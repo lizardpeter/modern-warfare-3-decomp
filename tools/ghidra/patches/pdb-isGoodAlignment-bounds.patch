@@ -1,0 +1,17 @@
+--- a/Ghidra/Features/PDB/src/main/java/ghidra/app/util/bin/format/pdb/DefaultCompositeMember.java
++++ b/Ghidra/Features/PDB/src/main/java/ghidra/app/util/bin/format/pdb/DefaultCompositeMember.java
+@@ -496,8 +496,13 @@
+ 			// verify that components did not move
+ 			Structure struct = (Structure) memberDataType;
+ 			DataTypeComponent[] nonPackedComponents = struct.getDefinedComponents();
++			DataTypeComponent[] testComponents = testComposite.getComponents();
++			if (testComponents.length != nonPackedComponents.length) {
++				// packing added or merged components (e.g. big-endian bit-fields): the layout changed
++				return false;
++			}
+ 			int index = 0;
+-			for (DataTypeComponent dtc : testComposite.getComponents()) {
++			for (DataTypeComponent dtc : testComponents) {
+ 				DataTypeComponent nonPackedDtc = nonPackedComponents[index++];
+ 				if (!isComponentUnchanged(dtc, nonPackedDtc)) {
+ 					alignOK = false;

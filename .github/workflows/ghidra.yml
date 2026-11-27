@@ -127,6 +127,8 @@ jobs:
           # Ghidra 12 names the default MAXMEM_DEFAULT; PrepAnalysis.java aborts if the heap is still small
           sed -i -E 's/^#?MAXMEM(_DEFAULT)?=.*/MAXMEM\1=13G/' /opt/ghidra/support/analyzeHeadless
           grep -n 'MAXMEM' /opt/ghidra/support/analyzeHeadless; free -g
+          # our fixes to Ghidra itself (tools/ghidra/patches, docs/xbox360.md)
+          tools/ghidra/patch_ghidra.sh /opt/ghidra "$GHIDRA_TAG"
       - uses: actions/download-artifact@v4
         continue-on-error: true  # builds without a PDB have none
         with: { name: "symbols-${{ matrix.build }}", path: "analysis/${{ matrix.build }}" }
@@ -212,6 +214,8 @@ jobs:
           # Ghidra 12 names the default MAXMEM_DEFAULT; PrepAnalysis.java aborts if the heap is still small
           sed -i -E 's/^#?MAXMEM(_DEFAULT)?=.*/MAXMEM\1=13G/' /opt/ghidra/support/analyzeHeadless
           grep -n 'MAXMEM' /opt/ghidra/support/analyzeHeadless; free -g
+          # our fixes to Ghidra itself (tools/ghidra/patches, docs/xbox360.md)
+          tools/ghidra/patch_ghidra.sh /opt/ghidra "$GHIDRA_TAG"
       - uses: actions/download-artifact@v4
         with: { name: "raw-${{ matrix.build }}", path: /tmp/raw }
       - name: Decompile shard
