@@ -10,6 +10,8 @@
 // Discovered" analyzer marks them non-returning and every caller ends at its prologue's `bl __savegprlr_NN` (8,396
 // functions of iw5mp_xenon cut to 8 bytes in the first run). They are marked returning here, and that analyzer is
 // turned off for PowerPC builds, so it can't flip them back. Known non-returning functions are still applied.
+// With the Xenon language they also get its "xenon_save_restore" call fixup, so the decompiler doesn't show them as
+// calls returning a value (tools/ghidra/xenon/build_language.py).
 //@category IW5
 import java.io.BufferedReader;
 import java.io.File;
@@ -49,6 +51,8 @@ public class ApplySymbols extends GhidraScript {
 		return out;
 	}
 
+	private static final String SAVE_RESTORE_FIXUP = "xenon_save_restore";
+
 	private static final Pattern XENON_HELPER =
 		Pattern.compile("^__(save|rest)(gprlr|gpr|fpr|vmx)(_\\d+)?$");
 
@@ -76,9 +80,14 @@ public class ApplySymbols extends GhidraScript {
 			names.put(Long.parseLong(r.get("va"), 16), r.get("name"));
 		}
 		boolean ppc = currentProgram.getLanguage().getProcessor().toString().equals("PowerPC");
+		// the Xenon language's compiler spec models the helpers as a no-op call fixup (build_language.py)
+		boolean fixup = ppc && java.util.Arrays.asList(
+			currentProgram.getCompilerSpec().getPcodeInjectLibrary().getCallFixupNames())
+				.contains(SAVE_RESTORE_FIXUP);
 		if (ppc) {
 			setAnalysisOption(currentProgram, "Non-Returning Functions - Discovered", "false");
-			println("PowerPC: Non-Returning Functions - Discovered turned off (register save/restore helpers)");
+			println("PowerPC: Non-Returning Functions - Discovered turned off (register save/restore helpers)" +
+				(fixup ? "; call fixup " + SAVE_RESTORE_FIXUP : ""));
 		}
 		int created = 0, named = 0, failed = 0, helpers = 0;
 		for (Map.Entry<Long, String> e : names.entrySet()) {
@@ -108,6 +117,9 @@ public class ApplySymbols extends GhidraScript {
 				}
 				if (ppc && f != null && name != null && XENON_HELPER.matcher(name).matches()) {
 					f.setNoReturn(false);
+					if (fixup) {
+						f.setCallFixup(SAVE_RESTORE_FIXUP);
+					}
 					helpers++;
 				}
 			}
