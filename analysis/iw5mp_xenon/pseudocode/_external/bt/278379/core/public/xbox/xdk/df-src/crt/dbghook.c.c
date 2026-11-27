@@ -5,7 +5,7 @@
 void __crt_debugger_hook(int param_1)
 
 {
-  _debugger_hook_dummy = 0;
+  DAT_84897dac = 0;
   return;
 }
 

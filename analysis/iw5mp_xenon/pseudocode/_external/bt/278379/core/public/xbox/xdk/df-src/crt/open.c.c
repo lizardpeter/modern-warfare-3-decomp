@@ -2,26 +2,25 @@
 
 // 8292A2C8  _sopen_helper  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/open.c:145)
 
-int _sopen_helper(char *param_1,int param_2,int param_3,int param_4,int *param_5,int param_6)
+errno_t _sopen_helper(char *_Filename,int _OFlag,int _ShFlag,int _PMode,int *_PFileHandle,
+                     int _BSecure)
 
 {
   int *piVar1;
-  int in_r9;
+  int iVar2;
   int *piStack00000034;
-  int local_20;
-  int local_1c;
+  undefined1 local_20 [8];
   
-  local_20 = 0;
-  piStack00000034 = param_5;
-  if (((param_5 != (int *)0x0) && (*param_5 = -1, param_1 != (char *)0x0)) &&
-     ((param_6 == 0 || ((param_4 & 0xfffffe7fU) == 0)))) {
-    local_1c = _tsopen_nolock(&local_20,param_5,param_1,param_2,param_3,param_4,in_r9);
+  piStack00000034 = _PFileHandle;
+  if (((_PFileHandle != (int *)0x0) && (*_PFileHandle = -1, _Filename != (char *)0x0)) &&
+     ((_BSecure == 0 || ((_PMode & 0xfffffe7fU) == 0)))) {
+    iVar2 = tsopen_nolock(local_20,_PFileHandle,_Filename,_OFlag,_ShFlag,_PMode);
     FUN_8292a3c4();
-    if (local_1c == 0) {
+    if (iVar2 == 0) {
       return 0;
     }
     *piStack00000034 = -1;
-    return local_1c;
+    return iVar2;
   }
   piVar1 = _errno();
   *piVar1 = 0x16;
@@ -30,53 +29,54 @@ int _sopen_helper(char *param_1,int param_2,int param_3,int param_4,int *param_5
 }
 
 
-// 82929DA0  _tsopen_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/open.c:194)
+// 82929DA0  tsopen_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/open.c:194)
 
-int _tsopen_nolock(int *param_1,int *param_2,char *param_3,int param_4,int param_5,int param_6,
-                  int param_7)
+/* WARNING: Unknown calling convention: __cdecl */
+/* tsopen_nolock */
+
+void __cdecl
+tsopen_nolock(undefined8 param_1,uint *param_2,LPCSTR param_3,ulonglong param_4,int param_5,
+             ulonglong param_6)
 
 {
   ulonglong uVar1;
   undefined4 *puVar2;
-  int iVar3;
+  errno_t eVar3;
   ulong *puVar4;
   int *piVar5;
-  int iVar6;
-  uint uVar7;
-  void *pvVar8;
-  ulong uVar9;
-  long lVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  uint uVar13;
-  uint uVar14;
-  ulong uVar15;
-  byte bVar16;
+  uint uVar6;
+  HANDLE pvVar7;
+  DWORD DVar8;
+  long lVar9;
+  int iVar10;
+  int iVar11;
+  uint dwShareMode;
+  uint dwDesiredAccess;
+  DWORD dwFlagsAndAttributes;
+  byte bVar12;
   char local_70 [4];
   int local_6c [27];
   
-  uVar12 = (ulonglong)param_6;
-  uVar11 = (ulonglong)param_4;
-  puVar2 = (undefined4 *)__savegprlr_20(param_1);
-  iVar6 = 0;
+  puVar2 = (undefined4 *)__savegprlr_20();
+  iVar11 = 0;
   local_6c[0] = 0;
-  bVar16 = 0;
-  iVar3 = _get_fmode(local_6c);
-  if (iVar3 != 0) {
+  bVar12 = 0;
+  eVar3 = _get_fmode(local_6c);
+  if (eVar3 != 0) {
                     /* WARNING: Subroutine does not return */
     _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);
   }
-  if ((uVar11 & 0x8000) == 0) {
-    bVar16 = 0x80;
+  if ((param_4 & 0x8000) == 0) {
+    bVar12 = 0x80;
   }
-  uVar1 = uVar11 & 3;
+  uVar1 = param_4 & 3;
   if (uVar1 != 0) {
     if (uVar1 == 1) {
-      uVar14 = 0x40000000;
+      dwDesiredAccess = 0x40000000;
       goto LAB_82929e48;
     }
     if (uVar1 < 3) {
-      uVar14 = 0xc0000000;
+      dwDesiredAccess = 0xc0000000;
       goto LAB_82929e48;
     }
 LAB_82929e08:
@@ -86,108 +86,109 @@ LAB_82929e08:
     piVar5 = _errno();
     *piVar5 = 0x16;
     _invalid_parameter_noinfo();
-    iVar6 = 0x16;
+    iVar11 = 0x16;
     goto LAB_82929e2c;
   }
-  uVar14 = 0x80000000;
+  dwDesiredAccess = 0x80000000;
 LAB_82929e48:
   if (param_5 == 0x10) {
-    uVar13 = 0;
+    dwShareMode = 0;
   }
   else if (param_5 == 0x20) {
-    uVar13 = 1;
+    dwShareMode = 1;
   }
   else if (param_5 == 0x30) {
-    uVar13 = 2;
+    dwShareMode = 2;
   }
   else if (param_5 == 0x40) {
-    uVar13 = 3;
+    dwShareMode = 3;
   }
   else {
     if (param_5 != 0x80) goto LAB_82929e08;
-    uVar13 = (uint)(uVar14 == 0x80000000);
+    dwShareMode = (uint)(dwDesiredAccess == 0x80000000);
   }
-  uVar7 = (uint)uVar11 & 0x700;
-  if (uVar7 < 0x401) {
-    if ((uVar7 == 0x400) || ((uVar11 & 0x700) == 0)) {
-      uVar9 = 3;
+  uVar6 = (uint)param_4 & 0x700;
+  if (uVar6 < 0x401) {
+    if ((uVar6 == 0x400) || ((param_4 & 0x700) == 0)) {
+      DVar8 = 3;
     }
-    else if (uVar7 == 0x100) {
-      uVar9 = 4;
+    else if (uVar6 == 0x100) {
+      DVar8 = 4;
     }
     else {
-      if (uVar7 == 0x200) goto LAB_82929f58;
-      if (uVar7 != 0x300) goto LAB_82929e08;
-      uVar9 = 2;
+      if (uVar6 == 0x200) goto LAB_82929f58;
+      if (uVar6 != 0x300) goto LAB_82929e08;
+      DVar8 = 2;
     }
   }
   else {
-    if (uVar7 != 0x500) {
-      if (uVar7 == 0x600) {
+    if (uVar6 != 0x500) {
+      if (uVar6 == 0x600) {
 LAB_82929f58:
-        uVar9 = 5;
+        DVar8 = 5;
         goto LAB_82929f04;
       }
-      if (uVar7 != 0x700) goto LAB_82929e08;
+      if (uVar6 != 0x700) goto LAB_82929e08;
     }
-    uVar9 = 1;
+    DVar8 = 1;
   }
 LAB_82929f04:
-  uVar15 = 0x80;
-  if (((uVar11 & 0x100) != 0) && ((uVar12 & ~(ulonglong)(uint)_umaskval & 0x80) == 0)) {
-    uVar15 = 1;
+  dwFlagsAndAttributes = 0x80;
+  if (((param_4 & 0x100) != 0) && ((param_6 & ~(ulonglong)DAT_84895de8 & 0x80) == 0)) {
+    dwFlagsAndAttributes = 1;
   }
-  if ((uVar11 & 0x40) != 0) {
-    uVar15 = uVar15 | 0x4000000;
-    uVar14 = uVar14 | 0x10000;
-    uVar13 = uVar13 | 4;
+  if ((param_4 & 0x40) != 0) {
+    dwFlagsAndAttributes = dwFlagsAndAttributes | 0x4000000;
+    dwDesiredAccess = dwDesiredAccess | 0x10000;
+    dwShareMode = dwShareMode | 4;
   }
-  if ((uVar11 & 0x1000) != 0) {
-    uVar15 = uVar15 | 0x100;
+  if ((param_4 & 0x1000) != 0) {
+    dwFlagsAndAttributes = dwFlagsAndAttributes | 0x100;
   }
-  if ((uVar11 & 0x20) == 0) {
-    if ((uVar11 & 0x10) != 0) {
-      uVar15 = uVar15 | 0x10000000;
+  if ((param_4 & 0x20) == 0) {
+    if ((param_4 & 0x10) != 0) {
+      dwFlagsAndAttributes = dwFlagsAndAttributes | 0x10000000;
     }
   }
   else {
-    uVar15 = uVar15 | 0x8000000;
+    dwFlagsAndAttributes = dwFlagsAndAttributes | 0x8000000;
   }
-  uVar7 = _alloc_osfhnd();
-  *param_2 = uVar7;
-  if (uVar7 == 0xffffffff) {
+  uVar6 = _alloc_osfhnd();
+  *param_2 = uVar6;
+  if (uVar6 == 0xffffffff) {
     puVar4 = __doserrno();
     *puVar4 = 0;
     *param_2 = 0xffffffff;
     piVar5 = _errno();
     *piVar5 = 0x18;
     piVar5 = _errno();
-    iVar6 = *piVar5;
+    iVar11 = *piVar5;
     goto LAB_82929e2c;
   }
   *puVar2 = 1;
-  pvVar8 = CreateFileA(param_3,uVar14,uVar13,(void *)0x0,uVar9,uVar15,(void *)0x0);
-  if (pvVar8 == (void *)0xffffffff) {
-    if (((uVar14 & 0xc0000000) == 0xc0000000) && ((uVar11 & 1) != 0)) {
-      uVar14 = uVar14 & 0x7fffffff;
-      pvVar8 = CreateFileA(param_3,uVar14,uVar13,(void *)0x0,uVar9,uVar15,(void *)0x0);
-      if (pvVar8 != (void *)0xffffffff) goto LAB_8292a064;
+  pvVar7 = CreateFileA(param_3,dwDesiredAccess,dwShareMode,(LPSECURITY_ATTRIBUTES)0x0,DVar8,
+                       dwFlagsAndAttributes,(HANDLE)0x0);
+  if (pvVar7 == (HANDLE)0xffffffff) {
+    if (((dwDesiredAccess & 0xc0000000) == 0xc0000000) && ((param_4 & 1) != 0)) {
+      dwDesiredAccess = dwDesiredAccess & 0x7fffffff;
+      pvVar7 = CreateFileA(param_3,dwDesiredAccess,dwShareMode,(LPSECURITY_ATTRIBUTES)0x0,DVar8,
+                           dwFlagsAndAttributes,(HANDLE)0x0);
+      if (pvVar7 != (HANDLE)0xffffffff) goto LAB_8292a064;
     }
-    iVar6 = *(int *)(&__pioinfo + (*param_2 >> 5) * 4) + (*param_2 & 0x1fU) * 0x48;
-    *(byte *)(iVar6 + 4) = *(byte *)(iVar6 + 4) & 0xfe;
-    uVar9 = GetLastError();
-    _dosmaperr(uVar9);
+    iVar11 = (&DAT_84897dc0)[(int)*param_2 >> 5] + (*param_2 & 0x1f) * 0x48;
+    *(byte *)(iVar11 + 4) = *(byte *)(iVar11 + 4) & 0xfe;
+    DVar8 = GetLastError();
+    _dosmaperr(DVar8);
   }
   else {
 LAB_8292a064:
-    _set_osfhnd(*param_2,(int)pvVar8);
-    *(byte *)(*(int *)(&__pioinfo + (*param_2 >> 5) * 4) + (*param_2 & 0x1fU) * 0x48 + 4) =
-         bVar16 | 1;
-    iVar3 = *(int *)(&__pioinfo + (*param_2 >> 5) * 4) + (*param_2 & 0x1fU) * 0x48;
-    *(byte *)(iVar3 + 0x28) = *(byte *)(iVar3 + 0x28) & 1;
-    if ((((longlong)(char)(bVar16 | 1) & 0x80U) != 0) && ((uVar11 & 2) != 0)) {
-      lVar10 = _lseek_nolock(*param_2,-1,2);
-      if (lVar10 == -1) {
+    _set_osfhnd(*param_2,(intptr_t)pvVar7);
+    *(byte *)((&DAT_84897dc0)[(int)*param_2 >> 5] + (*param_2 & 0x1f) * 0x48 + 4) = bVar12 | 1;
+    iVar10 = (&DAT_84897dc0)[(int)*param_2 >> 5] + (*param_2 & 0x1f) * 0x48;
+    *(byte *)(iVar10 + 0x28) = *(byte *)(iVar10 + 0x28) & 1;
+    if ((((longlong)(char)(bVar12 | 1) & 0x80U) != 0) && ((param_4 & 2) != 0)) {
+      lVar9 = _lseek_nolock(*param_2,-1,2);
+      if (lVar9 == -1) {
         puVar4 = __doserrno();
         if (*puVar4 != 0x83) {
 LAB_8292a110:
@@ -197,50 +198,51 @@ LAB_8292a110:
       }
       else {
         local_70[0] = '\0';
-        iVar3 = _read_nolock(*param_2,local_70,1);
-        if ((((iVar3 == 0) && (local_70[0] == '\x1a')) &&
-            (iVar3 = _chsize_nolock(*param_2,(longlong)lVar10), iVar3 == -1)) ||
-           (lVar10 = _lseek_nolock(*param_2,0,0), lVar10 == -1)) goto LAB_8292a110;
+        iVar10 = _read_nolock(*param_2,local_70,1);
+        if ((((iVar10 == 0) && (local_70[0] == '\x1a')) &&
+            (iVar10 = _chsize_nolock(*param_2,(longlong)lVar9), iVar10 == -1)) ||
+           (lVar9 = _lseek_nolock(*param_2,0,0), lVar9 == -1)) goto LAB_8292a110;
       }
     }
-    iVar3 = *(int *)(&__pioinfo + (*param_2 >> 5) * 4) + (*param_2 & 0x1fU) * 0x48;
-    *(byte *)(iVar3 + 0x28) = *(byte *)(iVar3 + 0x28) & 1;
-    iVar3 = *(int *)(&__pioinfo + (*param_2 >> 5) * 4) + (*param_2 & 0x1fU) * 0x48;
-    *(byte *)(iVar3 + 0x28) = *(byte *)(iVar3 + 0x28) & 0xfe;
-    if ((uVar11 & 8) != 0) {
-      iVar3 = *(int *)(&__pioinfo + (*param_2 >> 5) * 4) + (*param_2 & 0x1fU) * 0x48;
-      *(byte *)(iVar3 + 4) = *(byte *)(iVar3 + 4) | 0x20;
+    iVar10 = (&DAT_84897dc0)[(int)*param_2 >> 5] + (*param_2 & 0x1f) * 0x48;
+    *(byte *)(iVar10 + 0x28) = *(byte *)(iVar10 + 0x28) & 1;
+    iVar10 = (&DAT_84897dc0)[(int)*param_2 >> 5] + (*param_2 & 0x1f) * 0x48;
+    *(byte *)(iVar10 + 0x28) = *(byte *)(iVar10 + 0x28) & 0xfe;
+    if ((param_4 & 8) != 0) {
+      iVar10 = (&DAT_84897dc0)[(int)*param_2 >> 5] + (*param_2 & 0x1f) * 0x48;
+      *(byte *)(iVar10 + 4) = *(byte *)(iVar10 + 4) | 0x20;
     }
-    if (((uVar14 & 0xc0000000) != 0xc0000000) || ((uVar11 & 1) == 0)) goto LAB_82929e2c;
-    CloseHandle(pvVar8);
-    pvVar8 = CreateFileA(param_3,uVar14 & 0x7fffffff,uVar13,(void *)0x0,3,uVar15,(void *)0x0);
-    if (pvVar8 != (void *)0xffffffff) {
-      *(void **)(*(int *)(&__pioinfo + (*param_2 >> 5) * 4) + (*param_2 & 0x1fU) * 0x48) = pvVar8;
+    if (((dwDesiredAccess & 0xc0000000) != 0xc0000000) || ((param_4 & 1) == 0)) goto LAB_82929e2c;
+    CloseHandle(pvVar7);
+    pvVar7 = CreateFileA(param_3,dwDesiredAccess & 0x7fffffff,dwShareMode,(LPSECURITY_ATTRIBUTES)0x0
+                         ,3,dwFlagsAndAttributes,(HANDLE)0x0);
+    if (pvVar7 != (HANDLE)0xffffffff) {
+      *(HANDLE *)((&DAT_84897dc0)[(int)*param_2 >> 5] + (*param_2 & 0x1f) * 0x48) = pvVar7;
       goto LAB_82929e2c;
     }
-    uVar9 = GetLastError();
-    _dosmaperr(uVar9);
-    iVar6 = *(int *)(&__pioinfo + (*param_2 >> 5) * 4) + (*param_2 & 0x1fU) * 0x48;
-    *(byte *)(iVar6 + 4) = *(byte *)(iVar6 + 4) & 0xfe;
+    DVar8 = GetLastError();
+    _dosmaperr(DVar8);
+    iVar11 = (&DAT_84897dc0)[(int)*param_2 >> 5] + (*param_2 & 0x1f) * 0x48;
+    *(byte *)(iVar11 + 4) = *(byte *)(iVar11 + 4) & 0xfe;
     _free_osfhnd(*param_2);
   }
 LAB_8292a058:
   piVar5 = _errno();
-  iVar6 = *piVar5;
+  iVar11 = *piVar5;
 LAB_82929e2c:
-  iVar6 = __restgprlr_20(iVar6);
-  return iVar6;
+  __restgprlr_20(iVar11);
+  return;
 }
 
 
 // 8292A450  _sopen_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/open.c:624)
 
-int _sopen_s(int *param_1,char *param_2,int param_3,int param_4,int param_5)
+errno_t _sopen_s(int *_FileHandle,char *_Filename,int _OpenFlag,int _ShareFlag,int _PermissionMode)
 
 {
-  int iVar1;
+  errno_t eVar1;
   
-  iVar1 = _sopen_helper(param_2,param_3,param_4,param_5,param_1,1);
-  return iVar1;
+  eVar1 = _sopen_helper(_Filename,_OpenFlag,_ShareFlag,_PermissionMode,_FileHandle,1);
+  return eVar1;
 }
 

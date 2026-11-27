@@ -2,11 +2,17 @@
 
 // 82916730  __u64tod  (<external>/bt/278379/vctools/crt/xb/xbox/u64tod.asm:8)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void __u64tod(void)
+ulonglong __u64tod(longlong param_1)
 
 {
-  return;
+  ulonglong uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = param_1 << LZCOUNT(param_1);
+  uVar2 = 0;
+  if (uVar1 != 0) {
+    uVar2 = (0x43eU - LZCOUNT(param_1) & 0x7ff) << 0x34 | uVar1 >> 0xb & 0xfffffffffffff;
+  }
+  return uVar2;
 }
 

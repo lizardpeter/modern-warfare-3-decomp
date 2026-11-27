@@ -2,118 +2,127 @@
 
 // 82722090  R_AddCloudSurf  (gfx_d3d/r_cloudsurf.cpp:12)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void R_AddCloudSurf(uint param_1,Material *param_2,uchar param_3)
+void R_AddCloudSurf(undefined8 param_1,undefined8 param_2,undefined1 param_3)
 
 {
   uint uVar1;
-  Material *pMVar2;
+  int iVar2;
   ulonglong uVar3;
   uint local_30;
   
-  uVar1 = __savegprlr_29(param_1);
-  pMVar2 = Material_FromHandle(param_2);
-  uVar3 = *(ulonglong *)&(pMVar2->info).field0_0x0.field1_0x8;
+  uVar1 = __savegprlr_29();
+  iVar2 = Material_FromHandle(param_2);
+  uVar3 = *(ulonglong *)(iVar2 + 8);
   if (uVar1 != (uVar1 & 0xff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
-                    ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar1,uVar1 & 0xff);
   }
   local_30 = CONCAT31(CONCAT21((short)(uVar3 >> 0x1d),(char)uVar1),param_3) & 0xfffffff;
-  scene.cloudSurfs[uVar1].packed = local_30;
+  *(uint *)(&DAT_84775a00 + uVar1 * 4) = local_30;
   __restgprlr_29();
   return;
 }
 
 
 // 82722118  R_EmitCloudSurfs  (gfx_d3d/r_cloudsurf.cpp:52)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_EmitCloudSurfs(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar2;
+  ulonglong uVar1;
+  
+  iVar2 = __savegprlr_28();
+  if ((int)param_2 < *(int *)(DAT_84628b00 + 0x1560)) {
+    MyAssertHandler(0xffffffff821baf98,0x35,0,0xffffffff821baf5c,
+                    *(undefined4 *)(DAT_84628b00 + 0x1560),param_2);
+  }
+  if (*(int *)(iVar2 + 8) != 0) {
+    MyAssertHandler(0xffffffff821baf98,0x36,0,0xffffffff82000f98,0xffffffff821baf40);
+  }
+  if (*(int *)(iVar2 + 4) == 0) {
+    MyAssertHandler(0xffffffff821baf98,0x37,0,0xffffffff82000f98,0xffffffff821baf20);
+  }
+  uVar1 = R_StableSortSurfs_ExcludeKey<GfxSortCloudSurfsInterface,GfxCloudSurf>
+                    (0xffffffff84775a00,*(undefined4 *)(DAT_84628b00 + 0x1560),
+                     *(undefined4 *)(DAT_8461658c + 0x2c),*(undefined4 *)(iVar2 + 4));
+  *(int *)(iVar2 + 8) = (int)uVar1;
+  if ((ulonglong)*(uint *)(DAT_84628b00 + 0x1560) < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821baf98,0x3a,0,0xffffffff821baec8,uVar1,
+                    *(undefined4 *)(DAT_84628b00 + 0x1560));
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 82721F88  R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>  (gfx_d3d/r_sortsurfs.h:101)
 
-uint R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
-               (GfxCloudSurf *param_1,uint param_2,uint param_3,uint param_4,GfxCloudSurf *param_5,
-               uint param_6)
+void R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
+               (undefined8 param_1,uint param_2,uint param_3,uint param_4,longlong param_5,
+               ulonglong param_6)
 
 {
   int iVar1;
   int iVar2;
   uint uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  undefined4 *puVar14;
+  longlong lVar5;
+  longlong lVar6;
+  uint uVar7;
+  undefined4 *puVar8;
   
-  uVar8 = (ulonglong)(int)param_6;
-  lVar7 = (longlong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  uVar13 = 0;
-  if ((uVar4 & 0xffffffff) != 0) {
-    lVar12 = (uVar8 & 0x3fffffff) * 4 + lVar7 + -4;
+  iVar2 = __savegprlr_28();
+  uVar7 = 0;
+  if (param_2 != 0) {
+    lVar6 = (param_6 & 0x3fffffff) * 4 + param_5 + -4;
     do {
-      iVar1 = (int)uVar13 * 4;
-      puVar14 = (undefined4 *)(iVar1 + iVar2);
-      uVar9 = (ulonglong)*(ushort *)(iVar1 + iVar2);
-      if (((uVar5 & 0xffffffff) <= uVar9) && (uVar9 < (uVar6 & 0xffffffff))) {
-        uVar10 = uVar8;
-        if ((uVar8 & 0xffffffff) != 0) {
-          lVar11 = lVar12 + 8;
+      puVar8 = (undefined4 *)(uVar7 * 4 + iVar2);
+      uVar3 = (uint)*(ushort *)(uVar7 * 4 + iVar2);
+      if ((param_3 <= uVar3) && (uVar3 < param_4)) {
+        uVar4 = param_6;
+        if ((param_6 & 0xffffffff) != 0) {
+          lVar5 = lVar6 + 8;
           do {
-            iVar1 = (int)lVar11;
-            if (*(ushort *)(iVar1 + -8) <= uVar9) break;
-            uVar10 = uVar10 - 1;
-            lVar11 = lVar11 + -4;
-            *(undefined4 *)lVar11 = *(undefined4 *)(iVar1 + -8);
-          } while (uVar10 != 0);
+            iVar1 = (int)lVar5;
+            if (*(ushort *)(iVar1 + -8) <= uVar3) break;
+            uVar4 = uVar4 - 1;
+            lVar5 = lVar5 + -4;
+            *(undefined4 *)lVar5 = *(undefined4 *)(iVar1 + -8);
+          } while (uVar4 != 0);
         }
-        uVar8 = uVar8 + 1;
-        lVar12 = lVar12 + 4;
-        *(undefined4 *)((int)((uVar10 & 0xffffffff) << 2) + (int)lVar7) = *puVar14;
+        param_6 = param_6 + 1;
+        lVar6 = lVar6 + 4;
+        *(undefined4 *)((int)((uVar4 & 0xffffffff) << 2) + (int)param_5) = *puVar8;
       }
-      uVar13 = ((ulonglong)*(byte *)((int)puVar14 + 3) - 0xb & 0x7fffffff) * 2 + uVar13 + 1;
-    } while ((uVar13 & 0xffffffff) < (uVar4 & 0xffffffff));
+      uVar7 = (*(byte *)((int)puVar8 + 3) - 0xb) * 2 + uVar7 + 1;
+    } while (uVar7 < param_2);
   }
-  uVar3 = __restgprlr_28(uVar8);
-  return uVar3;
+  __restgprlr_28(param_6);
+  return;
 }
 
 
 // 82722028  R_CopySortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>  (gfx_d3d/r_sortsurfs.h:128)
 
-uint R_CopySortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
-               (GfxCloudSurf *param_1,uint param_2,uint param_3,uint param_4,GfxCloudSurf *param_5,
-               uint param_6)
+int R_CopySortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
+              (int param_1,uint param_2,uint param_3,uint param_4,int param_5,int param_6)
 
 {
-  GfxCloudSurf *pGVar1;
-  GfxCloudSurf *pGVar2;
+  undefined4 *puVar1;
+  ushort *puVar2;
   uint uVar3;
   
   uVar3 = 0;
   if (param_2 != 0) {
-    pGVar1 = param_5 + (param_6 - 1);
+    puVar1 = (undefined4 *)(param_6 * 4 + param_5 + -4);
     do {
-      pGVar2 = param_1 + uVar3;
-      if ((param_3 <= (pGVar2->fields).materialSortedIndex) &&
-         ((pGVar2->fields).materialSortedIndex < param_4)) {
+      puVar2 = (ushort *)(uVar3 * 4 + param_1);
+      if ((param_3 <= *puVar2) && (*puVar2 < param_4)) {
         param_6 = param_6 + 1;
-        pGVar1 = pGVar1 + 1;
-        pGVar1->fields = *(GfxCloudSurfFields *)pGVar2;
+        puVar1 = puVar1 + 1;
+        *puVar1 = *(undefined4 *)puVar2;
       }
-      uVar3 = ((pGVar2->fields).surfType - 0xb) * 2 + uVar3 + 1;
+      uVar3 = (*(byte *)((int)puVar2 + 3) - 0xb) * 2 + uVar3 + 1;
     } while (uVar3 < param_2);
   }
   return param_6;
@@ -121,5 +130,17 @@ uint R_CopySortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
 
 
 // 82722228  R_StableSortSurfs_ExcludeKey<GfxSortCloudSurfsInterface,GfxCloudSurf>  (gfx_d3d/r_sortsurfs.h:150)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_StableSortSurfs_ExcludeKey<GfxSortCloudSurfsInterface,GfxCloudSurf>(void)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_27();
+  R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>();
+  R_CopySortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>(uVar1);
+  R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>(uVar1);
+  __restgprlr_27();
+  return;
+}
+

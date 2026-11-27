@@ -2,16 +2,16 @@
 
 // 8292B998  FlushFileBuffers  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/flushfilebuffers.c:44)
 
-int FlushFileBuffers(void *param_1)
+BOOL FlushFileBuffers(HANDLE hFile)
 
 {
-  long lVar1;
+  int iVar1;
   undefined1 auStack_10 [16];
   
-  lVar1 = NtFlushBuffersFile(param_1,auStack_10);
-  if (lVar1 < 0) {
-    RtlSetLastNTError(lVar1);
+  iVar1 = NtFlushBuffersFile(hFile,auStack_10);
+  if (iVar1 < 0) {
+    RtlSetLastNTError();
   }
-  return (int)(lVar1 >= 0);
+  return (BOOL)(iVar1 >= 0);
 }
 

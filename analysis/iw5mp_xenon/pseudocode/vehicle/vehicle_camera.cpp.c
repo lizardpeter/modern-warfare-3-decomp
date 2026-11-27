@@ -2,134 +2,346 @@
 
 // 826B8668  TRACK_VehicleCam  (vehicle/vehicle_camera.cpp:113)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_VehicleCam(void)
 
 {
-  track_static_alloc_internal(zOffsetModeNames,0x10,"zOffsetModeNames",10);
-  track_static_alloc_internal(vehicleCameraModes,0x68,"vehicleCameraModes",10);
-  track_static_alloc_internal(vehicleCameras,0xe0,"vehicleCameras",10);
+  track_static_alloc_internal(0xffffffff82997ad4,0x10,0xffffffff8219f864,10);
+  track_static_alloc_internal(0xffffffff8444ffa0,0x68,0xffffffff8219f850,10);
+  track_static_alloc_internal(0xffffffff8444fec0,0xe0,0xffffffff8219f840,10);
   return;
 }
 
 
 // 826B86E0  VehicleCam_RegisterDvars  (vehicle/vehicle_camera.cpp:122)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void VehicleCam_RegisterDvars(void)
 
 {
-  vehCam_freeLook = Dvar_RegisterBool("vehCam_freeLook",false,4,"Enables free look mode");
+  DAT_8444feb8 = Dvar_RegisterBool(0xffffffff8219f878,0,4,0xffffffff8219f888);
   return;
 }
 
 
 // 826B8720  VehicleCam_GetCamera  (vehicle/vehicle_camera.cpp:150)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-VehicleCamera * VehicleCam_GetCamera(LocalClientNum_t param_1)
+longlong VehicleCam_GetCamera(ulonglong param_1)
 
 {
-  if (LOCAL_CLIENT_3 < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
-                    0x97,0,
-                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8219f8a0,0x97,0,0xffffffff820011a8,param_1,4);
   }
-  return vehicleCameras + param_1;
+  return param_1 * 0x38 + -0x7bbb0140;
 }
 
 
 // 826B8788  VehicleCam_GetParams  (vehicle/vehicle_camera.cpp:157)
 
-VehicleCameraParams * VehicleCam_GetParams(VehCamMode param_1)
+longlong VehicleCam_GetParams(ulonglong param_1)
 
 {
-  if (VEHCAM_MODE_3RD_PERSON < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
-                    0x9e,0,"mode doesn\'t index VEHCAM_MODE_COUNT\n\t%i not in [0, %i)");
+  if (1 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8219f8a0,0x9e,0,0xffffffff8219f8e8,param_1,2);
   }
-  return vehicleCameraModes + param_1;
+  return param_1 * 0x34 + -0x7bbb0060;
 }
 
 
 // 826B87F0  VehicleCam_InitGlobals  (vehicle/vehicle_camera.cpp:165)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void VehicleCam_InitGlobals(void)
 
 {
-  Com_Memset(vehicleCameraModes,0,0x68);
+  Com_Memset(0xffffffff8444ffa0,0,0x68);
   return;
 }
 
 
 // 826B8808  VehicleCam_InitLocalClient  (vehicle/vehicle_camera.cpp:171)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void VehicleCam_InitLocalClient(LocalClientNum_t param_1)
+void VehicleCam_InitLocalClient(longlong param_1)
 
 {
-  Com_Memset(vehicleCameras + param_1,0,0x38);
+  Com_Memset(param_1 * 0x38 + -0x7bbb0140,0,0x38);
   return;
 }
 
 
 // 826B8828  VehicleCam_Archive  (vehicle/vehicle_camera.cpp:184)
 
-void VehicleCam_Archive(MemoryFile *param_1)
+void VehicleCam_Archive(ulonglong param_1)
 
 {
-  if (param_1 == (MemoryFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
-                    0xb9,0,"%s");
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0xb9,0,0xffffffff82000f98,0xffffffff82001348);
   }
-  MemFile_ArchiveData(param_1,0xe0,vehicleCameras);
+  MemFile_ArchiveData(param_1,0xe0,0xffffffff8444fec0);
   return;
 }
 
 
 // 826B9F58  VehicleCam_IsDriveCam  (vehicle/vehicle_camera.cpp:192)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void VehicleCam_IsDriveCam(void)
+
+{
+  undefined1 uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar5;
+  char cVar6;
+  undefined8 uVar4;
+  
+  uVar3 = __savegprlr_28();
+  iVar5 = CG_GetLocalClientGlobals();
+  if (3 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8219f8a0,0x97,0,0xffffffff820011a8,uVar3,4);
+  }
+  iVar2 = (int)uVar3 * 0x38;
+  uVar1 = (&DAT_8444fef4)[iVar2];
+  (&DAT_8444fef4)[iVar2] = 0;
+  cVar6 = VehicleCam_IsPlayerControlCam(uVar3);
+  if (cVar6 != '\0') {
+    (&DAT_8444fef4)[iVar2] = uVar1;
+    __restgprlr_28(0);
+    return;
+  }
+  if (((*(uint *)(iVar5 + 0xf8) & 0x200000) != 0) && (*(int *)(iVar5 + 0x1bc) != 0x7ff)) {
+    uVar4 = CG_GetEntity(*(undefined4 *)(iVar5 + 0x3338));
+    VehicleCl_GetClient(uVar3,uVar4);
+    iVar5 = VehicleCl_GetClientDef();
+    iVar5 = *(int *)(iVar5 + 4);
+    if ((iVar5 == 6) || ((iVar5 == 3 || (iVar5 == 7)))) {
+      (&DAT_8444fef4)[iVar2] = uVar1;
+      __restgprlr_28(1);
+      return;
+    }
+  }
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 826B8890  VehicleCam_SetClientViewAngles  (vehicle/vehicle_camera.cpp:234)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void VehicleCam_SetClientViewAngles(int param_1,float *param_2)
+
+{
+  float local_30;
+  float local_2c;
+  float local_28;
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0xed,0,0xffffffff82000f98,0xffffffff8219f920);
+  }
+  local_30 = -*(float *)(param_1 + 0x60);
+  local_2c = -*(float *)(param_1 + 100);
+  local_28 = -*(float *)(param_1 + 0x68);
+  if (param_2 != (float *)0x0) {
+    local_30 = *param_2 + local_30;
+    local_2c = param_2[1] + local_2c;
+    local_28 = param_2[2] + local_28;
+  }
+  CL_SetViewAngles(*(undefined4 *)(param_1 + 0x3338),&local_30);
+  return;
+}
+
 
 // 826B8950  VehicleCam_UpdateModeParams  (vehicle/vehicle_camera.cpp:249)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
+
+void VehicleCam_UpdateModeParams(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0xfe,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  iVar2 = VehicleCl_GetClient(uVar1,param_2);
+  iVar3 = VehicleCl_GetClientDef();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x103,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x104,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  DAT_8444ffa8 = *(undefined4 *)(iVar3 + 0x220);
+  DAT_8444ffa4 = *(undefined4 *)(iVar3 + 0x21c);
+  DAT_8444ffa0 = *(undefined4 *)(iVar3 + 0x218);
+  DAT_8444ffb4 = *(undefined4 *)(iVar3 + 0x22c);
+  DAT_8444ffb0 = *(undefined4 *)(iVar3 + 0x228);
+  DAT_8444ffac = *(undefined4 *)(iVar3 + 0x224);
+  DAT_8444ffb8 = *(undefined4 *)(iVar3 + 0x230);
+  DAT_8444ffbc = *(undefined4 *)(iVar3 + 0x234);
+  DAT_8444ffc0 = *(undefined4 *)(iVar3 + 0x238);
+  DAT_8444ffc4 = *(undefined4 *)(iVar3 + 0x23c);
+  DAT_8444ffc8 = *(undefined4 *)(iVar3 + 0x240);
+  DAT_8444ffcc = *(undefined4 *)(iVar3 + 0x244);
+  DAT_8444ffd0 = *(undefined4 *)(iVar3 + 0x248);
+  DAT_8444ffdc = *(undefined4 *)(iVar3 + 0x254);
+  DAT_8444ffd8 = *(undefined4 *)(iVar3 + 0x250);
+  DAT_8444ffd4 = *(undefined4 *)(iVar3 + 0x24c);
+  DAT_8444ffe8 = *(undefined4 *)(iVar3 + 0x260);
+  DAT_8444ffe4 = *(undefined4 *)(iVar3 + 0x25c);
+  DAT_8444ffe0 = *(undefined4 *)(iVar3 + 600);
+  DAT_8444ffec = *(undefined4 *)(iVar3 + 0x264);
+  DAT_8444fff0 = *(undefined4 *)(iVar3 + 0x268);
+  DAT_8444fff4 = *(undefined4 *)(iVar3 + 0x26c);
+  DAT_8444fff8 = *(undefined4 *)(iVar3 + 0x270);
+  DAT_8444fffc = *(undefined4 *)(iVar3 + 0x274);
+  DAT_84450000 = *(undefined4 *)(iVar3 + 0x278);
+  DAT_84450004 = *(undefined4 *)(iVar3 + 0x27c);
+  __restgprlr_28();
+  return;
+}
+
 
 // 826B8AD8  VehicleCam_UpdateMode  (vehicle/vehicle_camera.cpp:331)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
+
+void VehicleCam_UpdateMode(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  bool bVar2;
+  undefined8 uVar3;
+  longlong lVar4;
+  int iVar5;
+  int *piVar6;
+  undefined1 auStack_b0 [48];
+  undefined1 auStack_80 [128];
+  
+  uVar3 = __savegprlr_24();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x153,0,0xffffffff82000f98,0xffffffff8219f920);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x154,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x155,0,0xffffffff82000f98,0xffffffff82108148);
+  }
+  iVar1 = (int)param_2;
+  lVar4 = CL_GetCurrentCmdNumber(*(undefined4 *)(iVar1 + 0x3338));
+  if (1 < (int)lVar4) {
+    iVar5 = VehicleCl_GetClient(uVar3,param_3);
+    bVar2 = false;
+    CL_GetUserCmd(*(undefined4 *)(iVar1 + 0x3338),lVar4 + -1,auStack_b0);
+    CL_GetUserCmd(*(undefined4 *)(iVar1 + 0x3338),lVar4,auStack_80);
+    VehicleCam_UpdateModeParams(uVar3,param_3);
+    piVar6 = (int *)param_4;
+    if ((*piVar6 == 0) && ((*(uint *)(iVar5 + 0x18) & 1) != 0)) {
+      bVar2 = true;
+      *piVar6 = 1;
+    }
+    else if ((*piVar6 == 1) && ((*(uint *)(iVar5 + 0x18) & 1) == 0)) {
+      bVar2 = true;
+      *piVar6 = 0;
+    }
+    if (bVar2) {
+      piVar6[7] = 0;
+      piVar6[8] = 0;
+      piVar6[9] = 0;
+      *(undefined1 *)(piVar6 + 0xd) = 0;
+    }
+  }
+  __restgprlr_24();
+  return;
+}
+
 
 // 826B8C40  VehicleCam_GetVehiclePosition  (vehicle/vehicle_camera.cpp:376)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
+
+void VehicleCam_GetVehiclePosition
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  float *pfVar2;
+  undefined4 *puVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  int iVar6;
+  undefined1 auStack_60 [24];
+  float local_48;
+  float local_44;
+  float local_40;
+  
+  uVar4 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x17d,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x17e,0,0xffffffff82000f98,0xffffffff82004854);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x17f,0,0xffffffff82000f98,0xffffffff8200b100);
+  }
+  iVar1 = (int)param_2;
+  uVar5 = Com_GetClientDObj(*(undefined4 *)(iVar1 + 0xc4),uVar4);
+  iVar6 = VehicleCl_GetClient(uVar4,param_2);
+  pfVar2 = (float *)param_3;
+  puVar3 = (undefined4 *)param_4;
+  if ((*(uint *)(iVar6 + 0x18) & 1) == 0) {
+    iVar6 = CG_DObjGetWorldTagMatrix(param_2,uVar5,DAT_835a0c62,auStack_60,param_3);
+    if (iVar6 == 0) {
+      iVar6 = CG_DObjGetWorldTagMatrix(param_2,uVar5,DAT_835a0c60,auStack_60,param_3);
+      if (iVar6 == 0) {
+        *pfVar2 = *(float *)(iVar1 + 0x14);
+        pfVar2[1] = *(float *)(iVar1 + 0x18);
+        pfVar2[2] = *(float *)(iVar1 + 0x1c);
+        *puVar3 = *(undefined4 *)(iVar1 + 0x20);
+        puVar3[1] = *(undefined4 *)(iVar1 + 0x24);
+        puVar3[2] = *(undefined4 *)(iVar1 + 0x28);
+        AnglesToAxis(param_4,auStack_60);
+      }
+      else {
+        AxisToAngles(auStack_60,param_4);
+      }
+      *pfVar2 = local_48 * 60.0 + *pfVar2;
+      pfVar2[1] = local_44 * 60.0 + pfVar2[1];
+      pfVar2[2] = local_40 * 60.0 + pfVar2[2];
+      __restgprlr_26();
+      return;
+    }
+  }
+  else {
+    iVar6 = CG_DObjGetWorldTagMatrix(param_2,uVar5,DAT_835a0c60,auStack_60,param_3);
+    if (iVar6 == 0) {
+      *pfVar2 = *(float *)(iVar1 + 0x14);
+      pfVar2[1] = *(float *)(iVar1 + 0x18);
+      pfVar2[2] = *(float *)(iVar1 + 0x1c);
+      *puVar3 = *(undefined4 *)(iVar1 + 0x20);
+      puVar3[1] = *(undefined4 *)(iVar1 + 0x24);
+      puVar3[2] = *(undefined4 *)(iVar1 + 0x28);
+      __restgprlr_26();
+      return;
+    }
+  }
+  AxisToAngles(auStack_60,param_4);
+  __restgprlr_26();
+  return;
+}
+
 
 // 826B8E38  ApplyDeadzone  (vehicle/vehicle_camera.cpp:425)
 
-void ApplyDeadzone(float param_1,float param_2,float *param_3,float *param_4)
+void ApplyDeadzone(double param_1,double param_2,undefined8 param_3,undefined8 param_4,
+                  float *param_5,float *param_6)
 
 {
-  float *in_r5;
-  float *in_r6;
   float fVar1;
+  double dVar2;
   float local_20;
   float local_1c;
   
-  local_20 = param_1;
-  local_1c = param_2;
-  fVar1 = Vec2Normalize(&local_20);
-  if (0.27 <= fVar1) {
-    if (fVar1 <= 0.99) {
-      fVar1 = (fVar1 - 0.27) * 1.3888888;
+  local_20 = (float)param_1;
+  local_1c = (float)param_2;
+  dVar2 = (double)Vec2Normalize(&local_20);
+  if (0.27000001072883606 <= dVar2) {
+    if (dVar2 <= 0.9900000095367432) {
+      fVar1 = (float)(dVar2 - 0.27000001072883606) * 1.3888888;
     }
     else {
       fVar1 = 1.0;
@@ -138,19 +350,76 @@ void ApplyDeadzone(float param_1,float param_2,float *param_3,float *param_4)
   else {
     fVar1 = 0.0;
   }
-  *in_r5 = fVar1 * local_20;
-  *in_r6 = fVar1 * local_1c;
+  *param_5 = fVar1 * local_20;
+  *param_6 = fVar1 * local_1c;
   return;
 }
 
 
 // 826B8EE0  VehicleCam_GetControllerAxis  (vehicle/vehicle_camera.cpp:450)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void VehicleCam_GetControllerAxis(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  float *pfVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
+  uVar1 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x1c7,0,0xffffffff82000f98,0xffffffff820022a0);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x1c8,0,0xffffffff82000f98,0xffffffff82002298);
+  }
+  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x1cb,0,0xffffffff82000f98,0xffffffff82002798);
+  }
+  pfVar4 = (float *)param_2;
+  pfVar5 = (float *)param_3;
+  if ((((*(uint *)(iVar2 + 0xc) & 0x800) == 0) || (cVar3 = CL_Demo_IsPlaying(uVar1), cVar3 != '\0'))
+     && (cVar3 = CG_ShouldUpdateViewAngles(uVar1), cVar3 != '\0')) {
+    dVar6 = (double)CL_GamepadAxisValue(uVar1,4);
+    *pfVar4 = (float)dVar6;
+    dVar6 = (double)CL_GetClientLookInversion(uVar1);
+    *pfVar4 = (float)(dVar6 * (double)*pfVar4);
+    dVar6 = (double)CL_GamepadAxisValue(uVar1,3);
+    *pfVar5 = (float)-dVar6;
+    dVar8 = ABS((double)*pfVar4);
+    dVar7 = 1.0;
+    dVar6 = ABS(-dVar6);
+    if (1.0 < dVar8) {
+      MyAssertHandler(0xffffffff8219f8a0,0x1e8,0,0xffffffff82000f98,0xffffffff820021bc);
+    }
+    if (dVar7 < dVar6) {
+      MyAssertHandler(0xffffffff8219f8a0,0x1e9,0,0xffffffff82000f98,0xffffffff820021a8);
+    }
+    if (dVar8 <= dVar6) {
+      *pfVar4 = (float)(dVar7 - (double)(float)(dVar6 - dVar8)) * *pfVar4;
+    }
+    else {
+      *pfVar5 = (float)(dVar7 - (double)(float)(dVar8 - dVar6)) * *pfVar5;
+    }
+    ApplyDeadzone((double)*pfVar5,(double)*pfVar4);
+    __restgprlr_26();
+    return;
+  }
+  *pfVar4 = 0.0;
+  *pfVar5 = 0.0;
+  __restgprlr_26();
+  return;
+}
+
 
 // 826B90D8  VehicleCam_ClampAngle  (vehicle/vehicle_camera.cpp:534)
 
-float VehicleCam_ClampAngle(float param_1,float param_2)
+void VehicleCam_ClampAngle(undefined8 param_1,double param_2)
 
 {
   double dVar1;
@@ -158,55 +427,503 @@ float VehicleCam_ClampAngle(float param_1,float param_2)
   double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
   
-  dVar2 = (double)param_2;
-  dVar1 = (double)__savefpr_27((double)param_1);
-  dVar6 = 0.0027777778450399637;
-  dVar3 = (double)(float)(dVar1 * 0.0027777778450399637);
-  dVar5 = 0.5;
-  dVar1 = floor((double)(float)(dVar3 + 0.5));
-  dVar4 = 360.0;
-  dVar3 = (double)(float)((double)((float)(dVar3 - (double)(float)dVar1) * 360.0) * dVar6);
-  dVar1 = floor((double)(float)(dVar3 + dVar5));
-  dVar3 = (double)(float)((double)(float)(dVar3 - (double)(float)dVar1) * dVar4);
-  dVar1 = dVar2;
-  if ((float)(dVar3 - dVar2) < 0.0) {
-    dVar1 = dVar3;
+  dVar1 = (double)__savefpr_27();
+  dVar5 = 0.0027777778450399637;
+  dVar2 = (double)(float)(dVar1 * 0.0027777778450399637);
+  dVar4 = 0.5;
+  dVar1 = floor((double)(float)(dVar2 + 0.5));
+  dVar3 = 360.0;
+  dVar2 = (double)(float)((double)((float)(dVar2 - (double)(float)dVar1) * 360.0) * dVar5);
+  dVar1 = floor((double)(float)(dVar2 + dVar4));
+  dVar2 = (double)(float)((double)(float)(dVar2 - (double)(float)dVar1) * dVar3);
+  dVar1 = param_2;
+  if ((float)(dVar2 - param_2) < 0.0) {
+    dVar1 = dVar2;
   }
-  dVar4 = -dVar2;
-  if ((float)(-dVar2 - dVar3) < 0.0) {
-    dVar4 = dVar1;
+  dVar3 = -param_2;
+  if ((float)(-param_2 - dVar2) < 0.0) {
+    dVar3 = dVar1;
   }
-  dVar1 = (double)__restfpr_27(dVar4);
-  return (float)dVar1;
+  __restfpr_27(dVar3);
+  return;
 }
 
 
 // 826B9168  VehicleCam_UpdateCamInternal  (vehicle/vehicle_camera.cpp:543)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void VehicleCam_UpdateCamInternal
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5)
+
+{
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  float *pfVar4;
+  undefined8 uVar5;
+  char cVar10;
+  int iVar6;
+  int iVar7;
+  int *piVar8;
+  float *pfVar9;
+  float *pfVar11;
+  float *pfVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  float local_1d0;
+  float local_1cc;
+  float local_1c8;
+  longlong local_1c0;
+  float local_1b8 [2];
+  float local_1b0;
+  float local_1ac;
+  float local_1a8;
+  float local_1a0;
+  float local_19c;
+  float local_198;
+  float local_190;
+  float local_18c;
+  float local_188;
+  float local_184;
+  float local_180;
+  float local_17c;
+  float local_178;
+  float local_174;
+  float local_170;
+  float local_160;
+  float local_15c;
+  float local_158;
+  float local_148;
+  float local_144;
+  float local_140;
+  undefined1 auStack_130 [48];
+  undefined1 auStack_100 [48];
+  undefined1 auStack_d0 [208];
+  
+  __savegprlr_22();
+  uVar5 = __savefpr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x237,0,0xffffffff82000f98,0xffffffff8219f920);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x238,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x239,0,0xffffffff82000f98,0xffffffff8219f980);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x23a,0,0xffffffff82000f98,0xffffffff82027150);
+  }
+  cVar10 = CL_Demo_IsFollowCamera(uVar5);
+  if ((cVar10 == '\0') && (cVar10 = CL_Demo_IsFreeCamera(uVar5), cVar10 == '\0')) {
+    iVar3 = (int)param_2;
+    local_1c0 = (longlong)*(int *)(iVar3 + 0x6b988);
+    dVar16 = (double)((float)local_1c0 * 0.001);
+    iVar6 = VehicleCl_GetClient(uVar5,param_3);
+    if (iVar6 == 0) {
+      MyAssertHandler(0xffffffff8219f8a0,0x244,0,0xffffffff82000f98,0xffffffff82026d30);
+    }
+    iVar7 = VehicleCl_GetClientDef(iVar6);
+    if (iVar7 == 0) {
+      MyAssertHandler(0xffffffff8219f8a0,0x247,0,0xffffffff82000f98,0xffffffff8200d194);
+    }
+    piVar8 = (int *)VehicleCam_GetCamera(*(undefined4 *)(iVar3 + 0x3338));
+    if (piVar8 == (int *)0x0) {
+      MyAssertHandler(0xffffffff8219f8a0,0x24a,0,0xffffffff82000f98,0xffffffff82108148);
+    }
+    VehicleCam_GetVehiclePosition(*(undefined4 *)(iVar3 + 0x3338),param_3,&local_1b0,&local_1a0);
+    AnglesToAxis(&local_1a0,&local_190);
+    VehicleCam_UpdateMode(uVar5,param_2,param_3,piVar8);
+    pfVar9 = (float *)VehicleCam_GetParams(*piVar8);
+    dVar15 = ABS((double)*(float *)(iVar6 + 0x1c));
+    dVar14 = 1.0;
+    if (*(int *)(iVar7 + 0x1e0) == 0) {
+      dVar17 = 0.0;
+      piVar8[7] = 0;
+      piVar8[8] = 0;
+      piVar8[9] = 0;
+    }
+    else {
+      VehicleCam_GetControllerAxis(*(undefined4 *)(iVar3 + 0x3338),local_1b8,&local_1c0);
+      dVar17 = 0.0;
+      dVar21 = (double)local_1b8[0];
+      dVar19 = (double)local_1c0._0_4_;
+      fVar1 = (float)((double)(float)((double)pfVar9[8] * dVar21) * dVar16 +
+                     (double)(float)piVar8[7]);
+      piVar8[7] = (int)fVar1;
+      piVar8[8] = (int)(float)((double)(float)((double)pfVar9[10] * dVar19) * dVar16 +
+                              (double)(float)piVar8[8]);
+      piVar8[9] = 0;
+      if (*(char *)(DAT_8444feb8 + 0xc) == '\0') {
+        dVar13 = (double)VehicleCam_ClampAngle((double)fVar1,(double)pfVar9[9]);
+        piVar8[7] = (int)(float)dVar13;
+        dVar13 = (double)VehicleCam_ClampAngle((double)(float)piVar8[8],(double)pfVar9[0xb]);
+        piVar8[8] = (int)(float)dVar13;
+        if ((dVar21 == dVar17) && (dVar19 == dVar17)) {
+          if ((double)*(float *)(iVar7 + 0x20c) == dVar17) {
+            MyAssertHandler(0xffffffff8219f8a0,0x269,0,0xffffffff82000f98,0xffffffff8219f960);
+          }
+          dVar21 = (double)(float)(dVar15 / (double)*(float *)(iVar7 + 0x20c));
+          dVar19 = dVar14;
+          if ((float)(dVar21 - dVar14) < 0.0) {
+            dVar19 = dVar21;
+          }
+          dVar13 = dVar17;
+          if (-dVar21 < 0.0) {
+            dVar13 = dVar19;
+          }
+          dVar21 = (double)(float)(dVar13 * (double)*(float *)(iVar7 + 0x210));
+          dVar19 = (double)DiffTrackAngle(dVar17,(double)(float)piVar8[7],dVar21,dVar16);
+          piVar8[7] = (int)(float)dVar19;
+          dVar19 = (double)DiffTrackAngle(dVar17,(double)(float)piVar8[8],dVar21,dVar16);
+          piVar8[8] = (int)(float)dVar19;
+        }
+      }
+    }
+    dVar22 = 0.0027777778450399637;
+    dVar13 = (double)(local_1a0 * 0.0027777778);
+    dVar20 = 0.5;
+    dVar19 = floor((double)(float)(dVar13 + 0.5));
+    dVar21 = (double)(float)((double)local_19c * dVar22);
+    dVar18 = 360.0;
+    local_1d0 = *(float *)(iVar7 + 500) * (float)(dVar13 - (double)(float)dVar19) * 360.0;
+    dVar19 = floor((double)(float)(dVar21 + dVar20));
+    dVar13 = (double)(float)((double)local_198 * dVar22);
+    local_1cc = *(float *)(iVar7 + 0x1f8) *
+                (float)((double)(float)(dVar21 - (double)(float)dVar19) * dVar18);
+    dVar19 = floor((double)(float)(dVar13 + dVar20));
+    local_1c8 = *(float *)(iVar7 + 0x1fc) *
+                (float)((double)(float)(dVar13 - (double)(float)dVar19) * dVar18);
+    AnglesToAxis(&local_1d0,auStack_100);
+    dVar21 = (double)(float)((double)(*pfVar9 + (float)piVar8[7]) * dVar22);
+    dVar19 = floor((double)(float)(dVar21 + dVar20));
+    local_1d0 = (float)((double)(float)(dVar21 - (double)(float)dVar19) * dVar18);
+    dVar21 = (double)(float)((double)(pfVar9[1] + (float)piVar8[8]) * dVar22);
+    dVar19 = floor((double)(float)(dVar21 + dVar20));
+    local_1cc = (float)((double)(float)(dVar21 - (double)(float)dVar19) * dVar18);
+    dVar21 = (double)(float)((double)(pfVar9[2] + (float)piVar8[9]) * dVar22);
+    dVar19 = floor((double)(float)(dVar21 + dVar20));
+    local_1c8 = (float)((double)(float)(dVar21 - (double)(float)dVar19) * dVar18);
+    AnglesToAxis(&local_1d0,auStack_130);
+    MatrixMultiply(auStack_130,auStack_100,auStack_d0);
+    AxisToAngles(auStack_d0,&local_1d0);
+    dVar19 = (double)(float)((double)pfVar9[7] * dVar15 + (double)pfVar9[6]);
+    if ((double)*(float *)(iVar7 + 0x208) <= dVar17) {
+      fVar1 = *(float *)(iVar7 + 0x200);
+      fVar2 = *(float *)(iVar7 + 0x204);
+    }
+    else {
+      dVar15 = (double)(float)(dVar15 / (double)(float)((double)*(float *)(iVar7 + 0x208) *
+                                                       17.600000381469727));
+      if ((float)(dVar15 - dVar14) < 0.0) {
+        dVar14 = dVar15;
+      }
+      dVar21 = dVar17;
+      if (-dVar15 < 0.0) {
+        dVar21 = dVar14;
+      }
+      fVar1 = (float)((double)*(float *)(iVar7 + 0x200) * dVar21);
+      fVar2 = (float)((double)*(float *)(iVar7 + 0x204) * dVar21);
+    }
+    dVar15 = (double)fVar1;
+    dVar14 = (double)fVar2;
+    pfVar4 = (float *)param_5;
+    if (((double)*(float *)(iVar7 + 0x1e8) <= dVar17) || (*(char *)(piVar8 + 0xd) == '\0')) {
+      piVar8[1] = (int)local_1d0;
+      piVar8[2] = (int)local_1cc;
+      piVar8[3] = (int)local_1c8;
+      if (*(int *)(iVar7 + 0x1e0) != 0) {
+        dVar17 = (double)(float)((double)*pfVar4 * dVar22);
+        dVar16 = floor((double)(float)(dVar17 + dVar20));
+        piVar8[7] = (int)(float)((double)(float)(dVar17 - (double)(float)dVar16) * dVar18);
+        dVar17 = (double)(float)((double)pfVar4[1] * dVar22);
+        dVar16 = floor((double)(float)(dVar17 + dVar20));
+        piVar8[8] = (int)(float)((double)(float)(dVar17 - (double)(float)dVar16) * dVar18);
+        dVar17 = (double)(float)((double)pfVar4[2] * dVar22);
+        dVar16 = floor((double)(float)(dVar17 + dVar20));
+        piVar8[9] = (int)(float)((double)(float)(dVar17 - (double)(float)dVar16) * dVar18);
+      }
+      piVar8[4] = (int)pfVar9[3];
+      piVar8[5] = (int)pfVar9[4];
+      piVar8[6] = (int)pfVar9[5];
+      *(undefined1 *)(piVar8 + 0xd) = 1;
+      piVar8[10] = (int)(float)dVar19;
+      piVar8[0xb] = (int)(float)dVar15;
+      piVar8[0xc] = (int)(float)dVar14;
+    }
+    else {
+      dVar17 = (double)DiffTrackAngle((double)local_1d0,(double)(float)piVar8[1],
+                                      (double)*(float *)(iVar7 + 0x1e8),dVar16);
+      piVar8[1] = (int)(float)dVar17;
+      dVar17 = (double)DiffTrackAngle((double)local_1cc,(double)(float)piVar8[2],
+                                      (double)*(float *)(iVar7 + 0x1e8),dVar16);
+      piVar8[2] = (int)(float)dVar17;
+      dVar17 = (double)DiffTrackAngle((double)local_1c8,(double)(float)piVar8[3],
+                                      (double)*(float *)(iVar7 + 0x1e8),dVar16);
+      piVar8[3] = (int)(float)dVar17;
+      dVar17 = (double)DiffTrack((double)pfVar9[3],(double)(float)piVar8[4],
+                                 (double)*(float *)(iVar7 + 0x1e8),dVar16);
+      piVar8[4] = (int)(float)dVar17;
+      dVar17 = (double)DiffTrack((double)pfVar9[4],(double)(float)piVar8[5],
+                                 (double)*(float *)(iVar7 + 0x1e8),dVar16);
+      piVar8[5] = (int)(float)dVar17;
+      dVar17 = (double)DiffTrack((double)pfVar9[5],(double)(float)piVar8[6],
+                                 (double)*(float *)(iVar7 + 0x1e8),dVar16);
+      piVar8[6] = (int)(float)dVar17;
+      dVar17 = (double)DiffTrack(dVar19,(double)(float)piVar8[10],(double)*(float *)(iVar7 + 0x1e8),
+                                 dVar16);
+      piVar8[10] = (int)(float)dVar17;
+      dVar15 = (double)DiffTrack(dVar15,(double)(float)piVar8[0xb],(double)*(float *)(iVar7 + 0x1e8)
+                                 ,dVar16);
+      piVar8[0xb] = (int)(float)dVar15;
+      dVar16 = (double)DiffTrack(dVar14,(double)(float)piVar8[0xc],(double)*(float *)(iVar7 + 0x1e8)
+                                 ,dVar16);
+      piVar8[0xc] = (int)(float)dVar16;
+    }
+    pfVar12 = (float *)(piVar8 + 1);
+    cVar10 = CL_Demo_IsPlaying(uVar5);
+    if (cVar10 != '\0') {
+      *pfVar12 = *(float *)(iVar3 + 0x158);
+      piVar8[2] = *(int *)(iVar3 + 0x15c);
+      piVar8[3] = *(int *)(iVar3 + 0x160);
+    }
+    AnglesToAxis(pfVar12,&local_160);
+    fVar1 = (float)piVar8[0xc] + (float)piVar8[4];
+    local_1b0 = local_190 * fVar1 + local_1b0;
+    pfVar11 = (float *)param_4;
+    *pfVar11 = local_1b0;
+    local_1ac = local_18c * fVar1 + local_1ac;
+    pfVar11[1] = local_1ac;
+    local_1a8 = local_188 * fVar1 + local_1a8;
+    pfVar11[2] = local_1a8;
+    fVar1 = (float)piVar8[5];
+    local_1b0 = local_184 * fVar1 + local_1b0;
+    *pfVar11 = local_1b0;
+    local_1ac = local_180 * fVar1 + local_1ac;
+    pfVar11[1] = local_1ac;
+    local_1a8 = local_17c * fVar1 + local_1a8;
+    pfVar11[2] = local_1a8;
+    fVar1 = pfVar9[0xc];
+    if (fVar1 == 0.0) {
+      pfVar11[2] = (float)piVar8[6] + local_1a8;
+    }
+    else if (fVar1 == 1.4013e-45) {
+      fVar1 = (float)piVar8[6];
+      *pfVar11 = local_178 * fVar1 + local_1b0;
+      pfVar11[1] = local_174 * fVar1 + local_1ac;
+      pfVar11[2] = local_170 * fVar1 + local_1a8;
+    }
+    else if ((uint)fVar1 < 3) {
+      fVar1 = (float)piVar8[6];
+      *pfVar11 = local_148 * fVar1 + local_1b0;
+      pfVar11[1] = local_144 * fVar1 + local_1ac;
+      pfVar11[2] = local_140 * fVar1 + local_1a8;
+    }
+    else if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff8219f8a0,0x2cf,0,0xffffffff8219f92c);
+    }
+    *pfVar4 = *pfVar12;
+    pfVar4[1] = (float)piVar8[2];
+    pfVar4[2] = (float)piVar8[3];
+    fVar1 = -(float)piVar8[10];
+    pfVar11[2] = local_158 * fVar1 + pfVar11[2];
+    *pfVar11 = local_160 * fVar1 + *pfVar11;
+    pfVar11[1] = local_15c * fVar1 + pfVar11[1];
+    if (*piVar8 == 1) {
+      ThirdPersonViewTrace(param_2,&local_1b0,param_4,0x2800211,param_4);
+    }
+    VehicleCam_SetClientViewAngles(param_2,param_5);
+  }
+  __restfpr_23();
+  __restgprlr_22();
+  return;
+}
+
 
 // 826B99B0  VehicleCam_UpdateDriveCam  (vehicle/vehicle_camera.cpp:737)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void VehicleCam_UpdateDriveCam
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  
+  uVar2 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x2e5,0,0xffffffff82000f98,0xffffffff8219f920);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x2e6,0,0xffffffff82000f98,0xffffffff8219f980);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x2e7,0,0xffffffff82000f98,0xffffffff82027150);
+  }
+  iVar1 = (int)param_2;
+  if ((*(uint *)(iVar1 + 0xf8) & 0x200000) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x2ea,0,0xffffffff82000f98,0xffffffff8219f98c);
+  }
+  if (*(int *)(iVar1 + 0x1bc) == 0x7ff) {
+    MyAssertHandler(0xffffffff8219f8a0,0x2eb,0,0xffffffff82000f98,0xffffffff82001fb4);
+  }
+  uVar3 = CG_GetEntity(*(undefined4 *)(iVar1 + 0x3338),*(undefined4 *)(iVar1 + 0x1bc));
+  VehicleCam_UpdateCamInternal(uVar2,param_2,uVar3,param_3,param_4);
+  __restgprlr_26();
+  return;
+}
+
 
 // 826B9AC8  VehicleCam_IsRemoteControlCam  (vehicle/vehicle_camera.cpp:756)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+undefined8 VehicleCam_IsRemoteControlCam(undefined8 param_1)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = CG_GetLocalClientGlobals();
+  if ((((*(uint *)(iVar2 + 0xc) & 0x80000) != 0) && ((*(uint *)(iVar2 + 0x10) & 2) != 0)) &&
+     (*(int *)(iVar2 + 0x4c) != 0x7ff)) {
+    iVar2 = CG_GetEntity(param_1);
+    if ((*(int *)(iVar2 + 200) == 0xe) || (uVar1 = 0, *(int *)(iVar2 + 200) == 0xc)) {
+      uVar1 = 1;
+    }
+    return uVar1;
+  }
+  return 0;
+}
+
 
 // 826B9B60  VehicleCam_UpdateRemoteControlCam  (vehicle/vehicle_camera.cpp:780)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void VehicleCam_UpdateRemoteControlCam
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  
+  uVar2 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x310,0,0xffffffff82000f98,0xffffffff8219f920);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x311,0,0xffffffff82000f98,0xffffffff8219f980);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x312,0,0xffffffff82000f98,0xffffffff82027150);
+  }
+  iVar1 = (int)param_2;
+  if ((*(uint *)(iVar1 + 0xc) & 0x80000) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x315,0,0xffffffff82000f98,0xffffffff8219f9d4);
+  }
+  if ((*(uint *)(iVar1 + 0x10) & 2) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x316,0,0xffffffff82000f98,0xffffffff82028a58);
+  }
+  if (*(int *)(iVar1 + 0x4c) == 0x7ff) {
+    MyAssertHandler(0xffffffff8219f8a0,0x317,0,0xffffffff82000f98,0xffffffff8219f9ac);
+  }
+  uVar3 = CG_GetEntity(*(undefined4 *)(iVar1 + 0x3338),*(undefined4 *)(iVar1 + 0x4c));
+  VehicleCam_UpdateCamInternal(uVar2,param_2,uVar3,param_3,param_4);
+  __restgprlr_26();
+  return;
+}
+
 
 // 826B9CA8  VehicleCam_IsPlayerControlCam  (vehicle/vehicle_camera.cpp:801)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+undefined8 VehicleCam_IsPlayerControlCam(undefined8 param_1)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = CG_GetLocalClientGlobals();
+  if ((((*(uint *)(iVar2 + 0x10) & 2) != 0) && (*(int *)(iVar2 + 0x1b8) == 0)) &&
+     (*(int *)(iVar2 + 0xac) != 0x7ff)) {
+    iVar2 = CG_GetEntity(param_1);
+    if ((*(int *)(iVar2 + 200) == 0xe) || (*(int *)(iVar2 + 200) == 0xc)) {
+      if ((*(char *)(iVar2 + 2) == '\x0e') || (uVar1 = 0, *(char *)(iVar2 + 2) == '\f')) {
+        uVar1 = 1;
+      }
+      return uVar1;
+    }
+  }
+  return 0;
+}
+
 
 // 826B9D50  VehicleCam_UpdatePlayerControlCam  (vehicle/vehicle_camera.cpp:828)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void VehicleCam_UpdatePlayerControlCam
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  
+  uVar2 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x340,0,0xffffffff82000f98,0xffffffff8219f920);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x341,0,0xffffffff82000f98,0xffffffff8219f980);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x342,0,0xffffffff82000f98,0xffffffff82027150);
+  }
+  iVar1 = (int)param_2;
+  if ((*(uint *)(iVar1 + 0x10) & 2) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x345,0,0xffffffff82000f98,0xffffffff82028a58);
+  }
+  if (*(int *)(iVar1 + 0xac) == 0x7ff) {
+    MyAssertHandler(0xffffffff8219f8a0,0x346,0,0xffffffff82000f98,0xffffffff8219f9fc);
+  }
+  uVar3 = CG_GetEntity(*(undefined4 *)(iVar1 + 0x3338),*(undefined4 *)(iVar1 + 0xac));
+  VehicleCam_UpdateCamInternal(uVar2,param_2,uVar3,param_3,param_4);
+  __restgprlr_26();
+  return;
+}
+
 
 // 826B9E68  VehicleCam_ScaleFov  (vehicle/vehicle_camera.cpp:847)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void VehicleCam_ScaleFov(void)
+
+{
+  uint uVar1;
+  int iVar2;
+  double extraout_f1;
+  double dVar3;
+  
+  iVar2 = __savegprlr_29();
+  dVar3 = extraout_f1;
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x355,0,0xffffffff82000f98,0xffffffff8219f920);
+  }
+  if ((*(uint *)(iVar2 + 0xf8) & 0x200000) == 0) {
+    MyAssertHandler(0xffffffff8219f8a0,0x359,0,0xffffffff82000f98,0xffffffff8219f98c);
+  }
+  if (*(int *)(iVar2 + 0x1bc) == 0x7ff) {
+    MyAssertHandler(0xffffffff8219f8a0,0x35a,0,0xffffffff82000f98,0xffffffff82001fb4);
+  }
+  uVar1 = *(uint *)(iVar2 + 0x3338);
+  if (3 < uVar1) {
+    MyAssertHandler(0xffffffff8219f8a0,0x97,0,0xffffffff820011a8,uVar1,4);
+  }
+  __restgprlr_29((double)(float)((double)*(float *)(&DAT_8444feec + uVar1 * 0x38) + dVar3));
+  return;
+}
+

@@ -2,43 +2,41 @@
 
 // 8293EDB8  `dynamic_initializer_for_'g_DWEliteClanTask''  (social/elite_clan.cpp:98)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__g_DWEliteClanTask__(void)
+int _dynamic_initializer_for__g_DWEliteClanTask__(void)
 
 {
-  g_DWEliteClanTask[0].m_ptr = (bdRemoteTask *)0x0;
-  g_DWEliteClanTask[1].m_ptr = (bdRemoteTask *)0x0;
-  g_DWEliteClanTask[2].m_ptr = (bdRemoteTask *)0x0;
-  g_DWEliteClanTask[3].m_ptr = (bdRemoteTask *)0x0;
-  atexit(_dynamic_atexit_destructor_for__g_DWEliteClanTask__);
-  return;
+  int iVar1;
+  
+  DAT_844f9fdc = 0;
+  DAT_844f9fe0 = 0;
+  DAT_844f9fe4 = 0;
+  DAT_844f9fe8 = 0;
+  iVar1 = atexit(_dynamic_atexit_destructor_for__g_DWEliteClanTask__);
+  return iVar1;
 }
 
 
 // 8293EDF0  `dynamic_initializer_for_'g_EliteClanStore''  (social/elite_clan.cpp:108)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_EliteClanStore__(void)
 
 {
   int iVar1;
   longlong lVar2;
-  bdTeamProfile *this;
+  undefined4 *puVar3;
   
   __savegprlr_28();
   lVar2 = 3;
-  this = (bdTeamProfile *)&g_EliteClanStore[0].privateProfile;
+  puVar3 = &DAT_844fc5d0;
   do {
-    _vector_constructor_iterator_(this + -0x25e,0x60,1,bdTeamInfo::bdTeamInfo);
-    _vector_constructor_iterator_(this + -600,0x60,100,bdTeamMember::bdTeamMember);
-    bdTeamProfile::bdTeamProfile(this);
-    this->_padding_ = (int)&PrivateTeamProfile::_vftable_;
-    bdTeamProfile::bdTeamProfile((bdTeamProfile *)&this[7].m_teamID);
-    *(undefined ***)&this[7].m_teamID = &PublicTeamProfile::_vftable_;
+    _vector_constructor_iterator_(puVar3 + -0x978,0x60,1,0xffffffff82909640);
+    _vector_constructor_iterator_(puVar3 + -0x960,0x60,100,0xffffffff82909490);
+    bdTeamProfile__bdTeamProfile(puVar3);
+    *puVar3 = &PTR_PrivateTeamProfile___scalar_deleting_destructor__821aef24;
+    bdTeamProfile__bdTeamProfile(puVar3 + 0x1e);
+    puVar3[0x1e] = &PTR_PublicTeamProfile___scalar_deleting_destructor__821aef14;
     lVar2 = lVar2 + -1;
-    this = (bdTeamProfile *)&this[0x66b].m_teamID;
+    puVar3 = puVar3 + 0x19ae;
   } while (-1 < lVar2);
   iVar1 = atexit(_dynamic_atexit_destructor_for__g_EliteClanStore__);
   __restgprlr_28(iVar1);
@@ -48,77 +46,74 @@ void _dynamic_initializer_for__g_EliteClanStore__(void)
 
 // 8293EE88  `dynamic_initializer_for_'g_DWEliteClanMOTDUpdateTask''  (social/elite_clan.cpp:119)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__g_DWEliteClanMOTDUpdateTask__(void)
+int _dynamic_initializer_for__g_DWEliteClanMOTDUpdateTask__(void)
 
 {
-  atexit(_dynamic_atexit_destructor_for__g_DWEliteClanMOTDUpdateTask__);
-  return;
+  int iVar1;
+  
+  iVar1 = atexit(_dynamic_atexit_destructor_for__g_DWEliteClanMOTDUpdateTask__);
+  return iVar1;
 }
 
 
 // 826F6FB0  EliteClan_Shutdown  (social/elite_clan.cpp:124)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void EliteClan_Shutdown(void)
 
 {
-  bdRemoteTask *pbVar1;
-  uint uVar2;
-  bdReference<bdRemoteTask> bVar3;
+  uint uVar1;
+  undefined4 *puVar2;
+  uint uVar3;
   uint *puVar5;
   longlong lVar4;
-  bdReference<bdRemoteTask> *pbVar6;
+  uint *puVar6;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_29();
-  pbVar6 = g_DWEliteClanTask;
+  puVar6 = &DAT_844f9fdc;
   do {
-    pbVar1 = pbVar6->m_ptr;
-    if (pbVar1 != (bdRemoteTask *)0x0) {
-      if (pbVar1 != (bdRemoteTask *)0x0) {
+    uVar1 = *puVar6;
+    if (uVar1 != 0) {
+      if (uVar1 != 0) {
         do {
-          puVar5 = (uint *)(ZEXT48(pbVar1) + 4);
+          puVar5 = (uint *)((ulonglong)uVar1 + 4);
           if (in_RESERVE != '\0') {
-            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,ZEXT48(pbVar1) + 4);
-            *puVar5 = uVar2;
+            uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,(ulonglong)uVar1 + 4);
+            *puVar5 = uVar3;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        if (*(int *)&pbVar1->field_0x4 == 0) {
-          pbVar1 = pbVar6->m_ptr;
-          if (pbVar1 != (bdRemoteTask *)0x0) {
-            (**(code **)pbVar1->_padding_)(pbVar1,1);
+        if (*(int *)(uVar1 + 4) == 0) {
+          puVar2 = (undefined4 *)*puVar6;
+          if (puVar2 != (undefined4 *)0x0) {
+            (**(code **)*puVar2)(puVar2,1);
           }
         }
       }
-      pbVar6->m_ptr = (bdRemoteTask *)0x0;
+      *puVar6 = 0;
     }
-    bVar3.m_ptr = g_DWEliteClanMOTDUpdateTask.m_ptr;
-    pbVar6 = pbVar6 + 1;
-  } while ((int)pbVar6 < -0x7bb06014);
-  if (ZEXT48(g_DWEliteClanMOTDUpdateTask.m_ptr) != 0) {
-    lVar4 = ZEXT48(g_DWEliteClanMOTDUpdateTask.m_ptr) + 4;
+    puVar2 = DAT_844f9fec;
+    puVar6 = puVar6 + 1;
+  } while ((int)puVar6 < -0x7bb06014);
+  if (ZEXT48(DAT_844f9fec) != 0) {
+    lVar4 = ZEXT48(DAT_844f9fec) + 4;
     do {
-      puVar5 = (uint *)lVar4;
+      puVar6 = (uint *)lVar4;
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
-        *puVar5 = uVar2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar4);
+        *puVar6 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (*(int *)&(bVar3.m_ptr)->field_0x4 == 0) {
-      if (g_DWEliteClanMOTDUpdateTask.m_ptr != (bdRemoteTask *)0x0) {
-        (**(code **)(g_DWEliteClanMOTDUpdateTask.m_ptr)->_padding_)
-                  (g_DWEliteClanMOTDUpdateTask.m_ptr,1);
+    if (puVar2[1] == 0) {
+      if (DAT_844f9fec != (undefined4 *)0x0) {
+        (**(code **)*DAT_844f9fec)(DAT_844f9fec,1);
       }
     }
   }
-  g_DWEliteClanMOTDUpdateTask.m_ptr = (bdRemoteTask *)0x0;
-  g_DWEliteClanMOTDUpdatingThrottle = 0;
+  DAT_844f9fec = (undefined4 *)0x0;
+  DAT_844f9fd4 = 0;
   DAT_844f9f84 = 0;
   __restgprlr_29();
   return;
@@ -127,34 +122,34 @@ void EliteClan_Shutdown(void)
 
 // 826F70C8  EliteClan_UserSignedOut  (social/elite_clan.cpp:140)
 
-void EliteClan_UserSignedOut(int param_1)
+void EliteClan_UserSignedOut(void)
 
 {
   int iVar1;
   int iVar2;
   
-  iVar1 = __savegprlr_25(param_1);
-  if ((g_DWEliteClanTask[iVar1].m_ptr != (bdRemoteTask *)0x0) &&
-     (iVar2 = (**(code **)((g_DWEliteClanTask[iVar1].m_ptr)->_padding_ + 4))(), iVar2 == 1)) {
-    bdRemoteTask::cancelTask(g_DWEliteClanTask[iVar1].m_ptr);
+  iVar1 = __savegprlr_25();
+  if (((int *)(&DAT_844f9fdc)[iVar1] != (int *)0x0) &&
+     (iVar2 = (**(code **)(*(int *)(&DAT_844f9fdc)[iVar1] + 4))(), iVar2 == 1)) {
+    bdRemoteTask__cancelTask((&DAT_844f9fdc)[iVar1]);
   }
-  if ((g_DWEliteClanMOTDUpdateTask.m_ptr != (bdRemoteTask *)0x0) &&
-     (iVar2 = (**(code **)((g_DWEliteClanMOTDUpdateTask.m_ptr)->_padding_ + 4))(), iVar2 == 1)) {
-    bdRemoteTask::cancelTask(g_DWEliteClanMOTDUpdateTask.m_ptr);
+  if ((DAT_844f9fec != (int *)0x0) && (iVar2 = (**(code **)(*DAT_844f9fec + 4))(), iVar2 == 1)) {
+    bdRemoteTask__cancelTask(DAT_844f9fec);
   }
-  s_eliteClanRetryAttempt[iVar1] = 0;
+  iVar2 = iVar1 * 0x66b8;
+  (&DAT_844f9f50)[iVar1] = 0;
   DAT_844f9f84 = 0;
-  g_DWEliteClanTaskType[iVar1] = ELITECLAN_DW_TASK_TYPE_GETTING_CLAN;
-  g_DWEliteClanMOTDUpdatingThrottle = 0;
-  g_EliteClanStore[iVar1].numMembers = 0;
-  g_EliteClanStore[iVar1].feederIndex = 0;
-  g_EliteClanStore[iVar1].currentStartPos = 0;
-  g_EliteClanStore[iVar1].team[0].m_teamID = 0;
-  g_EliteClanStore[iVar1].storedPlayer = 0;
-  s_eliteClanRetryTime[iVar1] = 0;
+  (&DAT_844f9f74)[iVar1] = 0;
+  DAT_844f9fd4 = 0;
+  *(undefined4 *)(&DAT_84500688 + iVar2) = 0;
+  *(undefined4 *)(&DAT_8450068c + iVar2) = 0;
+  *(undefined4 *)(&DAT_84500690 + iVar2) = 0;
+  *(undefined8 *)(&DAT_844f9ff8 + iVar2) = 0;
+  *(undefined8 *)(&DAT_84500698 + iVar2) = 0;
+  (&DAT_844f9f88)[iVar1] = 0;
   (&DAT_844f9fd8)[iVar1] = 0;
-  s_needToDownloadEliteClan[iVar1] = false;
-  g_EliteClanStore[iVar1].initial_sort = true;
+  (&DAT_844f9f60)[iVar1] = 0;
+  (&DAT_845006a0)[iVar2] = 1;
   __restgprlr_25();
   return;
 }
@@ -162,57 +157,54 @@ void EliteClan_UserSignedOut(int param_1)
 
 // 826F71C8  EliteClan_SetMOTD  (social/elite_clan.cpp:178)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void EliteClan_SetMOTD(int param_1)
+void EliteClan_SetMOTD(void)
 
 {
-  uint uVar1;
-  bool bVar6;
-  int iVar2;
-  bdTeams *pbVar3;
-  bool bVar7;
-  bdReference<bdRemoteTask> bVar4;
-  char *pcVar5;
-  LocalClientNum_t local_40;
-  bdReference<bdRemoteTask> bStack_3c;
-  ulong64 auStack_38 [7];
+  bool bVar1;
+  bool bVar2;
+  uint uVar5;
+  char cVar7;
+  int iVar6;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  undefined4 local_40;
+  undefined1 auStack_3c [4];
+  undefined1 auStack_38 [56];
   
-  uVar1 = __savegprlr_27(param_1);
-  if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0xb3,0,
-                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar5 = __savegprlr_27();
+  if (3 < uVar5) {
+    MyAssertHandler(0xffffffff821aecf8,0xb3,0,0xffffffff82031880,uVar5,4);
   }
-  bVar7 = false;
-  bVar6 = CL_DoesControllerIndexHaveALocalClientNum(uVar1,&local_40);
-  if ((bVar6) && (iVar2 = CL_IsCgameInitialized(local_40), iVar2 != 0)) {
-    bVar7 = true;
+  bVar1 = false;
+  cVar7 = CL_DoesControllerIndexHaveALocalClientNum(uVar5,&local_40);
+  if ((cVar7 != '\0') && (iVar6 = CL_IsCgameInitialized(local_40), iVar6 != 0)) {
+    bVar1 = true;
   }
-  pbVar3 = dwGetTeams(uVar1);
-  bVar6 = false;
-  if (((pbVar3 != (bdTeams *)0x0) && (!bVar7)) &&
-     (bVar7 = dwGetOnlineUserID(uVar1,auStack_38), bVar7)) {
-    bVar4 = bdTeams::setPrivateProfile
-                      ((bdTeams *)&bStack_3c,(longlong)(int)pbVar3,
-                       (bdTeamProfile *)g_EliteClanStore[uVar1].team[0].m_teamID);
-    bdReference<bdRemoteTask>::operator=
-              (&g_DWEliteClanMOTDUpdateTask,(bdReference<bdRemoteTask> *)bVar4.m_ptr);
-    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&bStack_3c);
-    if ((g_DWEliteClanMOTDUpdateTask.m_ptr != (bdRemoteTask *)0x0) &&
-       (iVar2 = (**(code **)((g_DWEliteClanMOTDUpdateTask.m_ptr)->_padding_ + 4))(), iVar2 == 1)) {
-      bVar6 = true;
-      bdRemoteTask::setTimeout(g_DWEliteClanMOTDUpdateTask.m_ptr,20.0);
-      DAT_844f9f84 = 1;
-      iVar2 = Sys_Milliseconds();
-      g_DWEliteClanMOTDUpdatingThrottle =
-           (int)((elite_clan_motd_throttle_time->current).string + iVar2);
-      UI_OpenMenu(local_40,"popup_elite_clan_updating_motd");
+  uVar3 = dwGetTeams(uVar5);
+  bVar2 = false;
+  if (((uVar3 & 0xffffffff) != 0) && (!bVar1)) {
+    cVar7 = dwGetOnlineUserID(uVar5,auStack_38);
+    if (cVar7 != '\0') {
+      uVar4 = bdTeams__setPrivateProfile
+                        (auStack_3c,uVar3,*(undefined8 *)(&DAT_844f9ff8 + uVar5 * 0x66b8),
+                         &DAT_844fc5d0 + uVar5 * 0x19ae);
+      bdReference<bdRemoteTask>__operator_(0xffffffff844f9fec,uVar4);
+      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_3c);
+      if ((DAT_844f9fec != (int *)0x0) && (iVar6 = (**(code **)(*DAT_844f9fec + 4))(), iVar6 == 1))
+      {
+        bVar2 = true;
+        bdRemoteTask__setTimeout(0x4034000000000000,DAT_844f9fec);
+        DAT_844f9f84 = 1;
+        iVar6 = Sys_Milliseconds();
+        DAT_844f9fd4 = iVar6 + *(int *)(DAT_84546cf4 + 0xc);
+        UI_OpenMenu(local_40,0xffffffff821aef50);
+      }
     }
   }
-  if (!bVar6) {
-    DAT_844f9f84 = bVar6;
-    pcVar5 = UI_SafeTranslateString("MENU_ELITE_CLAN_MOTD_ERROR");
-    FriendsMenu_ShowErrorMessage(pcVar5);
+  if (!bVar2) {
+    DAT_844f9f84 = bVar2;
+    UI_SafeTranslateString(0xffffffff821aef34);
+    FriendsMenu_ShowErrorMessage();
   }
   __restgprlr_27();
   return;
@@ -221,54 +213,49 @@ void EliteClan_SetMOTD(int param_1)
 
 // 826F7350  EliteClan_UpdateMOTD  (social/elite_clan.cpp:224)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void EliteClan_UpdateMOTD(int param_1)
+void EliteClan_UpdateMOTD(void)
 
 {
-  int iVar1;
-  bool bVar7;
-  int iVar2;
+  undefined8 uVar1;
+  char cVar5;
   int iVar3;
-  LocalClientNum_t LVar4;
-  bdLobbyErrorCode bVar5;
-  char *pcVar6;
+  int iVar4;
+  undefined8 uVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  if ((DAT_844f9f84 != '\0') && (g_DWEliteClanMOTDUpdateTask.m_ptr != (bdRemoteTask *)0x0)) {
-    bVar7 = Live_IsUserSignedInToDemonware(iVar1);
-    if ((bVar7) && (bVar7 = Live_IsUserSignedInToLive(iVar1), bVar7)) {
-      iVar2 = (**(code **)((g_DWEliteClanMOTDUpdateTask.m_ptr)->_padding_ + 4))();
-      if ((iVar2 != 1) && (iVar3 = Sys_Milliseconds(), g_DWEliteClanMOTDUpdatingThrottle <= iVar3))
-      {
+  uVar1 = __savegprlr_28();
+  if ((DAT_844f9f84 != '\0') && (DAT_844f9fec != (int *)0x0)) {
+    cVar5 = Live_IsUserSignedInToDemonware();
+    if ((cVar5 == '\0') || (cVar5 = Live_IsUserSignedInToLive(uVar1), cVar5 == '\0')) {
+      Com_Printf(0x10,0xffffffff821aef70);
+      iVar3 = (**(code **)(*DAT_844f9fec + 4))();
+      if (iVar3 == 1) {
+        bdRemoteTask__cancelTask(DAT_844f9fec);
+      }
+      DAT_844f9f84 = '\0';
+      DAT_844f9fd4 = 0;
+    }
+    else {
+      iVar3 = (**(code **)(*DAT_844f9fec + 4))();
+      if ((iVar3 != 1) && (iVar4 = Sys_Milliseconds(), DAT_844f9fd4 <= iVar4)) {
         DAT_844f9f84 = '\0';
-        g_DWEliteClanMOTDUpdatingThrottle = 0;
-        LVar4 = CL_LocalClientNumFromControllerIndex(iVar1);
-        UI_CloseMenu(LVar4,"popup_elite_clan_updating_motd");
-        bVar5 = bdRemoteTask::getErrorCode(g_DWEliteClanMOTDUpdateTask.m_ptr);
-        if (iVar2 == 2) {
-          if (bVar5 == BD_NO_ERROR) {
-            LVar4 = CL_LocalClientNumFromControllerIndex(iVar1);
-            UI_OpenMenu(LVar4,"popup_update_clan_motd_success");
+        DAT_844f9fd4 = 0;
+        uVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
+        UI_CloseMenu(uVar2,0xffffffff821aef50);
+        iVar4 = bdRemoteTask__getErrorCode(DAT_844f9fec);
+        if (iVar3 == 2) {
+          if (iVar4 == 0) {
+            uVar1 = CL_LocalClientNumFromControllerIndex(uVar1);
+            UI_OpenMenu(uVar1,0xffffffff821aefa8);
             __restgprlr_28();
             return;
           }
         }
-        else if (iVar2 == 5) goto LAB_826f7494;
-        pcVar6 = UI_SafeTranslateString("MENU_ELITE_CLAN_MOTD_ERROR");
-        FriendsMenu_ShowErrorMessage(pcVar6);
+        else if (iVar3 == 5) goto LAB_826f7494;
+        UI_SafeTranslateString(0xffffffff821aef34);
+        FriendsMenu_ShowErrorMessage();
         __restgprlr_28();
         return;
       }
-    }
-    else {
-      Com_Printf(0x10,"EliteClan_UpdateMOTD - signed out of DW, so cancelling\n");
-      iVar1 = (**(code **)((g_DWEliteClanMOTDUpdateTask.m_ptr)->_padding_ + 4))();
-      if (iVar1 == 1) {
-        bdRemoteTask::cancelTask(g_DWEliteClanMOTDUpdateTask.m_ptr);
-      }
-      DAT_844f9f84 = '\0';
-      g_DWEliteClanMOTDUpdatingThrottle = 0;
     }
   }
 LAB_826f7494:
@@ -279,25 +266,24 @@ LAB_826f7494:
 
 // 826F51C0  EliteClan_RetryGetClan  (social/elite_clan.cpp:268)
 
-void EliteClan_RetryGetClan(int param_1)
+void EliteClan_RetryGetClan(void)
 
 {
-  dvar_t *pdVar1;
-  dvar_t *pdVar2;
+  int iVar1;
+  int iVar2;
   int iVar3;
-  uint uVar4;
-  int iVar5;
+  int iVar4;
   
-  iVar3 = __savegprlr_29(param_1);
-  pdVar2 = elite_clan_get_clan_max_retry_time;
-  pdVar1 = elite_clan_get_clan_retry_step;
-  iVar5 = s_eliteClanRetryAttempt[iVar3];
-  s_eliteClanRetryAttempt[iVar3] = iVar5 + 1;
-  uVar4 = Live_GenerateTimeToRetryInSeconds
-                    (((pdVar1->current).integer / 1000) * (iVar5 + 1),
-                     (pdVar2->current).integer / 1000);
-  iVar5 = Sys_Milliseconds();
-  s_eliteClanRetryTime[iVar3] = iVar5 + uVar4 * 1000;
+  iVar2 = __savegprlr_29();
+  iVar1 = DAT_84546d04;
+  iVar4 = DAT_84545cac;
+  iVar3 = (&DAT_844f9f50)[iVar2];
+  (&DAT_844f9f50)[iVar2] = iVar3 + 1;
+  iVar3 = Live_GenerateTimeToRetryInSeconds
+                    ((longlong)(*(int *)(iVar4 + 0xc) / 1000) * (longlong)(iVar3 + 1),
+                     *(int *)(iVar1 + 0xc) / 1000);
+  iVar4 = Sys_Milliseconds();
+  (&DAT_844f9f88)[iVar2] = iVar4 + iVar3 * 1000;
   __restgprlr_29();
   return;
 }
@@ -305,25 +291,24 @@ void EliteClan_RetryGetClan(int param_1)
 
 // 826F5230  EliteClan_RetryGetMembers  (social/elite_clan.cpp:275)
 
-void EliteClan_RetryGetMembers(int param_1)
+void EliteClan_RetryGetMembers(void)
 
 {
-  dvar_t *pdVar1;
-  dvar_t *pdVar2;
+  int iVar1;
+  int iVar2;
   int iVar3;
-  uint uVar4;
-  int iVar5;
+  int iVar4;
   
-  iVar3 = __savegprlr_29(param_1);
-  pdVar2 = elite_clan_get_members_retry_step;
-  pdVar1 = elite_clan_get_members_max_retry_time;
-  iVar5 = s_eliteClanRetryAttempt[iVar3];
-  s_eliteClanRetryAttempt[iVar3] = iVar5 + 1;
-  uVar4 = Live_GenerateTimeToRetryInSeconds
-                    (((pdVar2->current).integer / 1000) * (iVar5 + 1),
-                     (pdVar1->current).integer / 1000);
-  iVar5 = Sys_Milliseconds();
-  s_eliteClanRetryTime[iVar3] = iVar5 + uVar4 * 1000;
+  iVar2 = __savegprlr_29();
+  iVar1 = DAT_84546d54;
+  iVar4 = DAT_84546d30;
+  iVar3 = (&DAT_844f9f50)[iVar2];
+  (&DAT_844f9f50)[iVar2] = iVar3 + 1;
+  iVar3 = Live_GenerateTimeToRetryInSeconds
+                    ((longlong)(*(int *)(iVar1 + 0xc) / 1000) * (longlong)(iVar3 + 1),
+                     *(int *)(iVar4 + 0xc) / 1000);
+  iVar4 = Sys_Milliseconds();
+  (&DAT_844f9f88)[iVar2] = iVar4 + iVar3 * 1000;
   __restgprlr_29();
   return;
 }
@@ -331,25 +316,24 @@ void EliteClan_RetryGetMembers(int param_1)
 
 // 826F52A0  EliteClan_RetryGetPrivateProfile  (social/elite_clan.cpp:282)
 
-void EliteClan_RetryGetPrivateProfile(int param_1)
+void EliteClan_RetryGetPrivateProfile(void)
 
 {
-  dvar_t *pdVar1;
-  dvar_t *pdVar2;
+  int iVar1;
+  int iVar2;
   int iVar3;
-  uint uVar4;
-  int iVar5;
+  int iVar4;
   
-  iVar3 = __savegprlr_29(param_1);
-  pdVar2 = elite_clan_get_private_profile_max_retry_time;
-  pdVar1 = elite_clan_get_private_profile_retry_step;
-  iVar5 = s_eliteClanRetryAttempt[iVar3];
-  s_eliteClanRetryAttempt[iVar3] = iVar5 + 1;
-  uVar4 = Live_GenerateTimeToRetryInSeconds
-                    (((pdVar1->current).integer / 1000) * (iVar5 + 1),
-                     (pdVar2->current).integer / 1000);
-  iVar5 = Sys_Milliseconds();
-  s_eliteClanRetryTime[iVar3] = iVar5 + uVar4 * 1000;
+  iVar2 = __savegprlr_29();
+  iVar1 = DAT_84546db0;
+  iVar4 = DAT_84545c88;
+  iVar3 = (&DAT_844f9f50)[iVar2];
+  (&DAT_844f9f50)[iVar2] = iVar3 + 1;
+  iVar3 = Live_GenerateTimeToRetryInSeconds
+                    ((longlong)(*(int *)(iVar4 + 0xc) / 1000) * (longlong)(iVar3 + 1),
+                     *(int *)(iVar1 + 0xc) / 1000);
+  iVar4 = Sys_Milliseconds();
+  (&DAT_844f9f88)[iVar2] = iVar4 + iVar3 * 1000;
   __restgprlr_29();
   return;
 }
@@ -357,25 +341,24 @@ void EliteClan_RetryGetPrivateProfile(int param_1)
 
 // 826F5310  EliteClan_RetryGetPublicProfile  (social/elite_clan.cpp:289)
 
-void EliteClan_RetryGetPublicProfile(int param_1)
+void EliteClan_RetryGetPublicProfile(void)
 
 {
-  dvar_t *pdVar1;
-  dvar_t *pdVar2;
+  int iVar1;
+  int iVar2;
   int iVar3;
-  uint uVar4;
-  int iVar5;
+  int iVar4;
   
-  iVar3 = __savegprlr_29(param_1);
-  pdVar2 = elite_clan_get_public_profile_max_retry_time;
-  pdVar1 = elite_clan_get_public_profile_retry_step;
-  iVar5 = s_eliteClanRetryAttempt[iVar3];
-  s_eliteClanRetryAttempt[iVar3] = iVar5 + 1;
-  uVar4 = Live_GenerateTimeToRetryInSeconds
-                    (((pdVar1->current).integer / 1000) * (iVar5 + 1),
-                     (pdVar2->current).integer / 1000);
-  iVar5 = Sys_Milliseconds();
-  s_eliteClanRetryTime[iVar3] = iVar5 + uVar4 * 1000;
+  iVar2 = __savegprlr_29();
+  iVar1 = DAT_84546cf0;
+  iVar4 = DAT_84545ccc;
+  iVar3 = (&DAT_844f9f50)[iVar2];
+  (&DAT_844f9f50)[iVar2] = iVar3 + 1;
+  iVar3 = Live_GenerateTimeToRetryInSeconds
+                    ((longlong)(*(int *)(iVar4 + 0xc) / 1000) * (longlong)(iVar3 + 1),
+                     *(int *)(iVar1 + 0xc) / 1000);
+  iVar4 = Sys_Milliseconds();
+  (&DAT_844f9f88)[iVar2] = iVar4 + iVar3 * 1000;
   __restgprlr_29();
   return;
 }
@@ -383,142 +366,124 @@ void EliteClan_RetryGetPublicProfile(int param_1)
 
 // 826F5380  EliteClan_ClearTeam  (social/elite_clan.cpp:319)
 
-void EliteClan_ClearTeam(int param_1)
+void EliteClan_ClearTeam(void)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  longlong lVar4;
+  void *pvVar3;
+  int iVar4;
+  longlong lVar5;
   
-  iVar2 = __savegprlr_29(param_1);
-  lVar4 = 100;
-  g_EliteClanStore[iVar2].team[0].m_teamID = 0;
-  g_EliteClanStore[iVar2].team[0].m_ownerUserID = 0;
-  g_EliteClanStore[iVar2].team[0].m_teamName[0] = '\0';
-  g_EliteClanStore[iVar2].team[0].m_memberStatus = '\0';
-  g_EliteClanStore[iVar2].numMembers = 0;
-  g_EliteClanStore[iVar2].feederIndex = 0;
-  g_EliteClanStore[iVar2].currentStartPos = 0;
-  g_EliteClanStore[iVar2].initial_sort = true;
-  iVar3 = 0;
+  iVar2 = __savegprlr_29();
+  iVar2 = iVar2 * 0x66b8;
+  lVar5 = 100;
+  *(undefined8 *)(&DAT_844f9ff8 + iVar2) = 0;
+  iVar4 = 0;
+  *(undefined8 *)(&DAT_844fa000 + iVar2) = 0;
+  (&DAT_844fa008)[iVar2] = 0;
+  (&DAT_844fa048)[iVar2] = 0;
+  *(undefined4 *)(&DAT_84500688 + iVar2) = 0;
+  *(undefined4 *)(&DAT_8450068c + iVar2) = 0;
+  *(undefined4 *)(&DAT_84500690 + iVar2) = 0;
+  (&DAT_845006a0)[iVar2] = 1;
   do {
-    pcVar1 = g_EliteClanStore[iVar2].members[0].m_userName + iVar3 + -0x10;
-    pcVar1[0] = '\0';
-    pcVar1[1] = '\0';
-    pcVar1[2] = '\0';
-    pcVar1[3] = '\0';
-    pcVar1[4] = '\0';
-    pcVar1[5] = '\0';
-    pcVar1[6] = '\0';
-    pcVar1[7] = '\0';
-    pcVar1 = g_EliteClanStore[iVar2].members[0].m_userName + iVar3 + -8;
-    pcVar1[0] = '\0';
-    pcVar1[1] = '\0';
-    pcVar1[2] = '\0';
-    pcVar1[3] = '\0';
-    pcVar1[4] = '\0';
-    pcVar1[5] = '\0';
-    pcVar1[6] = '\0';
-    pcVar1[7] = '\0';
-    g_EliteClanStore[iVar2].members[0].m_userName[iVar3] = '\0';
-    g_EliteClanStore[iVar2].members[0].m_userName[iVar3 + 0x40] = '\0';
-    g_EliteClanStore[iVar2].members[0].m_userName[iVar3 + 0x41] = '\0';
-    lVar4 = lVar4 + -1;
-    iVar3 = iVar3 + 0x60;
-  } while (lVar4 != 0);
-  g_EliteClanStore[iVar2].privateProfile.m_memberTeamID = 0;
-  g_EliteClanStore[iVar2].privateProfile.m_membermotd[0] = '\0';
-  memset();
-  g_EliteClanStore[iVar2].publicProfile.m_membermotto_bg = 0;
-  g_EliteClanStore[iVar2].publicProfile.m_memberclantag[0] = '\0';
-  g_EliteClanStore[iVar2].publicProfile.m_membermotto[0] = '\0';
-  __restgprlr_29();
+    iVar1 = iVar4 + iVar2;
+    *(undefined8 *)(&DAT_844fa058 + iVar1) = 0;
+    iVar4 = iVar4 + 0x60;
+    *(undefined8 *)(&DAT_844fa060 + iVar1) = 0;
+    (&DAT_844fa068)[iVar1] = 0;
+    (&DAT_844fa0a8)[iVar1] = 0;
+    (&DAT_844fa0a9)[iVar1] = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  *(undefined8 *)(&DAT_844fc5e0 + iVar2) = 0;
+  (&DAT_844fc5e8)[iVar2] = 0;
+  pvVar3 = memset((void *)(iVar2 + -0x7bb039a0),0,0x4001);
+  *(undefined4 *)(&DAT_84500664 + iVar2) = 0;
+  (&DAT_84500668)[iVar2] = 0;
+  (&DAT_8450066e)[iVar2] = 0;
+  __restgprlr_29(pvVar3);
   return;
 }
 
 
 // 826F74A0  EliteClan_UpdateGettingClan  (social/elite_clan.cpp:354)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void EliteClan_UpdateGettingClan(int param_1)
+void EliteClan_UpdateGettingClan(void)
 
 {
-  bdRemoteTask *pbVar1;
-  uint uVar2;
-  int iVar3;
-  bdLobbyErrorCode bVar4;
-  uint uVar5;
-  bool bVar9;
-  int iVar6;
-  bdTeams *pbVar7;
-  bool bVar10;
-  bdReference<bdRemoteTask> bVar8;
-  LocalClientNum_t local_60;
-  bdReference<bdRemoteTask> bStack_5c;
-  undefined8 local_58;
+  int *piVar1;
+  undefined4 uVar2;
+  bool bVar3;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
+  char cVar9;
+  ulonglong uVar4;
+  undefined8 uVar5;
+  int iVar10;
+  undefined4 local_60;
+  undefined1 auStack_5c [4];
+  undefined8 local_58 [11];
   
-  uVar2 = __savegprlr_23(param_1);
-  if (3 < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x163,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar6 = __savegprlr_23();
+  if (3 < uVar6) {
+    MyAssertHandler(0xffffffff821aecf8,0x163,0,0xffffffff82031880,uVar6,4);
   }
-  iVar3 = Sys_Milliseconds();
-  bVar10 = false;
-  if (g_DWEliteClanTaskStage[uVar2] == ELITECLAN_DW_TASK_STAGE_WAITING) {
-    bVar9 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,&local_60);
-    if ((bVar9) && (iVar6 = CL_IsCgameInitialized(local_60), iVar6 != 0)) {
-      bVar10 = true;
+  iVar7 = Sys_Milliseconds();
+  iVar10 = uVar6 * 4;
+  bVar3 = false;
+  if (*(int *)(&DAT_844f9f64 + iVar10) == 0) {
+    cVar9 = CL_DoesControllerIndexHaveALocalClientNum(uVar6,&local_60);
+    if ((cVar9 != '\0') && (iVar8 = CL_IsCgameInitialized(local_60), iVar8 != 0)) {
+      bVar3 = true;
     }
-    pbVar7 = dwGetTeams(uVar2);
-    if ((((pbVar7 == (bdTeams *)0x0) || (s_eliteClanRetryTime[uVar2] < 0)) ||
-        (iVar3 <= s_eliteClanRetryTime[uVar2])) ||
-       ((bVar10 || (bVar10 = dwGetOnlineUserID(uVar2,&local_58), !bVar10)))) goto LAB_826f75c4;
-    EliteClan_ClearTeam(uVar2);
-    bVar8 = bdTeams::getMembershipsUser
-                      ((bdTeams *)&bStack_5c,(longlong)(int)pbVar7,local_58._4_4_,
-                       (uint)(g_EliteClanStore + uVar2));
-    bdReference<bdRemoteTask>::operator=
-              (g_DWEliteClanTask + uVar2,(bdReference<bdRemoteTask> *)bVar8.m_ptr);
-    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&bStack_5c);
-    pbVar1 = g_DWEliteClanTask[uVar2].m_ptr;
-    if ((pbVar1 != (bdRemoteTask *)0x0) &&
-       (iVar3 = (**(code **)(pbVar1->_padding_ + 4))(), iVar3 == 1)) {
-      g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WORKING;
-      s_needToDownloadEliteClan[uVar2] = false;
+    uVar4 = dwGetTeams(uVar6);
+    if (((((uVar4 & 0xffffffff) == 0) || ((int)(&DAT_844f9f88)[uVar6] < 0)) ||
+        (iVar7 <= (int)(&DAT_844f9f88)[uVar6])) ||
+       ((bVar3 || (cVar9 = dwGetOnlineUserID(uVar6,local_58), cVar9 == '\0')))) goto LAB_826f75c4;
+    EliteClan_ClearTeam(uVar6);
+    uVar5 = bdTeams__getMembershipsUser
+                      (auStack_5c,uVar4,local_58[0],&DAT_844f9ff0 + uVar6 * 0x66b8,1);
+    bdReference<bdRemoteTask>__operator_(&DAT_844f9fdc + uVar6,uVar5);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_5c);
+    piVar1 = (int *)(&DAT_844f9fdc)[uVar6];
+    if ((piVar1 != (int *)0x0) && (iVar7 = (**(code **)(*piVar1 + 4))(), iVar7 == 1)) {
+      *(undefined4 *)(&DAT_844f9f64 + iVar10) = 1;
+      (&DAT_844f9f60)[uVar6] = 0;
       __restgprlr_23();
       return;
     }
   }
   else {
-    if (g_DWEliteClanTaskStage[uVar2] != ELITECLAN_DW_TASK_STAGE_WORKING) goto LAB_826f75c4;
-    if ((g_DWEliteClanTask[uVar2].m_ptr == (bdRemoteTask *)0x0) ||
-       (iVar3 = (**(code **)((g_DWEliteClanTask[uVar2].m_ptr)->_padding_ + 4))(), iVar3 == 1))
-    goto LAB_826f75c4;
-    bVar4 = bdRemoteTask::getErrorCode(g_DWEliteClanTask[uVar2].m_ptr);
-    if ((iVar3 == 2) && (bVar4 == BD_NO_ERROR)) {
-      s_eliteClanRetryAttempt[uVar2] = 0;
-      pbVar1 = g_DWEliteClanTask[uVar2].m_ptr;
-      (&DAT_844f9fd8)[uVar2] = 1;
-      s_eliteClanRetryTime[uVar2] = 0;
-      uVar5 = bdRemoteTask::getNumResults(pbVar1);
-      if (uVar5 == 1) {
-        g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WAITING;
-        g_DWEliteClanTaskType[uVar2] = ELITECLAN_DW_TASK_TYPE_GETTING_MEMBERS;
+    if (*(int *)(&DAT_844f9f64 + iVar10) != 1) goto LAB_826f75c4;
+    if ((int *)(&DAT_844f9fdc)[uVar6] == (int *)0x0) goto LAB_826f75c4;
+    iVar7 = (**(code **)(*(int *)(&DAT_844f9fdc)[uVar6] + 4))();
+    if (iVar7 == 1) goto LAB_826f75c4;
+    iVar8 = bdRemoteTask__getErrorCode((&DAT_844f9fdc)[uVar6]);
+    if ((iVar7 == 2) && (iVar8 == 0)) {
+      (&DAT_844f9f50)[uVar6] = 0;
+      uVar2 = (&DAT_844f9fdc)[uVar6];
+      (&DAT_844f9fd8)[uVar6] = 1;
+      (&DAT_844f9f88)[uVar6] = 0;
+      iVar7 = bdRemoteTask__getNumResults(uVar2);
+      if (iVar7 == 1) {
+        *(undefined4 *)(&DAT_844f9f64 + iVar10) = 0;
+        (&DAT_844f9f74)[uVar6] = 1;
         __restgprlr_23();
         return;
       }
-      EliteClan_ClearTeam(uVar2);
-      GamerProfile_ClearEliteClan(uVar2);
-      g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WAITING;
-      g_DWEliteClanTaskType[uVar2] = ELITECLAN_DW_TASK_TYPE_ALL_DONE;
+      EliteClan_ClearTeam(uVar6);
+      GamerProfile_ClearEliteClan(uVar6);
+      *(undefined4 *)(&DAT_844f9f64 + iVar10) = 0;
+      (&DAT_844f9f74)[uVar6] = 4;
       __restgprlr_23();
       return;
     }
-    g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WAITING;
+    *(undefined4 *)(&DAT_844f9f64 + iVar10) = 0;
   }
-  EliteClan_RetryGetClan(uVar2);
+  EliteClan_RetryGetClan(uVar6);
 LAB_826f75c4:
   __restgprlr_23();
   return;
@@ -527,75 +492,69 @@ LAB_826f75c4:
 
 // 826F76D0  EliteClan_UpdateGettingMembers  (social/elite_clan.cpp:443)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void EliteClan_UpdateGettingMembers(int param_1)
+void EliteClan_UpdateGettingMembers(void)
 
 {
-  bdRemoteTask *pbVar1;
-  uint uVar2;
-  int iVar3;
-  bdLobbyErrorCode bVar4;
+  int *piVar1;
+  bool bVar2;
   uint uVar5;
-  bool bVar9;
   int iVar6;
-  bdTeams *pbVar7;
-  bool bVar10;
-  bdReference<bdRemoteTask> bVar8;
-  LocalClientNum_t local_50;
-  bdReference<bdRemoteTask> bStack_4c;
-  ulong64 auStack_48 [9];
+  int iVar7;
+  undefined4 uVar8;
+  char cVar9;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  int iVar10;
+  undefined4 local_50;
+  undefined1 auStack_4c [4];
+  undefined1 auStack_48 [72];
   
-  uVar2 = __savegprlr_25(param_1);
-  if (3 < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x1bc,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar5 = __savegprlr_25();
+  if (3 < uVar5) {
+    MyAssertHandler(0xffffffff821aecf8,0x1bc,0,0xffffffff82031880,uVar5,4);
   }
-  iVar3 = Sys_Milliseconds();
-  bVar10 = false;
-  if (g_DWEliteClanTaskStage[uVar2] == ELITECLAN_DW_TASK_STAGE_WAITING) {
-    bVar9 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,&local_50);
-    if ((bVar9) && (iVar6 = CL_IsCgameInitialized(local_50), iVar6 != 0)) {
-      bVar10 = true;
+  iVar6 = Sys_Milliseconds();
+  iVar10 = uVar5 * 4;
+  bVar2 = false;
+  if (*(int *)(&DAT_844f9f64 + iVar10) == 0) {
+    cVar9 = CL_DoesControllerIndexHaveALocalClientNum(uVar5,&local_50);
+    if ((cVar9 != '\0') && (iVar7 = CL_IsCgameInitialized(local_50), iVar7 != 0)) {
+      bVar2 = true;
     }
-    pbVar7 = dwGetTeams(uVar2);
-    if ((((pbVar7 == (bdTeams *)0x0) || (iVar3 <= s_eliteClanRetryTime[uVar2])) || (bVar10)) ||
-       (bVar10 = dwGetOnlineUserID(uVar2,auStack_48), !bVar10)) goto LAB_826f77e4;
-    bVar8 = bdTeams::getMembers((bdTeams *)&bStack_4c,(longlong)(int)pbVar7,
-                                (bdTeamMember *)g_EliteClanStore[uVar2].team[0].m_teamID,
-                                uVar2 * 0x66b8 + 0x844fa050);
-    bdReference<bdRemoteTask>::operator=
-              (g_DWEliteClanTask + uVar2,(bdReference<bdRemoteTask> *)bVar8.m_ptr);
-    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&bStack_4c);
-    pbVar1 = g_DWEliteClanTask[uVar2].m_ptr;
-    if ((pbVar1 != (bdRemoteTask *)0x0) &&
-       (iVar3 = (**(code **)(pbVar1->_padding_ + 4))(), iVar3 == 1)) {
-      g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WORKING;
+    uVar3 = dwGetTeams(uVar5);
+    if (((((uVar3 & 0xffffffff) == 0) || (iVar6 <= (int)(&DAT_844f9f88)[uVar5])) || (bVar2)) ||
+       (cVar9 = dwGetOnlineUserID(uVar5,auStack_48), cVar9 == '\0')) goto LAB_826f77e4;
+    uVar4 = bdTeams__getMembers(auStack_4c,uVar3,*(undefined8 *)(&DAT_844f9ff8 + uVar5 * 0x66b8),
+                                &DAT_844fa050 + uVar5 * 0x66b8,100);
+    bdReference<bdRemoteTask>__operator_(&DAT_844f9fdc + uVar5,uVar4);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_4c);
+    piVar1 = (int *)(&DAT_844f9fdc)[uVar5];
+    if ((piVar1 != (int *)0x0) && (iVar6 = (**(code **)(*piVar1 + 4))(), iVar6 == 1)) {
+      *(undefined4 *)(&DAT_844f9f64 + iVar10) = 1;
       __restgprlr_25();
       return;
     }
   }
   else {
-    if (g_DWEliteClanTaskStage[uVar2] != ELITECLAN_DW_TASK_STAGE_WORKING) goto LAB_826f77e4;
-    if ((g_DWEliteClanTask[uVar2].m_ptr == (bdRemoteTask *)0x0) ||
-       (iVar3 = (**(code **)((g_DWEliteClanTask[uVar2].m_ptr)->_padding_ + 4))(), iVar3 == 1))
-    goto LAB_826f77e4;
-    bVar4 = bdRemoteTask::getErrorCode(g_DWEliteClanTask[uVar2].m_ptr);
-    if ((iVar3 == 2) && (bVar4 == BD_NO_ERROR)) {
-      s_eliteClanRetryAttempt[uVar2] = 0;
-      pbVar1 = g_DWEliteClanTask[uVar2].m_ptr;
-      s_eliteClanRetryTime[uVar2] = 0;
-      uVar5 = bdRemoteTask::getNumResults(pbVar1);
-      g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WAITING;
-      g_DWEliteClanTaskType[uVar2] = ELITECLAN_DW_TASK_TYPE_GETTING_PRIVATE_PROFILE;
-      g_EliteClanStore[uVar2].numMembers = uVar5;
+    if (*(int *)(&DAT_844f9f64 + iVar10) != 1) goto LAB_826f77e4;
+    if ((int *)(&DAT_844f9fdc)[uVar5] == (int *)0x0) goto LAB_826f77e4;
+    iVar6 = (**(code **)(*(int *)(&DAT_844f9fdc)[uVar5] + 4))();
+    if (iVar6 == 1) goto LAB_826f77e4;
+    iVar7 = bdRemoteTask__getErrorCode((&DAT_844f9fdc)[uVar5]);
+    if ((iVar6 == 2) && (iVar7 == 0)) {
+      (&DAT_844f9f50)[uVar5] = 0;
+      (&DAT_844f9f88)[uVar5] = 0;
+      uVar8 = bdRemoteTask__getNumResults((&DAT_844f9fdc)[uVar5]);
+      *(undefined4 *)(&DAT_844f9f64 + iVar10) = 0;
+      (&DAT_844f9f74)[uVar5] = 2;
+      *(undefined4 *)(&DAT_84500688 + uVar5 * 0x66b8) = uVar8;
       __restgprlr_25();
       return;
     }
-    g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WAITING;
-    g_EliteClanStore[uVar2].numMembers = 0;
+    *(undefined4 *)(&DAT_844f9f64 + iVar10) = 0;
+    *(undefined4 *)(&DAT_84500688 + uVar5 * 0x66b8) = 0;
   }
-  EliteClan_RetryGetMembers(uVar2);
+  EliteClan_RetryGetMembers(uVar5);
 LAB_826f77e4:
   __restgprlr_25();
   return;
@@ -604,70 +563,66 @@ LAB_826f77e4:
 
 // 826F78E0  EliteClan_UpdateGettingPrivateProfile  (social/elite_clan.cpp:519)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void EliteClan_UpdateGettingPrivateProfile(int param_1)
+void EliteClan_UpdateGettingPrivateProfile(void)
 
 {
-  bdRemoteTask *pbVar1;
-  uint uVar2;
-  int iVar3;
-  bdLobbyErrorCode bVar4;
-  bool bVar8;
-  int iVar5;
-  bdTeams *pbVar6;
-  bool bVar9;
-  bdReference<bdRemoteTask> bVar7;
-  LocalClientNum_t local_50;
-  bdReference<bdRemoteTask> bStack_4c;
-  ulong64 auStack_48 [9];
+  int *piVar1;
+  bool bVar2;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  char cVar8;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  int iVar9;
+  undefined4 local_50;
+  undefined1 auStack_4c [4];
+  undefined1 auStack_48 [72];
   
-  uVar2 = __savegprlr_25(param_1);
-  if (3 < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x208,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar5 = __savegprlr_25();
+  if (3 < uVar5) {
+    MyAssertHandler(0xffffffff821aecf8,0x208,0,0xffffffff82031880,uVar5,4);
   }
-  iVar3 = Sys_Milliseconds();
-  bVar9 = false;
-  if (g_DWEliteClanTaskStage[uVar2] == ELITECLAN_DW_TASK_STAGE_WAITING) {
-    bVar8 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,&local_50);
-    if ((bVar8) && (iVar5 = CL_IsCgameInitialized(local_50), iVar5 != 0)) {
-      bVar9 = true;
+  iVar6 = Sys_Milliseconds();
+  iVar9 = uVar5 * 4;
+  bVar2 = false;
+  if (*(int *)(&DAT_844f9f64 + iVar9) == 0) {
+    cVar8 = CL_DoesControllerIndexHaveALocalClientNum(uVar5,&local_50);
+    if ((cVar8 != '\0') && (iVar7 = CL_IsCgameInitialized(local_50), iVar7 != 0)) {
+      bVar2 = true;
     }
-    pbVar6 = dwGetTeams(uVar2);
-    if ((((pbVar6 == (bdTeams *)0x0) || (iVar3 <= s_eliteClanRetryTime[uVar2])) || (bVar9)) ||
-       (bVar9 = dwGetOnlineUserID(uVar2,auStack_48), !bVar9)) goto LAB_826f79c0;
-    bVar7 = bdTeams::getPrivateProfile
-                      ((bdTeams *)&bStack_4c,(longlong)(int)pbVar6,
-                       (bdTeamProfile *)g_EliteClanStore[uVar2].team[0].m_teamID);
-    bdReference<bdRemoteTask>::operator=
-              (g_DWEliteClanTask + uVar2,(bdReference<bdRemoteTask> *)bVar7.m_ptr);
-    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&bStack_4c);
-    pbVar1 = g_DWEliteClanTask[uVar2].m_ptr;
-    if ((pbVar1 != (bdRemoteTask *)0x0) &&
-       (iVar3 = (**(code **)(pbVar1->_padding_ + 4))(), iVar3 == 1)) {
-      g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WORKING;
+    uVar3 = dwGetTeams(uVar5);
+    if (((((uVar3 & 0xffffffff) == 0) || (iVar6 <= (int)(&DAT_844f9f88)[uVar5])) || (bVar2)) ||
+       (cVar8 = dwGetOnlineUserID(uVar5,auStack_48), cVar8 == '\0')) goto LAB_826f79c0;
+    uVar4 = bdTeams__getPrivateProfile
+                      (auStack_4c,uVar3,*(undefined8 *)(&DAT_844f9ff8 + uVar5 * 0x66b8),
+                       &DAT_844fc5d0 + uVar5 * 0x19ae);
+    bdReference<bdRemoteTask>__operator_(&DAT_844f9fdc + uVar5,uVar4);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_4c);
+    piVar1 = (int *)(&DAT_844f9fdc)[uVar5];
+    if ((piVar1 != (int *)0x0) && (iVar6 = (**(code **)(*piVar1 + 4))(), iVar6 == 1)) {
+      *(undefined4 *)(&DAT_844f9f64 + iVar9) = 1;
       __restgprlr_25();
       return;
     }
   }
   else {
-    if (g_DWEliteClanTaskStage[uVar2] != ELITECLAN_DW_TASK_STAGE_WORKING) goto LAB_826f79c0;
-    if ((g_DWEliteClanTask[uVar2].m_ptr == (bdRemoteTask *)0x0) ||
-       (iVar3 = (**(code **)((g_DWEliteClanTask[uVar2].m_ptr)->_padding_ + 4))(), iVar3 == 1))
-    goto LAB_826f79c0;
-    bVar4 = bdRemoteTask::getErrorCode(g_DWEliteClanTask[uVar2].m_ptr);
-    if ((iVar3 == 2) && (bVar4 == BD_NO_ERROR)) {
-      s_eliteClanRetryAttempt[uVar2] = 0;
-      g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WAITING;
-      s_eliteClanRetryTime[uVar2] = 0;
-      g_DWEliteClanTaskType[uVar2] = ELITECLAN_DW_TASK_TYPE_GETTING_PUBLIC_PROFILE;
+    if (*(int *)(&DAT_844f9f64 + iVar9) != 1) goto LAB_826f79c0;
+    if ((int *)(&DAT_844f9fdc)[uVar5] == (int *)0x0) goto LAB_826f79c0;
+    iVar6 = (**(code **)(*(int *)(&DAT_844f9fdc)[uVar5] + 4))();
+    if (iVar6 == 1) goto LAB_826f79c0;
+    iVar7 = bdRemoteTask__getErrorCode((&DAT_844f9fdc)[uVar5]);
+    if ((iVar6 == 2) && (iVar7 == 0)) {
+      (&DAT_844f9f50)[uVar5] = 0;
+      *(undefined4 *)(&DAT_844f9f64 + iVar9) = 0;
+      (&DAT_844f9f88)[uVar5] = 0;
+      (&DAT_844f9f74)[uVar5] = 3;
       __restgprlr_25();
       return;
     }
-    g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WAITING;
+    *(undefined4 *)(&DAT_844f9f64 + iVar9) = 0;
   }
-  EliteClan_RetryGetPrivateProfile(uVar2);
+  EliteClan_RetryGetPrivateProfile(uVar5);
 LAB_826f79c0:
   __restgprlr_25();
   return;
@@ -676,75 +631,70 @@ LAB_826f79c0:
 
 // 826F7AB8  EliteClan_UpdateGettingPublicProfile  (social/elite_clan.cpp:591)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void EliteClan_UpdateGettingPublicProfile(int param_1)
+void EliteClan_UpdateGettingPublicProfile(void)
 
 {
-  bdRemoteTask *pbVar1;
-  uint uVar2;
-  int iVar3;
-  bdLobbyErrorCode bVar4;
-  bool bVar8;
-  int iVar5;
-  bdTeams *pbVar6;
-  bool bVar9;
-  bdReference<bdRemoteTask> bVar7;
-  LocalClientNum_t local_60;
-  bdReference<bdRemoteTask> bStack_5c;
-  bdTeamProfile local_58 [5];
+  int *piVar1;
+  bool bVar2;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  char cVar8;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  int iVar9;
+  undefined4 local_60;
+  undefined1 auStack_5c [4];
+  undefined8 local_58;
+  undefined1 auStack_50 [80];
   
-  uVar2 = __savegprlr_25(param_1);
-  if (3 < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x250,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar5 = __savegprlr_25();
+  if (3 < uVar5) {
+    MyAssertHandler(0xffffffff821aecf8,0x250,0,0xffffffff82031880,uVar5,4);
   }
-  iVar3 = Sys_Milliseconds();
-  bVar9 = false;
-  if (g_DWEliteClanTaskStage[uVar2] == ELITECLAN_DW_TASK_STAGE_WAITING) {
-    bVar8 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,&local_60);
-    if ((bVar8) && (iVar5 = CL_IsCgameInitialized(local_60), iVar5 != 0)) {
-      bVar9 = true;
+  iVar6 = Sys_Milliseconds();
+  iVar9 = uVar5 * 4;
+  bVar2 = false;
+  if (*(int *)(&DAT_844f9f64 + iVar9) == 0) {
+    cVar8 = CL_DoesControllerIndexHaveALocalClientNum(uVar5,&local_60);
+    if ((cVar8 != '\0') && (iVar7 = CL_IsCgameInitialized(local_60), iVar7 != 0)) {
+      bVar2 = true;
     }
-    pbVar6 = dwGetTeams(uVar2);
-    if ((((pbVar6 == (bdTeams *)0x0) || (iVar3 <= s_eliteClanRetryTime[uVar2])) || (bVar9)) ||
-       (bVar9 = dwGetOnlineUserID(uVar2,&local_58[0].m_teamID), !bVar9)) goto LAB_826f7bd0;
-    local_58[0]._0_8_ = g_EliteClanStore[uVar2].team[0].m_teamID;
-    bVar7 = bdTeams::getPublicProfiles
-                      ((bdTeams *)&bStack_5c,(ulong64 *)pbVar6,local_58,uVar2 * 0x66b8 + 0x844fc648)
-    ;
-    bdReference<bdRemoteTask>::operator=
-              (g_DWEliteClanTask + uVar2,(bdReference<bdRemoteTask> *)bVar7.m_ptr);
-    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&bStack_5c);
-    pbVar1 = g_DWEliteClanTask[uVar2].m_ptr;
-    if ((pbVar1 != (bdRemoteTask *)0x0) &&
-       (iVar3 = (**(code **)(pbVar1->_padding_ + 4))(), iVar3 == 1)) {
-      g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WORKING;
+    uVar3 = dwGetTeams(uVar5);
+    if (((((uVar3 & 0xffffffff) == 0) || (iVar6 <= (int)(&DAT_844f9f88)[uVar5])) || (bVar2)) ||
+       (cVar8 = dwGetOnlineUserID(uVar5,auStack_50), cVar8 == '\0')) goto LAB_826f7bd0;
+    local_58 = *(undefined8 *)(&DAT_844f9ff8 + uVar5 * 0x66b8);
+    uVar4 = bdTeams__getPublicProfiles(auStack_5c,uVar3,&local_58,&DAT_844fc648 + uVar5 * 0x19ae,1);
+    bdReference<bdRemoteTask>__operator_(&DAT_844f9fdc + uVar5,uVar4);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_5c);
+    piVar1 = (int *)(&DAT_844f9fdc)[uVar5];
+    if ((piVar1 != (int *)0x0) && (iVar6 = (**(code **)(*piVar1 + 4))(), iVar6 == 1)) {
+      *(undefined4 *)(&DAT_844f9f64 + iVar9) = 1;
       __restgprlr_25();
       return;
     }
   }
   else {
-    if (g_DWEliteClanTaskStage[uVar2] != ELITECLAN_DW_TASK_STAGE_WORKING) goto LAB_826f7bd0;
-    if ((g_DWEliteClanTask[uVar2].m_ptr == (bdRemoteTask *)0x0) ||
-       (iVar3 = (**(code **)((g_DWEliteClanTask[uVar2].m_ptr)->_padding_ + 4))(), iVar3 == 1))
-    goto LAB_826f7bd0;
-    bVar4 = bdRemoteTask::getErrorCode(g_DWEliteClanTask[uVar2].m_ptr);
-    if ((iVar3 == 2) && (bVar4 == BD_NO_ERROR)) {
-      s_eliteClanRetryAttempt[uVar2] = 0;
-      s_eliteClanRetryTime[uVar2] = 0;
-      GamerProfile_UpdateProfileFromEliteClan(uVar2);
-      g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WAITING;
-      iVar3 = Sys_Milliseconds();
-      s_eliteClanRetryTime[uVar2] = (int)((elite_clan_cool_off_time->current).string + iVar3);
-      g_EliteClanStore[uVar2].initial_sort = true;
-      g_DWEliteClanTaskType[uVar2] = ELITECLAN_DW_TASK_TYPE_ALL_DONE;
+    if (*(int *)(&DAT_844f9f64 + iVar9) != 1) goto LAB_826f7bd0;
+    if ((int *)(&DAT_844f9fdc)[uVar5] == (int *)0x0) goto LAB_826f7bd0;
+    iVar6 = (**(code **)(*(int *)(&DAT_844f9fdc)[uVar5] + 4))();
+    if (iVar6 == 1) goto LAB_826f7bd0;
+    iVar7 = bdRemoteTask__getErrorCode((&DAT_844f9fdc)[uVar5]);
+    if ((iVar6 == 2) && (iVar7 == 0)) {
+      (&DAT_844f9f50)[uVar5] = 0;
+      (&DAT_844f9f88)[uVar5] = 0;
+      GamerProfile_UpdateProfileFromEliteClan(uVar5);
+      *(undefined4 *)(&DAT_844f9f64 + iVar9) = 0;
+      iVar6 = Sys_Milliseconds();
+      (&DAT_844f9f88)[uVar5] = iVar6 + *(int *)(DAT_84546d34 + 0xc);
+      (&DAT_845006a0)[uVar5 * 0x66b8] = 1;
+      (&DAT_844f9f74)[uVar5] = 4;
       __restgprlr_25();
       return;
     }
-    g_DWEliteClanTaskStage[uVar2] = ELITECLAN_DW_TASK_STAGE_WAITING;
+    *(undefined4 *)(&DAT_844f9f64 + iVar9) = 0;
   }
-  EliteClan_RetryGetPublicProfile(uVar2);
+  EliteClan_RetryGetPublicProfile(uVar5);
 LAB_826f7bd0:
   __restgprlr_25();
   return;
@@ -753,41 +703,36 @@ LAB_826f7bd0:
 
 // 826F5468  EliteClan_MessageKeyboard  (social/elite_clan.cpp:931)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void EliteClan_MessageKeyboard(void)
 
 {
-  LocalClientNum_t LVar1;
-  ulong uVar2;
-  char *pcVar3;
-  int iVar4;
-  char acStack_b0 [176];
+  int iVar2;
+  LPCSTR lpMultiByteStr;
+  int iVar3;
+  longlong lVar1;
+  CHAR aCStack_b0 [176];
   
   __savegprlr_28();
-  LVar1 = Cmd_LocalClientNum();
-  uVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  if ((g_EliteClanStore[uVar2].team[0].m_teamID != 0) &&
-     (g_EliteClanStore[uVar2].team[0].m_memberStatus == '\x02')) {
-    pcVar3 = UI_SafeTranslateString("MENU_ELITE_CLAN_MESSAGE");
-    MultiByteToWideChar(0xfde9,0,pcVar3,-1,(ushort *)guideKeyboardTitle,0x40);
-    guideKeyboardTitle[0x3f] = L'\0';
-    pcVar3 = g_EliteClanStore[uVar2].privateProfile.m_membermotd;
-    I_strncpyz(guideKeyboardDefault,pcVar3,0x80);
-    I_strncpyz(acStack_b0,pcVar3,0x80);
-    MultiByteToWideChar(0xfde9,0,acStack_b0,-1,(ushort *)defaultStr,0x80);
-    defaultStr[0x7f] = L'\0';
-    iVar4 = Language_IsAsian();
-    uVar2 = XShowKeyboardUI(uVar2,(-(uint)(iVar4 != 0) & 0x3f) + 1,defaultStr,guideKeyboardTitle,
-                            (wchar_t *)0x0,(ushort *)guideKeyboard_Buffer,0x5f,
-                            &guideKeyboard_pOverlapped);
-    if (uVar2 != 0x3e5) {
-      Com_Printf(0x10,"Error Bringing up Guide Keyboard\n");
+  Cmd_LocalClientNum();
+  iVar2 = CL_ControllerIndexFromClientNum();
+  iVar3 = iVar2 * 0x66b8;
+  if ((*(longlong *)(&DAT_844f9ff8 + iVar3) != 0) && ((&DAT_844fa048)[iVar3] == '\x02')) {
+    lpMultiByteStr = (LPCSTR)UI_SafeTranslateString(0xffffffff821aeb5c);
+    MultiByteToWideChar(0xfde9,0,lpMultiByteStr,-1,&DAT_84253898,0x40);
+    DAT_84253916 = 0;
+    I_strncpyz(0xffffffff84253800,&DAT_844fc5e8 + iVar3,0x80);
+    I_strncpyz(aCStack_b0,&DAT_844fc5e8 + iVar3,0x80);
+    iVar3 = MultiByteToWideChar(0xfde9,0,aCStack_b0,-1,(LPWSTR)&DAT_84513ad0,0x80);
+    DAT_84513bce = 0;
+    lVar1 = Language_IsAsian(iVar3);
+    iVar2 = XShowKeyboardUI(iVar2,(-(lVar1 != 0) & 0x3fU) + 1,0xffffffff84513ad0,0xffffffff84253898,
+                            0,0xffffffff842536f8,0x5f,0xffffffff84253cac);
+    if (iVar2 != 0x3e5) {
+      Com_Printf(0x10,0xffffffff82172d44);
       __restgprlr_28();
       return;
     }
-    eliteClanMessageKeyboardActiveGlobal = true;
+    DAT_844f9f85 = 1;
   }
   __restgprlr_28();
   return;
@@ -796,43 +741,41 @@ void EliteClan_MessageKeyboard(void)
 
 // 826F7CD8  EliteClan_MessageKeyboardComplete  (social/elite_clan.cpp:988)
 
-void EliteClan_MessageKeyboardComplete(int param_1)
+void EliteClan_MessageKeyboardComplete(undefined8 param_1)
 
 {
-  ulong uVar1;
-  char *pcVar2;
-  int iVar3;
-  _STRING_DATA local_30;
-  _STRING_VERIFY_RESPONSE a_Stack_28 [2];
+  int iVar2;
+  undefined8 uVar1;
+  undefined2 local_30;
+  undefined2 *local_2e;
+  undefined1 auStack_28 [2];
+  int *local_26;
   
-  uVar1 = XGetOverlappedResult(&guideKeyboard_pOverlapped,(ulong *)0x0,1);
-  if (uVar1 != 0x3e4) {
-    if (uVar1 == 0) {
-      local_30.pszString = guideKeyboard_Buffer;
-      eliteClanMessageKeyboardActiveGlobal = false;
-      local_30.wStringSize = 0x100;
-      uVar1 = XGetLocale();
-      pcVar2 = GetLocaleString(uVar1);
-      XStringVerify(0,pcVar2,1,&local_30,0xe,a_Stack_28,(_XOVERLAPPED *)0x0);
-      if (*a_Stack_28[0].pStringResult == 0) {
-        iVar3 = WideCharToMultiByte(0,0,guideKeyboard_Buffer,-1,
-                                    g_EliteClanStore[param_1].privateProfile.m_membermotd,0x60,
-                                    (char *)0x0,(int *)0x0);
-        if ((longlong)iVar3 + -1 < 0) {
-          Com_PrintError(0xd,
-                         "EliteClan_MessageKeyboardComplete: Unable to convert wide char to multi byte\n"
-                        );
+  iVar2 = XGetOverlappedResult(0xffffffff84253cac,0,1);
+  if (iVar2 != 0x3e4) {
+    if (iVar2 == 0) {
+      local_2e = &DAT_842536f8;
+      DAT_844f9f85 = 0;
+      local_30 = 0x100;
+      XGetLocale();
+      uVar1 = GetLocaleString();
+      XStringVerify(0,uVar1,1,&local_30,0xe,auStack_28,0);
+      if (*local_26 == 0) {
+        iVar2 = WideCharToMultiByte(0,0,&DAT_842536f8,-1,&DAT_844fc5e8 + (int)param_1 * 0x66b8,0x60,
+                                    (LPCSTR)0x0,(LPBOOL)0x0);
+        if ((longlong)iVar2 + -1 < 0) {
+          Com_PrintError(0xd,0xffffffff821aefc8);
         }
         else {
           EliteClan_SetMOTD(param_1);
         }
       }
       else {
-        FriendsMenu_ShowErrorMessage("MENU_ELITE_CLAN_MOTD_OFFENSIVE");
+        FriendsMenu_ShowErrorMessage(0xffffffff821af018);
       }
     }
-    else if (uVar1 == 0x4c7) {
-      eliteClanMessageKeyboardActiveGlobal = false;
+    else if (iVar2 == 0x4c7) {
+      DAT_844f9f85 = 0;
     }
   }
   return;
@@ -841,29 +784,27 @@ void EliteClan_MessageKeyboardComplete(int param_1)
 
 // 826F55B8  EliteClan_SocialConfigComplete_Callback  (social/elite_clan.cpp:1085)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void EliteClan_SocialConfigComplete_Callback(void)
 
 {
   int iVar1;
-  dvar_t *pdVar2;
-  DvarValue *pDVar3;
+  int iVar2;
+  int *piVar3;
   int *piVar4;
   
   __savegprlr_28();
-  piVar4 = s_eliteClanRetryTime;
-  pDVar3 = &elite_clan_delay->current;
-  pdVar2 = elite_clan_delay;
+  piVar4 = &DAT_844f9f88;
+  piVar3 = (int *)(DAT_84545c78 + 0xc);
+  iVar2 = DAT_84545c78;
   do {
-    if (pDVar3->integer < 0) {
-      *piVar4 = pDVar3->integer;
+    if (*piVar3 < 0) {
+      *piVar4 = *piVar3;
     }
     else {
-      pDVar3 = &pdVar2->current;
+      piVar3 = (int *)(iVar2 + 0xc);
       iVar1 = Sys_Milliseconds();
-      pdVar2 = elite_clan_delay;
-      *piVar4 = (int)(pDVar3->string + iVar1);
+      iVar2 = DAT_84545c78;
+      *piVar4 = iVar1 + *piVar3;
     }
     piVar4 = piVar4 + 1;
   } while ((int)piVar4 < -0x7bb06068);
@@ -874,76 +815,72 @@ void EliteClan_SocialConfigComplete_Callback(void)
 
 // 826F5620  EliteClan_Init  (social/elite_clan.cpp:1097)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void EliteClan_Init(void)
 
 {
-  elite_clan_using_title =
-       Dvar_RegisterBool("elite_clan_using_title",false,0x2000,
-                         "Stores whether the Elite Clan title is in use by the user");
-  s_needToDownloadEliteClan[0] = false;
+  DAT_844f9f9c = Dvar_RegisterBool(0xffffffff821aeb74,0,0x2000,0xffffffff821aeb8c);
+  DAT_844f9f60 = 0;
   DAT_844f9fd8 = 0;
-  s_eliteClanRetryTime[0] = 0;
-  s_eliteClanRetryAttempt[0] = 0;
-  g_DWEliteClanTaskType[0] = ELITECLAN_DW_TASK_TYPE_GETTING_CLAN;
-  s_needToDownloadEliteClan[1] = false;
+  DAT_844f9f88 = 0;
+  DAT_844f9f50 = 0;
+  DAT_844f9f74 = 0;
+  DAT_844f9f61 = 0;
   DAT_844f9fd9 = 0;
-  s_eliteClanRetryTime[1] = 0;
-  s_eliteClanRetryAttempt[1] = 0;
-  g_DWEliteClanTaskType[1] = ELITECLAN_DW_TASK_TYPE_GETTING_CLAN;
-  s_needToDownloadEliteClan[2] = false;
+  DAT_844f9f8c = 0;
+  DAT_844f9f54 = 0;
+  DAT_844f9f78 = 0;
+  DAT_844f9f62 = 0;
   DAT_844f9fda = 0;
-  s_eliteClanRetryTime[2] = 0;
-  s_eliteClanRetryAttempt[2] = 0;
-  g_DWEliteClanTaskType[2] = ELITECLAN_DW_TASK_TYPE_GETTING_CLAN;
-  s_needToDownloadEliteClan[3] = false;
+  DAT_844f9f90 = 0;
+  DAT_844f9f58 = 0;
+  DAT_844f9f7c = 0;
+  DAT_844f9f63 = 0;
   DAT_844f9fdb = 0;
-  s_eliteClanRetryTime[3] = 0;
-  s_eliteClanRetryAttempt[3] = 0;
-  g_DWEliteClanTaskType[3] = ELITECLAN_DW_TASK_TYPE_GETTING_CLAN;
+  DAT_844f9f94 = 0;
+  DAT_844f9f5c = 0;
+  DAT_844f9f80 = 0;
   DAT_844f9f84 = 0;
-  g_DWEliteClanMOTDUpdatingThrottle = 0;
-  SocialConfig_AddCompleteCallback(EliteClan_SocialConfigComplete_Callback);
+  DAT_844f9fd4 = 0;
+  SocialConfig_AddCompleteCallback(0xffffffff826f55b8);
   return;
 }
 
 
 // 826F7E08  EliteClan_Update  (social/elite_clan.cpp:1119)
 
-void EliteClan_Update(int param_1)
+void EliteClan_Update(uint param_1)
 
 {
-  ELITECLAN_DW_TASK_TYPE EVar1;
-  bool bVar3;
-  bdLobbyService *this;
-  Status SVar2;
+  uint uVar1;
+  char cVar3;
+  int iVar2;
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x460,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff821aecf8,0x460,0,0xffffffff82031880,param_1,4);
   }
-  bVar3 = SocialConfig_Ok();
-  if ((bVar3) && ((elite_clan_active->current).integer != 0)) {
+  cVar3 = SocialConfig_Ok();
+  if ((cVar3 != '\0') && (*(int *)(DAT_84545ca0 + 0xc) != 0)) {
     EliteClan_UpdateMOTD(param_1);
-    bVar3 = Live_IsUserSignedInToLive(param_1);
-    if ((bVar3) &&
-       (((this = dwGetLobbyService(param_1), this != (bdLobbyService *)0x0 &&
-         (SVar2 = bdLobbyService::getStatus(this), SVar2 == BD_CONNECTED)) &&
-        (EVar1 = g_DWEliteClanTaskType[param_1], EVar1 < ELITECLAN_DW_TASK_TYPE_ALL_DONE)))) {
-      if (EVar1 == ELITECLAN_DW_TASK_TYPE_GETTING_MEMBERS) {
-        EliteClan_UpdateGettingMembers(param_1);
-        return;
+    cVar3 = Live_IsUserSignedInToLive(param_1);
+    if ((cVar3 != '\0') &&
+       ((iVar2 = dwGetLobbyService(param_1), iVar2 != 0 &&
+        (iVar2 = bdLobbyService__getStatus(), iVar2 == 2)))) {
+      uVar1 = (&DAT_844f9f74)[param_1];
+      if (uVar1 < 4) {
+        if (uVar1 == 1) {
+          EliteClan_UpdateGettingMembers(param_1);
+          return;
+        }
+        if (uVar1 == 2) {
+          EliteClan_UpdateGettingPrivateProfile(param_1);
+          return;
+        }
+        if (uVar1 == 0) {
+          EliteClan_UpdateGettingClan(param_1);
+          return;
+        }
+        EliteClan_UpdateGettingPublicProfile(param_1);
       }
-      if (EVar1 == ELITECLAN_DW_TASK_TYPE_GETTING_PRIVATE_PROFILE) {
-        EliteClan_UpdateGettingPrivateProfile(param_1);
-        return;
-      }
-      if (EVar1 == ELITECLAN_DW_TASK_TYPE_GETTING_CLAN) {
-        EliteClan_UpdateGettingClan(param_1);
-        return;
-      }
-      EliteClan_UpdateGettingPublicProfile(param_1);
     }
   }
   return;
@@ -952,36 +889,34 @@ void EliteClan_Update(int param_1)
 
 // 826F56D8  EliteClan_IsAllowed  (social/elite_clan.cpp:1180)
 
-bool EliteClan_IsAllowed(int param_1)
+undefined8 EliteClan_IsAllowed(undefined8 param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = SocialConfig_Ok();
-  if (((bVar1) && ((elite_clan_active->current).integer != 0)) &&
-     (bVar1 = Live_IsUserSignedInToLive(param_1), bVar1)) {
-    return true;
+  cVar1 = SocialConfig_Ok();
+  if (((cVar1 != '\0') && (*(int *)(DAT_84545ca0 + 0xc) != 0)) &&
+     (cVar1 = Live_IsUserSignedInToLive(param_1), cVar1 != '\0')) {
+    return 1;
   }
-  return false;
+  return 0;
 }
 
 
 // 826F5748  EliteClan_Start  (social/elite_clan.cpp:1186)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void EliteClan_Start(void)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  int iVar1;
   
-  LVar1 = Cmd_LocalClientNum();
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  if (((elite_clan_active->current).integer != 0) && (s_eliteClanRetryTime[iVar2] < 0)) {
-    Dvar_SetInt(elite_clan_delay,0);
-    s_eliteClanRetryTime[iVar2] = 0;
+  Cmd_LocalClientNum();
+  iVar1 = CL_ControllerIndexFromClientNum();
+  if (*(int *)(DAT_84545ca0 + 0xc) != 0) {
+    if ((int)(&DAT_844f9f88)[iVar1] < 0) {
+      Dvar_SetInt(DAT_84545c78,0);
+      (&DAT_844f9f88)[iVar1] = 0;
+    }
   }
   return;
 }
@@ -989,129 +924,101 @@ void EliteClan_Start(void)
 
 // 826F57C0  EliteClan_UseTag  (social/elite_clan.cpp:1198)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void EliteClan_UseTag(void)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  undefined8 uVar1;
   
-  LVar1 = Cmd_LocalClientNum();
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  GamerProfile_SetUsingEliteClanTag(iVar2,true);
+  Cmd_LocalClientNum();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  GamerProfile_SetUsingEliteClanTag(uVar1,1);
   return;
 }
 
 
 // 826F57F0  EliteClan_UseTitle  (social/elite_clan.cpp:1205)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void EliteClan_UseTitle(void)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  undefined8 uVar1;
   
-  LVar1 = Cmd_LocalClientNum();
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  GamerProfile_SetUsingEliteClanTitle(iVar2,true);
+  Cmd_LocalClientNum();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  GamerProfile_SetUsingEliteClanTitle(uVar1,1);
   return;
 }
 
 
 // 826F5820  EliteClan_ClearTag  (social/elite_clan.cpp:1212)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void EliteClan_ClearTag(void)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  undefined8 uVar1;
   
-  LVar1 = Cmd_LocalClientNum();
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  GamerProfile_SetUsingEliteClanTag(iVar2,false);
+  Cmd_LocalClientNum();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  GamerProfile_SetUsingEliteClanTag(uVar1,0);
   return;
 }
 
 
 // 826F5850  EliteClan_ClearTitle  (social/elite_clan.cpp:1219)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void EliteClan_ClearTitle(void)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  undefined8 uVar1;
   
-  LVar1 = Cmd_LocalClientNum();
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  GamerProfile_SetUsingEliteClanTitle(iVar2,false);
+  Cmd_LocalClientNum();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  GamerProfile_SetUsingEliteClanTitle(uVar1,0);
   return;
 }
 
 
 // 826F5880  EliteClan_StoreTitleDvar  (social/elite_clan.cpp:1226)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void EliteClan_StoreTitleDvar(void)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar3;
+  undefined8 uVar1;
   
-  LVar1 = Cmd_LocalClientNum();
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  bVar3 = GamerProfile_GetUsingEliteClanTitle(iVar2);
-  Dvar_SetBool(elite_clan_using_title,bVar3);
+  Cmd_LocalClientNum();
+  CL_ControllerIndexFromClientNum();
+  uVar1 = GamerProfile_GetUsingEliteClanTitle();
+  Dvar_SetBool(DAT_844f9f9c,uVar1);
   return;
 }
 
 
 // 826F58B8  EliteClan_Refresh  (social/elite_clan.cpp:1233)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void EliteClan_Refresh(void)
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
+  int iVar2;
   int iVar3;
+  char cVar5;
   int iVar4;
-  bool bVar6;
-  int iVar5;
-  LocalClientNum_t local_50 [20];
+  undefined4 local_50 [20];
   
   __savegprlr_25();
-  LVar2 = Cmd_LocalClientNum();
-  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-  iVar4 = Sys_Milliseconds();
-  if (g_DWEliteClanTaskType[iVar3] == ELITECLAN_DW_TASK_TYPE_ALL_DONE) {
+  Cmd_LocalClientNum();
+  iVar2 = CL_ControllerIndexFromClientNum();
+  iVar3 = Sys_Milliseconds();
+  if ((&DAT_844f9f74)[iVar2] == 4) {
     bVar1 = false;
-    bVar6 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,local_50);
-    if (bVar6) {
-      iVar5 = CL_IsCgameInitialized(local_50[0]);
-      if (iVar5 != 0) {
-        bVar1 = true;
-      }
+    cVar5 = CL_DoesControllerIndexHaveALocalClientNum(iVar2,local_50);
+    if ((cVar5 != '\0') && (iVar4 = CL_IsCgameInitialized(local_50[0]), iVar4 != 0)) {
+      bVar1 = true;
     }
-    if ((((s_needToDownloadEliteClan[iVar3] != false) && (-1 < s_eliteClanRetryTime[iVar3])) &&
-        (s_eliteClanRetryTime[iVar3] < iVar4)) && (!bVar1)) {
-      g_DWEliteClanTaskType[iVar3] = ELITECLAN_DW_TASK_TYPE_GETTING_CLAN;
-      g_DWEliteClanTaskStage[iVar3] = ELITECLAN_DW_TASK_STAGE_WAITING;
+    if (((((&DAT_844f9f60)[iVar2] != '\0') && (-1 < (int)(&DAT_844f9f88)[iVar2])) &&
+        ((int)(&DAT_844f9f88)[iVar2] < iVar3)) && (!bVar1)) {
+      (&DAT_844f9f74)[iVar2] = 0;
+      *(undefined4 *)(&DAT_844f9f64 + iVar2 * 4) = 0;
     }
   }
   __restgprlr_25();
@@ -1121,103 +1028,90 @@ void EliteClan_Refresh(void)
 
 // 826F5970  EliteClan_RegisterCommands  (social/elite_clan.cpp:1259)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void EliteClan_RegisterCommands(void)
 
 {
-  Cmd_AddCommandInternal("editclanmessage",EliteClan_MessageKeyboard,&EliteClan_MessageKeyboard_VAR)
-  ;
-  Cmd_AddCommandInternal("starteliteclan",EliteClan_Start,&EliteClan_Start_VAR);
-  Cmd_AddCommandInternal("use_eliteclan_tag",EliteClan_UseTag,&EliteClan_UseTag_VAR);
-  Cmd_AddCommandInternal("use_eliteclan_title",EliteClan_UseTitle,&EliteClan_UseTitle_VAR);
-  Cmd_AddCommandInternal("clear_eliteclan_tag",EliteClan_ClearTag,&EliteClan_ClearTag_VAR);
-  Cmd_AddCommandInternal("clear_eliteclan_title",EliteClan_ClearTitle,&EliteClan_ClearTitle_VAR);
-  Cmd_AddCommandInternal
-            ("store_eliteclan_titledvar",EliteClan_StoreTitleDvar,&EliteClan_StoreTitleDvar_VAR);
-  Cmd_AddCommandInternal("eliteclan_refresh",EliteClan_Refresh,&EliteClan_Refresh_VAR);
+  Cmd_AddCommandInternal(0xffffffff821aec5c,0xffffffff826f5468,0xffffffff84513c5c);
+  Cmd_AddCommandInternal(0xffffffff821aec4c,0xffffffff826f5748,0xffffffff84513c48);
+  Cmd_AddCommandInternal(0xffffffff821aec38,0xffffffff826f57c0,0xffffffff84513c34);
+  Cmd_AddCommandInternal(0xffffffff821aec24,0xffffffff826f57f0,0xffffffff84513c20);
+  Cmd_AddCommandInternal(0xffffffff821aec10,0xffffffff826f5820,0xffffffff84513c0c);
+  Cmd_AddCommandInternal(0xffffffff821aebf8,0xffffffff826f5850,0xffffffff84513bf8);
+  Cmd_AddCommandInternal(0xffffffff821aebdc,0xffffffff826f5880,0xffffffff84513be4);
+  Cmd_AddCommandInternal(0xffffffff821aebc8,0xffffffff826f58b8,0xffffffff84513bd0);
   return;
 }
 
 
 // 826F5A70  EliteClan_FeederItemText  (social/elite_clan.cpp:1276)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-char * EliteClan_FeederItemText(int param_1,int param_2,int param_3,Font_s *param_4,float param_5)
+void EliteClan_FeederItemText
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-  uint uVar1;
-  char *pcVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  double extraout_f1;
-  double dVar5;
+  ulonglong uVar1;
+  longlong lVar2;
+  undefined8 extraout_f1;
+  undefined8 uVar3;
   
-  uVar4 = (ulonglong)param_3;
-  uVar3 = (ulonglong)param_2;
-  uVar1 = __savegprlr_27((double)param_5,param_1);
-  dVar5 = extraout_f1;
-  if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x4fd,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar1 = __savegprlr_27();
+  uVar3 = extraout_f1;
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x4fd,0,0xffffffff82031880,uVar1,4);
   }
-  if (99 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x4fe,0
-                    ,"row doesn\'t index MAX_ELITE_CLAN_MEMBERS\n\t%i not in [0, %i)");
+  if (99 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x4fe,0,0xffffffff821aecbc,param_2,100);
   }
-  if (2 < (uVar4 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x4ff,0
-                    ,"column doesn\'t index ELITE_CLAN_MEMBER_FEEDER_COL_MAX\n\t%i not in [0, %i)");
+  if (2 < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x4ff,0,0xffffffff821aec70,param_3,3);
   }
-  if ((uVar4 & 0xffffffff) != 0) {
-    pcVar2 = (char *)__restgprlr_27(0xffffffff820068af);
-    return pcVar2;
+  if ((param_3 & 0xffffffff) != 0) {
+    __restgprlr_27(0xffffffff820068af);
+    return;
   }
-  if (g_EliteClanStore[uVar1].members[0].m_userName
-      [(int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 5) + 0x41] == '\x02') {
-    pcVar2 = "[^3%s^7]%s";
-    Com_sprintf(s_elitePlayerNameAndTag,0x31,"[^3%s^7]%s");
+  lVar2 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20 + uVar1 * 0x66b8;
+  if ((&DAT_844fa0a9)[(int)lVar2] == '\x02') {
+    Com_sprintf(0xffffffff844f9fa0,0x31,0xffffffff820223e8,uVar1 * 0x66b8 + -0x7baff998,
+                lVar2 + -0x7bb05f98);
   }
   else {
-    pcVar2 = "%s";
-    Com_sprintf(s_elitePlayerNameAndTag,0x31,"%s");
+    Com_sprintf(0xffffffff844f9fa0,0x31,0xffffffff82000f98,lVar2 + -0x7bb05f98);
   }
-  pcVar2 = UI_TruncateTextWithEllipsis(s_elitePlayerNameAndTag,param_4,(float)dVar5,(int)pcVar2);
-  pcVar2 = (char *)__restgprlr_27(pcVar2);
-  return pcVar2;
+  UI_TruncateTextWithEllipsis(uVar3,0xffffffff844f9fa0,param_4);
+  __restgprlr_27();
+  return;
 }
 
 
 // 826F5BD8  EliteClan_FeederSelection  (social/elite_clan.cpp:1307)
 
-void EliteClan_FeederSelection(int param_1,int param_2)
+void EliteClan_FeederSelection(ulonglong param_1,undefined4 param_2)
 
 {
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x51c,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x51c,0,0xffffffff82031880,param_1,4);
   }
-  g_EliteClanStore[param_1].feederIndex = param_2;
+  *(undefined4 *)(&DAT_8450068c + (int)param_1 * 0x66b8) = param_2;
   return;
 }
 
 
 // 826F5C50  EliteClan_FeederStoreXUID  (social/elite_clan.cpp:1314)
 
-void EliteClan_FeederStoreXUID(int param_1)
+void EliteClan_FeederStoreXUID(uint param_1)
 
 {
   int iVar1;
+  int iVar2;
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x525,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff821aecf8,0x525,0,0xffffffff82031880,param_1,4);
   }
-  iVar1 = g_EliteClanStore[param_1].feederIndex;
-  g_EliteClanStore[param_1].storedPlayer = 0;
+  iVar2 = param_1 * 0x66b8;
+  iVar1 = *(int *)(&DAT_8450068c + iVar2);
+  *(undefined8 *)(&DAT_84500698 + iVar2) = 0;
   if ((-1 < iVar1) && (iVar1 < 100)) {
-    g_EliteClanStore[param_1].storedPlayer = g_EliteClanStore[param_1].members[iVar1].m_userID;
+    *(undefined8 *)(&DAT_84500698 + iVar2) = *(undefined8 *)(&DAT_844fa060 + iVar1 * 0x60 + iVar2);
   }
   return;
 }
@@ -1225,163 +1119,157 @@ void EliteClan_FeederStoreXUID(int param_1)
 
 // 826F5CF0  EliteClan_FeederClearXUID  (social/elite_clan.cpp:1329)
 
-void EliteClan_FeederClearXUID(int param_1)
+void EliteClan_FeederClearXUID(ulonglong param_1)
 
 {
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x532,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x532,0,0xffffffff82031880,param_1,4);
   }
-  g_EliteClanStore[param_1].storedPlayer = 0;
+  *(undefined8 *)(&DAT_84500698 + (int)param_1 * 0x66b8) = 0;
   return;
 }
 
 
 // 826F7F40  EliteClan_FeederGamerTag  (social/elite_clan.cpp:1336)
 
-char * EliteClan_FeederGamerTag(int param_1)
+void EliteClan_FeederGamerTag(void)
 
 {
   uint uVar1;
   uint uVar2;
-  char *pcVar3;
   
-  uVar1 = __savegprlr_28(param_1);
+  uVar1 = __savegprlr_28();
   if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x53b,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+    MyAssertHandler(0xffffffff821aecf8,0x53b,0,0xffffffff82031880,uVar1,4);
   }
-  uVar2 = EliteClan_GetPositionByXUID(uVar1,g_EliteClanStore[uVar1].storedPlayer);
+  uVar2 = EliteClan_GetPositionByXUID(uVar1,*(undefined8 *)(&DAT_84500698 + uVar1 * 0x66b8));
   if ((int)uVar2 < 0) {
-    pcVar3 = (char *)__restgprlr_28(0xffffffff820068af);
-    return pcVar3;
+    __restgprlr_28(0xffffffff820068af);
+    return;
   }
   if (99 < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x541,0
-                    ,"memberIndex doesn\'t index MAX_ELITE_CLAN_MEMBERS\n\t%i not in [0, %i)");
+    MyAssertHandler(0xffffffff821aecf8,0x541,0,0xffffffff821af038,uVar2,100);
   }
-  pcVar3 = (char *)__restgprlr_28(uVar2 * 0x60 + uVar1 * 0x66b8 + -0x7bb05f98);
-  return pcVar3;
+  __restgprlr_28(&DAT_844fa068 + uVar2 * 0x60 + uVar1 * 0x66b8);
+  return;
 }
 
 
 // 826F5D60  EliteClan_GetPresence  (social/elite_clan.cpp:1351)
 
-FriendStatus EliteClan_GetPresence(int param_1,ulong64 param_2)
+longlong EliteClan_GetPresence(ulonglong param_1,undefined8 param_2)
 
 {
-  ulong uVar1;
-  int iVar2;
-  FriendStatus FVar3;
-  _XONLINE_PRESENCE *p_Var4;
-  SocialPresence *pSVar5;
-  uint uVar6;
+  int iVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  longlong lVar4;
+  int iVar5;
+  ulonglong uVar6;
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x54b,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x54b,0,0xffffffff82031880,param_1,4);
   }
-  iVar2 = Friends_FindIndex(param_1,param_2);
-  if ((iVar2 != -1) && (FVar3 = FriendsMenu_GetStatus(param_1,iVar2), 1 < (int)FVar3)) {
-    return FVar3;
+  uVar3 = Friends_FindIndex(param_1,param_2);
+  if (((int)uVar3 != -1) && (lVar4 = FriendsMenu_GetStatus(param_1,uVar3), 1 < (int)lVar4)) {
+    return lVar4;
   }
-  p_Var4 = MeetPlayer_GetPresence(param_1,param_2);
-  if (p_Var4 == (_XONLINE_PRESENCE *)0x0) {
-    p_Var4 = LiveParty_GetPresence(param_2);
-    if (p_Var4 == (_XONLINE_PRESENCE *)0x0) {
-      pSVar5 = Social_GetPresence(param_1,param_2);
-      uVar6 = -(uint)(pSVar5 != (SocialPresence *)0x0) & 4;
+  iVar5 = MeetPlayer_GetPresence(param_1,param_2);
+  if (iVar5 == 0) {
+    iVar5 = LiveParty_GetPresence(param_2);
+    if (iVar5 == 0) {
+      lVar4 = Social_GetPresence(param_1,param_2);
+      uVar6 = -(ulonglong)(lVar4 != 0) & 4;
       goto LAB_826f5e98;
     }
-    uVar1 = p_Var4->dwTitleID;
+    iVar1 = *(int *)(iVar5 + 0x14);
   }
   else {
-    uVar1 = p_Var4->dwTitleID;
+    iVar1 = *(int *)(iVar5 + 0x14);
   }
-  if (uVar1 == 0x415608cb) {
-    return FRIEND_STATUS_PRESENT;
+  if (iVar1 == 0x415608cb) {
+    return 6;
   }
-  uVar6 = p_Var4->dwState;
-  if ((uVar6 & 1) != 0) {
-    if ((uVar6 & 0xf0000) == 0x10000) {
-      return FRIEND_STATUS_AWAY;
+  uVar2 = *(uint *)(iVar5 + 8);
+  if ((uVar2 & 1) != 0) {
+    if ((uVar2 & 0xf0000) == 0x10000) {
+      return 4;
     }
-    if (((uVar6 & 1) != 0) && ((uVar6 & 0xf0000) == 0x20000)) {
-      return FRIEND_STATUS_BUSY;
+    if (((uVar2 & 1) != 0) && ((uVar2 & 0xf0000) == 0x20000)) {
+      return 5;
     }
   }
-  uVar6 = (uVar6 & 1) == 0 ^ 1;
+  uVar6 = (ulonglong)((uVar2 & 1) == 0) ^ 1;
 LAB_826f5e98:
-  return uVar6 + FRIEND_STATUS_OFFLINE;
+  return uVar6 + 2;
 }
 
 
 // 826F5EB8  EliteClan_Compare  (social/elite_clan.cpp:1425)
 
-int EliteClan_Compare(void *param_1,void *param_2)
+void EliteClan_Compare(undefined8 param_1,longlong param_2)
 
 {
-  int iVar1;
-  FriendStatus FVar2;
-  FriendStatus FVar3;
+  int iVar3;
+  longlong lVar1;
+  longlong lVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  FVar2 = EliteClan_GetPresence(sortingControllerIndex,*(ulong64 *)(iVar1 + 0x10));
-  FVar3 = EliteClan_GetPresence(sortingControllerIndex,*(ulong64 *)((int)param_2 + 0x10));
-  if (FVar3 == FVar2) {
-    iVar1 = I_stricmp((char *)(iVar1 + 0x18),(char *)((int)param_2 + 0x18));
-    iVar1 = __restgprlr_29(iVar1);
-    return iVar1;
+  iVar3 = __savegprlr_29();
+  lVar1 = EliteClan_GetPresence(DAT_844f9f98,*(undefined8 *)(iVar3 + 0x10));
+  lVar2 = EliteClan_GetPresence(DAT_844f9f98,*(undefined8 *)((int)param_2 + 0x10));
+  if ((int)lVar2 == (int)lVar1) {
+    I_stricmp(iVar3 + 0x18,param_2 + 0x18);
+    __restgprlr_29();
+    return;
   }
-  iVar1 = __restgprlr_29((longlong)(int)FVar3 - (longlong)(int)FVar2);
-  return iVar1;
+  __restgprlr_29(lVar2 - lVar1);
+  return;
 }
 
 
 // 826F5F18  EliteClan_Sort  (social/elite_clan.cpp:1446)
 
-void EliteClan_Sort(int param_1)
+void EliteClan_Sort(void)
 
 {
   uint uVar1;
   int iVar2;
   int iVar3;
   int iVar4;
-  ulong64 uVar5;
+  longlong lVar5;
+  int iVar6;
   
-  uVar1 = __savegprlr_26(param_1);
+  uVar1 = __savegprlr_26();
   if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x5a7,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+    MyAssertHandler(0xffffffff821aecf8,0x5a7,0,0xffffffff82031880,uVar1,4);
   }
-  if (g_EliteClanStore[uVar1].numMembers != 0) {
-    uVar5 = g_EliteClanStore[uVar1].members[g_EliteClanStore[uVar1].feederIndex].m_userID;
-    sortingControllerIndex = uVar1;
-    qsort(g_EliteClanStore[uVar1].members,g_EliteClanStore[uVar1].numMembers,0x60,EliteClan_Compare)
-    ;
-    if (g_EliteClanStore[uVar1].initial_sort != false) {
-      g_EliteClanStore[uVar1].initial_sort = false;
+  iVar6 = uVar1 * 0x66b8;
+  if (*(size_t *)(&DAT_84500688 + iVar6) != 0) {
+    lVar5 = *(longlong *)(&DAT_844fa060 + *(int *)(&DAT_8450068c + iVar6) * 0x60 + iVar6);
+    DAT_844f9f98 = uVar1;
+    qsort(&DAT_844fa050 + iVar6,*(size_t *)(&DAT_84500688 + iVar6),0x60,EliteClan_Compare);
+    if ((&DAT_845006a0)[iVar6] != '\0') {
+      (&DAT_845006a0)[iVar6] = 0;
       __restgprlr_26();
       return;
     }
     iVar2 = 0;
-    if (0 < g_EliteClanStore[uVar1].numMembers) {
+    if (0 < *(int *)(&DAT_84500688 + iVar6)) {
       iVar4 = 0;
-      iVar3 = uVar1 * 0x66b8;
+      iVar3 = iVar6;
       do {
-        if (uVar5 == *(ulong64 *)(g_EliteClanStore[0].members[0].m_userName + iVar3 + -8)) {
-          EliteClan_FeederSelection(uVar1,iVar2);
+        if (lVar5 == *(longlong *)(&DAT_844fa060 + iVar3)) {
+          EliteClan_FeederSelection(uVar1);
           __restgprlr_26();
           return;
         }
         iVar2 = iVar2 + 1;
         iVar4 = iVar4 + 0x60;
-        iVar3 = iVar4 + uVar1 * 0x66b8;
-      } while (iVar2 < g_EliteClanStore[uVar1].numMembers);
+        iVar3 = iVar4 + iVar6;
+      } while (iVar2 < *(int *)(&DAT_84500688 + iVar6));
     }
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x5c2
-                      ,0,"Elite Clan: We can\'t find the user we just had selected");
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff821aecf8,0x5c2,0,0xffffffff821aed38);
     }
   }
   __restgprlr_26();
@@ -1391,79 +1279,78 @@ void EliteClan_Sort(int param_1)
 
 // 826F6058  EliteClan_GetCount  (social/elite_clan.cpp:1479)
 
-int EliteClan_GetCount(int param_1)
+undefined4 EliteClan_GetCount(uint param_1)
 
 {
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x5c8,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff821aecf8,0x5c8,0,0xffffffff82031880,param_1,4);
   }
-  if (g_DWEliteClanTaskType[param_1] != ELITECLAN_DW_TASK_TYPE_ALL_DONE) {
+  if ((&DAT_844f9f74)[param_1] != 4) {
     return 0;
   }
-  return g_EliteClanStore[param_1].numMembers;
+  return *(undefined4 *)(&DAT_84500688 + param_1 * 0x66b8);
 }
 
 
 // 826F60F0  EliteClan_IsPlatformFriend  (social/elite_clan.cpp:1491)
 
-bool EliteClan_IsPlatformFriend(int param_1)
+longlong EliteClan_IsPlatformFriend(ulonglong param_1)
 
 {
-  int iVar1;
+  longlong lVar1;
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x5d4,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x5d4,0,0xffffffff82031880,param_1,4);
   }
-  if (g_EliteClanStore[param_1].storedPlayer == 0) {
-    return false;
+  if (*(longlong *)(&DAT_84500698 + (int)param_1 * 0x66b8) == 0) {
+    return 0;
   }
-  iVar1 = Friends_FindIndex(param_1,g_EliteClanStore[param_1].storedPlayer);
-  return (bool)((char)((longlong)iVar1 + 1) - ((char)iVar1 + ((longlong)iVar1 + 1 == 0)));
+  lVar1 = Friends_FindIndex(param_1);
+  return (lVar1 + 1) - (lVar1 + (ulonglong)(lVar1 + 1 == 0));
 }
 
 
 // 826F8000  EliteClan_SelectedIsMe  (social/elite_clan.cpp:1503)
 
-bool EliteClan_SelectedIsMe(int param_1)
+undefined8 EliteClan_SelectedIsMe(ulonglong param_1)
 
 {
-  bool bVar1;
-  ulong64 local_20;
-  ulong64 local_18;
+  char cVar2;
+  undefined8 uVar1;
+  longlong local_20;
+  longlong local_18;
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x5e3,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x5e3,0,0xffffffff82031880,param_1,4);
   }
   local_20 = 0;
   EliteClan_GetSelectedFeederXuid(param_1,&local_20);
-  bVar1 = dwGetOnlineUserID(param_1,&local_18);
-  if ((!bVar1) || (bVar1 = true, local_18 != local_20)) {
-    bVar1 = false;
+  cVar2 = dwGetOnlineUserID(param_1,&local_18);
+  if ((cVar2 == '\0') || (uVar1 = 1, local_18 != local_20)) {
+    uVar1 = 0;
   }
-  return bVar1;
+  return uVar1;
 }
 
 
 // 826F6190  EliteClan_IsMe  (social/elite_clan.cpp:1522)
 
-bool EliteClan_IsMe(int param_1)
+undefined8 EliteClan_IsMe(ulonglong param_1)
 
 {
-  bool bVar1;
-  ulong64 local_20 [2];
+  char cVar2;
+  undefined8 uVar1;
+  longlong local_20 [2];
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x5f5,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x5f5,0,0xffffffff82031880,param_1,4);
   }
-  bVar1 = dwGetOnlineUserID(param_1,local_20);
-  if ((!bVar1) || (bVar1 = true, local_20[0] != g_EliteClanStore[param_1].storedPlayer)) {
-    bVar1 = false;
+  cVar2 = dwGetOnlineUserID(param_1,local_20);
+  if ((cVar2 == '\0') ||
+     (uVar1 = 1, local_20[0] != *(longlong *)(&DAT_84500698 + (int)param_1 * 0x66b8))) {
+    uVar1 = 0;
   }
-  return bVar1;
+  return uVar1;
 }
 
 
@@ -1472,38 +1359,39 @@ bool EliteClan_IsMe(int param_1)
 bool EliteClan_IsLeader(int param_1)
 
 {
-  if (g_EliteClanStore[param_1].team[0].m_teamID == 0) {
+  if (*(longlong *)(&DAT_844f9ff8 + param_1 * 0x66b8) == 0) {
     return false;
   }
-  return g_EliteClanStore[param_1].team[0].m_memberStatus == '\x02';
+  return (&DAT_844fa048)[param_1 * 0x66b8] == '\x02';
 }
 
 
 // 826F6268  EliteClan_GetPositionByXUID  (social/elite_clan.cpp:1550)
 
-int EliteClan_GetPositionByXUID(int param_1,ulong64 param_2)
+longlong EliteClan_GetPositionByXUID(uint param_1,longlong param_2)
 
 {
-  int iVar1;
+  longlong lVar1;
   int iVar2;
   int iVar3;
+  int iVar4;
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x611,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff821aecf8,0x611,0,0xffffffff82031880,param_1,4);
   }
-  iVar1 = 0;
-  if (0 < g_EliteClanStore[param_1].numMembers) {
-    iVar3 = 0;
-    iVar2 = param_1 * 0x66b8;
+  iVar3 = param_1 * 0x66b8;
+  lVar1 = 0;
+  if (0 < *(int *)(&DAT_84500688 + iVar3)) {
+    iVar4 = 0;
+    iVar2 = iVar3;
     do {
-      if (*(ulong64 *)(g_EliteClanStore[0].members[0].m_userName + iVar2 + -8) == param_2) {
-        return iVar1;
+      if (*(longlong *)(&DAT_844fa060 + iVar2) == param_2) {
+        return lVar1;
       }
-      iVar1 = iVar1 + 1;
-      iVar3 = iVar3 + 0x60;
-      iVar2 = iVar3 + param_1 * 0x66b8;
-    } while (iVar1 < g_EliteClanStore[param_1].numMembers);
+      lVar1 = lVar1 + 1;
+      iVar4 = iVar4 + 0x60;
+      iVar2 = iVar4 + iVar3;
+    } while ((int)lVar1 < *(int *)(&DAT_84500688 + iVar3));
   }
   return -1;
 }
@@ -1511,72 +1399,62 @@ int EliteClan_GetPositionByXUID(int param_1,ulong64 param_2)
 
 // 826F6318  EliteClan_FeederOverrideCursorPos  (social/elite_clan.cpp:1566)
 
-void EliteClan_FeederOverrideCursorPos(int param_1,int param_2,int *param_3,int *param_4)
+void EliteClan_FeederOverrideCursorPos
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-  uint uVar1;
+  int iVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
+  uint *puVar3;
   uint *puVar4;
-  ulonglong uVar5;
-  uint *puVar6;
-  int iVar7;
-  uint uVar8;
+  int iVar5;
+  uint uVar6;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)param_2;
-  uVar1 = __savegprlr_23(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x61f,0
-                    ,"%s");
+  uVar2 = __savegprlr_23();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821aecf8,0x61f,0,0xffffffff82000f98,0xffffffff8218eadc);
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x620,0
-                    ,"%s");
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821aecf8,0x620,0,0xffffffff82000f98,0xffffffff82182238);
   }
-  if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x621,0
-                    ,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x621,0,0xffffffff82057c60,uVar2,4);
   }
-  puVar4 = (uint *)uVar3;
+  puVar3 = (uint *)param_3;
+  if ((int)*puVar3 < 0) {
+    MyAssertHandler(0xffffffff821aecf8,0x624,0,0xffffffff82000f98,0xffffffff8218eacc);
+  }
+  puVar4 = (uint *)param_4;
   if ((int)*puVar4 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x624,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff821aecf8,0x625,0,0xffffffff82000f98,0xffffffff8218eabc);
   }
-  puVar6 = (uint *)uVar5;
-  if ((int)*puVar6 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x625,0
-                    ,"%s");
-  }
-  if (g_EliteClanStore[uVar1].numMembers == 0) {
+  iVar1 = (int)uVar2 * 0x66b8;
+  if (*(int *)(&DAT_84500688 + iVar1) == 0) {
+    *puVar3 = 0;
     *puVar4 = 0;
-    *puVar6 = 0;
   }
   else {
-    *puVar4 = g_EliteClanStore[uVar1].feederIndex;
+    *puVar3 = *(uint *)(&DAT_8450068c + iVar1);
   }
-  uVar8 = *puVar4;
-  if ((int)*puVar6 <= (int)uVar8) {
-    iVar7 = uVar8 - (int)uVar2;
-    if (iVar7 < (int)*puVar6) goto LAB_826f6468;
-    uVar8 = iVar7 + 1;
+  uVar6 = *puVar3;
+  if ((int)*puVar4 <= (int)uVar6) {
+    iVar5 = uVar6 - (int)param_2;
+    if (iVar5 < (int)*puVar4) goto LAB_826f6468;
+    uVar6 = iVar5 + 1;
   }
-  *puVar6 = uVar8;
+  *puVar4 = uVar6;
 LAB_826f6468:
+  if ((int)*puVar3 < 0) {
+    MyAssertHandler(0xffffffff821aecf8,0x63a,1,0xffffffff82000f98,0xffffffff8218eacc);
+  }
   if ((int)*puVar4 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x63a,1
-                    ,"%s");
+    MyAssertHandler(0xffffffff821aecf8,0x63b,1,0xffffffff82000f98,0xffffffff8218eabc);
   }
-  if ((int)*puVar6 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x63b,1
-                    ,"%s");
+  if ((param_2 & 0xffffffff) <= ((ulonglong)*puVar3 - (ulonglong)*puVar4 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x63c,1,0xffffffff8218ea78,
+                    (ulonglong)*puVar3 - (ulonglong)*puVar4,param_2);
   }
-  if ((uVar2 & 0xffffffff) <= ((ulonglong)*puVar4 - (ulonglong)*puVar6 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x63c,1
-                    ,"(*cursorPos - *startPos) doesn\'t index viewmax\n\t%i not in [0, %i)");
-  }
-  g_EliteClanStore[uVar1].currentStartPos = *puVar6;
+  *(uint *)(&DAT_84500690 + iVar1) = *puVar4;
   __restgprlr_23();
   return;
 }
@@ -1584,27 +1462,26 @@ LAB_826f6468:
 
 // 826F64F8  EliteClan_FeederOnReportRequest  (social/elite_clan.cpp:1604)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void EliteClan_FeederOnReportRequest(int param_1,ReportOffense param_2)
+void EliteClan_FeederOnReportRequest(ulonglong param_1,undefined8 param_2)
 
 {
-  bool bVar2;
-  char *pcVar1;
-  LocalClientNum_t aLStack_20 [2];
+  int iVar1;
+  char cVar2;
+  undefined1 auStack_20 [8];
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x648,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x648,0,0xffffffff82031880,param_1,4);
   }
-  bVar2 = Live_IsUserSignedInToLive(param_1);
-  if (((bVar2) && (g_EliteClanStore[param_1].numMembers != 0)) &&
-     (g_EliteClanStore[param_1].storedPlayer != 0)) {
-    LiveAntiCheat_ReportPlayer(param_1,param_2,g_EliteClanStore[param_1].storedPlayer);
-    bVar2 = CL_DoesControllerIndexHaveALocalClientNum(param_1,aLStack_20);
-    if (bVar2) {
-      pcVar1 = FriendsMenu_GetReportSubmitString(param_2);
-      FriendsMenu_ShowErrorMessage(pcVar1);
+  cVar2 = Live_IsUserSignedInToLive(param_1);
+  if (cVar2 != '\0') {
+    iVar1 = (int)param_1 * 0x66b8;
+    if ((*(int *)(&DAT_84500688 + iVar1) != 0) && (*(longlong *)(&DAT_84500698 + iVar1) != 0)) {
+      LiveAntiCheat_ReportPlayer(param_1,param_2);
+      cVar2 = CL_DoesControllerIndexHaveALocalClientNum(param_1,auStack_20);
+      if (cVar2 != '\0') {
+        FriendsMenu_GetReportSubmitString(param_2);
+        FriendsMenu_ShowErrorMessage();
+      }
     }
   }
   return;
@@ -1613,21 +1490,23 @@ void EliteClan_FeederOnReportRequest(int param_1,ReportOffense param_2)
 
 // 826F65C8  EliteClan_FeederOnShowCard  (social/elite_clan.cpp:1629)
 
-void EliteClan_FeederOnShowCard(int param_1)
+void EliteClan_FeederOnShowCard(ulonglong param_1)
 
 {
-  bool bVar2;
-  ulong uVar1;
+  int iVar1;
+  char cVar3;
+  ulonglong uVar2;
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x65e,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x65e,0,0xffffffff82031880,param_1,4);
   }
-  bVar2 = Live_IsUserSignedInToLive(param_1);
-  if ((((bVar2) && (g_EliteClanStore[param_1].numMembers != 0)) &&
-      (g_EliteClanStore[param_1].storedPlayer != 0)) &&
-     (uVar1 = XShowGamerCardUI(param_1,g_EliteClanStore[param_1].storedPlayer), uVar1 != 0)) {
-    Com_PrintError(0x16,"Microsoft error %i from XShowGamerCardUI()\n");
+  cVar3 = Live_IsUserSignedInToLive(param_1);
+  if (cVar3 != '\0') {
+    iVar1 = (int)param_1 * 0x66b8;
+    if (((*(int *)(&DAT_84500688 + iVar1) != 0) && (*(longlong *)(&DAT_84500698 + iVar1) != 0)) &&
+       (uVar2 = XShowGamerCardUI(param_1), (uVar2 & 0xffffffff) != 0)) {
+      Com_PrintError(0x16,0xffffffff8218aec8,uVar2);
+    }
   }
   return;
 }
@@ -1635,26 +1514,28 @@ void EliteClan_FeederOnShowCard(int param_1)
 
 // 826F6680  EliteClan_FeederOnFriendRequest  (social/elite_clan.cpp:1645)
 
-void EliteClan_FeederOnFriendRequest(int param_1)
+void EliteClan_FeederOnFriendRequest(ulonglong param_1)
 
 {
-  bool bVar2;
-  ulong uVar1;
-  ulong64 local_20 [2];
+  int iVar1;
+  char cVar3;
+  ulonglong uVar2;
+  longlong local_20 [2];
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x670,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x670,0,0xffffffff82031880,param_1,4);
   }
-  bVar2 = EliteClan_IsPlatformFriend(param_1);
-  if (((!bVar2) &&
-      (((bVar2 = dwGetOnlineUserID(param_1,local_20), !bVar2 ||
-        (local_20[0] != g_EliteClanStore[param_1].storedPlayer)) &&
-       (0 < g_EliteClanStore[param_1].numMembers)))) &&
-     ((g_EliteClanStore[param_1].storedPlayer != 0 &&
-      (uVar1 = XShowFriendRequestUI(param_1,g_EliteClanStore[param_1].storedPlayer), uVar1 != 0))))
-  {
-    Com_PrintError(0x16,"Microsoft error %i from XShowFriendRequestUI()\n");
+  cVar3 = EliteClan_IsPlatformFriend(param_1);
+  if (cVar3 == '\0') {
+    cVar3 = dwGetOnlineUserID(param_1,local_20);
+    if ((cVar3 == '\0') || (local_20[0] != *(longlong *)(&DAT_84500698 + (int)param_1 * 0x66b8))) {
+      iVar1 = (int)param_1 * 0x66b8;
+      if ((0 < *(int *)(&DAT_84500688 + iVar1)) &&
+         ((*(longlong *)(&DAT_84500698 + iVar1) != 0 &&
+          (uVar2 = XShowFriendRequestUI(param_1), (uVar2 & 0xffffffff) != 0)))) {
+        Com_PrintError(0x16,0xffffffff821aed70,uVar2);
+      }
+    }
   }
   return;
 }
@@ -1662,22 +1543,22 @@ void EliteClan_FeederOnFriendRequest(int param_1)
 
 // 826F6768  EliteClan_GetSelectedFeederXuid  (social/elite_clan.cpp:1783)
 
-int EliteClan_GetSelectedFeederXuid(int param_1,ulong64 *param_2)
+undefined8 EliteClan_GetSelectedFeederXuid(int param_1,undefined8 *param_2)
 
 {
   int iVar1;
-  bool bVar2;
+  char cVar2;
   
-  if (param_2 == (ulong64 *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x6f8,0
-                    ,"%s");
+  if (param_2 == (undefined8 *)0x0) {
+    MyAssertHandler(0xffffffff821aecf8,0x6f8,0,0xffffffff82000f98,0xffffffff82032494);
   }
-  bVar2 = Live_IsUserSignedInToLive(param_1);
-  if (bVar2) {
-    if (((g_EliteClanStore[param_1].numMembers != 0) &&
-        (iVar1 = g_EliteClanStore[param_1].feederIndex, -1 < iVar1)) &&
-       (iVar1 < g_EliteClanStore[param_1].numMembers)) {
-      *param_2 = g_EliteClanStore[param_1].members[iVar1].m_userID;
+  cVar2 = Live_IsUserSignedInToLive(param_1);
+  if (cVar2 != '\0') {
+    param_1 = param_1 * 0x66b8;
+    if (((*(int *)(&DAT_84500688 + param_1) != 0) &&
+        (iVar1 = *(int *)(&DAT_8450068c + param_1), -1 < iVar1)) &&
+       (iVar1 < *(int *)(&DAT_84500688 + param_1))) {
+      *param_2 = *(undefined8 *)(&DAT_844fa060 + iVar1 * 0x60 + param_1);
       return 1;
     }
   }
@@ -1687,132 +1568,126 @@ int EliteClan_GetSelectedFeederXuid(int param_1,ulong64 *param_2)
 
 // 826F6838  EliteClan_FeederOnInvite  (social/elite_clan.cpp:1801)
 
-void EliteClan_FeederOnInvite(int param_1)
+void EliteClan_FeederOnInvite(void)
 
 {
-  uint uVar1;
-  bool bVar6;
-  uint uVar2;
-  FriendStatus FVar3;
-  int iVar4;
-  SocialPresence *pSVar5;
-  ulong64 uVar7;
-  char *local_30 [12];
+  ulonglong uVar1;
+  char cVar4;
+  undefined8 uVar2;
+  int iVar3;
+  undefined8 uVar5;
+  undefined4 local_30 [12];
   
-  uVar1 = __savegprlr_29(param_1);
-  if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x711,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar1 = __savegprlr_29();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x711,0,0xffffffff82031880,uVar1,4);
   }
-  bVar6 = Live_IsUserSignedInToLive(uVar1);
-  if ((bVar6) && (g_EliteClanStore[uVar1].numMembers != 0)) {
-    bVar6 = FriendsMenu_IsAllowedToInvite(uVar1,local_30);
-    if (!bVar6) {
-      Com_PrintError(0x10,
-                     "EliteClan_FeederOnInvite() failed because we are not allowed to invite anyone right now.\n"
-                    );
-      FriendsMenu_ShowErrorMessage(local_30[0]);
-      __restgprlr_29();
-      return;
+  cVar4 = Live_IsUserSignedInToLive(uVar1);
+  if (cVar4 != '\0') {
+    iVar3 = (int)uVar1 * 0x66b8;
+    if (*(int *)(&DAT_84500688 + iVar3) != 0) {
+      cVar4 = FriendsMenu_IsAllowedToInvite(uVar1,local_30);
+      if (cVar4 == '\0') {
+        Com_PrintError(0x10,0xffffffff821aee40);
+        FriendsMenu_ShowErrorMessage(local_30[0]);
+        __restgprlr_29();
+        return;
+      }
+      uVar5 = *(undefined8 *)(&DAT_84500698 + iVar3);
+      uVar2 = Friends_FindIndex(uVar1,uVar5);
+      if ((((int)uVar2 != -1) && (iVar3 = FriendsMenu_GetStatus(uVar1,uVar2), 1 < iVar3)) &&
+         (cVar4 = FriendsMenu_IsUserInvitable(uVar1,uVar2,local_30), cVar4 == '\0')) {
+        Com_PrintError(0x10,0xffffffff821aedf0);
+        FriendsMenu_ShowErrorMessage(local_30[0]);
+        __restgprlr_29();
+        return;
+      }
+      iVar3 = MeetPlayer_GetPositionByXuid(uVar1,uVar5);
+      if (-1 < iVar3) {
+        MeetPlayer_Invite(uVar1,uVar5);
+        __restgprlr_29();
+        return;
+      }
+      iVar3 = LiveParty_GetPositionByXuid(uVar5);
+      if (-1 < iVar3) {
+        LiveParty_InvitePartyMember();
+        __restgprlr_29();
+        return;
+      }
+      iVar3 = Social_GetPresence(uVar1,uVar5);
+      if ((iVar3 != 0) &&
+         (cVar4 = Social_IsAlreadyConnected(uVar1,*(undefined8 *)(iVar3 + 4),uVar5,local_30),
+         cVar4 != '\0')) {
+        Com_PrintError(0x10,0xffffffff821aeda0);
+        FriendsMenu_ShowErrorMessage(local_30[0]);
+        __restgprlr_29();
+        return;
+      }
+      Live_SendInvite(uVar1,uVar5);
     }
-    uVar7 = g_EliteClanStore[uVar1].storedPlayer;
-    uVar2 = Friends_FindIndex(uVar1,uVar7);
-    if (((uVar2 != 0xffffffff) && (FVar3 = FriendsMenu_GetStatus(uVar1,uVar2), 1 < (int)FVar3)) &&
-       (bVar6 = FriendsMenu_IsUserInvitable(uVar1,uVar2,local_30), !bVar6)) {
-      Com_PrintError(0x10,
-                     "EliteClan_FeederOnInvite() failed because friend is not available for invites.\n"
-                    );
-      FriendsMenu_ShowErrorMessage(local_30[0]);
-      __restgprlr_29();
-      return;
-    }
-    iVar4 = MeetPlayer_GetPositionByXuid(uVar1,uVar7);
-    if (-1 < iVar4) {
-      MeetPlayer_Invite(uVar1,uVar7);
-      __restgprlr_29();
-      return;
-    }
-    iVar4 = LiveParty_GetPositionByXuid(uVar7);
-    if (-1 < iVar4) {
-      LiveParty_InvitePartyMember(uVar1,uVar7);
-      __restgprlr_29();
-      return;
-    }
-    pSVar5 = Social_GetPresence(uVar1,uVar7);
-    if ((pSVar5 != (SocialPresence *)0x0) &&
-       (bVar6 = Social_IsAlreadyConnected(uVar1,(XNKID)*&(pSVar5->sessionId).ab,uVar7,local_30),
-       bVar6)) {
-      Com_PrintError(0x10,
-                     "EliteClan_FeederOnInvite() failed because the player is already connected.\n")
-      ;
-      FriendsMenu_ShowErrorMessage(local_30[0]);
-      __restgprlr_29();
-      return;
-    }
-    bVar6 = Live_SendInvite(uVar1,uVar7);
   }
-  __restgprlr_29(bVar6);
+  __restgprlr_29();
   return;
 }
 
 
 // 826F69F8  EliteClan_FeederOnJoin  (social/elite_clan.cpp:1900)
 
-void EliteClan_FeederOnJoin(int param_1)
+void EliteClan_FeederOnJoin(void)
 
 {
-  uint uVar1;
-  bool bVar5;
-  int iVar2;
-  FriendStatus FVar3;
-  SocialPresence *pSVar4;
-  ulong64 uVar6;
+  ulonglong uVar1;
+  char cVar5;
+  undefined8 uVar2;
+  int iVar4;
+  ulonglong uVar3;
+  undefined8 uVar6;
   char *local_30 [12];
   
-  uVar1 = __savegprlr_29(param_1);
-  if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x775,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar1 = __savegprlr_29();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x775,0,0xffffffff82031880,uVar1,4);
   }
-  bVar5 = Live_IsUserSignedInToLive(uVar1);
-  if ((bVar5) && (g_EliteClanStore[uVar1].numMembers != 0)) {
-    uVar6 = g_EliteClanStore[uVar1].storedPlayer;
-    iVar2 = Friends_FindIndex(uVar1,uVar6);
-    if ((iVar2 == -1) || (FVar3 = FriendsMenu_GetStatus(uVar1,iVar2), (int)FVar3 < 2)) {
-      iVar2 = MeetPlayer_GetPositionByXuid(uVar1,uVar6);
-      if (-1 < iVar2) {
-        MeetPlayer_Join(uVar1,uVar6);
-        __restgprlr_29();
-        return;
+  cVar5 = Live_IsUserSignedInToLive(uVar1);
+  if (cVar5 != '\0') {
+    iVar4 = (int)uVar1 * 0x66b8;
+    if (*(int *)(&DAT_84500688 + iVar4) != 0) {
+      uVar6 = *(undefined8 *)(&DAT_84500698 + iVar4);
+      uVar2 = Friends_FindIndex(uVar1,uVar6);
+      if (((int)uVar2 == -1) || (iVar4 = FriendsMenu_GetStatus(uVar1,uVar2), iVar4 < 2)) {
+        iVar4 = MeetPlayer_GetPositionByXuid(uVar1,uVar6);
+        if (-1 < iVar4) {
+          MeetPlayer_Join(uVar1,uVar6);
+          __restgprlr_29();
+          return;
+        }
+        uVar2 = LiveParty_GetPositionByXuid(uVar6);
+        if (-1 < (int)uVar2) {
+          LiveParty_JoinPartyMember(uVar1,uVar2);
+          __restgprlr_29();
+          return;
+        }
+        uVar3 = Social_GetPresence(uVar1,uVar6);
+        if ((uVar3 & 0xffffffff) != 0) {
+          Social_JoinPlayer(uVar1,uVar6);
+          __restgprlr_29();
+          return;
+        }
+        Com_PrintError(0x10,0xffffffff821aeeb8,uVar3);
+        local_30[0] = "MENU_JOIN_SESSION_INVALID";
       }
-      iVar2 = LiveParty_GetPositionByXuid(uVar6);
-      if (-1 < iVar2) {
-        LiveParty_JoinPartyMember(uVar1,iVar2);
-        __restgprlr_29();
-        return;
+      else {
+        cVar5 = FriendsMenu_JoinOnPresence(uVar1,uVar6,local_30);
+        if (cVar5 != '\0') goto LAB_826f6b84;
+        if (*local_30[0] == '\0') {
+          MyAssertHandler(0xffffffff821aecf8,0x788,0,0xffffffff82000f98,0xffffffff8218ea18);
+          FriendsMenu_ShowErrorMessage(local_30[0]);
+          __restgprlr_29();
+          return;
+        }
       }
-      pSVar4 = Social_GetPresence(uVar1,uVar6);
-      if (pSVar4 != (SocialPresence *)0x0) {
-        Social_JoinPlayer(uVar1,uVar6,pSVar4);
-        __restgprlr_29();
-        return;
-      }
-      Com_PrintError(0x10,"EliteClan_FeederOnJoin() failed because the friend info was not found.\n"
-                    );
-      local_30[0] = "MENU_JOIN_SESSION_INVALID";
+      FriendsMenu_ShowErrorMessage(local_30[0]);
     }
-    else {
-      bVar5 = FriendsMenu_JoinOnPresence(uVar1,uVar6,local_30);
-      if (bVar5) goto LAB_826f6b84;
-      if (*local_30[0] == '\0') {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",
-                        0x788,0,"%s");
-        FriendsMenu_ShowErrorMessage(local_30[0]);
-        __restgprlr_29();
-        return;
-      }
-    }
-    FriendsMenu_ShowErrorMessage(local_30[0]);
   }
 LAB_826f6b84:
   __restgprlr_29();
@@ -1828,84 +1703,79 @@ void EliteClan_Fetch(int param_1)
   if ((&DAT_844f9fd8)[param_1] == '\0') {
     return;
   }
-  s_needToDownloadEliteClan[param_1] = true;
+  (&DAT_844f9f60)[param_1] = 1;
   return;
 }
 
 
 // 826F6BB8  EliteClan_GetClanName  (social/elite_clan.cpp:1982)
 
-char * EliteClan_GetClanName(int param_1)
+undefined * EliteClan_GetClanName(uint param_1)
 
 {
-  char *pcVar1;
+  undefined *puVar1;
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x7bf,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff821aecf8,0x7bf,0,0xffffffff82031880,param_1,4);
   }
-  pcVar1 = g_EliteClanStore[param_1].team[0].m_teamName;
-  if ((g_EliteClanStore[param_1].team[0].m_teamName[0] == '\0') ||
-     (g_DWEliteClanTaskType[param_1] != ELITECLAN_DW_TASK_TYPE_ALL_DONE)) {
-    pcVar1 = UI_SafeTranslateString("MENU_NO_CLAN_HEADER");
+  puVar1 = &DAT_844fa008 + param_1 * 0x66b8;
+  if (((&DAT_844fa008)[param_1 * 0x66b8] == '\0') || ((&DAT_844f9f74)[param_1] != 4)) {
+    puVar1 = (undefined *)UI_SafeTranslateString(0xffffffff821aef00);
   }
-  return pcVar1;
+  return puVar1;
 }
 
 
 // 826F8098  EliteClan_GetHelp  (social/elite_clan.cpp:1993)
 
-char * EliteClan_GetHelp(int param_1)
+undefined8 EliteClan_GetHelp(uint param_1)
 
 {
-  bool bVar2;
-  char *pcVar1;
+  undefined8 uVar1;
+  char cVar2;
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x7ca,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff821aecf8,0x7ca,0,0xffffffff82031880,param_1,4);
   }
-  if (g_DWEliteClanTaskType[param_1] == ELITECLAN_DW_TASK_TYPE_ALL_DONE) {
-    bVar2 = EliteClan_IsMember(param_1);
-    if (bVar2) {
-      return "";
+  if ((&DAT_844f9f74)[param_1] == 4) {
+    cVar2 = EliteClan_IsMember(param_1);
+    if (cVar2 != '\0') {
+      return 0xffffffff820068af;
     }
-    pcVar1 = "MENU_NO_CLAN_DESCRIPTION";
+    uVar1 = 0xffffffff821af07c;
   }
   else {
-    pcVar1 = "MENU_DOWNLOADING_CLAN";
+    uVar1 = 0xffffffff821af098;
   }
-  pcVar1 = UI_SafeTranslateString(pcVar1);
-  return pcVar1;
+  uVar1 = UI_SafeTranslateString(uVar1);
+  return uVar1;
 }
 
 
 // 826F6C50  EliteClan_GetClanNMOTD  (social/elite_clan.cpp:2007)
 
-char * EliteClan_GetClanNMOTD(int param_1)
+undefined1 * EliteClan_GetClanNMOTD(uint param_1)
 
 {
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x7d8,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff821aecf8,0x7d8,0,0xffffffff82031880,param_1,4);
   }
-  if (g_DWEliteClanTaskType[param_1] != ELITECLAN_DW_TASK_TYPE_ALL_DONE) {
-    return "";
+  if ((&DAT_844f9f74)[param_1] != 4) {
+    return &DAT_820068af;
   }
-  return g_EliteClanStore[param_1].privateProfile.m_membermotd;
+  return &DAT_844fc5e8 + param_1 * 0x66b8;
 }
 
 
 // 826F6CF0  EliteClan_IsMember  (social/elite_clan.cpp:2019)
 
-bool EliteClan_IsMember(int param_1)
+bool EliteClan_IsMember(ulonglong param_1)
 
 {
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\elite_clan.cpp",0x7e4,0
-                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x7e4,0,0xffffffff82031880,param_1,4);
   }
-  return g_EliteClanStore[param_1].team[0].m_teamID != 0;
+  return *(longlong *)(&DAT_844f9ff8 + (int)param_1 * 0x66b8) != 0;
 }
 
 
@@ -1914,10 +1784,9 @@ bool EliteClan_IsMember(int param_1)
 bool EliteClan_IsSlotSelected(int param_1,int param_2)
 
 {
-  if ((g_DWEliteClanTaskType[param_1] == ELITECLAN_DW_TASK_TYPE_ALL_DONE) &&
-     (g_EliteClanStore[param_1].numMembers != 0)) {
-    return param_2 ==
-           g_EliteClanStore[param_1].feederIndex - g_EliteClanStore[param_1].currentStartPos;
+  if (((&DAT_844f9f74)[param_1] == 4) &&
+     (param_1 = param_1 * 0x66b8, *(int *)(&DAT_84500688 + param_1) != 0)) {
+    return param_2 == *(int *)(&DAT_8450068c + param_1) - *(int *)(&DAT_84500690 + param_1);
   }
   return false;
 }
@@ -1925,255 +1794,248 @@ bool EliteClan_IsSlotSelected(int param_1,int param_2)
 
 // 826F6DD0  EliteClan_GetPresenceForSlot  (social/elite_clan.cpp:2045)
 
-char * EliteClan_GetPresenceForSlot(int param_1,int param_2)
+undefined8 EliteClan_GetPresenceForSlot(int param_1,int param_2)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
   
-  if (g_DWEliteClanTaskType[param_1] == ELITECLAN_DW_TASK_TYPE_ALL_DONE) {
-    iVar2 = g_EliteClanStore[param_1].currentStartPos + param_2;
-    if (iVar2 < g_EliteClanStore[param_1].numMembers) {
-      pcVar1 = Social_GetPresenceString(param_1,g_EliteClanStore[param_1].members[iVar2].m_userID);
-      return pcVar1;
+  if ((&DAT_844f9f74)[param_1] == 4) {
+    iVar2 = param_1 * 0x66b8;
+    if (*(int *)(&DAT_84500690 + iVar2) + param_2 < *(int *)(&DAT_84500688 + iVar2)) {
+      uVar1 = Social_GetPresenceString
+                        (param_1,*(undefined8 *)
+                                  (&DAT_844fa060 +
+                                  (*(int *)(&DAT_84500690 + iVar2) + param_2) * 0x60 + iVar2));
+      return uVar1;
     }
   }
-  return "";
+  return 0xffffffff820068af;
 }
 
 
 // 826F6E38  EliteClan_GetCurrentIndexName  (social/elite_clan.cpp:2070)
 
-char * EliteClan_GetCurrentIndexName(int param_1)
+undefined * EliteClan_GetCurrentIndexName(int param_1)
 
 {
-  return g_EliteClanStore[param_1].members[g_EliteClanStore[param_1].feederIndex].m_userName;
+  return &DAT_844fa068 + *(int *)(&DAT_8450068c + param_1 * 0x66b8) * 0x60 + param_1 * 0x66b8;
 }
 
 
 // 826F6E68  EliteClan_GetCurrentIndexXUID  (social/elite_clan.cpp:2079)
 
-ulong64 EliteClan_GetCurrentIndexXUID(int param_1)
+undefined8 EliteClan_GetCurrentIndexXUID(int param_1)
 
 {
-  return g_EliteClanStore[param_1].members[g_EliteClanStore[param_1].feederIndex].m_userID;
+  return *(undefined8 *)
+          (&DAT_844fa060 + *(int *)(&DAT_8450068c + param_1 * 0x66b8) * 0x60 + param_1 * 0x66b8);
 }
 
 
-// 826F6E98  PublicTeamProfile  (social/elite_clan.cpp:2091)
+// 826F6E98  PublicTeamProfile::PublicTeamProfile  (social/elite_clan.cpp:2091)
 
-PublicTeamProfile * __thiscall PublicTeamProfile::PublicTeamProfile(PublicTeamProfile *this)
+undefined4 * PublicTeamProfile__PublicTeamProfile(undefined4 *param_1)
 
 {
-  bdTeamProfile::bdTeamProfile((bdTeamProfile *)this);
-  this->_padding_ = (int)&_vftable_;
-  return this;
+  bdTeamProfile__bdTeamProfile();
+  *param_1 = &PTR_PublicTeamProfile___scalar_deleting_destructor__821aef14;
+  return param_1;
 }
 
 
-// 826F6ED8  serialize  (social/elite_clan.cpp:2096)
+// 826F6ED8  PublicTeamProfile::serialize  (social/elite_clan.cpp:2096)
 
-void __thiscall PublicTeamProfile::serialize(PublicTeamProfile *this,bdByteBuffer *param_1)
+void PublicTeamProfile__serialize(int param_1,undefined8 param_2)
 
 {
-  bdByteBuffer::writeBlob(param_1,this->m_memberemblem,0x4000);
-  bdByteBuffer::writeInt32(param_1,this->m_membermotto_bg);
-  bdByteBuffer::writeString(param_1,this->m_memberclantag,5);
-  bdByteBuffer::writeString(param_1,this->m_membermotto,0x18);
+  bdByteBuffer__writeBlob(param_2,param_1 + 0x18,0x4000);
+  bdByteBuffer__writeInt32(param_2,*(undefined4 *)(param_1 + 0x401c));
+  bdByteBuffer__writeString(param_2,param_1 + 0x4020,5);
+  bdByteBuffer__writeString(param_2,param_1 + 0x4026,0x18);
   return;
 }
 
 
-// 826F8150  deserialize  (social/elite_clan.cpp:2105)
+// 826F8150  PublicTeamProfile::deserialize  (social/elite_clan.cpp:2105)
 
-bool __thiscall
-PublicTeamProfile::deserialize(PublicTeamProfile *this,bdReference<bdByteBuffer> param_1)
+undefined8 PublicTeamProfile__deserialize(longlong param_1,undefined4 *param_2)
 
 {
   bool bVar1;
-  bool bVar2;
-  uint local_20 [2];
+  char cVar2;
+  undefined8 uVar3;
+  undefined4 local_20 [2];
   
-  bVar1 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_memberTeamID)
-  ;
+  cVar2 = bdByteBuffer__readUInt64(*param_2,param_1 + 0x10);
   local_20[0] = 0x4000;
-  if (bVar1) {
-    bVar2 = bdByteBuffer::readBlob
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_memberemblem,local_20);
-    bVar1 = true;
-    if (!bVar2) goto LAB_826f81b8;
-  }
-  else {
+  if (cVar2 == '\0') {
 LAB_826f81b8:
     bVar1 = false;
   }
-  if (bVar1) {
-    bVar2 = bdByteBuffer::readInt32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_membermotto_bg);
+  else {
+    cVar2 = bdByteBuffer__readBlob(*param_2,param_1 + 0x18,local_20);
     bVar1 = true;
-    if (!bVar2) goto LAB_826f81e4;
+    if (cVar2 == '\0') goto LAB_826f81b8;
+  }
+  if (bVar1) {
+    cVar2 = bdByteBuffer__readInt32(*param_2,param_1 + 0x401c);
+    bVar1 = true;
+    if (cVar2 == '\0') goto LAB_826f81e4;
   }
   else {
 LAB_826f81e4:
     bVar1 = false;
   }
   if (bVar1) {
-    bVar2 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_memberclantag,5);
+    cVar2 = bdByteBuffer__readString(*param_2,param_1 + 0x4020,5);
     bVar1 = true;
-    if (!bVar2) goto LAB_826f8214;
+    if (cVar2 == '\0') goto LAB_826f8214;
   }
   else {
 LAB_826f8214:
     bVar1 = false;
   }
   if (bVar1) {
-    bVar1 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_membermotto,0x18);
-    bVar2 = true;
-    if (bVar1) goto LAB_826f8248;
+    cVar2 = bdByteBuffer__readString(*param_2,param_1 + 0x4026,0x18);
+    uVar3 = 1;
+    if (cVar2 != '\0') goto LAB_826f8248;
   }
-  bVar2 = false;
+  uVar3 = 0;
 LAB_826f8248:
-  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  return bVar2;
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  return uVar3;
 }
 
 
-// 826F6F48  sizeOf  (social/elite_clan.cpp:2118)
+// 826F6F48  PublicTeamProfile::sizeOf  (social/elite_clan.cpp:2118)
 
-uint __thiscall PublicTeamProfile::sizeOf(PublicTeamProfile *this)
+undefined8 PublicTeamProfile__sizeOf(void)
 
 {
   return 0x4040;
 }
 
 
-// 826F6F50  PrivateTeamProfile  (social/elite_clan.cpp:2124)
+// 826F6F50  PrivateTeamProfile::PrivateTeamProfile  (social/elite_clan.cpp:2124)
 
-PrivateTeamProfile * __thiscall PrivateTeamProfile::PrivateTeamProfile(PrivateTeamProfile *this)
+undefined4 * PrivateTeamProfile__PrivateTeamProfile(undefined4 *param_1)
 
 {
-  bdTeamProfile::bdTeamProfile((bdTeamProfile *)this);
-  this->_padding_ = (int)&_vftable_;
-  return this;
+  bdTeamProfile__bdTeamProfile();
+  *param_1 = &PTR_PrivateTeamProfile___scalar_deleting_destructor__821aef24;
+  return param_1;
 }
 
 
-// 826F6F90  serialize  (social/elite_clan.cpp:2129)
+// 826F6F90  PrivateTeamProfile::serialize  (social/elite_clan.cpp:2129)
 
-void __thiscall PrivateTeamProfile::serialize(PrivateTeamProfile *this,bdByteBuffer *param_1)
+void PrivateTeamProfile__serialize(longlong param_1,undefined8 param_2)
 
 {
-  bdByteBuffer::writeString(param_1,this->m_membermotd,0x5f);
+  bdByteBuffer__writeString(param_2,param_1 + 0x18,0x5f);
   return;
 }
 
 
-// 826F8270  deserialize  (social/elite_clan.cpp:2135)
+// 826F8270  PrivateTeamProfile::deserialize  (social/elite_clan.cpp:2135)
 
-bool __thiscall
-PrivateTeamProfile::deserialize(PrivateTeamProfile *this,bdReference<bdByteBuffer> param_1)
+undefined8 PrivateTeamProfile__deserialize(longlong param_1,undefined4 *param_2)
 
 {
-  bool bVar1;
-  bool bVar2;
+  char cVar1;
+  undefined8 uVar2;
   
-  bVar1 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_memberTeamID)
-  ;
-  if (bVar1) {
-    bVar1 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_membermotd,0x5f);
-    bVar2 = true;
-    if (bVar1) goto LAB_826f82d4;
+  cVar1 = bdByteBuffer__readUInt64(*param_2,param_1 + 0x10);
+  if (cVar1 != '\0') {
+    cVar1 = bdByteBuffer__readString(*param_2,param_1 + 0x18,0x5f);
+    uVar2 = 1;
+    if (cVar1 != '\0') goto LAB_826f82d4;
   }
-  bVar2 = false;
+  uVar2 = 0;
 LAB_826f82d4:
-  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  return bVar2;
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  return uVar2;
 }
 
 
-// 826F6FA8  sizeOf  (social/elite_clan.cpp:2144)
+// 826F6FA8  PrivateTeamProfile::sizeOf  (social/elite_clan.cpp:2144)
 
-uint __thiscall PrivateTeamProfile::sizeOf(PrivateTeamProfile *this)
+undefined8 PrivateTeamProfile__sizeOf(void)
 
 {
   return 0x78;
 }
 
 
-// 826F82F8  `scalar_deleting_destructor'  (line unknown)
+// 826F82F8  PublicTeamProfile::`scalar_deleting_destructor'  (line unknown)
 
-void * __thiscall
-PublicTeamProfile::_scalar_deleting_destructor_(PublicTeamProfile *this,uint param_1)
+undefined8 PublicTeamProfile___scalar_deleting_destructor_(undefined8 param_1,ulonglong param_2)
 
 {
-  bdTeamProfile::~bdTeamProfile((bdTeamProfile *)this);
-  if ((param_1 & 1) != 0) {
-    bdMemory::deallocate(this);
+  bdTeamProfile___bdTeamProfile();
+  if ((param_2 & 1) != 0) {
+    bdMemory__deallocate(param_1);
   }
-  return this;
+  return param_1;
 }
 
 
-// 826F8348  `scalar_deleting_destructor'  (line unknown)
+// 826F8348  PrivateTeamProfile::`scalar_deleting_destructor'  (line unknown)
 
-void * __thiscall
-PrivateTeamProfile::_scalar_deleting_destructor_(PrivateTeamProfile *this,uint param_1)
+undefined8 PrivateTeamProfile___scalar_deleting_destructor_(undefined8 param_1,ulonglong param_2)
 
 {
-  bdTeamProfile::~bdTeamProfile((bdTeamProfile *)this);
-  if ((param_1 & 1) != 0) {
-    bdMemory::deallocate(this);
+  bdTeamProfile___bdTeamProfile();
+  if ((param_2 & 1) != 0) {
+    bdMemory__deallocate(param_1);
   }
-  return this;
+  return param_1;
 }
 
 
 // 82940670  `dynamic_atexit_destructor_for_'g_DWEliteClanTask''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__g_DWEliteClanTask__(void)
 
 {
-  bdRemoteTask *pbVar1;
+  undefined4 *puVar1;
   uint uVar2;
-  longlong lVar3;
-  uint *puVar4;
-  longlong lVar5;
-  bdReference<bdRemoteTask> *pbVar6;
+  uint uVar3;
+  longlong lVar4;
+  uint *puVar5;
+  longlong lVar6;
+  uint *puVar7;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_29();
-  lVar5 = 3;
-  pbVar6 = &g_DWEliteClanMOTDUpdateTask;
+  lVar6 = 3;
+  puVar7 = &DAT_844f9fec;
   do {
-    pbVar6 = pbVar6 + -1;
-    pbVar1 = pbVar6->m_ptr;
-    if (ZEXT48(pbVar1) != 0) {
-      lVar3 = ZEXT48(pbVar1) + 4;
+    puVar7 = puVar7 + -1;
+    uVar2 = *puVar7;
+    if ((ulonglong)uVar2 != 0) {
+      lVar4 = (ulonglong)uVar2 + 4;
       do {
-        puVar4 = (uint *)lVar3;
+        puVar5 = (uint *)lVar4;
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,lVar3);
-          *puVar4 = uVar2;
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+          *puVar5 = uVar3;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      if (*(int *)&pbVar1->field_0x4 == 0) {
-        pbVar1 = pbVar6->m_ptr;
-        if (pbVar1 != (bdRemoteTask *)0x0) {
-          (**(code **)pbVar1->_padding_)(pbVar1,1);
+      if (*(int *)(uVar2 + 4) == 0) {
+        puVar1 = (undefined4 *)*puVar7;
+        if (puVar1 != (undefined4 *)0x0) {
+          (**(code **)*puVar1)(puVar1,1);
         }
-        pbVar6->m_ptr = (bdRemoteTask *)0x0;
+        *puVar7 = 0;
       }
     }
-    lVar5 = lVar5 + -1;
-    in_cr0 = (lVar5 == 0) << 1;
-  } while (-1 < lVar5);
+    lVar6 = lVar6 + -1;
+    in_cr0 = (lVar6 == 0) << 1;
+  } while (-1 < lVar6);
   __restgprlr_29();
   return;
 }
@@ -2181,38 +2043,31 @@ void _dynamic_atexit_destructor_for__g_DWEliteClanTask__(void)
 
 // 82940700  `dynamic_atexit_destructor_for_'g_DWEliteClanMOTDUpdateTask''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__g_DWEliteClanMOTDUpdateTask__(void)
 
 {
-  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&g_DWEliteClanMOTDUpdateTask);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(0xffffffff844f9fec);
   return;
 }
 
 
 // 82940710  `dynamic_atexit_destructor_for_'g_EliteClanStore''  (line unknown)
 
-/* WARNING: Type propagation algorithm not settling */
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__g_EliteClanStore__(void)
 
 {
   longlong lVar1;
-  bdTeamProfile *pbVar2;
+  longlong lVar2;
   
   lVar1 = 3;
-  pbVar2 = (bdTeamProfile *)(s_configFileBuffer + 0x23d8);
+  lVar2 = -0x7bae9f50;
   do {
-    bdTeamProfile::~bdTeamProfile(pbVar2 + 0xfffff99c);
-    bdTeamProfile::~bdTeamProfile((bdTeamProfile *)((int)(pbVar2 + 0xfffff994) + 8U));
-    _vector_destructor_iterator_
-              ((ulong64 *)((int)(pbVar2 + 0xfffff73c) + 8),0x60,100,bdTeamMember::~bdTeamMember);
-    _vector_destructor_iterator_
-              ((ulong64 *)((int)(pbVar2 + 0xfffff736) + 8),0x60,1,bdTeamInfo::~bdTeamInfo);
+    bdTeamProfile___bdTeamProfile(lVar2 + -0x6640);
+    bdTeamProfile___bdTeamProfile(lVar2 + -0x66b8);
+    _vector_destructor_iterator_(lVar2 + -0x8c38,0x60,100,0xffffffff829094e0);
+    _vector_destructor_iterator_(lVar2 + -0x8c98,0x60,1,0xffffffff82909688);
     lVar1 = lVar1 + -1;
-    pbVar2 = (bdTeamProfile *)((int)(pbVar2 + 0xfffff994) + 8U);
+    lVar2 = lVar2 + -0x66b8;
   } while (-1 < lVar1);
   return;
 }

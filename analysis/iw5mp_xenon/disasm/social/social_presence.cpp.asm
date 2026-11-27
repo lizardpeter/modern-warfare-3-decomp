@@ -1969,15 +1969,15 @@ LAB_827081f0:
   827081F0  38210080             addi r1,r1,0x80
   827081F4  4820E514             b 0x82916708
 
-; 82706FE8  `default_constructor_closure'  (line unknown)
+; 82706FE8  bdRichPresenceInfo::`default_constructor_closure'  (line unknown)
   82706FE8  38A00000             li r5,0x0
   82706FEC  38800000             li r4,0x0
   82706FF0  482052C0             b 0x8290c2b0
 
-; 82706FF8  ~bdRichPresenceInfo  (line unknown)
+; 82706FF8  bdRichPresenceInfo::~bdRichPresenceInfo  (line unknown)
   82706FF8  481F5FA0             b 0x828fcf98
 
-; 82708B40  ~SocialPresenceStore  (line unknown)
+; 82708B40  SocialPresenceStore::~SocialPresenceStore  (line unknown)
   82708B40  7D8802A6             mfspr r12,LR
   82708B44  9181FFF8             stw r12,-0x8(r1)
   82708B48  FBC1FFE8             std r30,-0x18(r1)

@@ -2,7 +2,7 @@
 
 // 82926480  raise  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/winsig.c:330)
 
-int raise(int param_1)
+int raise(int _SigNum)
 
 {
   void *pvVar1;
@@ -11,22 +11,22 @@ int raise(int param_1)
   undefined8 uVar3;
   int *piVar5;
   void *pvVar6;
-  _func___cdecl_void_int *p_Var7;
-  _func___cdecl_void_int **pp_Var8;
+  code *pcVar7;
+  undefined4 *puVar8;
   int iStack00000014;
-  _tiddata *local_48;
+  _ptiddata local_48;
   void *local_40;
   int local_3c;
   
-  iVar4 = __savegprlr_26(param_1);
+  iVar4 = __savegprlr_26(_SigNum);
   bVar2 = false;
-  local_48 = (_tiddata *)0x0;
+  local_48 = (_ptiddata)0x0;
   iStack00000014 = iVar4;
   if (iVar4 < 0xc) {
     if (iVar4 != 0xb) {
       if (iVar4 == 2) {
-        pp_Var8 = &ctrlc_action;
-        p_Var7 = ctrlc_action;
+        puVar8 = &DAT_84896068;
+        pcVar7 = DAT_84896068;
         goto LAB_829265c0;
       }
       if (iVar4 != 4) {
@@ -35,7 +35,7 @@ int raise(int param_1)
       }
     }
     local_48 = _getptd_noexit();
-    if (local_48 == (_tiddata *)0x0) {
+    if (local_48 == (_ptiddata)0x0) {
 LAB_829264e8:
       uVar3 = 0xffffffffffffffff;
       goto LAB_82926700;
@@ -49,17 +49,17 @@ LAB_829264e8:
     if (((void *)((int)pvVar1 + 0x90U) <= pvVar6) || (*(int *)((int)pvVar6 + 4) != iVar4)) {
       pvVar6 = (void *)0x0;
     }
-    pp_Var8 = (_func___cdecl_void_int **)((int)pvVar6 + 8);
-    p_Var7 = *(_func___cdecl_void_int **)((int)pvVar6 + 8);
+    puVar8 = (undefined4 *)((int)pvVar6 + 8);
+    pcVar7 = *(code **)((int)pvVar6 + 8);
   }
   else {
     if (iVar4 == 0xf) {
-      pp_Var8 = &term_action;
-      p_Var7 = term_action;
+      puVar8 = &DAT_84896074;
+      pcVar7 = DAT_84896074;
     }
     else if (iVar4 == 0x15) {
-      pp_Var8 = &ctrlbreak_action;
-      p_Var7 = ctrlbreak_action;
+      puVar8 = &DAT_8489606c;
+      pcVar7 = DAT_8489606c;
     }
     else {
       if (iVar4 != 0x16) {
@@ -70,14 +70,14 @@ LAB_82926574:
         goto LAB_829264e8;
       }
 LAB_82926588:
-      pp_Var8 = &abort_action;
-      p_Var7 = abort_action;
+      puVar8 = &DAT_84896070;
+      pcVar7 = DAT_84896070;
     }
 LAB_829265c0:
     bVar2 = true;
   }
-  if (p_Var7 != (_func___cdecl_void_int *)0x1) {
-    if (p_Var7 == (_func___cdecl_void_int *)0x0) {
+  if (pcVar7 != (code *)0x1) {
+    if (pcVar7 == (code *)0x0) {
                     /* WARNING: Subroutine does not return */
       _exit(3);
     }
@@ -93,7 +93,7 @@ LAB_829265c0:
         goto LAB_82926638;
       }
 LAB_82926688:
-      *pp_Var8 = (_func___cdecl_void_int *)0x0;
+      *puVar8 = 0;
     }
     else {
 LAB_82926638:
@@ -105,10 +105,10 @@ LAB_82926638:
     FUN_82926728();
     iVar4 = iStack00000014;
     if (iStack00000014 == 8) {
-      (*p_Var7)(8);
+      (*pcVar7)(8,local_48->_tfpecode);
     }
     else {
-      (*p_Var7)(iStack00000014);
+      (*pcVar7)(iStack00000014);
       if ((iVar4 != 0xb) && (iVar4 != 4)) goto LAB_829266fc;
     }
     local_48->_tpxcptinfoptrs = local_40;
@@ -128,9 +128,9 @@ LAB_82926700:
 
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-_func___cdecl_void_int * __get_sigabrt(void)
+_PHNDLR __get_sigabrt(void)
 
 {
-  return abort_action;
+  return DAT_84896070;
 }
 

@@ -2,259 +2,257 @@
 
 // 827B4660  start_pass_huff  (jpeg-6/jchuff.c:107)
 
-void start_pass_huff(jpeg_compress_struct *param_1,uchar param_2)
+void start_pass_huff(undefined8 param_1,ulonglong param_2)
 
 {
-  jpeg_entropy_encoder *pjVar1;
-  int iVar2;
-  int iVar3;
-  _func___cdecl_void_jpeg_compress_struct_ptr_uchar *p_Var4;
-  jpeg_compress_struct *pjVar5;
-  _func___cdecl_uchar_jpeg_compress_struct_ptr_short_64__ptr_ptr *p_Var6;
-  _func___cdecl_void_jpeg_compress_struct_ptr *p_Var7;
-  ulonglong uVar8;
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int *piVar5;
+  undefined4 uVar6;
+  int *piVar7;
+  code *pcVar8;
   code *pcVar9;
-  code *pcVar10;
-  _func___cdecl_uchar_jpeg_compress_struct_ptr_short_64__ptr_ptr **pp_Var11;
-  int iVar12;
-  jpeg_component_info **ppjVar13;
+  longlong lVar10;
+  int iVar11;
+  int *piVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
   
-  uVar8 = (ulonglong)(char)param_2;
-  pjVar5 = (jpeg_compress_struct *)__savegprlr_22(param_1);
-  pjVar1 = pjVar5->entropy;
-  if ((uVar8 & 0xff) == 0) {
-    pcVar10 = encode_mcu_huff;
-    pcVar9 = finish_pass_huff;
+  piVar5 = (int *)__savegprlr_22();
+  uVar1 = piVar5[0x59];
+  uVar15 = (ulonglong)uVar1;
+  if ((param_2 & 0xff) == 0) {
+    pcVar9 = encode_mcu_huff;
+    pcVar8 = finish_pass_huff;
   }
   else {
-    pcVar10 = encode_mcu_gather;
-    pcVar9 = finish_pass_gather;
+    pcVar9 = encode_mcu_gather;
+    pcVar8 = finish_pass_gather;
   }
-  pjVar1->finish_pass = pcVar9;
-  pjVar1->encode_mcu = pcVar10;
-  iVar12 = 0;
-  if (0 < pjVar5->comps_in_scan) {
-    pp_Var11 = &pjVar1[1].encode_mcu;
-    ppjVar13 = pjVar5->cur_comp_info;
+  *(code **)(uVar1 + 8) = pcVar8;
+  *(code **)(uVar1 + 4) = pcVar9;
+  iVar11 = 0;
+  piVar7 = piVar5;
+  if (0 < piVar5[0x3b]) {
+    lVar10 = uVar15 + 0x10;
+    piVar12 = piVar5 + 0x3c;
     do {
-      iVar2 = (*ppjVar13)->dc_tbl_no;
-      iVar3 = (*ppjVar13)->ac_tbl_no;
-      if ((uVar8 & 0xff) == 0) {
-        jpeg_make_c_derived_tbl
-                  (pjVar5,'\x01',iVar2,(c_derived_tbl **)(&pjVar1[3].finish_pass + iVar2));
-        jpeg_make_c_derived_tbl(pjVar5,'\0',iVar3,(c_derived_tbl **)(&pjVar1[5].start_pass + iVar3))
-        ;
+      uVar2 = *(uint *)(*piVar12 + 0x14);
+      uVar14 = (ulonglong)uVar2;
+      uVar3 = *(uint *)(*piVar12 + 0x18);
+      uVar13 = (ulonglong)uVar3;
+      if ((param_2 & 0xff) == 0) {
+        jpeg_make_c_derived_tbl(piVar5,1,uVar14,(uVar14 + 0xb & 0x3fffffff) * 4 + uVar15);
+        piVar7 = (int *)jpeg_make_c_derived_tbl
+                                  (piVar5,0,uVar13,(uVar13 + 0xf & 0x3fffffff) * 4 + uVar15);
       }
       else {
-        if ((iVar2 < 0) || (3 < iVar2)) {
-          pjVar5->err->msg_code = 0x32;
-          (pjVar5->err->msg_parm).i[0] = iVar2;
-          (*pjVar5->err->error_exit)((jpeg_common_struct *)pjVar5);
+        if (((int)uVar2 < 0) || (3 < (int)uVar2)) {
+          *(undefined4 *)(*piVar5 + 0x14) = 0x32;
+          *(uint *)(*piVar5 + 0x18) = uVar2;
+          (**(code **)*piVar5)(piVar5);
         }
-        if ((iVar3 < 0) || (3 < iVar3)) {
-          pjVar5->err->msg_code = 0x32;
-          (pjVar5->err->msg_parm).i[0] = iVar3;
-          (*pjVar5->err->error_exit)((jpeg_common_struct *)pjVar5);
+        if (((int)uVar3 < 0) || (3 < (int)uVar3)) {
+          *(undefined4 *)(*piVar5 + 0x14) = 0x32;
+          *(uint *)(*piVar5 + 0x18) = uVar3;
+          (**(code **)*piVar5)(piVar5);
         }
-        if ((&pjVar1[6].encode_mcu)[iVar2] ==
-            (_func___cdecl_uchar_jpeg_compress_struct_ptr_short_64__ptr_ptr *)0x0) {
-          p_Var6 = (*pjVar5->mem->alloc_small)((jpeg_common_struct *)pjVar5,1,0x404);
-          (&pjVar1[6].encode_mcu)[iVar2] = p_Var6;
+        iVar4 = (int)((uVar14 + 0x13 & 0x3fffffff) << 2);
+        if (*(int *)(iVar4 + uVar1) == 0) {
+          uVar6 = (**(code **)piVar5[1])(piVar5,1,0x404);
+          *(undefined4 *)(iVar4 + uVar1) = uVar6;
         }
-        memset();
-        if ((&pjVar1[7].finish_pass)[iVar3] == (_func___cdecl_void_jpeg_compress_struct_ptr *)0x0) {
-          p_Var7 = (*pjVar5->mem->alloc_small)((jpeg_common_struct *)pjVar5,1,0x404);
-          (&pjVar1[7].finish_pass)[iVar3] = p_Var7;
+        memset(*(void **)(iVar4 + uVar1),0,0x404);
+        iVar4 = (int)((uVar13 + 0x17 & 0x3fffffff) << 2);
+        if (*(int *)(iVar4 + uVar1) == 0) {
+          uVar6 = (**(code **)piVar5[1])(piVar5,1,0x404);
+          *(undefined4 *)(iVar4 + uVar1) = uVar6;
         }
-        memset();
+        piVar7 = memset(*(void **)(iVar4 + uVar1),0,0x404);
       }
-      pp_Var11 = pp_Var11 + 1;
-      *pp_Var11 = (_func___cdecl_uchar_jpeg_compress_struct_ptr_short_64__ptr_ptr *)0x0;
-      iVar12 = iVar12 + 1;
-      ppjVar13 = ppjVar13 + 1;
-    } while (iVar12 < pjVar5->comps_in_scan);
+      lVar10 = lVar10 + 4;
+      *(undefined4 *)lVar10 = 0;
+      iVar11 = iVar11 + 1;
+      piVar12 = piVar12 + 1;
+    } while (iVar11 < piVar5[0x3b]);
   }
-  pjVar1[1].encode_mcu = (_func___cdecl_uchar_jpeg_compress_struct_ptr_short_64__ptr_ptr *)0x0;
-  pjVar1[1].start_pass = (_func___cdecl_void_jpeg_compress_struct_ptr_uchar *)0x0;
-  p_Var4 = (_func___cdecl_void_jpeg_compress_struct_ptr_uchar *)pjVar5->restart_interval;
-  pjVar1[3].encode_mcu = (_func___cdecl_uchar_jpeg_compress_struct_ptr_short_64__ptr_ptr *)0x0;
-  pjVar1[3].start_pass = p_Var4;
-  __restgprlr_22();
+  *(undefined4 *)(uVar1 + 0x10) = 0;
+  *(undefined4 *)(uVar1 + 0xc) = 0;
+  iVar11 = piVar5[0x31];
+  *(undefined4 *)(uVar1 + 0x28) = 0;
+  *(int *)(uVar1 + 0x24) = iVar11;
+  __restgprlr_22(piVar7);
   return;
 }
 
 
 // 827B3068  jpeg_make_c_derived_tbl  (jpeg-6/jchuff.c:181)
 
-void jpeg_make_c_derived_tbl
-               (jpeg_compress_struct *param_1,uchar param_2,int param_3,c_derived_tbl **param_4)
+void jpeg_make_c_derived_tbl(undefined8 param_1,ulonglong param_2,longlong param_3,int *param_4)
 
 {
   char cVar1;
   byte bVar2;
   int iVar3;
   int *piVar4;
-  c_derived_tbl *pcVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  int iVar8;
-  ulonglong uVar9;
-  char *pcVar10;
-  uint *puVar11;
-  int iVar13;
+  int iVar5;
+  void *pvVar6;
+  ulonglong uVar7;
+  char *pcVar8;
+  undefined4 *puVar9;
+  int iVar11;
+  ulonglong uVar10;
+  void *_Dst;
+  uint uVar13;
   ulonglong uVar12;
-  uint uVar15;
-  ulonglong uVar14;
-  int iVar16;
+  int iVar14;
+  int iVar15;
   char acStack_571 [269];
-  uint auStack_464 [281];
+  undefined4 auStack_464 [281];
   
-  lVar7 = (longlong)param_3;
-  uVar6 = (ulonglong)(char)param_2;
-  piVar4 = (int *)__savegprlr_22(param_1);
-  iVar8 = (int)lVar7;
-  if ((iVar8 < 0) || (3 < iVar8)) {
+  piVar4 = (int *)__savegprlr_22();
+  iVar5 = (int)param_3;
+  if ((iVar5 < 0) || (3 < iVar5)) {
     *(undefined4 *)(*piVar4 + 0x14) = 0x32;
-    *(int *)(*piVar4 + 0x18) = iVar8;
+    *(int *)(*piVar4 + 0x18) = iVar5;
     (**(code **)*piVar4)(piVar4);
   }
-  uVar9 = lVar7 + 0x18;
-  if ((uVar6 & 0xff) == 0) {
-    uVar9 = lVar7 + 0x1c;
+  uVar7 = param_3 + 0x18;
+  if ((param_2 & 0xff) == 0) {
+    uVar7 = param_3 + 0x1c;
   }
-  iVar3 = *(int *)((int)((uVar9 & 0xffffffff) << 2) + (int)piVar4);
+  iVar3 = *(int *)((int)((uVar7 & 0xffffffff) << 2) + (int)piVar4);
   if (iVar3 == 0) {
     *(undefined4 *)(*piVar4 + 0x14) = 0x32;
-    *(int *)(*piVar4 + 0x18) = iVar8;
+    *(int *)(*piVar4 + 0x18) = iVar5;
     (**(code **)*piVar4)(piVar4);
   }
-  if (*param_4 == (c_derived_tbl *)0x0) {
-    pcVar5 = (c_derived_tbl *)(**(code **)piVar4[1])(piVar4,1,0x500);
-    *param_4 = pcVar5;
+  if (*param_4 == 0) {
+    iVar5 = (**(code **)piVar4[1])(piVar4,1,0x500);
+    *param_4 = iVar5;
   }
-  pcVar5 = *param_4;
-  iVar8 = 0;
-  iVar13 = 1;
+  iVar5 = *param_4;
+  iVar14 = 0;
+  iVar11 = 1;
   do {
-    bVar2 = *(byte *)(iVar13 + iVar3);
-    uVar15 = (uint)bVar2;
-    if (0x100 < (int)((uint)bVar2 + iVar8)) {
+    bVar2 = *(byte *)(iVar11 + iVar3);
+    uVar13 = (uint)bVar2;
+    if (0x100 < (int)((uint)bVar2 + iVar14)) {
       *(undefined4 *)(*piVar4 + 0x14) = 8;
       (**(code **)*piVar4)(piVar4);
     }
     if (bVar2 != 0) {
-      iVar16 = uVar15 + iVar8;
-      pcVar10 = acStack_571 + iVar8;
+      iVar15 = uVar13 + iVar14;
+      pcVar8 = acStack_571 + iVar14;
       do {
-        pcVar10 = pcVar10 + 1;
-        *pcVar10 = (char)iVar13;
-        uVar15 = uVar15 - 1;
-        iVar8 = iVar16;
-      } while (uVar15 != 0);
+        pcVar8 = pcVar8 + 1;
+        *pcVar8 = (char)iVar11;
+        uVar13 = uVar13 - 1;
+        iVar14 = iVar15;
+      } while (uVar13 != 0);
     }
-    iVar13 = iVar13 + 1;
-  } while (iVar13 < 0x11);
-  uVar14 = 0;
-  acStack_571[iVar8 + 1] = '\0';
-  iVar13 = 0;
-  uVar12 = (ulonglong)acStack_571[1];
-  uVar9 = 0x100000001 << (uVar12 & 0x1f) | 0x100000001U >> 0x40 - (uVar12 & 0x1f);
+    iVar11 = iVar11 + 1;
+  } while (iVar11 < 0x11);
+  uVar12 = 0;
+  acStack_571[iVar14 + 1] = '\0';
+  iVar11 = 0;
+  uVar10 = (ulonglong)acStack_571[1];
+  uVar7 = 0x100000001 << (uVar10 & 0x1f) | 0x100000001U >> 0x40 - (uVar10 & 0x1f);
   while (acStack_571[1] != '\0') {
-    pcVar10 = acStack_571 + iVar13 + 1;
-    if ((int)*pcVar10 == (int)uVar12) {
-      puVar11 = auStack_464 + iVar13;
+    pcVar8 = acStack_571 + iVar11 + 1;
+    if ((int)*pcVar8 == (int)uVar10) {
+      puVar9 = auStack_464 + iVar11;
       do {
-        pcVar10 = pcVar10 + 1;
-        cVar1 = *pcVar10;
-        iVar13 = iVar13 + 1;
-        puVar11 = puVar11 + 1;
-        *puVar11 = (uint)uVar14;
-        uVar14 = uVar14 + 1;
-      } while ((int)cVar1 == (int)uVar12);
+        pcVar8 = pcVar8 + 1;
+        cVar1 = *pcVar8;
+        iVar11 = iVar11 + 1;
+        puVar9 = puVar9 + 1;
+        *puVar9 = (int)uVar12;
+        uVar12 = uVar12 + 1;
+      } while ((int)cVar1 == (int)uVar10);
     }
-    if ((int)uVar9 <= (int)uVar14) {
+    if ((int)uVar7 <= (int)uVar12) {
       *(undefined4 *)(*piVar4 + 0x14) = 8;
       (**(code **)*piVar4)(piVar4);
     }
-    uVar14 = (uVar14 & 0x7fffffff) << 1;
-    uVar12 = uVar12 + 1;
-    uVar9 = (uVar9 & 0xffffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f;
-    acStack_571[1] = acStack_571[iVar13 + 1];
+    uVar12 = (uVar12 & 0x7fffffff) << 1;
+    uVar10 = uVar10 + 1;
+    uVar7 = (uVar7 & 0xffffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f;
+    acStack_571[1] = acStack_571[iVar11 + 1];
   }
-  memset();
-  iVar13 = 0;
-  if (0 < iVar8) {
-    puVar11 = auStack_464;
+  _Dst = (void *)(iVar5 + 0x400);
+  pvVar6 = memset(_Dst,0,0x100);
+  iVar11 = 0;
+  if (0 < iVar14) {
+    puVar9 = auStack_464;
     do {
-      bVar2 = *(byte *)(iVar3 + 0x11 + iVar13);
-      if (((int)((-(uint)((uVar6 & 0xff) != 0) & 0xffffff10) + 0xff) < (int)(uint)bVar2) ||
-         (pcVar5->ehufsi[bVar2] != '\0')) {
+      bVar2 = *(byte *)(iVar3 + 0x11 + iVar11);
+      if (((int)((-(uint)((param_2 & 0xff) != 0) & 0xffffff10) + 0xff) < (int)(uint)bVar2) ||
+         (*(char *)((int)_Dst + (uint)bVar2) != '\0')) {
         *(undefined4 *)(*piVar4 + 0x14) = 8;
-        (**(code **)*piVar4)(piVar4);
+        pvVar6 = (void *)(**(code **)*piVar4)(piVar4);
       }
-      puVar11 = puVar11 + 1;
-      cVar1 = acStack_571[iVar13 + 1];
-      iVar13 = iVar13 + 1;
-      pcVar5->ehufco[bVar2] = *puVar11;
-      pcVar5->ehufsi[bVar2] = cVar1;
-    } while (iVar13 < iVar8);
+      puVar9 = puVar9 + 1;
+      cVar1 = acStack_571[iVar11 + 1];
+      iVar11 = iVar11 + 1;
+      *(undefined4 *)((uint)bVar2 * 4 + iVar5) = *puVar9;
+      *(char *)((int)_Dst + (uint)bVar2) = cVar1;
+    } while (iVar11 < iVar14);
   }
-  __restgprlr_22();
+  __restgprlr_22(pvVar6);
   return;
 }
 
 
 // 827B3308  dump_buffer  (jpeg-6/jchuff.c:280)
 
-uchar dump_buffer(working_state *param_1)
+bool dump_buffer(undefined4 *param_1)
 
 {
-  jpeg_destination_mgr *pjVar1;
-  uchar uVar2;
+  undefined4 *puVar1;
+  char cVar2;
   
-  pjVar1 = param_1->cinfo->dest;
-  uVar2 = (*pjVar1->empty_output_buffer)(param_1->cinfo);
-  if (uVar2 != '\0') {
-    param_1->next_output_byte = pjVar1->next_output_byte;
-    param_1->free_in_buffer = pjVar1->free_in_buffer;
+  puVar1 = *(undefined4 **)(param_1[8] + 0x20);
+  cVar2 = (*(code *)puVar1[3])();
+  if (cVar2 != '\0') {
+    *param_1 = *puVar1;
+    param_1[1] = puVar1[1];
   }
-  return uVar2 != '\0';
+  return cVar2 != '\0';
 }
 
 
 // 827B3378  emit_bits  (jpeg-6/jchuff.c:304)
 
-uchar emit_bits(working_state *param_1,uint param_2,int param_3)
+void emit_bits(undefined8 param_1,uint param_2,uint param_3)
 
 {
   uint uVar1;
   int *piVar2;
   int *piVar3;
   char cVar4;
-  uchar uVar5;
-  longlong lVar6;
-  uint uVar7;
-  longlong lVar8;
-  int iVar9;
+  uint uVar5;
+  int iVar6;
   
-  lVar6 = (longlong)param_3;
-  piVar3 = (int *)__savegprlr_26(param_1);
-  uVar7 = piVar3[3];
-  if ((uint)lVar6 == 0) {
+  piVar3 = (int *)__savegprlr_26();
+  iVar6 = piVar3[3];
+  if (param_3 == 0) {
     *(undefined4 *)(*(int *)piVar3[8] + 0x14) = 0x28;
     (*(code *)**(undefined4 **)piVar3[8])();
   }
-  lVar8 = (ulonglong)uVar7 + lVar6;
-  iVar9 = (int)lVar8;
-  uVar7 = ((1 << ((uint)lVar6 & 0x3f)) - 1U & param_2) << (0x18U - iVar9 & 0x3f) | piVar3[2];
+  iVar6 = iVar6 + param_3;
+  uVar5 = ((1 << (param_3 & 0x3f)) - 1U & param_2) << (0x18U - iVar6 & 0x3f) | piVar3[2];
   do {
-    if (iVar9 < 8) {
-      piVar3[2] = uVar7;
-      piVar3[3] = iVar9;
-      uVar5 = __restgprlr_26(1);
-      return uVar5;
+    if (iVar6 < 8) {
+      piVar3[2] = uVar5;
+      piVar3[3] = iVar6;
+      __restgprlr_26(1);
+      return;
     }
-    *(char *)*piVar3 = (char)(uVar7 >> 0x10);
+    *(char *)*piVar3 = (char)(uVar5 >> 0x10);
     uVar1 = piVar3[1];
     *piVar3 = *piVar3 + 1;
     piVar3[1] = (int)((ulonglong)uVar1 - 1);
@@ -265,7 +263,7 @@ uchar emit_bits(working_state *param_1,uint param_2,int param_3)
       *piVar3 = *piVar2;
       piVar3[1] = piVar2[1];
     }
-    if (((int)uVar7 >> 0x10 & 0xffU) == 0xff) {
+    if (((int)uVar5 >> 0x10 & 0xffU) == 0xff) {
       *(undefined1 *)*piVar3 = 0;
       uVar1 = piVar3[1];
       *piVar3 = *piVar3 + 1;
@@ -275,314 +273,296 @@ uchar emit_bits(working_state *param_1,uint param_2,int param_3)
         cVar4 = (*(code *)piVar2[3])();
         if (cVar4 == '\0') {
 LAB_827b34fc:
-          uVar5 = __restgprlr_26(0);
-          return uVar5;
+          __restgprlr_26(0);
+          return;
         }
         *piVar3 = *piVar2;
         piVar3[1] = piVar2[1];
       }
     }
-    lVar8 = lVar8 + -8;
-    uVar7 = uVar7 << 8;
-    iVar9 = (int)lVar8;
+    iVar6 = iVar6 + -8;
+    uVar5 = uVar5 << 8;
   } while( true );
 }
 
 
 // 827B3508  flush_bits  (jpeg-6/jchuff.c:341)
 
-uchar flush_bits(working_state *param_1)
+undefined8 flush_bits(int param_1)
 
 {
-  uchar uVar1;
+  char cVar1;
   
-  uVar1 = emit_bits(param_1,0x7f,7);
-  if (uVar1 == '\0') {
-    return '\0';
+  cVar1 = emit_bits(param_1,0x7f,7);
+  if (cVar1 == '\0') {
+    return 0;
   }
-  (param_1->cur).EOBRUN = 0;
-  (param_1->cur).last_dc_val[0] = 0;
-  return '\x01';
+  *(undefined4 *)(param_1 + 8) = 0;
+  *(undefined4 *)(param_1 + 0xc) = 0;
+  return 1;
 }
 
 
 // 827B3570  encode_one_block  (jpeg-6/jchuff.c:355)
 
-uchar encode_one_block(working_state *param_1,short *param_2,int param_3,c_derived_tbl *param_4,
-                      c_derived_tbl *param_5)
+void encode_one_block(undefined8 param_1,short *param_2,longlong param_3,int param_4,
+                     undefined4 *param_5)
 
 {
   short sVar1;
-  working_state *pwVar3;
-  uchar uVar4;
+  int iVar3;
+  char cVar4;
   undefined8 uVar2;
   longlong lVar5;
   int iVar6;
   int *piVar7;
-  uint uVar8;
+  int iVar8;
   longlong lVar9;
   int iVar10;
-  uint uVar11;
-  int iVar12;
   
-  lVar9 = (longlong)param_3;
-  pwVar3 = (working_state *)__savegprlr_23(param_1);
-  lVar9 = *param_2 - lVar9;
-  lVar5 = lVar9;
-  if (lVar9 < 0) {
-    lVar5 = -lVar9;
-    lVar9 = lVar9 + -1;
+  iVar3 = __savegprlr_23();
+  param_3 = *param_2 - param_3;
+  lVar5 = param_3;
+  if (param_3 < 0) {
+    lVar5 = -param_3;
+    param_3 = param_3 + -1;
   }
-  iVar10 = 0;
+  iVar8 = 0;
   if ((int)lVar5 != 0) {
     do {
       lVar5 = (longlong)((int)lVar5 >> 1);
-      iVar10 = iVar10 + 1;
+      iVar8 = iVar8 + 1;
     } while (lVar5 != 0);
-    if (0xb < iVar10) {
-      pwVar3->cinfo->err->msg_code = 6;
-      (*pwVar3->cinfo->err->error_exit)((jpeg_common_struct *)pwVar3->cinfo);
+    if (0xb < iVar8) {
+      *(undefined4 *)(**(int **)(iVar3 + 0x20) + 0x14) = 6;
+      (**(code **)**(undefined4 **)(iVar3 + 0x20))();
     }
   }
-  uVar4 = emit_bits(pwVar3,param_4->ehufco[iVar10],(int)param_4->ehufsi[iVar10]);
-  if ((uVar4 == '\0') ||
-     ((iVar10 != 0 && (uVar4 = emit_bits(pwVar3,(uint)lVar9,iVar10), uVar4 == '\0')))) {
+  cVar4 = emit_bits(iVar3,*(undefined4 *)(iVar8 * 4 + param_4),
+                    *(undefined1 *)(iVar8 + param_4 + 0x400));
+  if ((cVar4 == '\0') || ((iVar8 != 0 && (cVar4 = emit_bits(iVar3,param_3,iVar8), cVar4 == '\0'))))
+  {
 LAB_827b3614:
-    uVar4 = __restgprlr_23(0);
-    return uVar4;
+    __restgprlr_23(0);
+    return;
   }
-  iVar10 = 0;
-  piVar7 = jpeg_natural_order + 1;
+  iVar8 = 0;
+  piVar7 = &DAT_821daf74;
   do {
     sVar1 = param_2[*piVar7];
-    uVar11 = (uint)sVar1;
+    lVar5 = (longlong)sVar1;
     if (sVar1 == 0) {
-      iVar10 = iVar10 + 1;
+      iVar8 = iVar8 + 1;
     }
     else {
-      for (; 0xf < iVar10; iVar10 = iVar10 + -0x10) {
-        uVar4 = emit_bits(pwVar3,param_5->ehufco[0xf0],(int)param_5->ehufsi[0xf0]);
-        if (uVar4 == '\0') goto LAB_827b3614;
+      for (; 0xf < iVar8; iVar8 = iVar8 + -0x10) {
+        cVar4 = emit_bits(iVar3,param_5[0xf0],*(undefined1 *)(param_5 + 0x13c));
+        if (cVar4 == '\0') goto LAB_827b3614;
       }
-      uVar8 = uVar11;
+      lVar9 = lVar5;
       if (sVar1 < 0) {
-        uVar11 = -(int)sVar1;
-        uVar8 = (int)sVar1 - 1;
+        lVar9 = -lVar5;
+        lVar5 = lVar5 + -1;
       }
-      iVar6 = (int)uVar11 >> 1;
-      iVar12 = 1;
+      iVar6 = (int)lVar9 >> 1;
+      iVar10 = 1;
       if (iVar6 != 0) {
         do {
           iVar6 = iVar6 >> 1;
-          iVar12 = iVar12 + 1;
+          iVar10 = iVar10 + 1;
         } while (iVar6 != 0);
-        if (10 < iVar12) {
-          pwVar3->cinfo->err->msg_code = 6;
-          (*pwVar3->cinfo->err->error_exit)((jpeg_common_struct *)pwVar3->cinfo);
+        if (10 < iVar10) {
+          *(undefined4 *)(**(int **)(iVar3 + 0x20) + 0x14) = 6;
+          (**(code **)**(undefined4 **)(iVar3 + 0x20))();
         }
       }
-      iVar10 = iVar10 * 0x10 + iVar12;
-      uVar4 = emit_bits(pwVar3,param_5->ehufco[iVar10],(int)param_5->ehufsi[iVar10]);
-      if ((uVar4 == '\0') || (uVar4 = emit_bits(pwVar3,uVar8,iVar12), uVar4 == '\0'))
+      iVar8 = iVar8 * 0x10 + iVar10;
+      cVar4 = emit_bits(iVar3,param_5[iVar8],*(undefined1 *)((int)param_5 + iVar8 + 0x400));
+      if ((cVar4 == '\0') || (cVar4 = emit_bits(iVar3,lVar5,iVar10), cVar4 == '\0'))
       goto LAB_827b3614;
-      iVar10 = 0;
+      iVar8 = 0;
     }
     piVar7 = piVar7 + 1;
   } while ((int)piVar7 < -0x7de24f90);
-  if (0 < iVar10) {
-    uVar4 = emit_bits(pwVar3,param_5->ehufco[0],(int)param_5->ehufsi[0]);
+  if (0 < iVar8) {
+    cVar4 = emit_bits(iVar3,*param_5,*(undefined1 *)(param_5 + 0x100));
     uVar2 = 0;
-    if (uVar4 == '\0') goto LAB_827b378c;
+    if (cVar4 == '\0') goto LAB_827b378c;
   }
   uVar2 = 1;
 LAB_827b378c:
-  uVar4 = __restgprlr_23(uVar2);
-  return uVar4;
+  __restgprlr_23(uVar2);
+  return;
 }
 
 
 // 827B3798  emit_restart  (jpeg-6/jchuff.c:452)
 
-uchar emit_restart(working_state *param_1,int param_2)
+void emit_restart(undefined8 param_1,char param_2)
 
 {
-  working_state *pwVar1;
-  uchar uVar2;
+  uint uVar1;
+  int *piVar2;
   char cVar3;
   int *piVar4;
-  longlong lVar5;
-  int iVar6;
+  int iVar5;
   
-  cVar3 = (char)param_2;
-  pwVar1 = (working_state *)__savegprlr_29(param_1);
-  uVar2 = emit_bits(pwVar1,0x7f,7);
-  if (uVar2 != '\0') {
-    (pwVar1->cur).EOBRUN = 0;
-    (pwVar1->cur).last_dc_val[0] = 0;
-    *pwVar1->next_output_byte = 0xff;
-    lVar5 = (ulonglong)pwVar1->free_in_buffer - 1;
-    pwVar1->free_in_buffer = (uint)lVar5;
-    pwVar1->next_output_byte = pwVar1->next_output_byte + 1;
-    if ((lVar5 != 0) || (uVar2 = dump_buffer(pwVar1), uVar2 != '\0')) {
-      *pwVar1->next_output_byte = cVar3 + 0xd0;
-      lVar5 = (ulonglong)pwVar1->free_in_buffer - 1;
-      pwVar1->next_output_byte = pwVar1->next_output_byte + 1;
-      pwVar1->free_in_buffer = (uint)lVar5;
-      if ((lVar5 != 0) || (uVar2 = dump_buffer(pwVar1), uVar2 != '\0')) {
-        iVar6 = 0;
-        if (0 < pwVar1->cinfo->comps_in_scan) {
-          piVar4 = (pwVar1->cur).last_dc_val;
+  piVar2 = (int *)__savegprlr_29();
+  cVar3 = emit_bits(piVar2,0x7f,7);
+  if (cVar3 != '\0') {
+    piVar2[2] = 0;
+    piVar2[3] = 0;
+    *(undefined1 *)*piVar2 = 0xff;
+    uVar1 = piVar2[1];
+    piVar2[1] = (int)((ulonglong)uVar1 - 1);
+    *piVar2 = *piVar2 + 1;
+    if (((ulonglong)uVar1 - 1 != 0) || (cVar3 = dump_buffer(piVar2), cVar3 != '\0')) {
+      *(char *)*piVar2 = param_2 + -0x30;
+      uVar1 = piVar2[1];
+      *piVar2 = *piVar2 + 1;
+      piVar2[1] = (int)((ulonglong)uVar1 - 1);
+      if (((ulonglong)uVar1 - 1 != 0) || (cVar3 = dump_buffer(piVar2), cVar3 != '\0')) {
+        iVar5 = 0;
+        if (0 < *(int *)(piVar2[8] + 0xec)) {
+          piVar4 = piVar2 + 3;
           do {
             piVar4 = piVar4 + 1;
             *piVar4 = 0;
-            iVar6 = iVar6 + 1;
-          } while (iVar6 < pwVar1->cinfo->comps_in_scan);
+            iVar5 = iVar5 + 1;
+          } while (iVar5 < *(int *)(piVar2[8] + 0xec));
         }
-        uVar2 = __restgprlr_29(1);
-        return uVar2;
+        __restgprlr_29(1);
+        return;
       }
     }
   }
-  uVar2 = __restgprlr_29(0);
-  return uVar2;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 827B38A8  encode_mcu_huff  (jpeg-6/jchuff.c:477)
 
-/* WARNING: Type propagation algorithm not settling */
-
-uchar encode_mcu_huff(jpeg_compress_struct *param_1,short (**param_2) [64])
+void encode_mcu_huff(undefined8 param_1,longlong param_2)
 
 {
-  jpeg_entropy_encoder *pjVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
-  jpeg_compress_struct *pjVar4;
-  uchar uVar5;
-  _func___cdecl_void_jpeg_compress_struct_ptr **pp_Var6;
-  savable_state *psVar7;
+  int iVar4;
+  char cVar5;
+  undefined4 *puVar6;
+  undefined4 *puVar7;
   int iVar8;
   int *piVar9;
   longlong lVar10;
-  longlong lVar11;
-  working_state local_70 [3];
+  undefined4 local_70;
+  undefined4 local_6c [3];
+  int aiStack_60 [4];
+  int local_50;
   
-  lVar10 = (longlong)(int)param_2;
-  pjVar4 = (jpeg_compress_struct *)__savegprlr_24(param_1);
-  pjVar1 = pjVar4->entropy;
-  psVar7 = (savable_state *)&local_70[0].free_in_buffer;
-  local_70[0].next_output_byte = pjVar4->dest->next_output_byte;
-  pp_Var6 = &pjVar1->finish_pass;
-  local_70[0].free_in_buffer = pjVar4->dest->free_in_buffer;
-  lVar11 = 6;
-  do {
-    pp_Var6 = pp_Var6 + 1;
-    psVar7 = (savable_state *)psVar7->last_dc_val;
-    psVar7->EOBRUN = (uint)*pp_Var6;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
-  local_70[0].cinfo = pjVar4;
-  if (((pjVar4->restart_interval != 0) &&
-      (pjVar1[3].start_pass == (_func___cdecl_void_jpeg_compress_struct_ptr_uchar *)0x0)) &&
-     (uVar5 = emit_restart(local_70,(int)pjVar1[3].encode_mcu), uVar5 == '\0')) {
-LAB_827b3928:
-    uVar5 = __restgprlr_24(0);
-    return uVar5;
-  }
-  iVar8 = 0;
-  if (0 < pjVar4->blocks_in_MCU) {
-    lVar10 = lVar10 + -4;
-    piVar9 = pjVar4->MCU_membership;
-    do {
-      iVar3 = *piVar9 * 4;
-      uVar5 = encode_one_block(local_70,*(short **)((int)lVar10 + 4),
-                               *(int *)((int)local_70[0].cur.last_dc_val + iVar3 + 4U),
-                               (c_derived_tbl *)
-                               (&pjVar1[3].finish_pass)[pjVar4->cur_comp_info[*piVar9]->dc_tbl_no],
-                               (c_derived_tbl *)
-                               (&pjVar1[5].start_pass)[pjVar4->cur_comp_info[*piVar9]->ac_tbl_no]);
-      if (uVar5 == '\0') goto LAB_827b3928;
-      lVar10 = lVar10 + 4;
-      iVar8 = iVar8 + 1;
-      iVar2 = pjVar4->blocks_in_MCU;
-      piVar9 = piVar9 + 1;
-      *(int *)((int)local_70[0].cur.last_dc_val + iVar3 + 4U) = (int)*(short *)*(undefined4 *)lVar10
-      ;
-    } while (iVar8 < iVar2);
-  }
-  psVar7 = (savable_state *)&local_70[0].free_in_buffer;
-  pp_Var6 = &pjVar1->finish_pass;
+  iVar4 = __savegprlr_24();
+  iVar1 = *(int *)(iVar4 + 0x164);
+  puVar6 = local_6c;
+  local_70 = **(undefined4 **)(iVar4 + 0x20);
+  puVar7 = (undefined4 *)(iVar1 + 8);
+  local_6c[0] = (*(undefined4 **)(iVar4 + 0x20))[1];
   lVar10 = 6;
-  pjVar4->dest->next_output_byte = local_70[0].next_output_byte;
-  pjVar4->dest->free_in_buffer = local_70[0].free_in_buffer;
   do {
-    psVar7 = (savable_state *)psVar7->last_dc_val;
-    pp_Var6 = pp_Var6 + 1;
-    *pp_Var6 = (_func___cdecl_void_jpeg_compress_struct_ptr *)psVar7->EOBRUN;
+    puVar7 = puVar7 + 1;
+    puVar6 = puVar6 + 1;
+    *puVar6 = *puVar7;
     lVar10 = lVar10 + -1;
   } while (lVar10 != 0);
-  if ((_func___cdecl_void_jpeg_compress_struct_ptr_uchar *)pjVar4->restart_interval !=
-      (_func___cdecl_void_jpeg_compress_struct_ptr_uchar *)0x0) {
-    if (pjVar1[3].start_pass == (_func___cdecl_void_jpeg_compress_struct_ptr_uchar *)0x0) {
-      pjVar1[3].start_pass =
-           (_func___cdecl_void_jpeg_compress_struct_ptr_uchar *)pjVar4->restart_interval;
-      pjVar1[3].encode_mcu =
-           (_func___cdecl_uchar_jpeg_compress_struct_ptr_short_64__ptr_ptr *)
-           ((uint)(pjVar1[3].encode_mcu + 1) & 7);
-    }
-    pjVar1[3].start_pass = pjVar1[3].start_pass + -1;
+  local_50 = iVar4;
+  if (((*(int *)(iVar4 + 0xc4) != 0) && (*(int *)(iVar1 + 0x24) == 0)) &&
+     (cVar5 = emit_restart(&local_70,*(undefined4 *)(iVar1 + 0x28)), cVar5 == '\0')) {
+LAB_827b3928:
+    __restgprlr_24(0);
+    return;
   }
-  uVar5 = __restgprlr_24(1);
-  return uVar5;
+  iVar8 = 0;
+  if (0 < *(int *)(iVar4 + 0x108)) {
+    param_2 = param_2 + -4;
+    piVar9 = (int *)(iVar4 + 0x10c);
+    do {
+      iVar2 = *piVar9;
+      iVar3 = *(int *)((iVar2 + 0x3c) * 4 + iVar4);
+      cVar5 = encode_one_block(&local_70,*(undefined4 *)((int)param_2 + 4),aiStack_60[iVar2],
+                               *(undefined4 *)((*(int *)(iVar3 + 0x14) + 0xb) * 4 + iVar1),
+                               *(undefined4 *)((*(int *)(iVar3 + 0x18) + 0xf) * 4 + iVar1));
+      if (cVar5 == '\0') goto LAB_827b3928;
+      param_2 = param_2 + 4;
+      iVar8 = iVar8 + 1;
+      iVar3 = *(int *)(iVar4 + 0x108);
+      piVar9 = piVar9 + 1;
+      aiStack_60[iVar2] = (int)*(short *)*(undefined4 *)param_2;
+    } while (iVar8 < iVar3);
+  }
+  puVar7 = local_6c;
+  puVar6 = (undefined4 *)(iVar1 + 8);
+  lVar10 = 6;
+  **(undefined4 **)(iVar4 + 0x20) = local_70;
+  *(undefined4 *)(*(int *)(iVar4 + 0x20) + 4) = local_6c[0];
+  do {
+    puVar7 = puVar7 + 1;
+    puVar6 = puVar6 + 1;
+    *puVar6 = *puVar7;
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  if (*(int *)(iVar4 + 0xc4) != 0) {
+    if (*(int *)(iVar1 + 0x24) == 0) {
+      *(int *)(iVar1 + 0x24) = *(int *)(iVar4 + 0xc4);
+      *(uint *)(iVar1 + 0x28) = *(int *)(iVar1 + 0x28) + 1U & 7;
+    }
+    *(int *)(iVar1 + 0x24) = *(int *)(iVar1 + 0x24) + -1;
+  }
+  __restgprlr_24(1);
+  return;
 }
 
 
 // 827B3A40  finish_pass_huff  (jpeg-6/jchuff.c:534)
 
-/* WARNING: Type propagation algorithm not settling */
-
-void finish_pass_huff(jpeg_compress_struct *param_1)
+void finish_pass_huff(int *param_1)
 
 {
-  jpeg_entropy_encoder *pjVar1;
-  uchar uVar2;
-  _func___cdecl_void_jpeg_compress_struct_ptr **pp_Var3;
-  savable_state *psVar4;
+  int iVar1;
+  char cVar2;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
   longlong lVar5;
-  working_state local_40;
+  undefined4 local_40;
+  undefined4 local_3c [7];
+  int *local_20;
   
-  pjVar1 = param_1->entropy;
-  psVar4 = (savable_state *)&local_40.free_in_buffer;
-  local_40.next_output_byte = param_1->dest->next_output_byte;
-  pp_Var3 = &pjVar1->finish_pass;
-  local_40.free_in_buffer = param_1->dest->free_in_buffer;
+  iVar1 = param_1[0x59];
+  puVar3 = local_3c;
+  local_40 = *(undefined4 *)param_1[8];
+  puVar4 = (undefined4 *)(iVar1 + 8);
+  local_3c[0] = ((undefined4 *)param_1[8])[1];
   lVar5 = 6;
   do {
-    pp_Var3 = pp_Var3 + 1;
-    psVar4 = (savable_state *)psVar4->last_dc_val;
-    psVar4->EOBRUN = (uint)*pp_Var3;
+    puVar4 = puVar4 + 1;
+    puVar3 = puVar3 + 1;
+    *puVar3 = *puVar4;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  local_40.cinfo = param_1;
-  uVar2 = emit_bits(&local_40,0x7f,7);
-  if (uVar2 == '\0') {
-    param_1->err->msg_code = 0x18;
-    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
+  local_20 = param_1;
+  cVar2 = emit_bits(&local_40,0x7f,7);
+  if (cVar2 == '\0') {
+    *(undefined4 *)(*param_1 + 0x14) = 0x18;
+    (**(code **)*param_1)(param_1);
   }
-  else {
-    local_40.cur.EOBRUN = 0;
-    local_40.cur.last_dc_val[0] = 0;
-  }
-  psVar4 = (savable_state *)&local_40.free_in_buffer;
-  pp_Var3 = &pjVar1->finish_pass;
+  puVar4 = local_3c;
+  puVar3 = (undefined4 *)(iVar1 + 8);
   lVar5 = 6;
-  param_1->dest->next_output_byte = local_40.next_output_byte;
-  param_1->dest->free_in_buffer = local_40.free_in_buffer;
+  *(undefined4 *)param_1[8] = local_40;
+  *(undefined4 *)(param_1[8] + 4) = local_3c[0];
   do {
-    psVar4 = (savable_state *)psVar4->last_dc_val;
-    pp_Var3 = pp_Var3 + 1;
-    *pp_Var3 = (_func___cdecl_void_jpeg_compress_struct_ptr *)psVar4->EOBRUN;
+    puVar4 = puVar4 + 1;
+    puVar3 = puVar3 + 1;
+    *puVar3 = *puVar4;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
   return;
@@ -591,8 +571,7 @@ void finish_pass_huff(jpeg_compress_struct *param_1)
 
 // 827B3B38  htest_one_block  (jpeg-6/jchuff.c:574)
 
-void htest_one_block(jpeg_compress_struct *param_1,short *param_2,int param_3,long *param_4,
-                    long *param_5)
+void htest_one_block(undefined8 param_1,short *param_2,longlong param_3,int param_4,int *param_5)
 
 {
   short sVar1;
@@ -603,26 +582,25 @@ void htest_one_block(jpeg_compress_struct *param_1,short *param_2,int param_3,lo
   int *piVar6;
   ulonglong uVar7;
   
-  lVar5 = (longlong)param_3;
-  piVar3 = (int *)__savegprlr_23(param_1);
-  lVar5 = *param_2 - lVar5;
-  if (lVar5 < 0) {
-    lVar5 = -lVar5;
+  piVar3 = (int *)__savegprlr_23();
+  param_3 = *param_2 - param_3;
+  if (param_3 < 0) {
+    param_3 = -param_3;
   }
   iVar4 = 0;
-  if ((int)lVar5 != 0) {
+  if ((int)param_3 != 0) {
     do {
-      lVar5 = (longlong)((int)lVar5 >> 1);
+      param_3 = (longlong)((int)param_3 >> 1);
       iVar4 = iVar4 + 1;
-    } while (lVar5 != 0);
+    } while (param_3 != 0);
     if (0xb < iVar4) {
       *(undefined4 *)(*piVar3 + 0x14) = 6;
       (**(code **)*piVar3)(piVar3);
     }
   }
   uVar7 = 0;
-  piVar6 = jpeg_natural_order + 1;
-  param_4[iVar4] = param_4[iVar4] + 1;
+  piVar6 = &DAT_821daf74;
+  *(int *)(iVar4 * 4 + param_4) = *(int *)(iVar4 * 4 + param_4) + 1;
   do {
     sVar1 = param_2[*piVar6];
     iVar4 = (int)sVar1;
@@ -670,7 +648,7 @@ void htest_one_block(jpeg_compress_struct *param_1,short *param_2,int param_3,lo
 
 // 827B3CA8  encode_mcu_gather  (jpeg-6/jchuff.c:646)
 
-uchar encode_mcu_gather(jpeg_compress_struct *param_1,short (**param_2) [64])
+void encode_mcu_gather(undefined8 param_1,longlong param_2)
 
 {
   short sVar1;
@@ -680,121 +658,118 @@ uchar encode_mcu_gather(jpeg_compress_struct *param_1,short (**param_2) [64])
   int iVar5;
   ulonglong uVar6;
   int *piVar7;
-  uchar uVar8;
-  undefined4 *puVar9;
-  int iVar10;
-  int iVar12;
-  longlong lVar11;
+  undefined4 *puVar8;
+  int iVar9;
+  int iVar11;
+  longlong lVar10;
+  int *piVar12;
   int *piVar13;
-  longlong lVar14;
-  int *piVar15;
-  ulonglong uVar16;
-  int iVar17;
+  ulonglong uVar14;
+  int iVar15;
   
-  lVar14 = (longlong)(int)param_2;
-  piVar7 = (int *)__savegprlr_17(param_1);
+  piVar7 = (int *)__savegprlr_17();
   iVar2 = piVar7[0x59];
   if (piVar7[0x31] != 0) {
     if (*(int *)(iVar2 + 0x24) == 0) {
-      iVar12 = 0;
+      iVar11 = 0;
       if (0 < piVar7[0x3b]) {
-        puVar9 = (undefined4 *)(iVar2 + 0x10);
+        puVar8 = (undefined4 *)(iVar2 + 0x10);
         do {
-          iVar12 = iVar12 + 1;
-          puVar9 = puVar9 + 1;
-          *puVar9 = 0;
-        } while (iVar12 < piVar7[0x3b]);
+          iVar11 = iVar11 + 1;
+          puVar8 = puVar8 + 1;
+          *puVar8 = 0;
+        } while (iVar11 < piVar7[0x3b]);
       }
       *(int *)(iVar2 + 0x24) = piVar7[0x31];
     }
     *(int *)(iVar2 + 0x24) = *(int *)(iVar2 + 0x24) + -1;
   }
-  iVar12 = 0;
+  iVar11 = 0;
   if (0 < piVar7[0x42]) {
-    lVar14 = lVar14 + -4;
-    piVar13 = piVar7 + 0x43;
+    param_2 = param_2 + -4;
+    piVar12 = piVar7 + 0x43;
     do {
-      psVar3 = *(short **)((int)lVar14 + 4);
-      iVar5 = (*piVar13 + 5) * 4;
-      lVar11 = (longlong)*psVar3 - (ulonglong)*(uint *)(iVar5 + iVar2);
-      piVar4 = *(int **)((*(int *)(piVar7[*piVar13 + 0x3c] + 0x18) + 0x17) * 4 + iVar2);
-      iVar10 = *(int *)((*(int *)(piVar7[*piVar13 + 0x3c] + 0x14) + 0x13) * 4 + iVar2);
-      if (lVar11 < 0) {
-        lVar11 = -lVar11;
+      psVar3 = *(short **)((int)param_2 + 4);
+      iVar5 = (*piVar12 + 5) * 4;
+      lVar10 = (longlong)*psVar3 - (ulonglong)*(uint *)(iVar5 + iVar2);
+      piVar4 = *(int **)((*(int *)(piVar7[*piVar12 + 0x3c] + 0x18) + 0x17) * 4 + iVar2);
+      iVar9 = *(int *)((*(int *)(piVar7[*piVar12 + 0x3c] + 0x14) + 0x13) * 4 + iVar2);
+      if (lVar10 < 0) {
+        lVar10 = -lVar10;
       }
-      iVar17 = 0;
-      if ((int)lVar11 != 0) {
+      iVar15 = 0;
+      if ((int)lVar10 != 0) {
         do {
-          lVar11 = (longlong)((int)lVar11 >> 1);
-          iVar17 = iVar17 + 1;
-        } while (lVar11 != 0);
-        if (0xb < iVar17) {
+          lVar10 = (longlong)((int)lVar10 >> 1);
+          iVar15 = iVar15 + 1;
+        } while (lVar10 != 0);
+        if (0xb < iVar15) {
           *(undefined4 *)(*piVar7 + 0x14) = 6;
           (**(code **)*piVar7)(piVar7);
         }
       }
-      uVar16 = 0;
-      piVar15 = jpeg_natural_order + 1;
-      *(int *)(iVar17 * 4 + iVar10) = *(int *)(iVar17 * 4 + iVar10) + 1;
+      uVar14 = 0;
+      piVar13 = &DAT_821daf74;
+      *(int *)(iVar15 * 4 + iVar9) = *(int *)(iVar15 * 4 + iVar9) + 1;
       do {
-        sVar1 = psVar3[*piVar15];
-        iVar10 = (int)sVar1;
+        sVar1 = psVar3[*piVar13];
+        iVar9 = (int)sVar1;
         if (sVar1 == 0) {
-          uVar16 = uVar16 + 1;
+          uVar14 = uVar14 + 1;
         }
         else {
-          if (0xf < (int)uVar16) {
-            lVar11 = ((uVar16 - 0x10 & 0xffffffff) >> 4) + 1;
-            uVar16 = uVar16 - (lVar11 * 0x10 & 0xfffffff0U);
+          if (0xf < (int)uVar14) {
+            lVar10 = ((uVar14 - 0x10 & 0xffffffff) >> 4) + 1;
+            uVar14 = uVar14 - (lVar10 * 0x10 & 0xfffffff0U);
             do {
               piVar4[0xf0] = piVar4[0xf0] + 1;
-              lVar11 = lVar11 + -1;
-            } while (lVar11 != 0);
+              lVar10 = lVar10 + -1;
+            } while (lVar10 != 0);
           }
           if (sVar1 < 0) {
-            iVar10 = -(int)sVar1;
+            iVar9 = -(int)sVar1;
           }
-          iVar10 = iVar10 >> 1;
-          lVar11 = 1;
-          if (iVar10 != 0) {
+          iVar9 = iVar9 >> 1;
+          lVar10 = 1;
+          if (iVar9 != 0) {
             do {
-              iVar10 = iVar10 >> 1;
-              lVar11 = lVar11 + 1;
-            } while (iVar10 != 0);
-            if (10 < (int)lVar11) {
+              iVar9 = iVar9 >> 1;
+              lVar10 = lVar10 + 1;
+            } while (iVar9 != 0);
+            if (10 < (int)lVar10) {
               *(undefined4 *)(*piVar7 + 0x14) = 6;
               (**(code **)*piVar7)(piVar7);
             }
           }
-          uVar6 = uVar16 & 0xfffffff;
-          uVar16 = 0;
-          iVar10 = (int)((uVar6 * 0x10 + lVar11 & 0xffffffff) << 2);
-          *(int *)(iVar10 + (int)piVar4) = *(int *)(iVar10 + (int)piVar4) + 1;
+          uVar6 = uVar14 & 0xfffffff;
+          uVar14 = 0;
+          iVar9 = (int)((uVar6 * 0x10 + lVar10 & 0xffffffff) << 2);
+          *(int *)(iVar9 + (int)piVar4) = *(int *)(iVar9 + (int)piVar4) + 1;
         }
-        piVar15 = piVar15 + 1;
-      } while ((int)piVar15 < -0x7de24f90);
-      if (0 < (int)uVar16) {
+        piVar13 = piVar13 + 1;
+      } while ((int)piVar13 < -0x7de24f90);
+      if (0 < (int)uVar14) {
         *piVar4 = *piVar4 + 1;
       }
-      lVar14 = lVar14 + 4;
-      iVar12 = iVar12 + 1;
-      piVar13 = piVar13 + 1;
-      *(int *)(iVar5 + iVar2) = (int)*(short *)*(undefined4 *)lVar14;
-    } while (iVar12 < piVar7[0x42]);
+      param_2 = param_2 + 4;
+      iVar11 = iVar11 + 1;
+      piVar12 = piVar12 + 1;
+      *(int *)(iVar5 + iVar2) = (int)*(short *)*(undefined4 *)param_2;
+    } while (iVar11 < piVar7[0x42]);
   }
-  uVar8 = __restgprlr_17(1);
-  return uVar8;
+  __restgprlr_17(1);
+  return;
 }
 
 
 // 827B3EE8  jpeg_gen_optimal_table  (jpeg-6/jchuff.c:706)
 
-void jpeg_gen_optimal_table(jpeg_compress_struct *param_1,JHUFF_TBL *param_2,long *param_3)
+void jpeg_gen_optimal_table(undefined8 param_1,void *param_2,longlong param_3)
 
 {
-  char cVar1;
-  int iVar2;
-  int *piVar3;
+  int iVar1;
+  int *piVar2;
+  void *pvVar3;
   int iVar4;
   int iVar5;
   int iVar6;
@@ -803,11 +778,10 @@ void jpeg_gen_optimal_table(jpeg_compress_struct *param_1,JHUFF_TBL *param_2,lon
   undefined4 *puVar9;
   int iVar10;
   char *pcVar11;
-  uchar uVar12;
-  longlong lVar13;
-  int *piVar14;
+  char cVar12;
+  int *piVar13;
+  longlong lVar14;
   longlong lVar15;
-  longlong lVar16;
   undefined4 uStack_894;
   char local_890 [16];
   char local_880 [32];
@@ -815,119 +789,118 @@ void jpeg_gen_optimal_table(jpeg_compress_struct *param_1,JHUFF_TBL *param_2,lon
   undefined4 local_454;
   int local_450 [276];
   
-  lVar13 = (longlong)(int)param_3;
-  piVar3 = (int *)__savegprlr_25(param_1);
-  lVar15 = 8;
+  piVar2 = (int *)__savegprlr_25();
+  lVar14 = 8;
   puVar9 = &uStack_894;
   do {
     puVar8 = puVar9;
     puVar9 = puVar8 + 1;
     *puVar9 = 0;
-    lVar15 = lVar15 + -1;
-  } while (lVar15 != 0);
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
   *(undefined1 *)(puVar8 + 2) = 0;
-  memset();
+  memset(local_860,0,0x404);
   puVar9 = &local_454;
-  lVar15 = 0x101;
+  lVar14 = 0x101;
   do {
     puVar9 = puVar9 + 1;
     *puVar9 = 0xffffffff;
-    lVar15 = lVar15 + -1;
-  } while (lVar15 != 0);
-  iVar7 = (int)lVar13;
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
+  iVar7 = (int)param_3;
   *(undefined4 *)(iVar7 + 0x400) = 1;
   while( true ) {
     iVar4 = -1;
     iVar6 = 0;
-    lVar16 = 0x101;
-    lVar15 = lVar13;
+    lVar15 = 0x101;
+    lVar14 = param_3;
     iVar5 = 1000000000;
     do {
-      iVar10 = *(int *)lVar15;
+      iVar10 = *(int *)lVar14;
       if ((iVar10 != 0) && (iVar10 <= iVar5)) {
         iVar5 = iVar10;
         iVar4 = iVar6;
       }
       iVar6 = iVar6 + 1;
-      lVar15 = lVar15 + 4;
-      lVar16 = lVar16 + -1;
-    } while (lVar16 != 0);
+      lVar14 = lVar14 + 4;
+      lVar15 = lVar15 + -1;
+    } while (lVar15 != 0);
     iVar6 = -1;
     iVar10 = 0;
-    lVar16 = 0x101;
-    lVar15 = lVar13;
+    lVar15 = 0x101;
+    lVar14 = param_3;
     iVar5 = 1000000000;
     do {
-      iVar2 = *(int *)lVar15;
-      if (((iVar2 != 0) && (iVar2 <= iVar5)) && (iVar10 != iVar4)) {
-        iVar5 = iVar2;
+      iVar1 = *(int *)lVar14;
+      if (((iVar1 != 0) && (iVar1 <= iVar5)) && (iVar10 != iVar4)) {
+        iVar5 = iVar1;
         iVar6 = iVar10;
       }
       iVar10 = iVar10 + 1;
-      lVar15 = lVar15 + 4;
-      lVar16 = lVar16 + -1;
-    } while (lVar16 != 0);
+      lVar14 = lVar14 + 4;
+      lVar15 = lVar15 + -1;
+    } while (lVar15 != 0);
     if (iVar6 < 0) break;
-    piVar14 = local_450 + iVar4;
+    piVar13 = local_450 + iVar4;
     iVar10 = local_860[iVar4];
-    iVar5 = *piVar14;
+    iVar5 = *piVar13;
     *(int *)(iVar4 * 4 + iVar7) = *(int *)(iVar6 * 4 + iVar7) + *(int *)(iVar4 * 4 + iVar7);
     *(undefined4 *)(iVar6 * 4 + iVar7) = 0;
     local_860[iVar4] = iVar10 + 1;
     while (-1 < iVar5) {
-      iVar4 = *piVar14;
-      piVar14 = local_450 + iVar4;
-      iVar5 = *piVar14;
+      iVar4 = *piVar13;
+      piVar13 = local_450 + iVar4;
+      iVar5 = *piVar13;
       local_860[iVar4] = local_860[iVar4] + 1;
     }
-    *piVar14 = iVar6;
-    piVar14 = local_450 + iVar6;
-    iVar5 = *piVar14;
+    *piVar13 = iVar6;
+    piVar13 = local_450 + iVar6;
+    iVar5 = *piVar13;
     local_860[iVar6] = local_860[iVar6] + 1;
     while (-1 < iVar5) {
-      iVar4 = *piVar14;
-      piVar14 = local_450 + iVar4;
-      iVar5 = *piVar14;
+      iVar4 = *piVar13;
+      piVar13 = local_450 + iVar4;
+      iVar5 = *piVar13;
       local_860[iVar4] = local_860[iVar4] + 1;
     }
   }
-  piVar14 = local_860;
-  lVar13 = 0x101;
+  piVar13 = local_860;
+  lVar14 = 0x101;
   do {
-    iVar7 = *piVar14;
+    iVar7 = *piVar13;
     if (iVar7 != 0) {
       if (0x20 < iVar7) {
-        *(undefined4 *)(*piVar3 + 0x14) = 0x27;
-        (**(code **)*piVar3)(piVar3);
+        *(undefined4 *)(*piVar2 + 0x14) = 0x27;
+        (**(code **)*piVar2)(piVar2);
       }
       local_890[iVar7] = local_890[iVar7] + '\x01';
     }
-    lVar13 = lVar13 + -1;
-    piVar14 = piVar14 + 1;
-  } while (lVar13 != 0);
+    lVar14 = lVar14 + -1;
+    piVar13 = piVar13 + 1;
+  } while (lVar14 != 0);
   iVar7 = 0x1e;
   iVar5 = 0x10;
-  lVar13 = 0x10;
+  lVar14 = 0x10;
   do {
-    cVar1 = local_890[iVar7 + 2];
-    while (cVar1 != '\0') {
+    cVar12 = local_890[iVar7 + 2];
+    while (cVar12 != '\0') {
       pcVar11 = local_890 + iVar7;
-      cVar1 = *pcVar11;
+      cVar12 = *pcVar11;
       iVar4 = iVar7;
-      while (cVar1 == '\0') {
+      while (cVar12 == '\0') {
         pcVar11 = pcVar11 + -1;
         iVar4 = iVar4 + -1;
-        cVar1 = *pcVar11;
+        cVar12 = *pcVar11;
       }
       local_890[iVar7 + 2] = local_890[iVar7 + 2] + -2;
       local_890[iVar7 + 1] = local_890[iVar7 + 1] + '\x01';
       local_890[iVar4 + 1] = local_890[iVar4 + 1] + '\x02';
       local_890[iVar4] = local_890[iVar4] + -1;
-      cVar1 = local_890[iVar7 + 2];
+      cVar12 = local_890[iVar7 + 2];
     }
     iVar7 = iVar7 + -1;
-    lVar13 = lVar13 + -1;
-  } while (lVar13 != 0);
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
   if (local_880[0] == '\0') {
     pcVar11 = local_880;
     do {
@@ -936,55 +909,55 @@ void jpeg_gen_optimal_table(jpeg_compress_struct *param_1,JHUFF_TBL *param_2,lon
     } while (*pcVar11 == '\0');
   }
   local_890[iVar5] = local_890[iVar5] + -1;
-  memcpy();
+  pvVar3 = memcpy(param_2,local_890,0x11);
   iVar7 = 0;
   iVar5 = 1;
   do {
-    uVar12 = '\0';
-    piVar3 = local_860;
-    lVar13 = 0x100;
+    cVar12 = '\0';
+    piVar2 = local_860;
+    lVar14 = 0x100;
     do {
-      if (*piVar3 == iVar5) {
-        param_2->huffval[iVar7] = uVar12;
+      if (*piVar2 == iVar5) {
+        *(char *)((int)param_2 + iVar7 + 0x11) = cVar12;
         iVar7 = iVar7 + 1;
       }
-      uVar12 = uVar12 + '\x01';
-      piVar3 = piVar3 + 1;
-      lVar13 = lVar13 + -1;
-    } while (lVar13 != 0);
+      cVar12 = cVar12 + '\x01';
+      piVar2 = piVar2 + 1;
+      lVar14 = lVar14 + -1;
+    } while (lVar14 != 0);
     iVar5 = iVar5 + 1;
   } while (iVar5 < 0x21);
-  param_2->sent_table = '\0';
-  __restgprlr_25();
+  *(undefined1 *)((int)param_2 + 0x111) = 0;
+  __restgprlr_25(pvVar3);
   return;
 }
 
 
 // 827B4238  finish_pass_gather  (jpeg-6/jchuff.c:847)
 
-void finish_pass_gather(jpeg_compress_struct *param_1)
+void finish_pass_gather(void)
 
 {
-  jpeg_entropy_encoder *pjVar1;
+  int iVar1;
   uint uVar2;
   uint uVar3;
   int iVar4;
-  int iVar5;
-  jpeg_compress_struct *pjVar6;
-  JHUFF_TBL *pJVar7;
+  void *_Dst;
+  int *piVar5;
+  undefined4 uVar6;
+  int *piVar7;
   int iVar8;
   int *piVar9;
   int iVar10;
   char *pcVar11;
   int iVar12;
-  int *piVar13;
+  undefined4 *puVar13;
   undefined4 *puVar14;
-  undefined4 *puVar15;
-  int iVar16;
-  char cVar17;
-  int iVar18;
-  jpeg_component_info **ppjVar19;
-  longlong lVar20;
+  int iVar15;
+  char cVar16;
+  int iVar17;
+  int *piVar18;
+  longlong lVar19;
   char local_8e0 [12];
   undefined4 uStack_8d4;
   char local_8d0 [15];
@@ -993,87 +966,87 @@ void finish_pass_gather(jpeg_compress_struct *param_1)
   undefined4 uStack_494;
   int local_490 [292];
   
-  pjVar6 = (jpeg_compress_struct *)__savegprlr_16(param_1);
-  pjVar1 = pjVar6->entropy;
+  piVar5 = (int *)__savegprlr_16();
+  iVar1 = piVar5[0x59];
   local_8e0[0] = '\0';
   local_8e0[1] = '\0';
   local_8e0[2] = '\0';
   local_8e0[3] = '\0';
-  iVar18 = 0;
+  iVar17 = 0;
   local_8e0[4] = '\0';
   local_8e0[5] = '\0';
   local_8e0[6] = '\0';
   local_8e0[7] = '\0';
-  if (0 < pjVar6->comps_in_scan) {
-    ppjVar19 = pjVar6->cur_comp_info;
+  piVar7 = piVar5;
+  if (0 < piVar5[0x3b]) {
+    piVar18 = piVar5 + 0x3c;
     do {
-      uVar2 = (*ppjVar19)->dc_tbl_no;
-      uVar3 = (*ppjVar19)->ac_tbl_no;
+      uVar2 = *(uint *)(*piVar18 + 0x14);
+      uVar3 = *(uint *)(*piVar18 + 0x18);
       if (local_8e0[uVar2] == '\0') {
-        iVar5 = (int)(((ulonglong)uVar2 + 0x18 & 0x3fffffff) << 2);
-        if (*(int *)((int)pjVar6->quant_tbl_ptrs + iVar5 + -0x50) == 0) {
-          pJVar7 = jpeg_alloc_huff_table((jpeg_common_struct *)pjVar6);
-          *(JHUFF_TBL **)((int)pjVar6->quant_tbl_ptrs + iVar5 + -0x50) = pJVar7;
+        iVar10 = (int)(((ulonglong)uVar2 + 0x18 & 0x3fffffff) << 2);
+        if (*(int *)(iVar10 + (int)piVar5) == 0) {
+          uVar6 = jpeg_alloc_huff_table(piVar5);
+          *(undefined4 *)(iVar10 + (int)piVar5) = uVar6;
         }
-        iVar5 = *(int *)((int)pjVar6->quant_tbl_ptrs + iVar5 + -0x50);
-        lVar20 = 8;
-        piVar13 = *(int **)((int)&pjVar1->start_pass +
-                           (int)(((ulonglong)uVar2 + 0x13 & 0xffffffff) << 2));
-        puVar15 = &uStack_8d4;
+        _Dst = *(void **)(iVar10 + (int)piVar5);
+        lVar19 = 8;
+        piVar7 = *(int **)((int)(((ulonglong)uVar2 + 0x13 & 0xffffffff) << 2) + iVar1);
+        puVar14 = &uStack_8d4;
         do {
-          puVar14 = puVar15;
-          puVar15 = puVar14 + 1;
-          *puVar15 = 0;
-          lVar20 = lVar20 + -1;
-        } while (lVar20 != 0);
-        *(undefined1 *)(puVar14 + 2) = 0;
-        memset();
-        puVar15 = &uStack_494;
-        lVar20 = 0x101;
+          puVar13 = puVar14;
+          puVar14 = puVar13 + 1;
+          *puVar14 = 0;
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
+        *(undefined1 *)(puVar13 + 2) = 0;
+        memset(local_8a0,0,0x404);
+        puVar14 = &uStack_494;
+        lVar19 = 0x101;
         do {
-          puVar15 = puVar15 + 1;
-          *puVar15 = 0xffffffff;
-          lVar20 = lVar20 + -1;
-        } while (lVar20 != 0);
-        piVar13[0x100] = 1;
+          puVar14 = puVar14 + 1;
+          *puVar14 = 0xffffffff;
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
+        piVar7[0x100] = 1;
         while( true ) {
           iVar8 = -1;
           iVar12 = 0;
-          lVar20 = 0x101;
+          lVar19 = 0x101;
           iVar10 = 1000000000;
-          piVar9 = piVar13;
+          piVar9 = piVar7;
           do {
-            iVar16 = *piVar9;
-            if ((iVar16 != 0) && (iVar16 <= iVar10)) {
-              iVar10 = iVar16;
+            iVar15 = *piVar9;
+            if ((iVar15 != 0) && (iVar15 <= iVar10)) {
+              iVar10 = iVar15;
               iVar8 = iVar12;
             }
             iVar12 = iVar12 + 1;
             piVar9 = piVar9 + 1;
-            lVar20 = lVar20 + -1;
-          } while (lVar20 != 0);
+            lVar19 = lVar19 + -1;
+          } while (lVar19 != 0);
           iVar12 = -1;
-          iVar16 = 0;
-          lVar20 = 0x101;
+          iVar15 = 0;
+          lVar19 = 0x101;
           iVar10 = 1000000000;
-          piVar9 = piVar13;
+          piVar9 = piVar7;
           do {
             iVar4 = *piVar9;
-            if (((iVar4 != 0) && (iVar4 <= iVar10)) && (iVar16 != iVar8)) {
+            if (((iVar4 != 0) && (iVar4 <= iVar10)) && (iVar15 != iVar8)) {
               iVar10 = iVar4;
-              iVar12 = iVar16;
+              iVar12 = iVar15;
             }
-            iVar16 = iVar16 + 1;
+            iVar15 = iVar15 + 1;
             piVar9 = piVar9 + 1;
-            lVar20 = lVar20 + -1;
-          } while (lVar20 != 0);
+            lVar19 = lVar19 + -1;
+          } while (lVar19 != 0);
           if (iVar12 < 0) break;
           piVar9 = local_490 + iVar8;
-          iVar16 = local_8a0[iVar8];
+          iVar15 = local_8a0[iVar8];
           iVar10 = *piVar9;
-          piVar13[iVar8] = piVar13[iVar12] + piVar13[iVar8];
-          piVar13[iVar12] = 0;
-          local_8a0[iVar8] = iVar16 + 1;
+          piVar7[iVar8] = piVar7[iVar12] + piVar7[iVar8];
+          piVar7[iVar12] = 0;
+          local_8a0[iVar8] = iVar15 + 1;
           while (-1 < iVar10) {
             iVar8 = *piVar9;
             piVar9 = local_490 + iVar8;
@@ -1091,32 +1064,32 @@ void finish_pass_gather(jpeg_compress_struct *param_1)
             local_8a0[iVar8] = local_8a0[iVar8] + 1;
           }
         }
-        piVar13 = local_8a0;
-        lVar20 = 0x101;
+        piVar7 = local_8a0;
+        lVar19 = 0x101;
         do {
-          iVar10 = *piVar13;
+          iVar10 = *piVar7;
           if (iVar10 != 0) {
             if (0x20 < iVar10) {
-              pjVar6->err->msg_code = 0x27;
-              (*pjVar6->err->error_exit)((jpeg_common_struct *)pjVar6);
+              *(undefined4 *)(*piVar5 + 0x14) = 0x27;
+              (**(code **)*piVar5)(piVar5);
             }
             local_8d0[iVar10] = local_8d0[iVar10] + '\x01';
           }
-          lVar20 = lVar20 + -1;
-          piVar13 = piVar13 + 1;
-        } while (lVar20 != 0);
+          lVar19 = lVar19 + -1;
+          piVar7 = piVar7 + 1;
+        } while (lVar19 != 0);
         iVar10 = 0x20;
         do {
           iVar8 = iVar10;
           if (local_8d0[iVar8] != '\0') {
             do {
               pcVar11 = local_8d0 + iVar8 + -2;
-              cVar17 = *pcVar11;
+              cVar16 = *pcVar11;
               iVar10 = iVar8 + -2;
-              while (cVar17 == '\0') {
+              while (cVar16 == '\0') {
                 pcVar11 = pcVar11 + -1;
                 iVar10 = iVar10 + -1;
-                cVar17 = *pcVar11;
+                cVar16 = *pcVar11;
               }
               local_8d0[iVar8] = local_8d0[iVar8] + -2;
               local_8d0[iVar8 + -1] = local_8d0[iVar8 + -1] + '\x01';
@@ -1127,77 +1100,75 @@ void finish_pass_gather(jpeg_compress_struct *param_1)
           iVar10 = iVar8 + -1;
         } while (0x10 < iVar10);
         pcVar11 = local_8d0 + iVar8 + -1;
-        cVar17 = *pcVar11;
-        while (cVar17 == '\0') {
+        cVar16 = *pcVar11;
+        while (cVar16 == '\0') {
           pcVar11 = pcVar11 + -1;
           iVar10 = iVar10 + -1;
-          cVar17 = *pcVar11;
+          cVar16 = *pcVar11;
         }
         local_8d0[iVar10] = local_8d0[iVar10] + -1;
-        memcpy();
-        iVar8 = 0;
-        iVar10 = 1;
+        piVar7 = memcpy(_Dst,local_8d0,0x11);
+        iVar10 = 0;
+        iVar8 = 1;
         do {
-          cVar17 = '\0';
-          piVar13 = local_8a0;
-          lVar20 = 0x100;
+          cVar16 = '\0';
+          piVar9 = local_8a0;
+          lVar19 = 0x100;
           do {
-            if (*piVar13 == iVar10) {
-              iVar12 = iVar8 + iVar5;
-              iVar8 = iVar8 + 1;
-              *(char *)(iVar12 + 0x11) = cVar17;
+            if (*piVar9 == iVar8) {
+              *(char *)((int)_Dst + iVar10 + 0x11) = cVar16;
+              iVar10 = iVar10 + 1;
             }
-            cVar17 = cVar17 + '\x01';
-            piVar13 = piVar13 + 1;
-            lVar20 = lVar20 + -1;
-          } while (lVar20 != 0);
-          iVar10 = iVar10 + 1;
-        } while (iVar10 < 0x21);
-        *(undefined1 *)(iVar5 + 0x111) = 0;
+            cVar16 = cVar16 + '\x01';
+            piVar9 = piVar9 + 1;
+            lVar19 = lVar19 + -1;
+          } while (lVar19 != 0);
+          iVar8 = iVar8 + 1;
+        } while (iVar8 < 0x21);
+        *(undefined1 *)((int)_Dst + 0x111) = 0;
         local_8e0[uVar2] = '\x01';
       }
       if (local_8e0[uVar3 + 4] == '\0') {
-        iVar5 = (int)(((ulonglong)uVar3 + 0x1c & 0x3fffffff) << 2);
-        if (*(int *)((int)pjVar6->quant_tbl_ptrs + iVar5 + -0x50) == 0) {
-          pJVar7 = jpeg_alloc_huff_table((jpeg_common_struct *)pjVar6);
-          *(JHUFF_TBL **)((int)pjVar6->quant_tbl_ptrs + iVar5 + -0x50) = pJVar7;
+        iVar10 = (int)(((ulonglong)uVar3 + 0x1c & 0x3fffffff) << 2);
+        if (*(int *)(iVar10 + (int)piVar5) == 0) {
+          uVar6 = jpeg_alloc_huff_table(piVar5);
+          *(undefined4 *)(iVar10 + (int)piVar5) = uVar6;
         }
-        jpeg_gen_optimal_table
-                  (pjVar6,*(JHUFF_TBL **)((int)pjVar6->quant_tbl_ptrs + iVar5 + -0x50),
-                   *(long **)((int)&pjVar1->start_pass +
-                             (int)(((ulonglong)uVar3 + 0x17 & 0xffffffff) << 2)));
+        piVar7 = (int *)jpeg_gen_optimal_table
+                                  (piVar5,*(undefined4 *)(iVar10 + (int)piVar5),
+                                   *(undefined4 *)
+                                    ((int)(((ulonglong)uVar3 + 0x17 & 0xffffffff) << 2) + iVar1));
         local_8e0[uVar3 + 4] = '\x01';
       }
-      iVar18 = iVar18 + 1;
-      ppjVar19 = ppjVar19 + 1;
-    } while (iVar18 < pjVar6->comps_in_scan);
+      iVar17 = iVar17 + 1;
+      piVar18 = piVar18 + 1;
+    } while (iVar17 < piVar5[0x3b]);
   }
-  __restgprlr_16();
+  __restgprlr_16(piVar7);
   return;
 }
 
 
 // 827B4840  jinit_huff_encoder  (jpeg-6/jchuff.c:892)
 
-void jinit_huff_encoder(jpeg_compress_struct *param_1)
+void jinit_huff_encoder(int param_1)
 
 {
-  jpeg_entropy_encoder *pjVar1;
-  jpeg_entropy_encoder *pjVar2;
+  undefined4 *puVar1;
+  undefined4 *puVar2;
   longlong lVar3;
   
-  pjVar1 = (*param_1->mem->alloc_small)((jpeg_common_struct *)param_1,1,0x6c);
-  param_1->entropy = pjVar1;
-  pjVar2 = pjVar1 + 6;
+  puVar1 = (undefined4 *)(*(code *)**(undefined4 **)(param_1 + 4))(param_1,1,0x6c);
+  *(undefined4 **)(param_1 + 0x164) = puVar1;
+  puVar2 = puVar1 + 0x12;
   lVar3 = 4;
-  pjVar1->start_pass = start_pass_huff;
+  *puVar1 = start_pass_huff;
   do {
-    pjVar2[-1].start_pass = (_func___cdecl_void_jpeg_compress_struct_ptr_uchar *)0x0;
-    pjVar2[-3].finish_pass = (_func___cdecl_void_jpeg_compress_struct_ptr *)0x0;
-    pjVar2[1].finish_pass = (_func___cdecl_void_jpeg_compress_struct_ptr *)0x0;
-    pjVar2 = (jpeg_entropy_encoder *)&pjVar2->encode_mcu;
-    *(_func___cdecl_uchar_jpeg_compress_struct_ptr_short_64__ptr_ptr **)pjVar2 =
-         (_func___cdecl_uchar_jpeg_compress_struct_ptr_short_64__ptr_ptr *)0x0;
+    puVar2[-3] = 0;
+    puVar2[-7] = 0;
+    puVar2[5] = 0;
+    puVar2 = puVar2 + 1;
+    *puVar2 = 0;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
   return;

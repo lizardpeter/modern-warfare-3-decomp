@@ -2,7 +2,7 @@
 
 // 822F9440  IsEqualXUID  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/xbox.h:46)
 
-int IsEqualXUID(ulong64 param_1,ulong64 param_2)
+undefined8 IsEqualXUID(longlong param_1,longlong param_2)
 
 {
   if (param_1 == param_2) {
@@ -13,52 +13,449 @@ int IsEqualXUID(ulong64 param_1,ulong64 param_2)
 
 
 // 822F9458  CG_ParseScores  (cgame_mp/cg_servercmds_mp.cpp:125)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ParseScores(void)
+
+{
+  uint uVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  int iVar4;
+  int iVar5;
+  char *pcVar6;
+  int iVar7;
+  void *pvVar8;
+  int iVar9;
+  int iVar10;
+  uint *puVar11;
+  int *piVar12;
+  longlong lVar13;
+  int *piVar14;
+  
+  uVar3 = __savegprlr();
+  iVar4 = PartyUI_ShouldShowPrivatePartyHostIcon();
+  iVar5 = CG_GetLocalClientGlobals(uVar3);
+  piVar12 = (int *)(iVar5 + 0x76ab4);
+  if (*piVar12 < 1) {
+    *(undefined4 *)(iVar5 + 0x76e50) = 0xffffffff;
+  }
+  pcVar6 = (char *)Cmd_Argv(1);
+  iVar7 = atoi(pcVar6);
+  *piVar12 = iVar7;
+  if (0x12 < iVar7) {
+    *piVar12 = 0x12;
+  }
+  *(undefined8 *)(iVar5 + 0x76ab8) = 0;
+  *(undefined8 *)(iVar5 + 0x76ac0) = 0;
+  pcVar6 = (char *)Cmd_Argv(2);
+  iVar7 = atoi(pcVar6);
+  *(int *)(iVar5 + 0x76abc) = iVar7;
+  pcVar6 = (char *)Cmd_Argv(3);
+  iVar7 = atoi(pcVar6);
+  *(int *)(iVar5 + 0x76ac0) = iVar7;
+  pcVar6 = (char *)Cmd_Argv(4);
+  iVar7 = atoi(pcVar6);
+  *(int *)(iVar5 + 0x76e48) = iVar7;
+  pvVar8 = memset((void *)(iVar5 + 0x76ae8),0,0x360);
+  puVar11 = (uint *)(iVar5 + 0x76ac8);
+  iVar7 = 0;
+  puVar11[0] = 0;
+  puVar11[1] = 0;
+  *(undefined8 *)(iVar5 + 0x76ad0) = 0;
+  *(undefined8 *)(iVar5 + 0x76ad8) = 0;
+  *(undefined8 *)(iVar5 + 0x76ae0) = 0;
+  if (0 < *piVar12) {
+    piVar14 = (int *)(iVar5 + 0x76b04);
+    lVar13 = 7;
+    do {
+      pcVar6 = (char *)Cmd_Argv(lVar13 + -2);
+      iVar9 = atoi(pcVar6);
+      piVar14[-7] = iVar9;
+      pcVar6 = (char *)Cmd_Argv(lVar13 + -1);
+      iVar9 = atoi(pcVar6);
+      piVar14[-6] = iVar9;
+      pcVar6 = (char *)Cmd_Argv(lVar13);
+      iVar9 = atoi(pcVar6);
+      piVar14[-5] = iVar9;
+      pcVar6 = (char *)Cmd_Argv(lVar13 + 1);
+      iVar9 = atoi(pcVar6);
+      piVar14[-4] = iVar9;
+      pcVar6 = (char *)Cmd_Argv(lVar13 + 2);
+      iVar9 = atoi(pcVar6);
+      pcVar6 = (char *)Cmd_Argv(lVar13 + 3);
+      iVar10 = atoi(pcVar6);
+      piVar14[-2] = iVar10;
+      pcVar6 = (char *)Cmd_Argv(lVar13 + 4);
+      iVar10 = atoi(pcVar6);
+      *piVar14 = iVar10;
+      pcVar6 = (char *)Cmd_Argv(lVar13 + 5);
+      pvVar8 = (void *)atoi(pcVar6);
+      piVar14[1] = (int)pvVar8;
+      if (0x11 < (uint)piVar14[-7]) {
+        pvVar8 = (void *)MyAssertHandler(0xffffffff82022d10,0xa9,0,0xffffffff82022cc0,piVar14[-7],
+                                         0x12);
+      }
+      iVar10 = piVar14[-7];
+      if ((0 < iVar9) && (iVar9 < 9)) {
+        uVar3 = CL_GetConfigString((longlong)iVar9 + 0xe02);
+        pvVar8 = (void *)Material_RegisterHandle(uVar3,7);
+        piVar14[3] = (int)pvVar8;
+      }
+      if (*(int *)(piVar14[-7] * 0x590 + iVar5 + 0x100b88) == 0) {
+        piVar14[-1] = 0;
+        piVar14[4] = 0;
+        piVar14[-3] = 0;
+      }
+      else {
+        iVar9 = iVar10 * 0x590 + iVar5;
+        piVar14[-1] = *(int *)(iVar9 + 0x100bbc);
+        pvVar8 = (void *)CL_GetRankIcon(*(undefined4 *)(iVar9 + 0x100bbc),
+                                        *(undefined4 *)(iVar9 + 0x100bc0),piVar14 + 4);
+        *(int *)(piVar14[-7] * 0x590 + iVar5 + 0x100bdc) = piVar14[-6];
+        piVar14[-3] = *(int *)(piVar14[-7] * 0x590 + iVar5 + 0x100bb4);
+      }
+      iVar9 = (piVar14[-3] + 0x1dab6) * 4;
+      *(int *)(iVar9 + iVar5) = *(int *)(iVar9 + iVar5) + 1;
+      iVar9 = (piVar14[-3] + 0x1dab2) * 4;
+      *(int *)(iVar9 + iVar5) = piVar14[-5] + *(int *)(iVar9 + iVar5);
+      if (piVar14[-7] == *(int *)(iVar5 + 0x3334)) {
+        Live_SetScore(piVar14[-6]);
+        pvVar8 = (void *)Live_SetDeaths(piVar14[-4]);
+      }
+      if (iVar4 == 0) {
+LAB_822f9780:
+        piVar14[2] = 0;
+      }
+      else {
+        iVar9 = Party_IsGameClientPrivatePartyHost(iVar10);
+        pvVar8 = (void *)0x0;
+        if (iVar9 == 0) goto LAB_822f9780;
+        pvVar8 = (void *)Material_RegisterHandle(0xffffffff82022d58,7);
+        piVar14[2] = (int)pvVar8;
+      }
+      iVar7 = iVar7 + 1;
+      lVar13 = lVar13 + 8;
+      piVar14 = piVar14 + 0xc;
+    } while (iVar7 < *piVar12);
+  }
+  lVar13 = 4;
+  do {
+    uVar1 = puVar11[4];
+    if (((int)uVar1 < 1) || (uVar2 = *puVar11, (int)uVar2 < 1)) {
+      *puVar11 = 0;
+    }
+    else {
+      trapWord(6,(ulonglong)uVar1,0);
+      *puVar11 = (int)uVar2 / (int)uVar1;
+      trapWord(5,(ulonglong)uVar1 &
+                 ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
+    }
+    puVar11 = puVar11 + 1;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  __restgprlr(pvVar8);
+  return;
+}
+
 
 // 822F97F8  CG_ClientScoreIsBetter  (cgame_mp/cg_servercmds_mp.cpp:224)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-bool CG_ClientScoreIsBetter(score_t *param_1,score_t *param_2)
+ulonglong CG_ClientScoreIsBetter(int param_1,int param_2)
 
 {
-  if ((param_1->team == param_2->team) || ((param_1->team != 3 && (param_2->team != 3)))) {
-    if (param_2->score < param_1->score) {
-      return true;
+  if ((*(int *)(param_1 + 0x10) == *(int *)(param_2 + 0x10)) ||
+     ((*(int *)(param_1 + 0x10) != 3 && (*(int *)(param_2 + 0x10) != 3)))) {
+    if (*(int *)(param_2 + 4) < *(int *)(param_1 + 4)) {
+      return 1;
     }
-    if (param_2->score <= param_1->score) {
-      return (bool)((char)((~(ulonglong)(uint)(param_2->deaths ^ param_1->deaths) & 0xffffffff) >>
-                          0x1f) + ((uint)param_2->deaths <= (uint)param_1->deaths) & 1);
+    if (*(int *)(param_2 + 4) <= *(int *)(param_1 + 4)) {
+      return ((~(ulonglong)(*(uint *)(param_2 + 0xc) ^ *(uint *)(param_1 + 0xc)) & 0xffffffff) >>
+             0x1f) + (ulonglong)(*(uint *)(param_2 + 0xc) <= *(uint *)(param_1 + 0xc)) & 1;
     }
   }
-  return false;
+  return 0;
 }
 
 
 // 822F9860  CG_SortSingleClientScore  (cgame_mp/cg_servercmds_mp.cpp:241)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_SortSingleClientScore(undefined8 param_1,ulonglong param_2)
+
+{
+  int *piVar1;
+  longlong lVar2;
+  longlong lVar3;
+  ulonglong uVar5;
+  int *piVar6;
+  longlong lVar7;
+  undefined1 auStack_60 [96];
+  void *pvVar4;
+  
+  lVar2 = __savegprlr_28();
+  lVar3 = lVar2;
+  if (0 < (int)param_2) {
+    lVar7 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0xfffffff) * 0x10 + lVar2 + 0x76ac8;
+    do {
+      piVar6 = (int *)lVar7;
+      if ((piVar6[0xc] == *piVar6) || ((piVar6[0xc] != 3 && (*piVar6 != 3)))) {
+        if (piVar6[-3] < piVar6[9]) {
+          uVar5 = 1;
+        }
+        else if (piVar6[9] < piVar6[-3]) {
+          uVar5 = 0;
+        }
+        else {
+          uVar5 = ((~(ulonglong)(uint)(piVar6[-1] ^ piVar6[0xb]) & 0xffffffff) >> 0x1f) +
+                  (ulonglong)((uint)piVar6[-1] <= (uint)piVar6[0xb]) & 1;
+        }
+      }
+      else {
+        uVar5 = 0;
+      }
+      if (uVar5 == 0) break;
+      memcpy(auStack_60,piVar6 + -4,0x30);
+      memcpy(piVar6 + -4,piVar6 + 8,0x30);
+      pvVar4 = memcpy(piVar6 + 8,auStack_60,0x30);
+      lVar3 = (longlong)(int)pvVar4;
+      param_2 = param_2 - 1;
+      lVar7 = lVar7 + -0x30;
+    } while (0 < (longlong)param_2);
+  }
+  piVar6 = (int *)((int)lVar2 + 0x76ab4);
+  if ((int)param_2 < *piVar6 + -1) {
+    lVar2 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0xfffffff) * 0x10 + lVar2 + 0x76af8;
+    do {
+      piVar1 = (int *)lVar2;
+      if ((piVar1[0xc] == *piVar1) || ((piVar1[0xc] != 3 && (*piVar1 != 3)))) {
+        if (piVar1[-3] < piVar1[9]) {
+          uVar5 = 1;
+        }
+        else if (piVar1[9] < piVar1[-3]) {
+          uVar5 = 0;
+        }
+        else {
+          uVar5 = ((~(ulonglong)(uint)(piVar1[-1] ^ piVar1[0xb]) & 0xffffffff) >> 0x1f) +
+                  (ulonglong)((uint)piVar1[-1] <= (uint)piVar1[0xb]) & 1;
+        }
+      }
+      else {
+        uVar5 = 0;
+      }
+      if (uVar5 == 0) break;
+      memcpy(auStack_60,piVar1 + 8,0x30);
+      memcpy(piVar1 + 8,piVar1 + -4,0x30);
+      pvVar4 = memcpy(piVar1 + -4,auStack_60,0x30);
+      lVar3 = (longlong)(int)pvVar4;
+      param_2 = param_2 + 1;
+      lVar2 = lVar2 + 0x30;
+    } while ((int)param_2 < *piVar6 + -1);
+  }
+  __restgprlr_28(lVar3);
+  return;
+}
+
 
 // 822F9A38  CG_SetSingleClientScore  (cgame_mp/cg_servercmds_mp.cpp:264)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_SetSingleClientScore(undefined8 param_1,int param_2,undefined4 param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  undefined8 uVar3;
+  int iVar4;
+  bool bVar5;
+  int *piVar6;
+  int *piVar7;
+  int iVar8;
+  int iVar9;
+  undefined4 *puVar10;
+  
+  uVar3 = __savegprlr_22();
+  iVar4 = CG_GetLocalClientGlobals();
+  piVar7 = (int *)(iVar4 + 0x76ab4);
+  bVar5 = false;
+  iVar9 = 0;
+  if (0 < *piVar7) {
+    piVar6 = (int *)(iVar4 + 0x76ae8);
+    do {
+      if (*piVar6 == param_2) {
+        bVar5 = true;
+        *(undefined4 *)(iVar9 * 0x30 + iVar4 + 0x76aec) = param_3;
+        break;
+      }
+      iVar9 = iVar9 + 1;
+      piVar6 = piVar6 + 0xc;
+    } while (iVar9 < *piVar7);
+  }
+  if (bVar5) {
+    iVar8 = 0;
+    if (0 < *piVar7) {
+      puVar10 = (undefined4 *)(iVar4 + 0x76af8);
+      do {
+        uVar1 = puVar10[-4];
+        if (0x11 < uVar1) {
+          MyAssertHandler(0xffffffff82022d10,299,0,0xffffffff82022d60,uVar1,0x12);
+        }
+        iVar2 = uVar1 * 0x590 + iVar4;
+        if (*(int *)(iVar2 + 0x100b88) != 0) {
+          *puVar10 = *(undefined4 *)(iVar2 + 0x100bb4);
+        }
+        iVar8 = iVar8 + 1;
+        puVar10 = puVar10 + 0xc;
+      } while (iVar8 < *piVar7);
+    }
+    CG_SortSingleClientScore(iVar4,iVar9);
+  }
+  else if ((*(int *)(iVar4 + 0x76ab0) == 0) ||
+          (*(int *)(iVar4 + 0x76ab0) + 10000 < *(int *)(iVar4 + 0x6b98c))) {
+    UpdateScores(uVar3);
+    __restgprlr_22();
+    return;
+  }
+  __restgprlr_22();
+  return;
+}
+
 
 // 822F9BA8  CG_ParseServerInfo  (cgame_mp/cg_servercmds_mp.cpp:319)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void CG_ParseServerInfo(void)
+
+{
+  uint uVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  int iVar6;
+  char *pcVar7;
+  int iVar8;
+  undefined8 uVar5;
+  char cVar9;
+  
+  uVar3 = __savegprlr_26();
+  uVar4 = CL_GetConfigString(0);
+  iVar6 = CG_GetLocalClientStaticGlobals(uVar3);
+  pcVar7 = (char *)Info_ValueForKey(uVar4,0xffffffff82022fa4);
+  strncpy((char *)(iVar6 + 0x44),pcVar7,0x100);
+  pcVar7 = (char *)Info_ValueForKey(uVar4,0xffffffff82022f98);
+  iVar8 = atoi(pcVar7);
+  *(char *)(iVar6 + 0x144) = (char)((-(longlong)iVar8 & ~(longlong)iVar8 & 0xffffffffU) >> 0x1f);
+  pcVar7 = (char *)Info_ValueForKey(uVar4,0xffffffff82022f8c);
+  strncpy((char *)(iVar6 + 0x24),pcVar7,0x20);
+  if (*(int *)(iVar6 + 0x20) == 0) {
+    Dvar_SetStringByName(0xffffffff82022f8c,(char *)(iVar6 + 0x24));
+    Dvar_SetBoolByName(0xffffffff82022f98,*(undefined1 *)(iVar6 + 0x144));
+  }
+  pcVar7 = (char *)Info_ValueForKey(uVar4,0xffffffff82022f7c);
+  iVar8 = atoi(pcVar7);
+  *(int *)(iVar6 + 0x148) = iVar8;
+  if ((iVar8 < 1) || (0x12 < iVar8)) {
+    MyAssertHandler(0xffffffff82022d10,0x14f,0,0xffffffff82022f30,0xffffffff82022f4c,iVar8);
+  }
+  uVar5 = Info_ValueForKey(uVar4,0xffffffff82010974);
+  Com_GetBspFilename(iVar6 + 0x150,0x40,uVar5);
+  pcVar7 = (char *)Info_ValueForKey(uVar4,0xffffffff82022f14);
+  iVar8 = atoi(pcVar7);
+  *(int *)(iVar6 + 0x14c) = iVar8;
+  cVar9 = CL_Demo_IsPlaying(uVar3);
+  if ((cVar9 == '\0') && (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
+    uVar1 = *(uint *)(iVar6 + 0x14c);
+    uVar4 = Session_CurrentFlags(0xffffffff844c7860);
+    cVar9 = Session_NeedToSyncParams
+                      (0xffffffff844c7860,(ulonglong)*(uint *)(iVar6 + 0x148) - (ulonglong)uVar1,
+                       (ulonglong)uVar1,uVar4);
+    if (cVar9 != '\0') {
+      Com_Printf(0xe,0xffffffff82022ea8,
+                 (ulonglong)*(uint *)(iVar6 + 0x148) - (ulonglong)*(uint *)(iVar6 + 0x14c),
+                 (ulonglong)*(uint *)(iVar6 + 0x14c),DAT_844c78c4,DAT_844c78c0);
+      cVar9 = IsServerRunning();
+      if (cVar9 != '\0') {
+        MyAssertHandler(0xffffffff82022d10,0x15d,0,0xffffffff820011f4,0xffffffff82022e08,
+                        0xffffffff82022e20);
+      }
+      if ((*(int *)(iVar6 + 0x14c) < 0) || (*(int *)(iVar6 + 0x148) < *(int *)(iVar6 + 0x14c))) {
+        MyAssertHandler(0xffffffff82022d10,0x15e,0,0xffffffff82022da0,0xffffffff82022dc0);
+      }
+      uVar1 = *(uint *)(iVar6 + 0x14c);
+      uVar4 = Session_CurrentFlags(0xffffffff844c7860);
+      uVar2 = *(uint *)(iVar6 + 0x148);
+      uVar3 = CL_ControllerIndexFromClientNum(uVar3);
+      Session_SyncParams(uVar3,0xffffffff844c7860,(ulonglong)uVar2 - (ulonglong)uVar1,
+                         (ulonglong)uVar1,uVar4);
+    }
+  }
+  __restgprlr_26();
+  return;
+}
+
 
 // 822F9E20  CG_ParseSingleCodInfo  (cgame_mp/cg_servercmds_mp.cpp:357)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void CG_ParseSingleCodInfo(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  char *pcVar4;
+  undefined8 uVar2;
+  char cVar5;
+  
+  uVar1 = __savegprlr_29();
+  if (199 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82022d10,0x16a,0,0xffffffff82022fb0,param_2,200);
+  }
+  iVar3 = CG_GetLocalClientStaticGlobals(uVar1);
+  if ((*(int *)(iVar3 + 0x20) == 0) &&
+     (pcVar4 = (char *)CL_GetConfigString(param_2 + 0x12), *pcVar4 != '\0')) {
+    uVar2 = CL_GetConfigString(param_2 + 0xda);
+    cVar5 = CL_Demo_IsPlaying(uVar1);
+    if (cVar5 != '\0') {
+      uVar2 = CL_Demo_GetAdjustedTimeForCodInfoDvar(pcVar4,uVar2);
+    }
+    Dvar_SetFromStringByName(pcVar4,uVar2);
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 822F9ED0  CG_ParseCodInfo  (cgame_mp/cg_servercmds_mp.cpp:390)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void CG_ParseCodInfo(void)
+
+{
+  undefined8 uVar1;
+  char cVar4;
+  int iVar2;
+  char *pcVar3;
+  longlong lVar5;
+  
+  uVar1 = __savegprlr_29();
+  cVar4 = CL_Demo_IsPlaying();
+  iVar2 = CG_GetLocalClientStaticGlobals(uVar1);
+  if (*(int *)(iVar2 + 0x20) == 0) {
+    lVar5 = 0xda;
+    do {
+      pcVar3 = (char *)CL_GetConfigString(lVar5 + -200);
+      if (*pcVar3 == '\0') break;
+      uVar1 = CL_GetConfigString(lVar5);
+      if (cVar4 != '\0') {
+        uVar1 = CL_Demo_GetAdjustedTimeForCodInfoDvar(pcVar3,uVar1);
+      }
+      Dvar_SetFromStringByName(pcVar3,uVar1);
+      iVar2 = (int)lVar5;
+      lVar5 = lVar5 + 1;
+    } while (iVar2 + -0xd9 < 200);
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 822F9F58  CG_XuidExistsInArray  (cgame_mp/cg_servercmds_mp.cpp:424)
 
-bool CG_XuidExistsInArray(ulong64 param_1,ulong64 *param_2,int param_3)
+undefined8 CG_XuidExistsInArray(longlong param_1,longlong *param_2,int param_3)
 
 {
   int iVar1;
@@ -67,50 +464,43 @@ bool CG_XuidExistsInArray(ulong64 param_1,ulong64 *param_2,int param_3)
   if (0 < param_3) {
     do {
       if (param_1 == *param_2) {
-        return true;
+        return 1;
       }
       iVar1 = iVar1 + 1;
       param_2 = param_2 + 1;
     } while (iVar1 < param_3);
   }
-  return false;
+  return 0;
 }
 
 
 // 822F9F98  CG_VerifyMemberXNAddr  (cgame_mp/cg_servercmds_mp.cpp:441)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void CG_VerifyMemberXNAddr(PartyMember *param_1,int param_2,char *param_3)
+void CG_VerifyMemberXNAddr(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
+  int iVar2;
+  undefined8 uVar1;
+  longlong lVar3;
   longlong lVar4;
-  longlong lVar5;
-  byte *pbVar6;
-  char acStack_80 [128];
+  byte *pbVar5;
+  undefined1 auStack_80 [128];
   
-  uVar3 = (ulonglong)param_2;
-  iVar1 = __savegprlr_28(param_1,uVar3,param_3);
-  if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0x1ba,0,"%s");
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82022d10,0x1ba,0,0xffffffff82000f98,0xffffffff82023010);
   }
-  pbVar6 = (byte *)(iVar1 + 0xea);
-  lVar5 = (uVar3 + (uVar3 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + -0x7d55d1b2;
+  pbVar5 = (byte *)(iVar2 + 0xea);
+  lVar4 = (param_2 + (param_2 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + -0x7d55d1b2;
   do {
-    lVar4 = (ulonglong)*pbVar6 - (ulonglong)*(byte *)lVar5;
-    if (lVar4 != 0) break;
-    pbVar6 = pbVar6 + 1;
-    lVar5 = lVar5 + 1;
-  } while (pbVar6 != (byte *)(iVar1 + 0xf0));
-  if (((int)lVar4 != 0) && (XNAddrToString((XNADDR *)(iVar1 + 0xe0),acStack_80), alwaysfails == 0))
-  {
-    pcVar2 = va("member->xnaddr != cls.xnaddrs[%i], %s != %s");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0x1c8,0,pcVar2);
+    lVar3 = (ulonglong)*pbVar5 - (ulonglong)*(byte *)lVar4;
+    if (lVar3 != 0) break;
+    pbVar5 = pbVar5 + 1;
+    lVar4 = lVar4 + 1;
+  } while (pbVar5 != (byte *)(iVar2 + 0xf0));
+  if (((int)lVar3 != 0) && (XNAddrToString(iVar2 + 0xe0,auStack_80), DAT_84013128 == 0)) {
+    uVar1 = va(0xffffffff82022fe4,param_2,auStack_80,param_3);
+    MyAssertHandler(0xffffffff82022d10,0x1c8,0,uVar1);
   }
   __restgprlr_28();
   return;
@@ -118,60 +508,568 @@ void CG_VerifyMemberXNAddr(PartyMember *param_1,int param_2,char *param_3)
 
 
 // 822FA080  CG_ParsePlayerInfos  (cgame_mp/cg_servercmds_mp.cpp:463)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void CG_ParsePlayerInfos(void)
+
+{
+  byte bVar1;
+  byte bVar2;
+  undefined4 *puVar3;
+  undefined *puVar4;
+  undefined8 uVar5;
+  int iVar9;
+  char cVar20;
+  undefined8 uVar6;
+  char *pcVar10;
+  char *pcVar11;
+  char *pcVar12;
+  char *_Str;
+  char *pcVar13;
+  char *pcVar14;
+  char *_Str_00;
+  uint uVar15;
+  ulonglong uVar7;
+  int iVar16;
+  undefined8 uVar8;
+  undefined1 *_Dst;
+  void *pvVar17;
+  byte *pbVar18;
+  char *pcVar19;
+  byte *pbVar21;
+  byte *pbVar22;
+  byte *pbVar23;
+  char **ppcVar24;
+  ulonglong uVar25;
+  longlong *plVar26;
+  longlong lVar27;
+  longlong local_230;
+  undefined4 local_228;
+  undefined8 local_220;
+  undefined8 local_218;
+  undefined4 *local_210;
+  char *local_20c;
+  undefined *local_208;
+  undefined8 local_200;
+  char *local_1f8;
+  char *local_1f4;
+  char *local_1f0;
+  char *local_1ec;
+  char *local_1e8;
+  char *local_1e4;
+  char *local_1e0;
+  char *local_1d8 [2];
+  char *local_1d0;
+  uint local_1cc;
+  char *local_1c8;
+  char *local_1c4;
+  char *local_1c0;
+  char *local_1bc;
+  char *local_1b8;
+  char *local_1b4;
+  char *local_1b0;
+  char *local_1ac;
+  int local_1a8;
+  byte local_1a0 [8];
+  undefined1 auStack_198 [56];
+  byte local_160 [8];
+  undefined8 local_158;
+  undefined8 local_150;
+  undefined8 local_148;
+  undefined4 local_140;
+  longlong local_130 [38];
+  
+  uVar5 = __savegprlr();
+  iVar9 = CG_GetLocalClientStaticGlobals();
+  local_1a8 = iVar9;
+  if ((*(int *)(iVar9 + 0x20) == 0) && (cVar20 = CL_Demo_IsPlaying(uVar5), cVar20 == '\0')) {
+    cVar20 = Session_ModifyInProgress();
+    if (cVar20 != '\0') {
+      Session_FinishModify();
+    }
+    local_20c = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp";
+    if (*(int *)(iVar9 + 0x14c) < 0) {
+      MyAssertHandler(0xffffffff82022d10,0x1fb,0,0xffffffff82022da0,0xffffffff82023630);
+    }
+    local_210 = &DAT_844c7860;
+    local_1cc = Voice_GetRegisteredPlayerList(0xffffffff844c7860,local_130);
+    memcpy(local_1a0,&DAT_844c7874,0x3c);
+    uVar25 = 0;
+    ppcVar24 = local_1d8;
+    pbVar22 = local_1a0;
+    do {
+      bVar1 = *(byte *)ppcVar24;
+      bVar2 = *pbVar22;
+      if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+      ppcVar24 = (char **)((int)ppcVar24 + 1);
+      pbVar22 = pbVar22 + 1;
+    } while (ppcVar24 != &local_1d0);
+    local_208 = &DAT_82000f98;
+    if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
+      MyAssertHandler(0xffffffff82022d10,0x202,0,0xffffffff82000f98,0xffffffff820235d8);
+    }
+    local_158 = 0;
+    local_150 = 0;
+    local_148 = 0;
+    local_140 = 0;
+    uVar6 = CL_ControllerIndexFromClientNum(uVar5);
+    local_228 = (undefined4)uVar6;
+    Com_Printf(0xe,0xffffffff8202359c,uVar5,uVar6);
+    pcVar19 = local_20c;
+    pbVar22 = &DAT_82aa2e44;
+    local_1f8 = 
+    "addr.localNetID == NET_GetLocalNetIDFromControllerIndex( localControllerForXuid )\n\t%i, %i";
+    local_1e4 = 
+    "Host has out of date information about our private party Id. He may not be up to date with our migration. This is normal if the party host just dropped.\n"
+    ;
+    local_1ec = 
+    "!Live_XUIDIsLocalPlayer( xuid ) || I_memcmp( Party_GetOurPrivatePartyId(), &partyId, sizeof( partyId ) ) == 0"
+    ;
+    local_1f4 = "Host has the wrong information about our private party Id";
+    local_1b0 = "%llx != %llx";
+    local_1c8 = "member->status == PARTYSTATUS_PRESENT";
+    local_1b8 = "Host %i is not in the session in CG_ParsePlayerInfos()!\n";
+    local_1e0 = "foundClientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)";
+    local_1ac = "0 natType, but the config string is %s";
+    local_1f0 = "(partyIdStr[0])";
+    local_1b4 = "(npIdStr[0])";
+    local_1e8 = "playerNetId doesn\'t index NS_MAXCLIENTS\n\t%i not in [0, %i)";
+    local_1c0 = "%s\n\t(partyIdStr) = %s";
+    local_1bc = "(natTypeStr[0])";
+    local_1c4 = "(xnaddrStr[0])";
+    local_1d0 = "(xuidStr[0])";
+    do {
+      pcVar10 = (char *)CL_GetConfigString(uVar25 + 0x1a3);
+      if (*pcVar10 != '\0') {
+        Cmd_TokenizeString();
+        pcVar11 = (char *)Cmd_Argv(0);
+        pcVar12 = (char *)Cmd_Argv(1);
+        _Str = (char *)Cmd_Argv(2);
+        pcVar13 = (char *)Cmd_Argv(3);
+        pcVar14 = (char *)Cmd_Argv(4);
+        _Str_00 = (char *)Cmd_Argv(5);
+        uVar15 = atoi(_Str_00);
+        if (*pcVar11 == '\0') {
+          MyAssertHandler(pcVar19,0x21b,0,0xffffffff82023140,local_1d0,pcVar10);
+        }
+        if (*pcVar12 == '\0') {
+          MyAssertHandler(pcVar19,0x21c,0,0xffffffff82023140,local_1c4,pcVar10);
+        }
+        if (*_Str == '\0') {
+          MyAssertHandler(pcVar19,0x21d,0,0xffffffff82023140,local_1bc,pcVar10);
+        }
+        if (*pcVar13 == '\0') {
+          MyAssertHandler(pcVar19,0x21e,0,0xffffffff82023140,local_1b4,pcVar10);
+        }
+        if (*pcVar14 == '\0') {
+          MyAssertHandler(pcVar19,0x21f,0,local_1c0,local_1f0,pcVar14);
+        }
+        if (3 < uVar15) {
+          MyAssertHandler(pcVar19,0x221,0,local_1e8,uVar15,4);
+        }
+        StringToXNAddr(pcVar12,pbVar22);
+        StringToXUID(pcVar11,&local_230);
+        iVar9 = atoi(_Str);
+        StringToXNKID(pcVar14,&local_200);
+        if (iVar9 == 0) {
+          uVar6 = va(local_1ac,_Str);
+          MyAssertHandler(pcVar19,0x22e,0,0xffffffff820011f4,0xffffffff82023188,uVar6);
+        }
+        if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
+          pbVar21 = local_160;
+          pbVar18 = pbVar22;
+          do {
+            bVar1 = *pbVar18;
+            bVar2 = *pbVar21;
+            if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+            pbVar18 = pbVar18 + 1;
+            pbVar21 = pbVar21 + 1;
+          } while (pbVar18 != pbVar22 + 0x24);
+          if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
+            uVar6 = va(0xffffffff82023190,uVar25);
+            MyAssertHandler(pcVar19,0x230,0,0xffffffff820011f4,0xffffffff820231b0,uVar6);
+          }
+        }
+        puVar3 = local_210;
+        uVar7 = Session_FindRegisteredUser(local_210,local_230);
+        if ((int)uVar25 == (int)uVar7) {
+          cVar20 = Lobby_IsInLobby();
+          if (cVar20 != '\0') {
+            pcVar10 = (char *)Lobby_GetMember(uVar25);
+            if (*pcVar10 != '\x05') {
+              MyAssertHandler(pcVar19,0x289,0,local_208,local_1c8);
+            }
+            if (*(longlong *)(pcVar10 + 0x128) != local_230) {
+              uVar6 = va(local_1b0);
+              MyAssertHandler(pcVar19,0x28a,0,0xffffffff820011f4,0xffffffff8202328c,uVar6);
+            }
+            CG_VerifyMemberXNAddr(pcVar10,uVar25,pcVar12);
+            *(int *)(pcVar10 + 0x120) = iVar9;
+            memcpy(pcVar10 + 0xe0,pbVar22,0x24);
+            pbVar21 = (byte *)&local_200;
+            pbVar18 = (byte *)(pcVar10 + 4);
+            do {
+              bVar1 = *pbVar18;
+              bVar2 = *pbVar21;
+              if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+              pbVar18 = pbVar18 + 1;
+              pbVar21 = pbVar21 + 1;
+            } while (pbVar18 != (byte *)(pcVar10 + 0xc));
+            if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
+              cVar20 = Live_XUIDIsLocalPlayer(local_230);
+              if (cVar20 != '\0') {
+                pbVar18 = (byte *)Party_GetOurPrivatePartyId();
+                pbVar23 = (byte *)&local_200;
+                pbVar21 = pbVar18 + 8;
+                do {
+                  bVar1 = *pbVar18;
+                  bVar2 = *pbVar23;
+                  if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+                  pbVar18 = pbVar18 + 1;
+                  pbVar23 = pbVar23 + 1;
+                } while (pbVar18 != pbVar21);
+                if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
+                  Com_Printf(0x19,local_1e4);
+                }
+              }
+            }
+            else {
+              cVar20 = Live_XUIDIsLocalPlayer(local_230);
+              if (cVar20 != '\0') {
+                pbVar18 = (byte *)Party_GetOurPrivatePartyId();
+                pbVar23 = (byte *)&local_200;
+                pbVar21 = pbVar18 + 8;
+                do {
+                  bVar1 = *pbVar18;
+                  bVar2 = *pbVar23;
+                  if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+                  pbVar18 = pbVar18 + 1;
+                  pbVar23 = pbVar23 + 1;
+                } while (pbVar18 != pbVar21);
+                if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
+                  MyAssertHandler(pcVar19,0x292,0,0xffffffff820011f4,local_1ec,local_1f4);
+                }
+              }
+              *(undefined8 *)(pcVar10 + 4) = local_200;
+              uVar6 = Lobby_GetPartyData();
+              Party_CheckUpdatedPartyMemberPartyId(uVar6,local_228,uVar25);
+            }
+          }
+        }
+        else {
+          if (((int)uVar7 == -1) || (cVar20 = Lobby_IsInLobby(), cVar20 == '\0')) {
+            Com_DPrintf(0xe,0xffffffff82023248,uVar25,local_230,pcVar12,_Str,pcVar13);
+          }
+          else {
+            Com_DPrintf(0xe,0xffffffff82023200,uVar7,uVar25,local_230,pcVar12,_Str,pcVar13);
+            if (0x11 < (uVar7 & 0xffffffff)) {
+              MyAssertHandler(pcVar19,0x239,0,local_1e0,uVar7,0x12);
+            }
+            uVar6 = Lobby_GetPartyData();
+            PartyClient_RemovePartyMember(uVar6,uVar7);
+          }
+          local_218 = 0;
+          memcpy(auStack_198,pbVar22,0x24);
+          cVar20 = Session_IsHost(puVar3,uVar25);
+          if (cVar20 == '\0') {
+            Xenon_RegisterRemoteXenon(local_1a0,(int)&local_220 + 4,&local_218);
+          }
+          else {
+            Com_PrintError(0xe,local_1b8,uVar25);
+            CL_GetLocalClientConnection((int)uVar5);
+          }
+          local_220 = 0;
+          local_218 = CONCAT44(local_218._0_4_,uVar15);
+          uVar6 = Live_GetPortForLocalXUID(local_230);
+          if ((int)uVar6 < 0) {
+            local_218 = CONCAT26(1000,local_218._2_6_);
+            local_220 = 0x400000000;
+          }
+          else {
+            iVar16 = NET_GetLocalNetIDFromControllerIndex();
+            if (local_218._4_4_ != iVar16) {
+              uVar8 = NET_GetLocalNetIDFromControllerIndex(uVar6);
+              MyAssertHandler(pcVar19,0x260,0,local_1f8,local_218._4_4_,uVar8);
+            }
+            local_218 = CONCAT26((short)uVar6,local_218._2_6_);
+            NetAdr_SetType(&local_220,2);
+          }
+          cVar20 = Lobby_IsInLobby();
+          if (cVar20 != '\0') {
+            _Dst = (undefined1 *)Lobby_GetMember(uVar25);
+            memset(_Dst,0,0x150);
+            *(int *)(_Dst + 0x120) = iVar9;
+            *_Dst = 5;
+            pvVar17 = memcpy(_Dst + 0xe0,pbVar22,0x24);
+            *(longlong *)(_Dst + 0x128) = local_230;
+            *(undefined8 *)(_Dst + 4) = local_200;
+            uVar6 = Lobby_GetPartyData(pvVar17);
+            Party_CheckUpdatedPartyMemberPartyId(uVar6,local_228,uVar25);
+          }
+          Session_RegisterRemotePlayer
+                    (local_228,puVar3,local_230,
+                     ((~(*(uint *)(local_1a8 + 0x14c) ^ uVar25) & 0xffffffff) >> 0x1f) +
+                     (ulonglong)(*(uint *)(local_1a8 + 0x14c) <= uVar25) & 1,uVar25,iVar9,pbVar22,
+                     local_220);
+        }
+        Cmd_EndTokenizedString();
+      }
+      puVar4 = local_208;
+      pcVar10 = local_20c;
+      pbVar22 = pbVar22 + 0x24;
+      uVar25 = uVar25 + 1;
+    } while ((int)pbVar22 < -0x7d55cf34);
+    uVar25 = (ulonglong)local_1cc;
+    if (0 < (int)local_1cc) {
+      plVar26 = local_130;
+      do {
+        lVar27 = 0;
+        do {
+          pcVar19 = (char *)CL_GetConfigString(lVar27 + 0x1a3);
+          if (*pcVar19 != '\0') {
+            Cmd_TokenizeString();
+            cVar20 = Sys_IsMainThread();
+            if (cVar20 == '\0') {
+              MyAssertHandler(0xffffffff82012b78,0xca,0,puVar4,0xffffffff82010b48);
+            }
+            if (7 < DAT_835ab9d8) {
+              MyAssertHandler(0xffffffff82012b78,0xcb,0,0xffffffff82012b30,DAT_835ab9d8,8);
+            }
+            pcVar19 = "";
+            if (0 < *(int *)(&DAT_835aba1c + DAT_835ab9d8 * 4)) {
+              pcVar19 = (char *)**(undefined4 **)(&DAT_835aba3c + DAT_835ab9d8 * 4);
+            }
+            if (*pcVar19 == '\0') {
+              MyAssertHandler(pcVar10,0x2af,0,puVar4,0xffffffff82023018);
+            }
+            Cmd_EndTokenizedString();
+            StringToXUID(pcVar19,&local_230);
+            if (*plVar26 == local_230) goto LAB_822fab88;
+          }
+          lVar27 = lVar27 + 1;
+        } while ((int)lVar27 < 0x12);
+        if (*plVar26 == 0) {
+          MyAssertHandler(pcVar10,0x2c3,0,puVar4,0xffffffff82023024);
+        }
+        cVar20 = Lobby_IsInLobby();
+        puVar3 = local_210;
+        if (cVar20 == '\0') {
+          if ((*(char *)(DAT_82aa1ae4 + 0xc) != '\0') &&
+             (uVar5 = Session_FindRegisteredUser(local_210,*plVar26), -1 < (int)uVar5)) {
+            Com_Printf(0xe,0xffffffff820230e8,uVar5);
+            Session_UnregisterRemotePlayer(puVar3,uVar5);
+          }
+        }
+        else {
+          lVar27 = *plVar26;
+          uVar5 = Lobby_GetPartyData();
+          uVar5 = Party_FindMemberByXUID_AllowNotPresent(uVar5,lVar27);
+          if (-1 < (int)uVar5) {
+            Com_Printf(0xe,0xffffffff82023040,uVar5);
+            uVar6 = Lobby_GetPartyData();
+            PartyClient_RemovePartyMember(uVar6,uVar5);
+          }
+          cVar20 = Live_XUIDIsLocalPlayer(*plVar26);
+          if (cVar20 == '\0') {
+            Party_LostPrivatePartyPlayer(local_228,*plVar26,0,1);
+          }
+          else if (DAT_84013128 == 0) {
+            uVar5 = va(0xffffffff82023090,*plVar26);
+            MyAssertHandler(pcVar10,0x2d1,0,uVar5);
+          }
+        }
+LAB_822fab88:
+        uVar25 = uVar25 - 1;
+        plVar26 = plVar26 + 1;
+      } while (uVar25 != 0);
+    }
+  }
+  __restgprlr();
+  return;
+}
+
 
 // 822FABA0  CG_ParseGameEndTime  (cgame_mp/cg_servercmds_mp.cpp:737)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void CG_ParseGameEndTime(undefined8 param_1)
+
+{
+  int iVar1;
+  char *_Str;
+  int iVar2;
+  char cVar4;
+  undefined4 uVar3;
+  
+  iVar1 = CG_GetLocalClientStaticGlobals();
+  _Str = (char *)CL_GetConfigString(0xf);
+  iVar2 = atoi(_Str);
+  *(int *)(iVar1 + 400) = iVar2;
+  cVar4 = CL_Demo_IsPlaying(param_1);
+  if (cVar4 != '\0') {
+    uVar3 = CL_Demo_GetAdjustedTimeForConfigString(0xf,*(undefined4 *)(iVar1 + 400));
+    *(undefined4 *)(iVar1 + 400) = uVar3;
+  }
+  return;
+}
+
 
 // 822FAC10  CG_ParseSunLight  (cgame_mp/cg_servercmds_mp.cpp:751)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_ParseSunLight(LocalClientNum_t param_1)
+void CG_ParseSunLight(void)
 
 {
-  char *pcVar1;
-  int iVar2;
-  float afStack_20 [8];
+  char *_Src;
+  int iVar1;
+  undefined1 auStack_20 [4];
+  undefined1 auStack_1c [4];
+  undefined1 auStack_18 [24];
   
-  pcVar1 = CL_GetConfigString(8);
-  if (*pcVar1 == '\0') {
+  _Src = (char *)CL_GetConfigString(8);
+  if (*_Src == '\0') {
     R_ResetSunLightOverride();
     return;
   }
-  iVar2 = sscanf(pcVar1,"%g %g %g");
-  if (iVar2 != 3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0x301,0,"%s\n\t(argCount) = %i");
+  iVar1 = sscanf(_Src,"%g %g %g",auStack_20,auStack_1c,auStack_18);
+  if (iVar1 != 3) {
+    MyAssertHandler(0xffffffff82022d10,0x301,0,0xffffffff8202364c,0xffffffff82023660,iVar1);
   }
-  R_SetSunLightOverride(afStack_20);
+  R_SetSunLightOverride(auStack_20);
   return;
 }
 
 
 // 822FACA8  CG_ParseFog  (cgame_mp/cg_servercmds_mp.cpp:794)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ParseFog(void)
+
+{
+  float fVar1;
+  undefined4 uVar2;
+  undefined8 uVar3;
+  char cVar6;
+  int iVar4;
+  char *pcVar5;
+  undefined8 uVar7;
+  ulonglong uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  undefined4 local_a0 [2];
+  longlong local_98;
+  float local_90;
+  float local_8c;
+  float local_88;
+  
+  __savegprlr_22();
+  uVar3 = __savefpr_27();
+  cVar6 = CG_ClientSideVisionSetsEnabled();
+  if (cVar6 == '\0') {
+    iVar4 = CG_GetLocalClientGlobals(uVar3);
+    uVar2 = *(undefined4 *)(iVar4 + 0x6b98c);
+    local_a0[0] = CL_GetConfigString(0xd);
+    pcVar5 = (char *)Com_Parse(local_a0);
+    dVar9 = atof(pcVar5);
+    dVar9 = (double)(float)dVar9;
+    pcVar5 = (char *)Com_Parse(local_a0);
+    if ((pcVar5 == (char *)0x0) || (*pcVar5 == '\0')) {
+      local_98 = (longlong)(int)dVar9;
+      uVar8 = (ulonglong)(uint)(int)dVar9;
+      uVar7 = 0;
+    }
+    else {
+      dVar10 = atof(pcVar5);
+      dVar12 = (double)(float)dVar10;
+      pcVar5 = (char *)Com_Parse(local_a0);
+      dVar10 = atof(pcVar5);
+      dVar14 = 255.0;
+      dVar13 = 0.5;
+      dVar10 = floor((double)((float)dVar10 * 255.0 + 0.5));
+      local_98 = (longlong)(int)dVar10;
+      pcVar5 = (char *)Com_Parse(local_a0);
+      dVar10 = atof(pcVar5);
+      dVar10 = floor((double)(float)((double)(float)((double)(float)dVar10 * dVar14) + dVar13));
+      local_98 = (longlong)(int)dVar10;
+      pcVar5 = (char *)Com_Parse(local_a0);
+      dVar10 = atof(pcVar5);
+      dVar10 = floor((double)(float)((double)(float)((double)(float)dVar10 * dVar14) + dVar13));
+      local_98 = (longlong)(int)dVar10;
+      pcVar5 = (char *)Com_Parse(local_a0);
+      dVar10 = atof(pcVar5);
+      dVar10 = (double)(float)dVar10;
+      pcVar5 = (char *)Com_Parse(local_a0);
+      iVar4 = atoi(pcVar5);
+      uVar8 = (ulonglong)iVar4;
+      pcVar5 = (char *)Com_Parse(local_a0);
+      iVar4 = atoi(pcVar5);
+      if (iVar4 == 0) {
+        dVar14 = 0.0;
+        fVar1 = 1.0;
+        local_90 = 0.0;
+        local_8c = 0.0;
+        local_88 = 0.0;
+        dVar13 = dVar14;
+      }
+      else {
+        pcVar5 = (char *)Com_Parse(local_a0);
+        dVar11 = atof(pcVar5);
+        dVar11 = floor((double)(float)((double)(float)((double)(float)dVar11 * dVar14) + dVar13));
+        local_98 = (longlong)(int)dVar11;
+        pcVar5 = (char *)Com_Parse(local_a0);
+        dVar11 = atof(pcVar5);
+        dVar11 = floor((double)(float)((double)(float)((double)(float)dVar11 * dVar14) + dVar13));
+        local_98 = (longlong)(int)dVar11;
+        pcVar5 = (char *)Com_Parse(local_a0);
+        dVar11 = atof(pcVar5);
+        dVar13 = floor((double)(float)((double)(float)((double)(float)dVar11 * dVar14) + dVar13));
+        local_98 = (longlong)(int)dVar13;
+        pcVar5 = (char *)Com_Parse(local_a0);
+        dVar13 = atof(pcVar5);
+        local_90 = (float)dVar13;
+        pcVar5 = (char *)Com_Parse(local_a0);
+        dVar13 = atof(pcVar5);
+        local_8c = (float)dVar13;
+        pcVar5 = (char *)Com_Parse(local_a0);
+        dVar13 = atof(pcVar5);
+        local_88 = (float)dVar13;
+        pcVar5 = (char *)Com_Parse(local_a0);
+        dVar13 = atof(pcVar5);
+        dVar13 = (double)(float)dVar13;
+        pcVar5 = (char *)Com_Parse(local_a0);
+        dVar14 = atof(pcVar5);
+        dVar14 = (double)(float)dVar14;
+        pcVar5 = (char *)Com_Parse(local_a0);
+        dVar11 = atof(pcVar5);
+        fVar1 = (float)dVar11;
+      }
+      R_SetFogFromServer(dVar9,dVar12,dVar10,dVar13,dVar14,(double)fVar1,uVar3);
+      uVar7 = 1;
+    }
+    R_SwitchFog(uVar3,uVar7,uVar2,uVar8);
+  }
+  __restfpr_27();
+  __restgprlr_22();
+  return;
+}
+
 
 // 822FAFB0  CG_PrecacheScriptMenu  (cgame_mp/cg_servercmds_mp.cpp:871)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_PrecacheScriptMenu(LocalClientNum_t param_1,int param_2)
+void CG_PrecacheScriptMenu(undefined8 param_1,undefined8 param_2)
 
 {
   char *pcVar1;
   int iVar2;
   
-  if ((param_2 < 0xbb4) || (0xbd3 < param_2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0x36a,0,"%s");
+  if (((int)param_2 < 0xbb4) || (0xbd3 < (int)param_2)) {
+    MyAssertHandler(0xffffffff82022d10,0x36a,0,0xffffffff82000f98,0xffffffff820236a8);
   }
-  pcVar1 = CL_GetConfigString(param_2);
+  pcVar1 = (char *)CL_GetConfigString(param_2);
   if ((*pcVar1 != '\0') && (iVar2 = Load_ScriptMenu(param_1,pcVar1,7), iVar2 == 0)) {
-    Com_Error(ERR_DROP,"\x15Could not load script menu file \'%s\'\n");
+    Com_Error(1,0xffffffff8202367c,pcVar1);
   }
   return;
 }
@@ -179,19 +1077,15 @@ void CG_PrecacheScriptMenu(LocalClientNum_t param_1,int param_2)
 
 // 822FB060  CG_RegisterServerMaterial  (cgame_mp/cg_servercmds_mp.cpp:886)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CG_RegisterServerMaterial(LocalClientNum_t param_1,int param_2)
+void CG_RegisterServerMaterial(undefined8 param_1)
 
 {
   char *pcVar1;
   
   if (((int)param_1 < 0xbd4) || (0xcd3 < (int)param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0x379,0,"%s\n\t(configStringIndex) = %i");
+    MyAssertHandler(0xffffffff82022d10,0x379,0,0xffffffff8201d934,0xffffffff82023710,param_1);
   }
-  pcVar1 = CL_GetConfigString(param_1);
+  pcVar1 = (char *)CL_GetConfigString(param_1);
   if (*pcVar1 != '\0') {
     Material_RegisterHandle(pcVar1,7);
   }
@@ -200,135 +1094,845 @@ void CG_RegisterServerMaterial(LocalClientNum_t param_1,int param_2)
 
 
 // 822FB0E0  VisionSetConfigString  (cgame_mp/cg_servercmds_mp.cpp:898)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void VisionSetConfigString(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined8 uVar1;
+  longlong lVar2;
+  undefined8 uVar3;
+  char *_Str;
+  int iVar4;
+  longlong lVar5;
+  int iVar6;
+  undefined4 local_80 [4];
+  char local_70 [112];
+  
+  uVar1 = __savegprlr_28();
+  lVar2 = CG_GetLocalClientGlobals();
+  iVar6 = (int)param_2;
+  if (iVar6 == 5) {
+    MyAssertHandler(0xffffffff82022d10,0x38e,0,0xffffffff82000f98,0xffffffff8202376c);
+  }
+  else {
+    if (iVar6 == 2) {
+      uVar3 = 0x3fe;
+      goto LAB_822fb16c;
+    }
+    if (iVar6 == 1) {
+      uVar3 = 0x3fd;
+      goto LAB_822fb16c;
+    }
+    if (iVar6 == 3) {
+      uVar3 = 0x3ff;
+      goto LAB_822fb16c;
+    }
+    uVar3 = 0x400;
+    if (iVar6 == 4) goto LAB_822fb16c;
+  }
+  uVar3 = 0x3fc;
+LAB_822fb16c:
+  local_80[0] = CL_GetConfigString(uVar3);
+  uVar3 = Com_Parse(local_80);
+  I_strncpyz(local_70,uVar3,0x40);
+  _Str = (char *)Com_Parse(local_80);
+  iVar4 = atoi(_Str);
+  if (iVar6 == 0) {
+    if (local_70[0] == '\0') {
+      CG_EnableClientSideVisionSets(uVar1,iVar4);
+      __restgprlr_28();
+      return;
+    }
+    CG_DisableClientSideVisionSets(uVar1);
+  }
+  lVar5 = (param_2 & 0x3ffffff) * 0x40 + lVar2 + 0x107eb8;
+  I_strncpyz(lVar5,local_70,0x40);
+  CG_VisionSetStartLerp_To
+            (lVar2 + 0x107060,param_2,3,lVar5,iVar4,*(undefined4 *)((int)lVar2 + 0x6b98c));
+  __restgprlr_28();
+  return;
+}
+
 
 // 822FB218  VisionSetAllConfigStrings  (cgame_mp/cg_servercmds_mp.cpp:944)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void VisionSetAllConfigStrings(void)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  char *pcVar4;
+  int iVar5;
+  undefined4 local_90 [4];
+  char local_80 [128];
+  
+  uVar1 = __savegprlr_26();
+  iVar3 = CG_GetLocalClientGlobals();
+  local_90[0] = CL_GetConfigString(0x3fc);
+  uVar2 = Com_Parse(local_90);
+  I_strncpyz(local_80,uVar2,0x40);
+  pcVar4 = (char *)Com_Parse(local_90);
+  iVar5 = atoi(pcVar4);
+  if (local_80[0] == '\0') {
+    CG_EnableClientSideVisionSets(uVar1,iVar5);
+  }
+  else {
+    CG_DisableClientSideVisionSets(uVar1);
+    I_strncpyz(iVar3 + 0x107eb8,local_80,0x40);
+    CG_VisionSetStartLerp_To
+              (iVar3 + 0x107060,0,3,iVar3 + 0x107eb8,iVar5,*(undefined4 *)(iVar3 + 0x6b98c));
+  }
+  iVar3 = CG_GetLocalClientGlobals(uVar1);
+  local_90[0] = CL_GetConfigString(0x3fd);
+  uVar2 = Com_Parse(local_90);
+  I_strncpyz(local_80,uVar2,0x40);
+  pcVar4 = (char *)Com_Parse(local_90);
+  iVar5 = atoi(pcVar4);
+  I_strncpyz(iVar3 + 0x107ef8,local_80,0x40);
+  CG_VisionSetStartLerp_To
+            (iVar3 + 0x107060,1,3,iVar3 + 0x107ef8,iVar5,*(undefined4 *)(iVar3 + 0x6b98c));
+  iVar3 = CG_GetLocalClientGlobals(uVar1);
+  local_90[0] = CL_GetConfigString(0x3fe);
+  uVar2 = Com_Parse(local_90);
+  I_strncpyz(local_80,uVar2,0x40);
+  pcVar4 = (char *)Com_Parse(local_90);
+  iVar5 = atoi(pcVar4);
+  I_strncpyz(iVar3 + 0x107f38,local_80,0x40);
+  CG_VisionSetStartLerp_To
+            (iVar3 + 0x107060,2,3,iVar3 + 0x107f38,iVar5,*(undefined4 *)(iVar3 + 0x6b98c));
+  iVar3 = CG_GetLocalClientGlobals(uVar1);
+  local_90[0] = CL_GetConfigString(0x3ff);
+  uVar2 = Com_Parse(local_90);
+  I_strncpyz(local_80,uVar2,0x40);
+  pcVar4 = (char *)Com_Parse(local_90);
+  iVar5 = atoi(pcVar4);
+  I_strncpyz(iVar3 + 0x107f78,local_80,0x40);
+  CG_VisionSetStartLerp_To
+            (iVar3 + 0x107060,3,3,iVar3 + 0x107f78,iVar5,*(undefined4 *)(iVar3 + 0x6b98c));
+  iVar3 = CG_GetLocalClientGlobals(uVar1);
+  local_90[0] = CL_GetConfigString(0x400);
+  uVar1 = Com_Parse(local_90);
+  I_strncpyz(local_80,uVar1,0x40);
+  pcVar4 = (char *)Com_Parse(local_90);
+  iVar5 = atoi(pcVar4);
+  I_strncpyz(iVar3 + 0x107fb8,local_80,0x40);
+  CG_VisionSetStartLerp_To
+            (iVar3 + 0x107060,4,3,iVar3 + 0x107fb8,iVar5,*(undefined4 *)(iVar3 + 0x6b98c));
+  __restgprlr_26();
+  return;
+}
+
 
 // 822FB4A0  PrecacheTeamFx  (cgame_mp/cg_servercmds_mp.cpp:959)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void PrecacheTeamFx(undefined8 param_1,longlong param_2)
+
+{
+  char *pcVar2;
+  longlong lVar1;
+  int iVar3;
+  
+  pcVar2 = (char *)CL_GetConfigString(param_2);
+  if (*pcVar2 != '\0') {
+    lVar1 = CG_GetLocalClientGlobals(param_1);
+    iVar3 = Com_BitCheckAssert(lVar1 + 0x108430,param_2 + -0xe68,0xfffffff);
+    if (iVar3 != 0) {
+      MyAssertHandler(0xffffffff82022d10,0x3c9,0,0xffffffff82000f98,0xffffffff8202378c);
+    }
+    Com_BitSetAssert(lVar1 + 0x108430,param_2 + -0xe68,0xfffffff);
+  }
+  return;
+}
+
 
 // 822FB550  CG_ParseTimeScale  (cgame_mp/cg_servercmds_mp.cpp:975)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ParseTimeScale(void)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  float local_50;
+  int local_4c;
+  float local_48;
+  int local_44;
+  longlong local_40;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_GetConfigString(0xe88);
+  sscanf((char *)uVar2,"%i %i %g %g",&local_44,&local_4c,&local_50,&local_48);
+  Com_Printf(0x10,0xffffffff820237ec,uVar2);
+  local_40 = (longlong)local_4c;
+  dVar5 = (double)local_40;
+  dVar6 = 0.0;
+  if (dVar5 <= 0.0) {
+    dVar5 = (double)local_48;
+    goto LAB_822fb76c;
+  }
+  local_40 = (longlong)local_44;
+  dVar7 = (double)(float)((double)(local_48 - local_50) / dVar5);
+  dVar5 = (double)(float)((double)((float)(dVar5 * dVar7) * 0.5 + local_50) * dVar5 +
+                         (double)local_40);
+  iVar3 = CG_GetLocalClientGlobals(uVar1);
+  iVar3 = *(int *)(iVar3 + 0x6b98c);
+  if (local_44 < iVar3) {
+    local_40 = (longlong)iVar3;
+    iVar4 = local_4c;
+    if ((double)local_40 < dVar5) {
+      local_40 = (longlong)(local_44 - iVar3);
+      dVar5 = (double)(local_50 * local_50 - (float)((double)local_40 * dVar7) * 2.0);
+      if (dVar5 < dVar6) {
+        MyAssertHandler(0xffffffff82022d10,0x3ef,0,0xffffffff82000f98,0xffffffff820237e0);
+      }
+      iVar4 = (int)((double)((float)SQRT(dVar5) - local_50) / dVar7);
+      local_40 = (longlong)iVar4;
+    }
+    if (-1 < iVar4) goto LAB_822fb6f0;
+LAB_822fb6fc:
+    MyAssertHandler(0xffffffff82022d10,0x3f6,0,0xffffffff82000f98,0xffffffff820237c8);
+  }
+  else {
+    iVar4 = 0;
+LAB_822fb6f0:
+    if (local_4c < iVar4) goto LAB_822fb6fc;
+  }
+  dVar5 = (double)local_48;
+  local_40 = (longlong)local_4c;
+  local_50 = (float)(1.0 - (double)((float)(longlong)iVar4 / (float)local_40)) * local_50 +
+             (float)((double)((float)(longlong)iVar4 / (float)local_40) * dVar5);
+LAB_822fb76c:
+  Com_SetSlowMotion((double)local_50,dVar5);
+  __restgprlr_29();
+  return;
+}
+
 
 // 822FB788  CG_SetConfigValues  (cgame_mp/cg_servercmds_mp.cpp:1030)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_SetConfigValues(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  char *pcVar4;
+  int iVar5;
+  char cVar7;
+  undefined8 uVar2;
+  undefined4 uVar6;
+  longlong lVar8;
+  
+  uVar1 = __savegprlr_27();
+  iVar3 = CG_GetLocalClientGlobals();
+  CL_ParseMapCenter(uVar1);
+  pcVar4 = (char *)CL_GetConfigString(5);
+  iVar5 = atoi(pcVar4);
+  *(int *)(iVar3 + 0x76abc) = iVar5;
+  pcVar4 = (char *)CL_GetConfigString(6);
+  iVar5 = atoi(pcVar4);
+  *(int *)(iVar3 + 0x76ac0) = iVar5;
+  cVar7 = CG_ClientSideVisionSetsEnabled(uVar1);
+  if (cVar7 == '\0') {
+    iVar3 = CG_GetLocalClientGlobals(uVar1);
+    R_SwitchFog(uVar1,0,*(undefined4 *)(iVar3 + 0x6b98c),0);
+  }
+  if ((param_2 & 0xff) != 0) {
+    uVar2 = R_PopRemoteScreenUpdate();
+    lVar8 = 0xbb4;
+    do {
+      CG_PrecacheScriptMenu(uVar1,lVar8);
+      lVar8 = lVar8 + 1;
+    } while ((int)lVar8 < 0xbd4);
+    R_PushRemoteScreenUpdate(uVar2);
+  }
+  lVar8 = 0xe03;
+  do {
+    uVar2 = CL_GetConfigString(lVar8);
+    Material_RegisterHandle(uVar2,7);
+    lVar8 = lVar8 + 1;
+  } while ((int)lVar8 < 0xe0b);
+  lVar8 = 0xe0b;
+  do {
+    uVar2 = CL_GetConfigString(lVar8);
+    Material_RegisterHandle(uVar2,7);
+    lVar8 = lVar8 + 1;
+  } while ((int)lVar8 < 0xe1a);
+  lVar8 = 0xe1a;
+  do {
+    uVar2 = CL_GetConfigString(lVar8);
+    Material_RegisterHandle(uVar2,7);
+    lVar8 = lVar8 + 1;
+  } while ((int)lVar8 < 0xe29);
+  lVar8 = 0xbd5;
+  do {
+    if (((int)lVar8 < 0xbd4) || (0xcd3 < (int)lVar8)) {
+      MyAssertHandler(0xffffffff82022d10,0x379,0,0xffffffff8201d934,0xffffffff82023710,lVar8);
+    }
+    pcVar4 = (char *)CL_GetConfigString(lVar8);
+    if (*pcVar4 != '\0') {
+      Material_RegisterHandle(pcVar4,7);
+    }
+    lVar8 = lVar8 + 1;
+  } while ((int)lVar8 < 0xcd4);
+  lVar8 = 0xe68;
+  do {
+    PrecacheTeamFx(uVar1,lVar8);
+    lVar8 = lVar8 + 1;
+  } while ((int)lVar8 < 0xe88);
+  iVar3 = CG_GetLocalClientStaticGlobals(uVar1);
+  pcVar4 = (char *)CL_GetConfigString(0xf);
+  iVar5 = atoi(pcVar4);
+  *(int *)(iVar3 + 400) = iVar5;
+  cVar7 = CL_Demo_IsPlaying(uVar1);
+  if (cVar7 != '\0') {
+    uVar6 = CL_Demo_GetAdjustedTimeForConfigString(0xf,*(undefined4 *)(iVar3 + 400));
+    *(undefined4 *)(iVar3 + 400) = uVar6;
+  }
+  VisionSetAllConfigStrings(uVar1);
+  uVar2 = CL_GetConfigString(0xe8a);
+  LB_SetWriteLeaderboards(uVar1,uVar2);
+  CG_ParseTimeScale(uVar1);
+  __restgprlr_27();
+  return;
+}
+
 
 // 822FB9A8  CG_ConfigStringModified  (cgame_mp/cg_servercmds_mp.cpp:1138)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void CG_ConfigStringModified(void)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  char *pcVar5;
+  uint uVar6;
+  undefined4 uVar7;
+  undefined8 uVar2;
+  undefined4 local_80 [4];
+  char local_70 [112];
+  
+  uVar1 = __savegprlr_28();
+  iVar3 = CG_GetLocalClientStaticGlobals();
+  iVar4 = CG_GetLocalClientGlobals(uVar1);
+  pcVar5 = (char *)Cmd_Argv(1);
+  uVar6 = atoi(pcVar5);
+  pcVar5 = (char *)CL_GetConfigString();
+  if ((0xd13 < uVar6) && (uVar6 < 0xe03)) {
+    CG_SetupWeaponDef(uVar1,uVar6 - 0xd13);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0xe89) {
+    uVar1 = Hunk_Inuse();
+    if ((int)uVar1 == 0) {
+      Com_PrintWarning(uVar1,0xffffffff82023830);
+      Hunk_Begin();
+    }
+    CG_PrecacheWeaponAnimations();
+    if ((int)uVar1 == 0) {
+      Hunk_End();
+      __restgprlr_28();
+      return;
+    }
+    goto LAB_822fc090;
+  }
+  if (((uVar6 == 0x3d6) || (uVar6 == 0x3d7)) || (uVar6 == 0x3d8)) {
+    CG_StartAmbientWithConfig(uVar1,uVar6);
+    goto LAB_822fc090;
+  }
+  if (uVar6 == 0) {
+    CG_ParseServerInfo(uVar1);
+    __restgprlr_28();
+    return;
+  }
+  if ((0x11 < uVar6) && (uVar6 < 0x1a2)) {
+    if (uVar6 < 0xda) {
+      CG_ParseSingleCodInfo(uVar1,uVar6 - 0x12);
+      __restgprlr_28();
+      return;
+    }
+    CG_ParseSingleCodInfo(uVar1,uVar6 - 0xda);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0x1b5) {
+    Cmd_Argv(2);
+    uVar1 = StringToInt64();
+    Xenon_SetSessionNonce(0xffffffff844c7860,uVar1);
+    __restgprlr_28();
+    return;
+  }
+  if ((0x1a2 < uVar6) && (uVar6 < 0x1b5)) {
+    CG_ParsePlayerInfos(uVar1);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 5) {
+    iVar3 = atoi(pcVar5);
+    *(int *)(iVar4 + 0x76abc) = iVar3;
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 6) {
+    iVar3 = atoi(pcVar5);
+    *(int *)(iVar4 + 0x76ac0) = iVar3;
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0x10) {
+    CL_ParseMapCenter(uVar1);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0xf) {
+    CG_ParseGameEndTime(uVar1);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0xd) {
+    CG_ParseFog(uVar1);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 8) {
+    CG_ParseSunLight(uVar1);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 < 0x404) {
+    if (0x803 < uVar6) goto LAB_822fbbcc;
+  }
+  else {
+    if (uVar6 < 0x804) {
+      uVar7 = R_RegisterModel();
+      *(undefined4 *)((uVar6 - 0x39e) * 4 + iVar3) = uVar7;
+      __restgprlr_28();
+      return;
+    }
+LAB_822fbbcc:
+    if (uVar6 < 0x824) {
+      VehicleCl_RegisterClientDef(pcVar5,uVar6 - 0x804);
+      __restgprlr_28();
+      return;
+    }
+  }
+  if ((0x9a3 < uVar6) && (uVar6 < 0xaa4)) {
+    iVar3 = FX_Register();
+    *(int *)(&DAT_82a3a390 + uVar6 * 4) = iVar3;
+    if (iVar3 == 0) {
+      MyAssertHandler(0xffffffff82022d10,0x4f6,0,0xffffffff82000f98,0xffffffff8202380c);
+      __restgprlr_28();
+      return;
+    }
+    goto LAB_822fc090;
+  }
+  if ((0xba3 < uVar6) && (uVar6 < 0xbb4)) {
+    if ((*pcVar5 != '\0') && (iVar3 = BG_LoadShellShockDvars(), iVar3 != 0)) {
+      BG_GetShellshockParms(uVar6 - 0xba4);
+      BG_SetShellShockParmsFromDvars();
+      __restgprlr_28();
+      return;
+    }
+    goto LAB_822fc090;
+  }
+  if (uVar6 < 0xe03) {
+    if (0xe0a < uVar6) goto LAB_822fbcac;
+    if (0xe19 < uVar6) goto LAB_822fbcd4;
+  }
+  else {
+    if (uVar6 < 0xe0b) {
+      uVar1 = CL_GetConfigString(uVar6);
+      Material_RegisterHandle(uVar1,7);
+      __restgprlr_28();
+      return;
+    }
+LAB_822fbcac:
+    if (uVar6 < 0xe1a) goto LAB_822fbcb4;
+LAB_822fbcd4:
+    if (uVar6 < 0xe29) {
+LAB_822fbcb4:
+      uVar1 = CL_GetConfigString(uVar6);
+      Material_RegisterHandle(uVar1,7);
+      __restgprlr_28();
+      return;
+    }
+  }
+  if ((0xbd3 < uVar6) && (uVar6 < 0xcd4)) {
+    CG_RegisterServerMaterial(uVar6);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0x3f9) {
+    CG_NorthDirectionChanged(uVar1);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0x3fa) {
+    CG_MiniMapChanged(uVar1);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0x3fb) {
+    CG_ThermalBodyMaterialChanged(uVar1);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0x3fc) {
+    iVar3 = CG_GetLocalClientGlobals(uVar1);
+    local_80[0] = CL_GetConfigString(0x3fc);
+    uVar2 = Com_Parse(local_80);
+    I_strncpyz(local_70,uVar2,0x40);
+    pcVar5 = (char *)Com_Parse(local_80);
+    iVar4 = atoi(pcVar5);
+    if (local_70[0] == '\0') {
+      CG_EnableClientSideVisionSets(uVar1,iVar4);
+      __restgprlr_28();
+      return;
+    }
+    CG_DisableClientSideVisionSets(uVar1);
+    I_strncpyz(iVar3 + 0x107eb8,local_70,0x40);
+    CG_VisionSetStartLerp_To
+              (iVar3 + 0x107060,0,3,iVar3 + 0x107eb8,iVar4,*(undefined4 *)(iVar3 + 0x6b98c));
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0x3fd) {
+    iVar3 = CG_GetLocalClientGlobals(uVar1);
+    local_80[0] = CL_GetConfigString(0x3fd);
+    uVar1 = Com_Parse(local_80);
+    I_strncpyz(local_70,uVar1,0x40);
+    pcVar5 = (char *)Com_Parse(local_80);
+    iVar4 = atoi(pcVar5);
+    I_strncpyz(iVar3 + 0x107ef8,local_70,0x40);
+    CG_VisionSetStartLerp_To
+              (iVar3 + 0x107060,1,3,iVar3 + 0x107ef8,iVar4,*(undefined4 *)(iVar3 + 0x6b98c));
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0x3fe) {
+    iVar3 = CG_GetLocalClientGlobals(uVar1);
+    local_80[0] = CL_GetConfigString(0x3fe);
+    uVar1 = Com_Parse(local_80);
+    I_strncpyz(local_70,uVar1,0x40);
+    pcVar5 = (char *)Com_Parse(local_80);
+    iVar4 = atoi(pcVar5);
+    I_strncpyz(iVar3 + 0x107f38,local_70,0x40);
+    CG_VisionSetStartLerp_To
+              (iVar3 + 0x107060,2,3,iVar3 + 0x107f38,iVar4,*(undefined4 *)(iVar3 + 0x6b98c));
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0x3ff) {
+    iVar3 = CG_GetLocalClientGlobals(uVar1);
+    local_80[0] = CL_GetConfigString(0x3ff);
+    uVar1 = Com_Parse(local_80);
+    I_strncpyz(local_70,uVar1,0x40);
+    pcVar5 = (char *)Com_Parse(local_80);
+    iVar4 = atoi(pcVar5);
+    I_strncpyz(iVar3 + 0x107f78,local_70,0x40);
+    CG_VisionSetStartLerp_To
+              (iVar3 + 0x107060,3,3,iVar3 + 0x107f78,iVar4,*(undefined4 *)(iVar3 + 0x6b98c));
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0x400) {
+    iVar3 = CG_GetLocalClientGlobals(uVar1);
+    local_80[0] = CL_GetConfigString(0x400);
+    uVar1 = Com_Parse(local_80);
+    I_strncpyz(local_70,uVar1,0x40);
+    pcVar5 = (char *)Com_Parse(local_80);
+    iVar4 = atoi(pcVar5);
+    I_strncpyz(iVar3 + 0x107fb8,local_70,0x40);
+    CG_VisionSetStartLerp_To
+              (iVar3 + 0x107060,4,3,iVar3 + 0x107fb8,iVar4,*(undefined4 *)(iVar3 + 0x6b98c));
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0x1a2) {
+    iVar4 = atoi(pcVar5);
+    *(int *)(iVar3 + 0x194) = iVar4;
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0xe8a) {
+    LB_SetWriteLeaderboards(uVar1,pcVar5);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar6 == 0xe88) {
+    CG_ParseTimeScale(uVar1);
+    __restgprlr_28();
+    return;
+  }
+LAB_822fc090:
+  __restgprlr_28();
+  return;
+}
+
 
 // 822FF078  CL_GetLocalClientConnection  (client_mp/client_mp.h:1177)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-clientConnection_t * CL_GetLocalClientConnection(LocalClientNum_t param_1)
+void CL_GetLocalClientConnection(void)
 
 {
-  uint uVar1;
-  clientConnection_t *pcVar2;
+  ulonglong uVar1;
   
-  uVar1 = __savegprlr_29(param_1);
-  if (clientConnections == (clientConnection_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
-                    ,0x49a,0,"%s");
+  uVar1 = __savegprlr_29();
+  if (DAT_82aa1a9c == 0) {
+    MyAssertHandler(0xffffffff82001158,0x49a,0,0xffffffff82000f98,0xffffffff82022ca8);
   }
-  if ((uint)cl_maxLocalClients <= uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
-                    ,0x49c,0,"localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
-    ;
+  if ((ulonglong)DAT_82aa1ae8 <= (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82001158,0x49c,0,0xffffffff8200d150,uVar1);
   }
-  pcVar2 = (clientConnection_t *)
-           __restgprlr_29((longlong)(int)uVar1 * 0x65670 + ZEXT48(clientConnections));
-  return pcVar2;
+  __restgprlr_29((longlong)(int)uVar1 * 0x65670 + (ulonglong)DAT_82aa1a9c);
+  return;
 }
 
 
 // 822FC098  CG_ClearEntityFxHandles  (cgame_mp/cg_servercmds_mp.cpp:1425)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ClearEntityFxHandles(void)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  int iVar3;
+  char cVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  
+  uVar2 = __savegprlr_20();
+  iVar3 = CG_GetLocalClientGlobals();
+  if ((*(int *)(iVar3 + 0x3358) != *(int *)(iVar3 + 0x335c)) &&
+     (cVar4 = CL_Demo_IsPlaybackMemoryAllocated(), cVar4 == '\0')) {
+    MyAssertHandler(0xffffffff82022d10,0x599,0,0xffffffff82000f98,0xffffffff82023858);
+  }
+  iVar5 = *(int *)(iVar3 + 0x335c);
+  iVar6 = 0;
+  if (0 < *(int *)(iVar5 + 0x330c)) {
+    iVar7 = 0;
+    do {
+      uVar1 = *(uint *)(iVar5 + 0x3314);
+      if (0x7ff < uVar1) {
+        MyAssertHandler(0xffffffff8200ffd8,0x6b4,0,0xffffffff820012f4,uVar1,0x800);
+      }
+      if ((ulonglong)DAT_82a38328 <= (uVar2 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff8200ffd8,0x6b9,0,0xffffffff820012b0,uVar2,DAT_82a38328);
+      }
+      iVar5 = ((int)uVar2 * 0x800 + uVar1) * 0x1ec + DAT_82a3ce28;
+      if ((*(int *)(iVar5 + 200) == 8) || (*(int *)(iVar5 + 200) == 9)) {
+        *(undefined4 *)(iVar5 + 0x30) = 0;
+        *(undefined4 *)(iVar5 + 0x2c) = 0;
+      }
+      iVar7 = iVar7 + 0x100;
+      iVar6 = iVar6 + 1;
+      iVar5 = iVar7 + *(int *)(iVar3 + 0x335c);
+    } while (iVar6 < *(int *)(*(int *)(iVar3 + 0x335c) + 0x330c));
+  }
+  __restgprlr_20();
+  return;
+}
+
 
 // 822FC1D8  CL_HaveAllClientsReceivedMapRestartCmd  (cgame_mp/cg_servercmds_mp.cpp:1458)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CL_HaveAllClientsReceivedMapRestartCmd(void)
+
+{
+  int iVar1;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  undefined8 uVar2;
+  int iVar6;
+  ulonglong uVar7;
+  
+  iVar3 = __savegprlr_16();
+  iVar4 = CG_GetLocalClientGlobals();
+  if (*(int *)(iVar4 + 0x335c) == 0) {
+    MyAssertHandler(0xffffffff82022d10,0x5b8,0,0xffffffff82000f98,0xffffffff82002858);
+  }
+  uVar7 = 0;
+  iVar6 = 0;
+  do {
+    if (((int)uVar7 != iVar3) && (cVar5 = CL_IsLocalClientActive(uVar7), cVar5 != '\0')) {
+      if (*(char *)(DAT_82b3ecb8 + 0xc) == '\0') {
+        MyAssertHandler(0xffffffff82022d10,0x5c2,0,0xffffffff820011f4,0xffffffff820238f0,
+                        0xffffffff820238a8);
+      }
+      if (DAT_82a383cc == 0) {
+        uVar2 = CL_GetLocalClientConnectionState(uVar7);
+        uVar2 = va(0xffffffff82001208,uVar2,uVar7);
+        MyAssertHandler(0xffffffff8200ffd8,0x682,0,0xffffffff820011f4,0xffffffff820011fc,uVar2);
+      }
+      if (3 < (uVar7 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff8200ffd8,0x684,0,0xffffffff820011a8,uVar7,4);
+      }
+      iVar1 = *(int *)(iVar6 + DAT_82a383cc + 0x335c);
+      if ((iVar1 == 0) ||
+         (((*(uint *)(iVar1 + 0x3300) ^ *(uint *)(*(int *)(iVar4 + 0x335c) + 0x3300)) & 4) != 0)) {
+        __restgprlr_16(0);
+        return;
+      }
+    }
+    iVar6 = iVar6 + 0x108600;
+    uVar7 = uVar7 + 1;
+    if (0x4217ff < iVar6) {
+      __restgprlr_16(1);
+      return;
+    }
+  } while( true );
+}
+
 
 // 822FE0E0  CG_MapRestart  (cgame_mp/cg_servercmds_mp.cpp:1504)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_MapRestart(undefined8 param_1,int param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = CG_GetLocalClientGlobals();
+  if (*(int *)(iVar2 + 0x335c) == 0) {
+    MyAssertHandler(0xffffffff82022d10,0x5e8,0,0xffffffff82000f98,0xffffffff82002858);
+  }
+  if (*(int *)(DAT_82a3d648 + 0xc) != 0) {
+    Com_Printf(0xe,0xffffffff82024290);
+  }
+  CG_ClearCenterPrint(uVar1);
+  *(undefined4 *)(iVar2 + 0x76e90) = 0;
+  *(undefined4 *)(iVar2 + 0x76eb0) = 1;
+  CG_InitLocalEntities(uVar1);
+  iVar3 = CL_HaveAllClientsReceivedMapRestartCmd(uVar1);
+  Phys_EndFrame();
+  FX_WaitKillAllEffects(uVar1);
+  FX_ShutdownSystem(uVar1);
+  DynEntCl_Shutdown(uVar1);
+  CG_FreeRagdolls(uVar1);
+  if (iVar3 != 0) {
+    CG_Glass_Shutdown();
+    Phys_ShutdownClient();
+    Phys_InitClient();
+  }
+  DynEntCl_InitEntities(uVar1);
+  R_InitPrimaryLights(iVar2 + 0x6bb20);
+  R_ClearShadowedPrimaryLightHistory(uVar1);
+  FX_InitSystem(uVar1);
+  CG_ClearEntityFxHandles(uVar1);
+  if (iVar3 != 0) {
+    CG_Glass_Init(0);
+  }
+  VehicleCl_InitGlobals();
+  VehicleCl_InitLocalClient(uVar1);
+  VisionSetAllConfigStrings(uVar1);
+  DynEntCl_Shutdown(uVar1);
+  *(undefined4 *)(iVar2 + 0x6b99c) = 1;
+  SND_StopSounds(0);
+  CG_StartAmbient(uVar1);
+  *(undefined4 *)(iVar2 + 0x79768) = 0;
+  *(undefined4 *)(iVar2 + 0x7976c) = 0;
+  memset((void *)(iVar2 + 0x79424),0,0x330);
+  Dvar_SetBool(DAT_82a38258,0);
+  CL_SetStance(uVar1,0);
+  CL_SetADS(uVar1,0);
+  if (param_2 == 0) {
+    CG_CloseScriptMenu(uVar1,0);
+    UI_CloseAllMenus(uVar1);
+    memset((void *)(iVar2 + 0x76ae8),0,0x360);
+    *(undefined8 *)(iVar2 + 0x76ab8) = 0;
+    *(undefined8 *)(iVar2 + 0x76ac0) = 0;
+  }
+  CG_ScoresUp(uVar1);
+  *(undefined1 *)(iVar2 + 0x765b0) = 0;
+  CL_SyncTimes(uVar1);
+  CG_StopAllRumbles(uVar1);
+  CG_ShutdownClientSideEffects(uVar1);
+  CG_StartClientSideEffects(uVar1);
+  CG_ShutdownClientSideTriggers(uVar1);
+  CG_StartClientSideTriggers(uVar1);
+  __restgprlr_26();
+  return;
+}
+
 
 // 822FC380  CG_OpenScriptMenu  (cgame_mp/cg_servercmds_mp.cpp:1634)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_OpenScriptMenu(LocalClientNum_t param_1)
+void CG_OpenScriptMenu(void)
 
 {
-  char cVar1;
-  LocalClientNum_t LVar2;
-  bool bVar8;
+  int iVar2;
+  char cVar8;
   char *pcVar3;
-  int iVar4;
+  longlong lVar1;
   int iVar5;
   char *pcVar6;
-  char *pcVar7;
+  int iVar7;
+  undefined8 uVar9;
+  undefined1 uVar10;
+  int iVar4;
   
-  LVar2 = __savegprlr_25(param_1);
-  bVar8 = CL_Demo_IsPlaying(LVar2);
-  if (bVar8) goto LAB_822fc534;
-  pcVar3 = Cmd_Argv(1);
+  iVar2 = __savegprlr_25();
+  cVar8 = CL_Demo_IsPlaying();
+  if (cVar8 != '\0') goto LAB_822fc534;
+  pcVar3 = (char *)Cmd_Argv(1);
   iVar4 = atoi(pcVar3);
+  lVar1 = (longlong)iVar4;
   if ((iVar4 < 0) || (0x1f < iVar4)) {
-    pcVar3 = "Server tried to open a bad script menu index: %i\n";
+    uVar9 = 0xffffffff82023920;
   }
   else {
-    pcVar3 = CL_GetConfigString(iVar4 + 0xbb4);
+    pcVar3 = (char *)CL_GetConfigString(lVar1 + 0xbb4);
     if (*pcVar3 != '\0') {
       iVar5 = Cmd_Argc();
-      if ((iVar5 < 3) || (pcVar6 = Cmd_Argv(2), pcVar6 == (char *)0x0)) {
+      if ((iVar5 < 3) || (iVar5 = Cmd_Argv(2), iVar5 == 0)) {
 LAB_822fc418:
-        bVar8 = true;
+        uVar10 = 1;
       }
       else {
-        pcVar6 = Cmd_Argv(2);
-        bVar8 = false;
+        pcVar6 = (char *)Cmd_Argv(2);
+        uVar10 = 0;
         if (*pcVar6 == '\0') goto LAB_822fc418;
       }
-      iVar5 = UI_PopupScriptMenu(LVar2,pcVar3,bVar8);
+      iVar5 = UI_PopupScriptMenu(iVar2,pcVar3,uVar10);
       if (iVar5 == 0) {
+        iVar5 = iVar2 * 0x48;
         pcVar6 = pcVar3;
-        if (cg_waitingScriptMenu[LVar2].name[0] != '\0') {
-          iVar5 = I_stricmp(pcVar3,cg_waitingScriptMenu[LVar2].name);
-          if (iVar5 == 0) goto LAB_822fc534;
-          pcVar7 = va("cmd mr %i noop\n");
-          Cbuf_AddText(LVar2,pcVar7);
+        if ((&DAT_82a625f0)[iVar5] != '\0') {
+          iVar7 = I_stricmp(pcVar3,&DAT_82a625f0 + iVar5);
+          if (iVar7 == 0) goto LAB_822fc534;
+          uVar9 = va(0xffffffff82023a70,*(undefined4 *)(&DAT_82a62630 + iVar5));
+          Cbuf_AddText(iVar2,uVar9);
         }
         do {
-          cVar1 = *pcVar6;
+          cVar8 = *pcVar6;
           pcVar6 = pcVar6 + 1;
-        } while (cVar1 != '\0');
+        } while (cVar8 != '\0');
         if ((char *)0x3f < pcVar6 + (-1 - (int)pcVar3)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                          ,0x694,0,"%s\n\t(menuName) = %s");
+          MyAssertHandler(0xffffffff82022d10,0x694,0,0xffffffff82023954,0xffffffff82023968,pcVar3);
         }
-        I_strncpyz(cg_waitingScriptMenu[LVar2].name,pcVar3,0x40);
-        cg_waitingScriptMenu[LVar2].index = iVar4;
-        *(bool *)(LVar2 * 0x48 + -0x7d59d9cc) = bVar8;
+        I_strncpyz(&DAT_82a625f0 + iVar5,pcVar3,0x40);
+        *(int *)(&DAT_82a62630 + iVar5) = iVar4;
+        (&DAT_82a62634)[iVar5] = uVar10;
         __restgprlr_25();
         return;
       }
       goto LAB_822fc534;
     }
-    pcVar3 = "Server tried to open a non-loaded script menu index: %i\n";
+    uVar9 = 0xffffffff82023a80;
   }
-  Com_Printf(0xe,pcVar3);
-  pcVar3 = va("cmd mr %i bad\n");
-  Cbuf_AddText(LVar2,pcVar3);
+  Com_Printf(0xe,uVar9,lVar1);
+  uVar9 = va(0xffffffff82023910,lVar1);
+  Cbuf_AddText(iVar2,uVar9);
 LAB_822fc534:
   __restgprlr_25();
   return;
@@ -337,33 +1941,34 @@ LAB_822fc534:
 
 // 822FC540  CG_OpenMenu  (cgame_mp/cg_servercmds_mp.cpp:1693)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_OpenMenu(LocalClientNum_t param_1)
+void CG_OpenMenu(undefined8 param_1)
 
 {
-  bool bVar3;
-  char *pcVar1;
-  int iVar2;
+  char cVar4;
+  char *pcVar2;
+  longlong lVar1;
+  undefined8 uVar5;
+  int iVar3;
   
-  bVar3 = CL_Demo_IsPlaying(param_1);
-  if (!bVar3) {
-    pcVar1 = Cmd_Argv(1);
-    iVar2 = atoi(pcVar1);
-    if ((iVar2 < 0) || (0x1f < iVar2)) {
-      pcVar1 = "Server tried to open a bad script menu index: %i\n";
+  cVar4 = CL_Demo_IsPlaying();
+  if (cVar4 == '\0') {
+    pcVar2 = (char *)Cmd_Argv(1);
+    iVar3 = atoi(pcVar2);
+    lVar1 = (longlong)iVar3;
+    if ((iVar3 < 0) || (0x1f < iVar3)) {
+      uVar5 = 0xffffffff82023920;
     }
     else {
-      pcVar1 = CL_GetConfigString(iVar2 + 0xbb4);
-      if (*pcVar1 != '\0') {
-        UI_OpenMenu(param_1,pcVar1);
+      pcVar2 = (char *)CL_GetConfigString(lVar1 + 0xbb4);
+      if (*pcVar2 != '\0') {
+        UI_OpenMenu(param_1,pcVar2);
         return;
       }
-      pcVar1 = "Server tried to open a non-loaded script menu index: %i\n";
+      uVar5 = 0xffffffff82023a80;
     }
-    Com_Printf(0xe,pcVar1);
-    pcVar1 = va("cmd mr %i bad\n");
-    Cbuf_AddText(param_1,pcVar1);
+    Com_Printf(0xe,uVar5,lVar1);
+    uVar5 = va(0xffffffff82023910,lVar1);
+    Cbuf_AddText(param_1,uVar5);
   }
   return;
 }
@@ -371,33 +1976,34 @@ void CG_OpenMenu(LocalClientNum_t param_1)
 
 // 822FC600  CG_CloseMenu  (cgame_mp/cg_servercmds_mp.cpp:1727)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_CloseMenu(LocalClientNum_t param_1)
+void CG_CloseMenu(undefined8 param_1)
 
 {
-  bool bVar3;
-  char *pcVar1;
-  int iVar2;
+  char cVar4;
+  char *pcVar2;
+  longlong lVar1;
+  undefined8 uVar5;
+  int iVar3;
   
-  bVar3 = CL_Demo_IsPlaying(param_1);
-  if (!bVar3) {
-    pcVar1 = Cmd_Argv(1);
-    iVar2 = atoi(pcVar1);
-    if ((iVar2 < 0) || (0x1f < iVar2)) {
-      pcVar1 = "Server tried to open a bad script menu index: %i\n";
+  cVar4 = CL_Demo_IsPlaying();
+  if (cVar4 == '\0') {
+    pcVar2 = (char *)Cmd_Argv(1);
+    iVar3 = atoi(pcVar2);
+    lVar1 = (longlong)iVar3;
+    if ((iVar3 < 0) || (0x1f < iVar3)) {
+      uVar5 = 0xffffffff82023920;
     }
     else {
-      pcVar1 = CL_GetConfigString(iVar2 + 0xbb4);
-      if (*pcVar1 != '\0') {
-        UI_CloseMenu(param_1,pcVar1);
+      pcVar2 = (char *)CL_GetConfigString(lVar1 + 0xbb4);
+      if (*pcVar2 != '\0') {
+        UI_CloseMenu(param_1,pcVar2);
         return;
       }
-      pcVar1 = "Server tried to open a non-loaded script menu index: %i\n";
+      uVar5 = 0xffffffff82023a80;
     }
-    Com_Printf(0xe,pcVar1);
-    pcVar1 = va("cmd mr %i bad\n");
-    Cbuf_AddText(param_1,pcVar1);
+    Com_Printf(0xe,uVar5,lVar1);
+    uVar5 = va(0xffffffff82023910,lVar1);
+    Cbuf_AddText(param_1,uVar5);
   }
   return;
 }
@@ -405,17 +2011,17 @@ void CG_CloseMenu(LocalClientNum_t param_1)
 
 // 822FC6C0  CG_CheckOpenWaitingScriptMenu  (cgame_mp/cg_servercmds_mp.cpp:1761)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_CheckOpenWaitingScriptMenu(LocalClientNum_t param_1)
+void CG_CheckOpenWaitingScriptMenu(int param_1)
 
 {
   int iVar1;
+  int iVar2;
   
-  if ((cg_waitingScriptMenu[param_1].name[0] != '\0') &&
-     (iVar1 = UI_PopupScriptMenu(param_1,cg_waitingScriptMenu[param_1].name,
-                                 *(bool *)(param_1 * 0x48 + -0x7d59d9cc)), iVar1 != 0)) {
-    cg_waitingScriptMenu[param_1].name[0] = '\0';
+  iVar2 = param_1 * 0x48;
+  if (((&DAT_82a625f0)[iVar2] != '\0') &&
+     (iVar1 = UI_PopupScriptMenu(param_1,&DAT_82a625f0 + iVar2,(&DAT_82a62634)[iVar2]), iVar1 != 0))
+  {
+    (&DAT_82a625f0)[iVar2] = 0;
   }
   return;
 }
@@ -423,68 +2029,253 @@ void CG_CheckOpenWaitingScriptMenu(LocalClientNum_t param_1)
 
 // 822FC728  CG_CloseScriptMenu  (cgame_mp/cg_servercmds_mp.cpp:1774)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_CloseScriptMenu(LocalClientNum_t param_1,bool param_2)
+void CG_CloseScriptMenu(int param_1,undefined8 param_2)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = CL_Demo_IsPlaying(param_1);
-  if (!bVar1) {
+  cVar1 = CL_Demo_IsPlaying();
+  if (cVar1 == '\0') {
     UI_ClosePopupScriptMenu(param_1,param_2);
-    cg_waitingScriptMenu[param_1].name[0] = '\0';
+    (&DAT_82a625f0)[param_1 * 0x48] = 0;
   }
   return;
 }
 
 
 // 822FC798  CG_MenuShowNotify  (cgame_mp/cg_servercmds_mp.cpp:1786)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_MenuShowNotify(undefined8 param_1,ulonglong param_2)
+
+{
+  bool bVar1;
+  longlong lVar2;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar5;
+  
+  lVar2 = __savegprlr_27();
+  iVar3 = CG_GetLocalClientGlobals();
+  if (5 < (param_2 & 0xffffffff)) goto LAB_822fca50;
+  bVar1 = (int)param_2 != 0;
+  if (param_2 != 1 || !bVar1) {
+    if (param_2 == 2 && bVar1) {
+      if (*(int *)(iVar3 + 0x79808) < *(int *)(iVar3 + 0x6b98c)) {
+        *(int *)(iVar3 + 0x79808) = *(int *)(iVar3 + 0x6b98c);
+        iVar3 = CL_GetLocalClientActiveCount();
+        if (iVar3 == 1) {
+          Menus_ShowByName(lVar2 * 0x2284 + -0x7d5d07e8,0xffffffff82014dc8);
+          __restgprlr_27();
+          return;
+        }
+        Menus_ShowByName(lVar2 * 0x2284 + -0x7d5d07e8,0xffffffff82014dbc);
+        __restgprlr_27();
+        return;
+      }
+      goto LAB_822fca50;
+    }
+    if (param_2 != 3 || !bVar1) {
+      if (param_2 == 4 && bVar1) {
+        if (*(int *)(iVar3 + 0x76e4c) < *(int *)(iVar3 + 0x6b98c)) {
+          *(int *)(iVar3 + 0x76e4c) = *(int *)(iVar3 + 0x6b98c);
+          Menus_ShowByName(lVar2 * 0x2284 + -0x7d5d07e8,0xffffffff82014e08);
+        }
+      }
+      else if (bVar1) {
+        if (*(int *)(iVar3 + 0x79814) < *(int *)(iVar3 + 0x6b98c)) {
+          *(int *)(iVar3 + 0x79814) = *(int *)(iVar3 + 0x6b98c);
+          iVar3 = CL_GetLocalClientActiveCount();
+          if (iVar3 == 1) {
+            Menus_ShowByName(lVar2 * 0x2284 + -0x7d5d07e8,0xffffffff82014de0);
+            __restgprlr_27();
+            return;
+          }
+          Menus_ShowByName(lVar2 * 0x2284 + -0x7d5d07e8,0xffffffff82014dd0);
+          __restgprlr_27();
+          return;
+        }
+      }
+      else if (*(int *)(iVar3 + 0x7980c) < *(int *)(iVar3 + 0x6b98c)) {
+        *(int *)(iVar3 + 0x7980c) = *(int *)(iVar3 + 0x6b98c);
+        iVar3 = CL_GetLocalClientActiveCount();
+        if (iVar3 == 1) {
+          Menus_ShowByName(lVar2 * 0x2284 + -0x7d5d07e8,0xffffffff82014d84);
+          __restgprlr_27();
+          return;
+        }
+        Menus_ShowByName(lVar2 * 0x2284 + -0x7d5d07e8,0xffffffff82014d78);
+        __restgprlr_27();
+        return;
+      }
+      goto LAB_822fca50;
+    }
+  }
+  iVar4 = *(int *)(iVar3 + 0x6b98c);
+  if (*(int *)(iVar3 + 0x79810) < iVar4) {
+    *(int *)(iVar3 + 0x79810) = iVar4;
+    iVar4 = CL_GetLocalClientActiveCount();
+    if (iVar4 == 1) {
+      Menus_ShowByName(lVar2 * 0x2284 + -0x7d5d07e8,0xffffffff82014db0);
+      uVar5 = 0xffffffff82014d9c;
+    }
+    else {
+      uVar5 = 0xffffffff82014d8c;
+    }
+    Menus_ShowByName(lVar2 * 0x2284 + -0x7d5d07e8,uVar5);
+  }
+  iVar4 = *(int *)(iVar3 + 0x6b98c);
+  if (*(int *)(iVar3 + 0x79818) < iVar4) {
+    *(int *)(iVar3 + 0x79818) = iVar4;
+    iVar3 = CL_GetLocalClientActiveCount();
+    if (iVar3 == 1) {
+      Menus_ShowByName(lVar2 * 0x2284 + -0x7d5d07e8,0xffffffff82014dfc);
+      __restgprlr_27();
+      return;
+    }
+    Menus_ShowByName(lVar2 * 0x2284 + -0x7d5d07e8,0xffffffff82014dec);
+    __restgprlr_27();
+    return;
+  }
+LAB_822fca50:
+  __restgprlr_27();
+  return;
+}
+
 
 // 822FCA58  CG_HudMenuShowAllTimed  (cgame_mp/cg_servercmds_mp.cpp:1861)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_HudMenuShowAllTimed(void)
+
+{
+  longlong lVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
+  int *piVar5;
+  
+  lVar1 = __savegprlr_27();
+  iVar2 = CG_GetLocalClientGlobals();
+  piVar5 = (int *)(iVar2 + 0x6b98c);
+  if (*(int *)(iVar2 + 0x7980c) < *piVar5) {
+    *(int *)(iVar2 + 0x7980c) = *piVar5;
+    iVar3 = CL_GetLocalClientActiveCount();
+    if (iVar3 == 1) {
+      uVar4 = 0xffffffff82014d84;
+    }
+    else {
+      uVar4 = 0xffffffff82014d78;
+    }
+    Menus_ShowByName(lVar1 * 0x2284 + -0x7d5d07e8,uVar4);
+  }
+  if (*(int *)(iVar2 + 0x79810) < *piVar5) {
+    *(int *)(iVar2 + 0x79810) = *piVar5;
+    iVar3 = CL_GetLocalClientActiveCount();
+    if (iVar3 == 1) {
+      Menus_ShowByName(lVar1 * 0x2284 + -0x7d5d07e8,0xffffffff82014db0);
+      uVar4 = 0xffffffff82014d9c;
+    }
+    else {
+      uVar4 = 0xffffffff82014d8c;
+    }
+    Menus_ShowByName(lVar1 * 0x2284 + -0x7d5d07e8,uVar4);
+  }
+  if (*(int *)(iVar2 + 0x79808) < *piVar5) {
+    *(int *)(iVar2 + 0x79808) = *piVar5;
+    iVar3 = CL_GetLocalClientActiveCount();
+    if (iVar3 == 1) {
+      uVar4 = 0xffffffff82014dc8;
+    }
+    else {
+      uVar4 = 0xffffffff82014dbc;
+    }
+    Menus_ShowByName(lVar1 * 0x2284 + -0x7d5d07e8,uVar4);
+  }
+  if (*(int *)(iVar2 + 0x79814) < *piVar5) {
+    *(int *)(iVar2 + 0x79814) = *piVar5;
+    iVar3 = CL_GetLocalClientActiveCount();
+    if (iVar3 == 1) {
+      uVar4 = 0xffffffff82014de0;
+    }
+    else {
+      uVar4 = 0xffffffff82014dd0;
+    }
+    Menus_ShowByName(lVar1 * 0x2284 + -0x7d5d07e8,uVar4);
+  }
+  if (*(int *)(iVar2 + 0x79818) < *piVar5) {
+    *(int *)(iVar2 + 0x79818) = *piVar5;
+    iVar3 = CL_GetLocalClientActiveCount();
+    if (iVar3 == 1) {
+      uVar4 = 0xffffffff82014dfc;
+    }
+    else {
+      uVar4 = 0xffffffff82014dec;
+    }
+    Menus_ShowByName(lVar1 * 0x2284 + -0x7d5d07e8,uVar4);
+  }
+  if (*(int *)(iVar2 + 0x76e4c) < *piVar5) {
+    *(int *)(iVar2 + 0x76e4c) = *piVar5;
+    Menus_ShowByName(lVar1 * 0x2284 + -0x7d5d07e8,0xffffffff82014e08);
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 822FCC38  CG_SetTeamScore  (cgame_mp/cg_servercmds_mp.cpp:1948)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_SetTeamScore(undefined8 param_1,longlong param_2,undefined4 param_3)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  if (((int)param_2 < 0) || (3 < (int)param_2)) {
+    MyAssertHandler(0xffffffff82022d10,0x79f,0,0xffffffff82022304,0xffffffff82023abc,param_2);
+  }
+  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  *(undefined4 *)(iVar2 + (int)((param_2 + 0x1daaeU & 0xffffffff) << 2)) = param_3;
+  __restgprlr_29();
+  return;
+}
+
 
 // 822FCCA8  CG_ReverbCmd  (cgame_mp/cg_servercmds_mp.cpp:1963)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_ReverbCmd(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
+  uint uVar1;
+  int iVar3;
+  char *pcVar4;
+  undefined8 uVar2;
+  ulonglong uVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 == 6) {
-    pcVar2 = Cmd_Argv(1);
-    iVar1 = atoi(pcVar2);
-    pcVar2 = Cmd_Argv(3);
-    dVar3 = atof(pcVar2);
-    dVar5 = (double)(float)dVar3;
-    pcVar2 = Cmd_Argv(4);
-    dVar3 = atof(pcVar2);
-    dVar4 = (double)(float)dVar3;
-    pcVar2 = Cmd_Argv(5);
-    dVar3 = atof(pcVar2);
-    dVar3 = (double)(float)dVar3;
-    pcVar2 = Cmd_Argv(2);
-    dVar3 = floor((double)(float)(dVar3 * 1000.0 + 0.5));
+  iVar3 = Cmd_Argc();
+  if (iVar3 == 6) {
+    pcVar4 = (char *)Cmd_Argv(1);
+    iVar3 = atoi(pcVar4);
+    pcVar4 = (char *)Cmd_Argv(3);
+    dVar6 = atof(pcVar4);
+    dVar8 = (double)(float)dVar6;
+    pcVar4 = (char *)Cmd_Argv(4);
+    dVar6 = atof(pcVar4);
+    dVar7 = (double)(float)dVar6;
+    pcVar4 = (char *)Cmd_Argv(5);
+    dVar6 = atof(pcVar4);
+    dVar6 = (double)(float)dVar6;
+    uVar2 = Cmd_Argv(2);
+    dVar6 = floor((double)(float)(dVar6 * 1000.0 + 0.5));
+    uVar1 = (uint)dVar6;
+    uVar5 = (ulonglong)(uVar1 >> 0x1f) - (ulonglong)((ulonglong)uVar1 != 0);
     SND_SetEnvironmentEffects
-              (iVar1,pcVar2,(float)dVar5,(float)dVar4,
-               -((int)dVar3 >> 0x1f) - (uint)((int)dVar3 != 0));
+              (dVar8,dVar7,iVar3,uVar2,uVar5,(ulonglong)(uVar1 >> 0x1f),uVar5 & uVar1);
   }
   else {
-    Com_PrintError(0xe,"ERROR: CG_ReverbCmd called with %i args (should be 6)\n");
+    Com_PrintError(0xe,0xffffffff82023ae4);
   }
   return;
 }
@@ -492,67 +2283,64 @@ void CG_ReverbCmd(void)
 
 // 822FCDB0  CG_DeactivateReverbCmd  (cgame_mp/cg_servercmds_mp.cpp:1993)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CG_DeactivateReverbCmd(void)
 
 {
-  uint uVar1;
+  ulonglong uVar1;
   int iVar2;
   char *pcVar3;
-  double dVar4;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  double dVar6;
   
   iVar2 = Cmd_Argc();
   if (iVar2 != 3) {
-    Com_PrintError(0xe,"ERROR: CG_DeactivateReverbCmd called with %i args (should be 3)\n");
+    Com_PrintError(0xe,0xffffffff82023b20);
     return;
   }
-  pcVar3 = Cmd_Argv(1);
+  pcVar3 = (char *)Cmd_Argv(1);
   iVar2 = atoi(pcVar3);
-  pcVar3 = Cmd_Argv(2);
-  dVar4 = atof(pcVar3);
-  dVar4 = floor((double)((float)dVar4 * 1000.0 + 0.5));
-  uVar1 = (uint)dVar4;
-  SND_DeactivateEnvironmentEffects(iVar2,-((int)uVar1 >> 0x1f) - (uint)(uVar1 != 0) & uVar1);
+  pcVar3 = (char *)Cmd_Argv(2);
+  dVar6 = atof(pcVar3);
+  dVar6 = floor((double)((float)dVar6 * 1000.0 + 0.5));
+  uVar5 = (ulonglong)(uint)(int)dVar6;
+  uVar1 = (ulonglong)((uint)(int)dVar6 >> 0x1f);
+  uVar4 = uVar1 - (uVar5 != 0);
+  SND_DeactivateEnvironmentEffects(iVar2,uVar4 & uVar5,uVar4,uVar1,-uVar5);
   return;
 }
 
 
 // 822FCE70  CG_SetVolMod  (cgame_mp/cg_servercmds_mp.cpp:2017)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CG_SetVolMod(void)
 
 {
   int iVar1;
   char *pcVar2;
-  int in_r4;
   double dVar3;
   double dVar4;
   
   iVar1 = Cmd_Argc();
   if (iVar1 == 4) {
-    pcVar2 = Cmd_Argv(1);
+    pcVar2 = (char *)Cmd_Argv(1);
     iVar1 = atoi(pcVar2);
-    pcVar2 = Cmd_Argv(2);
+    pcVar2 = (char *)Cmd_Argv(2);
     dVar3 = atof(pcVar2);
     dVar4 = (double)(float)dVar3;
-    pcVar2 = Cmd_Argv(3);
+    pcVar2 = (char *)Cmd_Argv(3);
     dVar3 = atof(pcVar2);
     floor((double)((float)dVar3 * 1000.0 + 0.5));
-    SND_SetVolModValue(iVar1,(float)dVar4,in_r4);
+    SND_SetVolModValue(dVar4,iVar1);
   }
   else {
-    Com_PrintError(0xe,"ERROR: CG_SetVolMod called with %i args (should be 4)\n");
+    Com_PrintError(0xe,0xffffffff82023b64);
   }
   return;
 }
 
 
 // 822FCF40  CG_WhizbySpreads  (cgame_mp/cg_servercmds_mp.cpp:2044)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_WhizbySpreads(void)
 
@@ -566,16 +2354,16 @@ void CG_WhizbySpreads(void)
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 4) {
-    Com_PrintError(0xe,"ERROR: CG_WhizbySpreads called with %i args (should be 4)\n");
+    Com_PrintError(0xe,0xffffffff82023b9c);
     return;
   }
-  pcVar2 = Cmd_Argv(1);
+  pcVar2 = (char *)Cmd_Argv(1);
   dVar3 = atof(pcVar2);
   local_20 = (float)dVar3;
-  pcVar2 = Cmd_Argv(2);
+  pcVar2 = (char *)Cmd_Argv(2);
   dVar3 = atof(pcVar2);
   local_1c = (float)dVar3;
-  pcVar2 = Cmd_Argv(3);
+  pcVar2 = (char *)Cmd_Argv(3);
   dVar3 = atof(pcVar2);
   local_18 = (float)dVar3;
   SND_SetWhizbySpread(&local_20);
@@ -584,8 +2372,6 @@ void CG_WhizbySpreads(void)
 
 
 // 822FCFD0  CG_WhizbyRadii  (cgame_mp/cg_servercmds_mp.cpp:2071)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_WhizbyRadii(void)
 
@@ -599,16 +2385,16 @@ void CG_WhizbyRadii(void)
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 4) {
-    Com_PrintError(0xe,"ERROR: CG_WhizbyRadii called with %i args (should be 4)\n");
+    Com_PrintError(0xe,0xffffffff82023bd8);
     return;
   }
-  pcVar2 = Cmd_Argv(1);
+  pcVar2 = (char *)Cmd_Argv(1);
   dVar3 = atof(pcVar2);
   local_20 = (float)dVar3;
-  pcVar2 = Cmd_Argv(2);
+  pcVar2 = (char *)Cmd_Argv(2);
   dVar3 = atof(pcVar2);
   local_1c = (float)dVar3;
-  pcVar2 = Cmd_Argv(3);
+  pcVar2 = (char *)Cmd_Argv(3);
   dVar3 = atof(pcVar2);
   local_18 = (float)dVar3;
   SND_SetWhizbyRadius(&local_20);
@@ -618,35 +2404,31 @@ void CG_WhizbyRadii(void)
 
 // 822FD060  CG_SetChannelVolCmd  (cgame_mp/cg_servercmds_mp.cpp:2097)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_SetChannelVolCmd(LocalClientNum_t param_1)
+void CG_SetChannelVolCmd(void)
 
 {
   uint uVar1;
-  int iVar2;
-  char *pcVar3;
-  int iVar4;
-  shellshock_parms_t *psVar5;
+  int iVar3;
+  char *pcVar4;
+  int iVar5;
+  longlong lVar2;
   double dVar6;
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 == 4) {
-    pcVar3 = Cmd_Argv(1);
-    iVar2 = atoi(pcVar3);
-    pcVar3 = Cmd_Argv(2);
-    iVar4 = atoi(pcVar3);
-    pcVar3 = Cmd_Argv(3);
-    dVar6 = atof(pcVar3);
+  iVar3 = Cmd_Argc();
+  if (iVar3 == 4) {
+    pcVar4 = (char *)Cmd_Argv(1);
+    iVar3 = atoi(pcVar4);
+    pcVar4 = (char *)Cmd_Argv(2);
+    iVar5 = atoi(pcVar4);
+    pcVar4 = (char *)Cmd_Argv(3);
+    dVar6 = atof(pcVar4);
     dVar6 = floor((double)((float)dVar6 * 1000.0 + 0.5));
     uVar1 = (uint)dVar6;
-    psVar5 = BG_GetShellshockParms(iVar4);
-    SND_SetChannelVolumes
-              (iVar2,(psVar5->sound).channelvolume,
-               -((int)uVar1 >> 0x1f) - (uint)(uVar1 != 0) & uVar1);
+    lVar2 = BG_GetShellshockParms(iVar5);
+    SND_SetChannelVolumes(iVar3,lVar2 + 0x144,-(uint)(uVar1 != 0) - ((int)uVar1 >> 0x1f) & uVar1);
   }
   else {
-    Com_PrintError(9,"ERROR: CG_SetChannelVolCmd called with %i args (should be 4)\n");
+    Com_PrintError(9,0xffffffff82023c14);
   }
   return;
 }
@@ -654,176 +2436,224 @@ void CG_SetChannelVolCmd(LocalClientNum_t param_1)
 
 // 822FD138  CG_DeactivateChannelVolCmd  (cgame_mp/cg_servercmds_mp.cpp:2123)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CG_DeactivateChannelVolCmd(void)
 
 {
-  uint uVar1;
+  ulonglong uVar1;
   int iVar2;
   char *pcVar3;
-  double dVar4;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  double dVar6;
   
   iVar2 = Cmd_Argc();
   if (iVar2 != 3) {
-    Com_PrintError(9,"ERROR: CG_DeactivateChannelVolCmd called with %i args (should be 3)\n");
+    Com_PrintError(9,0xffffffff82023c58);
     return;
   }
-  pcVar3 = Cmd_Argv(1);
+  pcVar3 = (char *)Cmd_Argv(1);
   iVar2 = atoi(pcVar3);
-  pcVar3 = Cmd_Argv(2);
-  dVar4 = atof(pcVar3);
-  dVar4 = floor((double)((float)dVar4 * 1000.0 + 0.5));
-  uVar1 = (uint)dVar4;
-  SND_DeactivateChannelVolumes(iVar2,-((int)uVar1 >> 0x1f) - (uint)(uVar1 != 0) & uVar1);
+  pcVar3 = (char *)Cmd_Argv(2);
+  dVar6 = atof(pcVar3);
+  dVar6 = floor((double)((float)dVar6 * 1000.0 + 0.5));
+  uVar5 = (ulonglong)(uint)(int)dVar6;
+  uVar1 = (ulonglong)((uint)(int)dVar6 >> 0x1f);
+  uVar4 = uVar1 - (uVar5 != 0);
+  SND_DeactivateChannelVolumes(iVar2,uVar4 & uVar5,uVar4,uVar1,-uVar5);
   return;
 }
 
 
 // 822FD1F8  LocalSound  (cgame_mp/cg_servercmds_mp.cpp:2142)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool LocalSound(LocalClientNum_t param_1)
+undefined8 LocalSound(undefined8 param_1)
 
 {
   int iVar1;
-  char *pcVar2;
-  bool bVar3;
+  char *_Str;
+  char cVar2;
   
   iVar1 = Cmd_Argc();
   if (iVar1 == 2) {
-    pcVar2 = Cmd_Argv(1);
-    iVar1 = atoi(pcVar2);
+    _Str = (char *)Cmd_Argv(1);
+    iVar1 = atoi(_Str);
     if ((0 < iVar1) && (iVar1 < 0x181)) {
-      bVar3 = CL_Demo_IsFollowCamera(param_1);
-      if ((!bVar3) && (bVar3 = CL_Demo_IsFreeCamera(param_1), !bVar3)) {
+      cVar2 = CL_Demo_IsFollowCamera(param_1);
+      if ((cVar2 == '\0') && (cVar2 = CL_Demo_IsFreeCamera(param_1), cVar2 == '\0')) {
         CG_PlayClientSoundAliasByName(param_1,iVar1);
       }
-      return true;
+      return 1;
     }
-    Com_PrintError(9,"ERROR: LocalSound() called with index %i (should be in range[1,%i])\n");
+    Com_PrintError(9,0xffffffff82023ca0,iVar1,0x180);
   }
   else {
-    Com_PrintError(9,"ERROR: LocalSound() called with %i args (should be 2)\n");
+    Com_PrintError(9,0xffffffff82023ce8);
   }
-  return false;
+  return 0;
 }
 
 
 // 822FD2C8  LocalSoundStop  (cgame_mp/cg_servercmds_mp.cpp:2173)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void LocalSoundStop(LocalClientNum_t param_1)
+void LocalSoundStop(undefined8 param_1)
 
 {
   int iVar1;
-  char *pcVar2;
+  char *_Str;
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 2) {
-    Com_PrintError(9,"ERROR: LocalSoundStop(), should be called with 2 arguments.\n");
+    Com_PrintError(9,0xffffffff82023d6c);
     return;
   }
-  pcVar2 = Cmd_Argv(1);
-  iVar1 = atoi(pcVar2);
+  _Str = (char *)Cmd_Argv(1);
+  iVar1 = atoi(_Str);
   if ((0 < iVar1) && (iVar1 < 0x181)) {
     CG_StopClientSoundAliasByName(param_1,iVar1);
     return;
   }
-  Com_PrintError(9,"ERROR: LocalSoundStop() called with index %i (should be in range[1,%i])\n");
+  Com_PrintError(9,0xffffffff82023d20,iVar1,0x180);
   return;
 }
 
 
 // 822FD378  CG_BlurServerCommand  (cgame_mp/cg_servercmds_mp.cpp:2195)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_BlurServerCommand(LocalClientNum_t param_1)
+void CG_BlurServerCommand(void)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   char *pcVar2;
   int iVar3;
-  BlurPriority BVar4;
-  BlurTime in_r5;
-  double dVar5;
+  double dVar4;
   
-  LVar1 = __savegprlr_26(param_1);
-  pcVar2 = Cmd_Argv(1);
+  uVar1 = __savegprlr_26();
+  pcVar2 = (char *)Cmd_Argv(1);
   iVar3 = atoi(pcVar2);
-  pcVar2 = Cmd_Argv(2);
-  dVar5 = atof(pcVar2);
-  dVar5 = (double)(float)dVar5;
-  pcVar2 = Cmd_Argv(3);
-  BVar4 = atoi(pcVar2);
-  pcVar2 = Cmd_Argv(4);
+  pcVar2 = (char *)Cmd_Argv(2);
+  dVar4 = atof(pcVar2);
+  dVar4 = (double)(float)dVar4;
+  pcVar2 = (char *)Cmd_Argv(3);
+  atoi(pcVar2);
+  pcVar2 = (char *)Cmd_Argv(4);
   atoi(pcVar2);
   if (iVar3 < 0) {
-    in_r5 = BLUR_TIME_RELATIVE;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0x89e,0,"%s");
+    MyAssertHandler(0xffffffff82022d10,0x89e,0,0xffffffff82000f98,0xffffffff820101c4);
   }
-  if (dVar5 < 0.0) {
-    in_r5 = BLUR_TIME_RELATIVE;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0x89f,0,"%s");
+  if (dVar4 < 0.0) {
+    MyAssertHandler(0xffffffff82022d10,0x89f,0,0xffffffff82000f98,0xffffffff82023dac);
   }
-  CG_Blur(LVar1,iVar3,(float)dVar5,in_r5,BVar4);
+  CG_Blur(dVar4,uVar1,iVar3);
   __restgprlr_26();
   return;
 }
 
 
 // 822FD450  CG_SetObjectiveText  (cgame_mp/cg_servercmds_mp.cpp:2213)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_SetObjectiveText(longlong param_1,undefined8 param_2)
+
+{
+  I_strncpyz(param_1 + 0x765b0,param_2,0x400);
+  return;
+}
+
 
 // 822FD460  CG_SetHudEnabled  (cgame_mp/cg_servercmds_mp.cpp:2219)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_SetHudEnabled(int param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = (int)param_2;
+  if ((iVar1 == 0) || (iVar1 == 1)) {
+    *(int *)(param_1 + 0x76ebc) = iVar1;
+  }
+  else {
+    MyAssertHandler(0xffffffff82022d10,0x8ac,0,0xffffffff82003d00,0xffffffff82023dc0,param_2);
+    *(int *)(param_1 + 0x76ebc) = iVar1;
+  }
+  return;
+}
+
 
 // 822FD4E8  CG_SetScriptMainMenu  (cgame_mp/cg_servercmds_mp.cpp:2226)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_SetScriptMainMenu(longlong param_1,ulonglong param_2)
+
+{
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82022d10,0x8b3,0,0xffffffff82000f98,0xffffffff82013b1c);
+  }
+  I_strncpyz(param_1 + 0x769b0,param_2,0x100);
+  return;
+}
+
 
 // 822FD560  CG_SetClientDvarFromServer  (cgame_mp/cg_servercmds_mp.cpp:2233)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_SetClientDvarFromServer(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  longlong lVar1;
+  int iVar2;
+  
+  lVar1 = __savegprlr_29();
+  iVar2 = I_stricmp(param_2,0xffffffff82023e00);
+  if (iVar2 == 0) {
+    I_strncpyz(lVar1 + 0x765b0,param_3,0x400);
+    __restgprlr_29();
+    return;
+  }
+  iVar2 = I_stricmp(param_2,0xffffffff82023df4);
+  if (iVar2 == 0) {
+    iVar2 = atoi((char *)param_3);
+    CG_SetHudEnabled(lVar1,iVar2);
+    __restgprlr_29();
+    return;
+  }
+  iVar2 = I_stricmp(param_2,0xffffffff82023de0);
+  if (iVar2 == 0) {
+    CG_SetScriptMainMenu(lVar1);
+    __restgprlr_29();
+    return;
+  }
+  Dvar_SetFromStringByName(param_2,param_3);
+  __restgprlr_29();
+  return;
+}
+
 
 // 822FD620  CG_PrintStatsCommand  (cgame_mp/cg_servercmds_mp.cpp:2246)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void CG_PrintStatsCommand(msg_t *param_1)
+void CG_PrintStatsCommand(void)
 
 {
-  msg_t *pmVar1;
-  int iVar2;
+  int iVar1;
+  int *piVar4;
+  undefined8 uVar2;
   longlong lVar3;
   
-  pmVar1 = (msg_t *)__savegprlr_26(param_1);
-  MSG_BeginReading(pmVar1);
-  MSG_ReadByte(pmVar1);
-  iVar2 = pmVar1->overflowed;
-  while ((iVar2 == 0 && (pmVar1->readcount != pmVar1->splitSize + pmVar1->cursize))) {
-    MSG_ReadShort(pmVar1);
-    iVar2 = MSG_ReadByte(pmVar1);
-    lVar3 = (longlong)iVar2;
-    Com_Printf(0xe,"[%i %i ");
-    if (0 < iVar2) {
+  piVar4 = (int *)__savegprlr_26();
+  MSG_BeginReading();
+  MSG_ReadByte(piVar4);
+  iVar1 = *piVar4;
+  while ((iVar1 == 0 && (piVar4[7] != piVar4[6] + piVar4[5]))) {
+    uVar2 = MSG_ReadShort(piVar4);
+    lVar3 = MSG_ReadByte(piVar4);
+    Com_Printf(0xe,0xffffffff82023e20,uVar2,lVar3);
+    if (0 < (int)lVar3) {
       do {
-        MSG_ReadByte(pmVar1);
-        Com_Printf(0xe,"%x ");
+        uVar2 = MSG_ReadByte(piVar4);
+        Com_Printf(0xe,0xffffffff82023e28,uVar2);
         lVar3 = lVar3 + -1;
       } while (lVar3 != 0);
     }
-    Com_Printf(0xe,"] ");
-    iVar2 = pmVar1->overflowed;
+    Com_Printf(0xe,0xffffffff82023e2c);
+    iVar1 = *piVar4;
   }
-  Com_Printf(0xe,"CL STATS\n");
+  Com_Printf(0xe,0xffffffff82023e14);
   __restgprlr_26();
   return;
 }
@@ -831,181 +2661,158 @@ void CG_PrintStatsCommand(msg_t *param_1)
 
 // 822FD700  CG_LogBadHostInfo  (cgame_mp/cg_servercmds_mp.cpp:2275)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void CG_LogBadHostInfo(int param_1)
+void CG_LogBadHostInfo(undefined8 param_1)
 
 {
-  bool bVar3;
-  int iVar1;
-  char *pcVar2;
-  ulong64 local_40 [2];
-  char acStack_30 [24];
+  char cVar1;
+  undefined8 uVar2;
+  undefined8 local_40 [2];
+  undefined1 auStack_30 [24];
   
-  bVar3 = Session_IsValid(&g_serverSession);
-  if (bVar3) {
-    iVar1 = Session_HostNum(&g_serverSession);
-    local_40[0] = Session_GetXuidEvenIfInactive(&g_serverSession,iVar1);
-    XUIDToString(local_40,acStack_30);
-    pcVar2 = va("BAD_STATS_FROM_HOST \"%s\" %s");
+  cVar1 = Session_IsValid(0xffffffff844c7860);
+  if (cVar1 == '\0') {
+    uVar2 = 0xffffffff82023e4c;
   }
   else {
-    pcVar2 = "BAD_STATS_SESSION_NOT_VALID";
+    uVar2 = Session_HostNum(0xffffffff844c7860);
+    local_40[0] = Session_GetXuidEvenIfInactive(0xffffffff844c7860,uVar2);
+    XUIDToString(local_40,auStack_30);
+    uVar2 = va(0xffffffff82023e30,0xffffffff82aa1b08,auStack_30);
   }
-  LSP_LogString(param_1,pcVar2);
+  LSP_LogString(param_1,uVar2);
   return;
 }
 
 
 // 822FD7A8  CG_NotifyServerOfBadStats  (cgame_mp/cg_servercmds_mp.cpp:2297)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_NotifyServerOfBadStats(LocalClientNum_t param_1)
+void CG_NotifyServerOfBadStats(undefined8 param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = CL_ControllerIndexFromClientNum(param_1);
-  LiveStorage_ReportStatsValidationFailure(iVar1);
-  CL_AddReliableCommand(param_1,"badStats");
+  CL_ControllerIndexFromClientNum();
+  LiveStorage_ReportStatsValidationFailure();
+  CL_AddReliableCommand(param_1,0xffffffff82023e68);
   return;
 }
 
 
 // 822FD7E8  CG_ReadPlayerPersistentDataChanges  (cgame_mp/cg_servercmds_mp.cpp:2312)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_ReadPlayerPersistentDataChanges(LocalClientNum_t param_1,msg_t *param_2)
+void CG_ReadPlayerPersistentDataChanges(undefined8 param_1,ulonglong param_2)
 
 {
-  msg_t *pmVar1;
-  bool bVar6;
-  int iVar2;
-  uchar *puVar3;
-  uint uVar4;
-  int iVar5;
-  longlong lVar7;
-  uint *puVar8;
-  uint *puVar9;
-  uint uVar10;
-  ulonglong uVar11;
-  uint uVar12;
+  int *piVar1;
+  undefined8 uVar2;
+  char cVar9;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  int iVar8;
+  undefined8 uVar7;
+  uint *puVar10;
+  uint *puVar11;
+  ulonglong uVar12;
+  uint uVar13;
+  undefined4 local_240;
   int local_23c;
   uint local_234;
-  DataIntegrityRange local_230 [70];
+  undefined1 local_230 [560];
   
-  uVar11 = (ulonglong)(int)param_2;
-  __savegprlr();
-  if ((uVar11 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0x919,0,"%s");
+  uVar2 = __savegprlr();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82022d10,0x919,0,0xffffffff82000f98,0xffffffff82004d74);
   }
-  bVar6 = LiveStorage_PersistentDataEnabled();
-  if (!bVar6) goto LAB_822fdb78;
-  iVar2 = CL_ControllerIndexFromClientNum(param_1);
-  puVar3 = LiveStorage_GetPersistentDataBuffer(iVar2);
-  if (puVar3 == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0x921,0,"%s");
+  cVar9 = LiveStorage_PersistentDataEnabled();
+  if (cVar9 == '\0') goto LAB_822fdb78;
+  uVar3 = CL_ControllerIndexFromClientNum(uVar2);
+  uVar4 = LiveStorage_GetPersistentDataBuffer();
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82022d10,0x921,0,0xffffffff82000f98,0xffffffff8200e484);
   }
-  Com_Memcpy(g_statsBackup,puVar3,0x2ffc);
-  uVar10 = 0;
-  bVar6 = CL_Demo_IsPlaying(param_1);
+  Com_Memcpy(0xffffffff82a5f5f0,uVar4,0x2ffc);
+  uVar12 = 0;
+  cVar9 = CL_Demo_IsPlaying(uVar2);
   local_23c = 0;
-  if (!bVar6) {
-    local_23c = Live_GetRankMP(iVar2);
-    Live_GetXpMP(iVar2);
+  local_240 = 0;
+  if (cVar9 == '\0') {
+    local_23c = Live_GetRankMP(uVar3);
+    local_240 = Live_GetXpMP(uVar3);
   }
-  pmVar1 = (msg_t *)uVar11;
-  if (pmVar1->readcount != pmVar1->splitSize + pmVar1->cursize) {
-    puVar8 = &local_234;
-    puVar9 = &local_234;
+  piVar1 = (int *)param_2;
+  if (piVar1[7] != piVar1[6] + piVar1[5]) {
+    puVar10 = &local_234;
+    puVar11 = &local_234;
     do {
-      uVar4 = MSG_ReadShort(pmVar1);
-      if ((0x2ffb < uVar4) || (pmVar1->overflowed != 0)) {
-        CG_PrintStatsCommand(pmVar1);
-        Com_Error(ERR_DROP,
-                  "\x15Received invalid stats delta: byte index %d is out of range (see console)\n")
-        ;
+      uVar5 = MSG_ReadShort(param_2);
+      if ((0x2ffb < (uVar5 & 0xffffffff)) || (*piVar1 != 0)) {
+        CG_PrintStatsCommand(param_2);
+        Com_Error(1,0xffffffff82023ef8,uVar5);
       }
-      iVar5 = MSG_ReadByte(pmVar1);
-      uVar11 = (longlong)iVar5 + (longlong)(int)uVar4;
-      if ((0x2ffc < (uVar11 & 0xffffffff)) || (pmVar1->overflowed != 0)) {
-        CG_PrintStatsCommand(pmVar1);
-        Com_Error(ERR_DROP,
-                  "\x15Received invalid stats delta: block size %d is invalid (see console)\n");
+      lVar6 = MSG_ReadByte(param_2);
+      if ((0x2ffc < (lVar6 + uVar5 & 0xffffffff)) || (*piVar1 != 0)) {
+        CG_PrintStatsCommand(param_2);
+        Com_Error(1,0xffffffff82023f48,lVar6);
       }
-      MSG_ReadData(pmVar1,puVar3 + uVar4,iVar5);
-      if (pmVar1->overflowed != 0) {
-        CG_PrintStatsCommand(pmVar1);
-        Com_Error(ERR_DROP,
-                  "\x15Received invalid stats delta: message is less than block size %d (see console)\n"
-                 );
+      MSG_ReadData(param_2,uVar5 + uVar4,lVar6);
+      if (*piVar1 != 0) {
+        CG_PrintStatsCommand(param_2);
+        Com_Error(1,0xffffffff82023f90,lVar6);
       }
-      if (uVar10 < 0x32) {
-        uVar12 = (uint)uVar11;
-        if (uVar10 != 0) {
-          if (0x31 < uVar10 - 1) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                            ,0x95d,0,
-                            "lastIntegrityIndex doesn\'t index INTEGRITY_MAX_DATA_RANGE_COUNT\n\t%i not in [0, %i)"
-                           );
+      if ((uVar12 & 0xffffffff) < 0x32) {
+        uVar13 = (uint)(lVar6 + uVar5);
+        if ((uVar12 & 0xffffffff) != 0) {
+          if (0x31 < (uVar12 - 1 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff82022d10,0x95d,0,0xffffffff82023fe8,uVar12 - 1,0x32);
           }
-          lVar7 = (longlong)(int)uVar4 - (ulonglong)*puVar9;
-          if ((-1 < lVar7) && ((int)lVar7 < 0x14)) {
-            *puVar9 = uVar12;
+          if ((-1 < (longlong)(uVar5 - *puVar11)) && ((int)(uVar5 - *puVar11) < 0x14)) {
+            *puVar11 = uVar13;
             goto LAB_822fda5c;
           }
         }
-        uVar10 = uVar10 + 1;
-        puVar8[1] = uVar4;
-        puVar8 = puVar8 + 2;
-        *puVar8 = uVar12;
-        puVar9 = puVar9 + 2;
-        if (0x32 < uVar10) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                          ,0x969,1,"dataIntegrityCount <= INTEGRITY_MAX_DATA_RANGE_COUNT\n\t%i, %i")
-          ;
+        uVar12 = uVar12 + 1;
+        puVar10[1] = (uint)uVar5;
+        puVar10 = puVar10 + 2;
+        *puVar10 = uVar13;
+        puVar11 = puVar11 + 2;
+        if (0x32 < (uVar12 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff82022d10,0x969,1,0xffffffff8202403c,uVar12,0x32);
         }
       }
 LAB_822fda5c:
-    } while (pmVar1->readcount != pmVar1->splitSize + pmVar1->cursize);
+    } while (piVar1[7] != piVar1[6] + piVar1[5]);
   }
-  if (pmVar1->overflowed != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0x96e,0,"%s");
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82022d10,0x96e,0,&DAT_82000f98,0xffffffff8201774c);
   }
-  if (bVar6) {
+  if (cVar9 != '\0') {
     UI_ExpressionState_PlayerDataModified();
     __restgprlr();
     return;
   }
-  if (uVar10 == 0x32) {
-    iVar5 = StructuredData_ValidatePersistentDataIntegrityFull(g_statsBackup,puVar3);
+  if ((uVar12 & 0xffffffff) == 0x32) {
+    iVar8 = StructuredData_ValidatePersistentDataIntegrityFull(0xffffffff82a5f5f0,uVar4);
 LAB_822fdadc:
-    if (iVar5 == 0) {
-      Com_Printf(0xe,"Data integrity failed when looking into %i blocks.\n");
-      CG_PrintStatsCommand(pmVar1);
-      CG_LogBadHostInfo(iVar2);
-      iVar5 = CL_ControllerIndexFromClientNum(param_1);
-      LiveStorage_ReportStatsValidationFailure(iVar5);
-      CL_AddReliableCommand(param_1,"badStats");
+    if (iVar8 == 0) {
+      Com_Printf(0xe,0xffffffff82023ec0,uVar12);
+      CG_PrintStatsCommand(param_2);
+      CG_LogBadHostInfo(uVar3);
+      CL_ControllerIndexFromClientNum(uVar2);
+      LiveStorage_ReportStatsValidationFailure();
+      CL_AddReliableCommand(uVar2,0xffffffff82023e68);
     }
   }
-  else if (uVar10 != 0) {
-    iVar5 = StructuredData_ValidatePersistentDataIntegrityRange
-                      (g_statsBackup,puVar3,local_230,uVar10);
+  else if ((uVar12 & 0xffffffff) != 0) {
+    iVar8 = StructuredData_ValidatePersistentDataIntegrityRange
+                      (0xffffffff82a5f5f0,uVar4,local_230,uVar12);
     goto LAB_822fdadc;
   }
-  LiveStorage_StatsWriteNeeded(param_1);
-  iVar5 = Live_GetRankMP(iVar2);
-  if (iVar5 != local_23c) {
-    Live_GetXpMP(iVar2);
-    Com_Printf(0xe,"Controller %i rank changed from %i to %i. XP changed from %i to %i.\n");
-    CG_PrintStatsCommand(pmVar1);
+  LiveStorage_StatsWriteNeeded(uVar2);
+  uVar2 = Live_GetRankMP(uVar3);
+  if ((int)uVar2 != local_23c) {
+    uVar7 = Live_GetXpMP(uVar3);
+    Com_Printf(0xe,0xffffffff82023e78,uVar3,local_23c,uVar2,local_240,uVar7);
+    CG_PrintStatsCommand(param_2);
   }
 LAB_822fdb78:
   __restgprlr();
@@ -1015,135 +2822,679 @@ LAB_822fdb78:
 
 // 822FDB90  CG_ParseWaterSheetingCommand  (cgame_mp/cg_servercmds_mp.cpp:2465)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_ParseWaterSheetingCommand(LocalClientNum_t param_1,int param_2,int param_3)
+void CG_ParseWaterSheetingCommand(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
   if (param_2 != 0) {
     CG_StartWaterSheetFX(param_1,param_3);
     return;
   }
-  CG_StopWaterSheetFX(param_1);
+  CG_StopWaterSheetFX();
   return;
 }
 
 
 // 822FDBA8  CG_ParseHudSplashCommand  (cgame_mp/cg_servercmds_mp.cpp:2474)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ParseHudSplashCommand
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined4 param_4)
+
+{
+  undefined8 uVar1;
+  char cVar4;
+  int iVar3;
+  char *_String;
+  undefined8 uVar2;
+  undefined4 *puVar5;
+  double dVar6;
+  undefined4 local_50 [20];
+  
+  uVar1 = __savegprlr_26();
+  cVar4 = CL_Demo_IsFollowCamera();
+  if ((cVar4 == '\0') && (cVar4 = CL_Demo_IsFreeCamera(uVar1), cVar4 == '\0')) {
+    iVar3 = CG_GetLocalClientGlobals(uVar1);
+    if (((int)param_2 < 0) || (4 < (int)param_2)) {
+      Com_PrintWarning(0x19,0xffffffff82024108,param_2,uVar1);
+      param_2 = 0;
+    }
+    else if (3 < (param_2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82022d10,0x9bc,0,0xffffffff820240c4,param_2,4);
+    }
+    puVar5 = (undefined4 *)(((int)param_2 + 0x1083e) * 0x10 + iVar3);
+    StringTable_GetAsset(0xffffffff8201cbd0,local_50);
+    _String = (char *)StringTable_GetColumnValueForRow(local_50[0],param_3,4);
+    dVar6 = atof(_String);
+    dVar6 = (double)(float)dVar6;
+    *puVar5 = (int)param_3;
+    puVar5[3] = param_4;
+    puVar5[2] = (int)(dVar6 * 1000.0);
+    puVar5[1] = *(undefined4 *)(iVar3 + 0x6b98c);
+    uVar2 = StringTable_GetColumnValueForRow(local_50[0],param_3,0);
+    Com_Printf(dVar6,0x19,0xffffffff82024080,uVar2,param_2,dVar6,uVar1);
+    cVar4 = CL_IsUIActive(uVar1);
+    if ((cVar4 == '\0') && (*(char *)(DAT_82a38338 + 0xc) != '\0')) {
+      uVar2 = StringTable_GetColumnValueForRow(local_50[0],param_3,0xb);
+      UI_OpenMenu(uVar1,uVar2);
+    }
+  }
+  __restgprlr_26();
+  return;
+}
+
 
 // 822FDD48  CG_ParsePredictStreamPosCommand  (cgame_mp/cg_servercmds_mp.cpp:2509)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ParsePredictStreamPosCommand(void)
+
+{
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  pcVar2 = (char *)Cmd_Argv(1);
+  iVar3 = atoi(pcVar2);
+  *(float *)(iVar1 + 0x1084d4) = (float)(longlong)iVar3;
+  pcVar2 = (char *)Cmd_Argv(2);
+  iVar3 = atoi(pcVar2);
+  *(float *)(iVar1 + 0x1084d8) = (float)(longlong)iVar3;
+  pcVar2 = (char *)Cmd_Argv(3);
+  iVar3 = atoi(pcVar2);
+  *(float *)(iVar1 + 0x1084dc) = (float)(longlong)iVar3;
+  *(undefined1 *)(iVar1 + 0x1084e0) = 1;
+  return;
+}
+
 
 // 822FDE08  CL_IsGameClientPartyHost  (cgame_mp/cg_servercmds_mp.cpp:2526)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int CL_IsGameClientPartyHost(int param_1)
+undefined8 CL_IsGameClientPartyHost(ulonglong param_1)
 
 {
-  bool bVar3;
-  ulong64 uVar1;
-  int iVar2;
+  undefined8 uVar1;
+  char cVar2;
   
-  if (0x11 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0x9e2,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
+  if (0x11 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82022d10,0x9e2,0,0xffffffff82014c1c,param_1,0x12);
   }
-  if ((g_serverSession.dyn.sessionHandle == (void *)0x0) ||
-     (bVar3 = Session_IsUserRegistered(&g_serverSession,param_1), !bVar3)) {
-    iVar2 = 0;
+  if ((DAT_844c7870 == 0) ||
+     (cVar2 = Session_IsUserRegistered(0xffffffff844c7860,param_1), cVar2 == '\0')) {
+    uVar1 = 0;
   }
   else {
-    uVar1 = Session_GetXuid(&g_serverSession,param_1);
-    iVar2 = Party_IsPlayerPrivatePartyHost(uVar1);
+    Session_GetXuid(0xffffffff844c7860,param_1);
+    uVar1 = Party_IsPlayerPrivatePartyHost();
   }
-  return iVar2;
+  return uVar1;
 }
 
 
 // 822FDEA8  CG_ParsePartyBackoutCommand  (cgame_mp/cg_servercmds_mp.cpp:2546)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ParsePartyBackoutCommand(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  undefined8 local_30 [6];
+  
+  uVar1 = __savegprlr_29();
+  if (0x11 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82022d10,0x9f5,0,0xffffffff82014c1c,param_2,0x12);
+  }
+  Com_Printf(0xe,0xffffffff820241c4,param_2);
+  iVar3 = CG_GetLocalClientGlobals(uVar1);
+  if ((*(int *)(iVar3 + 0x3334) != (int)param_2) &&
+     (iVar3 = CL_IsGameClientPartyHost(param_2), iVar3 != 0)) {
+    iVar3 = CL_GetLocalClientConnectionState(uVar1);
+    if (iVar3 < 5) {
+      MyAssertHandler(0xffffffff82022d10,0xa01,0,0xffffffff82000f98,0xffffffff82024180);
+    }
+    Com_Printf(0xe,0xffffffff82024150);
+    uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+    uVar2 = Lobby_GetPartyData();
+    local_30[0] = Party_GetMainActiveClient(uVar2,uVar1);
+    Party_Backout(local_30);
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 822FDF98  CL_DumpReliableCommands  (cgame_mp/cg_servercmds_mp.cpp:2571)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void CL_DumpReliableCommands(LocalClientNum_t param_1)
+void CL_DumpReliableCommands(void)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  longlong lVar1;
+  longlong lVar2;
   
-  LVar1 = __savegprlr_29(param_1);
-  CL_GetLocalClientConnection(LVar1);
-  iVar2 = 0;
+  __savegprlr_29();
+  lVar1 = CL_GetLocalClientConnection();
+  lVar2 = 0;
+  lVar1 = lVar1 + 0x20144;
   do {
-    Com_PrintError(1,"cmd %5d: \'%s\'\n");
-    iVar2 = iVar2 + 1;
-  } while (iVar2 < 0x80);
+    Com_PrintError(1,0xffffffff82024200,lVar2,lVar1);
+    lVar2 = lVar2 + 1;
+    lVar1 = lVar1 + 0x400;
+  } while ((int)lVar2 < 0x80);
   __restgprlr_29();
   return;
 }
 
 
 // 822FE318  CG_DeployServerCommandString  (cgame_mp/cg_servercmds_mp.cpp:2592)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
-// 822FDFE8  CG_DeployServerCommandBinary  (cgame_mp/cg_servercmds_mp.cpp:2925)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void CG_DeployServerCommandBinary(LocalClientNum_t param_1,uchar *param_2)
+void CG_DeployServerCommandString(void)
 
 {
-  ushort uVar1;
-  LocalClientNum_t LVar2;
-  int iVar3;
-  ulonglong uVar4;
-  char *pcVar5;
-  msg_t amStack_60 [2];
+  undefined8 uVar1;
+  undefined1 *puVar4;
+  int iVar5;
+  undefined8 uVar2;
+  char cVar11;
+  char *pcVar6;
+  uint uVar7;
+  uint uVar8;
+  char *_Str;
+  int iVar9;
+  int iVar10;
+  longlong lVar3;
+  uint *puVar12;
+  double dVar13;
+  undefined1 auStack_1c0 [256];
+  undefined1 auStack_c0 [192];
   
-  uVar4 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0xb72,0,"%s");
+  uVar1 = __savegprlr_28();
+  puVar4 = (undefined1 *)Cmd_Argv(0);
+  iVar5 = CG_GetLocalClientGlobals(uVar1);
+  if (*(int *)(iVar5 + 0x335c) == 0) {
+    MyAssertHandler(0xffffffff82022d10,0xa31,0,0xffffffff82000f98,0xffffffff82002858);
   }
-  pcVar5 = (char *)uVar4;
-  if (*pcVar5 != 'Z') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0xb73,0,"%s");
-  }
-  uVar1 = *(ushort *)(pcVar5 + 2);
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_servercmds_mp.cpp"
-                    ,0xb76,0,"%s\n\t(commandSize) = %i");
-  }
-  MSG_InitReadOnly(amStack_60,(uchar *)(pcVar5 + 4),(uint)uVar1);
-  MSG_BeginReading(amStack_60);
-  iVar3 = MSG_ReadByte(amStack_60);
-  if ((char)iVar3 != 'G') {
-    Com_Printf(0xe,"Unknown binary client game command: %c\n");
+  switch(*puVar4) {
+  case 0:
+    break;
+  default:
+    uVar1 = Cmd_Argv(0);
+    Com_Printf(0xe,0xffffffff820242b0,uVar1);
+    lVar3 = Cmd_Argc();
+    iVar5 = (int)lVar3;
+    if (1 < iVar5) {
+      Com_Printf(0xe,0xffffffff820242a0,lVar3 + -1);
+      lVar3 = 1;
+      if (1 < iVar5) {
+        do {
+          uVar1 = Cmd_Argv(lVar3);
+          Com_Printf(0xe,0xffffffff820209e8,uVar1);
+          lVar3 = lVar3 + 1;
+        } while ((int)lVar3 < iVar5);
+      }
+      Com_Printf(0xe,0xffffffff820044d8);
+    }
+    break;
+  case 0x41:
+    pcVar6 = (char *)Cmd_Argv(1);
+    iVar5 = atoi(pcVar6);
+    iVar9 = CG_GetLocalClientGlobals(uVar1);
+    *(int *)(iVar9 + 0x76abc) = iVar5;
+    __restgprlr_28();
+    return;
+  case 0x42:
+    pcVar6 = (char *)Cmd_Argv(1);
+    iVar5 = atoi(pcVar6);
+    iVar9 = CG_GetLocalClientGlobals(uVar1);
+    *(int *)(iVar9 + 0x76ac0) = iVar5;
+    __restgprlr_28();
+    return;
+  case 0x43:
+    pcVar6 = (char *)Cmd_Argv(2);
+    iVar5 = atoi(pcVar6);
+    pcVar6 = (char *)Cmd_Argv(1);
+    iVar9 = atoi(pcVar6);
+    CG_SetSingleClientScore(uVar1,iVar9,iVar5);
+    __restgprlr_28();
+    return;
+  case 0x44:
+    pcVar6 = (char *)Cmd_Argv(1);
+    iVar5 = atoi(pcVar6);
+    CG_MenuShowNotify(uVar1,iVar5);
+    __restgprlr_28();
+    return;
+  case 0x46:
+    UI_CloseInGameMenu(uVar1);
+    __restgprlr_28();
+    return;
+  case 0x48:
+    pcVar6 = (char *)Cmd_Argv(2);
+    iVar5 = atoi(pcVar6);
+    pcVar6 = (char *)Cmd_Argv(1);
+    iVar9 = atoi(pcVar6);
+    PlayerCards_SetCachedPlayerData(uVar1,iVar9,iVar5);
+    __restgprlr_28();
+    return;
+  case 0x49:
+    CL_ControllerIndexFromClientNum(uVar1);
+    cVar11 = LB_UploadPlayerData();
+    if (cVar11 == '\0') {
+      Com_PrintError(0x16,0xffffffff820242d8,uVar1);
+      __restgprlr_28();
+      return;
+    }
+    break;
+  case 0x4a:
+    pcVar6 = (char *)Cmd_Argv(1);
+    _Str = (char *)Cmd_Argv(2);
+    iVar9 = atoi(_Str);
+    if (*pcVar6 == '\0') {
+      CG_EnableClientSideVisionSets(uVar1,iVar9);
+      __restgprlr_28();
+      return;
+    }
+    CG_DisableClientSideVisionSets(uVar1);
+    I_strncpyz(iVar5 + 0x107eb8,pcVar6,0x40);
+    CG_VisionSetStartLerp_To
+              (iVar5 + 0x107060,0,3,iVar5 + 0x107eb8,iVar9,*(undefined4 *)(iVar5 + 0x6b98c));
+    __restgprlr_28();
+    return;
+  case 0x4b:
+    uVar1 = Cmd_Argv(1);
+    I_strncpyz(iVar5 + 0x107ef8,uVar1,0x40);
+    pcVar6 = (char *)Cmd_Argv(2);
+    iVar9 = atoi(pcVar6);
+    CG_VisionSetStartLerp_To
+              (iVar5 + 0x107060,1,3,iVar5 + 0x107ef8,iVar9,*(undefined4 *)(iVar5 + 0x6b98c));
+    __restgprlr_28();
+    return;
+  case 0x4c:
+    uVar1 = Cmd_Argv(1);
+    I_strncpyz(iVar5 + 0x107f38,uVar1,0x40);
+    pcVar6 = (char *)Cmd_Argv(2);
+    iVar9 = atoi(pcVar6);
+    CG_VisionSetStartLerp_To
+              (iVar5 + 0x107060,2,3,iVar5 + 0x107f38,iVar9,*(undefined4 *)(iVar5 + 0x6b98c));
+    __restgprlr_28();
+    return;
+  case 0x4d:
+    uVar1 = Cmd_Argv(1);
+    I_strncpyz(iVar5 + 0x107f78,uVar1,0x40);
+    pcVar6 = (char *)Cmd_Argv(2);
+    iVar9 = atoi(pcVar6);
+    CG_VisionSetStartLerp_To
+              (iVar5 + 0x107060,3,3,iVar5 + 0x107f78,iVar9,*(undefined4 *)(iVar5 + 0x6b98c));
+    __restgprlr_28();
+    return;
+  case 0x4e:
+    uVar1 = Cmd_Argv(1);
+    I_strncpyz(iVar5 + 0x107fb8,uVar1,0x40);
+    pcVar6 = (char *)Cmd_Argv(2);
+    iVar9 = atoi(pcVar6);
+    CG_VisionSetStartLerp_To
+              (iVar5 + 0x107060,4,3,iVar5 + 0x107fb8,iVar9,*(undefined4 *)(iVar5 + 0x6b98c));
+    __restgprlr_28();
+    return;
+  case 0x4f:
+    pcVar6 = (char *)Cmd_Argv(1);
+    uVar7 = atoi(pcVar6);
+    iVar9 = 0;
+    puVar12 = (uint *)(iVar5 + 0x108438);
+    do {
+      if ((*puVar12 & 0xff) == 0) break;
+      if (*puVar12 == uVar7) goto switchD_822fe390_caseD_0;
+      iVar9 = iVar9 + 1;
+      puVar12 = puVar12 + 1;
+    } while (iVar9 < 5);
+    if (iVar9 == 5) {
+      Com_PrintError(0xe,0xffffffff82024318,5);
+      __restgprlr_28();
+      return;
+    }
+    *(uint *)((iVar9 + 0x4210e) * 4 + iVar5) = uVar7;
+    __restgprlr_28();
+    return;
+  case 0x50:
+    pcVar6 = (char *)Cmd_Argv(2);
+    iVar5 = atoi(pcVar6);
+    pcVar6 = (char *)Cmd_Argv(1);
+    iVar9 = atoi(pcVar6);
+    if (iVar9 != 0) {
+      CG_StartWaterSheetFX(uVar1,iVar5);
+      __restgprlr_28();
+      return;
+    }
+    CG_StopWaterSheetFX(uVar1);
+    __restgprlr_28();
+    return;
+  case 0x51:
+    CG_ParsePredictStreamPosCommand(uVar1);
+    __restgprlr_28();
+    return;
+  case 0x52:
+    CG_WhizbySpreads();
+    __restgprlr_28();
+    return;
+  case 0x53:
+    CG_WhizbyRadii();
+    __restgprlr_28();
+    return;
+  case 0x57:
+    CG_SetVolMod();
+    __restgprlr_28();
+    return;
+  case 0x59:
+    pcVar6 = (char *)Cmd_Argv(1);
+    iVar5 = atoi(pcVar6);
+    CG_ParsePartyBackoutCommand(uVar1,iVar5);
+    __restgprlr_28();
+    return;
+  case 0x61:
+    pcVar6 = (char *)Cmd_Argv(1);
+    iVar9 = atoi(pcVar6);
+    iVar5 = BG_GetEquippedWeaponState(iVar5,iVar9);
+    if (iVar5 != 0) {
+      CG_SelectWeapon(uVar1,iVar9,*(undefined1 *)(iVar5 + 2));
+      __restgprlr_28();
+      return;
+    }
+    CG_SelectWeapon(uVar1,iVar9,0);
+    __restgprlr_28();
+    return;
+  case 0x62:
+    CG_ParseScores(uVar1);
+    __restgprlr_28();
+    return;
+  case 99:
+    uVar2 = Cmd_Argv(1);
+    CG_TranslateHudElemMessage(uVar1,uVar2,0xffffffff82024384,auStack_1c0,0x100);
+    CG_BoldGameMessage(uVar1,auStack_1c0);
+    __restgprlr_28();
+    return;
+  case 100:
+    CG_ConfigStringModified(uVar1);
+    __restgprlr_28();
+    return;
+  case 0x65:
+  case 0x66:
+    uVar2 = Cmd_Argv(1);
+    CG_TranslateHudElemMessage(uVar1,uVar2,0xffffffff82024374,auStack_1c0,0x100);
+    CG_GameMessage(uVar1,auStack_1c0);
+    __restgprlr_28();
+    return;
+  case 0x67:
+    uVar2 = Cmd_Argv(1);
+    CG_TranslateHudElemMessage(uVar1,uVar2,0xffffffff82024360,auStack_1c0,0x100);
+    CG_BoldGameMessage(uVar1,auStack_1c0);
+    __restgprlr_28();
+    return;
+  case 0x68:
+    LocalSoundStop(uVar1);
+    __restgprlr_28();
+    return;
+  case 0x69:
+    CG_BlurServerCommand(uVar1);
+    __restgprlr_28();
+    return;
+  case 0x6a:
+    CG_ClearBlur(uVar1);
+    __restgprlr_28();
+    return;
+  case 0x6b:
+    CG_MapRestart(uVar1,1);
+    __restgprlr_28();
+    return;
+  case 0x6c:
+    cVar11 = CL_IsFirstActiveLocalClient(uVar1);
+    if (cVar11 != '\0') {
+      pcVar6 = (char *)Cmd_Argv(2);
+      atoi(pcVar6);
+      pcVar6 = (char *)Cmd_Argv(1);
+      dVar13 = atof(pcVar6);
+      SND_FadeAllSounds((double)(float)dVar13);
+      __restgprlr_28();
+      return;
+    }
+    break;
+  case 0x6d:
+    CG_ReverbCmd();
+    __restgprlr_28();
+    return;
+  case 0x6e:
+    cVar11 = LocalSound(uVar1);
+    if (cVar11 == '\0') {
+      CL_DumpReliableCommands(uVar1);
+      __restgprlr_28();
+      return;
+    }
+    break;
+  case 0x6f:
+    CG_OpenScriptMenu(uVar1);
+    __restgprlr_28();
+    return;
+  case 0x70:
+    CG_CloseScriptMenu(uVar1,1);
+    __restgprlr_28();
+    return;
+  case 0x71:
+    lVar3 = 1;
+    iVar9 = Cmd_Argc();
+    if (1 < iVar9) {
+      do {
+        uVar1 = Cmd_Argv(lVar3);
+        I_strncpyz(auStack_c0,uVar1,0x96);
+        uVar1 = Cmd_Argv(lVar3 + 1);
+        CG_SetClientDvarFromServer(iVar5,auStack_c0,uVar1);
+        lVar3 = lVar3 + 2;
+        iVar9 = Cmd_Argc();
+      } while ((int)lVar3 < iVar9);
+      __restgprlr_28();
+      return;
+    }
+    break;
+  case 0x73:
+    CG_OpenMenu(uVar1);
+    __restgprlr_28();
+    return;
+  case 0x74:
+    CG_CloseMenu(uVar1);
+    __restgprlr_28();
+    return;
+  case 0x75:
+    pcVar6 = (char *)Cmd_Argv(3);
+    iVar5 = atoi(pcVar6);
+    pcVar6 = (char *)Cmd_Argv(2);
+    iVar9 = atoi(pcVar6);
+    pcVar6 = (char *)Cmd_Argv(1);
+    iVar10 = atoi(pcVar6);
+    CG_ParseHudSplashCommand(uVar1,iVar10,iVar9,iVar5);
+    __restgprlr_28();
+    return;
+  case 0x76:
+    CG_MapRestart(uVar1,0);
+    __restgprlr_28();
+    return;
+  case 0x77:
+    pcVar6 = (char *)Cmd_Argv(1);
+    uVar7 = atoi(pcVar6);
+    if (((uVar7 & 0xff) == 0) ||
+       (uVar8 = BG_GetAlternateWeapon(uVar7,0), *(int *)((&DAT_829d84a0)[uVar8 & 0xff] + 0x40) != 0)
+       ) {
+      CG_SetEquippedOffHand(uVar1,uVar7);
+      __restgprlr_28();
+      return;
+    }
+    break;
+  case 0x78:
+    CG_DeactivateReverbCmd();
+    __restgprlr_28();
+    return;
+  case 0x79:
+    CG_SetChannelVolCmd();
+    __restgprlr_28();
+    return;
+  case 0x7a:
+    CG_DeactivateChannelVolCmd();
     __restgprlr_28();
     return;
   }
-  CG_ReadPlayerPersistentDataChanges(LVar2,amStack_60);
+switchD_822fe390_caseD_0:
+  __restgprlr_28();
+  return;
+}
+
+
+// 822FDFE8  CG_DeployServerCommandBinary  (cgame_mp/cg_servercmds_mp.cpp:2925)
+
+void CG_DeployServerCommandBinary(undefined8 param_1,ulonglong param_2)
+
+{
+  short sVar1;
+  undefined8 uVar2;
+  char cVar3;
+  undefined1 auStack_60 [96];
+  
+  uVar2 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82022d10,0xb72,0,0xffffffff82000f98,0xffffffff82024288);
+  }
+  if (*(char *)param_2 != 'Z') {
+    MyAssertHandler(0xffffffff82022d10,0xb73,0,0xffffffff82000f98,0xffffffff82024264);
+  }
+  sVar1 = *(short *)((char *)param_2 + 2);
+  if (sVar1 == 0) {
+    MyAssertHandler(0xffffffff82022d10,0xb76,0,0xffffffff82024238,0xffffffff82024250,0);
+  }
+  MSG_InitReadOnly(auStack_60,param_2 + 4,sVar1);
+  MSG_BeginReading(auStack_60);
+  cVar3 = MSG_ReadByte(auStack_60);
+  if (cVar3 != 'G') {
+    Com_Printf(0xe,0xffffffff82024210);
+    __restgprlr_28();
+    return;
+  }
+  CG_ReadPlayerPersistentDataChanges(uVar2,auStack_60);
   __restgprlr_28();
   return;
 }
 
 
 // 822FED88  CG_ServerCommand  (cgame_mp/cg_servercmds_mp.cpp:2957)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CG_ServerCommand(undefined8 param_1,ulonglong param_2)
+
+{
+  bool bVar1;
+  undefined8 uVar2;
+  char cVar6;
+  longlong lVar3;
+  undefined8 uVar4;
+  int iVar5;
+  int *piVar7;
+  
+  uVar2 = __savegprlr_27();
+  cVar6 = CL_Demo_IsPlaying();
+  bVar1 = cVar6 != '\0';
+  lVar3 = CL_GetLocalClientConnection(uVar2);
+  piVar7 = (int *)((int)lVar3 + 0x2013c);
+  iVar5 = (int)param_2;
+  if (iVar5 <= *piVar7 + -0x80) {
+    if (bVar1) goto LAB_822fefa4;
+    Com_Printf(0xe,0xffffffff82024458);
+    Com_Printf(0xe,0xffffffff8202443c,param_2 & 0x7f);
+    CL_DumpReliableCommands(uVar2);
+    Com_Error(1,0xffffffff82024400);
+  }
+  if (*piVar7 < iVar5) {
+    if (bVar1) goto LAB_822fefa4;
+    Com_Error(1,0xffffffff820243cc);
+  }
+  *(int *)((int)lVar3 + 0x20140) = iVar5;
+  lVar3 = (param_2 & 0x7f) * 0x400 + lVar3 + 0x20144;
+  if (*(char *)(DAT_82aa1ab0 + 0xc) != '\0') {
+    Com_DPrintf(0xe,0xffffffff820243b4,param_2,lVar3);
+  }
+  cVar6 = *(char *)lVar3;
+  if (cVar6 == 'Z') {
+    CG_DeployServerCommandBinary(uVar2,lVar3);
+LAB_822fefa4:
+    __restgprlr_27();
+    return;
+  }
+  Cmd_TokenizeString(lVar3);
+  if (cVar6 < 's') {
+    if (cVar6 == 'r') {
+      if (!bVar1) {
+        iVar5 = Cmd_Argc();
+        if (iVar5 < 2) {
+          Com_Error(2,0xffffffff8202439c);
+          CG_DeployServerCommandString(uVar2);
+          Cmd_EndTokenizedString();
+          __restgprlr_27();
+          return;
+        }
+        uVar4 = Cmd_Argv(1);
+        CL_DisconnectError(uVar2,uVar4);
+        CG_DeployServerCommandString(uVar2);
+        Cmd_EndTokenizedString();
+        __restgprlr_27();
+        return;
+      }
+      goto LAB_822fef84;
+    }
+    if (cVar6 == 'd') {
+      Cmd_EndTokenizedString();
+      Cmd_TokenizeStringWithLimit(lVar3,3);
+      CL_ConfigstringModified(uVar2);
+      CG_DeployServerCommandString(uVar2);
+      Cmd_EndTokenizedString();
+      __restgprlr_27();
+      return;
+    }
+    if (cVar6 != 'k') {
+      CG_DeployServerCommandString(uVar2);
+      Cmd_EndTokenizedString();
+      __restgprlr_27();
+      return;
+    }
+  }
+  else if (cVar6 != 'v') goto LAB_822fef84;
+  Con_ClearNotify(uVar2);
+  iVar5 = CL_GetLocalClientGlobals(uVar2);
+  memset((void *)(iVar5 + 0x35f8),0,0x1600);
+LAB_822fef84:
+  CG_DeployServerCommandString(uVar2);
+  Cmd_EndTokenizedString();
+  __restgprlr_27();
+  return;
+}
+
 
 // 822FEFB0  CG_ExecuteNewServerCommands  (cgame_mp/cg_servercmds_mp.cpp:3055)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void CG_ExecuteNewServerCommands(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  
+  uVar2 = __savegprlr_23();
+  iVar1 = DAT_835ab9d8;
+  iVar3 = CG_GetLocalClientStaticGlobals();
+  iVar4 = *(int *)(iVar3 + 0x18);
+  while (iVar4 < param_2) {
+    iVar4 = CG_GetLocalClientGlobals(uVar2);
+    if (*(int *)(iVar4 + 0x335c) == 0) {
+      MyAssertHandler(0xffffffff82022d10,0xbfa,0,0xffffffff82000f98,0xffffffff82024480);
+    }
+    *(int *)(iVar3 + 0x18) = *(int *)(iVar3 + 0x18) + 1;
+    CG_ServerCommand(uVar2);
+    if (iVar1 != DAT_835ab9d8) {
+      MyAssertHandler(0xffffffff82022d10,0xbff,0,0xffffffff82000f98,0xffffffff820244b8);
+    }
+    iVar4 = *(int *)(iVar3 + 0x18);
+  }
+  __restgprlr_23();
+  return;
+}
+

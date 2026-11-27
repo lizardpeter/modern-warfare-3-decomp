@@ -2,20 +2,16 @@
 
 // 82776D10  TRACK_r_screenshot  (gfx_d3d/r_screenshot.cpp:56)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_r_screenshot(void)
 
 {
-  track_static_alloc_internal(cubemapShotAxis,0xfc,"cubemapShotAxis",0x12);
-  track_static_alloc_internal(&cubeShotGlob,0x18,"cubeShotGlob",0x12);
+  track_static_alloc_internal(0xffffffff821ce168,0xfc,0xffffffff821ce274,0x12);
+  track_static_alloc_internal(0xffffffff847eeae0,0x18,0xffffffff821ce264,0x12);
   return;
 }
 
 
 // 82776D68  R_LevelShot  (gfx_d3d/r_screenshot.cpp:626)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_LevelShot(void)
 
@@ -26,7 +22,7 @@ void R_LevelShot(void)
 
 // 82776D70  R_SaveGameShot  (gfx_d3d/r_screenshot.cpp:652)
 
-void R_SaveGameShot(char *param_1)
+void R_SaveGameShot(void)
 
 {
   return;
@@ -35,130 +31,120 @@ void R_SaveGameShot(char *param_1)
 
 // 82776D78  R_BeginHiResShot  (gfx_d3d/r_screenshot.cpp:762)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void R_BeginHiResShot(float param_1,float param_2,int param_3)
+void R_BeginHiResShot(double param_1,double param_2,undefined8 param_3,undefined8 param_4,
+                     undefined4 param_5)
 
 {
-  int in_r5;
-  
-  rg.hiResShotScaleX = param_1;
-  rg.renderHiResShot = 1;
-  rg.hiResShotScaleY = param_2;
-  rg.hiResShowProgressBar = in_r5;
+  DAT_846180ac = (float)param_1;
+  DAT_846180a8 = 1;
+  DAT_846180b0 = (float)param_2;
+  DAT_846180bc = param_5;
   return;
 }
 
 
 // 82776D98  R_UpdateHiResShot  (gfx_d3d/r_screenshot.cpp:773)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void R_UpdateHiResShot(float param_1,float param_2)
+void R_UpdateHiResShot(double param_1,double param_2)
 
 {
-  rg.hiResShotX = param_1;
-  rg.hiResShotY = param_2;
+  DAT_846180b4 = (float)param_1;
+  DAT_846180b8 = (float)param_2;
   return;
 }
 
 
 // 82776DB0  R_EndHiResShot  (gfx_d3d/r_screenshot.cpp:780)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void R_EndHiResShot(void)
 
 {
-  rg.hiResShotX = 0.0;
-  rg.renderHiResShot = 0;
-  rg.hiResShotY = 0.0;
-  rg.hiResShotScaleX = 1.0;
-  rg.hiResShotScaleY = 1.0;
+  DAT_846180b4 = 0;
+  DAT_846180a8 = 0;
+  DAT_846180b8 = 0;
+  DAT_846180ac = 0x3f800000;
+  DAT_846180b0 = 0x3f800000;
   return;
 }
 
 
 // 82776DE8  R_CubemapShotCalcReflectionFactor  (gfx_d3d/r_screenshot.cpp:791)
 
-uchar R_CubemapShotCalcReflectionFactor
-                (int param_1,int param_2,int param_3,float param_4,float param_5)
+void R_CubemapShotCalcReflectionFactor
+               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
-  uchar uVar6;
+  float fVar5;
+  undefined8 uVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
   double extraout_f1;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  float fVar10;
+  double dVar10;
+  double dVar11;
   
-  dVar8 = (double)param_5;
-  iVar5 = __savegprlr_26((double)param_4,param_1);
-  dVar7 = extraout_f1;
-  if (iVar5 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x31b,0,"%s\n\t(shotIndex) = %i");
+  uVar6 = __savegprlr_26();
+  iVar7 = (int)uVar6;
+  dVar10 = extraout_f1;
+  if (iVar7 < 1) {
+    MyAssertHandler(0xffffffff821ce3b0,0x31b,0,0xffffffff821ce394,0xffffffff821ce374,uVar6);
   }
-  if (6 < iVar5) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x31c,0,"%s\n\t(shotIndex) = %i");
+  if (6 < iVar7) {
+    MyAssertHandler(0xffffffff821ce3b0,0x31c,0,0xffffffff821ce394,0xffffffff821ce354,uVar6);
   }
-  if (param_2 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x31d,0,"%s\n\t(colIndex) = %i");
+  iVar9 = (int)param_4;
+  if (iVar9 < 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x31d,0,0xffffffff821ce340,0xffffffff821ce330,param_4);
   }
-  if ((int)(uint)gfxMetrics.cubemapShotRes <= param_2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x31e,0,"%s\n\t(colIndex) = %i");
+  if ((int)(uint)DAT_84617934 <= iVar9) {
+    MyAssertHandler(0xffffffff821ce3b0,0x31e,0,0xffffffff821ce340,0xffffffff821ce308,param_4);
   }
-  if (param_3 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",799,
-                    0,"%s\n\t(rowIndex) = %i");
+  iVar8 = (int)param_5;
+  if (iVar8 < 0) {
+    MyAssertHandler(0xffffffff821ce3b0,799,0,0xffffffff821ce2f4,0xffffffff821ce2e4,param_5);
   }
-  if ((int)(uint)gfxMetrics.cubemapShotRes <= param_3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",800,
-                    0,"%s\n\t(rowIndex) = %i");
+  if ((int)(uint)DAT_84617934 <= iVar8) {
+    MyAssertHandler(0xffffffff821ce3b0,800,0,0xffffffff821ce2f4,0xffffffff821ce2bc,param_5);
   }
-  dVar9 = 0.0;
-  if (dVar7 == 0.0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x321,0,"%s\n\t(n0) = %g");
+  dVar11 = 0.0;
+  if (dVar10 == 0.0) {
+    MyAssertHandler(dVar10,0xffffffff821ce3b0,0x321,0,0xffffffff821ce2a0,0xffffffff821ce2b0,dVar10);
   }
-  if (dVar8 == dVar9) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x322,0,"%s\n\t(n1) = %g");
+  if (param_2 == dVar11) {
+    MyAssertHandler(param_2,0xffffffff821ce3b0,0x322,0,0xffffffff821ce284,0xffffffff821ce294,param_2
+                   );
   }
-  dVar9 = 0.5;
-  fVar4 = (float)gfxMetrics.cubemapShotRes * 0.5;
-  fVar1 = ((float)(longlong)param_2 - fVar4) + 0.5;
-  fVar3 = ((float)(longlong)param_3 - fVar4) + 0.5;
-  fVar2 = cubemapShotAxis[iVar5][2][1] * fVar3 +
-          cubemapShotAxis[iVar5][1][1] * fVar1 + cubemapShotAxis[iVar5][0][1] * fVar4;
-  fVar10 = cubemapShotAxis[iVar5][2][0] * fVar3 +
-           cubemapShotAxis[iVar5][1][0] * fVar1 + cubemapShotAxis[iVar5][0][0] * fVar4;
-  fVar1 = cubemapShotAxis[iVar5][2][2] * fVar3 +
-          cubemapShotAxis[iVar5][1][2] * fVar1 + cubemapShotAxis[iVar5][0][2] * fVar4;
-  fVar2 = SQRT(fVar1 * fVar1 + fVar10 * fVar10 + fVar2 * fVar2);
-  fVar10 = 1.0;
-  if (-fVar2 < 0.0) {
-    fVar10 = fVar2;
+  dVar11 = 0.5;
+  iVar7 = iVar7 * 0x24;
+  fVar5 = (float)DAT_84617934 * 0.5;
+  fVar2 = ((float)(longlong)iVar9 - fVar5) + 0.5;
+  fVar4 = ((float)(longlong)iVar8 - fVar5) + 0.5;
+  fVar3 = *(float *)(&DAT_821ce184 + iVar7) * fVar4 +
+          *(float *)(&DAT_821ce178 + iVar7) * fVar2 + *(float *)(&DAT_821ce16c + iVar7) * fVar5;
+  fVar1 = *(float *)(&DAT_821ce180 + iVar7) * fVar4 +
+          *(float *)(&DAT_821ce174 + iVar7) * fVar2 + *(float *)(&DAT_821ce168 + iVar7) * fVar5;
+  fVar2 = *(float *)(&DAT_821ce188 + iVar7) * fVar4 +
+          *(float *)(&DAT_821ce17c + iVar7) * fVar2 + *(float *)(&DAT_821ce170 + iVar7) * fVar5;
+  fVar3 = SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3);
+  fVar1 = 1.0;
+  if (-fVar3 < 0.0) {
+    fVar1 = fVar3;
   }
-  fVar10 = FresnelTerm((float)dVar7,(float)dVar8,(1.0 / fVar10) * fVar1);
-  dVar7 = floor((double)(float)((double)fVar10 * 255.0 + dVar9));
-  uVar6 = __restgprlr_26((int)dVar7 & 0xff);
-  return uVar6;
+  dVar10 = (double)FresnelTerm(dVar10,param_2,(double)((1.0 / fVar1) * fVar2));
+  dVar10 = floor((double)(float)(dVar10 * 255.0 + dVar11));
+  __restgprlr_26((int)dVar10 & 0xff);
+  return;
 }
 
 
 // 827770D8  R_CubemapShotCopySurfaceToBuffer  (gfx_d3d/r_screenshot.cpp:843)
 
-void R_CubemapShotCopySurfaceToBuffer(uchar *param_1,int param_2)
+void R_CubemapShotCopySurfaceToBuffer(void)
 
 {
   return;
@@ -167,83 +153,76 @@ void R_CubemapShotCopySurfaceToBuffer(uchar *param_1,int param_2)
 
 // 827770E0  R_CubemapShotWriteTargaHeader  (gfx_d3d/r_screenshot.cpp:855)
 
-void R_CubemapShotWriteTargaHeader(int param_1,uchar *param_2)
+void R_CubemapShotWriteTargaHeader(undefined8 param_1,ulonglong param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  undefined1 uVar4;
+  undefined8 uVar1;
+  void *pvVar2;
+  undefined1 uVar3;
+  void *_Dst;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x358,0,"%s");
+  uVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x358,0,0xffffffff82000f98,0xffffffff821ce400);
   }
-  if (iVar2 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x359,0,"%s\n\t(res) = %i");
+  if ((int)uVar1 < 1) {
+    MyAssertHandler(0xffffffff821ce3b0,0x359,0,0xffffffff82174e08,0xffffffff821ce3f4,uVar1);
   }
-  memset();
-  iVar1 = (int)uVar3;
-  *(char *)(iVar1 + 0xc) = (char)iVar2;
-  uVar4 = (undefined1)((uint)iVar2 >> 8);
-  *(undefined1 *)(iVar1 + 0xd) = uVar4;
-  *(undefined1 *)(iVar1 + 2) = 2;
-  *(char *)(iVar1 + 0xe) = (char)iVar2;
-  *(undefined1 *)(iVar1 + 0xf) = uVar4;
-  *(undefined1 *)(iVar1 + 0x10) = 0x20;
-  __restgprlr_29();
+  _Dst = (void *)param_2;
+  pvVar2 = memset(_Dst,0,0x12);
+  *(char *)((int)_Dst + 0xc) = (char)uVar1;
+  uVar3 = (undefined1)((ulonglong)uVar1 >> 8);
+  *(undefined1 *)((int)_Dst + 0xd) = uVar3;
+  *(undefined1 *)((int)_Dst + 2) = 2;
+  *(char *)((int)_Dst + 0xe) = (char)uVar1;
+  *(undefined1 *)((int)_Dst + 0xf) = uVar3;
+  *(undefined1 *)((int)_Dst + 0x10) = 0x20;
+  __restgprlr_29(pvVar2);
   return;
 }
 
 
 // 82777198  R_CubemapShotCopyBufferToTarga  (gfx_d3d/r_screenshot.cpp:873)
 
-void R_CubemapShotCopyBufferToTarga(uchar *param_1,uchar *param_2)
+void R_CubemapShotCopyBufferToTarga(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  uint uVar6;
+  uint uVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1);
+  iVar2 = __savegprlr_27();
   if (iVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x36f,0,"%s");
+    MyAssertHandler(0xffffffff821ce3b0,0x36f,0,0xffffffff82000f98,0xffffffff821ce414);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x370,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x370,0,0xffffffff82000f98,0xffffffff821ce40c);
   }
-  iVar8 = 0;
-  uVar6 = (uint)gfxMetrics.cubemapShotRes;
-  if (gfxMetrics.cubemapShotRes != 0) {
+  iVar7 = 0;
+  uVar5 = (uint)DAT_84617934;
+  if (DAT_84617934 != 0) {
     do {
-      iVar4 = 0;
-      if (uVar6 != 0) {
-        iVar1 = (int)uVar3;
+      iVar3 = 0;
+      if (uVar5 != 0) {
+        iVar1 = (int)param_2;
         do {
-          iVar7 = uVar6 * iVar8 + iVar4;
-          iVar4 = iVar4 + 1;
-          iVar7 = iVar7 * 4;
-          iVar5 = iVar7 + 0x12;
-          *(undefined1 *)(iVar1 + 2 + iVar5) = *(undefined1 *)(iVar2 + 1 + iVar7);
-          *(undefined1 *)(iVar1 + 1 + iVar5) = *(undefined1 *)(iVar2 + 2 + iVar7);
-          *(undefined1 *)(iVar5 + iVar1) = *(undefined1 *)(iVar2 + 3 + iVar7);
-          *(undefined1 *)(iVar1 + 3 + iVar5) = *(undefined1 *)(iVar7 + iVar2);
-          uVar6 = (uint)gfxMetrics.cubemapShotRes;
-        } while (iVar4 < (int)uVar6);
+          iVar6 = uVar5 * iVar7 + iVar3;
+          iVar3 = iVar3 + 1;
+          iVar6 = iVar6 * 4;
+          iVar4 = iVar6 + 0x12;
+          *(undefined1 *)(iVar1 + 2 + iVar4) = *(undefined1 *)(iVar2 + 1 + iVar6);
+          *(undefined1 *)(iVar1 + 1 + iVar4) = *(undefined1 *)(iVar2 + 2 + iVar6);
+          *(undefined1 *)(iVar4 + iVar1) = *(undefined1 *)(iVar2 + 3 + iVar6);
+          *(undefined1 *)(iVar1 + 3 + iVar4) = *(undefined1 *)(iVar6 + iVar2);
+          uVar5 = (uint)DAT_84617934;
+        } while (iVar3 < (int)uVar5);
       }
-      iVar8 = iVar8 + 1;
-    } while (iVar8 < (int)uVar6);
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < (int)uVar5);
   }
   __restgprlr_27();
   return;
@@ -252,118 +231,112 @@ void R_CubemapShotCopyBufferToTarga(uchar *param_1,uchar *param_2)
 
 // 82777290  R_CubemapShotApplyFresnelToTarga  (gfx_d3d/r_screenshot.cpp:899)
 
-void R_CubemapShotApplyFresnelToTarga
-               (CubemapShot param_1,float param_2,float param_3,uchar *param_4)
+void R_CubemapShotApplyFresnelToTarga(undefined8 param_1,double param_2)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
+  float fVar4;
   int iVar5;
+  undefined8 uVar6;
   int in_r6;
-  uint uVar6;
-  int iVar7;
+  uint uVar7;
   int iVar8;
   int iVar9;
+  longlong lVar10;
+  int iVar11;
+  int iVar12;
   double extraout_f1;
-  double dVar10;
-  double dVar11;
-  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
-  float fVar19;
-  int iStack0000002c;
+  double dVar19;
+  double dVar20;
   
-  dVar10 = (double)param_3;
   __savegprlr();
-  iVar5 = __savefpr_25();
-  dVar16 = extraout_f1;
-  iStack0000002c = in_r6;
+  uVar6 = __savefpr_25();
+  dVar18 = extraout_f1;
   if (in_r6 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x389,0,"%s");
+    MyAssertHandler(0xffffffff821ce3b0,0x389,0,0xffffffff82000f98,0xffffffff821ce40c);
   }
-  if ((iVar5 < 1) || (6 < iVar5)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x38a,0,"%s\n\t(shotIndex) = %i");
+  iVar9 = (int)uVar6;
+  if ((iVar9 < 1) || (6 < iVar9)) {
+    MyAssertHandler(0xffffffff821ce3b0,0x38a,0,0xffffffff821ce394,0xffffffff821ce420,uVar6);
   }
-  iVar8 = 0;
-  uVar6 = (uint)gfxMetrics.cubemapShotRes;
-  if (gfxMetrics.cubemapShotRes != 0) {
-    dVar17 = 1.0;
-    dVar14 = 255.0;
-    dVar18 = 0.5;
-    dVar13 = 0.0;
+  lVar10 = 0;
+  uVar7 = (uint)DAT_84617934;
+  if (DAT_84617934 != 0) {
+    dVar19 = 1.0;
+    dVar16 = 255.0;
+    dVar20 = 0.5;
+    dVar15 = 0.0;
     do {
-      iVar4 = iStack0000002c;
-      iVar9 = 0;
-      if (uVar6 != 0) {
-        dVar15 = (double)(longlong)iVar8;
+      iVar12 = 0;
+      if (uVar7 != 0) {
+        iVar11 = (int)lVar10;
+        iVar5 = iVar9 * 0x24;
+        dVar17 = (double)(longlong)iVar11;
         do {
-          iVar7 = uVar6 * iVar8 + iVar9;
-          if (iVar5 < 1) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp"
-                            ,0x31b,0,"%s\n\t(shotIndex) = %i");
+          iVar8 = uVar7 * iVar11 + iVar12;
+          if (iVar9 < 1) {
+            MyAssertHandler(0xffffffff821ce3b0,0x31b,0,"%s\n\t(shotIndex) = %i",0xffffffff821ce374,
+                            uVar6);
           }
-          if (6 < iVar5) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp"
-                            ,0x31c,0,"%s\n\t(shotIndex) = %i");
+          if (6 < iVar9) {
+            MyAssertHandler(0xffffffff821ce3b0,0x31c,0,"%s\n\t(shotIndex) = %i",0xffffffff821ce354,
+                            uVar6);
           }
-          if (iVar9 < 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp"
-                            ,0x31d,0,"%s\n\t(colIndex) = %i");
+          if (iVar12 < 0) {
+            MyAssertHandler(0xffffffff821ce3b0,0x31d,0,0xffffffff821ce340,0xffffffff821ce330,iVar12)
+            ;
           }
-          if ((int)(uint)gfxMetrics.cubemapShotRes <= iVar9) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp"
-                            ,0x31e,0,"%s\n\t(colIndex) = %i");
+          if ((int)(uint)DAT_84617934 <= iVar12) {
+            MyAssertHandler(0xffffffff821ce3b0,0x31e,0,0xffffffff821ce340,0xffffffff821ce308,iVar12)
+            ;
           }
-          if (iVar8 < 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp"
-                            ,799,0,"%s\n\t(rowIndex) = %i");
+          if (iVar11 < 0) {
+            MyAssertHandler(0xffffffff821ce3b0,799,0,0xffffffff821ce2f4,0xffffffff821ce2e4,lVar10);
           }
-          if ((int)(uint)gfxMetrics.cubemapShotRes <= iVar8) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp"
-                            ,800,0,"%s\n\t(rowIndex) = %i");
+          if ((int)(uint)DAT_84617934 <= iVar11) {
+            MyAssertHandler(0xffffffff821ce3b0,800,0,0xffffffff821ce2f4,0xffffffff821ce2bc,lVar10);
           }
-          if (dVar16 == dVar13) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp"
-                            ,0x321,0,"%s\n\t(n0) = %g");
+          if (dVar18 == dVar15) {
+            MyAssertHandler(dVar18,0xffffffff821ce3b0,0x321,0,"%s\n\t(n0) = %g","(n0 != 0)",dVar18);
           }
-          if (dVar10 == dVar13) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp"
-                            ,0x322,0,"%s\n\t(n1) = %g");
+          if (param_2 == dVar15) {
+            MyAssertHandler(param_2,0xffffffff821ce3b0,0x322,0,"%s\n\t(n1) = %g","(n1 != 0)",param_2
+                           );
           }
-          dVar11 = (double)(float)((double)gfxMetrics.cubemapShotRes * dVar18);
-          fVar19 = (float)((double)(float)((double)(longlong)iVar9 - dVar11) + dVar18);
-          fVar1 = (float)((double)(float)(dVar15 - dVar11) + dVar18);
-          fVar2 = cubemapShotAxis[iVar5][2][2] * fVar1 +
-                  cubemapShotAxis[iVar5][1][2] * fVar19 +
-                  (float)((double)cubemapShotAxis[iVar5][0][2] * dVar11);
-          fVar3 = fVar1 * cubemapShotAxis[iVar5][2][1] +
-                  cubemapShotAxis[iVar5][1][1] * fVar19 +
-                  (float)((double)cubemapShotAxis[iVar5][0][1] * dVar11);
-          fVar19 = cubemapShotAxis[iVar5][2][0] * fVar1 +
-                   cubemapShotAxis[iVar5][1][0] * fVar19 +
-                   (float)((double)cubemapShotAxis[iVar5][0][0] * dVar11);
-          dVar12 = (double)SQRT(fVar3 * fVar3 + fVar19 * fVar19 + fVar2 * fVar2);
-          dVar11 = dVar17;
-          if (-dVar12 < 0.0) {
-            dVar11 = dVar12;
+          dVar13 = (double)(float)((double)DAT_84617934 * dVar20);
+          fVar1 = (float)((double)(float)((double)(longlong)iVar12 - dVar13) + dVar20);
+          fVar2 = (float)((double)(float)(dVar17 - dVar13) + dVar20);
+          fVar3 = *(float *)(&DAT_821ce188 + iVar5) * fVar2 +
+                  *(float *)(&DAT_821ce17c + iVar5) * fVar1 +
+                  (float)((double)*(float *)(&DAT_821ce170 + iVar5) * dVar13);
+          fVar4 = fVar2 * *(float *)(&DAT_821ce184 + iVar5) +
+                  *(float *)(&DAT_821ce178 + iVar5) * fVar1 +
+                  (float)((double)*(float *)(&DAT_821ce16c + iVar5) * dVar13);
+          fVar1 = *(float *)(&DAT_821ce180 + iVar5) * fVar2 +
+                  *(float *)(&DAT_821ce174 + iVar5) * fVar1 +
+                  (float)((double)*(float *)(&DAT_821ce168 + iVar5) * dVar13);
+          dVar14 = (double)SQRT(fVar4 * fVar4 + fVar1 * fVar1 + fVar3 * fVar3);
+          dVar13 = dVar19;
+          if (-dVar14 < 0.0) {
+            dVar13 = dVar14;
           }
-          fVar19 = FresnelTerm((float)dVar16,(float)dVar10,(float)(dVar17 / dVar11) * fVar2);
-          dVar11 = floor((double)(float)((double)fVar19 * dVar14 + dVar18));
-          iVar9 = iVar9 + 1;
-          *(char *)(iVar4 + iVar7 * 4 + 0x15) = (char)(int)dVar11;
-          uVar6 = (uint)gfxMetrics.cubemapShotRes;
-        } while (iVar9 < (int)uVar6);
+          dVar13 = (double)FresnelTerm(dVar18,param_2,(double)((float)(dVar19 / dVar13) * fVar3));
+          dVar13 = floor((double)(float)(dVar13 * dVar16 + dVar20));
+          iVar12 = iVar12 + 1;
+          *(char *)(in_r6 + iVar8 * 4 + 0x15) = (char)(int)dVar13;
+          uVar7 = (uint)DAT_84617934;
+        } while (iVar12 < (int)uVar7);
       }
-      iVar8 = iVar8 + 1;
-    } while (iVar8 < (int)uVar6);
+      lVar10 = lVar10 + 1;
+    } while ((int)lVar10 < (int)uVar7);
   }
   __restfpr_25();
   __restgprlr();
@@ -373,21 +346,19 @@ void R_CubemapShotApplyFresnelToTarga
 
 // 82777658  R_CopyCubemapShot  (gfx_d3d/r_screenshot.cpp:921)
 
-void R_CopyCubemapShot(CubemapShot param_1)
+void R_CopyCubemapShot(int param_1)
 
 {
-  uchar *puVar1;
+  int iVar1;
   
-  if (((int)param_1 < 1) || (6 < (int)param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x39d,0,"%s\n\t(shotIndex) = %i");
+  if ((param_1 < 1) || (6 < param_1)) {
+    MyAssertHandler(0xffffffff821ce3b0,0x39d,0,0xffffffff821ce394,0xffffffff821ce420,param_1);
   }
-  puVar1 = Z_VirtualAlloc((uint)gfxMetrics.cubemapShotRes * (uint)gfxMetrics.cubemapShotRes * 4,
-                          "R_CopyCubemapShot",0x16);
-  cubeShotGlob.pixels[param_1 - CUBEMAPSHOT_RIGHT] = puVar1;
-  if (puVar1 == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x3a3,1,"%s");
+  iVar1 = Z_VirtualAlloc((longlong)(int)(uint)DAT_84617934 * (longlong)(int)(uint)DAT_84617934 * 4 &
+                         0xfffffffc,0xffffffff821ce480,0x16);
+  *(int *)(&DAT_847eeae0 + (param_1 + -1) * 4) = iVar1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3a3,1,0xffffffff82000f98,0xffffffff821ce460);
   }
   return;
 }
@@ -395,89 +366,97 @@ void R_CopyCubemapShot(CubemapShot param_1)
 
 // 82777720  R_CubemapShotWriteTargaFile  (gfx_d3d/r_screenshot.cpp:937)
 
-void R_CubemapShotWriteTargaFile(char *param_1,CubemapShot param_2,float param_3,float param_4)
+void R_CubemapShotWriteTargaFile
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
 
 {
   int iVar1;
-  char *pcVar2;
-  int iVar3;
-  uchar *puVar4;
-  longlong lVar5;
-  uchar *puVar6;
-  CubemapShot CVar7;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  undefined8 extraout_f1;
+  undefined8 uVar5;
   
-  dVar8 = (double)param_4;
-  lVar5 = (longlong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_24((double)param_3,param_1);
-  dVar9 = extraout_f1;
-  if (pcVar2 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x3ae,0,"%s");
+  uVar2 = __savegprlr_24();
+  uVar5 = extraout_f1;
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3ae,0,0xffffffff82000f98,0xffffffff8215192c);
   }
-  CVar7 = (CubemapShot)lVar5;
-  if (((int)CVar7 < 1) || (6 < (int)CVar7)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x3af,0,"%s\n\t(shotIndex) = %i");
+  if (((int)param_4 < 1) || (6 < (int)param_4)) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3af,0,0xffffffff821ce394,0xffffffff821ce420,param_4);
   }
-  iVar3 = (uint)gfxMetrics.cubemapShotRes * (uint)gfxMetrics.cubemapShotRes * 4 + 0x12;
-  puVar4 = Z_VirtualAlloc(iVar3,"R_CubemapShotWriteTargaFile",0x16);
-  if (puVar4 == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x3b4,1,"%s");
+  lVar4 = ((longlong)(int)(uint)DAT_84617934 * (longlong)(int)(uint)DAT_84617934 * 4 & 0xfffffffcU)
+          + 0x12;
+  uVar3 = Z_VirtualAlloc(lVar4,0xffffffff821ce494,0x16);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3b4,1,0xffffffff82000f98,0xffffffff821ce40c);
   }
-  R_CubemapShotWriteTargaHeader((uint)gfxMetrics.cubemapShotRes,puVar4);
-  iVar1 = (int)((lVar5 - 1U & 0xffffffff) << 2);
-  puVar6 = puVar4;
-  R_CubemapShotCopyBufferToTarga(*(uchar **)((int)cubeShotGlob.pixels + iVar1),puVar4);
-  R_CubemapShotApplyFresnelToTarga(CVar7,(float)dVar9,(float)dVar8,puVar6);
-  FS_WriteFile(pcVar2,puVar4,iVar3);
-  Z_VirtualFree(puVar4,0x16);
-  Z_VirtualFree(*(void **)((int)cubeShotGlob.pixels + iVar1),0x16);
+  R_CubemapShotWriteTargaHeader(DAT_84617934,uVar3);
+  iVar1 = (int)((param_4 - 1U & 0xffffffff) << 2);
+  R_CubemapShotCopyBufferToTarga(*(undefined4 *)(&DAT_847eeae0 + iVar1),uVar3);
+  R_CubemapShotApplyFresnelToTarga(uVar5,param_2,param_4);
+  FS_WriteFile(uVar2,uVar3,lVar4);
+  Z_VirtualFree(uVar3,0x16);
+  Z_VirtualFree(*(undefined4 *)(&DAT_847eeae0 + iVar1),0x16);
   __restgprlr_24();
   return;
 }
 
 
 // 82777870  R_CubemapShotSetInitialState  (gfx_d3d/r_screenshot.cpp:962)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_CubemapShotSetInitialState(void)
+
+{
+  undefined8 in_r8;
+  undefined8 uVar1;
+  
+  R_SetRenderTargetSize(0xffffffff8484c7e0,1);
+  R_SetRenderTarget(0x8484c7e08484df40,1);
+  uVar1 = 0;
+  do {
+    D3DDevice_Clear(uVar1,DAT_84616688,0,0,0x3f,0xffffffffffff00ff,in_r8,0,0);
+  } while (DAT_84013128 != 0);
+  return;
+}
+
 
 // 82777910  R_CubemapShotRestoreState  (gfx_d3d/r_screenshot.cpp:972)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_CubemapShotRestoreState(void)
+
+{
+  R_SetRenderTargetSize(0xffffffff8484c7e0,1);
+  R_SetRenderTarget(0x8484c7e08484df40,1);
+  return;
+}
+
 
 // 82777950  R_BeginCubemapShot  (gfx_d3d/r_screenshot.cpp:979)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void R_BeginCubemapShot(int param_1,int param_2)
+void R_BeginCubemapShot(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
+  undefined8 uVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x3d4,0,"%s\n\t(pixelWidthHeight) = %i");
+  uVar1 = __savegprlr_28();
+  iVar2 = (int)uVar1;
+  if (iVar2 < 1) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3d4,0,0xffffffff821ce534,0xffffffff821ce51c,uVar1);
   }
-  if (0xffff < iVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x3d5,0,"%s\n\t(pixelWidthHeight) = %i");
+  if (0xffff < iVar2) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3d5,0,0xffffffff821ce534,0xffffffff821ce500,uVar1);
   }
-  if (param_2 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x3d6,0,"%s\n\t(pixelBorder) = %i");
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3d6,0,0xffffffff821ce4e8,0xffffffff821ce4d4,param_2);
   }
-  if (iVar1 <= param_2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x3d7,0,"%s\n\t(pixelBorder) = %i");
+  if (iVar2 <= (int)param_2) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3d7,0,0xffffffff821ce4e8,0xffffffff821ce4b0,param_2);
   }
-  gfxMetrics.cubemapShotRes = (ushort)iVar1;
-  gfxMetrics.cubemapShotPixelBorder = (ushort)param_2;
-  rg.renderCubeMap = 1;
+  DAT_84617934 = (undefined2)uVar1;
+  DAT_84617936 = (undefined2)param_2;
+  DAT_846180a4 = 1;
   R_CubemapShotSetInitialState();
   __restgprlr_28();
   return;
@@ -485,62 +464,23 @@ void R_BeginCubemapShot(int param_1,int param_2)
 
 
 // 82777A50  R_EndCubemapShot  (gfx_d3d/r_screenshot.cpp:997)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
-// 82777AA0  R_SaveCubemapShot  (gfx_d3d/r_screenshot.cpp:1008)
-
-/* void __cdecl R_SaveCubemapShot(char const *,enum CubemapShot,float,float) */
-
-void R_SaveCubemapShot(char *param_1,CubemapShot param_2,float param_3,float param_4)
+void R_EndCubemapShot(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  int iVar3;
-  uchar *puVar4;
-  uchar *puVar6;
-  longlong lVar5;
-  CubemapShot CVar7;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
-  
-  dVar8 = (double)param_4;
-  lVar5 = (longlong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_24((double)param_3,param_1);
-  dVar9 = extraout_f1;
-  if (pcVar2 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x3ae,0,"%s");
-  }
-  CVar7 = (CubemapShot)lVar5;
-  if (((int)CVar7 < 1) || (6 < (int)CVar7)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x3af,0,"%s\n\t(shotIndex) = %i");
-  }
-  iVar3 = (uint)gfxMetrics.cubemapShotRes * (uint)gfxMetrics.cubemapShotRes * 4 + 0x12;
-  puVar4 = Z_VirtualAlloc(iVar3,"R_CubemapShotWriteTargaFile",0x16);
-  if (puVar4 == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
-                    0x3b4,1,"%s");
-  }
-  R_CubemapShotWriteTargaHeader((uint)gfxMetrics.cubemapShotRes,puVar4);
-  iVar1 = (int)((lVar5 - 1U & 0xffffffff) << 2);
-  puVar6 = puVar4;
-  R_CubemapShotCopyBufferToTarga(*(uchar **)((int)cubeShotGlob.pixels + iVar1),puVar4);
-  R_CubemapShotApplyFresnelToTarga(CVar7,(float)dVar9,(float)dVar8,puVar6);
-  FS_WriteFile(pcVar2,puVar4,iVar3);
-  Z_VirtualFree(puVar4,0x16);
-  Z_VirtualFree(*(void **)((int)cubeShotGlob.pixels + iVar1),0x16);
-  __restgprlr_24();
+  R_CopyCubemapShot();
+  R_SetRenderTargetSize(0xffffffff8484c7e0,1);
+  R_SetRenderTarget(0x8484c7e08484df40,1);
+  DAT_846180a4 = 0;
   return;
 }
 
 
 // 82777AA8  R_GetDirForCubemapPixel  (gfx_d3d/r_screenshot.cpp:1223)
 
-void R_GetDirForCubemapPixel(int param_1,float param_2,float param_3,float *param_4)
+void R_GetDirForCubemapPixel
+               (double param_1,double param_2,int param_3,undefined8 param_4,undefined8 param_5,
+               float *param_6)
 
 {
   float fVar1;
@@ -548,31 +488,33 @@ void R_GetDirForCubemapPixel(int param_1,float param_2,float param_3,float *para
   float fVar3;
   float fVar4;
   float fVar5;
-  float *in_r6;
   int iVar6;
   
-  iVar6 = param_1 + 1;
-  fVar3 = cubemapShotAxis[iVar6][1][0] * param_2 + cubemapShotAxis[iVar6][0][0];
-  *in_r6 = fVar3;
-  fVar2 = cubemapShotAxis[iVar6][1][1] * param_2 + cubemapShotAxis[iVar6][0][1];
-  in_r6[1] = fVar2;
-  fVar1 = cubemapShotAxis[iVar6][1][2] * param_2 + cubemapShotAxis[iVar6][0][2];
-  in_r6[2] = fVar1;
-  fVar3 = param_3 * cubemapShotAxis[iVar6][2][0] + fVar3;
-  *in_r6 = fVar3;
-  fVar2 = cubemapShotAxis[iVar6][2][1] * param_3 + fVar2;
-  in_r6[1] = fVar2;
-  fVar1 = cubemapShotAxis[iVar6][2][2] * param_3 + fVar1;
-  in_r6[2] = fVar1;
-  fVar5 = SQRT(fVar3 * fVar3 + fVar1 * fVar1 + fVar2 * fVar2);
+  iVar6 = (param_3 + 1) * 0x24;
+  fVar1 = (float)((double)*(float *)(&DAT_821ce174 + iVar6) * param_1 +
+                 (double)*(float *)(&DAT_821ce168 + iVar6));
+  *param_6 = fVar1;
+  fVar2 = (float)((double)*(float *)(&DAT_821ce178 + iVar6) * param_1 +
+                 (double)*(float *)(&DAT_821ce16c + iVar6));
+  param_6[1] = fVar2;
+  fVar3 = (float)((double)*(float *)(&DAT_821ce17c + iVar6) * param_1 +
+                 (double)*(float *)(&DAT_821ce170 + iVar6));
+  param_6[2] = fVar3;
+  fVar1 = (float)(param_2 * (double)*(float *)(&DAT_821ce180 + iVar6) + (double)fVar1);
+  *param_6 = fVar1;
+  fVar2 = (float)((double)*(float *)(&DAT_821ce184 + iVar6) * param_2 + (double)fVar2);
+  param_6[1] = fVar2;
+  fVar3 = (float)((double)*(float *)(&DAT_821ce188 + iVar6) * param_2 + (double)fVar3);
+  param_6[2] = fVar3;
+  fVar5 = SQRT(fVar1 * fVar1 + fVar3 * fVar3 + fVar2 * fVar2);
   fVar4 = 1.0;
   if (-fVar5 < 0.0) {
     fVar4 = fVar5;
   }
   fVar4 = 1.0 / fVar4;
-  in_r6[1] = fVar2 * fVar4;
-  *in_r6 = fVar3 * fVar4;
-  in_r6[2] = fVar1 * fVar4;
+  param_6[1] = fVar2 * fVar4;
+  *param_6 = fVar1 * fVar4;
+  param_6[2] = fVar3 * fVar4;
   return;
 }
 
@@ -580,8 +522,8 @@ void R_GetDirForCubemapPixel(int param_1,float param_2,float param_3,float *para
 // 82777B80  R_CubemapLightingForDir  (gfx_d3d/r_screenshot.cpp:1234)
 
 void R_CubemapLightingForDir
-               (float (**param_1) [3],int param_2,int param_3,float *param_4,float *param_5,
-               uchar *param_6)
+               (undefined8 param_1,longlong param_2,int param_3,float *param_4,float *param_5,
+               undefined1 *param_6)
 
 {
   float fVar1;
@@ -593,107 +535,105 @@ void R_CubemapLightingForDir
   float fVar7;
   float fVar8;
   int iVar9;
-  longlong lVar10;
+  int iVar10;
   int iVar11;
-  int iVar12;
-  float *pfVar13;
-  int iVar14;
-  longlong lVar15;
+  float *pfVar12;
+  int iVar13;
+  longlong lVar14;
+  int iVar15;
   int iVar16;
-  int iVar17;
-  longlong lVar18;
+  longlong lVar17;
+  double dVar18;
   double dVar19;
   double dVar20;
   double dVar21;
   double dVar22;
   double dVar23;
   double dVar24;
-  double dVar25;
   
-  lVar10 = (longlong)param_2;
-  __savegprlr_25(param_1);
+  __savegprlr_25();
   iVar9 = __savefpr_25();
   fVar3 = 0.0;
-  dVar25 = 1.0;
+  dVar24 = 1.0;
+  iVar15 = 0;
   iVar16 = 0;
-  iVar17 = 0;
-  dVar24 = 0.5;
+  dVar23 = 0.5;
   fVar5 = fVar3;
   fVar4 = fVar3;
   do {
-    iVar14 = 0;
+    iVar13 = 0;
     if (0 < param_3) {
-      lVar15 = 0;
+      lVar14 = 0;
       do {
-        iVar11 = 0;
-        if (0 < (int)lVar10) {
-          iVar12 = iVar17 + 1;
-          fVar2 = ((float)((double)(longlong)iVar14 + 0.5) * 2.0) / (float)(longlong)param_3 - 1.0;
-          lVar18 = lVar10;
+        iVar10 = 0;
+        if (0 < (int)param_2) {
+          iVar11 = (iVar16 + 1) * 0x24;
+          fVar2 = ((float)((double)(longlong)iVar13 + 0.5) * 2.0) / (float)(longlong)param_3 - 1.0;
+          lVar17 = param_2;
           do {
-            fVar6 = ((float)((double)(longlong)iVar11 + 0.5) * 2.0) / (float)(longlong)(int)lVar10 -
-                    1.0;
-            fVar7 = cubemapShotAxis[iVar12][2][1] * fVar2 +
-                    cubemapShotAxis[iVar12][1][1] * fVar6 + cubemapShotAxis[iVar12][0][1];
-            fVar8 = cubemapShotAxis[iVar12][2][2] * fVar2 +
-                    cubemapShotAxis[iVar12][1][2] * fVar6 + cubemapShotAxis[iVar12][0][2];
-            fVar6 = fVar2 * cubemapShotAxis[iVar12][2][0] +
-                    cubemapShotAxis[iVar12][1][0] * fVar6 + cubemapShotAxis[iVar12][0][0];
-            dVar22 = (double)SQRT(fVar6 * fVar6 + fVar8 * fVar8 + fVar7 * fVar7);
-            dVar19 = dVar25;
-            if (-dVar22 < 0.0) {
-              dVar19 = dVar22;
+            fVar6 = ((float)((double)(longlong)iVar10 + 0.5) * 2.0) / (float)(longlong)(int)param_2
+                    - 1.0;
+            fVar7 = *(float *)(&DAT_821ce184 + iVar11) * fVar2 +
+                    *(float *)(&DAT_821ce178 + iVar11) * fVar6 + *(float *)(&DAT_821ce16c + iVar11);
+            fVar8 = *(float *)(&DAT_821ce188 + iVar11) * fVar2 +
+                    *(float *)(&DAT_821ce17c + iVar11) * fVar6 + *(float *)(&DAT_821ce170 + iVar11);
+            fVar6 = fVar2 * *(float *)(&DAT_821ce180 + iVar11) +
+                    *(float *)(&DAT_821ce174 + iVar11) * fVar6 + *(float *)(&DAT_821ce168 + iVar11);
+            dVar21 = (double)SQRT(fVar6 * fVar6 + fVar8 * fVar8 + fVar7 * fVar7);
+            dVar18 = dVar24;
+            if (-dVar21 < 0.0) {
+              dVar18 = dVar21;
             }
-            fVar1 = (float)(1.0 / dVar19);
+            fVar1 = (float)(1.0 / dVar18);
             fVar6 = param_4[2] * fVar8 * fVar1 +
                     param_4[1] * fVar7 * fVar1 + *param_4 * fVar1 * fVar6;
             if (0.0 < fVar6) {
-              iVar16 = iVar16 + 1;
-              pfVar13 = (float *)(((int)lVar15 + iVar11) * 0xc + *(int *)(iVar17 * 4 + iVar9));
-              fVar5 = *pfVar13 * fVar6 + fVar5;
-              fVar3 = pfVar13[1] * fVar6 + fVar3;
-              fVar4 = pfVar13[2] * fVar6 + fVar4;
+              iVar15 = iVar15 + 1;
+              pfVar12 = (float *)(((int)lVar14 + iVar10) * 0xc + *(int *)(iVar16 * 4 + iVar9));
+              fVar5 = *pfVar12 * fVar6 + fVar5;
+              fVar3 = pfVar12[1] * fVar6 + fVar3;
+              fVar4 = pfVar12[2] * fVar6 + fVar4;
             }
-            iVar11 = iVar11 + 1;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
+            iVar10 = iVar10 + 1;
+            lVar17 = lVar17 + -1;
+          } while (lVar17 != 0);
         }
-        iVar14 = iVar14 + 1;
-        lVar15 = lVar15 + lVar10;
-      } while (iVar14 < param_3);
+        iVar13 = iVar13 + 1;
+        lVar14 = lVar14 + param_2;
+      } while (iVar13 < param_3);
     }
-    iVar17 = iVar17 + 1;
-  } while (iVar17 < 6);
-  dVar23 = 0.45454543828964233;
-  fVar2 = (float)(1.0 / (double)(longlong)iVar16);
-  dVar20 = (double)(fVar2 * fVar3);
-  dVar21 = (double)(fVar2 * fVar4);
-  dVar19 = pow((double)(fVar2 * fVar5),0.45454543828964233);
-  dVar22 = (double)(float)dVar19;
-  dVar19 = pow(dVar20,dVar23);
-  dVar20 = (double)(float)dVar19;
-  dVar19 = pow(dVar21,dVar23);
-  dVar21 = (double)(float)((double)param_5[1] * dVar20);
-  dVar23 = 255.0;
-  dVar20 = (double)(param_5[2] * (float)dVar19);
-  dVar19 = dVar25;
-  if ((float)((double)(float)((double)*param_5 * dVar22) - dVar25) < 0.0) {
-    dVar19 = (double)(float)((double)*param_5 * dVar22);
+    iVar16 = iVar16 + 1;
+  } while (iVar16 < 6);
+  dVar22 = 0.45454543828964233;
+  fVar2 = (float)(1.0 / (double)(longlong)iVar15);
+  dVar19 = (double)(fVar2 * fVar3);
+  dVar20 = (double)(fVar2 * fVar4);
+  dVar18 = pow((double)(fVar2 * fVar5),0.45454543828964233);
+  dVar21 = (double)(float)dVar18;
+  dVar18 = pow(dVar19,dVar22);
+  dVar19 = (double)(float)dVar18;
+  dVar18 = pow(dVar20,dVar22);
+  dVar20 = (double)(float)((double)param_5[1] * dVar19);
+  dVar22 = 255.0;
+  dVar19 = (double)(param_5[2] * (float)dVar18);
+  dVar18 = dVar24;
+  if ((float)((double)(float)((double)*param_5 * dVar21) - dVar24) < 0.0) {
+    dVar18 = (double)(float)((double)*param_5 * dVar21);
   }
-  dVar22 = floor((double)(float)(dVar19 * 255.0 + dVar24));
-  dVar19 = dVar25;
-  if ((float)(dVar21 - dVar25) < 0.0) {
-    dVar19 = dVar21;
+  dVar21 = floor((double)(float)(dVar18 * 255.0 + dVar23));
+  dVar18 = dVar24;
+  if ((float)(dVar20 - dVar24) < 0.0) {
+    dVar18 = dVar20;
   }
-  param_6[1] = (uchar)(int)dVar22;
-  dVar19 = floor((double)(float)(dVar19 * dVar23 + dVar24));
-  if ((float)(dVar20 - dVar25) < 0.0) {
-    dVar25 = dVar20;
+  param_6[1] = (char)(int)dVar21;
+  dVar18 = floor((double)(float)(dVar18 * dVar22 + dVar23));
+  if ((float)(dVar19 - dVar24) < 0.0) {
+    dVar24 = dVar19;
   }
-  param_6[2] = (uchar)(int)dVar19;
-  dVar25 = floor((double)(float)(dVar25 * dVar23 + dVar24));
+  param_6[2] = (char)(int)dVar18;
+  dVar24 = floor((double)(float)(dVar24 * dVar22 + dVar23));
   *param_6 = 0xff;
-  param_6[3] = (uchar)(int)dVar25;
+  param_6[3] = (char)(int)dVar24;
   __restfpr_25();
   __restgprlr_25();
   return;
@@ -702,17 +642,18 @@ void R_CubemapLightingForDir
 
 // 82777E78  R_CubemapLighting  (gfx_d3d/r_screenshot.cpp:1276)
 
-void R_CubemapLighting(float (**param_1) [3],int param_2,int param_3,float *param_4,uchar **param_5)
+void R_CubemapLighting(undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4,
+                      int param_5)
 
 {
   float fVar1;
   float fVar2;
-  float (**ppafVar3) [3];
-  longlong lVar4;
+  undefined8 uVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
+  longlong lVar6;
   int iVar7;
-  longlong lVar8;
+  int iVar8;
   int iVar9;
   longlong lVar10;
   double dVar11;
@@ -726,40 +667,40 @@ void R_CubemapLighting(float (**param_1) [3],int param_2,int param_3,float *para
   float local_ac;
   float local_a8;
   
-  lVar4 = (longlong)param_2;
-  __savegprlr_19(param_1);
-  ppafVar3 = (float (**) [3])__savefpr_27();
+  __savegprlr_19();
+  uVar3 = __savefpr_27();
   dVar17 = 1.0;
   dVar14 = 2.0;
   dVar15 = 0.5;
-  iVar6 = 0;
+  iVar4 = 0;
   do {
-    iVar7 = 0;
-    if (0 < param_3) {
-      lVar8 = 0;
+    iVar5 = 0;
+    iVar7 = (int)param_3;
+    if (0 < iVar7) {
+      lVar6 = 0;
       do {
         lVar10 = 0;
-        iVar9 = (int)lVar4;
-        if (0 < iVar9) {
-          iVar5 = iVar6 + 1;
-          dVar13 = (double)(longlong)iVar9;
-          dVar16 = (double)(float)((double)((float)((double)(float)((double)(longlong)iVar7 + dVar15
+        iVar8 = (int)param_2;
+        if (0 < iVar8) {
+          dVar13 = (double)(longlong)iVar8;
+          iVar9 = (iVar4 + 1) * 0x24;
+          dVar16 = (double)(float)((double)((float)((double)(float)((double)(longlong)iVar5 + dVar15
                                                                    ) * dVar14) /
-                                           (float)(longlong)param_3) - dVar17);
+                                           (float)(longlong)iVar7) - dVar17);
           do {
             fVar2 = (float)((double)(float)((double)(float)((double)(float)((double)(longlong)
                                                                                     (int)lVar10 +
                                                                            dVar15) * dVar14) /
                                            dVar13) - dVar17);
-            fVar1 = (float)((double)cubemapShotAxis[iVar5][2][2] * dVar16 +
-                           (double)(cubemapShotAxis[iVar5][1][2] * fVar2 +
-                                   cubemapShotAxis[iVar5][0][2]));
-            local_b0 = (float)((double)cubemapShotAxis[iVar5][2][0] * dVar16 +
-                              (double)(fVar2 * cubemapShotAxis[iVar5][1][0] +
-                                      cubemapShotAxis[iVar5][0][0]));
-            local_ac = (float)(dVar16 * (double)cubemapShotAxis[iVar5][2][1] +
-                              (double)(cubemapShotAxis[iVar5][1][1] * fVar2 +
-                                      cubemapShotAxis[iVar5][0][1]));
+            fVar1 = (float)((double)*(float *)(&DAT_821ce188 + iVar9) * dVar16 +
+                           (double)(*(float *)(&DAT_821ce17c + iVar9) * fVar2 +
+                                   *(float *)(&DAT_821ce170 + iVar9)));
+            local_b0 = (float)((double)*(float *)(&DAT_821ce180 + iVar9) * dVar16 +
+                              (double)(fVar2 * *(float *)(&DAT_821ce174 + iVar9) +
+                                      *(float *)(&DAT_821ce168 + iVar9)));
+            local_ac = (float)(dVar16 * (double)*(float *)(&DAT_821ce184 + iVar9) +
+                              (double)(*(float *)(&DAT_821ce178 + iVar9) * fVar2 +
+                                      *(float *)(&DAT_821ce16c + iVar9)));
             dVar11 = (double)SQRT(local_ac * local_ac + local_b0 * local_b0 + fVar1 * fVar1);
             dVar12 = dVar17;
             if (-dVar11 < 0.0) {
@@ -770,17 +711,18 @@ void R_CubemapLighting(float (**param_1) [3],int param_2,int param_3,float *para
             local_ac = local_a8 * local_ac;
             local_a8 = local_a8 * fVar1;
             R_CubemapLightingForDir
-                      (ppafVar3,iVar9,param_3,&local_b0,param_4,
-                       param_5[iVar6] + (int)((lVar8 + lVar10 & 0xffffffffU) << 2));
+                      (uVar3,param_2,param_3,&local_b0,param_4,
+                       (lVar6 + lVar10 & 0x3fffffffU) * 4 +
+                       (ulonglong)*(uint *)(iVar4 * 4 + param_5));
             lVar10 = lVar10 + 1;
-          } while ((int)lVar10 < iVar9);
+          } while ((int)lVar10 < iVar8);
         }
-        iVar7 = iVar7 + 1;
-        lVar8 = lVar8 + lVar4;
-      } while (iVar7 < param_3);
+        iVar5 = iVar5 + 1;
+        lVar6 = lVar6 + param_2;
+      } while (iVar5 < iVar7);
     }
-    iVar6 = iVar6 + 1;
-  } while (iVar6 < 6);
+    iVar4 = iVar4 + 1;
+  } while (iVar4 < 6);
   __restfpr_27();
   __restgprlr_19();
   return;
@@ -789,68 +731,65 @@ void R_CubemapLighting(float (**param_1) [3],int param_2,int param_3,float *para
 
 // 82778048  R_CubemapShotExtractLinearLight  (gfx_d3d/r_screenshot.cpp:1297)
 
-void R_CubemapShotExtractLinearLight(uchar **param_1,int param_2,int param_3,float (**param_4) [3])
+void R_CubemapShotExtractLinearLight
+               (undefined8 param_1,ulonglong param_2,longlong param_3,int param_4)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
   int iVar4;
-  ulonglong uVar5;
+  longlong lVar5;
   longlong lVar6;
   longlong lVar7;
-  longlong lVar8;
+  ulonglong uVar8;
   longlong lVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
-  int iVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
+  longlong lVar10;
+  int iVar11;
+  double dVar12;
+  double _Y;
+  double dVar13;
   
-  lVar6 = (longlong)param_3;
-  uVar5 = (ulonglong)param_2;
-  iVar4 = __savegprlr_19(param_1);
-  dVar15 = 2.200000047683716;
-  dVar16 = 0.003921568859368563;
-  iVar13 = 0;
+  iVar4 = __savegprlr_19();
+  _Y = 2.200000047683716;
+  dVar13 = 0.003921568859368563;
+  iVar11 = 0;
   do {
-    if (0 < (int)lVar6) {
-      lVar7 = lVar6;
-      lVar12 = 0;
-      lVar11 = 0;
+    if (0 < (int)param_3) {
+      lVar5 = param_3;
+      lVar10 = 0;
+      lVar9 = 0;
       do {
-        lVar8 = lVar12;
-        lVar9 = lVar11;
-        if (0 < (int)uVar5) {
-          lVar9 = (uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar11;
-          lVar8 = (uVar5 & 0x3fffffff) * 4 + lVar12;
-          uVar10 = uVar5;
+        lVar6 = lVar10;
+        lVar7 = lVar9;
+        if (0 < (int)param_2) {
+          lVar7 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar9;
+          lVar6 = (param_2 & 0x3fffffff) * 4 + lVar10;
+          uVar8 = param_2;
           do {
-            iVar2 = (int)lVar12;
-            dVar14 = pow((double)(float)((double)*(byte *)(*(int *)(iVar13 + iVar4) + iVar2 + 1) *
-                                        dVar16),dVar15);
-            iVar1 = *(int *)(iVar13 + iVar4);
-            iVar3 = (int)lVar11;
-            *(float *)(*(int *)(iVar13 + (int)param_4) + iVar3) = (float)dVar14;
-            dVar14 = pow((double)(float)((double)*(byte *)(iVar1 + iVar2 + 2) * dVar16),dVar15);
-            iVar1 = *(int *)(iVar13 + iVar4);
-            *(float *)(*(int *)(iVar13 + (int)param_4) + iVar3 + 4) = (float)dVar14;
-            dVar14 = pow((double)(float)((double)*(byte *)(iVar1 + iVar2 + 3) * dVar16),dVar15);
-            uVar10 = uVar10 - 1;
-            lVar12 = lVar12 + 4;
-            lVar11 = lVar11 + 0xc;
-            *(float *)(*(int *)(iVar13 + (int)param_4) + iVar3 + 8) = (float)dVar14;
-          } while (uVar10 != 0);
+            iVar2 = (int)lVar10;
+            dVar12 = pow((double)(float)((double)*(byte *)(*(int *)(iVar11 + iVar4) + iVar2 + 1) *
+                                        dVar13),_Y);
+            iVar1 = *(int *)(iVar11 + iVar4);
+            iVar3 = (int)lVar9;
+            *(float *)(*(int *)(iVar11 + param_4) + iVar3) = (float)dVar12;
+            dVar12 = pow((double)(float)((double)*(byte *)(iVar1 + iVar2 + 2) * dVar13),_Y);
+            iVar1 = *(int *)(iVar11 + iVar4);
+            *(float *)(*(int *)(iVar11 + param_4) + iVar3 + 4) = (float)dVar12;
+            dVar12 = pow((double)(float)((double)*(byte *)(iVar1 + iVar2 + 3) * dVar13),_Y);
+            uVar8 = uVar8 - 1;
+            lVar10 = lVar10 + 4;
+            lVar9 = lVar9 + 0xc;
+            *(float *)(*(int *)(iVar11 + param_4) + iVar3 + 8) = (float)dVar12;
+          } while (uVar8 != 0);
         }
-        lVar7 = lVar7 + -1;
-        lVar12 = lVar8;
-        lVar11 = lVar9;
-      } while (lVar7 != 0);
+        lVar5 = lVar5 + -1;
+        lVar10 = lVar6;
+        lVar9 = lVar7;
+      } while (lVar5 != 0);
     }
-    iVar13 = iVar13 + 4;
-  } while (iVar13 < 0x18);
+    iVar11 = iVar11 + 4;
+  } while (iVar11 < 0x18);
   __restgprlr_19();
   return;
 }
@@ -858,34 +797,33 @@ void R_CubemapShotExtractLinearLight(uchar **param_1,int param_2,int param_3,flo
 
 // 82778198  R_LightingFromCubemapShots  (gfx_d3d/r_screenshot.cpp:1321)
 
-void R_LightingFromCubemapShots(float *param_1)
+void R_LightingFromCubemapShots(void)
 
 {
-  float *pfVar1;
-  float (*pafVar2) [3];
-  int iVar3;
-  float (*local_40) [3];
-  float (*local_3c) [3];
-  float (*local_38) [3];
-  float (*local_34) [3];
-  float (*local_30) [3];
-  float (*local_2c) [3];
+  undefined8 uVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  int local_40;
+  int local_3c;
+  int local_38;
+  int local_34;
+  int local_30;
+  int local_2c;
   
-  pfVar1 = (float *)__savegprlr_28(param_1);
-  iVar3 = (uint)gfxMetrics.cubemapShotRes * (uint)gfxMetrics.cubemapShotRes;
-  pafVar2 = Z_VirtualAlloc(iVar3 * 0x48,"R_LightingFromCubemapShot",0x16);
-  local_3c = pafVar2 + iVar3;
-  local_38 = local_3c + iVar3;
-  local_34 = local_38 + iVar3;
-  local_30 = local_34 + iVar3;
-  local_2c = local_30 + iVar3;
-  local_40 = pafVar2;
-  R_CubemapShotExtractLinearLight
-            (cubeShotGlob.pixels,(uint)gfxMetrics.cubemapShotRes,(uint)gfxMetrics.cubemapShotRes,
-             &local_40);
-  R_CubemapLighting(&local_40,(uint)gfxMetrics.cubemapShotRes,(uint)gfxMetrics.cubemapShotRes,pfVar1
-                    ,cubeShotGlob.pixels);
-  Z_VirtualFree(pafVar2,0x16);
+  uVar1 = __savegprlr_28();
+  lVar3 = (longlong)(int)(uint)DAT_84617934 * (longlong)(int)(uint)DAT_84617934;
+  uVar2 = Z_VirtualAlloc((lVar3 + (lVar3 * 8 & 0xfffffff8U) & 0x1fffffff) << 3,0xffffffff821ce560,
+                         0x16);
+  local_40 = (int)uVar2;
+  local_2c = (int)lVar3 * 0xc;
+  local_3c = local_2c + local_40;
+  local_38 = local_2c + local_3c;
+  local_34 = local_2c + local_38;
+  local_30 = local_2c + local_34;
+  local_2c = local_2c + local_30;
+  R_CubemapShotExtractLinearLight(0xffffffff847eeae0,DAT_84617934,DAT_84617934,&local_40);
+  R_CubemapLighting(&local_40,DAT_84617934,DAT_84617934,uVar1,0xffffffff847eeae0);
+  Z_VirtualFree(uVar2,0x16);
   __restgprlr_28();
   return;
 }

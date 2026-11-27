@@ -68,7 +68,7 @@ LAB_827151f0:
   827151F4  7943000E             rldimi r3,r10,0x20,0x0
   827151F8  4E800020             blr
 
-; 82715200  RequestHash  (online/memory_hash.cpp:219)
+; 82715200  MemoryHashInfo::RequestHash  (online/memory_hash.cpp:219)
   82715200  3D608458             lis r11,-0x7ba8
   82715204  39400000             li r10,0x0
   82715208  392B6718             addi r9,r11,0x6718
@@ -89,7 +89,7 @@ LAB_82715238:
   8271523C  7C6B4A14             add r3,r11,r9
   82715240  4E800020             blr
 
-; 82715248  OpenAsCRC32  (online/memory_hash.cpp:240)
+; 82715248  MemoryHashInfo::OpenAsCRC32  (online/memory_hash.cpp:240)
   82715248  7D8802A6             mfspr r12,LR
   8271524C  4820146D             bl 0x829166b8
   82715250  9421FF80             stwu r1,-0x80(r1)
@@ -126,7 +126,7 @@ LAB_82715294:
   827152C8  38210080             addi r1,r1,0x80
   827152CC  4820143C             b 0x82916708
 
-; 827152D0  OpenAsCRC32Split  (online/memory_hash.cpp:265)
+; 827152D0  MemoryHashInfo::OpenAsCRC32Split  (online/memory_hash.cpp:265)
   827152D0  7D8802A6             mfspr r12,LR
   827152D4  482013E5             bl 0x829166b8
   827152D8  9421FF80             stwu r1,-0x80(r1)
@@ -163,7 +163,7 @@ LAB_8271531c:
   82715350  38210080             addi r1,r1,0x80
   82715354  482013B4             b 0x82916708
 
-; 82715358  OpenAsMD4  (online/memory_hash.cpp:290)
+; 82715358  MemoryHashInfo::OpenAsMD4  (online/memory_hash.cpp:290)
   82715358  7D8802A6             mfspr r12,LR
   8271535C  4820135D             bl 0x829166b8
   82715360  9421FF80             stwu r1,-0x80(r1)
@@ -200,7 +200,7 @@ LAB_827153a4:
   827153D8  38210080             addi r1,r1,0x80
   827153DC  4820132C             b 0x82916708
 
-; 827153E0  OpenAsSHATomCrypt  (online/memory_hash.cpp:315)
+; 827153E0  MemoryHashInfo::OpenAsSHATomCrypt  (online/memory_hash.cpp:315)
   827153E0  7D8802A6             mfspr r12,LR
   827153E4  482012C9             bl 0x829166ac
   827153E8  9421FF70             stwu r1,-0x90(r1)
@@ -295,7 +295,7 @@ LAB_82715538:
   8271553C  38210090             addi r1,r1,0x90
   82715540  482011BC             b 0x829166fc
 
-; 82715548  OpenAs8WayProbe  (online/memory_hash.cpp:362)
+; 82715548  MemoryHashInfo::OpenAs8WayProbe  (online/memory_hash.cpp:362)
   82715548  7D8802A6             mfspr r12,LR
   8271554C  4820116D             bl 0x829166b8
   82715550  9421FF80             stwu r1,-0x80(r1)
@@ -336,7 +336,7 @@ LAB_82715594:
   827155D8  38210080             addi r1,r1,0x80
   827155DC  4820112C             b 0x82916708
 
-; 827155E0  Continue  (online/memory_hash.cpp:392)
+; 827155E0  MemoryHashInfo::Continue  (online/memory_hash.cpp:392)
   827155E0  7D8802A6             mfspr r12,LR
   827155E4  482010C9             bl 0x829166ac
   827155E8  9421FF60             stwu r1,-0xa0(r1)
@@ -588,7 +588,7 @@ LAB_82715964:
   82715978  382100A0             addi r1,r1,0xa0
   8271597C  48200D80             b 0x829166fc
 
-; 82715980  Cancel  (online/memory_hash.cpp:489)
+; 82715980  MemoryHashInfo::Cancel  (online/memory_hash.cpp:489)
   82715980  7C6A1B78             or r10,r3,r3
   82715984  39600000             li r11,0x0
   82715988  38600001             li r3,0x1
@@ -596,7 +596,7 @@ LAB_82715964:
   82715990  916A0000             stw r11,0x0(r10)
   82715994  4E800020             blr
 
-; 82715998  Complete  (online/memory_hash.cpp:503)
+; 82715998  MemoryHashInfo::Complete  (online/memory_hash.cpp:503)
   82715998  7D8802A6             mfspr r12,LR
   8271599C  48200D15             bl 0x829166b0
   827159A0  9421FF50             stwu r1,-0xb0(r1)

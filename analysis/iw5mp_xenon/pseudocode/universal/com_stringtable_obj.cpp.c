@@ -2,19 +2,19 @@
 
 // 825E7B38  StringTable_HashString  (universal/com_stringtable_obj.cpp:19)
 
-int StringTable_HashString(char *param_1)
+ulonglong StringTable_HashString(char *param_1)
 
 {
   int iVar1;
-  int iVar2;
+  ulonglong uVar2;
   
-  iVar2 = 0;
+  uVar2 = 0;
   iVar1 = tolower((int)*param_1);
   while (iVar1 != 0) {
     param_1 = param_1 + 1;
-    iVar2 = iVar2 * 0x1f + iVar1;
+    uVar2 = ((uVar2 & 0x7ffffff) * 0x20 - uVar2) + (longlong)iVar1;
     iVar1 = tolower((int)*param_1);
   }
-  return iVar2;
+  return uVar2;
 }
 

@@ -7,7 +7,7 @@ void __unwind_71813(void)
 {
   int in_r12;
   
-  bdChunk::~bdChunk(*(bdChunk **)(in_r12 + 0x14));
+  bdChunk___bdChunk(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 
@@ -19,8 +19,7 @@ void __unwind_71814(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
-            ((bdReference<bdByteBuffer> *)(*(int *)(in_r12 + 0x14) + 0x18));
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>((ulonglong)*(uint *)(in_r12 + 0x14) + 0x18);
   return;
 }
 
@@ -32,7 +31,7 @@ void __unwind_71906(void)
 {
   int in_r12;
   
-  bdReference<bdCookie>::~bdReference<bdCookie>(*(bdReference<bdCookie> **)(in_r12 + 0x24));
+  bdReference<bdCookie>___bdReference<bdCookie>(*(undefined4 *)(in_r12 + 0x24));
   return;
 }
 
@@ -44,7 +43,7 @@ void __unwind_72068(void)
 {
   int in_r12;
   
-  bdByteBuffer::operator_delete(*(void **)(in_r12 + -0x48));
+  bdByteBuffer__operator_delete(*(undefined4 *)(in_r12 + -0x48));
   return;
 }
 

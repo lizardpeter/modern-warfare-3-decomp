@@ -4,7 +4,7 @@
 
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-uint ___lc_codepage_func(void)
+UINT ___lc_codepage_func(void)
 
 {
   return 0;

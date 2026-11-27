@@ -7,7 +7,8 @@
 int _fcloseall(void)
 
 {
-  _iobuf *p_Var1;
+  FILE *_File;
+  int iVar1;
   int iVar2;
   int iVar3;
   int iVar4;
@@ -17,16 +18,17 @@ int _fcloseall(void)
   iVar3 = 0;
   local_40 = 0;
   _lock(1);
-  for (iVar4 = 3; iVar4 < _nstream; iVar4 = iVar4 + 1) {
-    p_Var1 = __piob[iVar4];
-    if (p_Var1 != (_iobuf *)0x0) {
-      if (((p_Var1->_flag & 0x83U) != 0) && (iVar2 = fclose(p_Var1), iVar2 != -1)) {
+  for (iVar4 = 3; iVar4 < DAT_84897ec4; iVar4 = iVar4 + 1) {
+    iVar1 = iVar4 * 4;
+    _File = *(FILE **)(iVar1 + DAT_84897ec0);
+    if (_File != (FILE *)0x0) {
+      if (((_File->_flag & 0x83U) != 0) && (iVar2 = fclose(_File), iVar2 != -1)) {
         iVar3 = iVar3 + 1;
         local_40 = iVar3;
       }
       if (0x13 < iVar4) {
-        free(__piob[iVar4]);
-        __piob[iVar4] = (void *)0x0;
+        free(*(void **)(iVar1 + DAT_84897ec0));
+        *(undefined4 *)(iVar1 + DAT_84897ec0) = 0;
       }
     }
   }

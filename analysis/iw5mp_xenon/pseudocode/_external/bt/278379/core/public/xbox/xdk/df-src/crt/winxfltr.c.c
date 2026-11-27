@@ -2,7 +2,7 @@
 
 // 82926768  _XcptFilter  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/winxfltr.c:195)
 
-int _XcptFilter(ulong param_1,_EXCEPTION_POINTERS *param_2)
+int _XcptFilter(ulong _ExceptionNum,_EXCEPTION_POINTERS *_ExceptionPtr)
 
 {
   int *piVar1;
@@ -10,14 +10,14 @@ int _XcptFilter(ulong param_1,_EXCEPTION_POINTERS *param_2)
   void *pvVar3;
   int iVar4;
   int iVar6;
-  _tiddata *p_Var7;
+  _ptiddata p_Var7;
   undefined8 uVar5;
   int *piVar8;
   longlong lVar9;
   
-  iVar6 = __savegprlr_28(param_1);
+  iVar6 = __savegprlr_28(_ExceptionNum);
   p_Var7 = _getptd_noexit();
-  if (p_Var7 != (_tiddata *)0x0) {
+  if (p_Var7 != (_ptiddata)0x0) {
     piVar1 = p_Var7->_pxcptacttab;
     piVar8 = piVar1;
     do {
@@ -37,7 +37,7 @@ int _XcptFilter(ulong param_1,_EXCEPTION_POINTERS *param_2)
         }
         if (pcVar2 != (code *)0x1) {
           pvVar3 = p_Var7->_tpxcptinfoptrs;
-          p_Var7->_tpxcptinfoptrs = param_2;
+          p_Var7->_tpxcptinfoptrs = _ExceptionPtr;
           if (piVar8[1] == 8) {
             lVar9 = 9;
             iVar6 = 0x24;

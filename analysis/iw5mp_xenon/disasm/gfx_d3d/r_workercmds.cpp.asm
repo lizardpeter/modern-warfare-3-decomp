@@ -1009,8 +1009,141 @@ LAB_8278ad50:
   8278AD60  398CAD70             subi r12,r12,0x5290
   8278AD64  7C0C002E             lwzx r0,r12,r0
   8278AD68  7C0903A6             mtspr CTR,r0
+switchD:
   8278AD6C  4E800420             bctr
-LAB_8278af84:
+caseD_20:
+  8278ADF8  7FE3FB78             or r3,r31,r31
+  8278ADFC  4BFA9B15             bl 0x82734910
+  8278AE00  480001B0             b 0x8278afb0
+caseD_21:
+  8278AE04  7FE3FB78             or r3,r31,r31
+  8278AE08  4BFFEF59             bl 0x82789d60
+  8278AE0C  480001A4             b 0x8278afb0
+caseD_1f:
+  8278AE10  7FE3FB78             or r3,r31,r31
+  8278AE14  4BC78D15             bl 0x82403b28
+  8278AE18  48000198             b 0x8278afb0
+caseD_5:
+  8278AE1C  7FE3FB78             or r3,r31,r31
+  8278AE20  4BFD2469             bl 0x8275d288
+  8278AE24  4800018C             b 0x8278afb0
+caseD_e:
+  8278AE28  7FE3FB78             or r3,r31,r31
+  8278AE2C  4BFA7FAD             bl 0x82732dd8
+  8278AE30  48000180             b 0x8278afb0
+caseD_3:
+  8278AE34  7FE3FB78             or r3,r31,r31
+  8278AE38  4BFA7341             bl 0x82732178
+  8278AE3C  48000174             b 0x8278afb0
+caseD_2:
+  8278AE40  7FE3FB78             or r3,r31,r31
+  8278AE44  4BFA6EA5             bl 0x82731ce8
+  8278AE48  48000168             b 0x8278afb0
+caseD_1:
+  8278AE4C  7FE3FB78             or r3,r31,r31
+  8278AE50  4BFA3289             bl 0x8272e0d8
+  8278AE54  4800015C             b 0x8278afb0
+caseD_16:
+  8278AE58  7FE3FB78             or r3,r31,r31
+  8278AE5C  4BCA03CD             bl 0x8242b228
+  8278AE60  48000150             b 0x8278afb0
+caseD_4:
+  8278AE64  7FE3FB78             or r3,r31,r31
+  8278AE68  4BFA7149             bl 0x82731fb0
+  8278AE6C  48000144             b 0x8278afb0
+caseD_13:
+  8278AE70  7FE3FB78             or r3,r31,r31
+  8278AE74  4BFD588D             bl 0x82760700
+  8278AE78  48000138             b 0x8278afb0
+caseD_7:
+  8278AE7C  7FE3FB78             or r3,r31,r31
+  8278AE80  4BD44961             bl 0x824cf7e0
+  8278AE84  4800012C             b 0x8278afb0
+caseD_1d:
+  8278AE88  7FE3FB78             or r3,r31,r31
+  8278AE8C  4BF1521D             bl 0x826a00a8
+  8278AE90  48000120             b 0x8278afb0
+caseD_1c:
+  8278AE94  7FE3FB78             or r3,r31,r31
+  8278AE98  4BEEAD91             bl 0x82675c28
+  8278AE9C  48000114             b 0x8278afb0
+caseD_1e:
+  8278AEA0  7FE3FB78             or r3,r31,r31
+  8278AEA4  4BEEAC15             bl 0x82675ab8
+  8278AEA8  48000108             b 0x8278afb0
+caseD_9:
+  8278AEAC  7FE3FB78             or r3,r31,r31
+  8278AEB0  4BCC5E79             bl 0x82450d28
+  8278AEB4  480000FC             b 0x8278afb0
+caseD_a:
+  8278AEB8  7FE3FB78             or r3,r31,r31
+  8278AEBC  4BCBC25D             bl 0x82447118
+  8278AEC0  480000F0             b 0x8278afb0
+caseD_c:
+  8278AEC4  7FE3FB78             or r3,r31,r31
+  8278AEC8  4BCBCD29             bl 0x82447bf0
+  8278AECC  480000E4             b 0x8278afb0
+caseD_d:
+  8278AED0  7FE3FB78             or r3,r31,r31
+  8278AED4  4BCBC43D             bl 0x82447310
+  8278AED8  480000D8             b 0x8278afb0
+caseD_b:
+  8278AEDC  807F0000             lwz r3,0x0(r31)
+  8278AEE0  4BCA5511             bl 0x824303f0
+  8278AEE4  480000CC             b 0x8278afb0
+caseD_0:
+  8278AEE8  7FE3FB78             or r3,r31,r31
+  8278AEEC  4BEECF2D             bl 0x82677e18
+  8278AEF0  480000C0             b 0x8278afb0
+caseD_1b:
+  8278AEF4  7FE3FB78             or r3,r31,r31
+  8278AEF8  4BC8E1A1             bl 0x82419098
+  8278AEFC  480000B4             b 0x8278afb0
+caseD_19:
+  8278AF00  7FE3FB78             or r3,r31,r31
+  8278AF04  4BCABCD5             bl 0x82436bd8
+  8278AF08  480000A8             b 0x8278afb0
+caseD_18:
+  8278AF0C  7FE3FB78             or r3,r31,r31
+  8278AF10  4BCA2D49             bl 0x8242dc58
+  8278AF14  4800009C             b 0x8278afb0
+caseD_10:
+  8278AF18  807F0000             lwz r3,0x0(r31)
+  8278AF1C  4BF91135             bl 0x8271c050
+  8278AF20  48000090             b 0x8278afb0
+caseD_12:
+  8278AF24  807F0000             lwz r3,0x0(r31)
+  8278AF28  4BF91949             bl 0x8271c870
+  8278AF2C  48000084             b 0x8278afb0
+caseD_f:
+  8278AF30  807F0000             lwz r3,0x0(r31)
+  8278AF34  4BF8D3E5             bl 0x82718318
+  8278AF38  48000078             b 0x8278afb0
+caseD_11:
+  8278AF3C  807F0000             lwz r3,0x0(r31)
+  8278AF40  4BF8E649             bl 0x82719588
+  8278AF44  4800006C             b 0x8278afb0
+caseD_14:
+  8278AF48  7FE3FB78             or r3,r31,r31
+  8278AF4C  4BF9E9AD             bl 0x827298f8
+  8278AF50  48000060             b 0x8278afb0
+caseD_15:
+  8278AF54  7FE3FB78             or r3,r31,r31
+  8278AF58  4BFE9139             bl 0x82774090
+  8278AF5C  48000054             b 0x8278afb0
+caseD_6:
+  8278AF60  7FE3FB78             or r3,r31,r31
+  8278AF64  4BFF0D35             bl 0x8277bc98
+  8278AF68  48000048             b 0x8278afb0
+caseD_1a:
+  8278AF6C  7FE3FB78             or r3,r31,r31
+  8278AF70  4BCABB59             bl 0x82436ac8
+  8278AF74  4800003C             b 0x8278afb0
+caseD_17:
+  8278AF78  7FE3FB78             or r3,r31,r31
+  8278AF7C  4BCA2D55             bl 0x8242dcd0
+  8278AF80  48000030             b 0x8278afb0
+default:
   8278AF84  3D608401             lis r11,-0x7bff
   8278AF88  816B3128             lwz r11,0x3128(r11)
   8278AF8C  2F0B0000             cmpwi cr6,r11,0x0

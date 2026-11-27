@@ -2,10 +2,10 @@
 
 // 828A4D80  DeleteFileA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/deletefile.c:40)
 
-int DeleteFileA(char *param_1)
+BOOL DeleteFileA(LPCSTR lpFileName)
 
 {
-  long lVar1;
+  undefined8 uVar1;
   undefined1 local_40 [4];
   undefined4 local_3c;
   undefined1 auStack_38 [8];
@@ -14,20 +14,20 @@ int DeleteFileA(char *param_1)
   undefined1 *local_24;
   undefined4 local_20;
   
-  RtlInitAnsiString(auStack_38,param_1);
+  RtlInitAnsiString(auStack_38,lpFileName);
   local_24 = auStack_38;
   local_28 = 0xfffffffd;
   local_20 = 0x40;
-  lVar1 = NtOpenFile(&local_3c,0x10000,&local_28,auStack_30,7,0x4040);
-  if (-1 < lVar1) {
+  uVar1 = NtOpenFile(&local_3c,0x10000,&local_28,auStack_30,7,0x4040);
+  if (-1 < (int)uVar1) {
     local_40[0] = 1;
-    lVar1 = NtSetInformationFile(local_3c,auStack_30,local_40,1,0xd);
+    uVar1 = NtSetInformationFile(local_3c,auStack_30,local_40,1,0xd);
     NtClose(local_3c);
-    if (-1 < lVar1) {
+    if (-1 < (int)uVar1) {
       return 1;
     }
   }
-  RtlSetLastNTError(lVar1);
+  RtlSetLastNTError(uVar1);
   return 0;
 }
 

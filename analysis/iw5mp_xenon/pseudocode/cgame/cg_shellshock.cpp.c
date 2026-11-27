@@ -2,54 +2,54 @@
 
 // 822FF108  CubicInterpolate  (cgame/cg_shellshock.cpp:163)
 
-float CubicInterpolate(float param_1,float param_2,float param_3,float param_4,float param_5)
+double CubicInterpolate(double param_1,double param_2,double param_3,double param_4,double param_5)
 
 {
-  float fVar1;
+  double dVar1;
   
-  fVar1 = ((param_5 - param_4) + param_3) - param_2;
-  return ((fVar1 * param_1 + ((param_2 - param_3) - fVar1)) * param_1 + (param_4 - param_2)) *
-         param_1 + param_3;
+  dVar1 = (double)(float)((double)(float)((double)(float)(param_5 - param_4) + param_3) - param_2);
+  return (double)(float)((double)(float)((double)(float)(dVar1 * param_1 +
+                                                        (double)(float)((double)(float)(param_2 -
+                                                                                       param_3) -
+                                                                       dVar1)) * param_1 +
+                                        (double)(float)(param_4 - param_2)) * param_1 + param_3);
 }
 
 
 // 822FF130  PerturbationPoint  (cgame/cg_shellshock.cpp:179)
 
-void PerturbationPoint(float *param_1,float *param_2,float param_3)
+void PerturbationPoint(undefined8 param_1,undefined8 param_2)
 
 {
-  float *pfVar1;
+  undefined8 uVar1;
   double extraout_f1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  float fVar7;
   
-  pfVar1 = (float *)__savefpr_28((double)param_3,param_1);
+  uVar1 = __savefpr_28();
   dVar5 = (double)(float)(extraout_f1 * extraout_f1);
   dVar6 = 3.1415927410125732;
   do {
-    fVar7 = crandom();
-    dVar4 = (double)(float)((double)fVar7 * dVar6);
+    dVar2 = (double)crandom();
+    dVar4 = (double)(float)(dVar2 * dVar6);
     dVar2 = sin(dVar4);
     dVar3 = (double)(float)dVar2;
     dVar2 = cos(dVar4);
-    dVar2 = (double)(float)dVar2;
-    fVar7 = random();
-    *param_2 = (float)((double)fVar7 * dVar2);
-    param_2[1] = (float)((double)fVar7 * dVar3);
-    fVar7 = Vec2DistanceSq(pfVar1,param_2);
-  } while ((double)fVar7 < dVar5);
+    dVar4 = (double)(float)dVar2;
+    dVar2 = (double)random();
+    *(float *)param_2 = (float)(dVar2 * dVar4);
+    ((float *)param_2)[1] = (float)(dVar2 * dVar3);
+    dVar2 = (double)Vec2DistanceSq(uVar1,param_2);
+  } while (dVar2 < dVar5);
   __restfpr_28();
   return;
 }
 
 
 // 822FF1C8  CG_PrintPerturbationPoints  (cgame/cg_shellshock.cpp:198)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_PrintPerturbationPoints(void)
 
@@ -62,13 +62,12 @@ void CG_PrintPerturbationPoints(void)
   double dVar6;
   double dVar7;
   double dVar8;
-  float fVar9;
-  float local_440 [2];
-  float local_438 [270];
+  float fStack_444;
+  float local_440 [272];
   
   __savegprlr_29();
   __savefpr_28();
-  PerturbationPoint(vec3_origin,local_440,0.5);
+  PerturbationPoint(0x3fe0000000000000,0xffffffff82179fd8,local_440);
   lVar1 = 0x7f;
   dVar7 = 0.25;
   dVar8 = 3.1415927410125732;
@@ -76,23 +75,26 @@ void CG_PrintPerturbationPoints(void)
   do {
     pfVar2 = pfVar3 + 2;
     do {
-      fVar9 = crandom();
-      dVar6 = (double)(float)((double)fVar9 * dVar8);
+      dVar4 = (double)crandom();
+      dVar6 = (double)(float)(dVar4 * dVar8);
       dVar4 = sin(dVar6);
       dVar5 = (double)(float)dVar4;
       dVar4 = cos(dVar6);
-      dVar4 = (double)(float)dVar4;
-      fVar9 = random();
-      *pfVar2 = (float)((double)fVar9 * dVar4);
-      pfVar3[3] = (float)((double)fVar9 * dVar5);
-      fVar9 = Vec2DistanceSq(pfVar3,pfVar2);
-    } while ((double)fVar9 < dVar7);
+      dVar6 = (double)(float)dVar4;
+      dVar4 = (double)random();
+      *pfVar2 = (float)(dVar4 * dVar6);
+      pfVar3[3] = (float)(dVar4 * dVar5);
+      dVar4 = (double)Vec2DistanceSq(pfVar3,pfVar2);
+    } while (dVar4 < dVar7);
     lVar1 = lVar1 + -1;
     pfVar3 = pfVar2;
   } while (lVar1 != 0);
   lVar1 = 0x80;
+  pfVar3 = &fStack_444;
   do {
-    Com_Printf(0x11,"\t{%f, %f},\n");
+    pfVar2 = pfVar3 + 1;
+    pfVar3 = pfVar3 + 2;
+    Com_Printf(0x11,0xffffffff820248f0,(double)*pfVar2,(double)*pfVar3);
     lVar1 = lVar1 + -1;
   } while (lVar1 != 0);
   __restfpr_28();
@@ -102,104 +104,611 @@ void CG_PrintPerturbationPoints(void)
 
 
 // 822FF2B8  CG_PerturbCamera  (cgame/cg_shellshock.cpp:211)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_PerturbCamera(int param_1)
+
+{
+  float fVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_64;
+  float local_60;
+  float local_5c;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined4 local_50;
+  undefined1 auStack_40 [48];
+  
+  local_6c = *(float *)(param_1 + 0x79830);
+  if ((local_6c != 0.0) || (*(float *)(param_1 + 0x79834) != 0.0)) {
+    local_68 = *(float *)(param_1 + 0x79834);
+    local_58 = 0;
+    local_54 = 0;
+    dVar4 = 1.0;
+    local_50 = 0x3f800000;
+    dVar3 = (double)SQRT(local_68 * local_68 + local_6c * local_6c + 1.0);
+    dVar2 = dVar4;
+    if (-dVar3 < 0.0) {
+      dVar2 = dVar3;
+    }
+    local_70 = (float)(1.0 / dVar2);
+    local_6c = local_70 * local_6c;
+    local_68 = local_70 * local_68;
+    Vec3Cross(&local_58,&local_70,&local_64);
+    dVar3 = (double)SQRT(local_5c * local_5c + local_64 * local_64 + local_60 * local_60);
+    dVar2 = dVar4;
+    if (-dVar3 < 0.0) {
+      dVar2 = dVar3;
+    }
+    fVar1 = (float)(dVar4 / dVar2);
+    local_64 = local_64 * fVar1;
+    local_60 = local_60 * fVar1;
+    local_5c = local_5c * fVar1;
+    Vec3Cross(&local_70,&local_64,&local_58);
+    AxisCopy(param_1 + 0x6b9d4,auStack_40);
+    MatrixMultiply(&local_70,auStack_40,param_1 + 0x6b9d4);
+  }
+  return;
+}
+
 
 // 822FF3E8  SaveScreenToBuffer  (cgame/cg_shellshock.cpp:236)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void SaveScreenToBuffer(LocalClientNum_t param_1)
+void SaveScreenToBuffer(undefined8 param_1)
 
 {
   int iVar1;
-  ClientViewParams *pCVar2;
+  float *pfVar2;
   
   iVar1 = CL_GetLocalClientActiveCount();
   if (iVar1 < 2) {
-    R_AddCmdSaveScreen(param_1);
+    R_AddCmdSaveScreen();
     return;
   }
-  pCVar2 = CG_GetLocalClientViewParams(param_1);
-  R_AddCmdSaveScreenSection(pCVar2->x,pCVar2->y,pCVar2->width,pCVar2->height,(int)pCVar2);
+  pfVar2 = (float *)CG_GetLocalClientViewParams(param_1);
+  R_AddCmdSaveScreenSection((double)*pfVar2,(double)pfVar2[1],(double)pfVar2[2],(double)pfVar2[3]);
   return;
 }
 
 
 // 822FF458  CG_GetShellShockBlendTime  (cgame/cg_shellshock.cpp:253)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+int CG_GetShellShockBlendTime(void)
+
+{
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  int iVar4;
+  double dVar5;
+  
+  iVar2 = CG_GetLocalClientGlobals();
+  if (((*(uint *)(iVar2 + 0x79824) == 0) || ((int)*(uint *)(iVar2 + 0x79828) < 1)) ||
+     (lVar3 = ((ulonglong)*(uint *)(iVar2 + 0x79828) - (ulonglong)*(uint *)(iVar2 + 0x6b98c)) +
+              (ulonglong)*(uint *)(iVar2 + 0x79824), lVar3 < 1)) {
+    iVar2 = 0;
+  }
+  else {
+    iVar1 = **(int **)(iVar2 + 0x79820);
+    iVar2 = (*(int **)(iVar2 + 0x79820))[1];
+    iVar4 = (int)lVar3;
+    if (iVar4 < iVar1) {
+      dVar5 = floor((double)(((float)(longlong)iVar4 / (float)(longlong)iVar1) *
+                             (float)(longlong)iVar2 + 0.5));
+      return (int)dVar5;
+    }
+  }
+  return iVar2;
+}
+
 
 // 822FF550  CG_DrawShellShockSavedScreenBlendBlurred  (cgame/cg_shellshock.cpp:284)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_DrawShellShockSavedScreenBlendBlurred(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  float *pfVar3;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = CG_GetLocalClientGlobals();
+  if ((int)param_2 < 1) {
+    *(undefined4 *)(iVar2 + 0x7983c) = 0;
+    *(undefined4 *)(iVar2 + 0x79838) = 0;
+    __restgprlr_28();
+    return;
+  }
+  if (*(int *)(iVar2 + 0x7983c) != 0) {
+    pfVar3 = (float *)CG_GetLocalClientViewParams(uVar1);
+    R_AddCmdBlendSavedScreenShockBlurred
+              ((double)*pfVar3,(double)pfVar3[1],(double)pfVar3[2],(double)pfVar3[3],param_2);
+  }
+  if (*(int *)(iVar2 + 0x79840) != 0) {
+    *(undefined4 *)(iVar2 + 0x79838) = 1;
+    __restgprlr_28();
+    return;
+  }
+  SaveScreenToBuffer(uVar1);
+  *(int *)(iVar2 + 0x7983c) = 1;
+  __restgprlr_28();
+  return;
+}
+
 
 // 822FF618  BlendSmooth  (cgame/cg_shellshock.cpp:314)
 
-float BlendSmooth(float param_1)
+double BlendSmooth(double param_1)
 
 {
   double dVar1;
+  double _X;
   double dVar2;
-  double dVar3;
   
-  dVar3 = 0.5;
-  dVar2 = (double)((param_1 - 0.5) * 3.1415927);
-  dVar1 = sin(dVar2);
+  dVar2 = 0.5;
+  _X = (double)((float)(param_1 - 0.5) * 3.1415927);
+  dVar1 = sin(_X);
   dVar1 = (double)(float)dVar1;
-  cos(dVar2);
-  return (float)((double)(float)(dVar1 + 1.0) * dVar3);
+  cos(_X);
+  return (double)(float)((double)(float)(dVar1 + 1.0) * dVar2);
 }
 
 
 // 822FF688  CG_DrawShellShockSavedScreenBlendFlashed  (cgame/cg_shellshock.cpp:324)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_DrawShellShockSavedScreenBlendFlashed(void)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  float *pfVar3;
+  longlong lVar4;
+  double dVar5;
+  double dVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = CG_GetLocalClientGlobals();
+  if (((*(uint *)(iVar2 + 0x79824) == 0) || ((int)*(uint *)(iVar2 + 0x79828) < 1)) ||
+     (lVar4 = ((ulonglong)*(uint *)(iVar2 + 0x79828) - (ulonglong)*(uint *)(iVar2 + 0x6b98c)) +
+              (ulonglong)*(uint *)(iVar2 + 0x79824), lVar4 < 1)) {
+    *(undefined4 *)(iVar2 + 0x7983c) = 0;
+    *(undefined4 *)(iVar2 + 0x79838) = 0;
+    __restgprlr_29();
+    return;
+  }
+  dVar11 = 1.0;
+  dVar5 = (double)(longlong)(int)lVar4;
+  dVar10 = (double)(longlong)*(int *)(*(int *)(iVar2 + 0x79820) + 8);
+  dVar9 = (double)(longlong)*(int *)(*(int *)(iVar2 + 0x79820) + 0xc);
+  dVar6 = dVar11;
+  if (dVar5 < dVar10) {
+    dVar6 = (double)(float)(dVar5 / dVar10);
+  }
+  if (dVar5 < dVar9) {
+    dVar11 = (double)(float)(dVar5 / dVar9);
+  }
+  uVar7 = BlendSmooth(dVar6);
+  uVar8 = BlendSmooth(dVar11);
+  if (*(int *)(iVar2 + 0x7983c) == 0) {
+    if (*(int *)(iVar2 + 0x79840) == 0) {
+      SaveScreenToBuffer(uVar1);
+      *(int *)(iVar2 + 0x7983c) = 1;
+      __restgprlr_29();
+      return;
+    }
+    *(undefined4 *)(iVar2 + 0x79838) = 1;
+    __restgprlr_29();
+    return;
+  }
+  CG_EndSceneCmds();
+  pfVar3 = (float *)CG_GetLocalClientViewParams(uVar1);
+  R_AddCmdBlendSavedScreenShockFlashed
+            (uVar7,uVar8,(double)*pfVar3,(double)pfVar3[1],(double)pfVar3[2],(double)pfVar3[3]);
+  __restgprlr_29();
+  return;
+}
+
 
 // 822FF840  EndShellShockSound  (cgame/cg_shellshock.cpp:396)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void EndShellShockSound(undefined8 param_1)
+
+{
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  SND_DeactivateChannelVolumes(3,0);
+  SND_DeactivateEnvironmentEffects(2,0);
+  iVar3 = CG_GetLocalClientGlobals(param_1);
+  if (*(int *)(iVar3 + 0x79844) != 0) {
+    *(int *)(iVar3 + 0x79844) = 0;
+    uVar1 = CL_PickSoundAlias(0xffffffff82007f84);
+    uVar2 = CG_GenerateSndEntHandle(param_1,0x7ff);
+    SND_PlaySoundAlias(uVar1,uVar2,0xffffffff82179fd8,0,1);
+  }
+  return;
+}
+
 
 // 822FF8E8  EndShellShockLookControl  (cgame/cg_shellshock.cpp:424)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void EndShellShockLookControl(undefined8 param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  *(undefined4 *)(iVar1 + 0x7982c) = 0x3f800000;
+  CL_CapTurnRate(0,param_1);
+  return;
+}
+
 
 // 822FF940  EndShellShockCamera  (cgame/cg_shellshock.cpp:434)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void EndShellShockCamera(void)
+
+{
+  int iVar1;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  *(undefined4 *)(iVar1 + 0x79830) = 0;
+  *(undefined4 *)(iVar1 + 0x79834) = 0;
+  return;
+}
+
 
 // 822FF980  EndShellShockScreen  (cgame/cg_shellshock.cpp:444)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void EndShellShockScreen(void)
+
+{
+  int iVar1;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  if (*(char *)(iVar1 + 0x108038) == '\0') {
+    *(undefined4 *)(iVar1 + 0x7983c) = 0;
+    *(undefined4 *)(iVar1 + 0x79838) = 0;
+  }
+  return;
+}
+
 
 // 822FF9D0  EndShellShock  (cgame/cg_shellshock.cpp:457)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void EndShellShock(undefined8 param_1)
+
+{
+  int iVar1;
+  double dVar2;
+  
+  EndShellShockSound();
+  iVar1 = CG_GetLocalClientGlobals(param_1);
+  *(undefined4 *)(iVar1 + 0x7982c) = 0x3f800000;
+  dVar2 = 0.0;
+  CL_CapTurnRate(0,0,param_1);
+  iVar1 = CG_GetLocalClientGlobals(param_1);
+  *(float *)(iVar1 + 0x79830) = (float)dVar2;
+  *(float *)(iVar1 + 0x79834) = (float)dVar2;
+  iVar1 = CG_GetLocalClientGlobals(param_1);
+  if (*(char *)(iVar1 + 0x108038) == '\0') {
+    *(undefined4 *)(iVar1 + 0x7983c) = 0;
+    *(undefined4 *)(iVar1 + 0x79838) = 0;
+  }
+  return;
+}
+
 
 // 822FFA98  UpdateShellShockSound  (cgame/cg_shellshock.cpp:472)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void UpdateShellShockSound(undefined8 param_1,ulonglong param_2,longlong param_3,longlong param_4)
+
+{
+  float fVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  int iVar6;
+  int *piVar7;
+  longlong lVar8;
+  int iVar9;
+  int iVar10;
+  undefined8 uVar11;
+  double dVar12;
+  
+  uVar3 = __savegprlr_24();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024910,0x1df,0,0xffffffff82000f98,0xffffffff8200aeec);
+  }
+  if ((int)param_3 < 0) {
+    MyAssertHandler(0xffffffff82024910,0x1e0,0,0xffffffff82000f98,0xffffffff820101c4);
+  }
+  if ((int)param_4 < 0) {
+    MyAssertHandler(0xffffffff82024910,0x1e1,0,0xffffffff82000f98,0xffffffff820248fc);
+  }
+  iVar10 = (int)param_2;
+  if (*(char *)(iVar10 + 0x20) == '\0') {
+    EndShellShockSound(uVar3);
+    __restgprlr_24();
+    return;
+  }
+  uVar2 = *(uint *)(iVar10 + 0x128);
+  lVar8 = ((ulonglong)*(uint *)(iVar10 + 0x244) - param_3) + (ulonglong)uVar2 + param_4;
+  if ((int)param_3 < *(int *)(iVar10 + 0x124)) {
+    SND_SetEnvironmentEffects
+              ((double)*(float *)(iVar10 + 300),(double)*(float *)(iVar10 + 0x130),2,param_2 + 0x134
+              );
+    SND_SetChannelVolumes(3,param_2 + 0x144,(ulonglong)*(uint *)(iVar10 + 0x124) - param_3);
+  }
+  else {
+    iVar6 = (int)lVar8;
+    if ((int)uVar2 < iVar6) {
+      SND_SetEnvironmentEffects
+                ((double)*(float *)(iVar10 + 300),(double)*(float *)(iVar10 + 0x130),2,
+                 param_2 + 0x134);
+      SND_SetChannelVolumes(3,param_2 + 0x144,0);
+    }
+    else if ((-1 < iVar6) && (iVar6 < (int)uVar2)) {
+      SND_DeactivateEnvironmentEffects(2,lVar8);
+      SND_DeactivateChannelVolumes(3,lVar8);
+    }
+  }
+  lVar8 = ((ulonglong)*(uint *)(iVar10 + 0x248) - param_3) + (ulonglong)*(uint *)(iVar10 + 0x24c) +
+          param_4;
+  if (0 < lVar8) {
+    uVar4 = CL_PickSoundAlias(param_2 + 0x21);
+    uVar5 = CL_PickSoundAlias(param_2 + 0x61);
+    iVar6 = *(int *)(iVar10 + 0x248);
+    uVar11 = 0x3ff0000000000000;
+    if ((iVar6 == 0) || (iVar9 = (int)lVar8, iVar6 < iVar9)) {
+      fVar1 = 0.0;
+    }
+    else {
+      fVar1 = 1.0 - (float)(longlong)iVar9 / (float)(longlong)iVar6;
+    }
+    dVar12 = (double)fVar1;
+    CG_GenerateSndEntHandle(uVar3,0x7ff);
+    SND_PlayBlendedSoundAliases(dVar12,uVar11,uVar4,uVar5);
+  }
+  iVar6 = CG_GetLocalClientGlobals(uVar3);
+  uVar2 = *(uint *)(iVar6 + 0x6b98c);
+  param_4 = ((ulonglong)uVar2 - param_3) + (ulonglong)*(uint *)(iVar10 + 0x24c) + param_4;
+  iVar10 = (int)param_4;
+  piVar7 = (int *)(iVar6 + 0x79844);
+  if ((int)uVar2 < iVar10) {
+    if (*piVar7 == 0) goto LAB_822ffd6c;
+    param_4 = 0;
+    *piVar7 = 0;
+    uVar3 = CG_GenerateSndEntHandle(uVar3,0x7ff);
+    lVar8 = param_2 + 0xe1;
+  }
+  else {
+    if (iVar10 == *piVar7) goto LAB_822ffd6c;
+    *piVar7 = iVar10;
+    uVar3 = CG_GenerateSndEntHandle(uVar3,0x7ff);
+    lVar8 = param_2 + 0xa1;
+    param_4 = (ulonglong)*(uint *)(iVar6 + 0x6b98c) - param_4;
+  }
+  uVar4 = CL_PickSoundAlias(lVar8);
+  SND_PlaySoundAlias(uVar4,uVar3,0xffffffff82179fd8,param_4,1);
+LAB_822ffd6c:
+  __restgprlr_24();
+  return;
+}
+
 
 // 822FFD80  UpdateShellShockLookControl  (cgame/cg_shellshock.cpp:558)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void UpdateShellShockLookControl(undefined8 param_1,ulonglong param_2,int param_3,int param_4)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  
+  uVar1 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024910,0x232,0,0xffffffff82000f98,0xffffffff8200aeec);
+  }
+  if (param_3 < 0) {
+    MyAssertHandler(0xffffffff82024910,0x233,0,0xffffffff82000f98,0xffffffff820101c4);
+  }
+  if (param_4 < 0) {
+    MyAssertHandler(0xffffffff82024910,0x234,0,0xffffffff82000f98,0xffffffff820248fc);
+  }
+  iVar2 = (int)param_2;
+  if (*(char *)(iVar2 + 0x250) == '\0') {
+    iVar2 = CG_GetLocalClientGlobals(uVar1);
+    *(undefined4 *)(iVar2 + 0x7982c) = 0x3f800000;
+    CL_CapTurnRate(0,uVar1);
+    __restgprlr_26();
+    return;
+  }
+  param_4 = param_4 - param_3;
+  dVar5 = 1.0;
+  dVar4 = dVar5;
+  if (param_4 < *(int *)(iVar2 + 0x254)) {
+    if (param_4 < 1) {
+      EndShellShockLookControl(uVar1);
+      __restgprlr_26();
+      return;
+    }
+    dVar4 = (double)((float)(longlong)param_4 / (float)(longlong)*(int *)(iVar2 + 0x254));
+  }
+  iVar3 = CG_GetLocalClientGlobals(uVar1);
+  if (dVar4 != dVar5) {
+    *(float *)(iVar3 + 0x7982c) =
+         (float)((double)(float)((double)*(float *)(iVar2 + 600) - dVar5) * dVar4 + dVar5);
+    CL_CapTurnRate((double)(*(float *)(iVar2 + 0x25c) * (float)(dVar5 / dVar4)),
+                   (double)(*(float *)(iVar2 + 0x260) * (float)(dVar5 / dVar4)),uVar1);
+    __restgprlr_26();
+    return;
+  }
+  *(float *)(iVar3 + 0x7982c) = *(float *)(iVar2 + 600);
+  CL_CapTurnRate((double)*(float *)(iVar2 + 0x25c),(double)*(float *)(iVar2 + 0x260),uVar1);
+  __restgprlr_26();
+  return;
+}
+
 
 // 822FFF50  UpdateShellShockCamera  (cgame/cg_shellshock.cpp:601)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void UpdateShellShockCamera(undefined8 param_1,ulonglong param_2,longlong param_3,longlong param_4)
+
+{
+  float fVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  
+  uVar2 = __savegprlr_27();
+  if (param_4 - param_3 < 1) {
+    iVar3 = CG_GetLocalClientGlobals();
+    *(undefined4 *)(iVar3 + 0x79830) = 0;
+    *(undefined4 *)(iVar3 + 0x79834) = 0;
+    __restgprlr_27();
+    return;
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024910,0x272,0,0xffffffff82000f98,0xffffffff8200aeec);
+  }
+  iVar3 = (int)param_2;
+  iVar4 = (int)(param_4 - param_3);
+  fVar1 = 1.0;
+  if (iVar4 < *(int *)(iVar3 + 0x14)) {
+    fVar1 = (float)(longlong)iVar4 / (float)(longlong)*(int *)(iVar3 + 0x14);
+  }
+  dVar7 = (double)(*(float *)(iVar3 + 0x18) * (float)(longlong)(int)param_3);
+  dVar9 = (double)(-(fVar1 * 2.0 - 3.0) * fVar1 * fVar1 * *(float *)(iVar3 + 0x1c));
+  dVar5 = floor(dVar7);
+  iVar3 = ((int)param_4 * 0x3d + (int)dVar5 & 0x7fU) * 8;
+  dVar8 = (double)(float)(dVar7 - (double)(longlong)(int)dVar5);
+  iVar4 = CG_GetLocalClientGlobals(uVar2);
+  dVar6 = (double)*(float *)(&DAT_820244e0 + iVar3);
+  dVar7 = (double)*(float *)(&DAT_820244d8 + iVar3);
+  dVar5 = (double)(float)((double)(float)((double)(float)((double)*(float *)(&DAT_820244f0 + iVar3)
+                                                         - (double)*(float *)(&DAT_820244e8 + iVar3)
+                                                         ) + dVar6) - dVar7);
+  *(float *)(iVar4 + 0x79830) =
+       (float)((double)(float)((double)(float)((double)(float)(dVar5 * dVar8 +
+                                                              (double)(float)((double)(float)(dVar7 
+                                                  - dVar6) - dVar5)) * dVar8 +
+                                              (double)(float)((double)*(float *)(&DAT_820244e8 +
+                                                                                iVar3) - dVar7)) *
+                               dVar8 + dVar6) * dVar9);
+  dVar6 = (double)*(float *)(&DAT_820244e4 + iVar3);
+  dVar7 = (double)*(float *)(&DAT_820244dc + iVar3);
+  dVar5 = (double)(float)((double)(float)((double)(float)((double)*(float *)(&DAT_820244f4 + iVar3)
+                                                         - (double)*(float *)(&DAT_820244ec + iVar3)
+                                                         ) + dVar6) - dVar7);
+  *(float *)(iVar4 + 0x79834) =
+       (float)((double)(float)((double)(float)((double)(float)(dVar5 * dVar8 +
+                                                              (double)(float)((double)(float)(dVar7 
+                                                  - dVar6) - dVar5)) * dVar8 +
+                                              (double)(float)((double)*(float *)(&DAT_820244ec +
+                                                                                iVar3) - dVar7)) *
+                               dVar8 + dVar6) * dVar9);
+  __restgprlr_27();
+  return;
+}
+
 
 // 82300148  CG_UpdateShellShock  (cgame/cg_shellshock.cpp:647)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_UpdateShellShock(undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  longlong lVar4;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = CG_GetLocalClientGlobals();
+  lVar4 = (ulonglong)*(uint *)(iVar2 + 0x6b98c) - param_3;
+  if (((int)param_3 == 0) || ((int)lVar4 < 0)) {
+    EndShellShock(uVar1);
+    __restgprlr_28();
+    return;
+  }
+  cVar3 = CL_Demo_IsFollowCamera(uVar1);
+  if ((cVar3 == '\0') && (cVar3 = CL_Demo_IsFreeCamera(uVar1), cVar3 == '\0')) {
+    UpdateShellShockSound(uVar1,param_2,lVar4,param_4);
+    UpdateShellShockLookControl(uVar1,param_2,lVar4,param_4);
+    UpdateShellShockCamera(uVar1,param_2,lVar4,param_4);
+    __restgprlr_28();
+    return;
+  }
+  EndShellShockLookControl(uVar1);
+  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  *(undefined4 *)(iVar2 + 0x79830) = 0;
+  *(undefined4 *)(iVar2 + 0x79834) = 0;
+  EndShellShockScreen(uVar1);
+  __restgprlr_28();
+  return;
+}
+
 
 // 82300248  CG_StartShellShock  (cgame/cg_shellshock.cpp:674)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_StartShellShock(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  *(undefined4 *)(param_1 + 0x79820) = param_2;
+  *(undefined4 *)(param_1 + 0x79824) = param_3;
+  *(undefined4 *)(param_1 + 0x79828) = param_4;
+  return;
+}
+
 
 // 82300270  CG_GetFlashbangedRemainingTime  (cgame/cg_shellshock.cpp:682)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+ulonglong CG_GetFlashbangedRemainingTime(void)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  uVar2 = ((ulonglong)*(uint *)(iVar1 + 0x79828) - (ulonglong)*(uint *)(iVar1 + 0x6b98c)) +
+          (ulonglong)*(uint *)(iVar1 + 0x79824);
+  if ((longlong)uVar2 < 1) {
+    return 0;
+  }
+  return -(ulonglong)(*(int *)(*(int *)(iVar1 + 0x79820) + 0x10) == 1) & uVar2;
+}
+
 
 // 823002F8  CG_ArchiveShellShock  (cgame/cg_shellshock.cpp:700)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ArchiveShellShock(undefined8 param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024910,0x2bf,0,0xffffffff82000f98,0xffffffff82001348);
+  }
+  lVar1 = CG_GetLocalClientGlobals(param_1);
+  MemFile_ArchiveData(param_2,4,lVar1 + 0x79844);
+  return;
+}
+

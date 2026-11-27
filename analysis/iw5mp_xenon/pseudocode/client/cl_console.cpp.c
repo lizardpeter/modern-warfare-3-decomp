@@ -2,31 +2,63 @@
 
 // 8232DB70  TRACK_cl_console  (client/cl_console.cpp:302)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_cl_console(void)
 
 {
-  track_static_alloc_internal(&con,0x223d0,"con",10);
+  track_static_alloc_internal(0xffffffff82a77aa8,0x223d0,0xffffffff8202cf78,10);
   return;
 }
 
 
 // 82334178  Con_ToggleConsole  (client/cl_console.cpp:312)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
 
-// 823342B0  Con_OpenConsole  (client/cl_console.cpp:334)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Con_OpenConsole(LocalClientNum_t param_1)
+void Con_ToggleConsole(void)
 
 {
   bool bVar1;
+  uint uVar2;
+  uint *puVar3;
   
-  bVar1 = Key_IsCatcherActive(param_1,1);
-  if (!bVar1) {
+  __savegprlr_27();
+  Field_Clear(0xffffffff82a9b110);
+  if ((DAT_82a774f0 < 0) || (bVar1 = true, DAT_82a774b0 == '\0')) {
+    bVar1 = false;
+  }
+  if (bVar1) {
+    DAT_82a774f0 = -1;
+    DAT_82a774b0 = '\0';
+  }
+  DAT_82a9b124 = 1;
+  DAT_82a87ce8 = 0;
+  DAT_82a9b11c = DAT_82964554;
+  DAT_82a9b120 = DAT_82964558;
+  puVar3 = &DAT_82b3e728;
+  uVar2 = DAT_82b3e544;
+  do {
+    if (((*puVar3 ^ uVar2) & 1) != 0) {
+      MyAssertHandler(0xffffffff8202cfb8,0x145,0,0xffffffff82000f98,0xffffffff8202e1e8);
+      uVar2 = DAT_82b3e544;
+    }
+    puVar3 = puVar3 + 0x79;
+  } while ((int)puVar3 < -0x7d4c132c);
+  DAT_82b3e544 = uVar2 ^ 1;
+  DAT_82b3e728 = DAT_82b3e728 ^ 1;
+  DAT_82b3e90c = DAT_82b3e90c ^ 1;
+  DAT_82b3eaf0 = DAT_82b3eaf0 ^ 1;
+  __restgprlr_27();
+  return;
+}
+
+
+// 823342B0  Con_OpenConsole  (client/cl_console.cpp:334)
+
+void Con_OpenConsole(undefined8 param_1)
+
+{
+  char cVar1;
+  
+  cVar1 = Key_IsCatcherActive(param_1,1);
+  if (cVar1 == '\0') {
     Con_ToggleConsole();
   }
   return;
@@ -35,16 +67,14 @@ void Con_OpenConsole(LocalClientNum_t param_1)
 
 // 8232DB90  Con_OpenConsoleOutput  (client/cl_console.cpp:342)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Con_OpenConsoleOutput(LocalClientNum_t param_1)
+void Con_OpenConsoleOutput(undefined8 param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Key_IsCatcherActive(param_1,1);
-  if (bVar1) {
-    con.outputVisible = true;
+  cVar1 = Key_IsCatcherActive(param_1,1);
+  if (cVar1 != '\0') {
+    DAT_82a87ce8 = 1;
   }
   return;
 }
@@ -52,15 +82,13 @@ void Con_OpenConsoleOutput(LocalClientNum_t param_1)
 
 // 823342E8  Con_CloseConsole  (client/cl_console.cpp:351)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Con_CloseConsole(LocalClientNum_t param_1)
+void Con_CloseConsole(undefined8 param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Key_IsCatcherActive(param_1,1);
-  if (bVar1) {
+  cVar1 = Key_IsCatcherActive(param_1,1);
+  if (cVar1 != '\0') {
     Con_ToggleConsole();
   }
   return;
@@ -69,50 +97,52 @@ void Con_CloseConsole(LocalClientNum_t param_1)
 
 // 8232DBD8  Con_GetTextCopy  (client/cl_console.cpp:418)
 
-void Con_GetTextCopy(char *param_1,int param_2)
+void Con_GetTextCopy(undefined8 param_1,int param_2)
 
 {
-  undefined1 *puVar1;
+  uint _Size;
+  undefined1 *_Dst;
+  void *pvVar1;
   int iVar2;
   longlong lVar3;
   int iVar4;
   uint uVar5;
   
-  puVar1 = (undefined1 *)__savegprlr_27(param_1);
-  if (con.consoleWindow.activeLineCount == 0) {
-    *puVar1 = 0;
+  _Dst = (undefined1 *)__savegprlr_27();
+  _Size = DAT_82a77acc;
+  if (DAT_82a77ad4 == 0) {
+    *_Dst = 0;
     __restgprlr_27();
     return;
   }
-  uVar5 = con.consoleWindow.lines[con.consoleWindow.firstLineIndex].textBufPos;
-  lVar3 = (ulonglong)(uint)con.consoleWindow.textBufPos - (ulonglong)uVar5;
+  uVar5 = *(uint *)(DAT_82a77ad0 * 0x18 + DAT_82a77aa8 + 4);
+  lVar3 = (ulonglong)DAT_82a77acc - (ulonglong)uVar5;
   if (lVar3 < 0) {
-    lVar3 = (ulonglong)(uint)con.consoleWindow.textBufSize + lVar3;
+    lVar3 = (ulonglong)DAT_82a77ab4 + lVar3;
   }
   iVar2 = param_2 + -1;
   iVar4 = (int)lVar3;
   if ((iVar2 < iVar4) &&
-     (uVar5 = (iVar4 - param_2) + uVar5 + 1, iVar4 = iVar2,
-     con.consoleWindow.textBufSize < (int)uVar5)) {
-    uVar5 = uVar5 - con.consoleWindow.textBufSize;
+     (uVar5 = (iVar4 - param_2) + uVar5 + 1, iVar4 = iVar2, (int)DAT_82a77ab4 < (int)uVar5)) {
+    uVar5 = uVar5 - DAT_82a77ab4;
   }
-  if (con.consoleWindow.textBufPos <= (int)uVar5) {
-    memcpy();
-    memcpy();
-    puVar1[iVar4] = 0;
-    __restgprlr_27();
+  if ((int)DAT_82a77acc <= (int)uVar5) {
+    memcpy(_Dst,(void *)((int)DAT_82a77ab0 + uVar5),DAT_82a77ab4 - uVar5);
+    pvVar1 = memcpy(_Dst + (DAT_82a77ab4 - uVar5),DAT_82a77ab0,_Size);
+    _Dst[iVar4] = 0;
+    __restgprlr_27(pvVar1);
     return;
   }
-  memcpy();
-  puVar1[iVar4] = 0;
-  __restgprlr_27();
+  pvVar1 = memcpy(_Dst,(void *)((int)DAT_82a77ab0 + uVar5),DAT_82a77acc - uVar5);
+  _Dst[iVar4] = 0;
+  __restgprlr_27(pvVar1);
   return;
 }
 
 
 // 8232DCC0  Con_ResetMessageWindowTimes  (client/cl_console.cpp:458)
 
-void Con_ResetMessageWindowTimes(MessageWindow *param_1,int param_2)
+void Con_ResetMessageWindowTimes(undefined8 param_1,int param_2)
 
 {
   uint uVar1;
@@ -125,13 +155,12 @@ void Con_ResetMessageWindowTimes(MessageWindow *param_1,int param_2)
   longlong lVar8;
   ulonglong uVar9;
   
-  piVar4 = (int *)__savegprlr_22(param_1);
+  piVar4 = (int *)__savegprlr_22();
   lVar8 = 0;
   if (0 < piVar4[0xb]) {
     do {
       if (piVar4[4] < 1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
-                        0x1d3,0,"%s\n\t(msgwnd->lineCount) = %i");
+        MyAssertHandler(0xffffffff8202cfb8,0x1d3,0,0xffffffff8202cf94,0xffffffff8202cf7c);
       }
       uVar1 = piVar4[4];
       uVar5 = (ulonglong)uVar1;
@@ -140,15 +169,12 @@ void Con_ResetMessageWindowTimes(MessageWindow *param_1,int param_2)
       uVar9 = uVar6 - (longlong)((int)uVar6 / (int)uVar1) * (longlong)(int)uVar1;
       trapWord(5,uVar5 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
       if (uVar5 <= (uVar9 & 0xffffffff)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
-                        0x1d6,0,"lineIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
+        MyAssertHandler(0xffffffff8202cfb8,0x1d6,0,0xffffffff8202cff8,uVar9);
       }
       iVar2 = *piVar4;
       iVar3 = (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 3);
       if ((uint)piVar4[4] <= *(uint *)(iVar3 + iVar2)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
-                        0x1d9,0,
-                        "line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
+        MyAssertHandler(0xffffffff8202cfb8,0x1d9,0,0xffffffff8202d038);
       }
       lVar8 = lVar8 + 1;
       piVar7 = (int *)(*(int *)(iVar3 + iVar2) * 8 + piVar4[1]);
@@ -164,9 +190,7 @@ void Con_ResetMessageWindowTimes(MessageWindow *param_1,int param_2)
 
 // 8232DDF0  Con_TimeJumped  (client/cl_console.cpp:484)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Con_TimeJumped(LocalClientNum_t param_1,int param_2)
+void Con_TimeJumped(undefined8 param_1,undefined8 param_2)
 
 {
   uint uVar1;
@@ -180,17 +204,17 @@ void Con_TimeJumped(LocalClientNum_t param_1,int param_2)
   ulonglong uVar9;
   uint *puVar10;
   
-  iVar3 = __savegprlr_19(param_1);
-  Con_ResetMessageWindowTimes(&con.consoleWindow,param_2);
-  puVar10 = (uint *)(iVar3 * 0x4858 + -0x7d5762e8);
+  iVar3 = __savegprlr_19();
+  Con_ResetMessageWindowTimes(0xffffffff82a77aa8);
+  iVar3 = iVar3 * 0x4858;
+  puVar10 = (uint *)(&DAT_82a89d18 + iVar3);
   lVar7 = 4;
   do {
     lVar8 = 0;
     if (0 < (int)puVar10[7]) {
       do {
         if ((int)*puVar10 < 1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
-                          0x1d3,0,"%s\n\t(msgwnd->lineCount) = %i");
+          MyAssertHandler(0xffffffff8202cfb8,0x1d3,0,0xffffffff8202cf94,0xffffffff8202cf7c);
         }
         uVar1 = *puVar10;
         uVar4 = (ulonglong)uVar1;
@@ -200,30 +224,25 @@ void Con_TimeJumped(LocalClientNum_t param_1,int param_2)
         trapWord(5,uVar4 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff)
         ;
         if (uVar4 <= (uVar9 & 0xffffffff)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
-                          0x1d6,0,"lineIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)")
-          ;
+          MyAssertHandler(0xffffffff8202cfb8,0x1d6,0,0xffffffff8202cff8,uVar9);
         }
         uVar1 = puVar10[-4];
         iVar2 = (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 3);
         if (*puVar10 <= *(uint *)(iVar2 + uVar1)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
-                          0x1d9,0,
-                          "line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)"
-                         );
+          MyAssertHandler(0xffffffff8202cfb8,0x1d9,0,0xffffffff8202d038);
         }
         lVar8 = lVar8 + 1;
         piVar6 = (int *)(puVar10[-3] + *(int *)(iVar2 + uVar1) * 8);
         iVar2 = *piVar6;
-        *piVar6 = param_2;
-        piVar6[1] = (piVar6[1] - iVar2) + param_2;
+        *piVar6 = (int)param_2;
+        piVar6[1] = (piVar6[1] - iVar2) + (int)param_2;
       } while ((int)lVar8 < (int)puVar10[7]);
     }
     lVar7 = lVar7 + -1;
     puVar10 = puVar10 + 0xd;
   } while (lVar7 != 0);
-  Con_ResetMessageWindowTimes(&con.messageBuffer[iVar3].miniconWindow,param_2);
-  Con_ResetMessageWindowTimes(&con.messageBuffer[iVar3].errorWindow,param_2);
+  Con_ResetMessageWindowTimes(&DAT_82a8b3d8 + iVar3,param_2);
+  Con_ResetMessageWindowTimes(&DAT_82a8c48c + iVar3,param_2);
   __restgprlr_19();
   return;
 }
@@ -231,72 +250,66 @@ void Con_TimeJumped(LocalClientNum_t param_1,int param_2)
 
 // 8232DF78  Con_NudgeMessageWindowTimes  (client/cl_console.cpp:501)
 
-void Con_NudgeMessageWindowTimes(MessageWindow *param_1,int param_2,int param_3)
+void Con_NudgeMessageWindowTimes(undefined8 param_1,longlong param_2,int param_3)
 
 {
   uint uVar1;
   int iVar2;
   int *piVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  int iVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  ulonglong uVar4;
+  int iVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  int iVar8;
   int iVar9;
-  int iVar10;
-  int *piVar11;
-  longlong lVar12;
-  ulonglong uVar13;
+  int *piVar10;
+  longlong lVar11;
+  ulonglong uVar12;
   
-  lVar4 = (longlong)param_2;
-  piVar3 = (int *)__savegprlr_19(param_1);
-  iVar6 = -1;
-  lVar12 = 0;
+  piVar3 = (int *)__savegprlr_19();
+  iVar5 = -1;
+  lVar11 = 0;
   if (0 < piVar3[0xb]) {
     do {
       if (piVar3[4] < 1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
-                        0x200,0,"%s\n\t(msgwnd->lineCount) = %i");
+        MyAssertHandler(0xffffffff8202cfb8,0x200,0,0xffffffff8202cf94,0xffffffff8202cf7c);
       }
       uVar1 = piVar3[4];
-      uVar5 = (ulonglong)uVar1;
-      uVar7 = lVar12 + (ulonglong)(uint)piVar3[10];
-      trapWord(6,uVar5,0);
-      uVar13 = uVar7 - (longlong)((int)uVar7 / (int)uVar1) * (longlong)(int)uVar1;
-      trapWord(5,uVar5 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1),0xffff);
-      if (uVar5 <= (uVar13 & 0xffffffff)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
-                        0x203,0,"lineIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
+      uVar4 = (ulonglong)uVar1;
+      uVar6 = lVar11 + (ulonglong)(uint)piVar3[10];
+      trapWord(6,uVar4,0);
+      uVar12 = uVar6 - (longlong)((int)uVar6 / (int)uVar1) * (longlong)(int)uVar1;
+      trapWord(5,uVar4 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      if (uVar4 <= (uVar12 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff8202cfb8,0x203,0,0xffffffff8202cff8,uVar12);
       }
       iVar2 = *piVar3;
-      iVar9 = (int)((uVar13 + (uVar13 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-      if ((uint)piVar3[4] <= *(uint *)(iVar9 + iVar2)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
-                        0x206,0,
-                        "line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
+      iVar8 = (int)((uVar12 + (uVar12 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+      if ((uint)piVar3[4] <= *(uint *)(iVar8 + iVar2)) {
+        MyAssertHandler(0xffffffff8202cfb8,0x206,0,0xffffffff8202d038);
       }
-      iVar2 = *(int *)(iVar9 + iVar2);
-      if (iVar2 != iVar6) {
-        piVar11 = (int *)(iVar2 * 8 + piVar3[1]);
-        lVar8 = lVar4 + (ulonglong)*(uint *)(iVar2 * 8 + piVar3[1]);
-        iVar6 = piVar11[1] + (int)lVar4;
-        iVar9 = (int)lVar8;
-        *piVar11 = iVar9;
-        piVar11[1] = iVar6;
-        if (lVar8 < 0) {
-          *piVar11 = 0;
-          piVar11[1] = iVar6 - iVar9;
+      iVar2 = *(int *)(iVar8 + iVar2);
+      if (iVar2 != iVar5) {
+        piVar10 = (int *)(iVar2 * 8 + piVar3[1]);
+        lVar7 = param_2 + (ulonglong)*(uint *)(iVar2 * 8 + piVar3[1]);
+        iVar5 = piVar10[1] + (int)param_2;
+        iVar8 = (int)lVar7;
+        *piVar10 = iVar8;
+        piVar10[1] = iVar5;
+        if (lVar7 < 0) {
+          *piVar10 = 0;
+          piVar10[1] = iVar5 - iVar8;
         }
-        iVar9 = *piVar11;
-        iVar10 = param_3 + 1000;
-        iVar6 = iVar2;
-        if (iVar10 < iVar9) {
-          *piVar11 = iVar10;
-          piVar11[1] = iVar10 + (piVar11[1] - iVar9);
+        iVar8 = *piVar10;
+        iVar9 = param_3 + 1000;
+        iVar5 = iVar2;
+        if (iVar9 < iVar8) {
+          *piVar10 = iVar9;
+          piVar10[1] = iVar9 + (piVar10[1] - iVar8);
         }
       }
-      lVar12 = lVar12 + 1;
-    } while ((int)lVar12 < piVar3[0xb]);
+      lVar11 = lVar11 + 1;
+    } while ((int)lVar11 < piVar3[0xb]);
   }
   __restgprlr_19();
   return;
@@ -304,28 +317,48 @@ void Con_NudgeMessageWindowTimes(MessageWindow *param_1,int param_2,int param_3)
 
 
 // 8232E0F8  Con_TimeNudged  (client/cl_console.cpp:544)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void Con_TimeNudged(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined4 uVar1;
+  longlong lVar2;
+  int iVar3;
+  ulonglong uVar4;
+  
+  lVar2 = __savegprlr_27();
+  iVar3 = CL_GetLocalClientGlobals();
+  uVar1 = *(undefined4 *)(iVar3 + 0x3404);
+  Con_NudgeMessageWindowTimes(0xffffffff82a77aa8,param_2,uVar1);
+  lVar2 = lVar2 * 0x4858;
+  uVar4 = 0;
+  do {
+    Con_NudgeMessageWindowTimes(uVar4 + lVar2 + -0x7d5762f8,param_2,uVar1);
+    uVar4 = uVar4 + 0x34;
+  } while ((uVar4 & 0xffffffff) < 0xd0);
+  Con_NudgeMessageWindowTimes(lVar2 + -0x7d574c28,param_2,uVar1);
+  Con_NudgeMessageWindowTimes(lVar2 + -0x7d573b74,param_2,uVar1);
+  __restgprlr_27();
+  return;
+}
+
 
 // 8232E198  Con_ClearMessageWindow  (client/cl_console.cpp:564)
 
-void Con_ClearMessageWindow(MessageWindow *param_1)
+void Con_ClearMessageWindow(void)
 
 {
   int *piVar1;
   
-  piVar1 = (int *)__savegprlr_29(param_1);
+  piVar1 = (int *)__savegprlr_29();
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x235,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x235,0,0xffffffff82000f98,0xffffffff8202d0a4);
   }
   if (piVar1[1] == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x236,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x236,0,0xffffffff82000f98,0xffffffff8202d090);
   }
   if (*piVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x237,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x237,0,0xffffffff82000f98,0xffffffff8202d080);
   }
   piVar1[9] = 0;
   piVar1[0xc] = 0;
@@ -338,38 +371,31 @@ void Con_ClearMessageWindow(MessageWindow *param_1)
 
 // 8232E248  Con_ClearNotify  (client/cl_console.cpp:577)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Con_ClearNotify(LocalClientNum_t param_1)
+void Con_ClearNotify(void)
 
 {
   int iVar1;
-  uint uVar2;
+  int iVar2;
   uint uVar3;
-  int *piVar4;
   
-  iVar1 = __savegprlr_22(param_1);
-  uVar2 = 0;
+  iVar1 = __savegprlr_22();
+  uVar3 = 0;
   do {
-    piVar4 = (int *)(uVar2 + iVar1 * 0x4858 + -0x7d5762f8);
-    if (piVar4 == (int *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x235
-                      ,0,"%s");
+    iVar2 = uVar3 + iVar1 * 0x4858;
+    if ((int *)(&DAT_82a89d08 + iVar2) == (int *)0x0) {
+      MyAssertHandler(0xffffffff8202cfb8,0x235,0,0xffffffff82000f98,0xffffffff8202d0a4);
     }
-    if (*(int *)((int)&con.messageBuffer[iVar1].gamemsgWindows[0].messages + uVar2) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x236
-                      ,0,"%s");
+    if (*(int *)(&DAT_82a89d0c + iVar2) == 0) {
+      MyAssertHandler(0xffffffff8202cfb8,0x236,0,0xffffffff82000f98,0xffffffff8202d090);
     }
-    if (*piVar4 == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x237
-                      ,0,"%s");
+    if (*(int *)(&DAT_82a89d08 + iVar2) == 0) {
+      MyAssertHandler(0xffffffff8202cfb8,0x237,0,0xffffffff82000f98,0xffffffff8202d080);
     }
-    uVar3 = uVar2 + 0x34;
-    *(undefined4 *)((int)&con.messageBuffer[iVar1].gamemsgWindows[0].textBufPos + uVar2) = 0;
-    *(undefined4 *)((int)&con.messageBuffer[iVar1].gamemsgWindows[0].messageIndex + uVar2) = 0;
-    *(undefined4 *)((int)&con.messageBuffer[iVar1].gamemsgWindows[0].firstLineIndex + uVar2) = 0;
-    *(undefined4 *)((int)&con.messageBuffer[iVar1].gamemsgWindows[0].activeLineCount + uVar2) = 0;
-    uVar2 = uVar3;
+    uVar3 = uVar3 + 0x34;
+    *(undefined4 *)(&DAT_82a89d2c + iVar2) = 0;
+    *(undefined4 *)(&DAT_82a89d38 + iVar2) = 0;
+    *(undefined4 *)(&DAT_82a89d30 + iVar2) = 0;
+    *(undefined4 *)(&DAT_82a89d34 + iVar2) = 0;
   } while (uVar3 < 0xd0);
   __restgprlr_22();
   return;
@@ -378,59 +404,96 @@ void Con_ClearNotify(LocalClientNum_t param_1)
 
 // 8232E328  Con_ClearMiniConsole  (client/cl_console.cpp:586)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Con_ClearMiniConsole(LocalClientNum_t param_1)
+void Con_ClearMiniConsole(longlong param_1)
 
 {
-  Con_ClearMessageWindow(&con.messageBuffer[param_1].miniconWindow);
+  Con_ClearMessageWindow(param_1 * 0x4858 + -0x7d574c28);
   return;
 }
 
 
 // 8232E348  Con_ClearErrors  (client/cl_console.cpp:592)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Con_ClearErrors(LocalClientNum_t param_1)
+void Con_ClearErrors(longlong param_1)
 
 {
-  Con_ClearMessageWindow(&con.messageBuffer[param_1].errorWindow);
+  Con_ClearMessageWindow(param_1 * 0x4858 + -0x7d573b74);
   return;
 }
 
 
 // 8232E368  Con_CheckResize  (client/cl_console.cpp:599)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Con_CheckResize(void)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  double dVar4;
+  undefined8 uVar5;
+  
+  uVar2 = __savegprlr_29();
+  dVar4 = (double)ScrPlace_ApplyX(0x4010000000000000);
+  dVar4 = floor(dVar4);
+  DAT_82a87cf8 = (float)dVar4;
+  dVar4 = (double)ScrPlace_ApplyY(0x4010000000000000,uVar2);
+  dVar4 = floor(dVar4);
+  DAT_82a87cfc = (float)dVar4;
+  uVar5 = 0xc010000000000000;
+  dVar4 = (double)ScrPlace_ApplyX(0xc010000000000000,uVar2);
+  dVar4 = floor(dVar4);
+  DAT_82a87d00 = (float)dVar4;
+  dVar4 = (double)ScrPlace_ApplyY(uVar5,uVar2,0x10000,3);
+  dVar4 = floor(dVar4);
+  DAT_82a87d04 = (float)dVar4;
+  if (DAT_82aa2964 != 0) {
+    uVar3 = R_TextHeight();
+    DAT_82a87cec = (uint)uVar3;
+    if ((int)DAT_82a87cec < 1) {
+      MyAssertHandler(0xffffffff8202cfb8,0x261,0,0xffffffff82000f98,0xffffffff8202d0ac);
+      uVar3 = (ulonglong)DAT_82a87cec;
+    }
+    trapWord(6,uVar3,0);
+    uVar1 = (uint)(((DAT_82a87d04 - DAT_82a87cfc) -
+                   (float)(longlong)(int)((uVar3 & 0xffffffff) << 1)) - 24.0);
+    DAT_82a87cf4 = (int)(((DAT_82a87d00 - DAT_82a87cf8) - 10.0) - 18.0);
+    DAT_82a87cf0 = (int)uVar1 / (int)uVar3;
+    trapWord(5,uVar3 & ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),
+             0xffff);
+    __restgprlr_29();
+    return;
+  }
+  DAT_82a87cec = 0;
+  DAT_82a87cf0 = 0;
+  DAT_82a87cf4 = 0;
+  __restgprlr_29();
+  return;
+}
+
 
 // 8232E580  Con_InitMessageWindow  (client/cl_console.cpp:623)
 
 void Con_InitMessageWindow
-               (MessageWindow *param_1,Message *param_2,MessageLine *param_3,char *param_4,
-               int param_5,int param_6,int param_7,int param_8,int param_9,int param_10)
+               (undefined8 param_1,undefined4 param_2,ulonglong param_3,undefined4 param_4,
+               undefined8 param_5,undefined8 param_6,undefined4 param_7,undefined4 param_8)
 
 {
   undefined4 *puVar1;
-  ulonglong uVar2;
   undefined4 in_stack_00000054;
   undefined4 in_stack_0000005c;
   
-  uVar2 = (ulonglong)(int)param_3;
-  puVar1 = (undefined4 *)__savegprlr_22(param_1);
+  puVar1 = (undefined4 *)__savegprlr_22();
   if (puVar1 == (undefined4 *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x270,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x270,0,0xffffffff82000f98,0xffffffff8202d0a4);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x271,0
-                    ,"%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x271,0,0xffffffff82000f98,0xffffffff8202d0e4);
   }
-  if (param_5 < param_6) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x272,0
-                    ,"lineCount >= padding\n\t%i, %i");
+  if ((int)param_5 < (int)param_6) {
+    MyAssertHandler(0xffffffff8202cfb8,0x272,0,0xffffffff8202d0c4,param_5,param_6);
   }
-  *puVar1 = (int)uVar2;
+  *puVar1 = (int)param_3;
   puVar1[1] = param_2;
   puVar1[2] = param_4;
   puVar1[9] = 0;
@@ -438,8 +501,8 @@ void Con_InitMessageWindow
   puVar1[10] = 0;
   puVar1[0xb] = 0;
   puVar1[0xc] = 0;
-  puVar1[4] = param_5;
-  puVar1[5] = param_6;
+  puVar1[4] = (int)param_5;
+  puVar1[5] = (int)param_6;
   puVar1[6] = param_8;
   puVar1[7] = in_stack_00000054;
   puVar1[8] = in_stack_0000005c;
@@ -450,60 +513,51 @@ void Con_InitMessageWindow
 
 // 8232E678  Con_Clear_f  (client/cl_console.cpp:651)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_Clear_f(void)
 
 {
-  Con_ClearMessageWindow(&con.consoleWindow);
-  con.lineOffset = 0;
-  con.displayLineOffset = 0;
+  Con_ClearMessageWindow(0xffffffff82a77aa8);
+  DAT_82a87cdc = 0;
+  DAT_82a87ce0 = 0;
   return;
 }
 
 
 // 8232E6D0  Con_Init  (client/cl_console.cpp:660)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_Init(void)
 
 {
-  int iVar1;
-  float fVar2;
-  int *piVar3;
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 *puVar3;
   
   __savegprlr_26();
-  con_restricted = Dvar_RegisterBool("monkeytoy",false,0,"Restrict console access");
-  con_matchPrefixOnly =
-       Dvar_RegisterBool("con_matchPrefixOnly",true,0,
-                         "Only match the prefix when listing matching Dvars");
-  cl_deathMessageWidth =
-       Dvar_RegisterInt("cl_deathMessageWidth",0x140,1,0x280,0,"Pixel width of the obituary area");
-  Field_Clear(&g_consoleField);
-  g_consoleField.fixedSize = 1;
-  g_consoleField.charHeight = g_console_char_height;
-  piVar3 = &historyEditLines[0].widthInPixels;
-  g_consoleField.widthInPixels = g_console_field_width;
+  DAT_82a773ec = Dvar_RegisterBool(0xffffffff8202d178,0,0,0xffffffff8202d184);
+  DAT_82a776a4 = Dvar_RegisterBool(0xffffffff8202d130,1,0,0xffffffff8202d144);
+  DAT_82a7799c = Dvar_RegisterInt(0xffffffff8202d0f4,0x140,1,0x280,0,0xffffffff8202d10c);
+  Field_Clear(0xffffffff82a9b110);
+  DAT_82a9b124 = 1;
+  DAT_82a9b120 = DAT_82964558;
+  puVar3 = &DAT_82a9f6dc;
+  DAT_82a9b11c = DAT_82964554;
   do {
-    Field_Clear((field_t *)(piVar3 + -3));
-    fVar2 = g_console_char_height;
-    iVar1 = g_console_field_width;
-    piVar3[2] = 1;
-    piVar3[1] = (int)fVar2;
-    *piVar3 = iVar1;
-    piVar3 = piVar3 + 0x46;
-  } while ((int)piVar3 < -0x7d55e624);
-  conDrawInputGlob.matchIndex = -1;
-  Cmd_AddCommandInternal("clear",Con_Clear_f,&Con_Clear_f_VAR);
+    Field_Clear(puVar3 + -3);
+    uVar2 = DAT_82964558;
+    uVar1 = DAT_82964554;
+    puVar3[2] = 1;
+    puVar3[1] = uVar2;
+    *puVar3 = uVar1;
+    puVar3 = puVar3 + 0x46;
+  } while ((int)puVar3 < -0x7d55e624);
+  DAT_82a774f0 = 0xffffffff;
+  Cmd_AddCommandInternal(0xffffffff8202d0ec,0xffffffff8232e678,0xffffffff82a99ff4);
   __restgprlr_26();
   return;
 }
 
 
 // 8232E7F0  Con_Shutdown  (client/cl_console.cpp:707)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Con_Shutdown(void)
 
@@ -514,22 +568,16 @@ void Con_Shutdown(void)
 
 // 8232E7F8  Con_InitClientAssets  (client/cl_console.cpp:712)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_InitClientAssets(void)
 
 {
-  ScreenPlacement *pSVar1;
-  
-  pSVar1 = ScrPlace_GetFullPlacement();
-  Con_CheckResize(pSVar1);
+  ScrPlace_GetFullPlacement();
+  Con_CheckResize();
   return;
 }
 
 
 // 8232E820  Con_ShutdownClientAssets  (client/cl_console.cpp:718)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Con_ShutdownClientAssets(void)
 
@@ -540,24 +588,20 @@ void Con_ShutdownClientAssets(void)
 
 // 8232E828  Con_GetDefaultMsgDuration  (client/cl_console.cpp:723)
 
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
-int Con_GetDefaultMsgDuration(print_msg_dest_t param_1)
+int Con_GetDefaultMsgDuration(int param_1)
 
 {
   double dVar1;
   
-  if (param_1 == CON_DEST_MINICON) {
-    dVar1 = floor((double)((con_minicontime->current).value * 1000.0 + 0.5));
+  if (param_1 == 1) {
+    dVar1 = floor((double)(*(float *)(DAT_82a99e98 + 0xc) * 1000.0 + 0.5));
     return (int)dVar1;
   }
-  if (param_1 != CON_DEST_ERROR) {
-    if (((int)param_1 < 3) || (6 < (int)param_1)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x2df
-                      ,0,"%s");
+  if (param_1 != 2) {
+    if ((param_1 < 3) || (6 < param_1)) {
+      MyAssertHandler(0xffffffff8202cfb8,0x2df,0,0xffffffff82000f98,0xffffffff8202d19c);
     }
-    dVar1 = floor((double)((con_gameMsgWindowNMsgTime[param_1 - CON_DEST_GAME1]->current).value *
-                           1000.0 + 0.5));
+    dVar1 = floor((double)(*(float *)((&DAT_82a77258)[param_1 + -3] + 0xc) * 1000.0 + 0.5));
     return (int)dVar1;
   }
   dVar1 = floor((double)(*(float *)(DAT_82a7787c + 0xc) * 1000.0 + 0.5));
@@ -566,34 +610,76 @@ int Con_GetDefaultMsgDuration(print_msg_dest_t param_1)
 
 
 // 8232E978  Con_UpdateMessage  (client/cl_console.cpp:742)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void Con_UpdateMessage(undefined8 param_1,ulonglong param_2,int param_3)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  int *piVar6;
+  
+  uVar2 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x2e9,0,0xffffffff82000f98,0xffffffff8202d0a4);
+  }
+  iVar4 = (int)param_2;
+  if (*(uint *)(iVar4 + 0x10) != 0) {
+    if (*(uint *)(iVar4 + 0x10) <= *(uint *)(iVar4 + 0x30)) {
+      MyAssertHandler(0xffffffff8202cfb8,0x2ee,0,0xffffffff8202d1f0);
+    }
+    if (*(int *)(iVar4 + 0x10) == 0) {
+      MyAssertHandler(0xffffffff8202cfb8,0x2f1,0,0xffffffff82000f98,0xffffffff8202d1d8);
+    }
+    uVar1 = *(uint *)(iVar4 + 0x10);
+    uVar5 = (ulonglong)*(uint *)(iVar4 + 0x30) + 1;
+    trapWord(6,(ulonglong)uVar1,0);
+    uVar3 = uVar5 - (longlong)((int)uVar5 / (int)uVar1) * (longlong)(int)uVar1;
+    *(int *)(iVar4 + 0x30) = (int)uVar3;
+    piVar6 = (int *)((int)((uVar3 & 0xffffffff) << 3) + *(int *)(iVar4 + 4));
+    trapWord(5,(ulonglong)uVar1 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),
+             0xffff);
+    if ((int)uVar2 < DAT_82aa1ae8) {
+      iVar4 = CL_GetLocalClientGlobals(uVar2);
+      iVar4 = *(int *)(iVar4 + 0x3404);
+    }
+    else {
+      iVar4 = 0;
+    }
+    *piVar6 = iVar4;
+    piVar6[1] = iVar4 + param_3;
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 8232EA98  Con_FreeFirstMessageWindowLine  (client/cl_console.cpp:766)
 
-void Con_FreeFirstMessageWindowLine(MessageWindow *param_1)
+void Con_FreeFirstMessageWindowLine(undefined4 *param_1)
 
 {
   int iVar1;
   
-  if (param_1->activeLineCount < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x2ff,0
-                    ,"%s");
+  if ((int)param_1[0xb] < 1) {
+    MyAssertHandler(0xffffffff8202cfb8,0x2ff,0,0xffffffff82000f98,0xffffffff8202d238);
   }
-  iVar1 = param_1->firstLineIndex + 1;
-  param_1->activeLineCount = param_1->activeLineCount + -1;
-  param_1->firstLineIndex = iVar1;
-  if (iVar1 == param_1->lineCount) {
-    param_1->firstLineIndex = 0;
+  iVar1 = param_1[10];
+  param_1[0xb] = param_1[0xb] + -1;
+  param_1[10] = iVar1 + 1;
+  if (iVar1 + 1 == param_1[4]) {
+    param_1[10] = 0;
   }
-  if ((Console *)param_1 == &con) {
-    con.displayLineOffset = con.displayLineOffset + -1;
-    if (con.displayLineOffset < con.visibleLineCount) {
-      if (con.visibleLineCount <= con.consoleWindow.activeLineCount) {
-        con.displayLineOffset = con.visibleLineCount;
+  if (param_1 == &DAT_82a77aa8) {
+    DAT_82a87ce0 = DAT_82a87ce0 + -1;
+    if (DAT_82a87ce0 < DAT_82a87cf0) {
+      if (DAT_82a87cf0 <= DAT_82a77ad4) {
+        DAT_82a87ce0 = DAT_82a87cf0;
         return;
       }
-      con.displayLineOffset = con.consoleWindow.activeLineCount;
+      DAT_82a87ce0 = DAT_82a77ad4;
     }
   }
   return;
@@ -602,89 +688,89 @@ void Con_FreeFirstMessageWindowLine(MessageWindow *param_1)
 
 // 8232EB98  Con_NeedToFreeMessageWindowLine  (client/cl_console.cpp:786)
 
-bool Con_NeedToFreeMessageWindowLine(MessageWindow *param_1,int param_2)
+void Con_NeedToFreeMessageWindowLine(undefined8 param_1,int param_2)
 
 {
   int iVar1;
   int iVar2;
   int *piVar3;
-  undefined1 uVar4;
-  uint uVar5;
-  undefined8 uVar6;
+  uint uVar4;
+  undefined8 uVar5;
   
-  piVar3 = (int *)__savegprlr_27(param_1);
+  piVar3 = (int *)__savegprlr_27();
   if (piVar3[0xb] == 0) {
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    __restgprlr_27(0);
+    return;
   }
   if (piVar3[4] < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x319,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x319,0,0xffffffff82000f98,0xffffffff8202d2c4);
   }
   if ((uint)piVar3[4] <= (uint)piVar3[10]) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x31a,0
-                    ,"msgwnd->firstLineIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)")
-    ;
+    MyAssertHandler(0xffffffff8202cfb8,0x31a,0,0xffffffff8202d278);
   }
   iVar1 = piVar3[10];
   iVar2 = *piVar3;
   if ((piVar3[3] - 1U & piVar3[3]) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x31d,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x31d,0,0xffffffff82000f98,0xffffffff8202d254);
   }
-  uVar5 = piVar3[9] + param_2 & piVar3[3] - 1U;
+  uVar4 = piVar3[9] + param_2 & piVar3[3] - 1U;
   iVar1 = *(int *)(iVar1 * 0x18 + iVar2 + 4);
-  if ((int)uVar5 < piVar3[9]) {
-    if ((piVar3[9] <= iVar1) || (uVar6 = 0, iVar1 < (int)uVar5)) {
-      uVar6 = 1;
+  if ((int)uVar4 < piVar3[9]) {
+    if ((piVar3[9] <= iVar1) || (uVar5 = 0, iVar1 < (int)uVar4)) {
+      uVar5 = 1;
     }
   }
-  else if ((iVar1 < piVar3[9]) || (uVar6 = 1, (int)uVar5 <= iVar1)) {
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+  else if ((iVar1 < piVar3[9]) || (uVar5 = 1, (int)uVar4 <= iVar1)) {
+    __restgprlr_27(0);
+    return;
   }
-  uVar4 = __restgprlr_27(uVar6);
-  return (bool)uVar4;
+  __restgprlr_27(uVar5);
+  return;
 }
 
 
 // 8232ECD8  Con_CopyCurrentConsoleLineText  (client/cl_console.cpp:807)
 
-void Con_CopyCurrentConsoleLineText(MessageWindow *param_1,MessageLine *param_2)
+void Con_CopyCurrentConsoleLineText(undefined8 param_1,ulonglong param_2)
 
 {
-  MessageWindow *pMVar1;
-  bool bVar3;
-  uint uVar2;
-  ulonglong uVar4;
+  int iVar1;
+  char cVar2;
+  void *_Dst;
+  undefined1 *_Src;
+  uint uVar3;
+  size_t _Size;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pMVar1 = (MessageWindow *)__savegprlr_26(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x32a,0
-                    ,"%s");
+  iVar1 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x32a,0,0xffffffff82000f98,0xffffffff8202d2dc);
   }
-  bVar3 = Con_NeedToFreeMessageWindowLine(pMVar1,con.lineOffset + 1);
-  if (bVar3) {
-    do {
-      Con_FreeFirstMessageWindowLine(pMVar1);
-      bVar3 = Con_NeedToFreeMessageWindowLine(pMVar1,con.lineOffset + 1);
-    } while (bVar3);
+  cVar2 = Con_NeedToFreeMessageWindowLine(iVar1,(ulonglong)DAT_82a87cdc + 1);
+  uVar3 = DAT_82a87cdc;
+  while (DAT_82a87cdc = uVar3, cVar2 != '\0') {
+    Con_FreeFirstMessageWindowLine(iVar1);
+    cVar2 = Con_NeedToFreeMessageWindowLine(iVar1,(ulonglong)DAT_82a87cdc + 1);
+    uVar3 = DAT_82a87cdc;
   }
-  if ((uint)(pMVar1->textBufSize - pMVar1->textBufPos) < con.lineOffset) {
-    memcpy();
+  _Size = *(int *)(iVar1 + 0xc) - *(int *)(iVar1 + 0x24);
+  _Src = &DAT_82a87adc;
+  _Dst = (void *)(*(int *)(iVar1 + 8) + *(int *)(iVar1 + 0x24));
+  if (_Size < uVar3) {
+    memcpy(_Dst,&DAT_82a87adc,_Size);
+    _Dst = *(void **)(iVar1 + 8);
+    _Src = &DAT_82a87adc + _Size;
+    uVar3 = DAT_82a87cdc - _Size;
   }
-  memcpy();
-  *(int *)((int)uVar4 + 4) = pMVar1->textBufPos;
-  *(uint *)((int)uVar4 + 8) = con.lineOffset;
-  if ((pMVar1->textBufSize - 1U & pMVar1->textBufSize) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x33d,0
-                    ,"%s");
+  memcpy(_Dst,_Src,uVar3);
+  *(undefined4 *)((int)param_2 + 4) = *(undefined4 *)(iVar1 + 0x24);
+  *(uint *)((int)param_2 + 8) = DAT_82a87cdc;
+  if ((*(uint *)(iVar1 + 0xc) - 1 & *(uint *)(iVar1 + 0xc)) != 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x33d,0,0xffffffff82000f98,0xffffffff8202d254);
   }
-  uVar2 = pMVar1->textBufPos + con.lineOffset & pMVar1->textBufSize - 1U;
-  pMVar1->textBufPos = uVar2;
-  pMVar1->circularTextBuffer[uVar2] = '\n';
-  pMVar1->textBufPos = pMVar1->textBufSize - 1U & pMVar1->textBufPos + 1U;
+  uVar3 = *(int *)(iVar1 + 0x24) + DAT_82a87cdc & *(int *)(iVar1 + 0xc) - 1U;
+  *(uint *)(iVar1 + 0x24) = uVar3;
+  *(undefined1 *)(*(int *)(iVar1 + 8) + uVar3) = 10;
+  *(uint *)(iVar1 + 0x24) = *(int *)(iVar1 + 0xc) - 1U & *(int *)(iVar1 + 0x24) + 1U;
   __restgprlr_26();
   return;
 }
@@ -692,7 +778,7 @@ void Con_CopyCurrentConsoleLineText(MessageWindow *param_1,MessageLine *param_2)
 
 // 8232EE70  LatestActiveTypewrittenLineIdx  (client/cl_console.cpp:847)
 
-int LatestActiveTypewrittenLineIdx(MessageWindow *param_1)
+ulonglong LatestActiveTypewrittenLineIdx(int *param_1)
 
 {
   uint uVar1;
@@ -700,165 +786,279 @@ int LatestActiveTypewrittenLineIdx(MessageWindow *param_1)
   ulonglong uVar3;
   longlong lVar4;
   
-  if (param_1->activeLineCount != 0) {
-    lVar4 = (ulonglong)(uint)param_1->activeLineCount - 1;
+  if (param_1[0xb] != 0) {
+    lVar4 = (ulonglong)(uint)param_1[0xb] - 1;
     if (-1 < lVar4) {
-      uVar1 = param_1->lineCount;
+      uVar1 = param_1[4];
       do {
-        uVar3 = (ulonglong)(uint)param_1->firstLineIndex + lVar4;
+        uVar3 = (ulonglong)(uint)param_1[10] + lVar4;
         trapWord(6,(ulonglong)uVar1,0);
         uVar2 = uVar3 - (longlong)((int)uVar3 / (int)uVar1) * (longlong)(int)uVar1;
         trapWord(5,(ulonglong)uVar1 &
                    ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
-        if ((*(uint *)((int)&param_1->lines->flags +
-                      (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 3)) & 1) != 0) {
-          return (int)uVar2;
+        if ((*(uint *)((int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + *param_1 + 0x14
+                      ) & 1) != 0) {
+          return uVar2;
         }
         lVar4 = lVar4 + -1;
       } while (-1 < lVar4);
     }
   }
-  return -1;
+  return 0xffffffffffffffff;
 }
 
 
 // 8232EEE8  PrintableCharsCount  (client/cl_console.cpp:869)
 
-int PrintableCharsCount(MessageWindow *param_1,MessageLine *param_2)
+void PrintableCharsCount(undefined8 param_1,int param_2)
 
 {
   char cVar1;
   int iVar2;
-  uint uVar3;
+  int iVar3;
   uint uVar4;
-  longlong lVar5;
-  int iVar6;
+  uint uVar5;
+  longlong lVar6;
+  int iVar7;
   int local_30 [12];
   
-  iVar2 = __savegprlr_28(param_1);
-  if ((param_2->textBufSize != 0) &&
+  iVar2 = __savegprlr_28();
+  if ((*(int *)(param_2 + 8) != 0) &&
      ((uint)LZCOUNT(*(uint *)(iVar2 + 0xc) - 1 & *(uint *)(iVar2 + 0xc)) >> 5 == 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x369,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x369,0,0xffffffff82000f98,0xffffffff8202d2e4);
   }
-  lVar5 = 0;
-  iVar6 = 0;
-  if (0 < param_2->textBufSize) {
+  lVar6 = 0;
+  iVar7 = 0;
+  if (0 < *(int *)(param_2 + 8)) {
     do {
-      uVar4 = iVar6 + param_2->textBufPos;
-      uVar3 = *(int *)(iVar2 + 0xc) - 1;
-      uVar3 = SEH_DecodeLetter((int)*(char *)((uVar3 & uVar4) + *(int *)(iVar2 + 8)),
-                               (int)*(char *)((uVar4 + 1 & uVar3) + *(int *)(iVar2 + 8)),local_30,
-                               (int *)0x0);
-      lVar5 = lVar5 + 1;
-      iVar6 = local_30[0] + iVar6;
-      if ((((uVar3 == 0x5e) &&
-           (cVar1 = *(char *)((iVar6 + param_2->textBufPos & *(int *)(iVar2 + 0xc) - 1U) +
+      uVar5 = iVar7 + *(int *)(param_2 + 4);
+      uVar4 = *(int *)(iVar2 + 0xc) - 1;
+      iVar3 = SEH_DecodeLetter(*(undefined1 *)((uVar4 & uVar5) + *(int *)(iVar2 + 8)),
+                               *(undefined1 *)((uVar5 + 1 & uVar4) + *(int *)(iVar2 + 8)),local_30,0
+                              );
+      lVar6 = lVar6 + 1;
+      iVar7 = local_30[0] + iVar7;
+      if ((((iVar3 == 0x5e) &&
+           (cVar1 = *(char *)((iVar7 + *(int *)(param_2 + 4) & *(int *)(iVar2 + 0xc) - 1U) +
                              *(int *)(iVar2 + 8)), cVar1 != '^')) && ('/' < cVar1)) && (cVar1 < '<')
          ) {
-        iVar6 = iVar6 + 1;
+        iVar7 = iVar7 + 1;
       }
-    } while (iVar6 < param_2->textBufSize);
+    } while (iVar7 < *(int *)(param_2 + 8));
   }
-  iVar2 = __restgprlr_28(lVar5);
-  return iVar2;
+  __restgprlr_28(lVar6);
+  return;
 }
 
 
 // 8232F000  PrintTimeTotal  (client/cl_console.cpp:902)
 
-int PrintTimeTotal(MessageWindow *param_1,MessageLine *param_2)
+longlong PrintTimeTotal(undefined8 param_1,int param_2)
 
 {
   int iVar1;
+  ulonglong uVar2;
   
-  if ((param_2->flags & 1U) == 0) {
+  if ((*(uint *)(param_2 + 0x14) & 1) == 0) {
     return 0;
   }
-  iVar1 = PrintableCharsCount(param_1,param_2);
-  iVar1 = (con_typewriterPrintSpeed->current).integer * iVar1;
-  if (iVar1 < (con_typewriterDecayStartTime->current).integer) {
-    iVar1 = (con_typewriterDecayStartTime->current).integer;
+  iVar1 = PrintableCharsCount();
+  uVar2 = (longlong)*(int *)(DAT_82a7726c + 0xc) * (longlong)iVar1;
+  if ((int)uVar2 < (int)*(uint *)(DAT_82a773e8 + 0xc)) {
+    uVar2 = (ulonglong)*(uint *)(DAT_82a773e8 + 0xc);
   }
-  return (int)((con_typewriterDecayDuration->current).string + iVar1);
+  return *(uint *)(DAT_82a773e4 + 0xc) + uVar2;
 }
 
 
 // 8232F080  PrintTimeWriteOut  (client/cl_console.cpp:921)
 
-int PrintTimeWriteOut(MessageWindow *param_1,MessageLine *param_2)
+longlong PrintTimeWriteOut(undefined8 param_1,int param_2)
 
 {
   int iVar1;
   
-  if ((param_2->flags & 1U) == 0) {
+  if ((*(uint *)(param_2 + 0x14) & 1) == 0) {
     return 0;
   }
-  iVar1 = PrintableCharsCount(param_1,param_2);
-  return (con_typewriterPrintSpeed->current).integer * iVar1;
+  iVar1 = PrintableCharsCount();
+  return (longlong)*(int *)(DAT_82a7726c + 0xc) * (longlong)iVar1;
 }
 
 
 // 8232F0D8  GetNextValidPrintTimeForLine  (client/cl_console.cpp:933)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+longlong GetNextValidPrintTimeForLine(undefined8 param_1,int *param_2,ulonglong param_3)
+
+{
+  uint uVar1;
+  longlong lVar2;
+  int iVar3;
+  
+  if ((param_3 & 1) == 0) {
+    lVar2 = 0;
+  }
+  else {
+    iVar3 = CL_GetLocalClientGlobals();
+    uVar1 = *(uint *)(iVar3 + 0x3404);
+    iVar3 = LatestActiveTypewrittenLineIdx(param_2);
+    if (iVar3 != -1) {
+      iVar3 = iVar3 * 0x18 + *param_2;
+      lVar2 = PrintTimeWriteOut(param_2,iVar3);
+      lVar2 = lVar2 + (ulonglong)*(uint *)(iVar3 + 0xc) + 0x96;
+      if (0xf9 < (int)((int)lVar2 - uVar1)) {
+        return lVar2;
+      }
+    }
+    lVar2 = (ulonglong)uVar1 + 0xfa;
+  }
+  return lVar2;
+}
+
 
 // 8232F178  Con_UpdateMessageWindowLine  (client/cl_console.cpp:960)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void Con_UpdateMessageWindowLine
+               (undefined8 param_1,ulonglong param_2,int param_3,undefined8 param_4)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint *puVar3;
+  undefined8 uVar4;
+  int iVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  int *piVar12;
+  
+  uVar4 = __savegprlr_25();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x3c7,0,0xffffffff82000f98,0xffffffff8202d0a4);
+  }
+  puVar3 = (uint *)param_2;
+  if (puVar3[4] != 0) {
+    if (puVar3[4] <= puVar3[10]) {
+      MyAssertHandler(0xffffffff8202cfb8,0x3cc,0,0xffffffff8202d278);
+    }
+    if (puVar3[4] <= puVar3[0xc]) {
+      MyAssertHandler(0xffffffff8202cfb8,0x3cd,0,0xffffffff8202d1f0);
+    }
+    if ((int)uVar4 < DAT_82aa1ae8) {
+      iVar5 = CL_GetLocalClientGlobals(uVar4);
+      iVar5 = *(int *)(iVar5 + 0x3404);
+    }
+    else {
+      iVar5 = 0;
+    }
+    uVar1 = puVar3[4];
+    uVar7 = (ulonglong)puVar3[0xb] + (ulonglong)puVar3[10];
+    trapWord(6,(ulonglong)uVar1,0);
+    uVar2 = puVar3[0xc];
+    uVar8 = uVar7 - (longlong)((int)uVar7 / (int)uVar1) * (longlong)(int)uVar1;
+    uVar7 = (ulonglong)uVar1 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1);
+    uVar8 = uVar8 + (uVar8 & 0x7fffffff) * 2;
+    trapWord(5,uVar7,0xffff);
+    lVar9 = (uVar8 & 0x1fffffff) * 8;
+    lVar10 = lVar9 + (ulonglong)*puVar3;
+    *(uint *)((int)lVar9 + *puVar3) = uVar2;
+    piVar12 = (int *)lVar10;
+    piVar12[4] = 0;
+    piVar12[3] = 0;
+    piVar12[5] = (int)param_4;
+    iVar6 = GetNextValidPrintTimeForLine(uVar4,param_2,param_4,uVar2,uVar8,uVar7);
+    piVar12[3] = iVar6;
+    if (iVar6 != 0) {
+      iVar6 = PrintTimeTotal(param_2,lVar10);
+      *(int *)(*piVar12 * 8 + puVar3[1] + 4) = iVar6 + piVar12[3];
+    }
+    Con_CopyCurrentConsoleLineText(param_2,lVar10);
+    if (param_3 != 0) {
+      if (puVar3[0xb] == puVar3[4]) {
+        Con_FreeFirstMessageWindowLine(param_2);
+      }
+      uVar1 = puVar3[0xb];
+      uVar2 = puVar3[4];
+      uVar7 = (ulonglong)uVar2;
+      puVar3[0xb] = (uint)((ulonglong)uVar1 + 1);
+      lVar9 = (puVar3[5] - uVar7) + (ulonglong)uVar1 + 1;
+      if (0 < lVar9) {
+        trapWord(6,uVar7,0);
+        uVar8 = ((ulonglong)puVar3[10] + lVar9) - 1;
+        uVar11 = uVar8 - (longlong)((int)uVar8 / (int)uVar2) * (longlong)(int)uVar2;
+        trapWord(5,uVar7 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff)
+        ;
+        if (uVar7 <= (uVar11 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8202cfb8,0x3eb,0,0xffffffff8202d354,uVar11);
+        }
+        uVar1 = *puVar3;
+        iVar6 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+        if (puVar3[4] <= *(uint *)(iVar6 + uVar1)) {
+          MyAssertHandler(0xffffffff8202cfb8,0x3ed,0,0xffffffff8202d038);
+        }
+        piVar12 = (int *)(*(int *)(iVar6 + uVar1) * 8 + puVar3[1]);
+        if (iVar5 < (int)(piVar12[1] - puVar3[8])) {
+          if (piVar12[1] < *piVar12) {
+            MyAssertHandler(0xffffffff8202cfb8,0x3f2,0,0xffffffff8202d324);
+          }
+          piVar12[1] = puVar3[8] + iVar5;
+        }
+      }
+    }
+  }
+  __restgprlr_25();
+  return;
+}
+
 
 // 8232F410  Con_GetDestWindow  (client/cl_console.cpp:1019)
 
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-MessageWindow * Con_GetDestWindow(LocalClientNum_t param_1,print_msg_dest_t param_2)
+longlong Con_GetDestWindow(longlong param_1,ulonglong param_2)
 
 {
-  Console *pCVar1;
+  longlong lVar1;
   
-  if (param_2 == CON_DEST_CONSOLE) {
-    pCVar1 = &con;
+  if ((param_2 & 0xffffffff) == 0) {
+    lVar1 = -0x7d588558;
   }
-  else if (param_2 == CON_DEST_MINICON) {
-    pCVar1 = (Console *)&con.messageBuffer[param_1].miniconWindow;
+  else if ((param_2 & 0xffffffff) == 1) {
+    lVar1 = param_1 * 0x4858 + -0x7d574c28;
   }
-  else if (param_2 < CON_DEST_GAME1) {
-    pCVar1 = (Console *)&con.messageBuffer[param_1].errorWindow;
+  else if ((param_2 & 0xffffffff) < 3) {
+    lVar1 = param_1 * 0x4858 + -0x7d573b74;
   }
   else {
     if (((int)param_2 < 3) || (6 < (int)param_2)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x409
-                      ,0,"%s");
+      MyAssertHandler(0xffffffff8202cfb8,0x409,0,0xffffffff82000f98,0xffffffff8202d19c);
     }
-    pCVar1 = (Console *)(con.messageBuffer[param_1].gamemsgText[3] + param_2 * 0x34 + 0x764);
+    lVar1 = param_1 * 0x4858 + param_2 * 0x34 + -0x7d576394;
   }
-  return &pCVar1->consoleWindow;
+  return lVar1;
 }
 
 
 // 8232F4F0  Con_UpdateNotifyMessageWindow  (client/cl_console.cpp:1040)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
 void Con_UpdateNotifyMessageWindow
-               (LocalClientNum_t param_1,int param_2,int param_3,int param_4,
-               print_msg_dest_t param_5)
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar3;
-  MessageWindow *pMVar2;
+  undefined8 uVar1;
+  char cVar3;
+  undefined8 uVar2;
   
-  LVar1 = __savegprlr_29(param_1);
-  bVar3 = Con_IsChannelVisible(param_5,param_2,param_4);
-  if (bVar3) {
-    if (param_3 == 0) {
+  uVar1 = __savegprlr_29();
+  cVar3 = Con_IsChannelVisible(param_5);
+  if (cVar3 != '\0') {
+    if ((int)param_3 == 0) {
       param_3 = Con_GetDefaultMsgDuration(param_5);
     }
-    pMVar2 = Con_GetDestWindow(LVar1,param_5);
-    Con_UpdateMessage(LVar1,pMVar2,-(param_3 >> 0x1f) - 1U & param_3);
+    uVar2 = Con_GetDestWindow(uVar1,param_5);
+    Con_UpdateMessage(uVar1,uVar2,((param_3 & 0xffffffff) >> 0x1f) - 1 & param_3);
   }
   __restgprlr_29();
   return;
@@ -867,65 +1067,63 @@ void Con_UpdateNotifyMessageWindow
 
 // 8232F568  Con_UpdateNotifyMessage  (client/cl_console.cpp:1055)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
-void Con_UpdateNotifyMessage(LocalClientNum_t param_1,int param_2,int param_3,int param_4)
+void Con_UpdateNotifyMessage
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar4;
-  uint uVar2;
-  MessageWindow *pMVar3;
-  print_msg_dest_t pVar5;
-  double dVar6;
+  longlong lVar1;
+  char cVar4;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  int iVar5;
+  ulonglong uVar6;
   double dVar7;
   double dVar8;
+  double dVar9;
   
-  LVar1 = __savegprlr_23(param_1);
-  bVar4 = Con_IsChannelOpen(param_2);
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x422,0
-                    ,"%s");
+  lVar1 = __savegprlr_23();
+  cVar4 = Con_IsChannelOpen(param_2);
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8202cfb8,0x422,0,0xffffffff82000f98,0xffffffff8202d39c);
   }
-  bVar4 = Con_IsChannelVisible(CON_DEST_MINICON,param_2,param_4);
-  dVar7 = 0.5;
-  dVar8 = 1000.0;
-  if (bVar4) {
-    uVar2 = param_3;
-    if (param_3 == 0) {
-      dVar6 = floor((double)((con_minicontime->current).value * 1000.0 + 0.5));
-      uVar2 = (uint)dVar6;
+  cVar4 = Con_IsChannelVisible(1,param_2,param_4);
+  dVar8 = 0.5;
+  dVar9 = 1000.0;
+  iVar5 = (int)param_3;
+  if (cVar4 != '\0') {
+    uVar6 = param_3;
+    if (iVar5 == 0) {
+      dVar7 = floor((double)(*(float *)(DAT_82a99e98 + 0xc) * 1000.0 + 0.5));
+      uVar6 = (ulonglong)(uint)(int)dVar7;
     }
-    Con_UpdateMessage(LVar1,&con.messageBuffer[LVar1].miniconWindow,
-                      -((int)uVar2 >> 0x1f) - 1U & uVar2);
-  }
-  pVar5 = CON_DEST_GAME1;
-  do {
-    bVar4 = Con_IsChannelVisible(pVar5,param_2,param_4);
-    if (bVar4) {
-      uVar2 = param_3;
-      if (param_3 == 0) {
-        uVar2 = Con_GetDefaultMsgDuration(pVar5);
-      }
-      pMVar3 = Con_GetDestWindow(LVar1,pVar5);
-      Con_UpdateMessage(LVar1,pMVar3,-((int)uVar2 >> 0x1f) - 1U & uVar2);
-    }
-    pVar5 = pVar5 + CON_DEST_MINICON;
-  } while (pVar5 < CON_DEST_COUNT);
-  if (com_developer == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x42b,0
-                    ,"%s");
-  }
-  if (((com_developer->current).integer != 0) &&
-     (bVar4 = Con_IsChannelVisible(CON_DEST_ERROR,param_2,param_4), bVar4)) {
-    if (param_3 == 0) {
-      dVar7 = floor((double)(float)((double)(float)((double)*(float *)(DAT_82a7787c + 0xc) * dVar8)
-                                   + dVar7));
-      param_3 = (int)dVar7;
-    }
-    Con_UpdateMessage(LVar1,&con.messageBuffer[LVar1].errorWindow,-(param_3 >> 0x1f) - 1U & param_3)
+    Con_UpdateMessage(lVar1,lVar1 * 0x4858 + -0x7d574c28,((uVar6 & 0xffffffff) >> 0x1f) - 1 & uVar6)
     ;
+  }
+  uVar6 = 3;
+  do {
+    cVar4 = Con_IsChannelVisible(uVar6,param_2,param_4);
+    if (cVar4 != '\0') {
+      uVar2 = param_3;
+      if (iVar5 == 0) {
+        uVar2 = Con_GetDefaultMsgDuration(uVar6);
+      }
+      uVar3 = Con_GetDestWindow(lVar1,uVar6);
+      Con_UpdateMessage(lVar1,uVar3,((uVar2 & 0xffffffff) >> 0x1f) - 1 & uVar2);
+    }
+    uVar6 = uVar6 + 1;
+  } while ((uVar6 & 0xffffffff) < 7);
+  if (DAT_8365e118 == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x42b,0,0xffffffff82000f98,0xffffffff8202d38c);
+  }
+  if ((*(int *)(DAT_8365e118 + 0xc) != 0) &&
+     (cVar4 = Con_IsChannelVisible(2,param_2,param_4), cVar4 != '\0')) {
+    if (iVar5 == 0) {
+      dVar8 = floor((double)(float)((double)(float)((double)*(float *)(DAT_82a7787c + 0xc) * dVar9)
+                                   + dVar8));
+      param_3 = (ulonglong)(uint)(int)dVar8;
+    }
+    Con_UpdateMessage(lVar1,lVar1 * 0x4858 + -0x7d573b74,
+                      ((param_3 & 0xffffffff) >> 0x1f) - 1 & param_3);
   }
   __restgprlr_23();
   return;
@@ -934,25 +1132,20 @@ void Con_UpdateNotifyMessage(LocalClientNum_t param_1,int param_2,int param_3,in
 
 // 8232F780  Con_UpdateNotifyLineWindow  (client/cl_console.cpp:1075)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
 void Con_UpdateNotifyLineWindow
-               (LocalClientNum_t param_1,int param_2,bool param_3,int param_4,
-               print_msg_dest_t param_5)
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar3;
-  MessageWindow *pMVar2;
-  uint uVar4;
+  undefined8 uVar1;
+  char cVar3;
+  undefined8 uVar2;
   
-  uVar4 = (uint)param_3;
-  LVar1 = __savegprlr_28(param_1);
-  bVar3 = Con_IsChannelVisible(param_5,param_2,param_4);
-  if (bVar3) {
-    pMVar2 = Con_GetDestWindow(LVar1,param_5);
-    Con_UpdateMessageWindowLine(LVar1,pMVar2,uVar4 & 0xff,param_4);
+  uVar1 = __savegprlr_28();
+  cVar3 = Con_IsChannelVisible(param_5);
+  if (cVar3 != '\0') {
+    uVar2 = Con_GetDestWindow(uVar1,param_5);
+    Con_UpdateMessageWindowLine(uVar1,uVar2,param_3 & 0xff,param_4);
   }
   __restgprlr_28();
   return;
@@ -961,49 +1154,43 @@ void Con_UpdateNotifyLineWindow
 
 // 8232F7E0  Con_UpdateNotifyLine  (client/cl_console.cpp:1084)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
-void Con_UpdateNotifyLine(LocalClientNum_t param_1,int param_2,bool param_3,int param_4)
+void Con_UpdateNotifyLine
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar3;
-  MessageWindow *pMVar2;
-  uint uVar4;
-  print_msg_dest_t pVar5;
+  longlong lVar1;
+  char cVar3;
+  undefined8 uVar2;
+  ulonglong uVar4;
   
-  uVar4 = (uint)param_3;
-  LVar1 = __savegprlr_24(param_1);
-  bVar3 = Con_IsChannelOpen(param_2);
-  if (!bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x43f,0
-                    ,"%s");
+  lVar1 = __savegprlr_24();
+  cVar3 = Con_IsChannelOpen(param_2);
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff8202cfb8,0x43f,0,0xffffffff82000f98,0xffffffff8202d39c);
   }
-  bVar3 = Con_IsChannelVisible(CON_DEST_CONSOLE,param_2,param_4);
-  if (bVar3) {
-    Con_UpdateMessageWindowLine(LVar1,&con.consoleWindow,uVar4 & 0xff,param_4);
+  cVar3 = Con_IsChannelVisible(0,param_2,param_4);
+  if (cVar3 != '\0') {
+    Con_UpdateMessageWindowLine(lVar1,0xffffffff82a77aa8,param_3 & 0xff,param_4);
   }
-  bVar3 = Con_IsChannelVisible(CON_DEST_MINICON,param_2,param_4);
-  if (bVar3) {
-    Con_UpdateMessageWindowLine(LVar1,&con.messageBuffer[LVar1].miniconWindow,uVar4 & 0xff,param_4);
+  cVar3 = Con_IsChannelVisible(1,param_2,param_4);
+  if (cVar3 != '\0') {
+    Con_UpdateMessageWindowLine(lVar1,lVar1 * 0x4858 + -0x7d574c28,param_3 & 0xff,param_4);
   }
-  pVar5 = CON_DEST_GAME1;
+  uVar4 = 3;
   do {
-    bVar3 = Con_IsChannelVisible(pVar5,param_2,param_4);
-    if (bVar3) {
-      pMVar2 = Con_GetDestWindow(LVar1,pVar5);
-      Con_UpdateMessageWindowLine(LVar1,pMVar2,uVar4 & 0xff,param_4);
+    cVar3 = Con_IsChannelVisible(uVar4,param_2,param_4);
+    if (cVar3 != '\0') {
+      uVar2 = Con_GetDestWindow(lVar1,uVar4);
+      Con_UpdateMessageWindowLine(lVar1,uVar2,param_3 & 0xff,param_4);
     }
-    pVar5 = pVar5 + CON_DEST_MINICON;
-  } while (pVar5 < CON_DEST_COUNT);
-  if (com_developer == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x449,0
-                    ,"%s");
+    uVar4 = uVar4 + 1;
+  } while ((uVar4 & 0xffffffff) < 7);
+  if (DAT_8365e118 == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x449,0,0xffffffff82000f98,0xffffffff8202d38c);
   }
-  if (((com_developer->current).integer != 0) &&
-     (bVar3 = Con_IsChannelVisible(CON_DEST_ERROR,param_2,param_4), bVar3)) {
-    Con_UpdateMessageWindowLine(LVar1,&con.messageBuffer[LVar1].errorWindow,uVar4 & 0xff,param_4);
+  if ((*(int *)(DAT_8365e118 + 0xc) != 0) &&
+     (cVar3 = Con_IsChannelVisible(2,param_2,param_4), cVar3 != '\0')) {
+    Con_UpdateMessageWindowLine(lVar1,lVar1 * 0x4858 + -0x7d573b74,param_3 & 0xff,param_4);
   }
   __restgprlr_24();
   return;
@@ -1012,15 +1199,13 @@ void Con_UpdateNotifyLine(LocalClientNum_t param_1,int param_2,bool param_3,int 
 
 // 8232F980  Con_Linefeed  (client/cl_console.cpp:1105)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Con_Linefeed(LocalClientNum_t param_1,int param_2,int param_3)
+void Con_Linefeed(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  Con_UpdateNotifyLine(param_1,param_2,true,param_3);
-  con.lineOffset = 0;
-  if (con.displayLineOffset == con.consoleWindow.activeLineCount + -1) {
-    con.displayLineOffset = con.displayLineOffset + 1;
+  Con_UpdateNotifyLine(param_1,param_2,1,param_3);
+  DAT_82a87cdc = 0;
+  if (DAT_82a87ce0 == DAT_82a77ad4 + -1) {
+    DAT_82a87ce0 = DAT_82a87ce0 + 1;
   }
   return;
 }
@@ -1028,36 +1213,32 @@ void Con_Linefeed(LocalClientNum_t param_1,int param_2,int param_3)
 
 // 8232F9F0  Con_InitMessageBuffer  (client/cl_console.cpp:1117)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_InitMessageBuffer(void)
 
 {
-  int iVar1;
-  Message *pMVar2;
-  MessageWindow *pMVar3;
-  Message *pMVar4;
-  MessageLine *pMVar5;
-  MessageBuffer *pMVar6;
+  uint uVar1;
+  longlong lVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
   uint uVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  int in_stack_ffffff08;
-  int in_stack_ffffff0c;
   
   __savegprlr_16();
-  pMVar2 = con.messageBuffer[0].gamemsgMessages[0];
+  lVar2 = -0x7d575da8;
   dVar9 = 0.5;
   dVar10 = 1000.0;
   do {
-    pMVar6 = (MessageBuffer *)(pMVar2 + -0x4aa);
-    pMVar3 = (MessageWindow *)(pMVar2 + -0xaa);
-    pMVar5 = (MessageLine *)(pMVar2 + -0x90);
+    lVar3 = lVar2 + -0x2550;
+    lVar4 = lVar2 + -0x550;
+    lVar6 = lVar2 + -0x480;
     uVar7 = 0;
-    pMVar4 = pMVar2;
+    lVar5 = lVar2;
     do {
-      iVar1 = *(int *)(*(int *)((int)con_gameMsgWindowNLineCount + uVar7) + 0xc);
+      uVar1 = *(uint *)(*(int *)((int)&DAT_82a77248 + uVar7) + 0xc);
       dVar8 = floor((double)(float)((double)(float)((double)*(float *)(*(int *)((int)&DAT_82a77868 +
                                                                                uVar7) + 0xc) *
                                                    dVar10) + dVar9));
@@ -1065,29 +1246,23 @@ void Con_InitMessageBuffer(void)
                                                               + 0xc) * dVar10) + dVar9));
       floor((double)(float)((double)(float)((double)*(float *)(*(int *)((int)&DAT_82a773d4 + uVar7)
                                                               + 0xc) * dVar10) + dVar9));
-      Con_InitMessageWindow
-                (pMVar3,pMVar4,pMVar5,(char *)pMVar6,iVar1 + 3,3,0x800,(int)dVar8,in_stack_ffffff08,
-                 in_stack_ffffff0c);
+      Con_InitMessageWindow(lVar4,lVar5,lVar6,lVar3,(ulonglong)uVar1 + 3,3,0x800,(int)dVar8);
       uVar7 = uVar7 + 4;
-      pMVar6 = (MessageBuffer *)(pMVar6->gamemsgText + 1);
-      pMVar5 = pMVar5 + 0xc;
-      pMVar4 = pMVar4 + 0xc;
-      pMVar3 = pMVar3 + 1;
+      lVar3 = lVar3 + 0x800;
+      lVar6 = lVar6 + 0x120;
+      lVar5 = lVar5 + 0x60;
+      lVar4 = lVar4 + 0x34;
     } while (uVar7 < 0x10);
-    if (100 < (con_miniconlines->current).integer) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x477
-                      ,0,"con_miniconlines->current.integer <= MINICON_LINES\n\t%i, %i");
+    if (100 < *(int *)(DAT_82a99e9c + 0xc)) {
+      MyAssertHandler(0xffffffff8202cfb8,0x477,0,0xffffffff8202d3b8,*(int *)(DAT_82a99e9c + 0xc),100
+                     );
     }
     Con_InitMessageWindow
-              ((MessageWindow *)(pMVar2 + 0x230),(Message *)&pMVar2[0x362].endTime,
-               (MessageLine *)&pMVar2[0x236].endTime,(char *)(pMVar2 + 0x30),
-               (con_miniconlines->current).integer,0,0x1000,0,in_stack_ffffff08,in_stack_ffffff0c);
-    Con_InitMessageWindow
-              ((MessageWindow *)&pMVar2[0x446].endTime,pMVar2 + 0x45c,
-               (MessageLine *)(pMVar2 + 0x44d),(char *)&pMVar2[0x3c6].endTime,5,0,0x400,0,
-               in_stack_ffffff08,in_stack_ffffff0c);
-    pMVar2 = pMVar2 + 0x90b;
-  } while ((int)pMVar2 < -0x7d563c48);
+              (lVar2 + 0x1180,lVar2 + 0x1b14,lVar2 + 0x11b4,lVar2 + 0x180,
+               *(undefined4 *)(DAT_82a99e9c + 0xc),0,0x1000,0);
+    Con_InitMessageWindow(lVar2 + 0x2234,lVar2 + 0x22e0,lVar2 + 0x2268,lVar2 + 0x1e34,5,0,0x400,0);
+    lVar2 = lVar2 + 0x4858;
+  } while ((int)lVar2 < -0x7d563c48);
   __restgprlr_16();
   return;
 }
@@ -1095,290 +1270,236 @@ void Con_InitMessageBuffer(void)
 
 // 8232FBD8  Con_OneTimeInit  (client/cl_console.cpp:1152)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_OneTimeInit(void)
 
 {
   char cVar1;
-  dvar_t *pdVar2;
-  ushort in_r4;
-  ushort uVar3;
+  undefined4 uVar2;
+  char *pcVar3;
   char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
-  char *pcVar7;
-  char *pcVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  int in_stack_fffffe78;
-  int in_stack_fffffe7c;
+  uint uVar6;
+  uint uVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  undefined8 uVar14;
+  undefined8 uVar15;
+  undefined8 uVar16;
+  undefined8 uVar17;
   
   __savegprlr();
   __savefpr_23();
-  dVar13 = 0.25;
-  dVar18 = 1.0;
-  dVar17 = 0.0;
-  pcVar4 = "Color of the console input box";
-  con_inputBoxColor =
-       Dvar_RegisterVec4("con_inputBoxColor",0.25,0.25,0.2,1.0,0.0,1.0,in_r4,
-                         "Color of the console input box");
-  dVar15 = 0.3499999940395355;
-  con_inputHintBoxColor =
-       Dvar_RegisterVec4("con_inputHintBoxColor",0.4,0.4,0.35,(float)dVar18,(float)dVar17,
-                         (float)dVar18,0,pcVar4);
-  dVar14 = 0.6000000238418579;
-  DAT_82a77884 = Dvar_RegisterVec4("con_outputBarColor",(float)dVar18,(float)dVar18,
-                                   (float)0x3f733333,0.6,(float)dVar17,(float)dVar18,0,
-                                   IMAGE_DOS_HEADER_82000000.e_magic);
-  pcVar4 = "bind <key> [command] : attach a command to a key\n";
-  uVar3 = 0xdba4;
-  con_outputSliderColor =
-       Dvar_RegisterVec4("con_outputSliderColor",0.15,0.15,0.1,(float)dVar14,(float)dVar17,
-                         (float)dVar18,0xdba4,"bind <key> [command] : attach a command to a key\n");
-  dVar10 = 0.75;
-  dVar12 = 0.30000001192092896;
-  con_outputWindowColor =
-       Dvar_RegisterVec4("con_outputWindowColor",(float)dVar15,(float)dVar15,0.3,0.75,(float)dVar17,
-                         (float)dVar18,uVar3,pcVar4);
-  dVar15 = 0.009999999776482582;
-  dVar11 = 0.5;
-  dVar16 = 3.4028234663852886e+38;
-  pcVar4 = (char *)0x0;
+  uVar12 = 0x3fd0000000000000;
+  uVar17 = 0x3ff0000000000000;
+  uVar16 = 0;
+  DAT_82a772e4 = Dvar_RegisterVec4(0x3fd0000000000000,0x3fd0000000000000,0x3fc99999a0000000,
+                                   0x3ff0000000000000,0,0x3ff0000000000000,0xffffffff8202dc38);
+  uVar14 = 0x3fd6666660000000;
+  DAT_82a99e94 = Dvar_RegisterVec4(0x3fd99999a0000000,0x3fd99999a0000000,0x3fd6666660000000,uVar17,
+                                   uVar16,uVar17,0xffffffff8202dbfc);
+  uVar13 = 0x3fe3333340000000;
+  DAT_82a77884 = Dvar_RegisterVec4(uVar17,uVar17,0x3fee666660000000,0x3fe3333340000000,uVar16,uVar17
+                                   ,0xffffffff8202dbc0);
+  DAT_82a99e90 = Dvar_RegisterVec4(0x3fc3333340000000,0x3fc3333340000000,0x3fb99999a0000000,uVar13,
+                                   uVar16,uVar17,0xffffffff8202db8c);
+  uVar9 = 0x3fe8000000000000;
+  uVar11 = 0x3fd3333340000000;
+  DAT_82a99e88 = Dvar_RegisterVec4(uVar14,uVar14,0x3fd3333340000000,0x3fe8000000000000,uVar16,uVar17
+                                   ,0xffffffff8202db58);
+  uVar14 = 0x3f847ae140000000;
+  uVar10 = 0x3fe0000000000000;
+  uVar15 = 0x47efffffe0000000;
+  uVar6 = 0;
   do {
-    pcVar7 = con_gameMsgWindowNMsgTime_Names[(int)pcVar4];
-    pcVar8 = con_gameMsgWindowNMsgTime_Descs[(int)pcVar4];
-    sprintf(pcVar7,"con_gameMsgWindow%dMsgTime");
-    pcVar5 = pcVar7;
+    pcVar5 = &DAT_82a77518 + uVar6 * 0x1a;
+    pcVar4 = &DAT_82a77888 + uVar6 * 0x45;
+    sprintf(pcVar5,"con_gameMsgWindow%dMsgTime",uVar6);
+    pcVar3 = pcVar5;
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar5 - (int)pcVar7 != 0x1a) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x49d
-                      ,0,"%s");
+    if ((int)pcVar3 - (int)pcVar5 != 0x1a) {
+      MyAssertHandler(0xffffffff8202cfb8,0x49d,0,0xffffffff82000f98,
+                      "strlen( dvarName ) == sizeof( con_gameMsgWindowNMsgTime_Names[gameWindowIndex] ) - 1"
+                     );
     }
-    uVar3 = 0xccc0;
-    pcVar5 = pcVar4;
-    sprintf(pcVar8,"On screen time for game messages in seconds in game message window %d");
-    pcVar6 = pcVar8;
+    sprintf(pcVar4,"On screen time for game messages in seconds in game message window %d",uVar6);
+    pcVar3 = pcVar4;
     do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar6 - (int)pcVar8 != 0x45) {
-      pcVar5 = (char *)0x0;
-      uVar3 = 0x49d;
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x49d
-                      ,0,"%s");
+    if ((int)pcVar3 - (int)pcVar4 != 0x45) {
+      MyAssertHandler(0xffffffff8202cfb8,0x49d,0,0xffffffff82000f98,
+                      "strlen( dvarDesc ) == sizeof( con_gameMsgWindowNMsgTime_Descs[gameWindowIndex] ) - 1"
+                     );
     }
-    pdVar2 = Dvar_RegisterFloat(pcVar7,defaultGameMessageTimes[(int)pcVar4],(float)dVar17,
-                                (float)dVar16,uVar3,pcVar5);
-    con_gameMsgWindowNMsgTime[(int)pcVar4] = pdVar2;
-    pcVar7 = con_gameMsgWindowNLineCount_Names[(int)pcVar4];
-    pcVar8 = con_gameMsgWindowNLineCount_Descs[(int)pcVar4];
-    sprintf(pcVar7,"con_gameMsgWindow%dLineCount");
-    pcVar5 = pcVar7;
+    uVar2 = Dvar_RegisterFloat((double)(float)(&DAT_8202cc70)[uVar6],uVar16,uVar15,pcVar5);
+    (&DAT_82a77258)[uVar6] = uVar2;
+    pcVar5 = &DAT_82a776a8 + uVar6 * 0x1c;
+    pcVar4 = &DAT_82a77580 + uVar6 * 0x49;
+    sprintf(pcVar5,"con_gameMsgWindow%dLineCount",uVar6);
+    pcVar3 = pcVar5;
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar5 - (int)pcVar7 != 0x1c) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4a0
-                      ,0,"%s");
+    if ((int)pcVar3 - (int)pcVar5 != 0x1c) {
+      MyAssertHandler(0xffffffff8202cfb8,0x4a0,0,0xffffffff82000f98,
+                      "strlen( dvarName ) == sizeof( con_gameMsgWindowNLineCount_Names[gameWindowIndex] ) - 1"
+                     );
     }
-    sprintf(pcVar8,"Maximum number of lines of text visible at once in game message window %d");
-    pcVar5 = pcVar8;
+    sprintf(pcVar4,"Maximum number of lines of text visible at once in game message window %d",uVar6
+           );
+    pcVar3 = pcVar4;
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar5 - (int)pcVar8 != 0x49) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4a0
-                      ,0,"%s");
+    if ((int)pcVar3 - (int)pcVar4 != 0x49) {
+      MyAssertHandler(0xffffffff8202cfb8,0x4a0,0,0xffffffff82000f98,0xffffffff8202d820);
     }
-    pdVar2 = Dvar_RegisterInt(pcVar7,defaultGameMessageWindowLineCounts[(int)pcVar4],1,9,0,pcVar8);
-    con_gameMsgWindowNLineCount[(int)pcVar4] = pdVar2;
-    pcVar7 = con_gameMsgWindowNScrollTime_Names[(int)pcVar4];
-    pcVar8 = con_gameMsgWindowNScrollTime_Descs[(int)pcVar4];
-    sprintf(pcVar7,"con_gameMsgWindow%dScrollTime");
-    pcVar5 = pcVar7;
+    uVar2 = Dvar_RegisterInt(pcVar5,(&DAT_8202cc80)[uVar6],1,9,0,pcVar4);
+    (&DAT_82a77248)[uVar6] = uVar2;
+    pcVar5 = &DAT_82a99ea0 + uVar6 * 0x1d;
+    pcVar4 = &DAT_82a77718 + uVar6 * 0x54;
+    sprintf(pcVar5,"con_gameMsgWindow%dScrollTime",uVar6);
+    pcVar3 = pcVar5;
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar5 - (int)pcVar7 != 0x1d) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4a4
-                      ,0,"%s");
+    if ((int)pcVar3 - (int)pcVar5 != 0x1d) {
+      MyAssertHandler(0xffffffff8202cfb8,0x4a4,0,0xffffffff82000f98,
+                      "strlen( dvarName ) == sizeof( con_gameMsgWindowNScrollTime_Names[gameWindowIndex] ) - 1"
+                     );
     }
-    uVar3 = 0xce28;
-    pcVar5 = pcVar4;
-    sprintf(pcVar8,
-            "Time to scroll messages when the oldest message is removed in game message window %d");
-    pcVar6 = pcVar8;
+    sprintf(pcVar4,
+            "Time to scroll messages when the oldest message is removed in game message window %d",
+            uVar6);
+    pcVar3 = pcVar4;
     do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar6 - (int)pcVar8 != 0x54) {
-      pcVar5 = (char *)0x0;
-      uVar3 = 0x4a4;
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4a4
-                      ,0,"%s");
+    if ((int)pcVar3 - (int)pcVar4 != 0x54) {
+      MyAssertHandler(0xffffffff8202cfb8,0x4a4,0,0xffffffff82000f98,
+                      "strlen( dvarDesc ) == sizeof( con_gameMsgWindowNScrollTime_Descs[gameWindowIndex] ) - 1"
+                     );
     }
-    pdVar2 = Dvar_RegisterFloat(pcVar7,(float)dVar13,(float)dVar17,(float)dVar16,uVar3,pcVar5);
-    (&DAT_82a77868)[(int)pcVar4] = pdVar2;
-    pcVar7 = con_gameMsgWindowNFadeInTime_Names[(int)pcVar4];
-    pcVar8 = con_gameMsgWindowNFadeInTime_Descs[(int)pcVar4];
-    sprintf(pcVar7,"con_gameMsgWindow%dFadeInTime");
-    pcVar5 = pcVar7;
+    uVar2 = Dvar_RegisterFloat(uVar12,uVar16,uVar15,pcVar5);
+    (&DAT_82a77868)[uVar6] = uVar2;
+    pcVar5 = &DAT_82a77270 + uVar6 * 0x1d;
+    pcVar4 = &DAT_82a99f18 + uVar6 * 0x36;
+    sprintf(pcVar5,"con_gameMsgWindow%dFadeInTime",uVar6);
+    pcVar3 = pcVar5;
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar5 - (int)pcVar7 != 0x1d) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4a7
-                      ,0,"%s");
+    if ((int)pcVar3 - (int)pcVar5 != 0x1d) {
+      MyAssertHandler(0xffffffff8202cfb8,0x4a7,0,0xffffffff82000f98,
+                      "strlen( dvarName ) == sizeof( con_gameMsgWindowNFadeInTime_Names[gameWindowIndex] ) - 1"
+                     );
     }
-    uVar3 = 0xcd94;
-    pcVar5 = pcVar4;
-    sprintf(pcVar8,"Time to fade in new messages in game message window %d");
-    pcVar6 = pcVar8;
+    sprintf(pcVar4,"Time to fade in new messages in game message window %d",uVar6);
+    pcVar3 = pcVar4;
     do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar6 - (int)pcVar8 != 0x36) {
-      pcVar5 = (char *)0x0;
-      uVar3 = 0x4a7;
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4a7
-                      ,0,"%s");
+    if ((int)pcVar3 - (int)pcVar4 != 0x36) {
+      MyAssertHandler(0xffffffff8202cfb8,0x4a7,0,0xffffffff82000f98,
+                      "strlen( dvarDesc ) == sizeof( con_gameMsgWindowNFadeInTime_Descs[gameWindowIndex] ) - 1"
+                     );
     }
-    dVar9 = dVar13;
-    if (pcVar4 == (char *)0x2) {
-      dVar9 = dVar10;
+    uVar8 = uVar12;
+    if (uVar6 == 2) {
+      uVar8 = uVar9;
     }
-    pdVar2 = Dvar_RegisterFloat(pcVar7,(float)dVar9,(float)dVar17,(float)dVar16,uVar3,pcVar5);
-    (&DAT_82a99e78)[(int)pcVar4] = pdVar2;
-    pcVar7 = con_gameMsgWindowNFadeOutTime_Names[(int)pcVar4];
-    pcVar8 = con_gameMsgWindowNFadeOutTime_Descs[(int)pcVar4];
-    sprintf(pcVar7,"con_gameMsgWindow%dFadeOutTime");
-    pcVar5 = pcVar7;
+    uVar2 = Dvar_RegisterFloat(uVar8,uVar16,uVar15,pcVar5);
+    (&DAT_82a99e78)[uVar6] = uVar2;
+    pcVar5 = &DAT_82a779a0 + uVar6 * 0x1e;
+    pcVar4 = &DAT_82a772e8 + uVar6 * 0x37;
+    sprintf(pcVar5,"con_gameMsgWindow%dFadeOutTime",uVar6);
+    pcVar3 = pcVar5;
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar5 - (int)pcVar7 != 0x1e) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4aa
-                      ,0,"%s");
+    if ((int)pcVar3 - (int)pcVar5 != 0x1e) {
+      MyAssertHandler(0xffffffff8202cfb8,0x4aa,0,0xffffffff82000f98,
+                      "strlen( dvarName ) == sizeof( con_gameMsgWindowNFadeOutTime_Names[gameWindowIndex] ) - 1"
+                     );
     }
-    uVar3 = 0xcdcc;
-    pcVar5 = pcVar4;
-    sprintf(pcVar8,"Time to fade out old messages in game message window %d");
-    pcVar6 = pcVar8;
+    sprintf(pcVar4,"Time to fade out old messages in game message window %d",uVar6);
+    pcVar3 = pcVar4;
     do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar6 - (int)pcVar8 != 0x37) {
-      pcVar5 = (char *)0x0;
-      uVar3 = 0x4aa;
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4aa
-                      ,0,"%s");
+    if ((int)pcVar3 - (int)pcVar4 != 0x37) {
+      MyAssertHandler(0xffffffff8202cfb8,0x4aa,0,0xffffffff82000f98,
+                      "strlen( dvarDesc ) == sizeof( con_gameMsgWindowNFadeOutTime_Descs[gameWindowIndex] ) - 1"
+                     );
     }
-    pdVar2 = Dvar_RegisterFloat(pcVar7,(float)dVar11,(float)dVar15,(float)dVar16,uVar3,pcVar5);
-    (&DAT_82a773d4)[(int)pcVar4] = pdVar2;
-    pcVar7 = con_gameMsgWindowNSplitscreenScale_Names[(int)pcVar4];
-    pcVar8 = con_gameMsgWindowNSplitscreenScale_Descs[(int)pcVar4];
-    sprintf(pcVar7,"con_gameMsgWindow%dSplitscreenScale");
-    pcVar5 = pcVar7;
+    uVar2 = Dvar_RegisterFloat(uVar10,uVar14,uVar15,pcVar5);
+    (&DAT_82a773d4)[uVar6] = uVar2;
+    pcVar5 = &DAT_82a77a18 + uVar6 * 0x23;
+    pcVar4 = &DAT_82a773f0 + uVar6 * 0x30;
+    sprintf(pcVar5,"con_gameMsgWindow%dSplitscreenScale",uVar6);
+    pcVar3 = pcVar5;
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar5 - (int)pcVar7 != 0x23) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4ad
-                      ,0,"%s");
+    if ((int)pcVar3 - (int)pcVar5 != 0x23) {
+      MyAssertHandler(0xffffffff8202cfb8,0x4ad,0,0xffffffff82000f98,
+                      "strlen( dvarName ) == sizeof( con_gameMsgWindowNSplitscreenScale_Names[gameWindowIndex] ) - 1"
+                     );
     }
-    uVar3 = 0xcec0;
-    pcVar5 = pcVar4;
-    sprintf(pcVar8,"Scaling of game message window %d in splitscreen");
-    pcVar6 = pcVar8;
+    sprintf(pcVar4,"Scaling of game message window %d in splitscreen",uVar6);
+    pcVar3 = pcVar4;
     do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar6 - (int)pcVar8 != 0x30) {
-      pcVar5 = (char *)0x0;
-      uVar3 = 0x4ad;
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4ad
-                      ,0,"%s");
+    if ((int)pcVar3 - (int)pcVar4 != 0x30) {
+      MyAssertHandler(0xffffffff8202cfb8,0x4ad,0,0xffffffff82000f98,
+                      "strlen( dvarDesc ) == sizeof( con_gameMsgWindowNSplitscreenScale_Descs[gameWindowIndex] ) - 1"
+                     );
     }
-    pdVar2 = Dvar_RegisterFloat(pcVar7,defaultGameMessageSplitscreenScale[(int)pcVar4],(float)dVar17
-                                ,(float)dVar16,uVar3,pcVar5);
-    pcVar8 = pcVar4 + 1;
-    (&DAT_82a773c4)[(int)pcVar4] = pdVar2;
-    pcVar4 = pcVar8;
-  } while (pcVar8 < &DAT_00000004);
-  DAT_82a7787c = Dvar_RegisterFloat("con_errormessagetime",8.0,(float)dVar17,(float)dVar16,uVar3,
-                                    pcVar5);
-  con_minicontime =
-       Dvar_RegisterFloat("con_minicontime",4.0,(float)dVar17,(float)dVar16,uVar3,pcVar5);
-  pcVar4 = (char *)0x0;
-  con_miniconlines =
-       Dvar_RegisterInt("con_miniconlines",5,0,100,0,"Number of lines in the minicon message window"
-                       );
-  DAT_82a77268 = Dvar_RegisterFloat("con_MiniConSplitscreenScale",1.4,(float)dVar17,(float)dVar16,0,
-                                    pcVar4);
-  con_typewriterPrintSpeed =
-       Dvar_RegisterInt("con_typewriterPrintSpeed",0x32,0,0x7fffffff,0,
-                        "Time (in milliseconds) to print each letter in the line.");
-  con_typewriterDecayStartTime =
-       Dvar_RegisterInt("con_typewriterDecayStartTime",6000,0,0x7fffffff,0,
-                        "Time (in milliseconds) to spend between the build and disolve phases.");
-  pcVar4 = (char *)0x0;
-  uVar3 = 700;
-  con_typewriterDecayDuration =
-       Dvar_RegisterInt("con_typewriterDecayDuration",700,0,0x7fffffff,0,
-                        "Time (in milliseconds) to spend disolving the line away.");
-  con_typewriterColorBase =
-       Dvar_RegisterVec3("con_typewriterColorBase",(float)dVar18,(float)dVar18,(float)dVar18,
-                         (float)dVar17,(float)dVar18,uVar3,pcVar4);
-  pcVar4 = "the motion tracker after being detected";
-  uVar3 = 0;
-  con_typewriterColorGlowUpdated =
-       Dvar_RegisterVec4("con_typewriterColorGlowUpdated",(float)dVar17,(float)dVar14,0.18,
-                         (float)dVar18,(float)dVar17,(float)dVar18,0,
-                         "the motion tracker after being detected");
-  dVar15 = 0.800000011920929;
-  con_typewriterColorGlowCompleted =
-       Dvar_RegisterVec4("con_typewriterColorGlowCompleted",(float)dVar17,(float)dVar12,0.8,
-                         (float)dVar18,(float)dVar17,(float)dVar18,uVar3,pcVar4);
-  pcVar4 = historyEditLines[8].buffer + 0x58;
-  uVar3 = 0;
-  con_typewriterColorGlowFailed =
-       Dvar_RegisterVec4("con_typewriterColorGlowFailed",(float)dVar15,(float)dVar17,(float)dVar17,
-                         (float)dVar18,(float)dVar17,(float)dVar18,0,
-                         historyEditLines[8].buffer + 0x58);
-  con_typewriterColorGlowCheckpoint =
-       Dvar_RegisterVec4("con_typewriterColorGlowCheckpoint",(float)dVar14,(float)dVar11,
-                         (float)dVar14,(float)dVar18,(float)dVar17,(float)dVar18,uVar3,pcVar4);
-  Con_InitMessageWindow
-            (&con.consoleWindow,con.consoleMessages,con.consoleLines,con.consoleText,0x400,0,0x8000,
-             0,in_stack_fffffe78,in_stack_fffffe7c);
+    uVar2 = Dvar_RegisterFloat((double)(float)(&DAT_8202cc90)[uVar6],uVar16,uVar15,pcVar5);
+    uVar7 = uVar6 + 1;
+    (&DAT_82a773c4)[uVar6] = uVar2;
+    uVar6 = uVar7;
+  } while (uVar7 < 4);
+  DAT_82a7787c = Dvar_RegisterFloat(0x4020000000000000,uVar16,uVar15,0xffffffff8202d6d0);
+  DAT_82a99e98 = Dvar_RegisterFloat(0x4010000000000000,uVar16,uVar15,0xffffffff8202d6c0);
+  DAT_82a99e9c = Dvar_RegisterInt(0xffffffff8202d64c,5,0,100,0,0xffffffff8202d660);
+  DAT_82a77268 = Dvar_RegisterFloat(0x3ff6666660000000,uVar16,uVar15,0xffffffff8202d600);
+  DAT_82a7726c = Dvar_RegisterInt(0xffffffff8202d5e4,0x32,0,0x7fffffff,0,0xffffffff8202d5a8);
+  DAT_82a773e8 = Dvar_RegisterInt(0xffffffff8202d540,6000,0,0x7fffffff,0,0xffffffff8202d560);
+  DAT_82a773e4 = Dvar_RegisterInt(0xffffffff8202d4e8,700,0,0x7fffffff,0,0xffffffff8202d504);
+  DAT_82a77880 = Dvar_RegisterVec3(uVar17,uVar17,uVar17,uVar16,uVar17,0xffffffff8202d4a4);
+  DAT_82a77514 = Dvar_RegisterVec4(uVar16,uVar13,0x3fc70a3d80000000,uVar17,uVar16,uVar17,
+                                   0xffffffff8202d45c);
+  uVar14 = 0x3fe99999a0000000;
+  DAT_82a99ff0 = Dvar_RegisterVec4(uVar16,uVar11,0x3fe99999a0000000,uVar17,uVar16,uVar17,
+                                   0xffffffff8202d438);
+  DAT_82a99f14 = Dvar_RegisterVec4(uVar14,uVar16,uVar16,uVar17,uVar16,uVar17,0xffffffff8202d418);
+  DAT_82a77aa4 = Dvar_RegisterVec4(uVar13,uVar10,uVar13,uVar17,uVar16,uVar17,0xffffffff8202d3f4);
+  Con_InitMessageWindow(&DAT_82a77aa8,&DAT_82a7dadc,&DAT_82a77adc,&DAT_82a7fadc,0x400,0,0x8000,0);
   Con_InitMessageBuffer();
-  con.color[0] = 1.0;
-  con.color[1] = 1.0;
-  con.color[2] = 1.0;
-  con.color[3] = 1.0;
+  DAT_82a99e68 = 0x3f800000;
+  DAT_82a99e6c = 0x3f800000;
+  DAT_82a99e70 = 0x3f800000;
+  DAT_82a99e74 = 0x3f800000;
   __restfpr_23();
   __restgprlr();
   return;
@@ -1387,10 +1508,7 @@ void Con_OneTimeInit(void)
 
 // 823306E8  CL_TextLineWrapPosition  (client/cl_console.cpp:1236)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-char * CL_TextLineWrapPosition
-                 (char *param_1,int param_2,int param_3,Font_s *param_4,float param_5,int param_6)
+uint CL_TextLineWrapPosition(char *param_1)
 
 {
   char cVar1;
@@ -1404,67 +1522,272 @@ char * CL_TextLineWrapPosition
       cVar1 = *param_1;
     }
   }
-  pcVar2 = R_TextLineWrapPosition(param_1,param_2,param_3,param_4,param_5);
+  pcVar2 = (char *)R_TextLineWrapPosition();
   if (pcVar2 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4de,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x4de,0,0xffffffff82000f98,0xffffffff8202dc6c);
   }
-  return (char *)(-(uint)(*pcVar2 != '\0') & (uint)pcVar2);
+  return -(uint)(*pcVar2 != '\0') & (uint)pcVar2;
 }
 
 
 // 82330770  CL_ConsolePrint_AddLine  (client/cl_console.cpp:1253)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_ConsolePrint_AddLine
+               (undefined8 param_1,longlong param_2,ulonglong param_3,undefined8 param_4,
+               ulonglong param_5,ulonglong param_6,undefined8 param_7)
+
+{
+  byte bVar1;
+  byte *pbVar2;
+  bool bVar3;
+  undefined8 uVar4;
+  undefined4 uVar8;
+  undefined8 uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  uint uVar9;
+  undefined1 *_Dst;
+  uint uVar10;
+  uint uVar11;
+  undefined4 uVar12;
+  int iVar13;
+  char cVar14;
+  size_t _Size;
+  int iVar15;
+  undefined8 uVar16;
+  uint uStack00000034;
+  byte *local_b0;
+  char *local_ac;
+  
+  uVar4 = __savegprlr();
+  uVar8 = (undefined4)uVar4;
+  uStack00000034 = (uint)param_5;
+  uVar12 = (undefined4)param_7;
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x4f2,0,0xffffffff82000f98,0xffffffff8202de74);
+  }
+  cVar14 = (char)param_6;
+  local_ac = "color not in [COLOR_FIRST, COLOR_LAST]\n\t%i not in [%i, %i]";
+  if ((cVar14 < '0') || (';' < cVar14)) {
+    MyAssertHandler(0xffffffff8202cfb8,0x4f3,0,0xffffffff8202de38,cVar14,0x30,0x3b);
+  }
+  if (DAT_82a9a008 == 0) {
+    DAT_82a9a008 = 1;
+    Con_UpdateNotifyMessage(uVar4,param_2,param_4,param_7);
+    iVar13 = (int)param_2;
+    if ((iVar13 != DAT_82a87ce4) && (DAT_82a87cdc != 0)) {
+      Con_Linefeed(uVar4,DAT_82a87ce4,param_7);
+    }
+    if (((iVar13 == 2) || (iVar13 == 3)) || (bVar3 = false, iVar13 == 4)) {
+      bVar3 = true;
+    }
+    if (bVar3) {
+      uVar5 = ScrPlace_GetFullPlacement();
+      uVar16 = 0x3fd5555560000000;
+      uVar6 = UI_GetFontHandle(0x3fd5555560000000,uVar5,-(param_2 == 3) & 4);
+      uVar5 = R_NormalizedTextScale(uVar16);
+    }
+    else {
+      uVar5 = 0x3ff0000000000000;
+      uVar6 = (ulonglong)DAT_82aa2964;
+    }
+    if (uStack00000034 == 0) {
+      param_5 = (ulonglong)DAT_82a87cf4;
+      uStack00000034 = DAT_82a87cf4;
+    }
+    uVar7 = R_TextLineWrapPosition(uVar5,param_3,0x200 - DAT_82a87cdc,param_5,uVar6);
+    if ((uVar7 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff8202cfb8,0x4de,0,0xffffffff82000f98,0xffffffff8202dc6c);
+    }
+    uVar7 = -(ulonglong)(*(char *)uVar7 != '\0') & uVar7;
+    if (((param_3 & 0xffffffff) == (uVar7 & 0xffffffff)) && (DAT_82a87cdc != 0)) {
+      Con_Linefeed(uVar4,param_2,param_7);
+      uVar7 = R_TextLineWrapPosition(uVar5,param_3,0x200 - DAT_82a87cdc,param_5,uVar6);
+      if ((uVar7 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff8202cfb8,0x4de,0,0xffffffff82000f98,0xffffffff8202dc6c);
+      }
+      uVar7 = -(ulonglong)(*(char *)uVar7 != '\0') & uVar7;
+    }
+    local_b0 = (byte *)param_3;
+    iVar15 = 0;
+    bVar1 = *local_b0;
+    while (bVar1 != 0) {
+      uVar9 = SEH_ReadCharFromString(&local_b0,0);
+      if (uVar9 == 10) {
+        if ((uVar7 & 0xffffffff) != 0) {
+          if ((uVar6 & 0xffffffff) != 0) {
+            if ((uVar7 & 0xffffffff) == ZEXT48(local_b0)) goto LAB_82330e28;
+            if (*local_b0 != 0) {
+              uVar4 = va(0xffffffff8202dc80,0xffffffff8202dc78,uVar7,local_b0,param_3);
+              MyAssertHandler(0xffffffff8202cfb8,0x529,0,0xffffffff820011f4,0xffffffff8202dcb8,uVar4
+                             );
+            }
+          }
+          goto LAB_82330e1c;
+        }
+LAB_82330e28:
+        Con_UpdateNotifyLine(uVar8,param_2,1,uVar12);
+        DAT_82a87cdc = 0;
+        if (DAT_82a87ce0 == DAT_82a77ad4 + -1) {
+          DAT_82a87ce0 = DAT_82a87ce0 + 1;
+        }
+        if (uVar9 != 10) {
+          cVar14 = (char)param_6;
+          iVar15 = 1;
+          if (cVar14 != '7') {
+            if (((cVar14 < '0') || (';' < cVar14)) &&
+               (MyAssertHandler(0xffffffff8202cfb8,0x567,0,local_ac,cVar14,0x30,0x3b),
+               0x1fe < DAT_82a87cdc)) {
+              MyAssertHandler(0xffffffff8202cfb8,0x568,0,0xffffffff8202dce8,DAT_82a87cdc,0x1ff);
+            }
+            (&DAT_82a87adc)[DAT_82a87cdc] = 0x5e;
+            (&DAT_82a87add)[DAT_82a87cdc] = cVar14;
+            uVar11 = DAT_82a87cdc + 2;
+            uVar9 = DAT_82a87cdc + 2;
+            DAT_82a87cdc = uVar11;
+            if (0x200 < uVar9) {
+              MyAssertHandler(0xffffffff8202cfb8,0x56c,0,0xffffffff8202dd38,uVar11,0x201);
+            }
+          }
+        }
+        uVar7 = CL_TextLineWrapPosition
+                          (uVar5,local_b0,0x200 - DAT_82a87cdc,uStack00000034,uVar6,DAT_82a87cdc,
+                           iVar15);
+      }
+      else {
+        if (uVar9 == 0x5e) {
+          if (((local_b0 == (byte *)0x0) || (bVar1 = *local_b0, bVar1 == 0x5e)) ||
+             (((char)bVar1 < '0' || (';' < (char)bVar1)))) {
+            if ((*local_b0 != 1) && (*local_b0 != 2)) goto LAB_82330d2c;
+            _Size = (int)(char)local_b0[3] + 4;
+            if (0x200 - _Size <= DAT_82a87cdc) {
+              MyAssertHandler(0xffffffff8202cfb8,0x53c,0,0xffffffff8202dd88,DAT_82a87cdc,
+                              0x200 - _Size);
+            }
+            (&DAT_82a87adc)[DAT_82a87cdc] = 0x5e;
+            _Dst = &DAT_82a87add + DAT_82a87cdc;
+            DAT_82a87cdc = DAT_82a87cdc + 1;
+            memcpy(_Dst,local_b0,_Size);
+            local_b0 = local_b0 + _Size;
+            DAT_82a87cdc = DAT_82a87cdc + _Size;
+            if (0x200 < DAT_82a87cdc) {
+              MyAssertHandler(0xffffffff8202cfb8,0x541,0,0xffffffff8202dd38,DAT_82a87cdc,0x201);
+            }
+            iVar15 = 0;
+          }
+          else {
+            if (0x1fe < DAT_82a87cdc) {
+              MyAssertHandler(0xffffffff8202cfb8,0x530,0,0xffffffff8202dce8,DAT_82a87cdc,0x1ff);
+            }
+            bVar1 = *local_b0;
+            param_6 = (ulonglong)bVar1;
+            (&DAT_82a87adc)[DAT_82a87cdc] = 0x5e;
+            pbVar2 = &DAT_82a87add + DAT_82a87cdc;
+            DAT_82a87cdc = DAT_82a87cdc + 1;
+            *pbVar2 = bVar1;
+            DAT_82a87cdc = DAT_82a87cdc + 1;
+            if (0x200 < DAT_82a87cdc) {
+              MyAssertHandler(0xffffffff8202cfb8,0x534,0,0xffffffff8202dd38,DAT_82a87cdc,0x201);
+            }
+            iVar15 = 0;
+            local_b0 = local_b0 + 1;
+          }
+        }
+        else {
+          if (uVar9 == 0x20) {
+            if (iVar15 != 0) goto LAB_82330e1c;
+          }
+          else if (0xff < (int)uVar9) {
+            if (0x1ff < DAT_82a87cdc) {
+              MyAssertHandler(0xffffffff8202cfb8,0x550,0,0xffffffff8202dde8,DAT_82a87cdc,0x200);
+            }
+            (&DAT_82a87adc)[DAT_82a87cdc] = (char)(uVar9 >> 8);
+            uVar9 = uVar9 & 0xff;
+            uVar10 = DAT_82a87cdc + 1;
+            uVar11 = DAT_82a87cdc + 1;
+            DAT_82a87cdc = uVar10;
+            if (0x200 < uVar11) {
+              MyAssertHandler(0xffffffff8202cfb8,0x554,0,0xffffffff8202dd38,uVar10,0x201);
+            }
+          }
+LAB_82330d2c:
+          if (0x1ff < DAT_82a87cdc) {
+            MyAssertHandler(0xffffffff8202cfb8,0x556,0,0xffffffff8202dde8,DAT_82a87cdc,0x200);
+          }
+          (&DAT_82a87adc)[DAT_82a87cdc] = (char)uVar9;
+          DAT_82a87cdc = DAT_82a87cdc + 1;
+          if (0x200 < DAT_82a87cdc) {
+            MyAssertHandler(0xffffffff8202cfb8,0x559,0,0xffffffff8202dd38,DAT_82a87cdc,0x201);
+          }
+          iVar15 = 0;
+        }
+LAB_82330e1c:
+        if (ZEXT48(local_b0) == (uVar7 & 0xffffffff)) goto LAB_82330e28;
+      }
+      bVar1 = *local_b0;
+    }
+    if (DAT_82a87cdc != 0) {
+      if (((iVar13 == 2) || (iVar13 == 3)) || (bVar3 = false, iVar13 == 4)) {
+        bVar3 = true;
+      }
+      if (bVar3) {
+        Con_Linefeed(uVar8,param_2,uVar12);
+      }
+      else {
+        Con_UpdateNotifyLine(uVar8,param_2,0,uVar12);
+      }
+    }
+    DAT_82a9a008 = DAT_82a9a008 + -1;
+    DAT_82a87ce4 = iVar13;
+  }
+  __restgprlr(param_6);
+  return;
+}
+
 
 // 82331020  CL_ConsolePrint  (client/cl_console.cpp:1413)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
-void CL_ConsolePrint(LocalClientNum_t param_1,int param_2,char *param_3,int param_4,int param_5,
-                    int param_6)
+void CL_ConsolePrint(undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
+                    undefined8 param_5,undefined8 param_6)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar2;
+  bool bVar1;
+  undefined8 uVar2;
+  char cVar3;
   char *pcVar4;
-  ulonglong uVar3;
+  int iVar5;
   
-  uVar3 = (ulonglong)(int)param_3;
-  LVar1 = __savegprlr_26(param_1);
-  pcVar4 = (char *)uVar3;
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x591,
-                    (int)pcVar4,"%s");
+  uVar2 = __savegprlr_26();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x591);
   }
-  if (((cl_noprint != (dvar_t *)0x0) && ((cl_noprint->current).enabled == false)) && (param_2 != 6))
-  {
-    Sys_EnterCriticalSection(CRITSECT_CONSOLE);
-    CL_ConsolePrint_AddLine(LVar1,param_2,pcVar4,param_4,param_5,'7',param_6);
-    Sys_LeaveCriticalSection(CRITSECT_CONSOLE);
-    bVar2 = Con_IsChannelVisible(CON_DEST_CONSOLE,param_2,param_6);
-    if (bVar2) {
-      RConsWriteTextToRemote(pcVar4);
+  if (((DAT_82b3ec88 != 0) && (*(char *)(DAT_82b3ec88 + 0xc) == '\0')) &&
+     (iVar5 = (int)param_2, iVar5 != 6)) {
+    Sys_EnterCriticalSection(0);
+    CL_ConsolePrint_AddLine(uVar2,param_2,param_3,param_4,param_5,0x37,param_6);
+    Sys_LeaveCriticalSection(0);
+    cVar3 = Con_IsChannelVisible(0,param_2,param_6);
+    if (cVar3 != '\0') {
+      RConsWriteTextToRemote(param_3);
     }
-    if (param_2 == 5) {
-      NET_RemoteDbgHostWriteToLog(5,"(Obituary) ");
-      bVar2 = false;
+    if (iVar5 == 5) {
+      NET_RemoteDbgHostWriteToLog(5,0xffffffff8202de78);
+      bVar1 = false;
     }
-    else if (((param_2 == 2) || (param_2 == 3)) || (param_2 == 4)) {
-      bVar2 = true;
+    else if (((iVar5 == 2) || (iVar5 == 3)) || (iVar5 == 4)) {
+      bVar1 = true;
     }
     else {
-      bVar2 = false;
+      bVar1 = false;
     }
-    if ((bVar2) || (param_2 == 5)) {
-      NET_RemoteDbgHostWriteToLog(param_2,pcVar4);
+    if ((bVar1) || (iVar5 == 5)) {
+      NET_RemoteDbgHostWriteToLog(param_2,param_3);
       do {
-        pcVar4 = (char *)uVar3;
-        uVar3 = uVar3 + 1;
+        pcVar4 = (char *)param_3;
+        param_3 = param_3 + 1;
       } while (*pcVar4 != '\0');
-      if (*(char *)((int)uVar3 + -2) != '\n') {
-        NET_RemoteDbgHostWriteToLog(param_2,"\n");
+      if (*(char *)((int)param_3 + -2) != '\n') {
+        NET_RemoteDbgHostWriteToLog(param_2,0xffffffff820044d8);
       }
     }
   }
@@ -1475,30 +1798,26 @@ void CL_ConsolePrint(LocalClientNum_t param_1,int param_2,char *param_3,int para
 
 // 82331190  CL_ConsoleFixPosition  (client/cl_console.cpp:1471)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
 void CL_ConsoleFixPosition(void)
 
 {
-  bool bVar2;
+  char cVar2;
   int iVar1;
   
-  com_fixedConsolePosition = 1;
-  if ((cl_noprint != (dvar_t *)0x0) && ((cl_noprint->current).enabled == false)) {
-    Sys_EnterCriticalSection(CRITSECT_CONSOLE);
-    CL_ConsolePrint_AddLine(LOCAL_CLIENT_0,0,"\n",0,0,'7',0);
-    Sys_LeaveCriticalSection(CRITSECT_CONSOLE);
-    bVar2 = Con_IsChannelVisible(CON_DEST_CONSOLE,0,0);
-    if (bVar2) {
-      RConsWriteTextToRemote("\n");
+  DAT_83667304 = 1;
+  if ((DAT_82b3ec88 != 0) && (*(char *)(DAT_82b3ec88 + 0xc) == '\0')) {
+    Sys_EnterCriticalSection(0);
+    CL_ConsolePrint_AddLine(0,0,0xffffffff820044d8,0,0,0x37,0);
+    Sys_LeaveCriticalSection(0);
+    cVar2 = Con_IsChannelVisible(0,0,0);
+    if (cVar2 != '\0') {
+      RConsWriteTextToRemote(0xffffffff820044d8);
     }
   }
-  con.displayLineOffset = con.consoleWindow.activeLineCount + -1;
+  DAT_82a87ce0 = DAT_82a77ad4 + -1;
   iVar1 = Sys_IsRemoteDebugServer();
   if ((iVar1 != 0) && (iVar1 = Sys_DebugSocketReady(0), iVar1 != 0)) {
-    Sys_WriteDebugSocketMessageType(',');
+    Sys_WriteDebugSocketMessageType(0x2c);
     Sys_EndWriteDebugSocket();
   }
   return;
@@ -1507,77 +1826,65 @@ void CL_ConsoleFixPosition(void)
 
 // 82331280  CL_AddDeathMessageChar  (client/cl_console.cpp:1493)
 
-int CL_AddDeathMessageChar(char *param_1,uint param_2,uint param_3,char param_4)
+void CL_AddDeathMessageChar(undefined8 param_1,longlong param_2,ulonglong param_3,char param_4)
 
 {
   int iVar1;
-  longlong lVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_3;
-  lVar2 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
+  iVar1 = __savegprlr_25();
   if (param_4 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x5d6,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x5d6,0,0xffffffff82000f98,0xffffffff8202dea8);
   }
-  if ((uVar3 & 0xffffffff) < (lVar2 + 1U & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x5d7,0
-                    ,"%s");
+  if ((param_3 & 0xffffffff) < (param_2 + 1U & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202cfb8,0x5d7,0,0xffffffff82000f98,0xffffffff8202de84);
   }
-  *(char *)(iVar1 + (int)lVar2) = param_4;
-  iVar1 = __restgprlr_25(lVar2 + 1U);
-  return iVar1;
+  *(char *)(iVar1 + (int)param_2) = param_4;
+  __restgprlr_25(param_2 + 1U);
+  return;
 }
 
 
 // 82331310  CL_AddDeathMessageString  (client/cl_console.cpp:1503)
 
-int CL_AddDeathMessageString(char *param_1,uint param_2,uint param_3,char *param_4)
+void CL_AddDeathMessageString(undefined8 param_1,longlong param_2,ulonglong param_3,char *param_4)
 
 {
   char cVar1;
-  longlong lVar2;
-  int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  lVar2 = __savegprlr_22(param_1);
+  lVar3 = __savegprlr_22();
   if (*param_4 != '\0') {
-    lVar5 = lVar2 + lVar6;
-    iVar3 = (int)lVar6;
+    lVar4 = lVar3 + param_2;
+    iVar2 = (int)param_2;
     do {
-      cVar1 = param_4[(int)lVar6 - iVar3];
+      cVar1 = param_4[(int)param_2 - iVar2];
       if (cVar1 == '\0') {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
-                        0x5d6,0,"%s");
+        MyAssertHandler(0xffffffff8202cfb8,0x5d6,0,0xffffffff82000f98,0xffffffff8202dea8);
       }
-      if ((uVar4 & 0xffffffff) < ((1 - lVar2) + lVar5 & 0xffffffffU)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
-                        0x5d7,0,"%s");
+      if ((param_3 & 0xffffffff) < ((1 - lVar3) + lVar4 & 0xffffffffU)) {
+        MyAssertHandler(0xffffffff8202cfb8,0x5d7,0,0xffffffff82000f98,0xffffffff8202de84);
       }
-      lVar6 = lVar6 + 1;
-      *(char *)lVar5 = cVar1;
-      lVar5 = lVar5 + 1;
-    } while (param_4[(int)lVar6 - iVar3] != '\0');
+      param_2 = param_2 + 1;
+      *(char *)lVar4 = cVar1;
+      lVar4 = lVar4 + 1;
+    } while (param_4[(int)param_2 - iVar2] != '\0');
   }
-  iVar3 = __restgprlr_22(lVar6);
-  return iVar3;
+  __restgprlr_22(param_2);
+  return;
 }
 
 
 // 823313C8  CL_DeathMessageIconDimension  (client/cl_console.cpp:1514)
 
-uchar CL_DeathMessageIconDimension(float param_1)
+uint CL_DeathMessageIconDimension(double param_1)
 
 {
   int iVar1;
   double dVar2;
   
-  dVar2 = floor((double)(param_1 * 32.0 + 0.5));
+  dVar2 = floor((double)(float)(param_1 * 32.0 + 0.5));
   iVar1 = (int)dVar2;
   if (iVar1 < 0x7f) {
     if (iVar1 < 0x11) {
@@ -1587,163 +1894,133 @@ uchar CL_DeathMessageIconDimension(float param_1)
   else {
     iVar1 = 0x7f;
   }
-  return (char)iVar1 + '\x10';
+  return iVar1 + 0x10U & 0xff;
 }
 
 
 // 82331430  CL_AddDeathMessageIcon  (client/cl_console.cpp:1520)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int CL_AddDeathMessageIcon
-              (char *param_1,uint param_2,uint param_3,Material *param_4,float param_5,float param_6
-              ,bool param_7)
+void CL_AddDeathMessageIcon
+               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
+               ulonglong param_9)
 
 {
-  char cVar1;
-  char *pcVar2;
-  bool bVar7;
-  char *pcVar3;
-  int iVar4;
-  uint uVar5;
-  uchar uVar8;
-  char *pcVar6;
-  longlong lVar9;
-  ulonglong in_r9;
+  undefined8 uVar1;
+  char cVar6;
+  char *pcVar4;
+  char *pcVar5;
+  undefined8 uVar2;
+  undefined8 uVar3;
   double extraout_f1;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  double dVar7;
+  double dVar8;
   
-  dVar10 = (double)param_6;
-  lVar9 = (longlong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_25((double)param_5,param_1);
-  dVar12 = 0.0;
-  dVar11 = extraout_f1;
+  uVar1 = __savegprlr_25();
+  dVar8 = 0.0;
+  dVar7 = extraout_f1;
   if (extraout_f1 <= 0.0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x5f3,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x5f3,0,0xffffffff82000f98,0xffffffff8202dee8);
   }
-  if (dVar10 <= dVar12) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x5f4,0
-                    ,"%s");
+  if (param_2 <= dVar8) {
+    MyAssertHandler(0xffffffff8202cfb8,0x5f4,0,0xffffffff82000f98,0xffffffff8202ded8);
   }
-  bVar7 = IsValidMaterialHandle(param_4);
-  if (!bVar7) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x5f6,0
-                    ,"%s");
+  cVar6 = IsValidMaterialHandle(param_6);
+  if (cVar6 == '\0') {
+    MyAssertHandler(0xffffffff8202cfb8,0x5f6,0,0xffffffff82000f98,0xffffffff8202deb4);
   }
-  pcVar3 = Material_GetName(param_4);
-  pcVar6 = pcVar3;
+  pcVar4 = (char *)Material_GetName(param_6);
+  pcVar5 = pcVar4;
   do {
-    cVar1 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
-  } while (cVar1 != '\0');
-  if (0xff < (int)(pcVar6 + (-1 - (int)pcVar3))) {
-    iVar4 = __restgprlr_25(lVar9);
-    return iVar4;
+    cVar6 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar6 != '\0');
+  if (0xff < (int)(pcVar5 + (-1 - (int)pcVar4))) {
+    __restgprlr_25(param_4);
+    return;
   }
-  uVar5 = CL_AddDeathMessageChar(pcVar2,(uint)lVar9,param_3,'^');
-  uVar5 = CL_AddDeathMessageChar(pcVar2,uVar5,param_3,((in_r9 & 0xff) != 0) + '\x01');
-  uVar8 = CL_DeathMessageIconDimension((float)dVar11);
-  uVar5 = CL_AddDeathMessageChar(pcVar2,uVar5,param_3,uVar8);
-  uVar8 = CL_DeathMessageIconDimension((float)dVar10);
-  uVar5 = CL_AddDeathMessageChar(pcVar2,uVar5,param_3,uVar8);
-  uVar5 = CL_AddDeathMessageChar(pcVar2,uVar5,param_3,(char)(pcVar6 + (-1 - (int)pcVar3)));
-  pcVar6 = Material_GetName(param_4);
-  iVar4 = CL_AddDeathMessageString(pcVar2,uVar5,param_3,pcVar6);
-  iVar4 = __restgprlr_25(iVar4);
-  return iVar4;
+  uVar2 = CL_AddDeathMessageChar(uVar1,param_4,param_5,0x5e);
+  uVar2 = CL_AddDeathMessageChar(uVar1,uVar2,param_5,((param_9 & 0xff) != 0) + '\x01');
+  uVar3 = CL_DeathMessageIconDimension(dVar7);
+  uVar2 = CL_AddDeathMessageChar(uVar1,uVar2,param_5,uVar3);
+  uVar3 = CL_DeathMessageIconDimension(param_2);
+  uVar2 = CL_AddDeathMessageChar(uVar1,uVar2,param_5,uVar3);
+  uVar2 = CL_AddDeathMessageChar(uVar1,uVar2,param_5,(char)(pcVar5 + (-1 - (int)pcVar4)));
+  uVar3 = Material_GetName(param_6);
+  CL_AddDeathMessageString(uVar1,uVar2,param_5,uVar3);
+  __restgprlr_25();
+  return;
 }
 
 
 // 82331600  CL_DeathMessagePrint  (client/cl_console.cpp:1547)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void CL_DeathMessagePrint
-               (LocalClientNum_t param_1,char *param_2,char param_3,char *param_4,char param_5,
-               Material *param_6,float param_7,float param_8,bool param_9)
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+               undefined8 param_5,ulonglong param_6,undefined8 param_7,undefined8 param_8)
 
 {
-  LocalClientNum_t LVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  uint uVar3;
+  int iVar4;
   char cVar5;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
-  char acStack_470 [1136];
+  char cVar6;
+  undefined8 uVar7;
+  undefined8 extraout_f1;
+  undefined1 auStack_470 [1136];
   
-  dVar6 = (double)param_8;
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_21((double)param_7,param_1);
-  dVar7 = extraout_f1;
-  cVar5 = param_5;
-  if ((uVar3 & 0xffffffff) == 0) {
-    cVar5 = '\x18';
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x610,0
-                    ,"%s");
+  uVar1 = __savegprlr_21();
+  uVar2 = extraout_f1;
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x610,0,0xffffffff82000f98,0xffffffff8202e018);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    cVar5 = '\x04';
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x611,0
-                    ,"%s");
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x611,0,0xffffffff82000f98,0xffffffff8202e004);
   }
-  if (((param_5 == '^') || (param_5 < '0')) || (';' < param_5)) {
-    cVar5 = -0x20;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x612,0
-                    ,"%s");
+  cVar5 = (char)param_7;
+  if (((cVar5 == '^') || (cVar5 < '0')) || (';' < cVar5)) {
+    MyAssertHandler(0xffffffff8202cfb8,0x612,0,0xffffffff82000f98,0xffffffff8202dfe0);
   }
-  if (((param_3 == '^') || (param_3 < '0')) || (';' < param_3)) {
-    cVar5 = -0x48;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x613,0
-                    ,"%s");
+  cVar6 = (char)param_5;
+  if (((cVar6 == '^') || (cVar6 < '0')) || (';' < cVar6)) {
+    MyAssertHandler(0xffffffff8202cfb8,0x613,0,0xffffffff82000f98,0xffffffff8202dfb8);
   }
-  if ((cl_noprint == (dvar_t *)0x0) || ((cl_noprint->current).enabled == false)) {
-    uVar2 = 0;
-    if (con.lineOffset != 0) {
-      Con_Linefeed(LVar1,con.prevChannel,0);
+  if ((DAT_82b3ec88 == 0) || (*(char *)(DAT_82b3ec88 + 0xc) == '\0')) {
+    uVar7 = 0;
+    if (DAT_82a87cdc != 0) {
+      Con_Linefeed(uVar1,DAT_82a87ce4,0);
     }
-    if (*(char *)uVar3 != '\0') {
-      if ((param_3 < '0') || (';' < param_3)) {
-        cVar5 = param_3;
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
-                        0x622,0,
-                        "attackerColorIndex not in [COLOR_FIRST, COLOR_LAST]\n\t%i not in [%i, %i]")
-        ;
+    if (*(char *)param_4 != '\0') {
+      if ((cVar6 < '0') || (';' < cVar6)) {
+        MyAssertHandler(0xffffffff8202cfb8,0x622,0,0xffffffff8202df70,cVar6,0x30,0x3b);
       }
-      uVar2 = CL_AddDeathMessageChar(acStack_470,0,0x400,'^');
-      uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,param_3);
-      uVar2 = CL_AddDeathMessageString(acStack_470,uVar2,0x400,(char *)uVar3);
-      uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,'^');
-      uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,'7');
-      uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,' ');
+      uVar7 = CL_AddDeathMessageChar(auStack_470,0,0x400,0x5e);
+      uVar7 = CL_AddDeathMessageChar(auStack_470,uVar7,0x400,param_5);
+      uVar7 = CL_AddDeathMessageString(auStack_470,uVar7,0x400,param_4);
+      uVar7 = CL_AddDeathMessageChar(auStack_470,uVar7,0x400,0x5e);
+      uVar7 = CL_AddDeathMessageChar(auStack_470,uVar7,0x400,0x37);
+      uVar7 = CL_AddDeathMessageChar(auStack_470,uVar7,0x400,0x20);
     }
-    uVar2 = CL_AddDeathMessageIcon
-                      (acStack_470,uVar2,0x400,param_6,(float)dVar7,(float)dVar6,(bool)cVar5);
-    if ((param_5 < '0') || (';' < param_5)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x62d
-                      ,0,"victimColorIndex not in [COLOR_FIRST, COLOR_LAST]\n\t%i not in [%i, %i]");
+    uVar2 = CL_AddDeathMessageIcon(uVar2,param_2,auStack_470,uVar7,0x400,param_8);
+    if ((cVar5 < '0') || (';' < cVar5)) {
+      MyAssertHandler(0xffffffff8202cfb8,0x62d,0,0xffffffff8202df28,cVar5,0x30,0x3b);
     }
-    uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,' ');
-    uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,'^');
-    uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,param_5);
-    uVar2 = CL_AddDeathMessageString(acStack_470,uVar2,0x400,(char *)uVar4);
-    uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,'\n');
-    if (0x3ff < uVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x634
-                      ,0,"deathMsgLen < ARRAY_COUNT( deathMsg )\n\t%i, %i");
+    uVar2 = CL_AddDeathMessageChar(auStack_470,uVar2,0x400,0x20);
+    uVar2 = CL_AddDeathMessageChar(auStack_470,uVar2,0x400,0x5e);
+    uVar2 = CL_AddDeathMessageChar(auStack_470,uVar2,0x400,param_7);
+    uVar2 = CL_AddDeathMessageString(auStack_470,uVar2,0x400,param_6);
+    uVar3 = CL_AddDeathMessageChar(auStack_470,uVar2,0x400,10);
+    if (0x3ff < uVar3) {
+      MyAssertHandler(0xffffffff8202cfb8,0x634,0,0xffffffff8202def8,uVar3,0x400);
     }
-    acStack_470[uVar2] = '\0';
-    if (cl_deathMessageWidth == (dvar_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x638
-                      ,0,"%s");
+    iVar4 = DAT_82a7799c;
+    auStack_470[uVar3] = 0;
+    if (iVar4 == 0) {
+      MyAssertHandler(0xffffffff8202cfb8,0x638,0,0xffffffff82000f98,0xffffffff8202d0f4);
+      iVar4 = DAT_82a7799c;
     }
-    CL_ConsolePrint(LVar1,5,acStack_470,0,(cl_deathMessageWidth->current).integer,0);
+    CL_ConsolePrint(uVar1,5,auStack_470,0,*(undefined4 *)(iVar4 + 0xc),0);
   }
   __restgprlr_21();
   return;
@@ -1752,81 +2029,75 @@ void CL_DeathMessagePrint
 
 // 82331960  Con_AutoCompleteFromList  (client/cl_console.cpp:1648)
 
-void Con_AutoCompleteFromList(char **param_1,uint param_2,char *param_3,char *param_4,uint param_5)
+void Con_AutoCompleteFromList
+               (undefined8 param_1,ulonglong param_2,longlong param_3,longlong param_4,
+               undefined8 param_5)
 
 {
-  char *pcVar1;
+  int iVar1;
   ulonglong uVar2;
-  undefined4 *puVar4;
+  int *piVar4;
   int iVar5;
+  char *pcVar8;
   longlong lVar6;
-  longlong lVar7;
-  char *pcVar10;
-  longlong lVar8;
-  ulonglong uVar9;
-  ulonglong uVar11;
+  ulonglong uVar7;
   int iVar3;
   
-  lVar7 = (longlong)(int)param_4;
-  lVar6 = (longlong)(int)param_3;
-  uVar11 = (ulonglong)(int)param_2;
-  puVar4 = (undefined4 *)__savegprlr_24(param_1);
-  lVar8 = lVar6;
+  piVar4 = (int *)__savegprlr_24();
+  lVar6 = param_3;
   do {
-    pcVar10 = (char *)lVar8;
-    lVar8 = lVar8 + 1;
-  } while (*pcVar10 != '\0');
-  uVar9 = (lVar8 - lVar6) - 1;
-  pcVar10 = (char *)lVar7;
-  *pcVar10 = '\0';
-  uVar2 = uVar9 & 0xffffffff;
-  iVar3 = (int)uVar9;
-  uVar9 = uVar11 & 0xffffffff;
+    pcVar8 = (char *)lVar6;
+    lVar6 = lVar6 + 1;
+  } while (*pcVar8 != '\0');
+  uVar7 = (lVar6 - param_3) - 1;
+  pcVar8 = (char *)param_4;
+  *pcVar8 = '\0';
+  uVar2 = uVar7 & 0xffffffff;
+  iVar3 = (int)uVar7;
+  uVar7 = param_2 & 0xffffffff;
   do {
-    if (uVar9 == 0) {
+    if (uVar7 == 0) {
       __restgprlr_24();
       return;
     }
-    pcVar1 = (char *)*puVar4;
-    iVar5 = I_strnicmp((char *)lVar6,pcVar1,iVar3);
+    iVar1 = *piVar4;
+    iVar5 = I_strnicmp(param_3,iVar1,uVar2);
     if (iVar5 == 0) {
-      if (*pcVar10 == '\0') {
-        I_strncpyz(pcVar10,pcVar1,param_5);
+      if (*pcVar8 == '\0') {
+        I_strncpyz(param_4,iVar1,param_5);
       }
       else {
-        lVar8 = uVar2 + lVar7;
+        lVar6 = uVar2 + param_4;
         iVar5 = iVar3;
-        if (pcVar1[iVar3] == pcVar10[iVar3]) {
-          uVar9 = uVar2;
+        if (*(char *)(iVar1 + iVar3) == pcVar8[iVar3]) {
+          uVar7 = uVar2;
           do {
-            iVar5 = (int)uVar9;
-            if (*(char *)lVar8 == '\0') break;
-            lVar8 = lVar8 + 1;
-            uVar9 = uVar9 + 1;
-            iVar5 = (int)uVar9;
-          } while (((char *)lVar8)[(int)pcVar1 - (int)pcVar10] == *(char *)lVar8);
+            iVar5 = (int)uVar7;
+            if (*(char *)lVar6 == '\0') break;
+            lVar6 = lVar6 + 1;
+            uVar7 = uVar7 + 1;
+            iVar5 = (int)uVar7;
+          } while (((char *)lVar6)[iVar1 - (int)pcVar8] == *(char *)lVar6);
         }
-        pcVar10[iVar5] = '\0';
+        pcVar8[iVar5] = '\0';
       }
     }
-    uVar11 = uVar11 - 1;
-    puVar4 = puVar4 + 1;
-    uVar9 = uVar11;
+    param_2 = param_2 - 1;
+    piVar4 = piVar4 + 1;
+    uVar7 = param_2;
   } while( true );
 }
 
 
 // 82331A48  Con_TokenizeInput  (client/cl_console.cpp:1675)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char * Con_TokenizeInput(void)
+byte * Con_TokenizeInput(void)
 
 {
   byte *pbVar1;
   int iVar2;
   
-  Cmd_TokenizeString(g_consoleField.buffer);
+  Cmd_TokenizeString(0xffffffff82a9b128);
   pbVar1 = (byte *)Cmd_Argv(0);
   if ((*pbVar1 == 0x5c) || (*pbVar1 == 0x2f)) {
     pbVar1 = pbVar1 + 1;
@@ -1836,72 +2107,100 @@ char * Con_TokenizeInput(void)
     pbVar1 = pbVar1 + 1;
     iVar2 = isspace((uint)*pbVar1);
   }
-  return (char *)pbVar1;
+  return pbVar1;
 }
 
 
 // 82331AC8  Con_AnySpaceAfterCommand  (client/cl_console.cpp:1691)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool Con_AnySpaceAfterCommand(void)
+void Con_AnySpaceAfterCommand(void)
 
 {
   char cVar1;
   int iVar2;
-  undefined1 uVar3;
+  int iVar3;
   char *pcVar4;
-  int iVar5;
   
   __savegprlr_29();
-  iVar5 = 0;
-  iVar2 = isspace((int)g_consoleField.buffer[0]);
+  iVar3 = 0;
+  iVar2 = isspace((int)DAT_82a9b128);
   if (iVar2 != 0) {
-    pcVar4 = g_consoleField.buffer;
+    pcVar4 = &DAT_82a9b128;
     do {
       pcVar4 = pcVar4 + 1;
-      iVar5 = iVar5 + 1;
+      iVar3 = iVar3 + 1;
       iVar2 = isspace((int)*pcVar4);
     } while (iVar2 != 0);
   }
-  pcVar4 = g_consoleField.buffer + iVar5;
+  pcVar4 = &DAT_82a9b128 + iVar3;
   cVar1 = *pcVar4;
   while( true ) {
     if (cVar1 == '\0') {
-      uVar3 = __restgprlr_29(0);
-      return (bool)uVar3;
+      __restgprlr_29(0);
+      return;
     }
     iVar2 = isspace((int)*pcVar4);
     if (iVar2 != 0) break;
     pcVar4 = pcVar4 + 1;
     cVar1 = *pcVar4;
   }
-  uVar3 = __restgprlr_29(1);
-  return (bool)uVar3;
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 82331B68  ConDrawInput_TextWidth  (client/cl_console.cpp:1715)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void ConDrawInput_TextWidth(ulonglong param_1)
+
+{
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x6b4,0,0xffffffff82000f98,0xffffffff82013b1c);
+  }
+  R_TextWidth(param_1,0,DAT_82aa2964);
+  return;
+}
+
 
 // 82331BD8  ConDrawInput_Text  (client/cl_console.cpp:1722)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void ConDrawInput_Text(ulonglong param_1)
+
+{
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x6bb,0,0xffffffff82000f98,0xffffffff8202e030);
+  }
+  R_AddCmdDrawText((double)DAT_82a77504,(double)(DAT_82a77510 + DAT_82a77508),0x3ff0000000000000,
+                   0x3ff0000000000000,0,param_1,0x7fffffff,DAT_82aa2964);
+  return;
+}
+
 
 // 82331C90  ConDrawInput_TextLimitChars  (client/cl_console.cpp:1729)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void ConDrawInput_TextLimitChars(undefined8 param_1,undefined8 param_2)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x6c2,0,0xffffffff82000f98,0xffffffff8202e030);
+  }
+  R_AddCmdDrawText((double)DAT_82a77504,(double)(DAT_82a77510 + DAT_82a77508),0x3ff0000000000000,
+                   0x3ff0000000000000,0,uVar1,param_2,DAT_82aa2964);
+  __restgprlr_29();
+  return;
+}
+
 
 // 82331D30  ConDrawInput_Newline  (client/cl_console.cpp:1736)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void ConDrawInput_Newline(void)
 
 {
-  conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
-  conDrawInputGlob.x = conDrawInputGlob.leftX;
+  DAT_82a77508 = DAT_82a77508 + DAT_82a77510;
+  DAT_82a77504 = DAT_82a7750c;
   return;
 }
 
@@ -1911,36 +2210,77 @@ void ConDrawInput_Newline(void)
 void ConDrawInput_Over(int param_1)
 
 {
-  conDrawInputGlob.x = (float)(longlong)param_1 + conDrawInputGlob.x;
+  DAT_82a77504 = (float)(longlong)param_1 + DAT_82a77504;
   return;
 }
 
 
 // 82331D88  ConDrawInput_TextAndOver  (client/cl_console.cpp:1749)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void ConDrawInput_TextAndOver(undefined8 param_1,undefined8 param_2)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x6d6,0,0xffffffff82000f98,0xffffffff8202e030);
+  }
+  ConDrawInput_Text(uVar1,param_2);
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x6b4,0,0xffffffff82000f98,0xffffffff82013b1c);
+  }
+  iVar2 = R_TextWidth(uVar1,0,DAT_82aa2964);
+  DAT_82a77504 = (float)(longlong)iVar2 + DAT_82a77504;
+  __restgprlr_28();
+  return;
+}
+
 
 // 82331E48  ConDraw_Box  (client/cl_console.cpp:1758)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void ConDraw_Box(undefined8 param_1,double param_2,double param_3,double param_4)
+
+{
+  double dVar1;
+  double dVar2;
+  undefined8 uVar3;
+  
+  dVar1 = (double)__savefpr_26();
+  uVar3 = 0;
+  R_AddCmdDrawStretchPic();
+  dVar2 = 2.0;
+  R_AddCmdDrawStretchPic(dVar1,param_2,0x4000000000000000,param_4,uVar3,uVar3,uVar3,uVar3);
+  R_AddCmdDrawStretchPic
+            ((double)(float)((double)(float)(dVar1 + param_3) - dVar2),param_2,dVar2,param_4,uVar3,
+             uVar3,uVar3,uVar3);
+  R_AddCmdDrawStretchPic(dVar1,param_2,param_3,dVar2,uVar3,uVar3,uVar3,uVar3);
+  R_AddCmdDrawStretchPic
+            (dVar1,(double)(float)((double)(float)(param_2 + param_4) - dVar2),param_3,dVar2,uVar3,
+             uVar3,uVar3,uVar3);
+  __restfpr_26();
+  return;
+}
+
 
 // 82331FE0  ConDrawInput_Box  (client/cl_console.cpp:1774)
 
-void ConDrawInput_Box(int param_1,float *param_2)
+void ConDrawInput_Box(int param_1)
 
 {
-  ConDraw_Box(conDrawInputGlob.x - 6.0,conDrawInputGlob.y - 6.0,
-              (con.screenMax[0] - con.screenMin[0]) -
-              ((conDrawInputGlob.x - 6.0) - con.screenMin[0]),
-              (float)(longlong)param_1 * conDrawInputGlob.fontHeight + 12.0,(float *)0x10250);
+  ConDraw_Box((double)(DAT_82a77504 - 6.0),(double)(DAT_82a77508 - 6.0),
+              (double)((float)((double)DAT_82a87d00 - (double)DAT_82a87cf8) -
+                      (float)((double)(DAT_82a77504 - 6.0) - (double)DAT_82a87cf8)),
+              (double)((float)(longlong)param_1 * DAT_82a77510 + 12.0));
   return;
 }
 
 
 // 82332070  Con_GetAutoCompleteColorCodedStringDiscontiguous  (client/cl_console.cpp:1791)
 
-int Con_GetAutoCompleteColorCodedStringDiscontiguous
-              (char *param_1,char *param_2,int param_3,char *param_4)
+void Con_GetAutoCompleteColorCodedStringDiscontiguous
+               (undefined8 param_1,ulonglong param_2,int param_3,longlong param_4)
 
 {
   char cVar1;
@@ -1948,315 +2288,288 @@ int Con_GetAutoCompleteColorCodedStringDiscontiguous
   char *pcVar3;
   int iVar4;
   int iVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  char *pcVar8;
-  bool bVar9;
-  longlong lVar10;
-  int iVar11;
+  char *pcVar6;
+  bool bVar7;
+  longlong lVar8;
+  int iVar9;
   
-  lVar7 = (longlong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_20(param_1);
+  pcVar3 = (char *)__savegprlr_20();
   if (pcVar3 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x707,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x707,0,0xffffffff82000f98,0xffffffff8202e070);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x708,0
-                    ,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x708,0,0xffffffff82000f98,0xffffffff8202e064);
   }
   if (param_3 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x709,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x709,0,0xffffffff82000f98,0xffffffff8202e054);
   }
-  bVar9 = false;
-  iVar11 = 0;
-  iVar4 = tolower((int)*(char *)uVar6);
+  bVar7 = false;
+  iVar9 = 0;
+  iVar4 = tolower((int)*(char *)param_2);
   if (*pcVar3 != '\0') {
-    lVar10 = lVar7;
+    lVar8 = param_4;
     do {
       iVar5 = tolower((int)*pcVar3);
       bVar2 = iVar4 == iVar5;
       if (bVar2) {
-        uVar6 = uVar6 + 1;
-        iVar4 = tolower((int)*(char *)uVar6);
+        param_2 = param_2 + 1;
+        iVar4 = tolower((int)*(char *)param_2);
       }
-      if (bVar2 != bVar9) {
-        pcVar8 = "^2";
+      if (bVar2 != bVar7) {
+        pcVar6 = "^2";
         if (!bVar2) {
-          pcVar8 = "^7";
+          pcVar6 = "^7";
         }
-        iVar5 = (int)lVar10 - (int)pcVar8;
+        iVar5 = (int)lVar8 - (int)pcVar6;
         do {
-          cVar1 = *pcVar8;
-          pcVar8[iVar5] = cVar1;
-          pcVar8 = pcVar8 + 1;
+          cVar1 = *pcVar6;
+          pcVar6[iVar5] = cVar1;
+          pcVar6 = pcVar6 + 1;
         } while (cVar1 != '\0');
-        iVar11 = iVar11 + 2;
-        lVar10 = lVar10 + 2;
-        bVar9 = bVar2;
+        iVar9 = iVar9 + 2;
+        lVar8 = lVar8 + 2;
+        bVar7 = bVar2;
       }
-      iVar11 = iVar11 + 1;
-      *(char *)lVar10 = *pcVar3;
-      lVar10 = lVar10 + 1;
+      iVar9 = iVar9 + 1;
+      *(char *)lVar8 = *pcVar3;
+      lVar8 = lVar8 + 1;
       pcVar3 = pcVar3 + 1;
     } while (*pcVar3 != '\0');
   }
-  iVar4 = (int)lVar7;
-  *(undefined1 *)(iVar11 + iVar4) = 0x5e;
-  *(undefined1 *)(iVar11 + iVar4 + 1) = 0x37;
-  *(undefined1 *)(iVar11 + iVar4 + 2) = 0;
-  *(undefined1 *)(iVar11 + 2 + iVar4) = 0x20;
-  *(undefined1 *)(iVar11 + 3 + iVar4) = 0;
-  lVar10 = lVar7;
+  iVar4 = (int)param_4;
+  *(undefined1 *)(iVar9 + iVar4) = 0x5e;
+  *(undefined1 *)(iVar9 + iVar4 + 1) = 0x37;
+  *(undefined1 *)(iVar9 + iVar4 + 2) = 0;
+  *(undefined1 *)(iVar9 + 2 + iVar4) = 0x20;
+  *(undefined1 *)(iVar9 + 3 + iVar4) = 0;
+  lVar8 = param_4;
   do {
-    pcVar3 = (char *)lVar10;
-    lVar10 = lVar10 + 1;
+    pcVar3 = (char *)lVar8;
+    lVar8 = lVar8 + 1;
   } while (*pcVar3 != '\0');
-  if (((lVar10 - lVar7) - 1U & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x728,0
-                    ,"%s");
+  if (((lVar8 - param_4) - 1U & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x728,0,0xffffffff82000f98,0xffffffff8202e034);
   }
-  iVar4 = __restgprlr_20(iVar11 + 3);
-  return iVar4;
+  __restgprlr_20(iVar9 + 3);
+  return;
 }
 
 
 // 82332260  Con_GetAutoCompleteColorCodedStringContiguous  (client/cl_console.cpp:1838)
 
-int Con_GetAutoCompleteColorCodedStringContiguous
-              (char *param_1,char *param_2,int param_3,char *param_4)
+void Con_GetAutoCompleteColorCodedStringContiguous
+               (undefined8 param_1,ulonglong param_2,int param_3,longlong param_4)
 
 {
   char cVar1;
-  ulonglong uVar2;
-  char *pcVar3;
-  int iVar5;
-  uint uVar6;
-  longlong lVar7;
-  longlong lVar8;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  size_t _Count;
+  longlong lVar5;
+  char *pcVar7;
+  longlong lVar6;
+  ulonglong uVar8;
+  char *pcVar10;
+  char *pcVar11;
   longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  char *pcVar13;
   longlong lVar12;
-  longlong lVar14;
-  longlong lVar15;
-  char *pcVar4;
+  longlong lVar13;
   
-  lVar7 = (longlong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x733,0
-                    ,"%s");
+  uVar3 = __savegprlr_25();
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x733,0,0xffffffff82000f98,0xffffffff8202e070);
   }
-  if ((uVar10 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x734,0
-                    ,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x734,0,0xffffffff82000f98,0xffffffff8202e064);
   }
   if (param_3 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x735,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x735,0,0xffffffff82000f98,0xffffffff8202e054);
   }
-  lVar14 = 0;
-  pcVar4 = (char *)uVar2;
-  pcVar3 = I_stristr(pcVar4,(char *)uVar10);
-  pcVar13 = (char *)lVar7;
-  uVar11 = uVar2;
-  lVar12 = lVar7;
-  if (pcVar3 == (char *)0x0) {
+  lVar13 = 0;
+  uVar4 = I_stristr(uVar3,param_2);
+  pcVar11 = (char *)param_4;
+  pcVar7 = (char *)uVar3;
+  uVar8 = uVar3;
+  lVar9 = param_4;
+  if ((uVar4 & 0xffffffff) == 0) {
     do {
-      pcVar3 = (char *)uVar11;
-      uVar11 = uVar11 + 1;
-    } while (*pcVar3 != '\0');
-    if (((uVar11 - uVar2) - 1 & 0xffffffff) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x74e
-                      ,0,"%s");
+      pcVar10 = (char *)uVar8;
+      uVar8 = uVar8 + 1;
+    } while (*pcVar10 != '\0');
+    if (((uVar8 - uVar3) - 1 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff8202cfb8,0x74e,0,0xffffffff82000f98,0xffffffff8202e078);
     }
     do {
-      cVar1 = *(char *)uVar2;
-      ((char *)uVar2)[(int)pcVar13 - (int)pcVar4] = cVar1;
-      uVar2 = uVar2 + 1;
+      cVar1 = *(char *)uVar3;
+      ((char *)uVar3)[(int)pcVar11 - (int)pcVar7] = cVar1;
+      uVar3 = uVar3 + 1;
     } while (cVar1 != '\0');
   }
   else {
-    lVar15 = (longlong)(int)pcVar3 - uVar2;
-    uVar6 = (uint)lVar15;
-    strncpy(pcVar13,pcVar4,uVar6);
-    lVar15 = lVar15 + 2;
-    pcVar13[uVar6] = '^';
-    pcVar13[uVar6 + 1] = '2';
-    pcVar13[uVar6 + 2] = '\0';
-    uVar2 = uVar10;
+    _Count = (size_t)(uVar4 - uVar3);
+    strncpy(pcVar11,pcVar7,_Count);
+    lVar12 = (uVar4 - uVar3) + 2;
+    pcVar11[_Count] = '^';
+    pcVar11[_Count + 1] = '2';
+    pcVar11[_Count + 2] = '\0';
+    uVar3 = param_2;
     do {
-      pcVar4 = (char *)uVar2;
-      uVar2 = uVar2 + 1;
-    } while (*pcVar4 != '\0');
-    uVar10 = (uVar2 - uVar10) - 1;
-    uVar2 = uVar10 & 0xffffffff;
-    strncpy(pcVar13 + (int)lVar15,pcVar3,(uint)uVar10);
-    lVar15 = uVar2 + lVar15;
-    iVar5 = (int)lVar15;
-    lVar8 = uVar2 + (longlong)(int)pcVar3;
-    pcVar13[iVar5] = '^';
-    lVar15 = lVar15 + 2;
-    pcVar13[iVar5 + 1] = '7';
-    pcVar13[iVar5 + 2] = '\0';
-    lVar14 = lVar8;
+      pcVar7 = (char *)uVar3;
+      uVar3 = uVar3 + 1;
+    } while (*pcVar7 != '\0');
+    uVar8 = (uVar3 - param_2) - 1;
+    uVar3 = uVar8 & 0xffffffff;
+    strncpy(pcVar11 + (int)lVar12,(char *)uVar4,(size_t)uVar8);
+    lVar12 = uVar3 + lVar12;
+    iVar2 = (int)lVar12;
+    lVar5 = uVar3 + uVar4;
+    pcVar11[iVar2] = '^';
+    lVar12 = lVar12 + 2;
+    pcVar11[iVar2 + 1] = '7';
+    pcVar11[iVar2 + 2] = '\0';
+    lVar13 = lVar5;
     do {
-      cVar1 = *(char *)lVar14;
-      ((char *)lVar14)[(int)(pcVar13 + ((int)lVar15 - (int)lVar8))] = cVar1;
-      lVar14 = lVar14 + 1;
-      lVar9 = lVar8;
+      cVar1 = *(char *)lVar13;
+      ((char *)lVar13)[(int)(pcVar11 + ((int)lVar12 - (int)lVar5))] = cVar1;
+      lVar13 = lVar13 + 1;
+      lVar6 = lVar5;
     } while (cVar1 != '\0');
     do {
-      pcVar3 = (char *)lVar9;
-      lVar9 = lVar9 + 1;
-    } while (*pcVar3 != '\0');
-    lVar15 = ((lVar9 - lVar8) - 1U & 0xffffffff) + lVar15;
-    lVar14 = lVar15 + 1;
-    pcVar13[(int)lVar15] = ' ';
-    pcVar13[(int)lVar14] = '\0';
+      pcVar7 = (char *)lVar6;
+      lVar6 = lVar6 + 1;
+    } while (*pcVar7 != '\0');
+    lVar12 = ((lVar6 - lVar5) - 1U & 0xffffffff) + lVar12;
+    lVar13 = lVar12 + 1;
+    pcVar11[(int)lVar12] = ' ';
+    pcVar11[(int)lVar13] = '\0';
   }
   do {
-    pcVar13 = (char *)lVar12;
-    lVar12 = lVar12 + 1;
-  } while (*pcVar13 != '\0');
-  if (((lVar12 - lVar7) - 1U & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x752,0
-                    ,"%s");
+    pcVar11 = (char *)lVar9;
+    lVar9 = lVar9 + 1;
+  } while (*pcVar11 != '\0');
+  if (((lVar9 - param_4) - 1U & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x752,0,0xffffffff82000f98,0xffffffff8202e034);
   }
-  iVar5 = __restgprlr_25(lVar14);
-  return iVar5;
+  __restgprlr_25(lVar13);
+  return;
 }
 
 
 // 823324C8  Con_GetAutoCompleteColorCodedString  (client/cl_console.cpp:1880)
 
-int Con_GetAutoCompleteColorCodedString
-              (char *param_1,char *param_2,int param_3,bool param_4,char *param_5,char *param_6)
+void Con_GetAutoCompleteColorCodedString
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+               undefined8 param_5,longlong param_6)
 
 {
-  char *pcVar1;
-  int iVar2;
-  ulonglong uVar3;
+  undefined8 uVar1;
+  int iVar3;
+  longlong lVar2;
   longlong lVar4;
   
-  uVar3 = (ulonglong)param_4;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if ((uVar3 & 0xff) == 0) {
+  uVar1 = __savegprlr_27();
+  if ((param_4 & 0xff) == 0) {
     lVar4 = 0;
   }
   else {
-    iVar2 = sprintf(param_6,"^2%s ");
-    lVar4 = (longlong)iVar2;
+    iVar3 = sprintf((char *)param_6,"^2%s ",param_5);
+    lVar4 = (longlong)iVar3;
   }
-  if ((con_matchPrefixOnly->current).enabled != false) {
-    iVar2 = Con_GetAutoCompleteColorCodedStringContiguous
-                      (pcVar1,param_2,param_3,param_6 + (int)lVar4);
-    iVar2 = __restgprlr_27(iVar2 + lVar4);
-    return iVar2;
+  if (*(char *)(DAT_82a776a4 + 0xc) != '\0') {
+    lVar2 = Con_GetAutoCompleteColorCodedStringContiguous();
+    __restgprlr_27(lVar2 + lVar4);
+    return;
   }
-  iVar2 = Con_GetAutoCompleteColorCodedStringDiscontiguous
-                    (pcVar1,param_2,param_3,param_6 + (int)lVar4);
-  iVar2 = __restgprlr_27(iVar2 + lVar4);
-  return iVar2;
+  lVar2 = Con_GetAutoCompleteColorCodedStringDiscontiguous(uVar1,param_2,param_3,lVar4 + param_6);
+  __restgprlr_27(lVar2 + lVar4);
+  return;
 }
 
 
 // 82332558  Con_IsAutoCompleteMatch  (client/cl_console.cpp:1896)
 
-bool Con_IsAutoCompleteMatch(char *param_1,char *param_2,int param_3)
+void Con_IsAutoCompleteMatch(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
   char *pcVar1;
   int iVar2;
-  undefined1 uVar4;
   int iVar3;
-  ulonglong uVar5;
-  char *pcVar6;
-  char cVar7;
-  int iVar8;
+  char *pcVar4;
+  char cVar5;
+  int iVar6;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_26(param_1);
+  pcVar1 = (char *)__savegprlr_26();
   if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x76d,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x76d,0,0xffffffff82000f98,0xffffffff8202e070);
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x76e,0
-                    ,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x76e,0,0xffffffff82000f98,0xffffffff8202e064);
   }
-  if (param_3 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x76f,0
-                    ,"%s");
+  if ((int)param_3 == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x76f,0,0xffffffff82000f98,0xffffffff8202e054);
   }
-  pcVar6 = (char *)uVar5;
-  if ((con_ignoreMatchPrefixOnly == false) && ((con_matchPrefixOnly->current).enabled != false)) {
-    iVar2 = I_strnicmp(pcVar1,pcVar6,param_3);
-    uVar4 = __restgprlr_26(iVar2 == 0);
-    return (bool)uVar4;
+  if ((DAT_82a77878 == '\0') && (*(char *)(DAT_82a776a4 + 0xc) != '\0')) {
+    iVar2 = I_strnicmp(pcVar1,param_2,param_3);
+    __restgprlr_26(iVar2 == 0);
+    return;
   }
-  iVar8 = 0;
-  iVar2 = tolower((int)*pcVar6);
-  cVar7 = *pcVar1;
+  pcVar4 = (char *)param_2;
+  iVar6 = 0;
+  iVar2 = tolower((int)*pcVar4);
+  cVar5 = *pcVar1;
   do {
-    if (cVar7 == '\0') {
-      uVar4 = __restgprlr_26(0);
-      return (bool)uVar4;
+    if (cVar5 == '\0') {
+      __restgprlr_26(0);
+      return;
     }
     iVar3 = tolower((int)*pcVar1);
     if (iVar3 == iVar2) {
-      iVar8 = iVar8 + 1;
-      if (iVar8 == param_3) {
-        uVar4 = __restgprlr_26(1);
-        return (bool)uVar4;
+      iVar6 = iVar6 + 1;
+      if (iVar6 == (int)param_3) {
+        __restgprlr_26(1);
+        return;
       }
-      cVar7 = pcVar6[iVar8];
+      cVar5 = pcVar4[iVar6];
 LAB_82332698:
-      iVar2 = tolower((int)cVar7);
+      iVar2 = tolower((int)cVar5);
     }
-    else if (((con_matchPrefixOnly->current).enabled != false) && (iVar8 != 0)) {
-      cVar7 = *pcVar6;
-      iVar8 = 0;
+    else if ((*(char *)(DAT_82a776a4 + 0xc) != '\0') && (iVar6 != 0)) {
+      cVar5 = *pcVar4;
+      iVar6 = 0;
       goto LAB_82332698;
     }
     pcVar1 = pcVar1 + 1;
-    cVar7 = *pcVar1;
+    cVar5 = *pcVar1;
   } while( true );
 }
 
 
 // 823326C8  ConDrawInput_StringMatchesInputText  (client/cl_console.cpp:1932)
 
-bool ConDrawInput_StringMatchesInputText(char *param_1)
+void ConDrawInput_StringMatchesInputText(undefined8 param_1)
 
 {
-  bool bVar1;
-  
-  bVar1 = Con_IsAutoCompleteMatch(param_1,conDrawInputGlob.inputText,conDrawInputGlob.inputTextLen);
-  return bVar1;
+  Con_IsAutoCompleteMatch(param_1,DAT_82a774f8,DAT_82a774fc);
+  return;
 }
 
 
 // 823326E0  ConDrawInput_IncrMatchCounter  (client/cl_console.cpp:1938)
 
-void ConDrawInput_IncrMatchCounter(char *param_1)
+void ConDrawInput_IncrMatchCounter(int param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Con_IsAutoCompleteMatch(param_1,conDrawInputGlob.inputText,conDrawInputGlob.inputTextLen);
-  if (bVar1) {
-    if (conDrawInputGlob.matchCount == conDrawInputGlob.matchIndex) {
-      I_strncpyz(conDrawInputGlob.autoCompleteChoice,param_1,0x40);
+  cVar1 = Con_IsAutoCompleteMatch(param_1,DAT_82a774f8,DAT_82a774fc);
+  if (cVar1 != '\0') {
+    if (DAT_82a774f4 == DAT_82a774f0) {
+      I_strncpyz(0xffffffff82a774b0,param_1,0x40);
     }
-    conDrawInputGlob.matchCount = conDrawInputGlob.matchCount + 1;
-    if (param_1[conDrawInputGlob.inputTextLen] == '\0') {
-      conDrawInputGlob.hasExactMatch = true;
+    DAT_82a774f4 = DAT_82a774f4 + 1;
+    if (*(char *)(DAT_82a774fc + param_1) == '\0') {
+      DAT_82a77500 = 1;
     }
   }
   return;
@@ -2265,25 +2578,25 @@ void ConDrawInput_IncrMatchCounter(char *param_1)
 
 // 82332778  ConDrawInput_DvarMatch  (client/cl_console.cpp:1951)
 
-void ConDrawInput_DvarMatch(char *param_1)
+void ConDrawInput_DvarMatch(void)
 
 {
-  char *pcVar1;
-  bool bVar2;
+  ulonglong uVar1;
+  char cVar3;
+  undefined8 uVar2;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x7a0,0
-                    ,"%s");
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x7a0,0,0xffffffff82000f98,0xffffffff8202e030);
   }
-  bVar2 = Con_IsAutoCompleteMatch(pcVar1,conDrawInputGlob.inputText,conDrawInputGlob.inputTextLen);
-  if (bVar2) {
-    ConDrawInput_TextLimitChars(pcVar1,0x1c,con_inputDvarMatchColor);
-    conDrawInputGlob.x = conDrawInputGlob.x + 290.0;
-    pcVar1 = Dvar_GetVariantString(pcVar1);
-    ConDrawInput_TextLimitChars(pcVar1,0x28,con_inputDvarValueColor);
-    conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
-    conDrawInputGlob.x = conDrawInputGlob.leftX;
+  cVar3 = Con_IsAutoCompleteMatch(uVar1,DAT_82a774f8,DAT_82a774fc);
+  if (cVar3 != '\0') {
+    ConDrawInput_TextLimitChars(uVar1,0x1c,0xffffffff8202cf18);
+    DAT_82a77504 = DAT_82a77504 + 290.0;
+    uVar2 = Dvar_GetVariantString(uVar1);
+    ConDrawInput_TextLimitChars(uVar2,0x28,0xffffffff8202cf28);
+    DAT_82a77508 = DAT_82a77508 + DAT_82a77510;
+    DAT_82a77504 = DAT_82a7750c;
   }
   __restgprlr_29();
   return;
@@ -2292,192 +2605,273 @@ void ConDrawInput_DvarMatch(char *param_1)
 
 // 82332838  ConDrawInput_CompareStrings  (client/cl_console.cpp:1965)
 
-int ConDrawInput_CompareStrings(void *param_1,void *param_2)
+void ConDrawInput_CompareStrings(undefined4 *param_1,undefined4 *param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = I_stricmp(*(char **)param_1,*(char **)param_2);
-  return iVar1;
+  I_stricmp(*param_1,*param_2);
+  return;
 }
 
 
 // 82332848  ConDrawInput_TextFieldFirstArgChar  (client/cl_console.cpp:1971)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int ConDrawInput_TextFieldFirstArgChar(void)
+void ConDrawInput_TextFieldFirstArgChar(void)
 
 {
   int iVar1;
-  int iVar2;
-  char *pcVar3;
+  char *pcVar2;
+  int iVar3;
   
   __savegprlr_29();
-  iVar2 = 0;
-  iVar1 = isspace((int)g_consoleField.buffer[0]);
+  iVar3 = 0;
+  iVar1 = isspace((int)DAT_82a9b128);
   if (iVar1 != 0) {
-    pcVar3 = g_consoleField.buffer;
+    pcVar2 = &DAT_82a9b128;
     do {
-      pcVar3 = pcVar3 + 1;
-      iVar2 = iVar2 + 1;
-      iVar1 = isspace((int)*pcVar3);
+      pcVar2 = pcVar2 + 1;
+      iVar3 = iVar3 + 1;
+      iVar1 = isspace((int)*pcVar2);
     } while (iVar1 != 0);
   }
-  pcVar3 = g_consoleField.buffer + iVar2;
-  iVar1 = isspace((int)g_consoleField.buffer[iVar2]);
+  pcVar2 = &DAT_82a9b128 + iVar3;
+  iVar1 = isspace((int)(&DAT_82a9b128)[iVar3]);
   while (iVar1 == 0) {
-    pcVar3 = pcVar3 + 1;
-    iVar2 = iVar2 + 1;
-    iVar1 = isspace((int)*pcVar3);
+    pcVar2 = pcVar2 + 1;
+    iVar3 = iVar3 + 1;
+    iVar1 = isspace((int)*pcVar2);
   }
-  pcVar3 = g_consoleField.buffer + iVar2;
-  iVar1 = isspace((int)g_consoleField.buffer[iVar2]);
+  pcVar2 = &DAT_82a9b128 + iVar3;
+  iVar1 = isspace((int)(&DAT_82a9b128)[iVar3]);
   while (iVar1 != 0) {
-    pcVar3 = pcVar3 + 1;
-    iVar2 = iVar2 + 1;
-    iVar1 = isspace((int)*pcVar3);
+    pcVar2 = pcVar2 + 1;
+    iVar3 = iVar3 + 1;
+    iVar1 = isspace((int)*pcVar2);
   }
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  __restgprlr_29(iVar3);
+  return;
 }
 
 
 // 82332908  ConDrawInput_AutoCompleteArg  (client/cl_console.cpp:1987)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void ConDrawInput_AutoCompleteArg(undefined8 param_1,int param_2)
+
+{
+  char cVar1;
+  undefined4 uVar2;
+  undefined4 *puVar4;
+  char *pcVar5;
+  int iVar6;
+  undefined8 uVar3;
+  int iVar7;
+  char *pcVar8;
+  char *pcVar9;
+  int iVar10;
+  undefined4 *puVar11;
+  ulonglong uVar12;
+  size_t _NumOfElements;
+  char *pcVar13;
+  double dVar14;
+  double dVar15;
+  undefined4 uStack_4a4;
+  undefined4 local_4a0 [16];
+  char acStack_460 [1120];
+  
+  puVar4 = (undefined4 *)__savegprlr_23();
+  pcVar5 = (char *)Cmd_Argv(1);
+  pcVar8 = pcVar5;
+  do {
+    cVar1 = *pcVar8;
+    pcVar8 = pcVar8 + 1;
+  } while (cVar1 != '\0');
+  if (pcVar8 + (-1 - (int)pcVar5) != (char *)0x0) {
+    uVar12 = 0;
+    pcVar13 = (char *)0x0;
+    iVar10 = 0;
+    iVar7 = 0;
+    if (0 < param_2) {
+      puVar11 = local_4a0;
+      do {
+        iVar6 = I_strnicmp(pcVar5,*puVar4,pcVar8 + (-1 - (int)pcVar5));
+        if (iVar6 == 0) {
+          if ((uVar12 & 0xffffffff) == 0x10) goto LAB_82332b60;
+          pcVar9 = (char *)*puVar4;
+          do {
+            cVar1 = *pcVar9;
+            pcVar9 = pcVar9 + 1;
+          } while (cVar1 != '\0');
+          if ((char *)0x3ff < pcVar9 + (int)(pcVar13 + (-1 - (int)*puVar4))) goto LAB_82332b60;
+          *puVar11 = acStack_460 + (int)pcVar13;
+          Com_StripExtension();
+          pcVar9 = (char *)*puVar11;
+          do {
+            cVar1 = *pcVar9;
+            pcVar9 = pcVar9 + 1;
+          } while (cVar1 != '\0');
+          pcVar13 = pcVar9 + ((int)pcVar13 - (int)*puVar11);
+          iVar6 = ConDrawInput_TextWidth();
+          if (iVar10 < iVar6) {
+            iVar10 = iVar6;
+          }
+          uVar12 = uVar12 + 1;
+          puVar11 = puVar11 + 1;
+        }
+        iVar7 = iVar7 + 1;
+        puVar4 = puVar4 + 1;
+      } while (iVar7 < param_2);
+      _NumOfElements = (size_t)uVar12;
+      if (_NumOfElements != 0) {
+        qsort(local_4a0,_NumOfElements,4,ConDrawInput_CompareStrings);
+        uVar2 = DAT_82aa2964;
+        uVar3 = ConDrawInput_TextFieldFirstArgChar();
+        iVar7 = R_TextWidth(0xffffffff82a9b128,uVar3,uVar2);
+        dVar15 = (double)(DAT_82a77510 + DAT_82a87cfc + 6.0);
+        dVar14 = (double)(((float)(longlong)iVar7 + DAT_82a7750c) - 6.0);
+        ConDraw_Box(dVar14,dVar15,(double)((float)(longlong)iVar10 + 12.0),
+                    (double)((float)(longlong)(int)_NumOfElements * DAT_82a77510 + 12.0));
+        DAT_82a77504 = (float)(dVar14 + 6.0);
+        DAT_82a77508 = (float)(dVar15 + 6.0);
+        DAT_82a7750c = DAT_82a77504;
+        if (0 < (int)_NumOfElements) {
+          puVar4 = &uStack_4a4;
+          do {
+            puVar4 = puVar4 + 1;
+            DAT_82a77504 = DAT_82a7750c;
+            ConDrawInput_Text(*puVar4,0xffffffff8202cf48);
+            uVar12 = uVar12 - 1;
+            DAT_82a77508 = DAT_82a77508 + DAT_82a77510;
+            DAT_82a77504 = DAT_82a7750c;
+          } while (uVar12 != 0);
+        }
+      }
+    }
+  }
+LAB_82332b60:
+  __restgprlr_23();
+  return;
+}
+
 
 // 82332B70  ConDrawInput_GetDvarDescriptionLines  (client/cl_console.cpp:2052)
 
-int ConDrawInput_GetDvarDescriptionLines(dvar_t *param_1)
+longlong ConDrawInput_GetDvarDescriptionLines(int param_1)
 
 {
   char cVar1;
   char *pcVar2;
-  int iVar3;
+  longlong lVar3;
   int iVar4;
   char *pcVar5;
   
-  if (param_1->description == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x809,0
-                    ,"%s");
+  if (*(int *)(param_1 + 4) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x809,0,0xffffffff82000f98,0xffffffff8202e098);
   }
-  pcVar2 = param_1->description;
+  pcVar2 = *(char **)(param_1 + 4);
   pcVar5 = pcVar2;
   do {
     cVar1 = *pcVar5;
     pcVar5 = pcVar5 + 1;
   } while (cVar1 != '\0');
-  iVar3 = 1;
+  lVar3 = 1;
   pcVar5 = pcVar5 + (-1 - (int)pcVar2);
   if (0 < (int)pcVar5) {
     iVar4 = 0;
-    iVar3 = 1;
     do {
       if (pcVar2[iVar4] == '\n') {
-        iVar3 = iVar3 + 1;
+        lVar3 = lVar3 + 1;
       }
       iVar4 = iVar4 + 1;
       pcVar5 = pcVar5 + -1;
     } while (pcVar5 != (char *)0x0);
   }
-  return iVar3;
+  return lVar3;
 }
 
 
 // 82332C18  ConDrawInput_DetailedDvarMatch  (client/cl_console.cpp:2071)
 
-void ConDrawInput_DetailedDvarMatch(char *param_1)
+void ConDrawInput_DetailedDvarMatch(void)
 
 {
-  char *pcVar1;
-  bool bVar4;
-  dvar_t *pdVar2;
   int iVar3;
-  longlong lVar5;
+  char cVar5;
+  int iVar4;
+  undefined8 uVar1;
+  longlong lVar2;
   longlong lVar6;
   double dVar7;
-  int local_450 [4];
-  char acStack_440 [1088];
+  uint local_450 [4];
+  undefined1 auStack_440 [1088];
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x822,0
-                    ,"%s");
+  iVar3 = __savegprlr_26();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x822,0,0xffffffff82000f98,0xffffffff8202e030);
   }
-  bVar4 = Con_IsAutoCompleteMatch(pcVar1,conDrawInputGlob.inputText,conDrawInputGlob.inputTextLen);
-  if ((bVar4) &&
-     ((conDrawInputGlob.hasExactMatch == false || (pcVar1[conDrawInputGlob.inputTextLen] == '\0'))))
-  {
-    pdVar2 = Dvar_FindVar(pcVar1);
-    if (pdVar2 == (dvar_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x82a
-                      ,0,"%s");
+  cVar5 = Con_IsAutoCompleteMatch(iVar3,DAT_82a774f8,DAT_82a774fc);
+  if ((cVar5 != '\0') && ((DAT_82a77500 == '\0' || (*(char *)(DAT_82a774fc + iVar3) == '\0')))) {
+    iVar4 = Dvar_FindVar(iVar3);
+    if (iVar4 == 0) {
+      MyAssertHandler(0xffffffff8202cfb8,0x82a,0,0xffffffff82000f98,0xffffffff8201ec3c);
     }
-    bVar4 = Dvar_HasLatchedValue(pdVar2);
-    ConDrawInput_Box(((uint)LZCOUNT((uint)bVar4) >> 5 ^ 1) + 2,
-                     &(con_inputHintBoxColor->current).value);
-    ConDrawInput_TextLimitChars(pcVar1,0x1c,con_inputDvarMatchColor);
+    cVar5 = Dvar_HasLatchedValue(iVar4);
+    ConDrawInput_Box((cVar5 != '\0') + '\x02',(ulonglong)DAT_82a99e94 + 0xc);
+    ConDrawInput_TextLimitChars(iVar3,0x1c,0xffffffff8202cf18);
     dVar7 = 290.0;
-    conDrawInputGlob.x = conDrawInputGlob.x + 290.0;
-    pcVar1 = Dvar_DisplayableValue(pdVar2);
-    ConDrawInput_TextLimitChars(pcVar1,0x28,con_inputDvarValueColor);
-    conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
-    conDrawInputGlob.x = conDrawInputGlob.leftX;
-    if (bVar4 != 0) {
-      ConDrawInput_Text("  latched value",con_inputDvarInactiveValueColor);
-      conDrawInputGlob.x = (float)((double)conDrawInputGlob.x + dVar7);
-      pcVar1 = Dvar_DisplayableLatchedValue(pdVar2);
-      ConDrawInput_TextLimitChars(pcVar1,0x28,con_inputDvarInactiveValueColor);
-      conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
+    DAT_82a77504 = DAT_82a77504 + 290.0;
+    uVar1 = Dvar_DisplayableValue(iVar4);
+    ConDrawInput_TextLimitChars(uVar1,0x28,0xffffffff8202cf28);
+    DAT_82a77508 = DAT_82a77508 + DAT_82a77510;
+    DAT_82a77504 = DAT_82a7750c;
+    if (cVar5 != '\0') {
+      ConDrawInput_Text(0xffffffff8202e0b8,0xffffffff8202cf38);
+      DAT_82a77504 = (float)((double)DAT_82a77504 + dVar7);
+      uVar1 = Dvar_DisplayableLatchedValue(iVar4);
+      ConDrawInput_TextLimitChars(uVar1,0x28,0xffffffff8202cf38);
+      DAT_82a77508 = DAT_82a77508 + DAT_82a77510;
     }
-    conDrawInputGlob.x = conDrawInputGlob.leftX;
-    ConDrawInput_Text("  default",con_inputDvarInactiveValueColor);
-    conDrawInputGlob.x = (float)((double)conDrawInputGlob.x + dVar7);
-    pcVar1 = Dvar_DisplayableResetValue(pdVar2);
-    ConDrawInput_TextLimitChars(pcVar1,0x28,con_inputDvarInactiveValueColor);
-    conDrawInputGlob.x = conDrawInputGlob.leftX;
-    conDrawInputGlob.y =
-         conDrawInputGlob.y + conDrawInputGlob.fontHeight + conDrawInputGlob.fontHeight;
-    Dvar_DomainToString_GetLines(pdVar2->type,pdVar2->domain,acStack_440,0x400,local_450);
-    if (pdVar2->description == (char *)0x0) {
-      lVar6 = 0;
+    DAT_82a77504 = DAT_82a7750c;
+    ConDrawInput_Text(0xffffffff8202e0ac,0xffffffff8202cf38);
+    DAT_82a77504 = (float)((double)DAT_82a77504 + dVar7);
+    uVar1 = Dvar_DisplayableResetValue(iVar4);
+    ConDrawInput_TextLimitChars(uVar1,0x28,0xffffffff8202cf38);
+    DAT_82a77504 = DAT_82a7750c;
+    DAT_82a77508 = DAT_82a77508 + DAT_82a77510 + DAT_82a77510;
+    Dvar_DomainToString_GetLines
+              (*(undefined1 *)(iVar4 + 10),*(undefined8 *)(iVar4 + 0x3c),auStack_440,0x400,local_450
+              );
+    if (*(int *)(iVar4 + 4) == 0) {
+      lVar2 = 0;
     }
     else {
-      iVar3 = ConDrawInput_GetDvarDescriptionLines(pdVar2);
-      lVar6 = (longlong)iVar3;
+      lVar2 = ConDrawInput_GetDvarDescriptionLines(iVar4);
     }
-    iVar3 = (int)lVar6;
-    ConDrawInput_Box(iVar3 + local_450[0] + 1,&(con_inputHintBoxColor->current).value);
-    if (pdVar2->description != (char *)0x0) {
-      ConDrawInput_Text(pdVar2->description,con_inputDvarDescriptionColor);
-      lVar5 = 0;
+    ConDrawInput_Box(lVar2 + (ulonglong)local_450[0] + 1,(ulonglong)DAT_82a99e94 + 0xc);
+    if (*(int *)(iVar4 + 4) != 0) {
+      ConDrawInput_Text(*(int *)(iVar4 + 4),0xffffffff8202cf58);
+      lVar6 = 0;
+      iVar3 = (int)lVar2;
       if (7 < iVar3) {
         do {
-          lVar5 = lVar5 + 8;
-          conDrawInputGlob.x = conDrawInputGlob.leftX;
-          conDrawInputGlob.y =
-               conDrawInputGlob.y + conDrawInputGlob.fontHeight + conDrawInputGlob.fontHeight +
-               conDrawInputGlob.fontHeight + conDrawInputGlob.fontHeight +
-               conDrawInputGlob.fontHeight + conDrawInputGlob.fontHeight +
-               conDrawInputGlob.fontHeight + conDrawInputGlob.fontHeight;
-        } while ((int)lVar5 < iVar3 + -7);
+          lVar6 = lVar6 + 8;
+          DAT_82a77504 = DAT_82a7750c;
+          DAT_82a77508 = DAT_82a77508 + DAT_82a77510 + DAT_82a77510 + DAT_82a77510 + DAT_82a77510 +
+                         DAT_82a77510 + DAT_82a77510 + DAT_82a77510 + DAT_82a77510;
+        } while ((int)lVar6 < iVar3 + -7);
       }
-      if ((int)lVar5 < iVar3) {
-        lVar6 = lVar6 - lVar5;
+      if ((int)lVar6 < iVar3) {
+        lVar2 = lVar2 - lVar6;
         do {
-          conDrawInputGlob.x = conDrawInputGlob.leftX;
-          conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
-          lVar6 = lVar6 + -1;
-        } while (lVar6 != 0);
+          DAT_82a77504 = DAT_82a7750c;
+          DAT_82a77508 = DAT_82a77508 + DAT_82a77510;
+          lVar2 = lVar2 + -1;
+        } while (lVar2 != 0);
       }
     }
-    ConDrawInput_Text(acStack_440,con_inputDvarInfoColor);
-    conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
-    conDrawInputGlob.x = conDrawInputGlob.leftX;
-    if ((pdVar2->type == '\x06') && (iVar3 = Cmd_Argc(), iVar3 == 2)) {
-      ConDrawInput_AutoCompleteArg
-                ((pdVar2->domain).enumeration.strings,(pdVar2->domain).enumeration.stringCount);
+    ConDrawInput_Text(auStack_440,0xffffffff8202cf48);
+    DAT_82a77508 = DAT_82a77508 + DAT_82a77510;
+    DAT_82a77504 = DAT_82a7750c;
+    if ((*(char *)(iVar4 + 10) == '\x06') && (iVar3 = Cmd_Argc(), iVar3 == 2)) {
+      ConDrawInput_AutoCompleteArg(*(undefined4 *)(iVar4 + 0x40),*(undefined4 *)(iVar4 + 0x3c));
     }
   }
   __restgprlr_26();
@@ -2487,23 +2881,20 @@ void ConDrawInput_DetailedDvarMatch(char *param_1)
 
 // 82332F18  ConDrawInput_DetailedCmdMatch  (client/cl_console.cpp:2149)
 
-void ConDrawInput_DetailedCmdMatch(char *param_1)
+void ConDrawInput_DetailedCmdMatch(int param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  if (param_1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x86b,0
-                    ,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x86b,0,0xffffffff82000f98,0xffffffff8202e030);
   }
-  bVar1 = Con_IsAutoCompleteMatch(param_1,conDrawInputGlob.inputText,conDrawInputGlob.inputTextLen);
-  if ((bVar1) &&
-     ((conDrawInputGlob.hasExactMatch == false || (param_1[conDrawInputGlob.inputTextLen] == '\0')))
-     ) {
-    ConDrawInput_Box(1,&(con_inputHintBoxColor->current).value);
-    ConDrawInput_Text(param_1,con_inputCommandMatchColor);
-    conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
-    conDrawInputGlob.x = conDrawInputGlob.leftX;
+  cVar1 = Con_IsAutoCompleteMatch(param_1,DAT_82a774f8,DAT_82a774fc);
+  if ((cVar1 != '\0') && ((DAT_82a77500 == '\0' || (*(char *)(DAT_82a774fc + param_1) == '\0')))) {
+    ConDrawInput_Box(1,(ulonglong)DAT_82a99e94 + 0xc);
+    ConDrawInput_Text(param_1,0xffffffff8202cf08);
+    DAT_82a77508 = DAT_82a77508 + DAT_82a77510;
+    DAT_82a77504 = DAT_82a7750c;
   }
   return;
 }
@@ -2511,20 +2902,19 @@ void ConDrawInput_DetailedCmdMatch(char *param_1)
 
 // 82332FF0  ConDrawInput_CmdMatch  (client/cl_console.cpp:2181)
 
-void ConDrawInput_CmdMatch(char *param_1)
+void ConDrawInput_CmdMatch(ulonglong param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  if (param_1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x886,0
-                    ,"%s");
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x886,0,0xffffffff82000f98,0xffffffff8202e030);
   }
-  bVar1 = Con_IsAutoCompleteMatch(param_1,conDrawInputGlob.inputText,conDrawInputGlob.inputTextLen);
-  if (bVar1) {
-    ConDrawInput_Text(param_1,con_inputCommandMatchColor);
-    conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
-    conDrawInputGlob.x = conDrawInputGlob.leftX;
+  cVar1 = Con_IsAutoCompleteMatch(param_1,DAT_82a774f8,DAT_82a774fc);
+  if (cVar1 != '\0') {
+    ConDrawInput_Text(param_1,0xffffffff8202cf08);
+    DAT_82a77508 = DAT_82a77508 + DAT_82a77510;
+    DAT_82a77504 = DAT_82a7750c;
   }
   return;
 }
@@ -2532,41 +2922,35 @@ void ConDrawInput_CmdMatch(char *param_1)
 
 // 82333098  Con_DrawAutoCompleteChoice  (client/cl_console.cpp:2193)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Con_DrawAutoCompleteChoice(LocalClientNum_t param_1,bool param_2,char *param_3)
+void Con_DrawAutoCompleteChoice(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
   int iVar2;
   char cVar3;
-  LocalClientNum_t LVar4;
-  int iVar5;
+  undefined8 uVar4;
+  undefined8 uVar5;
   char *pcVar6;
-  int in_stack_fffffe58;
   char local_140 [320];
   
-  LVar4 = __savegprlr_26(param_1);
+  uVar4 = __savegprlr_26();
   Con_GetAutoCompleteColorCodedString
-            (conDrawInputGlob.autoCompleteChoice,conDrawInputGlob.inputText,
-             conDrawInputGlob.inputTextLen,param_2,param_3,local_140);
-  iVar1 = (int)conDrawInputGlob.x;
-  iVar2 = (int)conDrawInputGlob.y;
+            (0xffffffff82a774b0,DAT_82a774f8,DAT_82a774fc,param_2,param_3,local_140);
+  iVar1 = (int)DAT_82a77504;
+  iVar2 = (int)DAT_82a77508;
   pcVar6 = local_140;
   do {
     cVar3 = *pcVar6;
     pcVar6 = pcVar6 + 1;
   } while (cVar3 != '\0');
   if ((int)pcVar6 - (int)local_140 == 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x89c,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x89c,0,0xffffffff82000f98,0xffffffff8202e0f4);
   }
-  iVar5 = SEH_PrintStrlen(local_140);
-  if (iVar5 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x89e,0
-                    ,"%s\n\t(colorCodedLine) = %s");
+  uVar5 = SEH_PrintStrlen(local_140);
+  if ((int)uVar5 < 1) {
+    MyAssertHandler(0xffffffff8202cfb8,0x89e,0,0xffffffff8202e0c8,0xffffffff8202e0e4,local_140);
   }
-  Field_DrawTextOverride(LVar4,&g_consoleField,iVar1,iVar2,5,5,local_140,iVar5,in_stack_fffffe58);
+  Field_DrawTextOverride(uVar4,0xffffffff82a9b110,iVar1,iVar2,5,5,local_140,uVar5);
   __restgprlr_26();
   return;
 }
@@ -2574,42 +2958,37 @@ void Con_DrawAutoCompleteChoice(LocalClientNum_t param_1,bool param_2,char *para
 
 // 823331B0  Con_DrawInputPrompt  (client/cl_console.cpp:2212)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Con_DrawInputPrompt(LocalClientNum_t param_1)
+void Con_DrawInputPrompt(undefined8 param_1)
 
 {
-  Field_Draw(param_1,&g_consoleField,(int)conDrawInputGlob.x,(int)conDrawInputGlob.y,5,5);
+  Field_Draw(param_1,0xffffffff82a9b110,(int)DAT_82a77504,(int)DAT_82a77508,5,5);
   return;
 }
 
 
 // 82333208  Con_HasTooManyMatchesToShow  (client/cl_console.cpp:2218)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool Con_HasTooManyMatchesToShow(void)
+ulonglong Con_HasTooManyMatchesToShow(void)
 
 {
-  return (bool)((char)((~(ulonglong)(uint)(conDrawInputGlob.matchCount ^ con_inputMaxMatchesShown) &
-                       0xffffffff) >> 0x1f) +
-                ((uint)conDrawInputGlob.matchCount <= (uint)con_inputMaxMatchesShown) & 1);
+  return ((~(ulonglong)(DAT_82a774f4 ^ DAT_82964550) & 0xffffffff) >> 0x1f) +
+         (ulonglong)(DAT_82a774f4 <= DAT_82964550) & 1;
 }
 
 
 // 82333238  Con_IsDvarCommand  (client/cl_console.cpp:2224)
 
-bool Con_IsDvarCommand(char *param_1)
+bool Con_IsDvarCommand(undefined8 param_1)
 
 {
   int iVar1;
   
-  iVar1 = I_stricmp(param_1,"set");
-  if ((((iVar1 != 0) && (iVar1 = I_stricmp(param_1,"seta"), iVar1 != 0)) &&
-      (iVar1 = I_stricmp(param_1,"sets"), iVar1 != 0)) &&
-     ((iVar1 = I_stricmp(param_1,"reset"), iVar1 != 0 &&
-      (iVar1 = I_stricmp(param_1,"toggle"), iVar1 != 0)))) {
-    iVar1 = I_stricmp(param_1,"togglep");
+  iVar1 = I_stricmp(param_1,0xffffffff82003740);
+  if ((((iVar1 != 0) && (iVar1 = I_stricmp(param_1,0xffffffff8202e134), iVar1 != 0)) &&
+      (iVar1 = I_stricmp(param_1,0xffffffff8202e12c), iVar1 != 0)) &&
+     ((iVar1 = I_stricmp(param_1,0xffffffff8202e124), iVar1 != 0 &&
+      (iVar1 = I_stricmp(param_1,0xffffffff8202e11c), iVar1 != 0)))) {
+    iVar1 = I_stricmp(param_1,0xffffffff8202e114);
     return iVar1 == 0;
   }
   return true;
@@ -2617,225 +2996,455 @@ bool Con_IsDvarCommand(char *param_1)
 
 
 // 82334320  Con_DrawInput  (client/cl_console.cpp:2242)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Con_DrawInput(void)
+
+{
+  char *pcVar1;
+  undefined8 uVar2;
+  char cVar5;
+  undefined8 uVar3;
+  int iVar4;
+  char *pcVar7;
+  longlong lVar6;
+  
+  uVar2 = __savegprlr_24();
+  cVar5 = Sys_IsMainThread();
+  if ((cVar5 == '\0') && (cVar5 = Sys_IsRenderThread(), cVar5 == '\0')) {
+    MyAssertHandler(0xffffffff8202cfb8,0x8ca,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  }
+  cVar5 = Key_IsCatcherActive(uVar2,1);
+  if ((cVar5 == '\0') || (cVar5 = Sys_IsMainThread(), cVar5 == '\0')) goto LAB_823347a0;
+  uVar3 = va(0xffffffff8202e2ac,0xffffffff8202e2b8,0xffffffff8202e2c4);
+  iVar4 = R_TextHeight(DAT_82aa2964);
+  DAT_82a77510 = (float)(longlong)iVar4;
+  DAT_82a77504 = DAT_82a87cf8 + 6.0;
+  DAT_82a77508 = DAT_82a87cfc + 6.0;
+  DAT_82a7750c = DAT_82a77504;
+  ConDrawInput_Box(1,(ulonglong)DAT_82a772e4 + 0xc);
+  ConDrawInput_TextAndOver(uVar3,0xffffffff8202cef4);
+  pcVar1 = DAT_82a774fc;
+  DAT_82a7750c = DAT_82a77504;
+  DAT_82a9b11c = (int)((DAT_82a87d00 - 6.0) - DAT_82a77504);
+  DAT_82a774f8 = (char *)Con_TokenizeInput();
+  pcVar7 = DAT_82a774f8;
+  do {
+    cVar5 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
+  } while (cVar5 != '\0');
+  DAT_82a774fc = pcVar7 + (-1 - (int)DAT_82a774f8);
+  DAT_82a774b0 = '\0';
+  if (pcVar1 != DAT_82a774fc) {
+    Con_CancelAutoComplete();
+  }
+  pcVar1 = DAT_82a774f8;
+  if (DAT_82a774fc == (char *)0x0) goto LAB_823344d0;
+  iVar4 = Cmd_Argc();
+  if (iVar4 < 2) {
+LAB_82334514:
+    lVar6 = 0;
+  }
+  else {
+    cVar5 = Con_IsDvarCommand(DAT_82a774f8);
+    lVar6 = 1;
+    if (cVar5 == '\0') goto LAB_82334514;
+  }
+  if (lVar6 != 0) {
+    DAT_82a774f8 = (char *)Cmd_Argv(1);
+    pcVar7 = DAT_82a774f8;
+    do {
+      cVar5 = *pcVar7;
+      pcVar7 = pcVar7 + 1;
+    } while (cVar5 != '\0');
+    DAT_82a774fc = pcVar7 + (-1 - (int)DAT_82a774f8);
+    if (DAT_82a774fc == (char *)0x0) {
+LAB_823344d0:
+      DAT_82a77501 = 0;
+      Con_DrawInputPrompt(uVar2);
+      Cmd_EndTokenizedString();
+      __restgprlr_24();
+      return;
+    }
+  }
+  DAT_82a77500 = '\0';
+  DAT_82a774f4 = 0;
+  if (*(char *)(DAT_82a776a4 + 0xc) == '\0') {
+    DAT_82a77878 = 0;
+LAB_82334634:
+    DAT_82a77500 = '\0';
+    DAT_82a774f4 = 0;
+    Dvar_ForEachName(0xffffffff823326e0);
+    if (lVar6 == 0) {
+      Cmd_ForEach(0xffffffff823326e0);
+    }
+LAB_82334650:
+    if (DAT_82a774f4 == 0) {
+      Con_DrawInputPrompt(uVar2);
+      Cmd_EndTokenizedString();
+      __restgprlr_24();
+      return;
+    }
+  }
+  else {
+    DAT_82a77878 = 1;
+    Dvar_ForEachName(0xffffffff823326e0);
+    if (lVar6 == 0) {
+      Cmd_ForEach(0xffffffff823326e0);
+    }
+    if (DAT_82a774f4 <= DAT_82964550) goto LAB_82334650;
+    DAT_82a77500 = '\0';
+    DAT_82a774f4 = 0;
+    DAT_82a77878 = 0;
+    Dvar_ForEachName(0xffffffff823326e0);
+    Cmd_ForEach(0xffffffff823326e0);
+    if (DAT_82a774f4 == 0) {
+      DAT_82a77878 = 1;
+      goto LAB_82334634;
+    }
+  }
+  iVar4 = DAT_82a774f4;
+  if ((DAT_82a774f0 < DAT_82a774f4) && (DAT_82a774b0 != '\0')) {
+    if (DAT_82a774f0 < 0) goto LAB_8233468c;
+    Con_DrawAutoCompleteChoice(uVar2,lVar6,pcVar1);
+  }
+  else {
+    DAT_82a774f0 = -1;
+LAB_8233468c:
+    Con_DrawInputPrompt(uVar2);
+  }
+  DAT_82a77504 = DAT_82a7750c;
+  DAT_82a77508 = DAT_82a77508 + DAT_82a77510 + DAT_82a77510;
+  if (DAT_82964550 < iVar4) {
+    uVar2 = va(0xffffffff8202e260,iVar4);
+    ConDrawInput_Box(1,(ulonglong)DAT_82a99e94 + 0xc);
+    ConDrawInput_Text(uVar2,0xffffffff8202cf18);
+    Cmd_EndTokenizedString();
+    __restgprlr_24();
+    return;
+  }
+  if ((iVar4 == 1) ||
+     ((DAT_82a77500 != '\0' && (cVar5 = Con_AnySpaceAfterCommand(), cVar5 != '\0')))) {
+    Dvar_ForEachName(0xffffffff82332c18);
+    if (lVar6 == 0) {
+      Cmd_ForEach(0xffffffff82332f18);
+    }
+  }
+  else {
+    ConDrawInput_Box(iVar4,(ulonglong)DAT_82a99e94 + 0xc);
+    Dvar_ForEachName(0xffffffff82332778);
+    if (lVar6 == 0) {
+      Cmd_ForEach(0xffffffff82332ff0);
+      Cmd_EndTokenizedString();
+      __restgprlr_24();
+      return;
+    }
+  }
+  Cmd_EndTokenizedString();
+LAB_823347a0:
+  __restgprlr_24();
+  return;
+}
+
 
 // 82333308  Con_CycleAutoComplete  (client/cl_console.cpp:2382)
 
-bool Con_CycleAutoComplete(int param_1)
+undefined8 Con_CycleAutoComplete(longlong param_1)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
+  char cVar2;
+  undefined8 uVar1;
+  ulonglong uVar3;
   
-  if ((((!conDrawInputGlob.mayAutoComplete) || (conDrawInputGlob.matchCount < 2)) ||
-      (con_inputMaxMatchesShown <= conDrawInputGlob.matchCount)) ||
-     ((conDrawInputGlob.hasExactMatch && (bVar1 = Con_AnySpaceAfterCommand(), bVar1)))) {
-    bVar1 = false;
+  if ((((DAT_82a77501 == '\0') || ((int)DAT_82a774f4 < 2)) || (DAT_82964550 <= (int)DAT_82a774f4))
+     || ((DAT_82a77500 != '\0' && (cVar2 = Con_AnySpaceAfterCommand(), cVar2 != '\0')))) {
+    uVar1 = 0;
   }
   else {
-    uVar2 = (ulonglong)(uint)conDrawInputGlob.matchIndex + (longlong)param_1;
-    if ((longlong)uVar2 < 0) {
-      conDrawInputGlob.matchIndex = conDrawInputGlob.matchCount + -1;
-      bVar1 = true;
+    uVar3 = (ulonglong)DAT_82a774f0 + param_1;
+    if ((longlong)uVar3 < 0) {
+      DAT_82a774f0 = DAT_82a774f4 - 1;
+      uVar1 = 1;
     }
     else {
-      bVar1 = true;
-      conDrawInputGlob.matchIndex =
-           -(conDrawInputGlob.matchCount >> 0x1f) -
-           ((uint)(uVar2 < (uint)conDrawInputGlob.matchCount) - ((int)(uint)uVar2 >> 0x1f)) &
-           (uint)uVar2;
+      uVar1 = 1;
+      DAT_82a774f0 = -((int)DAT_82a774f4 >> 0x1f) -
+                     ((uint)(uVar3 < DAT_82a774f4) - ((int)(uint)uVar3 >> 0x1f)) & (uint)uVar3;
     }
   }
-  return bVar1;
+  return uVar1;
 }
 
 
 // 823333C8  Con_HasActiveAutoComplete  (client/cl_console.cpp:2397)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool Con_HasActiveAutoComplete(void)
+undefined8 Con_HasActiveAutoComplete(void)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   
-  if ((conDrawInputGlob.matchIndex < 0) ||
-     (bVar1 = true, conDrawInputGlob.autoCompleteChoice[0] == '\0')) {
-    bVar1 = false;
+  if ((DAT_82a774f0 < 0) || (uVar1 = 1, DAT_82a774b0 == '\0')) {
+    uVar1 = 0;
   }
-  return bVar1;
+  return uVar1;
 }
 
 
 // 823347A8  Con_CommitToAutoComplete  (client/cl_console.cpp:2403)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool Con_CommitToAutoComplete(void)
+void Con_CommitToAutoComplete(void)
 
 {
-  char cVar1;
-  undefined1 uVar3;
-  char *pcVar2;
-  bool bVar4;
+  char *pcVar1;
+  bool bVar2;
+  undefined8 uVar3;
+  char cVar4;
   int iVar5;
   char *pcVar6;
   
   __savegprlr_29();
-  if ((conDrawInputGlob.matchIndex < 0) ||
-     (bVar4 = true, conDrawInputGlob.autoCompleteChoice[0] == '\0')) {
-    bVar4 = false;
+  if ((DAT_82a774f0 < 0) || (bVar2 = true, DAT_82a774b0 == '\0')) {
+    bVar2 = false;
   }
-  if (!bVar4) {
-    uVar3 = __restgprlr_29(0);
-    return (bool)uVar3;
+  if (!bVar2) {
+    __restgprlr_29(0);
+    return;
   }
-  pcVar2 = Con_TokenizeInput();
-  bVar4 = Con_IsDvarCommand(pcVar2);
-  if (bVar4) {
-    Com_sprintf(g_consoleField.buffer,0x100,"%s %s");
-  }
-  else {
+  uVar3 = Con_TokenizeInput();
+  cVar4 = Con_IsDvarCommand();
+  if (cVar4 == '\0') {
     iVar5 = 0;
     do {
-      cVar1 = conDrawInputGlob.autoCompleteChoice[iVar5];
-      g_consoleField.buffer[iVar5] = cVar1;
+      pcVar1 = &DAT_82a774b0 + iVar5;
+      (&DAT_82a9b128)[iVar5] = *pcVar1;
       iVar5 = iVar5 + 1;
-    } while (cVar1 != '\0');
+    } while (*pcVar1 != '\0');
+  }
+  else {
+    Com_sprintf(0xffffffff82a9b128,0x100,0xffffffff8202e2f4,uVar3,0xffffffff82a774b0);
   }
   Cmd_EndTokenizedString();
-  pcVar2 = g_consoleField.buffer;
+  pcVar1 = &DAT_82a9b128;
   do {
-    pcVar6 = pcVar2;
-    pcVar2 = pcVar6 + 1;
+    pcVar6 = pcVar1;
+    pcVar1 = pcVar6 + 1;
   } while (*pcVar6 != '\0');
-  g_consoleField.cursor = (int)(pcVar6 + 0x7d564ed8);
+  DAT_82a9b110 = pcVar6 + 0x7d564ed8;
   *pcVar6 = ' ';
-  iVar5 = g_consoleField.cursor + 1;
-  g_consoleField.cursor = g_consoleField.cursor + 1;
-  g_consoleField.buffer[iVar5] = '\0';
-  g_consoleField.drawWidth = SEH_PrintStrlen(g_consoleField.buffer);
-  if ((conDrawInputGlob.matchIndex < 0) ||
-     (bVar4 = true, conDrawInputGlob.autoCompleteChoice[0] == '\0')) {
-    bVar4 = false;
+  pcVar1 = DAT_82a9b110 + -0x7d564ed7;
+  DAT_82a9b110 = DAT_82a9b110 + 1;
+  *pcVar1 = '\0';
+  DAT_82a9b118 = SEH_PrintStrlen(0xffffffff82a9b128);
+  if ((DAT_82a774f0 < 0) || (bVar2 = true, DAT_82a774b0 == '\0')) {
+    bVar2 = false;
   }
-  if (bVar4) {
-    conDrawInputGlob.matchIndex = -1;
-    conDrawInputGlob.autoCompleteChoice[0] = '\0';
+  if (bVar2) {
+    DAT_82a774f0 = -1;
+    DAT_82a774b0 = '\0';
   }
-  uVar3 = __restgprlr_29(1);
-  return (bool)uVar3;
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 823333F8  Con_CancelAutoComplete  (client/cl_console.cpp:2428)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool Con_CancelAutoComplete(void)
+undefined8 Con_CancelAutoComplete(void)
 
 {
   bool bVar1;
   
-  if ((conDrawInputGlob.matchIndex < 0) ||
-     (bVar1 = true, conDrawInputGlob.autoCompleteChoice[0] == '\0')) {
+  if ((DAT_82a774f0 < 0) || (bVar1 = true, DAT_82a774b0 == '\0')) {
     bVar1 = false;
   }
   if (!bVar1) {
-    return false;
+    return 0;
   }
-  conDrawInputGlob.matchIndex = -1;
-  conDrawInputGlob.autoCompleteChoice[0] = '\0';
-  return true;
+  DAT_82a774f0 = 0xffffffff;
+  DAT_82a774b0 = 0;
+  return 1;
 }
 
 
 // 82333450  Con_AllowAutoCompleteCycling  (client/cl_console.cpp:2439)
 
-void Con_AllowAutoCompleteCycling(bool param_1)
+void Con_AllowAutoCompleteCycling(undefined1 param_1)
 
 {
-  conDrawInputGlob.mayAutoComplete = param_1;
+  DAT_82a77501 = param_1;
   return;
 }
 
 
 // 82333460  LineVisible  (client/cl_console.cpp:2447)
 
-bool LineVisible(MessageWindow *param_1,int param_2,int param_3)
+void LineVisible(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
   uint uVar1;
   int *piVar2;
-  undefined1 uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)param_3;
-  lVar4 = (longlong)param_2;
-  piVar2 = (int *)__savegprlr_29(param_1,lVar4,uVar5);
+  piVar2 = (int *)__savegprlr_29();
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x992,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0x992,0,0xffffffff82000f98,0xffffffff8202d0a4);
   }
-  uVar1 = *(uint *)((int)lVar4 * 0x18 + *piVar2 + 0xc);
-  uVar3 = __restgprlr_29((ulonglong)(uVar1 >> 0x1f) + (longlong)((int)uVar5 >> 0x1f) +
-                         (ulonglong)(uVar1 <= uVar5));
-  return (bool)uVar3;
+  uVar1 = *(uint *)(param_2 * 0x18 + *piVar2 + 0xc);
+  __restgprlr_29((ulonglong)(uVar1 >> 0x1f) + (longlong)((int)param_3 >> 0x1f) +
+                 (ulonglong)(uVar1 <= param_3));
+  return;
 }
 
 
 // 82334900  TypewriterSounds  (client/cl_console.cpp:2461)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void TypewriterSounds(undefined8 param_1,undefined8 param_2,longlong param_3)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = PrintableCharsCount(param_2,param_3);
+  iVar3 = CL_GetLocalClientGlobals(uVar1);
+  CL_PlayTextFXPulseSounds
+            (uVar1,*(undefined4 *)(iVar3 + 0x3404),uVar2,*(undefined4 *)((int)param_3 + 0xc),
+             *(undefined4 *)(DAT_82a7726c + 0xc),*(undefined4 *)(DAT_82a773e8 + 0xc),param_3 + 0x10)
+  ;
+  __restgprlr_29();
+  return;
+}
+
 
 // 82334968  Con_DrawMessageLineOnHUD  (client/cl_console.cpp:2472)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void Con_DrawMessageLineOnHUD
+               (undefined8 param_1,undefined8 param_2,int param_3,int param_4,int param_5,
+               undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  int *in_stack_00000054;
+  int in_stack_0000005c;
+  uint in_stack_0000007c;
+  float local_a0;
+  float local_9c;
+  float local_98 [2];
+  float local_90;
+  int iStack_8c;
+  longlong local_80;
+  undefined4 local_78;
+  float local_74;
+  
+  uVar2 = __savegprlr_21();
+  dVar5 = extraout_f1;
+  iVar3 = CL_GetLocalClientGlobals();
+  uVar1 = *(uint *)(iVar3 + 0x3404);
+  if (in_stack_00000054 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x992,0,0xffffffff82000f98,0xffffffff8202d0a4);
+  }
+  iVar3 = in_stack_0000005c * 0x18 + *in_stack_00000054;
+  if (((((int)uVar1 >> 0x1f) - ((int)*(uint *)(iVar3 + 0xc) >> 0x1f)) +
+       (uint)(*(uint *)(iVar3 + 0xc) <= uVar1) & 0xff) != 0) {
+    dVar6 = 1.0;
+    if ((*(uint *)(iVar3 + 0x14) & 1) != 0) {
+      param_8 = UI_GetFontHandle(0x3ff0000000000000,0,6);
+    }
+    local_80 = (longlong)param_5;
+    dVar5 = (double)R_NormalizedTextScale
+                              ((double)(float)((double)((float)local_80 * 0.020833334) * dVar5),
+                               param_8);
+    local_9c = (float)dVar5;
+    local_a0 = (float)dVar5;
+    if ((in_stack_0000007c & 3) == 1) {
+      iVar4 = R_ConsoleTextWidth(in_stack_00000054[2],in_stack_00000054[3],
+                                 *(undefined4 *)(iVar3 + 4),*(undefined4 *)(iVar3 + 8),param_8);
+      iVar4 = (int)((float)(longlong)iVar4 * local_9c * 0.5);
+      local_80 = (longlong)iVar4;
+      param_3 = param_3 - iVar4;
+    }
+    else if ((in_stack_0000007c & 3) == 2) {
+      iVar4 = R_ConsoleTextWidth(in_stack_00000054[2],in_stack_00000054[3],
+                                 *(undefined4 *)(iVar3 + 4),*(undefined4 *)(iVar3 + 8),param_8);
+      local_80 = (longlong)(int)((float)(longlong)iVar4 * local_9c);
+      param_3 = param_3 - (int)((float)(longlong)iVar4 * local_9c);
+    }
+    if ((in_stack_0000007c & 0xc) == 4) {
+      iVar4 = R_TextHeight(param_8);
+      param_4 = (int)((float)(longlong)iVar4 * local_a0) + param_4;
+    }
+    else if ((in_stack_0000007c & 0xc) == 8) {
+      iVar4 = R_TextHeight(param_8);
+      param_4 = param_4 - (int)((float)(longlong)iVar4 * local_a0 * -0.5);
+    }
+    local_80 = (longlong)param_4;
+    local_98[0] = (float)local_80;
+    _local_90 = CONCAT44((float)(longlong)param_3,param_3);
+    ScrPlace_ApplyRect(param_2,&local_90,local_98,&local_9c,&local_a0,param_6,param_7);
+    if ((*(uint *)(iVar3 + 0x14) & 1) != 0) {
+      local_80 = *(undefined8 *)(DAT_82a77880 + 0xc);
+      local_78 = *(undefined4 *)(DAT_82a77880 + 0x14);
+      local_74 = (float)dVar6;
+      TypewriterSounds(uVar2,in_stack_00000054,iVar3);
+      R_AddCmdDrawConsoleTextPulseFX
+                ((double)local_90,(double)local_98[0],(double)local_9c,(double)local_a0,
+                 in_stack_00000054[2],in_stack_00000054[3],*(undefined4 *)(iVar3 + 4),
+                 *(undefined4 *)(iVar3 + 8),param_8);
+      __restgprlr_21();
+      return;
+    }
+    if ((*(uint *)(iVar3 + 0x14) & 0x20) != 0) {
+      R_AddCmdDrawConsoleTextSubtitle();
+      __restgprlr_21();
+      return;
+    }
+    R_AddCmdDrawConsoleText
+              ((double)local_90,(double)local_98[0],(double)local_9c,(double)local_a0,
+               in_stack_00000054[2],in_stack_00000054[3],*(undefined4 *)(iVar3 + 4),
+               *(undefined4 *)(iVar3 + 8),param_8);
+  }
+  __restgprlr_21();
+  return;
+}
+
 
 // 823334D0  Con_CullFinishedLines  (client/cl_console.cpp:2555)
 
-void Con_CullFinishedLines(int param_1,MessageWindow *param_2)
+void Con_CullFinishedLines(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
   int iVar2;
   int *piVar3;
   longlong lVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_2;
-  lVar4 = __savegprlr_21(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x9ff,0
-                    ,"%s");
+  lVar4 = __savegprlr_21();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0x9ff,0,0xffffffff82000f98,0xffffffff8202d0a4);
   }
-  piVar3 = (int *)uVar5;
+  piVar3 = (int *)param_2;
   if (piVar3[4] < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa00,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0xa00,0,0xffffffff82000f98,0xffffffff8202d2c4);
   }
   iVar1 = piVar3[0xb];
   while (iVar1 != 0) {
     if ((uint)piVar3[4] <= (uint)piVar3[10]) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa04
-                      ,0,
-                      "msgwnd->firstLineIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)"
-                     );
+      MyAssertHandler(0xffffffff8202cfb8,0xa04,0,0xffffffff8202d278);
     }
     iVar1 = piVar3[10];
     iVar2 = *piVar3;
     if ((uint)piVar3[4] <= *(uint *)(iVar1 * 0x18 + iVar2)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa07
-                      ,0,"line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)")
-      ;
+      MyAssertHandler(0xffffffff8202cfb8,0xa07,0,0xffffffff8202d038);
     }
     if ((longlong)(lVar4 - (ulonglong)*(uint *)(*(int *)(iVar1 * 0x18 + iVar2) * 8 + piVar3[1] + 4))
         < 0) break;
     if (piVar3[0xb] < 1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x2ff
-                      ,0,"%s");
+      MyAssertHandler(0xffffffff8202cfb8,0x2ff,0,0xffffffff82000f98,0xffffffff8202d238);
     }
     iVar1 = piVar3[10];
     piVar3[0xb] = piVar3[0xb] + -1;
@@ -2843,14 +3452,13 @@ void Con_CullFinishedLines(int param_1,MessageWindow *param_2)
     if (iVar1 + 1 == piVar3[4]) {
       piVar3[10] = 0;
     }
-    if (((uVar5 & 0xffffffff) == ZEXT48(&con)) &&
-       (con.displayLineOffset = con.displayLineOffset + -1,
-       con.displayLineOffset < con.visibleLineCount)) {
-      if (con.consoleWindow.activeLineCount < con.visibleLineCount) {
-        con.displayLineOffset = con.consoleWindow.activeLineCount;
+    if (((param_2 & 0xffffffff) == ZEXT48(&DAT_82a77aa8)) &&
+       (DAT_82a87ce0 = DAT_82a87ce0 + -1, DAT_82a87ce0 < DAT_82a87cf0)) {
+      if (DAT_82a77ad4 < DAT_82a87cf0) {
+        DAT_82a87ce0 = DAT_82a77ad4;
       }
       else {
-        con.displayLineOffset = con.visibleLineCount;
+        DAT_82a87ce0 = DAT_82a87cf0;
       }
     }
     iVar1 = piVar3[0xb];
@@ -2862,7 +3470,7 @@ void Con_CullFinishedLines(int param_1,MessageWindow *param_2)
 
 // 823336A8  Con_GetMessageAlpha  (client/cl_console.cpp:2578)
 
-float Con_GetMessageAlpha(Message *param_1,MessageWindow *param_2,int param_3,bool param_4)
+void Con_GetMessageAlpha(undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4)
 
 {
   int iVar1;
@@ -2870,32 +3478,26 @@ float Con_GetMessageAlpha(Message *param_1,MessageWindow *param_2,int param_3,bo
   int iVar3;
   float fVar4;
   int *piVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  double dVar9;
-  double dVar10;
+  int iVar6;
+  double dVar7;
+  double dVar8;
   
-  uVar7 = (ulonglong)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  piVar5 = (int *)__savegprlr_26(param_1);
-  dVar10 = 1.0;
+  piVar5 = (int *)__savegprlr_26();
+  dVar8 = 1.0;
   if (piVar5 == (int *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa15,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8202cfb8,0xa15,0,0xffffffff82000f98,0xffffffff8201805c);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa16,0
-                    ,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0xa16,0,0xffffffff82000f98,0xffffffff8202d0a4);
   }
-  iVar3 = (int)uVar6;
+  iVar3 = (int)param_2;
   iVar1 = *(int *)(iVar3 + 0x20);
   if ((0 < iVar1) && (piVar5[1] - param_3 < iVar1)) {
-    dVar10 = (double)((float)(longlong)(piVar5[1] - param_3) / (float)(longlong)iVar1);
+    dVar8 = (double)((float)(longlong)(piVar5[1] - param_3) / (float)(longlong)iVar1);
   }
   iVar1 = *(int *)(iVar3 + 0x1c);
   if (iVar1 < 1) goto LAB_82333844;
-  if ((uVar7 & 0xff) == 0) {
+  if ((param_4 & 0xff) == 0) {
 LAB_82333804:
     if (iVar1 <= param_3 - *piVar5) goto LAB_82333844;
     fVar4 = (float)(longlong)(param_3 - *piVar5) / (float)(longlong)iVar1;
@@ -2903,86 +3505,375 @@ LAB_82333804:
   else {
     iVar2 = *(int *)(iVar3 + 0x18);
     if (iVar2 <= iVar1) goto LAB_82333804;
-    iVar8 = param_3 - *piVar5;
-    if (iVar2 <= iVar8) goto LAB_82333844;
-    if (iVar8 <= iVar2 - iVar1) {
-      dVar10 = (double)__restgprlr_26(0);
-      return (float)dVar10;
+    iVar6 = param_3 - *piVar5;
+    if (iVar2 <= iVar6) goto LAB_82333844;
+    if (iVar6 <= iVar2 - iVar1) {
+      __restgprlr_26(0);
+      return;
     }
     fVar4 = (float)(longlong)(((*(int *)(iVar3 + 0x1c) - *piVar5) - iVar2) + param_3) /
             (float)(longlong)*(int *)(iVar3 + 0x1c);
   }
-  dVar10 = (double)(float)((double)fVar4 * dVar10);
+  dVar8 = (double)(float)((double)fVar4 * dVar8);
 LAB_82333844:
-  dVar9 = 0.0;
-  if (-dVar10 < 0.0) {
-    dVar9 = dVar10;
+  dVar7 = 0.0;
+  if (-dVar8 < 0.0) {
+    dVar7 = dVar8;
   }
-  dVar10 = (double)__restgprlr_26(dVar9);
-  return (float)dVar10;
+  __restgprlr_26(dVar7);
+  return;
 }
 
 
 // 82334DB0  Con_DrawMessageWindowNewToOld  (client/cl_console.cpp:2626)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void Con_DrawMessageWindowNewToOld
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,longlong param_4,
+               longlong param_5,undefined8 param_6,undefined8 param_7,ulonglong param_8)
+
+{
+  uint uVar1;
+  uint uVar2;
+  int *piVar3;
+  int iVar4;
+  undefined8 uVar5;
+  int iVar7;
+  undefined8 uVar6;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  double dVar14;
+  undefined8 extraout_f1;
+  double dVar15;
+  double dVar16;
+  undefined8 uVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  undefined4 in_stack_00000054;
+  
+  __savegprlr();
+  uVar5 = __savefpr_28();
+  uVar17 = extraout_f1;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0xa4d,0,0xffffffff82000f98,0xffffffff8202d0a4);
+  }
+  iVar7 = CL_GetLocalClientGlobals(uVar5);
+  uVar1 = *(uint *)(iVar7 + 0x3404);
+  uVar10 = (ulonglong)uVar1;
+  Con_CullFinishedLines(uVar10,param_2);
+  param_8 = param_8 & 0xff;
+  if (param_8 == 0) {
+    param_4 = param_4 - param_5;
+  }
+  piVar3 = (int *)param_2;
+  uVar2 = piVar3[0xb];
+  lVar11 = 0;
+  if (0 < (int)uVar2) {
+    dVar19 = 0.5;
+    dVar18 = 0.0;
+    dVar20 = 1.0;
+    do {
+      if (piVar3[4] < 1) {
+        MyAssertHandler(0xffffffff8202cfb8,0xa58,0,0xffffffff82000f98,0xffffffff8202d2c4);
+      }
+      uVar2 = piVar3[4];
+      uVar9 = (ulonglong)uVar2;
+      uVar8 = (ulonglong)(uint)piVar3[10] + lVar11;
+      trapWord(6,uVar9,0);
+      uVar12 = uVar8 - (longlong)((int)uVar8 / (int)uVar2) * (longlong)(int)uVar2;
+      trapWord(5,uVar9 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      if (uVar9 <= (uVar12 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff8202cfb8,0xa5a,0,
+                        "imod doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)",uVar12);
+      }
+      iVar7 = *piVar3;
+      iVar4 = (int)((uVar12 + (uVar12 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+      if ((uint)piVar3[4] <= *(uint *)(iVar4 + iVar7)) {
+        MyAssertHandler(0xffffffff8202cfb8,0xa5c,0,
+                        "line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
+      }
+      iVar7 = uVar1 - *(int *)(*(int *)(iVar4 + iVar7) * 8 + piVar3[1]);
+      if (iVar7 < piVar3[6]) {
+        dVar16 = (double)(float)(dVar20 - (double)((float)(longlong)iVar7 /
+                                                  (float)(longlong)piVar3[6]));
+        dVar15 = dVar20;
+        if ((float)(dVar16 - dVar20) < 0.0) {
+          dVar15 = dVar16;
+        }
+        dVar14 = dVar18;
+        if (-dVar16 < 0.0) {
+          dVar14 = dVar15;
+        }
+        if (param_8 == 0) {
+          dVar15 = floor((double)(float)((double)(longlong)(int)param_5 * dVar14 + dVar19));
+          param_4 = param_4 - (ulonglong)(uint)(int)dVar15;
+        }
+        else {
+          dVar15 = floor((double)(float)((double)(longlong)(int)param_5 * dVar14 + dVar19));
+          param_4 = (ulonglong)(uint)(int)dVar15 + param_4;
+        }
+      }
+      uVar2 = piVar3[0xb];
+      lVar11 = lVar11 + 1;
+    } while ((int)lVar11 < (int)uVar2);
+  }
+  uVar9 = (ulonglong)uVar2;
+  while (uVar9 = uVar9 - 1, -1 < (longlong)uVar9) {
+    uVar1 = piVar3[4];
+    uVar8 = (ulonglong)uVar1;
+    uVar12 = (uint)piVar3[10] + uVar9;
+    trapWord(6,uVar8,0);
+    uVar13 = uVar12 - (longlong)((int)uVar12 / (int)uVar1) * (longlong)(int)uVar1;
+    trapWord(5,uVar8 & ~(((uVar12 & 0x7fffffff) << 1 | (uVar12 & 0xffffffff) >> 0x1f) - 1),0xffff);
+    if (uVar8 <= (uVar13 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8202cfb8,0xa75,0,
+                      "imod doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)",uVar13);
+    }
+    iVar7 = *piVar3;
+    iVar4 = (int)((uVar13 + (uVar13 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+    if ((uint)piVar3[4] <= *(uint *)(iVar4 + iVar7)) {
+      MyAssertHandler(0xffffffff8202cfb8,0xa78,0,
+                      "line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
+    }
+    iVar7 = *(int *)(iVar4 + iVar7) * 8 + piVar3[1];
+    lVar11 = param_5;
+    if (param_8 != 0) {
+      lVar11 = -param_5;
+    }
+    param_4 = param_4 + lVar11;
+    if ((longlong)(uVar10 - *(uint *)(iVar7 + 4)) < 0) {
+      Con_GetMessageAlpha(iVar7,param_2,uVar10,1);
+      uVar6 = ScrPlace_GetActivePlacement(uVar5);
+      Con_DrawMessageLineOnHUD
+                (uVar17,uVar5,uVar6,param_3,param_4,param_5,param_6,param_7,in_stack_00000054);
+    }
+  }
+  __restfpr_28();
+  __restgprlr();
+  return;
+}
+
 
 // 82335170  Con_DrawMessageWindowOldToNew  (client/cl_console.cpp:2700)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void Con_DrawMessageWindowOldToNew
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,longlong param_4,
+               longlong param_5,undefined8 param_6,undefined8 param_7,ulonglong param_8)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  int *piVar4;
+  int iVar5;
+  undefined8 uVar6;
+  int iVar8;
+  undefined8 uVar7;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  int *piVar13;
+  longlong lVar14;
+  undefined8 extraout_f1;
+  double dVar15;
+  undefined8 uVar16;
+  double dVar17;
+  undefined4 in_stack_00000054;
+  uint local_120;
+  
+  uVar6 = __savegprlr();
+  uVar16 = extraout_f1;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0xa96,0,0xffffffff82000f98,0xffffffff8202d0a4);
+  }
+  iVar8 = CL_GetLocalClientGlobals(uVar6);
+  uVar1 = *(uint *)(iVar8 + 0x3404);
+  uVar11 = (ulonglong)uVar1;
+  Con_CullFinishedLines(uVar11,param_2);
+  param_8 = param_8 & 0xff;
+  if (param_8 != 0) {
+    param_4 = param_4 - param_5;
+  }
+  piVar4 = (int *)param_2;
+  local_120 = 0;
+  if (0 < piVar4[0xb]) {
+    dVar17 = 0.5;
+    do {
+      if (piVar4[4] < 1) {
+        MyAssertHandler(0xffffffff8202cfb8,0xaa4,0,&DAT_82000f98,"msgwnd->lineCount > 0");
+      }
+      uVar2 = piVar4[4];
+      uVar9 = (ulonglong)uVar2;
+      uVar10 = (ulonglong)(uint)piVar4[10] + (ulonglong)local_120;
+      trapWord(6,uVar9,0);
+      uVar12 = uVar10 - (longlong)((int)uVar10 / (int)uVar2) * (longlong)(int)uVar2;
+      trapWord(5,uVar9 & ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),0xffff)
+      ;
+      if (uVar9 <= (uVar12 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff8202cfb8,0xaa6,0,
+                        "imod doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)",uVar12);
+      }
+      iVar8 = *piVar4;
+      iVar5 = (int)((uVar12 + (uVar12 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+      if ((uint)piVar4[4] <= *(uint *)(iVar5 + iVar8)) {
+        MyAssertHandler(0xffffffff8202cfb8,0xaa8,0,
+                        "line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
+      }
+      iVar8 = *(int *)(iVar5 + iVar8) * 8;
+      piVar13 = (int *)(iVar8 + piVar4[1]);
+      if (*(int *)(iVar8 + piVar4[1]) < 0) {
+        MyAssertHandler(0xffffffff8202cfb8,0xaab,0,"%s\n\t(message->startTime) = %i",
+                        "(message->startTime >= 0)");
+      }
+      if (*piVar13 < (int)(uVar1 + 1000)) {
+        uVar2 = piVar13[1];
+        if ((int)uVar1 <= (int)uVar2) {
+          uVar3 = piVar4[6];
+          if (((int)(uVar2 - uVar3) < (int)uVar1) &&
+             (lVar14 = ((ulonglong)uVar3 - (ulonglong)uVar2) + uVar11, 0 < lVar14)) {
+            if ((int)uVar3 < 1) {
+              MyAssertHandler(0xffffffff8202cfb8,0xab9,0,0xffffffff8202e2fc,
+                              "(msgwnd->scrollTime > 0)");
+            }
+            iVar8 = (int)lVar14;
+            if (param_8 == 0) {
+              dVar15 = floor((double)(float)((double)(((float)(longlong)iVar8 /
+                                                      (float)(longlong)piVar4[6]) *
+                                                     (float)(longlong)(int)param_5) + dVar17));
+              param_4 = param_4 - (ulonglong)(uint)(int)dVar15;
+            }
+            else {
+              dVar15 = floor((double)(float)((double)(((float)(longlong)iVar8 /
+                                                      (float)(longlong)piVar4[6]) *
+                                                     (float)(longlong)(int)param_5) + dVar17));
+              param_4 = (ulonglong)(uint)(int)dVar15 + param_4;
+            }
+          }
+          Con_GetMessageAlpha(piVar13,param_2,uVar11,0);
+          uVar7 = ScrPlace_GetActivePlacement(uVar6);
+          Con_DrawMessageLineOnHUD
+                    (uVar16,uVar6,uVar7,param_3,param_4,param_5,param_6,param_7,in_stack_00000054);
+          if (param_8 == 0) {
+            param_4 = param_4 + param_5;
+          }
+          else {
+            param_4 = param_4 - param_5;
+          }
+        }
+      }
+      local_120 = local_120 + 1;
+    } while ((int)local_120 < piVar4[0xb]);
+  }
+  __restgprlr();
+  return;
+}
+
 
 // 82333860  CL_ShouldntDrawMessageWindow  (client/cl_console.cpp:2766)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+undefined8 CL_ShouldntDrawMessageWindow(undefined8 param_1)
+
+{
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = CL_GetLocalClientGlobals();
+  if ((*(int *)(iVar1 + 0x84) != 6) && (cVar2 = CL_ShouldDisplayHud(param_1), cVar2 == '\0')) {
+    return 1;
+  }
+  return 0;
+}
+
 
 // 82335560  Con_DrawMessageWindow  (client/cl_console.cpp:2782)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void Con_DrawMessageWindow
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7)
+
+{
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char cVar4;
+  undefined8 extraout_f1;
+  undefined8 uVar5;
+  uint in_stack_0000006c;
+  
+  uVar2 = __savegprlr_23();
+  uVar5 = extraout_f1;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0xadf,0,0xffffffff82000f98,0xffffffff8202d0a4);
+  }
+  iVar3 = CL_GetLocalClientGlobals(uVar2);
+  if (*(int *)(iVar3 + 0x84) != 6) {
+    cVar4 = CL_ShouldDisplayHud(uVar2);
+    bVar1 = true;
+    if (cVar4 == '\0') goto LAB_823355f4;
+  }
+  bVar1 = false;
+LAB_823355f4:
+  if (!bVar1) {
+    if (in_stack_0000006c < 4) {
+      if ((in_stack_0000006c != 0) && ((in_stack_0000006c == 1 || (in_stack_0000006c == 2)))) {
+        Con_DrawMessageWindowNewToOld
+                  (uVar5,uVar2,param_2,param_3,param_4,param_5,param_6,param_7,
+                   in_stack_0000006c == 1);
+        __restgprlr_23();
+        return;
+      }
+      Con_DrawMessageWindowOldToNew
+                (uVar5,uVar2,param_2,param_3,param_4,param_5,param_6,param_7,in_stack_0000006c == 3)
+      ;
+      __restgprlr_23();
+      return;
+    }
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff8202cfb8,0xaf1,0,0xffffffff8202e374);
+    }
+  }
+  __restgprlr_23();
+  return;
+}
+
 
 // 82335708  Con_DrawGameMessageWindow  (client/cl_console.cpp:2807)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void Con_DrawGameMessageWindow
-               (LocalClientNum_t param_1,int param_2,int param_3,int param_4,int param_5,int param_6
-               ,Font_s *param_7,float param_8,float *param_9,int param_10,int param_11,
-               msgwnd_mode_t param_12)
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7)
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  bool bVar3;
-  ulonglong uVar4;
+  longlong lVar2;
+  char cVar3;
   double extraout_f1;
+  double dVar4;
   double dVar5;
-  double dVar6;
-  float *in_stack_ffffff18;
-  int in_stack_ffffff1c;
-  msgwnd_mode_t in_stack_ffffff20;
-  int in_stack_ffffff24;
   
-  uVar4 = (ulonglong)param_2;
-  LVar2 = __savegprlr_23((double)param_8,param_1);
-  if ((cg_paused->current).integer == 0) {
-    dVar5 = extraout_f1;
-    bVar3 = CL_IsRenderingSplitScreen();
-    if (bVar3) {
-      fVar1 = *(float *)(*(int *)((int)&DAT_82a773c4 + (int)((uVar4 & 0xffffffff) << 2)) + 0xc);
-    }
-    else {
+  lVar2 = __savegprlr_23();
+  if (*(int *)(DAT_82a3d69c + 0xc) == 0) {
+    dVar4 = extraout_f1;
+    cVar3 = CL_IsRenderingSplitScreen();
+    if (cVar3 == '\0') {
       fVar1 = 1.0;
     }
-    dVar6 = (double)fVar1;
-    dVar5 = floor((double)(float)(dVar5 * 48.0 + 0.5));
-    if (3 < (uVar4 & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xb0e
-                      ,0,"windowIndex doesn\'t index GAMEMSG_WINDOW_COUNT\n\t%i not in [0, %i)");
+    else {
+      fVar1 = *(float *)(*(int *)((int)&DAT_82a773c4 + (int)((param_2 & 0xffffffff) << 2)) + 0xc);
+    }
+    dVar5 = (double)fVar1;
+    dVar4 = floor((double)(float)(dVar4 * 48.0 + 0.5));
+    if (3 < (param_2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8202cfb8,0xb0e,0,0xffffffff8202e140,param_2,4);
     }
     Con_DrawMessageWindow
-              (LVar2,con.messageBuffer[LVar2].gamemsgWindows + (int)uVar4,param_3,param_4,(int)dVar5
-               ,param_5,param_6,param_7,in_stack_ffffff18,in_stack_ffffff1c,(float)dVar6,
-               in_stack_ffffff20,in_stack_ffffff24);
+              (dVar5,lVar2,lVar2 * 0x4858 + param_2 * 0x34 + -0x7d5762f8,param_3,param_4,(int)dVar4,
+               param_5,param_6,param_7);
   }
   __restgprlr_23();
   return;
@@ -2991,45 +3882,33 @@ void Con_DrawGameMessageWindow
 
 // 82335848  Con_DrawMiniConsole  (client/cl_console.cpp:2837)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Con_DrawMiniConsole(LocalClientNum_t param_1,int param_2,int param_3,float param_4)
+void Con_DrawMiniConsole(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar4;
-  ScreenPlacement *pSVar2;
-  Font_s *pFVar3;
+  longlong lVar1;
+  char cVar3;
+  undefined8 uVar2;
+  double dVar4;
   double dVar5;
-  double dVar6;
-  float *in_stack_ffffff28;
-  int in_stack_ffffff2c;
-  msgwnd_mode_t in_stack_ffffff30;
-  int in_stack_ffffff34;
   
-  LVar1 = __savegprlr_26((double)param_4,param_1);
-  bVar4 = CL_IsRenderingSplitScreen();
-  dVar6 = 1.0;
-  dVar5 = dVar6;
-  if (bVar4) {
-    dVar5 = (double)*(float *)(DAT_82a77268 + 0xc);
+  lVar1 = __savegprlr_26();
+  cVar3 = CL_IsRenderingSplitScreen();
+  dVar5 = 1.0;
+  dVar4 = dVar5;
+  if (cVar3 != '\0') {
+    dVar4 = (double)*(float *)(DAT_82a77268 + 0xc);
   }
-  if ((con_miniconlines->current).integer != 0) {
-    pSVar2 = ScrPlace_GetActivePlacement(LVar1);
-    pFVar3 = UI_GetFontHandle(pSVar2,0,(float)dVar6);
-    if (((con_miniconlines->current).integer < 0) || (100 < (con_miniconlines->current).integer)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xb28
-                      ,0,"%s\n\t(con_miniconlines->current.integer) = %i");
+  if (*(int *)(DAT_82a99e9c + 0xc) != 0) {
+    uVar2 = ScrPlace_GetActivePlacement(lVar1);
+    uVar2 = UI_GetFontHandle(dVar5,uVar2,0);
+    if ((*(int *)(DAT_82a99e9c + 0xc) < 0) || (100 < *(int *)(DAT_82a99e9c + 0xc))) {
+      MyAssertHandler(0xffffffff8202cfb8,0xb28,0,0xffffffff8202e384,0xffffffff8202e3b8);
     }
-    if (con.messageBuffer[0].miniconWindow.lineCount != (con_miniconlines->current).integer) {
-      con.messageBuffer[0].miniconWindow.lineCount = (con_miniconlines->current).integer;
-      Con_ClearMessageWindow(&con.messageBuffer[LVar1].miniconWindow);
+    if (DAT_82a8b3e8 != *(int *)(DAT_82a99e9c + 0xc)) {
+      DAT_82a8b3e8 = *(int *)(DAT_82a99e9c + 0xc);
+      Con_ClearMessageWindow(lVar1 * 0x4858 + -0x7d574c28);
     }
-    Con_DrawMessageWindow
-              (LVar1,&con.messageBuffer[LVar1].miniconWindow,param_2,param_3,0xc,1,1,pFVar3,
-               in_stack_ffffff28,in_stack_ffffff2c,(float)dVar5,in_stack_ffffff30,in_stack_ffffff34)
-    ;
+    Con_DrawMessageWindow(dVar4,lVar1,lVar1 * 0x4858 + -0x7d574c28,param_2,param_3,0xc,1,1,uVar2);
   }
   __restgprlr_26();
   return;
@@ -3037,182 +3916,225 @@ void Con_DrawMiniConsole(LocalClientNum_t param_1,int param_2,int param_3,float 
 
 
 // 823359C0  Con_DrawErrors  (client/cl_console.cpp:2868)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
-// 823338B8  Con_IsValidGameMessageWindow  (client/cl_console.cpp:2882)
-
-bool Con_IsValidGameMessageWindow(int param_1)
+void Con_DrawErrors(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   bool bVar1;
+  longlong lVar2;
+  undefined8 uVar3;
+  int iVar4;
+  char cVar5;
+  longlong lVar6;
+  undefined8 uVar7;
   
-  if ((param_1 < 0) || (bVar1 = true, 3 < param_1)) {
-    bVar1 = false;
+  lVar2 = __savegprlr_27();
+  uVar3 = ScrPlace_GetActivePlacement();
+  uVar7 = 0x3ff0000000000000;
+  UI_GetFontHandle(0x3ff0000000000000,uVar3,0);
+  lVar6 = lVar2 * 0x4858 + -0x7d573b74;
+  if (lVar6 == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0xadf,0,0xffffffff82000f98,0xffffffff8202d0a4);
   }
-  return bVar1;
+  iVar4 = CL_GetLocalClientGlobals(lVar2);
+  if (*(int *)(iVar4 + 0x84) != 6) {
+    cVar5 = CL_ShouldDisplayHud(lVar2);
+    bVar1 = true;
+    if (cVar5 == '\0') goto LAB_82335a80;
+  }
+  bVar1 = false;
+LAB_82335a80:
+  if (!bVar1) {
+    Con_DrawMessageWindowOldToNew(uVar7,lVar2,lVar6,param_2,param_3,0x10,1,1,0);
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 823338B8  Con_IsValidGameMessageWindow  (client/cl_console.cpp:2882)
+
+undefined8 Con_IsValidGameMessageWindow(int param_1)
+
+{
+  undefined8 uVar1;
+  
+  if ((param_1 < 0) || (uVar1 = 1, 3 < param_1)) {
+    uVar1 = 0;
+  }
+  return uVar1;
 }
 
 
 // 823338D8  Con_IsGameMessageWindowActive  (client/cl_console.cpp:2888)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool Con_IsGameMessageWindowActive(LocalClientNum_t param_1,int param_2)
+ulonglong Con_IsGameMessageWindowActive(int param_1,ulonglong param_2)
 
 {
-  uint uVar1;
-  
-  if (3 < (uint)param_2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xb4b,0
-                    ,"windowIndex doesn\'t index GAMEMSG_WINDOW_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202cfb8,0xb4b,0,0xffffffff8202e140,param_2,4);
   }
-  uVar1 = con.messageBuffer[param_1].gamemsgWindows[param_2].activeLineCount;
-  return (bool)((byte)((byte)(-(ulonglong)uVar1 >> 0x18) & ~(byte)(uVar1 >> 0x18)) >> 7);
+  return (-(ulonglong)*(uint *)(&DAT_82a89d34 + param_1 * 0x4858 + (int)param_2 * 0x34) &
+          ~(ulonglong)*(uint *)(&DAT_82a89d34 + param_1 * 0x4858 + (int)param_2 * 0x34) & 0xffffffff
+         ) >> 0x1f;
 }
 
 
 // 82333968  Con_ToggleConsoleOutput  (client/cl_console.cpp:2941)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_ToggleConsoleOutput(void)
 
 {
-  con.outputVisible = !con.outputVisible;
+  DAT_82a87ce8 = DAT_82a87ce8 == '\0';
   return;
 }
 
 
 // 82333998  Con_DrawOutputScrollBar  (client/cl_console.cpp:2947)
 
-void Con_DrawOutputScrollBar(float param_1,float param_2,float param_3,float param_4)
+void Con_DrawOutputScrollBar(undefined8 param_1,double param_2,double param_3,double param_4)
 
 {
   double dVar1;
   float fVar2;
-  float *pfVar3;
-  double extraout_f1;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
   
-  dVar10 = (double)param_3;
-  dVar6 = (double)param_4;
-  dVar5 = (double)param_2;
-  pfVar3 = (float *)__savefpr_27((double)param_1);
-  fVar2 = (float)(extraout_f1 + dVar10) - 10.0;
-  dVar10 = (double)fVar2;
-  ConDraw_Box(fVar2,(float)dVar5,10.0,(float)dVar6,pfVar3);
-  if (con.visibleLineCount < con.consoleWindow.activeLineCount) {
-    pfVar3 = (float *)(con.displayLineOffset - con.visibleLineCount);
-    fVar2 = (float)(1.0 / (double)(longlong)
-                                  (con.consoleWindow.activeLineCount - con.visibleLineCount));
-    dVar9 = (double)((float)(longlong)(int)pfVar3 * fVar2);
-    dVar8 = 1.0;
-    if ((float)(dVar9 - 1.0) < 0.0) {
-      dVar8 = dVar9;
+  dVar3 = (double)__savefpr_27();
+  dVar3 = (double)((float)(dVar3 + param_3) - 10.0);
+  ConDraw_Box(dVar3);
+  if (DAT_82a87cf0 < DAT_82a77ad4) {
+    fVar2 = (float)(1.0 / (double)(longlong)(DAT_82a77ad4 - DAT_82a87cf0));
+    dVar7 = (double)((float)(longlong)(DAT_82a87ce0 - DAT_82a87cf0) * fVar2);
+    dVar6 = 1.0;
+    if ((float)(dVar7 - 1.0) < 0.0) {
+      dVar6 = dVar7;
     }
-    dVar4 = ceil((double)(float)((double)((float)(longlong)con.visibleLineCount * fVar2) * dVar6));
-    dVar1 = dVar5 + dVar6;
-    dVar7 = 0.0;
-    if (-dVar9 < 0.0) {
-      dVar7 = dVar8;
+    dVar4 = ceil((double)(float)((double)((float)(longlong)DAT_82a87cf0 * fVar2) * param_4));
+    dVar1 = param_2 + param_4;
+    dVar5 = 0.0;
+    if (-dVar7 < 0.0) {
+      dVar5 = dVar6;
     }
-    dVar6 = 10.0;
+    param_4 = 10.0;
     if ((float)(10.0 - (double)(float)dVar4) < 0.0) {
-      dVar6 = (double)(float)dVar4;
+      param_4 = (double)(float)dVar4;
     }
-    dVar5 = (double)(float)((double)(float)((double)(float)((double)(float)dVar1 - dVar6) - dVar5) *
-                            dVar7 + dVar5);
+    param_2 = (double)(float)((double)(float)((double)(float)((double)(float)dVar1 - param_4) -
+                                             param_2) * dVar5 + param_2);
   }
-  ConDraw_Box((float)dVar10,(float)dVar5,10.0,(float)dVar6,pfVar3);
+  ConDraw_Box(dVar3,param_2,0x4024000000000000,param_4);
   __restfpr_27();
   return;
 }
 
 
 // 82333AF0  Con_DrawOutputText  (client/cl_console.cpp:2971)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Con_DrawOutputText(undefined8 param_1,double param_2)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  uint uVar3;
+  longlong lVar4;
+  int iVar5;
+  longlong lVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  undefined1 auStack_60 [96];
+  
+  uVar7 = __savegprlr_26();
+  CL_LookupColor(0,0x37,auStack_60);
+  if (DAT_82a87cec == 0) {
+    MyAssertHandler(0xffffffff8202cfb8,0xba5,0,0xffffffff82000f98,0xffffffff8202e184);
+  }
+  lVar4 = (ulonglong)DAT_82a87ce0 - (ulonglong)DAT_82a87cf0;
+  uVar3 = DAT_82a87cf0;
+  if (lVar4 < 0) {
+    iVar5 = (int)lVar4;
+    uVar3 = DAT_82a87cf0 + iVar5;
+    lVar4 = 0;
+    param_2 = (double)(float)(param_2 - (double)(longlong)(DAT_82a87cec * iVar5));
+  }
+  lVar6 = 0;
+  if (0 < (int)uVar3) {
+    uVar8 = 0x3ff0000000000000;
+    do {
+      trapWord(6,(ulonglong)DAT_82a77ab8,0);
+      uVar1 = (ulonglong)DAT_82a77ad0 + lVar6 + lVar4;
+      uVar2 = uVar1 - (longlong)((int)uVar1 / (int)DAT_82a77ab8) * (longlong)(int)DAT_82a77ab8;
+      trapWord(5,(ulonglong)DAT_82a77ab8 &
+                 ~(((uVar1 & 0x7fffffff) << 1 | (uVar1 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      iVar5 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + DAT_82a77aa8;
+      param_2 = (double)(float)((double)(longlong)DAT_82a87cec + param_2);
+      R_AddCmdDrawConsoleText
+                (uVar7,param_2,uVar8,uVar8,DAT_82a77ab0,DAT_82a77ab4,*(undefined4 *)(iVar5 + 4),
+                 *(undefined4 *)(iVar5 + 8),DAT_82aa2964);
+      lVar6 = lVar6 + 1;
+    } while ((int)lVar6 < (int)uVar3);
+  }
+  __restgprlr_26();
+  return;
+}
+
 
 // 82333C90  Con_GetVersionString  (client/cl_console.cpp:3003)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char * Con_GetVersionString(void)
+void Con_GetVersionString(void)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   
-  getBuildNumber();
-  pcVar1 = va("Build %s %s");
-  return pcVar1;
+  uVar1 = getBuildNumber();
+  va(0xffffffff8202e19c,uVar1,0xffffffff8202e194);
+  return;
 }
 
 
 // 82333CD0  Con_DrawOutputVersion  (client/cl_console.cpp:3009)
 
-void Con_DrawOutputVersion(float param_1,float param_2,float param_3,float param_4)
+void Con_DrawOutputVersion(double param_1,double param_2,double param_3)
 
 {
-  char *pcVar1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
+  undefined8 uVar1;
   
-  dVar4 = (double)param_3;
-  dVar2 = (double)param_1;
-  dVar3 = (double)param_2;
-  getBuildNumber();
-  pcVar1 = va("Build %s %s");
+  uVar1 = getBuildNumber();
+  uVar1 = va(0xffffffff8202e19c,uVar1,0xffffffff8202e194);
   SCR_DrawSmallStringExt
-            ((int)dVar2,(int)((double)(float)(dVar4 - 18.0) + dVar3),pcVar1,con_versionColor);
+            ((int)param_1,(int)((double)(float)(param_3 - 18.0) + param_2),uVar1,0xffffffff8202cef4)
+  ;
   return;
 }
 
 
 // 82333D68  Con_DrawOuputWindow  (client/cl_console.cpp:3020)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_DrawOuputWindow(void)
 
 {
-  float fVar1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
   
   __savefpr_27();
-  dVar9 = (double)con.screenMin[0];
-  dVar7 = (double)(float)((double)con.screenMax[0] - dVar9);
-  dVar5 = (double)(con.screenMin[1] + 32.0);
-  fVar1 = (con.screenMax[1] - con.screenMin[1]) - 32.0;
-  dVar3 = (double)fVar1;
-  dVar2 = (double)fVar1;
-  ConDraw_Box(con.screenMin[0],con.screenMin[1] + 32.0,(float)((double)con.screenMax[0] - dVar9),
-              fVar1,(float *)0x10258);
-  dVar8 = 12.0;
-  dVar10 = (double)(float)(dVar9 + 6.0);
-  dVar6 = (double)(float)(dVar5 + 6.0);
-  dVar4 = (double)(float)(dVar3 - 12.0);
-  Con_DrawOutputVersion
-            ((float)(dVar9 + 6.0),(float)(dVar5 + 6.0),(float)(dVar3 - 12.0),(float)dVar2);
-  dVar2 = (double)(float)(dVar7 - dVar8);
-  dVar3 = (double)(float)dVar4;
-  Con_DrawOutputScrollBar((float)dVar10,(float)dVar6,(float)(dVar7 - dVar8),(float)dVar4);
-  Con_DrawOutputText((float)dVar10,(float)dVar6,(float)dVar2,(float)dVar3);
+  dVar5 = (double)DAT_82a87cf8;
+  dVar3 = (double)(float)((double)DAT_82a87d00 - dVar5);
+  dVar2 = (double)(DAT_82a87cfc + 32.0);
+  dVar1 = (double)((DAT_82a87d04 - DAT_82a87cfc) - 32.0);
+  ConDraw_Box(dVar5,dVar2,dVar3,dVar1);
+  dVar4 = 12.0;
+  dVar5 = (double)(float)(dVar5 + 6.0);
+  dVar2 = (double)(float)(dVar2 + 6.0);
+  dVar1 = (double)(float)(dVar1 - 12.0);
+  Con_DrawOutputVersion(dVar5,dVar2,dVar1);
+  Con_DrawOutputScrollBar(dVar5,dVar2,(double)(float)(dVar3 - dVar4),dVar1);
+  Con_DrawOutputText(dVar5,dVar2);
   __restfpr_27();
   return;
 }
@@ -3220,21 +4142,19 @@ void Con_DrawOuputWindow(void)
 
 // 82335AE0  Con_DrawSolidConsole  (client/cl_console.cpp:3053)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Con_DrawSolidConsole(LocalClientNum_t param_1)
+void Con_DrawSolidConsole(undefined8 param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  Sys_EnterCriticalSection(CRITSECT_CONSOLE);
-  if (con.lineOffset != 0) {
-    Con_Linefeed(param_1,con.prevChannel,0);
+  Sys_EnterCriticalSection(0);
+  if (DAT_82a87cdc != 0) {
+    Con_Linefeed(param_1,DAT_82a87ce4,0);
   }
-  Sys_LeaveCriticalSection(CRITSECT_CONSOLE);
-  bVar1 = Key_IsCatcherActive(param_1,1);
-  con.outputVisible = (bool)(-bVar1 & con.outputVisible);
-  if (con.outputVisible != false) {
+  Sys_LeaveCriticalSection(0);
+  cVar1 = Key_IsCatcherActive(param_1,1);
+  DAT_82a87ce8 = -(cVar1 != '\0') & DAT_82a87ce8;
+  if (DAT_82a87ce8 != 0) {
     Con_DrawOuputWindow();
   }
   Con_DrawInput(param_1);
@@ -3244,18 +4164,15 @@ void Con_DrawSolidConsole(LocalClientNum_t param_1)
 
 // 82335BA0  Con_DrawConsole  (client/cl_console.cpp:3081)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Con_DrawConsole(LocalClientNum_t param_1)
+void Con_DrawConsole(undefined8 param_1)
 
 {
-  ScreenPlacement *pSVar1;
-  bool bVar2;
+  char cVar1;
   
-  pSVar1 = ScrPlace_GetActivePlacement(param_1);
-  Con_CheckResize(pSVar1);
-  bVar2 = Key_IsCatcherActive(param_1,1);
-  if (bVar2) {
+  ScrPlace_GetActivePlacement();
+  Con_CheckResize();
+  cVar1 = Key_IsCatcherActive(param_1,1);
+  if (cVar1 != '\0') {
     Con_DrawSolidConsole(param_1);
   }
   return;
@@ -3264,136 +4181,146 @@ void Con_DrawConsole(LocalClientNum_t param_1)
 
 // 82333E50  Con_PageUp  (client/cl_console.cpp:3091)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_PageUp(void)
 
 {
-  con.displayLineOffset = con.displayLineOffset + -2;
-  if (con.visibleLineCount <= con.displayLineOffset) {
+  DAT_82a87ce0 = DAT_82a87ce0 + -2;
+  if (DAT_82a87cf0 <= DAT_82a87ce0) {
     return;
   }
-  if (con.visibleLineCount <= con.consoleWindow.activeLineCount) {
-    con.displayLineOffset = con.visibleLineCount;
+  if (DAT_82a87cf0 <= DAT_82a77ad4) {
+    DAT_82a87ce0 = DAT_82a87cf0;
     return;
   }
-  con.displayLineOffset = con.consoleWindow.activeLineCount;
+  DAT_82a87ce0 = DAT_82a77ad4;
   return;
 }
 
 
 // 82333EB8  Con_PageDown  (client/cl_console.cpp:3099)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_PageDown(void)
 
 {
-  if (con.consoleWindow.activeLineCount <= con.displayLineOffset + 2) {
-    con.displayLineOffset = con.consoleWindow.activeLineCount;
+  if (DAT_82a77ad4 <= DAT_82a87ce0 + 2) {
+    DAT_82a87ce0 = DAT_82a77ad4;
     return;
   }
-  con.displayLineOffset = con.displayLineOffset + 2;
+  DAT_82a87ce0 = DAT_82a87ce0 + 2;
   return;
 }
 
 
 // 82333F00  Con_Top  (client/cl_console.cpp:3105)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_Top(void)
 
 {
-  if (con.visibleLineCount <= con.consoleWindow.activeLineCount) {
-    con.displayLineOffset = con.visibleLineCount;
+  if (DAT_82a87cf0 <= DAT_82a77ad4) {
+    DAT_82a87ce0 = DAT_82a87cf0;
     return;
   }
-  con.displayLineOffset = con.consoleWindow.activeLineCount;
+  DAT_82a87ce0 = DAT_82a77ad4;
   return;
 }
 
 
 // 82333F40  Con_Bottom  (client/cl_console.cpp:3111)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_Bottom(void)
 
 {
-  con.displayLineOffset = con.consoleWindow.activeLineCount;
+  DAT_82a87ce0 = DAT_82a77ad4;
   return;
 }
 
 
 // 82333F60  Con_Close  (client/cl_console.cpp:3118)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
 
-// 82334070  Con_IsActive  (client/cl_console.cpp:3145)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool Con_IsActive(LocalClientNum_t param_1)
+void Con_Close(void)
 
 {
   bool bVar1;
+  ulonglong uVar2;
   
-  bVar1 = Key_IsCatcherActive(param_1,1);
-  return (bool)('\x01' - !bVar1);
+  uVar2 = __savegprlr_29();
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202cab8,0x47f,0,0xffffffff820011a8,uVar2,4);
+  }
+  if ((&DAT_82b3e4f1)[(int)uVar2 * 0x1e4] != '\0') {
+    Field_Clear(0xffffffff82a9b110);
+    if ((DAT_82a774f0 < 0) || (bVar1 = true, DAT_82a774b0 == '\0')) {
+      bVar1 = false;
+    }
+    if (bVar1) {
+      DAT_82a774f0 = -1;
+      DAT_82a774b0 = '\0';
+    }
+    Con_ClearNotify(uVar2);
+    Con_ClearMessageWindow(uVar2 * 0x4858 + -0x7d574c28);
+    Con_ClearMessageWindow(uVar2 * 0x4858 + -0x7d573b74);
+    DAT_82b3e544 = DAT_82b3e544 & 0xfffffffe;
+    DAT_82b3e728 = DAT_82b3e728 & 0xfffffffe;
+    DAT_82b3e90c = DAT_82b3e90c & 0xfffffffe;
+    DAT_82b3eaf0 = DAT_82b3eaf0 & 0xfffffffe;
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 82334070  Con_IsActive  (client/cl_console.cpp:3145)
+
+bool Con_IsActive(undefined8 param_1)
+
+{
+  char cVar1;
+  
+  cVar1 = Key_IsCatcherActive(param_1,1);
+  return cVar1 != '\0';
 }
 
 
 // 823340A0  CL_PlayTextFXPulseSounds  (client/cl_console.cpp:3151)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_PlayTextFXPulseSounds
-               (LocalClientNum_t param_1,int param_2,int param_3,int param_4,int param_5,int param_6
-               ,int *param_7)
+               (undefined8 param_1,longlong param_2,int param_3,longlong param_4,ulonglong param_5,
+               int param_6,int *param_7)
 
 {
-  LocalClientNum_t LVar1;
-  longlong lVar2;
-  char *pcVar3;
-  longlong lVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
   ulonglong uVar5;
   int iVar6;
-  int iVar7;
-  int iVar8;
-  ulonglong uVar9;
-  int iVar10;
   
-  uVar5 = (ulonglong)param_5;
-  lVar4 = (longlong)param_4;
-  lVar2 = (longlong)param_2;
-  LVar1 = __savegprlr_26(param_1);
-  iVar6 = (int)uVar5;
-  iVar7 = param_3 * iVar6;
-  iVar8 = *param_7 - (int)lVar4;
-  uVar9 = lVar2 - lVar4;
-  if (param_6 < iVar7) {
-    param_6 = iVar7;
+  uVar1 = __savegprlr_26();
+  iVar3 = (int)param_5;
+  param_3 = param_3 * iVar3;
+  iVar4 = *param_7 - (int)param_4;
+  uVar5 = param_2 - param_4;
+  if (param_6 < param_3) {
+    param_6 = param_3;
   }
-  iVar10 = (int)uVar9;
-  if (iVar10 < 0) goto LAB_82334170;
-  if (param_6 < iVar10) {
-    if (param_6 <= iVar8) goto LAB_82334170;
-    pcVar3 = "ui_pulse_text_delete";
+  iVar6 = (int)uVar5;
+  if (iVar6 < 0) goto LAB_82334170;
+  if (param_6 < iVar6) {
+    if (param_6 <= iVar4) goto LAB_82334170;
+    uVar2 = 0xffffffff8202e1cc;
   }
   else {
-    if (iVar7 <= iVar10) goto LAB_82334170;
-    if (iVar6 == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xc70
-                      ,0,"%s");
+    if (param_3 <= iVar6) goto LAB_82334170;
+    if (iVar3 == 0) {
+      MyAssertHandler(0xffffffff8202cfb8,0xc70,0,0xffffffff82000f98,0xffffffff8202e1bc);
     }
-    trapWord(6,uVar5,0);
-    trapWord(5,uVar5 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),0xffff);
-    if ((iVar10 / iVar6) * iVar6 <= iVar8) goto LAB_82334170;
-    pcVar3 = "ui_pulse_text_type";
+    trapWord(6,param_5,0);
+    trapWord(5,param_5 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
+    if ((iVar6 / iVar3) * iVar3 <= iVar4) goto LAB_82334170;
+    uVar2 = 0xffffffff8202e1a8;
   }
-  SND_PlayLocalSoundAliasByName(LVar1,pcVar3,SASYS_CGAME);
-  *param_7 = (int)lVar2;
+  SND_PlayLocalSoundAliasByName(uVar1,uVar2,1);
+  *param_7 = (int)param_2;
 LAB_82334170:
   __restgprlr_26();
   return;

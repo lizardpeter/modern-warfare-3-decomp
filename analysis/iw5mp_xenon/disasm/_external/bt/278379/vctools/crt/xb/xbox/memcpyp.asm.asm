@@ -336,7 +336,7 @@ LAB_82916de0:
   82916DE0  4200FFA4             bdnz 0x82916d84
   82916DE4  4BFFFF04             b 0x82916ce8
 
-; 82916DE8  _blkmov  (<external>/bt/278379/vctools/crt/xb/xbox/memcpyp.asm:530)
+; 82916DE8  blkmov  (<external>/bt/278379/vctools/crt/xb/xbox/memcpyp.asm:530)
   82916DE8  38050001             addi r0,r5,0x1
   82916DEC  60660000             ori r6,r3,0x0
   82916DF0  7C0903A6             mtspr CTR,r0

@@ -2,8 +2,6 @@
 
 // 82651410  TRACK_xenon_net  (xenon/xenon_net.cpp:29)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_xenon_net(void)
 
 {
@@ -13,221 +11,190 @@ void TRACK_xenon_net(void)
 
 // 82651418  Xenon_SendPacketToSocket  (xenon/xenon_net.cpp:65)
 
-int Xenon_SendPacketToSocket(uint param_1,uchar *param_2,int param_3,sockaddr *param_4)
+void Xenon_SendPacketToSocket
+               (undefined8 param_1,longlong param_2,undefined8 param_3,sockaddr *param_4)
 
 {
-  uint uVar1;
-  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  int len;
   
-  uVar1 = __savegprlr_27(param_1);
+  uVar1 = __savegprlr_27();
   Profile_Begin(0x1a);
-  iVar2 = sendto(uVar1,(char *)param_2,param_3,0,param_4,0x10);
-  Profile_EndInternal((double *)0x0);
-  if (iVar2 == param_3) {
-    iVar2 = __restgprlr_27(iVar2);
-    return iVar2;
+  len = (int)param_3;
+  iVar3 = sendto((SOCKET)uVar1,(char *)param_2,len,0,param_4,0x10);
+  Profile_EndInternal(0);
+  if (iVar3 == len) {
+    __restgprlr_27(iVar3);
+    return;
   }
-  if (iVar2 == -1) {
-    iVar2 = WSAGetLastError();
-    NET_ErrorString();
-    Com_Printf(0x10,"Error trying to send packet to %u.%u.%u.%u through socket %i, error %s\n");
-    if (7 < param_3) {
-      Com_Printf(0x10,"Packet data: \'%s\' (%i)\n");
+  if (iVar3 == -1) {
+    iVar3 = WSAGetLastError();
+    uVar2 = NET_ErrorString();
+    Com_Printf(0x10,0xffffffff8218f538,param_4->sa_data[2],param_4->sa_data[3],param_4->sa_data[4],
+               param_4->sa_data[5],uVar1,uVar2);
+    if (7 < len) {
+      Com_Printf(0x10,0xffffffff8218f520,param_2 + 6,param_3);
     }
-    iVar2 = __restgprlr_27(-(ulonglong)(iVar2 == 0x2751));
-    return iVar2;
+    __restgprlr_27(-(ulonglong)(iVar3 == 0x2751));
+    return;
   }
-  Com_Printf(0x10,
-             "Datagram socket sent less than a single datagram, tried to send %d but only sent %d.\n"
-            );
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  Com_Printf(0x10,0xffffffff8218f4c8,param_3,iVar3);
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 82651510  Xenon_SendPacket  (xenon/xenon_net.cpp:117)
 
-int Xenon_SendPacket(uchar *param_1,int param_2,sockaddr *param_3)
+void Xenon_SendPacket(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = Xenon_SendPacketToSocket(ip_socket,param_1,param_2,param_3);
-  return iVar1;
+  Xenon_SendPacketToSocket(DAT_829959c4,param_1,param_2,param_3);
+  return;
 }
 
 
 // 82651528  Xenon_BroadcastPacket  (xenon/xenon_net.cpp:123)
 
-int Xenon_BroadcastPacket(char *param_1,int param_2)
+void Xenon_BroadcastPacket(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  sockaddr local_20;
+  undefined8 local_20;
+  undefined8 local_18;
   
-  local_20.sa_data[6] = '\0';
-  local_20.sa_data[7] = '\0';
-  local_20.sa_data[8] = '\0';
-  local_20.sa_data[9] = '\0';
-  local_20.sa_data[10] = '\0';
-  local_20.sa_data[0xb] = '\0';
-  local_20.sa_data[0xc] = '\0';
-  local_20.sa_data[0xd] = '\0';
-  local_20.sa_family = 2;
-  local_20.sa_data[0] = '\x03';
-  local_20.sa_data[1] = -0x17;
-  local_20.sa_data[2] = -1;
-  local_20.sa_data[3] = -1;
-  local_20.sa_data[4] = -1;
-  local_20.sa_data[5] = -1;
-  iVar1 = Xenon_SendPacketToSocket(broadcast_socket,(uchar *)param_1,param_2,&local_20);
-  return iVar1;
+  local_18 = 0;
+  local_20 = 0x203e9ffffffff;
+  Xenon_SendPacketToSocket(DAT_829959c8,param_1,param_2,&local_20);
+  return;
 }
 
 
 // 82651590  Xenon_GetPacketFromSocket  (xenon/xenon_net.cpp:138)
 
-int Xenon_GetPacketFromSocket(uint param_1,char *param_2,int param_3,sockaddr_in *param_4)
+void Xenon_GetPacketFromSocket(undefined8 param_1,char *param_2,int param_3,sockaddr *param_4)
 
 {
-  uint uVar1;
+  SOCKET s;
   int iVar2;
+  undefined8 uVar1;
   int local_30 [12];
   
-  uVar1 = __savegprlr_28(param_1);
+  s = __savegprlr_28();
   local_30[0] = 0x10;
-  if (uVar1 == 0xffffffff) {
-    Com_Error(ERR_DROP,"\x15Attempted to receive on an invalid socket.\n");
+  if (s == 0xffffffff) {
+    Com_Error(1,0xffffffff8218f5d4);
   }
   Profile_Begin(0x19);
-  iVar2 = recvfrom(uVar1,param_2,param_3,0,(sockaddr *)param_4,local_30);
-  Profile_EndInternal((double *)0x0);
+  iVar2 = recvfrom(s,param_2,param_3,0,param_4,local_30);
+  Profile_EndInternal(0);
   if (iVar2 == -1) {
     iVar2 = WSAGetLastError();
     if (iVar2 != 0x2733) {
-      NET_ErrorString();
-      Com_Error(ERR_DROP,"\x15Failed to recvfrom() socket, error %s.\n");
+      uVar1 = NET_ErrorString();
+      Com_Error(1,0xffffffff8218f5a8,uVar1);
     }
   }
   else if (iVar2 != 0) {
-    if ((showpackets->current).integer != 0) {
-      Com_Printf(0x10,"Received %i bytes from %u.%u.%u.%u:%i\n");
+    if (*(int *)(DAT_83691660 + 0xc) != 0) {
+      Com_Printf(0x10,0xffffffff8218f580,iVar2,param_4->sa_data[2],param_4->sa_data[3],
+                 param_4->sa_data[4],param_4->sa_data[5],*(undefined2 *)param_4->sa_data);
     }
-    iVar2 = __restgprlr_28(iVar2);
-    return iVar2;
+    __restgprlr_28(iVar2);
+    return;
   }
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 82651688  Xenon_GetPacket  (xenon/xenon_net.cpp:191)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int Xenon_GetPacket(char *param_1,int param_2,sockaddr_in *param_3,netsrc_t *param_4,
-                   netsrc_t *param_5)
+void Xenon_GetPacket(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+                    ulonglong param_5)
 
 {
   byte bVar1;
   short sVar2;
-  short *psVar3;
+  short *_Dst;
+  longlong lVar3;
   int iVar4;
-  ulonglong uVar5;
+  uint *puVar5;
   uint *puVar6;
-  ulonglong uVar7;
-  uint *puVar8;
   
-  uVar7 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_4;
-  psVar3 = (short *)__savegprlr_23(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0xc3,0,
-                    "%s");
+  _Dst = (short *)__savegprlr_23();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218f6d8,0xc3,0,0xffffffff82000f98,0xffffffff8218f6cc);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0xc4,0,
-                    "%s");
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218f6d8,0xc4,0,0xffffffff82000f98,0xffffffff8218f6c0);
   }
-  iVar4 = Xenon_GetPacketFromSocket(ip_socket,(char *)psVar3,param_2,param_3);
-  puVar8 = (uint *)uVar7;
-  puVar6 = (uint *)uVar5;
+  lVar3 = Xenon_GetPacketFromSocket(DAT_829959c4,_Dst,param_2,param_3);
+  iVar4 = (int)lVar3;
+  puVar6 = (uint *)param_5;
+  puVar5 = (uint *)param_4;
   if (0 < iVar4) {
-    bVar1 = *(byte *)(psVar3 + 1);
-    sVar2 = *psVar3;
-    *puVar8 = bVar1 & 0xf;
-    *puVar6 = (uint)(bVar1 >> 4);
-    if (5 < *puVar8) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0xd1,1,
-                      "*from_client doesn\'t index NS_INVALID_NETSRC\n\t%i not in [0, %i)");
-    }
+    bVar1 = *(byte *)(_Dst + 1);
+    sVar2 = *_Dst;
+    *puVar6 = bVar1 & 0xf;
+    *puVar5 = (uint)(bVar1 >> 4);
     if (5 < *puVar6) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0xd2,1,
-                      "*to_client doesn\'t index NS_INVALID_NETSRC\n\t%i not in [0, %i)");
+      MyAssertHandler(0xffffffff8218f6d8,0xd1,1,0xffffffff8218f680,*puVar6,6);
+    }
+    if (5 < *puVar5) {
+      MyAssertHandler(0xffffffff8218f6d8,0xd2,1,0xffffffff8218f63c,*puVar5,6);
     }
     if ((sVar2 != 1) && ((int)sVar2 != iVar4 + -2)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0xd9,0,
-                      "%s");
+      MyAssertHandler(0xffffffff8218f6d8,0xd9,0,0xffffffff82000f98,0xffffffff8218f604);
     }
-    memmove();
-    iVar4 = __restgprlr_23((longlong)iVar4 + -3);
-    return iVar4;
+    memmove(_Dst,(void *)((int)_Dst + 3),iVar4 - 3);
+    __restgprlr_23(lVar3 + -3);
+    return;
   }
-  iVar4 = Xenon_GetPacketFromSocket(broadcast_socket,(char *)psVar3,param_2,param_3);
-  *puVar8 = 4;
+  Xenon_GetPacketFromSocket(DAT_829959c8,_Dst,param_2,param_3);
   *puVar6 = 4;
-  iVar4 = __restgprlr_23(iVar4);
-  return iVar4;
+  *puVar5 = 4;
+  __restgprlr_23();
+  return;
 }
 
 
 // 82651808  NET_ConvertNetAdrToInAddr  (xenon/xenon_net.cpp:251)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void NET_ConvertNetAdrToInAddr(netadr_t *param_1,in_addr *param_2)
+void NET_ConvertNetAdrToInAddr(undefined8 param_1,ulonglong param_2)
 
 {
   int *piVar1;
-  int iVar2;
+  undefined8 *puVar2;
   int iVar3;
-  ulonglong uVar4;
-  netadr_t in_stack_ffffff88;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0xfc,0,
-                    "%s");
+  puVar2 = (undefined8 *)__savegprlr_28();
+  if (puVar2 == (undefined8 *)0x0) {
+    MyAssertHandler(0xffffffff8218f6d8,0xfc,0,0xffffffff82000f98,0xffffffff8218f85c);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0xfd,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218f6d8,0xfd,0,0xffffffff82000f98,0xffffffff8218f850);
   }
-  iVar3 = NET_IsLocalAddress(in_stack_ffffff88);
-  piVar1 = (int *)uVar4;
+  iVar3 = NET_IsLocalAddress(*puVar2,puVar2[1]);
+  piVar1 = (int *)param_2;
   if (iVar3 == 0) {
-    if ((((*(char *)(iVar2 + 4) == '\0') && (*(char *)(iVar2 + 5) == '\0')) &&
-        (*(char *)(iVar2 + 6) == '\0')) && (*(char *)(iVar2 + 7) == '\0')) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x108,0
-                      ,"%s");
+    if ((((*(char *)((int)puVar2 + 4) == '\0') && (*(char *)((int)puVar2 + 5) == '\0')) &&
+        (*(char *)((int)puVar2 + 6) == '\0')) && (*(char *)((int)puVar2 + 7) == '\0')) {
+      MyAssertHandler(0xffffffff8218f6d8,0x108,0,0xffffffff82000f98,0xffffffff8218f7f8);
     }
-    *piVar1 = *(int *)(iVar2 + 4);
-    if (*(char *)piVar1 != *(char *)(iVar2 + 4)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x10a,0
-                      ,"%s");
+    *piVar1 = *(int *)((int)puVar2 + 4);
+    if (*(char *)piVar1 != *(char *)((int)puVar2 + 4)) {
+      MyAssertHandler(0xffffffff8218f6d8,0x10a,0,0xffffffff82000f98,0xffffffff8218f7c4);
     }
-    if (*(char *)((int)piVar1 + 1) != *(char *)(iVar2 + 5)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x10b,0
-                      ,"%s");
+    if (*(char *)((int)piVar1 + 1) != *(char *)((int)puVar2 + 5)) {
+      MyAssertHandler(0xffffffff8218f6d8,0x10b,0,0xffffffff82000f98,0xffffffff8218f794);
     }
-    if (*(char *)((int)piVar1 + 2) != *(char *)(iVar2 + 6)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x10c,0
-                      ,"%s");
+    if (*(char *)((int)piVar1 + 2) != *(char *)((int)puVar2 + 6)) {
+      MyAssertHandler(0xffffffff8218f6d8,0x10c,0,0xffffffff82000f98,0xffffffff8218f764);
     }
-    if ((char)*piVar1 != *(char *)(iVar2 + 7)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x10d,0
-                      ,"%s");
+    if ((char)*piVar1 != *(char *)((int)puVar2 + 7)) {
+      MyAssertHandler(0xffffffff8218f6d8,0x10d,0,0xffffffff82000f98,0xffffffff8218f734);
     }
   }
   else {
@@ -237,8 +204,7 @@ void NET_ConvertNetAdrToInAddr(netadr_t *param_1,in_addr *param_2)
     *(char *)((int)piVar1 + 3) = '\x01';
   }
   if (*piVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x110,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8218f6d8,0x110,0,0xffffffff82000f98,0xffffffff8218f718);
   }
   __restgprlr_28();
   return;
@@ -247,31 +213,24 @@ void NET_ConvertNetAdrToInAddr(netadr_t *param_1,in_addr *param_2)
 
 // 826519E0  NET_ConvertInAddrToServerNetAddr  (xenon/xenon_net.cpp:277)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void NET_ConvertInAddrToServerNetAddr(in_addr *param_1,ushort param_2,netadr_t *param_3)
+void NET_ConvertInAddrToServerNetAddr(undefined8 param_1,undefined2 param_2,ulonglong param_3)
 
 {
   undefined4 *puVar1;
   int *piVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_3;
-  piVar2 = (int *)__savegprlr_27(param_1);
+  piVar2 = (int *)__savegprlr_27();
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x116,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8218f6d8,0x116,0,0xffffffff82000f98,0xffffffff8218f88c);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x117,0,
-                    "%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218f6d8,0x117,0,0xffffffff82000f98,0xffffffff8218f880);
   }
   if (*piVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x119,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8218f6d8,0x119,0,0xffffffff82000f98,0xffffffff8218f864);
   }
-  puVar1 = (undefined4 *)uVar3;
-  *(ushort *)(puVar1 + 2) = param_2;
+  puVar1 = (undefined4 *)param_3;
+  *(undefined2 *)(puVar1 + 2) = param_2;
   *puVar1 = 4;
   puVar1[3] = 4;
   *(undefined1 *)(puVar1 + 1) = *(undefined1 *)piVar2;
@@ -285,290 +244,233 @@ void NET_ConvertInAddrToServerNetAddr(in_addr *param_1,ushort param_2,netadr_t *
 
 // 82651AB8  NET_IsLoopbackInAddr  (xenon/xenon_net.cpp:295)
 
-int NET_IsLoopbackInAddr(in_addr *param_1)
+undefined8 NET_IsLoopbackInAddr(char *param_1)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   
-  if (param_1 == (in_addr *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x128,0,
-                    "%s");
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff8218f6d8,0x128,0,0xffffffff82000f98,0xffffffff8218f894);
   }
-  if (((((param_1->S_un).S_un_b.s_b1 != '\x7f') || ((param_1->S_un).S_un_b.s_b2 != '\0')) ||
-      ((param_1->S_un).S_un_b.s_b3 != '\0')) || (iVar1 = 1, (param_1->S_un).S_un_b.s_b4 != '\x01'))
-  {
-    iVar1 = 0;
+  if ((((*param_1 != '\x7f') || (param_1[1] != '\0')) || (param_1[2] != '\0')) ||
+     (uVar1 = 1, param_1[3] != '\x01')) {
+    uVar1 = 0;
   }
-  return iVar1;
+  return uVar1;
 }
 
 
 // 82651B48  NET_GetXnAddrForNetAddr  (xenon/xenon_net.cpp:302)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int NET_GetXnAddrForNetAddr(netadr_t *param_1,XNADDR *param_2,XNKID *param_3)
+void NET_GetXnAddrForNetAddr(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-  netadr_t *pnVar1;
-  int iVar2;
-  ulonglong uVar3;
-  netadr_t in_stack_ffffff78;
-  <unnamed_type_S_un> local_40 [16];
+  undefined8 *puVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined4 local_40 [16];
   
-  uVar3 = (ulonglong)(int)param_2;
-  pnVar1 = (netadr_t *)__savegprlr_27(param_1);
-  if (pnVar1 == (netadr_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x132,0,
-                    "%s");
+  puVar3 = (undefined8 *)__savegprlr_27();
+  if (puVar3 == (undefined8 *)0x0) {
+    MyAssertHandler(0xffffffff8218f6d8,0x132,0,0xffffffff82000f98,0xffffffff8218f85c);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x133,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218f6d8,0x133,0,0xffffffff82000f98,0xffffffff820344b0);
   }
-  NET_ConvertNetAdrToInAddr(pnVar1,(in_addr *)&local_40[0].S_un_b);
-  iVar2 = XNetInAddrToXnAddr((in_addr)local_40[0],(XNADDR *)uVar3,param_3);
-  if (iVar2 == 0) {
-    iVar2 = __restgprlr_27(1);
-    return iVar2;
+  NET_ConvertNetAdrToInAddr(puVar3,local_40);
+  uVar1 = XNetInAddrToXnAddr(local_40[0],param_2,param_3);
+  if ((int)uVar1 == 0) {
+    __restgprlr_27(1);
+    return;
   }
-  NET_AdrToString(in_stack_ffffff78);
-  Com_PrintWarning(0x19,"NET_GetXnAddrForNetAddr: Error \'%i\' for address %s (%ul)\n");
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  uVar2 = NET_AdrToString(*puVar3,puVar3[1]);
+  Com_PrintWarning(0x19,0xffffffff8218f8a0,uVar1,uVar2,local_40[0]);
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 82651C28  NET_XnAddrAndNetAddrAreSamePerson  (xenon/xenon_net.cpp:322)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int NET_XnAddrAndNetAddrAreSamePerson(XNADDR *param_1,netadr_t *param_2)
+bool NET_XnAddrAndNetAddrAreSamePerson(byte *param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  XNADDR *pXVar2;
-  longlong lVar3;
-  XNADDR *pXVar4;
-  XNADDR local_40;
+  byte bVar1;
+  byte bVar2;
+  int iVar3;
+  byte *pbVar4;
+  byte *pbVar5;
+  byte local_40 [48];
   
-  iVar1 = NET_GetXnAddrForNetAddr(param_2,&local_40,(XNKID *)0x0);
-  if (iVar1 == 0) {
-    return 0;
+  iVar3 = NET_GetXnAddrForNetAddr(param_2,local_40,0);
+  if (iVar3 == 0) {
+    return false;
   }
-  pXVar4 = &local_40;
-  pXVar2 = param_1 + 1;
+  pbVar5 = local_40;
+  pbVar4 = param_1 + 0x24;
   do {
-    lVar3 = (ulonglong)(param_1->ina).S_un.S_un_b.s_b1 - (ulonglong)(pXVar4->ina).S_un.S_un_b.s_b1;
-    if (lVar3 != 0) break;
-    param_1 = (XNADDR *)((int)&(param_1->ina).S_un + 1);
-    pXVar4 = (XNADDR *)((int)&(pXVar4->ina).S_un + 1);
-  } while (param_1 != pXVar2);
-  return (uint)LZCOUNT((int)lVar3) >> 5;
+    bVar1 = *param_1;
+    bVar2 = *pbVar5;
+    if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+    param_1 = param_1 + 1;
+    pbVar5 = pbVar5 + 1;
+  } while (param_1 != pbVar4);
+  return (int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0;
 }
 
 
 // 82651CB8  NET_GetConnectionStatus  (xenon/xenon_net.cpp:333)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int NET_GetConnectionStatus(netadr_t *param_1)
+void NET_GetConnectionStatus(undefined8 param_1)
 
 {
-  ulong uVar1;
-  <unnamed_type_S_un> local_20 [4];
+  int local_20 [4];
   
-  NET_ConvertNetAdrToInAddr(param_1,(in_addr *)&local_20[0].S_un_b);
+  NET_ConvertNetAdrToInAddr(param_1,local_20);
   if (local_20[0] == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x152,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8218f6d8,0x152,0,0xffffffff82000f98,0xffffffff8203c124);
   }
-  uVar1 = XNetGetConnectStatus(local_20[0].S_addr);
-  return uVar1;
+  XNetGetConnectStatus(local_20[0]);
+  return;
 }
 
 
 // 82651D20  NET_UnregisterAddr  (xenon/xenon_net.cpp:344)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int NET_UnregisterAddr(netadr_t *param_1)
+void NET_UnregisterAddr(void)
 
 {
-  netadr_t *pnVar1;
-  int iVar2;
-  netadr_t in_stack_ffffff88;
-  <unnamed_type_S_un> local_30 [12];
+  undefined8 *puVar2;
+  int iVar3;
+  undefined8 uVar1;
+  int local_30 [12];
   
-  pnVar1 = (netadr_t *)__savegprlr_29(param_1);
-  if (pnVar1 == (netadr_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x15c,0,
-                    "%s");
+  puVar2 = (undefined8 *)__savegprlr_29();
+  if (puVar2 == (undefined8 *)0x0) {
+    MyAssertHandler(0xffffffff8218f6d8,0x15c,0,0xffffffff82000f98,0xffffffff8218f85c);
   }
-  iVar2 = NET_IsLocalAddress(in_stack_ffffff88);
-  if (iVar2 != 0) {
-    NET_AdrToString(in_stack_ffffff88);
-    Com_Printf(0x10,"NET_UnregisterAddr called with %s - not unregistering\n");
-    iVar2 = __restgprlr_29(1);
-    return iVar2;
+  iVar3 = NET_IsLocalAddress(*puVar2,puVar2[1]);
+  if (iVar3 != 0) {
+    uVar1 = NET_AdrToString(*puVar2,puVar2[1]);
+    Com_Printf(0x10,0xffffffff8218f900,uVar1);
+    __restgprlr_29(1);
+    return;
   }
-  NET_ConvertNetAdrToInAddr(pnVar1,(in_addr *)&local_30[0].S_un_b);
-  iVar2 = NET_IsLoopbackInAddr((in_addr *)&local_30[0].S_un_b);
-  if (iVar2 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x165,0,
-                    "%s");
+  NET_ConvertNetAdrToInAddr(puVar2,local_30);
+  iVar3 = NET_IsLoopbackInAddr(local_30);
+  if (iVar3 != 0) {
+    MyAssertHandler(0xffffffff8218f6d8,0x165,0,0xffffffff82000f98,0xffffffff8218f8dc);
   }
   if (local_30[0] == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x166,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8218f6d8,0x166,0,0xffffffff82000f98,0xffffffff8203c124);
   }
-  iVar2 = XNetUnregisterInAddr((in_addr)local_30[0]);
-  iVar2 = __restgprlr_29(iVar2 == 0);
-  return iVar2;
+  iVar3 = XNetUnregisterInAddr(local_30[0]);
+  __restgprlr_29(iVar3 == 0);
+  return;
 }
 
 
 // 82651E20  Xenon_GetLocalAddressForEncryptedConnection  (xenon/xenon_net.cpp:364)
 
-bool Xenon_GetLocalAddressForEncryptedConnection
-               (XNADDR *param_1,XNKID *param_2,in_addr *param_3,ushort *param_4)
+void Xenon_GetLocalAddressForEncryptedConnection
+               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined2 *param_4)
 
 {
-  XNADDR *pXVar1;
-  int iVar2;
-  undefined1 uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  XNADDR *pXVar7;
-  byte *pbVar8;
-  byte local_a0 [16];
-  byte local_90 [144];
+  byte bVar1;
+  byte bVar2;
+  undefined1 *puVar3;
+  byte *pbVar5;
+  int iVar6;
+  undefined8 uVar4;
+  longlong lVar7;
+  longlong lVar8;
+  byte *pbVar9;
+  byte *pbVar10;
+  byte local_a0 [8];
+  byte abStack_98 [8];
+  byte local_90 [8];
+  undefined8 local_88;
+  undefined8 local_80;
+  undefined8 local_78;
+  undefined4 local_70;
+  byte abStack_6c [108];
   
-  lVar4 = (longlong)(int)param_2;
-  pXVar1 = (XNADDR *)__savegprlr_20(param_1);
-  if (((systemlink->current).enabled == false) && (iVar2 = Live_OnlinePlayEvenIfDown(), iVar2 == 0))
-  {
-    pbVar8 = local_a0;
-    local_90[0] = 0;
-    local_90[1] = 0;
-    local_90[2] = 0;
-    local_90[3] = 0;
-    local_90[4] = 0;
-    local_90[5] = 0;
-    local_90[6] = 0;
-    local_90[7] = 0;
-    local_90[8] = 0;
-    local_90[9] = 0;
-    local_90[10] = 0;
-    local_90[0xb] = 0;
-    local_90[0xc] = 0;
-    local_90[0xd] = 0;
-    local_90[0xe] = 0;
-    local_90[0xf] = 0;
-    local_90[0x10] = 0;
-    local_90[0x11] = 0;
-    local_90[0x12] = 0;
-    local_90[0x13] = 0;
-    local_90[0x14] = 0;
-    local_90[0x15] = 0;
-    local_90[0x16] = 0;
-    local_90[0x17] = 0;
-    local_90[0x18] = 0;
-    local_90[0x19] = 0;
-    local_90[0x1a] = 0;
-    local_90[0x1b] = 0;
-    local_90[0x1c] = 0;
-    local_90[0x1d] = 0;
-    local_90[0x1e] = 0;
-    local_90[0x1f] = 0;
-    local_a0[0] = 0;
-    local_a0[1] = 0;
-    local_a0[2] = 0;
-    local_a0[3] = 0;
-    local_a0[4] = 0;
-    local_a0[5] = 0;
-    local_a0[6] = 0;
-    local_a0[7] = 0;
-    local_90[0x20] = 0;
-    local_90[0x21] = 0;
-    local_90[0x22] = 0;
-    local_90[0x23] = 0;
-    lVar6 = lVar4;
-    do {
-      lVar5 = (ulonglong)*pbVar8 - (ulonglong)*(byte *)lVar6;
-      if (lVar5 != 0) break;
-      pbVar8 = pbVar8 + 1;
-      lVar6 = lVar6 + 1;
-    } while (pbVar8 != local_a0 + 8);
-    if ((int)lVar5 == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x17b,0
-                      ,"%s");
-    }
-    pbVar8 = local_90;
-    pXVar7 = pXVar1;
-    do {
-      lVar6 = (ulonglong)*pbVar8 - (ulonglong)(pXVar7->ina).S_un.S_un_b.s_b1;
-      if (lVar6 != 0) break;
-      pbVar8 = pbVar8 + 1;
-      pXVar7 = (XNADDR *)((int)&(pXVar7->ina).S_un + 1);
-    } while (pbVar8 != local_90 + 0x24);
-    if ((int)lVar6 == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x17c,0
-                      ,"%s");
+  pbVar5 = (byte *)__savegprlr_20();
+  if (*(char *)(DAT_82aa1ae4 + 0xc) == '\0') {
+    iVar6 = Live_OnlinePlayEvenIfDown();
+    if (iVar6 == 0) {
+      pbVar9 = local_a0;
+      local_88 = 0;
+      local_80 = 0;
+      local_78 = 0;
+      local_70 = 0;
+      lVar8 = param_2;
+      do {
+        lVar7 = (ulonglong)*pbVar9 - (ulonglong)*(byte *)lVar8;
+        if (lVar7 != 0) break;
+        pbVar9 = pbVar9 + 1;
+        lVar8 = lVar8 + 1;
+      } while (pbVar9 != abStack_98);
+      if ((int)lVar7 == 0) {
+        MyAssertHandler(0xffffffff8218f6d8,0x17b,0,0xffffffff82000f98,0xffffffff8218fa74);
+      }
+      pbVar10 = local_90;
+      pbVar9 = pbVar5;
+      do {
+        bVar1 = *pbVar10;
+        bVar2 = *pbVar9;
+        if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+        pbVar10 = pbVar10 + 1;
+        pbVar9 = pbVar9 + 1;
+      } while (pbVar10 != abStack_6c);
+      if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
+        MyAssertHandler(0xffffffff8218f6d8,0x17c,0,0xffffffff82000f98,0xffffffff8218fa38);
+      }
     }
   }
-  iVar2 = XNetXnAddrToInAddr(pXVar1,(XNKID *)lVar4,param_3);
+  uVar4 = XNetXnAddrToInAddr(pbVar5,param_2,param_3);
   *param_4 = 1000;
-  Com_Printf(0x10,
-             "XNetXnAddrToInAddr() for sessionId %i.%i.%i.%i.%i.%i.%i.%i and and xnaddr{ ip: %u.%u.%u.%u, online ip: %u.%u.%u.%u, ... } - "
-            );
-  Com_Printf(0x10,"Remote Xenon mapped to local IP %u.%u.%u.%u\n");
-  if (iVar2 != 0) {
-    iVar2 = Live_OnlinePlayEvenIfDown();
-    if ((iVar2 == 0) || ((pXVar1->ina).S_un.S_addr == 0)) {
-      Com_PrintError(0x10,
-                     "Failed to retrieve the remote xenon\'s IP address from XNADDR - error %i.\n");
-      uVar3 = __restgprlr_20(0);
-      return (bool)uVar3;
+  puVar3 = (undefined1 *)param_2;
+  Com_Printf(0x10,0xffffffff8218f9b8,*puVar3,puVar3[1],puVar3[2],puVar3[3],puVar3[4],puVar3[5]);
+  pbVar9 = (byte *)param_3;
+  Com_Printf(0x10,0xffffffff8218f984,*pbVar9,pbVar9[1],pbVar9[2],pbVar9[3]);
+  if ((int)uVar4 != 0) {
+    iVar6 = Live_OnlinePlayEvenIfDown();
+    if ((iVar6 == 0) || (*(int *)pbVar5 == 0)) {
+      Com_PrintError(0x10,0xffffffff8218f938,uVar4);
+      __restgprlr_20(0);
+      return;
     }
-    (param_3->S_un).S_un_b.s_b1 = (pXVar1->ina).S_un.S_un_b.s_b1;
-    (param_3->S_un).S_un_b.s_b2 = (pXVar1->ina).S_un.S_un_b.s_b2;
-    (param_3->S_un).S_un_b.s_b3 = (pXVar1->ina).S_un.S_un_b.s_b3;
-    (param_3->S_un).S_un_b.s_b4 = (pXVar1->ina).S_un.S_un_b.s_b4;
+    *pbVar9 = *pbVar5;
+    pbVar9[1] = pbVar5[1];
+    pbVar9[2] = pbVar5[2];
+    pbVar9[3] = pbVar5[3];
   }
-  uVar3 = __restgprlr_20(1);
-  return (bool)uVar3;
+  __restgprlr_20(1);
+  return;
 }
 
 
 // 82652058  Xenon_RegisterRemoteXenon  (xenon/xenon_net.cpp:412)
 
-bool Xenon_RegisterRemoteXenon(_XSESSION_INFO *param_1,in_addr *param_2,ushort *param_3)
+void Xenon_RegisterRemoteXenon(longlong param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  bool bVar1;
-  
-  bVar1 = Xenon_GetLocalAddressForEncryptedConnection
-                    (&param_1->hostAddress,&param_1->sessionID,param_2,param_3);
-  return bVar1;
+  Xenon_GetLocalAddressForEncryptedConnection(param_1 + 8,param_1,param_2,param_3);
+  return;
 }
 
 
 // 82652070  Xenon_GetXNAddr  (xenon/xenon_net.cpp:420)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-XNADDR * Xenon_GetXNAddr(void)
+undefined8 Xenon_GetXNAddr(void)
 
 {
-  return &g_ourXnaddr;
+  return 0xffffffff8425e870;
 }
 
 
 // 82652AA8  NET_Init  (xenon/xenon_net.cpp:429)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void NET_Init(void)
 
@@ -582,212 +484,184 @@ void NET_Init(void)
 
 // 82652080  Xenon_GetXNAddrForLive  (xenon/xenon_net.cpp:443)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-XNADDR * Xenon_GetXNAddrForLive(void)
+void Xenon_GetXNAddrForLive(void)
 
 {
-  ulong uVar1;
-  XNADDR *pXVar2;
-  int iVar3;
-  uint uVar4;
+  int iVar1;
+  ulonglong uVar2;
   
   __savegprlr_29();
-  uVar4 = (uint)g_ourXnaddrOkayForXboxLive;
-  if (uVar4 == 0) {
+  uVar2 = (ulonglong)DAT_8425e894;
+  if (uVar2 == 0) {
     do {
-      uVar1 = XNetGetTitleXnAddr(&g_ourXnaddr);
-    } while (uVar1 == 0);
-    if ((uVar1 & 1) != 0) {
-      Com_Error(ERR_FATAL,"\x15Unable to find an XNADDR.\n");
+      uVar2 = XNetGetTitleXnAddr(0xffffffff8425e870);
+    } while ((uVar2 & 0xffffffff) == 0);
+    if ((uVar2 & 1) != 0) {
+      Com_Error(0,0xffffffff8218fae8);
     }
-    uVar4 = uVar1 >> 7 & 1;
-    g_ourXnaddrOkayForXboxLive = SUB41(uVar4,0);
+    uVar2 = (uVar2 & 0xffffffff) >> 7 & 1;
+    DAT_8425e894 = (byte)uVar2;
   }
-  if ((uVar4 == 0) && (iVar3 = Live_OnlinePlayEvenIfDown(), iVar3 == 0)) {
-    Com_Error(ERR_DROP,"\x15Unable to get our Xbox Live address information\n");
-    pXVar2 = (XNADDR *)__restgprlr_29(0);
-    return pXVar2;
+  if ((uVar2 == 0) && (iVar1 = Live_OnlinePlayEvenIfDown(), iVar1 == 0)) {
+    Com_Error(1,0xffffffff8218fab4);
+    __restgprlr_29(0);
+    return;
   }
-  pXVar2 = (XNADDR *)__restgprlr_29(0xffffffff8425e870);
-  return pXVar2;
+  __restgprlr_29(0xffffffff8425e870);
+  return;
 }
 
 
 // 82652120  NET_ClearLiveAddrCache  (xenon/xenon_net.cpp:477)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void NET_ClearLiveAddrCache(void)
 
 {
-  g_ourXnaddrOkayForXboxLive = false;
+  DAT_8425e894 = 0;
   return;
 }
 
 
 // 82652130  Sys_GetPacket  (xenon/xenon_net.cpp:485)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int Sys_GetPacket(netadr_t *param_1,msg_t *param_2)
+void Sys_GetPacket(undefined8 param_1,ulonglong param_2)
 
 {
-  netadr_t *pnVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
-  ulonglong uVar4;
-  netsrc_t local_50;
-  netsrc_t local_4c [3];
-  sockaddr_in asStack_40 [4];
+  uint local_50;
+  uint local_4c [3];
+  undefined1 auStack_40 [64];
   
-  uVar4 = (ulonglong)(int)param_2;
-  pnVar1 = (netadr_t *)__savegprlr_27(param_1);
-  if (pnVar1 == (netadr_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x1ec,0,
-                    "%s");
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8218f6d8,0x1ec,0,0xffffffff82000f98,0xffffffff820907f0);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x1ed,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218f6d8,0x1ed,0,0xffffffff82000f98,0xffffffff820907e4);
   }
-  if (xnetInitialized != 0) {
-    iVar2 = (int)uVar4;
-    if (*(int *)(iVar2 + 8) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x1f2,0
-                      ,"%s");
+  if (DAT_8425e898 != 0) {
+    iVar1 = (int)param_2;
+    if (*(int *)(iVar1 + 8) == 0) {
+      MyAssertHandler(0xffffffff8218f6d8,0x1f2,0,0xffffffff82000f98,0xffffffff8208e3c4);
     }
-    iVar3 = Xenon_GetPacket(*(char **)(iVar2 + 8),*(int *)(iVar2 + 0x10),asStack_40,&local_50,
-                            local_4c);
+    iVar3 = Xenon_GetPacket(*(undefined4 *)(iVar1 + 8),*(undefined4 *)(iVar1 + 0x10),auStack_40,
+                            &local_50,local_4c);
     if (0 < iVar3) {
-      *(int *)(iVar2 + 0x14) = iVar3;
-      SockadrToNetadr((sockaddr *)asStack_40,pnVar1);
-      if (NS_PACKET < local_50) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x200
-                        ,0,"to_client doesn\'t index NS_INVALID_NETSRC\n\t%i not in [0, %i)");
+      *(int *)(iVar1 + 0x14) = iVar3;
+      SockadrToNetadr(auStack_40,iVar2);
+      if (5 < local_50) {
+        MyAssertHandler(0xffffffff8218f6d8,0x200,0,0xffffffff8218fb44,local_50,6);
       }
-      if (NS_PACKET < local_4c[0]) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x201
-                        ,0,"from_client doesn\'t index NS_INVALID_NETSRC\n\t%i not in [0, %i)");
+      if (5 < local_4c[0]) {
+        MyAssertHandler(0xffffffff8218f6d8,0x201,0,0xffffffff8218fb04,local_4c[0],6);
       }
-      *(netsrc_t *)(iVar2 + 0x28) = local_50;
-      pnVar1->localNetID = local_4c[0];
-      iVar2 = __restgprlr_27(1);
-      return iVar2;
+      *(uint *)(iVar1 + 0x28) = local_50;
+      *(uint *)(iVar2 + 0xc) = local_4c[0];
+      __restgprlr_27(1);
+      return;
     }
   }
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 82652280  Sys_SendVoiceDataPacket  (xenon/xenon_net.cpp:523)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int Sys_SendVoiceDataPacket
-              (netsrc_t param_1,int param_2,void *param_3,int param_4,void *param_5,netadr_t param_6
-              )
+void Sys_SendVoiceDataPacket
+               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,ulonglong param_7)
 
 {
-  uint uVar1;
-  int iVar2;
-  undefined8 in_r8;
-  netsrc_t in_r9;
-  netadrtype_t nStack00000040;
-  uchar uStack00000044;
-  uchar uStack00000045;
-  uchar uStack00000046;
-  uchar uStack00000047;
-  netsrc_t nStack0000004c;
-  msg_t local_570;
-  sockaddr sStack_540;
-  uchar auStack_530 [1328];
+  ulonglong uVar1;
+  undefined8 uVar2;
+  int iStack00000040;
+  char cStack00000044;
+  char cStack00000045;
+  char cStack00000046;
+  char cStack00000047;
+  ulonglong in_stack_00000048;
+  int local_570 [2];
+  undefined4 local_568;
+  undefined4 local_55c;
+  undefined1 auStack_540 [16];
+  undefined1 auStack_530 [1328];
   
-  nStack0000004c = in_r9;
-  uVar1 = __savegprlr_25(param_1);
-  _nStack00000040 = in_r8;
-  if (networkingEnabled == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x212,0,
-                    "%s");
+  uVar1 = __savegprlr_25();
+  _iStack00000040 = param_6;
+  in_stack_00000048 = param_7;
+  if (DAT_8425e89c == 0) {
+    MyAssertHandler(0xffffffff8218f6d8,0x212,0,0xffffffff82000f98,0xffffffff8218fc58);
   }
-  if (nStack00000040 == NA_BROADCAST) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x216,0,
-                    "%s");
+  if (iStack00000040 == 3) {
+    MyAssertHandler(0xffffffff8218f6d8,0x216,0,0xffffffff82000f98,0xffffffff8218fc40);
   }
-  if (nStack00000040 != NA_IP) {
-    Com_Error(ERR_DROP,"\x15Sys_SendVoiceDataPacket: bad address type");
+  if (iStack00000040 != 4) {
+    Com_Error(1,0xffffffff8218fc14);
   }
-  if ((((uStack00000044 == '\x7f') && (uStack00000045 == '\0')) && (uStack00000046 == '\0')) &&
-     (uStack00000047 == '\x01')) {
-    Com_PrintWarning(0x10,"Sending packet to local IP 127.0.0.1\n");
+  if ((((cStack00000044 == '\x7f') && (cStack00000045 == '\0')) && (cStack00000046 == '\0')) &&
+     (cStack00000047 == '\x01')) {
+    Com_PrintWarning(0x10,0xffffffff8218fbec);
   }
-  NetadrToSockadr((netadr_t *)&stack0x00000040,&sStack_540);
-  MSG_Init(&local_570,auStack_530,0x4f0);
-  MSG_WriteShort(&local_570,param_2 + 1);
-  MSG_WriteByte(&local_570,nStack0000004c << 4 | uVar1);
-  if (param_2 != 0) {
-    MSG_WriteData(&local_570,param_3,param_2);
+  NetadrToSockadr(&stack0x00000040,auStack_540);
+  MSG_Init(local_570,auStack_530,0x4f0);
+  MSG_WriteShort(local_570,param_2 + 1);
+  MSG_WriteByte(local_570,(in_stack_00000048 & 0xfffffff) << 4 | uVar1);
+  if ((int)param_2 != 0) {
+    MSG_WriteData(local_570,param_3,param_2);
   }
-  if (param_4 != 0) {
-    MSG_WriteData(&local_570,param_5,param_4);
+  if ((int)param_4 != 0) {
+    MSG_WriteData(local_570,param_5,param_4);
   }
-  if (local_570.overflowed != 0) {
-    va("Overflow while trying to send %i bytes of voice and %i bytes of game data");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x23b,0,
-                    "%s\n\t%s");
+  if (local_570[0] != 0) {
+    uVar2 = va(0xffffffff8218fba0,param_4,param_2);
+    MyAssertHandler(0xffffffff8218f6d8,0x23b,0,0xffffffff820011f4,0xffffffff8218fb84,uVar2);
   }
-  iVar2 = Xenon_SendPacketToSocket(ip_socket,local_570.data,local_570.cursize,&sStack_540);
-  iVar2 = __restgprlr_25(iVar2);
-  return iVar2;
+  Xenon_SendPacketToSocket(DAT_829959c4,local_568,local_55c,auStack_540);
+  __restgprlr_25();
+  return;
 }
 
 
 // 82652438  Sys_SendPacket  (xenon/xenon_net.cpp:580)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-bool Sys_SendPacket(netsrc_t param_1,int param_2,void *param_3,netadr_t param_4)
+void Sys_SendPacket(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                   undefined8 param_5)
 
 {
   undefined8 in_r0;
-  netsrc_t nVar1;
-  undefined1 uVar3;
-  uint uVar2;
-  undefined8 in_r6;
+  undefined8 uVar1;
+  ulonglong uVar2;
   int iStack00000030;
-  netadr_t in_stack_ffffff78;
   
-  iStack00000030 = (int)((ulonglong)in_r6 >> 0x20);
-  nVar1 = __savegprlr_26(param_1);
-  if (networkingEnabled == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x248,0,
-                    "%s");
+  uVar1 = __savegprlr_26();
+  if (DAT_8425e89c == 0) {
+    MyAssertHandler(0xffffffff8218f6d8,0x248,0,0xffffffff82000f98,0xffffffff8218fc58);
   }
+  iStack00000030 = (int)((ulonglong)param_4 >> 0x20);
   if (iStack00000030 == 3) {
     Xenon_BroadcastPacket(param_3,param_2);
-    uVar3 = __restgprlr_26(1);
-    return (bool)uVar3;
+    __restgprlr_26(1);
+    return;
   }
   if (iStack00000030 != 4) {
-    Com_Error(ERR_DROP,"\x15Sys_SendPacket: bad address type %i");
+    Com_Error(1,0xffffffff8218fc6c);
   }
-  uVar2 = Sys_SendVoiceDataPacket(nVar1,param_2,param_3,0,(void *)0x0,in_stack_ffffff78);
-  if (xenonCompilerWorkaround != 0) {
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",600,0,
-                      "XENON_COMPILER_WORKAROUND memory corruption");
+  uVar2 = Sys_SendVoiceDataPacket(uVar1,param_2,param_3,0,0,param_4,param_5);
+  if (DAT_8425e8a0 != 0) {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff8218f6d8,600,0,0xffffffff82027234);
     }
     trapWord(0x1f,in_r0,0x16);
   }
-  uVar3 = __restgprlr_26(uVar2 >> 0x1f ^ 1);
-  return (bool)uVar3;
+  __restgprlr_26((uVar2 & 0xffffffff) >> 0x1f ^ 1);
+  return;
 }
 
 
 // 82652540  NET_GetLocalAddress  (xenon/xenon_net.cpp:622)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void NET_GetLocalAddress(void)
 
@@ -798,166 +672,161 @@ void NET_GetLocalAddress(void)
 
 // 82652548  NET_IPSocket  (xenon/xenon_net.cpp:635)
 
-int NET_IPSocket(char *param_1,int param_2,int param_3)
+SOCKET NET_IPSocket(ulonglong param_1,undefined8 param_2,int param_3)
 
 {
-  uint uVar1;
+  SOCKET s;
   int iVar2;
-  ulong local_40 [4];
+  undefined8 uVar1;
+  u_long local_40 [4];
   sockaddr local_30;
   
-  if (param_1 == (char *)0x0) {
-    Com_Printf(0x10,"Opening IP socket: localhost:%i\n");
+  if ((param_1 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff8218fd10,param_2);
   }
   else {
-    Com_Printf(0x10,"Opening IP socket: %s:%i\n");
+    Com_Printf(0x10,0xffffffff8218fd34,param_1,param_2);
   }
-  uVar1 = socket(2,2,param_3);
-  if (uVar1 == 0xffffffff) {
+  s = socket(2,2,param_3);
+  if (s == 0xffffffff) {
     iVar2 = WSAGetLastError();
     if (iVar2 != 0x273f) {
-      NET_ErrorString();
-      Com_PrintWarning(0x10,"WARNING: UDP_OpenSocket: socket: %s\n");
+      uVar1 = NET_ErrorString();
+      Com_PrintWarning(0x10,0xffffffff8218fce8,uVar1);
     }
-    uVar1 = 0;
+    s = 0;
   }
   else {
-    local_30.sa_data._0_2_ = SUB42(param_2,0);
+    local_30.sa_data._0_2_ = SUB82(param_2,0);
     local_30.sa_family = 2;
     local_30.sa_data[2] = '\0';
     local_30.sa_data[3] = '\0';
     local_30.sa_data[4] = '\0';
     local_30.sa_data[5] = '\0';
-    iVar2 = bind(uVar1,&local_30,0x10);
+    iVar2 = bind(s,&local_30,0x10);
     if (iVar2 != 0) {
-      WSAGetLastError();
-      Com_Error(ERR_FATAL,"\x15Failed to bind socket, error %d.\n");
+      iVar2 = WSAGetLastError();
+      Com_Error(0,0xffffffff8218fcc4,iVar2);
     }
     local_40[0] = 1;
-    iVar2 = ioctlsocket(uVar1,-0x7ffb9982,local_40);
+    iVar2 = ioctlsocket(s,-0x7ffb9982,local_40);
     if (iVar2 != 0) {
-      WSAGetLastError();
-      Com_Error(ERR_FATAL,"\x15Failed to set socket to nonblocking, error %d\n");
+      iVar2 = WSAGetLastError();
+      Com_Error(0,0xffffffff8218fc94,iVar2);
     }
   }
-  return uVar1;
+  return s;
 }
 
 
 // 82652680  Xenon_SendLSPPacket  (xenon/xenon_net.cpp:738)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int Xenon_SendLSPPacket(uchar *param_1,int param_2,netadr_t *param_3)
+void Xenon_SendLSPPacket(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  uchar *puVar1;
-  int iVar2;
-  sockaddr asStack_30 [3];
+  int iVar1;
+  undefined8 uVar2;
+  undefined1 auStack_30 [48];
   
-  puVar1 = (uchar *)__savegprlr_29(param_1);
-  NetadrToSockadr(param_3,asStack_30);
-  if ((lsp_debug->current).enabled != false) {
-    Com_Printf(0xe,"Sending %i byte LSP packet to %u.%u.%u.%u:%i\n");
+  uVar2 = __savegprlr_29();
+  NetadrToSockadr(param_3,auStack_30);
+  if (*(char *)(DAT_844d823c + 0xc) != '\0') {
+    iVar1 = (int)param_3;
+    Com_Printf(0xe,0xffffffff8218fd50,param_2,*(undefined1 *)(iVar1 + 4),*(undefined1 *)(iVar1 + 5),
+               *(undefined1 *)(iVar1 + 6),*(undefined1 *)(iVar1 + 7),*(undefined2 *)(iVar1 + 8));
   }
-  iVar2 = Xenon_SendPacketToSocket(lsp_socket,puVar1,param_2,asStack_30);
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  Xenon_SendPacketToSocket(DAT_829959c0,uVar2,param_2,auStack_30);
+  __restgprlr_29();
+  return;
 }
 
 
 // 82652700  Xenon_GetLSPPacket  (xenon/xenon_net.cpp:749)
 
-int Xenon_GetLSPPacket(char *param_1,int param_2,sockaddr_in *param_3)
+void Xenon_GetLSPPacket(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = Xenon_GetPacketFromSocket(lsp_socket,param_1,param_2,param_3);
-  return iVar1;
+  Xenon_GetPacketFromSocket(DAT_829959c0,param_1,param_2,param_3);
+  return;
 }
 
 
 // 82652718  Sys_GetLSPPacket  (xenon/xenon_net.cpp:758)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int Sys_GetLSPPacket(netadr_t *param_1,msg_t *param_2)
+void Sys_GetLSPPacket(undefined8 param_1,int param_2)
 
 {
-  netadr_t *pnVar1;
-  int iVar2;
-  sockaddr_in asStack_30 [3];
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_30 [48];
   
-  pnVar1 = (netadr_t *)__savegprlr_29(param_1);
-  if (param_2->data == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x2fb,0,
-                    "%s");
+  uVar1 = __savegprlr_29();
+  if (*(int *)(param_2 + 8) == 0) {
+    MyAssertHandler(0xffffffff8218f6d8,0x2fb,0,0xffffffff82000f98,0xffffffff8208e3c4);
   }
-  iVar2 = Xenon_GetPacketFromSocket(lsp_socket,(char *)param_2->data,param_2->maxsize,asStack_30);
-  if (0 < iVar2) {
-    param_2->cursize = iVar2;
-    SockadrToNetadr((sockaddr *)asStack_30,pnVar1);
+  uVar2 = Xenon_GetPacketFromSocket
+                    (DAT_829959c0,*(undefined4 *)(param_2 + 8),*(undefined4 *)(param_2 + 0x10),
+                     auStack_30);
+  if (0 < (int)uVar2) {
+    *(int *)(param_2 + 0x14) = (int)uVar2;
+    SockadrToNetadr(auStack_30,uVar1);
   }
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 826527A0  NET_OpenIP  (xenon/xenon_net.cpp:788)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void NET_OpenIP(void)
 
 {
-  ulong uVar1;
-  int iVar2;
-  dvar_t *pdVar3;
-  dvar_t *pdVar4;
+  uint uVar2;
+  int iVar3;
+  undefined8 uVar1;
   char local_1c0 [16];
-  WSAData local_1b0;
+  WSADATA local_1b0;
   
   __savegprlr_29();
   do {
-    uVar1 = XNetGetTitleXnAddr(&g_ourXnaddr);
-  } while (uVar1 == 0);
-  if ((uVar1 & 1) != 0) {
-    Com_Error(ERR_FATAL,"\x15Unable to find an XNADDR.\n");
+    uVar2 = XNetGetTitleXnAddr(0xffffffff8425e870);
+  } while (uVar2 == 0);
+  if ((uVar2 & 1) != 0) {
+    Com_Error(0,0xffffffff8218fae8);
   }
-  iVar2 = XNetStartup((XNetStartupParams *)0x0);
-  if (iVar2 != 0) {
-    Com_Error(ERR_FATAL,"\x15XNetStartup failed.\n");
+  iVar3 = XNetStartup(0);
+  if (iVar3 != 0) {
+    Com_Error(0,0xffffffff8218fe70);
   }
-  iVar2 = WSAStartup(0x202,&local_1b0);
-  if (iVar2 != 0) {
-    Com_Error(ERR_FATAL,"\x15WSAStartup\tfailed,\terror %d.\n");
+  iVar3 = WSAStartup(0x202,&local_1b0);
+  if (iVar3 != 0) {
+    Com_Error(0,0xffffffff8218fe50,iVar3);
   }
   if (local_1b0.wVersion != 0x202) {
-    Com_Error(ERR_FATAL,"\x15Failed\tto get proper version of Winsock, got %d.%d.\n");
+    Com_Error(0,0xffffffff8218fe18,local_1b0.wVersion & 0xff,local_1b0.wVersion >> 8);
   }
-  pdVar3 = Dvar_RegisterString("net_ip","localhost",2,"Network IP address");
-  pdVar4 = Dvar_RegisterInt("net_port",1000,0,0xffff,2,"Network port");
-  ip_socket = NET_IPSocket((pdVar3->current).string,1000,0xfe);
-  if (ip_socket != 0) {
-    lsp_socket = NET_IPSocket((pdVar3->current).string,0x3f5,0x11);
-    broadcast_socket = NET_IPSocket((pdVar3->current).string,0x3e9,0x11);
-    if (broadcast_socket != 0) {
+  iVar3 = Dvar_RegisterString(0xffffffff8218fdfc,0xffffffff8202c774,2,0xffffffff8218fe04);
+  uVar1 = Dvar_RegisterInt(0xffffffff8218fdf0,1000,0,0xffff,2,0xffffffff8218fde0);
+  DAT_829959c4 = NET_IPSocket(*(undefined4 *)(iVar3 + 0xc),1000,0xfe);
+  if (DAT_829959c4 != 0) {
+    DAT_829959c0 = NET_IPSocket(*(undefined4 *)(iVar3 + 0xc),0x3f5,0x11);
+    DAT_829959c8 = NET_IPSocket(*(undefined4 *)(iVar3 + 0xc),0x3e9,0x11);
+    if (DAT_829959c8 != 0) {
       local_1c0[0] = '\0';
       local_1c0[1] = '\0';
       local_1c0[2] = '\0';
       local_1c0[3] = '\x01';
-      iVar2 = setsockopt(broadcast_socket,0xffff,0x20,local_1c0,4);
-      if (iVar2 != 0) {
-        WSAGetLastError();
-        Com_Error(ERR_FATAL,"\x15Failed to set socket to broadcast-capable, error %d\n");
+      iVar3 = setsockopt(DAT_829959c8,0xffff,0x20,local_1c0,4);
+      if (iVar3 != 0) {
+        iVar3 = WSAGetLastError();
+        Com_Error(0,0xffffffff8218fda8,iVar3);
       }
     }
-    Dvar_SetInt(pdVar4,1000);
+    Dvar_SetInt(uVar1,1000);
     __restgprlr_29();
     return;
   }
-  Com_Error(ERR_FATAL,"\x15WARNING: Couldn\'t allocate IP port\n");
+  Com_Error(0,0xffffffff8218fd80);
   __restgprlr_29();
   return;
 }
@@ -965,28 +834,33 @@ void NET_OpenIP(void)
 
 // 82652968  NET_Config  (xenon/xenon_net.cpp:880)
 
-void NET_Config(int param_1)
+void NET_Config(void)
 
 {
-  int iVar1;
+  ulonglong uVar1;
+  int iVar2;
+  int iVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 != networkingEnabled) {
-    networkingEnabled = iVar1;
-    if (iVar1 == 0) {
-      if ((ip_socket != 0) && (ip_socket != 0xffffffff)) {
-        closesocket(ip_socket);
-        ip_socket = 0;
-        xnetInitialized = 0;
+  uVar1 = __savegprlr_29();
+  iVar2 = (int)uVar1;
+  if (iVar2 != DAT_8425e89c) {
+    DAT_8425e89c = iVar2;
+    if (iVar2 == 0) {
+      if ((DAT_829959c4 != 0) && (DAT_829959c4 != 0xffffffff)) {
+        closesocket(DAT_829959c4);
+        DAT_829959c4 = 0;
+        DAT_8425e898 = 0;
       }
-      if ((broadcast_socket != 0) && (broadcast_socket != 0xffffffff)) {
-        closesocket(broadcast_socket);
-        broadcast_socket = 0;
+      uVar1 = (ulonglong)DAT_829959c8;
+      if ((uVar1 != 0) && (DAT_829959c8 != 0xffffffff)) {
+        iVar3 = closesocket(DAT_829959c8);
+        uVar1 = (ulonglong)iVar3;
+        DAT_829959c8 = 0;
       }
     }
-    if (iVar1 != 0) {
-      NET_OpenIP();
-      xnetInitialized = 1;
+    if (iVar2 != 0) {
+      NET_OpenIP(uVar1);
+      DAT_8425e898 = 1;
     }
   }
   __restgprlr_29();
@@ -996,62 +870,38 @@ void NET_Config(int param_1)
 
 // 82652A20  NET_Restart  (xenon/xenon_net.cpp:946)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void NET_Restart(void)
 
 {
-  NET_Config(networkingEnabled);
-  return;
-}
-
-
-// 82652A30  NET_Sleep  (xenon/xenon_net.cpp:953)
-
-void NET_Sleep(int param_1)
-
-{
-  int *in_r13;
-  
-  if ((param_1 != 0) && (*(int *)(*in_r13 + 0xe0) != 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xf5,0,
-                    "%s");
-  }
-  Sleep(param_1);
+  NET_Config(DAT_8425e89c);
   return;
 }
 
 
 // 82652A38  Sys_IsLANAddress  (xenon/xenon_net.cpp:968)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int Sys_IsLANAddress(netadr_t param_1)
+bool Sys_IsLANAddress(undefined8 param_1)
 
 {
-  byte bVar1;
-  undefined8 in_r3;
+  int iStack00000010;
   
-  param_1._8_4_ = SUB84((ulonglong)in_r3 >> 0x20,0);
-  if (param_1._8_4_ == 2) {
-    return 1;
+  iStack00000010 = (int)((ulonglong)param_1 >> 0x20);
+  if (iStack00000010 == 2) {
+    return true;
   }
-  if (param_1._8_4_ != 4) {
-    return 0;
+  if (iStack00000010 != 4) {
+    return false;
   }
-  bVar1 = (systemlink->current).color[0];
-  return (uint)bVar1 + (-(uint)(bVar1 == 0) - (bVar1 - 1));
+  return *(char *)(DAT_82aa1ae4 + 0xc) != '\0';
 }
 
 
 // 82652A80  Sys_ShowIP  (xenon/xenon_net.cpp:997)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_ShowIP(void)
 
 {
-  Com_Printf(0x10,"IP: %i.%i.%i.%i\n");
+  Com_Printf(0x10,0xffffffff8218fe88,DAT_8425e870,DAT_8425e871,DAT_8425e872,DAT_8425e873);
   return;
 }
 

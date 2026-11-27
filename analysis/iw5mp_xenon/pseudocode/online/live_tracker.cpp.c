@@ -2,313 +2,293 @@
 
 // 8293F570  `dynamic_initializer_for_'s_trackerTask''  (online/live_tracker.cpp:85)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__s_trackerTask__(void)
+int _dynamic_initializer_for__s_trackerTask__(void)
 
 {
-  trackerTask_s::trackerTask_s(&s_trackerTask);
-  atexit(_dynamic_atexit_destructor_for__s_trackerTask__);
-  return;
+  int iVar1;
+  
+  trackerTask_s__trackerTask_s(0xffffffff84585848);
+  iVar1 = atexit(_dynamic_atexit_destructor_for__s_trackerTask__);
+  return iVar1;
 }
 
 
 // 82714488  LiveTracker_GetColType  (online/live_tracker.cpp:89)
 
-/* WARNING: Enum "trackerColType_e": Some values do not have unique names */
-
-trackerColType_e LiveTracker_GetColType(trackerColumn_e param_1)
+int LiveTracker_GetColType(undefined8 param_1)
 
 {
-  char *pcVar1;
-  trackerColType_e tVar2;
-  StringTable *local_20 [4];
+  undefined8 uVar1;
+  char *_Str;
+  int iVar2;
+  int local_20 [4];
   
-  StringTable_GetAsset("mp/trackercolumns.csv",local_20);
-  if ((local_20[0] != (StringTable *)0x0) ||
-     (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_tracker.cpp",
-                      0x5d,0,"%s"), local_20[0] != (StringTable *)0x0)) {
-    pcVar1 = va("%d");
-    pcVar1 = StringTable_Lookup(local_20[0],0,pcVar1,2);
-    if ((pcVar1 != (char *)0x0) &&
-       (((*pcVar1 != '\0' && (tVar2 = atoi(pcVar1), -1 < (int)tVar2)) && ((int)tVar2 < 4)))) {
-      return tVar2;
+  StringTable_GetAsset(0xffffffff821b83ac,local_20);
+  if ((local_20[0] != 0) ||
+     (MyAssertHandler(0xffffffff821b8368,0x5d,0,0xffffffff82000f98,0xffffffff820362e8),
+     local_20[0] != 0)) {
+    uVar1 = va(0xffffffff82013b64,param_1);
+    _Str = (char *)StringTable_Lookup(local_20[0],0,uVar1,2);
+    if ((_Str != (char *)0x0) &&
+       (((*_Str != '\0' && (iVar2 = atoi(_Str), -1 < iVar2)) && (iVar2 < 4)))) {
+      return iVar2;
     }
   }
-  return TRACKER_COLTYPE_INVALID;
+  return -1;
 }
 
 
 // 82714550  LiveTracker_SetItem  (online/live_tracker.cpp:117)
 
-/* WARNING: Enum "trackerColType_e": Some values do not have unique names */
-
-int LiveTracker_SetItem(int param_1,trackerColumn_e param_2,ulong64 param_3,int param_4)
+void LiveTracker_SetItem(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
 
 {
   int iVar1;
   ulonglong uVar2;
   longlong lVar3;
+  ulonglong uVar4;
   int iVar5;
-  ulonglong uVar6;
-  trackerColumn_e tVar7;
-  trackerColType_e tVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_27(param_1);
-  if (0x95 < (uVar6 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_tracker.cpp",0x76,
-                    0,"col doesn\'t index TRACKER_MAX_COLS\n\t%i not in [0, %i)");
+  uVar2 = __savegprlr_27();
+  if (0x95 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821b8368,0x76,0,0xffffffff821b8474,param_2,0x96);
   }
   if (0x5f < (uVar2 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_tracker.cpp",0x77,
-                    0,"queuePos doesn\'t index TRACKER_QUEUE_SIZE\n\t%i not in [0, %i)");
+    MyAssertHandler(0xffffffff821b8368,0x77,0,0xffffffff821b8434,uVar2,0x60);
   }
-  tVar7 = (trackerColumn_e)uVar6;
-  if ((((-1 < (int)tVar7) && ((int)tVar7 < 0x96)) && (-1 < (int)uVar2)) && ((int)uVar2 < 0x60)) {
-    tVar4 = LiveTracker_GetColType(tVar7);
-    lVar3 = (longlong)(int)tVar4;
+  if ((((-1 < (int)param_2) && ((int)param_2 < 0x96)) && (-1 < (int)uVar2)) && ((int)uVar2 < 0x60))
+  {
+    lVar3 = LiveTracker_GetColType(param_2);
     if ((lVar3 + 1U & 0xffffffff) < 5) {
       if ((int)(lVar3 + 1U) == 0) goto LAB_827146f4;
+      iVar5 = (int)param_4;
       if ((lVar3 == 0) || (lVar3 == 1)) {
-        iVar5 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-        *(int *)((int)&s_trackerQueue.items[0].val + iVar5) = param_4;
-        *(undefined4 *)((int)&s_trackerQueue.items[0].type + iVar5) = 1;
+        iVar1 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+        *(int *)((int)&DAT_84584f50 + iVar1) = iVar5;
+        *(undefined4 *)((int)&DAT_84584f54 + iVar1) = 1;
       }
       else if (lVar3 == 2) {
         iVar1 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-        iVar5 = *(int *)((int)&s_trackerQueue.items[0].val + iVar1);
-        *(undefined4 *)((int)&s_trackerQueue.items[0].type + iVar1) = 2;
-        *(int *)((int)&s_trackerQueue.items[0].val + iVar1) = iVar5 + param_4;
+        *(undefined4 *)((int)&DAT_84584f54 + iVar1) = 2;
+        *(int *)((int)&DAT_84584f50 + iVar1) = *(int *)((int)&DAT_84584f50 + iVar1) + iVar5;
       }
       else {
         iVar1 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-        iVar5 = *(int *)((int)&s_trackerQueue.items[0].val + iVar1);
-        if (iVar5 < param_4) {
-          iVar5 = param_4;
+        uVar4 = (ulonglong)*(uint *)((int)&DAT_84584f50 + iVar1);
+        if ((int)*(uint *)((int)&DAT_84584f50 + iVar1) < iVar5) {
+          uVar4 = param_4;
         }
-        *(int *)((int)&s_trackerQueue.items[0].val + iVar1) = iVar5;
-        *(undefined4 *)((int)&s_trackerQueue.items[0].type + iVar1) = 3;
+        *(int *)((int)&DAT_84584f50 + iVar1) = (int)uVar4;
+        *(undefined4 *)((int)&DAT_84584f54 + iVar1) = 3;
       }
     }
     iVar5 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-    *(short *)((int)&s_trackerQueue.items[0].col + iVar5) = (short)uVar6;
-    *(ulong64 *)((int)&s_trackerQueue.items[0].ent + iVar5) = param_3;
-    if (s_trackerQueue.dirty == false) {
-      s_trackerQueue.lastUploadTime = Sys_Milliseconds();
+    *(short *)((int)&DAT_84584f40 + iVar5) = (short)param_2;
+    *(undefined8 *)((int)&DAT_84584f48 + iVar5) = param_3;
+    if (DAT_84585840 == '\0') {
+      DAT_84585844 = Sys_Milliseconds();
     }
-    s_trackerQueue.dirty = true;
-    Com_Printf(0x10,"Tracker: Added column %d, value %d for entity %llu\n");
-    iVar5 = __restgprlr_27(1);
-    return iVar5;
+    DAT_84585840 = 1;
+    Com_Printf(0x10,0xffffffff821b8400,param_2,param_4,param_3);
+    __restgprlr_27(1);
+    return;
   }
 LAB_827146f4:
-  Com_Printf(0x10,"Tracker: Could not add column %d, value %d for entity %llu\n");
-  iVar5 = __restgprlr_27(0);
-  return iVar5;
+  Com_Printf(0x10,0xffffffff821b83c4,param_2,param_4,param_3);
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 82714720  LiveTracker_GetColumnByName  (online/live_tracker.cpp:164)
 
-trackerColumn_e LiveTracker_GetColumnByName(char *param_1)
+uint LiveTracker_GetColumnByName(undefined8 param_1)
 
 {
-  char *pcVar1;
-  trackerColumn_e tVar2;
-  StringTable *local_20 [2];
+  char *_Str;
+  uint uVar1;
+  int local_20 [2];
   
-  StringTable_GetAsset("mp/trackercolumns.csv",local_20);
-  if ((((local_20[0] != (StringTable *)0x0) ||
-       (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_tracker.cpp",
-                        0xa8,0,"%s"), local_20[0] != (StringTable *)0x0)) &&
-      (pcVar1 = StringTable_Lookup(local_20[0],1,param_1,0), pcVar1 != (char *)0x0)) &&
-     (*pcVar1 != '\0')) {
-    tVar2 = atoi(pcVar1);
-    if (0x95 < tVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_tracker.cpp",
-                      0xb5,0,"col doesn\'t index TRACKER_MAX_COLS\n\t%i not in [0, %i)");
+  StringTable_GetAsset(0xffffffff821b83ac,local_20);
+  if ((((local_20[0] != 0) ||
+       (MyAssertHandler(0xffffffff821b8368,0xa8,0,0xffffffff82000f98,0xffffffff820362e8),
+       local_20[0] != 0)) &&
+      (_Str = (char *)StringTable_Lookup(local_20[0],1,param_1,0), _Str != (char *)0x0)) &&
+     (*_Str != '\0')) {
+    uVar1 = atoi(_Str);
+    if (0x95 < uVar1) {
+      MyAssertHandler(0xffffffff821b8368,0xb5,0,0xffffffff821b8474,uVar1,0x96);
     }
-    if ((-1 < (int)tVar2) && ((int)tVar2 < 0x96)) {
-      return tVar2;
+    if ((-1 < (int)uVar1) && ((int)uVar1 < 0x96)) {
+      return uVar1;
     }
   }
-  return TRACKER_INVALID_COLUMN;
+  return 0xffffffff;
 }
 
 
 // 82714810  LiveTracker_WriteByID  (online/live_tracker.cpp:194)
 
-/* WARNING: Enum "trackerColType_e": Some values do not have unique names */
-
-int LiveTracker_WriteByID(trackerColumn_e param_1,ulong64 param_2,int param_3)
+void LiveTracker_WriteByID(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-  trackerColumn_e tVar1;
-  int iVar2;
-  int iVar3;
-  trackerColType_e tVar4;
-  uint uVar5;
-  ulong64 *puVar6;
+  longlong lVar1;
+  longlong lVar2;
+  undefined8 uVar3;
+  int iVar4;
+  longlong *plVar5;
+  longlong lVar6;
   
-  tVar1 = __savegprlr_27(param_1);
+  lVar1 = __savegprlr_27();
   if (param_2 == 0) {
-    Com_PrintError(0x10,"Tracker: entity id is invalid.\n");
-    iVar2 = __restgprlr_27(0);
-    return iVar2;
+    Com_PrintError(0x10,0xffffffff821b84fc);
+    __restgprlr_27(0);
+    return;
   }
-  iVar2 = -1;
-  iVar3 = 0;
-  puVar6 = &s_trackerQueue.items[0].ent;
+  lVar6 = -1;
+  lVar2 = 0;
+  plVar5 = &DAT_84584f48;
   do {
-    if ((*puVar6 == param_2) && ((int)((trackerItem_s *)(puVar6 + -1))->col == tVar1)) {
-      iVar3 = LiveTracker_SetItem(iVar3,tVar1,param_2,param_3);
-      if (iVar3 != 0) goto LAB_827148ec;
+    if ((*plVar5 == param_2) && ((int)*(short *)(plVar5 + -1) == (int)lVar1)) {
+      uVar3 = LiveTracker_SetItem(lVar2,lVar1,param_2,param_3);
+      if ((int)uVar3 != 0) goto LAB_827148ec;
       break;
     }
-    if ((iVar2 == -1) && (*puVar6 == 0)) {
-      iVar2 = iVar3;
+    if (((int)lVar6 == -1) && (*plVar5 == 0)) {
+      lVar6 = lVar2;
     }
-    puVar6 = puVar6 + 3;
-    iVar3 = iVar3 + 1;
-  } while ((int)puVar6 < -0x7ba7a7b8);
-  if (iVar2 == -1) {
-    Com_PrintError(0x10,"Tracker: Queue full. Could not add entry col %d, val %d for entity %llu.\n"
-                  );
-    iVar2 = __restgprlr_27(0);
-    return iVar2;
+    plVar5 = plVar5 + 3;
+    lVar2 = lVar2 + 1;
+  } while ((int)plVar5 < -0x7ba7a7b8);
+  if ((int)lVar6 == -1) {
+    Com_PrintError(0x10,0xffffffff821b84b0,lVar1,param_3,param_2);
+    __restgprlr_27(0);
+    return;
   }
-  iVar3 = LiveTracker_SetItem(iVar2,tVar1,param_2,param_3);
-  if (iVar3 != 0) {
+  uVar3 = LiveTracker_SetItem(lVar6,lVar1,param_2);
+  if ((int)uVar3 != 0) {
 LAB_827148ec:
-    if ((int)tVar1 < 0x95) {
-      tVar4 = LiveTracker_GetColType(tVar1 + TRACKER_LEADERBOARD_MAX_WRITES);
-      if (tVar4 == TRACKER_COLTYPE_AUTOTIMESTAMP) {
-        uVar5 = LiveStorage_GetUTC();
-        iVar3 = LiveTracker_WriteByID(tVar1 + TRACKER_LEADERBOARD_MAX_WRITES,param_2,uVar5);
+    if ((int)lVar1 < 0x95) {
+      iVar4 = LiveTracker_GetColType(lVar1 + 1);
+      if (iVar4 == 0) {
+        uVar3 = LiveStorage_GetUTC();
+        uVar3 = LiveTracker_WriteByID(lVar1 + 1,param_2,uVar3);
       }
     }
   }
-  iVar2 = __restgprlr_27(iVar3);
-  return iVar2;
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
 // 82714950  LiveTracker_WriteByName  (online/live_tracker.cpp:249)
 
-int LiveTracker_WriteByName(char *param_1,ulong64 param_2,int param_3)
+void LiveTracker_WriteByName(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  char *pcVar1;
-  trackerColumn_e tVar2;
-  int iVar3;
-  StringTable *local_40 [16];
+  undefined8 uVar1;
+  char *_Str;
+  uint uVar2;
+  int local_40 [16];
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  StringTable_GetAsset("mp/trackercolumns.csv",local_40);
-  if (local_40[0] == (StringTable *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_tracker.cpp",0x100
-                    ,0,"%s");
-    if (local_40[0] == (StringTable *)0x0) goto LAB_82714a84;
+  uVar1 = __savegprlr_27();
+  StringTable_GetAsset(0xffffffff821b83ac,local_40);
+  if (local_40[0] == 0) {
+    MyAssertHandler(0xffffffff821b8368,0x100,0,0xffffffff82000f98,0xffffffff820362e8);
+    if (local_40[0] == 0) goto LAB_82714a84;
   }
-  pcVar1 = StringTable_Lookup(local_40[0],1,pcVar1,0);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_tracker.cpp",0x109
-                    ,0,"%s");
+  _Str = (char *)StringTable_Lookup(local_40[0],1,uVar1,0);
+  if (_Str == (char *)0x0) {
+    MyAssertHandler(0xffffffff821b8368,0x109,0,0xffffffff82000f98,0xffffffff821b8528);
   }
-  if (*pcVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_tracker.cpp",0x10a
-                    ,0,"%s");
+  if (*_Str == '\0') {
+    MyAssertHandler(0xffffffff821b8368,0x10a,0,0xffffffff82000f98,0xffffffff821b851c);
   }
-  if (*pcVar1 != '\0') {
-    tVar2 = atoi(pcVar1);
-    if (0x95 < tVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_tracker.cpp",
-                      0x110,0,"col doesn\'t index TRACKER_MAX_COLS\n\t%i not in [0, %i)");
+  if (*_Str != '\0') {
+    uVar2 = atoi(_Str);
+    if (0x95 < uVar2) {
+      MyAssertHandler(0xffffffff821b8368,0x110,0,0xffffffff821b8474,uVar2,0x96);
     }
-    if ((-1 < (int)tVar2) && ((int)tVar2 < 0x96)) {
-      iVar3 = LiveTracker_WriteByID(tVar2,param_2,param_3);
-      iVar3 = __restgprlr_27(iVar3);
-      return iVar3;
+    if ((-1 < (int)uVar2) && ((int)uVar2 < 0x96)) {
+      LiveTracker_WriteByID(uVar2,param_2,param_3);
+      __restgprlr_27();
+      return;
     }
   }
 LAB_82714a84:
-  iVar3 = __restgprlr_27(0);
-  return iVar3;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 82714A90  LiveTracker_WriteForAllLocalUsers  (online/live_tracker.cpp:285)
 
-/* WARNING: Enum "trackerColType_e": Some values do not have unique names */
-
-int LiveTracker_WriteForAllLocalUsers(trackerColumn_e param_1,int param_2)
+void LiveTracker_WriteForAllLocalUsers(undefined8 param_1,undefined8 param_2)
 
 {
   bool bVar1;
-  trackerColumn_e tVar3;
-  bool bVar8;
-  ulong64 uVar2;
-  int iVar4;
-  trackerColType_e tVar5;
-  uint uVar6;
+  longlong lVar2;
+  char cVar8;
+  longlong lVar3;
+  longlong lVar4;
+  int iVar6;
   int iVar7;
-  ulong64 *puVar9;
-  int iVar10;
+  undefined8 uVar5;
+  longlong *plVar9;
+  longlong lVar10;
+  longlong lVar11;
   
-  tVar3 = __savegprlr_22(param_1);
+  lVar2 = __savegprlr_22();
   bVar1 = false;
-  iVar7 = 0;
+  lVar10 = 0;
   do {
-    bVar8 = Live_IsUserSignedInToDemonware(iVar7);
-    if (bVar8) {
-      uVar2 = Live_GetXuid(iVar7);
-      if (uVar2 == 0) {
-        Com_PrintError(0x10,"Tracker: entity id is invalid.\n");
+    cVar8 = Live_IsUserSignedInToDemonware(lVar10);
+    if (cVar8 != '\0') {
+      lVar3 = Live_GetXuid(lVar10);
+      if (lVar3 == 0) {
+        Com_PrintError(0x10,0xffffffff821b84fc);
       }
       else {
-        iVar10 = -1;
-        iVar4 = 0;
-        puVar9 = &s_trackerQueue.items[0].ent;
+        lVar11 = -1;
+        lVar4 = 0;
+        plVar9 = &DAT_84584f48;
         do {
-          if ((*puVar9 == uVar2) && ((int)((trackerItem_s *)(puVar9 + -1))->col == tVar3)) {
-            iVar4 = LiveTracker_SetItem(iVar4,tVar3,uVar2,param_2);
-            if (iVar4 != 0) goto LAB_82714b94;
+          if ((*plVar9 == lVar3) && ((int)*(short *)(plVar9 + -1) == (int)lVar2)) {
+            iVar6 = LiveTracker_SetItem(lVar4,lVar2,lVar3,param_2);
+            if (iVar6 != 0) goto LAB_82714b94;
             break;
           }
-          if ((iVar10 == -1) && (*puVar9 == 0)) {
-            iVar10 = iVar4;
+          if (((int)lVar11 == -1) && (*plVar9 == 0)) {
+            lVar11 = lVar4;
           }
-          puVar9 = puVar9 + 3;
-          iVar4 = iVar4 + 1;
-        } while ((int)puVar9 < -0x7ba7a7b8);
-        if (iVar10 == -1) {
-          Com_PrintError(0x10,
-                         "Tracker: Queue full. Could not add entry col %d, val %d for entity %llu.\n"
-                        );
+          plVar9 = plVar9 + 3;
+          lVar4 = lVar4 + 1;
+        } while ((int)plVar9 < -0x7ba7a7b8);
+        if ((int)lVar11 == -1) {
+          Com_PrintError(0x10,0xffffffff821b84b0,lVar2,param_2,lVar3);
         }
         else {
-          iVar4 = LiveTracker_SetItem(iVar10,tVar3,uVar2,param_2);
-          if (iVar4 != 0) {
+          iVar6 = LiveTracker_SetItem(lVar11,lVar2,lVar3);
+          if (iVar6 != 0) {
 LAB_82714b94:
-            if ((int)tVar3 < 0x95) {
-              tVar5 = LiveTracker_GetColType(tVar3 + TRACKER_LEADERBOARD_MAX_WRITES);
-              if (tVar5 == TRACKER_COLTYPE_AUTOTIMESTAMP) {
-                uVar6 = LiveStorage_GetUTC();
-                iVar4 = LiveTracker_WriteByID(tVar3 + TRACKER_LEADERBOARD_MAX_WRITES,uVar2,uVar6);
+            if ((int)lVar2 < 0x95) {
+              iVar7 = LiveTracker_GetColType(lVar2 + 1);
+              if (iVar7 == 0) {
+                uVar5 = LiveStorage_GetUTC();
+                iVar6 = LiveTracker_WriteByID(lVar2 + 1,lVar3,uVar5);
               }
             }
-            if (iVar4 != 0) goto LAB_82714bd4;
+            if (iVar6 != 0) goto LAB_82714bd4;
           }
         }
       }
       bVar1 = true;
     }
 LAB_82714bd4:
-    iVar7 = iVar7 + 1;
-    if (3 < iVar7) {
-      iVar7 = __restgprlr_22(!bVar1);
-      return iVar7;
+    lVar10 = lVar10 + 1;
+    if (3 < (int)lVar10) {
+      __restgprlr_22(!bVar1);
+      return;
     }
   } while( true );
 }
@@ -316,149 +296,137 @@ LAB_82714bd4:
 
 // 82714C08  LiveTracker_WriteForUserAndHost  (online/live_tracker.cpp:306)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int LiveTracker_WriteForUserAndHost
-              (int param_1,trackerColumn_e param_2,trackerColumn_e param_3,int param_4)
+void LiveTracker_WriteForUserAndHost
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
   bool bVar1;
+  undefined8 uVar2;
+  char cVar4;
   int iVar3;
-  bool bVar7;
-  ulong64 uVar2;
-  PartyData *pPVar4;
-  uint uVar5;
-  PartyMember *pPVar6;
   
-  iVar3 = __savegprlr_27(param_1);
+  uVar2 = __savegprlr_27();
   bVar1 = false;
-  bVar7 = Live_IsSignedIn(iVar3);
-  if (bVar7) {
-    uVar2 = Live_GetXuid(iVar3);
+  cVar4 = Live_IsSignedIn();
+  if (cVar4 != '\0') {
+    uVar2 = Live_GetXuid(uVar2);
     iVar3 = LiveTracker_WriteByID(param_2,uVar2,param_4);
     if (iVar3 == 0) {
       bVar1 = true;
     }
   }
-  pPVar4 = Lobby_GetPartyData();
-  uVar5 = Party_HostNum(pPVar4);
-  pPVar6 = Lobby_GetMember(uVar5);
-  if ((pPVar6->player != 0) &&
-     (iVar3 = LiveTracker_WriteByID(param_3,pPVar6->player,param_4), iVar3 == 0)) {
-    iVar3 = __restgprlr_27(0);
-    return iVar3;
+  Lobby_GetPartyData();
+  Party_HostNum();
+  iVar3 = Lobby_GetMember();
+  if ((*(longlong *)(iVar3 + 0x128) != 0) &&
+     (iVar3 = LiveTracker_WriteByID(param_3,*(longlong *)(iVar3 + 0x128),param_4), iVar3 == 0)) {
+    __restgprlr_27(0);
+    return;
   }
-  iVar3 = __restgprlr_27(!bVar1);
-  return iVar3;
+  __restgprlr_27(!bVar1);
+  return;
 }
 
 
 // 82714CB0  LiveTracker_Process  (online/live_tracker.cpp:344)
 
-/* WARNING: Enum "trackerColType_e": Some values do not have unique names */
-
-void LiveTracker_Process(int param_1)
+void LiveTracker_Process(void)
 
 {
   short sVar1;
-  int iVar2;
-  trackerColType_e tVar3;
+  undefined4 uVar2;
+  uint uVar3;
   int iVar4;
-  undefined4 uVar5;
-  undefined4 uVar6;
+  bool bVar5;
+  undefined8 uVar6;
   int iVar7;
-  DWOnlineStatus DVar8;
+  char cVar8;
   int iVar9;
-  bool bVar10;
-  int iVar11;
-  int *piVar12;
-  trackerQueue_s *ptVar13;
-  longlong lVar14;
+  undefined8 uVar10;
+  undefined4 *puVar11;
+  short *psVar12;
+  longlong lVar13;
   
-  iVar7 = __savegprlr_20(param_1);
-  DVar8 = dwGetLogOnStatus(iVar7);
-  if (DVar8 == DW_LIVE_CONNECTED) {
-    ptVar13 = &s_trackerQueue;
-    if (s_trackerQueue.dirty != false) {
-      iVar9 = Sys_Milliseconds();
-      if (s_trackerQueue.lastUploadTime + 20000 <= iVar9) {
-        bVar10 = LB_UploadTrackersToLeaderboardInProgress();
-        if (!bVar10) {
-          iVar9 = 0;
-          bVar10 = false;
-          s_trackerTask.count = 0;
+  uVar6 = __savegprlr_20();
+  iVar7 = dwGetLogOnStatus();
+  if (iVar7 == 2) {
+    psVar12 = &DAT_84584f40;
+    if (((DAT_84585840 != '\0') && (iVar7 = Sys_Milliseconds(), DAT_84585844 + 20000 <= iVar7)) &&
+       (cVar8 = LB_UploadTrackersToLeaderboardInProgress(), cVar8 == '\0')) {
+      iVar7 = 0;
+      bVar5 = false;
+      DAT_845866e8 = 0;
+      do {
+        if (*(longlong *)(psVar12 + 4) != 0) {
+          lVar13 = 10;
+          puVar11 = (undefined4 *)(iVar7 * 0x98 + -0x7ba7a74c);
           do {
-            if (ptVar13->items[0].ent != 0) {
-              lVar14 = 10;
-              piVar12 = &s_trackerTask.rows[iVar9]._padding_;
-              do {
-                piVar12 = piVar12 + 1;
-                *piVar12 = 0x7fffffff;
-                lVar14 = lVar14 + -1;
-              } while (lVar14 != 0);
-              sVar1 = ptVar13->items[0].col;
-              uVar5 = *(undefined4 *)&ptVar13->items[0].ent;
-              uVar6 = *(undefined4 *)((int)&ptVar13->items[0].ent + 4);
-              iVar2 = ptVar13->items[0].val;
-              tVar3 = ptVar13->items[0].type;
-              iVar11 = (int)sVar1;
-              s_trackerTask.rows[iVar9]._padding_ = 0;
-              s_trackerTask.rows[iVar9]._padding_ = 1;
-              s_trackerTask.rows[iVar9]._padding_ = uVar5;
-              s_trackerTask.rows[iVar9]._padding_ = uVar6;
-              iVar4 = iVar11 / 10 + (iVar11 >> 0x1f);
-              s_trackerTask.rows[iVar9]._padding_ = iVar11 / 10 + 6000;
-              *(int *)((int)&s_trackerTask +
-                      ((int)sVar1 + ((iVar4 - (iVar4 >> 0x1f)) * 5 & 0x7fffffffU) * -2 + 0x1c) * 4 +
-                      iVar9 * 0x98) = iVar2;
-              if (TRACKER_COLTYPE_END < tVar3) {
-                if (alwaysfails == 0) {
-                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_tracker.cpp"
-                                  ,0x197,0,"Adding to tracker failed. No type specified.");
-                  __restgprlr_20();
-                  return;
-                }
-                goto LAB_82714e9c;
-              }
-              if ((tVar3 == TRACKER_COLTYPE_AUTOTIMESTAMP) || (tVar3 == TRACKER_COLTYPE_REPLACE)) {
-                s_trackerTask.rows[iVar9]._padding_ = 0;
-              }
-              else if (tVar3 == TRACKER_COLTYPE_ADD) {
-                s_trackerTask.rows[iVar9]._padding_ = 1;
-              }
-              else {
-                s_trackerTask.rows[iVar9]._padding_ = 2;
-              }
-              s_trackerTask.statsInfo[s_trackerTask.count] =
-                   (bdStatsInfo *)(s_trackerTask.rows + s_trackerTask.count);
-              Com_Printf(0x10,"Tracker: Uploading col %d, val %d for ent %llu\n");
-              ptVar13->items[0].col = -1;
-              iVar9 = s_trackerTask.count + 1;
-              ptVar13->items[0].ent = 0;
-              ptVar13->items[0].val = 0;
-              ptVar13->items[0].type = TRACKER_COLTYPE_INVALID;
-              s_trackerTask.count = iVar9;
-              if (iVar9 == 0x18) {
-                Com_Printf(0x10,
-                           "Tracker: Upload batch limit reached. Will continue in 20 seconds.\n");
-                bVar10 = true;
-                iVar9 = s_trackerTask.count;
-                break;
-              }
+            puVar11 = puVar11 + 1;
+            *puVar11 = 0x7fffffff;
+            lVar13 = lVar13 + -1;
+          } while (lVar13 != 0);
+          sVar1 = *psVar12;
+          uVar10 = *(undefined8 *)(psVar12 + 4);
+          uVar2 = *(undefined4 *)(psVar12 + 8);
+          uVar3 = *(uint *)(psVar12 + 10);
+          iVar9 = (int)sVar1;
+          (&DAT_84585860)[iVar7 * 0x13] = 1;
+          (&DAT_84585850)[iVar7 * 0x13] = uVar10;
+          iVar4 = iVar9 / 10 + (iVar9 >> 0x1f);
+          (&DAT_8458584c)[iVar7 * 0x26] = iVar9 / 10 + 6000;
+          *(undefined4 *)
+           (&DAT_84585848 +
+           ((int)sVar1 + ((iVar4 - (iVar4 >> 0x1f)) * 5 & 0x7fffffffU) * -2 + 0x1c) * 4 +
+           iVar7 * 0x98) = uVar2;
+          if (3 < uVar3) {
+            if (DAT_84013128 == 0) {
+              MyAssertHandler(0xffffffff821b8368,0x197,0,0xffffffff821b8534);
+              __restgprlr_20();
+              return;
             }
-            ptVar13 = (trackerQueue_s *)(ptVar13->items + 1);
-          } while ((int)ptVar13 < -0x7ba7a7c0);
-          if (0 < iVar9) {
-            LB_UploadTrackersToLeaderboard(iVar7,s_trackerTask.statsInfo,iVar9);
+            goto LAB_82714e9c;
           }
-          if (!bVar10) {
-            Com_Printf(0x10,"Tracker: Queue uploaded successfully.\n");
-            s_trackerQueue.dirty = false;
+          if ((uVar3 == 0) || (uVar3 == 1)) {
+            (&DAT_84585858)[iVar7 * 0x26] = 0;
           }
-          s_trackerQueue.lastUploadTime = Sys_Milliseconds();
+          else if (uVar3 == 2) {
+            (&DAT_84585858)[iVar7 * 0x26] = 1;
+          }
+          else {
+            (&DAT_84585858)[iVar7 * 0x26] = 2;
+          }
+          sVar1 = *psVar12;
+          uVar2 = *(undefined4 *)(psVar12 + 8);
+          (&DAT_84586688)[DAT_845866e8] = &DAT_84585848 + DAT_845866e8 * 0x98;
+          Com_Printf(0x10,0xffffffff821b85d4,sVar1,uVar2);
+          *psVar12 = -1;
+          DAT_845866e8 = DAT_845866e8 + 1;
+          psVar12[4] = 0;
+          psVar12[5] = 0;
+          psVar12[6] = 0;
+          psVar12[7] = 0;
+          psVar12[8] = 0;
+          psVar12[9] = 0;
+          psVar12[10] = -1;
+          psVar12[0xb] = -1;
+          iVar7 = DAT_845866e8;
+          if (DAT_845866e8 == 0x18) {
+            Com_Printf(0x10,0xffffffff821b8568);
+            bVar5 = true;
+            iVar7 = DAT_845866e8;
+            break;
+          }
         }
+        psVar12 = psVar12 + 0xc;
+      } while ((int)psVar12 < -0x7ba7a7c0);
+      if (0 < iVar7) {
+        LB_UploadTrackersToLeaderboard(uVar6,0xffffffff84586688);
       }
+      if (!bVar5) {
+        Com_Printf(0x10,0xffffffff821b85ac);
+        DAT_84585840 = '\0';
+      }
+      DAT_84585844 = Sys_Milliseconds();
     }
   }
 LAB_82714e9c:
@@ -469,42 +437,41 @@ LAB_82714e9c:
 
 // 82714EF8  LiveTracker_UpdateCmd  (online/live_tracker.cpp:449)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void LiveTracker_UpdateCmd(void)
 
 {
-  int iVar2;
-  char *pcVar3;
   int iVar4;
-  ulong64 uVar1;
+  char *pcVar5;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  longlong lVar3;
   
-  iVar2 = Cmd_Argc();
-  if ((iVar2 < 3) || (iVar2 = Cmd_Argc(), 4 < iVar2)) {
-    Com_Printf(0x10,"Usage: trackerAdd [entityID (optional)] <columnName> <value>\n");
+  iVar4 = Cmd_Argc();
+  if ((iVar4 < 3) || (iVar4 = Cmd_Argc(), 4 < iVar4)) {
+    Com_Printf(0x10,0xffffffff821b8604);
   }
   else {
-    iVar2 = Cmd_Argc();
-    if (iVar2 == 3) {
-      pcVar3 = Cmd_Argv(2);
-      iVar2 = atoi(pcVar3);
-      iVar4 = Cmd_LocalControllerIndex();
-      uVar1 = Live_GetXuid(iVar4);
-      pcVar3 = Cmd_Argv(1);
-      iVar2 = LiveTracker_WriteByName(pcVar3,uVar1,iVar2);
-      if (iVar2 == 0) {
-        Com_PrintError(0x10,"Tracker: Write failed.\n");
+    iVar4 = Cmd_Argc();
+    if (iVar4 == 3) {
+      pcVar5 = (char *)Cmd_Argv(2);
+      iVar4 = atoi(pcVar5);
+      Cmd_LocalControllerIndex();
+      uVar1 = Live_GetXuid();
+      uVar2 = Cmd_Argv(1);
+      iVar4 = LiveTracker_WriteByName(uVar2,uVar1,iVar4);
+      if (iVar4 == 0) {
+        Com_PrintError(0x10,0xffffffff821b8644);
       }
     }
     else {
-      pcVar3 = Cmd_Argv(3);
-      iVar2 = atoi(pcVar3);
-      pcVar3 = Cmd_Argv(1);
-      uVar1 = I_atoi64(pcVar3);
-      pcVar3 = Cmd_Argv(2);
-      iVar2 = LiveTracker_WriteByName(pcVar3,uVar1,iVar2);
-      if (iVar2 == 0) {
-        Com_PrintError(0x10,"Tracker: Write failed.\n");
+      pcVar5 = (char *)Cmd_Argv(3);
+      iVar4 = atoi(pcVar5);
+      pcVar5 = (char *)Cmd_Argv(1);
+      lVar3 = I_atoi64(pcVar5);
+      uVar1 = Cmd_Argv(2);
+      iVar4 = LiveTracker_WriteByName(uVar1,lVar3,iVar4);
+      if (iVar4 == 0) {
+        Com_PrintError(0x10,0xffffffff821b8644);
       }
     }
   }
@@ -514,104 +481,93 @@ void LiveTracker_UpdateCmd(void)
 
 // 82714FF8  LiveTracker_AddStressTestCmd  (online/live_tracker.cpp:475)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "trackerColType_e": Some values do not have unique names */
-
 void LiveTracker_AddStressTestCmd(void)
 
 {
-  trackerColType_e tVar2;
-  int iVar3;
-  ulong64 uVar1;
-  trackerColumn_e tVar4;
+  int iVar2;
+  undefined8 uVar1;
+  longlong lVar3;
   
-  tVar4 = TRACKER_LEADERBOARD_CACHE_READ_FAILURE;
+  lVar3 = 0;
   do {
-    tVar2 = LiveTracker_GetColType(tVar4);
-    if (tVar2 != TRACKER_COLTYPE_AUTOTIMESTAMP) {
-      iVar3 = Cmd_LocalControllerIndex();
-      uVar1 = Live_GetXuid(iVar3);
-      LiveTracker_WriteByID(tVar4,uVar1,tVar4);
+    iVar2 = LiveTracker_GetColType(lVar3);
+    if (iVar2 != 0) {
+      Cmd_LocalControllerIndex();
+      uVar1 = Live_GetXuid();
+      LiveTracker_WriteByID(lVar3,uVar1,lVar3);
     }
-    tVar4 = tVar4 + TRACKER_LEADERBOARD_MAX_WRITES;
-  } while ((int)tVar4 < 0xe);
+    lVar3 = lVar3 + 1;
+  } while ((int)lVar3 < 0xe);
   return;
 }
 
 
 // 82715058  LiveTracker_Init  (online/live_tracker.cpp:490)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "trackerColType_e": Some values do not have unique names */
-
 void LiveTracker_Init(void)
 
 {
-  OnlineConnectionDialogState *pOVar1;
+  undefined8 in_r6;
+  undefined4 *puVar1;
   longlong lVar2;
   
-  pOVar1 = &g_waitForSocialConfigDialogState;
+  puVar1 = &DAT_84584f3c;
   lVar2 = 0x60;
-  s_trackerQueue.dirty = false;
-  s_trackerQueue.lastUploadTime = 0;
+  DAT_84585840 = 0;
+  DAT_84585844 = 0;
   do {
-    *(undefined2 *)(pOVar1 + 1) = 0xffff;
-    pOVar1[3] = OCDS_NONE;
-    pOVar1[4] = OCDS_NONE;
-    pOVar1[5] = OCDS_NONE;
-    pOVar1 = pOVar1 + 6;
-    *pOVar1 = ~OCDS_NONE;
+    *(undefined2 *)(puVar1 + 1) = 0xffff;
+    *(undefined8 *)(puVar1 + 3) = 0;
+    puVar1[5] = 0;
+    puVar1 = puVar1 + 6;
+    *puVar1 = 0xffffffff;
     lVar2 = lVar2 + -1;
   } while (lVar2 != 0);
-  Cmd_AddCommandInternal("trackerUpdate",LiveTracker_UpdateCmd,&LiveTracker_UpdateCmd_VAR);
-  Cmd_AddCommandInternal
-            ("trackerAddStressTest",LiveTracker_AddStressTestCmd,&LiveTracker_AddStressTestCmd_VAR);
+  Cmd_AddCommandInternal(0xffffffff821b8674,0xffffffff82714ef8,0xffffffff84586704,in_r6,0);
+  Cmd_AddCommandInternal(0xffffffff821b865c,0xffffffff82714ff8,0xffffffff845866f0);
   return;
 }
 
 
-// 827150E8  trackerTask_s  (line unknown)
+// 827150E8  trackerTask_s::trackerTask_s  (line unknown)
 
-trackerTask_s * __thiscall trackerTask_s::trackerTask_s(trackerTask_s *this)
+void trackerTask_s__trackerTask_s(void)
 
 {
-  bdStatsInfo *pbVar1;
-  trackerTask_s *ptVar2;
-  longlong lVar3;
-  bdStatsInfo *this_00;
+  undefined4 *puVar1;
+  longlong lVar2;
+  undefined4 *puVar3;
   
-  pbVar1 = (bdStatsInfo *)__savegprlr_28(this);
-  lVar3 = 0x17;
-  this_00 = pbVar1;
+  puVar1 = (undefined4 *)__savegprlr_28();
+  lVar2 = 0x17;
+  puVar3 = puVar1;
   do {
-    bdStatsInfo::bdStatsInfo(this_00);
-    this_00->_padding_ = (int)&LeaderBoardRow<10>::_vftable_;
-    memset();
-    lVar3 = lVar3 + -1;
-    this_00 = (bdStatsInfo *)this_00[1].m_entityName;
-  } while (-1 < lVar3);
-  ptVar2 = (trackerTask_s *)__restgprlr_28(pbVar1);
-  return ptVar2;
+    bdStatsInfo__bdStatsInfo(puVar3);
+    *puVar3 = &PTR_LeaderBoardRow<10>___scalar_deleting_destructor__8203b6f4;
+    memset(puVar3 + 0x1c,0,0x28);
+    lVar2 = lVar2 + -1;
+    puVar3 = puVar3 + 0x26;
+  } while (-1 < lVar2);
+  __restgprlr_28(puVar1);
+  return;
 }
 
 
 // 82941118  `dynamic_atexit_destructor_for_'s_trackerTask''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__s_trackerTask__(void)
 
 {
   longlong lVar1;
-  bdStatsInfo *this;
+  undefined4 *puVar2;
   
   __savegprlr_29();
   lVar1 = 0x17;
-  this = (bdStatsInfo *)s_trackerTask.statsInfo;
+  puVar2 = &DAT_84586688;
   do {
-    this = (bdStatsInfo *)(this[-2].m_entityName + 0x20);
-    this->_padding_ = (int)&LeaderBoardRow<10>::_vftable_;
-    bdStatsInfo::~bdStatsInfo(this);
+    puVar2 = puVar2 + -0x26;
+    *puVar2 = &PTR_LeaderBoardRow<10>___scalar_deleting_destructor__8203b6f4;
+    bdStatsInfo___bdStatsInfo(puVar2);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
   __restgprlr_29();

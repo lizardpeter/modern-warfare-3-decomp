@@ -2,27 +2,26 @@
 
 // 828C8350  NellyInitVocalFry  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/decvcfry.c:195)
 
-ushort NellyInitVocalFry(void **param_1)
+void NellyInitVocalFry(void)
 
 {
-  undefined4 *puVar2;
-  undefined8 uVar1;
   undefined4 *puVar3;
-  void *pvVar4;
-  ushort uVar5;
+  undefined8 uVar1;
+  undefined4 *puVar4;
+  ulonglong uVar2;
   
-  puVar2 = (undefined4 *)__savegprlr_29(param_1);
-  if (puVar2 != (undefined4 *)0x0) {
-    *puVar2 = 0;
-    puVar3 = (*callocfunc)(1,0xc);
-    if (puVar3 != (undefined4 *)0x0) {
-      *puVar2 = puVar3;
-      pvVar4 = (*callocfunc)(0xd,4);
-      puVar3[2] = pvVar4;
-      if (pvVar4 != (void *)0x0) {
-        puVar3[1] = 0;
-        *puVar3 = 0x447a0000;
-        (*memsetfunc)(pvVar4,0,0x34);
+  puVar3 = (undefined4 *)__savegprlr_29();
+  if (puVar3 != (undefined4 *)0x0) {
+    *puVar3 = 0;
+    puVar4 = (undefined4 *)(*DAT_848958c0)(1,0xc);
+    if (puVar4 != (undefined4 *)0x0) {
+      *puVar3 = puVar4;
+      uVar2 = (*DAT_848958c0)(0xd,4);
+      puVar4[2] = (int)uVar2;
+      if ((uVar2 & 0xffffffff) != 0) {
+        puVar4[1] = 0;
+        *puVar4 = 0x447a0000;
+        (*DAT_848958c8)(uVar2,0,0x34);
         uVar1 = 0;
         goto LAB_828c83f0;
       }
@@ -30,25 +29,25 @@ ushort NellyInitVocalFry(void **param_1)
   }
   uVar1 = 1;
 LAB_828c83f0:
-  uVar5 = __restgprlr_29(uVar1);
-  return uVar5;
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 828C83F8  NellyFreeVocalFry  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/decvcfry.c:229)
 
-ushort NellyFreeVocalFry(void **param_1)
+undefined8 NellyFreeVocalFry(int *param_1)
 
 {
-  void *pvVar1;
+  int iVar1;
   
-  pvVar1 = *param_1;
-  if (pvVar1 != (void *)0x0) {
-    if (*(void **)((int)pvVar1 + 8) != (void *)0x0) {
-      (*freefunc)(*(void **)((int)pvVar1 + 8));
-      *(undefined4 *)((int)pvVar1 + 8) = 0;
+  iVar1 = *param_1;
+  if (iVar1 != 0) {
+    if (*(int *)(iVar1 + 8) != 0) {
+      (*DAT_848958c4)();
+      *(undefined4 *)(iVar1 + 8) = 0;
     }
-    (*freefunc)(pvVar1);
+    (*DAT_848958c4)(iVar1);
   }
   return 0;
 }

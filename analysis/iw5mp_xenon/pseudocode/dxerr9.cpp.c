@@ -2,352 +2,359 @@
 
 // 8289DDD0  DXGetErrorDescription9A  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3dx/dxerr9/dxerr9.cpp:8160)
 
-char * DXGetErrorDescription9A(int param_1)
+undefined8 DXGetErrorDescription9A(int param_1)
 
 {
   if (param_1 < -0x7789f798) {
     if (param_1 == -0x7789f799) {
-      return "More data";
+      return 0xffffffff8220134c;
     }
     if (param_1 < -0x7789fca5) {
       if (param_1 == -0x7789fca6) {
-        return "Resource not found";
+        return 0xffffffff822015c0;
       }
       if (param_1 < -0x7ff8fff9) {
         if (param_1 == -0x7ff8fffa) {
-          return "Invalid handle";
+          return 0xffffffff82201904;
         }
         if (param_1 < -0x7ffbfeef) {
           if (param_1 == -0x7ffbfef0) {
-            return "This object does not support aggregation";
+            return 0xffffffff822017e4;
           }
           if (param_1 == -0x7ffffff6) {
-            return "The data necessary to complete this operation is not yet available.";
+            return 0xffffffff82201878;
           }
           if (param_1 == -0x7fffbfff) {
-            return "The function called is not supported at this time";
+            return 0xffffffff822019a4;
           }
           if (param_1 == -0x7fffbffe) {
-            return "The requested COM interface is not available";
+            return 0xffffffff82201924;
           }
           if (param_1 == -0x7fffbffd) {
-            return "Invalid pointer";
+            return 0xffffffff82201914;
           }
           if (param_1 == -0x7fffbffc) {
-            return "Operation aborted";
+            return 0xffffffff822018f0;
           }
           if (param_1 == -0x7fffbffb) {
-            return "An undetermined error occurred";
+            return 0xffffffff822018d0;
           }
           if (param_1 == -0x7fff0001) {
-            return "Catastrophic failure";
+            return 0xffffffff822019d8;
           }
         }
         else {
           if (param_1 == -0x7ffbfeac) {
-            return "Class not registered";
+            return 0xffffffff8220185c;
           }
           if (param_1 == -0x7ffbfe10) {
-            return "CoInitialize has not been called.";
+            return 0xffffffff82201838;
           }
           if (param_1 == -0x7ffbfe0f) {
-            return "CoInitialize has already been called.";
+            return 0xffffffff82201810;
           }
-          if (param_1 == -0x7ff8fffe) goto switchD_8289e3fc_caseD_2;
-          if (param_1 == -0x7ff8fffd) goto switchD_8289e3fc_caseD_3;
-          if (param_1 == -0x7ff8fffc) goto switchD_8289e3fc_caseD_4;
+          if (param_1 == -0x7ff8fffe) {
+            return 0xffffffff822017b8;
+          }
+          if (param_1 == -0x7ff8fffd) {
+            return 0xffffffff8220178c;
+          }
+          if (param_1 == -0x7ff8fffc) {
+            return 0xffffffff82201768;
+          }
           if (param_1 == -0x7ff8fffb) {
-            return "Access is denied";
+            return 0xffffffff822018bc;
           }
         }
       }
       else if (param_1 < -0x7789fcad) {
         if (param_1 == -0x7789fcae) {
-          return "Bad object";
+          return 0xffffffff82201638;
         }
-        if (param_1 == -0x7ff8fff8) goto switchD_8289e3fc_caseD_8;
-        if (param_1 == -0x7ff8fff7) goto switchD_8289e3fc_caseD_9;
-        if (param_1 == -0x7ff8fff6) goto switchD_8289e3fc_caseD_a;
-        if (param_1 == -0x7ff8fff5) goto switchD_8289e3fc_caseD_b;
+        if (param_1 == -0x7ff8fff8) {
+          return 0xffffffff82201700;
+        }
+        if (param_1 == -0x7ff8fff7) {
+          return 0xffffffff822016d0;
+        }
+        if (param_1 == -0x7ff8fff6) {
+          return 0xffffffff822016b0;
+        }
+        if (param_1 == -0x7ff8fff5) {
+          return 0xffffffff82201670;
+        }
         if (param_1 == -0x7ff8fff2) {
-          return "Ran out of memory";
+          return 0xffffffff82201990;
         }
         if (param_1 == -0x7ff8ffa9) {
-          return "An invalid parameter was passed to the returning function";
+          return 0xffffffff82201954;
         }
         if (param_1 == -0x7789fe84) {
-          return "Out of video memory";
+          return 0xffffffff82201308;
         }
       }
       else {
         if (param_1 == -0x7789fcad) {
-          return "Bad value";
+          return 0xffffffff8220162c;
         }
         if (param_1 == -0x7789fcac) {
-          return "Bad type";
+          return 0xffffffff82201620;
         }
         if (param_1 == -0x7789fcab) {
-          return "Bad stream handle";
+          return 0xffffffff8220160c;
         }
         if (param_1 == -0x7789fcaa) {
-          return "Bad alloc";
+          return 0xffffffff82201600;
         }
         if (param_1 == -0x7789fca9) {
-          return "Not found";
+          return 0xffffffff822015f4;
         }
         if (param_1 == -0x7789fca8) {
-          return "Not done yet";
+          return 0xffffffff822015e4;
         }
         if (param_1 == -0x7789fca7) {
-          return "File not found";
+          return 0xffffffff822015d4;
         }
       }
     }
     else if (param_1 < -0x7789f7e7) {
       if (param_1 == -0x7789f7e8) {
-        return "Wrong texture format";
+        return 0xffffffff82201478;
       }
       switch(param_1) {
       case -0x7789fca5:
-        return "Url not found";
+        return 0xffffffff822015b0;
       case -0x7789fca4:
-        return "Bad resource";
+        return 0xffffffff822015a0;
       case -0x7789fca3:
-        return "Bad file type";
+        return 0xffffffff82201590;
       case -0x7789fca2:
-        return "Bad file version";
+        return 0xffffffff8220157c;
       case -0x7789fca1:
-        return "Bad file float size";
+        return 0xffffffff82201568;
       case -0x7789fca0:
-        return "Bad file compression type";
+        return 0xffffffff8220154c;
       case -0x7789fc9f:
-        return "Bad file";
+        return 0xffffffff82201540;
       case -0x7789fc9e:
-        return "Parse error";
+        return 0xffffffff82201534;
       case -0x7789fc9d:
-        return "No template";
+        return 0xffffffff82201528;
       case -0x7789fc9c:
-        return "Bad array size";
+        return 0xffffffff82201518;
       case -0x7789fc9b:
-        return "Bad data reference";
+        return 0xffffffff82201504;
       case -0x7789fc9a:
-        return "Internal error";
+        return 0xffffffff822014f4;
       case -0x7789fc99:
-        return "No more objects";
+        return 0xffffffff822014e4;
       case -0x7789fc98:
-        return "Bad intrinsics";
+        return 0xffffffff822014d4;
       case -0x7789fc97:
-        return "No more stream handles";
+        return 0xffffffff822014bc;
       case -0x7789fc96:
-        return "No more data";
+        return 0xffffffff822014ac;
       case -0x7789fc95:
-        return "Bad cache file";
+        return 0xffffffff8220149c;
       case -0x7789fc94:
-        return "No internet";
+        return 0xffffffff82201490;
       }
     }
     else if (param_1 < -0x7789f799) {
       if (param_1 == -0x7789f79a) {
-        return "Not found";
+        return 0xffffffff822015f4;
       }
       switch(param_1) {
       case -0x7789f7e7:
-        return "Unsupported color operation";
+        return 0xffffffff8220145c;
       case -0x7789f7e6:
-        return "Unsupported color arg";
+        return 0xffffffff82201444;
       case -0x7789f7e5:
-        return "Unsupported alpha operation";
+        return 0xffffffff82201428;
       case -0x7789f7e4:
-        return "Unsupported alpha arg";
+        return 0xffffffff82201410;
       case -0x7789f7e3:
-        return "Too many operations";
+        return 0xffffffff822013fc;
       case -0x7789f7e2:
-        return "Conflicting texture filter";
+        return 0xffffffff822013e0;
       case -0x7789f7e1:
-        return "Unsupported factor value";
+        return 0xffffffff822013c4;
       case -0x7789f7df:
-        return "Conflicting render state";
+        return 0xffffffff822013a8;
       case -0x7789f7de:
-        return "Unsupported texture filter";
+        return 0xffffffff8220138c;
       case -0x7789f7da:
-        return "Conflicting texture palette";
+        return 0xffffffff82201370;
       case -0x7789f7d9:
-        return "Driver internal error";
+        return 0xffffffff82201358;
       }
     }
   }
   else if (param_1 < -0x3788f436) {
     if (param_1 == -0x3788f437) {
-      return "Failed to render text to the surface";
+      return 0xffffffff82200f68;
     }
     if (param_1 < -0x3788f446) {
       if (param_1 == -0x3788f447) {
-        return "A NULL pointer was passed as a parameter";
+        return 0xffffffff822011ac;
       }
       if (param_1 < -0x7789f4aa) {
         if (param_1 == -0x7789f4ab) {
-          return "Invalid mesh";
+          return 0xffffffff8220126c;
         }
         if (param_1 == -0x7789f798) {
-          return "Device lost";
+          return 0xffffffff82201340;
         }
         if (param_1 == -0x7789f797) {
-          return "Device not reset";
+          return 0xffffffff8220132c;
         }
         if (param_1 == -0x7789f796) {
-          return "Not available";
+          return 0xffffffff8220131c;
         }
         if (param_1 == -0x7789f795) {
-          return "Invalid device";
+          return 0xffffffff822012f8;
         }
         if (param_1 == -0x7789f794) {
-          return "Invalid call";
+          return 0xffffffff822012e8;
         }
         if (param_1 == -0x7789f793) {
-          return "Driver invalid call";
+          return 0xffffffff822012d4;
         }
         if (param_1 == -0x7789f4ac) {
-          return "Can not modify index buffer";
+          return 0xffffffff8220127c;
         }
       }
       else {
         if (param_1 == -0x7789f4aa) {
-          return "Cannot attr sort";
+          return 0xffffffff82201258;
         }
         if (param_1 == -0x7789f4a9) {
-          return "Skinning not supported";
+          return 0xffffffff82201240;
         }
         if (param_1 == -0x7789f4a8) {
-          return "Too many influences";
+          return 0xffffffff8220122c;
         }
         if (param_1 == -0x7789f4a7) {
-          return "Invalid data";
+          return 0xffffffff8220121c;
         }
         if (param_1 == -0x7789f4a6) {
-          return "Loaded mesh has no data";
+          return 0xffffffff82201204;
         }
         if (param_1 == -0x7789f4a5) {
-          return "Duplicate named fragment";
+          return 0xffffffff822011e8;
         }
         if (param_1 == -0x3788f448) {
-          return "Out of memory";
+          return 0xffffffff822011d8;
         }
       }
     }
     else {
       switch(param_1) {
       case -0x3788f446:
-        return "The Device Index passed in is invalid";
+        return 0xffffffff82201184;
       case -0x3788f445:
-        return "DirectDraw has not been created";
+        return 0xffffffff82201164;
       case -0x3788f444:
-        return "Direct3D has not been created";
+        return 0xffffffff82201144;
       case -0x3788f443:
-        return "Direct3D device has not been created";
+        return 0xffffffff8220111c;
       case -0x3788f442:
-        return "Primary surface has not been created";
+        return 0xffffffff822010f4;
       case -0x3788f441:
-        return "Z buffer has not been created";
+        return 0xffffffff822010d4;
       case -0x3788f440:
-        return "Backbuffer has not been created";
+        return 0xffffffff822010b4;
       case -0x3788f43f:
-        return "Failed to update caps database after changing display mode";
+        return 0xffffffff82201078;
       case -0x3788f43e:
-        return "Could not create Z buffer";
+        return 0xffffffff8220105c;
       case -0x3788f43d:
-        return "Display mode is not valid";
+        return 0xffffffff82201040;
       case -0x3788f43c:
-        return "One or more of the parameters passed is invalid";
+        return 0xffffffff82201010;
       case -0x3788f43b:
-        return "D3DX failed to initialize itself";
+        return 0xffffffff82200fec;
       case -0x3788f43a:
-        return "D3DX failed to start up";
+        return 0xffffffff82200fd4;
       case -0x3788f439:
-        return "D3DXInitialize() must be called first";
+        return 0xffffffff82200fac;
       case -0x3788f438:
-        return "D3DX is not initialized yet";
+        return 0xffffffff82200f90;
       }
     }
   }
   else if (param_1 < 1) {
     if (param_1 == 0) {
-      return "The function completed successfully";
+      return 0xffffffff82201a14;
     }
     switch(param_1) {
     case -0x3788f436:
-      return "Bad D3DX context";
+      return 0xffffffff82200f54;
     case -0x3788f435:
-      return "The requested device capabilities are not supported";
+      return 0xffffffff82200f20;
     case -0x3788f434:
-      return "The image file format is unrecognized";
+      return 0xffffffff82200ef8;
     case -0x3788f433:
-      return "The image file loading library error";
+      return 0xffffffff82200ed0;
     case -0x3788f432:
-      return "Could not obtain device caps";
+      return 0xffffffff82200eb0;
     case -0x3788f431:
-      return "Resize does not work for full-screen";
+      return 0xffffffff82200e88;
     case -0x3788f430:
-      return "Resize does not work for non-windowed contexts";
+      return 0xffffffff82200e58;
     case -0x3788f42f:
-      return "Front buffer already exists";
+      return 0xffffffff82200e3c;
     case -0x3788f42e:
-      return "The app is using the primary in full-screen mode";
+      return 0xffffffff82200e08;
     case -0x3788f42d:
-      return "Could not get device context";
+      return 0xffffffff82200de8;
     case -0x3788f42c:
-      return "Could not bitBlt";
+      return 0xffffffff82200dd4;
     case -0x3788f42b:
-      return "There is no surface backing up this texture";
+      return 0xffffffff82200da8;
     case -0x3788f42a:
-      return "There is no such miplevel for this surface";
+      return 0xffffffff82200d7c;
     case -0x3788f429:
-      return "The surface is not paletted";
+      return 0xffffffff82200d60;
     case -0x3788f428:
-      return "An error occured while enumerating surface formats";
+      return 0xffffffff82200d2c;
     case -0x3788f427:
-      return "D3DX only supports color depths of 16 bit or greater";
+      return 0xffffffff82200cf4;
     case -0x3788f426:
-      return "The file format is invalid";
+      return 0xffffffff82200cd8;
     case -0x3788f425:
-      return "No suitable match found";
+      return 0xffffffff82200cc0;
     }
   }
   else if (param_1 < 0x8760870) {
     if (param_1 == 0x876086f) {
-      return "The call succeeded but there won\'t be any mipmaps generated";
+      return 0xffffffff82201298;
     }
     switch(param_1) {
     case 1:
-      return "Call successful, but returned FALSE";
+      return 0xffffffff822019f0;
     case 2:
-switchD_8289e3fc_caseD_2:
-      return "The system cannot find the file specified.";
+      return 0xffffffff822017b8;
     case 3:
-switchD_8289e3fc_caseD_3:
-      return "The system cannot find the path specified.";
+      return 0xffffffff8220178c;
     case 4:
-switchD_8289e3fc_caseD_4:
-      return "The system cannot open the file.";
+      return 0xffffffff82201768;
     case 5:
-      return "Access is denied.";
+      return 0xffffffff82201754;
     case 6:
-      return "The handle is invalid.";
+      return 0xffffffff8220173c;
     case 8:
-switchD_8289e3fc_caseD_8:
-      return "Not enough storage is available to process this command.";
+      return 0xffffffff82201700;
     case 9:
-switchD_8289e3fc_caseD_9:
-      return "The storage control block address is invalid.";
+      return 0xffffffff822016d0;
     case 10:
-switchD_8289e3fc_caseD_a:
-      return "The environment is incorrect.";
+      return 0xffffffff822016b0;
     case 0xb:
-switchD_8289e3fc_caseD_b:
-      return "An attempt was made to load a program with an incorrect format.";
+      return 0xffffffff82201670;
     case 0xe:
-      return "The system cannot find the drive specified.";
+      return 0xffffffff82201644;
     }
   }
-  return "n/a";
+  return 0xffffffff82200cbc;
 }
 

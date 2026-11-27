@@ -2,72 +2,72 @@
 
 // 82921E68  _stbuf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_sftbuf.c:59)
 
-int _stbuf(_iobuf *param_1)
+int _stbuf(FILE *_File)
 
 {
   char *pcVar1;
-  _iobuf *p_Var3;
-  int iVar4;
-  _iobuf *p_Var5;
-  void *pvVar6;
+  FILE *_File_00;
+  int iVar3;
+  FILE *pFVar4;
+  void *pvVar5;
   undefined8 uVar2;
   
-  p_Var3 = (_iobuf *)__savegprlr_29(param_1);
-  iVar4 = _fileno(p_Var3);
-  iVar4 = _isatty(iVar4);
-  if (iVar4 != 0) {
-    p_Var5 = __iob_func();
-    if (p_Var3 == p_Var5 + 1) {
-      iVar4 = 0;
+  _File_00 = (FILE *)__savegprlr_29(_File);
+  iVar3 = _fileno(_File_00);
+  iVar3 = _isatty(iVar3);
+  if (iVar3 != 0) {
+    pFVar4 = __iob_func();
+    if (_File_00 == pFVar4 + 1) {
+      iVar3 = 0;
     }
     else {
-      p_Var5 = __iob_func();
-      if (p_Var3 != p_Var5 + 2) goto LAB_82921f48;
-      iVar4 = 1;
+      pFVar4 = __iob_func();
+      if (_File_00 != pFVar4 + 2) goto LAB_82921f48;
+      iVar3 = 1;
     }
-    _cflush = _cflush + 1;
-    if ((p_Var3->_flag & 0x10cU) == 0) {
-      if (_stdbuf[iVar4] == (void *)0x0) {
-        pvVar6 = malloc(0x1000);
-        _stdbuf[iVar4] = pvVar6;
-        if (pvVar6 != (void *)0x0) goto LAB_82921f1c;
-        p_Var3->_bufsiz = 2;
-        p_Var3->_base = (char *)&p_Var3->_charbuf;
-        p_Var3->_ptr = (char *)&p_Var3->_charbuf;
-        p_Var3->_cnt = 2;
+    DAT_84895df8 = DAT_84895df8 + 1;
+    if ((_File_00->_flag & 0x10cU) == 0) {
+      if ((&DAT_84895e0c)[iVar3] == 0) {
+        pvVar5 = malloc(0x1000);
+        (&DAT_84895e0c)[iVar3] = pvVar5;
+        if (pvVar5 != (void *)0x0) goto LAB_82921f1c;
+        _File_00->_bufsiz = 2;
+        _File_00->_base = (char *)&_File_00->_charbuf;
+        _File_00->_ptr = (char *)&_File_00->_charbuf;
+        _File_00->_cnt = 2;
       }
       else {
 LAB_82921f1c:
-        pcVar1 = _stdbuf[iVar4];
-        p_Var3->_bufsiz = 0x1000;
-        p_Var3->_cnt = 0x1000;
-        p_Var3->_base = pcVar1;
-        p_Var3->_ptr = pcVar1;
+        pcVar1 = (char *)(&DAT_84895e0c)[iVar3];
+        _File_00->_bufsiz = 0x1000;
+        _File_00->_cnt = 0x1000;
+        _File_00->_base = pcVar1;
+        _File_00->_ptr = pcVar1;
       }
       uVar2 = 1;
-      p_Var3->_flag = p_Var3->_flag | 0x1102;
+      _File_00->_flag = _File_00->_flag | 0x1102;
       goto LAB_82921f4c;
     }
   }
 LAB_82921f48:
   uVar2 = 0;
 LAB_82921f4c:
-  iVar4 = __restgprlr_29(uVar2);
-  return iVar4;
+  iVar3 = __restgprlr_29(uVar2);
+  return iVar3;
 }
 
 
 // 82921F58  _ftbuf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_sftbuf.c:138)
 
-void _ftbuf(int param_1,_iobuf *param_2)
+void _ftbuf(int _Flag,FILE *_File)
 
 {
-  if ((param_1 != 0) && ((param_2->_flag & 0x1000U) != 0)) {
-    _flush(param_2);
-    param_2->_bufsiz = 0;
-    param_2->_ptr = (char *)0x0;
-    param_2->_base = (char *)0x0;
-    param_2->_flag = param_2->_flag & 0xffffeeff;
+  if ((_Flag != 0) && ((_File->_flag & 0x1000U) != 0)) {
+    _flush(_File);
+    _File->_bufsiz = 0;
+    _File->_ptr = (char *)0x0;
+    _File->_base = (char *)0x0;
+    _File->_flag = _File->_flag & 0xffffeeff;
   }
   return;
 }

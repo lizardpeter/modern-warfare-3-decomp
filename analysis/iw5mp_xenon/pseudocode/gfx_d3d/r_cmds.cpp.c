@@ -2,35 +2,31 @@
 
 // 827228C0  R_RegisterCmds  (gfx_d3d/r_cmds.cpp:47)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_RegisterCmds(void)
 
 {
-  Cmd_AddCommandInternal("r_loadsun",R_Cmd_LoadSun,&R_Cmd_LoadSun_VAR);
-  Cmd_AddCommandInternal("r_savesun",R_Cmd_SaveSun,&R_Cmd_SaveSun_VAR);
-  Cmd_AddCommandInternal("gfx_world",R_MaterialList_f,&R_MaterialList_f_VAR);
-  Cmd_AddCommandInternal("gfx_model",R_ModelList_f,&R_ModelList_f_VAR);
-  Cmd_AddCommandInternal("gfx_stats",RB_Stats_f,&RB_Stats_f_VAR);
+  Cmd_AddCommandInternal(0xffffffff821bb3a4,0xffffffff8277adc0,0xffffffff845a160c);
+  Cmd_AddCommandInternal(0xffffffff821bb398,0xffffffff8277af90,0xffffffff845a15f8);
+  Cmd_AddCommandInternal(0xffffffff821bb38c,0xffffffff82754d88,0xffffffff845a15e4);
+  Cmd_AddCommandInternal(0xffffffff821bb380,0xffffffff827597c0,0xffffffff845a15d0);
+  Cmd_AddCommandInternal(0xffffffff821bb374,0xffffffff827acbf0,0xffffffff845a15bc);
   return;
 }
 
 
 // 82722968  R_UnregisterCmds  (gfx_d3d/r_cmds.cpp:90)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_UnregisterCmds(void)
 
 {
-  Cmd_RemoveCommand("r_applyPicmip");
-  Cmd_RemoveCommand("imagelist");
-  Cmd_RemoveCommand("reloadmaterialtextures");
-  Cmd_RemoveCommand("r_loadsun");
-  Cmd_RemoveCommand("r_savesun");
-  Cmd_RemoveCommand("gfx_world");
-  Cmd_RemoveCommand("gfx_model");
-  Cmd_RemoveCommand("gfx_stats");
+  Cmd_RemoveCommand(0xffffffff821bb3d4);
+  Cmd_RemoveCommand(0xffffffff821bb3c8);
+  Cmd_RemoveCommand(0xffffffff821bb3b0);
+  Cmd_RemoveCommand(0xffffffff821bb3a4);
+  Cmd_RemoveCommand(0xffffffff821bb398);
+  Cmd_RemoveCommand(0xffffffff821bb38c);
+  Cmd_RemoveCommand(0xffffffff821bb380);
+  Cmd_RemoveCommand(0xffffffff821bb374);
   return;
 }
 

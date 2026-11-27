@@ -3,48 +3,46 @@
 // 828B5340  XapiInitHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapiinit.c:79)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-int XapiInitHeap(void)
+bool XapiInitHeap(void)
 
 {
-  ulong *puVar1;
-  uint uVar2;
-  undefined8 *puVar3;
-  ulong uVar4;
+  int *piVar1;
+  undefined8 *puVar2;
+  int iVar3;
+  bool bVar4;
   longlong lVar5;
   undefined8 uStack_58;
-  _RTL_HEAP_PARAMETERS local_50;
+  undefined4 local_50 [14];
   
-  uVar4 = 0x100000;
+  iVar3 = 0x100000;
   if (((_DAT_00000193 == 0) ||
-      (puVar1 = (ulong *)RtlImageXexHeaderField(*(undefined4 *)(_DAT_00000193 + 0x58),0x20401),
-      puVar1 == (ulong *)0x0)) || (uVar4 = *puVar1, uVar4 != 0)) {
-    puVar3 = &uStack_58;
+      (piVar1 = (int *)RtlImageXexHeaderField(*(undefined4 *)(_DAT_00000193 + 0x58),0x20401),
+      piVar1 == (int *)0x0)) || (iVar3 = *piVar1, iVar3 != 0)) {
+    puVar2 = &uStack_58;
     lVar5 = 6;
     do {
-      puVar3 = puVar3 + 1;
-      *puVar3 = 0;
+      puVar2 = puVar2 + 1;
+      *puVar2 = 0;
       lVar5 = lVar5 + -1;
     } while (lVar5 != 0);
-    local_50.Length = 0x30;
-    if (XapiProcessHeap == (void *)0x0) {
-      XapiProcessHeap = RtlCreateHeap(2,(void *)0x0,uVar4,0x1000,(void *)0x0,&local_50);
+    local_50[0] = 0x30;
+    if (DAT_84897d50 == 0) {
+      DAT_84897d50 = RtlCreateHeap(2,0,iVar3,0x1000,0,local_50);
     }
     XapiInitDebugHeap();
-    uVar2 = (uint)(XapiProcessHeap != (void *)0x0);
+    bVar4 = DAT_84897d50 != 0;
   }
   else {
-    uVar2 = 1;
+    bVar4 = true;
   }
-  return uVar2;
+  return bVar4;
 }
 
 
 // 828B5428  XapiInitProcess  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapiinit.c:183)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void XapiInitProcess(void)
 

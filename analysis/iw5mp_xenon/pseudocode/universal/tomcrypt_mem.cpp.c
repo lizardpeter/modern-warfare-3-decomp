@@ -2,33 +2,29 @@
 
 // 82613558  tom_game_mem_begin  (universal/tomcrypt_mem.cpp:52)
 
-void tom_game_mem_begin(void *param_1,uint param_2)
+void tom_game_mem_begin(undefined8 param_1,int param_2)
 
 {
   int iVar1;
   int iVar2;
   int *in_r13;
   
-  iVar2 = __savegprlr_25(param_1);
+  iVar2 = __savegprlr_25();
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 0x100) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\tomcrypt_mem.cpp",
-                    0x35,0,"%s");
+    MyAssertHandler(0xffffffff82184340,0x35,0,0xffffffff82000f98,0xffffffff82184324);
   }
   if (*(int *)(iVar1 + 0x104) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\tomcrypt_mem.cpp",
-                    0x36,0,"%s");
+    MyAssertHandler(0xffffffff82184340,0x36,0,0xffffffff82000f98,0xffffffff82184308);
   }
   *(int *)(iVar1 + 0x100) = iVar2;
-  *(uint *)(iVar1 + 0x104) = iVar2 + param_2;
+  *(int *)(iVar1 + 0x104) = iVar2 + param_2;
   __restgprlr_25();
   return;
 }
 
 
 // 826135F0  tom_game_mem_end  (universal/tomcrypt_mem.cpp:62)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void tom_game_mem_end(void)
 
@@ -39,12 +35,10 @@ void tom_game_mem_end(void)
   __savegprlr_27();
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 0x100) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\tomcrypt_mem.cpp",
-                    0x3f,0,"%s");
+    MyAssertHandler(0xffffffff82184340,0x3f,0,0xffffffff82000f98,0xffffffff821843a4);
   }
   if (*(int *)(iVar1 + 0x104) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\tomcrypt_mem.cpp",
-                    0x40,0,"%s");
+    MyAssertHandler(0xffffffff82184340,0x40,0,0xffffffff82000f98,0xffffffff82184388);
   }
   *(undefined4 *)(iVar1 + 0x100) = 0;
   *(undefined4 *)(iVar1 + 0x104) = 0;
@@ -55,126 +49,128 @@ void tom_game_mem_end(void)
 
 // 82613680  tom_game_malloc  (universal/tomcrypt_mem.cpp:74)
 
-void * tom_game_malloc(uint param_1)
+void tom_game_malloc(void)
 
 {
   int iVar1;
   undefined1 *puVar2;
   longlong lVar3;
-  void *pvVar4;
-  ulonglong uVar5;
+  ulonglong uVar4;
   int *in_r13;
   
-  lVar3 = __savegprlr_28(param_1);
+  lVar3 = __savegprlr_28();
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 0x100) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\tomcrypt_mem.cpp",
-                    0x4c,0,"%s");
+    MyAssertHandler(0xffffffff82184340,0x4c,0,0xffffffff82000f98,0xffffffff821843e0);
   }
   puVar2 = *(undefined1 **)(iVar1 + 0x100);
-  uVar5 = ZEXT48(puVar2) + lVar3 + 4;
-  if ((ulonglong)*(uint *)(iVar1 + 0x104) < (uVar5 & 0xffffffff)) {
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\tomcrypt_mem.cpp",
-                      0x4f,0,"tom_game_malloc out of memory.");
+  uVar4 = ZEXT48(puVar2) + lVar3 + 4;
+  if ((ulonglong)*(uint *)(iVar1 + 0x104) < (uVar4 & 0xffffffff)) {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82184340,0x4f,0,0xffffffff821843c0);
     }
-    pvVar4 = (void *)__restgprlr_28(0);
-    return pvVar4;
+    __restgprlr_28(0);
+    return;
   }
-  *(int *)(iVar1 + 0x100) = (int)uVar5;
+  *(int *)(iVar1 + 0x100) = (int)uVar4;
   *puVar2 = (char)lVar3;
   puVar2[1] = (char)((ulonglong)lVar3 >> 8);
   puVar2[2] = (char)((ulonglong)lVar3 >> 0x10);
   puVar2[3] = (char)((ulonglong)lVar3 >> 0x18);
-  pvVar4 = (void *)__restgprlr_28(ZEXT48(puVar2) + 4);
-  return pvVar4;
+  __restgprlr_28(ZEXT48(puVar2) + 4);
+  return;
 }
 
 
 // 82613750  tom_game_free_internal  (universal/tomcrypt_mem.cpp:92)
 
-bool tom_game_free_internal(void *param_1)
+void tom_game_free_internal(void)
 
 {
   int iVar1;
   int iVar2;
-  undefined1 uVar3;
-  int iVar4;
+  int iVar3;
   int *in_r13;
   
-  iVar2 = __savegprlr_29(param_1);
+  iVar2 = __savegprlr_29();
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 0x100) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\tomcrypt_mem.cpp",
-                    0x60,0,"%s");
+    MyAssertHandler(0xffffffff82184340,0x60,0,0xffffffff82000f98,0xffffffff821843e0);
   }
-  iVar4 = (((uint)*(byte *)(iVar2 + -1) * 0x100 + (uint)*(byte *)(iVar2 + -2)) * 0x100 +
+  iVar3 = (((uint)*(byte *)(iVar2 + -1) * 0x100 + (uint)*(byte *)(iVar2 + -2)) * 0x100 +
           (uint)*(byte *)(iVar2 + -3)) * 0x100 + (uint)*(byte *)(iVar2 + -4);
-  if (iVar4 + iVar2 == *(int *)(iVar1 + 0x100)) {
-    *(int *)(iVar1 + 0x100) = (*(int *)(iVar1 + 0x100) - iVar4) + -4;
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+  if (iVar3 + iVar2 == *(int *)(iVar1 + 0x100)) {
+    *(int *)(iVar1 + 0x100) = (*(int *)(iVar1 + 0x100) - iVar3) + -4;
+    __restgprlr_29(1);
+    return;
   }
-  uVar3 = __restgprlr_29(0);
-  return (bool)uVar3;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 826137F8  tom_game_realloc  (universal/tomcrypt_mem.cpp:110)
 
-void * tom_game_realloc(void *param_1,uint param_2)
+void tom_game_realloc(undefined8 param_1,undefined8 param_2)
 
 {
-  void *pvVar1;
-  bool bVar2;
+  byte bVar1;
+  byte bVar2;
+  byte bVar3;
+  byte bVar4;
+  void *_Src;
+  char cVar6;
+  undefined8 uVar5;
   int *in_r13;
   
-  pvVar1 = (void *)__savegprlr_29(param_1);
-  bVar2 = tom_game_free_internal(pvVar1);
-  if (bVar2) {
-    pvVar1 = tom_game_malloc(param_2);
-    pvVar1 = (void *)__restgprlr_29(pvVar1);
-    return pvVar1;
+  _Src = (void *)__savegprlr_29();
+  cVar6 = tom_game_free_internal();
+  if (cVar6 != '\0') {
+    tom_game_malloc(param_2);
+    __restgprlr_29();
+    return;
   }
   if (*(int *)(*in_r13 + 0x100) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\tomcrypt_mem.cpp",
-                    0x79,0,"%s");
+    MyAssertHandler(0xffffffff82184340,0x79,0,0xffffffff82000f98,0xffffffff821843e0);
   }
-  pvVar1 = tom_game_malloc(param_2);
-  memcpy();
-  pvVar1 = (void *)__restgprlr_29(pvVar1);
-  return pvVar1;
+  bVar1 = *(byte *)((int)_Src + -1);
+  bVar2 = *(byte *)((int)_Src + -2);
+  bVar3 = *(byte *)((int)_Src + -3);
+  bVar4 = *(byte *)((int)_Src + -4);
+  uVar5 = tom_game_malloc(param_2);
+  memcpy((void *)uVar5,_Src,
+         (((uint)bVar1 * 0x100 + (uint)bVar2) * 0x100 + (uint)bVar3) * 0x100 + (uint)bVar4);
+  __restgprlr_29(uVar5);
+  return;
 }
 
 
 // 826138B0  tom_game_calloc  (universal/tomcrypt_mem.cpp:131)
 
-void * tom_game_calloc(uint param_1,uint param_2)
+undefined8 tom_game_calloc(int param_1,int param_2)
 
 {
-  void *pvVar1;
+  undefined8 uVar1;
   int *in_r13;
   
   if (*(int *)(*in_r13 + 0x100) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\tomcrypt_mem.cpp",
-                    0x86,0,"%s");
+    MyAssertHandler(0xffffffff82184340,0x86,0,0xffffffff82000f98,0xffffffff821843e0);
   }
-  pvVar1 = tom_game_malloc(param_1 * param_2);
-  memset();
-  return pvVar1;
+  uVar1 = tom_game_malloc((longlong)param_1 * (longlong)param_2);
+  memset((void *)uVar1,0,(size_t)((longlong)param_1 * (longlong)param_2));
+  return uVar1;
 }
 
 
 // 82613940  tom_game_free  (universal/tomcrypt_mem.cpp:143)
 
-void tom_game_free(void *param_1)
+void tom_game_free(undefined8 param_1)
 
 {
   int *in_r13;
   
   if (*(int *)(*in_r13 + 0x100) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\tomcrypt_mem.cpp",
-                    0x90,0,"%s");
+    MyAssertHandler(0xffffffff82184340,0x90,0,0xffffffff82000f98,0xffffffff821843e0);
   }
   tom_game_free_internal(param_1);
   return;

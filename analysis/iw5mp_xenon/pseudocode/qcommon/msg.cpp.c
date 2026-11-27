@@ -2,51 +2,44 @@
 
 // 82503B70  MSG_Init  (qcommon/msg.cpp:50)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_Init(msg_t *param_1,uchar *param_2,int param_3)
+void MSG_Init(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 {
-  void *pvVar1;
-  void *pvVar2;
+  int iVar1;
   
-  pvVar1 = (void *)__savegprlr_29(param_1);
-  if (msgInit == 0) {
+  iVar1 = __savegprlr_29();
+  if (DAT_8368c644 == 0) {
     MSG_InitHuffman();
   }
-  pvVar2 = XMemSet(pvVar1,0,0x2c);
-  *(uchar **)((int)pvVar1 + 8) = param_2;
-  *(int *)((int)pvVar1 + 0x10) = param_3;
-  *(undefined4 *)((int)pvVar1 + 4) = 0;
-  *(undefined4 *)((int)pvVar1 + 0xc) = 0;
-  *(undefined4 *)((int)pvVar1 + 0x18) = 0;
-  __restgprlr_29(pvVar2);
+  XMemSet(iVar1,0,0x2c);
+  *(undefined4 *)(iVar1 + 8) = param_2;
+  *(undefined4 *)(iVar1 + 0x10) = param_3;
+  *(undefined4 *)(iVar1 + 4) = 0;
+  *(undefined4 *)(iVar1 + 0xc) = 0;
+  *(undefined4 *)(iVar1 + 0x18) = 0;
+  __restgprlr_29();
   return;
 }
 
 
 // 82503BD0  MSG_InitReadOnly  (qcommon/msg.cpp:78)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_InitReadOnly(msg_t *param_1,uchar *param_2,int param_3)
+void MSG_InitReadOnly(undefined8 param_1,ulonglong param_2,undefined4 param_3)
 
 {
   int iVar1;
-  ulonglong uVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x4f,0,"%s");
+  iVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x4f,0,0xffffffff82000f98,0xffffffff8201f49c);
   }
-  *(int *)(iVar1 + 8) = (int)uVar2;
-  *(int *)(iVar1 + 0x10) = param_3;
-  *(int *)(iVar1 + 0x14) = param_3;
+  *(int *)(iVar1 + 8) = (int)param_2;
+  *(undefined4 *)(iVar1 + 0x10) = param_3;
+  *(undefined4 *)(iVar1 + 0x14) = param_3;
   *(undefined4 *)(iVar1 + 0xc) = 0;
   *(undefined4 *)(iVar1 + 4) = 1;
   *(undefined4 *)(iVar1 + 0x18) = 0;
-  if (msgInit == 0) {
+  if (DAT_8368c644 == 0) {
     MSG_InitHuffman();
   }
   __restgprlr_29();
@@ -56,32 +49,27 @@ void MSG_InitReadOnly(msg_t *param_1,uchar *param_2,int param_3)
 
 // 82503C50  MSG_InitReadOnlySplit  (qcommon/msg.cpp:105)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_InitReadOnlySplit(msg_t *param_1,uchar *param_2,int param_3,uchar *param_4,int param_5)
+void MSG_InitReadOnlySplit
+               (undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4,int param_5)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_4;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x6a,0,"%s");
+  iVar1 = __savegprlr_25();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x6a,0,0xffffffff82000f98,0xffffffff8201f49c);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x6b,0,"%s");
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x6b,0,0xffffffff82000f98,0xffffffff8208f0e8);
   }
-  if (msgInit == 0) {
+  if (DAT_8368c644 == 0) {
     MSG_InitHuffman();
   }
-  *(int *)(iVar1 + 8) = (int)uVar2;
+  *(int *)(iVar1 + 8) = (int)param_2;
   *(int *)(iVar1 + 0x14) = param_3;
   *(undefined4 *)(iVar1 + 4) = 1;
   *(int *)(iVar1 + 0x10) = param_3 + param_5;
-  *(int *)(iVar1 + 0xc) = (int)uVar3;
+  *(int *)(iVar1 + 0xc) = (int)param_4;
   *(int *)(iVar1 + 0x18) = param_5;
   __restgprlr_25();
   return;
@@ -90,23 +78,19 @@ void MSG_InitReadOnlySplit(msg_t *param_1,uchar *param_2,int param_3,uchar *para
 
 // 82503D08  MSG_BeginReading  (qcommon/msg.cpp:132)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_BeginReading(msg_t *param_1)
+void MSG_BeginReading(undefined4 *param_1)
 
 {
-  param_1->overflowed = 0;
-  param_1->readcount = 0;
-  param_1->bit = 0;
+  *param_1 = 0;
+  param_1[7] = 0;
+  param_1[8] = 0;
   return;
 }
 
 
 // 82503D20  MSG_Truncate  (qcommon/msg.cpp:145)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_Truncate(msg_t *param_1)
+void MSG_Truncate(int param_1)
 
 {
   int iVar1;
@@ -114,16 +98,17 @@ void MSG_Truncate(msg_t *param_1)
   uint uVar3;
   uint uVar4;
   
-  uVar4 = param_1->bit;
+  uVar4 = *(uint *)(param_1 + 0x20);
   uVar3 = uVar4 & 7;
-  param_1->cursize = param_1->readcount;
+  *(undefined4 *)(param_1 + 0x14) = *(undefined4 *)(param_1 + 0x1c);
   if (uVar3 != 0) {
     do {
       iVar2 = (int)uVar4 >> 3;
       iVar1 = 1 << uVar3;
       uVar4 = uVar4 + 1;
       uVar3 = uVar4 & 7;
-      param_1->data[iVar2] = param_1->data[iVar2] & ~(byte)iVar1;
+      *(byte *)(iVar2 + *(int *)(param_1 + 8)) =
+           *(byte *)(iVar2 + *(int *)(param_1 + 8)) & ~(byte)iVar1;
     } while (uVar3 != 0);
     return;
   }
@@ -133,66 +118,56 @@ void MSG_Truncate(msg_t *param_1)
 
 // 82503D68  MSG_Discard  (qcommon/msg.cpp:166)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_Discard(msg_t *param_1)
+void MSG_Discard(undefined4 *param_1)
 
 {
-  param_1->overflowed = 1;
-  param_1->splitSize = 0;
-  param_1->cursize = param_1->readcount;
+  *param_1 = 1;
+  param_1[6] = 0;
+  param_1[5] = param_1[7];
   return;
 }
 
 
 // 825052C8  MSG_GetBytes  (qcommon/msg.cpp:176)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_GetBytes(msg_t *param_1,int param_2,uchar *param_3,int param_4)
+void MSG_GetBytes(undefined8 param_1,ulonglong param_2,int param_3,int param_4)
 
 {
   int iVar1;
-  uchar uVar2;
+  undefined1 uVar2;
   int iVar3;
-  int iVar5;
-  ulonglong uVar4;
+  int iVar4;
   
-  uVar4 = (ulonglong)param_2;
-  iVar1 = __savegprlr_20(param_1);
+  iVar1 = __savegprlr_20();
   iVar3 = 0;
   if (0 < param_4) {
     do {
-      iVar5 = (int)uVar4;
-      if (iVar5 < 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../qcommon/msg.h",
-                        0x140,0,"%s\n\t(where) = %i");
+      iVar4 = (int)param_2;
+      if (iVar4 < 0) {
+        MyAssertHandler(0xffffffff8208f068,0x140,0,0xffffffff820174a4,0xffffffff82017494,param_2);
       }
-      if (iVar5 < *(int *)(iVar1 + 0x14)) {
-        if ((iVar5 < (int)*(uint *)(iVar1 + 0x10)) && (-1 < iVar5)) {
-          uVar2 = *(uchar *)(*(int *)(iVar1 + 8) + iVar5);
+      if (iVar4 < *(int *)(iVar1 + 0x14)) {
+        if ((iVar4 < (int)*(uint *)(iVar1 + 0x10)) && (-1 < iVar4)) {
+          uVar2 = *(undefined1 *)(*(int *)(iVar1 + 8) + iVar4);
         }
         else {
-          if ((ulonglong)*(uint *)(iVar1 + 0x10) <= (uVar4 & 0xffffffff)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../qcommon/msg.h"
-                            ,0x14c,0,"where doesn\'t index msg->maxsize\n\t%i not in [0, %i)");
+          if ((ulonglong)*(uint *)(iVar1 + 0x10) <= (param_2 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8208f068,0x14c,0,0xffffffff82017428,param_2);
           }
-          uVar2 = '\0';
+          uVar2 = 0;
         }
       }
       else {
         if (*(int *)(iVar1 + 0xc) == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../qcommon/msg.h"
-                          ,0x144,0,"%s");
+          MyAssertHandler(0xffffffff8208f068,0x144,0,0xffffffff82000f98,0xffffffff82017484);
         }
-        if (*(int *)(iVar1 + 0x18) + *(int *)(iVar1 + 0x14) <= iVar5) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../qcommon/msg.h"
-                          ,0x145,0,"%s\n\t(where) = %i");
+        if (*(int *)(iVar1 + 0x18) + *(int *)(iVar1 + 0x14) <= iVar4) {
+          MyAssertHandler(0xffffffff8208f068,0x145,0,0xffffffff820174a4,0xffffffff8201745c,param_2);
         }
-        uVar2 = *(uchar *)((*(int *)(iVar1 + 0xc) - *(int *)(iVar1 + 0x14)) + iVar5);
+        uVar2 = *(undefined1 *)((*(int *)(iVar1 + 0xc) - *(int *)(iVar1 + 0x14)) + iVar4);
       }
-      uVar4 = uVar4 + 1;
-      param_3[iVar3] = uVar2;
+      param_2 = param_2 + 1;
+      *(undefined1 *)(iVar3 + param_3) = uVar2;
       iVar3 = iVar3 + 1;
     } while (iVar3 < param_4);
   }
@@ -203,143 +178,125 @@ void MSG_GetBytes(msg_t *param_1,int param_2,uchar *param_3,int param_4)
 
 // 82503D88  MSG_GetUsedBitCount  (qcommon/msg.cpp:216)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int MSG_GetUsedBitCount(msg_t *param_1)
+longlong MSG_GetUsedBitCount(int param_1)
 
 {
-  uint uVar1;
-  int iVar2;
+  ulonglong uVar1;
+  ulonglong uVar2;
   
-  uVar1 = param_1->bit & 7;
-  iVar2 = param_1->splitSize + param_1->cursize;
-  if (uVar1 != 0) {
-    return iVar2 * 8 + uVar1 + -8;
+  uVar1 = (ulonglong)*(uint *)(param_1 + 0x20) & 7;
+  uVar2 = (ulonglong)*(uint *)(param_1 + 0x18) + (ulonglong)*(uint *)(param_1 + 0x14);
+  if ((int)uVar1 != 0) {
+    return (uVar2 & 0x1fffffff) * 8 + uVar1 + -8;
   }
-  return iVar2 * 8;
+  return (uVar2 & 0x1fffffff) << 3;
 }
 
 
 // 82503DC0  MSG_IncrementBitPointer  (qcommon/msg.cpp:235)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-bool MSG_IncrementBitPointer(msg_t *param_1)
+undefined8 MSG_IncrementBitPointer(undefined4 *param_1)
 
 {
   int iVar1;
   
-  iVar1 = param_1->cursize;
-  if (param_1->maxsize <= iVar1) {
-    param_1->overflowed = 1;
-    return false;
+  iVar1 = param_1[5];
+  if ((int)param_1[4] <= iVar1) {
+    *param_1 = 1;
+    return 0;
   }
-  param_1->bit = iVar1 << 3;
-  param_1->data[iVar1] = '\0';
-  param_1->cursize = param_1->cursize + 1;
-  return true;
+  param_1[8] = iVar1 << 3;
+  *(undefined1 *)(param_1[2] + iVar1) = 0;
+  param_1[5] = param_1[5] + 1;
+  return 1;
 }
 
 
 // 82503E10  MSG_WriteBit0  (qcommon/msg.cpp:250)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteBit0(msg_t *param_1)
+void MSG_WriteBit0(undefined4 *param_1)
 
 {
   int iVar1;
   
-  if (param_1->readOnly != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0xfe,0,"%s");
+  if (param_1[1] != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0xfe,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
-  if ((param_1->bit & 7U) == 0) {
-    iVar1 = param_1->cursize;
-    if (param_1->maxsize <= iVar1) {
-      param_1->overflowed = 1;
+  if ((param_1[8] & 7) == 0) {
+    iVar1 = param_1[5];
+    if ((int)param_1[4] <= iVar1) {
+      *param_1 = 1;
       return;
     }
-    param_1->bit = iVar1 << 3;
-    param_1->data[iVar1] = '\0';
-    param_1->cursize = param_1->cursize + 1;
+    param_1[8] = iVar1 << 3;
+    *(undefined1 *)(param_1[2] + iVar1) = 0;
+    param_1[5] = param_1[5] + 1;
   }
-  param_1->bit = param_1->bit + 1;
+  param_1[8] = param_1[8] + 1;
   return;
 }
 
 
 // 82503ED8  MSG_WriteBit1  (qcommon/msg.cpp:268)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteBit1(msg_t *param_1)
+void MSG_WriteBit1(undefined4 *param_1)
 
 {
-  int iVar1;
-  uint uVar2;
+  uint uVar1;
+  int iVar2;
   
-  if (param_1->readOnly != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x110,0,"%s")
-    ;
+  if (param_1[1] != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x110,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
-  uVar2 = param_1->bit & 7;
-  if (uVar2 == 0) {
-    iVar1 = param_1->cursize;
-    if (param_1->maxsize <= iVar1) {
-      param_1->overflowed = 1;
+  uVar1 = param_1[8];
+  if ((uVar1 & 7) == 0) {
+    iVar2 = param_1[5];
+    if ((int)param_1[4] <= iVar2) {
+      *param_1 = 1;
       return;
     }
-    param_1->bit = iVar1 << 3;
-    param_1->data[iVar1] = '\0';
-    param_1->cursize = param_1->cursize + 1;
+    param_1[8] = iVar2 << 3;
+    *(undefined1 *)(param_1[2] + iVar2) = 0;
+    param_1[5] = param_1[5] + 1;
   }
-  iVar1 = param_1->bit >> 3;
-  param_1->data[iVar1] = (byte)(1 << uVar2) | param_1->data[iVar1];
-  param_1->bit = param_1->bit + 1;
+  *(byte *)(param_1[2] + ((int)param_1[8] >> 3)) =
+       (byte)(1 << (uVar1 & 7)) | *(byte *)(param_1[2] + ((int)param_1[8] >> 3));
+  param_1[8] = param_1[8] + 1;
   return;
 }
 
 
 // 82503FB8  MSG_WriteBool  (qcommon/msg.cpp:287)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteBool(msg_t *param_1,bool param_2)
+void MSG_WriteBool(undefined8 param_1,char param_2)
 
 {
-  if (param_2) {
-    MSG_WriteBit1(param_1);
+  if (param_2 != '\0') {
+    MSG_WriteBit1();
     return;
   }
-  MSG_WriteBit0(param_1);
+  MSG_WriteBit0();
   return;
 }
 
 
 // 82503FD0  MSG_WriteBits  (qcommon/msg.cpp:297)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteBits(msg_t *param_1,int param_2,int param_3)
+void MSG_WriteBits(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   uint uVar1;
   undefined4 *puVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)param_3;
-  uVar3 = (ulonglong)param_2;
-  puVar2 = (undefined4 *)__savegprlr_27(param_1);
+  puVar2 = (undefined4 *)__savegprlr_27();
   if (puVar2[1] != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",300,0,"%s");
+    MyAssertHandler(0xffffffff8208f0ac,300,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
-  if (0x20 < (uVar4 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x12f,0,"%s")
-    ;
+  if (0x20 < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8208f0ac,0x12f,0,0xffffffff82000f98,0xffffffff820174fc);
   }
   if (3 < (int)(puVar2[4] - puVar2[5])) {
-    if ((int)uVar4 != 0) {
+    if ((int)param_3 != 0) {
       do {
         uVar1 = puVar2[8];
         if ((uVar1 & 7) == 0) {
@@ -347,14 +304,14 @@ void MSG_WriteBits(msg_t *param_1,int param_2,int param_3)
           *(undefined1 *)(puVar2[2] + puVar2[5]) = 0;
           puVar2[5] = puVar2[5] + 1;
         }
-        if ((uVar3 & 1) != 0) {
+        if ((param_2 & 1) != 0) {
           *(byte *)(puVar2[2] + ((int)puVar2[8] >> 3)) =
                (byte)(1 << (uVar1 & 7)) | *(byte *)(puVar2[2] + ((int)puVar2[8] >> 3));
         }
-        uVar3 = (ulonglong)((int)uVar3 >> 1);
+        param_2 = (ulonglong)((int)param_2 >> 1);
         puVar2[8] = puVar2[8] + 1;
-        uVar4 = uVar4 - 1;
-      } while (uVar4 != 0);
+        param_3 = param_3 - 1;
+      } while (param_3 != 0);
     }
     __restgprlr_27();
     return;
@@ -367,92 +324,81 @@ void MSG_WriteBits(msg_t *param_1,int param_2,int param_3)
 
 // 825040F0  MSG_WriteBitsCompress  (qcommon/msg.cpp:335)
 
-int MSG_WriteBitsCompress(bool param_1,uchar *param_2,uchar *param_3,int param_4)
+void MSG_WriteBitsCompress(undefined8 param_1,longlong param_2,undefined8 param_3,longlong param_4)
 
 {
   byte bVar1;
-  char cVar3;
-  int iVar2;
+  char cVar2;
+  int iVar3;
   longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
   int local_30 [12];
   
-  lVar5 = (longlong)param_4;
-  lVar4 = (longlong)(int)param_2;
-  cVar3 = __savegprlr_28(param_1);
-  if ((cVar3 != '\0') && (iVar2 = 0, lVar6 = lVar5, 0 < (int)lVar5)) {
+  cVar2 = __savegprlr_28();
+  if ((cVar2 != '\0') && (iVar3 = 0, lVar4 = param_4, 0 < (int)param_4)) {
     do {
-      bVar1 = *(byte *)(iVar2 + (int)lVar4);
-      iVar2 = iVar2 + 1;
-      huffBytesSeen[bVar1] = huffBytesSeen[bVar1] + 1;
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
+      bVar1 = *(byte *)(iVar3 + (int)param_2);
+      iVar3 = iVar3 + 1;
+      (&DAT_8368c648)[bVar1] = (&DAT_8368c648)[bVar1] + 1;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
   }
   local_30[0] = 0;
-  if ((int)lVar5 == 0) {
-    iVar2 = __restgprlr_28(0);
-    return iVar2;
+  if ((int)param_4 == 0) {
+    __restgprlr_28(0);
+    return;
   }
-  lVar4 = lVar4 + -1;
+  param_2 = param_2 + -1;
   do {
-    lVar4 = lVar4 + 1;
-    Huff_offsetTransmit(&msgHuff.compressDecompress,(uint)*(byte *)lVar4,param_3,local_30);
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  iVar2 = __restgprlr_28(local_30[0] + 7 >> 3);
-  return iVar2;
+    param_2 = param_2 + 1;
+    Huff_offsetTransmit(0xffffffff8368ca48,*(undefined1 *)param_2,param_3,local_30);
+    param_4 = param_4 + -1;
+  } while (param_4 != 0);
+  __restgprlr_28(local_30[0] + 7 >> 3);
+  return;
 }
 
 
 // 825041A0  MSG_ReadBitsCompress  (qcommon/msg.cpp:356)
 
-int MSG_ReadBitsCompress(uchar *param_1,uchar *param_2,int param_3)
+void MSG_ReadBitsCompress(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-  uchar *puVar1;
-  int iVar2;
+  int iVar1;
+  undefined8 uVar2;
   longlong lVar3;
-  ulonglong uVar4;
-  longlong lVar5;
   int local_40;
-  int local_3c [15];
+  undefined1 local_3c [60];
   
-  uVar4 = (ulonglong)param_3;
-  lVar3 = (longlong)(int)param_2;
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar2 = (int)((uVar4 & 0xffffffff) << 3);
+  uVar2 = __savegprlr_27();
+  iVar1 = (int)((param_3 & 0xffffffff) << 3);
   local_40 = 0;
-  lVar5 = lVar3;
-  if (0 < iVar2) {
+  lVar3 = param_2;
+  if (0 < iVar1) {
     do {
-      Huff_offsetReceive(msgHuff.compressDecompress.tree,local_3c,puVar1,&local_40);
-      *(undefined1 *)lVar5 = (char)local_3c[0];
-      lVar5 = lVar5 + 1;
-    } while (local_40 < iVar2);
+      Huff_offsetReceive(DAT_8368ca50,local_3c,uVar2,&local_40);
+      *(undefined1 *)lVar3 = (char)local_3c._0_4_;
+      lVar3 = lVar3 + 1;
+    } while (local_40 < iVar1);
   }
-  iVar2 = __restgprlr_27(lVar5 - lVar3);
-  return iVar2;
+  __restgprlr_27(lVar3 - param_2);
+  return;
 }
 
 
 // 82504210  MSG_WriteByte  (qcommon/msg.cpp:383)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteByte(msg_t *param_1,int param_2)
+void MSG_WriteByte(undefined4 *param_1,undefined1 param_2)
 
 {
-  if (param_1->readOnly != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x185,0,"%s")
-    ;
+  if (param_1[1] != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x185,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
-  if (param_1->cursize < param_1->maxsize) {
-    param_1->data[param_1->cursize] = (uchar)param_2;
-    param_1->cursize = param_1->cursize + 1;
+  if ((int)param_1[5] < (int)param_1[4]) {
+    *(undefined1 *)(param_1[2] + param_1[5]) = param_2;
+    param_1[5] = param_1[5] + 1;
   }
   else {
-    param_1->overflowed = 1;
+    *param_1 = 1;
   }
   return;
 }
@@ -460,22 +406,19 @@ void MSG_WriteByte(msg_t *param_1,int param_2)
 
 // 825042A8  MSG_WriteData  (qcommon/msg.cpp:409)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteData(msg_t *param_1,void *param_2,int param_3)
+void MSG_WriteData(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   undefined4 *puVar1;
   int iVar2;
   
-  puVar1 = (undefined4 *)__savegprlr_28(param_1);
+  puVar1 = (undefined4 *)__savegprlr_28();
   if (puVar1[1] != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x19d,0,"%s")
-    ;
+    MyAssertHandler(0xffffffff8208f0ac,0x19d,0,0xffffffff82000f98,0xffffffff8208f100);
   }
-  iVar2 = puVar1[5] + param_3;
+  iVar2 = puVar1[5] + (int)param_3;
   if (iVar2 <= (int)puVar1[4]) {
-    Com_Memcpy((void *)(puVar1[2] + puVar1[5]),param_2,param_3);
+    Com_Memcpy((ulonglong)(uint)puVar1[2] + (ulonglong)(uint)puVar1[5],param_2,param_3);
     puVar1[5] = iVar2;
     __restgprlr_28();
     return;
@@ -488,24 +431,21 @@ void MSG_WriteData(msg_t *param_1,void *param_2,int param_3)
 
 // 82504338  MSG_WriteShort  (qcommon/msg.cpp:428)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteShort(msg_t *param_1,int param_2)
+void MSG_WriteShort(undefined4 *param_1,undefined2 param_2)
 
 {
   int iVar1;
   
-  if (param_1->readOnly != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x1b3,0,"%s")
-    ;
+  if (param_1[1] != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x1b3,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
-  iVar1 = param_1->cursize + 2;
-  if (param_1->maxsize < iVar1) {
-    param_1->overflowed = 1;
+  iVar1 = param_1[5] + 2;
+  if ((int)param_1[4] < iVar1) {
+    *param_1 = 1;
   }
   else {
-    *(short *)(param_1->data + param_1->cursize) = (short)param_2;
-    param_1->cursize = iVar1;
+    *(undefined2 *)(param_1[2] + param_1[5]) = param_2;
+    param_1[5] = iVar1;
   }
   return;
 }
@@ -513,24 +453,21 @@ void MSG_WriteShort(msg_t *param_1,int param_2)
 
 // 825043C8  MSG_WriteLong  (qcommon/msg.cpp:464)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteLong(msg_t *param_1,int param_2)
+void MSG_WriteLong(undefined4 *param_1,undefined4 param_2)
 
 {
   int iVar1;
   
-  if (param_1->readOnly != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x1d7,0,"%s")
-    ;
+  if (param_1[1] != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x1d7,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
-  iVar1 = param_1->cursize + 4;
-  if (param_1->maxsize < iVar1) {
-    param_1->overflowed = 1;
+  iVar1 = param_1[5] + 4;
+  if ((int)param_1[4] < iVar1) {
+    *param_1 = 1;
   }
   else {
-    *(int *)(param_1->data + param_1->cursize) = param_2;
-    param_1->cursize = iVar1;
+    *(undefined4 *)(param_1[2] + param_1[5]) = param_2;
+    param_1[5] = iVar1;
   }
   return;
 }
@@ -538,45 +475,36 @@ void MSG_WriteLong(msg_t *param_1,int param_2)
 
 // 82504458  MSG_WriteFloat  (qcommon/msg.cpp:502)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteFloat(msg_t *param_1,float param_2)
+void MSG_WriteFloat(double param_1,undefined8 param_2)
 
 {
-  if (param_2 == -NAN) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x201,0,"%s")
-    ;
+  if ((float)param_1 == -NAN) {
+    MyAssertHandler(0xffffffff8208f0ac,0x201,0,0xffffffff82000f98,0xffffffff8208f110);
   }
-  MSG_WriteLong(param_1,(int)param_2);
+  MSG_WriteLong(param_2,(float)param_1);
   return;
 }
 
 
 // 825044C8  MSG_WriteVec3  (qcommon/msg.cpp:535)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteVec3(msg_t *param_1,float *param_2)
+void MSG_WriteVec3(undefined8 param_1,longlong param_2)
 
 {
   int iVar1;
   undefined4 *puVar2;
   int iVar3;
   longlong lVar4;
-  longlong lVar5;
   
-  lVar5 = (longlong)(int)param_2;
-  puVar2 = (undefined4 *)__savegprlr_23(param_1);
+  puVar2 = (undefined4 *)__savegprlr_23();
   lVar4 = 3;
   do {
-    iVar1 = *(int *)lVar5;
+    iVar1 = *(int *)param_2;
     if (iVar1 == -1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x201,0,
-                      "%s");
+      MyAssertHandler(0xffffffff8208f0ac,0x201,0,0xffffffff82000f98,0xffffffff8208f110);
     }
     if (puVar2[1] != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x1d7,0,
-                      "%s");
+      MyAssertHandler(0xffffffff8208f0ac,0x1d7,0,0xffffffff82000f98,0xffffffff8208f0f0);
     }
     iVar3 = puVar2[5] + 4;
     if ((int)puVar2[4] < iVar3) {
@@ -587,7 +515,7 @@ void MSG_WriteVec3(msg_t *param_1,float *param_2)
       puVar2[5] = iVar3;
     }
     lVar4 = lVar4 + -1;
-    lVar5 = lVar5 + 4;
+    param_2 = param_2 + 4;
   } while (lVar4 != 0);
   __restgprlr_23();
   return;
@@ -596,24 +524,21 @@ void MSG_WriteVec3(msg_t *param_1,float *param_2)
 
 // 82504590  MSG_WriteInt64  (qcommon/msg.cpp:551)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteInt64(msg_t *param_1,ulong64 param_2)
+void MSG_WriteInt64(undefined8 param_1,undefined8 param_2)
 
 {
   int iVar1;
   undefined4 *puVar3;
-  ulong64 uVar2;
+  undefined8 uVar2;
   
-  puVar3 = (undefined4 *)__savegprlr_29(param_1);
+  puVar3 = (undefined4 *)__savegprlr_29();
   if (puVar3[1] != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x22b,0,"%s")
-    ;
+    MyAssertHandler(0xffffffff8208f0ac,0x22b,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
   iVar1 = puVar3[5];
   if (iVar1 + 8 <= (int)puVar3[4]) {
     uVar2 = LittleLong64(param_2);
-    *(ulong64 *)(puVar3[2] + puVar3[5]) = uVar2;
+    *(undefined8 *)(puVar3[2] + puVar3[5]) = uVar2;
     puVar3[5] = iVar1 + 8;
     __restgprlr_29();
     return;
@@ -626,73 +551,66 @@ void MSG_WriteInt64(msg_t *param_1,ulong64 param_2)
 
 // 82504618  MSG_WriteString  (qcommon/msg.cpp:575)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteString(msg_t *param_1,char *param_2)
+void MSG_WriteString(undefined8 param_1,ulonglong param_2)
 
 {
-  msg_t *pmVar1;
-  char cVar2;
+  undefined4 *puVar1;
+  undefined1 uVar2;
+  char *pcVar5;
   ulonglong uVar3;
-  char *pcVar6;
   ulonglong uVar4;
-  ulonglong uVar5;
-  int iVar7;
-  ulonglong uVar8;
-  int iVar9;
-  char local_450 [1104];
+  ulonglong uVar6;
+  undefined1 *puVar7;
+  int iVar8;
+  undefined1 local_450 [1104];
   
-  uVar3 = (ulonglong)(int)param_2;
-  pmVar1 = (msg_t *)__savegprlr_24(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x249,0,"%s")
-    ;
+  puVar1 = (undefined4 *)__savegprlr_24();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x249,0,0xffffffff82000f98,0xffffffff82012c64);
   }
-  uVar4 = uVar3;
-  if (pmVar1->readOnly != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x24b,0,"%s")
-    ;
+  uVar3 = param_2;
+  if (puVar1[1] != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x24b,0,0xffffffff82000f98,0xffffffff8208f14c);
   }
   do {
-    pcVar6 = (char *)uVar4;
-    uVar4 = uVar4 + 1;
-  } while (*pcVar6 != '\0');
-  uVar5 = (uVar4 - uVar3) - 1;
-  uVar4 = uVar5 & 0xffffffff;
-  iVar7 = (int)uVar5;
-  if (0x3ff < iVar7) {
-    I_strncpyz(local_450,(char *)uVar3,0x380);
-    Com_PrintError(0x19,"MSG_WriteString: MAX_STRING_CHARS for \"%s...\"\n");
-    MSG_WriteByte(pmVar1,0);
+    pcVar5 = (char *)uVar3;
+    uVar3 = uVar3 + 1;
+  } while (*pcVar5 != '\0');
+  uVar4 = (uVar3 - param_2) - 1;
+  uVar3 = uVar4 & 0xffffffff;
+  iVar8 = (int)uVar4;
+  if (0x3ff < iVar8) {
+    I_strncpyz(local_450,param_2,0x380);
+    Com_PrintError(0x19,0xffffffff8208f11c,local_450);
+    MSG_WriteByte(puVar1,0);
     __restgprlr_24();
     return;
   }
-  uVar5 = 0;
-  if (0 < iVar7) {
-    pcVar6 = local_450;
-    uVar8 = uVar4;
+  uVar4 = 0;
+  if (0 < iVar8) {
+    puVar7 = local_450;
+    uVar6 = uVar3;
     do {
-      cVar2 = I_CleanChar(pcVar6[(int)(char *)uVar3 - (int)local_450]);
-      *pcVar6 = cVar2;
-      uVar8 = uVar8 - 1;
-      pcVar6 = pcVar6 + 1;
-      uVar5 = uVar4;
-    } while (uVar8 != 0);
+      uVar2 = I_CleanChar(puVar7[(int)param_2 - (int)local_450]);
+      *puVar7 = uVar2;
+      uVar6 = uVar6 - 1;
+      puVar7 = puVar7 + 1;
+      uVar4 = uVar3;
+    } while (uVar6 != 0);
   }
-  iVar9 = pmVar1->readOnly;
-  local_450[(int)uVar5] = '\0';
-  if (iVar9 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x19d,0,"%s")
-    ;
+  iVar8 = puVar1[1];
+  local_450[(int)uVar4] = 0;
+  if (iVar8 != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x19d,0,0xffffffff82000f98,0xffffffff8208f100);
   }
-  iVar9 = pmVar1->cursize + iVar7 + 1;
-  if (pmVar1->maxsize < iVar9) {
-    pmVar1->overflowed = 1;
+  iVar8 = puVar1[5] + (int)(uVar3 + 1);
+  if ((int)puVar1[4] < iVar8) {
+    *puVar1 = 1;
     __restgprlr_24();
     return;
   }
-  Com_Memcpy(pmVar1->data + pmVar1->cursize,local_450,iVar7 + 1);
-  pmVar1->cursize = iVar9;
+  Com_Memcpy((ulonglong)(uint)puVar1[2] + (ulonglong)(uint)puVar1[5],local_450,uVar3 + 1);
+  puVar1[5] = iVar8;
   __restgprlr_24();
   return;
 }
@@ -700,9 +618,7 @@ void MSG_WriteString(msg_t *param_1,char *param_2)
 
 // 825047A0  MSG_WriteBigString  (qcommon/msg.cpp:629)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteBigString(msg_t *param_1,char *param_2)
+void MSG_WriteBigString(undefined8 param_1,ulonglong param_2)
 
 {
   char cVar1;
@@ -710,23 +626,19 @@ void MSG_WriteBigString(msg_t *param_1,char *param_2)
   undefined4 *puVar3;
   char *pcVar4;
   int iVar5;
-  ulonglong uVar6;
   
-  uVar6 = (ulonglong)(int)param_2;
-  puVar3 = (undefined4 *)__savegprlr_28(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x27f,0,"%s")
-    ;
+  puVar3 = (undefined4 *)__savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x27f,0,0xffffffff82000f98,0xffffffff82012c64);
   }
   if (puVar3[1] != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x280,0,"%s")
-    ;
+    MyAssertHandler(0xffffffff8208f0ac,0x280,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
   iVar5 = puVar3[5];
   iVar2 = puVar3[4];
   pcVar4 = (char *)(puVar3[2] + iVar5);
   while (iVar5 < iVar2) {
-    cVar1 = *(char *)uVar6;
+    cVar1 = *(char *)param_2;
     if (cVar1 == -0x6e) {
       *pcVar4 = '\'';
     }
@@ -736,7 +648,7 @@ void MSG_WriteBigString(msg_t *param_1,char *param_2)
     iVar5 = iVar5 + 1;
     if (cVar1 == '\0') break;
     pcVar4 = pcVar4 + 1;
-    uVar6 = uVar6 + 1;
+    param_2 = param_2 + 1;
   }
   if (iVar5 == iVar2) {
     *puVar3 = 1;
@@ -751,180 +663,159 @@ void MSG_WriteBigString(msg_t *param_1,char *param_2)
 
 // 82504888  MSG_WriteAngle  (qcommon/msg.cpp:677)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteAngle(msg_t *param_1,float param_2)
+void MSG_WriteAngle(double param_1,int param_2)
 
 {
-  double dVar1;
-  
-  dVar1 = (double)param_2;
-  if (param_1->readOnly != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x2a7,0,"%s")
-    ;
+  if (*(int *)(param_2 + 4) != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x2a7,0,0xffffffff82000f98,0xffffffff8208f14c);
   }
-  MSG_WriteByte(param_1,(int)(dVar1 * 0.7111111283302307) & 0xff);
+  MSG_WriteByte(param_2,(int)(param_1 * 0.7111111283302307) & 0xff);
   return;
 }
 
 
 // 82504910  MSG_WriteAngle16  (qcommon/msg.cpp:686)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_WriteAngle16(msg_t *param_1,float param_2)
+void MSG_WriteAngle16(double param_1,int param_2)
 
 {
   double dVar1;
   
-  dVar1 = (double)param_2;
-  if (param_1->readOnly != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x2b0,0,"%s")
-    ;
+  if (*(int *)(param_2 + 4) != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x2b0,0,0xffffffff82000f98,0xffffffff8208f14c);
   }
-  dVar1 = floor((double)(float)(dVar1 * 182.04444885253906 + 0.5));
-  MSG_WriteShort(param_1,(int)dVar1 & 0xffff);
+  dVar1 = floor((double)(float)(param_1 * 182.04444885253906 + 0.5));
+  MSG_WriteShort(param_2,(int)dVar1 & 0xffff);
   return;
 }
 
 
 // 825049A8  MSG_ReadByte  (qcommon/msg.cpp:702)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int MSG_ReadByte(msg_t *param_1)
+void MSG_ReadByte(void)
 
 {
-  msg_t *pmVar1;
-  uint uVar2;
-  int iVar3;
+  ulonglong uVar1;
+  undefined4 *puVar3;
+  ulonglong uVar2;
   
-  pmVar1 = (msg_t *)__savegprlr_27(param_1);
-  if (pmVar1->readcount < pmVar1->splitSize + pmVar1->cursize) {
-    uVar2 = MSG_GetByte(pmVar1,pmVar1->readcount);
-    if ((uVar2 != (uVar2 & 0xff)) &&
-       (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x2cb,0,
-                        "c == static_cast< byte >( c )\n\t%i, %i"), uVar2 != (uVar2 & 0xff))) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x2d3,0,
-                      "c == static_cast< byte >( c )\n\t%i, %i");
+  puVar3 = (undefined4 *)__savegprlr_27();
+  if ((int)puVar3[7] < (int)(puVar3[6] + puVar3[5])) {
+    uVar2 = MSG_GetByte();
+    uVar1 = uVar2 & 0xff;
+    if (((int)uVar2 != (int)uVar1) &&
+       (MyAssertHandler(0xffffffff8208f0ac,0x2cb,0,0xffffffff8208f15c,uVar2,uVar1),
+       (int)uVar2 != (int)uVar1)) {
+      MyAssertHandler(0xffffffff8208f0ac,0x2d3,0,0xffffffff8208f15c,uVar2,uVar1);
     }
-    pmVar1->readcount = pmVar1->readcount + 1;
-    iVar3 = __restgprlr_27(uVar2);
-    return iVar3;
+    puVar3[7] = puVar3[7] + 1;
+    __restgprlr_27(uVar2);
+    return;
   }
-  pmVar1->overflowed = 1;
-  iVar3 = __restgprlr_27(0xffffffffffffffff);
-  return iVar3;
+  *puVar3 = 1;
+  __restgprlr_27(0xffffffffffffffff);
+  return;
 }
 
 
 // 82504A60  MSG_ReadShort  (qcommon/msg.cpp:733)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int MSG_ReadShort(msg_t *param_1)
+undefined2 MSG_ReadShort(undefined4 *param_1)
 
 {
   int iVar1;
-  short local_20 [4];
+  undefined2 local_20 [4];
   
-  iVar1 = param_1->readcount + 2;
-  if (param_1->splitSize + param_1->cursize < iVar1) {
-    iVar1 = -1;
-    param_1->overflowed = 1;
+  iVar1 = param_1[7] + 2;
+  if ((int)(param_1[6] + param_1[5]) < iVar1) {
+    local_20[0] = 0xffff;
+    *param_1 = 1;
   }
   else {
-    MSG_GetBytes(param_1,param_1->readcount,(uchar *)local_20,2);
-    param_1->readcount = iVar1;
-    iVar1 = (int)local_20[0];
-  }
-  return iVar1;
-}
-
-
-// 82504AD8  MSG_ReadLong  (qcommon/msg.cpp:775)
-
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int MSG_ReadLong(msg_t *param_1)
-
-{
-  int iVar1;
-  int local_20 [2];
-  
-  iVar1 = param_1->readcount + 4;
-  if (param_1->splitSize + param_1->cursize < iVar1) {
-    local_20[0] = -1;
-    param_1->overflowed = 1;
-  }
-  else {
-    MSG_GetBytes(param_1,param_1->readcount,(uchar *)local_20,4);
-    param_1->readcount = iVar1;
+    MSG_GetBytes(param_1,param_1[7],local_20,2);
+    param_1[7] = iVar1;
   }
   return local_20[0];
 }
 
 
+// 82504AD8  MSG_ReadLong  (qcommon/msg.cpp:775)
+
+ulonglong MSG_ReadLong(undefined4 *param_1)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  uint local_20 [2];
+  
+  iVar2 = param_1[7] + 4;
+  if ((int)(param_1[6] + param_1[5]) < iVar2) {
+    uVar1 = 0xffffffffffffffff;
+    *param_1 = 1;
+  }
+  else {
+    MSG_GetBytes(param_1,param_1[7],local_20,4);
+    uVar1 = (ulonglong)local_20[0];
+    param_1[7] = iVar2;
+  }
+  return uVar1;
+}
+
+
 // 82504B48  MSG_ReadFloat  (qcommon/msg.cpp:816)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-float MSG_ReadFloat(msg_t *param_1)
+double MSG_ReadFloat(undefined4 *param_1)
 
 {
   float fVar1;
   
-  fVar1 = (float)MSG_ReadLong(param_1);
+  fVar1 = (float)MSG_ReadLong();
   if (fVar1 != -NAN) {
-    return fVar1;
+    return (double)fVar1;
   }
-  param_1->overflowed = 1;
+  *param_1 = 1;
   return -1.0;
 }
 
 
 // 82504BA8  MSG_ReadVec3  (qcommon/msg.cpp:832)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_ReadVec3(msg_t *param_1,float *param_2)
+void MSG_ReadVec3(undefined8 param_1,longlong param_2)
 
 {
-  msg_t *pmVar1;
+  undefined4 *puVar1;
   longlong lVar2;
-  longlong lVar3;
-  int iVar4;
+  int iVar3;
+  double dVar4;
   double dVar5;
-  double dVar6;
   float local_40;
   float local_3c;
   
-  lVar2 = (longlong)(int)param_2;
-  pmVar1 = (msg_t *)__savegprlr_27(param_1);
-  lVar2 = lVar2 + -4;
-  lVar3 = 3;
-  dVar6 = -1.0;
+  puVar1 = (undefined4 *)__savegprlr_27();
+  param_2 = param_2 + -4;
+  lVar2 = 3;
+  dVar5 = -1.0;
   do {
-    iVar4 = pmVar1->readcount + 4;
-    if (pmVar1->cursize + pmVar1->splitSize < iVar4) {
-      pmVar1->overflowed = 1;
-      dVar5 = dVar6;
+    iVar3 = puVar1[7] + 4;
+    if ((int)(puVar1[5] + puVar1[6]) < iVar3) {
+      *puVar1 = 1;
+      dVar4 = dVar5;
 LAB_82504c1c:
-      pmVar1->overflowed = 1;
-      dVar6 = dVar5;
+      *puVar1 = 1;
+      dVar5 = dVar4;
     }
     else {
-      MSG_GetBytes(pmVar1,pmVar1->readcount,(uchar *)&local_40,4);
-      pmVar1->readcount = iVar4;
+      MSG_GetBytes(puVar1,puVar1[7],&local_40,4);
+      puVar1[7] = iVar3;
       local_3c = local_40;
-      dVar5 = dVar6;
+      dVar4 = dVar5;
       if (local_40 == -NAN) goto LAB_82504c1c;
-      dVar5 = (double)local_40;
+      dVar4 = (double)local_40;
     }
-    lVar2 = lVar2 + 4;
-    *(float *)lVar2 = (float)dVar5;
-    lVar3 = lVar3 + -1;
-    if (lVar3 == 0) {
+    param_2 = param_2 + 4;
+    *(float *)param_2 = (float)dVar4;
+    lVar2 = lVar2 + -1;
+    if (lVar2 == 0) {
       __restgprlr_27();
       return;
     }
@@ -934,24 +825,22 @@ LAB_82504c1c:
 
 // 82504C40  MSG_ReadInt64  (qcommon/msg.cpp:841)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-ulong64 MSG_ReadInt64(msg_t *param_1)
+undefined8 MSG_ReadInt64(undefined4 *param_1)
 
 {
-  ulong64 uVar1;
+  undefined8 uVar1;
   int iVar2;
-  ulong64 local_20;
+  undefined8 local_20;
   
-  iVar2 = param_1->readcount + 8;
-  if (param_1->splitSize + param_1->cursize < iVar2) {
+  iVar2 = param_1[7] + 8;
+  if ((int)(param_1[6] + param_1[5]) < iVar2) {
     uVar1 = 0;
-    param_1->overflowed = 1;
+    *param_1 = 1;
   }
   else {
-    MSG_GetBytes(param_1,param_1->readcount,(uchar *)&local_20,8);
+    MSG_GetBytes(param_1,param_1[7],&local_20,8);
     uVar1 = LittleLong64(local_20);
-    param_1->readcount = iVar2;
+    param_1[7] = iVar2;
   }
   return uVar1;
 }
@@ -959,263 +848,303 @@ ulong64 MSG_ReadInt64(msg_t *param_1)
 
 // 82504CB8  MSG_ReadString  (qcommon/msg.cpp:867)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-char * MSG_ReadString(msg_t *param_1,char *param_2,uint param_3)
+void MSG_ReadString(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  msg_t *pmVar1;
-  uint uVar2;
-  char cVar4;
-  char *pcVar3;
-  ulonglong uVar5;
+  ulonglong uVar1;
+  undefined4 *puVar3;
+  ulonglong uVar2;
+  int iVar4;
+  undefined1 uVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pmVar1 = (msg_t *)__savegprlr_23(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x367,0,"%s")
-    ;
-  }
-  uVar7 = 0;
-  do {
-    if (pmVar1->readcount < pmVar1->cursize + pmVar1->splitSize) {
-      uVar2 = MSG_GetByte(pmVar1,pmVar1->readcount);
-      if ((uVar2 != (uVar2 & 0xff)) &&
-         (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x2cb,0
-                          ,"c == static_cast< byte >( c )\n\t%i, %i"), uVar2 != (uVar2 & 0xff))) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x2d3,0,
-                        "c == static_cast< byte >( c )\n\t%i, %i");
-      }
-      pmVar1->readcount = pmVar1->readcount + 1;
-      if (uVar2 == 0xffffffff) goto LAB_82504d94;
-    }
-    else {
-      pmVar1->overflowed = 1;
-LAB_82504d94:
-      uVar2 = 0;
-    }
-    if ((uVar7 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-      cVar4 = I_CleanChar((char)uVar2);
-      *(char *)((int)uVar7 + (int)uVar5) = cVar4;
-    }
-    if (uVar2 == 0) {
-      *(undefined1 *)((int)uVar5 + (int)uVar6 + -1) = 0;
-      pcVar3 = (char *)__restgprlr_23(uVar5);
-      return pcVar3;
-    }
-    uVar7 = uVar7 + 1;
-  } while( true );
-}
-
-
-// 82504DE0  MSG_ReadBigString  (qcommon/msg.cpp:898)
-
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-char * MSG_ReadBigString(msg_t *param_1)
-
-{
-  msg_t *pmVar1;
-  bool bVar4;
-  uint uVar2;
-  char cVar5;
-  char *pcVar3;
-  uint uVar6;
-  
-  pmVar1 = (msg_t *)__savegprlr_24(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x387,0,"%s")
-    ;
+  puVar3 = (undefined4 *)__savegprlr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x367,0,0xffffffff82000f98,0xffffffff820181d4);
   }
   uVar6 = 0;
   do {
-    if (pmVar1->readcount < pmVar1->cursize + pmVar1->splitSize) {
-      uVar2 = MSG_GetByte(pmVar1,pmVar1->readcount);
-      if ((uVar2 != (uVar2 & 0xff)) &&
-         (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x2cb,0
-                          ,"c == static_cast< byte >( c )\n\t%i, %i"), uVar2 != (uVar2 & 0xff))) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x2d3,0,
-                        "c == static_cast< byte >( c )\n\t%i, %i");
+    if ((int)puVar3[7] < (int)(puVar3[5] + puVar3[6])) {
+      uVar2 = MSG_GetByte(puVar3);
+      uVar1 = uVar2 & 0xff;
+      iVar4 = (int)uVar2;
+      if ((iVar4 != (int)uVar1) &&
+         (MyAssertHandler(0xffffffff8208f0ac,0x2cb,0,0xffffffff8208f15c,uVar2,uVar1),
+         iVar4 != (int)uVar1)) {
+        MyAssertHandler(0xffffffff8208f0ac,0x2d3,0,0xffffffff8208f15c,uVar2,uVar1);
       }
-      pmVar1->readcount = pmVar1->readcount + 1;
-      if (uVar2 == 0x25) {
-        uVar2 = 0x2e;
-      }
-      else if (uVar2 == 0xffffffff) goto LAB_82504edc;
+      puVar3[7] = puVar3[7] + 1;
+      if (iVar4 == -1) goto LAB_82504d94;
     }
     else {
-      pmVar1->overflowed = 1;
-LAB_82504edc:
+      *puVar3 = 1;
+LAB_82504d94:
       uVar2 = 0;
     }
-    if (uVar6 < 0x2000) {
-      cVar5 = I_CleanChar((char)uVar2);
-      string[uVar6] = cVar5;
+    if ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      uVar5 = I_CleanChar((char)uVar2);
+      *(undefined1 *)((int)uVar6 + (int)param_2) = uVar5;
     }
-    if (uVar2 == 0) {
-      string[0x1fff] = '\0';
-      pcVar3 = (char *)__restgprlr_24(0xffffffff83689bf8);
-      return pcVar3;
+    if ((int)uVar2 == 0) {
+      *(undefined1 *)((int)param_2 + (int)param_3 + -1) = 0;
+      __restgprlr_23(param_2);
+      return;
     }
     uVar6 = uVar6 + 1;
   } while( true );
 }
 
 
-// 82504F18  MSG_ReadStringLine  (qcommon/msg.cpp:932)
+// 82504DE0  MSG_ReadBigString  (qcommon/msg.cpp:898)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-char * MSG_ReadStringLine(msg_t *param_1,char *param_2,uint param_3)
+void MSG_ReadBigString(void)
 
 {
-  msg_t *pmVar1;
-  uint uVar2;
-  char cVar4;
-  char *pcVar3;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  ulonglong uVar1;
+  undefined4 *puVar3;
+  char cVar5;
+  ulonglong uVar2;
+  int iVar4;
+  undefined1 uVar6;
+  uint uVar7;
   
-  uVar6 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  pmVar1 = (msg_t *)__savegprlr_23(param_1);
+  puVar3 = (undefined4 *)__savegprlr_24();
+  cVar5 = Sys_IsMainThread();
+  if (cVar5 == '\0') {
+    MyAssertHandler(0xffffffff8208f0ac,0x387,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
   uVar7 = 0;
   do {
-    if (pmVar1->readcount < pmVar1->cursize + pmVar1->splitSize) {
-      uVar2 = MSG_GetByte(pmVar1,pmVar1->readcount);
-      if ((uVar2 != (uVar2 & 0xff)) &&
-         (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x2cb,0
-                          ,"c == static_cast< byte >( c )\n\t%i, %i"), uVar2 != (uVar2 & 0xff))) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x2d3,0,
-                        "c == static_cast< byte >( c )\n\t%i, %i");
+    if ((int)puVar3[7] < (int)(puVar3[5] + puVar3[6])) {
+      uVar2 = MSG_GetByte(puVar3);
+      uVar1 = uVar2 & 0xff;
+      iVar4 = (int)uVar2;
+      if ((iVar4 != (int)uVar1) &&
+         (MyAssertHandler(0xffffffff8208f0ac,0x2cb,0,0xffffffff8208f15c,uVar2,uVar1),
+         iVar4 != (int)uVar1)) {
+        MyAssertHandler(0xffffffff8208f0ac,0x2d3,0,0xffffffff8208f15c,uVar2,uVar1);
       }
-      pmVar1->readcount = pmVar1->readcount + 1;
-      if (uVar2 == 0x25) {
+      puVar3[7] = puVar3[7] + 1;
+      if (iVar4 == 0x25) {
         uVar2 = 0x2e;
       }
-      else if ((uVar2 == 10) || (uVar2 == 0xffffffff)) goto LAB_82504fec;
+      else if (iVar4 == -1) goto LAB_82504edc;
     }
     else {
-      pmVar1->overflowed = 1;
-LAB_82504fec:
+      *puVar3 = 1;
+LAB_82504edc:
       uVar2 = 0;
     }
-    if ((uVar7 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-      cVar4 = I_CleanChar((char)uVar2);
-      *(char *)((int)uVar7 + (int)lVar5) = cVar4;
+    if (uVar7 < 0x2000) {
+      uVar6 = I_CleanChar((char)uVar2);
+      (&DAT_83689bf8)[uVar7] = uVar6;
     }
-    if (uVar2 == 0) {
-      *(undefined1 *)((int)lVar5 + (int)uVar6 + -1) = 0;
-      pcVar3 = (char *)__restgprlr_23(lVar5);
-      return pcVar3;
+    if ((int)uVar2 == 0) {
+      DAT_8368bbf7 = 0;
+      __restgprlr_24(0xffffffff83689bf8);
+      return;
     }
     uVar7 = uVar7 + 1;
   } while( true );
 }
 
 
+// 82504F18  MSG_ReadStringLine  (qcommon/msg.cpp:932)
+
+void MSG_ReadStringLine(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+
+{
+  ulonglong uVar1;
+  undefined4 *puVar3;
+  ulonglong uVar2;
+  int iVar4;
+  undefined1 uVar5;
+  ulonglong uVar6;
+  
+  puVar3 = (undefined4 *)__savegprlr_23();
+  uVar6 = 0;
+  do {
+    if ((int)puVar3[7] < (int)(puVar3[5] + puVar3[6])) {
+      uVar2 = MSG_GetByte(puVar3);
+      uVar1 = uVar2 & 0xff;
+      iVar4 = (int)uVar2;
+      if ((iVar4 != (int)uVar1) &&
+         (MyAssertHandler(0xffffffff8208f0ac,0x2cb,0,0xffffffff8208f15c,uVar2,uVar1),
+         iVar4 != (int)uVar1)) {
+        MyAssertHandler(0xffffffff8208f0ac,0x2d3,0,0xffffffff8208f15c,uVar2,uVar1);
+      }
+      puVar3[7] = puVar3[7] + 1;
+      if (iVar4 == 0x25) {
+        uVar2 = 0x2e;
+      }
+      else if ((iVar4 == 10) || (iVar4 == -1)) goto LAB_82504fec;
+    }
+    else {
+      *puVar3 = 1;
+LAB_82504fec:
+      uVar2 = 0;
+    }
+    if ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      uVar5 = I_CleanChar((char)uVar2);
+      *(undefined1 *)((int)uVar6 + (int)param_2) = uVar5;
+    }
+    if ((int)uVar2 == 0) {
+      *(undefined1 *)((int)param_2 + (int)param_3 + -1) = 0;
+      __restgprlr_23(param_2);
+      return;
+    }
+    uVar6 = uVar6 + 1;
+  } while( true );
+}
+
+
 // 82505030  MSG_ReadAngle16  (qcommon/msg.cpp:967)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-float MSG_ReadAngle16(msg_t *param_1)
+double MSG_ReadAngle16(void)
 
 {
   int iVar1;
   
-  iVar1 = MSG_ReadShort(param_1);
-  return (float)(longlong)iVar1 * 0.005493164;
+  iVar1 = MSG_ReadShort();
+  return (double)((float)(longlong)iVar1 * 0.005493164);
 }
 
 
 // 82505070  MSG_Rewind  (qcommon/msg.cpp:973)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int MSG_Rewind(msg_t *param_1,int param_2)
+void MSG_Rewind(int param_1,int param_2)
 
 {
   int iVar1;
   int iVar2;
   
-  if (param_1 == (msg_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x3d0,0,"%s")
-    ;
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x3d0,0,0xffffffff82000f98,0xffffffff82004d74);
   }
-  iVar1 = param_1->readcount;
+  iVar1 = *(int *)(param_1 + 0x1c);
   iVar2 = iVar1;
   if (param_2 < iVar1) {
     iVar2 = param_2;
   }
-  param_1->readcount = iVar1 - iVar2;
-  return iVar2;
+  *(int *)(param_1 + 0x1c) = iVar1 - iVar2;
+  return;
 }
 
 
 // 825050F0  MSG_ReadData  (qcommon/msg.cpp:985)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void MSG_ReadData(msg_t *param_1,void *param_2,int param_3)
+void MSG_ReadData(undefined8 param_1,void *param_2,size_t param_3)
 
 {
   uint uVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  longlong lVar4;
+  uint uVar2;
+  undefined4 *puVar3;
+  void *pvVar4;
+  undefined4 *puVar5;
+  size_t _Size;
+  int iVar6;
   
-  puVar2 = (undefined4 *)__savegprlr_27(param_1,param_2);
-  uVar1 = puVar2[5];
-  iVar3 = puVar2[7] + param_3;
-  if (iVar3 <= (int)uVar1) {
-    memcpy();
-    puVar2[7] = iVar3;
-    __restgprlr_27();
+  puVar3 = (undefined4 *)__savegprlr_27();
+  uVar1 = puVar3[7];
+  uVar2 = puVar3[5];
+  iVar6 = uVar1 + param_3;
+  if (iVar6 <= (int)uVar2) {
+    pvVar4 = memcpy(param_2,(void *)(puVar3[2] + uVar1),param_3);
+    puVar3[7] = iVar6;
+    __restgprlr_27(pvVar4);
     return;
   }
-  if (iVar3 <= (int)(puVar2[6] + uVar1)) {
-    lVar4 = (ulonglong)uVar1 - (ulonglong)(uint)puVar2[7];
-    if (0 < lVar4) {
-      memcpy();
-      param_3 = param_3 - (int)lVar4;
+  if (iVar6 <= (int)(puVar3[6] + uVar2)) {
+    puVar5 = puVar3;
+    if (0 < (longlong)((ulonglong)uVar2 - (ulonglong)uVar1)) {
+      _Size = (size_t)((ulonglong)uVar2 - (ulonglong)uVar1);
+      puVar5 = memcpy(param_2,(void *)(puVar3[2] + uVar1),_Size);
+      param_3 = param_3 - _Size;
+      param_2 = (void *)(_Size + (int)param_2);
     }
-    if (0 < param_3) {
-      memcpy();
+    if (0 < (int)param_3) {
+      puVar5 = memcpy(param_2,(void *)((puVar3[3] - puVar3[5]) + puVar3[7]),param_3);
     }
-    puVar2[7] = iVar3;
-    __restgprlr_27();
+    puVar3[7] = iVar6;
+    __restgprlr_27(puVar5);
     return;
   }
-  *puVar2 = 1;
-  memset();
-  __restgprlr_27();
+  *puVar3 = 1;
+  pvVar4 = memset(param_2,-1,param_3);
+  __restgprlr_27(pvVar4);
   return;
 }
 
 
 // 825051C0  MSG_SetDefaultUserCmd  (qcommon/msg.cpp:1041)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void MSG_SetDefaultUserCmd(undefined8 param_1,longlong param_2)
+
+{
+  float *pfVar1;
+  int iVar2;
+  void *_Dst;
+  uint uVar3;
+  longlong lVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
+  iVar2 = __savegprlr_27();
+  _Dst = (void *)param_2;
+  memset(_Dst,0,0x2c);
+  param_2 = param_2 + 4;
+  pfVar5 = (float *)(iVar2 + 0x154);
+  lVar4 = 2;
+  *(undefined4 *)((int)_Dst + 0x14) = *(undefined4 *)(iVar2 + 0x370);
+  *(undefined4 *)((int)_Dst + 0x18) = *(undefined4 *)(iVar2 + 0x364);
+  dVar7 = 0.5;
+  dVar8 = 182.04444885253906;
+  *(short *)((int)_Dst + 0x20) = (short)*(undefined4 *)(iVar2 + 0x4e4);
+  do {
+    pfVar1 = pfVar5 + -0x3d;
+    pfVar5 = pfVar5 + 1;
+    dVar6 = floor((double)(float)((double)(*pfVar5 - *pfVar1) * dVar8 + dVar7));
+    lVar4 = lVar4 + -1;
+    param_2 = param_2 + 4;
+    *(uint *)param_2 = (int)dVar6 & 0xffff;
+  } while (lVar4 != 0);
+  if ((*(uint *)(iVar2 + 0x10) & 0x1000) == 0) goto LAB_825052b8;
+  if ((*(uint *)(iVar2 + 0xf8) & 8) == 0) {
+    if ((*(uint *)(iVar2 + 0xf8) & 4) != 0) {
+      uVar3 = *(uint *)((int)_Dst + 4) | 0x200;
+      goto LAB_82505294;
+    }
+  }
+  else {
+    uVar3 = *(uint *)((int)_Dst + 4) | 0x100;
+LAB_82505294:
+    *(uint *)((int)_Dst + 4) = uVar3;
+  }
+  if (*(float *)(iVar2 + 0x378) != 0.0) {
+    *(uint *)((int)_Dst + 4) = *(uint *)((int)_Dst + 4) | 0x800;
+  }
+LAB_825052b8:
+  __restgprlr_27();
+  return;
+}
+
 
 // 82503B60  LittleShort  (universal/com_math.h:1173)
 
-short LittleShort(short param_1)
+void LittleShort(void)
 
 {
-  return param_1;
+  return;
 }
 
 
 // 82503B68  LittleLong  (universal/com_math.h:1179)
 
-int LittleLong(int param_1)
+void LittleLong(void)
 
 {
-  return param_1;
+  return;
 }
 

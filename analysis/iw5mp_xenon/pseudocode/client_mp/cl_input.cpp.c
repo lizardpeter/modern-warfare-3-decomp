@@ -2,145 +2,136 @@
 
 // 823388A8  TRACK_cl_input  (client_mp/cl_input.cpp:76)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_cl_input(void)
 
 {
-  track_static_alloc_internal(playersKb,0xaa0,"playersKb",10);
+  track_static_alloc_internal(0xffffffff82a9a188,0xaa0,0xffffffff8202ed2c,10);
   return;
 }
 
 
 // 823388C8  IN_IsTempProneKeyActive  (client_mp/cl_input.cpp:83)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool IN_IsTempProneKeyActive(LocalClientNum_t param_1)
+undefined1 IN_IsTempProneKeyActive(int param_1)
 
 {
-  return playersKb[param_1][0x1a].active;
+  return (&DAT_82a9a3a0)[param_1 * 0x2a8];
 }
 
 
 // 823388E0  IN_IsTempStanceKeyActive  (client_mp/cl_input.cpp:89)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool IN_IsTempStanceKeyActive(LocalClientNum_t param_1)
+undefined8 IN_IsTempStanceKeyActive(int param_1)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   
-  if ((playersKb[param_1][0x1a].active != false) ||
-     (bVar1 = false, playersKb[param_1][0xb].active != false)) {
-    bVar1 = true;
+  if (((&DAT_82a9a3a0)[param_1 * 0x2a8] != '\0') ||
+     (uVar1 = 0, (&DAT_82a9a274)[param_1 * 0x2a8] != '\0')) {
+    uVar1 = 1;
   }
-  return bVar1;
+  return uVar1;
 }
 
 
 // 82338920  IN_KeyDown  (client_mp/cl_input.cpp:95)
 
-void IN_KeyDown(kbutton_t *param_1,int param_2,uint param_3)
+void IN_KeyDown(int *param_1,int param_2,int param_3)
 
 {
-  if (param_2 == param_1->down[0]) {
+  if (param_2 == *param_1) {
     return;
   }
-  if (param_2 == param_1->down[1]) {
+  if (param_2 == param_1[1]) {
     return;
   }
-  if (param_1->down[0] == 0) {
-    param_1->down[0] = param_2;
+  if (*param_1 == 0) {
+    *param_1 = param_2;
   }
   else {
-    if (param_1->down[1] != 0) {
-      Com_Printf(0xe,"Three keys down for a button!\n");
+    if (param_1[1] != 0) {
+      Com_Printf(0xe,0xffffffff8202ed38);
       return;
     }
-    param_1->down[1] = param_2;
+    param_1[1] = param_2;
   }
-  if (param_1->active != false) {
+  if (*(char *)(param_1 + 4) != '\0') {
     return;
   }
-  param_1->downtime = param_3;
-  param_1->active = true;
-  param_1->wasPressed = true;
+  param_1[2] = param_3;
+  *(undefined1 *)(param_1 + 4) = 1;
+  *(undefined1 *)((int)param_1 + 0x11) = 1;
   return;
 }
 
 
 // 82338988  IN_KeyUp  (client_mp/cl_input.cpp:129)
 
-void IN_KeyUp(kbutton_t *param_1,int param_2,uint param_3)
+void IN_KeyUp(int *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  uint uVar2;
+  uint uVar1;
   
-  iVar1 = param_1->down[0];
-  if (iVar1 == param_2) {
-    param_1->down[0] = 0;
+  if (*param_1 == param_2) {
+    *param_1 = 0;
   }
   else {
-    if (param_1->down[1] != param_2) {
+    if (param_1[1] != param_2) {
       return;
     }
-    param_1->down[1] = 0;
-    if (iVar1 != 0) {
+    param_1[1] = 0;
+    if (*param_1 != 0) {
       return;
     }
   }
-  if (param_1->down[1] != 0) {
+  if (param_1[1] != 0) {
     return;
   }
-  param_1->active = false;
-  uVar2 = frame_msec;
+  *(undefined1 *)(param_1 + 4) = 0;
+  uVar1 = DAT_82b3e4cc;
   if (param_3 != 0) {
-    param_1->active = false;
-    param_1->msec = (param_3 - param_1->downtime) + param_1->msec;
+    *(undefined1 *)(param_1 + 4) = 0;
+    param_1[3] = (param_3 - param_1[2]) + param_1[3];
     return;
   }
-  param_1->active = false;
-  param_1->msec = (uVar2 >> 1) + param_1->msec;
+  *(undefined1 *)(param_1 + 4) = 0;
+  param_1[3] = (uVar1 >> 1) + param_1[3];
   return;
 }
 
 
 // 82338A10  IN_KeyDownCheat  (client_mp/cl_input.cpp:165)
 
-void IN_KeyDownCheat(kbutton_t *param_1)
+void IN_KeyDownCheat(int *param_1)
 
 {
   char *pcVar1;
   int iVar2;
-  uint uVar3;
   
-  pcVar1 = Cmd_Argv(1);
+  pcVar1 = (char *)Cmd_Argv(1);
   if (*pcVar1 == '\0') {
     iVar2 = -1;
   }
   else {
     iVar2 = atoi(pcVar1);
   }
-  if ((iVar2 != param_1->down[0]) && (iVar2 != param_1->down[1])) {
-    if (param_1->down[0] == 0) {
-      param_1->down[0] = iVar2;
+  if ((iVar2 != *param_1) && (iVar2 != param_1[1])) {
+    if (*param_1 == 0) {
+      *param_1 = iVar2;
     }
     else {
-      if (param_1->down[1] != 0) {
-        Com_Printf(0xe,"Three keys down for a button!\n");
+      if (param_1[1] != 0) {
+        Com_Printf(0xe,0xffffffff8202ed38);
         return;
       }
-      param_1->down[1] = iVar2;
+      param_1[1] = iVar2;
     }
-    if (param_1->active == false) {
-      pcVar1 = Cmd_Argv(2);
-      uVar3 = atoi(pcVar1);
-      param_1->downtime = uVar3;
-      param_1->active = true;
-      param_1->wasPressed = true;
+    if (*(char *)(param_1 + 4) == '\0') {
+      pcVar1 = (char *)Cmd_Argv(2);
+      iVar2 = atoi(pcVar1);
+      param_1[2] = iVar2;
+      *(undefined1 *)(param_1 + 4) = 1;
+      *(undefined1 *)((int)param_1 + 0x11) = 1;
       return;
     }
   }
@@ -150,164 +141,248 @@ void IN_KeyDownCheat(kbutton_t *param_1)
 
 // 82338AD8  IN_KeyUpCheat  (client_mp/cl_input.cpp:213)
 
-void IN_KeyUpCheat(kbutton_t *param_1)
+void IN_KeyUpCheat(int *param_1)
 
 {
   char *pcVar1;
   int iVar2;
-  int iVar3;
   
-  pcVar1 = Cmd_Argv(1);
+  pcVar1 = (char *)Cmd_Argv(1);
   if (*pcVar1 == '\0') {
-    param_1->down[1] = 0;
-    param_1->down[0] = 0;
+    param_1[1] = 0;
+    *param_1 = 0;
   }
   else {
     iVar2 = atoi(pcVar1);
-    iVar3 = param_1->down[0];
-    if (iVar3 == iVar2) {
-      param_1->down[0] = 0;
+    if (*param_1 == iVar2) {
+      *param_1 = 0;
     }
     else {
-      if (param_1->down[1] != iVar2) {
+      if (param_1[1] != iVar2) {
         return;
       }
-      param_1->down[1] = 0;
-      if (iVar3 != 0) {
+      param_1[1] = 0;
+      if (*param_1 != 0) {
         return;
       }
     }
-    if (param_1->down[1] != 0) {
+    if (param_1[1] != 0) {
       return;
     }
-    param_1->active = false;
-    pcVar1 = Cmd_Argv(2);
-    iVar3 = atoi(pcVar1);
-    if (iVar3 == 0) {
-      param_1->msec = (frame_msec >> 1) + param_1->msec;
+    *(undefined1 *)(param_1 + 4) = 0;
+    pcVar1 = (char *)Cmd_Argv(2);
+    iVar2 = atoi(pcVar1);
+    if (iVar2 == 0) {
+      param_1[3] = (DAT_82b3e4cc >> 1) + param_1[3];
     }
     else {
-      param_1->msec = (iVar3 - param_1->downtime) + param_1->msec;
+      param_1[3] = (iVar2 - param_1[2]) + param_1[3];
     }
   }
-  param_1->active = false;
+  *(undefined1 *)(param_1 + 4) = 0;
   return;
 }
 
 
 // 82338BC0  CL_KeyState  (client_mp/cl_input.cpp:275)
 
-float CL_KeyState(kbutton_t *param_1)
+double CL_KeyState(int param_1)
 
 {
-  float fVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
+  double dVar3;
   
-  uVar3 = param_1->msec;
-  param_1->msec = 0;
-  if (param_1->active != false) {
-    uVar2 = com_frameTime;
-    if (param_1->downtime != 0) {
-      uVar2 = (com_frameTime - param_1->downtime) + uVar3;
+  uVar2 = *(uint *)(param_1 + 0xc);
+  *(undefined4 *)(param_1 + 0xc) = 0;
+  if (*(char *)(param_1 + 0x10) != '\0') {
+    uVar1 = DAT_8366737c;
+    if (*(int *)(param_1 + 8) != 0) {
+      uVar1 = (DAT_8366737c - *(int *)(param_1 + 8)) + uVar2;
     }
-    uVar3 = uVar2;
-    param_1->downtime = com_frameTime;
+    uVar2 = uVar1;
+    *(uint *)(param_1 + 8) = DAT_8366737c;
   }
-  if ((int)uVar3 < 1) {
-    fVar1 = 0.0;
+  if ((int)uVar2 < 1) {
+    dVar3 = 0.0;
   }
-  else if (uVar3 < frame_msec) {
-    if (frame_msec == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_input.cpp",299,
-                      0,"%s");
+  else if (uVar2 < DAT_82b3e4cc) {
+    if (DAT_82b3e4cc == 0) {
+      MyAssertHandler(0xffffffff8202ed58,299,0,0xffffffff82000f98,0xffffffff8202ed9c);
     }
-    fVar1 = (float)(longlong)(int)uVar3 / (float)frame_msec;
+    dVar3 = (double)((float)(longlong)(int)uVar2 / (float)DAT_82b3e4cc);
   }
   else {
-    fVar1 = 1.0;
+    dVar3 = 1.0;
   }
-  return fVar1;
+  return dVar3;
 }
 
 
 // 82338CC0  CL_SetStance  (client_mp/cl_input.cpp:305)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_SetStance(int param_1,undefined4 param_2)
+
+{
+  bool bVar1;
+  int iVar2;
+  
+  if ((&DAT_82a9a3a0)[param_1 * 0x2a8] == '\0') {
+    bVar1 = false;
+    if ((&DAT_82a9a274)[param_1 * 0x2a8] == '\0') goto LAB_82338d08;
+  }
+  bVar1 = true;
+LAB_82338d08:
+  if (!bVar1) {
+    iVar2 = CL_GetLocalClientGlobals();
+    *(undefined4 *)(iVar2 + 0x3530) = param_2;
+  }
+  return;
+}
+
 
 // 82338D30  IN_UpDown  (client_mp/cl_input.cpp:332)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void IN_UpDown(void)
+
+{
+  bool bVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  __savegprlr_29();
+  iVar2 = Cmd_LocalClientNum();
+  iVar4 = iVar2 * 0x2a8;
+  IN_KeyDownCheat(iVar4 + -0x7d565d88);
+  if ((&DAT_82a9a3a0)[iVar4] == '\0') {
+    bVar1 = false;
+    if ((&DAT_82a9a274)[iVar4] == '\0') goto LAB_82338d84;
+  }
+  bVar1 = true;
+LAB_82338d84:
+  if ((!bVar1) && (iVar3 = CL_GetLocalClientConnectionState(iVar2), 4 < iVar3)) {
+    iVar3 = CL_GetLocalClientGlobals(iVar2);
+    iVar2 = *(int *)(iVar3 + 0x3530);
+    if (iVar2 != 1) {
+      if (iVar2 != 2) {
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff8202ed58,0x164,1,0xffffffff82000f98,0xffffffff8202eda8);
+        }
+        IN_KeyDownCheat(iVar4 + -0x7d565db0);
+        __restgprlr_29();
+        return;
+      }
+      *(undefined4 *)(iVar3 + 0x3530) = 1;
+      __restgprlr_29();
+      return;
+    }
+    *(undefined4 *)(iVar3 + 0x3530) = 0;
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 82338E20  IN_UpUp  (client_mp/cl_input.cpp:364)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IN_UpUp(void)
 
 {
-  LocalClientNum_t LVar1;
+  longlong lVar1;
   
-  LVar1 = Cmd_LocalClientNum();
-  IN_KeyUpCheat(playersKb[LVar1] + 0xc);
-  IN_KeyUpCheat(playersKb[LVar1] + 10);
+  lVar1 = Cmd_LocalClientNum();
+  IN_KeyUpCheat(lVar1 * 0x2a8 + -0x7d565d88);
+  IN_KeyUpCheat(lVar1 * 0x2a8 + -0x7d565db0);
   return;
 }
 
 
 // 82338E78  IN_SpeedDown  (client_mp/cl_input.cpp:374)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void IN_SpeedDown(void)
+
+{
+  ulonglong uVar1;
+  undefined1 *puVar3;
+  longlong lVar2;
+  
+  uVar1 = Cmd_LocalClientNum();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  }
+  if (4 < (int)(&DAT_82b3e54c)[(int)uVar1 * 0x79]) {
+    puVar3 = (undefined1 *)CL_GetLocalClientGlobals(uVar1);
+    *puVar3 = 0;
+    lVar2 = Cmd_LocalClientNum();
+    IN_KeyDownCheat(lVar2 * 0x2a8 + -0x7d565dc4);
+  }
+  return;
+}
+
 
 // 82338F18  IN_SpeedUp  (client_mp/cl_input.cpp:391)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void IN_SpeedUp(void)
+
+{
+  ulonglong uVar1;
+  undefined1 *puVar3;
+  longlong lVar2;
+  
+  uVar1 = Cmd_LocalClientNum();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  }
+  if (4 < (int)(&DAT_82b3e54c)[(int)uVar1 * 0x79]) {
+    puVar3 = (undefined1 *)CL_GetLocalClientGlobals(uVar1);
+    *puVar3 = 0;
+    lVar2 = Cmd_LocalClientNum();
+    IN_KeyUpCheat(lVar2 * 0x2a8 + -0x7d565dc4);
+  }
+  return;
+}
+
 
 // 82338FB8  CL_UseReload  (client_mp/cl_input.cpp:438)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_UseReload(LocalClientNum_t param_1,int param_2)
+void CL_UseReload(undefined8 param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  kbutton_t *pkVar4;
-  int iVar5;
+  int *piVar1;
+  int iVar2;
   
-  iVar5 = __savegprlr_29(param_1);
-  pkVar4 = playersKb[iVar5] + 0x19;
-  iVar3 = playersKb[iVar5][0x19].down[0];
-  if ((param_2 != iVar3) && (iVar1 = playersKb[iVar5][0x19].down[1], param_2 != iVar1)) {
-    if (iVar3 == 0) {
-      pkVar4->down[0] = param_2;
-    }
-    else {
-      if (iVar1 != 0) {
-        Com_Printf(0xe,"Three keys down for a button!\n");
-        goto LAB_82339044;
+  iVar2 = __savegprlr_29();
+  iVar2 = iVar2 * 0x2a8;
+  piVar1 = (int *)(&DAT_82a9a37c + iVar2);
+  if (param_2 != *(int *)(&DAT_82a9a37c + iVar2)) {
+    if (param_2 != *(int *)(&DAT_82a9a380 + iVar2)) {
+      if (*(int *)(&DAT_82a9a37c + iVar2) == 0) {
+        *piVar1 = param_2;
       }
-      playersKb[iVar5][0x19].down[1] = param_2;
-    }
-    if (playersKb[iVar5][0x19].active == false) {
-      playersKb[iVar5][0x19].downtime = 0;
-      playersKb[iVar5][0x19].active = true;
-      playersKb[iVar5][0x19].wasPressed = true;
+      else {
+        if (*(int *)(&DAT_82a9a380 + iVar2) != 0) {
+          Com_Printf(0xe,0xffffffff8202ed38);
+          goto LAB_82339044;
+        }
+        *(int *)(&DAT_82a9a380 + iVar2) = param_2;
+      }
+      if ((&DAT_82a9a38c)[iVar2] == '\0') {
+        *(undefined4 *)(&DAT_82a9a384 + iVar2) = 0;
+        (&DAT_82a9a38c)[iVar2] = 1;
+        (&DAT_82a9a38d)[iVar2] = 1;
+      }
     }
   }
 LAB_82339044:
-  iVar3 = pkVar4->down[0];
-  if (iVar3 == param_2) {
-    pkVar4->down[0] = 0;
+  if (*piVar1 == param_2) {
+    *piVar1 = 0;
   }
-  else if ((playersKb[iVar5][0x19].down[1] != param_2) ||
-          (playersKb[iVar5][0x19].down[1] = 0, iVar3 != 0)) goto LAB_82339098;
-  if (playersKb[iVar5][0x19].down[1] == 0) {
-    uVar2 = playersKb[iVar5][0x19].msec;
-    playersKb[iVar5][0x19].active = false;
-    playersKb[iVar5][0x19].msec = (frame_msec >> 1) + uVar2;
+  else if ((*(int *)(&DAT_82a9a380 + iVar2) != param_2) ||
+          (*(undefined4 *)(&DAT_82a9a380 + iVar2) = 0, *piVar1 != 0)) goto LAB_82339098;
+  if (*(int *)(&DAT_82a9a380 + iVar2) == 0) {
+    (&DAT_82a9a38c)[iVar2] = 0;
+    *(uint *)(&DAT_82a9a388 + iVar2) = (DAT_82b3e4cc >> 1) + *(int *)(&DAT_82a9a388 + iVar2);
   }
 LAB_82339098:
   __restgprlr_29();
@@ -317,48 +392,43 @@ LAB_82339098:
 
 // 823390A0  CL_SpecPrev  (client_mp/cl_input.cpp:445)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_SpecPrev(LocalClientNum_t param_1,int param_2)
+void CL_SpecPrev(undefined8 param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  kbutton_t *pkVar4;
-  int iVar5;
+  int *piVar1;
+  int iVar2;
   
-  iVar5 = __savegprlr_29(param_1);
-  pkVar4 = playersKb[iVar5] + 0x10;
-  iVar3 = playersKb[iVar5][0x10].down[0];
-  if ((param_2 != iVar3) && (iVar1 = playersKb[iVar5][0x10].down[1], param_2 != iVar1)) {
-    if (iVar3 == 0) {
-      pkVar4->down[0] = param_2;
-    }
-    else {
-      if (iVar1 != 0) {
-        Com_Printf(0xe,"Three keys down for a button!\n");
-        goto LAB_8233912c;
+  iVar2 = __savegprlr_29();
+  iVar2 = iVar2 * 0x2a8;
+  piVar1 = (int *)(&DAT_82a9a2c8 + iVar2);
+  if (param_2 != *(int *)(&DAT_82a9a2c8 + iVar2)) {
+    if (param_2 != *(int *)(&DAT_82a9a2cc + iVar2)) {
+      if (*(int *)(&DAT_82a9a2c8 + iVar2) == 0) {
+        *piVar1 = param_2;
       }
-      playersKb[iVar5][0x10].down[1] = param_2;
-    }
-    if (playersKb[iVar5][0x10].active == false) {
-      playersKb[iVar5][0x10].downtime = 0;
-      playersKb[iVar5][0x10].active = true;
-      playersKb[iVar5][0x10].wasPressed = true;
+      else {
+        if (*(int *)(&DAT_82a9a2cc + iVar2) != 0) {
+          Com_Printf(0xe,0xffffffff8202ed38);
+          goto LAB_8233912c;
+        }
+        *(int *)(&DAT_82a9a2cc + iVar2) = param_2;
+      }
+      if ((&DAT_82a9a2d8)[iVar2] == '\0') {
+        *(undefined4 *)(&DAT_82a9a2d0 + iVar2) = 0;
+        (&DAT_82a9a2d8)[iVar2] = 1;
+        (&DAT_82a9a2d9)[iVar2] = 1;
+      }
     }
   }
 LAB_8233912c:
-  iVar3 = pkVar4->down[0];
-  if (iVar3 == param_2) {
-    pkVar4->down[0] = 0;
+  if (*piVar1 == param_2) {
+    *piVar1 = 0;
   }
-  else if ((playersKb[iVar5][0x10].down[1] != param_2) ||
-          (playersKb[iVar5][0x10].down[1] = 0, iVar3 != 0)) goto LAB_82339180;
-  if (playersKb[iVar5][0x10].down[1] == 0) {
-    uVar2 = playersKb[iVar5][0x10].msec;
-    playersKb[iVar5][0x10].active = false;
-    playersKb[iVar5][0x10].msec = (frame_msec >> 1) + uVar2;
+  else if ((*(int *)(&DAT_82a9a2cc + iVar2) != param_2) ||
+          (*(undefined4 *)(&DAT_82a9a2cc + iVar2) = 0, *piVar1 != 0)) goto LAB_82339180;
+  if (*(int *)(&DAT_82a9a2cc + iVar2) == 0) {
+    (&DAT_82a9a2d8)[iVar2] = 0;
+    *(uint *)(&DAT_82a9a2d4 + iVar2) = (DAT_82b3e4cc >> 1) + *(int *)(&DAT_82a9a2d4 + iVar2);
   }
 LAB_82339180:
   __restgprlr_29();
@@ -368,48 +438,43 @@ LAB_82339180:
 
 // 82339188  CL_SpecNext  (client_mp/cl_input.cpp:452)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_SpecNext(LocalClientNum_t param_1,int param_2)
+void CL_SpecNext(undefined8 param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  kbutton_t *pkVar4;
-  int iVar5;
+  int *piVar1;
+  int iVar2;
   
-  iVar5 = __savegprlr_29(param_1);
-  pkVar4 = playersKb[iVar5] + 0xf;
-  iVar3 = playersKb[iVar5][0xf].down[0];
-  if ((param_2 != iVar3) && (iVar1 = playersKb[iVar5][0xf].down[1], param_2 != iVar1)) {
-    if (iVar3 == 0) {
-      pkVar4->down[0] = param_2;
-    }
-    else {
-      if (iVar1 != 0) {
-        Com_Printf(0xe,"Three keys down for a button!\n");
-        goto LAB_82339214;
+  iVar2 = __savegprlr_29();
+  iVar2 = iVar2 * 0x2a8;
+  piVar1 = (int *)(&DAT_82a9a2b4 + iVar2);
+  if (param_2 != *(int *)(&DAT_82a9a2b4 + iVar2)) {
+    if (param_2 != *(int *)(&DAT_82a9a2b8 + iVar2)) {
+      if (*(int *)(&DAT_82a9a2b4 + iVar2) == 0) {
+        *piVar1 = param_2;
       }
-      playersKb[iVar5][0xf].down[1] = param_2;
-    }
-    if (playersKb[iVar5][0xf].active == false) {
-      playersKb[iVar5][0xf].downtime = 0;
-      playersKb[iVar5][0xf].active = true;
-      playersKb[iVar5][0xf].wasPressed = true;
+      else {
+        if (*(int *)(&DAT_82a9a2b8 + iVar2) != 0) {
+          Com_Printf(0xe,0xffffffff8202ed38);
+          goto LAB_82339214;
+        }
+        *(int *)(&DAT_82a9a2b8 + iVar2) = param_2;
+      }
+      if ((&DAT_82a9a2c4)[iVar2] == '\0') {
+        *(undefined4 *)(&DAT_82a9a2bc + iVar2) = 0;
+        (&DAT_82a9a2c4)[iVar2] = 1;
+        (&DAT_82a9a2c5)[iVar2] = 1;
+      }
     }
   }
 LAB_82339214:
-  iVar3 = pkVar4->down[0];
-  if (iVar3 == param_2) {
-    pkVar4->down[0] = 0;
+  if (*piVar1 == param_2) {
+    *piVar1 = 0;
   }
-  else if ((playersKb[iVar5][0xf].down[1] != param_2) ||
-          (playersKb[iVar5][0xf].down[1] = 0, iVar3 != 0)) goto LAB_82339268;
-  if (playersKb[iVar5][0xf].down[1] == 0) {
-    uVar2 = playersKb[iVar5][0xf].msec;
-    playersKb[iVar5][0xf].active = false;
-    playersKb[iVar5][0xf].msec = (frame_msec >> 1) + uVar2;
+  else if ((*(int *)(&DAT_82a9a2b8 + iVar2) != param_2) ||
+          (*(undefined4 *)(&DAT_82a9a2b8 + iVar2) = 0, *piVar1 != 0)) goto LAB_82339268;
+  if (*(int *)(&DAT_82a9a2b8 + iVar2) == 0) {
+    (&DAT_82a9a2c4)[iVar2] = 0;
+    *(uint *)(&DAT_82a9a2c0 + iVar2) = (DAT_82b3e4cc >> 1) + *(int *)(&DAT_82a9a2c0 + iVar2);
   }
 LAB_82339268:
   __restgprlr_29();
@@ -419,48 +484,43 @@ LAB_82339268:
 
 // 82339270  CL_ToggleSpec  (client_mp/cl_input.cpp:459)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_ToggleSpec(LocalClientNum_t param_1,int param_2)
+void CL_ToggleSpec(undefined8 param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  kbutton_t *pkVar4;
-  int iVar5;
+  int *piVar1;
+  int iVar2;
   
-  iVar5 = __savegprlr_29(param_1);
-  pkVar4 = playersKb[iVar5] + 0xe;
-  iVar3 = playersKb[iVar5][0xe].down[0];
-  if ((param_2 != iVar3) && (iVar1 = playersKb[iVar5][0xe].down[1], param_2 != iVar1)) {
-    if (iVar3 == 0) {
-      pkVar4->down[0] = param_2;
-    }
-    else {
-      if (iVar1 != 0) {
-        Com_Printf(0xe,"Three keys down for a button!\n");
-        goto LAB_823392fc;
+  iVar2 = __savegprlr_29();
+  iVar2 = iVar2 * 0x2a8;
+  piVar1 = (int *)(&DAT_82a9a2a0 + iVar2);
+  if (param_2 != *(int *)(&DAT_82a9a2a0 + iVar2)) {
+    if (param_2 != *(int *)(&DAT_82a9a2a4 + iVar2)) {
+      if (*(int *)(&DAT_82a9a2a0 + iVar2) == 0) {
+        *piVar1 = param_2;
       }
-      playersKb[iVar5][0xe].down[1] = param_2;
-    }
-    if (playersKb[iVar5][0xe].active == false) {
-      playersKb[iVar5][0xe].downtime = 0;
-      playersKb[iVar5][0xe].active = true;
-      playersKb[iVar5][0xe].wasPressed = true;
+      else {
+        if (*(int *)(&DAT_82a9a2a4 + iVar2) != 0) {
+          Com_Printf(0xe,0xffffffff8202ed38);
+          goto LAB_823392fc;
+        }
+        *(int *)(&DAT_82a9a2a4 + iVar2) = param_2;
+      }
+      if ((&DAT_82a9a2b0)[iVar2] == '\0') {
+        *(undefined4 *)(&DAT_82a9a2a8 + iVar2) = 0;
+        (&DAT_82a9a2b0)[iVar2] = 1;
+        (&DAT_82a9a2b1)[iVar2] = 1;
+      }
     }
   }
 LAB_823392fc:
-  iVar3 = pkVar4->down[0];
-  if (iVar3 == param_2) {
-    pkVar4->down[0] = 0;
+  if (*piVar1 == param_2) {
+    *piVar1 = 0;
   }
-  else if ((playersKb[iVar5][0xe].down[1] != param_2) ||
-          (playersKb[iVar5][0xe].down[1] = 0, iVar3 != 0)) goto LAB_82339350;
-  if (playersKb[iVar5][0xe].down[1] == 0) {
-    uVar2 = playersKb[iVar5][0xe].msec;
-    playersKb[iVar5][0xe].active = false;
-    playersKb[iVar5][0xe].msec = (frame_msec >> 1) + uVar2;
+  else if ((*(int *)(&DAT_82a9a2a4 + iVar2) != param_2) ||
+          (*(undefined4 *)(&DAT_82a9a2a4 + iVar2) = 0, *piVar1 != 0)) goto LAB_82339350;
+  if (*(int *)(&DAT_82a9a2a4 + iVar2) == 0) {
+    (&DAT_82a9a2b0)[iVar2] = 0;
+    *(uint *)(&DAT_82a9a2ac + iVar2) = (DAT_82b3e4cc >> 1) + *(int *)(&DAT_82a9a2ac + iVar2);
   }
 LAB_82339350:
   __restgprlr_29();
@@ -470,39 +530,36 @@ LAB_82339350:
 
 // 82339358  IN_RemoteKeyboard  (client_mp/cl_input.cpp:468)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void IN_RemoteKeyboard(void)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  char *pcVar3;
-  int iVar4;
+  undefined8 uVar1;
+  int iVar3;
+  char *pcVar4;
   int iVar5;
-  uint uVar6;
+  int iVar6;
+  undefined8 uVar2;
   
   __savegprlr_28();
-  LVar1 = Cmd_LocalClientNum();
-  iVar2 = Cmd_Argc();
-  if (iVar2 < 3) {
-    Com_Printf(0,"USAGE: remoteKey <value> <value> <value>\n");
+  uVar1 = Cmd_LocalClientNum();
+  iVar3 = Cmd_Argc();
+  if (iVar3 < 3) {
+    Com_Printf(0,0xffffffff8202edc8);
     __restgprlr_28();
     return;
   }
-  pcVar3 = Cmd_Argv(1);
-  iVar2 = atoi(pcVar3);
-  pcVar3 = Cmd_Argv(2);
-  iVar4 = atoi(pcVar3);
-  pcVar3 = Cmd_Argv(3);
-  iVar5 = atoi(pcVar3);
-  if (iVar2 != 0) {
-    uVar6 = Sys_Milliseconds();
-    CL_KeyEvent(LVar1,iVar2,iVar5,uVar6);
+  pcVar4 = (char *)Cmd_Argv(1);
+  iVar3 = atoi(pcVar4);
+  pcVar4 = (char *)Cmd_Argv(2);
+  iVar5 = atoi(pcVar4);
+  pcVar4 = (char *)Cmd_Argv(3);
+  iVar6 = atoi(pcVar4);
+  if (iVar3 != 0) {
+    uVar2 = Sys_Milliseconds();
+    CL_KeyEvent(uVar1,iVar3,iVar6,uVar2);
   }
-  if ((iVar4 != 0) && (iVar5 != 0)) {
-    CL_CharEvent(LVar1,iVar4);
+  if ((iVar5 != 0) && (iVar6 != 0)) {
+    CL_CharEvent(uVar1,iVar5);
   }
   __restgprlr_28();
   return;
@@ -510,211 +567,1559 @@ void IN_RemoteKeyboard(void)
 
 
 // 82339408  IN_RemoteMouseMove  (client_mp/cl_input.cpp:495)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void IN_RemoteMouseMove(void)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  int iVar3;
+  char *pcVar4;
+  int iVar5;
+  
+  uVar1 = Cmd_LocalClientNum();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  }
+  if (4 < (int)(&DAT_82b3e54c)[(int)uVar1 * 0x79]) {
+    iVar2 = CL_GetLocalClientGlobals(uVar1);
+    iVar3 = CG_IsValidRemoteInputState(uVar1);
+    if (iVar3 != 0) {
+      iVar3 = Cmd_Argc();
+      if (iVar3 < 2) {
+        Com_Printf(0,0xffffffff8202edf4);
+      }
+      else {
+        pcVar4 = (char *)Cmd_Argv(1);
+        iVar3 = atoi(pcVar4);
+        pcVar4 = (char *)Cmd_Argv(2);
+        iVar5 = atoi(pcVar4);
+        *(int *)((*(int *)(iVar2 + 0x3528) + 0xd46) * 4 + iVar2) = iVar3;
+        *(int *)((*(int *)(iVar2 + 0x3528) + 0xd48) * 4 + iVar2) = iVar5;
+      }
+    }
+  }
+  return;
+}
+
 
 // 82339500  IN_Throw_Down  (client_mp/cl_input.cpp:532)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IN_Throw_Down(void)
 
 {
-  LocalClientNum_t LVar1;
+  longlong lVar1;
   
-  LVar1 = Cmd_LocalClientNum();
-  IN_KeyDownCheat(playersKb[LVar1] + 0x1c);
+  lVar1 = Cmd_LocalClientNum();
+  IN_KeyDownCheat(lVar1 * 0x2a8 + -0x7d565c48);
   return;
 }
 
 
 // 82339538  IN_Throw_Up  (client_mp/cl_input.cpp:538)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void IN_Throw_Up(void)
 
 {
-  LocalClientNum_t LVar1;
+  longlong lVar1;
   
-  LVar1 = Cmd_LocalClientNum();
-  IN_KeyUpCheat(playersKb[LVar1] + 0x1c);
+  lVar1 = Cmd_LocalClientNum();
+  IN_KeyUpCheat(lVar1 * 0x2a8 + -0x7d565c48);
   return;
 }
 
 
 // 82339570  IN_LowerStance  (client_mp/cl_input.cpp:544)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
-// 82339690  IN_RaiseStance  (client_mp/cl_input.cpp:573)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
-
-// 823397B0  CL_UpdateAirburstMarkDistance  (client_mp/cl_input.cpp:611)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
-
-// 82339860  AdjustViewanglesForKeyboard  (client_mp/cl_input.cpp:638)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
-
-// 823399F8  CL_StanceButtonUpdate  (client_mp/cl_input.cpp:681)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
-
-// 82339AE8  CL_AddCurrentStanceToCmd  (client_mp/cl_input.cpp:708)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
-
-// 82339B90  CL_GamepadAccessibility  (client_mp/cl_input.cpp:737)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
-
-// 82339D28  CL_KeyMove  (client_mp/cl_input.cpp:791)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
-
-// 82339F08  SetMeleeChargeCmd  (client_mp/cl_input.cpp:934)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
-
-// 82339F90  CL_GetClientLookInversion  (client_mp/cl_input.cpp:952)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-float CL_GetClientLookInversion(LocalClientNum_t param_1)
+void IN_LowerStance(void)
 
 {
   int iVar1;
-  GamerSettingState *pGVar2;
+  bool bVar2;
+  ulonglong uVar3;
+  int iVar4;
+  undefined4 uVar5;
   
-  iVar1 = CL_ControllerIndexFromClientNum(param_1);
-  pGVar2 = GamerProfile_GetProfileSettings(iVar1);
-  if ((pGVar2->commonConfig).invertPitch != false) {
-    return 1.0;
+  uVar3 = Cmd_LocalClientNum();
+  if (3 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar3,4);
   }
-  return -1.0;
+  if (4 < (int)(&DAT_82b3e54c)[(int)uVar3 * 0x79]) {
+    iVar1 = (int)uVar3 * 0x2a8;
+    if (((&DAT_82a9a3a0)[iVar1] != '\0') || (bVar2 = false, (&DAT_82a9a274)[iVar1] != '\0')) {
+      bVar2 = true;
+    }
+    if (!bVar2) {
+      iVar4 = CL_GetLocalClientGlobals(uVar3);
+      iVar1 = *(int *)(iVar4 + 0x3530);
+      if (iVar1 == 0) {
+        uVar5 = 1;
+      }
+      else {
+        if (iVar1 != 1) {
+          if (iVar1 == 2) {
+            return;
+          }
+          MyAssertHandler(0xffffffff8202ed58,0x236,1,0xffffffff82000f98,0xffffffff8202ee18);
+          return;
+        }
+        uVar5 = 2;
+      }
+      *(undefined4 *)(iVar4 + 0x3530) = uVar5;
+    }
+    return;
+  }
+  return;
+}
+
+
+// 82339690  IN_RaiseStance  (client_mp/cl_input.cpp:573)
+
+void IN_RaiseStance(void)
+
+{
+  int iVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  int iVar4;
+  undefined4 uVar5;
+  
+  uVar3 = Cmd_LocalClientNum();
+  if (3 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar3,4);
+  }
+  if (4 < (int)(&DAT_82b3e54c)[(int)uVar3 * 0x79]) {
+    iVar1 = (int)uVar3 * 0x2a8;
+    if (((&DAT_82a9a3a0)[iVar1] != '\0') || (bVar2 = false, (&DAT_82a9a274)[iVar1] != '\0')) {
+      bVar2 = true;
+    }
+    if (!bVar2) {
+      iVar4 = CL_GetLocalClientGlobals(uVar3);
+      iVar1 = *(int *)(iVar4 + 0x3530);
+      if (iVar1 == 1) {
+        uVar5 = 0;
+      }
+      else {
+        if (iVar1 != 2) {
+          if (iVar1 == 0) {
+            return;
+          }
+          MyAssertHandler(0xffffffff8202ed58,0x253,1,0xffffffff82000f98,0xffffffff8202eda8);
+          return;
+        }
+        uVar5 = 1;
+      }
+      *(undefined4 *)(iVar4 + 0x3530) = uVar5;
+    }
+    return;
+  }
+  return;
+}
+
+
+// 823397B0  CL_UpdateAirburstMarkDistance  (client_mp/cl_input.cpp:611)
+
+void CL_UpdateAirburstMarkDistance(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  uint local_40 [16];
+  
+  uVar2 = __savegprlr_27();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202ed58,0x267,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  }
+  iVar1 = (int)param_3;
+  iVar3 = CG_GetAirburstMarkDistance(uVar2,param_2,*(undefined4 *)(iVar1 + 4),local_40);
+  if (iVar3 != 0) {
+    if (0xffff < local_40[0]) {
+      MyAssertHandler(0xffffffff8202ed58,0x26c,0,0xffffffff82000f98,0xffffffff8202ee38);
+    }
+    *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) | 0x8000000;
+    *(short *)(iVar1 + 0x1e) = (short)local_40[0];
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 82339860  AdjustViewanglesForKeyboard  (client_mp/cl_input.cpp:638)
+
+void AdjustViewanglesForKeyboard(int param_1)
+
+{
+  float fVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
+  param_1 = param_1 * 0x2a8;
+  iVar2 = CL_GetLocalClientGlobals();
+  if ((*(uint *)(iVar2 + 0x8c) & 0x800) == 0) {
+    if ((&DAT_82a9a24c)[param_1] == '\0') {
+      fVar1 = (float)(longlong)DAT_82aa1c1c;
+    }
+    else {
+      fVar1 = *(float *)(DAT_82a9ac2c + 0xc) * (float)(longlong)DAT_82aa1c1c;
+    }
+    dVar5 = (double)(fVar1 * 0.001);
+    dVar4 = 0.0;
+    if ((&DAT_82a9a238)[param_1] == '\0') {
+      dVar3 = (double)*(float *)(iVar2 + 0x3550);
+      if (dVar3 <= 0.0) {
+        dVar6 = (double)*(float *)(DAT_82a9a17c + 0xc);
+      }
+      else {
+        dVar6 = (double)*(float *)(DAT_82a9a17c + 0xc);
+        if ((float)(dVar3 - (double)*(float *)(DAT_82a9a17c + 0xc)) < 0.0) {
+          dVar6 = dVar3;
+        }
+      }
+      dVar3 = (double)CL_KeyState(param_1 + -0x7d565e64);
+      *(float *)(iVar2 + 0x35f0) =
+           -(float)((double)(float)(dVar3 * dVar6) * dVar5 - (double)*(float *)(iVar2 + 0x35f0));
+      dVar3 = (double)CL_KeyState(&DAT_82a9a188 + param_1);
+      *(float *)(iVar2 + 0x35f0) =
+           (float)((double)(float)(dVar3 * dVar6) * dVar5 + (double)*(float *)(iVar2 + 0x35f0));
+    }
+    dVar3 = (double)*(float *)(iVar2 + 0x354c);
+    if (dVar3 <= dVar4) {
+      dVar4 = (double)*(float *)(DAT_82a9ac28 + 0xc);
+    }
+    else {
+      dVar4 = (double)*(float *)(DAT_82a9ac28 + 0xc);
+      if ((float)(dVar3 - (double)*(float *)(DAT_82a9ac28 + 0xc)) < 0.0) {
+        dVar4 = dVar3;
+      }
+    }
+    dVar3 = (double)CL_KeyState(param_1 + -0x7d565e28);
+    *(float *)(iVar2 + 0x35ec) =
+         -(float)((double)(float)(dVar3 * dVar4) * dVar5 - (double)*(float *)(iVar2 + 0x35ec));
+    dVar3 = (double)CL_KeyState(param_1 + -0x7d565e14);
+    *(float *)(iVar2 + 0x35ec) =
+         (float)((double)(float)(dVar3 * dVar4) * dVar5 + (double)*(float *)(iVar2 + 0x35ec));
+  }
+  return;
+}
+
+
+// 823399F8  CL_StanceButtonUpdate  (client_mp/cl_input.cpp:681)
+
+void CL_StanceButtonUpdate(undefined8 param_1)
+
+{
+  bool bVar1;
+  int iVar2;
+  
+  iVar2 = (int)param_1 * 0x2a8;
+  if (((&DAT_82a9a3a0)[iVar2] != '\0') || (bVar1 = false, (&DAT_82a9a274)[iVar2] != '\0')) {
+    bVar1 = true;
+  }
+  if (bVar1) {
+    MyAssertHandler(0xffffffff8202ed58,0x2ac,0,0xffffffff82000f98,0xffffffff8202ee7c);
+  }
+  iVar2 = CL_GetLocalClientGlobals(param_1);
+  if ((*(char *)(iVar2 + 0x352c) != '\0') &&
+     (*(int *)(DAT_82a9a170 + 0xc) <= DAT_8366737c - *(int *)(iVar2 + 0x3538))) {
+    if (*(int *)(iVar2 + 0x3534) == 2) {
+      *(undefined4 *)(iVar2 + 0x3530) = 0;
+    }
+    else {
+      *(undefined4 *)(iVar2 + 0x3530) = 2;
+    }
+    *(undefined1 *)(iVar2 + 0x352c) = 0;
+  }
+  return;
+}
+
+
+// 82339AE8  CL_AddCurrentStanceToCmd  (client_mp/cl_input.cpp:708)
+
+void CL_AddCurrentStanceToCmd(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  uint uVar2;
+  
+  iVar1 = CL_GetLocalClientGlobals();
+  iVar1 = *(int *)(iVar1 + 0x3530);
+  if (iVar1 == 1) {
+    uVar2 = *(uint *)(param_2 + 4) & 0xfffffcff | 0x200;
+  }
+  else {
+    if (iVar1 != 2) {
+      if (iVar1 != 0) {
+        MyAssertHandler(0xffffffff8202ed58,0x2d4,0,0xffffffff82000f98,0xffffffff8202eda8);
+      }
+      *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) & 0xfffffcff;
+      goto LAB_82339b70;
+    }
+    uVar2 = *(uint *)(param_2 + 4) & 0xfffffcff | 0x100;
+  }
+  *(uint *)(param_2 + 4) = uVar2;
+LAB_82339b70:
+  *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) & 0xffffefff;
+  return;
+}
+
+
+// 82339B90  CL_GamepadAccessibility  (client_mp/cl_input.cpp:737)
+
+void CL_GamepadAccessibility(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar6;
+  int *piVar7;
+  
+  uVar2 = __savegprlr_28();
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202ed58,0x2e5,0,0xffffffff820011a8,uVar2,4);
+  }
+  iVar3 = CL_GetLocalClientGlobals(uVar2);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8202ed58,0x2e8,0,0xffffffff82000f98,0xffffffff8202eea8);
+  }
+  iVar1 = (int)uVar2 * 0x2a8;
+  if (((&DAT_82a9a42c)[iVar1] != '\0') || ((&DAT_82a9a42d)[iVar1] != '\0')) {
+    if (*(int *)(iVar3 + 0x410) == 1) {
+      if (*(int *)(iVar3 + 0x2e8) == 6) {
+LAB_82339d08:
+        *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x80000;
+      }
+      else {
+        if (*(int *)(iVar3 + 0x2cc) == 6) {
+LAB_82339c54:
+          *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 1;
+          (&DAT_82a9a42d)[iVar1] = 0;
+          __restgprlr_28();
+          return;
+        }
+        if ((*(char *)(DAT_82a9a174 + 0xc) != '\0') || ((&DAT_82a9a42d)[iVar1] != '\0')) {
+          if ((iVar3 + 0x80 == 0) || (uVar6 = 1, (*(uint *)(iVar3 + 0x3f4) & 0x8000) == 0)) {
+            uVar6 = 0;
+          }
+          iVar4 = BG_ClipForWeapon(*(undefined4 *)(iVar3 + 0x3f0),uVar6);
+          iVar5 = 0;
+          piVar7 = (int *)(iVar3 + 0x48c);
+          do {
+            if (*piVar7 == iVar4) {
+              if ((piVar7[2] != 0) &&
+                 (iVar3 = BG_ShotLimitReached(iVar3 + 0x80,*(undefined4 *)(iVar3 + 0x3f0),1),
+                 iVar3 == 0)) goto LAB_82339d08;
+              break;
+            }
+            iVar5 = iVar5 + 1;
+            piVar7 = piVar7 + 3;
+          } while (iVar5 < 0xf);
+          goto LAB_82339c54;
+        }
+      }
+    }
+    (&DAT_82a9a42d)[iVar1] = 0;
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 82339D28  CL_KeyMove  (client_mp/cl_input.cpp:791)
+
+void CL_KeyMove(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  char *pcVar3;
+  undefined1 uVar4;
+  bool bVar6;
+  uint uVar5;
+  int iVar7;
+  longlong lVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  
+  iVar2 = __savegprlr_27();
+  pcVar3 = (char *)CL_GetLocalClientGlobals();
+  iVar7 = iVar2 * 0x2a8;
+  if (((&DAT_82a9a3a0)[iVar7] != '\0') || (bVar6 = false, (&DAT_82a9a274)[iVar7] != '\0')) {
+    bVar6 = true;
+  }
+  iVar1 = (int)param_2;
+  if (bVar6) {
+    if ((&DAT_82a9a3a0)[iVar7] == '\0') {
+      uVar5 = *(uint *)(iVar1 + 4) & 0xfffffcff;
+      *(uint *)(iVar1 + 4) = uVar5 | 0x200;
+      *(uint *)(iVar1 + 4) = uVar5 | 0x1200;
+    }
+    else {
+      uVar5 = *(uint *)(iVar1 + 4) & 0xfffffcff;
+      *(uint *)(iVar1 + 4) = uVar5 | 0x100;
+      *(uint *)(iVar1 + 4) = uVar5 | 0x1100;
+    }
+  }
+  else {
+    CL_StanceButtonUpdate(iVar2);
+    CL_AddCurrentStanceToCmd(iVar2,param_2);
+  }
+  uVar5 = *(uint *)(iVar1 + 4) & 0xfffff7ff;
+  if ((bool)(&DAT_82a9a24c)[iVar7] == (*pcVar3 == '\0')) {
+    uVar5 = *(uint *)(iVar1 + 4) | 0x800;
+  }
+  *(uint *)(iVar1 + 4) = uVar5;
+  CL_GamepadAccessibility(iVar2,param_2);
+  dVar9 = (double)CL_KeyState(iVar7 + -0x7d565dec);
+  dVar13 = 127.0;
+  dVar10 = (double)CL_KeyState(iVar7 + -0x7d565e00);
+  lVar8 = (ulonglong)(uint)(int)(dVar9 * 127.0) - (ulonglong)(uint)(int)(dVar10 * dVar13);
+  dVar9 = (double)CL_KeyState(iVar7 + -0x7d565e50);
+  dVar9 = dVar9 * dVar13;
+  dVar10 = (double)CL_KeyState(iVar7 + -0x7d565e3c);
+  dVar10 = dVar10 * dVar13;
+  if (((&DAT_82a9a238)[iVar7] != '\0') && ((*(uint *)(iVar1 + 4) & 2) == 0)) {
+    dVar11 = (double)CL_KeyState(iVar7 + -0x7d565e64);
+    dVar12 = (double)CL_KeyState(&DAT_82a9a188 + iVar7);
+    lVar8 = (lVar8 - (ulonglong)(uint)(int)(dVar11 * -127.0)) -
+            (ulonglong)(uint)(int)(dVar12 * dVar13);
+  }
+  uVar4 = ClampChar((ulonglong)(uint)(int)dVar9 - (ulonglong)(uint)(int)dVar10);
+  *(undefined1 *)(iVar1 + 0x1c) = uVar4;
+  uVar4 = ClampChar(lVar8);
+  *(undefined1 *)(iVar1 + 0x1d) = uVar4;
+  __restgprlr_27();
+  return;
+}
+
+
+// 82339F08  SetMeleeChargeCmd  (client_mp/cl_input.cpp:934)
+
+void SetMeleeChargeCmd(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8202ed58,0x3a7,0,0xffffffff82000f98,0xffffffff8202eeb0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202ed58,0x3a8,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  }
+  *(undefined2 *)((int)param_2 + 0x20) = *(undefined2 *)(iVar1 + 0xc);
+  *(undefined1 *)((int)param_2 + 0x22) = *(undefined1 *)(iVar1 + 0xe);
+  __restgprlr_28();
+  return;
+}
+
+
+// 82339F90  CL_GetClientLookInversion  (client_mp/cl_input.cpp:952)
+
+undefined8 CL_GetClientLookInversion(void)
+
+{
+  int iVar1;
+  
+  CL_ControllerIndexFromClientNum();
+  iVar1 = GamerProfile_GetProfileSettings();
+  if (*(char *)(iVar1 + 0x44) != '\0') {
+    return 0x3ff0000000000000;
+  }
+  return 0xbff0000000000000;
 }
 
 
 // 82339FE0  ClearMeleeChargeCmd  (client_mp/cl_input.cpp:960)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void ClearMeleeChargeCmd(int param_1)
+
+{
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8202ed58,0x3c1,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  }
+  *(undefined2 *)(param_1 + 0x20) = 0x7ff;
+  *(undefined1 *)(param_1 + 0x22) = 0;
+  return;
+}
+
 
 // 8233A048  CL_GamepadMove  (client_mp/cl_input.cpp:974)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_GamepadMove(undefined8 param_1,undefined8 param_2,longlong param_3)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  char *pcVar4;
+  char cVar6;
+  undefined8 uVar3;
+  int iVar5;
+  undefined1 uVar7;
+  double dVar8;
+  double extraout_f1;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  undefined8 local_b0;
+  float local_a0;
+  float local_9c;
+  undefined4 local_98;
+  float local_94;
+  undefined4 local_90;
+  undefined4 local_8c;
+  float local_88;
+  undefined4 local_84;
+  float local_80;
+  float local_7c;
+  undefined4 local_78;
+  int local_74;
+  
+  __savegprlr_28();
+  uVar2 = __savefpr_23();
+  dVar13 = extraout_f1;
+  pcVar4 = (char *)CL_GetLocalClientGlobals();
+  if (((*(uint *)(pcVar4 + 0x8c) & 0x800) == 0) || (cVar6 = CL_Demo_IsPlaying(uVar2), cVar6 != '\0')
+     ) {
+    uVar3 = CL_ControllerIndexFromClientNum(uVar2);
+    dVar9 = (double)CL_GamepadAxisValue(uVar2,4);
+    CL_ControllerIndexFromClientNum(uVar2);
+    iVar5 = GamerProfile_GetProfileSettings();
+    dVar14 = 1.0;
+    dVar8 = dVar14;
+    if (*(char *)(iVar5 + 0x44) == '\0') {
+      dVar8 = -1.0;
+    }
+    dVar15 = (double)(float)(dVar8 * dVar9);
+    dVar9 = (double)CL_GamepadAxisValue(uVar2,3);
+    dVar9 = -dVar9;
+    dVar10 = (double)CL_GamepadAxisValue(uVar2,1);
+    dVar11 = (double)CL_GamepadAxisValue(uVar2,0);
+    dVar12 = (double)CL_GamepadAxisValue(uVar2,5);
+    dVar8 = 127.0;
+    dVar16 = 0.0;
+    if ((0.0 < ABS(dVar11)) || (0.0 < ABS(dVar10))) {
+      if (ABS(dVar11) <= ABS(dVar10)) {
+        dVar8 = dVar11 / dVar10;
+      }
+      else {
+        dVar8 = dVar10 / dVar11;
+      }
+      dVar8 = (double)(SQRT((float)((double)(float)dVar8 * (double)(float)dVar8 + dVar14)) * 127.0);
+    }
+    iVar5 = (int)param_3;
+    local_b0 = (longlong)(int)(dVar8 * dVar11);
+    uVar7 = ClampChar((ulonglong)(uint)(int)(dVar8 * dVar11) + (longlong)*(char *)(iVar5 + 0x1d));
+    *(undefined1 *)(iVar5 + 0x1d) = uVar7;
+    local_b0 = (longlong)(int)(dVar8 * dVar10);
+    uVar7 = ClampChar((ulonglong)(uint)(int)(dVar8 * dVar10) + (longlong)*(char *)(iVar5 + 0x1c));
+    iVar1 = (int)uVar2 * 0x2a8;
+    *(undefined1 *)(iVar5 + 0x1c) = uVar7;
+    if ((bool)(&DAT_82a9a24c)[iVar1] == (*pcVar4 == '\0')) {
+      *(uint *)(iVar5 + 4) = *(uint *)(iVar5 + 4) | 0x800;
+    }
+    if ((&DAT_82a9a1d4)[iVar1] == '\0') {
+      if (((&DAT_82a9a3dc)[iVar1] == '\0') && ((&DAT_82a9a3dd)[iVar1] == '\0')) {
+        *(uint *)(iVar5 + 4) = *(uint *)(iVar5 + 4) & 0xfffffffd;
+      }
+      else {
+        *(uint *)(iVar5 + 4) = *(uint *)(iVar5 + 4) | 2;
+        (&DAT_82a9a3dd)[iVar1] = 0;
+      }
+    }
+    if ((double)*(float *)(DAT_82a9a178 + 0xc) <= dVar12) {
+      *(uint *)(iVar5 + 4) = *(uint *)(iVar5 + 4) | 1;
+    }
+    if ((*(uint *)(pcVar4 + 0x178) & 0x200000) != 0) {
+      dVar8 = (double)GPad_GetButton(uVar3,0x20000001);
+      if (dVar8 != dVar16) {
+        *(uint *)(iVar5 + 4) = *(uint *)(iVar5 + 4) | 0x1000000;
+      }
+      dVar8 = (double)GPad_GetButton(uVar3,0x20000000);
+      if (dVar8 != dVar16) {
+        *(uint *)(iVar5 + 4) = *(uint *)(iVar5 + 4) | 0x2000000;
+      }
+      dVar8 = (double)GPad_GetButton(uVar3,0x10002000);
+      if (dVar8 != dVar16) {
+        *(uint *)(iVar5 + 4) = *(uint *)(iVar5 + 4) | 0x2000000;
+      }
+    }
+    CG_HandleSpecialStateInput(uVar2,param_3 + 4);
+    cVar6 = CG_ShouldUpdateViewAngles(uVar2);
+    if (cVar6 != '\0') {
+      local_78 = *(undefined4 *)(param_3 + 4);
+      local_98 = *(undefined4 *)(pcVar4 + 0x35ec);
+      local_90 = *(undefined4 *)(pcVar4 + 0x354c);
+      local_8c = *(undefined4 *)(pcVar4 + 0x35f0);
+      local_84 = *(undefined4 *)(pcVar4 + 0x3550);
+      local_b0 = (longlong)DAT_82aa1c1c;
+      local_a0 = (float)dVar13;
+      local_94 = (float)dVar15;
+      local_88 = (float)dVar9;
+      local_80 = (float)dVar10;
+      local_7c = (float)dVar11;
+      local_9c = (float)local_b0 * 0.001;
+      local_74 = (int)uVar2;
+      AimAssist_UpdateGamePadInput(&local_a0,&local_b0);
+      *(undefined4 *)(pcVar4 + 0x35ec) = local_b0._0_4_;
+      *(undefined4 *)(pcVar4 + 0x35f0) = local_b0._4_4_;
+      SetMeleeChargeCmd(&local_b0,param_3);
+    }
+    CL_UpdateAirburstMarkDistance(uVar2,pcVar4 + 0x80,param_3);
+    CG_ModelPreviewerHandleGamepadEvents(dVar10,dVar11,dVar15,dVar9,uVar2);
+  }
+  __restfpr_23();
+  __restgprlr_28();
+  return;
+}
+
 
 // 8233A3C8  CL_GetMouseMovement  (client_mp/cl_input.cpp:1128)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_GetMouseMovement(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  uint uVar2;
+  
+  iVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202ed58,0x469,0,0xffffffff82000f98,0xffffffff8202eec0);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202ed58,0x46a,0,0xffffffff82000f98,0xffffffff8202eebc);
+  }
+  if (*(char *)(DAT_82b3ec9c + 0xc) == '\0') {
+    *(float *)param_2 = (float)(longlong)*(int *)((*(int *)(iVar1 + 0x3528) + 0xd46) * 4 + iVar1);
+    *(float *)param_3 = (float)(longlong)*(int *)((*(int *)(iVar1 + 0x3528) + 0xd48) * 4 + iVar1);
+  }
+  else {
+    *(float *)param_2 = (float)(longlong)(*(int *)(iVar1 + 0x351c) + *(int *)(iVar1 + 0x3518)) * 0.5
+    ;
+    *(float *)param_3 = (float)(longlong)(*(int *)(iVar1 + 0x3524) + *(int *)(iVar1 + 0x3520)) * 0.5
+    ;
+  }
+  uVar2 = *(uint *)(iVar1 + 0x3528) ^ 1;
+  *(uint *)(iVar1 + 0x3528) = uVar2;
+  *(undefined4 *)((uVar2 + 0xd46) * 4 + iVar1) = 0;
+  *(undefined4 *)((*(int *)(iVar1 + 0x3528) + 0xd48) * 4 + iVar1) = 0;
+  __restgprlr_27();
+  return;
+}
+
 
 // 8233A530  CL_GetMouseMovementWithSensitivity  (client_mp/cl_input.cpp:1149)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_GetMouseMovementWithSensitivity(undefined8 param_1,float *param_2,float *param_3)
+
+{
+  int iVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  float local_50;
+  float local_4c;
+  ulonglong local_48;
+  
+  iVar1 = __savegprlr_29();
+  CL_GetMouseMovement(iVar1,&local_4c,&local_50);
+  local_48 = (ulonglong)DAT_82b3e4cc;
+  dVar4 = (double)local_50;
+  dVar3 = (double)local_4c;
+  dVar2 = (double)(SQRT((float)(dVar3 * dVar3 + (double)(float)(dVar4 * dVar4))) / (float)local_48);
+  dVar5 = (double)((float)((double)*(float *)(DAT_82b3e4d8 + 0xc) * dVar2 +
+                          (double)*(float *)(DAT_82aa1ac4 + 0xc)) * *(float *)(iVar1 + 0x3548));
+  if ((dVar2 != 0.0) && (*(char *)(DAT_82aa1afc + 0xc) != '\0')) {
+    Com_Printf(dVar2,dVar5,0xe,0xffffffff8202eec4,dVar2,dVar5);
+  }
+  *param_2 = (float)(dVar5 * dVar3);
+  *param_3 = (float)(dVar5 * dVar4);
+  __restgprlr_29();
+  return;
+}
+
 
 // 8233A620  CL_MouseMove  (client_mp/cl_input.cpp:1170)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_MouseMove(undefined8 param_1,undefined8 param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  float fVar4;
+  int iVar5;
+  undefined8 uVar6;
+  int iVar7;
+  char cVar8;
+  undefined1 uVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  float local_60 [2];
+  ulonglong local_58 [11];
+  
+  __savegprlr_28();
+  uVar6 = __savefpr_28();
+  iVar7 = CL_GetLocalClientGlobals();
+  if (DAT_82b3e4cc != 0) {
+    CL_GetMouseMovementWithSensitivity(iVar7,local_60,local_58);
+    if (((*(uint *)(iVar7 + 0x8c) & 0x800) == 0) ||
+       (cVar8 = CL_Demo_IsPlaying(uVar6), cVar8 != '\0')) {
+      dVar11 = (double)local_58[0]._0_4_;
+      dVar14 = 0.0;
+      if ((local_60[0] != 0.0) || (dVar11 != 0.0)) {
+        iVar5 = (int)uVar6 * 0x2a8;
+        dVar13 = 0.5;
+        dVar12 = 0.0010000000474974513;
+        iVar3 = (int)param_2;
+        if ((&DAT_82a9a238)[iVar5] == '\0') {
+          local_60[0] = *(float *)(DAT_82aa1ad0 + 0xc) * local_60[0];
+          if (0.0 < *(float *)(iVar7 + 0x3550)) {
+            local_58[0] = (ulonglong)DAT_82b3e4cc;
+            fVar2 = (float)local_58[0] * *(float *)(iVar7 + 0x3550) * 0.001;
+            fVar1 = fVar2;
+            if (local_60[0] - fVar2 < 0.0) {
+              fVar1 = local_60[0];
+            }
+            local_60[0] = -fVar2;
+            if (-fVar2 - fVar1 < 0.0) {
+              local_60[0] = fVar1;
+            }
+          }
+          *(float *)(iVar7 + 0x35f0) = *(float *)(iVar7 + 0x35f0) - local_60[0];
+        }
+        else {
+          dVar10 = floor((double)(*(float *)(DAT_82b3ec90 + 0xc) * local_60[0] + 0.5));
+          local_58[0] = (ulonglong)(int)dVar10;
+          uVar9 = ClampChar((longlong)*(char *)(iVar3 + 0x1d) + (ulonglong)(uint)(int)dVar10);
+          *(undefined1 *)(iVar3 + 0x1d) = uVar9;
+        }
+        if ((((&DAT_82a9a29c)[iVar5] == '\0') && (*(char *)(DAT_82b3ecc0 + 0xc) == '\0')) ||
+           ((&DAT_82a9a238)[iVar5] != '\0')) {
+          dVar11 = floor((double)(float)((double)(float)((double)*(float *)(DAT_82b3e4d0 + 0xc) *
+                                                        dVar11) + dVar13));
+          local_58[0] = (ulonglong)(int)dVar11;
+          uVar9 = ClampChar((longlong)*(char *)(iVar3 + 0x1c) - (ulonglong)(uint)(int)dVar11);
+          *(undefined1 *)(iVar3 + 0x1c) = uVar9;
+        }
+        else {
+          fVar1 = (float)((double)*(float *)(DAT_82aa1ad4 + 0xc) * dVar11);
+          if (dVar14 < (double)*(float *)(iVar7 + 0x354c)) {
+            local_58[0] = (ulonglong)DAT_82b3e4cc;
+            fVar2 = (float)((double)(float)((double)local_58[0] * (double)*(float *)(iVar7 + 0x354c)
+                                           ) * dVar12);
+            fVar4 = fVar2;
+            if (fVar1 - fVar2 < 0.0) {
+              fVar4 = fVar1;
+            }
+            fVar1 = -fVar2;
+            if (-fVar2 - fVar4 < 0.0) {
+              fVar1 = fVar4;
+            }
+          }
+          *(float *)(iVar7 + 0x35ec) = *(float *)(iVar7 + 0x35ec) + fVar1;
+        }
+      }
+      ClearMeleeChargeCmd(param_2);
+    }
+  }
+  __restfpr_28();
+  __restgprlr_28();
+  return;
+}
+
 
 // 8233A848  CL_KeyActiveOrPressed  (client_mp/cl_input.cpp:1267)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool CL_KeyActiveOrPressed(LocalClientNum_t param_1,int param_2)
+undefined8 CL_KeyActiveOrPressed(int param_1,uint param_2)
 
 {
-  bool bVar1;
+  int iVar1;
+  undefined8 uVar2;
   
-  if (0x21 < (uint)param_2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_input.cpp",0x4f6,
-                    0,"kbButton doesn\'t index NUM_BUTTONS\n\t%i not in [0, %i)");
+  if (0x21 < param_2) {
+    MyAssertHandler(0xffffffff8202ed58,0x4f6,0,0xffffffff8202eed0,param_2,0x22);
   }
-  if ((playersKb[param_1][param_2].active != false) ||
-     (bVar1 = false, playersKb[param_1][param_2].wasPressed != false)) {
-    bVar1 = true;
+  iVar1 = param_2 * 0x14 + param_1 * 0x2a8;
+  if (((&DAT_82a9a188)[iVar1 + 0x10] != '\0') || (uVar2 = 0, (&DAT_82a9a188)[iVar1 + 0x11] != '\0'))
+  {
+    uVar2 = 1;
   }
-  return bVar1;
+  return uVar2;
 }
 
 
 // 8233A8F0  CL_UpdateCmdButton  (client_mp/cl_input.cpp:1278)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_UpdateCmdButton(LocalClientNum_t param_1,int *param_2,int param_3,int param_4)
+void CL_UpdateCmdButton(int param_1,uint *param_2,int param_3,uint param_4)
 
 {
-  if ((playersKb[param_1][param_3].active == false) &&
-     (playersKb[param_1][param_3].wasPressed == false)) {
-    playersKb[param_1][param_3].wasPressed = false;
+  int iVar1;
+  
+  iVar1 = param_3 * 0x14 + param_1 * 0x2a8;
+  if (((&DAT_82a9a188)[iVar1 + 0x10] == '\0') && ((&DAT_82a9a188)[iVar1 + 0x11] == '\0')) {
+    (&DAT_82a9a188)[iVar1 + 0x11] = 0;
     return;
   }
   *param_2 = *param_2 | param_4;
-  playersKb[param_1][param_3].wasPressed = false;
+  (&DAT_82a9a188)[iVar1 + 0x11] = 0;
   return;
 }
 
 
 // 8233A950  CL_CmdButtons  (client_mp/cl_input.cpp:1296)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_CmdButtons(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  bool bVar2;
+  int iVar3;
+  ulonglong uVar4;
+  int iVar5;
+  
+  uVar4 = __savegprlr_21();
+  iVar1 = (int)uVar4;
+  iVar3 = iVar1 * 0x2a8;
+  if (((&DAT_82a9a2ec)[iVar3] != '\0') || ((&DAT_82a9a2ed)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 1;
+  }
+  (&DAT_82a9a2ed)[iVar3] = 0;
+  if (((&DAT_82a9a300)[iVar3] != '\0') || ((&DAT_82a9a301)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x2000;
+  }
+  (&DAT_82a9a301)[iVar3] = 0;
+  if (((&DAT_82a9a314)[iVar3] != '\0') || ((&DAT_82a9a315)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x4000000;
+  }
+  (&DAT_82a9a315)[iVar3] = 0;
+  if (((&DAT_82a9a328)[iVar3] != '\0') || ((&DAT_82a9a329)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x4000;
+  }
+  (&DAT_82a9a329)[iVar3] = 0;
+  if (((&DAT_82a9a33c)[iVar3] != '\0') || ((&DAT_82a9a33d)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x8000;
+  }
+  (&DAT_82a9a33d)[iVar3] = 0;
+  if (((&DAT_82a9a350)[iVar3] != '\0') || ((&DAT_82a9a351)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 4;
+  }
+  (&DAT_82a9a351)[iVar3] = 0;
+  if (((&DAT_82a9a364)[iVar3] != '\0') || ((&DAT_82a9a365)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 8;
+  }
+  (&DAT_82a9a365)[iVar3] = 0;
+  if (((&DAT_82a9a378)[iVar3] != '\0') || ((&DAT_82a9a379)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x10;
+  }
+  (&DAT_82a9a379)[iVar3] = 0;
+  if (((&DAT_82a9a38c)[iVar3] != '\0') || ((&DAT_82a9a38d)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x20;
+  }
+  (&DAT_82a9a38d)[iVar3] = 0;
+  if (((&DAT_82a9a3a0)[iVar3] != '\0') || ((&DAT_82a9a3a1)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x100;
+  }
+  (&DAT_82a9a3a1)[iVar3] = 0;
+  if (((&DAT_82a9a3b4)[iVar3] != '\0') || ((&DAT_82a9a3b5)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x200;
+  }
+  (&DAT_82a9a3b5)[iVar3] = 0;
+  if (((&DAT_82a9a260)[iVar3] != '\0') || ((&DAT_82a9a261)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x400;
+  }
+  (&DAT_82a9a261)[iVar3] = 0;
+  if (((&DAT_82a9a3c8)[iVar3] != '\0') || ((&DAT_82a9a3c9)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x80000;
+  }
+  (&DAT_82a9a3c9)[iVar3] = 0;
+  if (3 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x47f,0,0xffffffff820011a8,uVar4,4);
+  }
+  if ((&DAT_82b3e544)[iVar1 * 0x79] == 0) {
+LAB_8233abe8:
+    bVar2 = false;
+  }
+  else {
+    bVar2 = true;
+    if (*(char *)(DAT_82a9a180 + 0xc) != '\0') goto LAB_8233abe8;
+  }
+  if (bVar2) {
+    iVar5 = UI_GetActiveMenu(uVar4);
+    bVar2 = true;
+    if (iVar5 != 6) goto LAB_8233ac10;
+  }
+  bVar2 = false;
+LAB_8233ac10:
+  if (bVar2) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x800000;
+  }
+  iVar5 = CL_GetLocalClientGlobals(uVar4);
+  if (3 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar4,4);
+  }
+  if ((5 < (int)(&DAT_82b3e54c)[iVar1 * 0x79]) &&
+     (((iVar1 = *(int *)(iVar5 + 0x84), iVar1 == 2 || (iVar1 == 3)) || (iVar1 == 5)))) {
+    if (((&DAT_82a9a288)[iVar3] != '\0') || ((&DAT_82a9a289)[iVar3] != '\0')) {
+      *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x400;
+    }
+    (&DAT_82a9a289)[iVar3] = 0;
+  }
+  if (((&DAT_82a9a42c)[iVar3] != '\0') || ((&DAT_82a9a42d)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x800;
+  }
+  if (((&DAT_82a9a418)[iVar3] != '\0') || ((&DAT_82a9a419)[iVar3] != '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 1;
+  }
+  if ((*(int *)(iVar5 + 0x410) == 1) &&
+     (((&DAT_82a9a418)[iVar3] != '\0' || ((&DAT_82a9a419)[iVar3] != '\0')))) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x80000;
+  }
+  (&DAT_82a9a419)[iVar3] = 0;
+  if (0xfffffff < *(int *)(param_2 + 4)) {
+    MyAssertHandler(0xffffffff8202ed58,0x547,0,0xffffffff82000f98,0xffffffff8202ef08);
+  }
+  __restgprlr_21();
+  return;
+}
+
 
 // 8233AD80  CL_FinishMove  (client_mp/cl_input.cpp:1356)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_FinishMove(undefined8 param_1,longlong param_2)
+
+{
+  undefined4 *puVar1;
+  float *pfVar2;
+  int iVar3;
+  uint uVar4;
+  longlong lVar5;
+  float *pfVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  
+  __savegprlr_27();
+  iVar3 = CL_GetLocalClientGlobals();
+  puVar1 = (undefined4 *)param_2;
+  puVar1[5] = *(undefined4 *)(iVar3 + 0x353c);
+  puVar1[6] = *(undefined4 *)(iVar3 + 0x3540);
+  uVar4 = puVar1[1] | 0x400000;
+  if (*(int *)(iVar3 + 0x3544) == 0) {
+    uVar4 = puVar1[1] & 0xffbfffff;
+  }
+  puVar1[1] = uVar4;
+  BG_AssertOffhandIndexOrNone(puVar1[6]);
+  param_2 = param_2 + 4;
+  pfVar6 = (float *)(iVar3 + 0x35e8);
+  lVar5 = 3;
+  *puVar1 = *(undefined4 *)(iVar3 + 0x3404);
+  dVar9 = 182.04444885253906;
+  dVar8 = 0.5;
+  do {
+    pfVar2 = pfVar6 + -0x25;
+    pfVar6 = pfVar6 + 1;
+    dVar7 = floor((double)(float)((double)(*pfVar2 + *pfVar6) * dVar9 + dVar8));
+    lVar5 = lVar5 + -1;
+    param_2 = param_2 + 4;
+    *(uint *)param_2 = (int)dVar7 & 0xffff;
+  } while (lVar5 != 0);
+  puVar1[1] = *(uint *)(iVar3 + 0x35e4) | puVar1[1];
+  *(undefined4 *)(iVar3 + 0x35e4) = 0;
+  __restgprlr_27();
+  return;
+}
+
 
 // 8233AE58  LocationSelectionInput  (client_mp/cl_input.cpp:1383)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void LocationSelectionInput(undefined8 param_1,undefined8 param_2)
+
+{
+  float fVar1;
+  uint uVar2;
+  int iVar3;
+  undefined8 uVar4;
+  int iVar5;
+  float *pfVar6;
+  float *pfVar7;
+  float *pfVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  undefined8 uVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  float local_90;
+  float local_8c;
+  longlong local_88;
+  
+  __savegprlr_24();
+  uVar4 = __savefpr_25();
+  iVar5 = CG_GetLocalClientGlobals();
+  if (*(int *)(iVar5 + 0x208) == 0) {
+    Key_RemoveCatcher(uVar4,0xfffffffffffffff7);
+    __restfpr_25(0);
+    __restgprlr_24();
+    return;
+  }
+  CL_AddCurrentStanceToCmd(uVar4,param_2);
+  iVar3 = (int)param_2;
+  *(uint *)(iVar3 + 4) = *(uint *)(iVar3 + 4) | 0x800000;
+  local_88 = (longlong)*(int *)(iVar5 + 0x6b988);
+  uVar2 = *(int *)(iVar5 + 0x208) >> 7;
+  dVar12 = (double)(*(float *)(iVar5 + 0x79800) / *(float *)(iVar5 + 0x79804));
+  dVar15 = (double)((float)local_88 * 0.001);
+  dVar10 = (double)CL_GamepadAxisValue(uVar4,0);
+  local_90 = (float)dVar10;
+  dVar10 = (double)CL_GamepadAxisValue(uVar4,1);
+  dVar9 = (double)local_90;
+  uVar13 = 0x3ff0000000000000;
+  fVar1 = (float)(dVar10 * dVar10 + (double)(float)(dVar9 * dVar9));
+  if (1.0 < fVar1) {
+    dVar11 = (double)(1.0 / SQRT(fVar1));
+    local_90 = (float)(dVar11 * dVar9);
+    dVar9 = (double)local_90;
+    dVar10 = dVar11 * dVar10;
+  }
+  local_8c = (float)dVar10;
+  pfVar7 = (float *)(iVar5 + 0x79870);
+  pfVar6 = (float *)(iVar5 + 0x79874);
+  dVar10 = 360.0;
+  dVar11 = 0.5;
+  dVar14 = 0.0;
+  *pfVar7 = (float)((double)(float)((double)*(float *)(DAT_82a382a0 + 0xc) * dVar9) * dVar15 +
+                   (double)*pfVar7);
+  *pfVar6 = -(float)((double)(float)((double)(*(float *)(DAT_82a382a0 + 0xc) * local_8c) * dVar12) *
+                     dVar15 - (double)*pfVar6);
+  if ((uVar2 & 1) != 0) {
+    dVar9 = (double)CL_GamepadAxisValue(uVar4,4);
+    local_90 = (float)dVar9;
+    dVar9 = (double)CL_GamepadAxisValue(uVar4,3);
+    local_8c = (float)-dVar9;
+    dVar9 = (double)Vec2Normalize(&local_90);
+    if (0.20000000298023224 < dVar9) {
+      if ((double)*(float *)(DAT_82a9a184 + 0xc) <= dVar14) {
+        MyAssertHandler(0xffffffff8202ed58,0x598,0,0xffffffff8202ef38,0xffffffff8202ef6c,
+                        (double)*(float *)(DAT_82a9a184 + 0xc));
+      }
+      dVar16 = (double)(float)(dVar15 / (double)*(float *)(DAT_82a9a184 + 0xc));
+      dVar9 = (double)vectoyaw(&local_90);
+      dVar15 = (double)*(float *)(iVar5 + 0x79878);
+      dVar12 = (double)((float)(dVar9 - dVar15) * 0.0027777778);
+      dVar9 = floor((double)(float)(dVar12 + dVar11));
+      dVar9 = (double)AngleNormalize360((double)(float)((double)(float)((double)(float)(dVar12 - (
+                                                  double)(float)dVar9) * dVar16) * dVar10 + dVar15))
+      ;
+      *(float *)(iVar5 + 0x79878) = (float)dVar9;
+    }
+  }
+  dVar9 = (double)ClampFloat((double)*pfVar7,dVar14,uVar13);
+  *pfVar7 = (float)dVar9;
+  dVar9 = (double)ClampFloat((double)*pfVar6,dVar14,uVar13);
+  *pfVar6 = (float)dVar9;
+  pfVar8 = (float *)(iVar5 + 0x79878);
+  dVar10 = (double)ClampFloat((double)*pfVar8,dVar14,dVar10);
+  *pfVar8 = (float)dVar10;
+  if (*(int *)(&DAT_82a9c354 + (int)uVar4 * 0x1128) == 1) {
+    *(uint *)(iVar3 + 4) = *(uint *)(iVar3 + 4) | 0x10000;
+    dVar9 = 255.0;
+    dVar10 = floor((double)(float)((double)(*pfVar7 * 255.0) + dVar11));
+    local_88 = (longlong)(int)dVar10;
+    *(char *)(iVar3 + 0x23) = (char)(int)dVar10 + -0x80;
+    dVar10 = floor((double)(float)((double)(float)((double)*pfVar6 * dVar9) + dVar11));
+    local_88 = (longlong)(int)dVar10;
+    *(char *)(iVar3 + 0x24) = (char)(int)dVar10 + -0x80;
+    if ((uVar2 & 1) != 0) {
+      dVar10 = floor((double)(float)((double)(*pfVar8 * (float)0x3f355555) + dVar11));
+      local_88 = (longlong)(int)dVar10;
+      *(char *)(iVar3 + 0x25) = (char)(int)dVar10;
+      __restfpr_25(1);
+      __restgprlr_24();
+      return;
+    }
+    *(undefined1 *)(iVar3 + 0x25) = 0;
+    __restfpr_25(1);
+    __restgprlr_24();
+    return;
+  }
+  if (*(int *)(&DAT_82a9c354 + (int)uVar4 * 0x1128) == 2) {
+    *(uint *)(iVar3 + 4) = *(uint *)(iVar3 + 4) | 0x20000;
+  }
+  __restfpr_25(1);
+  __restgprlr_24();
+  return;
+}
+
 
 // 8233B1F0  AxisvalueToChar  (client_mp/cl_input.cpp:1498)
 
-char AxisvalueToChar(float param_1)
+undefined1 AxisvalueToChar(undefined8 param_1)
 
 {
   double dVar1;
-  float fVar2;
   
-  fVar2 = ClampFloat(param_1,-1.0,1.0);
-  dVar1 = floor((double)(fVar2 * 127.0 + 0.5));
+  dVar1 = (double)ClampFloat(param_1,0xbff0000000000000,0x3ff0000000000000);
+  dVar1 = floor((double)(float)(dVar1 * 127.0 + 0.5));
   return (char)(int)dVar1;
 }
 
 
 // 8233B250  CL_RemoteControlMove  (client_mp/cl_input.cpp:1505)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_RemoteControlMove(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  double dVar4;
+  undefined8 uVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  
+  __savegprlr_28();
+  uVar2 = __savefpr_24();
+  iVar3 = (int)uVar2 * 0x2a8;
+  iVar1 = (int)param_2;
+  if (((&DAT_82a9a2ec)[iVar3] != '\0') || ((&DAT_82a9a2ed)[iVar3] != '\0')) {
+    *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) | 1;
+  }
+  (&DAT_82a9a2ed)[iVar3] = 0;
+  if (((&DAT_82a9a364)[iVar3] != '\0') || ((&DAT_82a9a365)[iVar3] != '\0')) {
+    *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) | 8;
+  }
+  (&DAT_82a9a365)[iVar3] = 0;
+  if (((&DAT_82a9a38c)[iVar3] != '\0') || ((&DAT_82a9a38d)[iVar3] != '\0')) {
+    *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) | 0x20;
+  }
+  (&DAT_82a9a38d)[iVar3] = 0;
+  if (((&DAT_82a9a328)[iVar3] != '\0') || ((&DAT_82a9a329)[iVar3] != '\0')) {
+    *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) | 0x4000;
+  }
+  (&DAT_82a9a329)[iVar3] = 0;
+  if (((&DAT_82a9a33c)[iVar3] != '\0') || ((&DAT_82a9a33d)[iVar3] != '\0')) {
+    *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) | 0x8000;
+  }
+  (&DAT_82a9a33d)[iVar3] = 0;
+  CL_AddCurrentStanceToCmd(uVar2,param_2);
+  if (((&DAT_82a9a418)[iVar3] != '\0') || ((&DAT_82a9a419)[iVar3] != '\0')) {
+    *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) | 1;
+  }
+  (&DAT_82a9a419)[iVar3] = 0;
+  *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) | 0x100000;
+  dVar4 = (double)CL_GamepadAxisValue(uVar2,4);
+  CL_ControllerIndexFromClientNum(uVar2);
+  iVar3 = GamerProfile_GetProfileSettings();
+  dVar8 = 1.0;
+  dVar7 = -1.0;
+  dVar6 = dVar7;
+  if (*(char *)(iVar3 + 0x44) != '\0') {
+    dVar6 = dVar8;
+  }
+  dVar10 = (double)(float)(dVar6 * dVar4);
+  dVar4 = (double)CL_GamepadAxisValue(uVar2,3);
+  dVar4 = -dVar4;
+  uVar5 = CL_GamepadAxisValue(uVar2,1);
+  uVar2 = CL_GamepadAxisValue(uVar2,0);
+  dVar6 = 0.0;
+  if ((*(uint *)(iVar1 + 4) & 0x4000) != 0) {
+    dVar6 = dVar8;
+  }
+  if ((*(uint *)(iVar1 + 4) & 0x8000) != 0) {
+    dVar6 = (double)(float)(dVar6 - dVar8);
+  }
+  dVar10 = (double)ClampFloat(dVar10,dVar7,dVar8);
+  dVar11 = 127.0;
+  dVar9 = 0.5;
+  dVar10 = floor((double)(float)(dVar10 * 127.0 + 0.5));
+  *(char *)(iVar1 + 0x26) = (char)(int)dVar10;
+  dVar4 = (double)ClampFloat(dVar4,dVar7,dVar8);
+  dVar4 = floor((double)(float)(dVar4 * dVar11 + dVar9));
+  *(char *)(iVar1 + 0x27) = (char)(int)dVar4;
+  dVar4 = (double)ClampFloat(uVar5,dVar7,dVar8);
+  dVar4 = floor((double)(float)(dVar4 * dVar11 + dVar9));
+  *(char *)(iVar1 + 0x28) = (char)(int)dVar4;
+  dVar4 = (double)ClampFloat(uVar2,dVar7,dVar8);
+  dVar4 = floor((double)(float)(dVar4 * dVar11 + dVar9));
+  *(char *)(iVar1 + 0x29) = (char)(int)dVar4;
+  dVar6 = (double)ClampFloat(dVar6,dVar7,dVar8);
+  dVar6 = floor((double)(float)(dVar6 * dVar11 + dVar9));
+  *(char *)(iVar1 + 0x2a) = (char)(int)dVar6;
+  __restfpr_24();
+  __restgprlr_28();
+  return;
+}
+
 
 // 8233B528  CreateCmd  (client_mp/cl_input.cpp:1582)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CreateCmd(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  char cVar4;
+  undefined8 uVar5;
+  double dVar6;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = CL_GetLocalClientGlobals(param_2);
+  dVar6 = (double)*(float *)(iVar2 + 0x35ec);
+  AdjustViewanglesForKeyboard(param_2);
+  memset((void *)uVar1,0,0x2c);
+  cVar3 = CL_Demo_IsPlaying(param_2);
+  if (((*(uint *)(iVar2 + 0x8c) & 0x80000) != 0) && (cVar3 == '\0')) {
+    CL_RemoteControlMove(param_2,uVar1);
+    goto LAB_8233b6f0;
+  }
+  cVar4 = Key_IsCatcherActive(param_2,8);
+  if ((cVar4 != '\0') &&
+     ((cVar3 == '\0' && (cVar3 = LocationSelectionInput(param_2,uVar1), cVar3 != '\0'))))
+  goto LAB_8233b6f0;
+  CL_CmdButtons(param_2,uVar1);
+  CL_KeyMove(param_2,uVar1);
+  uVar5 = Com_ViewScaleMsec((double)DAT_82aa1c20);
+  CL_MouseMove(param_2,uVar1);
+  CL_ControllerIndexFromClientNum(param_2);
+  cVar3 = GPad_IsActive();
+  if (cVar3 != '\0') {
+    CL_GamepadMove(uVar5,param_2);
+  }
+  if ((float)((double)*(float *)(iVar2 + 0x35ec) - dVar6) <= 90.0) {
+    if (90.0 < (float)(dVar6 - (double)*(float *)(iVar2 + 0x35ec))) {
+      dVar6 = dVar6 - 90.0;
+      goto LAB_8233b668;
+    }
+  }
+  else {
+    dVar6 = dVar6 + 90.0;
+LAB_8233b668:
+    *(float *)(iVar2 + 0x35ec) = (float)dVar6;
+  }
+  cVar3 = CL_Demo_IsFollowCamera(param_2);
+  if (cVar3 != '\0') {
+    CL_ClampViewAngle(0xc03e000000000000,0x404e000000000000,param_2,0);
+  }
+  cVar3 = CL_Demo_IsFreeCamera(param_2);
+  if (cVar3 != '\0') {
+    if (180.0 < *(float *)(iVar2 + 0x35ec)) {
+      *(float *)(iVar2 + 0x35ec) = *(float *)(iVar2 + 0x35ec) - 360.0;
+    }
+    CL_ClampViewAngle(0xc056000000000000,0x4056000000000000,param_2,0);
+  }
+LAB_8233b6f0:
+  CL_FinishMove(param_2,uVar1);
+  __restgprlr_28(uVar1);
+  return;
+}
+
 
 // 8233B710  CL_CreateNewCommands  (client_mp/cl_input.cpp:1670)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_CreateNewCommands(void)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  int iVar3;
+  int iVar4;
+  void *pvVar5;
+  uint uVar6;
+  undefined1 auStack_80 [48];
+  undefined1 auStack_50 [80];
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = uVar1;
+  if (3 < (uVar1 & 0xffffffff)) {
+    uVar2 = MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  }
+  if ((8 < (int)(&DAT_82b3e54c)[(int)uVar1 * 0x79]) &&
+     (uVar2 = CL_Demo_IsCapturingScreenshot(uVar1), (int)uVar2 == 0)) {
+    iVar3 = CL_GetLocalClientGlobals(uVar1);
+    uVar6 = *(int *)(iVar3 + 0x4bf8) + 1;
+    *(uint *)(iVar3 + 0x4bf8) = uVar6;
+    uVar6 = uVar6 & 0x7f;
+    iVar4 = CL_GetLocalClientMigrationState(uVar1);
+    if ((iVar4 != 0) && (iVar4 = CL_GetLocalClientMigrationState(uVar1), iVar4 != 3)) {
+      MSG_SetDefaultUserCmd(iVar3 + 0x80,(uVar6 + 0x13a) * 0x2c + iVar3);
+      __restgprlr_29();
+      return;
+    }
+    pvVar5 = (void *)CreateCmd(auStack_50,uVar1);
+    memcpy(auStack_80,pvVar5,0x2c);
+    pvVar5 = memcpy((void *)((uVar6 + 0x13a) * 0x2c + iVar3),auStack_80,0x2c);
+    uVar2 = (ulonglong)(int)pvVar5;
+  }
+  __restgprlr_29(uVar2);
+  return;
+}
+
 
 // 8233B810  CL_ReadyToSendPacket  (client_mp/cl_input.cpp:1707)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_ReadyToSendPacket(void)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  char cVar7;
+  int iVar5;
+  int iVar6;
+  ulonglong uVar3;
+  uint uVar8;
+  
+  uVar2 = __savegprlr_26();
+  iVar4 = CL_GetLocalClientConnection();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff8202ed58,0x6b4,0,0xffffffff82000f98,0xffffffff8202effc);
+  }
+  cVar7 = CL_Demo_IsPlaying(uVar2);
+  if ((((cVar7 == '\0') && (iVar5 = CL_GetLocalClientConnectionState(uVar2), iVar5 != 1)) &&
+      (iVar5 != 2)) &&
+     ((iVar6 = CL_GetLocalClientMigrationState(uVar2), iVar6 != 2 &&
+      (((iVar5 == 10 || (iVar5 == 9)) || (999 < (int)(DAT_82aa1c24 - *(int *)(iVar4 + 8)))))))) {
+    if (*(int *)(iVar4 + 0x54248) == 2) {
+      __restgprlr_26(1);
+      return;
+    }
+    iVar5 = CL_GetLocalClientGlobals(uVar2);
+    if (iVar5 == 0) {
+      MyAssertHandler(0xffffffff8202ed58,0x6d9,0,0xffffffff82000f98,0xffffffff8202eea8);
+    }
+    if (*(int *)(iVar5 + 0xd410) == 0) {
+      MyAssertHandler(0xffffffff8202ed58,0x6da,0,0xffffffff82000f98,0xffffffff8202efec);
+    }
+    uVar8 = *(int *)(iVar4 + 0x54238) - 1U & *(uint *)(iVar5 + 0xd404);
+    if (0xf < uVar8) {
+      MyAssertHandler(0xffffffff8202ed58,0x6dd,0,0xffffffff8202efa8,uVar8,0x10);
+    }
+    uVar1 = 1000 / (int)*(uint *)(DAT_82b3e4dc + 0xc);
+    trapWord(6,(ulonglong)*(uint *)(DAT_82b3e4dc + 0xc),0);
+    uVar3 = (ulonglong)DAT_82aa1c24 -
+            (ulonglong)*(uint *)(uVar8 * 0xc + *(int *)(iVar5 + 0xd410) + 8);
+    __restgprlr_26((ulonglong)(uVar1 >> 0x1f) + (longlong)((int)uVar3 >> 0x1f) +
+                   (ulonglong)((ulonglong)(longlong)(int)uVar1 <= uVar3));
+    return;
+  }
+  __restgprlr_26(0);
+  return;
+}
+
 
 // 8233B9E8  CL_WritePacket  (client_mp/cl_input.cpp:1793)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+/* WARNING: Removing unreachable block (ram,0x8233bef8) */
+
+void CL_WritePacket(void)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  int iVar4;
+  char cVar6;
+  int iVar5;
+  ulonglong uVar3;
+  undefined8 uVar7;
+  undefined1 *puVar8;
+  char *pcVar9;
+  undefined1 *puVar10;
+  int iVar11;
+  uint *puVar12;
+  int *piVar13;
+  uint *puVar14;
+  uint *puVar15;
+  char *pcVar16;
+  uint uVar17;
+  int iVar18;
+  undefined4 *puVar19;
+  undefined4 *puVar20;
+  longlong lVar21;
+  undefined1 local_10f0 [48];
+  undefined4 auStack_10c0 [11];
+  undefined1 uStack_1091;
+  undefined1 local_1090 [9];
+  undefined1 auStack_1087 [2039];
+  undefined1 auStack_890 [2192];
+  
+  uVar2 = __savegprlr_15();
+  iVar4 = CL_GetLocalClientConnection();
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar2,4);
+  }
+  iVar5 = (&DAT_82b3e54c)[(int)uVar2 * 0x79];
+  cVar6 = CL_Demo_IsPlaying(uVar2);
+  if ((((cVar6 != '\0') || (cVar6 = CL_Demo_IsShutdownInProgress(), cVar6 != '\0')) || (iVar5 == 1))
+     || (iVar5 == 2)) goto LAB_8233c044;
+  iVar5 = CL_GetLocalClientGlobals(uVar2);
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff8202ed58,0x723,0,0xffffffff82000f98,0xffffffff8202eea8);
+  }
+  piVar13 = (int *)(iVar5 + 0xd410);
+  if (*piVar13 == 0) {
+    MyAssertHandler(0xffffffff8202ed58,0x724,0,0xffffffff82000f98,0xffffffff8202efec);
+  }
+  MSG_SetDefaultUserCmd(iVar5 + 0x80,&stack0x00000000 + -0x10c0);
+  iVar11 = 0;
+  puVar20 = (undefined4 *)(&stack0x00000000 + -0x10c0);
+  MSG_Init(&stack0x00000000 + -0x10f0,&stack0x00000000 + -0x890,0x800);
+  MSG_WriteByte(&stack0x00000000 + -0x10f0,*(undefined4 *)(iVar5 + 0x3414));
+  puVar14 = (uint *)(iVar4 + 0x20138);
+  MSG_WriteLong(&stack0x00000000 + -0x10f0,*puVar14);
+  puVar15 = (uint *)(iVar4 + 0x2013c);
+  MSG_WriteLong(&stack0x00000000 + -0x10f0,*puVar15);
+  uVar17 = *(int *)(iVar4 + 0x134) + 1;
+  if ((int)uVar17 <= *(int *)(iVar4 + 0x130)) {
+    do {
+      MSG_WriteBits(&stack0x00000000 + -0x10f0,2,3);
+      MSG_WriteLong(&stack0x00000000 + -0x10f0,uVar17);
+      MSG_WriteString(&stack0x00000000 + -0x10f0,(uVar17 & 0x7f) * 0x400 + iVar4 + 0x138);
+      uVar17 = uVar17 + 1;
+    } while ((int)uVar17 <= *(int *)(iVar4 + 0x130));
+  }
+  puVar12 = (uint *)(iVar4 + 0x54238);
+  iVar18 = *(int *)(iVar5 + 0x4bf8) -
+           *(int *)(((*puVar12 - *(int *)(DAT_82b3e4d4 + 0xc)) - 1 & *(uint *)(iVar5 + 0xd404)) *
+                    0xc + *piVar13);
+  if (iVar18 < 0x21) {
+    if (0 < iVar18) goto LAB_8233bc28;
+  }
+  else {
+    iVar18 = 0x20;
+    Com_Printf(0xe,0xffffffff8202f158);
+LAB_8233bc28:
+    if (*(char *)(DAT_82aa1a98 + 0xc) != '\0') {
+      Com_Printf(0xe,0xffffffff8202f150,iVar18);
+    }
+    if (*(char *)(DAT_82aa1aac + 0xc) == '\0') {
+      if ((*(int *)(iVar5 + 0x3380) == 0) || (uVar7 = 0, *puVar14 != *(uint *)(iVar5 + 0x338c))) {
+        uVar7 = 1;
+      }
+      MSG_WriteBits(&stack0x00000000 + -0x10f0,uVar7,3);
+    }
+    MSG_WriteByte(&stack0x00000000 + -0x10f0,iVar18);
+    uVar17 = *(uint *)(iVar4 + 300);
+    uVar1 = *puVar14;
+    uVar3 = Com_HashKey((*puVar15 & 0x7f) * 0x400 + iVar4 + 0x20144,0x20);
+    uVar3 = uVar3 ^ (uVar17 ^ uVar1);
+    if (*(char *)(DAT_82aa1ae0 + 0xc) != '\0') {
+      uVar17 = *puVar15;
+      pcVar16 = (char *)((uVar17 & 0x7f) * 0x400 + iVar4 + 0x20144);
+      pcVar9 = pcVar16;
+      do {
+        cVar6 = *pcVar9;
+        pcVar9 = pcVar9 + 1;
+      } while (cVar6 != '\0');
+      uVar7 = Com_HashKey(pcVar16,0x20);
+      Com_Printf(0xe,0xffffffff8202f0f0,uVar3,*(undefined4 *)(iVar4 + 300),*puVar14,uVar7,
+                 uVar17 & 0x7f,pcVar16);
+    }
+    puVar19 = puVar20;
+    if (0 < iVar18) {
+      do {
+        puVar20 = (undefined4 *)
+                  ((((*(int *)(iVar5 + 0x4bf8) - iVar18) + iVar11 + 1U & 0x7f) + 0x13a) * 0x2c +
+                  iVar5);
+        MSG_WriteDeltaUsercmdKey(&stack0x00000000 + -0x10f0,uVar3,puVar19,puVar20);
+        iVar11 = iVar11 + 1;
+        puVar19 = puVar20;
+      } while (iVar11 < iVar18);
+    }
+    MSG_WriteLong(&stack0x00000000 + -0x10f0,*(undefined4 *)(iVar5 + 0x3560));
+    MSG_WriteLong(&stack0x00000000 + -0x10f0,*(undefined4 *)(iVar5 + 0x3564));
+    MSG_WriteLong(&stack0x00000000 + -0x10f0,*(undefined4 *)(iVar5 + 0x3568));
+    if ((((*(uint *)(iVar5 + 0x356c) & 0x7f800000) == 0x7f800000) ||
+        ((*(uint *)(iVar5 + 0x3570) & 0x7f800000) == 0x7f800000)) ||
+       ((*(uint *)(iVar5 + 0x3574) & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler(0xffffffff8202ed58,0x788,0,0xffffffff82000f98,0xffffffff8202f088);
+    }
+    MSG_WriteLong(&stack0x00000000 + -0x10f0,*(undefined4 *)(iVar5 + 0x35e8));
+    if ((*(int *)(iVar5 + 0x3594) == 0) || (*(int *)(iVar5 + 0x3594) == 0x7ff)) {
+      MSG_WriteBit0(&stack0x00000000 + -0x10f0);
+    }
+    else {
+      MSG_WriteBit1(&stack0x00000000 + -0x10f0);
+      MSG_WriteLong(&stack0x00000000 + -0x10f0,*(undefined4 *)(iVar5 + 0x359c));
+      MSG_WriteLong(&stack0x00000000 + -0x10f0,*(undefined4 *)(iVar5 + 0x35a0));
+      MSG_WriteLong(&stack0x00000000 + -0x10f0,*(undefined4 *)(iVar5 + 0x35a4));
+    }
+    CL_SavePredictedVehicleForServerTime(iVar5,*(undefined4 *)(iVar5 + 0x35e8),iVar5 + 0x3594);
+    CL_SavePredictedPlayerInformationForServerTime(iVar5,*(undefined4 *)(iVar5 + 0x35e8));
+  }
+  MSG_WriteBits(&stack0x00000000 + -0x10f0,3,3);
+  MyAssertHandler(0xffffffff8202ed58,0x79f,0,0xffffffff82000f98,0xffffffff8202f064);
+  puVar8 = &stack0x00000000 + -0x1091;
+  puVar10 = (undefined1 *)0xffffffff;
+  lVar21 = 9;
+  do {
+    puVar10 = puVar10 + 1;
+    puVar8 = puVar8 + 1;
+    *puVar8 = *puVar10;
+    lVar21 = lVar21 + -1;
+  } while (lVar21 != 0);
+  lVar21 = MSG_WriteBitsCompress(0,9,&stack0x00000000 + -0x1087,0xfffffffffffffff7);
+  iVar11 = (*(uint *)(iVar5 + 0xd404) & *puVar12) * 0xc;
+  *(undefined4 *)(iVar11 + *piVar13 + 8) = DAT_82aa1c24;
+  *(undefined4 *)(iVar11 + *piVar13 + 4) = *puVar20;
+  *(undefined4 *)(iVar11 + *piVar13) = *(undefined4 *)(iVar5 + 0x4bf8);
+  *(undefined4 *)(iVar4 + 8) = DAT_82aa1c24;
+  if (*(char *)(DAT_82aa1a98 + 0xc) != '\0') {
+    uVar7 = NET_AdrToString(*(undefined8 *)(iVar4 + 0x54248),*(undefined8 *)(iVar4 + 0x54250));
+    Com_Printf(0xe,0xffffffff8202f028,lVar21 + 9,uVar7);
+  }
+  iVar5 = CL_Netchan_Transmit(puVar12,&stack0x00000000 + -0x1090,lVar21 + 9);
+  if ((iVar5 == 0) && (cVar6 = Com_ErrorEntered(), cVar6 == '\0')) {
+    CL_DisconnectError(uVar2,0xffffffff8202f014);
+    cVar6 = Com_ErrorEntered();
+    if (cVar6 == '\0') {
+      MyAssertHandler(0xffffffff8202ed58,0x7bd,0,0xffffffff82000f98,0xffffffff8202f000);
+    }
+  }
+  iVar5 = *(int *)(iVar4 + 0x54268);
+  while (iVar5 != 0) {
+    CL_Netchan_TransmitNextFragment(puVar12);
+    iVar5 = *(int *)(iVar4 + 0x54268);
+  }
+LAB_8233c044:
+  __restgprlr_15();
+  return;
+}
+
 
 // 8233C050  CL_SendCmd  (client_mp/cl_input.cpp:1998)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_SendCmd(LocalClientNum_t param_1)
+void CL_SendCmd(undefined8 param_1)
 
 {
   int iVar1;
   
-  iVar1 = CL_ReadyToSendPacket(param_1);
+  iVar1 = CL_ReadyToSendPacket();
   if (iVar1 != 0) {
     CL_WritePacket(param_1);
   }
@@ -723,84 +2128,377 @@ void CL_SendCmd(LocalClientNum_t param_1)
 
 
 // 8233C090  CL_CreateCmdsDuringConnection  (client_mp/cl_input.cpp:2008)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_CreateCmdsDuringConnection(ulonglong param_1)
+
+{
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,param_1,4);
+  }
+  if ((4 < (int)(&DAT_82b3e54c)[(int)param_1 * 0x79]) &&
+     ((&DAT_82b3e54c)[(int)param_1 * 0x79] != 10)) {
+    CL_SyncGpu(0);
+    CL_CreateNewCommands(param_1);
+  }
+  return;
+}
+
 
 // 8233C118  CL_CreateCmdsNoActiveFrame  (client_mp/cl_input.cpp:2024)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_CreateCmdsNoActiveFrame(ulonglong param_1)
+
+{
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,param_1,4);
+  }
+  if ((&DAT_82b3e54c)[(int)param_1 * 0x79] == 10) {
+    CL_SyncGpu(0);
+    CL_CreateNewCommands(param_1);
+  }
+  return;
+}
+
 
 // 8233C198  CL_Input  (client_mp/cl_input.cpp:2037)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_Input(ulonglong param_1)
+
+{
+  char cVar1;
+  
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,param_1,4);
+  }
+  if ((&DAT_82b3e54c)[(int)param_1 * 0x79] == 10) {
+    cVar1 = CL_IsFirstActiveLocalClient(param_1);
+    if (cVar1 != '\0') {
+      DAT_82aa1c29 = 1;
+      IN_Frame();
+    }
+    CL_CreateNewCommands(param_1);
+  }
+  return;
+}
+
 
 // 8233C238  CL_InitInput  (client_mp/cl_input.cpp:2057)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_InitInput(void)
 
 {
-  Cmd_AddCommandInternal("mouseMove",IN_RemoteMouseMove,&IN_RemoteMouseMove_VAR);
-  Cmd_AddCommandInternal("remoteKey",IN_RemoteKeyboard,&IN_RemoteKeyboard_VAR);
-  Cmd_AddCommandInternal("+moveup",IN_UpDown,&IN_UpDown_VAR);
-  Cmd_AddCommandInternal("-moveup",IN_UpUp,&IN_UpUp_VAR);
-  Cmd_AddCommandInternal("+speed",IN_SpeedDown,&IN_SpeedDown_VAR);
-  Cmd_AddCommandInternal("-speed",IN_SpeedUp,&IN_SpeedUp_VAR);
-  Cmd_AddCommandInternal("+throw",IN_Throw_Down,&IN_Throw_Down_VAR);
-  Cmd_AddCommandInternal("-throw",IN_Throw_Up,&IN_Throw_Up_VAR);
-  Cmd_AddCommandInternal("lowerstance",IN_LowerStance,&IN_LowerStance_VAR);
-  Cmd_AddCommandInternal("raisestance",IN_RaiseStance,&IN_RaiseStance_VAR);
-  cl_analog_attack_threshold =
-       Dvar_RegisterFloat("cl_analog_attack_threshold",0.8,0.0001,1.0,0,
-                          "bind <key> [command] : attach a command to a key\n");
-  cl_stanceHoldTime =
-       Dvar_RegisterInt("cl_stanceHoldTime",300,0,1000,0,
-                        "The time to hold the stance button before the player goes prone");
-  cl_nodelta = Dvar_RegisterBool("cl_nodelta",false,0,"The server does not send snapshot deltas");
-  net_debug_server_time_error =
-       Dvar_RegisterBool("net_debug_server_time_error",false,0,"Debug server time error");
-  cl_accessibilityTurboEnabled =
-       Dvar_RegisterBool("cl_accessibilityTurboEnabled",false,4,
-                         "True if accessibility configurations do continuous fire for akimbo weapons"
-                        );
+  Cmd_AddCommandInternal(0xffffffff8202f328,0xffffffff82339408,0xffffffff82a9ace4);
+  Cmd_AddCommandInternal(0xffffffff8202f31c,0xffffffff82339358,0xffffffff82a9acd0);
+  Cmd_AddCommandInternal(0xffffffff8202f314,0xffffffff82338d30,0xffffffff82a9acbc);
+  Cmd_AddCommandInternal(0xffffffff8202f30c,0xffffffff82338e20,0xffffffff82a9aca8);
+  Cmd_AddCommandInternal(0xffffffff8202f304,0xffffffff82338e78,0xffffffff82a9ac94);
+  Cmd_AddCommandInternal(0xffffffff8202f2fc,0xffffffff82338f18,0xffffffff82a9ac80);
+  Cmd_AddCommandInternal(0xffffffff8202f2f4,0xffffffff82339500,0xffffffff82a9ac6c);
+  Cmd_AddCommandInternal(0xffffffff8202f2ec,0xffffffff82339538,0xffffffff82a9ac58);
+  Cmd_AddCommandInternal(0xffffffff8202f2e0,0xffffffff82339570,0xffffffff82a9ac44);
+  Cmd_AddCommandInternal(0xffffffff8202f2d4,0xffffffff82339690,0xffffffff82a9ac30);
+  DAT_82a9a178 = Dvar_RegisterFloat(0x3fe99999a0000000,0x3f1a36e2e0000000,0x3ff0000000000000,
+                                    0xffffffff8202f29c);
+  DAT_82a9a170 = Dvar_RegisterInt(0xffffffff8202f288,300,0,1000,0,0xffffffff8202f248);
+  DAT_82aa1aac = Dvar_RegisterBool(0xffffffff8202f210,0,0,0xffffffff8202f21c);
+  DAT_82b3eca8 = Dvar_RegisterBool(0xffffffff8202f1dc,0,0,0xffffffff8202f1f8);
+  DAT_82a9a174 = Dvar_RegisterBool(0xffffffff8202f1bc,0,4,0xffffffff8202f170);
   return;
 }
 
 
 // 8233C440  CL_ShutdownInput  (client_mp/cl_input.cpp:2106)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_ShutdownInput(void)
 
 {
-  Cmd_RemoveCommand("mouseMove");
-  Cmd_RemoveCommand("remoteKey");
-  Cmd_RemoveCommand("+moveup");
-  Cmd_RemoveCommand("-moveup");
-  Cmd_RemoveCommand("+speed");
-  Cmd_RemoveCommand("-speed");
-  Cmd_RemoveCommand("+throw");
-  Cmd_RemoveCommand("-throw");
-  Cmd_RemoveCommand("lowerstance");
-  Cmd_RemoveCommand("raisestance");
+  Cmd_RemoveCommand(0xffffffff8202f328);
+  Cmd_RemoveCommand(0xffffffff8202f31c);
+  Cmd_RemoveCommand(0xffffffff8202f314);
+  Cmd_RemoveCommand(0xffffffff8202f30c);
+  Cmd_RemoveCommand(0xffffffff8202f304);
+  Cmd_RemoveCommand(0xffffffff8202f2fc);
+  Cmd_RemoveCommand(0xffffffff8202f2f4);
+  Cmd_RemoveCommand(0xffffffff8202f2ec);
+  Cmd_RemoveCommand(0xffffffff8202f2e0);
+  Cmd_RemoveCommand(0xffffffff8202f2d4);
   return;
 }
 
 
 // 8233C4D8  CL_ClearKeys  (client_mp/cl_input.cpp:2139)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_ClearKeys(LocalClientNum_t param_1)
+void * CL_ClearKeys(int param_1)
 
 {
-  memset();
-  return;
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_82a9a188 + param_1 * 0x2a8,0,0x2a8);
+  return pvVar1;
 }
 
 
 // 8233C4F8  CL_ExecBinding  (client_mp/cl_input.cpp:2145)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CL_ExecBinding(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  bool bVar1;
+  undefined4 uVar2;
+  longlong lVar3;
+  int iVar4;
+  undefined1 *puVar5;
+  char *pcVar6;
+  longlong lVar7;
+  
+  lVar3 = __savegprlr_27();
+  iVar4 = CL_IsCgameInitialized();
+  if ((iVar4 != 0) && (iVar4 = CG_GetLocalClientGlobals(lVar3), *(int *)(iVar4 + 0x335c) != 0)) {
+    if ((int)param_2 != 0) {
+      CL_CheckNotify(lVar3,param_2);
+    }
+    uVar2 = DAT_8366737c;
+    switch((int)param_2 + -1) {
+    case 0:
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565d24,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 1:
+      IN_KeyUp(lVar3 * 0x2a8 + -0x7d565d24,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 2:
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565cc0,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 3:
+      IN_KeyUp(lVar3 * 0x2a8 + -0x7d565cc0,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 4:
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565ce8,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 5:
+      IN_KeyUp(lVar3 * 0x2a8 + -0x7d565ce8,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 6:
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565cd4,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 7:
+      IN_KeyUp(lVar3 * 0x2a8 + -0x7d565cd4,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 8:
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565d10,param_3,DAT_8366737c);
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565c34,param_3,uVar2);
+      __restgprlr_27();
+      return;
+    case 9:
+      lVar3 = lVar3 * 0x2a8;
+      lVar7 = -0x7d565e78;
+      IN_KeyUp(lVar3 + -0x7d565d10,param_3,DAT_8366737c);
+      IN_KeyUp(lVar3 + lVar7 + 0x244);
+      __restgprlr_27();
+      return;
+    case 10:
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565c84,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 0xb:
+      IN_KeyUp(lVar3 * 0x2a8 + -0x7d565c84,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 0xc:
+      iVar4 = CL_GetLocalClientConnectionState(lVar3);
+      if (4 < iVar4) {
+        puVar5 = (undefined1 *)CL_GetLocalClientGlobals(lVar3);
+        *puVar5 = 0;
+        IN_KeyDown(lVar3 * 0x2a8 + -0x7d565dc4,param_3,uVar2);
+      }
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565c48,param_3,uVar2);
+      __restgprlr_27();
+      return;
+    case 0xd:
+      iVar4 = CL_GetLocalClientConnectionState(lVar3);
+      if (4 < iVar4) {
+        puVar5 = (undefined1 *)CL_GetLocalClientGlobals(lVar3);
+        *puVar5 = 0;
+        IN_KeyUp(lVar3 * 0x2a8 + -0x7d565dc4,param_3,uVar2);
+      }
+      IN_KeyUp(lVar3 * 0x2a8 + -0x7d565c48,param_3,uVar2);
+      __restgprlr_27();
+      return;
+    case 0xe:
+      CG_ActionSlotDown(lVar3,0);
+      __restgprlr_27();
+      return;
+    case 0xf:
+      CG_ActionSlotUp(lVar3,0);
+      __restgprlr_27();
+      return;
+    case 0x10:
+      CG_ActionSlotDown(lVar3,1);
+      __restgprlr_27();
+      return;
+    case 0x11:
+      CG_ActionSlotUp(lVar3,1);
+      __restgprlr_27();
+      return;
+    case 0x12:
+      CG_ActionSlotDown(lVar3,2);
+      __restgprlr_27();
+      return;
+    case 0x13:
+      CG_ActionSlotUp(lVar3,2);
+      __restgprlr_27();
+      return;
+    case 0x14:
+      CG_ActionSlotDown(lVar3,3);
+      __restgprlr_27();
+      return;
+    case 0x15:
+      CG_ActionSlotUp(lVar3,3);
+      __restgprlr_27();
+      return;
+    case 0x16:
+      iVar4 = (int)lVar3 * 0x2a8;
+      if (((&DAT_82a9a3a0)[iVar4] != '\0') || (bVar1 = false, (&DAT_82a9a274)[iVar4] != '\0')) {
+        bVar1 = true;
+      }
+      if ((!bVar1) && (iVar4 = CL_GetLocalClientConnectionState(lVar3), 4 < iVar4)) {
+        iVar4 = CL_GetLocalClientGlobals(lVar3);
+        *(undefined1 *)(iVar4 + 0x352c) = 1;
+        *(int *)(iVar4 + 0x3534) = *(int *)(iVar4 + 0x3530);
+        *(undefined4 *)(iVar4 + 0x3538) = DAT_8366737c;
+        if (*(int *)(iVar4 + 0x3530) != 1) {
+          *(undefined4 *)(iVar4 + 0x3530) = 1;
+          __restgprlr_27();
+          return;
+        }
+      }
+      break;
+    case 0x17:
+      iVar4 = (int)lVar3 * 0x2a8;
+      if (((&DAT_82a9a3a0)[iVar4] != '\0') || (bVar1 = false, (&DAT_82a9a274)[iVar4] != '\0')) {
+        bVar1 = true;
+      }
+      if ((!bVar1) && (iVar4 = CL_GetLocalClientConnectionState(lVar3), 4 < iVar4)) {
+        iVar4 = CL_GetLocalClientGlobals(lVar3);
+        if ((*(char *)(iVar4 + 0x352c) != '\0') && (*(int *)(iVar4 + 0x3534) == 1)) {
+          *(undefined4 *)(iVar4 + 0x3530) = 0;
+        }
+        *(undefined1 *)(iVar4 + 0x352c) = 0;
+        __restgprlr_27();
+        return;
+      }
+      break;
+    case 0x18:
+      iVar4 = CL_GetLocalClientConnectionState(lVar3);
+      if (4 < iVar4) {
+        IN_KeyDown(lVar3 * 0x2a8 + -0x7d565d88,param_3,uVar2);
+        iVar4 = CL_GetLocalClientGlobals(lVar3);
+        if (*(int *)(iVar4 + 0x3530) != 0) {
+          CL_SetStance(lVar3,0);
+          __restgprlr_27();
+          return;
+        }
+        IN_KeyDown(lVar3 * 0x2a8 + -0x7d565db0,param_3,uVar2);
+        __restgprlr_27();
+        return;
+      }
+      break;
+    case 0x19:
+      iVar4 = CL_GetLocalClientConnectionState(lVar3);
+      if (4 < iVar4) {
+        lVar3 = lVar3 * 0x2a8;
+        lVar7 = -0x7d565e78;
+        IN_KeyUp(lVar3 + -0x7d565d88,param_3,uVar2);
+        IN_KeyUp(lVar3 + lVar7 + 200);
+        __restgprlr_27();
+        return;
+      }
+      break;
+    case 0x1a:
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565cc0,param_3,DAT_8366737c);
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565cfc,param_3,uVar2);
+      __restgprlr_27();
+      return;
+    case 0x1b:
+      lVar3 = lVar3 * 0x2a8;
+      lVar7 = -0x7d565e78;
+      IN_KeyUp(lVar3 + -0x7d565cc0,param_3,DAT_8366737c);
+      IN_KeyUp(lVar3 + lVar7 + 0x17c);
+      __restgprlr_27();
+      return;
+    case 0x1c:
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565cfc,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 0x1d:
+      IN_KeyUp(lVar3 * 0x2a8 + -0x7d565cfc,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 0x1e:
+      iVar4 = CL_GetLocalClientConnectionState(lVar3);
+      if (4 < iVar4) {
+        pcVar6 = (char *)CL_GetLocalClientGlobals(lVar3);
+        *pcVar6 = *pcVar6 == '\0';
+      }
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565be4,param_3,uVar2);
+      __restgprlr_27();
+      return;
+    case 0x1f:
+      IN_KeyUp(lVar3 * 0x2a8 + -0x7d565be4,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 0x20:
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565bf8,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 0x21:
+      IN_KeyUp(lVar3 * 0x2a8 + -0x7d565bf8,param_3,DAT_8366737c);
+      __restgprlr_27();
+      return;
+    case 0x22:
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565cc0,param_3,DAT_8366737c);
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565d10,param_3,uVar2);
+      __restgprlr_27();
+      return;
+    case 0x23:
+      lVar3 = lVar3 * 0x2a8;
+      lVar7 = -0x7d565e78;
+      IN_KeyUp(lVar3 + -0x7d565cc0,param_3,DAT_8366737c);
+      IN_KeyUp(lVar3 + lVar7 + 0x168);
+      __restgprlr_27();
+      return;
+    case 0x24:
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565c34,param_3,DAT_8366737c);
+      IN_KeyDown(lVar3 * 0x2a8 + -0x7d565cfc,param_3,uVar2);
+      __restgprlr_27();
+      return;
+    case 0x25:
+      lVar3 = lVar3 * 0x2a8;
+      lVar7 = -0x7d565e78;
+      IN_KeyUp(lVar3 + -0x7d565c34,param_3,DAT_8366737c);
+      IN_KeyUp(lVar3 + lVar7 + 0x17c);
+      __restgprlr_27();
+      return;
+    case 0x26:
+      CL_ToggleMenu(lVar3);
+      __restgprlr_27();
+      return;
+    case 0x27:
+      CG_CycleWeapon(lVar3,1);
+      __restgprlr_27();
+      return;
+    case 0x29:
+      CG_ToggleScores(lVar3);
+    }
+  }
+  __restgprlr_27();
+  return;
+}
+

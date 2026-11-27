@@ -2,58 +2,48 @@
 
 // 825D4868  CCS_ClearConstantConfigStrings  (universal/com_constantconfigstrings.cpp:22)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CCS_ClearConstantConfigStrings(void)
 
 {
-  configStringTable = (StringTable *)0x0;
-  configStringTableChecksum = 0;
+  DAT_84013938 = 0;
+  DAT_8401393c = 0;
   return;
 }
 
 
 // 825D4888  CCS_GetChecksum  (universal/com_constantconfigstrings.cpp:29)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int CCS_GetChecksum(void)
+undefined4 CCS_GetChecksum(void)
 
 {
-  return configStringTableChecksum;
+  return DAT_8401393c;
 }
 
 
 // 825D4898  CCS_LoadConstantConfigStrings  (universal/com_constantconfigstrings.cpp:35)
 
-void CCS_LoadConstantConfigStrings(char *param_1,char *param_2)
+void CCS_LoadConstantConfigStrings(undefined8 param_1,ulonglong param_2)
 
 {
   char *pcVar1;
-  ulonglong uVar2;
-  char acStack_b0 [176];
+  undefined1 auStack_b0 [176];
   
-  uVar2 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
+  pcVar1 = (char *)__savegprlr_28();
   if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_constantconfigstrings.cpp"
-                    ,0x26,0,"%s");
+    MyAssertHandler(0xffffffff82174a88,0x26,0,0xffffffff82000f98,0xffffffff82010974);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_constantconfigstrings.cpp"
-                    ,0x27,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82174a88,0x27,0,0xffffffff82000f98,0xffffffff820337c4);
   }
   if (*pcVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_constantconfigstrings.cpp"
-                    ,0x28,0,"%s");
+    MyAssertHandler(0xffffffff82174a88,0x28,0,0xffffffff82000f98,0xffffffff8203391c);
   }
-  if (*(char *)uVar2 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_constantconfigstrings.cpp"
-                    ,0x29,0,"%s");
+  if (*(char *)param_2 == '\0') {
+    MyAssertHandler(0xffffffff82174a88,0x29,0,0xffffffff82000f98,0xffffffff82174a78);
   }
-  Com_sprintf(acStack_b0,0x80,"mp/configStrings/cs_360_%s_%s.csv");
-  StringTable_GetAsset(acStack_b0,&configStringTable);
-  configStringTableChecksum = StringTable_Checksum(configStringTable,0);
+  Com_sprintf(auStack_b0,0x80,0xffffffff82174a54,pcVar1,param_2);
+  StringTable_GetAsset(auStack_b0,0xffffffff84013938);
+  DAT_8401393c = StringTable_Checksum(DAT_84013938,0);
   __restgprlr_28();
   return;
 }
@@ -61,60 +51,54 @@ void CCS_LoadConstantConfigStrings(char *param_1,char *param_2)
 
 // 825D49A0  CCS_GetConfigStringValue  (universal/com_constantconfigstrings.cpp:51)
 
-char * CCS_GetConfigStringValue(int param_1)
+undefined8 CCS_GetConfigStringValue(undefined8 param_1)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   
-  if (configStringTable == (StringTable *)0x0) {
-    return "";
+  if (DAT_84013938 == 0) {
+    return 0xffffffff820068af;
   }
-  pcVar1 = StringTable_GetColumnValueForRow(configStringTable,param_1,1);
-  return pcVar1;
+  uVar1 = StringTable_GetColumnValueForRow(DAT_84013938,param_1,1);
+  return uVar1;
 }
 
 
 // 825D49D0  CCS_GetConfigStringNum  (universal/com_constantconfigstrings.cpp:62)
 
-int CCS_GetConfigStringNum(int param_1)
+int CCS_GetConfigStringNum(undefined8 param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
+  char *_Str;
+  int iVar1;
   
-  if (configStringTable == (StringTable *)0x0) {
+  if (DAT_84013938 == 0) {
     return 0;
   }
-  pcVar1 = StringTable_GetColumnValueForRow(configStringTable,param_1,0);
-  iVar2 = atoi(pcVar1);
-  return iVar2;
+  _Str = (char *)StringTable_GetColumnValueForRow(DAT_84013938,param_1,0);
+  iVar1 = atoi(_Str);
+  return iVar1;
 }
 
 
 // 825D4A28  CCS_GetConfigStringCount  (universal/com_constantconfigstrings.cpp:70)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int CCS_GetConfigStringCount(void)
+void CCS_GetConfigStringCount(void)
 
 {
-  int iVar1;
-  
-  if (configStringTable == (StringTable *)0x0) {
-    return 0;
+  if (DAT_84013938 == 0) {
+    return;
   }
-  iVar1 = StringTable_GetRowCount(configStringTable);
-  return iVar1;
+  StringTable_GetRowCount();
+  return;
 }
 
 
 // 825D4A40  CCS_UsingConstantConfigStrings  (universal/com_constantconfigstrings.cpp:79)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 bool CCS_UsingConstantConfigStrings(void)
 
 {
-  return (bool)('\x01' - (configStringTable == (StringTable *)0x0));
+  return DAT_84013938 != 0;
 }
 

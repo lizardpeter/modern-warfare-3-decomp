@@ -2,81 +2,70 @@
 
 // 82450BE8  FXW_UpdatePass0Worker  (EffectsCore/fx_update_worker.cpp:20)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FXW_UpdatePass0Worker(FxPass0Cmd *param_1)
+void FXW_UpdatePass0Worker(void)
 
 {
-  FxSystem *pFVar1;
-  ushort *puVar2;
-  int *piVar3;
-  int iVar4;
+  int iVar1;
+  short *psVar2;
+  int *piVar4;
+  undefined8 uVar3;
   
-  piVar3 = (int *)__savegprlr_27(param_1);
-  if (*piVar3 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_worker.cpp"
-                    ,0x1f,0,"%s");
+  piVar4 = (int *)__savegprlr_27();
+  if (*piVar4 == 0) {
+    MyAssertHandler(0xffffffff8206adf0,0x1f,0,0xffffffff82000f98,0xffffffff8206ade0);
   }
-  if (piVar3[6] == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_worker.cpp"
-                    ,0x20,0,"%s");
+  if (piVar4[6] == 0) {
+    MyAssertHandler(0xffffffff8206adf0,0x20,0,0xffffffff82000f98,0xffffffff8206adcc);
   }
-  pFVar1 = (FxSystem *)*piVar3;
-  puVar2 = (ushort *)piVar3[6];
-  if ((pFVar1->systemFlags & 1) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_worker.cpp"
-                    ,0x25,0,"%s");
+  iVar1 = *piVar4;
+  psVar2 = (short *)piVar4[6];
+  if ((*(uint *)(iVar1 + 0xb4) & 1) != 0) {
+    MyAssertHandler(0xffffffff8206adf0,0x25,0,0xffffffff82000f98,0xffffffff8206a9b4);
   }
-  if (puVar2 == (ushort *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_worker.cpp"
-                    ,0x26,0,"%s");
+  if (psVar2 == (short *)0x0) {
+    MyAssertHandler(0xffffffff8206adf0,0x26,0,0xffffffff82000f98,0xffffffff8206a028);
   }
-  if (*puVar2 == 0xffff) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_worker.cpp"
-                    ,0x34,0,"%s");
+  if (*psVar2 == -1) {
+    MyAssertHandler(0xffffffff8206adf0,0x34,0,0xffffffff82000f98,0xffffffff8206ad98);
   }
-  iVar4 = FXW_SystemUpdateEffect(pFVar1,piVar3[8],puVar2,0,piVar3[7]);
-  if (0 < pFVar1->numUpdateElement) {
-    FXW_SystemUpdateElement(pFVar1);
+  uVar3 = FXW_SystemUpdateEffect(iVar1,piVar4[8],psVar2,0,piVar4[7]);
+  if (0 < *(int *)(iVar1 + 0xd0)) {
+    FXW_SystemUpdateElement(iVar1);
   }
-  iVar4 = FXW_SystemUpdateEffectFinalize(pFVar1,puVar2,iVar4,piVar3[7]);
-  __restgprlr_27(iVar4);
+  FXW_SystemUpdateEffectFinalize(iVar1,psVar2,uVar3,piVar4[7]);
+  __restgprlr_27();
   return;
 }
 
 
 // 82450D28  FXW_UpdatePass0Internal  (EffectsCore/fx_update_worker.cpp:102)
 
-void FXW_UpdatePass0Internal(FxPass0Cmd *param_1)
+void FXW_UpdatePass0Internal(int param_1)
 
 {
+  undefined8 uVar1;
+  undefined8 in_MSR;
   char in_RESERVE;
   byte in_cr0;
   
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"fx update");
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8206ae3c);
   Profile2_UpdateEntry(8);
   do {
     if (in_RESERVE != '\0') {
-      g_prof2_begin_count[8] =
-           storeWordConditionalIndexed
-                     ((ulonglong)(uint)g_prof2_begin_count[8] + 1,0,0xffffffff84184e18);
+      DAT_84184e18 = storeWordConditionalIndexed((ulonglong)DAT_84184e18 + 1,0,0xffffffff84184e18);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   FXW_UpdatePass0Worker(param_1);
-  Profile2_UpdateEntry(8);
+  uVar1 = Profile2_UpdateEntry(8);
   do {
     if (in_RESERVE != '\0') {
-      g_prof2_begin_count[8] =
-           storeWordConditionalIndexed
-                     ((ulonglong)(uint)g_prof2_begin_count[8] - 1,0,0xffffffff84184e18);
+      DAT_84184e18 = storeWordConditionalIndexed((ulonglong)DAT_84184e18 - 1,0,0xffffffff84184e18);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  PIXEndNamedEvent();
-  FX_ExitWriteSystemLock((FxAccessLock *)param_1->_padding_);
+  PIXEndNamedEvent(uVar1,0xffffffff84184e18,in_MSR);
+  FX_ExitWriteSystemLock(*(undefined4 *)(param_1 + 0xc));
   return;
 }
 

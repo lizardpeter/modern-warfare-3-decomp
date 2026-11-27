@@ -4,28 +4,28 @@
 
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-_iobuf * _getstream(void)
+FILE * _getstream(void)
 
 {
   uint uVar1;
-  undefined4 *puVar2;
-  void **ppvVar3;
-  int iVar4;
-  void *pvVar5;
-  _iobuf *p_Var6;
-  int iVar7;
+  undefined4 *_File;
+  int iVar2;
+  int iVar3;
+  void *pvVar4;
+  int iVar5;
+  FILE *pFVar6;
   undefined4 *local_50;
   
   __savegprlr_24();
   local_50 = (undefined4 *)0x0;
   _lock(1);
-  iVar7 = 0;
+  iVar5 = 0;
   do {
-    ppvVar3 = __piob;
-    puVar2 = local_50;
-    if (_nstream <= iVar7) {
+    iVar3 = DAT_84897ec0;
+    _File = local_50;
+    if (DAT_84897ec4 <= iVar5) {
 LAB_82922b48:
-      local_50 = puVar2;
+      local_50 = _File;
       if (local_50 != (undefined4 *)0x0) {
         local_50[3] = local_50[3] & 0x8000;
         local_50[1] = 0;
@@ -35,37 +35,38 @@ LAB_82922b48:
         local_50[4] = 0xffffffff;
       }
       FUN_82922b8c();
-      p_Var6 = (_iobuf *)__restgprlr_24(local_50);
-      return p_Var6;
+      pFVar6 = (FILE *)__restgprlr_24(local_50);
+      return pFVar6;
     }
-    if (__piob[iVar7] == (void *)0x0) {
-      pvVar5 = malloc(0x3c);
-      ppvVar3[iVar7] = pvVar5;
-      if (pvVar5 != (void *)0x0) {
-        iVar4 = __crtInitCritSecAndSpinCount
-                          ((_RTL_CRITICAL_SECTION *)((int)__piob[iVar7] + 0x20),4000);
-        if (iVar4 == 0) {
-          free(__piob[iVar7]);
-          __piob[iVar7] = (void *)0x0;
+    iVar2 = iVar5 * 4;
+    if (*(int *)(iVar2 + DAT_84897ec0) == 0) {
+      pvVar4 = malloc(0x3c);
+      *(void **)(iVar2 + iVar3) = pvVar4;
+      if (pvVar4 != (void *)0x0) {
+        iVar5 = __crtInitCritSecAndSpinCount((ulonglong)*(uint *)(iVar2 + DAT_84897ec0) + 0x20,4000)
+        ;
+        if (iVar5 == 0) {
+          free(*(void **)(iVar2 + DAT_84897ec0));
+          *(undefined4 *)(iVar2 + DAT_84897ec0) = 0;
         }
         else {
-          RtlEnterCriticalSection(ZEXT48(__piob[iVar7]) + 0x20);
-          puVar2 = __piob[iVar7];
-          puVar2[3] = 0;
+          RtlEnterCriticalSection((ulonglong)*(uint *)(iVar2 + DAT_84897ec0) + 0x20);
+          _File = *(undefined4 **)(iVar2 + DAT_84897ec0);
+          _File[3] = 0;
         }
       }
       goto LAB_82922b48;
     }
-    uVar1 = *(uint *)((int)__piob[iVar7] + 0xc);
+    uVar1 = *(uint *)(*(int *)(iVar2 + DAT_84897ec0) + 0xc);
     if (((uVar1 & 0x83) == 0) && ((uVar1 & 0x8000) == 0)) {
-      if ((2 < iVar7) && ((iVar7 < 0x14 && (iVar4 = _mtinitlocknum(iVar7 + 0x10), iVar4 == 0))))
+      if ((2 < iVar5) && ((iVar5 < 0x14 && (iVar3 = _mtinitlocknum(iVar5 + 0x10), iVar3 == 0))))
       goto LAB_82922b48;
-      _lock_file2(iVar7,__piob[iVar7]);
-      puVar2 = __piob[iVar7];
-      if ((puVar2[3] & 0x83) == 0) goto LAB_82922b48;
-      _unlock_file2(iVar7,puVar2);
+      _lock_file2(iVar5,*(void **)(iVar2 + DAT_84897ec0));
+      _File = *(undefined4 **)(iVar2 + DAT_84897ec0);
+      if ((_File[3] & 0x83) == 0) goto LAB_82922b48;
+      _unlock_file2(iVar5,_File);
     }
-    iVar7 = iVar7 + 1;
+    iVar5 = iVar5 + 1;
   } while( true );
 }
 

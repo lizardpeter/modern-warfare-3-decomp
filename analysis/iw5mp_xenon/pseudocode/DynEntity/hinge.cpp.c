@@ -2,91 +2,82 @@
 
 // 824137F0  Hinge_Init  (DynEntity/hinge.cpp:25)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Hinge_Init(void)
+void * Hinge_Init(void)
 
 {
-  memset();
-  return;
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_83324b40,0,0xe00);
+  return pvVar1;
 }
 
 
 // 82413808  Hinge_Create  (DynEntity/hinge.cpp:31)
 
-Hinge * Hinge_Create(DynEntityHingeDef *param_1,PhysPreset *param_2,float *param_3,float param_4)
+void Hinge_Create(undefined8 param_1,ulonglong param_2,float *param_3)
 
 {
   int iVar1;
-  float *pfVar2;
-  dvar_t *pdVar3;
-  float fVar4;
-  Hinge *pHVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  longlong lVar8;
-  longlong lVar9;
+  float fVar2;
+  void *pvVar3;
+  uint uVar4;
+  float *pfVar5;
+  float *_Dst;
   double extraout_f1;
-  double dVar10;
+  double dVar6;
   
-  uVar6 = (ulonglong)(int)param_2;
-  fVar4 = (float)__savegprlr_27((double)param_4,param_1);
-  dVar10 = extraout_f1;
-  if (fVar4 == 0.0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\hinge.cpp",0x23,0,
-                    "%s");
+  fVar2 = (float)__savegprlr_27();
+  dVar6 = extraout_f1;
+  if (fVar2 == 0.0) {
+    MyAssertHandler(0xffffffff82060710,0x23,0,0xffffffff82000f98,0xffffffff8206070c);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\hinge.cpp",0x24,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82060710,0x24,0,0xffffffff82000f98,0xffffffff82025024);
   }
-  uVar7 = 0;
-  lVar8 = -0x7ccdb4c0;
+  uVar4 = 0;
+  pfVar5 = (float *)&DAT_83324b40;
   do {
-    iVar1 = (int)lVar8;
-    lVar9 = lVar8;
-    if (*(char *)(iVar1 + 0x1c) == '\0') {
+    _Dst = pfVar5;
+    if (*(char *)(pfVar5 + 7) == '\0') {
 LAB_824138fc:
-      if (0x3f < uVar7) {
-        pHVar5 = (Hinge *)__restgprlr_27(0);
-        return pHVar5;
+      if (0x3f < uVar4) {
+        __restgprlr_27(0);
+        return;
       }
-      lVar8 = lVar9;
-      memset();
-      pfVar2 = (float *)lVar9;
-      pfVar2[9] = fVar4;
-      *(undefined1 *)(pfVar2 + 7) = 1;
-      pfVar2[10] = (float)uVar6;
-      pfVar2[0xb] = *param_3;
-      pdVar3 = phys_autoDisableTime;
-      pfVar2[0xc] = param_3[1];
-      pfVar2[0xd] = param_3[2];
-      pfVar2[8] = (float)(pdVar3->current).integer;
-      *pfVar2 = (float)dVar10;
-      AngleAxisToQuat((float)dVar10,(float *)lVar8,(float *)((int)pfVar2[9] + 0xc));
-      pHVar5 = (Hinge *)__restgprlr_27(lVar9);
-      return pHVar5;
+      pvVar3 = memset(_Dst,0,0x38);
+      _Dst[9] = fVar2;
+      *(undefined1 *)(_Dst + 7) = 1;
+      _Dst[10] = (float)param_2;
+      _Dst[0xb] = *param_3;
+      iVar1 = DAT_8427b8cc;
+      _Dst[0xc] = param_3[1];
+      _Dst[0xd] = param_3[2];
+      _Dst[8] = *(float *)(iVar1 + 0xc);
+      *_Dst = (float)dVar6;
+      AngleAxisToQuat(dVar6,pvVar3,(ulonglong)(uint)_Dst[9] + 0xc,_Dst + 1);
+      __restgprlr_27(_Dst);
+      return;
     }
-    lVar9 = lVar8 + 0x38;
-    if (*(char *)(iVar1 + 0x54) == '\0') {
-      uVar7 = uVar7 + 1;
+    _Dst = pfVar5 + 0xe;
+    if (*(char *)(pfVar5 + 0x15) == '\0') {
+      uVar4 = uVar4 + 1;
       goto LAB_824138fc;
     }
-    lVar9 = lVar8 + 0x70;
-    if (*(char *)(iVar1 + 0x8c) == '\0') {
-      uVar7 = uVar7 + 2;
+    _Dst = pfVar5 + 0x1c;
+    if (*(char *)(pfVar5 + 0x23) == '\0') {
+      uVar4 = uVar4 + 2;
       goto LAB_824138fc;
     }
-    lVar9 = lVar8 + 0xa8;
-    if (*(char *)(iVar1 + 0xc4) == '\0') {
-      uVar7 = uVar7 + 3;
+    _Dst = pfVar5 + 0x2a;
+    if (*(char *)(pfVar5 + 0x31) == '\0') {
+      uVar4 = uVar4 + 3;
       goto LAB_824138fc;
     }
-    uVar7 = uVar7 + 4;
-    lVar8 = lVar8 + 0xe0;
-    if (0x3f < uVar7) {
-      pHVar5 = (Hinge *)__restgprlr_27(0);
-      return pHVar5;
+    uVar4 = uVar4 + 4;
+    pfVar5 = pfVar5 + 0x38;
+    if (0x3f < uVar4) {
+      __restgprlr_27(0);
+      return;
     }
   } while( true );
 }
@@ -94,40 +85,36 @@ LAB_824138fc:
 
 // 82413988  Hinge_Destroy  (DynEntity/hinge.cpp:63)
 
-void Hinge_Destroy(Hinge *param_1)
+void Hinge_Destroy(int param_1)
 
 {
-  if (param_1 == (Hinge *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\hinge.cpp",0x40,0,
-                    "%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82060710,0x40,0,0xffffffff82000f98,0xffffffff820605bc);
     uRam0000001c = 0;
     return;
   }
-  param_1->active = false;
+  *(undefined1 *)(param_1 + 0x1c) = 0;
   return;
 }
 
 
 // 82413A00  Hinge_AssertAllFree  (DynEntity/hinge.cpp:72)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hinge_AssertAllFree(void)
 
 {
-  bool *pbVar1;
+  char *pcVar1;
   longlong lVar2;
   
   __savegprlr_27();
-  pbVar1 = &hingeGlob.hinges[0].active;
+  pcVar1 = &DAT_83324b5c;
   lVar2 = 0x40;
   do {
-    if (*pbVar1 != false) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\hinge.cpp",0x4c,0,
-                      "%s");
+    if (*pcVar1 != '\0') {
+      MyAssertHandler(0xffffffff82060710,0x4c,0,0xffffffff82000f98,0xffffffff82060750);
     }
     lVar2 = lVar2 + -1;
-    pbVar1 = pbVar1 + 0x38;
+    pcVar1 = pcVar1 + 0x38;
   } while (lVar2 != 0);
   __restgprlr_27();
   return;
@@ -136,22 +123,20 @@ void Hinge_AssertAllFree(void)
 
 // 82413A70  Hinge_Save  (DynEntity/hinge.cpp:82)
 
-void Hinge_Save(Hinge *param_1,MemoryFile *param_2)
+void Hinge_Save(undefined8 param_1,undefined8 param_2)
 
 {
   float *pfVar1;
   
-  pfVar1 = (float *)__savegprlr_28(param_1);
+  pfVar1 = (float *)__savegprlr_28();
   if (pfVar1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\hinge.cpp",0x53,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82060710,0x53,0,0xffffffff82000f98,0xffffffff820605bc);
   }
   if (pfVar1[6] != 0.0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\hinge.cpp",0x54,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82060710,0x54,0,0xffffffff82000f98,0xffffffff8206077c);
   }
-  MemFile_WriteFloat(param_2,*pfVar1);
-  MemFile_WriteFloat(param_2,pfVar1[5]);
+  MemFile_WriteFloat((double)*pfVar1,param_2);
+  MemFile_WriteFloat((double)pfVar1[5],param_2);
   __restgprlr_28();
   return;
 }
@@ -159,46 +144,44 @@ void Hinge_Save(Hinge *param_1,MemoryFile *param_2)
 
 // 82413B08  Hinge_Load  (DynEntity/hinge.cpp:92)
 
-Hinge * Hinge_Load(MemoryFile *param_1,DynEntityHingeDef *param_2,PhysPreset *param_3,float *param_4
-                  )
+void Hinge_Load(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  MemoryFile *pMVar1;
-  Hinge *pHVar2;
+  undefined8 uVar1;
+  int iVar2;
   float local_60;
   float local_5c;
   float local_58;
   
-  pMVar1 = (MemoryFile *)__savegprlr_24(param_1);
-  MemFile_ReadData(pMVar1,4,&local_60);
+  uVar1 = __savegprlr_24();
+  MemFile_ReadData(uVar1,4,&local_60);
   local_5c = local_60;
   if (((uint)local_60 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\dynentity\\../universal/memfile.h"
-                    ,0xc6,0,"%s");
+    MyAssertHandler(0xffffffff820606b0,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
   }
-  MemFile_ReadData(pMVar1,4,&local_5c);
+  MemFile_ReadData(uVar1,4,&local_5c);
   local_58 = local_5c;
   if (((uint)local_5c & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\dynentity\\../universal/memfile.h"
-                    ,0xc6,0,"%s");
+    MyAssertHandler(0xffffffff820606b0,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
   }
-  pHVar2 = Hinge_Create(param_2,param_3,param_4,local_60);
-  if (pHVar2 == (Hinge *)0x0) {
-    pHVar2 = (Hinge *)__restgprlr_24();
-    return pHVar2;
+  iVar2 = Hinge_Create((double)local_60,param_2,param_3,param_4);
+  if (iVar2 == 0) {
+    __restgprlr_24();
+    return;
   }
-  pHVar2->angularVel = local_5c;
-  pHVar2 = (Hinge *)__restgprlr_24();
-  return pHVar2;
+  *(float *)(iVar2 + 0x14) = local_5c;
+  __restgprlr_24();
+  return;
 }
 
 
 // 82413BF0  Hinge_AddForce  (DynEntity/hinge.cpp:110)
 
-void Hinge_AddForce(Hinge *param_1,float *param_2,float *param_3)
+void Hinge_AddForce(int param_1,float *param_2,undefined8 param_3)
 
 {
-  DynEntityHingeDef *pDVar1;
+  float *pfVar1;
+  int iVar2;
   float local_30;
   float local_2c;
   float local_28;
@@ -206,84 +189,84 @@ void Hinge_AddForce(Hinge *param_1,float *param_2,float *param_3)
   float local_1c;
   float local_18;
   
-  pDVar1 = param_1->def;
-  local_30 = *param_2 - pDVar1->axisOrigin[0];
-  local_2c = param_2[1] - pDVar1->axisOrigin[1];
-  local_28 = param_2[2] - pDVar1->axisOrigin[2];
+  pfVar1 = *(float **)(param_1 + 0x24);
+  local_30 = *param_2 - *pfVar1;
+  local_2c = param_2[1] - pfVar1[1];
+  local_28 = param_2[2] - pfVar1[2];
   Vec3Cross(&local_30,param_3,&local_20);
-  pDVar1 = param_1->def;
-  param_1->torqueAccum =
-       pDVar1->axisDir[2] * local_18 + pDVar1->axisDir[1] * local_1c + pDVar1->axisDir[0] * local_20
-       + param_1->torqueAccum;
+  iVar2 = *(int *)(param_1 + 0x24);
+  *(float *)(param_1 + 0x18) =
+       *(float *)(iVar2 + 0x14) * local_18 +
+       *(float *)(iVar2 + 0x10) * local_1c + *(float *)(iVar2 + 0xc) * local_20 +
+       *(float *)(param_1 + 0x18);
   return;
 }
 
 
 // 82413D38  Hinge_Run  (DynEntity/hinge.cpp:121)
 
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
-void Hinge_Run(Hinge *param_1,float param_2)
+void Hinge_Run(double param_1,float *param_2)
 
 {
   float fVar1;
   float fVar2;
-  DynEntityHingeDef *pDVar3;
+  float fVar3;
   float fVar4;
-  Hinge *pHVar5;
-  float *pfVar6;
+  undefined8 uVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
   float local_60;
   float local_5c;
   float local_58;
-  float afStack_50 [4];
-  Bounds local_40 [2];
+  undefined1 auStack_50 [16];
+  float local_40;
+  float local_3c;
+  float local_38;
+  undefined4 local_34;
+  undefined4 local_30;
+  undefined4 local_2c;
   
-  dVar7 = (double)param_2;
-  Hinge_GetCenterOfMass(param_1,afStack_50);
-  Phys_GetGravityAccel(PHYS_WORLD_DYNENT,&local_60);
-  fVar1 = param_1->physPreset->mass;
+  Hinge_GetCenterOfMass(param_2,auStack_50);
+  Phys_GetGravityAccel(0,&local_60);
+  fVar1 = *(float *)((int)param_2[10] + 8);
   local_60 = local_60 * fVar1;
   local_5c = local_5c * fVar1;
   local_58 = local_58 * fVar1;
-  pHVar5 = param_1;
-  Hinge_AddForce(param_1,afStack_50,&local_60);
-  pDVar3 = param_1->def;
-  dVar8 = (double)param_1->angularVel;
-  dVar10 = 0.0;
-  fVar2 = -(float)((double)(float)((double)(pDVar3->friction * pDVar3->momentOfInertia) * dVar8) *
-                   dVar7 - (double)param_1->torqueAccum);
-  param_1->torqueAccum = fVar2;
-  fVar1 = pDVar3->momentOfInertia;
-  param_1->torqueAccum = 0.0;
-  dVar9 = (double)(float)((double)((fVar2 / fVar1) * 57.295776) * dVar7);
-  fVar1 = (float)(dVar9 + dVar8);
-  param_1->angularVel = fVar1;
-  fVar4 = (float)(dVar9 * dVar7) * 0.5 + (float)(dVar8 * dVar7) + param_1->angle;
-  param_1->angle = fVar4;
-  fVar2 = pDVar3->angleMin;
-  if ((fVar4 <= fVar2) || (fVar2 = pDVar3->angleMax, fVar2 <= fVar4)) {
-    param_1->angle = fVar2;
-    param_1->angularVel = -(param_1->physPreset->bounce * fVar1);
+  uVar5 = Hinge_AddForce(param_2,auStack_50,&local_60);
+  fVar3 = param_2[9];
+  dVar6 = (double)param_2[5];
+  dVar8 = 0.0;
+  fVar2 = -(float)((double)(float)((double)(*(float *)((int)fVar3 + 0x28) *
+                                           *(float *)((int)fVar3 + 0x24)) * dVar6) * param_1 -
+                  (double)param_2[6]);
+  param_2[6] = fVar2;
+  fVar1 = *(float *)((int)fVar3 + 0x24);
+  param_2[6] = 0.0;
+  dVar7 = (double)(float)((double)((fVar2 / fVar1) * 57.295776) * param_1);
+  fVar1 = (float)(dVar7 + dVar6);
+  param_2[5] = fVar1;
+  fVar4 = (float)(dVar7 * param_1) * 0.5 + (float)(dVar6 * param_1) + *param_2;
+  *param_2 = fVar4;
+  fVar2 = *(float *)((int)fVar3 + 0x1c);
+  if ((fVar4 <= fVar2) || (fVar2 = *(float *)((int)fVar3 + 0x20), fVar2 <= fVar4)) {
+    *param_2 = fVar2;
+    param_2[5] = -(*(float *)((int)param_2[10] + 0xc) * fVar1);
   }
-  pfVar6 = param_1->quat;
-  AngleAxisToQuat(param_1->angle,&pHVar5->angle,pDVar3->axisDir);
-  fVar1 = (float)((double)param_1->autoDisableTimeLeft - dVar7);
-  if (10.0 - ABS(param_1->angularVel) < 0.0) {
-    fVar1 = (float)(phys_autoDisableTime->current).integer;
+  AngleAxisToQuat((double)*param_2,uVar5,(int)fVar3 + 0xc,param_2 + 1);
+  fVar1 = (float)((double)param_2[8] - param_1);
+  if (10.0 - ABS(param_2[5]) < 0.0) {
+    fVar1 = *(float *)(DAT_8427b8cc + 0xc);
   }
-  param_1->autoDisableTimeLeft = fVar1;
-  if ((phys_drawAwake->current).enabled != false) {
-    local_40[0].midPoint[0] = (float)dVar10;
-    local_40[0].midPoint[1] = (float)dVar10;
-    local_40[0].midPoint[2] = (float)dVar10;
-    local_40[0].halfSize[0] = 4.0;
-    local_40[0].halfSize[1] = 4.0;
-    local_40[0].halfSize[2] = 4.0;
-    CG_DebugBox(afStack_50,local_40,(float)dVar10,pfVar6,-0x7de7e6f8,0);
+  param_2[8] = fVar1;
+  if (*(char *)(DAT_8427b8c4 + 0xc) != '\0') {
+    local_40 = (float)dVar8;
+    local_3c = (float)dVar8;
+    local_38 = (float)dVar8;
+    local_34 = 0x40800000;
+    local_30 = 0x40800000;
+    local_2c = 0x40800000;
+    CG_DebugBox(dVar8,auStack_50,&local_40);
   }
   return;
 }
@@ -291,39 +274,36 @@ void Hinge_Run(Hinge *param_1,float param_2)
 
 // 82413708  MemFile_WriteFloat  (universal/memfile.h:127)
 
-void MemFile_WriteFloat(MemoryFile *param_1,float param_2)
+void MemFile_WriteFloat(double param_1,undefined8 param_2)
 
 {
   float fStack0000001c;
   
-  fStack0000001c = param_2;
-  if (((uint)param_2 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\dynentity\\../universal/memfile.h"
-                    ,0x80,0,"%s");
+  fStack0000001c = (float)param_1;
+  if (((uint)(float)param_1 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff820606b0,0x80,0,0xffffffff82000f98,0xffffffff820606fc);
   }
-  MemFile_WriteData(param_1,4,&stack0x0000001c);
+  MemFile_WriteData(param_2,4,&stack0x0000001c);
   return;
 }
 
 
 // 82413F00  Hinge_UpdateAll  (DynEntity/hinge.cpp:171)
 
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
-void Hinge_UpdateAll(float param_1)
+void Hinge_UpdateAll(void)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  DynEntityHingeDef *pDVar4;
-  PhysPreset *pPVar5;
-  dvar_t *pdVar6;
-  Hinge *pHVar7;
+  float fVar4;
+  int iVar5;
+  undefined8 uVar6;
+  longlong lVar7;
   float *pfVar8;
-  longlong lVar9;
-  Hinge *pHVar10;
-  float *pfVar11;
+  float *pfVar9;
+  double dVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
@@ -331,81 +311,83 @@ void Hinge_UpdateAll(float param_1)
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
   float local_b0;
   float local_ac;
   float local_a8;
   float local_a0;
   float local_9c;
   float local_98;
-  Bounds local_90 [6];
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_84;
+  float local_80;
+  float local_7c;
   
-  __savegprlr_25((double)param_1);
-  dVar12 = (double)__savefpr_26();
-  dVar19 = 0.0;
-  if (0.0 < dVar12) {
-    pfVar11 = &hingeGlob.hinges[0].torqueAccum;
-    dVar16 = 4.0;
-    dVar15 = 10.0;
-    lVar9 = 0x40;
-    dVar17 = 0.5;
-    dVar18 = 57.2957763671875;
+  __savegprlr_25();
+  dVar10 = (double)__savefpr_26();
+  dVar18 = 0.0;
+  if (0.0 < dVar10) {
+    pfVar9 = (float *)&DAT_83324b58;
+    dVar15 = 4.0;
+    dVar14 = 10.0;
+    lVar7 = 0x40;
+    dVar16 = 0.5;
+    dVar17 = 57.2957763671875;
     do {
-      if (*(bool *)(pfVar11 + 1) != false) {
-        pfVar8 = pfVar11 + -5;
-        QuatTransform(pfVar8,pfVar11 + 5,&local_b0);
-        pDVar4 = (DynEntityHingeDef *)pfVar11[3];
-        local_b0 = pDVar4->axisOrigin[0] + local_b0;
-        local_ac = pDVar4->axisOrigin[1] + local_ac;
-        local_a8 = pDVar4->axisOrigin[2] + local_a8;
-        Phys_GetGravityAccel(PHYS_WORLD_DYNENT,&local_a0);
-        pHVar10 = (Hinge *)(pfVar11 + -6);
-        fVar1 = ((PhysPreset *)pfVar11[4])->mass;
+      if (*(char *)(pfVar9 + 1) != '\0') {
+        QuatTransform(pfVar9 + -5,pfVar9 + 5,&local_b0);
+        pfVar8 = (float *)pfVar9[3];
+        local_b0 = *pfVar8 + local_b0;
+        local_ac = pfVar8[1] + local_ac;
+        local_a8 = pfVar8[2] + local_a8;
+        Phys_GetGravityAccel(0,&local_a0);
+        pfVar8 = pfVar9 + -6;
+        fVar1 = *(float *)((int)pfVar9[4] + 8);
         local_a0 = local_a0 * fVar1;
         local_9c = local_9c * fVar1;
         local_98 = local_98 * fVar1;
-        pHVar7 = pHVar10;
-        Hinge_AddForce(pHVar10,&local_b0,&local_a0);
-        pDVar4 = (DynEntityHingeDef *)pfVar11[3];
-        dVar13 = (double)pfVar11[-1];
-        fVar2 = ((Hinge *)(pfVar11 + -6))->angle;
-        fVar3 = -(float)((double)((float)((double)pDVar4->friction * dVar13) *
-                                 pDVar4->momentOfInertia) * dVar12 - (double)*pfVar11);
-        *pfVar11 = fVar3;
-        fVar1 = pDVar4->momentOfInertia;
-        *pfVar11 = (float)dVar19;
-        dVar14 = (double)(float)((double)(float)((double)(fVar3 / fVar1) * dVar18) * dVar12);
-        fVar1 = (float)(dVar13 + dVar14);
-        pfVar11[-1] = fVar1;
-        fVar2 = (float)((double)(float)(dVar14 * dVar12) * dVar17 + (double)(float)(dVar13 * dVar12)
-                       ) + fVar2;
-        ((Hinge *)(pfVar11 + -6))->angle = fVar2;
-        fVar3 = pDVar4->angleMin;
-        if ((fVar2 <= fVar3) || (fVar3 = pDVar4->angleMax, fVar3 <= fVar2)) {
-          pPVar5 = (PhysPreset *)pfVar11[4];
-          pHVar10->angle = fVar3;
-          pfVar11[-1] = -(pPVar5->bounce * fVar1);
+        uVar6 = Hinge_AddForce(pfVar8,&local_b0,&local_a0);
+        fVar3 = pfVar9[3];
+        dVar12 = (double)pfVar9[-1];
+        dVar11 = -(double)(float)((double)((float)((double)*(float *)((int)fVar3 + 0x28) * dVar12) *
+                                          *(float *)((int)fVar3 + 0x24)) * dVar10 - (double)*pfVar9)
+        ;
+        *pfVar9 = (float)dVar11;
+        fVar1 = *(float *)((int)fVar3 + 0x24);
+        *pfVar9 = (float)dVar18;
+        dVar13 = (double)(float)((double)(float)((double)(float)(dVar11 / (double)fVar1) * dVar17) *
+                                dVar10);
+        fVar1 = (float)(dVar12 + dVar13);
+        pfVar9[-1] = fVar1;
+        fVar4 = (float)((double)(float)(dVar13 * dVar10) * dVar16 + (double)(float)(dVar12 * dVar10)
+                       ) + pfVar9[-6];
+        pfVar9[-6] = fVar4;
+        fVar2 = *(float *)((int)fVar3 + 0x1c);
+        if ((fVar4 <= fVar2) || (fVar2 = *(float *)((int)fVar3 + 0x20), fVar2 <= fVar4)) {
+          *pfVar8 = fVar2;
+          pfVar9[-1] = -(*(float *)((int)pfVar9[4] + 0xc) * fVar1);
         }
-        AngleAxisToQuat(pHVar10->angle,&pHVar7->angle,pDVar4->axisDir);
-        pdVar6 = phys_drawAwake;
-        fVar1 = (float)((double)pfVar11[2] - dVar12);
-        if ((float)(dVar15 - ABS((double)pfVar11[-1])) < 0.0) {
-          fVar1 = (float)(phys_autoDisableTime->current).integer;
+        AngleAxisToQuat((double)*pfVar8,dVar11,uVar6,(int)fVar3 + 0xc,pfVar9 + -5);
+        iVar5 = DAT_8427b8c4;
+        fVar1 = (float)((double)pfVar9[2] - dVar10);
+        if ((float)(dVar14 - ABS((double)pfVar9[-1])) < 0.0) {
+          fVar1 = *(float *)(DAT_8427b8cc + 0xc);
         }
-        pfVar11[2] = fVar1;
-        if ((pdVar6->current).enabled != false) {
-          local_90[0].midPoint[0] = (float)dVar19;
-          local_90[0].midPoint[1] = (float)dVar19;
-          local_90[0].midPoint[2] = (float)dVar19;
-          local_90[0].halfSize[0] = (float)dVar16;
-          local_90[0].halfSize[1] = (float)dVar16;
-          local_90[0].halfSize[2] = (float)dVar16;
-          CG_DebugBox(&local_b0,local_90,(float)dVar19,pfVar8,-0x7de7e6f8,0);
+        pfVar9[2] = fVar1;
+        if (*(char *)(iVar5 + 0xc) != '\0') {
+          local_90 = (float)dVar18;
+          local_8c = (float)dVar18;
+          local_88 = (float)dVar18;
+          local_84 = (float)dVar15;
+          local_80 = (float)dVar15;
+          local_7c = (float)dVar15;
+          CG_DebugBox(dVar18,&local_b0,&local_90);
         }
       }
-      lVar9 = lVar9 + -1;
-      pfVar11 = pfVar11 + 0xe;
-    } while (lVar9 != 0);
+      lVar7 = lVar7 + -1;
+      pfVar9 = pfVar9 + 0xe;
+    } while (lVar7 != 0);
   }
   __restfpr_26();
   __restgprlr_25();
@@ -415,23 +397,23 @@ void Hinge_UpdateAll(float param_1)
 
 // 82413C98  Hinge_GetCenterOfMass  (DynEntity/hinge.cpp:190)
 
-void Hinge_GetCenterOfMass(Hinge *param_1,float *param_2)
+void Hinge_GetCenterOfMass(int param_1,float *param_2)
 
 {
-  DynEntityHingeDef *pDVar1;
+  float *pfVar1;
   
-  QuatTransform(param_1->quat,param_1->centerOfMassRelToAxisOriginAtAngleZero,param_2);
-  pDVar1 = param_1->def;
-  *param_2 = pDVar1->axisOrigin[0] + *param_2;
-  param_2[1] = pDVar1->axisOrigin[1] + param_2[1];
-  param_2[2] = pDVar1->axisOrigin[2] + param_2[2];
+  QuatTransform(param_1 + 4,param_1 + 0x2c,param_2);
+  pfVar1 = *(float **)(param_1 + 0x24);
+  *param_2 = *pfVar1 + *param_2;
+  param_2[1] = pfVar1[1] + param_2[1];
+  param_2[2] = pfVar1[2] + param_2[2];
   return;
 }
 
 
 // 82413780  MemFile_ReadFloat  (universal/memfile.h:194)
 
-float MemFile_ReadFloat(MemoryFile *param_1)
+double MemFile_ReadFloat(undefined8 param_1)
 
 {
   float local_10;
@@ -440,18 +422,17 @@ float MemFile_ReadFloat(MemoryFile *param_1)
   MemFile_ReadData(param_1,4,&local_10);
   local_c = local_10;
   if (((uint)local_10 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\dynentity\\../universal/memfile.h"
-                    ,0xc6,0,"%s");
+    MyAssertHandler(0xffffffff820606b0,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
   }
-  return local_10;
+  return (double)local_10;
 }
 
 
 // 82413D10  Hinge_IsAsleep  (DynEntity/hinge.cpp:197)
 
-bool Hinge_IsAsleep(Hinge *param_1)
+bool Hinge_IsAsleep(int param_1)
 
 {
-  return param_1->autoDisableTimeLeft < 0.0;
+  return *(float *)(param_1 + 0x20) < 0.0;
 }
 

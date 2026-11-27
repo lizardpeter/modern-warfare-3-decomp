@@ -2,445 +2,3936 @@
 
 // 824BD018  TRACK_turret  (game/turret.cpp:222)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_turret(void)
 
 {
-  track_static_alloc_internal(turretArray,0x1980,"turretArray",9);
+  track_static_alloc_internal(0xffffffff835a0e28,0x1980,0xffffffff82081324,9);
   return;
 }
 
 
 // 824BD038  Turret_RegisterDvars  (game/turret.cpp:232)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Turret_RegisterDvars(void)
 
 {
-  turretConvergenceHeightDebug =
-       Dvar_RegisterBool("turretConvergenceHeightDebug",false,0x84,
-                         "When true, turns on debugging for turret converging to enemy head");
+  DAT_835a27ac = Dvar_RegisterBool(0xffffffff82081330,0,0x84,0xffffffff82081350);
   return;
 }
 
 
 // 824BD078  G_InitTurrets  (game/turret.cpp:243)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
+
+void G_InitTurrets(void)
+
+{
+  undefined2 *puVar1;
+  longlong lVar2;
+  
+  lVar2 = 0x20;
+  puVar1 = &DAT_835a0d5c;
+  do {
+    puVar1 = puVar1 + 0x66;
+    *(undefined1 *)puVar1 = 0;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  DAT_83580b14 = &DAT_835a0e28;
+  DAT_835a27ac = Dvar_RegisterBool(0xffffffff82081330,0,0x84,0xffffffff82081350);
+  return;
+}
+
 
 // 824C39A8  G_FreeTurret  (game/turret.cpp:259)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_FreeTurret(void)
+
+{
+  undefined1 *puVar1;
+  int iVar2;
+  int iVar3;
+  undefined *puVar4;
+  
+  iVar2 = __savegprlr_27();
+  iVar3 = EntHandle__isDefined(iVar2 + 0x150);
+  if (iVar3 == 0) {
+    puVar4 = &DAT_834b3400;
+  }
+  else {
+    puVar4 = (undefined *)EntHandle__ent(iVar2 + 0x150);
+  }
+  puVar1 = *(undefined1 **)(iVar2 + 0x15c);
+  if (puVar1 == (undefined1 *)0x0) {
+    MyAssertHandler(0xffffffff820813d8,0x10a,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if (*(int *)(puVar4 + 0x158) != 0) {
+    G_ClientStopUsingTurret(iVar2);
+  }
+  G_DeactivateTurret(iVar2);
+  if (*(int *)(iVar2 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xe36,0,0xffffffff82000f98,0xffffffff8208191c);
+  }
+  *(undefined4 *)(iVar2 + 0x15c) = 0;
+  *(undefined4 *)(iVar2 + 0x78) = 0x7ff;
+  *puVar1 = 0;
+  *(undefined4 *)(puVar1 + 0x54) = 0;
+  *(undefined4 *)(puVar1 + 0x58) = 0;
+  *(undefined4 *)(puVar1 + 0x5c) = 0;
+  Scr_FreeTurretFields(puVar1);
+  __restgprlr_27();
+  return;
+}
+
 
 // 824BD0E8  Turret_FillWeaponParms  (game/turret.cpp:290)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_FillWeaponParms(undefined8 param_1,int param_2,longlong param_3)
+
+{
+  undefined4 uVar1;
+  float *pfVar2;
+  float fVar3;
+  undefined4 *puVar6;
+  int iVar7;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  char cVar8;
+  undefined4 local_110;
+  undefined4 local_10c;
+  undefined4 local_108;
+  float local_100;
+  float local_fc;
+  float local_f8;
+  float local_f0;
+  float local_ec;
+  float local_e8;
+  float local_e4;
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  float local_9c;
+  float local_98;
+  float local_94;
+  undefined1 auStack_90 [48];
+  undefined1 auStack_60 [96];
+  
+  puVar6 = (undefined4 *)__savegprlr_27();
+  iVar7 = G_DObjGetWorldTagMatrix(puVar6,DAT_835a0c3a,&local_c0);
+  if (iVar7 == 0) {
+    uVar4 = SL_ConvertToString(*(undefined2 *)((int)puVar6 + 0x172));
+    uVar1 = *puVar6;
+    uVar5 = SL_ConvertToStringSafe(DAT_835a0c3a);
+    Com_Error(1,0xffffffff82081398,uVar5,uVar1,uVar4);
+  }
+  pfVar2 = (float *)param_3;
+  if (*(int *)(param_2 + 0x158) != 0) {
+    G_GetPlayerViewOrigin(*(int *)(param_2 + 0x158),&local_100);
+    cVar8 = BG_IsThirdPersonMode(*(undefined4 *)(param_2 + 0x158));
+    if (cVar8 == '\0') {
+      BG_GetPlayerViewDirection
+                (*(undefined4 *)(param_2 + 0x158),param_3,param_3 + 0xc,param_3 + 0x18);
+    }
+    else {
+      local_110 = *(undefined4 *)(*(int *)(param_2 + 0x158) + 0x3624);
+      local_10c = *(undefined4 *)(*(int *)(param_2 + 0x158) + 0x3628);
+      local_108 = 0;
+      AngleVectors(&local_110);
+    }
+    pfVar2[0xc] = *pfVar2;
+    pfVar2[0xd] = pfVar2[1];
+    pfVar2[0xe] = pfVar2[2];
+    fVar3 = SQRT((local_9c - local_100) * (local_9c - local_100) +
+                 (local_94 - local_f8) * (local_94 - local_f8) +
+                 (local_98 - local_fc) * (local_98 - local_fc));
+    pfVar2[9] = *pfVar2 * fVar3 + local_100;
+    pfVar2[10] = fVar3 * pfVar2[1] + local_fc;
+    pfVar2[0xb] = pfVar2[2] * fVar3 + local_f8;
+    __restgprlr_27();
+    return;
+  }
+  AnglesToAxis(puVar6 + 0x51,auStack_60);
+  local_10c = puVar6[0x16];
+  local_108 = 0;
+  local_110 = puVar6[0x15];
+  AnglesToAxis(&local_110,auStack_90);
+  MatrixMultiply(auStack_90,auStack_60,&local_f0);
+  *pfVar2 = local_f0;
+  pfVar2[1] = local_ec;
+  pfVar2[2] = local_e8;
+  pfVar2[3] = local_e4;
+  pfVar2[4] = local_e0;
+  pfVar2[5] = local_dc;
+  pfVar2[6] = local_d8;
+  pfVar2[7] = local_d4;
+  pfVar2[8] = local_d0;
+  pfVar2[0xc] = local_c0;
+  pfVar2[0xd] = local_bc;
+  pfVar2[0xe] = local_b8;
+  pfVar2[9] = local_9c;
+  pfVar2[10] = local_98;
+  pfVar2[0xb] = local_94;
+  __restgprlr_27();
+  return;
+}
+
 
 // 824BD2F8  Turret_GetRemainingConvergenceTime  (game/turret.cpp:381)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
+
+longlong Turret_GetRemainingConvergenceTime(int param_1,int param_2)
+
+{
+  if ((param_2 != 0) && (param_2 != 1)) {
+    MyAssertHandler(0xffffffff820813d8,0x17e,0,0xffffffff82000f98,0xffffffff82081414);
+  }
+  return ((ulonglong)*(uint *)((param_2 + 0x1e) * 4 + param_1) +
+         (ulonglong)*(uint *)(param_1 + 0x60)) - (ulonglong)DAT_83580fac;
+}
+
 
 // 824BD388  Turret_GetTargetEyePosition  (game/turret.cpp:407)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_GetTargetEyePosition(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x198,0,0xffffffff82000f98,0xffffffff820025cc);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x199,0,0xffffffff82000f98,0xffffffff82081444);
+  }
+  if (*(int *)(iVar2 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x19c,0,0xffffffff82000f98,0xffffffff82081434);
+  }
+  if ((*(uint *)(*(int *)(iVar2 + 0x158) + 0xf8) & 0x3800) != 0) {
+    puVar3 = (undefined4 *)param_2;
+    *puVar3 = *(undefined4 *)(iVar2 + 0x138);
+    puVar3[1] = *(undefined4 *)(iVar2 + 0x13c);
+    fVar1 = *(float *)(iVar2 + 0x140);
+    puVar3[2] = fVar1;
+    puVar3[2] = *(float *)(*(int *)(iVar2 + 0x158) + 0x168) + fVar1;
+    __restgprlr_28();
+    return;
+  }
+  G_GetPlayerEyePosition(*(int *)(iVar2 + 0x158),param_2);
+  __restgprlr_28();
+  return;
+}
+
 
 // 824BD470  Turret_GetEnemyHeightOffset  (game/turret.cpp:436)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_GetEnemyHeightOffset(undefined8 param_1,ulonglong param_2,float *param_3)
+
+{
+  float fVar1;
+  int iVar2;
+  bool bVar3;
+  int iVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  float local_50;
+  float local_4c;
+  float local_48;
+  
+  iVar4 = __savegprlr_27();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x1ba,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x1bb,0,0xffffffff82000f98,0xffffffff82081498);
+  }
+  iVar4 = *(int *)(iVar4 + 0x15c);
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x1be,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  dVar5 = (double)*(float *)(iVar4 + 0x80);
+  dVar9 = 1.0;
+  iVar2 = (int)param_2;
+  if ((1.0 <= dVar5) || (bVar3 = true, *(int *)(iVar2 + 0x158) == 0)) {
+    bVar3 = false;
+  }
+  if ((*(int *)(iVar4 + 0x3c) == 1) && (bVar3)) {
+    if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+      MyAssertHandler(0xffffffff820813d8,0x1cb,0,0xffffffff82081450,dVar5,0,0x3ff0000000000000);
+    }
+    Turret_GetTargetEyePosition(param_2,&local_50);
+    local_50 = *(float *)(iVar2 + 0x138) - local_50;
+    dVar8 = (double)local_50;
+    *param_3 = local_50;
+    local_4c = *(float *)(iVar2 + 0x13c) - local_4c;
+    dVar7 = (double)local_4c;
+    param_3[1] = local_4c;
+    local_48 = *(float *)(iVar2 + 0x140) - local_48;
+    dVar6 = (double)local_48;
+    param_3[2] = local_48;
+    fVar1 = *(float *)(iVar4 + 0x80);
+    dVar5 = (double)(float)(dVar9 - (double)fVar1);
+    *param_3 = (float)(dVar8 * dVar5);
+    param_3[1] = (float)(dVar5 * dVar7);
+    param_3[2] = (float)(dVar6 * dVar5);
+    __restgprlr_27(dVar5,(double)fVar1,dVar8,dVar6,dVar7);
+    return;
+  }
+  *param_3 = 0.0;
+  param_3[2] = 0.0;
+  param_3[1] = 0.0;
+  __restgprlr_27();
+  return;
+}
+
 
 // 824BD640  Turret_FireLead  (game/turret.cpp:477)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_FireLead(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar6;
+  undefined4 uVar7;
+  ulonglong uVar8;
+  undefined1 auStack_90 [60];
+  undefined4 local_54;
+  undefined1 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  
+  uVar2 = __savegprlr_26();
+  Profile_Begin(0xe9);
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x1e4,0,0xffffffff82000f98,0xffffffff820814a0);
+  }
+  uVar8 = param_2;
+  if ((param_2 & 0xffffffff) == ZEXT48(&DAT_834b3400)) {
+    uVar8 = uVar2;
+  }
+  Turret_FillWeaponParms(uVar2,uVar8,auStack_90);
+  iVar1 = (int)uVar2;
+  local_54 = *(undefined4 *)(iVar1 + 200);
+  local_50 = 0;
+  uVar3 = BG_GetAlternateWeapon(local_54,0);
+  local_4c = (&DAT_829d84a0)[uVar3 & 0xff];
+  uVar3 = BG_GetAlternateWeapon(*(undefined4 *)(iVar1 + 200),0);
+  iVar5 = *(int *)(iVar1 + 0x15c);
+  local_48 = (&DAT_829d80d8)[uVar3 & 0xff];
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x1f0,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  iVar4 = BG_GetWeaponType(local_54,local_50);
+  if (iVar4 == 1) {
+    Bullet_Fire((double)*(float *)(iVar5 + 0x38),uVar8);
+  }
+  else {
+    iVar5 = BG_GetWeaponType(local_54,local_50);
+    if (iVar5 == 2) {
+      Weapon_GrenadeLauncher_Fire(uVar2,*(undefined4 *)(iVar1 + 200),auStack_90);
+    }
+    else {
+      Weapon_RocketLauncher_Fire(0,uVar2,*(undefined4 *)(iVar1 + 200));
+    }
+  }
+  if (*(int *)((int)param_2 + 0x158) == 0) {
+    uVar7 = 0;
+    uVar6 = 0x38;
+  }
+  else {
+    uVar7 = *(undefined4 *)uVar8;
+    uVar6 = 0x37;
+  }
+  G_AddEvent(uVar2,uVar6,uVar7);
+  Scr_Notify(uVar2,DAT_835a0ce0,0);
+  Profile_EndInternal(0);
+  __restgprlr_26();
+  return;
+}
+
 
 // 824BD808  Turret_ClientAim  (game/turret.cpp:605)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_ClientAim(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  float fVar4;
+  float fVar5;
+  undefined4 *puVar7;
+  int iVar8;
+  ulonglong uVar6;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  
+  __savegprlr_25();
+  puVar7 = (undefined4 *)__savefpr_28();
+  if (puVar7 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff820813d8,0x261,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (puVar7[1] != 0xb) {
+    MyAssertHandler(0xffffffff820813d8,0x262,0,0xffffffff82000f98,0xffffffff8208150c);
+  }
+  iVar2 = puVar7[0x57];
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x265,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x267,0,0xffffffff82000f98,0xffffffff820810e8);
+  }
+  if (*(int *)((int)param_2 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x268,0,0xffffffff82000f98,0xffffffff820814fc);
+  }
+  iVar3 = *(int *)((int)param_2 + 0x158);
+  if (*(char *)(puVar7 + 0x5b) == '\0') {
+    MyAssertHandler(0xffffffff820813d8,0x26c,0,0xffffffff82000f98,0xffffffff820814ec);
+  }
+  iVar8 = EntHandle__isDefined(puVar7 + 0x54);
+  if (iVar8 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x26d,0,0xffffffff82000f98,0xffffffff820814cc);
+  }
+  uVar6 = EntHandle__ent(puVar7 + 0x54);
+  if ((uVar6 & 0xffffffff) != (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820813d8,0x26e,0,0xffffffff82000f98,0xffffffff820814ac);
+  }
+  *(undefined4 *)(iVar3 + 0x1b8) = 1;
+  *(undefined4 *)(iVar3 + 0x1bc) = *puVar7;
+  dVar13 = 0.0027777778450399637;
+  dVar12 = 0.5;
+  if ((*(uint *)(iVar3 + 0xf8) & 0x2000) == 0) {
+    dVar10 = (double)((*(float *)(iVar3 + 0x158) - (float)puVar7[0x51]) * 0.0027777778);
+    dVar9 = floor((double)(float)(dVar10 + 0.5));
+    dVar11 = 360.0;
+    fVar5 = (float)(dVar10 - (double)(float)dVar9) * 360.0;
+    puVar7[0x15] = fVar5;
+    fVar1 = *(float *)(iVar2 + 0x14);
+    if (fVar5 - *(float *)(iVar2 + 0x14) < 0.0) {
+      fVar1 = fVar5;
+    }
+    fVar4 = *(float *)(iVar2 + 0xc);
+    if (*(float *)(iVar2 + 0xc) - fVar5 < 0.0) {
+      fVar4 = fVar1;
+    }
+    puVar7[0x15] = fVar4;
+    dVar13 = (double)(float)((double)(*(float *)(iVar3 + 0x15c) - (float)puVar7[0x52]) * dVar13);
+    dVar12 = floor((double)(float)(dVar13 + dVar12));
+    fVar1 = (float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar11);
+    puVar7[0x16] = fVar1;
+    fVar5 = *(float *)(iVar2 + 0x18);
+    if (fVar1 - *(float *)(iVar2 + 0x18) < 0.0) {
+      fVar5 = fVar1;
+    }
+    fVar4 = *(float *)(iVar2 + 0x10);
+    if (*(float *)(iVar2 + 0x10) - fVar1 < 0.0) {
+      fVar4 = fVar5;
+    }
+    puVar7[0x16] = fVar4;
+  }
+  else {
+    dVar10 = (double)(*(float *)(iVar3 + 0x158) * 0.0027777778);
+    dVar9 = floor((double)(float)(dVar10 + 0.5));
+    dVar11 = 360.0;
+    puVar7[0x15] = (float)(dVar10 - (double)(float)dVar9) * 360.0;
+    dVar13 = (double)(float)((double)*(float *)(iVar3 + 0x15c) * dVar13);
+    dVar12 = floor((double)(float)(dVar13 + dVar12));
+    puVar7[0x16] = (float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar11);
+  }
+  puVar7[0x17] = 0;
+  if ((*(uint *)(iVar2 + 4) & 1) != 0) {
+    *(uint *)(iVar2 + 4) = *(uint *)(iVar2 + 4) & 0xfffffffe;
+    puVar7[2] = puVar7[2] ^ 2;
+  }
+  __restfpr_28();
+  __restgprlr_25();
+  return;
+}
+
 
 // 824BDAC8  Turret_CanShoot  (game/turret.cpp:654)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_CanShoot(void)
+
+{
+  int iVar1;
+  int iVar3;
+  uint uVar4;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x292,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar3 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x293,0,0xffffffff82000f98,0xffffffff82081528);
+  }
+  iVar1 = *(int *)(iVar3 + 0x15c);
+  if ((*(uint *)(iVar1 + 4) & 2) == 0) {
+    uVar4 = BG_GetAlternateWeapon(*(undefined4 *)(iVar3 + 200),0);
+    iVar3 = (&DAT_829d84a0)[uVar4 & 0xff];
+    if (iVar3 == 0) {
+      MyAssertHandler(0xffffffff820813d8,0x29a,1,0xffffffff82000f98,0xffffffff8200a88c);
+    }
+    if (*(int *)(iVar1 + 0xb0) <= DAT_83580fac) {
+      if ((*(char *)(iVar3 + 0x796) == '\0') || (uVar2 = 0, 1.0 <= *(float *)(iVar1 + 0xb4))) {
+        uVar2 = 1;
+      }
+      __restgprlr_28(uVar2);
+      return;
+    }
+  }
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 824BDBE0  Turret_Shoot_internal  (game/turret.cpp:686)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_Shoot_internal(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int local_30;
+  undefined1 auStack_2c [44];
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x2b2,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar1 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x2b3,0,0xffffffff82000f98,0xffffffff82081528);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x2b4,0,0xffffffff82000f98,0xffffffff820810e8);
+  }
+  iVar2 = Turret_CanShoot(iVar1);
+  if (iVar2 != 0) {
+    BG_GetFireTime(*(undefined4 *)(iVar1 + 200),0,0,&local_30,auStack_2c);
+    *(int *)(*(int *)(iVar1 + 0x15c) + 0x28) = local_30 * 3;
+    if (*(int *)((int)param_2 + 0x158) != 0) {
+      Turret_FireLead(iVar1,param_2);
+      *(undefined4 *)(*(int *)((int)param_2 + 0x158) + 0x1b8) = 2;
+      __restgprlr_28();
+      return;
+    }
+    Turret_FireLead(iVar1,param_2);
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 824BDCE8  Turret_Shoot  (game/turret.cpp:717)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_Shoot(longlong param_1)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = EntHandle__isDefined(param_1 + 0x150);
+  if (iVar2 == 0) {
+    uVar1 = 0xffffffff834b3400;
+  }
+  else {
+    uVar1 = EntHandle__ent(param_1 + 0x150);
+  }
+  Turret_Shoot_internal(param_1,uVar1);
+  return;
+}
+
 
 // 824BDD58  G_PlayerTurretPositionAndBlend  (game/turret.cpp:730)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_PlayerTurretPositionAndBlend(undefined8 param_1,longlong param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  uint uVar5;
+  undefined4 uVar6;
+  int iVar7;
+  int iVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  ulonglong uVar13;
+  undefined4 uVar14;
+  uint *puVar19;
+  float *pfVar20;
+  ulonglong uVar15;
+  uint uVar21;
+  int iVar22;
+  longlong lVar16;
+  int iVar23;
+  undefined8 uVar17;
+  undefined8 uVar18;
+  ulonglong uVar24;
+  undefined8 uVar25;
+  longlong lVar26;
+  ulonglong uVar27;
+  double dVar28;
+  double dVar29;
+  double extraout_f1;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  double dVar34;
+  double dVar35;
+  double dVar36;
+  double dVar37;
+  float local_268;
+  float local_264;
+  float local_260;
+  undefined4 local_258;
+  undefined4 local_254;
+  float local_250;
+  char *local_24c;
+  undefined4 local_248;
+  undefined4 local_244;
+  float local_240;
+  float local_238;
+  float local_234;
+  float local_230;
+  longlong local_228;
+  longlong local_220;
+  undefined1 auStack_210 [16];
+  float local_200;
+  float local_1fc;
+  float local_1f8;
+  float local_1f4;
+  float local_1f0;
+  float local_1ec;
+  float local_1e8;
+  float local_1e4;
+  float local_1e0;
+  undefined1 auStack_1d0 [36];
+  uint local_1ac;
+  uint local_1a8;
+  uint local_1a4;
+  undefined1 auStack_1a0 [24];
+  float local_188;
+  float local_184;
+  float local_180;
+  float local_17c;
+  float local_178;
+  float local_174;
+  undefined1 auStack_170 [36];
+  float local_14c;
+  float local_148;
+  float local_144;
+  undefined1 auStack_140 [48];
+  float local_110 [68];
+  
+  __savegprlr();
+  puVar19 = (uint *)__savefpr_24();
+  uVar5 = *puVar19;
+  local_24c = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp";
+  if (0x11 < uVar5) {
+    MyAssertHandler(0xffffffff820813d8,0x304,0,0xffffffff82014c1c,uVar5,0x12);
+  }
+  iVar23 = uVar5 * 0x590;
+  if ((&DAT_83539a90)[uVar5 * 0x164] == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x306,0,0xffffffff82000f98,0xffffffff8202b76c);
+  }
+  if (((*(int *)(&DAT_83539e58 + iVar23) == 0) || (*(int *)(&DAT_83539e5c + iVar23) == 0)) ||
+     ((*(uint *)(*(int *)(&DAT_83539e5c + iVar23) + 0x50) & 4) == 0)) goto LAB_824be618;
+  pfVar20 = (float *)G_DObjGetLocalTagMatrix(param_2,DAT_835a0c5e);
+  if (pfVar20 == (float *)0x0) {
+    Com_PrintWarning(0x11,0xffffffff82021220);
+    __restfpr_24();
+    __restgprlr();
+    return;
+  }
+  uVar15 = Com_GetServerDObjForEnt(puVar19);
+  if ((uVar15 & 0xffffffff) == 0) goto LAB_824be618;
+  iVar8 = (int)param_2;
+  if (*(char *)(iVar8 + 0xcb) == '\0') {
+    MyAssertHandler(0xffffffff820813d8,0x318,0,0xffffffff82000f98,0xffffffff8208157c);
+  }
+  uVar21 = BG_GetAlternateWeapon(*(undefined4 *)(iVar8 + 200),0);
+  iVar7 = (&DAT_829d84a0)[uVar21 & 0xff];
+  iVar22 = BG_GetWeaponClass(*(undefined4 *)(iVar8 + 200),0);
+  if (iVar22 != 8) {
+    MyAssertHandler(0xffffffff820813d8,0x31a,0,0xffffffff82000f98,0xffffffff82081538);
+  }
+  dVar37 = 0.0;
+  if (*(float *)(iVar7 + 0x664) == 0.0) {
+    MyAssertHandler(0xffffffff820813d8,0x31b,0,0xffffffff82000f98,0xffffffff8202118c);
+  }
+  uVar14 = DAT_83539a4c;
+  uVar6 = (&DAT_83539fa8)[uVar5 * 0x164];
+  uVar13 = CONCAT44(*(undefined4 *)(&DAT_83539e58 + iVar23),*(undefined4 *)(&DAT_83539e58 + iVar23))
+           & 0xfffffffffffffdff;
+  if (((((uint)*pfVar20 & 0x7f800000) == 0x7f800000) ||
+      (((uint)pfVar20[1] & 0x7f800000) == 0x7f800000)) ||
+     ((((uint)pfVar20[2] & 0x7f800000) == 0x7f800000 ||
+      (((uint)pfVar20[3] & 0x7f800000) == 0x7f800000)))) {
+    MyAssertHandler(0xffffffff82015a60,0x205,0,0xffffffff82000f98,0xffffffff820159f0);
+  }
+  if (((uint)pfVar20[7] & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82015a60,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
+  }
+  fVar1 = pfVar20[2];
+  fVar2 = pfVar20[7];
+  fVar3 = pfVar20[1];
+  fVar11 = fVar3 * fVar2;
+  fVar12 = *pfVar20 * fVar2;
+  fVar4 = pfVar20[3];
+  dVar35 = 1.0;
+  fVar9 = fVar1 * fVar1 * fVar2;
+  fVar10 = *pfVar20 * fVar12;
+  local_1f4 = fVar4 * fVar1 * fVar2;
+  local_1ec = fVar1 * fVar11 + fVar4 * fVar12;
+  local_1fc = local_1f4 + fVar3 * fVar12;
+  local_1f8 = fVar1 * fVar12 - fVar4 * fVar11;
+  local_1f4 = fVar3 * fVar12 - local_1f4;
+  local_1e8 = fVar4 * fVar11 + fVar1 * fVar12;
+  local_1e4 = fVar1 * fVar11 - fVar4 * fVar12;
+  local_200 = 1.0 - (fVar9 + fVar3 * fVar11);
+  local_1f0 = 1.0 - (fVar9 + fVar10);
+  local_1e0 = 1.0 - (fVar3 * fVar11 + fVar10);
+  dVar29 = (double)vectosignedyaw(&local_200);
+  AnglesToAxis(param_2 + 0x144,auStack_1a0);
+  local_178 = *(float *)(iVar8 + 0x13c);
+  local_17c = *(float *)(iVar8 + 0x138);
+  local_174 = *(float *)(iVar8 + 0x140);
+  dVar31 = (double)((local_180 * ((float)puVar19[0x50] - local_174) +
+                    local_188 * ((float)puVar19[0x4e] - local_17c) +
+                    local_184 * ((float)puVar19[0x4f] - local_178)) - pfVar20[6]);
+  lVar16 = XAnimGetNumChildren(uVar14,uVar13);
+  uVar25 = 0;
+  iVar23 = (int)lVar16;
+  dVar28 = dVar37;
+  dVar36 = dVar37;
+  if (iVar23 == 0) {
+    uVar17 = XAnimGetAnimDebugName(uVar14,uVar13);
+    Com_Error(1,0xffffffff82021168,uVar17);
+  }
+  lVar26 = 0;
+  dVar32 = 0.5;
+  uVar24 = 0;
+  do {
+    uVar17 = XAnimGetChildAt(uVar14,uVar13,(lVar16 - lVar26) + -1);
+    iVar22 = XAnimGetNumChildren(uVar14,uVar17);
+    dVar33 = dVar37;
+    dVar34 = dVar28;
+    if (iVar22 == 0) {
+      uVar18 = XAnimGetAnimDebugName(uVar14,uVar17);
+      Com_Error(1,0xffffffff82021168,uVar18);
+      dVar33 = dVar37;
+      dVar34 = dVar28;
+    }
+    dVar30 = (double)(longlong)(iVar22 + -1);
+    dVar28 = (double)(float)(dVar30 * dVar32 +
+                            (double)(float)(dVar29 / (double)*(float *)(iVar7 + 0x664)));
+    dVar37 = dVar36;
+    if ((dVar36 <= dVar28) && (dVar37 = dVar28, dVar30 <= dVar28)) {
+      dVar37 = dVar30;
+    }
+    uVar5 = (uint)dVar37;
+    local_220 = (longlong)(int)uVar5;
+    uVar27 = (ulonglong)uVar5;
+    local_228 = (longlong)(int)uVar5;
+    dVar37 = (double)(float)(dVar37 - (double)local_228);
+    uVar18 = XAnimGetChildAt(uVar14,uVar17,uVar27);
+    XAnimGetAbsDelta(dVar36,uVar14,uVar18,auStack_210,&local_268);
+    if (dVar37 != dVar36) {
+      uVar25 = XAnimGetChildAt(uVar14,uVar17,uVar27 + 1);
+      XAnimGetAbsDelta(dVar36,uVar14,uVar25,auStack_210,&local_238);
+      local_268 = (float)((double)(float)((double)local_238 - (double)local_268) * dVar37 +
+                         (double)local_268);
+      local_264 = (float)((double)(float)((double)local_234 - (double)local_264) * dVar37 +
+                         (double)local_264);
+      local_260 = (float)((double)(float)((double)local_230 - (double)local_260) * dVar37 +
+                         (double)local_260);
+    }
+    dVar28 = (double)local_260;
+  } while ((dVar28 < dVar31) &&
+          (lVar26 = lVar26 + 1, uVar24 = uVar27, dVar33 = dVar37, dVar34 = dVar28,
+          (int)lVar26 < iVar23));
+  XAnimClearTreeGoalWeightsStrict(dVar36,uVar6,uVar13);
+  XAnimSetGoalWeight((double)(float)(dVar35 - dVar37),dVar36,dVar35,uVar15,uVar18);
+  if (dVar37 != dVar36) {
+    XAnimSetGoalWeight(dVar37,dVar36,dVar35,uVar15,uVar25);
+  }
+  dVar37 = dVar35;
+  if (((int)lVar26 == 0) || ((int)lVar26 == iVar23)) {
+LAB_824be438:
+    XAnimSetGoalWeight(dVar35,dVar36,dVar37,uVar15,uVar17);
+  }
+  else {
+    if ((double)(float)((double)local_260 - dVar34) == dVar36) {
+      MyAssertHandler(local_24c,0x368,0,0xffffffff82000f98,0xffffffff82021150);
+      dVar37 = dVar35;
+    }
+    dVar35 = dVar33;
+    dVar28 = (double)((float)(dVar31 - dVar34) / (float)((double)local_260 - dVar34));
+    XAnimSetGoalWeight(dVar28,dVar36,dVar37,uVar15,uVar17);
+    uVar25 = XAnimGetChildAt(uVar14,uVar13,lVar16 - lVar26);
+    XAnimSetGoalWeight((double)(float)(dVar37 - dVar28),dVar36,dVar37,uVar15,uVar25);
+    uVar17 = XAnimGetChildAt(uVar14,uVar25,uVar24);
+    XAnimSetGoalWeight((double)(float)(dVar37 - dVar35),dVar36,dVar37,uVar15,uVar17);
+    if (dVar35 != dVar36) {
+      uVar17 = XAnimGetChildAt(uVar14,uVar25,uVar24 + 1);
+      goto LAB_824be438;
+    }
+  }
+  XAnimCalcAbsDelta(uVar15,uVar13,auStack_210,&local_268);
+  VectorAngleMultiply(dVar29,&local_268);
+  local_14c = local_268 + pfVar20[4];
+  local_148 = pfVar20[5] + local_264;
+  local_144 = pfVar20[6] + local_260;
+  QuatToAxis(auStack_210,auStack_140);
+  uVar25 = vectoyaw(auStack_140);
+  YawToAxis((double)(float)(extraout_f1 + dVar29),uVar25,auStack_170);
+  MatrixMultiply43(auStack_170,auStack_1a0,auStack_1d0);
+  puVar19[0x4e] = local_1ac;
+  puVar19[0x4f] = local_1a8;
+  puVar19[0x50] = local_1a4;
+  uVar5 = puVar19[0x56];
+  *(uint *)(uVar5 + 0x1c) = local_1ac;
+  *(uint *)(uVar5 + 0x20) = local_1a8;
+  *(uint *)(uVar5 + 0x24) = local_1a4;
+  AxisToAngles(auStack_1d0,puVar19 + 0x51);
+  puVar19[0xf] = puVar19[0x51];
+  puVar19[0x10] = puVar19[0x52];
+  puVar19[0x11] = puVar19[0x53];
+  MatrixMultiply(auStack_140,&local_200,auStack_1d0);
+  uVar5 = puVar19[0x56];
+  dVar29 = (double)*(float *)(uVar5 + 0x158);
+  dVar36 = (double)*(float *)(uVar5 + 0x15c);
+  dVar28 = (double)*(float *)(uVar5 + 0x160);
+  AxisToAngles(auStack_1d0,uVar5 + 0x158);
+  uVar5 = puVar19[0x56];
+  local_258 = *(undefined4 *)(uVar5 + 0x1c);
+  local_254 = *(undefined4 *)(uVar5 + 0x20);
+  local_250 = *(float *)(iVar8 + 0x140) - 11.0;
+  local_240 = *(float *)(iVar8 + 0x140) - 60.0;
+  local_248 = *(undefined4 *)(uVar5 + 0x1c);
+  local_244 = *(undefined4 *)(uVar5 + 0x20);
+  G_TraceCapsule(local_110,&local_258,&local_248,0xffffffff82174a3c,*puVar19,0x810011);
+  if ((double)local_110[0] < dVar37) {
+    fVar1 = (float)((double)(float)((double)local_240 - (double)local_250) * (double)local_110[0] +
+                   (double)local_250);
+    puVar19[0x50] = (uint)fVar1;
+    *(float *)(puVar19[0x56] + 0x24) = fVar1;
+  }
+  BG_PlayerStateToEntityState(puVar19[0x56],puVar19,1);
+  uVar5 = puVar19[0x56];
+  *(float *)(uVar5 + 0x158) = (float)dVar29;
+  *(float *)(uVar5 + 0x15c) = (float)dVar36;
+  *(float *)(uVar5 + 0x160) = (float)dVar28;
+  SV_LinkEntity(puVar19);
+LAB_824be618:
+  __restfpr_24();
+  __restgprlr();
+  return;
+}
+
 
 // 824C32B0  Turret_UpdateBarrelRotation  (game/turret.cpp:965)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_UpdateBarrelRotation(undefined8 param_1,ulonglong param_2)
+
+{
+  char cVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  char cVar7;
+  undefined1 uVar8;
+  double dVar9;
+  undefined2 uStack_3a;
+  
+  iVar5 = __savegprlr_26();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x3cb,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x3cc,0,0xffffffff82000f98,0xffffffff820818b8);
+  }
+  uVar6 = BG_GetAlternateWeapon(*(undefined4 *)(iVar5 + 200),0);
+  iVar4 = (&DAT_829d84a0)[uVar6 & 0xff];
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x3cf,1,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  if (*(char *)(iVar4 + 0x796) != '\0') {
+    iVar2 = *(int *)(iVar5 + 0x15c);
+    if (iVar2 == 0) {
+      MyAssertHandler(0xffffffff820813d8,0x3d5,1,0xffffffff82000f98,0xffffffff8200e074);
+    }
+    iVar3 = *(int *)((int)param_2 + 0x158);
+    cVar1 = *(char *)(iVar5 + 0x6c);
+    if (iVar3 == 0) {
+      *(undefined1 *)(iVar5 + 0x6c) = 0;
+      cVar7 = Turret_IsFiring(iVar5);
+      if ((cVar7 == '\0') && ((*(uint *)(iVar2 + 4) & 0x100010) == 0)) {
+        if ((0 < *(int *)(iVar2 + 0xbc)) &&
+           (DAT_83580fac <= *(int *)(iVar2 + 0xb8) + *(int *)(iVar2 + 0xbc))) {
+          *(undefined1 *)(iVar5 + 0x6c) = 1;
+        }
+      }
+      else {
+        *(undefined1 *)(iVar5 + 0x6c) = 1;
+        *(int *)(iVar2 + 0xbc) = DAT_83580fac;
+      }
+    }
+    else {
+      if (((*(uint *)(iVar3 + 0xc) & 0x800) != 0) ||
+         (uVar8 = 1, (*(uint *)(iVar3 + 0x3608) & 0x801) == 0)) {
+        uVar8 = 0;
+      }
+      *(undefined1 *)(iVar5 + 0x6c) = uVar8;
+    }
+    if (cVar1 != *(char *)(iVar5 + 0x6c)) {
+      *(int *)(iVar5 + 0x60) = DAT_83580fac;
+      uStack_3a = (undefined2)(longlong)(*(float *)(iVar2 + 0xb4) * 65535.0);
+      *(undefined2 *)(iVar5 + 100) = uStack_3a;
+    }
+    dVar9 = (double)BG_Turret_ComputeBarrelSpinRate(iVar4,iVar5 + 0x54,DAT_83580fac);
+    *(float *)(iVar2 + 0xb4) = (float)dVar9;
+  }
+  __restgprlr_26();
+  return;
+}
+
 
 // 824BE628  Turret_UpdateHeat  (game/turret.cpp:1016)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_UpdateHeat(void)
+
+{
+  char cVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  uint uVar5;
+  char cVar6;
+  double dVar7;
+  double dVar8;
+  undefined2 uStack_3a;
+  
+  iVar4 = __savegprlr_27();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x3fe,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  uVar5 = BG_GetAlternateWeapon(*(undefined4 *)(iVar4 + 200),0);
+  iVar3 = (&DAT_829d84a0)[uVar5 & 0xff];
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x401,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  if ((*(float *)(iVar3 + 0x6e4) <= 0.0) || (*(float *)(iVar3 + 0x6e8) <= 0.0)) goto LAB_824be7ec;
+  iVar2 = *(int *)(iVar4 + 0x15c);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x408,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  cVar1 = *(char *)(iVar4 + 0x6e);
+  dVar8 = 1.0;
+  if (((*(uint *)(iVar4 + 8) & 0x800000) == 0) ||
+     ((*(char *)(iVar3 + 0x796) != '\0' && (*(float *)(iVar2 + 0xb4) < 1.0)))) {
+LAB_824be74c:
+    cVar6 = '\0';
+  }
+  else {
+    cVar6 = '\x01';
+    if ((int)DAT_83580fac < *(int *)(iVar2 + 0xb0)) goto LAB_824be74c;
+  }
+  *(char *)(iVar4 + 0x6e) = cVar6;
+  if (cVar1 != cVar6) {
+    *(uint *)(iVar4 + 0x68) = DAT_83580fac;
+    uStack_3a = (undefined2)(longlong)(*(float *)(iVar2 + 0xac) * 65535.0);
+    *(undefined2 *)(iVar4 + 0x66) = uStack_3a;
+  }
+  dVar7 = (double)BG_Turret_ComputeHeatLevel(iVar3,iVar4 + 0x54,DAT_83580fac);
+  *(float *)(iVar2 + 0xac) = (float)dVar7;
+  if (dVar8 <= dVar7) {
+    *(uint *)(iVar2 + 0xb0) = DAT_83580fac - (int)(*(float *)(iVar3 + 0x6ec) * -1000.0);
+  }
+  *(char *)(iVar4 + 0x6d) =
+       ((char)((int)*(uint *)(iVar2 + 0xb0) >> 0x1f) - (char)((int)DAT_83580fac >> 0x1f)) +
+       (DAT_83580fac <= *(uint *)(iVar2 + 0xb0));
+LAB_824be7ec:
+  __restgprlr_27();
+  return;
+}
+
 
 // 824BE7F8  Turret_Track  (game/turret.cpp:1063)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_Track(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar3;
+  int iVar6;
+  longlong lVar7;
+  undefined4 local_40;
+  undefined1 auStack_3c [60];
+  
+  iVar4 = __savegprlr_26();
+  iVar1 = *(int *)(iVar4 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x42f,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if (*(char *)(iVar4 + 0x16c) == '\0') {
+    MyAssertHandler(0xffffffff820813d8,0x431,0,0xffffffff82000f98,0xffffffff820814ec);
+  }
+  iVar5 = EntHandle__isDefined(iVar4 + 0x150);
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x432,0,0xffffffff82000f98,0xffffffff820814cc);
+  }
+  uVar3 = EntHandle__ent(iVar4 + 0x150);
+  if ((uVar3 & 0xffffffff) != (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820813d8,0x433,0,0xffffffff82000f98,0xffffffff820814ac);
+  }
+  iVar5 = (int)param_2;
+  if (*(int *)(iVar5 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x434,0,0xffffffff82000f98,0xffffffff820814fc);
+  }
+  Turret_ClientAim(iVar4,param_2);
+  if (((*(uint *)(iVar4 + 8) & 0x3800) != 0) && ((*(uint *)(iVar4 + 8) & 0x2000) == 0)) {
+    G_PlayerTurretPositionAndBlend(param_2,iVar4);
+  }
+  iVar6 = BG_GetWeaponFireType(*(undefined4 *)(iVar4 + 200),0);
+  uVar2 = *(uint *)(*(int *)(iVar5 + 0x158) + 0x3608);
+  *(uint *)(iVar4 + 8) = *(uint *)(iVar4 + 8) & 0xff7fffff;
+  lVar7 = (ulonglong)*(uint *)(iVar1 + 8) - 0x32;
+  *(int *)(iVar1 + 8) = (int)lVar7;
+  if (lVar7 < 1) {
+    *(undefined4 *)(iVar1 + 8) = 0;
+    if ((((*(uint *)(*(int *)(iVar5 + 0x158) + 0xc) & 0x800) == 0) && ((uVar2 & 0x100000) == 0)) &&
+       ((uVar2 & 1) != 0)) {
+      if ((iVar6 != 1) || (*(char *)(iVar1 + 0xa8) == '\0')) {
+        *(undefined1 *)(iVar1 + 0xa8) = 1;
+        BG_GetFireTime(*(undefined4 *)(iVar4 + 200),0,0,&local_40,auStack_3c);
+        *(undefined4 *)(iVar1 + 8) = local_40;
+        Turret_Shoot_internal(iVar4,param_2);
+        *(uint *)(iVar4 + 8) = *(uint *)(iVar4 + 8) | 0x800000;
+        __restgprlr_26();
+        return;
+      }
+    }
+    else {
+      *(undefined1 *)(iVar1 + 0xa8) = 0;
+    }
+  }
+  __restgprlr_26();
+  return;
+}
+
 
 // 824BE9F0  Turret_UpdateSound  (game/turret.cpp:1119)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_UpdateSound(void)
+
+{
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x464,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  iVar1 = *(int *)(iVar2 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x467,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (*(int *)(iVar1 + 0x28) < 1) {
+    if (((*(uint *)(iVar1 + 4) & 8) != 0) && (0.0 < *(float *)(iVar1 + 0x9c))) {
+      *(uint *)(iVar2 + 0x84) = (uint)*(ushort *)(iVar1 + 200);
+    }
+  }
+  else {
+    *(uint *)(iVar2 + 0x84) = (uint)*(ushort *)(iVar1 + 0xc0);
+    lVar3 = (ulonglong)*(uint *)(iVar1 + 0x28) - 0x32;
+    *(int *)(iVar1 + 0x28) = (int)lVar3;
+    if ((lVar3 < 1) && (*(short *)(iVar1 + 0xc4) != 0)) {
+      *(undefined4 *)(iVar2 + 0x84) = 0;
+      G_PlaySoundAlias(iVar2);
+      __restgprlr_28();
+      return;
+    }
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 824C34A0  G_ClientStopUsingTurret  (game/turret.cpp:1170)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_ClientStopUsingTurret(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar6;
+  int iVar7;
+  
+  iVar4 = __savegprlr_26();
+  iVar1 = *(int *)(iVar4 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x498,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  iVar7 = iVar4 + 0x150;
+  iVar5 = EntHandle__isDefined(iVar7);
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x49a,0,0xffffffff82000f98,0xffffffff820814cc);
+  }
+  iVar5 = EntHandle__ent(iVar7);
+  if (*(int *)(iVar5 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x49c,0,0xffffffff82000f98,0xffffffff820818a8);
+  }
+  *(undefined4 *)(iVar1 + 0x28) = 0;
+  *(undefined4 *)(iVar4 + 0x84) = 0;
+  iVar2 = *(int *)(iVar1 + 0x24);
+  if (iVar2 != -1) {
+    iVar3 = *(int *)(iVar5 + 0x158);
+    if (iVar2 == 2) {
+      *(undefined4 *)(iVar3 + 0x164) = 0xb;
+      uVar6 = 8;
+      *(uint *)(iVar3 + 0xc) = *(uint *)(iVar3 + 0xc) & 0xfffffffc | 1;
+    }
+    else if (iVar2 == 1) {
+      *(undefined4 *)(iVar3 + 0x164) = 0x28;
+      uVar6 = 7;
+      *(uint *)(iVar3 + 0xc) = *(uint *)(iVar3 + 0xc) & 0xfffffffc | 2;
+    }
+    else {
+      *(undefined4 *)(iVar3 + 0x164) = 0x3c;
+      uVar6 = 6;
+      *(uint *)(iVar3 + 0xc) = *(uint *)(iVar3 + 0xc) & 0xfffffffc;
+    }
+    G_AddEvent(iVar5,uVar6,0);
+    *(undefined4 *)(iVar1 + 0x24) = 0xffffffff;
+  }
+  TeleportPlayer(iVar5,iVar1 + 0x2c,iVar5 + 0x144);
+  *(uint *)(*(int *)(iVar5 + 0x158) + 0xf8) = *(uint *)(*(int *)(iVar5 + 0x158) + 0xf8) & 0xffffc7ff
+  ;
+  *(undefined4 *)(*(int *)(iVar5 + 0x158) + 0x1b8) = 0;
+  *(undefined4 *)(*(int *)(iVar5 + 0x158) + 0x1bc) = 0x7ff;
+  *(undefined1 *)(iVar5 + 0x16c) = 0;
+  *(undefined4 *)(iVar5 + 0x78) = 0x7ff;
+  *(uint *)(iVar4 + 8) = *(uint *)(iVar4 + 8) & 0xffffc7ff;
+  G_DeactivateTurret(iVar4);
+  EntHandle__setEnt(iVar7,0);
+  *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) & 0xfffffffe;
+  Scr_Notify(iVar4,DAT_835a0cf2,0);
+  __restgprlr_26();
+  return;
+}
+
 
 // 824C3668  Turret_Think_Client  (game/turret.cpp:1239)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_Think_Client(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = __savegprlr_28();
+  iVar2 = EntHandle__isDefined(iVar1 + 0x150);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x4da,0,0xffffffff82000f98,0xffffffff820814cc);
+  }
+  iVar2 = EntHandle__ent(iVar1 + 0x150);
+  if (*(int *)(iVar2 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x4de,0,0xffffffff82000f98,0xffffffff820818a8);
+  }
+  if (*(char *)(iVar2 + 0x16c) == '\x01') {
+    if ((*(int *)(*(int *)(iVar2 + 0x158) + 0x3300) == 0) &&
+       (*(int *)(*(int *)(iVar2 + 0x158) + 4) != 7)) {
+      if (*(char *)(iVar1 + 0x16c) == '\0') {
+        MyAssertHandler(0xffffffff820813d8,0x4ea,0,0xffffffff82000f98,0xffffffff820814ec);
+      }
+      Turret_Track(iVar1,iVar2);
+      Turret_UpdateBarrelRotation(iVar1,iVar2);
+      Turret_UpdateHeat(iVar1);
+      Turret_UpdateSound(iVar1);
+      __restgprlr_28();
+      return;
+    }
+  }
+  G_ClientStopUsingTurret(iVar1);
+  __restgprlr_28();
+  return;
+}
+
 
 // 824BEAE0  Turret_ScanStart  (game/turret.cpp:1276)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
+
+void Turret_ScanStart(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  float fVar2;
+  int iVar3;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  
+  iVar3 = __savegprlr_28();
+  dVar4 = extraout_f1;
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x4ff,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if ((*(uint *)(iVar3 + 4) & 0x80) != 0) {
+    MyAssertHandler(0xffffffff820813d8,0x500,0,0xffffffff82000f98,0xffffffff820815d4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x502,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  iVar1 = (int)param_2;
+  dVar5 = 0.0;
+  if (*(float *)(iVar1 + 0x684) <= 0.0) {
+    MyAssertHandler(0xffffffff820813d8,0x503,0,0xffffffff82000f98,0xffffffff820815b8);
+  }
+  if ((double)*(float *)(iVar1 + 0x688) <= dVar5) {
+    MyAssertHandler(0xffffffff820813d8,0x504,0,0xffffffff82000f98,0xffffffff8208159c);
+  }
+  *(float *)(iVar3 + 0x9c) = (float)dVar5;
+  *(uint *)(iVar3 + 4) = *(uint *)(iVar3 + 4) | 0x80;
+  *(int *)(iVar3 + 0xa4) = *(int *)(iVar1 + 0x68c) + DAT_83580fac;
+  fVar2 = (*(float *)(iVar1 + 0x684) * *(float *)(iVar1 + 0x684)) /
+          (*(float *)(iVar1 + 0x688) * 2.0);
+  *(float *)(iVar3 + 0xa0) = fVar2;
+  if ((float)(dVar4 * 0.5) < fVar2) {
+    *(float *)(iVar3 + 0xa0) = (float)(dVar4 * 0.5);
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 824BEC50  Turret_ScanStop  (game/turret.cpp:1304)
 
-void Turret_ScanStop(Turret *param_1)
+void Turret_ScanStop(int param_1)
 
 {
-  if (param_1 == (Turret *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x519,0,"%s")
-    ;
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x519,0,0xffffffff82000f98,0xffffffff8200e074);
   }
-  param_1->scanPauseTime = 0;
-  param_1->scanSpeed = 0.0;
-  param_1->flags = param_1->flags & 0xffffff7fU ^ 0x100;
-  param_1->scanDecelYaw = 0.0;
+  *(undefined4 *)(param_1 + 0xa4) = 0;
+  *(undefined4 *)(param_1 + 0x9c) = 0;
+  *(uint *)(param_1 + 4) = *(uint *)(param_1 + 4) & 0xffffff7f ^ 0x100;
+  *(undefined4 *)(param_1 + 0xa0) = 0;
   return;
 }
 
 
 // 824BECD0  Turret_ScanForEnemies  (game/turret.cpp:1320)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_ScanForEnemies(void)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  float fVar4;
+  int iVar5;
+  uint uVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  
+  __savegprlr_27();
+  iVar5 = __savefpr_28();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x530,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar5 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x531,0,0xffffffff82000f98,0xffffffff82081528);
+  }
+  iVar2 = *(int *)(iVar5 + 0x15c);
+  uVar6 = BG_GetAlternateWeapon(*(undefined4 *)(iVar5 + 200),0);
+  iVar3 = (&DAT_829d84a0)[uVar6 & 0xff];
+  dVar8 = 0.0;
+  if (*(float *)(iVar3 + 0x684) <= 0.0) {
+    MyAssertHandler(0xffffffff820813d8,0x536,0,0xffffffff82000f98,0xffffffff820815b8);
+  }
+  if ((double)*(float *)(iVar3 + 0x688) <= dVar8) {
+    MyAssertHandler(0xffffffff820813d8,0x537,0,0xffffffff82000f98,0xffffffff8208159c);
+  }
+  dVar9 = 0.05000000074505806;
+  dVar7 = (double)LinearTrackAngle(dVar8,(double)*(float *)(iVar5 + 0x54),
+                                   (double)*(float *)(iVar3 + 0x684),0x3fa99999a0000000);
+  *(float *)(iVar5 + 0x54) = (float)dVar7;
+  if ((*(uint *)(iVar2 + 4) & 0x100) == 0) {
+    fVar4 = *(float *)(iVar2 + 0x18) - *(float *)(iVar5 + 0x58);
+    fVar1 = 1.0;
+  }
+  else {
+    fVar4 = *(float *)(iVar5 + 0x58) - *(float *)(iVar2 + 0x10);
+    fVar1 = -1.0;
+  }
+  dVar10 = (double)fVar4;
+  dVar7 = (double)fVar1;
+  if ((*(uint *)(iVar2 + 4) & 0x80) == 0) {
+    Turret_ScanStart(dVar10,iVar2,iVar3);
+  }
+  if (*(int *)(iVar2 + 0xa4) <= DAT_83580fac) {
+    if (dVar10 < (double)*(float *)(iVar2 + 0xa0)) {
+      dVar10 = -(double)(float)((double)*(float *)(iVar3 + 0x688) * dVar9 -
+                               (double)*(float *)(iVar2 + 0x9c));
+      *(float *)(iVar2 + 0x9c) = (float)dVar10;
+      if (dVar10 <= dVar8) {
+        Turret_ScanStop(iVar2);
+        __restfpr_28();
+        __restgprlr_27();
+        return;
+      }
+      *(float *)(iVar5 + 0x58) =
+           (float)((double)(float)(dVar10 * dVar7) * dVar9 + (double)*(float *)(iVar5 + 0x58));
+      __restfpr_28();
+      __restgprlr_27();
+      return;
+    }
+    fVar1 = (float)((double)*(float *)(iVar3 + 0x688) * dVar9 + (double)*(float *)(iVar2 + 0x9c));
+    *(float *)(iVar2 + 0x9c) = fVar1;
+    if (*(float *)(iVar3 + 0x684) <= fVar1) {
+      *(float *)(iVar2 + 0x9c) = *(float *)(iVar3 + 0x684);
+    }
+    *(float *)(iVar5 + 0x58) =
+         (float)((double)(float)((double)*(float *)(iVar2 + 0x9c) * dVar7) * dVar9 +
+                (double)*(float *)(iVar5 + 0x58));
+  }
+  __restfpr_28();
+  __restgprlr_27();
+  return;
+}
+
 
 // 824BEEE8  Turret_CalculateConvergenceAngularVelocity  (game/turret.cpp:1383)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_CalculateConvergenceAngularVelocity(undefined8 param_1,float *param_2,ulonglong param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  float *pfVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  
+  __savegprlr_24();
+  iVar3 = __savefpr_28();
+  iVar5 = *(int *)(iVar3 + 0x15c);
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x570,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x571,0,0xffffffff82000f98,0xffffffff82081628);
+  }
+  iVar7 = (*(int *)(iVar5 + 0x7c) - DAT_83580fac) + *(int *)(iVar5 + 0x60);
+  iVar6 = (*(int *)(iVar5 + 0x78) - DAT_83580fac) + *(int *)(iVar5 + 0x60);
+  if (*(int *)(iVar5 + 0x3c) == 1) {
+    if (DAT_83580fac < *(int *)(iVar5 + 100)) {
+      MyAssertHandler(0xffffffff820813d8,0x579,0,0xffffffff820815f8);
+    }
+    iVar5 = (*(int *)(iVar5 + 100) - DAT_83580fac) + 0x5dc;
+    if (iVar6 < iVar5) {
+      iVar6 = iVar5;
+    }
+  }
+  iVar5 = *(int *)(iVar3 + 0x198) - DAT_83580fac;
+  dVar12 = 0.0027777778450399637;
+  dVar11 = 0.5;
+  dVar9 = (double)((*(float *)(iVar3 + 0x54) - *param_2) * 0.0027777778);
+  dVar8 = floor((double)(float)(dVar9 + 0.5));
+  dVar10 = 360.0;
+  dVar13 = (double)(float)((double)(*(float *)(iVar3 + 0x58) - param_2[1]) * dVar12);
+  dVar12 = ABS((double)((float)(dVar9 - (double)(float)dVar8) * 360.0));
+  dVar9 = floor((double)(float)(dVar13 + dVar11));
+  dVar8 = (double)(longlong)iVar5;
+  fVar1 = (float)((double)(float)(dVar12 * 1000.0) / dVar8);
+  pfVar4 = (float *)param_3;
+  *pfVar4 = fVar1;
+  fVar2 = (float)((double)(ABS((float)((double)(float)(dVar13 - (double)(float)dVar9) * dVar10)) *
+                          1000.0) / dVar8);
+  pfVar4[1] = fVar2;
+  if ((0 < iVar7) && (iVar5 < iVar7)) {
+    pfVar4[1] = (float)(dVar8 / (double)(longlong)iVar7) * fVar2;
+  }
+  if ((0 < iVar6) && (iVar5 < iVar6)) {
+    *pfVar4 = (float)(dVar8 / (double)(longlong)iVar6) * fVar1;
+  }
+  __restfpr_28();
+  __restgprlr_24();
+  return;
+}
+
 
 // 824BF0F0  Turret_UpdateTargetAngles  (game/turret.cpp:1430)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_UpdateTargetAngles(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+
+{
+  float fVar1;
+  float *pfVar2;
+  bool bVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  ulonglong uVar7;
+  undefined8 uVar8;
+  float *pfVar9;
+  float *pfVar10;
+  longlong lVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  float local_c0;
+  float local_bc;
+  
+  __savegprlr_20();
+  iVar4 = __savefpr_23();
+  if (*(int *)(iVar4 + 4) != 0xb) {
+    MyAssertHandler(0xffffffff820813d8,0x5a2,0,0xffffffff82000f98,0xffffffff8208150c);
+  }
+  uVar7 = (ulonglong)*(uint *)(iVar4 + 0x15c);
+  if (uVar7 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x5a5,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  Turret_ScanStop(uVar7);
+  uVar8 = 1;
+  bVar3 = true;
+  uVar5 = BG_GetAlternateWeapon(*(undefined4 *)(iVar4 + 200),0);
+  dVar14 = (double)*(float *)(iVar4 + 0x54);
+  iVar6 = (&DAT_829d84a0)[uVar5 & 0xff];
+  *(float *)(iVar4 + 0x54) = (float)((double)*(float *)(iVar4 + 0x5c) + dVar14);
+  Turret_CalculateConvergenceAngularVelocity(iVar4,param_2,&local_c0);
+  if ((param_3 & 0xff) == 0) {
+    local_c0 = 200.0;
+    local_bc = 200.0;
+  }
+  else {
+    if (*(float *)(iVar6 + 0x64c) - local_c0 < 0.0) {
+      local_c0 = *(float *)(iVar6 + 0x64c);
+    }
+    if (*(float *)(iVar6 + 0x650) - local_bc < 0.0) {
+      local_bc = *(float *)(iVar6 + 0x650);
+    }
+    if (local_c0 - *(float *)(iVar6 + 0x644) < 0.0) {
+      local_c0 = *(float *)(iVar6 + 0x644);
+    }
+    if (local_bc - *(float *)(iVar6 + 0x648) < 0.0) {
+      local_bc = *(float *)(iVar6 + 0x648);
+    }
+  }
+  dVar18 = 360.0;
+  dVar17 = 5.0;
+  dVar19 = 0.5;
+  pfVar9 = &local_c0;
+  dVar20 = 0.0027777778450399637;
+  pfVar10 = (float *)(iVar4 + 0x50);
+  dVar15 = 0.05000000074505806;
+  lVar11 = 2;
+  dVar16 = 0.0;
+  do {
+    dVar21 = (double)(float)((double)*pfVar9 * dVar15);
+    *pfVar9 = (float)((double)*pfVar9 * dVar15);
+    if (dVar21 <= dVar16) {
+      MyAssertHandler(0xffffffff820813d8,0x5cd,0,0xffffffff82000f98,0xffffffff82081638);
+    }
+    dVar13 = (double)(float)((double)(*(float *)(((int)param_2 - (int)&local_c0) + (int)pfVar9) -
+                                     pfVar10[1]) * dVar20);
+    dVar12 = floor((double)(float)(dVar13 + dVar19));
+    dVar12 = (double)(float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar18);
+    if (dVar17 < ABS(dVar12)) {
+      bVar3 = false;
+    }
+    if ((dVar21 < dVar12) || (dVar21 = -dVar21, dVar12 < dVar21)) {
+      uVar8 = 0;
+      dVar12 = dVar21;
+    }
+    pfVar2 = pfVar10 + 1;
+    lVar11 = lVar11 + -1;
+    pfVar10 = pfVar10 + 1;
+    *pfVar10 = (float)((double)*pfVar2 + dVar12);
+    pfVar9 = pfVar9 + 1;
+  } while (lVar11 != 0);
+  fVar1 = *(float *)(iVar4 + 0x54);
+  *(float *)(iVar4 + 0x5c) = fVar1;
+  dVar16 = (double)(float)((double)(float)((double)fVar1 - dVar14) * dVar20);
+  dVar15 = floor((double)(float)(dVar16 + dVar19));
+  dVar17 = (double)local_c0;
+  dVar16 = (double)(float)((double)(float)(dVar16 - (double)(float)dVar15) * dVar18);
+  dVar15 = dVar17;
+  if ((dVar17 < dVar16) || (dVar15 = -dVar17, dVar16 < -dVar17)) {
+    dVar16 = dVar15;
+    uVar8 = 0;
+  }
+  *(float *)(iVar4 + 0x54) = (float)(dVar16 + dVar14);
+  *(float *)(iVar4 + 0x5c) = *(float *)(iVar4 + 0x5c) - (float)(dVar16 + dVar14);
+  if ((bVar3) && (iVar6 = EntHandle__isDefined(uVar7 + 0x40), iVar6 != 0)) {
+    Scr_Notify(iVar4,DAT_835a0ce6,0);
+  }
+  __restfpr_23(uVar8);
+  __restgprlr_20();
+  return;
+}
+
 
 // 824BF3A8  Turret_IsFiringInternal  (game/turret.cpp:1554)
 
-bool Turret_IsFiringInternal(int param_1)
+bool Turret_IsFiringInternal(longlong param_1)
 
 {
-  return (bool)('\x01' - (param_1 == 0));
+  return param_1 != 0;
 }
 
 
 // 824BF3B8  Turret_IsFiring  (game/turret.cpp:1563)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+bool Turret_IsFiring(int param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(param_1 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x61f,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  return *(int *)(iVar1 + 0x3c) != 0;
+}
+
 
 // 824BF418  Turret_SetState  (game/turret.cpp:1577)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_SetState(undefined8 param_1,longlong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar3 = __savegprlr_25();
+  iVar1 = *(int *)(iVar3 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x62d,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  iVar2 = *(int *)(iVar3 + 0x15c);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x61f,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if ((*(int *)(iVar2 + 0x3c) != 0) != (param_2 != 0)) {
+    Scr_Notify(iVar3,DAT_835a0cf0,0);
+    *(int *)(iVar1 + 0x3c) = (int)param_2;
+    *(undefined4 *)(iVar1 + 100) = DAT_83580fac;
+    __restgprlr_25();
+    return;
+  }
+  *(int *)(iVar1 + 0x3c) = (int)param_2;
+  *(undefined4 *)(iVar1 + 100) = DAT_83580fac;
+  __restgprlr_25();
+  return;
+}
+
 
 // 824BF4F8  Turret_ClearTargetEnt  (game/turret.cpp:1595)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_ClearTargetEnt(int param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(param_1 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x63f,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  EntHandle__setEnt(iVar1 + 0x40,0);
+  *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) & 0xffffff9f;
+  *(undefined4 *)(iVar1 + 0x44) = 0;
+  *(undefined4 *)(iVar1 + 0x48) = 0;
+  *(undefined4 *)(iVar1 + 0x4c) = 0;
+  Turret_SetState(param_1,0);
+  return;
+}
+
 
 // 824BF590  Turret_ReturnToDefaultPos  (game/turret.cpp:1613)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_ReturnToDefaultPos(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 local_30;
+  undefined4 local_2c;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = *(int *)(iVar2 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x652,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if ((param_2 & 0xff) == 0) {
+    local_30 = *(undefined4 *)(iVar1 + 0x1c);
+  }
+  else {
+    local_30 = 0;
+  }
+  local_2c = 0;
+  Turret_SetState(iVar2,0);
+  Turret_UpdateTargetAngles(iVar2,&local_30,param_2);
+  __restgprlr_29();
+  return;
+}
+
 
 // 824BF620  Turret_SetDefaultDropPitch  (game/turret.cpp:1633)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_SetDefaultDropPitch(void)
+
+{
+  int iVar1;
+  double extraout_f1;
+  double dVar2;
+  
+  iVar1 = __savegprlr_29();
+  dVar2 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x662,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar1 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x663,0,0xffffffff82000f98,0xffffffff82081528);
+    *(float *)(*(int *)(iVar1 + 0x15c) + 0x1c) = (float)dVar2;
+    __restgprlr_29();
+    return;
+  }
+  *(float *)(*(int *)(iVar1 + 0x15c) + 0x1c) = (float)dVar2;
+  __restgprlr_29();
+  return;
+}
+
 
 // 824BF6C0  Turret_RestoreDefaultDropPitch  (game/turret.cpp:1650)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_RestoreDefaultDropPitch(void)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  int iVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  float local_140;
+  float local_13c;
+  float local_138;
+  float local_130;
+  float local_12c;
+  float local_128;
+  float local_120;
+  float local_11c;
+  float local_118;
+  longlong local_110;
+  undefined1 auStack_108 [16];
+  undefined1 auStack_f8 [24];
+  undefined1 auStack_e0 [36];
+  undefined4 local_bc;
+  undefined4 local_b8;
+  undefined4 local_b4;
+  undefined1 auStack_b0 [48];
+  float local_80 [32];
+  
+  puVar2 = (undefined4 *)__savegprlr_27();
+  iVar1 = puVar2[0x57];
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x67b,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  iVar3 = G_DObjGetLocalTagMatrix(puVar2,DAT_835a0c3a);
+  if (iVar3 != 0) {
+    iVar4 = G_DObjGetLocalTagMatrix(puVar2,DAT_835a0c42);
+    if (iVar4 != 0) {
+      AnglesToAxis(puVar2 + 0x51,auStack_e0);
+      local_bc = puVar2[0x4e];
+      local_b8 = puVar2[0x4f];
+      local_b4 = puVar2[0x50];
+      local_118 = *(float *)(iVar4 + 0x18) - *(float *)(iVar3 + 0x18);
+      local_11c = *(float *)(iVar4 + 0x14) - *(float *)(iVar3 + 0x14);
+      local_120 = *(float *)(iVar4 + 0x10) - *(float *)(iVar3 + 0x10);
+      MatrixTransformVector43((float *)(iVar3 + 0x10),auStack_e0,auStack_f8);
+      iVar4 = 0;
+      dVar5 = 1.0;
+      dVar7 = 0.0;
+      dVar6 = -3.0;
+      while( true ) {
+        local_110 = (longlong)iVar4;
+        local_12c = (float)dVar7;
+        local_128 = (float)dVar7;
+        local_130 = (float)((double)local_110 * dVar6);
+        AnglesToAxis(&local_130,auStack_b0);
+        MatrixTransformVector(&local_120,auStack_b0,&local_140);
+        local_140 = *(float *)(iVar3 + 0x10) + local_140;
+        local_13c = *(float *)(iVar3 + 0x14) + local_13c;
+        local_138 = *(float *)(iVar3 + 0x18) + local_138;
+        MatrixTransformVector43(&local_140,auStack_e0,auStack_108);
+        G_LocationalTrace(local_80,auStack_f8,auStack_108,*puVar2,0x800811,0xffffffff82969400);
+        if ((double)local_80[0] < dVar5) break;
+        iVar4 = iVar4 + 1;
+        if (0x1e < iVar4) {
+          __restgprlr_27();
+          return;
+        }
+      }
+      *(float *)(iVar1 + 0x1c) = (float)puVar2[0x15] + local_130;
+    }
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 824BF8C0  Turret_Think_Init  (game/turret.cpp:1702)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_Think_Init(void)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x6a7,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(char *)(iVar1 + 0x16d) != '\x0e') {
+    MyAssertHandler(0xffffffff820813d8,0x6a8,0,0xffffffff82000f98,0xffffffff82081648);
+  }
+  *(undefined1 *)(iVar1 + 0x16d) = 0xf;
+  *(int *)(iVar1 + 0x198) = DAT_83580fac + 0x32;
+  *(undefined4 *)(iVar1 + 0x5c) = 0;
+  if (*(int *)(iVar1 + 0x214) != 0) {
+    G_GeneralLink(iVar1);
+  }
+  if (*(int *)(iVar1 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x6b2,0,0xffffffff82000f98,0xffffffff82081528);
+  }
+  if (*(float *)(*(int *)(iVar1 + 0x15c) + 0x1c) == -90.0) {
+    Turret_RestoreDefaultDropPitch(iVar1);
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 824BF9B8  Turret_CanTargetPoint  (game/turret.cpp:1724)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_CanTargetPoint(undefined8 param_1,undefined8 param_2,undefined4 *param_3,float *param_4)
+
+{
+  int iVar1;
+  int iVar2;
+  float *pfVar3;
+  float *pfVar4;
+  float local_90;
+  undefined1 auStack_8c [4];
+  float local_88;
+  float local_84;
+  float local_80;
+  float local_78;
+  float local_74;
+  undefined1 auStack_60 [36];
+  undefined4 local_3c;
+  undefined4 local_38;
+  undefined4 local_34;
+  
+  iVar1 = __savegprlr_28();
+  iVar2 = G_DObjGetWorldTagPos(iVar1,DAT_835a0c3a);
+  if (iVar2 != 0) {
+    AnglesToAxis(iVar1 + 0x144,auStack_60);
+    local_3c = *param_3;
+    local_38 = param_3[1];
+    local_34 = param_3[2];
+    MatrixTransposeTransformVector43(param_2,auStack_60,&local_88);
+    iVar2 = BG_GetMinDamage(*(undefined4 *)(iVar1 + 200),0);
+    if ((iVar2 != 0) ||
+       (BG_GetDamageRange(*(undefined4 *)(iVar1 + 200),0,&local_90,auStack_8c),
+       local_80 * local_80 + local_84 * local_84 + local_88 * local_88 < local_90 * local_90)) {
+      vectosignedangles(&local_88,&local_78);
+      iVar1 = *(int *)(iVar1 + 0x15c);
+      if (iVar1 == 0) {
+        MyAssertHandler(0xffffffff820813d8,0x6db,0,0xffffffff82000f98,0xffffffff8200e074);
+      }
+      iVar2 = 0;
+      pfVar3 = &local_78;
+      pfVar4 = (float *)(iVar1 + 0xc);
+      while ((*pfVar3 <= pfVar4[2] && (*pfVar4 <= *pfVar3))) {
+        iVar2 = iVar2 + 1;
+        pfVar3 = pfVar3 + 1;
+        pfVar4 = pfVar4 + 1;
+        if (1 < iVar2) {
+          *param_4 = local_78;
+          param_4[1] = local_74;
+          __restgprlr_28(1);
+          return;
+        }
+      }
+    }
+  }
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 824BFB10  Turret_CanTargetSentient_GetTargetPosInternal  (game/turret.cpp:1772)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
-// 824BFCC8  Turret_CanTargetSentient  (game/turret.cpp:1812)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824BFFA8  Turret_UpdateShootingState  (game/turret.cpp:1909)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C00C0  Turret_AimAtVector_Internal  (game/turret.cpp:1952)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C0148  Turret_AimAtVector  (game/turret.cpp:1969)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C01F8  Turret_SetTargetEnt  (game/turret.cpp:1990)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C0320  Turret_SightTrace  (game/turret.cpp:2014)
-
-int Turret_SightTrace(float *param_1,float *param_2,int param_3,int param_4)
+void Turret_CanTargetSentient_GetTargetPosInternal
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,int param_4,ulonglong param_5
+               ,ulonglong param_6)
 
 {
   float *pfVar1;
-  int iVar2;
-  int local_30 [12];
+  float *pfVar2;
+  int iVar3;
+  float local_70;
+  float local_6c;
+  float local_68;
+  undefined4 local_60;
+  undefined4 local_5c;
   
-  pfVar1 = (float *)__savegprlr_28(param_1);
+  iVar3 = __savegprlr_24();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x6f0,0,0xffffffff82000f98,0xffffffff82002128);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x6f1,0,0xffffffff82000f98,0xffffffff820816a4);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x6f2,0,0xffffffff82000f98,0xffffffff82081698);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x6f3,0,0xffffffff82000f98,0xffffffff82081684);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x6f4,0,0xffffffff82000f98,0xffffffff82081674);
+  }
+  pfVar2 = (float *)param_2;
+  pfVar1 = (float *)param_5;
+  if (param_4 == 0) {
+    *pfVar1 = *pfVar2 + *(float *)(iVar3 + 0x138);
+    pfVar1[1] = *(float *)(iVar3 + 0x13c) + pfVar2[1];
+    pfVar1[2] = *(float *)(iVar3 + 0x140) + pfVar2[2] + 2.0;
+  }
+  else {
+    Turret_GetTargetEyePosition(iVar3,param_5);
+    *pfVar1 = *pfVar2 + *pfVar1;
+    pfVar1[1] = pfVar2[1] + pfVar1[1];
+    pfVar1[2] = pfVar2[2] + pfVar1[2];
+  }
+  MatrixTransposeTransformVector43(param_5,param_3,&local_70);
+  vectosignedangles(&local_70,&local_60);
+  *(undefined4 *)param_6 = local_60;
+  ((undefined4 *)param_6)[1] = local_5c;
+  __restgprlr_24((double)(local_70 * local_70 + local_6c * local_6c + local_68 * local_68));
+  return;
+}
+
+
+// 824BFCC8  Turret_CanTargetSentient  (game/turret.cpp:1812)
+
+void Turret_CanTargetSentient
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float *pfVar4;
+  bool bVar5;
+  int iVar6;
+  int iVar7;
+  char cVar9;
+  int iVar8;
+  undefined4 *puVar10;
+  double dVar11;
+  int local_a0;
+  float local_9c;
+  undefined1 auStack_98 [4];
+  undefined1 auStack_94 [4];
+  undefined1 auStack_90 [36];
+  undefined4 local_6c;
+  undefined4 local_68;
+  undefined4 local_64;
+  
+  iVar6 = __savegprlr_23();
+  iVar7 = G_DObjGetWorldTagPos(iVar6,DAT_835a0c3a,param_5);
+  if (iVar7 == 0) goto LAB_824bff98;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x722,0,0xffffffff82000f98,0xffffffff82002128);
+  }
+  iVar8 = (int)param_2;
+  iVar7 = *(int *)(iVar8 + 0x158);
+  if ((iVar7 != 0) &&
+     ((((*(int *)(iVar7 + 0xac) == 0x7ff || ((&DAT_83373684)[*(int *)(iVar7 + 0xac) * 0xa0] != 0xe))
+       && ((cVar9 = BG_HasPerk(iVar7 + 0x4ec,0x25), cVar9 != '\0' ||
+           (iVar7 = *(int *)(iVar8 + 0x158), (*(uint *)(iVar7 + 0xf8) & 0x20) != 0)))) ||
+      ((*(uint *)(iVar7 + 0x10) & 0x800) != 0)))) goto LAB_824bff98;
+  iVar7 = *(int *)(iVar6 + 0x15c);
+  if (iVar7 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x739,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  AnglesToAxis(iVar6 + 0x144,auStack_90);
+  puVar10 = (undefined4 *)param_5;
+  local_6c = *puVar10;
+  local_68 = puVar10[1];
+  local_64 = puVar10[2];
+  bVar5 = *(int *)(iVar7 + 0x3c) == 1;
+  dVar11 = (double)Turret_CanTargetSentient_GetTargetPosInternal
+                             (param_2,param_3,auStack_90,bVar5,param_4,param_6);
+  pfVar4 = (float *)param_6;
+  if ((*(float *)(iVar7 + 0x18) < pfVar4[1]) || (pfVar4[1] < *(float *)(iVar7 + 0x10)))
+  goto LAB_824bff98;
+  BG_GetPlayerDamage(*(undefined4 *)(iVar6 + 200),0,auStack_98,&local_a0);
+  if (*(int *)(iVar8 + 0x158) == 0) {
+LAB_824bfe84:
+    iVar8 = BG_GetMinDamage(*(undefined4 *)(iVar6 + 200),0);
+    if (iVar8 == 0) {
+LAB_824bfe98:
+      BG_GetDamageRange(*(undefined4 *)(iVar6 + 200),0,&local_9c,auStack_94);
+      if ((double)(local_9c * local_9c) <= dVar11) goto LAB_824bff98;
+    }
+  }
+  else {
+    if (local_a0 == 0) goto LAB_824bfe98;
+    if (*(int *)(iVar8 + 0x158) == 0) goto LAB_824bfe84;
+  }
+  fVar1 = *pfVar4;
+  if ((*(float *)(iVar7 + 0xc) <= fVar1) && (fVar1 <= *(float *)(iVar7 + 0x14))) {
+LAB_824bfed8:
+    __restgprlr_23(1);
+    return;
+  }
+  fVar2 = *(float *)(iVar7 + 0x14);
+  Turret_CanTargetSentient_GetTargetPosInternal(param_2,param_3,auStack_90,!bVar5,param_4,param_6);
+  if ((pfVar4[1] <= *(float *)(iVar7 + 0x18)) && (*(float *)(iVar7 + 0x10) <= pfVar4[1])) {
+    fVar3 = *pfVar4;
+    if ((fVar3 <= *(float *)(iVar7 + 0x14)) && (*(float *)(iVar7 + 0xc) <= fVar3))
+    goto LAB_824bfed8;
+    if (fVar2 < fVar1 != *(float *)(iVar7 + 0x14) < fVar3) {
+      *pfVar4 = 0.0;
+      *(undefined4 *)((int)param_4 + 8) = puVar10[2];
+      __restgprlr_23(1);
+      return;
+    }
+  }
+LAB_824bff98:
+  __restgprlr_23(0);
+  return;
+}
+
+
+// 824BFFA8  Turret_UpdateShootingState  (game/turret.cpp:1909)
+
+void Turret_UpdateShootingState(undefined8 param_1,int param_2,float *param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  double dVar5;
+  double dVar6;
+  
+  iVar3 = __savegprlr_28();
+  iVar1 = *(int *)(iVar3 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x77a,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if (param_2 == 0) {
+    Turret_SetState(iVar3,0);
+  }
+  else {
+    iVar2 = *(int *)(iVar1 + 0x60);
+    iVar4 = *(int *)(iVar1 + 0x7c) - DAT_83580fac;
+    if (*(int *)(iVar1 + 0x3c) == 0) {
+      if (DAT_83580fac < iVar2 + 0xfa) {
+        dVar5 = (double)AngleSubtract((double)*(float *)(iVar3 + 0x54),(double)*param_3);
+        dVar6 = 5.0;
+        if ((5.0 <= ABS(dVar5)) ||
+           (dVar5 = (double)AngleSubtract((double)*(float *)(iVar3 + 0x58),(double)param_3[1]),
+           dVar6 <= ABS(dVar5))) goto LAB_824c00b4;
+      }
+      Turret_SetState(iVar3,2);
+    }
+    else if (*(int *)(iVar1 + 0x3c) != 2) {
+      __restgprlr_28();
+      return;
+    }
+    if (iVar4 + iVar2 < 1) {
+      Turret_SetState(iVar3,1);
+      __restgprlr_28();
+      return;
+    }
+  }
+LAB_824c00b4:
+  __restgprlr_28();
+  return;
+}
+
+
+// 824C00C0  Turret_AimAtVector_Internal  (game/turret.cpp:1952)
+
+void Turret_AimAtVector_Internal
+               (undefined8 param_1,undefined4 *param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_27();
+  iVar1 = *(int *)(iVar2 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x7a4,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  Turret_UpdateShootingState(iVar2,param_3,param_4);
+  *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) | 0x20;
+  *(undefined4 *)(iVar1 + 0x84) = *param_2;
+  *(undefined4 *)(iVar1 + 0x88) = param_2[1];
+  *(undefined4 *)(iVar1 + 0x8c) = param_2[2];
+  __restgprlr_27();
+  return;
+}
+
+
+// 824C0148  Turret_AimAtVector  (game/turret.cpp:1969)
+
+void Turret_AimAtVector(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_28();
+  cVar2 = Turret_CanTargetPoint();
+  if (cVar2 == '\0') {
+    if (*(int *)(iVar1 + 0x15c) == 0) {
+      MyAssertHandler(0xffffffff820813d8,0x7b7,0,0xffffffff82000f98,0xffffffff82081528);
+    }
+    *(uint *)(*(int *)(iVar1 + 0x15c) + 4) = *(uint *)(*(int *)(iVar1 + 0x15c) + 4) & 0xffffffdf;
+    Turret_UpdateShootingState(iVar1,param_3,param_4);
+    __restgprlr_28(0);
+    return;
+  }
+  Turret_AimAtVector_Internal(iVar1,param_2,param_3,param_4);
+  __restgprlr_28(1);
+  return;
+}
+
+
+// 824C01F8  Turret_SetTargetEnt  (game/turret.cpp:1990)
+
+void Turret_SetTargetEnt(undefined8 param_1,ulonglong param_2,float *param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  undefined4 uVar4;
+  int iVar6;
+  int iVar7;
+  ulonglong uVar5;
+  int iVar8;
+  
+  iVar6 = __savegprlr_27();
+  iVar6 = *(int *)(iVar6 + 0x15c);
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x7cc,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x7cd,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  iVar8 = iVar6 + 0x40;
+  iVar7 = EntHandle__isDefined(iVar8);
+  if (iVar7 == 0) {
+    uVar5 = 0;
+  }
+  else {
+    uVar5 = EntHandle__ent(iVar8);
+  }
+  if ((uVar5 & 0xffffffff) == (param_2 & 0xffffffff)) {
+    fVar3 = param_3[2] - *(float *)(iVar6 + 0x4c);
+    fVar1 = *param_3 - *(float *)(iVar6 + 0x44);
+    fVar2 = param_3[1] - *(float *)(iVar6 + 0x48);
+    if (fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3 <= 0.001) goto LAB_824c0314;
+  }
+  EntHandle__setEnt(iVar8,param_2);
+  uVar4 = DAT_83580fac;
+  *(uint *)(iVar6 + 4) = *(uint *)(iVar6 + 4) & 0xffffffbf;
+  *(undefined4 *)(iVar6 + 0x60) = uVar4;
+  *(float *)(iVar6 + 0x44) = *param_3;
+  *(float *)(iVar6 + 0x48) = param_3[1];
+  *(float *)(iVar6 + 0x4c) = param_3[2];
+LAB_824c0314:
+  __restgprlr_27();
+  return;
+}
+
+
+// 824C0320  Turret_SightTrace  (game/turret.cpp:2014)
+
+void Turret_SightTrace(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  undefined8 uVar1;
+  undefined4 local_30 [12];
+  
+  uVar1 = __savegprlr_28();
   local_30[0] = 0;
   Profile_Begin(0xe8);
-  SV_SightTrace(local_30,pfVar1,param_2,&bounds_origin,param_3,param_4,0x801803);
-  Profile_EndInternal((double *)0x0);
-  iVar2 = __restgprlr_28(local_30[0]);
-  return iVar2;
+  SV_SightTrace(local_30,uVar1,param_2,0xffffffff82174a3c,param_3,param_4,0x801803);
+  Profile_EndInternal(0);
+  __restgprlr_28(local_30[0]);
+  return;
 }
 
 
 // 824C0388  Turret_CanConvergeOnHeadOffset  (game/turret.cpp:2059)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_CanConvergeOnHeadOffset(undefined8 param_1,ulonglong param_2,float *param_3)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar4;
+  int iVar5;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_60;
+  float local_5c;
+  float local_58;
+  undefined1 auStack_50 [80];
+  
+  puVar4 = (undefined4 *)__savegprlr_26();
+  if (puVar4 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff820813d8,0x816,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x817,0,0xffffffff82000f98,0xffffffff82081498);
+  }
+  iVar5 = puVar4[0x57];
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x81a,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if ((*(int *)(iVar5 + 0x3c) == 1) && (*(float *)(iVar5 + 0x80) < 1.0)) {
+    Turret_GetTargetEyePosition(param_2,&local_60);
+    local_70 = *param_3 + local_60;
+    local_6c = param_3[1] + local_5c;
+    local_68 = param_3[2] + local_58;
+    iVar5 = G_DObjGetWorldTagPos(puVar4,DAT_835a0c3a,auStack_50);
+    if (iVar5 == 0) {
+      uVar2 = SL_ConvertToString(*(undefined2 *)((int)puVar4 + 0x172));
+      uVar1 = *puVar4;
+      uVar3 = SL_ConvertToStringSafe(DAT_835a0c3a);
+      Com_Error(1,0xffffffff82081398,uVar3,uVar1,uVar2);
+    }
+    iVar5 = Turret_SightTrace(auStack_50,&local_70,*puVar4,*(undefined4 *)param_2);
+    if (*(char *)(DAT_835a27ac + 0xc) != '\0') {
+      if (0 < iVar5) {
+        G_DebugLineWithDuration(auStack_50,&local_70,0xffffffff821817e8,0,0x19);
+        local_70 = local_60;
+        local_6c = local_5c;
+        local_68 = local_58;
+        G_DebugLineWithDuration(param_2 + 0x138,&local_70,0xffffffff821817e8,0,0x19);
+        __restgprlr_26(iVar5 == 0);
+        return;
+      }
+      G_DebugLine(param_2 + 0x138,&local_70,0xffffffff82181808,0);
+    }
+    __restgprlr_26(iVar5 == 0);
+    return;
+  }
+  __restgprlr_26(0);
+  return;
+}
+
 
 // 824C05B0  Turret_AimAtSentient_Internal  (game/turret.cpp:2117)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_AimAtSentient_Internal
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               int param_5,undefined8 param_6)
+
+{
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  char cVar6;
+  int iVar5;
+  float *pfVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float local_f0;
+  float local_ec;
+  undefined8 local_e8;
+  float local_e0;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  float local_b8;
+  float local_b4;
+  float local_b0;
+  undefined1 auStack_a8 [24];
+  float local_90;
+  float local_8c;
+  float local_6c;
+  float local_68;
+  
+  iVar3 = __savegprlr_24();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x854,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x855,0,0xffffffff82000f98,0xffffffff82081498);
+  }
+  if (*(int *)((int)param_2 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x857,0,0xffffffff82000f98,0xffffffff820816cc);
+  }
+  if (param_5 < 0) {
+    MyAssertHandler(0xffffffff820813d8,0x85c,0,0xffffffff82000f98,0xffffffff820816bc);
+  }
+  Turret_SetTargetEnt(iVar3,param_2,param_3);
+  Turret_GetEnemyHeightOffset(iVar3,param_2,&local_e8);
+  iVar4 = Turret_CanConvergeOnHeadOffset(iVar3,param_2,&local_e8);
+  pfVar7 = (float *)param_3;
+  if (iVar4 == 0) {
+    local_e0 = pfVar7[2];
+    local_e8 = *(longlong *)pfVar7;
+  }
+  else {
+    local_e0 = pfVar7[2] + local_e0;
+    local_e8 = CONCAT44(*pfVar7 + local_e8._0_4_,pfVar7[1] + local_e8._4_4_);
+  }
+  dVar10 = (double)local_e0;
+  iVar4 = *(int *)(iVar3 + 0x15c);
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x86b,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  cVar6 = Turret_CanTargetSentient(iVar3,param_2,&local_e8,&local_d8,auStack_a8,param_6);
+  if (cVar6 == '\0') {
+    *(uint *)(iVar4 + 4) = *(uint *)(iVar4 + 4) & 0xffffffdf;
+    Turret_UpdateShootingState(iVar3,param_4,param_6);
+LAB_824c0764:
+    __restgprlr_24(0);
+    return;
+  }
+  if (0 < (longlong)
+          (((ulonglong)*(uint *)(iVar4 + 0x7c) - (ulonglong)DAT_83580fac) +
+          (ulonglong)*(uint *)(iVar4 + 0x60))) {
+    if ((*(uint *)(iVar4 + 4) & 0x40) == 0) {
+      *(uint *)(iVar4 + 4) = *(uint *)(iVar4 + 4) | 0x40;
+      iVar5 = G_DObjGetWorldTagMatrix(iVar3,DAT_835a0c3a,&local_90);
+      if (iVar5 == 0) goto LAB_824c0764;
+      local_f0 = local_d4 - local_68;
+      local_ec = local_6c - local_d8;
+      Vec2Normalize(&local_f0);
+      local_f0 = local_f0 * 63.0;
+      dVar11 = 0.0;
+      local_ec = local_ec * 63.0;
+      if (local_8c * local_ec + local_90 * local_f0 < 0.0) {
+        local_c8 = local_d8 - local_f0;
+        local_c4 = local_d4 - local_ec;
+      }
+      else {
+        local_c8 = local_d8 + local_f0;
+        local_c4 = local_ec + local_d4;
+      }
+      local_c0 = (float)((double)*(float *)((int)param_2 + 0x140) + dVar10);
+      cVar6 = Turret_AimAtVector(iVar3,&local_c8,param_4,param_6);
+      if (cVar6 != '\0') {
+        local_d8 = local_c8 - local_d8;
+        *(float *)(iVar4 + 0x90) = local_d8;
+        local_d4 = local_c4 - local_d4;
+        *(float *)(iVar4 + 0x94) = local_d4;
+        local_d0 = local_c0 - local_d0;
+        *(float *)(iVar4 + 0x98) = local_d0;
+        fVar2 = SQRT(local_d0 * local_d0 + local_d8 * local_d8 + local_d4 * local_d4);
+        fVar1 = 1.0;
+        if (-fVar2 < 0.0) {
+          fVar1 = fVar2;
+        }
+        fVar1 = 1.0 / fVar1;
+        *(float *)(iVar4 + 0x90) = local_d8 * fVar1;
+        *(float *)(iVar4 + 0x94) = local_d4 * fVar1;
+        *(float *)(iVar4 + 0x98) = local_d0 * fVar1;
+        __restgprlr_24(1);
+        return;
+      }
+      local_c0 = local_d0;
+      cVar6 = Turret_AimAtVector(iVar3,&local_c8,param_4,param_6);
+      if (cVar6 != '\0') {
+        dVar9 = (double)(local_c8 - local_d8);
+        *(float *)(iVar4 + 0x90) = local_c8 - local_d8;
+        dVar11 = (double)(local_c4 - local_d4);
+        *(float *)(iVar4 + 0x94) = local_c4 - local_d4;
+        dVar10 = (double)(local_c0 - local_d0);
+        *(float *)(iVar4 + 0x98) = local_c0 - local_d0;
+        fVar2 = SQRT((float)(dVar10 * dVar10 +
+                            (double)(float)(dVar9 * dVar9 + (double)(float)(dVar11 * dVar11))));
+        fVar1 = 1.0;
+        if (-fVar2 < 0.0) {
+          fVar1 = fVar2;
+        }
+        dVar8 = (double)(1.0 / fVar1);
+        *(float *)(iVar4 + 0x90) = (float)(dVar9 * dVar8);
+        *(float *)(iVar4 + 0x94) = (float)(dVar11 * dVar8);
+        *(float *)(iVar4 + 0x98) = (float)(dVar10 * dVar8);
+        __restgprlr_24(dVar10,1);
+        return;
+      }
+      *(float *)(iVar4 + 0x90) = (float)dVar11;
+      *(float *)(iVar4 + 0x94) = (float)dVar11;
+      *(float *)(iVar4 + 0x98) = (float)dVar11;
+    }
+    else {
+      if (param_5 < 1) {
+        fVar1 = 0.0;
+      }
+      else {
+        local_e8 = (longlong)(int)((*(uint *)(iVar4 + 0x60) - DAT_83580fac) + param_5);
+        fVar1 = (float)local_e8 / (float)(longlong)param_5;
+      }
+      fVar1 = fVar1 * 30.0;
+      local_b8 = *(float *)(iVar4 + 0x90) * 33.0 + *(float *)(iVar4 + 0x90) * fVar1 + local_d8;
+      local_b4 = *(float *)(iVar4 + 0x94) * 33.0 + *(float *)(iVar4 + 0x94) * fVar1 + local_d4;
+      local_b0 = *(float *)(iVar4 + 0x98) * 33.0 + *(float *)(iVar4 + 0x98) * fVar1 + local_d0;
+      cVar6 = Turret_AimAtVector(iVar3,&local_b8,param_4,param_6);
+      if (cVar6 != '\0') goto LAB_824c0ac4;
+    }
+  }
+  Turret_AimAtVector_Internal(iVar3,&local_d8,param_4,param_6);
+LAB_824c0ac4:
+  __restgprlr_24(1);
+  return;
+}
+
 
 // 824C0AD8  Turret_AimAtSentient  (game/turret.cpp:2232)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_AimAtSentient
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
+
+{
+  ulonglong uVar1;
+  char cVar2;
+  undefined1 auStack_50 [80];
+  
+  uVar1 = __savegprlr_25();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x8bb,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x8bc,0,0xffffffff82000f98,0xffffffff82081498);
+  }
+  if (*(int *)((int)param_2 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x8be,0,0xffffffff82000f98,0xffffffff820816cc);
+  }
+  cVar2 = Turret_AimAtSentient_Internal(uVar1,param_2,param_3,param_4,param_5,auStack_50);
+  if (cVar2 == '\0') {
+    __restgprlr_25(0);
+    return;
+  }
+  Turret_UpdateTargetAngles(uVar1,auStack_50,1);
+  __restgprlr_25(1);
+  return;
+}
+
 
 // 824C0BC8  Turret_AimAtEntity  (game/turret.cpp:2255)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_AimAtEntity(undefined8 param_1,int param_2,float *param_3,undefined8 param_4)
+
+{
+  undefined8 uVar1;
+  char cVar2;
+  undefined1 auStack_40 [8];
+  float local_38;
+  float local_34;
+  float local_30;
+  
+  uVar1 = __savegprlr_28();
+  Turret_SetTargetEnt();
+  local_38 = *param_3 + *(float *)(param_2 + 0x138);
+  local_34 = *(float *)(param_2 + 0x13c) + param_3[1];
+  local_30 = *(float *)(param_2 + 0x140) + param_3[2];
+  cVar2 = Turret_AimAtVector(uVar1,&local_38,param_4,auStack_40);
+  if (cVar2 != '\0') {
+    Turret_UpdateTargetAngles(uVar1,auStack_40,1);
+    __restgprlr_28(1);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 824C0C60  GScr_Turret_SnapToTarget  (game/turret.cpp:2276)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void GScr_Turret_SnapToTarget(void)
+
+{
+  uint uVar1;
+  undefined2 uVar2;
+  byte bVar3;
+  int iVar5;
+  int iVar6;
+  char cVar8;
+  undefined8 uVar4;
+  int iVar7;
+  uint uVar9;
+  byte local_90 [8];
+  float local_88;
+  float local_84;
+  float local_80;
+  undefined4 local_78;
+  undefined4 local_74;
+  undefined1 auStack_68 [24];
+  uint local_50 [20];
+  
+  iVar5 = __savegprlr_27();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x8ef,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar5 + 4) != 0xb) {
+    MyAssertHandler(0xffffffff820813d8,0x8f0,0,0xffffffff82000f98,0xffffffff8208150c);
+  }
+  if (*(int *)(iVar5 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x8f1,0,0xffffffff82000f98,0xffffffff82081528);
+  }
+  iVar7 = *(int *)(iVar5 + 0x15c);
+  iVar6 = EntHandle__isDefined(iVar7 + 0x50);
+  if (iVar6 == 0) {
+    Scr_Error(0xffffffff82081720);
+  }
+  iVar6 = EntHandle__ent(iVar7 + 0x50);
+  uVar1 = *(uint *)(iVar7 + 4);
+  Turret_SetTargetEnt(iVar5,iVar6,iVar7 + 0x54);
+  local_88 = *(float *)(iVar6 + 0x138) + *(float *)(iVar7 + 0x54);
+  local_84 = *(float *)(iVar7 + 0x58) + *(float *)(iVar6 + 0x13c);
+  local_80 = *(float *)(iVar7 + 0x5c) + *(float *)(iVar6 + 0x140);
+  cVar8 = Turret_CanTargetPoint(iVar5,&local_88,auStack_68,&local_78);
+  if (cVar8 == '\0') {
+    Scr_Error(0xffffffff82081700);
+  }
+  Turret_AimAtVector_Internal(iVar5,auStack_68,uVar1 >> 4 & 1,&local_78);
+  *(undefined4 *)(iVar5 + 0x54) = local_78;
+  *(undefined4 *)(iVar5 + 0x58) = local_74;
+  *(undefined4 *)(iVar5 + 0x5c) = 0;
+  uVar4 = Com_GetServerDObjForEnt(iVar5);
+  local_90[0] = 0xfe;
+  local_50[0] = 0;
+  local_50[1] = 0;
+  local_50[2] = 0;
+  local_50[3] = 0;
+  local_50[4] = 0;
+  local_50[5] = 0;
+  iVar7 = DObjGetBoneIndex(uVar4,DAT_835a0c3a,local_90);
+  if (iVar7 == 0) {
+    Scr_Error(0xffffffff820816dc);
+  }
+  DObjClearBoneSetBit(uVar4,local_90[0]);
+  bVar3 = local_90[0];
+  uVar2 = DAT_835a0c3c;
+  uVar9 = (uint)local_90[0];
+  local_90[0] = 0xfe;
+  uVar1 = bVar3 >> 3 & 0x1ffffffc;
+  *(uint *)((int)local_50 + uVar1) =
+       (&DAT_82992400)[uVar9 & 0x1f] | *(uint *)((int)local_50 + uVar1);
+  iVar7 = DObjGetBoneIndex(uVar4,uVar2,local_90);
+  if (iVar7 != 0) {
+    DObjClearBoneSetBit(uVar4,local_90[0]);
+    uVar1 = local_90[0] >> 3 & 0x1ffffffc;
+    *(uint *)((int)local_50 + uVar1) =
+         (&DAT_82992400)[local_90[0] & 0x1f] | *(uint *)((int)local_50 + uVar1);
+  }
+  G_DObjCalcPose(iVar5,local_50);
+  __restgprlr_27();
+  return;
+}
+
 
 // 824C0EA8  Turret_IsTargetVisible  (game/turret.cpp:2389)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Turret_IsTargetVisible
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  char cVar4;
+  int iVar3;
+  float *pfVar5;
+  double dVar6;
+  float local_80;
+  float local_7c;
+  float local_78;
+  undefined1 auStack_70 [16];
+  undefined1 auStack_60 [96];
+  
+  puVar2 = (undefined4 *)__savegprlr_25();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x961,0,0xffffffff82000f98,0xffffffff820025cc);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x962,0,0xffffffff82000f98,0xffffffff82081734);
+  }
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff820813d8,0x963,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  iVar3 = puVar2[0x57];
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x966,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  puVar1 = (undefined4 *)param_2;
+  pfVar5 = (float *)param_3;
+  local_80 = (float)puVar1[0x4e] + *pfVar5;
+  local_78 = (float)puVar1[0x50] + pfVar5[2];
+  local_7c = (float)puVar1[0x4f] + pfVar5[1];
+  dVar6 = (double)((local_7c - (float)puVar2[0x4f]) * (local_7c - (float)puVar2[0x4f]) +
+                  (local_78 - (float)puVar2[0x50]) * (local_78 - (float)puVar2[0x50]) +
+                  (local_80 - (float)puVar2[0x4e]) * (local_80 - (float)puVar2[0x4e]));
+  if (dVar6 < (double)*(float *)(iVar3 + 0x6c)) {
+    if (puVar1[0x56] == 0) {
+      cVar4 = Turret_CanTargetPoint(puVar2,&local_80,auStack_70,auStack_60);
+      if (cVar4 == '\0') goto LAB_824c0fd0;
+      local_80 = (float)puVar1[0x4e] + *pfVar5;
+      local_7c = (float)puVar1[0x4f] + pfVar5[1];
+      local_78 = (float)puVar1[0x50] + pfVar5[2];
+    }
+    else {
+      cVar4 = Turret_CanTargetSentient(puVar2,param_2,param_3,&local_80,auStack_70,auStack_60);
+      if (cVar4 == '\0') goto LAB_824c0fd0;
+      Turret_GetTargetEyePosition(param_2,&local_80);
+      local_80 = *pfVar5 + local_80;
+      local_7c = pfVar5[1] + local_7c;
+      local_78 = pfVar5[2] + local_78;
+    }
+    if (((puVar1[2] & 0x20) == 0) &&
+       (iVar3 = Turret_SightTrace(auStack_70,&local_80,*puVar2,*puVar1), iVar3 == 0)) {
+      if ((param_4 & 0xffffffff) != 0) {
+        *(float *)param_4 = (float)dVar6;
+      }
+      __restgprlr_25(1);
+      return;
+    }
+  }
+LAB_824c0fd0:
+  __restgprlr_25(0);
+  return;
+}
+
 
 // 824C10E8  Turret_GetEnemyTeamFlags  (game/turret.cpp:2482)
 
-int Turret_GetEnemyTeamFlags(Turret *param_1)
+ulonglong Turret_GetEnemyTeamFlags(int param_1)
 
 {
-  team_t tVar1;
+  uint uVar1;
   
-  if (param_1 == (Turret *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x9b3,0,"%s")
-    ;
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x9b3,0,0xffffffff82000f98,0xffffffff8200e074);
   }
-  if (param_1->eTeam == TEAM_FREE) {
-    return -1;
+  if (*(int *)(param_1 + 0x74) == 0) {
+    return 0xffffffffffffffff;
   }
-  tVar1 = Com_EnemyTeam(param_1->eTeam);
-  return 1 << (tVar1 & 0x3f);
+  uVar1 = Com_EnemyTeam();
+  return (ulonglong)(uint)(1 << (uVar1 & 0x3f));
 }
 
 
 // 824C1170  Turret_NextTarget  (game/turret.cpp:2510)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
-// 824C12D8  Turret_FindBestTarget  (game/turret.cpp:2561)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C1578  Turret_ModeChangeClear  (game/turret.cpp:2672)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C15F8  Turret_ModeChangeNotify  (game/turret.cpp:2684)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C16A0  Turret_ModeChangeWait  (game/turret.cpp:2697)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C1750  Turret_Think_Auto_NonAI  (game/turret.cpp:2715)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C1918  Turret_Think_Manual  (game/turret.cpp:3056)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C3780  Turret_Think  (game/turret.cpp:3141)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C1A38  Turret_IsOperable  (game/turret.cpp:3222)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C1AC0  Turret_Controller  (game/turret.cpp:3398)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C1CF0  Turret_IsBehind  (game/turret.cpp:3505)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C1E68  Turret_IsSentryUsageRestricted  (game/turret.cpp:3539)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C1F40  G_IsTurretUsable  (game/turret.cpp:3568)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C2078  G_DeactivateTurret  (game/turret.cpp:3615)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C2128  Turret_SetSentryOwner  (game/turret.cpp:3636)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C21E8  Turret_ScrSetSentryCarrier  (game/turret.cpp:3660)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C22A0  Turret_SetMinimapVisible  (game/turret.cpp:3689)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C2368  Turret_SetMode  (game/turret.cpp:3721)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C2428  Turret_SetAutoRotationStopDelay  (game/turret.cpp:3770)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C24E0  Turret_SetManualSpinning  (game/turret.cpp:3783)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C2590  Turret_GetBarrelSpinRate  (game/turret.cpp:3803)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C2620  Turret_Use  (game/turret.cpp:3817)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C2940  Turret_ScrRemoteUse  (game/turret.cpp:3918)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C38A0  Turret_ScrStopRemoteUse  (game/turret.cpp:3959)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824C2AE8  G_CanSpawnTurret  (game/turret.cpp:3984)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool G_CanSpawnTurret(void)
+void Turret_NextTarget(void)
 
 {
-  Turret *pTVar1;
+  int iVar1;
+  int iVar4;
+  undefined8 uVar2;
+  longlong lVar3;
   
-  pTVar1 = turretArray;
-  do {
-    if (pTVar1->inuse == false) {
-      return true;
+  iVar4 = __savegprlr_27();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x9d2,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  iVar1 = *(int *)(iVar4 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0x9d4,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  uVar2 = Turret_GetEnemyTeamFlags(iVar1);
+  if (((*(uint *)(iVar1 + 4) & 8) != 0) && (*(int *)(iVar4 + 0x78) == 0x7ff)) {
+    MyAssertHandler(0xffffffff820813d8,0x9dc,0,0xffffffff82000f98,0xffffffff82081790);
+  }
+  if ((int)*(uint *)(iVar1 + 0x70) < 0) {
+    lVar3 = 0;
+  }
+  else {
+    lVar3 = (ulonglong)*(uint *)(iVar1 + 0x70) * 0x3980 + (ulonglong)DAT_83580b00;
+  }
+  iVar4 = G_GetNextClient(lVar3,2,0,uVar2,*(undefined4 *)(iVar4 + 0x78));
+  if (iVar4 != 0) {
+    *(int *)(iVar1 + 0x70) = (int)(iVar4 - DAT_83580b00) / 0x3980;
+    if (0x7ff < *(uint *)(iVar4 + 0x150)) {
+      MyAssertHandler(0xffffffff820813d8,0x9e6,0,0xffffffff82081748,*(uint *)(iVar4 + 0x150),0x800);
     }
-    pTVar1 = pTVar1 + 1;
-  } while ((int)pTVar1 < -0x7ca5d858);
-  return false;
+    __restgprlr_27(((ulonglong)*(uint *)(iVar4 + 0x150) +
+                    ((ulonglong)*(uint *)(iVar4 + 0x150) & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 +
+                   -0x7cc8c980);
+    return;
+  }
+  *(undefined4 *)(iVar1 + 0x70) = 0xffffffff;
+  __restgprlr_27(0);
+  return;
 }
 
 
-// 824C2B20  Turret_SoundAliasIndex  (game/turret.cpp:4001)
+// 824C12D8  Turret_FindBestTarget  (game/turret.cpp:2561)
 
-/* WARNING: Enum "ConfigString": Some values do not have unique names */
+void Turret_FindBestTarget(undefined8 param_1,float *param_2)
 
-ushort Turret_SoundAliasIndex(char *param_1)
+{
+  int iVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  undefined4 *puVar6;
+  int iVar7;
+  int iVar8;
+  char cVar9;
+  ulonglong uVar5;
+  int iVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  float local_70 [2];
+  float local_68;
+  float local_64;
+  float local_60;
+  
+  puVar6 = (undefined4 *)__savegprlr_25();
+  if (puVar6 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff820813d8,0xa0a,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  iVar1 = puVar6[0x57];
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xa0d,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if (((*(uint *)(iVar1 + 4) & 8) != 0) && (puVar6[0x1e] == 0x7ff)) {
+    Com_PrintWarning(0x11,0xffffffff820817f0,*puVar6);
+    *param_2 = 0.0;
+    param_2[1] = 0.0;
+    param_2[2] = 0.0;
+    __restgprlr_25(0);
+    return;
+  }
+  iVar8 = 0;
+  if ((*(uint *)(iVar1 + 4) & 0x20) == 0) {
+LAB_824c14b4:
+    dVar13 = (double)local_60;
+    dVar12 = (double)local_64;
+    dVar11 = (double)local_68;
+  }
+  else {
+    iVar10 = iVar1 + 0x40;
+    iVar7 = EntHandle__isDefined(iVar10);
+    if (((iVar7 == 0) || (iVar7 = EntHandle__ent(iVar10), *(int *)(iVar7 + 0x158) == 0)) ||
+       (iVar7 = EntHandle__ent(iVar10), *(int *)(iVar7 + 4) != 1)) goto LAB_824c14b4;
+    iVar8 = EntHandle__ent(iVar10);
+    if (iVar8 == 0) {
+      MyAssertHandler(0xffffffff820813d8,0xa2a,1,0xffffffff82000f98,0xffffffff820817e0);
+    }
+    local_68 = *(float *)(iVar1 + 0x44);
+    dVar11 = (double)local_68;
+    local_64 = *(float *)(iVar1 + 0x48);
+    dVar12 = (double)local_64;
+    local_60 = *(float *)(iVar1 + 0x4c);
+    dVar13 = (double)local_60;
+    cVar9 = Turret_IsTargetVisible(puVar6,iVar8,&local_68,local_70);
+    if (cVar9 == '\0') {
+      iVar8 = 0;
+    }
+    else if ((iVar8 != 0) && (DAT_83580fac <= *(int *)(iVar1 + 0x60) + 4000)) goto LAB_824c1490;
+  }
+  uVar5 = Turret_NextTarget(puVar6);
+  if ((uVar5 & 0xffffffff) != 0) {
+    cVar9 = Turret_IsTargetVisible(puVar6,uVar5,0xffffffff82179fd8,local_70);
+    if ((cVar9 != '\0') &&
+       ((iVar8 == 0 ||
+        (fVar2 = (float)((double)*(float *)(iVar8 + 0x13c) + dVar12) - (float)puVar6[0x4f],
+        fVar3 = (float)((double)*(float *)(iVar8 + 0x140) + dVar13) - (float)puVar6[0x50],
+        fVar4 = (float)((double)*(float *)(iVar8 + 0x138) + dVar11) - (float)puVar6[0x4e],
+        local_70[0] < fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2)))) {
+      param_2[2] = 0.0;
+      param_2[1] = 0.0;
+      *param_2 = 0.0;
+      __restgprlr_25(uVar5);
+      return;
+    }
+  }
+LAB_824c1490:
+  param_2[2] = (float)dVar13;
+  param_2[1] = (float)dVar12;
+  *param_2 = (float)dVar11;
+  __restgprlr_25(iVar8);
+  return;
+}
+
+
+// 824C1578  Turret_ModeChangeClear  (game/turret.cpp:2672)
+
+void Turret_ModeChangeClear(void)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xa71,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar1 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xa72,0,0xffffffff82000f98,0xffffffff82081528);
+  }
+  *(undefined4 *)(*(int *)(iVar1 + 0x15c) + 0x68) = 0;
+  __restgprlr_29();
+  return;
+}
+
+
+// 824C15F8  Turret_ModeChangeNotify  (game/turret.cpp:2684)
+
+void Turret_ModeChangeNotify(void)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xa7d,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar1 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xa7e,0,0xffffffff82000f98,0xffffffff82081528);
+    *(undefined4 *)(*(int *)(iVar1 + 0x15c) + 0x68) = DAT_83580fac;
+    __restgprlr_29();
+    return;
+  }
+  *(undefined4 *)(*(int *)(iVar1 + 0x15c) + 0x68) = DAT_83580fac;
+  __restgprlr_29();
+  return;
+}
+
+
+// 824C16A0  Turret_ModeChangeWait  (game/turret.cpp:2697)
+
+void Turret_ModeChangeWait(void)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xa8c,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  iVar2 = *(int *)(iVar2 + 0x15c);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xa8e,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if (((*(uint *)(iVar2 + 4) & 0x200000) != 0) && (0 < *(int *)(iVar2 + 0x68))) {
+    uVar1 = 1;
+    if (DAT_83580fac < *(int *)(iVar2 + 0x68) + 500) goto LAB_824c1748;
+  }
+  uVar1 = 0;
+LAB_824c1748:
+  __restgprlr_29(uVar1);
+  return;
+}
+
+
+// 824C1750  Turret_Think_Auto_NonAI  (game/turret.cpp:2715)
+
+void Turret_Think_Auto_NonAI(void)
+
+{
+  bool bVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  char cVar7;
+  int iVar5;
+  int iVar6;
+  undefined1 auStack_40 [64];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xaa1,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  iVar2 = *(int *)(iVar3 + 0x15c);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xaa4,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  iVar4 = Turret_ModeChangeWait(iVar3);
+  if (iVar4 != 0) {
+    Turret_ClearTargetEnt(iVar3);
+    cVar7 = Turret_ReturnToDefaultPos(iVar3,1);
+    if (cVar7 == '\0') goto LAB_824c190c;
+    Turret_ModeChangeClear(iVar3);
+  }
+  iVar4 = Turret_FindBestTarget(iVar3,auStack_40);
+  iVar5 = EntHandle__isDefined(iVar2 + 0x50);
+  if (iVar5 == 0) {
+    iVar5 = 0;
+  }
+  else {
+    iVar5 = EntHandle__ent(iVar2 + 0x50);
+  }
+  if (iVar4 == 0) {
+LAB_824c185c:
+    if (iVar5 != 0) {
+      if (*(int *)(iVar5 + 0x158) == 0) {
+        cVar7 = Turret_AimAtEntity(iVar3,iVar5,iVar2 + 0x54,1);
+        bVar1 = cVar7 == '\0';
+      }
+      else {
+        cVar7 = Turret_IsTargetVisible(iVar3,iVar5,iVar2 + 0x54,0);
+        if (cVar7 == '\0') goto LAB_824c18cc;
+        iVar4 = Turret_AimAtSentient(iVar3,iVar5,iVar2 + 0x54,1,*(undefined4 *)(iVar2 + 0x7c));
+        bVar1 = iVar4 == 0;
+      }
+      if (!bVar1) goto LAB_824c190c;
+    }
+  }
+  else {
+    iVar6 = Turret_AimAtSentient(iVar3,iVar4,auStack_40,1,*(undefined4 *)(iVar2 + 0x7c));
+    if (iVar6 != 0) goto LAB_824c190c;
+    if (iVar5 != iVar4) goto LAB_824c185c;
+  }
+LAB_824c18cc:
+  Turret_ClearTargetEnt(iVar3);
+  if (((*(uint *)(iVar2 + 4) & 8) != 0) && ((*(uint *)(iVar2 + 4) & 0x400) == 0)) {
+    Turret_ScanForEnemies(iVar3);
+    __restgprlr_28();
+    return;
+  }
+  Turret_ReturnToDefaultPos(iVar3,1);
+LAB_824c190c:
+  __restgprlr_28();
+  return;
+}
+
+
+// 824C1918  Turret_Think_Manual  (game/turret.cpp:3056)
+
+void Turret_Think_Manual(void)
+
+{
+  uint uVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  
+  iVar5 = __savegprlr_28();
+  iVar7 = *(int *)(iVar5 + 0x15c);
+  if (iVar7 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xbf7,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  uVar1 = *(uint *)(iVar7 + 4);
+  iVar6 = EntHandle__isDefined(iVar7 + 0x50);
+  if ((iVar6 != 0) && (iVar6 = EntHandle__ent(iVar7 + 0x50), iVar6 != 0)) {
+    fVar2 = (*(float *)(iVar7 + 0x5c) + *(float *)(iVar6 + 0x140)) - *(float *)(iVar5 + 0x140);
+    fVar3 = (*(float *)(iVar7 + 0x54) + *(float *)(iVar6 + 0x138)) - *(float *)(iVar5 + 0x138);
+    fVar4 = (*(float *)(iVar7 + 0x58) + *(float *)(iVar6 + 0x13c)) - *(float *)(iVar5 + 0x13c);
+    if (fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2 < *(float *)(iVar7 + 0x6c)) {
+      if (*(int *)(iVar6 + 0x158) == 0) {
+        Turret_AimAtEntity();
+        __restgprlr_28(1);
+        return;
+      }
+      iVar7 = Turret_AimAtSentient(iVar5,iVar6,iVar7 + 0x54,uVar1 >> 4 & 1,0);
+      if (iVar7 != 0) goto LAB_824c1a28;
+    }
+  }
+  Turret_ClearTargetEnt(iVar5);
+  Turret_ReturnToDefaultPos(iVar5,0);
+LAB_824c1a28:
+  __restgprlr_28(1);
+  return;
+}
+
+
+// 824C3780  Turret_Think  (game/turret.cpp:3141)
+
+void Turret_Think(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  undefined *puVar4;
+  char cVar5;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = *(int *)(iVar2 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xc4a,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  iVar3 = DAT_83580fac;
+  *(undefined4 *)(iVar2 + 0x5c) = 0;
+  *(int *)(iVar2 + 0x198) = iVar3 + 0x32;
+  if (*(int *)(iVar2 + 0x214) != 0) {
+    G_GeneralLink(iVar2);
+  }
+  iVar3 = EntHandle__isDefined(iVar2 + 0x150);
+  if (iVar3 == 0) {
+    puVar4 = &DAT_834b3400;
+  }
+  else {
+    puVar4 = (undefined *)EntHandle__ent(iVar2 + 0x150);
+  }
+  if (*(int *)(puVar4 + 0x158) == 0) {
+    Turret_UpdateBarrelRotation(iVar2);
+    Turret_UpdateHeat(iVar2);
+    Turret_UpdateSound(iVar2);
+    *(uint *)(iVar2 + 8) = *(uint *)(iVar2 + 8) & 0xff7fffff;
+    if ((*(uint *)(iVar1 + 4) & 4) != 0) {
+      Turret_Think_Auto_NonAI();
+      __restgprlr_29();
+      return;
+    }
+    cVar5 = Turret_Think_Manual(iVar2);
+    if (cVar5 == '\0') {
+      Turret_ReturnToDefaultPos(iVar2,0);
+    }
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 824C1A38  Turret_IsOperable  (game/turret.cpp:3222)
+
+void Turret_IsOperable(void)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xc99,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar1 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xc9a,0,0xffffffff82000f98,0xffffffff82081528);
+  }
+  __restgprlr_29((~(ulonglong)*(uint *)(*(int *)(iVar1 + 0x15c) + 4) & 0xffffffff) >> 9 & 1);
+  return;
+}
+
+
+// 824C1AC0  Turret_Controller  (game/turret.cpp:3398)
+
+void Turret_Controller(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar2;
+  ulonglong uVar1;
+  double dVar3;
+  char local_140 [8];
+  float local_138;
+  float local_134;
+  float local_130;
+  float local_128;
+  float local_124;
+  undefined4 local_120;
+  undefined1 auStack_110 [48];
+  undefined1 auStack_e0 [48];
+  undefined1 auStack_b0 [48];
+  undefined1 auStack_80 [128];
+  
+  iVar2 = __savegprlr_24();
+  if (*(int *)(iVar2 + 4) != 0xb) {
+    MyAssertHandler(0xffffffff820813d8,0xd4c,0,0xffffffff82000f98,0xffffffff8208150c);
+  }
+  uVar1 = Com_GetServerDObjForEnt(iVar2);
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xd4f,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  local_128 = *(float *)(iVar2 + 0x54);
+  dVar3 = 0.0;
+  local_120 = 0;
+  if ((*(uint *)(iVar2 + 8) & 0x2000) == 0) {
+    local_124 = *(float *)(iVar2 + 0x58);
+    local_128 = local_128 - *(float *)(iVar2 + 0x5c);
+  }
+  else {
+    local_124 = *(float *)(iVar2 + 0x58);
+    AnglesToAxis(iVar2 + 0x144,auStack_110);
+    AnglesToAxis(&local_128,auStack_e0);
+    MatrixTranspose(auStack_110,auStack_b0);
+    MatrixMultiply(auStack_e0,auStack_b0,auStack_80);
+    AxisToAngles(auStack_80,&local_128);
+  }
+  local_138 = (float)dVar3;
+  local_130 = (float)dVar3;
+  local_140[0] = -2;
+  local_134 = local_124;
+  DObjGetBoneIndex(uVar1,DAT_835a0c3e,local_140);
+  if (local_140[0] != -1) {
+    if (local_140[0] == -2) {
+      MyAssertHandler(0xffffffff820813d8,0xd74,0,0xffffffff82000f98,0xffffffff82081884);
+    }
+    DObjSetLocalTag(uVar1,param_2,local_140[0],0xffffffff82179fd8,&local_138);
+    local_134 = (float)dVar3;
+  }
+  local_140[0] = -2;
+  local_138 = local_128;
+  DObjGetBoneIndex(uVar1,DAT_835a0c3a,local_140);
+  DObjSetLocalTag(uVar1,param_2,local_140[0],0xffffffff82179fd8,&local_138);
+  local_140[0] = -2;
+  DObjGetBoneIndex(uVar1,DAT_835a0c3c,local_140);
+  DObjSetLocalTag(uVar1,param_2,local_140[0],0xffffffff82179fd8,&local_138);
+  local_138 = *(float *)(iVar2 + 0x5c);
+  local_134 = (float)dVar3;
+  local_140[0] = -2;
+  DObjGetBoneIndex(uVar1,DAT_835a0c48,local_140);
+  DObjSetLocalTag(uVar1,param_2,local_140[0],0xffffffff82179fd8,&local_138);
+  __restgprlr_24();
+  return;
+}
+
+
+// 824C1CF0  Turret_IsBehind  (game/turret.cpp:3505)
+
+void Turret_IsBehind(undefined8 param_1,int param_2)
+
+{
+  float fVar1;
+  int iVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  int iVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  float local_40;
+  float local_3c;
+  float local_38;
+  
+  iVar7 = __savegprlr_29();
+  iVar2 = *(int *)(iVar7 + 0x15c);
+  if (*(int *)(param_2 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xdb7,0,0xffffffff82000f98,0xffffffff820814fc);
+  }
+  fVar1 = *(float *)(iVar2 + 0x10);
+  dVar10 = (double)((ABS(*(float *)(iVar2 + 0x18)) + ABS(fVar1)) * 0.5);
+  dVar9 = (double)((float)((double)(*(float *)(iVar7 + 0x148) + fVar1) + dVar10) * 0.0027777778);
+  dVar8 = floor((double)(float)(dVar9 + 0.5));
+  YawVectors((double)((float)(dVar9 - (double)(float)dVar8) * 360.0));
+  fVar1 = *(float *)(iVar7 + 0x138) - *(float *)(param_2 + 0x138);
+  fVar3 = *(float *)(iVar7 + 0x13c) - *(float *)(param_2 + 0x13c);
+  fVar4 = SQRT(local_3c * local_3c + local_38 * local_38 + local_40 * local_40);
+  fVar5 = SQRT(fVar3 * fVar3 + fVar1 * fVar1);
+  fVar6 = 1.0;
+  if (-fVar4 < 0.0) {
+    fVar6 = fVar4;
+  }
+  fVar4 = 1.0;
+  if (-fVar5 < 0.0) {
+    fVar4 = fVar5;
+  }
+  fVar6 = 1.0 / fVar6;
+  fVar4 = 1.0 / fVar4;
+  dVar8 = (double)Q_acos((double)(local_38 * fVar6 * fVar4 * 0.0 +
+                                 fVar4 * fVar1 * local_40 * fVar6 + fVar3 * fVar4 * fVar6 * local_3c
+                                 ));
+  __restgprlr_29((double)(float)(dVar8 * 57.2957763671875) <= dVar10);
+  return;
+}
+
+
+// 824C1E68  Turret_IsSentryUsageRestricted  (game/turret.cpp:3539)
+
+void Turret_IsSentryUsageRestricted(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_27();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xdd6,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xdd7,0,0xffffffff82000f98,0xffffffff820810e8);
+  }
+  iVar1 = *(int *)(iVar3 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xdda,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if ((*(uint *)(iVar1 + 4) & 8) == 0) {
+    __restgprlr_27(0);
+    return;
+  }
+  if (*(int *)(iVar3 + 0x78) != 0x7ff) {
+    uVar2 = 0;
+    if (*(int *)(iVar3 + 0x78) == *(int *)param_2) goto LAB_824c1f38;
+  }
+  uVar2 = 1;
+LAB_824c1f38:
+  __restgprlr_27(uVar2);
+  return;
+}
+
+
+// 824C1F40  G_IsTurretUsable  (game/turret.cpp:3568)
+
+void G_IsTurretUsable(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xdf3,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xdf4,0,0xffffffff82000f98,0xffffffff820818b8);
+  }
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xdf5,0,0xffffffff82000f98,0xffffffff820818a8);
+  }
+  if (((*(uint *)(iVar2 + 0x11c) & 0x200000) != 0) && (*(char *)(iVar2 + 0x16c) == '\0')) {
+    if (((*(float *)(iVar1 + 0x140) <= *(float *)(iVar2 + 0x140) + 16.0) &&
+        (((iVar3 = Turret_IsBehind(iVar2,param_2), iVar3 != 0 &&
+          (iVar2 = Turret_IsSentryUsageRestricted(iVar2,param_2), iVar2 == 0)) &&
+         (iVar2 = *(int *)(iVar1 + 0x158), *(int *)(iVar2 + 0x34) == 0)))) &&
+       (*(int *)(iVar2 + 0x6c) != 0x7ff)) {
+      lVar4 = (ulonglong)*(uint *)(iVar2 + 4) - 7;
+      __restgprlr_28(lVar4 - (((ulonglong)*(uint *)(iVar2 + 4) - 8) + (ulonglong)(lVar4 == 0)));
+      return;
+    }
+  }
+  __restgprlr_28(0);
+  return;
+}
+
+
+// 824C2078  G_DeactivateTurret  (game/turret.cpp:3615)
+
+void G_DeactivateTurret(int param_1)
+
+{
+  int iVar1;
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xe20,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if ((*(char *)(param_1 + 0x16c) == '\x01') && (iVar1 = Scr_IsSystemActive(1), iVar1 != 0)) {
+    Scr_Notify(param_1,DAT_835a0cde,0);
+    *(undefined1 *)(param_1 + 0x16c) = 0;
+    return;
+  }
+  *(undefined1 *)(param_1 + 0x16c) = 0;
+  return;
+}
+
+
+// 824C2128  Turret_SetSentryOwner  (game/turret.cpp:3636)
+
+void Turret_SetSentryOwner(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xe35,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar1 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xe36,0,0xffffffff82000f98,0xffffffff8208191c);
+  }
+  if ((param_2 & 0xffffffff) != 0) {
+    if ((*(int *)(iVar1 + 0x78) != 0x7ff) && (*(int *)param_2 != *(int *)(iVar1 + 0x78))) {
+      Com_PrintWarning(0x11,0xffffffff820818c0);
+    }
+    *(int *)(iVar1 + 0x78) = *(int *)param_2;
+    __restgprlr_28();
+    return;
+  }
+  *(undefined4 *)(iVar1 + 0x78) = 0x7ff;
+  __restgprlr_28();
+  return;
+}
+
+
+// 824C21E8  Turret_ScrSetSentryCarrier  (game/turret.cpp:3660)
+
+void Turret_ScrSetSentryCarrier(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xe4d,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar1 + 0x78) == 0x7ff) {
+    MyAssertHandler(0xffffffff820813d8,0xe4e,0,0xffffffff82000f98,0xffffffff82081964);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    *(undefined1 *)(iVar1 + 0x70) = 0;
+    __restgprlr_28();
+    return;
+  }
+  if (*(int *)(iVar1 + 0x78) != *(int *)param_2) {
+    Scr_ParamError(0,0xffffffff82081934);
+  }
+  *(undefined1 *)(iVar1 + 0x70) = 1;
+  __restgprlr_28();
+  return;
+}
+
+
+// 824C22A0  Turret_SetMinimapVisible  (game/turret.cpp:3689)
+
+void Turret_SetMinimapVisible(undefined8 param_1,int param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xe6a,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (param_2 == 0) {
+    *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) & 0xfffffdff;
+  }
+  else {
+    *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) | 0x200;
+    if ((param_3 & 0xffffffff) != 0) {
+      iVar2 = I_stricmp(param_3,0xffffffff8208199c);
+      if (iVar2 == 0) {
+        *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) | 0x4000000;
+        __restgprlr_29();
+        return;
+      }
+      iVar2 = I_stricmp(param_3,0xffffffff82081990);
+      if (iVar2 == 0) {
+        *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) | 0x10000000;
+        __restgprlr_29();
+        return;
+      }
+    }
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 824C2368  Turret_SetMode  (game/turret.cpp:3721)
+
+void Turret_SetMode(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xe8d,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  iVar1 = *(int *)(iVar2 + 0x15c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xe8f,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  if ((param_2 & 0xfffffbf3) != 0) {
+    MyAssertHandler(0xffffffff820813d8,0xe96,0,0xffffffff82000f98,0xffffffff820819a8);
+  }
+  *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) & 0xfffffbf3 | (uint)param_2;
+  Turret_ModeChangeNotify(iVar2);
+  __restgprlr_27();
+  return;
+}
+
+
+// 824C2428  Turret_SetAutoRotationStopDelay  (game/turret.cpp:3770)
+
+void Turret_SetAutoRotationStopDelay(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xebb,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar1 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xebc,0,0xffffffff82000f98,0xffffffff82081528);
+  }
+  if (param_2 < 0) {
+    MyAssertHandler(0xffffffff820813d8,0xebd,0,0xffffffff82000f98,0xffffffff820819c4);
+    *(int *)(*(int *)(iVar1 + 0x15c) + 0xb8) = param_2;
+    __restgprlr_28();
+    return;
+  }
+  *(int *)(*(int *)(iVar1 + 0x15c) + 0xb8) = param_2;
+  __restgprlr_28();
+  return;
+}
+
+
+// 824C24E0  Turret_SetManualSpinning  (game/turret.cpp:3783)
+
+void Turret_SetManualSpinning(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xec8,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar2 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xec9,0,0xffffffff82000f98,0xffffffff82081528);
+  }
+  iVar1 = *(int *)(iVar2 + 0x15c);
+  if (param_2 != 0) {
+    *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) | 0x100000;
+    __restgprlr_28();
+    return;
+  }
+  *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) & 0xffefffff;
+  *(undefined4 *)(*(int *)(iVar2 + 0x15c) + 0xbc) = 0;
+  __restgprlr_28();
+  return;
+}
+
+
+// 824C2590  Turret_GetBarrelSpinRate  (game/turret.cpp:3803)
+
+void Turret_GetBarrelSpinRate(void)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xedc,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar1 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xedd,0,0xffffffff82000f98,0xffffffff82081528);
+    __restgprlr_29((double)*(float *)(*(int *)(iVar1 + 0x15c) + 0xb4));
+    return;
+  }
+  __restgprlr_29((double)*(float *)(*(int *)(iVar1 + 0x15c) + 0xb4));
+  return;
+}
+
+
+// 824C2620  Turret_Use  (game/turret.cpp:3817)
+
+void Turret_Use(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  int *piVar5;
+  int *piVar6;
+  int iVar7;
+  undefined4 uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  
+  piVar6 = (int *)__savegprlr_27();
+  if (piVar6 == (int *)0x0) {
+    MyAssertHandler(0xffffffff820813d8,0xeed,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (piVar6[1] != 0xb) {
+    MyAssertHandler(0xffffffff820813d8,0xeee,0,0xffffffff82000f98,0xffffffff8208150c);
+  }
+  iVar4 = piVar6[0x57];
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xef1,0,0xffffffff82000f98,0xffffffff8200e074);
+  }
+  iVar7 = Turret_IsOperable(piVar6);
+  if (iVar7 == 0) goto LAB_824c2930;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xef6,0,0xffffffff82000f98,0xffffffff820818b8);
+  }
+  piVar5 = (int *)param_2;
+  if (piVar5[0x56] == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xef7,0,0xffffffff82000f98,0xffffffff820818a8);
+  }
+  if (DAT_83580fa4 <= *piVar5) {
+    MyAssertHandler(0xffffffff820813d8,0xef8,0,0xffffffff82000f98,0xffffffff820819d4);
+  }
+  iVar7 = piVar5[0x56];
+  if ((*(uint *)(iVar7 + 0x35f8) & 4) != 0) goto LAB_824c2930;
+  *(undefined1 *)(piVar5 + 0x5b) = 1;
+  *(undefined1 *)(piVar6 + 0x5b) = 1;
+  EntHandle__setEnt(piVar6 + 0x54,param_2);
+  *(undefined4 *)(iVar7 + 0x1b8) = 1;
+  *(int *)(iVar7 + 0x1bc) = *piVar6;
+  *(uint *)(iVar4 + 4) = *(uint *)(iVar4 + 4) | 1;
+  *(int *)(iVar4 + 0x2c) = piVar5[0x4e];
+  *(int *)(iVar4 + 0x30) = piVar5[0x4f];
+  *(int *)(iVar4 + 0x34) = piVar5[0x50];
+  piVar5[0x1e] = *piVar6;
+  if ((*(uint *)(iVar7 + 0xc) & 1) == 0) {
+    if ((*(uint *)(iVar7 + 0xc) & 2) == 0) {
+      uVar8 = 0;
+      goto LAB_824c27e0;
+    }
+    *(undefined4 *)(iVar4 + 0x24) = 1;
+  }
+  else {
+    uVar8 = 2;
+LAB_824c27e0:
+    *(undefined4 *)(iVar4 + 0x24) = uVar8;
+  }
+  if (*(int *)(iVar4 + 0x20) == 2) {
+    *(uint *)(iVar7 + 0xf8) = *(uint *)(iVar7 + 0xf8) & 0xffffe7ff | 0x800;
+    piVar6[2] = piVar6[2] & 0xffffe7ffU | 0x800;
+  }
+  else if (*(int *)(iVar4 + 0x20) == 1) {
+    *(uint *)(iVar7 + 0xf8) = *(uint *)(iVar7 + 0xf8) & 0xffffe7ff | 0x1000;
+    piVar6[2] = piVar6[2] & 0xffffe7ffU | 0x1000;
+  }
+  else {
+    *(uint *)(iVar7 + 0xf8) = *(uint *)(iVar7 + 0xf8) | 0x1800;
+    piVar6[2] = piVar6[2] | 0x1800;
+  }
+  dVar9 = (double)AngleSubtract((double)*(float *)(iVar7 + 0x158),(double)(float)piVar6[0x51]);
+  piVar6[0x15] = (int)(float)dVar9;
+  dVar10 = (double)*(float *)(iVar4 + 0x14);
+  if ((float)(dVar9 - (double)*(float *)(iVar4 + 0x14)) < 0.0) {
+    dVar10 = dVar9;
+  }
+  dVar11 = (double)*(float *)(iVar4 + 0xc);
+  if ((float)((double)*(float *)(iVar4 + 0xc) - dVar9) < 0.0) {
+    dVar11 = dVar10;
+  }
+  piVar6[0x15] = (int)(float)dVar11;
+  dVar9 = (double)AngleSubtract((double)*(float *)(iVar7 + 0x15c),(double)(float)piVar6[0x52]);
+  piVar6[0x16] = (int)(float)dVar9;
+  dVar10 = (double)*(float *)(iVar4 + 0x18);
+  if ((float)(dVar9 - (double)*(float *)(iVar4 + 0x18)) < 0.0) {
+    dVar10 = dVar9;
+  }
+  dVar11 = (double)*(float *)(iVar4 + 0x10);
+  if ((float)((double)*(float *)(iVar4 + 0x10) - dVar9) < 0.0) {
+    dVar11 = dVar10;
+  }
+  piVar6[0x17] = 0;
+  piVar6[0x16] = (int)(float)dVar11;
+  dVar9 = 0.5;
+  fVar2 = (*(float *)(iVar4 + 0x14) - *(float *)(iVar4 + 0xc)) * 0.5;
+  *(float *)(iVar7 + 0x180) = fVar2;
+  fVar1 = (float)piVar6[0x51] + *(float *)(iVar4 + 0x14);
+  *(float *)(iVar7 + 0x178) = fVar1;
+  dVar10 = (double)AngleNormalize360((double)(fVar1 - fVar2));
+  *(float *)(iVar7 + 0x178) = (float)dVar10;
+  fVar1 = (float)((double)(*(float *)(iVar4 + 0x18) - *(float *)(iVar4 + 0x10)) * dVar9);
+  dVar10 = (double)fVar1;
+  *(float *)(iVar7 + 0x184) = fVar1;
+  fVar2 = (float)piVar6[0x52];
+  fVar3 = *(float *)(iVar4 + 0x18);
+  fVar1 = (float)((double)fVar2 + (double)fVar3);
+  *(float *)(iVar7 + 0x17c) = fVar1;
+  dVar10 = (double)AngleNormalize360((double)(float)((double)fVar1 - dVar10),(double)fVar3,
+                                     (double)fVar2,dVar10);
+  *(float *)(iVar7 + 0x17c) = (float)dVar10;
+  Scr_Notify(piVar6,DAT_835a0cf2,0);
+LAB_824c2930:
+  __restgprlr_27();
+  return;
+}
+
+
+// 824C2940  Turret_ScrRemoteUse  (game/turret.cpp:3918)
+
+void Turret_ScrRemoteUse(undefined8 param_1,ulonglong param_2)
+
+{
+  int *piVar1;
+  int iVar2;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xf53,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar2 + 4) != 0xb) {
+    MyAssertHandler(0xffffffff820813d8,0xf54,0,0xffffffff82000f98,0xffffffff8208150c);
+  }
+  iVar3 = Turret_IsOperable(iVar2);
+  if (iVar3 != 0) {
+    if ((param_2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff820813d8,0xf59,0,0xffffffff82000f98,0xffffffff820818b8);
+    }
+    piVar1 = (int *)param_2;
+    if (piVar1[0x56] == 0) {
+      MyAssertHandler(0xffffffff820813d8,0xf5a,0,0xffffffff82000f98,0xffffffff820818a8);
+    }
+    if (DAT_83580fa4 <= *piVar1) {
+      MyAssertHandler(0xffffffff820813d8,0xf5b,0,0xffffffff82000f98,0xffffffff820819d4);
+    }
+    iVar3 = piVar1[0x56];
+    if ((*(uint *)(iVar3 + 0x35f8) & 4) == 0) {
+      dVar6 = (double)*(float *)(iVar2 + 0x144);
+      dVar5 = (double)*(float *)(iVar2 + 0x148);
+      Turret_Use(iVar2,param_2,0);
+      *(uint *)(iVar3 + 0x10) = *(uint *)(iVar3 + 0x10) | 0x80000;
+      *(uint *)(iVar3 + 0xf8) = *(uint *)(iVar3 + 0xf8) | 0x2000;
+      *(float *)(iVar2 + 0x54) = (float)dVar6;
+      *(float *)(iVar2 + 0x58) = (float)dVar5;
+      *(uint *)(iVar2 + 8) = *(uint *)(iVar2 + 8) | 0x2000;
+      dVar4 = (double)AngleSubtract(dVar5,(double)*(float *)(iVar3 + 0x15c));
+      *(float *)(iVar3 + 100) = (float)(dVar4 + (double)*(float *)(iVar3 + 100));
+      dVar4 = (double)AngleSubtract(dVar6,(double)*(float *)(iVar3 + 0x158));
+      *(float *)(iVar3 + 0x60) = (float)(dVar4 + (double)*(float *)(iVar3 + 0x60));
+      *(float *)(iVar3 + 0x158) = (float)dVar6;
+      *(float *)(iVar3 + 0x15c) = (float)dVar5;
+    }
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 824C38A0  Turret_ScrStopRemoteUse  (game/turret.cpp:3959)
+
+void Turret_ScrStopRemoteUse(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar2;
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xf7a,0,0xffffffff82000f98,0xffffffff8206c550);
+  }
+  if (*(int *)(iVar3 + 4) != 0xb) {
+    MyAssertHandler(0xffffffff820813d8,0xf7b,0,0xffffffff82000f98,0xffffffff8208150c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xf7d,0,0xffffffff82000f98,0xffffffff820818b8);
+  }
+  if (*(int *)((int)param_2 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xf7e,0,0xffffffff82000f98,0xffffffff820818a8);
+  }
+  iVar1 = *(int *)((int)param_2 + 0x158);
+  iVar4 = EntHandle__isDefined(iVar3 + 0x150);
+  if ((iVar4 != 0) &&
+     (uVar2 = EntHandle__ent(iVar3 + 0x150), (uVar2 & 0xffffffff) == (param_2 & 0xffffffff))) {
+    G_ClientStopUsingTurret(iVar3);
+  }
+  *(undefined4 *)(iVar1 + 0x50) = 0x7ff;
+  *(uint *)(iVar1 + 0x10) = *(uint *)(iVar1 + 0x10) & 0xfff7ffff;
+  __restgprlr_28();
+  return;
+}
+
+
+// 824C2AE8  G_CanSpawnTurret  (game/turret.cpp:3984)
+
+undefined8 G_CanSpawnTurret(void)
 
 {
   char *pcVar1;
-  ushort uVar5;
-  uint uVar2;
-  uint uVar3;
-  char *pcVar4;
-  uint uVar6;
   
-  pcVar1 = (char *)__savegprlr_25(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x1a9,
-                    0,"%s");
-  }
-  else if (*pcVar1 != '\0') {
-    uVar2 = SL_FindLowercaseString(pcVar1);
-    uVar6 = 1;
-    do {
-      if (0x6c6 < (int)uVar6) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                        ,0x285,0,"%s");
-      }
-      uVar3 = SV_GetConfigstringConst(uVar6 + CS_SOUNDALIASES);
-      if (uVar3 == scr_const._) break;
-      if (uVar3 == uVar2) goto LAB_824afaec;
-      uVar6 = uVar6 + 1;
-    } while ((int)uVar6 < 0x180);
-    if (uVar6 == 0x180) {
-      Com_Printf(0xf,"G_FindConfigstringIndex: overflow...\n");
-      Com_Printf(0xf,"Dumping these %i Config Strings:\n");
-      uVar6 = 1;
-      do {
-        if (0xeea < (int)(uVar6 + CS_SOUNDALIASES)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                          ,0x285,0,"%s");
-        }
-        uVar2 = SV_GetConfigstringConst(uVar6 + CS_SOUNDALIASES);
-        SL_ConvertToString(uVar2);
-        Com_Printf(0xf,"%i: %s\n");
-        uVar6 = uVar6 + 1;
-      } while ((int)uVar6 < 0x180);
-      pcVar4 = va("\x15G_FindConfigstringIndex: overflow (%d): \'%s\'");
-      Com_Error(ERR_DROP,pcVar4);
+  pcVar1 = &DAT_835a0e28;
+  do {
+    if (*pcVar1 == '\0') {
+      return 1;
     }
-    if (0xeea < (int)(uVar6 + CS_SOUNDALIASES)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                      ,0x285,0,"%s");
-    }
-    SV_SetConfigstring(uVar6 + CS_SOUNDALIASES,pcVar1);
-LAB_824afaec:
-    uVar5 = __restgprlr_25(uVar6 & 0xffff);
-    return uVar5;
-  }
-  uVar5 = __restgprlr_25(0);
-  return uVar5;
+    pcVar1 = pcVar1 + 0xcc;
+  } while ((int)pcVar1 < -0x7ca5d858);
+  return 0;
 }
 
 
 // 824C2B28  G_SpawnTurret  (game/turret.cpp:4013)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_SpawnTurret(undefined8 param_1,undefined8 param_2,int param_3)
+
+{
+  bool bVar1;
+  float fVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  undefined2 uVar7;
+  undefined4 uVar6;
+  int iVar8;
+  char *pcVar9;
+  float *pfVar10;
+  char *_Dst;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  float local_80;
+  float local_7c [31];
+  
+  iVar3 = __savegprlr_22();
+  iVar8 = 0;
+  pcVar9 = &DAT_835a0ef4;
+  do {
+    _Dst = pcVar9 + -0xcc;
+    if (pcVar9[-0xcc] == '\0') break;
+    if (*pcVar9 == '\0') {
+      iVar8 = iVar8 + 1;
+      _Dst = pcVar9;
+      break;
+    }
+    if (pcVar9[0xcc] == '\0') {
+      iVar8 = iVar8 + 2;
+      _Dst = pcVar9 + 0xcc;
+      break;
+    }
+    _Dst = pcVar9 + 0x198;
+    if (pcVar9[0x198] == '\0') {
+      iVar8 = iVar8 + 3;
+      break;
+    }
+    pcVar9 = pcVar9 + 0x330;
+    iVar8 = iVar8 + 4;
+  } while ((int)pcVar9 < -0x7ca5d78c);
+  if (iVar8 == 0x20) {
+    Com_Error(1,0xffffffff82081af8,0x20);
+  }
+  memset(_Dst,0,0xcc);
+  *(char **)(iVar3 + 0x15c) = _Dst;
+  *_Dst = '\x01';
+  uVar4 = G_GetWeaponForName(param_2);
+  *(uint *)(iVar3 + 200) = uVar4;
+  if ((uVar4 & 0xff) == 0) {
+    Com_Error(1,0xffffffff82081aa0,param_2);
+  }
+  uVar4 = BG_GetAlternateWeapon(*(undefined4 *)(iVar3 + 200),0);
+  iVar8 = (&DAT_829d84a0)[uVar4 & 0xff];
+  iVar5 = BG_GetWeaponClass(*(undefined4 *)(iVar3 + 200),0);
+  if (iVar5 != 8) {
+    va(0xffffffff82081a38,param_2);
+    Scr_Error();
+  }
+  if ((DAT_83580b1c == 0) && (*(char *)(iVar3 + 0xcb) == '\0')) {
+    va(0xffffffff82081a18,param_2);
+    Scr_Error();
+  }
+  _Dst[8] = '\0';
+  _Dst[9] = '\0';
+  _Dst[10] = '\0';
+  _Dst[0xb] = '\0';
+  *(undefined4 *)(_Dst + 0x20) = *(undefined4 *)(iVar8 + 0x44);
+  _Dst[0x24] = -1;
+  _Dst[0x25] = -1;
+  _Dst[0x26] = -1;
+  _Dst[0x27] = -1;
+  _Dst[0x28] = '\0';
+  _Dst[0x29] = '\0';
+  _Dst[0x2a] = '\0';
+  _Dst[0x2b] = '\0';
+  if (*(undefined4 **)(iVar8 + 0x78) == (undefined4 *)0x0) {
+    _Dst[0xc0] = '\0';
+    _Dst[0xc1] = '\0';
+  }
+  else {
+    uVar7 = G_SoundAliasIndex(**(undefined4 **)(iVar8 + 0x78));
+    *(undefined2 *)(_Dst + 0xc0) = uVar7;
+  }
+  if (*(undefined4 **)(iVar8 + 0x7c) == (undefined4 *)0x0) {
+    _Dst[0xc2] = '\0';
+    _Dst[0xc3] = '\0';
+  }
+  else {
+    uVar7 = G_SoundAliasIndex(**(undefined4 **)(iVar8 + 0x7c));
+    *(undefined2 *)(_Dst + 0xc2) = uVar7;
+  }
+  if (*(undefined4 **)(iVar8 + 0x80) == (undefined4 *)0x0) {
+    _Dst[0xc4] = '\0';
+    _Dst[0xc5] = '\0';
+  }
+  else {
+    uVar7 = G_SoundAliasIndex(**(undefined4 **)(iVar8 + 0x80));
+    *(undefined2 *)(_Dst + 0xc4) = uVar7;
+  }
+  if (*(undefined4 **)(iVar8 + 0x84) == (undefined4 *)0x0) {
+    _Dst[0xc6] = '\0';
+    _Dst[199] = '\0';
+  }
+  else {
+    uVar7 = G_SoundAliasIndex(**(undefined4 **)(iVar8 + 0x84));
+    *(undefined2 *)(_Dst + 0xc6) = uVar7;
+  }
+  if (*(undefined4 **)(iVar8 + 0x108) == (undefined4 *)0x0) {
+    _Dst[200] = '\0';
+    _Dst[0xc9] = '\0';
+  }
+  else {
+    uVar7 = G_SoundAliasIndex(**(undefined4 **)(iVar8 + 0x108));
+    *(undefined2 *)(_Dst + 200) = uVar7;
+  }
+  if ((DAT_83581038 == '\0') ||
+     (iVar5 = G_SpawnFloat(0x318,0xffffffff820068af,_Dst + 0x10), iVar5 == 0)) {
+    *(undefined4 *)(_Dst + 0x10) = *(undefined4 *)(iVar8 + 0x62c);
+  }
+  pfVar10 = (float *)(_Dst + 0x10);
+  fVar2 = *pfVar10;
+  dVar12 = -1.0;
+  dVar14 = 0.0;
+  *pfVar10 = fVar2 * -1.0;
+  if (0.0 < fVar2 * -1.0) {
+    *pfVar10 = 0.0;
+  }
+  if ((DAT_83581038 == '\0') ||
+     (iVar5 = G_SpawnFloat(0x319,0xffffffff820068af,_Dst + 0x18), iVar5 == 0)) {
+    *(undefined4 *)(_Dst + 0x18) = *(undefined4 *)(iVar8 + 0x628);
+  }
+  if ((double)*(float *)(_Dst + 0x18) < dVar14) {
+    *(float *)(_Dst + 0x18) = (float)dVar14;
+  }
+  if ((DAT_83581038 == '\0') ||
+     (iVar5 = G_SpawnFloat(0x31a,0xffffffff820068af,_Dst + 0xc), iVar5 == 0)) {
+    *(undefined4 *)(_Dst + 0xc) = *(undefined4 *)(iVar8 + 0x630);
+  }
+  pfVar10 = (float *)(_Dst + 0xc);
+  fVar2 = *pfVar10;
+  *pfVar10 = (float)((double)fVar2 * dVar12);
+  if (dVar14 < (double)(float)((double)fVar2 * dVar12)) {
+    *pfVar10 = (float)dVar14;
+  }
+  if ((DAT_83581038 == '\0') ||
+     (iVar5 = G_SpawnFloat(0x31b,0xffffffff820068af,_Dst + 0x14), iVar5 == 0)) {
+    *(undefined4 *)(_Dst + 0x14) = *(undefined4 *)(iVar8 + 0x634);
+  }
+  if ((double)*(float *)(_Dst + 0x14) < dVar14) {
+    *(float *)(_Dst + 0x14) = (float)dVar14;
+  }
+  if (((DAT_83581038 == '\0') ||
+      (iVar5 = G_SpawnFloat(0x31c,0xffffffff820068af,&local_80), iVar5 == 0)) &&
+     ((DAT_83581038 == '\0' ||
+      (iVar5 = G_SpawnFloat(0x323,0xffffffff820068af,&local_80), iVar5 == 0)))) {
+    local_80 = *(float *)(iVar8 + 0x658);
+  }
+  dVar12 = (double)local_80;
+  if ((double)local_80 < dVar14) {
+    local_80 = (float)dVar14;
+    dVar12 = dVar14;
+  }
+  bVar1 = DAT_83581038 == '\0';
+  dVar13 = 1000.0;
+  dVar11 = 0.5;
+  *(int *)(_Dst + 0x7c) = (int)(dVar12 * 1000.0 + 0.5);
+  if ((bVar1) || (iVar5 = G_SpawnFloat(0x31d,0xffffffff820068af,&local_80), iVar5 == 0)) {
+    local_80 = *(float *)(iVar8 + 0x654);
+  }
+  dVar12 = (double)local_80;
+  if ((double)local_80 < dVar14) {
+    local_80 = (float)dVar14;
+    dVar12 = dVar14;
+  }
+  bVar1 = DAT_83581038 == '\0';
+  _Dst[0x80] = '?';
+  _Dst[0x81] = -0x80;
+  _Dst[0x82] = '\0';
+  _Dst[0x83] = '\0';
+  *(int *)(_Dst + 0x78) = (int)(dVar12 * dVar13 + dVar11);
+  if ((bVar1) || (iVar5 = G_SpawnFloat(799,0xffffffff820068af,local_7c), iVar5 == 0)) {
+    local_7c[0] = *(float *)(iVar8 + 0x660);
+  }
+  dVar12 = (double)local_7c[0];
+  if (dVar12 <= dVar14) {
+    fVar2 = 3.4028235e+38;
+  }
+  else {
+    fVar2 = (float)(dVar12 * dVar12);
+  }
+  *(float *)(_Dst + 0x6c) = fVar2;
+  _Dst[0x1c] = -0x3e;
+  _Dst[0x1d] = -0x4c;
+  _Dst[0x1e] = '\0';
+  _Dst[0x1f] = '\0';
+  if (*(int *)(iVar3 + 0x19c) == 0) {
+    *(undefined4 *)(iVar3 + 0x19c) = 100;
+  }
+  if ((DAT_83581038 == '\0') ||
+     (iVar5 = G_SpawnInt(0x321,0xffffffff8203248c,iVar3 + 0x1a4), iVar5 == 0)) {
+    uVar6 = BG_GetDamage(*(undefined4 *)(iVar3 + 200),0);
+    *(undefined4 *)(iVar3 + 0x1a4) = uVar6;
+  }
+  if (*(int *)(iVar3 + 0x1a4) < 0) {
+    *(int *)(iVar3 + 0x1a4) = 0;
+  }
+  if ((DAT_83581038 == '\0') ||
+     (iVar5 = G_SpawnFloat(0x322,0xffffffff82032490,_Dst + 0x38), iVar5 == 0)) {
+    *(undefined4 *)(_Dst + 0x38) = *(undefined4 *)(iVar8 + 0x640);
+  }
+  if ((double)*(float *)(_Dst + 0x38) < dVar14) {
+    *(float *)(_Dst + 0x38) = (float)dVar14;
+  }
+  _Dst[0x3c] = '\0';
+  _Dst[0x3d] = '\0';
+  _Dst[0x3e] = '\0';
+  _Dst[0x3f] = '\0';
+  _Dst[0x70] = -1;
+  _Dst[0x71] = -1;
+  _Dst[0x72] = -1;
+  _Dst[0x73] = -1;
+  _Dst[4] = '\0';
+  _Dst[5] = '\0';
+  _Dst[6] = '\0';
+  _Dst[7] = '\0';
+  _Dst[0x74] = '\0';
+  _Dst[0x75] = '\0';
+  _Dst[0x76] = '\0';
+  _Dst[0x77] = '\0';
+  _Dst[0x68] = '\0';
+  _Dst[0x69] = '\0';
+  _Dst[0x6a] = '\0';
+  _Dst[0x6b] = '\0';
+  *(undefined4 *)(iVar3 + 0x18c) = 1;
+  *(undefined4 *)(iVar3 + 0x11c) = 0x200000;
+  *(undefined1 *)(iVar3 + 0x102) = 0;
+  *(undefined4 *)(iVar3 + 4) = 0xb;
+  *(undefined4 *)(iVar3 + 0xd8) = 0xff;
+  *(uint *)(iVar3 + 0x184) = *(uint *)(iVar3 + 0x184) | 0x1000;
+  *(float *)(iVar3 + 0x104) = (float)dVar14;
+  *(float *)(iVar3 + 0x108) = (float)dVar14;
+  *(undefined4 *)(iVar3 + 0x10c) = 0x41e00000;
+  *(undefined4 *)(iVar3 + 0x110) = 0x42000000;
+  *(undefined4 *)(iVar3 + 0x114) = 0x42000000;
+  *(undefined4 *)(iVar3 + 0x118) = 0x41e00000;
+  G_SetOrigin(iVar3,iVar3 + 0x138);
+  G_SetAngle(iVar3,iVar3 + 0x144);
+  *(float *)(iVar3 + 0x54) = (float)dVar14;
+  *(float *)(iVar3 + 0x58) = (float)dVar14;
+  *(float *)(iVar3 + 0x5c) = (float)dVar14;
+  if (param_3 != 0) {
+    *(undefined4 *)(iVar3 + 0x54) = *(undefined4 *)(_Dst + 0x1c);
+  }
+  *(float *)(_Dst + 0xb4) = (float)dVar14;
+  *(float *)(_Dst + 0xac) = (float)dVar14;
+  _Dst[0xb8] = '\0';
+  _Dst[0xb9] = '\0';
+  _Dst[0xba] = '\x03';
+  _Dst[0xbb] = -0x18;
+  _Dst[0xb0] = '\0';
+  _Dst[0xb1] = '\0';
+  _Dst[0xb2] = '\0';
+  _Dst[0xb3] = '\0';
+  _Dst[0xbc] = '\0';
+  _Dst[0xbd] = '\0';
+  _Dst[0xbe] = '\0';
+  _Dst[0xbf] = '\0';
+  *(undefined1 *)(iVar3 + 0x16d) = 0xe;
+  iVar8 = DAT_83580fac + 0x32;
+  *(undefined4 *)(iVar3 + 0x30) = 3;
+  *(undefined1 *)(iVar3 + 0x16b) = 0;
+  *(int *)(iVar3 + 0x198) = iVar8;
+  if (*(int *)(iVar3 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff820813d8,0xe36,0,0xffffffff82000f98,0xffffffff8208191c);
+  }
+  *(undefined4 *)(iVar3 + 0x78) = 0x7ff;
+  uVar4 = (uint)*(ushort *)(iVar3 + 0x150);
+  if ((uVar4 != 0) && ((&DAT_83373503)[uVar4 * 0x280] == '\0')) {
+    MyAssertHandler(0xffffffff8206b6f8,0x186,0,0xffffffff8206b6b0,0xffffffff8206b6c8,uVar4 - 1);
+  }
+  if (*(short *)(iVar3 + 0x150) != 0) {
+    MyAssertHandler(0xffffffff820813d8,0x107f,0,0xffffffff82000f98,0xffffffff820819f8);
+  }
+  G_DObjUpdate(iVar3,1);
+  __restgprlr_22();
+  return;
+}
+
 
 // 824C3248  SP_turret  (game/turret.cpp:4233)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SP_turret(undefined8 param_1)
+
+{
+  int iVar1;
+  undefined4 local_20 [4];
+  
+  iVar1 = G_LevelSpawnString(0x324,0xffffffff820068af,local_20);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff82081b2c);
+  }
+  G_SpawnTurret(param_1,local_20[0],0);
+  return;
+}
+

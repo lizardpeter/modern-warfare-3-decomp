@@ -2,107 +2,105 @@
 
 // 828C3A58  PassthruProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codectypes.c:76)
 
-undefined4 PassthruProcess(CODEC_PROCESSOR *param_1,ulong param_2)
+void PassthruProcess(undefined8 param_1,ulonglong param_2)
 
 {
-  XMEDIAPACKET *pXVar1;
+  int *piVar1;
   int iVar2;
-  PACKET_CONTEXT *pPVar3;
-  PACKET_CONTEXT *pPVar4;
-  undefined4 uVar5;
-  uint uVar6;
-  int *piVar7;
-  uint uVar8;
-  undefined8 uVar9;
-  int iVar10;
-  ulonglong uVar11;
-  int *piVar12;
-  uint uVar13;
-  longlong lVar14;
+  int iVar3;
+  int *piVar4;
+  uint uVar5;
+  int *piVar6;
+  uint uVar7;
+  undefined8 uVar8;
+  int iVar9;
+  int *piVar10;
+  uint uVar11;
+  longlong lVar12;
   int local_70 [28];
   
-  uVar11 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_21(param_1);
-  pPVar4 = *(PACKET_CONTEXT **)(*(int *)(iVar2 + 4) + 8);
-  iVar10 = 0;
-  uVar9 = 1;
-  lVar14 = 2;
-  piVar12 = local_70;
-  piVar7 = (int *)(iVar2 + 8);
+  iVar2 = __savegprlr_21();
+  piVar4 = *(int **)(*(int *)(iVar2 + 4) + 8);
+  iVar9 = 0;
+  uVar8 = 1;
+  lVar12 = 2;
+  piVar10 = local_70;
+  piVar6 = (int *)(iVar2 + 8);
   do {
-    if (*piVar7 == 0) {
-      *piVar12 = 0;
+    if (*piVar6 == 0) {
+      *piVar10 = 0;
     }
     else {
-      if (piVar7[2] == 1) {
-        *piVar12 = *(int *)(*piVar7 + 8);
+      if (piVar6[2] == 1) {
+        *piVar10 = *(int *)(*piVar6 + 8);
       }
       else {
-        *piVar12 = 0;
+        *piVar10 = 0;
       }
-      if (*piVar12 != 0) {
-        iVar10 = iVar10 + 1;
+      if (*piVar10 != 0) {
+        iVar9 = iVar9 + 1;
       }
     }
-    piVar7 = piVar7 + 1;
-    piVar12 = piVar12 + 1;
-    lVar14 = lVar14 + -1;
-  } while (lVar14 != 0);
-  if ((pPVar4 != (PACKET_CONTEXT *)0x0) && (iVar10 != 0)) {
-    uVar9 = 0;
-    while ((((uVar11 & 0xffffffff) != 0 && (uVar11 = uVar11 - 1, pPVar4 != (PACKET_CONTEXT *)0x0))
-           && (iVar10 != 0))) {
-      piVar7 = local_70;
-      lVar14 = 2;
-      uVar13 = pPVar4->Packet->Length - pPVar4->Packet->Offset;
+    piVar6 = piVar6 + 1;
+    piVar10 = piVar10 + 1;
+    lVar12 = lVar12 + -1;
+  } while (lVar12 != 0);
+  if ((piVar4 != (int *)0x0) && (iVar9 != 0)) {
+    uVar8 = 0;
+    while ((((param_2 & 0xffffffff) != 0 && (param_2 = param_2 - 1, piVar4 != (int *)0x0)) &&
+           (iVar9 != 0))) {
+      piVar6 = local_70;
+      lVar12 = 2;
+      uVar11 = *(int *)(*piVar4 + 0xc) - *(int *)(*piVar4 + 4);
       do {
-        piVar12 = (int *)*piVar7;
-        if ((piVar12 != (int *)0x0) &&
-           ((uint)(*(int *)(*piVar12 + 0xc) - *(int *)(*piVar12 + 4)) <= uVar13)) {
-          uVar13 = *(int *)(*piVar12 + 0xc) - *(int *)(*piVar12 + 4);
+        piVar10 = (int *)*piVar6;
+        if ((piVar10 != (int *)0x0) &&
+           ((uint)(*(int *)(*piVar10 + 0xc) - *(int *)(*piVar10 + 4)) <= uVar11)) {
+          uVar11 = *(int *)(*piVar10 + 0xc) - *(int *)(*piVar10 + 4);
         }
-        piVar7 = piVar7 + 1;
-        lVar14 = lVar14 + -1;
-      } while (lVar14 != 0);
-      piVar12 = local_70;
-      lVar14 = 2;
-      piVar7 = (int *)(iVar2 + 8);
+        piVar6 = piVar6 + 1;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      piVar10 = local_70;
+      lVar12 = 2;
+      piVar6 = (int *)(iVar2 + 8);
       do {
-        pPVar3 = (PACKET_CONTEXT *)*piVar12;
-        if (pPVar3 != (PACKET_CONTEXT *)0x0) {
-          memcpy();
-          pXVar1 = pPVar3->Packet;
-          uVar6 = pXVar1->Offset + uVar13;
-          uVar8 = pXVar1->Length;
-          if (uVar6 < pXVar1->Length) {
-            uVar8 = uVar6;
+        piVar1 = (int *)*piVar10;
+        if (piVar1 != (int *)0x0) {
+          memcpy((void *)(*(int *)(*piVar1 + 8) + *(int *)(*piVar1 + 4)),
+                 (void *)(*(int *)(*piVar4 + 8) + *(int *)(*piVar4 + 4)),uVar11);
+          iVar3 = *piVar1;
+          uVar5 = *(int *)(iVar3 + 4) + uVar11;
+          uVar7 = *(uint *)(iVar3 + 0xc);
+          if (uVar5 < *(uint *)(iVar3 + 0xc)) {
+            uVar7 = uVar5;
           }
-          pXVar1->Offset = uVar8;
-          if (uVar8 == pPVar3->Packet->Length) {
-            pPVar3 = PacketProcessorRetireContext((PACKET_PROCESSOR *)*piVar7,pPVar3);
-            *piVar12 = (int)pPVar3;
-            if (pPVar3 == (PACKET_CONTEXT *)0x0) {
-              iVar10 = iVar10 + -1;
+          *(uint *)(iVar3 + 4) = uVar7;
+          if (uVar7 == *(uint *)(*piVar1 + 0xc)) {
+            iVar3 = PacketProcessorRetireContext(*piVar6,piVar1);
+            *piVar10 = iVar3;
+            if (iVar3 == 0) {
+              iVar9 = iVar9 + -1;
             }
           }
         }
-        lVar14 = lVar14 + -1;
-        piVar7 = piVar7 + 1;
-        piVar12 = piVar12 + 1;
-      } while (lVar14 != 0);
-      pXVar1 = pPVar4->Packet;
-      uVar13 = pXVar1->Offset + uVar13;
-      uVar8 = pXVar1->Length;
-      if (uVar13 < pXVar1->Length) {
-        uVar8 = uVar13;
+        lVar12 = lVar12 + -1;
+        piVar6 = piVar6 + 1;
+        piVar10 = piVar10 + 1;
+      } while (lVar12 != 0);
+      iVar3 = *piVar4;
+      uVar11 = *(int *)(iVar3 + 4) + uVar11;
+      uVar7 = *(uint *)(iVar3 + 0xc);
+      if (uVar11 < *(uint *)(iVar3 + 0xc)) {
+        uVar7 = uVar11;
       }
-      pXVar1->Offset = uVar8;
-      if (uVar8 == pPVar4->Packet->Length) {
-        pPVar4 = PacketProcessorRetireContext(*(PACKET_PROCESSOR **)(iVar2 + 4),pPVar4);
+      *(uint *)(iVar3 + 4) = uVar7;
+      if (uVar7 == *(uint *)(*piVar4 + 0xc)) {
+        piVar4 = (int *)PacketProcessorRetireContext(*(undefined4 *)(iVar2 + 4),piVar4);
       }
     }
   }
-  uVar5 = __restgprlr_21(uVar9);
-  return uVar5;
+  __restgprlr_21(uVar8);
+  return;
 }
 

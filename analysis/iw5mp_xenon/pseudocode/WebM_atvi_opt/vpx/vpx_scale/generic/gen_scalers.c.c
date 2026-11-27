@@ -2,7 +2,7 @@
 
 // 8283F7B8  vp8cx_horizontal_line_4_5_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:48)
 
-void vp8cx_horizontal_line_4_5_scale_c(uchar *param_1,uint param_2,uchar *param_3,uint param_4)
+void vp8cx_horizontal_line_4_5_scale_c(byte *param_1,longlong param_2,byte *param_3)
 
 {
   byte bVar1;
@@ -11,8 +11,8 @@ void vp8cx_horizontal_line_4_5_scale_c(uchar *param_1,uint param_2,uchar *param_
   byte *pbVar4;
   longlong lVar5;
   
-  if ((longlong)(int)param_2 != 4) {
-    lVar5 = (((longlong)(int)param_2 - 5U & 0xffffffff) >> 2) + 1;
+  if (param_2 != 4) {
+    lVar5 = ((param_2 - 5U & 0xffffffff) >> 2) + 1;
     do {
       bVar1 = *param_1;
       bVar2 = param_1[1];
@@ -44,28 +44,33 @@ void vp8cx_horizontal_line_4_5_scale_c(uchar *param_1,uint param_2,uchar *param_
 
 // 8283F8B8  vp8cx_vertical_band_4_5_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:105)
 
-void vp8cx_vertical_band_4_5_scale_c(uchar *param_1,uint param_2,uint param_3)
+void vp8cx_vertical_band_4_5_scale_c(byte *param_1,ulonglong param_2,ulonglong param_3)
 
 {
   byte bVar1;
   byte bVar2;
   byte bVar3;
-  longlong lVar4;
+  int iVar4;
+  int iVar5;
+  int iVar6;
   
-  lVar4 = (longlong)(int)param_3;
-  if (param_3 != 0) {
+  if ((param_3 & 0xffffffff) != 0) {
+    iVar6 = (int)((param_2 & 0xffffffff) << 1);
+    iVar5 = (int)param_2;
+    iVar4 = iVar5 + (int)((param_2 & 0xffffffff) << 1);
     do {
-      bVar1 = param_1[param_2];
-      param_1[param_2] = (byte)((ulonglong)*param_1 * 0x33 + (ulonglong)bVar1 * 0xcd + 0x80 >> 8);
-      bVar2 = param_1[param_2 * 3];
-      bVar3 = param_1[param_2 * 2];
-      param_1[param_2 * 2] = (byte)((ulonglong)bVar1 * 0x66 + (ulonglong)bVar3 * 0x9a + 0x80 >> 8);
-      param_1[param_2 * 3] = (byte)((ulonglong)bVar2 * 0x66 + (ulonglong)bVar3 * 0x9a + 0x80 >> 8);
-      param_1[param_2 * 4] =
-           (byte)((ulonglong)param_1[param_2 * 5] * 0x33 + (ulonglong)bVar2 * 0xcd + 0x80 >> 8);
+      bVar1 = param_1[iVar5];
+      param_1[iVar5] = (byte)((ulonglong)*param_1 * 0x33 + (ulonglong)bVar1 * 0xcd + 0x80 >> 8);
+      bVar2 = param_1[iVar4];
+      bVar3 = param_1[iVar6];
+      param_1[iVar6] = (byte)((ulonglong)bVar1 * 0x66 + (ulonglong)bVar3 * 0x9a + 0x80 >> 8);
+      param_1[iVar4] = (byte)((ulonglong)bVar2 * 0x66 + (ulonglong)bVar3 * 0x9a + 0x80 >> 8);
+      param_1[(int)((param_2 & 0xffffffff) << 2)] =
+           (byte)((ulonglong)param_1[iVar5 + (int)((param_2 & 0xffffffff) << 2)] * 0x33 +
+                  (ulonglong)bVar2 * 0xcd + 0x80 >> 8);
       param_1 = param_1 + 1;
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      param_3 = param_3 - 1;
+    } while (param_3 != 0);
   }
   return;
 }
@@ -73,36 +78,40 @@ void vp8cx_vertical_band_4_5_scale_c(uchar *param_1,uint param_2,uint param_3)
 
 // 8283F968  vp8cx_last_vertical_band_4_5_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:152)
 
-void vp8cx_last_vertical_band_4_5_scale_c(uchar *param_1,uint param_2,uint param_3)
+void vp8cx_last_vertical_band_4_5_scale_c(byte *param_1,ulonglong param_2,ulonglong param_3)
 
 {
   byte bVar1;
   byte bVar2;
   byte bVar3;
-  longlong lVar4;
+  int iVar4;
+  int iVar5;
+  int iVar6;
   
-  lVar4 = (longlong)(int)param_3;
-  if (param_3 == 0) {
+  if ((param_3 & 0xffffffff) == 0) {
     return;
   }
+  iVar6 = (int)((param_2 & 0xffffffff) << 1);
+  iVar5 = (int)param_2;
+  iVar4 = iVar5 + (int)((param_2 & 0xffffffff) << 1);
   do {
-    bVar1 = param_1[param_2];
-    param_1[param_2] = (byte)((ulonglong)*param_1 * 0x33 + (ulonglong)bVar1 * 0xcd + 0x80 >> 8);
-    bVar2 = param_1[param_2 * 3];
-    bVar3 = param_1[param_2 * 2];
-    param_1[param_2 * 2] = (byte)((ulonglong)bVar1 * 0x66 + (ulonglong)bVar3 * 0x9a + 0x80 >> 8);
-    param_1[param_2 * 3] = (byte)((ulonglong)bVar2 * 0x66 + (ulonglong)bVar3 * 0x9a + 0x80 >> 8);
-    param_1[param_2 * 4] = bVar2;
+    bVar1 = param_1[iVar5];
+    param_1[iVar5] = (byte)((ulonglong)*param_1 * 0x33 + (ulonglong)bVar1 * 0xcd + 0x80 >> 8);
+    bVar2 = param_1[iVar4];
+    bVar3 = param_1[iVar6];
+    param_1[iVar6] = (byte)((ulonglong)bVar1 * 0x66 + (ulonglong)bVar3 * 0x9a + 0x80 >> 8);
+    param_1[iVar4] = (byte)((ulonglong)bVar2 * 0x66 + (ulonglong)bVar3 * 0x9a + 0x80 >> 8);
+    param_1[(int)((param_2 & 0xffffffff) << 2)] = bVar2;
     param_1 = param_1 + 1;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    param_3 = param_3 - 1;
+  } while (param_3 != 0);
   return;
 }
 
 
 // 8283F9F0  vp8cx_horizontal_line_2_3_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:204)
 
-void vp8cx_horizontal_line_2_3_scale_c(uchar *param_1,uint param_2,uchar *param_3,uint param_4)
+void vp8cx_horizontal_line_2_3_scale_c(byte *param_1,longlong param_2,byte *param_3)
 
 {
   byte bVar1;
@@ -110,8 +119,8 @@ void vp8cx_horizontal_line_2_3_scale_c(uchar *param_1,uint param_2,uchar *param_
   byte bVar3;
   longlong lVar4;
   
-  if ((longlong)(int)param_2 != 2) {
-    lVar4 = (((longlong)(int)param_2 - 3U & 0xffffffff) >> 1) + 1;
+  if (param_2 != 2) {
+    lVar4 = ((param_2 - 3U & 0xffffffff) >> 1) + 1;
     do {
       bVar1 = *param_1;
       bVar2 = param_1[1];
@@ -135,39 +144,38 @@ void vp8cx_horizontal_line_2_3_scale_c(uchar *param_1,uint param_2,uchar *param_
 
 // 8283FA88  vp8cx_vertical_band_2_3_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:254)
 
-void vp8cx_vertical_band_2_3_scale_c(uchar *param_1,uint param_2,uint param_3)
+void vp8cx_vertical_band_2_3_scale_c(byte *param_1,ulonglong param_2,ulonglong param_3)
 
 {
   byte bVar1;
   byte bVar2;
-  longlong lVar3;
+  int iVar3;
   
-  lVar3 = (longlong)(int)param_3;
-  if (param_3 == 0) {
+  if ((param_3 & 0xffffffff) == 0) {
     return;
   }
+  iVar3 = (int)param_2;
   do {
-    bVar1 = param_1[param_2];
-    bVar2 = param_1[param_2 * 3];
-    param_1[param_2] = (byte)((ulonglong)*param_1 * 0x55 + (ulonglong)bVar1 * 0xab + 0x80 >> 8);
-    param_1[param_2 * 2] = (byte)((ulonglong)bVar2 * 0x55 + (ulonglong)bVar1 * 0xab + 0x80 >> 8);
+    bVar1 = param_1[iVar3];
+    bVar2 = param_1[iVar3 + (int)((param_2 & 0xffffffff) << 1)];
+    param_1[iVar3] = (byte)((ulonglong)*param_1 * 0x55 + (ulonglong)bVar1 * 0xab + 0x80 >> 8);
+    param_1[(int)((param_2 & 0xffffffff) << 1)] =
+         (byte)((ulonglong)bVar2 * 0x55 + (ulonglong)bVar1 * 0xab + 0x80 >> 8);
     param_1 = param_1 + 1;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
+    param_3 = param_3 - 1;
+  } while (param_3 != 0);
   return;
 }
 
 
 // 8283FAE8  vp8cx_last_vertical_band_2_3_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:292)
 
-void vp8cx_last_vertical_band_2_3_scale_c(uchar *param_1,uint param_2,uint param_3)
+void vp8cx_last_vertical_band_2_3_scale_c(byte *param_1,int param_2,ulonglong param_3)
 
 {
   byte bVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)(int)param_3;
-  if (param_3 == 0) {
+  if ((param_3 & 0xffffffff) == 0) {
     return;
   }
   do {
@@ -175,15 +183,15 @@ void vp8cx_last_vertical_band_2_3_scale_c(uchar *param_1,uint param_2,uint param
     param_1[param_2] = (byte)((ulonglong)*param_1 * 0x55 + (ulonglong)bVar1 * 0xab + 0x80 >> 8);
     param_1[param_2 * 2] = bVar1;
     param_1 = param_1 + 1;
-    lVar2 = lVar2 + -1;
-  } while (lVar2 != 0);
+    param_3 = param_3 - 1;
+  } while (param_3 != 0);
   return;
 }
 
 
 // 8283FB30  vp8cx_horizontal_line_3_5_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:335)
 
-void vp8cx_horizontal_line_3_5_scale_c(uchar *param_1,uint param_2,uchar *param_3,uint param_4)
+void vp8cx_horizontal_line_3_5_scale_c(byte *param_1,longlong param_2,byte *param_3)
 
 {
   byte bVar1;
@@ -192,8 +200,8 @@ void vp8cx_horizontal_line_3_5_scale_c(uchar *param_1,uint param_2,uchar *param_
   ulonglong uVar4;
   longlong lVar5;
   
-  if ((longlong)(int)param_2 != 3) {
-    lVar5 = ((longlong)(int)param_2 - 4U & 0xffffffff) / 3 + 1;
+  if (param_2 != 3) {
+    lVar5 = (param_2 - 4U & 0xffffffff) / 3 + 1;
     do {
       bVar1 = *param_1;
       uVar4 = (ulonglong)param_1[1];
@@ -223,26 +231,30 @@ void vp8cx_horizontal_line_3_5_scale_c(uchar *param_1,uint param_2,uchar *param_
 
 // 8283FC38  vp8cx_vertical_band_3_5_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:393)
 
-void vp8cx_vertical_band_3_5_scale_c(uchar *param_1,uint param_2,uint param_3)
+void vp8cx_vertical_band_3_5_scale_c(byte *param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  longlong lVar3;
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   
-  lVar3 = (longlong)(int)param_3;
-  if (param_3 != 0) {
+  if ((param_3 & 0xffffffff) != 0) {
+    iVar2 = (int)((param_2 & 0xffffffff) << 1);
+    iVar1 = (int)param_2;
     do {
-      uVar1 = (ulonglong)param_1[param_2];
-      param_1[param_2] = (byte)((ulonglong)*param_1 * 0x66 + uVar1 * 0x9a + 0x80 >> 8);
-      uVar2 = (ulonglong)param_1[param_2 * 2];
-      param_1[param_2 * 2] = (byte)(uVar1 * 0xcd + uVar2 * 0x33 + 0x80 >> 8);
-      param_1[param_2 * 3] = (byte)(uVar2 * 0xcd + uVar1 * 0x33 + 0x80 >> 8);
-      param_1[param_2 * 4] =
-           (byte)((ulonglong)param_1[param_2 * 5] * 0x66 + uVar2 * 0x9a + 0x80 >> 8);
+      uVar3 = (ulonglong)param_1[iVar1];
+      param_1[iVar1] = (byte)((ulonglong)*param_1 * 0x66 + uVar3 * 0x9a + 0x80 >> 8);
+      uVar4 = (ulonglong)param_1[iVar2];
+      param_1[iVar2] = (byte)(uVar3 * 0xcd + uVar4 * 0x33 + 0x80 >> 8);
+      param_1[iVar1 + (int)((param_2 & 0xffffffff) << 1)] =
+           (byte)(uVar4 * 0xcd + uVar3 * 0x33 + 0x80 >> 8);
+      param_1[(int)((param_2 & 0xffffffff) << 2)] =
+           (byte)((ulonglong)param_1[iVar1 + (int)((param_2 & 0xffffffff) << 2)] * 0x66 +
+                  uVar4 * 0x9a + 0x80 >> 8);
       param_1 = param_1 + 1;
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      param_3 = param_3 - 1;
+    } while (param_3 != 0);
   }
   return;
 }
@@ -250,25 +262,28 @@ void vp8cx_vertical_band_3_5_scale_c(uchar *param_1,uint param_2,uint param_3)
 
 // 8283FCF0  vp8cx_last_vertical_band_3_5_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:437)
 
-void vp8cx_last_vertical_band_3_5_scale_c(uchar *param_1,uint param_2,uint param_3)
+void vp8cx_last_vertical_band_3_5_scale_c(byte *param_1,ulonglong param_2,ulonglong param_3)
 
 {
   byte bVar1;
-  ulonglong uVar2;
-  longlong lVar3;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
   
-  lVar3 = (longlong)(int)param_3;
-  if (param_3 != 0) {
+  if ((param_3 & 0xffffffff) != 0) {
+    iVar3 = (int)((param_2 & 0xffffffff) << 1);
+    iVar2 = (int)param_2;
     do {
-      uVar2 = (ulonglong)param_1[param_2];
-      param_1[param_2] = (byte)((ulonglong)*param_1 * 0x66 + uVar2 * 0x9a + 0x80 >> 8);
-      bVar1 = param_1[param_2 * 2];
-      param_1[param_2 * 2] = (byte)(uVar2 * 0xcd + (ulonglong)bVar1 * 0x33 + 0x80 >> 8);
-      param_1[param_2 * 3] = (byte)((ulonglong)bVar1 * 0xcd + uVar2 * 0x33 + 0x80 >> 8);
-      param_1[param_2 * 4] = bVar1;
+      uVar4 = (ulonglong)param_1[iVar2];
+      param_1[iVar2] = (byte)((ulonglong)*param_1 * 0x66 + uVar4 * 0x9a + 0x80 >> 8);
+      bVar1 = param_1[iVar3];
+      param_1[iVar3] = (byte)(uVar4 * 0xcd + (ulonglong)bVar1 * 0x33 + 0x80 >> 8);
+      param_1[iVar2 + (int)((param_2 & 0xffffffff) << 1)] =
+           (byte)((ulonglong)bVar1 * 0xcd + uVar4 * 0x33 + 0x80 >> 8);
+      param_1[(int)((param_2 & 0xffffffff) << 2)] = bVar1;
       param_1 = param_1 + 1;
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      param_3 = param_3 - 1;
+    } while (param_3 != 0);
   }
   return;
 }
@@ -276,7 +291,7 @@ void vp8cx_last_vertical_band_3_5_scale_c(uchar *param_1,uint param_2,uint param
 
 // 8283FD80  vp8cx_horizontal_line_3_4_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:487)
 
-void vp8cx_horizontal_line_3_4_scale_c(uchar *param_1,uint param_2,uchar *param_3,uint param_4)
+void vp8cx_horizontal_line_3_4_scale_c(byte *param_1,longlong param_2,byte *param_3)
 
 {
   byte bVar1;
@@ -284,8 +299,8 @@ void vp8cx_horizontal_line_3_4_scale_c(uchar *param_1,uint param_2,uchar *param_
   byte *pbVar3;
   longlong lVar4;
   
-  if ((longlong)(int)param_2 != 3) {
-    lVar4 = ((longlong)(int)param_2 - 4U & 0xffffffff) / 3 + 1;
+  if (param_2 != 3) {
+    lVar4 = (param_2 - 4U & 0xffffffff) / 3 + 1;
     do {
       bVar1 = param_1[1];
       bVar2 = *param_1;
@@ -313,80 +328,87 @@ void vp8cx_horizontal_line_3_4_scale_c(uchar *param_1,uint param_2,uchar *param_
 
 // 8283FE48  vp8cx_vertical_band_3_4_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:542)
 
-void vp8cx_vertical_band_3_4_scale_c(uchar *param_1,uint param_2,uint param_3)
+void vp8cx_vertical_band_3_4_scale_c(byte *param_1,ulonglong param_2,ulonglong param_3)
 
 {
   byte bVar1;
   byte bVar2;
-  longlong lVar3;
+  int iVar3;
+  int iVar4;
   
-  lVar3 = (longlong)(int)param_3;
-  if (param_3 == 0) {
+  if ((param_3 & 0xffffffff) == 0) {
     return;
   }
+  iVar4 = (int)((param_2 & 0xffffffff) << 1);
+  iVar3 = (int)param_2;
   do {
-    bVar1 = param_1[param_2];
-    param_1[param_2] = (byte)((ulonglong)bVar1 * 3 + (ulonglong)*param_1 + 2 >> 2);
-    bVar2 = param_1[param_2 * 2];
-    param_1[param_2 * 2] = (byte)((ulonglong)bVar2 + (ulonglong)bVar1 + 1 >> 1);
-    param_1[param_2 * 3] = (byte)((ulonglong)param_1[param_2 * 4] + (ulonglong)bVar2 * 3 + 2 >> 2);
+    bVar1 = param_1[iVar3];
+    param_1[iVar3] = (byte)((ulonglong)bVar1 * 3 + (ulonglong)*param_1 + 2 >> 2);
+    bVar2 = param_1[iVar4];
+    param_1[iVar4] = (byte)((ulonglong)bVar2 + (ulonglong)bVar1 + 1 >> 1);
+    param_1[iVar3 + (int)((param_2 & 0xffffffff) << 1)] =
+         (byte)((ulonglong)param_1[(int)((param_2 & 0xffffffff) << 2)] + (ulonglong)bVar2 * 3 + 2 >>
+               2);
     param_1 = param_1 + 1;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
+    param_3 = param_3 - 1;
+  } while (param_3 != 0);
   return;
 }
 
 
 // 8283FEC8  vp8cx_last_vertical_band_3_4_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:585)
 
-void vp8cx_last_vertical_band_3_4_scale_c(uchar *param_1,uint param_2,uint param_3)
+ulonglong vp8cx_last_vertical_band_3_4_scale_c
+                    (ulonglong param_1,ulonglong param_2,ulonglong param_3)
 
 {
   byte bVar1;
   byte bVar2;
-  longlong lVar3;
+  byte *pbVar3;
+  int iVar4;
+  int iVar5;
   
-  lVar3 = (longlong)(int)param_3;
-  if (param_3 == 0) {
-    return;
+  if ((param_3 & 0xffffffff) == 0) {
+    return param_1;
   }
+  iVar5 = (int)((param_2 & 0xffffffff) << 1);
+  iVar4 = (int)param_2;
   do {
-    bVar1 = param_1[param_2];
-    param_1[param_2] = (byte)((ulonglong)bVar1 * 3 + (ulonglong)*param_1 + 2 >> 2);
-    bVar2 = param_1[param_2 * 2];
-    param_1[param_2 * 2] = (byte)((ulonglong)bVar2 + (ulonglong)bVar1 + 1 >> 1);
-    param_1[param_2 * 3] = bVar2;
+    pbVar3 = (byte *)param_1;
+    bVar1 = pbVar3[iVar4];
+    pbVar3[iVar4] = (byte)((ulonglong)bVar1 * 3 + (ulonglong)*pbVar3 + 2 >> 2);
+    bVar2 = pbVar3[iVar5];
+    pbVar3[iVar5] = (byte)((ulonglong)bVar2 + (ulonglong)bVar1 + 1 >> 1);
+    pbVar3[iVar4 + (int)((param_2 & 0xffffffff) << 1)] = bVar2;
     param_1 = param_1 + 1;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  return;
+    param_3 = param_3 - 1;
+  } while (param_3 != 0);
+  return (ulonglong)bVar2;
 }
 
 
 // 8283FF30  vp8cx_horizontal_line_1_2_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:633)
 
-void vp8cx_horizontal_line_1_2_scale_c(uchar *param_1,uint param_2,uchar *param_3,uint param_4)
+void vp8cx_horizontal_line_1_2_scale_c(byte *param_1,longlong param_2,byte *param_3)
 
 {
   byte bVar1;
   byte bVar2;
-  longlong lVar3;
-  int iVar4;
-  byte *pbVar5;
+  int iVar3;
+  byte *pbVar4;
   
-  lVar3 = (longlong)(int)param_2;
-  iVar4 = 0;
-  pbVar5 = param_1;
-  while (lVar3 = lVar3 + -1, lVar3 != 0) {
-    bVar1 = *pbVar5;
-    pbVar5 = pbVar5 + 1;
-    bVar2 = param_1[iVar4 + 1];
-    iVar4 = iVar4 + 1;
+  iVar3 = 0;
+  pbVar4 = param_1;
+  while (param_2 = param_2 + -1, param_2 != 0) {
+    bVar1 = *pbVar4;
+    pbVar4 = pbVar4 + 1;
+    bVar2 = param_1[iVar3 + 1];
+    iVar3 = iVar3 + 1;
     *param_3 = bVar1;
     param_3[1] = (byte)((ulonglong)bVar2 + (ulonglong)bVar1 + 1 >> 1);
     param_3 = param_3 + 2;
   }
-  bVar1 = *pbVar5;
+  bVar1 = *pbVar4;
   *param_3 = bVar1;
   param_3[1] = bVar1;
   return;
@@ -395,18 +417,16 @@ void vp8cx_horizontal_line_1_2_scale_c(uchar *param_1,uint param_2,uchar *param_
 
 // 8283FF90  vp8cx_vertical_band_1_2_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:676)
 
-void vp8cx_vertical_band_1_2_scale_c(uchar *param_1,uint param_2,uint param_3)
+void vp8cx_vertical_band_1_2_scale_c(byte *param_1,int param_2,longlong param_3)
 
 {
   byte bVar1;
   byte *pbVar2;
   int iVar3;
   byte *pbVar4;
-  longlong lVar5;
   
-  lVar5 = (longlong)(int)param_3;
   iVar3 = 0;
-  if (param_3 == 0) {
+  if ((int)param_3 == 0) {
     return;
   }
   pbVar4 = param_1;
@@ -414,39 +434,37 @@ void vp8cx_vertical_band_1_2_scale_c(uchar *param_1,uint param_2,uint param_3)
     bVar1 = *pbVar4;
     pbVar2 = pbVar4 + param_2 * 2;
     pbVar4 = pbVar4 + 1;
-    param_1[iVar3 + param_2] = (uchar)((ulonglong)*pbVar2 + (ulonglong)bVar1 + 1 >> 1);
+    param_1[iVar3 + param_2] = (byte)((ulonglong)*pbVar2 + (ulonglong)bVar1 + 1 >> 1);
     iVar3 = iVar3 + 1;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
+    param_3 = param_3 + -1;
+  } while (param_3 != 0);
   return;
 }
 
 
 // 8283FFD8  vp8cx_last_vertical_band_1_2_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:713)
 
-void vp8cx_last_vertical_band_1_2_scale_c(uchar *param_1,uint param_2,uint param_3)
+void vp8cx_last_vertical_band_1_2_scale_c(int param_1,int param_2,longlong param_3)
 
 {
   int iVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)(int)param_3;
   iVar1 = 0;
-  if (param_3 != 0) {
-    do {
-      param_1[iVar1 + param_2] = param_1[iVar1];
-      iVar1 = iVar1 + 1;
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+  if ((int)param_3 == 0) {
     return;
   }
+  do {
+    *(undefined1 *)(param_1 + param_2 + iVar1) = *(undefined1 *)(iVar1 + param_1);
+    iVar1 = iVar1 + 1;
+    param_3 = param_3 + -1;
+  } while (param_3 != 0);
   return;
 }
 
 
 // 82840000  vp8cx_horizontal_line_5_4_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:754)
 
-void vp8cx_horizontal_line_5_4_scale_c(uchar *param_1,uint param_2,uchar *param_3,uint param_4)
+void vp8cx_horizontal_line_5_4_scale_c(int param_1,int param_2,int param_3)
 
 {
   byte bVar1;
@@ -454,13 +472,13 @@ void vp8cx_horizontal_line_5_4_scale_c(uchar *param_1,uint param_2,uchar *param_
   byte bVar3;
   byte bVar4;
   longlong lVar5;
-  uchar *puVar6;
-  uchar *puVar7;
+  undefined1 *puVar6;
+  undefined1 *puVar7;
   
   if (param_2 != 0) {
-    puVar6 = param_3 + -1;
-    puVar7 = param_1 + -5;
-    lVar5 = ((longlong)(int)param_2 - 1U & 0xffffffff) / 5 + 1;
+    puVar6 = (undefined1 *)(param_3 + -1);
+    puVar7 = (undefined1 *)(param_1 + -5);
+    lVar5 = (ulonglong)(param_2 - 1) / 5 + 1;
     do {
       bVar1 = puVar7[6];
       bVar2 = puVar7[9];
@@ -468,10 +486,10 @@ void vp8cx_horizontal_line_5_4_scale_c(uchar *param_1,uint param_2,uchar *param_
       bVar4 = puVar7[8];
       puVar7 = puVar7 + 5;
       puVar6[1] = *puVar7;
-      puVar6[2] = (uchar)((ulonglong)bVar1 * 3 + (ulonglong)bVar3 + 2 >> 2);
-      puVar6[3] = (uchar)((ulonglong)bVar4 + (ulonglong)bVar3 + 1 >> 1);
+      puVar6[2] = (char)((ulonglong)bVar1 * 3 + (ulonglong)bVar3 + 2 >> 2);
+      puVar6[3] = (char)((ulonglong)bVar4 + (ulonglong)bVar3 + 1 >> 1);
       puVar6 = puVar6 + 4;
-      *puVar6 = (uchar)((ulonglong)bVar2 * 3 + (ulonglong)bVar4 + 2 >> 2);
+      *puVar6 = (char)((ulonglong)bVar2 * 3 + (ulonglong)bVar4 + 2 >> 2);
       lVar5 = lVar5 + -1;
     } while (lVar5 != 0);
   }
@@ -482,43 +500,39 @@ void vp8cx_horizontal_line_5_4_scale_c(uchar *param_1,uint param_2,uchar *param_
 // 828400A8  vp8cx_vertical_band_5_4_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:784)
 
 void vp8cx_vertical_band_5_4_scale_c
-               (uchar *param_1,uint param_2,uchar *param_3,uint param_4,uint param_5)
+               (undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4,ulonglong param_5
+               )
 
 {
   byte bVar1;
   byte bVar2;
   byte bVar3;
   byte bVar4;
-  uchar *puVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uchar *puVar8;
-  int iVar9;
-  ulonglong uVar10;
+  undefined1 *puVar5;
+  undefined1 *puVar6;
+  undefined1 *puVar7;
+  int iVar8;
   
-  uVar10 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  puVar5 = (uchar *)__savegprlr_23(param_1);
-  iVar9 = 0;
-  if ((uVar10 & 0xffffffff) != 0) {
-    puVar8 = puVar5;
+  puVar6 = (undefined1 *)__savegprlr_23();
+  iVar8 = 0;
+  if ((param_5 & 0xffffffff) != 0) {
+    puVar7 = puVar6;
     do {
-      bVar1 = puVar5[iVar9 + (int)uVar6];
-      bVar2 = puVar8[(int)((uVar6 & 0xffffffff) << 2)];
-      iVar9 = iVar9 + 1;
-      bVar3 = puVar8[(int)((uVar6 & 0xffffffff) << 1)];
-      bVar4 = puVar8[(int)uVar6 + (int)((uVar6 & 0xffffffff) << 1)];
-      param_3[(int)puVar8 - (int)puVar5] = *puVar8;
-      param_3[(int)(puVar8 + ((int)uVar7 - (int)puVar5))] =
-           (uchar)((ulonglong)bVar1 * 3 + (ulonglong)bVar3 + 2 >> 2);
-      param_3[(int)(puVar8 + ((int)((uVar7 & 0xffffffff) << 1) - (int)puVar5))] =
-           (uchar)((ulonglong)bVar4 + (ulonglong)bVar3 + 1 >> 1);
-      param_3[(int)(puVar8 + (((int)uVar7 + (int)((uVar7 & 0xffffffff) << 1)) - (int)puVar5))] =
-           (uchar)((ulonglong)bVar2 * 3 + (ulonglong)bVar4 + 2 >> 2);
-      uVar10 = uVar10 - 1;
-      puVar8 = puVar8 + 1;
-    } while (uVar10 != 0);
+      bVar1 = puVar6[iVar8 + (int)param_2];
+      puVar5 = puVar7 + (param_3 - (int)puVar6);
+      bVar2 = puVar7[(int)((param_2 & 0xffffffff) << 2)];
+      iVar8 = iVar8 + 1;
+      bVar3 = puVar7[(int)((param_2 & 0xffffffff) << 1)];
+      bVar4 = puVar7[(int)param_2 + (int)((param_2 & 0xffffffff) << 1)];
+      puVar7[param_3 - (int)puVar6] = *puVar7;
+      puVar5[(int)param_4] = (char)((ulonglong)bVar1 * 3 + (ulonglong)bVar3 + 2 >> 2);
+      puVar5[(int)((param_4 & 0xffffffff) << 1)] =
+           (char)((ulonglong)bVar4 + (ulonglong)bVar3 + 1 >> 1);
+      puVar7 = puVar7 + 1;
+      puVar5[(int)param_4 + (int)((param_4 & 0xffffffff) << 1)] =
+           (char)((ulonglong)bVar2 * 3 + (ulonglong)bVar4 + 2 >> 2);
+      param_5 = param_5 - 1;
+    } while (param_5 != 0);
   }
   __restgprlr_23();
   return;
@@ -527,7 +541,7 @@ void vp8cx_vertical_band_5_4_scale_c
 
 // 82840158  vp8cx_horizontal_line_5_3_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:838)
 
-void vp8cx_horizontal_line_5_3_scale_c(uchar *param_1,uint param_2,uchar *param_3,uint param_4)
+void vp8cx_horizontal_line_5_3_scale_c(int param_1,int param_2,int param_3)
 
 {
   byte bVar1;
@@ -535,15 +549,15 @@ void vp8cx_horizontal_line_5_3_scale_c(uchar *param_1,uint param_2,uchar *param_
   byte bVar3;
   byte bVar4;
   longlong lVar5;
-  uchar *puVar6;
-  uchar *puVar7;
+  undefined1 *puVar6;
+  undefined1 *puVar7;
   
   if (param_2 == 0) {
     return;
   }
-  puVar6 = param_3 + -1;
-  puVar7 = param_1 + -5;
-  lVar5 = ((longlong)(int)param_2 - 1U & 0xffffffff) / 5 + 1;
+  puVar6 = (undefined1 *)(param_3 + -1);
+  puVar7 = (undefined1 *)(param_1 + -5);
+  lVar5 = (ulonglong)(param_2 - 1) / 5 + 1;
   do {
     bVar1 = puVar7[6];
     bVar2 = puVar7[7];
@@ -551,9 +565,9 @@ void vp8cx_horizontal_line_5_3_scale_c(uchar *param_1,uint param_2,uchar *param_
     bVar4 = puVar7[9];
     puVar7 = puVar7 + 5;
     puVar6[1] = *puVar7;
-    puVar6[2] = (uchar)((ulonglong)bVar2 * 0xab + (ulonglong)bVar1 * 0x55 + 0x80 >> 8);
+    puVar6[2] = (char)((ulonglong)bVar2 * 0xab + (ulonglong)bVar1 * 0x55 + 0x80 >> 8);
     puVar6 = puVar6 + 3;
-    *puVar6 = (uchar)((ulonglong)bVar3 * 0xab + (ulonglong)bVar4 * 0x55 + 0x80 >> 8);
+    *puVar6 = (char)((ulonglong)bVar3 * 0xab + (ulonglong)bVar4 * 0x55 + 0x80 >> 8);
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
   return;
@@ -563,41 +577,37 @@ void vp8cx_horizontal_line_5_3_scale_c(uchar *param_1,uint param_2,uchar *param_
 // 828401D0  vp8cx_vertical_band_5_3_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:865)
 
 void vp8cx_vertical_band_5_3_scale_c
-               (uchar *param_1,uint param_2,uchar *param_3,uint param_4,uint param_5)
+               (undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4,ulonglong param_5
+               )
 
 {
   byte bVar1;
   byte bVar2;
   byte bVar3;
   byte bVar4;
-  uchar *puVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  uchar *puVar9;
-  ulonglong uVar10;
+  undefined1 *puVar5;
+  undefined1 *puVar6;
+  int iVar7;
+  undefined1 *puVar8;
   
-  uVar10 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  puVar5 = (uchar *)__savegprlr_26(param_1);
-  iVar8 = 0;
-  if ((uVar10 & 0xffffffff) != 0) {
-    puVar9 = puVar5;
+  puVar6 = (undefined1 *)__savegprlr_26();
+  iVar7 = 0;
+  if ((param_5 & 0xffffffff) != 0) {
+    puVar8 = puVar6;
     do {
-      bVar1 = puVar5[iVar8 + (int)uVar6];
-      bVar2 = puVar9[(int)uVar6 + (int)((uVar6 & 0xffffffff) << 1)];
-      iVar8 = iVar8 + 1;
-      bVar3 = puVar9[(int)((uVar6 & 0xffffffff) << 1)];
-      bVar4 = puVar9[(int)((uVar6 & 0xffffffff) << 2)];
-      param_3[(int)puVar9 - (int)puVar5] = *puVar9;
-      param_3[(int)(puVar9 + ((int)uVar7 - (int)puVar5))] =
-           (uchar)((ulonglong)bVar3 * 0xab + (ulonglong)bVar1 * 0x55 + 0x80 >> 8);
-      param_3[(int)(puVar9 + ((int)((uVar7 & 0xffffffff) << 1) - (int)puVar5))] =
-           (uchar)((ulonglong)bVar2 * 0xab + (ulonglong)bVar4 * 0x55 + 0x80 >> 8);
-      uVar10 = uVar10 - 1;
-      puVar9 = puVar9 + 1;
-    } while (uVar10 != 0);
+      bVar1 = puVar6[iVar7 + (int)param_2];
+      puVar5 = puVar8 + (param_3 - (int)puVar6);
+      bVar2 = puVar8[(int)param_2 + (int)((param_2 & 0xffffffff) << 1)];
+      iVar7 = iVar7 + 1;
+      bVar3 = puVar8[(int)((param_2 & 0xffffffff) << 1)];
+      bVar4 = puVar8[(int)((param_2 & 0xffffffff) << 2)];
+      puVar8[param_3 - (int)puVar6] = *puVar8;
+      puVar5[(int)param_4] = (char)((ulonglong)bVar3 * 0xab + (ulonglong)bVar1 * 0x55 + 0x80 >> 8);
+      puVar8 = puVar8 + 1;
+      puVar5[(int)((param_4 & 0xffffffff) << 1)] =
+           (char)((ulonglong)bVar2 * 0xab + (ulonglong)bVar4 * 0x55 + 0x80 >> 8);
+      param_5 = param_5 - 1;
+    } while (param_5 != 0);
   }
   __restgprlr_26();
   return;
@@ -606,19 +616,19 @@ void vp8cx_vertical_band_5_3_scale_c
 
 // 82840268  vp8cx_horizontal_line_2_1_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:916)
 
-void vp8cx_horizontal_line_2_1_scale_c(uchar *param_1,uint param_2,uchar *param_3,uint param_4)
+void vp8cx_horizontal_line_2_1_scale_c(int param_1,uint param_2,int param_3)
 
 {
   longlong lVar1;
-  uchar *puVar2;
-  uchar *puVar3;
+  undefined1 *puVar2;
+  undefined1 *puVar3;
   
   if (param_2 == 0) {
     return;
   }
-  puVar3 = param_1 + -2;
-  puVar2 = param_3 + -1;
-  lVar1 = (((longlong)(int)param_2 - 1U & 0xffffffff) >> 1) + 1;
+  puVar3 = (undefined1 *)(param_1 + -2);
+  puVar2 = (undefined1 *)(param_3 + -1);
+  lVar1 = (((ulonglong)param_2 - 1 & 0xffffffff) >> 1) + 1;
   do {
     puVar3 = puVar3 + 2;
     puVar2 = puVar2 + 1;
@@ -631,36 +641,37 @@ void vp8cx_horizontal_line_2_1_scale_c(uchar *param_1,uint param_2,uchar *param_
 
 // 82840298  vp8cx_vertical_band_2_1_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:936)
 
-void vp8cx_vertical_band_2_1_scale_c
-               (uchar *param_1,uint param_2,uchar *param_3,uint param_4,uint param_5)
+void * vp8cx_vertical_band_2_1_scale_c
+                 (void *param_1,undefined8 param_2,void *param_3,undefined8 param_4,size_t param_5)
 
 {
-  vpx_memcpy(param_3,param_1,param_5);
-  return;
+  void *pvVar1;
+  
+  pvVar1 = vpx_memcpy(param_3,param_1,param_5);
+  return pvVar1;
 }
 
 
 // 828402B0  vp8cx_vertical_band_2_1_scale_i_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:943)
 
 void vp8cx_vertical_band_2_1_scale_i_c
-               (uchar *param_1,uint param_2,uchar *param_3,uint param_4,uint param_5)
+               (int param_1,int param_2,int param_3,undefined8 param_4,longlong param_5)
 
 {
   int iVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)(int)param_5;
   iVar1 = 0;
   if ((int)param_5 < 1) {
     return;
   }
   do {
-    param_3[iVar1] =
-         (uchar)((int)(((uint)param_1[iVar1 - param_2] + (uint)param_1[iVar1 + param_2]) * 3 +
-                       (uint)param_1[iVar1] * 10 + 8) >> 4);
+    *(char *)(iVar1 + param_3) =
+         (char)((int)(((uint)*(byte *)((param_1 - param_2) + iVar1) +
+                      (uint)*(byte *)(param_1 + param_2 + iVar1)) * 3 +
+                      (uint)*(byte *)(param_1 + iVar1) * 10 + 8) >> 4);
     iVar1 = iVar1 + 1;
-    lVar2 = lVar2 + -1;
-  } while (lVar2 != 0);
+    param_5 = param_5 + -1;
+  } while (param_5 != 0);
   return;
 }
 

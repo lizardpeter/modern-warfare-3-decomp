@@ -2,61 +2,58 @@
 
 // 8293ECF0  `dynamic_initializer_for_'s_DWSubscriptionTask''  (social/commerce_xbox.cpp:53)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__s_DWSubscriptionTask__(void)
+int _dynamic_initializer_for__s_DWSubscriptionTask__(void)
 
 {
-  s_DWSubscriptionTask[0].m_ptr = (bdRemoteTask *)0x0;
-  s_DWSubscriptionTask[1].m_ptr = (bdRemoteTask *)0x0;
-  s_DWSubscriptionTask[2].m_ptr = (bdRemoteTask *)0x0;
-  s_DWSubscriptionTask[3].m_ptr = (bdRemoteTask *)0x0;
-  atexit(_dynamic_atexit_destructor_for__s_DWSubscriptionTask__);
-  return;
+  int iVar1;
+  
+  DAT_844f9f40 = 0;
+  DAT_844f9f44 = 0;
+  DAT_844f9f48 = 0;
+  DAT_844f9f4c = 0;
+  iVar1 = atexit(_dynamic_atexit_destructor_for__s_DWSubscriptionTask__);
+  return iVar1;
 }
 
 
 // 8293ED28  `dynamic_initializer_for_'s_DWSubscriptionInfo''  (social/commerce_xbox.cpp:56)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__s_DWSubscriptionInfo__(void)
+int _dynamic_initializer_for__s_DWSubscriptionInfo__(void)
 
 {
-  bdSubscriptionInfo (*this) [100];
-  longlong lVar1;
+  int iVar1;
+  longlong lVar2;
+  longlong lVar3;
   
-  lVar1 = 399;
-  this = s_DWSubscriptionInfo;
+  lVar3 = 399;
+  lVar2 = -0x7bb092c0;
   do {
-    bdSubscriptionInfo::bdSubscriptionInfo(*this);
-    lVar1 = lVar1 + -1;
-    this = (bdSubscriptionInfo (*) [100])((int)this + 0x20);
-  } while (-1 < lVar1);
-  atexit(_dynamic_atexit_destructor_for__s_DWSubscriptionInfo__);
-  return;
+    bdSubscriptionInfo__bdSubscriptionInfo(lVar2);
+    lVar3 = lVar3 + -1;
+    lVar2 = lVar2 + 0x20;
+  } while (-1 < lVar3);
+  iVar1 = atexit(_dynamic_atexit_destructor_for__s_DWSubscriptionInfo__);
+  return iVar1;
 }
 
 
 // 8293ED80  `dynamic_initializer_for_'s_DWSubscriptionUploadTask''  (social/commerce_xbox.cpp:64)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__s_DWSubscriptionUploadTask__(void)
+int _dynamic_initializer_for__s_DWSubscriptionUploadTask__(void)
 
 {
-  s_DWSubscriptionUploadTask[0].m_ptr = (bdRemoteTask *)0x0;
-  s_DWSubscriptionUploadTask[1].m_ptr = (bdRemoteTask *)0x0;
-  s_DWSubscriptionUploadTask[2].m_ptr = (bdRemoteTask *)0x0;
-  s_DWSubscriptionUploadTask[3].m_ptr = (bdRemoteTask *)0x0;
-  atexit(_dynamic_atexit_destructor_for__s_DWSubscriptionUploadTask__);
-  return;
+  int iVar1;
+  
+  DAT_844f6d2c = 0;
+  DAT_844f6d30 = 0;
+  DAT_844f6d34 = 0;
+  DAT_844f6d38 = 0;
+  iVar1 = atexit(_dynamic_atexit_destructor_for__s_DWSubscriptionUploadTask__);
+  return iVar1;
 }
 
 
 // 826F4C78  Commerce_Shutdown  (social/commerce_xbox.cpp:71)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Commerce_Shutdown(void)
 
@@ -72,7 +69,7 @@ void Commerce_Shutdown(void)
   __savegprlr_28();
   iVar5 = 0;
   do {
-    uVar1 = *(uint *)((int)&s_DWSubscriptionTask[0].m_ptr + iVar5);
+    uVar1 = *(uint *)((int)&DAT_844f9f40 + iVar5);
     if (uVar1 != 0) {
       if (uVar1 != 0) {
         do {
@@ -84,15 +81,15 @@ void Commerce_Shutdown(void)
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
         if (*(int *)(uVar1 + 4) == 0) {
-          puVar2 = *(undefined4 **)((int)&s_DWSubscriptionTask[0].m_ptr + iVar5);
+          puVar2 = *(undefined4 **)((int)&DAT_844f9f40 + iVar5);
           if (puVar2 != (undefined4 *)0x0) {
             (**(code **)*puVar2)(puVar2,1);
           }
         }
       }
-      *(undefined4 *)((int)&s_DWSubscriptionTask[0].m_ptr + iVar5) = 0;
+      *(undefined4 *)((int)&DAT_844f9f40 + iVar5) = 0;
     }
-    uVar1 = *(uint *)((int)&s_DWSubscriptionUploadTask[0].m_ptr + iVar5);
+    uVar1 = *(uint *)((int)&DAT_844f6d2c + iVar5);
     if (uVar1 != 0) {
       if (uVar1 != 0) {
         do {
@@ -104,13 +101,13 @@ void Commerce_Shutdown(void)
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
         if (*(int *)(uVar1 + 4) == 0) {
-          puVar2 = *(undefined4 **)((int)&s_DWSubscriptionUploadTask[0].m_ptr + iVar5);
+          puVar2 = *(undefined4 **)((int)&DAT_844f6d2c + iVar5);
           if (puVar2 != (undefined4 *)0x0) {
             (**(code **)*puVar2)(puVar2,1);
           }
         }
       }
-      *(undefined4 *)((int)&s_DWSubscriptionUploadTask[0].m_ptr + iVar5) = 0;
+      *(undefined4 *)((int)&DAT_844f6d2c + iVar5) = 0;
     }
     iVar5 = iVar5 + 4;
   } while (iVar5 < 0x10);
@@ -121,70 +118,70 @@ void Commerce_Shutdown(void)
 
 // 826F4D80  Commerce_UserSignedOut  (social/commerce_xbox.cpp:84)
 
-void Commerce_UserSignedOut(int param_1)
+void Commerce_UserSignedOut(void)
 
 {
-  bdRemoteTask *pbVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  undefined4 *puVar2;
+  uint uVar3;
   int iVar4;
-  longlong lVar5;
-  uint *puVar6;
+  int iVar5;
+  longlong lVar6;
+  uint *puVar7;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar3 = __savegprlr_28(param_1);
-  if ((s_DWSubscriptionTask[iVar3].m_ptr != (bdRemoteTask *)0x0) &&
-     (iVar4 = (**(code **)((s_DWSubscriptionTask[iVar3].m_ptr)->_padding_ + 4))(), iVar4 == 1)) {
-    bdRemoteTask::cancelTask(s_DWSubscriptionTask[iVar3].m_ptr);
+  iVar4 = __savegprlr_28();
+  if (((int *)(&DAT_844f9f40)[iVar4] != (int *)0x0) &&
+     (iVar5 = (**(code **)(*(int *)(&DAT_844f9f40)[iVar4] + 4))(), iVar5 == 1)) {
+    bdRemoteTask__cancelTask((&DAT_844f9f40)[iVar4]);
   }
-  pbVar1 = s_DWSubscriptionTask[iVar3].m_ptr;
-  if (ZEXT48(pbVar1) != 0) {
-    lVar5 = ZEXT48(pbVar1) + 4;
+  uVar1 = (&DAT_844f9f40)[iVar4];
+  if ((ulonglong)uVar1 != 0) {
+    lVar6 = (ulonglong)uVar1 + 4;
     do {
-      puVar6 = (uint *)lVar5;
+      puVar7 = (uint *)lVar6;
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar5);
-        *puVar6 = uVar2;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar7 - 1,0,lVar6);
+        *puVar7 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (*(int *)&pbVar1->field_0x4 == 0) {
-      pbVar1 = s_DWSubscriptionTask[iVar3].m_ptr;
-      if (pbVar1 != (bdRemoteTask *)0x0) {
-        (**(code **)pbVar1->_padding_)(pbVar1,1);
+    if (*(int *)(uVar1 + 4) == 0) {
+      puVar2 = (undefined4 *)(&DAT_844f9f40)[iVar4];
+      if (puVar2 != (undefined4 *)0x0) {
+        (**(code **)*puVar2)(puVar2,1);
       }
     }
   }
-  s_DWSubscriptionTask[iVar3].m_ptr = (bdRemoteTask *)0x0;
-  if ((s_DWSubscriptionUploadTask[iVar3].m_ptr != (bdRemoteTask *)0x0) &&
-     (iVar4 = (**(code **)((s_DWSubscriptionUploadTask[iVar3].m_ptr)->_padding_ + 4))(), iVar4 == 1)
-     ) {
-    bdRemoteTask::cancelTask(s_DWSubscriptionUploadTask[iVar3].m_ptr);
+  (&DAT_844f9f40)[iVar4] = 0;
+  if (((int *)(&DAT_844f6d2c)[iVar4] != (int *)0x0) &&
+     (iVar5 = (**(code **)(*(int *)(&DAT_844f6d2c)[iVar4] + 4))(), iVar5 == 1)) {
+    bdRemoteTask__cancelTask((&DAT_844f6d2c)[iVar4]);
   }
-  pbVar1 = s_DWSubscriptionUploadTask[iVar3].m_ptr;
-  if (ZEXT48(pbVar1) != 0) {
-    lVar5 = ZEXT48(pbVar1) + 4;
+  uVar1 = (&DAT_844f6d2c)[iVar4];
+  if ((ulonglong)uVar1 != 0) {
+    lVar6 = (ulonglong)uVar1 + 4;
     do {
-      puVar6 = (uint *)lVar5;
+      puVar7 = (uint *)lVar6;
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar5);
-        *puVar6 = uVar2;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar7 - 1,0,lVar6);
+        *puVar7 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (*(int *)&pbVar1->field_0x4 == 0) {
-      pbVar1 = s_DWSubscriptionUploadTask[iVar3].m_ptr;
-      if (pbVar1 != (bdRemoteTask *)0x0) {
-        (**(code **)pbVar1->_padding_)(pbVar1,1);
+    if (*(int *)(uVar1 + 4) == 0) {
+      puVar2 = (undefined4 *)(&DAT_844f6d2c)[iVar4];
+      if (puVar2 != (undefined4 *)0x0) {
+        (**(code **)*puVar2)(puVar2,1);
       }
     }
   }
-  s_DWSubscriptionUploadTask[iVar3].m_ptr = (bdRemoteTask *)0x0;
-  s_DWSubscriptionAttempts[iVar3] = 0;
-  s_DWSubscriptionTaskStage[iVar3] = COMMERCE_SUBSCRIPTION_TASK_STAGE_ALL_DONE;
-  s_DWSubscriptionUploadTaskStage[iVar3] = COMMERCE_SUBSCRIPTION_TASK_STAGE_START_TASK;
-  *(undefined4 *)(&DAT_844f6cec + iVar3 * 4) = 0;
+  (&DAT_844f6d2c)[iVar4] = 0;
+  *(undefined4 *)(&DAT_844f6cfc + iVar4 * 4) = 0;
+  (&DAT_844f6d1c)[iVar4] = 2;
+  (&DAT_844f6d0c)[iVar4] = 0;
+  *(undefined4 *)(&DAT_844f6cec + iVar4 * 4) = 0;
   __restgprlr_28();
   return;
 }
@@ -192,293 +189,272 @@ void Commerce_UserSignedOut(int param_1)
 
 // 826F4598  Commerce_ShowStore  (social/commerce_xbox.cpp:106)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Commerce_ShowStore(int param_1)
+void Commerce_ShowStore(undefined8 param_1)
 
 {
-  bool bVar2;
-  LocalClientNum_t LVar1;
-  char acStack_50 [64];
+  char cVar2;
+  undefined8 uVar1;
+  undefined1 auStack_50 [64];
   
-  bVar2 = Live_IsUserSignedInToLive(param_1);
-  if ((bVar2) && (bVar2 = Live_UserIsGuest(param_1), !bVar2)) {
-    XShowMarketplaceUI(param_1,0,0,0xffffffff);
+  cVar2 = Live_IsUserSignedInToLive();
+  if ((cVar2 != '\0') && (cVar2 = Live_UserIsGuest(param_1), cVar2 == '\0')) {
+    XShowMarketplaceUI(param_1,0,0,0xffffffffffffffff);
     return;
   }
-  Com_SetErrorMessage("PLATFORM_COMMERCE_NO_ONLINE_ERROR");
-  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-  UI_OpenMenu(LVar1,"error_popmenu_party");
-  Com_sprintf(acStack_50,0x40,"xsigninlive %d");
-  Dvar_SetString(com_errorResolveCommand,acStack_50);
+  Com_SetErrorMessage(0xffffffff8208ba5c);
+  uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+  UI_OpenMenu(uVar1,0xffffffff82036918);
+  Com_sprintf(auStack_50,0x40,0xffffffff8218c670,param_1);
+  Dvar_SetString(DAT_8366735c,auStack_50);
   return;
 }
 
 
 // 826F4658  Commerce_LocalEliteSubscription  (social/commerce_xbox.cpp:126)
 
-ELITE_SUBSCRIPTION_LEVEL Commerce_LocalEliteSubscription(int param_1)
+byte Commerce_LocalEliteSubscription(undefined8 param_1)
 
 {
-  ulong uVar1;
+  undefined8 uVar1;
   int local_10 [4];
   
   uVar1 = XUserCheckPrivilege(param_1,0xdb,local_10);
-  if (uVar1 != 0) {
+  if ((int)uVar1 != 0) {
     local_10[0] = 0;
-    Com_Printf(0x10,"XUserCheckPrivilege for ELITE SUBSCRIPTION failed - error %x.\n");
-    return ELITE_SUBSCRIPTION_LEVEL_NONE;
+    Com_Printf(0x10,0xffffffff821ae9e8,uVar1);
+    return 0;
   }
-  return -(uint)(local_10[0] != 0) & ELITE_SUBSCRIPTION_LEVEL_PAYING;
+  return -(local_10[0] != 0) & 2;
 }
 
 
 // 826F46D0  Commerce_XUIDEliteSubscription  (social/commerce_xbox.cpp:151)
 
-ELITE_SUBSCRIPTION_LEVEL Commerce_XUIDEliteSubscription(int param_1,ulong64 param_2)
+ulonglong Commerce_XUIDEliteSubscription(int param_1,longlong param_2)
 
 {
   int iVar1;
+  int iVar2;
   
-  if (s_DWSubscriptionTaskStage[param_1] != COMMERCE_SUBSCRIPTION_TASK_STAGE_ALL_DONE) {
-    return ELITE_SUBSCRIPTION_LEVEL_UNKNOWN;
+  if ((&DAT_844f6d1c)[param_1] != 2) {
+    return 0xffffffffffffffff;
   }
-  iVar1 = 0;
-  if (0 < s_DWSubscriptionCount[param_1]) {
+  iVar2 = 0;
+  if (0 < *(int *)(&DAT_844f6ca8 + param_1 * 4)) {
     do {
-      if (s_DWSubscriptionInfo[param_1][iVar1].m_userID == param_2) {
-        return s_DWSubscriptionInfo[param_1][iVar1].m_subscriptionLevel;
+      iVar1 = (param_1 * 100 + iVar2) * 0x20;
+      if (*(longlong *)(&DAT_844f6d48 + iVar1) == param_2) {
+        return (ulonglong)*(uint *)(&DAT_844f6d54 + iVar1);
       }
-      iVar1 = iVar1 + 1;
-    } while (iVar1 < s_DWSubscriptionCount[param_1]);
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < *(int *)(&DAT_844f6ca8 + param_1 * 4));
   }
-  return ELITE_SUBSCRIPTION_LEVEL_NONE;
+  return 0;
 }
 
 
 // 826F4748  Commerce_FillIDsFromFriendPage  (social/commerce_xbox.cpp:172)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Commerce_FillIDsFromFriendPage(int param_1)
+void Commerce_FillIDsFromFriendPage(void)
 
 {
   uint uVar1;
   ulonglong uVar2;
-  int iVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  ulong64 *puVar7;
-  int *piVar8;
-  longlong lVar9;
+  char cVar3;
+  bool bVar6;
+  ulonglong uVar4;
+  longlong lVar5;
+  int iVar7;
+  undefined8 *puVar8;
+  longlong *plVar9;
   longlong lVar10;
-  ulong64 *puVar11;
-  ulonglong uVar12;
+  longlong lVar11;
+  longlong *plVar12;
   ulonglong uVar13;
-  LocalClientNum_t local_60 [24];
+  ulonglong uVar14;
+  undefined4 local_60 [24];
   
-  uVar2 = __savegprlr_23(param_1);
-  if ((subscription_download_count->current).integer < 3) {
-    s_subscriptionIDs[0] = *(ulong64 *)(&DAT_844f6cb8 + (int)((uVar2 & 0xffffffff) << 3));
-    iVar3 = __restgprlr_23(1);
-    return iVar3;
+  uVar2 = __savegprlr_23();
+  if (*(int *)(DAT_844f6ce8 + 0xc) < 3) {
+    DAT_844f6988 = *(undefined8 *)(&DAT_844f6cb8 + (int)((uVar2 & 0xffffffff) << 3));
+    __restgprlr_23(1);
+    return;
   }
-  bVar4 = CL_DoesControllerIndexHaveALocalClientNum((int)uVar2,local_60);
-  if (bVar4) {
-    uVar12 = 0;
-    bVar4 = Menu_IsMenuOpenAndVisible(local_60[0],"page_friends");
-    puVar11 = s_subscriptionIDs;
-    if (bVar4) {
-      uVar1 = g_friendListGlobal[(int)uVar2].count;
-      uVar12 = (ulonglong)uVar1;
+  cVar3 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,local_60);
+  if (cVar3 != '\0') {
+    uVar13 = 0;
+    cVar3 = Menu_IsMenuOpenAndVisible(local_60[0],0xffffffff82168568);
+    plVar12 = &DAT_844f6988;
+    if (cVar3 != '\0') {
+      uVar1 = *(uint *)(&DAT_84546e60 + (int)uVar2 * 0x670);
+      uVar13 = (ulonglong)uVar1;
       if (99 < (int)uVar1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\commerce_xbox.cpp",
-                        0xc0,0,"%s");
+        MyAssertHandler(0xffffffff821aea48,0xc0,0,0xffffffff82000f98,0xffffffff821aea28);
       }
-      if (*(int *)((int)s_DWSubscriptionAttempts + (int)((uVar2 & 0xffffffff) << 2)) != 0)
-      goto LAB_826f4aa8;
-      bVar4 = false;
-      lVar9 = 0;
+      if (*(int *)(&DAT_844f6cfc + (int)((uVar2 & 0xffffffff) << 2)) != 0) goto LAB_826f4aa8;
+      bVar6 = false;
+      lVar10 = 0;
       if (0 < (int)uVar1) {
-        puVar7 = puVar11;
+        plVar9 = plVar12;
         do {
-          if (*puVar7 !=
-              *(ulong64 *)
-               ((int)g_friendListGlobal[0].friends + (int)((uVar2 * 0xce + lVar9 & 0xffffffff) << 3)
-               )) {
-            bVar4 = true;
+          if (*plVar9 !=
+              *(longlong *)(&DAT_84546e68 + (int)((uVar2 * 0xce + lVar10 & 0xffffffff) << 3))) {
+            bVar6 = true;
             break;
           }
-          lVar9 = lVar9 + 1;
-          puVar7 = puVar7 + 1;
-        } while ((int)lVar9 < (int)uVar1);
+          lVar10 = lVar10 + 1;
+          plVar9 = plVar9 + 1;
+        } while ((int)lVar10 < (int)uVar1);
       }
-      if (!bVar4) goto LAB_826f47ac;
-      lVar9 = 0;
+      if (!bVar6) goto LAB_826f47ac;
+      lVar10 = 0;
       if (0 < (int)uVar1) {
-        piVar8 = &g_logSubscriber._padding_;
-        uVar13 = uVar12;
+        puVar8 = (undefined8 *)0x844f6980;
+        uVar14 = uVar13;
         do {
-          uVar5 = uVar2 * 0xce + lVar9;
-          lVar9 = lVar9 + 1;
-          piVar8 = piVar8 + 2;
-          *(undefined8 *)piVar8 =
-               *(undefined8 *)
-                ((int)g_friendListGlobal[0].friends + (int)((uVar5 & 0xffffffff) << 3));
-          uVar13 = uVar13 - 1;
-        } while (uVar13 != 0);
+          uVar4 = uVar2 * 0xce + lVar10;
+          lVar10 = lVar10 + 1;
+          puVar8 = puVar8 + 1;
+          *puVar8 = *(undefined8 *)(&DAT_84546e68 + (int)((uVar4 & 0xffffffff) << 3));
+          uVar14 = uVar14 - 1;
+        } while (uVar14 != 0);
       }
     }
-    bVar4 = Menu_IsMenuOpenAndVisible(local_60[0],"page_facebook");
-    if (bVar4) {
-      lVar9 = uVar2 * 0x70a0;
-      uVar1 = *(uint *)((int)(g_FacebookFriendStore[0].facebookFriends + 100) + (int)lVar9);
-      uVar12 = (ulonglong)uVar1;
+    cVar3 = Menu_IsMenuOpenAndVisible(local_60[0],0xffffffff82168540);
+    if (cVar3 != '\0') {
+      lVar10 = uVar2 * 0x70a0;
+      uVar1 = *(uint *)(&DAT_84525120 + (int)lVar10);
+      uVar13 = (ulonglong)uVar1;
       if (99 < (int)uVar1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\commerce_xbox.cpp",
-                        0xdd,0,"%s");
+        MyAssertHandler(0xffffffff821aea48,0xdd,0,0xffffffff82000f98,0xffffffff821aea28);
       }
-      if (*(int *)((int)s_DWSubscriptionAttempts + (int)((uVar2 & 0xffffffff) << 2)) != 0)
-      goto LAB_826f4aa8;
-      bVar4 = false;
-      iVar3 = 0;
+      if (*(int *)(&DAT_844f6cfc + (int)((uVar2 & 0xffffffff) << 2)) != 0) goto LAB_826f4aa8;
+      bVar6 = false;
+      iVar7 = 0;
       if (0 < (int)uVar1) {
-        lVar10 = 0;
-        lVar6 = lVar9;
-        puVar7 = puVar11;
+        lVar11 = 0;
+        lVar5 = lVar10;
+        plVar9 = plVar12;
         do {
-          if (*puVar7 !=
-              *(ulong64 *)(g_FacebookFriendStore[0].facebookFriends[0].m_userName + (int)lVar6 + -8)
-             ) {
-            bVar4 = true;
+          if (*plVar9 != *(longlong *)(&DAT_8451e130 + (int)lVar5)) {
+            bVar6 = true;
             break;
           }
-          iVar3 = iVar3 + 1;
-          lVar10 = lVar10 + 0x120;
-          puVar7 = puVar7 + 1;
-          lVar6 = lVar10 + lVar9;
-        } while (iVar3 < (int)uVar1);
+          iVar7 = iVar7 + 1;
+          lVar11 = lVar11 + 0x120;
+          plVar9 = plVar9 + 1;
+          lVar5 = lVar11 + lVar10;
+        } while (iVar7 < (int)uVar1);
       }
-      if (!bVar4) goto LAB_826f47ac;
+      if (!bVar6) goto LAB_826f47ac;
       if (0 < (int)uVar1) {
-        lVar10 = 0;
-        piVar8 = &g_logSubscriber._padding_;
-        lVar6 = lVar9;
-        uVar13 = uVar12;
+        lVar11 = 0;
+        puVar8 = (undefined8 *)0x844f6980;
+        lVar5 = lVar10;
+        uVar14 = uVar13;
         do {
-          lVar10 = lVar10 + 0x120;
-          iVar3 = (int)lVar6;
-          lVar6 = lVar10 + lVar9;
-          piVar8 = piVar8 + 2;
-          *(undefined8 *)piVar8 =
-               *(undefined8 *)(g_FacebookFriendStore[0].facebookFriends[0].m_userName + iVar3 + -8);
-          uVar13 = uVar13 - 1;
-        } while (uVar13 != 0);
+          lVar11 = lVar11 + 0x120;
+          iVar7 = (int)lVar5;
+          lVar5 = lVar11 + lVar10;
+          puVar8 = puVar8 + 1;
+          *puVar8 = *(undefined8 *)(&DAT_8451e130 + iVar7);
+          uVar14 = uVar14 - 1;
+        } while (uVar14 != 0);
       }
     }
-    bVar4 = Menu_IsMenuOpenAndVisible(local_60[0],"page_elite_clan");
-    if (bVar4) {
-      lVar9 = uVar2 * 0x66b8;
-      uVar1 = *(uint *)((int)(&g_EliteClanStore[0].publicProfile + 1) + (int)lVar9);
-      uVar12 = (ulonglong)uVar1;
+    cVar3 = Menu_IsMenuOpenAndVisible(local_60[0],0xffffffff82168530);
+    if (cVar3 != '\0') {
+      lVar10 = uVar2 * 0x66b8;
+      uVar1 = *(uint *)(&DAT_84500688 + (int)lVar10);
+      uVar13 = (ulonglong)uVar1;
       if (99 < (int)uVar1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\commerce_xbox.cpp",
-                        0xfa,0,"%s");
+        MyAssertHandler(0xffffffff821aea48,0xfa,0,0xffffffff82000f98,0xffffffff821aea28);
       }
-      if (*(int *)((int)s_DWSubscriptionAttempts + (int)((uVar2 & 0xffffffff) << 2)) == 0) {
-        bVar4 = false;
-        iVar3 = 0;
+      if (*(int *)(&DAT_844f6cfc + (int)((uVar2 & 0xffffffff) << 2)) == 0) {
+        bVar6 = false;
+        iVar7 = 0;
         if (0 < (int)uVar1) {
-          lVar10 = 0;
-          lVar6 = lVar9;
+          lVar11 = 0;
+          lVar5 = lVar10;
           do {
-            if (*puVar11 !=
-                *(ulong64 *)(g_EliteClanStore[0].members[0].m_userName + (int)lVar6 + -8)) {
-              bVar4 = true;
+            if (*plVar12 != *(longlong *)(&DAT_844fa060 + (int)lVar5)) {
+              bVar6 = true;
               break;
             }
-            iVar3 = iVar3 + 1;
-            lVar10 = lVar10 + 0x60;
-            puVar11 = puVar11 + 1;
-            lVar6 = lVar10 + lVar9;
-          } while (iVar3 < (int)uVar1);
+            iVar7 = iVar7 + 1;
+            lVar11 = lVar11 + 0x60;
+            plVar12 = plVar12 + 1;
+            lVar5 = lVar11 + lVar10;
+          } while (iVar7 < (int)uVar1);
         }
-        if (!bVar4) goto LAB_826f47ac;
+        if (!bVar6) goto LAB_826f47ac;
         if (0 < (int)uVar1) {
-          lVar10 = 0;
-          piVar8 = &g_logSubscriber._padding_;
-          lVar6 = lVar9;
-          uVar2 = uVar12;
+          lVar11 = 0;
+          puVar8 = (undefined8 *)0x844f6980;
+          lVar5 = lVar10;
+          uVar2 = uVar13;
           do {
-            lVar10 = lVar10 + 0x60;
-            iVar3 = (int)lVar6;
-            lVar6 = lVar10 + lVar9;
-            piVar8 = piVar8 + 2;
-            *(undefined8 *)piVar8 =
-                 *(undefined8 *)(g_EliteClanStore[0].members[0].m_userName + iVar3 + -8);
+            lVar11 = lVar11 + 0x60;
+            iVar7 = (int)lVar5;
+            lVar5 = lVar11 + lVar10;
+            puVar8 = puVar8 + 1;
+            *puVar8 = *(undefined8 *)(&DAT_844fa060 + iVar7);
             uVar2 = uVar2 - 1;
           } while (uVar2 != 0);
         }
       }
     }
 LAB_826f4aa8:
-    iVar3 = __restgprlr_23(uVar12);
-    return iVar3;
+    __restgprlr_23(uVar13);
+    return;
   }
 LAB_826f47ac:
-  iVar3 = __restgprlr_23(0xffffffffffffffff);
-  return iVar3;
+  __restgprlr_23(0xffffffffffffffff);
+  return;
 }
 
 
 // 826F4AB8  Commerce_Init  (social/commerce_xbox.cpp:281)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Commerce_Init(void)
 
 {
-  s_DWSubscriptionTaskStage[0] = COMMERCE_SUBSCRIPTION_TASK_STAGE_ALL_DONE;
-  s_DWSubscriptionUploadTaskStage[0] = COMMERCE_SUBSCRIPTION_TASK_STAGE_START_TASK;
-  s_DWSubscriptionTaskStage[1] = COMMERCE_SUBSCRIPTION_TASK_STAGE_ALL_DONE;
-  s_DWSubscriptionUploadTaskStage[1] = COMMERCE_SUBSCRIPTION_TASK_STAGE_START_TASK;
-  s_DWSubscriptionUploadTaskStage[2] = COMMERCE_SUBSCRIPTION_TASK_STAGE_START_TASK;
-  s_DWSubscriptionTaskStage[2] = COMMERCE_SUBSCRIPTION_TASK_STAGE_ALL_DONE;
-  s_DWSubscriptionUploadTaskStage[3] = COMMERCE_SUBSCRIPTION_TASK_STAGE_START_TASK;
-  s_DWSubscriptionTaskStage[3] = COMMERCE_SUBSCRIPTION_TASK_STAGE_ALL_DONE;
-  subscription_download_count =
-       Dvar_RegisterInt("subscription_download_count",0,0,100,0,
-                        "Count for the amount of times a player has used the friends vault in a session"
-                       );
+  DAT_844f6d1c = 2;
+  DAT_844f6d0c = 0;
+  DAT_844f6d20 = 2;
+  DAT_844f6d10 = 0;
+  DAT_844f6d14 = 0;
+  DAT_844f6d24 = 2;
+  DAT_844f6d18 = 0;
+  DAT_844f6d28 = 2;
+  DAT_844f6ce8 = Dvar_RegisterInt(0xffffffff821aeae0,0,0,100,0,0xffffffff821aea90);
   return;
 }
 
 
 // 826F4B40  Commerce_RetryUploading  (social/commerce_xbox.cpp:293)
 
-void Commerce_RetryUploading(int param_1)
+void Commerce_RetryUploading(void)
 
 {
-  dvar_t *pdVar1;
-  dvar_t *pdVar2;
+  int iVar1;
+  int iVar2;
   int iVar3;
-  uint uVar4;
+  int iVar4;
   int iVar5;
-  int iVar6;
   
-  iVar3 = __savegprlr_29(param_1);
-  pdVar2 = commerce_upload_retry_step;
-  pdVar1 = commerce_upload_max_retry_time;
-  iVar6 = iVar3 * 4;
-  iVar5 = *(int *)(&DAT_844f6cec + iVar6);
-  *(int *)(&DAT_844f6cec + iVar6) = iVar5 + 1;
-  uVar4 = Live_GenerateTimeToRetryInSeconds
-                    (((pdVar2->current).integer / 1000) * (iVar5 + 1),
-                     (pdVar1->current).integer / 1000);
-  iVar5 = Sys_Milliseconds();
-  s_DWSubscriptionUploadTaskStage[iVar3] = COMMERCE_SUBSCRIPTION_TASK_STAGE_START_TASK;
-  *(uint *)(&DAT_844f6cd8 + iVar6) = iVar5 + uVar4 * 1000;
+  iVar2 = __savegprlr_29();
+  iVar1 = DAT_84546d6c;
+  iVar4 = DAT_84545cb0;
+  iVar5 = iVar2 * 4;
+  iVar3 = *(int *)(&DAT_844f6cec + iVar5);
+  *(int *)(&DAT_844f6cec + iVar5) = iVar3 + 1;
+  iVar3 = Live_GenerateTimeToRetryInSeconds
+                    ((longlong)(*(int *)(iVar1 + 0xc) / 1000) * (longlong)(iVar3 + 1),
+                     *(int *)(iVar4 + 0xc) / 1000);
+  iVar4 = Sys_Milliseconds();
+  (&DAT_844f6d0c)[iVar2] = 0;
+  *(int *)(&DAT_844f6cd8 + iVar5) = iVar4 + iVar3 * 1000;
   __restgprlr_29();
   return;
 }
@@ -486,121 +462,117 @@ void Commerce_RetryUploading(int param_1)
 
 // 826F4EE8  Commerce_Update  (social/commerce_xbox.cpp:301)
 
-void Commerce_Update(int param_1)
+void Commerce_Update(void)
 
 {
-  bdRemoteTask *pbVar1;
-  int iVar2;
-  bdLobbyService *this;
-  Status SVar3;
+  int *piVar1;
   int iVar4;
-  bdLobbyErrorCode bVar5;
-  uint uVar6;
-  bdSubscription *pbVar7;
-  bdReference<bdRemoteTask> bVar8;
-  int *piVar9;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  undefined4 uVar8;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  undefined8 *puVar9;
   longlong lVar10;
-  bdReference<bdRemoteTask> abStack_50 [20];
+  undefined1 auStack_50 [80];
   
-  iVar2 = __savegprlr_24(param_1);
-  this = dwGetLobbyService(iVar2);
-  if ((this == (bdLobbyService *)0x0) ||
-     (SVar3 = bdLobbyService::getStatus(this), SVar3 != BD_CONNECTED)) goto LAB_826f51b8;
-  if (s_DWSubscriptionUploadTaskStage[iVar2] == COMMERCE_SUBSCRIPTION_TASK_STAGE_START_TASK) {
-    pbVar7 = dwGetSubscription(iVar2);
-    if ((pbVar7 != (bdSubscription *)0x0) &&
-       (iVar4 = Sys_Milliseconds(), *(int *)(&DAT_844f6cd8 + iVar2 * 4) < iVar4)) {
-      bVar8 = bdSubscription::refreshSubscriptionXBL((bdSubscription *)abStack_50);
-      bdReference<bdRemoteTask>::operator=
-                (s_DWSubscriptionUploadTask + iVar2,(bdReference<bdRemoteTask> *)bVar8.m_ptr);
-      bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_50);
-      pbVar1 = s_DWSubscriptionUploadTask[iVar2].m_ptr;
-      if ((pbVar1 == (bdRemoteTask *)0x0) ||
-         (iVar4 = (**(code **)(pbVar1->_padding_ + 4))(), iVar4 != 1)) {
+  iVar4 = __savegprlr_24();
+  iVar5 = dwGetLobbyService();
+  if ((iVar5 == 0) || (iVar5 = bdLobbyService__getStatus(), iVar5 != 2)) goto LAB_826f51b8;
+  iVar5 = iVar4 * 4;
+  if ((&DAT_844f6d0c)[iVar4] == 0) {
+    uVar2 = dwGetSubscription(iVar4);
+    if ((uVar2 & 0xffffffff) != 0) {
+      iVar6 = Sys_Milliseconds();
+      if (*(int *)(&DAT_844f6cd8 + iVar5) < iVar6) {
+        uVar3 = bdSubscription__refreshSubscriptionXBL(auStack_50,uVar2);
+        bdReference<bdRemoteTask>__operator_(&DAT_844f6d2c + iVar4,uVar3);
+        bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_50);
+        piVar1 = (int *)(&DAT_844f6d2c)[iVar4];
+        if ((piVar1 == (int *)0x0) || (iVar6 = (**(code **)(*piVar1 + 4))(), iVar6 != 1)) {
 LAB_826f5008:
-        Commerce_RetryUploading(iVar2);
-      }
-      else {
-        s_DWSubscriptionUploadTaskStage[iVar2] = COMMERCE_SUBSCRIPTION_TASK_STAGE_WORKING;
+          Commerce_RetryUploading(iVar4);
+        }
+        else {
+          (&DAT_844f6d0c)[iVar4] = 1;
+        }
       }
     }
   }
-  else if (s_DWSubscriptionUploadTaskStage[iVar2] == COMMERCE_SUBSCRIPTION_TASK_STAGE_WORKING) {
-    if (s_DWSubscriptionUploadTask[iVar2].m_ptr != (bdRemoteTask *)0x0) {
-      iVar4 = (**(code **)((s_DWSubscriptionUploadTask[iVar2].m_ptr)->_padding_ + 4))();
-      if (iVar4 == 1) goto LAB_826f51b8;
-      bVar5 = bdRemoteTask::getErrorCode(s_DWSubscriptionUploadTask[iVar2].m_ptr);
-      if ((iVar4 != 2) && (bVar5 != BD_SUBSCRIPTION_TICKET_PARSE_ERROR)) goto LAB_826f5008;
-      s_DWSubscriptionUploadTaskStage[iVar2] = COMMERCE_SUBSCRIPTION_TASK_STAGE_ALL_DONE;
+  else if ((&DAT_844f6d0c)[iVar4] == 1) {
+    if ((int *)(&DAT_844f6d2c)[iVar4] != (int *)0x0) {
+      iVar6 = (**(code **)(*(int *)(&DAT_844f6d2c)[iVar4] + 4))();
+      if (iVar6 == 1) goto LAB_826f51b8;
+      iVar7 = bdRemoteTask__getErrorCode((&DAT_844f6d2c)[iVar4]);
+      if ((iVar6 != 2) && (iVar7 != 0x1b59)) goto LAB_826f5008;
+      (&DAT_844f6d0c)[iVar4] = 2;
     }
   }
-  if (s_DWSubscriptionTaskStage[iVar2] == COMMERCE_SUBSCRIPTION_TASK_STAGE_START_TASK) {
-    pbVar7 = dwGetSubscription(iVar2);
-    if (pbVar7 != (bdSubscription *)0x0) {
-      uVar6 = Commerce_FillIDsFromFriendPage(iVar2);
-      if (0 < (int)uVar6) {
-        bVar8 = bdSubscription::getSubscriptionForUsers
-                          ((bdSubscription *)abStack_50,(ulong64 *)pbVar7,0x844f6988,uVar6,
-                           (bdSubscriptionInfo *)0x2,
-                           (bdSubscriptionFilter)(s_DWSubscriptionInfo + iVar2));
-        bdReference<bdRemoteTask>::operator=
-                  (s_DWSubscriptionTask + iVar2,(bdReference<bdRemoteTask> *)bVar8.m_ptr);
-        bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_50);
-        pbVar1 = s_DWSubscriptionTask[iVar2].m_ptr;
-        if ((pbVar1 != (bdRemoteTask *)0x0) &&
-           (iVar4 = (**(code **)(pbVar1->_padding_ + 4))(), iVar4 == 1)) {
-          s_DWSubscriptionTaskStage[iVar2] = COMMERCE_SUBSCRIPTION_TASK_STAGE_WORKING;
+  if ((&DAT_844f6d1c)[iVar4] == 0) {
+    uVar2 = dwGetSubscription(iVar4);
+    if ((uVar2 & 0xffffffff) != 0) {
+      uVar3 = Commerce_FillIDsFromFriendPage(iVar4);
+      if (0 < (int)uVar3) {
+        uVar3 = bdSubscription__getSubscriptionForUsers
+                          (auStack_50,uVar2,0xffffffff844f6988,uVar3,2,&DAT_844f6d40 + iVar4 * 0xc80
+                           ,0);
+        bdReference<bdRemoteTask>__operator_(&DAT_844f9f40 + iVar4,uVar3);
+        bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_50);
+        piVar1 = (int *)(&DAT_844f9f40)[iVar4];
+        if ((piVar1 != (int *)0x0) && (iVar6 = (**(code **)(*piVar1 + 4))(), iVar6 == 1)) {
+          (&DAT_844f6d1c)[iVar4] = 1;
           __restgprlr_24();
           return;
         }
-        iVar4 = s_DWSubscriptionAttempts[iVar2];
-        s_DWSubscriptionAttempts[iVar2] = iVar4 + 1;
-        if (iVar4 + 1 != 3) {
-          s_DWSubscriptionCount[iVar2] = 0;
+        iVar6 = *(int *)(&DAT_844f6cfc + iVar5);
+        *(int *)(&DAT_844f6cfc + iVar5) = iVar6 + 1;
+        if (iVar6 + 1 != 3) {
+          *(undefined4 *)(&DAT_844f6ca8 + iVar5) = 0;
           goto LAB_826f51b8;
         }
-        piVar9 = &g_logSubscriber._padding_;
+        puVar9 = (undefined8 *)0x844f6980;
         lVar10 = 100;
         do {
-          piVar9 = piVar9 + 2;
-          *(undefined8 *)piVar9 = 0;
+          puVar9 = puVar9 + 1;
+          *puVar9 = 0;
           lVar10 = lVar10 + -1;
         } while (lVar10 != 0);
-        s_DWSubscriptionCount[iVar2] = 0;
+        *(undefined4 *)(&DAT_844f6ca8 + iVar5) = 0;
       }
-      s_DWSubscriptionTaskStage[iVar2] = COMMERCE_SUBSCRIPTION_TASK_STAGE_ALL_DONE;
+      (&DAT_844f6d1c)[iVar4] = 2;
       __restgprlr_24();
       return;
     }
   }
-  else if (s_DWSubscriptionTaskStage[iVar2] == COMMERCE_SUBSCRIPTION_TASK_STAGE_WORKING) {
-    if (s_DWSubscriptionTask[iVar2].m_ptr != (bdRemoteTask *)0x0) {
-      iVar4 = (**(code **)((s_DWSubscriptionTask[iVar2].m_ptr)->_padding_ + 4))();
-      if (iVar4 != 1) {
-        if (iVar4 == 2) {
-          uVar6 = bdRemoteTask::getNumResults(s_DWSubscriptionTask[iVar2].m_ptr);
-          s_DWSubscriptionCount[iVar2] = uVar6;
-          s_DWSubscriptionTaskStage[iVar2] = COMMERCE_SUBSCRIPTION_TASK_STAGE_ALL_DONE;
+  else if ((&DAT_844f6d1c)[iVar4] == 1) {
+    if ((int *)(&DAT_844f9f40)[iVar4] != (int *)0x0) {
+      iVar6 = (**(code **)(*(int *)(&DAT_844f9f40)[iVar4] + 4))();
+      if (iVar6 != 1) {
+        if (iVar6 == 2) {
+          uVar8 = bdRemoteTask__getNumResults((&DAT_844f9f40)[iVar4]);
+          *(undefined4 *)(&DAT_844f6ca8 + iVar5) = uVar8;
+          (&DAT_844f6d1c)[iVar4] = 2;
           __restgprlr_24();
           return;
         }
-        iVar4 = s_DWSubscriptionAttempts[iVar2];
-        s_DWSubscriptionAttempts[iVar2] = iVar4 + 1;
-        if (iVar4 + 1 == 3) {
-          piVar9 = &g_logSubscriber._padding_;
+        iVar6 = *(int *)(&DAT_844f6cfc + iVar5);
+        *(int *)(&DAT_844f6cfc + iVar5) = iVar6 + 1;
+        if (iVar6 + 1 == 3) {
+          puVar9 = (undefined8 *)0x844f6980;
           lVar10 = 100;
           do {
-            piVar9 = piVar9 + 2;
-            *(undefined8 *)piVar9 = 0;
+            puVar9 = puVar9 + 1;
+            *puVar9 = 0;
             lVar10 = lVar10 + -1;
           } while (lVar10 != 0);
-          s_DWSubscriptionCount[iVar2] = 0;
-          s_DWSubscriptionTaskStage[iVar2] = COMMERCE_SUBSCRIPTION_TASK_STAGE_ALL_DONE;
+          *(undefined4 *)(&DAT_844f6ca8 + iVar5) = 0;
+          (&DAT_844f6d1c)[iVar4] = 2;
           __restgprlr_24();
           return;
         }
-        s_DWSubscriptionCount[iVar2] = 0;
-        s_DWSubscriptionTaskStage[iVar2] = COMMERCE_SUBSCRIPTION_TASK_STAGE_START_TASK;
+        *(undefined4 *)(&DAT_844f6ca8 + iVar5) = 0;
+        (&DAT_844f6d1c)[iVar4] = 0;
         __restgprlr_24();
         return;
       }
@@ -614,27 +586,26 @@ LAB_826f51b8:
 
 // 826F4BB8  Commerce_GetSubscriptionStatusFromDW  (social/commerce_xbox.cpp:451)
 
-void Commerce_GetSubscriptionStatusFromDW(int param_1,ulong64 param_2)
+void Commerce_GetSubscriptionStatusFromDW(undefined8 param_1,longlong param_2)
 
 {
   int iVar1;
   int iVar2;
   ulonglong uVar3;
-  int iVar4;
+  longlong lVar4;
   
-  uVar3 = __savegprlr_26(param_1);
+  uVar3 = __savegprlr_26();
   iVar1 = (int)((uVar3 & 0x3fffffff) << 2);
-  if (*(int *)((int)s_DWSubscriptionTaskStage + iVar1) != 2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\commerce_xbox.cpp",
-                    0x1c4,0,"%s");
+  if (*(int *)((int)&DAT_844f6d1c + iVar1) != 2) {
+    MyAssertHandler(0xffffffff821aea48,0x1c4,0,0xffffffff82000f98,0xffffffff821aeb00);
   }
   iVar2 = (int)((uVar3 & 0xffffffff) << 3);
-  if (*(ulong64 *)(&DAT_844f6cb8 + iVar2) != param_2) {
-    iVar4 = Dvar_GetInt("subscription_download_count");
-    Dvar_SetInt(subscription_download_count,iVar4 + 1);
-    *(ulong64 *)(&DAT_844f6cb8 + iVar2) = param_2;
-    *(undefined4 *)((int)s_DWSubscriptionTaskStage + iVar1) = 0;
-    *(undefined4 *)((int)s_DWSubscriptionAttempts + iVar1) = 0;
+  if (*(longlong *)(&DAT_844f6cb8 + iVar2) != param_2) {
+    lVar4 = Dvar_GetInt(0xffffffff821aeae0);
+    Dvar_SetInt(DAT_844f6ce8,lVar4 + 1);
+    *(longlong *)(&DAT_844f6cb8 + iVar2) = param_2;
+    *(undefined4 *)((int)&DAT_844f6d1c + iVar1) = 0;
+    *(undefined4 *)(&DAT_844f6cfc + iVar1) = 0;
   }
   __restgprlr_26();
   return;
@@ -646,25 +617,23 @@ void Commerce_GetSubscriptionStatusFromDW(int param_1,ulong64 param_2)
 bool Commerce_SubscriptionAcquired(int param_1)
 
 {
-  return s_DWSubscriptionTaskStage[param_1] == COMMERCE_SUBSCRIPTION_TASK_STAGE_ALL_DONE;
+  return (&DAT_844f6d1c)[param_1] == 2;
 }
 
 
 // 82940500  `dynamic_atexit_destructor_for_'s_DWSubscriptionInfo''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__s_DWSubscriptionInfo__(void)
 
 {
   longlong lVar1;
-  bdReference<bdRemoteTask> *this;
+  longlong lVar2;
   
   lVar1 = 399;
-  this = s_DWSubscriptionTask;
+  lVar2 = -0x7bb060c0;
   do {
-    this = (bdReference<bdRemoteTask> *)((int)this + -0x20);
-    bdSubscriptionInfo::~bdSubscriptionInfo((bdSubscriptionInfo *)this);
+    lVar2 = lVar2 + -0x20;
+    bdSubscriptionInfo___bdSubscriptionInfo(lVar2);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
   return;
@@ -672,8 +641,6 @@ void _dynamic_atexit_destructor_for__s_DWSubscriptionInfo__(void)
 
 
 // 82940550  `dynamic_atexit_destructor_for_'s_DWSubscriptionTask''  (line unknown)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__s_DWSubscriptionTask__(void)
 
@@ -684,16 +651,16 @@ void _dynamic_atexit_destructor_for__s_DWSubscriptionTask__(void)
   longlong lVar4;
   uint *puVar5;
   longlong lVar6;
-  int *piVar7;
+  uint *puVar7;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_29();
   lVar6 = 3;
-  piVar7 = s_eliteClanRetryAttempt;
+  puVar7 = &DAT_844f9f50;
   do {
-    piVar7 = piVar7 + -1;
-    uVar2 = *piVar7;
+    puVar7 = puVar7 + -1;
+    uVar2 = *puVar7;
     if ((ulonglong)uVar2 != 0) {
       lVar4 = (ulonglong)uVar2 + 4;
       do {
@@ -705,11 +672,11 @@ void _dynamic_atexit_destructor_for__s_DWSubscriptionTask__(void)
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
       if (*(int *)(uVar2 + 4) == 0) {
-        puVar1 = (undefined4 *)*piVar7;
+        puVar1 = (undefined4 *)*puVar7;
         if (puVar1 != (undefined4 *)0x0) {
           (**(code **)*puVar1)(puVar1,1);
         }
-        *piVar7 = 0;
+        *puVar7 = 0;
       }
     }
     lVar6 = lVar6 + -1;
@@ -721,8 +688,6 @@ void _dynamic_atexit_destructor_for__s_DWSubscriptionTask__(void)
 
 
 // 829405E0  `dynamic_atexit_destructor_for_'s_DWSubscriptionUploadTask''  (line unknown)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__s_DWSubscriptionUploadTask__(void)
 

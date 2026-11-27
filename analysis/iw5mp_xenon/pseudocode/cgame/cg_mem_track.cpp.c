@@ -2,52 +2,48 @@
 
 // 822DC600  TRACK_cg_memtrack  (cgame/cg_mem_track.cpp:27)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_cg_memtrack(void)
 
 {
-  g_mem_track_filename = "";
+  DAT_8367aa78 = &DAT_820068af;
   return;
 }
 
 
 // 822DC618  CG_track_init  (cgame/cg_mem_track.cpp:71)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CG_track_init(void)
 
 {
-  g_mem_track_filename = "cg_main";
+  DAT_8367aa78 = "cg_main";
   TRACK_cg_main();
-  g_mem_track_filename = "cg_camerashake";
+  DAT_8367aa78 = "cg_camerashake";
   TRACK_cg_camerashake();
-  g_mem_track_filename = "cg_draw";
+  DAT_8367aa78 = "cg_draw";
   TRACK_cg_draw();
-  g_mem_track_filename = "cg_compassfriendlies";
+  DAT_8367aa78 = "cg_compassfriendlies";
   TRACK_cg_compassfriendlies();
-  g_mem_track_filename = "cg_predict";
+  DAT_8367aa78 = "cg_predict";
   TRACK_cg_predict();
-  g_mem_track_filename = "CG_CollWorld";
+  DAT_8367aa78 = "CG_CollWorld";
   TRACK_CG_CollWorld();
-  g_mem_track_filename = "cg_view";
+  DAT_8367aa78 = "cg_view";
   TRACK_cg_view();
-  g_mem_track_filename = "cg_localents";
+  DAT_8367aa78 = "cg_localents";
   TRACK_cg_localents();
-  g_mem_track_filename = "cg_glass";
+  DAT_8367aa78 = "cg_glass";
   TRACK_cg_glass();
-  g_mem_track_filename = "VehicleClient";
+  DAT_8367aa78 = "VehicleClient";
   TRACK_VehicleClient();
-  g_mem_track_filename = "VehicleCam";
+  DAT_8367aa78 = "VehicleCam";
   TRACK_VehicleCam();
-  g_mem_track_filename = "cg_players";
+  DAT_8367aa78 = "cg_players";
   TRACK_cg_players();
-  g_mem_track_filename = "cg_modelpreviewer";
+  DAT_8367aa78 = "cg_modelpreviewer";
   TRACK_cg_modelpreviewer();
-  g_mem_track_filename = "aim_assist";
+  DAT_8367aa78 = "aim_assist";
   TRACK_aim_assist();
-  g_mem_track_filename = "aim_target";
+  DAT_8367aa78 = "aim_target";
   TRACK_aim_target();
   return;
 }

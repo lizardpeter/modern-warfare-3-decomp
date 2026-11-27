@@ -61,7 +61,7 @@ LAB_8291c818:
   8291C818  382100A0             addi r1,r1,0xa0
   8291C81C  4BFF9EDC             b 0x829166f8
 
-; 8291C6B8  _threadstartex  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/threadex.c:202)
+; 8291C6B8  threadstartex  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/threadex.c:202)
   8291C6B8  7D8802A6             mfspr r12,LR
   8291C6BC  9181FFF8             stw r12,-0x8(r1)
   8291C6C0  FBE1FFF0             std r31,-0x10(r1)
@@ -101,7 +101,7 @@ LAB_8291c728:
   8291C73C  EBE1FFF0             ld r31,-0x10(r1)
   8291C740  4E800020             blr
 
-; 8291C638  _callthreadstartex  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/threadex.c:244)
+; 8291C638  callthreadstartex  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/threadex.c:244)
   8291C638  7D8802A6             mfspr r12,LR
   8291C63C  9181FFF8             stw r12,-0x8(r1)
   8291C640  FBE1FFF0             std r31,-0x10(r1)

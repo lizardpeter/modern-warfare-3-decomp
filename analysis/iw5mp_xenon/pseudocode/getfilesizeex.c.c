@@ -2,22 +2,21 @@
 
 // 828B3CE8  GetFileSizeEx  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/getfilesizeex.c:51)
 
-int GetFileSizeEx(void *param_1,_LARGE_INTEGER *param_2)
+BOOL GetFileSizeEx(HANDLE hFile,PLARGE_INTEGER lpFileSize)
 
 {
-  long lVar1;
-  _IO_STATUS_BLOCK a_Stack_60 [2];
+  int iVar1;
+  undefined1 auStack_60 [16];
   undefined1 auStack_50 [40];
-  _LARGE_INTEGER local_28;
+  LARGE_INTEGER local_28;
   
-  lVar1 = (*_fileIoHooks->NtQueryInformationFile)
-                    (param_1,a_Stack_60,auStack_50,0x38,FileNetworkOpenInformation);
-  if (-1 < lVar1) {
-    *param_2 = local_28;
+  iVar1 = (**(code **)(PTR_DAT_829a8580 + 0x20))(hFile,auStack_60,auStack_50,0x38,0x22);
+  if (-1 < iVar1) {
+    *lpFileSize = local_28;
   }
   else {
-    RtlSetLastNTError(lVar1);
+    RtlSetLastNTError();
   }
-  return (int)(-1 < lVar1);
+  return (BOOL)(-1 < iVar1);
 }
 

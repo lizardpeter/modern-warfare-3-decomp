@@ -4,7 +4,7 @@
 
 /* WARNING: Control flow encountered bad instruction data */
 
-void GetSystemTimeAsFileTime(_FILETIME *param_1)
+void GetSystemTimeAsFileTime(LPFILETIME lpSystemTimeAsFileTime)
 
 {
                     /* WARNING: Bad instruction - Truncating control flow here */

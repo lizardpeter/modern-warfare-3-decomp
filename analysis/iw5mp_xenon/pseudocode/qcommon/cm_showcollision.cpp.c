@@ -2,44 +2,41 @@
 
 // 824C7678  TRACK_cm_showcollision  (qcommon/cm_showcollision.cpp:29)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_cm_showcollision(void)
 
 {
-  track_static_alloc_internal(windingPool,0x3004,"windingPool",0);
+  track_static_alloc_internal(0xffffffff835a2990,0x3004,0xffffffff82082160,0);
   return;
 }
 
 
 // 824C7698  CM_GetShowCollisionColor  (qcommon/cm_showcollision.cpp:36)
 
-void CM_GetShowCollisionColor(float *param_1,int param_2)
+void CM_GetShowCollisionColor(undefined4 *param_1,uint param_2)
 
 {
-  float fVar1;
-  float fVar2;
+  undefined4 uVar1;
+  undefined4 uVar2;
   
-  if (param_1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x25,0,"%s");
+  if (param_1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82082170,0x25,0,0xffffffff82000f98,0xffffffff820821b8);
   }
-  fVar1 = 0.0;
-  fVar2 = fVar1;
-  if ((param_2 & 1U) != 0) {
-    fVar2 = 1.0;
+  uVar1 = 0;
+  uVar2 = uVar1;
+  if ((param_2 & 1) != 0) {
+    uVar2 = 0x3f800000;
   }
-  *param_1 = fVar2;
-  if ((param_2 & 2U) != 0) {
-    fVar1 = 1.0;
+  *param_1 = uVar2;
+  if ((param_2 & 2) != 0) {
+    uVar1 = 0x3f800000;
   }
-  param_1[1] = fVar1;
-  param_1[3] = 0.5;
-  if ((param_2 & 4U) == 0) {
-    param_1[2] = 0.0;
+  param_1[1] = uVar1;
+  param_1[3] = 0x3f000000;
+  if ((param_2 & 4) == 0) {
+    param_1[2] = 0;
   }
   else {
-    param_1[2] = 1.0;
+    param_1[2] = 0x3f800000;
   }
   return;
 }
@@ -47,208 +44,186 @@ void CM_GetShowCollisionColor(float *param_1,int param_2)
 
 // 824C7768  CM_BrushInView  (qcommon/cm_showcollision.cpp:47)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-bool CM_BrushInView(uint param_1,cplane_s *param_2,int param_3)
+void CM_BrushInView(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
-  Bounds *pBVar1;
+  float *pfVar1;
   float *pfVar2;
   float fVar3;
   float fVar4;
   int iVar5;
-  undefined1 uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  longlong lVar9;
+  int iVar6;
+  longlong lVar7;
   
-  uVar7 = (ulonglong)(int)param_2;
-  iVar5 = __savegprlr_29(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x33,0,"%s");
+  iVar5 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082170,0x33,0,0xffffffff82000f98,0xffffffff820821c4);
   }
-  iVar8 = 0;
-  pBVar1 = cm.info.brushBounds + iVar5;
+  iVar6 = 0;
+  pfVar1 = (float *)(iVar5 * 0x18 + DAT_835a28c0);
   if (0 < param_3) {
-    lVar9 = uVar7 + 8;
+    lVar7 = param_2 + 8;
     do {
-      pfVar2 = (float *)lVar9;
-      fVar4 = (*pfVar2 * pBVar1->midPoint[2] +
-              pfVar2[-2] * pBVar1->midPoint[0] + pfVar2[-1] * pBVar1->midPoint[1]) - pfVar2[1];
-      fVar3 = (ABS(*pfVar2) * pBVar1->halfSize[2] +
-              ABS(pfVar2[-2]) * pBVar1->halfSize[0] + ABS(pfVar2[-1]) * pBVar1->halfSize[1]) - 0.001
-      ;
+      pfVar2 = (float *)lVar7;
+      fVar4 = (*pfVar2 * pfVar1[2] + pfVar2[-2] * *pfVar1 + pfVar2[-1] * pfVar1[1]) - pfVar2[1];
+      fVar3 = (ABS(*pfVar2) * pfVar1[5] + ABS(pfVar2[-2]) * pfVar1[3] + ABS(pfVar2[-1]) * pfVar1[4])
+              - 0.001;
       if ((fVar4 <= fVar3) && (fVar4 < -fVar3)) {
-        uVar6 = __restgprlr_29(0);
-        return (bool)uVar6;
+        __restgprlr_29(0);
+        return;
       }
-      iVar8 = iVar8 + 1;
-      lVar9 = lVar9 + 0x14;
-    } while (iVar8 < param_3);
+      iVar6 = iVar6 + 1;
+      lVar7 = lVar7 + 0x14;
+    } while (iVar6 < param_3);
   }
-  uVar6 = __restgprlr_29(1);
-  return (bool)uVar6;
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 824C7870  CM_AddSimpleBrushPoint  (qcommon/cm_showcollision.cpp:65)
 
-int CM_AddSimpleBrushPoint
-              (cbrush_t *param_1,float (*param_2) [4],short *param_3,float *param_4,int param_5,
-              ShowCollisionBrushPt *param_6)
+void CM_AddSimpleBrushPoint
+               (undefined8 param_1,longlong param_2,short *param_3,float *param_4,longlong param_5,
+               ulonglong param_6)
 
 {
   int iVar1;
   ushort *puVar2;
   int iVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  uint uVar6;
-  longlong lVar7;
-  float *pfVar8;
+  uint uVar4;
+  float *pfVar5;
   
-  uVar5 = (ulonglong)(int)param_6;
-  lVar4 = (longlong)param_5;
-  lVar7 = (longlong)(int)param_2;
-  puVar2 = (ushort *)__savegprlr_24(param_1);
+  puVar2 = (ushort *)__savegprlr_24();
   if (puVar2 == (ushort *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x46,0,"%s");
+    MyAssertHandler(0xffffffff82082170,0x46,0,0xffffffff82000f98,0xffffffff82082224);
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x47,0,"%s");
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082170,0x47,0,0xffffffff82000f98,0xffffffff82082218);
   }
-  uVar6 = 0;
-  lVar7 = lVar7 + 8;
+  uVar4 = 0;
+  param_2 = param_2 + 8;
   do {
-    pfVar8 = (float *)lVar7;
-    if (0.1 < (*pfVar8 * param_4[2] + pfVar8[-2] * *param_4 + pfVar8[-1] * param_4[1]) - pfVar8[1])
+    pfVar5 = (float *)param_2;
+    if (0.1 < (*pfVar5 * param_4[2] + pfVar5[-2] * *param_4 + pfVar5[-1] * param_4[1]) - pfVar5[1])
     goto LAB_824c7a54;
-    uVar6 = uVar6 + 1;
-    lVar7 = lVar7 + 0x10;
-  } while (uVar6 < 6);
-  uVar6 = 0;
+    uVar4 = uVar4 + 1;
+    param_2 = param_2 + 0x10;
+  } while (uVar4 < 6);
+  uVar4 = 0;
   if (*puVar2 != 0) {
     iVar3 = 0;
     do {
       iVar1 = *(int *)(puVar2 + 2);
-      pfVar8 = *(float **)(iVar3 + iVar1);
-      if ((pfVar8 != *(float **)((*param_3 + -6) * 8 + iVar1)) &&
-         (pfVar8 != *(float **)((param_3[1] + -6) * 8 + iVar1))) {
-        if (pfVar8 != *(float **)((param_3[2] + -6) * 8 + iVar1)) {
-          if (0.1 < (pfVar8[2] * param_4[2] + pfVar8[1] * param_4[1] + *param_4 * *pfVar8) -
-                    pfVar8[3]) {
+      pfVar5 = *(float **)(iVar3 + iVar1);
+      if (pfVar5 != *(float **)((*param_3 + -6) * 8 + iVar1)) {
+        if (pfVar5 != *(float **)((param_3[1] + -6) * 8 + iVar1)) {
+          if (pfVar5 != *(float **)((param_3[2] + -6) * 8 + iVar1)) {
+            if (0.1 < (pfVar5[2] * param_4[2] + pfVar5[1] * param_4[1] + *param_4 * *pfVar5) -
+                      pfVar5[3]) {
 LAB_824c7a54:
-            iVar3 = __restgprlr_24(lVar4);
-            return iVar3;
+              __restgprlr_24(param_5);
+              return;
+            }
           }
         }
       }
-      uVar6 = uVar6 + 1;
+      uVar4 = uVar4 + 1;
       iVar3 = iVar3 + 8;
-    } while (uVar6 < *puVar2);
+    } while (uVar4 < *puVar2);
   }
-  if (0x3ff < (int)lVar4) {
-    Com_Error(ERR_DROP,"More than %i points from plane intersections on %i-sided brush\n");
+  if (0x3ff < (int)param_5) {
+    Com_Error(1,0xffffffff820821d8,param_5);
   }
-  pfVar8 = (float *)((int)lVar4 * 0x14 + (int)uVar5);
-  *pfVar8 = *param_4;
-  pfVar8[1] = param_4[1];
-  pfVar8[2] = param_4[2];
-  *(short *)(pfVar8 + 3) = *param_3;
-  *(short *)((int)pfVar8 + 0xe) = param_3[1];
-  *(short *)(pfVar8 + 4) = param_3[2];
-  iVar3 = __restgprlr_24(lVar4 + 1);
-  return iVar3;
+  pfVar5 = (float *)((int)param_5 * 0x14 + (int)param_6);
+  *pfVar5 = *param_4;
+  pfVar5[1] = param_4[1];
+  pfVar5[2] = param_4[2];
+  *(short *)(pfVar5 + 3) = *param_3;
+  *(short *)((int)pfVar5 + 0xe) = param_3[1];
+  *(short *)(pfVar5 + 4) = param_3[2];
+  __restgprlr_24(param_5 + 1);
+  return;
 }
 
 
 // 824C75B0  CM_BuildAxialPlanes  (qcommon/cm_local.h:69)
 
-void CM_BuildAxialPlanes(Bounds *param_1,float (*param_2) [4])
+void CM_BuildAxialPlanes(float *param_1,undefined4 *param_2)
 
 {
   float fVar1;
   float fVar2;
   
-  (*param_2)[3] = param_1->halfSize[0] - param_1->midPoint[0];
-  (*param_2)[0] = -1.0;
-  (*param_2)[1] = 0.0;
-  (*param_2)[2] = 0.0;
-  fVar1 = param_1->midPoint[0];
-  fVar2 = param_1->halfSize[0];
-  param_2[1][0] = 1.0;
-  param_2[1][1] = 0.0;
-  param_2[1][2] = 0.0;
-  param_2[1][3] = fVar1 + fVar2;
-  fVar1 = param_1->halfSize[1];
-  fVar2 = param_1->midPoint[1];
-  param_2[2][0] = 0.0;
-  param_2[2][1] = -1.0;
-  param_2[2][2] = 0.0;
-  param_2[2][3] = fVar1 - fVar2;
-  fVar1 = param_1->midPoint[1];
-  fVar2 = param_1->halfSize[1];
-  param_2[3][0] = 0.0;
-  param_2[3][1] = 1.0;
-  param_2[3][2] = 0.0;
-  param_2[3][3] = fVar1 + fVar2;
-  fVar1 = param_1->halfSize[2];
-  fVar2 = param_1->midPoint[2];
-  param_2[4][0] = 0.0;
-  param_2[4][1] = 0.0;
-  param_2[4][2] = -1.0;
-  param_2[4][3] = fVar1 - fVar2;
-  fVar1 = param_1->midPoint[2];
-  fVar2 = param_1->halfSize[2];
-  param_2[5][0] = 0.0;
-  param_2[5][1] = 0.0;
-  param_2[5][2] = 1.0;
-  param_2[5][3] = fVar1 + fVar2;
+  param_2[3] = param_1[3] - *param_1;
+  *param_2 = 0xbf800000;
+  param_2[1] = 0;
+  param_2[2] = 0;
+  fVar1 = *param_1;
+  fVar2 = param_1[3];
+  param_2[4] = 0x3f800000;
+  param_2[5] = 0;
+  param_2[6] = 0;
+  param_2[7] = fVar1 + fVar2;
+  fVar1 = param_1[4];
+  fVar2 = param_1[1];
+  param_2[8] = 0;
+  param_2[9] = 0xbf800000;
+  param_2[10] = 0;
+  param_2[0xb] = fVar1 - fVar2;
+  fVar1 = param_1[1];
+  fVar2 = param_1[4];
+  param_2[0xc] = 0;
+  param_2[0xd] = 0x3f800000;
+  param_2[0xe] = 0;
+  param_2[0xf] = fVar1 + fVar2;
+  fVar1 = param_1[5];
+  fVar2 = param_1[2];
+  param_2[0x10] = 0;
+  param_2[0x11] = 0;
+  param_2[0x12] = 0xbf800000;
+  param_2[0x13] = fVar1 - fVar2;
+  fVar1 = param_1[2];
+  fVar2 = param_1[5];
+  param_2[0x14] = 0;
+  param_2[0x15] = 0;
+  param_2[0x16] = 0x3f800000;
+  param_2[0x17] = fVar1 + fVar2;
   return;
 }
 
 
 // 824C7A60  CM_GetPlaneVec4Form  (qcommon/cm_showcollision.cpp:102)
 
-void CM_GetPlaneVec4Form(cbrushside_t *param_1,float (*param_2) [4],int param_3,float *param_4)
+void CM_GetPlaneVec4Form(undefined8 param_1,ulonglong param_2,longlong param_3,undefined4 *param_4)
 
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  float *pfVar5;
+  undefined4 *puVar3;
   
-  lVar4 = (longlong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if ((int)lVar4 < 6) {
-    if ((uVar3 & 0xffffffff) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp"
-                      ,0x69,0,"%s");
+  iVar2 = __savegprlr_28();
+  if ((int)param_3 < 6) {
+    if ((param_2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82082170,0x69,0,0xffffffff82000f98,0xffffffff82082234);
     }
-    pfVar5 = (float *)((int)lVar4 * 0x10 + (int)uVar3);
-    *param_4 = *pfVar5;
-    param_4[1] = pfVar5[1];
-    param_4[2] = pfVar5[2];
-    param_4[3] = pfVar5[3];
+    puVar3 = (undefined4 *)((int)param_3 * 0x10 + (int)param_2);
+    *param_4 = *puVar3;
+    param_4[1] = puVar3[1];
+    param_4[2] = puVar3[2];
+    param_4[3] = puVar3[3];
     __restgprlr_28();
     return;
   }
   if (iVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x6e,0,"%s");
+    MyAssertHandler(0xffffffff82082170,0x6e,0,0xffffffff82000f98,0xffffffff8208222c);
   }
-  iVar1 = (int)((lVar4 - 6U & 0xffffffff) << 3);
-  pfVar5 = *(float **)(iVar1 + iVar2);
-  *param_4 = *pfVar5;
-  param_4[1] = pfVar5[1];
-  param_4[2] = pfVar5[2];
-  param_4[3] = *(float *)(*(int *)(iVar1 + iVar2) + 0xc);
+  iVar1 = (int)((param_3 - 6U & 0xffffffff) << 3);
+  puVar3 = *(undefined4 **)(iVar1 + iVar2);
+  *param_4 = *puVar3;
+  param_4[1] = puVar3[1];
+  param_4[2] = puVar3[2];
+  param_4[3] = *(undefined4 *)(*(int *)(iVar1 + iVar2) + 0xc);
   __restgprlr_28();
   return;
 }
@@ -256,188 +231,168 @@ void CM_GetPlaneVec4Form(cbrushside_t *param_1,float (*param_2) [4],int param_3,
 
 // 824C7B48  CM_ForEachBrushPlaneIntersection  (qcommon/cm_showcollision.cpp:119)
 
-int CM_ForEachBrushPlaneIntersection
-              (cbrush_t *param_1,float (*param_2) [4],ShowCollisionBrushPt *param_3)
+void CM_ForEachBrushPlaneIntersection(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
   ushort uVar1;
-  cbrushside_t *pcVar2;
+  int iVar2;
   short sVar3;
-  int iVar4;
-  cbrush_t *pcVar5;
-  int iVar6;
-  int iVar7;
-  ulonglong uVar8;
-  short sVar9;
-  short sVar10;
-  int iVar11;
-  double dVar12;
-  double dVar13;
+  ushort *puVar4;
+  int iVar5;
+  short sVar6;
+  short sVar7;
+  undefined8 uVar8;
+  longlong lVar9;
+  longlong lVar10;
+  longlong lVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
   short local_e0;
   short local_de;
   short local_dc;
-  float *local_d8;
-  float *local_d4;
-  float *local_d0;
-  float afStack_c8 [6];
-  float afStack_b0 [4];
-  float afStack_a0 [4];
-  float afStack_90 [36];
+  undefined1 *local_d8;
+  undefined1 *local_d4;
+  undefined1 *local_d0;
+  undefined1 auStack_c8 [24];
+  undefined1 auStack_b0 [16];
+  undefined1 auStack_a0 [16];
+  undefined1 auStack_90 [144];
   
-  uVar8 = (ulonglong)(int)param_3;
-  pcVar5 = (cbrush_t *)__savegprlr_20(param_1);
-  if (pcVar5 == (cbrush_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x80,0,"%s");
+  puVar4 = (ushort *)__savegprlr_20();
+  if (puVar4 == (ushort *)0x0) {
+    MyAssertHandler(0xffffffff82082170,0x80,0,0xffffffff82000f98,0xffffffff82082224);
   }
-  if ((uVar8 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x81,0,"%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082170,0x81,0,0xffffffff82000f98,0xffffffff82082218);
   }
-  uVar1 = pcVar5->numsides;
-  iVar7 = 0;
-  local_d8 = afStack_b0;
-  pcVar2 = pcVar5->sides;
+  uVar1 = *puVar4;
+  uVar8 = 0;
+  local_d8 = auStack_b0;
+  iVar2 = *(int *)(puVar4 + 2);
   local_e0 = 0;
-  local_d4 = afStack_a0;
-  local_d0 = afStack_90;
+  local_d4 = auStack_a0;
+  local_d0 = auStack_90;
   if (uVar1 != 0xfffffffc) {
-    iVar11 = 0;
-    dVar12 = 0.009999999776482582;
-    dVar13 = 0.25;
+    lVar9 = 0;
+    uVar12 = 0x3f847ae140000000;
+    uVar13 = 0x3fd0000000000000;
     do {
-      CM_GetPlaneVec4Form(pcVar2,param_2,iVar11,afStack_b0);
-      sVar9 = (short)iVar11 + 1;
-      for (sVar10 = sVar9; iVar4 = (int)sVar10, local_de = sVar10, iVar4 < (int)(uVar1 + 5);
-          sVar10 = sVar10 + 1) {
-        if (((iVar11 < 6) || (iVar4 < 6)) || (pcVar2[iVar11 + -6].plane != pcVar2[iVar4 + -6].plane)
-           ) {
-          CM_GetPlaneVec4Form(pcVar2,param_2,iVar4,afStack_a0);
-          sVar3 = sVar10;
-          while( true ) {
-            sVar3 = sVar3 + 1;
-            iVar6 = (int)sVar3;
-            local_dc = sVar3;
-            if ((int)(uVar1 + 6) <= iVar6) break;
-            if ((((iVar11 < 6) || (iVar6 < 6)) ||
-                (pcVar2[iVar11 + -6].plane != pcVar2[iVar6 + -6].plane)) &&
-               (((iVar4 < 6 || (iVar6 < 6)) ||
-                (pcVar2[iVar4 + -6].plane != pcVar2[iVar6 + -6].plane)))) {
-              CM_GetPlaneVec4Form(pcVar2,param_2,iVar6,afStack_90);
-              iVar6 = IntersectPlanes(&local_d8,afStack_c8);
-              if (iVar6 != 0) {
-                SnapPointToIntersectingPlanes(&local_d8,afStack_c8,(float)dVar13,(float)dVar12);
-                iVar7 = CM_AddSimpleBrushPoint
-                                  (pcVar5,param_2,&local_e0,afStack_c8,iVar7,
-                                   (ShowCollisionBrushPt *)uVar8);
+      CM_GetPlaneVec4Form(iVar2,param_2,lVar9,auStack_b0);
+      sVar6 = (short)lVar9 + 1;
+      for (sVar7 = sVar6; local_de = sVar7, (int)sVar7 < (int)(uVar1 + 5); sVar7 = sVar7 + 1) {
+        lVar10 = (longlong)sVar7;
+        if ((((int)lVar9 < 6) || (sVar7 < 6)) ||
+           (*(int *)((int)((lVar9 - 6U & 0xffffffff) << 3) + iVar2) !=
+            *(int *)((int)((lVar10 - 6U & 0xffffffff) << 3) + iVar2))) {
+          CM_GetPlaneVec4Form(iVar2,param_2,lVar10,auStack_a0);
+          sVar3 = sVar7;
+          while (sVar3 = sVar3 + 1, local_dc = sVar3, (int)sVar3 < (int)(uVar1 + 6)) {
+            lVar11 = (longlong)sVar3;
+            if (((((int)lVar9 < 6) || (sVar3 < 6)) ||
+                (*(int *)((int)((lVar9 - 6U & 0xffffffff) << 3) + iVar2) !=
+                 *(int *)((int)((lVar11 - 6U & 0xffffffff) << 3) + iVar2))) &&
+               (((sVar7 < 6 || (sVar3 < 6)) ||
+                (*(int *)((int)((lVar10 - 6U & 0xffffffff) << 3) + iVar2) !=
+                 *(int *)((int)((lVar11 - 6U & 0xffffffff) << 3) + iVar2))))) {
+              CM_GetPlaneVec4Form(iVar2,param_2,lVar11,auStack_90);
+              iVar5 = IntersectPlanes(&local_d8,auStack_c8);
+              if (iVar5 != 0) {
+                SnapPointToIntersectingPlanes(uVar13,uVar12,&local_d8,auStack_c8);
+                uVar8 = CM_AddSimpleBrushPoint(puVar4,param_2,&local_e0,auStack_c8,uVar8,param_3);
               }
             }
           }
         }
       }
-      iVar11 = (int)sVar9;
-      local_e0 = sVar9;
-    } while (iVar11 < (int)(uVar1 + 4));
+      lVar9 = (longlong)sVar6;
+      local_e0 = sVar6;
+    } while ((int)sVar6 < (int)(uVar1 + 4));
   }
-  iVar7 = __restgprlr_20(iVar7);
-  return iVar7;
+  __restgprlr_20(uVar8);
+  return;
 }
 
 
 // 824C7DB0  CM_PointInList  (qcommon/cm_showcollision.cpp:171)
 
-int CM_PointInList(float *param_1,float (*param_2) [3],int param_3)
+void CM_PointInList(undefined8 param_1,longlong param_2,int param_3)
 
 {
-  float *pfVar1;
+  undefined8 uVar1;
   int iVar2;
   int iVar3;
-  longlong lVar4;
-  int iVar5;
-  longlong lVar6;
-  double dVar7;
+  undefined8 uVar4;
   
-  lVar4 = (longlong)param_3;
-  lVar6 = (longlong)(int)param_2;
-  pfVar1 = (float *)__savegprlr_28(param_1);
-  iVar5 = 0;
-  iVar3 = (int)lVar4;
-  if (0 < iVar3) {
-    dVar7 = 0.10000000149011612;
+  uVar1 = __savegprlr_28();
+  iVar3 = 0;
+  if (0 < param_3) {
+    uVar4 = 0x3fb99999a0000000;
     do {
-      iVar2 = VecNCompareCustomEpsilon((float *)lVar6,pfVar1,(float)dVar7,(int)lVar4);
+      iVar2 = VecNCompareCustomEpsilon(uVar4,param_2,uVar1);
       if (iVar2 != 0) {
-        iVar3 = __restgprlr_28(1);
-        return iVar3;
+        __restgprlr_28(1);
+        return;
       }
-      iVar5 = iVar5 + 1;
-      lVar6 = lVar6 + 0xc;
-    } while (iVar5 < iVar3);
+      iVar3 = iVar3 + 1;
+      param_2 = param_2 + 0xc;
+    } while (iVar3 < param_3);
   }
-  iVar3 = __restgprlr_28(0);
-  return iVar3;
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 824C7E30  CM_GetXyzList  (qcommon/cm_showcollision.cpp:184)
 
-int CM_GetXyzList(int param_1,ShowCollisionBrushPt *param_2,int param_3,float (*param_4) [3],
-                 int param_5)
+void CM_GetXyzList(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4,
+                  undefined8 param_5)
 
 {
   short *psVar1;
   short sVar3;
   int iVar2;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  longlong lVar4;
+  longlong lVar5;
   longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
   
-  uVar5 = (ulonglong)(int)param_4;
-  lVar6 = (longlong)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  sVar3 = __savegprlr_23(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0xbc,0,"%s");
+  sVar3 = __savegprlr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082170,0xbc,0,0xffffffff82000f98,0xffffffff82082274);
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0xbd,0,"%s");
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082170,0xbd,0,0xffffffff82000f98,0xffffffff82082270);
   }
-  lVar8 = 0;
-  if (0 < (int)lVar6) {
-    lVar7 = uVar5 - 4;
-    lVar9 = uVar4 + 0xe;
+  lVar5 = 0;
+  if (0 < (int)param_3) {
+    lVar4 = param_4 - 4;
+    lVar6 = param_2 + 0xe;
     do {
-      psVar1 = (short *)lVar9;
+      psVar1 = (short *)lVar6;
       if (((sVar3 == psVar1[-1]) || (sVar3 == *psVar1)) || (sVar3 == psVar1[1])) {
-        iVar2 = CM_PointInList((float *)(psVar1 + -7),(float (*) [3])uVar5,(int)lVar8);
+        iVar2 = CM_PointInList(lVar6 + -0xe,param_4,lVar5);
         if (iVar2 == 0) {
-          if ((int)lVar8 == param_5) {
-            Com_Error(ERR_DROP,"Winding point limit (%i) exceeded on brush face");
+          if ((int)lVar5 == (int)param_5) {
+            Com_Error(1,0xffffffff82082240,param_5);
           }
-          lVar8 = lVar8 + 1;
-          *(float *)((int)lVar7 + 4) = *(float *)(psVar1 + -7);
-          *(undefined4 *)((int)lVar7 + 8) = *(undefined4 *)(psVar1 + -5);
-          lVar7 = lVar7 + 0xc;
-          *(undefined4 *)lVar7 = *(undefined4 *)(psVar1 + -3);
+          lVar5 = lVar5 + 1;
+          *(undefined4 *)((int)lVar4 + 4) = *(undefined4 *)(lVar6 + -0xe);
+          *(undefined4 *)((int)lVar4 + 8) = *(undefined4 *)(psVar1 + -5);
+          lVar4 = lVar4 + 0xc;
+          *(undefined4 *)lVar4 = *(undefined4 *)(psVar1 + -3);
         }
       }
-      lVar6 = lVar6 + -1;
-      lVar9 = lVar9 + 0x14;
-    } while (lVar6 != 0);
+      param_3 = param_3 + -1;
+      lVar6 = lVar6 + 0x14;
+    } while (param_3 != 0);
   }
-  iVar2 = __restgprlr_23(lVar8);
-  return iVar2;
+  __restgprlr_23(lVar5);
+  return;
 }
 
 
 // 824C7F60  CM_PickProjectionAxes  (qcommon/cm_showcollision.cpp:208)
 
-void CM_PickProjectionAxes(float *param_1,int *param_2,int *param_3)
+void CM_PickProjectionAxes(float *param_1,uint *param_2,uint *param_3)
 
 {
   uint uVar1;
@@ -454,86 +409,80 @@ void CM_PickProjectionAxes(float *param_1,int *param_2,int *param_3)
 
 // 824C7FB8  CM_SignedAreaForPointsProjected  (qcommon/cm_showcollision.cpp:223)
 
-float CM_SignedAreaForPointsProjected
-                (float *param_1,float *param_2,float *param_3,int param_4,int param_5)
+double CM_SignedAreaForPointsProjected(int param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
-  return (param_3[param_5] - param_2[param_5]) * param_1[param_4] +
-         (param_2[param_5] - param_1[param_5]) * param_3[param_4] +
-         (param_1[param_5] - param_3[param_5]) * param_2[param_4];
+  param_5 = param_5 * 4;
+  param_4 = param_4 * 4;
+  return (double)((*(float *)(param_5 + param_3) - *(float *)(param_5 + param_2)) *
+                  *(float *)(param_4 + param_1) +
+                 (*(float *)(param_5 + param_2) - *(float *)(param_5 + param_1)) *
+                 *(float *)(param_4 + param_3) +
+                 (*(float *)(param_5 + param_1) - *(float *)(param_5 + param_3)) *
+                 *(float *)(param_4 + param_2));
 }
 
 
 // 824C7FF8  CM_AddColinearExteriorPointToWindingProjected  (qcommon/cm_showcollision.cpp:229)
 
 void CM_AddColinearExteriorPointToWindingProjected
-               (winding_t *param_1,float *param_2,int param_3,int param_4,int param_5,int param_6)
+               (undefined8 param_1,undefined4 *param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5,ulonglong param_6)
 
 {
   float fVar1;
-  float fVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
+  float fVar4;
   int iVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  longlong lVar11;
+  longlong lVar6;
+  longlong lVar7;
   
-  uVar9 = (ulonglong)param_6;
-  uVar8 = (ulonglong)param_5;
-  uVar7 = (ulonglong)param_4;
-  uVar6 = (ulonglong)param_3;
-  iVar5 = __savegprlr_20(param_1);
-  lVar11 = uVar8 + (uVar8 & 0x7fffffff) * 2;
-  lVar10 = uVar9 + (uVar9 & 0x7fffffff) * 2;
-  iVar3 = (int)((lVar11 + uVar6 + 1 & 0xffffffff) << 2);
-  iVar4 = (int)((lVar10 + uVar6 + 1 & 0xffffffff) << 2);
-  if ((*(float *)(iVar3 + iVar5) == *(float *)(iVar4 + iVar5)) &&
-     (*(float *)((int)((lVar11 + uVar7 + 1 & 0xffffffff) << 2) + iVar5) ==
-      *(float *)((int)((lVar10 + uVar7 + 1 & 0xffffffff) << 2) + iVar5))) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0xeb,0,"%s");
+  iVar5 = __savegprlr_20();
+  lVar7 = param_5 + (param_5 & 0x7fffffff) * 2;
+  lVar6 = param_6 + (param_6 & 0x7fffffff) * 2;
+  iVar2 = (int)((lVar7 + param_3 + 1 & 0xffffffff) << 2);
+  iVar3 = (int)((lVar6 + param_3 + 1 & 0xffffffff) << 2);
+  if ((*(float *)(iVar2 + iVar5) == *(float *)(iVar3 + iVar5)) &&
+     (*(float *)((int)((lVar7 + param_4 + 1 & 0xffffffff) << 2) + iVar5) ==
+      *(float *)((int)((lVar6 + param_4 + 1 & 0xffffffff) << 2) + iVar5))) {
+    MyAssertHandler(0xffffffff82082170,0xeb,0,0xffffffff82000f98,0xffffffff820822c8);
   }
-  fVar1 = *(float *)(iVar4 + iVar5) - *(float *)(iVar3 + iVar5);
-  fVar2 = *(float *)((int)((lVar10 + uVar7 + 1 & 0xffffffff) << 2) + iVar5) -
-          *(float *)((int)((lVar11 + uVar7 + 1 & 0xffffffff) << 2) + iVar5);
-  if (ABS(fVar2) <= ABS(fVar1)) {
-    uVar7 = uVar6;
-    fVar2 = fVar1;
+  fVar1 = *(float *)(iVar3 + iVar5) - *(float *)(iVar2 + iVar5);
+  fVar4 = *(float *)((int)((lVar6 + param_4 + 1 & 0xffffffff) << 2) + iVar5) -
+          *(float *)((int)((lVar7 + param_4 + 1 & 0xffffffff) << 2) + iVar5);
+  if (ABS(fVar4) <= ABS(fVar1)) {
+    param_4 = param_3;
+    fVar4 = fVar1;
   }
-  iVar3 = (int)((lVar11 + uVar7 + 1 & 0x3fffffff) << 2);
-  iVar4 = (int)((lVar10 + uVar7 + 1 & 0x3fffffff) << 2);
-  if (fVar2 <= 0.0) {
-    if (*(float *)(iVar3 + iVar5) <= *(float *)(iVar4 + iVar5)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp"
-                      ,0x104,0,"%s");
+  iVar2 = (int)((lVar7 + param_4 + 1 & 0x3fffffff) << 2);
+  iVar3 = (int)((lVar6 + param_4 + 1 & 0x3fffffff) << 2);
+  if (fVar4 <= 0.0) {
+    if (*(float *)(iVar2 + iVar5) <= *(float *)(iVar3 + iVar5)) {
+      MyAssertHandler(0xffffffff82082170,0x104,0,0xffffffff82000f98,0xffffffff82082278);
     }
-    fVar1 = *(float *)((int)((uVar7 & 0xffffffff) << 2) + (int)param_2);
-    if (*(float *)(iVar3 + iVar5) < fVar1) goto LAB_824c815c;
-    if (*(float *)(iVar4 + iVar5) <= fVar1) goto LAB_824c81e4;
+    fVar1 = *(float *)((int)((param_4 & 0xffffffff) << 2) + (int)param_2);
+    if (*(float *)(iVar2 + iVar5) < fVar1) goto LAB_824c815c;
+    if (*(float *)(iVar3 + iVar5) <= fVar1) goto LAB_824c81e4;
 LAB_824c81bc:
-    iVar3 = (int)uVar9;
+    iVar2 = (int)param_6;
   }
   else {
-    if (*(float *)(iVar4 + iVar5) <= *(float *)(iVar3 + iVar5)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp"
-                      ,0xfc,0,"%s");
+    if (*(float *)(iVar3 + iVar5) <= *(float *)(iVar2 + iVar5)) {
+      MyAssertHandler(0xffffffff82082170,0xfc,0,0xffffffff82000f98,0xffffffff820822a0);
     }
-    fVar1 = *(float *)((int)((uVar7 & 0xffffffff) << 2) + (int)param_2);
-    if (*(float *)(iVar3 + iVar5) <= fVar1) {
-      if (fVar1 <= *(float *)(iVar4 + iVar5)) goto LAB_824c81e4;
+    fVar1 = *(float *)((int)((param_4 & 0xffffffff) << 2) + (int)param_2);
+    if (*(float *)(iVar2 + iVar5) <= fVar1) {
+      if (fVar1 <= *(float *)(iVar3 + iVar5)) goto LAB_824c81e4;
       goto LAB_824c81bc;
     }
 LAB_824c815c:
-    iVar3 = (int)uVar8;
+    iVar2 = (int)param_5;
   }
-  iVar5 = iVar3 * 0xc + iVar5;
-  *(float *)(iVar5 + 4) = *param_2;
-  *(float *)(iVar5 + 8) = param_2[1];
-  *(float *)(iVar5 + 0xc) = param_2[2];
+  iVar5 = iVar2 * 0xc + iVar5;
+  *(undefined4 *)(iVar5 + 4) = *param_2;
+  *(undefined4 *)(iVar5 + 8) = param_2[1];
+  *(undefined4 *)(iVar5 + 0xc) = param_2[2];
 LAB_824c81e4:
   __restgprlr_20();
   return;
@@ -543,87 +492,84 @@ LAB_824c81e4:
 // 824C81F0  CM_AddExteriorPointToWindingProjected  (qcommon/cm_showcollision.cpp:271)
 
 void CM_AddExteriorPointToWindingProjected
-               (winding_t *param_1,float *param_2,int param_3,int param_4)
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
 
 {
   float fVar1;
-  float fVar2;
-  uint uVar3;
-  int iVar4;
-  winding_t *pwVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  uint uVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  uint *puVar6;
+  uint *puVar7;
+  ulonglong uVar8;
   int iVar9;
   ulonglong uVar10;
-  int iVar11;
-  float (*pafVar13) [3];
-  ulonglong uVar12;
-  longlong lVar14;
-  double dVar15;
-  double dVar16;
+  ulonglong uVar11;
+  double dVar12;
+  double dVar13;
   
-  uVar7 = (ulonglong)param_4;
-  uVar6 = (ulonglong)param_3;
-  pwVar5 = (winding_t *)__savegprlr_27(param_1);
-  dVar16 = 3.4028234663852886e+38;
-  lVar14 = -1;
-  lVar8 = 0;
-  if (0 < pwVar5->numpoints) {
-    pafVar13 = pwVar5->p;
-    iVar11 = (pwVar5->numpoints + -1) * 0xc;
-    iVar9 = (int)((uVar6 & 0x3fffffff) << 2);
+  puVar6 = (uint *)__savegprlr_27();
+  dVar13 = 3.4028234663852886e+38;
+  uVar11 = 0xffffffffffffffff;
+  uVar8 = 0;
+  puVar4 = (undefined4 *)param_2;
+  if (0 < (int)*puVar6) {
+    puVar7 = puVar6 + 1;
+    iVar9 = (*puVar6 - 1) * 0xc;
+    iVar3 = (int)((param_3 & 0x3fffffff) << 2);
     do {
-      iVar4 = (int)((uVar7 & 0x3fffffff) << 2);
-      fVar1 = *(float *)((int)*pafVar13 + iVar4);
-      fVar2 = *(float *)((int)pwVar5->p[0] + iVar4 + iVar11 + 4 + -4);
-      dVar15 = (double)((fVar2 - fVar1) * *(float *)(iVar9 + (int)param_2) +
-                       (*(float *)(iVar4 + (int)param_2) - fVar2) *
-                       *(float *)((int)*pafVar13 + iVar9) +
-                       (fVar1 - *(float *)(iVar4 + (int)param_2)) *
-                       *(float *)((int)pwVar5->p[0] + iVar9 + iVar11 + 4 + -4));
-      if (dVar15 < dVar16) {
-        lVar14 = lVar8;
-        dVar16 = dVar15;
+      iVar5 = (int)((param_4 & 0x3fffffff) << 2);
+      fVar1 = *(float *)((int)puVar6 + iVar5 + iVar9 + 4);
+      dVar12 = (double)((fVar1 - *(float *)((int)puVar7 + iVar5)) * *(float *)(iVar3 + (int)puVar4)
+                       + (*(float *)(iVar5 + (int)puVar4) - fVar1) * *(float *)((int)puVar7 + iVar3)
+                         + (*(float *)((int)puVar7 + iVar5) - *(float *)(iVar5 + (int)puVar4)) *
+                           *(float *)((int)puVar6 + iVar3 + iVar9 + 4));
+      if (dVar12 < dVar13) {
+        uVar11 = uVar8;
+        dVar13 = dVar12;
       }
-      lVar8 = lVar8 + 1;
-      iVar11 = (-4 - (int)pwVar5) + (int)pafVar13;
-      pafVar13 = pafVar13 + 1;
-    } while ((int)lVar8 < pwVar5->numpoints);
-    if (-1 < (int)lVar14) goto LAB_824c82d8;
+      uVar8 = uVar8 + 1;
+      iVar9 = (-4 - (int)puVar6) + (int)puVar7;
+      puVar7 = puVar7 + 3;
+    } while ((int)uVar8 < (int)*puVar6);
+    puVar7 = puVar6;
+    if (-1 < (int)uVar11) goto LAB_824c82d8;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                  0x121,0,"%s");
+  puVar7 = (uint *)MyAssertHandler(0xffffffff82082170,0x121,0,0xffffffff82000f98,0xffffffff82082314)
+  ;
 LAB_824c82d8:
-  iVar9 = (int)lVar14;
-  if (dVar16 < -0.0010000000474974513) {
-    memmove();
-    pwVar5->p[iVar9][0] = *param_2;
-    pwVar5->p[iVar9][1] = param_2[1];
-    pwVar5->p[iVar9][2] = param_2[2];
-    pwVar5->numpoints = pwVar5->numpoints + 1;
+  if (dVar13 < -0.0010000000474974513) {
+    iVar3 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 2);
+    puVar7 = memmove((void *)((int)puVar6 + iVar3 + 0x10),(void *)((int)puVar6 + iVar3 + 4),
+                     (size_t)(((*puVar6 - uVar11) + (*puVar6 - uVar11 & 0x7fffffff) * 2 & 0xffffffff
+                              ) << 2));
+    *(undefined4 *)((int)puVar6 + iVar3 + 4) = *puVar4;
+    *(undefined4 *)((int)puVar6 + iVar3 + 8) = puVar4[1];
+    *(undefined4 *)((int)puVar6 + iVar3 + 0xc) = puVar4[2];
+    *puVar6 = *puVar6 + 1;
   }
-  else if (dVar16 <= 0.0010000000474974513) {
-    uVar3 = pwVar5->numpoints;
-    uVar12 = (ulonglong)uVar3;
-    trapWord(6,uVar12,0);
-    uVar10 = (uVar12 + lVar14) - 1;
-    trapWord(5,uVar12 & ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  else if (dVar13 <= 0.0010000000474974513) {
+    uVar2 = *puVar6;
+    uVar10 = (ulonglong)uVar2;
+    trapWord(6,uVar10,0);
+    uVar8 = (uVar10 + uVar11) - 1;
+    trapWord(5,uVar10 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
     CM_AddColinearExteriorPointToWindingProjected
-              (pwVar5,param_2,(int)uVar6,(int)uVar7,(int)uVar10 - ((int)uVar10 / (int)uVar3) * uVar3
-               ,iVar9);
+              (puVar6,param_2,param_3,param_4,
+               uVar8 - (longlong)((int)uVar8 / (int)uVar2) * (longlong)(int)uVar2,uVar11);
     __restgprlr_27();
     return;
   }
-  __restgprlr_27();
+  __restgprlr_27(puVar7);
   return;
 }
 
 
 // 824C83A8  CM_RepresentativeTriangleFromWinding  (qcommon/cm_showcollision.cpp:304)
 
-float CM_RepresentativeTriangleFromWinding
-                (winding_t *param_1,float *param_2,int *param_3,int *param_4,int *param_5)
+void CM_RepresentativeTriangleFromWinding
+               (undefined8 param_1,float *param_2,int *param_3,int *param_4,int *param_5)
 
 {
   float *pfVar1;
@@ -645,7 +591,7 @@ float CM_RepresentativeTriangleFromWinding
   float local_7c;
   float local_78;
   
-  pfVar2 = (float *)__savegprlr_21(param_1);
+  pfVar2 = (float *)__savegprlr_21();
   *param_3 = 0;
   iVar4 = 2;
   *param_4 = 1;
@@ -689,46 +635,46 @@ float CM_RepresentativeTriangleFromWinding
       pfVar3 = pfVar3 + 3;
     } while (iVar4 < (int)*pfVar2);
   }
-  dVar9 = (double)__restgprlr_21(dVar9);
-  return (float)dVar9;
+  __restgprlr_21(dVar9);
+  return;
 }
 
 
 // 824C8510  CM_ReverseWinding  (qcommon/cm_showcollision.cpp:346)
 
-void CM_ReverseWinding(winding_t *param_1)
+void CM_ReverseWinding(uint *param_1)
 
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
   uint uVar4;
   int iVar5;
-  float *pfVar6;
+  uint *puVar6;
   int iVar7;
-  winding_t *pwVar8;
+  uint *puVar8;
   
-  uVar4 = param_1->numpoints;
+  uVar4 = *param_1;
   iVar7 = 0;
-  pwVar8 = param_1;
+  puVar8 = param_1;
   if (0 < (longlong)((longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0)))
   {
     do {
-      fVar1 = pwVar8->p[0][0];
-      fVar2 = pwVar8->p[0][1];
-      fVar3 = pwVar8->p[0][2];
-      pfVar6 = (float *)((uVar4 - iVar7) * 0xc + (int)param_1);
-      pwVar8->p[0][0] = pfVar6[-2];
-      pwVar8->p[0][1] = pfVar6[-1];
-      pwVar8 = (winding_t *)(pwVar8->p[0] + 2);
-      pwVar8->numpoints = (int)*pfVar6;
-      iVar5 = param_1->numpoints - iVar7;
+      uVar1 = puVar8[1];
+      uVar2 = puVar8[2];
+      uVar3 = puVar8[3];
+      puVar6 = param_1 + (uVar4 - iVar7) * 3;
+      puVar8[1] = puVar6[-2];
+      puVar8[2] = puVar6[-1];
+      puVar8[3] = *puVar6;
+      iVar5 = *param_1 - iVar7;
       iVar7 = iVar7 + 1;
-      pfVar6 = (float *)(iVar5 * 0xc + (int)param_1);
-      pfVar6[-2] = fVar1;
-      pfVar6[-1] = fVar2;
-      *pfVar6 = fVar3;
-      uVar4 = param_1->numpoints;
+      puVar6 = param_1 + iVar5 * 3;
+      puVar6[-2] = uVar1;
+      puVar6[-1] = uVar2;
+      *puVar6 = uVar3;
+      uVar4 = *param_1;
+      puVar8 = puVar8 + 3;
     } while (iVar7 < (int)(((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0)));
     return;
   }
@@ -738,153 +684,133 @@ void CM_ReverseWinding(winding_t *param_1)
 
 // 824C85A8  CM_BuildBrushWindingForSide  (qcommon/cm_showcollision.cpp:360)
 
-bool CM_BuildBrushWindingForSide
-               (winding_t *param_1,float *param_2,int param_3,ShowCollisionBrushPt *param_4,
-               int param_5)
+void CM_BuildBrushWindingForSide
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4,
+               undefined8 param_5)
 
 {
-  winding_t *pwVar1;
-  int iVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  float *pfVar8;
-  longlong lVar9;
-  float fVar10;
-  int local_3060;
-  int local_305c;
-  int local_3058 [2];
+  undefined4 *puVar2;
+  longlong lVar1;
+  float *pfVar3;
+  undefined1 *puVar4;
+  byte bVar5;
+  double dVar6;
+  uint local_3060;
+  uint local_305c;
+  uint local_3058 [2];
   float local_3050;
   float local_304c;
   float local_3048;
-  float local_3040;
-  float local_303c;
-  float local_3038;
-  float local_3034;
-  float local_3030;
-  float local_302c;
-  float afStack_3028 [3082];
+  undefined4 local_3040;
+  undefined4 local_303c;
+  undefined4 local_3038;
+  undefined4 local_3034;
+  undefined4 local_3030;
+  undefined4 local_302c;
+  undefined1 auStack_3028 [12328];
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  pwVar1 = (winding_t *)__savegprlr_25(param_1);
-  if (pwVar1 == (winding_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x173,0,"%s");
+  puVar2 = (undefined4 *)__savegprlr_25();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82082170,0x173,0,0xffffffff82000f98,0xffffffff82082330);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x174,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082170,0x174,0,0xffffffff82000f98,0xffffffff82082324);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x175,0,"%s");
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082170,0x175,0,0xffffffff82000f98,0xffffffff82082274);
   }
-  iVar2 = CM_GetXyzList(param_3,(ShowCollisionBrushPt *)uVar6,param_5,(float (*) [3])&local_3040,
-                        0x400);
-  if (2 < iVar2) {
-    pfVar5 = (float *)uVar4;
-    uVar7 = (uint)(ABS(*pfVar5) < ABS(pfVar5[1]));
-    if (ABS(pfVar5[ABS(*pfVar5) < ABS(pfVar5[1])]) < ABS(pfVar5[2])) {
-      uVar7 = 2;
+  lVar1 = CM_GetXyzList(param_3,param_4,param_5,&local_3040,0x400);
+  if (2 < (int)lVar1) {
+    pfVar3 = (float *)param_2;
+    bVar5 = ABS(*pfVar3) < ABS(pfVar3[1]);
+    if (ABS(pfVar3[bVar5]) < ABS(pfVar3[2])) {
+      bVar5 = 2;
     }
-    pwVar1->p[0][0] = local_3040;
-    pwVar1->p[0][1] = local_303c;
-    pwVar1->p[0][2] = local_3038;
-    pwVar1->p[1][0] = local_3034;
-    pwVar1->p[1][1] = local_3030;
-    pwVar1->p[1][2] = local_302c;
-    pwVar1->numpoints = 2;
-    if (2 < iVar2) {
-      pfVar8 = afStack_3028;
-      lVar9 = (longlong)iVar2 + -2;
+    puVar2[1] = local_3040;
+    puVar2[2] = local_303c;
+    puVar2[3] = local_3038;
+    puVar2[4] = local_3034;
+    puVar2[5] = local_3030;
+    puVar2[6] = local_302c;
+    *puVar2 = 2;
+    if (2 < (int)lVar1) {
+      puVar4 = auStack_3028;
+      lVar1 = lVar1 + -2;
       do {
-        CM_AddExteriorPointToWindingProjected(pwVar1,pfVar8,~uVar7 & 1,~uVar7 & 2);
-        lVar9 = lVar9 + -1;
-        pfVar8 = pfVar8 + 3;
-      } while (lVar9 != 0);
+        CM_AddExteriorPointToWindingProjected(puVar2,puVar4,~bVar5 & 1,~bVar5 & 2);
+        lVar1 = lVar1 + -1;
+        puVar4 = puVar4 + 0xc;
+      } while (lVar1 != 0);
     }
-    fVar10 = CM_RepresentativeTriangleFromWinding(pwVar1,pfVar5,&local_3060,local_3058,&local_305c);
-    if (0.001 <= fVar10) {
-      PlaneFromPoints(&local_3050,pwVar1->p[local_3060],pwVar1->p[local_3058[0]],
-                      pwVar1->p[local_305c]);
-      if (0.0 < pfVar5[2] * local_3048 + *pfVar5 * local_3050 + local_304c * pfVar5[1]) {
-        CM_ReverseWinding(pwVar1);
+    dVar6 = (double)CM_RepresentativeTriangleFromWinding
+                              (puVar2,param_2,&local_3060,local_3058,&local_305c);
+    if (0.0010000000474974513 <= dVar6) {
+      PlaneFromPoints(&local_3050,puVar2 + local_3060 * 3 + 1,puVar2 + local_3058[0] * 3 + 1,
+                      puVar2 + local_305c * 3 + 1);
+      if (0.0 < pfVar3[2] * local_3048 + *pfVar3 * local_3050 + local_304c * pfVar3[1]) {
+        CM_ReverseWinding(puVar2);
       }
-      uVar3 = __restgprlr_25(1);
-      return (bool)uVar3;
+      __restgprlr_25(1);
+      return;
     }
   }
-  uVar3 = __restgprlr_25(0);
-  return (bool)uVar3;
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 824C87F0  CM_ShowSingleBrushCollision  (qcommon/cm_showcollision.cpp:399)
 
 void CM_ShowSingleBrushCollision
-               (Bounds *param_1,cbrush_t *param_2,float *param_3,
-               _func___cdecl_void_int_float_3__ptr_float_ptr *param_4)
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
 
 {
-  int iVar1;
-  Bounds *pBVar2;
-  int iVar3;
-  bool bVar5;
-  ulonglong uVar6;
+  undefined8 uVar1;
+  char cVar2;
+  ushort *puVar3;
+  longlong lVar4;
+  longlong lVar5;
+  int iVar6;
   ulonglong uVar7;
-  longlong lVar8;
-  int iVar9;
-  uint uVar10;
-  cbrush_t *pcVar4;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  __savegprlr_25(param_1);
-  lVar8 = -0x50f0;
-  pBVar2 = (Bounds *)_RtlCheckStack12();
-  iVar1 = (int)(ZEXT48(&stack0x00000000) + lVar8);
-  *(BADSPACEBASE **)iVar1 = register0x0000000c;
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x196,0,"%s");
+  __savegprlr_25();
+  lVar4 = -0x50f0;
+  uVar1 = _RtlCheckStack12();
+  lVar4 = ZEXT48(&stack0x00000000) + lVar4;
+  *(BADSPACEBASE **)(int)lVar4 = register0x0000000c;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082170,0x196,0,0xffffffff82000f98,0xffffffff82082224);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x197,0,"%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082170,0x197,0,0xffffffff82000f98,0xffffffff8200240c);
   }
-  CM_BuildAxialPlanes(pBVar2,(float (*) [4])(iVar1 + 0x50));
-  pcVar4 = (cbrush_t *)uVar6;
-  iVar3 = CM_ForEachBrushPlaneIntersection
-                    (pcVar4,(float (*) [4])(iVar1 + 0x50),(ShowCollisionBrushPt *)(iVar1 + 0xb0));
-  if (3 < iVar3) {
-    uVar10 = 0;
-    lVar8 = ZEXT48(&stack0x00000000) + lVar8 + 0x50;
+  CM_BuildAxialPlanes(uVar1,lVar4 + 0x50);
+  uVar1 = CM_ForEachBrushPlaneIntersection(param_2,lVar4 + 0x50,lVar4 + 0xb0);
+  if (3 < (int)uVar1) {
+    uVar7 = 0;
+    lVar5 = lVar4 + 0x50;
     do {
-      bVar5 = CM_BuildBrushWindingForSide
-                        ((winding_t *)windingPool,(float *)lVar8,uVar10,
-                         (ShowCollisionBrushPt *)(iVar1 + 0xb0),iVar3);
-      if (bVar5) {
-        (*param_4)(windingPool._0_4_,(float (*) [3])(windingPool + 4),(float *)uVar7);
+      cVar2 = CM_BuildBrushWindingForSide(0xffffffff835a2990,lVar5,uVar7,lVar4 + 0xb0,uVar1);
+      if (cVar2 != '\0') {
+        (*param_4)(DAT_835a2990,0xffffffff835a2994,param_3);
       }
-      uVar10 = uVar10 + 1;
-      lVar8 = lVar8 + 0x10;
-    } while (uVar10 < 6);
-    uVar10 = 6;
-    if (6 < (ulonglong)pcVar4->numsides + 6) {
-      iVar9 = 0;
+      uVar7 = uVar7 + 1;
+      lVar5 = lVar5 + 0x10;
+    } while ((uVar7 & 0xffffffff) < 6);
+    puVar3 = (ushort *)param_2;
+    uVar7 = 6;
+    if (6 < (ulonglong)*puVar3 + 6) {
+      iVar6 = 0;
       do {
-        bVar5 = CM_BuildBrushWindingForSide
-                          ((winding_t *)windingPool,*(float **)((int)&pcVar4->sides->plane + iVar9),
-                           uVar10,(ShowCollisionBrushPt *)(iVar1 + 0xb0),iVar3);
-        if (bVar5) {
-          (*param_4)(windingPool._0_4_,(float (*) [3])(windingPool + 4),(float *)uVar7);
+        cVar2 = CM_BuildBrushWindingForSide
+                          (0xffffffff835a2990,*(undefined4 *)(iVar6 + *(int *)(puVar3 + 2)),uVar7,
+                           lVar4 + 0xb0,uVar1);
+        if (cVar2 != '\0') {
+          (*param_4)(DAT_835a2990,0xffffffff835a2994,param_3);
         }
-        uVar10 = uVar10 + 1;
-        iVar9 = iVar9 + 8;
-      } while (uVar10 < pcVar4->numsides + 6);
+        uVar7 = uVar7 + 1;
+        iVar6 = iVar6 + 8;
+      } while ((uVar7 & 0xffffffff) < (ulonglong)*puVar3 + 6);
     }
   }
   __restgprlr_25();
@@ -894,57 +820,48 @@ void CM_ShowSingleBrushCollision
 
 // 824C8960  CM_ShowBrushCollision  (qcommon/cm_showcollision.cpp:432)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
 void CM_ShowBrushCollision
-               (int param_1,cplane_s *param_2,int param_3,
-               _func___cdecl_void_int_float_3__ptr_float_ptr *param_4)
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
 
 {
   uint uVar1;
-  bool bVar2;
+  char cVar2;
   ulonglong uVar3;
-  uint uVar4;
+  longlong lVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  uint uVar9;
-  float afStack_70 [28];
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  undefined1 auStack_70 [112];
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_22(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_showcollision.cpp",
-                    0x1b5,0,"%s");
+  uVar1 = __savegprlr_22();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082170,0x1b5,0,0xffffffff82000f98,0xffffffff820821c4);
   }
-  iVar5 = 0;
-  uVar9 = 0;
-  if (cm.info.numBrushes != 0) {
-    iVar7 = 0;
-    iVar8 = 0;
-    iVar6 = 0;
+  lVar4 = 0;
+  lVar8 = 0;
+  if (DAT_835a28b8 != 0) {
+    lVar6 = 0;
+    lVar7 = 0;
+    iVar5 = 0;
     do {
-      if ((*(uint *)(iVar6 + (int)cm.info.brushContents) & uVar1) != 0) {
-        CM_GetShowCollisionColor(afStack_70,iVar5);
-        uVar4 = iVar5 + 1;
-        iVar5 = uVar4 + (((int)uVar4 >> 3) + (uint)((int)uVar4 < 0 && (uVar4 & 7) != 0) & 0x1fffffff
-                        ) * -8;
-        bVar2 = CM_BrushInView(uVar9,(cplane_s *)uVar3,param_3);
-        if (bVar2) {
+      if ((*(uint *)(iVar5 + DAT_835a28c4) & uVar1) != 0) {
+        CM_GetShowCollisionColor(auStack_70,lVar4);
+        uVar3 = lVar4 + 1;
+        lVar4 = uVar3 + ((longlong)((int)uVar3 >> 3) +
+                         (ulonglong)((int)uVar3 < 0 && (uVar3 & 7) != 0) & 0x1fffffff) * -8;
+        cVar2 = CM_BrushInView(lVar8,param_2,param_3);
+        if (cVar2 != '\0') {
           CM_ShowSingleBrushCollision
-                    ((Bounds *)((int)(cm.info.brushBounds)->midPoint + iVar7),
-                     (cbrush_t *)
-                     ((int)&((cbrush_t *)((cm.info.brushes)->axialMaterialNum + -2))->numsides +
-                     iVar8),afStack_70,param_4);
+                    (lVar6 + (ulonglong)DAT_835a28c0,lVar7 + (ulonglong)DAT_835a28bc,auStack_70,
+                     param_4);
         }
       }
-      uVar9 = uVar9 + 1;
-      iVar6 = iVar6 + 4;
-      iVar8 = iVar8 + 0x24;
-      iVar7 = iVar7 + 0x18;
-    } while ((int)uVar9 < (int)(uint)cm.info.numBrushes);
+      lVar8 = lVar8 + 1;
+      iVar5 = iVar5 + 4;
+      lVar7 = lVar7 + 0x24;
+      lVar6 = lVar6 + 0x18;
+    } while ((int)lVar8 < (int)(uint)DAT_835a28b8);
   }
   __restgprlr_22();
   return;

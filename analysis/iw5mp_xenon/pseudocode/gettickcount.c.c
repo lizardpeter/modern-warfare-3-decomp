@@ -3,9 +3,8 @@
 // 828A9108  GetTickCount  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/gettickcount.c:40)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-ulong GetTickCount(void)
+DWORD GetTickCount(void)
 
 {
   return _DAT_000000bd;

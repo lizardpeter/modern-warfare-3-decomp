@@ -193,6 +193,142 @@ LAB_8227816c:
   82277CE0  4E800020             blr
 
 ; 822781E8  PM_trace  (bgame/bg_pmove.cpp:302)
+caseD_39:
+  82000B44  53686970             rlwimi r8,r27,0xd,0x5,0x18
+caseD_b:
+  82000B7C  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_16:
+  82000B90  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_11:
+  82000BAC  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_6:
+  82000BC4  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_2d:
+  82000BD8  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_1a:
+  82000BEC  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_a:
+  82000C18  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_15:
+  82000C2C  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_10:
+  82000C40  57454150             rlwinm r5,r26,0x8,0x5,0x8
+  82000C44  4F4E5F44             addpcis r26,0x5f5c0000
+caseD_5:
+  82000C54  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_2c:
+  82000C68  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_19:
+  82000C80  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_9:
+  82000CA8  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_14:
+  82000CC0  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_f:
+  82000CD4  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_4:
+  82000CE8  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_2b:
+  82000CFC  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_18:
+  82000D10  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_8:
+  82000D44  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_13:
+  82000D58  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_e:
+  82000D74  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_3:
+  82000D88  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_2a:
+  82000D9C  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_17:
+  82000DAC  57454150             rlwinm r5,r26,0x8,0x5,0x8
+  82000DB0  4F4E5F44             addpcis r26,0x5f5c0000
+  82000DB4  524F5050             rlwimi r15,r18,0xa,0x1,0x8
+  82000DB8  494E475F             bla 0x014e475c
+  82000DBC  414C5400             bdzt 4*cr3+lt,0x820061bc
+caseD_d:
+  82000DC0  57454150             rlwinm r5,r26,0x8,0x5,0x8
+  82000DC4  4F4E5F44             addpcis r26,0x5f5c0000
+  82000DC8  524F5050             rlwimi r15,r18,0xa,0x1,0x8
+  82000DCC  494E475F             bla 0x014e475c
+  82000DD0  51554943             rlwimi. r21,r10,0x9,0x5,0x1
+  82000DD4  4B000000             b 0x81000dd4
+caseD_7:
+  82000DD8  57454150             rlwinm r5,r26,0x8,0x5,0x8
+  82000DDC  4F4E5F44             addpcis r26,0x5f5c0000
+  82000DE0  524F5050             rlwimi r15,r18,0xa,0x1,0x8
+  82000DE4  494E4700             b 0x834e54e4
+caseD_12:
+  82000DE8  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_d:
+  82000E04  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_2:
+  82000E14  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_1f:
+  82003484  6E6F6E65             xoris r15,r19,0x6e65
+caseD_1e:
+  8200E020  73636176             andi. r3,r27,0x6176
+  8200E024  656E6765             oris r14,r11,0x6765
+  8200E028  72000000             andi. r0,r16,0x0
+  8200E02C  6578636C             oris r24,r11,0x636c
+  8200E030  75736976             andis. r19,r11,0x6976
+  8200E034  65000000             oris r0,r8,0x0
+caseD_1d:
+  8200E038  616C746D             ori r12,r11,0x746d
+  8200E03C  6F646500             xoris r4,r27,0x6500
+  8200E040  6F666668             xoris r6,r27,0x6668
+  8200E044  616E6400             ori r14,r11,0x6400
+  8200E048  7072696D             andi. r18,r3,0x696d
+  8200E04C  61727900             ori r18,r11,0x7900
+  8200E050  6974656D             xori r20,r11,0x656d
+caseD_1d:
+  8200E058  6E6F6E2D             xoris r15,r19,0x6e2d
+  8200E05C  706C6179             andi. r12,r3,0x6179
+  8200E060  65720000             oris r18,r11,0x0
+LAB_8200e064:
+  8200E064  7468726F             andis. r8,r3,0x726f
+  8200E068  77696E67             andis. r9,r27,0x6e67
+  8200E06C  6B6E6966             xori r14,r27,0x6966
+  8200E070  65000000             oris r0,r8,0x0
+caseD_1c:
+  8200E074  74757272             andis. r21,r3,0x7272
+  8200E078  65740000             oris r20,r11,0x0
+  8200E07C  726F636B             andi. r15,r19,0x636b
+  8200E080  65746C61             oris r20,r11,0x6c61
+  8200E084  756E6368             andis. r14,r11,0x6368
+  8200E088  65720000             oris r18,r11,0x0
+  8200E08C  70697374             andi. r9,r3,0x7374
+  8200E090  6F6C0000             xoris r12,r27,0x0
+  8200E094  73707265             andi. r16,r27,0x7265
+  8200E098  61640000             ori r4,r11,0x0
+caseD_1c:
+  8200E09C  736D6700             andi. r13,r27,0x6700
+  8200E0A0  6D670000             xoris r7,r11,0x0
+caseD_1b:
+  8200E0A4  736E6970             andi. r14,r27,0x6970
+  8200E0A8  65720000             oris r18,r11,0x0
+  8200E0AC  7269666C             andi. r9,r19,0x666c
+  8200E0B0  65000000             oris r0,r8,0x0
+LAB_8200e0b4:
+  8200E0B4  72696F74             andi. r9,r19,0x6f74
+  8200E0B8  73686965             andi. r8,r27,0x6965
+  8200E0BC  6C640000             xoris r4,r3,0x0
+  8200E0C0  70726F6A             andi. r18,r3,0x6f6a
+  8200E0C4  65637469             oris r3,r11,0x7469
+  8200E0C8  6C650000             xoris r5,r3,0x0
+  8200E0CC  6772656E             oris r18,r27,0x656e
+  8200E0D0  61646500             ori r4,r11,0x6500
+caseD_1b:
+  8200E0D4  62756C6C             ori r21,r19,0x6c6c
+  8200E0D8  65740000             oris r20,r11,0x0
+  8200E0DC  737A5765             andi. r26,r27,0x5765
+  8200E0E0  6170496E             ori r16,r11,0x496e
+  8200E0E4  76656E74             andis. r5,r19,0x6e74
+  8200E0E8  6F727954             xoris r18,r27,0x7954
+  8200E0EC  7970654E             rldimi r16,r11,0x2c,0x15
+  8200E0F0  616D6573             ori r13,r11,0x6573
   822781E8  7C8B2378             or r11,r4,r4
   822781EC  89430134             lbz r10,0x134(r3)
   822781F0  7CA42B78             or r4,r5,r5
@@ -206,6 +342,7 @@ LAB_8227816c:
   82278210  7D43482E             lwzx r10,r3,r9
   82278214  7D635B78             or r3,r11,r11
   82278218  7D4903A6             mtspr CTR,r10
+switchD:
   8227821C  4E800420             bctr
 
 ; 82278220  PM_traceHandler  (bgame/bg_pmove.cpp:308)
@@ -319,6 +456,12 @@ LAB_8227fbfc:
   822782EC  4E800420             bctr
 
 ; 822782F8  PM_getPlayerTurretWeapon  (bgame/bg_pmove.cpp:359)
+caseD_10:
+  82000C04  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_f:
+  82000C94  57454150             rlwinm r5,r26,0x8,0x5,0x8
+caseD_e:
+  82000D24  57454150             rlwinm r5,r26,0x8,0x5,0x8
   822782F8  3D408296             lis r10,-0x7d6a
   822782FC  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
   82278300  394A1640             addi r10,r10,0x1640
@@ -338,6 +481,7 @@ LAB_82278330:
 LAB_82278334:
   82278334  7D4903A6             mtspr CTR,r10
   82278338  7D234B78             or r3,r9,r9
+switchD:
   8227833C  4E800420             bctr
 LAB_82278340:
   82278340  38600000             li r3,0x0
@@ -361,12 +505,33 @@ LAB_8227837c:
   8227837C  3860FFFF             li r3,-0x1
 LAB_82278380:
   82278380  7D4903A6             mtspr CTR,r10
+switchD:
   82278384  4E800420             bctr
 LAB_82278388:
   82278388  38600000             li r3,0x0
   8227838C  4E800020             blr
 
 ; 82278390  PM_getEntityVelocity  (bgame/bg_pmove.cpp:386)
+caseD_b:
+  82000B4C  53637265             rlwimi. r3,r27,0xe,0x9,0x12
+  82000B50  656E7368             oris r14,r11,0x7368
+  82000B54  6F740000             xoris r20,r27,0x0
+caseD_1e:
+  8200DFD8  342D526F             addic. r1,r13,0x526f
+  8200DFDC  756E6420             andis. r14,r11,0x6420
+  8200DFE0  42757273             bdzla 0x00007270
+  8200DFE4  74000000             andis. r0,r0,0x0
+  8200DFE8  332D526F             addic r25,r13,0x526f
+  8200DFEC  756E6420             andis. r14,r11,0x6420
+  8200DFF0  42757273             bdzla 0x00007270
+  8200DFF4  74000000             andis. r0,r0,0x0
+  8200DFF8  322D526F             addic r17,r13,0x526f
+  8200DFFC  756E6420             andis. r14,r11,0x6420
+  8200E000  42757273             bdzla 0x00007270
+  8200E004  74000000             andis. r0,r0,0x0
+  8200E008  53696E67             rlwimi. r9,r27,0xd,0x19,0x13
+  8200E00C  6C652053             xoris r5,r3,0x2053
+  8200E010  686F7400             xori r15,r3,0x7400
   82278390  3D408296             lis r10,-0x7d6a
   82278394  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
   82278398  394A1640             addi r10,r10,0x1640
@@ -384,6 +549,7 @@ LAB_822783c4:
   822783C4  3860FFFF             li r3,-0x1
 LAB_822783c8:
   822783C8  7D4903A6             mtspr CTR,r10
+switchD:
   822783CC  4E800420             bctr
 LAB_822783d0:
   822783D0  38600000             li r3,0x0

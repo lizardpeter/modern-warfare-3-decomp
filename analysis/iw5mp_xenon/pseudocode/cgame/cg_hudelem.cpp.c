@@ -2,107 +2,46 @@
 
 // 822D0640  CG_HudElemRegisterDvars  (cgame/cg_hudelem.cpp:103)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CG_HudElemRegisterDvars(void)
 
 {
-  ushort uVar1;
-  char *pcVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
   
   __savegprlr_28();
-  waypointDebugDraw = Dvar_RegisterBool("waypointDebugDraw",false,0,"");
-  pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
-  uVar1 = 0;
-  dVar5 = 3.4028234663852886e+38;
-  dVar4 = 1.1754943508222875e-38;
-  dVar3 = 36.0;
-  waypointIconWidth =
-       Dvar_RegisterFloat("waypointIconWidth",36.0,1.1754944e-38,3.4028235e+38,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  waypointIconHeight =
-       Dvar_RegisterFloat("waypointIconHeight",(float)dVar3,(float)dVar4,(float)dVar5,uVar1,pcVar2);
-  pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
-  waypointOffscreenPointerWidth =
-       Dvar_RegisterFloat("waypointOffscreenPointerWidth",25.0,(float)dVar4,(float)dVar5,uVar1,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  uVar1 = 0;
-  waypointOffscreenPointerHeight =
-       Dvar_RegisterFloat("waypointOffscreenPointerHeight",12.0,(float)dVar4,(float)dVar5,0,pcVar2);
-  waypointOffscreenPointerDistance =
-       Dvar_RegisterFloat("waypointOffscreenPointerDistance",30.0,(float)dVar4,(float)dVar5,uVar1,
-                          pcVar2);
-  pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
-  uVar1 = 0;
-  waypointOffscreenDistanceThresholdAlpha =
-       Dvar_RegisterFloat("waypointOffscreenDistanceThresholdAlpha",30.0,0.0,(float)dVar5,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  waypointOffscreenPadLeft =
-       Dvar_RegisterFloat("waypointOffscreenPadLeft",103.0,0.0,(float)dVar5,uVar1,pcVar2);
-  pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
-  waypointOffscreenPadRight =
-       Dvar_RegisterFloat("waypointOffscreenPadRight",0.0,0.0,(float)dVar5,uVar1,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  uVar1 = 0;
-  waypointOffscreenPadTop =
-       Dvar_RegisterFloat("waypointOffscreenPadTop",0.0,0.0,(float)dVar5,0,pcVar2);
-  waypointOffscreenPadBottom =
-       Dvar_RegisterFloat("waypointOffscreenPadBottom",30.0,0.0,(float)dVar5,uVar1,pcVar2);
-  pcVar2 = (char *)0x0;
-  waypointOffscreenRoundedCorners =
-       Dvar_RegisterBool("waypointOffscreenRoundedCorners",true,0,
-                         "Off-screen icons take rounded corners when true.  90-degree corners when false."
-                        );
-  uVar1 = 0;
-  waypointOffscreenCornerRadius =
-       Dvar_RegisterFloat("waypointOffscreenCornerRadius",105.0,0.0,(float)dVar5,0,pcVar2);
-  pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
-  waypointOffscreenScaleLength =
-       Dvar_RegisterFloat("waypointOffscreenScaleLength",500.0,(float)dVar4,(float)dVar5,uVar1,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  uVar1 = 0;
-  dVar4 = 1.0;
-  waypointOffscreenScaleSmallest =
-       Dvar_RegisterFloat("waypointOffscreenScaleSmallest",1.0,0.0,(float)dVar5,0,pcVar2);
-  pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
-  waypointDistScaleRangeMin =
-       Dvar_RegisterFloat("waypointDistScaleRangeMin",1000.0,0.0,(float)dVar5,uVar1,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  waypointDistScaleRangeMax =
-       Dvar_RegisterFloat("waypointDistScaleRangeMax",3000.0,0.0,(float)dVar5,0,pcVar2);
-  uVar1 = 0;
-  pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
-  waypointDistScaleSmallest =
-       Dvar_RegisterFloat("waypointDistScaleSmallest",0.8,0.0,(float)dVar5,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  waypointSplitscreenScale =
-       Dvar_RegisterFloat("waypointSplitscreenScale",1.8,0.1,(float)dVar5,uVar1,pcVar2);
-  pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
-  uVar1 = 0;
-  dVar3 = -3.4028234663852886e+38;
-  waypointTweakY =
-       Dvar_RegisterFloat("waypointTweakY",-17.0,-3.4028235e+38,(float)dVar5,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  hudElemPausedBrightness =
-       Dvar_RegisterFloat("hudElemPausedBrightness",0.4,0.0,(float)dVar4,uVar1,pcVar2);
-  pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
-  waypointPlayerOffsetProne =
-       Dvar_RegisterFloat("waypointPlayerOffsetProne",30.0,0.0,(float)dVar5,uVar1,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  uVar1 = 0;
-  waypointPlayerOffsetCrouch =
-       Dvar_RegisterFloat("waypointPlayerOffsetCrouch",56.0,0.0,(float)dVar5,0,pcVar2);
-  pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
-  waypointPlayerOffsetStand =
-       Dvar_RegisterFloat("waypointPlayerOffsetStand",66.0,0.0,(float)dVar5,uVar1,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  DAT_82a22d10 = Dvar_RegisterFloat("objectiveFontSize",0.6,0.01,(float)dVar5,0,pcVar2);
-  objectiveTextOffsetY =
-       Dvar_RegisterFloat("objectiveTextOffsetY",-5.33,(float)dVar3,(float)dVar5,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
+  DAT_82a22d08 = Dvar_RegisterBool(0xffffffff82018020,0,0,0xffffffff820068af);
+  uVar3 = 0x47efffffe0000000;
+  uVar2 = 0x3810000000000000;
+  uVar1 = 0x4042000000000000;
+  DAT_82a22cf4 = Dvar_RegisterFloat(0x4042000000000000,0x3810000000000000,0x47efffffe0000000,
+                                    0xffffffff82017fec);
+  DAT_82a22cd4 = Dvar_RegisterFloat(uVar1,uVar2,uVar3,0xffffffff82017fb4);
+  DAT_82a22cf0 = Dvar_RegisterFloat(0x4039000000000000,uVar2,uVar3,0xffffffff82017f94);
+  DAT_82a22ccc = Dvar_RegisterFloat(0x4028000000000000,uVar2,uVar3,0xffffffff82017f74);
+  DAT_82a22d24 = Dvar_RegisterFloat(0x403e000000000000,uVar2,uVar3,0xffffffff82017f50);
+  DAT_82a22d28 = Dvar_RegisterFloat(0x403e000000000000,0,uVar3,0xffffffff82017e74);
+  DAT_82a22d20 = Dvar_RegisterFloat(0x4059c00000000000,0,uVar3,0xffffffff82017e38);
+  DAT_82a22d00 = Dvar_RegisterFloat(0,0,uVar3,0xffffffff82017e1c);
+  DAT_82a22cd0 = Dvar_RegisterFloat(0,0,uVar3,0xffffffff82017e04);
+  DAT_82a22ce8 = Dvar_RegisterFloat(0x403e000000000000,0,uVar3,0xffffffff82017de8);
+  DAT_82a22ce0 = Dvar_RegisterBool(0xffffffff82017dc8,1,0,0xffffffff82017d78);
+  DAT_82a22d04 = Dvar_RegisterFloat(0x405a400000000000,0,uVar3,0xffffffff82017d38);
+  DAT_82a22d18 = Dvar_RegisterFloat(0x407f400000000000,uVar2,uVar3,0xffffffff82017cd0);
+  uVar2 = 0x3ff0000000000000;
+  DAT_82a22cc0 = Dvar_RegisterFloat(0x3ff0000000000000,0,uVar3,0xffffffff82017c80);
+  DAT_82a22cdc = Dvar_RegisterFloat(0x408f400000000000,0,uVar3,0xffffffff82017c2c);
+  DAT_82a22d0c = Dvar_RegisterFloat(0x40a7700000000000,0,uVar3,0xffffffff82017bd4);
+  DAT_82a22d1c = Dvar_RegisterFloat(0x3fe99999a0000000,0,uVar3,0xffffffff82017b88);
+  DAT_82a22cf8 = Dvar_RegisterFloat(0x3ffcccccc0000000,0x3fb99999a0000000,uVar3,0xffffffff82017b68);
+  uVar1 = 0xc7efffffe0000000;
+  DAT_82a22cc8 = Dvar_RegisterFloat(0xc031000000000000,0xc7efffffe0000000,uVar3,0xffffffff82017b1c);
+  DAT_82a22cd8 = Dvar_RegisterFloat(0x3fd99999a0000000,0,uVar2,0xffffffff82017ad0);
+  DAT_82a22cec = Dvar_RegisterFloat(0x403e000000000000,0,uVar3,0xffffffff82017a50);
+  DAT_82a22cfc = Dvar_RegisterFloat(0x404c000000000000,0,uVar3,0xffffffff820179c8);
+  DAT_82a22cc4 = Dvar_RegisterFloat(0x4050800000000000,0,uVar3,0xffffffff82017940);
+  DAT_82a22d10 = Dvar_RegisterFloat(0x3fe3333340000000,0x3f847ae140000000,uVar3,0xffffffff820178f0);
+  DAT_82a22d14 = Dvar_RegisterFloat(0xc01551eb80000000,uVar1,uVar3,0xffffffff8201789c);
   __restgprlr_28();
   return;
 }
@@ -110,34 +49,26 @@ void CG_HudElemRegisterDvars(void)
 
 // 822D0B48  CG_TranslateHudElemMessage  (cgame/cg_hudelem.cpp:157)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CG_TranslateHudElemMessage
-               (LocalClientNum_t param_1,char *param_2,char *param_3,char *param_4,int param_5)
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4,
+               undefined8 param_5)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_25(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0xa0,0,
-                    "%s");
+  uVar1 = __savegprlr_25();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0xa0,0,0xffffffff82000f98,0xffffffff8201805c);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0xa1,0,
-                    "%s");
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0xa1,0,0xffffffff82000f98,0xffffffff8201804c);
   }
-  if (param_5 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0xa2,0,
-                    "%s");
+  if ((int)param_5 < 1) {
+    MyAssertHandler(0xffffffff82018064,0xa2,0,0xffffffff82000f98,0xffffffff82018034);
   }
-  pcVar2 = SEH_LocalizeTextMessage((char *)uVar3,param_3,LOCMSG_SAFE);
-  UI_ReplaceDirective(LVar1,pcVar2,(char *)uVar4,param_5);
+  uVar2 = SEH_LocalizeTextMessage(param_2,param_3,0);
+  UI_ReplaceDirective(uVar1,uVar2,param_4,param_5);
   __restgprlr_25();
   return;
 }
@@ -145,24 +76,20 @@ void CG_TranslateHudElemMessage
 
 // 822D0C10  SafeTranslateHudElemString  (cgame/cg_hudelem.cpp:170)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void SafeTranslateHudElemString(LocalClientNum_t param_1,int param_2,char *param_3,int param_4)
+void SafeTranslateHudElemString
+               (undefined8 param_1,longlong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  ulonglong uVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  uVar3 = (ulonglong)(int)param_3;
-  LVar1 = __savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0xab,
-                    (int)(char *)uVar3,"%s");
+  uVar1 = __savegprlr_28();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0xab);
   }
-  if (param_2 != 0) {
-    pcVar2 = CL_GetConfigString(param_2 + 0x1d6);
-    CG_TranslateHudElemMessage(LVar1,pcVar2,"hudelem string",(char *)uVar3,param_4);
+  if ((int)param_2 != 0) {
+    uVar2 = CL_GetConfigString(param_2 + 0x1d6);
+    CG_TranslateHudElemMessage(uVar1,uVar2,0xffffffff820180a4,param_3,param_4);
   }
   __restgprlr_28();
   return;
@@ -171,263 +98,268 @@ void SafeTranslateHudElemString(LocalClientNum_t param_1,int param_2,char *param
 
 // 822D0C88  HudElemStringWidth  (cgame/cg_hudelem.cpp:181)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float HudElemStringWidth(char *param_1,cg_hudelem_t *param_2)
+double HudElemStringWidth(undefined4 param_1,int param_2)
 
 {
   int iVar1;
   double dVar2;
-  float fVar3;
+  double dVar3;
   
-  iVar1 = UI_TextWidth(param_1,0,param_2->font,param_2->fontScale);
-  dVar2 = (double)(longlong)iVar1;
-  fVar3 = CL_GetScreenAspectRatioDisplayPixel();
-  return (float)(dVar2 / (double)fVar3);
+  iVar1 = UI_TextWidth((double)*(float *)(param_2 + 0x21c),param_1,0,
+                       *(undefined4 *)(param_2 + 0x218));
+  dVar3 = (double)(longlong)iVar1;
+  dVar2 = (double)CL_GetScreenAspectRatioDisplayPixel();
+  return (double)(float)(dVar3 / dVar2);
 }
 
 
 // 822D0CE0  GetHudElemTime  (cgame/cg_hudelem.cpp:187)
 
-int GetHudElemTime(hudelem_s *param_1,int param_2)
+ulonglong GetHudElemTime(int *param_1,longlong param_2)
 
 {
-  he_type_t hVar1;
-  uint uVar2;
+  int iVar1;
+  ulonglong uVar2;
   
-  hVar1 = param_1->type;
-  if (7 < hVar1 - HE_TYPE_TIMER_DOWN) {
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0xd8,0
-                      ,"invalid case");
+  iVar1 = *param_1;
+  if (7 < iVar1 - 5U) {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82018064,0xd8,0,0xffffffff820180b4);
     }
     return 0;
   }
-  if (hVar1 != HE_TYPE_TIMER_UP) {
-    if (hVar1 == HE_TYPE_TIMER_STATIC) {
+  if (iVar1 != 6) {
+    if (iVar1 == 7) {
 LAB_822d0db8:
-      return -(param_1->time >> 0x1f) - 1U & param_1->time;
+      return (ulonglong)((uint)param_1[0x1e] >> 0x1f) - 1 & (ulonglong)(uint)param_1[0x1e];
     }
-    if (hVar1 == HE_TYPE_TENTHS_TIMER_DOWN) {
-      uVar2 = (param_1->time - param_2) + 99;
-      return -((int)uVar2 >> 0x1f) - 1U & uVar2;
+    if (iVar1 == 8) {
+      uVar2 = ((ulonglong)(uint)param_1[0x1e] - param_2) + 99;
+      return ((uVar2 & 0xffffffff) >> 0x1f) - 1 & uVar2;
     }
-    if (hVar1 != HE_TYPE_TENTHS_TIMER_UP) {
-      if (hVar1 == HE_TYPE_TENTHS_TIMER_STATIC) goto LAB_822d0db8;
-      if (hVar1 == HE_TYPE_CLOCK_DOWN) {
-        uVar2 = param_1->time - param_2;
-        return -((int)uVar2 >> 0x1f) - 1U & uVar2;
+    if (iVar1 != 9) {
+      if (iVar1 == 10) goto LAB_822d0db8;
+      if (iVar1 == 0xb) {
+        return (((ulonglong)(uint)param_1[0x1e] - param_2 & 0xffffffff) >> 0x1f) - 1 &
+               (ulonglong)(uint)param_1[0x1e] - param_2;
       }
-      if (hVar1 == HE_TYPE_TIMER_DOWN) {
-        uVar2 = (param_1->time - param_2) + 999;
-        return -((int)uVar2 >> 0x1f) - 1U & uVar2;
+      if (iVar1 == 5) {
+        uVar2 = ((ulonglong)(uint)param_1[0x1e] - param_2) + 999;
+        return ((uVar2 & 0xffffffff) >> 0x1f) - 1 & uVar2;
       }
     }
   }
-  uVar2 = param_2 - param_1->time;
-  return -((int)uVar2 >> 0x1f) - 1U & uVar2;
+  return ((param_2 - (ulonglong)(uint)param_1[0x1e] & 0xffffffff) >> 0x1f) - 1 &
+         param_2 - (ulonglong)(uint)param_1[0x1e];
 }
 
 
 // 822D0E18  HudElemTimerString  (cgame/cg_hudelem.cpp:228)
 
-char * HudElemTimerString(hudelem_s *param_1,int param_2)
+void HudElemTimerString(void)
 
 {
   int iVar1;
-  char *pcVar2;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  iVar1 = GetHudElemTime(param_1,param_2);
-  if (iVar1 / 3600000 != 0) {
-    pcVar2 = va("%i:%02i:%02i");
-    return pcVar2;
+  iVar2 = GetHudElemTime();
+  iVar1 = (iVar2 / 1000) / 0xe10;
+  lVar4 = (longlong)(iVar2 / 1000) + (longlong)iVar1 * -0xe10;
+  lVar3 = (longlong)((int)lVar4 / 0x3c);
+  if (iVar1 != 0) {
+    va(0xffffffff820180cc,(longlong)iVar1,lVar3);
+    return;
   }
-  pcVar2 = va("%i:%02i");
-  return pcVar2;
+  va(0xffffffff820180c4,lVar3,lVar4 + lVar3 * -0x3c);
+  return;
 }
 
 
 // 822D0E98  HudElemTenthsTimerString  (cgame/cg_hudelem.cpp:248)
 
-char * HudElemTenthsTimerString(hudelem_s *param_1,int param_2)
+void HudElemTenthsTimerString(void)
 
 {
-  int iVar1;
-  char *pcVar2;
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
   
-  iVar1 = GetHudElemTime(param_1,param_2);
-  if (iVar1 / 3600000 != 0) {
-    pcVar2 = va("%i:%02i:%02i.%i");
-    return pcVar2;
+  iVar3 = GetHudElemTime();
+  iVar2 = (iVar3 / 100) / 36000;
+  lVar5 = (longlong)(iVar3 / 100) + (longlong)iVar2 * -36000;
+  lVar4 = (longlong)((int)lVar5 / 600);
+  lVar5 = lVar5 + lVar4 * -600;
+  uVar1 = (int)lVar5 / 10;
+  lVar6 = (longlong)(int)uVar1;
+  if (iVar2 != 0) {
+    va(0xffffffff820180e8,iVar2,lVar4,lVar6);
+    return;
   }
-  pcVar2 = va("%i:%02i.%i");
-  return pcVar2;
+  va(0xffffffff820180dc,lVar4,lVar6,
+     lVar5 + (lVar6 + ((ulonglong)uVar1 & 0x3fffffff) * 4 & 0x7fffffff) * -2);
+  return;
 }
 
 
 // 822D0F40  HudElemMaterialSpecifiedWidth  (cgame/cg_hudelem.cpp:271)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float HudElemMaterialSpecifiedWidth
-                (ScreenPlacement *param_1,int param_2,int param_3,cg_hudelem_t *param_4)
+double HudElemMaterialSpecifiedWidth(float *param_1,uint param_2,int param_3,int param_4)
 
 {
   double dVar1;
-  float fVar2;
+  double dVar2;
   
   if (param_3 == 0) {
-    fVar2 = param_4->fontHeight;
+    dVar1 = (double)*(float *)(param_4 + 0x220);
   }
-  else if ((param_2 & 0xf0U) == 0x40) {
-    fVar2 = ScrPlace_HiResGetScaleX();
-    fVar2 = fVar2 * param_1->scaleVirtualToFull[0] * (float)(longlong)param_3;
+  else if ((param_2 & 0xf0) == 0x40) {
+    dVar1 = (double)ScrPlace_HiResGetScaleX();
+    dVar1 = (double)((float)(dVar1 * (double)param_1[2]) * (float)(longlong)param_3);
   }
   else {
-    dVar1 = (double)((float)(longlong)param_3 * cg_hudSplitscreenScale);
-    fVar2 = ScrPlace_HiResGetScaleX();
-    fVar2 = param_1->scaleVirtualToReal[0] * (float)((double)fVar2 * dVar1);
+    dVar2 = (double)((float)(longlong)param_3 * DAT_82b5c7fc);
+    dVar1 = (double)ScrPlace_HiResGetScaleX();
+    dVar1 = (double)(*param_1 * (float)(dVar1 * dVar2));
   }
-  return fVar2;
+  return dVar1;
 }
 
 
 // 822D0FF0  HudElemMaterialSpecifiedHeight  (cgame/cg_hudelem.cpp:283)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float HudElemMaterialSpecifiedHeight
-                (ScreenPlacement *param_1,int param_2,int param_3,cg_hudelem_t *param_4)
+double HudElemMaterialSpecifiedHeight(int param_1,uint param_2,int param_3,int param_4)
 
 {
   double dVar1;
-  float fVar2;
+  double dVar2;
   
   if (param_3 == 0) {
-    fVar2 = param_4->fontHeight;
+    dVar1 = (double)*(float *)(param_4 + 0x220);
   }
-  else if ((param_2 & 0xfU) == 4) {
-    fVar2 = ScrPlace_HiResGetScaleY();
-    fVar2 = fVar2 * param_1->scaleVirtualToFull[1] * (float)(longlong)param_3;
+  else if ((param_2 & 0xf) == 4) {
+    dVar1 = (double)ScrPlace_HiResGetScaleY();
+    dVar1 = (double)((float)(dVar1 * (double)*(float *)(param_1 + 0xc)) * (float)(longlong)param_3);
   }
   else {
-    dVar1 = (double)((float)(longlong)param_3 * cg_hudSplitscreenScale);
-    fVar2 = ScrPlace_HiResGetScaleY();
-    fVar2 = param_1->scaleVirtualToReal[1] * (float)((double)fVar2 * dVar1);
+    dVar2 = (double)((float)(longlong)param_3 * DAT_82b5c7fc);
+    dVar1 = (double)ScrPlace_HiResGetScaleY();
+    dVar1 = (double)(*(float *)(param_1 + 4) * (float)(dVar1 * dVar2));
   }
-  return fVar2;
+  return dVar1;
 }
 
 
 // 822D10A0  HudElemMaterialWidth  (cgame/cg_hudelem.cpp:295)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float HudElemMaterialWidth(ScreenPlacement *param_1,hudelem_s *param_2,cg_hudelem_t *param_3)
+void HudElemMaterialWidth(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-  ScreenPlacement *pSVar1;
+  undefined8 uVar1;
   int iVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  float fVar6;
   
-  pSVar1 = (ScreenPlacement *)__savegprlr_28(param_1);
-  fVar6 = HudElemMaterialSpecifiedWidth(pSVar1,param_2->alignScreen,param_2->width,param_3);
-  dVar3 = (double)fVar6;
-  if ((0 < param_2->scaleTime) &&
-     (iVar2 = param_3->timeNow - param_2->scaleStartTime, iVar2 < param_2->scaleTime)) {
-    fVar6 = HudElemMaterialSpecifiedWidth
-                      (pSVar1,param_2->fromAlignScreen,param_2->fromWidth,param_3);
-    dVar4 = (double)fVar6;
-    if (iVar2 < 1) {
-      dVar3 = (double)__restgprlr_28(dVar4);
-      return (float)dVar3;
+  uVar1 = __savegprlr_28();
+  dVar3 = (double)HudElemMaterialSpecifiedWidth
+                            (uVar1,*(undefined4 *)(param_2 + 0x2c),*(undefined4 *)(param_2 + 0x44),
+                             param_3);
+  if (0 < *(int *)(param_2 + 0x5c)) {
+    iVar2 = *(int *)((int)param_3 + 0x234) - *(int *)(param_2 + 0x58);
+    if (iVar2 < *(int *)(param_2 + 0x5c)) {
+      dVar4 = (double)HudElemMaterialSpecifiedWidth
+                                (uVar1,*(undefined4 *)(param_2 + 0x6c),
+                                 *(undefined4 *)(param_2 + 0x50),param_3);
+      if (iVar2 < 1) {
+        __restgprlr_28();
+        return;
+      }
+      dVar5 = (double)(float)((double)(longlong)iVar2 / (double)(longlong)*(int *)(param_2 + 0x5c));
+      if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+        MyAssertHandler(dVar5,0xffffffff82018064,0x13a,1,0xffffffff820180f8,dVar5,0,
+                        0x3ff0000000000000);
+      }
+      __restgprlr_28((double)(float)((double)(float)(dVar3 - dVar4) * dVar5 + dVar4));
+      return;
     }
-    dVar5 = (double)((float)(longlong)iVar2 / (float)(longlong)param_2->scaleTime);
-    if ((dVar5 < 0.0) || (1.0 < dVar5)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x13a,
-                      1,"lerp not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
-    }
-    dVar3 = (double)__restgprlr_28((double)(float)((double)(float)(dVar3 - dVar4) * dVar5 + dVar4));
-    return (float)dVar3;
   }
-  dVar3 = (double)__restgprlr_28(dVar3);
-  return (float)dVar3;
+  __restgprlr_28(dVar3);
+  return;
 }
 
 
 // 822D11F8  HudElemMaterialHeight  (cgame/cg_hudelem.cpp:320)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float HudElemMaterialHeight(ScreenPlacement *param_1,hudelem_s *param_2,cg_hudelem_t *param_3)
+void HudElemMaterialHeight(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-  ScreenPlacement *pSVar1;
+  undefined8 uVar1;
   int iVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  float fVar6;
   
-  pSVar1 = (ScreenPlacement *)__savegprlr_28(param_1);
-  fVar6 = HudElemMaterialSpecifiedHeight(pSVar1,param_2->alignScreen,param_2->height,param_3);
-  dVar3 = (double)fVar6;
-  if ((0 < param_2->scaleTime) &&
-     (iVar2 = param_3->timeNow - param_2->scaleStartTime, iVar2 < param_2->scaleTime)) {
-    fVar6 = HudElemMaterialSpecifiedHeight
-                      (pSVar1,param_2->fromAlignScreen,param_2->fromHeight,param_3);
-    dVar4 = (double)fVar6;
-    if (iVar2 < 1) {
-      dVar3 = (double)__restgprlr_28(dVar4);
-      return (float)dVar3;
+  uVar1 = __savegprlr_28();
+  dVar3 = (double)HudElemMaterialSpecifiedHeight
+                            (uVar1,*(undefined4 *)(param_2 + 0x2c),*(undefined4 *)(param_2 + 0x48),
+                             param_3);
+  if (0 < *(int *)(param_2 + 0x5c)) {
+    iVar2 = *(int *)((int)param_3 + 0x234) - *(int *)(param_2 + 0x58);
+    if (iVar2 < *(int *)(param_2 + 0x5c)) {
+      dVar4 = (double)HudElemMaterialSpecifiedHeight
+                                (uVar1,*(undefined4 *)(param_2 + 0x6c),
+                                 *(undefined4 *)(param_2 + 0x54),param_3);
+      if (iVar2 < 1) {
+        __restgprlr_28();
+        return;
+      }
+      dVar5 = (double)(float)((double)(longlong)iVar2 / (double)(longlong)*(int *)(param_2 + 0x5c));
+      if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+        MyAssertHandler(dVar5,0xffffffff82018064,0x153,1,0xffffffff820180f8,dVar5,0,
+                        0x3ff0000000000000);
+      }
+      __restgprlr_28((double)(float)((double)(float)(dVar3 - dVar4) * dVar5 + dVar4));
+      return;
     }
-    dVar5 = (double)((float)(longlong)iVar2 / (float)(longlong)param_2->scaleTime);
-    if ((dVar5 < 0.0) || (1.0 < dVar5)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x153,
-                      1,"lerp not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
-    }
-    dVar3 = (double)__restgprlr_28((double)(float)((double)(float)(dVar3 - dVar4) * dVar5 + dVar4));
-    return (float)dVar3;
   }
-  dVar3 = (double)__restgprlr_28(dVar3);
-  return (float)dVar3;
+  __restgprlr_28(dVar3);
+  return;
 }
 
 
 // 822D1350  HudElemWidth  (cgame/cg_hudelem.cpp:345)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float HudElemWidth(ScreenPlacement *param_1,hudelem_s *param_2,cg_hudelem_t *param_3)
+double HudElemWidth(undefined8 param_1,undefined4 *param_2,int param_3)
 
 {
-  float fVar1;
+  double dVar1;
   
-  switch(param_2->type) {
-  case HE_TYPE_TEXT:
-  case HE_TYPE_VALUE:
-  case HE_TYPE_PLAYERNAME:
-  case HE_TYPE_TIMER_DOWN:
-  case HE_TYPE_TIMER_UP:
-  case HE_TYPE_TIMER_STATIC:
-  case HE_TYPE_TENTHS_TIMER_DOWN:
-  case HE_TYPE_TENTHS_TIMER_UP:
-  case HE_TYPE_TENTHS_TIMER_STATIC:
-    return param_3->textWidth + param_3->labelWidth;
-  case HE_TYPE_MATERIAL:
-  case HE_TYPE_CLOCK_DOWN:
-  case HE_TYPE_CLOCK_UP:
-    fVar1 = HudElemMaterialWidth(param_1,param_2,param_3);
-    return fVar1 + param_3->labelWidth;
-  case HE_TYPE_WAYPOINT:
-    return (float)(longlong)param_2->width;
+  switch(*param_2) {
+  case 1:
+  case 2:
+  case 3:
+  case 5:
+  case 6:
+  case 7:
+  case 8:
+  case 9:
+  case 10:
+    return (double)(*(float *)(param_3 + 0x214) + *(float *)(param_3 + 0x110));
+  case 4:
+  case 0xb:
+  case 0xc:
+    dVar1 = (double)HudElemMaterialWidth(param_1,param_2,param_3);
+    return (double)(float)(dVar1 + (double)*(float *)(param_3 + 0x110));
+  case 0xd:
+    return (double)(longlong)(int)param_2[0x11];
   }
-  if (alwaysfails == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x173,0,
-                    "invalid case");
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff82018064,0x173,0,0xffffffff820180b4);
   }
   return 0.0;
 }
@@ -435,131 +367,103 @@ float HudElemWidth(ScreenPlacement *param_1,hudelem_s *param_2,cg_hudelem_t *par
 
 // 822D1478  HudElemHeight  (cgame/cg_hudelem.cpp:378)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float HudElemHeight(ScreenPlacement *param_1,hudelem_s *param_2,cg_hudelem_t *param_3)
+double HudElemHeight(undefined8 param_1,undefined4 *param_2,longlong param_3)
 
 {
-  float fVar1;
+  double dVar1;
+  double dVar2;
   
-  switch(param_2->type) {
-  case HE_TYPE_TEXT:
-  case HE_TYPE_VALUE:
-  case HE_TYPE_PLAYERNAME:
-  case HE_TYPE_TIMER_DOWN:
-  case HE_TYPE_TIMER_UP:
-  case HE_TYPE_TIMER_STATIC:
-  case HE_TYPE_TENTHS_TIMER_DOWN:
-  case HE_TYPE_TENTHS_TIMER_UP:
-  case HE_TYPE_TENTHS_TIMER_STATIC:
-    fVar1 = param_3->fontHeight;
+  switch(*param_2) {
+  case 1:
+  case 2:
+  case 3:
+  case 5:
+  case 6:
+  case 7:
+  case 8:
+  case 9:
+  case 10:
+    dVar2 = (double)*(float *)((int)param_3 + 0x220);
     break;
-  case HE_TYPE_MATERIAL:
-  case HE_TYPE_CLOCK_DOWN:
-  case HE_TYPE_CLOCK_UP:
-    fVar1 = HudElemMaterialHeight(param_1,param_2,param_3);
+  case 4:
+  case 0xb:
+  case 0xc:
+    dVar2 = (double)HudElemMaterialHeight(param_1,param_2,param_3);
     break;
-  case HE_TYPE_WAYPOINT:
-    fVar1 = (float)(longlong)param_2->height;
+  case 0xd:
+    dVar2 = (double)(longlong)(int)param_2[0x12];
     break;
   default:
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x199,
-                      0,"invalid case");
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82018064,0x199,0,0xffffffff820180b4);
     }
     return 0.0;
   }
-  if ((param_3 != (cg_hudelem_t *)0xfffffff0) && (fVar1 < param_3->fontHeight)) {
-    return param_3->fontHeight;
+  if ((param_3 != -0x10) && (dVar1 = (double)*(float *)((int)param_3 + 0x220), dVar2 < dVar1)) {
+    return dVar1;
   }
-  return fVar1;
+  return dVar2;
 }
 
 
 // 822D1588  AlignHudElemX  (cgame/cg_hudelem.cpp:433)
 
-float AlignHudElemX(int param_1,float param_2,float param_3)
+double AlignHudElemX(double param_1,double param_2,undefined8 param_3)
 
 {
   uint uVar1;
-  double dVar2;
-  double dVar3;
   
-  dVar3 = (double)param_3;
-  dVar2 = (double)param_2;
-  uVar1 = param_1 >> 2 & 3;
+  uVar1 = (int)param_3 >> 2 & 3;
   if (((uVar1 != 0) && (uVar1 != 1)) && (uVar1 != 2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x1b5,0,
-                    "%s\n\t(alignOrg) = %i");
+    MyAssertHandler(0xffffffff82018064,0x1b5,0,0xffffffff82018128,0xffffffff8201813c,param_3);
   }
-  return -(float)((double)s_alignScale[uVar1] * dVar3 - dVar2);
+  return -(double)(float)((double)*(float *)(&DAT_8201788c + uVar1 * 4) * param_2 - param_1);
 }
 
 
 // 822D1620  AlignHudElemY  (cgame/cg_hudelem.cpp:444)
 
-float AlignHudElemY(int param_1,float param_2,float param_3)
+double AlignHudElemY(double param_1,double param_2,uint param_3)
 
 {
   uint uVar1;
-  double dVar2;
-  double dVar3;
   
-  dVar2 = (double)param_2;
-  dVar3 = (double)param_3;
-  uVar1 = param_1 & 3;
+  uVar1 = param_3 & 3;
   if (((uVar1 != 0) && (uVar1 != 1)) && (uVar1 != 2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x1c0,0,
-                    "%s\n\t(alignOrg) = %i");
+    MyAssertHandler(0xffffffff82018064,0x1c0,0,0xffffffff82018128,0xffffffff82018168,param_3);
   }
-  return -(float)((double)s_alignScale[uVar1] * dVar3 - dVar2);
+  return -(double)(float)((double)*(float *)(&DAT_8201788c + uVar1 * 4) * param_2 - param_1);
 }
 
 
 // 822D16B8  GetHudElemOrg  (cgame/cg_hudelem.cpp:455)
 
-void GetHudElemOrg(ScreenPlacement *param_1,int param_2,int param_3,float param_4,float param_5,
-                  float param_6,float param_7,float *param_8,float *param_9)
+void GetHudElemOrg(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                  undefined8 param_5,undefined8 param_6)
 
 {
-  ScreenPlacement *pSVar1;
-  longlong lVar2;
-  int iVar3;
-  int iVar4;
+  undefined8 uVar1;
   ulonglong in_r10;
-  double extraout_f1;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  float fVar9;
+  undefined8 extraout_f1;
+  undefined8 uVar2;
+  double dVar3;
   float *in_stack_00000054;
   
-  dVar7 = (double)param_7;
-  dVar6 = (double)param_6;
-  dVar5 = (double)param_5;
-  lVar2 = (longlong)param_2;
-  __savegprlr_25((double)param_4,param_1,lVar2,param_3,param_8,param_9);
-  iVar3 = (int)lVar2;
-  pSVar1 = (ScreenPlacement *)__savefpr_28();
-  dVar8 = extraout_f1;
-  iVar4 = iVar3;
+  __savegprlr_25();
+  uVar1 = __savefpr_28();
+  uVar2 = extraout_f1;
   if ((in_r10 & 0xffffffff) == 0) {
-    iVar4 = 0x1cd;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x1cd,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82018064,0x1cd,0,0xffffffff82000f98,0xffffffff8201819c);
   }
   if (in_stack_00000054 == (float *)0x0) {
-    iVar4 = 0x1ce;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x1ce,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82018064,0x1ce,0,0xffffffff82000f98,0xffffffff82018194);
   }
-  fVar9 = ScrPlace_ApplyX(pSVar1,(float)dVar8,iVar4);
-  fVar9 = AlignHudElemX(iVar3,fVar9,(float)dVar6);
-  *(float *)in_r10 = fVar9;
-  fVar9 = ScrPlace_ApplyY(pSVar1,(float)dVar5,iVar4);
-  fVar9 = AlignHudElemY(iVar3,fVar9,(float)dVar7);
-  *in_stack_00000054 = fVar9;
+  uVar2 = ScrPlace_ApplyX(uVar2,uVar1);
+  dVar3 = (double)AlignHudElemX(uVar2,param_3,param_6);
+  *(float *)in_r10 = (float)dVar3;
+  uVar2 = ScrPlace_ApplyY(param_2,uVar1);
+  dVar3 = (double)AlignHudElemY(uVar2,param_4,param_6);
+  *in_stack_00000054 = (float)dVar3;
   __restfpr_28();
   __restgprlr_25();
   return;
@@ -568,22 +472,21 @@ void GetHudElemOrg(ScreenPlacement *param_1,int param_2,int param_3,float param_
 
 // 822D17A0  HudElemMovementFrac  (cgame/cg_hudelem.cpp:475)
 
-float HudElemMovementFrac(hudelem_s *param_1,int param_2)
+double HudElemMovementFrac(int param_1,longlong param_2)
 
 {
   int iVar1;
-  longlong lVar2;
-  int iVar3;
+  int iVar2;
   
-  iVar1 = param_1->moveTime;
+  iVar1 = *(int *)(param_1 + 0x74);
   if (0 < iVar1) {
-    lVar2 = (longlong)param_2 - (ulonglong)(uint)param_1->moveStartTime;
-    if (lVar2 < 1) {
+    param_2 = param_2 - (ulonglong)*(uint *)(param_1 + 0x70);
+    if (param_2 < 1) {
       return 0.0;
     }
-    iVar3 = (int)lVar2;
-    if (iVar3 < iVar1) {
-      return (float)(longlong)iVar3 / (float)(longlong)iVar1;
+    iVar2 = (int)param_2;
+    if (iVar2 < iVar1) {
+      return (double)((float)(longlong)iVar2 / (float)(longlong)iVar1);
     }
   }
   return 1.0;
@@ -592,101 +495,91 @@ float HudElemMovementFrac(hudelem_s *param_1,int param_2)
 
 // 822D1808  IsFontScaleLerping  (cgame/cg_hudelem.cpp:492)
 
-bool IsFontScaleLerping(hudelem_s *param_1,int param_2)
+ulonglong IsFontScaleLerping(int param_1,longlong param_2)
 
 {
   uint uVar1;
   ulonglong uVar2;
   
-  uVar1 = param_1->fontScaleTime;
+  uVar1 = *(uint *)(param_1 + 0x20);
   if ((int)uVar1 < 1) {
-    return false;
+    return 0;
   }
-  uVar2 = (longlong)param_2 - (ulonglong)(uint)param_1->fontScaleStartTime;
-  return (bool)((char)((~(uVar1 ^ uVar2) & 0xffffffff) >> 0x1f) + (uVar1 <= uVar2) & 1);
+  uVar2 = param_2 - (ulonglong)*(uint *)(param_1 + 0x1c);
+  return ((~(uVar1 ^ uVar2) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar1 <= uVar2) & 1;
 }
 
 
 // 822D1840  SetHudElemPos  (cgame/cg_hudelem.cpp:504)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void SetHudElemPos(ScreenPlacement *param_1,hudelem_s *param_2,cg_hudelem_t *param_3)
+void SetHudElemPos(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   int iVar1;
   uint uVar2;
   int iVar3;
   float *pfVar4;
-  ScreenPlacement *pSVar5;
-  ulonglong uVar6;
-  float *in_r6;
-  char *in_r7;
-  longlong lVar7;
-  int iVar9;
-  ulonglong uVar8;
+  undefined8 uVar5;
+  longlong lVar6;
+  int iVar8;
+  ulonglong uVar7;
+  double dVar9;
   double dVar10;
-  double dVar11;
   float local_50;
   float local_4c;
   undefined8 local_48;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  pSVar5 = (ScreenPlacement *)__savegprlr_27(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
-    in_r7 = "elem";
-    in_r6 = (float *)"%s";
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x1fd,0,
-                    "%s");
+  uVar5 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x1fd,0,0xffffffff82000f98,0xffffffff820181ac);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    in_r7 = "cghe";
-    in_r6 = (float *)"%s";
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x1fe,0,
-                    "%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x1fe,0,0xffffffff82000f98,0xffffffff820181a4);
   }
-  iVar3 = (int)uVar8;
+  iVar3 = (int)param_2;
   iVar1 = *(int *)(iVar3 + 0x74);
-  pfVar4 = (float *)uVar6;
+  pfVar4 = (float *)param_3;
   if (0 < iVar1) {
-    lVar7 = (ulonglong)(uint)pfVar4[0x8d] - (ulonglong)*(uint *)(iVar3 + 0x70);
-    if (lVar7 < 1) {
-      dVar10 = 0.0;
+    lVar6 = (ulonglong)(uint)pfVar4[0x8d] - (ulonglong)*(uint *)(iVar3 + 0x70);
+    if (lVar6 < 1) {
+      dVar9 = 0.0;
 LAB_822d18d8:
-      GetHudElemOrg(pSVar5,*(int *)(iVar3 + 0x68),*(int *)(iVar3 + 0x6c),*(float *)(iVar3 + 0x60),
-                    *(float *)(iVar3 + 100),pfVar4[2],pfVar4[3],in_r6,(float *)in_r7);
-      GetHudElemOrg(pSVar5,*(int *)(iVar3 + 0x28),*(int *)(iVar3 + 0x2c),*(float *)(iVar3 + 4),
-                    *(float *)(iVar3 + 8),pfVar4[2],pfVar4[3],in_r6,(float *)in_r7);
-      *pfVar4 = (float)((double)(float)((double)local_48._0_4_ - (double)local_50) * dVar10 +
+      GetHudElemOrg((double)*(float *)(iVar3 + 0x60),(double)*(float *)(iVar3 + 100),
+                    (double)pfVar4[2],(double)pfVar4[3],uVar5,*(undefined4 *)(iVar3 + 0x68),
+                    *(undefined4 *)(iVar3 + 0x6c));
+      GetHudElemOrg((double)*(float *)(iVar3 + 4),(double)*(float *)(iVar3 + 8),(double)pfVar4[2],
+                    (double)pfVar4[3],uVar5,*(undefined4 *)(iVar3 + 0x28),
+                    *(undefined4 *)(iVar3 + 0x2c));
+      *pfVar4 = (float)((double)(float)((double)local_48._0_4_ - (double)local_50) * dVar9 +
                        (double)local_50);
-      pfVar4[1] = (float)((double)(float)((double)local_48._4_4_ - (double)local_4c) * dVar10 +
+      pfVar4[1] = (float)((double)(float)((double)local_48._4_4_ - (double)local_4c) * dVar9 +
                          (double)local_4c);
       goto LAB_822d1958;
     }
-    iVar9 = (int)lVar7;
-    if (iVar9 < iVar1) {
-      local_48 = (longlong)iVar9;
-      dVar10 = (double)((float)local_48 / (float)(longlong)iVar1);
-      if (dVar10 != 1.0) goto LAB_822d18d8;
+    iVar8 = (int)lVar6;
+    if (iVar8 < iVar1) {
+      local_48 = (longlong)iVar8;
+      dVar9 = (double)((float)local_48 / (float)(longlong)iVar1);
+      if (dVar9 != 1.0) goto LAB_822d18d8;
     }
   }
-  GetHudElemOrg(pSVar5,*(int *)(iVar3 + 0x28),*(int *)(iVar3 + 0x2c),*(float *)(iVar3 + 4),
-                *(float *)(iVar3 + 8),pfVar4[2],pfVar4[3],in_r6,(float *)in_r7);
+  GetHudElemOrg((double)*(float *)(iVar3 + 4),(double)*(float *)(iVar3 + 8),(double)pfVar4[2],
+                (double)pfVar4[3],uVar5,*(undefined4 *)(iVar3 + 0x28),*(undefined4 *)(iVar3 + 0x2c))
+  ;
   uVar2 = *(uint *)(iVar3 + 0x20);
   if ((int)uVar2 < 1) {
-    uVar8 = 0;
+    uVar7 = 0;
   }
   else {
-    uVar8 = (ulonglong)(uint)pfVar4[0x8d] - (ulonglong)*(uint *)(iVar3 + 0x1c);
-    uVar8 = ((~(uVar2 ^ uVar8) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar2 <= uVar8) & 1;
+    uVar7 = (ulonglong)(uint)pfVar4[0x8d] - (ulonglong)*(uint *)(iVar3 + 0x1c);
+    uVar7 = ((~(uVar2 ^ uVar7) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar2 <= uVar7) & 1;
   }
-  if (uVar8 == 0) {
-    dVar11 = 0.5;
-    dVar10 = floor((double)(*pfVar4 + 0.5));
-    *pfVar4 = (float)(longlong)(int)dVar10;
-    dVar10 = floor((double)(float)((double)pfVar4[1] + dVar11));
-    pfVar4[1] = (float)(longlong)(int)dVar10;
+  if (uVar7 == 0) {
+    dVar10 = 0.5;
+    dVar9 = floor((double)(*pfVar4 + 0.5));
+    *pfVar4 = (float)(longlong)(int)dVar9;
+    dVar9 = floor((double)(float)((double)pfVar4[1] + dVar10));
+    pfVar4[1] = (float)(longlong)(int)dVar9;
     __restgprlr_27();
     return;
   }
@@ -698,9 +591,7 @@ LAB_822d1958:
 
 // 822D1A90  OffsetHudElemY  (cgame/cg_hudelem.cpp:535)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float OffsetHudElemY(hudelem_s *param_1,cg_hudelem_t *param_2,float param_3)
+double OffsetHudElemY(undefined8 param_1,int param_2,int param_3)
 
 {
   int iVar1;
@@ -709,37 +600,35 @@ float OffsetHudElemY(hudelem_s *param_1,cg_hudelem_t *param_2,float param_3)
   double dVar4;
   double dVar5;
   double dVar6;
-  float fVar7;
   
-  dVar4 = (double)param_3;
-  iVar1 = param_1->moveTime;
+  iVar1 = *(int *)(param_2 + 0x74);
   if (iVar1 < 1) {
 LAB_822d1b74:
-    fVar7 = AlignHudElemY(param_1->alignOrg,param_2->y,param_3);
-    return fVar7;
+    dVar6 = (double)AlignHudElemY((double)*(float *)(param_3 + 4),param_1,
+                                  *(undefined4 *)(param_2 + 0x28));
+    return dVar6;
   }
-  lVar2 = (ulonglong)(uint)param_2->timeNow - (ulonglong)(uint)param_1->moveStartTime;
+  lVar2 = (ulonglong)*(uint *)(param_3 + 0x234) - (ulonglong)*(uint *)(param_2 + 0x70);
   if (lVar2 < 1) {
     dVar6 = 0.0;
   }
   else {
     iVar3 = (int)lVar2;
     if ((iVar1 <= iVar3) ||
-       (dVar6 = (double)((float)(longlong)iVar3 / (float)(longlong)iVar1), dVar6 == 1.0))
+       (dVar6 = (double)(float)((double)(longlong)iVar3 / (double)(longlong)iVar1), dVar6 == 1.0))
     goto LAB_822d1b74;
   }
-  fVar7 = AlignHudElemY(param_1->fromAlignOrg,param_2->y,param_3);
-  dVar5 = (double)fVar7;
-  fVar7 = AlignHudElemY(param_1->alignOrg,param_2->y,(float)dVar4);
-  return (float)((double)(float)(dVar5 - (double)fVar7) * dVar6 + dVar5);
+  dVar4 = (double)AlignHudElemY((double)*(float *)(param_3 + 4),param_1,
+                                *(undefined4 *)(param_2 + 0x68));
+  dVar5 = (double)AlignHudElemY((double)*(float *)(param_3 + 4),param_1,
+                                *(undefined4 *)(param_2 + 0x28));
+  return (double)(float)((double)(float)(dVar4 - dVar5) * dVar6 + dVar4);
 }
 
 
 // 822D1B88  ConsolidateHudElemText  (cgame/cg_hudelem.cpp:551)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void ConsolidateHudElemText(cg_hudelem_t *param_1,char *param_2)
+void ConsolidateHudElemText(undefined8 param_1,void *param_2)
 
 {
   char cVar1;
@@ -749,9 +638,9 @@ void ConsolidateHudElemText(cg_hudelem_t *param_1,char *param_2)
   int iVar5;
   int iVar6;
   double dVar7;
-  float fVar8;
+  double dVar8;
   
-  iVar3 = __savegprlr_28(param_1);
+  iVar3 = __savegprlr_28();
   puVar2 = (undefined1 *)(iVar3 + 0x10);
   iVar6 = 0;
   iVar4 = 0;
@@ -764,7 +653,7 @@ void ConsolidateHudElemText(cg_hudelem_t *param_1,char *param_2)
       break;
     }
     iVar6 = iVar6 + 1;
-    param_2[iVar4] = cVar1;
+    *(char *)(iVar4 + (int)param_2) = cVar1;
     iVar4 = iVar4 + 1;
   } while (iVar6 < 0xff);
   iVar5 = 0;
@@ -775,14 +664,14 @@ void ConsolidateHudElemText(cg_hudelem_t *param_1,char *param_2)
         if (iVar6 < 0xff) goto LAB_822d1c3c;
         break;
       }
-      param_2[iVar6] = cVar1;
+      *(char *)(iVar6 + (int)param_2) = cVar1;
       iVar6 = iVar6 + 1;
       iVar5 = iVar5 + 1;
     } while (iVar6 < 0xff);
   }
   goto LAB_822d1c5c;
   while( true ) {
-    param_2[iVar6] = puVar2[iVar4];
+    *(undefined1 *)(iVar6 + (int)param_2) = puVar2[iVar4];
     iVar6 = iVar6 + 1;
     iVar4 = iVar4 + 1;
     if (0xfe < iVar6) break;
@@ -790,15 +679,15 @@ LAB_822d1c3c:
     if (puVar2[iVar4] == '\0') break;
   }
 LAB_822d1c5c:
-  param_2[iVar6] = '\0';
-  memcpy();
-  iVar4 = UI_TextWidth((char *)(iVar3 + 0x114),0,*(Font_s **)(iVar3 + 0x218),
-                       *(float *)(iVar3 + 0x21c));
-  dVar7 = (double)(longlong)iVar4;
-  fVar8 = CL_GetScreenAspectRatioDisplayPixel();
-  *(float *)(iVar3 + 0x214) = (float)(dVar7 / (double)fVar8);
+  *(undefined1 *)(iVar6 + (int)param_2) = 0;
+  memcpy((void *)(iVar3 + 0x114),param_2,0x100);
+  iVar4 = UI_TextWidth((double)*(float *)(iVar3 + 0x21c),(void *)(iVar3 + 0x114),0,
+                       *(undefined4 *)(iVar3 + 0x218));
+  dVar8 = (double)(longlong)iVar4;
+  dVar7 = (double)CL_GetScreenAspectRatioDisplayPixel();
+  *(float *)(iVar3 + 0x214) = (float)(dVar8 / dVar7);
   *puVar2 = 0;
-  *(float *)(iVar3 + 0x110) = 0.0;
+  *(undefined4 *)(iVar3 + 0x110) = 0;
   __restgprlr_28();
   return;
 }
@@ -806,98 +695,260 @@ LAB_822d1c5c:
 
 // 822D1CC0  CopyStringToHudElemString  (cgame/cg_hudelem.cpp:590)
 
-void CopyStringToHudElemString(char *param_1,char *param_2)
+void CopyStringToHudElemString(undefined8 param_1,ulonglong param_2)
 
 {
   char cVar1;
-  char *pcVar2;
-  ulonglong uVar3;
+  char *_Src;
+  undefined8 uVar2;
+  void *pvVar3;
   char *pcVar4;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  if (pcVar2 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x251,0,
-                    "%s");
+  _Src = (char *)__savegprlr_28();
+  if (_Src == (char *)0x0) {
+    MyAssertHandler(0xffffffff82018064,0x251,0,0xffffffff82000f98,0xffffffff820181d4);
   }
-  pcVar4 = pcVar2;
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x252,0,
-                    "%s");
+  pcVar4 = _Src;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x252,0,0xffffffff82000f98,0xffffffff8201804c);
   }
   do {
     cVar1 = *pcVar4;
     pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
-  if ((int)(pcVar4 + (-1 - (int)pcVar2)) < 0x100) {
-    memcpy();
-    (pcVar4 + (-1 - (int)pcVar2))[(int)uVar3] = '\0';
-    __restgprlr_28();
+  pcVar4 = pcVar4 + (-1 - (int)_Src);
+  if ((int)pcVar4 < 0x100) {
+    pvVar3 = memcpy((void *)param_2,_Src,(size_t)pcVar4);
+    pcVar4[(int)(void *)param_2] = '\0';
+    __restgprlr_28(pvVar3);
     return;
   }
-  pcVar2 = va("Hud elem string too long, %s");
-  Com_Error(ERR_DROP,pcVar2);
+  uVar2 = va(0xffffffff820181b4);
+  Com_Error(1,uVar2);
   __restgprlr_28();
   return;
 }
 
 
 // 822D1D98  DrawSingleHudElem2d_GetHudElemInfo  (cgame/cg_hudelem.cpp:612)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void DrawSingleHudElem2d_GetHudElemInfo
+               (undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4)
+
+{
+  uint uVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  undefined8 uVar4;
+  int iVar5;
+  undefined4 uVar6;
+  int iVar7;
+  longlong lVar8;
+  longlong lVar9;
+  undefined8 uVar10;
+  char *pcVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  float local_80 [2];
+  longlong local_78;
+  
+  uVar4 = __savegprlr_22();
+  iVar5 = ScrPlace_GetActivePlacement();
+  puVar2 = (undefined4 *)param_2;
+  uVar1 = puVar2[9];
+  if (uVar1 < 8) {
+    if (uVar1 == 0) goto LAB_822d1e84;
+    if (uVar1 == 1) {
+      uVar10 = 4;
+      dVar13 = 0.5833333134651184;
+      goto LAB_822d1e90;
+    }
+    if (uVar1 == 2) {
+      uVar10 = 5;
+      dVar13 = 0.375;
+      goto LAB_822d1e90;
+    }
+    if (uVar1 == 3) {
+      uVar10 = 6;
+    }
+    else if (uVar1 == 4) {
+      uVar10 = 2;
+    }
+    else {
+      if (uVar1 != 5) {
+        if (uVar1 == 6) {
+          uVar10 = 9;
+          dVar13 = 0.5833333134651184;
+        }
+        else {
+          uVar10 = 10;
+          dVar13 = 0.375;
+        }
+        goto LAB_822d1e90;
+      }
+      uVar10 = 3;
+    }
+  }
+  else {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82018064,0x273,0,0xffffffff820180b4);
+    }
+LAB_822d1e84:
+    uVar10 = 0;
+  }
+  dVar13 = 0.25;
+LAB_822d1e90:
+  iVar3 = (int)param_3;
+  BG_LerpFontScale(param_2,*(undefined4 *)(iVar3 + 0x234),local_80);
+  dVar14 = (double)((float)((double)local_80[0] * dVar13) * DAT_82b5c7fc);
+  dVar13 = (double)ScrPlace_HiResGetScaleY();
+  *(float *)(iVar3 + 0x21c) = *(float *)(iVar5 + 4) * (float)(dVar13 * dVar14);
+  uVar6 = UI_GetFontHandle(iVar5,uVar10);
+  *(undefined4 *)(iVar3 + 0x218) = uVar6;
+  iVar7 = UI_TextHeight((double)*(float *)(iVar3 + 0x21c));
+  local_78 = (longlong)iVar7;
+  *(undefined1 *)(iVar3 + 0x10) = 0;
+  lVar8 = param_3 + 0x10;
+  *(float *)(iVar3 + 0x220) = (float)local_78;
+  if (puVar2[0x10] != 0) {
+    SafeTranslateHudElemString(uVar4,puVar2[0x10],lVar8,0x100);
+  }
+  *(undefined1 *)(iVar3 + 0x114) = 0;
+  lVar9 = param_3 + 0x114;
+  switch(*puVar2) {
+  case 1:
+    if (puVar2[0x21] != 0) {
+      SafeTranslateHudElemString(uVar4,puVar2[0x21],lVar9,0x100);
+    }
+    break;
+  case 2:
+    Com_sprintf(lVar9,0x100,0xffffffff820181dc,(double)(float)puVar2[0x20]);
+    break;
+  case 3:
+    dVar13 = floor((double)((float)puVar2[0x20] + 0.5));
+    uVar1 = (uint)dVar13;
+    local_78 = (longlong)(int)uVar1;
+    if ((-1 < (int)uVar1) && ((int)uVar1 < 0x12)) {
+      iVar7 = CG_GetLocalClientGlobals(uVar4);
+      if (0x11 < uVar1) {
+        MyAssertHandler(0xffffffff82018064,0x2aa,0,0xffffffff82018234,uVar1,0x12);
+      }
+      iVar7 = uVar1 * 0x590 + iVar7;
+      if (*(int *)(iVar7 + 0x100b88) == 0) {
+        uVar4 = UI_SafeTranslateString(0xffffffff820181e0);
+        I_strncpyz(lVar9,uVar4,0x100);
+      }
+      else {
+        pcVar11 = (char *)(iVar7 + 0x100b94);
+        if (*pcVar11 == '\0') {
+          MyAssertHandler(0xffffffff82018064,0x2ae,0,0xffffffff82000f98,0xffffffff820181f4);
+        }
+        I_strncpyz(lVar9,pcVar11,0x100);
+      }
+    }
+    break;
+  case 5:
+  case 6:
+  case 7:
+    uVar4 = HudElemTimerString(param_2,*(undefined4 *)(iVar3 + 0x234));
+    CopyStringToHudElemString(uVar4,lVar9);
+    break;
+  case 8:
+  case 9:
+  case 10:
+    uVar4 = HudElemTenthsTimerString(param_2,*(undefined4 *)(iVar3 + 0x234));
+    CopyStringToHudElemString(uVar4,lVar9);
+  }
+  if ((*(char *)lVar8 != '\0') && (*(char *)lVar9 != '\0')) {
+    ConsolidateHudElemText(param_3,param_4);
+  }
+  dVar13 = 0.0;
+  if (*(char *)lVar8 == '\0') {
+    *(undefined4 *)(iVar3 + 0x110) = 0;
+  }
+  else {
+    iVar7 = UI_TextWidth((double)*(float *)(iVar3 + 0x21c),lVar8,0,*(undefined4 *)(iVar3 + 0x218));
+    local_78 = (longlong)iVar7;
+    dVar12 = (double)local_78;
+    dVar14 = (double)CL_GetScreenAspectRatioDisplayPixel();
+    *(float *)(iVar3 + 0x110) = (float)(dVar12 / dVar14);
+  }
+  if (*(char *)lVar9 == '\0') {
+    *(float *)(iVar3 + 0x214) = (float)dVar13;
+  }
+  else {
+    iVar7 = UI_TextWidth((double)*(float *)(iVar3 + 0x21c),lVar9,0,*(undefined4 *)(iVar3 + 0x218));
+    local_78 = (longlong)iVar7;
+    dVar14 = (double)local_78;
+    dVar13 = (double)CL_GetScreenAspectRatioDisplayPixel();
+    *(float *)(iVar3 + 0x214) = (float)(dVar14 / dVar13);
+  }
+  dVar13 = (double)HudElemWidth(iVar5,param_2,param_3);
+  *(float *)(iVar3 + 8) = (float)dVar13;
+  dVar13 = (double)HudElemHeight(iVar5,param_2,param_3);
+  *(float *)(iVar3 + 0xc) = (float)dVar13;
+  SetHudElemPos(iVar5,param_2,param_3);
+  __restgprlr_22();
+  return;
+}
+
 
 // 822D21D8  HudElemColorToVec4  (cgame/cg_hudelem.cpp:747)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void HudElemColorToVec4(LocalClientNum_t param_1,hudelem_color_t *param_2,float *param_3)
+void HudElemColorToVec4(undefined8 param_1,byte *param_2,float *param_3)
 
 {
   float fVar1;
-  dvar_t *pdVar2;
-  LocalClientNum_t LVar3;
-  uiMenuCommand_t uVar4;
+  undefined8 uVar2;
+  int iVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
+  undefined8 uVar7;
   
-  __savegprlr_25(param_1);
-  LVar3 = __savefpr_28();
-  if (hudElemPausedBrightness == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x2ec,0,
-                    "%s");
+  __savegprlr_25();
+  uVar2 = __savefpr_28();
+  if (DAT_82a22cd8 == 0) {
+    MyAssertHandler(0xffffffff82018064,0x2ec,0,0xffffffff82000f98,0xffffffff82017ad0);
   }
-  if (cl_paused == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x2ed,0,
-                    "%s");
+  if (DAT_83666158 == 0) {
+    MyAssertHandler(0xffffffff82018064,0x2ed,0,0xffffffff82000f98,0xffffffff82018374);
   }
-  pdVar2 = cl_paused;
-  *param_3 = (float)(param_2->_s_0).r * 0.003921569;
-  param_3[1] = (float)(param_2->_s_0).g * 0.003921569;
-  param_3[2] = (float)(param_2->_s_0).b * 0.003921569;
-  param_3[3] = (float)(param_2->_s_0).a * 0.003921569;
-  if (((pdVar2->current).integer != 0) && (uVar4 = UI_GetActiveMenu(LVar3), uVar4 != UIMENU_NONE)) {
-    fVar1 = (hudElemPausedBrightness->current).value;
+  iVar3 = DAT_83666158;
+  *param_3 = (float)*param_2 * 0.003921569;
+  param_3[1] = (float)param_2[1] * 0.003921569;
+  param_3[2] = (float)param_2[2] * 0.003921569;
+  param_3[3] = (float)param_2[3] * 0.003921569;
+  if ((*(int *)(iVar3 + 0xc) != 0) && (iVar3 = UI_GetActiveMenu(uVar2), iVar3 != 0)) {
+    fVar1 = *(float *)(DAT_82a22cd8 + 0xc);
     *param_3 = *param_3 * fVar1;
     param_3[1] = param_3[1] * fVar1;
     param_3[2] = param_3[2] * fVar1;
   }
+  dVar4 = (double)*param_3;
   dVar6 = 0.0;
   dVar5 = 1.0000009536743164;
-  if ((*param_3 < 0.0) || (1.000001 < *param_3)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x2f7,0,
-                    "resultColor[0] not in [0.0f, 1.000001f]\n\t%g not in [%g, %g]");
+  uVar2 = 0x3ff0000100000000;
+  uVar7 = 0;
+  if ((dVar4 < 0.0) || (1.0000009536743164 < dVar4)) {
+    MyAssertHandler(dVar4,0,0x3ff0000100000000,0xffffffff82018064,0x2f7,0,0xffffffff82018328,dVar4,0
+                    ,0x3ff0000100000000);
   }
-  if (((double)param_3[1] < dVar6) || (dVar5 < (double)param_3[1])) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x2f8,0,
-                    "resultColor[1] not in [0.0f, 1.000001f]\n\t%g not in [%g, %g]");
+  dVar4 = (double)param_3[1];
+  if ((dVar4 < dVar6) || (dVar5 < dVar4)) {
+    MyAssertHandler(dVar4,uVar7,uVar2,0xffffffff82018064,0x2f8,0,0xffffffff820182ec,dVar4,uVar7,
+                    uVar2);
   }
-  if (((double)param_3[2] < dVar6) || (dVar5 < (double)param_3[2])) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x2f9,0,
-                    "resultColor[2] not in [0.0f, 1.000001f]\n\t%g not in [%g, %g]");
+  dVar4 = (double)param_3[2];
+  if ((dVar4 < dVar6) || (dVar5 < dVar4)) {
+    MyAssertHandler(dVar4,uVar7,uVar2,0xffffffff82018064,0x2f9,0,0xffffffff820182b0,dVar4,uVar7,
+                    uVar2);
   }
-  if (((double)param_3[3] < dVar6) || (dVar5 < (double)param_3[3])) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x2fa,0,
-                    "resultColor[3] not in [0.0f, 1.000001f]\n\t%g not in [%g, %g]");
+  dVar4 = (double)param_3[3];
+  if ((dVar4 < dVar6) || (dVar5 < dVar4)) {
+    MyAssertHandler(dVar4,uVar7,uVar2,0xffffffff82018064,0x2fa,0,0xffffffff82018274,dVar4,uVar7,
+                    uVar2);
   }
   __restfpr_28();
   __restgprlr_25();
@@ -906,66 +957,117 @@ void HudElemColorToVec4(LocalClientNum_t param_1,hudelem_color_t *param_2,float 
 
 
 // 822D2488  DrawHudElemString  (cgame/cg_hudelem.cpp:767)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
-// 822D26F0  DrawHudElemClock  (cgame/cg_hudelem.cpp:813)
-
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void DrawHudElemClock(LocalClientNum_t param_1,hudelem_s *param_2,cg_hudelem_t *param_3)
+void DrawHudElemString(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-  LocalClientNum_t LVar1;
+  float *pfVar1;
   int iVar2;
-  ScreenPlacement *pSVar3;
-  cg_hudelem_t *pcVar4;
-  cg_hudelem_t *pcVar5;
-  double dVar6;
-  double dVar7;
+  undefined8 uVar3;
+  float *pfVar6;
+  longlong lVar4;
+  undefined8 uVar5;
+  float fVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  float fVar11;
-  char acStack_a0 [160];
+  double dVar11;
+  double dVar12;
   
-  __savegprlr_27(param_1);
-  LVar1 = __savefpr_27();
-  dVar10 = 0.0;
-  if (param_3->color[3] == 0.0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x338,0,
-                    "%s");
+  __savegprlr_25();
+  uVar3 = __savefpr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x309,0,0xffffffff82000f98,0xffffffff82013b1c);
   }
-  iVar2 = CG_ServerMaterialName(LVar1,param_2->materialIndex,acStack_a0,0x3a);
-  if (iVar2 != 0) {
-    Material_RegisterHandle(acStack_a0,7);
-    I_strncat(acStack_a0,0x40,"needle");
-    Material_RegisterHandle(acStack_a0,7);
-    iVar2 = GetHudElemTime(param_2,param_3->timeNow);
-    if (param_2->duration == 0) {
-      fVar11 = (float)(longlong)iVar2 * 0.006;
+  if (*(char *)param_2 == '\0') {
+    MyAssertHandler(0xffffffff82018064,0x30a,0,0xffffffff82000f98,0xffffffff82018390);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x30b,0,0xffffffff82000f98,0xffffffff820181ac);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x30c,0,0xffffffff82000f98,0xffffffff820181a4);
+  }
+  pfVar1 = (float *)param_4;
+  if (pfVar1[0x8c] == 0.0) {
+    MyAssertHandler(0xffffffff82018064,0x30e,0,0xffffffff82000f98,0xffffffff82018380);
+  }
+  pfVar6 = (float *)ScrPlace_GetActivePlacement(uVar3);
+  dVar8 = (double)OffsetHudElemY(-(double)(pfVar1[3] - pfVar1[0x88]),param_3,param_4);
+  dVar9 = (double)R_NormalizedTextScale((double)pfVar1[0x87],pfVar1[0x86]);
+  dVar11 = (double)(float)(dVar9 / (double)DAT_82b5c7fc);
+  dVar10 = (double)ScrPlace_HiResGetScaleY();
+  dVar11 = (double)(pfVar6[5] * (float)(dVar11 / dVar10) * DAT_82b5c7fc);
+  dVar10 = (double)ScrPlace_HiResGetScaleX();
+  iVar2 = (int)param_3;
+  fVar7 = *(float *)(iVar2 + 0x90);
+  dVar12 = (double)pfVar1[0x88];
+  dVar10 = (double)(*pfVar6 * (float)(dVar10 * dVar11));
+  if ((fVar7 != 0.0) && ((int)pfVar1[0x8d] < (int)fVar7)) {
+    fVar7 = pfVar1[0x8d];
+  }
+  HudElemColorToVec4(uVar3,param_3 + 0x8c,0xffffffff82a22d2c);
+  if (fVar7 != 0.0) {
+    lVar4 = CG_GetLocalClientGlobals(uVar3);
+    uVar5 = SEH_PrintStrlen(param_2);
+    CL_PlayTextFXPulseSounds
+              (uVar3,pfVar1[0x8d],uVar5,fVar7,*(undefined4 *)(iVar2 + 0x94),
+               *(undefined4 *)(iVar2 + 0x98),
+               ((ulonglong)*(uint *)(iVar2 + 0xa0) + 0x42037 & 0x3fffffff) * 4 + lVar4);
+  }
+  CL_DrawTextPhysicalWithEffects
+            ((double)*pfVar1,(double)(float)(dVar12 + dVar8),dVar10,dVar9,param_2,0x7fffffff,
+             pfVar1[0x86]);
+  __restfpr_28();
+  __restgprlr_25();
+  return;
+}
+
+
+// 822D26F0  DrawHudElemClock  (cgame/cg_hudelem.cpp:813)
+
+void DrawHudElemClock(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  float *pfVar1;
+  float fVar2;
+  undefined8 uVar3;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  double dVar8;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  undefined1 auStack_a0 [160];
+  
+  __savegprlr_27();
+  uVar3 = __savefpr_27();
+  pfVar1 = (float *)param_3;
+  uVar10 = 0;
+  if (pfVar1[0x8c] == 0.0) {
+    MyAssertHandler(0xffffffff82018064,0x338,0,0xffffffff82000f98,0xffffffff82018380);
+  }
+  iVar4 = CG_ServerMaterialName(uVar3,*(undefined4 *)((int)param_2 + 0x4c),auStack_a0,0x3a);
+  if (iVar4 != 0) {
+    Material_RegisterHandle(auStack_a0,7);
+    I_strncat(auStack_a0,0x40,0xffffffff8201839c);
+    Material_RegisterHandle(auStack_a0,7);
+    iVar5 = GetHudElemTime(param_2,pfVar1[0x8d]);
+    iVar4 = *(int *)((int)param_2 + 0x7c);
+    if (iVar4 == 0) {
+      fVar2 = (float)(longlong)iVar5 * 0.006;
     }
     else {
-      fVar11 = ((float)(longlong)iVar2 * 360.0) / (float)(longlong)param_2->duration;
+      fVar2 = ((float)(longlong)iVar5 * 360.0) / (float)(longlong)iVar4;
     }
-    fVar11 = AngleNormalize360(fVar11);
-    dVar6 = (double)fVar11;
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    fVar11 = HudElemMaterialWidth(pSVar3,param_2,param_3);
-    dVar7 = (double)fVar11;
-    pcVar5 = param_3;
-    fVar11 = HudElemMaterialHeight(pSVar3,param_2,param_3);
-    dVar8 = (double)fVar11;
-    pcVar4 = param_3;
-    fVar11 = OffsetHudElemY(param_2,param_3,-(float)((double)param_3->height - dVar8));
-    dVar9 = (double)fVar11;
-    CL_DrawStretchPicPhysical
-              (param_3->x,fVar11,(float)dVar7,(float)dVar8,(float)dVar10,(float)dVar10,1.0,1.0,
-               (float *)param_2,(Material *)pcVar4);
-    CG_DrawRotatedPicPhysical
-              (pSVar3,param_3->x,(float)dVar9,(float)dVar7,(float)dVar8,(float)dVar6,&pcVar4->x,
-               (Material *)pcVar5);
+    uVar6 = AngleNormalize360((double)fVar2);
+    uVar3 = ScrPlace_GetActivePlacement(uVar3);
+    uVar7 = HudElemMaterialWidth(uVar3,param_2,param_3);
+    dVar8 = (double)HudElemMaterialHeight(uVar3,param_2,param_3);
+    uVar9 = OffsetHudElemY(-(double)(float)((double)pfVar1[3] - dVar8),param_2,param_3);
+    CL_DrawStretchPicPhysical((double)*pfVar1,uVar9,uVar7,dVar8,uVar10,uVar10,0x3ff0000000000000);
+    CG_DrawRotatedPicPhysical((double)*pfVar1,uVar9,uVar7,dVar8,uVar6,uVar3);
   }
   __restfpr_27();
   __restgprlr_27();
@@ -975,42 +1077,32 @@ void DrawHudElemClock(LocalClientNum_t param_1,hudelem_s *param_2,cg_hudelem_t *
 
 // 822D28C8  DrawHudElemMaterial  (cgame/cg_hudelem.cpp:859)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void DrawHudElemMaterial(LocalClientNum_t param_1,hudelem_s *param_2,cg_hudelem_t *param_3)
+void DrawHudElemMaterial(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  ScreenPlacement *pSVar3;
-  cg_hudelem_t *pcVar4;
+  float *pfVar1;
+  undefined8 uVar2;
+  int iVar4;
+  undefined8 uVar3;
   double dVar5;
-  double dVar6;
-  double dVar7;
-  float fVar8;
-  char acStack_80 [128];
+  undefined8 uVar6;
+  undefined1 auStack_80 [128];
   
-  LVar1 = __savegprlr_28(param_1);
-  dVar7 = 0.0;
-  if (param_3->color[3] == 0.0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x362,0,
-                    "%s");
+  uVar2 = __savegprlr_28();
+  pfVar1 = (float *)param_3;
+  uVar6 = 0;
+  if (pfVar1[0x8c] == 0.0) {
+    MyAssertHandler(0xffffffff82018064,0x362,0,0xffffffff82000f98,0xffffffff82018380);
   }
-  iVar2 = CG_ServerMaterialName(LVar1,param_2->materialIndex,acStack_80,0x40);
-  if (iVar2 != 0) {
-    Material_RegisterHandle(acStack_80,7);
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    fVar8 = HudElemMaterialWidth(pSVar3,param_2,param_3);
-    dVar5 = (double)fVar8;
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    fVar8 = HudElemMaterialHeight(pSVar3,param_2,param_3);
-    dVar6 = (double)fVar8;
-    pcVar4 = param_3;
-    fVar8 = OffsetHudElemY(param_2,param_3,-(float)((double)param_3->height - dVar6));
-    CL_DrawStretchPicPhysical
-              (param_3->x,fVar8,(float)dVar5,(float)dVar6,(float)dVar7,(float)dVar7,1.0,1.0,
-               (float *)param_2,(Material *)pcVar4);
+  iVar4 = CG_ServerMaterialName(uVar2,*(undefined4 *)((int)param_2 + 0x4c),auStack_80,0x40);
+  if (iVar4 != 0) {
+    Material_RegisterHandle(auStack_80,7);
+    uVar3 = ScrPlace_GetActivePlacement(uVar2);
+    uVar3 = HudElemMaterialWidth(uVar3,param_2,param_3);
+    uVar2 = ScrPlace_GetActivePlacement(uVar2);
+    dVar5 = (double)HudElemMaterialHeight(uVar2,param_2,param_3);
+    uVar2 = OffsetHudElemY(-(double)(float)((double)pfVar1[3] - dVar5),param_2,param_3);
+    CL_DrawStretchPicPhysical((double)*pfVar1,uVar2,uVar3,dVar5,uVar6,uVar6,0x3ff0000000000000);
   }
   __restgprlr_28();
   return;
@@ -1018,33 +1110,350 @@ void DrawHudElemMaterial(LocalClientNum_t param_1,hudelem_s *param_2,cg_hudelem_
 
 
 // 822D29E0  HudElemWaypointHeight  (cgame/cg_hudelem.cpp:882)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+double HudElemWaypointHeight(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  
+  dVar2 = (double)(longlong)*(int *)(param_2 + 0x48);
+  dVar3 = dVar2;
+  if (0 < *(int *)(param_2 + 0x5c)) {
+    iVar1 = CG_GetLocalClientGlobals();
+    iVar1 = *(int *)(iVar1 + 0x6b98c) - *(int *)(param_2 + 0x58);
+    dVar3 = dVar2;
+    if ((iVar1 < *(int *)(param_2 + 0x5c)) &&
+       (dVar3 = (double)(longlong)*(int *)(param_2 + 0x54), 0 < iVar1)) {
+      dVar4 = (double)(float)((double)(longlong)iVar1 / (double)(longlong)*(int *)(param_2 + 0x5c));
+      if ((dVar4 < 0.0) || (1.0 < dVar4)) {
+        MyAssertHandler(dVar4,0xffffffff82018064,0x385,1,0xffffffff820180f8,dVar4,0,
+                        0x3ff0000000000000);
+      }
+      dVar3 = (double)(float)((double)(float)(dVar2 - dVar3) * dVar4 + dVar3);
+    }
+  }
+  return dVar3;
+}
+
 
 // 822D2B38  ClampScreenPosToEdges  (cgame/cg_hudelem.cpp:907)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-bool ClampScreenPosToEdges
-               (LocalClientNum_t param_1,float *param_2,float param_3,float param_4,float param_5,
-               float param_6,float *param_7,float *param_8)
+void ClampScreenPosToEdges
+               (undefined8 param_1,double param_2,double param_3,double param_4,undefined8 param_5,
+               undefined8 param_6)
 
 {
-  bool bVar1;
-  LocalClientNum_t LVar2;
-  ScreenPlacement *pSVar3;
-  undefined1 uVar4;
-  longlong lVar5;
-  Material *pMVar6;
-  Material *pMVar7;
-  float *in_r9;
+  float fVar1;
+  float fVar2;
+  bool bVar3;
+  bool bVar4;
+  undefined8 uVar5;
+  float *pfVar6;
+  float *pfVar7;
+  undefined8 in_r9;
   ulonglong in_r10;
   bool bVar8;
-  bool bVar9;
-  double dVar10;
+  double dVar9;
   double extraout_f1;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_84;
+  float local_80;
+  float local_7c;
+  
+  __savegprlr_25();
+  uVar5 = __savefpr_26();
+  dVar13 = extraout_f1;
+  if ((in_r10 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x396,0,0xffffffff82000f98,0xffffffff820183a4);
+  }
+  pfVar6 = (float *)ScrPlace_GetActivePlacement(uVar5);
+  bVar4 = false;
+  pfVar7 = (float *)param_6;
+  local_80 = *pfVar7;
+  local_7c = pfVar7[1];
+  dVar15 = (double)(pfVar6[9] * 0.5);
+  dVar16 = (double)(pfVar6[8] * 0.5);
+  pfVar7[1] = (float)((double)local_7c - dVar15);
+  dVar9 = (double)(float)((double)local_80 - dVar16);
+  *pfVar7 = (float)((double)local_80 - dVar16);
+  dVar13 = (double)(float)((double)(float)((double)pfVar6[0x16] + dVar13) - dVar16);
+  dVar11 = (double)(float)((double)(float)((double)pfVar6[0x17] + param_3) - dVar15);
+  dVar12 = (double)(float)(dVar16 - (double)(float)((double)(pfVar6[8] - pfVar6[0x18]) + param_2));
+  dVar10 = (double)(float)(dVar15 - (double)(float)((double)(pfVar6[9] - pfVar6[0x19]) + param_4));
+  dVar14 = dVar13;
+  if ((dVar9 < dVar13) || (dVar14 = dVar12, dVar12 < dVar9)) {
+    pfVar7[1] = (float)((double)(float)((double)local_7c - dVar15) * (double)(float)(dVar14 / dVar9)
+                       );
+    *pfVar7 = (float)(dVar9 * (double)(float)(dVar14 / dVar9));
+    bVar4 = true;
+  }
+  dVar9 = (double)pfVar7[1];
+  dVar14 = dVar11;
+  if ((dVar9 < dVar11) || (dVar14 = dVar10, dVar10 < dVar9)) {
+    pfVar7[1] = (float)(dVar9 * (double)(float)(dVar14 / dVar9));
+    *pfVar7 = (float)((double)*pfVar7 * (double)(float)(dVar14 / dVar9));
+    bVar4 = true;
+  }
+  if (*(char *)(DAT_82a22ce0 + 0xc) == '\0') goto LAB_822d2eb4;
+  fVar1 = *pfVar7;
+  dVar9 = 0.0;
+  dVar14 = (double)((pfVar6[1] + *pfVar6) * *(float *)(DAT_82a22d04 + 0xc) * 0.5);
+  fVar2 = pfVar7[1];
+  if (0.0 <= fVar1) {
+    dVar13 = dVar12 - dVar14;
+  }
+  else {
+    dVar13 = dVar14 + dVar13;
+  }
+  local_90 = (float)dVar13;
+  dVar13 = (double)local_90;
+  if (0.0 <= fVar2) {
+    dVar11 = dVar10 - dVar14;
+  }
+  else {
+    dVar11 = dVar14 + dVar11;
+  }
+  local_8c = (float)dVar11;
+  dVar11 = (double)local_8c;
+  if (*(char *)(DAT_82a22d08 + 0xc) != '\0') {
+    uVar5 = 0x4008000000000000;
+    dVar10 = 1.0;
+    CL_DrawStretchPicPhysical
+              ((double)((float)(dVar13 + dVar16) - 1.0),(double)((float)(dVar11 + dVar15) - 1.0),
+               0x4008000000000000,0x4008000000000000,0,0,0x3ff0000000000000,0x3ff0000000000000);
+    CL_DrawStretchPicPhysical
+              ((double)(float)((double)(float)((double)*pfVar7 + dVar16) - dVar10),
+               (double)(float)((double)(float)((double)pfVar7[1] + dVar15) - dVar10),uVar5,uVar5,
+               dVar9,dVar9,dVar10,dVar10);
+    dVar11 = (double)local_8c;
+    dVar13 = (double)local_90;
+  }
+  local_88 = (float)((double)*pfVar7 - dVar13);
+  local_84 = (float)((double)pfVar7[1] - dVar11);
+  Vec2Normalize(&local_88);
+  if (0.0 <= fVar1) {
+    if ((double)local_88 <= dVar9) goto LAB_822d2e2c;
+LAB_822d2e24:
+    bVar8 = true;
+  }
+  else {
+    if ((double)local_88 < dVar9) goto LAB_822d2e24;
+LAB_822d2e2c:
+    bVar8 = false;
+  }
+  if (0.0 <= fVar2) {
+    if ((double)local_84 <= dVar9) goto LAB_822d2e60;
+LAB_822d2e58:
+    bVar3 = true;
+  }
+  else {
+    if ((double)local_84 < dVar9) goto LAB_822d2e58;
+LAB_822d2e60:
+    bVar3 = false;
+  }
+  if (((bVar8) && (bVar3)) && (dVar13 = (double)Vec2Distance(&local_90,param_6), dVar14 < dVar13)) {
+    bVar4 = true;
+    *pfVar7 = (float)((double)local_88 * dVar14 + (double)local_90);
+    pfVar7[1] = (float)((double)local_84 * dVar14 + (double)local_8c);
+  }
+LAB_822d2eb4:
+  *pfVar7 = (float)((double)*pfVar7 + dVar16);
+  pfVar7[1] = (float)((double)pfVar7[1] + dVar15);
+  if (bVar4) {
+    dVar13 = (double)Vec2Distance(param_6,&local_80);
+    *(float *)in_r10 = (float)dVar13;
+    *(float *)in_r9 = local_80 - *pfVar7;
+    ((float *)in_r9)[1] = local_7c - pfVar7[1];
+    Vec2Normalize(in_r9);
+  }
+  __restfpr_26(bVar4);
+  __restgprlr_25();
+  return;
+}
+
+
+// 822D2F28  GetScaleForDistance  (cgame/cg_hudelem.cpp:1008)
+
+double GetScaleForDistance(undefined8 param_1,float *param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  
+  iVar5 = CG_GetLocalClientGlobals();
+  fVar2 = param_2[2] - *(float *)(iVar5 + 0x6b9d0);
+  fVar3 = *param_2 - *(float *)(iVar5 + 0x6b9c8);
+  fVar4 = param_2[1] - *(float *)(iVar5 + 0x6b9cc);
+  fVar1 = *(float *)(DAT_82a22cdc + 0xc);
+  fVar2 = SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  if (fVar2 <= fVar1) {
+    return 1.0;
+  }
+  if (*(float *)(DAT_82a22d0c + 0xc) <= fVar2) {
+    return (double)*(float *)(DAT_82a22d1c + 0xc);
+  }
+  fVar3 = *(float *)(DAT_82a22d0c + 0xc) - fVar1;
+  if (fVar3 <= 0.0) {
+    fVar3 = 1.0;
+  }
+  fVar3 = (fVar2 - fVar1) / fVar3;
+  return (double)(*(float *)(DAT_82a22d1c + 0xc) * fVar3 + (1.0 - fVar3));
+}
+
+
+// 822D3030  GetStanceHeightFromDObj  (cgame/cg_hudelem.cpp:1030)
+
+void GetStanceHeightFromDObj(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined2 uVar1;
+  int iVar4;
+  ulonglong uVar2;
+  int iVar5;
+  undefined8 uVar3;
+  float *pfVar6;
+  undefined1 auStack_40 [8];
+  float local_38;
+  
+  iVar4 = __savegprlr_28();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82018064,0x40c,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x40d,0,0xffffffff82000f98,0xffffffff82012420);
+  }
+  uVar1 = DAT_835a0b86;
+  uVar2 = Com_GetClientDObj(*(undefined4 *)(iVar4 + 0xc4),DAT_82a382e4);
+  pfVar6 = (float *)param_2;
+  if ((uVar2 & 0xffffffff) == 0) {
+    *pfVar6 = 0.0;
+    __restgprlr_28();
+    return;
+  }
+  iVar5 = CG_DObjGetWorldTagPos(iVar4,uVar2,uVar1,auStack_40);
+  if (iVar5 == 0) {
+    uVar3 = SL_ConvertToString(uVar1);
+    Com_PrintWarning(0xe,0xffffffff820183b0,uVar3);
+    *pfVar6 = 0.0;
+    __restgprlr_28(0);
+    return;
+  }
+  *pfVar6 = (local_38 - *(float *)(iVar4 + 0x1c)) + DAT_82962adc;
+  __restgprlr_28(1);
+  return;
+}
+
+
+// 822D3150  CG_GetWaypointOffsetForStance  (cgame/cg_hudelem.cpp:1060)
+
+double CG_GetWaypointOffsetForStance(int param_1)
+
+{
+  int iVar1;
+  char cVar2;
+  int iVar3;
+  float local_20 [4];
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82018064,0x427,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  iVar1 = *(int *)(param_1 + 200);
+  iVar3 = DAT_82a22cfc;
+  if ((iVar1 != 0xe) && (iVar1 != 0xc)) {
+    if (iVar1 != 1) {
+      return 0.0;
+    }
+    local_20[0] = 0.0;
+    cVar2 = GetStanceHeightFromDObj(param_1,local_20);
+    if (cVar2 != '\0') {
+      return (double)local_20[0];
+    }
+    iVar3 = DAT_82a22cec;
+    if (((*(uint *)(param_1 + 0x5c) & 8) == 0) &&
+       (iVar3 = DAT_82a22cfc, (*(uint *)(param_1 + 0x5c) & 4) == 0)) {
+      iVar3 = DAT_82a22cc4;
+    }
+  }
+  return (double)*(float *)(iVar3 + 0xc);
+}
+
+
+// 822D3258  GetWaypointEntPos  (cgame/cg_hudelem.cpp:1095)
+
+void GetWaypointEntPos(undefined8 param_1,ulonglong param_2,int *param_3)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int *piVar4;
+  double dVar5;
+  
+  uVar2 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,1099,0,0xffffffff82000f98,0xffffffff820181ac);
+  }
+  piVar4 = (int *)param_2;
+  if (*piVar4 != 0xd) {
+    MyAssertHandler(0xffffffff82018064,0x44c,0,0xffffffff82000f98,0xffffffff820183e8);
+  }
+  if (piVar4[4] == 0x7ff) {
+    iVar3 = piVar4[3];
+    iVar1 = piVar4[2];
+    *param_3 = piVar4[1];
+    param_3[1] = iVar1;
+    param_3[2] = iVar3;
+    __restgprlr_27(1);
+    return;
+  }
+  iVar3 = CG_GetLocalClientGlobals(uVar2);
+  if (piVar4[4] != *(int *)(*(int *)(iVar3 + 0x3300) + 0xc4)) {
+    iVar3 = CG_GetEntity(uVar2);
+    if ((*(uint *)(iVar3 + 0x1c4) & 1) != 0) {
+      *param_3 = *(int *)(iVar3 + 0x14);
+      param_3[1] = *(int *)(iVar3 + 0x18);
+      param_3[2] = *(int *)(iVar3 + 0x1c);
+      dVar5 = (double)CG_GetWaypointOffsetForStance();
+      param_3[2] = (int)(float)(dVar5 + (double)(float)param_3[2]);
+      __restgprlr_27(1);
+      return;
+    }
+  }
+  __restgprlr_27(0);
+  return;
+}
+
+
+// 822D3370  CG_DrawWaypoint  (cgame/cg_hudelem.cpp:1290)
+
+void CG_DrawWaypoint(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  undefined4 *puVar3;
+  undefined8 uVar4;
+  float *pfVar5;
+  char cVar7;
+  int iVar6;
+  int *piVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
@@ -1053,400 +1462,178 @@ bool ClampScreenPosToEdges
   double dVar16;
   double dVar17;
   double dVar18;
-  float fVar19;
-  float local_90;
-  float local_8c;
-  float local_88;
-  float local_84;
-  float local_80;
-  float local_7c;
-  
-  dVar13 = (double)param_5;
-  dVar12 = (double)param_6;
-  dVar16 = (double)param_4;
-  lVar5 = (longlong)(int)param_2;
-  __savegprlr_25((double)param_3,param_1,lVar5,param_7,param_8);
-  pMVar6 = (Material *)lVar5;
-  LVar2 = __savefpr_26();
-  dVar15 = extraout_f1;
-  pMVar7 = pMVar6;
-  if ((in_r10 & 0xffffffff) == 0) {
-    pMVar7 = (Material *)0x396;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x396,0,
-                    "%s");
-  }
-  pSVar3 = ScrPlace_GetActivePlacement(LVar2);
-  bVar1 = false;
-  local_80 = (float)(pMVar6->info).field0_0x0._padding_;
-  local_7c = *(float *)&(pMVar6->info).field0_0x0.field_0x4;
-  dVar17 = (double)(pSVar3->realViewportSize[1] * 0.5);
-  dVar18 = (double)(pSVar3->realViewportSize[0] * 0.5);
-  *(float *)&(pMVar6->info).field0_0x0.field_0x4 = (float)((double)local_7c - dVar17);
-  dVar10 = (double)(float)((double)local_80 - dVar18);
-  (pMVar6->info).field0_0x0._padding_ = (int)(float)((double)local_80 - dVar18);
-  dVar11 = (double)(float)((double)pSVar3->realAdjustableMin[0] + dVar15);
-  dVar15 = (double)(float)(dVar11 - dVar18);
-  dVar13 = (double)(float)((double)(float)((double)pSVar3->realAdjustableMin[1] + dVar13) - dVar17);
-  dVar14 = (double)(float)(dVar18 - (double)(float)((double)(pSVar3->realViewportSize[0] -
-                                                            pSVar3->realAdjustableMax[0]) + dVar16))
-  ;
-  dVar12 = (double)(float)(dVar17 - (double)(float)((double)(pSVar3->realViewportSize[1] -
-                                                            pSVar3->realAdjustableMax[1]) + dVar12))
-  ;
-  dVar16 = dVar15;
-  if ((dVar10 < dVar15) || (dVar16 = dVar14, dVar14 < dVar10)) {
-    *(float *)&(pMVar6->info).field0_0x0.field_0x4 =
-         (float)((double)(float)((double)local_7c - dVar17) * (double)(float)(dVar16 / dVar10));
-    (pMVar6->info).field0_0x0._padding_ = (int)(float)(dVar10 * (double)(float)(dVar16 / dVar10));
-    bVar1 = true;
-  }
-  dVar10 = (double)*(float *)&(pMVar6->info).field0_0x0.field_0x4;
-  dVar16 = dVar13;
-  if ((dVar10 < dVar13) || (dVar16 = dVar12, dVar12 < dVar10)) {
-    fVar19 = (float)(pMVar6->info).field0_0x0._padding_;
-    *(float *)&(pMVar6->info).field0_0x0.field_0x4 =
-         (float)(dVar10 * (double)(float)(dVar16 / dVar10));
-    (pMVar6->info).field0_0x0._padding_ =
-         (int)(float)((double)fVar19 * (double)(float)(dVar16 / dVar10));
-    bVar1 = true;
-  }
-  if ((waypointOffscreenRoundedCorners->current).enabled == false) goto LAB_822d2eb4;
-  dVar10 = 0.0;
-  bVar8 = 0.0 <= (float)(pMVar6->info).field0_0x0._padding_;
-  dVar16 = (double)((pSVar3->scaleVirtualToReal[1] + pSVar3->scaleVirtualToReal[0]) *
-                    (waypointOffscreenCornerRadius->current).value * 0.5);
-  bVar9 = 0.0 <= *(float *)&(pMVar6->info).field0_0x0.field_0x4;
-  if (bVar8) {
-    dVar15 = dVar14 - dVar16;
-  }
-  else {
-    dVar15 = dVar16 + dVar15;
-  }
-  local_90 = (float)dVar15;
-  dVar15 = (double)local_90;
-  if (bVar9) {
-    dVar13 = dVar12 - dVar16;
-  }
-  else {
-    dVar13 = dVar16 + dVar13;
-  }
-  local_8c = (float)dVar13;
-  dVar13 = (double)local_8c;
-  if ((waypointDebugDraw->current).enabled != false) {
-    dVar12 = 3.0;
-    dVar11 = 1.0;
-    CL_DrawStretchPicPhysical
-              ((float)(dVar15 + dVar18) - 1.0,(float)(dVar13 + dVar17) - 1.0,3.0,3.0,0.0,0.0,1.0,1.0
-               ,pSVar3->scaleVirtualToReal,pMVar7);
-    CL_DrawStretchPicPhysical
-              ((float)((double)(float)((double)(float)(pMVar6->info).field0_0x0._padding_ + dVar18)
-                      - dVar11),
-               (float)((double)(float)((double)*(float *)&(pMVar6->info).field0_0x0.field_0x4 +
-                                      dVar17) - dVar11),(float)dVar12,(float)dVar12,(float)dVar10,
-               (float)dVar10,(float)dVar11,(float)dVar11,pSVar3->scaleVirtualToReal,pMVar7);
-    dVar13 = (double)local_8c;
-    dVar15 = (double)local_90;
-  }
-  local_88 = (float)((double)(float)(pMVar6->info).field0_0x0._padding_ - dVar15);
-  local_84 = (float)((double)*(float *)&(pMVar6->info).field0_0x0.field_0x4 - dVar13);
-  fVar19 = Vec2Normalize(&local_88);
-  dVar11 = (double)fVar19;
-  if (bVar8) {
-    if ((double)local_88 <= dVar10) goto LAB_822d2e2c;
-LAB_822d2e24:
-    bVar8 = true;
-  }
-  else {
-    if ((double)local_88 < dVar10) goto LAB_822d2e24;
-LAB_822d2e2c:
-    bVar8 = false;
-  }
-  if (bVar9) {
-    if ((double)local_84 <= dVar10) goto LAB_822d2e60;
-LAB_822d2e58:
-    bVar9 = true;
-  }
-  else {
-    if ((double)local_84 < dVar10) goto LAB_822d2e58;
-LAB_822d2e60:
-    bVar9 = false;
-  }
-  if ((bVar8) && (bVar9)) {
-    fVar19 = Vec2Distance(&local_90,(float *)pMVar6);
-    dVar11 = (double)fVar19;
-    if (dVar16 < dVar11) {
-      bVar1 = true;
-      (pMVar6->info).field0_0x0._padding_ =
-           (int)(float)((double)local_88 * dVar16 + (double)local_90);
-      *(float *)&(pMVar6->info).field0_0x0.field_0x4 =
-           (float)((double)local_84 * dVar16 + (double)local_8c);
-    }
-  }
-LAB_822d2eb4:
-  fVar19 = *(float *)&(pMVar6->info).field0_0x0.field_0x4;
-  (pMVar6->info).field0_0x0._padding_ =
-       (int)(float)((double)(float)(pMVar6->info).field0_0x0._padding_ + dVar18);
-  *(float *)&(pMVar6->info).field0_0x0.field_0x4 = (float)((double)fVar19 + dVar17);
-  if (bVar1) {
-    fVar19 = Vec2Distance((float *)pMVar6,&local_80);
-    *(float *)in_r10 = fVar19;
-    *in_r9 = local_80 - (float)(pMVar6->info).field0_0x0._padding_;
-    in_r9[1] = local_7c - *(float *)&(pMVar6->info).field0_0x0.field_0x4;
-    fVar19 = Vec2Normalize(in_r9);
-    dVar11 = (double)fVar19;
-  }
-  __restfpr_26(dVar11,bVar1);
-  uVar4 = __restgprlr_25();
-  return (bool)uVar4;
-}
-
-
-// 822D2F28  GetScaleForDistance  (cgame/cg_hudelem.cpp:1008)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
-
-// 822D3030  GetStanceHeightFromDObj  (cgame/cg_hudelem.cpp:1030)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
-
-// 822D3150  CG_GetWaypointOffsetForStance  (cgame/cg_hudelem.cpp:1060)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
-
-// 822D3258  GetWaypointEntPos  (cgame/cg_hudelem.cpp:1095)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
-
-// 822D3370  CG_DrawWaypoint  (cgame/cg_hudelem.cpp:1290)
-
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_DrawWaypoint(LocalClientNum_t param_1,WaypointDrawArgs *param_2)
-
-{
-  float fVar1;
-  undefined4 *puVar2;
-  LocalClientNum_t LVar3;
-  ScreenPlacement *pSVar4;
-  bool bVar7;
-  Font_s *pFVar5;
-  int iVar6;
-  ulonglong uVar8;
-  int *piVar9;
-  Material *pMVar10;
-  float *pfVar11;
-  float *pfVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
   double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  float fVar24;
   float local_e0;
   float local_dc;
   float local_d8;
   float local_d4;
   longlong local_d0;
   float local_c8;
-  undefined1 local_c4 [8];
-  undefined1 local_bc [8];
-  undefined1 local_b4 [8];
-  MaterialInfo_s_0_u_8 local_ac;
-  uchar local_9c [4];
-  uchar local_98 [4];
+  float local_c4;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  float local_b4;
+  float local_b0;
+  float local_ac;
+  undefined4 local_a0;
+  undefined4 local_9c;
+  undefined4 local_98;
   float local_94;
-  uchar local_90 [4];
-  uchar local_8c [4];
-  uchar local_88 [4];
+  undefined4 local_90;
+  undefined4 local_8c;
+  undefined4 local_88;
   float local_84;
   
-  uVar8 = (ulonglong)(int)param_2;
-  __savegprlr_28(param_1);
-  LVar3 = __savefpr_21();
-  if ((uVar8 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x526,0,
-                    "%s");
+  __savegprlr_28();
+  uVar4 = __savefpr_21();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x526,0,0xffffffff82000f98,0xffffffff8201843c);
   }
-  piVar9 = (int *)uVar8;
-  if (*piVar9 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x527,0,
-                    "%s");
+  piVar8 = (int *)param_2;
+  if (*piVar8 == 0) {
+    MyAssertHandler(0xffffffff82018064,0x527,0,0xffffffff82000f98,0xffffffff8201842c);
   }
-  if (piVar9[2] == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x528,0,
-                    "%s");
+  if (piVar8[2] == 0) {
+    MyAssertHandler(0xffffffff82018064,0x528,0,0xffffffff82000f98,0xffffffff8201841c);
   }
-  if (piVar9[5] == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x529,0,
-                    "%s");
+  if (piVar8[5] == 0) {
+    MyAssertHandler(0xffffffff82018064,0x529,0,0xffffffff82000f98,0xffffffff82018408);
   }
-  pSVar4 = ScrPlace_GetActivePlacement(LVar3);
-  dVar19 = 0.5;
-  local_dc = (waypointIconWidth->current).value * pSVar4->scaleVirtualToReal[0];
-  dVar13 = (double)((pSVar4->scaleVirtualToReal[0] + pSVar4->scaleVirtualToReal[1]) * 0.5);
-  local_e0 = (waypointIconHeight->current).value * pSVar4->scaleVirtualToReal[1];
-  local_d4 = (float)piVar9[6] * pSVar4->scaleVirtualToReal[0];
-  dVar20 = (double)(float)((double)(float)piVar9[9] * dVar13);
-  local_d8 = (float)piVar9[7] * pSVar4->scaleVirtualToReal[1];
-  dVar14 = (double)(float)((double)(waypointOffscreenDistanceThresholdAlpha->current).value * dVar13
-                          );
-  if (dVar14 < 0.10000000149011612) {
-    dVar14 = 0.10000000149011612;
+  pfVar5 = (float *)ScrPlace_GetActivePlacement(uVar4);
+  dVar15 = 0.5;
+  local_dc = *(float *)(DAT_82a22cf4 + 0xc) * *pfVar5;
+  dVar9 = (double)((*pfVar5 + pfVar5[1]) * 0.5);
+  local_e0 = *(float *)(DAT_82a22cd4 + 0xc) * pfVar5[1];
+  local_d4 = (float)piVar8[6] * *pfVar5;
+  dVar16 = (double)(float)((double)(float)piVar8[9] * dVar9);
+  local_d8 = (float)piVar8[7] * pfVar5[1];
+  dVar10 = (double)(float)((double)*(float *)(DAT_82a22d28 + 0xc) * dVar9);
+  if (dVar10 < 0.10000000149011612) {
+    dVar10 = 0.10000000149011612;
   }
-  fVar24 = (float)((double)local_d8 * 0.5 + dVar20);
-  fVar1 = pSVar4->scaleVirtualToReal[1];
-  dVar23 = (double)((float)piVar9[4] * fVar1);
-  dVar18 = (double)((waypointOffscreenPadLeft->current).value * pSVar4->scaleVirtualToReal[0] +
-                   fVar24);
-  dVar17 = (double)((waypointOffscreenPadRight->current).value * pSVar4->scaleVirtualToReal[0] +
-                   fVar24);
-  dVar16 = (double)((waypointOffscreenPadTop->current).value * fVar1 + fVar24);
-  dVar15 = (double)((waypointOffscreenPadBottom->current).value * fVar1 + fVar24);
-  bVar7 = CL_IsRenderingSplitScreen();
-  if (bVar7) {
-    local_dc = (waypointSplitscreenScale->current).value * local_dc;
-    local_e0 = (waypointSplitscreenScale->current).value * local_e0;
-    local_d4 = (waypointSplitscreenScale->current).value * local_d4;
-    local_d8 = (waypointSplitscreenScale->current).value * local_d8;
-    dVar20 = (double)(float)((double)(waypointSplitscreenScale->current).value * dVar20);
+  fVar1 = (float)((double)local_d8 * 0.5 + dVar16);
+  fVar2 = pfVar5[1];
+  dVar19 = (double)((float)piVar8[4] * fVar2);
+  dVar14 = (double)(*(float *)(DAT_82a22d20 + 0xc) * *pfVar5 + fVar1);
+  dVar13 = (double)(*(float *)(DAT_82a22d00 + 0xc) * *pfVar5 + fVar1);
+  dVar12 = (double)(*(float *)(DAT_82a22cd0 + 0xc) * fVar2 + fVar1);
+  dVar11 = (double)(*(float *)(DAT_82a22ce8 + 0xc) * fVar2 + fVar1);
+  cVar7 = CL_IsRenderingSplitScreen();
+  if (cVar7 != '\0') {
+    local_dc = *(float *)(DAT_82a22cf8 + 0xc) * local_dc;
+    local_e0 = *(float *)(DAT_82a22cf8 + 0xc) * local_e0;
+    local_d4 = *(float *)(DAT_82a22cf8 + 0xc) * local_d4;
+    local_d8 = *(float *)(DAT_82a22cf8 + 0xc) * local_d8;
+    dVar16 = (double)(float)((double)*(float *)(DAT_82a22cf8 + 0xc) * dVar16);
   }
-  puVar2 = (undefined4 *)piVar9[2];
-  pfVar12 = (float *)(local_b4 + 4);
-  pfVar11 = (float *)*piVar9;
-  local_ac._12_4_ = *puVar2;
-  local_9c = (uchar  [4])puVar2[1];
-  local_98 = (uchar  [4])puVar2[2];
-  local_94 = (float)puVar2[3];
-  CG_WorldPosToScreenPosReal(LVar3,pSVar4,pfVar11,pfVar12);
-  local_c4._0_4_ = (undefined4)((double)(float)local_ac.surfaceTypeBits + dVar23);
-  local_c8 = (float)local_b4._4_4_;
-  dVar21 = 0.0;
-  dVar23 = dVar21;
-  dVar22 = dVar21;
-  local_ac.surfaceTypeBits = local_c4._0_4_;
-  if (*(char *)(piVar9 + 0xb) == '\0') {
-    bVar7 = false;
+  puVar3 = (undefined4 *)piVar8[2];
+  local_a0 = *puVar3;
+  local_9c = puVar3[1];
+  local_98 = puVar3[2];
+  local_94 = (float)puVar3[3];
+  CG_WorldPosToScreenPosReal(uVar4,pfVar5,*piVar8,&local_b0);
+  local_c4 = (float)((double)local_ac + dVar19);
+  local_c8 = local_b0;
+  dVar17 = 0.0;
+  dVar19 = dVar17;
+  dVar18 = dVar17;
+  local_ac = local_c4;
+  if (*(char *)(piVar8 + 0xb) == '\0') {
+    cVar7 = '\0';
   }
   else {
-    bVar7 = ClampScreenPosToEdges
-                      (LVar3,&local_c8,(float)dVar18,(float)dVar17,(float)dVar16,(float)dVar15,
-                       pfVar11,pfVar12);
-    dVar21 = (double)local_d0._0_4_;
+    cVar7 = ClampScreenPosToEdges(dVar14,dVar13,dVar12,dVar11,uVar4,&local_c8);
+    dVar17 = (double)local_d0._0_4_;
   }
-  dVar15 = 1.0;
-  if ((bVar7 != false) && (dVar22 < dVar21)) {
-    if (*(char *)(piVar9 + 10) == '\0') {
+  dVar11 = 1.0;
+  if ((cVar7 != '\0') && (dVar18 < dVar17)) {
+    if (*(char *)(piVar8 + 10) == '\0') {
       local_84 = local_94;
-      local_90[0] = local_ac._12_1_;
-      local_90[1] = local_ac._13_1_;
-      local_90[2] = local_ac._14_1_;
-      local_90[3] = local_ac._15_1_;
-      local_8c[0] = local_9c[0];
-      local_8c[1] = local_9c[1];
-      local_8c[2] = local_9c[2];
-      local_8c[3] = local_9c[3];
-      local_88[0] = local_98[0];
-      local_88[1] = local_98[1];
-      local_88[2] = local_98[2];
-      local_88[3] = local_98[3];
-      dVar16 = (double)local_94;
-      if (*(char *)(piVar9 + 8) != '\0') {
+      local_90 = local_a0;
+      local_8c = local_9c;
+      local_88 = local_98;
+      dVar12 = (double)local_94;
+      if (*(char *)(piVar8 + 8) != '\0') {
         local_84 = 1.0;
-        dVar16 = dVar15;
+        dVar12 = dVar11;
       }
-      if (dVar14 <= dVar21) {
-        if (*(char *)((int)piVar9 + 0x29) != '\0') {
-          local_94 = (float)dVar22;
+      if (dVar10 <= dVar17) {
+        if (*(char *)((int)piVar8 + 0x29) != '\0') {
+          local_94 = (float)dVar18;
         }
       }
       else {
-        local_84 = (float)((double)(float)(dVar16 / dVar14) * dVar21);
-        if (*(char *)((int)piVar9 + 0x29) != '\0') {
+        local_84 = (float)((double)(float)(dVar12 / dVar10) * dVar17);
+        if (*(char *)((int)piVar8 + 0x29) != '\0') {
           local_94 = 1.0 - local_84;
         }
       }
-      dVar14 = (double)(float)((double)(waypointOffscreenScaleLength->current).value * dVar13);
-      if (dVar14 <= dVar21) {
-        fVar24 = (waypointOffscreenScaleSmallest->current).value;
+      dVar10 = (double)(float)((double)*(float *)(DAT_82a22d18 + 0xc) * dVar9);
+      if (dVar10 <= dVar17) {
+        fVar1 = *(float *)(DAT_82a22cc0 + 0xc);
       }
       else {
-        fVar24 = (float)(dVar21 / dVar14);
-        fVar24 = (waypointOffscreenScaleSmallest->current).value * fVar24 + (1.0 - fVar24);
+        fVar1 = (float)(dVar17 / dVar10);
+        fVar1 = *(float *)(DAT_82a22cc0 + 0xc) * fVar1 + (1.0 - fVar1);
       }
-      local_dc = fVar24 * local_dc;
-      local_e0 = fVar24 * local_e0;
-      dVar14 = atan2((double)(float)local_c4._4_4_,-(double)(float)local_bc._0_4_);
-      local_bc._4_4_ = (undefined4)((double)(float)local_c4._4_4_ * dVar20 + (double)local_c8);
-      local_b4._0_4_ =
-           (undefined4)((double)(float)local_bc._0_4_ * dVar20 + (double)(float)local_c4._0_4_);
-      pfVar12 = &local_d8;
-      pMVar10 = (Material *)local_b4;
-      pfVar11 = (float *)(local_bc + 4);
-      dVar14 = (double)((float)dVar14 * 57.295776);
-      ScrPlace_HiResApplyRect(pfVar11,(float *)pMVar10,&local_d4,pfVar12);
+      local_dc = fVar1 * local_dc;
+      local_e0 = fVar1 * local_e0;
+      dVar10 = atan2((double)local_c0,-(double)local_bc);
+      local_b8 = (float)((double)local_c0 * dVar16 + (double)local_c8);
+      local_b4 = (float)((double)local_bc * dVar16 + (double)local_c4);
+      dVar10 = (double)((float)dVar10 * 57.295776);
+      ScrPlace_HiResApplyRect(&local_b8,&local_b4,&local_d4,&local_d8);
       CL_DrawStretchPicPhysicalRotateXY
-                (-(float)((double)local_d4 * dVar19 - (double)(float)local_bc._4_4_),
-                 -(float)((double)local_d8 * dVar19 - (double)(float)local_b4._0_4_),local_d4,
-                 local_d8,(float)dVar22,(float)dVar22,(float)dVar15,(float)dVar15,(float)dVar14,
-                 pfVar11,pMVar10);
+                (-(double)(float)((double)local_d4 * dVar15 - (double)local_b8),
+                 -(double)(float)((double)local_d8 * dVar15 - (double)local_b4),(double)local_d4,
+                 (double)local_d8,dVar18,dVar18,dVar11,dVar11,dVar10);
     }
     else {
-      dVar14 = atan2((double)(float)local_c4._4_4_,-(double)(float)local_bc._0_4_);
-      dVar23 = (double)((float)dVar14 * 57.295776 + 180.0);
+      dVar10 = atan2((double)local_c0,-(double)local_bc);
+      dVar19 = (double)((float)dVar10 * 57.295776 + 180.0);
     }
   }
-  if (*(char *)((int)piVar9 + 0x2b) == '\0') {
-    if ((bVar7 == false) && (*(char *)((int)piVar9 + 0x2a) != '\0')) goto LAB_822d3994;
+  if (*(char *)((int)piVar8 + 0x2b) == '\0') {
+    if ((cVar7 == '\0') && (*(char *)((int)piVar8 + 0x2a) != '\0')) goto LAB_822d3994;
   }
   else {
-    puVar2 = (undefined4 *)piVar9[2];
-    local_c8 = (float)local_b4._4_4_;
-    local_c4._0_4_ = local_ac.surfaceTypeBits;
-    local_ac._12_4_ = *puVar2;
-    local_9c = (uchar  [4])puVar2[1];
-    local_98 = (uchar  [4])puVar2[2];
-    local_94 = (float)puVar2[3];
+    puVar3 = (undefined4 *)piVar8[2];
+    local_c8 = local_b0;
+    local_c4 = local_ac;
+    local_a0 = *puVar3;
+    local_9c = puVar3[1];
+    local_98 = puVar3[2];
+    local_94 = (float)puVar3[3];
   }
-  if (*(char *)((int)piVar9 + 0x2d) == '\0') {
-    fVar24 = GetScaleForDistance(LVar3,(float *)*piVar9);
-    local_dc = fVar24 * local_dc;
-    local_e0 = fVar24 * local_e0;
+  if (*(char *)((int)piVar8 + 0x2d) == '\0') {
+    dVar10 = (double)GetScaleForDistance(uVar4,*piVar8);
+    local_dc = (float)(dVar10 * (double)local_dc);
+    local_e0 = (float)(dVar10 * (double)local_e0);
   }
-  if (piVar9[1] != 0) {
-    pfVar12 = &local_e0;
-    pMVar10 = (Material *)local_c4;
-    pfVar11 = &local_c8;
-    ScrPlace_HiResApplyRect(pfVar11,(float *)pMVar10,&local_dc,pfVar12);
+  if (piVar8[1] != 0) {
+    ScrPlace_HiResApplyRect(&local_c8,&local_c4,&local_dc,&local_e0);
     CL_DrawStretchPicPhysicalRotateXY
-              (-(float)((double)local_dc * dVar19 - (double)local_c8),
-               -(float)((double)local_e0 * dVar19 - (double)(float)local_c4._0_4_),local_dc,local_e0
-               ,(float)dVar22,(float)dVar22,(float)dVar15,(float)dVar15,(float)dVar23,pfVar11,
-               pMVar10);
+              (-(double)(float)((double)local_dc * dVar15 - (double)local_c8),
+               -(double)(float)((double)local_e0 * dVar15 - (double)local_c4),(double)local_dc,
+               (double)local_e0,dVar18,dVar18,dVar11,dVar11,dVar19);
   }
-  if (piVar9[3] != 0) {
-    dVar13 = (double)((objectiveTextOffsetY->current).value * pSVar4->scaleVirtualToReal[1]);
-    dVar14 = (double)*(float *)(DAT_82a22d10 + 0xc);
-    pFVar5 = UI_GetFontHandle(pSVar4,6,*(float *)(DAT_82a22d10 + 0xc));
-    local_c4._0_4_ = (undefined4)(dVar13 + (double)(float)local_c4._0_4_);
-    dVar13 = (double)(float)(dVar14 * (double)cg_hudSplitscreenScale);
-    fVar24 = ScrPlace_HiResGetScaleX();
-    dVar20 = (double)(float)(dVar14 * (double)cg_hudSplitscreenScale);
-    dVar14 = (double)(pSVar4->scaleVirtualToReal[0] * (float)((double)fVar24 * dVar13));
-    fVar24 = ScrPlace_HiResGetScaleY();
-    dVar13 = (double)((float)((double)fVar24 * dVar20) * pSVar4->scaleVirtualToReal[1]);
-    iVar6 = R_TextWidth((char *)piVar9[3],0x7fffffff,pFVar5);
+  if (piVar8[3] != 0) {
+    dVar10 = (double)(*(float *)(DAT_82a22d14 + 0xc) * pfVar5[1]);
+    dVar9 = (double)*(float *)(DAT_82a22d10 + 0xc);
+    uVar4 = UI_GetFontHandle(dVar9,pfVar5,6);
+    local_c4 = (float)(dVar10 + (double)local_c4);
+    dVar16 = (double)(float)(dVar9 * (double)DAT_82b5c7fc);
+    dVar10 = (double)ScrPlace_HiResGetScaleX();
+    dVar11 = (double)(float)(dVar9 * (double)DAT_82b5c7fc);
+    dVar9 = (double)(*pfVar5 * (float)(dVar10 * dVar16));
+    dVar10 = (double)ScrPlace_HiResGetScaleY();
+    dVar10 = (double)((float)(dVar10 * dVar11) * pfVar5[1]);
+    iVar6 = R_TextWidth(piVar8[3],0x7fffffff,uVar4);
     local_d0 = (longlong)iVar6;
-    CL_DrawTextPhysical((char *)piVar9[3],0x7fffffff,pFVar5,
-                        -(float)((double)(float)((double)local_d0 * dVar14) * dVar19 -
-                                (double)local_c8),(float)local_c4._0_4_,(float)dVar14,(float)dVar13,
-                        pfVar12,3);
+    CL_DrawTextPhysical(-(double)(float)((double)(float)((double)local_d0 * dVar9) * dVar15 -
+                                        (double)local_c8),(double)local_c4,dVar9,dVar10,piVar8[3],
+                        0x7fffffff,uVar4);
   }
 LAB_822d3994:
   __restfpr_21();
@@ -1456,16 +1643,175 @@ LAB_822d3994:
 
 
 // 822D39A8  DrawViewableWaypoint  (cgame/cg_hudelem.cpp:1487)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void DrawViewableWaypoint(undefined8 param_1,ulonglong param_2)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char cVar4;
+  int *piVar5;
+  undefined1 auStack_d0 [3];
+  char local_cd;
+  undefined1 *local_c0;
+  undefined4 local_bc;
+  undefined1 *local_b8;
+  undefined4 local_b4;
+  undefined4 local_b0;
+  undefined4 local_ac;
+  undefined4 local_a8;
+  undefined4 local_a4;
+  undefined1 local_a0;
+  undefined4 local_9c;
+  byte local_98;
+  byte local_97;
+  byte local_96;
+  undefined1 local_95;
+  byte local_94;
+  byte local_93;
+  undefined1 auStack_90 [16];
+  undefined1 auStack_80 [16];
+  undefined1 auStack_70 [112];
+  
+  uVar2 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x5d9,0,0xffffffff82000f98,0xffffffff820181ac);
+  }
+  piVar5 = (int *)param_2;
+  if (*piVar5 != 0xd) {
+    MyAssertHandler(0xffffffff82018064,0x5da,0,0xffffffff82000f98,0xffffffff820183e8);
+  }
+  if ((piVar5[0x29] & 0x400U) != 0) {
+    MyAssertHandler(0xffffffff82018064,0x5dd,0,0xffffffff82000f98,0xffffffff82018484);
+  }
+  iVar3 = CG_GetFlashbangedRemainingTime(uVar2);
+  if (iVar3 == 0) {
+    iVar3 = CG_GetLocalClientGlobals(uVar2);
+    BG_LerpHudColors(param_2,*(undefined4 *)(iVar3 + 0x6b98c),auStack_d0);
+    if (local_cd != '\0') {
+      HudElemColorToVec4(uVar2,auStack_d0,auStack_80);
+      iVar3 = CG_ServerMaterialName(uVar2,piVar5[0x13],auStack_70,0x40);
+      if (iVar3 != 0) {
+        local_bc = Material_RegisterHandle(auStack_70,7);
+        cVar4 = Material_Is2D();
+        if (cVar4 == '\0') {
+          Com_PrintError(0xd,0xffffffff82018444,auStack_70);
+          __restgprlr_28();
+          return;
+        }
+        cVar4 = GetWaypointEntPos(uVar2,param_2,auStack_90);
+        if (cVar4 != '\0') {
+          uVar1 = piVar5[0x29];
+          local_c0 = auStack_90;
+          local_b8 = auStack_80;
+          local_98 = (byte)(uVar1 >> 5) & 1;
+          local_b0 = *(undefined4 *)(DAT_82a22cc8 + 0xc);
+          local_a8 = *(undefined4 *)(DAT_82a22cf0 + 0xc);
+          local_97 = (byte)(uVar1 >> 4) & 1;
+          local_96 = (byte)(uVar1 >> 6) & 1;
+          local_94 = (byte)(uVar1 >> 3) & 1;
+          local_a4 = *(undefined4 *)(DAT_82a22ccc + 0xc);
+          local_93 = (byte)(uVar1 >> 9) & 1;
+          local_9c = *(undefined4 *)(DAT_82a22d24 + 0xc);
+          local_95 = 0;
+          local_b4 = 0;
+          local_ac = DAT_82a3c984;
+          local_a0 = 0;
+          CG_DrawWaypoint(uVar2,&local_c0);
+        }
+      }
+    }
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 822D3BB8  DrawSingleHudElem2d  (cgame/cg_hudelem.cpp:1558)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void DrawSingleHudElem2d(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int *piVar3;
+  undefined1 auStack_370 [3];
+  char local_36d;
+  float local_360 [4];
+  char local_350 [256];
+  float local_250;
+  char local_24c [272];
+  undefined1 auStack_13c [16];
+  undefined4 local_12c;
+  undefined1 auStack_120 [288];
+  
+  uVar1 = __savegprlr_29();
+  piVar3 = (int *)param_2;
+  if (*piVar3 == 0xd) {
+    if ((piVar3[0x29] & 0x400U) == 0) {
+      DrawViewableWaypoint();
+      __restgprlr_29();
+      return;
+    }
+  }
+  else {
+    iVar2 = CG_GetLocalClientGlobals(uVar1);
+    local_12c = *(undefined4 *)(iVar2 + 0x6b98c);
+    iVar2 = CG_GetLocalClientGlobals(uVar1);
+    if (*(int *)(*(int *)(iVar2 + 0x335c) + 0x3308) < piVar3[0xe]) {
+      iVar2 = CG_GetLocalClientGlobals(uVar1);
+      MyAssertHandler(0xffffffff82018064,0x639,0,0xffffffff820184b0,piVar3[0xe],
+                      *(undefined4 *)(*(int *)(iVar2 + 0x335c) + 0x3308));
+    }
+    BG_LerpHudColors(param_2,local_12c,auStack_370);
+    if (local_36d != '\0') {
+      HudElemColorToVec4(uVar1,auStack_370,auStack_13c);
+      DrawSingleHudElem2d_GetHudElemInfo(uVar1,param_2,local_360,auStack_120);
+      if (local_350[0] != '\0') {
+        DrawHudElemString(uVar1,local_350,param_2,local_360);
+        local_360[0] = local_360[0] + local_250;
+      }
+      switch(*piVar3) {
+      case 1:
+      case 2:
+      case 3:
+      case 5:
+      case 6:
+      case 7:
+      case 8:
+      case 9:
+      case 10:
+        if (local_24c[0] != '\0') {
+          DrawHudElemString(uVar1,local_24c,param_2,local_360);
+          __restgprlr_29();
+          return;
+        }
+        break;
+      case 4:
+        DrawHudElemMaterial(uVar1,param_2,local_360);
+        __restgprlr_29();
+        return;
+      case 0xb:
+      case 0xc:
+        DrawHudElemClock(uVar1,param_2,local_360);
+        __restgprlr_29();
+        return;
+      default:
+        if (DAT_84013128 == 0) {
+          MyAssertHandler(0xffffffff82018064,0x674,0,0xffffffff820180b4);
+        }
+      }
+    }
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 822D3DB0  CopyInUseHudElems  (cgame/cg_hudelem.cpp:1659)
 
-void CopyInUseHudElems(hudelem_s **param_1,uint *param_2,hudelem_s *param_3,int param_4)
+void CopyInUseHudElems(int param_1,int *param_2,int *param_3,int param_4)
 
 {
   int iVar1;
@@ -1475,12 +1821,12 @@ void CopyInUseHudElems(hudelem_s **param_1,uint *param_2,hudelem_s *param_3,int 
     return;
   }
   do {
-    if (param_3->type == HE_TYPE_FREE) {
+    if (*param_3 == 0) {
       return;
     }
     iVar1 = iVar1 + 1;
-    param_1[*param_2] = param_3;
-    param_3 = param_3 + 1;
+    *(int **)(*param_2 * 4 + param_1) = param_3;
+    param_3 = param_3 + 0x2a;
     *param_2 = *param_2 + 1;
   } while (iVar1 < param_4);
   return;
@@ -1489,14 +1835,14 @@ void CopyInUseHudElems(hudelem_s **param_1,uint *param_2,hudelem_s *param_3,int 
 
 // 822D3DF8  compare_hudelems  (cgame/cg_hudelem.cpp:1673)
 
-int compare_hudelems(void *param_1,void *param_2)
+undefined8 compare_hudelems(int *param_1,int *param_2)
 
 {
   float fVar1;
   
-  fVar1 = *(float *)(*(int *)param_1 + 0x88) - *(float *)(*(int *)param_2 + 0x88);
+  fVar1 = *(float *)(*param_1 + 0x88) - *(float *)(*param_2 + 0x88);
   if (fVar1 < 0.0) {
-    return -1;
+    return 0xffffffffffffffff;
   }
   if (0.0 < fVar1) {
     return 1;
@@ -1506,50 +1852,198 @@ int compare_hudelems(void *param_1,void *param_2)
 
 
 // 822D3E38  GetSortedHudElems  (cgame/cg_hudelem.cpp:1687)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+size_t GetSortedHudElems(undefined8 param_1,void *param_2)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  int *piVar4;
+  size_t _NumOfElements;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  _NumOfElements = 0;
+  piVar4 = (int *)(iVar1 + 0xa14);
+  iVar3 = 0;
+  puVar2 = (undefined4 *)((int)param_2 + -4);
+  do {
+    if (*piVar4 == 0) break;
+    iVar3 = iVar3 + 1;
+    puVar2 = puVar2 + 1;
+    *puVar2 = piVar4;
+    _NumOfElements = _NumOfElements + 1;
+    piVar4 = piVar4 + 0x2a;
+  } while (iVar3 < 0x1f);
+  piVar4 = (int *)(iVar1 + 0x1e6c);
+  iVar1 = 0;
+  puVar2 = (undefined4 *)((int)param_2 + _NumOfElements * 4 + -4);
+  do {
+    if (*piVar4 == 0) break;
+    iVar1 = iVar1 + 1;
+    puVar2 = puVar2 + 1;
+    *puVar2 = piVar4;
+    _NumOfElements = _NumOfElements + 1;
+    piVar4 = piVar4 + 0x2a;
+  } while (iVar1 < 0x1f);
+  qsort(param_2,_NumOfElements,4,compare_hudelems);
+  return _NumOfElements;
+}
+
 
 // 822D3EF8  CG_Draw2dHudElems  (cgame/cg_hudelem.cpp:1709)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_Draw2dHudElems(undefined8 param_1,int param_2)
+
+{
+  uint uVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  int iVar5;
+  longlong lVar4;
+  char cVar7;
+  int iVar6;
+  int *piVar8;
+  int local_1040 [1040];
+  
+  uVar3 = __savegprlr_25();
+  iVar5 = CG_GetLocalClientGlobals();
+  lVar4 = GetSortedHudElems(uVar3,local_1040);
+  cVar7 = CL_Demo_IsFollowCamera(uVar3);
+  if (((cVar7 == '\0') && (cVar7 = CL_Demo_IsFreeCamera(uVar3), cVar7 == '\0')) && ((int)lVar4 != 0)
+     ) {
+    ScrPlace_SetLegacySplitscreenScaling();
+    uVar1 = *(uint *)(iVar5 + 4);
+    if (0 < (int)lVar4) {
+      piVar8 = local_1040;
+      do {
+        if ((((((~(ulonglong)uVar1 & 0xffffffff) >> 0x1f) + (ulonglong)(7 < (ulonglong)uVar1) & 1)
+              != 0) || ((*(uint *)(*piVar8 + 0xa4) & 2) == 0)) &&
+           ((*(int *)(iVar5 + 0x6b9a0) == 0 || ((*(uint *)(*piVar8 + 0xa4) & 0x800) == 0)))) {
+          if (param_2 == 0) {
+            if ((*(uint *)(*piVar8 + 0xa4) & 0x100) != 0) {
+LAB_822d4040:
+              if ((((*(uint *)(*piVar8 + 0xa4) & 4) == 0) ||
+                  (iVar6 = UI_AnyMenuActive(uVar3), iVar6 == 0)) &&
+                 ((cVar7 = CL_Demo_IsPlaying(uVar3), cVar7 == '\0' ||
+                  ((*(uint *)(*piVar8 + 0xa4) & 0x1000) == 0)))) {
+                DrawSingleHudElem2d(uVar3,*piVar8);
+              }
+            }
+          }
+          else if (param_2 == 2) {
+            uVar2 = *(uint *)(*piVar8 + 0xa4);
+            if ((uVar2 & 1) != 0) {
+joined_r0x822d403c:
+              if ((uVar2 & 0x100) == 0) goto LAB_822d4040;
+            }
+          }
+          else {
+            if (param_2 != 1) goto LAB_822d4040;
+            uVar2 = *(uint *)(*piVar8 + 0xa4);
+            if ((uVar2 & 1) == 0) goto joined_r0x822d403c;
+          }
+        }
+        lVar4 = lVar4 + -1;
+        piVar8 = piVar8 + 1;
+      } while (lVar4 != 0);
+    }
+    ScrPlace_SetNormalSplitscreenScaling();
+  }
+  __restgprlr_25();
+  return;
+}
+
 
 // 822D40B0  AddDrawSurfForHudElemWaypoint  (cgame/cg_hudelem.cpp:1765)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void AddDrawSurfForHudElemWaypoint(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 uVar4;
+  char cVar5;
+  undefined4 uVar6;
+  double dVar7;
+  double dVar8;
+  undefined1 local_b0 [3];
+  char local_ad;
+  undefined4 local_a0;
+  undefined1 auStack_9c [16];
+  float local_8c;
+  float local_88;
+  undefined4 local_84;
+  undefined1 auStack_80 [128];
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = CG_GetLocalClientGlobals();
+  BG_LerpHudColors(param_2,*(undefined4 *)(iVar2 + 0x6b98c),local_b0);
+  if ((local_ad != '\0') && (iVar2 = (int)param_2, (*(uint *)(iVar2 + 0xa4) & 0x400) != 0)) {
+    iVar3 = CG_ServerMaterialName(uVar1,*(undefined4 *)(iVar2 + 0x4c),auStack_80,0x40);
+    if (iVar3 != 0) {
+      uVar4 = Material_RegisterHandle(auStack_80,7);
+      cVar5 = Material_Is2D();
+      if (cVar5 != '\0') {
+        Com_PrintError(0xd,0xffffffff82018514,auStack_80);
+        __restgprlr_28();
+        return;
+      }
+      dVar7 = (double)HudElemWaypointHeight(uVar1,param_2);
+      dVar8 = 0.0;
+      if (dVar7 != 0.0) {
+        if ((*(uint *)(iVar2 + 0xa4) >> 9 & 1) == 0) {
+          uVar6 = 0;
+        }
+        else {
+          uVar6 = 3;
+          dVar7 = (double)(float)(dVar7 * 0.00430000014603138);
+        }
+        cVar5 = GetWaypointEntPos(uVar1,param_2,auStack_9c);
+        if (cVar5 != '\0') {
+          local_8c = (float)dVar7;
+          local_88 = (float)dVar8;
+          local_a0 = uVar4;
+          local_84 = uVar6;
+          FX_SpriteAdd(&local_a0);
+        }
+      }
+    }
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 822D4218  CG_AddDrawSurfsFor3dHudElems  (cgame/cg_hudelem.cpp:1836)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_AddDrawSurfsFor3dHudElems(LocalClientNum_t param_1)
+void CG_AddDrawSurfsFor3dHudElems(void)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar3;
-  uint uVar2;
-  longlong lVar4;
-  hudelem_s **pphVar5;
-  hudelem_s *local_120 [72];
+  undefined8 uVar1;
+  char cVar3;
+  ulonglong uVar2;
+  undefined4 *puVar4;
+  undefined4 local_120 [72];
   
-  LVar1 = __savegprlr_29(param_1);
-  bVar3 = CG_ShouldDrawHud(LVar1);
-  if (((bVar3) && (bVar3 = CL_Demo_IsFollowCamera(LVar1), !bVar3)) &&
-     (bVar3 = CL_Demo_IsFreeCamera(LVar1), !bVar3)) {
-    uVar2 = GetSortedHudElems(LVar1,local_120);
-    lVar4 = (longlong)(int)uVar2;
-    if (0x3e < uVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x73c,
-                      0,"elemCount not in [0, ARRAY_COUNT( elems )]\n\t%i not in [0, %i]");
+  uVar1 = __savegprlr_29();
+  cVar3 = CG_ShouldDrawHud();
+  if (((cVar3 != '\0') && (cVar3 = CL_Demo_IsFollowCamera(uVar1), cVar3 == '\0')) &&
+     (cVar3 = CL_Demo_IsFreeCamera(uVar1), cVar3 == '\0')) {
+    uVar2 = GetSortedHudElems(uVar1,local_120);
+    if (0x3e < (uVar2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82018064,0x73c,0,0xffffffff82018554,uVar2,0x3e);
     }
-    if (uVar2 != 0) {
-      pphVar5 = local_120;
+    if ((uVar2 & 0xffffffff) != 0) {
+      puVar4 = local_120;
       do {
-        if ((*pphVar5)->type == HE_TYPE_WAYPOINT) {
-          AddDrawSurfForHudElemWaypoint(LVar1,*pphVar5);
+        if (*(int *)*puVar4 == 0xd) {
+          AddDrawSurfForHudElemWaypoint(uVar1);
         }
-        lVar4 = lVar4 + -1;
-        pphVar5 = pphVar5 + 1;
-      } while (lVar4 != 0);
+        uVar2 = uVar2 - 1;
+        puVar4 = puVar4 + 1;
+      } while (uVar2 != 0);
     }
   }
   __restgprlr_29();

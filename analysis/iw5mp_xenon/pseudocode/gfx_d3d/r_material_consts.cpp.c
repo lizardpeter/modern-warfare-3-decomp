@@ -2,40 +2,36 @@
 
 // 82755920  R_RegisterShaderConst  (gfx_d3d/r_material_consts.cpp:11)
 
-void R_RegisterShaderConst(uint param_1,float *param_2,GfxShaderConstantBlock *param_3)
+void R_RegisterShaderConst(undefined8 param_1,undefined4 param_2,longlong param_3)
 
 {
   uint uVar1;
-  longlong lVar2;
-  uint *puVar3;
+  uint *puVar2;
+  longlong lVar3;
   longlong lVar4;
   ulonglong uVar5;
   
-  lVar2 = (longlong)(int)param_3;
-  uVar1 = __savegprlr_29(param_1);
-  puVar3 = (uint *)lVar2;
-  if (0xf < *puVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_consts.cpp"
-                    ,0xe,1,
-                    "consts->count doesn\'t index ARRAY_COUNT( consts->dest )\n\t%i not in [0, %i)")
-    ;
+  uVar1 = __savegprlr_29();
+  puVar2 = (uint *)param_3;
+  if (0xf < *puVar2) {
+    MyAssertHandler(0xffffffff821c81a8,0xe,1,0xffffffff821c81f0,*puVar2,0x10);
   }
-  uVar5 = (ulonglong)*puVar3;
+  uVar5 = (ulonglong)*puVar2;
   if (uVar5 != 0) {
-    lVar4 = (uVar5 + 2 & 0x7fffffff) * 2 + lVar2;
-    lVar2 = (uVar5 + 10 & 0x3fffffff) * 4 + lVar2;
+    lVar4 = (uVar5 + 2 & 0x7fffffff) * 2 + param_3;
+    lVar3 = (uVar5 + 10 & 0x3fffffff) * 4 + param_3;
     do {
       if (*(ushort *)((int)lVar4 + -2) <= uVar1) break;
       lVar4 = lVar4 + -2;
       uVar5 = uVar5 - 1;
       ((undefined2 *)lVar4)[1] = *(undefined2 *)lVar4;
-      *(undefined4 *)(lVar2 + -4) = *(undefined4 *)((int)lVar2 + -8);
-      lVar2 = lVar2 + -4;
+      *(undefined4 *)(lVar3 + -4) = *(undefined4 *)((int)lVar3 + -8);
+      lVar3 = lVar3 + -4;
     } while (uVar5 != 0);
   }
-  *(short *)((int)((uVar5 + 2 & 0xffffffff) << 1) + (int)puVar3) = (short)uVar1;
-  *(float **)((int)((uVar5 + 9 & 0xffffffff) << 2) + (int)puVar3) = param_2;
-  *puVar3 = *puVar3 + 1;
+  *(short *)((int)((uVar5 + 2 & 0xffffffff) << 1) + (int)puVar2) = (short)uVar1;
+  *(undefined4 *)((int)((uVar5 + 9 & 0xffffffff) << 2) + (int)puVar2) = param_2;
+  *puVar2 = *puVar2 + 1;
   __restgprlr_29();
   return;
 }
@@ -43,61 +39,57 @@ void R_RegisterShaderConst(uint param_1,float *param_2,GfxShaderConstantBlock *p
 
 // 827559E0  R_GetPixelLiteralConsts  (gfx_d3d/r_material_consts.cpp:31)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void R_GetPixelLiteralConsts
-               (Material *param_1,MaterialPass *param_2,GfxShaderConstantBlock *param_3)
+void R_GetPixelLiteralConsts(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
   ushort uVar1;
-  short *psVar2;
-  int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  MaterialShaderArgument *pMVar6;
-  int *piVar7;
-  MaterialArgumentDef *pMVar8;
+  int iVar2;
+  ushort *puVar3;
+  undefined4 *puVar5;
+  undefined8 uVar4;
+  ulonglong uVar6;
+  ushort *puVar7;
+  int *piVar8;
   
-  iVar3 = __savegprlr_23(param_1);
-  param_3->count = 0;
-  uVar5 = (ulonglong)param_2->stableArgCount;
-  if (uVar5 != 0) {
-    iVar4 = (uint)param_2->perObjArgCount + (uint)param_2->perPrimArgCount;
-    pMVar6 = param_2->args + iVar4;
-    uVar1 = param_2->args[iVar4].type;
+  puVar5 = (undefined4 *)__savegprlr_23();
+  *(undefined4 *)param_3 = 0;
+  uVar6 = (ulonglong)*(byte *)(param_2 + 0x62);
+  if (uVar6 != 0) {
+    iVar2 = ((uint)*(byte *)(param_2 + 0x61) + (uint)*(byte *)(param_2 + 0x60)) * 8;
+    puVar7 = (ushort *)(iVar2 + *(int *)(param_2 + 0x68));
+    uVar1 = *(ushort *)(iVar2 + *(int *)(param_2 + 0x68));
     while (uVar1 < 7) {
-      uVar5 = uVar5 - 1;
-      pMVar6 = pMVar6 + 1;
-      if (uVar5 == 0) goto LAB_82755b30;
-      uVar1 = pMVar6->type;
+      uVar6 = uVar6 - 1;
+      puVar7 = puVar7 + 4;
+      if (uVar6 == 0) goto LAB_82755b30;
+      uVar1 = *puVar7;
     }
-    piVar7 = *(int **)(iVar3 + 0x4c);
+    piVar8 = (int *)puVar5[0x13];
     while (uVar1 == 7) {
-      if ((float *)*piVar7 != (pMVar6->u).literalConst) {
+      if (*piVar8 != *(int *)(puVar7 + 2)) {
         do {
-          piVar7 = piVar7 + 8;
-          if (piVar7 == (int *)((uint)*(byte *)(iVar3 + 0x3e) * 0x20 + *(int *)(iVar3 + 0x4c))) {
-            va("material \'%s\' is missing a required named constant");
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_consts.cpp"
-                            ,0x3a,0,"%s\n\t%s");
+          piVar8 = piVar8 + 8;
+          if (piVar8 == (int *)((uint)*(byte *)((int)puVar5 + 0x3e) * 0x20 + puVar5[0x13])) {
+            uVar4 = va(0xffffffff821c823c,*puVar5);
+            MyAssertHandler(0xffffffff821c81a8,0x3a,0,0xffffffff820011f4,0xffffffff821c8270,uVar4);
           }
-        } while ((float *)*piVar7 != (pMVar6->u).literalConst);
+        } while (*piVar8 != *(int *)(puVar7 + 2));
       }
-      R_RegisterShaderConst((uint)pMVar6->dest,(float *)(piVar7 + 4),param_3);
-      uVar5 = uVar5 - 1;
-      pMVar6 = pMVar6 + 1;
-      if (uVar5 == 0) goto LAB_82755b30;
-      uVar1 = pMVar6->type;
+      R_RegisterShaderConst(puVar7[1],piVar8 + 4,param_3);
+      uVar6 = uVar6 - 1;
+      puVar7 = puVar7 + 4;
+      if (uVar6 == 0) goto LAB_82755b30;
+      uVar1 = *puVar7;
     }
     if (uVar1 == 8) {
-      pMVar8 = &pMVar6[-1].u;
+      puVar7 = puVar7 + -2;
       do {
-        R_RegisterShaderConst((uint)*(ushort *)((int)pMVar8 + 6),pMVar8[2].literalConst,param_3);
-        uVar5 = uVar5 - 1;
-        if (uVar5 == 0) break;
-        psVar2 = (short *)(pMVar8 + 3);
-        pMVar8 = pMVar8 + 2;
-      } while (*psVar2 == 8);
+        R_RegisterShaderConst(puVar7[3],*(undefined4 *)(puVar7 + 4),param_3);
+        uVar6 = uVar6 - 1;
+        if (uVar6 == 0) break;
+        puVar3 = puVar7 + 6;
+        puVar7 = puVar7 + 4;
+      } while (*puVar3 == 8);
     }
   }
 LAB_82755b30:
@@ -107,135 +99,179 @@ LAB_82755b30:
 
 
 // 82755B38  R_GetPixelConsts  (gfx_d3d/r_material_consts.cpp:76)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_GetPixelConsts(undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  ushort uVar1;
+  ushort *puVar2;
+  int iVar3;
+  ushort *puVar4;
+  ulonglong uVar5;
+  double dVar6;
+  
+  iVar3 = __savegprlr_20();
+  *(undefined4 *)param_3 = 0;
+  uVar5 = (ulonglong)*(byte *)(iVar3 + 0x62);
+  if (uVar5 != 0) {
+    puVar4 = (ushort *)
+             (((uint)*(byte *)(iVar3 + 0x61) + (uint)*(byte *)(iVar3 + 0x60)) * 8 +
+             *(int *)(iVar3 + 0x68));
+    uVar1 = *puVar4;
+    while (uVar1 < 6) {
+      uVar5 = uVar5 - 1;
+      puVar4 = puVar4 + 4;
+      if (uVar5 == 0) goto LAB_82755c9c;
+      uVar1 = *puVar4;
+    }
+    if (uVar1 == 6) {
+      dVar6 = 3.4028234663852886e+38;
+      puVar4 = puVar4 + -3;
+      do {
+        if ((&DAT_821c8480)[puVar4[5]] != 2) {
+          MyAssertHandler(0xffffffff821c81a8,100,0,0xffffffff821c82f0,0xffffffff821c82a8,puVar4[5]);
+        }
+        if (*(char *)((int)puVar4 + 0xd) != '\x01') {
+          MyAssertHandler(0xffffffff821c81a8,0x66,0,0xffffffff821c8338,0xffffffff821c8314);
+        }
+        uVar1 = puVar4[5];
+        if ((double)*(float *)((uint)uVar1 * 0x10 + (int)param_2) == dVar6) {
+          MyAssertHandler(0xffffffff821c81a8,0x68,0,0xffffffff821c82f0,0xffffffff821c8360,
+                          (ulonglong)uVar1);
+        }
+        R_RegisterShaderConst(puVar4[4],(ulonglong)uVar1 * 0x10 + param_2,param_3);
+        uVar5 = uVar5 - 1;
+      } while ((uVar5 != 0) && (puVar2 = puVar4 + 7, puVar4 = puVar4 + 4, *puVar2 == 6));
+    }
+  }
+LAB_82755c9c:
+  __restgprlr_20();
+  return;
+}
+
 
 // 82755CA8  R_ComparePixelConsts  (gfx_d3d/r_material_consts.cpp:114)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int R_ComparePixelConsts(Material **param_1,MaterialPass **param_2)
+void R_ComparePixelConsts(undefined8 param_1,longlong param_2)
 
 {
   float fVar1;
   float fVar2;
-  ushort uVar3;
-  int iVar4;
-  uint uVar5;
-  ushort *puVar6;
-  int iVar7;
-  int iVar8;
-  ulonglong uVar9;
-  ushort *puVar10;
+  int iVar3;
+  uint uVar4;
+  int iVar6;
+  longlong lVar5;
+  ushort *puVar7;
+  ushort uVar10;
+  ulonglong uVar8;
+  int iVar9;
   int iVar11;
-  GfxShaderConstantBlock *pGVar12;
+  uint *puVar12;
   int iVar13;
+  ushort *puVar14;
   int *piVar15;
-  longlong lVar14;
   ulonglong uVar16;
   uint local_540 [4];
-  GfxShaderConstantBlock local_530;
+  uint local_530;
+  ushort local_52c [16];
+  int local_50c [16];
   uint local_4cc;
   int local_4a8 [18];
   ushort local_460 [560];
   
-  lVar14 = (longlong)(int)param_2;
-  iVar7 = __savegprlr_21(param_1);
-  iVar11 = (int)lVar14;
-  iVar8 = (int)local_540 - iVar11;
+  iVar6 = __savegprlr_21();
+  iVar11 = (int)param_2;
+  iVar9 = (int)local_540 - iVar11;
   iVar13 = 0;
-  pGVar12 = &local_530;
+  puVar12 = &local_530;
   do {
-    piVar15 = (int *)lVar14;
-    iVar4 = *piVar15;
-    pGVar12->count = 0;
-    *(undefined4 *)(iVar8 + (int)piVar15) = 0;
-    uVar16 = (ulonglong)*(byte *)(iVar4 + 0x62);
-    puVar10 = (ushort *)
-              (((uint)*(byte *)(iVar4 + 0x61) + (uint)*(byte *)(iVar4 + 0x60)) * 8 +
-              *(int *)(iVar4 + 0x68));
+    piVar15 = (int *)param_2;
+    iVar3 = *piVar15;
+    *puVar12 = 0;
+    *(undefined4 *)(iVar9 + (int)piVar15) = 0;
+    puVar7 = *(ushort **)(iVar3 + 0x68);
+    uVar16 = (ulonglong)*(byte *)(iVar3 + 0x62);
+    puVar14 = puVar7 + ((uint)*(byte *)(iVar3 + 0x61) + (uint)*(byte *)(iVar3 + 0x60)) * 4;
     if (uVar16 != 0) {
-      uVar3 = *puVar10;
-      while (uVar3 < 6) {
+      uVar10 = *puVar14;
+      while (uVar10 < 6) {
         uVar16 = uVar16 - 1;
-        puVar10 = puVar10 + 4;
+        puVar14 = puVar14 + 4;
         if (uVar16 == 0) goto LAB_82755dac;
-        uVar3 = *puVar10;
+        uVar10 = *puVar14;
       }
-      if (uVar3 == 6) {
-        puVar10 = puVar10 + -2;
+      if (uVar10 == 6) {
+        uVar10 = 6;
+        puVar14 = puVar14 + -2;
         do {
-          uVar5 = *(uint *)(iVar8 + (int)piVar15);
-          if (0xff < uVar5) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_consts.cpp"
-                            ,0x93,0,
-                            "pixelConstsCount[i] doesn\'t index ARRAY_COUNT( pixelConsts[i] )\n\t%i not in [0, %i)"
-                           );
+          uVar4 = *(uint *)(iVar9 + (int)piVar15);
+          if (0xff < uVar4) {
+            MyAssertHandler(0xffffffff821c81a8,0x93,0,0xffffffff821c8380,uVar4,0x100,puVar7,uVar10);
           }
-          uVar3 = puVar10[4];
+          uVar10 = puVar14[4];
+          puVar7 = local_460;
           uVar16 = uVar16 - 1;
-          *(uint *)(iVar8 + (int)piVar15) = uVar5 + 1;
-          local_460[uVar5 + iVar13] = uVar3;
+          *(uint *)(iVar9 + (int)piVar15) = uVar4 + 1;
+          puVar7[uVar4 + iVar13] = uVar10;
           if (uVar16 == 0) goto LAB_82755dac;
-          puVar6 = puVar10 + 6;
-          puVar10 = puVar10 + 4;
-        } while (*puVar6 == 6);
+          uVar10 = puVar14[6];
+          puVar14 = puVar14 + 4;
+        } while (uVar10 == 6);
       }
-      R_GetPixelLiteralConsts
-                (*(Material **)((iVar7 - iVar11) + (int)piVar15),(MaterialPass *)*piVar15,pGVar12);
+      R_GetPixelLiteralConsts(*(undefined4 *)((iVar6 - iVar11) + (int)piVar15),*piVar15,puVar12);
     }
 LAB_82755dac:
     iVar13 = iVar13 + 0x100;
-    pGVar12 = pGVar12 + 1;
-    lVar14 = lVar14 + 4;
+    puVar12 = puVar12 + 0x19;
+    param_2 = param_2 + 4;
   } while (iVar13 < 0x200);
   uVar16 = (ulonglong)local_540[0];
-  lVar14 = uVar16 - local_540[1];
-  if (lVar14 == 0) {
-    uVar9 = 0;
+  lVar5 = uVar16 - local_540[1];
+  if (lVar5 == 0) {
+    uVar8 = 0;
     if (uVar16 != 0) {
-      puVar10 = local_460;
+      puVar7 = local_460;
       do {
-        lVar14 = (ulonglong)*puVar10 - (ulonglong)puVar10[0x100];
-        if (lVar14 != 0) goto LAB_82755e84;
-        uVar9 = uVar9 + 1;
-        puVar10 = puVar10 + 1;
-      } while ((uVar9 & 0xffffffff) < uVar16);
+        lVar5 = (ulonglong)*puVar7 - (ulonglong)puVar7[0x100];
+        if (lVar5 != 0) goto LAB_82755e84;
+        uVar8 = uVar8 + 1;
+        puVar7 = puVar7 + 1;
+      } while ((uVar8 & 0xffffffff) < uVar16);
     }
-    uVar16 = (ulonglong)local_530.count;
-    lVar14 = uVar16 - local_4cc;
-    if (lVar14 == 0) {
-      uVar9 = 0;
+    uVar16 = (ulonglong)local_530;
+    lVar5 = uVar16 - local_4cc;
+    if (lVar5 == 0) {
+      uVar8 = 0;
       if (uVar16 != 0) {
-        iVar8 = 0;
-        puVar10 = local_530.dest;
+        iVar9 = 0;
+        puVar7 = local_52c;
         do {
-          lVar14 = (ulonglong)*puVar10 - (ulonglong)puVar10[0x32];
-          if (lVar14 != 0) goto LAB_82755e84;
+          lVar5 = (ulonglong)*puVar7 - (ulonglong)puVar7[0x32];
+          if (lVar5 != 0) goto LAB_82755e84;
           iVar11 = 0;
           do {
-            fVar1 = *(float *)(*(int *)((int)local_4a8 + iVar8) + iVar11);
-            fVar2 = *(float *)(*(int *)((int)local_530.value + iVar8) + iVar11);
+            fVar1 = *(float *)(*(int *)((int)local_4a8 + iVar9) + iVar11);
+            fVar2 = *(float *)(*(int *)((int)local_50c + iVar9) + iVar11);
             if (fVar2 < fVar1) {
-              iVar8 = __restgprlr_21(0xffffffffffffffff);
-              return iVar8;
+              __restgprlr_21(0xffffffffffffffff);
+              return;
             }
             if (fVar1 < fVar2) {
-              iVar8 = __restgprlr_21(1);
-              return iVar8;
+              __restgprlr_21(1);
+              return;
             }
             iVar11 = iVar11 + 4;
           } while (iVar11 < 0x10);
-          uVar9 = uVar9 + 1;
-          puVar10 = puVar10 + 1;
-          iVar8 = iVar8 + 4;
-        } while ((uVar9 & 0xffffffff) < uVar16);
+          uVar8 = uVar8 + 1;
+          puVar7 = puVar7 + 1;
+          iVar9 = iVar9 + 4;
+        } while ((uVar8 & 0xffffffff) < uVar16);
       }
-      lVar14 = 0;
+      lVar5 = 0;
     }
   }
 LAB_82755e84:
-  iVar8 = __restgprlr_21(lVar14);
-  return iVar8;
+  __restgprlr_21(lVar5);
+  return;
 }
 

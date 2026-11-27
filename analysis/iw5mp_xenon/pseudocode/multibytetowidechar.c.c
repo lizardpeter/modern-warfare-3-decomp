@@ -2,54 +2,51 @@
 
 // 828A2BB8  MultiByteToWideChar  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/multibytetowidechar.c:25)
 
-int MultiByteToWideChar(uint param_1,ulong param_2,char *param_3,int param_4,ushort *param_5,
-                       int param_6)
+int MultiByteToWideChar(UINT CodePage,DWORD dwFlags,LPCSTR lpMultiByteStr,int cbMultiByte,
+                       LPWSTR lpWideCharStr,int cchWideChar)
 
 {
-  int iVar1;
-  ulong uVar2;
+  int iVar2;
+  longlong lVar1;
+  DWORD dwErrCode;
   longlong lVar3;
-  int iVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  char *pcVar8;
-  longlong lVar7;
-  longlong lVar9;
+  longlong lVar4;
+  ulonglong uVar5;
+  char *pcVar7;
+  longlong lVar6;
   
-  uVar6 = (ulonglong)param_6;
-  lVar5 = (longlong)(int)param_5;
-  lVar9 = (longlong)param_4;
-  lVar3 = (longlong)(int)param_3;
-  iVar1 = __savegprlr_27(param_1,param_2);
-  iVar4 = (int)uVar6;
-  if (iVar1 == 0xfde9) {
-    iVar1 = UTF8ToUnicode((char *)lVar3,(int)lVar9,(ushort *)lVar5,iVar4);
-    lVar9 = (longlong)iVar1;
+  uVar5 = (ulonglong)cchWideChar;
+  lVar4 = (longlong)(int)lpWideCharStr;
+  lVar1 = (longlong)cbMultiByte;
+  lVar3 = (longlong)(int)lpMultiByteStr;
+  iVar2 = __savegprlr_27(CodePage,dwFlags,lVar3,lVar1,lVar4);
+  if (iVar2 == 0xfde9) {
+    lVar1 = UTF8ToUnicode(lVar3,lVar1,lVar4,uVar5);
   }
   else {
-    lVar7 = lVar3;
-    if ((int)lVar9 == -1) {
+    lVar6 = lVar3;
+    if ((int)lVar1 == -1) {
       do {
-        pcVar8 = (char *)lVar7;
-        lVar7 = lVar7 + 1;
-      } while (*pcVar8 != '\0');
-      lVar9 = ((lVar7 - lVar3) - 1U & 0xffffffff) + 1;
+        pcVar7 = (char *)lVar6;
+        lVar6 = lVar6 + 1;
+      } while (*pcVar7 != '\0');
+      lVar1 = ((lVar6 - lVar3) - 1U & 0xffffffff) + 1;
     }
-    if (iVar4 != 0) {
-      if (((int)lVar9 < 0) || (iVar4 < (int)lVar9)) {
-        uVar2 = 0x7a;
+    if ((int)uVar5 != 0) {
+      if (((int)lVar1 < 0) || ((int)uVar5 < (int)lVar1)) {
+        dwErrCode = 0x7a;
       }
       else {
-        iVar1 = RtlMultiByteToUnicodeN(lVar5,(uVar6 & 0x7fffffff) << 1,0,lVar3,lVar9);
-        if (-1 < iVar1) goto LAB_828a2c84;
-        uVar2 = RtlNtStatusToDosError();
+        iVar2 = RtlMultiByteToUnicodeN(lVar4,(uVar5 & 0x7fffffff) << 1,0,lVar3,lVar1);
+        if (-1 < iVar2) goto LAB_828a2c84;
+        dwErrCode = RtlNtStatusToDosError();
       }
-      SetLastError(uVar2);
-      lVar9 = 0;
+      SetLastError(dwErrCode);
+      lVar1 = 0;
     }
   }
 LAB_828a2c84:
-  iVar1 = __restgprlr_27(lVar9);
-  return iVar1;
+  iVar2 = __restgprlr_27(lVar1);
+  return iVar2;
 }
 

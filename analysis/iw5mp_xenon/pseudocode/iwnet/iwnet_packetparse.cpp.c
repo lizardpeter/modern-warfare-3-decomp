@@ -2,9 +2,7 @@
 
 // 826E2D68  Auth_ParsePacket  (iwnet/iwnet_packetparse.cpp:180)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void Auth_ParsePacket(msg_t *param_1)
+void Auth_ParsePacket(void)
 
 {
   return;

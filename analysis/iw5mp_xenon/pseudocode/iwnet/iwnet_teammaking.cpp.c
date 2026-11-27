@@ -2,40 +2,38 @@
 
 // 826E3EF0  TeamMaking_GetMemberCount  (iwnet/iwnet_teammaking.cpp:36)
 
-int TeamMaking_GetMemberCount(TeamMakingRequest *param_1)
+longlong TeamMaking_GetMemberCount(int param_1)
 
 {
   int iVar1;
-  int *piVar2;
-  int iVar3;
-  int iVar4;
-  int *piVar5;
+  uint *puVar2;
+  longlong lVar3;
+  longlong lVar4;
+  uint *puVar5;
   int iVar6;
   
-  iVar1 = param_1->partyCount;
-  iVar4 = 0;
-  iVar3 = 0;
+  iVar1 = *(int *)(param_1 + 0x90);
+  lVar4 = 0;
+  lVar3 = 0;
   iVar6 = 0;
   if (1 < iVar1) {
-    piVar5 = &param_1[-1].maxSkill;
+    puVar5 = (uint *)(param_1 + -4);
     do {
-      piVar2 = piVar5 + 2;
+      puVar2 = puVar5 + 2;
       iVar6 = iVar6 + 2;
-      piVar5 = piVar5 + 4;
-      iVar4 = *piVar2 + iVar4;
-      iVar3 = *piVar5 + iVar3;
+      puVar5 = puVar5 + 4;
+      lVar4 = (ulonglong)*puVar2 + lVar4;
+      lVar3 = (ulonglong)*puVar5 + lVar3;
     } while (iVar6 < iVar1 + -1);
   }
   if (iVar6 < iVar1) {
-    return iVar3 + iVar4 + param_1->parties[iVar6].memberCount;
+    return lVar3 + lVar4 + (ulonglong)*(uint *)(iVar6 * 8 + param_1 + 4);
   }
-  return iVar3 + iVar4;
+  return lVar3 + lVar4;
 }
 
 
 // 826E3F68  TeamMaking_Init  (iwnet/iwnet_teammaking.cpp:261)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void TeamMaking_Init(void)
 
@@ -47,146 +45,131 @@ void TeamMaking_Init(void)
 // 826E3F70  TeamMaking_InitRequest  (iwnet/iwnet_teammaking.cpp:271)
 
 void TeamMaking_InitRequest
-               (TeamMakingRequest *param_1,SubpartyInfo *param_2,int param_3,int param_4,int param_5
-               ,bool param_6)
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined4 param_4,
+               undefined4 param_5)
 
 {
-  int iVar1;
+  void *_Dst;
+  void *pvVar1;
   undefined4 *puVar2;
-  longlong lVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  memset();
-  *(int *)(iVar1 + 0x90) = (int)lVar4;
-  if (0 < (int)lVar4) {
-    puVar2 = (undefined4 *)(iVar1 + -8);
-    lVar3 = lVar3 + -0xc;
+  _Dst = (void *)__savegprlr_27();
+  pvVar1 = memset(_Dst,0,0xa0);
+  *(int *)((int)_Dst + 0x90) = (int)param_3;
+  if (0 < (int)param_3) {
+    puVar2 = (undefined4 *)((int)_Dst + -8);
+    param_2 = param_2 + -0xc;
     do {
-      puVar2[3] = *(undefined4 *)((int)lVar3 + 0x54);
-      lVar3 = lVar3 + 0x58;
+      puVar2[3] = *(undefined4 *)((int)param_2 + 0x54);
+      param_2 = param_2 + 0x58;
       puVar2 = puVar2 + 2;
-      *puVar2 = *(undefined4 *)lVar3;
-      *(int *)(iVar1 + 0x94) = param_4;
-      *(int *)(iVar1 + 0x98) = param_5;
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      *puVar2 = *(undefined4 *)param_2;
+      *(undefined4 *)((int)_Dst + 0x94) = param_4;
+      *(undefined4 *)((int)_Dst + 0x98) = param_5;
+      param_3 = param_3 + -1;
+    } while (param_3 != 0);
   }
-  __restgprlr_27();
+  __restgprlr_27(pvVar1);
   return;
 }
 
 
 // 826E3FD8  TeamMaking_ProcessResponse  (iwnet/iwnet_teammaking.cpp:286)
 
-void TeamMaking_ProcessResponse(TeamMakingResponse *param_1,SubpartyInfo *param_2,int param_3)
+void TeamMaking_ProcessResponse(int param_1,int param_2,longlong param_3)
 
 {
-  uchar *puVar1;
-  int *piVar2;
+  byte *pbVar1;
+  uint *puVar2;
   int iVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)param_3;
   iVar3 = 0;
-  if (param_3 < 1) {
+  if ((int)param_3 < 1) {
     return;
   }
-  piVar2 = &param_2[-1].team;
+  puVar2 = (uint *)(param_2 + -4);
   do {
-    puVar1 = param_1->teams + iVar3;
+    pbVar1 = (byte *)(iVar3 + param_1);
     iVar3 = iVar3 + 1;
-    piVar2 = piVar2 + 0x16;
-    *piVar2 = (uint)*puVar1;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    puVar2 = puVar2 + 0x16;
+    *puVar2 = (uint)*pbVar1;
+    param_3 = param_3 + -1;
+  } while (param_3 != 0);
   return;
 }
 
 
 // 826E4000  TeamMaking_DefaultTeamsToAllies  (iwnet/iwnet_teammaking.cpp:295)
 
-void TeamMaking_DefaultTeamsToAllies(SubpartyInfo *param_1,int param_2)
+void TeamMaking_DefaultTeamsToAllies(int param_1,longlong param_2)
 
 {
-  int *piVar1;
-  longlong lVar2;
+  undefined4 *puVar1;
   
-  lVar2 = (longlong)param_2;
-  if (param_2 < 1) {
+  if ((int)param_2 < 1) {
     return;
   }
-  piVar1 = &param_1[-1].team;
+  puVar1 = (undefined4 *)(param_1 + -4);
   do {
-    piVar1 = piVar1 + 0x16;
-    *piVar1 = 2;
-    lVar2 = lVar2 + -1;
-  } while (lVar2 != 0);
+    puVar1 = puVar1 + 0x16;
+    *puVar1 = 2;
+    param_2 = param_2 + -1;
+  } while (param_2 != 0);
   return;
 }
 
 
 // 826E4020  TeamMaking_FindTeams  (iwnet/iwnet_teammaking.cpp:304)
 
-int TeamMaking_FindTeams
-              (int param_1,SubpartyInfo *param_2,int param_3,int param_4,int param_5,int param_6,
-              bool param_7)
+void TeamMaking_FindTeams
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,ulonglong param_7)
 
 {
-  uchar *puVar1;
-  int iVar2;
-  bool bVar3;
-  int iVar4;
-  ulonglong uVar5;
+  byte *pbVar1;
+  int iVar3;
+  undefined8 uVar2;
+  char cVar4;
+  longlong lVar5;
   longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  TeamMakingResponse local_f0;
-  TeamMakingRequest TStack_d0;
+  byte local_f0 [32];
+  undefined1 auStack_d0 [208];
   
-  uVar5 = (ulonglong)param_7;
-  lVar9 = (longlong)param_3;
-  lVar6 = (longlong)(int)param_2;
-  __savegprlr_28(param_1);
-  iVar4 = (int)lVar9;
-  TeamMaking_InitRequest(&TStack_d0,(SubpartyInfo *)lVar6,iVar4,param_5,param_6,SUB41(param_6,0));
-  iVar2 = TeamMaking_GetMemberCount(&TStack_d0);
-  if (param_4 != iVar2) {
-    TeamMaking_GetMemberCount(&TStack_d0);
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_teammaking.cpp",
-                    0x135,0,"memberCount == TeamMaking_GetMemberCount( &request )\n\t%i, %i");
+  __savegprlr_28();
+  TeamMaking_InitRequest(auStack_d0);
+  iVar3 = TeamMaking_GetMemberCount(auStack_d0);
+  if ((int)param_4 != iVar3) {
+    uVar2 = TeamMaking_GetMemberCount(auStack_d0);
+    MyAssertHandler(0xffffffff821a8e80,0x135,0,0xffffffff821a8e40,param_4,uVar2);
   }
-  if (0 < iVar4) {
-    lVar7 = lVar6 + -4;
-    lVar8 = lVar9;
+  if (0 < (int)param_3) {
+    lVar5 = param_2 + -4;
+    lVar6 = param_3;
     do {
-      lVar7 = lVar7 + 0x58;
-      *(undefined4 *)lVar7 = 2;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
+      lVar5 = lVar5 + 0x58;
+      *(undefined4 *)lVar5 = 2;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
   }
-  bVar3 = TeamMaking_FindTeamsImmediate(&TStack_d0,&local_f0);
-  if (bVar3) {
-    if ((uVar5 & 0xff) != 0) {
-      iVar2 = 0;
-      if (0 < iVar4) {
-        lVar6 = lVar6 + -4;
+  cVar4 = TeamMaking_FindTeamsImmediate(auStack_d0,local_f0);
+  if (cVar4 != '\0') {
+    if ((param_7 & 0xff) != 0) {
+      iVar3 = 0;
+      if (0 < (int)param_3) {
+        param_2 = param_2 + -4;
         do {
-          puVar1 = local_f0.teams + iVar2;
-          iVar2 = iVar2 + 1;
-          lVar6 = lVar6 + 0x58;
-          *(uint *)lVar6 = (uint)*puVar1;
-          lVar9 = lVar9 + -1;
-        } while (lVar9 != 0);
+          pbVar1 = local_f0 + iVar3;
+          iVar3 = iVar3 + 1;
+          param_2 = param_2 + 0x58;
+          *(uint *)param_2 = (uint)*pbVar1;
+          param_3 = param_3 + -1;
+        } while (param_3 != 0);
       }
     }
-    iVar2 = __restgprlr_28(2);
-    return iVar2;
+    __restgprlr_28(2);
+    return;
   }
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  __restgprlr_28(0);
+  return;
 }
 

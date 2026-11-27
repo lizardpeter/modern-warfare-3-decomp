@@ -2,21 +2,21 @@
 
 // 82916E90  strstr  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/strstr.c:38)
 
-char * strstr(char *param_1,char *param_2)
+char * strstr(char *_Str,char *_SubStr)
 
 {
   int iVar1;
   longlong lVar2;
   char *pcVar3;
   
-  if (*param_2 == '\0') {
-    return param_1;
+  if (*_SubStr == '\0') {
+    return _Str;
   }
-  lVar2 = (longlong)*param_1;
+  lVar2 = (longlong)*_Str;
   if (lVar2 != 0) {
-    iVar1 = (int)param_1 - (int)param_2;
+    iVar1 = (int)_Str - (int)_SubStr;
     do {
-      pcVar3 = param_2;
+      pcVar3 = _SubStr;
       if ((int)lVar2 != 0) {
         do {
           if ((*pcVar3 == '\0') || (pcVar3[iVar1] != *pcVar3)) break;
@@ -24,11 +24,11 @@ char * strstr(char *param_1,char *param_2)
         } while (pcVar3[iVar1] != '\0');
       }
       if (*pcVar3 == '\0') {
-        return param_1;
+        return _Str;
       }
-      param_1 = param_1 + 1;
+      _Str = _Str + 1;
       iVar1 = iVar1 + 1;
-      lVar2 = (longlong)*param_1;
+      lVar2 = (longlong)*_Str;
     } while (lVar2 != 0);
   }
   return (char *)0x0;

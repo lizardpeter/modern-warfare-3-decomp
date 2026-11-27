@@ -2,44 +2,43 @@
 
 // 82359B40  Con_OpenChannel  (client/con_channels.cpp:87)
 
-bool Con_OpenChannel(char *param_1,bool param_2)
+void Con_OpenChannel(undefined8 param_1,undefined1 param_2)
 
 {
   bool bVar1;
-  char *pcVar2;
+  undefined8 uVar2;
   int iVar3;
-  undefined1 uVar4;
-  int iVar5;
-  PrintChannelGlob *pPVar6;
+  int iVar4;
+  char *pcVar5;
   
-  pcVar2 = (char *)__savegprlr_26(param_1);
-  pPVar6 = &pcGlob;
+  uVar2 = __savegprlr_26();
+  pcVar5 = &DAT_82b3fa38;
   bVar1 = false;
-  iVar5 = 0;
+  iVar4 = 0;
   do {
-    if (pPVar6->openChannels[0].name[0] == '\0') {
+    if (*pcVar5 == '\0') {
 LAB_82359bb0:
-      if (0xff < iVar5) {
-        uVar4 = __restgprlr_26(0);
-        return (bool)uVar4;
+      if (0xff < iVar4) {
+        __restgprlr_26(0);
+        return;
       }
       if (!bVar1) {
-        I_strncpyz(pcGlob.openChannels[iVar5].name,pcVar2,0x20);
-        pcGlob.openChannels[iVar5].allowScript = param_2;
+        I_strncpyz(&DAT_82b3fa38 + iVar4 * 0x21,uVar2,0x20);
+        (&DAT_82b3fa58)[iVar4 * 0x21] = param_2;
       }
-      uVar4 = __restgprlr_26(1);
-      return (bool)uVar4;
+      __restgprlr_26(1);
+      return;
     }
-    iVar3 = I_strnicmp((char *)pPVar6,pcVar2,0x20);
+    iVar3 = I_strnicmp(pcVar5,uVar2,0x20);
     if (iVar3 == 0) {
       bVar1 = true;
       goto LAB_82359bb0;
     }
-    pPVar6 = (PrintChannelGlob *)(pPVar6->openChannels + 1);
-    iVar5 = iVar5 + 1;
-    if (-0x7d4be4c9 < (int)pPVar6) {
-      uVar4 = __restgprlr_26(0);
-      return (bool)uVar4;
+    pcVar5 = pcVar5 + 0x21;
+    iVar4 = iVar4 + 1;
+    if (-0x7d4be4c9 < (int)pcVar5) {
+      __restgprlr_26(0);
+      return;
     }
   } while( true );
 }
@@ -47,36 +46,33 @@ LAB_82359bb0:
 
 // 82359C00  Con_CloseChannelInternal  (client/con_channels.cpp:118)
 
-void Con_CloseChannelInternal(int param_1)
+void Con_CloseChannelInternal(void)
 
 {
   int iVar1;
   uint uVar2;
   longlong lVar3;
-  int iVar4;
+  undefined *puVar4;
   
-  uVar2 = __savegprlr_23(param_1);
+  uVar2 = __savegprlr_23();
   if (0xff < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",0x79,
-                    0,"channel doesn\'t index CON_MAX_CHANNELS\n\t%i not in [0, %i)");
+    MyAssertHandler(0xffffffff820387a0,0x79,0,0xffffffff820387e4,uVar2,0x100);
   }
-  if (pcGlob.openChannels[uVar2].name[0] != '\0') {
-    pcGlob.openChannels[uVar2].name[0] = '\0';
-    iVar4 = -0x7d4be4c8;
+  if ((&DAT_82b3fa38)[uVar2 * 0x21] != '\0') {
+    (&DAT_82b3fa38)[uVar2 * 0x21] = 0;
+    puVar4 = &DAT_82b41b38;
     iVar1 = ((int)uVar2 >> 5) * 4;
     lVar3 = 7;
     do {
-      if (iVar4 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
-                        0x19,0,"%s");
+      if (puVar4 == (undefined *)0x0) {
+        MyAssertHandler(0xffffffff82003098,0x19,0,0xffffffff82000f98,0xffffffff8200308c);
       }
       if (0xff < uVar2) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
-                        0x1a,0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
+        MyAssertHandler(0xffffffff82003098,0x1a,0,0xffffffff82003058,uVar2,0x100);
       }
       lVar3 = lVar3 + -1;
-      *(uint *)(iVar4 + iVar1) = *(uint *)(iVar4 + iVar1) & ~(1 << (uVar2 & 0x1f));
-      iVar4 = iVar4 + 0x20;
+      *(uint *)(puVar4 + iVar1) = *(uint *)(puVar4 + iVar1) & ~(1 << (uVar2 & 0x1f));
+      puVar4 = puVar4 + 0x20;
     } while (lVar3 != 0);
   }
   __restgprlr_23();
@@ -86,42 +82,40 @@ void Con_CloseChannelInternal(int param_1)
 
 // 82359D08  Con_ScriptHasPermission  (client/con_channels.cpp:136)
 
-bool Con_ScriptHasPermission(int param_1)
+undefined1 Con_ScriptHasPermission(int param_1)
 
 {
-  if (((-1 < param_1) && (param_1 < 0x100)) && (pcGlob.openChannels[param_1].name[0] != '\0')) {
-    return pcGlob.openChannels[param_1].allowScript;
+  if (((-1 < param_1) && (param_1 < 0x100)) && ((&DAT_82b3fa38)[param_1 * 0x21] != '\0')) {
+    return (&DAT_82b3fa58)[param_1 * 0x21];
   }
-  return false;
+  return 0;
 }
 
 
 // 82359D48  Con_GetChannel  (client/con_channels.cpp:148)
 
-bool Con_GetChannel(char *param_1,int *param_2)
+void Con_GetChannel(undefined8 param_1,int *param_2)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
-  undefined1 uVar3;
-  int iVar4;
-  PrintChannelGlob *pPVar5;
+  int iVar3;
+  char *pcVar4;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  pPVar5 = &pcGlob;
-  iVar4 = 0;
-  while ((pPVar5->openChannels[0].name[0] == '\0' ||
-         (iVar2 = I_stricmp(pcVar1,(char *)pPVar5), iVar2 != 0))) {
-    pPVar5 = (PrintChannelGlob *)(pPVar5->openChannels + 1);
-    iVar4 = iVar4 + 1;
-    if (-0x7d4be4c9 < (int)pPVar5) {
-      uVar3 = __restgprlr_27(0);
-      return (bool)uVar3;
+  uVar1 = __savegprlr_27();
+  pcVar4 = &DAT_82b3fa38;
+  iVar3 = 0;
+  while ((*pcVar4 == '\0' || (iVar2 = I_stricmp(uVar1,pcVar4), iVar2 != 0))) {
+    pcVar4 = pcVar4 + 0x21;
+    iVar3 = iVar3 + 1;
+    if (-0x7d4be4c9 < (int)pcVar4) {
+      __restgprlr_27(0);
+      return;
     }
   }
-  *param_2 = iVar4;
-  uVar3 = __restgprlr_27(iVar4 < 0x100);
-  return (bool)uVar3;
+  *param_2 = iVar3;
+  __restgprlr_27(iVar3 < 0x100);
+  return;
 }
 
 
@@ -131,7 +125,7 @@ bool Con_IsChannelOpen(int param_1)
 
 {
   if ((-1 < param_1) && (param_1 < 0x100)) {
-    return (bool)('\x01' - (pcGlob.openChannels[param_1].name[0] == '\0'));
+    return (&DAT_82b3fa38)[param_1 * 0x21] != '\0';
   }
   return false;
 }
@@ -139,52 +133,48 @@ bool Con_IsChannelOpen(int param_1)
 
 // 82359E08  Con_FilterShowChannel  (client/con_channels.cpp:175)
 
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
-void Con_FilterShowChannel(print_msg_dest_t param_1,char *param_2,bool param_3)
+void Con_FilterShowChannel(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  int iVar1;
+  ulonglong uVar1;
   int iVar2;
-  uint (*pauVar3) [8];
-  char *pcVar4;
-  ulonglong uVar5;
-  int iVar6;
-  PrintChannel *pPVar7;
-  int iVar8;
+  undefined8 uVar3;
+  int iVar4;
+  char *pcVar5;
+  longlong lVar6;
+  longlong lVar7;
   
-  uVar5 = (ulonglong)param_3;
-  iVar1 = __savegprlr_22(param_1);
-  iVar6 = 0;
-  iVar8 = 1;
-  pPVar7 = pcGlob.openChannels + 1;
+  uVar1 = __savegprlr_22();
+  iVar4 = 0;
+  lVar7 = 1;
+  pcVar5 = &DAT_82b3fa59;
   do {
-    if ((pPVar7->name[0] != '\0') && (iVar2 = I_stricmpwild(param_2,pPVar7->name), iVar2 == 0)) {
-      pauVar3 = pcGlob.filters + iVar1;
-      if ((uVar5 & 0xff) == 0) {
-        iVar2 = Com_BitCheckAssert(*pauVar3,iVar8,0x20);
+    if ((*pcVar5 != '\0') && (iVar2 = I_stricmpwild(param_2,pcVar5), iVar2 == 0)) {
+      lVar6 = (uVar1 & 0x7ffffff) * 0x20 + -0x7d4be4c8;
+      if ((param_3 & 0xff) == 0) {
+        iVar2 = Com_BitCheckAssert(lVar6,lVar7,0x20);
         if (iVar2 != 0) {
-          Com_BitClearAssert(*pauVar3,iVar8,0x20);
-          pcVar4 = "Hiding channel: %s\n";
+          Com_BitClearAssert(lVar6,lVar7,0x20);
+          uVar3 = 0xffffffff82038854;
           goto LAB_82359ecc;
         }
       }
       else {
-        iVar2 = Com_BitCheckAssert(*pauVar3,iVar8,0x20);
+        iVar2 = Com_BitCheckAssert(lVar6,lVar7,0x20);
         if (iVar2 == 0) {
-          Com_BitSetAssert(*pauVar3,iVar8,0x20);
-          pcVar4 = "Adding channel: %s\n";
+          Com_BitSetAssert(lVar6,lVar7,0x20);
+          uVar3 = 0xffffffff82038840;
 LAB_82359ecc:
-          Com_Printf(0,pcVar4);
-          iVar6 = iVar6 + 1;
+          Com_Printf(0,uVar3,pcVar5);
+          iVar4 = iVar4 + 1;
         }
       }
     }
-    pPVar7 = pPVar7 + 1;
-    iVar8 = iVar8 + 1;
-    if (-0x7d4be4c9 < (int)pPVar7) {
-      if (iVar6 == 0) {
-        Com_Printf(0,"No channels added or hidden\n");
+    pcVar5 = pcVar5 + 0x21;
+    lVar7 = lVar7 + 1;
+    if (-0x7d4be4c9 < (int)pcVar5) {
+      if (iVar4 == 0) {
+        Com_Printf(0,0xffffffff82038820);
       }
       __restgprlr_22();
       return;
@@ -195,78 +185,72 @@ LAB_82359ecc:
 
 // 82359F10  Con_IsChannelVisible  (client/con_channels.cpp:211)
 
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
-bool Con_IsChannelVisible(print_msg_dest_t param_1,int param_2,int param_3)
+void Con_IsChannelVisible(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
   uint uVar1;
   bool bVar2;
-  int iVar4;
-  undefined1 uVar6;
+  ulonglong uVar3;
   int iVar5;
-  undefined8 uVar3;
-  ulonglong uVar7;
+  undefined8 uVar4;
+  longlong lVar6;
   
-  uVar7 = (ulonglong)param_2;
-  iVar4 = __savegprlr_29(param_1);
-  iVar5 = (int)uVar7;
+  uVar3 = __savegprlr_29();
+  iVar5 = (int)param_2;
   if ((iVar5 < 0) || (0xff < iVar5)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",0xd6,
-                    0,"%s\n\t(channel) = %i");
+    MyAssertHandler(0xffffffff820387a0,0xd6,0,0xffffffff82038868,0xffffffff8203887c,param_2);
   }
-  if (pcGlob.openChannels[0].name[(int)((uVar7 & 0xffffffff) << 5) + iVar5] != '\0') {
-    if (iVar4 == 1) {
+  if ((&DAT_82b3fa38)[(int)((param_2 & 0xffffffff) << 5) + iVar5] != '\0') {
+    if ((int)uVar3 == 1) {
       if (((iVar5 == 2) || (iVar5 == 3)) || (bVar2 = false, iVar5 == 4)) {
         bVar2 = true;
       }
       if (bVar2) goto LAB_8235a02c;
-      iVar4 = 0;
+      uVar3 = 0;
 LAB_82359fc0:
       if (iVar5 == 0) goto LAB_82359fc8;
     }
-    else if (iVar4 == 0) goto LAB_82359fc0;
-    iVar5 = Com_BitCheckAssert(pcGlob.filters[iVar4],iVar5,0x20);
+    else if ((int)uVar3 == 0) goto LAB_82359fc0;
+    lVar6 = (uVar3 & 0x7ffffff) * 0x20 + -0x7d4be4c8;
+    iVar5 = Com_BitCheckAssert(lVar6,param_2,0x20);
     if (iVar5 != 0) {
 LAB_82359fc8:
-      uVar6 = __restgprlr_29(1);
-      return (bool)uVar6;
+      __restgprlr_29(1);
+      return;
     }
     uVar1 = param_3 >> 5 & 0x1f;
     if ((uVar1 == 3) || (uVar1 == 2)) {
-      iVar4 = Com_BitCheckAssert(pcGlob.filters[iVar4],1,0x20);
-      uVar3 = 1;
-      if (iVar4 != 0) goto LAB_8235a030;
+      iVar5 = Com_BitCheckAssert(lVar6,1,0x20);
+      uVar4 = 1;
+      if (iVar5 != 0) goto LAB_8235a030;
     }
   }
 LAB_8235a02c:
-  uVar3 = 0;
+  uVar4 = 0;
 LAB_8235a030:
-  uVar6 = __restgprlr_29(uVar3);
-  return (bool)uVar6;
+  __restgprlr_29(uVar4);
+  return;
 }
 
 
 // 8235A038  Con_ChannelList_f  (client/con_channels.cpp:245)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_ChannelList_f(void)
 
 {
   int iVar1;
-  PrintChannelGlob *pPVar2;
+  char *pcVar2;
   
   __savegprlr_28();
   iVar1 = 0;
-  pPVar2 = &pcGlob;
+  pcVar2 = &DAT_82b3fa38;
   do {
-    if ((iVar1 != 0) && (pPVar2->openChannels[0].name[0] != '\0')) {
-      Com_Printf(0,"%s\n");
+    if ((iVar1 != 0) && (*pcVar2 != '\0')) {
+      Com_Printf(0,0xffffffff82004d30,pcVar2);
     }
-    pPVar2 = (PrintChannelGlob *)(pPVar2->openChannels + 1);
+    pcVar2 = pcVar2 + 0x21;
     iVar1 = iVar1 + 1;
-  } while ((int)pPVar2 < -0x7d4be4c8);
+  } while ((int)pcVar2 < -0x7d4be4c8);
   __restgprlr_28();
   return;
 }
@@ -274,31 +258,29 @@ void Con_ChannelList_f(void)
 
 // 8235A0A0  Con_FilterAdd  (client/con_channels.cpp:257)
 
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
-void Con_FilterAdd(bool param_1)
+void Con_FilterAdd(void)
 
 {
-  bool bVar3;
-  int iVar1;
-  char *pcVar2;
-  int iVar4;
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  longlong lVar4;
   
-  bVar3 = (bool)__savegprlr_29(param_1);
-  iVar1 = Cmd_Argc();
-  if (iVar1 < 2) {
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s <channel>\n<channel> may include wildcards */?\n");
+  uVar1 = __savegprlr_29();
+  iVar3 = Cmd_Argc();
+  if (iVar3 < 2) {
+    uVar1 = Cmd_Argv(0);
+    Com_Printf(0,0xffffffff820388ac,uVar1);
     __restgprlr_29();
     return;
   }
-  iVar4 = 1;
-  if (1 < iVar1) {
+  lVar4 = 1;
+  if (1 < iVar3) {
     do {
-      pcVar2 = Cmd_Argv(iVar4);
-      Con_FilterShowChannel(CON_DEST_CONSOLE,pcVar2,bVar3);
-      iVar4 = iVar4 + 1;
-    } while (iVar4 < iVar1);
+      uVar2 = Cmd_Argv(lVar4);
+      Con_FilterShowChannel(0,uVar2,uVar1);
+      lVar4 = lVar4 + 1;
+    } while ((int)lVar4 < iVar3);
   }
   __restgprlr_29();
   return;
@@ -307,61 +289,56 @@ void Con_FilterAdd(bool param_1)
 
 // 8235A120  Con_FilterAdd_f  (client/con_channels.cpp:289)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_FilterAdd_f(void)
 
 {
-  Con_FilterAdd(true);
+  Con_FilterAdd(1);
   return;
 }
 
 
 // 8235A128  Con_FilterRemove_f  (client/con_channels.cpp:295)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_FilterRemove_f(void)
 
 {
-  Con_FilterAdd(false);
+  Con_FilterAdd(0);
   return;
 }
 
 
 // 8235A130  Con_FilterList_f  (client/con_channels.cpp:302)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_FilterList_f(void)
 
 {
-  int iVar1;
-  PrintChannelGlob *pPVar2;
-  int iVar3;
-  bool bVar4;
+  longlong lVar1;
+  char *pcVar2;
+  longlong lVar3;
+  int iVar4;
+  bool bVar5;
   
   __savegprlr_25();
-  pPVar2 = &pcGlob;
-  iVar3 = 0;
+  pcVar2 = &DAT_82b3fa38;
+  lVar3 = 0;
   do {
-    if (iVar3 != 0) {
-      if ((iVar3 < 0) || (0xff < iVar3)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",
-                        0xd6,0,"%s\n\t(channel) = %i");
+    iVar4 = (int)lVar3;
+    if (iVar4 != 0) {
+      if ((iVar4 < 0) || (0xff < iVar4)) {
+        MyAssertHandler(0xffffffff820387a0,0xd6,0,0xffffffff82038868,0xffffffff8203887c,lVar3);
       }
-      bVar4 = false;
-      if (pPVar2->openChannels[0].name[0] != '\0') {
-        iVar1 = Com_BitCheckAssert(pcGlob.filters[0],iVar3,0x20);
-        bVar4 = iVar1 != 0;
+      bVar5 = false;
+      if (*pcVar2 != '\0') {
+        lVar1 = Com_BitCheckAssert(0xffffffff82b41b38,lVar3,0x20);
+        bVar5 = lVar1 != 0;
       }
-      if (bVar4) {
-        Com_Printf(0,"%s\n");
+      if (bVar5) {
+        Com_Printf(0,0xffffffff82004d30,pcVar2);
       }
     }
-    pPVar2 = (PrintChannelGlob *)(pPVar2->openChannels + 1);
-    iVar3 = iVar3 + 1;
-  } while ((int)pPVar2 < -0x7d4be4c8);
+    pcVar2 = pcVar2 + 0x21;
+    lVar3 = lVar3 + 1;
+  } while ((int)pcVar2 < -0x7d4be4c8);
   __restgprlr_25();
   return;
 }
@@ -369,38 +346,37 @@ void Con_FilterList_f(void)
 
 // 8235A1F8  Con_WriteFilterConfigString  (client/con_channels.cpp:314)
 
-void Con_WriteFilterConfigString(void *param_1)
+void Con_WriteFilterConfigString(void)
 
 {
-  void *pvVar1;
-  int iVar2;
+  undefined8 uVar1;
+  longlong lVar2;
   int iVar3;
   bool bVar4;
   
-  pvVar1 = (void *)__savegprlr_24(param_1);
-  FS_Printf(pvVar1,"con_hidechannel *; con_showchannel");
+  uVar1 = __savegprlr_24();
+  FS_Printf(uVar1,0xffffffff820388e8);
   iVar3 = 0;
   do {
     if ((iVar3 < 0) || (0xff < iVar3)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",
-                      0xd6,0,"%s\n\t(channel) = %i");
+      MyAssertHandler(0xffffffff820387a0,0xd6,0,0xffffffff82038868,0xffffffff8203887c,iVar3);
     }
     bVar4 = false;
-    if (pcGlob.openChannels[iVar3].name[0] != '\0') {
+    if ((&DAT_82b3fa38)[iVar3 * 0x21] != '\0') {
       if (iVar3 == 0) {
         bVar4 = true;
       }
       else {
-        iVar2 = Com_BitCheckAssert(pcGlob.filters[0],iVar3,0x20);
-        bVar4 = iVar2 != 0;
+        lVar2 = Com_BitCheckAssert(0xffffffff82b41b38,iVar3,0x20);
+        bVar4 = lVar2 != 0;
       }
     }
     if (bVar4) {
-      FS_Printf(pvVar1," %s");
+      FS_Printf(uVar1,0xffffffff820209e8,&DAT_82b3fa38 + iVar3 * 0x21);
     }
     iVar3 = iVar3 + 1;
   } while (iVar3 < 0x100);
-  FS_Printf(pvVar1,"\n");
+  FS_Printf(uVar1,0xffffffff820044d8);
   __restgprlr_24();
   return;
 }
@@ -408,182 +384,179 @@ void Con_WriteFilterConfigString(void *param_1)
 
 // 8235A2F0  Con_InitChannelsForDestFromList  (client/con_channels.cpp:330)
 
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
-void Con_InitChannelsForDestFromList(print_msg_dest_t param_1,char *param_2)
+void Con_InitChannelsForDestFromList(undefined8 param_1,ulonglong param_2)
 
 {
   char cVar1;
   bool bVar2;
-  print_msg_dest_t pVar3;
-  int iVar4;
+  ulonglong uVar3;
+  void *pvVar4;
+  size_t _Size;
+  char *pcVar6;
   ulonglong uVar5;
-  char *pcVar7;
-  ulonglong uVar6;
+  ulonglong uVar7;
   ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar10;
-  PrintChannel *pPVar11;
-  int iVar12;
-  char acStack_180 [384];
+  int iVar9;
+  longlong lVar10;
+  longlong lVar11;
+  undefined1 auStack_180 [384];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pVar3 = __savegprlr_18(param_1);
-  uVar6 = uVar5;
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",0x152
-                    ,0,"%s");
+  uVar3 = __savegprlr_18();
+  uVar5 = param_2;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820387a0,0x152,0,0xffffffff82000f98,0xffffffff82038940);
   }
   do {
-    pcVar7 = (char *)uVar6;
-    uVar6 = uVar6 + 1;
-  } while (*pcVar7 != '\0');
+    pcVar6 = (char *)uVar5;
+    uVar5 = uVar5 + 1;
+  } while (*pcVar6 != '\0');
   bVar2 = false;
-  uVar9 = 0;
-  Con_FilterShowChannel(pVar3,"*",false);
   uVar8 = 0;
+  pvVar4 = (void *)Con_FilterShowChannel(uVar3,0xffffffff8203893c,0);
+  uVar7 = 0;
   do {
-    cVar1 = *(char *)((int)uVar8 + (int)uVar5);
+    cVar1 = *(char *)((int)uVar7 + (int)param_2);
     if (((cVar1 == ' ') || (cVar1 == ',')) || (cVar1 == '\0')) {
       if (bVar2) {
-        if (0x100 < ((uVar8 - uVar9) + 1 & 0xffffffff)) {
-          Com_Error(ERR_DROP,"Channel name too long in specified list: \"%s\"\n");
+        if (0x100 < ((uVar7 - uVar8) + 1 & 0xffffffff)) {
+          Com_Error(1,0xffffffff8203890c,param_2);
         }
-        memcpy();
-        iVar10 = 0;
-        iVar12 = 1;
-        pPVar11 = pcGlob.openChannels + 1;
-        acStack_180[(int)(uVar8 - uVar9)] = '\0';
+        _Size = (size_t)(uVar7 - uVar8);
+        pvVar4 = memcpy(auStack_180,(void *)((int)uVar8 + (int)param_2),_Size);
+        iVar9 = 0;
+        lVar11 = 1;
+        pcVar6 = &DAT_82b3fa59;
+        auStack_180[_Size] = 0;
         do {
-          if ((pPVar11->name[0] != '\0') &&
-             (iVar4 = I_stricmpwild(acStack_180,pPVar11->name), iVar4 == 0)) {
-            iVar4 = Com_BitCheckAssert(pcGlob.filters[pVar3],iVar12,0x20);
-            if (iVar4 == 0) {
-              Com_BitSetAssert(pcGlob.filters[pVar3],iVar12,0x20);
-              Com_Printf(0,"Adding channel: %s\n");
-              iVar10 = iVar10 + 1;
+          if (*pcVar6 != '\0') {
+            pvVar4 = (void *)I_stricmpwild(auStack_180,pcVar6);
+            if (pvVar4 == (void *)0x0) {
+              lVar10 = (uVar3 & 0x7ffffff) * 0x20 + -0x7d4be4c8;
+              pvVar4 = (void *)Com_BitCheckAssert(lVar10,lVar11,0x20);
+              if (pvVar4 == (void *)0x0) {
+                Com_BitSetAssert(lVar10,lVar11,0x20);
+                pvVar4 = (void *)Com_Printf(0,0xffffffff82038840,pcVar6);
+                iVar9 = iVar9 + 1;
+              }
             }
           }
-          pPVar11 = pPVar11 + 1;
-          iVar12 = iVar12 + 1;
-        } while ((int)pPVar11 < -0x7d4be4c8);
-        if (iVar10 == 0) {
-          Com_Printf(0,"No channels added or hidden\n");
+          pcVar6 = pcVar6 + 0x21;
+          lVar11 = lVar11 + 1;
+        } while ((int)pcVar6 < -0x7d4be4c8);
+        if (iVar9 == 0) {
+          pvVar4 = (void *)Com_Printf(0,0xffffffff82038820);
         }
         bVar2 = false;
       }
     }
     else if (!bVar2) {
       bVar2 = true;
-      uVar9 = uVar8;
+      uVar8 = uVar7;
     }
-    uVar8 = uVar8 + 1;
-  } while ((uVar8 & 0xffffffff) <= ((uVar6 - uVar5) - 1 & 0xffffffff));
-  __restgprlr_18();
+    uVar7 = uVar7 + 1;
+  } while ((uVar7 & 0xffffffff) <= ((uVar5 - param_2) - 1 & 0xffffffff));
+  __restgprlr_18(pvVar4);
   return;
 }
 
 
 // 8235A4C8  Con_InitGameMsgChannels  (client/con_channels.cpp:378)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
 void Con_InitGameMsgChannels(void)
 
 {
   char cVar1;
   bool bVar2;
-  dvar_t *pdVar3;
+  undefined4 uVar3;
   char *pcVar4;
-  char *pcVar5;
-  dvar_t **ppdVar6;
-  longlong lVar7;
-  print_msg_dest_t pVar8;
-  int iVar9;
+  int *piVar5;
+  longlong lVar6;
+  int iVar7;
+  longlong lVar8;
+  char *pcVar9;
   char *pcVar10;
-  char (*pacVar11) [91];
-  char *pcVar12;
-  char (*pacVar13) [25];
-  char acStack_180 [384];
+  char *pcVar11;
+  size_t _Size;
+  undefined1 auStack_180 [384];
   
   __savegprlr_18();
-  pacVar11 = con_gameMsgWindowNFilter_Descs;
-  pacVar13 = con_gameMsgWindowNFilter_Names;
-  iVar9 = 0;
-  lVar7 = 4;
-  ppdVar6 = con_gameMsgWindowNFilter;
+  pcVar9 = &DAT_82b41c90;
+  pcVar11 = &DAT_82b41c18;
+  lVar8 = 0;
+  iVar7 = 0;
+  lVar6 = 4;
+  piVar5 = &DAT_82b41c7c;
   do {
-    sprintf(*pacVar13,"con_gameMsgWindow%dFilter");
-    pcVar4 = *pacVar13;
+    sprintf(pcVar11,"con_gameMsgWindow%dFilter",lVar8);
+    pcVar4 = pcVar11;
     do {
       cVar1 = *pcVar4;
       pcVar4 = pcVar4 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar4 - (int)pacVar13 != 0x19) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",
-                      0x186,0,"%s");
+    if ((int)pcVar4 - (int)pcVar11 != 0x19) {
+      MyAssertHandler(0xffffffff820387a0,0x186,0,0xffffffff82000f98,0xffffffff82038950);
     }
-    sprintf(*pacVar11,
+    sprintf(pcVar9,
             "Space-separated list of console channels that should be displayed in game message window %d"
-           );
-    pcVar4 = *pacVar11;
+            ,lVar8);
+    pcVar4 = pcVar9;
     do {
       cVar1 = *pcVar4;
       pcVar4 = pcVar4 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar4 - (int)pacVar11 != 0x5b) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",
-                      0x189,0,"%s");
+    if ((int)pcVar4 - (int)pcVar9 != 0x5b) {
+      MyAssertHandler(0xffffffff820387a0,0x189,0,0xffffffff82000f98,0xffffffff820389a8);
     }
-    pdVar3 = Dvar_RegisterString(*pacVar13,*(char **)((int)defaultGameWindowFilters + iVar9),2,
-                                 *pacVar11);
-    *(dvar_t **)((int)con_gameMsgWindowNFilter + iVar9) = pdVar3;
-    lVar7 = lVar7 + -1;
-    pacVar13 = (char (*) [25])((int)pacVar13 + 0x19);
-    pacVar11 = (char (*) [91])((int)pacVar11 + 0x5b);
-    iVar9 = iVar9 + 4;
-  } while (lVar7 != 0);
-  pVar8 = CON_DEST_GAME1;
-  lVar7 = 4;
+    uVar3 = Dvar_RegisterString(pcVar11,*(undefined4 *)
+                                         ((int)&PTR_s_gamenotify_obituary_829662e8 + iVar7),2,pcVar9
+                               );
+    *(undefined4 *)((int)&DAT_82b41c7c + iVar7) = uVar3;
+    lVar6 = lVar6 + -1;
+    lVar8 = lVar8 + 1;
+    pcVar11 = pcVar11 + 0x19;
+    pcVar9 = pcVar9 + 0x5b;
+    iVar7 = iVar7 + 4;
+  } while (lVar6 != 0);
+  lVar8 = 3;
+  lVar6 = 4;
   do {
-    pcVar4 = ((*ppdVar6)->current).string;
-    pcVar5 = pcVar4;
-    if (pcVar4 == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",
-                      0x152,0,"%s");
+    pcVar9 = *(char **)(*piVar5 + 0xc);
+    pcVar11 = pcVar9;
+    if (pcVar9 == (char *)0x0) {
+      MyAssertHandler(0xffffffff820387a0,0x152,0,0xffffffff82000f98,0xffffffff82038940);
     }
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar11;
+      pcVar11 = pcVar11 + 1;
     } while (cVar1 != '\0');
     bVar2 = false;
+    pcVar4 = (char *)0x0;
+    Con_FilterShowChannel(lVar8,0xffffffff8203893c,0);
     pcVar10 = (char *)0x0;
-    Con_FilterShowChannel(pVar8,"*",false);
-    pcVar12 = (char *)0x0;
     do {
-      cVar1 = pcVar4[(int)pcVar12];
+      cVar1 = pcVar9[(int)pcVar10];
       if (((cVar1 == ' ') || (cVar1 == ',')) || (cVar1 == '\0')) {
         if (bVar2) {
-          if (0x100 < ((int)pcVar12 - (int)pcVar10) + 1U) {
-            Com_Error(ERR_DROP,"Channel name too long in specified list: \"%s\"\n");
+          _Size = (int)pcVar10 - (int)pcVar4;
+          if (0x100 < _Size + 1) {
+            Com_Error(1,0xffffffff8203890c,pcVar9);
           }
-          memcpy();
-          acStack_180[(int)pcVar12 - (int)pcVar10] = '\0';
-          Con_FilterShowChannel(pVar8,acStack_180,true);
+          memcpy(auStack_180,pcVar9 + (int)pcVar4,_Size);
+          auStack_180[_Size] = 0;
+          Con_FilterShowChannel(lVar8,auStack_180,1);
           bVar2 = false;
         }
       }
       else if (!bVar2) {
         bVar2 = true;
-        pcVar10 = pcVar12;
+        pcVar4 = pcVar10;
       }
-      pcVar12 = pcVar12 + 1;
-    } while (pcVar12 <= pcVar5 + (-1 - (int)pcVar4));
-    lVar7 = lVar7 + -1;
-    ppdVar6 = ppdVar6 + 1;
-    pVar8 = pVar8 + CON_DEST_MINICON;
-  } while (lVar7 != 0);
+      pcVar10 = pcVar10 + 1;
+    } while (pcVar10 <= pcVar11 + (-1 - (int)pcVar9));
+    lVar6 = lVar6 + -1;
+    piVar5 = piVar5 + 1;
+    lVar8 = lVar8 + 1;
+  } while (lVar6 != 0);
   __restgprlr_18();
   return;
 }
@@ -591,36 +564,32 @@ void Con_InitGameMsgChannels(void)
 
 // 8235A738  Con_InitChannels  (client/con_channels.cpp:405)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
-
 void Con_InitChannels(void)
 
 {
-  char **ppcVar1;
+  undefined **ppuVar1;
   longlong lVar2;
   
   __savegprlr_29();
-  memset();
+  memset(&DAT_82b3fa38,0,0x2100);
   lVar2 = 0x1a;
-  ppcVar1 = demoExeModeNames + 5;
+  ppuVar1 = &PTR_caseD_39_8296627c;
   do {
-    ppcVar1 = ppcVar1 + 1;
-    Con_OpenChannel(*ppcVar1,false);
+    ppuVar1 = ppuVar1 + 1;
+    Con_OpenChannel(*ppuVar1,0);
     lVar2 = lVar2 + -1;
   } while (lVar2 != 0);
-  pcGlob.openChannels[0x18].allowScript = true;
-  DAT_82b41c8c = Dvar_RegisterString("con_default_console_filter","*",0,
-                                     "Default channel filter for the console destination.");
-  Con_FilterShowChannel(CON_DEST_CONSOLE,(DAT_82b41c8c->current).string,true);
-  Con_FilterShowChannel(CON_DEST_MINICON,"std",true);
-  Con_FilterShowChannel(CON_DEST_MINICON,"error",true);
-  Con_FilterShowChannel(CON_DEST_ERROR,"error",true);
+  DAT_82b3fd70 = 1;
+  DAT_82b41c8c = Dvar_RegisterString(0xffffffff82038a48,0xffffffff8203893c,0,0xffffffff82038a64);
+  Con_FilterShowChannel(0,*(undefined4 *)(DAT_82b41c8c + 0xc),1);
+  Con_FilterShowChannel(1,0xffffffff82038a44,1);
+  Con_FilterShowChannel(1,0xffffffff82033c0c,1);
+  Con_FilterShowChannel(2,0xffffffff82033c0c,1);
   Con_InitGameMsgChannels();
-  Cmd_AddCommandInternal("con_channellist",Con_ChannelList_f,&Con_ChannelList_f_VAR);
-  Cmd_AddCommandInternal("con_showchannel",Con_FilterAdd_f,&Con_FilterAdd_f_VAR);
-  Cmd_AddCommandInternal("con_hidechannel",Con_FilterRemove_f,&Con_FilterRemove_f_VAR);
-  Cmd_AddCommandInternal("con_visiblechannellist",Con_FilterList_f,&Con_FilterList_f_VAR);
+  Cmd_AddCommandInternal(0xffffffff82038a34,0xffffffff8235a038,0xffffffff82b41e38);
+  Cmd_AddCommandInternal(0xffffffff82038a24,0xffffffff8235a120,0xffffffff82b41e24);
+  Cmd_AddCommandInternal(0xffffffff82038a14,0xffffffff8235a128,0xffffffff82b41e10);
+  Cmd_AddCommandInternal(0xffffffff820389fc,0xffffffff8235a130,0xffffffff82b41dfc);
   __restgprlr_29();
   return;
 }
@@ -628,50 +597,45 @@ void Con_InitChannels(void)
 
 // 8235A878  Con_ShutdownChannels  (client/con_channels.cpp:439)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Con_ShutdownChannels(void)
 
 {
   int iVar1;
-  PrintChannelGlob *pPVar2;
+  char *pcVar2;
   ulonglong uVar3;
   longlong lVar4;
-  int iVar5;
+  undefined *puVar5;
   
   __savegprlr_17();
-  pPVar2 = &pcGlob;
+  pcVar2 = &DAT_82b3fa38;
   uVar3 = 0;
   do {
     if (0xff < (uVar3 & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",
-                      0x79,0,"channel doesn\'t index CON_MAX_CHANNELS\n\t%i not in [0, %i)");
+      MyAssertHandler(0xffffffff820387a0,0x79,0,0xffffffff820387e4,uVar3,0x100);
     }
-    if (pPVar2->openChannels[0].name[0] != '\0') {
-      pPVar2->openChannels[0].name[0] = '\0';
+    if (*pcVar2 != '\0') {
+      *pcVar2 = '\0';
       iVar1 = ((int)uVar3 >> 5) * 4;
-      iVar5 = -0x7d4be4c8;
+      puVar5 = &DAT_82b41b38;
       lVar4 = 7;
       do {
-        if (iVar5 == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
-                          0x19,0,"%s");
+        if (puVar5 == (undefined *)0x0) {
+          MyAssertHandler(0xffffffff82003098,0x19,0,0xffffffff82000f98,0xffffffff8200308c);
         }
         if (0xff < (uVar3 & 0xffffffff)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
-                          0x1a,0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
+          MyAssertHandler(0xffffffff82003098,0x1a,0,0xffffffff82003058,uVar3,0x100);
         }
         lVar4 = lVar4 + -1;
-        *(uint *)(iVar5 + iVar1) =
-             *(uint *)(iVar5 + iVar1) &
+        *(uint *)(puVar5 + iVar1) =
+             *(uint *)(puVar5 + iVar1) &
              ~((uint)(0x100000001 << (uVar3 & 0x1f)) | (uint)(0x100000001 >> 0x40 - (uVar3 & 0x1f)))
         ;
-        iVar5 = iVar5 + 0x20;
+        puVar5 = puVar5 + 0x20;
       } while (lVar4 != 0);
     }
-    pPVar2 = (PrintChannelGlob *)(pPVar2->openChannels + 1);
+    pcVar2 = pcVar2 + 0x21;
     uVar3 = uVar3 + 1;
-  } while ((int)pPVar2 < -0x7d4be4c8);
+  } while ((int)pcVar2 < -0x7d4be4c8);
   __restgprlr_17();
   return;
 }
@@ -679,58 +643,56 @@ void Con_ShutdownChannels(void)
 
 // 8235A990  Con_SaveChannels  (client/con_channels.cpp:449)
 
-void Con_SaveChannels(MemoryFile *param_1)
+void Con_SaveChannels(void)
 
 {
-  MemoryFile *pMVar1;
-  PrintChannel *pPVar2;
-  PrintChannelGlob *pPVar3;
+  char cVar1;
+  undefined8 uVar2;
+  char *pcVar3;
   char *pcVar4;
   char *pcVar5;
-  PrintChannelGlob *pPVar6;
-  longlong lVar7;
+  longlong lVar6;
   char *local_40 [16];
   
-  pMVar1 = (MemoryFile *)__savegprlr_27(param_1);
-  pPVar6 = &pcGlob;
+  uVar2 = __savegprlr_27();
+  pcVar5 = &DAT_82b3fa38;
   local_40[0] = (char *)0x0;
-  pPVar2 = pcGlob.openChannels + 1;
-  lVar7 = 0x40;
+  pcVar4 = &DAT_82b3fa59;
+  lVar6 = 0x40;
   do {
-    if (((PrintChannelGlob *)(pPVar2 + -1))->openChannels[0].name[0] != '\0') {
+    if (pcVar4[-0x21] != '\0') {
       local_40[0] = local_40[0] + 1;
     }
-    if (pPVar2->name[0] != '\0') {
+    if (*pcVar4 != '\0') {
       local_40[0] = local_40[0] + 1;
     }
-    if (pPVar2[1].name[0] != '\0') {
+    if (pcVar4[0x21] != '\0') {
       local_40[0] = local_40[0] + 1;
     }
-    if (pPVar2[2].name[0] != '\0') {
+    if (pcVar4[0x42] != '\0') {
       local_40[0] = local_40[0] + 1;
     }
-    pPVar2 = pPVar2 + 4;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  MemFile_WriteData(pMVar1,4,local_40);
-  pcVar5 = (char *)0x0;
+    pcVar4 = pcVar4 + 0x84;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  MemFile_WriteData(uVar2,4,local_40);
+  pcVar4 = (char *)0x0;
   do {
-    pPVar3 = pPVar6;
-    if (pPVar6->openChannels[0].name[0] != '\0') {
+    pcVar3 = pcVar5;
+    if (*pcVar5 != '\0') {
       do {
-        pPVar2 = pPVar3->openChannels;
-        pPVar3 = (PrintChannelGlob *)(pPVar3->openChannels[0].name + 1);
-      } while (pPVar2->name[0] != '\0');
-      pcVar4 = (char *)((int)pPVar3 + (-1 - (int)pPVar6));
-      local_40[0] = pcVar5;
-      MemFile_WriteData(pMVar1,4,local_40);
+        cVar1 = *pcVar3;
+        pcVar3 = pcVar3 + 1;
+      } while (cVar1 != '\0');
       local_40[0] = pcVar4;
-      MemFile_WriteData(pMVar1,4,local_40);
-      MemFile_WriteData(pMVar1,(int)pcVar4,pPVar6);
+      MemFile_WriteData(uVar2,4,local_40);
+      local_40[0] = pcVar3 + (-1 - (int)pcVar5);
+      MemFile_WriteData(uVar2,4,local_40);
+      MemFile_WriteData(uVar2,pcVar3 + (-1 - (int)pcVar5),pcVar5);
     }
-    pPVar6 = (PrintChannelGlob *)(pPVar6->openChannels + 1);
-    pcVar5 = pcVar5 + 1;
-  } while ((int)pPVar6 < -0x7d4be4c8);
+    pcVar5 = pcVar5 + 0x21;
+    pcVar4 = pcVar4 + 1;
+  } while ((int)pcVar5 < -0x7d4be4c8);
   __restgprlr_27();
   return;
 }
@@ -738,68 +700,65 @@ void Con_SaveChannels(MemoryFile *param_1)
 
 // 8235AAA0  Con_RestoreChannels  (client/con_channels.cpp:476)
 
-void Con_RestoreChannels(MemoryFile *param_1)
+void Con_RestoreChannels(void)
 
 {
   uint uVar1;
-  MemoryFile *pMVar2;
-  PrintChannel *pPVar3;
-  int iVar4;
-  uint uVar5;
-  uint (*pauVar6) [8];
+  undefined8 uVar2;
+  int iVar3;
+  ulonglong uVar4;
+  char *pcVar5;
+  longlong lVar6;
   longlong lVar7;
   uint local_90;
   int local_8c [3];
-  char acStack_80 [128];
+  undefined1 auStack_80 [128];
   
-  pMVar2 = (MemoryFile *)__savegprlr_21(param_1);
-  MemFile_ReadData(pMVar2,4,&local_90);
-  uVar5 = local_90;
-  do {
-    if (uVar5 == 0) {
-      __restgprlr_21();
-      return;
-    }
-    MemFile_ReadData(pMVar2,4,&local_90);
-    uVar1 = local_90;
-    if (((int)local_90 < 0) || (0xff < (int)local_90)) {
-                    /* WARNING: Subroutine does not return */
-      Sys_Error("GAME_ERR_SAVEGAME_BAD");
-    }
-    MemFile_ReadData(pMVar2,4,local_8c);
-    iVar4 = local_8c[0];
-    if ((local_8c[0] == 0) || (0x1e < local_8c[0])) {
-                    /* WARNING: Subroutine does not return */
-      Sys_Error("GAME_ERR_SAVEGAME_BAD");
-    }
-    MemFile_ReadData(pMVar2,local_8c[0],acStack_80);
-    pPVar3 = pcGlob.openChannels + uVar1;
-    acStack_80[iVar4] = '\0';
-    if (pcGlob.openChannels[uVar1].name[0] == '\0') {
-LAB_8235abe4:
-      I_strncpyz(pPVar3->name,acStack_80,0x20);
-    }
-    else {
-      iVar4 = I_stricmp(pPVar3->name,acStack_80);
-      if (iVar4 != 0) {
-        if (0xff < uVar1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp"
-                          ,0x79,0,"channel doesn\'t index CON_MAX_CHANNELS\n\t%i not in [0, %i)");
-        }
-        if (pPVar3->name[0] != '\0') {
-          lVar7 = 7;
-          pPVar3->name[0] = '\0';
-          pauVar6 = pcGlob.filters;
-          do {
-            Com_BitClearAssert(*pauVar6,uVar1,0x20);
-            lVar7 = lVar7 + -1;
-            pauVar6 = pauVar6 + 1;
-          } while (lVar7 != 0);
-        }
-        goto LAB_8235abe4;
+  uVar2 = __savegprlr_21();
+  MemFile_ReadData(uVar2,4,&local_90);
+  uVar4 = (ulonglong)local_90;
+  if (local_90 != 0) {
+    do {
+      MemFile_ReadData(uVar2,4,&local_90);
+      uVar1 = local_90;
+      if (((int)local_90 < 0) || (0xff < (int)local_90)) {
+        Sys_Error(0xffffffff82038a98);
       }
-    }
-    uVar5 = uVar5 - 1;
-  } while( true );
+      MemFile_ReadData(uVar2,4,local_8c);
+      iVar3 = local_8c[0];
+      if ((local_8c[0] == 0) || (0x1e < local_8c[0])) {
+        Sys_Error(0xffffffff82038a98);
+      }
+      MemFile_ReadData(uVar2,iVar3,auStack_80);
+      pcVar5 = &DAT_82b3fa38 + uVar1 * 0x21;
+      auStack_80[iVar3] = 0;
+      if ((&DAT_82b3fa38)[uVar1 * 0x21] == '\0') {
+LAB_8235abe4:
+        I_strncpyz(pcVar5,auStack_80,0x20);
+      }
+      else {
+        iVar3 = I_stricmp(pcVar5,auStack_80);
+        if (iVar3 != 0) {
+          if (0xff < uVar1) {
+            MyAssertHandler(0xffffffff820387a0,0x79,0,0xffffffff820387e4,uVar1,0x100);
+          }
+          if (*pcVar5 != '\0') {
+            lVar7 = 7;
+            *pcVar5 = '\0';
+            lVar6 = -0x7d4be4c8;
+            do {
+              Com_BitClearAssert(lVar6,uVar1,0x20);
+              lVar7 = lVar7 + -1;
+              lVar6 = lVar6 + 0x20;
+            } while (lVar7 != 0);
+          }
+          goto LAB_8235abe4;
+        }
+      }
+      uVar4 = uVar4 - 1;
+    } while (uVar4 != 0);
+  }
+  __restgprlr_21();
+  return;
 }
 

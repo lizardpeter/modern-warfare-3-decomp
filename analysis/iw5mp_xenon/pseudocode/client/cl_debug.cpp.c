@@ -2,13 +2,10 @@
 
 // 82335BF0  CL_InitDebugDvars  (client/cl_debug.cpp:14)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_InitDebugDvars(void)
 
 {
-  debugOverlay = Dvar_RegisterEnum("debugOverlay",debugOverlayNames,0,0,
-                                   "Toggles the display of various debug info.");
+  DAT_82a9a00c = Dvar_RegisterEnum(0xffffffff8202e410,0xffffffff82964608,0,0,0xffffffff8202e420);
   return;
 }
 

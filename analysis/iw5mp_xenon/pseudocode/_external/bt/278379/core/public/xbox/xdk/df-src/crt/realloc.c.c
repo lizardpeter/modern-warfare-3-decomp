@@ -2,61 +2,59 @@
 
 // 8291B188  realloc  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/realloc.c:62)
 
-void * realloc(void *param_1,uint param_2)
+void * realloc(void *_Memory,size_t _NewSize)
 
 {
-  void *pvVar1;
+  ulonglong uVar1;
   void *pvVar2;
-  int iVar3;
-  int *piVar4;
-  ulong uVar5;
-  uint uVar6;
+  HANDLE pvVar3;
+  int iVar4;
+  int *piVar5;
+  DWORD DVar6;
   ulonglong uVar7;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pvVar1 = (void *)__savegprlr_27(param_1);
-  uVar6 = (uint)uVar7;
-  if (pvVar1 == (void *)0x0) {
-    pvVar2 = malloc(uVar6);
+  uVar7 = (ulonglong)(int)_NewSize;
+  uVar1 = __savegprlr_27(_Memory);
+  if ((uVar1 & 0xffffffff) == 0) {
+    pvVar2 = malloc((size_t)uVar7);
   }
   else {
     if ((uVar7 & 0xffffffff) == 0) {
-      free(pvVar1);
+      free((void *)uVar1);
     }
     else {
       do {
         if (0xfffff000 < (uVar7 & 0xffffffff)) {
-          _callnewh(uVar6);
-          piVar4 = _errno();
-          *piVar4 = 0xc;
+          _callnewh((size_t)uVar7);
+          piVar5 = _errno();
+          *piVar5 = 0xc;
           goto LAB_8291b238;
         }
         if ((uVar7 & 0xffffffff) == 0) {
           uVar7 = 1;
         }
-        pvVar2 = GetProcessHeap();
-        uVar6 = (uint)uVar7;
-        pvVar2 = RtlReAllocateHeap(pvVar2,0,pvVar1,uVar6);
+        pvVar3 = GetProcessHeap();
+        pvVar2 = (void *)RtlReAllocateHeap(pvVar3,0,uVar1,uVar7);
         if (pvVar2 != (void *)0x0) goto LAB_8291b23c;
-        if (_newmode == 0) {
-          piVar4 = _errno();
-          uVar5 = GetLastError();
-          iVar3 = _get_errno_from_oserr(uVar5);
-          *piVar4 = iVar3;
+        if (DAT_84896064 == 0) {
+          piVar5 = _errno();
+          DVar6 = GetLastError();
+          iVar4 = _get_errno_from_oserr(DVar6);
+          *piVar5 = iVar4;
           goto LAB_8291b23c;
         }
-        iVar3 = _callnewh(uVar6);
-      } while (iVar3 != 0);
-      piVar4 = _errno();
-      uVar5 = GetLastError();
-      iVar3 = _get_errno_from_oserr(uVar5);
-      *piVar4 = iVar3;
+        iVar4 = _callnewh((size_t)uVar7);
+      } while (iVar4 != 0);
+      piVar5 = _errno();
+      DVar6 = GetLastError();
+      iVar4 = _get_errno_from_oserr(DVar6);
+      *piVar5 = iVar4;
     }
 LAB_8291b238:
     pvVar2 = (void *)0x0;
   }
 LAB_8291b23c:
-  pvVar1 = (void *)__restgprlr_27(pvVar2);
-  return pvVar1;
+  pvVar2 = (void *)__restgprlr_27(pvVar2);
+  return pvVar2;
 }
 

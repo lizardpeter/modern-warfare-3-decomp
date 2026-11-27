@@ -2,18 +2,20 @@
 
 // 828A4A00  XGetOverlappedExtendedError  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xgetoverlappedextendederror.c:45)
 
-ulong XGetOverlappedExtendedError(_XOVERLAPPED *param_1)
+ulonglong XGetOverlappedExtendedError(int *param_1)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
+  ulonglong uVar2;
   
-  uVar1 = 0x3e4;
-  if (param_1 == (_XOVERLAPPED *)0x0) {
-    uVar1 = GetLastError();
+  uVar2 = 0x3e4;
+  if (param_1 == (int *)0x0) {
+    DVar1 = GetLastError();
+    uVar2 = (ulonglong)(int)DVar1;
   }
-  else if (param_1->InternalLow != 0x3e5) {
-    uVar1 = param_1->dwExtendedError;
+  else if (*param_1 != 0x3e5) {
+    uVar2 = (ulonglong)(uint)param_1[6];
   }
-  return uVar1;
+  return uVar2;
 }
 

@@ -2,13 +2,11 @@
 
 // 827FB268  Com_BlockChecksum32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/checksum.h:9)
 
-uint Com_BlockChecksum32(void *param_1,uint param_2)
+void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
 
 {
-  uint uVar1;
-  
-  uVar1 = Com_BlockChecksumKey32(param_1,param_2,0);
-  return uVar1;
+  Com_BlockChecksumKey32(param_1,param_2,0);
+  return;
 }
 
 
@@ -17,37 +15,36 @@ uint Com_BlockChecksum32(void *param_1,uint param_2)
 void GameStateInfo_SetUsingGameStateInfo(int param_1)
 
 {
-  dvar_t *pdVar1;
+  int iVar1;
   
-  if (g_gameRules[0].init == 0) {
-    g_gameRules[0].matchRules = g_matchRules;
-    InitializeMatchRules(g_matchRules);
-    if (g_gameRules[0].mapRotation != (LobbyMapRotation *)0x0) {
-      PrivateMapRotation_ClearAll(g_gameRules[0].mapRotation);
+  if (DAT_84876518 == 0) {
+    DAT_84876520 = &DAT_84876698;
+    InitializeMatchRules();
+    if (DAT_8487652c != (undefined *)0x0) {
+      PrivateMapRotation_ClearAll();
     }
-    g_gameRules[0].usingRecipe = 0;
-    g_gameRules[0].mapRotation = g_mapRotation;
-    g_gameRules[0].usingRotation = 0;
-    g_gameRules[0].usingIntermission = 0;
-    g_gameRules[0].init = 1;
+    DAT_8487651c = 0;
+    DAT_8487652c = &DAT_84876548;
+    DAT_84876524 = 0;
+    DAT_84876528 = 0;
+    DAT_84876518 = 1;
   }
   if (param_1 == 0) {
-    g_gameRules[0].usingRecipe = 0;
+    DAT_8487651c = 0;
   }
-  else if ((g_gameRules[0].usingRotation == 0) || ((xblive_privatematch->current).enabled == false))
-  {
-    pdVar1 = Dvar_FindVar("ui_oldmapname");
-    if ((pdVar1 != (dvar_t *)0x0) && (*(pdVar1->current).string != '\0')) {
-      Dvar_SetString(ui_mapname,(pdVar1->current).string);
-      Dvar_SetString(pdVar1,"");
+  else if ((DAT_84876524 == 0) || (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
+    iVar1 = Dvar_FindVar(0xffffffff8216f6b0);
+    if ((iVar1 != 0) && (**(char **)(iVar1 + 0xc) != '\0')) {
+      Dvar_SetString(DAT_83f71e10);
+      Dvar_SetString(iVar1,0xffffffff820068af);
     }
-    g_gameRules[0].usingRecipe = 1;
-    MatchRulesChanged(g_gameRules[0].matchRules);
+    DAT_8487651c = 1;
+    MatchRulesChanged(DAT_84876520);
   }
   else {
-    PrivateMapRotation_GetNextMapSelection(g_gameRules[0].mapRotation);
-    g_gameRules[0].usingRecipe = 1;
-    MatchRulesChanged(g_gameRules[0].matchRules);
+    PrivateMapRotation_GetNextMapSelection(DAT_8487652c);
+    DAT_8487651c = 1;
+    MatchRulesChanged(DAT_84876520);
   }
   return;
 }
@@ -55,19 +52,16 @@ void GameStateInfo_SetUsingGameStateInfo(int param_1)
 
 // 827FB270  GameStateInfo_InPlaylistGame  (bgame/bg_gamestateinfo.cpp:71)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int GameStateInfo_InPlaylistGame(void)
+undefined8 GameStateInfo_InPlaylistGame(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  if (((onlinegame->current).enabled != false) && ((xblive_privatematch->current).enabled == false))
-  {
-    bVar1 = Lobby_IsInLobby();
-    if (!bVar1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_gamestateinfo.cpp",
-                      0x4b,0,"%s\n\t%s");
+  if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
+    cVar1 = Lobby_IsInLobby();
+    if (cVar1 == '\0') {
+      MyAssertHandler(0xffffffff821e1f38,0x4b,0,0xffffffff820011f4,0xffffffff82032564,
+                      0xffffffff821e1f00);
     }
     return 1;
   }
@@ -77,276 +71,249 @@ int GameStateInfo_InPlaylistGame(void)
 
 // 827FB308  GameStateInfo_GetIndexForGamemode  (bgame/bg_gamestateinfo.cpp:81)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-GameStateInfoIndex GameStateInfo_GetIndexForGamemode(void)
+undefined8 GameStateInfo_GetIndexForGamemode(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  if ((onlinegame->current).enabled == false) {
-    if ((systemlink->current).enabled == false) {
-      if ((splitscreen->current).enabled != false) {
-        return GAMESTATEINFO_HOST;
+  if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
+    if (*(char *)(DAT_82aa1ae4 + 0xc) == '\0') {
+      if (*(char *)(DAT_82b3ecb8 + 0xc) != '\0') {
+        return 0;
       }
     }
-    else if ((systemlink_host->current).enabled != false) {
-      return GAMESTATEINFO_HOST;
+    else if (*(char *)(DAT_82aa1aa8 + 0xc) != '\0') {
+      return 0;
     }
   }
-  else if (((xblive_privatematch->current).enabled != false) && (bVar1 = Lobby_AreWeHost(), bVar1))
-  {
-    return GAMESTATEINFO_HOST;
+  else if ((*(char *)(DAT_84253bb8 + 0xc) != '\0') && (cVar1 = Lobby_AreWeHost(), cVar1 != '\0')) {
+    return 0;
   }
-  return GAMESTATEINFO_CLIENT;
+  return 1;
 }
 
 
 // 827FB3C8  GameStateInfo_InitAndGetIndex  (bgame/bg_gamestateinfo.cpp:107)
 
-GameStateInfo *
-GameStateInfo_InitAndGetIndex(GameStateInfoIndex param_1,GameStateInfoInitOption param_2)
+undefined4 * GameStateInfo_InitAndGetIndex(int param_1,int param_2)
 
 {
-  GameStateInfo *pGVar1;
+  undefined4 *puVar1;
   
-  if (param_1 == GAMESTATEINFO_HOST) {
-    pGVar1 = g_gameRules;
-    if ((param_2 == GAMESTATEINFO_INITONCE) && (g_gameRules[0].init != 0)) {
-      return pGVar1;
+  if (param_1 == 0) {
+    puVar1 = &DAT_84876518;
+    if ((param_2 == 0) && (DAT_84876518 != 0)) {
+      return puVar1;
     }
-    g_gameRules[0].matchRules = g_matchRules;
-    InitializeMatchRules(g_matchRules);
-    if (g_gameRules[0].mapRotation != (LobbyMapRotation *)0x0) {
-      PrivateMapRotation_ClearAll(g_gameRules[0].mapRotation);
+    DAT_84876520 = &DAT_84876698;
+    InitializeMatchRules();
+    if (DAT_8487652c != (undefined *)0x0) {
+      PrivateMapRotation_ClearAll();
     }
-    g_gameRules[0].mapRotation = g_mapRotation;
+    DAT_8487652c = &DAT_84876548;
   }
   else {
-    if (param_1 != GAMESTATEINFO_CLIENT) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_gamestateinfo.cpp",
-                      0x81,0,"%s");
+    if (param_1 != 1) {
+      MyAssertHandler(0xffffffff821e1f38,0x81,0,0xffffffff82000f98,0xffffffff821e1f80);
     }
-    pGVar1 = g_gameRules + 1;
-    if ((param_2 == GAMESTATEINFO_INITONCE) && (g_gameRules[1].init != 0)) {
-      return g_gameRules + 1;
+    puVar1 = &DAT_84876530;
+    if ((param_2 == 0) && (DAT_84876530 != 0)) {
+      return &DAT_84876530;
     }
-    g_gameRules[1].mapRotation = (LobbyMapRotation *)0x0;
-    g_gameRules[1].matchRules = g_matchRules + 1;
+    DAT_84876544 = 0;
+    DAT_84876538 = &DAT_848772a0;
   }
-  pGVar1->usingRecipe = 0;
-  pGVar1->usingRotation = 0;
-  pGVar1->usingIntermission = 0;
-  pGVar1->init = 1;
-  return pGVar1;
+  puVar1[1] = 0;
+  puVar1[3] = 0;
+  puVar1[4] = 0;
+  *puVar1 = 1;
+  return puVar1;
 }
 
 
 // 827FB4D8  GameStateInfo_ReInit  (bgame/bg_gamestateinfo.cpp:159)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-GameStateInfo * GameStateInfo_ReInit(void)
+void GameStateInfo_ReInit(void)
 
 {
-  GameStateInfoIndex GVar1;
-  GameStateInfo *pGVar2;
+  undefined8 uVar1;
   
-  GVar1 = GameStateInfo_GetIndexForGamemode();
-  pGVar2 = GameStateInfo_InitAndGetIndex(GVar1,GAMESTATEINFO_REINIT);
-  return pGVar2;
+  uVar1 = GameStateInfo_GetIndexForGamemode();
+  GameStateInfo_InitAndGetIndex(uVar1,1);
+  return;
 }
 
 
 // 827FB500  GameStateInfo_Get  (bgame/bg_gamestateinfo.cpp:166)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-GameStateInfo * GameStateInfo_Get(void)
+undefined4 * GameStateInfo_Get(void)
 
 {
-  GameStateInfoIndex GVar1;
-  GameStateInfo *pGVar2;
+  int iVar1;
+  undefined4 *puVar2;
   
-  GVar1 = GameStateInfo_GetIndexForGamemode();
-  if (GVar1 == GAMESTATEINFO_HOST) {
-    pGVar2 = g_gameRules;
-    if (g_gameRules[0].init != 0) {
-      return pGVar2;
+  iVar1 = GameStateInfo_GetIndexForGamemode();
+  if (iVar1 == 0) {
+    puVar2 = &DAT_84876518;
+    if (DAT_84876518 != 0) {
+      return puVar2;
     }
-    g_gameRules[0].matchRules = g_matchRules;
-    InitializeMatchRules(g_matchRules);
-    if (g_gameRules[0].mapRotation != (LobbyMapRotation *)0x0) {
-      PrivateMapRotation_ClearAll(g_gameRules[0].mapRotation);
+    DAT_84876520 = &DAT_84876698;
+    InitializeMatchRules();
+    if (DAT_8487652c != (undefined *)0x0) {
+      PrivateMapRotation_ClearAll();
     }
-    g_gameRules[0].mapRotation = g_mapRotation;
+    DAT_8487652c = &DAT_84876548;
   }
   else {
-    if (GVar1 != GAMESTATEINFO_CLIENT) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_gamestateinfo.cpp",
-                      0x81,0,"%s");
+    if (iVar1 != 1) {
+      MyAssertHandler(0xffffffff821e1f38,0x81,0,0xffffffff82000f98,0xffffffff821e1f80);
     }
-    pGVar2 = g_gameRules + 1;
-    if (g_gameRules[1].init != 0) {
-      return g_gameRules + 1;
+    puVar2 = &DAT_84876530;
+    if (DAT_84876530 != 0) {
+      return &DAT_84876530;
     }
-    g_gameRules[1].mapRotation = (LobbyMapRotation *)0x0;
-    g_gameRules[1].matchRules = g_matchRules + 1;
+    DAT_84876544 = 0;
+    DAT_84876538 = &DAT_848772a0;
   }
-  pGVar2->usingRecipe = 0;
-  pGVar2->usingRotation = 0;
-  pGVar2->usingIntermission = 0;
-  pGVar2->init = 1;
-  return pGVar2;
+  puVar2[1] = 0;
+  puVar2[3] = 0;
+  puVar2[4] = 0;
+  *puVar2 = 1;
+  return puVar2;
 }
 
 
 // 827FB600  CL_ReceiveGameStateInfoMessage  (bgame/bg_gamestateinfo.cpp:174)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "MatchRulesReturnCode": Some values do not have unique names */
-
-MatchRulesReturnCode
-CL_ReceiveGameStateInfoMessage(netadr_t param_1,msg_t *param_2,clientConnection_t *param_3)
+void CL_ReceiveGameStateInfoMessage
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
 
 {
-  GameStateInfo *pGVar1;
-  int iVar2;
-  uint uVar3;
-  uint uVar4;
-  uint uVar5;
-  uint uVar6;
-  MatchRulesReturnCode MVar7;
-  char *pcVar8;
-  uint uVar9;
+  int iVar6;
+  longlong lVar1;
+  int iVar7;
+  undefined8 uVar2;
+  uint uVar8;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  int iVar9;
+  ulonglong uVar5;
   uint uVar10;
-  StructuredDataDef *pSVar11;
-  char *pcVar12;
-  msg_t *in_r5;
-  int in_r6;
+  undefined4 uVar11;
   
-  __savegprlr_24(param_2,param_3);
-  pGVar1 = GameStateInfo_Get();
-  iVar2 = MSG_ReadBit(in_r5);
-  pGVar1->usingRecipe = (uint)(iVar2 != 0);
-  if (iVar2 == 0) {
+  __savegprlr_24();
+  iVar6 = GameStateInfo_Get();
+  lVar1 = MSG_ReadBit(param_3);
+  *(uint *)(iVar6 + 4) = (uint)(lVar1 != 0);
+  if (lVar1 == 0) {
 LAB_827fb864:
-    MVar7 = __restgprlr_24(1);
-    return MVar7;
+    __restgprlr_24(1);
+    return;
   }
-  uVar3 = MSG_ReadLong(in_r5);
-  uVar4 = MSG_ReadShort(in_r5);
-  uVar5 = MSG_ReadShort(in_r5);
-  uVar6 = MSG_ReadShort(in_r5);
-  if (uVar6 == *(uint *)(in_r6 + 0x65668)) {
-    if (uVar6 == 0) {
-      pcVar8 = BG_MatchRulesData_GetGameTypeFromIndex(uVar4);
-      iVar2 = LoadMatchRulesDefaultFromFF(pGVar1->matchRules,pcVar8);
-      if (iVar2 == 0) {
-        Com_PrintWarning(0x19,"Couldn\'t load defaults ff for matchrules %s\n");
+  iVar7 = MSG_ReadLong(param_3);
+  uVar2 = MSG_ReadShort(param_3);
+  uVar8 = MSG_ReadShort(param_3);
+  uVar3 = MSG_ReadShort(param_3);
+  if ((uVar3 & 0xffffffff) == (ulonglong)*(uint *)(param_4 + 0x65668)) {
+    if ((uVar3 & 0xffffffff) == 0) {
+      uVar4 = BG_MatchRulesData_GetGameTypeFromIndex(uVar2);
+      iVar9 = LoadMatchRulesDefaultFromFF(*(undefined4 *)(iVar6 + 8),uVar4);
+      if (iVar9 == 0) {
+        Com_PrintWarning(0x19,0xffffffff821e2064,uVar4);
       }
     }
-    if (in_r5->readcount != in_r5->cursize + in_r5->splitSize) {
+    iVar9 = (int)param_3;
+    if (*(int *)(iVar9 + 0x1c) != *(int *)(iVar9 + 0x14) + *(int *)(iVar9 + 0x18)) {
       do {
-        uVar9 = MSG_ReadShort(in_r5);
-        uVar10 = MSG_ReadShort(in_r5);
-        if (0xbff < (uVar9 & 0xffff) + (uVar10 & 0xffff)) {
-          Com_PrintError(0x19,
-                         "Malformed network packet, tried to write beyond length of match rules\n");
-          if (alwaysfails == 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_gamestateinfo.cpp"
-                            ,0xd8,0,
-                            "Malformed network packet, tried to write beyond length of match rules\n"
-                           );
+        uVar5 = MSG_ReadShort(param_3);
+        uVar10 = MSG_ReadShort(param_3);
+        if (0xbff < (int)(uVar5 & 0xffff) + (uVar10 & 0xffff)) {
+          Com_PrintError(0x19,0xffffffff8203d3d8);
+          if (DAT_84013128 == 0) {
+            MyAssertHandler(0xffffffff821e1f38,0xd8,0,0xffffffff8203d3d8);
           }
-          MVar7 = __restgprlr_24(0xffffffffffffffff);
-          return MVar7;
+          __restgprlr_24(0xffffffffffffffff);
+          return;
         }
-        MSG_ReadData(in_r5,pGVar1->matchRules->data + (uVar9 & 0xffff),uVar10 & 0xffff);
-      } while (in_r5->readcount != in_r5->cursize + in_r5->splitSize);
+        MSG_ReadData(param_3,(ulonglong)*(uint *)(iVar6 + 8) + (uVar5 & 0xffff),uVar10 & 0xffff);
+      } while (*(int *)(iVar9 + 0x1c) != *(int *)(iVar9 + 0x14) + *(int *)(iVar9 + 0x18));
     }
-    *(uint *)(in_r6 + 0x65668) = uVar6 + 1;
-    if (uVar5 <= uVar6 + 1) {
-      pSVar11 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
-      uVar5 = Com_BlockChecksumKey32(pGVar1->matchRules,pSVar11->size,0);
-      pGVar1->matchRules->checksum = uVar5;
-      if (pGVar1->matchRules->checksum != uVar3) {
-        Com_PrintError(0x19,"Match rules does not match checksum after applying received delta.\n");
-        if (alwaysfails == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_gamestateinfo.cpp"
-                          ,0xe9,0,
-                          "Match rules does not match checksum after applying received delta.\n");
+    uVar10 = (int)uVar3 + 1;
+    *(uint *)(param_4 + 0x65668) = uVar10;
+    if (uVar8 <= uVar10) {
+      iVar9 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
+      uVar11 = Com_BlockChecksumKey32(*(undefined4 *)(iVar6 + 8),*(undefined4 *)(iVar9 + 0x30),0);
+      *(undefined4 *)(*(int *)(iVar6 + 8) + 0xc04) = uVar11;
+      if (*(int *)(*(int *)(iVar6 + 8) + 0xc04) != iVar7) {
+        Com_PrintError(0x19,0xffffffff821e2020);
+        if (DAT_84013128 == 0) {
+          MyAssertHandler(0xffffffff821e1f38,0xe9,0,0xffffffff821e2020);
         }
-        MVar7 = __restgprlr_24(0xffffffffffffffff);
-        return MVar7;
+        __restgprlr_24(0xffffffffffffffff);
+        return;
       }
-      pcVar8 = BG_MatchRulesData_GetGameType(pGVar1->matchRules);
-      pcVar12 = BG_MatchRulesData_GetGameTypeFromIndex(uVar4);
-      iVar2 = I_strcmp(pcVar12,pcVar8);
-      if (iVar2 != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_gamestateinfo.cpp"
-                        ,0xed,0,"%s");
+      uVar4 = BG_MatchRulesData_GetGameType();
+      uVar2 = BG_MatchRulesData_GetGameTypeFromIndex(uVar2);
+      iVar7 = I_strcmp(uVar2,uVar4);
+      if (iVar7 != 0) {
+        MyAssertHandler(0xffffffff821e1f38,0xed,0,0xffffffff82000f98,0xffffffff821e1fa0);
       }
-      MatchRulesChanged(pGVar1->matchRules);
+      MatchRulesChanged(*(undefined4 *)(iVar6 + 8));
       goto LAB_827fb864;
     }
   }
   else {
-    Com_PrintWarning(0x19,
-                     "Got out of order mruleResponse packet %d which will be discarded, expected %d. \n"
-                    );
+    Com_PrintWarning(0x19,0xffffffff821e2098,uVar3);
   }
-  MVar7 = __restgprlr_24(0);
-  return MVar7;
+  __restgprlr_24(0);
+  return;
 }
 
 
 // 827FB870  SV_SendGameStateInfoMessage  (bgame/bg_gamestateinfo.cpp:245)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void SV_SendGameStateInfoMessage(netadr_t param_1,msg_t *param_2)
+void SV_SendGameStateInfoMessage(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  uchar *puVar1;
-  uchar *puVar2;
+  undefined8 uVar1;
+  undefined8 uVar2;
   uint uVar3;
-  GameStateInfo *pGVar4;
-  MatchRulesSnapshotDelta *pMVar5;
-  uint uVar6;
-  int in_r4;
-  msg_t *in_r5;
-  netadr_t in_stack_ffffff38;
-  LargeLocal aLStack_80 [2];
-  msg_t amStack_70 [2];
+  int iVar4;
+  int iVar5;
+  undefined1 auStack_80 [16];
+  undefined1 auStack_70 [8];
+  undefined4 local_68;
+  undefined4 local_5c;
   
-  puVar1 = (uchar *)__savegprlr_26(param_2);
-  LargeLocal::LargeLocal(aLStack_80,0x10000);
-  puVar2 = LargeLocal::GetBuf(aLStack_80);
-  uVar3 = MSG_ReadByte(in_r5);
-  pMVar5 = (MatchRulesSnapshotDelta *)0x0;
-  pGVar4 = GameStateInfo_Get();
-  if ((pGVar4->usingRecipe == 0) ||
-     (pMVar5 = PartyHost_GetMatchRulesSnapshotDeltaFromDefault(), uVar3 < pMVar5->partitionCount)) {
-    MSG_Init(amStack_70,puVar2,0x10000);
-    MSG_WriteString(amStack_70,"mruleResponse");
-    MSG_WriteBool(amStack_70,pGVar4->usingRecipe == 1);
-    if (pGVar4->usingRecipe != 0) {
-      if (pMVar5 == (MatchRulesSnapshotDelta *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_gamestateinfo.cpp"
-                        ,0x10a,0,"%s");
+  uVar1 = __savegprlr_26();
+  LargeLocal__LargeLocal(auStack_80,0x10000);
+  uVar2 = LargeLocal__GetBuf(auStack_80);
+  uVar3 = MSG_ReadByte(param_3);
+  iVar5 = 0;
+  iVar4 = GameStateInfo_Get();
+  if ((*(int *)(iVar4 + 4) == 0) ||
+     (iVar5 = PartyHost_GetMatchRulesSnapshotDeltaFromDefault(), uVar3 < *(ushort *)(iVar5 + 0xc)))
+  {
+    MSG_Init(auStack_70,uVar2,0x10000);
+    MSG_WriteString(auStack_70,0xffffffff82033d08);
+    MSG_WriteBool(auStack_70,*(int *)(iVar4 + 4) == 1);
+    if (*(int *)(iVar4 + 4) != 0) {
+      if (iVar5 == 0) {
+        MyAssertHandler(0xffffffff821e1f38,0x10a,0,0xffffffff82000f98,0xffffffff8208f468);
       }
-      MSG_WriteLong(amStack_70,pGVar4->matchRules->checksum);
-      uVar6 = BG_MatchRulesData_GetGameTypeIndex(pGVar4->matchRules);
-      MSG_WriteShort(amStack_70,uVar6);
-      MSG_WriteShort(amStack_70,(uint)pMVar5->partitionCount);
-      MSG_WriteShort(amStack_70,uVar3);
-      MSG_WriteData(amStack_70,pMVar5->partition[uVar3].data,pMVar5->partition[uVar3].len);
+      MSG_WriteLong(auStack_70,*(undefined4 *)(*(int *)(iVar4 + 8) + 0xc04));
+      uVar2 = BG_MatchRulesData_GetGameTypeIndex(*(undefined4 *)(iVar4 + 8));
+      MSG_WriteShort(auStack_70,uVar2);
+      MSG_WriteShort(auStack_70,*(undefined2 *)(iVar5 + 0xc));
+      MSG_WriteShort(auStack_70,uVar3);
+      iVar5 = uVar3 * 0x4d4 + iVar5;
+      MSG_WriteData(auStack_70,iVar5 + 0x14,*(undefined4 *)(iVar5 + 0x10));
     }
-    Com_DPrintf(0x19,"mruleResponse pt %i: msg.cursize = %d\n");
-    NET_OutOfBandData(NS_MAXCLIENTS,in_stack_ffffff38,puVar1,in_r4);
+    Com_DPrintf(0x19,0xffffffff821e20ec,uVar3,local_5c);
+    NET_OutOfBandData(4,uVar1,param_2,local_68,local_5c);
   }
-  LargeLocal::~LargeLocal(aLStack_80);
+  LargeLocal___LargeLocal(auStack_80);
   __restgprlr_26();
   return;
 }

@@ -5,22 +5,21 @@
 undefined8 mp_init(undefined4 *param_1)
 
 {
-  void *pvVar1;
-  int iVar2;
-  longlong lVar3;
+  int iVar1;
+  longlong lVar2;
   
-  pvVar1 = tom_game_malloc(0x100);
-  param_1[3] = pvVar1;
-  if (pvVar1 == (void *)0x0) {
+  iVar1 = tom_game_malloc(0x100);
+  param_1[3] = iVar1;
+  if (iVar1 == 0) {
     return 0xfffffffffffffffe;
   }
-  iVar2 = 0;
-  lVar3 = 0x40;
+  iVar1 = 0;
+  lVar2 = 0x40;
   do {
-    *(undefined4 *)(iVar2 + param_1[3]) = 0;
-    iVar2 = iVar2 + 4;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
+    *(undefined4 *)(iVar1 + param_1[3]) = 0;
+    iVar1 = iVar1 + 4;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
   *param_1 = 0;
   param_1[1] = 0x40;
   param_1[2] = 0;

@@ -1301,7 +1301,7 @@ LAB_826f3240:
   826F3240  7D635B78             or r3,r11,r11
   826F3244  4E800020             blr
 
-; 826F4438  publish  (DW/dwUtils.cpp:798)
+; 826F4438  DWLogging::publish  (DW/dwUtils.cpp:798)
   826F4438  7D8802A6             mfspr r12,LR
   826F443C  4822227D             bl 0x829166b8
   826F4440  9421FF80             stwu r1,-0x80(r1)
@@ -1423,7 +1423,7 @@ LAB_826f32c8:
   826F32F4  886B6955             lbz r3,0x6955(r11)
   826F32F8  4E800020             blr
 
-; 826F4548  `scalar_deleting_destructor'  (line unknown)
+; 826F4548  DWLogging::`scalar_deleting_destructor'  (line unknown)
   826F4548  7D8802A6             mfspr r12,LR
   826F454C  9181FFF8             stw r12,-0x8(r1)
   826F4550  FBC1FFE8             std r30,-0x18(r1)

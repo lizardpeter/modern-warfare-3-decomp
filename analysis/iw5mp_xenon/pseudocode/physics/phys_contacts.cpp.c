@@ -2,13 +2,13 @@
 
 // 8266BAA0  Phys_AssignInitialGroups  (physics/phys_contacts.cpp:50)
 
-void Phys_AssignInitialGroups(ContactList *param_1,int *param_2)
+void Phys_AssignInitialGroups(undefined8 param_1,longlong param_2)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
-  longlong lVar4;
+  int iVar4;
+  undefined8 uVar3;
   longlong lVar5;
   int iVar6;
   int iVar8;
@@ -22,21 +22,19 @@ void Phys_AssignInitialGroups(ContactList *param_1,int *param_2)
   double dVar15;
   double dVar16;
   
-  lVar4 = (longlong)(int)param_2;
-  __savegprlr_24(param_1);
-  iVar3 = __savefpr_28();
-  if (iVar3 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                    0x3c,0,"%s");
+  __savegprlr_24();
+  iVar4 = __savefpr_28();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff821938c0,0x3c,0,0xffffffff82000f98,0xffffffff821938b0);
   }
-  if (*(int *)(iVar3 + 0x1000) < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                    0x3d,0,"%s");
+  if (*(int *)(iVar4 + 0x1000) < 1) {
+    MyAssertHandler(0xffffffff821938c0,0x3d,0,0xffffffff82000f98,0xffffffff82193894);
   }
-  uVar1 = *(uint *)(iVar3 + 0x1000);
+  uVar1 = *(uint *)(iVar4 + 0x1000);
   dVar13 = 3.4028234663852886e+38;
   iVar6 = 0x19919 - (0x19919 / (int)uVar1) * uVar1;
-  iVar2 = iVar6 * 0x20 + iVar3;
+  uVar3 = 0x33231;
+  iVar2 = iVar6 * 0x20 + iVar4;
   trapWord(6,(ulonglong)uVar1,0);
   iVar10 = -1;
   dVar16 = (double)*(float *)(iVar2 + 0xc);
@@ -46,12 +44,11 @@ void Phys_AssignInitialGroups(ContactList *param_1,int *param_2)
   dVar14 = (double)*(float *)(iVar2 + 0x14);
   if (uVar1 == 0) {
 LAB_8266bbd8:
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                    0x52,0,"%s");
+    uVar3 = MyAssertHandler(0xffffffff821938c0,0x52,0,0xffffffff82000f98,0xffffffff8219387c);
   }
   else {
-    pfVar9 = (float *)(iVar3 + 0x14);
-    lVar5 = lVar4;
+    pfVar9 = (float *)(iVar4 + 0x14);
+    lVar5 = param_2;
     dVar12 = dVar13;
     do {
       *(undefined4 *)lVar5 = 0xffffffff;
@@ -65,18 +62,18 @@ LAB_8266bbd8:
       iVar8 = iVar8 + 1;
       lVar5 = lVar5 + 4;
       pfVar9 = pfVar9 + 8;
-    } while (iVar8 != *(int *)(iVar3 + 0x1000));
+    } while (iVar8 != *(int *)(iVar4 + 0x1000));
     if (iVar10 == -1) goto LAB_8266bbd8;
   }
-  iVar8 = iVar10 * 0x20 + iVar3;
-  iVar2 = (int)lVar4;
+  iVar8 = iVar10 * 0x20 + iVar4;
+  iVar2 = (int)param_2;
   *(undefined4 *)(iVar6 * 4 + iVar2) = 0;
   *(undefined4 *)(iVar10 * 4 + iVar2) = 1;
   iVar10 = -1;
-  uVar7 = (ulonglong)*(uint *)(iVar3 + 0x1000);
+  uVar7 = (ulonglong)*(uint *)(iVar4 + 0x1000);
   iVar6 = 0;
-  if (*(uint *)(iVar3 + 0x1000) != 0) {
-    pfVar9 = (float *)(iVar3 + 0x14);
+  if (*(uint *)(iVar4 + 0x1000) != 0) {
+    pfVar9 = (float *)(iVar4 + 0x14);
     do {
       dVar11 = (double)(float)((double)*pfVar9 * (double)*(float *)(iVar8 + 0x14) +
                               (double)(float)((double)pfVar9[-2] * (double)*(float *)(iVar8 + 0xc) +
@@ -98,11 +95,10 @@ LAB_8266bbd8:
     } while (uVar7 != 0);
     if (iVar10 != -1) goto LAB_8266bca8;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",0x69,
-                  0,"%s");
+  uVar3 = MyAssertHandler(0xffffffff821938c0,0x69,0,0xffffffff82000f98,0xffffffff8219387c);
 LAB_8266bca8:
   *(undefined4 *)(iVar10 * 4 + iVar2) = 2;
-  __restfpr_28();
+  __restfpr_28(uVar3);
   __restgprlr_24();
   return;
 }
@@ -110,7 +106,7 @@ LAB_8266bca8:
 
 // 8266BCC8  Phys_KMeans  (physics/phys_contacts.cpp:116)
 
-void Phys_KMeans(ContactList *param_1,float (*param_2) [3],int *param_3)
+void Phys_KMeans(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
   float fVar1;
@@ -118,112 +114,106 @@ void Phys_KMeans(ContactList *param_1,float (*param_2) [3],int *param_3)
   float fVar3;
   float fVar4;
   int iVar5;
-  longlong lVar6;
+  float *pfVar6;
   longlong lVar7;
   float *pfVar8;
-  longlong lVar9;
-  float *pfVar10;
+  int iVar9;
+  int iVar10;
   int iVar11;
   int iVar12;
-  int iVar13;
-  int iVar14;
-  longlong lVar15;
-  longlong lVar16;
+  longlong lVar13;
+  longlong lVar14;
+  double dVar15;
+  double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
-  double dVar21;
-  double dVar22;
   
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  iVar5 = __savegprlr_20(param_1);
-  dVar21 = -3.4028234663852886e+38;
-  dVar20 = 1.0;
-  dVar22 = 0.0;
-  iVar12 = 0;
+  iVar5 = __savegprlr_20();
+  dVar19 = -3.4028234663852886e+38;
+  dVar18 = 1.0;
+  dVar20 = 0.0;
+  iVar10 = 0;
   while( true ) {
-    lVar9 = lVar6 + -4;
-    lVar15 = 3;
+    lVar7 = param_2 + -4;
+    lVar13 = 3;
     do {
-      *(float *)((int)lVar9 + 4) = (float)dVar22;
-      *(float *)((int)lVar9 + 8) = (float)dVar22;
-      lVar9 = lVar9 + 0xc;
-      *(float *)lVar9 = (float)dVar22;
-      lVar15 = lVar15 + -1;
-    } while (lVar15 != 0);
-    iVar13 = 0;
+      *(float *)((int)lVar7 + 4) = (float)dVar20;
+      *(float *)((int)lVar7 + 8) = (float)dVar20;
+      lVar7 = lVar7 + 0xc;
+      *(float *)lVar7 = (float)dVar20;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    iVar11 = 0;
     if (*(int *)(iVar5 + 0x1000) != 0) {
-      pfVar8 = (float *)(iVar5 + 0x14);
-      lVar9 = lVar7;
+      pfVar6 = (float *)(iVar5 + 0x14);
+      lVar7 = param_3;
       do {
-        if (*(int *)lVar9 != -1) {
-          pfVar10 = (float *)(*(int *)lVar9 * 0xc + (int)lVar6);
-          *pfVar10 = *pfVar10 + pfVar8[-2];
-          pfVar10[1] = pfVar10[1] + pfVar8[-1];
-          pfVar10[2] = pfVar10[2] + *pfVar8;
+        if (*(int *)lVar7 != -1) {
+          pfVar8 = (float *)(*(int *)lVar7 * 0xc + (int)param_2);
+          *pfVar8 = *pfVar8 + pfVar6[-2];
+          pfVar8[1] = pfVar8[1] + pfVar6[-1];
+          pfVar8[2] = pfVar8[2] + *pfVar6;
         }
-        iVar13 = iVar13 + 1;
-        pfVar8 = pfVar8 + 8;
-        lVar9 = lVar9 + 4;
-      } while (iVar13 != *(int *)(iVar5 + 0x1000));
+        iVar11 = iVar11 + 1;
+        pfVar6 = pfVar6 + 8;
+        lVar7 = lVar7 + 4;
+      } while (iVar11 != *(int *)(iVar5 + 0x1000));
     }
-    lVar9 = lVar6 + -4;
-    lVar15 = 3;
+    lVar7 = param_2 + -4;
+    lVar13 = 3;
     do {
-      iVar13 = (int)lVar9;
-      fVar2 = *(float *)(iVar13 + 8);
-      fVar3 = *(float *)(iVar13 + 4);
-      fVar4 = *(float *)(iVar13 + 0xc);
-      dVar18 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-      dVar17 = dVar20;
-      if (-dVar18 < 0.0) {
-        dVar17 = dVar18;
+      iVar11 = (int)lVar7;
+      fVar2 = *(float *)(iVar11 + 8);
+      fVar3 = *(float *)(iVar11 + 4);
+      fVar4 = *(float *)(iVar11 + 0xc);
+      dVar16 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+      dVar15 = dVar18;
+      if (-dVar16 < 0.0) {
+        dVar15 = dVar16;
       }
-      fVar1 = (float)(dVar20 / dVar17);
-      *(float *)(iVar13 + 4) = fVar3 * fVar1;
-      *(float *)(iVar13 + 8) = fVar2 * fVar1;
-      lVar9 = lVar9 + 0xc;
-      *(float *)lVar9 = fVar4 * fVar1;
-      lVar15 = lVar15 + -1;
-    } while (lVar15 != 0);
-    if (iVar12 == 5) break;
-    iVar12 = iVar12 + 1;
-    iVar13 = 0;
+      fVar1 = (float)(dVar18 / dVar15);
+      *(float *)(iVar11 + 4) = fVar3 * fVar1;
+      *(float *)(iVar11 + 8) = fVar2 * fVar1;
+      lVar7 = lVar7 + 0xc;
+      *(float *)lVar7 = fVar4 * fVar1;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    if (iVar10 == 5) break;
+    iVar10 = iVar10 + 1;
+    iVar11 = 0;
     if (*(int *)(iVar5 + 0x1000) != 0) {
-      lVar9 = lVar7 + -4;
-      pfVar8 = (float *)(iVar5 + 0x14);
+      lVar7 = param_3 + -4;
+      pfVar6 = (float *)(iVar5 + 0x14);
       do {
-        iVar14 = -1;
-        iVar11 = 0;
-        lVar16 = 3;
-        lVar15 = lVar6 + 8;
-        dVar17 = dVar21;
+        iVar12 = -1;
+        iVar9 = 0;
+        lVar14 = 3;
+        lVar13 = param_2 + 8;
+        dVar15 = dVar19;
         do {
-          pfVar10 = (float *)lVar15;
-          dVar18 = (double)(*pfVar10 * *pfVar8 + pfVar10[-2] * pfVar8[-2] + pfVar10[-1] * pfVar8[-1]
-                           );
-          dVar19 = (double)(float)(dVar17 - dVar18);
-          if (dVar19 < dVar22) {
-            iVar14 = iVar11;
+          pfVar8 = (float *)lVar13;
+          dVar16 = (double)(*pfVar8 * *pfVar6 + pfVar8[-2] * pfVar6[-2] + pfVar8[-1] * pfVar6[-1]);
+          dVar17 = (double)(float)(dVar15 - dVar16);
+          if (dVar17 < dVar20) {
+            iVar12 = iVar9;
           }
-          if (dVar19 < 0.0) {
-            dVar17 = dVar18;
+          if (dVar17 < 0.0) {
+            dVar15 = dVar16;
           }
-          iVar11 = iVar11 + 1;
-          lVar15 = lVar15 + 0xc;
-          lVar16 = lVar16 + -1;
-        } while (lVar16 != 0);
-        if (iVar14 == -1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp"
-                          ,0x9c,0,"%s");
+          iVar9 = iVar9 + 1;
+          lVar13 = lVar13 + 0xc;
+          lVar14 = lVar14 + -1;
+        } while (lVar14 != 0);
+        if (iVar12 == -1) {
+          MyAssertHandler(0xffffffff821938c0,0x9c,0,0xffffffff82000f98,0xffffffff82193904);
         }
-        iVar13 = iVar13 + 1;
-        lVar9 = lVar9 + 4;
-        *(int *)lVar9 = iVar14;
-        pfVar8 = pfVar8 + 8;
-      } while (iVar13 != *(int *)(iVar5 + 0x1000));
+        iVar11 = iVar11 + 1;
+        lVar7 = lVar7 + 4;
+        *(int *)lVar7 = iVar12;
+        pfVar6 = pfVar6 + 8;
+      } while (iVar11 != *(int *)(iVar5 + 0x1000));
     }
   }
   __restgprlr_20();
@@ -233,17 +223,25 @@ void Phys_KMeans(ContactList *param_1,float (*param_2) [3],int *param_3)
 
 // 8266BEE0  Phys_DumpGroups  (physics/phys_contacts.cpp:165)
 
-void Phys_DumpGroups(float (*param_1) [3])
+void Phys_DumpGroups(void)
 
 {
-  int iVar1;
+  float *pfVar1;
+  float *pfVar2;
+  int iVar3;
+  longlong lVar4;
+  float *pfVar5;
   
-  __savegprlr_29(param_1);
-  iVar1 = 0;
+  iVar3 = __savegprlr_29();
+  lVar4 = 0;
+  pfVar5 = (float *)(iVar3 + -4);
   do {
-    Com_Printf(0,"Group %i: N:%g %g %g\n");
-    iVar1 = iVar1 + 1;
-  } while (iVar1 != 3);
+    pfVar1 = pfVar5 + 1;
+    pfVar2 = pfVar5 + 2;
+    pfVar5 = pfVar5 + 3;
+    Com_Printf(0,0xffffffff82193914,lVar4,(double)*pfVar1,(double)*pfVar2,(double)*pfVar5);
+    lVar4 = lVar4 + 1;
+  } while ((int)lVar4 != 3);
   __restgprlr_29();
   return;
 }
@@ -251,19 +249,33 @@ void Phys_DumpGroups(float (*param_1) [3])
 
 // 8266BF48  Phys_DumpContacts  (physics/phys_contacts.cpp:180)
 
-void Phys_DumpContacts(ContactList *param_1,int *param_2)
+void Phys_DumpContacts(undefined8 param_1,longlong param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  float *pfVar1;
+  float *pfVar2;
+  float *pfVar3;
+  float *pfVar4;
+  int iVar5;
+  longlong lVar6;
+  int iVar7;
   
-  iVar1 = __savegprlr_27(param_1);
-  iVar2 = 0;
-  if (*(int *)(iVar1 + 0x1000) != 0) {
+  iVar5 = __savegprlr_27();
+  lVar6 = 0;
+  if (*(int *)(iVar5 + 0x1000) != 0) {
+    param_2 = param_2 + -4;
+    iVar7 = iVar5 + -8;
     do {
-      Com_Printf(0,"Contact %i: G:%i, P:(%g %g %g), N:(%g %g %g), D:%g\n");
-      iVar2 = iVar2 + 1;
-    } while (iVar2 != *(int *)(iVar1 + 0x1000));
+      pfVar1 = (float *)(iVar7 + 8);
+      pfVar2 = (float *)(iVar7 + 0xc);
+      pfVar3 = (float *)(iVar7 + 0x10);
+      pfVar4 = (float *)(iVar7 + 0x14);
+      param_2 = param_2 + 4;
+      iVar7 = iVar7 + 0x20;
+      Com_Printf(0,0xffffffff8219392c,lVar6,*(undefined4 *)param_2,(double)*pfVar1,(double)*pfVar2,
+                 (double)*pfVar3,(double)*pfVar4);
+      lVar6 = lVar6 + 1;
+    } while ((int)lVar6 != *(int *)(iVar5 + 0x1000));
   }
   __restgprlr_27();
   return;
@@ -272,60 +284,56 @@ void Phys_DumpContacts(ContactList *param_1,int *param_2)
 
 // 8266BFF0  Phys_MergeGroups  (physics/phys_contacts.cpp:199)
 
-void Phys_MergeGroups(ContactList *param_1,float (*param_2) [3],int *param_3)
+void Phys_MergeGroups(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
   float *pfVar1;
   int iVar2;
-  longlong lVar3;
-  int iVar4;
+  int iVar3;
+  longlong lVar4;
   longlong lVar5;
-  int iVar6;
+  float *pfVar6;
   longlong lVar7;
-  float *pfVar8;
+  longlong lVar8;
   longlong lVar9;
-  int iVar10;
-  int iVar11;
-  double dVar12;
+  double dVar10;
   
-  lVar3 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_23(param_1);
-  dVar12 = 0.9990000128746033;
-  lVar7 = lVar7 + 4;
-  iVar10 = 0;
+  iVar2 = __savegprlr_23();
+  dVar10 = 0.9990000128746033;
+  param_2 = param_2 + 4;
+  lVar8 = 0;
   do {
-    iVar6 = iVar10 + 1;
-    if (iVar6 != 3) {
-      lVar9 = lVar7 + 0x10;
-      iVar11 = iVar6;
+    lVar5 = lVar8 + 1;
+    if ((int)lVar5 != 3) {
+      lVar7 = param_2 + 0x10;
+      lVar9 = lVar5;
       do {
-        pfVar1 = (float *)lVar9;
-        pfVar8 = (float *)lVar7;
-        if (dVar12 < (double)(pfVar8[1] * *pfVar1 + pfVar1[-2] * pfVar8[-1] + pfVar1[-1] * *pfVar8))
+        pfVar1 = (float *)lVar7;
+        pfVar6 = (float *)param_2;
+        if (dVar10 < (double)(pfVar6[1] * *pfVar1 + pfVar1[-2] * pfVar6[-1] + pfVar1[-1] * *pfVar6))
         {
-          if ((phys_dumpcontacts->current).enabled != false) {
-            Com_Printf(0,"Group %i merged into %i.\n");
+          if (*(char *)(DAT_8427b930 + 0xc) != '\0') {
+            Com_Printf(0,0xffffffff82193960,lVar9,lVar8);
           }
-          iVar4 = 0;
-          lVar5 = lVar3;
+          iVar3 = 0;
+          lVar4 = param_3;
           if (*(int *)(iVar2 + 0x1000) != 0) {
             do {
-              if (*(int *)lVar5 == iVar11) {
-                *(int *)lVar5 = iVar10;
+              if (*(int *)lVar4 == (int)lVar9) {
+                *(int *)lVar4 = (int)lVar8;
               }
-              iVar4 = iVar4 + 1;
-              lVar5 = lVar5 + 4;
-            } while (iVar4 != *(int *)(iVar2 + 0x1000));
+              iVar3 = iVar3 + 1;
+              lVar4 = lVar4 + 4;
+            } while (iVar3 != *(int *)(iVar2 + 0x1000));
           }
         }
-        iVar11 = iVar11 + 1;
-        lVar9 = lVar9 + 0xc;
-      } while (iVar11 != 3);
+        lVar9 = lVar9 + 1;
+        lVar7 = lVar7 + 0xc;
+      } while ((int)lVar9 != 3);
     }
-    lVar7 = lVar7 + 0xc;
-    iVar10 = iVar6;
-  } while (iVar6 != 2);
+    param_2 = param_2 + 0xc;
+    lVar8 = lVar5;
+  } while ((int)lVar5 != 2);
   __restgprlr_23();
   return;
 }
@@ -333,7 +341,7 @@ void Phys_MergeGroups(ContactList *param_1,float (*param_2) [3],int *param_3)
 
 // 8266C0F0  Phys_CreateBasisFromNormal  (physics/phys_contacts.cpp:230)
 
-void Phys_CreateBasisFromNormal(float *param_1,float *param_2,float *param_3)
+void Phys_CreateBasisFromNormal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   float fVar1;
@@ -341,48 +349,53 @@ void Phys_CreateBasisFromNormal(float *param_1,float *param_2,float *param_3)
   float fVar3;
   float fVar4;
   float *pfVar5;
-  double dVar6;
+  int iVar6;
   double dVar7;
   double dVar8;
-  float local_40 [16];
+  double dVar9;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
   
-  pfVar5 = (float *)__savegprlr_29(param_1);
-  dVar8 = 1.0;
-  local_40[0] = 0.0;
-  if (ABS(pfVar5[2]) < 0.5) {
-    local_40[1] = 0.0;
-    local_40[2] = 1.0;
+  iVar6 = __savegprlr_29();
+  dVar9 = 1.0;
+  local_40 = 0;
+  if (ABS(*(float *)(iVar6 + 8)) < 0.5) {
+    local_3c = 0;
+    local_38 = 0x3f800000;
   }
   else {
-    local_40[1] = 1.0;
-    local_40[2] = 0.0;
+    local_3c = 0x3f800000;
+    local_38 = 0;
   }
-  Vec3Cross(pfVar5,local_40,param_2);
-  fVar2 = param_2[1];
-  fVar3 = *param_2;
-  fVar4 = param_2[2];
-  dVar7 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-  dVar6 = dVar8;
-  if (-dVar7 < 0.0) {
-    dVar6 = dVar7;
+  Vec3Cross(iVar6,&local_40,param_2);
+  pfVar5 = (float *)param_2;
+  fVar2 = pfVar5[1];
+  fVar3 = *pfVar5;
+  fVar4 = pfVar5[2];
+  dVar8 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar7 = dVar9;
+  if (-dVar8 < 0.0) {
+    dVar7 = dVar8;
   }
-  fVar1 = (float)(dVar8 / dVar6);
-  *param_2 = fVar3 * fVar1;
-  param_2[1] = fVar2 * fVar1;
-  param_2[2] = fVar4 * fVar1;
-  Vec3Cross(pfVar5,param_2,param_3);
-  fVar2 = param_3[1];
-  fVar3 = *param_3;
-  fVar4 = param_3[2];
-  dVar7 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-  dVar6 = dVar8;
-  if (-dVar7 < 0.0) {
-    dVar6 = dVar7;
+  fVar1 = (float)(dVar9 / dVar7);
+  *pfVar5 = fVar3 * fVar1;
+  pfVar5[1] = fVar2 * fVar1;
+  pfVar5[2] = fVar4 * fVar1;
+  Vec3Cross(iVar6,param_2,param_3);
+  pfVar5 = (float *)param_3;
+  fVar2 = pfVar5[1];
+  fVar3 = *pfVar5;
+  fVar4 = pfVar5[2];
+  dVar8 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar7 = dVar9;
+  if (-dVar8 < 0.0) {
+    dVar7 = dVar8;
   }
-  fVar1 = (float)(dVar8 / dVar6);
-  *param_3 = fVar3 * fVar1;
-  param_3[1] = fVar2 * fVar1;
-  param_3[2] = fVar4 * fVar1;
+  fVar1 = (float)(dVar9 / dVar7);
+  *pfVar5 = fVar3 * fVar1;
+  pfVar5[1] = fVar2 * fVar1;
+  pfVar5[2] = fVar4 * fVar1;
   __restgprlr_29();
   return;
 }
@@ -390,23 +403,23 @@ void Phys_CreateBasisFromNormal(float *param_1,float *param_2,float *param_3)
 
 // 8266C200  Phys_PushContact  (physics/phys_contacts.cpp:255)
 
-void Phys_PushContact(ContactList *param_1,dContactGeom *param_2)
+void Phys_PushContact(int param_1,int param_2)
 
 {
-  int *piVar1;
-  int *piVar2;
+  undefined4 *puVar1;
+  undefined4 *puVar2;
   longlong lVar3;
   
-  piVar2 = &param_2[-1].surfFlags;
+  puVar2 = (undefined4 *)(param_2 + -4);
   lVar3 = 8;
-  piVar1 = &param_1->contacts[param_1->contactCount + -1].surfFlags;
+  puVar1 = (undefined4 *)(*(int *)(param_1 + 0x1000) * 0x20 + param_1 + -4);
   do {
-    piVar2 = piVar2 + 1;
-    piVar1 = piVar1 + 1;
-    *piVar1 = *piVar2;
+    puVar2 = puVar2 + 1;
+    puVar1 = puVar1 + 1;
+    *puVar1 = *puVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  param_1->contactCount = param_1->contactCount + 1;
+  *(int *)(param_1 + 0x1000) = *(int *)(param_1 + 0x1000) + 1;
   return;
 }
 
@@ -427,7 +440,7 @@ void Phys_PushContact(ContactList *param_1,dContactGeom *param_2)
 /* WARNING: Removing unreachable block (ram,0x8266c65c) */
 
 void Phys_GenerateGroupContacts
-               (ContactList *param_1,float (*param_2) [3],int *param_3,ContactList *param_4)
+               (undefined8 param_1,longlong param_2,longlong param_3,longlong param_4)
 
 {
   float fVar1;
@@ -437,185 +450,178 @@ void Phys_GenerateGroupContacts
   float fVar5;
   int iVar6;
   int iVar7;
-  longlong lVar8;
+  int iVar8;
   int iVar9;
-  longlong lVar10;
-  int iVar11;
-  undefined4 *puVar12;
-  longlong lVar13;
-  float *pfVar15;
-  longlong lVar14;
+  undefined4 *puVar10;
+  longlong lVar11;
+  float *pfVar12;
+  int iVar13;
+  uint uVar14;
+  longlong lVar15;
   int iVar16;
-  uint uVar17;
-  longlong lVar18;
-  int iVar19;
-  float *pfVar20;
-  int iVar21;
-  longlong lVar22;
+  float *pfVar17;
+  int iVar18;
+  longlong lVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
   double dVar23;
   double dVar24;
-  double dVar25;
-  double dVar26;
-  double dVar27;
   float local_c0 [2];
   int local_b8 [2];
   float local_b0 [6];
   float local_98;
-  float local_90 [2];
+  undefined1 local_90 [8];
   float local_88;
-  float afStack_84 [33];
+  undefined1 auStack_84 [132];
   
-  lVar10 = (longlong)(int)param_4;
-  lVar8 = (longlong)(int)param_3;
-  lVar14 = (longlong)(int)param_2;
-  iVar6 = __savegprlr_21(param_1);
-  lVar18 = lVar14 + 8;
-  iVar4 = (int)lVar10;
+  iVar6 = __savegprlr_21();
+  lVar15 = param_2 + 8;
+  iVar4 = (int)param_4;
   *(undefined4 *)(iVar4 + 0x1000) = 0;
-  lVar22 = 3;
-  lVar13 = lVar14 + -4;
+  lVar19 = 3;
+  lVar11 = param_2 + -4;
   do {
-    *(undefined4 *)((int)lVar13 + 4) = 0;
-    *(undefined4 *)((int)lVar13 + 8) = 0;
-    lVar13 = lVar13 + 0xc;
-    *(undefined4 *)lVar13 = 0;
-    lVar22 = lVar22 + -1;
-  } while (lVar22 != 0);
-  iVar19 = 0;
+    *(undefined4 *)((int)lVar11 + 4) = 0;
+    *(undefined4 *)((int)lVar11 + 8) = 0;
+    lVar11 = lVar11 + 0xc;
+    *(undefined4 *)lVar11 = 0;
+    lVar19 = lVar19 + -1;
+  } while (lVar19 != 0);
+  iVar16 = 0;
   if (*(int *)(iVar6 + 0x1000) != 0) {
-    lVar13 = lVar8 + -4;
-    pfVar20 = (float *)(iVar6 + -0xc);
+    lVar11 = param_3 + -4;
+    pfVar17 = (float *)(iVar6 + -0xc);
     do {
-      if (*(int *)((int)lVar13 + 4) == -1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp"
-                        ,0x110,0,"%s");
+      if (*(int *)((int)lVar11 + 4) == -1) {
+        MyAssertHandler(0xffffffff821938c0,0x110,0,0xffffffff82000f98,0xffffffff82193980);
       }
-      lVar13 = lVar13 + 4;
-      iVar19 = iVar19 + 1;
-      pfVar15 = (float *)(*(int *)lVar13 * 0xc + (int)lVar14);
-      *pfVar15 = pfVar20[6] + *pfVar15;
-      pfVar15[1] = pfVar15[1] + pfVar20[7];
-      pfVar20 = pfVar20 + 8;
-      pfVar15[2] = pfVar15[2] + *pfVar20;
-    } while (iVar19 != *(int *)(iVar6 + 0x1000));
+      lVar11 = lVar11 + 4;
+      iVar16 = iVar16 + 1;
+      pfVar12 = (float *)(*(int *)lVar11 * 0xc + (int)param_2);
+      *pfVar12 = pfVar17[6] + *pfVar12;
+      pfVar12[1] = pfVar12[1] + pfVar17[7];
+      pfVar17 = pfVar17 + 8;
+      pfVar12[2] = pfVar12[2] + *pfVar17;
+    } while (iVar16 != *(int *)(iVar6 + 0x1000));
   }
-  iVar19 = 0;
-  dVar26 = 0.010000000707805157;
-  dVar25 = -3.4028234663852886e+38;
-  dVar27 = 1.0;
+  iVar16 = 0;
+  dVar23 = 0.010000000707805157;
+  dVar22 = -3.4028234663852886e+38;
+  dVar24 = 1.0;
   do {
-    pfVar20 = (float *)lVar18;
-    local_b0[4] = pfVar20[-2];
-    local_98 = *pfVar20;
-    local_b0[5] = pfVar20[-1];
-    dVar24 = (double)SQRT(local_b0[5] * local_b0[5] +
+    pfVar17 = (float *)lVar15;
+    local_b0[4] = pfVar17[-2];
+    local_98 = *pfVar17;
+    local_b0[5] = pfVar17[-1];
+    dVar21 = (double)SQRT(local_b0[5] * local_b0[5] +
                           local_98 * local_98 + local_b0[4] * local_b0[4]);
-    dVar23 = dVar27;
-    if (-dVar24 < 0.0) {
-      dVar23 = dVar24;
+    dVar20 = dVar24;
+    if (-dVar21 < 0.0) {
+      dVar20 = dVar21;
     }
-    fVar1 = (float)(dVar27 / dVar23);
+    fVar1 = (float)(dVar24 / dVar20);
     local_b0[4] = local_b0[4] * fVar1;
     local_b0[5] = local_b0[5] * fVar1;
     local_98 = local_98 * fVar1;
-    Phys_CreateBasisFromNormal(local_c0 + 8,local_90,afStack_84);
-    iVar11 = *(int *)(iVar6 + 0x1000);
+    Phys_CreateBasisFromNormal(local_c0 + 8,local_90,auStack_84);
+    iVar9 = *(int *)(iVar6 + 0x1000);
     local_b8[0] = 0xffffffff;
     local_b8[1] = 0xffffffff;
     local_c0[0] = -NAN;
     local_b0[2] = -3.4028235e+38;
     local_b0[0] = 3.4028235e+38;
-    iVar21 = -1;
+    iVar18 = -1;
     local_b0[3] = -3.4028235e+38;
     iVar7 = 0;
     local_c0[1] = -NAN;
-    iVar9 = 0;
+    iVar8 = 0;
     local_b0[1] = 3.4028235e+38;
-    if (iVar11 != 0) {
-      pfVar20 = (float *)(iVar6 + 4);
-      lVar13 = lVar8;
-      dVar23 = dVar25;
+    if (iVar9 != 0) {
+      pfVar17 = (float *)(iVar6 + 4);
+      lVar11 = param_3;
+      dVar20 = dVar22;
       do {
-        if (*(int *)lVar13 == iVar19) {
-          iVar16 = iVar9 + 1;
-          if (iVar16 != iVar11) {
-            pfVar15 = pfVar20 + 9;
-            lVar14 = lVar13;
+        if (*(int *)lVar11 == iVar16) {
+          iVar13 = iVar8 + 1;
+          if (iVar13 != iVar9) {
+            pfVar12 = pfVar17 + 9;
+            lVar19 = lVar11;
             do {
-              lVar14 = lVar14 + 4;
-              iVar11 = *(int *)lVar14;
-              if (iVar11 == iVar19) {
-                if ((double)((pfVar15[-2] - pfVar20[-1]) * (pfVar15[-2] - pfVar20[-1]) +
-                            (*pfVar15 - pfVar20[1]) * (*pfVar15 - pfVar20[1]) +
-                            (pfVar15[-1] - *pfVar20) * (pfVar15[-1] - *pfVar20)) < dVar26) {
-                  iVar11 = -1;
+              lVar19 = lVar19 + 4;
+              iVar9 = *(int *)lVar19;
+              if (iVar9 == iVar16) {
+                if ((double)((pfVar12[-2] - pfVar17[-1]) * (pfVar12[-2] - pfVar17[-1]) +
+                            (*pfVar12 - pfVar17[1]) * (*pfVar12 - pfVar17[1]) +
+                            (pfVar12[-1] - *pfVar17) * (pfVar12[-1] - *pfVar17)) < dVar23) {
+                  iVar9 = -1;
                 }
-                *(int *)lVar14 = iVar11;
+                *(int *)lVar19 = iVar9;
               }
-              iVar11 = *(int *)(iVar6 + 0x1000);
-              iVar16 = iVar16 + 1;
-              pfVar15 = pfVar15 + 8;
-            } while (iVar16 != iVar11);
+              iVar9 = *(int *)(iVar6 + 0x1000);
+              iVar13 = iVar13 + 1;
+              pfVar12 = pfVar12 + 8;
+            } while (iVar13 != iVar9);
           }
-          fVar1 = *pfVar20;
-          fVar2 = pfVar20[-1];
+          fVar1 = *pfVar17;
+          fVar2 = pfVar17[-1];
           iVar7 = iVar7 + 1;
-          fVar3 = pfVar20[1];
-          pfVar15 = &local_88;
-          iVar16 = 0;
-          lVar14 = 2;
+          fVar3 = pfVar17[1];
+          pfVar12 = &local_88;
+          iVar13 = 0;
+          lVar19 = 2;
           do {
-            fVar5 = *pfVar15 * fVar3 + pfVar15[-2] * fVar2 + pfVar15[-1] * fVar1;
-            if (fVar5 < *(float *)((int)local_c0 + iVar16 + 0x10)) {
-              *(float *)((int)local_c0 + iVar16 + 0x10) = fVar5;
-              *(int *)((int)local_c0 + iVar16) = iVar9;
+            fVar5 = *pfVar12 * fVar3 + pfVar12[-2] * fVar2 + pfVar12[-1] * fVar1;
+            if (fVar5 < *(float *)((int)local_c0 + iVar13 + 0x10)) {
+              *(float *)((int)local_c0 + iVar13 + 0x10) = fVar5;
+              *(int *)((int)local_c0 + iVar13) = iVar8;
             }
-            if (*(float *)((int)local_c0 + iVar16 + 0x18) < fVar5) {
-              *(float *)((int)local_c0 + iVar16 + 0x18) = fVar5;
-              *(int *)((int)local_c0 + iVar16 + 8) = iVar9;
+            if (*(float *)((int)local_c0 + iVar13 + 0x18) < fVar5) {
+              *(float *)((int)local_c0 + iVar13 + 0x18) = fVar5;
+              *(int *)((int)local_c0 + iVar13 + 8) = iVar8;
             }
-            pfVar15 = pfVar15 + 3;
-            iVar16 = iVar16 + 4;
-            lVar14 = lVar14 + -1;
-          } while (lVar14 != 0);
-          if (dVar23 < (double)pfVar20[5]) {
-            dVar23 = (double)pfVar20[5];
-            iVar21 = iVar9;
+            pfVar12 = pfVar12 + 3;
+            iVar13 = iVar13 + 4;
+            lVar19 = lVar19 + -1;
+          } while (lVar19 != 0);
+          if (dVar20 < (double)pfVar17[5]) {
+            dVar20 = (double)pfVar17[5];
+            iVar18 = iVar8;
           }
         }
-        iVar9 = iVar9 + 1;
-        lVar13 = lVar13 + 4;
-        pfVar20 = pfVar20 + 8;
-      } while (iVar9 != iVar11);
+        iVar8 = iVar8 + 1;
+        lVar11 = lVar11 + 4;
+        pfVar17 = pfVar17 + 8;
+      } while (iVar8 != iVar9);
       if (iVar7 != 0) {
-        lVar14 = 8;
-        lVar13 = ((ulonglong)*(uint *)(iVar4 + 0x1000) & 0x7ffffff) * 0x20 + lVar10 + -4;
-        puVar12 = (undefined4 *)(iVar6 + -0x24);
+        lVar19 = 8;
+        lVar11 = ((ulonglong)*(uint *)(iVar4 + 0x1000) & 0x7ffffff) * 0x20 + param_4 + -4;
+        puVar10 = (undefined4 *)(iVar6 + -0x24);
         do {
-          puVar12 = puVar12 + 1;
-          lVar13 = lVar13 + 4;
-          *(undefined4 *)lVar13 = *puVar12;
-          lVar14 = lVar14 + -1;
-        } while (lVar14 != 0);
-        uVar17 = *(int *)(iVar4 + 0x1000) + 1;
-        *(uint *)(iVar4 + 0x1000) = uVar17;
-        if ((((iVar21 != -1) && (iVar21 != -1)) && (iVar21 != -1)) && (iVar21 != -1)) {
-          puVar12 = (undefined4 *)(iVar21 * 0x20 + iVar6 + -4);
-          lVar13 = ((ulonglong)uVar17 & 0x7ffffff) * 0x20 + lVar10 + -4;
-          lVar14 = 8;
+          puVar10 = puVar10 + 1;
+          lVar11 = lVar11 + 4;
+          *(undefined4 *)lVar11 = *puVar10;
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
+        uVar14 = *(int *)(iVar4 + 0x1000) + 1;
+        *(uint *)(iVar4 + 0x1000) = uVar14;
+        if ((((iVar18 != -1) && (iVar18 != -1)) && (iVar18 != -1)) && (iVar18 != -1)) {
+          puVar10 = (undefined4 *)(iVar18 * 0x20 + iVar6 + -4);
+          lVar11 = ((ulonglong)uVar14 & 0x7ffffff) * 0x20 + param_4 + -4;
+          lVar19 = 8;
           do {
-            puVar12 = puVar12 + 1;
-            lVar13 = lVar13 + 4;
-            *(undefined4 *)lVar13 = *puVar12;
-            lVar14 = lVar14 + -1;
-          } while (lVar14 != 0);
+            puVar10 = puVar10 + 1;
+            lVar11 = lVar11 + 4;
+            *(undefined4 *)lVar11 = *puVar10;
+            lVar19 = lVar19 + -1;
+          } while (lVar19 != 0);
           *(int *)(iVar4 + 0x1000) = *(int *)(iVar4 + 0x1000) + 1;
         }
       }
     }
-    iVar19 = iVar19 + 1;
-    lVar18 = lVar18 + 0xc;
-  } while (iVar19 != 3);
+    iVar16 = iVar16 + 1;
+    lVar15 = lVar15 + 0xc;
+  } while (iVar16 != 3);
   __restgprlr_21();
   return;
 }
@@ -623,7 +629,7 @@ void Phys_GenerateGroupContacts
 
 // 8266BA10  Phys_OdeMatrix3ToAxis  (physics/phys_local.h:347)
 
-void Phys_OdeMatrix3ToAxis(float *param_1,float (*param_2) [3])
+void Phys_OdeMatrix3ToAxis(undefined8 param_1,longlong param_2)
 
 {
   float fVar1;
@@ -632,27 +638,24 @@ void Phys_OdeMatrix3ToAxis(float *param_1,float (*param_2) [3])
   longlong lVar4;
   longlong lVar5;
   longlong lVar6;
-  longlong lVar7;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_24(param_1);
-  lVar5 = 0;
+  iVar3 = __savegprlr_24();
+  lVar4 = 0;
   do {
-    lVar7 = 0;
-    lVar6 = lVar5 + lVar4;
+    lVar6 = 0;
+    lVar5 = lVar4 + param_2;
     do {
-      iVar2 = (int)((lVar5 + lVar7 & 0xffffffffU) << 2);
+      iVar2 = (int)((lVar4 + lVar6 & 0xffffffffU) << 2);
       fVar1 = *(float *)(iVar2 + iVar3);
-      *(float *)lVar6 = fVar1;
+      *(float *)lVar5 = fVar1;
       if (fVar1 != *(float *)(iVar2 + iVar3)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_local.h",
-                        0x163,0,"%s");
+        MyAssertHandler(0xffffffff8219251c,0x163,0,0xffffffff82000f98,0xffffffff82193854);
       }
-      lVar7 = lVar7 + 1;
-      lVar6 = lVar6 + 0xc;
-    } while ((int)lVar7 < 3);
-    lVar5 = lVar5 + 4;
-  } while ((int)lVar5 < 0xc);
+      lVar6 = lVar6 + 1;
+      lVar5 = lVar5 + 0xc;
+    } while ((int)lVar6 < 3);
+    lVar4 = lVar4 + 4;
+  } while ((int)lVar4 < 0xc);
   __restgprlr_24();
   return;
 }
@@ -660,36 +663,39 @@ void Phys_OdeMatrix3ToAxis(float *param_1,float (*param_2) [3])
 
 // 8266C6E8  Phys_DebugDrawContactPoint  (physics/phys_contacts.cpp:377)
 
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
 void Phys_DebugDrawContactPoint
-               (PhysWorld param_1,float *param_2,float *param_3,float param_4,float *param_5)
+               (double param_1,int param_2,float *param_3,float *param_4,undefined8 param_5,
+               undefined8 param_6)
 
 {
   float fVar1;
-  float *in_r7;
   float local_40;
   float local_3c;
   float local_38;
-  Bounds local_30;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  undefined4 local_24;
+  undefined4 local_20;
+  undefined4 local_1c;
   
-  fVar1 = param_4 * 10.0;
-  local_30.midPoint[0] = 0.0;
-  local_30.midPoint[1] = 0.0;
-  local_30.midPoint[2] = 0.0;
-  local_30.halfSize[0] = 1.0;
-  local_30.halfSize[1] = 1.0;
-  local_30.halfSize[2] = 1.0;
-  local_40 = *param_3 * fVar1 + *param_2;
-  local_3c = param_3[1] * fVar1 + param_2[1];
-  local_38 = param_3[2] * fVar1 + param_2[2];
-  if ((int)param_1 < 3) {
-    CG_DebugBox(param_2,&local_30,0.0,param_3,(int)in_r7,0);
-    CG_DebugLine(param_2,&local_40,in_r7,0,3);
+  fVar1 = (float)(param_1 * 10.0);
+  local_30 = 0;
+  local_2c = 0;
+  local_28 = 0;
+  local_24 = 0x3f800000;
+  local_20 = 0x3f800000;
+  local_1c = 0x3f800000;
+  local_40 = *param_4 * fVar1 + *param_3;
+  local_3c = param_4[1] * fVar1 + param_3[1];
+  local_38 = param_4[2] * fVar1 + param_3[2];
+  if (param_2 < 3) {
+    CG_DebugBox(param_3,&local_30,param_4,param_6,0,3);
+    CG_DebugLine(param_3,&local_40,param_6,0,3);
   }
   else {
-    G_DebugBox(param_2,&local_30,0.0,param_3,(int)in_r7,0);
-    G_DebugLine(param_2,&local_40,in_r7,0);
+    G_DebugBox();
+    G_DebugLine(param_3,&local_40,param_6,0);
   }
   return;
 }
@@ -697,62 +703,59 @@ void Phys_DebugDrawContactPoint
 
 // 8266C7D8  Phys_CheckOpposingNormals  (physics/phys_contacts.cpp:400)
 
-void Phys_CheckOpposingNormals(dxBody *param_1,dxBody *param_2,ContactList *param_3)
+void Phys_CheckOpposingNormals(undefined8 param_1,ulonglong param_2,longlong param_3)
 
 {
   uint uVar1;
   float *pfVar2;
   longlong lVar3;
-  dxBody *pdVar4;
-  void *pvVar5;
-  ulonglong uVar6;
+  int iVar4;
+  longlong lVar5;
+  longlong lVar6;
   longlong lVar7;
-  int iVar8;
-  int iVar9;
   
-  lVar7 = (longlong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pdVar4 = (dxBody *)__savegprlr_27(param_1);
-  uVar1 = *(uint *)((int)lVar7 + 0x1000);
-  iVar8 = 0;
+  iVar4 = __savegprlr_27();
+  uVar1 = *(uint *)((int)param_3 + 0x1000);
   if ((longlong)((ulonglong)uVar1 - 1) < 1) {
 LAB_8266c8e4:
     __restgprlr_27();
     return;
   }
-  lVar7 = lVar7 + 0x10;
+  param_3 = param_3 + 0x10;
+  lVar6 = 0;
   do {
-    iVar8 = iVar8 + 1;
-    if (iVar8 < (int)uVar1) {
-      pfVar2 = (float *)lVar7;
-      lVar3 = lVar7;
-      iVar9 = iVar8;
+    lVar5 = lVar6 + 1;
+    if ((int)lVar5 < (int)uVar1) {
+      pfVar2 = (float *)param_3;
+      lVar7 = lVar5;
+      lVar3 = param_3;
       do {
         if (*(float *)((int)lVar3 + 0x24) * pfVar2[1] +
             *(float *)((int)lVar3 + 0x1c) * pfVar2[-1] + *(float *)(lVar3 + 0x20) * *pfVar2 < -0.99)
         {
-          if (pdVar4 != (dxBody *)0x0) {
-            pvVar5 = dBodyGetData(pdVar4);
-            if (*(char *)((int)pvVar5 + 0x6c) != '\0') {
-              Com_Printf(0,"Body0 flagged stuck due to normals %d and %d\n");
+          if (iVar4 != 0) {
+            iVar4 = dBodyGetData();
+            if (*(char *)(iVar4 + 0x6c) != '\0') {
+              Com_Printf(0,0xffffffff821939cc,lVar6,lVar7);
             }
-            *(undefined4 *)((int)pvVar5 + 0x58) = 1;
+            *(undefined4 *)(iVar4 + 0x58) = 1;
           }
-          if ((uVar6 & 0xffffffff) != 0) {
-            pvVar5 = dBodyGetData((dxBody *)uVar6);
-            if (*(char *)((int)pvVar5 + 0x6c) != '\0') {
-              Com_Printf(0,"Body1 flagged stuck due to normals %d and %d\n");
+          if ((param_2 & 0xffffffff) != 0) {
+            iVar4 = dBodyGetData(param_2);
+            if (*(char *)(iVar4 + 0x6c) != '\0') {
+              Com_Printf(0,0xffffffff8219399c,lVar6,lVar7);
             }
-            *(undefined4 *)((int)pvVar5 + 0x58) = 1;
+            *(undefined4 *)(iVar4 + 0x58) = 1;
           }
           goto LAB_8266c8e4;
         }
-        iVar9 = iVar9 + 1;
+        lVar7 = lVar7 + 1;
         lVar3 = lVar3 + 0x20;
-      } while (iVar9 < (int)uVar1);
+      } while ((int)lVar7 < (int)uVar1);
     }
-    lVar7 = lVar7 + 0x20;
-    if ((int)((ulonglong)uVar1 - 1) <= iVar8) {
+    param_3 = param_3 + 0x20;
+    lVar6 = lVar5;
+    if ((int)((ulonglong)uVar1 - 1) <= (int)lVar5) {
       __restgprlr_27();
       return;
     }
@@ -762,29 +765,30 @@ LAB_8266c8e4:
 
 // 8266C8F0  Phys_ReduceContactsToForceBoxFallover  (physics/phys_contacts.cpp:439)
 
-void Phys_ReduceContactsToForceBoxFallover(dxBody *param_1,dxGeom *param_2,ContactList *param_3)
+void Phys_ReduceContactsToForceBoxFallover(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   float fVar1;
   int iVar2;
-  int iVar3;
-  float fVar4;
+  uint uVar3;
+  int iVar4;
   float fVar5;
-  bool bVar6;
-  int iVar7;
-  int iVar8;
-  int *piVar10;
-  float *pfVar11;
-  ulonglong uVar12;
-  uint *puVar13;
-  uint uVar14;
-  uint uVar15;
-  longlong lVar16;
-  longlong lVar17;
-  ulonglong uVar18;
+  int iVar6;
+  float fVar7;
+  bool bVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  int iVar12;
+  int *piVar13;
+  undefined8 uVar11;
+  longlong lVar14;
+  ulonglong uVar15;
+  uint uVar16;
+  float *pfVar17;
+  longlong lVar18;
   ulonglong uVar19;
   ulonglong uVar20;
-  uint uVar21;
+  ulonglong uVar21;
   longlong lVar22;
   double dVar23;
   double dVar24;
@@ -798,126 +802,116 @@ void Phys_ReduceContactsToForceBoxFallover(dxBody *param_1,dxGeom *param_2,Conta
   float local_2c0;
   float local_2b8;
   float local_2b4;
-  float afStack_2a0 [11];
-  uint uStack_274;
   uint local_270 [156];
-  dxGeom *pdVar9;
   
-  uVar12 = (ulonglong)(int)param_3;
-  uVar18 = (ulonglong)(int)param_2;
-  __savegprlr_24(param_1);
-  iVar7 = __savefpr_27();
-  if (iVar7 == 0) goto LAB_8266cf70;
-  if ((uVar12 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                    0x1df,0,"%s");
+  uVar9 = ZEXT48(&stack0x00000000);
+  __savegprlr_24();
+  uVar10 = __savefpr_27();
+  if ((uVar10 & 0xffffffff) == 0) goto LAB_8266cf70;
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821938c0,0x1df,0,0xffffffff82000f98,0xffffffff82039d70);
   }
-  iVar3 = (int)uVar12;
-  if (*(int *)(iVar3 + 0x1000) < 3) goto LAB_8266cf70;
-  if ((uVar18 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                    0x1e4,0,"%s");
+  iVar4 = (int)param_3;
+  if (*(int *)(iVar4 + 0x1000) < 3) goto LAB_8266cf70;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821938c0,0x1e4,0,0xffffffff82000f98,0xffffffff82193ae4);
   }
-  pdVar9 = (dxGeom *)uVar18;
-  iVar8 = dGeomGetClass(pdVar9);
-  if (iVar8 == 4) {
-    piVar10 = ODE_GeomGetClassData(pdVar9);
-    iVar8 = *piVar10;
-    iVar2 = *(int *)(iVar8 + 8);
-    pfVar11 = dGeomGetRotation(pdVar9);
-    if ((*(int *)(iVar8 + 4) == 1) && (*(int *)(iVar2 + 4) == 1)) {
-      Phys_OdeMatrix3ToAxis(pfVar11,(float (*) [3])afStack_2a0);
-      MatrixMultiply((float (*) [3])(iVar2 + 8),(float (*) [3])afStack_2a0,
-                     (float (*) [3])afStack_2e0);
+  iVar12 = dGeomGetClass(param_2);
+  if (iVar12 == 4) {
+    piVar13 = (int *)ODE_GeomGetClassData(param_2);
+    iVar12 = *piVar13;
+    iVar2 = *(int *)(iVar12 + 8);
+    uVar11 = dGeomGetRotation(param_2);
+    if ((*(int *)(iVar12 + 4) == 1) && (*(int *)(iVar2 + 4) == 1)) {
+      Phys_OdeMatrix3ToAxis(uVar11,uVar9 - 0x2a0);
+      MatrixMultiply(iVar2 + 8,uVar9 - 0x2a0,uVar9 - 0x2e0);
       local_2f4[0] = *(float *)(iVar2 + 0x38);
       local_2f4[1] = *(float *)(iVar2 + 0x3c);
       local_2f4[2] = *(float *)(iVar2 + 0x40);
     }
     else {
-      Phys_OdeMatrix3ToAxis(pfVar11,(float (*) [3])afStack_2e0);
-      local_2f4[0] = *(float *)(iVar8 + 0x3c);
-      local_2f4[1] = *(float *)(iVar8 + 0x40);
-      local_2f4[2] = *(float *)(iVar8 + 0x44);
+      Phys_OdeMatrix3ToAxis(uVar11,uVar9 - 0x2e0);
+      local_2f4[0] = *(float *)(iVar12 + 0x3c);
+      local_2f4[1] = *(float *)(iVar12 + 0x40);
+      local_2f4[2] = *(float *)(iVar12 + 0x44);
     }
   }
   else {
-    if (iVar8 != 0) goto LAB_8266cf70;
-    Phys_ObjGetRotation(iVar7,(float (*) [3])afStack_2e0);
-    dGeomBoxGetLengths(pdVar9,local_2f4);
+    if (iVar12 != 0) goto LAB_8266cf70;
+    Phys_ObjGetRotation(uVar10,uVar9 - 0x2e0);
+    dGeomBoxGetLengths(param_2,uVar9 - 0x2f4);
   }
-  Phys_ObjGetCenterOfMass(iVar7,&local_2b8);
-  uVar18 = (ulonglong)(local_2f4[1] < local_2f4[0]);
+  Phys_ObjGetCenterOfMass(uVar10,uVar9 - 0x2b8);
+  uVar10 = (ulonglong)(local_2f4[1] < local_2f4[0]);
   if (local_2f4[2] < local_2f4[local_2f4[1] < local_2f4[0]]) {
-    uVar18 = 2;
+    uVar10 = 2;
   }
-  iVar7 = (int)uVar18;
-  uVar20 = (ulonglong)(iVar7 == 0);
-  if (((uVar20 == 0) || (uVar18 == 0)) ||
-     (ABS(afStack_2e0[2]) <= ABS(afStack_2e0[(uint)(iVar7 == 0) * 3 + 2]))) {
-    if (uVar20 != 1) goto LAB_8266cac8;
+  iVar12 = (int)uVar10;
+  uVar21 = (ulonglong)(iVar12 == 0);
+  if (((uVar21 == 0) || (uVar10 == 0)) ||
+     (ABS(afStack_2e0[2]) <= ABS(afStack_2e0[(uint)(iVar12 == 0) * 3 + 2]))) {
+    if (uVar21 != 1) goto LAB_8266cac8;
 LAB_8266cb00:
-    if (uVar20 != 2) goto LAB_8266cb08;
+    if (uVar21 != 2) goto LAB_8266cb08;
   }
   else {
-    uVar20 = 0;
+    uVar21 = 0;
 LAB_8266cac8:
-    if ((uVar18 == 1) || (ABS(local_2cc) <= ABS(afStack_2e0[(int)uVar20 * 3 + 2])))
+    if ((uVar10 == 1) || (ABS(local_2cc) <= ABS(afStack_2e0[(int)uVar21 * 3 + 2])))
     goto LAB_8266cb00;
-    uVar20 = 1;
+    uVar21 = 1;
 LAB_8266cb08:
-    if ((uVar18 != 2) && (ABS(afStack_2e0[(int)uVar20 * 3 + 2]) < ABS(local_2c0))) {
-      uVar20 = 2;
+    if ((uVar10 != 2) && (ABS(afStack_2e0[(int)uVar21 * 3 + 2]) < ABS(local_2c0))) {
+      uVar21 = 2;
     }
   }
-  if (uVar18 == uVar20) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                    0x221,1,"%s");
+  if (uVar10 == uVar21) {
+    MyAssertHandler(0xffffffff821938c0,0x221,1,0xffffffff82000f98,0xffffffff82193ad0);
   }
-  iVar2 = (int)(uVar20 << 2);
-  iVar8 = (int)(uVar18 << 2);
-  if (*(float *)((int)local_2f4 + iVar2) < *(float *)((int)local_2f4 + iVar8)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                    0x223,1,"%s");
+  iVar6 = (int)(uVar21 << 2);
+  iVar2 = (int)(uVar10 << 2);
+  if (*(float *)((int)local_2f4 + iVar6) < *(float *)((int)local_2f4 + iVar2)) {
+    MyAssertHandler(0xffffffff821938c0,0x223,1,0xffffffff82000f98,0xffffffff82193a9c);
   }
-  fVar4 = *(float *)((int)local_2f4 + iVar8) / *(float *)((int)local_2f4 + iVar2);
-  if (fVar4 <= 0.33333334) {
-    fVar5 = fVar4 * fVar4 + 1.0;
-    fVar1 = afStack_2e0[iVar7 * 3 + 2];
-    if (fVar1 * fVar1 <= (fVar4 * fVar4) / fVar5) {
+  fVar5 = *(float *)((int)local_2f4 + iVar2) / *(float *)((int)local_2f4 + iVar6);
+  if (fVar5 <= 0.33333334) {
+    fVar7 = fVar5 * fVar5 + 1.0;
+    fVar1 = afStack_2e0[iVar12 * 3 + 2];
+    if (fVar1 * fVar1 <= (fVar5 * fVar5) / fVar7) {
       if (fVar1 <= 0.0) {
-        dVar28 = -(double)afStack_2e0[iVar7 * 3];
-        dVar27 = -(double)afStack_2e0[iVar7 * 3 + 1];
-        dVar26 = -(double)afStack_2e0[iVar7 * 3 + 2];
+        dVar28 = -(double)afStack_2e0[iVar12 * 3];
+        dVar27 = -(double)afStack_2e0[iVar12 * 3 + 1];
+        dVar26 = -(double)afStack_2e0[iVar12 * 3 + 2];
       }
       else {
-        dVar28 = (double)afStack_2e0[iVar7 * 3];
-        dVar27 = (double)afStack_2e0[iVar7 * 3 + 1];
-        dVar26 = (double)afStack_2e0[iVar7 * 3 + 2];
+        dVar28 = (double)afStack_2e0[iVar12 * 3];
+        dVar27 = (double)afStack_2e0[iVar12 * 3 + 1];
+        dVar26 = (double)afStack_2e0[iVar12 * 3 + 2];
       }
-      uVar14 = *(uint *)(iVar3 + 0x1000);
-      uVar21 = 0;
-      bVar6 = false;
+      uVar3 = *(uint *)(iVar4 + 0x1000);
+      uVar10 = 0;
+      bVar8 = false;
       dVar25 = 3.4028234663852886e+38;
-      uVar15 = 0;
+      uVar16 = 0;
       dVar24 = -3.4028234663852886e+38;
-      if (uVar14 != 0) {
-        lVar17 = uVar12 + 4;
-        puVar13 = &uStack_274;
+      if (uVar3 != 0) {
+        lVar18 = param_3 + 4;
+        lVar14 = uVar9 - 0x274;
         do {
-          pfVar11 = (float *)lVar17;
-          if (1.0 / fVar5 < pfVar11[4]) {
-            puVar13 = puVar13 + 1;
-            *puVar13 = uVar15;
-            uVar21 = uVar21 + 1;
-            if ((bVar6) ||
-               ((float)((double)*pfVar11 * dVar27 + (double)(float)((double)pfVar11[-1] * dVar28)) <
+          pfVar17 = (float *)lVar18;
+          if (1.0 / fVar7 < pfVar17[4]) {
+            lVar14 = lVar14 + 4;
+            *(uint *)lVar14 = uVar16;
+            uVar10 = uVar10 + 1;
+            if ((bVar8) ||
+               ((float)((double)*pfVar17 * dVar27 + (double)(float)((double)pfVar17[-1] * dVar28)) <
                 (float)((double)local_2b4 * dVar27 + (double)(float)((double)local_2b8 * dVar28)) +
                 1.0)) {
-              bVar6 = true;
+              bVar8 = true;
             }
-            dVar23 = (double)(float)((double)pfVar11[1] * dVar26 +
-                                    (double)(float)((double)*pfVar11 * dVar27 +
-                                                   (double)(float)((double)pfVar11[-1] * dVar28)));
+            dVar23 = (double)(float)((double)pfVar17[1] * dVar26 +
+                                    (double)(float)((double)*pfVar17 * dVar27 +
+                                                   (double)(float)((double)pfVar17[-1] * dVar28)));
             if ((float)(dVar23 - dVar25) < 0.0) {
               dVar25 = dVar23;
             }
@@ -925,88 +919,84 @@ LAB_8266cb08:
               dVar24 = dVar23;
             }
           }
-          uVar15 = uVar15 + 1;
-          lVar17 = lVar17 + 0x20;
-        } while (uVar15 < uVar14);
-        if ((2 < uVar21) && (bVar6)) {
+          uVar16 = uVar16 + 1;
+          lVar18 = lVar18 + 0x20;
+        } while (uVar16 < uVar3);
+        if ((2 < (uVar10 & 0xffffffff)) && (bVar8)) {
           if (dVar24 < dVar25) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp"
-                            ,0x253,0,"%s");
+            MyAssertHandler(0xffffffff821938c0,0x253,0,0xffffffff82000f98,0xffffffff82193a74);
           }
-          uVar20 = 0;
-          uVar14 = 0;
           uVar19 = 0;
-          fVar4 = (float)(dVar24 + dVar25) * 0.5;
-          uVar18 = uVar12;
-          if (*(int *)(iVar3 + 0x1000) != 0) {
+          uVar15 = 0;
+          uVar20 = 0;
+          fVar5 = (float)(dVar24 + dVar25) * 0.5;
+          uVar21 = param_3;
+          if (*(int *)(iVar4 + 0x1000) != 0) {
 LAB_8266cd5c:
-            if (uVar14 < uVar21) {
-              if (3 < (int)(uVar21 - uVar14)) {
-                puVar13 = local_270 + uVar14 + 1;
+            if ((uVar15 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+              if (3 < (int)uVar10 - (int)uVar15) {
+                lVar14 = (uVar15 & 0x3fffffff) * 4 + (uVar9 - 0x26c);
                 do {
-                  pfVar11 = (float *)(puVar13[-1] * 0x20 + iVar3);
-                  if ((float)((double)pfVar11[2] * dVar26 +
-                             (double)(float)((double)pfVar11[1] * dVar27 +
-                                            (double)(float)((double)*pfVar11 * dVar28))) < fVar4)
+                  piVar13 = (int *)lVar14;
+                  pfVar17 = (float *)(piVar13[-1] * 0x20 + iVar4);
+                  if ((float)((double)pfVar17[2] * dVar26 +
+                             (double)(float)((double)pfVar17[1] * dVar27 +
+                                            (double)(float)((double)*pfVar17 * dVar28))) < fVar5)
                   goto LAB_8266cf94;
-                  pfVar11 = (float *)(*puVar13 * 0x20 + iVar3);
-                  if ((float)((double)pfVar11[2] * dVar26 +
-                             (double)(float)((double)pfVar11[1] * dVar27 +
-                                            (double)(float)((double)*pfVar11 * dVar28))) < fVar4) {
-                    uVar14 = uVar14 + 1;
+                  pfVar17 = (float *)(*piVar13 * 0x20 + iVar4);
+                  if ((float)((double)pfVar17[2] * dVar26 +
+                             (double)(float)((double)pfVar17[1] * dVar27 +
+                                            (double)(float)((double)*pfVar17 * dVar28))) < fVar5) {
+                    uVar15 = uVar15 + 1;
                     goto LAB_8266cf94;
                   }
-                  pfVar11 = (float *)(puVar13[1] * 0x20 + iVar3);
-                  if ((float)((double)pfVar11[2] * dVar26 +
-                             (double)(float)((double)pfVar11[1] * dVar27 +
-                                            (double)(float)((double)*pfVar11 * dVar28))) < fVar4) {
-                    uVar14 = uVar14 + 2;
+                  pfVar17 = (float *)(piVar13[1] * 0x20 + iVar4);
+                  if ((float)((double)pfVar17[2] * dVar26 +
+                             (double)(float)((double)pfVar17[1] * dVar27 +
+                                            (double)(float)((double)*pfVar17 * dVar28))) < fVar5) {
+                    uVar15 = uVar15 + 2;
                     goto LAB_8266cf94;
                   }
-                  pfVar11 = (float *)(puVar13[2] * 0x20 + iVar3);
-                  if ((float)((double)pfVar11[2] * dVar26 +
-                             (double)(float)((double)pfVar11[1] * dVar27 +
-                                            (double)(float)((double)*pfVar11 * dVar28))) < fVar4) {
-                    uVar14 = uVar14 + 3;
+                  pfVar17 = (float *)(piVar13[2] * 0x20 + iVar4);
+                  if ((float)((double)pfVar17[2] * dVar26 +
+                             (double)(float)((double)pfVar17[1] * dVar27 +
+                                            (double)(float)((double)*pfVar17 * dVar28))) < fVar5) {
+                    uVar15 = uVar15 + 3;
                     goto LAB_8266cf94;
                   }
-                  uVar14 = uVar14 + 4;
-                  puVar13 = puVar13 + 4;
-                } while (uVar14 < uVar21 - 3);
+                  uVar15 = uVar15 + 4;
+                  lVar14 = lVar14 + 0x10;
+                } while ((uVar15 & 0xffffffff) < (uVar10 - 3 & 0xffffffff));
               }
-              if (uVar14 < uVar21) {
-                puVar13 = local_270 + uVar14;
+              if ((uVar15 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+                lVar14 = (uVar15 & 0x3fffffff) * 4 + (uVar9 - 0x270);
                 do {
-                  pfVar11 = (float *)(*puVar13 * 0x20 + iVar3);
-                  if ((float)((double)pfVar11[2] * dVar26 +
-                             (double)(float)((double)pfVar11[1] * dVar27 +
-                                            (double)(float)((double)*pfVar11 * dVar28))) < fVar4)
+                  pfVar17 = (float *)(*(int *)lVar14 * 0x20 + iVar4);
+                  if ((float)((double)pfVar17[2] * dVar26 +
+                             (double)(float)((double)pfVar17[1] * dVar27 +
+                                            (double)(float)((double)*pfVar17 * dVar28))) < fVar5)
                   goto LAB_8266cf94;
-                  uVar14 = uVar14 + 1;
-                  puVar13 = puVar13 + 1;
-                } while (uVar14 < uVar21);
+                  uVar15 = uVar15 + 1;
+                  lVar14 = lVar14 + 4;
+                } while ((uVar15 & 0xffffffff) < (uVar10 & 0xffffffff));
               }
             }
             goto LAB_8266ce90;
           }
 LAB_8266ced0:
-          if (uVar14 != uVar21) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp"
-                            ,0x267,1,"%s");
+          if ((uVar15 & 0xffffffff) != (uVar10 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff821938c0,0x267,1,0xffffffff82000f98,0xffffffff82193a50);
           }
-          if ((uVar19 & 0xffffffff) < (uVar20 & 0xffffffff)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp"
-                            ,0x268,1,"%s");
+          if ((uVar20 & 0xffffffff) < (uVar19 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff821938c0,0x268,1,0xffffffff82000f98,0xffffffff82193a3c);
           }
-          if ((ulonglong)uVar21 < (uVar19 - uVar20 & 0xffffffff)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp"
-                            ,0x269,1,"%s");
+          if ((uVar10 & 0xffffffff) < (uVar20 - uVar19 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff821938c0,0x269,1,0xffffffff82000f98,0xffffffff82193a14);
           }
-          lVar17 = (*(uint *)(iVar3 + 0x1000) - uVar19) + uVar20;
-          *(int *)(iVar3 + 0x1000) = (int)lVar17;
-          if (lVar17 < 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp"
-                            ,0x26c,1,"%s");
+          lVar14 = (*(uint *)(iVar4 + 0x1000) - uVar20) + uVar19;
+          *(int *)(iVar4 + 0x1000) = (int)lVar14;
+          if (lVar14 < 0) {
+            MyAssertHandler(0xffffffff821938c0,0x26c,1,0xffffffff82000f98,0xffffffff821939fc);
           }
         }
       }
@@ -1017,106 +1007,100 @@ LAB_8266cf70:
   __restgprlr_24();
   return;
 LAB_8266cf94:
-  if ((uVar14 < uVar21) && ((ulonglong)local_270[uVar14] == (uVar19 & 0xffffffff))) {
-    uVar14 = uVar14 + 1;
+  if (((uVar15 & 0xffffffff) < (uVar10 & 0xffffffff)) &&
+     ((ulonglong)*(uint *)((int)local_270 + (int)((uVar15 & 0xffffffff) << 2)) ==
+      (uVar20 & 0xffffffff))) {
+    uVar15 = uVar15 + 1;
   }
   else {
 LAB_8266ce90:
-    if ((uVar20 & 0xffffffff) != (uVar19 & 0xffffffff)) {
-      lVar17 = uVar18 - 4;
-      lVar16 = uVar12 - 4;
+    if ((uVar19 & 0xffffffff) != (uVar20 & 0xffffffff)) {
+      lVar14 = uVar21 - 4;
+      lVar18 = param_3 - 4;
       lVar22 = 8;
       do {
-        lVar17 = lVar17 + 4;
-        lVar16 = lVar16 + 4;
-        *(undefined4 *)lVar16 = *(undefined4 *)lVar17;
+        lVar14 = lVar14 + 4;
+        lVar18 = lVar18 + 4;
+        *(undefined4 *)lVar18 = *(undefined4 *)lVar14;
         lVar22 = lVar22 + -1;
       } while (lVar22 != 0);
     }
-    uVar20 = uVar20 + 1;
-    uVar12 = uVar12 + 0x20;
+    uVar19 = uVar19 + 1;
+    param_3 = param_3 + 0x20;
   }
-  uVar19 = uVar19 + 1;
-  uVar18 = uVar18 + 0x20;
-  if ((ulonglong)*(uint *)(iVar3 + 0x1000) <= (uVar19 & 0xffffffff)) goto LAB_8266ced0;
+  uVar20 = uVar20 + 1;
+  uVar21 = uVar21 + 0x20;
+  if ((ulonglong)*(uint *)(iVar4 + 0x1000) <= (uVar20 & 0xffffffff)) goto LAB_8266ced0;
   goto LAB_8266cd5c;
 }
 
 
 // 8266CFB8  Phys_ReduceContacts  (physics/phys_contacts.cpp:625)
 
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
-void Phys_ReduceContacts(PhysWorld param_1,ContactList *param_2,ContactList *param_3)
+void Phys_ReduceContacts(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-  ContactList *pCVar1;
-  float *pfVar2;
-  PhysWorld PVar3;
-  int iVar4;
-  undefined8 in_r6;
-  longlong lVar5;
-  float afStack_270 [12];
-  int aiStack_240 [144];
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  longlong lVar4;
+  undefined1 auStack_270 [48];
+  undefined1 auStack_240 [576];
   
-  lVar5 = (longlong)(int)param_2;
-  PVar3 = __savegprlr_26(param_1);
-  pCVar1 = (ContactList *)lVar5;
-  if ((phys_drawcontacts->current).enabled != false) {
-    iVar4 = 0;
-    if (0 < pCVar1->contactCount) {
-      lVar5 = lVar5 + 0xc;
+  uVar1 = __savegprlr_26();
+  if (*(char *)(DAT_8427b898 + 0xc) != '\0') {
+    iVar3 = 0;
+    if (0 < *(int *)((int)param_2 + 0x1000)) {
+      lVar4 = param_2 + 0xc;
       do {
-        pfVar2 = (float *)lVar5;
-        Phys_DebugDrawContactPoint(PVar3,pfVar2 + -3,pfVar2,pfVar2[3],(float *)in_r6);
-        iVar4 = iVar4 + 1;
-        lVar5 = lVar5 + 0x20;
-      } while (iVar4 < pCVar1->contactCount);
+        Phys_DebugDrawContactPoint((double)*(float *)((int)lVar4 + 0xc),uVar1,lVar4 + -0xc,lVar4);
+        iVar3 = iVar3 + 1;
+        lVar4 = lVar4 + 0x20;
+      } while (iVar3 < *(int *)((int)param_2 + 0x1000));
     }
   }
-  iVar4 = 0x16c;
-  if ((int)PVar3 < 3) {
-    iVar4 = 0x187;
+  uVar2 = 0x16c;
+  if ((int)uVar1 < 3) {
+    uVar2 = 0x187;
   }
-  Profile_Begin(iVar4);
-  Phys_AssignInitialGroups(pCVar1,aiStack_240);
-  Phys_KMeans(pCVar1,(float (*) [3])afStack_270,aiStack_240);
-  if ((phys_dumpcontacts->current).enabled != false) {
-    Phys_DumpGroups((float (*) [3])afStack_270);
-    Phys_DumpContacts(pCVar1,aiStack_240);
+  Profile_Begin(uVar2);
+  Phys_AssignInitialGroups(param_2,auStack_240);
+  Phys_KMeans(param_2,auStack_270,auStack_240);
+  if (*(char *)(DAT_8427b930 + 0xc) != '\0') {
+    Phys_DumpGroups(auStack_270);
+    Phys_DumpContacts(param_2,auStack_240);
   }
-  Phys_MergeGroups(pCVar1,(float (*) [3])afStack_270,aiStack_240);
-  Phys_GenerateGroupContacts(pCVar1,(float (*) [3])afStack_270,aiStack_240,param_3);
-  iVar4 = Profile_EndInternal((double *)0x0);
-  __restgprlr_26(iVar4);
+  Phys_MergeGroups(param_2,auStack_270,auStack_240);
+  Phys_GenerateGroupContacts(param_2,auStack_270,auStack_240,param_3);
+  Profile_EndInternal(0);
+  __restgprlr_26();
   return;
 }
 
 
 // 8266D0B8  Phys_ApplyContactJitter  (physics/phys_contacts.cpp:668)
 
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
 void Phys_ApplyContactJitter
-               (PhysWorld param_1,dContactGeom *param_2,dxBody *param_3,dxBody *param_4,bool param_5
-               )
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5)
 
 {
   float fVar1;
-  PhysWorld PVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  float fVar2;
+  float *pfVar3;
+  int iVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
   int iVar7;
-  float *pfVar8;
-  double dVar9;
+  int iVar8;
+  float *pfVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  float fVar15;
+  double dVar15;
+  double dVar16;
   float local_b0;
   float local_ac;
   float local_a8;
@@ -1124,89 +1108,86 @@ void Phys_ApplyContactJitter
   float local_9c;
   float local_98;
   
-  uVar6 = (ulonglong)param_5;
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  __savegprlr_21(param_1);
-  PVar2 = __savefpr_26();
-  if ((uVar4 & 0xffffffff) == 0) {
-    if ((uVar5 & 0xffffffff) != 0) goto LAB_8266d134;
-    iVar3 = 0x2ac;
+  __savegprlr_21();
+  iVar4 = __savefpr_26();
+  if ((param_3 & 0xffffffff) == 0) {
+    if ((param_4 & 0xffffffff) != 0) goto LAB_8266d134;
+    uVar5 = 0x2ac;
+    uVar6 = 0xffffffff82193b14;
   }
   else {
-    if ((uVar5 & 0xffffffff) == 0) goto LAB_8266d134;
-    iVar3 = 0x2af;
+    if ((param_4 & 0xffffffff) == 0) goto LAB_8266d134;
+    uVar5 = 0x2af;
+    uVar6 = 0xffffffff82193b00;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",iVar3
-                  ,0,"%s");
+  MyAssertHandler(0xffffffff821938c0,uVar5,0,0xffffffff82000f98,uVar6);
 LAB_8266d134:
-  if ((float)0x3f333333 <= param_2->normal[2]) {
-    iVar3 = (int)uVar4;
-    if (((uVar4 & 0xffffffff) == 0) && (iVar3 = (int)uVar5, (uVar5 & 0xffffffff) == 0)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                      0x2b6,1,"%s");
+  pfVar3 = (float *)param_2;
+  if ((float)0x3f333333 <= pfVar3[5]) {
+    if (((param_3 & 0xffffffff) == 0) && (param_3 = param_4, (param_4 & 0xffffffff) == 0)) {
+      MyAssertHandler(0xffffffff821938c0,0x2b6,1,0xffffffff82000f98,0xffffffff82003cbc);
     }
-    dVar11 = 0.0;
-    dVar13 = 1.0;
+    fVar1 = *(float *)((int)param_3 + 0x20);
+    iVar7 = iVar4 * 0x110;
+    dVar13 = 0.0;
+    dVar15 = 1.0;
     local_b0 = 0.0;
     local_ac = 0.0;
     local_a8 = 1.0;
-    fVar15 = (phys_jitterMaxMass->current).value;
-    fVar1 = *(float *)(iVar3 + 0x20);
-    if (fVar15 - *(float *)(iVar3 + 0x20) < 0.0) {
-      fVar1 = fVar15;
+    fVar2 = *(float *)(DAT_8427b964 + 0xc);
+    if (fVar2 - fVar1 < 0.0) {
+      fVar1 = fVar2;
     }
-    iVar7 = 0;
-    fVar1 = fVar1 / fVar15;
-    dVar12 = -(double)(fVar1 * fVar1 * fVar1 - 1.0);
-    if (0 < physGlob.worldData[PVar2].numJitterRegions) {
-      pfVar8 = (float *)(PVar2 * 0x110 + -0x7bd8441c);
-      dVar10 = 2.0;
+    iVar8 = 0;
+    fVar1 = fVar1 / fVar2;
+    dVar14 = -(double)(fVar1 * fVar1 * fVar1 - 1.0);
+    if (0 < *(int *)(&DAT_8427bbcc + iVar7)) {
+      pfVar9 = (float *)(&DAT_8427bbe4 + iVar7);
+      dVar12 = 2.0;
       do {
-        fVar15 = param_2->pos[0] - pfVar8[-5];
-        fVar1 = param_2->pos[1] - pfVar8[-4];
-        fVar15 = fVar1 * fVar1 + fVar15 * fVar15;
-        if (fVar15 < pfVar8[-1]) {
-          fVar15 = SQRT(fVar15);
-          dVar14 = dVar13;
-          if (*pfVar8 < fVar15) {
-            dVar14 = (double)((float)(dVar13 / (double)(pfVar8[1] - *pfVar8)) * (pfVar8[1] - fVar15)
-                             );
+        fVar1 = (pfVar3[1] - pfVar9[-4]) * (pfVar3[1] - pfVar9[-4]) +
+                (*pfVar3 - pfVar9[-5]) * (*pfVar3 - pfVar9[-5]);
+        if (fVar1 < pfVar9[-1]) {
+          fVar1 = SQRT(fVar1);
+          dVar16 = dVar15;
+          if (*pfVar9 < fVar1) {
+            dVar16 = (double)((float)(dVar15 / (double)(pfVar9[1] - *pfVar9)) * (pfVar9[1] - fVar1))
+            ;
           }
-          if ((int)PVar2 < 3) {
-            fVar15 = random();
+          if (iVar4 < 3) {
+            dVar10 = (double)random();
           }
           else {
-            fVar15 = G_random();
+            dVar10 = (double)G_random();
           }
-          dVar14 = (double)(float)((double)((pfVar8[3] - pfVar8[2]) * fVar15 + pfVar8[2]) * dVar14);
-          if ((uVar6 & 0xff) == 0) {
-            if (dVar14 < dVar11) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp"
-                              ,0x2e9,0,"%s");
+          dVar16 = (double)(float)((double)(float)((double)(float)((double)pfVar9[3] -
+                                                                  (double)pfVar9[2]) * dVar10 +
+                                                  (double)pfVar9[2]) * dVar16);
+          if ((param_5 & 0xff) == 0) {
+            if (dVar16 < dVar13) {
+              MyAssertHandler(0xffffffff821938c0,0x2e9,0,0xffffffff82000f98,0xffffffff82193aec);
             }
-            dVar9 = ABS((double)(phys_gravity->current).value);
-            fVar15 = Phys_ObjGetEffectiveInverseMassAtPoint(iVar3,param_2->pos,&local_b0);
-            local_98 = (float)((double)((float)(dVar13 / (double)fVar15) *
-                                       SQRT((float)((double)(float)(dVar9 * dVar14) * dVar10))) *
-                              dVar12);
+            dVar11 = ABS((double)*(float *)(DAT_8427b8e8 + 0xc));
+            dVar10 = (double)Phys_ObjGetEffectiveInverseMassAtPoint(param_3,param_2,&local_b0);
+            local_98 = (float)((double)((float)(dVar15 / dVar10) *
+                                       SQRT((float)((double)(float)(dVar11 * dVar16) * dVar12))) *
+                              dVar14);
             local_a0 = local_98 * local_b0;
             local_9c = local_98 * local_ac;
             local_98 = local_a8 * local_98;
-            Phys_ObjAddImpulse(PVar2,iVar3,param_2->pos,&local_a0);
+            Phys_ObjAddImpulse(iVar4,param_3,param_2,&local_a0);
           }
           else {
-            dVar14 = (double)(float)(dVar14 * dVar12);
-            if (dVar14 < dVar11) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp"
-                              ,0x2e3,0,"%s");
+            dVar16 = (double)(float)(dVar16 * dVar14);
+            if (dVar16 < dVar13) {
+              MyAssertHandler(0xffffffff821938c0,0x2e3,0,0xffffffff82000f98,0xffffffff82193aec);
             }
-            param_2->depth = (float)((double)param_2->depth + dVar14);
+            pfVar3[6] = (float)((double)pfVar3[6] + dVar16);
           }
         }
-        iVar7 = iVar7 + 1;
-        pfVar8 = pfVar8 + 9;
-      } while (iVar7 < physGlob.worldData[PVar2].numJitterRegions);
+        iVar8 = iVar8 + 1;
+        pfVar9 = pfVar9 + 9;
+      } while (iVar8 < *(int *)(&DAT_8427bbcc + iVar7));
     }
   }
   __restfpr_26();
@@ -1217,7 +1198,7 @@ LAB_8266d134:
 
 // 8266D368  Phys_RemoveOpposingNormalContacts  (physics/phys_contacts.cpp:757)
 
-void Phys_RemoveOpposingNormalContacts(float *param_1,ContactList *param_2)
+void Phys_RemoveOpposingNormalContacts(float *param_1,int param_2)
 
 {
   bool bVar1;
@@ -1228,57 +1209,55 @@ void Phys_RemoveOpposingNormalContacts(float *param_1,ContactList *param_2)
   int iVar6;
   float *pfVar7;
   float *pfVar8;
-  int *piVar9;
-  int *piVar10;
-  int iVar11;
-  longlong lVar12;
+  float *pfVar9;
+  int iVar10;
+  longlong lVar11;
   
-  if (0 < (longlong)((ulonglong)(uint)param_2->contactCount - 1)) {
-    pfVar7 = param_2->contacts[0].normal + 2;
-    iVar11 = 1;
+  if (0 < (longlong)((ulonglong)*(uint *)(param_2 + 0x1000) - 1)) {
+    pfVar7 = (float *)(param_2 + 0x14);
+    iVar10 = 1;
     do {
       fVar2 = pfVar7[-1];
       fVar3 = *pfVar7;
       fVar4 = pfVar7[-2];
-      iVar6 = iVar11;
+      iVar6 = iVar10;
       pfVar5 = pfVar7;
-      if (iVar11 < param_2->contactCount) {
+      if (iVar10 < *(int *)(param_2 + 0x1000)) {
         do {
           if (pfVar5[8] * fVar3 + pfVar5[6] * fVar4 + pfVar5[7] * fVar2 < -0.99) {
             if ((param_1[2] * fVar3 + param_1[1] * fVar2 + *param_1 * fVar4) -
-                (pfVar7[-2] * ((dContactGeom *)(pfVar7 + -5))->pos[0] +
-                pfVar7[-1] * pfVar7[-4] + pfVar7[-3] * *pfVar7) < 0.0) {
-              piVar10 = (int *)(pfVar5 + 2);
+                (pfVar7[-2] * pfVar7[-5] + pfVar7[-1] * pfVar7[-4] + pfVar7[-3] * *pfVar7) < 0.0) {
+              pfVar9 = pfVar5 + 2;
               pfVar8 = pfVar7 + -6;
-              lVar12 = 8;
+              lVar11 = 8;
               do {
-                piVar10 = piVar10 + 1;
+                pfVar9 = pfVar9 + 1;
                 pfVar8 = pfVar8 + 1;
-                *pfVar8 = (float)*piVar10;
-                lVar12 = lVar12 + -1;
-              } while (lVar12 != 0);
+                *pfVar8 = *pfVar9;
+                lVar11 = lVar11 + -1;
+              } while (lVar11 != 0);
               fVar4 = pfVar7[-2];
               fVar2 = pfVar7[-1];
               fVar3 = *pfVar7;
             }
-            piVar9 = (int *)(pfVar5 + 2);
-            lVar12 = 8;
-            piVar10 = &param_2->contacts[param_2->contactCount + -2].surfFlags;
+            pfVar8 = pfVar5 + 2;
+            lVar11 = 8;
+            pfVar9 = (float *)(*(int *)(param_2 + 0x1000) * 0x20 + param_2 + -0x24);
             do {
-              piVar10 = piVar10 + 1;
-              piVar9 = piVar9 + 1;
-              *piVar9 = *piVar10;
-              lVar12 = lVar12 + -1;
-            } while (lVar12 != 0);
-            param_2->contactCount = param_2->contactCount + -1;
+              pfVar9 = pfVar9 + 1;
+              pfVar8 = pfVar8 + 1;
+              *pfVar8 = *pfVar9;
+              lVar11 = lVar11 + -1;
+            } while (lVar11 != 0);
+            *(int *)(param_2 + 0x1000) = *(int *)(param_2 + 0x1000) + -1;
           }
           iVar6 = iVar6 + 1;
           pfVar5 = pfVar5 + 8;
-        } while (iVar6 < param_2->contactCount);
+        } while (iVar6 < *(int *)(param_2 + 0x1000));
       }
       pfVar7 = pfVar7 + 8;
-      bVar1 = iVar11 < param_2->contactCount + -1;
-      iVar11 = iVar11 + 1;
+      bVar1 = iVar10 < *(int *)(param_2 + 0x1000) + -1;
+      iVar10 = iVar10 + 1;
     } while (bVar1);
   }
   return;
@@ -1287,294 +1266,271 @@ void Phys_RemoveOpposingNormalContacts(float *param_1,ContactList *param_2)
 
 // 8266D4B0  Phys_DumpContact  (physics/phys_contacts.cpp:816)
 
-void Phys_DumpContact(int param_1,dContactGeom *param_2)
+void Phys_DumpContact(undefined8 param_1,float *param_2)
 
 {
-  Com_Printf(0,"Contact %i: P:(%g %g %g), N:(%g %g %g), D:%g\n");
+  Com_Printf(0,0xffffffff82193b24,param_1,(double)*param_2,(double)param_2[1],(double)param_2[2],
+             (double)param_2[3],(double)param_2[4]);
   return;
 }
 
 
 // 8266D530  Phys_CreateJointForEachContact  (physics/phys_contacts.cpp:827)
 
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
 void Phys_CreateJointForEachContact
-               (ContactList *param_1,dxBody *param_2,dxBody *param_3,dSurfaceParameters *param_4,
-               PhysWorld param_5)
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined4 param_4,
+               ulonglong param_5)
 
 {
   byte bVar1;
-  bool bVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  dSurfaceParameters *pdVar6;
-  ulonglong uVar7;
-  ContactList *pCVar8;
-  void *pvVar9;
-  float *pfVar10;
-  float *pfVar11;
-  dxJoint *pdVar12;
-  dxBody *pdVar14;
-  ulonglong uVar13;
-  ulonglong uVar15;
-  dxBody *pdVar16;
-  dContactGeom *pdVar17;
-  ulonglong uVar18;
-  int iVar19;
-  PhysWorld PVar20;
-  uint uVar21;
-  ulonglong uVar22;
-  dxWorld *pdVar23;
-  int iVar24;
+  char cVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  undefined4 uVar5;
+  float *pfVar6;
+  float *pfVar7;
+  float *pfVar8;
+  int iVar11;
+  int iVar12;
+  undefined4 *puVar13;
+  undefined1 *puVar14;
+  ulonglong uVar9;
+  undefined8 uVar10;
+  int iVar15;
+  int iVar16;
+  int iVar17;
+  uint uVar18;
+  float *pfVar19;
+  char *pcVar20;
+  undefined *puVar21;
+  undefined4 *puVar23;
+  longlong lVar22;
+  longlong lVar24;
   uint uVar25;
   longlong lVar26;
-  double dVar27;
-  double dVar28;
-  ContactList *pCStack00000014;
-  dxBody *pdStack0000001c;
-  dxBody *pdStack00000024;
-  dSurfaceParameters *pdStack0000002c;
+  int iVar27;
+  float *pfVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
   byte local_f0 [4];
   int local_ec;
   char *local_e8;
-  dContactGeom *local_e4;
+  undefined *local_e4;
   uint local_e0;
   uint local_dc;
   char *local_d8;
-  dContactGeom *local_d4;
+  char *local_d4;
   float local_d0;
   float local_cc;
   float local_c8;
-  float local_c0 [2];
-  float local_b8;
-  float afStack_b4 [45];
+  undefined1 local_c0 [8];
+  undefined4 local_b8;
+  undefined1 auStack_b4 [180];
   
-  uVar18 = (ulonglong)(int)param_5;
-  uVar15 = (ulonglong)(int)param_3;
-  uVar22 = (ulonglong)(int)param_2;
-  uVar7 = (ulonglong)(int)param_1;
-  __savegprlr();
-  pCVar8 = (ContactList *)uVar7;
-  pdVar14 = (dxBody *)uVar22;
-  pdVar16 = (dxBody *)uVar15;
+  iVar11 = __savegprlr();
+  iVar15 = (int)param_2;
+  iVar17 = (int)param_3;
   local_e8 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp";
-  pCStack00000014 = pCVar8;
-  pdStack0000001c = pdVar14;
-  pdStack00000024 = pdVar16;
-  pdStack0000002c = param_4;
-  if (4 < (uVar18 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                    0x349,0,"worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
+  if (4 < (param_5 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821938c0,0x349,0,0xffffffff82193d5c);
   }
-  lVar26 = uVar18 * 0x70;
+  lVar26 = param_5 * 0x70;
   local_ec = (int)lVar26;
-  local_e4 = (dContactGeom *)0x82000f98;
-  PVar20 = (PhysWorld)uVar18;
-  if (*(PhysWorld *)((int)((dxAutoDisable *)(&physGlob.world[0].stepInfo + 1) + 2) + local_ec + 4)
-      != PVar20) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                    0x34a,0,"%s");
+  local_e4 = &DAT_82000f98;
+  if (*(int *)((int)&DAT_8427b9dc + local_ec) != (int)param_5) {
+    MyAssertHandler(0xffffffff821938c0,0x34a,0,0xffffffff82000f98,0xffffffff82193d28);
   }
-  local_d4 = (dContactGeom *)0x820011f4;
-  if ((uVar22 & 0xffffffff) == 0) {
-    if ((uVar15 & 0xffffffff) != 0) {
+  local_d4 = "%s\n\t%s";
+  if ((param_2 & 0xffffffff) == 0) {
+    if ((param_3 & 0xffffffff) != 0) {
 LAB_8266d648:
-      if (pdVar16->_padding_ == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp"
-                        ,0x34d,0,"%s");
+      if (*(int *)(iVar17 + 0x10) == 0) {
+        MyAssertHandler(0xffffffff821938c0,0x34d,0,0xffffffff82000f98,0xffffffff82193cf8);
       }
       goto LAB_8266d670;
     }
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                    0x34b,0,"%s");
+    MyAssertHandler(0xffffffff821938c0,0x34b,0,0xffffffff82000f98,0xffffffff82193b14);
   }
   else {
-    if (pdVar14->_padding_ == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                      0x34c,0,"%s");
+    if (*(int *)(iVar15 + 0x10) == 0) {
+      MyAssertHandler(0xffffffff821938c0,0x34c,0,0xffffffff82000f98,0xffffffff82193d10);
     }
-    if ((uVar15 & 0xffffffff) != 0) goto LAB_8266d648;
+    if ((param_3 & 0xffffffff) != 0) goto LAB_8266d648;
 LAB_8266d670:
-    if (((uVar22 & 0xffffffff) != 0) &&
-       ((ulonglong)(uint)pdVar14->_padding_ != (lVar26 - 0x7bd84680U & 0xffffffff))) {
-      va("body1 in wrong world: %i, %i");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                      0x34e,0,"%s\n\t%s");
+    if (((param_2 & 0xffffffff) != 0) &&
+       ((ulonglong)*(uint *)(iVar15 + 0x10) != (lVar26 - 0x7bd84680U & 0xffffffff))) {
+      uVar10 = va(0xffffffff82193cd8,*(undefined4 *)(*(uint *)(iVar15 + 0x10) + 0x5c),param_5);
+      MyAssertHandler(0xffffffff821938c0,0x34e,0,0xffffffff820011f4,0xffffffff82193ca0,uVar10);
     }
-    if (((uVar15 & 0xffffffff) != 0) &&
-       ((ulonglong)(uint)pdVar16->_padding_ != (lVar26 - 0x7bd84680U & 0xffffffff))) {
-      va("body2 in wrong world: %i, %i");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                      0x34f,0,"%s\n\t%s");
+    if (((param_3 & 0xffffffff) != 0) &&
+       ((ulonglong)*(uint *)(iVar17 + 0x10) != (lVar26 - 0x7bd84680U & 0xffffffff))) {
+      uVar10 = va(0xffffffff82193c80,*(undefined4 *)(*(uint *)(iVar17 + 0x10) + 0x5c),param_5);
+      MyAssertHandler(0xffffffff821938c0,0x34f,0,0xffffffff820011f4,0xffffffff82193c48,uVar10);
     }
   }
-  uVar13 = uVar15;
-  Phys_CheckOpposingNormals(pdVar14,pdVar16,pCVar8);
-  iVar19 = 0;
-  pfVar11 = &local_b8;
-  iVar24 = 0;
-  bVar2 = physGlob.worldData[PVar20].useContactCentroids;
-  bVar1 = (phys_dumpcontacts->current).color[0];
-  uVar21 = (uint)bVar1;
+  Phys_CheckOpposingNormals(param_2,param_3,iVar11);
+  lVar26 = 0;
+  puVar23 = &local_b8;
+  iVar27 = 0;
+  cVar2 = (&DAT_8427bc94)[(int)param_5 * 0x110];
+  bVar1 = *(byte *)(DAT_8427b930 + 0xc);
+  uVar18 = (uint)bVar1;
   do {
-    local_f0[iVar24] = 0;
-    if ((uVar22 & 0xffffffff) != 0) {
-      pvVar9 = dBodyGetData((dxBody *)uVar22);
-      if (pvVar9 == (void *)0x0) {
-        uVar13 = 0x35f;
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp"
-                        ,0x35f,0,"%s");
+    local_f0[iVar27] = 0;
+    if ((param_2 & 0xffffffff) != 0) {
+      iVar12 = dBodyGetData(param_2);
+      if (iVar12 == 0) {
+        MyAssertHandler(0xffffffff821938c0,0x35f,0,0xffffffff82000f98,0xffffffff82193414);
       }
-      local_f0[iVar24] = *(int *)((int)pvVar9 + 0x58) == 1;
-      if (bVar2 == false) {
-        pfVar10 = dBodyGetPosition((dxBody *)uVar22);
-        fVar3 = *pfVar10;
-        fVar4 = pfVar10[1];
-        fVar5 = pfVar10[2];
+      local_f0[iVar27] = *(int *)(iVar12 + 0x58) == 1;
+      if (cVar2 == '\0') {
+        puVar13 = (undefined4 *)dBodyGetPosition(param_2);
+        uVar3 = *puVar13;
+        uVar4 = puVar13[1];
+        uVar5 = puVar13[2];
       }
       else {
-        fVar3 = *(float *)((int)pvVar9 + 0x5c);
-        fVar4 = *(float *)((int)pvVar9 + 0x60);
-        fVar5 = *(float *)((int)pvVar9 + 100);
+        uVar3 = *(undefined4 *)(iVar12 + 0x5c);
+        uVar4 = *(undefined4 *)(iVar12 + 0x60);
+        uVar5 = *(undefined4 *)(iVar12 + 100);
       }
-      *pfVar11 = fVar5;
-      pfVar11[-1] = fVar4;
-      pfVar11[-2] = fVar3;
+      *puVar23 = uVar5;
+      puVar23[-1] = uVar4;
+      puVar23[-2] = uVar3;
     }
-    iVar24 = iVar24 + 1;
-    pfVar11 = pfVar11 + 3;
-    uVar22 = uVar15;
-  } while (iVar24 < 2);
-  uVar22 = 0xffffffff82193b24;
+    iVar27 = iVar27 + 1;
+    puVar23 = puVar23 + 3;
+    param_2 = param_3;
+  } while (iVar27 < 2);
   local_e0 = (uint)bVar1;
   local_d8 = "Contact %i: P:(%g %g %g), N:(%g %g %g), D:%g\n";
-  if (uVar21 != 0) {
-    uVar13 = 0xffffffff82193c34;
-    Com_Printf(0,"Pre Oppose Check:\n");
-    iVar24 = 0;
-    if (pCVar8->contactCount != 0) {
+  if (uVar18 != 0) {
+    Com_Printf(0,0xffffffff82193c34);
+    lVar24 = 0;
+    if (*(int *)(iVar11 + 0x1000) != 0) {
+      iVar27 = iVar11 + -8;
       do {
-        uVar13 = uVar22;
-        Com_Printf(0,"Contact %i: P:(%g %g %g), N:(%g %g %g), D:%g\n");
-        iVar24 = iVar24 + 1;
-      } while (iVar24 != pCVar8->contactCount);
+        pfVar28 = (float *)(iVar27 + 8);
+        pfVar19 = (float *)(iVar27 + 0xc);
+        pfVar6 = (float *)(iVar27 + 0x10);
+        pfVar7 = (float *)(iVar27 + 0x14);
+        pfVar8 = (float *)(iVar27 + 0x18);
+        iVar27 = iVar27 + 0x20;
+        Com_Printf(0,0xffffffff82193b24,lVar24,(double)*pfVar28,(double)*pfVar19,(double)*pfVar6,
+                   (double)*pfVar7,(double)*pfVar8);
+        lVar24 = lVar24 + 1;
+      } while ((int)lVar24 != *(int *)(iVar11 + 0x1000));
     }
   }
   local_dc = (uint)local_f0[0];
   if (local_f0[0] == 0) {
     if (local_f0[1] == '\0') goto LAB_8266d8c0;
-    pfVar11 = afStack_b4;
+    puVar14 = auStack_b4;
   }
   else {
-    pfVar11 = local_c0;
+    puVar14 = local_c0;
   }
-  uVar13 = uVar7;
-  Phys_RemoveOpposingNormalContacts(pfVar11,pCVar8);
+  Phys_RemoveOpposingNormalContacts(puVar14,iVar11);
 LAB_8266d8c0:
-  if (uVar21 != 0) {
-    uVar13 = 0xffffffff82193c20;
-    Com_Printf(0,"Final Contacts:\n");
+  if (uVar18 != 0) {
+    Com_Printf(0,0xffffffff82193c20);
   }
-  if (pCVar8->contactCount != 0) {
-    dVar28 = 0.009999999776482582;
-    dVar27 = 1e-06;
-    lVar26 = uVar7 + 0x14;
+  if (*(int *)(iVar11 + 0x1000) != 0) {
+    dVar31 = 0.009999999776482582;
+    dVar30 = 1e-06;
+    pfVar28 = (float *)(iVar11 + 0x14);
     uVar25 = (uint)local_f0[0];
+    pcVar20 = "Contact %i: P:(%g %g %g), N:(%g %g %g), D:%g\n";
     while( true ) {
-      pfVar11 = (float *)lVar26;
-      pfVar10 = pfVar11 + -2;
-      if ((double)(*pfVar11 * *pfVar11 + pfVar11[-2] * pfVar11[-2] + pfVar11[-1] * pfVar11[-1]) <=
-          dVar27) {
-        uVar13 = 0x381;
-        MyAssertHandler(local_e8,0x381,0,(char *)local_e4);
+      pfVar19 = pfVar28 + -2;
+      if ((double)(*pfVar28 * *pfVar28 + pfVar28[-2] * pfVar28[-2] + pfVar28[-1] * pfVar28[-1]) <=
+          dVar30) {
+        MyAssertHandler(local_e8,0x381,0,local_e4,0xffffffff82193b54);
       }
       if (uVar25 == 0) break;
-      dBodyGetPointVel(pdStack0000001c,pfVar11[-5],pfVar11[-4],pfVar11[-3],(float *)uVar13);
+      dBodyGetPointVel((double)pfVar28[-5],(double)pfVar28[-4],(double)pfVar28[-3],iVar15);
       dNormalize3(&local_d0);
-      if ((double)(*pfVar10 * local_d0 + pfVar11[-1] * local_cc + *pfVar11 * local_c8) <= dVar28)
-      break;
-      if (uVar21 != 0) {
-        uVar13 = 0xffffffff82193b8c;
-        Com_Printf(0,"Killing contact %d, pointvel %f %f %f dot %f\n");
+      dVar29 = (double)(float)((double)*pfVar19 * (double)local_d0 +
+                              (double)(float)((double)pfVar28[-1] * (double)local_cc +
+                                             (double)(float)((double)*pfVar28 * (double)local_c8)));
+      if (dVar29 <= dVar31) break;
+      if (uVar18 != 0) {
+        Com_Printf(0,0xffffffff82193b8c,lVar26,(double)local_d0,(double)local_cc,(double)local_c8,
+                   dVar29);
       }
 LAB_8266dc70:
-      iVar19 = iVar19 + 1;
-      lVar26 = lVar26 + 0x20;
-      if (iVar19 == pCStack00000014->contactCount) {
+      lVar26 = lVar26 + 1;
+      pfVar28 = pfVar28 + 8;
+      uVar25 = local_dc;
+      pcVar20 = local_d8;
+      if ((int)lVar26 == *(int *)(iVar11 + 0x1000)) {
         __restgprlr();
         return;
       }
-      uVar22 = ZEXT48(local_d8);
-      uVar25 = local_dc;
     }
     if (local_f0[1] != '\0') {
-      dBodyGetPointVel(pdStack00000024,pfVar11[-5],pfVar11[-4],pfVar11[-3],(float *)uVar13);
+      dBodyGetPointVel((double)pfVar28[-5],(double)pfVar28[-4],(double)pfVar28[-3],iVar17);
       dNormalize3(&local_d0);
-      if (dVar28 < (double)(*pfVar10 * local_d0 + pfVar11[-1] * local_cc + *pfVar11 * local_c8)) {
-        if (uVar21 != 0) {
-          uVar13 = 0xffffffff82193b8c;
-          Com_Printf(0,"Killing contact %d, pointvel %f %f %f dot %f\n");
+      dVar29 = (double)(float)((double)*pfVar19 * (double)local_d0 +
+                              (double)(float)((double)pfVar28[-1] * (double)local_cc +
+                                             (double)(float)((double)*pfVar28 * (double)local_c8)));
+      if (dVar31 < dVar29) {
+        if (uVar18 != 0) {
+          Com_Printf(0,0xffffffff82193b8c,lVar26,(double)local_d0,(double)local_cc,(double)local_c8,
+                     dVar29);
         }
         goto LAB_8266dc70;
       }
     }
-    if (uVar21 != 0) {
-      Com_Printf(0,(char *)uVar22);
+    if (uVar18 != 0) {
+      Com_Printf(0,pcVar20,lVar26,(double)pfVar28[-5],(double)pfVar28[-4],(double)pfVar28[-3],
+                 (double)*pfVar19,(double)pfVar28[-1]);
     }
-    pdVar6 = pdStack0000002c;
-    if ((((phys_noIslands->current).enabled == false) || (pdStack0000001c == (dxBody *)0x0)) ||
-       (pdStack00000024 == (dxBody *)0x0)) {
-      pdVar17 = (dContactGeom *)(pfVar11 + -5);
-      pdVar23 = (dxWorld *)((int)physGlob.world[0].stepInfo.gravity + local_ec + -0x10);
-      pdVar12 = dJointCreateContact(pdVar23,(dxJointGroup *)
-                                            (&contactGroups +
-                                            (int)((uVar18 + (uVar18 & 0x7fffffff) * 2 & 0xffffffff)
-                                                 << 2)),pdStack0000002c,pdVar17);
-      if (pdVar12 != (dxJoint *)0x0) {
-        if (pdVar12->_padding_ == 0) {
-          pdVar17 = local_e4;
-          MyAssertHandler(local_e8,0x3ca,0,(char *)local_e4);
+    iVar27 = local_ec;
+    if (((*(char *)(DAT_8427b8ac + 0xc) == '\0') || (iVar15 == 0)) || (iVar17 == 0)) {
+      lVar22 = (param_5 + (param_5 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
+      lVar24 = lVar22 + -0x7d668cf8;
+      iVar12 = dJointCreateContact(&DAT_8427b980 + local_ec,lVar24,param_4,pfVar28 + -5);
+      if (iVar12 != 0) {
+        if (*(int *)(iVar12 + 0x10) == 0) {
+          MyAssertHandler(local_e8,0x3ca,0,local_e4,0xffffffff82193bbc);
         }
-        if ((dxWorld *)pdVar12->_padding_ != pdVar23) {
-          va("joint & world mismatch. world: %i, %i");
-          pdVar17 = local_d4;
-          MyAssertHandler(local_e8,0x3cb,0,(char *)local_d4);
+        iVar16 = iVar15;
+        if (*(undefined **)(iVar12 + 0x10) != &DAT_8427b980 + iVar27) {
+          uVar10 = va(0xffffffff82193bcc,*(undefined4 *)(*(undefined **)(iVar12 + 0x10) + 0x5c),
+                      param_5);
+          MyAssertHandler(local_e8,0x3cb,0,local_d4,0xffffffff82193bf4,uVar10);
         }
-        uVar13 = ZEXT48(pdStack0000001c);
 LAB_8266dc3c:
-        uVar22 = lVar26 - 0x14;
-        dJointAttach(pdVar12,(dxBody *)uVar13,pdStack00000024);
-        uVar21 = local_e0;
-        if ((phys_drawcontacts->current).enabled != false) {
-          Phys_DebugDrawContactPoint(PVar20,(float *)uVar22,pfVar10,pfVar11[1],pdVar17->pos);
-          uVar13 = uVar22;
-          uVar21 = local_e0;
+        dJointAttach(iVar12,iVar16,iVar17);
+        uVar18 = local_e0;
+        if (*(char *)(DAT_8427b898 + 0xc) != '\0') {
+          Phys_DebugDrawContactPoint((double)pfVar28[1],param_5,pfVar28 + -5,pfVar19);
+          uVar18 = local_e0;
         }
         goto LAB_8266dc70;
       }
+      uVar3 = *(undefined4 *)lVar24;
+      uVar4 = *(undefined4 *)(&DAT_8299730c + (int)lVar22);
     }
     else {
-      pdVar17 = (dContactGeom *)(pfVar11 + -5);
-      pdVar23 = (dxWorld *)((int)physGlob.world[0].stepInfo.gravity + local_ec + -0x10);
-      pdVar12 = dJointCreateContact(pdVar23,(dxJointGroup *)
-                                            (&contactGroups +
-                                            (int)((uVar18 + (uVar18 & 0x7fffffff) * 2 & 0xffffffff)
-                                                 << 2)),pdStack0000002c,pdVar17);
-      if (pdVar12 != (dxJoint *)0x0) {
-        dJointAttach(pdVar12,pdStack0000001c,(dxBody *)0x0);
-        pdVar12 = dJointCreateContact(pdVar23,(dxJointGroup *)
-                                              (&contactGroups +
-                                              (int)((uVar18 + (uVar18 & 0x7fffffff) * 2 & 0xffffffff
-                                                    ) << 2)),pdVar6,pdVar17);
-        if (pdVar12 != (dxJoint *)0x0) {
-          uVar13 = 0;
+      puVar21 = &DAT_8427b980 + local_ec;
+      lVar24 = (param_5 + (param_5 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
+      lVar22 = lVar24 + -0x7d668cf8;
+      uVar9 = dJointCreateContact(puVar21,lVar22,param_4,pfVar28 + -5);
+      if ((uVar9 & 0xffffffff) != 0) {
+        dJointAttach(uVar9,iVar15,0);
+        iVar12 = dJointCreateContact(puVar21,lVar22,param_4,pfVar28 + -5);
+        if (iVar12 != 0) {
+          iVar16 = 0;
           goto LAB_8266dc3c;
         }
       }
+      uVar3 = *(undefined4 *)lVar22;
+      uVar4 = *(undefined4 *)(&DAT_8299730c + (int)lVar24);
     }
-    R_WarnOncePerFrame(R_WARN_MAX_JOINT_COUNT);
+    R_WarnOncePerFrame(0x43,param_5,*(undefined4 *)(&DAT_8427b98c + local_ec),0x400,uVar3,uVar4);
   }
   __restgprlr();
   return;
@@ -1583,51 +1539,62 @@ LAB_8266dc3c:
 
 // 8266DCE0  Phys_AddCollisionContact  (physics/phys_contacts.cpp:985)
 
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
-void Phys_AddCollisionContact(PhysWorld param_1,PhysContact *param_2,int param_3,int param_4)
+void Phys_AddCollisionContact
+               (undefined8 param_1,undefined4 *param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  PhysWorld PVar1;
+  int iVar1;
   double dVar2;
   double dVar3;
-  dSurfaceParameters local_1070;
-  ContactList local_1040;
+  undefined4 local_1070;
+  undefined4 local_106c;
+  undefined4 local_1068;
+  undefined4 local_1064;
+  undefined4 local_1060;
+  float local_105c;
+  float local_1058;
+  undefined4 local_1040;
+  undefined4 local_103c;
+  undefined4 local_1038;
+  undefined4 local_1034;
+  undefined4 local_1030;
+  undefined4 local_102c;
+  undefined4 local_1028;
+  undefined4 local_1024;
+  undefined4 local_40;
   
-  PVar1 = __savegprlr_27(param_1);
-  local_1070.mode = 0x301c;
+  iVar1 = __savegprlr_27();
+  local_1070 = 0x301c;
   dVar3 = 1.0;
   dVar2 = dVar3;
-  if ((dxBody *)param_3 != (dxBody *)0x0) {
-    dVar2 = (double)((dxBody *)param_3)->invMass;
+  if ((int)param_3 != 0) {
+    dVar2 = (double)*(float *)((int)param_3 + 0x94);
   }
-  local_1070.soft_cfm = Phys_GetContactCFM(PVar1,(float)dVar2,(dxBody *)param_2,(dxBody *)param_3);
-  local_1070.soft_erp =
-       Phys_GetContactERP(PVar1,(float)(longlong)g_phys_msecStep[PVar1] * 0.001,
-                          (dxBody *)g_phys_msecStep[PVar1],(dxBody *)param_3);
-  local_1070.mu = (float)((dxBody *)param_2)->geom;
-  local_1070.mu2 = 0.0;
-  local_1040.contactCount = 1;
-  local_1070.bounce = (((dxBody *)param_2)->mass).mass;
-  local_1040.contacts[0].depth = (float)((dxBody *)param_2)->flags;
-  local_1070.bounce_vel = 0.1;
-  if (0.002 <= ABS((float)((double)((float)((dxBody *)param_2)->firstjoint *
-                                    (float)((dxBody *)param_2)->firstjoint +
-                                   (float)((dxBody *)param_2)->_padding_ *
-                                   (float)((dxBody *)param_2)->_padding_ +
-                                   (float)((dxBody *)param_2)->_padding_ *
-                                   (float)((dxBody *)param_2)->_padding_) - dVar3))) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_contacts.cpp",
-                    0x3f1,0,"%s");
+  dVar2 = (double)Phys_GetContactCFM(dVar2,iVar1);
+  local_1058 = (float)dVar2;
+  dVar2 = (double)Phys_GetContactERP((double)((float)(longlong)*(int *)(&DAT_82997380 + iVar1 * 4) *
+                                             0.001),iVar1,
+                                     (longlong)*(int *)(&DAT_82997380 + iVar1 * 4),param_3,param_4);
+  local_105c = (float)dVar2;
+  local_106c = param_2[7];
+  local_1068 = 0;
+  local_40 = 1;
+  local_1064 = param_2[8];
+  local_1028 = param_2[6];
+  local_1060 = 0x3dcccccd;
+  if (0.002 <= ABS((float)((double)((float)param_2[5] * (float)param_2[5] +
+                                   (float)param_2[3] * (float)param_2[3] +
+                                   (float)param_2[4] * (float)param_2[4]) - dVar3))) {
+    MyAssertHandler(0xffffffff821938c0,0x3f1,0,0xffffffff82000f98,0xffffffff82193d9c);
   }
-  local_1040.contacts[0].normal[0] = (float)((dxBody *)param_2)->_padding_;
-  local_1040.contacts[0].normal[1] = (float)((dxBody *)param_2)->_padding_;
-  local_1040.contacts[0].normal[2] = (float)((dxBody *)param_2)->firstjoint;
-  local_1040.contacts[0].surfFlags = 0;
-  local_1040.contacts[0].pos[0] = (float)((dxBody *)param_2)->_padding_;
-  local_1040.contacts[0].pos[1] = (float)((dxBody *)param_2)->_padding_;
-  local_1040.contacts[0].pos[2] = (float)((dxBody *)param_2)->_padding_;
-  Phys_CreateJointForEachContact(&local_1040,(dxBody *)param_3,(dxBody *)param_4,&local_1070,PVar1);
+  local_1034 = param_2[3];
+  local_1030 = param_2[4];
+  local_102c = param_2[5];
+  local_1024 = 0;
+  local_1040 = *param_2;
+  local_103c = param_2[1];
+  local_1038 = param_2[2];
+  Phys_CreateJointForEachContact(&local_1040,param_3,param_4,&local_1070,iVar1);
   __restgprlr_27();
   return;
 }

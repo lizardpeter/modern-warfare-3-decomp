@@ -2,7 +2,7 @@
 
 // 82927AA8  _atodbl_l  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/atodbl.inl:40)
 
-int _atodbl_l(_CRT_DOUBLE *param_1,char *param_2,localeinfo_struct *param_3)
+int _atodbl_l(_CRT_DOUBLE *_Result,char *_Str,_locale_t _Locale)
 
 {
   uint uVar1;
@@ -10,8 +10,8 @@ int _atodbl_l(_CRT_DOUBLE *param_1,char *param_2,localeinfo_struct *param_3)
   char *apcStack_30 [2];
   _LDBL12 _Stack_28;
   
-  uVar1 = __strgtold12_l(&_Stack_28,apcStack_30,param_2,0,0,0,0,&__initiallocalestructinfo);
-  IVar2 = _ld12tod(&_Stack_28,param_1);
+  uVar1 = __strgtold12_l(&_Stack_28,apcStack_30,_Str,0,0,0,0,(_locale_t)&PTR_DAT_829b07f8);
+  IVar2 = _ld12tod(&_Stack_28,_Result);
   if ((uVar1 & 3) == 0) {
     if (IVar2 == INTRNCVT_OVERFLOW) {
       return 3;
@@ -32,7 +32,7 @@ int _atodbl_l(_CRT_DOUBLE *param_1,char *param_2,localeinfo_struct *param_3)
 
 // 82927B50  _atoflt_l  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/atodbl.inl:125)
 
-int _atoflt_l(_CRT_FLOAT *param_1,char *param_2,localeinfo_struct *param_3)
+int _atoflt_l(_CRT_FLOAT *_Result,char *_Str,_locale_t _Locale)
 
 {
   uint uVar1;
@@ -40,8 +40,8 @@ int _atoflt_l(_CRT_FLOAT *param_1,char *param_2,localeinfo_struct *param_3)
   char *apcStack_30 [2];
   _LDBL12 _Stack_28;
   
-  uVar1 = __strgtold12_l(&_Stack_28,apcStack_30,param_2,0,0,0,0,&__initiallocalestructinfo);
-  IVar2 = _ld12tof(&_Stack_28,param_1);
+  uVar1 = __strgtold12_l(&_Stack_28,apcStack_30,_Str,0,0,0,0,(_locale_t)&PTR_DAT_829b07f8);
+  IVar2 = _ld12tof(&_Stack_28,_Result);
   if ((uVar1 & 3) == 0) {
     if (IVar2 == INTRNCVT_OVERFLOW) {
       return 3;

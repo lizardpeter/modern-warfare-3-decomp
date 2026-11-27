@@ -2,18 +2,18 @@
 
 // 828C6E40  unquantize  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/decsc.c:134)
 
-void unquantize(tagDecode_mblk *param_1,int *param_2,float *param_3,PARAM_SC *param_4)
+void unquantize(undefined8 param_1,longlong param_2,undefined8 param_3,longlong param_4)
 
 {
   float fVar1;
   float fVar2;
   uint uVar3;
-  ulonglong uVar4;
-  int iVar5;
-  longlong lVar6;
-  uint *puVar7;
+  uint *puVar4;
+  float *pfVar5;
+  ulonglong uVar6;
+  int iVar7;
   ulonglong uVar8;
-  SUBFRAME_PARAM_SC *pSVar9;
+  float *pfVar9;
   double dVar10;
   double dVar11;
   double dVar12;
@@ -22,42 +22,42 @@ void unquantize(tagDecode_mblk *param_1,int *param_2,float *param_3,PARAM_SC *pa
   double dVar15;
   double dVar16;
   
-  lVar6 = (longlong)(int)param_2;
-  __savegprlr_27(param_1,lVar6,param_3);
-  puVar7 = (uint *)lVar6;
-  iVar5 = __savefpr_26();
-  fVar1 = *(float *)(iVar5 + 0x70);
+  __savegprlr_27();
+  iVar7 = __savefpr_26();
+  puVar4 = (uint *)param_2;
+  fVar1 = *(float *)(iVar7 + 0x70);
   dVar12 = (double)fVar1;
-  uVar4 = (ulonglong)puVar7[1] & 8;
-  dVar13 = (double)*(float *)(iVar5 + 0x6c);
-  dVar16 = (double)*(float *)(iVar5 + 0x2c);
-  uVar8 = puVar7[1] - uVar4;
-  dVar15 = (double)*(float *)(iVar5 + 0x3c);
-  dVar14 = (double)*(float *)(iVar5 + 0x30);
-  dVar11 = (double)*(float *)(iVar5 + 0x40);
-  pSVar9 = param_4->SubParam + 1;
-  fVar2 = *(float *)((int)PvCodeBook +
+  uVar6 = (ulonglong)puVar4[1] & 8;
+  dVar13 = (double)*(float *)(iVar7 + 0x6c);
+  dVar16 = (double)*(float *)(iVar7 + 0x2c);
+  uVar8 = puVar4[1] - uVar6;
+  dVar15 = (double)*(float *)(iVar7 + 0x3c);
+  dVar14 = (double)*(float *)(iVar7 + 0x30);
+  dVar11 = (double)*(float *)(iVar7 + 0x40);
+  pfVar5 = (float *)param_4;
+  pfVar9 = pfVar5 + 2;
+  fVar2 = *(float *)(&DAT_82202988 +
                     (int)((-(((uVar8 & 0xffffffff) >> 0x1f) + (ulonglong)(uVar8 < 8)) & uVar8 &
                           0xffffffff) << 2));
-  param_4->SubParam[1].Pv = fVar2;
-  if ((int)uVar4 == 0) {
-    param_4->SubParam[0].Pv = fVar1;
+  pfVar5[3] = fVar2;
+  if ((int)uVar6 == 0) {
+    pfVar5[1] = fVar1;
   }
   else {
-    param_4->SubParam[0].Pv = fVar2;
+    pfVar5[1] = fVar2;
   }
-  dVar10 = exp(-(double)((float)(longlong)(int)puVar7[2] * 0.01174797 - 5.075174));
+  dVar10 = exp(-(double)((float)(longlong)(int)puVar4[2] * 0.01174797 - 5.075174));
   fVar1 = 8000.0 / (float)((double)(float)((double)(8000.0 / (float)dVar10) * dVar15) * dVar16 +
                           dVar14);
-  pSVar9->Pitch = fVar1;
+  *pfVar9 = fVar1;
   if (fVar1 < 8.0) {
-    pSVar9->Pitch = 8.0;
+    *pfVar9 = 8.0;
   }
-  if (160.0 < pSVar9->Pitch) {
-    pSVar9->Pitch = 160.0;
+  if (160.0 < *pfVar9) {
+    *pfVar9 = 160.0;
   }
-  dVar15 = (double)pSVar9->Pitch;
-  dVar14 = (double)param_4->SubParam[1].Pv;
+  dVar15 = (double)*pfVar9;
+  dVar14 = (double)pfVar5[3];
   if (((double)(float)(dVar13 * 1.25) < dVar15) ||
      (dVar15 < (double)(float)(dVar13 * 0.800000011920929))) {
     dVar16 = dVar15;
@@ -73,12 +73,13 @@ void unquantize(tagDecode_mblk *param_1,int *param_2,float *param_3,PARAM_SC *pa
   else {
     dVar16 = (double)((float)(dVar15 + dVar13) * 0.5);
   }
-  uVar3 = *puVar7;
-  param_4->SubParam[0].Pitch = (float)dVar16;
-  param_4->fLog2Gain = GainCodeBook[-(-((int)uVar3 >> 0x1f) + (uint)(uVar3 < 0x40)) & uVar3];
-  NellyMSVQDecPred((int *)(puVar7 + 3),param_4->pfASK,0xc,param_4->SubParam[1].Pv,
-                   (float *)-((int)uVar3 >> 0x1f));
-  param_4->SubParam[1].Pv = (float)((double)param_4->SubParam[1].Pv * dVar11);
+  uVar3 = *puVar4;
+  *pfVar5 = (float)dVar16;
+  pfVar5[4] = *(float *)(&DAT_822029a8 +
+                        (-(-((int)uVar3 >> 0x1f) + (uint)(uVar3 < 0x40)) & uVar3) * 4);
+  NellyMSVQDecPred((double)pfVar5[3],param_2 + 0xc,param_4 + 0x14,0xc,-((int)uVar3 >> 0x1f),param_3,
+                   uVar3 - 0x40);
+  pfVar5[3] = (float)((double)pfVar5[3] * dVar11);
   __restfpr_26();
   __restgprlr_27();
   return;
@@ -87,94 +88,88 @@ void unquantize(tagDecode_mblk *param_1,int *param_2,float *param_3,PARAM_SC *pa
 
 // 828C7048  NellyDecodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/decsc.c:228)
 
-void NellyDecodeSase3200(void *param_1,short *param_2,ushort *param_3,uchar *param_4,ushort param_5,
-                        ushort *param_6,uchar *param_7,float *param_8,float *param_9,float *param_10
-                        )
+void NellyDecodeSase3200(undefined8 param_1,longlong param_2,undefined2 *param_3,undefined4 param_4,
+                        undefined2 param_5,undefined2 *param_6,undefined1 *param_7)
 
 {
   int iVar1;
-  uchar uVar2;
-  ushort uVar3;
-  float *pfVar4;
-  float fVar5;
-  tagDecode_mblk *ptVar6;
-  float *pfVar7;
-  longlong lVar8;
-  int iVar9;
-  longlong lVar10;
-  ulonglong uVar11;
+  undefined1 uVar2;
+  undefined2 uVar3;
+  float fVar4;
+  int iVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
   float *in_stack_0000005c;
   byte local_140 [4];
   uint local_13c;
   longlong local_138;
   longlong local_130;
   undefined8 local_128;
-  C_BUFFER_TYPE local_120;
+  undefined4 local_120;
+  undefined2 local_11c;
+  undefined2 *local_118;
+  undefined1 *local_114;
   undefined1 auStack_100 [8];
   undefined1 auStack_f8 [8];
   float local_f0;
-  float afStack_ec [15];
-  float local_b0 [44];
+  undefined1 auStack_ec [60];
+  uint local_b0 [44];
   
-  lVar10 = (longlong)(int)param_2;
-  ptVar6 = (tagDecode_mblk *)__savegprlr_20(param_1);
+  iVar5 = __savegprlr_20();
   uVar3 = *param_6;
   uVar2 = *param_7;
-  pfVar4 = ptVar6->pMemoryBlock;
+  uVar8 = (ulonglong)*(uint *)(iVar5 + 4);
   local_13c = 0;
-  iVar9 = 0;
-  local_120.pBuffer = param_4;
-  local_120.wBufferSize = param_5;
-  local_120.pBufferReadByteOffset = param_6;
-  local_120.pBufferReadBitOffset = param_7;
+  iVar6 = 0;
+  local_120 = param_4;
+  local_11c = param_5;
+  local_118 = param_6;
+  local_114 = param_7;
   do {
-    BitUnpackCBuffer(&local_120,local_140,*(int *)((int)BitTable_SC3 + iVar9));
-    *(uint *)((int)local_b0 + iVar9) = (uint)local_140[0];
-    iVar9 = iVar9 + 4;
-  } while (iVar9 < 0x44);
-  lVar8 = ZEXT48(&stack0x00000000) - 0x100;
-  pfVar7 = local_b0;
-  unquantize(ptVar6,(int *)pfVar7,pfVar4,(PARAM_SC *)lVar8);
-  if (ptVar6->iNewFrame == 1) {
-    NellyAskToEnv(afStack_ec,local_f0,pfVar7,ptVar6->fSpectrumWarp,(short)ptVar6->pMemoryBlock,
-                  (short)lVar8,(float *)(uint)(ushort)ptVar6->wSpectrumOffset,
-                  (float *)(uint)(ushort)ptVar6->wSpectrumLedge);
+    BitUnpackCBuffer(&local_120,local_140,*(undefined4 *)((int)&DAT_82202aa8 + iVar6));
+    *(uint *)((int)local_b0 + iVar6) = (uint)local_140[0];
+    iVar6 = iVar6 + 4;
+  } while (iVar6 < 0x44);
+  unquantize(iVar5,local_b0,uVar8,auStack_100);
+  if (*(short *)(iVar5 + 0x5c) == 1) {
+    NellyAskToEnv((double)local_f0,(double)*(float *)(iVar5 + 0x34),auStack_ec);
   }
-  SubFrameSynth(ptVar6,auStack_100,(short *)lVar10,(int *)&local_13c);
+  SubFrameSynth(iVar5,auStack_100,param_2,&local_13c);
   *param_3 = 0x50;
   *in_stack_0000005c = local_f0;
-  if (ptVar6->iNewFrame == 0) {
-    ptVar6->iNewFrame = 1;
-    (*memcpyfunc)(&ptVar6->PrevSubParam,&stack0x00000000 + -0xf8,8);
+  if (*(short *)(iVar5 + 0x5c) == 0) {
+    *(undefined2 *)(iVar5 + 0x5c) = 1;
+    (*DAT_848958cc)(iVar5 + 0x6c,auStack_f8,8);
   }
   else {
-    uVar11 = (ulonglong)local_13c;
-    ptVar6->iNewFrame = 0;
+    uVar7 = (ulonglong)local_13c;
+    *(undefined2 *)(iVar5 + 0x5c) = 0;
     *param_6 = uVar3;
     *param_7 = uVar2;
     local_138 = (longlong)(int)(local_13c - 1);
-    fVar5 = (float)local_138;
-    if (ptVar6->iSilenceInjectionMode == 1) {
-      iVar9 = 0;
-      ptVar6->iSilenceInjectionMode = 0;
+    fVar4 = (float)local_138;
+    if (*(short *)(iVar5 + 0x5e) == 1) {
+      iVar6 = 0;
+      *(undefined2 *)(iVar5 + 0x5e) = 0;
       if (0 < (int)local_13c) {
-        lVar10 = lVar10 + -2;
+        param_2 = param_2 + -2;
         do {
-          local_130 = (longlong)*(short *)((int)lVar10 + 2);
-          local_138 = (longlong)iVar9;
-          iVar9 = iVar9 + 1;
-          iVar1 = (int)((float)local_130 * (float)local_138 * (1.0 / fVar5));
+          local_130 = (longlong)*(short *)((int)param_2 + 2);
+          local_138 = (longlong)iVar6;
+          iVar6 = iVar6 + 1;
+          iVar1 = (int)((float)local_130 * (float)local_138 * (1.0 / fVar4));
           local_128._6_2_ = (undefined2)iVar1;
-          lVar10 = lVar10 + 2;
-          *(undefined2 *)lVar10 = local_128._6_2_;
-          uVar11 = uVar11 - 1;
+          param_2 = param_2 + 2;
+          *(undefined2 *)param_2 = local_128._6_2_;
+          uVar7 = uVar7 - 1;
           local_128 = (longlong)iVar1;
-        } while (uVar11 != 0);
+        } while (uVar7 != 0);
       }
     }
   }
-  (*memcpyfunc)(ptVar6->pfEnv_1,pfVar4 + 0x202,0x104);
-  (*memcpyfunc)(ptVar6->pfPhase_1,pfVar4 + 0x243,0x104);
+  (*DAT_848958cc)(*(undefined4 *)(iVar5 + 0xc),uVar8 + 0x808,0x104);
+  (*DAT_848958cc)(*(undefined4 *)(iVar5 + 0x10),uVar8 + 0x90c,0x104);
   __restgprlr_20();
   return;
 }
@@ -182,72 +177,71 @@ void NellyDecodeSase3200(void *param_1,short *param_2,ushort *param_3,uchar *par
 
 // 828C7240  NellyInitDecodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/decsc.c:1212)
 
-ushort NellyInitDecodeSase3200(void **param_1)
+void NellyInitDecodeSase3200(void)
 
 {
-  undefined4 *puVar1;
-  void **ppvVar2;
-  void *pvVar3;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
   int iVar4;
-  ushort uVar5;
-  bool bVar6;
+  longlong lVar1;
+  bool bVar5;
   
-  puVar1 = (undefined4 *)__savegprlr_28(param_1);
-  if (puVar1 != (undefined4 *)0x0) {
-    *puVar1 = 0;
-    ppvVar2 = (*callocfunc)(1,0x74);
-    if (ppvVar2 != (void **)0x0) {
-      *puVar1 = ppvVar2;
-      *ppvVar2 = (void *)0x0;
-      ppvVar2[1] = (void *)0x0;
-      ppvVar2[2] = (void *)0x0;
-      ppvVar2[3] = (void *)0x0;
-      ppvVar2[8] = (void *)0x46fffe00;
-      ppvVar2[4] = (void *)0x0;
-      ppvVar2[5] = (void *)0x0;
-      ppvVar2[6] = (void *)0x0;
-      ppvVar2[0x16] = (void *)0x0;
-      ppvVar2[7] = (void *)0x3f800000;
-      *(undefined2 *)(ppvVar2 + 0xe) = 0;
-      ppvVar2[9] = (void *)0x0;
-      *(undefined2 *)((int)ppvVar2 + 0x3a) = 0;
-      ppvVar2[10] = (void *)0x3f800000;
-      *(undefined2 *)(ppvVar2 + 0x17) = 1;
-      ppvVar2[0xb] = (void *)0x3f800000;
-      ppvVar2[0x15] = (void *)0x0;
-      ppvVar2[0xc] = (void *)0x0;
-      ppvVar2[0x1a] = (void *)0x1;
-      ppvVar2[0xd] = (void *)0x3f800000;
-      *(undefined2 *)((int)ppvVar2 + 0x5e) = 0;
-      ppvVar2[0xf] = (void *)0x3f800000;
-      *(undefined2 *)(ppvVar2 + 0x18) = 100;
-      ppvVar2[0x10] = (void *)0x3f800000;
-      ppvVar2[0x19] = (void *)0x1;
-      ppvVar2[0x11] = (void *)0x3f800000;
-      ppvVar2[0x12] = (void *)0x3f800000;
-      ppvVar2[0x13] = (void *)0x42a00000;
-      ppvVar2[0x14] = (void *)0x0;
-      ppvVar2[0x1b] = (void *)0x42c80000;
-      pvVar3 = (*callocfunc)(0x284,4);
-      ppvVar2[1] = pvVar3;
-      if (pvVar3 != (void *)0x0) {
-        pvVar3 = (*callocfunc)(0x50,4);
-        ppvVar2[2] = pvVar3;
-        if (pvVar3 != (void *)0x0) {
-          pvVar3 = (*callocfunc)(0x41,4);
-          ppvVar2[3] = pvVar3;
-          if (pvVar3 != (void *)0x0) {
-            pvVar3 = (*callocfunc)(0x41,4);
-            ppvVar2[4] = pvVar3;
-            if (pvVar3 != (void *)0x0) {
-              pvVar3 = (*callocfunc)(0x66,4);
-              ppvVar2[5] = pvVar3;
-              if (pvVar3 != (void *)0x0) {
-                pvVar3 = (*callocfunc)(0x68,4);
-                ppvVar2[6] = pvVar3;
-                if (pvVar3 != (void *)0x0) {
-                  iVar4 = NellyInitHFRegen(ppvVar2);
-                  bVar6 = iVar4 != 0;
+  puVar2 = (undefined4 *)__savegprlr_28();
+  if (puVar2 != (undefined4 *)0x0) {
+    *puVar2 = 0;
+    puVar3 = (undefined4 *)(*DAT_848958c0)(1,0x74);
+    if (puVar3 != (undefined4 *)0x0) {
+      *puVar2 = puVar3;
+      *puVar3 = 0;
+      puVar3[1] = 0;
+      puVar3[2] = 0;
+      puVar3[3] = 0;
+      puVar3[8] = 0x46fffe00;
+      puVar3[4] = 0;
+      puVar3[5] = 0;
+      puVar3[6] = 0;
+      puVar3[0x16] = 0;
+      puVar3[7] = 0x3f800000;
+      *(undefined2 *)(puVar3 + 0xe) = 0;
+      puVar3[9] = 0;
+      *(undefined2 *)((int)puVar3 + 0x3a) = 0;
+      puVar3[10] = 0x3f800000;
+      *(undefined2 *)(puVar3 + 0x17) = 1;
+      puVar3[0xb] = 0x3f800000;
+      puVar3[0x15] = 0;
+      puVar3[0xc] = 0;
+      puVar3[0x1a] = 1;
+      puVar3[0xd] = 0x3f800000;
+      *(undefined2 *)((int)puVar3 + 0x5e) = 0;
+      puVar3[0xf] = 0x3f800000;
+      *(undefined2 *)(puVar3 + 0x18) = 100;
+      puVar3[0x10] = 0x3f800000;
+      puVar3[0x19] = 1;
+      puVar3[0x11] = 0x3f800000;
+      puVar3[0x12] = 0x3f800000;
+      puVar3[0x13] = 0x42a00000;
+      puVar3[0x14] = 0;
+      puVar3[0x1b] = 0x42c80000;
+      iVar4 = (*DAT_848958c0)(0x284,4);
+      puVar3[1] = iVar4;
+      if (iVar4 != 0) {
+        iVar4 = (*DAT_848958c0)(0x50,4);
+        puVar3[2] = iVar4;
+        if (iVar4 != 0) {
+          iVar4 = (*DAT_848958c0)(0x41,4);
+          puVar3[3] = iVar4;
+          if (iVar4 != 0) {
+            iVar4 = (*DAT_848958c0)(0x41,4);
+            puVar3[4] = iVar4;
+            if (iVar4 != 0) {
+              iVar4 = (*DAT_848958c0)(0x66,4);
+              puVar3[5] = iVar4;
+              if (iVar4 != 0) {
+                iVar4 = (*DAT_848958c0)(0x68,4);
+                puVar3[6] = iVar4;
+                if (iVar4 != 0) {
+                  lVar1 = NellyInitHFRegen(puVar3);
+                  bVar5 = lVar1 != 0;
                   goto LAB_828c7404;
                 }
               }
@@ -257,53 +251,52 @@ ushort NellyInitDecodeSase3200(void **param_1)
       }
     }
   }
-  bVar6 = true;
+  bVar5 = true;
 LAB_828c7404:
-  uVar5 = __restgprlr_28(bVar6);
-  return uVar5;
+  __restgprlr_28(bVar5);
+  return;
 }
 
 
 // 828C7410  NellyFreeDecodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/decsc.c:1280)
 
-ushort NellyFreeDecodeSase3200(void **param_1)
+void NellyFreeDecodeSase3200(void)
 
 {
-  void **ppvVar1;
-  undefined4 *puVar2;
-  ushort uVar3;
+  int iVar1;
+  int *piVar2;
   
-  puVar2 = (undefined4 *)__savegprlr_29(param_1);
-  ppvVar1 = (void **)*puVar2;
-  if (ppvVar1 != (void **)0x0) {
-    if (ppvVar1[1] != (void *)0x0) {
-      (*freefunc)(ppvVar1[1]);
-      ppvVar1[1] = (void *)0x0;
+  piVar2 = (int *)__savegprlr_29();
+  iVar1 = *piVar2;
+  if (iVar1 != 0) {
+    if (*(int *)(iVar1 + 4) != 0) {
+      (*DAT_848958c4)();
+      *(undefined4 *)(iVar1 + 4) = 0;
     }
-    NellyFreeHFRegen(ppvVar1);
-    if (ppvVar1[3] != (void *)0x0) {
-      (*freefunc)(ppvVar1[3]);
-      ppvVar1[3] = (void *)0x0;
+    NellyFreeHFRegen(iVar1);
+    if (*(int *)(iVar1 + 0xc) != 0) {
+      (*DAT_848958c4)();
+      *(undefined4 *)(iVar1 + 0xc) = 0;
     }
-    if (ppvVar1[4] != (void *)0x0) {
-      (*freefunc)(ppvVar1[4]);
-      ppvVar1[4] = (void *)0x0;
+    if (*(int *)(iVar1 + 0x10) != 0) {
+      (*DAT_848958c4)();
+      *(undefined4 *)(iVar1 + 0x10) = 0;
     }
-    if (ppvVar1[5] != (void *)0x0) {
-      (*freefunc)(ppvVar1[5]);
-      ppvVar1[5] = (void *)0x0;
+    if (*(int *)(iVar1 + 0x14) != 0) {
+      (*DAT_848958c4)();
+      *(undefined4 *)(iVar1 + 0x14) = 0;
     }
-    if (ppvVar1[6] != (void *)0x0) {
-      (*freefunc)(ppvVar1[6]);
-      ppvVar1[6] = (void *)0x0;
+    if (*(int *)(iVar1 + 0x18) != 0) {
+      (*DAT_848958c4)();
+      *(undefined4 *)(iVar1 + 0x18) = 0;
     }
-    if (ppvVar1[2] != (void *)0x0) {
-      (*freefunc)(ppvVar1[2]);
-      ppvVar1[2] = (void *)0x0;
+    if (*(int *)(iVar1 + 8) != 0) {
+      (*DAT_848958c4)();
+      *(undefined4 *)(iVar1 + 8) = 0;
     }
-    (*freefunc)(ppvVar1);
+    (*DAT_848958c4)(iVar1);
   }
-  uVar3 = __restgprlr_29(0);
-  return uVar3;
+  __restgprlr_29(0);
+  return;
 }
 

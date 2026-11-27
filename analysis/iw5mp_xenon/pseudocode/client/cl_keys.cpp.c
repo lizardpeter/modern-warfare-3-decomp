@@ -2,253 +2,470 @@
 
 // 8233CDD8  TRACK_cl_keys  (client/cl_keys.cpp:489)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_cl_keys(void)
 
 {
-  track_static_alloc_internal(playerKeys,0x44a0,"playerKeys",10);
-  track_static_alloc_internal(&g_consoleField,0x118,"g_consoleField",10);
-  track_static_alloc_internal(historyEditLines,0x2300,"historyEditLines",10);
-  track_static_alloc_internal(keynames,0x3a0,"keynames",10);
-  track_static_alloc_internal(keynames_localized,0x3a0,"keynames_localized",10);
-  track_static_alloc_internal(s_shortestMatch,0x400,"s_shortestMatch",3);
+  track_static_alloc_internal(0xffffffff82a9b230,0x44a0,0xffffffff8202fe94,10);
+  track_static_alloc_internal(0xffffffff82a9b110,0x118,0xffffffff8202fe84,10);
+  track_static_alloc_internal(0xffffffff82a9f6d0,0x2300,0xffffffff8202fe70,10);
+  track_static_alloc_internal(0xffffffff82964a60,0x3a0,0xffffffff8202fe64,10);
+  track_static_alloc_internal(0xffffffff82964e00,0x3a0,0xffffffff8202fe50,10);
+  track_static_alloc_internal(0xffffffff82a9ad08,0x400,0xffffffff8202fe40,3);
   return;
 }
 
 
 // 8233F518  Field_DrawTextOverride  (client/cl_keys.cpp:515)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Field_DrawTextOverride
+               (undefined8 param_1,int param_2,int param_3,int param_4,undefined8 param_5,
+               undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  undefined8 uVar1;
+  float *pfVar2;
+  int iVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
+  uVar1 = __savegprlr_22();
+  if ((int)param_8 < 1) {
+    MyAssertHandler(0xffffffff8202fedc,0x20e,0,0xffffffff82000f98,0xffffffff82030138);
+  }
+  pfVar2 = (float *)ScrPlace_GetActivePlacement(uVar1);
+  if (*(int *)(param_2 + 0x14) == 0) {
+    dVar8 = (double)(*(float *)(param_2 + 0x10) * 0.020833334);
+    uVar5 = UI_GetFontHandle(dVar8,pfVar2,0);
+    dVar6 = (double)R_NormalizedTextScale(dVar8);
+    dVar8 = dVar6;
+    if ((int)param_6 == 5) {
+      dVar7 = (double)(float)((double)DAT_82b5c7fc * dVar6);
+      dVar6 = (double)ScrPlace_HiResGetScaleX();
+      dVar6 = (double)(*pfVar2 * (float)(dVar6 * dVar7));
+      dVar7 = (double)(float)((double)DAT_82b5c7fc * dVar8);
+      dVar8 = (double)ScrPlace_HiResGetScaleY();
+      dVar8 = (double)(pfVar2[1] * (float)(dVar8 * dVar7));
+    }
+  }
+  else {
+    dVar6 = 1.0;
+    uVar5 = (ulonglong)DAT_82aa2964;
+    dVar8 = dVar6;
+  }
+  iVar3 = R_TextHeight(uVar5);
+  lVar4 = (longlong)((int)((double)(longlong)iVar3 * dVar8) + param_4);
+  CL_DrawTextWithCursor
+            ((double)(longlong)param_3,(double)lVar4,dVar6,dVar8,pfVar2,param_7,param_8,uVar5,
+             0xffffffff821818b8,lVar4,param_5,param_6);
+  __restgprlr_22();
+  return;
+}
+
 
 // 8233F718  Field_Draw  (client/cl_keys.cpp:581)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Field_Draw(LocalClientNum_t param_1,field_t *param_2,int param_3,int param_4,int param_5,
-               int param_6)
+void Field_Draw(undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
-  LocalClientNum_t LVar1;
-  int in_stack_fffffb68;
-  char acStack_440 [1088];
+  int iVar1;
+  undefined8 uVar2;
+  undefined1 auStack_440 [1088];
   
-  LVar1 = __savegprlr_26(param_1);
-  if (param_2->drawWidth == 0) {
-    param_2->drawWidth = 0x100;
+  uVar2 = __savegprlr_26();
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 8) == 0) {
+    *(undefined4 *)(iVar1 + 8) = 0x100;
   }
-  if (param_2->scroll < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_keys.cpp",0x24c,0,
-                    "%s\n\t(edit->scroll) = %i");
+  if (*(int *)(iVar1 + 4) < 0) {
+    MyAssertHandler(0xffffffff8202fedc,0x24c,0,0xffffffff82030144,0xffffffff8203015c);
   }
-  I_strncpyz(acStack_440,param_2->buffer + param_2->scroll,0x100 - param_2->scroll);
+  I_strncpyz(auStack_440,(ulonglong)*(uint *)(iVar1 + 4) + param_2 + 0x18,
+             0x100 - (ulonglong)*(uint *)(iVar1 + 4));
   Field_DrawTextOverride
-            (LVar1,param_2,param_3,param_4,param_5,param_6,acStack_440,param_2->drawWidth,
-             in_stack_fffffb68);
+            (uVar2,param_2,param_3,param_4,param_5,param_6,auStack_440,*(undefined4 *)(iVar1 + 8));
   __restgprlr_26();
   return;
 }
 
 
 // 8233CEA0  Field_AdjustScroll  (client/cl_keys.cpp:601)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Field_AdjustScroll(undefined8 param_1,longlong param_2)
+
+{
+  uint *puVar1;
+  int iVar2;
+  uint uVar3;
+  longlong lVar4;
+  char *pcVar6;
+  longlong lVar5;
+  ulonglong uVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  
+  __savegprlr_29();
+  iVar2 = __savefpr_28();
+  puVar1 = (uint *)param_2;
+  dVar9 = (double)((float)puVar1[4] * 0.020833334);
+  dVar11 = (double)(longlong)(int)puVar1[3];
+  if (puVar1[5] == 0) {
+    uVar7 = UI_GetFontHandle(dVar9,iVar2,0);
+  }
+  else {
+    dVar10 = (double)(float)(dVar9 / (double)DAT_82b5c7fc);
+    dVar9 = (double)ScrPlace_HiResGetScaleX();
+    dVar12 = (double)(float)(dVar11 / (double)DAT_82b5c7fc);
+    dVar9 = (double)(*(float *)(iVar2 + 0x10) * (float)(dVar10 / dVar9));
+    dVar11 = (double)ScrPlace_HiResGetScaleY();
+    uVar7 = (ulonglong)DAT_82aa2964;
+    dVar11 = (double)(*(float *)(iVar2 + 0x14) * (float)(dVar12 / dVar11));
+  }
+  dVar9 = (double)R_NormalizedTextScale(dVar9,uVar7);
+  iVar2 = R_TextWidth(param_2 + 0x18,0,uVar7);
+  if (dVar11 <= (double)(float)((double)(longlong)iVar2 * dVar9)) {
+    dVar10 = 0.0;
+    if (0.0 < dVar11) {
+      while (0 < (int)puVar1[1]) {
+        iVar2 = R_TextWidth((ulonglong)puVar1[1] + param_2 + 0x17,0,uVar7);
+        if ((dVar11 <= (double)(float)((double)(longlong)iVar2 * dVar9)) ||
+           (puVar1[1] = puVar1[1] - 1, dVar11 <= (double)(float)((double)(longlong)iVar2 * dVar9)))
+        break;
+      }
+    }
+LAB_8233d014:
+    do {
+      iVar2 = R_TextWidth((ulonglong)puVar1[1] + param_2 + 0x18,0,uVar7);
+      dVar12 = (double)(float)((double)(longlong)iVar2 * dVar9);
+      iVar2 = R_TextWidth((ulonglong)*puVar1 + param_2 + 0x18,0,uVar7);
+      dVar12 = -(double)(float)((double)(longlong)iVar2 * dVar9 - dVar12);
+      if (dVar12 < dVar10) {
+LAB_8233d08c:
+        dVar8 = dVar10;
+        if (puVar1[1] != 0) {
+          uVar3 = puVar1[1] - 1;
+LAB_8233d0b0:
+          puVar1[1] = uVar3;
+          goto LAB_8233d0b4;
+        }
+      }
+      else {
+        if (dVar11 <= dVar12) {
+          if (dVar12 < dVar10) goto LAB_8233d08c;
+          uVar3 = puVar1[1] + 1;
+          goto LAB_8233d0b0;
+        }
+LAB_8233d0b4:
+        dVar8 = dVar12;
+        if (dVar12 < dVar10) goto LAB_8233d014;
+      }
+    } while (dVar11 <= dVar8);
+    lVar4 = (ulonglong)puVar1[1] + param_2 + 0x18;
+    lVar5 = lVar4;
+    do {
+      pcVar6 = (char *)lVar5;
+      lVar5 = lVar5 + 1;
+    } while (*pcVar6 != '\0');
+    puVar1[2] = *puVar1 - puVar1[1];
+    if (dVar10 < dVar11) {
+      while (((int)puVar1[2] < ((int)lVar5 - (int)lVar4) + -1 &&
+             (iVar2 = R_TextWidth((ulonglong)puVar1[1] + param_2 + 0x18,(ulonglong)puVar1[2] + 1,
+                                  uVar7), (double)(float)((double)(longlong)iVar2 * dVar9) < dVar11)
+             )) {
+        puVar1[2] = puVar1[2] + 1;
+      }
+    }
+  }
+  else {
+    puVar1[1] = 0;
+    uVar3 = SEH_PrintStrlen(param_2 + 0x18);
+    puVar1[2] = uVar3;
+  }
+  __restfpr_28();
+  __restgprlr_29();
+  return;
+}
+
 
 // 8233D158  Field_Paste  (client/cl_keys.cpp:678)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool Field_Paste(LocalClientNum_t param_1,ScreenPlacement *param_2,field_t *param_3)
+void Field_Paste(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  LocalClientNum_t LVar2;
+  undefined8 uVar2;
   char *pcVar3;
-  undefined1 uVar4;
-  char *pcVar5;
-  int iVar6;
+  char *pcVar4;
+  int iVar5;
   
-  LVar2 = __savegprlr_26(param_1);
-  pcVar3 = Sys_GetClipboardData();
-  pcVar5 = pcVar3;
+  uVar2 = __savegprlr_26();
+  pcVar3 = (char *)Sys_GetClipboardData();
+  pcVar4 = pcVar3;
   if (pcVar3 != (char *)0x0) {
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 != '\0');
-    iVar6 = 0;
-    if (0 < (int)(pcVar5 + (-1 - (int)pcVar3))) {
+    iVar5 = 0;
+    if (0 < (int)(pcVar4 + (-1 - (int)pcVar3))) {
       do {
-        Field_CharEvent(LVar2,param_2,param_3,(int)pcVar3[iVar6]);
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < (int)(pcVar5 + (-1 - (int)pcVar3)));
+        Field_CharEvent(uVar2,param_2,param_3,pcVar3[iVar5]);
+        iVar5 = iVar5 + 1;
+      } while (iVar5 < (int)(pcVar4 + (-1 - (int)pcVar3)));
     }
     Sys_FreeClipboardData(pcVar3);
-    uVar4 = __restgprlr_26(1);
-    return (bool)uVar4;
+    __restgprlr_26(1);
+    return;
   }
-  uVar4 = __restgprlr_26();
-  return (bool)uVar4;
+  __restgprlr_26();
+  return;
 }
 
 
 // 8233F7D8  Field_KeyDownEvent  (client/cl_keys.cpp:713)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
-// 8233FA48  Field_CharEvent  (client/cl_keys.cpp:783)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool Field_CharEvent(LocalClientNum_t param_1,ScreenPlacement *param_2,field_t *param_3,int param_4)
+void Field_KeyDownEvent(undefined8 param_1,undefined8 param_2,longlong param_3,int param_4)
 
 {
   int iVar1;
   int iVar2;
-  LocalClientNum_t LVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  longlong lVar6;
-  field_t *pfVar7;
-  char *pcVar9;
-  longlong lVar8;
-  int iVar10;
-  ulonglong uVar11;
+  undefined8 uVar3;
+  int iVar4;
+  int iVar5;
+  int *piVar6;
+  char *pcVar8;
+  longlong lVar7;
+  undefined8 uVar9;
   
-  lVar6 = (longlong)(int)param_3;
-  LVar3 = __savegprlr_28(param_1);
-  lVar8 = lVar6 + 0x18;
+  uVar3 = __savegprlr_24();
+  iVar1 = (int)uVar3 * 0x1128;
+  uVar9 = 0;
+  iVar4 = *(int *)(&DAT_82a9bd44 + iVar1);
+  lVar7 = param_3 + 0x18;
   do {
-    pcVar9 = (char *)lVar8;
-    lVar8 = lVar8 + 1;
-  } while (*pcVar9 != '\0');
-  iVar2 = (int)lVar8 - (int)(lVar6 + 0x18);
-  iVar1 = iVar2 + -1;
-  pfVar7 = (field_t *)lVar6;
+    pcVar8 = (char *)lVar7;
+    lVar7 = lVar7 + 1;
+  } while (*pcVar8 != '\0');
+  iVar2 = ((int)lVar7 - (int)(param_3 + 0x18)) + -1;
+  if (((param_4 == 0xa1) || (param_4 == 0xc0)) && (*(int *)(&DAT_82a9bd54 + iVar1) != 0)) {
+    uVar9 = Field_Paste(uVar3,param_2,param_3);
+  }
+  else {
+    piVar6 = (int *)param_3;
+    if (param_4 == 0xa2) {
+      iVar4 = *piVar6;
+      if (iVar4 < iVar2) {
+        memmove((void *)((int)piVar6 + iVar4 + 0x18),(void *)((int)piVar6 + iVar4 + 0x19),
+                iVar2 - iVar4);
+      }
+    }
+    else if (param_4 == 0x9d) {
+      if (*piVar6 < iVar2) {
+        *piVar6 = *piVar6 + 1;
+      }
+      if ((iVar4 != 0) && (*piVar6 < iVar2)) {
+        do {
+          iVar4 = isalnum((int)*(char *)((int)piVar6 + *piVar6 + 0x18));
+          if (iVar4 == 0) break;
+          iVar4 = *piVar6;
+          *piVar6 = iVar4 + 1;
+        } while (iVar4 + 1 < iVar2);
+        iVar4 = *piVar6;
+        while ((iVar4 < iVar2 &&
+               (iVar4 = isalnum((int)*(char *)((int)piVar6 + *piVar6 + 0x18)), iVar4 == 0))) {
+          iVar4 = *piVar6 + 1;
+          *piVar6 = *piVar6 + 1;
+        }
+      }
+    }
+    else if (param_4 == 0x9c) {
+      if (0 < *piVar6) {
+        *piVar6 = *piVar6 + -1;
+      }
+      if (iVar4 != 0) {
+        iVar4 = *piVar6;
+        while ((0 < iVar4 &&
+               (iVar4 = isalnum((int)*(char *)((int)piVar6 + *piVar6 + 0x17)), iVar4 != 0))) {
+          iVar4 = *piVar6 + -1;
+          *piVar6 = *piVar6 + -1;
+        }
+      }
+      if (*piVar6 < piVar6[1]) {
+        piVar6[1] = *piVar6;
+      }
+    }
+    else if ((param_4 == 0xa5) || ((iVar5 = tolower(param_4), iVar5 == 0x61 && (iVar4 != 0)))) {
+      *piVar6 = 0;
+    }
+    else if ((param_4 == 0xa6) || ((iVar5 = tolower(param_4), iVar5 == 0x65 && (iVar4 != 0)))) {
+      *piVar6 = iVar2;
+    }
+    else if (param_4 == 0xa1) {
+      *(uint *)(&DAT_82a9b34c + iVar1) = (uint)LZCOUNT(*(undefined4 *)(&DAT_82a9b34c + iVar1)) >> 5;
+    }
+  }
+  if (DAT_82aa1c14 != 0) {
+    Field_AdjustScroll(param_2,param_3);
+  }
+  __restgprlr_24(uVar9);
+  return;
+}
+
+
+// 8233FA48  Field_CharEvent  (client/cl_keys.cpp:783)
+
+void Field_CharEvent(undefined8 param_1,undefined8 param_2,longlong param_3,int param_4)
+
+{
+  uint uVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  uint *puVar5;
+  char *pcVar7;
+  longlong lVar6;
+  uint uVar8;
+  
+  uVar3 = __savegprlr_28();
+  lVar6 = param_3 + 0x18;
+  do {
+    pcVar7 = (char *)lVar6;
+    lVar6 = lVar6 + 1;
+  } while (*pcVar7 != '\0');
+  uVar2 = (int)lVar6 - (int)(param_3 + 0x18);
+  uVar1 = uVar2 - 1;
   if (param_4 == 0x16) {
-    bVar4 = Field_Paste(LVar3,param_2,pfVar7);
-    uVar11 = (ulonglong)bVar4;
+    uVar4 = Field_Paste(uVar3,param_2,param_3);
     goto LAB_8233fbd4;
   }
   if (param_4 == 3) {
-    Field_Clear(pfVar7);
+    Field_Clear(param_3);
   }
   else {
+    puVar5 = (uint *)param_3;
     if (param_4 == 8) {
-      uVar11 = (-(ulonglong)(uint)pfVar7->cursor & ~(ulonglong)(uint)pfVar7->cursor & 0xffffffff) >>
-               0x1f;
-      if (uVar11 != 0) {
-        memmove();
-        pfVar7->cursor = pfVar7->cursor + -1;
+      uVar2 = *puVar5;
+      uVar4 = (-(ulonglong)uVar2 & ~(ulonglong)uVar2 & 0xffffffff) >> 0x1f;
+      if (uVar4 != 0) {
+        memmove((void *)((int)puVar5 + uVar2 + 0x17),(void *)((int)puVar5 + uVar2 + 0x18),
+                (uVar1 - uVar2) + 1);
+        *puVar5 = *puVar5 - 1;
       }
       goto LAB_8233fbd4;
     }
     if (param_4 == 1) {
-      pfVar7->cursor = 0;
-      pfVar7->scroll = 0;
-      uVar5 = __restgprlr_28(0);
-      return (bool)uVar5;
+      *puVar5 = 0;
+      puVar5[1] = 0;
+      __restgprlr_28(0);
+      return;
     }
     if (param_4 == 5) {
-      pfVar7->cursor = iVar1;
-      uVar11 = 0;
+      *puVar5 = uVar1;
+      uVar4 = 0;
       goto LAB_8233fbd4;
     }
     if (param_4 < 0x20) {
 LAB_8233fb3c:
-      uVar5 = __restgprlr_28(0);
-      return (bool)uVar5;
+      __restgprlr_28(0);
+      return;
     }
-    if (playerKeys[LVar3].overstrikeMode == 0) {
-      if (iVar1 == 0xff) goto LAB_8233fb3c;
-      memmove();
-      pfVar7->buffer[pfVar7->cursor] = (char)param_4;
+    if (*(int *)(&DAT_82a9b34c + (int)uVar3 * 0x1128) == 0) {
+      if (uVar1 == 0xff) goto LAB_8233fb3c;
+      uVar8 = *puVar5;
+      memmove((void *)((int)puVar5 + uVar8 + 0x19),(void *)((int)puVar5 + uVar8 + 0x18),
+              (uVar1 - uVar8) + 1);
+      *(char *)((int)puVar5 + *puVar5 + 0x18) = (char)param_4;
     }
     else {
-      if (pfVar7->cursor == 0xff) goto LAB_8233fb3c;
-      pfVar7->buffer[pfVar7->cursor] = (char)param_4;
+      if (*puVar5 == 0xff) goto LAB_8233fb3c;
+      *(char *)((int)puVar5 + *puVar5 + 0x18) = (char)param_4;
     }
-    iVar1 = pfVar7->cursor;
-    iVar10 = iVar1 + 1;
-    pfVar7->cursor = iVar10;
-    if (iVar10 == iVar2) {
-      pfVar7->buffer[iVar1 + 1] = '\0';
+    uVar1 = *puVar5;
+    uVar8 = uVar1 + 1;
+    *puVar5 = uVar8;
+    if (uVar8 == uVar2) {
+      *(undefined1 *)((int)puVar5 + uVar1 + 0x19) = 0;
     }
   }
-  uVar11 = 1;
+  uVar4 = 1;
 LAB_8233fbd4:
-  Field_AdjustScroll(param_2,pfVar7);
-  uVar5 = __restgprlr_28(uVar11);
-  return (bool)uVar5;
+  Field_AdjustScroll(param_2,param_3);
+  __restgprlr_28(uVar4);
+  return;
 }
 
 
 // 8233D1F0  FindMatches  (client/cl_keys.cpp:868)
 
-void FindMatches(char *param_1)
+void FindMatches(void)
 
 {
-  char cVar1;
-  char *pcVar2;
-  bool bVar6;
+  char *pcVar1;
+  char cVar5;
+  int iVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  char *pcVar7;
+  char *pcVar6;
+  bool bVar7;
   
-  pcVar2 = (char *)__savegprlr_26(param_1);
-  pcVar7 = DAT_82a9acfc;
+  pcVar1 = (char *)__savegprlr_26();
+  pcVar6 = DAT_82a9acfc;
   do {
-    cVar1 = *pcVar7;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 != '\0');
-  iVar3 = -1 - (int)DAT_82a9acfc;
-  bVar6 = Con_IsAutoCompleteMatch(pcVar2,DAT_82a9acfc,(int)(pcVar7 + iVar3));
-  if (!bVar6) goto LAB_8233d3c0;
-  if ((con_ignoreMatchPrefixOnly == false) && ((con_matchPrefixOnly->current).enabled != false)) {
+    cVar5 = *pcVar6;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar5 != '\0');
+  iVar2 = -1 - (int)DAT_82a9acfc;
+  cVar5 = Con_IsAutoCompleteMatch(pcVar1,DAT_82a9acfc,pcVar6 + iVar2);
+  if (cVar5 == '\0') goto LAB_8233d3c0;
+  if ((DAT_82a77878 == '\0') && (*(char *)(DAT_82a776a4 + 0xc) != '\0')) {
 LAB_8233d284:
-    bVar6 = true;
+    bVar7 = true;
   }
   else {
-    iVar3 = I_strnicmp(pcVar2,DAT_82a9acfc,(int)(pcVar7 + iVar3));
-    bVar6 = false;
-    if (iVar3 == 0) goto LAB_8233d284;
+    iVar2 = I_strnicmp(pcVar1,DAT_82a9acfc,pcVar6 + iVar2);
+    bVar7 = false;
+    if (iVar2 == 0) goto LAB_8233d284;
   }
-  if (bVar6) {
+  if (bVar7) {
     DAT_82a9ad00 = DAT_82a9ad00 + 1;
   }
   DAT_82a9b228 = DAT_82a9b228 + 1;
-  if ((DAT_82a9b228 == 1) || ((bVar6 && (DAT_82a9ad00 == 1)))) {
-    I_strncpyz(s_shortestMatch,pcVar2,0x400);
-    s_hasExactMatch = true;
+  if ((DAT_82a9b228 == 1) || ((bVar7 && (DAT_82a9ad00 == 1)))) {
+    I_strncpyz(0xffffffff82a9ad08,pcVar1,0x400);
+    DAT_82a9ad05 = '\x01';
   }
   else {
     if (DAT_82a9ad00 == 0) {
-      I_strncpyz(s_shortestMatch,DAT_82a9acfc,0x400);
+      I_strncpyz(0xffffffff82a9ad08,DAT_82a9acfc,0x400);
       __restgprlr_26();
       return;
     }
-    if (bVar6) {
-      iVar3 = 0;
-      if (*pcVar2 != '\0') {
-        pcVar7 = pcVar2;
+    if (bVar7) {
+      iVar2 = 0;
+      if (*pcVar1 != '\0') {
+        pcVar6 = pcVar1;
         do {
-          iVar4 = tolower((int)s_shortestMatch[(int)pcVar7 - (int)pcVar2]);
-          iVar5 = tolower((int)*pcVar7);
-          if (iVar4 != iVar5) break;
-          pcVar7 = pcVar7 + 1;
-          iVar3 = iVar3 + 1;
-        } while (*pcVar7 != '\0');
+          iVar3 = tolower((int)(char)(&DAT_82a9ad08)[(int)pcVar6 - (int)pcVar1]);
+          iVar4 = tolower((int)*pcVar6);
+          if (iVar3 != iVar4) break;
+          pcVar6 = pcVar6 + 1;
+          iVar2 = iVar2 + 1;
+        } while (*pcVar6 != '\0');
       }
-      if ((pcVar2[iVar3] != '\0') &&
-         ((s_hasExactMatch == false || (s_shortestMatch[iVar3] != '\0')))) {
-        s_hasExactMatch = false;
-        s_shortestMatch[iVar3] = '\0';
+      if ((pcVar1[iVar2] != '\0') && ((DAT_82a9ad05 == '\0' || ((&DAT_82a9ad08)[iVar2] != '\0')))) {
+        DAT_82a9ad05 = 0;
+        (&DAT_82a9ad08)[iVar2] = 0;
         __restgprlr_26();
         return;
       }
-      s_hasExactMatch = true;
-      s_shortestMatch[iVar3] = '\0';
+      DAT_82a9ad05 = 1;
+      (&DAT_82a9ad08)[iVar2] = 0;
       __restgprlr_26();
       return;
     }
@@ -261,27 +478,27 @@ LAB_8233d3c0:
 
 // 8233D3C8  PrintMatches  (client/cl_keys.cpp:914)
 
-void PrintMatches(char *param_1)
+void PrintMatches(undefined8 param_1)
 
 {
-  int iVar1;
-  char *pcVar2;
+  char *pcVar1;
+  int iVar2;
   char *pcVar3;
   
-  pcVar2 = s_shortestMatch;
-  if ((!con_ignoreMatchPrefixOnly) || ((con_matchPrefixOnly->current).enabled == false)) {
+  pcVar1 = &DAT_82a9ad08;
+  if ((DAT_82a77878 == '\0') || (*(char *)(DAT_82a776a4 + 0xc) == '\0')) {
     do {
-      pcVar3 = pcVar2;
-      pcVar2 = pcVar3 + 1;
+      pcVar3 = pcVar1;
+      pcVar1 = pcVar3 + 1;
     } while (*pcVar3 != '\0');
-    iVar1 = I_strnicmp(param_1,s_shortestMatch,(int)(pcVar3 + 0x7d5652f8));
-    if (iVar1 != 0) {
+    iVar2 = I_strnicmp(param_1,0xffffffff82a9ad08,pcVar3 + 0x7d5652f8);
+    if (iVar2 != 0) {
       return;
     }
   }
-  pcVar2 = I_stristr(param_1,s_shortestMatch);
-  if (pcVar2 != (char *)0x0) {
-    Com_Printf(0,"    %s\n");
+  iVar2 = I_stristr(param_1,0xffffffff82a9ad08);
+  if (iVar2 != 0) {
+    Com_Printf(0,0xffffffff8202fea0,param_1);
   }
   return;
 }
@@ -289,41 +506,39 @@ void PrintMatches(char *param_1)
 
 // 8233D488  keyConcatArgs  (client/cl_keys.cpp:926)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void keyConcatArgs(void)
 
 {
   char cVar1;
-  int iVar2;
-  char *pcVar3;
+  int iVar3;
   char *pcVar4;
-  int iVar5;
+  undefined8 uVar2;
+  longlong lVar5;
   
   __savegprlr_27();
-  iVar5 = 1;
-  iVar2 = Cmd_Argc();
-  if (1 < iVar2) {
+  lVar5 = 1;
+  iVar3 = Cmd_Argc();
+  if (1 < iVar3) {
     do {
-      I_strncat(g_consoleField.buffer,0x100," ");
-      pcVar3 = Cmd_Argv(iVar5);
-      cVar1 = *pcVar3;
+      I_strncat(0xffffffff82a9b128,0x100,0xffffffff820034a0);
+      pcVar4 = (char *)Cmd_Argv(lVar5);
+      cVar1 = *pcVar4;
       while (cVar1 != '\0') {
         if (cVar1 == ' ') {
-          I_strncat(g_consoleField.buffer,0x100,"\"");
+          I_strncat(0xffffffff82a9b128,0x100,0xffffffff8202f54c);
           break;
         }
-        pcVar3 = pcVar3 + 1;
-        cVar1 = *pcVar3;
+        pcVar4 = pcVar4 + 1;
+        cVar1 = *pcVar4;
       }
-      pcVar4 = Cmd_Argv(iVar5);
-      I_strncat(g_consoleField.buffer,0x100,pcVar4);
-      if (*pcVar3 == ' ') {
-        I_strncat(g_consoleField.buffer,0x100,"\"");
+      uVar2 = Cmd_Argv(lVar5);
+      I_strncat(0xffffffff82a9b128,0x100,uVar2);
+      if (*pcVar4 == ' ') {
+        I_strncat(0xffffffff82a9b128,0x100,0xffffffff8202f54c);
       }
-      iVar5 = iVar5 + 1;
-      iVar2 = Cmd_Argc();
-    } while (iVar5 < iVar2);
+      lVar5 = lVar5 + 1;
+      iVar3 = Cmd_Argc();
+    } while ((int)lVar5 < iVar3);
   }
   __restgprlr_27();
   return;
@@ -346,7 +561,7 @@ void ConcatRemaining(char *param_1,char *param_2)
       cVar1 = *pcVar3;
       pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    I_strncat(g_consoleField.buffer,0x100,pcVar2 + (int)(pcVar3 + (-1 - (int)param_2)));
+    I_strncat(0xffffffff82a9b128,0x100,pcVar2 + (int)(pcVar3 + (-1 - (int)param_2)));
     return;
   }
   keyConcatArgs();
@@ -356,39 +571,35 @@ void ConcatRemaining(char *param_1,char *param_2)
 
 // 8233D5E8  ReplaceConsoleInputArgument  (client/cl_keys.cpp:969)
 
-void ReplaceConsoleInputArgument(int param_1,char *param_2)
+void ReplaceConsoleInputArgument(undefined8 param_1,ulonglong param_2)
 
 {
-  int iVar1;
   int iVar2;
-  ulonglong uVar3;
+  int iVar3;
+  undefined8 uVar1;
   char *pcVar4;
   char *pcVar5;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_keys.cpp",0x3cd,0,
-                    "%s");
+  iVar2 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202fedc,0x3cd,0,0xffffffff82000f98,0xffffffff8202fed0);
   }
-  if (*(char *)uVar3 != '\0') {
-    pcVar4 = g_consoleField.buffer;
+  if (*(char *)param_2 != '\0') {
+    pcVar4 = &DAT_82a9b128;
     do {
       pcVar5 = pcVar4;
       pcVar4 = pcVar5 + 1;
     } while (*pcVar5 != '\0');
     for (pcVar4 = pcVar5 + 0x7d564ed8; pcVar4 != (char *)0x0; pcVar4 = pcVar4 + -1) {
       pcVar5 = pcVar5 + -1;
-      iVar2 = isspace((int)*pcVar5);
-      if (iVar2 == 0) break;
+      iVar3 = isspace((int)*pcVar5);
+      if (iVar3 == 0) break;
     }
-    if ((int)pcVar4 <= iVar1) {
-      va("%s: %i, %i");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_keys.cpp",0x3d4,0,
-                      "%s\n\t%s");
+    if ((int)pcVar4 <= iVar2) {
+      uVar1 = va(0xffffffff8202fec4,0xffffffff82a9b128,iVar2,pcVar4);
+      MyAssertHandler(0xffffffff8202fedc,0x3d4,0,0xffffffff820011f4,0xffffffff8202fea8,uVar1);
     }
-    I_strncpyz((char *)((int)&g_consoleField + ((int)pcVar4 - iVar1) + 0x18),(char *)uVar3,
-               0x100 - ((int)pcVar4 - iVar1));
+    I_strncpyz(&DAT_82a9b128 + ((int)pcVar4 - iVar2),param_2,0x100 - ((int)pcVar4 - iVar2));
   }
   __restgprlr_26();
   return;
@@ -396,8 +607,6 @@ void ReplaceConsoleInputArgument(int param_1,char *param_2)
 
 
 // 8233D6F8  CompleteCmdArgument  (client/cl_keys.cpp:988)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CompleteCmdArgument(void)
 
@@ -408,32 +617,28 @@ void CompleteCmdArgument(void)
 
 // 8233D700  CompleteDvarArgument  (client/cl_keys.cpp:1018)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CompleteDvarArgument(void)
 
 {
   char cVar1;
-  char *pcVar2;
-  dvar_t *pdVar3;
+  int iVar2;
+  char *pcVar3;
   char *pcVar4;
-  char acStack_120 [264];
+  undefined1 auStack_120 [264];
   
-  pcVar2 = Con_TokenizeInput();
-  pdVar3 = Dvar_FindVar(pcVar2);
-  if ((pdVar3 != (dvar_t *)0x0) && (pdVar3->type == '\x06')) {
-    pcVar2 = Cmd_Argv(1);
-    if (*pcVar2 != '\0') {
-      Con_AutoCompleteFromList
-                ((pdVar3->domain).enumeration.strings,(pdVar3->domain).enumeration.stringCount,
-                 pcVar2,acStack_120,0x100);
-      pcVar4 = pcVar2;
-      do {
-        cVar1 = *pcVar4;
-        pcVar4 = pcVar4 + 1;
-      } while (cVar1 != '\0');
-      ReplaceConsoleInputArgument((int)(pcVar4 + (-1 - (int)pcVar2)),acStack_120);
-    }
+  Con_TokenizeInput();
+  iVar2 = Dvar_FindVar();
+  if (((iVar2 != 0) && (*(char *)(iVar2 + 10) == '\x06')) &&
+     (pcVar3 = (char *)Cmd_Argv(1), *pcVar3 != '\0')) {
+    Con_AutoCompleteFromList
+              (*(undefined4 *)(iVar2 + 0x40),*(undefined4 *)(iVar2 + 0x3c),pcVar3,auStack_120,0x100)
+    ;
+    pcVar4 = pcVar3;
+    do {
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
+    } while (cVar1 != '\0');
+    ReplaceConsoleInputArgument(pcVar4 + (-1 - (int)pcVar3),auStack_120);
   }
   Cmd_EndTokenizedString();
   return;
@@ -442,36 +647,36 @@ void CompleteDvarArgument(void)
 
 // 8233D7A8  UpdateMatches  (client/cl_keys.cpp:1043)
 
-void UpdateMatches(bool param_1,int *param_2,int *param_3)
+void UpdateMatches(undefined8 param_1,undefined4 *param_2,undefined4 *param_3)
 
 {
   char *pcVar1;
   char cVar2;
   char *pcVar3;
   
-  cVar2 = __savegprlr_29(param_1);
+  cVar2 = __savegprlr_29();
   DAT_82a9b228 = 0;
   DAT_82a9ad00 = 0;
-  s_shortestMatch[0] = '\0';
+  DAT_82a9ad08 = 0;
   if (cVar2 == '\0') {
     *param_2 = 0;
   }
   else {
-    Cmd_ForEach(FindMatches);
-    pcVar1 = s_shortestMatch;
+    Cmd_ForEach(0xffffffff8233d1f0);
+    pcVar1 = &DAT_82a9ad08;
     do {
       pcVar3 = pcVar1;
       pcVar1 = pcVar3 + 1;
     } while (*pcVar3 != '\0');
-    *param_2 = (int)(pcVar3 + 0x7d5652f8);
+    *param_2 = pcVar3 + 0x7d5652f8;
   }
-  Dvar_ForEachName(FindMatches);
-  pcVar1 = s_shortestMatch;
+  Dvar_ForEachName(0xffffffff8233d1f0);
+  pcVar1 = &DAT_82a9ad08;
   do {
     pcVar3 = pcVar1;
     pcVar1 = pcVar3 + 1;
   } while (*pcVar3 != '\0');
-  *param_3 = (int)(pcVar3 + 0x7d5652f8);
+  *param_3 = pcVar3 + 0x7d5652f8;
   __restgprlr_29();
   return;
 }
@@ -479,132 +684,139 @@ void UpdateMatches(bool param_1,int *param_2,int *param_3)
 
 // 8233D858  CompleteCommand  (client/cl_keys.cpp:1062)
 
-void CompleteCommand(ScreenPlacement *param_1)
+void CompleteCommand(void)
 
 {
-  char *pcVar1;
-  ScreenPlacement *pSVar2;
-  int iVar3;
-  bool bVar4;
-  bool bVar5;
-  char *pcVar6;
+  bool bVar1;
+  bool bVar2;
+  undefined8 uVar3;
+  char *pcVar4;
+  int iVar5;
+  char cVar7;
+  void *pvVar6;
+  char *pcVar8;
   int local_170;
-  int local_16c [9];
-  char acStack_148 [328];
+  int local_16c [3];
+  undefined1 auStack_160 [24];
+  undefined1 auStack_148 [328];
   
-  pSVar2 = (ScreenPlacement *)__savegprlr_25(param_1);
-  DAT_82a9acfc = Con_TokenizeInput();
-  s_shortestMatch[0] = '\0';
+  uVar3 = __savegprlr_25();
+  pcVar4 = (char *)Con_TokenizeInput();
+  DAT_82a9ad08 = 0;
   DAT_82a9b228 = 0;
   DAT_82a9ad00 = 0;
-  if (*DAT_82a9acfc == '\0') goto LAB_8233d8a0;
-  iVar3 = Cmd_Argc();
-  if (iVar3 < 2) {
+  DAT_82a9acfc = pcVar4;
+  if (*pcVar4 == '\0') goto LAB_8233d8a0;
+  iVar5 = Cmd_Argc();
+  if (iVar5 < 2) {
 LAB_8233d8d4:
-    bVar5 = false;
+    bVar2 = false;
   }
   else {
-    bVar4 = Con_IsDvarCommand(DAT_82a9acfc);
-    bVar5 = true;
-    if (!bVar4) goto LAB_8233d8d4;
+    cVar7 = Con_IsDvarCommand(DAT_82a9acfc);
+    bVar2 = true;
+    if (cVar7 == '\0') goto LAB_8233d8d4;
   }
-  if (bVar5) {
-    DAT_82a9acfc = Cmd_Argv(1);
+  if (bVar2) {
+    DAT_82a9acfc = (char *)Cmd_Argv(1);
   }
   local_16c[0] = 0;
   local_170 = 0;
-  if ((con_matchPrefixOnly->current).enabled == false) {
-    con_ignoreMatchPrefixOnly = false;
+  if (*(char *)(DAT_82a776a4 + 0xc) == '\0') {
+    DAT_82a77878 = 0;
 LAB_8233d998:
-    UpdateMatches(!bVar5,local_16c,&local_170);
+    UpdateMatches(!bVar2,local_16c,&local_170);
   }
   else {
-    con_ignoreMatchPrefixOnly = true;
-    UpdateMatches(!bVar5,local_16c,&local_170);
-    if (con_inputMaxMatchesShown < DAT_82a9b228) {
-      con_ignoreMatchPrefixOnly = false;
-      UpdateMatches(!bVar5,local_16c,&local_170);
+    DAT_82a77878 = 1;
+    UpdateMatches(!bVar2,local_16c,&local_170);
+    if (DAT_82964550 < DAT_82a9b228) {
+      DAT_82a77878 = 0;
+      UpdateMatches(!bVar2,local_16c,&local_170);
       if (DAT_82a9b228 == 0) {
-        con_ignoreMatchPrefixOnly = true;
+        DAT_82a77878 = 1;
         goto LAB_8233d998;
       }
     }
   }
-  memcpy();
+  pvVar6 = memcpy(auStack_160,&DAT_82a9b110,0x118);
   if (DAT_82a9b228 == 0) {
-    if (!bVar5) {
+    if (!bVar2) {
 LAB_8233d8a0:
       Cmd_EndTokenizedString();
       __restgprlr_25();
       return;
     }
-    I_strncpyz(s_shortestMatch,DAT_82a9acfc,0x400);
+    pvVar6 = (void *)I_strncpyz(0xffffffff82a9ad08,DAT_82a9acfc,0x400);
   }
-  if (((bVar5) || (DAT_82a9b228 == 1)) ||
-     ((s_hasExactMatch != false && (bVar4 = Con_AnySpaceAfterCommand(), bVar4)))) {
-    bVar4 = true;
-  }
-  else {
-    bVar4 = false;
-  }
-  if (bVar5) {
-    Com_sprintf(g_consoleField.buffer,0x100,"\\%s %s");
+  if (((bVar2) || (DAT_82a9b228 == 1)) ||
+     ((DAT_82a9ad05 != '\0' && (cVar7 = Con_AnySpaceAfterCommand(pvVar6), cVar7 != '\0')))) {
+    bVar1 = true;
   }
   else {
-    Com_sprintf(g_consoleField.buffer,0x100,"\\%s");
+    bVar1 = false;
   }
-  pcVar1 = g_consoleField.buffer;
+  if (bVar2) {
+    Com_sprintf(0xffffffff82a9b128,0x100,0xffffffff8202ff28,pcVar4,0xffffffff82a9ad08);
+  }
+  else {
+    Com_sprintf(0xffffffff82a9b128,0x100,0xffffffff8202ff24,0xffffffff82a9ad08);
+  }
+  pcVar4 = &DAT_82a9b128;
   do {
-    pcVar6 = pcVar1;
-    pcVar1 = pcVar6 + 1;
-  } while (*pcVar6 != '\0');
-  g_consoleField.cursor = (int)(pcVar6 + 0x7d564ed8);
-  ConcatRemaining(acStack_148,DAT_82a9acfc);
+    pcVar8 = pcVar4;
+    pcVar4 = pcVar8 + 1;
+  } while (*pcVar8 != '\0');
+  DAT_82a9b110 = pcVar8 + 0x7d564ed8;
+  ConcatRemaining(auStack_148,DAT_82a9acfc);
   if (DAT_82a9b228 == 0) {
-    pcVar1 = g_consoleField.buffer;
+    pcVar4 = &DAT_82a9b128;
     do {
-      pcVar6 = pcVar1;
-      pcVar1 = pcVar6 + 1;
-    } while (*pcVar6 != '\0');
-    g_consoleField.cursor = (int)(pcVar6 + 0x7d564ed8);
+      pcVar8 = pcVar4;
+      pcVar4 = pcVar8 + 1;
+    } while (*pcVar8 != '\0');
+    DAT_82a9b110 = pcVar8 + 0x7d564ed8;
+    goto LAB_8233dbac;
   }
-  else if (bVar4) {
-    if (!bVar5) {
-      iVar3 = Cmd_Argc();
-      if (iVar3 == 1) {
-        pcVar1 = g_consoleField.buffer;
-        do {
-          pcVar6 = pcVar1;
-          pcVar1 = pcVar6 + 1;
-        } while (*pcVar6 != '\0');
-        if ((pcVar6 == g_consoleField.buffer) || (pcVar6[-1] != ' ')) {
-          I_strncat(g_consoleField.buffer,0x100," ");
-        }
+  if (!bVar1) {
+    cVar7 = Con_HasTooManyMatchesToShow();
+    if (cVar7 != '\0') {
+      Com_Printf(0,0xffffffff8202ff1c,0xffffffff82a9b128);
+      Cmd_ForEach(0xffffffff8233d3c8);
+      Dvar_ForEachName(0xffffffff8233d3c8);
+    }
+    goto LAB_8233dbac;
+  }
+  if (!bVar2) {
+    iVar5 = Cmd_Argc();
+    if (iVar5 == 1) {
+      pcVar4 = &DAT_82a9b128;
+      do {
+        pcVar8 = pcVar4;
+        pcVar4 = pcVar8 + 1;
+      } while (*pcVar8 != '\0');
+      if (pcVar8 != &DAT_82a9b128) {
+        if (pcVar8[-1] == ' ') goto LAB_8233db48;
       }
-      else {
-        iVar3 = Cmd_Argc();
-        if ((iVar3 == 2) && (local_16c[0] != local_170)) {
-          CompleteDvarArgument();
-        }
+      I_strncat(0xffffffff82a9b128,0x100,0xffffffff820034a0);
+    }
+    else {
+      iVar5 = Cmd_Argc();
+      if ((iVar5 == 2) && (local_16c[0] != local_170)) {
+        CompleteDvarArgument();
       }
     }
-    pcVar1 = g_consoleField.buffer;
-    do {
-      pcVar6 = pcVar1;
-      pcVar1 = pcVar6 + 1;
-    } while (*pcVar6 != '\0');
-    g_consoleField.cursor = (int)(pcVar6 + 0x7d564ed8);
   }
-  else {
-    bVar5 = Con_HasTooManyMatchesToShow();
-    if (bVar5) {
-      Com_Printf(0,"]%s\n");
-      Cmd_ForEach(PrintMatches);
-      Dvar_ForEachName(PrintMatches);
-    }
-  }
+LAB_8233db48:
+  pcVar4 = &DAT_82a9b128;
+  do {
+    pcVar8 = pcVar4;
+    pcVar4 = pcVar8 + 1;
+  } while (*pcVar8 != '\0');
+  DAT_82a9b110 = pcVar8 + 0x7d564ed8;
+LAB_8233dbac:
   Cmd_EndTokenizedString();
-  Field_AdjustScroll(pSVar2,&g_consoleField);
+  Field_AdjustScroll(uVar3,0xffffffff82a9b110);
   __restgprlr_25();
   return;
 }
@@ -612,162 +824,174 @@ LAB_8233d8a0:
 
 // 8233DBD0  Console_IsScrollUpKey  (client/cl_keys.cpp:1203)
 
-bool Console_IsScrollUpKey(int param_1,int param_2,int param_3)
+undefined8 Console_IsScrollUpKey(int param_1,int param_2)
 
 {
   int iVar1;
-  bool bVar2;
+  undefined8 uVar2;
   
   if (((param_1 == 0x9a) || (param_1 == 0xb7)) ||
      ((iVar1 = tolower(param_1), iVar1 == 0x70 && (param_2 != 0)))) {
-    bVar2 = true;
+    uVar2 = 1;
   }
   else {
-    bVar2 = false;
+    uVar2 = 0;
   }
-  return bVar2;
+  return uVar2;
 }
 
 
 // 8233DC30  Console_IsScrollDownKey  (client/cl_keys.cpp:1213)
 
-bool Console_IsScrollDownKey(int param_1,int param_2,int param_3)
+undefined8 Console_IsScrollDownKey(int param_1,int param_2)
 
 {
   int iVar1;
-  bool bVar2;
+  undefined8 uVar2;
   
   if (((param_1 == 0x9b) || (param_1 == 0xbd)) ||
      ((iVar1 = tolower(param_1), iVar1 == 0x6e && (param_2 != 0)))) {
-    bVar2 = true;
+    uVar2 = 1;
   }
   else {
-    bVar2 = false;
+    uVar2 = 0;
   }
-  return bVar2;
+  return uVar2;
 }
 
 
 // 8233FBF0  Console_Key  (client/cl_keys.cpp:1230)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Console_Key(LocalClientNum_t param_1,int param_2)
+void Console_Key(undefined8 param_1,undefined8 param_2)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
-  LocalClientNum_t LVar4;
-  ScreenPlacement *pSVar5;
-  bool bVar6;
-  char *pcVar7;
-  int in_r5;
+  uint uVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  char cVar7;
+  int iVar8;
   
-  LVar4 = __savegprlr_24(param_1);
-  bVar6 = s_shouldCompleteCmd;
-  s_shouldCompleteCmd = true;
-  iVar1 = playerKeys[LVar4].keys[0xa0].down;
-  iVar2 = playerKeys[LVar4].keys[0x9f].down;
-  iVar3 = playerKeys[LVar4].keys[0x9e].down;
-  pSVar5 = ScrPlace_GetFullPlacement();
-  if (param_2 == 0x6c) {
+  uVar5 = __savegprlr_24();
+  cVar7 = DAT_82a9ad04;
+  iVar3 = (int)uVar5 * 0x1128;
+  DAT_82a9ad04 = 1;
+  iVar1 = *(int *)(&DAT_82a9bd54 + iVar3);
+  iVar2 = *(int *)(&DAT_82a9bd44 + iVar3);
+  iVar3 = *(int *)(&DAT_82a9bd34 + iVar3);
+  uVar6 = ScrPlace_GetFullPlacement();
+  iVar8 = (int)param_2;
+  if (iVar8 == 0x6c) {
     if (iVar2 != 0) {
-      Cbuf_AddText(LVar4,"clear\n");
+      Cbuf_AddText(uVar5,0xffffffff82030170);
       __restgprlr_24();
       return;
     }
   }
   else {
-    if ((param_2 == 0xd) || (param_2 == 0xbf)) {
-      bVar6 = Con_CommitToAutoComplete();
-      if (!bVar6) {
-        Com_Printf(0,"]%s\n");
-        if ((g_consoleField.buffer[0] == '\\') || (g_consoleField.buffer[0] == '/')) {
-          pcVar7 = g_consoleField.buffer + 1;
+    if ((iVar8 == 0xd) || (iVar8 == 0xbf)) {
+      cVar7 = Con_CommitToAutoComplete();
+      if (cVar7 == '\0') {
+        Com_Printf(0,0xffffffff8202ff1c,0xffffffff82a9b128);
+        if ((DAT_82a9b128 == '\\') || (DAT_82a9b128 == '/')) {
+          uVar6 = 0xffffffff82a9b129;
         }
         else {
-          if (g_consoleField.buffer[0] == '\0') goto LAB_82340024;
-          pcVar7 = g_consoleField.buffer;
+          if (DAT_82a9b128 == '\0') goto LAB_82340024;
+          uVar6 = 0xffffffff82a9b128;
         }
-        Cbuf_AddText(LVar4,pcVar7);
-        Cbuf_AddText(LVar4,"\n");
-        iVar1 = nextHistoryLine;
-        if (g_consoleField.buffer[0] != '\0') {
-          memcpy();
-          historyLine = iVar1 + 1;
-          nextHistoryLine = historyLine;
+        Cbuf_AddText(uVar5,uVar6);
+        Cbuf_AddText(uVar5,0xffffffff820044d8);
+        uVar4 = DAT_82a9b108;
+        if (DAT_82a9b128 != '\0') {
+          memcpy(&DAT_82a9f6d0 +
+                 (DAT_82a9b108 +
+                 (((int)DAT_82a9b108 >> 5) +
+                 (uint)((int)DAT_82a9b108 < 0 && (DAT_82a9b108 & 0x1f) != 0)) * -0x20) * 0x118,
+                 &DAT_82a9b110,0x118);
+          DAT_82a9acf8 = uVar4 + 1;
+          DAT_82a9b108 = DAT_82a9acf8;
         }
-        Field_Clear(&g_consoleField);
-        g_consoleField.fixedSize = 1;
-        g_consoleField.charHeight = g_console_char_height;
-        g_consoleField.widthInPixels = g_console_field_width;
-        bVar6 = CL_AllLocalClientsDisconnected();
-        if (bVar6) {
+        Field_Clear(0xffffffff82a9b110);
+        DAT_82a9b124 = 1;
+        DAT_82a9b120 = DAT_82964558;
+        DAT_82a9b11c = DAT_82964554;
+        cVar7 = CL_AllLocalClientsDisconnected();
+        if (cVar7 != '\0') {
           SCR_UpdateScreen();
         }
       }
       goto LAB_82340024;
     }
-    if (param_2 == 9) {
-      if (bVar6 != false) {
-        CompleteCommand(pSVar5);
-        s_shouldCompleteCmd = false;
+    if (iVar8 == 9) {
+      if (cVar7 != '\0') {
+        CompleteCommand(uVar6);
+        DAT_82a9ad04 = 0;
         __restgprlr_24();
         return;
       }
-      bVar6 = Con_CycleAutoComplete((-(uint)(iVar1 != 0) & 0xfffffffe) + 1);
-      s_shouldCompleteCmd = false;
-      __restgprlr_24(bVar6);
+      Con_CycleAutoComplete((-(ulonglong)(iVar1 != 0) & 0xfffffffe) + 1);
+      DAT_82a9ad04 = 0;
+      __restgprlr_24();
       return;
     }
-    if (param_2 == 0x9a) {
+    if (iVar8 == 0x9a) {
       if (iVar2 != 0) {
-        bVar6 = Con_CycleAutoComplete(-1);
-        __restgprlr_24(bVar6);
+        Con_CycleAutoComplete(0xffffffffffffffff);
+        __restgprlr_24();
         return;
       }
     }
-    else if ((param_2 == 0x9b) && (iVar2 != 0)) {
-      bVar6 = Con_CycleAutoComplete(1);
-      __restgprlr_24(bVar6);
+    else if ((iVar8 == 0x9b) && (iVar2 != 0)) {
+      Con_CycleAutoComplete(1);
+      __restgprlr_24();
       return;
     }
   }
-  bVar6 = Console_IsScrollUpKey(param_2,iVar2,in_r5);
-  if (bVar6) {
-    if ((nextHistoryLine - historyLine < 0x20) && (0 < historyLine)) {
-      historyLine = historyLine + -1;
+  cVar7 = Console_IsScrollUpKey(param_2,iVar2);
+  if (cVar7 != '\0') {
+    if (((int)(DAT_82a9b108 - DAT_82a9acf8) < 0x20) && (0 < (int)DAT_82a9acf8)) {
+      DAT_82a9acf8 = DAT_82a9acf8 - 1;
     }
-    memcpy();
-    Field_AdjustScroll(pSVar5,&g_consoleField);
-    Con_AllowAutoCompleteCycling(false);
+    memcpy(&DAT_82a9b110,
+           &DAT_82a9f6d0 +
+           (DAT_82a9acf8 +
+           (((int)DAT_82a9acf8 >> 5) + (uint)((int)DAT_82a9acf8 < 0 && (DAT_82a9acf8 & 0x1f) != 0))
+           * -0x20) * 0x118,0x118);
+    Field_AdjustScroll(uVar6,0xffffffff82a9b110);
+    Con_AllowAutoCompleteCycling(0);
     __restgprlr_24();
     return;
   }
-  bVar6 = Console_IsScrollDownKey(param_2,iVar2,in_r5);
-  if (bVar6) {
-    bVar6 = Con_CycleAutoComplete(1);
-    if ((!bVar6) && (historyLine != nextHistoryLine)) {
-      historyLine = historyLine + 1;
-      memcpy();
-      Field_AdjustScroll(pSVar5,&g_consoleField);
+  cVar7 = Console_IsScrollDownKey(param_2,iVar2);
+  if (cVar7 != '\0') {
+    cVar7 = Con_CycleAutoComplete(1);
+    if ((cVar7 == '\0') && (DAT_82a9acf8 != DAT_82a9b108)) {
+      DAT_82a9acf8 = DAT_82a9acf8 + 1;
+      memcpy(&DAT_82a9b110,
+             &DAT_82a9f6d0 +
+             (DAT_82a9acf8 +
+             (((int)DAT_82a9acf8 >> 5) + (uint)((int)DAT_82a9acf8 < 0 && (DAT_82a9acf8 & 0x1f) != 0)
+             ) * -0x20) * 0x118,0x118);
+      Field_AdjustScroll(uVar6,0xffffffff82a9b110);
       __restgprlr_24();
       return;
     }
     goto LAB_82340024;
   }
-  if (param_2 == 0xa4) {
+  if (iVar8 == 0xa4) {
     Con_PageUp();
     __restgprlr_24();
     return;
   }
-  if (param_2 == 0xa3) {
+  if (iVar8 == 0xa3) {
     Con_PageDown();
     __restgprlr_24();
     return;
   }
-  if (param_2 == 0xa5) {
+  if (iVar8 == 0xa5) {
     if (iVar2 != 0) {
       Con_Top();
       __restgprlr_24();
@@ -780,7 +1004,7 @@ LAB_8233fedc:
     }
   }
   else {
-    if (param_2 == 0xa6) {
+    if (iVar8 == 0xa6) {
       if (iVar2 != 0) {
         Con_Bottom();
         __restgprlr_24();
@@ -788,20 +1012,20 @@ LAB_8233fedc:
       }
       goto LAB_8233fecc;
     }
-    if ((param_2 != 0xa2) && (param_2 != 0x1b)) {
-      if ((((param_2 != 0x9d) && (param_2 != 0xbb)) && (param_2 != 0x9c)) && (param_2 != 0xb9)) {
-        if ((param_2 != 0x7f) && (iVar2 == 0)) goto LAB_8233fecc;
+    if ((iVar8 != 0xa2) && (iVar8 != 0x1b)) {
+      if ((((iVar8 != 0x9d) && (iVar8 != 0xbb)) && (iVar8 != 0x9c)) && (iVar8 != 0xb9)) {
+        if ((iVar8 != 0x7f) && (iVar2 == 0)) goto LAB_8233fecc;
         goto LAB_8233fef4;
       }
       goto LAB_8233fedc;
     }
-    bVar6 = Con_CancelAutoComplete();
-    if (bVar6) goto LAB_82340024;
+    cVar7 = Con_CancelAutoComplete();
+    if (cVar7 != '\0') goto LAB_82340024;
   }
 LAB_8233fef4:
-  bVar6 = Field_KeyDownEvent(LVar4,pSVar5,&g_consoleField,param_2);
-  if (bVar6) {
-    Con_AllowAutoCompleteCycling(true);
+  cVar7 = Field_KeyDownEvent(uVar5,uVar6,0xffffffff82a9b110,param_2);
+  if (cVar7 != '\0') {
+    Con_AllowAutoCompleteCycling(1);
     __restgprlr_24();
     return;
   }
@@ -812,214 +1036,250 @@ LAB_82340024:
 
 
 // 82340030  Message_Key  (client/cl_keys.cpp:1446)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void Message_Key(undefined8 param_1,undefined8 param_2)
+
+{
+  uint uVar2;
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  undefined1 auStack_440 [1088];
+  
+  uVar2 = __savegprlr_26();
+  iVar4 = uVar2 * 0x1128;
+  if (3 < uVar2) {
+    MyAssertHandler(0xffffffff8202cab8,0x47f,0,0xffffffff820011a8,uVar2,4);
+  }
+  iVar3 = (int)param_2;
+  if (iVar3 != 0x1b) {
+    if ((iVar3 != 0xd) && (iVar3 != 0xbf)) {
+      uVar1 = ScrPlace_GetViewPlacement(uVar2);
+      Field_KeyDownEvent(uVar2,uVar1,&DAT_82a9b230 + iVar4,param_2);
+      __restgprlr_26();
+      return;
+    }
+    iVar3 = CL_GetLocalClientConnectionState(uVar2);
+    if (((&DAT_82a9b248)[iVar4] != '\0') && (iVar3 == 10)) {
+      if (*(int *)(&DAT_82a9b348 + iVar4) == 0) {
+        uVar1 = 0xffffffff82030178;
+      }
+      else {
+        uVar1 = 0xffffffff82030184;
+      }
+      Com_sprintf(auStack_440,0x400,uVar1,&DAT_82a9b248 + iVar4);
+      CL_AddReliableCommand(uVar2,auStack_440);
+    }
+  }
+  (&DAT_82b3e544)[uVar2 * 0x79] = (&DAT_82b3e544)[uVar2 * 0x79] & 0xffffffdf;
+  Field_Clear(&DAT_82a9b230 + iVar4);
+  __restgprlr_26();
+  return;
+}
+
 
 // 8233DC90  Key_GetOverstrikeMode  (client/cl_keys.cpp:1484)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Key_GetOverstrikeMode(LocalClientNum_t param_1)
+undefined4 Key_GetOverstrikeMode(int param_1)
 
 {
-  return playerKeys[param_1].overstrikeMode;
+  return *(undefined4 *)(&DAT_82a9b34c + param_1 * 0x1128);
 }
 
 
 // 8233DCA8  Key_SetOverstrikeMode  (client/cl_keys.cpp:1490)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Key_SetOverstrikeMode(LocalClientNum_t param_1,int param_2)
+void Key_SetOverstrikeMode(int param_1,undefined4 param_2)
 
 {
-  playerKeys[param_1].overstrikeMode = param_2;
+  *(undefined4 *)(&DAT_82a9b34c + param_1 * 0x1128) = param_2;
   return;
 }
 
 
 // 8233DCC0  Key_IsDown  (client/cl_keys.cpp:1496)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Key_IsDown(LocalClientNum_t param_1,int param_2)
+undefined4 Key_IsDown(int param_1,int param_2)
 
 {
   if (param_2 == -1) {
     return 0;
   }
-  return playerKeys[param_1].keys[param_2].down;
+  return *(undefined4 *)(&DAT_82a9b354 + param_1 * 0x1128 + param_2 * 0x10);
 }
 
 
 // 8233DCF0  Key_StringToKeynum  (client/cl_keys.cpp:1518)
 
-int Key_StringToKeynum(char *param_1)
+void Key_StringToKeynum(void)
 
 {
-  char *pcVar1;
-  bool bVar3;
-  int iVar2;
+  undefined *puVar1;
+  char *pcVar2;
   char cVar4;
+  int iVar3;
+  char cVar5;
   char *pcVar6;
-  longlong lVar5;
   ulonglong uVar7;
-  keyname_t *pkVar8;
+  longlong lVar8;
+  undefined **ppuVar9;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if ((pcVar1 != (char *)0x0) && (cVar4 = *pcVar1, cVar4 != '\0')) {
-    if (pcVar1[1] == '\0') goto LAB_8233de2c;
-    if ((cVar4 == '0') && (pcVar6 = pcVar1, pcVar1[1] == 'x')) {
+  pcVar2 = (char *)__savegprlr_29();
+  if ((pcVar2 != (char *)0x0) && (cVar5 = *pcVar2, cVar5 != '\0')) {
+    if (pcVar2[1] == '\0') goto LAB_8233de2c;
+    if ((cVar5 == '0') && (pcVar6 = pcVar2, pcVar2[1] == 'x')) {
       do {
-        cVar4 = *pcVar6;
+        cVar5 = *pcVar6;
         pcVar6 = pcVar6 + 1;
-      } while (cVar4 != '\0');
-      if ((int)pcVar6 - (int)pcVar1 == 5) {
-        cVar4 = pcVar1[2];
-        bVar3 = I_isdigit((int)cVar4);
-        if (bVar3) {
-          uVar7 = (longlong)cVar4 - 0x30;
+      } while (cVar5 != '\0');
+      if ((int)pcVar6 - (int)pcVar2 == 5) {
+        cVar5 = pcVar2[2];
+        lVar8 = (longlong)cVar5;
+        cVar4 = I_isdigit(lVar8);
+        if (cVar4 == '\0') {
+          if ((cVar5 < 'a') || (uVar7 = lVar8 - 0x57, 'f' < cVar5)) {
+            uVar7 = 0;
+          }
         }
-        else if ((cVar4 < 'a') || (uVar7 = (longlong)cVar4 - 0x57, 'f' < cVar4)) {
-          uVar7 = 0;
+        else {
+          uVar7 = lVar8 - 0x30;
         }
-        cVar4 = pcVar1[3];
-        bVar3 = I_isdigit((int)cVar4);
-        if (bVar3) {
-          iVar2 = __restgprlr_29((uVar7 & 0xfffffff) * 0x10 + (longlong)cVar4 + -0x30);
-          return iVar2;
+        cVar5 = pcVar2[3];
+        lVar8 = (longlong)cVar5;
+        cVar4 = I_isdigit(lVar8);
+        if (cVar4 != '\0') {
+          __restgprlr_29((uVar7 & 0xfffffff) * 0x10 + lVar8 + -0x30);
+          return;
         }
-        if ((cVar4 < 'a') || (lVar5 = (longlong)cVar4 + -0x57, 'f' < cVar4)) {
-          lVar5 = 0;
+        if ((cVar5 < 'a') || (lVar8 = lVar8 + -0x57, 'f' < cVar5)) {
+          lVar8 = 0;
         }
-        iVar2 = __restgprlr_29((uVar7 & 0xfffffff) * 0x10 + lVar5);
-        return iVar2;
+        __restgprlr_29((uVar7 & 0xfffffff) * 0x10 + lVar8);
+        return;
       }
     }
-    pkVar8 = keynames;
-    pcVar6 = keynames[0].name;
-    while (pcVar6 != (char *)0x0) {
-      iVar2 = I_stricmp(pcVar1,pkVar8->name);
-      if (iVar2 == 0) {
-        iVar2 = __restgprlr_29(pkVar8->keynum);
-        return iVar2;
+    ppuVar9 = &PTR_DAT_82964a60;
+    puVar1 = PTR_DAT_82964a60;
+    while (puVar1 != (undefined *)0x0) {
+      iVar3 = I_stricmp(pcVar2,*ppuVar9);
+      if (iVar3 == 0) {
+        __restgprlr_29(ppuVar9[1]);
+        return;
       }
-      pkVar8 = pkVar8 + 1;
-      pcVar6 = pkVar8->name;
+      ppuVar9 = ppuVar9 + 2;
+      puVar1 = *ppuVar9;
     }
   }
-  cVar4 = -1;
+  cVar5 = -1;
 LAB_8233de2c:
-  iVar2 = __restgprlr_29(cVar4);
-  return iVar2;
+  __restgprlr_29(cVar5);
+  return;
 }
 
 
 // 8233DE40  Key_IsValidGamePadChar  (client/cl_keys.cpp:1579)
 
-bool Key_IsValidGamePadChar(char param_1)
+undefined8 Key_IsValidGamePadChar(char param_1)
 
 {
   if ((((param_1 < '\x01') || ('\x06' < param_1)) && ((param_1 < '\x0e' || ('\x17' < param_1)))) &&
      ((param_1 < '\x1c' || ('\x1f' < param_1)))) {
-    return false;
+    return 0;
   }
-  return true;
+  return 1;
 }
 
 
 // 8233DE90  Key_KeynumToString  (client/cl_keys.cpp:1592)
 
-char * Key_KeynumToString(int param_1,int param_2)
+void Key_KeynumToString(undefined8 param_1,int param_2)
 
 {
-  uint uVar2;
-  char *pcVar3;
-  int iVar4;
-  bool bVar5;
-  ulonglong uVar1;
-  keyname_t *pkVar6;
-  char cVar7;
+  undefined *puVar1;
+  undefined *_C;
+  int iVar3;
+  char cVar4;
+  ulonglong uVar2;
+  longlong lVar5;
+  undefined **ppuVar6;
   
-  uVar2 = __savegprlr_29(param_1);
-  if (uVar2 == 0xffffffff) {
-    pcVar3 = (char *)__restgprlr_29(0xffffffff8202ff40);
-    return pcVar3;
+  _C = (undefined *)__savegprlr_29();
+  if (_C == (undefined *)0xffffffff) {
+    __restgprlr_29(0xffffffff8202ff40);
+    return;
   }
-  if (((int)uVar2 < 0) || (0xff < (int)uVar2)) {
-    uVar1 = 0xffffffff8202ff30;
+  if (((int)_C < 0) || (0xff < (int)_C)) {
+    uVar2 = 0xffffffff8202ff30;
     goto LAB_8233e034;
   }
-  if ((((param_2 != 0) && (iVar4 = SEH_GetCurrentLanguage(), iVar4 == 1)) && (0x2f < (int)uVar2)) &&
-     ((int)uVar2 < 0x3a)) {
-    pcVar3 = (char *)__restgprlr_29(frenchNumberKeysMap[uVar2 - 0x30]);
-    return pcVar3;
+  if ((((param_2 != 0) && (iVar3 = SEH_GetCurrentLanguage(), iVar3 == 1)) && (0x2f < (int)_C)) &&
+     ((int)_C < 0x3a)) {
+    __restgprlr_29((&PTR_DAT_829651a0)[(int)(_C + -0x30)]);
+    return;
   }
-  if ((((int)uVar2 < 0x21) || (0x7e < (int)uVar2)) || (uVar2 == 0x22)) {
+  if ((((int)_C < 0x21) || (0x7e < (int)_C)) || (_C == (undefined *)0x22)) {
     if (param_2 == 0) goto LAB_8233dfa8;
-    cVar7 = (char)uVar2;
-    bVar5 = Key_IsValidGamePadChar(cVar7);
-    if (bVar5) {
-      tinystr[1] = '\0';
-      tinystr[0] = cVar7;
-      pcVar3 = (char *)__restgprlr_29(0xffffffff82aa19d0);
-      return pcVar3;
+    lVar5 = (longlong)(char)_C;
+    cVar4 = Key_IsValidGamePadChar(lVar5);
+    if (cVar4 != '\0') {
+      DAT_82aa19d0 = (undefined1)lVar5;
+      DAT_82aa19d1 = 0;
+      __restgprlr_29(0xffffffff82aa19d0);
+      return;
     }
-    pkVar6 = keynames_localized;
+    ppuVar6 = &PTR_s_KEY_TAB_82964e00;
   }
   else {
-    iVar4 = toupper(uVar2);
-    tinystr[0] = (char)iVar4;
-    tinystr[1] = '\0';
-    if ((uVar2 != 0x3b) || (param_2 != 0)) {
-      pcVar3 = (char *)__restgprlr_29(0xffffffff82aa19d0);
-      return pcVar3;
+    iVar3 = toupper((int)_C);
+    DAT_82aa19d0 = (undefined1)iVar3;
+    DAT_82aa19d1 = 0;
+    if ((_C != (undefined *)0x3b) || (param_2 != 0)) {
+      __restgprlr_29(0xffffffff82aa19d0);
+      return;
     }
 LAB_8233dfa8:
-    pkVar6 = keynames;
+    ppuVar6 = &PTR_DAT_82964a60;
   }
-  pcVar3 = pkVar6->name;
+  puVar1 = *ppuVar6;
   while( true ) {
-    uVar1 = ZEXT48(pcVar3);
-    if (uVar1 == 0) {
-      tinystr[0] = '0';
-      tinystr[1] = 'x';
-      cVar7 = (char)((int)uVar2 >> 4);
-      if ((int)uVar2 >> 4 < 10) {
-        tinystr[2] = cVar7 + '0';
+    uVar2 = ZEXT48(puVar1);
+    if (uVar2 == 0) {
+      DAT_82aa19d0 = 0x30;
+      DAT_82aa19d1 = 0x78;
+      cVar4 = (char)((int)_C >> 4);
+      if ((int)_C >> 4 < 10) {
+        DAT_82aa19d2 = cVar4 + '0';
       }
       else {
-        tinystr[2] = cVar7 + 'W';
+        DAT_82aa19d2 = cVar4 + 'W';
       }
-      cVar7 = (char)(uVar2 & 0xf);
-      tinystr[3] = cVar7 + 'W';
-      if ((uVar2 & 0xf) < 10) {
-        tinystr[3] = cVar7 + '0';
+      cVar4 = (char)((uint)_C & 0xf);
+      DAT_82aa19d3 = cVar4 + 'W';
+      if (((uint)_C & 0xf) < 10) {
+        DAT_82aa19d3 = cVar4 + '0';
       }
-      tinystr[4] = '\0';
-      pcVar3 = (char *)__restgprlr_29(0xffffffff82aa19d0);
-      return pcVar3;
+      DAT_82aa19d4 = 0;
+      __restgprlr_29(0xffffffff82aa19d0);
+      return;
     }
-    if (uVar2 == pkVar6->keynum) break;
-    pkVar6 = pkVar6 + 1;
-    pcVar3 = pkVar6->name;
+    if (_C == ppuVar6[1]) break;
+    ppuVar6 = ppuVar6 + 2;
+    puVar1 = *ppuVar6;
   }
 LAB_8233e034:
-  pcVar3 = (char *)__restgprlr_29(uVar1);
-  return pcVar3;
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 8233E040  Key_SetBindingCheat  (client/cl_keys.cpp:1665)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Key_SetBindingCheat(LocalClientNum_t param_1,int param_2,char *param_3)
+void Key_SetBindingCheat(int param_1,int param_2,undefined8 param_3)
 
 {
   if (param_2 != -1) {
-    ReplaceString(&playerKeys[param_1].keys[param_2].bindingCheat,param_3,"Key_SetBindingCheat",10);
-    playerKeys[param_1].keys[param_2].binding = 0;
+    ReplaceString(&DAT_82a9b360 + param_2 * 4 + param_1 * 0x44a,param_3,0xffffffff8202ff50,10);
+    (&DAT_82a9b35c)[param_2 * 4 + param_1 * 0x44a] = 0;
   }
   return;
 }
@@ -1027,24 +1287,20 @@ void Key_SetBindingCheat(LocalClientNum_t param_1,int param_2,char *param_3)
 
 // 8233E0B8  Key_SetBinding  (client/cl_keys.cpp:1685)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Key_SetBinding(LocalClientNum_t param_1,int param_2,int param_3)
+void Key_SetBinding(undefined8 param_1,ulonglong param_2,undefined4 param_3)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
+  longlong lVar2;
   
-  uVar3 = (ulonglong)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  if ((int)uVar3 != -1) {
-    iVar1 = (int)((uVar3 & 0xffffffff) << 4);
-    if (*(int *)((int)&playerKeys[iVar2].keys[0].bindingCheat + iVar1) != 0) {
-      ReplaceString((char **)((int)&playerKeys[iVar2].keys[0].bindingCheat + iVar1),"",
-                    "Key_SetBindingCheat",10);
+  lVar2 = __savegprlr_29();
+  if ((int)param_2 != -1) {
+    lVar2 = lVar2 * 0x1128 + (param_2 & 0xfffffff) * 0x10;
+    iVar1 = (int)lVar2;
+    if (*(int *)((int)&DAT_82a9b360 + iVar1) != 0) {
+      ReplaceString(lVar2 + -0x7d564ca0,0xffffffff820068af,0xffffffff8202ff50,10);
     }
-    *(int *)((int)&playerKeys[iVar2].keys[0].binding + iVar1) = param_3;
+    *(undefined4 *)((int)&DAT_82a9b35c + iVar1) = param_3;
   }
   __restgprlr_29();
   return;
@@ -1053,124 +1309,104 @@ void Key_SetBinding(LocalClientNum_t param_1,int param_2,int param_3)
 
 // 8233E120  Key_GetBindingForCmd  (client/cl_keys.cpp:1706)
 
-int Key_GetBindingForCmd(char *param_1)
+void Key_GetBindingForCmd(void)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
   ulonglong uVar3;
-  char **ppcVar4;
+  undefined **ppuVar4;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
+  uVar1 = __savegprlr_29();
   uVar3 = 0;
-  ppcVar4 = g_bindCommands;
+  ppuVar4 = &PTR_DAT_829651c8;
   do {
-    iVar2 = I_stricmp(pcVar1,*ppcVar4);
+    iVar2 = I_stricmp(uVar1,*ppuVar4);
     if (iVar2 == 0) {
-      iVar2 = __restgprlr_29(uVar3);
-      return iVar2;
+      __restgprlr_29(uVar3);
+      return;
     }
     uVar3 = uVar3 + 1;
-    ppcVar4 = ppcVar4 + 1;
+    ppuVar4 = ppuVar4 + 1;
   } while ((uVar3 & 0xffffffff) < 0x2b);
-  iVar2 = __restgprlr_29(0);
-  return iVar2;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 8233E178  Key_GetBindingCheat  (client/cl_keys.cpp:1721)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-char * Key_GetBindingCheat(LocalClientNum_t param_1,int param_2)
+void Key_GetBindingCheat(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
   int iVar2;
-  uint uVar3;
-  char *pcVar4;
-  ulonglong uVar5;
+  ulonglong uVar3;
   
-  uVar5 = (ulonglong)param_2;
-  uVar3 = __savegprlr_29(param_1);
-  if (3 < uVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_keys.cpp",0x6ba,0,
-                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  uVar3 = __savegprlr_29();
+  if (3 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202fedc,0x6ba,0,0xffffffff820011a8,uVar3,4);
   }
-  if (0xff < (uVar5 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_keys.cpp",0x6bb,0,
-                    "keynum doesn\'t index MAX_KEYS\n\t%i not in [0, %i)");
+  if (0xff < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202fedc,0x6bb,0,0xffffffff8202ff64,param_2,0x100);
   }
-  iVar2 = (int)((uVar5 & 0xffffffff) << 4);
-  iVar1 = *(int *)((int)&playerKeys[uVar3].keys[0].binding + iVar2);
+  iVar2 = (int)uVar3 * 0x1128 + (int)((param_2 & 0xffffffff) << 4);
+  iVar1 = *(int *)((int)&DAT_82a9b35c + iVar2);
   if (iVar1 != 0) {
-    pcVar4 = (char *)__restgprlr_29(g_bindCommands[iVar1]);
-    return pcVar4;
+    __restgprlr_29((&PTR_DAT_829651c8)[iVar1]);
+    return;
   }
-  pcVar4 = (char *)__restgprlr_29(*(undefined4 *)
-                                   ((int)&playerKeys[uVar3].keys[0].bindingCheat + iVar2));
-  return pcVar4;
+  __restgprlr_29(*(undefined4 *)((int)&DAT_82a9b360 + iVar2));
+  return;
 }
 
 
 // 8233E230  Key_GetBinding  (client/cl_keys.cpp:1732)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Key_GetBinding(LocalClientNum_t param_1,int param_2)
+void Key_GetBinding(undefined8 param_1,ulonglong param_2)
 
 {
-  uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
+  ulonglong uVar1;
   
-  uVar3 = (ulonglong)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_keys.cpp",0x6c5,0,
-                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  uVar1 = __savegprlr_29();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202fedc,0x6c5,0,0xffffffff820011a8,uVar1,4);
   }
-  if (0xff < (uVar3 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_keys.cpp",0x6c6,0,
-                    "keynum doesn\'t index MAX_KEYS\n\t%i not in [0, %i)");
+  if (0xff < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202fedc,0x6c6,0,0xffffffff8202ff64,param_2,0x100);
   }
-  iVar2 = __restgprlr_29(*(undefined4 *)
-                          ((int)&playerKeys[uVar1].keys[0].binding +
-                          (int)((uVar3 & 0xffffffff) << 4)));
-  return iVar2;
+  __restgprlr_29(*(undefined4 *)
+                  ((int)&DAT_82a9b35c + (int)uVar1 * 0x1128 + (int)((param_2 & 0xffffffff) << 4)));
+  return;
 }
 
 
 // 8233E2C0  Key_GetCommandAssignmentInternal  (client/cl_keys.cpp:1740)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Key_GetCommandAssignmentInternal
-              (LocalClientNum_t param_1,char *param_2,int *param_3,int param_4)
+void Key_GetCommandAssignmentInternal
+               (undefined8 param_1,undefined8 param_2,longlong param_3,int param_4)
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
-  int iVar3;
-  char *pcVar4;
+  undefined8 uVar2;
+  int iVar4;
+  ulonglong uVar3;
   int iVar5;
   longlong lVar6;
-  int iVar7;
+  longlong lVar7;
   char cVar8;
-  longlong lVar9;
   
-  lVar9 = (longlong)(int)param_3;
-  LVar2 = __savegprlr_25(param_1);
-  ((undefined4 *)lVar9)[1] = 0xffffffff;
-  *(undefined4 *)lVar9 = 0xffffffff;
+  uVar2 = __savegprlr_25();
+  ((undefined4 *)param_3)[1] = 0xffffffff;
+  *(undefined4 *)param_3 = 0xffffffff;
   lVar6 = 0;
-  iVar3 = Key_GetBindingForCmd(param_2);
-  iVar7 = 0;
-  lVar9 = lVar9 + -4;
-  if (iVar3 == 0) {
+  iVar4 = Key_GetBindingForCmd(param_2);
+  lVar7 = 0;
+  param_3 = param_3 + -4;
+  if (iVar4 == 0) {
     do {
       if (param_4 == 1) {
-        cVar8 = (char)iVar7;
+        cVar8 = (char)lVar7;
         if ((((cVar8 < '\x01') || ('\x06' < cVar8)) && ((cVar8 < '\x0e' || ('\x17' < cVar8)))) &&
            ((cVar8 < '\x1c' || ('\x1f' < cVar8)))) {
           bVar1 = false;
@@ -1182,24 +1418,24 @@ int Key_GetCommandAssignmentInternal
       }
       else {
 LAB_8233e35c:
-        pcVar4 = Key_GetBindingCheat(LVar2,iVar7);
-        if ((pcVar4 != (char *)0x0) && (iVar3 = I_stricmp(pcVar4,param_2), iVar3 == 0)) {
+        uVar3 = Key_GetBindingCheat(uVar2,lVar7);
+        if (((uVar3 & 0xffffffff) != 0) && (iVar4 = I_stricmp(uVar3,param_2), iVar4 == 0)) {
           lVar6 = lVar6 + 1;
-          lVar9 = lVar9 + 4;
-          *(int *)lVar9 = iVar7;
+          param_3 = param_3 + 4;
+          *(undefined4 *)param_3 = (int)lVar7;
           if ((int)lVar6 == 2) goto LAB_8233e42c;
         }
       }
-      iVar7 = iVar7 + 1;
-      if (0xff < iVar7) {
-        iVar3 = __restgprlr_25(lVar6);
-        return iVar3;
+      lVar7 = lVar7 + 1;
+      if (0xff < (int)lVar7) {
+        __restgprlr_25(lVar6);
+        return;
       }
     } while( true );
   }
   do {
     if (param_4 == 1) {
-      cVar8 = (char)iVar7;
+      cVar8 = (char)lVar7;
       if ((((cVar8 < '\x01') || ('\x06' < cVar8)) && ((cVar8 < '\x0e' || ('\x17' < cVar8)))) &&
          ((cVar8 < '\x1c' || ('\x1f' < cVar8)))) {
         bVar1 = false;
@@ -1211,106 +1447,95 @@ LAB_8233e35c:
     }
     else {
 LAB_8233e3fc:
-      iVar5 = Key_GetBinding(LVar2,iVar7);
-      if (iVar5 == iVar3) {
+      iVar5 = Key_GetBinding(uVar2,lVar7);
+      if (iVar5 == iVar4) {
         lVar6 = lVar6 + 1;
-        lVar9 = lVar9 + 4;
-        *(int *)lVar9 = iVar7;
+        param_3 = param_3 + 4;
+        *(undefined4 *)param_3 = (int)lVar7;
         if ((int)lVar6 == 2) break;
       }
     }
-    iVar7 = iVar7 + 1;
-  } while (iVar7 < 0x100);
+    lVar7 = lVar7 + 1;
+  } while ((int)lVar7 < 0x100);
 LAB_8233e42c:
-  iVar3 = __restgprlr_25(lVar6);
-  return iVar3;
+  __restgprlr_25(lVar6);
+  return;
 }
 
 
 // 8233E438  Key_GetCommandAssignment  (client/cl_keys.cpp:1807)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Key_GetCommandAssignment(LocalClientNum_t param_1,char *param_2,int *param_3)
+void Key_GetCommandAssignment(void)
 
 {
-  int iVar1;
-  
-  iVar1 = Key_GetCommandAssignmentInternal(param_1,param_2,param_3,0);
-  return iVar1;
+  Key_GetCommandAssignmentInternal();
+  return;
 }
 
 
 // 8233E440  Key_IsCommandBound  (client/cl_keys.cpp:1813)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Key_IsCommandBound(LocalClientNum_t param_1,char *param_2)
+ulonglong Key_IsCommandBound(undefined8 param_1,undefined8 param_2)
 
 {
-  uint uVar1;
-  int aiStack_20 [2];
+  ulonglong uVar1;
+  undefined1 auStack_20 [8];
   
-  Sys_EnterCriticalSection(CRITSECT_KEY_BINDINGS);
-  uVar1 = Key_GetCommandAssignmentInternal(param_1,param_2,aiStack_20,0);
-  Sys_LeaveCriticalSection(CRITSECT_KEY_BINDINGS);
-  return (-uVar1 & ~uVar1) >> 0x1f;
+  Sys_EnterCriticalSection(0xe);
+  uVar1 = Key_GetCommandAssignmentInternal(param_1,param_2,auStack_20,0);
+  Sys_LeaveCriticalSection(0xe);
+  return (-uVar1 & ~uVar1 & 0xffffffff) >> 0x1f;
 }
 
 
 // 8233E4A8  Key_Unbind_f  (client/cl_keys.cpp:1832)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void Key_Unbind_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  LocalClientNum_t LVar3;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 != 2) {
-    Com_Printf(0,"unbind <key> : remove commands from a key\n");
+  iVar3 = Cmd_Argc();
+  if (iVar3 != 2) {
+    Com_Printf(0,0xffffffff8202ffb0);
     return;
   }
-  pcVar2 = Cmd_Argv(1);
-  iVar1 = Key_StringToKeynum(pcVar2);
-  if (iVar1 == -1) {
-    Cmd_Argv(1);
-    Com_Printf(0,"\"%s\" isn\'t a valid key\n");
+  Cmd_Argv(1);
+  uVar1 = Key_StringToKeynum();
+  if ((int)uVar1 == -1) {
+    uVar1 = Cmd_Argv(1);
+    Com_Printf(0,0xffffffff8202ff98,uVar1);
     return;
   }
-  LVar3 = Cmd_LocalClientNum();
-  Key_SetBinding(LVar3,iVar1,0);
+  uVar2 = Cmd_LocalClientNum();
+  Key_SetBinding(uVar2,uVar1,0);
   return;
 }
 
 
 // 8233E558  Key_Unbindall_f  (client/cl_keys.cpp:1853)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void Key_Unbindall_f(void)
 
 {
-  LocalClientNum_t LVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
+  int iVar4;
   
   __savegprlr_24();
-  LVar1 = Cmd_LocalClientNum();
+  iVar1 = Cmd_LocalClientNum();
   iVar2 = 0;
   iVar3 = 0;
   do {
     if (iVar2 != -1) {
-      if (*(int *)((int)&playerKeys[LVar1].keys[0].bindingCheat + iVar3) != 0) {
-        ReplaceString((char **)((int)&playerKeys[LVar1].keys[0].bindingCheat + iVar3),"",
-                      "Key_SetBindingCheat",10);
+      iVar4 = iVar1 * 0x1128 + iVar3;
+      if (*(int *)((int)&DAT_82a9b360 + iVar4) != 0) {
+        ReplaceString((int)&DAT_82a9b360 + iVar4,0xffffffff820068af,0xffffffff8202ff50,10);
       }
-      *(undefined4 *)((int)&playerKeys[LVar1].keys[0].binding + iVar3) = 0;
+      *(undefined4 *)((int)&DAT_82a9b35c + iVar4) = 0;
     }
     iVar3 = iVar3 + 0x10;
     iVar2 = iVar2 + 1;
@@ -1322,88 +1547,85 @@ void Key_Unbindall_f(void)
 
 // 8233E5E8  Key_Bind_f  (client/cl_keys.cpp:1869)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void Key_Bind_f(void)
 
 {
   bool bVar1;
-  int iVar3;
-  char *pcVar4;
   int iVar5;
-  LocalClientNum_t LVar6;
-  int iVar7;
-  ulonglong uVar2;
-  char local_450 [1104];
+  int iVar6;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  char *pcVar7;
+  longlong lVar8;
+  undefined1 local_450 [1104];
   
   __savegprlr_24();
-  iVar3 = Cmd_Argc();
-  if (iVar3 < 2) {
-    Com_Printf(0,"bind <key> [command] : attach a command to a key\n");
+  iVar5 = Cmd_Argc();
+  if (iVar5 < 2) {
+    Com_Printf(0,0xffffffff82030000);
     __restgprlr_24();
     return;
   }
-  pcVar4 = Cmd_Argv(1);
-  iVar5 = Key_StringToKeynum(pcVar4);
-  if (iVar5 == -1) {
-    Cmd_Argv(1);
-    Com_Printf(0,"\"%s\" isn\'t a valid key\n");
+  Cmd_Argv(1);
+  iVar6 = Key_StringToKeynum();
+  if (iVar6 == -1) {
+    uVar2 = Cmd_Argv(1);
+    Com_Printf(0,0xffffffff8202ff98,uVar2);
     __restgprlr_24();
     return;
   }
-  iVar5 = tolower(iVar5);
-  LVar6 = Cmd_LocalClientNum();
-  if (iVar3 == 2) {
-    pcVar4 = Key_GetBindingCheat(LVar6,iVar5);
-    if (pcVar4 != (char *)0x0) {
-      Cmd_Argv(1);
-      Com_Printf(0,"\"%s\" = \"%s\"\n");
+  iVar6 = tolower(iVar6);
+  uVar2 = Cmd_LocalClientNum();
+  if (iVar5 == 2) {
+    uVar3 = Key_GetBindingCheat(uVar2,iVar6);
+    if ((uVar3 & 0xffffffff) != 0) {
+      uVar2 = Cmd_Argv(1);
+      Com_Printf(0,0xffffffff8202fff0,uVar2,uVar3);
       __restgprlr_24();
       return;
     }
-    Cmd_Argv(1);
-    Com_Printf(0,"\"%s\" is not bound\n");
+    uVar2 = Cmd_Argv(1);
+    Com_Printf(0,0xffffffff8202ffdc,uVar2);
     __restgprlr_24();
     return;
   }
-  pcVar4 = Cmd_Argv(2);
-  iVar7 = Key_GetBindingForCmd(pcVar4);
-  if (iVar7 != 0) {
-    Key_SetBinding(LVar6,iVar5,iVar7);
+  Cmd_Argv(2);
+  uVar4 = Key_GetBindingForCmd();
+  if ((int)uVar4 != 0) {
+    Key_SetBinding(uVar2,iVar6,uVar4);
     __restgprlr_24();
     return;
   }
-  iVar7 = 2;
-  local_450[0] = '\0';
-  if (2 < iVar3) {
+  lVar8 = 2;
+  local_450[0] = 0;
+  if (2 < iVar5) {
     do {
-      if (iVar3 < 4) {
+      if (iVar5 < 4) {
 LAB_8233e740:
         bVar1 = false;
       }
       else {
-        pcVar4 = Cmd_Argv(iVar7);
-        uVar2 = (ulonglong)(int)pcVar4;
-        strchr();
+        pcVar7 = (char *)Cmd_Argv(lVar8);
+        pcVar7 = strchr(pcVar7,0x20);
         bVar1 = true;
-        if ((uVar2 & 0xffffffff) == 0) goto LAB_8233e740;
+        if (pcVar7 == (char *)0x0) goto LAB_8233e740;
       }
       if (bVar1) {
-        I_strncat(local_450,0x400,"\"");
+        I_strncat(local_450,0x400,0xffffffff8202f54c);
       }
-      pcVar4 = Cmd_Argv(iVar7);
-      I_strncat(local_450,0x400,pcVar4);
+      uVar4 = Cmd_Argv(lVar8);
+      I_strncat(local_450,0x400,uVar4);
       if (bVar1) {
-        I_strncat(local_450,0x400,"\"");
+        I_strncat(local_450,0x400,0xffffffff8202f54c);
       }
-      if (iVar7 != iVar3 + -1) {
-        I_strncat(local_450,0x400," ");
+      if ((int)lVar8 != iVar5 + -1) {
+        I_strncat(local_450,0x400,0xffffffff820034a0);
       }
-      iVar7 = iVar7 + 1;
-    } while (iVar7 < iVar3);
+      lVar8 = lVar8 + 1;
+    } while ((int)lVar8 < iVar5);
   }
-  Key_SetBindingCheat(LVar6,iVar5,local_450);
+  Key_SetBindingCheat(uVar2,iVar6,local_450);
   __restgprlr_24();
   return;
 }
@@ -1411,94 +1633,91 @@ LAB_8233e740:
 
 // 8233E7D0  Key_SwapBind_f  (client/cl_keys.cpp:1940)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void Key_SwapBind_f(void)
 
 {
   char cVar1;
-  int iVar2;
-  LocalClientNum_t LVar3;
-  char *pcVar4;
+  int iVar3;
+  undefined8 uVar2;
+  int iVar4;
   int iVar5;
-  int iVar6;
+  longlong lVar6;
   int iVar7;
-  int local_460 [2];
+  uint local_460 [2];
   char *local_458 [2];
   int local_450 [4];
   char acStack_440 [1088];
   
   __savegprlr_25();
-  iVar2 = Cmd_Argc();
-  if (iVar2 != 3) {
-    Com_Printf(0,"bind_swap <key> <key> : Swap binds of keys\n");
+  iVar3 = Cmd_Argc();
+  if (iVar3 != 3) {
+    Com_Printf(0,0xffffffff82030034);
     __restgprlr_25();
     return;
   }
-  LVar3 = Cmd_LocalClientNum();
-  iVar2 = 0;
+  iVar3 = Cmd_LocalClientNum();
+  lVar6 = 0;
   iVar7 = 0;
   while( true ) {
-    iVar2 = iVar2 + 1;
-    pcVar4 = Cmd_Argv(iVar2);
-    iVar5 = Key_StringToKeynum(pcVar4);
-    *(int *)((int)local_460 + iVar7) = iVar5;
-    if (iVar5 == -1) {
-      Com_Printf(0,"\"%s\" isn\'t a valid key\n");
+    lVar6 = lVar6 + 1;
+    uVar2 = Cmd_Argv(lVar6);
+    iVar4 = Key_StringToKeynum();
+    *(int *)((int)local_460 + iVar7) = iVar4;
+    if (iVar4 == -1) {
+      Com_Printf(0,0xffffffff8202ff98,uVar2);
       __restgprlr_25();
       return;
     }
-    iVar5 = tolower(iVar5);
-    *(int *)((int)local_460 + iVar7) = iVar5;
-    iVar6 = Key_GetBinding(LVar3,iVar5);
-    *(int *)((int)local_450 + iVar7) = iVar6;
-    pcVar4 = Key_GetBindingCheat(LVar3,iVar5);
-    *(char **)((int)local_458 + iVar7) = pcVar4;
-    if ((iVar6 == 0) && (pcVar4 == (char *)0x0)) break;
+    iVar4 = tolower(iVar4);
+    *(int *)((int)local_460 + iVar7) = iVar4;
+    iVar5 = Key_GetBinding(iVar3,iVar4);
+    *(int *)((int)local_450 + iVar7) = iVar5;
+    iVar4 = Key_GetBindingCheat(iVar3,iVar4);
+    *(int *)((int)local_458 + iVar7) = iVar4;
+    if ((iVar5 == 0) && (iVar4 == 0)) break;
     iVar7 = iVar7 + 4;
     if (7 < iVar7) {
-      iVar2 = -(int)local_458[0];
+      iVar7 = -(int)local_458[0];
       do {
         cVar1 = *local_458[0];
-        local_458[0][(int)(acStack_440 + iVar2)] = cVar1;
+        local_458[0][(int)(acStack_440 + iVar7)] = cVar1;
         local_458[0] = local_458[0] + 1;
       } while (cVar1 != '\0');
       if (local_450[1] == 0) {
-        if (local_460[0] != -1) {
-          ReplaceString(&playerKeys[LVar3].keys[local_460[0]].bindingCheat,local_458[1],
-                        "Key_SetBindingCheat",10);
-          playerKeys[LVar3].keys[local_460[0]].binding = 0;
+        if (local_460[0] != 0xffffffff) {
+          ReplaceString(&DAT_82a9b360 + local_460[0] * 4 + iVar3 * 0x44a,local_458[1],
+                        0xffffffff8202ff50,10);
+          (&DAT_82a9b35c)[local_460[0] * 4 + iVar3 * 0x44a] = 0;
         }
       }
-      else if (local_460[0] != -1) {
-        if (playerKeys[LVar3].keys[local_460[0]].bindingCheat != (char *)0x0) {
-          ReplaceString(&playerKeys[LVar3].keys[local_460[0]].bindingCheat,"","Key_SetBindingCheat",
-                        10);
+      else if (local_460[0] != 0xffffffff) {
+        if ((&DAT_82a9b360)[local_460[0] * 4 + iVar3 * 0x44a] != 0) {
+          ReplaceString(&DAT_82a9b360 + local_460[0] * 4 + iVar3 * 0x44a,0xffffffff820068af,
+                        0xffffffff8202ff50,10);
         }
-        playerKeys[LVar3].keys[local_460[0]].binding = local_450[1];
+        (&DAT_82a9b35c)[local_460[0] * 4 + iVar3 * 0x44a] = local_450[1];
       }
       if (local_450[0] == 0) {
         if (local_460[1] != -1) {
-          ReplaceString(&playerKeys[LVar3].keys[local_460[1]].bindingCheat,acStack_440,
-                        "Key_SetBindingCheat",10);
-          playerKeys[LVar3].keys[local_460[1]].binding = 0;
+          ReplaceString(&DAT_82a9b360 + local_460[1] * 4 + iVar3 * 0x44a,acStack_440,
+                        0xffffffff8202ff50,10);
+          (&DAT_82a9b35c)[local_460[1] * 4 + iVar3 * 0x44a] = 0;
           __restgprlr_25();
           return;
         }
       }
       else if (local_460[1] != -1) {
-        if (playerKeys[LVar3].keys[local_460[1]].bindingCheat != (char *)0x0) {
-          ReplaceString(&playerKeys[LVar3].keys[local_460[1]].bindingCheat,"","Key_SetBindingCheat",
-                        10);
+        if ((&DAT_82a9b360)[local_460[1] * 4 + iVar3 * 0x44a] != 0) {
+          ReplaceString(&DAT_82a9b360 + local_460[1] * 4 + iVar3 * 0x44a,0xffffffff820068af,
+                        0xffffffff8202ff50,10);
         }
-        playerKeys[LVar3].keys[local_460[1]].binding = local_450[0];
+        (&DAT_82a9b35c)[local_460[1] * 4 + iVar3 * 0x44a] = local_450[0];
       }
       __restgprlr_25();
       return;
     }
   }
-  Com_Printf(0,"\"%s\" is not bound\n");
+  Com_Printf(0,0xffffffff8202ffdc,uVar2);
   __restgprlr_25();
   return;
 }
@@ -1506,163 +1725,191 @@ void Key_SwapBind_f(void)
 
 // 8233EA20  Key_WriteBindingsToBuffer  (client/cl_keys.cpp:2016)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Key_WriteBindingsToBuffer(LocalClientNum_t param_1,char *param_2,int param_3)
+void Key_WriteBindingsToBuffer(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
   char cVar1;
   char *pcVar2;
   int iVar3;
-  keyname_t *pkVar4;
-  char *pcVar5;
+  undefined **ppuVar4;
+  undefined *puVar5;
   int iVar6;
-  int iVar7;
   int iVar8;
-  uint uVar9;
+  int iVar9;
+  longlong lVar7;
+  ulonglong uVar10;
+  longlong lVar11;
+  undefined *_C;
   
-  iVar6 = __savegprlr_17(param_1);
-  iVar8 = 0;
-  uVar9 = 0;
+  iVar8 = __savegprlr_17();
+  lVar11 = 0;
+  _C = (undefined *)0x0;
   do {
-    iVar3 = uVar9 * 0x10 + iVar6 * 0x1128 + -0x7d564cac;
-    iVar7 = *(int *)(iVar3 + 8);
-    if (iVar7 == 0) {
-      pcVar2 = *(char **)(iVar3 + 0xc);
+    iVar6 = (int)_C * 0x10 + iVar8 * 0x1128;
+    iVar9 = *(int *)(&DAT_82a9b354 + iVar6 + 8);
+    iVar3 = (int)param_2;
+    if (iVar9 == 0) {
+      pcVar2 = *(char **)(&DAT_82a9b354 + iVar6 + 0xc);
       if ((pcVar2 != (char *)0x0) && (*pcVar2 != '\0')) goto LAB_8233eac4;
     }
     else {
-      pcVar2 = g_bindCommands[iVar7];
+      pcVar2 = (&PTR_DAT_829651c8)[iVar9];
 LAB_8233eac4:
-      if (((uVar9 != 0xffffffff) && (-1 < (int)uVar9)) && ((int)uVar9 < 0x100)) {
-        pkVar4 = keynames;
-        pcVar5 = keynames[0].name;
-        if (((0x20 < (int)uVar9) && ((int)uVar9 < 0x7f)) && (uVar9 != 0x22)) {
-          iVar7 = toupper(uVar9);
-          tinystr[0] = (char)iVar7;
-          tinystr[1] = '\0';
-          pcVar5 = keynames[0].name;
-          if (uVar9 != 0x3b) goto LAB_8233eba8;
-        }
-        while (pcVar5 != (char *)0x0) {
-          if (uVar9 == pkVar4->keynum) goto LAB_8233eba8;
-          pkVar4 = pkVar4 + 1;
-          pcVar5 = pkVar4->name;
-        }
-        tinystr[0] = '0';
-        tinystr[1] = 'x';
-        cVar1 = (char)((int)uVar9 >> 4);
-        if ((int)uVar9 >> 4 < 10) {
-          tinystr[2] = cVar1 + '0';
+      uVar10 = 0xffffffff8202ff40;
+      if (_C != (undefined *)0xffffffff) {
+        if (((int)_C < 0) || (0xff < (int)_C)) {
+          uVar10 = 0xffffffff8202ff30;
         }
         else {
-          tinystr[2] = cVar1 + 'W';
+          ppuVar4 = &PTR_DAT_82964a60;
+          puVar5 = PTR_DAT_82964a60;
+          if (((0x20 < (int)_C) && ((int)_C < 0x7f)) && (_C != (undefined *)0x22)) {
+            iVar9 = toupper((int)_C);
+            DAT_82aa19d0 = (undefined1)iVar9;
+            DAT_82aa19d1 = 0;
+            puVar5 = PTR_DAT_82964a60;
+            if (_C != (undefined *)0x3b) {
+              uVar10 = 0xffffffff82aa19d0;
+              goto LAB_8233eba8;
+            }
+          }
+          while (puVar5 != (undefined *)0x0) {
+            if (_C == ppuVar4[1]) {
+              uVar10 = ZEXT48(*ppuVar4);
+              goto LAB_8233eba8;
+            }
+            ppuVar4 = ppuVar4 + 2;
+            puVar5 = *ppuVar4;
+          }
+          DAT_82aa19d0 = 0x30;
+          DAT_82aa19d1 = 0x78;
+          cVar1 = (char)((int)_C >> 4);
+          if ((int)_C >> 4 < 10) {
+            DAT_82aa19d2 = cVar1 + '0';
+          }
+          else {
+            DAT_82aa19d2 = cVar1 + 'W';
+          }
+          cVar1 = (char)((uint)_C & 0xf);
+          DAT_82aa19d3 = cVar1 + 'W';
+          if (((uint)_C & 0xf) < 10) {
+            DAT_82aa19d3 = cVar1 + '0';
+          }
+          DAT_82aa19d4 = 0;
+          uVar10 = 0xffffffff82aa19d0;
         }
-        cVar1 = (char)(uVar9 & 0xf);
-        tinystr[3] = cVar1 + 'W';
-        if ((uVar9 & 0xf) < 10) {
-          tinystr[3] = cVar1 + '0';
-        }
-        tinystr[4] = '\0';
       }
 LAB_8233eba8:
-      iVar7 = Com_sprintf(param_2 + iVar8,(param_3 + -4) - iVar8,"bind %s \"");
-      if (iVar7 < 0) goto LAB_8233ec2c;
+      lVar7 = Com_sprintf(lVar11 + param_2,(param_3 + -4) - lVar11,0xffffffff82030060,uVar10);
+      if ((int)lVar7 < 0) goto LAB_8233ec2c;
       cVar1 = *pcVar2;
-      for (iVar7 = iVar7 + iVar8; (cVar1 != '\0' && (iVar7 < param_3 + -4)); iVar7 = iVar7 + 1) {
+      for (lVar7 = lVar7 + lVar11;
+          (iVar9 = (int)lVar7, cVar1 != '\0' && (iVar9 < (int)(param_3 + -4))); lVar7 = lVar7 + 1) {
         if (cVar1 == '\"') {
-          param_2[iVar7] = '\\';
-          iVar7 = iVar7 + 1;
+          *(undefined1 *)(iVar9 + iVar3) = 0x5c;
+          lVar7 = lVar7 + 1;
         }
-        param_2[iVar7] = *pcVar2;
+        *(char *)((int)lVar7 + iVar3) = *pcVar2;
         pcVar2 = pcVar2 + 1;
         cVar1 = *pcVar2;
       }
-      param_2[iVar7] = '\"';
-      iVar8 = iVar7 + 2;
-      param_2[iVar7 + 1] = '\n';
+      *(undefined1 *)(iVar9 + iVar3) = 0x22;
+      lVar11 = lVar7 + 2;
+      *(undefined1 *)(iVar9 + iVar3 + 1) = 10;
     }
-    uVar9 = uVar9 + 1;
-  } while ((int)uVar9 < 0x100);
-  param_2[iVar8] = '\0';
+    _C = _C + 1;
+  } while ((int)_C < 0x100);
+  *(undefined1 *)((int)lVar11 + iVar3) = 0;
 LAB_8233ec2c:
-  iVar6 = __restgprlr_17(iVar8);
-  return iVar6;
+  __restgprlr_17(lVar11);
+  return;
 }
 
 
 // 8233EC38  Key_WriteBindings  (client/cl_keys.cpp:2094)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Key_WriteBindings(LocalClientNum_t param_1,void *param_2)
+void Key_WriteBindings(undefined8 param_1,undefined8 param_2)
 
 {
-  char acStack_2010 [8192];
+  undefined1 auStack_2010 [8192];
   
-  Key_WriteBindingsToBuffer(param_1,acStack_2010,0x2000);
-  FS_Printf(param_2,"%s");
+  Key_WriteBindingsToBuffer(param_1,auStack_2010,0x2000);
+  FS_Printf(param_2,0xffffffff82000f98,auStack_2010);
   return;
 }
 
 
 // 8233EC88  Key_Bindlist_f  (client/cl_keys.cpp:2105)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void Key_Bindlist_f(void)
 
 {
   char cVar1;
-  keyname_t *pkVar2;
-  LocalClientNum_t LVar3;
-  char *pcVar4;
-  int iVar5;
-  uint uVar6;
+  undefined **ppuVar2;
+  undefined *puVar3;
+  undefined8 uVar4;
+  char *pcVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  undefined *_C;
   
   __savegprlr_24();
-  LVar3 = Cmd_LocalClientNum();
-  uVar6 = 0;
+  uVar4 = Cmd_LocalClientNum();
+  uVar8 = 0;
   do {
-    pcVar4 = Key_GetBindingCheat(LVar3,uVar6);
-    if ((pcVar4 != (char *)0x0) && (*pcVar4 != '\0')) {
-      if ((uVar6 != 0xffffffff) && ((-1 < (int)uVar6 && ((int)uVar6 < 0x100)))) {
-        pkVar2 = keynames;
-        pcVar4 = keynames[0].name;
-        if ((0x20 < (int)uVar6) && (((int)uVar6 < 0x7f && (uVar6 != 0x22)))) {
-          iVar5 = toupper(uVar6);
-          tinystr[0] = (char)iVar5;
-          tinystr[1] = '\0';
-          pcVar4 = keynames[0].name;
-          if (uVar6 != 0x3b) goto LAB_8233edd0;
-        }
-        while (pcVar4 != (char *)0x0) {
-          if (uVar6 == pkVar2->keynum) goto LAB_8233edd0;
-          pkVar2 = pkVar2 + 1;
-          pcVar4 = pkVar2->name;
-        }
-        tinystr[0] = '0';
-        tinystr[1] = 'x';
-        cVar1 = (char)((int)uVar6 >> 4);
-        if ((int)uVar6 >> 4 < 10) {
-          tinystr[2] = cVar1 + '0';
+    pcVar5 = (char *)Key_GetBindingCheat(uVar4,uVar8);
+    if ((pcVar5 != (char *)0x0) && (*pcVar5 != '\0')) {
+      _C = (undefined *)uVar8;
+      uVar7 = 0xffffffff8202ff40;
+      if (_C != (undefined *)0xffffffff) {
+        if (((int)_C < 0) || (0xff < (int)_C)) {
+          uVar7 = 0xffffffff8202ff30;
         }
         else {
-          tinystr[2] = cVar1 + 'W';
+          ppuVar2 = &PTR_DAT_82964a60;
+          puVar3 = PTR_DAT_82964a60;
+          if (((0x20 < (int)_C) && ((int)_C < 0x7f)) && (_C != (undefined *)0x22)) {
+            iVar6 = toupper((int)_C);
+            DAT_82aa19d0 = (undefined1)iVar6;
+            DAT_82aa19d1 = 0;
+            puVar3 = PTR_DAT_82964a60;
+            if (_C != (undefined *)0x3b) {
+              uVar7 = 0xffffffff82aa19d0;
+              goto LAB_8233edd0;
+            }
+          }
+          while (puVar3 != (undefined *)0x0) {
+            if (_C == ppuVar2[1]) {
+              uVar7 = ZEXT48(*ppuVar2);
+              goto LAB_8233edd0;
+            }
+            ppuVar2 = ppuVar2 + 2;
+            puVar3 = *ppuVar2;
+          }
+          DAT_82aa19d0 = 0x30;
+          DAT_82aa19d1 = 0x78;
+          cVar1 = (char)((int)_C >> 4);
+          if ((int)_C >> 4 < 10) {
+            DAT_82aa19d2 = cVar1 + '0';
+          }
+          else {
+            DAT_82aa19d2 = cVar1 + 'W';
+          }
+          cVar1 = (char)(uVar8 & 0xf);
+          DAT_82aa19d3 = cVar1 + 'W';
+          if ((uint)(uVar8 & 0xf) < 10) {
+            DAT_82aa19d3 = cVar1 + '0';
+          }
+          DAT_82aa19d4 = 0;
+          uVar7 = 0xffffffff82aa19d0;
         }
-        cVar1 = (char)(uVar6 & 0xf);
-        tinystr[3] = cVar1 + 'W';
-        if ((uVar6 & 0xf) < 10) {
-          tinystr[3] = cVar1 + '0';
-        }
-        tinystr[4] = '\0';
       }
 LAB_8233edd0:
-      Com_Printf(0,"%s \"%s\"\n");
+      Com_Printf(0,0xffffffff8203006c,uVar7,pcVar5);
     }
-    uVar6 = uVar6 + 1;
-    if (0xff < (int)uVar6) {
+    uVar8 = uVar8 + 1;
+    if (0xff < (int)uVar8) {
       __restgprlr_24();
       return;
     }
@@ -1672,114 +1919,477 @@ LAB_8233edd0:
 
 // 8233EDF8  CL_InitKeyCommands  (client/cl_keys.cpp:2122)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_InitKeyCommands(void)
 
 {
-  Cmd_AddCommandInternal("bind",Key_Bind_f,&Key_Bind_f_VAR);
-  Cmd_AddCommandInternal("bind_swap",Key_SwapBind_f,&Key_SwapBind_f_VAR);
-  Cmd_AddCommandInternal("unbind",Key_Unbind_f,&Key_Unbind_f_VAR);
-  Cmd_AddCommandInternal("unbindall",Key_Unbindall_f,&Key_Unbindall_f_VAR);
-  Cmd_AddCommandInternal("bindlist",Key_Bindlist_f,&Key_Bindlist_f_VAR);
+  Cmd_AddCommandInternal(0xffffffff820300a4,0xffffffff8233e5e8,0xffffffff82aa1a28);
+  Cmd_AddCommandInternal(0xffffffff82030098,0xffffffff8233e7d0,0xffffffff82aa1a14);
+  Cmd_AddCommandInternal(0xffffffff82030090,0xffffffff8233e4a8,0xffffffff82aa1a00);
+  Cmd_AddCommandInternal(0xffffffff82030084,0xffffffff8233e558,0xffffffff82aa19ec);
+  Cmd_AddCommandInternal(0xffffffff82030078,0xffffffff8233ec88,0xffffffff82aa19d8);
   return;
 }
 
 
 // 8233EEA0  CL_MouseInputShouldBypassMenus  (client/cl_keys.cpp:2135)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined8 CL_MouseInputShouldBypassMenus(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = UI_GetActiveMenu();
+  if (iVar2 == 6) {
+    uVar1 = 1;
+  }
+  else {
+    if ((((DAT_82a9a180 != 0) && (*(char *)(DAT_82a9a180 + 0xc) != '\0')) && (DAT_82aa1c14 != 0)) &&
+       (iVar2 = UI_CheckExecKey(param_1,param_2), iVar2 == 0)) {
+      return 1;
+    }
+    uVar1 = 0;
+  }
+  return uVar1;
+}
+
 
 // 8233EF38  CL_SendDownKeyBinding  (client/cl_keys.cpp:2173)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_SendDownKeyBinding(LocalClientNum_t param_1,int param_2,uint param_3,char *param_4)
+void CL_SendDownKeyBinding
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  char acStack_410 [1024];
+  undefined1 auStack_410 [1024];
   
-  Com_sprintf(acStack_410,0x400,"%s %i %i\n");
-  Cbuf_AddText(param_1,acStack_410);
+  Com_sprintf(auStack_410,0x400,0xffffffff8202eb84,param_4,param_2,param_3);
+  Cbuf_AddText(param_1,auStack_410);
   return;
 }
 
 
 // 8233EF88  CL_SendUpKeyBinding  (client/cl_keys.cpp:2184)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_SendUpKeyBinding(LocalClientNum_t param_1,int param_2,uint param_3,char *param_4)
+void CL_SendUpKeyBinding(undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
 
 {
-  char acStack_410 [1024];
+  undefined1 auStack_410 [1024];
   
-  Com_sprintf(acStack_410,0x400,"-%s %i %i\n");
-  Cbuf_AddText(param_1,acStack_410);
+  Com_sprintf(auStack_410,0x400,0xffffffff8202ec40,param_4 + 1,param_2,param_3);
+  Cbuf_AddText(param_1,auStack_410);
   return;
 }
 
 
 // 82340148  CL_KeyEvent  (client/cl_keys.cpp:2202)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_KeyEvent(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  uint uVar2;
+  char *pcVar3;
+  undefined *puVar4;
+  undefined *_C;
+  uint uVar6;
+  int iVar7;
+  char cVar10;
+  int iVar8;
+  undefined8 uVar5;
+  int iVar9;
+  int iVar11;
+  undefined **ppuVar12;
+  undefined1 auStack_470 [1136];
+  
+  uVar6 = __savegprlr_19();
+  iVar8 = uVar6 * 0x1128;
+  _C = (undefined *)param_2;
+  iVar11 = (int)param_3;
+  *(int *)(&DAT_82a9b354 + (int)_C * 0x10 + iVar8) = iVar11;
+  iVar1 = (int)_C * 0x10 + iVar8;
+  if (iVar11 == 0) {
+    *(undefined4 *)(&DAT_82a9b354 + iVar1 + 4) = 0;
+    uVar2 = *(uint *)(&DAT_82a9b350 + iVar8);
+    *(int *)(&DAT_82a9b350 + iVar8) = (int)((ulonglong)uVar2 - 1);
+    if ((longlong)((ulonglong)uVar2 - 1) < 0) {
+      *(undefined4 *)(&DAT_82a9b350 + iVar8) = 0;
+    }
+  }
+  else {
+    iVar9 = *(int *)(&DAT_82a9b354 + iVar1 + 4) + 1;
+    *(int *)(&DAT_82a9b354 + iVar1 + 4) = iVar9;
+    if (iVar9 == 1) {
+      *(int *)(&DAT_82a9b350 + iVar8) = *(int *)(&DAT_82a9b350 + iVar8) + 1;
+    }
+  }
+  if (3 < uVar6) {
+    MyAssertHandler(0xffffffff8202cab8,0x4aa,0,0xffffffff820011a8,uVar6,4);
+  }
+  if (9 < (int)(&DAT_82b3e54c)[uVar6 * 0x79]) {
+    CG_ModelPreviewerHandleKeyEvents(uVar6,param_2,param_3,param_4);
+  }
+  if (3 < uVar6) {
+    MyAssertHandler(0xffffffff8202cab8,0x47f,0,0xffffffff820011a8,uVar6,4);
+  }
+  if (((_C == (undefined *)0x60) || (_C == (undefined *)0x7e)) ||
+     (((&DAT_82b3e544)[uVar6 * 0x79] & 1) != 0)) {
+    cVar10 = DevGui_IsActive();
+    if (cVar10 != '\0') {
+      DevGui_Toggle();
+    }
+  }
+  else {
+    iVar9 = *(int *)(&DAT_82a9b354 + iVar1 + 0xc);
+    if (((iVar9 != 0) && (iVar7 = I_stricmp(iVar9,0xffffffff8202ecb0), iVar7 == 0)) &&
+       ((iVar11 != 0 && (*(int *)(&DAT_82a9b354 + iVar1 + 4) == 1)))) {
+      Cbuf_AddText(uVar6,iVar9);
+      __restgprlr_19();
+      return;
+    }
+    cVar10 = DevGui_IsActive();
+    if (cVar10 != '\0') {
+      if ((iVar11 != 0) && (*(int *)(&DAT_82a9b354 + iVar1 + 4) == 1)) {
+        DevGui_KeyPressed(param_2);
+        __restgprlr_19();
+        return;
+      }
+      goto switchD_82340368_caseD_2;
+    }
+  }
+  if ((iVar11 != 0) && (1 < *(int *)(&DAT_82a9b354 + iVar1 + 4))) {
+    if (((&DAT_82b3e544)[uVar6 * 0x79] & 0x21) == 0) {
+      if (((&DAT_82b3e544)[uVar6 * 0x79] & 0x10) != 0) {
+        switch(_C + -0x9a) {
+        case (undefined *)0x0:
+        case (undefined *)0x1:
+        case (undefined *)0x9:
+        case (undefined *)0xa:
+          goto switchD_82340368_caseD_0;
+        default:
+          break;
+        }
+      }
+      goto switchD_82340368_caseD_2;
+    }
+switchD_82340368_caseD_0:
+    if (((_C == (undefined *)0x60) || (_C == (undefined *)0x7e)) || (_C == (undefined *)0x1b))
+    goto switchD_82340368_caseD_2;
+  }
+  if ((*(char *)(DAT_82a773ec + 0xc) == '\0') || (((&DAT_82b3e544)[uVar6 * 0x79] & 1) != 0)) {
+    if ((_C == (undefined *)0x60) || (_C == (undefined *)0x7e)) {
+      if (iVar11 == 0) goto switchD_82340368_caseD_2;
+      if (*(int *)(&DAT_82a9bd54 + iVar8) != 0) {
+        cVar10 = Con_IsActive(uVar6);
+        if (cVar10 == '\0') {
+          Con_ToggleConsole();
+        }
+        Con_ToggleConsoleOutput();
+        __restgprlr_19();
+        return;
+      }
+LAB_823403f0:
+      Con_ToggleConsole();
+      goto switchD_82340368_caseD_2;
+    }
+  }
+  else if (_C == (undefined *)0xa5) {
+    if ((iVar11 != 0) && (*(int *)(&DAT_82a9bb44 + iVar8) != 0)) goto LAB_823403f0;
+  }
+  else {
+    if (_C == (undefined *)0x60) goto switchD_82340368_caseD_2;
+    if (_C == (undefined *)0x7e) {
+      __restgprlr_19();
+      return;
+    }
+  }
+  if ((((&DAT_82b3e544)[uVar6 * 0x79] & 8) == 0) || (iVar11 < 1)) {
+    *(undefined4 *)(&DAT_82a9c354 + iVar8) = 0;
+    iVar8 = CL_GetLocalClientConnectionState(uVar6);
+    if ((_C == (undefined *)0x1b) && (iVar11 != 0)) {
+      if (((&DAT_82b3e544)[uVar6 * 0x79] & 0x20) != 0) {
+        Message_Key(uVar6,0x1b);
+        __restgprlr_19();
+        return;
+      }
+      if (((&DAT_82b3e544)[uVar6 * 0x79] & 1) != 0) {
+        Con_CancelAutoComplete();
+      }
+      if (((&DAT_82b3e544)[uVar6 * 0x79] & 0x10) != 0) {
+        UI_KeyEvent(uVar6,0x1b,param_3);
+        __restgprlr_19();
+        return;
+      }
+      switch(iVar8 + -1) {
+      case 0:
+      case 1:
+        CL_StopLogoOrCinematic_ByUserRequest(uVar6);
+        __restgprlr_19();
+        return;
+      case 2:
+      case 3:
+      case 4:
+      case 5:
+      case 8:
+        break;
+      default:
+        if (DAT_82aa1c14 != 0) {
+          uVar5 = UI_GetMenuScreen(uVar6);
+          UI_SetActiveMenu(uVar6,uVar5);
+          __restgprlr_19();
+          return;
+        }
+        break;
+      case 9:
+        cVar10 = CL_Demo_IsPlaying(uVar6);
+        if (cVar10 != '\0') {
+          UI_SetActiveMenu(uVar6,2);
+          __restgprlr_19();
+          return;
+        }
+        if ((&DAT_82b3e4e8)[uVar6] == '\0') {
+          UI_SetActiveMenu(uVar6,2);
+          __restgprlr_19();
+          return;
+        }
+        UI_SetActiveMenu(uVar6,1);
+        __restgprlr_19();
+        return;
+      }
+    }
+    else if (((((&DAT_82b3e4f2)[uVar6 * 0x1e4] == '\0') ||
+              (iVar9 = CG_IsScoreboardDisplayed(uVar6), iVar9 == 0)) || (iVar11 == 0)) ||
+            (cVar10 = Scoreboard_HandleInput(uVar6,param_2), cVar10 == '\0')) {
+      if (((&DAT_82b3e544)[uVar6 * 0x79] & 1) == 0) {
+        CL_Demo_HandleInput(uVar6,param_2,param_3);
+      }
+      if (iVar11 == 0) {
+        uVar2 = *(uint *)(&DAT_82a9b354 + iVar1 + 8);
+        if (((int)uVar2 < 0x27) && ((uVar2 & 1) != 0)) {
+          CL_ExecBinding(uVar6,(ulonglong)uVar2 + 1,param_2);
+        }
+        else {
+          pcVar3 = *(char **)(&DAT_82a9b354 + iVar1 + 0xc);
+          if ((pcVar3 != (char *)0x0) && (*pcVar3 == '+')) {
+            Com_sprintf(auStack_470,0x400,0xffffffff8202ec40,pcVar3 + 1,param_2,param_4);
+            Cbuf_AddText(uVar6,auStack_470);
+          }
+        }
+        if ((((&DAT_82b3e544)[uVar6 * 0x79] & 0x10) != 0) && (DAT_82aa1c14 != 0)) {
+          UI_KeyEvent(uVar6,param_2,0);
+          __restgprlr_19();
+          return;
+        }
+      }
+      else {
+        if (((&DAT_82b3e544)[uVar6 * 0x79] & 1) != 0) {
+LAB_82340780:
+          Console_Key(uVar6,param_2);
+          __restgprlr_19();
+          return;
+        }
+        if ((((&DAT_82b3e544)[uVar6 * 0x79] & 0x10) == 0) ||
+           (cVar10 = CL_MouseInputShouldBypassMenus(uVar6,param_2), cVar10 != '\0')) {
+          if (((&DAT_82b3e544)[uVar6 * 0x79] & 0x20) != 0) {
+            Message_Key(uVar6,param_2);
+            __restgprlr_19();
+            return;
+          }
+          if (iVar8 == 0) goto LAB_82340780;
+          iVar8 = *(int *)(&DAT_82a9b354 + iVar1 + 8);
+          if (iVar8 != 0) {
+            CL_ExecBinding(uVar6,iVar8,param_2);
+            __restgprlr_19();
+            return;
+          }
+          pcVar3 = *(char **)(&DAT_82a9b354 + iVar1 + 0xc);
+          if (pcVar3 != (char *)0x0) {
+            if (*pcVar3 != '+') {
+              Cbuf_AddText(uVar6,pcVar3);
+              Cbuf_AddText(uVar6,0xffffffff820044d8);
+              __restgprlr_19();
+              return;
+            }
+            Com_sprintf(auStack_470,0x400,0xffffffff8202eb84,pcVar3,param_2,param_4);
+            Cbuf_AddText(uVar6,auStack_470);
+            __restgprlr_19();
+            return;
+          }
+          if (0xce < (int)_C) {
+            if (_C == (undefined *)0xffffffff) {
+              Com_Printf(0xe,0xffffffff8202eb90,0xffffffff8202ff40);
+              __restgprlr_19();
+              return;
+            }
+            if ((-1 < (int)_C) && ((int)_C < 0x100)) {
+              if ((0x20 < (int)_C) && (((int)_C < 0x7f && (_C != (undefined *)0x22)))) {
+                iVar8 = toupper((int)_C);
+                DAT_82aa19d0 = (undefined1)iVar8;
+                DAT_82aa19d1 = 0;
+                if (_C != (undefined *)0x3b) {
+                  Com_Printf(0xe,0xffffffff8202eb90,0xffffffff82aa19d0);
+                  __restgprlr_19();
+                  return;
+                }
+              }
+              ppuVar12 = &PTR_DAT_82964a60;
+              puVar4 = PTR_DAT_82964a60;
+              while( true ) {
+                if (puVar4 == (undefined *)0x0) {
+                  DAT_82aa19d0 = 0x30;
+                  DAT_82aa19d1 = 0x78;
+                  cVar10 = (char)((int)_C >> 4);
+                  if ((int)_C >> 4 < 10) {
+                    DAT_82aa19d2 = cVar10 + '0';
+                  }
+                  else {
+                    DAT_82aa19d2 = cVar10 + 'W';
+                  }
+                  cVar10 = (char)(param_2 & 0xf);
+                  DAT_82aa19d3 = cVar10 + 'W';
+                  if ((uint)(param_2 & 0xf) < 10) {
+                    DAT_82aa19d3 = cVar10 + '0';
+                  }
+                  DAT_82aa19d4 = 0;
+                  Com_Printf(0xe,0xffffffff8202eb90,0xffffffff82aa19d0);
+                  __restgprlr_19();
+                  return;
+                }
+                if (_C == ppuVar12[1]) break;
+                ppuVar12 = ppuVar12 + 2;
+                puVar4 = *ppuVar12;
+              }
+              Com_Printf(0xe,0xffffffff8202eb90,*ppuVar12);
+              __restgprlr_19();
+              return;
+            }
+            Com_Printf(0xe,0xffffffff8202eb90,0xffffffff8202ff30);
+            __restgprlr_19();
+            return;
+          }
+        }
+        else if (DAT_82aa1c14 != 0) {
+          UI_KeyEvent(uVar6,param_2,param_3);
+          __restgprlr_19();
+          return;
+        }
+      }
+    }
+  }
+  else {
+    if (_C == (undefined *)0x1b) {
+      *(undefined4 *)(&DAT_82a9c354 + iVar8) = 2;
+      __restgprlr_19();
+      return;
+    }
+    iVar1 = *(int *)(&DAT_82a9b354 + iVar1 + 8);
+    if ((iVar1 == 1) || (iVar1 == 0x21)) {
+      *(undefined4 *)(&DAT_82a9c354 + iVar8) = 1;
+      __restgprlr_19();
+      return;
+    }
+  }
+switchD_82340368_caseD_2:
+  __restgprlr_19();
+  return;
+}
+
 
 // 823409C0  CL_ConsoleCharEvent  (client/cl_keys.cpp:2682)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_ConsoleCharEvent(LocalClientNum_t param_1,int param_2)
+void CL_ConsoleCharEvent(undefined8 param_1,undefined8 param_2)
 
 {
-  ScreenPlacement *pSVar1;
-  bool bVar2;
+  undefined8 uVar1;
+  char cVar2;
   
-  pSVar1 = ScrPlace_GetFullPlacement();
-  bVar2 = Field_CharEvent(param_1,pSVar1,&g_consoleField,param_2);
-  if (bVar2) {
-    Con_AllowAutoCompleteCycling(true);
+  uVar1 = ScrPlace_GetFullPlacement();
+  cVar2 = Field_CharEvent(param_1,uVar1,0xffffffff82a9b110,param_2);
+  if (cVar2 != '\0') {
+    Con_AllowAutoCompleteCycling(1);
   }
   return;
 }
 
 
 // 82340A28  CL_CharEvent  (client/cl_keys.cpp:2691)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_CharEvent(undefined8 param_1,ulonglong param_2)
+
+{
+  bool bVar1;
+  uint uVar2;
+  longlong lVar3;
+  char cVar7;
+  int iVar5;
+  undefined8 uVar4;
+  int iVar6;
+  
+  lVar3 = __savegprlr_29();
+  cVar7 = DevGui_IsActive();
+  if (((cVar7 != '\0') || (iVar6 = (int)param_2, iVar6 == 0x60)) || (iVar6 == 0x7e))
+  goto LAB_82340b00;
+  iVar5 = CL_GetLocalClientUIGlobals(lVar3);
+  uVar2 = *(uint *)(iVar5 + 0x54);
+  if ((uVar2 & 1) == 0) {
+    if ((uVar2 & 0x20) != 0) {
+      uVar4 = ScrPlace_GetViewPlacement();
+      Field_CharEvent(lVar3,uVar4,lVar3 * 0x1128 + -0x7d564dd0,param_2);
+      __restgprlr_29();
+      return;
+    }
+    if ((uVar2 & 0x10) != 0) {
+      UI_KeyEvent(lVar3,param_2 | 0x400,1);
+      __restgprlr_29();
+      return;
+    }
+    iVar6 = CL_GetLocalClientConnectionState(lVar3);
+    bVar1 = iVar6 == 0;
+LAB_82340af0:
+    if (!bVar1) goto LAB_82340b00;
+  }
+  else if (iVar6 == 8) {
+    cVar7 = Con_CancelAutoComplete();
+    bVar1 = cVar7 == '\0';
+    goto LAB_82340af0;
+  }
+  CL_ConsoleCharEvent(lVar3,param_2);
+LAB_82340b00:
+  __restgprlr_29();
+  return;
+}
+
 
 // 8233EFE0  Key_ClearStates_Internal  (client/cl_keys.cpp:2742)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Key_ClearStates_Internal(LocalClientNum_t param_1,bool param_2)
+void Key_ClearStates_Internal(undefined8 param_1,ulonglong param_2)
 
 {
-  LocalClientNum_t LVar1;
   int iVar2;
-  ulonglong uVar3;
-  int *piVar4;
+  undefined8 uVar1;
+  int *piVar3;
+  longlong lVar4;
   int iVar5;
   
-  uVar3 = (ulonglong)param_2;
-  LVar1 = __savegprlr_27(param_1);
-  iVar5 = 0;
-  piVar4 = (int *)(LVar1 * 0x1128 + -0x7d564cac);
-  playerKeys[LVar1].anyKeyDown = 0;
+  iVar2 = __savegprlr_27();
+  lVar4 = 0;
+  piVar3 = (int *)(&DAT_82a9b354 + iVar2 * 0x1128);
+  *(undefined4 *)(&DAT_82a9b350 + iVar2 * 0x1128) = 0;
   do {
-    if (*piVar4 == 0) {
+    if (*piVar3 == 0) {
 LAB_8233f070:
-      *piVar4 = 0;
-      piVar4[1] = 0;
+      *piVar3 = 0;
+      piVar3[1] = 0;
     }
-    else if (((uVar3 & 0xff) == 0) ||
-            ((((iVar5 != 0x12 && (iVar5 != 0x13)) && (iVar5 != 5)) && (iVar5 != 6)))) {
-      iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-      CL_GamepadButtonEvent(LVar1,iVar2,iVar5,0,0);
+    else if (((param_2 & 0xff) == 0) ||
+            ((((iVar5 = (int)lVar4, iVar5 != 0x12 && (iVar5 != 0x13)) && (iVar5 != 5)) &&
+             (iVar5 != 6)))) {
+      uVar1 = CL_ControllerIndexFromClientNum(iVar2);
+      CL_GamepadButtonEvent(iVar2,uVar1,lVar4,0,0);
       goto LAB_8233f070;
     }
-    iVar5 = iVar5 + 1;
-    piVar4 = piVar4 + 4;
-    if (0xff < iVar5) {
+    lVar4 = lVar4 + 1;
+    piVar3 = piVar3 + 4;
+    if (0xff < (int)lVar4) {
       __restgprlr_27();
       return;
     }
@@ -1789,162 +2399,196 @@ LAB_8233f070:
 
 // 8233F090  Key_ClearStates  (client/cl_keys.cpp:2770)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Key_ClearStates(LocalClientNum_t param_1)
+void Key_ClearStates(undefined8 param_1)
 
 {
-  Key_ClearStates_Internal(param_1,false);
+  Key_ClearStates_Internal(param_1,0);
   return;
 }
 
 
 // 8233F098  Key_ClearStatesExceptTriggers  (client/cl_keys.cpp:2776)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Key_ClearStatesExceptTriggers(LocalClientNum_t param_1)
+void Key_ClearStatesExceptTriggers(undefined8 param_1)
 
 {
-  Key_ClearStates_Internal(param_1,true);
+  Key_ClearStates_Internal(param_1,1);
   return;
 }
 
 
 // 8233F0A0  CL_GetKeyBindingInternal  (client/cl_keys.cpp:2782)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int CL_GetKeyBindingInternal
-              (LocalClientNum_t param_1,char *param_2,char (*param_3) [128],int param_4)
+void CL_GetKeyBindingInternal
+               (undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   int iVar2;
-  int local_30;
-  int local_2c;
+  undefined4 local_30;
+  undefined4 local_2c;
   
-  LVar1 = __savegprlr_28(param_1);
-  Sys_EnterCriticalSection(CRITSECT_KEY_BINDINGS);
-  param_3[1][0] = '\0';
-  iVar2 = Key_GetCommandAssignmentInternal(LVar1,param_2,&local_30,param_4);
+  uVar1 = __savegprlr_28();
+  Sys_EnterCriticalSection(0xe);
+  *(undefined1 *)((int)(void *)param_3 + 0x80) = 0;
+  uVar1 = Key_GetCommandAssignmentInternal(uVar1,param_2,&local_30,param_4);
+  iVar2 = (int)uVar1;
   if ((iVar2 < 0) || (2 < iVar2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_keys.cpp",0xae9,0,
-                    "bindCount not in [0, 2]\n\t%i not in [%i, %i]");
+    MyAssertHandler(0xffffffff8202fedc,0xae9,0,0xffffffff820300ac,uVar1,0,2);
   }
   if (iVar2 == 0) {
-    memcpy();
-    Sys_LeaveCriticalSection(CRITSECT_KEY_BINDINGS);
-    iVar2 = __restgprlr_28(0);
-    return iVar2;
+    memcpy((void *)param_3,"KEY_UNBOUND",0xc);
+    Sys_LeaveCriticalSection(0xe);
+    __restgprlr_28(uVar1);
+    return;
   }
-  Key_KeynumToStringBuf(local_30,*param_3,0x80);
+  Key_KeynumToStringBuf(local_30,param_3,0x80);
   if (iVar2 == 2) {
-    Key_KeynumToStringBuf(local_2c,param_3[1],0x80);
+    Key_KeynumToStringBuf(local_2c,param_3 + 0x80,0x80);
   }
-  Sys_LeaveCriticalSection(CRITSECT_KEY_BINDINGS);
-  iVar2 = __restgprlr_28(iVar2);
-  return iVar2;
+  Sys_LeaveCriticalSection(0xe);
+  __restgprlr_28(uVar1);
+  return;
 }
 
 
 // 8233F190  CL_GetKeyBinding  (client/cl_keys.cpp:2812)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int CL_GetKeyBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [128])
+void CL_GetKeyBinding(void)
 
 {
-  int iVar1;
-  
-  iVar1 = CL_GetKeyBindingInternal(param_1,param_2,param_3,0);
-  return iVar1;
+  CL_GetKeyBindingInternal();
+  return;
 }
 
 
 // 8233F198  CL_GetGamePadBinding  (client/cl_keys.cpp:2819)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int CL_GetGamePadBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [128])
+void CL_GetGamePadBinding(void)
 
 {
-  int iVar1;
-  
-  iVar1 = CL_GetKeyBindingInternal(param_1,param_2,param_3,1);
-  return iVar1;
+  CL_GetKeyBindingInternal();
+  return;
 }
 
 
 // 8233F1A0  CL_IsKeyPressed  (client/cl_keys.cpp:2826)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int CL_IsKeyPressed(LocalClientNum_t param_1,char *param_2)
+undefined4 CL_IsKeyPressed(undefined8 param_1,undefined8 param_2)
 
 {
   int iVar1;
+  undefined4 uVar2;
+  int iVar3;
   
   iVar1 = Key_StringToKeynum(param_2);
   if (iVar1 < 0) {
-    iVar1 = 0;
+    uVar2 = 0;
   }
   else {
-    if (((int)param_1 < 0) || (3 < (int)param_1)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_keys.cpp",0xb11,0,
-                      "%s\n\t(localClientNum) = %i");
+    iVar3 = (int)param_1;
+    if ((iVar3 < 0) || (3 < iVar3)) {
+      MyAssertHandler(0xffffffff8202fedc,0xb11,0,0xffffffff820300d8,0xffffffff820300f4,param_1);
     }
-    iVar1 = playerKeys[param_1].keys[iVar1].down;
+    uVar2 = *(undefined4 *)(&DAT_82a9b354 + iVar3 * 0x1128 + iVar1 * 0x10);
   }
-  return iVar1;
+  return uVar2;
 }
 
 
 // 8233F240  Key_Shutdown  (client/cl_keys.cpp:2854)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Key_Shutdown(void)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
   
   __savegprlr_26();
-  iVar2 = 0;
+  iVar1 = 0;
   do {
-    iVar3 = 0;
+    iVar2 = 0;
     do {
-      iVar4 = iVar2 + iVar3;
-      pcVar1 = *(char **)((int)&playerKeys[0].keys[0].bindingCheat + iVar4);
-      *(undefined4 *)((int)&playerKeys[0].keys[0].binding + iVar4) = 0;
-      if (pcVar1 != (char *)0x0) {
-        FreeString(pcVar1,10);
-        *(undefined4 *)((int)&playerKeys[0].keys[0].bindingCheat + iVar4) = 0;
+      iVar3 = iVar1 + iVar2;
+      *(undefined4 *)((int)&DAT_82a9b35c + iVar3) = 0;
+      if (*(int *)((int)&DAT_82a9b360 + iVar3) != 0) {
+        FreeString(*(int *)((int)&DAT_82a9b360 + iVar3),10);
+        *(undefined4 *)((int)&DAT_82a9b360 + iVar3) = 0;
       }
-      iVar3 = iVar3 + 0x10;
-    } while (iVar3 < 0x1000);
-    iVar2 = iVar2 + 0x1128;
-  } while (iVar2 < 0x44a0);
+      iVar2 = iVar2 + 0x10;
+    } while (iVar2 < 0x1000);
+    iVar1 = iVar1 + 0x1128;
+  } while (iVar1 < 0x44a0);
   __restgprlr_26();
   return;
 }
 
 
 // 8233F2A8  Key_IsCatcherActive  (client/cl_keys.cpp:2876)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+bool Key_IsCatcherActive(ulonglong param_1,uint param_2)
+
+{
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202cab8,0x47f,0,0xffffffff820011a8,param_1,4);
+  }
+  return ((&DAT_82b3e544)[(int)param_1 * 0x79] & param_2) != 0;
+}
+
 
 // 8233F328  Key_AddCatcher  (client/cl_keys.cpp:2885)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void Key_AddCatcher(ulonglong param_1,uint param_2)
+
+{
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202cab8,0x47f,0,0xffffffff820011a8,param_1,4);
+  }
+  (&DAT_82b3e544)[(int)param_1 * 0x79] = (&DAT_82b3e544)[(int)param_1 * 0x79] | param_2;
+  return;
+}
+
 
 // 8233F3A8  Key_RemoveCatcher  (client/cl_keys.cpp:2894)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void Key_RemoveCatcher(uint param_1,uint param_2)
+
+{
+  uint uVar1;
+  
+  if ((param_2 - 1 & param_2) == 0) {
+    MyAssertHandler(0xffffffff8202fedc,0xb52,0,0xffffffff82000f98,0xffffffff82030120);
+  }
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff8202cab8,0x47f,0,0xffffffff820011a8,param_1,4);
+  }
+  uVar1 = (&DAT_82b3e544)[param_1 * 0x79];
+  (&DAT_82b3e544)[param_1 * 0x79] = uVar1 & param_2;
+  if ((uVar1 & param_2 & 0x10) == 0) {
+    (&DAT_82b3e548)[param_1 * 0x1e4] = 0;
+  }
+  return;
+}
+
 
 // 8233F470  Key_SetCatcher  (client/cl_keys.cpp:2909)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void Key_SetCatcher(uint param_1,uint param_2)
+
+{
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff8202cab8,0x47f,0,0xffffffff820011a8,param_1,4);
+  }
+  if (((&DAT_82b3e544)[param_1 * 0x79] & 1) == 0) {
+    (&DAT_82b3e544)[param_1 * 0x79] = param_2;
+  }
+  else {
+    (&DAT_82b3e544)[param_1 * 0x79] = param_2 | 1;
+  }
+  if (((&DAT_82b3e544)[param_1 * 0x79] & 0x10) == 0) {
+    (&DAT_82b3e548)[param_1 * 0x1e4] = 0;
+  }
+  return;
+}
+

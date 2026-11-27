@@ -7,7 +7,7 @@ void __unwind_71964(void)
 {
   int in_r12;
   
-  bdChunk::~bdChunk(*(bdChunk **)(in_r12 + 0x14));
+  bdChunk___bdChunk(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 

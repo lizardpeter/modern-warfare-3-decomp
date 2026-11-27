@@ -3277,7 +3277,7 @@ LAB_826f6e2c:
   826F6E90  7C66402A             ldx r3,r6,r8
   826F6E94  4E800020             blr
 
-; 826F6E98  PublicTeamProfile  (social/elite_clan.cpp:2091)
+; 826F6E98  PublicTeamProfile::PublicTeamProfile  (social/elite_clan.cpp:2091)
   826F6E98  7D8802A6             mfspr r12,LR
   826F6E9C  9181FFF8             stw r12,-0x8(r1)
   826F6EA0  FBE1FFF0             std r31,-0x10(r1)
@@ -3294,7 +3294,7 @@ LAB_826f6e2c:
   826F6ECC  EBE1FFF0             ld r31,-0x10(r1)
   826F6ED0  4E800020             blr
 
-; 826F6ED8  serialize  (social/elite_clan.cpp:2096)
+; 826F6ED8  PublicTeamProfile::serialize  (social/elite_clan.cpp:2096)
   826F6ED8  7D8802A6             mfspr r12,LR
   826F6EDC  9181FFF8             stw r12,-0x8(r1)
   826F6EE0  FBC1FFE8             std r30,-0x18(r1)
@@ -3324,7 +3324,7 @@ LAB_826f6e2c:
   826F6F40  EBE1FFF0             ld r31,-0x10(r1)
   826F6F44  4E800020             blr
 
-; 826F8150  deserialize  (social/elite_clan.cpp:2105)
+; 826F8150  PublicTeamProfile::deserialize  (social/elite_clan.cpp:2105)
   826F8150  7D8802A6             mfspr r12,LR
   826F8154  9181FFF8             stw r12,-0x8(r1)
   826F8158  FBC1FFE8             std r30,-0x18(r1)
@@ -3405,11 +3405,11 @@ LAB_826f8248:
   826F8264  EBE1FFF0             ld r31,-0x10(r1)
   826F8268  4E800020             blr
 
-; 826F6F48  sizeOf  (social/elite_clan.cpp:2118)
+; 826F6F48  PublicTeamProfile::sizeOf  (social/elite_clan.cpp:2118)
   826F6F48  38604040             li r3,0x4040
   826F6F4C  4E800020             blr
 
-; 826F6F50  PrivateTeamProfile  (social/elite_clan.cpp:2124)
+; 826F6F50  PrivateTeamProfile::PrivateTeamProfile  (social/elite_clan.cpp:2124)
   826F6F50  7D8802A6             mfspr r12,LR
   826F6F54  9181FFF8             stw r12,-0x8(r1)
   826F6F58  FBE1FFF0             std r31,-0x10(r1)
@@ -3426,14 +3426,14 @@ LAB_826f8248:
   826F6F84  EBE1FFF0             ld r31,-0x10(r1)
   826F6F88  4E800020             blr
 
-; 826F6F90  serialize  (social/elite_clan.cpp:2129)
+; 826F6F90  PrivateTeamProfile::serialize  (social/elite_clan.cpp:2129)
   826F6F90  7C6B1B78             or r11,r3,r3
   826F6F94  7C832378             or r3,r4,r4
   826F6F98  38A0005F             li r5,0x5f
   826F6F9C  388B0018             addi r4,r11,0x18
   826F6FA0  481FF3D0             b 0x828f6370
 
-; 826F8270  deserialize  (social/elite_clan.cpp:2135)
+; 826F8270  PrivateTeamProfile::deserialize  (social/elite_clan.cpp:2135)
   826F8270  7D8802A6             mfspr r12,LR
   826F8274  9181FFF8             stw r12,-0x8(r1)
   826F8278  FBC1FFE8             std r30,-0x18(r1)
@@ -3471,11 +3471,11 @@ LAB_826f82d4:
   826F82F0  EBE1FFF0             ld r31,-0x10(r1)
   826F82F4  4E800020             blr
 
-; 826F6FA8  sizeOf  (social/elite_clan.cpp:2144)
+; 826F6FA8  PrivateTeamProfile::sizeOf  (social/elite_clan.cpp:2144)
   826F6FA8  38600078             li r3,0x78
   826F6FAC  4E800020             blr
 
-; 826F82F8  `scalar_deleting_destructor'  (line unknown)
+; 826F82F8  PublicTeamProfile::`scalar_deleting_destructor'  (line unknown)
   826F82F8  7D8802A6             mfspr r12,LR
   826F82FC  9181FFF8             stw r12,-0x8(r1)
   826F8300  FBC1FFE8             std r30,-0x18(r1)
@@ -3498,7 +3498,7 @@ LAB_826f8330:
   826F8340  EBE1FFF0             ld r31,-0x10(r1)
   826F8344  4E800020             blr
 
-; 826F8348  `scalar_deleting_destructor'  (line unknown)
+; 826F8348  PrivateTeamProfile::`scalar_deleting_destructor'  (line unknown)
   826F8348  7D8802A6             mfspr r12,LR
   826F834C  9181FFF8             stw r12,-0x8(r1)
   826F8350  FBC1FFE8             std r30,-0x18(r1)

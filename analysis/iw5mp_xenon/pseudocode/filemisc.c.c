@@ -2,10 +2,10 @@
 
 // 828A4B08  MoveFileA  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/filemisc.c:29)
 
-int MoveFileA(char *param_1,char *param_2)
+BOOL MoveFileA(LPCSTR lpExistingFileName,LPCSTR lpNewFileName)
 
 {
-  long lVar1;
+  undefined8 uVar1;
   undefined4 local_60 [2];
   undefined1 auStack_58 [8];
   undefined1 auStack_50 [8];
@@ -16,59 +16,57 @@ int MoveFileA(char *param_1,char *param_2)
   undefined4 local_2c;
   undefined1 auStack_28 [16];
   
-  RtlInitAnsiString(auStack_58,param_1);
+  RtlInitAnsiString(auStack_58,lpExistingFileName);
   local_44 = auStack_58;
   local_40 = 0x40;
   local_48 = 0xfffffffd;
-  lVar1 = NtOpenFile(local_60,0x110000,&local_48,auStack_50,7,0x4020);
-  if (-1 < lVar1) {
+  uVar1 = NtOpenFile(local_60,0x110000,&local_48,auStack_50,7,0x4020);
+  if (-1 < (int)uVar1) {
     local_2c = 0xfffffffd;
     local_30[0] = 0;
-    RtlInitAnsiString(auStack_28,param_2);
-    lVar1 = NtSetInformationFile(local_60[0],auStack_50,local_30,0x10,10);
+    RtlInitAnsiString(auStack_28,lpNewFileName);
+    uVar1 = NtSetInformationFile(local_60[0],auStack_50,local_30,0x10,10);
     NtClose(local_60[0]);
-    if (-1 < lVar1) {
+    if (-1 < (int)uVar1) {
       return 1;
     }
   }
-  XapiSetLastNTError(lVar1);
+  XapiSetLastNTError(uVar1);
   return 0;
 }
 
 
 // 828A4D38  MoveFileExA  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/filemisc.c:98)
 
-int MoveFileExA(char *param_1,char *param_2,ulong param_3)
+BOOL MoveFileExA(LPCSTR lpExistingFileName,LPCSTR lpNewFileName,DWORD dwFlags)
 
 {
-  char *pcVar1;
-  int iVar2;
+  LPCSTR lpExistingFileName_00;
+  BOOL BVar1;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  iVar2 = MoveFileWithProgressA
-                    (pcVar1,param_2,
-                     (_func___cdecl_ulong__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER_ulong_ulong_void_ptr_void_ptr_void_ptr
-                      *)0x0,(void *)0x0,param_3);
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  lpExistingFileName_00 = (LPCSTR)__savegprlr_29(lpExistingFileName);
+  BVar1 = MoveFileWithProgressA
+                    (lpExistingFileName_00,lpNewFileName,(LPPROGRESS_ROUTINE)0x0,(LPVOID)0x0,dwFlags
+                    );
+  BVar1 = __restgprlr_29(BVar1);
+  return BVar1;
 }
 
 
 // 828A4BE8  MoveFileWithProgressA  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/filemisc.c:162)
 
-int MoveFileWithProgressA
-              (char *param_1,char *param_2,
-              _func___cdecl_ulong__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER_ulong_ulong_void_ptr_void_ptr_void_ptr
-              *param_3,void *param_4,ulong param_5)
+BOOL MoveFileWithProgressA
+               (LPCSTR lpExistingFileName,LPCSTR lpNewFileName,LPPROGRESS_ROUTINE lpProgressRoutine,
+               LPVOID lpData,DWORD dwFlags)
 
 {
   undefined8 uVar1;
-  long lVar2;
-  char *pcVar3;
-  int iVar4;
-  int iVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  undefined8 uVar2;
+  LPCSTR lpExistingFileName_00;
+  BOOL BVar3;
+  BOOL BVar4;
+  longlong lVar5;
+  ulonglong uVar6;
   undefined4 local_80 [2];
   undefined1 auStack_78 [8];
   undefined1 auStack_70 [8];
@@ -79,39 +77,39 @@ int MoveFileWithProgressA
   undefined4 local_4c;
   undefined1 auStack_48 [72];
   
-  uVar7 = (ulonglong)(int)param_5;
-  lVar6 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_26(param_1);
+  uVar6 = (ulonglong)(int)dwFlags;
+  lVar5 = (longlong)(int)lpNewFileName;
+  uVar1 = __savegprlr_26(lpExistingFileName);
   RtlInitAnsiString(auStack_78,uVar1);
   local_64 = auStack_78;
   local_60 = 0x40;
   local_68 = 0xfffffffd;
-  lVar2 = NtOpenFile(local_80,0x110000,&local_68,auStack_70,7,0x4020);
-  if (-1 < lVar2) {
-    local_50[0] = (byte)uVar7 & 1;
+  uVar2 = NtOpenFile(local_80,0x110000,&local_68,auStack_70,7,0x4020);
+  if (-1 < (int)uVar2) {
+    local_50[0] = (byte)uVar6 & 1;
     local_4c = 0xfffffffd;
-    RtlInitAnsiString(auStack_48,lVar6);
-    lVar2 = NtSetInformationFile(local_80[0],auStack_70,local_50,0x10,10);
+    RtlInitAnsiString(auStack_48,lVar5);
+    uVar2 = NtSetInformationFile(local_80[0],auStack_70,local_50,0x10,10);
     NtClose(local_80[0]);
-    if (-1 < lVar2) {
-      iVar5 = 1;
+    if (-1 < (int)uVar2) {
+      BVar4 = 1;
       goto LAB_828a4d2c;
     }
-    if ((lVar2 == -0x3fffff2c) && ((uVar7 & 2) != 0)) {
-      pcVar3 = (char *)uVar1;
-      iVar5 = CopyFileExA(pcVar3,(char *)lVar6,param_3,param_4,(int *)0x0,
+    if (((int)uVar2 == -0x3fffff2c) && ((uVar6 & 2) != 0)) {
+      lpExistingFileName_00 = (LPCSTR)uVar1;
+      BVar4 = CopyFileExA(lpExistingFileName_00,(LPCSTR)lVar5,lpProgressRoutine,lpData,(LPBOOL)0x0,
                           (uint)LZCOUNT((uint)local_50[0]) >> 5 | 4);
-      if ((iVar5 != 0) && (iVar4 = DeleteFileA(pcVar3), iVar4 == 0)) {
-        SetFileAttributesA(pcVar3,0x80);
-        DeleteFileA(pcVar3);
+      if ((BVar4 != 0) && (BVar3 = DeleteFileA(lpExistingFileName_00), BVar3 == 0)) {
+        SetFileAttributesA(lpExistingFileName_00,0x80);
+        DeleteFileA(lpExistingFileName_00);
       }
       goto LAB_828a4d2c;
     }
   }
-  XapiSetLastNTError(lVar2);
-  iVar5 = 0;
+  XapiSetLastNTError(uVar2);
+  BVar4 = 0;
 LAB_828a4d2c:
-  iVar5 = __restgprlr_26(iVar5);
-  return iVar5;
+  BVar4 = __restgprlr_26(BVar4);
+  return BVar4;
 }
 

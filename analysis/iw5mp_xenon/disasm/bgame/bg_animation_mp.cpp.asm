@@ -3106,8 +3106,72 @@ LAB_8226c100:
   8226C128  398CC138             subi r12,r12,0x3ec8
   8226C12C  7C0C002E             lwzx r0,r12,r0
   8226C130  7C0903A6             mtspr CTR,r0
+switchD:
   8226C134  4E800420             bctr
-LAB_8226c240:
+caseD_0:
+  8226C17C  80780000             lwz r3,0x0(r24)
+  8226C180  4BFFCD09             bl 0x82268e88
+  8226C184  7C651B78             or r5,r3,r3
+  8226C188  7F84E378             or r4,r28,r28
+  8226C18C  38600013             li r3,0x13
+  8226C190  4828A5F1             bl 0x824f6780
+  8226C194  480000AC             b 0x8226c240
+caseD_f:
+  8226C198  80780000             lwz r3,0x0(r24)
+  8226C19C  4BFFCCED             bl 0x82268e88
+  8226C1A0  7C651B78             or r5,r3,r3
+  8226C1A4  7FA4EB78             or r4,r29,r29
+  8226C1A8  38600013             li r3,0x13
+  8226C1AC  4828A5D5             bl 0x824f6780
+  8226C1B0  48000090             b 0x8226c240
+caseD_1:
+  8226C1B4  80780000             lwz r3,0x0(r24)
+  8226C1B8  4BFFCCD1             bl 0x82268e88
+  8226C1BC  4BFFCBF5             bl 0x82268db0
+  8226C1C0  7C651B78             or r5,r3,r3
+  8226C1C4  7FC4F378             or r4,r30,r30
+  8226C1C8  38600013             li r3,0x13
+  8226C1CC  4828A5B5             bl 0x824f6780
+  8226C1D0  48000070             b 0x8226c240
+caseD_2:
+  8226C1D4  7DE47B78             or r4,r15,r15
+  8226C1D8  48000060             b 0x8226c238
+caseD_3:
+  8226C1DC  80780000             lwz r3,0x0(r24)
+  8226C1E0  4BFFCCA9             bl 0x82268e88
+  8226C1E4  4BFFCA3D             bl 0x82268c20
+  8226C1E8  7C651B78             or r5,r3,r3
+  8226C1EC  7FE4FB78             or r4,r31,r31
+  8226C1F0  38600013             li r3,0x13
+  8226C1F4  4828A58D             bl 0x824f6780
+  8226C1F8  48000048             b 0x8226c240
+caseD_e:
+  8226C1FC  7E048378             or r4,r16,r16
+  8226C200  48000038             b 0x8226c238
+caseD_c:
+  8226C204  7E248B78             or r4,r17,r17
+  8226C208  48000030             b 0x8226c238
+caseD_d:
+  8226C20C  7E449378             or r4,r18,r18
+  8226C210  48000028             b 0x8226c238
+caseD_4:
+  8226C214  7E649B78             or r4,r19,r19
+  8226C218  48000020             b 0x8226c238
+caseD_5:
+  8226C21C  7E84A378             or r4,r20,r20
+  8226C220  48000018             b 0x8226c238
+caseD_6:
+  8226C224  7EA4AB78             or r4,r21,r21
+  8226C228  48000010             b 0x8226c238
+caseD_7:
+  8226C22C  7EC4B378             or r4,r22,r22
+  8226C230  48000008             b 0x8226c238
+caseD_10:
+  8226C234  7EE4BB78             or r4,r23,r23
+LAB_8226c238:
+  8226C238  38600013             li r3,0x13
+  8226C23C  4828A545             bl 0x824f6780
+caseD_8:
   8226C240  817A0000             lwz r11,0x0(r26)
   8226C244  55691838             rlwinm r9,r11,0x3,0x0,0x1c
   8226C248  7D49C82E             lwzx r10,r9,r25

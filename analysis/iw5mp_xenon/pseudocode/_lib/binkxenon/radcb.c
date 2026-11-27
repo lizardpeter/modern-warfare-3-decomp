@@ -36,39 +36,39 @@ void my_wait_for_2(undefined8 param_1,ulonglong param_2)
 
 {
   ulonglong uVar1;
-  void *pvVar2;
-  ulong uVar3;
-  void *pvVar4;
-  void *local_30;
-  void *local_2c;
+  HANDLE hHandle;
+  DWORD DVar2;
+  HANDLE hHandle_00;
+  HANDLE local_30;
+  HANDLE local_2c;
   
   uVar1 = __savegprlr_29();
-  pvVar2 = (void *)param_2;
+  hHandle = (HANDLE)param_2;
   if ((uVar1 & 0xffffffff) == 0) {
     if ((param_2 & 0xffffffff) != 0) {
-      uVar3 = WaitForSingleObject(pvVar2,0xffffffff);
-      __restgprlr_29(uVar3);
+      DVar2 = WaitForSingleObject(hHandle,0xffffffff);
+      __restgprlr_29(DVar2);
       return;
     }
   }
   else {
-    pvVar4 = (void *)uVar1;
+    hHandle_00 = (HANDLE)uVar1;
     if ((param_2 & 0xffffffff) == 0) {
-      uVar3 = WaitForSingleObject(pvVar4,0xffffffff);
-      __restgprlr_29(uVar3);
+      DVar2 = WaitForSingleObject(hHandle_00,0xffffffff);
+      __restgprlr_29(DVar2);
       return;
     }
-    local_30 = pvVar4;
-    local_2c = pvVar2;
-    uVar3 = WaitForMultipleObjects(2,&local_30,0,0xffffffff);
-    uVar1 = (ulonglong)(int)uVar3;
-    if (uVar3 == 0) {
-      uVar3 = WaitForSingleObject(pvVar2,0xffffffff);
-      uVar1 = (ulonglong)(int)uVar3;
+    local_30 = hHandle_00;
+    local_2c = hHandle;
+    DVar2 = WaitForMultipleObjects(2,&local_30,0,0xffffffff);
+    uVar1 = (ulonglong)(int)DVar2;
+    if (DVar2 == 0) {
+      DVar2 = WaitForSingleObject(hHandle,0xffffffff);
+      uVar1 = (ulonglong)(int)DVar2;
     }
-    else if (uVar3 == 1) {
-      uVar3 = WaitForSingleObject(pvVar4,0xffffffff);
-      __restgprlr_29(uVar3);
+    else if (DVar2 == 1) {
+      DVar2 = WaitForSingleObject(hHandle_00,0xffffffff);
+      __restgprlr_29(DVar2);
       return;
     }
   }
@@ -90,8 +90,8 @@ void call_callbacks(void)
   int *piVar6;
   uint uVar7;
   undefined4 *puVar8;
-  int *piVar9;
-  void *local_b0 [16];
+  int *nCount;
+  HANDLE local_b0 [16];
   int local_70 [28];
   
   piVar5 = (int *)__savegprlr_28();
@@ -131,7 +131,7 @@ LAB_829464fc:
         }
       }
     }
-    piVar9 = (int *)0x0;
+    nCount = (int *)0x0;
     if (puVar8 == (undefined4 *)0x0) {
 LAB_829465b0:
       __restgprlr_28(piVar6);
@@ -140,16 +140,16 @@ LAB_829465b0:
     uVar7 = 0;
     do {
       if (0x3f < uVar7) break;
-      piVar9 = (int *)((int)piVar9 + 1);
+      nCount = (int *)((int)nCount + 1);
       *(undefined4 *)((int)local_b0 + uVar7) = puVar8[1];
       puVar1 = (undefined4 *)puVar8[2];
       *(undefined4 **)((int)local_70 + uVar7) = puVar8;
       uVar7 = uVar7 + 4;
       puVar8 = puVar1;
     } while (puVar1 != (undefined4 *)0x0);
-    if (piVar9 == (int *)0x0) goto LAB_829465b0;
-    piVar6 = (int *)WaitForMultipleObjects((ulong)piVar9,local_b0,0,1);
-    if (piVar6 < piVar9) {
+    if (nCount == (int *)0x0) goto LAB_829465b0;
+    piVar6 = (int *)WaitForMultipleObjects((DWORD)nCount,local_b0,0,1);
+    if (piVar6 < nCount) {
       (**(code **)(local_70[(int)piVar6] + 0x14))(local_70[(int)piVar6],piVar5[7]);
       piVar6 = (int *)ReleaseMutex(local_b0[(int)piVar6]);
     }
@@ -162,25 +162,25 @@ LAB_829465b0:
 undefined8 RAD_callback_thread(int *param_1)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = WaitForSingleObject((void *)param_1[2],param_1[1]);
+  DVar1 = WaitForSingleObject((HANDLE)param_1[2],param_1[1]);
   do {
-    if (uVar1 == 0) {
+    if (DVar1 == 0) {
       return 0;
     }
-    WaitForSingleObject((void *)param_1[5],0xffffffff);
+    WaitForSingleObject((HANDLE)param_1[5],0xffffffff);
     if (*param_1 == 1) {
       if (param_1[6] != 0) {
         call_callbacks(param_1);
       }
     }
     else if (*param_1 == 3) {
-      ReleaseMutex((void *)param_1[5]);
+      ReleaseMutex((HANDLE)param_1[5]);
       return 0;
     }
-    ReleaseMutex((void *)param_1[5]);
-    uVar1 = WaitForSingleObject((void *)param_1[2],param_1[1]);
+    ReleaseMutex((HANDLE)param_1[5]);
+    DVar1 = WaitForSingleObject((HANDLE)param_1[2],param_1[1]);
   } while( true );
 }
 
@@ -191,11 +191,11 @@ void RADCB_allocate_handler(void)
 
 {
   int iVar1;
-  void *pvVar2;
+  HANDLE pvVar2;
   int *piVar3;
   int iVar4;
   uint uVar5;
-  undefined4 *puVar6;
+  undefined4 *lpParameter;
   
   iVar1 = __savegprlr_28();
   piVar3 = &DAT_8489bec0;
@@ -210,26 +210,26 @@ void RADCB_allocate_handler(void)
   }
   (&DAT_8489bec0)[iVar4] = 1;
   iVar4 = iVar4 * 0x24;
-  puVar6 = (undefined4 *)(iVar4 + -0x7b76a448);
-  if (puVar6 != (undefined4 *)0x0) {
+  lpParameter = (undefined4 *)(iVar4 + -0x7b76a448);
+  if (lpParameter != (undefined4 *)0x0) {
     if (iVar1 < 0) {
       iVar1 = -iVar1;
     }
-    *puVar6 = 0;
+    *lpParameter = 0;
     *(undefined4 *)(iVar4 + -0x7b76a430) = 0;
     *(undefined4 *)(iVar4 + -0x7b76a42c) = 1;
     *(undefined4 *)(iVar4 + -0x7b76a428) = 0;
     *(int *)(iVar4 + -0x7b76a444) = 1000 / iVar1;
-    pvVar2 = CreateThread((void *)0x0,0x8000,RAD_callback_thread,puVar6,4,
-                          (ulong *)(iVar4 + -0x7b76a438));
-    *(void **)(iVar4 + -0x7b76a43c) = pvVar2;
+    pvVar2 = CreateThread((LPSECURITY_ATTRIBUTES)0x0,0x8000,RAD_callback_thread,lpParameter,4,
+                          (LPDWORD)(iVar4 + -0x7b76a438));
+    *(HANDLE *)(iVar4 + -0x7b76a43c) = pvVar2;
     XSetThreadProcessor(pvVar2,5);
     if (*(int *)(iVar4 + -0x7b76a43c) != 0) {
-      pvVar2 = CreateMutexA((void *)0x0,0,(char *)0x0);
-      *(void **)(iVar4 + -0x7b76a434) = pvVar2;
-      pvVar2 = CreateEventA((void *)0x0,0,0,(char *)0x0);
-      *(void **)(iVar4 + -0x7b76a440) = pvVar2;
-      __restgprlr_28(puVar6);
+      pvVar2 = CreateMutexA((LPSECURITY_ATTRIBUTES)0x0,0,(LPCSTR)0x0);
+      *(HANDLE *)(iVar4 + -0x7b76a434) = pvVar2;
+      pvVar2 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)0x0);
+      *(HANDLE *)(iVar4 + -0x7b76a440) = pvVar2;
+      __restgprlr_28(lpParameter);
       return;
     }
     iVar1 = iVar4 / 0x24 + (iVar4 >> 0x1f);
@@ -248,11 +248,11 @@ void RADCB_allocate_handler(void)
 void RADCB_register_callback(int param_1,undefined4 *param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  void *pvVar1;
+  HANDLE pvVar1;
   
   param_2[5] = param_4;
   param_2[4] = param_3;
-  pvVar1 = CreateMutexA((void *)0x0,0,(char *)0x0);
+  pvVar1 = CreateMutexA((LPSECURITY_ATTRIBUTES)0x0,0,(LPCSTR)0x0);
   param_2[1] = pvVar1;
   *param_2 = *(undefined4 *)(param_1 + 0x18);
   *(undefined4 **)(param_1 + 0x18) = param_2;
@@ -263,93 +263,93 @@ void RADCB_register_callback(int param_1,undefined4 *param_2,undefined4 param_3,
 
 // 82946820  request_free  (line unknown)
 
-ulong request_free(int *param_1)
+DWORD request_free(int *param_1)
 
 {
   int iVar1;
-  ulong uVar2;
+  DWORD DVar2;
   
   iVar1 = *param_1;
-  SetEvent((void *)param_1[2]);
+  SetEvent((HANDLE)param_1[2]);
   *param_1 = 3;
-  uVar2 = SetThreadPriority((void *)param_1[3],0xf);
+  DVar2 = SetThreadPriority((HANDLE)param_1[3],0xf);
   if (iVar1 == 0) {
-    uVar2 = ResumeThread((void *)param_1[3]);
+    DVar2 = ResumeThread((HANDLE)param_1[3]);
   }
   else if (iVar1 == 2) {
-    uVar2 = ReleaseMutex((void *)param_1[5]);
+    DVar2 = ReleaseMutex((HANDLE)param_1[5]);
   }
-  return uVar2;
+  return DVar2;
 }
 
 
 // 82946898  do_free  (line unknown)
 
-int do_free(int param_1)
+BOOL do_free(int param_1)
 
 {
   int iVar1;
-  int iVar2;
+  BOOL BVar2;
   uint uVar3;
   
-  CloseHandle(*(void **)(param_1 + 0x14));
-  CloseHandle(*(void **)(param_1 + 0xc));
-  iVar2 = CloseHandle(*(void **)(param_1 + 8));
+  CloseHandle(*(HANDLE *)(param_1 + 0x14));
+  CloseHandle(*(HANDLE *)(param_1 + 0xc));
+  BVar2 = CloseHandle(*(HANDLE *)(param_1 + 8));
   iVar1 = (param_1 + 0x7b76a448) / 0x24 + (param_1 + 0x7b76a448 >> 0x1f);
   uVar3 = iVar1 - (iVar1 >> 0x1f);
   if (uVar3 < 8) {
     (&DAT_8489bec0)[uVar3] = 0;
   }
-  return iVar2;
+  return BVar2;
 }
 
 
 // 82946918  RADCB_suspend_2_handlers  (line unknown)
 
-ulong RADCB_suspend_2_handlers(undefined4 *param_1,undefined4 *param_2)
+DWORD RADCB_suspend_2_handlers(undefined4 *param_1,undefined4 *param_2)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
   if (param_1 == (undefined4 *)0x0) {
     if (param_2 == (undefined4 *)0x0) {
       return 0;
     }
     *param_2 = 4;
-    uVar1 = WaitForSingleObject((void *)param_2[5],0xffffffff);
+    DVar1 = WaitForSingleObject((HANDLE)param_2[5],0xffffffff);
   }
   else {
     *param_1 = 4;
     if (param_2 == (undefined4 *)0x0) {
-      uVar1 = WaitForSingleObject((void *)param_1[5],0xffffffff);
+      DVar1 = WaitForSingleObject((HANDLE)param_1[5],0xffffffff);
       *param_1 = 2;
-      return uVar1;
+      return DVar1;
     }
     *param_2 = 4;
-    uVar1 = my_wait_for_2(param_1[5],param_2[5]);
+    DVar1 = my_wait_for_2(param_1[5],param_2[5]);
     *param_1 = 2;
   }
   *param_2 = 2;
-  return uVar1;
+  return DVar1;
 }
 
 
 // 829469C0  RADCB_resume_handler  (line unknown)
 
-ulong RADCB_resume_handler(int *param_1)
+DWORD RADCB_resume_handler(int *param_1)
 
 {
   int iVar1;
-  ulong uVar2;
+  DWORD DVar2;
   
   iVar1 = *param_1;
   *param_1 = 1;
   if (iVar1 == 0) {
-    uVar2 = ResumeThread((void *)param_1[3]);
-    return uVar2;
+    DVar2 = ResumeThread((HANDLE)param_1[3]);
+    return DVar2;
   }
-  uVar2 = ReleaseMutex((void *)param_1[5]);
-  return uVar2;
+  DVar2 = ReleaseMutex((HANDLE)param_1[5]);
+  return DVar2;
 }
 
 
@@ -358,11 +358,11 @@ ulong RADCB_resume_handler(int *param_1)
 bool RADCB_try_to_suspend_callback(undefined8 param_1,int param_2)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  if ((param_2 != 0) && (*(void **)(param_2 + 4) != (void *)0x0)) {
-    uVar1 = WaitForSingleObject(*(void **)(param_2 + 4),0);
-    return uVar1 == 0;
+  if ((param_2 != 0) && (*(HANDLE *)(param_2 + 4) != (HANDLE)0x0)) {
+    DVar1 = WaitForSingleObject(*(HANDLE *)(param_2 + 4),0);
+    return DVar1 == 0;
   }
   return true;
 }
@@ -370,19 +370,19 @@ bool RADCB_try_to_suspend_callback(undefined8 param_1,int param_2)
 
 // 82946A40  RADCB_suspend_callback  (line unknown)
 
-ulong RADCB_suspend_callback(ulong param_1,int param_2)
+DWORD RADCB_suspend_callback(DWORD param_1,int param_2)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
   if (param_2 == 0) {
     return param_1;
   }
-  if (*(void **)(param_2 + 4) == (void *)0x0) {
+  if (*(HANDLE *)(param_2 + 4) == (HANDLE)0x0) {
     return 0;
   }
-  uVar1 = WaitForSingleObject(*(void **)(param_2 + 4),0xffffffff);
-  return uVar1;
+  DVar1 = WaitForSingleObject(*(HANDLE *)(param_2 + 4),0xffffffff);
+  return DVar1;
 }
 
 
@@ -398,19 +398,19 @@ void RADCB_suspend_2_callbacks(undefined8 param_1,int param_2,undefined8 param_3
 
 // 82946A70  RADCB_resume_callback  (line unknown)
 
-int RADCB_resume_callback(int param_1,int param_2)
+BOOL RADCB_resume_callback(BOOL param_1,int param_2)
 
 {
-  int iVar1;
+  BOOL BVar1;
   
   if (param_2 == 0) {
     return param_1;
   }
-  if (*(void **)(param_2 + 4) == (void *)0x0) {
+  if (*(HANDLE *)(param_2 + 4) == (HANDLE)0x0) {
     return 0;
   }
-  iVar1 = ReleaseMutex(*(void **)(param_2 + 4));
-  return iVar1;
+  BVar1 = ReleaseMutex(*(HANDLE *)(param_2 + 4));
+  return BVar1;
 }
 
 
@@ -424,11 +424,11 @@ void RADCB_free_2_handlers(int param_1,int param_2)
       return;
     }
     request_free(param_2);
-    WaitForSingleObject(*(void **)(param_2 + 0xc),0xffffffff);
+    WaitForSingleObject(*(HANDLE *)(param_2 + 0xc),0xffffffff);
   }
   else if (param_2 == 0) {
     request_free(param_1);
-    WaitForSingleObject(*(void **)(param_1 + 0xc),0xffffffff);
+    WaitForSingleObject(*(HANDLE *)(param_1 + 0xc),0xffffffff);
     param_2 = param_1;
   }
   else {
@@ -462,18 +462,18 @@ undefined8 do_unregister(undefined4 *param_1,int param_2,ulonglong param_3)
   param_1[8] = param_1[8] + -1;
   if (((param_3 & 1) == 0) || (param_1[6] != 0)) {
     *param_1 = 4;
-    WaitForSingleObject((void *)param_1[5],0xffffffff);
+    WaitForSingleObject((HANDLE)param_1[5],0xffffffff);
     *param_1 = 1;
-    ReleaseMutex((void *)param_1[5]);
+    ReleaseMutex((HANDLE)param_1[5]);
     uVar1 = 0;
   }
   else {
     request_free();
-    WaitForSingleObject((void *)param_1[3],0xffffffff);
+    WaitForSingleObject((HANDLE)param_1[3],0xffffffff);
     do_free(param_1);
     uVar1 = 1;
   }
-  CloseHandle(*(void **)(param_2 + 4));
+  CloseHandle(*(HANDLE *)(param_2 + 4));
   *(undefined4 *)(param_2 + 4) = 0;
   return uVar1;
 }
@@ -532,7 +532,7 @@ void RADCB_unregister_2_callbacks
         my_wait_for_2(piVar3[3],piVar1[5]);
         do_free(piVar3);
         *piVar1 = 1;
-        ReleaseMutex((void *)piVar1[5]);
+        ReleaseMutex((HANDLE)piVar1[5]);
         uVar6 = 1;
       }
       goto LAB_82946d8c;
@@ -543,7 +543,7 @@ void RADCB_unregister_2_callbacks
       my_wait_for_2(piVar1[3],piVar3[5]);
       do_free(param_3);
       *piVar3 = 1;
-      ReleaseMutex((void *)piVar3[5]);
+      ReleaseMutex((HANDLE)piVar3[5]);
       uVar6 = 2;
       goto LAB_82946d8c;
     }
@@ -552,23 +552,23 @@ void RADCB_unregister_2_callbacks
   iVar4 = *piVar3;
   *piVar3 = 1;
   if (iVar4 == 0) {
-    ResumeThread((void *)piVar3[3]);
+    ResumeThread((HANDLE)piVar3[3]);
   }
   else {
-    ReleaseMutex((void *)piVar3[5]);
+    ReleaseMutex((HANDLE)piVar3[5]);
   }
   iVar4 = *piVar1;
   *piVar1 = 1;
   if (iVar4 == 0) {
-    ResumeThread((void *)piVar1[3]);
+    ResumeThread((HANDLE)piVar1[3]);
   }
   else {
-    ReleaseMutex((void *)piVar1[5]);
+    ReleaseMutex((HANDLE)piVar1[5]);
   }
   uVar6 = 0;
 LAB_82946d8c:
-  CloseHandle(*(void **)((int)param_2 + 4));
-  CloseHandle(*(void **)((int)param_4 + 4));
+  CloseHandle(*(HANDLE *)((int)param_2 + 4));
+  CloseHandle(*(HANDLE *)((int)param_4 + 4));
   *(undefined4 *)((int)param_2 + 4) = 0;
   *(undefined4 *)((int)param_4 + 4) = 0;
   __restgprlr_26(uVar6);

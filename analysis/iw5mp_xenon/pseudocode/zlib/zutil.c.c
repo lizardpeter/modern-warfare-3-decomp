@@ -2,8 +2,6 @@
 
 // 8265E900  TRACK_zutil  (zlib/zutil.c:52)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_zutil(void)
 
 {
@@ -13,47 +11,41 @@ void TRACK_zutil(void)
 
 // 8265E908  zlibVersion  (zlib/zutil.c:59)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char * zlibVersion(void)
+undefined8 zlibVersion(void)
 
 {
-  return "1.1.4";
+  return 0xffffffff820593e8;
 }
 
 
 // 8265E918  zError  (zlib/zutil.c:83)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char * zError(void)
+undefined4 zError(int param_1)
 
 {
-  int in_r3;
-  
-  return z_errmsg[2 - in_r3];
+  return *(undefined4 *)(param_1 * -4 + -0x7d668ee0);
 }
 
 
 // 8265EC30  Zip_InitThreadMemory  (zlib/zutil.c:89)
 
-void Zip_InitThreadMemory(z_stream_s *param_1,void *param_2,int param_3)
+void Zip_InitThreadMemory(undefined8 param_1,int param_2,int param_3)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_27(param_1);
+  iVar1 = __savegprlr_27();
   if (*(int *)(iVar1 + 0x28) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\zlib\\zutil.c",0x5c,0,"%s");
+    MyAssertHandler(0xffffffff82192380,0x5c,0,0xffffffff82000f98,0xffffffff821924e4);
   }
   if ((param_3 != 0x10000) && (param_3 != 0x60000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\zlib\\zutil.c",0x5d,0,"%s");
+    MyAssertHandler(0xffffffff82192380,0x5d,0,0xffffffff82000f98,0xffffffff821924ac);
   }
-  *(int *)((int)param_2 + 0x204) = param_3 + -0x20c;
-  *(int *)((int)param_2 + 0x208) = (int)param_2 + 0x20c;
+  *(int *)(param_2 + 0x204) = param_3 + -0x20c;
+  *(int *)(param_2 + 0x208) = param_2 + 0x20c;
   *(code **)(iVar1 + 0x20) = zcalloc;
   *(code **)(iVar1 + 0x24) = zcfree;
-  *(void **)(iVar1 + 0x28) = param_2;
+  *(int *)(iVar1 + 0x28) = param_2;
   __restgprlr_27();
   return;
 }
@@ -61,76 +53,74 @@ void Zip_InitThreadMemory(z_stream_s *param_1,void *param_2,int param_3)
 
 // 8265E938  Zip_ShutdownThreadMemory  (zlib/zutil.c:106)
 
-void Zip_ShutdownThreadMemory(z_stream_s *param_1)
+void Zip_ShutdownThreadMemory(int param_1)
 
 {
-  if (param_1->opaque == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\zlib\\zutil.c",0x6b,0,"%s");
+  if (*(int *)(param_1 + 0x28) == 0) {
+    MyAssertHandler(0xffffffff82192380,0x6b,0,0xffffffff82000f98,0xffffffff821923b8);
   }
-  param_1->opaque = (uchar *)0x0;
-  param_1->zfree = (_func___cdecl_void_uchar_ptr_uchar_ptr *)0x0;
-  param_1->zalloc = (_func___cdecl_uchar_ptr_uchar_ptr_uint_uint *)0x0;
+  *(undefined4 *)(param_1 + 0x28) = 0;
+  *(undefined4 *)(param_1 + 0x24) = 0;
+  *(undefined4 *)(param_1 + 0x20) = 0;
   return;
 }
 
 
 // 8265E9A0  Zip_Alloc  (zlib/zutil.c:115)
 
-void * Zip_Alloc(ZipInfo *param_1,int param_2)
+void Zip_Alloc(undefined8 param_1,longlong param_2)
 
 {
   uint uVar1;
   uint uVar2;
   uint uVar3;
   uint *puVar4;
-  void *pvVar5;
-  uint uVar6;
+  uint uVar5;
   
-  puVar4 = (uint *)__savegprlr_28(param_1);
+  puVar4 = (uint *)__savegprlr_28();
   if (puVar4 == (uint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\zlib\\zutil.c",0x77,0,"%s");
+    MyAssertHandler(0xffffffff82192380,0x77,0,0xffffffff82000f98,0xffffffff82192420);
   }
-  if (param_2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\zlib\\zutil.c",0x78,0,"%s");
+  if ((int)param_2 == 0) {
+    MyAssertHandler(0xffffffff82192380,0x78,0,0xffffffff82000f98,0xffffffff82036204);
   }
   if (0x7e < *puVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\zlib\\zutil.c",0x79,0,"%s");
+    MyAssertHandler(0xffffffff82192380,0x79,0,0xffffffff82000f98,0xffffffff821923e4);
   }
   uVar1 = puVar4[0x82];
   uVar3 = puVar4[*puVar4 + 1];
-  uVar6 = uVar3 + param_2;
-  if ((int)puVar4[0x81] < (int)uVar6) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\zlib\\zutil.c",0x7f,0,
-                    "%s\n\t(offset) = %i");
+  param_2 = (ulonglong)uVar3 + param_2;
+  uVar5 = (uint)param_2;
+  if ((int)puVar4[0x81] < (int)uVar5) {
+    MyAssertHandler(0xffffffff82192380,0x7f,0,0xffffffff8205ca6c,0xffffffff821923c8,param_2);
   }
   uVar2 = *puVar4;
   *puVar4 = uVar2 + 1;
-  puVar4[uVar2 + 2] = uVar6;
-  pvVar5 = (void *)__restgprlr_28((ulonglong)uVar1 + (ulonglong)uVar3);
-  return pvVar5;
+  puVar4[uVar2 + 2] = uVar5;
+  __restgprlr_28((ulonglong)uVar1 + (ulonglong)uVar3);
+  return;
 }
 
 
 // 8265EAA8  Zip_Free  (zlib/zutil.c:136)
 
-void Zip_Free(ZipInfo *param_1,void *param_2)
+void Zip_Free(undefined8 param_1,int param_2)
 
 {
   int iVar1;
   int *piVar2;
   
-  piVar2 = (int *)__savegprlr_28(param_1);
+  piVar2 = (int *)__savegprlr_28();
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\zlib\\zutil.c",0x89,0,"%s");
+    MyAssertHandler(0xffffffff82192380,0x89,0,0xffffffff82000f98,0xffffffff82192420);
   }
   if (*piVar2 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\zlib\\zutil.c",0x8a,0,
-                    "%s\n\t(zipInfo->offsetCount) = %i");
+    MyAssertHandler(0xffffffff82192380,0x8a,0,0xffffffff82192470,0xffffffff82192490);
   }
   iVar1 = *piVar2;
   *piVar2 = iVar1 + -1;
-  if ((int)param_2 - piVar2[0x82] != piVar2[iVar1]) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\zlib\\zutil.c",0x8c,0,"%s");
+  if (param_2 - piVar2[0x82] != piVar2[iVar1]) {
+    MyAssertHandler(0xffffffff82192380,0x8c,0,0xffffffff82000f98,0xffffffff82192428);
   }
   __restgprlr_28();
   return;
@@ -139,32 +129,30 @@ void Zip_Free(ZipInfo *param_1,void *param_2)
 
 // 8265EB68  zcalloc  (zlib/zutil.c:148)
 
-uchar * zcalloc(uchar *param_1,uint param_2,uint param_3)
+void zcalloc(undefined8 param_1,int param_2,int param_3)
 
 {
-  ZipInfo *pZVar1;
-  void *pvVar2;
-  uchar *puVar3;
+  ulonglong uVar1;
   
-  pZVar1 = (ZipInfo *)__savegprlr_29(param_1);
-  if (pZVar1 == (ZipInfo *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\zlib\\zutil.c",0x9a,0,"%s");
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82192380,0x9a,0,0xffffffff82000f98,0xffffffff82192420);
   }
-  pvVar2 = Zip_Alloc(pZVar1,param_2 * param_3);
-  puVar3 = (uchar *)__restgprlr_29(pvVar2);
-  return puVar3;
+  Zip_Alloc(uVar1,(longlong)param_2 * (longlong)param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 8265EBC0  zcfree  (zlib/zutil.c:169)
 
-void zcfree(uchar *param_1,uchar *param_2)
+void zcfree(ulonglong param_1,undefined8 param_2)
 
 {
-  if (param_1 == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\zlib\\zutil.c",0xaf,0,"%s");
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82192380,0xaf,0,0xffffffff82000f98,0xffffffff82192420);
   }
-  Zip_Free((ZipInfo *)param_1,param_2);
+  Zip_Free(param_1,param_2);
   return;
 }
 

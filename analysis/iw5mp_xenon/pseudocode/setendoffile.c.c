@@ -2,28 +2,28 @@
 
 // 828ABBA0  SetEndOfFile  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/setendoffile.c:45)
 
-int SetEndOfFile(void *param_1)
+BOOL SetEndOfFile(HANDLE hFile)
 
 {
-  long lVar1;
+  int iVar1;
   undefined8 local_30;
   undefined1 auStack_28 [8];
   undefined8 local_20;
   undefined8 local_18;
   
-  lVar1 = NtQueryInformationFile(param_1,auStack_28,&local_30,8,0xe);
-  if (-1 < lVar1) {
+  iVar1 = NtQueryInformationFile(hFile,auStack_28,&local_30,8,0xe);
+  if (-1 < iVar1) {
     local_20 = local_30;
-    lVar1 = NtSetInformationFile(param_1,auStack_28,&local_20,8,0x14);
-    if (-1 < lVar1) {
+    iVar1 = NtSetInformationFile(hFile,auStack_28,&local_20,8,0x14);
+    if (-1 < iVar1) {
       local_18 = local_30;
-      lVar1 = NtSetInformationFile(param_1,auStack_28,&local_18,8,0x13);
-      if (-1 < lVar1) {
+      iVar1 = NtSetInformationFile(hFile,auStack_28,&local_18,8,0x13);
+      if (-1 < iVar1) {
         return 1;
       }
     }
   }
-  RtlSetLastNTError(lVar1);
+  RtlSetLastNTError();
   return 0;
 }
 

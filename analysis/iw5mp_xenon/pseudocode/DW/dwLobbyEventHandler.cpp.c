@@ -2,65 +2,64 @@
 
 // 8293EA08  `dynamic_initializer_for_'g_dwLobbyEventHandler0''  (DW/dwLobbyEventHandler.cpp:20)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__g_dwLobbyEventHandler0__(void)
+int _dynamic_initializer_for__g_dwLobbyEventHandler0__(void)
 
 {
-  bdLobbyEventHandler::bdLobbyEventHandler((bdLobbyEventHandler *)&g_dwLobbyEventHandler0);
-  g_dwLobbyEventHandler0 = (dwLobbyEventHandler<0>)&dwLobbyEventHandler<0>::_vftable_;
-  atexit(_dynamic_atexit_destructor_for__g_dwLobbyEventHandler0__);
-  return;
+  int iVar1;
+  
+  bdLobbyEventHandler__bdLobbyEventHandler(0xffffffff844f2228);
+  DAT_844f2228 = &PTR_dwLobbyEventHandler<0>___scalar_deleting_destructor__821aa290;
+  iVar1 = atexit(_dynamic_atexit_destructor_for__g_dwLobbyEventHandler0__);
+  return iVar1;
 }
 
 
 // 8293EA50  `dynamic_initializer_for_'g_dwLobbyEventHandler1''  (DW/dwLobbyEventHandler.cpp:21)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__g_dwLobbyEventHandler1__(void)
+int _dynamic_initializer_for__g_dwLobbyEventHandler1__(void)
 
 {
-  bdLobbyEventHandler::bdLobbyEventHandler((bdLobbyEventHandler *)&g_dwLobbyEventHandler1);
-  g_dwLobbyEventHandler1 = (dwLobbyEventHandler<1>)&dwLobbyEventHandler<1>::_vftable_;
-  atexit(_dynamic_atexit_destructor_for__g_dwLobbyEventHandler1__);
-  return;
+  int iVar1;
+  
+  bdLobbyEventHandler__bdLobbyEventHandler(0xffffffff844f222c);
+  DAT_844f222c = &PTR_dwLobbyEventHandler<1>___scalar_deleting_destructor__821aa2d8;
+  iVar1 = atexit(_dynamic_atexit_destructor_for__g_dwLobbyEventHandler1__);
+  return iVar1;
 }
 
 
 // 8293EA98  `dynamic_initializer_for_'g_dwLobbyEventHandler2''  (DW/dwLobbyEventHandler.cpp:22)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__g_dwLobbyEventHandler2__(void)
+int _dynamic_initializer_for__g_dwLobbyEventHandler2__(void)
 
 {
-  bdLobbyEventHandler::bdLobbyEventHandler((bdLobbyEventHandler *)&g_dwLobbyEventHandler2);
-  g_dwLobbyEventHandler2 = (dwLobbyEventHandler<2>)&dwLobbyEventHandler<2>::_vftable_;
-  atexit(_dynamic_atexit_destructor_for__g_dwLobbyEventHandler2__);
-  return;
+  int iVar1;
+  
+  bdLobbyEventHandler__bdLobbyEventHandler(0xffffffff844f2224);
+  DAT_844f2224 = &PTR_dwLobbyEventHandler<2>___scalar_deleting_destructor__821aa320;
+  iVar1 = atexit(_dynamic_atexit_destructor_for__g_dwLobbyEventHandler2__);
+  return iVar1;
 }
 
 
 // 8293EAE0  `dynamic_initializer_for_'g_dwLobbyEventHandler3''  (DW/dwLobbyEventHandler.cpp:23)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__g_dwLobbyEventHandler3__(void)
+int _dynamic_initializer_for__g_dwLobbyEventHandler3__(void)
 
 {
-  bdLobbyEventHandler::bdLobbyEventHandler((bdLobbyEventHandler *)&g_dwLobbyEventHandler3);
-  g_dwLobbyEventHandler3 = (dwLobbyEventHandler<3>)&dwLobbyEventHandler<3>::_vftable_;
-  atexit(_dynamic_atexit_destructor_for__g_dwLobbyEventHandler3__);
-  return;
+  int iVar1;
+  
+  bdLobbyEventHandler__bdLobbyEventHandler(0xffffffff844f2230);
+  DAT_844f2230 = &PTR_dwLobbyEventHandler<3>___scalar_deleting_destructor__821aa368;
+  iVar1 = atexit(_dynamic_atexit_destructor_for__g_dwLobbyEventHandler3__);
+  return iVar1;
 }
 
 
-// 826E83B8  onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
+// 826E83B8  dwLobbyEventHandler<0>::onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
 
-void __thiscall
-dwLobbyEventHandler<0>::onChallengesReceived
-          (dwLobbyEventHandler<0> *this,ulong64 param_1,bdReference<bdAntiCheatChallenges> param_2)
+void dwLobbyEventHandler<0>__onChallengesReceived
+               (undefined8 param_1,undefined8 param_2,uint *param_3)
 
 {
   uint uVar1;
@@ -70,7 +69,7 @@ dwLobbyEventHandler<0>::onChallengesReceived
   byte in_cr0;
   uint local_20 [4];
   
-  local_20[0] = (param_2.m_ptr)->_padding_;
+  local_20[0] = *param_3;
   if ((ulonglong)local_20[0] != 0) {
     lVar2 = (ulonglong)local_20[0] + 4;
     do {
@@ -82,18 +81,16 @@ dwLobbyEventHandler<0>::onChallengesReceived
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  LiveAntiCheat_OnChallengesReceived(0,(bdAntiCheatChallenges *)local_20);
-  bdReference<bdAntiCheatChallenges>::~bdReference<bdAntiCheatChallenges>
-            ((bdReference<bdAntiCheatChallenges> *)param_2.m_ptr);
+  LiveAntiCheat_OnChallengesReceived(0,local_20);
+  bdReference<bdAntiCheatChallenges>___bdReference<bdAntiCheatChallenges>(param_3);
   return;
 }
 
 
-// 826E8428  onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
+// 826E8428  dwLobbyEventHandler<1>::onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
 
-void __thiscall
-dwLobbyEventHandler<1>::onChallengesReceived
-          (dwLobbyEventHandler<1> *this,ulong64 param_1,bdReference<bdAntiCheatChallenges> param_2)
+void dwLobbyEventHandler<1>__onChallengesReceived
+               (undefined8 param_1,undefined8 param_2,uint *param_3)
 
 {
   uint uVar1;
@@ -103,7 +100,7 @@ dwLobbyEventHandler<1>::onChallengesReceived
   byte in_cr0;
   uint local_20 [4];
   
-  local_20[0] = (param_2.m_ptr)->_padding_;
+  local_20[0] = *param_3;
   if ((ulonglong)local_20[0] != 0) {
     lVar2 = (ulonglong)local_20[0] + 4;
     do {
@@ -115,18 +112,16 @@ dwLobbyEventHandler<1>::onChallengesReceived
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  LiveAntiCheat_OnChallengesReceived(1,(bdAntiCheatChallenges *)local_20);
-  bdReference<bdAntiCheatChallenges>::~bdReference<bdAntiCheatChallenges>
-            ((bdReference<bdAntiCheatChallenges> *)param_2.m_ptr);
+  LiveAntiCheat_OnChallengesReceived(1,local_20);
+  bdReference<bdAntiCheatChallenges>___bdReference<bdAntiCheatChallenges>(param_3);
   return;
 }
 
 
-// 826E8498  onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
+// 826E8498  dwLobbyEventHandler<2>::onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
 
-void __thiscall
-dwLobbyEventHandler<2>::onChallengesReceived
-          (dwLobbyEventHandler<2> *this,ulong64 param_1,bdReference<bdAntiCheatChallenges> param_2)
+void dwLobbyEventHandler<2>__onChallengesReceived
+               (undefined8 param_1,undefined8 param_2,uint *param_3)
 
 {
   uint uVar1;
@@ -136,7 +131,7 @@ dwLobbyEventHandler<2>::onChallengesReceived
   byte in_cr0;
   uint local_20 [4];
   
-  local_20[0] = (param_2.m_ptr)->_padding_;
+  local_20[0] = *param_3;
   if ((ulonglong)local_20[0] != 0) {
     lVar2 = (ulonglong)local_20[0] + 4;
     do {
@@ -148,18 +143,16 @@ dwLobbyEventHandler<2>::onChallengesReceived
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  LiveAntiCheat_OnChallengesReceived(2,(bdAntiCheatChallenges *)local_20);
-  bdReference<bdAntiCheatChallenges>::~bdReference<bdAntiCheatChallenges>
-            ((bdReference<bdAntiCheatChallenges> *)param_2.m_ptr);
+  LiveAntiCheat_OnChallengesReceived(2,local_20);
+  bdReference<bdAntiCheatChallenges>___bdReference<bdAntiCheatChallenges>(param_3);
   return;
 }
 
 
-// 826E8508  onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
+// 826E8508  dwLobbyEventHandler<3>::onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
 
-void __thiscall
-dwLobbyEventHandler<3>::onChallengesReceived
-          (dwLobbyEventHandler<3> *this,ulong64 param_1,bdReference<bdAntiCheatChallenges> param_2)
+void dwLobbyEventHandler<3>__onChallengesReceived
+               (undefined8 param_1,undefined8 param_2,uint *param_3)
 
 {
   uint uVar1;
@@ -169,7 +162,7 @@ dwLobbyEventHandler<3>::onChallengesReceived
   byte in_cr0;
   uint local_20 [4];
   
-  local_20[0] = (param_2.m_ptr)->_padding_;
+  local_20[0] = *param_3;
   if ((ulonglong)local_20[0] != 0) {
     lVar2 = (ulonglong)local_20[0] + 4;
     do {
@@ -181,16 +174,15 @@ dwLobbyEventHandler<3>::onChallengesReceived
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  LiveAntiCheat_OnChallengesReceived(3,(bdAntiCheatChallenges *)local_20);
-  bdReference<bdAntiCheatChallenges>::~bdReference<bdAntiCheatChallenges>
-            ((bdReference<bdAntiCheatChallenges> *)param_2.m_ptr);
+  LiveAntiCheat_OnChallengesReceived(3,local_20);
+  bdReference<bdAntiCheatChallenges>___bdReference<bdAntiCheatChallenges>(param_3);
   return;
 }
 
 
-// 826E82B0  onNewMail  (DW/dwlobbyeventhandler.h:50)
+// 826E82B0  dwLobbyEventHandler<0>::onNewMail  (DW/dwlobbyeventhandler.h:50)
 
-void __thiscall dwLobbyEventHandler<0>::onNewMail(dwLobbyEventHandler<0> *this)
+void dwLobbyEventHandler<0>__onNewMail(void)
 
 {
   dwMail_HandleOnNewMailEvent(0);
@@ -198,9 +190,9 @@ void __thiscall dwLobbyEventHandler<0>::onNewMail(dwLobbyEventHandler<0> *this)
 }
 
 
-// 826E82D0  onNewMail  (DW/dwlobbyeventhandler.h:50)
+// 826E82D0  dwLobbyEventHandler<1>::onNewMail  (DW/dwlobbyeventhandler.h:50)
 
-void __thiscall dwLobbyEventHandler<1>::onNewMail(dwLobbyEventHandler<1> *this)
+void dwLobbyEventHandler<1>__onNewMail(void)
 
 {
   dwMail_HandleOnNewMailEvent(1);
@@ -208,9 +200,9 @@ void __thiscall dwLobbyEventHandler<1>::onNewMail(dwLobbyEventHandler<1> *this)
 }
 
 
-// 826E82F0  onNewMail  (DW/dwlobbyeventhandler.h:50)
+// 826E82F0  dwLobbyEventHandler<2>::onNewMail  (DW/dwlobbyeventhandler.h:50)
 
-void __thiscall dwLobbyEventHandler<2>::onNewMail(dwLobbyEventHandler<2> *this)
+void dwLobbyEventHandler<2>__onNewMail(void)
 
 {
   dwMail_HandleOnNewMailEvent(2);
@@ -218,9 +210,9 @@ void __thiscall dwLobbyEventHandler<2>::onNewMail(dwLobbyEventHandler<2> *this)
 }
 
 
-// 826E8310  onNewMail  (DW/dwlobbyeventhandler.h:50)
+// 826E8310  dwLobbyEventHandler<3>::onNewMail  (DW/dwlobbyeventhandler.h:50)
 
-void __thiscall dwLobbyEventHandler<3>::onNewMail(dwLobbyEventHandler<3> *this)
+void dwLobbyEventHandler<3>__onNewMail(void)
 
 {
   dwMail_HandleOnNewMailEvent(3);
@@ -228,231 +220,222 @@ void __thiscall dwLobbyEventHandler<3>::onNewMail(dwLobbyEventHandler<3> *this)
 }
 
 
-// 826E8330  ~bdReference<bdAntiCheatChallenges>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdreference/bdreference.inl:55)
+// 826E8330  bdReference<bdAntiCheatChallenges>::~bdReference<bdAntiCheatChallenges>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdreference/bdreference.inl:55)
 
-void __thiscall
-bdReference<bdAntiCheatChallenges>::~bdReference<bdAntiCheatChallenges>
-          (bdReference<bdAntiCheatChallenges> *this)
+void bdReference<bdAntiCheatChallenges>___bdReference<bdAntiCheatChallenges>(uint *param_1)
 
 {
-  bdAntiCheatChallenges *pbVar1;
-  uint uVar2;
-  longlong lVar3;
-  uint *puVar4;
+  uint uVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  longlong lVar4;
+  uint *puVar5;
   char in_RESERVE;
   byte in_cr0;
   
-  pbVar1 = this->m_ptr;
-  if (ZEXT48(pbVar1) != 0) {
-    lVar3 = ZEXT48(pbVar1) + 4;
+  uVar1 = *param_1;
+  if ((ulonglong)uVar1 != 0) {
+    lVar4 = (ulonglong)uVar1 + 4;
     do {
-      puVar4 = (uint *)lVar3;
+      puVar5 = (uint *)lVar4;
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,lVar3);
-        *puVar4 = uVar2;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+        *puVar5 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (pbVar1->_padding_ == 0) {
-      pbVar1 = this->m_ptr;
-      if (pbVar1 != (bdAntiCheatChallenges *)0x0) {
-        (**(code **)pbVar1->_padding_)(pbVar1,1);
+    if (*(int *)(uVar1 + 4) == 0) {
+      puVar2 = (undefined4 *)*param_1;
+      if (puVar2 != (undefined4 *)0x0) {
+        (**(code **)*puVar2)(puVar2,1);
       }
-      this->m_ptr = (bdAntiCheatChallenges *)0x0;
+      *param_1 = 0;
     }
   }
   return;
 }
 
 
-// 826E82B8  onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
+// 826E82B8  dwLobbyEventHandler<0>::onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
 
-void __thiscall dwLobbyEventHandler<0>::onPlayerBanned(dwLobbyEventHandler<0> *this,ulong64 param_1)
+void dwLobbyEventHandler<0>__onPlayerBanned(undefined8 param_1,undefined8 param_2)
 
 {
-  LiveAntiCheat_DWPlayerBanned(param_1);
+  LiveAntiCheat_DWPlayerBanned(param_2);
   return;
 }
 
 
-// 826E82D8  onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
+// 826E82D8  dwLobbyEventHandler<1>::onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
 
-void __thiscall dwLobbyEventHandler<1>::onPlayerBanned(dwLobbyEventHandler<1> *this,ulong64 param_1)
+void dwLobbyEventHandler<1>__onPlayerBanned(undefined8 param_1,undefined8 param_2)
 
 {
-  LiveAntiCheat_DWPlayerBanned(param_1);
+  LiveAntiCheat_DWPlayerBanned(param_2);
   return;
 }
 
 
-// 826E82F8  onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
+// 826E82F8  dwLobbyEventHandler<2>::onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
 
-void __thiscall dwLobbyEventHandler<2>::onPlayerBanned(dwLobbyEventHandler<2> *this,ulong64 param_1)
+void dwLobbyEventHandler<2>__onPlayerBanned(undefined8 param_1,undefined8 param_2)
 
 {
-  LiveAntiCheat_DWPlayerBanned(param_1);
+  LiveAntiCheat_DWPlayerBanned(param_2);
   return;
 }
 
 
-// 826E8318  onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
+// 826E8318  dwLobbyEventHandler<3>::onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
 
-void __thiscall dwLobbyEventHandler<3>::onPlayerBanned(dwLobbyEventHandler<3> *this,ulong64 param_1)
+void dwLobbyEventHandler<3>__onPlayerBanned(undefined8 param_1,undefined8 param_2)
 
 {
-  LiveAntiCheat_DWPlayerBanned(param_1);
+  LiveAntiCheat_DWPlayerBanned(param_2);
   return;
 }
 
 
-// 826E82C0  onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
+// 826E82C0  dwLobbyEventHandler<0>::onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
 
-void __thiscall
-dwLobbyEventHandler<0>::onGlobalInstantMessage
-          (dwLobbyEventHandler<0> *this,ulong64 param_1,char *param_2,void *param_3,uint param_4)
+void dwLobbyEventHandler<0>__onGlobalInstantMessage(void)
 
 {
-  SocialConfig_HandleInstantMessage(0,param_3);
+  undefined8 in_r6;
+  
+  SocialConfig_HandleInstantMessage(0,in_r6);
   return;
 }
 
 
-// 826E82E0  onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
+// 826E82E0  dwLobbyEventHandler<1>::onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
 
-void __thiscall
-dwLobbyEventHandler<1>::onGlobalInstantMessage
-          (dwLobbyEventHandler<1> *this,ulong64 param_1,char *param_2,void *param_3,uint param_4)
+void dwLobbyEventHandler<1>__onGlobalInstantMessage(void)
 
 {
-  SocialConfig_HandleInstantMessage(1,param_3);
+  undefined8 in_r6;
+  
+  SocialConfig_HandleInstantMessage(1,in_r6);
   return;
 }
 
 
-// 826E8300  onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
+// 826E8300  dwLobbyEventHandler<2>::onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
 
-void __thiscall
-dwLobbyEventHandler<2>::onGlobalInstantMessage
-          (dwLobbyEventHandler<2> *this,ulong64 param_1,char *param_2,void *param_3,uint param_4)
+void dwLobbyEventHandler<2>__onGlobalInstantMessage(void)
 
 {
-  SocialConfig_HandleInstantMessage(2,param_3);
+  undefined8 in_r6;
+  
+  SocialConfig_HandleInstantMessage(2,in_r6);
   return;
 }
 
 
-// 826E8320  onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
+// 826E8320  dwLobbyEventHandler<3>::onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
 
-void __thiscall
-dwLobbyEventHandler<3>::onGlobalInstantMessage
-          (dwLobbyEventHandler<3> *this,ulong64 param_1,char *param_2,void *param_3,uint param_4)
+void dwLobbyEventHandler<3>__onGlobalInstantMessage(void)
 
 {
-  SocialConfig_HandleInstantMessage(3,param_3);
+  undefined8 in_r6;
+  
+  SocialConfig_HandleInstantMessage(3,in_r6);
   return;
 }
 
 
-// 826E8170  `scalar_deleting_destructor'  (line unknown)
+// 826E8170  dwLobbyEventHandler<0>::`scalar_deleting_destructor'  (line unknown)
 
-void * __thiscall
-dwLobbyEventHandler<0>::_scalar_deleting_destructor_(dwLobbyEventHandler<0> *this,uint param_1)
+undefined8
+dwLobbyEventHandler<0>___scalar_deleting_destructor_(undefined8 param_1,ulonglong param_2)
 
 {
-  bdLobbyEventHandler::~bdLobbyEventHandler((bdLobbyEventHandler *)this);
-  if ((param_1 & 1) != 0) {
-    bdMemory::deallocate(this);
+  bdLobbyEventHandler___bdLobbyEventHandler();
+  if ((param_2 & 1) != 0) {
+    bdMemory__deallocate(param_1);
   }
-  return this;
+  return param_1;
 }
 
 
-// 826E81C0  `scalar_deleting_destructor'  (line unknown)
+// 826E81C0  dwLobbyEventHandler<1>::`scalar_deleting_destructor'  (line unknown)
 
-void * __thiscall
-dwLobbyEventHandler<1>::_scalar_deleting_destructor_(dwLobbyEventHandler<1> *this,uint param_1)
+undefined8
+dwLobbyEventHandler<1>___scalar_deleting_destructor_(undefined8 param_1,ulonglong param_2)
 
 {
-  bdLobbyEventHandler::~bdLobbyEventHandler((bdLobbyEventHandler *)this);
-  if ((param_1 & 1) != 0) {
-    bdMemory::deallocate(this);
+  bdLobbyEventHandler___bdLobbyEventHandler();
+  if ((param_2 & 1) != 0) {
+    bdMemory__deallocate(param_1);
   }
-  return this;
+  return param_1;
 }
 
 
-// 826E8210  `scalar_deleting_destructor'  (line unknown)
+// 826E8210  dwLobbyEventHandler<2>::`scalar_deleting_destructor'  (line unknown)
 
-void * __thiscall
-dwLobbyEventHandler<2>::_scalar_deleting_destructor_(dwLobbyEventHandler<2> *this,uint param_1)
+undefined8
+dwLobbyEventHandler<2>___scalar_deleting_destructor_(undefined8 param_1,ulonglong param_2)
 
 {
-  bdLobbyEventHandler::~bdLobbyEventHandler((bdLobbyEventHandler *)this);
-  if ((param_1 & 1) != 0) {
-    bdMemory::deallocate(this);
+  bdLobbyEventHandler___bdLobbyEventHandler();
+  if ((param_2 & 1) != 0) {
+    bdMemory__deallocate(param_1);
   }
-  return this;
+  return param_1;
 }
 
 
-// 826E8260  `scalar_deleting_destructor'  (line unknown)
+// 826E8260  dwLobbyEventHandler<3>::`scalar_deleting_destructor'  (line unknown)
 
-void * __thiscall
-dwLobbyEventHandler<3>::_scalar_deleting_destructor_(dwLobbyEventHandler<3> *this,uint param_1)
+undefined8
+dwLobbyEventHandler<3>___scalar_deleting_destructor_(undefined8 param_1,ulonglong param_2)
 
 {
-  bdLobbyEventHandler::~bdLobbyEventHandler((bdLobbyEventHandler *)this);
-  if ((param_1 & 1) != 0) {
-    bdMemory::deallocate(this);
+  bdLobbyEventHandler___bdLobbyEventHandler();
+  if ((param_2 & 1) != 0) {
+    bdMemory__deallocate(param_1);
   }
-  return this;
+  return param_1;
 }
 
 
 // 829403D0  `dynamic_atexit_destructor_for_'g_dwLobbyEventHandler0''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__g_dwLobbyEventHandler0__(void)
 
 {
-  bdLobbyEventHandler::~bdLobbyEventHandler((bdLobbyEventHandler *)&g_dwLobbyEventHandler0);
+  bdLobbyEventHandler___bdLobbyEventHandler(0xffffffff844f2228);
   return;
 }
 
 
 // 829403E0  `dynamic_atexit_destructor_for_'g_dwLobbyEventHandler1''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__g_dwLobbyEventHandler1__(void)
 
 {
-  bdLobbyEventHandler::~bdLobbyEventHandler((bdLobbyEventHandler *)&g_dwLobbyEventHandler1);
+  bdLobbyEventHandler___bdLobbyEventHandler(0xffffffff844f222c);
   return;
 }
 
 
 // 829403F0  `dynamic_atexit_destructor_for_'g_dwLobbyEventHandler2''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__g_dwLobbyEventHandler2__(void)
 
 {
-  bdLobbyEventHandler::~bdLobbyEventHandler((bdLobbyEventHandler *)&g_dwLobbyEventHandler2);
+  bdLobbyEventHandler___bdLobbyEventHandler(0xffffffff844f2224);
   return;
 }
 
 
 // 82940400  `dynamic_atexit_destructor_for_'g_dwLobbyEventHandler3''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__g_dwLobbyEventHandler3__(void)
 
 {
-  bdLobbyEventHandler::~bdLobbyEventHandler((bdLobbyEventHandler *)&g_dwLobbyEventHandler3);
+  bdLobbyEventHandler___bdLobbyEventHandler(0xffffffff844f2230);
   return;
 }
 

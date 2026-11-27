@@ -2,7 +2,7 @@
 
 // 8274DA18  R_GetVec3FromByteArray  (gfx_d3d/r_light_tweak.cpp:26)
 
-void R_GetVec3FromByteArray(uchar *param_1,float *param_2)
+void R_GetVec3FromByteArray(int param_1,int param_2)
 
 {
   byte *pbVar1;
@@ -11,10 +11,10 @@ void R_GetVec3FromByteArray(uchar *param_1,float *param_2)
   longlong lVar4;
   
   iVar3 = 0;
-  pfVar2 = param_2 + -1;
+  pfVar2 = (float *)(param_2 + -4);
   lVar4 = 3;
   do {
-    pbVar1 = param_1 + iVar3;
+    pbVar1 = (byte *)(iVar3 + param_1);
     iVar3 = iVar3 + 1;
     pfVar2 = pfVar2 + 1;
     *pfVar2 = (float)*pbVar1;
@@ -26,231 +26,229 @@ void R_GetVec3FromByteArray(uchar *param_1,float *param_2)
 
 // 8274DE68  R_SetSunLightFromDvars  (gfx_d3d/r_light_tweak.cpp:35)
 
-void R_SetSunLightFromDvars(GfxLight *param_1)
+void R_SetSunLightFromDvars(char *param_1)
 
 {
   byte *pbVar1;
   char *pcVar2;
-  float *pfVar3;
-  int iVar4;
-  longlong lVar5;
-  float local_38;
-  int local_34;
+  int iVar3;
+  float *pfVar4;
+  int iVar5;
+  longlong lVar6;
+  undefined4 local_38;
+  undefined4 local_34;
   undefined4 local_30;
   float fStack_2c;
-  float local_28 [4];
+  undefined1 local_28 [16];
   
-  pcVar2 = (char *)param_1;
-  if (param_1->type != '\x01') {
-    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light_tweak.cpp";
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light_tweak.cpp",
-                    0x26,0,"%s");
+  pcVar2 = param_1;
+  if (*param_1 != '\x01') {
+    pcVar2 = (char *)MyAssertHandler(0xffffffff821c6a08,0x26,0,0xffffffff82000f98,0xffffffff821bcea0
+                                    );
   }
-  pfVar3 = &fStack_2c;
-  iVar4 = 0;
-  lVar5 = 3;
+  pfVar4 = &fStack_2c;
+  iVar5 = 0;
+  lVar6 = 3;
+  iVar3 = DAT_8461822c + 0xc;
   do {
-    pbVar1 = (byte *)(iVar4 + DAT_8461822c + 0xc);
-    iVar4 = iVar4 + 1;
-    pfVar3 = pfVar3 + 1;
-    *pfVar3 = (float)*pbVar1;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  R_GetSunColorFromLightAndColor(*(float *)(DAT_8461821c + 0xc),(float *)pcVar2,local_28);
-  local_34 = (r_lightTweakSunHeading->current).integer;
-  local_38 = (float)(r_lightTweakSunPitch->current).integer;
+    pbVar1 = (byte *)(iVar5 + iVar3);
+    iVar5 = iVar5 + 1;
+    pfVar4 = pfVar4 + 1;
+    *pfVar4 = (float)*pbVar1;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  R_GetSunColorFromLightAndColor((double)*(float *)(DAT_8461821c + 0xc),pcVar2,local_28,param_1 + 4)
+  ;
+  local_34 = *(undefined4 *)(DAT_84618230 + 0xc);
+  local_38 = *(undefined4 *)(DAT_84618228 + 0xc);
   local_30 = 0;
-  AngleVectors(&local_38,param_1->dir,(float *)0x0,(float *)0x0);
+  AngleVectors(&local_38,param_1 + 0x10,0,0);
   return;
 }
 
 
 // 8274DF58  R_ResetSunLightFromDvars  (gfx_d3d/r_light_tweak.cpp:47)
 
-void R_ResetSunLightFromDvars(GfxLight *param_1)
+void R_ResetSunLightFromDvars(char *param_1)
 
 {
   byte *pbVar1;
   char *pcVar2;
-  float *pfVar3;
-  int iVar4;
-  longlong lVar5;
-  float local_38;
-  int local_34;
+  int iVar3;
+  float *pfVar4;
+  int iVar5;
+  longlong lVar6;
+  undefined4 local_38;
+  undefined4 local_34;
   undefined4 local_30;
   float fStack_2c;
-  float local_28 [4];
+  undefined1 local_28 [16];
   
-  pcVar2 = (char *)param_1;
-  if (param_1->type != '\x01') {
-    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light_tweak.cpp";
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light_tweak.cpp",
-                    0x32,0,"%s");
+  pcVar2 = param_1;
+  if (*param_1 != '\x01') {
+    pcVar2 = (char *)MyAssertHandler(0xffffffff821c6a08,0x32,0,0xffffffff82000f98,0xffffffff821bcea0
+                                    );
   }
-  pfVar3 = &fStack_2c;
-  iVar4 = 0;
-  lVar5 = 3;
+  pfVar4 = &fStack_2c;
+  iVar5 = 0;
+  lVar6 = 3;
+  iVar3 = DAT_8461822c + 0x2c;
   do {
-    pbVar1 = (byte *)(iVar4 + DAT_8461822c + 0x2c);
-    iVar4 = iVar4 + 1;
-    pfVar3 = pfVar3 + 1;
-    *pfVar3 = (float)*pbVar1;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  R_GetSunColorFromLightAndColor(*(float *)(DAT_8461821c + 0x2c),(float *)pcVar2,local_28);
-  local_34 = (r_lightTweakSunHeading->reset).integer;
-  local_38 = (float)(r_lightTweakSunPitch->reset).integer;
+    pbVar1 = (byte *)(iVar5 + iVar3);
+    iVar5 = iVar5 + 1;
+    pfVar4 = pfVar4 + 1;
+    *pfVar4 = (float)*pbVar1;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  R_GetSunColorFromLightAndColor
+            ((double)*(float *)(DAT_8461821c + 0x2c),pcVar2,local_28,param_1 + 4);
+  local_34 = *(undefined4 *)(DAT_84618230 + 0x2c);
+  local_38 = *(undefined4 *)(DAT_84618228 + 0x2c);
   local_30 = 0;
-  AngleVectors(&local_38,param_1->dir,(float *)0x0,(float *)0x0);
+  AngleVectors(&local_38,param_1 + 0x10,0,0);
   return;
 }
 
 
 // 8274DA50  R_LightTweaksModified  (gfx_d3d/r_light_tweak.cpp:59)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool R_LightTweaksModified(void)
+void R_LightTweaksModified(void)
 
 {
-  bool bVar1;
-  bool bVar2;
-  bool bVar3;
-  bool bVar4;
-  undefined1 uVar5;
+  byte bVar1;
+  byte bVar2;
+  byte bVar3;
+  byte bVar4;
   
   __savegprlr_29();
   if (DAT_84618220 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light_tweak.cpp",
-                    0x3e,0,"%s");
+    MyAssertHandler(0xffffffff821c6a08,0x3e,0,0xffffffff82000f98,0xffffffff821c69f4);
   }
-  if (DAT_8461821c == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light_tweak.cpp",
-                    0x3f,0,"%s");
+  if (DAT_8461821c == 0) {
+    MyAssertHandler(0xffffffff821c6a08,0x3f,0,0xffffffff82000f98,0xffffffff821c69dc);
   }
-  if (DAT_8461822c == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light_tweak.cpp",
-                    0x40,0,"%s");
+  if (DAT_8461822c == 0) {
+    MyAssertHandler(0xffffffff821c6a08,0x40,0,0xffffffff82000f98,0xffffffff821c69c4);
   }
-  if (r_lightTweakSunPitch == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light_tweak.cpp",
-                    0x41,0,"%s");
+  if (DAT_84618228 == 0) {
+    MyAssertHandler(0xffffffff821c6a08,0x41,0,0xffffffff82000f98,0xffffffff821c69ac);
   }
-  if (r_lightTweakSunHeading == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light_tweak.cpp",
-                    0x42,0,"%s");
+  if (DAT_84618230 == 0) {
+    MyAssertHandler(0xffffffff821c6a08,0x42,0,0xffffffff82000f98,0xffffffff821c6994);
   }
   bVar1 = R_CheckDvarModified(DAT_8461821c);
   bVar2 = R_CheckDvarModified(DAT_8461822c);
-  bVar3 = R_CheckDvarModified(r_lightTweakSunPitch);
-  bVar4 = R_CheckDvarModified(r_lightTweakSunHeading);
-  uVar5 = __restgprlr_29(bVar4 || (bVar3 || (bVar2 || bVar1)));
-  return (bool)uVar5;
+  bVar3 = R_CheckDvarModified(DAT_84618228);
+  bVar4 = R_CheckDvarModified(DAT_84618230);
+  __restgprlr_29(bVar4 | bVar3 | bVar2 | bVar1);
+  return;
 }
 
 
 // 8274DB98  R_InitLightTweaks  (gfx_d3d/r_light_tweak.cpp:79)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_InitLightTweaks(void)
 
 {
-  g_tweakPrimaryLightIndex = 0;
+  DAT_84618224 = 0;
   return;
 }
 
 
 // 8274E048  R_UpdateLightTweaks  (gfx_d3d/r_light_tweak.cpp:85)
 
-void R_UpdateLightTweaks(GfxLight *param_1,uint param_2)
+void R_UpdateLightTweaks(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  float fVar2;
-  int iVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  uint uVar6;
-  double dVar7;
-  DvarValue in_stack_ffffff48;
+  longlong lVar2;
+  char cVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  double dVar6;
+  undefined8 uVar7;
   float local_70;
   float local_6c;
   float local_68;
   float local_60;
   float local_5c;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_25(param_1);
-  dVar7 = 1.0;
-  uVar6 = (uint)uVar5;
-  if ((ulonglong)g_tweakPrimaryLightIndex != (uVar5 & 0xffffffff)) {
-    if ((ulonglong)g_tweakPrimaryLightIndex != 0) {
-      iVar1 = g_tweakPrimaryLightIndex * 0x4c;
-      if (*(char *)(iVar1 + iVar3) != '\x01') {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light_tweak.cpp"
-                        ,0x61,0,"%s");
+  lVar2 = __savegprlr_25();
+  uVar7 = 0x3ff0000000000000;
+  uVar4 = (ulonglong)DAT_84618224;
+  if (uVar4 != (param_2 & 0xffffffff)) {
+    if (uVar4 != 0) {
+      if (*(char *)((int)(uVar4 * 0x4c) + (int)lVar2) != '\x01') {
+        MyAssertHandler(0xffffffff821c6a08,0x61,0,0xffffffff82000f98,0xffffffff821bcea0);
       }
-      Dvar_Reset(DAT_8461821c,DVAR_SOURCE_INTERNAL);
-      Dvar_Reset(DAT_8461822c,DVAR_SOURCE_INTERNAL);
-      Dvar_Reset(r_lightTweakSunPitch,DVAR_SOURCE_INTERNAL);
-      Dvar_Reset(r_lightTweakSunHeading,DVAR_SOURCE_INTERNAL);
-      R_SetSunLightFromDvars((GfxLight *)(iVar1 + iVar3));
+      Dvar_Reset(DAT_8461821c,0);
+      Dvar_Reset(DAT_8461822c,0);
+      Dvar_Reset(DAT_84618228,0);
+      Dvar_Reset(DAT_84618230,0);
+      R_SetSunLightFromDvars(uVar4 * 0x4c + lVar2);
     }
-    if ((uVar5 & 0xffffffff) != 0) {
-      iVar1 = uVar6 * 0x4c + iVar3;
-      if (*(char *)(uVar6 * 0x4c + iVar3) != '\x01') {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light_tweak.cpp"
-                        ,0x6f,0,"%s");
+    if ((param_2 & 0xffffffff) != 0) {
+      lVar5 = param_2 * 0x4c + lVar2;
+      if (*(char *)((int)(param_2 * 0x4c) + (int)lVar2) != '\x01') {
+        MyAssertHandler(0xffffffff821c6a08,0x6f,0,0xffffffff82000f98,0xffffffff821bcea0);
       }
-      Dvar_SetBool(DAT_84618220,false);
-      ColorNormalize((float *)(iVar1 + 4),&local_70);
-      fVar2 = *(float *)(iVar1 + 4);
-      if (*(float *)(iVar1 + 4) - *(float *)(iVar1 + 8) < 0.0) {
-        fVar2 = *(float *)(iVar1 + 8);
+      Dvar_SetBool(DAT_84618220,0);
+      ColorNormalize(lVar5 + 4,&local_70);
+      iVar1 = (int)lVar5;
+      dVar6 = (double)*(float *)(iVar1 + 4);
+      if ((float)((double)*(float *)(iVar1 + 4) - (double)*(float *)(iVar1 + 8)) < 0.0) {
+        dVar6 = (double)*(float *)(iVar1 + 8);
       }
-      if (fVar2 - *(float *)(iVar1 + 0xc) < 0.0) {
-        fVar2 = *(float *)(iVar1 + 0xc);
+      if ((float)(dVar6 - (double)*(float *)(iVar1 + 0xc)) < 0.0) {
+        dVar6 = (double)*(float *)(iVar1 + 0xc);
       }
-      Dvar_SetFloat(DAT_8461821c,fVar2);
-      Dvar_SetColor(DAT_8461822c,local_70,local_6c,local_68,(float)dVar7);
-      vectosignedangles((float *)(iVar1 + 0x10),&local_60);
-      Dvar_SetFloat(r_lightTweakSunPitch,local_60);
-      Dvar_SetFloat(r_lightTweakSunHeading,local_5c);
-      Dvar_ChangeResetValue(DAT_8461821c,in_stack_ffffff48);
-      Dvar_ChangeResetValue(DAT_8461822c,in_stack_ffffff48);
-      Dvar_ChangeResetValue(r_lightTweakSunPitch,in_stack_ffffff48);
-      Dvar_ChangeResetValue(r_lightTweakSunHeading,in_stack_ffffff48);
+      Dvar_SetFloat(dVar6,DAT_8461821c);
+      Dvar_SetColor((double)local_70,(double)local_6c,(double)local_68,uVar7,DAT_8461822c);
+      vectosignedangles(lVar5 + 0x10,&local_60);
+      Dvar_SetFloat((double)local_60,DAT_84618228);
+      Dvar_SetFloat((double)local_5c,DAT_84618230);
+      Dvar_ChangeResetValue
+                (DAT_8461821c,*(undefined8 *)(DAT_8461821c + 0xc),
+                 *(undefined8 *)(DAT_8461821c + 0x14));
+      Dvar_ChangeResetValue
+                (DAT_8461822c,*(undefined8 *)(DAT_8461822c + 0xc),
+                 *(undefined8 *)(DAT_8461822c + 0x14));
+      Dvar_ChangeResetValue
+                (DAT_84618228,*(undefined8 *)(DAT_84618228 + 0xc),
+                 *(undefined8 *)(DAT_84618228 + 0x14));
+      Dvar_ChangeResetValue
+                (DAT_84618230,*(undefined8 *)(DAT_84618230 + 0xc),
+                 *(undefined8 *)(DAT_84618230 + 0x14));
       Dvar_ClearModified(DAT_8461821c);
       Dvar_ClearModified(DAT_8461822c);
-      Dvar_ClearModified(r_lightTweakSunPitch);
-      Dvar_ClearModified(r_lightTweakSunHeading);
+      Dvar_ClearModified(DAT_84618228);
+      Dvar_ClearModified(DAT_84618230);
     }
-    g_tweakLightsReset = true;
-    g_tweakPrimaryLightIndex = uVar6;
+    DAT_84618218 = '\x01';
+    DAT_84618224 = (uint)param_2;
   }
-  if ((uVar5 & 0xffffffff) != 0) {
-    bVar4 = R_LightTweaksModified();
-    if (bVar4) {
-      Dvar_SetBool(DAT_84618220,true);
+  if ((param_2 & 0xffffffff) != 0) {
+    cVar3 = R_LightTweaksModified();
+    if (cVar3 != '\0') {
+      Dvar_SetBool(DAT_84618220,1);
     }
-    if ((DAT_84618220->current).enabled == false) {
-      if (g_tweakLightsReset == false) {
-        R_ResetSunLightFromDvars((GfxLight *)(uVar6 * 0x4c + iVar3));
-        g_tweakLightsReset = true;
+    if (*(char *)(DAT_84618220 + 0xc) == '\0') {
+      if (DAT_84618218 == '\0') {
+        R_ResetSunLightFromDvars(param_2 * 0x4c + lVar2);
+        DAT_84618218 = 1;
         __restgprlr_25();
         return;
       }
     }
     else {
-      if (((sm_enable->current).enabled == false) &&
-         (((r_lightTweakSunPitch->current).value != (r_lightTweakSunPitch->reset).value ||
-          ((r_lightTweakSunHeading->current).value != (r_lightTweakSunHeading->reset).value)))) {
-        Dvar_SetFloat(sm_sunSampleSizeNear,(float)dVar7);
-        Dvar_SetBool(sm_enable,true);
+      if ((*(char *)(DAT_845aa7bc + 0xc) == '\0') &&
+         ((*(float *)(DAT_84618228 + 0xc) != *(float *)(DAT_84618228 + 0x2c) ||
+          (*(float *)(DAT_84618230 + 0xc) != *(float *)(DAT_84618230 + 0x2c))))) {
+        Dvar_SetFloat(uVar7,DAT_845aa7e0);
+        Dvar_SetBool(DAT_845aa7bc,1);
       }
-      g_tweakLightsReset = false;
-      R_SetSunLightFromDvars((GfxLight *)(uVar6 * 0x4c + iVar3));
+      DAT_84618218 = '\0';
+      R_SetSunLightFromDvars(param_2 * 0x4c + lVar2);
     }
   }
   __restgprlr_25();
@@ -260,98 +258,79 @@ void R_UpdateLightTweaks(GfxLight *param_1,uint param_2)
 
 // 8274DBA8  R_LightTweakInitDvars  (gfx_d3d/r_light_tweak.cpp:166)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_LightTweakInitDvars(void)
 
 {
-  ushort uVar1;
-  char *pcVar2;
-  double dVar3;
-  double dVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  DAT_84618220 = Dvar_RegisterBool("r_lightTweakEnable",false,4,"Apply sun tweaks to the active sun"
-                                  );
-  pcVar2 = "lues from dvars rather than the level";
-  uVar1 = 0;
-  dVar4 = 0.0;
-  dVar3 = 1.0;
-  DAT_8461821c = Dvar_RegisterFloat("r_lightTweakSunLight",1.0,0.0,4.0,0,
-                                    "lues from dvars rather than the level");
-  DAT_8461822c = Dvar_RegisterColor("r_lightTweakSunColor",(float)dVar4,(float)dVar3,(float)dVar4,
-                                    (float)dVar3,uVar1,pcVar2);
-  pcVar2 = "lues from dvars rather than the level";
-  r_lightTweakSunPitch =
-       Dvar_RegisterFloat("r_lightTweakSunPitch",(float)dVar4,-90.0,90.0,uVar1,
-                          "lues from dvars rather than the level");
-  r_lightTweakSunHeading =
-       Dvar_RegisterFloat("r_lightTweakSunHeading",(float)dVar4,-180.0,180.0,0,pcVar2);
+  DAT_84618220 = Dvar_RegisterBool(0xffffffff821c69f4,0,4,0xffffffff821c6aa8);
+  uVar2 = 0;
+  uVar1 = 0x3ff0000000000000;
+  DAT_8461821c = Dvar_RegisterFloat(0x3ff0000000000000,0,0x4010000000000000,0xffffffff821c69dc);
+  DAT_8461822c = Dvar_RegisterColor(uVar2,uVar1,uVar2,uVar1,0xffffffff821c69c4);
+  DAT_84618228 = Dvar_RegisterFloat(uVar2,0xc056800000000000,0x4056800000000000,0xffffffff821c69ac);
+  DAT_84618230 = Dvar_RegisterFloat(uVar2,0xc066800000000000,0x4066800000000000,0xffffffff821c6994);
   return;
 }
 
 
 // 8274DCD8  R_LightTweakAngleChanged  (gfx_d3d/r_light_tweak.cpp:176)
 
-bool R_LightTweakAngleChanged(float param_1)
+undefined8 R_LightTweakAngleChanged(double param_1)
 
 {
   double dVar1;
   double dVar2;
-  double dVar3;
-  float fVar4;
   
-  dVar1 = (double)param_1;
   if (*(char *)(DAT_84618220 + 0xc) != '\0') {
-    dVar3 = (double)(((r_lightTweakSunPitch->current).value - (r_lightTweakSunPitch->reset).value) *
+    dVar2 = (double)((*(float *)(DAT_84618228 + 0xc) - *(float *)(DAT_84618228 + 0x2c)) *
                     0.0027777778);
-    dVar2 = floor((double)(float)(dVar3 + 0.5));
-    if (dVar1 < ABS((double)((float)(dVar3 - (double)(float)dVar2) * 360.0))) {
-      return true;
+    dVar1 = floor((double)(float)(dVar2 + 0.5));
+    if (param_1 < ABS((double)((float)(dVar2 - (double)(float)dVar1) * 360.0))) {
+      return 1;
     }
-    fVar4 = AngleSubtract((r_lightTweakSunHeading->current).value,
-                          (r_lightTweakSunHeading->reset).value);
-    if (dVar1 < ABS((double)fVar4)) {
-      return true;
+    dVar1 = (double)AngleSubtract((double)*(float *)(DAT_84618230 + 0xc),
+                                  (double)*(float *)(DAT_84618230 + 0x2c));
+    if (param_1 < ABS(dVar1)) {
+      return 1;
     }
   }
-  return false;
+  return 0;
 }
 
 
 // 8274DDA0  R_GetSunDirFromPitchAndHeading  (gfx_d3d/r_light_tweak.cpp:192)
 
-void R_GetSunDirFromPitchAndHeading(float param_1,float param_2,float *param_3)
+void R_GetSunDirFromPitchAndHeading
+               (double param_1,double param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-  float *in_r5;
   float local_20;
   float local_1c;
   undefined4 local_18;
   
+  local_20 = (float)param_1;
+  local_1c = (float)param_2;
   local_18 = 0;
-  local_20 = param_1;
-  local_1c = param_2;
-  AngleVectors(&local_20,in_r5,(float *)0x0,(float *)0x0);
+  AngleVectors(&local_20,param_5,0,0);
   return;
 }
 
 
 // 8274DDE8  R_GetSunColorFromLightAndColor  (gfx_d3d/r_light_tweak.cpp:201)
 
-void R_GetSunColorFromLightAndColor(float param_1,float *param_2,float *param_3)
+void R_GetSunColorFromLightAndColor(double param_1,undefined8 param_2,float *param_3,float *param_4)
 
 {
-  float *in_r5;
-  double dVar1;
-  
-  dVar1 = (double)param_1;
-  *in_r5 = *param_3;
-  in_r5[1] = param_3[1];
-  in_r5[2] = param_3[2];
-  ColorNormalize(in_r5,in_r5);
-  *in_r5 = (float)((double)*in_r5 * dVar1);
-  in_r5[1] = (float)(dVar1 * (double)in_r5[1]);
-  in_r5[2] = (float)((double)in_r5[2] * dVar1);
+  *param_4 = *param_3;
+  param_4[1] = param_3[1];
+  param_4[2] = param_3[2];
+  ColorNormalize(param_4,param_4);
+  *param_4 = (float)((double)*param_4 * param_1);
+  param_4[1] = (float)(param_1 * (double)param_4[1]);
+  param_4[2] = (float)((double)param_4[2] * param_1);
   return;
 }
 

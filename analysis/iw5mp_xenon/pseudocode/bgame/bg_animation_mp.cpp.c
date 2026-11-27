@@ -2,53 +2,41 @@
 
 // 82266990  Com_BitCheckAssert  (universal/com_bitops.h:10)
 
-int Com_BitCheckAssert(uint *param_1,int param_2,int param_3)
+void Com_BitCheckAssert(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)param_3;
-  uVar2 = (ulonglong)param_2;
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",0xb,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82003098,0xb,0,0xffffffff82000f98,0xffffffff8200308c);
   }
-  if ((uVar3 & 0x1fffffff) << 3 <= (uVar2 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",0xc,0,
-                    "bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
+  if ((param_3 & 0x1fffffff) << 3 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82003098,0xc,0,0xffffffff82003058,param_2);
   }
-  iVar1 = __restgprlr_28((1 << ((uint)uVar2 & 0x1f) & *(uint *)(((int)(uint)uVar2 >> 5) * 4 + iVar1)
-                         ) != 0);
-  return iVar1;
+  __restgprlr_28((1 << ((uint)param_2 & 0x1f) & *(uint *)(((int)(uint)param_2 >> 5) * 4 + iVar1)) !=
+                 0);
+  return;
 }
 
 
 // 82266A30  Com_BitSetAssert  (universal/com_bitops.h:17)
 
-void Com_BitSetAssert(uint *param_1,int param_2,int param_3)
+void Com_BitSetAssert(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)param_3;
-  uVar3 = (ulonglong)param_2;
-  iVar2 = __savegprlr_28(param_1);
+  iVar2 = __savegprlr_28();
   if (iVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",0x12,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff82003098,0x12,0,0xffffffff82000f98,0xffffffff8200308c);
   }
-  if ((uVar4 & 0x1fffffff) << 3 <= (uVar3 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",0x13,0
-                    ,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
+  if ((param_3 & 0x1fffffff) << 3 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82003098,0x13,0,0xffffffff82003058,param_2);
   }
-  iVar1 = ((int)(uint)uVar3 >> 5) * 4;
-  *(uint *)(iVar1 + iVar2) = 1 << ((uint)uVar3 & 0x1f) | *(uint *)(iVar1 + iVar2);
+  iVar1 = ((int)(uint)param_2 >> 5) * 4;
+  *(uint *)(iVar1 + iVar2) = 1 << ((uint)param_2 & 0x1f) | *(uint *)(iVar1 + iVar2);
   __restgprlr_28();
   return;
 }
@@ -56,433 +44,412 @@ void Com_BitSetAssert(uint *param_1,int param_2,int param_3)
 
 // 82266880  I_rsqrt  (universal/com_math.h:209)
 
-float I_rsqrt(float param_1)
+double I_rsqrt(double param_1)
 
 {
-  double dVar1;
-  
-  dVar1 = (double)param_1;
-  if (((uint)param_1 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",0xd2,0,
-                    "%s");
+  if (((uint)(float)param_1 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82003018,0xd2,0,0xffffffff82000f98,0xffffffff82003008);
   }
-  if (dVar1 == 0.0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",0xd3,0,
-                    "%s");
+  if (param_1 == 0.0) {
+    MyAssertHandler(0xffffffff82003018,0xd3,0,0xffffffff82000f98,0xffffffff82003004);
   }
-  return (float)(1.0 / SQRT(dVar1));
+  return (double)(float)(1.0 / SQRT(param_1));
 }
 
 
 // 82266AC8  BG_IsIW5Weapon  (bgame/bg_weapons_util.h:248)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-bool BG_IsIW5Weapon(Weapon param_1)
+undefined8 BG_IsIW5Weapon(uint param_1)
 
 {
   char *pcVar1;
-  bool bVar2;
+  undefined8 uVar2;
   
-  pcVar1 = (char *)**(undefined4 **)
-                     ((int)bg_weaponCompleteDefs +
-                     ((uint)(((ulonglong)param_1 & 0xffffffff) << 2) & 0x3fc));
+  pcVar1 = *(char **)(&DAT_829d80d8)[param_1 & 0xff];
   if ((((*pcVar1 != 'i') || (pcVar1[1] != 'w')) || (pcVar1[2] != '5')) ||
-     (bVar2 = true, pcVar1[3] != '_')) {
-    bVar2 = false;
+     (uVar2 = 1, pcVar1[3] != '_')) {
+    uVar2 = 0;
   }
-  return bVar2;
+  return uVar2;
 }
 
 
 // 82266B20  BG_GetAlternateWeapon  (bgame/bg_weapons_util.h:259)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-Weapon BG_GetAlternateWeapon(Weapon param_1,bool param_2)
+void BG_GetAlternateWeapon(undefined8 param_1,ulonglong param_2)
 
 {
   char *pcVar1;
   bool bVar2;
+  uint uVar3;
   uint uVar4;
-  uint uVar5;
-  Weapon WVar3;
-  ulonglong uVar6;
   
-  uVar6 = (ulonglong)param_2;
-  uVar4 = __savegprlr_27();
-  if (bg_lastParsedWeaponIndex < (uVar4 & 0xff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_util.h",0x104
-                    ,0,"weapon.weaponIdx not in [0, bg_lastParsedWeaponIndex]\n\t%i not in [0, %i]")
-    ;
+  uVar3 = __savegprlr_27();
+  uVar4 = uVar3 & 0xff;
+  if (DAT_829d8a50 < uVar4) {
+    MyAssertHandler(0xffffffff82003180,0x104,0,0xffffffff82003130,uVar4);
   }
-  if ((uVar6 & 0xff) != 0) {
-    pcVar1 = bg_weaponCompleteDefs[uVar4 & 0xff]->szInternalName;
+  if ((param_2 & 0xff) != 0) {
+    pcVar1 = *(char **)(&DAT_829d80d8)[uVar4];
     if ((((*pcVar1 != 'i') || (pcVar1[1] != 'w')) || (pcVar1[2] != '5')) ||
        (bVar2 = true, pcVar1[3] != '_')) {
       bVar2 = false;
     }
     if (!bVar2) {
-      uVar5 = bg_weaponCompleteDefs[uVar4 & 0xff]->altWeapon;
-      if (bg_lastParsedWeaponIndex < (uVar5 & 0xff)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_util.h",
-                        0x10a,0,
-                        "actualWeapon.weaponIdx not in [0, bg_lastParsedWeaponIndex]\n\t%i not in [0, %i]"
-                       );
+      uVar4 = ((undefined4 *)(&DAT_829d80d8)[uVar4])[0x1e];
+      if (DAT_829d8a50 < (uVar4 & 0xff)) {
+        MyAssertHandler(0xffffffff82003180,0x10a,0,0xffffffff820030e0,uVar4 & 0xff);
       }
-      if ((uVar5 & 0xff) != 0) goto LAB_82266c10;
+      if ((uVar4 & 0xff) != 0) goto LAB_82266c10;
     }
   }
-  uVar5 = uVar4;
+  uVar4 = uVar3;
 LAB_82266c10:
-  WVar3 = (Weapon)__restgprlr_27(uVar5);
-  return WVar3;
+  __restgprlr_27(uVar4);
+  return;
 }
 
 
 // 82266C18  TRACK_bg_animation_mp  (bgame/bg_animation_mp.cpp:458)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_bg_animation_mp(void)
 
 {
-  track_static_alloc_internal(&DAT_829c0808,0x48,"numDefines",9);
-  track_static_alloc_internal(&DAT_829c18d8,10000,"defineStrings",9);
-  track_static_alloc_internal(&DAT_829bff08,0x900,"defineStr",9);
-  track_static_alloc_internal(defineBits,0x900,"defineBits",9);
-  track_static_alloc_internal(weaponStrings,0x780,"weaponStrings",9);
-  track_static_alloc_internal(animStateStr,0x10,"animStateStr",9);
-  track_static_alloc_internal(animMoveTypesStr,0x1c8,"animMoveTypesStr",9);
-  track_static_alloc_internal(animEventTypesStr,0xb8,"animEventTypesStr",9);
-  track_static_alloc_internal(animBodyPartsStr,0x28,"animBodyPartsStr",9);
-  track_static_alloc_internal(animConditionMountedStr,0x20,"animConditionMountedStr",9);
-  track_static_alloc_internal(animWeaponClassStr,0x68,"animWeaponClassStr",9);
-  track_static_alloc_internal(animWeaponPositionStr,0x18,"animWeaponPositionStr",9);
-  track_static_alloc_internal(animStrafeStateStr,0x20,"animStrafeStateStr",9);
-  track_static_alloc_internal(animPerkStateStr,0x18,"animPerkStateStr",9);
-  track_static_alloc_internal(animDamageTypeStr,0x20,"animDamageTypeStr",9);
-  track_static_alloc_internal(animHitLocationStr,0x28,"animHitLocationStr",9);
-  track_static_alloc_internal(animHitDirectionStr,0x28,"animHitDirectionStr",9);
-  track_static_alloc_internal(animMoveDirectionStr,0x48,"animMoveDirectionStr",9);
-  track_static_alloc_internal(animScriptedStr,0x20,"animScriptedStr",9);
-  track_static_alloc_internal(animConditionsStr,0x98,"animConditionsStr",9);
-  track_static_alloc_internal(animConditionsTable,0x90,"animConditionsTable",9);
+  track_static_alloc_internal(0xffffffff829c0808,0x48,0xffffffff82003340,9);
+  track_static_alloc_internal(0xffffffff829c18d8,10000,0xffffffff82003330,9);
+  track_static_alloc_internal(0xffffffff829bff08,0x900,0xffffffff82003324,9);
+  track_static_alloc_internal(0xffffffff829c0850,0x900,0xffffffff82003318,9);
+  track_static_alloc_internal(0xffffffff829c1158,0x780,0xffffffff82003308,9);
+  track_static_alloc_internal(0xffffffff82960574,0x10,0xffffffff820032f8,9);
+  track_static_alloc_internal(0xffffffff82960588,0x1c8,0xffffffff820032e4,9);
+  track_static_alloc_internal(0xffffffff82960750,0xb8,0xffffffff820032d0,9);
+  track_static_alloc_internal(0xffffffff82960808,0x28,0xffffffff820032bc,9);
+  track_static_alloc_internal(0xffffffff82960830,0x20,0xffffffff820032a4,9);
+  track_static_alloc_internal(0xffffffff82960850,0x68,0xffffffff82003290,9);
+  track_static_alloc_internal(0xffffffff829608b8,0x18,0xffffffff82003278,9);
+  track_static_alloc_internal(0xffffffff829608d0,0x20,0xffffffff82003264,9);
+  track_static_alloc_internal(0xffffffff829608f0,0x18,0xffffffff82003250,9);
+  track_static_alloc_internal(0xffffffff82960908,0x20,0xffffffff8200323c,9);
+  track_static_alloc_internal(0xffffffff82960928,0x28,0xffffffff82003228,9);
+  track_static_alloc_internal(0xffffffff82960950,0x28,0xffffffff82003214,9);
+  track_static_alloc_internal(0xffffffff829609c8,0x48,0xffffffff820031fc,9);
+  track_static_alloc_internal(0xffffffff82960a10,0x20,0xffffffff820031ec,9);
+  track_static_alloc_internal(0xffffffff82960a30,0x98,0xffffffff820031d8,9);
+  track_static_alloc_internal(0xffffffff82960ac8,0x90,0xffffffff820031c4,9);
   return;
 }
 
 
 // 82266E48  BG_StringHashValue  (bgame/bg_animation_mp.cpp:495)
 
-long BG_StringHashValue(char *param_1)
+void BG_StringHashValue(void)
 
 {
   int iVar1;
   char *pcVar2;
   int iVar3;
-  long lVar4;
-  char *pcVar5;
-  int iVar6;
-  ulonglong uVar7;
+  char *pcVar4;
+  int _C;
+  ulonglong uVar5;
   
-  pcVar2 = (char *)__savegprlr_29(param_1);
-  uVar7 = 0;
-  iVar6 = (int)*pcVar2;
+  pcVar2 = (char *)__savegprlr_29();
+  uVar5 = 0;
+  _C = (int)*pcVar2;
   if (*pcVar2 != '\0') {
     iVar1 = 0x77 - (int)pcVar2;
     do {
-      iVar3 = tolower(iVar6);
-      pcVar5 = pcVar2 + iVar1;
+      iVar3 = tolower(_C);
+      pcVar4 = pcVar2 + iVar1;
       pcVar2 = pcVar2 + 1;
-      iVar6 = (int)*pcVar2;
-      uVar7 = (longlong)(int)(char)iVar3 * (longlong)(int)pcVar5 + uVar7;
-    } while (iVar6 != 0);
-    lVar4 = __restgprlr_29(-(ulonglong)(uVar7 != 0xffffffffffffffff) & uVar7);
-    return lVar4;
+      _C = (int)*pcVar2;
+      uVar5 = (longlong)(int)(char)iVar3 * (longlong)(int)pcVar4 + uVar5;
+    } while (_C != 0);
+    __restgprlr_29(-(ulonglong)(uVar5 != 0xffffffffffffffff) & uVar5);
+    return;
   }
-  lVar4 = __restgprlr_29(0);
-  return lVar4;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 82266EC0  BG_AnimParseError  (bgame/bg_animation_mp.cpp:522)
 
-void BG_AnimParseError(char *param_1)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void BG_AnimParseError(char *param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                      undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
+  int iVar2;
+  longlong lVar1;
   char *pcStack00000014;
+  undefined8 uStack00000018;
+  undefined8 uStack00000020;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
   char acStack_410 [1024];
   
+  uStack00000018 = param_2;
+  uStack00000020 = param_3;
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
   pcStack00000014 = param_1;
-  _vsnprintf(acStack_410,0x400,param_1,&stack0x00000018);
-  if (globalFilename != (char *)0x0) {
-    Com_GetCurrentParseLine();
-    Com_Error(ERR_DROP,"\x15%s: (%s, line %i)");
+  iVar2 = _vsnprintf(acStack_410,0x400,param_1,(va_list)&stack0x00000018);
+  if (PTR_s_mp_playeranim_script_82960570 != (undefined *)0x0) {
+    lVar1 = Com_GetCurrentParseLine(iVar2);
+    Com_Error(1,0xffffffff82003350,acStack_410,PTR_s_mp_playeranim_script_82960570,lVar1 + 1);
     return;
   }
-  Com_Error(ERR_DROP,"\x15%s");
+  Com_Error(1,0xffffffff8200334c,acStack_410);
   return;
 }
 
 
 // 82266F80  BG_AnimationIndexForString  (bgame/bg_animation_mp.cpp:545)
 
-int BG_AnimationIndexForString(char *param_1)
+void BG_AnimationIndexForString(void)
 
 {
   char cVar1;
   uint uVar2;
   char *pcVar3;
-  long lVar4;
+  int iVar4;
   int iVar5;
-  scr_anim_s sVar6;
-  int iVar7;
-  uint *puVar8;
-  animScriptData_t *paVar9;
+  int iVar6;
+  uint *puVar7;
   int *in_r13;
-  uint uVar10;
-  animScriptData_t *paVar11;
-  char *pcVar12;
-  scr_anim_s *psVar13;
+  uint uVar8;
+  int iVar9;
   
-  pcVar3 = (char *)__savegprlr_25(param_1);
+  pcVar3 = (char *)__savegprlr_25();
   BG_CheckThread();
-  iVar5 = *in_r13;
-  if (*(int *)(iVar5 + 8) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0x22a,0,"%s");
+  iVar9 = *in_r13;
+  if (*(int *)(iVar9 + 8) == 0) {
+    MyAssertHandler(0xffffffff820033b0,0x22a,0,0xffffffff82000f98,0xffffffff820033f4);
   }
   if (DAT_829c3fe8 != 0) {
-    sVar6.field0_0x0 = (scr_anim_s_u_0)BG_StringHashValue(pcVar3);
-    uVar10 = 0;
+    iVar6 = BG_StringHashValue(pcVar3);
+    uVar8 = 0;
     uVar2 = 0;
-    if (*g_piNumLoadAnims != 0) {
-      pcVar12 = (char *)(DAT_829c3fe8 + 8);
-      puVar8 = g_piNumLoadAnims;
+    if (*DAT_829c1150 != 0) {
+      iVar4 = DAT_829c3fe8 + 8;
+      puVar7 = DAT_829c1150;
       do {
-        if ((sVar6.field0_0x0 == (scr_anim_s_u_0)((scr_anim_s_u_0 *)(pcVar12 + -4))->linkPointer) &&
-           (iVar7 = I_stricmp(pcVar3,pcVar12), puVar8 = g_piNumLoadAnims, iVar7 == 0)) {
+        if ((iVar6 == *(int *)(iVar4 + -4)) &&
+           (iVar5 = I_stricmp(pcVar3,iVar4), puVar7 = DAT_829c1150, iVar5 == 0)) {
 LAB_82267060:
-          iVar5 = __restgprlr_25(uVar10);
-          return iVar5;
+          __restgprlr_25(uVar8);
+          return;
         }
-        uVar2 = *puVar8;
-        uVar10 = uVar10 + 1;
-        pcVar12 = pcVar12 + 0x48;
-      } while (uVar10 < uVar2);
+        uVar2 = *puVar7;
+        uVar8 = uVar8 + 1;
+        iVar4 = iVar4 + 0x48;
+      } while (uVar8 < uVar2);
     }
-    psVar13 = (scr_anim_s *)(uVar2 * 0x48 + DAT_829c3fe8);
-    Scr_FindAnim("multiplayer",pcVar3,psVar13,*(int *)(*(int *)(iVar5 + 8) + 0x863cc));
-    iVar5 = 8 - (int)pcVar3;
+    iVar4 = uVar2 * 0x48 + DAT_829c3fe8;
+    Scr_FindAnim(0xffffffff82003364,pcVar3,iVar4,*(undefined4 *)(*(int *)(iVar9 + 8) + 0x863cc));
+    iVar9 = iVar4 - (int)pcVar3;
     do {
       cVar1 = *pcVar3;
-      (pcVar3 + iVar5)[(int)&psVar13->field0_0x0] = cVar1;
-      puVar8 = g_piNumLoadAnims;
+      pcVar3[iVar9 + 8] = cVar1;
+      puVar7 = DAT_829c1150;
       pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    psVar13[1].field0_0x0 = sVar6.field0_0x0;
-    uVar10 = *puVar8;
-    *puVar8 = uVar10 + 1;
-    iVar5 = __restgprlr_25(uVar10);
-    return iVar5;
+    *(int *)(iVar4 + 4) = iVar6;
+    uVar8 = *puVar7;
+    *puVar7 = uVar8 + 1;
+    __restgprlr_25(uVar8);
+    return;
   }
-  lVar4 = BG_StringHashValue(pcVar3);
-  uVar10 = 0;
-  paVar11 = globalScriptData;
-  paVar9 = globalScriptData;
-  if (globalScriptData->numAnimations != 0) {
+  iVar4 = BG_StringHashValue(pcVar3);
+  uVar8 = 0;
+  iVar9 = DAT_829c3fec;
+  iVar6 = DAT_829c3fec;
+  if (*(int *)(DAT_829c3fec + 0xd000) != 0) {
     do {
-      if ((lVar4 == paVar11->animations[0].nameHash) &&
-         (iVar5 = I_stricmp(pcVar3,(char *)paVar11), paVar9 = globalScriptData, iVar5 == 0))
-      goto LAB_82267060;
-      uVar10 = uVar10 + 1;
-      paVar11 = (animScriptData_t *)(paVar11->animations + 1);
-    } while (uVar10 < paVar9->numAnimations);
+      if ((iVar4 == *(int *)(iVar9 + 0x4c)) &&
+         (iVar5 = I_stricmp(pcVar3,iVar9), iVar6 = DAT_829c3fec, iVar5 == 0)) goto LAB_82267060;
+      uVar8 = uVar8 + 1;
+      iVar9 = iVar9 + 0x68;
+    } while (uVar8 < *(uint *)(iVar6 + 0xd000));
   }
-  BG_AnimParseError("BG_AnimationIndexForString: unknown player animation \'%s\'");
-  iVar5 = __restgprlr_25(0xffffffffffffffff);
-  return iVar5;
+  BG_AnimParseError(0xffffffff82003370,pcVar3);
+  __restgprlr_25(0xffffffffffffffff);
+  return;
 }
 
 
 // 82267148  BG_IndexForString  (bgame/bg_animation_mp.cpp:606)
 
-int BG_IndexForString(char *param_1,animStringItem_t *param_2,int param_3)
+void BG_IndexForString(undefined8 param_1,longlong param_2,int param_3)
 
 {
   undefined4 *puVar1;
-  char *pcVar2;
-  long lVar3;
+  undefined8 uVar2;
+  int iVar3;
   int iVar4;
   int iVar5;
-  longlong lVar6;
-  char *pcVar7;
-  longlong lVar8;
-  int iVar9;
-  ulonglong uVar10;
-  char *pcVar11;
+  char *pcVar6;
+  longlong lVar7;
+  int iVar8;
+  ulonglong uVar9;
+  char *pcVar10;
   
-  lVar6 = (longlong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_24(param_1);
-  lVar3 = BG_StringHashValue(pcVar2);
-  iVar4 = *(int *)lVar6;
-  lVar8 = 0;
+  uVar2 = __savegprlr_24();
+  iVar3 = BG_StringHashValue();
+  iVar4 = *(int *)param_2;
+  lVar7 = 0;
   while( true ) {
     if (iVar4 == 0) {
       if (param_3 == 0) {
-        BG_AnimParseError("BG_IndexForString: unknown token \'%s\'");
+        BG_AnimParseError(0xffffffff820033f8,uVar2);
       }
-      iVar4 = __restgprlr_24(0xffffffffffffffff);
-      return iVar4;
+      __restgprlr_24(0xffffffffffffffff);
+      return;
     }
-    puVar1 = (undefined4 *)lVar6;
+    puVar1 = (undefined4 *)param_2;
     if (puVar1[1] == -1) {
-      pcVar11 = (char *)*puVar1;
-      uVar10 = 0;
-      iVar4 = (int)*pcVar11;
-      if (*pcVar11 != '\0') {
-        iVar9 = 0x77 - (int)pcVar11;
+      pcVar10 = (char *)*puVar1;
+      uVar9 = 0;
+      iVar4 = (int)*pcVar10;
+      if (*pcVar10 != '\0') {
+        iVar8 = 0x77 - (int)pcVar10;
         do {
           iVar5 = tolower(iVar4);
-          pcVar7 = pcVar11 + iVar9;
-          pcVar11 = pcVar11 + 1;
-          iVar4 = (int)*pcVar11;
-          uVar10 = (longlong)(int)(char)iVar5 * (longlong)(int)pcVar7 + uVar10;
+          pcVar6 = pcVar10 + iVar8;
+          pcVar10 = pcVar10 + 1;
+          iVar4 = (int)*pcVar10;
+          uVar9 = (longlong)(int)(char)iVar5 * (longlong)(int)pcVar6 + uVar9;
         } while (iVar4 != 0);
-        uVar10 = -(ulonglong)(uVar10 != 0xffffffffffffffff) & uVar10;
+        uVar9 = -(ulonglong)(uVar9 != 0xffffffffffffffff) & uVar9;
       }
-      puVar1[1] = (int)uVar10;
+      puVar1[1] = (int)uVar9;
     }
-    if ((lVar3 == puVar1[1]) && (iVar4 = I_stricmp(pcVar2,(char *)*puVar1), iVar4 == 0)) break;
-    lVar6 = lVar6 + 8;
-    iVar4 = *(int *)lVar6;
-    lVar8 = lVar8 + 1;
+    if ((iVar3 == puVar1[1]) && (iVar4 = I_stricmp(uVar2,*puVar1), iVar4 == 0)) break;
+    param_2 = param_2 + 8;
+    iVar4 = *(int *)param_2;
+    lVar7 = lVar7 + 1;
   }
-  iVar4 = __restgprlr_24(lVar8);
-  return iVar4;
+  __restgprlr_24(lVar7);
+  return;
 }
 
 
 // 82267240  BG_CopyStringIntoBuffer  (bgame/bg_animation_mp.cpp:640)
 
-char * BG_CopyStringIntoBuffer(char *param_1,char *param_2,uint param_3,uint *param_4)
+void BG_CopyStringIntoBuffer(undefined8 param_1,int param_2,char *param_3,int *param_4)
 
 {
   char cVar1;
-  uint uVar2;
-  int iVar3;
-  longlong lVar4;
+  int iVar2;
+  char *pcVar3;
+  char *pcVar4;
   char *pcVar5;
-  ulonglong uVar6;
-  longlong lVar7;
   
-  uVar6 = (ulonglong)(int)param_3;
-  lVar4 = __savegprlr_29(param_1);
-  lVar7 = lVar4;
+  pcVar3 = (char *)__savegprlr_29();
+  pcVar4 = pcVar3;
   do {
-    pcVar5 = (char *)lVar7;
-    lVar7 = lVar7 + 1;
-  } while (*pcVar5 != '\0');
-  if ((uVar6 & 0xffffffff) <=
-      ((ulonglong)*param_4 + ((lVar7 - lVar4) - 1U & 0xffffffff) + 1 & 0xffffffff)) {
-    BG_AnimParseError("BG_CopyStringIntoBuffer: out of buffer space");
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
+  if (param_3 <= pcVar4 + (*param_4 - (int)pcVar3)) {
+    BG_AnimParseError(0xffffffff82003420);
   }
-  uVar2 = *param_4;
-  iVar3 = (int)lVar4;
-  lVar7 = lVar4;
+  iVar2 = *param_4;
+  pcVar4 = pcVar3;
   do {
-    cVar1 = *(char *)lVar7;
-    ((char *)lVar7)[(int)(param_2 + (uVar2 - iVar3))] = cVar1;
-    lVar7 = lVar7 + 1;
+    cVar1 = *pcVar4;
+    pcVar4[(iVar2 + param_2) - (int)pcVar3] = cVar1;
+    pcVar4 = pcVar4 + 1;
+    pcVar5 = pcVar3;
   } while (cVar1 != '\0');
   do {
-    pcVar5 = (char *)lVar4;
-    lVar4 = lVar4 + 1;
-  } while (*pcVar5 != '\0');
-  *param_4 = *param_4 + ((int)lVar4 - iVar3);
-  pcVar5 = (char *)__restgprlr_29();
-  return pcVar5;
+    cVar1 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar1 != '\0');
+  *param_4 = (int)(pcVar5 + (*param_4 - (int)pcVar3));
+  __restgprlr_29();
+  return;
 }
 
 
 // 822672F8  BG_InitWeaponString  (bgame/bg_animation_mp.cpp:668)
 
-void BG_InitWeaponString(int param_1,char *param_2)
+void BG_InitWeaponString(int param_1,undefined8 param_2)
 
 {
-  long lVar1;
+  undefined4 uVar1;
   
-  weaponStrings[param_1].string = param_2;
-  lVar1 = BG_StringHashValue(param_2);
-  weaponStrings[param_1].hash = lVar1;
+  *(int *)(&DAT_829c1158 + param_1 * 8) = (int)param_2;
+  uVar1 = BG_StringHashValue(param_2);
+  *(undefined4 *)(&DAT_829c115c + param_1 * 8) = uVar1;
   return;
 }
 
 
 // 82267348  BG_InitWeaponStrings  (bgame/bg_animation_mp.cpp:682)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void BG_InitWeaponStrings(void)
 
 {
-  memset();
-  BG_LoadWeaponStrings();
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_829c1158,0,0x780);
+  BG_LoadWeaponStrings(pvVar1);
   return;
 }
 
 
 // 82266930  FastSinCos  (universal/com_math.h:689)
 
-void FastSinCos(float param_1,float *param_2,float *param_3)
+void FastSinCos(double param_1,undefined8 param_2,float *param_3,float *param_4)
 
 {
-  float *in_r5;
   double dVar1;
-  double dVar2;
   
-  dVar2 = (double)param_1;
-  dVar1 = sin(dVar2);
+  dVar1 = sin(param_1);
   *param_3 = (float)dVar1;
-  dVar2 = cos(dVar2);
-  *in_r5 = (float)dVar2;
+  dVar1 = cos(param_1);
+  *param_4 = (float)dVar1;
   return;
 }
 
 
 // 82267380  BG_LoadAnimForAnimIndex  (bgame/bg_animation_mp.cpp:696)
 
-loadAnim_t * BG_LoadAnimForAnimIndex(int param_1)
+ushort * BG_LoadAnimForAnimIndex(ulonglong param_1)
 
 {
-  loadAnim_t *plVar1;
+  ushort *puVar1;
   uint uVar2;
   
-  if (globalScriptData->numAnimations <= (uint)param_1) {
-    Com_Error(ERR_DROP,"\x15Player animation index %i out of 0 to %i range");
+  if ((ulonglong)*(uint *)(DAT_829c3fec + 0xd000) <= (param_1 & 0xffffffff)) {
+    Com_Error(1,0xffffffff82003450,param_1);
   }
   uVar2 = 0;
-  plVar1 = DAT_829c3fe8;
-  if (*g_piNumLoadAnims != 0) {
+  puVar1 = DAT_829c3fe8;
+  if (*DAT_829c1150 != 0) {
     do {
-      if (param_1 == (uint)(plVar1->anim).field0_0x0._s_0.index) {
-        return plVar1;
+      if ((uint)param_1 == (uint)*puVar1) {
+        return puVar1;
       }
       uVar2 = uVar2 + 1;
-      plVar1 = plVar1 + 1;
-    } while (uVar2 < *g_piNumLoadAnims);
+      puVar1 = puVar1 + 0x24;
+    } while (uVar2 < *DAT_829c1150);
   }
-  return (loadAnim_t *)0x0;
+  return (ushort *)0x0;
 }
 
 
 // 82267420  BG_SetupAnimNoteTypes  (bgame/bg_animation_mp.cpp:720)
 
-void BG_SetupAnimNoteTypes(animScriptData_t *param_1)
+void BG_SetupAnimNoteTypes(void)
 
 {
   int iVar1;
@@ -495,12 +462,11 @@ void BG_SetupAnimNoteTypes(animScriptData_t *param_1)
   short *psVar8;
   int *in_r13;
   
-  iVar2 = __savegprlr_29(param_1);
+  iVar2 = __savegprlr_29();
   BG_CheckThread();
   iVar3 = *in_r13;
   if (*(int *)(iVar3 + 8) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0x2dc,0,"%s");
+    MyAssertHandler(0xffffffff820033b0,0x2dc,0,0xffffffff82000f98,0xffffffff820033f4);
   }
   uVar7 = 0;
   if (*(uint *)(iVar2 + 0xd000) != 0) {
@@ -543,27 +509,34 @@ void BG_SetupAnimNoteTypes(animScriptData_t *param_1)
 
 // 8226BB30  BG_FinalizePlayerAnims  (bgame/bg_animation_mp.cpp:771)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void BG_FinalizePlayerAnims(void)
 
 {
-  int iVar1;
-  XAnim_s *pXVar2;
-  animScriptData_t *paVar3;
-  uint uVar4;
-  loadAnim_t *plVar5;
-  bool bVar8;
-  char *pcVar6;
-  long lVar7;
-  uint uVar9;
-  animScriptData_t *paVar10;
+  float fVar1;
+  undefined4 uVar2;
+  char *pcVar3;
+  int iVar5;
+  int iVar6;
+  char cVar9;
+  undefined8 uVar4;
+  undefined4 uVar7;
+  char *pcVar8;
+  longlong lVar10;
+  char *_Str;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  float fVar15;
-  float afStack_100 [2];
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  undefined1 auStack_100 [8];
   float local_f8;
   float local_f4;
   float local_f0;
@@ -571,98 +544,148 @@ void BG_FinalizePlayerAnims(void)
   __savegprlr();
   __savefpr_22();
   if (DAT_829c3fe8 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0x312,0,"%s");
+    MyAssertHandler(0xffffffff820033b0,0x312,0,0xffffffff82000f98,0xffffffff8200423c);
   }
-  if (g_piNumLoadAnims == (uint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0x313,0,"%s");
+  if (DAT_829c1150 == 0) {
+    MyAssertHandler(0xffffffff820033b0,0x313,0,0xffffffff82000f98,0xffffffff82004228);
   }
-  paVar3 = globalScriptData;
-  pXVar2 = (globalScriptData->animTree).anims;
-  uVar4 = XAnimGetAnimTreeSize(pXVar2);
-  globalScriptData->numAnimations = uVar4;
-  paVar3->animations[0].flags = paVar3->animations[0].flags | 0x201;
-  I_strncpyz((char *)paVar3,"root",0x40);
-  paVar3->animations[0].nameHash = 0;
-  uVar9 = 1;
-  if (1 < (int)uVar4) {
-    dVar13 = 1.0;
-    dVar12 = 1000.0;
-    dVar14 = 0.0;
+  pcVar3 = DAT_829c3fec;
+  uVar2 = *(undefined4 *)(DAT_829c3fec + 0x863a4);
+  iVar5 = XAnimGetAnimTreeSize(uVar2);
+  *(int *)(DAT_829c3fec + 0xd000) = iVar5;
+  *(uint *)(pcVar3 + 0x50) = *(uint *)(pcVar3 + 0x50) | 0x201;
+  I_strncpyz(pcVar3,0xffffffff82004220,0x40);
+  pcVar3[0x4c] = '\0';
+  pcVar3[0x4d] = '\0';
+  pcVar3[0x4e] = '\0';
+  pcVar3[0x4f] = '\0';
+  lVar10 = 1;
+  if (1 < iVar5) {
+    dVar19 = 100.0;
+    dVar15 = 0.4000000059604645;
+    dVar16 = 0.15000000596046448;
+    dVar17 = 0.6499999761581421;
+    dVar18 = 190.0;
+    dVar21 = 1.0;
+    dVar20 = 1000.0;
+    dVar22 = 0.0;
     do {
-      paVar10 = (animScriptData_t *)(paVar3->animations + 1);
-      plVar5 = BG_LoadAnimForAnimIndex(uVar9);
-      if (plVar5 == (loadAnim_t *)0x0) {
-        paVar3->animations[1].flags = paVar3->animations[1].flags | 0x200;
-        I_strncpyz((char *)paVar10,"unused",0x40);
-        paVar3->animations[1].nameHash = 0;
+      _Str = pcVar3 + 0x68;
+      iVar6 = BG_LoadAnimForAnimIndex(lVar10);
+      if (iVar6 == 0) {
+        *(uint *)(pcVar3 + 0xb8) = *(uint *)(pcVar3 + 0xb8) | 0x200;
+        I_strncpyz(_Str,0xffffffff82004130,0x40);
+        pcVar3[0xb4] = '\0';
+        pcVar3[0xb5] = '\0';
+        pcVar3[0xb6] = '\0';
+        pcVar3[0xb7] = '\0';
       }
       else {
-        bVar8 = XAnimIsPrimitive(pXVar2,uVar9);
-        if (bVar8) {
-          pcVar6 = XAnimGetAnimName(pXVar2,uVar9);
-          I_strncpyz((char *)paVar10,pcVar6,0x40);
-          lVar7 = BG_StringHashValue((char *)paVar10);
-          iVar1 = paVar3->animations[1].initialLerp;
-          paVar3->animations[1].nameHash = lVar7;
-          if (iVar1 == 0) {
-            paVar3->animations[1].initialLerp = -1;
+        cVar9 = XAnimIsPrimitive(uVar2,lVar10);
+        if (cVar9 == '\0') {
+          *(uint *)(pcVar3 + 0xb8) = *(uint *)(pcVar3 + 0xb8) | 1;
+          I_strncpyz(_Str,iVar6 + 8,0x40);
+          *(undefined4 *)(pcVar3 + 0xb4) = *(undefined4 *)(iVar6 + 4);
+          if (*(int *)(pcVar3 + 0xa8) == 0) {
+            pcVar3[0xa8] = -1;
+            pcVar3[0xa9] = -1;
+            pcVar3[0xaa] = -1;
+            pcVar3[0xab] = -1;
           }
-          fVar15 = XAnimGetLength(pXVar2,uVar9);
-          dVar11 = (double)fVar15;
-          if (dVar11 == dVar14) {
-            paVar3->animations[1].moveSpeed = (float)dVar14;
-LAB_8226bf7c:
-            paVar3->animations[1].duration = 500;
-          }
-          else {
-            paVar3->animations[1].duration = (int)(dVar11 * dVar12);
-            XAnimGetRelDelta(pXVar2,uVar9,afStack_100,&local_f8,(float)dVar14,(float)dVar13);
-            fVar15 = (float)((double)SQRT(local_f8 * local_f8 +
-                                          local_f4 * local_f4 + local_f0 * local_f0) / dVar11);
-            paVar3->animations[1].moveSpeed = fVar15;
-            if ((anim_debugSpeeds->current).enabled != false) {
-              if ((double)fVar15 <= dVar13) {
-                Com_Printf(0x13,"Anim \'%s\' moves %f units over %fms\n");
-              }
-              else {
-                pcVar6 = strstr((char *)paVar10,"crouch");
-                if (((pcVar6 == (char *)0x0) &&
-                    (pcVar6 = strstr((char *)paVar10,"prone"), pcVar6 == (char *)0x0)) &&
-                   (pcVar6 = strstr((char *)paVar10,"walk"), pcVar6 == (char *)0x0)) {
-                  strstr((char *)paVar10,"fast");
-                }
-                Com_Printf(0x13,
-                           "Anim \'%s\' moves %f units over %fms (%f units/s), will play back at %.1f%% speed when player moves at full %s speed (%.0f units/sec)\n"
-                          );
-              }
-            }
-            if (paVar3->animations[1].duration < 500) goto LAB_8226bf7c;
-          }
-          bVar8 = XAnimIsLooped(pXVar2,uVar9);
-          if (bVar8) {
-            paVar3->animations[1].flags = paVar3->animations[1].flags | 0x80;
-          }
+          *(float *)(pcVar3 + 0xac) = (float)dVar22;
+          pcVar3[0xb0] = '\0';
+          pcVar3[0xb1] = '\0';
+          pcVar3[0xb2] = '\0';
+          pcVar3[0xb3] = '\0';
         }
         else {
-          paVar3->animations[1].flags = paVar3->animations[1].flags | 1;
-          I_strncpyz((char *)paVar10,plVar5->szAnimName,0x40);
-          iVar1 = paVar3->animations[1].initialLerp;
-          paVar3->animations[1].nameHash = plVar5->iNameHash;
-          if (iVar1 == 0) {
-            paVar3->animations[1].initialLerp = -1;
+          uVar4 = XAnimGetAnimName(uVar2,lVar10);
+          I_strncpyz(_Str,uVar4,0x40);
+          uVar7 = BG_StringHashValue(_Str);
+          *(undefined4 *)(pcVar3 + 0xb4) = uVar7;
+          if (*(int *)(pcVar3 + 0xa8) == 0) {
+            pcVar3[0xa8] = -1;
+            pcVar3[0xa9] = -1;
+            pcVar3[0xaa] = -1;
+            pcVar3[0xab] = -1;
           }
-          paVar3->animations[1].moveSpeed = (float)dVar14;
-          paVar3->animations[1].duration = 0;
+          dVar11 = (double)XAnimGetLength(uVar2,lVar10);
+          if (dVar11 == dVar22) {
+            *(float *)(pcVar3 + 0xac) = (float)dVar22;
+LAB_8226bf7c:
+            pcVar3[0xb0] = '\0';
+            pcVar3[0xb1] = '\0';
+            pcVar3[0xb2] = '\x01';
+            pcVar3[0xb3] = -0xc;
+          }
+          else {
+            *(int *)(pcVar3 + 0xb0) = (int)(dVar11 * dVar20);
+            XAnimGetRelDelta(dVar22,dVar21,uVar2,lVar10,auStack_100,&local_f8);
+            fVar1 = (float)((double)SQRT(local_f8 * local_f8 +
+                                         local_f4 * local_f4 + local_f0 * local_f0) / dVar11);
+            *(float *)(pcVar3 + 0xac) = fVar1;
+            if (*(char *)(DAT_829c7e54 + 0xc) != '\0') {
+              if ((double)fVar1 <= dVar21) {
+                dVar23 = (double)SQRT(local_f8 * local_f8 +
+                                      local_f4 * local_f4 + local_f0 * local_f0);
+                Com_Printf(dVar23,dVar11,0x13,0xffffffff820041f0,_Str,dVar23,dVar11);
+              }
+              else {
+                dVar23 = dVar18;
+                if (DAT_8353ff30 != 0) {
+                  dVar23 = (double)(longlong)*(int *)(DAT_8353ff30 + 0xc);
+                }
+                pcVar8 = strstr(_Str,"crouch");
+                if (pcVar8 == (char *)0x0) {
+                  pcVar8 = strstr(_Str,"prone");
+                  if (pcVar8 == (char *)0x0) {
+                    pcVar8 = strstr(_Str,"walk");
+                    if (pcVar8 == (char *)0x0) {
+                      pcVar8 = strstr(_Str,"fast");
+                      if (pcVar8 == (char *)0x0) {
+                        uVar4 = 0xffffffff82004160;
+                      }
+                      else {
+                        uVar4 = 0xffffffff82004158;
+                        dVar23 = (double)(float)((double)*(float *)(DAT_829c7dd4 + 0xc) * dVar23);
+                      }
+                    }
+                    else {
+                      uVar4 = 0xffffffff82004148;
+                      dVar23 = (double)(float)(dVar23 * dVar15);
+                    }
+                  }
+                  else {
+                    uVar4 = 0xffffffff82004140;
+                    dVar23 = (double)(float)(dVar23 * dVar16);
+                  }
+                }
+                else {
+                  dVar23 = (double)(float)(dVar23 * dVar17);
+                  uVar4 = 0xffffffff82004138;
+                }
+                dVar13 = (double)*(float *)(pcVar3 + 0xac);
+                dVar14 = (double)(float)((double)(float)(dVar23 / dVar13) * dVar19);
+                dVar12 = (double)SQRT(local_f8 * local_f8 +
+                                      local_f4 * local_f4 + local_f0 * local_f0);
+                Com_Printf(dVar12,dVar11,dVar13,dVar14,dVar23,0x13,0xffffffff82004168,_Str,dVar12,
+                           dVar11,dVar13,dVar14,uVar4);
+              }
+            }
+            if (*(int *)(pcVar3 + 0xb0) < 500) goto LAB_8226bf7c;
+          }
+          cVar9 = XAnimIsLooped(uVar2,lVar10);
+          if (cVar9 != '\0') {
+            *(uint *)(pcVar3 + 0xb8) = *(uint *)(pcVar3 + 0xb8) | 0x80;
+          }
         }
       }
-      uVar9 = uVar9 + 1;
-      paVar3 = paVar10;
-    } while ((int)uVar9 < (int)uVar4);
+      lVar10 = lVar10 + 1;
+      pcVar3 = _Str;
+    } while ((int)lVar10 < iVar5);
   }
-  BG_AnimParseAnimScript(globalScriptData,(loadAnim_t *)0x0,(uint *)0x0);
-  BG_SetupAnimNoteTypes(globalScriptData);
+  BG_AnimParseAnimScript(DAT_829c3fec,0,0);
+  BG_SetupAnimNoteTypes(DAT_829c3fec);
   __restfpr_22();
   __restgprlr();
   return;
@@ -671,42 +694,34 @@ LAB_8226bf7c:
 
 // 82267560  BG_ParseConditionBits  (bgame/bg_animation_mp.cpp:927)
 
-void BG_ParseConditionBits(char **param_1,animStringItem_t *param_2,int param_3,uint *param_4)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void BG_ParseConditionBits(undefined8 param_1,undefined4 param_2,uint param_3,ulonglong param_4)
 
 {
   char cVar1;
   bool bVar2;
   bool bVar3;
-  char *pcVar4;
-  int iVar5;
-  ulonglong uVar6;
-  uint *puVar7;
-  uint uVar8;
+  undefined4 uVar5;
+  char *pcVar6;
+  int iVar7;
+  undefined8 uVar4;
+  uint *puVar8;
   char *pcVar9;
   char *pcVar10;
-  uint uVar11;
-  char **ppcStack00000014;
-  animStringItem_t *paStack0000001c;
-  int iStack00000024;
   uint local_e8 [2];
   char local_e0 [224];
   
-  uVar6 = (ulonglong)(int)param_4;
-  __savegprlr();
-  puVar7 = (uint *)uVar6;
-  *puVar7 = 0;
-  local_e8[0] = 0;
-  local_e8[1] = 0;
+  uVar5 = __savegprlr();
+  puVar8 = (uint *)param_4;
+  *puVar8 = 0;
   bVar2 = false;
   bVar3 = false;
   local_e0[0] = '\0';
-  ppcStack00000014 = param_1;
-  paStack0000001c = param_2;
-  iStack00000024 = param_3;
 LAB_8226760c:
   do {
-    pcVar4 = Com_ParseOnLine(ppcStack00000014);
-    if ((pcVar4 == (char *)0x0) || (*pcVar4 == '\0')) {
+    pcVar6 = (char *)Com_ParseOnLine(uVar5);
+    if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) {
       Com_UngetToken();
       bVar2 = true;
       pcVar10 = local_e0;
@@ -716,39 +731,38 @@ LAB_8226760c:
       } while (cVar1 != '\0');
       if ((int)pcVar10 - (int)local_e0 == 1) goto LAB_822679a4;
     }
-    iVar5 = I_stricmp(pcVar4,",");
-    if (iVar5 == 0) {
+    iVar7 = I_stricmp(pcVar6,0xffffffff82003480);
+    if (iVar7 == 0) {
       bVar2 = true;
     }
-    iVar5 = I_stricmp(pcVar4,"none");
-    if (iVar5 == 0) {
-      if ((uVar6 & 0xffffffff) == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
-                        0x12,0,"%s");
+    iVar7 = I_stricmp(pcVar6,0xffffffff82003484);
+    if (iVar7 == 0) {
+      if ((param_4 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff82003098,0x12,0,0xffffffff82000f98,0xffffffff8200308c);
       }
-      *puVar7 = *puVar7 | 1;
+      *puVar8 = *puVar8 | 1;
     }
     else {
-      iVar5 = I_stricmp(pcVar4,"none,");
-      if (iVar5 == 0) {
-        Com_BitSetAssert(puVar7,0,0xfffffff);
+      iVar7 = I_stricmp(pcVar6,0xffffffff8200348c);
+      if (iVar7 == 0) {
+        Com_BitSetAssert(param_4,0,0xfffffff);
 LAB_822679a4:
         __restgprlr();
         return;
       }
-      iVar5 = I_stricmp(pcVar4,"NOT");
-      if (iVar5 == 0) {
-        pcVar4 = s_MINUS;
+      iVar7 = I_stricmp(pcVar6,0xffffffff82002ae4);
+      if (iVar7 == 0) {
+        pcVar6 = s_MINUS_82003494;
       }
-      if (((!bVar2) && (iVar5 = I_stricmp(pcVar4,"AND"), iVar5 != 0)) &&
-         (iVar5 = I_stricmp(pcVar4,s_MINUS), pcVar10 = pcVar4, iVar5 != 0)) {
+      if (((!bVar2) && (iVar7 = I_stricmp(pcVar6,0xffffffff8200349c), iVar7 != 0)) &&
+         (iVar7 = I_stricmp(pcVar6,0xffffffff82003494), pcVar10 = pcVar6, iVar7 != 0)) {
         do {
           pcVar9 = pcVar10;
           pcVar10 = pcVar9 + 1;
         } while (*pcVar9 != '\0');
         if (pcVar9[-1] == ',') {
           bVar2 = true;
-          pcVar10 = pcVar4;
+          pcVar10 = pcVar6;
           do {
             pcVar9 = pcVar10;
             pcVar10 = pcVar9 + 1;
@@ -761,12 +775,12 @@ LAB_822679a4:
           pcVar10 = pcVar10 + 1;
         } while (cVar1 != '\0');
         if ((int)pcVar10 - (int)local_e0 != 1) {
-          I_strncat(local_e0,0x40," ");
+          I_strncat(local_e0,0x40,0xffffffff820034a0);
         }
-        I_strncat(local_e0,0x40,pcVar4);
+        I_strncat(local_e0,0x40,pcVar6);
       }
-      iVar5 = I_stricmp(pcVar4,"AND");
-      if (((iVar5 != 0) && (iVar5 = I_stricmp(pcVar4,s_MINUS), iVar5 != 0)) && (!bVar2))
+      iVar7 = I_stricmp(pcVar6,0xffffffff8200349c);
+      if (((iVar7 != 0) && (iVar7 = I_stricmp(pcVar6,0xffffffff82003494), iVar7 != 0)) && (!bVar2))
       goto LAB_8226760c;
       pcVar10 = local_e0;
       do {
@@ -775,55 +789,53 @@ LAB_822679a4:
       } while (cVar1 != '\0');
       if ((int)pcVar10 - (int)local_e0 == 1) {
         if (bVar2) {
-          BG_AnimParseError("BG_ParseConditionBits: unexpected end of condition");
+          BG_AnimParseError(0xffffffff820034a4);
         }
         else {
-          iVar5 = I_stricmp(pcVar4,s_MINUS);
-          if (iVar5 == 0) {
+          iVar7 = I_stricmp(pcVar6,0xffffffff82003494);
+          if (iVar7 == 0) {
             bVar3 = true;
             goto LAB_8226760c;
           }
-          BG_AnimParseError("BG_ParseConditionBits: unexpected \'%s\'");
+          BG_AnimParseError(0xffffffff820034d8,pcVar6);
         }
       }
-      iVar5 = I_stricmp(local_e0,"all");
-      if (iVar5 == 0) {
-        uVar8 = 0xffffffff;
-        uVar11 = 0xffffffff;
+      iVar7 = I_stricmp(local_e0,0xffffffff82003500);
+      if (iVar7 == 0) {
+        local_e8[0] = 0xffffffff;
+        local_e8[1] = 0xffffffff;
       }
       else {
-        iVar5 = BG_IndexForString(local_e0,(animStringItem_t *)
-                                           (&DAT_829bff08 + iStack00000024 * 0x80),1);
-        if (iVar5 < 0) {
-          local_e8[0] = 0;
+        iVar7 = BG_IndexForString(local_e0,((ulonglong)param_3 & 0x1ffffff) * 0x80 + -0x7d6400f8,1);
+        if (iVar7 < 0) {
+          uVar4 = BG_IndexForString(local_e0,param_2,0);
+          Com_BitSetAssert(local_e8,uVar4,8);
           local_e8[1] = 0;
-          iVar5 = BG_IndexForString(local_e0,paStack0000001c,0);
-          Com_BitSetAssert(local_e8,iVar5,8);
-          uVar8 = local_e8[0];
-          uVar11 = local_e8[1];
+          local_e8[0] = 0;
         }
         else {
-          uVar8 = defineBits[iStack00000024][iVar5][0];
-          uVar11 = defineBits[iStack00000024][iVar5][1];
+          iVar7 = (param_3 * 0x10 + iVar7) * 8;
+          local_e8[0] = *(uint *)(&DAT_829c0850 + iVar7);
+          local_e8[1] = *(uint *)(&DAT_829c0854 + iVar7);
         }
       }
       if (bVar3) {
-        if ((*puVar7 == 0) && (puVar7[1] == 0)) {
-          puVar7[1] = 0xffffffff;
-          *puVar7 = 0xffffffff;
+        if ((*puVar8 == 0) && (puVar8[1] == 0)) {
+          puVar8[1] = 0xffffffff;
+          *puVar8 = 0xffffffff;
         }
-        uVar8 = *puVar7 & ~uVar8;
-        uVar11 = puVar7[1] & ~uVar11;
+        local_e8[0] = *puVar8 & ~local_e8[0];
+        local_e8[1] = puVar8[1] & ~local_e8[1];
       }
       else {
-        uVar8 = *puVar7 | uVar8;
-        uVar11 = puVar7[1] | uVar11;
+        local_e8[0] = *puVar8 | local_e8[0];
+        local_e8[1] = puVar8[1] | local_e8[1];
       }
-      puVar7[1] = uVar11;
-      *puVar7 = uVar8;
+      puVar8[1] = local_e8[1];
+      *puVar8 = local_e8[0];
       local_e0[0] = '\0';
-      iVar5 = I_stricmp(pcVar4,s_MINUS);
-      if (iVar5 == 0) {
+      iVar7 = I_stricmp(pcVar6,0xffffffff82003494);
+      if (iVar7 == 0) {
         bVar3 = true;
       }
     }
@@ -837,250 +849,251 @@ LAB_822679a4:
 
 // 822679B0  BG_ParseConditions  (bgame/bg_animation_mp.cpp:1081)
 
-int BG_ParseConditions(char **param_1,animScriptItem_t *param_2)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void BG_ParseConditions(undefined8 param_1,int *param_2)
 
 {
-  char *pcVar1;
-  char **ppcVar2;
-  char *pcVar3;
-  int iVar4;
-  char *pcVar5;
-  uint local_60;
-  uint uStack_5c;
+  int iVar1;
+  char *pcVar2;
+  undefined8 uVar3;
+  char *pcVar4;
+  int iVar5;
+  char *pcVar6;
+  int local_60 [24];
   
-  ppcVar2 = (char **)__savegprlr_22(param_1);
-  uStack_5c = 0;
-  local_60 = 0;
-  pcVar3 = Com_ParseOnLine(ppcVar2);
-  while ((pcVar3 != (char *)0x0 && (*pcVar3 != '\0'))) {
-    iVar4 = I_stricmp(pcVar3,"default");
-    if (iVar4 == 0) goto LAB_82267b94;
-    iVar4 = BG_IndexForString(pcVar3,animConditionsStr,0);
-    if (animConditionsTable[iVar4].type == ANIM_CONDTYPE_BITFLAGS) {
-      BG_ParseConditionBits(ppcVar2,animConditionsTable[iVar4].values,iVar4,&local_60);
+  uVar3 = __savegprlr_22();
+  local_60[0] = 0;
+  pcVar4 = (char *)Com_ParseOnLine();
+  iVar1 = local_60[0];
+  while ((pcVar4 != (char *)0x0 && (*pcVar4 != '\0'))) {
+    iVar5 = I_stricmp(pcVar4,0xffffffff8200352c);
+    if (iVar5 == 0) goto LAB_82267b94;
+    iVar5 = BG_IndexForString(pcVar4,0xffffffff82960a30,0);
+    local_60[0] = iVar1;
+    if (*(int *)(&DAT_82960ac8 + iVar5 * 8) == 0) {
+      BG_ParseConditionBits(uVar3,(&PTR_DAT_82960acc)[iVar5 * 2],iVar5,local_60);
     }
-    else if (animConditionsTable[iVar4].type == ANIM_CONDTYPE_VALUE) {
-      if (animConditionsTable[iVar4].values == (animStringItem_t *)0x0) {
-        local_60 = 1;
+    else if (*(int *)(&DAT_82960ac8 + iVar5 * 8) == 1) {
+      if ((&PTR_DAT_82960acc)[iVar5 * 2] == (undefined *)0x0) {
+        local_60[0] = 1;
       }
       else {
-        pcVar3 = Com_ParseOnLine(ppcVar2);
-        if ((pcVar3 == (char *)0x0) || (pcVar1 = pcVar3, *pcVar3 == '\0')) {
-          BG_AnimParseError("BG_ParseConditions: expected condition value, found end of line");
-          pcVar1 = pcVar3;
+        pcVar4 = (char *)Com_ParseOnLine(uVar3);
+        if ((pcVar4 == (char *)0x0) || (pcVar2 = pcVar4, *pcVar4 == '\0')) {
+          BG_AnimParseError(0xffffffff82003538);
+          pcVar2 = pcVar4;
         }
         do {
-          pcVar5 = pcVar1;
-          pcVar1 = pcVar5 + 1;
-        } while (*pcVar5 != '\0');
-        pcVar1 = pcVar3;
-        if (pcVar5[-1] == ',') {
+          pcVar6 = pcVar2;
+          pcVar2 = pcVar6 + 1;
+        } while (*pcVar6 != '\0');
+        pcVar2 = pcVar4;
+        if (pcVar6[-1] == ',') {
           do {
-            pcVar5 = pcVar1;
-            pcVar1 = pcVar5 + 1;
-          } while (*pcVar5 != '\0');
-          pcVar5[-1] = '\0';
+            pcVar6 = pcVar2;
+            pcVar2 = pcVar6 + 1;
+          } while (*pcVar6 != '\0');
+          pcVar6[-1] = '\0';
         }
-        local_60 = BG_IndexForString(pcVar3,animConditionsTable[iVar4].values,0);
+        local_60[0] = BG_IndexForString(pcVar4,(&PTR_DAT_82960acc)[iVar5 * 2],0);
       }
     }
-    param_2->conditions[param_2->numConditions].index = iVar4;
-    param_2->conditions[param_2->numConditions].value[0] = local_60;
-    param_2->conditions[param_2->numConditions].value[1] = uStack_5c;
-    param_2->numConditions = param_2->numConditions + 1;
-    pcVar3 = Com_ParseOnLine(ppcVar2);
+    param_2[*param_2 * 3 + 1] = iVar5;
+    param_2[*param_2 * 3 + 2] = local_60[0];
+    param_2[(*param_2 + 1) * 3] = 0;
+    *param_2 = *param_2 + 1;
+    pcVar4 = (char *)Com_ParseOnLine(uVar3);
+    iVar1 = local_60[0];
   }
-  if (param_2->numConditions == 0) {
-    BG_AnimParseError("BG_ParseConditions: no conditions found");
+  if (*param_2 == 0) {
+    BG_AnimParseError(0xffffffff82003504);
   }
 LAB_82267b94:
-  iVar4 = __restgprlr_22(1);
-  return iVar4;
+  __restgprlr_22(1);
+  return;
 }
 
 
 // 82267BA0  BG_ParseCommands  (bgame/bg_animation_mp.cpp:1157)
 
-void BG_ParseCommands(char **param_1,animScriptItem_t *param_2,animScriptData_t *param_3)
+void BG_ParseCommands(undefined8 param_1,longlong param_2,int param_3)
 
 {
   bool bVar1;
   char cVar2;
   int iVar3;
-  int *piVar4;
-  int iVar5;
-  char *pcVar6;
+  int iVar4;
+  int *piVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  short sVar10;
-  int iVar9;
-  longlong lVar11;
-  uint uVar12;
-  longlong lVar13;
-  int iVar14;
-  animation_s *paVar15;
-  char *pcVar16;
-  int iVar17;
-  longlong lVar18;
-  double dVar19;
+  int *piVar8;
+  char *pcVar9;
+  int iVar10;
+  short sVar12;
+  int iVar11;
+  uint uVar13;
+  longlong lVar14;
+  char *pcVar15;
+  int iVar16;
+  longlong lVar17;
+  double dVar18;
   
-  lVar11 = (longlong)(int)param_2;
-  __savegprlr();
-  dVar19 = 0.0;
-  lVar18 = 0;
+  piVar8 = (int *)__savegprlr();
+  dVar18 = 0.0;
+  lVar17 = 0;
 LAB_82267c34:
-  iVar17 = 0;
+  iVar16 = 0;
   do {
-    if (iVar17 < 1) {
-      pcVar6 = Com_Parse(param_1);
+    if (iVar16 < 1) {
+      pcVar9 = (char *)Com_Parse();
     }
     else {
-      pcVar6 = Com_ParseOnLine(param_1);
+      pcVar9 = (char *)Com_ParseOnLine(piVar8);
     }
-    if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) goto LAB_8226810c;
-    iVar7 = I_stricmp(pcVar6,"}");
-    pcVar16 = pcVar6;
-    if (iVar7 == 0) goto LAB_822680e4;
-    piVar4 = (int *)lVar11;
-    if (iVar17 == 0) {
-      if (0xb < piVar4[0x37]) {
-        BG_AnimParseError("BG_ParseCommands: exceeded maximum number of animations (%i)");
+    if ((pcVar9 == (char *)0x0) || (*pcVar9 == '\0')) goto LAB_8226810c;
+    iVar10 = I_stricmp(pcVar9,&DAT_82003674);
+    pcVar15 = pcVar9;
+    if (iVar10 == 0) goto LAB_822680e4;
+    piVar5 = (int *)param_2;
+    if (iVar16 == 0) {
+      if (0xb < piVar5[0x37]) {
+        BG_AnimParseError("BG_ParseCommands: exceeded maximum number of animations (%i)",0xc);
       }
-      uVar12 = piVar4[0x37];
-      piVar4[0x37] = uVar12 + 1;
-      lVar13 = ((ulonglong)uVar12 + ((ulonglong)uVar12 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar11;
-      lVar18 = lVar13 + 0xe0;
-      *(undefined2 *)lVar18 = 0;
-      *(undefined2 *)((int)lVar13 + 0xe2) = 0;
+      uVar13 = piVar5[0x37];
+      piVar5[0x37] = uVar13 + 1;
+      lVar14 = ((ulonglong)uVar13 + ((ulonglong)uVar13 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + param_2
+      ;
+      lVar17 = lVar14 + 0xe0;
+      *(undefined2 *)lVar17 = 0;
+      *(undefined2 *)((int)lVar14 + 0xe2) = 0;
     }
-    iVar8 = BG_IndexForString(pcVar6,animBodyPartsStr,1);
-    iVar7 = iVar17 * 2;
-    iVar5 = (int)lVar18;
-    *(short *)(iVar7 + iVar5) = (short)iVar8;
-    if ((short)iVar8 < 1) goto LAB_8226808c;
-    pcVar6 = Com_ParseOnLine(param_1);
-    if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) {
+    sVar12 = BG_IndexForString(pcVar9,0xffffffff82960808,1);
+    iVar10 = iVar16 * 2;
+    iVar6 = (int)lVar17;
+    *(short *)(iVar10 + iVar6) = sVar12;
+    if (sVar12 < 1) goto LAB_8226808c;
+    pcVar9 = (char *)Com_ParseOnLine(piVar8);
+    if ((pcVar9 == (char *)0x0) || (*pcVar9 == '\0')) {
       BG_AnimParseError("BG_ParseCommands: expected animation");
     }
-    iVar8 = BG_AnimationIndexForString(pcVar6);
-    sVar10 = (short)iVar8;
-    iVar8 = (iVar17 + 2) * 2;
-    iVar3 = (iVar17 + 4) * 2;
+    sVar12 = BG_AnimationIndexForString(pcVar9);
+    iVar3 = (iVar16 + 2) * 2;
+    iVar11 = sVar12 * 0x68 + param_3;
+    iVar4 = (iVar16 + 4) * 2;
     bVar1 = DAT_829c3fe8 == 0;
-    *(short *)(iVar8 + iVar5) = sVar10;
-    *(short *)(iVar3 + iVar5) = (short)param_3->animations[sVar10].duration;
-    iVar9 = DAT_829bff04;
+    *(short *)(iVar3 + iVar6) = sVar12;
+    *(short *)(iVar4 + iVar6) = (short)*(undefined4 *)(iVar11 + 0x48);
+    iVar7 = DAT_829bff04;
     if (bVar1) {
-      if ((DAT_829bff04 != 0) && (*(short *)(iVar7 + iVar5) != 2)) {
+      if ((DAT_829bff04 != 0) && (*(short *)(iVar10 + iVar6) != 2)) {
         bVar1 = DAT_829bff04 == 0x12;
-        param_3->animations[sVar10].movetype =
-             1L << ((longlong)DAT_829bff04 & 0x7fU) | param_3->animations[sVar10].movetype;
-        if (((bVar1) || (iVar9 == 0x13)) &&
-           (sVar10 = *(short *)(iVar8 + iVar5),
-           (double)param_3->animations[sVar10].moveSpeed != dVar19)) {
-          param_3->animations[sVar10].flags = param_3->animations[sVar10].flags | 2;
+        *(ulonglong *)(iVar11 + 0x58) =
+             1L << ((longlong)DAT_829bff04 & 0x7fU) | *(ulonglong *)(iVar11 + 0x58);
+        if (((bVar1) || (iVar7 == 0x13)) &&
+           (iVar11 = *(short *)(iVar3 + iVar6) * 0x68 + param_3,
+           (double)*(float *)(iVar11 + 0x44) != dVar18)) {
+          *(uint *)(iVar11 + 0x50) = *(uint *)(iVar11 + 0x50) | 2;
         }
-        iVar14 = 0;
-        if (0 < *piVar4) {
-          lVar13 = lVar11 + 4;
+        iVar11 = 0;
+        if (0 < *piVar5) {
+          lVar14 = param_2 + 4;
           do {
-            if (*(int *)lVar13 == 7) {
-              if (piVar4[iVar14 * 3 + 2] == 1) {
-                paVar15 = param_3->animations + *(short *)(iVar8 + iVar5);
-                uVar12 = paVar15->flags | 0x10;
+            if (*(int *)lVar14 == 7) {
+              if (piVar5[iVar11 * 3 + 2] == 1) {
+                iVar11 = *(short *)(iVar3 + iVar6) * 0x68 + param_3;
+                uVar13 = *(uint *)(iVar11 + 0x50) | 0x10;
               }
               else {
-                if (piVar4[iVar14 * 3 + 2] != 2) break;
-                paVar15 = param_3->animations + *(short *)(iVar8 + iVar5);
-                uVar12 = paVar15->flags | 0x20;
+                if (piVar5[iVar11 * 3 + 2] != 2) break;
+                iVar11 = *(short *)(iVar3 + iVar6) * 0x68 + param_3;
+                uVar13 = *(uint *)(iVar11 + 0x50) | 0x20;
               }
-              paVar15->flags = uVar12;
+              *(uint *)(iVar11 + 0x50) = uVar13;
               break;
             }
-            iVar14 = iVar14 + 1;
-            lVar13 = lVar13 + 0xc;
-          } while (iVar14 < *piVar4);
+            iVar11 = iVar11 + 1;
+            lVar14 = lVar14 + 0xc;
+          } while (iVar11 < *piVar5);
         }
       }
-      if (parseEvent == 2) {
-        param_3->animations[*(short *)(iVar8 + iVar5)].flags =
-             param_3->animations[*(short *)(iVar8 + iVar5)].flags | 8;
-        param_3->animations[*(short *)(iVar8 + iVar5)].initialLerp = 0x1e;
+      if (DAT_829bff00 == 2) {
+        iVar11 = *(short *)(iVar3 + iVar6) * 0x68 + param_3;
+        *(uint *)(iVar11 + 0x50) = *(uint *)(iVar11 + 0x50) | 8;
+        *(undefined4 *)(*(short *)(iVar3 + iVar6) * 0x68 + param_3 + 0x40) = 0x1e;
       }
-      else if ((parseEvent == 0x12) || (parseEvent == 0x13)) {
-        param_3->animations[*(short *)(iVar8 + iVar5)].flags =
-             param_3->animations[*(short *)(iVar8 + iVar5)].flags | 0x100;
+      else if ((DAT_829bff00 == 0x12) || (DAT_829bff00 == 0x13)) {
+        iVar11 = *(short *)(iVar3 + iVar6) * 0x68 + param_3;
+        *(uint *)(iVar11 + 0x50) = *(uint *)(iVar11 + 0x50) | 0x100;
       }
-      else if (parseEvent == 1) {
-        param_3->animations[*(short *)(iVar8 + iVar5)].moveSpeed = (float)dVar19;
-        param_3->animations[*(short *)(iVar8 + iVar5)].flags =
-             param_3->animations[*(short *)(iVar8 + iVar5)].flags | 0x40;
+      else if (DAT_829bff00 == 1) {
+        *(float *)(*(short *)(iVar3 + iVar6) * 0x68 + param_3 + 0x44) = (float)dVar18;
+        iVar11 = *(short *)(iVar3 + iVar6) * 0x68 + param_3;
+        *(uint *)(iVar11 + 0x50) = *(uint *)(iVar11 + 0x50) | 0x40;
       }
-      else if (parseEvent == 10) {
-        param_3->animations[*(short *)(iVar8 + iVar5)].moveSpeed = (float)dVar19;
+      else if (DAT_829bff00 == 10) {
+        *(float *)(*(short *)(iVar3 + iVar6) * 0x68 + param_3 + 0x44) = (float)dVar18;
       }
-      else if ((0x16 < iVar9) && (iVar9 < 0x21)) {
-        param_3->animations[*(short *)(iVar8 + iVar5)].moveSpeed = (float)dVar19;
+      else if ((0x16 < iVar7) && (iVar7 < 0x21)) {
+        *(float *)(*(short *)(iVar3 + iVar6) * 0x68 + param_3 + 0x44) = (float)dVar18;
       }
     }
-    while ((pcVar6 = Com_ParseOnLine(param_1), pcVar6 != (char *)0x0 && (*pcVar6 != '\0'))) {
-      iVar9 = I_stricmp(pcVar6,"duration");
-      if (iVar9 == 0) {
-        pcVar6 = Com_ParseOnLine(param_1);
-        if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) {
-          BG_AnimParseError("BG_ParseCommands: expected duration value");
+    while ((pcVar9 = (char *)Com_ParseOnLine(piVar8), pcVar9 != (char *)0x0 && (*pcVar9 != '\0'))) {
+      iVar11 = I_stricmp(pcVar9,0xffffffff82003578);
+      if (iVar11 == 0) {
+        pcVar9 = (char *)Com_ParseOnLine(piVar8);
+        if ((pcVar9 == (char *)0x0) || (*pcVar9 == '\0')) {
+          BG_AnimParseError(0xffffffff82003584);
         }
-        iVar9 = atoi(pcVar6);
-        *(short *)(iVar3 + iVar5) = (short)iVar9;
+        iVar11 = atoi(pcVar9);
+        *(short *)(iVar4 + iVar6) = (short)iVar11;
       }
       else {
-        iVar9 = I_stricmp(pcVar6,"turretanim");
-        if (iVar9 == 0) {
+        iVar11 = I_stricmp(pcVar9,0xffffffff820035b0);
+        if (iVar11 == 0) {
           if (DAT_829c3fe8 == 0) {
-            param_3->animations[*(short *)(iVar8 + iVar5)].flags =
-                 param_3->animations[*(short *)(iVar8 + iVar5)].flags | 4;
+            iVar11 = *(short *)(iVar3 + iVar6) * 0x68 + param_3;
+            *(uint *)(iVar11 + 0x50) = *(uint *)(iVar11 + 0x50) | 4;
           }
-          if (*(short *)(iVar7 + iVar5) != 3) {
-            BG_AnimParseError(
-                             "BG_ParseCommands: Turret animations can only be played on the \'both\' body part"
-                             );
+          if (*(short *)(iVar10 + iVar6) != 3) {
+            BG_AnimParseError(0xffffffff820035c0);
           }
         }
         else {
-          iVar9 = I_stricmp(pcVar6,"blendtime");
-          if (iVar9 != 0) break;
-          pcVar6 = Com_ParseOnLine(param_1);
-          if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) {
-            BG_AnimParseError("BG_ParseCommands: expected blendtime value");
+          iVar11 = I_stricmp(pcVar9,0xffffffff82003610);
+          if (iVar11 != 0) break;
+          pcVar9 = (char *)Com_ParseOnLine(piVar8);
+          if ((pcVar9 == (char *)0x0) || (*pcVar9 == '\0')) {
+            BG_AnimParseError(0xffffffff8200361c);
           }
           if (DAT_829c3fe8 == 0) {
-            iVar9 = atoi(pcVar6);
-            param_3->animations[*(short *)(iVar8 + iVar5)].initialLerp = iVar9;
+            iVar11 = atoi(pcVar9);
+            *(int *)(*(short *)(iVar3 + iVar6) * 0x68 + param_3 + 0x40) = iVar11;
           }
         }
       }
     }
     Com_UngetToken();
-  } while ((*(short *)(iVar7 + iVar5) != 3) && (bVar1 = iVar17 < 1, iVar17 = iVar17 + 1, bVar1));
+  } while ((*(short *)(iVar10 + iVar6) != 3) && (bVar1 = iVar16 < 1, iVar16 = iVar16 + 1, bVar1));
   goto LAB_822680b4;
 LAB_8226808c:
   do {
-    cVar2 = *pcVar16;
-    pcVar16 = pcVar16 + 1;
+    cVar2 = *pcVar15;
+    pcVar15 = pcVar15 + 1;
   } while (cVar2 != '\0');
-  *param_1 = *param_1 + -(int)(pcVar16 + (-1 - (int)pcVar6));
+  *piVar8 = *piVar8 - (int)(pcVar15 + (-1 - (int)pcVar9));
 LAB_822680b4:
-  pcVar6 = Com_ParseOnLine(param_1);
-  if ((pcVar6 != (char *)0x0) && (*pcVar6 != '\0')) {
-    BG_AnimParseError("BG_ParseCommands: unknown parameter \'%s\'");
+  pcVar9 = (char *)Com_ParseOnLine(piVar8);
+  if ((pcVar9 != (char *)0x0) && (*pcVar9 != '\0')) {
+    BG_AnimParseError(0xffffffff82003648,pcVar9);
   }
   goto LAB_82267c34;
 LAB_822680e4:
   do {
-    cVar2 = *pcVar16;
-    pcVar16 = pcVar16 + 1;
+    cVar2 = *pcVar15;
+    pcVar15 = pcVar15 + 1;
   } while (cVar2 != '\0');
-  *param_1 = *param_1 + -(int)(pcVar16 + (-1 - (int)pcVar6));
+  *piVar8 = *piVar8 - (int)(pcVar15 + (-1 - (int)pcVar9));
 LAB_8226810c:
   __restgprlr();
   return;
@@ -1089,43 +1102,43 @@ LAB_8226810c:
 
 // 82268118  BG_AnimParseAnimScript  (bgame/bg_animation_mp.cpp:1364)
 
-void BG_AnimParseAnimScript(animScriptData_t *param_1,loadAnim_t *param_2,uint *param_3)
+void BG_AnimParseAnimScript(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 {
   bool bVar1;
   char cVar2;
-  animStringItem_t *paVar3;
-  longlong lVar4;
-  char *pcVar5;
-  int iVar6;
-  uint uVar7;
-  long lVar8;
-  int iVar9;
-  int iVar10;
-  char *pcVar11;
-  char *pcVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  animScriptData_t *paVar16;
+  undefined **ppuVar3;
+  int iVar7;
+  undefined8 uVar4;
+  uint uVar8;
+  void *pvVar9;
+  char *pcVar10;
+  ulonglong uVar5;
+  int iVar11;
+  undefined4 uVar12;
+  ulonglong uVar6;
+  int iVar13;
+  uint uVar14;
+  char *pcVar15;
+  char *pcVar16;
   ulonglong uVar17;
+  int *_Dst;
+  int iVar19;
   ulonglong uVar18;
-  int *piVar19;
-  ulonglong uVar20;
-  animScriptItem_t *paVar21;
-  char *pcVar22;
+  char *pcVar20;
+  char *pcVar21;
+  undefined1 *puVar22;
   char *pcVar23;
-  char *pcVar24;
-  longlong lVar25;
-  int *piVar26;
-  char *local_280 [2];
+  longlong lVar24;
+  int *piVar25;
+  uint local_280 [2];
   uint local_278 [3];
   char *local_26c;
-  animStringItem_t *local_268;
-  animScriptItem_t *local_264;
-  char *local_260;
+  undefined **local_268;
+  char *local_264;
+  undefined *local_260;
   char *local_25c;
-  char *local_258;
+  undefined1 *local_258;
   char *local_254;
   char *local_250;
   char *local_24c;
@@ -1135,370 +1148,369 @@ void BG_AnimParseAnimScript(animScriptData_t *param_1,loadAnim_t *param_2,uint *
   char *local_23c;
   char *local_238;
   char *local_234;
-  char *local_230;
+  undefined *local_230;
   char *local_22c;
   char *local_228;
-  LargeLocal aLStack_220 [2];
-  animScriptItem_t aStack_210;
+  undefined1 auStack_220 [16];
+  undefined1 auStack_210 [528];
   
-  lVar4 = (longlong)(int)param_1;
-  __savegprlr();
-  LargeLocal::LargeLocal(aLStack_220,0x18000);
-  pcVar5 = LargeLocal::GetBuf(aLStack_220);
-  uVar18 = 0;
-  local_268 = animEventTypesStr;
-  local_264 = (animScriptItem_t *)0x0;
-  pcVar5 = Com_LoadRawTextFile(globalFilename,pcVar5,0x18000);
-  if (pcVar5 == (char *)0x0) {
-    Com_Error(ERR_DROP,"\x15Couldn\'t load player animation script %s\n");
+  iVar7 = __savegprlr();
+  LargeLocal__LargeLocal(auStack_220,0x18000);
+  uVar4 = LargeLocal__GetBuf(auStack_220);
+  _Dst = (int *)0x0;
+  local_268 = &PTR_DAT_82960750;
+  local_264 = (char *)0x0;
+  uVar8 = Com_LoadRawTextFile(PTR_s_mp_playeranim_script_82960570,uVar4,0x18000);
+  if (uVar8 == 0) {
+    Com_Error(1,0xffffffff82003a20,PTR_s_mp_playeranim_script_82960570);
   }
   local_26c = (char *)0x0;
-  paVar16 = (animScriptData_t *)lVar4;
-  g_piNumLoadAnims = param_3;
+  DAT_829c1150 = param_3;
   DAT_829c3fe8 = param_2;
-  globalScriptData = paVar16;
-  memset();
-  BG_LoadWeaponStrings();
-  memset();
-  memset();
-  memset();
+  DAT_829c3fec = iVar7;
+  pvVar9 = memset(&DAT_829c1158,0,0x780);
+  BG_LoadWeaponStrings(pvVar9);
+  memset(&DAT_829bff08,0,0x900);
+  memset(&DAT_829c18d8,0,10000);
+  memset(&DAT_829c0808,0,0x48);
   DAT_829c1154 = 0;
   local_278[0] = 0xffffffff;
-  uVar14 = 0;
-  local_278[1] = 0xffffffff;
+  uVar17 = 0;
+  local_278[1] = -1;
   local_278[2] = -1;
-  local_280[0] = pcVar5;
-  Com_BeginParseSession("BG_AnimParseAnimScript");
-  pcVar5 = Com_Parse(local_280);
-  paVar21 = local_264;
-  paVar3 = local_268;
-  if (pcVar5 != (char *)0x0) {
-    uVar13 = (ulonglong)local_278[1];
-    uVar17 = (ulonglong)local_278[0];
-    local_258 = "}";
+  local_280[0] = uVar8;
+  Com_BeginParseSession(0xffffffff82003a08);
+  pcVar10 = (char *)Com_Parse(local_280);
+  pcVar20 = local_264;
+  ppuVar3 = local_268;
+  if (pcVar10 != (char *)0x0) {
+    local_258 = &DAT_82003674;
     local_25c = "BG_AnimParseAnimScript: expected \'{\'";
     local_254 = "BG_AnimParseAnimScript: expected <state type>";
     local_250 = "BG_AnimParseAnimScript: internal error";
-    pcVar24 = "BG_AnimParseAnimScript: internal error";
+    pcVar23 = "BG_AnimParseAnimScript: internal error";
     local_248 = "BG_AnimParseAnimScript: expected state type";
     local_238 = "BG_AnimParseAnimScript: expected \'statechange\', got \'%s\'";
     local_240 = "statechange";
     local_23c = "BG_AnimParseAnimScript: expected \'=\', found \'%s\'";
-    pcVar23 = "}";
+    puVar22 = &DAT_82003674;
     local_234 = "BG_AnimParseAnimScript: expected \'state\'";
     local_228 = "state";
-    local_230 = "=";
+    local_230 = &DAT_8200386c;
     local_244 = "BG_AnimParseAnimScript: expected \'=\', found end of line";
-    pcVar22 = "BG_AnimParseAnimScript: expected <state type>";
-    local_268 = (animStringItem_t *)0x820037f8;
+    pcVar21 = "BG_AnimParseAnimScript: expected <state type>";
+    local_268 = (undefined **)0x820037f8;
     local_26c = "BG_AnimParseAnimScript: exceeded maximum items per script (%i)";
     local_24c = "BG_AnimParseAnimScript: expected condition define string";
     local_22c = "BG_AnimParseAnimScript: can not make a define of type \'%s\'";
-    uVar20 = 0;
-    local_264 = (animScriptItem_t *)0x82003744;
-    local_260 = "set";
+    uVar18 = 0;
+    local_264 = "BG_AnimParseAnimScript: expected condition type string";
+    local_260 = &DAT_82003740;
+    uVar8 = local_278[0];
+    uVar14 = local_278[1];
     do {
-      if (*pcVar5 == '\0') break;
-      iVar6 = BG_IndexForString(pcVar5,paVar3 + 0x83,1);
-      iVar9 = (int)uVar14;
-      if (iVar6 < 0) {
-        if ((uVar20 & 0xffffffff) < 5) {
-          iVar6 = (int)uVar20;
-          bVar1 = iVar6 != 0;
-          piVar19 = (int *)uVar18;
-          pcVar11 = pcVar5;
-          if ((uVar20 == 1 && bVar1) || (uVar20 == 2 && bVar1)) {
-            iVar10 = I_stricmp(pcVar5,"{");
-            if (iVar10 == 0) {
-              if (2 < iVar9) {
-                BG_AnimParseError("BG_AnimParseAnimScript: unexpected \'%s\'");
+      if (*pcVar10 == '\0') break;
+      uVar5 = BG_IndexForString(pcVar10,ppuVar3 + 0x106,1);
+      iVar11 = (int)uVar17;
+      if ((int)uVar5 < 0) {
+        if ((uVar18 & 0xffffffff) < 5) {
+          iVar19 = (int)uVar18;
+          bVar1 = iVar19 != 0;
+          pcVar16 = pcVar10;
+          if ((uVar18 == 1 && bVar1) || (uVar18 == 2 && bVar1)) {
+            iVar13 = I_stricmp(pcVar10,0xffffffff8200373c);
+            if (iVar13 == 0) {
+              if (2 < iVar11) {
+                BG_AnimParseError(0xffffffff82003714,pcVar10);
               }
-              if (-1 < *(int *)((int)local_278 + (int)((uVar14 & 0xffffffff) << 2)))
+              if (-1 < *(int *)((int)local_278 + (int)((uVar17 & 0xffffffff) << 2)))
               goto LAB_822688b0;
-              BG_AnimParseError("BG_AnimParseAnimScript: unexpected \'%s\'");
-              uVar14 = uVar14 + 1;
+              BG_AnimParseError(0xffffffff82003714,pcVar10);
+              uVar17 = uVar17 + 1;
             }
             else {
-              iVar10 = I_stricmp(pcVar5,pcVar23);
-              if (iVar10 == 0) {
-                uVar15 = uVar14 - 1;
-                if ((longlong)uVar15 < 0) {
-                  BG_AnimParseError("BG_AnimParseAnimScript: unexpected \'%s\'");
+              iVar13 = I_stricmp(pcVar10,puVar22);
+              if (iVar13 == 0) {
+                uVar5 = uVar17 - 1;
+                if ((longlong)uVar5 < 0) {
+                  BG_AnimParseError(0xffffffff82003714,pcVar10);
                 }
-                *(undefined4 *)((int)local_278 + (int)((uVar15 & 0xffffffff) << 2)) = 0xffffffff;
-                uVar18 = -(ulonglong)(uVar14 != 2) & uVar18;
-                uVar13 = (ulonglong)local_278[1];
-                uVar17 = (ulonglong)local_278[0];
-                uVar14 = uVar15;
+                *(undefined4 *)((int)local_278 + (int)((uVar5 & 0xffffffff) << 2)) = 0xffffffff;
+                _Dst = (int *)(-(uint)(uVar17 != 2) & (uint)_Dst);
+                uVar17 = uVar5;
+                uVar8 = local_278[0];
+                uVar14 = local_278[1];
               }
               else {
-                if (iVar9 == 0) {
-                  if ((int)uVar17 < 0) {
-                    iVar6 = I_stricmp(pcVar5,local_228);
-                    if (iVar6 != 0) {
+                if (iVar11 == 0) {
+                  if ((int)uVar8 < 0) {
+                    iVar11 = I_stricmp(pcVar10,local_228);
+                    if (iVar11 != 0) {
                       BG_AnimParseError(local_234);
                     }
-                    pcVar5 = Com_ParseOnLine(local_280);
-                    if (pcVar5 == (char *)0x0) {
+                    uVar17 = Com_ParseOnLine(local_280);
+                    if ((uVar17 & 0xffffffff) == 0) {
                       BG_AnimParseError(local_248);
                     }
-                    local_278[0] = BG_IndexForString(pcVar5,(animStringItem_t *)&paVar3[-0x3c].hash,
-                                                     0);
-                    uVar17 = (ulonglong)(int)local_278[0];
-                    pcVar5 = Com_Parse(local_280);
-                    if ((pcVar5 == (char *)0x0) || (iVar6 = I_stricmp(pcVar5,"{"), iVar6 != 0)) {
+                    uVar8 = BG_IndexForString(uVar17,ppuVar3 + -0x77,0);
+                    local_278[0] = uVar8;
+                    uVar17 = Com_Parse(local_280);
+                    if (((uVar17 & 0xffffffff) == 0) ||
+                       (iVar11 = I_stricmp(uVar17,0xffffffff8200373c), iVar11 != 0)) {
                       BG_AnimParseError(local_25c);
                     }
-                    uVar14 = 1;
+                    uVar17 = 1;
                     goto LAB_82268be0;
                   }
                 }
-                else if (iVar9 == 1) {
-                  if ((int)uVar13 < 0) {
-                    local_278[1] = BG_IndexForString(pcVar5,paVar3 + -0x39,0);
-                    uVar13 = (ulonglong)(int)local_278[1];
-                    if (iVar6 == 1) {
-                      uVar18 = (uVar17 * 0x38 + uVar13) * 0x204 + lVar4 + 0xd004;
-                      DAT_829bff04 = local_278[1];
-                      memset();
+                else if (iVar11 == 1) {
+                  if ((int)uVar14 < 0) {
+                    uVar14 = BG_IndexForString(pcVar10,ppuVar3 + -0x72,0);
+                    local_278[1] = uVar14;
+                    if (iVar19 == 1) {
+                      _Dst = (int *)((uVar8 * 0x38 + uVar14) * 0x204 + iVar7 + 0xd004);
+                      DAT_829bff04 = uVar14;
+                      memset(_Dst,0,0x204);
                     }
                     else {
-                      if (iVar6 == 2) {
-                        uVar18 = (uVar17 * 0x38 + uVar13) * 0x204 + lVar4 + 0x140e4;
+                      if (iVar19 == 2) {
+                        _Dst = (int *)((uVar8 * 0x38 + uVar14) * 0x204 + iVar7 + 0x140e4);
                       }
-                      memset();
+                      memset(_Dst,0,0x204);
                     }
                     goto LAB_82268be0;
                   }
                 }
-                else if (iVar9 == 2) {
+                else if (iVar11 == 2) {
                   if ((int)local_278[2] < 0) {
                     do {
-                      cVar2 = *pcVar11;
-                      pcVar11 = pcVar11 + 1;
+                      cVar2 = *pcVar16;
+                      pcVar16 = pcVar16 + 1;
                     } while (cVar2 != '\0');
-                    local_280[0] = local_280[0] + -(int)(pcVar11 + (-1 - (int)pcVar5));
-                    pcVar11 = pcVar5;
+                    local_280[0] = local_280[0] - (int)(pcVar16 + (-1 - (int)pcVar10));
+                    pcVar20 = pcVar10;
                     do {
-                      cVar2 = *pcVar11;
-                      pcVar11 = pcVar11 + 1;
+                      cVar2 = *pcVar20;
+                      pcVar20 = pcVar20 + 1;
                     } while (cVar2 != '\0');
-                    iVar6 = I_strncmp(local_280[0],pcVar5,(int)(pcVar11 + (-1 - (int)pcVar5)));
-                    if (iVar6 != 0) {
-                      BG_AnimParseError(pcVar24);
+                    iVar11 = I_strncmp(local_280[0],pcVar10,pcVar20 + (-1 - (int)pcVar10));
+                    if (iVar11 != 0) {
+                      BG_AnimParseError(pcVar23);
                     }
-                    memset();
-                    local_278[2] = BG_ParseConditions(local_280,&aStack_210);
-                    if (0x7f < *piVar19) {
-                      BG_AnimParseError(local_26c);
+                    memset(auStack_210,0,0x170);
+                    local_278[2] = BG_ParseConditions(local_280,auStack_210);
+                    if (0x7f < *_Dst) {
+                      BG_AnimParseError(local_26c,0x80);
                     }
-                    piVar26 = &paVar16->numScriptItems;
-                    if (0x487 < paVar16->numScriptItems) {
-                      BG_AnimParseError((char *)local_268);
+                    piVar25 = (int *)(iVar7 + 0x863a0);
+                    if (0x487 < *(int *)(iVar7 + 0x863a0)) {
+                      BG_AnimParseError(local_268,0x488);
                     }
-                    piVar19[*piVar19 + 1] = (int)(paVar16->scriptItems + *piVar26);
-                    *piVar26 = *piVar26 + 1;
-                    paVar21 = (animScriptItem_t *)piVar19[*piVar19 + 1];
-                    *piVar19 = *piVar19 + 1;
-                    memcpy();
+                    _Dst[*_Dst + 1] = (*piVar25 + 0x14e) * 0x170 + iVar7;
+                    *piVar25 = *piVar25 + 1;
+                    pcVar20 = (char *)_Dst[*_Dst + 1];
+                    *_Dst = *_Dst + 1;
+                    memcpy(pcVar20,auStack_210,0x170);
                     goto LAB_82268be0;
                   }
                 }
                 else {
-                  pcVar12 = pcVar5;
-                  if (iVar9 == 3) {
+                  pcVar15 = pcVar10;
+                  if (iVar11 == 3) {
                     do {
-                      cVar2 = *pcVar12;
-                      pcVar12 = pcVar12 + 1;
+                      cVar2 = *pcVar15;
+                      pcVar15 = pcVar15 + 1;
                     } while (cVar2 != '\0');
-                    local_280[0] = local_280[0] + -(int)(pcVar12 + (-1 - (int)pcVar5));
+                    local_280[0] = local_280[0] - (int)(pcVar15 + (-1 - (int)pcVar10));
                     do {
-                      cVar2 = *pcVar11;
-                      pcVar11 = pcVar11 + 1;
+                      cVar2 = *pcVar16;
+                      pcVar16 = pcVar16 + 1;
                     } while (cVar2 != '\0');
                     goto LAB_82268b9c;
                   }
                 }
 LAB_82268bd4:
-                BG_AnimParseError("BG_AnimParseAnimScript: unexpected \'%s\'");
+                BG_AnimParseError(0xffffffff82003714,pcVar10);
               }
             }
           }
-          else if ((uVar20 == 3 && bVar1) || (bVar1)) {
-            iVar10 = I_stricmp(pcVar5,"{");
-            if (iVar10 == 0) {
-              if (2 < iVar9) {
-                BG_AnimParseError("BG_AnimParseAnimScript: unexpected \'%s\'");
+          else if ((uVar18 == 3 && bVar1) || (bVar1)) {
+            iVar13 = I_stricmp(pcVar10,0xffffffff8200373c);
+            if (iVar13 == 0) {
+              if (2 < iVar11) {
+                BG_AnimParseError(0xffffffff82003714,pcVar10);
               }
-              if (*(int *)((int)local_278 + (int)((uVar14 & 0xffffffff) << 2)) < 0) {
-                BG_AnimParseError("BG_AnimParseAnimScript: unexpected \'%s\'");
+              if (*(int *)((int)local_278 + (int)((uVar17 & 0xffffffff) << 2)) < 0) {
+                BG_AnimParseError(0xffffffff82003714,pcVar10);
               }
 LAB_822688b0:
-              uVar14 = uVar14 + 1;
+              uVar17 = uVar17 + 1;
             }
             else {
-              iVar10 = I_stricmp(pcVar5,pcVar23);
-              if (iVar10 == 0) {
-                uVar14 = uVar14 - 1;
-                if ((longlong)uVar14 < 0) {
-                  BG_AnimParseError("BG_AnimParseAnimScript: unexpected \'%s\'");
+              iVar13 = I_stricmp(pcVar10,puVar22);
+              if (iVar13 == 0) {
+                uVar17 = uVar17 - 1;
+                if ((longlong)uVar17 < 0) {
+                  BG_AnimParseError(0xffffffff82003714,pcVar10);
                 }
-                *(undefined4 *)((int)local_278 + (int)((uVar14 & 0xffffffff) << 2)) = 0xffffffff;
-                uVar18 = -(ulonglong)(uVar14 != 0) & uVar18;
-                uVar17 = (ulonglong)local_278[0];
-                uVar13 = (ulonglong)local_278[1];
+                *(undefined4 *)((int)local_278 + (int)((uVar17 & 0xffffffff) << 2)) = 0xffffffff;
+                _Dst = (int *)(-(uint)(uVar17 != 0) & (uint)_Dst);
+                uVar8 = local_278[0];
+                uVar14 = local_278[1];
               }
-              else if (iVar9 == 0) {
-                if (-1 < (int)uVar17) goto LAB_82268bd4;
-                if (iVar6 == 3) {
-                  iVar6 = I_stricmp(pcVar5,local_240);
-                  if (iVar6 != 0) {
-                    BG_AnimParseError(local_238);
+              else if (iVar11 == 0) {
+                if (-1 < (int)uVar8) goto LAB_82268bd4;
+                if (iVar19 == 3) {
+                  iVar11 = I_stricmp(pcVar10,local_240);
+                  if (iVar11 != 0) {
+                    BG_AnimParseError(local_238,pcVar10);
                   }
-                  pcVar5 = Com_ParseOnLine(local_280);
-                  if (pcVar5 == (char *)0x0) {
-                    BG_AnimParseError(pcVar22);
+                  uVar17 = Com_ParseOnLine(local_280);
+                  if ((uVar17 & 0xffffffff) == 0) {
+                    BG_AnimParseError(pcVar21);
                   }
-                  iVar6 = BG_IndexForString(pcVar5,(animStringItem_t *)&paVar3[-0x3c].hash,0);
-                  pcVar5 = Com_ParseOnLine(local_280);
-                  if (pcVar5 == (char *)0x0) {
-                    BG_AnimParseError(pcVar22);
+                  iVar11 = BG_IndexForString(uVar17,ppuVar3 + -0x77,0);
+                  uVar17 = Com_ParseOnLine(local_280);
+                  if ((uVar17 & 0xffffffff) == 0) {
+                    BG_AnimParseError(pcVar21);
                   }
-                  local_278[0] = BG_IndexForString(pcVar5,(animStringItem_t *)&paVar3[-0x3c].hash,0)
-                  ;
-                  uVar17 = (ulonglong)(int)local_278[0];
-                  uVar18 = ((longlong)iVar6 + uVar17) * 0x204 + lVar4 + 0x1b1c4;
-                  pcVar5 = Com_Parse(local_280);
-                  if ((pcVar5 == (char *)0x0) || (iVar6 = I_stricmp(pcVar5,"{"), iVar6 != 0)) {
+                  uVar8 = BG_IndexForString(uVar17,ppuVar3 + -0x77,0);
+                  _Dst = (int *)((iVar11 + uVar8) * 0x204 + iVar7 + 0x1b1c4);
+                  local_278[0] = uVar8;
+                  uVar17 = Com_Parse(local_280);
+                  if (((uVar17 & 0xffffffff) == 0) ||
+                     (iVar11 = I_stricmp(uVar17,0xffffffff8200373c), iVar11 != 0)) {
                     BG_AnimParseError(local_25c);
                   }
-                  memset();
-                  uVar14 = 1;
+                  memset(_Dst,0,0x204);
+                  uVar17 = 1;
                 }
                 else {
-                  parseEvent = BG_IndexForString(pcVar5,paVar3,0);
-                  uVar17 = (ulonglong)parseEvent;
-                  uVar18 = uVar17 * 0x204 + lVar4 + 0x1b3c8;
-                  local_278[0] = parseEvent;
-                  memset();
+                  uVar8 = BG_IndexForString(pcVar10,ppuVar3,0);
+                  _Dst = (int *)(uVar8 * 0x204 + iVar7 + 0x1b3c8);
+                  DAT_829bff00 = uVar8;
+                  local_278[0] = uVar8;
+                  memset(_Dst,0,0x204);
                 }
               }
-              else if (iVar9 == 1) {
-                if (-1 < (int)uVar13) goto LAB_82268bd4;
+              else if (iVar11 == 1) {
+                if (-1 < (int)uVar14) goto LAB_82268bd4;
                 do {
-                  cVar2 = *pcVar11;
-                  pcVar11 = pcVar11 + 1;
+                  cVar2 = *pcVar16;
+                  pcVar16 = pcVar16 + 1;
                 } while (cVar2 != '\0');
-                local_280[0] = local_280[0] + -(int)(pcVar11 + (-1 - (int)pcVar5));
-                pcVar11 = pcVar5;
+                local_280[0] = local_280[0] - (int)(pcVar16 + (-1 - (int)pcVar10));
+                pcVar20 = pcVar10;
                 do {
-                  cVar2 = *pcVar11;
-                  pcVar11 = pcVar11 + 1;
+                  cVar2 = *pcVar20;
+                  pcVar20 = pcVar20 + 1;
                 } while (cVar2 != '\0');
-                iVar6 = I_strncmp(local_280[0],pcVar5,(int)(pcVar11 + (-1 - (int)pcVar5)));
-                if (iVar6 != 0) {
-                  BG_AnimParseError(pcVar24);
+                iVar11 = I_strncmp(local_280[0],pcVar10,pcVar20 + (-1 - (int)pcVar10));
+                if (iVar11 != 0) {
+                  BG_AnimParseError(pcVar23);
                 }
-                memset();
-                local_278[1] = BG_ParseConditions(local_280,&aStack_210);
-                uVar13 = (ulonglong)(int)local_278[1];
-                if (0x7f < *piVar19) {
-                  BG_AnimParseError(local_26c);
+                memset(auStack_210,0,0x170);
+                uVar14 = BG_ParseConditions(local_280,auStack_210);
+                local_278[1] = uVar14;
+                if (0x7f < *_Dst) {
+                  BG_AnimParseError(local_26c,0x80);
                 }
-                piVar26 = &paVar16->numScriptItems;
-                if (0x487 < paVar16->numScriptItems) {
-                  BG_AnimParseError((char *)local_268);
+                piVar25 = (int *)(iVar7 + 0x863a0);
+                if (0x487 < *(int *)(iVar7 + 0x863a0)) {
+                  BG_AnimParseError(local_268,0x488);
                 }
-                piVar19[*piVar19 + 1] = (int)(paVar16->scriptItems + *piVar26);
-                *piVar26 = *piVar26 + 1;
-                paVar21 = (animScriptItem_t *)piVar19[*piVar19 + 1];
-                *piVar19 = *piVar19 + 1;
-                memcpy();
+                _Dst[*_Dst + 1] = (*piVar25 + 0x14e) * 0x170 + iVar7;
+                *piVar25 = *piVar25 + 1;
+                pcVar20 = (char *)_Dst[*_Dst + 1];
+                *_Dst = *_Dst + 1;
+                memcpy(pcVar20,auStack_210,0x170);
               }
               else {
-                pcVar12 = pcVar5;
-                if (iVar9 != 2) goto LAB_82268bd4;
+                pcVar15 = pcVar10;
+                if (iVar11 != 2) goto LAB_82268bd4;
                 do {
-                  cVar2 = *pcVar12;
-                  pcVar12 = pcVar12 + 1;
+                  cVar2 = *pcVar15;
+                  pcVar15 = pcVar15 + 1;
                 } while (cVar2 != '\0');
-                local_280[0] = local_280[0] + -(int)(pcVar12 + (-1 - (int)pcVar5));
+                local_280[0] = local_280[0] - (int)(pcVar15 + (-1 - (int)pcVar10));
                 do {
-                  cVar2 = *pcVar11;
-                  pcVar11 = pcVar11 + 1;
+                  cVar2 = *pcVar16;
+                  pcVar16 = pcVar16 + 1;
                 } while (cVar2 != '\0');
 LAB_82268b9c:
-                iVar6 = I_strncmp(local_280[0],pcVar5,(int)(pcVar11 + (-1 - (int)pcVar5)));
-                if (iVar6 != 0) {
-                  BG_AnimParseError(pcVar24);
+                iVar11 = I_strncmp(local_280[0],pcVar10,pcVar16 + (-1 - (int)pcVar10));
+                if (iVar11 != 0) {
+                  BG_AnimParseError(pcVar23);
                 }
-                BG_ParseCommands(local_280,paVar21,paVar16);
+                BG_ParseCommands(local_280,pcVar20,iVar7);
               }
             }
           }
           else {
-            iVar6 = I_stricmp(pcVar5,local_260);
-            if (iVar6 == 0) {
-              pcVar5 = Com_ParseOnLine(local_280);
-              if ((pcVar5 == (char *)0x0) || (*pcVar5 == '\0')) {
-                BG_AnimParseError((char *)local_264);
+            iVar11 = I_stricmp(pcVar10,local_260);
+            if (iVar11 == 0) {
+              pcVar10 = (char *)Com_ParseOnLine(local_280);
+              if ((pcVar10 == (char *)0x0) || (*pcVar10 == '\0')) {
+                BG_AnimParseError(local_264);
               }
-              uVar7 = BG_IndexForString(pcVar5,paVar3 + 0x5c,0);
-              if (paVar3[uVar7 + 0x6f].string != (char *)0x0) {
-                BG_AnimParseError(local_22c);
+              uVar5 = BG_IndexForString(pcVar10,ppuVar3 + 0xb8,0);
+              iVar11 = (int)((uVar5 & 0xffffffff) << 3);
+              if (*(int *)((int)ppuVar3 + iVar11 + 0x378) != 0) {
+                BG_AnimParseError(local_22c,pcVar10);
               }
-              pcVar5 = Com_ParseOnLine(local_280);
-              if ((pcVar5 == (char *)0x0) || (*pcVar5 == '\0')) {
+              pcVar10 = (char *)Com_ParseOnLine(local_280);
+              if ((pcVar10 == (char *)0x0) || (*pcVar10 == '\0')) {
                 BG_AnimParseError(local_24c);
               }
-              pcVar5 = BG_CopyStringIntoBuffer(pcVar5,&DAT_829c18d8,10000,&DAT_829c1154);
-              iVar6 = uVar7 * 4;
-              lVar25 = ((ulonglong)uVar7 & 0xfffffff) * 0x10;
-              *(char **)(&DAT_829bff08 +
-                        (int)(((ulonglong)*(uint *)(&DAT_829c0808 + iVar6) + lVar25 & 0xffffffff) <<
-                             3)) = pcVar5;
-              lVar8 = BG_StringHashValue(pcVar5);
-              *(long *)(&DAT_829bff0c +
-                       (int)(((ulonglong)*(uint *)(&DAT_829c0808 + iVar6) + lVar25 & 0xffffffff) <<
-                            3)) = lVar8;
-              pcVar5 = Com_ParseOnLine(local_280);
-              if (pcVar5 == (char *)0x0) {
+              uVar12 = BG_CopyStringIntoBuffer(pcVar10,0xffffffff829c18d8,10000,0xffffffff829c1154);
+              lVar24 = (uVar5 & 0xfffffff) * 0x10;
+              iVar19 = (int)((uVar5 & 0x3fffffff) << 2);
+              *(undefined4 *)
+               (&DAT_829bff08 +
+               (int)(((ulonglong)*(uint *)(&DAT_829c0808 + iVar19) + lVar24 & 0xffffffff) << 3)) =
+                   uVar12;
+              uVar12 = BG_StringHashValue();
+              *(undefined4 *)
+               (&DAT_829bff0c +
+               (int)(((ulonglong)*(uint *)(&DAT_829c0808 + iVar19) + lVar24 & 0xffffffff) << 3)) =
+                   uVar12;
+              uVar6 = Com_ParseOnLine(local_280);
+              if ((uVar6 & 0xffffffff) == 0) {
                 BG_AnimParseError(local_244);
               }
-              iVar9 = I_stricmp(pcVar5,local_230);
-              if (iVar9 != 0) {
-                BG_AnimParseError(local_23c);
+              iVar13 = I_stricmp(uVar6,local_230);
+              if (iVar13 != 0) {
+                BG_AnimParseError(local_23c,uVar6);
               }
               BG_ParseConditionBits
-                        (local_280,(animStringItem_t *)paVar3[uVar7 + 0x6f].hash,uVar7,
-                         (uint *)((int)defineBits[0][0] +
-                                 (int)(((ulonglong)*(uint *)(&DAT_829c0808 + iVar6) + lVar25 &
-                                       0xffffffff) << 3)));
-              *(int *)(&DAT_829c0808 + iVar6) = *(int *)(&DAT_829c0808 + iVar6) + 1;
-              pcVar24 = local_250;
-              pcVar23 = local_258;
-              pcVar22 = local_254;
+                        (local_280,*(undefined4 *)((int)ppuVar3 + iVar11 + 0x37c),uVar5,
+                         ((ulonglong)*(uint *)(&DAT_829c0808 + iVar19) + lVar24 & 0x1fffffff) * 8 +
+                         -0x7d63f7b0);
+              *(int *)(&DAT_829c0808 + iVar19) = *(int *)(&DAT_829c0808 + iVar19) + 1;
+              pcVar23 = local_250;
+              puVar22 = local_258;
+              pcVar21 = local_254;
             }
           }
         }
       }
       else {
-        if (iVar9 != 0) {
-          BG_AnimParseError("BG_AnimParseAnimScript: unexpected \'%s\'");
+        if (iVar11 != 0) {
+          BG_AnimParseError(0xffffffff82003714,pcVar10);
         }
-        parseEvent = -1;
+        DAT_829bff00 = 0xffffffff;
         DAT_829bff04 = 0;
-        uVar20 = (longlong)iVar6;
+        uVar18 = uVar5;
       }
 LAB_82268be0:
-      pcVar5 = Com_Parse(local_280);
-    } while (pcVar5 != (char *)0x0);
-    if ((int)uVar14 != 0) {
-      BG_AnimParseError("BG_AnimParseAnimScript: unexpected end of file: %s");
+      pcVar10 = (char *)Com_Parse(local_280);
+    } while (pcVar10 != (char *)0x0);
+    if ((int)uVar17 != 0) {
+      BG_AnimParseError(0xffffffff820036e0);
     }
   }
   Com_EndParseSession();
-  LargeLocal::~LargeLocal(aLStack_220);
+  LargeLocal___LargeLocal(auStack_220);
   __restgprlr();
   return;
 }
@@ -1506,564 +1518,1292 @@ LAB_82268be0:
 
 // 82268C20  GetMoveTypeName  (bgame/bg_animation_mp.cpp:1686)
 
-char * GetMoveTypeName(int param_1)
+undefined8 GetMoveTypeName(undefined4 param_1)
 
 {
   switch(param_1) {
   case 0:
-    return "ANIM_MT_UNUSED";
+    return 0xffffffff82003ba4;
   case 1:
-    return "Idle";
+    return 0xffffffff82003b9c;
   case 2:
-    return "Crouching Idle";
+    return 0xffffffff82003b8c;
   case 3:
-    return "Prone Idle";
+    return 0xffffffff82003b80;
   case 4:
-    return "Walk";
+    return 0xffffffff82003b78;
   case 5:
-    return "Walk Backward";
+    return 0xffffffff82003b68;
   case 6:
-    return "Crouching Walk";
+    return 0xffffffff82003b58;
   case 7:
-    return "Crouching Walk Backward";
+    return 0xffffffff82003b40;
   case 8:
-    return "Prone Crawl";
+    return 0xffffffff82003b34;
   case 9:
-    return "Prone Crawl Backward";
+    return 0xffffffff82003b1c;
   case 10:
-    return "Run";
+    return 0xffffffff82003b18;
   case 0xb:
-    return "Run Backward";
+    return 0xffffffff82003b08;
   case 0xc:
-    return "Crouching Run";
+    return 0xffffffff82003af8;
   case 0xd:
-    return "Crouching Run Backward";
+    return 0xffffffff82003ae0;
   case 0xe:
-    return "Turning Right";
+    return 0xffffffff82003ad0;
   case 0xf:
-    return "Turning Left";
+    return 0xffffffff82003ac0;
   case 0x10:
-    return "Turning Right Crouching";
+    return 0xffffffff82003aa8;
   case 0x11:
-    return "Turning Left Crouching";
+    return 0xffffffff82003a90;
   case 0x12:
-    return "Climbing Up";
+    return 0xffffffff82003a84;
   case 0x13:
-    return "Climbing Down";
+    return 0xffffffff82003a74;
   case 0x14:
-    return "Sprinting";
+    return 0xffffffff82003a68;
   case 0x15:
-    return "Crouch Sprinting";
+    return 0xffffffff82003a54;
   default:
-    return "Unknown";
+    return 0xffffffff82003a4c;
   }
 }
 
 
 // 82268DB0  GetWeaponTypeName  (bgame/bg_animation_mp.cpp:1739)
 
-char * GetWeaponTypeName(int param_1)
+undefined8 GetWeaponTypeName(undefined4 param_1)
 
 {
   switch(param_1) {
   case 0:
-    return "Rifle";
+    return 0xffffffff82003c40;
   case 1:
-    return "Sniper Rifle";
+    return 0xffffffff82003c30;
   case 2:
-    return "Machine Gun";
+    return 0xffffffff82003c24;
   case 3:
-    return "Submachine Gun";
+    return 0xffffffff82003c14;
   default:
-    return "Unknown";
+    return 0xffffffff82003a4c;
   case 5:
-    return "Pistol";
+    return 0xffffffff82003c0c;
   case 6:
-    return "Grenade";
+    return 0xffffffff82003c04;
   case 7:
-    return "Rocket Launcher";
+    return 0xffffffff82003bf4;
   case 8:
-    return "Turret";
+    return 0xffffffff82003bec;
   case 10:
-    return "Weapon that\'s not meant for use by the player";
+    return 0xffffffff82003bbc;
   case 0xb:
-    return "Item";
+    return 0xffffffff82003bb4;
   }
 }
 
 
 // 82268E88  GetValueForBitfield  (bgame/bg_animation_mp.cpp:1768)
 
-int GetValueForBitfield(uint param_1)
+void GetValueForBitfield(void)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  undefined4 uStack00000014;
+  ulonglong uVar1;
+  undefined4 in_stack_00000014;
   
-  uStack00000014 = __savegprlr_27(param_1);
-  uVar2 = 0;
+  in_stack_00000014 = __savegprlr_27();
+  uVar1 = 0;
   while( true ) {
-    if (0x7ffffff7 < (uVar2 & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",0xc,
-                      0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
+    if (0x7ffffff7 < (uVar1 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82003098,0xc,0,0xffffffff82003058,uVar1,0x7ffffff8);
     }
-    if ((1 << ((uint)uVar2 & 0x1f) & *(uint *)((int)&stack0x00000014 + ((int)(uint)uVar2 >> 5) * 4))
-        != 0) break;
-    uVar2 = uVar2 + 1;
-    if (0x1f < (int)uVar2) {
-      iVar1 = __restgprlr_27(0);
-      return iVar1;
+    if ((1 << ((uint)uVar1 & 0x1f) & (&stack0x00000014)[(int)(uint)uVar1 >> 5]) != 0) break;
+    uVar1 = uVar1 + 1;
+    if (0x1f < (int)uVar1) {
+      __restgprlr_27(0);
+      return;
     }
   }
-  iVar1 = __restgprlr_27(uVar2);
-  return iVar1;
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
 // 8226BFE8  BG_EvaluateConditions  (bgame/bg_animation_mp.cpp:1799)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void BG_EvaluateConditions(undefined8 param_1,longlong param_2)
+
+{
+  undefined4 *puVar1;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar2;
+  longlong lVar5;
+  longlong lVar6;
+  int *piVar7;
+  int local_a0;
+  
+  iVar3 = __savegprlr();
+  iVar4 = BG_GetConditionBit(iVar3,3);
+  if (iVar4 < 0) {
+    MyAssertHandler(0xffffffff820033b0,0x70e,0,0xffffffff82000f98,0xffffffff82003fd4);
+  }
+  iVar4 = BG_GetConditionBit(iVar3,3);
+  if (0x37 < iVar4) {
+    MyAssertHandler(0xffffffff820033b0,0x70f,0,0xffffffff82000f98,0xffffffff82003f90);
+  }
+  lVar6 = param_2 + 4;
+  local_a0 = 0;
+  if (0 < *(int *)param_2) {
+    lVar5 = param_2 + 8;
+    do {
+      if (*(char *)(DAT_829c54c0 + 0xc) == '\0') goto switchD_8226c134_caseD_8;
+      puVar1 = (undefined4 *)lVar5;
+      switch(puVar1[-1]) {
+      case 0:
+        uVar2 = GetValueForBitfield(*puVar1);
+        Com_Printf(0x13,0xffffffff82004260,uVar2);
+        goto switchD_8226c134_caseD_8;
+      case 1:
+        GetValueForBitfield(*puVar1);
+        uVar2 = GetWeaponTypeName();
+        Com_Printf(0x13,0xffffffff820042c8,uVar2);
+        goto switchD_8226c134_caseD_8;
+      case 2:
+        uVar2 = 0xffffffff820043e8;
+        break;
+      case 3:
+        GetValueForBitfield(*puVar1);
+        uVar2 = GetMoveTypeName();
+        Com_Printf(0x13,0xffffffff82004414,uVar2);
+        goto switchD_8226c134_caseD_8;
+      case 4:
+        uVar2 = 0xffffffff82004318;
+        break;
+      case 5:
+        uVar2 = 0xffffffff82004344;
+        break;
+      case 6:
+        uVar2 = 0xffffffff8200436c;
+        break;
+      case 7:
+        uVar2 = 0xffffffff8200438c;
+        break;
+      default:
+        goto switchD_8226c134_caseD_8;
+      case 0xc:
+        uVar2 = 0xffffffff82004478;
+        break;
+      case 0xd:
+        uVar2 = 0xffffffff820042f4;
+        break;
+      case 0xe:
+        uVar2 = 0xffffffff8200443c;
+        break;
+      case 0xf:
+        uVar2 = GetValueForBitfield(*puVar1);
+        Com_Printf(0x13,0xffffffff82004290,uVar2);
+        goto switchD_8226c134_caseD_8;
+      case 0x10:
+        uVar2 = 0xffffffff820043b8;
+      }
+      Com_Printf(0x13,uVar2);
+switchD_8226c134_caseD_8:
+      piVar7 = (int *)lVar6;
+      iVar4 = *piVar7;
+      if (*(int *)(&DAT_82960ac8 + iVar4 * 8) == 0) {
+        if (((*(uint *)((iVar4 + 0x91) * 8 + iVar3) & piVar7[1]) == 0) &&
+           ((*(uint *)(iVar4 * 8 + iVar3 + 0x48c) & piVar7[2]) == 0)) goto LAB_8226c270;
+      }
+      else if ((*(int *)(&DAT_82960ac8 + iVar4 * 8) == 1) &&
+              (*(int *)((iVar4 + 0x91) * 8 + iVar3) != piVar7[1])) {
+LAB_8226c270:
+        if (*(char *)(DAT_829c54c0 + 0xc) != '\0') {
+          Com_Printf(0x13,0xffffffff82004258);
+        }
+        __restgprlr(0);
+        return;
+      }
+      lVar5 = lVar5 + 0xc;
+      lVar6 = lVar6 + 0xc;
+      local_a0 = local_a0 + 1;
+    } while (local_a0 < *(int *)param_2);
+  }
+  if (*(char *)(DAT_829c54c0 + 0xc) != '\0') {
+    Com_Printf(0x13,0xffffffff8200424c);
+  }
+  __restgprlr(1);
+  return;
+}
+
 
 // 82268F28  GetBodyPart  (bgame/bg_animation_mp.cpp:1904)
 
-char * GetBodyPart(int param_1)
+undefined8 GetBodyPart(int param_1)
 
 {
   if (param_1 == 1) {
-    return "legs";
+    return 0xffffffff82003c48;
   }
   if (param_1 != 2) {
     if (param_1 != 3) {
-      return "unknown body part";
+      return 0xffffffff82003c64;
     }
-    return "fullbody";
+    return 0xffffffff82003c58;
   }
-  return "torso";
+  return 0xffffffff82003c50;
 }
 
 
 // 8226C328  BG_FirstValidItem  (bgame/bg_animation_mp.cpp:1930)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void BG_FirstValidItem(undefined8 param_1,ulonglong param_2)
+
+{
+  short sVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar4;
+  undefined8 uVar5;
+  int iVar6;
+  int *in_r13;
+  int iVar7;
+  ulonglong uVar8;
+  int *piVar9;
+  int iVar11;
+  ulonglong uVar10;
+  int iVar13;
+  ulonglong uVar12;
+  
+  uVar3 = __savegprlr();
+  BG_CheckThread();
+  iVar2 = *in_r13;
+  if (*(int *)(iVar2 + 8) == 0) {
+    MyAssertHandler(0xffffffff820033b0,0x794,0,0xffffffff82000f98,0xffffffff820033f4);
+  }
+  iVar7 = 0;
+  if (0 < *(int *)param_2) {
+    uVar10 = param_2;
+    uVar12 = uVar3;
+    uVar8 = param_2;
+    do {
+      uVar8 = uVar8 + 4;
+      piVar9 = (int *)uVar8;
+      if (*(char *)(DAT_829c54c0 + 0xc) != '\0') {
+        Com_Printf(0x13,0xffffffff820044a8);
+        iVar4 = *piVar9;
+        iVar11 = 0;
+        if (0 < *(int *)(iVar4 + 0xdc)) {
+          iVar13 = 0;
+          iVar6 = iVar4;
+          do {
+            sVar1 = *(short *)(iVar6 + 0xe0);
+            if (sVar1 == 1) {
+              uVar5 = 0xffffffff82003c48;
+            }
+            else if (sVar1 == 2) {
+              uVar5 = 0xffffffff82003c50;
+            }
+            else {
+              uVar5 = 0xffffffff82003c64;
+              if (sVar1 == 3) {
+                uVar5 = 0xffffffff82003c58;
+              }
+            }
+            Com_Printf(0x13,0xffffffff820044c8,
+                       (longlong)*(short *)(iVar13 + iVar4 + 0xe4) * 0x68 + (ulonglong)DAT_829c3fec,
+                       uVar5);
+            if (0 < iVar11) {
+              Com_Printf(0x13,0xffffffff820044d4);
+            }
+            iVar4 = *piVar9;
+            iVar11 = iVar11 + 1;
+            iVar13 = iVar13 + 0xc;
+            iVar6 = iVar13 + iVar4;
+          } while (iVar11 < *(int *)(iVar4 + 0xdc));
+          uVar12 = uVar3 & 0xffffffff;
+        }
+        Com_Printf(0x13,0xffffffff820044d8);
+        uVar10 = param_2 & 0xffffffff;
+      }
+      if (0x11 < (uVar12 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp"
+                        ,0x7a6,0,0xffffffff82003d60,uVar12,0x12);
+      }
+      iVar4 = BG_EvaluateConditions
+                        ((ulonglong)*(uint *)(iVar2 + 8) + uVar12 * 0x590 + 0x863e8,*piVar9);
+      if (iVar4 != 0) {
+        __restgprlr(*piVar9);
+        return;
+      }
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < *(int *)uVar10);
+  }
+  __restgprlr(0);
+  return;
+}
+
 
 // 82268F70  BG_PlayAnim  (bgame/bg_animation_mp.cpp:1975)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-int BG_PlayAnim(playerState_s *param_1,int param_2,animBodyPart_t param_3,int param_4,int param_5,
-               int param_6,int param_7)
+void BG_PlayAnim(undefined8 param_1,longlong param_2,int param_3,longlong param_4,int param_5,
+                int param_6,int param_7)
 
 {
   bool bVar1;
   int iVar2;
-  animScriptData_t *paVar3;
-  longlong lVar4;
-  undefined4 uVar5;
+  uint uVar3;
+  undefined8 uVar4;
+  ulonglong uVar5;
+  undefined4 uVar6;
   
-  lVar4 = (longlong)param_4;
-  iVar2 = __savegprlr_23(param_1);
-  paVar3 = globalScriptData;
+  iVar2 = __savegprlr_23();
+  uVar5 = (ulonglong)DAT_829c3fec;
   bVar1 = false;
-  if ((int)lVar4 == 0) {
-    lVar4 = (ulonglong)(uint)globalScriptData->animations[param_2].duration + 0x32;
+  uVar3 = (uint)param_2;
+  if ((int)param_4 == 0) {
+    param_4 = (ulonglong)*(uint *)(uVar3 * 0x68 + DAT_829c3fec + 0x48) + 0x32;
   }
-  uVar5 = (undefined4)lVar4;
-  if (param_3 == ANIM_BP_LEGS) {
+  uVar6 = (undefined4)param_4;
+  if (param_3 == 1) {
 LAB_82268fd8:
     if ((*(int *)(iVar2 + 0x84) < 0x32) || (param_7 != 0)) {
-      if ((param_6 == 0) || ((*(uint *)(iVar2 + 0x88) & 0xfffffdff) != param_2)) {
+      if ((param_6 == 0) || ((*(uint *)(iVar2 + 0x88) & 0xfffffdff) != uVar3)) {
         bVar1 = true;
-        *(undefined4 *)(iVar2 + 0x94) = uVar5;
-        *(uint *)(iVar2 + 0x88) = ~*(uint *)(iVar2 + 0x88) & 0x200 | param_2;
+        *(undefined4 *)(iVar2 + 0x94) = uVar6;
+        *(uint *)(iVar2 + 0x88) = ~*(uint *)(iVar2 + 0x88) & 0x200 | uVar3;
         if (param_5 != 0) {
-          *(undefined4 *)(iVar2 + 0x84) = uVar5;
+          *(undefined4 *)(iVar2 + 0x84) = uVar6;
         }
-        if ((xanim_debug->current).enabled != false) {
-          Com_Printf(0x13,"Playing (client %i) %s on %s\n");
-          paVar3 = globalScriptData;
+        if (*(char *)(DAT_829c7de4 + 0xc) != '\0') {
+          if (param_3 == 3) {
+            uVar4 = 0xffffffff82003cbc;
+          }
+          else if (param_3 == 1) {
+            uVar4 = 0xffffffff82003c48;
+          }
+          else {
+            uVar4 = 0xffffffff82003c50;
+          }
+          Com_Printf(0x13,0xffffffff82003c9c,*(undefined4 *)(iVar2 + 0x150),param_2 * 0x68 + uVar5,
+                     uVar4);
+          uVar5 = (ulonglong)DAT_829c3fec;
         }
       }
-      else if ((param_5 != 0) && ((globalScriptData->animations[param_2].flags & 0x80U) != 0)) {
-        *(undefined4 *)(iVar2 + 0x84) = uVar5;
+      else if ((param_5 != 0) && ((*(uint *)(uVar3 * 0x68 + DAT_829c3fec + 0x50) & 0x80) != 0)) {
+        *(undefined4 *)(iVar2 + 0x84) = uVar6;
       }
     }
-    if (param_3 == ANIM_BP_BOTH) {
+    if (param_3 == 3) {
       param_2 = 0;
       goto LAB_822690c0;
     }
   }
   else {
-    if (param_3 != ANIM_BP_TORSO) {
-      if (param_3 != ANIM_BP_BOTH) goto LAB_8226916c;
+    if (param_3 != 2) {
+      if (param_3 != 3) goto LAB_8226916c;
       goto LAB_82268fd8;
     }
 LAB_822690c0:
     if ((*(int *)(iVar2 + 0x8c) < 0x32) || (param_7 != 0)) {
-      if ((param_6 == 0) || ((*(uint *)(iVar2 + 0x90) & 0xfffffdff) != param_2)) {
-        *(uint *)(iVar2 + 0x90) = ~*(uint *)(iVar2 + 0x90) & 0x200 | param_2;
+      uVar3 = (uint)param_2;
+      if ((param_6 == 0) || ((*(uint *)(iVar2 + 0x90) & 0xfffffdff) != uVar3)) {
+        *(uint *)(iVar2 + 0x90) = ~*(uint *)(iVar2 + 0x90) & 0x200 | uVar3;
         if (param_5 != 0) {
-          *(undefined4 *)(iVar2 + 0x8c) = uVar5;
+          *(undefined4 *)(iVar2 + 0x8c) = uVar6;
         }
-        *(undefined4 *)(iVar2 + 0x98) = uVar5;
-        if ((xanim_debug->current).enabled != false) {
-          Com_Printf(0x13,"Playing (client %i) %s on torso\n");
+        *(undefined4 *)(iVar2 + 0x98) = uVar6;
+        if (*(char *)(DAT_829c7de4 + 0xc) != '\0') {
+          Com_Printf(0x13,0xffffffff82003c78,*(undefined4 *)(iVar2 + 0x150),param_2 * 0x68 + uVar5);
         }
       }
-      else if ((param_5 != 0) && ((paVar3->animations[param_2].flags & 0x80U) != 0)) {
-        *(undefined4 *)(iVar2 + 0x8c) = uVar5;
+      else if ((param_5 != 0) && ((*(uint *)(uVar3 * 0x68 + (int)uVar5 + 0x50) & 0x80) != 0)) {
+        *(undefined4 *)(iVar2 + 0x8c) = uVar6;
       }
     }
   }
   if (bVar1) {
-    iVar2 = __restgprlr_23(lVar4);
-    return iVar2;
+    __restgprlr_23(param_4);
+    return;
   }
 LAB_8226916c:
-  iVar2 = __restgprlr_23(0xffffffffffffffff);
-  return iVar2;
+  __restgprlr_23(0xffffffffffffffff);
+  return;
 }
 
 
 // 82269188  BG_ExecuteCommand  (bgame/bg_animation_mp.cpp:2081)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-int BG_ExecuteCommand(playerState_s *param_1,animScriptCommand_t *param_2,int param_3,int param_4,
-                     int param_5)
+void BG_ExecuteCommand(undefined8 param_1,short *param_2,undefined8 param_3,undefined8 param_4,
+                      undefined8 param_5)
 
 {
   short sVar1;
-  playerState_s *ppVar2;
-  int iVar3;
-  animBodyPart_t aVar4;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  int iVar4;
   uint uVar5;
   longlong lVar6;
   
-  ppVar2 = (playerState_s *)__savegprlr_25(param_1);
-  sVar1 = param_2->bodyPart[0];
+  uVar2 = __savegprlr_25();
+  sVar1 = *param_2;
   lVar6 = -1;
   uVar5 = 0;
   if (sVar1 != 0) {
-    lVar6 = (longlong)param_2->animDuration[0] + 0x32;
-    aVar4 = (animBodyPart_t)sVar1;
-    if ((sVar1 == 1) || (aVar4 == ANIM_BP_BOTH)) {
-      iVar3 = BG_PlayAnim(ppVar2,(int)param_2->animIndex[0],aVar4,(int)lVar6,param_3,param_4,param_5
-                         );
-      uVar5 = (int)((~((longlong)iVar3 ^ 0xffffffffffffffffU) & 0xffffffff) >> 0x1f) + 1U & 1;
+    lVar6 = (longlong)param_2[4] + 0x32;
+    if ((sVar1 == 1) || (sVar1 == 3)) {
+      uVar3 = BG_PlayAnim(uVar2,param_2[2],sVar1,lVar6,param_3,param_4,param_5);
+      uVar5 = (int)((~(uVar3 ^ 0xffffffffffffffff) & 0xffffffff) >> 0x1f) + 1U & 1;
     }
     else {
-      BG_PlayAnim(ppVar2,(int)param_2->animIndex[0],aVar4,(int)lVar6,param_3,param_4,param_5);
+      BG_PlayAnim(uVar2,param_2[2],sVar1,lVar6,param_3,param_4,param_5);
     }
   }
-  sVar1 = param_2->bodyPart[1];
-  if ((int)sVar1 != ANIM_BP_UNUSED) {
-    lVar6 = (longlong)param_2->animDuration[0] + 0x32;
-    if ((param_2->bodyPart[0] == 1) || (param_2->bodyPart[0] == 3)) {
-      iVar3 = BG_PlayAnim(ppVar2,(int)param_2->animIndex[1],(int)sVar1,(int)lVar6,param_3,param_4,
-                          param_5);
-      if (-1 < iVar3) goto LAB_822692c4;
+  sVar1 = param_2[1];
+  if (sVar1 != 0) {
+    lVar6 = (longlong)param_2[4] + 0x32;
+    if ((*param_2 == 1) || (*param_2 == 3)) {
+      iVar4 = BG_PlayAnim(uVar2,param_2[3],sVar1,lVar6,param_3,param_4,param_5);
+      if (-1 < iVar4) goto LAB_822692c4;
       goto LAB_82269290;
     }
-    BG_PlayAnim(ppVar2,(int)param_2->animIndex[1],(int)sVar1,(int)lVar6,param_3,param_4,param_5);
+    BG_PlayAnim(uVar2,param_2[3],sVar1,lVar6,param_3,param_4,param_5);
   }
   if (uVar5 != 0) {
 LAB_822692c4:
-    iVar3 = __restgprlr_25(lVar6);
-    return iVar3;
+    __restgprlr_25(lVar6);
+    return;
   }
 LAB_82269290:
-  iVar3 = __restgprlr_25(0xffffffffffffffff);
-  return iVar3;
+  __restgprlr_25(0xffffffffffffffff);
+  return;
 }
 
 
 // 8226C540  BG_AnimScriptAnimation  (bgame/bg_animation_mp.cpp:2123)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
-// 8226C8B8  BG_AnimScriptEvent  (bgame/bg_animation_mp.cpp:2204)
-
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-int BG_AnimScriptEvent(playerState_s *param_1,scriptAnimEventTypes_t param_2,int param_3,int param_4
-                      ,uint *param_5)
+void BG_AnimScriptAnimation(undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
 
 {
   uint uVar1;
-  playerState_s *ppVar2;
+  uint uVar2;
   int iVar3;
-  char *pcVar4;
-  animScriptItem_t *paVar5;
-  uint uVar6;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  ulonglong uVar7;
   int *in_r13;
+  longlong lVar8;
   
-  ppVar2 = (playerState_s *)__savegprlr_27(param_1);
+  iVar3 = __savegprlr_16();
   BG_CheckThread();
-  if (*(int *)(*in_r13 + 8) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0x8a4,0,"%s");
+  iVar6 = *in_r13;
+  if (*(int *)(iVar6 + 8) == 0) {
+    MyAssertHandler(0xffffffff820033b0,0x853,0,0xffffffff82000f98,0xffffffff820033f4);
   }
-  if ((param_2 == ANIM_ET_DEATH) || ((ppVar2->field0_0x0).remoteEyesEnt < 8)) {
-    pcVar4 = va("event: %s\n");
-    G_DebugPlayerAnimScript_Print((ppVar2->field0_0x0).clientNum,pcVar4);
-    if ((globalScriptData->scriptEvents[param_2].numItems != 0) &&
-       ((paVar5 = BG_FirstValidItem((ppVar2->field0_0x0).clientNum,
-                                    globalScriptData->scriptEvents + param_2),
-        paVar5 != (animScriptItem_t *)0x0 && (paVar5->numCommands != 0)))) {
-      uVar6 = BG_rand(param_5);
-      uVar1 = paVar5->numCommands;
-      trapWord(6,(ulonglong)uVar1,0);
-      trapWord(5,(ulonglong)uVar1 &
-                 ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) - 1),0xffff);
-      iVar3 = BG_ExecuteCommand(ppVar2,(animScriptCommand_t *)
-                                       ((int)paVar5 +
-                                       (uVar6 - ((int)uVar6 / (int)uVar1) * uVar1) * 0xc + 0xe0),1,
-                                param_3,param_4);
-      iVar3 = __restgprlr_27(iVar3);
-      return iVar3;
+  if ((int)param_3 < 0) {
+    MyAssertHandler(0xffffffff820033b0,0x855,0,0xffffffff82000f98,0xffffffff82004680);
+  }
+  if (0x37 < (int)param_3) {
+    MyAssertHandler(0xffffffff820033b0,0x856,0,0xffffffff82000f98,0xffffffff82004660);
+  }
+  if (0x11 < *(uint *)(iVar3 + 0x150)) {
+    MyAssertHandler(0xffffffff820033b0,0x858,0,0xffffffff82004624,*(uint *)(iVar3 + 0x150),0x12);
+  }
+  iVar4 = BG_GetConditionBit((ulonglong)*(uint *)(iVar3 + 0x150) * 0x590 +
+                             (ulonglong)*(uint *)(iVar6 + 8) + 0x863e8,3);
+  if (iVar4 < 0) {
+    MyAssertHandler(0xffffffff820033b0,0x859,0,0xffffffff82000f98,0xffffffff820045c8);
+  }
+  iVar4 = BG_GetConditionBit((ulonglong)*(uint *)(iVar3 + 0x150) * 0x590 +
+                             (ulonglong)*(uint *)(iVar6 + 8) + 0x863e8,3);
+  if (0x37 < iVar4) {
+    MyAssertHandler(0xffffffff820033b0,0x85a,0,0xffffffff82000f98,0xffffffff82004568);
+  }
+  if (*(int *)(iVar3 + 4) < 8) {
+    lVar8 = (param_2 * 0x38 + param_3) * 0x204;
+    while (-1 < (int)param_2) {
+      if (*(int *)((int)lVar8 + DAT_829c3fec + 0xd004) == 0) {
+        param_2 = param_2 + -1;
+        lVar8 = lVar8 + -0x70e0;
+      }
+      else {
+        iVar4 = BG_FirstValidItem(*(undefined4 *)(iVar3 + 0x150));
+        if (iVar4 != 0) {
+          if (*(int *)(iVar4 + 0xdc) == 0) {
+            if (*(char *)(DAT_829c7de4 + 0xc) != '\0') {
+              Com_Printf(0x13,0xffffffff820044f4);
+            }
+            __restgprlr_16(0xffffffffffffffff);
+            return;
+          }
+          BG_SetConditionBit(*(undefined4 *)(iVar3 + 0x150),3,param_3);
+          if (0x11 < *(uint *)(iVar3 + 0x150)) {
+            MyAssertHandler(0xffffffff820033b0,0x887,0,0xffffffff82004624,*(uint *)(iVar3 + 0x150),
+                            0x12);
+          }
+          iVar5 = BG_GetConditionBit((ulonglong)*(uint *)(iVar3 + 0x150) * 0x590 +
+                                     (ulonglong)*(uint *)(iVar6 + 8) + 0x863e8,3);
+          if (iVar5 < 0) {
+            MyAssertHandler(0xffffffff820033b0,0x888,0,0xffffffff82000f98,0xffffffff820045c8);
+          }
+          iVar6 = BG_GetConditionBit((ulonglong)*(uint *)(iVar3 + 0x150) * 0x590 +
+                                     (ulonglong)*(uint *)(iVar6 + 8) + 0x863e8,3);
+          if (0x37 < iVar6) {
+            MyAssertHandler(0xffffffff820033b0,0x889,0,0xffffffff82000f98,0xffffffff82004568);
+          }
+          if (*(int *)(iVar4 + 0xdc) == 0) {
+            MyAssertHandler(0xffffffff820033b0,0x88c,0,0xffffffff82000f98,0xffffffff820044dc);
+          }
+          uVar1 = *(uint *)(iVar3 + 0x150);
+          uVar2 = *(uint *)(iVar4 + 0xdc);
+          iVar6 = uVar1 - ((int)uVar1 / (int)uVar2) * uVar2;
+          trapWord(6,(ulonglong)uVar2,0);
+          uVar7 = (ulonglong)uVar2 &
+                  ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1);
+          trapWord(5,uVar7,0xffff);
+          lVar8 = BG_ExecuteCommand(iVar3,iVar6 * 0xc + iVar4 + 0xe0,0,1,param_4,iVar6 * 3,uVar7);
+          __restgprlr_16((lVar8 + 1) - (lVar8 + (ulonglong)(lVar8 + 1 == 0)));
+          return;
+        }
+        param_2 = param_2 + -1;
+        lVar8 = lVar8 + -0x70e0;
+      }
+    }
+    if (*(char *)(DAT_829c7de4 + 0xc) != '\0') {
+      Com_Printf(0x13,0xffffffff82004534);
     }
   }
-  iVar3 = __restgprlr_27(0xffffffffffffffff);
-  return iVar3;
+  __restgprlr_16(0xffffffffffffffff);
+  return;
+}
+
+
+// 8226C8B8  BG_AnimScriptEvent  (bgame/bg_animation_mp.cpp:2204)
+
+void BG_AnimScriptEvent(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+                       undefined8 param_5)
+
+{
+  uint uVar1;
+  int iVar5;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar6;
+  int *in_r13;
+  
+  iVar5 = __savegprlr_27();
+  BG_CheckThread();
+  if (*(int *)(*in_r13 + 8) == 0) {
+    MyAssertHandler(0xffffffff820033b0,0x8a4,0,0xffffffff82000f98,0xffffffff820033f4);
+  }
+  if (((int)param_2 == 1) || (*(int *)(iVar5 + 4) < 8)) {
+    uVar2 = va(0xffffffff82004690,
+               *(undefined4 *)((int)&PTR_DAT_82960750 + (int)((param_2 & 0xffffffff) << 3)));
+    G_DebugPlayerAnimScript_Print(*(undefined4 *)(iVar5 + 0x150),uVar2);
+    if ((*(int *)((int)param_2 * 0x204 + DAT_829c3fec + 0x1b3c8) != 0) &&
+       ((uVar3 = BG_FirstValidItem(*(undefined4 *)(iVar5 + 0x150)), (uVar3 & 0xffffffff) != 0 &&
+        (*(int *)((int)uVar3 + 0xdc) != 0)))) {
+      uVar4 = BG_rand(param_5);
+      uVar1 = *(uint *)((int)uVar3 + 0xdc);
+      uVar6 = uVar4 - (longlong)((int)uVar4 / (int)uVar1) * (longlong)(int)uVar1;
+      trapWord(6,(ulonglong)uVar1,0);
+      uVar4 = (ulonglong)uVar1 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1);
+      uVar6 = uVar6 + (uVar6 & 0x7fffffff) * 2;
+      trapWord(5,uVar4,0xffff);
+      BG_ExecuteCommand(iVar5,(uVar6 & 0x3fffffff) * 4 + uVar3 + 0xe0,1,param_3,param_4,uVar6,uVar4)
+      ;
+      __restgprlr_27();
+      return;
+    }
+  }
+  __restgprlr_27(0xffffffffffffffff);
+  return;
 }
 
 
 // 822692D0  BG_GetConditionString  (bgame/bg_animation_mp.cpp:2248)
 
-char * BG_GetConditionString(int param_1,int param_2)
+ulonglong BG_GetConditionString(undefined4 param_1,ulonglong param_2)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int iVar3;
   
   BG_CheckThread();
+  iVar3 = (int)param_2;
   switch(param_1) {
   case 0:
   case 0xf:
-    pcVar1 = BG_GetPlayerAnimTypeName(param_2);
+    uVar2 = BG_GetPlayerAnimTypeName(param_2);
     break;
   case 1:
-    pcVar1 = animWeaponClassStr[param_2].string;
+    uVar2 = (ulonglong)*(uint *)((int)&PTR_s_RIFLE_82960850 + (int)((param_2 & 0xffffffff) << 3));
     break;
   case 2:
-    pcVar1 = animConditionMountedStr[param_2].string;
+    uVar2 = (ulonglong)
+            *(uint *)((int)&PTR_s____UNUSED____82960830 + (int)((param_2 & 0xffffffff) << 3));
     break;
   case 3:
-    if ((param_2 < 0) || (0x37 < param_2)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                      0x8d9,0,"%s\n\t(value) = %i");
+    if ((iVar3 < 0) || (0x37 < iVar3)) {
+      MyAssertHandler(0xffffffff820033b0,0x8d9,0,0xffffffff82003d00,0xffffffff82003d14,param_2);
     }
-    pcVar1 = animMoveTypesStr[param_2].string;
+    uVar2 = (ulonglong)
+            *(uint *)((int)&PTR_s____UNUSED____82960588 + (int)((param_2 & 0xffffffff) << 3));
     break;
   case 4:
   case 5:
   case 0xc:
   case 0xe:
   case 0x10:
-    if (param_2 == 0) {
-      pcVar1 = "false";
+    if (iVar3 == 0) {
+      uVar2 = 0xffffffff82003cf0;
     }
     else {
-      pcVar1 = "true";
+      uVar2 = 0xffffffff82003cf8;
     }
     break;
   case 6:
-    pcVar1 = animWeaponPositionStr[param_2].string;
+    uVar2 = (ulonglong)*(uint *)((int)&PTR_DAT_829608b8 + (int)((param_2 & 0xffffffff) << 3));
     break;
   case 7:
-    pcVar1 = animStrafeStateStr[param_2].string;
+    uVar2 = (ulonglong)*(uint *)((int)&PTR_DAT_829608d0 + (int)((param_2 & 0xffffffff) << 3));
     break;
   default:
-    if (alwaysfails == 0) {
-      pcVar1 = va("BG_GetConditionString: unhandled case: %d");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                      0x8ed,0,pcVar1);
+    if (DAT_84013128 == 0) {
+      uVar1 = va(0xffffffff82003cc4,param_1);
+      MyAssertHandler(0xffffffff820033b0,0x8ed,0,uVar1);
     }
-    pcVar1 = (char *)0x0;
+    uVar2 = 0;
     break;
   case 0xd:
-    pcVar1 = animDiveDirectionStr[param_2].string;
+    uVar2 = (ulonglong)*(uint *)((int)&PTR_DAT_82960978 + (int)((param_2 & 0xffffffff) << 3));
   }
-  return pcVar1;
+  return uVar2;
 }
 
 
 // 8226CA00  BG_SetConditionValue  (bgame/bg_animation_mp.cpp:2293)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+/* WARNING: Removing unreachable block (ram,0x8226cae8) */
+/* WARNING: Removing unreachable block (ram,0x8226caf8) */
+/* WARNING: Removing unreachable block (ram,0x8226cb00) */
+/* WARNING: Removing unreachable block (ram,0x8226cb1c) */
+
+void BG_SetConditionValue(undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  undefined4 *puVar3;
+  int *in_r13;
+  
+  uVar2 = __savegprlr_25();
+  BG_CheckThread();
+  iVar1 = *in_r13;
+  if (*(int *)(iVar1 + 8) == 0) {
+    MyAssertHandler(0xffffffff820033b0,0x8f9,0,0xffffffff82000f98,0xffffffff820033f4);
+  }
+  if ((0x11 < (int)param_2) || ((int)param_2 < 0)) {
+    MyAssertHandler(0xffffffff820033b0,0x8fa,0,0xffffffff82003dd4,0xffffffff82003dec,param_2);
+  }
+  if (0x11 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820033b0,0x8fe,0,0xffffffff82003d60,uVar2,0x12);
+  }
+  puVar3 = (undefined4 *)
+           ((int)((uVar2 * 0xb2 + param_2 + 0x10d0e & 0xffffffff) << 3) + *(int *)(iVar1 + 8));
+  *puVar3 = (int)param_3;
+  puVar3[1] = (int)((ulonglong)param_3 >> 0x20);
+  __restgprlr_25();
+  return;
+}
+
 
 // 82269498  BG_SetConditionBit  (bgame/bg_animation_mp.cpp:2322)
 
-void BG_SetConditionBit(int param_1,int param_2,int param_3)
+void BG_SetConditionBit(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
   int iVar1;
   int iVar2;
   ulonglong uVar3;
-  int iVar4;
-  ulonglong uVar5;
+  int iVar5;
+  undefined8 uVar4;
   int *in_r13;
   ulonglong uVar6;
+  longlong lVar7;
   
-  uVar5 = (ulonglong)param_2;
-  uVar3 = __savegprlr_21(param_1);
+  uVar3 = __savegprlr_21();
   BG_CheckThread();
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 8) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0x916,0,"%s");
+    MyAssertHandler(0xffffffff820033b0,0x916,0,0xffffffff82000f98,0xffffffff820033f4);
   }
-  if (*(int *)((int)&animConditionsTable[0].type + (int)((uVar5 & 0xffffffff) << 3)) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0x918,0,"%s");
-  }
-  if (0x11 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0x91a,0,"client doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
-  }
-  if (0x3f < param_3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0x91c,0,"%s");
+  iVar2 = (int)((param_2 & 0xffffffff) << 3);
+  if (*(int *)(&DAT_82960ac8 + iVar2) != 0) {
+    MyAssertHandler(0xffffffff820033b0,0x918,0,0xffffffff82000f98,0xffffffff82003d94);
   }
   if (0x11 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0x91f,0,"client doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
+    MyAssertHandler(0xffffffff820033b0,0x91a,0,0xffffffff82003d60,uVar3,0x12);
   }
-  uVar6 = uVar3 * 0xb2 + uVar5;
-  iVar2 = (int)((uVar6 + 0x10d0e & 0x1fffffff) << 3);
-  iVar4 = Com_BitCheckAssert((uint *)(*(int *)(iVar1 + 8) + iVar2),param_3,8);
-  if ((iVar4 == 0) && (iVar4 = G_IsServerGameSystem((int)uVar3), iVar4 != 0)) {
-    BG_GetConditionString((int)uVar5,param_3);
-    Com_Printf(0x13,"condition: %s: %s\n");
+  if (0x3f < (int)param_3) {
+    MyAssertHandler(0xffffffff820033b0,0x91c,0,0xffffffff82000f98,0xffffffff82003d54);
   }
   if (0x11 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0x92a,0,"client doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
+    MyAssertHandler(0xffffffff820033b0,0x91f,0,0xffffffff82003d60,uVar3,0x12);
   }
-  *(undefined4 *)(*(int *)(iVar1 + 8) + iVar2) = 0;
+  uVar6 = uVar3 * 0xb2 + param_2;
+  lVar7 = (uVar6 + 0x10d0e & 0x1fffffff) * 8;
+  iVar5 = Com_BitCheckAssert((ulonglong)*(uint *)(iVar1 + 8) + lVar7,param_3,8);
+  if ((iVar5 == 0) && (iVar5 = G_IsServerGameSystem(uVar3), iVar5 != 0)) {
+    uVar4 = BG_GetConditionString(param_2,param_3);
+    Com_Printf(0x13,0xffffffff82003d40,*(undefined4 *)((int)&PTR_s_PLAYERANIMTYPE_82960a30 + iVar2),
+               uVar4);
+  }
+  if (0x11 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820033b0,0x92a,0,0xffffffff82003d60,uVar3,0x12);
+  }
+  *(undefined4 *)(*(int *)(iVar1 + 8) + (int)lVar7) = 0;
   *(undefined4 *)((int)((uVar6 & 0xffffffff) << 3) + *(int *)(iVar1 + 8) + 0x86874) = 0;
-  Com_BitSetAssert((uint *)(*(int *)(iVar1 + 8) + iVar2),param_3,8);
+  Com_BitSetAssert((ulonglong)*(uint *)(iVar1 + 8) + lVar7,param_3,8);
   __restgprlr_21();
   return;
 }
 
 
 // 82269668  BG_GetConditionValue  (bgame/bg_animation_mp.cpp:2362)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+undefined4 BG_GetConditionValue(int param_1,int param_2)
+
+{
+  if ((0x11 < param_2) || (param_2 < 0)) {
+    MyAssertHandler(0xffffffff820033b0,0x93b,0,0xffffffff82003dd4,0xffffffff82003dec,param_2);
+  }
+  return *(undefined4 *)((param_2 + 0x91) * 8 + param_1);
+}
+
 
 // 822696E0  BG_GetConditionBit  (bgame/bg_animation_mp.cpp:2375)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void BG_GetConditionBit(undefined8 param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  
+  lVar1 = __savegprlr_25();
+  if ((0x11 < (int)param_2) || ((int)param_2 < 0)) {
+    MyAssertHandler(0xffffffff820033b0,0x94a,0,0xffffffff82003dd4,0xffffffff82003dec,param_2);
+  }
+  if (*(int *)(&DAT_82960ac8 + (int)((param_2 & 0xffffffff) << 3)) != 0) {
+    MyAssertHandler(0xffffffff820033b0,0x94b,0,0xffffffff82003e20,0xffffffff82003e50);
+  }
+  uVar2 = (param_2 + 0x91 & 0x1fffffff) * 8 + lVar1;
+  uVar3 = 0;
+  while( true ) {
+    if ((uVar2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82003098,0xb,0,0xffffffff82000f98,0xffffffff8200308c);
+    }
+    if (0x3f < (uVar3 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82003098,0xc,0,0xffffffff82003058,uVar3,0x40);
+    }
+    if ((1 << ((uint)uVar3 & 0x1f) & *(uint *)(((int)(uint)uVar3 >> 5) * 4 + (int)uVar2)) != 0)
+    break;
+    uVar3 = uVar3 + 1;
+    if (0x3f < (uVar3 & 0xffffffff)) {
+      __restgprlr_25(0);
+      return;
+    }
+  }
+  __restgprlr_25(uVar3);
+  return;
+}
+
 
 // 82269828  BG_GetAnimationForIndex  (bgame/bg_animation_mp.cpp:2401)
 
-animation_s * BG_GetAnimationForIndex(int param_1)
+longlong BG_GetAnimationForIndex(ulonglong param_1)
 
 {
-  if (globalScriptData->numAnimations <= (uint)param_1) {
-    Com_Error(ERR_DROP,"\x15BG_GetAnimationForIndex: index out of bounds");
+  if ((ulonglong)*(uint *)(DAT_829c3fec + 0xd000) <= (param_1 & 0xffffffff)) {
+    Com_Error(1,0xffffffff82003e90);
   }
-  return globalScriptData->animations + param_1;
+  return param_1 * 0x68 + (ulonglong)DAT_829c3fec;
 }
 
 
 // 8226CB70  BG_AnimUpdatePlayerStateConditions  (bgame/bg_animation_mp.cpp:2410)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void BG_AnimUpdatePlayerStateConditions(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int *piVar4;
+  undefined8 uVar3;
+  uint uVar5;
+  undefined4 uVar6;
+  undefined8 uVar7;
+  
+  piVar4 = (int *)__savegprlr_28();
+  iVar1 = *piVar4;
+  uVar3 = BG_GetViewmodelWeapon(iVar1);
+  if ((iVar1 == 0) || (uVar7 = 1, (*(uint *)(iVar1 + 0x374) & 0x8000) == 0)) {
+    uVar7 = 0;
+  }
+  uVar5 = BG_GetAlternateWeapon(uVar3,uVar7);
+  iVar2 = (&DAT_829d84a0)[uVar5 & 0xff];
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820033b0,0x970,0,0xffffffff82000f98,0xffffffff8200469c);
+  }
+  BG_SetConditionBit(*(undefined4 *)(iVar1 + 0x150),0,*(undefined4 *)(iVar2 + 0x28));
+  uVar5 = BG_GetAlternateWeapon(*(undefined4 *)(iVar1 + 0x370),*(uint *)(iVar1 + 0x374) >> 0xf & 1);
+  BG_SetConditionBit(*(undefined4 *)(iVar1 + 0x150),0xf,
+                     *(undefined4 *)((&DAT_829d84a0)[uVar5 & 0xff] + 0x28));
+  uVar3 = BG_GetWeaponClass(*(undefined4 *)(iVar1 + 0x370),*(uint *)(iVar1 + 0x374) >> 0xf & 1);
+  BG_SetConditionBit(*(undefined4 *)(iVar1 + 0x150),1,uVar3);
+  BG_SetConditionValue(*(undefined4 *)(iVar1 + 0x150),0xc,*(int *)(iVar1 + 0x390) == 1);
+  uVar6 = BG_PlayerSwitchingToRiotShield(iVar1);
+  BG_SetConditionValue(*(undefined4 *)(iVar1 + 0x150),0xe,uVar6);
+  uVar6 = BG_GetPlayerDiveState(iVar1);
+  BG_SetConditionValue(*(undefined4 *)(iVar1 + 0x150),0xd,uVar6);
+  BG_SetConditionValue(*(undefined4 *)(iVar1 + 0x150),6,(*(uint *)(iVar1 + 0xc) & 0x10) != 0);
+  if ((*(uint *)(iVar1 + 0xf8) & 0x2000) == 0) {
+    uVar3 = 1;
+    if ((*(uint *)(iVar1 + 0xf8) & 0x3800) == 0) {
+      uVar3 = 0;
+    }
+  }
+  else {
+    uVar3 = 2;
+  }
+  BG_SetConditionValue(*(undefined4 *)(iVar1 + 0x150),2,uVar3);
+  BG_SetConditionValue(*(undefined4 *)(iVar1 + 0x150),5,(piVar4[2] & 1U) != 0);
+  BG_SetConditionValue(*(undefined4 *)(iVar1 + 0x150),8,0);
+  if ((*(uint *)(iVar1 + 0xc) & 0x100000) != 0) {
+    BG_SetConditionValue(*(undefined4 *)(iVar1 + 0x150),0x11,*(undefined4 *)(iVar1 + 0x550));
+    __restgprlr_28();
+    return;
+  }
+  BG_SetConditionValue(*(undefined4 *)(iVar1 + 0x150),0x11,0);
+  __restgprlr_28();
+  return;
+}
+
 
 // 82269890  BG_IsCrouchingAnim  (bgame/bg_animation_mp.cpp:2474)
 
-int BG_IsCrouchingAnim(int param_1)
+bool BG_IsCrouchingAnim(uint param_1)
 
 {
-  if (globalScriptData->numAnimations <= (param_1 & 0xfffffdffU)) {
-    Com_Error(ERR_DROP,"\x15BG_GetAnimationForIndex: index out of bounds");
+  if (*(uint *)(DAT_829c3fec + 0xd000) <= (param_1 & 0xfffffdff)) {
+    Com_Error(1,0xffffffff82003e90);
   }
-  return (int)((globalScriptData->animations[param_1 & 0xfffffdff].movetype & 0x600000000c4U) != 0);
+  return (*(ulonglong *)((param_1 & 0xfffffdff) * 0x68 + DAT_829c3fec + 0x58) & 0x600000000c4) != 0;
 }
 
 
 // 82269920  BG_IsAds  (bgame/bg_animation_mp.cpp:2486)
 
-int BG_IsAds(int param_1)
+bool BG_IsAds(uint param_1)
 
 {
-  if (globalScriptData->numAnimations <= (param_1 & 0xfffffdffU)) {
-    Com_Error(ERR_DROP,"\x15BG_GetAnimationForIndex: index out of bounds");
+  if (*(uint *)(DAT_829c3fec + 0xd000) <= (param_1 & 0xfffffdff)) {
+    Com_Error(1,0xffffffff82003e90);
   }
-  return (int)((globalScriptData->animations[param_1 & 0xfffffdff].movetype & 0x3f0U) != 0);
+  return (*(ulonglong *)((param_1 & 0xfffffdff) * 0x68 + DAT_829c3fec + 0x58) & 0x3f0) != 0;
 }
 
 
 // 822699A0  BG_IsProneAnim  (bgame/bg_animation_mp.cpp:2503)
 
-int BG_IsProneAnim(int param_1)
+bool BG_IsProneAnim(uint param_1)
 
 {
-  if (globalScriptData->numAnimations <= (param_1 & 0xfffffdffU)) {
-    Com_Error(ERR_DROP,"\x15BG_GetAnimationForIndex: index out of bounds");
+  if (*(uint *)(DAT_829c3fec + 0xd000) <= (param_1 & 0xfffffdff)) {
+    Com_Error(1,0xffffffff82003e90);
   }
-  return (int)((globalScriptData->animations[param_1 & 0xfffffdff].movetype & 0x308U) != 0);
+  return (*(ulonglong *)((param_1 & 0xfffffdff) * 0x68 + DAT_829c3fec + 0x58) & 0x308) != 0;
 }
 
 
 // 82269A28  BG_IsKnifeMeleeAnim  (bgame/bg_animation_mp.cpp:2515)
 
-int BG_IsKnifeMeleeAnim(int param_1)
+uint BG_IsKnifeMeleeAnim(uint param_1)
 
 {
-  if (globalScriptData->numAnimations <= (param_1 & 0xfffffdffU)) {
-    Com_Error(ERR_DROP,"\x15BG_GetAnimationForIndex: index out of bounds");
+  if (*(uint *)(DAT_829c3fec + 0xd000) <= (param_1 & 0xfffffdff)) {
+    Com_Error(1,0xffffffff82003e90);
   }
-  return (uint)globalScriptData->animations[param_1 & 0xfffffdff].flags >> 8 & 1;
+  return *(uint *)((param_1 & 0xfffffdff) * 0x68 + DAT_829c3fec + 0x50) >> 8 & 1;
 }
 
 
 // 82269A98  BG_SetNewAnimation  (bgame/bg_animation_mp.cpp:2550)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void BG_SetNewAnimation(undefined8 param_1,int param_2,int param_3,ulonglong param_4,
+                       undefined4 *param_5)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  undefined4 uVar4;
+  undefined4 uVar5;
+  undefined4 uVar6;
+  uint uVar7;
+  float fVar8;
+  uint uVar9;
+  ulonglong uVar10;
+  bool bVar11;
+  undefined8 uVar12;
+  ulonglong uVar13;
+  int iVar15;
+  int iVar16;
+  int iVar17;
+  int iVar18;
+  char cVar19;
+  longlong lVar14;
+  ulonglong uVar20;
+  ulonglong uVar21;
+  int iVar22;
+  int *in_r13;
+  int iVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  
+  uVar12 = __savegprlr();
+  dVar26 = 0.0;
+  iVar22 = -1;
+  dVar27 = dVar26;
+  BG_CheckThread();
+  iVar1 = *in_r13;
+  if (*(int *)(iVar1 + 8) == 0) {
+    MyAssertHandler(0xffffffff820033b0,0xa0c,0,0xffffffff82000f98,0xffffffff820033f4);
+  }
+  uVar13 = (**(code **)(*(int *)(iVar1 + 8) + 0x863e0))(*param_5,uVar12);
+  if ((uVar13 & 0xffffffff) == 0) goto LAB_8226a14c;
+  uVar2 = param_5[2];
+  iVar3 = *(int *)(param_3 + 0x14);
+  uVar4 = *(undefined4 *)(param_3 + 0x10);
+  uVar9 = (uint)LZCOUNT((param_2 + 0x3b8) - param_3) >> 5;
+  *(int *)(param_3 + 0x10) = (int)param_4;
+  uVar10 = param_4 << 0x20 | param_4 & 0xfffffdff;
+  uVar20 = (ulonglong)*(uint *)(*(int *)(iVar1 + 8) + 0xd000);
+  if (uVar20 <= (param_4 & 0xfffffdff)) {
+    Com_Error(1,0xffffffff82003ee8,uVar20,uVar10);
+  }
+  uVar5 = *(undefined4 *)(param_2 + 0x518);
+  iVar23 = (int)(param_4 & 0xfffffdff);
+  uVar6 = *(undefined4 *)(*(uint *)(iVar1 + 8) + 0x863a4);
+  if (iVar23 == 0) {
+    *(undefined4 *)(param_3 + 0x14) = 0;
+    uVar20 = 0;
+    *(undefined4 *)(param_3 + 0x18) = 200;
+  }
+  else {
+    uVar20 = uVar10 * 0x68 + (ulonglong)*(uint *)(iVar1 + 8);
+    *(int *)(param_3 + 0x14) = (int)uVar20;
+    *(undefined4 *)(param_3 + 0x18) = *(undefined4 *)((int)uVar20 + 0x40);
+    iVar15 = BG_IsCrouchingAnim(uVar4);
+    iVar16 = BG_IsCrouchingAnim(uVar10);
+    iVar17 = BG_IsProneAnim(uVar4);
+    iVar18 = BG_IsProneAnim(uVar10);
+    if ((uVar9 != 0) &&
+       (((uint)LZCOUNT(iVar15 - iVar16) >> 5 == 0 || ((uint)LZCOUNT(iVar17 - iVar18) >> 5 == 0)))) {
+      *(int *)(param_2 + 0x524) = *(int *)(*(int *)(iVar1 + 8) + 0x863c0) + 400;
+    }
+  }
+  iVar15 = (int)uVar20;
+  if ((iVar3 == 0) && (uVar9 != 0)) {
+    *(undefined4 *)(param_3 + 0x18) = 0;
+  }
+  else {
+    if ((uVar20 & 0xffffffff) == 0) {
+LAB_82269c9c:
+      if ((iVar3 == 0) || (iVar22 = 0xfa, (double)*(float *)(iVar3 + 0x44) == dVar27)) {
+        iVar22 = 0xaa;
+      }
+    }
+    else if (*(int *)(param_3 + 0x18) < 1) {
+      if ((double)*(float *)(iVar15 + 0x44) == dVar27) goto LAB_82269c9c;
+      iVar22 = 0x78;
+    }
+    iVar16 = *(int *)(param_2 + 0x524) - *(int *)(*(int *)(iVar1 + 8) + 0x863c0);
+    if (iVar22 < iVar16) {
+      iVar22 = iVar16;
+    }
+    if (*(int *)(param_3 + 0x18) < iVar22) {
+      *(int *)(param_3 + 0x18) = iVar22;
+    }
+  }
+  if ((((uVar20 & 0xffffffff) != 0) && ((double)*(float *)(iVar15 + 0x44) != dVar27)) &&
+     (cVar19 = XAnimIsLooped(uVar6,uVar10), cVar19 != '\0')) {
+    uVar21 = CONCAT44(uVar4,uVar4) & 0xfffffffffffffdff;
+    if (((iVar3 == 0) || ((double)*(float *)(iVar3 + 0x44) == dVar27)) ||
+       (cVar19 = XAnimIsLooped(uVar6,uVar21), cVar19 == '\0')) {
+      cVar19 = XAnimIsPrimitive(uVar6,uVar21);
+      if (cVar19 == '\0') {
+        uVar21 = 1000;
+      }
+      else {
+        lVar14 = XAnimGetLengthMsec(uVar6,uVar21);
+        uVar21 = lVar14 + 200;
+      }
+      iVar22 = (int)uVar21;
+      trapWord(6,uVar21,0);
+      uVar7 = *(uint *)(*(int *)(iVar1 + 8) + 0x863c0);
+      trapWord(5,uVar21 & ~((((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) - 1)
+               ,0xffff);
+      fVar8 = (float)(longlong)*(int *)(param_2 + 8) * 0.36 +
+              (float)(longlong)(int)(uVar7 - ((int)uVar7 / iVar22) * iVar22) /
+              (float)(longlong)iVar22;
+      dVar26 = (double)(fVar8 - (float)(longlong)(int)fVar8);
+    }
+    else {
+      dVar26 = (double)XAnimGetTime(uVar5,uVar21);
+    }
+  }
+  dVar25 = 0.0010000000474974513;
+  if (iVar3 != 0) {
+    XAnimClearTreeGoalWeights
+              ((double)(float)((double)(longlong)*(int *)(param_3 + 0x18) * 0.0010000000474974513),
+               uVar5,CONCAT44(uVar4,uVar4) & 0xfffffffffffffdff);
+  }
+  if (iVar23 == 0) {
+    if (uVar9 == 0) {
+      uVar12 = 0x3ff0000000000000;
+      XAnimSetCompleteGoalWeightRel
+                (dVar27,(double)(float)((double)(longlong)*(int *)(param_3 + 0x18) * dVar25),
+                 0x3ff0000000000000,uVar13,*(undefined2 *)(*(int *)(iVar1 + 8) + 0x863a8),
+                 *(undefined2 *)(*(int *)(iVar1 + 8) + 0x863ae));
+      XAnimSetCompleteGoalWeightRel
+                (uVar12,(double)(float)((double)(longlong)*(int *)(param_3 + 0x18) * dVar25),uVar12,
+                 uVar13,*(undefined2 *)(*(int *)(iVar1 + 8) + 0x863aa),
+                 *(undefined2 *)(*(int *)(iVar1 + 8) + 0x863ae));
+    }
+    goto LAB_8226a14c;
+  }
+  if (uVar9 == 0) {
+    *(undefined4 *)(param_2 + 0x438) = 0;
+    *(undefined4 *)(param_2 + 0x43c) = 1;
+  }
+  if ((*(uint *)(iVar15 + 0x50) & 0x40) == 0) {
+    if ((double)*(float *)(iVar15 + 0x44) == dVar27) {
+LAB_82269f68:
+      bVar11 = false;
+    }
+    else {
+      dVar24 = (double)XAnimGetWeight(uVar5,uVar10);
+      bVar11 = true;
+      if (dVar24 != dVar27) goto LAB_82269f68;
+    }
+    dVar27 = 1.0;
+    XAnimSetCompleteGoalWeightRel
+              (0x3ff0000000000000,
+               (double)(float)((double)(longlong)*(int *)(param_3 + 0x18) * dVar25),
+               0x3ff0000000000000,uVar13,uVar10,*(undefined2 *)(*(int *)(iVar1 + 8) + 0x863ae));
+    if (bVar11) goto LAB_82269fd8;
+  }
+  else {
+    cVar19 = XAnimIsLooped(uVar6,uVar10);
+    if (cVar19 != '\0') {
+      Com_Error(1,0xffffffff82003ec4,uVar20);
+    }
+    if ((uVar2 >> 0x14 & 1) == 0) {
+      dVar26 = 1.0;
+      XAnimSetGoalWeightKnobAll
+                (0x3ff0000000000000,dVar27,0x3ff0000000000000,uVar13,uVar10,
+                 *(undefined2 *)(*(int *)(iVar1 + 8) + 0x863ae));
+      dVar27 = dVar26;
+LAB_82269fd8:
+      XAnimSetTime(dVar26,uVar5,uVar10);
+    }
+    else {
+      dVar27 = 1.0;
+      XAnimSetCompleteGoalWeightRel
+                (0x3ff0000000000000,
+                 (double)(float)((double)(longlong)*(int *)(param_3 + 0x18) * dVar25),
+                 0x3ff0000000000000,uVar13,uVar10,*(undefined2 *)(*(int *)(iVar1 + 8) + 0x863ae));
+    }
+  }
+  if (uVar9 == 0) {
+    XAnimSetCompleteGoalWeightRel
+              (dVar27,(double)(float)((double)(longlong)*(int *)(param_3 + 0x18) * dVar25),dVar27,
+               uVar13,*(undefined2 *)(*(int *)(iVar1 + 8) + 0x863a8),
+               *(undefined2 *)(*(int *)(iVar1 + 8) + 0x863ae));
+    XAnimSetCompleteGoalWeightRel
+              (0x3f847ae140000000,
+               (double)(float)((double)(longlong)*(int *)(param_3 + 0x18) * dVar25),dVar27,uVar13,
+               *(undefined2 *)(*(int *)(iVar1 + 8) + 0x863aa),
+               *(undefined2 *)(*(int *)(iVar1 + 8) + 0x863ae));
+    __restgprlr();
+    return;
+  }
+LAB_8226a14c:
+  __restgprlr();
+  return;
+}
+
 
 // 8226A160  SmoothAnimSpeedScale  (bgame/bg_animation_mp.cpp:2737)
 
-float SmoothAnimSpeedScale(float param_1,float param_2)
+void SmoothAnimSpeedScale(void)
 
 {
-  return param_1;
+  return;
 }
 
 
 // 8226A168  BG_RunLerpFrameRate  (bgame/bg_animation_mp.cpp:2762)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void BG_RunLerpFrameRate(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+                        undefined8 param_5,float *param_6)
+
+{
+  undefined4 uVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  int iVar5;
+  undefined4 uVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  float fVar10;
+  bool bVar11;
+  bool bVar12;
+  undefined8 uVar13;
+  int *in_r13;
+  
+  uVar13 = __savegprlr_20();
+  BG_CheckThread();
+  iVar4 = *in_r13;
+  if (*(int *)(iVar4 + 8) == 0) {
+    MyAssertHandler(0xffffffff820033b0,0xad4,0,0xffffffff82000f98,0xffffffff820033f4);
+  }
+  iVar9 = (int)param_3;
+  iVar5 = *(int *)(iVar9 + 0x14);
+  if ((iVar5 == 0) || (bVar12 = true, (*(uint *)(iVar5 + 0x50) & 2) == 0)) {
+    bVar12 = false;
+  }
+  if ((iVar5 == 0) || (bVar11 = true, (*(uint *)(iVar5 + 0x50) & 0x40) == 0)) {
+    bVar11 = false;
+  }
+  uVar6 = *(undefined4 *)((int)param_2 + 0x518);
+  if (((int)param_4 != *(int *)(iVar9 + 0x10)) || ((iVar5 == 0 && ((param_4 & 0xfffffdff) != 0)))) {
+    BG_SetNewAnimation(uVar13,param_2,param_3,param_4,param_5);
+  }
+  if ((param_4 & 0xfffffdff) == 0) goto LAB_8226a46c;
+  if (iVar5 == 0) {
+LAB_8226a418:
+    *(undefined4 *)(iVar9 + 0x28) = 0x3f800000;
+    *(undefined4 *)(iVar9 + 0x2c) = *(undefined4 *)(*(int *)(iVar4 + 8) + 0x863c4);
+    *(float *)(iVar9 + 0x1c) = *param_6;
+    *(float *)(iVar9 + 0x20) = param_6[1];
+    *(float *)(iVar9 + 0x24) = param_6[2];
+  }
+  else {
+    if (*(float *)(iVar5 + 0x44) == 0.0) goto LAB_8226a418;
+    iVar7 = *(int *)(iVar9 + 0x2c);
+    if ((iVar7 == 0) || (bVar11)) goto LAB_8226a418;
+    iVar8 = *(int *)(*(int *)(iVar4 + 8) + 0x863c4);
+    if (iVar8 != iVar7) {
+      if (bVar12) {
+        fVar2 = ABS(*(float *)(iVar9 + 0x24) - param_6[2]);
+      }
+      else {
+        fVar2 = *param_6 - *(float *)(iVar9 + 0x1c);
+        fVar3 = param_6[2] - *(float *)(iVar9 + 0x24);
+        fVar10 = param_6[1] - *(float *)(iVar9 + 0x20);
+        fVar2 = SQRT(fVar10 * fVar10 + fVar3 * fVar3 + fVar2 * fVar2);
+      }
+      uVar1 = 0x3dcccccd;
+      *(float *)(iVar9 + 0x28) =
+           (fVar2 / ((float)(longlong)(iVar8 - iVar7) * 0.001)) / *(float *)(iVar5 + 0x44);
+      *(undefined4 *)(iVar9 + 0x2c) = *(undefined4 *)(*(int *)(iVar4 + 8) + 0x863c4);
+      *(float *)(iVar9 + 0x1c) = *param_6;
+      *(float *)(iVar9 + 0x20) = param_6[1];
+      *(float *)(iVar9 + 0x24) = param_6[2];
+      fVar2 = *(float *)(iVar9 + 0x28);
+      if (0.1 <= fVar2) {
+        if (2.0 < fVar2) {
+          if ((*(uint *)(iVar5 + 0x50) & 2) == 0) {
+            fVar3 = *(float *)(iVar5 + 0x44);
+            if (fVar3 <= 150.0) {
+              if (20.0 <= fVar3) {
+                fVar3 = -((fVar3 - 20.0) * 0.0076923077 - 3.0);
+                if (fVar3 < fVar2) {
+                  *(float *)(iVar9 + 0x28) = fVar3;
+                }
+              }
+              else if (3.0 < fVar2) {
+                *(undefined4 *)(iVar9 + 0x28) = 0x40400000;
+              }
+            }
+            else {
+              *(undefined4 *)(iVar9 + 0x28) = 0x40000000;
+            }
+          }
+          else {
+            uVar1 = 0x40800000;
+            if (4.0 < fVar2) goto LAB_8226a410;
+          }
+        }
+      }
+      else if ((0.01 <= fVar2) || (!bVar12)) {
+LAB_8226a410:
+        *(undefined4 *)(iVar9 + 0x28) = uVar1;
+      }
+      else {
+        *(undefined4 *)(iVar9 + 0x28) = 0;
+      }
+    }
+  }
+  iVar4 = *(int *)(iVar9 + 0x10);
+  if (iVar4 != 0) {
+    XAnimSetAnimRate((double)*(float *)(iVar9 + 0x28),uVar6,
+                     CONCAT44(iVar4,iVar4) & 0xfffffffffffffdff);
+  }
+LAB_8226a46c:
+  __restgprlr_20();
+  return;
+}
+
 
 // 8226A478  BG_PlayerAnimation_VerifyAnim  (bgame/bg_animation_mp.cpp:2876)
 
-void BG_PlayerAnimation_VerifyAnim(XAnimTree *param_1,lerpFrame_t *param_2)
+void BG_PlayerAnimation_VerifyAnim(undefined8 param_1,int param_2)
 
 {
-  XAnimTree *pXVar1;
+  int iVar1;
+  undefined8 uVar2;
   int *in_r13;
-  float fVar2;
+  double dVar3;
   
-  pXVar1 = (XAnimTree *)__savegprlr_28(param_1);
+  uVar2 = __savegprlr_28();
   BG_CheckThread();
   if (*(int *)(*in_r13 + 8) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0xb40,0,"%s");
+    MyAssertHandler(0xffffffff820033b0,0xb40,0,0xffffffff82000f98,0xffffffff820033f4);
   }
-  if (param_2->animationNumber == 0) {
-    if (param_2->animation != (animation_s *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                      0xb4e,0,"%s");
+  iVar1 = *(int *)(param_2 + 0x10);
+  if (iVar1 == 0) {
+    if (*(int *)(param_2 + 0x14) != 0) {
+      MyAssertHandler(0xffffffff820033b0,0xb4e,0,0xffffffff82000f98,0xffffffff82003f34);
     }
   }
   else {
-    fVar2 = XAnimGetWeight(pXVar1,param_2->animationNumber & 0xfffffdff);
-    if (fVar2 == 0.0) {
-      param_2->animationNumber = 0;
-      param_2->animation = (animation_s *)0x0;
-      param_2->animationTime = 0x96;
+    dVar3 = (double)XAnimGetWeight(uVar2,CONCAT44(iVar1,iVar1) & 0xfffffffffffffdff);
+    if (dVar3 == 0.0) {
+      *(undefined4 *)(param_2 + 0x10) = 0;
+      *(undefined4 *)(param_2 + 0x14) = 0;
+      *(undefined4 *)(param_2 + 0x18) = 0x96;
       __restgprlr_28();
       return;
     }
@@ -2075,92 +2815,84 @@ void BG_PlayerAnimation_VerifyAnim(XAnimTree *param_1,lerpFrame_t *param_2)
 
 // 8226A548  BG_SwingAngles  (bgame/bg_animation_mp.cpp:2913)
 
-void BG_SwingAngles(float param_1,float param_2,float param_3,float param_4,float *param_5,
-                   int *param_6)
+void BG_SwingAngles(undefined8 param_1,double param_2,double param_3,double param_4)
 
 {
   float fVar1;
-  int iVar2;
+  float fVar2;
+  int iVar3;
   float *in_r7;
   int *in_r8;
   int *in_r13;
-  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  float fVar12;
   
-  dVar6 = (double)param_3;
-  dVar10 = (double)param_4;
-  dVar5 = (double)param_2;
-  __savegprlr_27((double)param_1,param_5,param_6);
-  dVar3 = (double)__savefpr_24();
+  __savegprlr_27();
+  dVar4 = (double)__savefpr_24();
   BG_CheckThread();
-  iVar2 = *in_r13;
-  if (*(int *)(iVar2 + 8) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0xb69,0,"%s");
+  iVar3 = *in_r13;
+  if (*(int *)(iVar3 + 8) == 0) {
+    MyAssertHandler(0xffffffff820033b0,0xb69,0,0xffffffff82000f98,0xffffffff820033f4);
   }
-  dVar8 = 360.0;
-  dVar11 = 0.5;
-  dVar9 = 0.0027777778450399637;
+  dVar7 = 360.0;
+  dVar9 = 0.5;
+  dVar8 = 0.0027777778450399637;
   if (*in_r8 == 0) {
-    dVar7 = (double)((float)((double)*in_r7 - dVar3) * 0.0027777778);
-    dVar4 = floor((double)(float)(dVar7 + 0.5));
-    dVar4 = (double)(float)((double)(float)(dVar7 - (double)(float)dVar4) * dVar8);
-    if ((dVar5 < dVar4) || (dVar4 < -dVar5)) {
+    dVar6 = (double)((float)((double)*in_r7 - dVar4) * 0.0027777778);
+    dVar5 = floor((double)(float)(dVar6 + 0.5));
+    dVar5 = (double)(float)((double)(float)(dVar6 - (double)(float)dVar5) * dVar7);
+    if ((param_2 < dVar5) || (dVar5 < -param_2)) {
       *in_r8 = 1;
     }
     else if (*in_r8 == 0) goto LAB_8226a75c;
   }
-  dVar4 = (double)(float)((double)(float)(dVar3 - (double)*in_r7) * dVar9);
-  dVar5 = floor((double)(float)(dVar4 + dVar11));
-  fVar12 = (float)((double)(float)(dVar4 - (double)(float)dVar5) * dVar8);
-  dVar5 = (double)(ABS(fVar12) * 0.05);
-  if ((double)(ABS(fVar12) * 0.05) < dVar11) {
-    dVar5 = dVar11;
+  dVar6 = (double)(float)((double)(float)(dVar4 - (double)*in_r7) * dVar8);
+  dVar5 = floor((double)(float)(dVar6 + dVar9));
+  fVar1 = (float)((double)(float)(dVar6 - (double)(float)dVar5) * dVar7);
+  dVar5 = (double)(ABS(fVar1) * 0.05);
+  if ((double)(ABS(fVar1) * 0.05) < dVar9) {
+    dVar5 = dVar9;
   }
-  if (fVar12 < 0.0) {
-    if (fVar12 < 0.0) {
-      fVar1 = -(float)((double)(float)((double)(longlong)*(int *)(*(int *)(iVar2 + 8) + 0x863c8) *
-                                      dVar5) * dVar10);
-      if (fVar12 < fVar1) goto LAB_8226a700;
+  if (fVar1 < 0.0) {
+    if (fVar1 < 0.0) {
+      fVar2 = -(float)((double)(float)((double)(longlong)*(int *)(*(int *)(iVar3 + 8) + 0x863c8) *
+                                      dVar5) * param_4);
+      if (fVar1 < fVar2) goto LAB_8226a700;
       *in_r8 = 0;
       goto LAB_8226a704;
     }
   }
   else {
-    fVar1 = (float)((double)(float)((double)(longlong)*(int *)(*(int *)(iVar2 + 8) + 0x863c8) *
-                                   dVar5) * dVar10);
-    if (fVar1 < fVar12) {
+    fVar2 = (float)((double)(float)((double)(longlong)*(int *)(*(int *)(iVar3 + 8) + 0x863c8) *
+                                   dVar5) * param_4);
+    if (fVar2 < fVar1) {
 LAB_8226a700:
-      fVar12 = fVar1;
+      fVar1 = fVar2;
       *in_r8 = 1;
     }
     else {
       *in_r8 = 0;
     }
 LAB_8226a704:
-    fVar12 = AngleNormalize360(*in_r7 + fVar12);
-    *in_r7 = fVar12;
+    dVar5 = (double)AngleNormalize360((double)(*in_r7 + fVar1));
+    *in_r7 = (float)dVar5;
   }
-  dVar10 = (double)(float)((double)(float)(dVar3 - (double)*in_r7) * dVar9);
-  dVar5 = floor((double)(float)(dVar10 + dVar11));
-  dVar5 = (double)(float)((double)(float)(dVar10 - (double)(float)dVar5) * dVar8);
-  if (dVar5 <= dVar6) {
-    if (-dVar6 <= dVar5) goto LAB_8226a75c;
-    dVar3 = dVar3 + dVar6;
+  dVar5 = (double)(float)((double)(float)(dVar4 - (double)*in_r7) * dVar8);
+  dVar8 = floor((double)(float)(dVar5 + dVar9));
+  dVar7 = (double)(float)((double)(float)(dVar5 - (double)(float)dVar8) * dVar7);
+  if (dVar7 <= param_3) {
+    if (-param_3 <= dVar7) goto LAB_8226a75c;
+    dVar4 = dVar4 + param_3;
   }
   else {
-    dVar3 = dVar3 - dVar6;
+    dVar4 = dVar4 - param_3;
   }
-  fVar12 = AngleNormalize360((float)dVar3);
-  *in_r7 = fVar12;
+  dVar4 = (double)AngleNormalize360((double)(float)dVar4);
+  *in_r7 = (float)dVar4;
 LAB_8226a75c:
   __restfpr_24();
   __restgprlr_27();
@@ -2169,99 +2901,508 @@ LAB_8226a75c:
 
 
 // 8226A770  BG_PlayerAngles  (bgame/bg_animation_mp.cpp:3008)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void BG_PlayerAngles(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int *in_r13;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  
+  __savegprlr_24();
+  iVar4 = __savefpr_25();
+  BG_CheckThread();
+  iVar1 = *in_r13;
+  if (*(int *)(iVar1 + 8) == 0) {
+    MyAssertHandler(0xffffffff820033b0,0xbcb,0,0xffffffff82000f98,0xffffffff820033f4);
+  }
+  iVar3 = (int)param_2;
+  dVar14 = (double)*(float *)(iVar3 + 0x418);
+  dVar11 = (double)*(float *)(iVar3 + 0x41c);
+  dVar6 = (double)AngleNormalize360((double)*(float *)(iVar3 + 0x420));
+  iVar5 = BG_GetConditionBit(param_2,3);
+  if (iVar5 < 0) {
+    MyAssertHandler(0xffffffff820033b0,0xbdb,0,0xffffffff82000f98,0xffffffff82003fd4);
+  }
+  iVar5 = BG_GetConditionBit(param_2,3);
+  if (0x37 < iVar5) {
+    MyAssertHandler(0xffffffff820033b0,0xbdc,0,0xffffffff82000f98,0xffffffff82003f90);
+  }
+  if ((*(uint *)(iVar4 + 8) & 0x3800) == 0) {
+    if ((*(uint *)(iVar3 + 0x4a0) & 0xc0000) != 0) {
+      *(undefined4 *)(iVar3 + 0x3bc) = 1;
+      goto LAB_8226a8bc;
+    }
+    if ((*(uint *)(iVar4 + 8) & 0x20000) != 0) {
+      *(undefined4 *)(iVar3 + 0x3bc) = 1;
+      goto LAB_8226a8bc;
+    }
+    if ((*(uint *)(iVar3 + 0x4a0) & 6) == 0) {
+      *(undefined4 *)(iVar3 + 0x3bc) = 1;
+      goto LAB_8226a8bc;
+    }
+    if (*(int *)(iVar3 + 0x4b0) != 0) goto LAB_8226a8bc;
+  }
+  else {
+    *(undefined4 *)(iVar3 + 0x3bc) = 1;
+LAB_8226a8bc:
+    *(undefined4 *)(iVar3 + 0x3ec) = 1;
+    *(undefined4 *)(iVar3 + 0x3f4) = 1;
+  }
+  dVar12 = (double)(float)(dVar6 + dVar14);
+  uVar2 = *(uint *)(iVar4 + 8);
+  dVar10 = 45.0;
+  dVar13 = 0.0;
+  if ((uVar2 & 0x40000) == 0) {
+    dVar7 = dVar12;
+    dVar9 = dVar13;
+    dVar8 = dVar12;
+    if ((*(uint *)(iVar3 + 0x4a0) & 0xc0000) == 0) {
+      if ((uVar2 & 0x20000) == 0) {
+        if ((uVar2 & 8) == 0) {
+          dVar7 = dVar6;
+          dVar9 = dVar10;
+          if ((uVar2 & 0x800000) == 0) {
+            if ((uVar2 & 0x80000) == 0) {
+              dVar7 = (double)(float)((double)*(float *)(DAT_829c54a8 + 0xc) * dVar14 + dVar6);
+              dVar9 = 90.0;
+            }
+            else {
+              dVar9 = 90.0;
+            }
+          }
+        }
+        else {
+          dVar7 = dVar6;
+          dVar9 = 90.0;
+        }
+      }
+      else {
+        dVar7 = dVar6;
+        dVar9 = 90.0;
+        dVar8 = dVar6;
+      }
+    }
+  }
+  else {
+    dVar7 = dVar6;
+    dVar9 = 90.0;
+    dVar8 = dVar6;
+  }
+  BG_SwingAngles(dVar7,0,dVar9,(double)*(float *)(DAT_829c54d4 + 0xc));
+  if (*(int *)(iVar1 + 8) == 0) {
+    MyAssertHandler(0xffffffff820033b0,0xc34,0,0xffffffff82000f98,0xffffffff82003f68);
+  }
+  if (*(int *)(iVar3 + 0x428) != *(int *)(iVar4 + 0xd0)) {
+    MyAssertHandler(0xffffffff820033b0,0xc37,0,0xffffffff82000f98,0xffffffff82003f48);
+  }
+  dVar14 = dVar13;
+  if ((*(uint *)(iVar4 + 8) & 0x40000) == 0) {
+    if ((*(uint *)(iVar4 + 8) & 8) != 0) {
+      *(float *)(iVar3 + 0x3b8) = (float)dVar6;
+      *(undefined4 *)(iVar3 + 0x3bc) = 0;
+      goto LAB_8226aadc;
+    }
+    if ((*(uint *)((*(uint *)(iVar3 + 0x428) & 0xfffffdff) * 0x68 + *(int *)(iVar1 + 8) + 0x50) &
+        0x30) == 0) {
+      if (*(int *)(iVar3 + 0x3bc) == 0) {
+        dVar14 = (double)*(float *)(DAT_829c7dfc + 0xc);
+      }
+    }
+    else {
+      *(undefined4 *)(iVar3 + 0x3bc) = 0;
+      dVar8 = dVar6;
+    }
+  }
+  BG_SwingAngles(dVar8,dVar14,0x4062c00000000000,(double)*(float *)(DAT_829c54d4 + 0xc));
+LAB_8226aadc:
+  if ((*(uint *)(iVar4 + 8) & 0x3800) == 0) {
+    if ((*(uint *)(iVar3 + 0x4a0) & 0xc0000) != 0) {
+      *(float *)(iVar3 + 1000) = (float)dVar12;
+      *(float *)(iVar3 + 0x3b8) = (float)dVar12;
+    }
+  }
+  else {
+    *(float *)(iVar3 + 1000) = (float)dVar6;
+    *(float *)(iVar3 + 0x3b8) = (float)dVar6;
+  }
+  uVar2 = *(uint *)(iVar4 + 8);
+  dVar6 = dVar13;
+  if (((((uVar2 & 0x40000) == 0) && ((uVar2 & 0x3800) == 0)) &&
+      ((*(uint *)(iVar3 + 0x4a0) & 0xc0000) == 0)) && (uVar2 != 0x20000)) {
+    if (dVar11 <= 180.0) {
+      dVar6 = (double)(float)(dVar11 * 2.0);
+    }
+    else {
+      dVar6 = (double)((float)(dVar11 - 360.0) * 2.0);
+    }
+  }
+  BG_SwingAngles(dVar6,dVar13,dVar10,0x3fc3333340000000);
+  __restfpr_25();
+  __restgprlr_24();
+  return;
+}
+
 
 // 8226CD68  BG_AnimPlayerConditions  (bgame/bg_animation_mp.cpp:3198)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void BG_AnimPlayerConditions(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  undefined8 uVar3;
+  int iVar7;
+  longlong lVar8;
+  int *in_r13;
+  
+  iVar4 = __savegprlr_22();
+  BG_CheckThread();
+  iVar1 = *in_r13;
+  if (*(int *)(iVar1 + 8) == 0) {
+    MyAssertHandler(0xffffffff820033b0,0xc86,0,0xffffffff82000f98,0xffffffff820033f4);
+  }
+  uVar5 = BG_GetAlternateWeapon(*(undefined4 *)(iVar4 + 200),*(int *)(iVar4 + 0xcc) != 0);
+  iVar7 = (&DAT_829d84a0)[uVar5 & 0xff];
+  if (iVar7 == 0) {
+    MyAssertHandler(0xffffffff820033b0,0xc89,0,0xffffffff82000f98,0xffffffff8200469c);
+  }
+  iVar6 = BG_GetConditionBit(param_2,3);
+  if (iVar6 < 0) {
+    MyAssertHandler(0xffffffff820033b0,0xc8b,0,0xffffffff82000f98,0xffffffff82003fd4);
+  }
+  iVar6 = BG_GetConditionBit(param_2,3);
+  if (0x37 < iVar6) {
+    MyAssertHandler(0xffffffff820033b0,0xc8c,0,0xffffffff82000f98,0xffffffff82003f90);
+  }
+  iVar2 = (int)param_2;
+  iVar6 = *(int *)(iVar2 + 8);
+  if (iVar6 != *(int *)(iVar4 + 0x90)) {
+    MyAssertHandler(0xffffffff820033b0,0xc91,0,0xffffffff82000f98,0xffffffff820046a8);
+  }
+  BG_SetConditionBit(iVar6,0,*(undefined4 *)(iVar7 + 0x28));
+  uVar3 = BG_GetWeaponClass(*(undefined4 *)(iVar4 + 200),*(int *)(iVar4 + 0xcc) != 0);
+  BG_SetConditionBit(iVar6,1,uVar3);
+  BG_SetConditionValue(iVar6,0xc,*(undefined4 *)(iVar2 + 0x530));
+  BG_SetConditionValue(iVar6,0xe,*(undefined4 *)(iVar2 + 0x538));
+  BG_SetConditionValue(iVar6,0xd,*(undefined4 *)(iVar2 + 0x534));
+  BG_SetConditionValue(iVar6,6,(*(uint *)(iVar4 + 8) & 0x80000) != 0);
+  if ((*(uint *)(iVar4 + 8) & 0x2000) == 0) {
+    uVar3 = 1;
+    if ((*(uint *)(iVar4 + 8) & 0x3800) == 0) {
+      uVar3 = 0;
+    }
+  }
+  else {
+    uVar3 = 2;
+  }
+  BG_SetConditionValue(iVar6,2,uVar3);
+  BG_SetConditionValue(iVar6,4,(*(uint *)(iVar4 + 8) & 4) != 0);
+  BG_SetConditionValue(iVar6,5,(*(uint *)(iVar4 + 8) & 0x800000) != 0);
+  if (*(int *)(iVar2 + 0x428) != *(int *)(iVar4 + 0xd0)) {
+    MyAssertHandler(0xffffffff820033b0,0xcbd,0,0xffffffff82000f98,0xffffffff82003f48);
+  }
+  iVar4 = (*(uint *)(iVar2 + 0x428) & 0xfffffdff) * 0x68;
+  lVar8 = *(longlong *)(iVar4 + *(int *)(iVar1 + 8) + 0x58);
+  if ((lVar8 != 0) && (*(int *)(iVar2 + 0x4a0) != lVar8)) {
+    BG_SetConditionValue(iVar6,3);
+    iVar7 = BG_GetConditionBit(param_2,3);
+    if (iVar7 < 0) {
+      MyAssertHandler(0xffffffff820033b0,0xcc9,0,0xffffffff82000f98,0xffffffff82003fd4);
+    }
+    iVar7 = BG_GetConditionBit(param_2,3);
+    if (0x37 < iVar7) {
+      MyAssertHandler(0xffffffff820033b0,0xcca,0,0xffffffff82000f98,0xffffffff82003f90);
+    }
+  }
+  uVar5 = *(uint *)(iVar4 + *(int *)(iVar1 + 8) + 0x50);
+  if ((uVar5 & 0x10) != 0) {
+    BG_SetConditionValue(iVar6,7,1);
+    __restgprlr_22();
+    return;
+  }
+  uVar3 = 2;
+  if ((uVar5 & 0x20) == 0) {
+    uVar3 = 0;
+  }
+  BG_SetConditionValue(iVar6,7,uVar3);
+  __restgprlr_22();
+  return;
+}
+
 
 // 8226ABB8  BG_Player_DoControllersInternal  (bgame/bg_animation_mp.cpp:3301)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
-// 8226B020  BG_LerpAngles  (bgame/bg_animation_mp.cpp:3483)
-
-void BG_LerpAngles(float *param_1,float param_2,float *param_3)
+void BG_Player_DoControllersInternal(undefined8 param_1,undefined8 param_2,float *param_3)
 
 {
   float fVar1;
-  float fVar2;
-  float *in_r5;
+  int iVar2;
+  int iVar3;
+  void *pvVar4;
+  int iVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c0;
+  float local_bc;
+  float local_b8;
   
-  fVar1 = *in_r5;
-  fVar2 = *param_1 - fVar1;
-  if (fVar2 <= param_2) {
-    if (-param_2 <= fVar2) {
-      *in_r5 = *param_1;
+  __savegprlr_27();
+  iVar3 = __savefpr_17();
+  if (((*(uint *)(iVar3 + 8) & 0x3800) != 0) && ((*(uint *)(iVar3 + 8) & 0x2000) == 0)) {
+    pvVar4 = memset(param_3,0,0x48);
+    __restfpr_17(pvVar4);
+    __restgprlr_27();
+    return;
+  }
+  iVar2 = (int)param_2;
+  if (*(int *)(iVar2 + 8) != *(int *)(iVar3 + 0x90)) {
+    MyAssertHandler(0xffffffff820033b0,0xcfc,0,0xffffffff82000f98,0xffffffff82004094);
+  }
+  if (*(float *)(iVar2 + 0x430) != *(float *)(iVar3 + 0x58)) {
+    MyAssertHandler(0xffffffff820033b0,0xcfd,0,0xffffffff82000f98,0xffffffff82004064);
+  }
+  if (*(float *)(iVar2 + 0x434) != *(float *)(iVar3 + 0x5c)) {
+    MyAssertHandler(0xffffffff820033b0,0xcfe,0,0xffffffff82000f98,0xffffffff82004034);
+  }
+  local_bc = *(float *)(iVar2 + 0x3b8);
+  local_cc = *(float *)(iVar2 + 1000);
+  dVar21 = 0.0;
+  local_c0 = 0.0;
+  local_b8 = 0.0;
+  local_d0 = 0.0;
+  local_c8 = 0.0;
+  iVar5 = BG_GetConditionBit(param_2,3);
+  if (iVar5 < 0) {
+    MyAssertHandler(0xffffffff820033b0,0xd07,0,0xffffffff82000f98,0xffffffff82003fd4);
+  }
+  iVar5 = BG_GetConditionBit(param_2,3);
+  if (0x37 < iVar5) {
+    MyAssertHandler(0xffffffff820033b0,0xd08,0,0xffffffff82000f98,0xffffffff82003f90);
+  }
+  dVar12 = 360.0;
+  dVar16 = 0.5;
+  dVar13 = 0.0027777778450399637;
+  if (((*(uint *)(iVar2 + 0x4a0) & 0xc0000) == 0) &&
+     (local_d0 = *(float *)(iVar2 + 0x3f0), (*(uint *)(iVar3 + 8) & 8) != 0)) {
+    dVar19 = (double)(local_d0 * 0.0027777778);
+    dVar7 = floor((double)(float)(dVar19 + 0.5));
+    dVar19 = (double)(float)((double)(float)(dVar19 - (double)(float)dVar7) * dVar12);
+    dVar7 = dVar16;
+    if (dVar19 <= dVar21) {
+      dVar7 = 0.25;
+    }
+    local_d0 = (float)(dVar19 * dVar7);
+  }
+  AnglesSubtract(&local_d0,&local_c0,&local_d0);
+  local_c8 = (float)dVar21;
+  dVar7 = dVar21;
+  dVar19 = dVar21;
+  dVar6 = dVar21;
+  if ((*(uint *)(iVar3 + 8) & 0x40000) == 0) {
+    dVar20 = (double)(float)((double)(local_bc - *(float *)(iVar2 + 0x420)) * dVar13);
+    dVar8 = floor((double)(float)(dVar20 + dVar16));
+    dVar21 = (double)local_c8;
+    local_bc = (float)((double)(float)(dVar20 - (double)(float)dVar8) * dVar12);
+  }
+  dVar8 = (double)local_cc;
+  if ((*(uint *)(iVar3 + 8) & 8) == 0) {
+    dVar10 = (double)local_d0;
+    dVar14 = (double)(float)(dVar21 * dVar16);
+    dVar20 = 0.20000000298023224;
+    dVar11 = 0.4000000059604645;
+    dVar9 = (double)(float)(dVar10 * 0.20000000298023224);
+    dVar15 = (double)(float)(dVar8 * 0.4000000059604645);
+    if (((double)*(float *)(iVar2 + 0x430) != dVar6) || ((double)*(float *)(iVar2 + 0x434) != dVar6)
+       ) {
+      dVar8 = (double)AngleSubtract((double)*(float *)(iVar2 + 0x430),
+                                    (double)*(float *)(iVar2 + 0x434));
+      dVar21 = (double)local_c8;
+      dVar9 = (double)(float)(dVar8 + dVar9);
+      dVar8 = (double)local_cc;
+      dVar10 = (double)local_d0;
+    }
+    dVar20 = dVar8 * dVar20;
+    dVar8 = dVar8 * dVar11;
+    dVar11 = (double)(float)(dVar21 * dVar16);
+    fVar1 = (float)(dVar10 * dVar16);
+    dVar10 = (double)(float)(dVar10 * 0.30000001192092896);
+    dVar21 = dVar21 * -0.6000000238418579;
+  }
+  else {
+    local_c0 = *(float *)(iVar2 + 0x430) + local_c0;
+    dVar19 = (double)(float)(dVar8 * 0.01745329238474369);
+    dVar21 = sin(dVar19);
+    dVar7 = (double)(float)dVar21;
+    dVar9 = dVar6;
+    dVar21 = cos(dVar19);
+    dVar6 = (double)local_c8;
+    dVar19 = (double)(float)(dVar7 * -12.0);
+    dVar15 = (double)(float)(dVar6 * -1.2000000476837158);
+    dVar14 = (double)(float)(dVar6 * 0.30000001192092896);
+    dVar7 = (double)((1.0 - (float)dVar21) * -24.0);
+    dVar10 = dVar9;
+    if (((double)*(float *)(iVar2 + 0x430) != dVar9) || ((double)*(float *)(iVar2 + 0x434) != dVar9)
+       ) {
+      dVar9 = (double)AngleSubtract((double)*(float *)(iVar2 + 0x430),
+                                    (double)*(float *)(iVar2 + 0x434));
+      dVar6 = (double)local_c8;
+    }
+    dVar11 = (double)(float)(dVar6 * 0.20000000298023224);
+    dVar21 = dVar6 * -0.20000000298023224;
+    dVar8 = (double)local_cc * 0.10000000149011612 - dVar11;
+    dVar20 = (double)local_cc * 0.800000011920929 - (double)(float)(dVar6 * -1.0);
+    dVar6 = dVar10;
+    fVar1 = local_d0;
+  }
+  dVar18 = (double)(float)dVar8;
+  dVar17 = (double)fVar1;
+  dVar20 = (double)(float)dVar20;
+  dVar8 = (double)(float)dVar21;
+  dVar21 = dVar6;
+  if (((double)*(float *)(iVar2 + 0x434) != dVar6) || ((double)*(float *)(iVar2 + 0x430) != dVar6))
+  {
+    dVar6 = (double)(float)((double)(float)((double)*(float *)(iVar2 + 0x434) -
+                                           (double)*(float *)(iVar2 + 0x430)) * dVar13);
+    dVar13 = floor((double)(float)(dVar6 + dVar16));
+    dVar6 = (double)(float)((double)(float)(dVar6 - (double)(float)dVar13) * dVar12);
+  }
+  *param_3 = (float)dVar9;
+  param_3[3] = (float)dVar10;
+  param_3[1] = (float)dVar15;
+  param_3[2] = (float)dVar14;
+  param_3[4] = (float)dVar18;
+  param_3[5] = (float)dVar11;
+  param_3[6] = (float)dVar17;
+  param_3[7] = (float)dVar20;
+  param_3[8] = (float)dVar8;
+  param_3[9] = (float)dVar6;
+  param_3[10] = (float)dVar21;
+  param_3[0xb] = (float)dVar21;
+  param_3[0xc] = local_c0;
+  param_3[0xd] = local_bc;
+  param_3[0xe] = local_b8;
+  param_3[0xf] = (float)dVar7;
+  param_3[0x10] = (float)dVar19;
+  param_3[0x11] = (float)dVar21;
+  __restfpr_17();
+  __restgprlr_27();
+  return;
+}
+
+
+// 8226B020  BG_LerpAngles  (bgame/bg_animation_mp.cpp:3483)
+
+void BG_LerpAngles(double param_1,float *param_2,undefined8 param_3,float *param_4)
+
+{
+  double dVar1;
+  double dVar2;
+  
+  dVar1 = (double)*param_4;
+  dVar2 = (double)(float)((double)*param_2 - dVar1);
+  if (dVar2 <= param_1) {
+    if (-param_1 <= dVar2) {
+      *param_4 = *param_2;
     }
     else {
-      *in_r5 = fVar1 - param_2;
+      *param_4 = (float)(dVar1 - param_1);
     }
   }
   else {
-    *in_r5 = fVar1 + param_2;
+    *param_4 = (float)(dVar1 + param_1);
   }
-  fVar1 = in_r5[1];
-  fVar2 = param_1[1] - fVar1;
-  if (fVar2 <= param_2) {
-    if (-param_2 <= fVar2) {
-      in_r5[1] = param_1[1];
+  dVar1 = (double)param_4[1];
+  dVar2 = (double)(float)((double)param_2[1] - dVar1);
+  if (dVar2 <= param_1) {
+    if (-param_1 <= dVar2) {
+      param_4[1] = param_2[1];
     }
     else {
-      in_r5[1] = fVar1 - param_2;
+      param_4[1] = (float)(dVar1 - param_1);
     }
   }
   else {
-    in_r5[1] = fVar1 + param_2;
+    param_4[1] = (float)(dVar1 + param_1);
   }
-  fVar1 = in_r5[2];
-  fVar2 = param_1[2] - fVar1;
-  if (param_2 < fVar2) {
-    in_r5[2] = fVar1 + param_2;
+  dVar1 = (double)param_4[2];
+  dVar2 = (double)(float)((double)param_2[2] - dVar1);
+  if (param_1 < dVar2) {
+    param_4[2] = (float)(dVar1 + param_1);
     return;
   }
-  if (fVar2 < -param_2) {
-    in_r5[2] = fVar1 - param_2;
+  if (dVar2 < -param_1) {
+    param_4[2] = (float)(dVar1 - param_1);
     return;
   }
-  in_r5[2] = param_1[2];
+  param_4[2] = param_2[2];
   return;
 }
 
 
 // 8226B0D8  BG_LerpOffset  (bgame/bg_animation_mp.cpp:3513)
 
-void BG_LerpOffset(float *param_1,float param_2,float *param_3)
+void BG_LerpOffset(undefined8 param_1,undefined8 param_2,float *param_3)
 
 {
   float *pfVar1;
-  float *in_r5;
   double dVar2;
   double extraout_f1;
   double dVar3;
   double dVar4;
   double dVar5;
-  float fVar6;
+  double dVar6;
   
-  pfVar1 = (float *)__savefpr_28((double)param_2,param_1,param_3);
-  dVar4 = (double)(pfVar1[2] - in_r5[2]);
-  dVar5 = (double)(*pfVar1 - *in_r5);
-  dVar3 = (double)(pfVar1[1] - in_r5[1]);
-  fVar6 = (float)(dVar3 * dVar3 + (double)(float)(dVar5 * dVar5 + (double)(float)(dVar4 * dVar4)));
-  if (fVar6 != 0.0) {
+  pfVar1 = (float *)__savefpr_28();
+  dVar5 = (double)(pfVar1[2] - param_3[2]);
+  dVar6 = (double)(*pfVar1 - *param_3);
+  dVar4 = (double)(pfVar1[1] - param_3[1]);
+  if ((float)(dVar4 * dVar4 + (double)(float)(dVar6 * dVar6 + (double)(float)(dVar5 * dVar5))) !=
+      0.0) {
     dVar2 = extraout_f1;
-    fVar6 = I_rsqrt(fVar6);
-    dVar2 = (double)(float)((double)fVar6 * dVar2);
+    dVar3 = (double)I_rsqrt();
+    dVar2 = (double)(float)(dVar3 * dVar2);
     if (1.0 <= dVar2) {
-      *in_r5 = *pfVar1;
-      in_r5[1] = pfVar1[1];
-      in_r5[2] = pfVar1[2];
+      *param_3 = *pfVar1;
+      param_3[1] = pfVar1[1];
+      param_3[2] = pfVar1[2];
     }
     else {
-      *in_r5 = (float)(dVar5 * dVar2 + (double)*in_r5);
-      in_r5[1] = (float)(dVar3 * dVar2 + (double)in_r5[1]);
-      in_r5[2] = (float)(dVar4 * dVar2 + (double)in_r5[2]);
+      *param_3 = (float)(dVar6 * dVar2 + (double)*param_3);
+      param_3[1] = (float)(dVar4 * dVar2 + (double)param_3[1]);
+      param_3[2] = (float)(dVar5 * dVar2 + (double)param_3[2]);
     }
   }
   __restfpr_28();
@@ -2270,56 +3411,343 @@ void BG_LerpOffset(float *param_1,float param_2,float *param_3)
 
 
 // 8226B1B8  BG_Player_DoControllersSetup  (bgame/bg_animation_mp.cpp:3544)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void BG_Player_DoControllersSetup(undefined8 param_1,undefined8 param_2,int param_3)
+
+{
+  ulonglong uVar1;
+  longlong lVar2;
+  longlong lVar3;
+  double dVar4;
+  double extraout_f1;
+  double dVar5;
+  
+  uVar1 = ZEXT48(&stack0x00000000);
+  BG_Player_DoControllersInternal(param_1,param_2,uVar1 - 0x60);
+  lVar2 = uVar1 - 0x60;
+  dVar5 = (double)(longlong)param_3;
+  lVar3 = 4;
+  dVar4 = (double)(float)(dVar5 * 0.36000001430511475);
+  do {
+    lVar2 = BG_LerpAngles(dVar4,lVar2);
+    lVar3 = lVar3 + -1;
+    lVar2 = lVar2 + 0xc;
+    dVar4 = extraout_f1;
+  } while (lVar3 != 0);
+  BG_LerpAngles(uVar1 - 0x30);
+  BG_LerpOffset((double)(float)(dVar5 * 0.10000000149011612),uVar1 - 0x24);
+  return;
+}
+
 
 // 8226D0C8  BG_PlayerAnimation  (bgame/bg_animation_mp.cpp:3566)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void BG_PlayerAnimation(undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  undefined8 uVar3;
+  
+  uVar3 = __savegprlr_24();
+  BG_PlayerAngles(param_2,param_3);
+  BG_AnimPlayerConditions(param_2,param_3);
+  iVar2 = (int)param_3;
+  uVar1 = *(undefined4 *)(iVar2 + 0x518);
+  BG_PlayerAnimation_VerifyAnim(uVar1,param_3 + 0x3b8);
+  BG_PlayerAnimation_VerifyAnim(uVar1,param_3 + 1000);
+  if ((*(int *)(iVar2 + 0x438) != 0) && ((*(uint *)(iVar2 + 0x3f8) & 0xfffffdff) == 0)) {
+    *(undefined4 *)(iVar2 + 0x438) = 0;
+    *(undefined4 *)(iVar2 + 0x43c) = 1;
+  }
+  if (*(int *)(iVar2 + 0x428) != *(int *)((int)param_2 + 0xd0)) {
+    MyAssertHandler(0xffffffff820033b0,0xe05,0,0xffffffff82000f98,0xffffffff82003f48);
+  }
+  if (*(int *)(iVar2 + 0x42c) != *(int *)((int)param_2 + 0xd4)) {
+    MyAssertHandler(0xffffffff820033b0,0xe06,0,0xffffffff82000f98,0xffffffff820046c4);
+  }
+  BG_RunLerpFrameRate(uVar3,param_3,param_3 + 0x3b8,*(undefined4 *)(iVar2 + 0x428),param_2,param_4);
+  BG_RunLerpFrameRate(uVar3,param_3,param_3 + 1000,*(undefined4 *)(iVar2 + 0x42c),param_2,param_4);
+  __restgprlr_24();
+  return;
+}
+
 
 // 8226B258  BG_UpdateWeaponHidePartBitsForModel  (bgame/bg_animation_mp.cpp:3602)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-void BG_UpdateWeaponHidePartBitsForModel(Weapon param_1,XModel *param_2,uint *param_3,int param_4)
+void BG_UpdateWeaponHidePartBitsForModel
+               (undefined8 param_1,undefined8 param_2,int param_3,undefined8 param_4)
 
 {
   int iVar1;
-  Weapon WVar2;
-  int iVar3;
+  undefined8 uVar2;
+  uint uVar3;
   int iVar4;
+  int iVar5;
   byte local_50 [80];
   
-  WVar2 = (Weapon)__savegprlr_25();
-  WVar2 = BG_GetAlternateWeapon(WVar2,false);
-  iVar4 = 0;
-  iVar1 = *(int *)((int)bg_weaponCompleteDefs +
-                  ((uint)(((ulonglong)WVar2 & 0xffffffff) << 2) & 0x3fc));
+  uVar2 = __savegprlr_25();
+  uVar3 = BG_GetAlternateWeapon(uVar2,0);
+  iVar5 = 0;
+  iVar1 = (&DAT_829d80d8)[uVar3 & 0xff];
   do {
-    if (*(short *)(*(int *)(iVar1 + 0xc) + iVar4) == 0) break;
+    if (*(short *)(*(int *)(iVar1 + 0xc) + iVar5) == 0) break;
     local_50[0] = 0xfe;
-    iVar3 = XModelGetBoneIndex(param_2,(uint)*(ushort *)(*(int *)(iVar1 + 0xc) + iVar4),param_4,
+    iVar4 = XModelGetBoneIndex(param_2,*(undefined2 *)(*(int *)(iVar1 + 0xc) + iVar5),param_4,
                                local_50);
-    if (iVar3 != 0) {
-      param_3[(int)(uint)local_50[0] >> 5] =
-           *(uint *)(&g_bitShift + (local_50[0] & 0x1f) * 4) | param_3[(int)(uint)local_50[0] >> 5];
+    if (iVar4 != 0) {
+      iVar4 = ((int)(uint)local_50[0] >> 5) * 4;
+      *(uint *)(iVar4 + param_3) = (&DAT_82992400)[local_50[0] & 0x1f] | *(uint *)(iVar4 + param_3);
     }
-    iVar4 = iVar4 + 2;
-  } while (iVar4 < 0x40);
+    iVar5 = iVar5 + 2;
+  } while (iVar5 < 0x40);
   __restgprlr_25();
   return;
 }
 
 
 // 8226B300  BG_UpdatePlayerDObj  (bgame/bg_animation_mp.cpp:3630)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
+
+void BG_UpdatePlayerDObj(undefined8 param_1,longlong param_2,longlong param_3,longlong param_4,
+                        ulonglong param_5)
+
+{
+  int iVar1;
+  code *pcVar2;
+  int iVar3;
+  ulonglong uVar4;
+  undefined8 uVar5;
+  char cVar11;
+  int iVar8;
+  ulonglong uVar6;
+  longlong lVar7;
+  int iVar9;
+  undefined2 uVar10;
+  undefined4 *puVar12;
+  int *piVar13;
+  uint uVar14;
+  ulonglong uVar15;
+  longlong lVar16;
+  int *in_r13;
+  ulonglong uVar17;
+  uint uVar18;
+  longlong lVar19;
+  longlong lVar20;
+  ulonglong uVar21;
+  uint local_2c0 [176];
+  
+  uVar4 = ZEXT48(&stack0x00000000);
+  uVar5 = __savegprlr();
+  iVar3 = (int)(uVar4 - 0x330);
+  *(BADSPACEBASE **)iVar3 = register0x0000000c;
+  *(int *)(iVar3 + 0x344) = (int)uVar5;
+  puVar12 = (undefined4 *)param_3;
+  *(undefined4 **)(iVar3 + 0x354) = puVar12;
+  piVar13 = (int *)param_4;
+  *(int **)(iVar3 + 0x35c) = piVar13;
+  BG_CheckThread();
+  iVar1 = *in_r13;
+  if (*(int *)(iVar1 + 8) == 0) {
+    MyAssertHandler(0xffffffff820033b0,0xe48,0,0xffffffff82000f98,0xffffffff820033f4);
+  }
+  uVar18 = puVar12[0x18];
+  if ((uVar18 & 0xff) == 0) {
+    uVar18 = puVar12[0x32];
+    *(uint *)(iVar3 + 0x50) = uVar18;
+  }
+  else {
+    *(uint *)(iVar3 + 0x50) = uVar18;
+  }
+  if ((puVar12[2] & 0x3800) != 0) {
+    uVar18 = -(uint)((puVar12[2] & 0x2000) != 0) & uVar18;
+    *(uint *)(iVar3 + 0x50) = uVar18;
+  }
+  iVar8 = piVar13[0x146];
+  *(int *)(iVar3 + 0x5c) = iVar8;
+  if (iVar8 == 0) {
+    MyAssertHandler(0xffffffff820033b0,0xe5b,0,0xffffffff82000f98,0xffffffff820040f8);
+  }
+  if ((*piVar13 != 0) && (*(char *)(piVar13 + 0x18) != '\0')) {
+    cVar11 = Sys_IsServerThread();
+    if ((cVar11 != '\0') || (uVar17 = param_4 + 0x3a0, puVar12[1] != 2)) {
+      uVar17 = param_3 + 0xe4;
+    }
+    lVar16 = param_4 + 0x3a0;
+    *(int *)(iVar3 + 0x60) = (int)lVar16;
+    uVar15 = uVar17;
+    do {
+      lVar19 = (ulonglong)*(byte *)lVar16 - (ulonglong)*(byte *)uVar15;
+      if (lVar19 != 0) break;
+      lVar16 = lVar16 + 1;
+      uVar15 = uVar15 + 1;
+    } while ((int *)lVar16 != piVar13 + 0xee);
+    if ((int)uVar5 != -1) {
+      FX_MarkEntUpdateBegin(uVar4 - 0x1a0,param_2,0,0);
+    }
+    if ((int)param_2 != (int)param_2 + -1 + (uint)(param_2 == 0)) {
+      if (((piVar13[0x147] == uVar18) && ((int)lVar19 == 0)) && (piVar13[0x10f] == 0))
+      goto LAB_8226b904;
+      (**(code **)(*(int *)(iVar1 + 8) + 0x863dc))(*puVar12,uVar5);
+    }
+    iVar8 = (**(code **)(*(int *)(iVar1 + 8) + 0x863d0))(param_4 + 0x60);
+    *(int *)(iVar3 + 0x90) = iVar8;
+    if (iVar8 == 0) {
+      MyAssertHandler(0xffffffff820033b0,0xe86,0,0xffffffff82000f98,0xffffffff820040d8);
+    }
+    piVar13[0x147] = uVar18;
+    iVar8 = *(int *)(iVar1 + 8);
+    *(undefined4 *)(iVar3 + 0x58) = 0xffffffff;
+    *(undefined4 *)(iVar3 + 0x54) = 0xffffffff;
+    uVar15 = 1;
+    *(undefined2 *)(iVar3 + 0x94) = 0;
+    *(undefined1 *)(iVar3 + 0x96) = 0;
+    pcVar2 = *(code **)(iVar8 + 0x863d8);
+    if (pcVar2 != (code *)0x0) {
+      uVar15 = (*pcVar2)(uVar4 - 0x2a0,1,param_4,puVar12[0x19],uVar4 - 0x2dc,uVar4 - 0x2d8);
+      uVar15 = uVar15 & 0xffff;
+    }
+    uVar6 = XModelNumBones(*(undefined4 *)(iVar3 + 0x90));
+    lVar16 = 0;
+    if (1 < (uint)uVar15) {
+      lVar19 = uVar4 - 0x2a0;
+      lVar20 = uVar15 - 1;
+      do {
+        lVar19 = lVar19 + 8;
+        lVar7 = XModelNumBones(*(undefined4 *)lVar19);
+        lVar20 = lVar20 + -1;
+        lVar16 = lVar7 + lVar16;
+      } while (lVar20 != 0);
+      if (0 < (int)lVar16) {
+        iVar8 = 0;
+        *(undefined8 *)(iVar3 + 0x78) = 0;
+        *(undefined8 *)(iVar3 + 0x80) = 0;
+        if ((uVar6 & 0xffffffff) != 0) {
+          uVar18 = 0;
+          uVar21 = uVar6;
+          do {
+            iVar9 = iVar8 >> 5;
+            uVar18 = *(uint *)((int)&DAT_82992400 + (uVar18 & 0x7c));
+            uVar14 = uVar18 | local_2c0[iVar9];
+            if ((*(uint *)(iVar9 * 4 + (int)uVar17) & uVar18) == 0) {
+              uVar14 = local_2c0[iVar9] & ~uVar18;
+            }
+            iVar8 = iVar8 + 1;
+            local_2c0[iVar9] = uVar14;
+            uVar18 = iVar8 * 4;
+            uVar21 = uVar21 - 1;
+          } while (uVar21 != 0);
+        }
+        iVar8 = 1;
+        lVar19 = uVar4 - 0x2a0;
+        uVar21 = uVar6;
+        do {
+          if (((*(int *)(iVar3 + 0x58) < 0) || (iVar8 < *(int *)(iVar3 + 0x58))) ||
+             (*(char *)(*(int *)(iVar3 + 0x354) + 0x67) == '\0')) {
+            if (((-1 < *(int *)(iVar3 + 0x54)) && (*(int *)(iVar3 + 0x54) <= iVar8)) &&
+               (uVar18 = *(uint *)(iVar3 + 0x50), (uVar18 & 0xff) != 0)) goto LAB_8226b66c;
+          }
+          else {
+            uVar18 = *(uint *)(*(int *)(iVar3 + 0x354) + 100);
+LAB_8226b66c:
+            BG_UpdateWeaponHidePartBitsForModel
+                      (uVar18,*(undefined4 *)((int)lVar19 + 8),uVar4 - 0x2c0,uVar21);
+          }
+          lVar19 = lVar19 + 8;
+          lVar20 = XModelNumBones(*(undefined4 *)lVar19);
+          iVar8 = iVar8 + 1;
+          uVar21 = lVar20 + uVar21;
+        } while (iVar8 < (int)(uint)uVar15);
+      }
+    }
+    param_4 = param_4 + 0xa0;
+    iVar8 = 0;
+    lVar19 = uVar15 * 8 + (uVar4 - 0x330) + 0x8e;
+    uVar21 = 1;
+    do {
+      if (*(char *)param_4 == '\0') break;
+      if (0x1f < (int)uVar15) {
+        MyAssertHandler(0xffffffff820033b0,0xeaf,0,0xffffffff82000f98,0xffffffff820040b8);
+      }
+      iVar9 = (**(code **)(*(int *)(iVar1 + 8) + 0x863d0))(param_4);
+      *(int *)((int)lVar19 + 2) = iVar9;
+      if (iVar9 == 0) {
+        MyAssertHandler(0xffffffff820033b0,0xeb1,0,0xffffffff82000f98,0xffffffff820040d8);
+      }
+      uVar10 = SL_FindString(param_4 + 0x180);
+      iVar8 = iVar8 + 1;
+      *(undefined2 *)((int)lVar19 + 6) = uVar10;
+      uVar15 = uVar15 + 1;
+      lVar19 = lVar19 + 8;
+      *(char *)lVar19 = '\x01' - ((uVar21 & param_5) == 0);
+      param_4 = param_4 + 0x40;
+      uVar21 = (uVar21 & 0x7fffffff) << 1 | uVar21 >> 0x1f;
+    } while (iVar8 < 6);
+    iVar8 = *(int *)(iVar3 + 0x35c);
+    puVar12 = *(undefined4 **)(iVar3 + 0x354);
+    iVar9 = *(int *)(iVar3 + 0x344);
+    uVar15 = (**(code **)(*(int *)(iVar1 + 8) + 0x863d4))
+                       (uVar4 - 0x2a0,uVar15 & 0xffff,*(undefined4 *)(iVar3 + 0x5c),*puVar12,iVar9,
+                        *(undefined4 *)(iVar8 + 8));
+    if ((uVar15 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff820033b0,0xeb9,0,0xffffffff82000f98,0xffffffff820040b4);
+    }
+    uVar21 = uVar17;
+    if (0 < (int)lVar16) {
+      uVar21 = DObjNumBones(uVar15);
+      uVar6 = lVar16 + uVar6;
+      if ((uVar6 & 0xffffffff) < (uVar21 & 0xffffffff)) {
+        lVar19 = uVar21 - uVar6;
+        uVar21 = uVar6 - lVar16;
+        do {
+          iVar1 = (int)uVar6 >> 5;
+          uVar18 = *(uint *)((int)&DAT_82992400 + ((uint)((uVar6 & 0xffffffff) << 2) & 0x7c));
+          uVar14 = uVar18 | local_2c0[iVar1];
+          if ((*(uint *)(((int)uVar21 >> 5) * 4 + (int)uVar17) &
+              *(uint *)((int)&DAT_82992400 + ((uint)((uVar21 & 0xffffffff) << 2) & 0x7c))) == 0) {
+            uVar14 = local_2c0[iVar1] & ~uVar18;
+          }
+          uVar21 = uVar21 + 1;
+          local_2c0[iVar1] = uVar14;
+          uVar6 = uVar6 + 1;
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
+      }
+      uVar21 = uVar4 - 0x2c0;
+    }
+    DObjSetHidePartBits(uVar15,uVar21);
+    if ((ulonglong)*(uint *)(iVar3 + 0x60) != (uVar17 & 0xffffffff)) {
+      lVar16 = uVar17 - 4;
+      lVar19 = (ulonglong)*(uint *)(iVar3 + 0x60) - 4;
+      lVar20 = 6;
+      do {
+        lVar16 = lVar16 + 4;
+        lVar19 = lVar19 + 4;
+        *(undefined4 *)lVar19 = *(undefined4 *)lVar16;
+        lVar20 = lVar20 + -1;
+      } while (lVar20 != 0);
+    }
+    if (-1 < *(int *)(iVar3 + 0x54)) {
+      BG_SetWeaponIronSights(*(undefined4 *)(iVar3 + 0x50),uVar15);
+    }
+    if ((*(char *)((int)puVar12 + 0x67) != '\0') && (-1 < *(int *)(iVar3 + 0x58))) {
+      BG_SetWeaponIronSights(puVar12[0x19],uVar15);
+    }
+    if (iVar9 != -1) {
+      FX_MarkEntUpdateEnd(uVar4 - 0x1a0,iVar9,*puVar12,uVar15,0,0);
+    }
+    *(undefined4 *)(iVar8 + 0x43c) = 0;
+    __restgprlr();
+    return;
+  }
+  XAnimClearTree(iVar8);
+  (**(code **)(*(int *)(iVar1 + 8) + 0x863dc))(*puVar12,uVar5);
+LAB_8226b904:
+  __restgprlr();
+  return;
+}
+
 
 // 8226B910  BG_FindAnims  (bgame/bg_animation_mp.cpp:3808)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void BG_FindAnims(void)
 
@@ -2331,15 +3759,14 @@ void BG_FindAnims(void)
   BG_CheckThread();
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 8) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0xee4,0,"%s");
+    MyAssertHandler(0xffffffff820033b0,0xee4,0,0xffffffff82000f98,0xffffffff820033f4);
   }
-  Scr_FindAnim("multiplayer","torso",(scr_anim_s *)(*(int *)(iVar1 + 8) + 0x863b4),
-               *(int *)(*(int *)(iVar1 + 8) + 0x863cc));
-  Scr_FindAnim("multiplayer","legs",(scr_anim_s *)(*(int *)(iVar1 + 8) + 0x863b8),
-               *(int *)(*(int *)(iVar1 + 8) + 0x863cc));
-  Scr_FindAnim("multiplayer","turning",(scr_anim_s *)(*(int *)(iVar1 + 8) + 0x863bc),
-               *(int *)(*(int *)(iVar1 + 8) + 0x863cc));
+  Scr_FindAnim(0xffffffff82003364,0xffffffff82003c50,*(int *)(iVar1 + 8) + 0x863b4,
+               *(undefined4 *)(*(int *)(iVar1 + 8) + 0x863cc));
+  Scr_FindAnim(0xffffffff82003364,0xffffffff82003c48,*(int *)(iVar1 + 8) + 0x863b8,
+               *(undefined4 *)(*(int *)(iVar1 + 8) + 0x863cc));
+  Scr_FindAnim(0xffffffff82003364,0xffffffff82004104,*(int *)(iVar1 + 8) + 0x863bc,
+               *(undefined4 *)(*(int *)(iVar1 + 8) + 0x863cc));
   __restgprlr_28();
   return;
 }
@@ -2347,46 +3774,42 @@ void BG_FindAnims(void)
 
 // 8226B9D0  BG_FindAnimTree  (bgame/bg_animation_mp.cpp:3829)
 
-scr_animtree_t BG_FindAnimTree(char *param_1,int param_2)
+void BG_FindAnimTree(undefined8 param_1,int param_2)
 
 {
-  char *pcVar1;
-  scr_animtree_t sVar2;
-  XAnim_s *pXVar3;
+  undefined8 uVar1;
+  ulonglong uVar2;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  sVar2 = Scr_FindAnimTree(pcVar1);
-  if ((sVar2.anims == (XAnim_s *)0x0) && (param_2 != 0)) {
-    Com_Error(ERR_DROP,"\x15Could not find animation tree \'%s\'");
+  uVar1 = __savegprlr_29();
+  uVar2 = Scr_FindAnimTree();
+  if (((uVar2 & 0xffffffff) == 0) && (param_2 != 0)) {
+    Com_Error(1,0xffffffff8200410c,uVar1);
   }
-  pXVar3 = (XAnim_s *)__restgprlr_29(sVar2.anims);
-  return (scr_animtree_t)pXVar3;
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 8226BA20  BG_FindAnimTrees  (bgame/bg_animation_mp.cpp:3848)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void BG_FindAnimTrees(void)
 
 {
   int iVar1;
-  scr_animtree_t sVar2;
+  int iVar2;
   int *in_r13;
   
   __savegprlr_28();
   BG_CheckThread();
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 8) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_animation_mp.cpp",
-                    0xf0c,0,"%s");
+    MyAssertHandler(0xffffffff820033b0,0xf0c,0,0xffffffff82000f98,0xffffffff820033f4);
   }
-  sVar2 = Scr_FindAnimTree("multiplayer");
-  if (sVar2.anims == (XAnim_s *)0x0) {
-    Com_Error(ERR_DROP,"\x15Could not find animation tree \'%s\'");
+  iVar2 = Scr_FindAnimTree(0xffffffff82003364);
+  if (iVar2 == 0) {
+    Com_Error(1,0xffffffff8200410c,0xffffffff82003364);
   }
-  *(XAnim_s **)(*(int *)(iVar1 + 8) + 0x863b0) = sVar2.anims;
+  *(int *)(*(int *)(iVar1 + 8) + 0x863b0) = iVar2;
   *(undefined4 *)(*(int *)(iVar1 + 8) + 0x863a4) = *(undefined4 *)(*(int *)(iVar1 + 8) + 0x863b0);
   *(undefined2 *)(*(int *)(iVar1 + 8) + 0x863a8) = *(undefined2 *)(*(int *)(iVar1 + 8) + 0x863b4);
   *(undefined2 *)(*(int *)(iVar1 + 8) + 0x863aa) = *(undefined2 *)(*(int *)(iVar1 + 8) + 0x863b8);

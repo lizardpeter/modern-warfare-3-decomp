@@ -2,7 +2,7 @@
 
 // 82821B80  vp8_subtract_b_c  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:33)
 
-void vp8_subtract_b_c(BLOCK *param_1,BLOCKD *param_2,int param_3)
+void vp8_subtract_b_c(int *param_1,int param_2,int param_3)
 
 {
   byte *pbVar1;
@@ -10,10 +10,10 @@ void vp8_subtract_b_c(BLOCK *param_1,BLOCKD *param_2,int param_3)
   short *psVar3;
   byte *pbVar4;
   
-  pbVar1 = param_2->predictor;
-  iVar2 = param_1->src_stride;
-  psVar3 = param_1->src_diff;
-  pbVar4 = *param_1->base_src + param_1->src;
+  pbVar1 = *(byte **)(param_2 + 8);
+  iVar2 = param_1[10];
+  psVar3 = (short *)*param_1;
+  pbVar4 = (byte *)(*(int *)param_1[8] + param_1[9]);
   *psVar3 = (ushort)*pbVar4 - (ushort)*pbVar1;
   psVar3[1] = (ushort)pbVar4[1] - (ushort)pbVar1[1];
   psVar3[2] = (ushort)pbVar4[2] - (ushort)pbVar1[2];
@@ -45,7 +45,7 @@ void vp8_subtract_b_c(BLOCK *param_1,BLOCKD *param_2,int param_3)
 
 // 82821CA8  vp8_subtract_mbuv_c  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:55)
 
-void vp8_subtract_mbuv_c(short *param_1,uchar *param_2,uchar *param_3,uchar *param_4,int param_5)
+void vp8_subtract_mbuv_c(int param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
   byte *pbVar1;
@@ -54,9 +54,9 @@ void vp8_subtract_mbuv_c(short *param_1,uchar *param_2,uchar *param_3,uchar *par
   byte *pbVar4;
   longlong lVar5;
   
-  psVar2 = param_1 + 0xff;
-  pbVar3 = param_4 + 0xff;
-  pbVar4 = param_2 + 2;
+  psVar2 = (short *)(param_1 + 0x1fe);
+  pbVar3 = (byte *)(param_4 + 0xff);
+  pbVar4 = (byte *)(param_2 + 2);
   lVar5 = 8;
   do {
     psVar2[1] = (ushort)pbVar4[-2] - (ushort)pbVar3[1];
@@ -73,9 +73,9 @@ void vp8_subtract_mbuv_c(short *param_1,uchar *param_2,uchar *param_3,uchar *par
     *psVar2 = (ushort)*pbVar1 - (ushort)*pbVar3;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  pbVar4 = param_3 + 2;
-  pbVar3 = param_4 + 0x13f;
-  psVar2 = param_1 + 0x13f;
+  pbVar4 = (byte *)(param_3 + 2);
+  pbVar3 = (byte *)(param_4 + 0x13f);
+  psVar2 = (short *)(param_1 + 0x27e);
   lVar5 = 8;
   do {
     psVar2[1] = (ushort)pbVar4[-2] - (ushort)pbVar3[1];
@@ -98,48 +98,42 @@ void vp8_subtract_mbuv_c(short *param_1,uchar *param_2,uchar *param_3,uchar *par
 
 // 82821DF8  vp8_subtract_mby_c  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:89)
 
-void vp8_subtract_mby_c(short *param_1,uchar *param_2,uchar *param_3,int param_4)
+void vp8_subtract_mby_c(undefined8 param_1,longlong param_2,longlong param_3,longlong param_4)
 
 {
   byte *pbVar1;
   byte *pbVar2;
   int iVar3;
   int iVar4;
-  longlong lVar5;
-  longlong lVar6;
+  short *psVar5;
+  int iVar6;
   longlong lVar7;
-  short *psVar8;
-  int iVar9;
-  longlong lVar10;
-  longlong lVar11;
+  longlong lVar8;
   
-  lVar6 = (longlong)param_4;
-  lVar5 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
-  psVar8 = (short *)(iVar4 + 4);
-  lVar7 = lVar7 + 2;
-  lVar10 = 0x10;
+  iVar4 = __savegprlr_27();
+  psVar5 = (short *)(iVar4 + 4);
+  param_2 = param_2 + 2;
+  lVar7 = 0x10;
   do {
-    iVar3 = (int)lVar5;
-    iVar4 = (int)lVar7;
-    iVar9 = 0;
-    lVar11 = 4;
+    iVar3 = (int)param_3;
+    iVar4 = (int)param_2;
+    iVar6 = 0;
+    lVar8 = 4;
     do {
-      psVar8[-2] = (ushort)*(byte *)(iVar4 + -2 + iVar9) - (ushort)*(byte *)(iVar9 + iVar3);
-      psVar8[-1] = (ushort)*(byte *)(iVar4 + -1 + iVar9) - (ushort)*(byte *)(iVar3 + 1 + iVar9);
-      *psVar8 = (ushort)*(byte *)(iVar4 + iVar9) - (ushort)*(byte *)(iVar3 + 2 + iVar9);
-      pbVar1 = (byte *)(iVar3 + 3 + iVar9);
-      pbVar2 = (byte *)(iVar4 + 1 + iVar9);
-      iVar9 = iVar9 + 4;
-      psVar8[1] = (ushort)*pbVar2 - (ushort)*pbVar1;
-      psVar8 = psVar8 + 4;
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
-    lVar10 = lVar10 + -1;
-    lVar5 = lVar5 + 0x10;
-    lVar7 = lVar7 + lVar6;
-  } while (lVar10 != 0);
+      psVar5[-2] = (ushort)*(byte *)(iVar4 + -2 + iVar6) - (ushort)*(byte *)(iVar6 + iVar3);
+      psVar5[-1] = (ushort)*(byte *)(iVar4 + -1 + iVar6) - (ushort)*(byte *)(iVar3 + 1 + iVar6);
+      *psVar5 = (ushort)*(byte *)(iVar4 + iVar6) - (ushort)*(byte *)(iVar3 + 2 + iVar6);
+      pbVar1 = (byte *)(iVar3 + 3 + iVar6);
+      pbVar2 = (byte *)(iVar4 + 1 + iVar6);
+      iVar6 = iVar6 + 4;
+      psVar5[1] = (ushort)*pbVar2 - (ushort)*pbVar1;
+      psVar5 = psVar5 + 4;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    lVar7 = lVar7 + -1;
+    param_3 = param_3 + 0x10;
+    param_2 = param_2 + param_4;
+  } while (lVar7 != 0);
   __restgprlr_27();
   return;
 }
@@ -147,20 +141,18 @@ void vp8_subtract_mby_c(short *param_1,uchar *param_2,uchar *param_3,int param_4
 
 // 82821EA0  vp8_subtract_mb  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:106)
 
-void vp8_subtract_mb(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
+void vp8_subtract_mb(undefined8 param_1,longlong param_2)
 
 {
   int iVar1;
   int iVar2;
-  longlong lVar3;
   
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = (int)lVar3;
+  iVar2 = __savegprlr_29();
+  iVar1 = (int)param_2;
   (**(code **)(iVar2 + 200))
-            (lVar3,*(undefined4 *)(iVar1 + 0xb08),lVar3 + 0xe50,*(undefined4 *)(iVar1 + 0xaf8));
+            (param_2,*(undefined4 *)(iVar1 + 0xb08),param_2 + 0xe50,*(undefined4 *)(iVar1 + 0xaf8));
   (**(code **)(iVar2 + 0xcc))
-            (lVar3,*(undefined4 *)(iVar1 + 0xb0c),*(undefined4 *)(iVar1 + 0xb10),lVar3 + 0xe50,
+            (param_2,*(undefined4 *)(iVar1 + 0xb0c),*(undefined4 *)(iVar1 + 0xb10),param_2 + 0xe50,
              *(undefined4 *)(iVar1 + 0xb04));
   __restgprlr_29();
   return;
@@ -169,20 +161,20 @@ void vp8_subtract_mb(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
 
 // 82821F00  vp8_build_dcblock  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:112)
 
-void vp8_build_dcblock(MACROBLOCK *param_1)
+void vp8_build_dcblock(int param_1)
 
 {
-  short *psVar1;
-  short *psVar2;
+  undefined2 *puVar1;
+  undefined2 *puVar2;
   longlong lVar3;
   
-  psVar2 = param_1->src_diff + 0x180;
-  psVar1 = param_1->src_diff + 0x17f;
+  puVar2 = (undefined2 *)(param_1 + 0x300);
+  puVar1 = (undefined2 *)(param_1 + 0x2fe);
   lVar3 = 0x10;
   do {
-    psVar2 = psVar2 + 0x10;
-    psVar1 = psVar1 + 1;
-    *psVar1 = *psVar2;
+    puVar2 = puVar2 + 0x10;
+    puVar1 = puVar1 + 1;
+    *puVar1 = *puVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
   return;
@@ -191,7 +183,7 @@ void vp8_build_dcblock(MACROBLOCK *param_1)
 
 // 82821F28  vp8_transform_mbuv  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:123)
 
-void vp8_transform_mbuv(MACROBLOCK *param_1)
+void vp8_transform_mbuv(void)
 
 {
   undefined4 *puVar1;
@@ -199,7 +191,7 @@ void vp8_transform_mbuv(MACROBLOCK *param_1)
   longlong lVar3;
   undefined4 *puVar4;
   
-  iVar2 = __savegprlr_29(param_1);
+  iVar2 = __savegprlr_29();
   puVar4 = (undefined4 *)(iVar2 + 0x8e4);
   lVar3 = 4;
   do {
@@ -215,7 +207,7 @@ void vp8_transform_mbuv(MACROBLOCK *param_1)
 
 // 82821F70  vp8_transform_intra_mby  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:135)
 
-void vp8_transform_intra_mby(MACROBLOCK *param_1)
+void vp8_transform_intra_mby(void)
 
 {
   undefined4 *puVar1;
@@ -225,7 +217,7 @@ void vp8_transform_intra_mby(MACROBLOCK *param_1)
   longlong lVar5;
   undefined4 *puVar6;
   
-  iVar2 = __savegprlr_28(param_1);
+  iVar2 = __savegprlr_28();
   puVar6 = (undefined4 *)(iVar2 + 0x5e4);
   lVar5 = 8;
   do {
@@ -251,7 +243,7 @@ void vp8_transform_intra_mby(MACROBLOCK *param_1)
 
 // 82821FF8  vp8_transform_mb  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:155)
 
-void vp8_transform_mb(MACROBLOCK *param_1)
+void vp8_transform_mb(void)
 
 {
   undefined4 *puVar1;
@@ -261,7 +253,7 @@ void vp8_transform_mb(MACROBLOCK *param_1)
   longlong lVar5;
   undefined4 *puVar6;
   
-  iVar2 = __savegprlr_28(param_1);
+  iVar2 = __savegprlr_28();
   puVar6 = (undefined4 *)(iVar2 + 0x5e4);
   lVar5 = 8;
   do {
@@ -299,7 +291,7 @@ void vp8_transform_mb(MACROBLOCK *param_1)
 
 // 828220C8  vp8_transform_mby  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:182)
 
-void vp8_transform_mby(MACROBLOCK *param_1)
+void vp8_transform_mby(void)
 
 {
   undefined4 *puVar1;
@@ -309,7 +301,7 @@ void vp8_transform_mby(MACROBLOCK *param_1)
   longlong lVar5;
   undefined4 *puVar6;
   
-  iVar2 = __savegprlr_28(param_1);
+  iVar2 = __savegprlr_28();
   puVar6 = (undefined4 *)(iVar2 + 0x5e4);
   lVar5 = 8;
   do {
@@ -337,37 +329,36 @@ void vp8_transform_mby(MACROBLOCK *param_1)
 
 // 82822160  vp8_stuff_inter16x16  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:202)
 
-void vp8_stuff_inter16x16(MACROBLOCK *param_1)
+void vp8_stuff_inter16x16(longlong param_1)
 
 {
-  vp8_build_inter_predictors_mb_s(&param_1->e_mbd);
+  vp8_build_inter_predictors_mb_s(param_1 + 0xb30);
   return;
 }
 
 
 // 82822168  vp8_encode_inter16x16  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:632)
 
-void vp8_encode_inter16x16(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
+void vp8_encode_inter16x16(undefined8 param_1,longlong param_2)
 
 {
-  MACROBLOCK *pMVar1;
+  int iVar1;
   int *piVar2;
-  MACROBLOCKD *pMVar3;
-  longlong lVar4;
+  longlong lVar3;
   
-  lVar4 = (longlong)(int)param_2;
-  piVar2 = (int *)__savegprlr_28(param_1);
-  pMVar3 = (MACROBLOCKD *)(lVar4 + 0xb30);
-  vp8_build_inter_predictors_mb(pMVar3);
-  pMVar1 = (MACROBLOCK *)lVar4;
-  (*(code *)piVar2[0x32])(lVar4,(pMVar1->src).y_buffer,lVar4 + 0xe50,(pMVar1->src).y_stride);
+  piVar2 = (int *)__savegprlr_28();
+  lVar3 = param_2 + 0xb30;
+  vp8_build_inter_predictors_mb(lVar3);
+  iVar1 = (int)param_2;
+  (*(code *)piVar2[0x32])
+            (param_2,*(undefined4 *)(iVar1 + 0xb08),param_2 + 0xe50,*(undefined4 *)(iVar1 + 0xaf8));
   (*(code *)piVar2[0x33])
-            (lVar4,(pMVar1->src).u_buffer,(pMVar1->src).v_buffer,lVar4 + 0xe50,
-             (pMVar1->src).uv_stride);
-  vp8_transform_mb(pMVar1);
-  vp8_quantize_mb(pMVar1);
-  vp8_inverse_transform_mb((vp8_idct_rtcd_vtable_t *)*piVar2,pMVar3);
-  (**(code **)(*piVar2 + 0x2c))(*piVar2 + 0x14,lVar4 + 0xb30);
+            (param_2,*(undefined4 *)(iVar1 + 0xb0c),*(undefined4 *)(iVar1 + 0xb10),param_2 + 0xe50,
+             *(undefined4 *)(iVar1 + 0xb04));
+  vp8_transform_mb(param_2);
+  vp8_quantize_mb(param_2);
+  vp8_inverse_transform_mb(*piVar2,lVar3);
+  (**(code **)(*piVar2 + 0x2c))(*piVar2 + 0x14,lVar3);
   __restgprlr_28();
   return;
 }
@@ -375,24 +366,22 @@ void vp8_encode_inter16x16(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
 
 // 82822208  vp8_encode_inter16x16y  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:655)
 
-void vp8_encode_inter16x16y(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
+void vp8_encode_inter16x16y(undefined8 param_1,longlong param_2)
 
 {
-  MACROBLOCK *pMVar1;
-  int *piVar2;
-  MACROBLOCKD *pMVar3;
-  longlong lVar4;
+  int *piVar1;
+  longlong lVar2;
   
-  lVar4 = (longlong)(int)param_2;
-  piVar2 = (int *)__savegprlr_29(param_1);
-  pMVar3 = (MACROBLOCKD *)(lVar4 + 0xb30);
-  vp8_build_inter_predictors_mby(pMVar3);
-  pMVar1 = (MACROBLOCK *)lVar4;
-  (*(code *)piVar2[0x32])(lVar4,(pMVar1->src).y_buffer,lVar4 + 0xe50,(pMVar1->src).y_stride);
-  vp8_transform_mby(pMVar1);
-  vp8_quantize_mby(pMVar1);
-  vp8_inverse_transform_mby((vp8_idct_rtcd_vtable_t *)*piVar2,pMVar3);
-  (**(code **)(*piVar2 + 0x30))(*piVar2 + 0x14,lVar4 + 0xb30);
+  piVar1 = (int *)__savegprlr_29();
+  lVar2 = param_2 + 0xb30;
+  vp8_build_inter_predictors_mby(lVar2);
+  (*(code *)piVar1[0x32])
+            (param_2,*(undefined4 *)((int)param_2 + 0xb08),param_2 + 0xe50,
+             *(undefined4 *)((int)param_2 + 0xaf8));
+  vp8_transform_mby(param_2);
+  vp8_quantize_mby(param_2);
+  vp8_inverse_transform_mby(*piVar1,lVar2);
+  (**(code **)(*piVar1 + 0x30))(*piVar1 + 0x14,lVar2);
   __restgprlr_29();
   return;
 }
@@ -400,35 +389,34 @@ void vp8_encode_inter16x16y(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
 
 // 82822280  vp8_encode_inter16x16uv  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:672)
 
-void vp8_encode_inter16x16uv(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
+void vp8_encode_inter16x16uv(undefined8 param_1,longlong param_2)
 
 {
   int iVar1;
-  MACROBLOCK *pMVar2;
-  int *piVar3;
-  MACROBLOCKD *pMVar4;
+  int iVar2;
+  uint *puVar3;
+  longlong lVar4;
   longlong lVar5;
   longlong lVar6;
   
-  lVar6 = (longlong)(int)param_2;
-  piVar3 = (int *)__savegprlr_26(param_1);
-  pMVar2 = (MACROBLOCK *)lVar6;
-  pMVar4 = &pMVar2->e_mbd;
-  vp8_build_inter_predictors_mbuv(pMVar4);
-  (*(code *)piVar3[0x33])
-            (lVar6,(pMVar2->src).u_buffer,(pMVar2->src).v_buffer,lVar6 + 0xe50,
-             (pMVar2->src).uv_stride);
-  lVar6 = lVar6 + 0x8e4;
+  puVar3 = (uint *)__savegprlr_26();
+  lVar4 = param_2 + 0xb30;
+  vp8_build_inter_predictors_mbuv(lVar4);
+  iVar1 = (int)param_2;
+  (*(code *)puVar3[0x33])
+            (param_2,*(undefined4 *)(iVar1 + 0xb0c),*(undefined4 *)(iVar1 + 0xb10),param_2 + 0xe50,
+             *(undefined4 *)(iVar1 + 0xb04));
+  lVar6 = param_2 + 0x8e4;
   lVar5 = 4;
   do {
-    iVar1 = (int)lVar6;
+    iVar2 = (int)lVar6;
     lVar6 = lVar6 + 0x60;
-    (*pMVar2->vp8_short_fdct8x4)(*(short **)(iVar1 + 0x5c),(short *)*(undefined4 *)lVar6,0x10);
+    (**(code **)(iVar1 + 0xbfc8))(*(undefined4 *)(iVar2 + 0x5c),*(undefined4 *)lVar6,0x10);
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  vp8_quantize_mbuv(pMVar2);
-  vp8_inverse_transform_mbuv((vp8_idct_rtcd_vtable_t *)*piVar3,pMVar4);
-  vp8_recon_intra_mbuv((vp8_recon_rtcd_vtable *)(*piVar3 + 0x14),pMVar4);
+  vp8_quantize_mbuv(param_2);
+  vp8_inverse_transform_mbuv(*puVar3,lVar4);
+  vp8_recon_intra_mbuv((ulonglong)*puVar3 + 0x14,lVar4);
   __restgprlr_26();
   return;
 }
@@ -436,30 +424,29 @@ void vp8_encode_inter16x16uv(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
 
 // 82822320  vp8_encode_inter16x16uvrd  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:688)
 
-void vp8_encode_inter16x16uvrd(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
+void vp8_encode_inter16x16uvrd(undefined8 param_1,longlong param_2)
 
 {
-  MACROBLOCK *pMVar1;
+  int iVar1;
   int iVar2;
   longlong lVar3;
   longlong lVar4;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  pMVar1 = (MACROBLOCK *)lVar4;
-  vp8_build_inter_predictors_mbuv(&pMVar1->e_mbd);
+  iVar2 = __savegprlr_28();
+  vp8_build_inter_predictors_mbuv(param_2 + 0xb30);
+  iVar1 = (int)param_2;
   (**(code **)(iVar2 + 0xcc))
-            (lVar4,(pMVar1->src).u_buffer,(pMVar1->src).v_buffer,lVar4 + 0xe50,
-             (pMVar1->src).uv_stride);
-  lVar4 = lVar4 + 0x8e4;
+            (param_2,*(undefined4 *)(iVar1 + 0xb0c),*(undefined4 *)(iVar1 + 0xb10),param_2 + 0xe50,
+             *(undefined4 *)(iVar1 + 0xb04));
+  lVar4 = param_2 + 0x8e4;
   lVar3 = 4;
   do {
     iVar2 = (int)lVar4;
     lVar4 = lVar4 + 0x60;
-    (*pMVar1->vp8_short_fdct8x4)(*(short **)(iVar2 + 0x5c),(short *)*(undefined4 *)lVar4,0x10);
+    (**(code **)(iVar1 + 0xbfc8))(*(undefined4 *)(iVar2 + 0x5c),*(undefined4 *)lVar4,0x10);
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  vp8_quantize_mbuv(pMVar1);
+  vp8_quantize_mbuv(param_2);
   __restgprlr_28();
   return;
 }

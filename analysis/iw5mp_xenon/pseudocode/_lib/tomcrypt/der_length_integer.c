@@ -5,54 +5,54 @@
 void der_length_integer(undefined8 param_1,int *param_2)
 
 {
-  ulonglong uVar1;
-  void *pvVar2;
-  int iVar3;
-  uint uVar4;
-  ulong uVar5;
+  undefined8 uVar1;
+  int iVar4;
+  uint uVar5;
+  longlong lVar2;
   int iVar6;
+  ulonglong uVar3;
   ulonglong uVar7;
   longlong lVar8;
   
-  pvVar2 = (void *)__savegprlr_27();
-  iVar3 = (*ltc_mp.compare_d)(pvVar2,0);
-  if (iVar3 == -1) {
-    iVar3 = (*ltc_mp.count_bits)(pvVar2);
-    lVar8 = (longlong)iVar3 - ((longlong)iVar3 & 7U);
+  uVar1 = __savegprlr_27();
+  iVar4 = (*DAT_84897f10)(uVar1,0);
+  if (iVar4 == -1) {
+    uVar7 = (*DAT_84897f14)(uVar1);
+    lVar8 = uVar7 - (uVar7 & 7);
     uVar7 = lVar8 + 8;
-    iVar3 = (*ltc_mp.count_lsb_bits)(pvVar2);
-    iVar6 = (*ltc_mp.count_bits)(pvVar2);
-    if ((iVar3 + 1 == iVar6) && (uVar4 = (*ltc_mp.count_bits)(pvVar2), (uVar4 & 7) == 0)) {
+    iVar4 = (*DAT_84897f18)(uVar1);
+    iVar6 = (*DAT_84897f14)(uVar1);
+    if ((iVar4 + 1 == iVar6) && (uVar3 = (*DAT_84897f14)(uVar1), (uVar3 & 7) == 0)) {
       uVar7 = lVar8 + 7;
     }
     uVar7 = (uVar7 & 0xffffffff) >> 3;
     goto LAB_82255ce8;
   }
-  uVar4 = (*ltc_mp.count_bits)(pvVar2);
-  if ((uVar4 & 7) == 0) {
+  uVar5 = (*DAT_84897f14)(uVar1);
+  if ((uVar5 & 7) == 0) {
 LAB_82255c68:
     lVar8 = 1;
   }
   else {
-    iVar3 = (*ltc_mp.compare_d)(pvVar2,0);
+    iVar4 = (*DAT_84897f10)(uVar1,0);
     lVar8 = 0;
-    if (iVar3 == 0) goto LAB_82255c68;
+    if (iVar4 == 0) goto LAB_82255c68;
   }
-  uVar5 = (*ltc_mp.unsigned_size)(pvVar2);
-  uVar7 = (int)uVar5 + lVar8;
+  lVar2 = (*DAT_84897f28)(uVar1);
+  uVar7 = lVar2 + lVar8;
 LAB_82255ce8:
   lVar8 = uVar7 + 1;
-  iVar3 = (int)lVar8;
+  iVar4 = (int)lVar8;
   if (0x7f < (uVar7 & 0xffffffff)) {
-    uVar1 = uVar7 & 0xffffffff;
-    while (uVar1 != 0) {
+    uVar3 = uVar7 & 0xffffffff;
+    while (uVar3 != 0) {
       lVar8 = lVar8 + 1;
-      iVar3 = (int)lVar8;
+      iVar4 = (int)lVar8;
       uVar7 = (uVar7 & 0xffffffff) >> 8;
-      uVar1 = uVar7;
+      uVar3 = uVar7;
     }
   }
-  *param_2 = iVar3 + 1;
+  *param_2 = iVar4 + 1;
   __restgprlr_27(0);
   return;
 }

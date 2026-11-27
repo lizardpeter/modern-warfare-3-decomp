@@ -2,19 +2,19 @@
 
 // 828A9900  VirtualAlloc  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/virtualallocate.c:23)
 
-void * VirtualAlloc(void *param_1,ulong param_2,ulong param_3,ulong param_4)
+LPVOID VirtualAlloc(LPVOID lpAddress,SIZE_T dwSize,DWORD flAllocationType,DWORD flProtect)
 
 {
-  long lVar1;
-  void *pvStack00000014;
-  ulong uStack0000001c;
+  int iVar1;
+  LPVOID pvStack00000014;
+  SIZE_T SStack0000001c;
   
-  pvStack00000014 = param_1;
-  uStack0000001c = param_2;
-  lVar1 = NtAllocateVirtualMemory(&stack0x00000014,&stack0x0000001c,param_3,param_4,0);
-  if (lVar1 < 0) {
-    RtlSetLastNTError(lVar1);
-    pvStack00000014 = (void *)0x0;
+  pvStack00000014 = lpAddress;
+  SStack0000001c = dwSize;
+  iVar1 = NtAllocateVirtualMemory(&stack0x00000014,&stack0x0000001c,flAllocationType,flProtect,0);
+  if (iVar1 < 0) {
+    RtlSetLastNTError();
+    pvStack00000014 = (LPVOID)0x0;
   }
   return pvStack00000014;
 }

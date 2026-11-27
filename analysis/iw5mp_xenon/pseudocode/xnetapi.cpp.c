@@ -2,9 +2,7 @@
 
 // 828B8330  NetDll_XNetStartup_Override  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:69)
 
-/* WARNING: Enum "_XNCALLER_TYPE": Some values do not have unique names */
-
-int NetDll_XNetStartup_Override(_XNCALLER_TYPE param_1,XNetStartupParams *param_2)
+void NetDll_XNetStartup_Override(undefined8 param_1,undefined8 param_2)
 
 {
   uint uVar2;
@@ -25,248 +23,197 @@ int NetDll_XNetStartup_Override(_XNCALLER_TYPE param_1,XNetStartupParams *param_
     local_20 = (uint)uVar1;
   }
   if (uVar1 == 0) {
-    iVar3 = NetDll_XNetStartup(param_1,param_2);
+    NetDll_XNetStartup(param_1,param_2);
   }
   else {
-    iVar3 = (*(code *)uVar1)(param_1,param_2,0x20501400);
+    (*(code *)uVar1)(param_1,param_2,0x20501400);
   }
-  return iVar3;
+  return;
 }
 
 
 // 828B83F0  XNetStartup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-/* WARNING: Enum "_XNCALLER_TYPE": Some values do not have unique names */
-
-int XNetStartup(XNetStartupParams *param_1)
+void XNetStartup(undefined8 param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetStartup_Override(XNCALLER_TITLE,param_1);
-  return iVar1;
+  NetDll_XNetStartup_Override(1,param_1);
+  return;
 }
 
 
 // 828B8400  XNetRandom  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetRandom(uchar *param_1,uint param_2)
+void XNetRandom(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetRandom(1,param_1,param_2);
-  return iVar1;
+  NetDll_XNetRandom(1,param_1,param_2);
+  return;
 }
 
 
 // 828B8410  XNetXnAddrToInAddr  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetXnAddrToInAddr(XNADDR *param_1,XNKID *param_2,in_addr *param_3)
+void XNetXnAddrToInAddr(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetXnAddrToInAddr(1,param_1,param_2,param_3);
-  return iVar1;
+  NetDll_XNetXnAddrToInAddr(1,param_1,param_2,param_3);
+  return;
 }
 
 
 // 828B8428  XNetServerToInAddr  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetServerToInAddr(in_addr param_1,ulong param_2,in_addr *param_3)
+void XNetServerToInAddr(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetServerToInAddr(1,param_1.S_un,param_2,param_3);
-  return iVar1;
+  NetDll_XNetServerToInAddr(1,param_1,param_2,param_3);
+  return;
 }
 
 
 // 828B8440  XNetInAddrToXnAddr  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetInAddrToXnAddr(in_addr param_1,XNADDR *param_2,XNKID *param_3)
+void XNetInAddrToXnAddr(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetInAddrToXnAddr(1,param_1.S_un,param_2,param_3);
-  return iVar1;
+  NetDll_XNetInAddrToXnAddr(1,param_1,param_2,param_3);
+  return;
 }
 
 
 // 828B8458  XNetInAddrToString  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetInAddrToString(in_addr param_1,char *param_2,int param_3)
+void XNetInAddrToString(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetInAddrToString(1,param_1.S_un,param_2,param_3);
-  return iVar1;
+  NetDll_XNetInAddrToString(1,param_1,param_2,param_3);
+  return;
 }
 
 
 // 828B8470  XNetUnregisterInAddr  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetUnregisterInAddr(in_addr param_1)
+void XNetUnregisterInAddr(undefined8 param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetUnregisterInAddr(1,param_1.S_un);
-  return iVar1;
+  NetDll_XNetUnregisterInAddr(1,param_1);
+  return;
 }
 
 
 // 828B8480  XNetXnAddrToMachineId  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetXnAddrToMachineId(XNADDR *param_1,ulong64 *param_2)
+void XNetXnAddrToMachineId(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetXnAddrToMachineId(1,param_1,param_2);
-  return iVar1;
+  NetDll_XNetXnAddrToMachineId(1,param_1,param_2);
+  return;
 }
 
 
 // 828B8490  XNetConnect  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetConnect(in_addr param_1)
+void XNetConnect(undefined8 param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetConnect(1,param_1.S_un);
-  return iVar1;
+  NetDll_XNetConnect(1,param_1);
+  return;
 }
 
 
 // 828B84A0  XNetGetConnectStatus  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-ulong XNetGetConnectStatus(in_addr param_1)
+void XNetGetConnectStatus(undefined8 param_1)
 
 {
-  ulong uVar1;
-  
-  uVar1 = NetDll_XNetGetConnectStatus(1,param_1.S_un);
-  return uVar1;
+  NetDll_XNetGetConnectStatus(1,param_1);
+  return;
 }
 
 
 // 828B84B0  XNetDnsLookup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetDnsLookup(char *param_1,void *param_2,XNDNS **param_3)
+void XNetDnsLookup(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetDnsLookup(1,param_1,param_2,param_3);
-  return iVar1;
+  NetDll_XNetDnsLookup(1,param_1,param_2,param_3);
+  return;
 }
 
 
 // 828B84C8  XNetDnsRelease  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetDnsRelease(XNDNS *param_1)
+void XNetDnsRelease(undefined8 param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetDnsRelease(1,param_1);
-  return iVar1;
+  NetDll_XNetDnsRelease(1,param_1);
+  return;
 }
 
 
 // 828B84D8  XNetQosListen  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetQosListen(XNKID *param_1,uchar *param_2,uint param_3,ulong param_4,ulong param_5)
+void XNetQosListen(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                  undefined8 param_5)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetQosListen(1,param_1,param_2,param_3,param_4,param_5);
-  return iVar1;
+  NetDll_XNetQosListen(1,param_1,param_2,param_3,param_4,param_5);
+  return;
 }
 
 
 // 828B84F8  XNetQosLookup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetQosLookup(uint param_1,XNADDR **param_2,XNKID **param_3,XNKEY **param_4,uint param_5,
-                 in_addr *param_6,ulong *param_7,uint param_8,ulong param_9,ulong param_10,
-                 void *param_11,XNQOS **param_12)
+void XNetQosLookup(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                  undefined8 param_5,undefined8 param_6,undefined8 param_7)
 
 {
   undefined8 uVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
   
-  lVar8 = (longlong)(int)param_7;
-  lVar7 = (longlong)(int)param_6;
-  lVar6 = (longlong)(int)param_5;
-  lVar5 = (longlong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8);
-  NetDll_XNetQosLookup(1,uVar1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8);
-  iVar2 = __restgprlr_28();
-  return iVar2;
+  uVar1 = __savegprlr_28();
+  NetDll_XNetQosLookup(1,uVar1,param_2,param_3,param_4,param_5,param_6,param_7);
+  __restgprlr_28();
+  return;
 }
 
 
 // 828B8558  XNetQosServiceLookup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetQosServiceLookup(ulong param_1,void *param_2,XNQOS **param_3)
+void XNetQosServiceLookup(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetQosServiceLookup(1,param_1,param_2,param_3);
-  return iVar1;
+  NetDll_XNetQosServiceLookup(1,param_1,param_2,param_3);
+  return;
 }
 
 
 // 828B8570  XNetQosRelease  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-int XNetQosRelease(XNQOS *param_1)
+void XNetQosRelease(undefined8 param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = NetDll_XNetQosRelease(1,param_1);
-  return iVar1;
+  NetDll_XNetQosRelease(1,param_1);
+  return;
 }
 
 
 // 828B8580  XNetGetTitleXnAddr  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-ulong XNetGetTitleXnAddr(XNADDR *param_1)
+void XNetGetTitleXnAddr(undefined8 param_1)
 
 {
-  ulong uVar1;
-  
-  uVar1 = NetDll_XNetGetTitleXnAddr(1,param_1);
-  return uVar1;
+  NetDll_XNetGetTitleXnAddr(1,param_1);
+  return;
 }
 
 
 // 828B8590  XNetGetEthernetLinkStatus  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ulong XNetGetEthernetLinkStatus(void)
+void XNetGetEthernetLinkStatus(void)
 
 {
-  ulong uVar1;
-  
-  uVar1 = NetDll_XNetGetEthernetLinkStatus(1);
-  return uVar1;
+  NetDll_XNetGetEthernetLinkStatus(1);
+  return;
 }
 

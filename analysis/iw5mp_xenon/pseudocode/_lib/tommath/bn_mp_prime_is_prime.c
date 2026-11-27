@@ -24,7 +24,7 @@ void mp_prime_is_prime(undefined8 param_1,int param_2,undefined4 *param_3)
     __restgprlr_25(0xfffffffffffffffd);
     return;
   }
-  puVar7 = &ltm_prime_tab;
+  puVar7 = &DAT_8221ce00;
   puVar4 = puVar7;
   do {
     if ((((piVar3[2] != 1) && (*piVar3 < 2)) && (*(uint *)piVar3[3] <= *puVar4)) &&

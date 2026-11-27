@@ -2,15 +2,15 @@
 
 // 828AB1A8  ReleaseMutex  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/releasemutex.c:48)
 
-int ReleaseMutex(void *param_1)
+BOOL ReleaseMutex(HANDLE hMutex)
 
 {
-  long lVar1;
+  int iVar1;
   
-  lVar1 = NtReleaseMutant(param_1,0);
-  if (lVar1 < 0) {
-    RtlSetLastNTError(lVar1);
+  iVar1 = NtReleaseMutant(hMutex,0);
+  if (iVar1 < 0) {
+    RtlSetLastNTError();
   }
-  return (int)(lVar1 >= 0);
+  return (BOOL)(iVar1 >= 0);
 }
 

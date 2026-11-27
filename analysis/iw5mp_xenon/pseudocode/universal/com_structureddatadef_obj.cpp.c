@@ -2,56 +2,52 @@
 
 // 825F7708  LoadBuffer_StructuredDataValidationType  (universal/com_structureddatadef_load_buf.h:492)
 
-void LoadBuffer_StructuredDataValidationType(bool param_1)
+void LoadBuffer_StructuredDataValidationType(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataValidationType,4);
+  LoadBuffer_Stream(param_1,DAT_8404f2e8,4);
   return;
 }
 
 
 // 825F7718  AllocLoadBuffer_StructuredDataValidationType  (universal/com_structureddatadef_load_buf.h:498)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataValidationType * AllocLoadBuffer_StructuredDataValidationType(void)
+void AllocLoadBuffer_StructuredDataValidationType(void)
 
 {
-  StructuredDataValidationType *pSVar1;
-  
-  pSVar1 = (StructuredDataValidationType *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F7720  LoadBuffer_StructuredDataValidationTypeArray  (universal/com_structureddatadef_load_buf.h:507)
 
-void LoadBuffer_StructuredDataValidationTypeArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataValidationTypeArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataValidationType,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f2e8,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825F7730  LoadBuffer_StructuredDataValidationTypeStream  (universal/com_structureddatadef_load_buf.h:529)
 
-void LoadBuffer_StructuredDataValidationTypeStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataValidationTypeStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x214,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x214,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f2e8;
     do {
-      LoadBuffer_Stream(true,bufStructuredDataValidationType,4);
-      bufStructuredDataValidationType = (StructuredDataValidationType *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2e8 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -59,56 +55,52 @@ void LoadBuffer_StructuredDataValidationTypeStream(bool param_1,int param_2)
 
 // 825F77C0  LoadBuffer_EnumIndexType  (universal/com_structureddatadef_load_buf.h:543)
 
-void LoadBuffer_EnumIndexType(bool param_1)
+void LoadBuffer_EnumIndexType(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufEnumIndexType,2);
+  LoadBuffer_Stream(param_1,DAT_8404f410,2);
   return;
 }
 
 
 // 825F77D0  AllocLoadBuffer_EnumIndexType  (universal/com_structureddatadef_load_buf.h:549)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ushort * AllocLoadBuffer_EnumIndexType(void)
+void AllocLoadBuffer_EnumIndexType(void)
 
 {
-  ushort *puVar1;
-  
-  puVar1 = (ushort *)AssetBuf_AllocStreamPos(1);
-  return puVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F77D8  LoadBuffer_EnumIndexTypeArray  (universal/com_structureddatadef_load_buf.h:558)
 
-void LoadBuffer_EnumIndexTypeArray(bool param_1,int param_2)
+void LoadBuffer_EnumIndexTypeArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufEnumIndexType,param_2 << 1);
+  LoadBuffer_Stream(param_1,DAT_8404f410,(param_2 & 0x7fffffff) << 1);
   return;
 }
 
 
 // 825F77E8  LoadBuffer_EnumIndexTypeStream  (universal/com_structureddatadef_load_buf.h:580)
 
-void LoadBuffer_EnumIndexTypeStream(bool param_1,int param_2)
+void LoadBuffer_EnumIndexTypeStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x247,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x247,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f410;
     do {
-      LoadBuffer_Stream(true,bufEnumIndexType,2);
-      bufEnumIndexType = (ushort *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,2);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f410 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -116,87 +108,76 @@ void LoadBuffer_EnumIndexTypeStream(bool param_1,int param_2)
 
 // 825F7878  LoadBuffer_StructuredDataEnumEntry  (universal/com_structureddatadef_load_buf.h:594)
 
-void LoadBuffer_StructuredDataEnumEntry(bool param_1)
+void LoadBuffer_StructuredDataEnumEntry(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataEnumEntry,8);
-  bufXString = &bufStructuredDataEnumEntry->string;
-  LoadBuffer_XString(false);
+  LoadBuffer_Stream(param_1,DAT_8404f540,8);
+  DAT_8404f538 = DAT_8404f540;
+  LoadBuffer_XString(0);
   return;
 }
 
 
 // 825F5518  SaveBuffer_StructuredDataValidationType  (universal/com_structureddatadef_save_buf.h:604)
 
-void SaveBuffer_StructuredDataValidationType(bool param_1)
+void SaveBuffer_StructuredDataValidationType(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataValidationType,4,&bufoutStructuredDataValidationType);
+  SaveBuffer_Stream(param_1,DAT_8404f2e8,4,0xffffffff8404f4d0);
   return;
 }
 
 
 // 825F5530  AllocSaveBuffer_StructuredDataValidationType  (universal/com_structureddatadef_save_buf.h:610)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataValidationType * AllocSaveBuffer_StructuredDataValidationType(void)
+void AllocSaveBuffer_StructuredDataValidationType(void)
 
 {
-  StructuredDataValidationType *pSVar1;
-  
-  pSVar1 = (StructuredDataValidationType *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F78C0  AllocLoadBuffer_StructuredDataEnumEntry  (universal/com_structureddatadef_load_buf.h:610)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataEnumEntry * AllocLoadBuffer_StructuredDataEnumEntry(void)
+void AllocLoadBuffer_StructuredDataEnumEntry(void)
 
 {
-  StructuredDataEnumEntry *pSVar1;
-  
-  pSVar1 = (StructuredDataEnumEntry *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F5538  SaveBuffer_StructuredDataValidationTypeArray  (universal/com_structureddatadef_save_buf.h:619)
 
-void SaveBuffer_StructuredDataValidationTypeArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataValidationTypeArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataValidationType,param_2 << 2,
-                    &bufoutStructuredDataValidationType);
+  SaveBuffer_Stream(param_1,DAT_8404f2e8,(param_2 & 0x3fffffff) << 2,0xffffffff8404f4d0);
   return;
 }
 
 
 // 825F78C8  LoadBuffer_StructuredDataEnumEntryArray  (universal/com_structureddatadef_load_buf.h:619)
 
-void LoadBuffer_StructuredDataEnumEntryArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataEnumEntryArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   ulonglong uVar2;
-  StructuredDataEnumEntry *pSVar3;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar1,bufStructuredDataEnumEntry,(int)((uVar2 & 0xffffffff) << 3));
-  pSVar3 = bufStructuredDataEnumEntry;
-  if (0 < (int)uVar2) {
+  uVar1 = __savegprlr_28();
+  LoadBuffer_Stream(uVar1,DAT_8404f540,(param_2 & 0x1fffffff) << 3);
+  uVar2 = (ulonglong)DAT_8404f540;
+  if (0 < (int)param_2) {
     do {
-      bufStructuredDataEnumEntry = pSVar3;
-      LoadBuffer_Stream(false,pSVar3,8);
-      bufXString = &bufStructuredDataEnumEntry->string;
-      LoadBuffer_XString(false);
-      uVar2 = uVar2 - 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar2 != 0);
+      DAT_8404f540 = (uint)uVar2;
+      LoadBuffer_Stream(0,uVar2,8);
+      DAT_8404f538 = DAT_8404f540;
+      LoadBuffer_XString(0);
+      param_2 = param_2 - 1;
+      uVar2 = uVar2 + 8;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -205,26 +186,26 @@ void LoadBuffer_StructuredDataEnumEntryArray(bool param_1,int param_2)
 
 // 825F7930  LoadBuffer_StructuredDataEnumEntryStream  (universal/com_structureddatadef_load_buf.h:641)
 
-void LoadBuffer_StructuredDataEnumEntryStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataEnumEntryStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
+  ulonglong uVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_29(param_1);
+  cVar1 = __savegprlr_29();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x284,0,"%s");
+    MyAssertHandler(0xffffffff82179e90,0x284,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
+    uVar2 = (ulonglong)DAT_8404f540;
     do {
-      LoadBuffer_Stream(true,bufStructuredDataEnumEntry,8);
-      bufXString = &bufStructuredDataEnumEntry->string;
-      LoadBuffer_XString(false);
-      bufStructuredDataEnumEntry = (StructuredDataEnumEntry *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      LoadBuffer_Stream(1,uVar2,8);
+      DAT_8404f538 = DAT_8404f540;
+      LoadBuffer_XString(0);
+      uVar2 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f540 = (uint)uVar2;
+    } while (param_2 != 0);
   }
   __restgprlr_29();
   return;
@@ -233,26 +214,22 @@ void LoadBuffer_StructuredDataEnumEntryStream(bool param_1,int param_2)
 
 // 825F5550  SaveBuffer_StructuredDataValidationTypeStream  (universal/com_structureddatadef_save_buf.h:649)
 
-void SaveBuffer_StructuredDataValidationTypeStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataValidationTypeStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x28c,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x28c,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufStructuredDataValidationType,4,&bufoutStructuredDataValidationType);
-      bufStructuredDataValidationType = (StructuredDataValidationType *)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataValidationType =
-           (StructuredDataValidationType *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f2e8,4,0xffffffff8404f4d0);
+      DAT_8404f2e8 = AssetBuf_GetSourcePos();
+      DAT_8404f2a4 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -261,17 +238,17 @@ void SaveBuffer_StructuredDataValidationTypeStream(bool param_1,int param_2)
 
 // 825F79C0  LoadBuffer_StructuredDataEnum  (universal/com_structureddatadef_load_buf.h:655)
 
-void LoadBuffer_StructuredDataEnum(bool param_1)
+void LoadBuffer_StructuredDataEnum(undefined8 param_1)
 
 {
-  StructuredDataEnumEntry *pSVar1;
+  undefined4 uVar1;
   
-  LoadBuffer_Stream(param_1,bufStructuredDataEnum,0xc);
-  if (bufStructuredDataEnum->entries != (StructuredDataEnumEntry *)0x0) {
-    pSVar1 = (StructuredDataEnumEntry *)AssetBuf_AllocStreamPos(3);
-    bufStructuredDataEnum->entries = pSVar1;
-    bufStructuredDataEnumEntry = bufStructuredDataEnum->entries;
-    LoadBuffer_StructuredDataEnumEntryArray(true,bufStructuredDataEnum->entryCount);
+  LoadBuffer_Stream(param_1,DAT_8404f368,0xc);
+  if (DAT_8404f368[2] != 0) {
+    uVar1 = AssetBuf_AllocStreamPos(3);
+    DAT_8404f368[2] = uVar1;
+    DAT_8404f540 = DAT_8404f368[2];
+    LoadBuffer_StructuredDataEnumEntryArray(1,*DAT_8404f368);
   }
   return;
 }
@@ -279,80 +256,69 @@ void LoadBuffer_StructuredDataEnum(bool param_1)
 
 // 825F55E0  SaveBuffer_EnumIndexType  (universal/com_structureddatadef_save_buf.h:664)
 
-void SaveBuffer_EnumIndexType(bool param_1)
+void SaveBuffer_EnumIndexType(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufEnumIndexType,2,&bufoutEnumIndexType);
+  SaveBuffer_Stream(param_1,DAT_8404f410,2,0xffffffff8404f474);
   return;
 }
 
 
 // 825F55F8  AllocSaveBuffer_EnumIndexType  (universal/com_structureddatadef_save_buf.h:670)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ushort * AllocSaveBuffer_EnumIndexType(void)
+void AllocSaveBuffer_EnumIndexType(void)
 
 {
-  ushort *puVar1;
-  
-  puVar1 = (ushort *)AssetBuf_AllocStreamPos(1);
-  return puVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F7A38  AllocLoadBuffer_StructuredDataEnum  (universal/com_structureddatadef_load_buf.h:678)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataEnum * AllocLoadBuffer_StructuredDataEnum(void)
+void AllocLoadBuffer_StructuredDataEnum(void)
 
 {
-  StructuredDataEnum *pSVar1;
-  
-  pSVar1 = (StructuredDataEnum *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F5600  SaveBuffer_EnumIndexTypeArray  (universal/com_structureddatadef_save_buf.h:679)
 
-void SaveBuffer_EnumIndexTypeArray(bool param_1,int param_2)
+void SaveBuffer_EnumIndexTypeArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufEnumIndexType,param_2 << 1,&bufoutEnumIndexType);
+  SaveBuffer_Stream(param_1,DAT_8404f410,(param_2 & 0x7fffffff) << 1,0xffffffff8404f474);
   return;
 }
 
 
 // 825F7A40  LoadBuffer_StructuredDataEnumArray  (universal/com_structureddatadef_load_buf.h:687)
 
-void LoadBuffer_StructuredDataEnumArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataEnumArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar2;
-  StructuredDataEnumEntry *pSVar1;
-  StructuredDataEnum *pSVar3;
-  ulonglong uVar4;
+  undefined8 uVar1;
+  undefined4 uVar2;
+  undefined4 *puVar3;
   
-  uVar4 = (ulonglong)param_2;
-  bVar2 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar2,bufStructuredDataEnum,
-                    (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2));
-  pSVar3 = bufStructuredDataEnum;
-  if (0 < (int)uVar4) {
+  uVar1 = __savegprlr_28();
+  LoadBuffer_Stream(uVar1,DAT_8404f368,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+  puVar3 = DAT_8404f368;
+  if (0 < (int)param_2) {
     do {
-      bufStructuredDataEnum = pSVar3;
-      LoadBuffer_Stream(false,pSVar3,0xc);
-      if (bufStructuredDataEnum->entries != (StructuredDataEnumEntry *)0x0) {
-        pSVar1 = (StructuredDataEnumEntry *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataEnum->entries = pSVar1;
-        bufStructuredDataEnumEntry = bufStructuredDataEnum->entries;
-        LoadBuffer_StructuredDataEnumEntryArray(true,bufStructuredDataEnum->entryCount);
+      DAT_8404f368 = puVar3;
+      LoadBuffer_Stream(0,puVar3,0xc);
+      if (DAT_8404f368[2] != 0) {
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        DAT_8404f368[2] = uVar2;
+        DAT_8404f540 = DAT_8404f368[2];
+        LoadBuffer_StructuredDataEnumEntryArray(1,*DAT_8404f368);
       }
-      uVar4 = uVar4 - 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar4 != 0);
+      param_2 = param_2 - 1;
+      puVar3 = puVar3 + 3;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -361,25 +327,22 @@ void LoadBuffer_StructuredDataEnumArray(bool param_1,int param_2)
 
 // 825F5618  SaveBuffer_EnumIndexTypeStream  (universal/com_structureddatadef_save_buf.h:709)
 
-void SaveBuffer_EnumIndexTypeStream(bool param_1,int param_2)
+void SaveBuffer_EnumIndexTypeStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x2c8,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x2c8,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufEnumIndexType,2,&bufoutEnumIndexType);
-      bufEnumIndexType = (ushort *)AssetBuf_GetSourcePos();
-      bufstreamEnumIndexType = (ushort *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f410,2,0xffffffff8404f474);
+      DAT_8404f410 = AssetBuf_GetSourcePos();
+      DAT_8404f3c4 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -388,31 +351,28 @@ void SaveBuffer_EnumIndexTypeStream(bool param_1,int param_2)
 
 // 825F7AE0  LoadBuffer_StructuredDataEnumStream  (universal/com_structureddatadef_load_buf.h:709)
 
-void LoadBuffer_StructuredDataEnumStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataEnumStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar2;
-  StructuredDataEnumEntry *pSVar1;
-  longlong lVar3;
+  undefined4 uVar1;
   
-  lVar3 = (longlong)param_2;
-  cVar2 = __savegprlr_29(param_1);
+  cVar2 = __savegprlr_29();
   if (cVar2 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x2c8,0,"%s");
+    MyAssertHandler(0xffffffff82179e90,0x2c8,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar3) {
+  if (0 < (int)param_2) {
     do {
-      LoadBuffer_Stream(true,bufStructuredDataEnum,0xc);
-      if (bufStructuredDataEnum->entries != (StructuredDataEnumEntry *)0x0) {
-        pSVar1 = (StructuredDataEnumEntry *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataEnum->entries = pSVar1;
-        bufStructuredDataEnumEntry = bufStructuredDataEnum->entries;
-        LoadBuffer_StructuredDataEnumEntryArray(true,bufStructuredDataEnum->entryCount);
+      LoadBuffer_Stream(1,DAT_8404f368,0xc);
+      if (DAT_8404f368[2] != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        DAT_8404f368[2] = uVar1;
+        DAT_8404f540 = DAT_8404f368[2];
+        LoadBuffer_StructuredDataEnumEntryArray(1,*DAT_8404f368);
       }
-      bufStructuredDataEnum = (StructuredDataEnum *)AssetBuf_GetStreamPos();
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      DAT_8404f368 = (undefined4 *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_29();
   return;
@@ -421,99 +381,88 @@ void LoadBuffer_StructuredDataEnumStream(bool param_1,int param_2)
 
 // 825F7BA0  LoadBuffer_StructuredDataTypeCategory  (universal/com_structureddatadef_load_buf.h:723)
 
-void LoadBuffer_StructuredDataTypeCategory(bool param_1)
+void LoadBuffer_StructuredDataTypeCategory(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataTypeCategory,4);
+  LoadBuffer_Stream(param_1,DAT_8404f4d8,4);
   return;
 }
 
 
 // 825F56A8  SaveBuffer_StructuredDataEnumEntry  (universal/com_structureddatadef_save_buf.h:724)
 
-void SaveBuffer_StructuredDataEnumEntry(bool param_1)
+void SaveBuffer_StructuredDataEnumEntry(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataEnumEntry,8,&bufoutStructuredDataEnumEntry);
-  bufXString = &bufStructuredDataEnumEntry->string;
-  bufoutXString = &bufoutStructuredDataEnumEntry->string;
-  bufstreamXString = &bufstreamStructuredDataEnumEntry->string;
-  SaveBuffer_XString(false);
+  SaveBuffer_Stream(param_1,DAT_8404f540,8,0xffffffff8404f520);
+  DAT_8404f538 = DAT_8404f540;
+  DAT_8404f28c = DAT_8404f520;
+  DAT_8404f47c = DAT_8404f55c;
+  SaveBuffer_XString(0);
   return;
 }
 
 
 // 825F7BB0  AllocLoadBuffer_StructuredDataTypeCategory  (universal/com_structureddatadef_load_buf.h:729)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataTypeCategory * AllocLoadBuffer_StructuredDataTypeCategory(void)
+void AllocLoadBuffer_StructuredDataTypeCategory(void)
 
 {
-  StructuredDataTypeCategory *pSVar1;
-  
-  pSVar1 = (StructuredDataTypeCategory *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F7BB8  LoadBuffer_StructuredDataTypeCategoryArray  (universal/com_structureddatadef_load_buf.h:738)
 
-void LoadBuffer_StructuredDataTypeCategoryArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataTypeCategoryArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataTypeCategory,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f4d8,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825F5720  AllocSaveBuffer_StructuredDataEnumEntry  (universal/com_structureddatadef_save_buf.h:744)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataEnumEntry * AllocSaveBuffer_StructuredDataEnumEntry(void)
+void AllocSaveBuffer_StructuredDataEnumEntry(void)
 
 {
-  StructuredDataEnumEntry *pSVar1;
-  
-  pSVar1 = (StructuredDataEnumEntry *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F5728  SaveBuffer_StructuredDataEnumEntryArray  (universal/com_structureddatadef_save_buf.h:753)
 
-void SaveBuffer_StructuredDataEnumEntryArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataEnumEntryArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
-  StructuredDataEnumEntry *pSVar3;
-  StructuredDataEnumEntry *pSVar4;
-  StructuredDataEnumEntry *pSVar5;
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_22(param_1);
-  SaveBuffer_Stream(bVar1,bufStructuredDataEnumEntry,(int)((uVar2 & 0xffffffff) << 3),
-                    &bufoutStructuredDataEnumEntry);
-  pSVar5 = bufStructuredDataEnumEntry;
-  pSVar4 = bufstreamStructuredDataEnumEntry;
-  pSVar3 = bufoutStructuredDataEnumEntry;
-  if (0 < (int)uVar2) {
+  uVar1 = __savegprlr_22();
+  SaveBuffer_Stream(uVar1,DAT_8404f540,(param_2 & 0x1fffffff) << 3,0xffffffff8404f520);
+  uVar4 = (ulonglong)DAT_8404f540;
+  iVar3 = DAT_8404f55c;
+  iVar2 = DAT_8404f520;
+  if (0 < (int)param_2) {
     do {
-      bufoutStructuredDataEnumEntry = pSVar3;
-      bufStructuredDataEnumEntry = pSVar5;
-      bufstreamStructuredDataEnumEntry = pSVar4;
-      SaveBuffer_Stream(false,pSVar5,8,&bufoutStructuredDataEnumEntry);
-      bufXString = &bufStructuredDataEnumEntry->string;
-      bufstreamXString = &bufstreamStructuredDataEnumEntry->string;
-      bufoutXString = &bufoutStructuredDataEnumEntry->string;
-      SaveBuffer_XString(false);
-      uVar2 = uVar2 - 1;
-      pSVar5 = pSVar5 + 1;
-      pSVar4 = pSVar4 + 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar2 != 0);
+      DAT_8404f540 = (uint)uVar4;
+      DAT_8404f520 = iVar2;
+      DAT_8404f55c = iVar3;
+      SaveBuffer_Stream(0,uVar4,8,0xffffffff8404f520);
+      DAT_8404f538 = DAT_8404f540;
+      DAT_8404f47c = DAT_8404f55c;
+      DAT_8404f28c = DAT_8404f520;
+      SaveBuffer_XString(0);
+      param_2 = param_2 - 1;
+      uVar4 = uVar4 + 8;
+      iVar3 = iVar3 + 8;
+      iVar2 = iVar2 + 8;
+    } while (param_2 != 0);
   }
   __restgprlr_22();
   return;
@@ -522,22 +471,22 @@ void SaveBuffer_StructuredDataEnumEntryArray(bool param_1,int param_2)
 
 // 825F7BC8  LoadBuffer_StructuredDataTypeCategoryStream  (universal/com_structureddatadef_load_buf.h:760)
 
-void LoadBuffer_StructuredDataTypeCategoryStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataTypeCategoryStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x2fb,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x2fb,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f4d8;
     do {
-      LoadBuffer_Stream(true,bufStructuredDataTypeCategory,4);
-      bufStructuredDataTypeCategory = (StructuredDataTypeCategory *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f4d8 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -545,81 +494,78 @@ void LoadBuffer_StructuredDataTypeCategoryStream(bool param_1,int param_2)
 
 // 825F7C58  LoadBuffer_StructuredDataTypeUnion  (universal/com_structureddatadef_load_buf.h:774)
 
-void LoadBuffer_StructuredDataTypeUnion(bool param_1)
+void LoadBuffer_StructuredDataTypeUnion(ulonglong param_1)
 
 {
-  StructuredDataTypeCategory SVar1;
+  int iVar1;
   
-  SVar1 = bufStructuredDataType->type;
-  if (SVar1 == DATA_STRING) {
-    if (!param_1) {
+  iVar1 = *DAT_8404f2cc;
+  if (iVar1 == 3) {
+    if ((param_1 & 0xff) == 0) {
       return;
     }
-    bufuint = &bufStructuredDataTypeUnion->stringDataLength;
-    LoadBuffer_Stream(true,bufStructuredDataTypeUnion,4);
+    DAT_8404f3b4 = DAT_8404f3e8;
+    LoadBuffer_Stream(param_1,DAT_8404f3e8,4);
     return;
   }
-  if (SVar1 == DATA_ENUM) {
-    if (!param_1) {
+  if (iVar1 == 4) {
+    if ((param_1 & 0xff) == 0) {
       return;
     }
-    bufint = &bufStructuredDataTypeUnion->enumIndex;
-    LoadBuffer_Stream(true,bufStructuredDataTypeUnion,4);
+    DAT_8404f2d0 = DAT_8404f3e8;
+    LoadBuffer_Stream(param_1,DAT_8404f3e8,4);
     return;
   }
-  if (SVar1 == DATA_STRUCT) {
-    if (!param_1) {
+  if (iVar1 == 5) {
+    if ((param_1 & 0xff) == 0) {
       return;
     }
-    bufint = &bufStructuredDataTypeUnion->enumIndex;
-    LoadBuffer_Stream(true,bufStructuredDataTypeUnion,4);
+    DAT_8404f2d0 = DAT_8404f3e8;
+    LoadBuffer_Stream(param_1,DAT_8404f3e8,4);
     return;
   }
-  if (SVar1 == DATA_INDEXED_ARRAY) {
-    if (!param_1) {
+  if (iVar1 == 6) {
+    if ((param_1 & 0xff) == 0) {
       return;
     }
-    bufint = &bufStructuredDataTypeUnion->enumIndex;
-    LoadBuffer_Stream(true,bufStructuredDataTypeUnion,4);
+    DAT_8404f2d0 = DAT_8404f3e8;
+    LoadBuffer_Stream(param_1,DAT_8404f3e8,4);
     return;
   }
-  if (SVar1 != DATA_ENUM_ARRAY) {
+  if (iVar1 != 7) {
     return;
   }
-  if (!param_1) {
+  if ((param_1 & 0xff) == 0) {
     return;
   }
-  bufint = &bufStructuredDataTypeUnion->enumIndex;
-  LoadBuffer_Stream(true,bufStructuredDataTypeUnion,4);
+  DAT_8404f2d0 = DAT_8404f3e8;
+  LoadBuffer_Stream(param_1,DAT_8404f3e8,4);
   return;
 }
 
 
 // 825F57D8  SaveBuffer_StructuredDataEnumEntryStream  (universal/com_structureddatadef_save_buf.h:783)
 
-void SaveBuffer_StructuredDataEnumEntryStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataEnumEntryStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_25(param_1);
+  cVar1 = __savegprlr_25();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x312,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x312,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufStructuredDataEnumEntry,8,&bufoutStructuredDataEnumEntry);
-      bufXString = &bufStructuredDataEnumEntry->string;
-      bufstreamXString = &bufstreamStructuredDataEnumEntry->string;
-      bufoutXString = &bufoutStructuredDataEnumEntry->string;
-      SaveBuffer_XString(false);
-      bufStructuredDataEnumEntry = (StructuredDataEnumEntry *)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataEnumEntry = (StructuredDataEnumEntry *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f540,8,0xffffffff8404f520);
+      DAT_8404f538 = DAT_8404f540;
+      DAT_8404f47c = DAT_8404f55c;
+      DAT_8404f28c = DAT_8404f520;
+      SaveBuffer_XString(0);
+      DAT_8404f540 = AssetBuf_GetSourcePos();
+      DAT_8404f55c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_25();
   return;
@@ -628,26 +574,25 @@ void SaveBuffer_StructuredDataEnumEntryStream(bool param_1,int param_2)
 
 // 825F5890  SaveBuffer_StructuredDataEnum  (universal/com_structureddatadef_save_buf.h:798)
 
-void SaveBuffer_StructuredDataEnum(bool param_1)
+void SaveBuffer_StructuredDataEnum(undefined8 param_1)
 
 {
-  void *pvVar1;
-  StructuredDataEnumEntry *pSVar2;
+  int iVar1;
+  undefined4 uVar2;
   
-  SaveBuffer_Stream(param_1,bufStructuredDataEnum,0xc,&bufoutStructuredDataEnum);
-  if (bufStructuredDataEnum->entries != (StructuredDataEnumEntry *)0x0) {
-    pvVar1 = AssetBuf_FindStreamData(bufStructuredDataEnum->entries);
-    if (pvVar1 != (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                      ,0x331,0,"%s");
+  SaveBuffer_Stream(param_1,DAT_8404f368,0xc,0xffffffff8404f484);
+  if (DAT_8404f368[2] != 0) {
+    iVar1 = AssetBuf_FindStreamData(DAT_8404f368[2]);
+    if (iVar1 != 0) {
+      MyAssertHandler(0xffffffff82179c20,0x331,0,0xffffffff82000f98,0xffffffff82179c84);
     }
-    pSVar2 = (StructuredDataEnumEntry *)AssetBuf_AllocStreamPos(3);
-    bufoutStructuredDataEnum->entries = pSVar2;
-    bufStructuredDataEnumEntry = bufStructuredDataEnum->entries;
-    bufstreamStructuredDataEnumEntry = bufoutStructuredDataEnum->entries;
-    AssetBuf_SetStreamData(bufStructuredDataEnum->entries,bufoutStructuredDataEnum->entries);
-    bufoutStructuredDataEnum->entries = (StructuredDataEnumEntry *)0xffffffff;
-    SaveBuffer_StructuredDataEnumEntryArray(true,bufStructuredDataEnum->entryCount);
+    uVar2 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f484 + 8) = uVar2;
+    DAT_8404f540 = DAT_8404f368[2];
+    DAT_8404f55c = *(undefined4 *)(DAT_8404f484 + 8);
+    AssetBuf_SetStreamData(DAT_8404f368[2],*(undefined4 *)(DAT_8404f484 + 8));
+    *(undefined4 *)(DAT_8404f484 + 8) = 0xffffffff;
+    SaveBuffer_StructuredDataEnumEntryArray(1,*DAT_8404f368);
   }
   return;
 }
@@ -655,64 +600,56 @@ void SaveBuffer_StructuredDataEnum(bool param_1)
 
 // 825F5978  AllocSaveBuffer_StructuredDataEnum  (universal/com_structureddatadef_save_buf.h:829)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataEnum * AllocSaveBuffer_StructuredDataEnum(void)
+void AllocSaveBuffer_StructuredDataEnum(void)
 
 {
-  StructuredDataEnum *pSVar1;
-  
-  pSVar1 = (StructuredDataEnum *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F5980  SaveBuffer_StructuredDataEnumArray  (universal/com_structureddatadef_save_buf.h:838)
 
-void SaveBuffer_StructuredDataEnumArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataEnumArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar3;
-  void *pvVar1;
-  StructuredDataEnumEntry *pSVar2;
-  StructuredDataEnum *pSVar4;
-  StructuredDataEnum *pSVar5;
-  StructuredDataEnum *pSVar6;
-  ulonglong uVar7;
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar5;
+  undefined4 *puVar6;
   
-  uVar7 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_19(param_1);
-  SaveBuffer_Stream(bVar3,bufStructuredDataEnum,
-                    (int)((uVar7 + (uVar7 & 0x7fffffff) * 2 & 0xffffffff) << 2),
-                    &bufoutStructuredDataEnum);
-  pSVar6 = bufStructuredDataEnum;
-  pSVar4 = bufoutStructuredDataEnum;
-  pSVar5 = bufstreamStructuredDataEnum;
-  if (0 < (int)uVar7) {
+  uVar1 = __savegprlr_19();
+  SaveBuffer_Stream(uVar1,DAT_8404f368,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2,
+                    0xffffffff8404f484);
+  iVar4 = DAT_8404f484;
+  iVar5 = DAT_8404f438;
+  puVar6 = DAT_8404f368;
+  if (0 < (int)param_2) {
     do {
-      bufStructuredDataEnum = pSVar6;
-      bufstreamStructuredDataEnum = pSVar5;
-      bufoutStructuredDataEnum = pSVar4;
-      SaveBuffer_Stream(false,pSVar6,0xc,&bufoutStructuredDataEnum);
-      if (bufStructuredDataEnum->entries != (StructuredDataEnumEntry *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataEnum->entries);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x331,0,"%s");
+      DAT_8404f368 = puVar6;
+      DAT_8404f438 = iVar5;
+      DAT_8404f484 = iVar4;
+      SaveBuffer_Stream(0,puVar6,0xc,0xffffffff8404f484);
+      if (DAT_8404f368[2] != 0) {
+        iVar2 = AssetBuf_FindStreamData(DAT_8404f368[2]);
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x331,0,0xffffffff82000f98,0xffffffff82179c84);
         }
-        pSVar2 = (StructuredDataEnumEntry *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataEnum->entries = pSVar2;
-        bufStructuredDataEnumEntry = bufStructuredDataEnum->entries;
-        bufstreamStructuredDataEnumEntry = bufoutStructuredDataEnum->entries;
-        AssetBuf_SetStreamData(bufStructuredDataEnum->entries,bufoutStructuredDataEnum->entries);
-        bufoutStructuredDataEnum->entries = (StructuredDataEnumEntry *)0xffffffff;
-        SaveBuffer_StructuredDataEnumEntryArray(true,bufStructuredDataEnum->entryCount);
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f484 + 8) = uVar3;
+        DAT_8404f540 = DAT_8404f368[2];
+        DAT_8404f55c = *(undefined4 *)(DAT_8404f484 + 8);
+        AssetBuf_SetStreamData(DAT_8404f368[2],*(undefined4 *)(DAT_8404f484 + 8));
+        *(undefined4 *)(DAT_8404f484 + 8) = 0xffffffff;
+        SaveBuffer_StructuredDataEnumEntryArray(1,*DAT_8404f368);
       }
-      uVar7 = uVar7 - 1;
-      pSVar6 = pSVar6 + 1;
-      pSVar4 = pSVar4 + 1;
-      pSVar5 = pSVar5 + 1;
-    } while (uVar7 != 0);
+      param_2 = param_2 - 1;
+      iVar4 = iVar4 + 0xc;
+      iVar5 = iVar5 + 0xc;
+      puVar6 = puVar6 + 3;
+    } while (param_2 != 0);
   }
   __restgprlr_19();
   return;
@@ -721,65 +658,57 @@ void SaveBuffer_StructuredDataEnumArray(bool param_1,int param_2)
 
 // 825F7D48  AllocLoadBuffer_StructuredDataTypeUnion  (universal/com_structureddatadef_load_buf.h:838)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataTypeUnion * AllocLoadBuffer_StructuredDataTypeUnion(void)
+void AllocLoadBuffer_StructuredDataTypeUnion(void)
 
 {
-  StructuredDataTypeUnion *pSVar1;
-  
-  pSVar1 = (StructuredDataTypeUnion *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F7D50  LoadBuffer_StructuredDataTypeUnionArray  (universal/com_structureddatadef_load_buf.h:847)
 
-void LoadBuffer_StructuredDataTypeUnionArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataTypeUnionArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataTypeUnion,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f3e8,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825F5AB0  SaveBuffer_StructuredDataEnumStream  (universal/com_structureddatadef_save_buf.h:868)
 
-void SaveBuffer_StructuredDataEnumStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataEnumStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar3;
-  void *pvVar1;
-  StructuredDataEnumEntry *pSVar2;
-  longlong lVar4;
+  int iVar1;
+  undefined4 uVar2;
   
-  lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_22(param_1);
+  cVar3 = __savegprlr_22();
   if (cVar3 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x367,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x367,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar4) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufStructuredDataEnum,0xc,&bufoutStructuredDataEnum);
-      if (bufStructuredDataEnum->entries != (StructuredDataEnumEntry *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataEnum->entries);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x331,0,"%s");
+      SaveBuffer_Stream(1,DAT_8404f368,0xc,0xffffffff8404f484);
+      if (DAT_8404f368[2] != 0) {
+        iVar1 = AssetBuf_FindStreamData(DAT_8404f368[2]);
+        if (iVar1 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x331,0,0xffffffff82000f98,0xffffffff82179c84);
         }
-        pSVar2 = (StructuredDataEnumEntry *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataEnum->entries = pSVar2;
-        bufStructuredDataEnumEntry = bufStructuredDataEnum->entries;
-        bufstreamStructuredDataEnumEntry = bufoutStructuredDataEnum->entries;
-        AssetBuf_SetStreamData(bufStructuredDataEnum->entries,bufoutStructuredDataEnum->entries);
-        bufoutStructuredDataEnum->entries = (StructuredDataEnumEntry *)0xffffffff;
-        SaveBuffer_StructuredDataEnumEntryArray(true,bufStructuredDataEnum->entryCount);
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f484 + 8) = uVar2;
+        DAT_8404f540 = DAT_8404f368[2];
+        DAT_8404f55c = *(undefined4 *)(DAT_8404f484 + 8);
+        AssetBuf_SetStreamData(DAT_8404f368[2],*(undefined4 *)(DAT_8404f484 + 8));
+        *(undefined4 *)(DAT_8404f484 + 8) = 0xffffffff;
+        SaveBuffer_StructuredDataEnumEntryArray(1,*DAT_8404f368);
       }
-      bufStructuredDataEnum = (StructuredDataEnum *)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataEnum = (StructuredDataEnum *)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      DAT_8404f368 = (undefined4 *)AssetBuf_GetSourcePos();
+      DAT_8404f438 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_22();
   return;
@@ -788,38 +717,35 @@ void SaveBuffer_StructuredDataEnumStream(bool param_1,int param_2)
 
 // 825F7D60  LoadBuffer_StructuredDataTypeUnionStream  (universal/com_structureddatadef_load_buf.h:869)
 
-void LoadBuffer_StructuredDataTypeUnionStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataTypeUnionStream(undefined8 param_1,longlong param_2)
 
 {
-  StructuredDataTypeCategory SVar1;
-  StructuredDataTypeUnion *pSVar2;
-  StructuredDataTypeUnion *pSVar3;
-  char cVar4;
-  longlong lVar5;
+  int iVar1;
+  undefined4 uVar2;
+  char cVar3;
+  ulonglong uVar4;
+  undefined4 uVar5;
   
-  lVar5 = (longlong)param_2;
-  cVar4 = __savegprlr_27(param_1);
-  if (cVar4 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x368,0,"%s");
+  cVar3 = __savegprlr_27();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x368,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar5) {
+  if (0 < (int)param_2) {
+    uVar4 = (ulonglong)DAT_8404f3e8;
     do {
-      SVar1 = bufStructuredDataType->type;
-      pSVar2 = (StructuredDataTypeUnion *)bufint;
-      pSVar3 = bufStructuredDataTypeUnion;
-      if ((((SVar1 == DATA_STRING) ||
-           (pSVar2 = bufStructuredDataTypeUnion, pSVar3 = (StructuredDataTypeUnion *)bufuint,
-           SVar1 == DATA_ENUM)) || (pSVar2 = bufStructuredDataTypeUnion, SVar1 == DATA_STRUCT)) ||
-         ((pSVar2 = bufStructuredDataTypeUnion, SVar1 == DATA_INDEXED_ARRAY ||
-          (pSVar2 = bufStructuredDataTypeUnion, SVar1 == DATA_ENUM_ARRAY)))) {
-        bufuint = &pSVar3->stringDataLength;
-        bufint = &pSVar2->enumIndex;
-        LoadBuffer_Stream(true,bufStructuredDataTypeUnion,4);
+      iVar1 = *DAT_8404f2cc;
+      uVar5 = (undefined4)uVar4;
+      uVar2 = DAT_8404f2d0;
+      if ((((iVar1 == 3) || (uVar2 = uVar5, uVar5 = DAT_8404f3b4, iVar1 == 4)) || (iVar1 == 5)) ||
+         ((iVar1 == 6 || (iVar1 == 7)))) {
+        DAT_8404f3b4 = uVar5;
+        DAT_8404f2d0 = uVar2;
+        LoadBuffer_Stream(1,uVar4,4);
       }
-      bufStructuredDataTypeUnion = (StructuredDataTypeUnion *)AssetBuf_GetStreamPos();
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
+      uVar4 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f3e8 = (uint)uVar4;
+    } while (param_2 != 0);
   }
   __restgprlr_27();
   return;
@@ -828,94 +754,82 @@ void LoadBuffer_StructuredDataTypeUnionStream(bool param_1,int param_2)
 
 // 825F5BE0  SaveBuffer_StructuredDataTypeCategory  (universal/com_structureddatadef_save_buf.h:883)
 
-void SaveBuffer_StructuredDataTypeCategory(bool param_1)
+void SaveBuffer_StructuredDataTypeCategory(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataTypeCategory,4,&bufoutStructuredDataTypeCategory);
+  SaveBuffer_Stream(param_1,DAT_8404f4d8,4,0xffffffff8404f3fc);
   return;
 }
 
 
 // 825F7E20  LoadBuffer_StructuredDataType  (universal/com_structureddatadef_load_buf.h:883)
 
-void LoadBuffer_StructuredDataType(bool param_1)
+void LoadBuffer_StructuredDataType(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataType,8);
+  LoadBuffer_Stream(param_1,DAT_8404f2cc,8);
   return;
 }
 
 
 // 825F5BF8  AllocSaveBuffer_StructuredDataTypeCategory  (universal/com_structureddatadef_save_buf.h:889)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataTypeCategory * AllocSaveBuffer_StructuredDataTypeCategory(void)
+void AllocSaveBuffer_StructuredDataTypeCategory(void)
 
 {
-  StructuredDataTypeCategory *pSVar1;
-  
-  pSVar1 = (StructuredDataTypeCategory *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F5C00  SaveBuffer_StructuredDataTypeCategoryArray  (universal/com_structureddatadef_save_buf.h:898)
 
-void SaveBuffer_StructuredDataTypeCategoryArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataTypeCategoryArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataTypeCategory,param_2 << 2,
-                    &bufoutStructuredDataTypeCategory);
+  SaveBuffer_Stream(param_1,DAT_8404f4d8,(param_2 & 0x3fffffff) << 2,0xffffffff8404f3fc);
   return;
 }
 
 
 // 825F7E30  AllocLoadBuffer_StructuredDataType  (universal/com_structureddatadef_load_buf.h:899)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataType * AllocLoadBuffer_StructuredDataType(void)
+void AllocLoadBuffer_StructuredDataType(void)
 
 {
-  StructuredDataType *pSVar1;
-  
-  pSVar1 = (StructuredDataType *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F7E38  LoadBuffer_StructuredDataTypeArray  (universal/com_structureddatadef_load_buf.h:908)
 
-void LoadBuffer_StructuredDataTypeArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataTypeArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataType,param_2 << 3);
+  LoadBuffer_Stream(param_1,DAT_8404f2cc,(param_2 & 0x1fffffff) << 3);
   return;
 }
 
 
 // 825F5C18  SaveBuffer_StructuredDataTypeCategoryStream  (universal/com_structureddatadef_save_buf.h:928)
 
-void SaveBuffer_StructuredDataTypeCategoryStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataTypeCategoryStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x3a3,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x3a3,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufStructuredDataTypeCategory,4,&bufoutStructuredDataTypeCategory);
-      bufStructuredDataTypeCategory = (StructuredDataTypeCategory *)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataTypeCategory = (StructuredDataTypeCategory *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f4d8,4,0xffffffff8404f3fc);
+      DAT_8404f4d8 = AssetBuf_GetSourcePos();
+      DAT_8404f3a8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -924,22 +838,22 @@ void SaveBuffer_StructuredDataTypeCategoryStream(bool param_1,int param_2)
 
 // 825F7E48  LoadBuffer_StructuredDataTypeStream  (universal/com_structureddatadef_load_buf.h:930)
 
-void LoadBuffer_StructuredDataTypeStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataTypeStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x3a5,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x3a5,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f2cc;
     do {
-      LoadBuffer_Stream(true,bufStructuredDataType,8);
-      bufStructuredDataType = (StructuredDataType *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,8);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2cc = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -947,92 +861,87 @@ void LoadBuffer_StructuredDataTypeStream(bool param_1,int param_2)
 
 // 825F5CA8  SaveBuffer_StructuredDataTypeUnion  (universal/com_structureddatadef_save_buf.h:943)
 
-void SaveBuffer_StructuredDataTypeUnion(bool param_1)
+void SaveBuffer_StructuredDataTypeUnion(ulonglong param_1)
 
 {
-  StructuredDataTypeCategory SVar1;
-  uint **ppuVar2;
+  int iVar1;
+  undefined8 uVar2;
   
-  SVar1 = bufStructuredDataType->type;
-  if (SVar1 == DATA_STRING) {
-    if (!param_1) {
+  iVar1 = *DAT_8404f2cc;
+  if (iVar1 == 3) {
+    if ((param_1 & 0xff) == 0) {
       return;
     }
-    ppuVar2 = &bufoutuint;
-    bufuint = &bufStructuredDataTypeUnion->stringDataLength;
-    bufstreamuint = &bufstreamStructuredDataTypeUnion->stringDataLength;
-    bufoutuint = &bufoutStructuredDataTypeUnion->stringDataLength;
+    uVar2 = 0xffffffff8404f260;
+    DAT_8404f3b4 = DAT_8404f3e8;
+    DAT_8404f3c8 = DAT_8404f4b8;
+    DAT_8404f260 = DAT_8404f35c;
   }
   else {
-    if ((((SVar1 != DATA_ENUM) && (SVar1 != DATA_STRUCT)) && (SVar1 != DATA_INDEXED_ARRAY)) &&
-       (SVar1 != DATA_ENUM_ARRAY)) {
+    if ((((iVar1 != 4) && (iVar1 != 5)) && (iVar1 != 6)) && (iVar1 != 7)) {
       return;
     }
-    if (!param_1) {
+    if ((param_1 & 0xff) == 0) {
       return;
     }
-    bufint = &bufStructuredDataTypeUnion->enumIndex;
-    bufstreamint = &bufstreamStructuredDataTypeUnion->enumIndex;
-    bufoutint = &bufoutStructuredDataTypeUnion->enumIndex;
-    ppuVar2 = (uint **)&bufoutint;
+    uVar2 = 0xffffffff8404f400;
+    DAT_8404f2d0 = DAT_8404f3e8;
+    DAT_8404f38c = DAT_8404f4b8;
+    DAT_8404f400 = DAT_8404f35c;
   }
-  SaveBuffer_Stream(param_1,bufStructuredDataTypeUnion,4,ppuVar2);
+  SaveBuffer_Stream(param_1,DAT_8404f3e8,4,uVar2);
   return;
 }
 
 
 // 825F7ED8  LoadBuffer_StructuredDataIndexedArray  (universal/com_structureddatadef_load_buf.h:944)
 
-void LoadBuffer_StructuredDataIndexedArray(bool param_1)
+void LoadBuffer_StructuredDataIndexedArray(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataIndexedArray,0x10);
+  LoadBuffer_Stream(param_1,DAT_8404f508,0x10);
   return;
 }
 
 
 // 825F7EE8  AllocLoadBuffer_StructuredDataIndexedArray  (universal/com_structureddatadef_load_buf.h:965)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataIndexedArray * AllocLoadBuffer_StructuredDataIndexedArray(void)
+void AllocLoadBuffer_StructuredDataIndexedArray(void)
 
 {
-  StructuredDataIndexedArray *pSVar1;
-  
-  pSVar1 = (StructuredDataIndexedArray *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F7EF0  LoadBuffer_StructuredDataIndexedArrayArray  (universal/com_structureddatadef_load_buf.h:974)
 
-void LoadBuffer_StructuredDataIndexedArrayArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataIndexedArrayArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataIndexedArray,param_2 << 4);
+  LoadBuffer_Stream(param_1,DAT_8404f508,(param_2 & 0xfffffff) << 4);
   return;
 }
 
 
 // 825F7F00  LoadBuffer_StructuredDataIndexedArrayStream  (universal/com_structureddatadef_load_buf.h:996)
 
-void LoadBuffer_StructuredDataIndexedArrayStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataIndexedArrayStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,999,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,999,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f508;
     do {
-      LoadBuffer_Stream(true,bufStructuredDataIndexedArray,0x10);
-      bufStructuredDataIndexedArray = (StructuredDataIndexedArray *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,0x10);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f508 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -1040,114 +949,102 @@ void LoadBuffer_StructuredDataIndexedArrayStream(bool param_1,int param_2)
 
 // 825F2818  LoadBuffer_void  (database/db_primtypes_load_buf.h:1010)
 
-void LoadBuffer_void(bool param_1)
+void LoadBuffer_void(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufvoid,1);
+  LoadBuffer_Stream(param_1,DAT_8404f2ac,1);
   return;
 }
 
 
 // 825F7F90  LoadBuffer_StructuredDataEnumedArray  (universal/com_structureddatadef_load_buf.h:1010)
 
-void LoadBuffer_StructuredDataEnumedArray(bool param_1)
+void LoadBuffer_StructuredDataEnumedArray(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataEnumedArray,0x10);
+  LoadBuffer_Stream(param_1,DAT_8404f4c0,0x10);
   return;
 }
 
 
 // 825F2828  AllocLoadBuffer_void  (database/db_primtypes_load_buf.h:1016)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void * AllocLoadBuffer_void(void)
+void AllocLoadBuffer_void(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F5D90  AllocSaveBuffer_StructuredDataTypeUnion  (universal/com_structureddatadef_save_buf.h:1017)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataTypeUnion * AllocSaveBuffer_StructuredDataTypeUnion(void)
+void AllocSaveBuffer_StructuredDataTypeUnion(void)
 
 {
-  StructuredDataTypeUnion *pSVar1;
-  
-  pSVar1 = (StructuredDataTypeUnion *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F2830  LoadBuffer_voidArray  (database/db_primtypes_load_buf.h:1025)
 
-void LoadBuffer_voidArray(bool param_1,int param_2)
+void LoadBuffer_voidArray(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufvoid,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f2ac,param_2);
   return;
 }
 
 
 // 825F5D98  SaveBuffer_StructuredDataTypeUnionArray  (universal/com_structureddatadef_save_buf.h:1026)
 
-void SaveBuffer_StructuredDataTypeUnionArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataTypeUnionArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataTypeUnion,param_2 << 2,&bufoutStructuredDataTypeUnion);
+  SaveBuffer_Stream(param_1,DAT_8404f3e8,(param_2 & 0x3fffffff) << 2,0xffffffff8404f35c);
   return;
 }
 
 
 // 825F7FA0  AllocLoadBuffer_StructuredDataEnumedArray  (universal/com_structureddatadef_load_buf.h:1031)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataEnumedArray * AllocLoadBuffer_StructuredDataEnumedArray(void)
+void AllocLoadBuffer_StructuredDataEnumedArray(void)
 
 {
-  StructuredDataEnumedArray *pSVar1;
-  
-  pSVar1 = (StructuredDataEnumedArray *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F7FA8  LoadBuffer_StructuredDataEnumedArrayArray  (universal/com_structureddatadef_load_buf.h:1040)
 
-void LoadBuffer_StructuredDataEnumedArrayArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataEnumedArrayArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataEnumedArray,param_2 << 4);
+  LoadBuffer_Stream(param_1,DAT_8404f4c0,(param_2 & 0xfffffff) << 4);
   return;
 }
 
 
 // 825F2840  LoadBuffer_voidStream  (database/db_primtypes_load_buf.h:1047)
 
-void LoadBuffer_voidStream(bool param_1,int param_2)
+void LoadBuffer_voidStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x41a,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x41a,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f2ac;
     do {
-      LoadBuffer_Stream(true,bufvoid,1);
-      bufvoid = AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2ac = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -1155,43 +1052,39 @@ void LoadBuffer_voidStream(bool param_1,int param_2)
 
 // 825F5DB0  SaveBuffer_StructuredDataTypeUnionStream  (universal/com_structureddatadef_save_buf.h:1056)
 
-void SaveBuffer_StructuredDataTypeUnionStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataTypeUnionStream(undefined8 param_1,longlong param_2)
 
 {
-  StructuredDataTypeCategory SVar1;
+  int iVar1;
   char cVar2;
-  uint **ppuVar3;
-  longlong lVar4;
+  undefined8 uVar3;
   
-  lVar4 = (longlong)param_2;
-  cVar2 = __savegprlr_21(param_1);
+  cVar2 = __savegprlr_21();
   if (cVar2 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x423,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x423,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar4) {
+  if (0 < (int)param_2) {
     do {
-      SVar1 = bufStructuredDataType->type;
-      if (SVar1 == DATA_STRING) {
-        bufuint = &bufStructuredDataTypeUnion->stringDataLength;
-        bufoutuint = &bufoutStructuredDataTypeUnion->stringDataLength;
-        ppuVar3 = &bufoutuint;
-        bufstreamuint = (uint *)bufstreamStructuredDataTypeUnion;
+      iVar1 = *DAT_8404f2cc;
+      if (iVar1 == 3) {
+        DAT_8404f3b4 = DAT_8404f3e8;
+        DAT_8404f260 = DAT_8404f35c;
+        uVar3 = 0xffffffff8404f260;
+        DAT_8404f3c8 = DAT_8404f4b8;
 LAB_825f5e94:
-        SaveBuffer_Stream(true,bufStructuredDataTypeUnion,4,ppuVar3);
+        SaveBuffer_Stream(1,DAT_8404f3e8,4,uVar3);
       }
-      else if ((((SVar1 == DATA_ENUM) || (SVar1 == DATA_STRUCT)) || (SVar1 == DATA_INDEXED_ARRAY))
-              || (SVar1 == DATA_ENUM_ARRAY)) {
-        bufoutint = &bufoutStructuredDataTypeUnion->enumIndex;
-        bufint = &bufStructuredDataTypeUnion->enumIndex;
-        ppuVar3 = (uint **)&bufoutint;
-        bufstreamint = (int *)bufstreamStructuredDataTypeUnion;
+      else if ((((iVar1 == 4) || (iVar1 == 5)) || (iVar1 == 6)) || (iVar1 == 7)) {
+        uVar3 = 0xffffffff8404f400;
+        DAT_8404f400 = DAT_8404f35c;
+        DAT_8404f2d0 = DAT_8404f3e8;
+        DAT_8404f38c = DAT_8404f4b8;
         goto LAB_825f5e94;
       }
-      bufStructuredDataTypeUnion = (StructuredDataTypeUnion *)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataTypeUnion = (StructuredDataTypeUnion *)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      DAT_8404f3e8 = AssetBuf_GetSourcePos();
+      DAT_8404f4b8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_21();
   return;
@@ -1200,32 +1093,32 @@ LAB_825f5e94:
 
 // 825F28D0  LoadBuffer_byte  (database/db_primtypes_load_buf.h:1061)
 
-void LoadBuffer_byte(bool param_1)
+void LoadBuffer_byte(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufbyte,1);
+  LoadBuffer_Stream(param_1,DAT_8404f284,1);
   return;
 }
 
 
 // 825F7FB8  LoadBuffer_StructuredDataEnumedArrayStream  (universal/com_structureddatadef_load_buf.h:1062)
 
-void LoadBuffer_StructuredDataEnumedArrayStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataEnumedArrayStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x429,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x429,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f4c0;
     do {
-      LoadBuffer_Stream(true,bufStructuredDataEnumedArray,0x10);
-      bufStructuredDataEnumedArray = (StructuredDataEnumedArray *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,0x10);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f4c0 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -1233,82 +1126,74 @@ void LoadBuffer_StructuredDataEnumedArrayStream(bool param_1,int param_2)
 
 // 825F28E0  AllocLoadBuffer_byte  (database/db_primtypes_load_buf.h:1067)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocLoadBuffer_byte(void)
+void AllocLoadBuffer_byte(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F5EC0  SaveBuffer_StructuredDataType  (universal/com_structureddatadef_save_buf.h:1071)
 
-void SaveBuffer_StructuredDataType(bool param_1)
+void SaveBuffer_StructuredDataType(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataType,8,&bufoutStructuredDataType);
+  SaveBuffer_Stream(param_1,DAT_8404f2cc,8,0xffffffff8404f408);
   return;
 }
 
 
 // 825F28E8  LoadBuffer_byteArray  (database/db_primtypes_load_buf.h:1076)
 
-void LoadBuffer_byteArray(bool param_1,int param_2)
+void LoadBuffer_byteArray(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufbyte,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f284,param_2);
   return;
 }
 
 
 // 825F8048  LoadBuffer_StructuredDataStructProperty  (universal/com_structureddatadef_load_buf.h:1076)
 
-void LoadBuffer_StructuredDataStructProperty(bool param_1)
+void LoadBuffer_StructuredDataStructProperty(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufStructuredDataStructProperty,0x14);
-  bufXString = &bufStructuredDataStructProperty->name;
-  LoadBuffer_XString(false);
+  LoadBuffer_Stream(param_1,DAT_8404f2dc,0x14);
+  DAT_8404f538 = DAT_8404f2dc;
+  LoadBuffer_XString(0);
   return;
 }
 
 
 // 825F5ED8  AllocSaveBuffer_StructuredDataType  (universal/com_structureddatadef_save_buf.h:1091)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataType * AllocSaveBuffer_StructuredDataType(void)
+void AllocSaveBuffer_StructuredDataType(void)
 
 {
-  StructuredDataType *pSVar1;
-  
-  pSVar1 = (StructuredDataType *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F28F8  LoadBuffer_byteStream  (database/db_primtypes_load_buf.h:1098)
 
-void LoadBuffer_byteStream(bool param_1,int param_2)
+void LoadBuffer_byteStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x44d,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x44d,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f284;
     do {
-      LoadBuffer_Stream(true,bufbyte,1);
-      bufbyte = AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f284 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -1316,51 +1201,44 @@ void LoadBuffer_byteStream(bool param_1,int param_2)
 
 // 825F5EE0  SaveBuffer_StructuredDataTypeArray  (universal/com_structureddatadef_save_buf.h:1100)
 
-void SaveBuffer_StructuredDataTypeArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataTypeArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataType,param_2 << 3,&bufoutStructuredDataType);
+  SaveBuffer_Stream(param_1,DAT_8404f2cc,(param_2 & 0x1fffffff) << 3,0xffffffff8404f408);
   return;
 }
 
 
 // 825F8090  AllocLoadBuffer_StructuredDataStructProperty  (universal/com_structureddatadef_load_buf.h:1102)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataStructProperty * AllocLoadBuffer_StructuredDataStructProperty(void)
+void AllocLoadBuffer_StructuredDataStructProperty(void)
 
 {
-  StructuredDataStructProperty *pSVar1;
-  
-  pSVar1 = (StructuredDataStructProperty *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F8098  LoadBuffer_StructuredDataStructPropertyArray  (universal/com_structureddatadef_load_buf.h:1111)
 
-void LoadBuffer_StructuredDataStructPropertyArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataStructPropertyArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   ulonglong uVar2;
-  StructuredDataStructProperty *pSVar3;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar1,bufStructuredDataStructProperty,
-                    (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 2));
-  pSVar3 = bufStructuredDataStructProperty;
-  if (0 < (int)uVar2) {
+  uVar1 = __savegprlr_28();
+  LoadBuffer_Stream(uVar1,DAT_8404f2dc,(param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
+  uVar2 = (ulonglong)DAT_8404f2dc;
+  if (0 < (int)param_2) {
     do {
-      bufStructuredDataStructProperty = pSVar3;
-      LoadBuffer_Stream(false,pSVar3,0x14);
-      bufXString = &bufStructuredDataStructProperty->name;
-      LoadBuffer_XString(false);
-      uVar2 = uVar2 - 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar2 != 0);
+      DAT_8404f2dc = (uint)uVar2;
+      LoadBuffer_Stream(0,uVar2,0x14);
+      DAT_8404f538 = DAT_8404f2dc;
+      LoadBuffer_XString(0);
+      param_2 = param_2 - 1;
+      uVar2 = uVar2 + 0x14;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -1369,59 +1247,52 @@ void LoadBuffer_StructuredDataStructPropertyArray(bool param_1,int param_2)
 
 // 825F2988  LoadBuffer_BYTE  (database/db_primtypes_load_buf.h:1112)
 
-void LoadBuffer_BYTE(bool param_1)
+void LoadBuffer_BYTE(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufBYTE,1);
+  LoadBuffer_Stream(param_1,DAT_8404f2e0,1);
   return;
 }
 
 
 // 825F2998  AllocLoadBuffer_BYTE  (database/db_primtypes_load_buf.h:1118)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocLoadBuffer_BYTE(void)
+void AllocLoadBuffer_BYTE(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F29A0  LoadBuffer_BYTEArray  (database/db_primtypes_load_buf.h:1127)
 
-void LoadBuffer_BYTEArray(bool param_1,int param_2)
+void LoadBuffer_BYTEArray(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufBYTE,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f2e0,param_2);
   return;
 }
 
 
 // 825F5EF8  SaveBuffer_StructuredDataTypeStream  (universal/com_structureddatadef_save_buf.h:1130)
 
-void SaveBuffer_StructuredDataTypeStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataTypeStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x46d,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x46d,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufStructuredDataType,8,&bufoutStructuredDataType);
-      bufStructuredDataType = (StructuredDataType *)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataType = (StructuredDataType *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f2cc,8,0xffffffff8404f408);
+      DAT_8404f2cc = AssetBuf_GetSourcePos();
+      DAT_8404f44c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -1430,26 +1301,26 @@ void SaveBuffer_StructuredDataTypeStream(bool param_1,int param_2)
 
 // 825F8108  LoadBuffer_StructuredDataStructPropertyStream  (universal/com_structureddatadef_load_buf.h:1133)
 
-void LoadBuffer_StructuredDataStructPropertyStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataStructPropertyStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
+  ulonglong uVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_29(param_1);
+  cVar1 = __savegprlr_29();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x470,0,"%s");
+    MyAssertHandler(0xffffffff82179e90,0x470,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
+    uVar2 = (ulonglong)DAT_8404f2dc;
     do {
-      LoadBuffer_Stream(true,bufStructuredDataStructProperty,0x14);
-      bufXString = &bufStructuredDataStructProperty->name;
-      LoadBuffer_XString(false);
-      bufStructuredDataStructProperty = (StructuredDataStructProperty *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      LoadBuffer_Stream(1,uVar2,0x14);
+      DAT_8404f538 = DAT_8404f2dc;
+      LoadBuffer_XString(0);
+      uVar2 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2dc = (uint)uVar2;
+    } while (param_2 != 0);
   }
   __restgprlr_29();
   return;
@@ -1457,42 +1328,53 @@ void LoadBuffer_StructuredDataStructPropertyStream(bool param_1,int param_2)
 
 
 // 825F8C98  StructuredDataDef_LoadDef_FastFile  (universal/com_structureddatadef_obj.cpp:1139)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+ulonglong StructuredDataDef_LoadDef_FastFile(undefined8 param_1)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = DB_FindXAssetHeader(0x28,param_1,1);
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82179ef8,0x477,0,0xffffffff82000f98,0xffffffff82087f1c);
+  }
+  return uVar1;
+}
+
 
 // 825EEFF8  SaveBuffer_void  (database/db_primtypes_save_buf.h:1143)
 
-void SaveBuffer_void(bool param_1)
+void SaveBuffer_void(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufvoid,1,&bufoutvoid);
+  SaveBuffer_Stream(param_1,DAT_8404f2ac,1,0xffffffff8404f524);
   return;
 }
 
 
 // 825F5F88  SaveBuffer_StructuredDataIndexedArray  (universal/com_structureddatadef_save_buf.h:1145)
 
-void SaveBuffer_StructuredDataIndexedArray(bool param_1)
+void SaveBuffer_StructuredDataIndexedArray(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataIndexedArray,0x10,&bufoutStructuredDataIndexedArray);
+  SaveBuffer_Stream(param_1,DAT_8404f508,0x10,0xffffffff8404f268);
   return;
 }
 
 
 // 825F8198  LoadBuffer_StructuredDataStruct  (universal/com_structureddatadef_load_buf.h:1147)
 
-void LoadBuffer_StructuredDataStruct(bool param_1)
+void LoadBuffer_StructuredDataStruct(undefined8 param_1)
 
 {
-  StructuredDataStructProperty *pSVar1;
+  undefined4 uVar1;
   
-  LoadBuffer_Stream(param_1,bufStructuredDataStruct,0x10);
-  if (bufStructuredDataStruct->properties != (StructuredDataStructProperty *)0x0) {
-    pSVar1 = (StructuredDataStructProperty *)AssetBuf_AllocStreamPos(3);
-    bufStructuredDataStruct->properties = pSVar1;
-    bufStructuredDataStructProperty = bufStructuredDataStruct->properties;
-    LoadBuffer_StructuredDataStructPropertyArray(true,bufStructuredDataStruct->propertyCount);
+  LoadBuffer_Stream(param_1,DAT_8404f2c8,0x10);
+  if (DAT_8404f2c8[1] != 0) {
+    uVar1 = AssetBuf_AllocStreamPos(3);
+    DAT_8404f2c8[1] = uVar1;
+    DAT_8404f2dc = DAT_8404f2c8[1];
+    LoadBuffer_StructuredDataStructPropertyArray(1,*DAT_8404f2c8);
   }
   return;
 }
@@ -1500,251 +1382,227 @@ void LoadBuffer_StructuredDataStruct(bool param_1)
 
 // 825EF010  AllocSaveBuffer_void  (database/db_primtypes_save_buf.h:1149)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void * AllocSaveBuffer_void(void)
+void AllocSaveBuffer_void(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F29B0  LoadBuffer_BYTEStream  (database/db_primtypes_load_buf.h:1149)
 
-void LoadBuffer_BYTEStream(bool param_1,int param_2)
+void LoadBuffer_BYTEStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x480,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x480,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f2e0;
     do {
-      LoadBuffer_Stream(true,bufBYTE,1);
-      bufBYTE = AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2e0 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
 
 
 // 825F8D00  StructuredDataDef_LoadDef  (universal/com_structureddatadef_obj.cpp:1150)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+ulonglong StructuredDataDef_LoadDef(undefined8 param_1)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = DB_FindXAssetHeader(0x28,param_1,1);
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82179ef8,0x477,0,0xffffffff82000f98,0xffffffff82087f1c);
+  }
+  return uVar1;
+}
+
 
 // 825F8D68  StructuredData_GetTypeSize  (universal/com_structureddatadef_obj.cpp:1156)
 
-uint StructuredData_GetTypeSize(StructuredDataDef *param_1,StructuredDataType *param_2)
+void StructuredData_GetTypeSize(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  undefined4 *puVar4;
-  int *piVar5;
+  undefined4 *puVar2;
+  int *piVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
-                    ,0x488,0,"%s");
+    MyAssertHandler(0xffffffff82179ef8,0x488,0,0xffffffff82000f98,0xffffffff8206070c);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
-                    ,0x489,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82179ef8,0x489,0,0xffffffff82000f98,0xffffffff820928bc);
   }
-  puVar4 = (undefined4 *)uVar3;
-  switch(*puVar4) {
+  puVar2 = (undefined4 *)param_2;
+  switch(*puVar2) {
   case 0:
   case 8:
-    uVar2 = __restgprlr_28(4);
-    return uVar2;
+    __restgprlr_28(4);
+    return;
   case 1:
   case 2:
-    uVar2 = __restgprlr_28(1);
-    return uVar2;
+    __restgprlr_28(1);
+    return;
   case 3:
-    uVar2 = __restgprlr_28(puVar4[1]);
-    return uVar2;
+    __restgprlr_28(puVar2[1]);
+    return;
   case 4:
   case 9:
-    uVar2 = __restgprlr_28(2);
-    return uVar2;
+    __restgprlr_28(2);
+    return;
   case 5:
-    if (*(uint *)(iVar1 + 0x10) <= (uint)puVar4[1]) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
-                      ,0x4a0,0,
-                      "type->u.structIndex doesn\'t index def->structCount\n\t%i not in [0, %i)");
+    if (*(uint *)(iVar1 + 0x10) <= (uint)puVar2[1]) {
+      MyAssertHandler(0xffffffff82179ef8,0x4a0,0,0xffffffff82086aa0);
     }
-    uVar2 = __restgprlr_28(*(undefined4 *)(puVar4[1] * 0x10 + *(int *)(iVar1 + 0x14) + 8));
-    return uVar2;
+    __restgprlr_28(*(undefined4 *)(puVar2[1] * 0x10 + *(int *)(iVar1 + 0x14) + 8));
+    return;
   case 6:
     break;
   case 7:
-    if (*(uint *)(iVar1 + 0x20) <= (uint)puVar4[1]) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
-                      ,0x4ae,0,
-                      "type->u.enumedArrayIndex doesn\'t index def->enumedArrayCount\n\t%i not in [0, %i)"
-                     );
+    if (*(uint *)(iVar1 + 0x20) <= (uint)puVar2[1]) {
+      MyAssertHandler(0xffffffff82179ef8,0x4ae,0,0xffffffff820869f8);
     }
-    piVar5 = (int *)(puVar4[1] * 0x10 + *(int *)(iVar1 + 0x24));
-    if (*(uint *)(iVar1 + 8) <= *(uint *)(puVar4[1] * 0x10 + *(int *)(iVar1 + 0x24))) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
-                      ,0x4b1,0,
-                      "enumedArray->enumIndex doesn\'t index def->enumCount\n\t%i not in [0, %i)");
+    piVar3 = (int *)(puVar2[1] * 0x10 + *(int *)(iVar1 + 0x24));
+    if (*(uint *)(iVar1 + 8) <= *(uint *)(puVar2[1] * 0x10 + *(int *)(iVar1 + 0x24))) {
+      MyAssertHandler(0xffffffff82179ef8,0x4b1,0,0xffffffff82179f60);
     }
-    iVar1 = *(int *)(*piVar5 * 0xc + *(int *)(iVar1 + 0xc) + 4);
-    if (piVar5[1] != 2) {
-      uVar2 = __restgprlr_28((longlong)iVar1 * (longlong)piVar5[3]);
-      return uVar2;
+    iVar1 = *(int *)(*piVar3 * 0xc + *(int *)(iVar1 + 0xc) + 4);
+    if (piVar3[1] != 2) {
+      __restgprlr_28((longlong)iVar1 * (longlong)piVar3[3]);
+      return;
     }
-    uVar2 = __restgprlr_28(((longlong)iVar1 * (longlong)piVar5[3] + 7U & 0xffffffff) >> 3);
-    return uVar2;
+    __restgprlr_28(((longlong)iVar1 * (longlong)piVar3[3] + 7U & 0xffffffff) >> 3);
+    return;
   default:
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
-                      ,0x4be,0,"Unhandled data type");
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82179ef8,0x4be,0,0xffffffff82179f4c);
     }
-    uVar2 = __restgprlr_28(0);
-    return uVar2;
+    __restgprlr_28(0);
+    return;
   }
-  if (*(uint *)(iVar1 + 0x18) <= (uint)puVar4[1]) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
-                    ,0x4a4,0,
-                    "type->u.indexedArrayIndex doesn\'t index def->indexedArrayCount\n\t%i not in [0, %i)"
-                   );
+  if (*(uint *)(iVar1 + 0x18) <= (uint)puVar2[1]) {
+    MyAssertHandler(0xffffffff82179ef8,0x4a4,0,0xffffffff82086a48);
   }
-  piVar5 = (int *)(puVar4[1] * 0x10 + *(int *)(iVar1 + 0x1c));
-  if (*(int *)(puVar4[1] * 0x10 + *(int *)(iVar1 + 0x1c)) < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_obj.cpp"
-                    ,0x4a7,0,"indexedArray->arraySize >= 0\n\t%i, %i");
+  piVar3 = (int *)(puVar2[1] * 0x10 + *(int *)(iVar1 + 0x1c));
+  iVar1 = *(int *)(puVar2[1] * 0x10 + *(int *)(iVar1 + 0x1c));
+  if (iVar1 < 0) {
+    MyAssertHandler(0xffffffff82179ef8,0x4a7,0,0xffffffff82179fa8,iVar1,0);
   }
-  if (piVar5[1] != 2) {
-    uVar2 = __restgprlr_28((longlong)piVar5[3] * (longlong)*piVar5);
-    return uVar2;
+  if (piVar3[1] != 2) {
+    __restgprlr_28((longlong)piVar3[3] * (longlong)*piVar3);
+    return;
   }
-  uVar2 = __restgprlr_28(((longlong)piVar5[3] * (longlong)*piVar5 + 7U & 0xffffffff) >> 3);
-  return uVar2;
+  __restgprlr_28(((longlong)piVar3[3] * (longlong)*piVar3 + 7U & 0xffffffff) >> 3);
+  return;
 }
 
 
 // 825EF018  SaveBuffer_voidArray  (database/db_primtypes_save_buf.h:1158)
 
-void SaveBuffer_voidArray(bool param_1,int param_2)
+void SaveBuffer_voidArray(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufvoid,param_2,&bufoutvoid);
+  SaveBuffer_Stream(param_1,DAT_8404f2ac,param_2,0xffffffff8404f524);
   return;
 }
 
 
 // 825F2A40  LoadBuffer_char  (database/db_primtypes_load_buf.h:1163)
 
-void LoadBuffer_char(bool param_1)
+void LoadBuffer_char(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufchar,1);
+  LoadBuffer_Stream(param_1,DAT_8404f454,1);
   return;
 }
 
 
 // 825F2A50  AllocLoadBuffer_char  (database/db_primtypes_load_buf.h:1169)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char * AllocLoadBuffer_char(void)
+void AllocLoadBuffer_char(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return (char *)puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F5FA0  AllocSaveBuffer_StructuredDataIndexedArray  (universal/com_structureddatadef_save_buf.h:1172)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataIndexedArray * AllocSaveBuffer_StructuredDataIndexedArray(void)
+void AllocSaveBuffer_StructuredDataIndexedArray(void)
 
 {
-  StructuredDataIndexedArray *pSVar1;
-  
-  pSVar1 = (StructuredDataIndexedArray *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F8210  AllocLoadBuffer_StructuredDataStruct  (universal/com_structureddatadef_load_buf.h:1175)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataStruct * AllocLoadBuffer_StructuredDataStruct(void)
+void AllocLoadBuffer_StructuredDataStruct(void)
 
 {
-  StructuredDataStruct *pSVar1;
-  
-  pSVar1 = (StructuredDataStruct *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F2A58  LoadBuffer_charArray  (database/db_primtypes_load_buf.h:1178)
 
-void LoadBuffer_charArray(bool param_1,int param_2)
+void LoadBuffer_charArray(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufchar,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f454,param_2);
   return;
 }
 
 
 // 825F5FA8  SaveBuffer_StructuredDataIndexedArrayArray  (universal/com_structureddatadef_save_buf.h:1181)
 
-void SaveBuffer_StructuredDataIndexedArrayArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataIndexedArrayArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataIndexedArray,param_2 << 4,
-                    &bufoutStructuredDataIndexedArray);
+  SaveBuffer_Stream(param_1,DAT_8404f508,(param_2 & 0xfffffff) << 4,0xffffffff8404f268);
   return;
 }
 
 
 // 825F8218  LoadBuffer_StructuredDataStructArray  (universal/com_structureddatadef_load_buf.h:1184)
 
-void LoadBuffer_StructuredDataStructArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataStructArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar2;
-  StructuredDataStructProperty *pSVar1;
-  StructuredDataStruct *pSVar3;
-  ulonglong uVar4;
+  undefined8 uVar1;
+  undefined4 uVar2;
+  undefined4 *puVar3;
   
-  uVar4 = (ulonglong)param_2;
-  bVar2 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar2,bufStructuredDataStruct,(int)((uVar4 & 0xffffffff) << 4));
-  pSVar3 = bufStructuredDataStruct;
-  if (0 < (int)uVar4) {
+  uVar1 = __savegprlr_28();
+  LoadBuffer_Stream(uVar1,DAT_8404f2c8,(param_2 & 0xfffffff) << 4);
+  puVar3 = DAT_8404f2c8;
+  if (0 < (int)param_2) {
     do {
-      bufStructuredDataStruct = pSVar3;
-      LoadBuffer_Stream(false,pSVar3,0x10);
-      if (bufStructuredDataStruct->properties != (StructuredDataStructProperty *)0x0) {
-        pSVar1 = (StructuredDataStructProperty *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataStruct->properties = pSVar1;
-        bufStructuredDataStructProperty = bufStructuredDataStruct->properties;
-        LoadBuffer_StructuredDataStructPropertyArray(true,bufStructuredDataStruct->propertyCount);
+      DAT_8404f2c8 = puVar3;
+      LoadBuffer_Stream(0,puVar3,0x10);
+      if (DAT_8404f2c8[1] != 0) {
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        DAT_8404f2c8[1] = uVar2;
+        DAT_8404f2dc = DAT_8404f2c8[1];
+        LoadBuffer_StructuredDataStructPropertyArray(1,*DAT_8404f2c8);
       }
-      uVar4 = uVar4 - 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar4 != 0);
+      param_2 = param_2 - 1;
+      puVar3 = puVar3 + 4;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -1753,25 +1611,22 @@ void LoadBuffer_StructuredDataStructArray(bool param_1,int param_2)
 
 // 825EF030  SaveBuffer_voidStream  (database/db_primtypes_save_buf.h:1188)
 
-void SaveBuffer_voidStream(bool param_1,int param_2)
+void SaveBuffer_voidStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x4a7,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x4a7,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufvoid,1,&bufoutvoid);
-      bufvoid = AssetBuf_GetSourcePos();
-      bufstreamvoid = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f2ac,1,0xffffffff8404f524);
+      DAT_8404f2ac = AssetBuf_GetSourcePos();
+      DAT_8404f3ec = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -1780,22 +1635,22 @@ void SaveBuffer_voidStream(bool param_1,int param_2)
 
 // 825F2A68  LoadBuffer_charStream  (database/db_primtypes_load_buf.h:1200)
 
-void LoadBuffer_charStream(bool param_1,int param_2)
+void LoadBuffer_charStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x4b3,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x4b3,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f454;
     do {
-      LoadBuffer_Stream(true,bufchar,1);
-      bufchar = (char *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f454 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -1803,41 +1658,38 @@ void LoadBuffer_charStream(bool param_1,int param_2)
 
 // 825EF0C0  SaveBuffer_byte  (database/db_primtypes_save_buf.h:1203)
 
-void SaveBuffer_byte(bool param_1)
+void SaveBuffer_byte(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufbyte,1,&bufoutbyte);
+  SaveBuffer_Stream(param_1,DAT_8404f284,1,0xffffffff8404f514);
   return;
 }
 
 
 // 825F82B0  LoadBuffer_StructuredDataStructStream  (universal/com_structureddatadef_load_buf.h:1206)
 
-void LoadBuffer_StructuredDataStructStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataStructStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar2;
-  StructuredDataStructProperty *pSVar1;
-  longlong lVar3;
+  undefined4 uVar1;
   
-  lVar3 = (longlong)param_2;
-  cVar2 = __savegprlr_29(param_1);
+  cVar2 = __savegprlr_29();
   if (cVar2 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x4b9,0,"%s");
+    MyAssertHandler(0xffffffff82179e90,0x4b9,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar3) {
+  if (0 < (int)param_2) {
     do {
-      LoadBuffer_Stream(true,bufStructuredDataStruct,0x10);
-      if (bufStructuredDataStruct->properties != (StructuredDataStructProperty *)0x0) {
-        pSVar1 = (StructuredDataStructProperty *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataStruct->properties = pSVar1;
-        bufStructuredDataStructProperty = bufStructuredDataStruct->properties;
-        LoadBuffer_StructuredDataStructPropertyArray(true,bufStructuredDataStruct->propertyCount);
+      LoadBuffer_Stream(1,DAT_8404f2c8,0x10);
+      if (DAT_8404f2c8[1] != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        DAT_8404f2c8[1] = uVar1;
+        DAT_8404f2dc = DAT_8404f2c8[1];
+        LoadBuffer_StructuredDataStructPropertyArray(1,*DAT_8404f2c8);
       }
-      bufStructuredDataStruct = (StructuredDataStruct *)AssetBuf_GetStreamPos();
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      DAT_8404f2c8 = (undefined4 *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_29();
   return;
@@ -1846,39 +1698,32 @@ void LoadBuffer_StructuredDataStructStream(bool param_1,int param_2)
 
 // 825EF0D8  AllocSaveBuffer_byte  (database/db_primtypes_save_buf.h:1209)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocSaveBuffer_byte(void)
+void AllocSaveBuffer_byte(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F5FC0  SaveBuffer_StructuredDataIndexedArrayStream  (universal/com_structureddatadef_save_buf.h:1211)
 
-void SaveBuffer_StructuredDataIndexedArrayStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataIndexedArrayStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x4be,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x4be,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufStructuredDataIndexedArray,0x10,&bufoutStructuredDataIndexedArray);
-      bufStructuredDataIndexedArray = (StructuredDataIndexedArray *)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataIndexedArray = (StructuredDataIndexedArray *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f508,0x10,0xffffffff8404f268);
+      DAT_8404f508 = AssetBuf_GetSourcePos();
+      DAT_8404f52c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -1887,74 +1732,65 @@ void SaveBuffer_StructuredDataIndexedArrayStream(bool param_1,int param_2)
 
 // 825F2AF8  LoadBuffer_uint8_t  (database/db_primtypes_load_buf.h:1214)
 
-void LoadBuffer_uint8_t(bool param_1)
+void LoadBuffer_uint8_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufuint8_t,1);
+  LoadBuffer_Stream(param_1,DAT_8404f560,1);
   return;
 }
 
 
 // 825EF0E0  SaveBuffer_byteArray  (database/db_primtypes_save_buf.h:1218)
 
-void SaveBuffer_byteArray(bool param_1,int param_2)
+void SaveBuffer_byteArray(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufbyte,param_2,&bufoutbyte);
+  SaveBuffer_Stream(param_1,DAT_8404f284,param_2,0xffffffff8404f514);
   return;
 }
 
 
 // 825F2B08  AllocLoadBuffer_uint8_t  (database/db_primtypes_load_buf.h:1220)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocLoadBuffer_uint8_t(void)
+void AllocLoadBuffer_uint8_t(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F8370  LoadBuffer_StructuredDataDef  (universal/com_structureddatadef_load_buf.h:1220)
 
-void LoadBuffer_StructuredDataDef(bool param_1)
+void LoadBuffer_StructuredDataDef(undefined8 param_1)
 
 {
-  StructuredDataEnum *pSVar1;
-  StructuredDataStruct *pSVar2;
-  StructuredDataIndexedArray *pSVar3;
-  StructuredDataEnumedArray *pSVar4;
+  undefined4 uVar1;
   
-  LoadBuffer_Stream(param_1,bufStructuredDataDef,0x34);
-  if (bufStructuredDataDef->enums != (StructuredDataEnum *)0x0) {
-    pSVar1 = (StructuredDataEnum *)AssetBuf_AllocStreamPos(3);
-    bufStructuredDataDef->enums = pSVar1;
-    bufStructuredDataEnum = bufStructuredDataDef->enums;
-    LoadBuffer_StructuredDataEnumArray(true,bufStructuredDataDef->enumCount);
+  LoadBuffer_Stream(param_1,DAT_8404f34c,0x34);
+  if (*(int *)(DAT_8404f34c + 0xc) != 0) {
+    uVar1 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f34c + 0xc) = uVar1;
+    DAT_8404f368 = *(undefined4 *)(DAT_8404f34c + 0xc);
+    LoadBuffer_StructuredDataEnumArray(1,*(undefined4 *)(DAT_8404f34c + 8));
   }
-  if (bufStructuredDataDef->structs != (StructuredDataStruct *)0x0) {
-    pSVar2 = (StructuredDataStruct *)AssetBuf_AllocStreamPos(3);
-    bufStructuredDataDef->structs = pSVar2;
-    bufStructuredDataStruct = bufStructuredDataDef->structs;
-    LoadBuffer_StructuredDataStructArray(true,bufStructuredDataDef->structCount);
+  if (*(int *)(DAT_8404f34c + 0x14) != 0) {
+    uVar1 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f34c + 0x14) = uVar1;
+    DAT_8404f2c8 = *(undefined4 *)(DAT_8404f34c + 0x14);
+    LoadBuffer_StructuredDataStructArray(1,*(undefined4 *)(DAT_8404f34c + 0x10));
   }
-  if (bufStructuredDataDef->indexedArrays != (StructuredDataIndexedArray *)0x0) {
-    pSVar3 = (StructuredDataIndexedArray *)AssetBuf_AllocStreamPos(3);
-    bufStructuredDataDef->indexedArrays = pSVar3;
-    bufStructuredDataIndexedArray = bufStructuredDataDef->indexedArrays;
-    LoadBuffer_Stream(true,bufStructuredDataIndexedArray,
-                      bufStructuredDataDef->indexedArrayCount << 4);
+  if (*(int *)(DAT_8404f34c + 0x1c) != 0) {
+    uVar1 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f34c + 0x1c) = uVar1;
+    DAT_8404f508 = *(undefined4 *)(DAT_8404f34c + 0x1c);
+    LoadBuffer_Stream(1,DAT_8404f508,*(int *)(DAT_8404f34c + 0x18) << 4);
   }
-  if (bufStructuredDataDef->enumedArrays != (StructuredDataEnumedArray *)0x0) {
-    pSVar4 = (StructuredDataEnumedArray *)AssetBuf_AllocStreamPos(3);
-    bufStructuredDataDef->enumedArrays = pSVar4;
-    bufStructuredDataEnumedArray = bufStructuredDataDef->enumedArrays;
-    LoadBuffer_Stream(true,bufStructuredDataEnumedArray,bufStructuredDataDef->enumedArrayCount << 4)
-    ;
+  if (*(int *)(DAT_8404f34c + 0x24) != 0) {
+    uVar1 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f34c + 0x24) = uVar1;
+    DAT_8404f4c0 = *(undefined4 *)(DAT_8404f34c + 0x24);
+    LoadBuffer_Stream(1,DAT_8404f4c0,*(int *)(DAT_8404f34c + 0x20) << 4);
   }
   return;
 }
@@ -1962,45 +1798,42 @@ void LoadBuffer_StructuredDataDef(bool param_1)
 
 // 825F6050  SaveBuffer_StructuredDataEnumedArray  (universal/com_structureddatadef_save_buf.h:1226)
 
-void SaveBuffer_StructuredDataEnumedArray(bool param_1)
+void SaveBuffer_StructuredDataEnumedArray(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataEnumedArray,0x10,&bufoutStructuredDataEnumedArray);
+  SaveBuffer_Stream(param_1,DAT_8404f4c0,0x10,0xffffffff8404f2f0);
   return;
 }
 
 
 // 825F2B10  LoadBuffer_uint8_tArray  (database/db_primtypes_load_buf.h:1229)
 
-void LoadBuffer_uint8_tArray(bool param_1,int param_2)
+void LoadBuffer_uint8_tArray(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufuint8_t,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f560,param_2);
   return;
 }
 
 
 // 825EF0F8  SaveBuffer_byteStream  (database/db_primtypes_save_buf.h:1248)
 
-void SaveBuffer_byteStream(bool param_1,int param_2)
+void SaveBuffer_byteStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x4e3,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x4e3,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufbyte,1,&bufoutbyte);
-      bufbyte = AssetBuf_GetSourcePos();
-      bufstreambyte = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f284,1,0xffffffff8404f514);
+      DAT_8404f284 = AssetBuf_GetSourcePos();
+      DAT_8404f2c4 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -2009,22 +1842,22 @@ void SaveBuffer_byteStream(bool param_1,int param_2)
 
 // 825F2B20  LoadBuffer_uint8_tStream  (database/db_primtypes_load_buf.h:1251)
 
-void LoadBuffer_uint8_tStream(bool param_1,int param_2)
+void LoadBuffer_uint8_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x4e6,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x4e6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f560;
     do {
-      LoadBuffer_Stream(true,bufuint8_t,1);
-      bufuint8_t = AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f560 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -2032,118 +1865,102 @@ void LoadBuffer_uint8_tStream(bool param_1,int param_2)
 
 // 825F6068  AllocSaveBuffer_StructuredDataEnumedArray  (universal/com_structureddatadef_save_buf.h:1253)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataEnumedArray * AllocSaveBuffer_StructuredDataEnumedArray(void)
+void AllocSaveBuffer_StructuredDataEnumedArray(void)
 
 {
-  StructuredDataEnumedArray *pSVar1;
-  
-  pSVar1 = (StructuredDataEnumedArray *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F6070  SaveBuffer_StructuredDataEnumedArrayArray  (universal/com_structureddatadef_save_buf.h:1262)
 
-void SaveBuffer_StructuredDataEnumedArrayArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataEnumedArrayArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataEnumedArray,param_2 << 4,
-                    &bufoutStructuredDataEnumedArray);
+  SaveBuffer_Stream(param_1,DAT_8404f4c0,(param_2 & 0xfffffff) << 4,0xffffffff8404f2f0);
   return;
 }
 
 
 // 825EF188  SaveBuffer_BYTE  (database/db_primtypes_save_buf.h:1263)
 
-void SaveBuffer_BYTE(bool param_1)
+void SaveBuffer_BYTE(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufBYTE,1,&bufoutBYTE);
+  SaveBuffer_Stream(param_1,DAT_8404f2e0,1,0xffffffff8404f3e4);
   return;
 }
 
 
 // 825F2BB0  LoadBuffer_int8_t  (database/db_primtypes_load_buf.h:1265)
 
-void LoadBuffer_int8_t(bool param_1)
+void LoadBuffer_int8_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufint8_t,1);
+  LoadBuffer_Stream(param_1,DAT_8404f510,1);
   return;
 }
 
 
 // 825EF1A0  AllocSaveBuffer_BYTE  (database/db_primtypes_save_buf.h:1269)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocSaveBuffer_BYTE(void)
+void AllocSaveBuffer_BYTE(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F2BC0  AllocLoadBuffer_int8_t  (database/db_primtypes_load_buf.h:1271)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char * AllocLoadBuffer_int8_t(void)
+void AllocLoadBuffer_int8_t(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return (char *)puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825EF1A8  SaveBuffer_BYTEArray  (database/db_primtypes_save_buf.h:1278)
 
-void SaveBuffer_BYTEArray(bool param_1,int param_2)
+void SaveBuffer_BYTEArray(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufBYTE,param_2,&bufoutBYTE);
+  SaveBuffer_Stream(param_1,DAT_8404f2e0,param_2,0xffffffff8404f3e4);
   return;
 }
 
 
 // 825F2BC8  LoadBuffer_int8_tArray  (database/db_primtypes_load_buf.h:1280)
 
-void LoadBuffer_int8_tArray(bool param_1,int param_2)
+void LoadBuffer_int8_tArray(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufint8_t,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f510,param_2);
   return;
 }
 
 
 // 825F6088  SaveBuffer_StructuredDataEnumedArrayStream  (universal/com_structureddatadef_save_buf.h:1292)
 
-void SaveBuffer_StructuredDataEnumedArrayStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataEnumedArrayStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x50f,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x50f,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufStructuredDataEnumedArray,0x10,&bufoutStructuredDataEnumedArray);
-      bufStructuredDataEnumedArray = (StructuredDataEnumedArray *)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataEnumedArray = (StructuredDataEnumedArray *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f4c0,0x10,0xffffffff8404f2f0);
+      DAT_8404f4c0 = AssetBuf_GetSourcePos();
+      DAT_8404f4dc = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -2152,36 +1969,32 @@ void SaveBuffer_StructuredDataEnumedArrayStream(bool param_1,int param_2)
 
 // 825F84B0  AllocLoadBuffer_StructuredDataDef  (universal/com_structureddatadef_load_buf.h:1294)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataDef * AllocLoadBuffer_StructuredDataDef(void)
+void AllocLoadBuffer_StructuredDataDef(void)
 
 {
-  StructuredDataDef *pSVar1;
-  
-  pSVar1 = (StructuredDataDef *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F2BD8  LoadBuffer_int8_tStream  (database/db_primtypes_load_buf.h:1302)
 
-void LoadBuffer_int8_tStream(bool param_1,int param_2)
+void LoadBuffer_int8_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x519,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x519,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f510;
     do {
-      LoadBuffer_Stream(true,bufint8_t,1);
-      bufint8_t = (char *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f510 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -2189,54 +2002,47 @@ void LoadBuffer_int8_tStream(bool param_1,int param_2)
 
 // 825F84B8  LoadBuffer_StructuredDataDefArray  (universal/com_structureddatadef_load_buf.h:1303)
 
-void LoadBuffer_StructuredDataDefArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataDefArray(undefined8 param_1,longlong param_2)
 
 {
-  bool bVar5;
-  StructuredDataEnum *pSVar1;
-  StructuredDataStruct *pSVar2;
-  StructuredDataIndexedArray *pSVar3;
-  StructuredDataEnumedArray *pSVar4;
-  StructuredDataDef *pSVar6;
-  longlong lVar7;
+  undefined8 uVar1;
+  undefined4 uVar2;
+  int iVar3;
   
-  lVar7 = (longlong)param_2;
-  bVar5 = (bool)__savegprlr_25(param_1);
-  LoadBuffer_Stream(bVar5,bufStructuredDataDef,(int)lVar7 * 0x34);
-  pSVar6 = bufStructuredDataDef;
-  if (0 < (int)lVar7) {
+  uVar1 = __savegprlr_25();
+  LoadBuffer_Stream(uVar1,DAT_8404f34c,param_2 * 0x34);
+  iVar3 = DAT_8404f34c;
+  if (0 < (int)param_2) {
     do {
-      bufStructuredDataDef = pSVar6;
-      LoadBuffer_Stream(false,pSVar6,0x34);
-      if (bufStructuredDataDef->enums != (StructuredDataEnum *)0x0) {
-        pSVar1 = (StructuredDataEnum *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataDef->enums = pSVar1;
-        bufStructuredDataEnum = bufStructuredDataDef->enums;
-        LoadBuffer_StructuredDataEnumArray(true,bufStructuredDataDef->enumCount);
+      DAT_8404f34c = iVar3;
+      LoadBuffer_Stream(0,iVar3,0x34);
+      if (*(int *)(DAT_8404f34c + 0xc) != 0) {
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f34c + 0xc) = uVar2;
+        DAT_8404f368 = *(undefined4 *)(DAT_8404f34c + 0xc);
+        LoadBuffer_StructuredDataEnumArray(1,*(undefined4 *)(DAT_8404f34c + 8));
       }
-      if (bufStructuredDataDef->structs != (StructuredDataStruct *)0x0) {
-        pSVar2 = (StructuredDataStruct *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataDef->structs = pSVar2;
-        bufStructuredDataStruct = bufStructuredDataDef->structs;
-        LoadBuffer_StructuredDataStructArray(true,bufStructuredDataDef->structCount);
+      if (*(int *)(DAT_8404f34c + 0x14) != 0) {
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f34c + 0x14) = uVar2;
+        DAT_8404f2c8 = *(undefined4 *)(DAT_8404f34c + 0x14);
+        LoadBuffer_StructuredDataStructArray(1,*(undefined4 *)(DAT_8404f34c + 0x10));
       }
-      if (bufStructuredDataDef->indexedArrays != (StructuredDataIndexedArray *)0x0) {
-        pSVar3 = (StructuredDataIndexedArray *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataDef->indexedArrays = pSVar3;
-        bufStructuredDataIndexedArray = bufStructuredDataDef->indexedArrays;
-        LoadBuffer_Stream(true,bufStructuredDataIndexedArray,
-                          bufStructuredDataDef->indexedArrayCount << 4);
+      if (*(int *)(DAT_8404f34c + 0x1c) != 0) {
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f34c + 0x1c) = uVar2;
+        DAT_8404f508 = *(undefined4 *)(DAT_8404f34c + 0x1c);
+        LoadBuffer_Stream(1,DAT_8404f508,*(int *)(DAT_8404f34c + 0x18) << 4);
       }
-      if (bufStructuredDataDef->enumedArrays != (StructuredDataEnumedArray *)0x0) {
-        pSVar4 = (StructuredDataEnumedArray *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataDef->enumedArrays = pSVar4;
-        bufStructuredDataEnumedArray = bufStructuredDataDef->enumedArrays;
-        LoadBuffer_Stream(true,bufStructuredDataEnumedArray,
-                          bufStructuredDataDef->enumedArrayCount << 4);
+      if (*(int *)(DAT_8404f34c + 0x24) != 0) {
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f34c + 0x24) = uVar2;
+        DAT_8404f4c0 = *(undefined4 *)(DAT_8404f34c + 0x24);
+        LoadBuffer_Stream(1,DAT_8404f4c0,*(int *)(DAT_8404f34c + 0x20) << 4);
       }
-      lVar7 = lVar7 + -1;
-      pSVar6 = pSVar6 + 1;
-    } while (lVar7 != 0);
+      param_2 = param_2 + -1;
+      iVar3 = iVar3 + 0x34;
+    } while (param_2 != 0);
   }
   __restgprlr_25();
   return;
@@ -2245,40 +2051,36 @@ void LoadBuffer_StructuredDataDefArray(bool param_1,int param_2)
 
 // 825F6118  SaveBuffer_StructuredDataStructProperty  (universal/com_structureddatadef_save_buf.h:1307)
 
-void SaveBuffer_StructuredDataStructProperty(bool param_1)
+void SaveBuffer_StructuredDataStructProperty(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufStructuredDataStructProperty,0x14,&bufoutStructuredDataStructProperty
-                   );
-  bufXString = &bufStructuredDataStructProperty->name;
-  bufoutXString = &bufoutStructuredDataStructProperty->name;
-  bufstreamXString = &bufstreamStructuredDataStructProperty->name;
-  SaveBuffer_XString(false);
+  SaveBuffer_Stream(param_1,DAT_8404f2dc,0x14,0xffffffff8404f25c);
+  DAT_8404f538 = DAT_8404f2dc;
+  DAT_8404f28c = DAT_8404f25c;
+  DAT_8404f47c = DAT_8404f270;
+  SaveBuffer_XString(0);
   return;
 }
 
 
 // 825EF1C0  SaveBuffer_BYTEStream  (database/db_primtypes_save_buf.h:1308)
 
-void SaveBuffer_BYTEStream(bool param_1,int param_2)
+void SaveBuffer_BYTEStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x51f,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x51f,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufBYTE,1,&bufoutBYTE);
-      bufBYTE = AssetBuf_GetSourcePos();
-      bufstreamBYTE = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f2e0,1,0xffffffff8404f3e4);
+      DAT_8404f2e0 = AssetBuf_GetSourcePos();
+      DAT_8404f37c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -2287,88 +2089,76 @@ void SaveBuffer_BYTEStream(bool param_1,int param_2)
 
 // 825F2C68  LoadBuffer_bool  (database/db_primtypes_load_buf.h:1316)
 
-void LoadBuffer_bool(bool param_1)
+void LoadBuffer_bool(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufbool,1);
+  LoadBuffer_Stream(param_1,DAT_8404f340,1);
   return;
 }
 
 
 // 825F2C78  AllocLoadBuffer_bool  (database/db_primtypes_load_buf.h:1322)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool * AllocLoadBuffer_bool(void)
+void AllocLoadBuffer_bool(void)
 
 {
-  bool *pbVar1;
-  
-  pbVar1 = (bool *)AssetBuf_AllocStreamPos(0);
-  return pbVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825EF250  SaveBuffer_char  (database/db_primtypes_save_buf.h:1323)
 
-void SaveBuffer_char(bool param_1)
+void SaveBuffer_char(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufchar,1,&bufoutchar);
+  SaveBuffer_Stream(param_1,DAT_8404f454,1,0xffffffff8404f334);
   return;
 }
 
 
 // 825F8618  LoadBuffer_StructuredDataDefStream  (universal/com_structureddatadef_load_buf.h:1325)
 
-void LoadBuffer_StructuredDataDefStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataDefStream(undefined8 param_1,longlong param_2)
 
 {
-  char cVar5;
-  StructuredDataEnum *pSVar1;
-  StructuredDataStruct *pSVar2;
-  StructuredDataIndexedArray *pSVar3;
-  StructuredDataEnumedArray *pSVar4;
-  longlong lVar6;
+  char cVar2;
+  undefined4 uVar1;
   
-  lVar6 = (longlong)param_2;
-  cVar5 = __savegprlr_26(param_1);
-  if (cVar5 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x530,0,"%s");
+  cVar2 = __savegprlr_26();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x530,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar6) {
+  if (0 < (int)param_2) {
     do {
-      LoadBuffer_Stream(true,bufStructuredDataDef,0x34);
-      if (bufStructuredDataDef->enums != (StructuredDataEnum *)0x0) {
-        pSVar1 = (StructuredDataEnum *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataDef->enums = pSVar1;
-        bufStructuredDataEnum = bufStructuredDataDef->enums;
-        LoadBuffer_StructuredDataEnumArray(true,bufStructuredDataDef->enumCount);
+      LoadBuffer_Stream(1,DAT_8404f34c,0x34);
+      if (*(int *)(DAT_8404f34c + 0xc) != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f34c + 0xc) = uVar1;
+        DAT_8404f368 = *(undefined4 *)(DAT_8404f34c + 0xc);
+        LoadBuffer_StructuredDataEnumArray(1,*(undefined4 *)(DAT_8404f34c + 8));
       }
-      if (bufStructuredDataDef->structs != (StructuredDataStruct *)0x0) {
-        pSVar2 = (StructuredDataStruct *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataDef->structs = pSVar2;
-        bufStructuredDataStruct = bufStructuredDataDef->structs;
-        LoadBuffer_StructuredDataStructArray(true,bufStructuredDataDef->structCount);
+      if (*(int *)(DAT_8404f34c + 0x14) != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f34c + 0x14) = uVar1;
+        DAT_8404f2c8 = *(undefined4 *)(DAT_8404f34c + 0x14);
+        LoadBuffer_StructuredDataStructArray(1,*(undefined4 *)(DAT_8404f34c + 0x10));
       }
-      if (bufStructuredDataDef->indexedArrays != (StructuredDataIndexedArray *)0x0) {
-        pSVar3 = (StructuredDataIndexedArray *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataDef->indexedArrays = pSVar3;
-        bufStructuredDataIndexedArray = bufStructuredDataDef->indexedArrays;
-        LoadBuffer_Stream(true,bufStructuredDataIndexedArray,
-                          bufStructuredDataDef->indexedArrayCount << 4);
+      if (*(int *)(DAT_8404f34c + 0x1c) != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f34c + 0x1c) = uVar1;
+        DAT_8404f508 = *(undefined4 *)(DAT_8404f34c + 0x1c);
+        LoadBuffer_Stream(1,DAT_8404f508,*(int *)(DAT_8404f34c + 0x18) << 4);
       }
-      if (bufStructuredDataDef->enumedArrays != (StructuredDataEnumedArray *)0x0) {
-        pSVar4 = (StructuredDataEnumedArray *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataDef->enumedArrays = pSVar4;
-        bufStructuredDataEnumedArray = bufStructuredDataDef->enumedArrays;
-        LoadBuffer_Stream(true,bufStructuredDataEnumedArray,
-                          bufStructuredDataDef->enumedArrayCount << 4);
+      if (*(int *)(DAT_8404f34c + 0x24) != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f34c + 0x24) = uVar1;
+        DAT_8404f4c0 = *(undefined4 *)(DAT_8404f34c + 0x24);
+        LoadBuffer_Stream(1,DAT_8404f4c0,*(int *)(DAT_8404f34c + 0x20) << 4);
       }
-      bufStructuredDataDef = (StructuredDataDef *)AssetBuf_GetStreamPos();
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
+      DAT_8404f34c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_26();
   return;
@@ -2377,54 +2167,50 @@ void LoadBuffer_StructuredDataDefStream(bool param_1,int param_2)
 
 // 825EF268  AllocSaveBuffer_char  (database/db_primtypes_save_buf.h:1329)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char * AllocSaveBuffer_char(void)
+void AllocSaveBuffer_char(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return (char *)puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F2C80  LoadBuffer_boolArray  (database/db_primtypes_load_buf.h:1331)
 
-void LoadBuffer_boolArray(bool param_1,int param_2)
+void LoadBuffer_boolArray(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufbool,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f340,param_2);
   return;
 }
 
 
 // 825EF270  SaveBuffer_charArray  (database/db_primtypes_save_buf.h:1338)
 
-void SaveBuffer_charArray(bool param_1,int param_2)
+void SaveBuffer_charArray(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufchar,param_2,&bufoutchar);
+  SaveBuffer_Stream(param_1,DAT_8404f454,param_2,0xffffffff8404f334);
   return;
 }
 
 
 // 825F87A0  LoadBuffer_StructuredDataDefSet  (universal/com_structureddatadef_load_buf.h:1339)
 
-void LoadBuffer_StructuredDataDefSet(bool param_1)
+void LoadBuffer_StructuredDataDefSet(undefined8 param_1)
 
 {
-  StructuredDataDef *pSVar1;
+  undefined4 uVar1;
   
-  LoadBuffer_Stream(param_1,bufStructuredDataDefSet,0xc);
+  LoadBuffer_Stream(param_1,DAT_8404f3d0,0xc);
   AssetBuf_PushStreamPos(3);
-  bufXString = &bufStructuredDataDefSet->name;
-  LoadBuffer_XString(false);
-  if (bufStructuredDataDefSet->defs != (StructuredDataDef *)0x0) {
-    pSVar1 = (StructuredDataDef *)AssetBuf_AllocStreamPos(3);
-    bufStructuredDataDefSet->defs = pSVar1;
-    bufStructuredDataDef = bufStructuredDataDefSet->defs;
-    LoadBuffer_StructuredDataDefArray(true,bufStructuredDataDefSet->defCount);
+  DAT_8404f538 = DAT_8404f3d0;
+  LoadBuffer_XString(0);
+  if (*(int *)(DAT_8404f3d0 + 8) != 0) {
+    uVar1 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f3d0 + 8) = uVar1;
+    DAT_8404f34c = *(undefined4 *)(DAT_8404f3d0 + 8);
+    LoadBuffer_StructuredDataDefArray(1,*(undefined4 *)(DAT_8404f3d0 + 4));
   }
   AssetBuf_PopStreamPos();
   return;
@@ -2433,52 +2219,45 @@ void LoadBuffer_StructuredDataDefSet(bool param_1)
 
 // 825F6190  AllocSaveBuffer_StructuredDataStructProperty  (universal/com_structureddatadef_save_buf.h:1341)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataStructProperty * AllocSaveBuffer_StructuredDataStructProperty(void)
+void AllocSaveBuffer_StructuredDataStructProperty(void)
 
 {
-  StructuredDataStructProperty *pSVar1;
-  
-  pSVar1 = (StructuredDataStructProperty *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F6198  SaveBuffer_StructuredDataStructPropertyArray  (universal/com_structureddatadef_save_buf.h:1350)
 
-void SaveBuffer_StructuredDataStructPropertyArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataStructPropertyArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
-  StructuredDataStructProperty *pSVar3;
-  StructuredDataStructProperty *pSVar4;
-  StructuredDataStructProperty *pSVar5;
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_22(param_1);
-  SaveBuffer_Stream(bVar1,bufStructuredDataStructProperty,
-                    (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 2),
-                    &bufoutStructuredDataStructProperty);
-  pSVar5 = bufStructuredDataStructProperty;
-  pSVar4 = bufstreamStructuredDataStructProperty;
-  pSVar3 = bufoutStructuredDataStructProperty;
-  if (0 < (int)uVar2) {
+  uVar1 = __savegprlr_22();
+  SaveBuffer_Stream(uVar1,DAT_8404f2dc,(param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) << 2,
+                    0xffffffff8404f25c);
+  uVar4 = (ulonglong)DAT_8404f2dc;
+  iVar3 = DAT_8404f270;
+  iVar2 = DAT_8404f25c;
+  if (0 < (int)param_2) {
     do {
-      bufoutStructuredDataStructProperty = pSVar3;
-      bufstreamStructuredDataStructProperty = pSVar4;
-      bufStructuredDataStructProperty = pSVar5;
-      SaveBuffer_Stream(false,pSVar5,0x14,&bufoutStructuredDataStructProperty);
-      bufXString = &bufStructuredDataStructProperty->name;
-      bufstreamXString = &bufstreamStructuredDataStructProperty->name;
-      bufoutXString = &bufoutStructuredDataStructProperty->name;
-      SaveBuffer_XString(false);
-      uVar2 = uVar2 - 1;
-      pSVar5 = pSVar5 + 1;
-      pSVar4 = pSVar4 + 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar2 != 0);
+      DAT_8404f2dc = (uint)uVar4;
+      DAT_8404f25c = iVar2;
+      DAT_8404f270 = iVar3;
+      SaveBuffer_Stream(0,uVar4,0x14,0xffffffff8404f25c);
+      DAT_8404f538 = DAT_8404f2dc;
+      DAT_8404f47c = DAT_8404f270;
+      DAT_8404f28c = DAT_8404f25c;
+      SaveBuffer_XString(0);
+      param_2 = param_2 - 1;
+      uVar4 = uVar4 + 0x14;
+      iVar3 = iVar3 + 0x14;
+      iVar2 = iVar2 + 0x14;
+    } while (param_2 != 0);
   }
   __restgprlr_22();
   return;
@@ -2487,22 +2266,22 @@ void SaveBuffer_StructuredDataStructPropertyArray(bool param_1,int param_2)
 
 // 825F2C90  LoadBuffer_boolStream  (database/db_primtypes_load_buf.h:1353)
 
-void LoadBuffer_boolStream(bool param_1,int param_2)
+void LoadBuffer_boolStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x54c,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x54c,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f340;
     do {
-      LoadBuffer_Stream(true,bufbool,1);
-      bufbool = (bool *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f340 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -2510,49 +2289,42 @@ void LoadBuffer_boolStream(bool param_1,int param_2)
 
 // 825F8838  AllocLoadBuffer_StructuredDataDefSet  (universal/com_structureddatadef_load_buf.h:1366)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataDefSet * AllocLoadBuffer_StructuredDataDefSet(void)
+void AllocLoadBuffer_StructuredDataDefSet(void)
 
 {
-  StructuredDataDefSet *pSVar1;
-  
-  pSVar1 = (StructuredDataDefSet *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F2D20  LoadBuffer_qboolean  (database/db_primtypes_load_buf.h:1367)
 
-void LoadBuffer_qboolean(bool param_1)
+void LoadBuffer_qboolean(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufqboolean,4);
+  LoadBuffer_Stream(param_1,DAT_8404f250,4);
   return;
 }
 
 
 // 825EF288  SaveBuffer_charStream  (database/db_primtypes_save_buf.h:1368)
 
-void SaveBuffer_charStream(bool param_1,int param_2)
+void SaveBuffer_charStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x55b,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x55b,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufchar,1,&bufoutchar);
-      bufchar = (char *)AssetBuf_GetSourcePos();
-      bufstreamchar = (char *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f454,1,0xffffffff8404f334);
+      DAT_8404f454 = AssetBuf_GetSourcePos();
+      DAT_8404f4a0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -2561,36 +2333,33 @@ void SaveBuffer_charStream(bool param_1,int param_2)
 
 // 825F8840  LoadBuffer_StructuredDataDefSetArray  (universal/com_structureddatadef_load_buf.h:1375)
 
-void LoadBuffer_StructuredDataDefSetArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataDefSetArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar2;
-  StructuredDataDef *pSVar1;
-  StructuredDataDefSet *pSVar3;
-  ulonglong uVar4;
+  undefined8 uVar1;
+  undefined4 uVar2;
+  int iVar3;
   
-  uVar4 = (ulonglong)param_2;
-  bVar2 = (bool)__savegprlr_27(param_1);
-  LoadBuffer_Stream(bVar2,bufStructuredDataDefSet,
-                    (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2));
-  pSVar3 = bufStructuredDataDefSet;
-  if (0 < (int)uVar4) {
+  uVar1 = __savegprlr_27();
+  LoadBuffer_Stream(uVar1,DAT_8404f3d0,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+  iVar3 = DAT_8404f3d0;
+  if (0 < (int)param_2) {
     do {
-      bufStructuredDataDefSet = pSVar3;
-      LoadBuffer_Stream(false,pSVar3,0xc);
+      DAT_8404f3d0 = iVar3;
+      LoadBuffer_Stream(0,iVar3,0xc);
       AssetBuf_PushStreamPos(3);
-      bufXString = &bufStructuredDataDefSet->name;
-      LoadBuffer_XString(false);
-      if (bufStructuredDataDefSet->defs != (StructuredDataDef *)0x0) {
-        pSVar1 = (StructuredDataDef *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataDefSet->defs = pSVar1;
-        bufStructuredDataDef = bufStructuredDataDefSet->defs;
-        LoadBuffer_StructuredDataDefArray(true,bufStructuredDataDefSet->defCount);
+      DAT_8404f538 = DAT_8404f3d0;
+      LoadBuffer_XString(0);
+      if (*(int *)(DAT_8404f3d0 + 8) != 0) {
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f3d0 + 8) = uVar2;
+        DAT_8404f34c = *(undefined4 *)(DAT_8404f3d0 + 8);
+        LoadBuffer_StructuredDataDefArray(1,*(undefined4 *)(DAT_8404f3d0 + 4));
       }
       AssetBuf_PopStreamPos();
-      uVar4 = uVar4 - 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar4 != 0);
+      param_2 = param_2 - 1;
+      iVar3 = iVar3 + 0xc;
+    } while (param_2 != 0);
   }
   __restgprlr_27();
   return;
@@ -2599,45 +2368,36 @@ void LoadBuffer_StructuredDataDefSetArray(bool param_1,int param_2)
 
 // 825F2D30  AllocLoadBuffer_qboolean  (database/db_primtypes_load_buf.h:1378)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int * AllocLoadBuffer_qboolean(void)
+void AllocLoadBuffer_qboolean(void)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)AssetBuf_AllocStreamPos(3);
-  return piVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F6250  SaveBuffer_StructuredDataStructPropertyStream  (universal/com_structureddatadef_save_buf.h:1380)
 
-void SaveBuffer_StructuredDataStructPropertyStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataStructPropertyStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_25(param_1);
+  cVar1 = __savegprlr_25();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x567,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x567,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufStructuredDataStructProperty,0x14,
-                        &bufoutStructuredDataStructProperty);
-      bufXString = &bufStructuredDataStructProperty->name;
-      bufstreamXString = &bufstreamStructuredDataStructProperty->name;
-      bufoutXString = &bufoutStructuredDataStructProperty->name;
-      SaveBuffer_XString(false);
-      bufStructuredDataStructProperty = (StructuredDataStructProperty *)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataStructProperty =
-           (StructuredDataStructProperty *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f2dc,0x14,0xffffffff8404f25c);
+      DAT_8404f538 = DAT_8404f2dc;
+      DAT_8404f47c = DAT_8404f270;
+      DAT_8404f28c = DAT_8404f25c;
+      SaveBuffer_XString(0);
+      DAT_8404f2dc = AssetBuf_GetSourcePos();
+      DAT_8404f270 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_25();
   return;
@@ -2646,61 +2406,55 @@ void SaveBuffer_StructuredDataStructPropertyStream(bool param_1,int param_2)
 
 // 825EF318  SaveBuffer_uint8_t  (database/db_primtypes_save_buf.h:1383)
 
-void SaveBuffer_uint8_t(bool param_1)
+void SaveBuffer_uint8_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufuint8_t,1,&bufoutuint8_t);
+  SaveBuffer_Stream(param_1,DAT_8404f560,1,0xffffffff8404f3dc);
   return;
 }
 
 
 // 825F2D38  LoadBuffer_qbooleanArray  (database/db_primtypes_load_buf.h:1387)
 
-void LoadBuffer_qbooleanArray(bool param_1,int param_2)
+void LoadBuffer_qbooleanArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufqboolean,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f250,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825EF330  AllocSaveBuffer_uint8_t  (database/db_primtypes_save_buf.h:1389)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocSaveBuffer_uint8_t(void)
+void AllocSaveBuffer_uint8_t(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F6308  SaveBuffer_StructuredDataStruct  (universal/com_structureddatadef_save_buf.h:1395)
 
-void SaveBuffer_StructuredDataStruct(bool param_1)
+void SaveBuffer_StructuredDataStruct(undefined8 param_1)
 
 {
-  void *pvVar1;
-  StructuredDataStructProperty *pSVar2;
+  int iVar1;
+  undefined4 uVar2;
   
-  SaveBuffer_Stream(param_1,bufStructuredDataStruct,0x10,&bufoutStructuredDataStruct);
-  if (bufStructuredDataStruct->properties != (StructuredDataStructProperty *)0x0) {
-    pvVar1 = AssetBuf_FindStreamData(bufStructuredDataStruct->properties);
-    if (pvVar1 != (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                      ,0x57f,0,"%s");
+  SaveBuffer_Stream(param_1,DAT_8404f2c8,0x10,0xffffffff8404f3a4);
+  if (DAT_8404f2c8[1] != 0) {
+    iVar1 = AssetBuf_FindStreamData(DAT_8404f2c8[1]);
+    if (iVar1 != 0) {
+      MyAssertHandler(0xffffffff82179c20,0x57f,0,0xffffffff82000f98,0xffffffff82179cc0);
     }
-    pSVar2 = (StructuredDataStructProperty *)AssetBuf_AllocStreamPos(3);
-    bufoutStructuredDataStruct->properties = pSVar2;
-    bufStructuredDataStructProperty = bufStructuredDataStruct->properties;
-    bufstreamStructuredDataStructProperty = bufoutStructuredDataStruct->properties;
-    AssetBuf_SetStreamData
-              (bufStructuredDataStruct->properties,bufoutStructuredDataStruct->properties);
-    bufoutStructuredDataStruct->properties = (StructuredDataStructProperty *)0xffffffff;
-    SaveBuffer_StructuredDataStructPropertyArray(true,bufStructuredDataStruct->propertyCount);
+    uVar2 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f3a4 + 4) = uVar2;
+    DAT_8404f2dc = DAT_8404f2c8[1];
+    DAT_8404f270 = *(undefined4 *)(DAT_8404f3a4 + 4);
+    AssetBuf_SetStreamData(DAT_8404f2c8[1],*(undefined4 *)(DAT_8404f3a4 + 4));
+    *(undefined4 *)(DAT_8404f3a4 + 4) = 0xffffffff;
+    SaveBuffer_StructuredDataStructPropertyArray(1,*DAT_8404f2c8);
   }
   return;
 }
@@ -2708,35 +2462,32 @@ void SaveBuffer_StructuredDataStruct(bool param_1)
 
 // 825F8900  LoadBuffer_StructuredDataDefSetStream  (universal/com_structureddatadef_load_buf.h:1397)
 
-void LoadBuffer_StructuredDataDefSetStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataDefSetStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar2;
-  StructuredDataDef *pSVar1;
-  longlong lVar3;
+  undefined4 uVar1;
   
-  lVar3 = (longlong)param_2;
-  cVar2 = __savegprlr_28(param_1);
+  cVar2 = __savegprlr_28();
   if (cVar2 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x578,0,"%s");
+    MyAssertHandler(0xffffffff82179e90,0x578,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar3) {
+  if (0 < (int)param_2) {
     do {
-      LoadBuffer_Stream(true,bufStructuredDataDefSet,0xc);
+      LoadBuffer_Stream(1,DAT_8404f3d0,0xc);
       AssetBuf_PushStreamPos(3);
-      bufXString = &bufStructuredDataDefSet->name;
-      LoadBuffer_XString(false);
-      if (bufStructuredDataDefSet->defs != (StructuredDataDef *)0x0) {
-        pSVar1 = (StructuredDataDef *)AssetBuf_AllocStreamPos(3);
-        bufStructuredDataDefSet->defs = pSVar1;
-        bufStructuredDataDef = bufStructuredDataDefSet->defs;
-        LoadBuffer_StructuredDataDefArray(true,bufStructuredDataDefSet->defCount);
+      DAT_8404f538 = DAT_8404f3d0;
+      LoadBuffer_XString(0);
+      if (*(int *)(DAT_8404f3d0 + 8) != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f3d0 + 8) = uVar1;
+        DAT_8404f34c = *(undefined4 *)(DAT_8404f3d0 + 8);
+        LoadBuffer_StructuredDataDefArray(1,*(undefined4 *)(DAT_8404f3d0 + 4));
       }
       AssetBuf_PopStreamPos();
-      bufStructuredDataDefSet = (StructuredDataDefSet *)AssetBuf_GetStreamPos();
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      DAT_8404f3d0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -2745,32 +2496,32 @@ void LoadBuffer_StructuredDataDefSetStream(bool param_1,int param_2)
 
 // 825EF338  SaveBuffer_uint8_tArray  (database/db_primtypes_save_buf.h:1398)
 
-void SaveBuffer_uint8_tArray(bool param_1,int param_2)
+void SaveBuffer_uint8_tArray(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufuint8_t,param_2,&bufoutuint8_t);
+  SaveBuffer_Stream(param_1,DAT_8404f560,param_2,0xffffffff8404f3dc);
   return;
 }
 
 
 // 825F2D48  LoadBuffer_qbooleanStream  (database/db_primtypes_load_buf.h:1409)
 
-void LoadBuffer_qbooleanStream(bool param_1,int param_2)
+void LoadBuffer_qbooleanStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x584,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x584,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f250;
     do {
-      LoadBuffer_Stream(true,bufqboolean,4);
-      bufqboolean = (int *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f250 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -2778,35 +2529,34 @@ void LoadBuffer_qbooleanStream(bool param_1,int param_2)
 
 // 825F89E0  LoadBuffer_StructuredDataDefSetPtr  (universal/com_structureddatadef_load_buf.h:1411)
 
-void LoadBuffer_StructuredDataDefSetPtr(bool param_1)
+void LoadBuffer_StructuredDataDefSetPtr(undefined8 param_1)
 
 {
-  StructuredDataDefSet *pSVar1;
-  StructuredDataDefSet *pSVar2;
-  void **ppvVar3;
+  int iVar1;
+  int iVar2;
+  int *piVar3;
   
-  LoadBuffer_Stream(param_1,bufStructuredDataDefSetPtr,4);
+  LoadBuffer_Stream(param_1,DAT_8404f358,4);
   AssetBuf_PushStreamPos(0);
-  pSVar1 = *bufStructuredDataDefSetPtr;
-  if (pSVar1 != (StructuredDataDefSet *)0x0) {
-    if ((pSVar1 == (StructuredDataDefSet *)0xffffffff) ||
-       (pSVar1 == (StructuredDataDefSet *)0xfffffffe)) {
-      pSVar2 = (StructuredDataDefSet *)AssetBuf_AllocStreamPos(3);
-      *bufStructuredDataDefSetPtr = pSVar2;
-      bufStructuredDataDefSet = *bufStructuredDataDefSetPtr;
-      if (pSVar1 == (StructuredDataDefSet *)0xfffffffe) {
-        ppvVar3 = AssetBuf_InsertPointer();
+  iVar1 = *DAT_8404f358;
+  if (iVar1 != 0) {
+    if ((iVar1 == -1) || (iVar1 == -2)) {
+      iVar2 = AssetBuf_AllocStreamPos(3);
+      *DAT_8404f358 = iVar2;
+      DAT_8404f3d0 = *DAT_8404f358;
+      if (iVar1 == -2) {
+        piVar3 = (int *)AssetBuf_InsertPointer();
       }
       else {
-        ppvVar3 = (void **)0x0;
+        piVar3 = (int *)0x0;
       }
-      LoadBuffer_StructuredDataDefSet(true);
-      if (ppvVar3 != (void **)0x0) {
-        *ppvVar3 = *bufStructuredDataDefSetPtr;
+      LoadBuffer_StructuredDataDefSet(1);
+      if (piVar3 != (int *)0x0) {
+        *piVar3 = *DAT_8404f358;
       }
     }
     else {
-      AssetBuf_ConvertOffsetToAlias(bufStructuredDataDefSetPtr);
+      AssetBuf_ConvertOffsetToAlias();
     }
   }
   AssetBuf_PopStreamPos();
@@ -2816,35 +2566,32 @@ void LoadBuffer_StructuredDataDefSetPtr(bool param_1)
 
 // 825F2DD8  LoadBuffer_int  (database/db_primtypes_load_buf.h:1423)
 
-void LoadBuffer_int(bool param_1)
+void LoadBuffer_int(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufint,4);
+  LoadBuffer_Stream(param_1,DAT_8404f2d0,4);
   return;
 }
 
 
 // 825EF350  SaveBuffer_uint8_tStream  (database/db_primtypes_save_buf.h:1428)
 
-void SaveBuffer_uint8_tStream(bool param_1,int param_2)
+void SaveBuffer_uint8_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x597,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x597,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufuint8_t,1,&bufoutuint8_t);
-      bufuint8_t = AssetBuf_GetSourcePos();
-      bufstreamuint8_t = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f560,1,0xffffffff8404f3dc);
+      DAT_8404f560 = AssetBuf_GetSourcePos();
+      DAT_8404f40c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -2853,102 +2600,85 @@ void SaveBuffer_uint8_tStream(bool param_1,int param_2)
 
 // 825F2DE8  AllocLoadBuffer_int  (database/db_primtypes_load_buf.h:1429)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int * AllocLoadBuffer_int(void)
+void AllocLoadBuffer_int(void)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)AssetBuf_AllocStreamPos(3);
-  return piVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F63F0  AllocSaveBuffer_StructuredDataStruct  (universal/com_structureddatadef_save_buf.h:1433)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataStruct * AllocSaveBuffer_StructuredDataStruct(void)
+void AllocSaveBuffer_StructuredDataStruct(void)
 
 {
-  StructuredDataStruct *pSVar1;
-  
-  pSVar1 = (StructuredDataStruct *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F2DF0  LoadBuffer_intArray  (database/db_primtypes_load_buf.h:1438)
 
-void LoadBuffer_intArray(bool param_1,int param_2)
+void LoadBuffer_intArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufint,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f2d0,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825F8AA8  AllocLoadBuffer_StructuredDataDefSetPtr  (universal/com_structureddatadef_load_buf.h:1440)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataDefSet ** AllocLoadBuffer_StructuredDataDefSetPtr(void)
+void AllocLoadBuffer_StructuredDataDefSetPtr(void)
 
 {
-  StructuredDataDefSet **ppSVar1;
-  
-  ppSVar1 = (StructuredDataDefSet **)AssetBuf_AllocStreamPos(3);
-  return ppSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F63F8  SaveBuffer_StructuredDataStructArray  (universal/com_structureddatadef_save_buf.h:1442)
 
-void SaveBuffer_StructuredDataStructArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataStructArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar3;
-  void *pvVar1;
-  StructuredDataStructProperty *pSVar2;
-  StructuredDataStruct *pSVar4;
-  StructuredDataStruct *pSVar5;
-  StructuredDataStruct *pSVar6;
-  ulonglong uVar7;
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar5;
+  undefined4 *puVar6;
   
-  uVar7 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_19(param_1);
-  SaveBuffer_Stream(bVar3,bufStructuredDataStruct,(int)((uVar7 & 0xffffffff) << 4),
-                    &bufoutStructuredDataStruct);
-  pSVar6 = bufStructuredDataStruct;
-  pSVar4 = bufoutStructuredDataStruct;
-  pSVar5 = bufstreamStructuredDataStruct;
-  if (0 < (int)uVar7) {
+  uVar1 = __savegprlr_19();
+  SaveBuffer_Stream(uVar1,DAT_8404f2c8,(param_2 & 0xfffffff) << 4,0xffffffff8404f3a4);
+  iVar4 = DAT_8404f3a4;
+  iVar5 = DAT_8404f480;
+  puVar6 = DAT_8404f2c8;
+  if (0 < (int)param_2) {
     do {
-      bufStructuredDataStruct = pSVar6;
-      bufoutStructuredDataStruct = pSVar4;
-      bufstreamStructuredDataStruct = pSVar5;
-      SaveBuffer_Stream(false,pSVar6,0x10,&bufoutStructuredDataStruct);
-      if (bufStructuredDataStruct->properties != (StructuredDataStructProperty *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataStruct->properties);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x57f,0,"%s");
+      DAT_8404f2c8 = puVar6;
+      DAT_8404f3a4 = iVar4;
+      DAT_8404f480 = iVar5;
+      SaveBuffer_Stream(0,puVar6,0x10,0xffffffff8404f3a4);
+      if (DAT_8404f2c8[1] != 0) {
+        iVar2 = AssetBuf_FindStreamData(DAT_8404f2c8[1]);
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x57f,0,0xffffffff82000f98,0xffffffff82179cc0);
         }
-        pSVar2 = (StructuredDataStructProperty *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataStruct->properties = pSVar2;
-        bufStructuredDataStructProperty = bufStructuredDataStruct->properties;
-        bufstreamStructuredDataStructProperty = bufoutStructuredDataStruct->properties;
-        AssetBuf_SetStreamData
-                  (bufStructuredDataStruct->properties,bufoutStructuredDataStruct->properties);
-        bufoutStructuredDataStruct->properties = (StructuredDataStructProperty *)0xffffffff;
-        SaveBuffer_StructuredDataStructPropertyArray(true,bufStructuredDataStruct->propertyCount);
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f3a4 + 4) = uVar3;
+        DAT_8404f2dc = DAT_8404f2c8[1];
+        DAT_8404f270 = *(undefined4 *)(DAT_8404f3a4 + 4);
+        AssetBuf_SetStreamData(DAT_8404f2c8[1],*(undefined4 *)(DAT_8404f3a4 + 4));
+        *(undefined4 *)(DAT_8404f3a4 + 4) = 0xffffffff;
+        SaveBuffer_StructuredDataStructPropertyArray(1,*DAT_8404f2c8);
       }
-      uVar7 = uVar7 - 1;
-      pSVar6 = pSVar6 + 1;
-      pSVar4 = pSVar4 + 1;
-      pSVar5 = pSVar5 + 1;
-    } while (uVar7 != 0);
+      param_2 = param_2 - 1;
+      iVar4 = iVar4 + 0x10;
+      iVar5 = iVar5 + 0x10;
+      puVar6 = puVar6 + 4;
+    } while (param_2 != 0);
   }
   __restgprlr_19();
   return;
@@ -2957,75 +2687,68 @@ void SaveBuffer_StructuredDataStructArray(bool param_1,int param_2)
 
 // 825EF3E0  SaveBuffer_int8_t  (database/db_primtypes_save_buf.h:1443)
 
-void SaveBuffer_int8_t(bool param_1)
+void SaveBuffer_int8_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufint8_t,1,&bufoutint8_t);
+  SaveBuffer_Stream(param_1,DAT_8404f510,1,0xffffffff8404f36c);
   return;
 }
 
 
 // 825EF3F8  AllocSaveBuffer_int8_t  (database/db_primtypes_save_buf.h:1449)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char * AllocSaveBuffer_int8_t(void)
+void AllocSaveBuffer_int8_t(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return (char *)puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F8AB0  LoadBuffer_StructuredDataDefSetPtrArray  (universal/com_structureddatadef_load_buf.h:1449)
 
-void LoadBuffer_StructuredDataDefSetPtrArray(bool param_1,int param_2)
+void LoadBuffer_StructuredDataDefSetPtrArray(undefined8 param_1,ulonglong param_2)
 
 {
-  StructuredDataDefSet *pSVar1;
-  bool bVar4;
-  StructuredDataDefSet *pSVar2;
-  void **ppvVar3;
-  ulonglong uVar5;
-  StructuredDataDefSet **ppSVar6;
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int *piVar4;
+  int *piVar5;
   
-  uVar5 = (ulonglong)param_2;
-  bVar4 = (bool)__savegprlr_27(param_1);
-  LoadBuffer_Stream(bVar4,bufStructuredDataDefSetPtr,(int)((uVar5 & 0xffffffff) << 2));
-  ppSVar6 = bufStructuredDataDefSetPtr;
-  if (0 < (int)uVar5) {
+  uVar2 = __savegprlr_27();
+  LoadBuffer_Stream(uVar2,DAT_8404f358,(param_2 & 0x3fffffff) << 2);
+  piVar5 = DAT_8404f358;
+  if (0 < (int)param_2) {
     do {
-      bufStructuredDataDefSetPtr = ppSVar6;
-      LoadBuffer_Stream(false,ppSVar6,4);
+      DAT_8404f358 = piVar5;
+      LoadBuffer_Stream(0,piVar5,4);
       AssetBuf_PushStreamPos(0);
-      pSVar1 = *bufStructuredDataDefSetPtr;
-      if (pSVar1 != (StructuredDataDefSet *)0x0) {
-        if ((pSVar1 == (StructuredDataDefSet *)0xffffffff) ||
-           (pSVar1 == (StructuredDataDefSet *)0xfffffffe)) {
-          pSVar2 = (StructuredDataDefSet *)AssetBuf_AllocStreamPos(3);
-          *bufStructuredDataDefSetPtr = pSVar2;
-          bufStructuredDataDefSet = *bufStructuredDataDefSetPtr;
-          if (pSVar1 == (StructuredDataDefSet *)0xfffffffe) {
-            ppvVar3 = AssetBuf_InsertPointer();
+      iVar1 = *DAT_8404f358;
+      if (iVar1 != 0) {
+        if ((iVar1 == -1) || (iVar1 == -2)) {
+          iVar3 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f358 = iVar3;
+          DAT_8404f3d0 = *DAT_8404f358;
+          if (iVar1 == -2) {
+            piVar4 = (int *)AssetBuf_InsertPointer();
           }
           else {
-            ppvVar3 = (void **)0x0;
+            piVar4 = (int *)0x0;
           }
-          LoadBuffer_StructuredDataDefSet(true);
-          if (ppvVar3 != (void **)0x0) {
-            *ppvVar3 = *bufStructuredDataDefSetPtr;
+          LoadBuffer_StructuredDataDefSet(1);
+          if (piVar4 != (int *)0x0) {
+            *piVar4 = *DAT_8404f358;
           }
         }
         else {
-          AssetBuf_ConvertOffsetToAlias(bufStructuredDataDefSetPtr);
+          AssetBuf_ConvertOffsetToAlias();
         }
       }
       AssetBuf_PopStreamPos();
-      uVar5 = uVar5 - 1;
-      ppSVar6 = ppSVar6 + 1;
-    } while (uVar5 != 0);
+      param_2 = param_2 - 1;
+      piVar5 = piVar5 + 1;
+    } while (param_2 != 0);
   }
   __restgprlr_27();
   return;
@@ -3034,32 +2757,32 @@ void LoadBuffer_StructuredDataDefSetPtrArray(bool param_1,int param_2)
 
 // 825EF400  SaveBuffer_int8_tArray  (database/db_primtypes_save_buf.h:1458)
 
-void SaveBuffer_int8_tArray(bool param_1,int param_2)
+void SaveBuffer_int8_tArray(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufint8_t,param_2,&bufoutint8_t);
+  SaveBuffer_Stream(param_1,DAT_8404f510,param_2,0xffffffff8404f36c);
   return;
 }
 
 
 // 825F2E00  LoadBuffer_intStream  (database/db_primtypes_load_buf.h:1460)
 
-void LoadBuffer_intStream(bool param_1,int param_2)
+void LoadBuffer_intStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x5b7,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x5b7,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f2d0;
     do {
-      LoadBuffer_Stream(true,bufint,4);
-      bufint = (int *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2d0 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -3067,51 +2790,47 @@ void LoadBuffer_intStream(bool param_1,int param_2)
 
 // 825F8B90  LoadBuffer_StructuredDataDefSetPtrStream  (universal/com_structureddatadef_load_buf.h:1471)
 
-void LoadBuffer_StructuredDataDefSetPtrStream(bool param_1,int param_2)
+void LoadBuffer_StructuredDataDefSetPtrStream(undefined8 param_1,longlong param_2)
 
 {
-  StructuredDataDefSet *pSVar1;
+  int iVar1;
   char cVar4;
-  StructuredDataDefSet *pSVar2;
-  void **ppvVar3;
-  longlong lVar5;
+  int iVar2;
+  int *piVar3;
   
-  lVar5 = (longlong)param_2;
-  cVar4 = __savegprlr_28(param_1);
+  cVar4 = __savegprlr_28();
   if (cVar4 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_load_buf.h"
-                    ,0x5c2,0,"%s");
+    MyAssertHandler(0xffffffff82179e90,0x5c2,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar5) {
+  if (0 < (int)param_2) {
     do {
-      LoadBuffer_Stream(true,bufStructuredDataDefSetPtr,4);
+      LoadBuffer_Stream(1,DAT_8404f358,4);
       AssetBuf_PushStreamPos(0);
-      pSVar1 = *bufStructuredDataDefSetPtr;
-      if (pSVar1 != (StructuredDataDefSet *)0x0) {
-        if ((pSVar1 == (StructuredDataDefSet *)0xffffffff) ||
-           (pSVar1 == (StructuredDataDefSet *)0xfffffffe)) {
-          pSVar2 = (StructuredDataDefSet *)AssetBuf_AllocStreamPos(3);
-          *bufStructuredDataDefSetPtr = pSVar2;
-          bufStructuredDataDefSet = *bufStructuredDataDefSetPtr;
-          if (pSVar1 == (StructuredDataDefSet *)0xfffffffe) {
-            ppvVar3 = AssetBuf_InsertPointer();
+      iVar1 = *DAT_8404f358;
+      if (iVar1 != 0) {
+        if ((iVar1 == -1) || (iVar1 == -2)) {
+          iVar2 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f358 = iVar2;
+          DAT_8404f3d0 = *DAT_8404f358;
+          if (iVar1 == -2) {
+            piVar3 = (int *)AssetBuf_InsertPointer();
           }
           else {
-            ppvVar3 = (void **)0x0;
+            piVar3 = (int *)0x0;
           }
-          LoadBuffer_StructuredDataDefSet(true);
-          if (ppvVar3 != (void **)0x0) {
-            *ppvVar3 = *bufStructuredDataDefSetPtr;
+          LoadBuffer_StructuredDataDefSet(1);
+          if (piVar3 != (int *)0x0) {
+            *piVar3 = *DAT_8404f358;
           }
         }
         else {
-          AssetBuf_ConvertOffsetToAlias(bufStructuredDataDefSetPtr);
+          AssetBuf_ConvertOffsetToAlias();
         }
       }
       AssetBuf_PopStreamPos();
-      bufStructuredDataDefSetPtr = (StructuredDataDefSet **)AssetBuf_GetStreamPos();
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
+      DAT_8404f358 = (int *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -3120,42 +2839,37 @@ void LoadBuffer_StructuredDataDefSetPtrStream(bool param_1,int param_2)
 
 // 825F6520  SaveBuffer_StructuredDataStructStream  (universal/com_structureddatadef_save_buf.h:1472)
 
-void SaveBuffer_StructuredDataStructStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataStructStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar3;
-  void *pvVar1;
-  StructuredDataStructProperty *pSVar2;
-  longlong lVar4;
+  int iVar1;
+  undefined4 uVar2;
   
-  lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_22(param_1);
+  cVar3 = __savegprlr_22();
   if (cVar3 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x5c3,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x5c3,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar4) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufStructuredDataStruct,0x10,&bufoutStructuredDataStruct);
-      if (bufStructuredDataStruct->properties != (StructuredDataStructProperty *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataStruct->properties);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x57f,0,"%s");
+      SaveBuffer_Stream(1,DAT_8404f2c8,0x10,0xffffffff8404f3a4);
+      if (DAT_8404f2c8[1] != 0) {
+        iVar1 = AssetBuf_FindStreamData(DAT_8404f2c8[1]);
+        if (iVar1 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x57f,0,0xffffffff82000f98,0xffffffff82179cc0);
         }
-        pSVar2 = (StructuredDataStructProperty *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataStruct->properties = pSVar2;
-        bufStructuredDataStructProperty = bufStructuredDataStruct->properties;
-        bufstreamStructuredDataStructProperty = bufoutStructuredDataStruct->properties;
-        AssetBuf_SetStreamData
-                  (bufStructuredDataStruct->properties,bufoutStructuredDataStruct->properties);
-        bufoutStructuredDataStruct->properties = (StructuredDataStructProperty *)0xffffffff;
-        SaveBuffer_StructuredDataStructPropertyArray(true,bufStructuredDataStruct->propertyCount);
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f3a4 + 4) = uVar2;
+        DAT_8404f2dc = DAT_8404f2c8[1];
+        DAT_8404f270 = *(undefined4 *)(DAT_8404f3a4 + 4);
+        AssetBuf_SetStreamData(DAT_8404f2c8[1],*(undefined4 *)(DAT_8404f3a4 + 4));
+        *(undefined4 *)(DAT_8404f3a4 + 4) = 0xffffffff;
+        SaveBuffer_StructuredDataStructPropertyArray(1,*DAT_8404f2c8);
       }
-      bufStructuredDataStruct = (StructuredDataStruct *)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataStruct = (StructuredDataStruct *)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      DAT_8404f2c8 = (undefined4 *)AssetBuf_GetSourcePos();
+      DAT_8404f480 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_22();
   return;
@@ -3164,102 +2878,89 @@ void SaveBuffer_StructuredDataStructStream(bool param_1,int param_2)
 
 // 825F2E90  LoadBuffer_byte4096  (database/db_primtypes_load_buf.h:1474)
 
-void LoadBuffer_byte4096(bool param_1)
+void LoadBuffer_byte4096(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufbyte4096,1);
+  LoadBuffer_Stream(param_1,DAT_8404f568,1);
   return;
 }
 
 
 // 825F2EA0  AllocLoadBuffer_byte4096  (database/db_primtypes_load_buf.h:1480)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocLoadBuffer_byte4096(void)
+void AllocLoadBuffer_byte4096(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0xfff);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0xfff);
+  return;
 }
 
 
 // 825F6650  SaveBuffer_StructuredDataDef  (universal/com_structureddatadef_save_buf.h:1487)
 
-void SaveBuffer_StructuredDataDef(bool param_1)
+void SaveBuffer_StructuredDataDef(void)
 
 {
-  bool bVar6;
-  void *pvVar1;
-  StructuredDataEnum *pSVar2;
-  StructuredDataStruct *pSVar3;
-  StructuredDataIndexedArray *pSVar4;
-  StructuredDataEnumedArray *pSVar5;
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
   
-  bVar6 = (bool)__savegprlr_26(param_1);
-  SaveBuffer_Stream(bVar6,bufStructuredDataDef,0x34,&bufoutStructuredDataDef);
-  if (bufStructuredDataDef->enums != (StructuredDataEnum *)0x0) {
-    pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->enums);
-    if (pvVar1 != (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                      ,0x5e9,0,"%s");
+  uVar1 = __savegprlr_26();
+  SaveBuffer_Stream(uVar1,DAT_8404f34c,0x34,0xffffffff8404f518);
+  if (*(int *)(DAT_8404f34c + 0xc) != 0) {
+    iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0xc));
+    if (iVar2 != 0) {
+      MyAssertHandler(0xffffffff82179c20,0x5e9,0,0xffffffff82000f98,0xffffffff82179dbc);
     }
-    pSVar2 = (StructuredDataEnum *)AssetBuf_AllocStreamPos(3);
-    bufoutStructuredDataDef->enums = pSVar2;
-    bufStructuredDataEnum = bufStructuredDataDef->enums;
-    bufstreamStructuredDataEnum = bufoutStructuredDataDef->enums;
-    AssetBuf_SetStreamData(bufStructuredDataDef->enums,bufoutStructuredDataDef->enums);
-    bufoutStructuredDataDef->enums = (StructuredDataEnum *)0xffffffff;
-    SaveBuffer_StructuredDataEnumArray(true,bufStructuredDataDef->enumCount);
+    uVar3 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f518 + 0xc) = uVar3;
+    DAT_8404f368 = *(undefined4 *)(DAT_8404f34c + 0xc);
+    DAT_8404f438 = *(undefined4 *)(DAT_8404f518 + 0xc);
+    AssetBuf_SetStreamData(*(undefined4 *)(DAT_8404f34c + 0xc),*(undefined4 *)(DAT_8404f518 + 0xc));
+    *(undefined4 *)(DAT_8404f518 + 0xc) = 0xffffffff;
+    SaveBuffer_StructuredDataEnumArray(1,*(undefined4 *)(DAT_8404f34c + 8));
   }
-  if (bufStructuredDataDef->structs != (StructuredDataStruct *)0x0) {
-    pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->structs);
-    if (pvVar1 != (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                      ,0x5fb,0,"%s");
+  if (*(int *)(DAT_8404f34c + 0x14) != 0) {
+    iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x14));
+    if (iVar2 != 0) {
+      MyAssertHandler(0xffffffff82179c20,0x5fb,0,0xffffffff82000f98,0xffffffff82179d80);
     }
-    pSVar3 = (StructuredDataStruct *)AssetBuf_AllocStreamPos(3);
-    bufoutStructuredDataDef->structs = pSVar3;
-    bufStructuredDataStruct = bufStructuredDataDef->structs;
-    bufstreamStructuredDataStruct = bufoutStructuredDataDef->structs;
-    AssetBuf_SetStreamData(bufStructuredDataDef->structs,bufoutStructuredDataDef->structs);
-    bufoutStructuredDataDef->structs = (StructuredDataStruct *)0xffffffff;
-    SaveBuffer_StructuredDataStructArray(true,bufStructuredDataDef->structCount);
-  }
-  if (bufStructuredDataDef->indexedArrays != (StructuredDataIndexedArray *)0x0) {
-    pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->indexedArrays);
-    if (pvVar1 != (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                      ,0x60d,0,"%s");
-    }
-    pSVar4 = (StructuredDataIndexedArray *)AssetBuf_AllocStreamPos(3);
-    bufoutStructuredDataDef->indexedArrays = pSVar4;
-    bufStructuredDataIndexedArray = bufStructuredDataDef->indexedArrays;
-    bufstreamStructuredDataIndexedArray = bufoutStructuredDataDef->indexedArrays;
+    uVar3 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f518 + 0x14) = uVar3;
+    DAT_8404f2c8 = *(undefined4 *)(DAT_8404f34c + 0x14);
+    DAT_8404f480 = *(undefined4 *)(DAT_8404f518 + 0x14);
     AssetBuf_SetStreamData
-              (bufStructuredDataDef->indexedArrays,bufoutStructuredDataDef->indexedArrays);
-    bufoutStructuredDataDef->indexedArrays = (StructuredDataIndexedArray *)0xffffffff;
-    SaveBuffer_Stream(true,bufStructuredDataIndexedArray,
-                      bufStructuredDataDef->indexedArrayCount << 4,&bufoutStructuredDataIndexedArray
-                     );
+              (*(undefined4 *)(DAT_8404f34c + 0x14),*(undefined4 *)(DAT_8404f518 + 0x14));
+    *(undefined4 *)(DAT_8404f518 + 0x14) = 0xffffffff;
+    SaveBuffer_StructuredDataStructArray(1,*(undefined4 *)(DAT_8404f34c + 0x10));
   }
-  if (bufStructuredDataDef->enumedArrays != (StructuredDataEnumedArray *)0x0) {
-    pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->enumedArrays);
-    if (pvVar1 != (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                      ,0x61f,0,"%s");
+  if (*(int *)(DAT_8404f34c + 0x1c) != 0) {
+    iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x1c));
+    if (iVar2 != 0) {
+      MyAssertHandler(0xffffffff82179c20,0x60d,0,0xffffffff82000f98,0xffffffff82179d40);
     }
-    pSVar5 = (StructuredDataEnumedArray *)AssetBuf_AllocStreamPos(3);
-    bufoutStructuredDataDef->enumedArrays = pSVar5;
-    bufStructuredDataEnumedArray = bufStructuredDataDef->enumedArrays;
-    bufstreamStructuredDataEnumedArray = bufoutStructuredDataDef->enumedArrays;
-    AssetBuf_SetStreamData(bufStructuredDataDef->enumedArrays,bufoutStructuredDataDef->enumedArrays)
-    ;
-    bufoutStructuredDataDef->enumedArrays = (StructuredDataEnumedArray *)0xffffffff;
-    SaveBuffer_Stream(true,bufStructuredDataEnumedArray,bufStructuredDataDef->enumedArrayCount << 4,
-                      &bufoutStructuredDataEnumedArray);
+    uVar3 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f518 + 0x1c) = uVar3;
+    DAT_8404f508 = *(undefined4 *)(DAT_8404f34c + 0x1c);
+    DAT_8404f52c = *(undefined4 *)(DAT_8404f518 + 0x1c);
+    AssetBuf_SetStreamData
+              (*(undefined4 *)(DAT_8404f34c + 0x1c),*(undefined4 *)(DAT_8404f518 + 0x1c));
+    *(undefined4 *)(DAT_8404f518 + 0x1c) = 0xffffffff;
+    SaveBuffer_Stream(1,DAT_8404f508,*(int *)(DAT_8404f34c + 0x18) << 4,0xffffffff8404f268);
+  }
+  if (*(int *)(DAT_8404f34c + 0x24) != 0) {
+    iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x24));
+    if (iVar2 != 0) {
+      MyAssertHandler(0xffffffff82179c20,0x61f,0,0xffffffff82000f98,0xffffffff82179d00);
+    }
+    uVar3 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f518 + 0x24) = uVar3;
+    DAT_8404f4c0 = *(undefined4 *)(DAT_8404f34c + 0x24);
+    DAT_8404f4dc = *(undefined4 *)(DAT_8404f518 + 0x24);
+    AssetBuf_SetStreamData
+              (*(undefined4 *)(DAT_8404f34c + 0x24),*(undefined4 *)(DAT_8404f518 + 0x24));
+    *(undefined4 *)(DAT_8404f518 + 0x24) = 0xffffffff;
+    SaveBuffer_Stream(1,DAT_8404f4c0,*(int *)(DAT_8404f34c + 0x20) << 4,0xffffffff8404f2f0);
   }
   __restgprlr_26();
   return;
@@ -3268,25 +2969,22 @@ void SaveBuffer_StructuredDataDef(bool param_1)
 
 // 825EF418  SaveBuffer_int8_tStream  (database/db_primtypes_save_buf.h:1488)
 
-void SaveBuffer_int8_tStream(bool param_1,int param_2)
+void SaveBuffer_int8_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x5d3,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x5d3,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufint8_t,1,&bufoutint8_t);
-      bufint8_t = (char *)AssetBuf_GetSourcePos();
-      bufstreamint8_t = (char *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f510,1,0xffffffff8404f36c);
+      DAT_8404f510 = AssetBuf_GetSourcePos();
+      DAT_8404f430 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -3295,56 +2993,52 @@ void SaveBuffer_int8_tStream(bool param_1,int param_2)
 
 // 825F2EA8  LoadBuffer_byte4096Array  (database/db_primtypes_load_buf.h:1489)
 
-void LoadBuffer_byte4096Array(bool param_1,int param_2)
+void LoadBuffer_byte4096Array(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufbyte4096,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f568,param_2);
   return;
 }
 
 
 // 825EF4A8  SaveBuffer_bool  (database/db_primtypes_save_buf.h:1503)
 
-void SaveBuffer_bool(bool param_1)
+void SaveBuffer_bool(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufbool,1,&bufoutbool);
+  SaveBuffer_Stream(param_1,DAT_8404f340,1,0xffffffff8404f434);
   return;
 }
 
 
 // 825EF4C0  AllocSaveBuffer_bool  (database/db_primtypes_save_buf.h:1509)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool * AllocSaveBuffer_bool(void)
+void AllocSaveBuffer_bool(void)
 
 {
-  bool *pbVar1;
-  
-  pbVar1 = (bool *)AssetBuf_AllocStreamPos(0);
-  return pbVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F2EB8  LoadBuffer_byte4096Stream  (database/db_primtypes_load_buf.h:1511)
 
-void LoadBuffer_byte4096Stream(bool param_1,int param_2)
+void LoadBuffer_byte4096Stream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x5ea,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x5ea,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f568;
     do {
-      LoadBuffer_Stream(true,bufbyte4096,1);
-      bufbyte4096 = AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f568 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -3352,69 +3046,62 @@ void LoadBuffer_byte4096Stream(bool param_1,int param_2)
 
 // 825EF4C8  SaveBuffer_boolArray  (database/db_primtypes_save_buf.h:1518)
 
-void SaveBuffer_boolArray(bool param_1,int param_2)
+void SaveBuffer_boolArray(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufbool,param_2,&bufoutbool);
+  SaveBuffer_Stream(param_1,DAT_8404f340,param_2,0xffffffff8404f434);
   return;
 }
 
 
 // 825F2F48  LoadBuffer_byte128  (database/db_primtypes_load_buf.h:1525)
 
-void LoadBuffer_byte128(bool param_1)
+void LoadBuffer_byte128(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufbyte128,1);
+  LoadBuffer_Stream(param_1,DAT_8404f2e4,1);
   return;
 }
 
 
 // 825F2F58  AllocLoadBuffer_byte128  (database/db_primtypes_load_buf.h:1531)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocLoadBuffer_byte128(void)
+void AllocLoadBuffer_byte128(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0x7f);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0x7f);
+  return;
 }
 
 
 // 825F2F60  LoadBuffer_byte128Array  (database/db_primtypes_load_buf.h:1540)
 
-void LoadBuffer_byte128Array(bool param_1,int param_2)
+void LoadBuffer_byte128Array(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufbyte128,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f2e4,param_2);
   return;
 }
 
 
 // 825EF4E0  SaveBuffer_boolStream  (database/db_primtypes_save_buf.h:1548)
 
-void SaveBuffer_boolStream(bool param_1,int param_2)
+void SaveBuffer_boolStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x60f,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x60f,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufbool,1,&bufoutbool);
-      bufbool = (bool *)AssetBuf_GetSourcePos();
-      bufstreambool = (bool *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f340,1,0xffffffff8404f434);
+      DAT_8404f340 = AssetBuf_GetSourcePos();
+      DAT_8404f29c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -3423,22 +3110,22 @@ void SaveBuffer_boolStream(bool param_1,int param_2)
 
 // 825F2F70  LoadBuffer_byte128Stream  (database/db_primtypes_load_buf.h:1562)
 
-void LoadBuffer_byte128Stream(bool param_1,int param_2)
+void LoadBuffer_byte128Stream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x61d,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x61d,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f2e4;
     do {
-      LoadBuffer_Stream(true,bufbyte128,1);
-      bufbyte128 = AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2e4 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -3446,182 +3133,166 @@ void LoadBuffer_byte128Stream(bool param_1,int param_2)
 
 // 825EF570  SaveBuffer_qboolean  (database/db_primtypes_save_buf.h:1563)
 
-void SaveBuffer_qboolean(bool param_1)
+void SaveBuffer_qboolean(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufqboolean,4,&bufoutqboolean);
+  SaveBuffer_Stream(param_1,DAT_8404f250,4,0xffffffff8404f490);
   return;
 }
 
 
 // 825EF588  AllocSaveBuffer_qboolean  (database/db_primtypes_save_buf.h:1576)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int * AllocSaveBuffer_qboolean(void)
+void AllocSaveBuffer_qboolean(void)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)AssetBuf_AllocStreamPos(3);
-  return piVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3000  LoadBuffer_byte64  (database/db_primtypes_load_buf.h:1576)
 
-void LoadBuffer_byte64(bool param_1)
+void LoadBuffer_byte64(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufbyte64,1);
+  LoadBuffer_Stream(param_1,DAT_8404f32c,1);
   return;
 }
 
 
 // 825F3010  AllocLoadBuffer_byte64  (database/db_primtypes_load_buf.h:1582)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocLoadBuffer_byte64(void)
+void AllocLoadBuffer_byte64(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0x3f);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0x3f);
+  return;
 }
 
 
 // 825EF590  SaveBuffer_qbooleanArray  (database/db_primtypes_save_buf.h:1585)
 
-void SaveBuffer_qbooleanArray(bool param_1,int param_2)
+void SaveBuffer_qbooleanArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufqboolean,param_2 << 2,&bufoutqboolean);
+  SaveBuffer_Stream(param_1,DAT_8404f250,(param_2 & 0x3fffffff) << 2,0xffffffff8404f490);
   return;
 }
 
 
 // 825F3018  LoadBuffer_byte64Array  (database/db_primtypes_load_buf.h:1591)
 
-void LoadBuffer_byte64Array(bool param_1,int param_2)
+void LoadBuffer_byte64Array(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufbyte64,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f32c,param_2);
   return;
 }
 
 
 // 825F68F8  AllocSaveBuffer_StructuredDataDef  (universal/com_structureddatadef_save_buf.h:1593)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataDef * AllocSaveBuffer_StructuredDataDef(void)
+void AllocSaveBuffer_StructuredDataDef(void)
 
 {
-  StructuredDataDef *pSVar1;
-  
-  pSVar1 = (StructuredDataDef *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F6900  SaveBuffer_StructuredDataDefArray  (universal/com_structureddatadef_save_buf.h:1602)
 
-void SaveBuffer_StructuredDataDefArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataDefArray(undefined8 param_1,longlong param_2)
 
 {
-  void *pvVar1;
-  StructuredDataEnum *pSVar2;
-  StructuredDataStruct *pSVar3;
-  StructuredDataIndexedArray *pSVar4;
-  StructuredDataEnumedArray *pSVar5;
-  ulonglong uVar6;
-  StructuredDataDef *pSVar7;
-  StructuredDataDef *pSVar8;
-  StructuredDataDef *pSVar9;
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
   uint local_b0;
   
-  __savegprlr();
-  SaveBuffer_Stream(param_1,bufStructuredDataDef,param_2 * 0x34,&bufoutStructuredDataDef);
-  pSVar9 = bufStructuredDataDef;
-  pSVar7 = bufoutStructuredDataDef;
-  pSVar8 = bufstreamStructuredDataDef;
-  local_b0 = param_2;
-  if (0 < param_2) {
+  uVar1 = __savegprlr();
+  SaveBuffer_Stream(uVar1,DAT_8404f34c,param_2 * 0x34,0xffffffff8404f518);
+  local_b0 = (uint)param_2;
+  iVar5 = DAT_8404f518;
+  iVar6 = DAT_8404f380;
+  iVar7 = DAT_8404f34c;
+  if (0 < (int)local_b0) {
     do {
-      bufStructuredDataDef = pSVar9;
-      bufstreamStructuredDataDef = pSVar8;
-      bufoutStructuredDataDef = pSVar7;
-      SaveBuffer_Stream(false,pSVar9,0x34,&bufoutStructuredDataDef);
-      if (bufStructuredDataDef->enums != (StructuredDataEnum *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->enums);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x5e9,0,"%s");
+      DAT_8404f34c = iVar7;
+      DAT_8404f380 = iVar6;
+      DAT_8404f518 = iVar5;
+      SaveBuffer_Stream(0,iVar7,0x34,0xffffffff8404f518);
+      if (*(int *)(DAT_8404f34c + 0xc) != 0) {
+        iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0xc));
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x5e9,0,0xffffffff82000f98,
+                          "!AssetBuf_FindStreamData( bufStructuredDataDef->enums )");
         }
-        pSVar2 = (StructuredDataEnum *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataDef->enums = pSVar2;
-        bufStructuredDataEnum = bufStructuredDataDef->enums;
-        bufstreamStructuredDataEnum = bufoutStructuredDataDef->enums;
-        AssetBuf_SetStreamData(bufStructuredDataDef->enums,bufoutStructuredDataDef->enums);
-        bufoutStructuredDataDef->enums = (StructuredDataEnum *)0xffffffff;
-        SaveBuffer_StructuredDataEnumArray(true,bufStructuredDataDef->enumCount);
-      }
-      if (bufStructuredDataDef->structs != (StructuredDataStruct *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->structs);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x5fb,0,"%s");
-        }
-        pSVar3 = (StructuredDataStruct *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataDef->structs = pSVar3;
-        bufStructuredDataStruct = bufStructuredDataDef->structs;
-        bufstreamStructuredDataStruct = bufoutStructuredDataDef->structs;
-        AssetBuf_SetStreamData(bufStructuredDataDef->structs,bufoutStructuredDataDef->structs);
-        bufoutStructuredDataDef->structs = (StructuredDataStruct *)0xffffffff;
-        SaveBuffer_StructuredDataStructArray(true,bufStructuredDataDef->structCount);
-      }
-      if (bufStructuredDataDef->indexedArrays != (StructuredDataIndexedArray *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->indexedArrays);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x60d,0,"%s");
-        }
-        pSVar4 = (StructuredDataIndexedArray *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataDef->indexedArrays = pSVar4;
-        bufStructuredDataIndexedArray = bufStructuredDataDef->indexedArrays;
-        bufstreamStructuredDataIndexedArray = bufoutStructuredDataDef->indexedArrays;
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0xc) = uVar3;
+        DAT_8404f368 = *(undefined4 *)(DAT_8404f34c + 0xc);
+        DAT_8404f438 = *(undefined4 *)(DAT_8404f518 + 0xc);
         AssetBuf_SetStreamData
-                  (bufStructuredDataDef->indexedArrays,bufoutStructuredDataDef->indexedArrays);
-        bufoutStructuredDataDef->indexedArrays = (StructuredDataIndexedArray *)0xffffffff;
-        SaveBuffer_Stream(true,bufStructuredDataIndexedArray,
-                          bufStructuredDataDef->indexedArrayCount << 4,
-                          &bufoutStructuredDataIndexedArray);
+                  (*(undefined4 *)(DAT_8404f34c + 0xc),*(undefined4 *)(DAT_8404f518 + 0xc));
+        *(undefined4 *)(DAT_8404f518 + 0xc) = 0xffffffff;
+        SaveBuffer_StructuredDataEnumArray(1,*(undefined4 *)(DAT_8404f34c + 8));
       }
-      if (bufStructuredDataDef->enumedArrays != (StructuredDataEnumedArray *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->enumedArrays);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x61f,0,"%s");
+      if (*(int *)(DAT_8404f34c + 0x14) != 0) {
+        iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x14));
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x5fb,0,0xffffffff82000f98,
+                          "!AssetBuf_FindStreamData( bufStructuredDataDef->structs )");
         }
-        pSVar5 = (StructuredDataEnumedArray *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataDef->enumedArrays = pSVar5;
-        bufStructuredDataEnumedArray = bufStructuredDataDef->enumedArrays;
-        bufstreamStructuredDataEnumedArray = bufoutStructuredDataDef->enumedArrays;
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0x14) = uVar3;
+        DAT_8404f2c8 = *(undefined4 *)(DAT_8404f34c + 0x14);
+        DAT_8404f480 = *(undefined4 *)(DAT_8404f518 + 0x14);
         AssetBuf_SetStreamData
-                  (bufStructuredDataDef->enumedArrays,bufoutStructuredDataDef->enumedArrays);
-        bufoutStructuredDataDef->enumedArrays = (StructuredDataEnumedArray *)0xffffffff;
-        SaveBuffer_Stream(true,bufStructuredDataEnumedArray,
-                          bufStructuredDataDef->enumedArrayCount << 4,
-                          &bufoutStructuredDataEnumedArray);
+                  (*(undefined4 *)(DAT_8404f34c + 0x14),*(undefined4 *)(DAT_8404f518 + 0x14));
+        *(undefined4 *)(DAT_8404f518 + 0x14) = 0xffffffff;
+        SaveBuffer_StructuredDataStructArray(1,*(undefined4 *)(DAT_8404f34c + 0x10));
       }
-      uVar6 = (ulonglong)local_b0;
-      local_b0 = (uint)(uVar6 - 1);
-      pSVar9 = pSVar9 + 1;
-      pSVar7 = pSVar7 + 1;
-      pSVar8 = pSVar8 + 1;
-    } while (uVar6 - 1 != 0);
+      if (*(int *)(DAT_8404f34c + 0x1c) != 0) {
+        iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x1c));
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x60d,0,0xffffffff82000f98,
+                          "!AssetBuf_FindStreamData( bufStructuredDataDef->indexedArrays )");
+        }
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0x1c) = uVar3;
+        DAT_8404f508 = *(undefined4 *)(DAT_8404f34c + 0x1c);
+        DAT_8404f52c = *(undefined4 *)(DAT_8404f518 + 0x1c);
+        AssetBuf_SetStreamData
+                  (*(undefined4 *)(DAT_8404f34c + 0x1c),*(undefined4 *)(DAT_8404f518 + 0x1c));
+        *(undefined4 *)(DAT_8404f518 + 0x1c) = 0xffffffff;
+        SaveBuffer_Stream(1,DAT_8404f508,*(int *)(DAT_8404f34c + 0x18) << 4,0xffffffff8404f268);
+      }
+      if (*(int *)(DAT_8404f34c + 0x24) != 0) {
+        iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x24));
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x61f,0,0xffffffff82000f98,
+                          "!AssetBuf_FindStreamData( bufStructuredDataDef->enumedArrays )");
+        }
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0x24) = uVar3;
+        DAT_8404f4c0 = *(undefined4 *)(DAT_8404f34c + 0x24);
+        DAT_8404f4dc = *(undefined4 *)(DAT_8404f518 + 0x24);
+        AssetBuf_SetStreamData
+                  (*(undefined4 *)(DAT_8404f34c + 0x24),*(undefined4 *)(DAT_8404f518 + 0x24));
+        *(undefined4 *)(DAT_8404f518 + 0x24) = 0xffffffff;
+        SaveBuffer_Stream(1,DAT_8404f4c0,*(int *)(DAT_8404f34c + 0x20) << 4,0xffffffff8404f2f0);
+      }
+      uVar4 = (ulonglong)local_b0;
+      local_b0 = (uint)(uVar4 - 1);
+      iVar5 = iVar5 + 0x34;
+      iVar6 = iVar6 + 0x34;
+      iVar7 = iVar7 + 0x34;
+    } while (uVar4 - 1 != 0);
   }
   __restgprlr();
   return;
@@ -3630,22 +3301,22 @@ void SaveBuffer_StructuredDataDefArray(bool param_1,int param_2)
 
 // 825F3028  LoadBuffer_byte64Stream  (database/db_primtypes_load_buf.h:1613)
 
-void LoadBuffer_byte64Stream(bool param_1,int param_2)
+void LoadBuffer_byte64Stream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x650,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x650,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f32c;
     do {
-      LoadBuffer_Stream(true,bufbyte64,1);
-      bufbyte64 = AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f32c = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -3653,25 +3324,22 @@ void LoadBuffer_byte64Stream(bool param_1,int param_2)
 
 // 825EF5A8  SaveBuffer_qbooleanStream  (database/db_primtypes_save_buf.h:1615)
 
-void SaveBuffer_qbooleanStream(bool param_1,int param_2)
+void SaveBuffer_qbooleanStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x652,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x652,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufqboolean,4,&bufoutqboolean);
-      bufqboolean = (int *)AssetBuf_GetSourcePos();
-      bufstreamqboolean = (int *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f250,4,0xffffffff8404f490);
+      DAT_8404f250 = AssetBuf_GetSourcePos();
+      DAT_8404f3cc = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -3680,114 +3348,108 @@ void SaveBuffer_qbooleanStream(bool param_1,int param_2)
 
 // 825F30B8  LoadBuffer_byte32  (database/db_primtypes_load_buf.h:1627)
 
-void LoadBuffer_byte32(bool param_1)
+void LoadBuffer_byte32(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufbyte32,1);
+  LoadBuffer_Stream(param_1,DAT_8404f2b4,1);
   return;
 }
 
 
 // 825EF638  SaveBuffer_int  (database/db_primtypes_save_buf.h:1630)
 
-void SaveBuffer_int(bool param_1)
+void SaveBuffer_int(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufint,4,&bufoutint);
+  SaveBuffer_Stream(param_1,DAT_8404f2d0,4,0xffffffff8404f400);
   return;
 }
 
 
 // 825F6C30  SaveBuffer_StructuredDataDefStream  (universal/com_structureddatadef_save_buf.h:1632)
 
-void SaveBuffer_StructuredDataDefStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataDefStream(undefined8 param_1,uint param_2)
 
 {
-  void *pvVar1;
-  StructuredDataEnum *pSVar2;
-  StructuredDataStruct *pSVar3;
-  StructuredDataIndexedArray *pSVar4;
-  StructuredDataEnumedArray *pSVar5;
-  ulonglong uVar6;
+  char cVar3;
+  int iVar1;
+  undefined4 uVar2;
+  ulonglong uVar4;
   uint local_a8;
   
-  uVar6 = (ulonglong)param_1;
-  __savegprlr();
-  if ((uVar6 & 0xff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x663,0,"%s");
-  }
   local_a8 = param_2;
-  if (0 < param_2) {
+  cVar3 = __savegprlr();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82179c20,0x663,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)local_a8) {
     do {
-      SaveBuffer_Stream(true,bufStructuredDataDef,0x34,&bufoutStructuredDataDef);
-      if (bufStructuredDataDef->enums != (StructuredDataEnum *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->enums);
-        if (pvVar1 != (void *)0x0) {
+      SaveBuffer_Stream(1,DAT_8404f34c,0x34,0xffffffff8404f518);
+      if (*(int *)(DAT_8404f34c + 0xc) != 0) {
+        iVar1 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0xc));
+        if (iVar1 != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x5e9,0,"%s");
+                          ,0x5e9,0,&DAT_82000f98,0xffffffff82179dbc);
         }
-        pSVar2 = (StructuredDataEnum *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataDef->enums = pSVar2;
-        bufStructuredDataEnum = bufStructuredDataDef->enums;
-        bufstreamStructuredDataEnum = bufoutStructuredDataDef->enums;
-        AssetBuf_SetStreamData(bufStructuredDataDef->enums,bufoutStructuredDataDef->enums);
-        bufoutStructuredDataDef->enums = (StructuredDataEnum *)0xffffffff;
-        SaveBuffer_StructuredDataEnumArray(true,bufStructuredDataDef->enumCount);
-      }
-      if (bufStructuredDataDef->structs != (StructuredDataStruct *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->structs);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x5fb,0,"%s");
-        }
-        pSVar3 = (StructuredDataStruct *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataDef->structs = pSVar3;
-        bufStructuredDataStruct = bufStructuredDataDef->structs;
-        bufstreamStructuredDataStruct = bufoutStructuredDataDef->structs;
-        AssetBuf_SetStreamData(bufStructuredDataDef->structs,bufoutStructuredDataDef->structs);
-        bufoutStructuredDataDef->structs = (StructuredDataStruct *)0xffffffff;
-        SaveBuffer_StructuredDataStructArray(true,bufStructuredDataDef->structCount);
-      }
-      if (bufStructuredDataDef->indexedArrays != (StructuredDataIndexedArray *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->indexedArrays);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x60d,0,"%s");
-        }
-        pSVar4 = (StructuredDataIndexedArray *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataDef->indexedArrays = pSVar4;
-        bufStructuredDataIndexedArray = bufStructuredDataDef->indexedArrays;
-        bufstreamStructuredDataIndexedArray = bufoutStructuredDataDef->indexedArrays;
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0xc) = uVar2;
+        DAT_8404f368 = *(undefined4 *)(DAT_8404f34c + 0xc);
+        DAT_8404f438 = *(undefined4 *)(DAT_8404f518 + 0xc);
         AssetBuf_SetStreamData
-                  (bufStructuredDataDef->indexedArrays,bufoutStructuredDataDef->indexedArrays);
-        bufoutStructuredDataDef->indexedArrays = (StructuredDataIndexedArray *)0xffffffff;
-        SaveBuffer_Stream(true,bufStructuredDataIndexedArray,
-                          bufStructuredDataDef->indexedArrayCount << 4,
-                          &bufoutStructuredDataIndexedArray);
+                  (*(undefined4 *)(DAT_8404f34c + 0xc),*(undefined4 *)(DAT_8404f518 + 0xc));
+        *(undefined4 *)(DAT_8404f518 + 0xc) = 0xffffffff;
+        SaveBuffer_StructuredDataEnumArray(1,*(undefined4 *)(DAT_8404f34c + 8));
       }
-      if (bufStructuredDataDef->enumedArrays != (StructuredDataEnumedArray *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDef->enumedArrays);
-        if (pvVar1 != (void *)0x0) {
+      if (*(int *)(DAT_8404f34c + 0x14) != 0) {
+        iVar1 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x14));
+        if (iVar1 != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x61f,0,"%s");
+                          ,0x5fb,0,&DAT_82000f98,0xffffffff82179d80);
         }
-        pSVar5 = (StructuredDataEnumedArray *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataDef->enumedArrays = pSVar5;
-        bufStructuredDataEnumedArray = bufStructuredDataDef->enumedArrays;
-        bufstreamStructuredDataEnumedArray = bufoutStructuredDataDef->enumedArrays;
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0x14) = uVar2;
+        DAT_8404f2c8 = *(undefined4 *)(DAT_8404f34c + 0x14);
+        DAT_8404f480 = *(undefined4 *)(DAT_8404f518 + 0x14);
         AssetBuf_SetStreamData
-                  (bufStructuredDataDef->enumedArrays,bufoutStructuredDataDef->enumedArrays);
-        bufoutStructuredDataDef->enumedArrays = (StructuredDataEnumedArray *)0xffffffff;
-        SaveBuffer_Stream(true,bufStructuredDataEnumedArray,
-                          bufStructuredDataDef->enumedArrayCount << 4,
-                          &bufoutStructuredDataEnumedArray);
+                  (*(undefined4 *)(DAT_8404f34c + 0x14),*(undefined4 *)(DAT_8404f518 + 0x14));
+        *(undefined4 *)(DAT_8404f518 + 0x14) = 0xffffffff;
+        SaveBuffer_StructuredDataStructArray(1,*(undefined4 *)(DAT_8404f34c + 0x10));
       }
-      bufStructuredDataDef = (StructuredDataDef *)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataDef = (StructuredDataDef *)AssetBuf_GetStreamPos();
-      uVar6 = (ulonglong)local_a8;
-      local_a8 = (uint)(uVar6 - 1);
-    } while (uVar6 - 1 != 0);
+      if (*(int *)(DAT_8404f34c + 0x1c) != 0) {
+        iVar1 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x1c));
+        if (iVar1 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
+                          ,0x60d,0,&DAT_82000f98,0xffffffff82179d40);
+        }
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0x1c) = uVar2;
+        DAT_8404f508 = *(undefined4 *)(DAT_8404f34c + 0x1c);
+        DAT_8404f52c = *(undefined4 *)(DAT_8404f518 + 0x1c);
+        AssetBuf_SetStreamData
+                  (*(undefined4 *)(DAT_8404f34c + 0x1c),*(undefined4 *)(DAT_8404f518 + 0x1c));
+        *(undefined4 *)(DAT_8404f518 + 0x1c) = 0xffffffff;
+        SaveBuffer_Stream(1,DAT_8404f508,*(int *)(DAT_8404f34c + 0x18) << 4,0xffffffff8404f268);
+      }
+      if (*(int *)(DAT_8404f34c + 0x24) != 0) {
+        iVar1 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x24));
+        if (iVar1 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
+                          ,0x61f,0,&DAT_82000f98,0xffffffff82179d00);
+        }
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0x24) = uVar2;
+        DAT_8404f4c0 = *(undefined4 *)(DAT_8404f34c + 0x24);
+        DAT_8404f4dc = *(undefined4 *)(DAT_8404f518 + 0x24);
+        AssetBuf_SetStreamData
+                  (*(undefined4 *)(DAT_8404f34c + 0x24),*(undefined4 *)(DAT_8404f518 + 0x24));
+        *(undefined4 *)(DAT_8404f518 + 0x24) = 0xffffffff;
+        SaveBuffer_Stream(1,DAT_8404f4c0,*(int *)(DAT_8404f34c + 0x20) << 4,0xffffffff8404f2f0);
+      }
+      DAT_8404f34c = AssetBuf_GetSourcePos();
+      DAT_8404f380 = AssetBuf_GetStreamPos();
+      uVar4 = (ulonglong)local_a8;
+      local_a8 = (uint)(uVar4 - 1);
+    } while (uVar4 - 1 != 0);
   }
   __restgprlr();
   return;
@@ -3796,79 +3458,70 @@ void SaveBuffer_StructuredDataDefStream(bool param_1,int param_2)
 
 // 825F30C8  AllocLoadBuffer_byte32  (database/db_primtypes_load_buf.h:1633)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocLoadBuffer_byte32(void)
+void AllocLoadBuffer_byte32(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0x1f);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0x1f);
+  return;
 }
 
 
 // 825EF650  AllocSaveBuffer_int  (database/db_primtypes_save_buf.h:1636)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int * AllocSaveBuffer_int(void)
+void AllocSaveBuffer_int(void)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)AssetBuf_AllocStreamPos(3);
-  return piVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F30D0  LoadBuffer_byte32Array  (database/db_primtypes_load_buf.h:1642)
 
-void LoadBuffer_byte32Array(bool param_1,int param_2)
+void LoadBuffer_byte32Array(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufbyte32,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f2b4,param_2);
   return;
 }
 
 
 // 825EF658  SaveBuffer_intArray  (database/db_primtypes_save_buf.h:1645)
 
-void SaveBuffer_intArray(bool param_1,int param_2)
+void SaveBuffer_intArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufint,param_2 << 2,&bufoutint);
+  SaveBuffer_Stream(param_1,DAT_8404f2d0,(param_2 & 0x3fffffff) << 2,0xffffffff8404f400);
   return;
 }
 
 
 // 825F6F50  SaveBuffer_StructuredDataDefSet  (universal/com_structureddatadef_save_buf.h:1647)
 
-void SaveBuffer_StructuredDataDefSet(bool param_1)
+void SaveBuffer_StructuredDataDefSet(undefined8 param_1)
 
 {
-  void *pvVar1;
-  StructuredDataDef *pSVar2;
+  int iVar1;
+  undefined4 uVar2;
   
-  SaveBuffer_Stream(param_1,bufStructuredDataDefSet,0xc,&bufoutStructuredDataDefSet);
+  SaveBuffer_Stream(param_1,DAT_8404f3d0,0xc,0xffffffff8404f498);
   AssetBuf_PushStreamPos(3);
-  bufXString = &bufStructuredDataDefSet->name;
-  bufoutXString = &bufoutStructuredDataDefSet->name;
-  bufstreamXString = &bufstreamStructuredDataDefSet->name;
-  SaveBuffer_XString(false);
-  if (bufStructuredDataDefSet->defs != (StructuredDataDef *)0x0) {
-    pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDefSet->defs);
-    if (pvVar1 != (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                      ,0x684,0,"%s");
+  DAT_8404f538 = DAT_8404f3d0;
+  DAT_8404f28c = DAT_8404f498;
+  DAT_8404f47c = DAT_8404f2f4;
+  SaveBuffer_XString(0);
+  if (*(int *)(DAT_8404f3d0 + 8) != 0) {
+    iVar1 = AssetBuf_FindStreamData(*(int *)(DAT_8404f3d0 + 8));
+    if (iVar1 != 0) {
+      MyAssertHandler(0xffffffff82179c20,0x684,0,0xffffffff82000f98,0xffffffff82179df4);
     }
-    pSVar2 = (StructuredDataDef *)AssetBuf_AllocStreamPos(3);
-    bufoutStructuredDataDefSet->defs = pSVar2;
-    bufStructuredDataDef = bufStructuredDataDefSet->defs;
-    bufstreamStructuredDataDef = bufoutStructuredDataDefSet->defs;
-    AssetBuf_SetStreamData(bufStructuredDataDefSet->defs,bufoutStructuredDataDefSet->defs);
-    bufoutStructuredDataDefSet->defs = (StructuredDataDef *)0xffffffff;
-    SaveBuffer_StructuredDataDefArray(true,bufStructuredDataDefSet->defCount);
+    uVar2 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f498 + 8) = uVar2;
+    DAT_8404f34c = *(undefined4 *)(DAT_8404f3d0 + 8);
+    DAT_8404f380 = *(undefined4 *)(DAT_8404f498 + 8);
+    AssetBuf_SetStreamData(*(undefined4 *)(DAT_8404f3d0 + 8),*(undefined4 *)(DAT_8404f498 + 8));
+    *(undefined4 *)(DAT_8404f498 + 8) = 0xffffffff;
+    SaveBuffer_StructuredDataDefArray(1,*(undefined4 *)(DAT_8404f3d0 + 4));
   }
   AssetBuf_PopStreamPos();
   return;
@@ -3877,22 +3530,22 @@ void SaveBuffer_StructuredDataDefSet(bool param_1)
 
 // 825F30E0  LoadBuffer_byte32Stream  (database/db_primtypes_load_buf.h:1664)
 
-void LoadBuffer_byte32Stream(bool param_1,int param_2)
+void LoadBuffer_byte32Stream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x683,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x683,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f2b4;
     do {
-      LoadBuffer_Stream(true,bufbyte32,1);
-      bufbyte32 = AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2b4 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -3900,25 +3553,22 @@ void LoadBuffer_byte32Stream(bool param_1,int param_2)
 
 // 825EF670  SaveBuffer_intStream  (database/db_primtypes_save_buf.h:1675)
 
-void SaveBuffer_intStream(bool param_1,int param_2)
+void SaveBuffer_intStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x68e,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x68e,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufint,4,&bufoutint);
-      bufint = (int *)AssetBuf_GetSourcePos();
-      bufstreamint = (int *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f2d0,4,0xffffffff8404f400);
+      DAT_8404f2d0 = AssetBuf_GetSourcePos();
+      DAT_8404f38c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -3927,104 +3577,92 @@ void SaveBuffer_intStream(bool param_1,int param_2)
 
 // 825F3170  LoadBuffer_unsigned  (database/db_primtypes_load_buf.h:1678)
 
-void LoadBuffer_unsigned(bool param_1)
+void LoadBuffer_unsigned(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufunsigned,4);
+  LoadBuffer_Stream(param_1,DAT_8404f530,4);
   return;
 }
 
 
 // 825F7070  AllocSaveBuffer_StructuredDataDefSet  (universal/com_structureddatadef_save_buf.h:1682)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataDefSet * AllocSaveBuffer_StructuredDataDefSet(void)
+void AllocSaveBuffer_StructuredDataDefSet(void)
 
 {
-  StructuredDataDefSet *pSVar1;
-  
-  pSVar1 = (StructuredDataDefSet *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3180  AllocLoadBuffer_unsigned  (database/db_primtypes_load_buf.h:1684)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint * AllocLoadBuffer_unsigned(void)
+void AllocLoadBuffer_unsigned(void)
 
 {
-  uint *puVar1;
-  
-  puVar1 = (uint *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825EF700  SaveBuffer_byte4096  (database/db_primtypes_save_buf.h:1690)
 
-void SaveBuffer_byte4096(bool param_1)
+void SaveBuffer_byte4096(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufbyte4096,1,&bufoutbyte4096);
+  SaveBuffer_Stream(param_1,DAT_8404f568,1,0xffffffff8404f258);
   return;
 }
 
 
 // 825F7078  SaveBuffer_StructuredDataDefSetArray  (universal/com_structureddatadef_save_buf.h:1691)
 
-void SaveBuffer_StructuredDataDefSetArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataDefSetArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar3;
-  void *pvVar1;
-  StructuredDataDef *pSVar2;
-  StructuredDataDefSet *pSVar4;
-  StructuredDataDefSet *pSVar5;
-  StructuredDataDefSet *pSVar6;
-  ulonglong uVar7;
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
   
-  uVar7 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_16(param_1);
-  SaveBuffer_Stream(bVar3,bufStructuredDataDefSet,
-                    (int)((uVar7 + (uVar7 & 0x7fffffff) * 2 & 0xffffffff) << 2),
-                    &bufoutStructuredDataDefSet);
-  pSVar4 = bufoutStructuredDataDefSet;
-  pSVar5 = bufstreamStructuredDataDefSet;
-  pSVar6 = bufStructuredDataDefSet;
-  if (0 < (int)uVar7) {
+  uVar1 = __savegprlr_16();
+  SaveBuffer_Stream(uVar1,DAT_8404f3d0,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2,
+                    0xffffffff8404f498);
+  iVar4 = DAT_8404f498;
+  iVar5 = DAT_8404f2f4;
+  iVar6 = DAT_8404f3d0;
+  if (0 < (int)param_2) {
     do {
-      bufstreamStructuredDataDefSet = pSVar5;
-      bufStructuredDataDefSet = pSVar6;
-      bufoutStructuredDataDefSet = pSVar4;
-      SaveBuffer_Stream(false,pSVar6,0xc,&bufoutStructuredDataDefSet);
+      DAT_8404f2f4 = iVar5;
+      DAT_8404f3d0 = iVar6;
+      DAT_8404f498 = iVar4;
+      SaveBuffer_Stream(0,iVar6,0xc,0xffffffff8404f498);
       AssetBuf_PushStreamPos(3);
-      bufXString = &bufStructuredDataDefSet->name;
-      bufstreamXString = &bufstreamStructuredDataDefSet->name;
-      bufoutXString = &bufoutStructuredDataDefSet->name;
-      SaveBuffer_XString(false);
-      if (bufStructuredDataDefSet->defs != (StructuredDataDef *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDefSet->defs);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x684,0,"%s");
+      DAT_8404f538 = DAT_8404f3d0;
+      DAT_8404f47c = DAT_8404f2f4;
+      DAT_8404f28c = DAT_8404f498;
+      SaveBuffer_XString(0);
+      if (*(int *)(DAT_8404f3d0 + 8) != 0) {
+        iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f3d0 + 8));
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x684,0,0xffffffff82000f98,0xffffffff82179df4);
         }
-        pSVar2 = (StructuredDataDef *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataDefSet->defs = pSVar2;
-        bufStructuredDataDef = bufStructuredDataDefSet->defs;
-        bufstreamStructuredDataDef = bufoutStructuredDataDefSet->defs;
-        AssetBuf_SetStreamData(bufStructuredDataDefSet->defs,bufoutStructuredDataDefSet->defs);
-        bufoutStructuredDataDefSet->defs = (StructuredDataDef *)0xffffffff;
-        SaveBuffer_StructuredDataDefArray(true,bufStructuredDataDefSet->defCount);
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f498 + 8) = uVar3;
+        DAT_8404f34c = *(undefined4 *)(DAT_8404f3d0 + 8);
+        DAT_8404f380 = *(undefined4 *)(DAT_8404f498 + 8);
+        AssetBuf_SetStreamData(*(undefined4 *)(DAT_8404f3d0 + 8),*(undefined4 *)(DAT_8404f498 + 8));
+        *(undefined4 *)(DAT_8404f498 + 8) = 0xffffffff;
+        SaveBuffer_StructuredDataDefArray(1,*(undefined4 *)(DAT_8404f3d0 + 4));
       }
       AssetBuf_PopStreamPos();
-      uVar7 = uVar7 - 1;
-      pSVar4 = pSVar4 + 1;
-      pSVar5 = pSVar5 + 1;
-      pSVar6 = pSVar6 + 1;
-    } while (uVar7 != 0);
+      param_2 = param_2 - 1;
+      iVar4 = iVar4 + 0xc;
+      iVar5 = iVar5 + 0xc;
+      iVar6 = iVar6 + 0xc;
+    } while (param_2 != 0);
   }
   __restgprlr_16();
   return;
@@ -4033,56 +3671,52 @@ void SaveBuffer_StructuredDataDefSetArray(bool param_1,int param_2)
 
 // 825F3188  LoadBuffer_unsignedArray  (database/db_primtypes_load_buf.h:1693)
 
-void LoadBuffer_unsignedArray(bool param_1,int param_2)
+void LoadBuffer_unsignedArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufunsigned,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f530,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825EF718  AllocSaveBuffer_byte4096  (database/db_primtypes_save_buf.h:1696)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocSaveBuffer_byte4096(void)
+void AllocSaveBuffer_byte4096(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0xfff);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0xfff);
+  return;
 }
 
 
 // 825EF720  SaveBuffer_byte4096Array  (database/db_primtypes_save_buf.h:1705)
 
-void SaveBuffer_byte4096Array(bool param_1,int param_2)
+void SaveBuffer_byte4096Array(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufbyte4096,param_2,&bufoutbyte4096);
+  SaveBuffer_Stream(param_1,DAT_8404f568,param_2,0xffffffff8404f258);
   return;
 }
 
 
 // 825F3198  LoadBuffer_unsignedStream  (database/db_primtypes_load_buf.h:1715)
 
-void LoadBuffer_unsignedStream(bool param_1,int param_2)
+void LoadBuffer_unsignedStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x6b6,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x6b6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f530;
     do {
-      LoadBuffer_Stream(true,bufunsigned,4);
-      bufunsigned = (uint *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f530 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -4090,47 +3724,43 @@ void LoadBuffer_unsignedStream(bool param_1,int param_2)
 
 // 825F71E0  SaveBuffer_StructuredDataDefSetStream  (universal/com_structureddatadef_save_buf.h:1721)
 
-void SaveBuffer_StructuredDataDefSetStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataDefSetStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar3;
-  void *pvVar1;
-  StructuredDataDef *pSVar2;
-  longlong lVar4;
+  int iVar1;
+  undefined4 uVar2;
   
-  lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_19(param_1);
+  cVar3 = __savegprlr_19();
   if (cVar3 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x6bc,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x6bc,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar4) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufStructuredDataDefSet,0xc,&bufoutStructuredDataDefSet);
+      SaveBuffer_Stream(1,DAT_8404f3d0,0xc,0xffffffff8404f498);
       AssetBuf_PushStreamPos(3);
-      bufXString = &bufStructuredDataDefSet->name;
-      bufstreamXString = &bufstreamStructuredDataDefSet->name;
-      bufoutXString = &bufoutStructuredDataDefSet->name;
-      SaveBuffer_XString(false);
-      if (bufStructuredDataDefSet->defs != (StructuredDataDef *)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufStructuredDataDefSet->defs);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x684,0,"%s");
+      DAT_8404f538 = DAT_8404f3d0;
+      DAT_8404f47c = DAT_8404f2f4;
+      DAT_8404f28c = DAT_8404f498;
+      SaveBuffer_XString(0);
+      if (*(int *)(DAT_8404f3d0 + 8) != 0) {
+        iVar1 = AssetBuf_FindStreamData(*(int *)(DAT_8404f3d0 + 8));
+        if (iVar1 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x684,0,0xffffffff82000f98,0xffffffff82179df4);
         }
-        pSVar2 = (StructuredDataDef *)AssetBuf_AllocStreamPos(3);
-        bufoutStructuredDataDefSet->defs = pSVar2;
-        bufStructuredDataDef = bufStructuredDataDefSet->defs;
-        bufstreamStructuredDataDef = bufoutStructuredDataDefSet->defs;
-        AssetBuf_SetStreamData(bufStructuredDataDefSet->defs,bufoutStructuredDataDefSet->defs);
-        bufoutStructuredDataDefSet->defs = (StructuredDataDef *)0xffffffff;
-        SaveBuffer_StructuredDataDefArray(true,bufStructuredDataDefSet->defCount);
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f498 + 8) = uVar2;
+        DAT_8404f34c = *(undefined4 *)(DAT_8404f3d0 + 8);
+        DAT_8404f380 = *(undefined4 *)(DAT_8404f498 + 8);
+        AssetBuf_SetStreamData(*(undefined4 *)(DAT_8404f3d0 + 8),*(undefined4 *)(DAT_8404f498 + 8));
+        *(undefined4 *)(DAT_8404f498 + 8) = 0xffffffff;
+        SaveBuffer_StructuredDataDefArray(1,*(undefined4 *)(DAT_8404f3d0 + 4));
       }
       AssetBuf_PopStreamPos();
-      bufStructuredDataDefSet = (StructuredDataDefSet *)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataDefSet = (StructuredDataDefSet *)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      DAT_8404f3d0 = AssetBuf_GetSourcePos();
+      DAT_8404f2f4 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_19();
   return;
@@ -4139,35 +3769,32 @@ void SaveBuffer_StructuredDataDefSetStream(bool param_1,int param_2)
 
 // 825F3228  LoadBuffer_DWORD  (database/db_primtypes_load_buf.h:1729)
 
-void LoadBuffer_DWORD(bool param_1)
+void LoadBuffer_DWORD(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufDWORD,4);
+  LoadBuffer_Stream(param_1,DAT_8404f42c,4);
   return;
 }
 
 
 // 825EF738  SaveBuffer_byte4096Stream  (database/db_primtypes_save_buf.h:1735)
 
-void SaveBuffer_byte4096Stream(bool param_1,int param_2)
+void SaveBuffer_byte4096Stream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x6ca,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x6ca,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufbyte4096,1,&bufoutbyte4096);
-      bufbyte4096 = AssetBuf_GetSourcePos();
-      bufstreambyte4096 = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f568,1,0xffffffff8404f258);
+      DAT_8404f568 = AssetBuf_GetSourcePos();
+      DAT_8404f53c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -4176,44 +3803,38 @@ void SaveBuffer_byte4096Stream(bool param_1,int param_2)
 
 // 825F3238  AllocLoadBuffer_DWORD  (database/db_primtypes_load_buf.h:1735)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ulong * AllocLoadBuffer_DWORD(void)
+void AllocLoadBuffer_DWORD(void)
 
 {
-  ulong *puVar1;
-  
-  puVar1 = (ulong *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F7348  SaveBuffer_StructuredDataDefSetPtr  (universal/com_structureddatadef_save_buf.h:1736)
 
-void SaveBuffer_StructuredDataDefSetPtr(bool param_1)
+void SaveBuffer_StructuredDataDefSetPtr(undefined8 param_1)
 
 {
-  StructuredDataDefSet *pSVar1;
-  void *pvVar2;
+  int iVar2;
+  undefined8 uVar1;
   
-  SaveBuffer_Stream(param_1,bufStructuredDataDefSetPtr,4,&bufoutStructuredDataDefSetPtr);
+  SaveBuffer_Stream(param_1,DAT_8404f358,4,0xffffffff8404f458);
   AssetBuf_PushStreamPos(0);
-  if (*bufStructuredDataDefSetPtr != (StructuredDataDefSet *)0x0) {
-    pSVar1 = AssetBuf_FindStreamData(*bufStructuredDataDefSetPtr);
-    *bufoutStructuredDataDefSetPtr = pSVar1;
-    if (*bufoutStructuredDataDefSetPtr == (StructuredDataDefSet *)0xffffffff) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                      ,0x6cf,0,"%s");
+  if (*DAT_8404f358 != 0) {
+    iVar2 = AssetBuf_FindStreamData(*DAT_8404f358);
+    *DAT_8404f458 = iVar2;
+    if (*DAT_8404f458 == -1) {
+      MyAssertHandler(0xffffffff82179c20,0x6cf,0,0xffffffff82000f98,0xffffffff82179e30);
     }
-    if (*bufoutStructuredDataDefSetPtr == (StructuredDataDefSet *)0x0) {
-      pSVar1 = (StructuredDataDefSet *)AssetBuf_AllocStreamPos(3);
-      *bufoutStructuredDataDefSetPtr = pSVar1;
-      bufStructuredDataDefSet = *bufStructuredDataDefSetPtr;
-      bufstreamStructuredDataDefSet = *bufoutStructuredDataDefSetPtr;
-      pvVar2 = AssetBuf_ConvertAliasToOffset
-                         (bufstreamStructuredDataDefSetPtr,bufoutStructuredDataDefSetPtr);
-      AssetBuf_SetStreamDataRaw(*bufStructuredDataDefSetPtr,pvVar2);
-      SaveBuffer_StructuredDataDefSet(true);
+    if (*DAT_8404f458 == 0) {
+      iVar2 = AssetBuf_AllocStreamPos(3);
+      *DAT_8404f458 = iVar2;
+      DAT_8404f3d0 = *DAT_8404f358;
+      DAT_8404f2f4 = *DAT_8404f458;
+      uVar1 = AssetBuf_ConvertAliasToOffset(DAT_8404f4e0);
+      AssetBuf_SetStreamDataRaw(*DAT_8404f358,uVar1);
+      SaveBuffer_StructuredDataDefSet(1);
     }
   }
   AssetBuf_PopStreamPos();
@@ -4223,80 +3844,72 @@ void SaveBuffer_StructuredDataDefSetPtr(bool param_1)
 
 // 825F3240  LoadBuffer_DWORDArray  (database/db_primtypes_load_buf.h:1744)
 
-void LoadBuffer_DWORDArray(bool param_1,int param_2)
+void LoadBuffer_DWORDArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufDWORD,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f42c,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825EF7C8  SaveBuffer_byte128  (database/db_primtypes_save_buf.h:1750)
 
-void SaveBuffer_byte128(bool param_1)
+void SaveBuffer_byte128(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufbyte128,1,&bufoutbyte128);
+  SaveBuffer_Stream(param_1,DAT_8404f2e4,1,0xffffffff8404f3f4);
   return;
 }
 
 
 // 825EF7E0  AllocSaveBuffer_byte128  (database/db_primtypes_save_buf.h:1756)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocSaveBuffer_byte128(void)
+void AllocSaveBuffer_byte128(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0x7f);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0x7f);
+  return;
 }
 
 
 // 825F7458  AllocSaveBuffer_StructuredDataDefSetPtr  (universal/com_structureddatadef_save_buf.h:1758)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-StructuredDataDefSet ** AllocSaveBuffer_StructuredDataDefSetPtr(void)
+void AllocSaveBuffer_StructuredDataDefSetPtr(void)
 
 {
-  StructuredDataDefSet **ppSVar1;
-  
-  ppSVar1 = (StructuredDataDefSet **)AssetBuf_AllocStreamPos(3);
-  return ppSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825EF7E8  SaveBuffer_byte128Array  (database/db_primtypes_save_buf.h:1765)
 
-void SaveBuffer_byte128Array(bool param_1,int param_2)
+void SaveBuffer_byte128Array(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufbyte128,param_2,&bufoutbyte128);
+  SaveBuffer_Stream(param_1,DAT_8404f2e4,param_2,0xffffffff8404f3f4);
   return;
 }
 
 
 // 825F3250  LoadBuffer_DWORDStream  (database/db_primtypes_load_buf.h:1766)
 
-void LoadBuffer_DWORDStream(bool param_1,int param_2)
+void LoadBuffer_DWORDStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x6e9,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x6e9,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f42c;
     do {
-      LoadBuffer_Stream(true,bufDWORD,4);
-      bufDWORD = (ulong *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f42c = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -4304,55 +3917,49 @@ void LoadBuffer_DWORDStream(bool param_1,int param_2)
 
 // 825F7460  SaveBuffer_StructuredDataDefSetPtrArray  (universal/com_structureddatadef_save_buf.h:1767)
 
-void SaveBuffer_StructuredDataDefSetPtrArray(bool param_1,int param_2)
+void SaveBuffer_StructuredDataDefSetPtrArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar3;
-  StructuredDataDefSet *pSVar1;
-  void *pvVar2;
-  StructuredDataDefSet **ppSVar4;
-  StructuredDataDefSet **ppSVar5;
-  StructuredDataDefSet **ppSVar6;
-  ulonglong uVar7;
+  undefined8 uVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  int *piVar5;
   
-  uVar7 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_20(param_1);
-  SaveBuffer_Stream(bVar3,bufStructuredDataDefSetPtr,(int)((uVar7 & 0xffffffff) << 2),
-                    &bufoutStructuredDataDefSetPtr);
-  ppSVar6 = bufStructuredDataDefSetPtr;
-  ppSVar4 = bufoutStructuredDataDefSetPtr;
-  ppSVar5 = bufstreamStructuredDataDefSetPtr;
-  if (0 < (int)uVar7) {
+  uVar1 = __savegprlr_20();
+  SaveBuffer_Stream(uVar1,DAT_8404f358,(param_2 & 0x3fffffff) << 2,0xffffffff8404f458);
+  piVar3 = DAT_8404f458;
+  iVar4 = DAT_8404f4e0;
+  piVar5 = DAT_8404f358;
+  if (0 < (int)param_2) {
     do {
-      bufStructuredDataDefSetPtr = ppSVar6;
-      bufoutStructuredDataDefSetPtr = ppSVar4;
-      bufstreamStructuredDataDefSetPtr = ppSVar5;
-      SaveBuffer_Stream(false,ppSVar6,4,&bufoutStructuredDataDefSetPtr);
+      DAT_8404f358 = piVar5;
+      DAT_8404f458 = piVar3;
+      DAT_8404f4e0 = iVar4;
+      SaveBuffer_Stream(0,piVar5,4,0xffffffff8404f458);
       AssetBuf_PushStreamPos(0);
-      if (*bufStructuredDataDefSetPtr != (StructuredDataDefSet *)0x0) {
-        pSVar1 = AssetBuf_FindStreamData(*bufStructuredDataDefSetPtr);
-        *bufoutStructuredDataDefSetPtr = pSVar1;
-        if (*bufoutStructuredDataDefSetPtr == (StructuredDataDefSet *)0xffffffff) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x6cf,0,"%s");
+      if (*DAT_8404f358 != 0) {
+        iVar2 = AssetBuf_FindStreamData(*DAT_8404f358);
+        *DAT_8404f458 = iVar2;
+        if (*DAT_8404f458 == -1) {
+          MyAssertHandler(0xffffffff82179c20,0x6cf,0,0xffffffff82000f98,0xffffffff82179e30);
         }
-        if (*bufoutStructuredDataDefSetPtr == (StructuredDataDefSet *)0x0) {
-          pSVar1 = (StructuredDataDefSet *)AssetBuf_AllocStreamPos(3);
-          *bufoutStructuredDataDefSetPtr = pSVar1;
-          bufStructuredDataDefSet = *bufStructuredDataDefSetPtr;
-          bufstreamStructuredDataDefSet = *bufoutStructuredDataDefSetPtr;
-          pvVar2 = AssetBuf_ConvertAliasToOffset
-                             (bufstreamStructuredDataDefSetPtr,bufoutStructuredDataDefSetPtr);
-          AssetBuf_SetStreamDataRaw(*bufStructuredDataDefSetPtr,pvVar2);
-          SaveBuffer_StructuredDataDefSet(true);
+        if (*DAT_8404f458 == 0) {
+          iVar2 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f458 = iVar2;
+          DAT_8404f3d0 = *DAT_8404f358;
+          DAT_8404f2f4 = *DAT_8404f458;
+          uVar1 = AssetBuf_ConvertAliasToOffset(DAT_8404f4e0);
+          AssetBuf_SetStreamDataRaw(*DAT_8404f358,uVar1);
+          SaveBuffer_StructuredDataDefSet(1);
         }
       }
       AssetBuf_PopStreamPos();
-      uVar7 = uVar7 - 1;
-      ppSVar6 = ppSVar6 + 1;
-      ppSVar4 = ppSVar4 + 1;
-      ppSVar5 = ppSVar5 + 1;
-    } while (uVar7 != 0);
+      param_2 = param_2 - 1;
+      piVar3 = piVar3 + 1;
+      iVar4 = iVar4 + 4;
+      piVar5 = piVar5 + 1;
+    } while (param_2 != 0);
   }
   __restgprlr_20();
   return;
@@ -4361,49 +3968,42 @@ void SaveBuffer_StructuredDataDefSetPtrArray(bool param_1,int param_2)
 
 // 825F32E0  LoadBuffer_int32_t  (database/db_primtypes_load_buf.h:1780)
 
-void LoadBuffer_int32_t(bool param_1)
+void LoadBuffer_int32_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufint32_t,4);
+  LoadBuffer_Stream(param_1,DAT_8404f450,4);
   return;
 }
 
 
 // 825F32F0  AllocLoadBuffer_int32_t  (database/db_primtypes_load_buf.h:1786)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int * AllocLoadBuffer_int32_t(void)
+void AllocLoadBuffer_int32_t(void)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)AssetBuf_AllocStreamPos(3);
-  return piVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825EF800  SaveBuffer_byte128Stream  (database/db_primtypes_save_buf.h:1795)
 
-void SaveBuffer_byte128Stream(bool param_1,int param_2)
+void SaveBuffer_byte128Stream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x706,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x706,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufbyte128,1,&bufoutbyte128);
-      bufbyte128 = AssetBuf_GetSourcePos();
-      bufstreambyte128 = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f2e4,1,0xffffffff8404f3f4);
+      DAT_8404f2e4 = AssetBuf_GetSourcePos();
+      DAT_8404f554 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -4412,57 +4012,52 @@ void SaveBuffer_byte128Stream(bool param_1,int param_2)
 
 // 825F32F8  LoadBuffer_int32_tArray  (database/db_primtypes_load_buf.h:1795)
 
-void LoadBuffer_int32_tArray(bool param_1,int param_2)
+void LoadBuffer_int32_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufint32_t,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f450,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825F75B0  SaveBuffer_StructuredDataDefSetPtrStream  (universal/com_structureddatadef_save_buf.h:1797)
 
-void SaveBuffer_StructuredDataDefSetPtrStream(bool param_1,int param_2)
+void SaveBuffer_StructuredDataDefSetPtrStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar3;
-  StructuredDataDefSet *pSVar1;
-  void *pvVar2;
-  longlong lVar4;
+  int iVar2;
+  undefined8 uVar1;
   
-  lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_23(param_1);
+  cVar3 = __savegprlr_23();
   if (cVar3 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                    ,0x708,0,"%s");
+    MyAssertHandler(0xffffffff82179c20,0x708,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar4) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufStructuredDataDefSetPtr,4,&bufoutStructuredDataDefSetPtr);
+      SaveBuffer_Stream(1,DAT_8404f358,4,0xffffffff8404f458);
       AssetBuf_PushStreamPos(0);
-      if (*bufStructuredDataDefSetPtr != (StructuredDataDefSet *)0x0) {
-        pSVar1 = AssetBuf_FindStreamData(*bufStructuredDataDefSetPtr);
-        *bufoutStructuredDataDefSetPtr = pSVar1;
-        if (*bufoutStructuredDataDefSetPtr == (StructuredDataDefSet *)0xffffffff) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
-                          ,0x6cf,0,"%s");
+      if (*DAT_8404f358 != 0) {
+        iVar2 = AssetBuf_FindStreamData(*DAT_8404f358);
+        *DAT_8404f458 = iVar2;
+        if (*DAT_8404f458 == -1) {
+          MyAssertHandler(0xffffffff82179c20,0x6cf,0,0xffffffff82000f98,0xffffffff82179e30);
         }
-        if (*bufoutStructuredDataDefSetPtr == (StructuredDataDefSet *)0x0) {
-          pSVar1 = (StructuredDataDefSet *)AssetBuf_AllocStreamPos(3);
-          *bufoutStructuredDataDefSetPtr = pSVar1;
-          bufStructuredDataDefSet = *bufStructuredDataDefSetPtr;
-          bufstreamStructuredDataDefSet = *bufoutStructuredDataDefSetPtr;
-          pvVar2 = AssetBuf_ConvertAliasToOffset
-                             (bufstreamStructuredDataDefSetPtr,bufoutStructuredDataDefSetPtr);
-          AssetBuf_SetStreamDataRaw(*bufStructuredDataDefSetPtr,pvVar2);
-          SaveBuffer_StructuredDataDefSet(true);
+        if (*DAT_8404f458 == 0) {
+          iVar2 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f458 = iVar2;
+          DAT_8404f3d0 = *DAT_8404f358;
+          DAT_8404f2f4 = *DAT_8404f458;
+          uVar1 = AssetBuf_ConvertAliasToOffset(DAT_8404f4e0);
+          AssetBuf_SetStreamDataRaw(*DAT_8404f358,uVar1);
+          SaveBuffer_StructuredDataDefSet(1);
         }
       }
       AssetBuf_PopStreamPos();
-      bufStructuredDataDefSetPtr = (StructuredDataDefSet **)AssetBuf_GetSourcePos();
-      bufstreamStructuredDataDefSetPtr = (StructuredDataDefSet **)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      DAT_8404f358 = (int *)AssetBuf_GetSourcePos();
+      DAT_8404f4e0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_23();
   return;
@@ -4471,46 +4066,42 @@ void SaveBuffer_StructuredDataDefSetPtrStream(bool param_1,int param_2)
 
 // 825EF890  SaveBuffer_byte64  (database/db_primtypes_save_buf.h:1810)
 
-void SaveBuffer_byte64(bool param_1)
+void SaveBuffer_byte64(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufbyte64,1,&bufoutbyte64);
+  SaveBuffer_Stream(param_1,DAT_8404f32c,1,0xffffffff8404f264);
   return;
 }
 
 
 // 825EF8A8  AllocSaveBuffer_byte64  (database/db_primtypes_save_buf.h:1816)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocSaveBuffer_byte64(void)
+void AllocSaveBuffer_byte64(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0x3f);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0x3f);
+  return;
 }
 
 
 // 825F3308  LoadBuffer_int32_tStream  (database/db_primtypes_load_buf.h:1817)
 
-void LoadBuffer_int32_tStream(bool param_1,int param_2)
+void LoadBuffer_int32_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x71c,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x71c,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f450;
     do {
-      LoadBuffer_Stream(true,bufint32_t,4);
-      bufint32_t = (int *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f450 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -4518,69 +4109,62 @@ void LoadBuffer_int32_tStream(bool param_1,int param_2)
 
 // 825EF8B0  SaveBuffer_byte64Array  (database/db_primtypes_save_buf.h:1825)
 
-void SaveBuffer_byte64Array(bool param_1,int param_2)
+void SaveBuffer_byte64Array(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufbyte64,param_2,&bufoutbyte64);
+  SaveBuffer_Stream(param_1,DAT_8404f32c,param_2,0xffffffff8404f264);
   return;
 }
 
 
 // 825F3398  LoadBuffer_uint32_t  (database/db_primtypes_load_buf.h:1831)
 
-void LoadBuffer_uint32_t(bool param_1)
+void LoadBuffer_uint32_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufuint32_t,4);
+  LoadBuffer_Stream(param_1,DAT_8404f2f8,4);
   return;
 }
 
 
 // 825F33A8  AllocLoadBuffer_uint32_t  (database/db_primtypes_load_buf.h:1837)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint * AllocLoadBuffer_uint32_t(void)
+void AllocLoadBuffer_uint32_t(void)
 
 {
-  uint *puVar1;
-  
-  puVar1 = (uint *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F33B0  LoadBuffer_uint32_tArray  (database/db_primtypes_load_buf.h:1846)
 
-void LoadBuffer_uint32_tArray(bool param_1,int param_2)
+void LoadBuffer_uint32_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufuint32_t,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f2f8,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825EF8C8  SaveBuffer_byte64Stream  (database/db_primtypes_save_buf.h:1855)
 
-void SaveBuffer_byte64Stream(bool param_1,int param_2)
+void SaveBuffer_byte64Stream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x742,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x742,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufbyte64,1,&bufoutbyte64);
-      bufbyte64 = AssetBuf_GetSourcePos();
-      bufstreambyte64 = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f32c,1,0xffffffff8404f264);
+      DAT_8404f32c = AssetBuf_GetSourcePos();
+      DAT_8404f314 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -4589,22 +4173,22 @@ void SaveBuffer_byte64Stream(bool param_1,int param_2)
 
 // 825F33C0  LoadBuffer_uint32_tStream  (database/db_primtypes_load_buf.h:1868)
 
-void LoadBuffer_uint32_tStream(bool param_1,int param_2)
+void LoadBuffer_uint32_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x74f,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x74f,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f2f8;
     do {
-      LoadBuffer_Stream(true,bufuint32_t,4);
-      bufuint32_t = (uint *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2f8 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -4612,93 +4196,82 @@ void LoadBuffer_uint32_tStream(bool param_1,int param_2)
 
 // 825EF958  SaveBuffer_byte32  (database/db_primtypes_save_buf.h:1870)
 
-void SaveBuffer_byte32(bool param_1)
+void SaveBuffer_byte32(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufbyte32,1,&bufoutbyte32);
+  SaveBuffer_Stream(param_1,DAT_8404f2b4,1,0xffffffff8404f288);
   return;
 }
 
 
 // 825EF970  AllocSaveBuffer_byte32  (database/db_primtypes_save_buf.h:1876)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocSaveBuffer_byte32(void)
+void AllocSaveBuffer_byte32(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0x1f);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0x1f);
+  return;
 }
 
 
 // 825F3450  LoadBuffer_uint  (database/db_primtypes_load_buf.h:1882)
 
-void LoadBuffer_uint(bool param_1)
+void LoadBuffer_uint(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufuint,4);
+  LoadBuffer_Stream(param_1,DAT_8404f3b4,4);
   return;
 }
 
 
 // 825EF978  SaveBuffer_byte32Array  (database/db_primtypes_save_buf.h:1885)
 
-void SaveBuffer_byte32Array(bool param_1,int param_2)
+void SaveBuffer_byte32Array(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufbyte32,param_2,&bufoutbyte32);
+  SaveBuffer_Stream(param_1,DAT_8404f2b4,param_2,0xffffffff8404f288);
   return;
 }
 
 
 // 825F3460  AllocLoadBuffer_uint  (database/db_primtypes_load_buf.h:1888)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint * AllocLoadBuffer_uint(void)
+void AllocLoadBuffer_uint(void)
 
 {
-  uint *puVar1;
-  
-  puVar1 = (uint *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3468  LoadBuffer_uintArray  (database/db_primtypes_load_buf.h:1897)
 
-void LoadBuffer_uintArray(bool param_1,int param_2)
+void LoadBuffer_uintArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufuint,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f3b4,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825EF990  SaveBuffer_byte32Stream  (database/db_primtypes_save_buf.h:1915)
 
-void SaveBuffer_byte32Stream(bool param_1,int param_2)
+void SaveBuffer_byte32Stream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x77e,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x77e,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufbyte32,1,&bufoutbyte32);
-      bufbyte32 = AssetBuf_GetSourcePos();
-      bufstreambyte32 = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f2b4,1,0xffffffff8404f288);
+      DAT_8404f2b4 = AssetBuf_GetSourcePos();
+      DAT_8404f360 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -4707,22 +4280,22 @@ void SaveBuffer_byte32Stream(bool param_1,int param_2)
 
 // 825F3478  LoadBuffer_uintStream  (database/db_primtypes_load_buf.h:1919)
 
-void LoadBuffer_uintStream(bool param_1,int param_2)
+void LoadBuffer_uintStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x782,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x782,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f3b4;
     do {
-      LoadBuffer_Stream(true,bufuint,4);
-      bufuint = (uint *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f3b4 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -4730,90 +4303,82 @@ void LoadBuffer_uintStream(bool param_1,int param_2)
 
 // 825EFA20  SaveBuffer_unsigned  (database/db_primtypes_save_buf.h:1930)
 
-void SaveBuffer_unsigned(bool param_1)
+void SaveBuffer_unsigned(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufunsigned,4,&bufoutunsigned);
+  SaveBuffer_Stream(param_1,DAT_8404f530,4,0xffffffff8404f364);
   return;
 }
 
 
 // 825F3508  LoadBuffer_uint64_t  (database/db_primtypes_load_buf.h:1933)
 
-void LoadBuffer_uint64_t(bool param_1)
+void LoadBuffer_uint64_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufuint64_t,8);
+  LoadBuffer_Stream(param_1,DAT_8404f2d4,8);
   return;
 }
 
 
 // 825EFA38  AllocSaveBuffer_unsigned  (database/db_primtypes_save_buf.h:1936)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint * AllocSaveBuffer_unsigned(void)
+void AllocSaveBuffer_unsigned(void)
 
 {
-  uint *puVar1;
-  
-  puVar1 = (uint *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3518  AllocLoadBuffer_uint64_t  (database/db_primtypes_load_buf.h:1939)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ulong64 * AllocLoadBuffer_uint64_t(void)
+void AllocLoadBuffer_uint64_t(void)
 
 {
-  ulong64 *puVar1;
-  
-  puVar1 = (ulong64 *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825EFA40  SaveBuffer_unsignedArray  (database/db_primtypes_save_buf.h:1945)
 
-void SaveBuffer_unsignedArray(bool param_1,int param_2)
+void SaveBuffer_unsignedArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufunsigned,param_2 << 2,&bufoutunsigned);
+  SaveBuffer_Stream(param_1,DAT_8404f530,(param_2 & 0x3fffffff) << 2,0xffffffff8404f364);
   return;
 }
 
 
 // 825F3520  LoadBuffer_uint64_tArray  (database/db_primtypes_load_buf.h:1948)
 
-void LoadBuffer_uint64_tArray(bool param_1,int param_2)
+void LoadBuffer_uint64_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufuint64_t,param_2 << 3);
+  LoadBuffer_Stream(param_1,DAT_8404f2d4,(param_2 & 0x1fffffff) << 3);
   return;
 }
 
 
 // 825F3530  LoadBuffer_uint64_tStream  (database/db_primtypes_load_buf.h:1970)
 
-void LoadBuffer_uint64_tStream(bool param_1,int param_2)
+void LoadBuffer_uint64_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x7b5,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x7b5,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f2d4;
     do {
-      LoadBuffer_Stream(true,bufuint64_t,8);
-      bufuint64_t = (ulong64 *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,8);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2d4 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -4821,25 +4386,22 @@ void LoadBuffer_uint64_tStream(bool param_1,int param_2)
 
 // 825EFA58  SaveBuffer_unsignedStream  (database/db_primtypes_save_buf.h:1975)
 
-void SaveBuffer_unsignedStream(bool param_1,int param_2)
+void SaveBuffer_unsignedStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x7ba,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x7ba,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufunsigned,4,&bufoutunsigned);
-      bufunsigned = (uint *)AssetBuf_GetSourcePos();
-      bufstreamunsigned = (uint *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f530,4,0xffffffff8404f364);
+      DAT_8404f530 = AssetBuf_GetSourcePos();
+      DAT_8404f49c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -4848,90 +4410,82 @@ void SaveBuffer_unsignedStream(bool param_1,int param_2)
 
 // 825F35C0  LoadBuffer_raw_DWORD  (database/db_primtypes_load_buf.h:1984)
 
-void LoadBuffer_raw_DWORD(bool param_1)
+void LoadBuffer_raw_DWORD(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_DWORD,4);
+  LoadBuffer_Stream(param_1,DAT_8404f4b0,4);
   return;
 }
 
 
 // 825EFAE8  SaveBuffer_DWORD  (database/db_primtypes_save_buf.h:1990)
 
-void SaveBuffer_DWORD(bool param_1)
+void SaveBuffer_DWORD(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufDWORD,4,&bufoutDWORD);
+  SaveBuffer_Stream(param_1,DAT_8404f42c,4,0xffffffff8404f374);
   return;
 }
 
 
 // 825F35D0  AllocLoadBuffer_raw_DWORD  (database/db_primtypes_load_buf.h:1990)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ulong * AllocLoadBuffer_raw_DWORD(void)
+void AllocLoadBuffer_raw_DWORD(void)
 
 {
-  ulong *puVar1;
-  
-  puVar1 = (ulong *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825EFB00  AllocSaveBuffer_DWORD  (database/db_primtypes_save_buf.h:1996)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ulong * AllocSaveBuffer_DWORD(void)
+void AllocSaveBuffer_DWORD(void)
 
 {
-  ulong *puVar1;
-  
-  puVar1 = (ulong *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F35D8  LoadBuffer_raw_DWORDArray  (database/db_primtypes_load_buf.h:1999)
 
-void LoadBuffer_raw_DWORDArray(bool param_1,int param_2)
+void LoadBuffer_raw_DWORDArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_DWORD,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f4b0,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825EFB08  SaveBuffer_DWORDArray  (database/db_primtypes_save_buf.h:2005)
 
-void SaveBuffer_DWORDArray(bool param_1,int param_2)
+void SaveBuffer_DWORDArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufDWORD,param_2 << 2,&bufoutDWORD);
+  SaveBuffer_Stream(param_1,DAT_8404f42c,(param_2 & 0x3fffffff) << 2,0xffffffff8404f374);
   return;
 }
 
 
 // 825F35E8  LoadBuffer_raw_DWORDStream  (database/db_primtypes_load_buf.h:2021)
 
-void LoadBuffer_raw_DWORDStream(bool param_1,int param_2)
+void LoadBuffer_raw_DWORDStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x7e8,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x7e8,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f4b0;
     do {
-      LoadBuffer_Stream(true,bufraw_DWORD,4);
-      bufraw_DWORD = (ulong *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f4b0 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -4939,25 +4493,22 @@ void LoadBuffer_raw_DWORDStream(bool param_1,int param_2)
 
 // 825EFB20  SaveBuffer_DWORDStream  (database/db_primtypes_save_buf.h:2035)
 
-void SaveBuffer_DWORDStream(bool param_1,int param_2)
+void SaveBuffer_DWORDStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x7f6,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x7f6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufDWORD,4,&bufoutDWORD);
-      bufDWORD = (ulong *)AssetBuf_GetSourcePos();
-      bufstreamDWORD = (ulong *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f42c,4,0xffffffff8404f374);
+      DAT_8404f42c = AssetBuf_GetSourcePos();
+      DAT_8404f414 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -4966,90 +4517,82 @@ void SaveBuffer_DWORDStream(bool param_1,int param_2)
 
 // 825F3678  LoadBuffer_float  (database/db_primtypes_load_buf.h:2035)
 
-void LoadBuffer_float(bool param_1)
+void LoadBuffer_float(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,buffloat,4);
+  LoadBuffer_Stream(param_1,DAT_8404f3d4,4);
   return;
 }
 
 
 // 825F3688  AllocLoadBuffer_float  (database/db_primtypes_load_buf.h:2041)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float * AllocLoadBuffer_float(void)
+void AllocLoadBuffer_float(void)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)AssetBuf_AllocStreamPos(3);
-  return pfVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825EFBB0  SaveBuffer_int32_t  (database/db_primtypes_save_buf.h:2050)
 
-void SaveBuffer_int32_t(bool param_1)
+void SaveBuffer_int32_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufint32_t,4,&bufoutint32_t);
+  SaveBuffer_Stream(param_1,DAT_8404f450,4,0xffffffff8404f390);
   return;
 }
 
 
 // 825F3690  LoadBuffer_floatArray  (database/db_primtypes_load_buf.h:2050)
 
-void LoadBuffer_floatArray(bool param_1,int param_2)
+void LoadBuffer_floatArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,buffloat,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f3d4,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825EFBC8  AllocSaveBuffer_int32_t  (database/db_primtypes_save_buf.h:2056)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int * AllocSaveBuffer_int32_t(void)
+void AllocSaveBuffer_int32_t(void)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)AssetBuf_AllocStreamPos(3);
-  return piVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825EFBD0  SaveBuffer_int32_tArray  (database/db_primtypes_save_buf.h:2065)
 
-void SaveBuffer_int32_tArray(bool param_1,int param_2)
+void SaveBuffer_int32_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufint32_t,param_2 << 2,&bufoutint32_t);
+  SaveBuffer_Stream(param_1,DAT_8404f450,(param_2 & 0x3fffffff) << 2,0xffffffff8404f390);
   return;
 }
 
 
 // 825F36A0  LoadBuffer_floatStream  (database/db_primtypes_load_buf.h:2072)
 
-void LoadBuffer_floatStream(bool param_1,int param_2)
+void LoadBuffer_floatStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x81b,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x81b,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f3d4;
     do {
-      LoadBuffer_Stream(true,buffloat,4);
-      buffloat = (float *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f3d4 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -5057,49 +4600,42 @@ void LoadBuffer_floatStream(bool param_1,int param_2)
 
 // 825F3730  LoadBuffer_float16  (database/db_primtypes_load_buf.h:2086)
 
-void LoadBuffer_float16(bool param_1)
+void LoadBuffer_float16(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,buffloat16,4);
+  LoadBuffer_Stream(param_1,DAT_8404f550,4);
   return;
 }
 
 
 // 825F3740  AllocLoadBuffer_float16  (database/db_primtypes_load_buf.h:2092)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float * AllocLoadBuffer_float16(void)
+void AllocLoadBuffer_float16(void)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)AssetBuf_AllocStreamPos(0xf);
-  return pfVar1;
+  AssetBuf_AllocStreamPos(0xf);
+  return;
 }
 
 
 // 825EFBE8  SaveBuffer_int32_tStream  (database/db_primtypes_save_buf.h:2095)
 
-void SaveBuffer_int32_tStream(bool param_1,int param_2)
+void SaveBuffer_int32_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x832,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x832,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufint32_t,4,&bufoutint32_t);
-      bufint32_t = (int *)AssetBuf_GetSourcePos();
-      bufstreamint32_t = (int *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f450,4,0xffffffff8404f390);
+      DAT_8404f450 = AssetBuf_GetSourcePos();
+      DAT_8404f344 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -5108,56 +4644,52 @@ void SaveBuffer_int32_tStream(bool param_1,int param_2)
 
 // 825F3748  LoadBuffer_float16Array  (database/db_primtypes_load_buf.h:2101)
 
-void LoadBuffer_float16Array(bool param_1,int param_2)
+void LoadBuffer_float16Array(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,buffloat16,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f550,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825EFC78  SaveBuffer_uint32_t  (database/db_primtypes_save_buf.h:2110)
 
-void SaveBuffer_uint32_t(bool param_1)
+void SaveBuffer_uint32_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufuint32_t,4,&bufoutuint32_t);
+  SaveBuffer_Stream(param_1,DAT_8404f2f8,4,0xffffffff8404f494);
   return;
 }
 
 
 // 825EFC90  AllocSaveBuffer_uint32_t  (database/db_primtypes_save_buf.h:2116)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint * AllocSaveBuffer_uint32_t(void)
+void AllocSaveBuffer_uint32_t(void)
 
 {
-  uint *puVar1;
-  
-  puVar1 = (uint *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3758  LoadBuffer_float16Stream  (database/db_primtypes_load_buf.h:2123)
 
-void LoadBuffer_float16Stream(bool param_1,int param_2)
+void LoadBuffer_float16Stream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x84e,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x84e,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f550;
     do {
-      LoadBuffer_Stream(true,buffloat16,4);
-      buffloat16 = (float *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f550 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -5165,69 +4697,62 @@ void LoadBuffer_float16Stream(bool param_1,int param_2)
 
 // 825EFC98  SaveBuffer_uint32_tArray  (database/db_primtypes_save_buf.h:2125)
 
-void SaveBuffer_uint32_tArray(bool param_1,int param_2)
+void SaveBuffer_uint32_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufuint32_t,param_2 << 2,&bufoutuint32_t);
+  SaveBuffer_Stream(param_1,DAT_8404f2f8,(param_2 & 0x3fffffff) << 2,0xffffffff8404f494);
   return;
 }
 
 
 // 825F37E8  LoadBuffer_raw_float  (database/db_primtypes_load_buf.h:2137)
 
-void LoadBuffer_raw_float(bool param_1)
+void LoadBuffer_raw_float(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_float,4);
+  LoadBuffer_Stream(param_1,DAT_8404f2a0,4);
   return;
 }
 
 
 // 825F37F8  AllocLoadBuffer_raw_float  (database/db_primtypes_load_buf.h:2143)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float * AllocLoadBuffer_raw_float(void)
+void AllocLoadBuffer_raw_float(void)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)AssetBuf_AllocStreamPos(3);
-  return pfVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3800  LoadBuffer_raw_floatArray  (database/db_primtypes_load_buf.h:2152)
 
-void LoadBuffer_raw_floatArray(bool param_1,int param_2)
+void LoadBuffer_raw_floatArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_float,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f2a0,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825EFCB0  SaveBuffer_uint32_tStream  (database/db_primtypes_save_buf.h:2155)
 
-void SaveBuffer_uint32_tStream(bool param_1,int param_2)
+void SaveBuffer_uint32_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x86e,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x86e,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufuint32_t,4,&bufoutuint32_t);
-      bufuint32_t = (uint *)AssetBuf_GetSourcePos();
-      bufstreamuint32_t = (uint *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f2f8,4,0xffffffff8404f494);
+      DAT_8404f2f8 = AssetBuf_GetSourcePos();
+      DAT_8404f3d8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -5236,32 +4761,32 @@ void SaveBuffer_uint32_tStream(bool param_1,int param_2)
 
 // 825EFD40  SaveBuffer_uint  (database/db_primtypes_save_buf.h:2170)
 
-void SaveBuffer_uint(bool param_1)
+void SaveBuffer_uint(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufuint,4,&bufoutuint);
+  SaveBuffer_Stream(param_1,DAT_8404f3b4,4,0xffffffff8404f260);
   return;
 }
 
 
 // 825F3810  LoadBuffer_raw_floatStream  (database/db_primtypes_load_buf.h:2174)
 
-void LoadBuffer_raw_floatStream(bool param_1,int param_2)
+void LoadBuffer_raw_floatStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x881,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x881,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f2a0;
     do {
-      LoadBuffer_Stream(true,bufraw_float,4);
-      bufraw_float = (float *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2a0 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -5269,83 +4794,72 @@ void LoadBuffer_raw_floatStream(bool param_1,int param_2)
 
 // 825EFD58  AllocSaveBuffer_uint  (database/db_primtypes_save_buf.h:2176)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint * AllocSaveBuffer_uint(void)
+void AllocSaveBuffer_uint(void)
 
 {
-  uint *puVar1;
-  
-  puVar1 = (uint *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825EFD60  SaveBuffer_uintArray  (database/db_primtypes_save_buf.h:2185)
 
-void SaveBuffer_uintArray(bool param_1,int param_2)
+void SaveBuffer_uintArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufuint,param_2 << 2,&bufoutuint);
+  SaveBuffer_Stream(param_1,DAT_8404f3b4,(param_2 & 0x3fffffff) << 2,0xffffffff8404f260);
   return;
 }
 
 
 // 825F38A0  LoadBuffer_raw_float16  (database/db_primtypes_load_buf.h:2188)
 
-void LoadBuffer_raw_float16(bool param_1)
+void LoadBuffer_raw_float16(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_float16,4);
+  LoadBuffer_Stream(param_1,DAT_8404f3f0,4);
   return;
 }
 
 
 // 825F38B0  AllocLoadBuffer_raw_float16  (database/db_primtypes_load_buf.h:2194)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float * AllocLoadBuffer_raw_float16(void)
+void AllocLoadBuffer_raw_float16(void)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)AssetBuf_AllocStreamPos(0xf);
-  return pfVar1;
+  AssetBuf_AllocStreamPos(0xf);
+  return;
 }
 
 
 // 825F38B8  LoadBuffer_raw_float16Array  (database/db_primtypes_load_buf.h:2203)
 
-void LoadBuffer_raw_float16Array(bool param_1,int param_2)
+void LoadBuffer_raw_float16Array(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_float16,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f3f0,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825EFD78  SaveBuffer_uintStream  (database/db_primtypes_save_buf.h:2215)
 
-void SaveBuffer_uintStream(bool param_1,int param_2)
+void SaveBuffer_uintStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x8aa,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x8aa,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufuint,4,&bufoutuint);
-      bufuint = (uint *)AssetBuf_GetSourcePos();
-      bufstreamuint = (uint *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f3b4,4,0xffffffff8404f260);
+      DAT_8404f3b4 = AssetBuf_GetSourcePos();
+      DAT_8404f3c8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -5354,22 +4868,22 @@ void SaveBuffer_uintStream(bool param_1,int param_2)
 
 // 825F38C8  LoadBuffer_raw_float16Stream  (database/db_primtypes_load_buf.h:2225)
 
-void LoadBuffer_raw_float16Stream(bool param_1,int param_2)
+void LoadBuffer_raw_float16Stream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x8b4,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x8b4,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f3f0;
     do {
-      LoadBuffer_Stream(true,bufraw_float16,4);
-      bufraw_float16 = (float *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f3f0 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -5377,93 +4891,82 @@ void LoadBuffer_raw_float16Stream(bool param_1,int param_2)
 
 // 825EFE08  SaveBuffer_uint64_t  (database/db_primtypes_save_buf.h:2230)
 
-void SaveBuffer_uint64_t(bool param_1)
+void SaveBuffer_uint64_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufuint64_t,8,&bufoutuint64_t);
+  SaveBuffer_Stream(param_1,DAT_8404f2d4,8,0xffffffff8404f384);
   return;
 }
 
 
 // 825EFE20  AllocSaveBuffer_uint64_t  (database/db_primtypes_save_buf.h:2236)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ulong64 * AllocSaveBuffer_uint64_t(void)
+void AllocSaveBuffer_uint64_t(void)
 
 {
-  ulong64 *puVar1;
-  
-  puVar1 = (ulong64 *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3958  LoadBuffer_raw_vec3_t  (database/db_primtypes_load_buf.h:2239)
 
-void LoadBuffer_raw_vec3_t(bool param_1)
+void LoadBuffer_raw_vec3_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_vec3_t,0xc);
+  LoadBuffer_Stream(param_1,DAT_8404f4c8,0xc);
   return;
 }
 
 
 // 825EFE28  SaveBuffer_uint64_tArray  (database/db_primtypes_save_buf.h:2245)
 
-void SaveBuffer_uint64_tArray(bool param_1,int param_2)
+void SaveBuffer_uint64_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufuint64_t,param_2 << 3,&bufoutuint64_t);
+  SaveBuffer_Stream(param_1,DAT_8404f2d4,(param_2 & 0x1fffffff) << 3,0xffffffff8404f384);
   return;
 }
 
 
 // 825F3968  AllocLoadBuffer_raw_vec3_t  (database/db_primtypes_load_buf.h:2245)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float (*) [3] AllocLoadBuffer_raw_vec3_t(void)
+void AllocLoadBuffer_raw_vec3_t(void)
 
 {
-  float (*pafVar1) [3];
-  
-  pafVar1 = (float (*) [3])AssetBuf_AllocStreamPos(3);
-  return pafVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3970  LoadBuffer_raw_vec3_tArray  (database/db_primtypes_load_buf.h:2254)
 
-void LoadBuffer_raw_vec3_tArray(bool param_1,int param_2)
+void LoadBuffer_raw_vec3_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_vec3_t,param_2 * 0xc);
+  LoadBuffer_Stream(param_1,DAT_8404f4c8,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825EFE40  SaveBuffer_uint64_tStream  (database/db_primtypes_save_buf.h:2275)
 
-void SaveBuffer_uint64_tStream(bool param_1,int param_2)
+void SaveBuffer_uint64_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x8e6,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x8e6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufuint64_t,8,&bufoutuint64_t);
-      bufuint64_t = (ulong64 *)AssetBuf_GetSourcePos();
-      bufstreamuint64_t = (ulong64 *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f2d4,8,0xffffffff8404f384);
+      DAT_8404f2d4 = AssetBuf_GetSourcePos();
+      DAT_8404f564 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -5472,22 +4975,22 @@ void SaveBuffer_uint64_tStream(bool param_1,int param_2)
 
 // 825F3988  LoadBuffer_raw_vec3_tStream  (database/db_primtypes_load_buf.h:2276)
 
-void LoadBuffer_raw_vec3_tStream(bool param_1,int param_2)
+void LoadBuffer_raw_vec3_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x8e7,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x8e7,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f4c8;
     do {
-      LoadBuffer_Stream(true,bufraw_vec3_t,0xc);
-      bufraw_vec3_t = (float (*) [3])AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,0xc);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f4c8 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -5495,90 +4998,82 @@ void LoadBuffer_raw_vec3_tStream(bool param_1,int param_2)
 
 // 825EFED0  SaveBuffer_raw_DWORD  (database/db_primtypes_save_buf.h:2290)
 
-void SaveBuffer_raw_DWORD(bool param_1)
+void SaveBuffer_raw_DWORD(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_DWORD,4,&bufoutraw_DWORD);
+  SaveBuffer_Stream(param_1,DAT_8404f4b0,4,0xffffffff8404f56c);
   return;
 }
 
 
 // 825F3A18  LoadBuffer_raw_ushort  (database/db_primtypes_load_buf.h:2290)
 
-void LoadBuffer_raw_ushort(bool param_1)
+void LoadBuffer_raw_ushort(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_ushort,2);
+  LoadBuffer_Stream(param_1,DAT_8404f43c,2);
   return;
 }
 
 
 // 825EFEE8  AllocSaveBuffer_raw_DWORD  (database/db_primtypes_save_buf.h:2296)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ulong * AllocSaveBuffer_raw_DWORD(void)
+void AllocSaveBuffer_raw_DWORD(void)
 
 {
-  ulong *puVar1;
-  
-  puVar1 = (ulong *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3A28  AllocLoadBuffer_raw_ushort  (database/db_primtypes_load_buf.h:2296)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ushort * AllocLoadBuffer_raw_ushort(void)
+void AllocLoadBuffer_raw_ushort(void)
 
 {
-  ushort *puVar1;
-  
-  puVar1 = (ushort *)AssetBuf_AllocStreamPos(1);
-  return puVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825EFEF0  SaveBuffer_raw_DWORDArray  (database/db_primtypes_save_buf.h:2305)
 
-void SaveBuffer_raw_DWORDArray(bool param_1,int param_2)
+void SaveBuffer_raw_DWORDArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_DWORD,param_2 << 2,&bufoutraw_DWORD);
+  SaveBuffer_Stream(param_1,DAT_8404f4b0,(param_2 & 0x3fffffff) << 2,0xffffffff8404f56c);
   return;
 }
 
 
 // 825F3A30  LoadBuffer_raw_ushortArray  (database/db_primtypes_load_buf.h:2305)
 
-void LoadBuffer_raw_ushortArray(bool param_1,int param_2)
+void LoadBuffer_raw_ushortArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_ushort,param_2 << 1);
+  LoadBuffer_Stream(param_1,DAT_8404f43c,(param_2 & 0x7fffffff) << 1);
   return;
 }
 
 
 // 825F3A40  LoadBuffer_raw_ushortStream  (database/db_primtypes_load_buf.h:2327)
 
-void LoadBuffer_raw_ushortStream(bool param_1,int param_2)
+void LoadBuffer_raw_ushortStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x91a,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x91a,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f43c;
     do {
-      LoadBuffer_Stream(true,bufraw_ushort,2);
-      bufraw_ushort = (ushort *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,2);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f43c = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -5586,25 +5081,22 @@ void LoadBuffer_raw_ushortStream(bool param_1,int param_2)
 
 // 825EFF08  SaveBuffer_raw_DWORDStream  (database/db_primtypes_save_buf.h:2335)
 
-void SaveBuffer_raw_DWORDStream(bool param_1,int param_2)
+void SaveBuffer_raw_DWORDStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x922,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x922,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufraw_DWORD,4,&bufoutraw_DWORD);
-      bufraw_DWORD = (ulong *)AssetBuf_GetSourcePos();
-      bufstreamraw_DWORD = (ulong *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f4b0,4,0xffffffff8404f56c);
+      DAT_8404f4b0 = AssetBuf_GetSourcePos();
+      DAT_8404f54c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -5613,90 +5105,82 @@ void SaveBuffer_raw_DWORDStream(bool param_1,int param_2)
 
 // 825F3AD0  LoadBuffer_raw_uint  (database/db_primtypes_load_buf.h:2341)
 
-void LoadBuffer_raw_uint(bool param_1)
+void LoadBuffer_raw_uint(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_uint,4);
+  LoadBuffer_Stream(param_1,DAT_8404f278,4);
   return;
 }
 
 
 // 825F3AE0  AllocLoadBuffer_raw_uint  (database/db_primtypes_load_buf.h:2347)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint * AllocLoadBuffer_raw_uint(void)
+void AllocLoadBuffer_raw_uint(void)
 
 {
-  uint *puVar1;
-  
-  puVar1 = (uint *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825EFF98  SaveBuffer_float  (database/db_primtypes_save_buf.h:2350)
 
-void SaveBuffer_float(bool param_1)
+void SaveBuffer_float(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,buffloat,4,&bufoutfloat);
+  SaveBuffer_Stream(param_1,DAT_8404f3d4,4,0xffffffff8404f298);
   return;
 }
 
 
 // 825EFFB0  AllocSaveBuffer_float  (database/db_primtypes_save_buf.h:2356)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float * AllocSaveBuffer_float(void)
+void AllocSaveBuffer_float(void)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)AssetBuf_AllocStreamPos(3);
-  return pfVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3AE8  LoadBuffer_raw_uintArray  (database/db_primtypes_load_buf.h:2356)
 
-void LoadBuffer_raw_uintArray(bool param_1,int param_2)
+void LoadBuffer_raw_uintArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_uint,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f278,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825EFFB8  SaveBuffer_floatArray  (database/db_primtypes_save_buf.h:2365)
 
-void SaveBuffer_floatArray(bool param_1,int param_2)
+void SaveBuffer_floatArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,buffloat,param_2 << 2,&bufoutfloat);
+  SaveBuffer_Stream(param_1,DAT_8404f3d4,(param_2 & 0x3fffffff) << 2,0xffffffff8404f298);
   return;
 }
 
 
 // 825F3AF8  LoadBuffer_raw_uintStream  (database/db_primtypes_load_buf.h:2378)
 
-void LoadBuffer_raw_uintStream(bool param_1,int param_2)
+void LoadBuffer_raw_uintStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x94d,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x94d,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f278;
     do {
-      LoadBuffer_Stream(true,bufraw_uint,4);
-      bufraw_uint = (uint *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f278 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -5704,35 +5188,32 @@ void LoadBuffer_raw_uintStream(bool param_1,int param_2)
 
 // 825F3B88  LoadBuffer_raw_uint128  (database/db_primtypes_load_buf.h:2392)
 
-void LoadBuffer_raw_uint128(bool param_1)
+void LoadBuffer_raw_uint128(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_uint128,4);
+  LoadBuffer_Stream(param_1,DAT_8404f318,4);
   return;
 }
 
 
 // 825EFFD0  SaveBuffer_floatStream  (database/db_primtypes_save_buf.h:2395)
 
-void SaveBuffer_floatStream(bool param_1,int param_2)
+void SaveBuffer_floatStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x95e,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x95e,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,buffloat,4,&bufoutfloat);
-      buffloat = (float *)AssetBuf_GetSourcePos();
-      bufstreamfloat = (float *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f3d4,4,0xffffffff8404f298);
+      DAT_8404f3d4 = AssetBuf_GetSourcePos();
+      DAT_8404f464 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -5741,80 +5222,72 @@ void SaveBuffer_floatStream(bool param_1,int param_2)
 
 // 825F3B98  AllocLoadBuffer_raw_uint128  (database/db_primtypes_load_buf.h:2398)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint * AllocLoadBuffer_raw_uint128(void)
+void AllocLoadBuffer_raw_uint128(void)
 
 {
-  uint *puVar1;
-  
-  puVar1 = (uint *)AssetBuf_AllocStreamPos(0x7f);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0x7f);
+  return;
 }
 
 
 // 825F3BA0  LoadBuffer_raw_uint128Array  (database/db_primtypes_load_buf.h:2407)
 
-void LoadBuffer_raw_uint128Array(bool param_1,int param_2)
+void LoadBuffer_raw_uint128Array(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_uint128,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f318,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825F0060  SaveBuffer_float16  (database/db_primtypes_save_buf.h:2410)
 
-void SaveBuffer_float16(bool param_1)
+void SaveBuffer_float16(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,buffloat16,4,&bufoutfloat16);
+  SaveBuffer_Stream(param_1,DAT_8404f550,4,0xffffffff8404f24c);
   return;
 }
 
 
 // 825F0078  AllocSaveBuffer_float16  (database/db_primtypes_save_buf.h:2416)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float * AllocSaveBuffer_float16(void)
+void AllocSaveBuffer_float16(void)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)AssetBuf_AllocStreamPos(0xf);
-  return pfVar1;
+  AssetBuf_AllocStreamPos(0xf);
+  return;
 }
 
 
 // 825F0080  SaveBuffer_float16Array  (database/db_primtypes_save_buf.h:2425)
 
-void SaveBuffer_float16Array(bool param_1,int param_2)
+void SaveBuffer_float16Array(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,buffloat16,param_2 << 2,&bufoutfloat16);
+  SaveBuffer_Stream(param_1,DAT_8404f550,(param_2 & 0x3fffffff) << 2,0xffffffff8404f24c);
   return;
 }
 
 
 // 825F3BB0  LoadBuffer_raw_uint128Stream  (database/db_primtypes_load_buf.h:2429)
 
-void LoadBuffer_raw_uint128Stream(bool param_1,int param_2)
+void LoadBuffer_raw_uint128Stream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x980,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x980,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f318;
     do {
-      LoadBuffer_Stream(true,bufraw_uint128,4);
-      bufraw_uint128 = (uint *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f318 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -5822,49 +5295,42 @@ void LoadBuffer_raw_uint128Stream(bool param_1,int param_2)
 
 // 825F3C40  LoadBuffer_raw_byte  (database/db_primtypes_load_buf.h:2443)
 
-void LoadBuffer_raw_byte(bool param_1)
+void LoadBuffer_raw_byte(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_byte,1);
+  LoadBuffer_Stream(param_1,DAT_8404f39c,1);
   return;
 }
 
 
 // 825F3C50  AllocLoadBuffer_raw_byte  (database/db_primtypes_load_buf.h:2449)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocLoadBuffer_raw_byte(void)
+void AllocLoadBuffer_raw_byte(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F0098  SaveBuffer_float16Stream  (database/db_primtypes_save_buf.h:2455)
 
-void SaveBuffer_float16Stream(bool param_1,int param_2)
+void SaveBuffer_float16Stream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x99a,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x99a,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,buffloat16,4,&bufoutfloat16);
-      buffloat16 = (float *)AssetBuf_GetSourcePos();
-      bufstreamfloat16 = (float *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f550,4,0xffffffff8404f24c);
+      DAT_8404f550 = AssetBuf_GetSourcePos();
+      DAT_8404f460 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -5873,56 +5339,52 @@ void SaveBuffer_float16Stream(bool param_1,int param_2)
 
 // 825F3C58  LoadBuffer_raw_byteArray  (database/db_primtypes_load_buf.h:2458)
 
-void LoadBuffer_raw_byteArray(bool param_1,int param_2)
+void LoadBuffer_raw_byteArray(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_byte,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f39c,param_2);
   return;
 }
 
 
 // 825F0128  SaveBuffer_raw_float  (database/db_primtypes_save_buf.h:2470)
 
-void SaveBuffer_raw_float(bool param_1)
+void SaveBuffer_raw_float(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_float,4,&bufoutraw_float);
+  SaveBuffer_Stream(param_1,DAT_8404f2a0,4,0xffffffff8404f478);
   return;
 }
 
 
 // 825F0140  AllocSaveBuffer_raw_float  (database/db_primtypes_save_buf.h:2476)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float * AllocSaveBuffer_raw_float(void)
+void AllocSaveBuffer_raw_float(void)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)AssetBuf_AllocStreamPos(3);
-  return pfVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3C68  LoadBuffer_raw_byteStream  (database/db_primtypes_load_buf.h:2480)
 
-void LoadBuffer_raw_byteStream(bool param_1,int param_2)
+void LoadBuffer_raw_byteStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x9b3,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x9b3,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f39c;
     do {
-      LoadBuffer_Stream(true,bufraw_byte,1);
-      bufraw_byte = AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f39c = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -5930,69 +5392,62 @@ void LoadBuffer_raw_byteStream(bool param_1,int param_2)
 
 // 825F0148  SaveBuffer_raw_floatArray  (database/db_primtypes_save_buf.h:2485)
 
-void SaveBuffer_raw_floatArray(bool param_1,int param_2)
+void SaveBuffer_raw_floatArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_float,param_2 << 2,&bufoutraw_float);
+  SaveBuffer_Stream(param_1,DAT_8404f2a0,(param_2 & 0x3fffffff) << 2,0xffffffff8404f478);
   return;
 }
 
 
 // 825F3CF8  LoadBuffer_raw_byte16  (database/db_primtypes_load_buf.h:2494)
 
-void LoadBuffer_raw_byte16(bool param_1)
+void LoadBuffer_raw_byte16(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_byte16,1);
+  LoadBuffer_Stream(param_1,DAT_8404f30c,1);
   return;
 }
 
 
 // 825F3D08  AllocLoadBuffer_raw_byte16  (database/db_primtypes_load_buf.h:2500)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocLoadBuffer_raw_byte16(void)
+void AllocLoadBuffer_raw_byte16(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0xf);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0xf);
+  return;
 }
 
 
 // 825F3D10  LoadBuffer_raw_byte16Array  (database/db_primtypes_load_buf.h:2509)
 
-void LoadBuffer_raw_byte16Array(bool param_1,int param_2)
+void LoadBuffer_raw_byte16Array(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_byte16,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f30c,param_2);
   return;
 }
 
 
 // 825F0160  SaveBuffer_raw_floatStream  (database/db_primtypes_save_buf.h:2515)
 
-void SaveBuffer_raw_floatStream(bool param_1,int param_2)
+void SaveBuffer_raw_floatStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x9d6,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x9d6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufraw_float,4,&bufoutraw_float);
-      bufraw_float = (float *)AssetBuf_GetSourcePos();
-      bufstreamraw_float = (float *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f2a0,4,0xffffffff8404f478);
+      DAT_8404f2a0 = AssetBuf_GetSourcePos();
+      DAT_8404f324 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -6001,32 +5456,32 @@ void SaveBuffer_raw_floatStream(bool param_1,int param_2)
 
 // 825F01F0  SaveBuffer_raw_float16  (database/db_primtypes_save_buf.h:2530)
 
-void SaveBuffer_raw_float16(bool param_1)
+void SaveBuffer_raw_float16(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_float16,4,&bufoutraw_float16);
+  SaveBuffer_Stream(param_1,DAT_8404f3f0,4,0xffffffff8404f398);
   return;
 }
 
 
 // 825F3D20  LoadBuffer_raw_byte16Stream  (database/db_primtypes_load_buf.h:2531)
 
-void LoadBuffer_raw_byte16Stream(bool param_1,int param_2)
+void LoadBuffer_raw_byte16Stream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0x9e6,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0x9e6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f30c;
     do {
-      LoadBuffer_Stream(true,bufraw_byte16,1);
-      bufraw_byte16 = AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f30c = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -6034,83 +5489,72 @@ void LoadBuffer_raw_byte16Stream(bool param_1,int param_2)
 
 // 825F0208  AllocSaveBuffer_raw_float16  (database/db_primtypes_save_buf.h:2536)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float * AllocSaveBuffer_raw_float16(void)
+void AllocSaveBuffer_raw_float16(void)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)AssetBuf_AllocStreamPos(0xf);
-  return pfVar1;
+  AssetBuf_AllocStreamPos(0xf);
+  return;
 }
 
 
 // 825F0210  SaveBuffer_raw_float16Array  (database/db_primtypes_save_buf.h:2545)
 
-void SaveBuffer_raw_float16Array(bool param_1,int param_2)
+void SaveBuffer_raw_float16Array(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_float16,param_2 << 2,&bufoutraw_float16);
+  SaveBuffer_Stream(param_1,DAT_8404f3f0,(param_2 & 0x3fffffff) << 2,0xffffffff8404f398);
   return;
 }
 
 
 // 825F3DB0  LoadBuffer_raw_byte4096  (database/db_primtypes_load_buf.h:2545)
 
-void LoadBuffer_raw_byte4096(bool param_1)
+void LoadBuffer_raw_byte4096(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_byte4096,1);
+  LoadBuffer_Stream(param_1,DAT_8404f274,1);
   return;
 }
 
 
 // 825F3DC0  AllocLoadBuffer_raw_byte4096  (database/db_primtypes_load_buf.h:2551)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocLoadBuffer_raw_byte4096(void)
+void AllocLoadBuffer_raw_byte4096(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0xfff);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0xfff);
+  return;
 }
 
 
 // 825F3DC8  LoadBuffer_raw_byte4096Array  (database/db_primtypes_load_buf.h:2560)
 
-void LoadBuffer_raw_byte4096Array(bool param_1,int param_2)
+void LoadBuffer_raw_byte4096Array(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_byte4096,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f274,param_2);
   return;
 }
 
 
 // 825F0228  SaveBuffer_raw_float16Stream  (database/db_primtypes_save_buf.h:2575)
 
-void SaveBuffer_raw_float16Stream(bool param_1,int param_2)
+void SaveBuffer_raw_float16Stream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xa12,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xa12,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufraw_float16,4,&bufoutraw_float16);
-      bufraw_float16 = (float *)AssetBuf_GetSourcePos();
-      bufstreamraw_float16 = (float *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f3f0,4,0xffffffff8404f398);
+      DAT_8404f3f0 = AssetBuf_GetSourcePos();
+      DAT_8404f4f0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -6119,22 +5563,22 @@ void SaveBuffer_raw_float16Stream(bool param_1,int param_2)
 
 // 825F3DD8  LoadBuffer_raw_byte4096Stream  (database/db_primtypes_load_buf.h:2582)
 
-void LoadBuffer_raw_byte4096Stream(bool param_1,int param_2)
+void LoadBuffer_raw_byte4096Stream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xa19,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xa19,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f274;
     do {
-      LoadBuffer_Stream(true,bufraw_byte4096,1);
-      bufraw_byte4096 = AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f274 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -6142,93 +5586,83 @@ void LoadBuffer_raw_byte4096Stream(bool param_1,int param_2)
 
 // 825F02B8  SaveBuffer_raw_vec3_t  (database/db_primtypes_save_buf.h:2590)
 
-void SaveBuffer_raw_vec3_t(bool param_1)
+void SaveBuffer_raw_vec3_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_vec3_t,0xc,&bufoutraw_vec3_t);
+  SaveBuffer_Stream(param_1,DAT_8404f4c8,0xc,0xffffffff8404f41c);
   return;
 }
 
 
 // 825F02D0  AllocSaveBuffer_raw_vec3_t  (database/db_primtypes_save_buf.h:2596)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float (*) [3] AllocSaveBuffer_raw_vec3_t(void)
+void AllocSaveBuffer_raw_vec3_t(void)
 
 {
-  float (*pafVar1) [3];
-  
-  pafVar1 = (float (*) [3])AssetBuf_AllocStreamPos(3);
-  return pafVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3E68  LoadBuffer_vec_t  (database/db_primtypes_load_buf.h:2596)
 
-void LoadBuffer_vec_t(bool param_1)
+void LoadBuffer_vec_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufvec_t,4);
+  LoadBuffer_Stream(param_1,DAT_8404f338,4);
   return;
 }
 
 
 // 825F02D8  SaveBuffer_raw_vec3_tArray  (database/db_primtypes_save_buf.h:2605)
 
-void SaveBuffer_raw_vec3_tArray(bool param_1,int param_2)
+void SaveBuffer_raw_vec3_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_vec3_t,param_2 * 0xc,&bufoutraw_vec3_t);
+  SaveBuffer_Stream(param_1,DAT_8404f4c8,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2,
+                    0xffffffff8404f41c);
   return;
 }
 
 
 // 825F3E78  AllocLoadBuffer_vec_t  (database/db_primtypes_load_buf.h:2607)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float * AllocLoadBuffer_vec_t(void)
+void AllocLoadBuffer_vec_t(void)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)AssetBuf_AllocStreamPos(3);
-  return pfVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3E80  LoadBuffer_vec_tArray  (database/db_primtypes_load_buf.h:2616)
 
-void LoadBuffer_vec_tArray(bool param_1,int param_2)
+void LoadBuffer_vec_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufvec_t,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f338,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825F02F8  SaveBuffer_raw_vec3_tStream  (database/db_primtypes_save_buf.h:2635)
 
-void SaveBuffer_raw_vec3_tStream(bool param_1,int param_2)
+void SaveBuffer_raw_vec3_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xa4e,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xa4e,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufraw_vec3_t,0xc,&bufoutraw_vec3_t);
-      bufraw_vec3_t = (float (*) [3])AssetBuf_GetSourcePos();
-      bufstreamraw_vec3_t = (float (*) [3])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f4c8,0xc,0xffffffff8404f41c);
+      DAT_8404f4c8 = AssetBuf_GetSourcePos();
+      DAT_8404f428 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -6237,22 +5671,22 @@ void SaveBuffer_raw_vec3_tStream(bool param_1,int param_2)
 
 // 825F3E90  LoadBuffer_vec_tStream  (database/db_primtypes_load_buf.h:2638)
 
-void LoadBuffer_vec_tStream(bool param_1,int param_2)
+void LoadBuffer_vec_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xa51,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xa51,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f338;
     do {
-      LoadBuffer_Stream(true,bufvec_t,4);
-      bufvec_t = (float *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f338 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -6260,90 +5694,82 @@ void LoadBuffer_vec_tStream(bool param_1,int param_2)
 
 // 825F0388  SaveBuffer_raw_ushort  (database/db_primtypes_save_buf.h:2650)
 
-void SaveBuffer_raw_ushort(bool param_1)
+void SaveBuffer_raw_ushort(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_ushort,2,&bufoutraw_ushort);
+  SaveBuffer_Stream(param_1,DAT_8404f43c,2,0xffffffff8404f3b8);
   return;
 }
 
 
 // 825F3F20  LoadBuffer_vec2_t  (database/db_primtypes_load_buf.h:2652)
 
-void LoadBuffer_vec2_t(bool param_1)
+void LoadBuffer_vec2_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufvec2_t,8);
+  LoadBuffer_Stream(param_1,DAT_8404f3b0,8);
   return;
 }
 
 
 // 825F03A0  AllocSaveBuffer_raw_ushort  (database/db_primtypes_save_buf.h:2656)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ushort * AllocSaveBuffer_raw_ushort(void)
+void AllocSaveBuffer_raw_ushort(void)
 
 {
-  ushort *puVar1;
-  
-  puVar1 = (ushort *)AssetBuf_AllocStreamPos(1);
-  return puVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F3F30  AllocLoadBuffer_vec2_t  (database/db_primtypes_load_buf.h:2663)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float (*) [2] AllocLoadBuffer_vec2_t(void)
+void AllocLoadBuffer_vec2_t(void)
 
 {
-  float (*pafVar1) [2];
-  
-  pafVar1 = (float (*) [2])AssetBuf_AllocStreamPos(3);
-  return pafVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F03A8  SaveBuffer_raw_ushortArray  (database/db_primtypes_save_buf.h:2665)
 
-void SaveBuffer_raw_ushortArray(bool param_1,int param_2)
+void SaveBuffer_raw_ushortArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_ushort,param_2 << 1,&bufoutraw_ushort);
+  SaveBuffer_Stream(param_1,DAT_8404f43c,(param_2 & 0x7fffffff) << 1,0xffffffff8404f3b8);
   return;
 }
 
 
 // 825F3F38  LoadBuffer_vec2_tArray  (database/db_primtypes_load_buf.h:2672)
 
-void LoadBuffer_vec2_tArray(bool param_1,int param_2)
+void LoadBuffer_vec2_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufvec2_t,param_2 << 3);
+  LoadBuffer_Stream(param_1,DAT_8404f3b0,(param_2 & 0x1fffffff) << 3);
   return;
 }
 
 
 // 825F3F48  LoadBuffer_vec2_tStream  (database/db_primtypes_load_buf.h:2694)
 
-void LoadBuffer_vec2_tStream(bool param_1,int param_2)
+void LoadBuffer_vec2_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xa89,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xa89,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f3b0;
     do {
-      LoadBuffer_Stream(true,bufvec2_t,8);
-      bufvec2_t = (float (*) [2])AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,8);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f3b0 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -6351,25 +5777,22 @@ void LoadBuffer_vec2_tStream(bool param_1,int param_2)
 
 // 825F03C0  SaveBuffer_raw_ushortStream  (database/db_primtypes_save_buf.h:2695)
 
-void SaveBuffer_raw_ushortStream(bool param_1,int param_2)
+void SaveBuffer_raw_ushortStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xa8a,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xa8a,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufraw_ushort,2,&bufoutraw_ushort);
-      bufraw_ushort = (ushort *)AssetBuf_GetSourcePos();
-      bufstreamraw_ushort = (ushort *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f43c,2,0xffffffff8404f3b8);
+      DAT_8404f43c = AssetBuf_GetSourcePos();
+      DAT_8404f26c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -6378,90 +5801,82 @@ void SaveBuffer_raw_ushortStream(bool param_1,int param_2)
 
 // 825F3FD8  LoadBuffer_vec3_t  (database/db_primtypes_load_buf.h:2708)
 
-void LoadBuffer_vec3_t(bool param_1)
+void LoadBuffer_vec3_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufvec3_t,0xc);
+  LoadBuffer_Stream(param_1,DAT_8404f348,0xc);
   return;
 }
 
 
 // 825F0450  SaveBuffer_raw_uint  (database/db_primtypes_save_buf.h:2710)
 
-void SaveBuffer_raw_uint(bool param_1)
+void SaveBuffer_raw_uint(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_uint,4,&bufoutraw_uint);
+  SaveBuffer_Stream(param_1,DAT_8404f278,4,0xffffffff8404f548);
   return;
 }
 
 
 // 825F0468  AllocSaveBuffer_raw_uint  (database/db_primtypes_save_buf.h:2716)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint * AllocSaveBuffer_raw_uint(void)
+void AllocSaveBuffer_raw_uint(void)
 
 {
-  uint *puVar1;
-  
-  puVar1 = (uint *)AssetBuf_AllocStreamPos(3);
-  return puVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F3FE8  AllocLoadBuffer_vec3_t  (database/db_primtypes_load_buf.h:2719)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float (*) [3] AllocLoadBuffer_vec3_t(void)
+void AllocLoadBuffer_vec3_t(void)
 
 {
-  float (*pafVar1) [3];
-  
-  pafVar1 = (float (*) [3])AssetBuf_AllocStreamPos(3);
-  return pafVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F0470  SaveBuffer_raw_uintArray  (database/db_primtypes_save_buf.h:2725)
 
-void SaveBuffer_raw_uintArray(bool param_1,int param_2)
+void SaveBuffer_raw_uintArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_uint,param_2 << 2,&bufoutraw_uint);
+  SaveBuffer_Stream(param_1,DAT_8404f278,(param_2 & 0x3fffffff) << 2,0xffffffff8404f548);
   return;
 }
 
 
 // 825F3FF0  LoadBuffer_vec3_tArray  (database/db_primtypes_load_buf.h:2728)
 
-void LoadBuffer_vec3_tArray(bool param_1,int param_2)
+void LoadBuffer_vec3_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufvec3_t,param_2 * 0xc);
+  LoadBuffer_Stream(param_1,DAT_8404f348,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825F4008  LoadBuffer_vec3_tStream  (database/db_primtypes_load_buf.h:2750)
 
-void LoadBuffer_vec3_tStream(bool param_1,int param_2)
+void LoadBuffer_vec3_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xac1,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xac1,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f348;
     do {
-      LoadBuffer_Stream(true,bufvec3_t,0xc);
-      bufvec3_t = (float (*) [3])AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,0xc);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f348 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -6469,25 +5884,22 @@ void LoadBuffer_vec3_tStream(bool param_1,int param_2)
 
 // 825F0488  SaveBuffer_raw_uintStream  (database/db_primtypes_save_buf.h:2755)
 
-void SaveBuffer_raw_uintStream(bool param_1,int param_2)
+void SaveBuffer_raw_uintStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xac6,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xac6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufraw_uint,4,&bufoutraw_uint);
-      bufraw_uint = (uint *)AssetBuf_GetSourcePos();
-      bufstreamraw_uint = (uint *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f278,4,0xffffffff8404f548);
+      DAT_8404f278 = AssetBuf_GetSourcePos();
+      DAT_8404f388 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -6496,90 +5908,82 @@ void SaveBuffer_raw_uintStream(bool param_1,int param_2)
 
 // 825F4098  LoadBuffer_vec4_t  (database/db_primtypes_load_buf.h:2764)
 
-void LoadBuffer_vec4_t(bool param_1)
+void LoadBuffer_vec4_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufvec4_t,0x10);
+  LoadBuffer_Stream(param_1,DAT_8404f330,0x10);
   return;
 }
 
 
 // 825F0518  SaveBuffer_raw_uint128  (database/db_primtypes_save_buf.h:2770)
 
-void SaveBuffer_raw_uint128(bool param_1)
+void SaveBuffer_raw_uint128(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_uint128,4,&bufoutraw_uint128);
+  SaveBuffer_Stream(param_1,DAT_8404f318,4,0xffffffff8404f2b0);
   return;
 }
 
 
 // 825F40A8  AllocLoadBuffer_vec4_t  (database/db_primtypes_load_buf.h:2775)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float (*) [4] AllocLoadBuffer_vec4_t(void)
+void AllocLoadBuffer_vec4_t(void)
 
 {
-  float (*pafVar1) [4];
-  
-  pafVar1 = (float (*) [4])AssetBuf_AllocStreamPos(3);
-  return pafVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F0530  AllocSaveBuffer_raw_uint128  (database/db_primtypes_save_buf.h:2776)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint * AllocSaveBuffer_raw_uint128(void)
+void AllocSaveBuffer_raw_uint128(void)
 
 {
-  uint *puVar1;
-  
-  puVar1 = (uint *)AssetBuf_AllocStreamPos(0x7f);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0x7f);
+  return;
 }
 
 
 // 825F40B0  LoadBuffer_vec4_tArray  (database/db_primtypes_load_buf.h:2784)
 
-void LoadBuffer_vec4_tArray(bool param_1,int param_2)
+void LoadBuffer_vec4_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufvec4_t,param_2 << 4);
+  LoadBuffer_Stream(param_1,DAT_8404f330,(param_2 & 0xfffffff) << 4);
   return;
 }
 
 
 // 825F0538  SaveBuffer_raw_uint128Array  (database/db_primtypes_save_buf.h:2785)
 
-void SaveBuffer_raw_uint128Array(bool param_1,int param_2)
+void SaveBuffer_raw_uint128Array(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_uint128,param_2 << 2,&bufoutraw_uint128);
+  SaveBuffer_Stream(param_1,DAT_8404f318,(param_2 & 0x3fffffff) << 2,0xffffffff8404f2b0);
   return;
 }
 
 
 // 825F40C0  LoadBuffer_vec4_tStream  (database/db_primtypes_load_buf.h:2806)
 
-void LoadBuffer_vec4_tStream(bool param_1,int param_2)
+void LoadBuffer_vec4_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xaf9,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xaf9,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f330;
     do {
-      LoadBuffer_Stream(true,bufvec4_t,0x10);
-      bufvec4_t = (float (*) [4])AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,0x10);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f330 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -6587,25 +5991,22 @@ void LoadBuffer_vec4_tStream(bool param_1,int param_2)
 
 // 825F0550  SaveBuffer_raw_uint128Stream  (database/db_primtypes_save_buf.h:2815)
 
-void SaveBuffer_raw_uint128Stream(bool param_1,int param_2)
+void SaveBuffer_raw_uint128Stream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xb02,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xb02,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufraw_uint128,4,&bufoutraw_uint128);
-      bufraw_uint128 = (uint *)AssetBuf_GetSourcePos();
-      bufstreamraw_uint128 = (uint *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f318,4,0xffffffff8404f2b0);
+      DAT_8404f318 = AssetBuf_GetSourcePos();
+      DAT_8404f50c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -6614,90 +6015,82 @@ void SaveBuffer_raw_uint128Stream(bool param_1,int param_2)
 
 // 825F4150  LoadBuffer_Bounds  (database/db_primtypes_load_buf.h:2820)
 
-void LoadBuffer_Bounds(bool param_1)
+void LoadBuffer_Bounds(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufBounds,0x18);
+  LoadBuffer_Stream(param_1,DAT_8404f424,0x18);
   return;
 }
 
 
 // 825F05E0  SaveBuffer_raw_byte  (database/db_primtypes_save_buf.h:2830)
 
-void SaveBuffer_raw_byte(bool param_1)
+void SaveBuffer_raw_byte(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_byte,1,&bufoutraw_byte);
+  SaveBuffer_Stream(param_1,DAT_8404f39c,1,0xffffffff8404f304);
   return;
 }
 
 
 // 825F05F8  AllocSaveBuffer_raw_byte  (database/db_primtypes_save_buf.h:2836)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocSaveBuffer_raw_byte(void)
+void AllocSaveBuffer_raw_byte(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F4160  AllocLoadBuffer_Bounds  (database/db_primtypes_load_buf.h:2836)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-Bounds * AllocLoadBuffer_Bounds(void)
+void AllocLoadBuffer_Bounds(void)
 
 {
-  Bounds *pBVar1;
-  
-  pBVar1 = (Bounds *)AssetBuf_AllocStreamPos(3);
-  return pBVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F0600  SaveBuffer_raw_byteArray  (database/db_primtypes_save_buf.h:2845)
 
-void SaveBuffer_raw_byteArray(bool param_1,int param_2)
+void SaveBuffer_raw_byteArray(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_byte,param_2,&bufoutraw_byte);
+  SaveBuffer_Stream(param_1,DAT_8404f39c,param_2,0xffffffff8404f304);
   return;
 }
 
 
 // 825F4168  LoadBuffer_BoundsArray  (database/db_primtypes_load_buf.h:2845)
 
-void LoadBuffer_BoundsArray(bool param_1,int param_2)
+void LoadBuffer_BoundsArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufBounds,param_2 * 0x18);
+  LoadBuffer_Stream(param_1,DAT_8404f424,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
   return;
 }
 
 
 // 825F4180  LoadBuffer_BoundsStream  (database/db_primtypes_load_buf.h:2867)
 
-void LoadBuffer_BoundsStream(bool param_1,int param_2)
+void LoadBuffer_BoundsStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xb36,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xb36,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f424;
     do {
-      LoadBuffer_Stream(true,bufBounds,0x18);
-      bufBounds = (Bounds *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,0x18);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f424 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -6705,25 +6098,22 @@ void LoadBuffer_BoundsStream(bool param_1,int param_2)
 
 // 825F0618  SaveBuffer_raw_byteStream  (database/db_primtypes_save_buf.h:2875)
 
-void SaveBuffer_raw_byteStream(bool param_1,int param_2)
+void SaveBuffer_raw_byteStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xb3e,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xb3e,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufraw_byte,1,&bufoutraw_byte);
-      bufraw_byte = AssetBuf_GetSourcePos();
-      bufstreamraw_byte = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f39c,1,0xffffffff8404f304);
+      DAT_8404f39c = AssetBuf_GetSourcePos();
+      DAT_8404f4f8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -6732,90 +6122,82 @@ void SaveBuffer_raw_byteStream(bool param_1,int param_2)
 
 // 825F4210  LoadBuffer_raw_vec4_t  (database/db_primtypes_load_buf.h:2881)
 
-void LoadBuffer_raw_vec4_t(bool param_1)
+void LoadBuffer_raw_vec4_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_vec4_t,0x10);
+  LoadBuffer_Stream(param_1,DAT_8404f418,0x10);
   return;
 }
 
 
 // 825F06A8  SaveBuffer_raw_byte16  (database/db_primtypes_save_buf.h:2890)
 
-void SaveBuffer_raw_byte16(bool param_1)
+void SaveBuffer_raw_byte16(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_byte16,1,&bufoutraw_byte16);
+  SaveBuffer_Stream(param_1,DAT_8404f30c,1,0xffffffff8404f328);
   return;
 }
 
 
 // 825F4220  AllocLoadBuffer_raw_vec4_t  (database/db_primtypes_load_buf.h:2892)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float (*) [4] AllocLoadBuffer_raw_vec4_t(void)
+void AllocLoadBuffer_raw_vec4_t(void)
 
 {
-  float (*pafVar1) [4];
-  
-  pafVar1 = (float (*) [4])AssetBuf_AllocStreamPos(3);
-  return pafVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F06C0  AllocSaveBuffer_raw_byte16  (database/db_primtypes_save_buf.h:2896)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocSaveBuffer_raw_byte16(void)
+void AllocSaveBuffer_raw_byte16(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0xf);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0xf);
+  return;
 }
 
 
 // 825F4228  LoadBuffer_raw_vec4_tArray  (database/db_primtypes_load_buf.h:2901)
 
-void LoadBuffer_raw_vec4_tArray(bool param_1,int param_2)
+void LoadBuffer_raw_vec4_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufraw_vec4_t,param_2 << 4);
+  LoadBuffer_Stream(param_1,DAT_8404f418,(param_2 & 0xfffffff) << 4);
   return;
 }
 
 
 // 825F06C8  SaveBuffer_raw_byte16Array  (database/db_primtypes_save_buf.h:2905)
 
-void SaveBuffer_raw_byte16Array(bool param_1,int param_2)
+void SaveBuffer_raw_byte16Array(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_byte16,param_2,&bufoutraw_byte16);
+  SaveBuffer_Stream(param_1,DAT_8404f30c,param_2,0xffffffff8404f328);
   return;
 }
 
 
 // 825F4238  LoadBuffer_raw_vec4_tStream  (database/db_primtypes_load_buf.h:2923)
 
-void LoadBuffer_raw_vec4_tStream(bool param_1,int param_2)
+void LoadBuffer_raw_vec4_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xb6e,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xb6e,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f418;
     do {
-      LoadBuffer_Stream(true,bufraw_vec4_t,0x10);
-      bufraw_vec4_t = (float (*) [4])AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,0x10);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f418 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -6823,25 +6205,22 @@ void LoadBuffer_raw_vec4_tStream(bool param_1,int param_2)
 
 // 825F06E0  SaveBuffer_raw_byte16Stream  (database/db_primtypes_save_buf.h:2935)
 
-void SaveBuffer_raw_byte16Stream(bool param_1,int param_2)
+void SaveBuffer_raw_byte16Stream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xb7a,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xb7a,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufraw_byte16,1,&bufoutraw_byte16);
-      bufraw_byte16 = AssetBuf_GetSourcePos();
-      bufstreamraw_byte16 = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f30c,1,0xffffffff8404f328);
+      DAT_8404f30c = AssetBuf_GetSourcePos();
+      DAT_8404f500 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -6850,90 +6229,82 @@ void SaveBuffer_raw_byte16Stream(bool param_1,int param_2)
 
 // 825F42C8  LoadBuffer_shared_vec3_t  (database/db_primtypes_load_buf.h:2937)
 
-void LoadBuffer_shared_vec3_t(bool param_1)
+void LoadBuffer_shared_vec3_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufshared_vec3_t,0xc);
+  LoadBuffer_Stream(param_1,DAT_8404f45c,0xc);
   return;
 }
 
 
 // 825F42D8  AllocLoadBuffer_shared_vec3_t  (database/db_primtypes_load_buf.h:2948)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float (*) [3] AllocLoadBuffer_shared_vec3_t(void)
+void AllocLoadBuffer_shared_vec3_t(void)
 
 {
-  float (*pafVar1) [3];
-  
-  pafVar1 = (float (*) [3])AssetBuf_AllocStreamPos(3);
-  return pafVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F0770  SaveBuffer_raw_byte4096  (database/db_primtypes_save_buf.h:2950)
 
-void SaveBuffer_raw_byte4096(bool param_1)
+void SaveBuffer_raw_byte4096(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_byte4096,1,&bufoutraw_byte4096);
+  SaveBuffer_Stream(param_1,DAT_8404f274,1,0xffffffff8404f4bc);
   return;
 }
 
 
 // 825F0788  AllocSaveBuffer_raw_byte4096  (database/db_primtypes_save_buf.h:2956)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocSaveBuffer_raw_byte4096(void)
+void AllocSaveBuffer_raw_byte4096(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0xfff);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0xfff);
+  return;
 }
 
 
 // 825F42E0  LoadBuffer_shared_vec3_tArray  (database/db_primtypes_load_buf.h:2957)
 
-void LoadBuffer_shared_vec3_tArray(bool param_1,int param_2)
+void LoadBuffer_shared_vec3_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufshared_vec3_t,param_2 * 0xc);
+  LoadBuffer_Stream(param_1,DAT_8404f45c,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825F0790  SaveBuffer_raw_byte4096Array  (database/db_primtypes_save_buf.h:2965)
 
-void SaveBuffer_raw_byte4096Array(bool param_1,int param_2)
+void SaveBuffer_raw_byte4096Array(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_byte4096,param_2,&bufoutraw_byte4096);
+  SaveBuffer_Stream(param_1,DAT_8404f274,param_2,0xffffffff8404f4bc);
   return;
 }
 
 
 // 825F42F8  LoadBuffer_shared_vec3_tStream  (database/db_primtypes_load_buf.h:2979)
 
-void LoadBuffer_shared_vec3_tStream(bool param_1,int param_2)
+void LoadBuffer_shared_vec3_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xba6,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xba6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f45c;
     do {
-      LoadBuffer_Stream(true,bufshared_vec3_t,0xc);
-      bufshared_vec3_t = (float (*) [3])AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,0xc);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f45c = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -6941,35 +6312,32 @@ void LoadBuffer_shared_vec3_tStream(bool param_1,int param_2)
 
 // 825F4388  LoadBuffer_short  (database/db_primtypes_load_buf.h:2993)
 
-void LoadBuffer_short(bool param_1)
+void LoadBuffer_short(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufshort,2);
+  LoadBuffer_Stream(param_1,DAT_8404f448,2);
   return;
 }
 
 
 // 825F07A8  SaveBuffer_raw_byte4096Stream  (database/db_primtypes_save_buf.h:2995)
 
-void SaveBuffer_raw_byte4096Stream(bool param_1,int param_2)
+void SaveBuffer_raw_byte4096Stream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xbb6,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xbb6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufraw_byte4096,1,&bufoutraw_byte4096);
-      bufraw_byte4096 = AssetBuf_GetSourcePos();
-      bufstreamraw_byte4096 = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f274,1,0xffffffff8404f4bc);
+      DAT_8404f274 = AssetBuf_GetSourcePos();
+      DAT_8404f51c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -6978,70 +6346,62 @@ void SaveBuffer_raw_byte4096Stream(bool param_1,int param_2)
 
 // 825F4398  AllocLoadBuffer_short  (database/db_primtypes_load_buf.h:2999)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-short * AllocLoadBuffer_short(void)
+void AllocLoadBuffer_short(void)
 
 {
-  short *psVar1;
-  
-  psVar1 = (short *)AssetBuf_AllocStreamPos(1);
-  return psVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F43A0  LoadBuffer_shortArray  (database/db_primtypes_load_buf.h:3008)
 
-void LoadBuffer_shortArray(bool param_1,int param_2)
+void LoadBuffer_shortArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufshort,param_2 << 1);
+  LoadBuffer_Stream(param_1,DAT_8404f448,(param_2 & 0x7fffffff) << 1);
   return;
 }
 
 
 // 825F0838  SaveBuffer_vec_t  (database/db_primtypes_save_buf.h:3010)
 
-void SaveBuffer_vec_t(bool param_1)
+void SaveBuffer_vec_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufvec_t,4,&bufoutvec_t);
+  SaveBuffer_Stream(param_1,DAT_8404f338,4,0xffffffff8404f528);
   return;
 }
 
 
 // 825F0850  AllocSaveBuffer_vec_t  (database/db_primtypes_save_buf.h:3023)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float * AllocSaveBuffer_vec_t(void)
+void AllocSaveBuffer_vec_t(void)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)AssetBuf_AllocStreamPos(3);
-  return pfVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F43B0  LoadBuffer_shortStream  (database/db_primtypes_load_buf.h:3030)
 
-void LoadBuffer_shortStream(bool param_1,int param_2)
+void LoadBuffer_shortStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xbd9,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xbd9,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f448;
     do {
-      LoadBuffer_Stream(true,bufshort,2);
-      bufshort = (short *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,2);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f448 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -7049,69 +6409,62 @@ void LoadBuffer_shortStream(bool param_1,int param_2)
 
 // 825F0858  SaveBuffer_vec_tArray  (database/db_primtypes_save_buf.h:3032)
 
-void SaveBuffer_vec_tArray(bool param_1,int param_2)
+void SaveBuffer_vec_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufvec_t,param_2 << 2,&bufoutvec_t);
+  SaveBuffer_Stream(param_1,DAT_8404f338,(param_2 & 0x3fffffff) << 2,0xffffffff8404f528);
   return;
 }
 
 
 // 825F4440  LoadBuffer_int16_t  (database/db_primtypes_load_buf.h:3044)
 
-void LoadBuffer_int16_t(bool param_1)
+void LoadBuffer_int16_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufint16_t,2);
+  LoadBuffer_Stream(param_1,DAT_8404f354,2);
   return;
 }
 
 
 // 825F4450  AllocLoadBuffer_int16_t  (database/db_primtypes_load_buf.h:3050)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-short * AllocLoadBuffer_int16_t(void)
+void AllocLoadBuffer_int16_t(void)
 
 {
-  short *psVar1;
-  
-  psVar1 = (short *)AssetBuf_AllocStreamPos(1);
-  return psVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F4458  LoadBuffer_int16_tArray  (database/db_primtypes_load_buf.h:3059)
 
-void LoadBuffer_int16_tArray(bool param_1,int param_2)
+void LoadBuffer_int16_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufint16_t,param_2 << 1);
+  LoadBuffer_Stream(param_1,DAT_8404f354,(param_2 & 0x7fffffff) << 1);
   return;
 }
 
 
 // 825F0870  SaveBuffer_vec_tStream  (database/db_primtypes_save_buf.h:3062)
 
-void SaveBuffer_vec_tStream(bool param_1,int param_2)
+void SaveBuffer_vec_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xbf9,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xbf9,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufvec_t,4,&bufoutvec_t);
-      bufvec_t = (float *)AssetBuf_GetSourcePos();
-      bufstreamvec_t = (float *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f338,4,0xffffffff8404f528);
+      DAT_8404f338 = AssetBuf_GetSourcePos();
+      DAT_8404f3f8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -7120,32 +6473,32 @@ void SaveBuffer_vec_tStream(bool param_1,int param_2)
 
 // 825F0900  SaveBuffer_vec2_t  (database/db_primtypes_save_buf.h:3077)
 
-void SaveBuffer_vec2_t(bool param_1)
+void SaveBuffer_vec2_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufvec2_t,8,&bufoutvec2_t);
+  SaveBuffer_Stream(param_1,DAT_8404f3b0,8,0xffffffff8404f300);
   return;
 }
 
 
 // 825F4468  LoadBuffer_int16_tStream  (database/db_primtypes_load_buf.h:3081)
 
-void LoadBuffer_int16_tStream(bool param_1,int param_2)
+void LoadBuffer_int16_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xc0c,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xc0c,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f354;
     do {
-      LoadBuffer_Stream(true,bufint16_t,2);
-      bufint16_t = (short *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,2);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f354 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -7153,83 +6506,72 @@ void LoadBuffer_int16_tStream(bool param_1,int param_2)
 
 // 825F0918  AllocSaveBuffer_vec2_t  (database/db_primtypes_save_buf.h:3090)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float (*) [2] AllocSaveBuffer_vec2_t(void)
+void AllocSaveBuffer_vec2_t(void)
 
 {
-  float (*pafVar1) [2];
-  
-  pafVar1 = (float (*) [2])AssetBuf_AllocStreamPos(3);
-  return pafVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F44F8  LoadBuffer_uint16_t  (database/db_primtypes_load_buf.h:3095)
 
-void LoadBuffer_uint16_t(bool param_1)
+void LoadBuffer_uint16_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufuint16_t,2);
+  LoadBuffer_Stream(param_1,DAT_8404f4e4,2);
   return;
 }
 
 
 // 825F0920  SaveBuffer_vec2_tArray  (database/db_primtypes_save_buf.h:3099)
 
-void SaveBuffer_vec2_tArray(bool param_1,int param_2)
+void SaveBuffer_vec2_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufvec2_t,param_2 << 3,&bufoutvec2_t);
+  SaveBuffer_Stream(param_1,DAT_8404f3b0,(param_2 & 0x1fffffff) << 3,0xffffffff8404f300);
   return;
 }
 
 
 // 825F4508  AllocLoadBuffer_uint16_t  (database/db_primtypes_load_buf.h:3101)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ushort * AllocLoadBuffer_uint16_t(void)
+void AllocLoadBuffer_uint16_t(void)
 
 {
-  ushort *puVar1;
-  
-  puVar1 = (ushort *)AssetBuf_AllocStreamPos(1);
-  return puVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F4510  LoadBuffer_uint16_tArray  (database/db_primtypes_load_buf.h:3110)
 
-void LoadBuffer_uint16_tArray(bool param_1,int param_2)
+void LoadBuffer_uint16_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufuint16_t,param_2 << 1);
+  LoadBuffer_Stream(param_1,DAT_8404f4e4,(param_2 & 0x7fffffff) << 1);
   return;
 }
 
 
 // 825F0938  SaveBuffer_vec2_tStream  (database/db_primtypes_save_buf.h:3129)
 
-void SaveBuffer_vec2_tStream(bool param_1,int param_2)
+void SaveBuffer_vec2_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xc3c,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xc3c,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufvec2_t,8,&bufoutvec2_t);
-      bufvec2_t = (float (*) [2])AssetBuf_GetSourcePos();
-      bufstreamvec2_t = (float (*) [2])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f3b0,8,0xffffffff8404f300);
+      DAT_8404f3b0 = AssetBuf_GetSourcePos();
+      DAT_8404f2b8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -7238,22 +6580,22 @@ void SaveBuffer_vec2_tStream(bool param_1,int param_2)
 
 // 825F4520  LoadBuffer_uint16_tStream  (database/db_primtypes_load_buf.h:3132)
 
-void LoadBuffer_uint16_tStream(bool param_1,int param_2)
+void LoadBuffer_uint16_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xc3f,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xc3f,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f4e4;
     do {
-      LoadBuffer_Stream(true,bufuint16_t,2);
-      bufuint16_t = (ushort *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,2);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f4e4 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -7261,90 +6603,83 @@ void LoadBuffer_uint16_tStream(bool param_1,int param_2)
 
 // 825F09C8  SaveBuffer_vec3_t  (database/db_primtypes_save_buf.h:3144)
 
-void SaveBuffer_vec3_t(bool param_1)
+void SaveBuffer_vec3_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufvec3_t,0xc,&bufoutvec3_t);
+  SaveBuffer_Stream(param_1,DAT_8404f348,0xc,0xffffffff8404f4ec);
   return;
 }
 
 
 // 825F45B0  LoadBuffer_ushort  (database/db_primtypes_load_buf.h:3146)
 
-void LoadBuffer_ushort(bool param_1)
+void LoadBuffer_ushort(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufushort,2);
+  LoadBuffer_Stream(param_1,DAT_8404f440,2);
   return;
 }
 
 
 // 825F45C0  AllocLoadBuffer_ushort  (database/db_primtypes_load_buf.h:3152)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ushort * AllocLoadBuffer_ushort(void)
+void AllocLoadBuffer_ushort(void)
 
 {
-  ushort *puVar1;
-  
-  puVar1 = (ushort *)AssetBuf_AllocStreamPos(1);
-  return puVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F09E0  AllocSaveBuffer_vec3_t  (database/db_primtypes_save_buf.h:3157)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float (*) [3] AllocSaveBuffer_vec3_t(void)
+void AllocSaveBuffer_vec3_t(void)
 
 {
-  float (*pafVar1) [3];
-  
-  pafVar1 = (float (*) [3])AssetBuf_AllocStreamPos(3);
-  return pafVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F45C8  LoadBuffer_ushortArray  (database/db_primtypes_load_buf.h:3161)
 
-void LoadBuffer_ushortArray(bool param_1,int param_2)
+void LoadBuffer_ushortArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufushort,param_2 << 1);
+  LoadBuffer_Stream(param_1,DAT_8404f440,(param_2 & 0x7fffffff) << 1);
   return;
 }
 
 
 // 825F09E8  SaveBuffer_vec3_tArray  (database/db_primtypes_save_buf.h:3166)
 
-void SaveBuffer_vec3_tArray(bool param_1,int param_2)
+void SaveBuffer_vec3_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufvec3_t,param_2 * 0xc,&bufoutvec3_t);
+  SaveBuffer_Stream(param_1,DAT_8404f348,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2,
+                    0xffffffff8404f4ec);
   return;
 }
 
 
 // 825F45D8  LoadBuffer_ushortStream  (database/db_primtypes_load_buf.h:3183)
 
-void LoadBuffer_ushortStream(bool param_1,int param_2)
+void LoadBuffer_ushortStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xc72,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xc72,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f440;
     do {
-      LoadBuffer_Stream(true,bufushort,2);
-      bufushort = (ushort *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,2);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f440 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -7352,25 +6687,22 @@ void LoadBuffer_ushortStream(bool param_1,int param_2)
 
 // 825F0A08  SaveBuffer_vec3_tStream  (database/db_primtypes_save_buf.h:3196)
 
-void SaveBuffer_vec3_tStream(bool param_1,int param_2)
+void SaveBuffer_vec3_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xc7f,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xc7f,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufvec3_t,0xc,&bufoutvec3_t);
-      bufvec3_t = (float (*) [3])AssetBuf_GetSourcePos();
-      bufstreamvec3_t = (float (*) [3])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f348,0xc,0xffffffff8404f4ec);
+      DAT_8404f348 = AssetBuf_GetSourcePos();
+      DAT_8404f2bc = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -7379,90 +6711,82 @@ void SaveBuffer_vec3_tStream(bool param_1,int param_2)
 
 // 825F4668  LoadBuffer_XQuat  (database/db_primtypes_load_buf.h:3197)
 
-void LoadBuffer_XQuat(bool param_1)
+void LoadBuffer_XQuat(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufXQuat,8);
+  LoadBuffer_Stream(param_1,DAT_8404f4cc,8);
   return;
 }
 
 
 // 825F4678  AllocLoadBuffer_XQuat  (database/db_primtypes_load_buf.h:3208)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-short (*) [4] AllocLoadBuffer_XQuat(void)
+void AllocLoadBuffer_XQuat(void)
 
 {
-  short (*pasVar1) [4];
-  
-  pasVar1 = (short (*) [4])AssetBuf_AllocStreamPos(3);
-  return pasVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F0A98  SaveBuffer_vec4_t  (database/db_primtypes_save_buf.h:3211)
 
-void SaveBuffer_vec4_t(bool param_1)
+void SaveBuffer_vec4_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufvec4_t,0x10,&bufoutvec4_t);
+  SaveBuffer_Stream(param_1,DAT_8404f330,0x10,0xffffffff8404f378);
   return;
 }
 
 
 // 825F4680  LoadBuffer_XQuatArray  (database/db_primtypes_load_buf.h:3217)
 
-void LoadBuffer_XQuatArray(bool param_1,int param_2)
+void LoadBuffer_XQuatArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufXQuat,param_2 << 3);
+  LoadBuffer_Stream(param_1,DAT_8404f4cc,(param_2 & 0x1fffffff) << 3);
   return;
 }
 
 
 // 825F0AB0  AllocSaveBuffer_vec4_t  (database/db_primtypes_save_buf.h:3224)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float (*) [4] AllocSaveBuffer_vec4_t(void)
+void AllocSaveBuffer_vec4_t(void)
 
 {
-  float (*pafVar1) [4];
-  
-  pafVar1 = (float (*) [4])AssetBuf_AllocStreamPos(3);
-  return pafVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F0AB8  SaveBuffer_vec4_tArray  (database/db_primtypes_save_buf.h:3233)
 
-void SaveBuffer_vec4_tArray(bool param_1,int param_2)
+void SaveBuffer_vec4_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufvec4_t,param_2 << 4,&bufoutvec4_t);
+  SaveBuffer_Stream(param_1,DAT_8404f330,(param_2 & 0xfffffff) << 4,0xffffffff8404f378);
   return;
 }
 
 
 // 825F4690  LoadBuffer_XQuatStream  (database/db_primtypes_load_buf.h:3239)
 
-void LoadBuffer_XQuatStream(bool param_1,int param_2)
+void LoadBuffer_XQuatStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xcaa,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xcaa,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f4cc;
     do {
-      LoadBuffer_Stream(true,bufXQuat,8);
-      bufXQuat = (short (*) [4])AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,8);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f4cc = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -7470,35 +6794,32 @@ void LoadBuffer_XQuatStream(bool param_1,int param_2)
 
 // 825F4720  LoadBuffer_XQuat2  (database/db_primtypes_load_buf.h:3253)
 
-void LoadBuffer_XQuat2(bool param_1)
+void LoadBuffer_XQuat2(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufXQuat2,4);
+  LoadBuffer_Stream(param_1,DAT_8404f470,4);
   return;
 }
 
 
 // 825F0AD0  SaveBuffer_vec4_tStream  (database/db_primtypes_save_buf.h:3263)
 
-void SaveBuffer_vec4_tStream(bool param_1,int param_2)
+void SaveBuffer_vec4_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xcc2,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xcc2,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufvec4_t,0x10,&bufoutvec4_t);
-      bufvec4_t = (float (*) [4])AssetBuf_GetSourcePos();
-      bufstreamvec4_t = (float (*) [4])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f330,0x10,0xffffffff8404f378);
+      DAT_8404f330 = AssetBuf_GetSourcePos();
+      DAT_8404f4e8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -7507,56 +6828,52 @@ void SaveBuffer_vec4_tStream(bool param_1,int param_2)
 
 // 825F4730  AllocLoadBuffer_XQuat2  (database/db_primtypes_load_buf.h:3264)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-short (*) [2] AllocLoadBuffer_XQuat2(void)
+void AllocLoadBuffer_XQuat2(void)
 
 {
-  short (*pasVar1) [2];
-  
-  pasVar1 = (short (*) [2])AssetBuf_AllocStreamPos(3);
-  return pasVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F4738  LoadBuffer_XQuat2Array  (database/db_primtypes_load_buf.h:3273)
 
-void LoadBuffer_XQuat2Array(bool param_1,int param_2)
+void LoadBuffer_XQuat2Array(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufXQuat2,param_2 << 2);
+  LoadBuffer_Stream(param_1,DAT_8404f470,(param_2 & 0x3fffffff) << 2);
   return;
 }
 
 
 // 825F0B60  SaveBuffer_Bounds  (database/db_primtypes_save_buf.h:3278)
 
-void SaveBuffer_Bounds(bool param_1)
+void SaveBuffer_Bounds(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufBounds,0x18,&bufoutBounds);
+  SaveBuffer_Stream(param_1,DAT_8404f424,0x18,0xffffffff8404f4fc);
   return;
 }
 
 
 // 825F4748  LoadBuffer_XQuat2Stream  (database/db_primtypes_load_buf.h:3295)
 
-void LoadBuffer_XQuat2Stream(bool param_1,int param_2)
+void LoadBuffer_XQuat2Stream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xce2,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xce2,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f470;
     do {
-      LoadBuffer_Stream(true,bufXQuat2,4);
-      bufXQuat2 = (short (*) [2])AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,4);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f470 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -7564,83 +6881,73 @@ void LoadBuffer_XQuat2Stream(bool param_1,int param_2)
 
 // 825F0B78  AllocSaveBuffer_Bounds  (database/db_primtypes_save_buf.h:3298)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-Bounds * AllocSaveBuffer_Bounds(void)
+void AllocSaveBuffer_Bounds(void)
 
 {
-  Bounds *pBVar1;
-  
-  pBVar1 = (Bounds *)AssetBuf_AllocStreamPos(3);
-  return pBVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F0B80  SaveBuffer_BoundsArray  (database/db_primtypes_save_buf.h:3307)
 
-void SaveBuffer_BoundsArray(bool param_1,int param_2)
+void SaveBuffer_BoundsArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufBounds,param_2 * 0x18,&bufoutBounds);
+  SaveBuffer_Stream(param_1,DAT_8404f424,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x1fffffff) << 3,
+                    0xffffffff8404f4fc);
   return;
 }
 
 
 // 825F47D8  LoadBuffer_UnsignedShort  (database/db_primtypes_load_buf.h:3309)
 
-void LoadBuffer_UnsignedShort(bool param_1)
+void LoadBuffer_UnsignedShort(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufUnsignedShort,2);
+  LoadBuffer_Stream(param_1,DAT_8404f46c,2);
   return;
 }
 
 
 // 825F47E8  AllocLoadBuffer_UnsignedShort  (database/db_primtypes_load_buf.h:3315)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ushort * AllocLoadBuffer_UnsignedShort(void)
+void AllocLoadBuffer_UnsignedShort(void)
 
 {
-  ushort *puVar1;
-  
-  puVar1 = (ushort *)AssetBuf_AllocStreamPos(1);
-  return puVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F47F0  LoadBuffer_UnsignedShortArray  (database/db_primtypes_load_buf.h:3324)
 
-void LoadBuffer_UnsignedShortArray(bool param_1,int param_2)
+void LoadBuffer_UnsignedShortArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufUnsignedShort,param_2 << 1);
+  LoadBuffer_Stream(param_1,DAT_8404f46c,(param_2 & 0x7fffffff) << 1);
   return;
 }
 
 
 // 825F0BA0  SaveBuffer_BoundsStream  (database/db_primtypes_save_buf.h:3337)
 
-void SaveBuffer_BoundsStream(bool param_1,int param_2)
+void SaveBuffer_BoundsStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xd0c,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xd0c,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufBounds,0x18,&bufoutBounds);
-      bufBounds = (Bounds *)AssetBuf_GetSourcePos();
-      bufstreamBounds = (Bounds *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f424,0x18,0xffffffff8404f4fc);
+      DAT_8404f424 = AssetBuf_GetSourcePos();
+      DAT_8404f488 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -7649,22 +6956,22 @@ void SaveBuffer_BoundsStream(bool param_1,int param_2)
 
 // 825F4800  LoadBuffer_UnsignedShortStream  (database/db_primtypes_load_buf.h:3346)
 
-void LoadBuffer_UnsignedShortStream(bool param_1,int param_2)
+void LoadBuffer_UnsignedShortStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xd15,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xd15,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f46c;
     do {
-      LoadBuffer_Stream(true,bufUnsignedShort,2);
-      bufUnsignedShort = (ushort *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,2);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f46c = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -7672,84 +6979,74 @@ void LoadBuffer_UnsignedShortStream(bool param_1,int param_2)
 
 // 825F0C30  SaveBuffer_raw_vec4_t  (database/db_primtypes_save_buf.h:3352)
 
-void SaveBuffer_raw_vec4_t(bool param_1)
+void SaveBuffer_raw_vec4_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_vec4_t,0x10,&bufoutraw_vec4_t);
+  SaveBuffer_Stream(param_1,DAT_8404f418,0x10,0xffffffff8404f444);
   return;
 }
 
 
 // 825F4890  LoadBuffer_ScriptString  (database/db_primtypes_load_buf.h:3360)
 
-void LoadBuffer_ScriptString(bool param_1)
+void LoadBuffer_ScriptString(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufScriptString,2);
-  LoadBuffer_ScriptStringCustom(bufScriptString);
+  LoadBuffer_Stream(param_1,DAT_8404f31c,2);
+  LoadBuffer_ScriptStringCustom(DAT_8404f31c);
   return;
 }
 
 
 // 825F0C48  AllocSaveBuffer_raw_vec4_t  (database/db_primtypes_save_buf.h:3365)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float (*) [4] AllocSaveBuffer_raw_vec4_t(void)
+void AllocSaveBuffer_raw_vec4_t(void)
 
 {
-  float (*pafVar1) [4];
-  
-  pafVar1 = (float (*) [4])AssetBuf_AllocStreamPos(3);
-  return pafVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F48D0  AllocLoadBuffer_ScriptString  (database/db_primtypes_load_buf.h:3368)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ushort * AllocLoadBuffer_ScriptString(void)
+void AllocLoadBuffer_ScriptString(void)
 
 {
-  ushort *puVar1;
-  
-  puVar1 = (ushort *)AssetBuf_AllocStreamPos(1);
-  return puVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F0C50  SaveBuffer_raw_vec4_tArray  (database/db_primtypes_save_buf.h:3374)
 
-void SaveBuffer_raw_vec4_tArray(bool param_1,int param_2)
+void SaveBuffer_raw_vec4_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufraw_vec4_t,param_2 << 4,&bufoutraw_vec4_t);
+  SaveBuffer_Stream(param_1,DAT_8404f418,(param_2 & 0xfffffff) << 4,0xffffffff8404f444);
   return;
 }
 
 
 // 825F48D8  LoadBuffer_ScriptStringArray  (database/db_primtypes_load_buf.h:3377)
 
-void LoadBuffer_ScriptStringArray(bool param_1,int param_2)
+void LoadBuffer_ScriptStringArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   ulonglong uVar2;
-  ushort *puVar3;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_29(param_1);
-  LoadBuffer_Stream(bVar1,bufScriptString,(int)((uVar2 & 0xffffffff) << 1));
-  puVar3 = bufScriptString;
-  if (0 < (int)uVar2) {
+  uVar1 = __savegprlr_29();
+  LoadBuffer_Stream(uVar1,DAT_8404f31c,(param_2 & 0x7fffffff) << 1);
+  uVar2 = (ulonglong)DAT_8404f31c;
+  if (0 < (int)param_2) {
     do {
-      bufScriptString = puVar3;
-      LoadBuffer_Stream(false,puVar3,2);
-      LoadBuffer_ScriptStringCustom(bufScriptString);
-      uVar2 = uVar2 - 1;
-      puVar3 = puVar3 + 1;
-    } while (uVar2 != 0);
+      DAT_8404f31c = (uint)uVar2;
+      LoadBuffer_Stream(0,uVar2,2);
+      LoadBuffer_ScriptStringCustom(DAT_8404f31c);
+      param_2 = param_2 - 1;
+      uVar2 = uVar2 + 2;
+    } while (param_2 != 0);
   }
   __restgprlr_29();
   return;
@@ -7758,23 +7055,23 @@ void LoadBuffer_ScriptStringArray(bool param_1,int param_2)
 
 // 825F4938  LoadBuffer_ScriptStringStream  (database/db_primtypes_load_buf.h:3399)
 
-void LoadBuffer_ScriptStringStream(bool param_1,int param_2)
+void LoadBuffer_ScriptStringStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xd4a,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xd4a,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f31c;
     do {
-      LoadBuffer_Stream(true,bufScriptString,2);
-      LoadBuffer_ScriptStringCustom(bufScriptString);
-      bufScriptString = (ushort *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,2);
+      LoadBuffer_ScriptStringCustom(DAT_8404f31c);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f31c = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -7782,25 +7079,22 @@ void LoadBuffer_ScriptStringStream(bool param_1,int param_2)
 
 // 825F0C68  SaveBuffer_raw_vec4_tStream  (database/db_primtypes_save_buf.h:3404)
 
-void SaveBuffer_raw_vec4_tStream(bool param_1,int param_2)
+void SaveBuffer_raw_vec4_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xd4f,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xd4f,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufraw_vec4_t,0x10,&bufoutraw_vec4_t);
-      bufraw_vec4_t = (float (*) [4])AssetBuf_GetSourcePos();
-      bufstreamraw_vec4_t = (float (*) [4])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f418,0x10,0xffffffff8404f444);
+      DAT_8404f418 = AssetBuf_GetSourcePos();
+      DAT_8404f254 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -7809,107 +7103,93 @@ void SaveBuffer_raw_vec4_tStream(bool param_1,int param_2)
 
 // 825F49D0  LoadBuffer_ConstChar  (database/db_primtypes_load_buf.h:3413)
 
-void LoadBuffer_ConstChar(bool param_1)
+void LoadBuffer_ConstChar(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufConstChar,1);
+  LoadBuffer_Stream(param_1,DAT_8404f2d8,1);
   return;
 }
 
 
 // 825F0CF8  SaveBuffer_shared_vec3_t  (database/db_primtypes_save_buf.h:3419)
 
-void SaveBuffer_shared_vec3_t(bool param_1)
+void SaveBuffer_shared_vec3_t(undefined8 param_1)
 
 {
-  AssetBuf_SetStreamData(bufshared_vec3_t,bufstreamshared_vec3_t);
-  SaveBuffer_Stream(param_1,bufshared_vec3_t,0xc,&bufoutshared_vec3_t);
+  AssetBuf_SetStreamData(DAT_8404f45c,DAT_8404f320);
+  SaveBuffer_Stream(param_1,DAT_8404f45c,0xc,0xffffffff8404f4ac);
   return;
 }
 
 
 // 825F49E0  AllocLoadBuffer_ConstChar  (database/db_primtypes_load_buf.h:3419)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char * AllocLoadBuffer_ConstChar(void)
+void AllocLoadBuffer_ConstChar(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return (char *)puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F49E8  LoadBuffer_ConstCharArray  (database/db_primtypes_load_buf.h:3428)
 
-void LoadBuffer_ConstCharArray(bool param_1,int param_2)
+void LoadBuffer_ConstCharArray(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufConstChar,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f2d8,param_2);
   return;
 }
 
 
 // 825F0D58  AllocSaveBuffer_shared_vec3_t  (database/db_primtypes_save_buf.h:3433)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float (*) [3] AllocSaveBuffer_shared_vec3_t(void)
+void AllocSaveBuffer_shared_vec3_t(void)
 
 {
-  float (*pafVar1) [3];
-  
-  pafVar1 = (float (*) [3])AssetBuf_AllocStreamPos(3);
-  return pafVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F0D60  SaveBuffer_shared_vec3_tArray  (database/db_primtypes_save_buf.h:3442)
 
-void SaveBuffer_shared_vec3_tArray(bool param_1,int param_2)
+void SaveBuffer_shared_vec3_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
-  float (*pafVar3) [3];
-  ulonglong uVar4;
-  float (*pafVar5) [3];
-  int iVar6;
-  float (*pafVar7) [3];
+  undefined8 uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  ulonglong uVar5;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_25(param_1);
-  SaveBuffer_Stream(bVar1,bufshared_vec3_t,
-                    (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 2),&bufoutshared_vec3_t
-                   );
-  if (0 < (int)uVar2) {
-    iVar6 = 0;
-    uVar4 = uVar2;
+  uVar1 = __savegprlr_25();
+  SaveBuffer_Stream(uVar1,DAT_8404f45c,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2,
+                    0xffffffff8404f4ac);
+  if (0 < (int)param_2) {
+    lVar4 = 0;
+    uVar3 = param_2;
     do {
-      AssetBuf_SetStreamData
-                ((void *)((int)*bufshared_vec3_t + iVar6),
-                 (void *)((int)*bufstreamshared_vec3_t + iVar6));
-      uVar4 = uVar4 - 1;
-      iVar6 = iVar6 + 0xc;
-    } while (uVar4 != 0);
+      AssetBuf_SetStreamData(lVar4 + (ulonglong)DAT_8404f45c,lVar4 + (ulonglong)DAT_8404f320);
+      uVar3 = uVar3 - 1;
+      lVar4 = lVar4 + 0xc;
+    } while (uVar3 != 0);
   }
-  pafVar7 = bufshared_vec3_t;
-  pafVar5 = bufstreamshared_vec3_t;
-  pafVar3 = bufoutshared_vec3_t;
-  if (0 < (int)uVar2) {
+  uVar5 = (ulonglong)DAT_8404f45c;
+  uVar3 = (ulonglong)DAT_8404f320;
+  iVar2 = DAT_8404f4ac;
+  if (0 < (int)param_2) {
     do {
-      bufstreamshared_vec3_t = pafVar5;
-      bufshared_vec3_t = pafVar7;
-      bufoutshared_vec3_t = pafVar3;
-      AssetBuf_SetStreamData(pafVar7,pafVar5);
-      SaveBuffer_Stream(false,bufshared_vec3_t,0xc,&bufoutshared_vec3_t);
-      uVar2 = uVar2 - 1;
-      pafVar7 = pafVar7 + 1;
-      pafVar5 = pafVar5 + 1;
-      pafVar3 = pafVar3 + 1;
-    } while (uVar2 != 0);
+      DAT_8404f45c = (uint)uVar5;
+      DAT_8404f320 = (uint)uVar3;
+      DAT_8404f4ac = iVar2;
+      AssetBuf_SetStreamData(uVar5,uVar3);
+      SaveBuffer_Stream(0,DAT_8404f45c,0xc,0xffffffff8404f4ac);
+      param_2 = param_2 - 1;
+      uVar5 = uVar5 + 0xc;
+      uVar3 = uVar3 + 0xc;
+      iVar2 = iVar2 + 0xc;
+    } while (param_2 != 0);
   }
   __restgprlr_25();
   return;
@@ -7918,22 +7198,22 @@ void SaveBuffer_shared_vec3_tArray(bool param_1,int param_2)
 
 // 825F49F8  LoadBuffer_ConstCharStream  (database/db_primtypes_load_buf.h:3450)
 
-void LoadBuffer_ConstCharStream(bool param_1,int param_2)
+void LoadBuffer_ConstCharStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xd7d,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xd7d,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f2d8;
     do {
-      LoadBuffer_Stream(true,bufConstChar,1);
-      bufConstChar = (char *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,1);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2d8 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -7941,28 +7221,28 @@ void LoadBuffer_ConstCharStream(bool param_1,int param_2)
 
 // 825F4A88  LoadBuffer_TempString  (database/db_primtypes_load_buf.h:3464)
 
-void LoadBuffer_TempString(bool param_1)
+void LoadBuffer_TempString(undefined8 param_1)
 
 {
   char cVar1;
-  uchar *puVar2;
+  int iVar2;
   char *pcVar3;
   
-  LoadBuffer_Stream(param_1,bufTempString,4);
-  if (*bufTempString != (char *)0x0) {
-    if (*bufTempString == (char *)0xffffffff) {
-      puVar2 = AssetBuf_AllocStreamPos(0);
-      *bufTempString = (char *)puVar2;
-      bufConstChar = *bufTempString;
-      pcVar3 = *bufTempString;
+  LoadBuffer_Stream(param_1,DAT_8404f394,4);
+  if (*DAT_8404f394 != 0) {
+    if (*DAT_8404f394 == -1) {
+      iVar2 = AssetBuf_AllocStreamPos(0);
+      *DAT_8404f394 = iVar2;
+      DAT_8404f2d8 = *DAT_8404f394;
+      pcVar3 = (char *)*DAT_8404f394;
       do {
         cVar1 = *pcVar3;
         pcVar3 = pcVar3 + 1;
       } while (cVar1 != '\0');
-      LoadBuffer_Stream(true,bufConstChar,(int)pcVar3 - (int)*bufTempString);
+      LoadBuffer_Stream(1,DAT_8404f2d8,(int)pcVar3 - *DAT_8404f394);
       return;
     }
-    AssetBuf_ConvertOffsetToPointer(bufTempString);
+    AssetBuf_ConvertOffsetToPointer();
   }
   return;
 }
@@ -7970,26 +7250,26 @@ void LoadBuffer_TempString(bool param_1)
 
 // 825F0E28  SaveBuffer_shared_vec3_tStream  (database/db_primtypes_save_buf.h:3475)
 
-void SaveBuffer_shared_vec3_tStream(bool param_1,int param_2)
+void SaveBuffer_shared_vec3_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
+  ulonglong uVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xd96,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xd96,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
+    uVar2 = (ulonglong)DAT_8404f320;
     do {
-      AssetBuf_SetStreamData(bufshared_vec3_t,bufstreamshared_vec3_t);
-      SaveBuffer_Stream(true,bufshared_vec3_t,0xc,&bufoutshared_vec3_t);
-      bufshared_vec3_t = (float (*) [3])AssetBuf_GetSourcePos();
-      bufstreamshared_vec3_t = (float (*) [3])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      AssetBuf_SetStreamData(DAT_8404f45c,uVar2);
+      SaveBuffer_Stream(1,DAT_8404f45c,0xc,0xffffffff8404f4ac);
+      DAT_8404f45c = AssetBuf_GetSourcePos();
+      uVar2 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f320 = (uint)uVar2;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -7998,67 +7278,61 @@ void SaveBuffer_shared_vec3_tStream(bool param_1,int param_2)
 
 // 825F4B40  AllocLoadBuffer_TempString  (database/db_primtypes_load_buf.h:3484)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char ** AllocLoadBuffer_TempString(void)
+void AllocLoadBuffer_TempString(void)
 
 {
-  char **ppcVar1;
-  
-  ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-  return ppcVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F0EC8  SaveBuffer_short  (database/db_primtypes_save_buf.h:3490)
 
-void SaveBuffer_short(bool param_1)
+void SaveBuffer_short(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufshort,2,&bufoutshort);
+  SaveBuffer_Stream(param_1,DAT_8404f448,2,0xffffffff8404f4f4);
   return;
 }
 
 
 // 825F4B48  LoadBuffer_TempStringArray  (database/db_primtypes_load_buf.h:3493)
 
-void LoadBuffer_TempStringArray(bool param_1,int param_2)
+void LoadBuffer_TempStringArray(undefined8 param_1,ulonglong param_2)
 
 {
   char cVar1;
-  bool bVar3;
-  uchar *puVar2;
+  undefined8 uVar2;
+  int iVar3;
   char *pcVar4;
-  char **ppcVar5;
-  ulonglong uVar6;
+  int *piVar5;
   
-  uVar6 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar3,bufTempString,(int)((uVar6 & 0xffffffff) << 2));
-  ppcVar5 = bufTempString;
-  if (0 < (int)uVar6) {
+  uVar2 = __savegprlr_28();
+  LoadBuffer_Stream(uVar2,DAT_8404f394,(param_2 & 0x3fffffff) << 2);
+  piVar5 = DAT_8404f394;
+  if (0 < (int)param_2) {
     do {
-      bufTempString = ppcVar5;
-      LoadBuffer_Stream(false,ppcVar5,4);
-      if (*bufTempString != (char *)0x0) {
-        if (*bufTempString == (char *)0xffffffff) {
-          puVar2 = AssetBuf_AllocStreamPos(0);
-          *bufTempString = (char *)puVar2;
-          bufConstChar = *bufTempString;
-          pcVar4 = *bufTempString;
+      DAT_8404f394 = piVar5;
+      LoadBuffer_Stream(0,piVar5,4);
+      if (*DAT_8404f394 != 0) {
+        if (*DAT_8404f394 == -1) {
+          iVar3 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f394 = iVar3;
+          DAT_8404f2d8 = *DAT_8404f394;
+          pcVar4 = (char *)*DAT_8404f394;
           do {
             cVar1 = *pcVar4;
             pcVar4 = pcVar4 + 1;
           } while (cVar1 != '\0');
-          LoadBuffer_Stream(true,bufConstChar,(int)pcVar4 - (int)*bufTempString);
+          LoadBuffer_Stream(1,DAT_8404f2d8,(int)pcVar4 - *DAT_8404f394);
         }
         else {
-          AssetBuf_ConvertOffsetToPointer(bufTempString);
+          AssetBuf_ConvertOffsetToPointer();
         }
       }
-      uVar6 = uVar6 - 1;
-      ppcVar5 = ppcVar5 + 1;
-    } while (uVar6 != 0);
+      param_2 = param_2 - 1;
+      piVar5 = piVar5 + 1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -8067,66 +7341,59 @@ void LoadBuffer_TempStringArray(bool param_1,int param_2)
 
 // 825F0EE0  AllocSaveBuffer_short  (database/db_primtypes_save_buf.h:3496)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-short * AllocSaveBuffer_short(void)
+void AllocSaveBuffer_short(void)
 
 {
-  short *psVar1;
-  
-  psVar1 = (short *)AssetBuf_AllocStreamPos(1);
-  return psVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F0EE8  SaveBuffer_shortArray  (database/db_primtypes_save_buf.h:3505)
 
-void SaveBuffer_shortArray(bool param_1,int param_2)
+void SaveBuffer_shortArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufshort,param_2 << 1,&bufoutshort);
+  SaveBuffer_Stream(param_1,DAT_8404f448,(param_2 & 0x7fffffff) << 1,0xffffffff8404f4f4);
   return;
 }
 
 
 // 825F4C10  LoadBuffer_TempStringStream  (database/db_primtypes_load_buf.h:3515)
 
-void LoadBuffer_TempStringStream(bool param_1,int param_2)
+void LoadBuffer_TempStringStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar2;
-  uchar *puVar1;
+  int iVar1;
   char *pcVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)param_2;
-  cVar2 = __savegprlr_29(param_1);
+  cVar2 = __savegprlr_29();
   if (cVar2 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xdbe,0,"%s");
+    MyAssertHandler(0xffffffff82179bc8,0xdbe,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar4) {
+  if (0 < (int)param_2) {
     do {
-      LoadBuffer_Stream(true,bufTempString,4);
-      if (*bufTempString != (char *)0x0) {
-        if (*bufTempString == (char *)0xffffffff) {
-          puVar1 = AssetBuf_AllocStreamPos(0);
-          *bufTempString = (char *)puVar1;
-          bufConstChar = *bufTempString;
-          pcVar3 = *bufTempString;
+      LoadBuffer_Stream(1,DAT_8404f394,4);
+      if (*DAT_8404f394 != 0) {
+        if (*DAT_8404f394 == -1) {
+          iVar1 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f394 = iVar1;
+          DAT_8404f2d8 = *DAT_8404f394;
+          pcVar3 = (char *)*DAT_8404f394;
           do {
             cVar2 = *pcVar3;
             pcVar3 = pcVar3 + 1;
           } while (cVar2 != '\0');
-          LoadBuffer_Stream(true,bufConstChar,(int)pcVar3 - (int)*bufTempString);
+          LoadBuffer_Stream(1,DAT_8404f2d8,(int)pcVar3 - *DAT_8404f394);
         }
         else {
-          AssetBuf_ConvertOffsetToPointer(bufTempString);
+          AssetBuf_ConvertOffsetToPointer();
         }
       }
-      bufTempString = (char **)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      DAT_8404f394 = (int *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_29();
   return;
@@ -8135,28 +7402,28 @@ void LoadBuffer_TempStringStream(bool param_1,int param_2)
 
 // 825F4D00  LoadBuffer_XString  (database/db_primtypes_load_buf.h:3529)
 
-void LoadBuffer_XString(bool param_1)
+void LoadBuffer_XString(undefined8 param_1)
 
 {
   char cVar1;
-  uchar *puVar2;
+  int iVar2;
   char *pcVar3;
   
-  LoadBuffer_Stream(param_1,bufXString,4);
-  if (*bufXString != (char *)0x0) {
-    if (*bufXString == (char *)0xffffffff) {
-      puVar2 = AssetBuf_AllocStreamPos(0);
-      *bufXString = (char *)puVar2;
-      bufConstChar = *bufXString;
-      pcVar3 = *bufXString;
+  LoadBuffer_Stream(param_1,DAT_8404f538,4);
+  if (*DAT_8404f538 != 0) {
+    if (*DAT_8404f538 == -1) {
+      iVar2 = AssetBuf_AllocStreamPos(0);
+      *DAT_8404f538 = iVar2;
+      DAT_8404f2d8 = *DAT_8404f538;
+      pcVar3 = (char *)*DAT_8404f538;
       do {
         cVar1 = *pcVar3;
         pcVar3 = pcVar3 + 1;
       } while (cVar1 != '\0');
-      LoadBuffer_Stream(true,bufConstChar,(int)pcVar3 - (int)*bufXString);
+      LoadBuffer_Stream(1,DAT_8404f2d8,(int)pcVar3 - *DAT_8404f538);
       return;
     }
-    AssetBuf_ConvertOffsetToPointer(bufXString);
+    AssetBuf_ConvertOffsetToPointer();
   }
   return;
 }
@@ -8164,25 +7431,22 @@ void LoadBuffer_XString(bool param_1)
 
 // 825F0F00  SaveBuffer_shortStream  (database/db_primtypes_save_buf.h:3535)
 
-void SaveBuffer_shortStream(bool param_1,int param_2)
+void SaveBuffer_shortStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xdd2,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xdd2,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufshort,2,&bufoutshort);
-      bufshort = (short *)AssetBuf_GetSourcePos();
-      bufstreamshort = (short *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f448,2,0xffffffff8404f4f4);
+      DAT_8404f448 = AssetBuf_GetSourcePos();
+      DAT_8404f404 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -8191,81 +7455,71 @@ void SaveBuffer_shortStream(bool param_1,int param_2)
 
 // 825F4DB8  AllocLoadBuffer_XString  (database/db_primtypes_load_buf.h:3549)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char ** AllocLoadBuffer_XString(void)
+void AllocLoadBuffer_XString(void)
 
 {
-  char **ppcVar1;
-  
-  ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-  return ppcVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F0F90  SaveBuffer_int16_t  (database/db_primtypes_save_buf.h:3550)
 
-void SaveBuffer_int16_t(bool param_1)
+void SaveBuffer_int16_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufint16_t,2,&bufoutint16_t);
+  SaveBuffer_Stream(param_1,DAT_8404f354,2,0xffffffff8404f558);
   return;
 }
 
 
 // 825F0FA8  AllocSaveBuffer_int16_t  (database/db_primtypes_save_buf.h:3556)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-short * AllocSaveBuffer_int16_t(void)
+void AllocSaveBuffer_int16_t(void)
 
 {
-  short *psVar1;
-  
-  psVar1 = (short *)AssetBuf_AllocStreamPos(1);
-  return psVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F4DC0  LoadBuffer_XStringArray  (database/db_primtypes_load_buf.h:3558)
 
-void LoadBuffer_XStringArray(bool param_1,int param_2)
+void LoadBuffer_XStringArray(undefined8 param_1,ulonglong param_2)
 
 {
   char cVar1;
-  bool bVar3;
-  uchar *puVar2;
+  undefined8 uVar2;
+  int iVar3;
   char *pcVar4;
-  char **ppcVar5;
-  ulonglong uVar6;
+  int *piVar5;
   
-  uVar6 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar3,bufXString,(int)((uVar6 & 0xffffffff) << 2));
-  ppcVar5 = bufXString;
-  if (0 < (int)uVar6) {
+  uVar2 = __savegprlr_28();
+  LoadBuffer_Stream(uVar2,DAT_8404f538,(param_2 & 0x3fffffff) << 2);
+  piVar5 = DAT_8404f538;
+  if (0 < (int)param_2) {
     do {
-      bufXString = ppcVar5;
-      LoadBuffer_Stream(false,ppcVar5,4);
-      if (*bufXString != (char *)0x0) {
-        if (*bufXString == (char *)0xffffffff) {
-          puVar2 = AssetBuf_AllocStreamPos(0);
-          *bufXString = (char *)puVar2;
-          bufConstChar = *bufXString;
-          pcVar4 = *bufXString;
+      DAT_8404f538 = piVar5;
+      LoadBuffer_Stream(0,piVar5,4);
+      if (*DAT_8404f538 != 0) {
+        if (*DAT_8404f538 == -1) {
+          iVar3 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f538 = iVar3;
+          DAT_8404f2d8 = *DAT_8404f538;
+          pcVar4 = (char *)*DAT_8404f538;
           do {
             cVar1 = *pcVar4;
             pcVar4 = pcVar4 + 1;
           } while (cVar1 != '\0');
-          LoadBuffer_Stream(true,bufConstChar,(int)pcVar4 - (int)*bufXString);
+          LoadBuffer_Stream(1,DAT_8404f2d8,(int)pcVar4 - *DAT_8404f538);
         }
         else {
-          AssetBuf_ConvertOffsetToPointer(bufXString);
+          AssetBuf_ConvertOffsetToPointer();
         }
       }
-      uVar6 = uVar6 - 1;
-      ppcVar5 = ppcVar5 + 1;
-    } while (uVar6 != 0);
+      param_2 = param_2 - 1;
+      piVar5 = piVar5 + 1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -8274,52 +7528,49 @@ void LoadBuffer_XStringArray(bool param_1,int param_2)
 
 // 825F0FB0  SaveBuffer_int16_tArray  (database/db_primtypes_save_buf.h:3565)
 
-void SaveBuffer_int16_tArray(bool param_1,int param_2)
+void SaveBuffer_int16_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufint16_t,param_2 << 1,&bufoutint16_t);
+  SaveBuffer_Stream(param_1,DAT_8404f354,(param_2 & 0x7fffffff) << 1,0xffffffff8404f558);
   return;
 }
 
 
 // 825F4E88  LoadBuffer_XStringStream  (database/db_primtypes_load_buf.h:3580)
 
-void LoadBuffer_XStringStream(bool param_1,int param_2)
+void LoadBuffer_XStringStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar2;
-  uchar *puVar1;
+  int iVar1;
   char *pcVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)param_2;
-  cVar2 = __savegprlr_29(param_1);
+  cVar2 = __savegprlr_29();
   if (cVar2 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xdff,0,"%s");
+    MyAssertHandler(0xffffffff82179bc8,0xdff,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar4) {
+  if (0 < (int)param_2) {
     do {
-      LoadBuffer_Stream(true,bufXString,4);
-      if (*bufXString != (char *)0x0) {
-        if (*bufXString == (char *)0xffffffff) {
-          puVar1 = AssetBuf_AllocStreamPos(0);
-          *bufXString = (char *)puVar1;
-          bufConstChar = *bufXString;
-          pcVar3 = *bufXString;
+      LoadBuffer_Stream(1,DAT_8404f538,4);
+      if (*DAT_8404f538 != 0) {
+        if (*DAT_8404f538 == -1) {
+          iVar1 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f538 = iVar1;
+          DAT_8404f2d8 = *DAT_8404f538;
+          pcVar3 = (char *)*DAT_8404f538;
           do {
             cVar2 = *pcVar3;
             pcVar3 = pcVar3 + 1;
           } while (cVar2 != '\0');
-          LoadBuffer_Stream(true,bufConstChar,(int)pcVar3 - (int)*bufXString);
+          LoadBuffer_Stream(1,DAT_8404f2d8,(int)pcVar3 - *DAT_8404f538);
         }
         else {
-          AssetBuf_ConvertOffsetToPointer(bufXString);
+          AssetBuf_ConvertOffsetToPointer();
         }
       }
-      bufXString = (char **)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      DAT_8404f538 = (int *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_29();
   return;
@@ -8328,21 +7579,21 @@ void LoadBuffer_XStringStream(bool param_1,int param_2)
 
 // 825F4F78  LoadBuffer_XStringPtr  (database/db_primtypes_load_buf.h:3594)
 
-void LoadBuffer_XStringPtr(bool param_1)
+void LoadBuffer_XStringPtr(undefined8 param_1)
 
 {
-  char **ppcVar1;
+  int iVar1;
   
-  LoadBuffer_Stream(param_1,bufXStringPtr,4);
-  if (*bufXStringPtr != (char **)0x0) {
-    if (*bufXStringPtr == (char **)0xffffffff) {
-      ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-      *bufXStringPtr = ppcVar1;
-      bufXString = *bufXStringPtr;
-      LoadBuffer_XString(true);
+  LoadBuffer_Stream(param_1,DAT_8404f4b4,4);
+  if (*DAT_8404f4b4 != 0) {
+    if (*DAT_8404f4b4 == -1) {
+      iVar1 = AssetBuf_AllocStreamPos(3);
+      *DAT_8404f4b4 = iVar1;
+      DAT_8404f538 = *DAT_8404f4b4;
+      LoadBuffer_XString(1);
       return;
     }
-    AssetBuf_ConvertOffsetToPointer(bufXStringPtr);
+    AssetBuf_ConvertOffsetToPointer();
   }
   return;
 }
@@ -8350,25 +7601,22 @@ void LoadBuffer_XStringPtr(bool param_1)
 
 // 825F0FC8  SaveBuffer_int16_tStream  (database/db_primtypes_save_buf.h:3595)
 
-void SaveBuffer_int16_tStream(bool param_1,int param_2)
+void SaveBuffer_int16_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xe0e,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xe0e,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufint16_t,2,&bufoutint16_t);
-      bufint16_t = (short *)AssetBuf_GetSourcePos();
-      bufstreamint16_t = (short *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f354,2,0xffffffff8404f558);
+      DAT_8404f354 = AssetBuf_GetSourcePos();
+      DAT_8404f504 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -8377,74 +7625,64 @@ void SaveBuffer_int16_tStream(bool param_1,int param_2)
 
 // 825F1058  SaveBuffer_uint16_t  (database/db_primtypes_save_buf.h:3610)
 
-void SaveBuffer_uint16_t(bool param_1)
+void SaveBuffer_uint16_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufuint16_t,2,&bufoutuint16_t);
+  SaveBuffer_Stream(param_1,DAT_8404f4e4,2,0xffffffff8404f544);
   return;
 }
 
 
 // 825F5008  AllocLoadBuffer_XStringPtr  (database/db_primtypes_load_buf.h:3614)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char *** AllocLoadBuffer_XStringPtr(void)
+void AllocLoadBuffer_XStringPtr(void)
 
 {
-  char ***pppcVar1;
-  
-  pppcVar1 = (char ***)AssetBuf_AllocStreamPos(3);
-  return pppcVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F1070  AllocSaveBuffer_uint16_t  (database/db_primtypes_save_buf.h:3616)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ushort * AllocSaveBuffer_uint16_t(void)
+void AllocSaveBuffer_uint16_t(void)
 
 {
-  ushort *puVar1;
-  
-  puVar1 = (ushort *)AssetBuf_AllocStreamPos(1);
-  return puVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F5010  LoadBuffer_XStringPtrArray  (database/db_primtypes_load_buf.h:3623)
 
-void LoadBuffer_XStringPtrArray(bool param_1,int param_2)
+void LoadBuffer_XStringPtrArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar2;
-  char **ppcVar1;
-  char ***pppcVar3;
-  ulonglong uVar4;
+  undefined8 uVar1;
+  int iVar2;
+  int *piVar3;
   
-  uVar4 = (ulonglong)param_2;
-  bVar2 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar2,bufXStringPtr,(int)((uVar4 & 0xffffffff) << 2));
-  pppcVar3 = bufXStringPtr;
-  if (0 < (int)uVar4) {
+  uVar1 = __savegprlr_28();
+  LoadBuffer_Stream(uVar1,DAT_8404f4b4,(param_2 & 0x3fffffff) << 2);
+  piVar3 = DAT_8404f4b4;
+  if (0 < (int)param_2) {
     do {
-      bufXStringPtr = pppcVar3;
-      LoadBuffer_Stream(false,pppcVar3,4);
-      if (*bufXStringPtr != (char **)0x0) {
-        if (*bufXStringPtr == (char **)0xffffffff) {
-          ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-          *bufXStringPtr = ppcVar1;
-          bufXString = *bufXStringPtr;
-          LoadBuffer_XString(true);
+      DAT_8404f4b4 = piVar3;
+      LoadBuffer_Stream(0,piVar3,4);
+      if (*DAT_8404f4b4 != 0) {
+        if (*DAT_8404f4b4 == -1) {
+          iVar2 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f4b4 = iVar2;
+          DAT_8404f538 = *DAT_8404f4b4;
+          LoadBuffer_XString(1);
         }
         else {
-          AssetBuf_ConvertOffsetToPointer(bufXStringPtr);
+          AssetBuf_ConvertOffsetToPointer();
         }
       }
-      uVar4 = uVar4 - 1;
-      pppcVar3 = pppcVar3 + 1;
-    } while (uVar4 != 0);
+      param_2 = param_2 - 1;
+      piVar3 = piVar3 + 1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -8453,46 +7691,43 @@ void LoadBuffer_XStringPtrArray(bool param_1,int param_2)
 
 // 825F1078  SaveBuffer_uint16_tArray  (database/db_primtypes_save_buf.h:3625)
 
-void SaveBuffer_uint16_tArray(bool param_1,int param_2)
+void SaveBuffer_uint16_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufuint16_t,param_2 << 1,&bufoutuint16_t);
+  SaveBuffer_Stream(param_1,DAT_8404f4e4,(param_2 & 0x7fffffff) << 1,0xffffffff8404f544);
   return;
 }
 
 
 // 825F50B0  LoadBuffer_XStringPtrStream  (database/db_primtypes_load_buf.h:3645)
 
-void LoadBuffer_XStringPtrStream(bool param_1,int param_2)
+void LoadBuffer_XStringPtrStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar2;
-  char **ppcVar1;
-  longlong lVar3;
+  int iVar1;
   
-  lVar3 = (longlong)param_2;
-  cVar2 = __savegprlr_29(param_1);
+  cVar2 = __savegprlr_29();
   if (cVar2 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xe40,0,"%s");
+    MyAssertHandler(0xffffffff82179bc8,0xe40,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar3) {
+  if (0 < (int)param_2) {
     do {
-      LoadBuffer_Stream(true,bufXStringPtr,4);
-      if (*bufXStringPtr != (char **)0x0) {
-        if (*bufXStringPtr == (char **)0xffffffff) {
-          ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-          *bufXStringPtr = ppcVar1;
-          bufXString = *bufXStringPtr;
-          LoadBuffer_XString(true);
+      LoadBuffer_Stream(1,DAT_8404f4b4,4);
+      if (*DAT_8404f4b4 != 0) {
+        if (*DAT_8404f4b4 == -1) {
+          iVar1 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f4b4 = iVar1;
+          DAT_8404f538 = *DAT_8404f4b4;
+          LoadBuffer_XString(1);
         }
         else {
-          AssetBuf_ConvertOffsetToPointer(bufXStringPtr);
+          AssetBuf_ConvertOffsetToPointer();
         }
       }
-      bufXStringPtr = (char ***)AssetBuf_GetStreamPos();
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      DAT_8404f4b4 = (int *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_29();
   return;
@@ -8501,25 +7736,22 @@ void LoadBuffer_XStringPtrStream(bool param_1,int param_2)
 
 // 825F1090  SaveBuffer_uint16_tStream  (database/db_primtypes_save_buf.h:3655)
 
-void SaveBuffer_uint16_tStream(bool param_1,int param_2)
+void SaveBuffer_uint16_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xe4a,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xe4a,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufuint16_t,2,&bufoutuint16_t);
-      bufuint16_t = (ushort *)AssetBuf_GetSourcePos();
-      bufstreamuint16_t = (ushort *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f4e4,2,0xffffffff8404f544);
+      DAT_8404f4e4 = AssetBuf_GetSourcePos();
+      DAT_8404f2ec = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -8528,18 +7760,18 @@ void SaveBuffer_uint16_tStream(bool param_1,int param_2)
 
 // 825F5178  LoadBuffer_ScriptStringList  (database/db_primtypes_load_buf.h:3659)
 
-void LoadBuffer_ScriptStringList(bool param_1)
+void LoadBuffer_ScriptStringList(undefined8 param_1)
 
 {
-  char **ppcVar1;
+  undefined4 uVar1;
   
-  LoadBuffer_Stream(param_1,bufScriptStringList,8);
+  LoadBuffer_Stream(param_1,DAT_8404f4c4,8);
   AssetBuf_PushStreamPos(3);
-  if (bufScriptStringList->strings != (char **)0x0) {
-    ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-    bufScriptStringList->strings = ppcVar1;
-    bufTempString = bufScriptStringList->strings;
-    LoadBuffer_TempStringArray(true,bufScriptStringList->count);
+  if (DAT_8404f4c4[1] != 0) {
+    uVar1 = AssetBuf_AllocStreamPos(3);
+    DAT_8404f4c4[1] = uVar1;
+    DAT_8404f394 = DAT_8404f4c4[1];
+    LoadBuffer_TempStringArray(1,*DAT_8404f4c4);
   }
   AssetBuf_PopStreamPos();
   return;
@@ -8548,81 +7780,71 @@ void LoadBuffer_ScriptStringList(bool param_1)
 
 // 825F1120  SaveBuffer_ushort  (database/db_primtypes_save_buf.h:3670)
 
-void SaveBuffer_ushort(bool param_1)
+void SaveBuffer_ushort(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufushort,2,&bufoutushort);
+  SaveBuffer_Stream(param_1,DAT_8404f440,2,0xffffffff8404f48c);
   return;
 }
 
 
 // 825F1138  AllocSaveBuffer_ushort  (database/db_primtypes_save_buf.h:3676)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ushort * AllocSaveBuffer_ushort(void)
+void AllocSaveBuffer_ushort(void)
 
 {
-  ushort *puVar1;
-  
-  puVar1 = (ushort *)AssetBuf_AllocStreamPos(1);
-  return puVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F51F8  AllocLoadBuffer_ScriptStringList  (database/db_primtypes_load_buf.h:3681)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ScriptStringList * AllocLoadBuffer_ScriptStringList(void)
+void AllocLoadBuffer_ScriptStringList(void)
 
 {
-  ScriptStringList *pSVar1;
-  
-  pSVar1 = (ScriptStringList *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F1140  SaveBuffer_ushortArray  (database/db_primtypes_save_buf.h:3685)
 
-void SaveBuffer_ushortArray(bool param_1,int param_2)
+void SaveBuffer_ushortArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufushort,param_2 << 1,&bufoutushort);
+  SaveBuffer_Stream(param_1,DAT_8404f440,(param_2 & 0x7fffffff) << 1,0xffffffff8404f48c);
   return;
 }
 
 
 // 825F5200  LoadBuffer_ScriptStringListArray  (database/db_primtypes_load_buf.h:3690)
 
-void LoadBuffer_ScriptStringListArray(bool param_1,int param_2)
+void LoadBuffer_ScriptStringListArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar2;
-  char **ppcVar1;
-  ScriptStringList *pSVar3;
-  ulonglong uVar4;
+  undefined8 uVar1;
+  undefined4 uVar2;
+  undefined4 *puVar3;
   
-  uVar4 = (ulonglong)param_2;
-  bVar2 = (bool)__savegprlr_28(param_1);
-  LoadBuffer_Stream(bVar2,bufScriptStringList,(int)((uVar4 & 0xffffffff) << 3));
-  pSVar3 = bufScriptStringList;
-  if (0 < (int)uVar4) {
+  uVar1 = __savegprlr_28();
+  LoadBuffer_Stream(uVar1,DAT_8404f4c4,(param_2 & 0x1fffffff) << 3);
+  puVar3 = DAT_8404f4c4;
+  if (0 < (int)param_2) {
     do {
-      bufScriptStringList = pSVar3;
-      LoadBuffer_Stream(false,pSVar3,8);
+      DAT_8404f4c4 = puVar3;
+      LoadBuffer_Stream(0,puVar3,8);
       AssetBuf_PushStreamPos(3);
-      if (bufScriptStringList->strings != (char **)0x0) {
-        ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-        bufScriptStringList->strings = ppcVar1;
-        bufTempString = bufScriptStringList->strings;
-        LoadBuffer_TempStringArray(true,bufScriptStringList->count);
+      if (DAT_8404f4c4[1] != 0) {
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        DAT_8404f4c4[1] = uVar2;
+        DAT_8404f394 = DAT_8404f4c4[1];
+        LoadBuffer_TempStringArray(1,*DAT_8404f4c4);
       }
       AssetBuf_PopStreamPos();
-      uVar4 = uVar4 - 1;
-      pSVar3 = pSVar3 + 1;
-    } while (uVar4 != 0);
+      param_2 = param_2 - 1;
+      puVar3 = puVar3 + 2;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -8631,33 +7853,30 @@ void LoadBuffer_ScriptStringListArray(bool param_1,int param_2)
 
 // 825F52A0  LoadBuffer_ScriptStringListStream  (database/db_primtypes_load_buf.h:3712)
 
-void LoadBuffer_ScriptStringListStream(bool param_1,int param_2)
+void LoadBuffer_ScriptStringListStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar2;
-  char **ppcVar1;
-  longlong lVar3;
+  undefined4 uVar1;
   
-  lVar3 = (longlong)param_2;
-  cVar2 = __savegprlr_29(param_1);
+  cVar2 = __savegprlr_29();
   if (cVar2 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xe83,0,"%s");
+    MyAssertHandler(0xffffffff82179bc8,0xe83,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar3) {
+  if (0 < (int)param_2) {
     do {
-      LoadBuffer_Stream(true,bufScriptStringList,8);
+      LoadBuffer_Stream(1,DAT_8404f4c4,8);
       AssetBuf_PushStreamPos(3);
-      if (bufScriptStringList->strings != (char **)0x0) {
-        ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-        bufScriptStringList->strings = ppcVar1;
-        bufTempString = bufScriptStringList->strings;
-        LoadBuffer_TempStringArray(true,bufScriptStringList->count);
+      if (DAT_8404f4c4[1] != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        DAT_8404f4c4[1] = uVar1;
+        DAT_8404f394 = DAT_8404f4c4[1];
+        LoadBuffer_TempStringArray(1,*DAT_8404f4c4);
       }
       AssetBuf_PopStreamPos();
-      bufScriptStringList = (ScriptStringList *)AssetBuf_GetStreamPos();
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      DAT_8404f4c4 = (undefined4 *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_29();
   return;
@@ -8666,25 +7885,22 @@ void LoadBuffer_ScriptStringListStream(bool param_1,int param_2)
 
 // 825F1158  SaveBuffer_ushortStream  (database/db_primtypes_save_buf.h:3715)
 
-void SaveBuffer_ushortStream(bool param_1,int param_2)
+void SaveBuffer_ushortStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xe86,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xe86,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufushort,2,&bufoutushort);
-      bufushort = (ushort *)AssetBuf_GetSourcePos();
-      bufstreamushort = (ushort *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f440,2,0xffffffff8404f48c);
+      DAT_8404f440 = AssetBuf_GetSourcePos();
+      DAT_8404f308 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -8693,96 +7909,88 @@ void SaveBuffer_ushortStream(bool param_1,int param_2)
 
 // 825F5368  LoadBuffer_XZoneHandle  (database/db_primtypes_load_buf.h:3726)
 
-void LoadBuffer_XZoneHandle(bool param_1)
+void LoadBuffer_XZoneHandle(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufXZoneHandle,1);
-  bufbyte = bufXZoneHandle;
-  LoadBuffer_Stream(false,bufXZoneHandle,1);
+  LoadBuffer_Stream(param_1,DAT_8404f370,1);
+  DAT_8404f284 = DAT_8404f370;
+  LoadBuffer_Stream(0,DAT_8404f370,1);
   return;
 }
 
 
 // 825F11E8  SaveBuffer_XQuat  (database/db_primtypes_save_buf.h:3730)
 
-void SaveBuffer_XQuat(bool param_1)
+void SaveBuffer_XQuat(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufXQuat,8,&bufoutXQuat);
+  SaveBuffer_Stream(param_1,DAT_8404f4cc,8,0xffffffff8404f350);
   return;
 }
 
 
 // 825F53B8  AllocLoadBuffer_XZoneHandle  (database/db_primtypes_load_buf.h:3735)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocLoadBuffer_XZoneHandle(void)
+void AllocLoadBuffer_XZoneHandle(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F1200  AllocSaveBuffer_XQuat  (database/db_primtypes_save_buf.h:3743)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-short (*) [4] AllocSaveBuffer_XQuat(void)
+void AllocSaveBuffer_XQuat(void)
 
 {
-  short (*pasVar1) [4];
-  
-  pasVar1 = (short (*) [4])AssetBuf_AllocStreamPos(3);
-  return pasVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F53C0  LoadBuffer_XZoneHandleArray  (database/db_primtypes_load_buf.h:3744)
 
-void LoadBuffer_XZoneHandleArray(bool param_1,int param_2)
+void LoadBuffer_XZoneHandleArray(undefined8 param_1,undefined8 param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufXZoneHandle,param_2);
+  LoadBuffer_Stream(param_1,DAT_8404f370,param_2);
   return;
 }
 
 
 // 825F1208  SaveBuffer_XQuatArray  (database/db_primtypes_save_buf.h:3752)
 
-void SaveBuffer_XQuatArray(bool param_1,int param_2)
+void SaveBuffer_XQuatArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufXQuat,param_2 << 3,&bufoutXQuat);
+  SaveBuffer_Stream(param_1,DAT_8404f4cc,(param_2 & 0x1fffffff) << 3,0xffffffff8404f350);
   return;
 }
 
 
 // 825F53D0  LoadBuffer_XZoneHandleStream  (database/db_primtypes_load_buf.h:3766)
 
-void LoadBuffer_XZoneHandleStream(bool param_1,int param_2)
+void LoadBuffer_XZoneHandleStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
+  ulonglong uVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_29(param_1);
+  cVar1 = __savegprlr_29();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xeb9,0,"%s");
+    MyAssertHandler(0xffffffff82179bc8,0xeb9,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
+    uVar2 = (ulonglong)DAT_8404f370;
     do {
-      LoadBuffer_Stream(true,bufXZoneHandle,1);
-      bufbyte = bufXZoneHandle;
-      LoadBuffer_Stream(false,bufXZoneHandle,1);
-      bufXZoneHandle = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      LoadBuffer_Stream(1,uVar2,1);
+      DAT_8404f284 = DAT_8404f370;
+      LoadBuffer_Stream(0,DAT_8404f370,1);
+      uVar2 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f370 = (uint)uVar2;
+    } while (param_2 != 0);
   }
   __restgprlr_29();
   return;
@@ -8791,35 +7999,32 @@ void LoadBuffer_XZoneHandleStream(bool param_1,int param_2)
 
 // 825F5460  LoadBuffer_complex_t  (database/db_primtypes_load_buf.h:3780)
 
-void LoadBuffer_complex_t(bool param_1)
+void LoadBuffer_complex_t(undefined8 param_1)
 
 {
-  LoadBuffer_Stream(param_1,bufcomplex_t,8);
+  LoadBuffer_Stream(param_1,DAT_8404f280,8);
   return;
 }
 
 
 // 825F1220  SaveBuffer_XQuatStream  (database/db_primtypes_save_buf.h:3782)
 
-void SaveBuffer_XQuatStream(bool param_1,int param_2)
+void SaveBuffer_XQuatStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xec9,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xec9,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufXQuat,8,&bufoutXQuat);
-      bufXQuat = (short (*) [4])AssetBuf_GetSourcePos();
-      bufstreamXQuat = (short (*) [4])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f4cc,8,0xffffffff8404f350);
+      DAT_8404f4cc = AssetBuf_GetSourcePos();
+      DAT_8404f3c0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -8828,80 +8033,72 @@ void SaveBuffer_XQuatStream(bool param_1,int param_2)
 
 // 825F5470  AllocLoadBuffer_complex_t  (database/db_primtypes_load_buf.h:3796)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-complex_s * AllocLoadBuffer_complex_t(void)
+void AllocLoadBuffer_complex_t(void)
 
 {
-  complex_s *pcVar1;
-  
-  pcVar1 = (complex_s *)AssetBuf_AllocStreamPos(3);
-  return pcVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F12B0  SaveBuffer_XQuat2  (database/db_primtypes_save_buf.h:3797)
 
-void SaveBuffer_XQuat2(bool param_1)
+void SaveBuffer_XQuat2(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufXQuat2,4,&bufoutXQuat2);
+  SaveBuffer_Stream(param_1,DAT_8404f470,4,0xffffffff8404f2a8);
   return;
 }
 
 
 // 825F5478  LoadBuffer_complex_tArray  (database/db_primtypes_load_buf.h:3805)
 
-void LoadBuffer_complex_tArray(bool param_1,int param_2)
+void LoadBuffer_complex_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  LoadBuffer_Stream(param_1,bufcomplex_t,param_2 << 3);
+  LoadBuffer_Stream(param_1,DAT_8404f280,(param_2 & 0x1fffffff) << 3);
   return;
 }
 
 
 // 825F12C8  AllocSaveBuffer_XQuat2  (database/db_primtypes_save_buf.h:3810)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-short (*) [2] AllocSaveBuffer_XQuat2(void)
+void AllocSaveBuffer_XQuat2(void)
 
 {
-  short (*pasVar1) [2];
-  
-  pasVar1 = (short (*) [2])AssetBuf_AllocStreamPos(3);
-  return pasVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F12D0  SaveBuffer_XQuat2Array  (database/db_primtypes_save_buf.h:3819)
 
-void SaveBuffer_XQuat2Array(bool param_1,int param_2)
+void SaveBuffer_XQuat2Array(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufXQuat2,param_2 << 2,&bufoutXQuat2);
+  SaveBuffer_Stream(param_1,DAT_8404f470,(param_2 & 0x3fffffff) << 2,0xffffffff8404f2a8);
   return;
 }
 
 
 // 825F5488  LoadBuffer_complex_tStream  (database/db_primtypes_load_buf.h:3827)
 
-void LoadBuffer_complex_tStream(bool param_1,int param_2)
+void LoadBuffer_complex_tStream(char param_1,longlong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (longlong)param_2;
-  if (!param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_load_buf.h"
-                    ,0xef6,0,"%s");
+  if (param_1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xef6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < param_2) {
+  if (0 < (int)param_2) {
+    uVar1 = (ulonglong)DAT_8404f280;
     do {
-      LoadBuffer_Stream(true,bufcomplex_t,8);
-      bufcomplex_t = (complex_s *)AssetBuf_GetStreamPos();
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      LoadBuffer_Stream(1,uVar1,8);
+      uVar1 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f280 = (uint)uVar1;
+    } while (param_2 != 0);
   }
   return;
 }
@@ -8909,25 +8106,22 @@ void LoadBuffer_complex_tStream(bool param_1,int param_2)
 
 // 825F12E8  SaveBuffer_XQuat2Stream  (database/db_primtypes_save_buf.h:3849)
 
-void SaveBuffer_XQuat2Stream(bool param_1,int param_2)
+void SaveBuffer_XQuat2Stream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xf0c,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xf0c,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufXQuat2,4,&bufoutXQuat2);
-      bufXQuat2 = (short (*) [2])AssetBuf_GetSourcePos();
-      bufstreamXQuat2 = (short (*) [2])AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f470,4,0xffffffff8404f2a8);
+      DAT_8404f470 = AssetBuf_GetSourcePos();
+      DAT_8404f33c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -8936,59 +8130,52 @@ void SaveBuffer_XQuat2Stream(bool param_1,int param_2)
 
 // 825F1378  SaveBuffer_UnsignedShort  (database/db_primtypes_save_buf.h:3864)
 
-void SaveBuffer_UnsignedShort(bool param_1)
+void SaveBuffer_UnsignedShort(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufUnsignedShort,2,&bufoutUnsignedShort);
+  SaveBuffer_Stream(param_1,DAT_8404f46c,2,0xffffffff8404f4d4);
   return;
 }
 
 
 // 825F1390  AllocSaveBuffer_UnsignedShort  (database/db_primtypes_save_buf.h:3870)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ushort * AllocSaveBuffer_UnsignedShort(void)
+void AllocSaveBuffer_UnsignedShort(void)
 
 {
-  ushort *puVar1;
-  
-  puVar1 = (ushort *)AssetBuf_AllocStreamPos(1);
-  return puVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F1398  SaveBuffer_UnsignedShortArray  (database/db_primtypes_save_buf.h:3879)
 
-void SaveBuffer_UnsignedShortArray(bool param_1,int param_2)
+void SaveBuffer_UnsignedShortArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufUnsignedShort,param_2 << 1,&bufoutUnsignedShort);
+  SaveBuffer_Stream(param_1,DAT_8404f46c,(param_2 & 0x7fffffff) << 1,0xffffffff8404f4d4);
   return;
 }
 
 
 // 825F13B0  SaveBuffer_UnsignedShortStream  (database/db_primtypes_save_buf.h:3909)
 
-void SaveBuffer_UnsignedShortStream(bool param_1,int param_2)
+void SaveBuffer_UnsignedShortStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xf48,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xf48,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufUnsignedShort,2,&bufoutUnsignedShort);
-      bufUnsignedShort = (ushort *)AssetBuf_GetSourcePos();
-      bufstreamUnsignedShort = (ushort *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f46c,2,0xffffffff8404f4d4);
+      DAT_8404f46c = AssetBuf_GetSourcePos();
+      DAT_8404f3a0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -8997,58 +8184,52 @@ void SaveBuffer_UnsignedShortStream(bool param_1,int param_2)
 
 // 825F1440  SaveBuffer_ScriptString  (database/db_primtypes_save_buf.h:3924)
 
-void SaveBuffer_ScriptString(bool param_1)
+void SaveBuffer_ScriptString(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufScriptString,2,&bufoutScriptString);
-  SaveBuffer_ScriptStringCustom(bufScriptString,bufoutScriptString);
+  SaveBuffer_Stream(param_1,DAT_8404f31c,2,0xffffffff8404f3e0);
+  SaveBuffer_ScriptStringCustom(DAT_8404f31c,DAT_8404f3e0);
   return;
 }
 
 
 // 825F1490  AllocSaveBuffer_ScriptString  (database/db_primtypes_save_buf.h:3932)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ushort * AllocSaveBuffer_ScriptString(void)
+void AllocSaveBuffer_ScriptString(void)
 
 {
-  ushort *puVar1;
-  
-  puVar1 = (ushort *)AssetBuf_AllocStreamPos(1);
-  return puVar1;
+  AssetBuf_AllocStreamPos(1);
+  return;
 }
 
 
 // 825F1498  SaveBuffer_ScriptStringArray  (database/db_primtypes_save_buf.h:3941)
 
-void SaveBuffer_ScriptStringArray(bool param_1,int param_2)
+void SaveBuffer_ScriptStringArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
-  ushort *puVar3;
-  ushort *puVar4;
-  ushort *puVar5;
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
   
-  uVar2 = (ulonglong)param_2;
-  bVar1 = (bool)__savegprlr_25(param_1);
-  SaveBuffer_Stream(bVar1,bufScriptString,(int)((uVar2 & 0xffffffff) << 1),&bufoutScriptString);
-  puVar5 = bufScriptString;
-  puVar4 = bufstreamScriptString;
-  puVar3 = bufoutScriptString;
-  if (0 < (int)uVar2) {
+  uVar1 = __savegprlr_25();
+  SaveBuffer_Stream(uVar1,DAT_8404f31c,(param_2 & 0x7fffffff) << 1,0xffffffff8404f3e0);
+  uVar4 = (ulonglong)DAT_8404f31c;
+  iVar3 = DAT_8404f2c0;
+  iVar2 = DAT_8404f3e0;
+  if (0 < (int)param_2) {
     do {
-      bufstreamScriptString = puVar4;
-      bufScriptString = puVar5;
-      bufoutScriptString = puVar3;
-      SaveBuffer_Stream(false,puVar5,2,&bufoutScriptString);
-      SaveBuffer_ScriptStringCustom(bufScriptString,bufoutScriptString);
-      uVar2 = uVar2 - 1;
-      puVar5 = puVar5 + 1;
-      puVar4 = puVar4 + 1;
-      puVar3 = puVar3 + 1;
-    } while (uVar2 != 0);
+      DAT_8404f31c = (uint)uVar4;
+      DAT_8404f2c0 = iVar3;
+      DAT_8404f3e0 = iVar2;
+      SaveBuffer_Stream(0,uVar4,2,0xffffffff8404f3e0);
+      SaveBuffer_ScriptStringCustom(DAT_8404f31c,DAT_8404f3e0);
+      param_2 = param_2 - 1;
+      uVar4 = uVar4 + 2;
+      iVar3 = iVar3 + 2;
+      iVar2 = iVar2 + 2;
+    } while (param_2 != 0);
   }
   __restgprlr_25();
   return;
@@ -9057,26 +8238,23 @@ void SaveBuffer_ScriptStringArray(bool param_1,int param_2)
 
 // 825F1528  SaveBuffer_ScriptStringStream  (database/db_primtypes_save_buf.h:3971)
 
-void SaveBuffer_ScriptStringStream(bool param_1,int param_2)
+void SaveBuffer_ScriptStringStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xf86,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xf86,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufScriptString,2,&bufoutScriptString);
-      SaveBuffer_ScriptStringCustom(bufScriptString,bufoutScriptString);
-      bufScriptString = (ushort *)AssetBuf_GetSourcePos();
-      bufstreamScriptString = (ushort *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f31c,2,0xffffffff8404f3e0);
+      SaveBuffer_ScriptStringCustom(DAT_8404f31c,DAT_8404f3e0);
+      DAT_8404f31c = AssetBuf_GetSourcePos();
+      DAT_8404f2c0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -9085,59 +8263,52 @@ void SaveBuffer_ScriptStringStream(bool param_1,int param_2)
 
 // 825F15C0  SaveBuffer_ConstChar  (database/db_primtypes_save_buf.h:3986)
 
-void SaveBuffer_ConstChar(bool param_1)
+void SaveBuffer_ConstChar(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufConstChar,1,&bufoutConstChar);
+  SaveBuffer_Stream(param_1,DAT_8404f2d8,1,0xffffffff8404f534);
   return;
 }
 
 
 // 825F15D8  AllocSaveBuffer_ConstChar  (database/db_primtypes_save_buf.h:3992)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char * AllocSaveBuffer_ConstChar(void)
+void AllocSaveBuffer_ConstChar(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return (char *)puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F15E0  SaveBuffer_ConstCharArray  (database/db_primtypes_save_buf.h:4001)
 
-void SaveBuffer_ConstCharArray(bool param_1,int param_2)
+void SaveBuffer_ConstCharArray(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufConstChar,param_2,&bufoutConstChar);
+  SaveBuffer_Stream(param_1,DAT_8404f2d8,param_2,0xffffffff8404f534);
   return;
 }
 
 
 // 825F15F8  SaveBuffer_ConstCharStream  (database/db_primtypes_save_buf.h:4031)
 
-void SaveBuffer_ConstCharStream(bool param_1,int param_2)
+void SaveBuffer_ConstCharStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0xfc2,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0xfc2,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufConstChar,1,&bufoutConstChar);
-      bufConstChar = (char *)AssetBuf_GetSourcePos();
-      bufstreamConstChar = (char *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f2d8,1,0xffffffff8404f534);
+      DAT_8404f2d8 = AssetBuf_GetSourcePos();
+      DAT_8404f310 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;
@@ -9146,36 +8317,35 @@ void SaveBuffer_ConstCharStream(bool param_1,int param_2)
 
 // 825F1688  SaveBuffer_TempString  (database/db_primtypes_save_buf.h:4046)
 
-void SaveBuffer_TempString(bool param_1)
+void SaveBuffer_TempString(void)
 
 {
   char cVar1;
-  bool bVar4;
-  char *pcVar2;
-  uchar *puVar3;
+  undefined8 uVar2;
+  int iVar3;
+  char *pcVar4;
   
-  bVar4 = (bool)__savegprlr_29(param_1);
-  SaveBuffer_Stream(bVar4,bufTempString,4,&bufoutTempString);
-  if (*bufTempString != (char *)0x0) {
-    pcVar2 = AssetBuf_FindStreamData(*bufTempString);
-    *bufoutTempString = pcVar2;
-    if (*bufoutTempString == (char *)0xffffffff) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                      ,0xfd4,0,"%s");
+  uVar2 = __savegprlr_29();
+  SaveBuffer_Stream(uVar2,DAT_8404f394,4,0xffffffff8404f4a8);
+  if (*DAT_8404f394 != 0) {
+    iVar3 = AssetBuf_FindStreamData(*DAT_8404f394);
+    *DAT_8404f4a8 = iVar3;
+    if (*DAT_8404f4a8 == -1) {
+      MyAssertHandler(0xffffffff82179a68,0xfd4,0,0xffffffff82000f98,0xffffffff82179ac0);
     }
-    if (*bufoutTempString == (char *)0x0) {
-      puVar3 = AssetBuf_AllocStreamPos(0);
-      *bufoutTempString = (char *)puVar3;
-      bufConstChar = *bufTempString;
-      bufstreamConstChar = *bufoutTempString;
-      AssetBuf_SetStreamData(*bufTempString,*bufoutTempString);
-      *bufoutTempString = (char *)0xffffffff;
-      pcVar2 = *bufTempString;
+    if (*DAT_8404f4a8 == 0) {
+      iVar3 = AssetBuf_AllocStreamPos(0);
+      *DAT_8404f4a8 = iVar3;
+      DAT_8404f2d8 = *DAT_8404f394;
+      DAT_8404f310 = *DAT_8404f4a8;
+      AssetBuf_SetStreamData(*DAT_8404f394,*DAT_8404f4a8);
+      *DAT_8404f4a8 = -1;
+      pcVar4 = (char *)*DAT_8404f394;
       do {
-        cVar1 = *pcVar2;
-        pcVar2 = pcVar2 + 1;
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
       } while (cVar1 != '\0');
-      SaveBuffer_Stream(true,bufConstChar,(int)pcVar2 - (int)*bufTempString,&bufoutConstChar);
+      SaveBuffer_Stream(1,DAT_8404f2d8,(int)pcVar4 - *DAT_8404f394,0xffffffff8404f534);
     }
   }
   __restgprlr_29();
@@ -9185,71 +8355,64 @@ void SaveBuffer_TempString(bool param_1)
 
 // 825F17A8  AllocSaveBuffer_TempString  (database/db_primtypes_save_buf.h:4067)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char ** AllocSaveBuffer_TempString(void)
+void AllocSaveBuffer_TempString(void)
 
 {
-  char **ppcVar1;
-  
-  ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-  return ppcVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F17B0  SaveBuffer_TempStringArray  (database/db_primtypes_save_buf.h:4076)
 
-void SaveBuffer_TempStringArray(bool param_1,int param_2)
+void SaveBuffer_TempStringArray(undefined8 param_1,ulonglong param_2)
 
 {
   char cVar1;
-  bool bVar4;
-  char *pcVar2;
-  uchar *puVar3;
-  char **ppcVar5;
-  char **ppcVar6;
-  char **ppcVar7;
-  ulonglong uVar8;
+  undefined8 uVar2;
+  int iVar3;
+  char *pcVar4;
+  int *piVar5;
+  int iVar6;
+  int *piVar7;
   
-  uVar8 = (ulonglong)param_2;
-  bVar4 = (bool)__savegprlr_18(param_1);
-  SaveBuffer_Stream(bVar4,bufTempString,(int)((uVar8 & 0xffffffff) << 2),&bufoutTempString);
-  ppcVar7 = bufTempString;
-  ppcVar5 = bufoutTempString;
-  ppcVar6 = bufstreamTempString;
-  if (0 < (int)uVar8) {
+  uVar2 = __savegprlr_18();
+  SaveBuffer_Stream(uVar2,DAT_8404f394,(param_2 & 0x3fffffff) << 2,0xffffffff8404f4a8);
+  piVar5 = DAT_8404f4a8;
+  iVar6 = DAT_8404f290;
+  piVar7 = DAT_8404f394;
+  if (0 < (int)param_2) {
     do {
-      bufstreamTempString = ppcVar6;
-      bufTempString = ppcVar7;
-      bufoutTempString = ppcVar5;
-      SaveBuffer_Stream(false,ppcVar7,4,&bufoutTempString);
-      if (*bufTempString != (char *)0x0) {
-        pcVar2 = AssetBuf_FindStreamData(*bufTempString);
-        *bufoutTempString = pcVar2;
-        if (*bufoutTempString == (char *)0xffffffff) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                          ,0xfd4,0,"%s");
+      DAT_8404f290 = iVar6;
+      DAT_8404f394 = piVar7;
+      DAT_8404f4a8 = piVar5;
+      SaveBuffer_Stream(0,piVar7,4,0xffffffff8404f4a8);
+      if (*DAT_8404f394 != 0) {
+        iVar3 = AssetBuf_FindStreamData(*DAT_8404f394);
+        *DAT_8404f4a8 = iVar3;
+        if (*DAT_8404f4a8 == -1) {
+          MyAssertHandler(0xffffffff82179a68,0xfd4,0,0xffffffff82000f98,0xffffffff82179ac0);
         }
-        if (*bufoutTempString == (char *)0x0) {
-          puVar3 = AssetBuf_AllocStreamPos(0);
-          *bufoutTempString = (char *)puVar3;
-          bufConstChar = *bufTempString;
-          bufstreamConstChar = *bufoutTempString;
-          AssetBuf_SetStreamData(*bufTempString,*bufoutTempString);
-          *bufoutTempString = (char *)0xffffffff;
-          pcVar2 = *bufTempString;
+        if (*DAT_8404f4a8 == 0) {
+          iVar3 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f4a8 = iVar3;
+          DAT_8404f2d8 = *DAT_8404f394;
+          DAT_8404f310 = *DAT_8404f4a8;
+          AssetBuf_SetStreamData(*DAT_8404f394,*DAT_8404f4a8);
+          *DAT_8404f4a8 = -1;
+          pcVar4 = (char *)*DAT_8404f394;
           do {
-            cVar1 = *pcVar2;
-            pcVar2 = pcVar2 + 1;
+            cVar1 = *pcVar4;
+            pcVar4 = pcVar4 + 1;
           } while (cVar1 != '\0');
-          SaveBuffer_Stream(true,bufConstChar,(int)pcVar2 - (int)*bufTempString,&bufoutConstChar);
+          SaveBuffer_Stream(1,DAT_8404f2d8,(int)pcVar4 - *DAT_8404f394,0xffffffff8404f534);
         }
       }
-      uVar8 = uVar8 - 1;
-      ppcVar7 = ppcVar7 + 1;
-      ppcVar5 = ppcVar5 + 1;
-      ppcVar6 = ppcVar6 + 1;
-    } while (uVar8 != 0);
+      param_2 = param_2 - 1;
+      piVar5 = piVar5 + 1;
+      iVar6 = iVar6 + 4;
+      piVar7 = piVar7 + 1;
+    } while (param_2 != 0);
   }
   __restgprlr_18();
   return;
@@ -9258,49 +8421,45 @@ void SaveBuffer_TempStringArray(bool param_1,int param_2)
 
 // 825F1930  SaveBuffer_TempStringStream  (database/db_primtypes_save_buf.h:4106)
 
-void SaveBuffer_TempStringStream(bool param_1,int param_2)
+void SaveBuffer_TempStringStream(undefined8 param_1,longlong param_2)
 
 {
-  char cVar3;
-  char *pcVar1;
-  uchar *puVar2;
-  longlong lVar4;
+  char cVar2;
+  int iVar1;
+  char *pcVar3;
   
-  lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_21(param_1);
-  if (cVar3 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x100d,0,"%s");
+  cVar2 = __savegprlr_21();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x100d,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar4) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufTempString,4,&bufoutTempString);
-      if (*bufTempString != (char *)0x0) {
-        pcVar1 = AssetBuf_FindStreamData(*bufTempString);
-        *bufoutTempString = pcVar1;
-        if (*bufoutTempString == (char *)0xffffffff) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                          ,0xfd4,0,"%s");
+      SaveBuffer_Stream(1,DAT_8404f394,4,0xffffffff8404f4a8);
+      if (*DAT_8404f394 != 0) {
+        iVar1 = AssetBuf_FindStreamData(*DAT_8404f394);
+        *DAT_8404f4a8 = iVar1;
+        if (*DAT_8404f4a8 == -1) {
+          MyAssertHandler(0xffffffff82179a68,0xfd4,0,0xffffffff82000f98,0xffffffff82179ac0);
         }
-        if (*bufoutTempString == (char *)0x0) {
-          puVar2 = AssetBuf_AllocStreamPos(0);
-          *bufoutTempString = (char *)puVar2;
-          bufConstChar = *bufTempString;
-          bufstreamConstChar = *bufoutTempString;
-          AssetBuf_SetStreamData(*bufTempString,*bufoutTempString);
-          *bufoutTempString = (char *)0xffffffff;
-          pcVar1 = *bufTempString;
+        if (*DAT_8404f4a8 == 0) {
+          iVar1 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f4a8 = iVar1;
+          DAT_8404f2d8 = *DAT_8404f394;
+          DAT_8404f310 = *DAT_8404f4a8;
+          AssetBuf_SetStreamData(*DAT_8404f394,*DAT_8404f4a8);
+          *DAT_8404f4a8 = -1;
+          pcVar3 = (char *)*DAT_8404f394;
           do {
-            cVar3 = *pcVar1;
-            pcVar1 = pcVar1 + 1;
-          } while (cVar3 != '\0');
-          SaveBuffer_Stream(true,bufConstChar,(int)pcVar1 - (int)*bufTempString,&bufoutConstChar);
+            cVar2 = *pcVar3;
+            pcVar3 = pcVar3 + 1;
+          } while (cVar2 != '\0');
+          SaveBuffer_Stream(1,DAT_8404f2d8,(int)pcVar3 - *DAT_8404f394,0xffffffff8404f534);
         }
       }
-      bufTempString = (char **)AssetBuf_GetSourcePos();
-      bufstreamTempString = (char **)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      DAT_8404f394 = (int *)AssetBuf_GetSourcePos();
+      DAT_8404f290 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_21();
   return;
@@ -9309,36 +8468,35 @@ void SaveBuffer_TempStringStream(bool param_1,int param_2)
 
 // 825F1AB8  SaveBuffer_XString  (database/db_primtypes_save_buf.h:4121)
 
-void SaveBuffer_XString(bool param_1)
+void SaveBuffer_XString(void)
 
 {
   char cVar1;
-  bool bVar4;
-  char *pcVar2;
-  uchar *puVar3;
+  undefined8 uVar2;
+  int iVar3;
+  char *pcVar4;
   
-  bVar4 = (bool)__savegprlr_29(param_1);
-  SaveBuffer_Stream(bVar4,bufXString,4,&bufoutXString);
-  if (*bufXString != (char *)0x0) {
-    pcVar2 = AssetBuf_FindStreamData(*bufXString);
-    *bufoutXString = pcVar2;
-    if (*bufoutXString == (char *)0xffffffff) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                      ,0x101f,0,"%s");
+  uVar2 = __savegprlr_29();
+  SaveBuffer_Stream(uVar2,DAT_8404f538,4,0xffffffff8404f28c);
+  if (*DAT_8404f538 != 0) {
+    iVar3 = AssetBuf_FindStreamData(*DAT_8404f538);
+    *DAT_8404f28c = iVar3;
+    if (*DAT_8404f28c == -1) {
+      MyAssertHandler(0xffffffff82179a68,0x101f,0,0xffffffff82000f98,0xffffffff82179b08);
     }
-    if (*bufoutXString == (char *)0x0) {
-      puVar3 = AssetBuf_AllocStreamPos(0);
-      *bufoutXString = (char *)puVar3;
-      bufConstChar = *bufXString;
-      bufstreamConstChar = *bufoutXString;
-      AssetBuf_SetStreamData(*bufXString,*bufoutXString);
-      *bufoutXString = (char *)0xffffffff;
-      pcVar2 = *bufXString;
+    if (*DAT_8404f28c == 0) {
+      iVar3 = AssetBuf_AllocStreamPos(0);
+      *DAT_8404f28c = iVar3;
+      DAT_8404f2d8 = *DAT_8404f538;
+      DAT_8404f310 = *DAT_8404f28c;
+      AssetBuf_SetStreamData(*DAT_8404f538,*DAT_8404f28c);
+      *DAT_8404f28c = -1;
+      pcVar4 = (char *)*DAT_8404f538;
       do {
-        cVar1 = *pcVar2;
-        pcVar2 = pcVar2 + 1;
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
       } while (cVar1 != '\0');
-      SaveBuffer_Stream(true,bufConstChar,(int)pcVar2 - (int)*bufXString,&bufoutConstChar);
+      SaveBuffer_Stream(1,DAT_8404f2d8,(int)pcVar4 - *DAT_8404f538,0xffffffff8404f534);
     }
   }
   __restgprlr_29();
@@ -9348,71 +8506,64 @@ void SaveBuffer_XString(bool param_1)
 
 // 825F1BD8  AllocSaveBuffer_XString  (database/db_primtypes_save_buf.h:4142)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char ** AllocSaveBuffer_XString(void)
+void AllocSaveBuffer_XString(void)
 
 {
-  char **ppcVar1;
-  
-  ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-  return ppcVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F1BE0  SaveBuffer_XStringArray  (database/db_primtypes_save_buf.h:4151)
 
-void SaveBuffer_XStringArray(bool param_1,int param_2)
+void SaveBuffer_XStringArray(undefined8 param_1,ulonglong param_2)
 
 {
   char cVar1;
-  bool bVar4;
-  char *pcVar2;
-  uchar *puVar3;
-  char **ppcVar5;
-  char **ppcVar6;
-  char **ppcVar7;
-  ulonglong uVar8;
+  undefined8 uVar2;
+  int iVar3;
+  char *pcVar4;
+  int *piVar5;
+  int iVar6;
+  int *piVar7;
   
-  uVar8 = (ulonglong)param_2;
-  bVar4 = (bool)__savegprlr_18(param_1);
-  SaveBuffer_Stream(bVar4,bufXString,(int)((uVar8 & 0xffffffff) << 2),&bufoutXString);
-  ppcVar7 = bufXString;
-  ppcVar5 = bufoutXString;
-  ppcVar6 = bufstreamXString;
-  if (0 < (int)uVar8) {
+  uVar2 = __savegprlr_18();
+  SaveBuffer_Stream(uVar2,DAT_8404f538,(param_2 & 0x3fffffff) << 2,0xffffffff8404f28c);
+  piVar5 = DAT_8404f28c;
+  iVar6 = DAT_8404f47c;
+  piVar7 = DAT_8404f538;
+  if (0 < (int)param_2) {
     do {
-      bufoutXString = ppcVar5;
-      bufstreamXString = ppcVar6;
-      bufXString = ppcVar7;
-      SaveBuffer_Stream(false,ppcVar7,4,&bufoutXString);
-      if (*bufXString != (char *)0x0) {
-        pcVar2 = AssetBuf_FindStreamData(*bufXString);
-        *bufoutXString = pcVar2;
-        if (*bufoutXString == (char *)0xffffffff) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                          ,0x101f,0,"%s");
+      DAT_8404f28c = piVar5;
+      DAT_8404f47c = iVar6;
+      DAT_8404f538 = piVar7;
+      SaveBuffer_Stream(0,piVar7,4,0xffffffff8404f28c);
+      if (*DAT_8404f538 != 0) {
+        iVar3 = AssetBuf_FindStreamData(*DAT_8404f538);
+        *DAT_8404f28c = iVar3;
+        if (*DAT_8404f28c == -1) {
+          MyAssertHandler(0xffffffff82179a68,0x101f,0,0xffffffff82000f98,0xffffffff82179b08);
         }
-        if (*bufoutXString == (char *)0x0) {
-          puVar3 = AssetBuf_AllocStreamPos(0);
-          *bufoutXString = (char *)puVar3;
-          bufConstChar = *bufXString;
-          bufstreamConstChar = *bufoutXString;
-          AssetBuf_SetStreamData(*bufXString,*bufoutXString);
-          *bufoutXString = (char *)0xffffffff;
-          pcVar2 = *bufXString;
+        if (*DAT_8404f28c == 0) {
+          iVar3 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f28c = iVar3;
+          DAT_8404f2d8 = *DAT_8404f538;
+          DAT_8404f310 = *DAT_8404f28c;
+          AssetBuf_SetStreamData(*DAT_8404f538,*DAT_8404f28c);
+          *DAT_8404f28c = -1;
+          pcVar4 = (char *)*DAT_8404f538;
           do {
-            cVar1 = *pcVar2;
-            pcVar2 = pcVar2 + 1;
+            cVar1 = *pcVar4;
+            pcVar4 = pcVar4 + 1;
           } while (cVar1 != '\0');
-          SaveBuffer_Stream(true,bufConstChar,(int)pcVar2 - (int)*bufXString,&bufoutConstChar);
+          SaveBuffer_Stream(1,DAT_8404f2d8,(int)pcVar4 - *DAT_8404f538,0xffffffff8404f534);
         }
       }
-      uVar8 = uVar8 - 1;
-      ppcVar7 = ppcVar7 + 1;
-      ppcVar5 = ppcVar5 + 1;
-      ppcVar6 = ppcVar6 + 1;
-    } while (uVar8 != 0);
+      param_2 = param_2 - 1;
+      piVar5 = piVar5 + 1;
+      iVar6 = iVar6 + 4;
+      piVar7 = piVar7 + 1;
+    } while (param_2 != 0);
   }
   __restgprlr_18();
   return;
@@ -9421,49 +8572,45 @@ void SaveBuffer_XStringArray(bool param_1,int param_2)
 
 // 825F1D60  SaveBuffer_XStringStream  (database/db_primtypes_save_buf.h:4181)
 
-void SaveBuffer_XStringStream(bool param_1,int param_2)
+void SaveBuffer_XStringStream(undefined8 param_1,longlong param_2)
 
 {
-  char cVar3;
-  char *pcVar1;
-  uchar *puVar2;
-  longlong lVar4;
+  char cVar2;
+  int iVar1;
+  char *pcVar3;
   
-  lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_21(param_1);
-  if (cVar3 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x1058,0,"%s");
+  cVar2 = __savegprlr_21();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x1058,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar4) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufXString,4,&bufoutXString);
-      if (*bufXString != (char *)0x0) {
-        pcVar1 = AssetBuf_FindStreamData(*bufXString);
-        *bufoutXString = pcVar1;
-        if (*bufoutXString == (char *)0xffffffff) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                          ,0x101f,0,"%s");
+      SaveBuffer_Stream(1,DAT_8404f538,4,0xffffffff8404f28c);
+      if (*DAT_8404f538 != 0) {
+        iVar1 = AssetBuf_FindStreamData(*DAT_8404f538);
+        *DAT_8404f28c = iVar1;
+        if (*DAT_8404f28c == -1) {
+          MyAssertHandler(0xffffffff82179a68,0x101f,0,0xffffffff82000f98,0xffffffff82179b08);
         }
-        if (*bufoutXString == (char *)0x0) {
-          puVar2 = AssetBuf_AllocStreamPos(0);
-          *bufoutXString = (char *)puVar2;
-          bufConstChar = *bufXString;
-          bufstreamConstChar = *bufoutXString;
-          AssetBuf_SetStreamData(*bufXString,*bufoutXString);
-          *bufoutXString = (char *)0xffffffff;
-          pcVar1 = *bufXString;
+        if (*DAT_8404f28c == 0) {
+          iVar1 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f28c = iVar1;
+          DAT_8404f2d8 = *DAT_8404f538;
+          DAT_8404f310 = *DAT_8404f28c;
+          AssetBuf_SetStreamData(*DAT_8404f538,*DAT_8404f28c);
+          *DAT_8404f28c = -1;
+          pcVar3 = (char *)*DAT_8404f538;
           do {
-            cVar3 = *pcVar1;
-            pcVar1 = pcVar1 + 1;
-          } while (cVar3 != '\0');
-          SaveBuffer_Stream(true,bufConstChar,(int)pcVar1 - (int)*bufXString,&bufoutConstChar);
+            cVar2 = *pcVar3;
+            pcVar3 = pcVar3 + 1;
+          } while (cVar2 != '\0');
+          SaveBuffer_Stream(1,DAT_8404f2d8,(int)pcVar3 - *DAT_8404f538,0xffffffff8404f534);
         }
       }
-      bufXString = (char **)AssetBuf_GetSourcePos();
-      bufstreamXString = (char **)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      DAT_8404f538 = (int *)AssetBuf_GetSourcePos();
+      DAT_8404f47c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_21();
   return;
@@ -9472,27 +8619,26 @@ void SaveBuffer_XStringStream(bool param_1,int param_2)
 
 // 825F1EE8  SaveBuffer_XStringPtr  (database/db_primtypes_save_buf.h:4196)
 
-void SaveBuffer_XStringPtr(bool param_1)
+void SaveBuffer_XStringPtr(undefined8 param_1)
 
 {
-  char **ppcVar1;
+  int iVar1;
   
-  SaveBuffer_Stream(param_1,bufXStringPtr,4,&bufoutXStringPtr);
-  if (*bufXStringPtr != (char **)0x0) {
-    ppcVar1 = AssetBuf_FindStreamData(*bufXStringPtr);
-    *bufoutXStringPtr = ppcVar1;
-    if (*bufoutXStringPtr == (char **)0xffffffff) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                      ,0x106a,0,"%s");
+  SaveBuffer_Stream(param_1,DAT_8404f4b4,4,0xffffffff8404f468);
+  if (*DAT_8404f4b4 != 0) {
+    iVar1 = AssetBuf_FindStreamData(*DAT_8404f4b4);
+    *DAT_8404f468 = iVar1;
+    if (*DAT_8404f468 == -1) {
+      MyAssertHandler(0xffffffff82179a68,0x106a,0,0xffffffff82000f98,0xffffffff82179b48);
     }
-    if (*bufoutXStringPtr == (char **)0x0) {
-      ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-      *bufoutXStringPtr = ppcVar1;
-      bufXString = *bufXStringPtr;
-      bufstreamXString = *bufoutXStringPtr;
-      AssetBuf_SetStreamData(*bufXStringPtr,*bufoutXStringPtr);
-      *bufoutXStringPtr = (char **)0xffffffff;
-      SaveBuffer_XString(true);
+    if (*DAT_8404f468 == 0) {
+      iVar1 = AssetBuf_AllocStreamPos(3);
+      *DAT_8404f468 = iVar1;
+      DAT_8404f538 = *DAT_8404f4b4;
+      DAT_8404f47c = *DAT_8404f468;
+      AssetBuf_SetStreamData(*DAT_8404f4b4,*DAT_8404f468);
+      *DAT_8404f468 = -1;
+      SaveBuffer_XString(1);
     }
   }
   return;
@@ -9501,64 +8647,57 @@ void SaveBuffer_XStringPtr(bool param_1)
 
 // 825F1FE8  AllocSaveBuffer_XStringPtr  (database/db_primtypes_save_buf.h:4217)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char *** AllocSaveBuffer_XStringPtr(void)
+void AllocSaveBuffer_XStringPtr(void)
 
 {
-  char ***pppcVar1;
-  
-  pppcVar1 = (char ***)AssetBuf_AllocStreamPos(3);
-  return pppcVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F1FF0  SaveBuffer_XStringPtrArray  (database/db_primtypes_save_buf.h:4226)
 
-void SaveBuffer_XStringPtrArray(bool param_1,int param_2)
+void SaveBuffer_XStringPtrArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar2;
-  char **ppcVar1;
-  char ***pppcVar3;
-  char ***pppcVar4;
-  char ***pppcVar5;
-  ulonglong uVar6;
+  undefined8 uVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  int *piVar5;
   
-  uVar6 = (ulonglong)param_2;
-  bVar2 = (bool)__savegprlr_19(param_1);
-  SaveBuffer_Stream(bVar2,bufXStringPtr,(int)((uVar6 & 0xffffffff) << 2),&bufoutXStringPtr);
-  pppcVar5 = bufXStringPtr;
-  pppcVar3 = bufoutXStringPtr;
-  pppcVar4 = bufstreamXStringPtr;
-  if (0 < (int)uVar6) {
+  uVar1 = __savegprlr_19();
+  SaveBuffer_Stream(uVar1,DAT_8404f4b4,(param_2 & 0x3fffffff) << 2,0xffffffff8404f468);
+  piVar3 = DAT_8404f468;
+  iVar4 = DAT_8404f420;
+  piVar5 = DAT_8404f4b4;
+  if (0 < (int)param_2) {
     do {
-      bufstreamXStringPtr = pppcVar4;
-      bufoutXStringPtr = pppcVar3;
-      bufXStringPtr = pppcVar5;
-      SaveBuffer_Stream(false,pppcVar5,4,&bufoutXStringPtr);
-      if (*bufXStringPtr != (char **)0x0) {
-        ppcVar1 = AssetBuf_FindStreamData(*bufXStringPtr);
-        *bufoutXStringPtr = ppcVar1;
-        if (*bufoutXStringPtr == (char **)0xffffffff) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                          ,0x106a,0,"%s");
+      DAT_8404f420 = iVar4;
+      DAT_8404f468 = piVar3;
+      DAT_8404f4b4 = piVar5;
+      SaveBuffer_Stream(0,piVar5,4,0xffffffff8404f468);
+      if (*DAT_8404f4b4 != 0) {
+        iVar2 = AssetBuf_FindStreamData(*DAT_8404f4b4);
+        *DAT_8404f468 = iVar2;
+        if (*DAT_8404f468 == -1) {
+          MyAssertHandler(0xffffffff82179a68,0x106a,0,0xffffffff82000f98,0xffffffff82179b48);
         }
-        if (*bufoutXStringPtr == (char **)0x0) {
-          ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-          *bufoutXStringPtr = ppcVar1;
-          bufXString = *bufXStringPtr;
-          bufstreamXString = *bufoutXStringPtr;
-          AssetBuf_SetStreamData(*bufXStringPtr,*bufoutXStringPtr);
-          *bufoutXStringPtr = (char **)0xffffffff;
-          SaveBuffer_XString(true);
+        if (*DAT_8404f468 == 0) {
+          iVar2 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f468 = iVar2;
+          DAT_8404f538 = *DAT_8404f4b4;
+          DAT_8404f47c = *DAT_8404f468;
+          AssetBuf_SetStreamData(*DAT_8404f4b4,*DAT_8404f468);
+          *DAT_8404f468 = -1;
+          SaveBuffer_XString(1);
         }
       }
-      uVar6 = uVar6 - 1;
-      pppcVar5 = pppcVar5 + 1;
-      pppcVar3 = pppcVar3 + 1;
-      pppcVar4 = pppcVar4 + 1;
-    } while (uVar6 != 0);
+      param_2 = param_2 - 1;
+      piVar3 = piVar3 + 1;
+      iVar4 = iVar4 + 4;
+      piVar5 = piVar5 + 1;
+    } while (param_2 != 0);
   }
   __restgprlr_19();
   return;
@@ -9567,43 +8706,39 @@ void SaveBuffer_XStringPtrArray(bool param_1,int param_2)
 
 // 825F2130  SaveBuffer_XStringPtrStream  (database/db_primtypes_save_buf.h:4256)
 
-void SaveBuffer_XStringPtrStream(bool param_1,int param_2)
+void SaveBuffer_XStringPtrStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar2;
-  char **ppcVar1;
-  longlong lVar3;
+  int iVar1;
   
-  lVar3 = (longlong)param_2;
-  cVar2 = __savegprlr_22(param_1);
+  cVar2 = __savegprlr_22();
   if (cVar2 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x10a3,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x10a3,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar3) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufXStringPtr,4,&bufoutXStringPtr);
-      if (*bufXStringPtr != (char **)0x0) {
-        ppcVar1 = AssetBuf_FindStreamData(*bufXStringPtr);
-        *bufoutXStringPtr = ppcVar1;
-        if (*bufoutXStringPtr == (char **)0xffffffff) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                          ,0x106a,0,"%s");
+      SaveBuffer_Stream(1,DAT_8404f4b4,4,0xffffffff8404f468);
+      if (*DAT_8404f4b4 != 0) {
+        iVar1 = AssetBuf_FindStreamData(*DAT_8404f4b4);
+        *DAT_8404f468 = iVar1;
+        if (*DAT_8404f468 == -1) {
+          MyAssertHandler(0xffffffff82179a68,0x106a,0,0xffffffff82000f98,0xffffffff82179b48);
         }
-        if (*bufoutXStringPtr == (char **)0x0) {
-          ppcVar1 = (char **)AssetBuf_AllocStreamPos(3);
-          *bufoutXStringPtr = ppcVar1;
-          bufXString = *bufXStringPtr;
-          bufstreamXString = *bufoutXStringPtr;
-          AssetBuf_SetStreamData(*bufXStringPtr,*bufoutXStringPtr);
-          *bufoutXStringPtr = (char **)0xffffffff;
-          SaveBuffer_XString(true);
+        if (*DAT_8404f468 == 0) {
+          iVar1 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f468 = iVar1;
+          DAT_8404f538 = *DAT_8404f4b4;
+          DAT_8404f47c = *DAT_8404f468;
+          AssetBuf_SetStreamData(*DAT_8404f4b4,*DAT_8404f468);
+          *DAT_8404f468 = -1;
+          SaveBuffer_XString(1);
         }
       }
-      bufXStringPtr = (char ***)AssetBuf_GetSourcePos();
-      bufstreamXStringPtr = (char ***)AssetBuf_GetStreamPos();
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      DAT_8404f4b4 = (int *)AssetBuf_GetSourcePos();
+      DAT_8404f420 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_22();
   return;
@@ -9612,27 +8747,26 @@ void SaveBuffer_XStringPtrStream(bool param_1,int param_2)
 
 // 825F2278  SaveBuffer_ScriptStringList  (database/db_primtypes_save_buf.h:4271)
 
-void SaveBuffer_ScriptStringList(bool param_1)
+void SaveBuffer_ScriptStringList(undefined8 param_1)
 
 {
-  void *pvVar1;
-  char **ppcVar2;
+  int iVar1;
+  undefined4 uVar2;
   
-  SaveBuffer_Stream(param_1,bufScriptStringList,8,&bufoutScriptStringList);
+  SaveBuffer_Stream(param_1,DAT_8404f4c4,8,0xffffffff8404f2fc);
   AssetBuf_PushStreamPos(3);
-  if (bufScriptStringList->strings != (char **)0x0) {
-    pvVar1 = AssetBuf_FindStreamData(bufScriptStringList->strings);
-    if (pvVar1 != (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                      ,0x10bd,0,"%s");
+  if (DAT_8404f4c4[1] != 0) {
+    iVar1 = AssetBuf_FindStreamData(DAT_8404f4c4[1]);
+    if (iVar1 != 0) {
+      MyAssertHandler(0xffffffff82179a68,0x10bd,0,0xffffffff82000f98,0xffffffff82179b8c);
     }
-    ppcVar2 = (char **)AssetBuf_AllocStreamPos(3);
-    bufoutScriptStringList->strings = ppcVar2;
-    bufTempString = bufScriptStringList->strings;
-    bufstreamTempString = bufoutScriptStringList->strings;
-    AssetBuf_SetStreamData(bufScriptStringList->strings,bufoutScriptStringList->strings);
-    bufoutScriptStringList->strings = (char **)0xffffffff;
-    SaveBuffer_TempStringArray(true,bufScriptStringList->count);
+    uVar2 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f2fc + 4) = uVar2;
+    DAT_8404f394 = DAT_8404f4c4[1];
+    DAT_8404f290 = *(undefined4 *)(DAT_8404f2fc + 4);
+    AssetBuf_SetStreamData(DAT_8404f4c4[1],*(undefined4 *)(DAT_8404f2fc + 4));
+    *(undefined4 *)(DAT_8404f2fc + 4) = 0xffffffff;
+    SaveBuffer_TempStringArray(1,*DAT_8404f4c4);
   }
   AssetBuf_PopStreamPos();
   return;
@@ -9641,65 +8775,57 @@ void SaveBuffer_ScriptStringList(bool param_1)
 
 // 825F2368  AllocSaveBuffer_ScriptStringList  (database/db_primtypes_save_buf.h:4299)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ScriptStringList * AllocSaveBuffer_ScriptStringList(void)
+void AllocSaveBuffer_ScriptStringList(void)
 
 {
-  ScriptStringList *pSVar1;
-  
-  pSVar1 = (ScriptStringList *)AssetBuf_AllocStreamPos(3);
-  return pSVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F2370  SaveBuffer_ScriptStringListArray  (database/db_primtypes_save_buf.h:4308)
 
-void SaveBuffer_ScriptStringListArray(bool param_1,int param_2)
+void SaveBuffer_ScriptStringListArray(undefined8 param_1,ulonglong param_2)
 
 {
-  bool bVar3;
-  void *pvVar1;
-  char **ppcVar2;
-  ScriptStringList *pSVar4;
-  ScriptStringList *pSVar5;
-  ScriptStringList *pSVar6;
-  ulonglong uVar7;
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar5;
+  undefined4 *puVar6;
   
-  uVar7 = (ulonglong)param_2;
-  bVar3 = (bool)__savegprlr_19(param_1);
-  SaveBuffer_Stream(bVar3,bufScriptStringList,(int)((uVar7 & 0xffffffff) << 3),
-                    &bufoutScriptStringList);
-  pSVar6 = bufScriptStringList;
-  pSVar4 = bufoutScriptStringList;
-  pSVar5 = bufstreamScriptStringList;
-  if (0 < (int)uVar7) {
+  uVar1 = __savegprlr_19();
+  SaveBuffer_Stream(uVar1,DAT_8404f4c4,(param_2 & 0x1fffffff) << 3,0xffffffff8404f2fc);
+  iVar4 = DAT_8404f2fc;
+  iVar5 = DAT_8404f27c;
+  puVar6 = DAT_8404f4c4;
+  if (0 < (int)param_2) {
     do {
-      bufstreamScriptStringList = pSVar5;
-      bufoutScriptStringList = pSVar4;
-      bufScriptStringList = pSVar6;
-      SaveBuffer_Stream(false,pSVar6,8,&bufoutScriptStringList);
+      DAT_8404f27c = iVar5;
+      DAT_8404f2fc = iVar4;
+      DAT_8404f4c4 = puVar6;
+      SaveBuffer_Stream(0,puVar6,8,0xffffffff8404f2fc);
       AssetBuf_PushStreamPos(3);
-      if (bufScriptStringList->strings != (char **)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufScriptStringList->strings);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                          ,0x10bd,0,"%s");
+      if (DAT_8404f4c4[1] != 0) {
+        iVar2 = AssetBuf_FindStreamData(DAT_8404f4c4[1]);
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179a68,0x10bd,0,0xffffffff82000f98,0xffffffff82179b8c);
         }
-        ppcVar2 = (char **)AssetBuf_AllocStreamPos(3);
-        bufoutScriptStringList->strings = ppcVar2;
-        bufTempString = bufScriptStringList->strings;
-        bufstreamTempString = bufoutScriptStringList->strings;
-        AssetBuf_SetStreamData(bufScriptStringList->strings,bufoutScriptStringList->strings);
-        bufoutScriptStringList->strings = (char **)0xffffffff;
-        SaveBuffer_TempStringArray(true,bufScriptStringList->count);
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f2fc + 4) = uVar3;
+        DAT_8404f394 = DAT_8404f4c4[1];
+        DAT_8404f290 = *(undefined4 *)(DAT_8404f2fc + 4);
+        AssetBuf_SetStreamData(DAT_8404f4c4[1],*(undefined4 *)(DAT_8404f2fc + 4));
+        *(undefined4 *)(DAT_8404f2fc + 4) = 0xffffffff;
+        SaveBuffer_TempStringArray(1,*DAT_8404f4c4);
       }
       AssetBuf_PopStreamPos();
-      uVar7 = uVar7 - 1;
-      pSVar6 = pSVar6 + 1;
-      pSVar4 = pSVar4 + 1;
-      pSVar5 = pSVar5 + 1;
-    } while (uVar7 != 0);
+      param_2 = param_2 - 1;
+      iVar4 = iVar4 + 8;
+      iVar5 = iVar5 + 8;
+      puVar6 = puVar6 + 2;
+    } while (param_2 != 0);
   }
   __restgprlr_19();
   return;
@@ -9708,43 +8834,39 @@ void SaveBuffer_ScriptStringListArray(bool param_1,int param_2)
 
 // 825F24A8  SaveBuffer_ScriptStringListStream  (database/db_primtypes_save_buf.h:4338)
 
-void SaveBuffer_ScriptStringListStream(bool param_1,int param_2)
+void SaveBuffer_ScriptStringListStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar3;
-  void *pvVar1;
-  char **ppcVar2;
-  longlong lVar4;
+  int iVar1;
+  undefined4 uVar2;
   
-  lVar4 = (longlong)param_2;
-  cVar3 = __savegprlr_22(param_1);
+  cVar3 = __savegprlr_22();
   if (cVar3 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x10f5,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x10f5,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar4) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufScriptStringList,8,&bufoutScriptStringList);
+      SaveBuffer_Stream(1,DAT_8404f4c4,8,0xffffffff8404f2fc);
       AssetBuf_PushStreamPos(3);
-      if (bufScriptStringList->strings != (char **)0x0) {
-        pvVar1 = AssetBuf_FindStreamData(bufScriptStringList->strings);
-        if (pvVar1 != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                          ,0x10bd,0,"%s");
+      if (DAT_8404f4c4[1] != 0) {
+        iVar1 = AssetBuf_FindStreamData(DAT_8404f4c4[1]);
+        if (iVar1 != 0) {
+          MyAssertHandler(0xffffffff82179a68,0x10bd,0,0xffffffff82000f98,0xffffffff82179b8c);
         }
-        ppcVar2 = (char **)AssetBuf_AllocStreamPos(3);
-        bufoutScriptStringList->strings = ppcVar2;
-        bufTempString = bufScriptStringList->strings;
-        bufstreamTempString = bufoutScriptStringList->strings;
-        AssetBuf_SetStreamData(bufScriptStringList->strings,bufoutScriptStringList->strings);
-        bufoutScriptStringList->strings = (char **)0xffffffff;
-        SaveBuffer_TempStringArray(true,bufScriptStringList->count);
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f2fc + 4) = uVar2;
+        DAT_8404f394 = DAT_8404f4c4[1];
+        DAT_8404f290 = *(undefined4 *)(DAT_8404f2fc + 4);
+        AssetBuf_SetStreamData(DAT_8404f4c4[1],*(undefined4 *)(DAT_8404f2fc + 4));
+        *(undefined4 *)(DAT_8404f2fc + 4) = 0xffffffff;
+        SaveBuffer_TempStringArray(1,*DAT_8404f4c4);
       }
       AssetBuf_PopStreamPos();
-      bufScriptStringList = (ScriptStringList *)AssetBuf_GetSourcePos();
-      bufstreamScriptStringList = (ScriptStringList *)AssetBuf_GetStreamPos();
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      DAT_8404f4c4 = (undefined4 *)AssetBuf_GetSourcePos();
+      DAT_8404f27c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_22();
   return;
@@ -9753,67 +8875,60 @@ void SaveBuffer_ScriptStringListStream(bool param_1,int param_2)
 
 // 825F25E8  SaveBuffer_XZoneHandle  (database/db_primtypes_save_buf.h:4353)
 
-void SaveBuffer_XZoneHandle(bool param_1)
+void SaveBuffer_XZoneHandle(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufXZoneHandle,1,&bufoutXZoneHandle);
-  bufoutbyte = bufoutXZoneHandle;
-  bufbyte = bufXZoneHandle;
-  bufstreambyte = bufstreamXZoneHandle;
-  SaveBuffer_Stream(false,bufXZoneHandle,1,&bufoutbyte);
+  SaveBuffer_Stream(param_1,DAT_8404f370,1,0xffffffff8404f4a4);
+  DAT_8404f514 = DAT_8404f4a4;
+  DAT_8404f284 = DAT_8404f370;
+  DAT_8404f2c4 = DAT_8404f3bc;
+  SaveBuffer_Stream(0,DAT_8404f370,1,0xffffffff8404f514);
   return;
 }
 
 
 // 825F2668  AllocSaveBuffer_XZoneHandle  (database/db_primtypes_save_buf.h:4364)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uchar * AllocSaveBuffer_XZoneHandle(void)
+void AllocSaveBuffer_XZoneHandle(void)
 
 {
-  uchar *puVar1;
-  
-  puVar1 = AssetBuf_AllocStreamPos(0);
-  return puVar1;
+  AssetBuf_AllocStreamPos(0);
+  return;
 }
 
 
 // 825F2670  SaveBuffer_XZoneHandleArray  (database/db_primtypes_save_buf.h:4373)
 
-void SaveBuffer_XZoneHandleArray(bool param_1,int param_2)
+void SaveBuffer_XZoneHandleArray(undefined8 param_1,undefined8 param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufXZoneHandle,param_2,&bufoutXZoneHandle);
+  SaveBuffer_Stream(param_1,DAT_8404f370,param_2,0xffffffff8404f4a4);
   return;
 }
 
 
 // 825F2688  SaveBuffer_XZoneHandleStream  (database/db_primtypes_save_buf.h:4403)
 
-void SaveBuffer_XZoneHandleStream(bool param_1,int param_2)
+void SaveBuffer_XZoneHandleStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_25(param_1);
+  cVar1 = __savegprlr_25();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x1136,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x1136,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufXZoneHandle,1,&bufoutXZoneHandle);
-      bufbyte = bufXZoneHandle;
-      bufstreambyte = bufstreamXZoneHandle;
-      bufoutbyte = bufoutXZoneHandle;
-      SaveBuffer_Stream(false,bufXZoneHandle,1,&bufoutbyte);
-      bufXZoneHandle = AssetBuf_GetSourcePos();
-      bufstreamXZoneHandle = AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f370,1,0xffffffff8404f4a4);
+      DAT_8404f284 = DAT_8404f370;
+      DAT_8404f2c4 = DAT_8404f3bc;
+      DAT_8404f514 = DAT_8404f4a4;
+      SaveBuffer_Stream(0,DAT_8404f370,1,0xffffffff8404f514);
+      DAT_8404f370 = AssetBuf_GetSourcePos();
+      DAT_8404f3bc = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_25();
   return;
@@ -9822,59 +8937,52 @@ void SaveBuffer_XZoneHandleStream(bool param_1,int param_2)
 
 // 825F2750  SaveBuffer_complex_t  (database/db_primtypes_save_buf.h:4418)
 
-void SaveBuffer_complex_t(bool param_1)
+void SaveBuffer_complex_t(undefined8 param_1)
 
 {
-  SaveBuffer_Stream(param_1,bufcomplex_t,8,&bufoutcomplex_t);
+  SaveBuffer_Stream(param_1,DAT_8404f280,8,0xffffffff8404f3ac);
   return;
 }
 
 
 // 825F2768  AllocSaveBuffer_complex_t  (database/db_primtypes_save_buf.h:4438)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-complex_s * AllocSaveBuffer_complex_t(void)
+void AllocSaveBuffer_complex_t(void)
 
 {
-  complex_s *pcVar1;
-  
-  pcVar1 = (complex_s *)AssetBuf_AllocStreamPos(3);
-  return pcVar1;
+  AssetBuf_AllocStreamPos(3);
+  return;
 }
 
 
 // 825F2770  SaveBuffer_complex_tArray  (database/db_primtypes_save_buf.h:4447)
 
-void SaveBuffer_complex_tArray(bool param_1,int param_2)
+void SaveBuffer_complex_tArray(undefined8 param_1,ulonglong param_2)
 
 {
-  SaveBuffer_Stream(param_1,bufcomplex_t,param_2 << 3,&bufoutcomplex_t);
+  SaveBuffer_Stream(param_1,DAT_8404f280,(param_2 & 0x1fffffff) << 3,0xffffffff8404f3ac);
   return;
 }
 
 
 // 825F2788  SaveBuffer_complex_tStream  (database/db_primtypes_save_buf.h:4477)
 
-void SaveBuffer_complex_tStream(bool param_1,int param_2)
+void SaveBuffer_complex_tStream(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_2;
-  cVar1 = __savegprlr_28(param_1);
+  cVar1 = __savegprlr_28();
   if (cVar1 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../database/db_primtypes_save_buf.h"
-                    ,0x1180,0,"%s");
+    MyAssertHandler(0xffffffff82179a68,0x1180,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-  if (0 < (int)lVar2) {
+  if (0 < (int)param_2) {
     do {
-      SaveBuffer_Stream(true,bufcomplex_t,8,&bufoutcomplex_t);
-      bufcomplex_t = (complex_s *)AssetBuf_GetSourcePos();
-      bufstreamcomplex_t = (complex_s *)AssetBuf_GetStreamPos();
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      SaveBuffer_Stream(1,DAT_8404f280,8,0xffffffff8404f3ac);
+      DAT_8404f280 = AssetBuf_GetSourcePos();
+      DAT_8404f294 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
   __restgprlr_28();
   return;

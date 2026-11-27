@@ -2,7 +2,7 @@
 
 // 827B9D30  start_pass_downsample  (jpeg-6/jcsample.c:76)
 
-void start_pass_downsample(jpeg_compress_struct *param_1)
+void start_pass_downsample(void)
 
 {
   return;
@@ -11,81 +11,68 @@ void start_pass_downsample(jpeg_compress_struct *param_1)
 
 // 827B9D38  expand_right_edge  (jpeg-6/jcsample.c:89)
 
-void expand_right_edge(uchar **param_1,int param_2,uint param_3,uint param_4)
+void expand_right_edge(int param_1,longlong param_2,longlong param_3,longlong param_4)
 
 {
   undefined1 uVar1;
   ulonglong uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  uchar **ppuVar5;
-  longlong lVar6;
-  longlong lVar7;
-  ulonglong uVar8;
+  ulonglong uVar3;
+  uint *puVar4;
+  longlong lVar5;
+  ulonglong uVar6;
   
-  lVar3 = (longlong)param_2;
-  uVar4 = (longlong)(int)param_4 - (longlong)(int)param_3;
-  if ((longlong)uVar4 < 1) {
+  uVar3 = param_4 - param_3;
+  if ((longlong)uVar3 < 1) {
     return;
   }
-  if (param_2 < 1) {
+  if ((int)param_2 < 1) {
     return;
   }
-  ppuVar5 = param_1 + -1;
+  puVar4 = (uint *)(param_1 + -4);
   do {
-    ppuVar5 = ppuVar5 + 1;
-    lVar7 = ZEXT48(*ppuVar5) + (longlong)(int)param_3;
-    lVar6 = lVar7 + -1;
-    uVar1 = *(undefined1 *)((int)lVar7 + -1);
-    uVar8 = uVar4;
-    uVar2 = uVar4 & 0xffffffff;
+    puVar4 = puVar4 + 1;
+    lVar5 = (ulonglong)*puVar4 + param_3 + -1;
+    uVar1 = *(undefined1 *)((int)((ulonglong)*puVar4 + param_3) + -1);
+    uVar6 = uVar3;
+    uVar2 = uVar3 & 0xffffffff;
     while (uVar2 != 0) {
-      lVar6 = lVar6 + 1;
-      *(undefined1 *)lVar6 = uVar1;
-      uVar8 = uVar8 - 1;
-      uVar2 = uVar8;
+      lVar5 = lVar5 + 1;
+      *(undefined1 *)lVar5 = uVar1;
+      uVar6 = uVar6 - 1;
+      uVar2 = uVar6;
     }
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
+    param_2 = param_2 + -1;
+  } while (param_2 != 0);
   return;
 }
 
 
 // 827B9D80  sep_downsample  (jpeg-6/jcsample.c:117)
 
-void sep_downsample(jpeg_compress_struct *param_1,uchar ***param_2,uint param_3,uchar ***param_4,
-                   uint param_5)
+void sep_downsample(undefined8 param_1,longlong param_2,ulonglong param_3,int param_4,int param_5)
 
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  undefined4 *puVar6;
-  int iVar7;
-  int iVar8;
-  longlong lVar9;
+  undefined4 *puVar3;
+  int iVar4;
+  int iVar5;
   
-  lVar5 = (longlong)(int)param_5;
-  lVar4 = (longlong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_24(param_1,lVar9,uVar3,lVar4,lVar5);
-  iVar8 = *(int *)(iVar2 + 0x4c);
-  iVar7 = 0;
+  iVar2 = __savegprlr_24();
+  iVar5 = *(int *)(iVar2 + 0x4c);
+  iVar4 = 0;
   if (0 < *(int *)(iVar2 + 0x44)) {
-    puVar6 = (undefined4 *)(*(int *)(iVar2 + 0x15c) + 8);
-    iVar1 = (int)lVar9;
+    puVar3 = (undefined4 *)(*(int *)(iVar2 + 0x15c) + 8);
+    iVar1 = (int)param_2;
     do {
-      puVar6 = puVar6 + 1;
-      (*(code *)*puVar6)(iVar2,iVar8,(ulonglong)*(uint *)lVar9 + (uVar3 & 0x3fffffff) * 4,
-                         ((longlong)*(int *)(iVar8 + 0xc) * (longlong)(int)lVar5 & 0x3fffffffU) * 4
-                         + (ulonglong)*(uint *)(((int)lVar4 - iVar1) + (int)(uint *)lVar9));
-      iVar7 = iVar7 + 1;
-      lVar9 = lVar9 + 4;
-      iVar8 = iVar8 + 0x54;
-    } while (iVar7 < *(int *)(iVar2 + 0x44));
+      puVar3 = puVar3 + 1;
+      (*(code *)*puVar3)(iVar2,iVar5,(ulonglong)*(uint *)param_2 + (param_3 & 0x3fffffff) * 4,
+                         ((longlong)*(int *)(iVar5 + 0xc) * (longlong)param_5 & 0x3fffffffU) * 4 +
+                         (ulonglong)*(uint *)((param_4 - iVar1) + (int)(uint *)param_2));
+      iVar4 = iVar4 + 1;
+      param_2 = param_2 + 4;
+      iVar5 = iVar5 + 0x54;
+    } while (iVar4 < *(int *)(iVar2 + 0x44));
   }
   __restgprlr_24();
   return;
@@ -94,8 +81,7 @@ void sep_downsample(jpeg_compress_struct *param_1,uchar ***param_2,uint param_3,
 
 // 827B9E10  int_downsample  (jpeg-6/jcsample.c:142)
 
-void int_downsample(jpeg_compress_struct *param_1,jpeg_component_info *param_2,uchar **param_3,
-                   uchar **param_4)
+void int_downsample(undefined8 param_1,int param_2,ulonglong param_3,longlong param_4)
 
 {
   int iVar1;
@@ -122,71 +108,67 @@ void int_downsample(jpeg_compress_struct *param_1,jpeg_component_info *param_2,u
   byte *pbVar22;
   longlong lVar23;
   int iVar24;
-  longlong lVar25;
-  ulonglong uVar26;
-  ulonglong uVar27;
-  undefined1 *puVar28;
-  int iVar29;
-  longlong lVar30;
-  ulonglong uVar31;
+  ulonglong uVar25;
+  undefined1 *puVar26;
+  int iVar27;
+  longlong lVar28;
+  ulonglong uVar29;
   
-  lVar25 = (longlong)(int)param_4;
-  uVar26 = (ulonglong)(int)param_3;
-  iVar14 = __savegprlr_19(param_1);
+  iVar14 = __savegprlr_19();
   uVar5 = *(uint *)(iVar14 + 0xe0);
   uVar6 = *(uint *)(iVar14 + 0xe4);
   uVar21 = (ulonglong)uVar6;
-  uVar7 = param_2->h_samp_factor;
-  uVar8 = param_2->v_samp_factor;
-  uVar9 = param_2->width_in_blocks;
+  uVar7 = *(uint *)(param_2 + 8);
+  uVar8 = *(uint *)(param_2 + 0xc);
+  uVar9 = *(uint *)(param_2 + 0x1c);
   iVar1 = (int)uVar5 / (int)uVar7;
   uVar2 = (int)uVar6 / (int)uVar8;
   uVar10 = *(uint *)(iVar14 + 0x24);
   lVar23 = ((ulonglong)uVar9 & 0x1fffffff) << 3;
-  uVar27 = (longlong)(int)uVar2 * (longlong)iVar1;
+  uVar25 = (longlong)(int)uVar2 * (longlong)iVar1;
   uVar13 = (ulonglong)uVar7 &
            ~((((ulonglong)uVar5 & 0x7fffffff) << 1 | (ulonglong)(uVar5 >> 0x1f)) - 1);
   trapWord(6,(ulonglong)uVar7,0);
-  iVar14 = (int)uVar27;
+  iVar14 = (int)uVar25;
   trapWord(6,(ulonglong)uVar8,0);
   uVar15 = (longlong)iVar1 * (longlong)(int)lVar23 - (ulonglong)uVar10;
   trapWord(5,uVar13,0xffff);
   trapWord(5,(ulonglong)uVar8 &
              ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) - 1),0xffff);
   if ((0 < (longlong)uVar15) && (0 < (int)uVar6)) {
-    uVar13 = uVar26 - 4;
+    uVar13 = param_3 - 4;
     do {
       uVar13 = uVar13 + 4;
       lVar19 = (ulonglong)*(uint *)uVar13 + (ulonglong)uVar10;
       lVar17 = lVar19 + -1;
       uVar3 = *(undefined1 *)((int)lVar19 + -1);
-      uVar31 = uVar15;
+      uVar29 = uVar15;
       uVar12 = uVar15 & 0xffffffff;
       while (uVar12 != 0) {
         lVar17 = lVar17 + 1;
         *(undefined1 *)lVar17 = uVar3;
-        uVar31 = uVar31 - 1;
-        uVar12 = uVar31;
+        uVar29 = uVar29 - 1;
+        uVar12 = uVar29;
       }
       uVar21 = uVar21 - 1;
     } while (uVar21 != 0);
   }
   iVar24 = 0;
-  if (0 < param_2->v_samp_factor) {
+  if (0 < *(int *)(param_2 + 0xc)) {
     do {
-      iVar29 = 0;
+      iVar27 = 0;
       if ((uVar9 & 0x1fffffff) != 0) {
-        puVar28 = (undefined1 *)(*(int *)lVar25 + -1);
+        puVar26 = (undefined1 *)(*(int *)param_4 + -1);
         lVar17 = lVar23;
         do {
-          lVar30 = 0;
-          uVar15 = uVar26;
+          lVar28 = 0;
+          uVar15 = param_3;
           lVar19 = (longlong)(int)uVar2;
           if (0 < (int)uVar2) {
             do {
               lVar18 = 0;
               lVar16 = 0;
-              pbVar22 = (byte *)(*(int *)uVar15 + iVar29);
+              pbVar22 = (byte *)(*(int *)uVar15 + iVar27);
               iVar20 = 0;
               if (1 < iVar1) {
                 do {
@@ -199,28 +181,28 @@ void int_downsample(jpeg_compress_struct *param_1,jpeg_component_info *param_2,u
                 } while (iVar20 < iVar1 + -1);
               }
               if (iVar20 < iVar1) {
-                lVar30 = (ulonglong)*pbVar22 + lVar30;
+                lVar28 = (ulonglong)*pbVar22 + lVar28;
               }
               uVar13 = uVar15 + 4;
-              lVar30 = lVar16 + lVar18 + lVar30;
+              lVar28 = lVar16 + lVar18 + lVar28;
               lVar19 = lVar19 + -1;
               uVar15 = uVar13;
             } while (lVar19 != 0);
           }
-          uVar15 = lVar30 + (longlong)(iVar14 >> 1) + (ulonglong)(iVar14 < 0 && (uVar27 & 1) != 0);
+          uVar15 = lVar28 + (longlong)(iVar14 >> 1) + (ulonglong)(iVar14 < 0 && (uVar25 & 1) != 0);
           lVar17 = lVar17 + -1;
-          trapWord(6,uVar27,0);
-          puVar28 = puVar28 + 1;
-          *puVar28 = (char)((int)uVar15 / iVar14);
-          iVar29 = iVar29 + iVar1;
-          trapWord(5,uVar27 & ~(((uVar15 & 0x7fffffff) << 1 | (uVar15 & 0xffffffff) >> 0x1f) - 1),
+          trapWord(6,uVar25,0);
+          puVar26 = puVar26 + 1;
+          *puVar26 = (char)((int)uVar15 / iVar14);
+          iVar27 = iVar27 + iVar1;
+          trapWord(5,uVar25 & ~(((uVar15 & 0x7fffffff) << 1 | (uVar15 & 0xffffffff) >> 0x1f) - 1),
                    0xffff);
         } while (lVar17 != 0);
       }
       iVar24 = iVar24 + 1;
-      uVar26 = ((ulonglong)uVar2 & 0x3fffffff) * 4 + uVar26;
-      lVar25 = lVar25 + 4;
-    } while (iVar24 < param_2->v_samp_factor);
+      param_3 = ((ulonglong)uVar2 & 0x3fffffff) * 4 + param_3;
+      param_4 = param_4 + 4;
+    } while (iVar24 < *(int *)(param_2 + 0xc));
   }
   __restgprlr_19(uVar13);
   return;
@@ -229,8 +211,7 @@ void int_downsample(jpeg_compress_struct *param_1,jpeg_component_info *param_2,u
 
 // 827B9FA8  fullsize_downsample  (jpeg-6/jcsample.c:189)
 
-void fullsize_downsample(jpeg_compress_struct *param_1,jpeg_component_info *param_2,uchar **param_3,
-                        uchar **param_4)
+void fullsize_downsample(undefined8 param_1,int param_2,undefined8 param_3,longlong param_4)
 
 {
   undefined1 uVar1;
@@ -239,34 +220,33 @@ void fullsize_downsample(jpeg_compress_struct *param_1,jpeg_component_info *para
   int iVar4;
   ulonglong uVar5;
   longlong lVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
+  ulonglong uVar7;
+  longlong lVar8;
+  ulonglong uVar9;
   
-  lVar6 = (longlong)(int)param_4;
-  iVar4 = __savegprlr_29(param_1);
-  jcopy_sample_rows(param_3,0,(uchar **)lVar6,0,*(int *)(iVar4 + 0xe4),*(uint *)(iVar4 + 0x24));
+  iVar4 = __savegprlr_29();
+  jcopy_sample_rows(param_3,0,param_4,0,*(undefined4 *)(iVar4 + 0xe4),*(undefined4 *)(iVar4 + 0x24))
+  ;
   uVar2 = *(uint *)(iVar4 + 0x24);
-  uVar8 = (ulonglong)*(uint *)(iVar4 + 0xe4);
-  uVar5 = ((ulonglong)param_2->width_in_blocks & 0x1fffffff) * 8 - (ulonglong)uVar2;
+  uVar7 = (ulonglong)*(uint *)(iVar4 + 0xe4);
+  uVar5 = ((ulonglong)*(uint *)(param_2 + 0x1c) & 0x1fffffff) * 8 - (ulonglong)uVar2;
   if ((0 < (longlong)uVar5) && (0 < (int)*(uint *)(iVar4 + 0xe4))) {
-    lVar6 = lVar6 + -4;
+    param_4 = param_4 + -4;
     do {
-      lVar6 = lVar6 + 4;
-      lVar9 = (ulonglong)*(uint *)lVar6 + (ulonglong)uVar2;
-      lVar7 = lVar9 + -1;
-      uVar1 = *(undefined1 *)((int)lVar9 + -1);
-      uVar10 = uVar5;
+      param_4 = param_4 + 4;
+      lVar8 = (ulonglong)*(uint *)param_4 + (ulonglong)uVar2;
+      lVar6 = lVar8 + -1;
+      uVar1 = *(undefined1 *)((int)lVar8 + -1);
+      uVar9 = uVar5;
       uVar3 = uVar5 & 0xffffffff;
       while (uVar3 != 0) {
-        lVar7 = lVar7 + 1;
-        *(undefined1 *)lVar7 = uVar1;
-        uVar10 = uVar10 - 1;
-        uVar3 = uVar10;
+        lVar6 = lVar6 + 1;
+        *(undefined1 *)lVar6 = uVar1;
+        uVar9 = uVar9 - 1;
+        uVar3 = uVar9;
       }
-      uVar8 = uVar8 - 1;
-    } while (uVar8 != 0);
+      uVar7 = uVar7 - 1;
+    } while (uVar7 != 0);
   }
   __restgprlr_29();
   return;
@@ -275,71 +255,69 @@ void fullsize_downsample(jpeg_compress_struct *param_1,jpeg_component_info *para
 
 // 827BA038  h2v1_downsample  (jpeg-6/jcsample.c:214)
 
-void h2v1_downsample(jpeg_compress_struct *param_1,jpeg_component_info *param_2,uchar **param_3,
-                    uchar **param_4)
+void h2v1_downsample(int param_1,int param_2,int *param_3,int param_4)
 
 {
   undefined1 uVar1;
   uint uVar2;
-  int iVar3;
-  byte *pbVar4;
-  ulonglong uVar5;
-  int iVar6;
-  ulonglong uVar7;
-  int iVar8;
-  uchar **ppuVar9;
-  undefined1 *puVar10;
-  longlong lVar11;
-  uint uVar12;
-  ulonglong uVar13;
-  longlong lVar14;
-  byte *pbVar15;
-  ulonglong uVar16;
+  byte *pbVar3;
+  ulonglong uVar4;
+  int iVar5;
+  ulonglong uVar6;
+  int iVar7;
+  uint *puVar8;
+  undefined1 *puVar9;
+  longlong lVar10;
+  uint uVar11;
+  ulonglong uVar12;
+  longlong lVar13;
+  byte *pbVar14;
+  ulonglong uVar15;
   
-  uVar2 = param_2->width_in_blocks;
-  uVar12 = param_1->image_width;
-  uVar13 = (ulonglong)(uint)param_1->max_v_samp_factor;
-  uVar7 = ((ulonglong)uVar2 & 0xfffffff) * 0x10 - (ulonglong)uVar12;
-  if ((0 < (longlong)uVar7) && (0 < param_1->max_v_samp_factor)) {
-    ppuVar9 = param_3 + -1;
+  uVar2 = *(uint *)(param_2 + 0x1c);
+  uVar11 = *(uint *)(param_1 + 0x24);
+  uVar12 = (ulonglong)*(uint *)(param_1 + 0xe4);
+  uVar6 = ((ulonglong)uVar2 & 0xfffffff) * 0x10 - (ulonglong)uVar11;
+  if ((0 < (longlong)uVar6) && (0 < (int)*(uint *)(param_1 + 0xe4))) {
+    puVar8 = (uint *)(param_3 + -1);
     do {
-      ppuVar9 = ppuVar9 + 1;
-      lVar14 = ZEXT48(*ppuVar9) + (ulonglong)uVar12;
-      lVar11 = lVar14 + -1;
-      uVar1 = *(undefined1 *)((int)lVar14 + -1);
-      uVar16 = uVar7;
-      uVar5 = uVar7 & 0xffffffff;
-      while (uVar5 != 0) {
-        lVar11 = lVar11 + 1;
-        *(undefined1 *)lVar11 = uVar1;
-        uVar16 = uVar16 - 1;
-        uVar5 = uVar16;
+      puVar8 = puVar8 + 1;
+      lVar13 = (ulonglong)*puVar8 + (ulonglong)uVar11;
+      lVar10 = lVar13 + -1;
+      uVar1 = *(undefined1 *)((int)lVar13 + -1);
+      uVar15 = uVar6;
+      uVar4 = uVar6 & 0xffffffff;
+      while (uVar4 != 0) {
+        lVar10 = lVar10 + 1;
+        *(undefined1 *)lVar10 = uVar1;
+        uVar15 = uVar15 - 1;
+        uVar4 = uVar15;
       }
-      uVar13 = uVar13 - 1;
-    } while (uVar13 != 0);
+      uVar12 = uVar12 - 1;
+    } while (uVar12 != 0);
   }
-  iVar6 = 0;
-  if (0 < param_2->v_samp_factor) {
-    iVar3 = (int)param_4 - (int)param_3;
+  iVar5 = 0;
+  if (0 < *(int *)(param_2 + 0xc)) {
+    param_4 = param_4 - (int)param_3;
     do {
-      uVar12 = 0;
+      uVar11 = 0;
       if ((uVar2 & 0x1fffffff) != 0) {
-        pbVar15 = *param_3 + -1;
-        puVar10 = (undefined1 *)(*(int *)(iVar3 + (int)param_3) + -1);
-        lVar11 = ((ulonglong)uVar2 & 0x1fffffff) << 3;
+        pbVar14 = (byte *)(*param_3 + -1);
+        puVar9 = (undefined1 *)(*(int *)(param_4 + (int)param_3) + -1);
+        lVar10 = ((ulonglong)uVar2 & 0x1fffffff) << 3;
         do {
-          pbVar4 = pbVar15 + 1;
-          pbVar15 = pbVar15 + 2;
-          iVar8 = (uint)*pbVar4 + (uint)*pbVar15 + uVar12;
-          uVar12 = uVar12 ^ 1;
-          puVar10 = puVar10 + 1;
-          *puVar10 = (char)(iVar8 >> 1);
-          lVar11 = lVar11 + -1;
-        } while (lVar11 != 0);
+          pbVar3 = pbVar14 + 1;
+          pbVar14 = pbVar14 + 2;
+          iVar7 = (uint)*pbVar3 + (uint)*pbVar14 + uVar11;
+          uVar11 = uVar11 ^ 1;
+          puVar9 = puVar9 + 1;
+          *puVar9 = (char)(iVar7 >> 1);
+          lVar10 = lVar10 + -1;
+        } while (lVar10 != 0);
       }
-      iVar6 = iVar6 + 1;
+      iVar5 = iVar5 + 1;
       param_3 = param_3 + 1;
-    } while (iVar6 < param_2->v_samp_factor);
+    } while (iVar5 < *(int *)(param_2 + 0xc));
   }
   return;
 }
@@ -347,8 +325,7 @@ void h2v1_downsample(jpeg_compress_struct *param_1,jpeg_component_info *param_2,
 
 // 827BA108  h2v2_downsample  (jpeg-6/jcsample.c:251)
 
-void h2v2_downsample(jpeg_compress_struct *param_1,jpeg_component_info *param_2,uchar **param_3,
-                    uchar **param_4)
+void h2v2_downsample(undefined8 param_1,int param_2,longlong param_3,longlong param_4)
 
 {
   undefined1 uVar1;
@@ -367,43 +344,39 @@ void h2v2_downsample(jpeg_compress_struct *param_1,jpeg_component_info *param_2,
   ulonglong uVar14;
   longlong lVar15;
   byte *pbVar16;
-  longlong lVar17;
-  longlong lVar18;
-  ulonglong uVar19;
+  ulonglong uVar17;
   
-  lVar17 = (longlong)(int)param_4;
-  lVar18 = (longlong)(int)param_3;
-  iVar6 = __savegprlr_28(param_1);
-  uVar2 = param_2->width_in_blocks;
+  iVar6 = __savegprlr_28();
+  uVar2 = *(uint *)(param_2 + 0x1c);
   uVar11 = *(uint *)(iVar6 + 0x24);
   uVar14 = (ulonglong)*(uint *)(iVar6 + 0xe4);
   uVar8 = ((ulonglong)uVar2 & 0xfffffff) * 0x10 - (ulonglong)uVar11;
   if ((0 < (longlong)uVar8) && (0 < (int)*(uint *)(iVar6 + 0xe4))) {
-    lVar10 = lVar18 + -4;
+    lVar10 = param_3 + -4;
     do {
       lVar10 = lVar10 + 4;
       lVar15 = (ulonglong)*(uint *)lVar10 + (ulonglong)uVar11;
       lVar12 = lVar15 + -1;
       uVar1 = *(undefined1 *)((int)lVar15 + -1);
-      uVar19 = uVar8;
+      uVar17 = uVar8;
       uVar5 = uVar8 & 0xffffffff;
       while (uVar5 != 0) {
         lVar12 = lVar12 + 1;
         *(undefined1 *)lVar12 = uVar1;
-        uVar19 = uVar19 - 1;
-        uVar5 = uVar19;
+        uVar17 = uVar17 - 1;
+        uVar5 = uVar17;
       }
       uVar14 = uVar14 - 1;
     } while (uVar14 != 0);
   }
   iVar6 = 0;
-  if (0 < param_2->v_samp_factor) {
+  if (0 < *(int *)(param_2 + 0xc)) {
     do {
       uVar11 = 1;
       if ((uVar2 & 0x1fffffff) != 0) {
-        pbVar16 = (byte *)(((int *)lVar18)[1] + -1);
-        pbVar13 = (byte *)(*(int *)lVar18 + -1);
-        puVar9 = (undefined1 *)(*(int *)lVar17 + -1);
+        pbVar16 = (byte *)(((int *)param_3)[1] + -1);
+        pbVar13 = (byte *)(*(int *)param_3 + -1);
+        puVar9 = (undefined1 *)(*(int *)param_4 + -1);
         lVar10 = ((ulonglong)uVar2 & 0x1fffffff) << 3;
         do {
           pbVar3 = pbVar16 + 1;
@@ -418,9 +391,9 @@ void h2v2_downsample(jpeg_compress_struct *param_1,jpeg_component_info *param_2,
         } while (lVar10 != 0);
       }
       iVar6 = iVar6 + 1;
-      lVar18 = lVar18 + 8;
-      lVar17 = lVar17 + 4;
-    } while (iVar6 < param_2->v_samp_factor);
+      param_3 = param_3 + 8;
+      param_4 = param_4 + 4;
+    } while (iVar6 < *(int *)(param_2 + 0xc));
   }
   __restgprlr_28();
   return;
@@ -429,9 +402,7 @@ void h2v2_downsample(jpeg_compress_struct *param_1,jpeg_component_info *param_2,
 
 // 827BA200  h2v2_smooth_downsample  (jpeg-6/jcsample.c:294)
 
-void h2v2_smooth_downsample
-               (jpeg_compress_struct *param_1,jpeg_component_info *param_2,uchar **param_3,
-               uchar **param_4)
+void h2v2_smooth_downsample(undefined8 param_1,int param_2,longlong param_3,longlong param_4)
 
 {
   undefined1 uVar1;
@@ -455,32 +426,28 @@ void h2v2_smooth_downsample
   longlong lVar19;
   byte *pbVar20;
   int iVar21;
-  longlong lVar22;
-  longlong lVar23;
-  undefined4 *puVar24;
-  ulonglong uVar25;
+  undefined4 *puVar22;
+  ulonglong uVar23;
   
-  lVar22 = (longlong)(int)param_4;
-  lVar23 = (longlong)(int)param_3;
-  iVar14 = __savegprlr_18(param_1);
-  uVar3 = param_2->width_in_blocks;
+  iVar14 = __savegprlr_18();
+  uVar3 = *(uint *)(param_2 + 0x1c);
   uVar4 = *(uint *)(iVar14 + 0x24);
   lVar18 = (ulonglong)*(uint *)(iVar14 + 0xe4) + 2;
   uVar15 = ((ulonglong)uVar3 & 0xfffffff) * 0x10 - (ulonglong)uVar4;
   if ((0 < (longlong)uVar15) && (0 < (int)lVar18)) {
-    lVar16 = lVar23 + -8;
+    lVar16 = param_3 + -8;
     do {
       lVar16 = lVar16 + 4;
       lVar19 = (ulonglong)*(uint *)lVar16 + (ulonglong)uVar4;
       lVar17 = lVar19 + -1;
       uVar1 = *(undefined1 *)((int)lVar19 + -1);
-      uVar25 = uVar15;
+      uVar23 = uVar15;
       uVar13 = uVar15 & 0xffffffff;
       while (uVar13 != 0) {
         lVar17 = lVar17 + 1;
         *(undefined1 *)lVar17 = uVar1;
-        uVar25 = uVar25 - 1;
-        uVar13 = uVar25;
+        uVar23 = uVar23 - 1;
+        uVar13 = uVar23;
       }
       lVar18 = lVar18 + -1;
     } while (lVar18 != 0);
@@ -488,23 +455,23 @@ void h2v2_smooth_downsample
   iVar21 = 0;
   iVar12 = *(int *)(iVar14 + 0xbc) * 0x10;
   iVar14 = *(int *)(iVar14 + 0xbc) * -0x50 + 0x4000;
-  if (0 < param_2->v_samp_factor) {
+  if (0 < *(int *)(param_2 + 0xc)) {
     uVar15 = ((ulonglong)uVar3 & 0x1fffffff) * 8 - 2;
-    lVar23 = lVar23 + -4;
+    param_3 = param_3 + -4;
     do {
-      puVar24 = (undefined4 *)lVar23;
-      pbVar5 = (byte *)*puVar24;
-      pbVar6 = (byte *)puVar24[3];
-      pbVar7 = (byte *)puVar24[1];
-      pbVar8 = (byte *)puVar24[2];
-      puVar9 = (undefined1 *)*(undefined4 *)lVar22;
+      puVar22 = (undefined4 *)param_3;
+      pbVar5 = (byte *)*puVar22;
+      pbVar6 = (byte *)puVar22[3];
+      pbVar7 = (byte *)puVar22[1];
+      pbVar8 = (byte *)puVar22[2];
+      puVar9 = (undefined1 *)*(undefined4 *)param_4;
       pbVar20 = pbVar8 + 2;
       *puVar9 = (char)((((uint)pbVar6[1] + (uint)pbVar5[1] + (uint)pbVar7[2] + (uint)*pbVar20 +
                          (uint)*pbVar7 + (uint)*pbVar8 + (uint)*pbVar5 + (uint)*pbVar6) * 2 +
                         (uint)pbVar5[2] + (uint)pbVar6[2] + (uint)*pbVar5 + (uint)*pbVar6) * iVar12
                        + ((uint)pbVar8[1] + (uint)pbVar7[1] + (uint)*pbVar7 + (uint)*pbVar8) *
                          iVar14 + 0x8000 >> 0x10);
-      uVar25 = uVar15;
+      uVar23 = uVar15;
       pbVar5 = pbVar5 + 2;
       pbVar6 = pbVar6 + 2;
       uVar13 = uVar15 & 0xffffffff;
@@ -522,20 +489,20 @@ void h2v2_smooth_downsample
                           (uint)pbVar6[-1] + (uint)pbVar5[-1] + (uint)pbVar5[2] + (uint)pbVar6[2]) *
                          iVar12 + ((uint)*pbVar10 + (uint)pbVar7[1] + (uint)bVar2 + (uint)*pbVar7) *
                                   iVar14 + 0x8000 >> 0x10);
-        uVar25 = uVar25 - 1;
+        uVar23 = uVar23 - 1;
         pbVar5 = pbVar5 + 2;
         pbVar6 = pbVar6 + 2;
-        uVar13 = uVar25;
+        uVar13 = uVar23;
       }
       iVar21 = iVar21 + 1;
-      lVar23 = lVar23 + 8;
-      lVar22 = lVar22 + 4;
+      param_3 = param_3 + 8;
+      param_4 = param_4 + 4;
       *puVar9 = (char)((((uint)pbVar20[-1] + (uint)pbVar7[-1] + (uint)*pbVar6 + (uint)*pbVar5 +
                          (uint)pbVar7[1] + (uint)pbVar20[1] + (uint)pbVar5[1] + (uint)pbVar6[1]) * 2
                         + (uint)pbVar6[-1] + (uint)pbVar5[-1] + (uint)pbVar5[1] + (uint)pbVar6[1]) *
                        iVar12 + ((uint)*pbVar20 + (uint)*pbVar7 + (uint)pbVar7[1] + (uint)pbVar20[1]
                                 ) * iVar14 + 0x8000 >> 0x10);
-    } while (iVar21 < param_2->v_samp_factor);
+    } while (iVar21 < *(int *)(param_2 + 0xc));
   }
   __restgprlr_18();
   return;
@@ -544,9 +511,7 @@ void h2v2_smooth_downsample
 
 // 827BA4B8  fullsize_smooth_downsample  (jpeg-6/jcsample.c:394)
 
-void fullsize_smooth_downsample
-               (jpeg_compress_struct *param_1,jpeg_component_info *param_2,uchar **param_3,
-               uchar **param_4)
+void fullsize_smooth_downsample(undefined8 param_1,int param_2,longlong param_3,longlong param_4)
 
 {
   byte *pbVar1;
@@ -563,83 +528,79 @@ void fullsize_smooth_downsample
   ulonglong uVar12;
   int iVar13;
   int iVar14;
-  longlong lVar15;
-  ulonglong uVar16;
+  ulonglong uVar15;
+  longlong lVar16;
   longlong lVar17;
-  longlong lVar18;
+  int iVar18;
   int iVar19;
-  int iVar20;
+  longlong lVar20;
   longlong lVar21;
-  longlong lVar22;
-  int iVar23;
-  longlong lVar24;
-  longlong lVar25;
-  ulonglong uVar26;
+  int iVar22;
+  longlong lVar23;
+  ulonglong uVar24;
   
-  lVar24 = (longlong)(int)param_4;
-  lVar15 = (longlong)(int)param_3;
-  iVar13 = __savegprlr_22(param_1);
+  iVar13 = __savegprlr_22();
   uVar6 = *(uint *)(iVar13 + 0x24);
-  lVar25 = ((ulonglong)param_2->width_in_blocks & 0x1fffffff) * 8;
-  uVar16 = lVar25 - (ulonglong)uVar6;
-  lVar21 = (ulonglong)*(uint *)(iVar13 + 0xe4) + 2;
-  if ((0 < (longlong)uVar16) && (0 < (int)lVar21)) {
-    lVar17 = lVar15 + -8;
+  lVar23 = ((ulonglong)*(uint *)(param_2 + 0x1c) & 0x1fffffff) * 8;
+  uVar15 = lVar23 - (ulonglong)uVar6;
+  lVar20 = (ulonglong)*(uint *)(iVar13 + 0xe4) + 2;
+  if ((0 < (longlong)uVar15) && (0 < (int)lVar20)) {
+    lVar16 = param_3 + -8;
     do {
-      lVar17 = lVar17 + 4;
-      lVar22 = (ulonglong)*(uint *)lVar17 + (ulonglong)uVar6;
-      lVar18 = lVar22 + -1;
-      uVar4 = *(undefined1 *)((int)lVar22 + -1);
-      uVar26 = uVar16;
-      uVar12 = uVar16 & 0xffffffff;
+      lVar16 = lVar16 + 4;
+      lVar21 = (ulonglong)*(uint *)lVar16 + (ulonglong)uVar6;
+      lVar17 = lVar21 + -1;
+      uVar4 = *(undefined1 *)((int)lVar21 + -1);
+      uVar24 = uVar15;
+      uVar12 = uVar15 & 0xffffffff;
       while (uVar12 != 0) {
-        lVar18 = lVar18 + 1;
-        *(undefined1 *)lVar18 = uVar4;
-        uVar26 = uVar26 - 1;
-        uVar12 = uVar26;
+        lVar17 = lVar17 + 1;
+        *(undefined1 *)lVar17 = uVar4;
+        uVar24 = uVar24 - 1;
+        uVar12 = uVar24;
       }
-      lVar21 = lVar21 + -1;
-    } while (lVar21 != 0);
+      lVar20 = lVar20 + -1;
+    } while (lVar20 != 0);
   }
-  iVar23 = 0;
+  iVar22 = 0;
   iVar11 = *(int *)(iVar13 + 0xbc) * 0x40;
   iVar13 = (0x80 - *(int *)(iVar13 + 0xbc)) * 0x200;
-  if (0 < param_2->v_samp_factor) {
-    uVar16 = lVar25 - 2;
+  if (0 < *(int *)(param_2 + 0xc)) {
+    uVar15 = lVar23 - 2;
     do {
-      puVar10 = (undefined4 *)(lVar15 + 4);
+      puVar10 = (undefined4 *)(param_3 + 4);
       pbVar7 = (byte *)puVar10[-2];
       pbVar8 = (byte *)*puVar10;
-      puVar9 = (undefined1 *)*(undefined4 *)lVar24;
-      bVar5 = *(byte *)*(undefined4 *)lVar15;
+      puVar9 = (undefined1 *)*(undefined4 *)param_4;
+      bVar5 = *(byte *)*(undefined4 *)param_3;
       pbVar1 = pbVar7 + 1;
       pbVar2 = pbVar8 + 1;
-      pbVar3 = (byte *)*(undefined4 *)lVar15 + 1;
+      pbVar3 = (byte *)*(undefined4 *)param_3 + 1;
       iVar14 = (uint)*pbVar8 + (uint)*pbVar7 + (uint)bVar5;
-      iVar19 = (uint)*pbVar2 + (uint)*pbVar1 + (uint)*pbVar3;
-      *puVar9 = (char)(((iVar14 * 2 - (uint)bVar5) + iVar19) * iVar11 + (uint)bVar5 * iVar13 +
+      iVar18 = (uint)*pbVar2 + (uint)*pbVar1 + (uint)*pbVar3;
+      *puVar9 = (char)(((iVar14 * 2 - (uint)bVar5) + iVar18) * iVar11 + (uint)bVar5 * iVar13 +
                        0x8000 >> 0x10);
-      uVar26 = uVar16;
-      uVar12 = uVar16 & 0xffffffff;
+      uVar24 = uVar15;
+      uVar12 = uVar15 & 0xffffffff;
       while (puVar9 = puVar9 + 1, uVar12 != 0) {
         pbVar1 = pbVar1 + 1;
         pbVar2 = pbVar2 + 1;
         bVar5 = *pbVar3;
         pbVar3 = pbVar3 + 1;
-        iVar20 = (uint)*pbVar2 + (uint)*pbVar1 + (uint)*pbVar3;
-        *puVar9 = (char)(((iVar14 - (uint)bVar5) + iVar20 + iVar19) * iVar11 + (uint)bVar5 * iVar13
+        iVar19 = (uint)*pbVar2 + (uint)*pbVar1 + (uint)*pbVar3;
+        *puVar9 = (char)(((iVar14 - (uint)bVar5) + iVar19 + iVar18) * iVar11 + (uint)bVar5 * iVar13
                          + 0x8000 >> 0x10);
-        uVar26 = uVar26 - 1;
-        iVar14 = iVar19;
-        iVar19 = iVar20;
-        uVar12 = uVar26;
+        uVar24 = uVar24 - 1;
+        iVar14 = iVar18;
+        iVar18 = iVar19;
+        uVar12 = uVar24;
       }
-      iVar23 = iVar23 + 1;
-      lVar24 = lVar24 + 4;
-      *puVar9 = (char)(((iVar19 * 2 - (uint)*pbVar3) + iVar14) * iVar11 + (uint)*pbVar3 * iVar13 +
+      iVar22 = iVar22 + 1;
+      param_4 = param_4 + 4;
+      *puVar9 = (char)(((iVar18 * 2 - (uint)*pbVar3) + iVar14) * iVar11 + (uint)*pbVar3 * iVar13 +
                        0x8000 >> 0x10);
-      lVar15 = lVar15 + 4;
-    } while (iVar23 < param_2->v_samp_factor);
+      param_3 = param_3 + 4;
+    } while (iVar22 < *(int *)(param_2 + 0xc));
   }
   __restgprlr_22();
   return;
@@ -648,7 +609,7 @@ void fullsize_smooth_downsample
 
 // 827BA658  jinit_downsampler  (jpeg-6/jcsample.c:465)
 
-void jinit_downsampler(jpeg_compress_struct *param_1)
+void jinit_downsampler(void)
 
 {
   uint uVar1;
@@ -661,7 +622,7 @@ void jinit_downsampler(jpeg_compress_struct *param_1)
   uint *puVar8;
   undefined4 *puVar9;
   
-  piVar4 = (int *)__savegprlr_24(param_1);
+  piVar4 = (int *)__savegprlr_24();
   bVar3 = true;
   puVar5 = (undefined4 *)(**(code **)piVar4[1])(piVar4,1,0x34);
   piVar4[0x57] = (int)puVar5;

@@ -2,8 +2,6 @@
 
 // 82761AF8  GenerateLightGridBasisDirs  (gfx_d3d/r_pointlights.cpp:20)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void GenerateLightGridBasisDirs(void)
 
 {
@@ -26,7 +24,7 @@ void GenerateLightGridBasisDirs(void)
     fVar1 = (float)(longlong)iVar6 * 0.6666667 - 1.0;
     do {
       iVar9 = 0;
-      pfVar10 = &s_topY + iVar8 * 3;
+      pfVar10 = (float *)(&DAT_84628694 + iVar8 * 3);
       lVar11 = 4;
       fVar2 = (float)(longlong)iVar7 * 0.6666667 - 1.0;
       do {
@@ -53,8 +51,7 @@ void GenerateLightGridBasisDirs(void)
     iVar6 = iVar6 + 1;
   } while (iVar6 < 4);
   if (iVar8 != 0x38) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_pointlights.cpp",
-                    0x2d,1,"%s");
+    MyAssertHandler(0xffffffff821ca6e0,0x2d,1,0xffffffff82000f98,0xffffffff821ca724);
   }
   return;
 }
@@ -62,25 +59,25 @@ void GenerateLightGridBasisDirs(void)
 
 // 82761C58  EncodeFloatInByte  (gfx_d3d/r_pointlights.cpp:50)
 
-uchar EncodeFloatInByte(float param_1)
+uint EncodeFloatInByte(double param_1)
 
 {
   double dVar1;
   
   if (param_1 <= 0.0) {
-    return '\0';
+    return 0;
   }
   if (1.0 <= param_1) {
     return 0xff;
   }
-  dVar1 = floor((double)(param_1 * 255.0 + 0.5));
-  return (uchar)(int)dVar1;
+  dVar1 = floor((double)(float)(param_1 * 255.0 + 0.5));
+  return (int)dVar1 & 0xff;
 }
 
 
 // 82761CE8  GatherIncidentEnergyInSpaceForLightFromDir  (gfx_d3d/r_pointlights.cpp:60)
 
-void GatherIncidentEnergyInSpaceForLightFromDir(float *param_1,float *param_2,float (*param_3) [3])
+void GatherIncidentEnergyInSpaceForLightFromDir(undefined8 param_1,float *param_2,longlong param_3)
 
 {
   float fVar1;
@@ -89,40 +86,37 @@ void GatherIncidentEnergyInSpaceForLightFromDir(float *param_1,float *param_2,fl
   float *pfVar4;
   float *pfVar5;
   longlong lVar6;
-  longlong lVar7;
   
-  lVar6 = (longlong)(int)param_3;
-  pfVar4 = (float *)__savegprlr_28(param_1);
-  lVar7 = 0xe;
-  iVar3 = (int)lVar6;
-  pfVar5 = gridBasisDirs[0] + 2;
-  lVar6 = lVar6 + 0x14;
+  pfVar4 = (float *)__savegprlr_28();
+  lVar6 = 0xe;
+  iVar3 = (int)param_3;
+  pfVar5 = (float *)&DAT_846286a0;
+  param_3 = param_3 + 0x14;
   do {
-    fVar1 = *pfVar5 * param_2[2] +
-            pfVar5[-1] * param_2[1] + (*(float (*) [3])(pfVar5 + -2))[0] * *param_2;
-    pfVar2 = (float *)lVar6;
+    fVar1 = *pfVar5 * param_2[2] + pfVar5[-1] * param_2[1] + pfVar5[-2] * *param_2;
+    pfVar2 = (float *)param_3;
     if (0.0 < fVar1) {
       pfVar2[-5] = *pfVar4 * fVar1 + pfVar2[-5];
       pfVar2[-4] = pfVar4[1] * fVar1 + pfVar2[-4];
       pfVar2[-3] = pfVar4[2] * fVar1 + pfVar2[-3];
     }
-    fVar1 = *(float *)(((int)gridBasisDirs - iVar3) + (int)pfVar2) * param_2[2] +
+    fVar1 = *(float *)(((int)&DAT_84628698 - iVar3) + (int)pfVar2) * param_2[2] +
             pfVar5[2] * param_2[1] + pfVar5[1] * *param_2;
     if (0.0 < fVar1) {
       pfVar2[-2] = *pfVar4 * fVar1 + pfVar2[-2];
       pfVar2[-1] = pfVar4[1] * fVar1 + pfVar2[-1];
       *pfVar2 = pfVar4[2] * fVar1 + *pfVar2;
     }
-    fVar1 = *(float *)((-0x7b9d795c - iVar3) + (int)pfVar2) * param_2[2] +
-            *(float *)((-0x7b9d7964 - iVar3) + (int)pfVar2) * *param_2 +
-            *(float *)((-0x7b9d7960 - iVar3) + (int)pfVar2) * param_2[1];
+    fVar1 = *(float *)(((int)&DAT_846286a4 - iVar3) + (int)pfVar2) * param_2[2] +
+            *(float *)(((int)&DAT_8462869c - iVar3) + (int)pfVar2) * *param_2 +
+            *(float *)(((int)&DAT_846286a0 - iVar3) + (int)pfVar2) * param_2[1];
     if (0.0 < fVar1) {
       pfVar2[1] = *pfVar4 * fVar1 + pfVar2[1];
       pfVar2[2] = pfVar4[1] * fVar1 + pfVar2[2];
       pfVar2[3] = pfVar4[2] * fVar1 + pfVar2[3];
     }
     fVar1 = *(float *)((-0x7b9d7950 - iVar3) + (int)pfVar2) * param_2[2] +
-            *(float *)((-0x7b9d7958 - iVar3) + (int)pfVar2) * *param_2 +
+            *(float *)(((int)&DAT_846286a8 - iVar3) + (int)pfVar2) * *param_2 +
             *(float *)((-0x7b9d7954 - iVar3) + (int)pfVar2) * param_2[1];
     if (0.0 < fVar1) {
       pfVar2[4] = *pfVar4 * fVar1 + pfVar2[4];
@@ -130,9 +124,9 @@ void GatherIncidentEnergyInSpaceForLightFromDir(float *param_1,float *param_2,fl
       pfVar2[6] = pfVar4[2] * fVar1 + pfVar2[6];
     }
     pfVar5 = pfVar5 + 0xc;
-    lVar6 = lVar6 + 0x30;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
+    param_3 = param_3 + 0x30;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
   __restgprlr_28();
   return;
 }
@@ -140,8 +134,7 @@ void GatherIncidentEnergyInSpaceForLightFromDir(float *param_1,float *param_2,fl
 
 // 82761EC8  EvaluateHeroOnlyLightForGrid  (gfx_d3d/r_pointlights.cpp:230)
 
-LightInfluenceType
-EvaluateHeroOnlyLightForGrid(GfxHeroOnlyLight *param_1,float *param_2,float *param_3,float *param_4)
+undefined8 EvaluateHeroOnlyLightForGrid(char *param_1,float *param_2,float *param_3,float *param_4)
 
 {
   float fVar1;
@@ -155,12 +148,12 @@ EvaluateHeroOnlyLightForGrid(GfxHeroOnlyLight *param_1,float *param_2,float *par
   float fVar9;
   longlong lVar10;
   
-  fVar4 = param_1->origin[1] - param_2[1];
-  fVar6 = param_1->origin[2] - param_2[2];
-  fVar7 = param_1->origin[0] - *param_2;
+  fVar4 = *(float *)(param_1 + 0x2c) - param_2[1];
+  fVar6 = *(float *)(param_1 + 0x30) - param_2[2];
+  fVar7 = *(float *)(param_1 + 0x28) - *param_2;
   fVar5 = fVar7 * fVar7 + fVar6 * fVar6 + fVar4 * fVar4;
-  if (param_1->radius * param_1->radius < fVar5) {
-    return LIGHT_INFLUENCE_NONE;
+  if (*(float *)(param_1 + 0x34) * *(float *)(param_1 + 0x34) < fVar5) {
+    return 0;
   }
   fVar5 = SQRT(fVar5);
   if (0.001 <= fVar5) {
@@ -170,16 +163,17 @@ EvaluateHeroOnlyLightForGrid(GfxHeroOnlyLight *param_1,float *param_2,float *par
     param_3[1] = fVar4 * fVar8;
     param_3[2] = fVar6 * fVar8;
     fVar9 = fVar1;
-    if (param_1->type == '\x02') {
-      fVar2 = param_1->cosHalfFovOuter;
-      fVar4 = param_1->dir[2] * fVar6 * fVar8 +
-              param_1->dir[1] * fVar4 * fVar8 + param_1->dir[0] * fVar7 * fVar8;
+    if (*param_1 == '\x02') {
+      fVar2 = *(float *)(param_1 + 0x38);
+      fVar4 = *(float *)(param_1 + 0x18) * fVar6 * fVar8 +
+              *(float *)(param_1 + 0x14) * fVar4 * fVar8 +
+              *(float *)(param_1 + 0x10) * fVar7 * fVar8;
       if (fVar4 <= fVar2) {
-        return LIGHT_INFLUENCE_NONE;
+        return 0;
       }
-      if ((fVar4 < param_1->cosHalfFovInner) &&
-         (fVar4 = (fVar4 - fVar2) / (param_1->cosHalfFovInner - fVar2), fVar4 < 1.0)) {
-        uVar3 = param_1->exponent;
+      if ((fVar4 < *(float *)(param_1 + 0x3c)) &&
+         (fVar4 = (fVar4 - fVar2) / (*(float *)(param_1 + 0x3c) - fVar2), fVar4 < 1.0)) {
+        uVar3 = *(uint *)(param_1 + 0x40);
         lVar10 = 0;
         if (7 < (int)uVar3) {
           do {
@@ -196,7 +190,7 @@ EvaluateHeroOnlyLightForGrid(GfxHeroOnlyLight *param_1,float *param_2,float *par
         }
       }
     }
-    fVar5 = fVar5 / param_1->radius;
+    fVar5 = fVar5 / *(float *)(param_1 + 0x34);
     if (fVar5 - 1.0 < 0.0) {
       fVar1 = fVar5;
     }
@@ -205,15 +199,194 @@ EvaluateHeroOnlyLightForGrid(GfxHeroOnlyLight *param_1,float *param_2,float *par
       fVar4 = fVar1;
     }
     fVar9 = (1.0 - fVar4) * fVar9;
-    *param_4 = param_1->color[0] * fVar9;
-    param_4[1] = param_1->color[1] * fVar9;
-    param_4[2] = param_1->color[2] * fVar9;
-    return LIGHT_INFLUENCE_SECONDARY;
+    *param_4 = *(float *)(param_1 + 4) * fVar9;
+    param_4[1] = *(float *)(param_1 + 8) * fVar9;
+    param_4[2] = *(float *)(param_1 + 0xc) * fVar9;
+    return 2;
   }
-  return LIGHT_INFLUENCE_COINCIDENT;
+  return 3;
 }
 
 
 // 82762058  R_AddHeroOnlyLightsToGridColors  (gfx_d3d/r_pointlights.cpp:341)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_AddHeroOnlyLightsToGridColors
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  ushort uVar1;
+  ushort uVar2;
+  ushort uVar3;
+  ushort uVar4;
+  ushort uVar5;
+  ushort uVar6;
+  ushort uVar7;
+  ushort *puVar8;
+  float fVar9;
+  float fVar10;
+  int iVar11;
+  int iVar12;
+  undefined2 *puVar13;
+  float *pfVar15;
+  ulonglong uVar14;
+  ushort *puVar16;
+  uint uVar17;
+  float *pfVar18;
+  longlong lVar19;
+  longlong lVar20;
+  double dVar21;
+  int iStack_34c;
+  undefined1 auStack_310 [16];
+  undefined1 auStack_300 [12];
+  float fStack_2f4;
+  float local_2f0 [188];
+  
+  iVar11 = __savegprlr_24();
+  if ((param_4 & 0xffffffff) == 0) {
+LAB_827620ac:
+    if ((param_3 & 0xffffffff) == 0) goto LAB_827620b4;
+  }
+  else {
+    if ((param_3 & 0xffffffff) != 0) {
+      MyAssertHandler(0xffffffff821ca6e0,0x166,0,0xffffffff82000f98,0xffffffff821ca75c);
+      goto LAB_827620ac;
+    }
+LAB_827620b4:
+    param_3 = param_4;
+  }
+  if ((*(char *)(DAT_845aa788 + 0xc) == '\0') && ((param_4 & 0xffffffff) == 0)) goto LAB_827624fc;
+  Profile_Begin(0x51);
+  pfVar18 = (float *)0x0;
+  dVar21 = 3.0637256713816896e-05;
+  if ((*(char *)(DAT_845aa788 + 0xc) == '\0') ||
+     (((param_2 & 0xffffffff) == 0 || (uVar17 = 0, *(int *)(DAT_8461658c + 0x2c8) == 0)))) {
+LAB_827622a0:
+    if ((param_3 & 0xffffffff) != 0) {
+      pfVar18 = local_2f0;
+      pfVar15 = &fStack_2f4;
+      puVar16 = (ushort *)(iVar11 + -2);
+      lVar19 = 0x15;
+      do {
+        puVar8 = puVar16 + 4;
+        uVar1 = puVar16[5];
+        uVar2 = puVar16[7];
+        uVar3 = puVar16[2];
+        uVar4 = puVar16[3];
+        uVar5 = puVar16[1];
+        uVar6 = puVar16[6];
+        puVar16 = puVar16 + 8;
+        uVar7 = *puVar16;
+        pfVar15[4] = (float)((double)*puVar8 * dVar21) * (float)((double)*puVar8 * dVar21);
+        pfVar15[2] = (float)((double)uVar3 * dVar21) * (float)((double)uVar3 * dVar21);
+        pfVar15[3] = (float)((double)uVar4 * dVar21) * (float)((double)uVar4 * dVar21);
+        pfVar15[1] = (float)((double)uVar5 * dVar21) * (float)((double)uVar5 * dVar21);
+        pfVar15[5] = (float)((double)uVar1 * dVar21) * (float)((double)uVar1 * dVar21);
+        pfVar15[6] = (float)((double)uVar6 * dVar21) * (float)((double)uVar6 * dVar21);
+        pfVar15[7] = (float)((double)uVar2 * dVar21) * (float)((double)uVar2 * dVar21);
+        pfVar15 = pfVar15 + 8;
+        *pfVar15 = (float)((double)uVar7 * dVar21) * (float)((double)uVar7 * dVar21);
+        lVar19 = lVar19 + -1;
+      } while (lVar19 != 0);
+      goto LAB_827623e0;
+    }
+  }
+  else {
+    lVar19 = 0;
+    do {
+      iVar12 = EvaluateHeroOnlyLightForGrid
+                         ((ulonglong)*(uint *)(DAT_8461658c + 0x2cc) + lVar19,param_2,auStack_310,
+                          auStack_300);
+      if (iVar12 == 2) {
+        if (pfVar18 == (float *)0x0) {
+          pfVar18 = local_2f0;
+          pfVar15 = &fStack_2f4;
+          puVar16 = (ushort *)(iVar11 + -2);
+          lVar20 = 0x15;
+          do {
+            puVar8 = puVar16 + 4;
+            uVar1 = puVar16[1];
+            uVar2 = puVar16[7];
+            uVar3 = puVar16[3];
+            uVar4 = puVar16[2];
+            uVar5 = puVar16[6];
+            uVar6 = puVar16[5];
+            puVar16 = puVar16 + 8;
+            uVar7 = *puVar16;
+            pfVar15[4] = (float)((double)*puVar8 * dVar21) * (float)((double)*puVar8 * dVar21);
+            pfVar15[3] = (float)((double)uVar3 * dVar21) * (float)((double)uVar3 * dVar21);
+            pfVar15[2] = (float)((double)uVar4 * dVar21) * (float)((double)uVar4 * dVar21);
+            pfVar15[1] = (float)((double)uVar1 * dVar21) * (float)((double)uVar1 * dVar21);
+            pfVar15[5] = (float)((double)uVar6 * dVar21) * (float)((double)uVar6 * dVar21);
+            pfVar15[6] = (float)((double)uVar5 * dVar21) * (float)((double)uVar5 * dVar21);
+            pfVar15[7] = (float)((double)uVar2 * dVar21) * (float)((double)uVar2 * dVar21);
+            pfVar15 = pfVar15 + 8;
+            *pfVar15 = (float)((double)uVar7 * dVar21) * (float)((double)uVar7 * dVar21);
+            lVar20 = lVar20 + -1;
+          } while (lVar20 != 0);
+        }
+        GatherIncidentEnergyInSpaceForLightFromDir(auStack_300,auStack_310,local_2f0);
+      }
+      uVar17 = uVar17 + 1;
+      lVar19 = lVar19 + 0x44;
+    } while (uVar17 < *(uint *)(DAT_8461658c + 0x2c8));
+    if (pfVar18 == (float *)0x0) goto LAB_827622a0;
+LAB_827623e0:
+    if ((param_3 & 0xffffffff) != 0) {
+      lVar19 = 0x38;
+      puVar13 = (undefined2 *)(iVar11 + -2);
+      do {
+        pfVar15 = pfVar18 + 3;
+        lVar20 = 3;
+        uVar14 = param_3;
+        do {
+          fVar9 = *(float *)uVar14 + *pfVar18;
+          fVar10 = 0.0;
+          if (0.0 < fVar9) {
+            fVar10 = SQRT(fVar9);
+          }
+          iStack_34c = (int)(longlong)(fVar10 * 32640.0);
+          if (0xfeff < iStack_34c) {
+            iStack_34c = 0xff00;
+          }
+          uVar14 = uVar14 + 4;
+          puVar13 = puVar13 + 1;
+          *puVar13 = (short)iStack_34c;
+          pfVar18 = pfVar18 + 1;
+          lVar20 = lVar20 + -1;
+        } while (lVar20 != 0);
+        lVar19 = lVar19 + -1;
+        pfVar18 = pfVar15;
+      } while (lVar19 != 0);
+      Profile_EndInternal(0);
+      __restgprlr_24();
+      return;
+    }
+    lVar19 = 0x38;
+    puVar13 = (undefined2 *)(iVar11 + -2);
+    do {
+      pfVar15 = pfVar18 + 3;
+      lVar20 = 3;
+      do {
+        fVar9 = 0.0;
+        if (0.0 < *pfVar18) {
+          fVar9 = SQRT(*pfVar18);
+        }
+        iStack_34c = (int)(longlong)(fVar9 * 32640.0);
+        if (0xfeff < iStack_34c) {
+          iStack_34c = 0xff00;
+        }
+        pfVar18 = pfVar18 + 1;
+        puVar13 = puVar13 + 1;
+        *puVar13 = (short)iStack_34c;
+        lVar20 = lVar20 + -1;
+      } while (lVar20 != 0);
+      lVar19 = lVar19 + -1;
+      pfVar18 = pfVar15;
+    } while (lVar19 != 0);
+  }
+  Profile_EndInternal(0);
+LAB_827624fc:
+  __restgprlr_24();
+  return;
+}
+

@@ -7,7 +7,7 @@ void __unwind_75944(void)
 {
   int in_r12;
   
-  bdTaskResult::~bdTaskResult(*(bdTaskResult **)(in_r12 + 0x14));
+  bdTaskResult___bdTaskResult(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 
@@ -19,7 +19,7 @@ void __unwind_76017(void)
 {
   int in_r12;
   
-  bdTaskResult::~bdTaskResult(*(bdTaskResult **)(in_r12 + 0x14));
+  bdTaskResult___bdTaskResult(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 
@@ -31,8 +31,8 @@ void __unwind_76018(void)
 {
   int in_r12;
   
-  _eh_vector_destructor_iterator_((void *)(*(int *)(in_r12 + 0x14) + 0x478),0x18,0x21,bdTag::~bdTag)
-  ;
+  _eh_vector_destructor_iterator_
+            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x478,0x18,0x21,0xffffffff828fd720);
   return;
 }
 
@@ -44,8 +44,7 @@ void __unwind_76081(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
-            (*(bdReference<bdByteBuffer> **)(in_r12 + 0x1c));
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
   return;
 }
 

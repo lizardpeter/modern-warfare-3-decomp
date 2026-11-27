@@ -2,21 +2,17 @@
 
 // 824DD1A8  TRACK_com_profilemapload  (qcommon/com_profilemapload.cpp:101)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_com_profilemapload(void)
 
 {
-  track_static_alloc_internal(&mapLoadProfile,0xa880,"mapLoadProfile",0);
+  track_static_alloc_internal(0xffffffff83606020,0xa880,0xffffffff82085428,0);
   return;
 }
 
 
 // 824DD1C8  ProfLoad_GetRawTimerCount  (qcommon/com_profilemapload.cpp:110)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ulong64 ProfLoad_GetRawTimerCount(void)
+ulonglong ProfLoad_GetRawTimerCount(void)
 
 {
   ulonglong uVar1;
@@ -28,60 +24,52 @@ ulong64 ProfLoad_GetRawTimerCount(void)
 
 // 824DD1D8  ProfLoad_IsActive  (qcommon/com_profilemapload.cpp:120)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool ProfLoad_IsActive(void)
+undefined1 ProfLoad_IsActive(void)
 
 {
-  return mapLoadProfile.isLoading;
+  return DAT_83606020;
 }
 
 
 // 824DD1E8  ProfLoad_BeginTrackedValueTicks  (qcommon/com_profilemapload.cpp:126)
 
-void ProfLoad_BeginTrackedValueTicks(MapProfileElement *param_1,ulong64 param_2)
+void ProfLoad_BeginTrackedValueTicks(longlong *param_1,longlong param_2)
 
 {
-  if (param_1->ticksStart != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_profilemapload.cpp"
-                    ,0x7f,0,"%s");
+  if (*param_1 != 0) {
+    MyAssertHandler(0xffffffff82085438,0x7f,0,0xffffffff82000f98,0xffffffff82085484);
   }
-  param_1->ticksStart = param_2;
+  *param_1 = param_2;
   return;
 }
 
 
 // 824DD250  ProfLoad_BeginTrackedValue  (qcommon/com_profilemapload.cpp:133)
 
-void ProfLoad_BeginTrackedValue(MapProfileTrackedValue param_1)
+void ProfLoad_BeginTrackedValue(void)
 
 {
-  MapProfileEntry *pMVar1;
-  ulonglong uVar2;
+  ulonglong uVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  bool bVar6;
+  char cVar4;
   
-  uVar5 = __savegprlr_26(param_1);
-  if (((mapLoadProfile.isLoading != false) &&
-      (mapLoadProfile.currentEntry != (MapProfileEntry *)0x0)) &&
-     (bVar6 = Sys_IsMainThread(), bVar6)) {
-    uVar2 = TBLr;
-    iVar3 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-    ProfLoad_BeginTrackedValueTicks
-              ((MapProfileElement *)((int)&mapLoadProfile.elements[0].ticksStart + iVar3),
-               uVar2 & 0xffffffff);
-    iVar4 = (int)((uVar5 & 0xffffffff) << 2);
-    *(int *)((int)mapLoadProfile.elementAccessCount + iVar4) =
-         *(int *)((int)mapLoadProfile.elementAccessCount + iVar4) + 1;
-    for (pMVar1 = mapLoadProfile.currentEntry; pMVar1 != (MapProfileEntry *)0x0;
-        pMVar1 = pMVar1->parent) {
-      if (*(longlong *)((int)&pMVar1->elements[0].ticksStart + iVar3) != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_profilemapload.cpp"
-                        ,0x7f,0,"%s");
-      }
-      *(ulonglong *)((int)&pMVar1->elements[0].ticksStart + iVar3) = uVar2 & 0xffffffff;
+  iVar3 = __savegprlr_26();
+  if (((DAT_83606020 != '\0') && (DAT_83610828 != 0)) && (cVar4 = Sys_IsMainThread(), cVar4 != '\0')
+     ) {
+    uVar1 = TBLr;
+    ProfLoad_BeginTrackedValueTicks(iVar3 * 0x18 + -0x7c9ef7a8,uVar1 & 0xffffffff);
+    (&DAT_83610848)[iVar3] = (&DAT_83610848)[iVar3] + 1;
+    if (DAT_83610828 != 0) {
+      iVar2 = iVar3 * 0x18 + 0x28;
+      iVar3 = DAT_83610828;
+      do {
+        if (*(longlong *)(iVar2 + iVar3) != 0) {
+          MyAssertHandler(0xffffffff82085438,0x7f,0,0xffffffff82000f98,0xffffffff82085484);
+        }
+        *(ulonglong *)(iVar2 + iVar3) = uVar1 & 0xffffffff;
+        iVar3 = *(int *)(iVar3 + 0x24);
+      } while (iVar3 != 0);
     }
   }
   __restgprlr_26();
@@ -91,50 +79,51 @@ void ProfLoad_BeginTrackedValue(MapProfileTrackedValue param_1)
 
 // 824DD348  ProfLoad_EndTrackedValueTicks  (qcommon/com_profilemapload.cpp:155)
 
-void ProfLoad_EndTrackedValueTicks(MapProfileElement *param_1,ulong64 param_2)
+void ProfLoad_EndTrackedValueTicks(longlong *param_1,longlong param_2)
 
 {
-  ulong64 uVar1;
+  longlong lVar1;
   
-  if (param_1->ticksStart == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_profilemapload.cpp"
-                    ,0x9c,0,"%s");
+  if (*param_1 == 0) {
+    MyAssertHandler(0xffffffff82085438,0x9c,0,0xffffffff82000f98,0xffffffff8208549c);
   }
-  uVar1 = param_1->ticksStart;
-  param_1->ticksStart = 0;
-  param_1->ticksTotal = (param_1->ticksTotal - uVar1) + param_2;
+  lVar1 = *param_1;
+  *param_1 = 0;
+  param_1[1] = (param_1[1] - lVar1) + param_2;
   return;
 }
 
 
 // 824DD3C8  ProfLoad_EndTrackedValue  (qcommon/com_profilemapload.cpp:163)
 
-void ProfLoad_EndTrackedValue(MapProfileTrackedValue param_1)
+void ProfLoad_EndTrackedValue(void)
 
 {
-  MapProfileEntry *pMVar1;
-  ulonglong uVar2;
-  MapProfileElement *pMVar3;
+  ulonglong uVar1;
+  int iVar2;
+  longlong *plVar3;
   int iVar4;
-  bool bVar5;
-  ulong64 uVar6;
+  char cVar5;
+  longlong lVar6;
   
-  iVar4 = __savegprlr_24(param_1);
-  if (((mapLoadProfile.isLoading != false) &&
-      (mapLoadProfile.currentEntry != (MapProfileEntry *)0x0)) &&
-     (bVar5 = Sys_IsMainThread(), bVar5)) {
-    uVar2 = TBLr;
-    ProfLoad_EndTrackedValueTicks(mapLoadProfile.elements + iVar4,uVar2 & 0xffffffff);
-    for (pMVar1 = mapLoadProfile.currentEntry; pMVar1 != (MapProfileEntry *)0x0;
-        pMVar1 = pMVar1->parent) {
-      pMVar3 = pMVar1->elements + iVar4;
-      if (pMVar1->elements[iVar4].ticksStart == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_profilemapload.cpp"
-                        ,0x9c,0,"%s");
-      }
-      uVar6 = pMVar3->ticksStart;
-      pMVar3->ticksStart = 0;
-      pMVar3->ticksTotal = (pMVar3->ticksTotal - uVar6) + (uVar2 & 0xffffffff);
+  iVar4 = __savegprlr_24();
+  if (((DAT_83606020 != '\0') && (DAT_83610828 != 0)) && (cVar5 = Sys_IsMainThread(), cVar5 != '\0')
+     ) {
+    uVar1 = TBLr;
+    ProfLoad_EndTrackedValueTicks(iVar4 * 0x18 + -0x7c9ef7a8,uVar1 & 0xffffffff);
+    if (DAT_83610828 != 0) {
+      iVar2 = iVar4 * 0x18 + 0x28;
+      iVar4 = DAT_83610828;
+      do {
+        plVar3 = (longlong *)(iVar2 + iVar4);
+        if (*(longlong *)(iVar2 + iVar4) == 0) {
+          MyAssertHandler(0xffffffff82085438,0x9c,0,0xffffffff82000f98,0xffffffff8208549c);
+        }
+        lVar6 = *plVar3;
+        *plVar3 = 0;
+        plVar3[1] = (plVar3[1] - lVar6) + (uVar1 & 0xffffffff);
+        iVar4 = *(int *)(iVar4 + 0x24);
+      } while (iVar4 != 0);
     }
   }
   __restgprlr_24();
@@ -144,56 +133,48 @@ void ProfLoad_EndTrackedValue(MapProfileTrackedValue param_1)
 
 // 824DD4C0  ProfLoad_Init  (qcommon/com_profilemapload.cpp:184)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void ProfLoad_Init(void)
 
 {
-  com_profileLoading = Dvar_RegisterBool("profile_show_loading",false,0,"Show map load profiler");
-  mapLoadProfile.isLoading = false;
+  DAT_83606018 = Dvar_RegisterBool(0xffffffff820854b4,0,0,0xffffffff820854cc);
+  DAT_83606020 = 0;
   return;
 }
 
 
 // 824DD510  ProfLoad_Activate  (qcommon/com_profilemapload.cpp:191)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void ProfLoad_Activate(void)
 
 {
   ulonglong uVar1;
   
-  if (mapLoadProfile.isLoading) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_profilemapload.cpp"
-                    ,0xc0,0,"%s");
+  if (DAT_83606020 != '\0') {
+    MyAssertHandler(0xffffffff82085438,0xc0,0,0xffffffff82000f98,0xffffffff82085504);
   }
-  memset();
-  mapLoadProfile.isLoading = true;
+  memset(&DAT_83606020,0,0xa880);
+  DAT_83606020 = 1;
   uVar1 = TBLr;
-  mapLoadProfile.ticksStart = uVar1 & 0xffffffff;
-  mapLoadProfile.ticksFinish = mapLoadProfile.ticksStart;
-  Com_Printf(0xc,"^6Activating map load profiler\n");
+  DAT_83610830 = uVar1 & 0xffffffff;
+  DAT_83610838 = DAT_83610830;
+  Com_Printf(0xc,0xffffffff820854e4);
   return;
 }
 
 
 // 824DE460  ProfLoad_Deactivate  (qcommon/com_profilemapload.cpp:205)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void ProfLoad_Deactivate(void)
 
 {
   ulonglong uVar1;
   
-  if (!mapLoadProfile.isLoading) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_profilemapload.cpp"
-                    ,0xce,0,"%s");
+  if (DAT_83606020 != '\x01') {
+    MyAssertHandler(0xffffffff82085438,0xce,0,0xffffffff82000f98,0xffffffff820857f4);
   }
   uVar1 = TBLr;
-  mapLoadProfile.ticksFinish = uVar1 & 0xffffffff;
-  mapLoadProfile.isLoading = false;
+  DAT_83610838 = uVar1 & 0xffffffff;
+  DAT_83606020 = 0;
   ProfLoad_Print();
   return;
 }
@@ -201,86 +182,78 @@ void ProfLoad_Deactivate(void)
 
 // 824DD5B8  Com_GetEntryForNewLabel  (qcommon/com_profilemapload.cpp:215)
 
-MapProfileEntry * Com_GetEntryForNewLabel(char *param_1)
+int * Com_GetEntryForNewLabel(int param_1)
 
 {
   int iVar1;
-  MapProfileEntry *pMVar2;
+  int *piVar2;
   
-  if (mapLoadProfile.currentEntry == (MapProfileEntry *)0x0) {
+  if (DAT_83610828 == 0) {
     iVar1 = 0;
   }
   else {
-    iVar1 = (int)&mapLoadProfile.currentEntry[0x11cda91].elements[2].ticksSelf / 0x70 + 1;
+    iVar1 = (DAT_83610828 + 0x7c9f9fd8) / 0x70 + 1;
   }
-  if (iVar1 < mapLoadProfile.profileEntryCount) {
-    pMVar2 = mapLoadProfile.profileEntries + iVar1;
+  if (iVar1 < DAT_83606024) {
+    piVar2 = &DAT_83606028 + iVar1 * 0x1c;
     do {
-      if ((pMVar2->parent == mapLoadProfile.currentEntry) && (pMVar2->label == param_1)) {
-        return pMVar2;
+      if ((piVar2[9] == DAT_83610828) && (*piVar2 == param_1)) {
+        return piVar2;
       }
       iVar1 = iVar1 + 1;
-      pMVar2 = pMVar2 + 1;
-    } while (iVar1 < mapLoadProfile.profileEntryCount);
+      piVar2 = piVar2 + 0x1c;
+    } while (iVar1 < DAT_83606024);
   }
-  if (0x17f < mapLoadProfile.profileEntryCount) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_profilemapload.cpp"
-                    ,0xe8,0,"%s");
+  if (0x17f < DAT_83606024) {
+    MyAssertHandler(0xffffffff82085438,0xe8,0,0xffffffff82000f98,0xffffffff82085528);
   }
-  pMVar2 = mapLoadProfile.profileEntries + mapLoadProfile.profileEntryCount;
-  mapLoadProfile.profileEntryCount = mapLoadProfile.profileEntryCount + 1;
-  return pMVar2;
+  iVar1 = DAT_83606024 * 0x1c;
+  DAT_83606024 = DAT_83606024 + 1;
+  return &DAT_83606028 + iVar1;
 }
 
 
 // 824DD6B8  ProfLoad_CalculateSelfTicks  (qcommon/com_profilemapload.cpp:240)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void ProfLoad_CalculateSelfTicks(void)
 
 {
-  MapProfileEntry *pMVar1;
-  ulong64 uVar2;
-  ulong64 uVar3;
+  int iVar1;
+  undefined8 *puVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  ulong64 *puVar6;
-  mapLoadProfile_t *pmVar7;
+  longlong *plVar5;
+  undefined8 *puVar6;
   
-  iVar5 = 0;
-  pmVar7 = &mapLoadProfile;
-  if (0 < mapLoadProfile.profileEntryCount) {
+  iVar4 = 0;
+  puVar6 = (undefined8 *)&DAT_83606020;
+  if (0 < DAT_83606024) {
     do {
-      iVar5 = iVar5 + 1;
-      pmVar7->profileEntries[0].ticksSelf = pmVar7->profileEntries[0].ticksTotal;
-      uVar2 = pmVar7->profileEntries[0].elements[1].ticksTotal;
-      uVar3 = pmVar7->profileEntries[0].elements[2].ticksTotal;
-      pmVar7->profileEntries[0].elements[0].ticksSelf =
-           pmVar7->profileEntries[0].elements[0].ticksTotal;
-      pmVar7->profileEntries[0].elements[1].ticksSelf = uVar2;
-      pmVar7 = (mapLoadProfile_t *)&pmVar7->profileEntries[0].elements[2].ticksSelf;
-      *(ulong64 *)pmVar7 = uVar3;
-    } while (iVar5 < mapLoadProfile.profileEntryCount);
-  }
-  iVar5 = 0;
-  if (0 < mapLoadProfile.profileEntryCount) {
-    puVar6 = &mapLoadProfile.profileEntries[0].ticksTotal;
-    iVar4 = mapLoadProfile.profileEntryCount;
-    do {
-      pMVar1 = *(MapProfileEntry **)((int)puVar6 + 0x14);
-      if (pMVar1 != (MapProfileEntry *)0x0) {
-        pMVar1->ticksSelf = pMVar1->ticksSelf - *puVar6;
-        uVar3 = pMVar1->elements[1].ticksSelf;
-        uVar2 = pMVar1->elements[2].ticksSelf;
-        pMVar1->elements[0].ticksSelf = pMVar1->elements[0].ticksSelf - puVar6[4];
-        pMVar1->elements[1].ticksSelf = uVar3 - puVar6[7];
-        pMVar1->elements[2].ticksSelf = uVar2 - puVar6[10];
-        iVar4 = mapLoadProfile.profileEntryCount;
-      }
-      iVar5 = iVar5 + 1;
+      iVar4 = iVar4 + 1;
+      puVar6[4] = puVar6[3];
+      puVar2 = puVar6 + 0xd;
+      puVar6[8] = puVar6[7];
+      puVar6[0xb] = puVar6[10];
       puVar6 = puVar6 + 0xe;
-    } while (iVar5 < iVar4);
+      *puVar6 = *puVar2;
+    } while (iVar4 < DAT_83606024);
+  }
+  iVar4 = 0;
+  if (0 < DAT_83606024) {
+    plVar5 = &DAT_83606038;
+    iVar3 = DAT_83606024;
+    do {
+      iVar1 = *(int *)((int)plVar5 + 0x14);
+      if (iVar1 != 0) {
+        *(longlong *)(iVar1 + 0x18) = *(longlong *)(iVar1 + 0x18) - *plVar5;
+        *(longlong *)(iVar1 + 0x38) = *(longlong *)(iVar1 + 0x38) - plVar5[4];
+        *(longlong *)(iVar1 + 0x50) = *(longlong *)(iVar1 + 0x50) - plVar5[7];
+        *(longlong *)(iVar1 + 0x68) = *(longlong *)(iVar1 + 0x68) - plVar5[10];
+        iVar3 = DAT_83606024;
+      }
+      iVar4 = iVar4 + 1;
+      plVar5 = plVar5 + 0xe;
+    } while (iVar4 < iVar3);
     return;
   }
   return;
@@ -289,18 +262,31 @@ void ProfLoad_CalculateSelfTicks(void)
 
 // 824DD778  ProfLoad_GetEntryRowText  (qcommon/com_profilemapload.cpp:269)
 
-void ProfLoad_GetEntryRowText(MapProfileEntry *param_1,char *param_2,int param_3)
+void ProfLoad_GetEntryRowText(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  __savegprlr_28(param_1);
-  __savefpr_28();
-  __u64tod();
-  __u64tod();
-  __u64tod();
-  iVar1 = Com_sprintf(param_2,param_3,"%s - %5.3f total, %5.3f self, %5.3f file, %i hits");
-  __restfpr_28(iVar1);
+  __savegprlr_28();
+  puVar2 = (undefined4 *)__savefpr_28();
+  uVar1 = puVar2[1];
+  dVar3 = (double)__u64tod(*(longlong *)(puVar2 + 0x1a) + *(longlong *)(puVar2 + 0x14) +
+                           *(longlong *)(puVar2 + 0xe));
+  dVar7 = 0.0010000000474974513;
+  dVar6 = dVar3 * DAT_841db430 * 0.0010000000474974513;
+  dVar3 = DAT_841db430;
+  dVar4 = (double)__u64tod(*(undefined8 *)(puVar2 + 6));
+  dVar5 = dVar4 * dVar3 * dVar7;
+  dVar4 = (double)__u64tod(*(undefined8 *)(puVar2 + 4));
+  dVar7 = dVar4 * dVar3 * dVar7;
+  Com_sprintf(dVar7,dVar5,dVar6,param_2,param_3,0xffffffff82085560,*puVar2,dVar7,dVar5,dVar6,uVar1);
+  __restfpr_28();
   __restgprlr_28();
   return;
 }
@@ -308,26 +294,47 @@ void ProfLoad_GetEntryRowText(MapProfileEntry *param_1,char *param_2,int param_3
 
 // 824DD838  ProfLoad_PrintTree  (qcommon/com_profilemapload.cpp:289)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void ProfLoad_PrintTree(void)
 
 {
   int iVar1;
-  char acStack_180 [384];
+  int iVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  int iVar5;
+  int *piVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  undefined1 auStack_180 [384];
   
   __savegprlr_22();
   __savefpr_28();
-  iVar1 = 0;
-  if (0 < mapLoadProfile.profileEntryCount) {
+  iVar5 = 0;
+  if (0 < DAT_83606024) {
+    piVar6 = (int *)&DAT_83605fd8;
+    dVar11 = 0.0010000000474974513;
     do {
-      __u64tod();
-      __u64tod();
-      __u64tod();
-      Com_sprintf(acStack_180,0x100,"%s - %5.3f total, %5.3f self, %5.3f file, %i hits");
-      Com_Printf(0xc,"^6%*c %s\n");
-      iVar1 = iVar1 + 1;
-    } while (iVar1 < mapLoadProfile.profileEntryCount);
+      iVar1 = piVar6[0x14];
+      uVar4 = *(undefined8 *)(piVar6 + 0x18);
+      uVar3 = *(undefined8 *)(piVar6 + 0x1a);
+      iVar2 = piVar6[0x15];
+      dVar7 = (double)__u64tod(*(longlong *)(piVar6 + 0x2e) + *(longlong *)(piVar6 + 0x28) +
+                               *(longlong *)(piVar6 + 0x22));
+      dVar10 = dVar7 * DAT_841db430 * dVar11;
+      dVar7 = DAT_841db430;
+      dVar8 = (double)__u64tod(uVar3);
+      dVar9 = dVar8 * dVar7 * dVar11;
+      dVar8 = (double)__u64tod(uVar4);
+      dVar7 = dVar8 * dVar7 * dVar11;
+      Com_sprintf(dVar7,dVar9,dVar10,auStack_180,0x100,0xffffffff82085560,iVar1,dVar7,dVar9,dVar10,
+                  iVar2);
+      piVar6 = piVar6 + 0x1c;
+      Com_Printf(0xc,0xffffffff820855a0,*piVar6 * 2 + 1,0x20,auStack_180);
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < DAT_83606024);
   }
   __restfpr_28();
   __restgprlr_22();
@@ -337,126 +344,137 @@ void ProfLoad_PrintTree(void)
 
 // 824DD950  ProfLoad_CompareHotSpotNames  (qcommon/com_profilemapload.cpp:304)
 
-bool ProfLoad_CompareHotSpotNames(MapProfileHotSpot *param_1,MapProfileHotSpot *param_2)
+byte ProfLoad_CompareHotSpotNames(uint *param_1,uint *param_2)
 
 {
-  return (bool)(-(param_2->label < param_1->label) & 1);
+  return -(*param_2 < *param_1) & 1;
 }
 
 
 // 824DD968  ProfLoad_CompareHotSpotTicks  (qcommon/com_profilemapload.cpp:310)
 
-bool ProfLoad_CompareHotSpotTicks(MapProfileHotSpot *param_1,MapProfileHotSpot *param_2)
+bool ProfLoad_CompareHotSpotTicks(int param_1,int param_2)
 
 {
-  return param_2->ticksSelf < param_1->ticksSelf;
+  return *(longlong *)(param_2 + 8) < *(longlong *)(param_1 + 8);
 }
 
 
 // 824DDFF8  ProfLoad_PrintHotSpots  (qcommon/com_profilemapload.cpp:316)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void ProfLoad_PrintHotSpots(void)
 
 {
-  MapProfileEntry *pMVar1;
-  MapProfileHotSpot *pMVar2;
-  int iVar3;
-  ulong64 uVar4;
-  ulonglong uVar5;
-  ulong64 uVar6;
-  ulong64 uVar7;
-  ulong64 uVar8;
+  undefined4 uVar1;
+  longlong *plVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
   longlong *plVar9;
   int iVar10;
   int iVar11;
-  mapLoadProfile_t *pmVar12;
+  longlong *plVar12;
   int iVar13;
-  ulonglong uVar14;
+  int iVar14;
+  undefined4 *puVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  undefined4 auStack_2464 [3];
   longlong lStack_2458;
-  MapProfileHotSpot local_2450 [387];
+  int local_2450 [2];
+  longlong local_2448 [1161];
   
   __savegprlr_28();
   __savefpr_27();
-  iVar3 = mapLoadProfile.profileEntryCount;
-  pmVar12 = &mapLoadProfile;
-  uVar5 = (ulonglong)(uint)mapLoadProfile.profileEntryCount;
-  if (0 < mapLoadProfile.profileEntryCount) {
+  iVar4 = DAT_83606024;
+  plVar12 = (longlong *)&DAT_83606020;
+  if (0 < DAT_83606024) {
     plVar9 = &lStack_2458;
-    uVar14 = uVar5;
+    iVar10 = DAT_83606024;
     do {
-      uVar6 = pmVar12->profileEntries[0].elements[0].ticksSelf;
-      uVar7 = pmVar12->profileEntries[0].elements[1].ticksSelf;
-      pMVar1 = pmVar12->profileEntries;
-      iVar10 = pmVar12->profileEntries[0].accessCount;
-      uVar4 = pmVar12->profileEntries[0].ticksSelf;
-      pmVar12 = (mapLoadProfile_t *)&pmVar12->profileEntries[0].elements[2].ticksSelf;
-      uVar8 = *(ulong64 *)pmVar12;
-      *(char **)(plVar9 + 1) = pMVar1->label;
-      *(int *)((int)plVar9 + 0xc) = iVar10;
-      plVar9[2] = uVar4;
+      lVar6 = plVar12[8];
+      lVar7 = plVar12[0xb];
+      plVar2 = plVar12 + 1;
+      uVar1 = *(undefined4 *)((int)plVar12 + 0xc);
+      lVar5 = plVar12[4];
+      plVar12 = plVar12 + 0xe;
+      lVar8 = *plVar12;
+      *(undefined4 *)(plVar9 + 1) = *(undefined4 *)plVar2;
+      *(undefined4 *)((int)plVar9 + 0xc) = uVar1;
+      plVar9[2] = lVar5;
       plVar9 = plVar9 + 3;
-      *plVar9 = uVar6 + uVar7 + uVar8;
-      uVar14 = uVar14 - 1;
-    } while (uVar14 != 0);
+      *plVar9 = lVar6 + lVar7 + lVar8;
+      iVar10 = iVar10 + -1;
+    } while (iVar10 != 0);
   }
-  pMVar2 = (MapProfileHotSpot *)
-           ((int)&local_2450[0].label +
-           (int)((uVar5 + ((ulonglong)(uint)iVar3 & 0x7fffffff) * 2 & 0xffffffff) << 3));
-  std::
-  _Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-            (local_2450,pMVar2,((int)pMVar2 - (int)local_2450) / 0x18,ProfLoad_CompareHotSpotNames);
-  iVar3 = mapLoadProfile.profileEntryCount;
-  uVar5 = 0;
+  std___Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+            (local_2450,local_2450 + iVar4 * 6,
+             ((int)(local_2450 + iVar4 * 6) - (int)local_2450) / 0x18,0xffffffff824dd950);
+  iVar4 = DAT_83606024;
+  iVar14 = 0;
   iVar10 = 0;
-  if (mapLoadProfile.profileEntryCount != 0) {
+  if (DAT_83606024 != 0) {
     iVar13 = 0;
     do {
       iVar11 = iVar10 + 1;
-      *(undefined8 *)((int)&local_2450[0].label + iVar13) = *(undefined8 *)(local_2450 + iVar10);
-      *(long64 *)((int)&local_2450[0].ticksSelf + iVar13) = local_2450[iVar10].ticksSelf;
-      *(long64 *)((int)&local_2450[0].ticksFile + iVar13) = local_2450[iVar10].ticksFile;
+      *(undefined8 *)((int)local_2450 + iVar13) = *(undefined8 *)(local_2450 + iVar10 * 6);
+      *(longlong *)((int)local_2448 + iVar13) = local_2448[iVar10 * 3];
+      *(longlong *)((int)local_2448 + iVar13 + 8) = local_2448[iVar10 * 3 + 1];
       iVar10 = iVar11;
-      if (iVar11 != iVar3) {
-        plVar9 = &lStack_2458 + iVar11 * 3;
+      if (iVar11 != iVar4) {
+        plVar12 = &lStack_2458 + iVar11 * 3;
         do {
           iVar10 = iVar11;
-          if (*(int *)(plVar9 + 1) != *(int *)((int)&local_2450[0].label + iVar13)) break;
+          if (*(int *)(plVar12 + 1) != *(int *)((int)local_2450 + iVar13)) break;
           iVar11 = iVar11 + 1;
-          *(int *)((int)&local_2450[0].accessCount + iVar13) =
-               *(int *)((int)plVar9 + 0xc) + *(int *)((int)&local_2450[0].accessCount + iVar13);
-          *(longlong *)((int)&local_2450[0].ticksSelf + iVar13) =
-               plVar9[2] + *(longlong *)((int)&local_2450[0].ticksSelf + iVar13);
-          plVar9 = plVar9 + 3;
-          *(longlong *)((int)&local_2450[0].ticksFile + iVar13) =
-               *plVar9 + *(longlong *)((int)&local_2450[0].ticksFile + iVar13);
+          lVar5 = *(longlong *)((int)local_2448 + iVar13);
+          lVar6 = *(longlong *)((int)local_2448 + iVar13 + 8);
+          *(int *)((int)local_2450 + iVar13 + 4) =
+               *(int *)((int)plVar12 + 0xc) + *(int *)((int)local_2450 + iVar13 + 4);
+          *(longlong *)((int)local_2448 + iVar13) = plVar12[2] + lVar5;
+          plVar12 = plVar12 + 3;
+          *(longlong *)((int)local_2448 + iVar13 + 8) = *plVar12 + lVar6;
           iVar10 = iVar11;
-        } while (iVar11 != iVar3);
+        } while (iVar11 != iVar4);
       }
-      uVar5 = uVar5 + 1;
+      iVar14 = iVar14 + 1;
       iVar13 = iVar13 + 0x18;
-    } while (iVar10 != iVar3);
+    } while (iVar10 != iVar4);
   }
-  pMVar2 = (MapProfileHotSpot *)
-           ((int)&local_2450[0].label + (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 3))
-  ;
-  std::
-  _Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-            (local_2450,pMVar2,((int)pMVar2 - (int)local_2450) / 0x18,ProfLoad_CompareHotSpotTicks);
-  Com_Printf(0xc,"\n\n^6---------- Load time hot spots ----------\n");
-  if (0x10 < (int)uVar5) {
-    uVar5 = 0x10;
+  std___Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+            (local_2450,local_2450 + iVar14 * 6,
+             ((int)(local_2450 + iVar14 * 6) - (int)local_2450) / 0x18,0xffffffff824dd968);
+  Com_Printf(0xc,0xffffffff820856f0);
+  if (0x10 < iVar14) {
+    iVar14 = 0x10;
   }
-  if (0 < (int)uVar5) {
+  dVar20 = 0.0;
+  dVar21 = dVar20;
+  if (0 < iVar14) {
+    puVar15 = auStack_2464;
+    dVar19 = 0.0010000000474974513;
     do {
-      __u64tod();
-      __u64tod();
-      Com_Printf(0xc,"^6%s: %5.3f self, %5.3f file, %i hits\n");
-      uVar5 = uVar5 - 1;
-    } while (uVar5 != 0);
+      dVar16 = (double)__u64tod(*(undefined8 *)(puVar15 + 7));
+      dVar18 = dVar16 * DAT_841db430 * dVar19;
+      dVar16 = DAT_841db430;
+      dVar17 = (double)__u64tod(*(undefined8 *)(puVar15 + 9));
+      puVar3 = puVar15 + 5;
+      puVar15 = puVar15 + 6;
+      dVar21 = dVar18 + dVar21;
+      dVar16 = dVar17 * dVar16 * dVar19;
+      dVar20 = dVar16 + dVar20;
+      Com_Printf(dVar18,0xc,0xffffffff820856c8,*puVar3,dVar18,dVar16,*puVar15);
+      iVar14 = iVar14 + -1;
+    } while (iVar14 != 0);
   }
-  Com_Printf(0xc,"\n^6Hot spot total time: %5.3f self, %5.3f file\n\n");
+  Com_Printf(dVar21,dVar20,0xc,0xffffffff82085694,dVar21,dVar20);
   __restfpr_27();
   __restgprlr_28();
   return;
@@ -465,27 +483,35 @@ void ProfLoad_PrintHotSpots(void)
 
 // 824DE288  ProfLoad_Print  (qcommon/com_profilemapload.cpp:376)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void ProfLoad_Print(void)
 
 {
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  double dVar4;
+  double dVar5;
+  
   __savegprlr_27();
   ProfLoad_CalculateSelfTicks();
   ProfLoad_PrintTree();
   ProfLoad_PrintHotSpots();
-  __u64tod();
-  Com_Printf(0xc,"^6Total Load Time: %5.4f\n");
-  __u64tod();
-  Com_Printf(0xc,"^6Profiled Time: %5.4f\n");
-  __u64tod();
-  Com_Printf(0xc,"^6Unprofiled Time: %5.4f\n");
-  __u64tod();
-  Com_Printf(0xc,"^6File Open Time: %5.4f, Accessed %d times\n");
-  __u64tod();
-  Com_Printf(0xc,"^6File Seek Time: %5.4f, Accessed %d times\n");
-  __u64tod();
-  Com_Printf(0xc,"^6File Read Time: %5.4f, Accessed %d times\n");
+  uVar3 = DAT_83610850;
+  uVar2 = DAT_8361084c;
+  uVar1 = DAT_83610848;
+  dVar4 = (double)__u64tod(DAT_83610838 - DAT_83610830);
+  dVar5 = 0.0010000000474974513;
+  Com_Printf(0xc,0xffffffff820857d8,dVar4 * DAT_841db430 * 0.0010000000474974513);
+  dVar4 = (double)__u64tod(DAT_83610840);
+  Com_Printf(0xc,0xffffffff820857c0,dVar4 * DAT_841db430 * dVar5);
+  dVar4 = (double)__u64tod((DAT_83610838 - DAT_83610840) - DAT_83610830);
+  Com_Printf(0xc,0xffffffff820857a4,dVar4 * DAT_841db430 * dVar5);
+  dVar4 = (double)__u64tod(DAT_83610860);
+  Com_Printf(0xc,0xffffffff82085778,dVar4 * DAT_841db430 * dVar5,uVar1);
+  dVar4 = (double)__u64tod(DAT_83610878);
+  Com_Printf(0xc,0xffffffff8208574c,dVar4 * DAT_841db430 * dVar5,uVar2);
+  dVar4 = (double)__u64tod(DAT_83610890);
+  Com_Printf(0xc,0xffffffff82085720,dVar4 * DAT_841db430 * dVar5,uVar3);
   __restgprlr_27();
   return;
 }
@@ -493,29 +519,29 @@ void ProfLoad_Print(void)
 
 // 824DD988  ProfLoad_Begin  (qcommon/com_profilemapload.cpp:408)
 
-void ProfLoad_Begin(char *param_1)
+void ProfLoad_Begin(undefined8 param_1)
 
 {
   ulonglong uVar1;
-  bool bVar3;
-  MapProfileEntry *pMVar2;
+  char cVar3;
+  undefined4 *puVar2;
   int iVar4;
   
-  if ((mapLoadProfile.isLoading) && (bVar3 = Sys_IsMainThread(), bVar3)) {
-    pMVar2 = Com_GetEntryForNewLabel(param_1);
-    pMVar2->accessCount = pMVar2->accessCount + 1;
-    pMVar2->parent = mapLoadProfile.currentEntry;
-    if (mapLoadProfile.currentEntry == (MapProfileEntry *)0x0) {
+  if ((DAT_83606020 != '\0') && (cVar3 = Sys_IsMainThread(), cVar3 != '\0')) {
+    puVar2 = (undefined4 *)Com_GetEntryForNewLabel(param_1);
+    puVar2[1] = puVar2[1] + 1;
+    puVar2[9] = DAT_83610828;
+    if (DAT_83610828 == (undefined4 *)0x0) {
       iVar4 = 0;
     }
     else {
-      iVar4 = (mapLoadProfile.currentEntry)->indent + 1;
+      iVar4 = DAT_83610828[8] + 1;
     }
-    pMVar2->indent = iVar4;
+    puVar2[8] = iVar4;
     uVar1 = TBLr;
-    mapLoadProfile.currentEntry = pMVar2;
-    pMVar2->label = param_1;
-    pMVar2->ticksStart = uVar1 & 0xffffffff;
+    DAT_83610828 = puVar2;
+    *puVar2 = (int)param_1;
+    *(ulonglong *)(puVar2 + 2) = uVar1 & 0xffffffff;
   }
   return;
 }
@@ -523,35 +549,31 @@ void ProfLoad_Begin(char *param_1)
 
 // 824DDA48  ProfLoad_End  (qcommon/com_profilemapload.cpp:427)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void ProfLoad_End(void)
 
 {
   ulonglong uVar1;
-  MapProfileEntry *pMVar2;
-  bool bVar3;
+  int *piVar2;
+  char cVar3;
   longlong lVar4;
   
   __savegprlr_28();
-  if ((mapLoadProfile.isLoading != false) &&
-     (bVar3 = Sys_IsMainThread(), pMVar2 = mapLoadProfile.currentEntry, bVar3)) {
-    if (mapLoadProfile.currentEntry == (MapProfileEntry *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_profilemapload.cpp"
-                      ,0x1b4,0,"%s");
+  if ((DAT_83606020 != '\0') && (cVar3 = Sys_IsMainThread(), piVar2 = DAT_83610828, cVar3 != '\0'))
+  {
+    if (DAT_83610828 == (int *)0x0) {
+      MyAssertHandler(0xffffffff82085438,0x1b4,0,0xffffffff82000f98,0xffffffff820589d8);
     }
-    if (pMVar2->label == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_profilemapload.cpp"
-                      ,0x1b5,0,"%s");
+    if (*piVar2 == 0) {
+      MyAssertHandler(0xffffffff82085438,0x1b5,0,0xffffffff82000f98,0xffffffff820855ac);
     }
     uVar1 = TBLr;
-    mapLoadProfile.ticksFinish = uVar1 & 0xffffffff;
-    lVar4 = mapLoadProfile.ticksFinish - pMVar2->ticksStart;
-    pMVar2->ticksTotal = pMVar2->ticksTotal + lVar4;
-    if (pMVar2->parent == (MapProfileEntry *)0x0) {
-      mapLoadProfile.ticksProfiled = mapLoadProfile.ticksProfiled + lVar4;
+    DAT_83610838 = uVar1 & 0xffffffff;
+    lVar4 = DAT_83610838 - *(longlong *)(piVar2 + 2);
+    *(longlong *)(piVar2 + 4) = *(longlong *)(piVar2 + 4) + lVar4;
+    if (piVar2[9] == 0) {
+      DAT_83610840 = DAT_83610840 + lVar4;
     }
-    mapLoadProfile.currentEntry = pMVar2->parent;
+    DAT_83610828 = (int *)piVar2[9];
   }
   __restgprlr_28();
   return;
@@ -560,38 +582,33 @@ void ProfLoad_End(void)
 
 // 824DDB48  ProfLoad_DrawTree  (qcommon/com_profilemapload.cpp:452)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void ProfLoad_DrawTree(ScreenPlacement *param_1)
+void ProfLoad_DrawTree(void)
 
 {
-  ScreenPlacement *pSVar1;
-  Font_s *pFVar2;
+  undefined8 uVar1;
+  undefined8 uVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
-  int iVar5;
-  longlong lVar6;
-  double dVar7;
-  char acStack_150 [336];
+  int iVar4;
+  longlong lVar5;
+  double dVar6;
+  undefined1 auStack_150 [336];
   
-  pSVar1 = (ScreenPlacement *)__savegprlr_24(param_1);
+  uVar1 = __savegprlr_24();
   ProfLoad_CalculateSelfTicks();
-  pFVar2 = UI_GetFontHandle(pSVar1,0,0.36);
-  uVar4 = (ulonglong)(uint)mapLoadProfile.profileEntryCount - 0x10;
-  uVar3 = (uVar4 & 0xffffffff) >> 0x1f;
-  uVar4 = uVar3 - (uVar4 != 0) & uVar4;
-  if ((int)uVar4 < mapLoadProfile.profileEntryCount) {
-    iVar5 = 0x46;
-    lVar6 = uVar4 * 0x70 + -0x7c9f9fd8;
+  uVar2 = UI_GetFontHandle(0x3fd70a3d80000000,uVar1,0);
+  uVar3 = (ulonglong)DAT_83606024 - 0x10;
+  uVar3 = ((uVar3 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar3 != 0) & uVar3;
+  if ((int)uVar3 < (int)DAT_83606024) {
+    iVar4 = 0x46;
+    lVar5 = uVar3 * 0x70 + -0x7c9f9fd8;
     do {
-      dVar7 = (double)(longlong)((((MapProfileEntry *)lVar6)->indent + 0xc) * 5);
-      ProfLoad_GetEntryRowText((MapProfileEntry *)lVar6,acStack_150,0x100);
-      UI_DrawText(pSVar1,acStack_150,0x100,pFVar2,(float)dVar7,(float)(longlong)iVar5,(int)uVar3,
-                  -0x7df7abf8,0.36,(float *)0x0,0);
-      uVar4 = uVar4 + 1;
-      iVar5 = iVar5 + 0x10;
-      lVar6 = lVar6 + 0x70;
-    } while ((int)uVar4 < mapLoadProfile.profileEntryCount);
+      dVar6 = (double)(longlong)((*(int *)((int)lVar5 + 0x20) + 0xc) * 5);
+      ProfLoad_GetEntryRowText(lVar5,auStack_150,0x100);
+      UI_DrawText(dVar6,(double)(longlong)iVar4,0x3fd70a3d80000000,uVar1,auStack_150,0x100,uVar2);
+      uVar3 = uVar3 + 1;
+      iVar4 = iVar4 + 0x10;
+      lVar5 = lVar5 + 0x70;
+    } while ((int)uVar3 < (int)DAT_83606024);
   }
   __restgprlr_24();
   return;
@@ -600,67 +617,58 @@ void ProfLoad_DrawTree(ScreenPlacement *param_1)
 
 // 824DDC60  ProfLoad_DrawOverlay  (qcommon/com_profilemapload.cpp:480)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void ProfLoad_DrawOverlay(ScreenPlacement *param_1,rectDef_s *param_2)
+void ProfLoad_DrawOverlay(undefined8 param_1,float *param_2)
 
 {
-  ScreenPlacement *pSVar1;
-  Font_s *pFVar2;
-  int in_r5;
-  float *in_r6;
-  int iVar3;
-  char *pcVar4;
-  int iVar5;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   double dVar6;
-  double dVar7;
-  double dVar8;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  double dVar10;
   char acStack_180 [384];
   
-  __savegprlr_21(param_1);
-  pSVar1 = (ScreenPlacement *)__savefpr_28();
-  if ((com_profileLoading->current).enabled != false) {
-    iVar5 = 0;
-    pFVar2 = UI_GetFontHandle(pSVar1,0,0.36);
-    UI_FillRect(pSVar1,param_2->x,param_2->y,param_2->w,param_2->h,iVar5,in_r5,in_r6);
-    ProfLoad_DrawTree(pSVar1);
-    iVar3 = 0xa82c;
-    iVar5 = 0xa830;
-    __u64tod();
-    sprintf(acStack_180,"Total Load Time: %5.4f");
-    dVar6 = 395.0;
-    dVar8 = 60.0;
-    UI_DrawText(pSVar1,acStack_180,0x100,pFVar2,60.0,395.0,iVar5,iVar3,0.36,
-                (float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
-    __u64tod();
-    pcVar4 = "xlen\n\t%i, %i";
-    sprintf(acStack_180,"File Open Time: %5.4f, Accessed %d times");
-    dVar7 = 250.0;
-    UI_DrawText(pSVar1,acStack_180,0x100,pFVar2,250.0,(float)dVar6,-0x7df7abf8,(int)pcVar4,0.36,
-                (float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
-    __u64tod();
-    pcVar4 = "xlen\n\t%i, %i";
-    sprintf(acStack_180,"Profiled Time: %5.4f");
-    dVar6 = 410.0;
-    UI_DrawText(pSVar1,acStack_180,0x100,pFVar2,(float)dVar8,410.0,-0x7df7abf8,(int)pcVar4,0.36,
-                (float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
-    __u64tod();
-    pcVar4 = "xlen\n\t%i, %i";
-    sprintf(acStack_180,"File Seek Time: %5.4f, Accessed %d times");
-    UI_DrawText(pSVar1,acStack_180,0x100,pFVar2,(float)dVar7,(float)dVar6,-0x7df7abf8,(int)pcVar4,
-                0.36,(float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
-    iVar5 = (int)mapLoadProfile.ticksFinish - (int)mapLoadProfile.ticksProfiled;
-    __u64tod();
-    pcVar4 = "xlen\n\t%i, %i";
-    sprintf(acStack_180,"Unprofiled Time: %5.4f");
-    dVar6 = 425.0;
-    UI_DrawText(pSVar1,acStack_180,0x100,pFVar2,(float)dVar8,425.0,(int)pcVar4,iVar5,0.36,
-                (float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
-    __u64tod();
-    pcVar4 = "xlen\n\t%i, %i";
-    sprintf(acStack_180,"File Read Time: %5.4f, Accessed %d times");
-    UI_DrawText(pSVar1,acStack_180,0x100,pFVar2,(float)dVar7,(float)dVar6,-0x7df7abf8,(int)pcVar4,
-                0.36,(float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
+  __savegprlr_21();
+  uVar1 = __savefpr_28();
+  if (*(char *)(DAT_83606018 + 0xc) != '\0') {
+    uVar2 = UI_GetFontHandle(0x3fd70a3d80000000,uVar1,0);
+    UI_FillRect((double)*param_2,(double)param_2[1],(double)param_2[2],(double)param_2[3],uVar1);
+    ProfLoad_DrawTree(uVar1);
+    uVar5 = (ulonglong)DAT_83610848;
+    uVar4 = (ulonglong)DAT_8361084c;
+    uVar3 = (ulonglong)DAT_83610850;
+    dVar6 = (double)__u64tod(DAT_83610838 - DAT_83610830);
+    dVar10 = 0.0010000000474974513;
+    sprintf(acStack_180,"Total Load Time: %5.4f",dVar6 * DAT_841db430 * 0.0010000000474974513);
+    uVar7 = 0x4078b00000000000;
+    uVar9 = 0x404e000000000000;
+    UI_DrawText(0x404e000000000000,0x4078b00000000000,0x3fd70a3d80000000,uVar1,acStack_180,0x100,
+                uVar2);
+    dVar6 = (double)__u64tod(DAT_83610860);
+    sprintf(acStack_180,"File Open Time: %5.4f, Accessed %d times",dVar6 * DAT_841db430 * dVar10,
+            uVar5);
+    uVar8 = 0x406f400000000000;
+    UI_DrawText(0x406f400000000000,uVar7,0x3fd70a3d80000000,uVar1,acStack_180,0x100,uVar2);
+    dVar6 = (double)__u64tod(DAT_83610840);
+    sprintf(acStack_180,"Profiled Time: %5.4f",dVar6 * DAT_841db430 * dVar10);
+    uVar7 = 0x4079a00000000000;
+    UI_DrawText(uVar9,0x4079a00000000000,0x3fd70a3d80000000,uVar1,acStack_180,0x100,uVar2);
+    dVar6 = (double)__u64tod(DAT_83610878);
+    sprintf(acStack_180,"File Seek Time: %5.4f, Accessed %d times",dVar6 * DAT_841db430 * dVar10,
+            uVar4);
+    UI_DrawText(uVar8,uVar7,0x3fd70a3d80000000,uVar1,acStack_180,0x100,uVar2);
+    dVar6 = (double)__u64tod((DAT_83610838 - DAT_83610840) - DAT_83610830);
+    sprintf(acStack_180,"Unprofiled Time: %5.4f",dVar6 * DAT_841db430 * dVar10);
+    uVar7 = 0x407a900000000000;
+    UI_DrawText(uVar9,0x407a900000000000,0x3fd70a3d80000000,uVar1,acStack_180,0x100,uVar2);
+    dVar6 = (double)__u64tod(DAT_83610890);
+    sprintf(acStack_180,"File Read Time: %5.4f, Accessed %d times",dVar6 * DAT_841db430 * dVar10,
+            uVar3);
+    UI_DrawText(uVar8,uVar7,0x3fd70a3d80000000,uVar1,acStack_180,0x100,uVar2);
   }
   __restfpr_28();
   __restgprlr_21();
@@ -668,258 +676,245 @@ void ProfLoad_DrawOverlay(ScreenPlacement *param_1,rectDef_s *param_2)
 }
 
 
-// 824DE4E0  _Push_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+// 824DE4E0  std::_Push_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Push_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-               (MapProfileHotSpot *param_1,int param_2,int param_3,MapProfileHotSpot *param_4,
-               _func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *param_5)
+void std___Push_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+               (undefined8 param_1,ulonglong param_2,int param_3,undefined8 param_4,code *param_5)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
-  ulonglong uVar4;
-  MapProfileHotSpot *pMVar5;
+  int iVar4;
+  ulonglong uVar5;
   ulonglong uVar6;
-  int iVar7;
-  bool bVar8;
-  ulonglong uVar9;
-  uint uVar10;
+  longlong lVar7;
+  char cVar8;
+  uint uVar9;
+  longlong lVar10;
+  undefined8 *puVar11;
   
-  uVar9 = (ulonglong)param_2;
-  iVar7 = __savegprlr_25(param_1);
-  iVar2 = (int)uVar9;
-  uVar10 = iVar2 - 1;
-  uVar6 = (longlong)((int)uVar10 >> 1) + (ulonglong)((int)uVar10 < 0 && (uVar10 & 1) != 0);
-  while (uVar4 = uVar6, param_3 < iVar2) {
-    iVar2 = (int)uVar4;
-    pMVar5 = (MapProfileHotSpot *)(iVar2 * 0x18 + iVar7);
-    bVar8 = (*param_5)(pMVar5,param_4);
-    if (!bVar8) break;
-    uVar10 = iVar2 - 1;
-    iVar3 = (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-    iVar1 = iVar3 + iVar7;
-    *(undefined8 *)(iVar3 + iVar7) = *(undefined8 *)pMVar5;
-    *(long64 *)(iVar1 + 8) = pMVar5->ticksSelf;
-    *(long64 *)(iVar1 + 0x10) = pMVar5->ticksFile;
-    uVar6 = (longlong)((int)uVar10 >> 1) + (ulonglong)((int)uVar10 < 0 && (uVar10 & 1) != 0);
-    uVar9 = uVar4;
+  lVar7 = __savegprlr_25();
+  iVar3 = (int)param_2;
+  uVar9 = iVar3 - 1;
+  iVar1 = (int)lVar7;
+  uVar6 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
+  while (uVar5 = uVar6, param_3 < iVar3) {
+    lVar10 = (uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar7;
+    cVar8 = (*param_5)(lVar10,param_4);
+    if (cVar8 == '\0') break;
+    puVar11 = (undefined8 *)lVar10;
+    iVar3 = (int)uVar5;
+    uVar9 = iVar3 - 1;
+    iVar4 = (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+    iVar2 = iVar4 + iVar1;
+    *(undefined8 *)(iVar4 + iVar1) = *puVar11;
+    *(undefined8 *)(iVar2 + 8) = puVar11[1];
+    *(undefined8 *)(iVar2 + 0x10) = puVar11[2];
+    uVar6 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
+    param_2 = uVar5;
   }
-  iVar1 = (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-  iVar2 = iVar1 + iVar7;
-  *(undefined8 *)(iVar1 + iVar7) = *(undefined8 *)param_4;
-  *(long64 *)(iVar2 + 8) = param_4->ticksSelf;
-  *(long64 *)(iVar2 + 0x10) = param_4->ticksFile;
+  puVar11 = (undefined8 *)param_4;
+  iVar2 = (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+  iVar3 = iVar2 + iVar1;
+  *(undefined8 *)(iVar2 + iVar1) = *puVar11;
+  *(undefined8 *)(iVar3 + 8) = puVar11[1];
+  *(undefined8 *)(iVar3 + 0x10) = puVar11[2];
   __restgprlr_25();
   return;
 }
 
 
-// 824DE5B0  _Adjust_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+// 824DE5B0  std::_Adjust_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Adjust_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-               (MapProfileHotSpot *param_1,int param_2,int param_3,MapProfileHotSpot *param_4,
-               _func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *param_5)
+void std___Adjust_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+               (undefined8 param_1,ulonglong param_2,longlong param_3,undefined8 param_4,
+               code *param_5)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
-  MapProfileHotSpot *pMVar4;
-  int iVar5;
-  bool bVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  int iVar9;
-  uint uVar10;
-  ulonglong uVar11;
+  int iVar4;
+  longlong lVar5;
+  longlong lVar6;
+  char cVar7;
+  int iVar8;
+  uint uVar9;
+  ulonglong uVar10;
+  undefined8 *puVar11;
   ulonglong uVar12;
   int iVar14;
   ulonglong uVar13;
   
-  lVar8 = (longlong)param_3;
-  uVar7 = (ulonglong)param_2;
-  iVar5 = __savegprlr_25(param_1);
-  uVar12 = (uVar7 + 1 & 0x7fffffff) << 1;
-  iVar9 = (int)lVar8;
+  lVar5 = __savegprlr_25();
+  uVar12 = (param_2 + 1 & 0x7fffffff) << 1;
+  iVar8 = (int)param_3;
+  iVar1 = (int)lVar5;
   iVar14 = (int)uVar12;
-  uVar11 = uVar7;
-  while (uVar13 = uVar12, iVar14 < iVar9) {
-    pMVar4 = (MapProfileHotSpot *)((int)uVar13 * 0x18 + iVar5);
-    bVar6 = (*param_5)(pMVar4,pMVar4 + -1);
-    if (bVar6) {
+  uVar10 = param_2;
+  while (uVar13 = uVar12, iVar14 < iVar8) {
+    lVar6 = (uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar5;
+    cVar7 = (*param_5)(lVar6,lVar6 + -0x18);
+    if (cVar7 != '\0') {
       uVar13 = uVar13 - 1;
     }
-    iVar2 = (int)((uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-    iVar14 = iVar2 + iVar5;
-    iVar3 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-    iVar1 = iVar3 + iVar5;
+    iVar3 = (int)((uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+    iVar14 = iVar3 + iVar1;
+    iVar4 = (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+    iVar2 = iVar4 + iVar1;
     uVar12 = (uVar13 + 1 & 0x7fffffff) << 1;
-    *(undefined8 *)(iVar3 + iVar5) = *(undefined8 *)(iVar2 + iVar5);
-    *(undefined8 *)(iVar1 + 8) = *(undefined8 *)(iVar14 + 8);
-    *(undefined8 *)(iVar1 + 0x10) = *(undefined8 *)(iVar14 + 0x10);
+    *(undefined8 *)(iVar4 + iVar1) = *(undefined8 *)(iVar3 + iVar1);
+    *(undefined8 *)(iVar2 + 8) = *(undefined8 *)(iVar14 + 8);
+    *(undefined8 *)(iVar2 + 0x10) = *(undefined8 *)(iVar14 + 0x10);
     iVar14 = (int)uVar12;
-    uVar11 = uVar13;
+    uVar10 = uVar13;
   }
-  if (iVar14 == iVar9) {
-    iVar14 = iVar9 * 0x18 + iVar5;
-    iVar1 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-    iVar9 = iVar1 + iVar5;
-    uVar11 = lVar8 - 1;
-    *(undefined8 *)(iVar1 + iVar5) = *(undefined8 *)(iVar14 + -0x18);
-    *(undefined8 *)(iVar9 + 8) = *(undefined8 *)(iVar14 + -0x10);
-    *(undefined8 *)(iVar9 + 0x10) = *(undefined8 *)(iVar14 + -8);
+  if (iVar14 == iVar8) {
+    iVar14 = iVar8 * 0x18 + iVar1;
+    iVar2 = (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+    iVar8 = iVar2 + iVar1;
+    uVar10 = param_3 - 1;
+    *(undefined8 *)(iVar2 + iVar1) = *(undefined8 *)(iVar14 + -0x18);
+    *(undefined8 *)(iVar8 + 8) = *(undefined8 *)(iVar14 + -0x10);
+    *(undefined8 *)(iVar8 + 0x10) = *(undefined8 *)(iVar14 + -8);
   }
-  iVar14 = (int)uVar11;
-  uVar10 = iVar14 - 1;
-  uVar12 = (longlong)((int)uVar10 >> 1) + (ulonglong)((int)uVar10 < 0 && (uVar10 & 1) != 0);
-  while (uVar13 = uVar12, (int)uVar7 < iVar14) {
+  iVar14 = (int)uVar10;
+  uVar9 = iVar14 - 1;
+  uVar12 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
+  while (uVar13 = uVar12, (int)param_2 < iVar14) {
+    lVar6 = (uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar5;
+    cVar7 = (*param_5)(lVar6,param_4);
+    if (cVar7 == '\0') break;
+    puVar11 = (undefined8 *)lVar6;
     iVar14 = (int)uVar13;
-    pMVar4 = (MapProfileHotSpot *)(iVar14 * 0x18 + iVar5);
-    bVar6 = (*param_5)(pMVar4,param_4);
-    if (!bVar6) break;
-    uVar10 = iVar14 - 1;
-    iVar1 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-    iVar9 = iVar1 + iVar5;
-    *(undefined8 *)(iVar1 + iVar5) = *(undefined8 *)pMVar4;
-    *(long64 *)(iVar9 + 8) = pMVar4->ticksSelf;
-    *(long64 *)(iVar9 + 0x10) = pMVar4->ticksFile;
-    uVar12 = (longlong)((int)uVar10 >> 1) + (ulonglong)((int)uVar10 < 0 && (uVar10 & 1) != 0);
-    uVar11 = uVar13;
+    uVar9 = iVar14 - 1;
+    iVar2 = (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+    iVar8 = iVar2 + iVar1;
+    *(undefined8 *)(iVar2 + iVar1) = *puVar11;
+    *(undefined8 *)(iVar8 + 8) = puVar11[1];
+    *(undefined8 *)(iVar8 + 0x10) = puVar11[2];
+    uVar12 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
+    uVar10 = uVar13;
   }
-  iVar9 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-  iVar14 = iVar9 + iVar5;
-  *(undefined8 *)(iVar9 + iVar5) = *(undefined8 *)param_4;
-  *(long64 *)(iVar14 + 8) = param_4->ticksSelf;
-  *(long64 *)(iVar14 + 0x10) = param_4->ticksFile;
+  puVar11 = (undefined8 *)param_4;
+  iVar8 = (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+  iVar14 = iVar8 + iVar1;
+  *(undefined8 *)(iVar8 + iVar1) = *puVar11;
+  *(undefined8 *)(iVar14 + 8) = puVar11[1];
+  *(undefined8 *)(iVar14 + 0x10) = puVar11[2];
   __restgprlr_25();
   return;
 }
 
 
-// 824DE758  _Make_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+// 824DE758  std::_Make_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Make_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-               (MapProfileHotSpot *param_1,MapProfileHotSpot *param_2,
-               _func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *param_3,int *param_4,
-               MapProfileHotSpot *param_5)
+void std___Make_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+               (undefined8 param_1,int param_2,undefined8 param_3)
 
 {
   uint uVar1;
-  MapProfileHotSpot *pMVar2;
+  int iVar2;
   int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  bool bVar6;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
   longlong lVar7;
-  longlong lVar8;
+  char cVar8;
   ulonglong uVar9;
-  uint uVar10;
-  ulonglong uVar11;
-  int iVar12;
+  int iVar10;
+  longlong lVar11;
+  ulonglong uVar12;
   ulonglong uVar13;
   ulonglong uVar14;
-  MapProfileHotSpot local_60 [4];
+  ulonglong uVar15;
+  undefined1 local_60 [8];
+  undefined8 local_58;
+  undefined8 local_50;
   
-  lVar8 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  lVar5 = __savegprlr_24(param_1,lVar7,lVar8,param_4,param_5);
-  pMVar2 = (MapProfileHotSpot *)lVar5;
-  uVar1 = ((int)lVar7 - (int)pMVar2) / 0x18;
-  uVar11 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar11) {
-    uVar9 = (uVar11 + 1 & 0x7fffffff) << 1;
-    lVar5 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar5;
+  lVar6 = __savegprlr_24();
+  iVar2 = (int)lVar6;
+  uVar1 = (param_2 - iVar2) / 0x18;
+  uVar12 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar12) {
+    uVar9 = (uVar12 + 1 & 0x7fffffff) << 1;
+    lVar11 = (uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar6;
     do {
       uVar9 = uVar9 - 2;
-      uVar11 = uVar11 - 1;
-      local_60[0]._0_8_ = *(undefined8 *)(lVar5 + -0x18);
-      local_60[0].ticksSelf = *(long64 *)((int)lVar5 + -0x10);
-      local_60[0].ticksFile = *(long64 *)((int)lVar5 + -8);
-      uVar10 = (uint)uVar9;
-      uVar14 = uVar9;
-      uVar4 = uVar11;
-      while (uVar13 = uVar14, (int)uVar10 < (int)uVar1) {
-        bVar6 = (*(_func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *)lVar8)
-                          (pMVar2 + (int)uVar13,pMVar2 + (int)uVar13 + -1);
-        if (bVar6) {
-          uVar13 = uVar13 - 1;
+      uVar12 = uVar12 - 1;
+      local_58 = *(undefined8 *)((int)lVar11 + -0x10);
+      local_50 = *(undefined8 *)((int)lVar11 + -8);
+      iVar10 = (int)uVar9;
+      uVar15 = uVar9;
+      uVar13 = uVar12;
+      while (uVar14 = uVar15, iVar10 < (int)uVar1) {
+        lVar7 = (uVar14 + (uVar14 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar6;
+        cVar8 = (*(code *)param_3)(lVar7,lVar7 + -0x18);
+        if (cVar8 != '\0') {
+          uVar14 = uVar14 - 1;
         }
-        iVar12 = (int)((uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-        iVar3 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-        uVar14 = (uVar13 + 1 & 0x7fffffff) << 1;
-        *(undefined8 *)((int)&pMVar2->label + iVar3) = *(undefined8 *)((int)&pMVar2->label + iVar12)
-        ;
-        *(undefined8 *)((int)&pMVar2->ticksSelf + iVar3) =
-             *(undefined8 *)((int)&pMVar2->ticksSelf + iVar12);
-        *(undefined8 *)((int)&pMVar2->ticksFile + iVar3) =
-             *(undefined8 *)((int)&pMVar2->ticksFile + iVar12);
-        uVar10 = (uint)uVar14;
-        uVar4 = uVar13;
+        iVar4 = (int)((uVar14 + (uVar14 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+        iVar10 = iVar4 + iVar2;
+        iVar5 = (int)((uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+        iVar3 = iVar5 + iVar2;
+        uVar15 = (uVar14 + 1 & 0x7fffffff) << 1;
+        *(undefined8 *)(iVar5 + iVar2) = *(undefined8 *)(iVar4 + iVar2);
+        *(undefined8 *)(iVar3 + 8) = *(undefined8 *)(iVar10 + 8);
+        *(undefined8 *)(iVar3 + 0x10) = *(undefined8 *)(iVar10 + 0x10);
+        iVar10 = (int)uVar15;
+        uVar13 = uVar14;
       }
-      iVar12 = (int)uVar4;
-      if (uVar10 == uVar1) {
-        iVar3 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-        iVar12 = uVar1 - 1;
-        *(undefined8 *)((int)&pMVar2->label + iVar3) = *(undefined8 *)(pMVar2 + (uVar1 - 1));
-        *(long64 *)((int)&pMVar2->ticksSelf + iVar3) = pMVar2[uVar1 - 1].ticksSelf;
-        *(long64 *)((int)&pMVar2->ticksFile + iVar3) = pMVar2[uVar1 - 1].ticksFile;
+      if ((uint)uVar14 == uVar1) {
+        iVar10 = uVar1 * 0x18 + iVar2;
+        iVar4 = (int)((uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+        iVar3 = iVar4 + iVar2;
+        uVar13 = (longlong)(int)uVar1 - 1;
+        *(undefined8 *)(iVar4 + iVar2) = *(undefined8 *)(iVar10 + -0x18);
+        *(undefined8 *)(iVar3 + 8) = *(undefined8 *)(iVar10 + -0x10);
+        *(undefined8 *)(iVar3 + 0x10) = *(undefined8 *)(iVar10 + -8);
       }
-      _Push_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-                (pMVar2,iVar12,(int)uVar11,local_60,
-                 (_func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *)lVar8);
-      lVar5 = lVar5 + -0x18;
-    } while (0 < (int)uVar11);
+      std___Push_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+                (lVar6,uVar13,uVar12,local_60,param_3);
+      lVar11 = lVar11 + -0x18;
+    } while (0 < (int)uVar12);
   }
   __restgprlr_24();
   return;
 }
 
 
-// 824DF080  _Sort_heap<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+// 824DF080  std::_Sort_heap<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Sort_heap<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-               (MapProfileHotSpot *param_1,MapProfileHotSpot *param_2,
-               _func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *param_3)
+void std___Sort_heap<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
   longlong lVar1;
-  MapProfileHotSpot *pMVar2;
+  undefined8 *puVar2;
   longlong lVar3;
-  longlong lVar4;
-  undefined8 *puVar5;
-  MapProfileHotSpot local_50 [3];
+  undefined8 *puVar4;
+  undefined8 local_50;
+  undefined8 local_48;
+  undefined8 local_40;
   
-  lVar4 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_27(param_1);
-  lVar3 = lVar4 - lVar1;
+  lVar1 = __savegprlr_27();
+  lVar3 = param_2 - lVar1;
   if (1 < (int)lVar3 / 0x18) {
-    lVar4 = lVar4 + -0x18;
+    param_2 = param_2 + -0x18;
     do {
-      pMVar2 = (MapProfileHotSpot *)lVar1;
-      puVar5 = (undefined8 *)lVar4;
-      local_50[0]._0_8_ = *puVar5;
-      local_50[0].ticksSelf = puVar5[1];
-      local_50[0].ticksFile = puVar5[2];
-      *puVar5 = *(undefined8 *)pMVar2;
-      puVar5[1] = pMVar2->ticksSelf;
-      puVar5[2] = pMVar2->ticksFile;
-      _Adjust_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-                (pMVar2,0,((int)lVar3 + -0x18) / 0x18,local_50,param_3);
-      lVar4 = lVar4 + -0x18;
-      lVar3 = (lVar4 - lVar1) + 0x18;
+      puVar2 = (undefined8 *)lVar1;
+      puVar4 = (undefined8 *)param_2;
+      local_50 = *puVar4;
+      local_48 = puVar4[1];
+      local_40 = puVar4[2];
+      *puVar4 = *puVar2;
+      puVar4[1] = puVar2[1];
+      puVar4[2] = puVar2[2];
+      std___Adjust_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+                (lVar1,0,((int)lVar3 + -0x18) / 0x18,&local_50,param_3);
+      param_2 = param_2 + -0x18;
+      lVar3 = (param_2 - lVar1) + 0x18;
     } while (1 < (int)lVar3 / 0x18);
   }
   __restgprlr_27();
@@ -927,15 +922,10 @@ void std::
 }
 
 
-// 824DEAE8  _Insertion_sort1<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&),MapProfileHotSpot>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+// 824DEAE8  std::_Insertion_sort1<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&),MapProfileHotSpot>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Insertion_sort1<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&),MapProfileHotSpot>
-               (MapProfileHotSpot *param_1,MapProfileHotSpot *param_2,
-               _func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *param_3,
-               MapProfileHotSpot *param_4)
+void std___Insertion_sort1<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&),MapProfileHotSpot>
+               (undefined8 param_1,ulonglong param_2,code *param_3)
 
 {
   ulonglong uVar1;
@@ -943,462 +933,414 @@ void std::
   char cVar4;
   undefined8 *puVar3;
   ulonglong uVar5;
-  longlong lVar6;
-  code *pcVar7;
+  ulonglong uVar7;
   ulonglong uVar8;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  undefined8 *puVar12;
+  undefined8 *puVar9;
   undefined8 local_60;
   undefined8 local_58;
   undefined8 local_50;
-  ulonglong uVar9;
+  ulonglong uVar6;
   
-  lVar6 = (longlong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1,uVar5,lVar6,param_4);
-  if (((uVar2 & 0xffffffff) != (uVar5 & 0xffffffff)) &&
-     (uVar11 = uVar2 + 0x18, uVar10 = uVar2, (uVar11 & 0xffffffff) != (uVar5 & 0xffffffff))) {
+  uVar2 = __savegprlr_25();
+  if (((uVar2 & 0xffffffff) != (param_2 & 0xffffffff)) &&
+     (uVar8 = uVar2 + 0x18, uVar7 = uVar2, (uVar8 & 0xffffffff) != (param_2 & 0xffffffff))) {
     do {
-      local_58 = *(undefined8 *)((int)uVar11 + 8);
-      local_50 = *(undefined8 *)((int)uVar11 + 0x10);
-      pcVar7 = (code *)lVar6;
-      cVar4 = (*pcVar7)(&local_60,uVar2);
+      local_58 = *(undefined8 *)((int)uVar8 + 8);
+      local_50 = *(undefined8 *)((int)uVar8 + 0x10);
+      cVar4 = (*param_3)(&local_60,uVar2);
       if (cVar4 == '\0') {
-        cVar4 = (*pcVar7)(&local_60,uVar10);
-        uVar8 = uVar10;
-        uVar9 = uVar11;
-        while (uVar1 = uVar8, puVar3 = (undefined8 *)uVar9, cVar4 != '\0') {
-          puVar12 = (undefined8 *)uVar1;
-          *puVar3 = *puVar12;
-          puVar3[1] = puVar12[1];
-          puVar3[2] = puVar12[2];
-          cVar4 = (*pcVar7)(&local_60,uVar1 - 0x18);
-          uVar8 = uVar1 - 0x18;
-          uVar9 = uVar1;
+        cVar4 = (*param_3)(&local_60,uVar7);
+        uVar5 = uVar7;
+        uVar6 = uVar8;
+        while (uVar1 = uVar5, puVar3 = (undefined8 *)uVar6, cVar4 != '\0') {
+          puVar9 = (undefined8 *)uVar1;
+          *puVar3 = *puVar9;
+          puVar3[1] = puVar9[1];
+          puVar3[2] = puVar9[2];
+          cVar4 = (*param_3)(&local_60,uVar1 - 0x18);
+          uVar5 = uVar1 - 0x18;
+          uVar6 = uVar1;
         }
         *puVar3 = local_60;
         puVar3[1] = local_58;
         puVar3[2] = local_50;
       }
       else {
-        uVar9 = uVar11;
-        if ((uVar2 & 0xffffffff) != (uVar11 & 0xffffffff)) {
+        uVar6 = uVar8;
+        if ((uVar2 & 0xffffffff) != (uVar8 & 0xffffffff)) {
           do {
-            uVar8 = uVar9 - 0x18;
-            puVar3 = (undefined8 *)uVar9;
-            *puVar3 = *(undefined8 *)uVar8;
+            uVar5 = uVar6 - 0x18;
+            puVar3 = (undefined8 *)uVar6;
+            *puVar3 = *(undefined8 *)uVar5;
             puVar3[1] = puVar3[-2];
             puVar3[2] = puVar3[-1];
-            uVar9 = uVar8;
-          } while ((uVar8 & 0xffffffff) != (uVar2 & 0xffffffff));
+            uVar6 = uVar5;
+          } while ((uVar5 & 0xffffffff) != (uVar2 & 0xffffffff));
         }
         puVar3 = (undefined8 *)uVar2;
         *puVar3 = local_60;
         puVar3[1] = local_58;
         puVar3[2] = local_50;
       }
-      uVar11 = uVar11 + 0x18;
-      uVar10 = uVar10 + 0x18;
-    } while ((uVar11 & 0xffffffff) != (uVar5 & 0xffffffff));
+      uVar8 = uVar8 + 0x18;
+      uVar7 = uVar7 + 0x18;
+    } while ((uVar8 & 0xffffffff) != (param_2 & 0xffffffff));
   }
   __restgprlr_25();
   return;
 }
 
 
-// 824DE8C0  _Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+// 824DE8C0  std::_Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-               (MapProfileHotSpot *param_1,MapProfileHotSpot *param_2,MapProfileHotSpot *param_3,
-               _func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *param_4)
+void std___Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,code *param_4)
 
 {
-  int iVar1;
-  char *pcVar2;
-  int iVar3;
-  MapProfileHotSpot *pMVar4;
-  bool bVar5;
-  long64 lVar6;
-  long64 lVar7;
+  undefined8 *puVar1;
+  undefined8 *puVar2;
+  char cVar3;
+  undefined8 *puVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
   
-  pMVar4 = (MapProfileHotSpot *)__savegprlr_28(param_1);
-  bVar5 = (*param_4)(param_2,pMVar4);
-  if (bVar5) {
-    pcVar2 = param_2->label;
-    iVar3 = param_2->accessCount;
-    lVar7 = param_2->ticksSelf;
-    lVar6 = param_2->ticksFile;
-    iVar1 = pMVar4->accessCount;
-    param_2->label = pMVar4->label;
-    param_2->accessCount = iVar1;
-    param_2->ticksSelf = pMVar4->ticksSelf;
-    param_2->ticksFile = pMVar4->ticksFile;
-    pMVar4->label = pcVar2;
-    pMVar4->accessCount = iVar3;
-    pMVar4->ticksSelf = lVar7;
-    pMVar4->ticksFile = lVar6;
+  puVar2 = (undefined8 *)__savegprlr_28();
+  cVar3 = (*param_4)(param_2,puVar2);
+  puVar1 = (undefined8 *)param_2;
+  if (cVar3 != '\0') {
+    uVar7 = *puVar1;
+    uVar6 = puVar1[1];
+    uVar5 = puVar1[2];
+    *puVar1 = *puVar2;
+    puVar1[1] = puVar2[1];
+    puVar1[2] = puVar2[2];
+    *puVar2 = uVar7;
+    puVar2[1] = uVar6;
+    puVar2[2] = uVar5;
   }
-  bVar5 = (*param_4)(param_3,param_2);
-  if (bVar5) {
-    pcVar2 = param_3->label;
-    iVar3 = param_3->accessCount;
-    lVar7 = param_3->ticksSelf;
-    lVar6 = param_3->ticksFile;
-    iVar1 = param_2->accessCount;
-    param_3->label = param_2->label;
-    param_3->accessCount = iVar1;
-    param_3->ticksSelf = param_2->ticksSelf;
-    param_3->ticksFile = param_2->ticksFile;
-    param_2->ticksFile = lVar6;
-    param_2->ticksSelf = lVar7;
-    param_2->label = pcVar2;
-    param_2->accessCount = iVar3;
+  cVar3 = (*param_4)(param_3,param_2);
+  if (cVar3 != '\0') {
+    puVar4 = (undefined8 *)param_3;
+    uVar7 = *puVar4;
+    uVar6 = puVar4[1];
+    uVar5 = puVar4[2];
+    *puVar4 = *puVar1;
+    puVar4[1] = puVar1[1];
+    puVar4[2] = puVar1[2];
+    puVar1[2] = uVar5;
+    puVar1[1] = uVar6;
+    *puVar1 = uVar7;
   }
-  bVar5 = (*param_4)(param_2,pMVar4);
-  if (bVar5) {
-    pcVar2 = param_2->label;
-    iVar3 = param_2->accessCount;
-    lVar7 = param_2->ticksSelf;
-    lVar6 = param_2->ticksFile;
-    iVar1 = pMVar4->accessCount;
-    param_2->label = pMVar4->label;
-    param_2->accessCount = iVar1;
-    param_2->ticksSelf = pMVar4->ticksSelf;
-    param_2->ticksFile = pMVar4->ticksFile;
-    pMVar4->label = pcVar2;
-    pMVar4->accessCount = iVar3;
-    pMVar4->ticksSelf = lVar7;
-    pMVar4->ticksFile = lVar6;
+  cVar3 = (*param_4)(param_2,puVar2);
+  if (cVar3 != '\0') {
+    uVar7 = *puVar1;
+    uVar6 = puVar1[1];
+    uVar5 = puVar1[2];
+    *puVar1 = *puVar2;
+    puVar1[1] = puVar2[1];
+    puVar1[2] = puVar2[2];
+    *puVar2 = uVar7;
+    puVar2[1] = uVar6;
+    puVar2[2] = uVar5;
   }
   __restgprlr_28();
   return;
 }
 
 
-// 824DEA28  _Median<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+// 824DEA28  std::_Median<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Median<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-               (MapProfileHotSpot *param_1,MapProfileHotSpot *param_2,MapProfileHotSpot *param_3,
-               _func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *param_4)
+void std___Median<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
 
 {
   int iVar1;
-  int iVar2;
-  MapProfileHotSpot *pMVar3;
-  MapProfileHotSpot *pMVar4;
-  uint uVar6;
-  ulonglong uVar5;
+  ulonglong uVar2;
+  longlong lVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
   
-  pMVar3 = (MapProfileHotSpot *)__savegprlr_26(param_1);
-  iVar1 = ((int)param_3 - (int)pMVar3) / 0x18;
+  lVar3 = __savegprlr_26();
+  iVar1 = ((int)param_3 - (int)lVar3) / 0x18;
   if (0x28 < iVar1) {
-    uVar6 = iVar1 + 1;
-    uVar5 = (longlong)((int)uVar6 >> 3) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 7) != 0);
-    iVar2 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 4);
-    iVar1 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-    pMVar4 = (MapProfileHotSpot *)((int)&pMVar3->label + iVar1);
-    _Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-              (pMVar3,pMVar4,(MapProfileHotSpot *)((int)&pMVar3->label + iVar2),param_4);
-    _Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-              ((MapProfileHotSpot *)((int)param_2 - iVar1),param_2,
-               (MapProfileHotSpot *)((int)&param_2->label + iVar1),param_4);
-    _Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-              ((MapProfileHotSpot *)((int)param_3 - iVar2),
-               (MapProfileHotSpot *)((int)param_3 - iVar1),param_3,param_4);
-    _Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-              (pMVar4,param_2,(MapProfileHotSpot *)((int)param_3 - iVar1),param_4);
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    uVar2 = uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x1fffffff;
+    uVar4 = uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xfffffff;
+    lVar6 = uVar2 * 8 + lVar3;
+    std___Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+              (lVar3,lVar6,uVar4 * 0x10 + lVar3);
+    std___Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+              (param_2 + uVar2 * -8,param_2,uVar2 * 8 + param_2,param_4);
+    lVar3 = param_3 + uVar2 * -8;
+    std___Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+              (param_3 + uVar4 * -0x10,lVar3,param_3,param_4);
+    std___Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+              (lVar6,param_2,lVar3,param_4);
     __restgprlr_26();
     return;
   }
-  _Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-            (pMVar3,param_2,param_3,param_4);
+  std___Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+            (lVar3,param_2,param_3);
   __restgprlr_26();
   return;
 }
 
 
-// 824DEC38  _Unguarded_partition<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+// 824DEC38  std::_Unguarded_partition<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-pair<MapProfileHotSpot_*,MapProfileHotSpot_*>
-std::
-_Unguarded_partition<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-          (MapProfileHotSpot *param_1,MapProfileHotSpot *param_2,
-          _func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *param_3)
+void std___Unguarded_partition<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
 
 {
-  uint uVar1;
-  int iVar2;
-  undefined8 *puVar3;
-  MapProfileHotSpot *pMVar4;
-  MapProfileHotSpot *pMVar5;
-  undefined4 *puVar7;
-  bool bVar8;
-  pair<MapProfileHotSpot_*,MapProfileHotSpot_*> pVar6;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  long64 lVar11;
-  _func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *in_r6;
-  long64 lVar12;
-  undefined8 uVar13;
-  undefined8 uVar14;
-  undefined8 uVar15;
+  bool bVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  undefined8 *puVar5;
+  undefined4 *puVar6;
+  char cVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  undefined8 *puVar14;
+  undefined8 *puVar15;
   ulonglong uVar16;
   ulonglong uVar17;
   ulonglong uVar18;
-  undefined8 *puVar19;
   undefined8 *puVar20;
-  ulonglong uVar21;
-  ulonglong uVar22;
-  undefined8 *puVar23;
+  ulonglong uVar19;
   
-  uVar10 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  puVar7 = (undefined4 *)__savegprlr_23(param_1);
-  uVar1 = ((int)uVar10 - (int)(MapProfileHotSpot *)uVar9) / 0x18;
-  uVar16 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  uVar16 = (uVar16 + (uVar16 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + uVar9;
-  _Median<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-            ((MapProfileHotSpot *)uVar9,(MapProfileHotSpot *)uVar16,
-             (MapProfileHotSpot *)((int)uVar10 + -0x18),in_r6);
-  uVar18 = uVar16 + 0x18;
-  if ((uVar9 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+  puVar6 = (undefined4 *)__savegprlr_23();
+  uVar2 = ((int)param_3 - (int)param_2) / 0x18;
+  uVar11 = (longlong)((int)uVar2 >> 1) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0);
+  uVar11 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + param_2;
+  std___Median<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+            (param_2,uVar11,param_3 - 0x18);
+  uVar13 = uVar11 + 0x18;
+  if ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff)) {
     do {
-      uVar21 = uVar16 - 0x18;
-      bVar8 = (*in_r6)((MapProfileHotSpot *)uVar21,(MapProfileHotSpot *)uVar16);
-      if ((bVar8) ||
-         (bVar8 = (*in_r6)((MapProfileHotSpot *)uVar16,(MapProfileHotSpot *)uVar21), bVar8)) break;
-      uVar16 = uVar21;
-    } while ((uVar9 & 0xffffffff) < (uVar21 & 0xffffffff));
+      uVar16 = uVar11 - 0x18;
+      cVar7 = (*param_4)(uVar16,uVar11);
+      if ((cVar7 != '\0') || (cVar7 = (*param_4)(uVar11,uVar16), cVar7 != '\0')) break;
+      uVar11 = uVar16;
+    } while ((param_2 & 0xffffffff) < (uVar16 & 0xffffffff));
   }
-  uVar21 = uVar18;
-  uVar22 = uVar16;
-  if ((uVar18 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+  uVar16 = uVar13;
+  uVar19 = uVar11;
+  if ((uVar13 & 0xffffffff) < (param_3 & 0xffffffff)) {
     do {
-      bVar8 = (*in_r6)((MapProfileHotSpot *)uVar18,(MapProfileHotSpot *)uVar16);
-      uVar21 = uVar18;
-      if ((bVar8) ||
-         (bVar8 = (*in_r6)((MapProfileHotSpot *)uVar16,(MapProfileHotSpot *)uVar18), bVar8)) break;
-      uVar18 = uVar18 + 0x18;
-      uVar21 = uVar18;
-    } while ((uVar18 & 0xffffffff) < (uVar10 & 0xffffffff));
+      cVar7 = (*param_4)(uVar13,uVar11);
+      uVar16 = uVar13;
+      if ((cVar7 != '\0') || (cVar7 = (*param_4)(uVar11,uVar13), cVar7 != '\0')) break;
+      uVar13 = uVar13 + 0x18;
+      uVar16 = uVar13;
+    } while ((uVar13 & 0xffffffff) < (param_3 & 0xffffffff));
   }
   do {
-    uVar17 = uVar18;
-    if ((uVar21 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+    uVar12 = uVar13;
+    if ((uVar16 & 0xffffffff) < (param_3 & 0xffffffff)) {
       do {
-        pMVar4 = (MapProfileHotSpot *)uVar21;
-        bVar8 = (*in_r6)((MapProfileHotSpot *)uVar22,pMVar4);
-        uVar18 = uVar17;
-        if (!bVar8) {
-          bVar8 = (*in_r6)(pMVar4,(MapProfileHotSpot *)uVar22);
-          if (bVar8) break;
-          uVar18 = uVar17 + 0x18;
-          puVar19 = (undefined8 *)uVar17;
-          uVar13 = *puVar19;
-          lVar12 = puVar19[1];
-          lVar11 = puVar19[2];
-          *puVar19 = *(undefined8 *)pMVar4;
-          puVar19[1] = pMVar4->ticksSelf;
-          puVar19[2] = pMVar4->ticksFile;
-          pMVar4->label = (char *)(int)((ulonglong)uVar13 >> 0x20);
-          pMVar4->accessCount = (int)uVar13;
-          pMVar4->ticksSelf = lVar12;
-          pMVar4->ticksFile = lVar11;
+        cVar7 = (*param_4)(uVar19,uVar16);
+        uVar13 = uVar12;
+        if (cVar7 == '\0') {
+          cVar7 = (*param_4)(uVar16,uVar19);
+          if (cVar7 != '\0') break;
+          puVar15 = (undefined8 *)uVar16;
+          uVar13 = uVar12 + 0x18;
+          puVar14 = (undefined8 *)uVar12;
+          uVar10 = *puVar14;
+          uVar9 = puVar14[1];
+          uVar8 = puVar14[2];
+          *puVar14 = *puVar15;
+          puVar14[1] = puVar15[1];
+          puVar14[2] = puVar15[2];
+          *puVar15 = uVar10;
+          puVar15[1] = uVar9;
+          puVar15[2] = uVar8;
         }
-        uVar21 = uVar21 + 0x18;
-        uVar17 = uVar18;
-      } while ((uVar21 & 0xffffffff) < (uVar10 & 0xffffffff));
+        uVar16 = uVar16 + 0x18;
+        uVar12 = uVar13;
+      } while ((uVar16 & 0xffffffff) < (param_3 & 0xffffffff));
     }
-    bVar8 = (uVar16 & 0xffffffff) == (uVar9 & 0xffffffff);
-    uVar17 = uVar16;
-    if ((uVar9 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+    bVar1 = (uVar11 & 0xffffffff) == (param_2 & 0xffffffff);
+    uVar18 = uVar19;
+    uVar12 = uVar11;
+    if ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff)) {
       do {
-        pMVar4 = (MapProfileHotSpot *)(uVar17 - 0x18);
-        pMVar5 = (MapProfileHotSpot *)uVar22;
-        bVar8 = (*in_r6)(pMVar4,pMVar5);
-        if (!bVar8) {
-          bVar8 = (*in_r6)(pMVar5,pMVar4);
-          if (bVar8) break;
-          uVar22 = uVar22 - 0x18;
-          uVar13 = *(undefined8 *)uVar22;
-          lVar12 = pMVar5[-1].ticksSelf;
-          lVar11 = pMVar5[-1].ticksFile;
-          *(undefined8 *)uVar22 = *(undefined8 *)pMVar4;
-          iVar2 = (int)uVar17;
-          pMVar5[-1].ticksSelf = *(long64 *)(iVar2 + -0x10);
-          pMVar5[-1].ticksFile = *(long64 *)(iVar2 + -8);
-          pMVar4->label = (char *)(int)((ulonglong)uVar13 >> 0x20);
-          pMVar4->accessCount = (int)uVar13;
-          *(long64 *)(iVar2 + -0x10) = lVar12;
-          *(long64 *)(iVar2 + -8) = lVar11;
+        uVar17 = uVar12 - 0x18;
+        cVar7 = (*param_4)(uVar17,uVar19);
+        uVar18 = uVar19;
+        if (cVar7 == '\0') {
+          cVar7 = (*param_4)(uVar19,uVar17);
+          if (cVar7 != '\0') break;
+          uVar18 = uVar19 - 0x18;
+          uVar10 = *(undefined8 *)uVar18;
+          iVar3 = (int)uVar19;
+          uVar9 = *(undefined8 *)(iVar3 + -0x10);
+          uVar8 = *(undefined8 *)(iVar3 + -8);
+          *(undefined8 *)uVar18 = *(undefined8 *)uVar17;
+          iVar4 = (int)uVar12;
+          *(undefined8 *)(iVar3 + -0x10) = *(undefined8 *)(iVar4 + -0x10);
+          *(undefined8 *)(iVar3 + -8) = *(undefined8 *)(iVar4 + -8);
+          *(undefined8 *)uVar17 = uVar10;
+          *(undefined8 *)(iVar4 + -0x10) = uVar9;
+          *(undefined8 *)(iVar4 + -8) = uVar8;
         }
-        uVar16 = uVar16 - 0x18;
-        uVar17 = uVar17 - 0x18;
-      } while ((uVar9 & 0xffffffff) < (uVar16 & 0xffffffff));
-      bVar8 = (uVar16 & 0xffffffff) == (uVar9 & 0xffffffff);
+        uVar11 = uVar11 - 0x18;
+        uVar19 = uVar18;
+        uVar12 = uVar17;
+      } while ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff));
+      bVar1 = (uVar11 & 0xffffffff) == (param_2 & 0xffffffff);
     }
-    puVar20 = (undefined8 *)uVar21;
-    puVar19 = (undefined8 *)uVar18;
-    puVar23 = (undefined8 *)uVar22;
-    if (bVar8) {
-      if ((uVar21 & 0xffffffff) == (uVar10 & 0xffffffff)) {
-        *puVar7 = puVar23;
-        puVar7[1] = puVar19;
-        pVar6 = (pair<MapProfileHotSpot_*,MapProfileHotSpot_*>)__restgprlr_23(puVar7);
-        return pVar6;
+    puVar15 = (undefined8 *)uVar16;
+    puVar14 = (undefined8 *)uVar13;
+    puVar20 = (undefined8 *)uVar18;
+    if (bVar1) {
+      if ((uVar16 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        *puVar6 = puVar20;
+        puVar6[1] = puVar14;
+        __restgprlr_23(puVar6);
+        return;
       }
-      if ((uVar18 & 0xffffffff) != (uVar21 & 0xffffffff)) {
-        uVar15 = *puVar23;
-        uVar14 = puVar23[1];
-        uVar13 = puVar23[2];
-        *puVar23 = *puVar19;
-        puVar23[1] = puVar19[1];
-        puVar23[2] = puVar19[2];
-        puVar19[2] = uVar13;
-        *puVar19 = uVar15;
-        puVar19[1] = uVar14;
+      if ((uVar13 & 0xffffffff) != (uVar16 & 0xffffffff)) {
+        uVar10 = *puVar20;
+        uVar9 = puVar20[1];
+        uVar8 = puVar20[2];
+        *puVar20 = *puVar14;
+        puVar20[1] = puVar14[1];
+        puVar20[2] = puVar14[2];
+        puVar14[2] = uVar8;
+        *puVar14 = uVar10;
+        puVar14[1] = uVar9;
       }
-      uVar15 = *puVar23;
-      uVar18 = uVar18 + 0x18;
-      uVar14 = puVar23[1];
-      uVar13 = puVar23[2];
-      *puVar23 = *puVar20;
-      puVar23[1] = puVar20[1];
-      puVar23[2] = puVar20[2];
-      *puVar20 = uVar15;
-      puVar20[1] = uVar14;
-      puVar20[2] = uVar13;
-      uVar21 = uVar21 + 0x18;
-      uVar22 = uVar22 + 0x18;
+      uVar10 = *puVar20;
+      uVar13 = uVar13 + 0x18;
+      uVar9 = puVar20[1];
+      uVar8 = puVar20[2];
+      *puVar20 = *puVar15;
+      puVar20[1] = puVar15[1];
+      puVar20[2] = puVar15[2];
+      *puVar15 = uVar10;
+      puVar15[1] = uVar9;
+      puVar15[2] = uVar8;
+      uVar16 = uVar16 + 0x18;
+      uVar19 = uVar18 + 0x18;
     }
     else {
-      uVar17 = uVar16 - 0x18;
-      puVar3 = (undefined8 *)uVar17;
-      if ((uVar21 & 0xffffffff) == (uVar10 & 0xffffffff)) {
-        uVar22 = uVar22 - 0x18;
-        puVar20 = (undefined8 *)uVar22;
-        if ((uVar17 & 0xffffffff) != (uVar22 & 0xffffffff)) {
-          uVar15 = *puVar3;
-          uVar14 = puVar3[1];
-          uVar13 = puVar3[2];
-          *puVar3 = *puVar20;
-          puVar3[1] = puVar23[-2];
-          puVar3[2] = puVar23[-1];
-          *puVar20 = uVar15;
-          puVar23[-2] = uVar14;
-          puVar23[-1] = uVar13;
+      uVar12 = uVar11 - 0x18;
+      puVar5 = (undefined8 *)uVar12;
+      if ((uVar16 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        uVar19 = uVar18 - 0x18;
+        puVar15 = (undefined8 *)uVar19;
+        if ((uVar12 & 0xffffffff) != (uVar19 & 0xffffffff)) {
+          uVar10 = *puVar5;
+          uVar9 = puVar5[1];
+          uVar8 = puVar5[2];
+          *puVar5 = *puVar15;
+          puVar5[1] = puVar20[-2];
+          puVar5[2] = puVar20[-1];
+          *puVar15 = uVar10;
+          puVar20[-2] = uVar9;
+          puVar20[-1] = uVar8;
         }
-        uVar18 = uVar18 - 0x18;
-        uVar15 = *puVar20;
-        uVar14 = puVar23[-2];
-        uVar13 = puVar23[-1];
-        *puVar20 = *(undefined8 *)uVar18;
-        puVar23[-2] = puVar19[-2];
-        puVar23[-1] = puVar19[-1];
-        puVar19[-1] = uVar13;
-        *(undefined8 *)uVar18 = uVar15;
-        puVar19[-2] = uVar14;
-        uVar16 = uVar17;
+        uVar13 = uVar13 - 0x18;
+        uVar10 = *puVar15;
+        uVar9 = puVar20[-2];
+        uVar8 = puVar20[-1];
+        *puVar15 = *(undefined8 *)uVar13;
+        puVar20[-2] = puVar14[-2];
+        puVar20[-1] = puVar14[-1];
+        puVar14[-1] = uVar8;
+        *(undefined8 *)uVar13 = uVar10;
+        puVar14[-2] = uVar9;
+        uVar11 = uVar12;
       }
       else {
-        uVar15 = *puVar20;
-        uVar14 = puVar20[1];
-        uVar13 = puVar20[2];
-        *puVar20 = *puVar3;
-        iVar2 = (int)uVar16;
-        puVar20[1] = *(undefined8 *)(iVar2 + -0x10);
-        puVar20[2] = *(undefined8 *)(iVar2 + -8);
-        *puVar3 = uVar15;
-        *(undefined8 *)(iVar2 + -0x10) = uVar14;
-        *(undefined8 *)(iVar2 + -8) = uVar13;
-        uVar16 = uVar17;
-        uVar21 = uVar21 + 0x18;
+        uVar10 = *puVar15;
+        uVar9 = puVar15[1];
+        uVar8 = puVar15[2];
+        *puVar15 = *puVar5;
+        iVar3 = (int)uVar11;
+        puVar15[1] = *(undefined8 *)(iVar3 + -0x10);
+        puVar15[2] = *(undefined8 *)(iVar3 + -8);
+        *puVar5 = uVar10;
+        *(undefined8 *)(iVar3 + -0x10) = uVar9;
+        *(undefined8 *)(iVar3 + -8) = uVar8;
+        uVar11 = uVar12;
+        uVar16 = uVar16 + 0x18;
+        uVar19 = uVar18;
       }
     }
   } while( true );
 }
 
 
-// 824DF120  _Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+// 824DF120  std::_Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-               (MapProfileHotSpot *param_1,MapProfileHotSpot *param_2,int param_3,
-               _func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *param_4)
+void std___Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-  MapProfileHotSpot *pMVar1;
-  ulonglong uVar2;
-  MapProfileHotSpot *pMVar3;
-  int iVar5;
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
   ulonglong uVar4;
-  ulonglong uVar6;
-  int iVar7;
-  MapProfileHotSpot local_50 [3];
+  int iVar5;
+  uint local_50;
+  uint local_4c;
   
-  uVar4 = (ulonglong)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pMVar1 = (MapProfileHotSpot *)__savegprlr_25(param_1);
-  pMVar3 = (MapProfileHotSpot *)uVar2;
-  iVar5 = (int)pMVar3 - (int)pMVar1;
+  uVar1 = __savegprlr_25();
+  iVar2 = (int)param_2 - (int)uVar1;
   do {
-    iVar5 = iVar5 / 0x18;
-    if (iVar5 < 0x21) {
+    iVar2 = iVar2 / 0x18;
+    if (iVar2 < 0x21) {
 LAB_824df1dc:
-      if (1 < iVar5) {
-        _Insertion_sort1<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&),MapProfileHotSpot>
-                  (pMVar1,pMVar3,param_4,(MapProfileHotSpot *)0x0);
+      if (1 < iVar2) {
+        std___Insertion_sort1<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&),MapProfileHotSpot>
+                  (uVar1,param_2,param_4,0);
       }
       __restgprlr_25();
       return;
     }
-    iVar7 = (int)uVar4;
-    pMVar3 = (MapProfileHotSpot *)uVar2;
-    if (iVar7 < 1) {
-      if (0x20 < iVar5) {
-        if (1 < iVar5) {
-          _Make_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-                    (pMVar1,pMVar3,param_4,(int *)0x0,(MapProfileHotSpot *)0x0);
+    iVar5 = (int)param_3;
+    if (iVar5 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
+          std___Make_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+                    (uVar1,param_2,param_4,0,0);
         }
-        _Sort_heap<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-                  (pMVar1,pMVar3,param_4);
+        std___Sort_heap<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+                  (uVar1,param_2,param_4);
         __restgprlr_25();
         return;
       }
       goto LAB_824df1dc;
     }
-    _Unguarded_partition<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-              (local_50,pMVar1,
-               (_func___cdecl_bool_MapProfileHotSpot_ptr_MapProfileHotSpot_ptr *)pMVar3);
-    iVar5 = local_50[0].accessCount;
-    uVar4 = (longlong)(iVar7 >> 1) + (ulonglong)(iVar7 < 0 && (uVar4 & 1) != 0);
-    uVar4 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) + uVar4;
-    uVar6 = ZEXT48(local_50[0].label);
-    if (((int)local_50[0].label - (int)pMVar1) / 0x18 <
-        ((int)pMVar3 - local_50[0].accessCount) / 0x18) {
-      _Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-                (pMVar1,(MapProfileHotSpot *)local_50[0].label,(int)uVar4,param_4);
-      uVar6 = uVar2;
-      pMVar1 = (MapProfileHotSpot *)iVar5;
+    std___Unguarded_partition<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+              (&local_50,uVar1,param_2,param_4);
+    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
+    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
+              param_3;
+    uVar4 = (ulonglong)local_4c;
+    uVar3 = (ulonglong)local_50;
+    if ((int)(local_50 - (int)uVar1) / 0x18 < (int)((int)param_2 - local_4c) / 0x18) {
+      std___Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+                (uVar1,uVar3,param_3,param_4);
+      uVar1 = uVar4;
+      uVar3 = param_2;
     }
     else {
-      _Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
-                ((MapProfileHotSpot *)local_50[0].accessCount,pMVar3,(int)uVar4,param_4);
+      std___Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>
+                (uVar4,param_2,param_3,param_4);
     }
-    pMVar3 = (MapProfileHotSpot *)uVar6;
-    iVar5 = (int)pMVar3 - (int)pMVar1;
-    uVar2 = uVar6;
+    iVar2 = (int)uVar3 - (int)uVar1;
+    param_2 = uVar3;
   } while( true );
 }
 

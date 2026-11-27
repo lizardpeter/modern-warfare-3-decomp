@@ -382,7 +382,7 @@ LAB_8253fed4:
   8253FF04  7D8803A6             mtspr LR,r12
   8253FF08  4E800020             blr
 
-; 8253F930  GetName  (script/scr_variable_local.h:196)
+; 8253F930  ChildVariableValue::GetName  (script/scr_variable_local.h:196)
   8253F930  7D8802A6             mfspr r12,LR
   8253F934  9181FFF8             stw r12,-0x8(r1)
   8253F938  FBE1FFF0             std r31,-0x10(r1)

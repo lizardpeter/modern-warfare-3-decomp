@@ -2,33 +2,24 @@
 
 // 82917708  vscan_fn  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/sscanf.c:42)
 
-int vscan_fn(_func___cdecl_int__iobuf_ptr_uchar_ptr_localeinfo_struct_ptr_char_ptr *param_1,
-            char *param_2,char *param_3,localeinfo_struct *param_4,char *param_5)
+void vscan_fn(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+             undefined8 param_5)
 
 {
   code *pcVar2;
   int *piVar3;
   undefined8 uVar1;
-  int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  char *pcVar10;
-  ulonglong uVar9;
+  char *pcVar5;
+  ulonglong uVar4;
   undefined4 local_50;
   undefined4 local_4c;
   undefined4 local_48;
   undefined4 local_44;
   
-  lVar7 = (longlong)(int)param_5;
-  lVar6 = (longlong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  pcVar2 = (code *)__savegprlr_27(param_1,uVar8,uVar5,lVar6,lVar7);
+  pcVar2 = (code *)__savegprlr_27();
   local_50 = 0;
-  memset();
-  if (((uVar8 & 0xffffffff) == 0) || (uVar9 = uVar8, (uVar5 & 0xffffffff) == 0)) {
+  memset(&local_4c,0,0x1c);
+  if (((param_2 & 0xffffffff) == 0) || (uVar4 = param_2, (param_3 & 0xffffffff) == 0)) {
     piVar3 = _errno();
     *piVar3 = 0x16;
     _invalid_parameter_noinfo();
@@ -36,34 +27,54 @@ int vscan_fn(_func___cdecl_int__iobuf_ptr_uchar_ptr_localeinfo_struct_ptr_char_p
   }
   else {
     do {
-      pcVar10 = (char *)uVar9;
-      uVar9 = uVar9 + 1;
-    } while (*pcVar10 != '\0');
-    local_50 = (undefined4)uVar8;
-    uVar8 = (uVar9 - uVar8) - 1;
+      pcVar5 = (char *)uVar4;
+      uVar4 = uVar4 + 1;
+    } while (*pcVar5 != '\0');
+    local_50 = (undefined4)param_2;
+    uVar4 = (uVar4 - param_2) - 1;
     local_4c = 0x7fffffff;
     local_44 = 0x49;
-    if ((uVar8 & 0xffffffff) < 0x80000000) {
-      local_4c = (undefined4)uVar8;
+    if ((uVar4 & 0xffffffff) < 0x80000000) {
+      local_4c = (undefined4)uVar4;
     }
     local_48 = local_50;
-    uVar1 = (*pcVar2)(&local_50,uVar5,lVar6,lVar7);
+    uVar1 = (*pcVar2)(&local_50,param_3,param_4,param_5);
   }
-  iVar4 = __restgprlr_27(uVar1);
-  return iVar4;
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
 // 829177D0  sscanf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/sscanf.c:157)
 
-int sscanf(char *param_1,char *param_2)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+int sscanf(char *_Src,char *_Format,...)
 
 {
   int iVar1;
+  undefined8 in_r5;
+  undefined8 in_r6;
+  undefined8 in_r7;
+  undefined8 in_r8;
+  undefined8 in_r9;
+  undefined8 in_r10;
   char *pcStack0000001c;
+  undefined8 uStack00000020;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
   
-  pcStack0000001c = param_2;
-  iVar1 = vscan_fn(_input_l,param_1,param_2,(localeinfo_struct *)0x0,&stack0x00000020);
+  uStack00000020 = in_r5;
+  uStack00000028 = in_r6;
+  uStack00000030 = in_r7;
+  uStack00000038 = in_r8;
+  uStack00000040 = in_r9;
+  uStack00000048 = in_r10;
+  pcStack0000001c = _Format;
+  iVar1 = vscan_fn(0xffffffff82920200,_Src,_Format,0,&stack0x00000020);
   return iVar1;
 }
 

@@ -2,20 +2,18 @@
 
 // 825B9890  Com_BlockChecksum32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/checksum.h:9)
 
-uint Com_BlockChecksum32(void *param_1,uint param_2)
+void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
 
 {
-  uint uVar1;
-  
-  uVar1 = Com_BlockChecksumKey32(param_1,param_2,0);
-  return uVar1;
+  Com_BlockChecksumKey32(param_1,param_2,0);
+  return;
 }
 
 
 // 825B9898  UI_GetOffsetForTextureCoords  (ui/ui_screenshot.cpp:146)
 
-uint UI_GetOffsetForTextureCoords
-               (uint param_1,uint param_2,uint param_3,uint param_4,uint param_5,uint param_6)
+longlong UI_GetOffsetForTextureCoords
+                   (uint param_1,uint param_2,int param_3,undefined8 param_4,int param_5)
 
 {
   int iVar1;
@@ -23,18 +21,20 @@ uint UI_GetOffsetForTextureCoords
   
   iVar1 = -(int)LZCOUNT(param_5);
   uVar2 = (param_2 & 6) * 4 + (param_1 & 7) << (iVar1 + 0x1fU & 0x3f);
-  uVar2 = ((param_3 + 0x1f >> 5) * (param_2 >> 5) + (param_1 >> 5) << (iVar1 + 0x26U & 0x3f)) +
+  uVar2 = ((param_3 + 0x1fU >> 5) * (param_2 >> 5) + (param_1 >> 5) << (iVar1 + 0x26U & 0x3f)) +
           ((param_2 & 1) * 8 + (uVar2 & 0xfffffff0)) * 2 + ((param_2 & 8) << (iVar1 + 0x22U & 0x3f))
           + (uVar2 & 0xf);
-  return ((((param_2 & 0x10) * 0x10 + (uVar2 & 0xfffffe00)) * 2 + (uVar2 & 0x1c0)) * 4 +
-          ((param_2 & 0x7ffffff8) * 2 + param_1 & 0x18) * 8 + (uVar2 & 0x3f) >>
-         (iVar1 + 0x1fU & 0x3f)) * param_5;
+  return (longlong)
+         (int)((((param_2 & 0x10) * 0x10 + (uVar2 & 0xfffffe00)) * 2 + (uVar2 & 0x1c0)) * 4 +
+               ((param_2 & 0x7ffffff8) * 2 + param_1 & 0x18) * 8 + (uVar2 & 0x3f) >>
+              (iVar1 + 0x1fU & 0x3f)) * (longlong)param_5;
 }
 
 
 // 825B9948  UI_CopyRGBToOutputBuffer  (ui/ui_screenshot.cpp:161)
 
-void UI_CopyRGBToOutputBuffer(uchar *param_1,uchar param_2,uchar param_3,uchar param_4)
+void UI_CopyRGBToOutputBuffer
+               (undefined1 *param_1,undefined1 param_2,undefined1 param_3,undefined1 param_4)
 
 {
   param_1[1] = param_2;
@@ -47,14 +47,14 @@ void UI_CopyRGBToOutputBuffer(uchar *param_1,uchar param_2,uchar param_3,uchar p
 
 // 825B9960  UI_GetLetterBoxBiasX  (ui/ui_screenshot.cpp:177)
 
-int UI_GetLetterBoxBiasX(ushort param_1,ushort param_2,int param_3,int param_4)
+longlong UI_GetLetterBoxBiasX(ushort param_1,ushort param_2,int param_3,int param_4)
 
 {
   uint uVar1;
   
   if ((float)param_1 / (float)param_2 != (float)(longlong)param_3 / (float)(longlong)param_4) {
     uVar1 = (int)(((float)(longlong)param_4 / (float)param_2) * (float)param_1) - param_3;
-    return ((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+    return (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
   }
   return 0;
 }
@@ -62,89 +62,77 @@ int UI_GetLetterBoxBiasX(ushort param_1,ushort param_2,int param_3,int param_4)
 
 // 825B99F0  UI_ScreenshotViewerDecompress  (ui/ui_screenshot.cpp:199)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool UI_ScreenshotViewerDecompress(LocalClientNum_t param_1)
+void UI_ScreenshotViewerDecompress(void)
 
 {
-  ushort uVar1;
-  ushort uVar2;
-  uchar *puVar3;
-  GfxImage *pGVar4;
-  int iVar5;
-  uchar *puVar6;
-  undefined1 uVar7;
-  uint in_stack_ffffff68;
-  _func___cdecl_uint_uint_uint_uint_uint_uint_uint *in_stack_ffffff6c;
-  _func___cdecl_void_uchar_ptr_uchar_uchar_uchar *in_stack_ffffff70;
+  undefined2 uVar1;
+  undefined2 uVar2;
+  void *_Dst;
+  undefined4 uVar3;
+  int iVar6;
+  int iVar7;
+  undefined8 uVar4;
+  longlong lVar5;
   
-  __savegprlr_27(param_1);
-  pGVar4 = Image_Register(s_constScreenshotValues[0].imageName,'\0',3);
-  puVar6 = s_screenshotInfo[0].downloadedBuffer;
-  s_screenshotInfo[0].image = pGVar4;
-  if (pGVar4[0x47] == (GfxImage)0x0) {
-    iVar5 = stbi_jpeg_info_from_memory
-                      (s_screenshotInfo[0].downloadedBuffer,s_screenshotInfo[0].jpeg.size,
-                       &s_screenshotInfo[0].jpeg.width,&s_screenshotInfo[0].jpeg.height,
-                       &s_screenshotInfo[0].jpeg.comp);
-    if (((iVar5 != 0) && (s_screenshotInfo[0].jpeg.width <= (int)(uint)*(ushort *)(pGVar4 + 0x40)))
-       && (s_screenshotInfo[0].jpeg.height <= (int)(uint)*(ushort *)(pGVar4 + 0x42))) {
-      puVar3 = *(uchar **)(pGVar4 + 0x48);
-      memset();
-      stbi_set_memglob(g_jpegDecompressionBuffer,0x600000);
-      uVar1 = *(ushort *)(pGVar4 + 0x42);
-      uVar2 = *(ushort *)(pGVar4 + 0x40);
-      iVar5 = UI_GetLetterBoxBiasX
-                        (uVar2,uVar1,s_screenshotInfo[0].jpeg.width,s_screenshotInfo[0].jpeg.height)
-      ;
-      puVar6 = stbi_jpeg_load_from_memory_swizzle
-                         (puVar6,s_screenshotInfo[0].jpeg.size,puVar3,(uint)uVar2,(uint)uVar1,iVar5,
-                          0,4,in_stack_ffffff68,in_stack_ffffff6c,in_stack_ffffff70);
+  __savegprlr_27();
+  iVar6 = Image_Register(PTR_s_screenshot_viewer_829921c8,0,3);
+  uVar3 = DAT_8400ba88;
+  DAT_8400ba74 = iVar6;
+  if (*(char *)(iVar6 + 0x47) == '\0') {
+    iVar7 = stbi_jpeg_info_from_memory
+                      (DAT_8400ba88,DAT_8400ba78,0xffffffff8400ba7c,0xffffffff8400ba80,
+                       0xffffffff8400ba84);
+    if (((iVar7 != 0) && (DAT_8400ba7c <= (int)(uint)*(ushort *)(iVar6 + 0x40))) &&
+       (DAT_8400ba80 <= (int)(uint)*(ushort *)(iVar6 + 0x42))) {
+      _Dst = *(void **)(iVar6 + 0x48);
+      memset(_Dst,0,(uint)*(ushort *)(iVar6 + 0x42) * (uint)*(ushort *)(iVar6 + 0x40) * 4);
+      stbi_set_memglob(DAT_8400bcc0,0x600000);
+      uVar1 = *(undefined2 *)(iVar6 + 0x42);
+      uVar2 = *(undefined2 *)(iVar6 + 0x40);
+      uVar4 = UI_GetLetterBoxBiasX(uVar2,uVar1,DAT_8400ba7c,DAT_8400ba80);
+      lVar5 = stbi_jpeg_load_from_memory_swizzle(uVar3,DAT_8400ba78,_Dst,uVar2,uVar1,uVar4,0,4);
       stbi_clear_memglob();
-      uVar7 = __restgprlr_27(puVar6 != (uchar *)0x0);
-      return (bool)uVar7;
+      __restgprlr_27(lVar5 != 0);
+      return;
     }
   }
-  uVar7 = __restgprlr_27(0);
-  return (bool)uVar7;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 825B9B20  UI_ScreenshotUpdateViewer  (ui/ui_screenshot.cpp:268)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void UI_ScreenshotUpdateViewer(LocalClientNum_t param_1)
+void UI_ScreenshotUpdateViewer(undefined8 param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  if (s_screenshotInfo[0].state == SCREENSHOT_DOWNLOADED) {
+  if (DAT_8400ba70 == 2) {
     R_BeginRemoteScreenUpdate();
-    bVar1 = UI_ScreenshotViewerDecompress(param_1);
-    if (bVar1) {
-      if (s_screenshotInfo[0].image == (GfxImage *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",
-                        0x11f,0,"%s");
-      }
-      s_screenshotInfo[0].state = SCREENSHOT_CREATED;
+    cVar1 = UI_ScreenshotViewerDecompress();
+    if (cVar1 == '\0') {
+      DAT_8400ba70 = 4;
     }
     else {
-      s_screenshotInfo[0].state = SCREENSHOT_ERROR;
+      if (DAT_8400ba74 == 0) {
+        MyAssertHandler(0xffffffff8216f740,0x11f,0,0xffffffff82000f98,0xffffffff8216f780);
+      }
+      DAT_8400ba70 = 3;
     }
     R_EndRemoteScreenUpdate();
   }
-  else if (s_screenshotInfo[0].state == SCREENSHOT_CREATED) {
-    bVar1 = Menu_IsMenuOpenAndVisible(param_1,"menu_screenshot");
-    if (!bVar1) {
-      s_screenshotInfo[0].state = SCREENSHOT_IDLE;
-      s_screenshotInfo[0].image = (GfxImage *)0x0;
+  else if (DAT_8400ba70 == 3) {
+    cVar1 = Menu_IsMenuOpenAndVisible(param_1,0xffffffff8216f794);
+    if (cVar1 == '\0') {
+      DAT_8400ba70 = 0;
+      DAT_8400ba74 = 0;
       return;
     }
   }
-  else if (s_screenshotInfo[0].state == SCREENSHOT_ERROR) {
-    s_screenshotInfo[0].state = SCREENSHOT_IDLE;
-    Com_Error(ERR_DROP,"EXE_ERR_OPENING_SCREENSHOT");
+  else if (DAT_8400ba70 == 4) {
+    DAT_8400ba70 = 0;
+    Com_Error(1,0xffffffff8216f7a4);
     return;
   }
   return;
@@ -153,66 +141,57 @@ void UI_ScreenshotUpdateViewer(LocalClientNum_t param_1)
 
 // 825B9C28  UI_ScreenshotViewerDraw  (ui/ui_screenshot.cpp:316)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void UI_ScreenshotViewerDraw(LocalClientNum_t param_1,rectDef_s *param_2,float *param_3)
+void UI_ScreenshotViewerDraw(undefined8 param_1,float *param_2)
 
 {
-  byte bVar1;
-  byte bVar2;
+  undefined1 uVar1;
+  undefined1 uVar2;
   ushort uVar3;
-  ushort uVar4;
-  int iVar5;
-  LocalClientNum_t LVar6;
+  int iVar4;
+  undefined8 uVar5;
+  int iVar6;
   int iVar7;
-  ScreenPlacement *pSVar8;
-  longlong lVar9;
-  float *pfVar10;
-  Material *pMVar11;
-  int iVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
+  longlong lVar8;
+  ulonglong uVar9;
+  double dVar10;
+  double dVar11;
+  undefined8 uVar12;
   float local_70;
   float local_6c;
   float local_68;
-  Material local_64;
+  float local_64;
+  ulonglong local_60;
+  longlong local_58;
   
-  lVar9 = (longlong)(int)param_2;
-  LVar6 = __savegprlr_26(param_1,lVar9,param_3);
-  pfVar10 = (float *)lVar9;
-  local_64.info.field0_0x0._padding_ = (int)*pfVar10;
-  local_68 = pfVar10[1];
-  local_6c = pfVar10[2];
-  local_70 = pfVar10[3];
-  if (s_screenshotInfo[0].state == SCREENSHOT_CREATED) {
-    if (s_screenshotInfo[0].image == (GfxImage *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x14e,
-                      0,"%s");
+  uVar5 = __savegprlr_26();
+  local_64 = *param_2;
+  local_68 = param_2[1];
+  local_6c = param_2[2];
+  local_70 = param_2[3];
+  if (DAT_8400ba70 == 3) {
+    if (DAT_8400ba74 == 0) {
+      MyAssertHandler(0xffffffff8216f740,0x14e,0,0xffffffff82000f98,0xffffffff8216f7c0);
     }
-    iVar5 = s_screenshotInfo[0].jpeg.height;
-    uVar3 = *(ushort *)(s_screenshotInfo[0].image + 0x42);
-    uVar4 = *(ushort *)(s_screenshotInfo[0].image + 0x40);
-    iVar12 = s_screenshotInfo[0].jpeg.width;
-    iVar7 = UI_GetLetterBoxBiasX
-                      (uVar4,uVar3,s_screenshotInfo[0].jpeg.width,s_screenshotInfo[0].jpeg.height);
-    local_64.info.field0_0x0.field1_0x8._4_8_ = SEXT48(iVar5);
-    dVar14 = (double)((float)(longlong)(iVar7 * 2 + iVar12) / (float)uVar4);
-    dVar13 = (double)((float)(longlong)local_64.info.field0_0x0.field1_0x8._4_8_ / (float)uVar3);
-    local_64.info.field0_0x0._4_8_ = (ulonglong)uVar4;
-    Material_RegisterHandle(s_constScreenshotValues[0].imageName,3);
-    dVar15 = 0.0;
-    R_AddCmdSetCodeConstant(0x3f,0.0,0.0,0.0,0.0);
-    bVar1 = *(byte *)((int)pfVar10 + 0x11);
-    bVar2 = *(byte *)(pfVar10 + 4);
-    pSVar8 = ScrPlace_GetViewPlacement(LVar6);
-    pMVar11 = &local_64;
-    ScrPlace_ApplyRect(pSVar8,(float *)pMVar11,&local_68,&local_6c,&local_70,(uint)bVar2,(uint)bVar1
-                      );
+    iVar4 = DAT_8400ba80;
+    uVar3 = *(ushort *)(DAT_8400ba74 + 0x42);
+    uVar9 = (ulonglong)*(ushort *)(DAT_8400ba74 + 0x40);
+    iVar7 = DAT_8400ba7c;
+    iVar6 = UI_GetLetterBoxBiasX(uVar9,uVar3,DAT_8400ba7c,DAT_8400ba80);
+    local_58 = (longlong)iVar4;
+    lVar8 = (longlong)(iVar6 * 2 + iVar7);
+    dVar11 = (double)(float)((double)lVar8 / (double)uVar9);
+    dVar10 = (double)((float)local_58 / (float)uVar3);
+    local_60 = uVar9;
+    Material_RegisterHandle(PTR_s_screenshot_viewer_829921c8,3,uVar9,lVar8,uVar3);
+    uVar12 = 0;
+    R_AddCmdSetCodeConstant(0,0,0,0,0x3f);
+    uVar1 = *(undefined1 *)((int)param_2 + 0x11);
+    uVar2 = *(undefined1 *)(param_2 + 4);
+    uVar5 = ScrPlace_GetViewPlacement(uVar5);
+    ScrPlace_ApplyRect(uVar5,&local_64,&local_68,&local_6c,&local_70,uVar2,uVar1);
     R_AddCmdDrawStretchPic
-              ((float)local_64.info.field0_0x0._padding_,local_68,local_6c,local_70,(float)dVar15,
-               (float)dVar15,(float)dVar14,(float)dVar13,pSVar8->scaleVirtualToReal,pMVar11);
+              ((double)local_64,(double)local_68,(double)local_6c,(double)local_70,uVar12,uVar12,
+               dVar11,dVar10);
   }
   __restgprlr_26();
   return;
@@ -221,85 +200,76 @@ void UI_ScreenshotViewerDraw(LocalClientNum_t param_1,rectDef_s *param_2,float *
 
 // 825B9DD8  UI_ScreenshotThumbnailDecompress  (ui/ui_screenshot.cpp:352)
 
-bool UI_ScreenshotThumbnailDecompress(int param_1)
+void UI_ScreenshotThumbnailDecompress(void)
 
 {
-  uchar *puVar1;
+  undefined4 uVar1;
   int iVar2;
-  uint uVar3;
-  int iVar4;
-  GfxImage *pGVar5;
-  undefined1 uVar8;
-  uint uVar6;
-  uchar *puVar7;
-  uint uVar9;
-  uint in_stack_ffffff68;
-  _func___cdecl_uint_uint_uint_uint_uint_uint_uint *in_stack_ffffff6c;
-  _func___cdecl_void_uchar_ptr_uchar_uchar_uchar *in_stack_ffffff70;
+  int iVar5;
+  ulonglong uVar3;
+  int iVar6;
+  int iVar7;
+  ulonglong uVar4;
+  int iVar8;
   
-  iVar4 = __savegprlr_26(param_1);
-  Sys_Microseconds();
-  pGVar5 = Image_Register(s_constScreenshotValues[1].imageName,'\0',3);
-  s_screenshotInfo[1].image = pGVar5;
-  if (pGVar5[0x47] == (GfxImage)0x0) {
-    iVar2 = s_screenshotThumbnailInfo.files[iVar4].jpegBufferSize;
-    puVar7 = s_screenshotThumbnailInfo.files[iVar4].jpegBuffer;
-    if (iVar2 == 4) {
-      Com_Printf(0xe,
-                 "Error processing thumbnail. Looks like the buffer size is less than 4 bytes.\n");
+  iVar5 = __savegprlr_26();
+  uVar3 = Sys_Microseconds();
+  iVar6 = Image_Register(PTR_s_screenshot_thumbnail_829921d0,0,3);
+  DAT_8400ba90 = iVar6;
+  if (*(char *)(iVar6 + 0x47) == '\0') {
+    iVar2 = *(int *)(&DAT_8400bac8 + iVar5 * 0x10);
+    if (*(int *)(&DAT_8400bacc + iVar5 * 0x10) == 4) {
+      Com_Printf(0xe,0xffffffff8216f820);
     }
     else {
-      uVar9 = iVar2 - 4;
-      uVar3 = *(uint *)(puVar7 + uVar9);
-      uVar6 = Com_BlockChecksumKey32(puVar7,uVar9,0);
-      if (uVar6 != uVar3) {
-        Com_Printf(0xe,"Error processing thumbnail. Checksum failure.\n");
-        uVar8 = __restgprlr_26(0);
-        return (bool)uVar8;
+      iVar8 = *(int *)(&DAT_8400bacc + iVar5 * 0x10) + -4;
+      iVar5 = *(int *)(iVar8 + iVar2);
+      iVar7 = Com_BlockChecksumKey32(iVar2,iVar8,0);
+      if (iVar7 != iVar5) {
+        Com_Printf(0xe,0xffffffff8216f7f0);
+        __restgprlr_26(0);
+        return;
       }
-      iVar4 = stbi_jpeg_info_from_memory
-                        (puVar7,uVar9,&s_screenshotInfo[1].jpeg.width,
-                         &s_screenshotInfo[1].jpeg.height,&s_screenshotInfo[1].jpeg.comp);
-      if (iVar4 != 0) {
-        puVar1 = *(uchar **)(pGVar5 + 0x48);
-        stbi_set_memglob(g_jpegDecompressionBuffer,0x600000);
-        puVar7 = stbi_jpeg_load_from_memory_swizzle
-                           (puVar7,uVar9,puVar1,(uint)*(ushort *)(pGVar5 + 0x40),
-                            (uint)*(ushort *)(pGVar5 + 0x42),0,0,4,in_stack_ffffff68,
-                            in_stack_ffffff6c,in_stack_ffffff70);
+      iVar5 = stbi_jpeg_info_from_memory
+                        (iVar2,iVar8,0xffffffff8400ba98,0xffffffff8400ba9c,0xffffffff8400baa0);
+      if (iVar5 != 0) {
+        uVar1 = *(undefined4 *)(iVar6 + 0x48);
+        stbi_set_memglob(DAT_8400bcc0,0x600000);
+        iVar5 = stbi_jpeg_load_from_memory_swizzle
+                          (iVar2,iVar8,uVar1,*(undefined2 *)(iVar6 + 0x40),
+                           *(undefined2 *)(iVar6 + 0x42),0,0,4);
         stbi_clear_memglob();
-        if (puVar7 != (uchar *)0x0) {
-          Sys_Microseconds();
-          Com_Printf(0,"Decompress took %dus (%d bytes)\n");
-          uVar8 = __restgprlr_26(1);
-          return (bool)uVar8;
+        if (iVar5 != 0) {
+          uVar4 = Sys_Microseconds();
+          Com_Printf(0,0xffffffff8216f7cc,(uVar4 & 0xffffffff) - (uVar3 & 0xffffffff),iVar8);
+          __restgprlr_26(1);
+          return;
         }
       }
     }
   }
-  uVar8 = __restgprlr_26(0);
-  return (bool)uVar8;
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 825B9F58  UI_ScreenshotGetThumbnailCacheIndexForFileID  (ui/ui_screenshot.cpp:439)
 
-int UI_ScreenshotGetThumbnailCacheIndexForFileID(ulong64 param_1,int *param_2)
+undefined8 UI_ScreenshotGetThumbnailCacheIndexForFileID(longlong param_1,int *param_2)
 
 {
   int iVar1;
-  <unnamed_type_files> *p<Var2;
+  longlong *plVar2;
   
   if (param_1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x1b9,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8216f740,0x1b9,0,0xffffffff82000f98,0xffffffff8216f870);
   }
   iVar1 = 0;
-  p<Var2 = s_screenshotThumbnailInfo.files;
-  while ((p<Var2->id == 0 || (p<Var2->id != param_1))) {
-    p<Var2 = p<Var2 + 1;
+  plVar2 = &DAT_8400bac0;
+  while ((*plVar2 == 0 || (*plVar2 != param_1))) {
+    plVar2 = plVar2 + 2;
     iVar1 = iVar1 + 1;
-    if (-0x7bff43b1 < (int)p<Var2) {
+    if (-0x7bff43b1 < (int)plVar2) {
       return 0;
     }
   }
@@ -310,95 +280,79 @@ int UI_ScreenshotGetThumbnailCacheIndexForFileID(ulong64 param_1,int *param_2)
 
 // 825BA000  UI_ScreenshotThumbnailIsFileTypeValidForSelectedIndex  (ui/ui_screenshot.cpp:460)
 
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-
-int UI_ScreenshotThumbnailIsFileTypeValidForSelectedIndex(int param_1)
+bool UI_ScreenshotThumbnailIsFileTypeValidForSelectedIndex(undefined8 param_1)
 
 {
-  uint uVar1;
-  Operand OStack_20;
+  bool bVar1;
+  undefined1 auStack_20 [4];
+  int local_1c;
   
-  OnlineVault_FeederGetData
-            (param_1,"isScreenshot",s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex,
-             &OStack_20);
-  if (OStack_20.internals.intVal == 0) {
-    OnlineVault_FeederGetData
-              (param_1,"isClip",s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex,&OStack_20);
-    uVar1 = (uint)(OStack_20.internals.intVal != 0);
+  OnlineVault_FeederGetData(param_1,0xffffffff8216f884,DAT_8400baac,auStack_20);
+  if (local_1c == 0) {
+    OnlineVault_FeederGetData(param_1,0xffffffff8216f87c,DAT_8400baac,auStack_20);
+    bVar1 = local_1c != 0;
   }
   else {
-    uVar1 = 1;
+    bVar1 = true;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 825BA088  UI_ScreenshotThumbnailGetFileIDForSelectedIndex  (ui/ui_screenshot.cpp:476)
 
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-
-ulong64 UI_ScreenshotThumbnailGetFileIDForSelectedIndex(int param_1)
+void UI_ScreenshotThumbnailGetFileIDForSelectedIndex(undefined8 param_1)
 
 {
-  ulong64 uVar1;
-  Operand aOStack_10 [2];
+  undefined1 auStack_10 [4];
+  char *local_c;
   
-  OnlineVault_FeederGetData
-            (param_1,"fileID",s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex,aOStack_10);
-  uVar1 = I_atoi64((char *)aOStack_10[0].internals.function);
-  return uVar1;
+  OnlineVault_FeederGetData(param_1,0xffffffff8216f894,DAT_8400baac,auStack_10);
+  I_atoi64(local_c);
+  return;
 }
 
 
 // 825BA0C8  UI_ScreenshotThumbnailStateChangeHandler  (ui/ui_screenshot.cpp:488)
 
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-
 void UI_ScreenshotThumbnailStateChangeHandler
-               (int param_1,ScreenshotState param_2,int param_3,int param_4)
+               (undefined8 param_1,int param_2,int param_3,int param_4)
 
 {
-  int iVar2;
+  undefined8 uVar1;
   int iVar3;
-  ulong64 uVar1;
-  bool bVar4;
-  int local_30 [2];
-  Operand aOStack_28 [5];
+  longlong lVar2;
+  char cVar4;
+  undefined4 local_30 [2];
+  undefined1 auStack_28 [4];
+  char *local_24;
   
-  iVar2 = __savegprlr_29(param_1);
+  uVar1 = __savegprlr_29();
   local_30[0] = 0;
-  if ((param_2 != SCREENSHOT_ERROR) && (param_2 != SCREENSHOT_CREATED)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x1ed,0,
-                    "%s");
+  if ((param_2 != 4) && (param_2 != 3)) {
+    MyAssertHandler(0xffffffff8216f740,0x1ed,0,0xffffffff82000f98,0xffffffff8216f89c);
   }
-  iVar3 = OnlineVaultUI_GetStackCount(iVar2);
+  iVar3 = OnlineVaultUI_GetStackCount(uVar1);
   if (iVar3 == 0) {
-    s_screenshotInfo[1].image = (GfxImage *)0x0;
-    s_screenshotInfo[1].state = SCREENSHOT_IDLE;
+    DAT_8400ba90 = 0;
+    DAT_8400ba8c = 0;
     __restgprlr_29();
     return;
   }
   if ((param_3 != 0) || (param_4 != 0)) {
-    iVar3 = UI_ScreenshotThumbnailIsFileTypeValidForSelectedIndex(iVar2);
+    iVar3 = UI_ScreenshotThumbnailIsFileTypeValidForSelectedIndex(uVar1);
     if (iVar3 != 0) {
-      OnlineVault_FeederGetData
-                (iVar2,"fileID",s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex,aOStack_28);
-      uVar1 = I_atoi64((char *)aOStack_28[0].internals.function);
-      iVar2 = UI_ScreenshotGetThumbnailCacheIndexForFileID(uVar1,local_30);
-      if (iVar2 != 0) {
-        bVar4 = UI_ScreenshotThumbnailDecompress(local_30[0]);
-        if (bVar4) {
-          s_screenshotInfo[1].state = SCREENSHOT_CREATED;
-          s_screenshotThumbnailInfo.currentFileID = uVar1;
-          __restgprlr_29();
-          return;
-        }
+      OnlineVault_FeederGetData(uVar1,0xffffffff8216f894,DAT_8400baac,auStack_28);
+      lVar2 = I_atoi64(local_24);
+      iVar3 = UI_ScreenshotGetThumbnailCacheIndexForFileID(lVar2,local_30);
+      if ((iVar3 != 0) && (cVar4 = UI_ScreenshotThumbnailDecompress(local_30[0]), cVar4 != '\0')) {
+        DAT_8400ba8c = 3;
+        DAT_8400bab8 = lVar2;
+        __restgprlr_29();
+        return;
       }
-      s_screenshotInfo[1].state = SCREENSHOT_IDLE;
-      s_screenshotInfo[1].image = (GfxImage *)0x0;
+      DAT_8400ba8c = 0;
+      DAT_8400ba90 = 0;
     }
   }
   __restgprlr_29();
@@ -408,119 +362,110 @@ void UI_ScreenshotThumbnailStateChangeHandler
 
 // 825BAEF8  UI_ScreenshotUpdateThumbnail  (ui/ui_screenshot.cpp:533)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-
-void UI_ScreenshotUpdateThumbnail(LocalClientNum_t param_1)
+void UI_ScreenshotUpdateThumbnail(void)
 
 {
-  uint uVar1;
-  LocalClientNum_t LVar3;
-  int iVar4;
-  int iVar5;
-  ulong64 uVar2;
-  bool bVar6;
-  ScreenshotState SVar7;
+  bool bVar1;
+  undefined4 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  int iVar6;
+  longlong lVar5;
+  char cVar7;
   int iVar8;
-  int local_50;
+  undefined4 local_50;
   int local_4c;
   int local_48 [2];
-  Operand OStack_40;
-  Operand aOStack_38 [7];
+  undefined1 auStack_40 [4];
+  char *local_3c;
+  undefined1 auStack_38 [4];
+  undefined4 local_34;
   
-  LVar3 = __savegprlr_27(param_1);
+  uVar3 = __savegprlr_27();
   local_50 = 0;
-  iVar4 = CL_ControllerIndexFromClientNum(LVar3);
+  uVar4 = CL_ControllerIndexFromClientNum();
   iVar8 = 0;
-  iVar5 = OnlineVaultUI_GetStackCount(iVar4);
-  bVar6 = s_screenshotThumbnailInfo.onlineVaultStackCount != iVar5;
-  if (bVar6) {
-    s_screenshotThumbnailInfo.onlineVaultStackCount = OnlineVaultUI_GetStackCount(iVar4);
+  iVar6 = OnlineVaultUI_GetStackCount();
+  bVar1 = DAT_8400baa8 != iVar6;
+  if (bVar1) {
+    DAT_8400baa8 = OnlineVaultUI_GetStackCount(uVar4);
   }
-  if (((s_screenshotThumbnailInfo.onlineVaultStackCount != 0) &&
-      (iVar5 = OnlineVaultUI_GetSelectedFeederParam(iVar4,&local_4c,local_48), iVar5 != 0)) &&
-     ((local_4c != s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex || (bVar6)))) {
+  if (((DAT_8400baa8 != 0) &&
+      (iVar6 = OnlineVaultUI_GetSelectedFeederParam(uVar4,&local_4c,local_48), iVar6 != 0)) &&
+     ((local_4c != DAT_8400baac || (bVar1)))) {
+    DAT_8400bab0 = local_48[0];
     iVar8 = 1;
-    s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex = local_4c;
-    s_screenshotThumbnailInfo.onlineVaultFeederSelectTime = local_48[0];
+    DAT_8400baac = local_4c;
   }
-  if (s_screenshotInfo[1].state < (SCREENSHOT_ERROR|SCREENSHOT_DOWNLOADING)) {
-    if (s_screenshotInfo[1].state == SCREENSHOT_DOWNLOADING) {
-      if ((bVar6) || (iVar8 != 0)) {
-        UI_ScreenshotAbortDownload(iVar4,UI_SCREENSHOT_TYPE_THUMBNAIL);
-        s_screenshotThumbnailInfo.currentFileID = 0;
+  if (DAT_8400ba8c < 5) {
+    if (DAT_8400ba8c == 1) {
+      if ((bVar1) || (iVar8 != 0)) {
+        UI_ScreenshotAbortDownload(uVar4,1);
+        DAT_8400bab8 = 0;
         __restgprlr_27();
         return;
       }
     }
     else {
-      if (s_screenshotInfo[1].state == SCREENSHOT_DOWNLOADED) {
+      if (DAT_8400ba8c == 2) {
         R_BeginRemoteScreenUpdate();
-        uVar1 = s_screenshotInfo[1].jpeg.size;
-        s_screenshotThumbnailInfo.files[s_screenshotThumbnailInfo.imageIndex].jpegBuffer =
-             g_screenshotThumbnailBuffers[s_screenshotThumbnailInfo.imageIndex];
-        s_screenshotThumbnailInfo.files[s_screenshotThumbnailInfo.imageIndex].jpegBufferSize = uVar1
-        ;
-        bVar6 = UI_ScreenshotThumbnailDecompress(s_screenshotThumbnailInfo.imageIndex);
-        if (!bVar6) {
-          s_screenshotInfo[1].state = SCREENSHOT_ERROR;
-          s_screenshotThumbnailInfo.currentFileID = 0;
+        uVar2 = DAT_8400ba94;
+        *(undefined4 *)(&DAT_8400bac8 + DAT_8400bab4 * 0x10) = (&DAT_8400bc50)[DAT_8400bab4];
+        *(undefined4 *)(&DAT_8400bacc + DAT_8400bab4 * 0x10) = uVar2;
+        cVar7 = UI_ScreenshotThumbnailDecompress(DAT_8400bab4);
+        if (cVar7 == '\0') {
+          DAT_8400ba8c = 4;
+          DAT_8400bab8 = 0;
           R_EndRemoteScreenUpdate();
           __restgprlr_27();
           return;
         }
-        s_screenshotInfo[1].state = SCREENSHOT_CREATED;
-        s_screenshotThumbnailInfo.files[s_screenshotThumbnailInfo.imageIndex].id =
-             s_screenshotThumbnailInfo.currentFileID;
-        s_screenshotThumbnailInfo.imageIndex = (s_screenshotThumbnailInfo.imageIndex + 1) % 0x19;
+        DAT_8400ba8c = 3;
+        (&DAT_8400bac0)[DAT_8400bab4 * 2] = DAT_8400bab8;
+        iVar8 = DAT_8400bab4 + 1;
+        iVar6 = iVar8 / 0x19 + (iVar8 >> 0x1f);
+        DAT_8400bab4 = iVar8 + (iVar6 - (iVar6 >> 0x1f)) * -0x19;
         R_EndRemoteScreenUpdate();
         __restgprlr_27();
         return;
       }
-      if (s_screenshotInfo[1].state == SCREENSHOT_CREATED) {
-        SVar7 = SCREENSHOT_CREATED;
+      if (DAT_8400ba8c == 3) {
+        uVar3 = 3;
       }
       else {
-        if (s_screenshotInfo[1].state == SCREENSHOT_IDLE) {
-          if ((s_screenshotThumbnailInfo.onlineVaultStackCount != 0) &&
-             (iVar5 = UI_ScreenshotThumbnailIsFileTypeValidForSelectedIndex(iVar4), iVar5 != 0)) {
-            OnlineVault_FeederGetData
-                      (iVar4,"fileID",s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex,
-                       &OStack_40);
-            uVar2 = I_atoi64((char *)OStack_40.internals.function);
-            iVar5 = UI_ScreenshotGetThumbnailCacheIndexForFileID(uVar2,&local_50);
-            if (iVar5 != 0) {
-              bVar6 = UI_ScreenshotThumbnailDecompress(local_50);
-              if (!bVar6) {
-                Com_PrintError(0xd,
-                               "Cached data at index %d for thumbnail file %d can\'t be decompressed.\n"
-                              );
+        if (DAT_8400ba8c == 0) {
+          if ((DAT_8400baa8 != 0) &&
+             (iVar6 = UI_ScreenshotThumbnailIsFileTypeValidForSelectedIndex(uVar4), iVar6 != 0)) {
+            OnlineVault_FeederGetData(uVar4,0xffffffff8216f894,DAT_8400baac,auStack_40);
+            lVar5 = I_atoi64(local_3c);
+            iVar6 = UI_ScreenshotGetThumbnailCacheIndexForFileID(lVar5,&local_50);
+            uVar2 = local_50;
+            if (iVar6 != 0) {
+              cVar7 = UI_ScreenshotThumbnailDecompress(local_50);
+              if (cVar7 == '\0') {
+                Com_PrintError(0xd,0xffffffff8216fb00,uVar2,lVar5);
                 __restgprlr_27();
                 return;
               }
-              s_screenshotInfo[1].state = SCREENSHOT_CREATED;
-              s_screenshotThumbnailInfo.currentFileID = uVar2;
+              DAT_8400ba8c = 3;
+              DAT_8400bab8 = lVar5;
               __restgprlr_27();
               return;
             }
-            bVar6 = LiveStorage_CS_IsTaskInProgress(iVar4,"readfile");
-            if (((!bVar6) && (iVar8 == 0)) &&
-               (iVar5 = Sys_Milliseconds(),
-               1999 < iVar5 - s_screenshotThumbnailInfo.onlineVaultFeederSelectTime)) {
-              OnlineVault_FeederGetData
-                        (iVar4,"summaryFileSize",
-                         s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex,aOStack_38);
-              UI_ScreenshotThumbnailDownload(LVar3,uVar2,aOStack_38[0].internals.intVal);
+            cVar7 = LiveStorage_CS_IsTaskInProgress(uVar4,0xffffffff8208a3e4);
+            if (((cVar7 == '\0') && (iVar8 == 0)) &&
+               (iVar6 = Sys_Milliseconds(), 1999 < iVar6 - DAT_8400bab0)) {
+              OnlineVault_FeederGetData(uVar4,0xffffffff8216faec,DAT_8400baac,auStack_38);
+              UI_ScreenshotThumbnailDownload(uVar3,lVar5,local_34);
               __restgprlr_27();
               return;
             }
           }
           goto LAB_825bb1cc;
         }
-        SVar7 = SCREENSHOT_ERROR;
+        uVar3 = 4;
       }
-      UI_ScreenshotThumbnailStateChangeHandler(iVar4,SVar7,(uint)bVar6,iVar8);
+      UI_ScreenshotThumbnailStateChangeHandler(uVar4,uVar3,bVar1,iVar8);
     }
   }
 LAB_825bb1cc:
@@ -530,38 +475,114 @@ LAB_825bb1cc:
 
 
 // 825BA1E8  UI_ScreenshotThumbnailDraw  (ui/ui_screenshot.cpp:642)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void UI_ScreenshotThumbnailDraw(undefined8 param_1,float *param_2,undefined8 param_3)
+
+{
+  undefined1 uVar1;
+  undefined1 uVar2;
+  undefined8 uVar3;
+  int iVar5;
+  undefined8 uVar4;
+  uint uVar6;
+  undefined8 extraout_f1;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  undefined8 uVar11;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_64;
+  undefined8 local_60;
+  
+  __savegprlr_26();
+  uVar3 = __savefpr_28();
+  local_68 = *param_2;
+  local_70 = param_2[1];
+  local_64 = param_2[2];
+  local_6c = param_2[3];
+  local_60 = (ulonglong)local_60._4_4_;
+  if (DAT_8400ba8c == 3) {
+    iVar5 = UI_ScreenshotGetThumbnailCacheIndexForFileID(DAT_8400bab8,&local_60);
+    if (iVar5 != 0) {
+      uVar1 = *(undefined1 *)((int)param_2 + 0x11);
+      uVar2 = *(undefined1 *)(param_2 + 4);
+      uVar3 = ScrPlace_GetViewPlacement(uVar3);
+      ScrPlace_ApplyRect(uVar3,&local_68,&local_70,&local_64,&local_6c,uVar2,uVar1);
+      dVar10 = 1.0;
+      uVar3 = 0;
+      R_AddCmdDrawStretchPic
+                ((double)local_68,(double)local_70,(double)local_64,(double)local_6c,0,0,
+                 0x3ff0000000000000,0x3ff0000000000000);
+      local_60 = (ulonglong)(int)(uint)*(ushort *)(DAT_8400ba90 + 0x40);
+      dVar8 = (double)((float)(longlong)DAT_8400ba9c / (float)*(ushort *)(DAT_8400ba90 + 0x42));
+      dVar9 = (double)(float)((double)(longlong)DAT_8400ba98 / (double)local_60);
+      if (dVar8 <= dVar9) {
+        dVar7 = (double)local_6c;
+        local_6c = (float)((double)(float)(dVar8 / dVar9) * dVar7);
+        local_70 = (float)((double)((float)(dVar10 - (double)(float)(dVar8 / dVar9)) * 0.5) * dVar7
+                          + (double)local_70);
+      }
+      else {
+        dVar7 = (double)local_64;
+        local_64 = (float)((double)(float)(dVar9 / dVar8) * dVar7);
+        local_68 = (float)((double)((float)(dVar10 - (double)(float)(dVar9 / dVar8)) * 0.5) * dVar7
+                          + (double)local_68);
+      }
+      Material_RegisterHandle(PTR_s_screenshot_thumbnail_829921d0,3);
+      R_AddCmdDrawStretchPic
+                ((double)local_68,(double)local_70,(double)local_64,(double)local_6c,uVar3,uVar3,
+                 dVar9,dVar8);
+      __restfpr_28();
+      __restgprlr_26();
+      return;
+    }
+  }
+  else {
+    uVar11 = extraout_f1;
+    uVar4 = UI_SafeTranslateString(0xffffffff8216f8d8);
+    uVar6 = UI_TextWidth(uVar11,uVar4,0x7fffffff,param_3);
+    local_60 = (ulonglong)(int)(((int)uVar6 >> 1) + (uint)((int)uVar6 < 0 && (uVar6 & 1) != 0));
+    dVar9 = (double)(local_6c * 0.5 + local_70);
+    dVar8 = (double)(local_64 * 0.5 + local_68);
+    uVar3 = ScrPlace_GetViewPlacement(uVar3);
+    UI_DrawText((double)(float)(dVar8 - (double)(longlong)local_60),dVar9,uVar11,uVar3,uVar4,
+                0x7fffffff,param_3);
+  }
+  __restfpr_28();
+  __restgprlr_26();
+  return;
+}
+
 
 // 825BA4B0  UI_Screenshot_Success  (ui/ui_screenshot.cpp:698)
 
-void UI_Screenshot_Success(int param_1,dwCSReadFileTask *param_2)
+void UI_Screenshot_Success(undefined8 param_1,int param_2)
 
 {
-  if (param_2->m_buffer != g_downloadedScreenshotBuffer) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x2be,0,
-                    "%s");
+  if (*(int *)(param_2 + 0x79c) != DAT_8400bcbc) {
+    MyAssertHandler(0xffffffff8216f740,0x2be,0,0xffffffff82000f98,0xffffffff8216f92c);
   }
-  if (s_screenshotInfo[0].state != SCREENSHOT_DOWNLOADING) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x2bf,0,
-                    "%s\n\t(info->state) = %i");
+  if (DAT_8400ba70 != 1) {
+    MyAssertHandler(0xffffffff8216f740,0x2bf,0,0xffffffff8216f8ec,0xffffffff8216f904);
   }
-  s_screenshotInfo[0].state = SCREENSHOT_DOWNLOADED;
+  DAT_8400ba70 = 2;
   return;
 }
 
 
 // 825BA550  UI_Screenshot_Failure  (ui/ui_screenshot.cpp:710)
 
-void UI_Screenshot_Failure(int param_1,bdLobbyErrorCode param_2)
+void UI_Screenshot_Failure(void)
 
 {
-  if (s_screenshotInfo[0].state != SCREENSHOT_IDLE) {
-    if (s_screenshotInfo[0].state != SCREENSHOT_DOWNLOADING) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x2cc,
-                      0,"%s");
+  if (DAT_8400ba70 != 0) {
+    if (DAT_8400ba70 != 1) {
+      MyAssertHandler(0xffffffff8216f740,0x2cc,0,0xffffffff82000f98,0xffffffff8216f95c);
     }
-    s_screenshotInfo[0].state = SCREENSHOT_ERROR;
+    DAT_8400ba70 = 4;
   }
   return;
 }
@@ -569,65 +590,63 @@ void UI_Screenshot_Failure(int param_1,bdLobbyErrorCode param_2)
 
 // 825BA5B8  UI_ScreenshotDownload  (ui/ui_screenshot.cpp:724)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void UI_ScreenshotDownload(LocalClientNum_t param_1,ulong64 param_2,uint param_3)
+void UI_ScreenshotDownload(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  undefined8 *puVar5;
-  longlong lVar6;
+  undefined8 uVar1;
+  char cVar2;
+  undefined8 *puVar3;
+  longlong lVar4;
   undefined8 uStack_78;
-  contentServerReadFileInfo local_70 [2];
+  undefined8 local_70;
+  undefined4 local_68;
+  int local_64;
+  undefined4 local_60;
+  undefined1 local_58;
+  code *local_4c;
+  code *local_48;
   
-  uVar4 = (ulonglong)(int)param_3;
-  LVar1 = __savegprlr_25(param_1);
-  if (s_screenshotInfo[0].state != SCREENSHOT_IDLE) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x2dc,0,
-                    "%s");
+  uVar1 = __savegprlr_25();
+  if (DAT_8400ba70 != 0) {
+    MyAssertHandler(0xffffffff8216f740,0x2dc,0,0xffffffff82000f98,0xffffffff8216fa00);
   }
-  if (g_downloadedScreenshotBuffer == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x2dd,0,
-                    "%s");
+  if (DAT_8400bcbc == 0) {
+    MyAssertHandler(0xffffffff8216f740,0x2dd,0,0xffffffff82000f98,0xffffffff8216f9d8);
   }
-  puVar5 = &uStack_78;
-  lVar6 = 6;
+  puVar3 = &uStack_78;
+  lVar4 = 6;
   do {
-    puVar5 = puVar5 + 1;
-    *puVar5 = 0;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  bVar3 = LiveStorage_CS_IsInited(iVar2);
-  if (!bVar3) {
-    LiveStorage_CS_Init(iVar2);
+    puVar3 = puVar3 + 1;
+    *puVar3 = 0;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+  cVar2 = LiveStorage_CS_IsInited();
+  if (cVar2 == '\0') {
+    LiveStorage_CS_Init(uVar1);
   }
-  bVar3 = LiveStorage_CS_IsAvailable(iVar2);
-  if (!bVar3) {
-    Com_PrintError(0x10,
-                   "[UI_ScreenshotDownload] Failed to write, LiveStorage_CS_IsAvailable = false\n");
+  cVar2 = LiveStorage_CS_IsAvailable(uVar1);
+  if (cVar2 == '\0') {
+    Com_PrintError(0x10,0xffffffff8216f988);
     __restgprlr_25();
     return;
   }
-  s_screenshotInfo[0].state = SCREENSHOT_DOWNLOADING;
-  if (((uVar4 & 0xffffffff) != 0) && ((uVar4 & 0xffffffff) < 0x100000)) {
-    s_screenshotInfo[0].jpeg.size = (uint)uVar4;
-    local_70[0].m_bufferSize = 0x100000;
-    s_screenshotInfo[0].downloadedBuffer = g_downloadedScreenshotBuffer;
-    local_70[0].m_buffer = (char *)g_downloadedScreenshotBuffer;
-    local_70[0].m_isStreamed = false;
-    local_70[0].m_successCallback = UI_Screenshot_Success;
-    local_70[0].m_failureCallback = UI_Screenshot_Failure;
-    local_70[0].m_fileID = param_2;
-    local_70[0].m_fileSize = s_screenshotInfo[0].jpeg.size;
-    iVar2 = LiveStorage_CS_ReadFile(iVar2,local_70);
-    __restgprlr_25(iVar2);
+  DAT_8400ba70 = 1;
+  if (((param_3 & 0xffffffff) != 0) && ((param_3 & 0xffffffff) < 0x100000)) {
+    DAT_8400ba78 = (undefined4)param_3;
+    local_60 = 0x100000;
+    DAT_8400ba88 = DAT_8400bcbc;
+    local_64 = DAT_8400bcbc;
+    local_58 = 0;
+    local_4c = UI_Screenshot_Success;
+    local_48 = UI_Screenshot_Failure;
+    local_70 = param_2;
+    local_68 = DAT_8400ba78;
+    LiveStorage_CS_ReadFile(uVar1,&local_70);
+    __restgprlr_25();
     return;
   }
-  UI_Screenshot_Failure(iVar2,BD_NO_ERROR);
+  UI_Screenshot_Failure(uVar1,0);
   __restgprlr_25();
   return;
 }
@@ -635,29 +654,27 @@ void UI_ScreenshotDownload(LocalClientNum_t param_1,ulong64 param_2,uint param_3
 
 // 825BA728  UI_ScreenshotThumbnail_Success  (ui/ui_screenshot.cpp:774)
 
-void UI_ScreenshotThumbnail_Success(int param_1)
+void UI_ScreenshotThumbnail_Success(void)
 
 {
-  if (s_screenshotInfo[1].state != SCREENSHOT_DOWNLOADING) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x30a,0,
-                    "%s\n\t(info->state) = %i");
+  if (DAT_8400ba8c != 1) {
+    MyAssertHandler(0xffffffff8216f740,0x30a,0,0xffffffff8216f8ec,0xffffffff8216f904);
   }
-  s_screenshotInfo[1].state = SCREENSHOT_DOWNLOADED;
+  DAT_8400ba8c = 2;
   return;
 }
 
 
 // 825BA790  UI_ScreenshotThumbnail_Failure  (ui/ui_screenshot.cpp:784)
 
-void UI_ScreenshotThumbnail_Failure(int param_1,bdLobbyErrorCode param_2)
+void UI_ScreenshotThumbnail_Failure(void)
 
 {
-  if (s_screenshotInfo[1].state != SCREENSHOT_IDLE) {
-    if (s_screenshotInfo[1].state != SCREENSHOT_DOWNLOADING) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x316,
-                      0,"%s");
+  if (DAT_8400ba8c != 0) {
+    if (DAT_8400ba8c != 1) {
+      MyAssertHandler(0xffffffff8216f740,0x316,0,0xffffffff82000f98,0xffffffff8216f95c);
     }
-    s_screenshotInfo[1].state = SCREENSHOT_ERROR;
+    DAT_8400ba8c = 4;
   }
   return;
 }
@@ -665,61 +682,49 @@ void UI_ScreenshotThumbnail_Failure(int param_1,bdLobbyErrorCode param_2)
 
 // 825BA800  UI_ScreenshotThumbnailDownload  (ui/ui_screenshot.cpp:797)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void UI_ScreenshotThumbnailDownload(LocalClientNum_t param_1,ulong64 param_2,uint param_3)
+void UI_ScreenshotThumbnailDownload(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  contentServerDownloadSummaryInfo local_60 [4];
+  undefined8 uVar1;
+  char cVar2;
+  undefined8 local_60;
+  undefined8 local_58;
+  undefined8 local_50;
   
-  uVar4 = (ulonglong)(int)param_3;
-  LVar1 = __savegprlr_25(param_1);
-  if (s_screenshotInfo[1].state != SCREENSHOT_IDLE) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x325,0,
-                    "%s");
+  uVar1 = __savegprlr_25();
+  if (DAT_8400ba8c != 0) {
+    MyAssertHandler(0xffffffff8216f740,0x325,0,0xffffffff82000f98,0xffffffff8216fa00);
   }
-  if (g_screenshotThumbnailBuffers[s_screenshotThumbnailInfo.imageIndex] == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x326,0,
-                    "%s");
+  if ((&DAT_8400bc50)[DAT_8400bab4] == 0) {
+    MyAssertHandler(0xffffffff8216f740,0x326,0,0xffffffff82000f98,0xffffffff8216fa78);
   }
-  local_60[0].m_fileID = 0;
-  local_60[0].m_summaryData = (void *)0x0;
-  local_60[0].m_summaryDataSize = 0;
-  local_60[0].m_successCallback = (_func___cdecl_void_int *)0x0;
-  local_60[0].m_failureCallback = (_func___cdecl_void_int_bdLobbyErrorCode *)0x0;
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  bVar3 = LiveStorage_CS_IsInited(iVar2);
-  if (!bVar3) {
-    LiveStorage_CS_Init(iVar2);
+  local_60 = 0;
+  local_58 = 0;
+  local_50 = 0;
+  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+  cVar2 = LiveStorage_CS_IsInited();
+  if (cVar2 == '\0') {
+    LiveStorage_CS_Init(uVar1);
   }
-  bVar3 = LiveStorage_CS_IsAvailable(iVar2);
-  if (!bVar3) {
-    Com_PrintError(0x10,
-                   "[UI_ScreenshotThumbnailDownload] Failed to write, LiveStorage_CS_IsAvailable = false\n"
-                  );
+  cVar2 = LiveStorage_CS_IsAvailable(uVar1);
+  if (cVar2 == '\0') {
+    Com_PrintError(0x10,0xffffffff8216fa20);
     __restgprlr_25();
     return;
   }
-  s_screenshotInfo[1].state = SCREENSHOT_DOWNLOADING;
-  if (((uVar4 & 0xffffffff) != 0) && ((uVar4 & 0xffffffff) < 0x8000)) {
-    s_screenshotInfo[1].jpeg.size = (uint)uVar4;
-    local_60[0].m_successCallback = UI_ScreenshotThumbnail_Success;
-    local_60[0].m_failureCallback = UI_ScreenshotThumbnail_Failure;
-    s_screenshotInfo[1].downloadedBuffer =
-         g_screenshotThumbnailBuffers[s_screenshotThumbnailInfo.imageIndex];
-    local_60[0].m_summaryData = s_screenshotInfo[1].downloadedBuffer;
-    local_60[0].m_summaryDataSize = s_screenshotInfo[1].jpeg.size;
-    s_screenshotThumbnailInfo.currentFileID = param_2;
-    local_60[0].m_fileID = param_2;
-    iVar2 = LiveStorage_CS_DownloadSummaryData(iVar2,local_60);
-    __restgprlr_25(iVar2);
+  DAT_8400ba8c = 1;
+  if (((param_3 & 0xffffffff) != 0) && ((param_3 & 0xffffffff) < 0x8000)) {
+    DAT_8400ba94 = (undefined4)param_3;
+    local_50 = 0x825ba728825ba790;
+    DAT_8400baa4 = (&DAT_8400bc50)[DAT_8400bab4];
+    local_58 = CONCAT44(DAT_8400baa4,DAT_8400ba94);
+    DAT_8400bab8 = param_2;
+    local_60 = param_2;
+    LiveStorage_CS_DownloadSummaryData(uVar1,&local_60);
+    __restgprlr_25();
     return;
   }
-  UI_ScreenshotThumbnail_Failure(iVar2,BD_NO_ERROR);
+  UI_ScreenshotThumbnail_Failure(uVar1,0);
   __restgprlr_25();
   return;
 }
@@ -727,103 +732,91 @@ void UI_ScreenshotThumbnailDownload(LocalClientNum_t param_1,ulong64 param_2,uin
 
 // 825BA970  UI_ScreenshotDownload_f  (ui/ui_screenshot.cpp:846)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void UI_ScreenshotDownload_f(void)
 
 {
-  char *pcVar2;
-  uint uVar3;
-  ulong64 uVar1;
-  LocalClientNum_t LVar4;
+  char *pcVar3;
+  int iVar4;
+  longlong lVar1;
+  undefined8 uVar2;
   
-  pcVar2 = Cmd_Argv(2);
-  uVar3 = atoi(pcVar2);
-  pcVar2 = Cmd_Argv(1);
-  uVar1 = I_atoi64(pcVar2);
-  LVar4 = Cmd_LocalClientNum();
-  UI_ScreenshotDownload(LVar4,uVar1,uVar3);
+  pcVar3 = (char *)Cmd_Argv(2);
+  iVar4 = atoi(pcVar3);
+  pcVar3 = (char *)Cmd_Argv(1);
+  lVar1 = I_atoi64(pcVar3);
+  uVar2 = Cmd_LocalClientNum();
+  UI_ScreenshotDownload(uVar2,lVar1,iVar4);
   return;
 }
 
 
 // 825BB1D8  UI_AbortScreenshotDownload_f  (ui/ui_screenshot.cpp:852)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void UI_AbortScreenshotDownload_f(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  LiveStorage_CS_CancelTask(iVar1,s_constScreenshotValues[0].taskType);
-  s_screenshotInfo[0].state =
-       -(uint)(s_screenshotInfo[0].state == SCREENSHOT_CREATED) & s_screenshotInfo[0].state;
+  uVar1 = Cmd_LocalControllerIndex();
+  LiveStorage_CS_CancelTask(uVar1,DAT_829921cc);
+  DAT_8400ba70 = -(uint)(DAT_8400ba70 == 3) & DAT_8400ba70;
   return;
 }
 
 
 // 825BB228  UI_ScreenshotInit  (ui/ui_screenshot.cpp:858)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void UI_ScreenshotInit(void)
+void * UI_ScreenshotInit(void)
 
 {
-  GfxImage **ppGVar1;
+  void *pvVar1;
+  undefined4 *puVar2;
   
-  if (!s_inited) {
-    Cmd_AddCommandInternal
-              ("screenshotDownload",UI_ScreenshotDownload_f,&UI_ScreenshotDownload_f_VAR);
-    Cmd_AddCommandInternal
-              ("abortScreenshotDownload",UI_AbortScreenshotDownload_f,
-               &UI_AbortScreenshotDownload_f_VAR);
+  if (DAT_8400bcb8 == '\0') {
+    Cmd_AddCommandInternal(0xffffffff8216fb60,0xffffffff825ba970,0xffffffff8400bcd8);
+    Cmd_AddCommandInternal(0xffffffff8216fb48,0xffffffff825bb1d8,0xffffffff8400bcc4);
   }
-  ppGVar1 = &s_screenshotInfo[0].image;
+  puVar2 = &DAT_8400ba74;
   do {
-    ((ScreenshotInfo *)(ppGVar1 + -1))->state = SCREENSHOT_IDLE;
-    *ppGVar1 = (GfxImage *)0x0;
-    ((jpegInfo *)(ppGVar1 + 1))->size = 0;
-    ppGVar1[2] = (GfxImage *)0x0;
-    ppGVar1[3] = (GfxImage *)0x0;
-    ppGVar1[4] = (GfxImage *)0x0;
-    ppGVar1 = ppGVar1 + 7;
-  } while ((int)ppGVar1 < -0x7bff4554);
-  memset();
-  s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex = -1;
-  s_inited = true;
-  return;
+    puVar2[-1] = 0;
+    *puVar2 = 0;
+    puVar2[1] = 0;
+    puVar2[2] = 0;
+    puVar2[3] = 0;
+    puVar2[4] = 0;
+    puVar2 = puVar2 + 7;
+  } while ((int)puVar2 < -0x7bff4554);
+  pvVar1 = memset(&DAT_8400baa8,0,0x1a8);
+  DAT_8400baac = 0xffffffff;
+  DAT_8400bcb8 = 1;
+  return pvVar1;
 }
 
 
 // 825BB2E8  UI_ScreenshotShutdown  (ui/ui_screenshot.cpp:884)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void UI_ScreenshotShutdown(void)
 
 {
-  int iVar1;
-  int *piVar2;
-  ScreenshotInfo *pSVar3;
+  longlong lVar1;
+  undefined4 *puVar2;
+  int *piVar3;
   
   __savegprlr_26();
-  iVar1 = 0;
+  lVar1 = 0;
   do {
-    piVar2 = &s_constScreenshotValues[0].taskType;
-    pSVar3 = s_screenshotInfo;
+    puVar2 = &DAT_829921cc;
+    piVar3 = &DAT_8400ba70;
     do {
-      LiveStorage_CS_CancelTask(iVar1,*piVar2);
-      if (pSVar3->state != SCREENSHOT_CREATED) {
-        pSVar3->state = SCREENSHOT_IDLE;
+      LiveStorage_CS_CancelTask(lVar1,*puVar2);
+      if (*piVar3 != 3) {
+        *piVar3 = 0;
       }
-      piVar2 = piVar2 + 2;
-      pSVar3 = pSVar3 + 1;
-    } while ((int)piVar2 < -0x7d66de24);
-    iVar1 = iVar1 + 1;
-  } while (iVar1 < 4);
+      puVar2 = puVar2 + 2;
+      piVar3 = piVar3 + 7;
+    } while ((int)puVar2 < -0x7d66de24);
+    lVar1 = lVar1 + 1;
+  } while ((int)lVar1 < 4);
   __restgprlr_26();
   return;
 }
@@ -831,19 +824,17 @@ void UI_ScreenshotShutdown(void)
 
 // 825BB358  UI_ScreenshotUpdate  (ui/ui_screenshot.cpp:898)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void UI_ScreenshotUpdate(LocalClientNum_t param_1)
+void UI_ScreenshotUpdate(int param_1)
 
 {
-  bool bVar2;
-  connstate_t cVar1;
+  char cVar2;
+  int iVar1;
   
-  bVar2 = Sys_IsMainThread();
-  if (((bVar2) && (param_1 == LOCAL_CLIENT_0)) &&
-     (cVar1 = CL_GetLocalClientConnectionState(LOCAL_CLIENT_0), cVar1 == CA_DISCONNECTED)) {
-    UI_ScreenshotUpdateViewer(LOCAL_CLIENT_0);
-    UI_ScreenshotUpdateThumbnail(LOCAL_CLIENT_0);
+  cVar2 = Sys_IsMainThread();
+  if (((cVar2 != '\0') && (param_1 == 0)) &&
+     (iVar1 = CL_GetLocalClientConnectionState(0), iVar1 == 0)) {
+    UI_ScreenshotUpdateViewer();
+    UI_ScreenshotUpdateThumbnail(0);
   }
   return;
 }
@@ -851,12 +842,12 @@ void UI_ScreenshotUpdate(LocalClientNum_t param_1)
 
 // 825BA9D0  UI_ScreenshotAbortDownload  (ui/ui_screenshot.cpp:915)
 
-void UI_ScreenshotAbortDownload(int param_1,ScreenshotViewTypes param_2)
+void UI_ScreenshotAbortDownload(undefined8 param_1,int param_2)
 
 {
-  LiveStorage_CS_CancelTask(param_1,s_constScreenshotValues[param_2].taskType);
-  if (s_screenshotInfo[param_2].state != SCREENSHOT_CREATED) {
-    s_screenshotInfo[param_2].state = SCREENSHOT_IDLE;
+  LiveStorage_CS_CancelTask(param_1,(&DAT_829921cc)[param_2 * 2]);
+  if ((&DAT_8400ba70)[param_2 * 7] != 3) {
+    (&DAT_8400ba70)[param_2 * 7] = 0;
   }
   return;
 }
@@ -864,32 +855,30 @@ void UI_ScreenshotAbortDownload(int param_1,ScreenshotViewTypes param_2)
 
 // 825BAA30  UI_ScreenshotIsFinishedLoading  (ui/ui_screenshot.cpp:925)
 
-bool UI_ScreenshotIsFinishedLoading(ScreenshotViewTypes param_1)
+bool UI_ScreenshotIsFinishedLoading(void)
 
 {
-  return s_screenshotInfo[1].state == SCREENSHOT_CREATED;
+  return DAT_8400ba8c == 3;
 }
 
 
 // 825BAA50  UI_ScreenshotAllocMemory  (ui/ui_screenshot.cpp:935)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void UI_ScreenshotAllocMemory(void)
 
 {
-  uchar *puVar1;
-  uchar **ppuVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
   
-  if (g_downloadedScreenshotBuffer == (uchar *)0x0) {
-    g_downloadedScreenshotBuffer = PMem_AllocFromSource_NoDebug(0x100000,4,4,PMEM_SOURCE_DATABASE);
-    ppuVar2 = g_screenshotThumbnailBuffers;
+  if (DAT_8400bcbc == 0) {
+    DAT_8400bcbc = PMem_AllocFromSource_NoDebug(0x100000,4,4,1);
+    puVar2 = &DAT_8400bc50;
     do {
-      puVar1 = PMem_AllocFromSource_NoDebug(0x8000,4,4,PMEM_SOURCE_DATABASE);
-      *ppuVar2 = puVar1;
-      ppuVar2 = ppuVar2 + 1;
-    } while ((int)ppuVar2 < -0x7bff434c);
-    g_jpegDecompressionBuffer = PMem_AllocFromSource_NoDebug(0x600000,4,4,PMEM_SOURCE_DATABASE);
+      uVar1 = PMem_AllocFromSource_NoDebug(0x8000,4,4,1);
+      *puVar2 = uVar1;
+      puVar2 = puVar2 + 1;
+    } while ((int)puVar2 < -0x7bff434c);
+    DAT_8400bcc0 = PMem_AllocFromSource_NoDebug(0x600000,4,4,1);
   }
   return;
 }
@@ -897,30 +886,28 @@ void UI_ScreenshotAllocMemory(void)
 
 // 825BAAF8  UI_ScreenshotClearMemory  (ui/ui_screenshot.cpp:949)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void UI_ScreenshotClearMemory(void)
 
 {
-  int *piVar1;
+  undefined4 *puVar1;
   longlong lVar2;
   
-  piVar1 = &s_screenshotThumbnailInfo.files[0x18].jpegBufferSize;
+  puVar1 = (undefined4 *)0x8400bc4c;
   lVar2 = 0x19;
-  g_downloadedScreenshotBuffer = (uchar *)0x0;
+  DAT_8400bcbc = 0;
   do {
-    piVar1 = piVar1 + 1;
-    *piVar1 = 0;
+    puVar1 = puVar1 + 1;
+    *puVar1 = 0;
     lVar2 = lVar2 + -1;
   } while (lVar2 != 0);
-  g_jpegDecompressionBuffer = (uchar *)0x0;
+  DAT_8400bcc0 = 0;
   return;
 }
 
 
 // 825BAB38  UI_GeneratePlaylistPopulationImage  (ui/ui_screenshot.cpp:963)
 
-bool UI_GeneratePlaylistPopulationImage(uchar *param_1)
+void UI_GeneratePlaylistPopulationImage(void)
 
 {
   ushort uVar1;
@@ -930,141 +917,120 @@ bool UI_GeneratePlaylistPopulationImage(uchar *param_1)
   uint uVar5;
   uint uVar6;
   int iVar7;
-  GfxImage *pGVar8;
-  undefined1 uVar9;
+  int iVar8;
+  longlong lVar9;
   longlong lVar10;
-  longlong lVar11;
+  ulonglong uVar11;
   ulonglong uVar12;
-  ulonglong uVar13;
-  char *pcVar14;
-  uint uVar15;
-  ulonglong uVar16;
-  longlong lVar17;
+  char *pcVar13;
+  uint uVar14;
+  ulonglong uVar15;
+  longlong lVar16;
   
-  iVar7 = __savegprlr_19(param_1);
-  pGVar8 = Image_Register("menu_mp_playlist_population",'\0',3);
-  if (pGVar8 == (GfxImage *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x3cc,0,
-                    "%s");
+  iVar7 = __savegprlr_19();
+  iVar8 = Image_Register(0xffffffff8216fac4,0,3);
+  if (iVar8 == 0) {
+    MyAssertHandler(0xffffffff8216f740,0x3cc,0,0xffffffff82000f98,0xffffffff82058d58);
   }
-  if (pGVar8[0x47] == (GfxImage)0x0) {
-    if ((*(short *)(pGVar8 + 0x40) == 0x100) && (*(short *)(pGVar8 + 0x42) == 0x100)) {
-      iVar2 = *(int *)(pGVar8 + 0x48);
-      lVar17 = 0;
-      uVar15 = 0x100;
+  if (*(char *)(iVar8 + 0x47) == '\0') {
+    if ((*(short *)(iVar8 + 0x40) == 0x100) && (*(short *)(iVar8 + 0x42) == 0x100)) {
+      iVar2 = *(int *)(iVar8 + 0x48);
+      lVar16 = 0;
+      uVar14 = 0x100;
       do {
-        iVar4 = uVar15 * (int)lVar17;
-        lVar11 = 0;
-        if (uVar15 != 0) {
+        iVar4 = uVar14 * (int)lVar16;
+        lVar10 = 0;
+        if (uVar14 != 0) {
           do {
-            uVar1 = *(ushort *)(pGVar8 + 0x40);
-            uVar12 = (ulonglong)uVar1;
-            iVar3 = (int)lVar11;
-            uVar16 = (uVar12 + lVar11) - 7;
-            uVar13 = ((ulonglong)*(ushort *)(pGVar8 + 0x42) - lVar17) - 1;
-            lVar10 = uVar16 - (longlong)((int)uVar16 / (int)(uint)uVar1) *
-                              (longlong)(int)(uint)uVar1;
-            uVar5 = (uint)lVar10;
-            uVar6 = (uint)uVar13;
-            uVar15 = (((uint)((uVar13 & 0xffffffff) << 2) & 0x18) + (uVar5 & 7)) * 4;
-            uVar15 = ((uVar1 + 0x1f >> 5) * (uVar6 >> 5) + (uVar5 >> 5)) * 0x200 +
-                     ((uVar6 & 1) * 8 + (uVar15 & 0xfffffff0)) * 2 + (uVar6 & 8) * 0x20 +
-                     (uVar15 & 0xf);
-            pcVar14 = (char *)((((uVar6 & 0x10) * 0x10 + (uVar15 & 0xfffffe00)) * 2 +
-                               (uVar15 & 0x1c0)) * 4 +
-                               ((uint)(((uVar13 & 0x7ffffff8) * 2 + lVar10 & 0xffffffff) << 3) &
-                               0xc0) + (uVar15 & 0x3f) + iVar2);
-            trapWord(6,uVar12,0);
-            lVar11 = lVar11 + 1;
-            *pcVar14 = -(*(char *)(iVar4 + iVar7 + iVar3) != '\0');
-            pcVar14[1] = -1;
-            pcVar14[2] = -1;
-            trapWord(5,uVar12 & ~(((uVar16 & 0x7fffffff) << 1 | (uVar16 & 0xffffffff) >> 0x1f) - 1),
+            uVar1 = *(ushort *)(iVar8 + 0x40);
+            uVar11 = (ulonglong)uVar1;
+            iVar3 = (int)lVar10;
+            uVar15 = (uVar11 + lVar10) - 7;
+            uVar12 = ((ulonglong)*(ushort *)(iVar8 + 0x42) - lVar16) - 1;
+            lVar9 = uVar15 - (longlong)((int)uVar15 / (int)(uint)uVar1) * (longlong)(int)(uint)uVar1
+            ;
+            uVar5 = (uint)lVar9;
+            uVar6 = (uint)uVar12;
+            uVar14 = (((uint)((uVar12 & 0xffffffff) << 2) & 0x18) + (uVar5 & 7)) * 4;
+            uVar14 = ((uVar1 + 0x1f >> 5) * (uVar6 >> 5) + (uVar5 >> 5)) * 0x200 +
+                     ((uVar6 & 1) * 8 + (uVar14 & 0xfffffff0)) * 2 + (uVar6 & 8) * 0x20 +
+                     (uVar14 & 0xf);
+            pcVar13 = (char *)((((uVar6 & 0x10) * 0x10 + (uVar14 & 0xfffffe00)) * 2 +
+                               (uVar14 & 0x1c0)) * 4 +
+                               ((uint)(((uVar12 & 0x7ffffff8) * 2 + lVar9 & 0xffffffff) << 3) & 0xc0
+                               ) + (uVar14 & 0x3f) + iVar2);
+            trapWord(6,uVar11,0);
+            lVar10 = lVar10 + 1;
+            *pcVar13 = -(*(char *)(iVar4 + iVar7 + iVar3) != '\0');
+            pcVar13[1] = -1;
+            pcVar13[2] = -1;
+            trapWord(5,uVar11 & ~(((uVar15 & 0x7fffffff) << 1 | (uVar15 & 0xffffffff) >> 0x1f) - 1),
                      0xffff);
-            pcVar14[3] = -1;
-            uVar15 = (uint)*(ushort *)(pGVar8 + 0x40);
-          } while ((int)lVar11 < (int)(uint)*(ushort *)(pGVar8 + 0x40));
+            pcVar13[3] = -1;
+            uVar14 = (uint)*(ushort *)(iVar8 + 0x40);
+          } while ((int)lVar10 < (int)(uint)*(ushort *)(iVar8 + 0x40));
         }
-        lVar17 = lVar17 + 1;
-      } while ((int)lVar17 < (int)(uint)*(ushort *)(pGVar8 + 0x42));
-      uVar9 = __restgprlr_19(1);
-      return (bool)uVar9;
+        lVar16 = lVar16 + 1;
+      } while ((int)lVar16 < (int)(uint)*(ushort *)(iVar8 + 0x42));
+      __restgprlr_19(1);
+      return;
     }
   }
-  uVar9 = __restgprlr_19(0);
-  return (bool)uVar9;
+  __restgprlr_19(0);
+  return;
 }
 
 
 // 825BAD10  UI_CalculateDeclination  (ui/ui_screenshot.cpp:1029)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float UI_CalculateDeclination(void)
+double UI_CalculateDeclination(void)
 
 {
-  uint uVar1;
+  int iVar1;
   double dVar2;
   
-  uVar1 = LiveStorage_GetUTC();
-  dVar2 = cos((double)(((float)(longlong)((int)uVar1 % 0x1e1853e) * 1.1574074e-05 + 10.0) *
+  iVar1 = LiveStorage_GetUTC();
+  dVar2 = cos((double)(((float)(longlong)(iVar1 % 0x1e1853e) * (float)0x37422e45 + 10.0) *
                       0.017202793));
-  return (float)dVar2 * -0.4092797;
+  return (double)((float)dVar2 * -0.4092797);
 }
 
 
 // 825BADA8  UI_DrawPlaylistPopulation  (ui/ui_screenshot.cpp:1038)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void UI_DrawPlaylistPopulation(LocalClientNum_t param_1,rectDef_s *param_2,float *param_3)
+void UI_DrawPlaylistPopulation(undefined8 param_1,float *param_2)
 
 {
-  float *pfVar1;
-  LocalClientNum_t LVar2;
-  bool bVar7;
-  uchar *puVar3;
-  uint uVar4;
-  int iVar5;
-  ScreenPlacement *pSVar6;
-  longlong lVar8;
-  int iVar9;
-  float *pfVar10;
-  Material *pMVar11;
-  double dVar12;
-  float fVar13;
+  undefined8 uVar1;
+  char cVar4;
+  uint uVar2;
+  int iVar3;
+  undefined8 uVar5;
   
-  lVar8 = (longlong)(int)param_2;
-  LVar2 = __savegprlr_28(param_1,lVar8,param_3);
-  bVar7 = LiveStorage_DoWeHavePlaylistPopulation();
-  if (bVar7) {
-    bVar7 = LiveStorage_DoWeHavePlaylistPopulationImage();
-    if (!bVar7) {
-      puVar3 = LiveStorage_GetPlaylistPopulationBuffer();
-      bVar7 = UI_GeneratePlaylistPopulationImage(puVar3);
-      if (bVar7) {
+  uVar1 = __savegprlr_28();
+  cVar4 = LiveStorage_DoWeHavePlaylistPopulation();
+  if (cVar4 != '\0') {
+    cVar4 = LiveStorage_DoWeHavePlaylistPopulationImage();
+    if (cVar4 == '\0') {
+      LiveStorage_GetPlaylistPopulationBuffer();
+      cVar4 = UI_GeneratePlaylistPopulationImage();
+      if (cVar4 != '\0') {
         LiveStorage_GeneratePlaylistPopulationImageDone();
       }
     }
-    bVar7 = LiveStorage_DoWeHavePlaylistPopulationImage();
-    if ((bVar7) && (bVar7 = LiveStorage_IsTimeSynced(), bVar7)) {
-      uVar4 = LiveStorage_GetUTC();
-      pfVar10 = (float *)(uVar4 / 0x15180);
-      iVar9 = (int)pfVar10 * 0x15180;
-      fVar13 = UI_CalculateDeclination();
-      dVar12 = (double)fVar13;
-      iVar5 = Sys_Milliseconds();
+    cVar4 = LiveStorage_DoWeHavePlaylistPopulationImage();
+    if ((cVar4 != '\0') && (cVar4 = LiveStorage_IsTimeSynced(), cVar4 != '\0')) {
+      uVar2 = LiveStorage_GetUTC();
+      uVar5 = UI_CalculateDeclination();
+      iVar3 = Sys_Milliseconds();
       R_AddCmdSetCodeConstant
-                (0x3f,(float)(longlong)iVar5 * 0.001,
-                 -((float)(longlong)(int)(uVar4 % 0x15180) * 1.1574074e-05 - 1.0),(float)dVar12,0.0)
-      ;
-      pMVar11 = (Material *)0x82170000;
-      iVar5 = 3;
-      Material_RegisterHandle("playlist_population",3);
-      pSVar6 = ScrPlace_GetActivePlacement(LVar2);
-      pfVar1 = (float *)lVar8;
-      UI_DrawHandlePic(pSVar6,*pfVar1,pfVar1[1],pfVar1[2],pfVar1[3],iVar5,iVar9,pfVar10,pMVar11);
+                ((double)((float)(longlong)iVar3 * 0.001),
+                 -(double)((float)(longlong)
+                                  (int)(uVar2 + (uint)(ushort)((ulonglong)uVar2 / 0x15180) *
+                                                -0x15180) * 1.1574074e-05 - 1.0),uVar5,0,0x3f);
+      Material_RegisterHandle(0xffffffff8216cbe0,3);
+      ScrPlace_GetActivePlacement(uVar1);
+      UI_DrawHandlePic((double)*param_2,(double)param_2[1],(double)param_2[2],(double)param_2[3]);
     }
   }
   __restgprlr_28();

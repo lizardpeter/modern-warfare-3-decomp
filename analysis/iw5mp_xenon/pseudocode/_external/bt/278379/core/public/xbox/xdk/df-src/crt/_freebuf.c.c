@@ -2,15 +2,15 @@
 
 // 82922388  _freebuf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_freebuf.c:45)
 
-void _freebuf(_iobuf *param_1)
+void _freebuf(FILE *_File)
 
 {
-  if (((param_1->_flag & 0x83U) != 0) && ((param_1->_flag & 8U) != 0)) {
-    free(param_1->_base);
-    param_1->_ptr = (char *)0x0;
-    param_1->_base = (char *)0x0;
-    param_1->_cnt = 0;
-    param_1->_flag = param_1->_flag & 0xfffffbf7;
+  if (((_File->_flag & 0x83U) != 0) && ((_File->_flag & 8U) != 0)) {
+    free(_File->_base);
+    _File->_ptr = (char *)0x0;
+    _File->_base = (char *)0x0;
+    _File->_cnt = 0;
+    _File->_flag = _File->_flag & 0xfffffbf7;
   }
   return;
 }

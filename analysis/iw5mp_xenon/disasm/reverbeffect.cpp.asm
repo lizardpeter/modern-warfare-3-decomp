@@ -7,7 +7,7 @@
   828D9B04  91640000             stw r11,0x0(r4)
   828D9B08  4E800020             blr
 
-; 828D8568  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/vardelay.hpp:44)
+; 828D8568  princeton_digital::vardelay_t<float,16384>::preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/vardelay.hpp:44)
   828D8568  7D8802A6             mfspr r12,LR
   828D856C  4803E121             bl 0x8291668c
   828D8570  DBC1FF70             stfd f30,-0x90(r1)
@@ -426,7 +426,7 @@ LAB_828d8b84:
   828D8B98  CBE1FF78             lfd f31,-0x88(r1)
   828D8B9C  4803DB40             b 0x829166dc
 
-; 828D9628  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/vardelay.hpp:44)
+; 828D9628  princeton_digital::vardelay_t<float,256>::preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/vardelay.hpp:44)
   828D9628  7D8802A6             mfspr r12,LR
   828D962C  4803D06D             bl 0x82916698
   828D9630  DBC1FF88             stfd f30,-0x78(r1)
@@ -749,7 +749,7 @@ LAB_828d9adc:
   828D9AF0  CBE1FF90             lfd f31,-0x70(r1)
   828D9AF4  4803CBF4             b 0x829166e8
 
-; 828D9578  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/twotap.hpp:49)
+; 828D9578  princeton_digital::twotap_t<float,1024>::preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/twotap.hpp:49)
   828D9578  FBC1FFF0             std r30,-0x10(r1)
   828D957C  FBE1FFF8             std r31,-0x8(r1)
   828D9580  81230018             lwz r9,0x18(r3)
@@ -795,7 +795,7 @@ LAB_828d95d4:
   828D961C  EBE1FFF8             ld r31,-0x8(r1)
   828D9620  4E800020             blr
 
-; 828D8BA0  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/occlusion.hpp:59)
+; 828D8BA0  princeton_digital::occlusion_t<float,2>::preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/occlusion.hpp:59)
   828D8BA0  3D208200             lis r9,-0x7e00
   828D8BA4  C1230014             lfs f9,0x14(r3)
   828D8BA8  C1830010             lfs f12,0x10(r3)
@@ -869,7 +869,7 @@ LAB_828d8ca4:
   828D8CA8  D1830010             stfs f12,0x10(r3)
   828D8CAC  4E800020             blr
 
-; 828D8D78  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/allpass.hpp:64)
+; 828D8D78  princeton_digital::allpass_t<float,128>::preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/allpass.hpp:64)
   828D8D78  7D8802A6             mfspr r12,LR
   828D8D7C  9181FFF8             stw r12,-0x8(r1)
   828D8D80  FBC1FFE8             std r30,-0x18(r1)
@@ -1045,7 +1045,7 @@ LAB_828d8ef4:
   828D9020  EBE1FFF0             ld r31,-0x10(r1)
   828D9024  4E800020             blr
 
-; 828D90F0  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/allpass.hpp:64)
+; 828D90F0  princeton_digital::allpass_t<float,256>::preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/allpass.hpp:64)
   828D90F0  7D8802A6             mfspr r12,LR
   828D90F4  9181FFF8             stw r12,-0x8(r1)
   828D90F8  FBC1FFE8             std r30,-0x18(r1)
@@ -1146,7 +1146,7 @@ LAB_828d9140:
   828D9270  EBE1FFF0             ld r31,-0x10(r1)
   828D9274  4E800020             blr
 
-; 828D9278  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/allpass.hpp:64)
+; 828D9278  princeton_digital::allpass_t<float,512>::preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/allpass.hpp:64)
   828D9278  7D8802A6             mfspr r12,LR
   828D927C  9181FFF8             stw r12,-0x8(r1)
   828D9280  FBC1FFE8             std r30,-0x18(r1)
@@ -1247,7 +1247,7 @@ LAB_828d92c8:
   828D93F8  EBE1FFF0             ld r31,-0x10(r1)
   828D93FC  4E800020             blr
 
-; 828D8CB0  preprocess3  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/threetap.hpp:70)
+; 828D8CB0  princeton_digital::threetap_t<float,512>::preprocess3  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/threetap.hpp:70)
   828D8CB0  7D8802A6             mfspr r12,LR
   828D8CB4  4803DA05             bl 0x829166b8
   828D8CB8  81230024             lwz r9,0x24(r3)
@@ -1299,7 +1299,7 @@ LAB_828d8d14:
   828D8D6C  D1A30020             stfs f13,0x20(r3)
   828D8D70  4803D998             b 0x82916708
 
-; 828D9028  preprocess3  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/threetap.hpp:70)
+; 828D9028  princeton_digital::threetap_t<float,2048>::preprocess3  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/threetap.hpp:70)
   828D9028  7D8802A6             mfspr r12,LR
   828D902C  4803D68D             bl 0x829166b8
   828D9030  81230024             lwz r9,0x24(r3)
@@ -1402,7 +1402,7 @@ LAB_828db8f0:
   828DB908  38210080             addi r1,r1,0x80
   828DB90C  4803ADFC             b 0x82916708
 
-; 828DB4D8  AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.h:120)
+; 828DB4D8  XAUDIO::CReverbEffect::AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.h:120)
   828DB4D8  81230008             lwz r9,0x8(r3)
   828DB4DC  7C6B1B78             or r11,r3,r3
   828DB4E0  39430004             addi r10,r3,0x4
@@ -1410,7 +1410,7 @@ LAB_828db8f0:
   828DB4E8  906B0008             stw r3,0x8(r11)
   828DB4EC  4E800020             blr
 
-; 828DB4F0  Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.h:125)
+; 828DB4F0  XAUDIO::CReverbEffect::Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.h:125)
   828DB4F0  7D8802A6             mfspr r12,LR
   828DB4F4  9181FFF8             stw r12,-0x8(r1)
   828DB4F8  9421FFA0             stwu r1,-0x60(r1)
@@ -1431,18 +1431,18 @@ LAB_828db528:
   828DB530  7D8803A6             mtspr LR,r12
   828DB534  4E800020             blr
 
-; 828DB538  GetContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.h:130)
+; 828DB538  XAUDIO::CReverbEffect::GetContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.h:130)
   828DB538  8163000C             lwz r11,0xc(r3)
   828DB53C  38600000             li r3,0x0
   828DB540  91640000             stw r11,0x0(r4)
   828DB544  4E800020             blr
 
-; 828DB548  QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.h:135)
+; 828DB548  XAUDIO::CReverbEffect::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.h:135)
   828DB548  3963FFFC             subi r11,r3,0x4
   828DB54C  91640000             stw r11,0x0(r4)
   828DB550  4E800020             blr
 
-; 828DB318  Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:144)
+; 828DB318  XAUDIO::CStereoRoomFloat::Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:144)
   828DB318  7D8802A6             mfspr r12,LR
   828DB31C  4803B395             bl 0x829166b0
   828DB320  9421FF70             stwu r1,-0x90(r1)
@@ -1529,7 +1529,7 @@ LAB_828db430:
   828DB44C  38210090             addi r1,r1,0x90
   828DB450  4803B2B0             b 0x82916700
 
-; 828D9400  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/allpass.hpp:163)
+; 828D9400  princeton_digital::allpass_t<float,512>::preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/allpass.hpp:163)
   828D9400  7D8802A6             mfspr r12,LR
   828D9404  4803D2B9             bl 0x829166bc
   828D9408  3981FFE0             subi r12,r1,0x20
@@ -1625,7 +1625,7 @@ LAB_828d944c:
   828D956C  4803D279             bl 0x829167e4
   828D9570  4803D19C             b 0x8291670c
 
-; 828DB750  CReverbEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:199)
+; 828DB750  XAUDIO::CReverbEffect::CReverbEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:199)
   828DB750  7D8802A6             mfspr r12,LR
   828DB754  4803AF69             bl 0x829166bc
   828DB758  9421FF90             stwu r1,-0x70(r1)
@@ -1671,11 +1671,11 @@ LAB_828d944c:
   828DB7F8  38210070             addi r1,r1,0x70
   828DB7FC  4803AF10             b 0x8291670c
 
-; 828D7F80  Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:247)
+; 828D7F80  XAUDIO::CReverbEffect::Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:247)
   828D7F80  38600000             li r3,0x0
   828D7F84  4E800020             blr
 
-; 828D9B10  process  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/stereo_room.hpp:249)
+; 828D9B10  princeton_digital::stereo_room_t<float>::process  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/stereo_room.hpp:249)
   828D9B10  7D8802A6             mfspr r12,LR
   828D9B14  4803CB6D             bl 0x82916680
   828D9B18  3981FF68             subi r12,r1,0x98
@@ -3202,7 +3202,7 @@ LAB_828db210:
   828DB2B4  4803B4F9             bl 0x829167ac
   828DB2B8  4803B418             b 0x829166d0
 
-; 828D7F88  GetInfo  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:270)
+; 828D7F88  XAUDIO::CReverbEffect::GetInfo  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:270)
   828D7F88  39600006             li r11,0x6
   828D7F8C  39400EA6             li r10,0xea6
   828D7F90  99640000             stb r11,0x0(r4)
@@ -3210,7 +3210,7 @@ LAB_828db210:
   828D7F98  B1440002             sth r10,0x2(r4)
   828D7F9C  4E800020             blr
 
-; 828D7FA0  GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:308)
+; 828D7FA0  XAUDIO::CReverbEffect::GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:308)
   828D7FA0  7D8802A6             mfspr r12,LR
   828D7FA4  4803E70D             bl 0x829166b0
   828D7FA8  DBE1FFC0             stfd f31,-0x40(r1)
@@ -3353,7 +3353,7 @@ LAB_828d81a0:
   828D81A8  CBE1FFC0             lfd f31,-0x40(r1)
   828D81AC  4803E554             b 0x82916700
 
-; 828D81B0  SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:390)
+; 828D81B0  XAUDIO::CReverbEffect::SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:390)
   828D81B0  7D8802A6             mfspr r12,LR
   828D81B4  4803E4FD             bl 0x829166b0
   828D81B8  DBE1FFC0             stfd f31,-0x40(r1)
@@ -3610,7 +3610,7 @@ LAB_828d8554:
   828D855C  CBE1FFC0             lfd f31,-0x40(r1)
   828D8560  4803E1A0             b 0x82916700
 
-; 828DB570  Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:564)
+; 828DB570  XAUDIO::CReverbEffect::Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:564)
   828DB570  7D8802A6             mfspr r12,LR
   828DB574  9181FFF8             stw r12,-0x8(r1)
   828DB578  FBC1FFE8             std r30,-0x18(r1)
@@ -3707,7 +3707,7 @@ LAB_828db6c0:
   828DB6D0  EBE1FFF0             ld r31,-0x10(r1)
   828DB6D4  4E800020             blr
 
-; 828DB2C0  `scalar_deleting_destructor'  (line unknown)
+; 828DB2C0  princeton_digital::stereo_room_t<float>::`scalar_deleting_destructor'  (line unknown)
   828DB2C0  7D8802A6             mfspr r12,LR
   828DB2C4  9181FFF8             stw r12,-0x8(r1)
   828DB2C8  FBE1FFF0             std r31,-0x10(r1)
@@ -3732,7 +3732,7 @@ LAB_828db300:
   828DB310  EBE1FFF0             ld r31,-0x10(r1)
   828DB314  4E800020             blr
 
-; 828DB458  `scalar_deleting_destructor'  (line unknown)
+; 828DB458  XAUDIO::CStereoRoomFloat::`scalar_deleting_destructor'  (line unknown)
   828DB458  7D8802A6             mfspr r12,LR
   828DB45C  9181FFF8             stw r12,-0x8(r1)
   828DB460  FBE1FFF0             std r31,-0x10(r1)
@@ -3764,23 +3764,23 @@ LAB_828db4b4:
   828DB4C4  EBE1FFF0             ld r31,-0x10(r1)
   828DB4C8  4E800020             blr
 
-; 828DB4D0  `vector_deleting_destructor'`adjustor{4}'  (line unknown)
+; 828DB4D0  [thunk]:XAUDIO::CReverbEffect::`vector_deleting_destructor'  (line unknown)
   828DB4D0  3863FFFC             subi r3,r3,0x4
   828DB4D4  4800032C             b 0x828db800
 
-; 828DB558  GetContext`adjustor{4}'  (line unknown)
+; 828DB558  [thunk]:XAUDIO::CReverbEffect::GetContext`adjustor{4}'  (line unknown)
   828DB558  3863FFFC             subi r3,r3,0x4
   828DB55C  4BFFFFDC             b 0x828db538
 
-; 828DB560  Release`adjustor{4}'  (line unknown)
+; 828DB560  [thunk]:XAUDIO::CReverbEffect::Release`adjustor{4}'  (line unknown)
   828DB560  3863FFFC             subi r3,r3,0x4
   828DB564  4BFFFF8C             b 0x828db4f0
 
-; 828DB568  AddRef`adjustor{4}'  (line unknown)
+; 828DB568  [thunk]:XAUDIO::CReverbEffect::AddRef`adjustor{4}'  (line unknown)
   828DB568  3863FFFC             subi r3,r3,0x4
   828DB56C  4BFFFF6C             b 0x828db4d8
 
-; 828DB6D8  `scalar_deleting_destructor'  (line unknown)
+; 828DB6D8  princeton_digital::stereo_room_3dl2_t<float>::`scalar_deleting_destructor'  (line unknown)
   828DB6D8  7D8802A6             mfspr r12,LR
   828DB6DC  9181FFF8             stw r12,-0x8(r1)
   828DB6E0  FBE1FFF0             std r31,-0x10(r1)
@@ -3812,7 +3812,7 @@ LAB_828db734:
   828DB744  EBE1FFF0             ld r31,-0x10(r1)
   828DB748  4E800020             blr
 
-; 828DB800  `scalar_deleting_destructor'  (line unknown)
+; 828DB800  XAUDIO::CReverbEffect::`scalar_deleting_destructor'  (line unknown)
   828DB800  3D608220             lis r11,-0x7de0
   828DB804  3D408220             lis r10,-0x7de0
   828DB808  392B7608             addi r9,r11,0x7608

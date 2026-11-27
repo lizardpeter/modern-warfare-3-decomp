@@ -2,24 +2,23 @@
 
 // 82715B30  RemoteConsoleFindFileData_FillWithDefaults  (online/remoteconsole.cpp:289)
 
-void RemoteConsoleFindFileData_FillWithDefaults(remoteConsoleFindFileData *param_1)
+void RemoteConsoleFindFileData_FillWithDefaults(undefined4 *param_1)
 
 {
-  if (param_1 == (remoteConsoleFindFileData *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\remoteconsole.cpp",
-                    0x122,0,"%s");
+  if (param_1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821b8c00,0x122,0,0xffffffff82000f98,0xffffffff821b8c44);
   }
   else {
-    param_1->handle = (void *)0xffffffff;
-    param_1->opened = 0;
-    Com_Memset(param_1->pattern_requested,0,0x230);
-    Com_Memset(param_1->pattern_adjusted,0,0x230);
-    Com_Memset(param_1->filename,0,0x230);
-    param_1->exists = 0;
-    param_1->file = 0;
-    param_1->dir = 0;
-    param_1->filesize = 0;
-    param_1->flags = 0;
+    *param_1 = 0xffffffff;
+    param_1[1] = 0;
+    Com_Memset(param_1 + 2,0,0x230);
+    Com_Memset(param_1 + 0x8e,0,0x230);
+    Com_Memset(param_1 + 0x11a,0,0x230);
+    param_1[0x1a6] = 0;
+    param_1[0x1a7] = 0;
+    param_1[0x1a8] = 0;
+    *(undefined8 *)(param_1 + 0x1aa) = 0;
+    param_1[0x1ac] = 0;
   }
   return;
 }
@@ -27,40 +26,36 @@ void RemoteConsoleFindFileData_FillWithDefaults(remoteConsoleFindFileData *param
 
 // 82715BE8  RemoteConsoleFindFileData_PopulateWithLowLevelData  (online/remoteconsole.cpp:324)
 
-void RemoteConsoleFindFileData_PopulateWithLowLevelData
-               (remoteConsoleFindFileData *param_1,void *param_2)
+void RemoteConsoleFindFileData_PopulateWithLowLevelData(undefined8 param_1,ulonglong param_2)
 
 {
-  uint *puVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
+  uint *puVar2;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\remoteconsole.cpp",
-                    0x14d,0,"%s");
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821b8c00,0x14d,0,0xffffffff82000f98,0xffffffff821b8c44);
     __restgprlr_29();
     return;
   }
-  Com_Memset((char *)(iVar2 + 0x468),0,0x230);
-  *(undefined4 *)(iVar2 + 0x698) = 0;
-  *(undefined4 *)(iVar2 + 0x69c) = 0;
-  *(undefined4 *)(iVar2 + 0x6a0) = 0;
-  *(undefined8 *)(iVar2 + 0x6a8) = 0;
-  *(undefined4 *)(iVar2 + 0x6b0) = 0;
-  if ((uVar3 & 0xffffffff) != 0) {
-    puVar1 = (uint *)uVar3;
-    I_strncpyz((char *)(iVar2 + 0x468),(char *)(puVar1 + 0xb),0x230);
-    *(undefined4 *)(iVar2 + 0x698) = 1;
-    if ((*puVar1 & 0x10) == 0) {
-      *(undefined4 *)(iVar2 + 0x69c) = 1;
+  Com_Memset(iVar1 + 0x468,0,0x230);
+  *(undefined4 *)(iVar1 + 0x698) = 0;
+  *(undefined4 *)(iVar1 + 0x69c) = 0;
+  *(undefined4 *)(iVar1 + 0x6a0) = 0;
+  *(undefined8 *)(iVar1 + 0x6a8) = 0;
+  *(undefined4 *)(iVar1 + 0x6b0) = 0;
+  if ((param_2 & 0xffffffff) != 0) {
+    I_strncpyz(iVar1 + 0x468,param_2 + 0x2c,0x230);
+    *(undefined4 *)(iVar1 + 0x698) = 1;
+    puVar2 = (uint *)param_2;
+    if ((*puVar2 & 0x10) == 0) {
+      *(undefined4 *)(iVar1 + 0x69c) = 1;
     }
     else {
-      *(undefined4 *)(iVar2 + 0x6a0) = 1;
+      *(undefined4 *)(iVar1 + 0x6a0) = 1;
     }
-    *(undefined8 *)(iVar2 + 0x6a8) = *(undefined8 *)(puVar1 + 7);
-    *(uint *)(iVar2 + 0x6b0) = *puVar1;
+    *(undefined8 *)(iVar1 + 0x6a8) = *(undefined8 *)(puVar2 + 7);
+    *(uint *)(iVar1 + 0x6b0) = *puVar2;
   }
   __restgprlr_29();
   return;
@@ -69,27 +64,25 @@ void RemoteConsoleFindFileData_PopulateWithLowLevelData
 
 // 82715CC0  RemoteConsoleFindFileData_Init  (online/remoteconsole.cpp:395)
 
-void RemoteConsoleFindFileData_Init(remoteConsoleFindFileData *param_1)
+void RemoteConsoleFindFileData_Init(int param_1)
 
 {
-  if (param_1 == (remoteConsoleFindFileData *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\remoteconsole.cpp",
-                    0x18c,0,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff821b8c00,0x18c,0,0xffffffff82000f98,0xffffffff821b8c44);
     return;
   }
-  RemoteConsoleFindFileData_FillWithDefaults(param_1);
+  RemoteConsoleFindFileData_FillWithDefaults();
   return;
 }
 
 
 // 827171F8  RemoteConsoleFindFileData_Uninit  (online/remoteconsole.cpp:412)
 
-void RemoteConsoleFindFileData_Uninit(remoteConsoleFindFileData *param_1)
+void RemoteConsoleFindFileData_Uninit(ulonglong param_1)
 
 {
-  if (param_1 == (remoteConsoleFindFileData *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\remoteconsole.cpp",
-                    0x19d,0,"%s");
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821b8c00,0x19d,0,0xffffffff82000f98,0xffffffff821b8c44);
     return;
   }
   RemoteConsoleFindFileData_Cancel(param_1);
@@ -100,50 +93,46 @@ void RemoteConsoleFindFileData_Uninit(remoteConsoleFindFileData *param_1)
 
 // 82717270  RemoteConsoleFindFileData_SetupPatterns  (online/remoteconsole.cpp:429)
 
-void RemoteConsoleFindFileData_SetupPatterns(remoteConsoleFindFileData *param_1,char *param_2)
+void RemoteConsoleFindFileData_SetupPatterns(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  char *pcVar2;
-  char *pcVar3;
-  ulonglong uVar4;
-  char *pcVar5;
+  undefined8 uVar2;
+  undefined1 *puVar3;
+  int iVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
+  iVar1 = __savegprlr_29();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\remoteconsole.cpp",
-                    0x1ae,0,"%s");
+    MyAssertHandler(0xffffffff821b8c00,0x1ae,0,0xffffffff82000f98,0xffffffff821b8c44);
     __restgprlr_29();
     return;
   }
-  pcVar3 = (char *)(iVar1 + 8);
-  Com_Memset(pcVar3,0,0x230);
-  pcVar5 = (char *)(iVar1 + 0x238);
-  Com_Memset(pcVar5,0,0x230);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\remoteconsole.cpp",
-                    0x1b7,0,"%s");
+  iVar4 = iVar1 + 8;
+  Com_Memset(iVar4,0,0x230);
+  puVar3 = (undefined1 *)(iVar1 + 0x238);
+  Com_Memset(puVar3,0,0x230);
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821b8c00,0x1b7,0,0xffffffff82000f98,0xffffffff821b8d70);
     __restgprlr_29();
     return;
   }
-  I_strncpyz(pcVar3,(char *)uVar4,0x230);
-  if ((pcVar5 != (char *)0x0) && (*pcVar5 = '\0', pcVar3 != (char *)0x0)) {
-    pcVar2 = "";
-    iVar1 = RemoteConsole_StringBeginIgnore(pcVar3,"",(char **)0x0);
+  I_strncpyz(iVar4,param_2,0x230);
+  if ((puVar3 != (undefined1 *)0x0) && (*puVar3 = 0, iVar4 != 0)) {
+    uVar2 = 0xffffffff820068af;
+    iVar1 = RemoteConsole_StringBeginIgnore(iVar4,0xffffffff820068af,0);
     if (iVar1 == 0) {
-      I_strncat(pcVar5,0x230,pcVar2);
+      I_strncat(puVar3,0x230,uVar2);
     }
-    I_strncat(pcVar5,0x230,pcVar3);
+    I_strncat(puVar3,0x230,iVar4);
   }
-  pcVar2 = RemoteConsole_StringFindFirstIgnore(pcVar3,"\\");
-  if ((pcVar2 == (char *)0x0) &&
-     (pcVar3 = RemoteConsole_StringFindFirstIgnore(pcVar3,"*"), pcVar3 == (char *)0x0)) {
-    iVar1 = RemoteConsole_StringEndIgnore(pcVar5,"\\",(char **)0x0);
+  iVar1 = RemoteConsole_StringFindFirstIgnore(iVar4,0xffffffff8215bc64);
+  if ((iVar1 == 0) &&
+     (iVar1 = RemoteConsole_StringFindFirstIgnore(iVar4,0xffffffff8203893c), iVar1 == 0)) {
+    iVar1 = RemoteConsole_StringEndIgnore(puVar3,0xffffffff8215bc64,0);
     if (iVar1 == 0) {
-      I_strncat(pcVar5,0x230,"\\");
+      I_strncat(puVar3,0x230,0xffffffff8215bc64);
     }
-    I_strncat(pcVar5,0x230,"*");
+    I_strncat(puVar3,0x230,0xffffffff8203893c);
   }
   __restgprlr_29();
   return;
@@ -152,90 +141,86 @@ void RemoteConsoleFindFileData_SetupPatterns(remoteConsoleFindFileData *param_1,
 
 // 827173F8  RemoteConsoleFindFileData_FindFirst  (online/remoteconsole.cpp:470)
 
-int RemoteConsoleFindFileData_FindFirst(remoteConsoleFindFileData *param_1,char *param_2)
+bool RemoteConsoleFindFileData_FindFirst(undefined4 *param_1,ulonglong param_2)
 
 {
-  uint uVar1;
-  void *pvVar2;
+  HANDLE pvVar1;
+  bool bVar2;
   _WIN32_FIND_DATAA _Stack_160;
   
-  if (param_1 == (remoteConsoleFindFileData *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\remoteconsole.cpp",
-                    0x1e0,0,"%s");
-    uVar1 = 0;
+  if (param_1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821b8c00,0x1e0,0,0xffffffff82000f98,0xffffffff821b8c44);
+    bVar2 = false;
   }
   else {
     RemoteConsoleFindFileData_Cancel(param_1);
-    if (param_2 == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\remoteconsole.cpp",
-                      0x1e8,0,"%s");
-      uVar1 = 0;
+    if ((param_2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff821b8c00,0x1e8,0,0xffffffff82000f98,0xffffffff821b8d70);
+      bVar2 = false;
     }
     else {
       RemoteConsoleFindFileData_SetupPatterns(param_1,param_2);
-      pvVar2 = FindFirstFileA(param_1->pattern_adjusted,&_Stack_160);
-      param_1->handle = pvVar2;
-      if (pvVar2 != (void *)0xffffffff) {
-        param_1->opened = 1;
+      pvVar1 = FindFirstFileA((LPCSTR)(param_1 + 0x8e),&_Stack_160);
+      *param_1 = pvVar1;
+      if (pvVar1 != (HANDLE)0xffffffff) {
+        param_1[1] = 1;
         RemoteConsoleFindFileData_PopulateWithLowLevelData(param_1,&_Stack_160);
       }
-      if (param_1->opened == 0) {
+      if (param_1[1] == 0) {
         RemoteConsoleFindFileData_FillWithDefaults(param_1);
       }
-      uVar1 = (uint)(param_1->opened != 0);
+      bVar2 = param_1[1] != 0;
     }
   }
-  return uVar1;
+  return bVar2;
 }
 
 
 // 827174F8  RemoteConsoleFindFileData_FindNext  (online/remoteconsole.cpp:553)
 
-int RemoteConsoleFindFileData_FindNext(remoteConsoleFindFileData *param_1)
+bool RemoteConsoleFindFileData_FindNext(undefined4 *param_1)
 
 {
-  int iVar1;
+  BOOL BVar1;
   _WIN32_FIND_DATAA _Stack_150;
   
-  if (param_1 == (remoteConsoleFindFileData *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\remoteconsole.cpp",
-                    0x234,0,"%s");
+  if (param_1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821b8c00,0x234,0,0xffffffff82000f98,0xffffffff821b8c44);
   }
   else {
-    Com_Memset(param_1->filename,0,0x230);
-    param_1->exists = 0;
-    param_1->file = 0;
-    param_1->dir = 0;
-    param_1->filesize = 0;
-    param_1->flags = 0;
-    if (param_1->opened != 0) {
-      iVar1 = FindNextFileA(param_1->handle,&_Stack_150);
-      if (iVar1 == 0) {
-        RemoteConsoleFindFileData_Cancel(param_1);
-        return 0;
+    Com_Memset(param_1 + 0x11a,0,0x230);
+    param_1[0x1a6] = 0;
+    param_1[0x1a7] = 0;
+    param_1[0x1a8] = 0;
+    *(undefined8 *)(param_1 + 0x1aa) = 0;
+    param_1[0x1ac] = 0;
+    if (param_1[1] != 0) {
+      BVar1 = FindNextFileA((HANDLE)*param_1,&_Stack_150);
+      if (BVar1 == 0) {
+        RemoteConsoleFindFileData_Cancel();
+        return false;
       }
       RemoteConsoleFindFileData_PopulateWithLowLevelData(param_1,&_Stack_150);
-      return (uint)(param_1->opened != 0);
+      return param_1[1] != 0;
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 82715CF0  RemoteConsoleFindFileData_Cancel  (online/remoteconsole.cpp:623)
 
-void RemoteConsoleFindFileData_Cancel(remoteConsoleFindFileData *param_1)
+void RemoteConsoleFindFileData_Cancel(undefined4 *param_1)
 
 {
-  if (param_1 == (remoteConsoleFindFileData *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\remoteconsole.cpp",
-                    0x270,0,"%s");
+  if (param_1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821b8c00,0x270,0,0xffffffff82000f98,0xffffffff821b8c44);
     return;
   }
-  if (param_1->opened != 0) {
-    CloseHandle(param_1->handle);
-    param_1->handle = (void *)0xffffffff;
-    param_1->opened = 0;
+  if (param_1[1] != 0) {
+    CloseHandle((HANDLE)*param_1);
+    *param_1 = 0xffffffff;
+    param_1[1] = 0;
     RemoteConsoleFindFileData_FillWithDefaults(param_1);
   }
   return;
@@ -244,68 +229,63 @@ void RemoteConsoleFindFileData_Cancel(remoteConsoleFindFileData *param_1)
 
 // 82715D88  RemoteConsole_Reset  (online/remoteconsole.cpp:655)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void RemoteConsole_Reset(void)
 
 {
-  s_remoteConsoleManager.controllerindex = 0;
-  s_remoteConsoleManager.timestamp = Sys_Milliseconds();
-  s_remoteConsoleManager.messageid = 0;
-  s_remoteConsoleManager.messagepart = 0;
-  s_remoteConsoleManager.scan_key = 0;
-  s_remoteConsoleManager.scan_start = 0;
-  s_remoteConsoleManager.scan_size = 0;
-  s_remoteConsoleManager.scan_end = 0;
-  s_remoteConsoleManager.memory_text_start = 0;
-  s_remoteConsoleManager.memory_text_size = 0;
-  s_remoteConsoleManager.memory_text_end = 0;
-  if (s_remoteConsoleManager.memoryhashinfo != (MemoryHashInfo *)0x0) {
-    MemoryHashInfo::Cancel(s_remoteConsoleManager.memoryhashinfo);
+  DAT_8458709c = 0;
+  DAT_845870a0 = Sys_Milliseconds();
+  DAT_845870a4 = 0;
+  DAT_845870a8 = 0;
+  DAT_845870b0 = 0;
+  DAT_845870b8 = 0;
+  DAT_845870bc = 0;
+  DAT_845870c0 = 0;
+  DAT_845870c4 = 0;
+  DAT_845870c8 = 0;
+  DAT_845870cc = 0;
+  if (DAT_845870d0 != 0) {
+    MemoryHashInfo__Cancel(DAT_845870d0);
   }
-  s_remoteConsoleManager.memoryhashinfo = (MemoryHashInfo *)0x0;
-  s_remoteConsoleManager.linenumber = 0;
-  s_remoteConsoleManager.filecount = 0;
-  s_remoteConsoleManager.dircount = 0;
-  s_remoteConsoleManager.totalsize = 0;
-  s_remoteConsoleManager.began_outgoing_message = 0;
-  Com_Memset(s_remoteConsoleManager.path,0,0x230);
-  RemoteConsoleFindFileData_Cancel(&s_remoteConsoleManager.remoteconsolefindfiledata);
-  s_remoteConsoleManager.tokencount = 0;
-  Com_Memset(s_remoteConsoleManager.token,0,0x50);
-  Com_Memset(s_remoteConsoleManager.tokenbuffer,0,0x400);
-  Com_Memset(s_remoteConsoleManager.messagestring,0,0x80);
-  s_remoteConsoleManager.remoteconsolecmd = (remoteConsoleCmd *)0x0;
+  DAT_845870d0 = 0;
+  DAT_845870d4 = 0;
+  DAT_845870d8 = 0;
+  DAT_845870dc = 0;
+  DAT_845870e0 = 0;
+  DAT_845870e8 = 0;
+  Com_Memset(0xffffffff845870ec,0,0x230);
+  RemoteConsoleFindFileData_Cancel(0xffffffff84587320);
+  DAT_845879d8 = 0;
+  Com_Memset(0xffffffff845879dc,0,0x50);
+  Com_Memset(0xffffffff84587a2c,0,0x400);
+  Com_Memset(0xffffffff84587e2c,0,0x80);
+  DAT_84587098 = 0;
   return;
 }
 
 
 // 82715E88  RemoteConsole_SetupMemoryScanParams  (online/remoteconsole.cpp:705)
 
-void RemoteConsole_SetupMemoryScanParams(ulong64 param_1,uint param_2,uint param_3,uint param_4)
+void RemoteConsole_SetupMemoryScanParams(undefined8 param_1,uint param_2,int param_3,int param_4)
 
 {
-  s_remoteConsoleManager.scan_end = param_2 + param_3;
-  s_remoteConsoleManager.scan_key = param_1;
-  s_remoteConsoleManager.scan_start = param_2;
-  s_remoteConsoleManager.scan_size = param_3;
-  Sys_GetTextSection(&s_remoteConsoleManager.memory_text_start,
-                     &s_remoteConsoleManager.memory_text_size);
-  s_remoteConsoleManager.memory_text_end =
-       s_remoteConsoleManager.memory_text_size + s_remoteConsoleManager.memory_text_start;
+  DAT_845870c0 = param_2 + param_3;
+  DAT_845870b0 = param_1;
+  DAT_845870b8 = param_2;
+  DAT_845870bc = param_3;
+  Sys_GetTextSection(0xffffffff845870c4,0xffffffff845870c8);
+  DAT_845870cc = DAT_845870c8 + DAT_845870c4;
   if (param_4 == 0) {
-    if (s_remoteConsoleManager.scan_start < s_remoteConsoleManager.memory_text_start) {
-      s_remoteConsoleManager.scan_start = s_remoteConsoleManager.memory_text_start;
+    if (DAT_845870b8 < DAT_845870c4) {
+      DAT_845870b8 = DAT_845870c4;
     }
-    if (s_remoteConsoleManager.memory_text_end < s_remoteConsoleManager.scan_end) {
-      s_remoteConsoleManager.scan_end = s_remoteConsoleManager.memory_text_end;
+    if (DAT_845870cc < DAT_845870c0) {
+      DAT_845870c0 = DAT_845870cc;
     }
-    if (s_remoteConsoleManager.scan_end < s_remoteConsoleManager.scan_start) {
-      s_remoteConsoleManager.scan_size = 0;
+    if (DAT_845870c0 < DAT_845870b8) {
+      DAT_845870bc = 0;
     }
     else {
-      s_remoteConsoleManager.scan_size =
-           s_remoteConsoleManager.scan_end - s_remoteConsoleManager.scan_start;
+      DAT_845870bc = DAT_845870c0 - DAT_845870b8;
     }
   }
   return;
@@ -344,7 +324,8 @@ void RemoteConsole_StringCat(char *param_1,int param_2,char *param_3)
 
 // 82715FB8  RemoteConsole_StringSplitIntoTokens  (online/remoteconsole.cpp:787)
 
-int RemoteConsole_StringSplitIntoTokens(char *param_1,char *param_2,char **param_3,int param_4)
+void RemoteConsole_StringSplitIntoTokens
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,int param_4)
 
 {
   char cVar1;
@@ -353,19 +334,15 @@ int RemoteConsole_StringSplitIntoTokens(char *param_1,char *param_2,char **param
   bool bVar4;
   char *pcVar5;
   int iVar6;
-  undefined4 *puVar8;
-  ulonglong uVar7;
-  char *pcVar10;
-  ulonglong uVar9;
+  undefined4 *puVar7;
+  char *pcVar8;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  pcVar5 = (char *)__savegprlr_19(param_1);
-  puVar8 = (undefined4 *)uVar7;
-  if ((((pcVar5 == (char *)0x0) || ((uVar9 & 0xffffffff) == 0)) || ((uVar7 & 0xffffffff) == 0)) ||
-     (param_4 < 1)) {
-    iVar6 = __restgprlr_19(0);
-    return iVar6;
+  pcVar5 = (char *)__savegprlr_19();
+  puVar7 = (undefined4 *)param_3;
+  if ((((pcVar5 == (char *)0x0) || ((param_2 & 0xffffffff) == 0)) || ((param_3 & 0xffffffff) == 0))
+     || (param_4 < 1)) {
+    __restgprlr_19(0);
+    return;
   }
   bVar2 = false;
   iVar6 = 0;
@@ -373,79 +350,79 @@ int RemoteConsole_StringSplitIntoTokens(char *param_1,char *param_2,char **param
   bVar3 = false;
   if (*pcVar5 != '\0') {
     do {
-      puVar8 = (undefined4 *)uVar7;
+      puVar7 = (undefined4 *)param_3;
       cVar1 = *pcVar5;
-      pcVar10 = (char *)uVar9;
+      pcVar8 = (char *)param_2;
       if (((((cVar1 != '\t') && (cVar1 != '\n')) &&
            ((cVar1 != '\v' && ((cVar1 != '\f' && (cVar1 != '\r')))))) && (cVar1 != ' ')) ||
          ((bVar2 || (bVar3)))) {
         if (!bVar4) {
           if (param_4 + -1 <= iVar6) goto LAB_8271623c;
-          *puVar8 = pcVar10;
-          uVar7 = uVar7 + 4;
+          *puVar7 = pcVar8;
+          param_3 = param_3 + 4;
           iVar6 = iVar6 + 1;
           bVar4 = true;
         }
         if (bVar3) {
           cVar1 = *pcVar5;
           if (cVar1 == '0') {
-            *pcVar10 = '\0';
+            *pcVar8 = '\0';
             bVar3 = false;
           }
           else if (cVar1 == '1') {
-            *pcVar10 = '\x01';
+            *pcVar8 = '\x01';
             bVar3 = false;
           }
           else if (cVar1 == '2') {
-            *pcVar10 = '\x02';
+            *pcVar8 = '\x02';
             bVar3 = false;
           }
           else if (cVar1 == '3') {
-            *pcVar10 = '\x03';
+            *pcVar8 = '\x03';
             bVar3 = false;
           }
           else if (cVar1 == '4') {
-            *pcVar10 = '\x04';
+            *pcVar8 = '\x04';
             bVar3 = false;
           }
           else if (cVar1 == '5') {
-            *pcVar10 = '\x05';
+            *pcVar8 = '\x05';
             bVar3 = false;
           }
           else if (cVar1 == '6') {
-            *pcVar10 = '\x06';
+            *pcVar8 = '\x06';
             bVar3 = false;
           }
           else if (cVar1 == '7') {
-            *pcVar10 = '\a';
+            *pcVar8 = '\a';
             bVar3 = false;
           }
           else if (cVar1 == '8') {
-            *pcVar10 = '\b';
+            *pcVar8 = '\b';
             bVar3 = false;
           }
           else if (cVar1 == '9') {
-            *pcVar10 = '\t';
+            *pcVar8 = '\t';
             bVar3 = false;
           }
           else if (cVar1 == 'n') {
-            *pcVar10 = '\n';
+            *pcVar8 = '\n';
             bVar3 = false;
           }
           else if (cVar1 == 'r') {
-            *pcVar10 = '\r';
+            *pcVar8 = '\r';
             bVar3 = false;
           }
           else if (cVar1 == 'b') {
-            *pcVar10 = '\b';
+            *pcVar8 = '\b';
             bVar3 = false;
           }
           else if (cVar1 == 't') {
-            *pcVar10 = '\t';
+            *pcVar8 = '\t';
             bVar3 = false;
           }
           else {
-            *pcVar10 = cVar1;
+            *pcVar8 = cVar1;
             bVar3 = false;
           }
           goto LAB_82716220;
@@ -456,7 +433,7 @@ int RemoteConsole_StringSplitIntoTokens(char *param_1,char *param_2,char **param
         }
         else {
           if (cVar1 != '\\') {
-            *pcVar10 = cVar1;
+            *pcVar8 = cVar1;
             goto LAB_82716220;
           }
           bVar3 = true;
@@ -464,37 +441,37 @@ int RemoteConsole_StringSplitIntoTokens(char *param_1,char *param_2,char **param
       }
       else {
         if (!bVar4) goto LAB_82716224;
-        *pcVar10 = '\0';
+        *pcVar8 = '\0';
         bVar4 = false;
 LAB_82716220:
-        uVar9 = uVar9 + 1;
+        param_2 = param_2 + 1;
       }
 LAB_82716224:
-      puVar8 = (undefined4 *)uVar7;
+      puVar7 = (undefined4 *)param_3;
       pcVar5 = pcVar5 + 1;
     } while (*pcVar5 != '\0');
     if (bVar4) {
-      *(undefined1 *)uVar9 = 0;
+      *(undefined1 *)param_2 = 0;
     }
   }
 LAB_8271623c:
-  *puVar8 = 0;
-  iVar6 = __restgprlr_19();
-  return iVar6;
+  *puVar7 = 0;
+  __restgprlr_19();
+  return;
 }
 
 
 // 82716248  RemoteConsole_StringBeginIgnore  (online/remoteconsole.cpp:971)
 
-int RemoteConsole_StringBeginIgnore(char *param_1,char *param_2,char **param_3)
+undefined8 RemoteConsole_StringBeginIgnore(char *param_1,char *param_2,int *param_3)
 
 {
   char cVar1;
   int iVar2;
   int iVar3;
   
-  if (param_3 != (char **)0x0) {
-    *param_3 = param_1;
+  if (param_3 != (int *)0x0) {
+    *param_3 = (int)param_1;
   }
   if ((param_1 != (char *)0x0) && (param_2 != (char *)0x0)) {
     iVar3 = (int)*param_1;
@@ -516,8 +493,8 @@ int RemoteConsole_StringBeginIgnore(char *param_1,char *param_2,char **param_3)
       } while (iVar3 != 0);
     }
     if (*param_2 == '\0') {
-      if (param_3 != (char **)0x0) {
-        *param_3 = param_1;
+      if (param_3 != (int *)0x0) {
+        *param_3 = (int)param_1;
       }
       return 1;
     }
@@ -528,62 +505,60 @@ int RemoteConsole_StringBeginIgnore(char *param_1,char *param_2,char **param_3)
 
 // 827162F0  RemoteConsole_StringEndIgnore  (online/remoteconsole.cpp:1014)
 
-int RemoteConsole_StringEndIgnore(char *param_1,char *param_2,char **param_3)
+undefined8 RemoteConsole_StringEndIgnore(char *param_1,char *param_2,undefined4 *param_3)
 
 {
   char *pcVar1;
   char *pcVar2;
-  char *pcVar3;
-  char *pcVar4;
-  char cVar5;
-  char cVar6;
+  char cVar3;
+  char cVar4;
   
-  pcVar3 = param_1;
+  pcVar1 = param_1;
   do {
-    cVar5 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
-  } while (cVar5 != '\0');
-  pcVar3 = pcVar3 + (-1 - (int)param_1);
-  if (pcVar3 == (char *)0x0) {
+    cVar3 = *pcVar1;
+    pcVar1 = pcVar1 + 1;
+  } while (cVar3 != '\0');
+  pcVar1 = pcVar1 + (-1 - (int)param_1);
+  if (pcVar1 == (char *)0x0) {
     return 0;
   }
-  pcVar1 = param_1 + (int)(pcVar3 + -1);
-  pcVar4 = param_2;
-  if (param_3 != (char **)0x0) {
-    *param_3 = pcVar1;
+  param_1 = param_1 + (int)(pcVar1 + -1);
+  pcVar2 = param_2;
+  if (param_3 != (undefined4 *)0x0) {
+    *param_3 = param_1;
   }
   do {
-    cVar5 = *pcVar4;
-    pcVar4 = pcVar4 + 1;
-  } while (cVar5 != '\0');
-  pcVar4 = pcVar4 + (-1 - (int)param_2);
-  if (pcVar4 != (char *)0x0) {
-    pcVar2 = param_2 + (int)pcVar4;
-    if (0 < (int)pcVar3) {
+    cVar3 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
+  } while (cVar3 != '\0');
+  pcVar2 = pcVar2 + (-1 - (int)param_2);
+  if (pcVar2 != (char *)0x0) {
+    param_2 = param_2 + (int)pcVar2;
+    if (0 < (int)pcVar1) {
       do {
-        pcVar2 = pcVar2 + -1;
-        if ((int)pcVar4 < 1) break;
-        cVar5 = *pcVar1;
-        if (('`' < cVar5) && (cVar5 < '{')) {
-          cVar5 = cVar5 + -0x20;
+        param_2 = param_2 + -1;
+        if ((int)pcVar2 < 1) break;
+        cVar3 = *param_1;
+        if (('`' < cVar3) && (cVar3 < '{')) {
+          cVar3 = cVar3 + -0x20;
         }
-        cVar6 = *pcVar2;
-        if (('`' < cVar6) && (cVar6 < '{')) {
-          cVar6 = cVar6 + -0x20;
+        cVar4 = *param_2;
+        if (('`' < cVar4) && (cVar4 < '{')) {
+          cVar4 = cVar4 + -0x20;
         }
-        if (cVar5 != cVar6) {
+        if (cVar3 != cVar4) {
           return 0;
         }
+        param_1 = param_1 + -1;
+        pcVar2 = pcVar2 + -1;
         pcVar1 = pcVar1 + -1;
-        pcVar4 = pcVar4 + -1;
-        pcVar3 = pcVar3 + -1;
-      } while (pcVar3 != (char *)0x0);
+      } while (pcVar1 != (char *)0x0);
     }
-    if (pcVar4 != (char *)0x0) {
+    if (pcVar2 != (char *)0x0) {
       return 0;
     }
-    if (param_3 != (char **)0x0) {
-      *param_3 = pcVar1 + 1;
+    if (param_3 != (undefined4 *)0x0) {
+      *param_3 = param_1 + 1;
     }
   }
   return 1;
@@ -642,28 +617,23 @@ joined_r0x82716414:
 
 // 82716498  RemoteConsole_ConvertToLowLevelFullPath  (online/remoteconsole.cpp:1107)
 
-void RemoteConsole_ConvertToLowLevelFullPath(char *param_1,char *param_2,int param_3)
+void RemoteConsole_ConvertToLowLevelFullPath
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-  char *pcVar1;
+  ulonglong uVar1;
   int iVar2;
-  ulonglong uVar3;
-  char *pcVar4;
-  char *pcVar5;
+  undefined8 uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (((uVar3 & 0xffffffff) != 0) && (0 < param_3)) {
-    pcVar4 = (char *)uVar3;
-    *pcVar4 = '\0';
-    if (pcVar1 != (char *)0x0) {
-      pcVar5 = "";
-      iVar2 = RemoteConsole_StringBeginIgnore(pcVar1,"",(char **)0x0);
-      if (iVar2 == 0) {
-        I_strncat(pcVar4,param_3,pcVar5);
-      }
-      I_strncat(pcVar4,param_3,pcVar1);
+  uVar1 = __savegprlr_29();
+  if ((((param_2 & 0xffffffff) != 0) && (0 < (int)param_3)) &&
+     (*(undefined1 *)param_2 = 0, (uVar1 & 0xffffffff) != 0)) {
+    uVar3 = 0xffffffff820068af;
+    iVar2 = RemoteConsole_StringBeginIgnore(uVar1,0xffffffff820068af,0);
+    if (iVar2 == 0) {
+      I_strncat(param_2,param_3,uVar3);
     }
+    I_strncat(param_2,param_3,uVar1);
   }
   __restgprlr_29();
   return;
@@ -672,628 +642,591 @@ void RemoteConsole_ConvertToLowLevelFullPath(char *param_1,char *param_2,int par
 
 // 82716518  RemoteConsole_FindCmdByName  (online/remoteconsole.cpp:1132)
 
-remoteConsoleCmd * RemoteConsole_FindCmdByName(char *param_1)
+void RemoteConsole_FindCmdByName(void)
 
 {
-  char *pcVar1;
-  remoteConsoleCmd *prVar2;
-  int iVar3;
-  uint uVar4;
+  ulonglong uVar1;
+  int iVar2;
+  uint uVar3;
+  undefined **ppuVar4;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\remoteconsole.cpp",
-                    0x470,0,"%s");
-    prVar2 = (remoteConsoleCmd *)__restgprlr_29(0);
-    return prVar2;
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821b8c00,0x470,0,0xffffffff82000f98,0xffffffff821b8c64);
+    __restgprlr_29(0);
+    return;
   }
-  uVar4 = 0;
-  prVar2 = s_remoteConsoleCmdList;
+  uVar3 = 0;
+  ppuVar4 = &PTR_DAT_82999b60;
   do {
-    iVar3 = I_stricmp(prVar2->cmd,pcVar1);
-    if (iVar3 == 0) {
-      prVar2 = (remoteConsoleCmd *)__restgprlr_29(prVar2);
-      return prVar2;
+    iVar2 = I_stricmp(*ppuVar4,uVar1);
+    if (iVar2 == 0) {
+      __restgprlr_29(ppuVar4);
+      return;
     }
-    uVar4 = uVar4 + 1;
-    prVar2 = prVar2 + 1;
-  } while (uVar4 < 0xd);
-  prVar2 = (remoteConsoleCmd *)__restgprlr_29(0);
-  return prVar2;
+    uVar3 = uVar3 + 1;
+    ppuVar4 = ppuVar4 + 4;
+  } while (uVar3 < 0xd);
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 827165A8  RemoteConsole_BeginOutgoingMessage  (online/remoteconsole.cpp:1161)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void RemoteConsole_BeginOutgoingMessage(void)
 
 {
-  char *pcVar1;
-  
   dwMail_ReplyBufferReset();
-  pcVar1 = va("RCR:%d:%d\n");
-  dwMail_ReplyBufferWriteString(pcVar1);
+  va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+  dwMail_ReplyBufferWriteString();
   return;
 }
 
 
 // 827165E8  RemoteConsole_InspectReturnCode  (online/remoteconsole.cpp:1173)
 
-void RemoteConsole_InspectReturnCode(dwMailHandlerReturnCode_t param_1)
+void RemoteConsole_InspectReturnCode(int param_1)
 
 {
-  if (param_1 != DWMAILHANDLERRETURNCODE_PROCESSING) {
-    if (param_1 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_CONTINUE) goto LAB_82716618;
+  if (param_1 != 1) {
+    if (param_1 == 3) goto LAB_82716618;
     RemoteConsole_Reset();
   }
-  if (param_1 != DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_CONTINUE) {
+  if (param_1 != 3) {
     return;
   }
 LAB_82716618:
-  s_remoteConsoleManager.messagepart = s_remoteConsoleManager.messagepart + 1;
+  DAT_845870a8 = DAT_845870a8 + 1;
   return;
 }
 
 
 // 82716640  RemoteConsole_EchoInit  (online/remoteconsole.cpp:1192)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dwMailHandlerReturnCode_t RemoteConsole_EchoInit(void)
+undefined8 RemoteConsole_EchoInit(void)
 
 {
-  char *pcVar1;
-  
   dwMail_ReplyBufferReset();
-  pcVar1 = va("RCR:%d:%d\n");
-  dwMail_ReplyBufferWriteString(pcVar1);
-  pcVar1 = va("Echo: \"%s\"");
-  dwMail_ReplyBufferWriteString(pcVar1);
-  return DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
+  va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+  dwMail_ReplyBufferWriteString();
+  va(0xffffffff821b8c78,0xffffffff84587e2c);
+  dwMail_ReplyBufferWriteString();
+  return 4;
 }
 
 
 // 827166A0  RemoteConsole_IdentInit  (online/remoteconsole.cpp:1222)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dwMailHandlerReturnCode_t RemoteConsole_IdentInit(void)
+void RemoteConsole_IdentInit(void)
 
 {
-  char *pcVar1;
-  dwMailHandlerReturnCode_t dVar2;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
   
   __savegprlr_29();
   dwMail_ReplyBufferReset();
-  pcVar1 = va("RCR:%d:%d\n");
-  dwMail_ReplyBufferWriteString(pcVar1);
+  va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+  dwMail_ReplyBufferWriteString();
   GetProtocolVersion();
-  getBuildNumber();
-  Live_GetLocalClientName(s_remoteConsoleManager.controllerindex);
-  Live_GetLocalClientXuidString(s_remoteConsoleManager.controllerindex);
-  pcVar1 = va("%s,\"%s\"\n%s\n%s,%s,%s\n%d,%d,%s,%s");
-  dwMail_ReplyBufferWriteString(pcVar1);
-  dVar2 = __restgprlr_29(4);
-  return dVar2;
+  uVar1 = getBuildNumber();
+  uVar2 = Live_GetLocalClientName(DAT_8458709c);
+  uVar3 = Live_GetLocalClientXuidString(DAT_8458709c);
+  va(0xffffffff821b8c8c,uVar3,uVar2,uVar1,0xffffffff8202e2b8,0xffffffff8202e2c4,0xffffffff8202e194,
+     0x51);
+  dwMail_ReplyBufferWriteString();
+  __restgprlr_29(4);
+  return;
 }
 
 
 // 82716760  RemoteConsole_TextInit  (online/remoteconsole.cpp:1247)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dwMailHandlerReturnCode_t RemoteConsole_TextInit(void)
+undefined8 RemoteConsole_TextInit(void)
 
 {
-  char *pcVar1;
-  uint local_10;
-  uint local_c [3];
+  undefined4 local_10;
+  undefined4 local_c [3];
   
   Sys_GetTextSection(local_c,&local_10);
   dwMail_ReplyBufferReset();
-  pcVar1 = va("RCR:%d:%d\n");
-  dwMail_ReplyBufferWriteString(pcVar1);
-  pcVar1 = va("%08x %08x\n");
-  dwMail_ReplyBufferWriteString(pcVar1);
-  return DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
+  va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+  dwMail_ReplyBufferWriteString();
+  va(0xffffffff821b8cac,local_c[0],local_10);
+  dwMail_ReplyBufferWriteString();
+  return 4;
 }
 
 
 // 827167C8  RemoteConsole_DVarInit  (online/remoteconsole.cpp:1268)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dwMailHandlerReturnCode_t RemoteConsole_DVarInit(void)
+undefined8 RemoteConsole_DVarInit(void)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   
   dwMail_ReplyBufferReset();
-  pcVar1 = va("RCR:%d:%d\n");
-  dwMail_ReplyBufferWriteString(pcVar1);
-  if (s_remoteConsoleManager.tokencount < 3) {
-    pcVar1 = "???";
+  va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+  dwMail_ReplyBufferWriteString();
+  if (DAT_845879d8 < 3) {
+    uVar1 = 0xffffffff821b5108;
   }
   else {
-    Dvar_GetVariantString(s_remoteConsoleManager.token[2]);
-    pcVar1 = va("\"%s\"\n");
+    uVar1 = Dvar_GetVariantString(DAT_845879e4);
+    uVar1 = va(0xffffffff82178520,uVar1);
   }
-  dwMail_ReplyBufferWriteString(pcVar1);
-  return DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
+  dwMail_ReplyBufferWriteString(uVar1);
+  return 4;
 }
 
 
 // 82716848  RemoteConsole_PeekInit  (online/remoteconsole.cpp:1291)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dwMailHandlerReturnCode_t RemoteConsole_PeekInit(void)
+undefined8 RemoteConsole_PeekInit(void)
 
 {
-  char *pcVar1;
-  dwMailHandlerReturnCode_t dVar2;
+  int iVar1;
   uint local_30;
-  uint local_28;
+  int local_2c;
+  undefined4 local_28 [4];
   
-  if (s_remoteConsoleManager.tokencount < 4) {
+  if (DAT_845879d8 < 4) {
     dwMail_ReplyBufferReset();
-    pcVar1 = va("RCR:%d:%d\n");
-    dwMail_ReplyBufferWriteString(pcVar1);
-    dwMail_ReplyBufferWriteString("???");
-    dVar2 = DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
+    va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+    dwMail_ReplyBufferWriteString();
+    dwMail_ReplyBufferWriteString(0xffffffff821b5108);
+    return 4;
   }
-  else {
-    sscanf(s_remoteConsoleManager.token[2],"%i");
-    sscanf(s_remoteConsoleManager.token[3],"%i");
-    if (4 < s_remoteConsoleManager.tokencount) {
-      sscanf(s_remoteConsoleManager.token[4],"%i");
-    }
-    if (local_30 < 0x1001) {
-      RemoteConsole_SetupMemoryScanParams(0,local_28,local_30,0);
-      dVar2 = DWMAILHANDLERRETURNCODE_PROCESSING;
-    }
-    else {
-      dwMail_ReplyBufferReset();
-      pcVar1 = va("RCR:%d:%d\n");
-      dwMail_ReplyBufferWriteString(pcVar1);
-      pcVar1 = va("%d too big");
-      dwMail_ReplyBufferWriteString(pcVar1);
-      dVar2 = DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
-    }
+  sscanf(DAT_845879e4,"%i",local_28);
+  iVar1 = sscanf(DAT_845879e8,"%i",&local_30);
+  local_2c = 0;
+  if (((DAT_845879d8 < 5) || (iVar1 = sscanf(DAT_845879ec,"%i",&local_2c), local_2c == 0)) &&
+     (0x1000 < local_30)) {
+    dwMail_ReplyBufferReset(iVar1);
+    va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+    dwMail_ReplyBufferWriteString();
+    va(0xffffffff821b8cb8,local_30);
+    dwMail_ReplyBufferWriteString();
+    return 4;
   }
-  return dVar2;
+  RemoteConsole_SetupMemoryScanParams(0,local_28[0],local_30);
+  return 1;
 }
 
 
 // 82716968  RemoteConsole_PeekPump  (online/remoteconsole.cpp:1337)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dwMailHandlerReturnCode_t RemoteConsole_PeekPump(void)
+void RemoteConsole_PeekPump(void)
 
 {
-  bool bVar1;
+  uint uVar1;
   bool bVar2;
-  char *pcVar3;
+  bool bVar3;
   int iVar4;
-  dwMailHandlerReturnCode_t dVar5;
+  uint uVar5;
+  undefined1 *puVar6;
   
   __savegprlr_23();
-  bVar1 = false;
+  uVar1 = DAT_845870b8;
   bVar2 = false;
+  bVar3 = false;
   iVar4 = 0;
   dwMail_ReplyBufferReset();
-  if (s_remoteConsoleManager.scan_start < s_remoteConsoleManager.scan_end) {
+  if (DAT_845870b8 < DAT_845870c0) {
+    puVar6 = (undefined1 *)(uVar1 - 1);
     do {
-      if (!bVar1) {
-        bVar1 = true;
-        dwMail_ReplyBufferReset();
-        pcVar3 = va("RCR:%d:%d\n");
-        dwMail_ReplyBufferWriteString(pcVar3);
-      }
       if (!bVar2) {
         bVar2 = true;
-        pcVar3 = va("$%8.8x : ");
-        dwMail_ReplyBufferWriteString(pcVar3);
+        dwMail_ReplyBufferReset();
+        va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+        dwMail_ReplyBufferWriteString();
       }
-      pcVar3 = va("%2.2x ");
-      dwMail_ReplyBufferWriteString(pcVar3);
+      if (!bVar3) {
+        bVar3 = true;
+        va(0xffffffff821b8ccc,DAT_845870b8);
+        dwMail_ReplyBufferWriteString();
+      }
+      puVar6 = puVar6 + 1;
+      va(0xffffffff821b8cd8,*puVar6);
+      dwMail_ReplyBufferWriteString();
       iVar4 = iVar4 + 1;
-      s_remoteConsoleManager.scan_start = s_remoteConsoleManager.scan_start + 1;
-      if (s_remoteConsoleManager.scan_end <= s_remoteConsoleManager.scan_start) break;
+      uVar5 = DAT_845870b8 + 1;
+      uVar1 = DAT_845870b8 + 1;
+      DAT_845870b8 = uVar5;
+      if (DAT_845870c0 <= uVar1) break;
       if (7 < iVar4) {
         iVar4 = dwMail_ReplyBufferGetNumBytesWritten();
         if (0x380 < iVar4) {
-          dVar5 = __restgprlr_23(3);
-          return dVar5;
+          __restgprlr_23(3);
+          return;
         }
         iVar4 = 0;
-        dwMail_ReplyBufferWriteString("\n");
-        bVar2 = false;
+        dwMail_ReplyBufferWriteString(0xffffffff820044d8);
+        bVar3 = false;
       }
-    } while (s_remoteConsoleManager.scan_start < s_remoteConsoleManager.scan_end);
+    } while (DAT_845870b8 < DAT_845870c0);
   }
   iVar4 = dwMail_ReplyBufferGetNumBytesWritten();
   if (iVar4 < 1) {
-    if ((bVar1) || (s_remoteConsoleManager.messagepart != 0)) {
-      dVar5 = __restgprlr_23(2);
-      return dVar5;
+    if ((bVar2) || (DAT_845870a8 != 0)) {
+      __restgprlr_23(2);
+      return;
     }
     dwMail_ReplyBufferReset();
-    pcVar3 = va("RCR:%d:%d\n");
-    dwMail_ReplyBufferWriteString(pcVar3);
-    dwMail_ReplyBufferWriteString("NADA");
+    va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+    dwMail_ReplyBufferWriteString();
+    dwMail_ReplyBufferWriteString(0xffffffff821b8cc4);
   }
-  dVar5 = __restgprlr_23(4);
-  return dVar5;
+  __restgprlr_23(4);
+  return;
 }
 
 
 // 82716AD0  RemoteConsole_HashInit  (online/remoteconsole.cpp:1406)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dwMailHandlerReturnCode_t RemoteConsole_HashInit(void)
+undefined8 RemoteConsole_HashInit(void)
 
 {
   bool bVar1;
-  char *pcVar2;
+  ulonglong uVar2;
   int iVar3;
   ulonglong uVar4;
-  uint local_2c;
-  uint local_28;
-  uint local_24;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  undefined4 local_24 [3];
   
-  if (s_remoteConsoleManager.tokencount < 5) {
+  if (DAT_845879d8 < 5) {
     dwMail_ReplyBufferReset();
-    pcVar2 = va("RCR:%d:%d\n");
-    dwMail_ReplyBufferWriteString(pcVar2);
-    dwMail_ReplyBufferWriteString("???");
+    va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+    dwMail_ReplyBufferWriteString();
+    dwMail_ReplyBufferWriteString(0xffffffff821b5108);
   }
   else {
-    sscanf(s_remoteConsoleManager.token[2],"%i");
-    sscanf(s_remoteConsoleManager.token[3],"%i");
-    sscanf(s_remoteConsoleManager.token[4],"%i");
-    if (5 < s_remoteConsoleManager.tokencount) {
-      sscanf(s_remoteConsoleManager.token[5],"%i");
+    sscanf(DAT_845879e4,"%i",&local_2c);
+    sscanf(DAT_845879e8,"%i",local_24);
+    sscanf(DAT_845879ec,"%i",&local_28);
+    local_30 = 0;
+    if (5 < DAT_845879d8) {
+      sscanf(DAT_845879f0,"%i",&local_30);
     }
-    RemoteConsole_SetupMemoryScanParams((ulonglong)local_2c,local_24,local_28,0);
-    s_remoteConsoleManager.memoryhashinfo = MemoryHashInfo::RequestHash();
-    if (s_remoteConsoleManager.memoryhashinfo != (MemoryHashInfo *)0x0) {
-      uVar4 = (ulonglong)(s_remoteConsoleManager.remoteconsolecmd)->remoteconsoleparam - 2;
+    RemoteConsole_SetupMemoryScanParams(local_2c,local_24[0],local_28,local_30);
+    uVar2 = MemoryHashInfo__RequestHash();
+    DAT_845870d0 = (undefined4)uVar2;
+    if ((uVar2 & 0xffffffff) != 0) {
+      uVar4 = (ulonglong)*(uint *)(DAT_84587098 + 0xc) - 2;
       if ((uVar4 & 0xffffffff) < 4) {
         bVar1 = (int)uVar4 != 0;
-        if ((ulonglong)(s_remoteConsoleManager.remoteconsolecmd)->remoteconsoleparam == 3 && bVar1)
-        {
-          iVar3 = MemoryHashInfo::OpenAsSHATomCrypt
-                            (s_remoteConsoleManager.memoryhashinfo,s_remoteConsoleManager.scan_start
-                             ,s_remoteConsoleManager.scan_size,s_remoteConsoleManager.scan_key);
+        if ((ulonglong)*(uint *)(DAT_84587098 + 0xc) == 3 && bVar1) {
+          iVar3 = MemoryHashInfo__OpenAsSHATomCrypt(uVar2,DAT_845870b8,DAT_845870bc,DAT_845870b0);
         }
         else if (uVar4 == 2 && bVar1) {
-          iVar3 = MemoryHashInfo::OpenAs8WayProbe
-                            (s_remoteConsoleManager.memoryhashinfo,s_remoteConsoleManager.scan_start
-                             ,s_remoteConsoleManager.scan_size,s_remoteConsoleManager.scan_key);
+          iVar3 = MemoryHashInfo__OpenAs8WayProbe(uVar2,DAT_845870b8,DAT_845870bc,DAT_845870b0);
         }
         else if (bVar1) {
-          iVar3 = MemoryHashInfo::OpenAsCRC32Split
-                            (s_remoteConsoleManager.memoryhashinfo,s_remoteConsoleManager.scan_start
-                             ,s_remoteConsoleManager.scan_size,s_remoteConsoleManager.scan_key);
+          iVar3 = MemoryHashInfo__OpenAsCRC32Split(uVar2,DAT_845870b8,DAT_845870bc,DAT_845870b0);
         }
         else {
-          iVar3 = MemoryHashInfo::OpenAsMD4
-                            (s_remoteConsoleManager.memoryhashinfo,s_remoteConsoleManager.scan_start
-                             ,s_remoteConsoleManager.scan_size,s_remoteConsoleManager.scan_key);
+          iVar3 = MemoryHashInfo__OpenAsMD4(uVar2,DAT_845870b8,DAT_845870bc,DAT_845870b0);
         }
       }
       else {
-        iVar3 = MemoryHashInfo::OpenAsCRC32
-                          (s_remoteConsoleManager.memoryhashinfo,s_remoteConsoleManager.scan_start,
-                           s_remoteConsoleManager.scan_size,s_remoteConsoleManager.scan_key);
+        iVar3 = MemoryHashInfo__OpenAsCRC32(uVar2,DAT_845870b8,DAT_845870bc,DAT_845870b0);
       }
       if (iVar3 != 0) {
-        return DWMAILHANDLERRETURNCODE_PROCESSING;
+        return 1;
       }
     }
     dwMail_ReplyBufferReset();
-    pcVar2 = va("RCR:%d:%d\n");
-    dwMail_ReplyBufferWriteString(pcVar2);
-    dwMail_ReplyBufferWriteString("Err");
+    va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+    dwMail_ReplyBufferWriteString();
+    dwMail_ReplyBufferWriteString(0xffffffff821b8ce0);
   }
-  return DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
+  return 4;
 }
 
 
 // 82716C88  RemoteConsole_HashPump  (online/remoteconsole.cpp:1514)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dwMailHandlerReturnCode_t RemoteConsole_HashPump(void)
+undefined8 RemoteConsole_HashPump(void)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
-  ulong64 local_20 [2];
+  undefined8 local_20 [2];
   
-  if (s_remoteConsoleManager.memoryhashinfo == (MemoryHashInfo *)0x0) {
+  if (DAT_845870d0 == 0) {
     dwMail_ReplyBufferReset();
-    pcVar1 = va("RCR:%d:%d\n");
-    dwMail_ReplyBufferWriteString(pcVar1);
-    pcVar1 = "Err";
+    va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+    dwMail_ReplyBufferWriteString();
+    uVar1 = 0xffffffff821b8ce0;
   }
   else {
-    iVar2 = MemoryHashInfo::Continue(s_remoteConsoleManager.memoryhashinfo);
+    iVar2 = MemoryHashInfo__Continue();
     if (iVar2 == 0) {
-      return DWMAILHANDLERRETURNCODE_PROCESSING;
+      return 1;
     }
-    MemoryHashInfo::Complete(s_remoteConsoleManager.memoryhashinfo,local_20);
-    s_remoteConsoleManager.memoryhashinfo = (MemoryHashInfo *)0x0;
+    MemoryHashInfo__Complete(DAT_845870d0,local_20);
+    DAT_845870d0 = 0;
     dwMail_ReplyBufferReset();
-    pcVar1 = va("RCR:%d:%d\n");
-    dwMail_ReplyBufferWriteString(pcVar1);
-    pcVar1 = va("$%16.16lx (%lld) ");
+    va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+    dwMail_ReplyBufferWriteString();
+    uVar1 = va(0xffffffff821b8ce4,local_20[0]);
   }
-  dwMail_ReplyBufferWriteString(pcVar1);
-  return DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
+  dwMail_ReplyBufferWriteString(uVar1);
+  return 4;
 }
 
 
 // 82716D58  RemoteConsole_ProcAddrInit  (online/remoteconsole.cpp:1547)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dwMailHandlerReturnCode_t RemoteConsole_ProcAddrInit(void)
+undefined8 RemoteConsole_ProcAddrInit(void)
 
 {
-  char *pcVar1;
-  char *pcVar2;
-  HINSTANCE__ *pHVar3;
+  LPCSTR lpModuleName;
+  undefined8 uVar1;
+  LPCSTR lpProcName;
+  HMODULE hModule;
+  FARPROC pFVar2;
   
   dwMail_ReplyBufferReset();
-  pcVar1 = va("RCR:%d:%d\n");
-  dwMail_ReplyBufferWriteString(pcVar1);
-  pcVar1 = s_remoteConsoleManager.token[2];
-  if (s_remoteConsoleManager.tokencount < 4) {
-    pcVar1 = "???";
+  va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+  dwMail_ReplyBufferWriteString();
+  lpModuleName = DAT_845879e4;
+  if (DAT_845879d8 < 4) {
+    uVar1 = 0xffffffff821b5108;
   }
   else {
-    pcVar2 = (char *)atol(s_remoteConsoleManager.token[3]);
-    pHVar3 = GetModuleHandleA(pcVar1);
-    if (pHVar3 == (HINSTANCE__ *)0x0) {
-      pcVar1 = va("Can\'t find: %s");
+    lpProcName = (LPCSTR)atol(DAT_845879e8);
+    hModule = GetModuleHandleA(lpModuleName);
+    if (hModule == (HMODULE)0x0) {
+      uVar1 = va(0xffffffff821b8d04,lpModuleName);
     }
     else {
-      GetProcAddress(pHVar3,pcVar2);
-      pcVar1 = va("%s,%d: %08x");
+      pFVar2 = GetProcAddress(hModule,lpProcName);
+      uVar1 = va(0xffffffff821b8cf8,lpModuleName,lpProcName,pFVar2);
     }
   }
-  dwMail_ReplyBufferWriteString(pcVar1);
-  return DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
+  dwMail_ReplyBufferWriteString(uVar1);
+  return 4;
 }
 
 
 // 82716E20  RemoteConsole_SectionInit  (online/remoteconsole.cpp:1593)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dwMailHandlerReturnCode_t RemoteConsole_SectionInit(void)
+undefined8 RemoteConsole_SectionInit(void)
 
 {
-  char *pcVar1;
-  HINSTANCE__ *pHVar2;
-  int iVar3;
-  ulong local_20;
-  void *local_1c;
+  LPCSTR pCVar1;
+  undefined4 uVar2;
+  undefined8 uVar3;
+  HMODULE pHVar4;
+  int iVar5;
+  undefined4 local_20;
+  undefined4 local_1c;
   
   dwMail_ReplyBufferReset();
-  pcVar1 = va("RCR:%d:%d\n");
-  dwMail_ReplyBufferWriteString(pcVar1);
-  pcVar1 = s_remoteConsoleManager.token[3];
-  if (s_remoteConsoleManager.tokencount < 4) {
-    pcVar1 = "???";
+  va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+  dwMail_ReplyBufferWriteString();
+  uVar2 = DAT_845879e8;
+  pCVar1 = DAT_845879e4;
+  if (DAT_845879d8 < 4) {
+    uVar3 = 0xffffffff821b5108;
   }
   else {
-    pHVar2 = GetModuleHandleA(s_remoteConsoleManager.token[2]);
-    if (pHVar2 == (HINSTANCE__ *)0x0) {
-      pcVar1 = va("Can\'t find: %s");
+    pHVar4 = GetModuleHandleA(DAT_845879e4);
+    if (pHVar4 == (HMODULE)0x0) {
+      uVar3 = va(0xffffffff821b8d04,pCVar1);
     }
     else {
-      iVar3 = XGetModuleSection(pHVar2,pcVar1,&local_1c,&local_20);
-      if (iVar3 == 0) {
-        pcVar1 = va("Can\'t find: %s");
+      iVar5 = XGetModuleSection(pHVar4,uVar2,&local_1c,&local_20);
+      if (iVar5 == 0) {
+        uVar3 = va(0xffffffff821b8d04,uVar2);
       }
       else {
-        pcVar1 = va("%s,%s: %08x %08x");
+        uVar3 = va(0xffffffff821b8d14,pCVar1,uVar2,local_1c,local_20);
       }
     }
   }
-  dwMail_ReplyBufferWriteString(pcVar1);
-  return DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
+  dwMail_ReplyBufferWriteString(uVar3);
+  return 4;
 }
 
 
 // 827175E0  RemoteConsole_DirInit  (online/remoteconsole.cpp:1643)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dwMailHandlerReturnCode_t RemoteConsole_DirInit(void)
+undefined8 RemoteConsole_DirInit(void)
 
 {
-  char *pcVar1;
-  dwMailHandlerReturnCode_t dVar2;
-  char *pcVar3;
-  int iVar4;
+  undefined8 uVar1;
+  int iVar2;
+  ulonglong uVar3;
   
   dwMail_ReplyBufferReset();
-  pcVar1 = va("RCR:%d:%d\n");
-  dwMail_ReplyBufferWriteString(pcVar1);
-  if (s_remoteConsoleManager.tokencount < 2) {
-    dwMail_ReplyBufferWriteString("???");
-    dVar2 = DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
+  va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+  dwMail_ReplyBufferWriteString();
+  if (DAT_845879d8 < 2) {
+    dwMail_ReplyBufferWriteString(0xffffffff821b5108);
+    uVar1 = 4;
   }
   else {
-    pcVar1 = s_remoteConsoleManager.token[2];
-    if (s_remoteConsoleManager.tokencount < 3) {
-      pcVar1 = "*.*";
-    }
-    s_remoteConsoleManager.filecount = 0;
-    s_remoteConsoleManager.linenumber = 0;
-    s_remoteConsoleManager.totalsize = 0;
-    s_remoteConsoleManager.dircount = 0;
-    s_remoteConsoleManager.began_outgoing_message = 1;
-    pcVar3 = va("Pattern: \'%s\'\n");
-    dwMail_ReplyBufferWriteString(pcVar3);
-    Sys_Cwd();
-    pcVar3 = va("CWD: \'%s\'\n");
-    dwMail_ReplyBufferWriteString(pcVar3);
-    iVar4 = RemoteConsoleFindFileData_FindFirst
-                      (&s_remoteConsoleManager.remoteconsolefindfiledata,pcVar1);
-    if (iVar4 == 0) {
-      dwMail_ReplyBufferWriteString("NADA");
-      dVar2 = DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
+    if (DAT_845879d8 < 3) {
+      uVar3 = 0xffffffff821b8d98;
     }
     else {
-      dVar2 = DWMAILHANDLERRETURNCODE_PROCESSING;
+      uVar3 = (ulonglong)DAT_845879e4;
+    }
+    DAT_845870d8 = 0;
+    DAT_845870d4 = 0;
+    DAT_845870e0 = 0;
+    DAT_845870dc = 0;
+    DAT_845870e8 = 1;
+    va(0xffffffff821b8d88,uVar3);
+    dwMail_ReplyBufferWriteString();
+    uVar1 = Sys_Cwd();
+    va(0xffffffff821b8d7c,uVar1);
+    dwMail_ReplyBufferWriteString();
+    iVar2 = RemoteConsoleFindFileData_FindFirst(0xffffffff84587320,uVar3);
+    if (iVar2 == 0) {
+      dwMail_ReplyBufferWriteString(0xffffffff821b8cc4);
+      uVar1 = 4;
+    }
+    else {
+      uVar1 = 1;
     }
   }
-  return dVar2;
+  return uVar1;
 }
 
 
 // 827176E0  RemoteConsole_DirPump  (online/remoteconsole.cpp:1734)
 
 /* WARNING: Removing unreachable block (ram,0x82717934) */
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-dwMailHandlerReturnCode_t RemoteConsole_DirPump(void)
+void RemoteConsole_DirPump(void)
 
 {
-  char *pcVar1;
+  undefined *puVar1;
   int iVar2;
   int iVar3;
-  dwMailHandlerReturnCode_t dVar4;
-  longlong lVar5;
-  char **ppcVar6;
-  char *local_8c;
-  char *local_88;
+  longlong lVar4;
+  undefined **ppuVar5;
+  undefined *local_8c;
+  undefined *local_88;
   undefined4 local_84;
-  char *local_80;
-  char *local_7c;
+  undefined *local_80;
+  undefined *local_7c;
   undefined4 local_78;
-  char *local_74;
-  char *local_70;
+  undefined *local_74;
+  undefined *local_70;
   undefined4 local_6c;
-  char *local_68;
-  char *local_64;
+  undefined *local_68;
+  undefined *local_64;
   undefined4 local_60;
-  char *local_5c;
-  char *local_58;
+  undefined *local_5c;
+  undefined *local_58;
   undefined4 local_54;
-  char *local_50;
-  char *local_4c;
+  undefined *local_50;
+  undefined *local_4c;
   undefined4 local_48;
-  char *local_44;
-  char *local_40;
+  undefined *local_44;
+  undefined *local_40;
   undefined4 local_3c;
-  char *local_38;
-  char *local_34;
+  undefined *local_38;
+  undefined *local_34;
   
   __savegprlr_27();
-  local_80 = "H";
-  local_74 = "S";
-  local_68 = "D";
-  local_5c = "A";
-  local_8c = "R";
+  local_80 = &DAT_8205f3f4;
+  local_74 = &DAT_8205f3f8;
+  local_68 = &DAT_820755b4;
+  local_5c = &DAT_820755b8;
+  local_8c = &DAT_8205f3e8;
   local_84 = 2;
   local_78 = 4;
   local_6c = 0x10;
-  local_88 = ".";
-  local_7c = ".";
-  local_70 = ".";
-  local_64 = ".";
+  local_88 = &DAT_820185b4;
+  local_7c = &DAT_820185b4;
+  local_70 = &DAT_820185b4;
+  local_64 = &DAT_820185b4;
   local_60 = 0x20;
-  local_58 = ".";
+  local_58 = &DAT_820185b4;
   local_54 = 0x40;
-  local_50 = "V";
-  local_4c = ".";
+  local_50 = &DAT_8205f3fc;
+  local_4c = &DAT_820185b4;
   local_48 = 0x80;
-  local_44 = "N";
-  local_40 = ".";
+  local_44 = &DAT_821b8dd0;
+  local_40 = &DAT_820185b4;
   local_3c = 0x100;
-  local_38 = "T";
-  local_34 = ".";
-  if (s_remoteConsoleManager.began_outgoing_message == 0) {
-    s_remoteConsoleManager.began_outgoing_message = 1;
+  local_38 = &DAT_821b8dcc;
+  local_34 = &DAT_820185b4;
+  if (DAT_845870e8 == 0) {
+    DAT_845870e8 = 1;
     dwMail_ReplyBufferReset();
-    pcVar1 = va("RCR:%d:%d\n");
-    dwMail_ReplyBufferWriteString(pcVar1);
+    va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+    dwMail_ReplyBufferWriteString();
   }
-  if (s_remoteConsoleManager.remoteconsolefindfiledata.exists != 0) {
-    pcVar1 = va("%4.4d \"%s\" ");
-    dwMail_ReplyBufferWriteString(pcVar1);
-    if (s_remoteConsoleManager.remoteconsolefindfiledata.file == 0) {
-      if (s_remoteConsoleManager.remoteconsolefindfiledata.dir != 0) {
-        s_remoteConsoleManager.dircount = s_remoteConsoleManager.dircount + 1;
+  if (DAT_845879b8 != 0) {
+    va(0xffffffff821b8dc0,DAT_845870d4,0xffffffff84587788);
+    dwMail_ReplyBufferWriteString();
+    if (DAT_845879bc == 0) {
+      if (DAT_845879c0 != 0) {
+        DAT_845870dc = DAT_845870dc + 1;
       }
     }
     else {
-      s_remoteConsoleManager.filecount = s_remoteConsoleManager.filecount + 1;
-      s_remoteConsoleManager.totalsize =
-           s_remoteConsoleManager.totalsize +
-           s_remoteConsoleManager.remoteconsolefindfiledata.filesize;
-      pcVar1 = va("%lld ");
-      dwMail_ReplyBufferWriteString(pcVar1);
+      DAT_845870d8 = DAT_845870d8 + 1;
+      DAT_845870e0 = DAT_845870e0 + DAT_845879c8;
+      va(0xffffffff821b8db8);
+      dwMail_ReplyBufferWriteString();
     }
-    s_remoteConsoleManager.linenumber = s_remoteConsoleManager.linenumber + 1;
+    DAT_845870d4 = DAT_845870d4 + 1;
   }
-  ppcVar6 = &local_8c;
-  lVar5 = 8;
+  ppuVar5 = &local_8c;
+  lVar4 = 8;
   do {
-    if (((uint)ppcVar6[-1] & s_remoteConsoleManager.remoteconsolefindfiledata.flags) == 0) {
-      pcVar1 = ppcVar6[1];
+    if (((uint)ppuVar5[-1] & DAT_845879d0) == 0) {
+      puVar1 = ppuVar5[1];
     }
     else {
-      pcVar1 = *ppcVar6;
+      puVar1 = *ppuVar5;
     }
-    dwMail_ReplyBufferWriteString(pcVar1);
-    lVar5 = lVar5 + -1;
-    ppcVar6 = ppcVar6 + 3;
-  } while (lVar5 != 0);
-  iVar2 = RemoteConsoleFindFileData_FindNext(&s_remoteConsoleManager.remoteconsolefindfiledata);
+    dwMail_ReplyBufferWriteString(puVar1);
+    lVar4 = lVar4 + -1;
+    ppuVar5 = ppuVar5 + 3;
+  } while (lVar4 != 0);
+  iVar2 = RemoteConsoleFindFileData_FindNext(0xffffffff84587320);
   if (iVar2 == 0) {
-    dwMail_ReplyBufferWriteString("\n");
-    pcVar1 = va("Done! F:%d, D:%d, S:%lld");
-    dwMail_ReplyBufferWriteString(pcVar1);
+    dwMail_ReplyBufferWriteString(0xffffffff820044d8);
+    va(0xffffffff821b8d9c,DAT_845870d8,DAT_845870dc,DAT_845870e0);
+    dwMail_ReplyBufferWriteString();
   }
   iVar3 = dwMail_ReplyBufferGetNumBytesWritten();
   if (iVar3 < 0x381) {
-    dwMail_ReplyBufferWriteString("\n");
+    dwMail_ReplyBufferWriteString(0xffffffff820044d8);
   }
   if (iVar2 == 0) {
-    s_remoteConsoleManager.began_outgoing_message = 0;
-    dVar4 = __restgprlr_27(4);
-    return dVar4;
+    DAT_845870e8 = 0;
+    __restgprlr_27(4);
+    return;
   }
   if (iVar3 >= 0x381) {
-    s_remoteConsoleManager.began_outgoing_message = 0;
-    dVar4 = __restgprlr_27(3);
-    return dVar4;
+    DAT_845870e8 = 0;
+    __restgprlr_27(3);
+    return;
   }
-  dVar4 = __restgprlr_27(1);
-  return dVar4;
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 82716F08  RemoteConsole_Init  (online/remoteconsole.cpp:1896)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void RemoteConsole_Init(void)
 
 {
-  s_remoteConsoleManager.memoryhashinfo = (MemoryHashInfo *)0x0;
-  RemoteConsoleFindFileData_FillWithDefaults(&s_remoteConsoleManager.remoteconsolefindfiledata);
+  DAT_845870d0 = 0;
+  RemoteConsoleFindFileData_FillWithDefaults(0xffffffff84587320);
   RemoteConsole_Reset();
   return;
 }
@@ -1301,137 +1234,126 @@ void RemoteConsole_Init(void)
 
 // 82717968  RemoteConsole_Shutdown  (online/remoteconsole.cpp:1909)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void RemoteConsole_Shutdown(void)
 
 {
-  if (s_remoteConsoleManager.remoteconsolecmd != (remoteConsoleCmd *)0x0) {
+  if (DAT_84587098 != 0) {
     dwMail_AbortProcessing();
   }
   RemoteConsole_Reset();
-  RemoteConsoleFindFileData_Uninit(&s_remoteConsoleManager.remoteconsolefindfiledata);
+  RemoteConsoleFindFileData_Uninit(0xffffffff84587320);
   return;
 }
 
 
 // 82716F40  RemoteConsole_HandlerInspect  (online/remoteconsole.cpp:1927)
 
-dwMailHandlerReturnCode_t RemoteConsole_HandlerInspect(int param_1,char *param_2,int param_3)
+void RemoteConsole_HandlerInspect(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
-  int iVar1;
-  dwMailHandlerReturnCode_t dVar2;
-  int iVar3;
-  char *pcVar4;
-  remoteConsoleCmd *prVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  char **ppcVar8;
-  char *local_40 [16];
+  undefined4 uVar1;
+  int iVar2;
+  longlong lVar3;
+  undefined8 uVar4;
+  undefined4 *puVar5;
+  undefined4 local_40 [16];
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if ((((uVar6 & 0xffffffff) != 0) && (3 < param_3)) &&
-     (iVar3 = RemoteConsole_StringBeginIgnore((char *)uVar6,"RCC:",local_40), iVar3 != 0)) {
-    if ((s_remoteConsoleManager.remoteconsolecmd != (remoteConsoleCmd *)0x0) &&
-       (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\remoteconsole.cpp",
-                        0x7a9,0,"%s"),
-       s_remoteConsoleManager.remoteconsolecmd != (remoteConsoleCmd *)0x0)) {
-      dVar2 = __restgprlr_27(0xffffffffffffffff);
-      return dVar2;
-    }
-    dVar2 = DWMAILHANDLERRETURNCODE_PROCESSING;
-    s_remoteConsoleManager.tokencount =
-         RemoteConsole_StringSplitIntoTokens
-                   (local_40[0],s_remoteConsoleManager.tokenbuffer,s_remoteConsoleManager.token,0x14
-                   );
-    s_remoteConsoleManager.messageid = 0;
-    s_remoteConsoleManager.messagepart = 0;
-    Com_Memset(s_remoteConsoleManager.messagestring,0,0x80);
-    if (s_remoteConsoleManager.tokencount < 1) {
-      dwMail_ReplyBufferReset();
-      pcVar4 = va("RCR:%d:%d\n");
-      dwMail_ReplyBufferWriteString(pcVar4);
-      dwMail_ReplyBufferWriteString("Huh?");
-      dVar2 = DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
-    }
-    else {
-      s_remoteConsoleManager.messageid = atoi(s_remoteConsoleManager.token[0]);
-      lVar7 = 1;
-      s_remoteConsoleManager.messagestring[0] = '\0';
-      if (1 < s_remoteConsoleManager.tokencount) {
-        ppcVar8 = s_remoteConsoleManager.token;
-        do {
-          if (1 < (int)lVar7) {
-            RemoteConsole_StringCat(s_remoteConsoleManager.messagestring,0x80," ");
-          }
-          ppcVar8 = ppcVar8 + 1;
-          RemoteConsole_StringCat(s_remoteConsoleManager.messagestring,0x80,*ppcVar8);
-          lVar7 = lVar7 + 1;
-        } while ((int)lVar7 < s_remoteConsoleManager.tokencount);
+  uVar1 = __savegprlr_27();
+  if (((param_2 & 0xffffffff) != 0) && (3 < param_3)) {
+    iVar2 = RemoteConsole_StringBeginIgnore(param_2,0xffffffff821b8d68,local_40);
+    if (iVar2 != 0) {
+      if ((DAT_84587098 != 0) &&
+         (MyAssertHandler(0xffffffff821b8c00,0x7a9,0,0xffffffff82000f98,0xffffffff821b8d38),
+         DAT_84587098 != 0)) {
+        __restgprlr_27(0xffffffffffffffff);
+        return;
       }
-      prVar5 = RemoteConsole_FindCmdByName(s_remoteConsoleManager.token[1]);
-      if (prVar5 == (remoteConsoleCmd *)0x0) {
+      uVar4 = 1;
+      DAT_845879d8 = RemoteConsole_StringSplitIntoTokens
+                               (local_40[0],0xffffffff84587a2c,0xffffffff845879dc,0x14);
+      DAT_845870a4 = 0;
+      DAT_845870a8 = 0;
+      Com_Memset(0xffffffff84587e2c,0,0x80);
+      if (DAT_845879d8 < 1) {
         dwMail_ReplyBufferReset();
-        pcVar4 = va("RCR:%d:%d\n");
-        dwMail_ReplyBufferWriteString(pcVar4);
-        dwMail_ReplyBufferWriteString("What?");
-        dVar2 = DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE;
+        va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+        dwMail_ReplyBufferWriteString();
+        dwMail_ReplyBufferWriteString(0xffffffff821b8d30);
+        uVar4 = 4;
       }
       else {
-        s_remoteConsoleManager.controllerindex = iVar1;
-        s_remoteConsoleManager.timestamp = Sys_Milliseconds();
-        s_remoteConsoleManager.remoteconsolecmd = prVar5;
-        if (prVar5->remoteconsolecmdinitfunction != (_func___cdecl_dwMailHandlerReturnCode_t *)0x0)
-        {
-          dVar2 = (*prVar5->remoteconsolecmdinitfunction)();
+        DAT_845870a4 = atoi(DAT_845879dc);
+        lVar3 = 1;
+        DAT_84587e2c = 0;
+        if (1 < DAT_845879d8) {
+          puVar5 = &DAT_845879dc;
+          do {
+            if (1 < (int)lVar3) {
+              RemoteConsole_StringCat(0xffffffff84587e2c,0x80,0xffffffff820034a0);
+            }
+            puVar5 = puVar5 + 1;
+            RemoteConsole_StringCat(0xffffffff84587e2c,0x80,*puVar5);
+            lVar3 = lVar3 + 1;
+          } while ((int)lVar3 < DAT_845879d8);
+        }
+        iVar2 = RemoteConsole_FindCmdByName(DAT_845879e0);
+        if (iVar2 == 0) {
+          dwMail_ReplyBufferReset();
+          va(0xffffffff821b8c6c,DAT_845870a4,DAT_845870a8);
+          dwMail_ReplyBufferWriteString();
+          dwMail_ReplyBufferWriteString(0xffffffff821b8d28);
+          uVar4 = 4;
+        }
+        else {
+          DAT_8458709c = uVar1;
+          DAT_845870a0 = Sys_Milliseconds();
+          DAT_84587098 = iVar2;
+          if (*(code **)(iVar2 + 4) != (code *)0x0) {
+            uVar4 = (**(code **)(iVar2 + 4))();
+          }
         }
       }
+      DAT_845879d8 = 0;
+      Com_Memset(0xffffffff845879dc,0,0x50);
+      Com_Memset(0xffffffff84587a2c,0,0x400);
+      RemoteConsole_InspectReturnCode(uVar4);
+      __restgprlr_27(uVar4);
+      return;
     }
-    s_remoteConsoleManager.tokencount = 0;
-    Com_Memset(s_remoteConsoleManager.token,0,0x50);
-    Com_Memset(s_remoteConsoleManager.tokenbuffer,0,0x400);
-    RemoteConsole_InspectReturnCode(dVar2);
-    dVar2 = __restgprlr_27(dVar2);
-    return dVar2;
   }
-  dVar2 = __restgprlr_27(0);
-  return dVar2;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 82717160  RemoteConsole_HandlerPump  (online/remoteconsole.cpp:2035)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dwMailHandlerReturnCode_t RemoteConsole_HandlerPump(void)
+undefined8 RemoteConsole_HandlerPump(void)
 
 {
-  dwMailHandlerReturnCode_t dVar1;
+  undefined8 uVar1;
   
-  if (s_remoteConsoleManager.remoteconsolecmd == (remoteConsoleCmd *)0x0) {
-    dVar1 = DWMAILHANDLERRETURNCODE_ERROR;
+  if (DAT_84587098 == 0) {
+    uVar1 = 0xffffffffffffffff;
 LAB_827171c0:
     RemoteConsole_Reset();
   }
   else {
-    if ((s_remoteConsoleManager.remoteconsolecmd)->remoteconsolecmdpumpfunction ==
-        (_func___cdecl_dwMailHandlerReturnCode_t *)0x0) {
-      dVar1 = DWMAILHANDLERRETURNCODE_PROCESSING_DONE;
+    if (*(code **)(DAT_84587098 + 8) == (code *)0x0) {
+      uVar1 = 2;
       goto LAB_827171c0;
     }
-    dVar1 = (*(s_remoteConsoleManager.remoteconsolecmd)->remoteconsolecmdpumpfunction)();
-    if (dVar1 != DWMAILHANDLERRETURNCODE_PROCESSING) {
-      if (dVar1 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_CONTINUE) goto LAB_827171cc;
+    uVar1 = (**(code **)(DAT_84587098 + 8))();
+    if ((int)uVar1 != 1) {
+      if ((int)uVar1 == 3) goto LAB_827171cc;
       goto LAB_827171c0;
     }
   }
-  if (dVar1 != DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_CONTINUE) {
-    return dVar1;
+  if ((int)uVar1 != 3) {
+    return uVar1;
   }
 LAB_827171cc:
-  s_remoteConsoleManager.messagepart = s_remoteConsoleManager.messagepart + 1;
-  return dVar1;
+  DAT_845870a8 = DAT_845870a8 + 1;
+  return uVar1;
 }
 

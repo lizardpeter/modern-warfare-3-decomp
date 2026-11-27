@@ -2,283 +2,279 @@
 
 // 824004E0  DB_GetSubImageStream  (database/db_streaming_choose.cpp:36)
 
-GfxSubImageStream * DB_GetSubImageStream(uint param_1,uint *param_2)
+longlong DB_GetSubImageStream(ulonglong param_1,int *param_2)
 
 {
-  if (0x52ff < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                    ,0x2b,0,"%s");
+  int iVar1;
+  
+  if (0x52ff < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8205e220,0x2b,0,0xffffffff82000f98,0xffffffff8205cd5c);
   }
-  *param_2 = param_1 / 0x14c0;
-  return (GfxSubImageStream *)
-         ((int)&g_stream + param_1 * 0x40 + (param_1 / 0x14c0) * -0x52ff4 + 0x67a00);
+  iVar1 = (int)((param_1 & 0xffffffff) / 0x14c0);
+  *param_2 = iVar1;
+  return (param_1 & 0x3ffffff) * 0x40 + (longlong)iVar1 * -0x52ff4 + -0x7cd65700;
 }
 
 
 // 82400EF8  DB_FileCompare2  (database/db_streaming_choose.cpp:60)
 
-int DB_FileCompare2(uint param_1,uint param_2)
+byte DB_FileCompare2(int param_1,int param_2)
 
 {
-  return -(uint)(g_sequenceOffset[param_1] < g_sequenceOffset[param_2]) & 1;
+  return -(*(uint *)(param_1 * 4 + DAT_83306d88) < *(uint *)(param_2 * 4 + DAT_83306d88)) & 1;
 }
 
 
 // 82400F20  DB_StreamCompare  (database/db_streaming_choose.cpp:66)
 
-int DB_StreamCompare(uint param_1,uint param_2)
+ulonglong DB_StreamCompare(ulonglong param_1,ulonglong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   
-  lVar1 = (ulonglong)(uint)g_stream2.priority[param_1] -
-          (ulonglong)(uint)g_stream2.priority[param_2];
-  if (lVar1 != 0) {
-    return (uint)lVar1 >> 0x1f;
+  uVar1 = (ulonglong)*(uint *)((int)&DAT_845f4400 + (int)((param_1 & 0xffffffff) << 2)) -
+          (ulonglong)*(uint *)((int)&DAT_845f4400 + (int)((param_2 & 0xffffffff) << 2));
+  if (uVar1 != 0) {
+    return (uVar1 & 0xffffffff) >> 0x1f;
   }
-  return -(uint)(param_1 < param_2) & 1;
+  return -(ulonglong)(param_1 < param_2) & 1;
 }
 
 
 // 82400F60  DB_FileCompare3  (database/db_streaming_choose.cpp:78)
 
-int DB_FileCompare3(uint param_1,uint param_2)
+void DB_FileCompare3(undefined8 param_1,undefined8 param_2)
 
 {
-  uint uVar1;
-  GfxSubImageStream *pGVar2;
-  GfxSubImageStream *pGVar3;
-  int iVar4;
-  ulonglong uVar5;
-  uint auStack_30 [12];
+  undefined8 uVar1;
+  uint *puVar2;
+  uint *puVar3;
+  ulonglong uVar4;
+  undefined1 auStack_30 [48];
   
-  uVar1 = __savegprlr_28(param_1);
-  pGVar2 = DB_GetSubImageStream(uVar1,auStack_30);
-  if (pGVar2->file == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                    ,0x56,0,"%s");
+  uVar1 = __savegprlr_28();
+  puVar2 = (uint *)DB_GetSubImageStream(uVar1,auStack_30);
+  if (puVar2[2] == 0) {
+    MyAssertHandler(0xffffffff8205e220,0x56,0,0xffffffff82000f98,0xffffffff8205da18);
   }
-  pGVar3 = DB_GetSubImageStream(param_2,auStack_30);
-  if (pGVar3->file == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                    ,0x59,0,"%s");
+  puVar3 = (uint *)DB_GetSubImageStream(param_2,auStack_30);
+  if (puVar3[2] == 0) {
+    MyAssertHandler(0xffffffff8205e220,0x59,0,0xffffffff82000f98,0xffffffff8205da00);
   }
-  uVar5 = ZEXT48(pGVar2->file) - ZEXT48(pGVar3->file);
-  if (uVar5 == 0) {
-    iVar4 = __restgprlr_28(-(pGVar2->fileOffset < pGVar3->fileOffset) & 1);
-    return iVar4;
+  uVar4 = (ulonglong)puVar2[2] - (ulonglong)puVar3[2];
+  if (uVar4 == 0) {
+    __restgprlr_28(-(*puVar2 < *puVar3) & 1);
+    return;
   }
-  if (ZEXT48(pGVar2->file) == ZEXT48(g_recentReadFile2)) {
-    iVar4 = __restgprlr_28(1);
-    return iVar4;
+  if ((ulonglong)puVar2[2] == (ulonglong)DAT_83306d8c) {
+    __restgprlr_28(1);
+    return;
   }
-  if (ZEXT48(pGVar3->file) == ZEXT48(g_recentReadFile2)) {
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+  if ((ulonglong)puVar3[2] == (ulonglong)DAT_83306d8c) {
+    __restgprlr_28(0);
+    return;
   }
-  iVar4 = __restgprlr_28((uVar5 & 0xffffffff) >> 0x1f);
-  return iVar4;
+  __restgprlr_28((uVar4 & 0xffffffff) >> 0x1f);
+  return;
 }
 
 
 // 82400578  DB_ChooseStreamFile  (database/db_streaming_choose.cpp:107)
 
-void DB_ChooseStreamFile(void *param_1)
+void DB_ChooseStreamFile(void)
 
 {
   ushort uVar1;
-  StreamGlob *pSVar2;
-  DBFile *pDVar3;
-  DBFile *pDVar4;
+  undefined4 *puVar2;
+  int iVar3;
+  int iVar4;
   uint uVar5;
   uint uVar6;
   uint uVar7;
   int iVar8;
-  ushort *puVar9;
-  int iVar10;
-  uint uVar11;
-  uint uVar12;
-  int *piVar13;
-  uint uVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
+  undefined4 *puVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ushort *puVar13;
+  int iVar14;
+  uint uVar15;
+  uint uVar16;
   uint uVar17;
-  ushort *puVar18;
-  longlong lVar19;
+  int *piVar18;
+  uint uVar19;
+  ushort *puVar20;
+  ulonglong uVar21;
   uint local_ccc;
-  DBFile *local_cc8;
+  int local_cc8;
   uint local_cbc;
   ushort local_ca0 [510];
   int iStack_8a4;
-  uint local_8a0 [552];
+  undefined1 local_8a0 [2208];
   
-  __savegprlr();
+  puVar9 = (undefined4 *)__savegprlr();
   Profile_Begin(0x1b9);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream priority sort");
-  pSVar2 = *(StreamGlob **)param_1;
-  iVar10 = *(int *)((int)param_1 + 8);
-  pDVar3 = *(DBFile **)((int)param_1 + 0xc);
-  uVar17 = *(uint *)((int)param_1 + 0x10);
-  std::_Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
-            (g_stream2.sort,g_stream2.sort + g_stream2.sortCount,(int)(g_stream2.sortCount * 2) >> 1
-             ,DB_StreamCompare);
-  if (iVar10 != 0) {
-    uVar15 = 0;
-    if (g_stream2.sortCount != 0) {
-      puVar18 = g_stream2.sort;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205e38c);
+  puVar2 = (undefined4 *)*puVar9;
+  iVar14 = puVar9[2];
+  iVar3 = puVar9[3];
+  uVar16 = puVar9[4];
+  lVar10 = ((ulonglong)DAT_84613600 & 0x7fffffff) * 2 + -0x7b9f7000;
+  std___Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
+            (0xffffffff84609000,lVar10,(int)lVar10 + 0x7b9f7000 >> 1,0xffffffff82400f20);
+  if (iVar14 != 0) {
+    uVar19 = 0;
+    if (DAT_84613600 != 0) {
+      puVar20 = &DAT_84609000;
       do {
-        uVar1 = *puVar18;
-        if ((*(uint *)((int)g_stream.alwaysLoaded + (uVar1 >> 3 & 0x1ffffffc)) &
-            *(uint *)(&g_bitShift + (uVar1 & 0x1f) * 4)) != 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                          ,0xa8,0,"%s");
+        uVar1 = *puVar20;
+        if ((*(uint *)((int)&DAT_83299e80 + (uVar1 >> 3 & 0x1ffffffc)) &
+            (&DAT_82992400)[uVar1 & 0x1f]) != 0) {
+          MyAssertHandler(0xffffffff8205e220,0xa8,0,0xffffffff82000f98,0xffffffff8205d7d0);
         }
-        if (g_stream2.priority[uVar1] < -0x1fffff) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                          ,0xaa,0,"%s\n\t(g_stream2.priority[index]) = %i");
+        if ((int)(&DAT_845f4400)[uVar1] < -0x1fffff) {
+          MyAssertHandler(0xffffffff8205e220,0xaa,0,0xffffffff8205d31c,0xffffffff8205d2e0);
         }
-        if (0x1fff < g_stream2.priority[uVar1]) break;
+        if (0x1fff < (int)(&DAT_845f4400)[uVar1]) break;
+        uVar19 = uVar19 + 1;
+        puVar20 = puVar20 + 1;
+      } while (uVar19 < DAT_84613600);
+    }
+    puVar20 = &DAT_84609000 + uVar19;
+    DAT_83306d8c = iVar3;
+    std___Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
+              (0xffffffff84609000,puVar20,(int)(uVar19 * 2) >> 1,0xffffffff82400f60);
+    uVar15 = uVar19;
+    if (uVar19 < DAT_84613600) {
+      do {
+        uVar1 = *puVar20;
+        if ((*(uint *)((int)&DAT_83299e80 + (uVar1 >> 3 & 0x1ffffffc)) &
+            (&DAT_82992400)[uVar1 & 0x1f]) != 0) {
+          MyAssertHandler(0xffffffff8205e220,0xb7,0,0xffffffff82000f98,0xffffffff8205d7d0);
+        }
+        if ((int)(&DAT_845f4400)[uVar1] < -0x1fffff) {
+          MyAssertHandler(0xffffffff8205e220,0xb9,0,0xffffffff8205d31c,0xffffffff8205d2e0);
+        }
+        if (0x3fff < (int)(&DAT_845f4400)[uVar1]) break;
         uVar15 = uVar15 + 1;
-        puVar18 = puVar18 + 1;
-      } while ((uVar15 & 0xffffffff) < (ulonglong)g_stream2.sortCount);
+        puVar20 = puVar20 + 1;
+      } while (uVar15 < DAT_84613600);
     }
-    lVar19 = (uVar15 & 0x7fffffff) * 2 + -0x7b9f7000;
-    g_recentReadFile2 = pDVar3;
-    std::_Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
-              (g_stream2.sort,(ushort *)lVar19,(int)((ushort *)lVar19 + 0x3dcfb800) >> 1,
-               DB_FileCompare3);
-    uVar16 = uVar15;
-    if ((uVar15 & 0xffffffff) < (ulonglong)g_stream2.sortCount) {
-      do {
-        uVar1 = *(ushort *)lVar19;
-        if ((*(uint *)((int)g_stream.alwaysLoaded + (uVar1 >> 3 & 0x1ffffffc)) &
-            *(uint *)(&g_bitShift + (uVar1 & 0x1f) * 4)) != 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                          ,0xb7,0,"%s");
-        }
-        if (g_stream2.priority[uVar1] < -0x1fffff) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                          ,0xb9,0,"%s\n\t(g_stream2.priority[index]) = %i");
-        }
-        if (0x3fff < g_stream2.priority[uVar1]) break;
-        uVar16 = uVar16 + 1;
-        lVar19 = lVar19 + 2;
-      } while ((uVar16 & 0xffffffff) < (ulonglong)g_stream2.sortCount);
+    if (DAT_83306d8c != iVar3) {
+      MyAssertHandler(0xffffffff8205e220,0xbe,0,0xffffffff82000f98,0xffffffff8205e368);
     }
-    if (g_recentReadFile2 != pDVar3) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                      ,0xbe,0,"%s");
-    }
-    puVar18 = (ushort *)((int)g_stream2.sort + (int)((uVar16 & 0xffffffff) << 1));
-    puVar9 = (ushort *)((int)g_stream2.sort + (int)((uVar15 & 0xffffffff) << 1));
-    std::_Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
-              (puVar9,puVar18,(int)puVar18 - (int)puVar9 >> 1,DB_FileCompare3);
+    std___Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
+              (&DAT_84609000 + uVar19,&DAT_84609000 + uVar15,
+               (int)(&DAT_84609000 + uVar15) - (int)(&DAT_84609000 + uVar19) >> 1,0xffffffff82400f60
+              );
   }
   PIXEndNamedEvent();
   local_cbc = 0xffffffff;
-  uVar12 = 0;
-  local_cc8 = (DBFile *)0x0;
-  uVar11 = 0;
+  uVar17 = 0;
+  local_cc8 = 0;
+  uVar15 = 0;
   local_ccc = 0x80000;
-  uVar14 = 0xffffffff;
-  if (g_stream2.sortCount != 0) {
-    puVar18 = g_stream2.sort;
+  uVar19 = 0xffffffff;
+  if (DAT_84613600 != 0) {
+    puVar20 = &DAT_84609000;
+    uVar15 = 0;
     do {
-      uVar1 = *puVar18;
-      uVar15 = (ulonglong)uVar1;
+      uVar1 = *puVar20;
+      uVar11 = (ulonglong)uVar1;
       uVar7 = uVar1 >> 3 & 0x1ffffffc;
-      iVar8 = (int)((uVar15 & 0x1f) << 2);
-      if ((*(uint *)((int)g_stream.alwaysLoaded + uVar7) & *(uint *)(&g_bitShift + iVar8)) != 0) {
+      iVar4 = (int)((uVar11 & 0x1f) << 2);
+      if ((*(uint *)((int)&DAT_83299e80 + uVar7) & *(uint *)((int)&DAT_82992400 + iVar4)) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                        ,0xd5,0,"%s");
+                        ,0xd5,0,&DAT_82000f98,
+                        "!(g_stream.alwaysLoaded[index >> 5] & BitShiftMasked( index ))");
       }
-      if ((*(uint *)((int)g_stream2.inuse + uVar7) & *(uint *)(&g_bitShift + iVar8)) == 0) {
-        if (0x52ff < uVar15) {
+      if ((*(uint *)((int)&DAT_845f3980 + uVar7) & *(uint *)((int)&DAT_82992400 + iVar4)) == 0) {
+        if (0x52ff < uVar11) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                          ,0x2b,0,"%s");
+                          ,0x2b,0,&DAT_82000f98,"tempIndex < DB_STREAM_IMAGE_COUNT");
         }
         iVar8 = (uint)uVar1 * 0x40 + (uVar1 / 0x14c0) * -0x52ff4;
-        pDVar4 = *(DBFile **)((int)&g_stream + iVar8 + 0x67a08);
-        if (pDVar4 == (DBFile *)0x0) {
+        iVar4 = *(int *)(&DAT_8329a908 + iVar8);
+        if (iVar4 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                          ,0xde,0,"%s");
+                          ,0xde,0,&DAT_82000f98,0xffffffff82059864);
         }
-        uVar7 = g_stream2.priority[uVar1];
+        uVar7 = (&DAT_845f4400)[uVar1];
         if ((int)uVar7 < -0x1fffff) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                          ,0xe1,0,"%s\n\t(priority) = %i");
+                          ,0xe1,0,0xffffffff8205e330,0xffffffff8205e304,uVar7);
         }
-        if (local_cc8 == (DBFile *)0x0) {
-          uVar11 = uVar7;
+        if (local_cc8 == 0) {
+          uVar15 = uVar7;
           if (0 < (int)uVar7) {
-            uVar11 = uVar7 + 0x1000;
+            uVar15 = uVar7 + 0x1000;
           }
           local_ccc = uVar7;
-          if (iVar10 != 0) {
+          if (iVar14 != 0) {
             if ((int)uVar7 < 0x4001) {
-              if (0x4000 < (int)uVar11) {
-                uVar11 = 0x4000;
+              if (0x4000 < (int)uVar15) {
+                uVar15 = 0x4000;
               }
             }
             else {
-              iVar10 = 0;
+              iVar14 = 0;
             }
           }
         }
-        if ((int)uVar11 < (int)uVar7) break;
-        uVar7 = *(uint *)((int)&g_stream + iVar8 + 0x67a00);
-        if (pDVar4 == pDVar3) {
-          if ((local_cc8 == pDVar3) &&
-             (uVar5 = (int)(uVar7 - uVar17) >> 0x1f, uVar6 = (int)(uVar14 - uVar17) >> 0x1f,
-             (int)((uVar14 - uVar17 ^ uVar6) - uVar6) <= (int)((uVar7 - uVar17 ^ uVar5) - uVar5))) {
-            if (uVar7 == uVar14) {
+        if ((int)uVar15 < (int)uVar7) break;
+        uVar7 = *(uint *)(&DAT_8329a900 + iVar8);
+        if (iVar4 == iVar3) {
+          if ((local_cc8 == iVar3) &&
+             (uVar5 = (int)(uVar7 - uVar16) >> 0x1f, uVar6 = (int)(uVar19 - uVar16) >> 0x1f,
+             (int)((uVar19 - uVar16 ^ uVar6) - uVar6) <= (int)((uVar7 - uVar16 ^ uVar5) - uVar5))) {
+            if (uVar7 == uVar19) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                              ,0x10a,0,"%s");
+                              ,0x10a,0,&DAT_82000f98,0xffffffff8205e344);
             }
-            if (((uVar17 <= uVar7) || (uVar17 <= uVar14)) || (0x1fffff < uVar14 - uVar7))
+            if (((uVar16 <= uVar7) || (uVar16 <= uVar19)) || (0x1fffff < uVar19 - uVar7))
             goto LAB_82400afc;
           }
         }
-        else if ((local_cc8 != (DBFile *)0x0) && ((local_cc8 != pDVar4 || (local_cbc <= uVar7))))
+        else if ((local_cc8 != 0) && ((local_cc8 != iVar4 || (local_cbc <= uVar7))))
         goto LAB_82400afc;
-        uVar15 = uVar15 - 0x14c0;
-        if ((((longlong)uVar15 < 0) ||
-            ((*(uint *)((int)g_stream2.inuse + ((uint)uVar15 >> 3 & 0x1ffffffc)) &
-             *(uint *)(&g_bitShift + ((uint)((uVar15 & 0xffffffff) << 2) & 0x7c))) != 0)) &&
-           (local_cc8 = pDVar4, local_cbc = uVar7, uVar14 = uVar7, iVar10 != 0)) break;
+        uVar11 = uVar11 - 0x14c0;
+        if ((((longlong)uVar11 < 0) ||
+            ((*(uint *)((int)&DAT_845f3980 + ((uint)uVar11 >> 3 & 0x1ffffffc)) &
+             *(uint *)((int)&DAT_82992400 + ((uint)((uVar11 & 0xffffffff) << 2) & 0x7c))) != 0)) &&
+           (uVar19 = uVar7, local_cc8 = iVar4, local_cbc = uVar7, iVar14 != 0)) break;
       }
 LAB_82400afc:
-      uVar12 = uVar12 + 1;
-      puVar18 = puVar18 + 1;
-    } while (uVar12 < g_stream2.sortCount);
+      uVar17 = uVar17 + 1;
+      puVar20 = puVar20 + 1;
+    } while (uVar17 < DAT_84613600);
   }
-  Profile_EndInternal((double *)0x0);
-  pSVar2->bestFile = local_cc8;
-  if (local_cc8 == (DBFile *)0x0) goto LAB_82400eec;
-  uVar17 = 0;
-  pSVar2->abort2 = 0;
+  Profile_EndInternal(0);
+  puVar2[0x2ec41] = local_cc8;
+  if (local_cc8 == 0) goto LAB_82400eec;
+  uVar11 = 0;
+  puVar2[0x2ec43] = 0;
   sync(1);
-  piVar13 = &pSVar2->abortPriority;
-  if (*piVar13 != -0x200000) {
+  piVar18 = puVar2 + 0x2ec44;
+  if (*piVar18 != -0x200000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                    ,0x13c,0,"%s\n\t(stream->abortPriority) = %i");
+                    ,0x13c,0,0xffffffff8205e2a8,0xffffffff8205e2cc,*piVar18);
   }
-  if (iVar10 == 0) {
+  if (iVar14 == 0) {
     if ((int)local_ccc < 0) {
       local_ccc = 0xffffffff;
     }
     else if (local_ccc == 0) {
-      *piVar13 = 0;
+      *piVar18 = 0;
     }
     else {
-      iVar10 = local_ccc - 0x1000;
-      if (iVar10 < 1) {
-        iVar10 = 1;
+      iVar14 = local_ccc - 0x1000;
+      if (iVar14 < 1) {
+        iVar14 = 1;
       }
-      *piVar13 = iVar10;
+      *piVar18 = iVar14;
       if ((int)local_ccc < 0x4001) {
-        local_ccc = uVar11;
-        if ((int)uVar11 < 0x4001) goto LAB_82400bf4;
+        local_ccc = uVar15;
+        if ((int)uVar15 < 0x4001) goto LAB_82400bf4;
       }
       else {
         local_ccc = ((int)local_ccc >> 1) + (uint)((int)local_ccc < 0 && (local_ccc & 1) != 0) +
@@ -290,94 +286,99 @@ LAB_82400afc:
 LAB_82400bf4:
     local_ccc = 0x4000;
   }
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream file sort");
-  uVar11 = 0;
-  if (g_stream2.sortCount == 0) {
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205e294);
+  uVar16 = 0;
+  if (DAT_84613600 == 0) {
 LAB_82400e20:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                    ,0x19a,0,"%s");
+                    ,0x19a,0,&DAT_82000f98,0xffffffff8205d7c0);
   }
   else {
-    piVar13 = &iStack_8a4;
-    puVar18 = g_stream2.sort;
-    uVar14 = 0;
+    piVar18 = &iStack_8a4;
+    puVar20 = &DAT_84609000;
+    uVar19 = 0;
+    uVar21 = uVar11;
     do {
-      uVar1 = *puVar18;
-      uVar15 = (ulonglong)uVar1;
-      uVar12 = uVar1 >> 3 & 0x1ffffffc;
-      iVar10 = (int)((uVar15 & 0x1f) << 2);
-      if ((*(uint *)((int)g_stream.alwaysLoaded + uVar12) & *(uint *)(&g_bitShift + iVar10)) != 0) {
+      uVar1 = *puVar20;
+      uVar12 = (ulonglong)uVar1;
+      uVar15 = uVar1 >> 3 & 0x1ffffffc;
+      iVar14 = (int)((uVar12 & 0x1f) << 2);
+      if ((*(uint *)((int)&DAT_83299e80 + uVar15) & *(uint *)((int)&DAT_82992400 + iVar14)) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                        ,0x16c,0,"%s");
+                        ,0x16c,0,&DAT_82000f98,
+                        "!(g_stream.alwaysLoaded[index >> 5] & BitShiftMasked( index ))");
       }
-      if ((*(uint *)((int)g_stream2.inuse + uVar12) & *(uint *)(&g_bitShift + iVar10)) == 0) {
-        if (g_stream2.priority[uVar1] < -0x1fffff) {
+      if ((*(uint *)((int)&DAT_845f3980 + uVar15) & *(uint *)((int)&DAT_82992400 + iVar14)) == 0) {
+        if ((int)(&DAT_845f4400)[uVar1] < -0x1fffff) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                          ,0x172,0,"%s\n\t(g_stream2.priority[index]) = %i");
+                          ,0x172,0,"%s\n\t(g_stream2.priority[index]) = %i",
+                          "(g_stream2.priority[index] > -((int)(128.0f * (1 << 14))))");
         }
-        if ((int)local_ccc < g_stream2.priority[uVar1]) break;
-        if (0x52ff < uVar15) {
+        uVar11 = uVar21;
+        if ((int)local_ccc < (int)(&DAT_845f4400)[uVar1]) break;
+        if (0x52ff < uVar12) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                          ,0x2b,0,"%s");
+                          ,0x2b,0,&DAT_82000f98,"tempIndex < DB_STREAM_IMAGE_COUNT");
         }
-        iVar10 = (uint)uVar1 * 0x40 + (uVar1 / 0x14c0) * -0x52ff4;
-        if (*(int *)((int)&g_stream + iVar10 + 0x67a08) == 0) {
+        iVar14 = (uint)uVar1 * 0x40 + (uVar1 / 0x14c0) * -0x52ff4;
+        if (*(int *)(&DAT_8329a908 + iVar14) == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                          ,0x177,0,"%s");
+                          ,0x177,0,&DAT_82000f98,0xffffffff8205e194);
         }
-        if ((*(DBFile **)((int)&g_stream + iVar10 + 0x67a08) == local_cc8) &&
-           (iVar10 = *(int *)((int)&g_stream + iVar10 + 0x67a00), iVar10 - local_cbc < 0x280000)) {
-          uVar15 = uVar15 - 0x14c0;
-          if (((longlong)uVar15 < 0) ||
-             ((*(uint *)((int)g_stream2.inuse + ((uint)uVar15 >> 3 & 0x1ffffffc)) &
-              *(uint *)(&g_bitShift + ((uint)((uVar15 & 0xffffffff) << 2) & 0x7c))) != 0)) {
+        if ((*(int *)(&DAT_8329a908 + iVar14) == local_cc8) &&
+           (*(int *)(&DAT_8329a900 + iVar14) - local_cbc < 0x280000)) {
+          uVar12 = uVar12 - 0x14c0;
+          if (((longlong)uVar12 < 0) ||
+             ((*(uint *)((int)&DAT_845f3980 + ((uint)uVar12 >> 3 & 0x1ffffffc)) &
+              *(uint *)((int)&DAT_82992400 + ((uint)((uVar12 & 0xffffffff) << 2) & 0x7c))) != 0)) {
 LAB_82400dcc:
-            piVar13 = piVar13 + 1;
-            *piVar13 = iVar10;
-            uVar12 = uVar17 + 1;
-            *(ushort *)((int)local_ca0 + uVar14) = uVar1;
-            *(short *)((int)g_stream.sortedImages + uVar14) = (short)uVar17;
-            uVar14 = uVar14 + 2;
-            uVar17 = uVar12;
-            if (0x3ff < uVar14) break;
+            piVar18 = piVar18 + 1;
+            *piVar18 = *(int *)(&DAT_8329a900 + iVar14);
+            uVar11 = uVar21 + 1;
+            *(ushort *)((int)local_ca0 + uVar19) = uVar1;
+            *(short *)((int)&DAT_832ed900 + uVar19) = (short)uVar21;
+            uVar19 = uVar19 + 2;
+            uVar21 = uVar11;
+            if (0x3ff < uVar19) break;
           }
           else {
-            uVar12 = 0;
-            if (uVar17 != 0) {
-              puVar9 = local_ca0;
+            uVar11 = 0;
+            if ((uVar21 & 0xffffffff) != 0) {
+              puVar13 = local_ca0;
               do {
-                if ((ulonglong)*puVar9 == (uVar15 & 0xffffffff)) goto LAB_82400dcc;
-                uVar12 = uVar12 + 1;
-                puVar9 = puVar9 + 1;
-              } while (uVar12 < uVar17);
+                if ((ulonglong)*puVar13 == (uVar12 & 0xffffffff)) goto LAB_82400dcc;
+                uVar11 = uVar11 + 1;
+                puVar13 = puVar13 + 1;
+              } while ((uVar11 & 0xffffffff) < (uVar21 & 0xffffffff));
             }
           }
         }
       }
-      uVar11 = uVar11 + 1;
-      puVar18 = puVar18 + 1;
-    } while (uVar11 < g_stream2.sortCount);
-    if (uVar17 == 0) goto LAB_82400e20;
+      uVar16 = uVar16 + 1;
+      puVar20 = puVar20 + 1;
+      uVar11 = uVar21;
+    } while (uVar16 < DAT_84613600);
+    if ((uVar11 & 0xffffffff) == 0) goto LAB_82400e20;
   }
-  g_sequenceOffset = local_8a0;
-  std::_Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
-            (g_stream.sortedImages,g_stream.sortedImages + uVar17,(int)(uVar17 * 2) >> 1,
-             DB_FileCompare2);
-  if (uVar17 != 0) {
-    puVar18 = (ushort *)((int)&g_stream.imageStream[0x14bf].basePixels + 2);
-    uVar11 = uVar17;
+  DAT_83306d88 = local_8a0;
+  lVar10 = (uVar11 & 0x7fffffff) * 2 + -0x7cd12700;
+  std___Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
+            (0xffffffff832ed900,lVar10,(int)lVar10 + 0x7cd12700 >> 1,0xffffffff82400ef8);
+  if ((uVar11 & 0xffffffff) != 0) {
+    puVar20 = (ushort *)0x832ed8fe;
+    uVar21 = uVar11;
     do {
-      puVar9 = puVar18 + 1;
-      puVar18 = puVar18 + 1;
-      *puVar18 = local_ca0[*puVar9];
-      uVar11 = uVar11 - 1;
-    } while (uVar11 != 0);
+      puVar13 = puVar20 + 1;
+      puVar20 = puVar20 + 1;
+      *puVar20 = local_ca0[*puVar13];
+      uVar21 = uVar21 - 1;
+    } while (uVar21 != 0);
   }
-  if (pSVar2 != &g_stream) {
+  if (puVar2 != &DAT_83232f00) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_choose.cpp"
-                    ,0x1a2,0,"%s");
+                    ,0x1a2,0,&DAT_82000f98,0xffffffff8205e26c);
   }
-  pSVar2->sortedImagesCount = uVar17;
+  puVar2[0x2ec40] = (int)uVar11;
   PIXEndNamedEvent();
 LAB_82400eec:
   __restgprlr();

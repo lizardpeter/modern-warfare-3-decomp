@@ -2,8 +2,6 @@
 
 // 828B5AE0  RtlDebugPrintHelper  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xbox/rtldbghelp.asm:66)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void RtlDebugPrintHelper(void)
 
 {

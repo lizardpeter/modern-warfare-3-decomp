@@ -2,100 +2,98 @@
 
 // 829258E0  _lseek  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/lseek.c:60)
 
-long _lseek(int param_1,long param_2,int param_3)
+long _lseek(int _FileHandle,long _Offset,int _Origin)
 
 {
   int iVar1;
-  int iVar2;
-  uint uVar4;
-  ulong *puVar5;
-  int *piVar6;
-  ulonglong uVar3;
-  long lVar7;
+  uint _Filehandle;
+  ulong *puVar3;
+  int *piVar4;
+  ulonglong uVar2;
+  long lVar5;
   uint uStack00000014;
   uint local_50;
   
-  uVar4 = __savegprlr_25(param_1);
-  uStack00000014 = uVar4;
-  if (uVar4 == 0xfffffffe) {
-    puVar5 = __doserrno();
-    *puVar5 = 0;
-    piVar6 = _errno();
-    uVar3 = 0xffffffffffffffff;
-    *piVar6 = 9;
+  _Filehandle = __savegprlr_25(_FileHandle);
+  uStack00000014 = _Filehandle;
+  if (_Filehandle == 0xfffffffe) {
+    puVar3 = __doserrno();
+    *puVar3 = 0;
+    piVar4 = _errno();
+    uVar2 = 0xffffffffffffffff;
+    *piVar4 = 9;
   }
   else {
-    if ((-1 < (int)uVar4) && (uVar4 < (uint)_nhandle)) {
-      iVar1 = ((int)uVar4 >> 5) * 4;
-      iVar2 = (uVar4 & 0x1f) * 0x48;
-      if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar2 + 4) & 1) != 0) {
-        __lock_fhandle(uVar4);
-        if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar2 + 4) & 1) == 0) {
-          piVar6 = _errno();
-          *piVar6 = 9;
-          puVar5 = __doserrno();
-          *puVar5 = 0;
+    if ((-1 < (int)_Filehandle) && (_Filehandle < DAT_84897db0)) {
+      iVar1 = (_Filehandle & 0x1f) * 0x48;
+      if ((*(byte *)((&DAT_84897dc0)[(int)_Filehandle >> 5] + iVar1 + 4) & 1) != 0) {
+        __lock_fhandle(_Filehandle);
+        if ((*(byte *)((&DAT_84897dc0)[(int)_Filehandle >> 5] + iVar1 + 4) & 1) == 0) {
+          piVar4 = _errno();
+          *piVar4 = 9;
+          puVar3 = __doserrno();
+          *puVar3 = 0;
           local_50 = 0xffffffff;
         }
         else {
-          local_50 = _lseek_nolock(uVar4,param_2,param_3);
+          local_50 = _lseek_nolock(_Filehandle,_Offset,_Origin);
         }
         FUN_82925a24();
-        uVar3 = (ulonglong)local_50;
+        uVar2 = (ulonglong)local_50;
         goto LAB_829259fc;
       }
     }
-    puVar5 = __doserrno();
-    *puVar5 = 0;
-    piVar6 = _errno();
-    *piVar6 = 9;
+    puVar3 = __doserrno();
+    *puVar3 = 0;
+    piVar4 = _errno();
+    *piVar4 = 9;
     _invalid_parameter_noinfo();
-    uVar3 = 0xffffffffffffffff;
+    uVar2 = 0xffffffffffffffff;
   }
 LAB_829259fc:
-  lVar7 = __restgprlr_25(uVar3);
-  return lVar7;
+  lVar5 = __restgprlr_25(uVar2);
+  return lVar5;
 }
 
 
 // 82925820  _lseek_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/lseek.c:93)
 
-long _lseek_nolock(int param_1,long param_2,int param_3)
+long _lseek_nolock(int _FileHandle,long _Offset,int _Origin)
 
 {
   int iVar1;
-  uint uVar2;
-  void *pvVar3;
-  int *piVar4;
-  ulong uVar5;
-  ulong uVar6;
-  long lVar7;
+  uint _FileHandle_00;
+  HANDLE hFile;
+  int *piVar2;
+  DWORD DVar3;
+  ulong uVar4;
+  long lVar5;
   
-  uVar2 = __savegprlr_29(param_1);
-  pvVar3 = (void *)_get_osfhandle(uVar2);
-  if (pvVar3 == (void *)0xffffffff) {
-    piVar4 = _errno();
-    uVar5 = 0xffffffff;
-    *piVar4 = 9;
+  _FileHandle_00 = __savegprlr_29(_FileHandle);
+  hFile = (HANDLE)_get_osfhandle(_FileHandle_00);
+  if (hFile == (HANDLE)0xffffffff) {
+    piVar2 = _errno();
+    DVar3 = 0xffffffff;
+    *piVar2 = 9;
   }
   else {
-    uVar5 = SetFilePointer(pvVar3,param_2,(long *)0x0,param_3);
-    if (uVar5 == 0xffffffff) {
-      uVar6 = GetLastError();
+    DVar3 = SetFilePointer(hFile,_Offset,(PLONG)0x0,_Origin);
+    if (DVar3 == 0xffffffff) {
+      uVar4 = GetLastError();
     }
     else {
-      uVar6 = 0;
+      uVar4 = 0;
     }
-    if (uVar6 == 0) {
-      iVar1 = *(int *)(&__pioinfo + ((int)uVar2 >> 5) * 4) + (uVar2 & 0x1f) * 0x48;
+    if (uVar4 == 0) {
+      iVar1 = (&DAT_84897dc0)[(int)_FileHandle_00 >> 5] + (_FileHandle_00 & 0x1f) * 0x48;
       *(byte *)(iVar1 + 4) = *(byte *)(iVar1 + 4) & 0xfd;
     }
     else {
-      _dosmaperr(uVar6);
-      uVar5 = 0xffffffff;
+      _dosmaperr(uVar4);
+      DVar3 = 0xffffffff;
     }
   }
-  lVar7 = __restgprlr_29(uVar5);
-  return lVar7;
+  lVar5 = __restgprlr_29(DVar3);
+  return lVar5;
 }
 

@@ -2,8 +2,8 @@
 
 // 8242E9A0  Glass_DoesEdgeLoopContainPoint  (EffectsCore/fx_glass_trace.cpp:36)
 
-bool Glass_DoesEdgeLoopContainPoint
-               (FxGlassVertex *param_1,FxGlassVertex *param_2,uint param_3,int param_4,int *param_5)
+void Glass_DoesEdgeLoopContainPoint
+               (undefined8 param_1,longlong param_2,uint param_3,ulonglong param_4,int *param_5)
 
 {
   short sVar1;
@@ -11,88 +11,75 @@ bool Glass_DoesEdgeLoopContainPoint
   short *psVar3;
   short *psVar4;
   longlong lVar5;
-  ulonglong uVar6;
-  undefined1 uVar7;
+  uint uVar6;
+  longlong lVar7;
   longlong lVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
   
-  uVar10 = (ulonglong)param_4;
-  uVar9 = (ulonglong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  lVar5 = __savegprlr_29(param_1,lVar8,uVar9,uVar10);
+  lVar5 = __savegprlr_29();
   iVar2 = param_5[1];
   uVar6 = 0;
-  lVar12 = (uVar9 & 0x3fffffff) * 4 + lVar8 + -4;
+  lVar8 = ((ulonglong)param_3 & 0x3fffffff) * 4 + param_2 + -4;
   while( true ) {
-    lVar11 = lVar5;
-    lVar5 = lVar8;
-    psVar3 = (short *)lVar12;
-    psVar4 = (short *)lVar11;
+    lVar7 = lVar5;
+    lVar5 = param_2;
+    psVar3 = (short *)lVar8;
+    psVar4 = (short *)lVar7;
     sVar1 = psVar4[1];
     if (iVar2 < psVar3[1]) {
       if ((sVar1 <= iVar2) &&
          ((iVar2 - psVar3[1]) * ((int)*psVar4 - (int)*psVar3) <
           (*param_5 - (int)*psVar3) * ((int)sVar1 - (int)psVar3[1]))) {
-        uVar10 = uVar10 + 1;
+        param_4 = param_4 + 1;
       }
     }
     else if ((iVar2 < sVar1) &&
             ((*param_5 - (int)*psVar3) * ((int)sVar1 - (int)psVar3[1]) <
              (iVar2 - psVar3[1]) * ((int)*psVar4 - (int)*psVar3))) {
-      uVar10 = uVar10 - 1;
+      param_4 = param_4 - 1;
     }
-    if ((uVar6 & 0xffffffff) == (uVar9 & 0xffffffff)) break;
+    if (uVar6 == param_3) break;
     uVar6 = uVar6 + 1;
-    lVar8 = lVar5 + 4;
-    lVar12 = lVar11;
+    param_2 = lVar5 + 4;
+    lVar8 = lVar7;
   }
-  uVar7 = __restgprlr_29((-uVar10 & ~uVar10 & 0xffffffff) >> 0x1f);
-  return (bool)uVar7;
+  __restgprlr_29((-param_4 & ~param_4 & 0xffffffff) >> 0x1f);
+  return;
 }
 
 
 // 8242F040  Glass_ForEachPiece<FxGlassTrace_*,void_(__cdecl*)(FxGlassSystem_*___restrict,FxGlassTrace_*___restrict,unsigned_int)>  (EffectsCore/fx_glass_api.h:80)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void Glass_ForEachPiece<FxGlassTrace_*,void_(__cdecl*)(FxGlassSystem_*___restrict,FxGlassTrace_*___restrict,unsigned_int)>
-               (FxGlassSystem *param_1,FxGlassTrace *param_2,
-               _func___cdecl_void_FxGlassSystem_ptr_FxGlassTrace_ptr_uint *param_3)
+               (undefined8 param_1,undefined8 param_2,code *param_3)
 
 {
   uint uVar1;
-  FxGlassSystem *pFVar2;
-  longlong lVar3;
-  int iVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  uint uVar7;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  uint uVar6;
   
-  lVar3 = (longlong)(int)param_2;
-  pFVar2 = (FxGlassSystem *)__savegprlr_20(param_1,lVar3);
-  uVar1 = pFVar2->pieceWordCount;
-  uVar5 = 0;
+  iVar2 = __savegprlr_20();
+  uVar1 = *(uint *)(iVar2 + 0x10);
+  uVar4 = 0;
   if (uVar1 != 0) {
-    iVar4 = 0;
+    iVar3 = 0;
     do {
-      uVar7 = *(uint *)(iVar4 + (int)pFVar2->isInUse);
-      if (uVar7 != 0) {
+      uVar6 = *(uint *)(iVar3 + *(int *)(iVar2 + 0x44));
+      if (uVar6 != 0) {
         do {
-          uVar6 = LZCOUNT(uVar7);
-          if (0x20 < uVar6) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
-                            0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
+          uVar5 = LZCOUNT(uVar6);
+          if (0x20 < uVar5) {
+            MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar5,0x21);
           }
-          uVar7 = uVar7 & ~*(uint *)(&g_bitShift + (int)(uVar6 << 2));
-          (*param_3)(pFVar2,(FxGlassTrace *)lVar3,uVar5 << 5 | (uint)uVar6);
-        } while (uVar7 != 0);
+          uVar6 = uVar6 & ~*(uint *)((int)&DAT_82992400 + (int)(uVar5 << 2));
+          (*param_3)(iVar2,param_2,(uVar4 & 0x7ffffff) << 5 | uVar5);
+        } while (uVar6 != 0);
       }
-      uVar5 = uVar5 + 1;
-      iVar4 = iVar4 + 4;
-    } while (uVar5 < uVar1);
+      uVar4 = uVar4 + 1;
+      iVar3 = iVar3 + 4;
+    } while ((uVar4 & 0xffffffff) < (ulonglong)uVar1);
   }
   __restgprlr_20();
   return;
@@ -101,203 +88,193 @@ void Glass_ForEachPiece<FxGlassTrace_*,void_(__cdecl*)(FxGlassSystem_*___restric
 
 // 8242EA98  Glass_DoesPieceContainPoint  (EffectsCore/fx_glass_trace.cpp:85)
 
-bool Glass_DoesPieceContainPoint
-               (FxGlassPieceState *param_1,FxGlassGeometryData *param_2,int *param_3)
+void Glass_DoesPieceContainPoint(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
   ushort uVar1;
-  FxGlassVertex *pFVar2;
-  ushort *puVar3;
-  ulonglong uVar4;
-  int iVar5;
-  bool bVar7;
-  undefined1 uVar8;
-  FxGlassVertex *pFVar6;
-  longlong lVar9;
-  ulonglong uVar10;
-  uint *puVar11;
-  ulonglong uVar12;
+  ushort *puVar2;
+  ulonglong uVar3;
+  int iVar4;
+  char cVar5;
+  ulonglong uVar6;
+  uint *puVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  uint *puVar10;
+  ulonglong uVar11;
+  longlong lVar12;
   ulonglong uVar13;
-  ulonglong uVar14;
-  uint *puVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
   uint local_a0 [40];
   
-  lVar9 = (longlong)(int)param_2;
-  iVar5 = __savegprlr_22(param_1);
-  uVar17 = (ulonglong)*(byte *)(iVar5 + 0x16);
-  pFVar2 = (FxGlassVertex *)lVar9;
-  bVar7 = Glass_DoesEdgeLoopContainPoint(pFVar2,pFVar2 + 1,*(byte *)(iVar5 + 0x16) - 1,0,param_3);
-  if (!bVar7) {
+  iVar4 = __savegprlr_22();
+  uVar13 = (ulonglong)*(byte *)(iVar4 + 0x16);
+  cVar5 = Glass_DoesEdgeLoopContainPoint(param_2,param_2 + 4,uVar13 - 1,0,param_3);
+  if (cVar5 == '\0') {
 LAB_8242ead8:
-    uVar8 = __restgprlr_22(0);
-    return (bool)uVar8;
+    __restgprlr_22(0);
+    return;
   }
-  if ((ulonglong)*(byte *)(iVar5 + 0x17) != 0) {
-    uVar12 = uVar17 * 4 + lVar9;
-    uVar14 = (ulonglong)*(byte *)(iVar5 + 0x17) * 4 + uVar12;
-    uVar16 = 0;
-    puVar15 = local_a0;
+  if ((ulonglong)*(byte *)(iVar4 + 0x17) != 0) {
+    uVar8 = uVar13 * 4 + param_2;
+    uVar9 = (ulonglong)*(byte *)(iVar4 + 0x17) * 4 + uVar8;
+    uVar11 = 0;
+    puVar10 = local_a0;
     do {
-      puVar3 = (ushort *)uVar12;
-      uVar10 = (ulonglong)*(byte *)(puVar3 + 1);
-      pFVar6 = (FxGlassVertex *)(uVar12 + 4);
-      if (uVar10 == 0xff) {
-        bVar7 = Glass_DoesEdgeLoopContainPoint
-                          (pFVar6,(FxGlassVertex *)(puVar3 + 4),*puVar3 - 1,1,param_3);
+      puVar2 = (ushort *)uVar8;
+      uVar6 = (ulonglong)*(byte *)(puVar2 + 1);
+      lVar12 = uVar8 + 4;
+      if (uVar6 == 0xff) {
+        cVar5 = Glass_DoesEdgeLoopContainPoint(lVar12,uVar8 + 8,(ulonglong)*puVar2 - 1,1,param_3);
       }
       else {
-        uVar13 = uVar16;
-        puVar11 = puVar15;
-        uVar4 = uVar16 & 0xffffffff;
-        while ((uVar4 != 0 && (puVar11 = puVar11 + -1, uVar10 < *puVar11))) {
-          uVar13 = uVar13 - 1;
-          uVar4 = uVar13;
+        uVar8 = uVar11;
+        puVar7 = puVar10;
+        uVar3 = uVar11 & 0xffffffff;
+        while ((uVar3 != 0 && (puVar7 = puVar7 + -1, uVar6 < *puVar7))) {
+          uVar8 = uVar8 - 1;
+          uVar3 = uVar8;
         }
-        bVar7 = Glass_DoesEdgeLoopContainPoint
-                          ((FxGlassVertex *)
-                           ((int)&pFVar2->x + (int)((uVar10 + uVar13 & 0xffffffff) << 2)),pFVar6,
-                           (uint)*puVar3,1,param_3);
+        cVar5 = Glass_DoesEdgeLoopContainPoint
+                          ((uVar6 + uVar8 & 0x3fffffff) * 4 + param_2,lVar12,*puVar2,1,param_3);
       }
-      if (!bVar7) goto LAB_8242ead8;
-      if (0xe < (uVar16 & 0xffffffff)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_trace.cpp"
-                        ,0x7d,0,
-                        "holeCount doesn\'t index ARRAY_COUNT( firstHoleVert )\n\t%i not in [0, %i)"
-                       );
+      if (cVar5 == '\0') goto LAB_8242ead8;
+      if (0xe < (uVar11 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff82064f40,0x7d,0,0xffffffff82064ef8,uVar11,0xf);
       }
-      uVar1 = *puVar3;
-      uVar16 = uVar16 + 1;
-      *puVar15 = (uint)uVar17;
-      puVar15 = puVar15 + 1;
-      uVar17 = uVar1 + uVar17;
-      uVar12 = (ulonglong)uVar1 * 4 + uVar12 + 4;
-    } while ((uVar12 & 0xffffffff) != (uVar14 & 0xffffffff));
+      uVar1 = *puVar2;
+      uVar11 = uVar11 + 1;
+      *puVar10 = (uint)uVar13;
+      puVar10 = puVar10 + 1;
+      uVar13 = uVar1 + uVar13;
+      uVar8 = (ulonglong)uVar1 * 4 + lVar12;
+    } while ((uVar8 & 0xffffffff) != (uVar9 & 0xffffffff));
   }
-  uVar8 = __restgprlr_22(1);
-  return (bool)uVar8;
+  __restgprlr_22(1);
+  return;
 }
 
 
 // 8242EC00  Glass_CompareTraceHits  (EffectsCore/fx_glass_trace.cpp:137)
 
-bool Glass_CompareTraceHits(FxGlassTraceHit *param_1,FxGlassTraceHit *param_2)
+bool Glass_CompareTraceHits(int param_1,int param_2)
 
 {
-  return param_1->dist < param_2->dist;
+  return *(float *)(param_1 + 8) < *(float *)(param_2 + 8);
 }
 
 
 // 8242EC20  Glass_TraceAgainstPiece  (EffectsCore/fx_glass_trace.cpp:143)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Glass_TraceAgainstPiece(FxGlassSystem *param_1,FxGlassTrace *param_2,uint param_3)
+void Glass_TraceAgainstPiece(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  uint uVar4;
-  float *pfVar5;
-  FxGlassPieceState *pFVar6;
+  int iVar4;
+  int iVar5;
   int iVar7;
-  bool bVar9;
-  short sVar8;
-  float (*pafVar10) [3];
-  double dVar11;
-  double dVar12;
+  longlong lVar6;
+  char cVar9;
+  undefined2 uVar8;
+  float *pfVar10;
+  longlong lVar11;
+  longlong lVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
+  double dVar18;
+  double dVar19;
   int local_80;
   int iStack_7c;
   longlong local_78;
   
-  __savegprlr_24(param_1);
+  __savegprlr_24();
   iVar7 = __savefpr_27();
-  pfVar5 = (float *)(*(int *)(iVar7 + 0x34) + param_3 * 0x20);
-  uVar4 = param_2->hitCount;
-  dVar14 = (double)(pfVar5[4] - param_2->start[0]);
-  dVar13 = (double)(pfVar5[5] - param_2->start[1]);
-  dVar12 = (double)(pfVar5[6] - param_2->start[2]);
-  dVar17 = 0.0;
-  dVar15 = (double)(float)((double)param_2->dir[2] * dVar12 +
-                          (double)(float)((double)param_2->dir[1] * dVar13 +
-                                         (double)(float)((double)param_2->dir[0] * dVar14)));
-  dVar11 = (double)param_2->len;
-  if ((float)(dVar15 - (double)param_2->len) < 0.0) {
-    dVar11 = dVar15;
+  lVar12 = (param_3 & 0x7ffffff) * 0x20;
+  pfVar10 = (float *)param_2;
+  lVar6 = (ulonglong)*(uint *)(iVar7 + 0x34) + lVar12;
+  iVar4 = (int)lVar6;
+  dVar16 = (double)(*(float *)(iVar4 + 0x10) - *pfVar10);
+  dVar15 = (double)(*(float *)(iVar4 + 0x14) - pfVar10[1]);
+  dVar14 = (double)(*(float *)(iVar4 + 0x18) - pfVar10[2]);
+  dVar19 = 0.0;
+  lVar11 = ((ulonglong)(uint)pfVar10[7] + ((ulonglong)(uint)pfVar10[7] & 0x7fffffff) * 2 & 0xfffffff
+           ) * 0x10 + param_2;
+  iVar5 = (int)lVar11;
+  dVar17 = (double)(float)((double)pfVar10[5] * dVar14 +
+                          (double)(float)((double)pfVar10[4] * dVar15 +
+                                         (double)(float)((double)pfVar10[3] * dVar16)));
+  dVar13 = (double)pfVar10[6];
+  if ((float)(dVar17 - (double)pfVar10[6]) < 0.0) {
+    dVar13 = dVar17;
   }
-  dVar16 = dVar17;
-  if (-dVar15 < 0.0) {
-    dVar16 = dVar11;
+  dVar18 = dVar19;
+  if (-dVar17 < 0.0) {
+    dVar18 = dVar13;
   }
-  dVar16 = -dVar16;
-  fVar1 = (float)((double)param_2->dir[1] * dVar16 + dVar13);
-  fVar2 = (float)((double)param_2->dir[2] * dVar16 + dVar12);
-  fVar3 = (float)((double)param_2->dir[0] * dVar16 + dVar14);
-  if (fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1 <= pfVar5[7] * pfVar5[7]) {
-    pafVar10 = param_2->hits[uVar4].axis;
-    UnitQuatToAxis(pfVar5,pafVar10);
-    dVar11 = (double)param_2->hits[uVar4].axis[2][1];
-    dVar13 = (double)param_2->hits[uVar4].axis[2][0];
-    dVar12 = (double)param_2->hits[uVar4].axis[2][2];
-    fVar1 = (float)(dVar12 * (double)param_2->dir[2] +
-                   (double)(float)(dVar13 * (double)param_2->dir[0] +
-                                  (double)(float)(dVar11 * (double)param_2->dir[1])));
+  dVar18 = -dVar18;
+  fVar1 = (float)((double)pfVar10[4] * dVar18 + dVar15);
+  fVar2 = (float)((double)pfVar10[5] * dVar18 + dVar14);
+  fVar3 = (float)((double)pfVar10[3] * dVar18 + dVar16);
+  if (fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1 <=
+      *(float *)(iVar4 + 0x1c) * *(float *)(iVar4 + 0x1c)) {
+    lVar11 = lVar11 + 0x2c;
+    UnitQuatToAxis(lVar6,lVar11);
+    fVar1 = (float)((double)*(float *)(iVar5 + 0x4c) * (double)pfVar10[5] +
+                   (double)(float)((double)*(float *)(iVar5 + 0x44) * (double)pfVar10[3] +
+                                  (double)(float)((double)*(float *)(iVar5 + 0x48) *
+                                                 (double)pfVar10[4])));
     if (0.001 <= ABS(fVar1)) {
-      dVar16 = (double)(pfVar5[5] - param_2->start[1]);
-      dVar15 = (double)(pfVar5[4] - param_2->start[0]);
-      dVar14 = (double)(pfVar5[6] - param_2->start[2]);
-      fVar1 = (float)(dVar12 * dVar14 +
-                     (double)(float)(dVar13 * dVar15 + (double)(float)(dVar11 * dVar16))) / fVar1;
-      dVar11 = (double)fVar1;
-      param_2->hits[uVar4].dist = fVar1;
-      if ((dVar17 < dVar11) && (dVar11 < (double)param_2->len)) {
-        dVar15 = (double)(float)(dVar11 * (double)param_2->dir[0] - dVar15);
-        dVar13 = (double)(float)((double)param_2->dir[1] * dVar11 - dVar16);
-        dVar12 = (double)(float)((double)param_2->dir[2] * dVar11 - dVar14);
-        dVar17 = 32.0;
-        dVar14 = 0.5;
-        dVar11 = floor((double)((float)((double)param_2->hits[uVar4].axis[0][2] * dVar12 +
-                                       (double)(float)((double)param_2->hits[uVar4].axis[0][1] *
-                                                       dVar13 + (double)(float)(dVar15 * (double)(*
-                                                  pafVar10)[0]))) * 32.0 + 0.5));
-        iStack_7c = (int)dVar11;
+      dVar16 = (double)(*(float *)(iVar4 + 0x14) - pfVar10[1]);
+      dVar15 = (double)(*(float *)(iVar4 + 0x10) - *pfVar10);
+      dVar14 = (double)(*(float *)(iVar4 + 0x18) - pfVar10[2]);
+      fVar1 = (float)((double)*(float *)(iVar5 + 0x4c) * dVar14 +
+                     (double)(float)((double)*(float *)(iVar5 + 0x44) * dVar15 +
+                                    (double)(float)((double)*(float *)(iVar5 + 0x48) * dVar16))) /
+              fVar1;
+      dVar13 = (double)fVar1;
+      *(float *)(iVar5 + 0x28) = fVar1;
+      if ((dVar19 < dVar13) && (dVar13 < (double)pfVar10[6])) {
+        dVar17 = (double)(float)(dVar13 * (double)pfVar10[3] - dVar15);
+        dVar15 = (double)(float)((double)pfVar10[4] * dVar13 - dVar16);
+        dVar14 = (double)(float)((double)pfVar10[5] * dVar13 - dVar14);
+        dVar19 = 32.0;
+        dVar16 = 0.5;
+        dVar13 = floor((double)((float)((double)*(float *)(iVar5 + 0x34) * dVar14 +
+                                       (double)(float)((double)*(float *)(iVar5 + 0x30) * dVar15 +
+                                                      (double)(float)(dVar17 * (double)*(float *)
+                                                  lVar11))) * 32.0 + 0.5));
+        iStack_7c = (int)dVar13;
         local_80 = iStack_7c;
-        dVar11 = floor((double)(float)((double)(float)((double)param_2->hits[uVar4].axis[1][2] *
-                                                       dVar12 + (double)(float)((double)param_2->
-                                                  hits[uVar4].axis[1][1] * dVar13 +
-                                                  (double)(float)((double)param_2->hits[uVar4].axis
-                                                                          [1][0] * dVar15))) *
-                                       dVar17 + dVar14));
-        pFVar6 = (FxGlassPieceState *)(*(int *)(iVar7 + 0x38) + param_3 * 0x20);
-        local_78 = (longlong)(int)dVar11;
-        _local_80 = CONCAT44(local_80,(int)dVar11);
-        bVar9 = Glass_DoesPieceContainPoint
-                          (pFVar6,(FxGlassGeometryData *)
-                                  ((uint)pFVar6->geoDataStart * 4 + *(int *)(iVar7 + 0x40)),
-                           &local_80);
-        if (bVar9) {
-          sVar8 = truncate_cast<short>(local_80);
-          param_2->hits[uVar4].breakOrg.x = sVar8;
-          sVar8 = truncate_cast<short>(iStack_7c);
-          param_2->hits[uVar4].breakOrg.y = sVar8;
-          param_2->hits[uVar4].pieceIndex = param_3;
-          if (param_2->hitCount == 4) {
-            std::
-            _Sort<FxGlassTraceHit_*,int,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-                      (param_2->hits,(FxGlassTraceHit *)(param_2 + 1),
-                       ((int)(param_2 + 1) - (int)param_2->hits) / 0x30,Glass_CompareTraceHits);
+        dVar13 = floor((double)(float)((double)(float)((double)*(float *)(iVar5 + 0x40) * dVar14 +
+                                                      (double)(float)((double)*(float *)(iVar5 + 
+                                                  0x3c) * dVar15 +
+                                                  (double)(float)((double)*(float *)(iVar5 + 0x38) *
+                                                                 dVar17))) * dVar19 + dVar16));
+        lVar12 = (ulonglong)*(uint *)(iVar7 + 0x38) + lVar12;
+        local_78 = (longlong)(int)dVar13;
+        _local_80 = CONCAT44(local_80,(int)dVar13);
+        cVar9 = Glass_DoesPieceContainPoint
+                          (lVar12,(ulonglong)*(ushort *)((int)lVar12 + 0xe) * 4 +
+                                  (ulonglong)*(uint *)(iVar7 + 0x40),&local_80);
+        if (cVar9 != '\0') {
+          uVar8 = truncate_cast<short>(local_80);
+          *(undefined2 *)(iVar5 + 0x20) = uVar8;
+          uVar8 = truncate_cast<short>(iStack_7c);
+          *(undefined2 *)(iVar5 + 0x22) = uVar8;
+          *(int *)(iVar5 + 0x24) = (int)param_3;
+          if (pfVar10[7] == 5.60519e-45) {
+            std___Sort<FxGlassTraceHit_*,int,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+                      (param_2 + 0x20,param_2 + 0x110,
+                       ((int)(param_2 + 0x110) - (int)(param_2 + 0x20)) / 0x30,0xffffffff8242ec00);
             __restfpr_27();
             __restgprlr_24();
             return;
           }
-          param_2->hitCount = param_2->hitCount + 1;
+          pfVar10[7] = (float)((int)pfVar10[7] + 1);
         }
       }
     }
@@ -310,261 +287,259 @@ void Glass_TraceAgainstPiece(FxGlassSystem *param_1,FxGlassTrace *param_2,uint p
 
 // 8242EEB0  Glass_TraceLine  (EffectsCore/fx_glass_trace.cpp:195)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Glass_TraceLine(FxGlassSystem *param_1,float *param_2,float *param_3,float *param_4)
+void Glass_TraceLine(undefined8 param_1,float *param_2,float *param_3,undefined8 param_4)
 
 {
   float fVar1;
-  FxGlassSystem *pFVar2;
+  int iVar2;
   int iVar3;
   uint uVar4;
-  uint *puVar5;
+  int *piVar5;
   float local_150;
   float local_14c;
   float local_148;
-  FxGlassTrace local_140;
+  float local_140;
+  float local_13c;
+  float local_138;
+  float local_134;
+  float local_130;
+  float local_12c;
+  float local_128;
+  uint local_124;
+  int local_11c [71];
   
-  pFVar2 = (FxGlassSystem *)__savegprlr_27(param_1);
-  iVar3 = R_UpdateGlassPending((void *)0x0);
+  iVar2 = __savegprlr_27();
+  iVar3 = R_UpdateGlassPending(0);
   if (iVar3 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_trace.cpp"
-                    ,0xcb,0,"%s");
+    MyAssertHandler(0xffffffff82064f40,0xcb,0,0xffffffff82000f98,0xffffffff82017618);
   }
-  if ((glass_break->current).enabled != false) {
-    local_140.start[1] = param_2[1];
+  if (*(char *)(DAT_8332cc14 + 0xc) != '\0') {
+    local_13c = param_2[1];
     uVar4 = 0;
-    local_140.dir[1] = param_3[1] - local_140.start[1];
-    local_140.start[2] = param_2[2];
-    local_140.hitCount = 0;
-    local_140.dir[2] = param_3[2] - local_140.start[2];
-    local_140.start[0] = *param_2;
-    local_140.dir[0] = *param_3 - local_140.start[0];
-    local_140.len =
-         SQRT(local_140.dir[0] * local_140.dir[0] +
-              local_140.dir[2] * local_140.dir[2] + local_140.dir[1] * local_140.dir[1]);
+    local_130 = param_3[1] - local_13c;
+    local_138 = param_2[2];
+    local_124 = 0;
+    local_12c = param_3[2] - local_138;
+    local_140 = *param_2;
+    local_134 = *param_3 - local_140;
+    local_128 = SQRT(local_134 * local_134 + local_12c * local_12c + local_130 * local_130);
     fVar1 = 1.0;
-    if (-local_140.len < 0.0) {
-      fVar1 = local_140.len;
+    if (-local_128 < 0.0) {
+      fVar1 = local_128;
     }
     fVar1 = 1.0 / fVar1;
-    local_140.dir[0] = fVar1 * local_140.dir[0];
-    local_140.dir[1] = local_140.dir[1] * fVar1;
-    local_140.dir[2] = local_140.dir[2] * fVar1;
+    local_134 = fVar1 * local_134;
+    local_130 = local_130 * fVar1;
+    local_12c = local_12c * fVar1;
     Glass_ForEachPiece<FxGlassTrace_*,void_(__cdecl*)(FxGlassSystem_*___restrict,FxGlassTrace_*___restrict,unsigned_int)>
-              (pFVar2,&local_140,Glass_TraceAgainstPiece);
-    if (local_140.hitCount != 0) {
-      puVar5 = &local_140.hits[0].pieceIndex;
+              (iVar2,&local_140,0xffffffff8242ec20);
+    if (local_124 != 0) {
+      piVar5 = local_11c;
       do {
-        if ((pFVar2->pieceStates[*puVar5].flags & 2) != 0) {
-          fVar1 = (float)puVar5[1];
-          local_150 = fVar1 * local_140.dir[0] + *param_2;
-          local_14c = local_140.dir[1] * fVar1 + param_2[1];
-          local_148 = local_140.dir[2] * fVar1 + param_2[2];
-          Glass_DestroySimplePiece(pFVar2,*puVar5,&local_150,local_140.dir,param_4);
+        if ((*(ushort *)(*piVar5 * 0x20 + *(int *)(iVar2 + 0x38) + 0x1a) & 2) != 0) {
+          fVar1 = (float)piVar5[1];
+          local_150 = fVar1 * local_134 + *param_2;
+          local_14c = local_130 * fVar1 + param_2[1];
+          local_148 = local_12c * fVar1 + param_2[2];
+          Glass_DestroySimplePiece(iVar2,*piVar5,&local_150,&local_134,param_4);
         }
         uVar4 = uVar4 + 1;
-        puVar5 = puVar5 + 0xc;
-      } while (uVar4 < local_140.hitCount);
+        piVar5 = piVar5 + 0xc;
+      } while (uVar4 < local_124);
     }
-    Glass_CompactData(pFVar2);
+    Glass_CompactData(iVar2);
   }
   __restgprlr_27();
   return;
 }
 
 
-// 8242F100  _Push_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+// 8242F100  std::_Push_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+void std___Push_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+               (undefined8 param_1,ulonglong param_2,int param_3,undefined8 param_4,code *param_5)
 
-void std::
-     _Push_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-               (FxGlassTraceHit *param_1,int param_2,int param_3,FxGlassTraceHit *param_4,
-               _func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *param_5)
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  char cVar5;
+  void *pvVar4;
+  int iVar6;
+  uint uVar7;
+  longlong lVar8;
+  int iVar9;
+  
+  lVar3 = __savegprlr_25();
+  iVar9 = (int)param_2;
+  uVar7 = iVar9 - 1;
+  uVar2 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  while (uVar1 = uVar2, param_3 < iVar9) {
+    lVar8 = (uVar1 + (uVar1 & 0x7fffffff) * 2 & 0xfffffff) * 0x10 + lVar3;
+    cVar5 = (*param_5)(lVar8,param_4);
+    if (cVar5 == '\0') break;
+    memcpy((void *)((int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 4) + (int)lVar3),
+           (void *)lVar8,0x30);
+    iVar6 = (int)(uVar1 - 1);
+    uVar2 = (longlong)(iVar6 >> 1) + (ulonglong)(iVar6 < 0 && (uVar1 - 1 & 1) != 0);
+    param_2 = uVar1;
+    iVar9 = (int)uVar1;
+  }
+  pvVar4 = memcpy((void *)((int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 4) +
+                          (int)lVar3),(void *)param_4,0x30);
+  __restgprlr_25(pvVar4);
+  return;
+}
+
+
+// 8242F1B8  std::_Adjust_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+
+void std___Adjust_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+               code *param_5)
 
 {
   int iVar1;
-  int iVar2;
-  int iVar3;
-  bool bVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  uint uVar8;
-  
-  lVar7 = (longlong)(int)param_4;
-  lVar6 = (longlong)param_3;
-  lVar5 = (longlong)param_2;
-  iVar3 = __savegprlr_25(param_1,lVar5,lVar6,lVar7);
-  uVar8 = (int)lVar5 - 1;
-  iVar2 = (int)lVar5;
-  iVar1 = ((int)uVar8 >> 1) + (uint)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-  while (((int)lVar6 < iVar2 &&
-         (bVar4 = (*param_5)((FxGlassTraceHit *)(iVar1 * 0x30 + iVar3),(FxGlassTraceHit *)lVar7),
-         bVar4))) {
-    memcpy();
-    uVar8 = iVar1 - 1;
-    iVar2 = iVar1;
-    iVar1 = ((int)uVar8 >> 1) + (uint)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-  }
-  memcpy();
-  __restgprlr_25();
-  return;
-}
-
-
-// 8242F1B8  _Adjust_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Adjust_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-               (FxGlassTraceHit *param_1,int param_2,int param_3,FxGlassTraceHit *param_4,
-               _func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *param_5)
-
-{
-  FxGlassTraceHit *pFVar1;
-  int iVar2;
-  bool bVar3;
-  longlong lVar4;
-  longlong lVar5;
+  longlong lVar2;
+  longlong lVar3;
+  char cVar5;
+  void *pvVar4;
   int iVar6;
-  longlong lVar7;
-  uint uVar8;
-  int iVar9;
-  longlong lVar10;
+  uint uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
   int iVar11;
+  ulonglong uVar10;
   
-  lVar7 = (longlong)(int)param_4;
-  lVar5 = (longlong)param_3;
-  lVar4 = (longlong)param_2;
-  iVar2 = __savegprlr_25(param_1,lVar4,lVar5,lVar7);
-  lVar10 = (lVar4 + 1U & 0x7fffffff) << 1;
-  iVar6 = (int)lVar5;
-  iVar11 = (int)lVar10;
-  iVar9 = (int)lVar4;
-  while (iVar11 < iVar6) {
-    pFVar1 = (FxGlassTraceHit *)((int)lVar10 * 0x30 + iVar2);
-    bVar3 = (*param_5)(pFVar1,pFVar1 + -1);
-    if (bVar3) {
-      lVar10 = lVar10 + -1;
+  lVar2 = __savegprlr_25();
+  uVar9 = (param_2 + 1 & 0x7fffffff) << 1;
+  iVar1 = (int)lVar2;
+  iVar11 = (int)uVar9;
+  uVar8 = param_2;
+  while (uVar10 = uVar9, iVar11 < (int)param_3) {
+    lVar3 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0xfffffff) * 0x10 + lVar2;
+    cVar5 = (*param_5)(lVar3,lVar3 + -0x30);
+    if (cVar5 != '\0') {
+      uVar10 = uVar10 - 1;
     }
-    iVar9 = (int)lVar10;
-    memcpy();
-    lVar10 = (lVar10 + 1U & 0x7fffffff) << 1;
-    iVar11 = (int)lVar10;
+    memcpy((void *)((int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar1),
+           (void *)((int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar1),0x30);
+    uVar9 = (uVar10 + 1 & 0x7fffffff) << 1;
+    iVar11 = (int)uVar9;
+    uVar8 = uVar10;
   }
-  if (iVar11 == iVar6) {
-    memcpy();
-    iVar9 = iVar6 + -1;
+  if (iVar11 == (int)param_3) {
+    memcpy((void *)((int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar1),
+           (void *)((int)((param_3 + (param_3 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar1 + -0x30)
+           ,0x30);
+    uVar8 = param_3 - 1;
   }
-  uVar8 = iVar9 - 1;
-  iVar11 = ((int)uVar8 >> 1) + (uint)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-  while (((int)lVar4 < iVar9 &&
-         (bVar3 = (*param_5)((FxGlassTraceHit *)(iVar11 * 0x30 + iVar2),(FxGlassTraceHit *)lVar7),
-         bVar3))) {
-    memcpy();
-    uVar8 = iVar11 - 1;
-    iVar9 = iVar11;
-    iVar11 = ((int)uVar8 >> 1) + (uint)((int)uVar8 < 0 && (uVar8 & 1) != 0);
+  iVar11 = (int)uVar8;
+  uVar7 = iVar11 - 1;
+  uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  while (uVar10 = uVar9, (int)param_2 < iVar11) {
+    lVar3 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0xfffffff) * 0x10 + lVar2;
+    cVar5 = (*param_5)(lVar3,param_4);
+    if (cVar5 == '\0') break;
+    memcpy((void *)((int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar1),
+           (void *)lVar3,0x30);
+    iVar6 = (int)(uVar10 - 1);
+    uVar9 = (longlong)(iVar6 >> 1) + (ulonglong)(iVar6 < 0 && (uVar10 - 1 & 1) != 0);
+    uVar8 = uVar10;
+    iVar11 = (int)uVar10;
   }
-  memcpy();
-  __restgprlr_25();
+  pvVar4 = memcpy((void *)((int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar1),
+                  (void *)param_4,0x30);
+  __restgprlr_25(pvVar4);
   return;
 }
 
 
-// 8242F328  _Make_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+// 8242F328  std::_Make_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Make_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-               (FxGlassTraceHit *param_1,FxGlassTraceHit *param_2,
-               _func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *param_3,int *param_4,
-               FxGlassTraceHit *param_5)
+void std___Make_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+               (undefined8 param_1,int param_2,undefined8 param_3)
 
 {
   uint uVar1;
-  FxGlassTraceHit *pFVar2;
-  bool bVar3;
+  int iVar2;
+  longlong lVar3;
   longlong lVar4;
-  longlong lVar5;
+  char cVar5;
   longlong lVar6;
-  int iVar7;
+  ulonglong uVar7;
   int iVar8;
-  longlong lVar9;
-  uint uVar10;
-  FxGlassTraceHit aFStack_80 [2];
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  undefined1 auStack_80 [128];
   
-  lVar4 = (longlong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  pFVar2 = (FxGlassTraceHit *)__savegprlr_24(param_1,lVar6,lVar4,param_4,param_5);
-  uVar1 = ((int)lVar6 - (int)pFVar2) / 0x30;
-  lVar6 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < lVar6) {
-    lVar5 = (lVar6 + 1U & 0x7fffffff) << 1;
+  lVar3 = __savegprlr_24();
+  iVar2 = (int)lVar3;
+  uVar1 = (param_2 - iVar2) / 0x30;
+  uVar9 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar9) {
+    uVar7 = (uVar9 + 1 & 0x7fffffff) << 1;
+    lVar6 = (uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xfffffff) * 0x10 + lVar3;
     do {
-      lVar6 = lVar6 + -1;
-      iVar7 = (int)lVar6;
-      lVar5 = lVar5 + -2;
-      memcpy();
-      uVar10 = (uint)lVar5;
-      lVar9 = lVar5;
-      iVar8 = iVar7;
-      while ((int)uVar10 < (int)uVar1) {
-        bVar3 = (*(_func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *)lVar4)
-                          (pFVar2 + (int)lVar9,pFVar2 + (int)lVar9 + -1);
-        if (bVar3) {
-          lVar9 = lVar9 + -1;
+      lVar6 = lVar6 + -0x30;
+      uVar9 = uVar9 - 1;
+      uVar7 = uVar7 - 2;
+      memcpy(auStack_80,(void *)lVar6,0x30);
+      iVar8 = (int)uVar7;
+      uVar10 = uVar9;
+      uVar11 = uVar7;
+      while (iVar8 < (int)uVar1) {
+        lVar4 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xfffffff) * 0x10 + lVar3;
+        cVar5 = (*(code *)param_3)(lVar4,lVar4 + -0x30);
+        if (cVar5 != '\0') {
+          uVar11 = uVar11 - 1;
         }
-        iVar8 = (int)lVar9;
-        memcpy();
-        lVar9 = (lVar9 + 1U & 0x7fffffff) << 1;
-        uVar10 = (uint)lVar9;
+        memcpy((void *)((int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar2),
+               (void *)((int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar2),0x30)
+        ;
+        uVar12 = (uVar11 + 1 & 0x7fffffff) << 1;
+        uVar10 = uVar11;
+        uVar11 = uVar12;
+        iVar8 = (int)uVar12;
       }
-      if (uVar10 == uVar1) {
-        memcpy();
-        iVar8 = uVar1 - 1;
+      if ((uint)uVar11 == uVar1) {
+        memcpy((void *)((int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar2),
+               (void *)((int)(((longlong)(int)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 &
+                              0xffffffff) << 4) + iVar2 + -0x30),0x30);
+        uVar10 = (longlong)(int)uVar1 - 1;
       }
-      _Push_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-                (pFVar2,iVar8,iVar7,aFStack_80,
-                 (_func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *)lVar4);
-    } while (0 < iVar7);
+      std___Push_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+                (lVar3,uVar10,uVar9,auStack_80,param_3);
+    } while (0 < (int)uVar9);
   }
   __restgprlr_24();
   return;
 }
 
 
-// 8242FAA8  _Sort_heap<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+// 8242FAA8  std::_Sort_heap<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Sort_heap<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-               (FxGlassTraceHit *param_1,FxGlassTraceHit *param_2,
-               _func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *param_3)
+void std___Sort_heap<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
   longlong lVar1;
   longlong lVar2;
-  longlong lVar3;
-  FxGlassTraceHit aFStack_60 [2];
+  undefined1 auStack_60 [96];
   
-  lVar3 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_27(param_1);
-  lVar2 = lVar3 - lVar1;
+  lVar1 = __savegprlr_27();
+  lVar2 = param_2 - lVar1;
   if (1 < (int)lVar2 / 0x30) {
-    lVar3 = lVar3 + -0x30;
+    param_2 = param_2 + -0x30;
     do {
-      memcpy();
-      memcpy();
-      _Adjust_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-                ((FxGlassTraceHit *)lVar1,0,((int)lVar2 + -0x30) / 0x30,aFStack_60,param_3);
-      lVar3 = lVar3 + -0x30;
-      lVar2 = (lVar3 - lVar1) + 0x30;
+      memcpy(auStack_60,(void *)param_2,0x30);
+      memcpy((void *)param_2,(void *)lVar1,0x30);
+      std___Adjust_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+                (lVar1,0,((int)lVar2 + -0x30) / 0x30,auStack_60,param_3);
+      param_2 = param_2 + -0x30;
+      lVar2 = (param_2 - lVar1) + 0x30;
     } while (1 < (int)lVar2 / 0x30);
   }
   __restgprlr_27();
@@ -572,360 +547,336 @@ void std::
 }
 
 
-// 8242F628  _Insertion_sort1<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&),FxGlassTraceHit>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+// 8242F628  std::_Insertion_sort1<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&),FxGlassTraceHit>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Insertion_sort1<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&),FxGlassTraceHit>
-               (FxGlassTraceHit *param_1,FxGlassTraceHit *param_2,
-               _func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *param_3,
-               FxGlassTraceHit *param_4)
+void std___Insertion_sort1<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&),FxGlassTraceHit>
+               (undefined8 param_1,ulonglong param_2,code *param_3)
 
 {
   ulonglong uVar1;
-  char cVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  code *pcVar5;
+  char cVar4;
+  ulonglong uVar2;
+  ulonglong uVar5;
   ulonglong uVar6;
   ulonglong uVar7;
-  ulonglong uVar8;
   undefined1 auStack_70 [112];
+  void *pvVar3;
+  ulonglong uVar8;
   
-  lVar4 = (longlong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_25(param_1,uVar3,lVar4,param_4);
-  if (((uVar1 & 0xffffffff) != (uVar3 & 0xffffffff)) &&
-     (uVar7 = uVar1 + 0x30, uVar6 = uVar1, (uVar7 & 0xffffffff) != (uVar3 & 0xffffffff))) {
+  uVar1 = __savegprlr_25();
+  uVar2 = uVar1;
+  if (((uVar1 & 0xffffffff) != (param_2 & 0xffffffff)) &&
+     (uVar6 = uVar1 + 0x30, uVar5 = uVar1, (uVar6 & 0xffffffff) != (param_2 & 0xffffffff))) {
     do {
-      memcpy();
-      pcVar5 = (code *)lVar4;
-      cVar2 = (*pcVar5)(auStack_70,uVar1);
-      if (cVar2 == '\0') {
-        cVar2 = (*pcVar5)(auStack_70,uVar6);
-        uVar8 = uVar6;
-        while (cVar2 != '\0') {
-          memcpy();
-          uVar8 = uVar8 - 0x30;
-          cVar2 = (*pcVar5)(auStack_70,uVar8);
+      memcpy(auStack_70,(void *)uVar6,0x30);
+      cVar4 = (*param_3)(auStack_70,uVar1);
+      if (cVar4 == '\0') {
+        cVar4 = (*param_3)(auStack_70,uVar5);
+        uVar8 = uVar5;
+        uVar2 = uVar6;
+        while (uVar7 = uVar8, cVar4 != '\0') {
+          memcpy((void *)uVar2,(void *)uVar7,0x30);
+          cVar4 = (*param_3)(auStack_70,uVar7 - 0x30);
+          uVar8 = uVar7 - 0x30;
+          uVar2 = uVar7;
         }
       }
       else {
-        uVar8 = uVar7;
-        if ((uVar1 & 0xffffffff) != (uVar7 & 0xffffffff)) {
+        uVar2 = uVar1;
+        uVar8 = uVar6;
+        if ((uVar1 & 0xffffffff) != (uVar6 & 0xffffffff)) {
           do {
-            uVar8 = uVar8 - 0x30;
-            memcpy();
-          } while ((uVar8 & 0xffffffff) != (uVar1 & 0xffffffff));
+            uVar7 = uVar8 - 0x30;
+            memcpy((void *)uVar8,(void *)uVar7,0x30);
+            uVar8 = uVar7;
+          } while ((uVar7 & 0xffffffff) != (uVar1 & 0xffffffff));
         }
       }
-      memcpy();
-      uVar7 = uVar7 + 0x30;
+      pvVar3 = memcpy((void *)uVar2,auStack_70,0x30);
+      uVar2 = (ulonglong)(int)pvVar3;
       uVar6 = uVar6 + 0x30;
-    } while ((uVar7 & 0xffffffff) != (uVar3 & 0xffffffff));
+      uVar5 = uVar5 + 0x30;
+    } while ((uVar6 & 0xffffffff) != (param_2 & 0xffffffff));
   }
-  __restgprlr_25();
+  __restgprlr_25(uVar2);
   return;
 }
 
 
-// 8242F460  _Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+// 8242F460  std::_Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::_Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-               (FxGlassTraceHit *param_1,FxGlassTraceHit *param_2,FxGlassTraceHit *param_3,
-               _func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *param_4)
+void std___Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,code *param_4)
 
 {
-  FxGlassTraceHit *pFVar1;
-  FxGlassTraceHit *pFVar2;
-  bool bVar3;
-  longlong lVar4;
-  longlong lVar5;
+  undefined8 uVar1;
+  char cVar3;
+  void *pvVar2;
+  void *_Src;
+  undefined1 auStack_60 [96];
+  void *_Src_00;
   
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  pFVar2 = (FxGlassTraceHit *)__savegprlr_28(param_1,lVar4,lVar5);
-  pFVar1 = (FxGlassTraceHit *)lVar4;
-  bVar3 = (*param_4)(pFVar1,pFVar2);
-  if (bVar3) {
-    memcpy();
-    memcpy();
-    memcpy();
+  uVar1 = __savegprlr_28();
+  cVar3 = (*param_4)(param_2,uVar1);
+  _Src = (void *)param_2;
+  _Src_00 = (void *)uVar1;
+  if (cVar3 != '\0') {
+    memcpy(auStack_60,_Src,0x30);
+    memcpy(_Src,_Src_00,0x30);
+    memcpy(_Src_00,auStack_60,0x30);
   }
-  bVar3 = (*param_4)((FxGlassTraceHit *)lVar5,pFVar1);
-  if (bVar3) {
-    memcpy();
-    memcpy();
-    memcpy();
+  cVar3 = (*param_4)(param_3,param_2);
+  if (cVar3 != '\0') {
+    memcpy(auStack_60,(void *)param_3,0x30);
+    memcpy((void *)param_3,_Src,0x30);
+    memcpy(_Src,auStack_60,0x30);
   }
-  bVar3 = (*param_4)(pFVar1,pFVar2);
-  if (bVar3) {
-    memcpy();
-    memcpy();
-    memcpy();
+  pvVar2 = (void *)(*param_4)(param_2,uVar1);
+  if (((uint)pvVar2 & 0xff) != 0) {
+    memcpy(auStack_60,_Src,0x30);
+    memcpy(_Src,_Src_00,0x30);
+    pvVar2 = memcpy(_Src_00,auStack_60,0x30);
   }
-  __restgprlr_28();
+  __restgprlr_28(pvVar2);
   return;
 }
 
 
-// 8242F568  _Median<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+// 8242F568  std::_Median<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Median<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-               (FxGlassTraceHit *param_1,FxGlassTraceHit *param_2,FxGlassTraceHit *param_3,
-               _func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *param_4)
+void std___Median<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
 
 {
   int iVar1;
-  int iVar2;
-  FxGlassTraceHit *pFVar3;
-  FxGlassTraceHit *pFVar4;
-  uint uVar6;
-  ulonglong uVar5;
+  ulonglong uVar2;
+  longlong lVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
   
-  pFVar3 = (FxGlassTraceHit *)__savegprlr_26(param_1);
-  iVar1 = ((int)param_3 - (int)pFVar3) / 0x30;
+  lVar3 = __savegprlr_26();
+  iVar1 = ((int)param_3 - (int)lVar3) / 0x30;
   if (0x28 < iVar1) {
-    uVar6 = iVar1 + 1;
-    uVar5 = (longlong)((int)uVar6 >> 3) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 7) != 0);
-    iVar2 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 5);
-    iVar1 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xfffffff) << 4);
-    pFVar4 = (FxGlassTraceHit *)
-             ((int)&(((FxGlassTraceHit *)(pFVar3->axis + -1))->breakOrg).x + iVar1);
-    _Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-              (pFVar3,pFVar4,
-               (FxGlassTraceHit *)
-               ((int)&(((FxGlassTraceHit *)(pFVar3->axis + -1))->breakOrg).x + iVar2),param_4);
-    _Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-              ((FxGlassTraceHit *)((int)param_2 - iVar1),param_2,
-               (FxGlassTraceHit *)
-               ((int)&(((FxGlassTraceHit *)(param_2->axis + -1))->breakOrg).x + iVar1),param_4);
-    _Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-              ((FxGlassTraceHit *)((int)param_3 - iVar2),(FxGlassTraceHit *)((int)param_3 - iVar1),
-               param_3,param_4);
-    _Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-              (pFVar4,param_2,(FxGlassTraceHit *)((int)param_3 - iVar1),param_4);
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    uVar2 = uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xfffffff;
+    uVar4 = uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x7ffffff;
+    lVar6 = uVar2 * 0x10 + lVar3;
+    std___Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+              (lVar3,lVar6,uVar4 * 0x20 + lVar3);
+    std___Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+              (param_2 + uVar2 * -0x10,param_2,uVar2 * 0x10 + param_2,param_4);
+    lVar3 = param_3 + uVar2 * -0x10;
+    std___Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+              (param_3 + uVar4 * -0x20,lVar3,param_3,param_4);
+    std___Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+              (lVar6,param_2,lVar3,param_4);
     __restgprlr_26();
     return;
   }
-  _Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-            (pFVar3,param_2,param_3,param_4);
+  std___Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+            (lVar3,param_2,param_3);
   __restgprlr_26();
   return;
 }
 
 
-// 8242F738  _Unguarded_partition<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+// 8242F738  std::_Unguarded_partition<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-pair<FxGlassTraceHit_*,FxGlassTraceHit_*>
-std::
-_Unguarded_partition<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-          (FxGlassTraceHit *param_1,FxGlassTraceHit *param_2,
-          _func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *param_3)
+void std___Unguarded_partition<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
-  FxGlassTraceHit *pFVar3;
-  undefined4 *puVar5;
-  bool bVar6;
-  pair<FxGlassTraceHit_*,FxGlassTraceHit_*> pVar4;
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  char cVar4;
+  void *pvVar5;
+  ulonglong uVar6;
+  void *_Src;
   ulonglong uVar7;
   ulonglong uVar8;
-  _func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *in_r6;
   ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
+  void *_Src_00;
+  undefined1 auStack_1b0 [48];
+  undefined1 auStack_180 [48];
+  undefined1 auStack_150 [48];
+  undefined1 auStack_120 [48];
+  undefined1 auStack_f0 [48];
+  undefined1 auStack_c0 [48];
+  undefined1 auStack_90 [144];
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  puVar5 = (undefined4 *)__savegprlr_22(param_1);
-  uVar1 = ((int)uVar8 - (int)(FxGlassTraceHit *)uVar7) / 0x30;
-  uVar9 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  uVar9 = (uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xfffffff) * 0x10 + uVar7;
-  _Median<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-            ((FxGlassTraceHit *)uVar7,(FxGlassTraceHit *)uVar9,
-             (FxGlassTraceHit *)((int)uVar8 + -0x30),in_r6);
-  uVar10 = uVar9 + 0x30;
-  if ((uVar7 & 0xffffffff) < (uVar9 & 0xffffffff)) {
+  puVar3 = (undefined4 *)__savegprlr_22();
+  uVar2 = ((int)param_3 - (int)param_2) / 0x30;
+  uVar6 = (longlong)((int)uVar2 >> 1) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0);
+  uVar9 = (uVar6 + (uVar6 & 0x7fffffff) * 2 & 0xfffffff) * 0x10 + param_2;
+  std___Median<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+            (param_2,uVar9,param_3 - 0x30);
+  uVar6 = uVar9 + 0x30;
+  if ((param_2 & 0xffffffff) < (uVar9 & 0xffffffff)) {
     do {
-      uVar11 = uVar9 - 0x30;
-      bVar6 = (*in_r6)((FxGlassTraceHit *)uVar11,(FxGlassTraceHit *)uVar9);
-      if ((bVar6) || (bVar6 = (*in_r6)((FxGlassTraceHit *)uVar9,(FxGlassTraceHit *)uVar11), bVar6))
-      break;
-      uVar9 = uVar11;
-    } while ((uVar7 & 0xffffffff) < (uVar11 & 0xffffffff));
+      uVar7 = uVar9 - 0x30;
+      cVar4 = (*param_4)(uVar7,uVar9);
+      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar9,uVar7), cVar4 != '\0')) break;
+      uVar9 = uVar7;
+    } while ((param_2 & 0xffffffff) < (uVar7 & 0xffffffff));
   }
-  uVar11 = uVar10;
-  uVar12 = uVar9;
-  if ((uVar10 & 0xffffffff) < (uVar8 & 0xffffffff)) {
+  uVar7 = uVar6;
+  uVar10 = uVar9;
+  if ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff)) {
     do {
-      bVar6 = (*in_r6)((FxGlassTraceHit *)uVar10,(FxGlassTraceHit *)uVar9);
-      uVar11 = uVar10;
-      if ((bVar6) || (bVar6 = (*in_r6)((FxGlassTraceHit *)uVar9,(FxGlassTraceHit *)uVar10), bVar6))
-      break;
-      uVar10 = uVar10 + 0x30;
-      uVar11 = uVar10;
-    } while ((uVar10 & 0xffffffff) < (uVar8 & 0xffffffff));
+      cVar4 = (*param_4)(uVar6,uVar9);
+      uVar7 = uVar6;
+      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar9,uVar6), cVar4 != '\0')) break;
+      uVar6 = uVar6 + 0x30;
+      uVar7 = uVar6;
+    } while ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff));
   }
   do {
-    if ((uVar11 & 0xffffffff) < (uVar8 & 0xffffffff)) {
+    uVar8 = uVar6;
+    if ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff)) {
       do {
-        bVar6 = (*in_r6)((FxGlassTraceHit *)uVar12,(FxGlassTraceHit *)uVar11);
-        if (!bVar6) {
-          bVar6 = (*in_r6)((FxGlassTraceHit *)uVar11,(FxGlassTraceHit *)uVar12);
-          if (bVar6) break;
-          uVar10 = uVar10 + 0x30;
-          memcpy();
-          memcpy();
-          memcpy();
+        cVar4 = (*param_4)(uVar10,uVar7);
+        uVar6 = uVar8;
+        if (cVar4 == '\0') {
+          cVar4 = (*param_4)(uVar7,uVar10);
+          if (cVar4 != '\0') break;
+          uVar6 = uVar8 + 0x30;
+          memcpy(auStack_180,(void *)uVar8,0x30);
+          memcpy((void *)uVar8,(void *)uVar7,0x30);
+          memcpy((void *)uVar7,auStack_180,0x30);
         }
-        uVar11 = uVar11 + 0x30;
-      } while ((uVar11 & 0xffffffff) < (uVar8 & 0xffffffff));
+        uVar7 = uVar7 + 0x30;
+        uVar8 = uVar6;
+      } while ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff));
     }
-    bVar6 = (uVar9 & 0xffffffff) == (uVar7 & 0xffffffff);
-    uVar2 = uVar9;
-    if ((uVar7 & 0xffffffff) < (uVar9 & 0xffffffff)) {
+    bVar1 = (uVar9 & 0xffffffff) == (param_2 & 0xffffffff);
+    uVar8 = uVar9;
+    if ((param_2 & 0xffffffff) < (uVar9 & 0xffffffff)) {
       do {
-        pFVar3 = (FxGlassTraceHit *)(uVar2 - 0x30);
-        bVar6 = (*in_r6)(pFVar3,(FxGlassTraceHit *)uVar12);
-        if (!bVar6) {
-          bVar6 = (*in_r6)((FxGlassTraceHit *)uVar12,pFVar3);
-          if (bVar6) break;
-          uVar12 = uVar12 - 0x30;
-          memcpy();
-          memcpy();
-          memcpy();
+        uVar8 = uVar8 - 0x30;
+        cVar4 = (*param_4)(uVar8,uVar10);
+        if (cVar4 == '\0') {
+          cVar4 = (*param_4)(uVar10,uVar8);
+          if (cVar4 != '\0') break;
+          uVar10 = uVar10 - 0x30;
+          memcpy(auStack_c0,(void *)uVar10,0x30);
+          memcpy((void *)uVar10,(void *)uVar8,0x30);
+          memcpy((void *)uVar8,auStack_c0,0x30);
         }
         uVar9 = uVar9 - 0x30;
-        uVar2 = uVar2 - 0x30;
-      } while ((uVar7 & 0xffffffff) < (uVar9 & 0xffffffff));
-      bVar6 = (uVar9 & 0xffffffff) == (uVar7 & 0xffffffff);
+      } while ((param_2 & 0xffffffff) < (uVar9 & 0xffffffff));
+      bVar1 = (uVar9 & 0xffffffff) == (param_2 & 0xffffffff);
     }
-    if (bVar6) {
-      if ((uVar11 & 0xffffffff) == (uVar8 & 0xffffffff)) {
-        *puVar5 = (int)uVar12;
-        puVar5[1] = (int)uVar10;
-        pVar4 = (pair<FxGlassTraceHit_*,FxGlassTraceHit_*>)__restgprlr_22(puVar5);
-        return pVar4;
+    pvVar5 = (void *)uVar7;
+    if (bVar1) {
+      _Src_00 = (void *)uVar10;
+      _Src = (void *)uVar6;
+      if ((uVar7 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        *puVar3 = _Src_00;
+        puVar3[1] = _Src;
+        __restgprlr_22(puVar3);
+        return;
       }
-      if ((uVar10 & 0xffffffff) != (uVar11 & 0xffffffff)) {
-        memcpy();
-        memcpy();
-        memcpy();
+      if ((uVar6 & 0xffffffff) != (uVar7 & 0xffffffff)) {
+        memcpy(auStack_120,_Src_00,0x30);
+        memcpy(_Src_00,_Src,0x30);
+        memcpy(_Src,auStack_120,0x30);
       }
+      uVar6 = uVar6 + 0x30;
+      memcpy(auStack_1b0,_Src_00,0x30);
+      memcpy(_Src_00,pvVar5,0x30);
+      memcpy(pvVar5,auStack_1b0,0x30);
+      uVar7 = uVar7 + 0x30;
       uVar10 = uVar10 + 0x30;
-      memcpy();
-      memcpy();
-      memcpy();
-      uVar11 = uVar11 + 0x30;
-      uVar12 = uVar12 + 0x30;
     }
-    else if ((uVar11 & 0xffffffff) == (uVar8 & 0xffffffff)) {
+    else if ((uVar7 & 0xffffffff) == (param_3 & 0xffffffff)) {
       uVar9 = uVar9 - 0x30;
-      if ((uVar9 & 0xffffffff) != (uVar12 - 0x30 & 0xffffffff)) {
-        memcpy();
-        memcpy();
-        memcpy();
-      }
       uVar10 = uVar10 - 0x30;
-      memcpy();
-      memcpy();
-      memcpy();
-      uVar12 = uVar12 - 0x30;
+      pvVar5 = (void *)uVar10;
+      if ((uVar9 & 0xffffffff) != (uVar10 & 0xffffffff)) {
+        memcpy(auStack_150,(void *)uVar9,0x30);
+        memcpy((void *)uVar9,pvVar5,0x30);
+        memcpy(pvVar5,auStack_150,0x30);
+      }
+      uVar6 = uVar6 - 0x30;
+      memcpy(auStack_f0,pvVar5,0x30);
+      memcpy(pvVar5,(void *)uVar6,0x30);
+      memcpy((void *)uVar6,auStack_f0,0x30);
     }
     else {
       uVar9 = uVar9 - 0x30;
-      memcpy();
-      memcpy();
-      memcpy();
-      uVar11 = uVar11 + 0x30;
+      memcpy(auStack_90,pvVar5,0x30);
+      memcpy(pvVar5,(void *)uVar9,0x30);
+      memcpy((void *)uVar9,auStack_90,0x30);
+      uVar7 = uVar7 + 0x30;
     }
   } while( true );
 }
 
 
-// 8242FB38  _Sort<FxGlassTraceHit_*,int,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+// 8242FB38  std::_Sort<FxGlassTraceHit_*,int,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void std::
-     _Sort<FxGlassTraceHit_*,int,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-               (FxGlassTraceHit *param_1,FxGlassTraceHit *param_2,int param_3,
-               _func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *param_4)
+void std___Sort<FxGlassTraceHit_*,int,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-  uint uVar1;
-  FxGlassTraceHit *pFVar2;
+  ulonglong uVar1;
+  int iVar2;
   ulonglong uVar3;
-  FxGlassTraceHit *pFVar4;
-  int iVar6;
-  ulonglong uVar5;
-  ulonglong uVar7;
-  int iVar8;
-  FxGlassTraceHit local_50;
+  ulonglong uVar4;
+  int iVar5;
+  uint local_50;
+  uint local_4c;
   
-  uVar5 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pFVar2 = (FxGlassTraceHit *)__savegprlr_25(param_1);
-  pFVar4 = (FxGlassTraceHit *)uVar3;
-  iVar6 = (int)pFVar4 - (int)pFVar2;
+  uVar1 = __savegprlr_25();
+  iVar2 = (int)param_2 - (int)uVar1;
   do {
-    iVar6 = iVar6 / 0x30;
-    if (iVar6 < 0x21) {
+    iVar2 = iVar2 / 0x30;
+    if (iVar2 < 0x21) {
 LAB_8242fbf4:
-      if (1 < iVar6) {
-        _Insertion_sort1<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&),FxGlassTraceHit>
-                  (pFVar2,pFVar4,param_4,(FxGlassTraceHit *)0x0);
+      if (1 < iVar2) {
+        std___Insertion_sort1<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&),FxGlassTraceHit>
+                  (uVar1,param_2,param_4,0);
       }
       __restgprlr_25();
       return;
     }
-    iVar8 = (int)uVar5;
-    pFVar4 = (FxGlassTraceHit *)uVar3;
-    if (iVar8 < 1) {
-      if (0x20 < iVar6) {
-        if (1 < iVar6) {
-          _Make_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-                    (pFVar2,pFVar4,param_4,(int *)0x0,(FxGlassTraceHit *)0x0);
+    iVar5 = (int)param_3;
+    if (iVar5 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
+          std___Make_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+                    (uVar1,param_2,param_4,0,0);
         }
-        _Sort_heap<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-                  (pFVar2,pFVar4,param_4);
+        std___Sort_heap<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+                  (uVar1,param_2,param_4);
         __restgprlr_25();
         return;
       }
       goto LAB_8242fbf4;
     }
-    _Unguarded_partition<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-              (&local_50,pFVar2,(_func___cdecl_bool_FxGlassTraceHit_ptr_FxGlassTraceHit_ptr *)pFVar4
-              );
-    uVar1 = local_50.pieceIndex;
-    uVar5 = (longlong)(iVar8 >> 1) + (ulonglong)(iVar8 < 0 && (uVar5 & 1) != 0);
-    uVar5 = (longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0) + uVar5;
-    uVar7 = (ulonglong)(uint)local_50.breakOrg;
-    if (((int)local_50.breakOrg - (int)pFVar2) / 0x30 <
-        (int)((int)pFVar4 - local_50.pieceIndex) / 0x30) {
-      _Sort<FxGlassTraceHit_*,int,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-                (pFVar2,(FxGlassTraceHit *)local_50.breakOrg,(int)uVar5,param_4);
-      uVar7 = uVar3;
-      pFVar2 = (FxGlassTraceHit *)uVar1;
+    std___Unguarded_partition<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+              (&local_50,uVar1,param_2,param_4);
+    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
+    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
+              param_3;
+    uVar4 = (ulonglong)local_4c;
+    uVar3 = (ulonglong)local_50;
+    if ((int)(local_50 - (int)uVar1) / 0x30 < (int)((int)param_2 - local_4c) / 0x30) {
+      std___Sort<FxGlassTraceHit_*,int,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+                (uVar1,uVar3,param_3,param_4);
+      uVar1 = uVar4;
+      uVar3 = param_2;
     }
     else {
-      _Sort<FxGlassTraceHit_*,int,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-                ((FxGlassTraceHit *)local_50.pieceIndex,pFVar4,(int)uVar5,param_4);
+      std___Sort<FxGlassTraceHit_*,int,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+                (uVar4,param_2,param_3,param_4);
     }
-    pFVar4 = (FxGlassTraceHit *)uVar7;
-    iVar6 = (int)pFVar4 - (int)pFVar2;
-    uVar3 = uVar7;
+    iVar2 = (int)uVar3 - (int)uVar1;
+    param_2 = uVar3;
   } while( true );
 }
 

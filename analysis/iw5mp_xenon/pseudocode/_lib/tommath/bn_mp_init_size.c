@@ -5,29 +5,28 @@
 undefined8 mp_init_size(undefined4 *param_1,uint param_2)
 
 {
-  void *pvVar2;
+  int iVar2;
   undefined8 uVar1;
-  int iVar3;
-  ulonglong uVar4;
+  ulonglong uVar3;
   
-  uVar4 = ((longlong)((int)param_2 >> 6) + (ulonglong)((int)param_2 < 0 && (param_2 & 0x3f) != 0) &
+  uVar3 = ((longlong)((int)param_2 >> 6) + (ulonglong)((int)param_2 < 0 && (param_2 & 0x3f) != 0) &
           0x3ffffff) * 0x40 + 0x80;
-  pvVar2 = tom_game_malloc((uint)((uVar4 & 0xffffffff) << 2));
-  param_1[3] = pvVar2;
-  if (pvVar2 == (void *)0x0) {
+  iVar2 = tom_game_malloc((uVar3 & 0x3fffffff) << 2);
+  param_1[3] = iVar2;
+  if (iVar2 == 0) {
     uVar1 = 0xfffffffffffffffe;
   }
   else {
-    param_1[1] = (int)uVar4;
+    param_1[1] = (int)uVar3;
     *param_1 = 0;
     param_1[2] = 0;
-    if (0 < (int)uVar4) {
-      iVar3 = 0;
+    if (0 < (int)uVar3) {
+      iVar2 = 0;
       do {
-        *(undefined4 *)(iVar3 + param_1[3]) = 0;
-        iVar3 = iVar3 + 4;
-        uVar4 = uVar4 - 1;
-      } while (uVar4 != 0);
+        *(undefined4 *)(iVar2 + param_1[3]) = 0;
+        iVar2 = iVar2 + 4;
+        uVar3 = uVar3 - 1;
+      } while (uVar3 != 0);
     }
     uVar1 = 0;
   }

@@ -2,7 +2,7 @@
 
 // 8271D6F8  R_CullBoxFromLightRegionHull  (gfx_d3d/r_primarylights_cull.h:72)
 
-bool R_CullBoxFromLightRegionHull(GfxLightRegionHull *param_1,float *param_2,float *param_3)
+undefined8 R_CullBoxFromLightRegionHull(float *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
@@ -13,217 +13,343 @@ bool R_CullBoxFromLightRegionHull(GfxLightRegionHull *param_1,float *param_2,flo
   float fVar6;
   float fVar7;
   float fVar8;
-  float fVar9;
-  GfxLightRegionAxis *pGVar10;
-  uint uVar11;
-  int iVar12;
+  int iVar9;
+  int iVar10;
   
   fVar1 = *param_2;
   fVar2 = *param_3;
-  if (ABS(fVar1 - param_1->kdopMidPoint[0]) < param_1->kdopHalfSize[0] + fVar2) {
+  if (ABS(fVar1 - *param_1) < param_1[9] + fVar2) {
     fVar3 = param_2[1];
     fVar4 = param_3[1];
-    if (ABS(fVar3 - param_1->kdopMidPoint[1]) < param_1->kdopHalfSize[1] + fVar4) {
+    if (ABS(fVar3 - param_1[1]) < param_1[10] + fVar4) {
       fVar5 = param_2[2];
       fVar6 = param_3[2];
-      if ((((ABS(fVar5 - param_1->kdopMidPoint[2]) < param_1->kdopHalfSize[2] + fVar6) &&
-           (ABS((fVar3 + fVar1) - param_1->kdopMidPoint[3]) <
-            param_1->kdopHalfSize[3] + fVar4 + fVar2)) &&
-          (ABS((fVar1 - fVar3) - param_1->kdopMidPoint[4]) <
-           param_1->kdopHalfSize[4] + fVar4 + fVar2)) &&
-         (((ABS((fVar5 + fVar1) - param_1->kdopMidPoint[5]) <
-            param_1->kdopHalfSize[5] + fVar6 + fVar2 &&
-           (ABS((fVar1 - fVar5) - param_1->kdopMidPoint[6]) <
-            param_1->kdopHalfSize[6] + fVar6 + fVar2)) &&
-          ((ABS((fVar5 + fVar3) - param_1->kdopMidPoint[7]) <
-            param_1->kdopHalfSize[7] + fVar6 + fVar4 &&
-           (ABS((fVar3 - fVar5) - param_1->kdopMidPoint[8]) <
-            param_1->kdopHalfSize[8] + fVar6 + fVar4)))))) {
-        uVar11 = 0;
-        if (param_1->axisCount != 0) {
-          pGVar10 = param_1->axis;
-          iVar12 = 0;
+      if ((((ABS(fVar5 - param_1[2]) < param_1[0xb] + fVar6) &&
+           (ABS((fVar3 + fVar1) - param_1[3]) < param_1[0xc] + fVar4 + fVar2)) &&
+          (ABS((fVar1 - fVar3) - param_1[4]) < param_1[0xd] + fVar4 + fVar2)) &&
+         (((ABS((fVar5 + fVar1) - param_1[5]) < param_1[0xe] + fVar6 + fVar2 &&
+           (ABS((fVar1 - fVar5) - param_1[6]) < param_1[0xf] + fVar6 + fVar2)) &&
+          ((ABS((fVar5 + fVar3) - param_1[7]) < param_1[0x10] + fVar6 + fVar4 &&
+           (ABS((fVar3 - fVar5) - param_1[8]) < param_1[0x11] + fVar6 + fVar4)))))) {
+        fVar8 = 0.0;
+        if (param_1[0x12] != 0.0) {
+          iVar9 = 0;
           do {
-            fVar9 = *(float *)((int)pGVar10->dir + iVar12);
-            fVar7 = *(float *)((int)pGVar10->dir + iVar12 + 4);
-            fVar8 = *(float *)((int)pGVar10->dir + iVar12 + 8);
-            if (ABS(fVar9) * fVar2 + ABS(fVar8) * fVar6 + ABS(fVar7) * fVar4 +
-                *(float *)((int)pGVar10->dir + iVar12 + 0x10) <=
-                ABS((fVar9 * fVar1 + fVar8 * fVar5 + fVar7 * fVar3) -
-                    *(float *)((int)pGVar10->dir + iVar12 + 0xc))) {
-              return true;
+            iVar10 = iVar9 + (int)param_1[0x13];
+            fVar7 = *(float *)(iVar9 + (int)param_1[0x13]);
+            if (ABS(fVar7) * fVar2 +
+                ABS(*(float *)(iVar10 + 8)) * fVar6 + ABS(*(float *)(iVar10 + 4)) * fVar4 +
+                *(float *)(iVar10 + 0x10) <=
+                ABS((fVar7 * fVar1 + *(float *)(iVar10 + 8) * fVar5 + *(float *)(iVar10 + 4) * fVar3
+                    ) - *(float *)(iVar10 + 0xc))) {
+              return 1;
             }
-            uVar11 = uVar11 + 1;
-            iVar12 = iVar12 + 0x14;
-          } while (uVar11 < param_1->axisCount);
+            fVar8 = (float)((int)fVar8 + 1);
+            iVar9 = iVar9 + 0x14;
+          } while ((uint)fVar8 < (uint)param_1[0x12]);
         }
-        return false;
+        return 0;
       }
     }
   }
-  return true;
+  return 1;
 }
 
 
 // 8271D8B8  R_CullBoxFromLightRegion  (gfx_d3d/r_primarylights_cull.h:123)
 
-bool R_CullBoxFromLightRegion(GfxLightRegion *param_1,float *param_2,Bounds *param_3)
+void R_CullBoxFromLightRegion(undefined8 param_1,float *param_2,longlong param_3)
 
 {
   uint uVar1;
   uint uVar2;
   uint *puVar3;
-  undefined1 uVar4;
-  bool bVar5;
+  char cVar4;
+  float *pfVar5;
   uint uVar6;
-  int iVar7;
+  longlong lVar7;
   float local_40;
   float local_3c;
   float local_38;
   
-  puVar3 = (uint *)__savegprlr_27(param_1);
+  puVar3 = (uint *)__savegprlr_27();
   uVar1 = *puVar3;
   if (uVar1 == 0) {
 LAB_8271d8d0:
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    __restgprlr_27(0);
+    return;
   }
+  pfVar5 = (float *)param_3;
   uVar6 = 0;
-  local_40 = param_3->midPoint[0] - *param_2;
-  local_3c = param_3->midPoint[1] - param_2[1];
-  local_38 = param_3->midPoint[2] - param_2[2];
+  local_40 = *pfVar5 - *param_2;
+  local_3c = pfVar5[1] - param_2[1];
+  local_38 = pfVar5[2] - param_2[2];
   if (uVar1 != 0) {
     uVar2 = puVar3[1];
-    iVar7 = 0;
+    lVar7 = 0;
     do {
-      bVar5 = R_CullBoxFromLightRegionHull
-                        ((GfxLightRegionHull *)(iVar7 + uVar2),&local_40,param_3->halfSize);
-      if (!bVar5) goto LAB_8271d8d0;
+      cVar4 = R_CullBoxFromLightRegionHull(lVar7 + (ulonglong)uVar2,&local_40,param_3 + 0xc);
+      if (cVar4 == '\0') goto LAB_8271d8d0;
       uVar6 = uVar6 + 1;
-      iVar7 = iVar7 + 0x50;
+      lVar7 = lVar7 + 0x50;
     } while (uVar6 < uVar1);
   }
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 8271D960  R_ApproximateSunLightParseParamsShadowedColor  (gfx_d3d/r_bsp_load_obj.cpp:5951)
 
-void R_ApproximateSunLightParseParamsShadowedColor(SunLightParseParams *param_1,float *param_2)
+void R_ApproximateSunLightParseParamsShadowedColor(undefined8 param_1,float *param_2)
 
 {
   float fVar1;
   float fVar2;
-  int iVar3;
-  float *pfVar4;
-  double dVar5;
+  float fVar3;
+  int iVar4;
+  float *pfVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  float fVar9;
+  double dVar9;
   
-  iVar3 = __savegprlr_29(param_1);
-  dVar7 = 0.0;
-  dVar6 = dVar7;
-  dVar8 = dVar7;
-  if (*(float *)(iVar3 + 0x40) != 0.0) {
-    pfVar4 = (float *)(iVar3 + 0x44);
-    fVar9 = ColorNormalize(pfVar4,pfVar4);
-    dVar6 = dVar7;
-    dVar8 = dVar7;
-    if ((double)fVar9 != dVar7) {
-      fVar9 = *(float *)(iVar3 + 0x40);
-      dVar7 = (double)(*(float *)(iVar3 + 0x48) * fVar9);
-      dVar6 = (double)(fVar9 * *pfVar4);
-      dVar8 = (double)(*(float *)(iVar3 + 0x4c) * fVar9);
+  iVar4 = __savegprlr_29();
+  dVar8 = 0.0;
+  dVar7 = dVar8;
+  dVar9 = dVar8;
+  if (*(float *)(iVar4 + 0x40) != 0.0) {
+    pfVar5 = (float *)(iVar4 + 0x44);
+    dVar6 = (double)ColorNormalize(pfVar5,pfVar5);
+    dVar7 = dVar8;
+    dVar9 = dVar8;
+    if (dVar6 != dVar8) {
+      fVar1 = *(float *)(iVar4 + 0x40);
+      dVar8 = (double)(*(float *)(iVar4 + 0x48) * fVar1);
+      dVar7 = (double)(fVar1 * *pfVar5);
+      dVar9 = (double)(*(float *)(iVar4 + 0x4c) * fVar1);
     }
   }
-  if (*(char *)(iVar3 + 0x70) == '\0') {
-    fVar9 = *(float *)(iVar3 + 0x58);
-    fVar1 = *(float *)(iVar3 + 0x5c);
-    fVar2 = *(float *)(iVar3 + 0x60);
+  if (*(char *)(iVar4 + 0x70) == '\0') {
+    fVar1 = *(float *)(iVar4 + 0x58);
+    fVar2 = *(float *)(iVar4 + 0x5c);
+    fVar3 = *(float *)(iVar4 + 0x60);
   }
   else {
-    fVar9 = *(float *)(iVar3 + 100);
-    fVar1 = *(float *)(iVar3 + 0x68);
-    fVar2 = *(float *)(iVar3 + 0x6c);
+    fVar1 = *(float *)(iVar4 + 100);
+    fVar2 = *(float *)(iVar4 + 0x68);
+    fVar3 = *(float *)(iVar4 + 0x6c);
   }
-  dVar5 = (double)*(float *)(iVar3 + 0x50);
-  *param_2 = (float)(dVar5 * (double)fVar9 + dVar6);
-  param_2[1] = (float)((double)fVar1 * dVar5 + dVar7);
-  param_2[2] = (float)((double)fVar2 * dVar5 + dVar8);
+  dVar6 = (double)*(float *)(iVar4 + 0x50);
+  *param_2 = (float)(dVar6 * (double)fVar1 + dVar7);
+  param_2[1] = (float)((double)fVar2 * dVar6 + dVar8);
+  param_2[2] = (float)((double)fVar3 * dVar6 + dVar9);
   __restgprlr_29();
   return;
 }
 
 
 // 8271DA20  R_InitPrimaryLights  (gfx_d3d/r_bsp_load_obj.cpp:5970)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_InitPrimaryLights(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  ulonglong uVar4;
+  undefined4 *puVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
+  iVar1 = __savegprlr_18();
+  if (DAT_8461658c == 0) {
+    MyAssertHandler(0xffffffff821b9d48,0x1757,0,0xffffffff82000f98,0xffffffff821b9c84);
+  }
+  uVar4 = 0;
+  if (*(int *)(DAT_8461658c + 0x20) != 0) {
+    dVar7 = 1.0;
+    dVar8 = 0.0;
+    iVar3 = 0;
+    puVar5 = (undefined4 *)(iVar1 + 0xc);
+    do {
+      if (DAT_835f15dc == 0) {
+        MyAssertHandler(0xffffffff821b9aa0,0x1f,0,0xffffffff82000f98,0xffffffff82015af4);
+      }
+      if ((ulonglong)DAT_835f15e0 <= (uVar4 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff821b9aa0,0x20,0,0xffffffff82015b08,uVar4);
+      }
+      iVar1 = iVar3 + DAT_835f15e4;
+      *(undefined1 *)(puVar5 + -3) = *(undefined1 *)(iVar3 + DAT_835f15e4);
+      *(undefined1 *)((int)puVar5 + -0xb) = *(undefined1 *)(iVar1 + 1);
+      puVar5[-2] = *(undefined4 *)(iVar1 + 4);
+      puVar5[-1] = *(undefined4 *)(iVar1 + 8);
+      *puVar5 = *(undefined4 *)(iVar1 + 0xc);
+      puVar5[1] = *(undefined4 *)(iVar1 + 0x10);
+      puVar5[2] = *(undefined4 *)(iVar1 + 0x14);
+      puVar5[3] = *(undefined4 *)(iVar1 + 0x18);
+      puVar5[4] = *(undefined4 *)(iVar1 + 0x1c);
+      puVar5[5] = *(undefined4 *)(iVar1 + 0x20);
+      puVar5[6] = *(undefined4 *)(iVar1 + 0x24);
+      puVar5[7] = *(undefined4 *)(iVar1 + 0x28);
+      puVar5[8] = *(undefined4 *)(iVar1 + 0x2c);
+      puVar5[9] = *(undefined4 *)(iVar1 + 0x30);
+      puVar5[10] = *(undefined4 *)(iVar1 + 0x34);
+      if ((*(char *)(iVar1 + 1) != '\0') &&
+         ((dVar6 = (double)*(float *)(iVar1 + 0x38), dVar6 <= dVar8 || (dVar7 <= dVar6)))) {
+        MyAssertHandler(0xffffffff821b9d48,0x1766,0,0xffffffff821b9d24,0xffffffff821b9cd0,dVar6);
+      }
+      puVar5[0xb] = *(undefined4 *)(iVar1 + 0x38);
+      puVar5[0xc] = *(undefined4 *)(iVar1 + 0x3c);
+      puVar5[0xd] = (uint)*(byte *)(iVar1 + 2);
+      if (*(int *)(iVar1 + 0x4c) == 0) {
+        puVar5[0xf] = 0;
+      }
+      else {
+        uVar2 = R_RegisterLightDef();
+        puVar5[0xf] = uVar2;
+      }
+      uVar4 = uVar4 + 1;
+      iVar3 = iVar3 + 0x50;
+      puVar5 = puVar5 + 0x13;
+    } while ((uVar4 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20));
+  }
+  __restgprlr_18();
+  return;
+}
+
 
 // 8271DF20  R_AddShadowSurfaceToPrimaryLight  (gfx_d3d/r_bsp_load_obj.cpp:6004)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_AddShadowSurfaceToPrimaryLight(int param_1,int param_2,ulonglong param_3)
+
+{
+  ushort *puVar1;
+  
+  puVar1 = (ushort *)(*(int *)(param_1 + 0x224) + param_2 * 0xc);
+  if (*(int *)(puVar1 + 2) != 0) {
+    if ((int)param_3 != (int)(param_3 & 0xffff)) {
+      MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,param_3,param_3 & 0xffff);
+    }
+    *(short *)((uint)*puVar1 * 2 + *(int *)(puVar1 + 2)) = (short)param_3;
+    *puVar1 = *puVar1 + 1;
+  }
+  return;
+}
+
 
 // 8271DC40  R_ForEachPrimaryLightAffectingSurface  (gfx_d3d/r_bsp_load_obj.cpp:6017)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_ForEachPrimaryLightAffectingSurface
+               (undefined8 param_1,int param_2,longlong param_3,undefined8 param_4,code *param_5)
+
+{
+  int iVar1;
+  char *pcVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  double dVar7;
+  undefined4 uStack_64;
+  undefined1 local_60 [12];
+  float local_54;
+  float local_50;
+  float local_4c;
+  
+  iVar1 = __savegprlr_25();
+  if ((*(byte *)(*(int *)(param_2 + 0x10) + 4) & 2) != 0) {
+    (*param_5)(iVar1,*(undefined1 *)(param_2 + 0x16),param_4);
+    __restgprlr_25();
+    return;
+  }
+  puVar4 = &uStack_64;
+  param_3 = param_3 + -4;
+  lVar6 = 6;
+  do {
+    param_3 = param_3 + 4;
+    puVar4 = puVar4 + 1;
+    *puVar4 = *(undefined4 *)param_3;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  uVar5 = (ulonglong)*(uint *)(iVar1 + 0x1c) + 1;
+  local_54 = local_54 + 1.0;
+  local_50 = local_50 + 1.0;
+  local_4c = local_4c + 1.0;
+  if ((uVar5 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x20)) {
+    lVar6 = (uVar5 & 0x1fffffff) << 3;
+    dVar7 = 0.0;
+    do {
+      pcVar2 = (char *)Com_GetPrimaryLight(uVar5);
+      if ((*pcVar2 != '\x02') || ((double)*(float *)(pcVar2 + 0x40) < dVar7)) {
+        cVar3 = CullBoxFromSphere((double)*(float *)(pcVar2 + 0x34),pcVar2 + 0x28);
+      }
+      else {
+        cVar3 = CullBoxFromConicSectionOfSphere
+                          ((double)*(float *)(pcVar2 + 0x40),(double)*(float *)(pcVar2 + 0x34),
+                           pcVar2 + 0x28,pcVar2 + 0x10);
+      }
+      if ((cVar3 == '\0') &&
+         (cVar3 = R_CullBoxFromLightRegion(lVar6 + (ulonglong)DAT_845a0a30,pcVar2 + 0x28,local_60),
+         cVar3 == '\0')) {
+        (*param_5)(iVar1,uVar5,param_4);
+      }
+      uVar5 = uVar5 + 1;
+      lVar6 = lVar6 + 8;
+    } while ((uVar5 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x20));
+  }
+  __restgprlr_25();
+  return;
+}
+
 
 // 8271DDB0  R_GetMaterialStride_WorldLayerData  (gfx_d3d/r_bsp_load_obj.cpp:6063)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-uint R_GetMaterialStride_WorldLayerData(Material *param_1)
+undefined4 R_GetMaterialStride_WorldLayerData(int param_1)
 
 {
-  uint uVar1;
+  byte bVar1;
+  undefined4 uVar2;
   
-  if (param_1 == (Material *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp_load_obj.cpp",
-                    0x17b0,0,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff821b9d48,0x17b0,0,0xffffffff82000f98,0xffffffff82020dcc);
   }
-  if (param_1->techniqueSet == (MaterialTechniqueSet *)0x0) {
-    uVar1 = 0;
+  if (*(int *)(param_1 + 0x44) == 0) {
+    uVar2 = 0;
   }
   else {
-    if (0xb < param_1->techniqueSet->worldVertFormat) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp_load_obj.cpp",
-                      0x17b4,0,
-                      "material->techniqueSet->worldVertFormat doesn\'t index ARRAY_COUNT( g_worldLayerDataStride )\n\t%i not in [0, %i)"
-                     );
+    bVar1 = *(byte *)(*(int *)(param_1 + 0x44) + 4);
+    if (0xb < bVar1) {
+      MyAssertHandler(0xffffffff821b9d48,0x17b4,0,0xffffffff821b9d90,bVar1,0xc);
     }
-    uVar1 = g_worldLayerDataStride[param_1->techniqueSet->worldVertFormat];
+    uVar2 = *(undefined4 *)(&DAT_821b9c9c + (uint)*(byte *)(*(int *)(param_1 + 0x44) + 4) * 4);
   }
-  return uVar1;
+  return uVar2;
 }
 
 
 // 8271DE68  R_GetMaterialStride_WorldStream1  (gfx_d3d/r_bsp_load_obj.cpp:6074)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-uint R_GetMaterialStride_WorldStream1(Material *param_1)
+undefined4 R_GetMaterialStride_WorldStream1(int param_1)
 
 {
-  uint uVar1;
+  byte bVar1;
+  undefined4 uVar2;
   
-  if (param_1 == (Material *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp_load_obj.cpp",
-                    0x17bb,0,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff821b9d48,0x17bb,0,0xffffffff82000f98,0xffffffff82020dcc);
   }
-  if (param_1->techniqueSet == (MaterialTechniqueSet *)0x0) {
-    uVar1 = 0;
+  if (*(int *)(param_1 + 0x44) == 0) {
+    uVar2 = 0;
   }
   else {
-    if (0xb < param_1->techniqueSet->worldVertFormat) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp_load_obj.cpp",
-                      0x17bf,0,
-                      "material->techniqueSet->worldVertFormat doesn\'t index ARRAY_COUNT( g_worldLayerDataStride )\n\t%i not in [0, %i)"
-                     );
+    bVar1 = *(byte *)(*(int *)(param_1 + 0x44) + 4);
+    if (0xb < bVar1) {
+      MyAssertHandler(0xffffffff821b9d48,0x17bf,0,0xffffffff821b9d90,bVar1,0xc);
     }
-    uVar1 = g_worldLayerDataStride[param_1->techniqueSet->worldVertFormat];
+    uVar2 = *(undefined4 *)(&DAT_821b9c9c + (uint)*(byte *)(*(int *)(param_1 + 0x44) + 4) * 4);
   }
-  return uVar1;
+  return uVar2;
 }
 

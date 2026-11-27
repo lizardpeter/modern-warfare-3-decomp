@@ -5360,12 +5360,18 @@ LAB_8263a43c:
 LAB_8263a464:
   8263A464  3D608219             lis r11,-0x7de7
   8263A468  3BEB9548             subi r31,r11,0x6ab8
+LAB_8263a46c:
   8263A46C  7FC3F378             or r3,r30,r30
   8263A470  4810E191             bl 0x82748600
   8263A474  7C651B78             or r5,r3,r3
   8263A478  38800A62             li r4,0xa62
   8263A47C  7FE3FB78             or r3,r31,r31
   8263A480  48013F51             bl 0x8264e3d0
+  8263A484  817D3128             lwz r11,0x3128(r29)
+  8263A488  2F0B0000             cmpwi cr6,r11,0x0
+  8263A48C  409AFFE0             bne cr6,0x8263a46c
+  8263A490  382100E0             addi r1,r1,0xe0
+  8263A494  482DC260             b 0x829166f4
 
 ; 8263F360  SND_InitDriver  (xenon/snd_driver.cpp:2666)
   8263F360  7D8802A6             mfspr r12,LR

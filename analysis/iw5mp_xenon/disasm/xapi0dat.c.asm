@@ -69,7 +69,7 @@ LAB_828b51e0:
   828B51E0  38210070             addi r1,r1,0x70
   828B51E4  48061528             b 0x8291670c
 
-; 828B51E8  _rtinit  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0dat.c:163)
+; 828B51E8  rtinit  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0dat.c:163)
   828B51E8  7D8802A6             mfspr r12,LR
   828B51EC  480614D1             bl 0x829166bc
   828B51F0  9421FF90             stwu r1,-0x70(r1)

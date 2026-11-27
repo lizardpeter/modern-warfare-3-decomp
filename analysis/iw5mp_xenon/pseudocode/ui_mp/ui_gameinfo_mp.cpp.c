@@ -2,117 +2,113 @@
 
 // 825A35C8  TRACK_ui_gameinfo  (ui_mp/ui_gameinfo_mp.cpp:52)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_ui_gameinfo(void)
 
 {
-  track_static_alloc_internal(ui_arenaInfos,0x100,"ui_arenaInfos",9);
+  track_static_alloc_internal(0xffffffff83f69cf8,0x100,0xffffffff8216a5d0,9);
   return;
 }
 
 
 // 825A35E8  UI_ParseInfos  (ui_mp/ui_gameinfo_mp.cpp:65)
 
-int UI_ParseInfos(char *param_1,int param_2,char **param_3)
+void UI_ParseInfos(undefined8 param_1,int param_2,longlong param_3)
 
 {
   char cVar1;
   char cVar2;
   char *pcVar3;
   char *pcVar4;
-  int iVar5;
-  char *pcVar6;
-  longlong lVar7;
-  longlong lVar8;
-  char *pcStack00000014;
-  char cStack_881;
-  char local_880 [1024];
-  char acStack_480 [1152];
+  char *pcVar5;
+  longlong lVar6;
+  undefined4 in_stack_00000014;
+  char acStack_881 [1025];
+  undefined1 auStack_480 [1152];
   
-  lVar8 = (longlong)(int)param_3;
-  pcStack00000014 = (char *)__savegprlr_18(param_1);
-  lVar7 = 0;
-  pcVar3 = Com_Parse(&stack0x00000014);
+  in_stack_00000014 = __savegprlr_18();
+  lVar6 = 0;
+  pcVar3 = (char *)Com_Parse(&stack0x00000014);
   if (*pcVar3 == '\0') {
 LAB_825a3840:
-    iVar5 = __restgprlr_18(lVar7);
-    return iVar5;
+    __restgprlr_18(lVar6);
+    return;
   }
-  pcVar6 = "{";
+  pcVar5 = "{";
+  pcVar4 = pcVar3;
 LAB_825a366c:
   do {
-    cVar1 = *pcVar3;
-    cVar2 = *pcVar6;
+    cVar1 = *pcVar4;
+    cVar2 = *pcVar5;
     if (cVar1 != '\0') {
-      pcVar3 = pcVar3 + 1;
-      pcVar6 = pcVar6 + 1;
+      pcVar5 = pcVar5 + 1;
+      pcVar4 = pcVar4 + 1;
       if (cVar1 == cVar2) goto LAB_825a366c;
     }
     if (cVar1 != cVar2) {
-      Com_PrintError(0xd,"Missing { in info file - got %s instead\n");
-      iVar5 = __restgprlr_18(lVar7);
-      return iVar5;
+      Com_PrintError(0xd,0xffffffff8216a5f4,pcVar3);
+      __restgprlr_18(lVar6);
+      return;
     }
-    if ((int)lVar7 == param_2) {
-      Com_PrintError(0xd,"Max infos exceeded\n");
+    if ((int)lVar6 == param_2) {
+      Com_PrintError(0xd,0xffffffff8216a5e0);
       goto LAB_825a3840;
     }
-    local_880[0] = '\0';
-    pcVar3 = Com_Parse(&stack0x00000014);
+    acStack_881[1] = 0;
+    pcVar3 = (char *)Com_Parse(&stack0x00000014);
     cVar1 = *pcVar3;
-    while (pcVar6 = "}", pcVar4 = pcVar3, cVar1 != '\0') {
+    while (pcVar5 = "}", pcVar4 = pcVar3, cVar1 != '\0') {
       do {
         cVar1 = *pcVar4;
-        cVar2 = *pcVar6;
+        cVar2 = *pcVar5;
         if (cVar1 == '\0') break;
-        pcVar6 = pcVar6 + 1;
+        pcVar5 = pcVar5 + 1;
         pcVar4 = pcVar4 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 == cVar2) goto LAB_825a3744;
-      I_strncpyz(acStack_480,pcVar3,0x400);
-      pcVar3 = Com_ParseOnLine(&stack0x00000014);
+      I_strncpyz(auStack_480,pcVar3,0x400);
+      pcVar3 = (char *)Com_ParseOnLine(&stack0x00000014);
       if (*pcVar3 == '\0') {
         pcVar3 = "<NULL>";
       }
-      Info_SetValueForKey(local_880,acStack_480,pcVar3);
-      pcVar3 = Com_Parse(&stack0x00000014);
+      Info_SetValueForKey(acStack_881 + 1,auStack_480,pcVar3);
+      pcVar3 = (char *)Com_Parse(&stack0x00000014);
       cVar1 = *pcVar3;
     }
-    Com_PrintError(0xd,"Unexpected end of info file\n");
+    Com_PrintError(0xd,0xffffffff8216a620);
 LAB_825a3744:
-    *(int *)lVar8 = (int)(ui_arenaBuf + ui_arenaBufPos);
-    pcVar3 = local_880;
+    *(int *)param_3 = (int)(DAT_83f69dfc + -0x7c096200);
+    pcVar3 = acStack_881 + 1;
     do {
       cVar1 = *pcVar3;
       pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    pcVar4 = va("%d");
-    pcVar6 = pcVar4;
+    pcVar4 = (char *)va(0xffffffff82013b64,0x40);
+    pcVar5 = pcVar4;
     do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
-    ui_arenaBufPos =
-         (int)(pcVar3 + (int)(pcVar6 + ui_arenaBufPos + (-(int)pcVar4 - (int)local_880) + 4));
-    if (0x8000 < ui_arenaBufPos) {
-      Com_Error(ERR_DROP,"ARENA_BUFFER_SIZE exceeded");
+    DAT_83f69dfc = pcVar3 + (int)(DAT_83f69dfc +
+                                 (int)(pcVar5 + (-(int)pcVar4 - (int)(acStack_881 + 1)) + 4));
+    if (0x8000 < (int)DAT_83f69dfc) {
+      Com_Error(1,0xffffffff8216a640);
     }
-    pcVar3 = &cStack_881;
-    pcVar6 = (char *)(*(int *)lVar8 + -1);
+    pcVar3 = acStack_881;
+    pcVar5 = (char *)(*(int *)param_3 + -1);
     do {
       pcVar3 = pcVar3 + 1;
       cVar1 = *pcVar3;
-      pcVar6 = pcVar6 + 1;
-      *pcVar6 = cVar1;
+      pcVar5 = pcVar5 + 1;
+      *pcVar5 = cVar1;
     } while (cVar1 != '\0');
-    lVar7 = lVar7 + 1;
-    lVar8 = lVar8 + 4;
-    pcVar3 = Com_Parse(&stack0x00000014);
-    pcVar6 = "{";
+    lVar6 = lVar6 + 1;
+    param_3 = param_3 + 4;
+    pcVar3 = (char *)Com_Parse(&stack0x00000014);
+    pcVar5 = "{";
+    pcVar4 = pcVar3;
     if (*pcVar3 == '\0') {
-      iVar5 = __restgprlr_18(lVar7);
-      return iVar5;
+      __restgprlr_18(lVar6);
+      return;
     }
   } while( true );
 }
@@ -120,67 +116,65 @@ LAB_825a3744:
 
 // 825A3850  UI_LoadArenasFromFile_FastFile  (ui_mp/ui_gameinfo_mp.cpp:181)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void UI_LoadArenasFromFile_FastFile(void)
 
 {
-  char *pcVar1;
-  int iVar2;
-  LargeLocal aLStack_20 [2];
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int iVar3;
+  undefined1 auStack_20 [16];
   
-  LargeLocal::LargeLocal(aLStack_20,0x18000);
-  pcVar1 = LargeLocal::GetBuf(aLStack_20);
+  LargeLocal__LargeLocal(auStack_20,0x18000);
+  uVar1 = LargeLocal__GetBuf(auStack_20);
   DAT_83f69df8 = 0;
-  ui_arenaBufPos = 0;
-  pcVar1 = DB_ReadRawFile("mp/basemaps.arena",pcVar1,0x18000);
-  if (pcVar1 == (char *)0x0) {
-    Com_PrintError(0xd,"file not found: \'mp/basemaps.arena\'\n");
+  DAT_83f69dfc = 0;
+  uVar2 = DB_ReadRawFile(0xffffffff8216a684,uVar1,0x18000);
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_PrintError(0xd,0xffffffff8216a65c);
   }
   else {
-    iVar2 = UI_ParseInfos(pcVar1,0x40 - DAT_83f69df8,ui_arenaInfos + DAT_83f69df8);
-    DAT_83f69df8 = iVar2 + DAT_83f69df8;
+    iVar3 = UI_ParseInfos(uVar2,0x40 - (ulonglong)DAT_83f69df8,
+                          ((ulonglong)DAT_83f69df8 & 0x3fffffff) * 4 + -0x7c096308);
+    DAT_83f69df8 = iVar3 + DAT_83f69df8;
   }
-  LargeLocal::~LargeLocal(aLStack_20);
+  LargeLocal___LargeLocal(auStack_20);
   return;
 }
 
 
 // 825A3900  UI_SortArenas  (ui_mp/ui_gameinfo_mp.cpp:204)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void UI_SortArenas(void)
 
 {
-  char *pcVar1;
-  char *pcVar2;
+  undefined8 uVar1;
+  undefined8 uVar2;
   int iVar3;
   int *piVar4;
-  mapInfo *pmVar5;
+  longlong lVar5;
   int *piVar6;
   int iVar7;
-  int iVar8;
+  uint *puVar8;
+  int iVar9;
   
   __savegprlr_25();
-  if (sharedUiInfo.mapsAreSorted == false) {
-    iVar8 = 0;
-    if (0 < sharedUiInfo.mapCount) {
-      pmVar5 = sharedUiInfo.mapList;
-      piVar6 = sharedUiInfo.mapIndexSorted;
+  if (DAT_83fd1d68 == '\0') {
+    iVar9 = 0;
+    if (0 < DAT_83f7df64) {
+      lVar5 = -0x7c082098;
+      piVar6 = &DAT_83fd1b68;
       do {
-        pcVar1 = UI_SafeTranslateString(pmVar5->mapName);
-        *piVar6 = iVar8;
+        uVar1 = UI_SafeTranslateString(lVar5);
+        *piVar6 = iVar9;
         iVar7 = 0;
-        if (0 < iVar8) {
-          piVar4 = sharedUiInfo.mapIndexSorted;
+        if (0 < iVar9) {
+          puVar8 = &DAT_83fd1b68;
 LAB_825a3968:
-          pcVar2 = UI_SafeTranslateString(sharedUiInfo.mapList[*piVar4].mapName);
-          iVar3 = I_stricmp(pcVar1,pcVar2);
+          uVar2 = UI_SafeTranslateString((ulonglong)*puVar8 * 0xa78 + -0x7c082098);
+          iVar3 = I_stricmp(uVar1,uVar2);
           if (-1 < iVar3) goto code_r0x825a3990;
-          if (iVar7 < iVar8) {
-            iVar3 = iVar8 - iVar7;
+          if (iVar7 < iVar9) {
+            iVar3 = iVar9 - iVar7;
             piVar4 = piVar6;
             do {
               *piVar4 = piVar4[-1];
@@ -188,175 +182,169 @@ LAB_825a3968:
               iVar3 = iVar3 + -1;
             } while (iVar3 != 0);
           }
-          sharedUiInfo.mapIndexSorted[iVar7] = iVar8;
+          (&DAT_83fd1b68)[iVar7] = iVar9;
         }
 LAB_825a39d8:
-        iVar8 = iVar8 + 1;
-        pmVar5 = pmVar5 + 1;
+        iVar9 = iVar9 + 1;
+        lVar5 = lVar5 + 0xa78;
         piVar6 = piVar6 + 1;
-      } while (iVar8 < sharedUiInfo.mapCount);
+      } while (iVar9 < DAT_83f7df64);
     }
-    sharedUiInfo.mapsAreSorted = true;
+    DAT_83fd1d68 = '\x01';
   }
   __restgprlr_25();
   return;
 code_r0x825a3990:
   iVar7 = iVar7 + 1;
-  piVar4 = piVar4 + 1;
-  if (iVar8 <= iVar7) goto LAB_825a39d8;
+  puVar8 = puVar8 + 1;
+  if (iVar9 <= iVar7) goto LAB_825a39d8;
   goto LAB_825a3968;
 }
 
 
 // 825A3A08  UI_GetMapInfo_Sorted  (ui_mp/ui_gameinfo_mp.cpp:232)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-mapInfo * UI_GetMapInfo_Sorted(int param_1)
+longlong UI_GetMapInfo_Sorted(int param_1)
 
 {
   UI_SortArenas();
-  return sharedUiInfo.mapList + sharedUiInfo.mapIndexSorted[param_1];
+  return (ulonglong)(uint)(&DAT_83fd1b68)[param_1] * 0xa78 + -0x7c082098;
 }
 
 
 // 825A3A58  UI_UpdateArenas  (ui_mp/ui_gameinfo_mp.cpp:262)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void UI_UpdateArenas(void)
 
 {
-  int iVar1;
-  bool bVar2;
-  char *pcVar3;
-  uint uVar4;
-  bool bVar7;
-  int iVar5;
-  char *pcVar6;
-  int iVar8;
-  char cVar9;
-  char **ppcVar10;
-  char **ppcVar11;
-  int iVar12;
+  bool bVar1;
+  undefined4 uVar2;
+  bool bVar3;
+  char *pcVar5;
+  uint uVar6;
+  char cVar8;
+  undefined8 uVar4;
+  int iVar7;
+  int iVar9;
+  char *pcVar10;
+  undefined4 *puVar11;
+  undefined4 *puVar12;
   int iVar13;
   char *pcVar14;
   char *local_9c [39];
   
   __savegprlr();
-  if (sharedUiInfo.updateArenas != 0) {
-    sharedUiInfo.mapCount = 0;
-    sharedUiInfo.mapsAreSorted = false;
+  if (DAT_83f7df60 != 0) {
+    DAT_83f7df64 = 0;
+    DAT_83fd1d68 = 0;
     UI_LoadArenasFromFile_FastFile();
-    bVar2 = false;
-    ppcVar10 = ui_arenaInfos;
+    bVar3 = false;
+    puVar11 = &DAT_83f69cf8;
     iVar13 = 0;
-    ppcVar11 = ppcVar10;
+    puVar12 = puVar11;
     if (0 < DAT_83f69df8) {
       do {
-        pcVar3 = Info_ValueForKey(*ppcVar11,"mappack");
-        if ((((pcVar3 != (char *)0x0) && (*pcVar3 != '\0')) &&
-            (uVar4 = atoi(pcVar3), 0 < (int)uVar4)) &&
-           (((accessToSubscriberContent->current).enabled != false ||
-            (bVar7 = Content_DoWeHaveContentPack(2 << (uVar4 & 0x3f)), bVar7)))) {
-          bVar2 = true;
+        pcVar5 = (char *)Info_ValueForKey(*puVar12,0xffffffff8216a78c);
+        if ((((pcVar5 != (char *)0x0) && (*pcVar5 != '\0')) &&
+            (uVar6 = atoi(pcVar5), 0 < (int)uVar6)) &&
+           ((*(char *)(DAT_83f71e90 + 0xc) != '\0' ||
+            (cVar8 = Content_DoWeHaveContentPack(2 << (uVar6 & 0x3f)), cVar8 != '\0')))) {
+          bVar3 = true;
           break;
         }
         iVar13 = iVar13 + 1;
-        ppcVar11 = ppcVar11 + 1;
+        puVar12 = puVar12 + 1;
       } while (iVar13 < DAT_83f69df8);
     }
     iVar13 = 0;
     if (0 < DAT_83f69df8) {
       do {
-        pcVar3 = Info_ValueForKey(*ppcVar10,"map");
-        iVar5 = I_strcmp(pcVar3,"bonus_map");
-        if ((iVar5 != 0) || (bVar2)) {
-          pcVar3 = Info_ValueForKey(*ppcVar10,"map");
-          I_strncpyz(sharedUiInfo.mapList[sharedUiInfo.mapCount].mapLoadName,pcVar3,0x10);
-          pcVar3 = Info_ValueForKey(*ppcVar10,"longname");
-          I_strncpyz(sharedUiInfo.mapList[sharedUiInfo.mapCount].mapName,pcVar3,0x20);
-          pcVar3 = Info_ValueForKey(*ppcVar10,"description");
-          I_strncpyz(sharedUiInfo.mapList[sharedUiInfo.mapCount].mapDescription,pcVar3,0x20);
-          pcVar3 = Info_ValueForKey(*ppcVar10,"mapimage");
-          I_strncpyz(sharedUiInfo.mapList[sharedUiInfo.mapCount].mapLoadImage,pcVar3,0x20);
-          pcVar3 = Info_ValueForKey(*ppcVar10,"mappack");
-          if ((pcVar3 == (char *)0x0) || (*pcVar3 == '\0')) {
-            iVar5 = -1;
+        uVar4 = Info_ValueForKey(*puVar11,0xffffffff82043710);
+        iVar7 = I_strcmp(uVar4,0xffffffff8216a698);
+        if ((iVar7 != 0) || (bVar3)) {
+          uVar4 = Info_ValueForKey(*puVar11,0xffffffff82043710);
+          I_strncpyz((ulonglong)DAT_83f7df64 * 0xa78 + -0x7c082078,uVar4,0x10);
+          uVar4 = Info_ValueForKey(*puVar11,0xffffffff8216a6a4);
+          I_strncpyz((ulonglong)DAT_83f7df64 * 0xa78 + -0x7c082098,uVar4,0x20);
+          uVar4 = Info_ValueForKey(*puVar11,0xffffffff8212f570);
+          I_strncpyz((ulonglong)DAT_83f7df64 * 0xa78 + -0x7c082068,uVar4,0x20);
+          uVar4 = Info_ValueForKey(*puVar11,0xffffffff8216a6b0);
+          I_strncpyz((ulonglong)DAT_83f7df64 * 0xa78 + -0x7c082048,uVar4,0x20);
+          pcVar5 = (char *)Info_ValueForKey(*puVar11,0xffffffff8216a78c);
+          if ((pcVar5 == (char *)0x0) || (*pcVar5 == '\0')) {
+            iVar7 = -1;
           }
           else {
-            iVar5 = atoi(pcVar3);
+            iVar7 = atoi(pcVar5);
           }
-          pcVar3 = *ppcVar10;
-          sharedUiInfo.mapList[sharedUiInfo.mapCount].mapPack = iVar5;
-          pcVar3 = Info_ValueForKey(pcVar3,"gametype");
-          if ((pcVar3 != (char *)0x0) && (*pcVar3 != '\0')) {
-            pcVar6 = va(".arena files : %s");
-            Com_BeginParseSession(pcVar6);
-            local_9c[0] = pcVar3;
-            pcVar3 = Com_Parse(local_9c);
-            while ((pcVar3 != (char *)0x0 && (*pcVar3 != '\0'))) {
-              pcVar3 = Com_Parse(local_9c);
+          uVar2 = *puVar11;
+          (&DAT_83f7e9dc)[DAT_83f7df64 * 0x29e] = iVar7;
+          pcVar5 = (char *)Info_ValueForKey(uVar2,0xffffffff820337c4);
+          if ((pcVar5 != (char *)0x0) && (*pcVar5 != '\0')) {
+            va(0xffffffff8216a6bc,(ulonglong)DAT_83f7df64 * 0xa78 + -0x7c082078);
+            Com_BeginParseSession();
+            local_9c[0] = pcVar5;
+            pcVar5 = (char *)Com_Parse(local_9c);
+            while ((pcVar5 != (char *)0x0 && (*pcVar5 != '\0'))) {
+              pcVar5 = (char *)Com_Parse(local_9c);
             }
             Com_EndParseSession();
           }
-          iVar5 = sharedUiInfo.mapCount;
-          pcVar3 = *ppcVar10;
-          iVar12 = sharedUiInfo.mapCount * 0xa78 + -0x7c082098;
-          sharedUiInfo.mapList[sharedUiInfo.mapCount].mapCustomCount = 0;
-          if (pcVar3 != (char *)0x0) {
-            while (*pcVar3 != '\0') {
-              iVar1 = sharedUiInfo.mapList[iVar5].mapCustomCount;
-              if (iVar1 == 0x20) {
-                pcVar3 = "UI_UpdateArenas: max number of field for map \'%s\' exceeded.\n";
+          uVar6 = DAT_83f7df64;
+          pcVar5 = (char *)*puVar11;
+          iVar7 = DAT_83f7df64 * 0xa78;
+          (&DAT_83f7e9d8)[DAT_83f7df64 * 0x29e] = 0;
+          if (pcVar5 != (char *)0x0) {
+            while (*pcVar5 != '\0') {
+              if ((&DAT_83f7e9d8)[uVar6 * 0x29e] == 0x20) {
+                uVar4 = 0xffffffff8216a6d0;
 LAB_825a3e30:
-                Com_PrintWarning(0xd,pcVar3);
+                Com_PrintWarning(0xd,uVar4,&DAT_83f7df88 + iVar7);
                 break;
               }
-              pcVar6 = pcVar3 + 1;
-              if (*pcVar3 != '\\') {
-                pcVar3 = "UI_UpdateArenas: invalid field key for map \'%s\' exceeded.\n";
+              pcVar10 = pcVar5 + 1;
+              if (*pcVar5 != '\\') {
+                uVar4 = 0xffffffff8216a710;
                 goto LAB_825a3e30;
               }
-              cVar9 = *pcVar6;
-              pcVar14 = pcVar6;
-              while ((cVar9 != '\\' && (bVar7 = cVar9 != '\0', cVar9 = '\0', bVar7))) {
+              cVar8 = *pcVar10;
+              pcVar14 = pcVar10;
+              while ((cVar8 != '\\' && (bVar1 = cVar8 != '\0', cVar8 = '\0', bVar1))) {
                 pcVar14 = pcVar14 + 1;
-                cVar9 = *pcVar14;
+                cVar8 = *pcVar14;
               }
               pcVar14 = pcVar14 + 1;
-              pcVar3 = "UI_UpdateArenas: invalid field value for map \'%s\' exceeded.\n";
-              if (cVar9 != '\\') goto LAB_825a3e30;
-              iVar8 = (int)pcVar14 - (int)pcVar6;
-              if (0xf < iVar8) {
-                iVar8 = 0x10;
+              uVar4 = 0xffffffff8216a74c;
+              if (cVar8 != '\\') goto LAB_825a3e30;
+              iVar9 = (int)pcVar14 - (int)pcVar10;
+              if (0xf < iVar9) {
+                iVar9 = 0x10;
               }
-              I_strncpyz((char *)((iVar1 + 7) * 0x10 + iVar12),pcVar6,iVar8);
-              cVar9 = *pcVar14;
-              pcVar3 = pcVar14;
-              while ((cVar9 != '\\' && (cVar9 != '\0'))) {
-                pcVar3 = pcVar3 + 1;
-                cVar9 = *pcVar3;
+              I_strncpyz(&DAT_83f7df68 + ((&DAT_83f7e9d8)[uVar6 * 0x29e] + 7) * 0x10 + iVar7,pcVar10
+                         ,iVar9);
+              cVar8 = *pcVar14;
+              pcVar5 = pcVar14;
+              while ((cVar8 != '\\' && (cVar8 != '\0'))) {
+                pcVar5 = pcVar5 + 1;
+                cVar8 = *pcVar5;
               }
-              pcVar6 = pcVar3 + (1 - (int)pcVar14);
-              if (0x3f < (int)pcVar6) {
-                pcVar6 = (char *)0x40;
+              pcVar10 = pcVar5 + (1 - (int)pcVar14);
+              if (0x3f < (int)pcVar10) {
+                pcVar10 = (char *)0x40;
               }
-              I_strncpyz((char *)(sharedUiInfo.mapList[iVar5].mapCustomCount * 0x40 + iVar12 + 0x270
-                                 ),pcVar14,(int)pcVar6);
-              sharedUiInfo.mapList[iVar5].mapCustomCount =
-                   sharedUiInfo.mapList[iVar5].mapCustomCount + 1;
+              I_strncpyz(&DAT_83f7df68 + (&DAT_83f7e9d8)[uVar6 * 0x29e] * 0x40 + iVar7 + 0x270,
+                         pcVar14,pcVar10);
+              (&DAT_83f7e9d8)[uVar6 * 0x29e] = (&DAT_83f7e9d8)[uVar6 * 0x29e] + 1;
             }
           }
-          sharedUiInfo.mapCount = sharedUiInfo.mapCount + 1;
-          if (0x7f < sharedUiInfo.mapCount) break;
+          DAT_83f7df64 = DAT_83f7df64 + 1;
+          if (0x7f < (int)DAT_83f7df64) break;
         }
         iVar13 = iVar13 + 1;
-        ppcVar10 = ppcVar10 + 1;
+        puVar11 = puVar11 + 1;
       } while (iVar13 < DAT_83f69df8);
     }
-    sharedUiInfo.updateArenas = 0;
+    DAT_83f7df60 = 0;
   }
   __restgprlr();
   return;
@@ -365,17 +353,14 @@ LAB_825a3e30:
 
 // 825A3E70  UI_LoadArenas  (ui_mp/ui_gameinfo_mp.cpp:402)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void UI_LoadArenas(void)
 
 {
-  uint uVar1;
+  ulonglong uVar1;
   
   uVar1 = DB_GetLoadedFlags();
   if ((uVar1 & 2) != 0) {
-    sharedUiInfo.updateArenas = 1;
+    DAT_83f7df60 = 1;
   }
   return;
 }
@@ -383,33 +368,30 @@ void UI_LoadArenas(void)
 
 // 825A3EB0  UI_GetIndexForMapName  (ui_mp/ui_gameinfo_mp.cpp:428)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-bool UI_GetIndexForMapName(char *param_1,int *param_2)
+void UI_GetIndexForMapName(undefined8 param_1,int *param_2)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
-  undefined1 uVar3;
-  char *pcVar4;
-  int iVar5;
+  longlong lVar3;
+  int iVar4;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  iVar5 = 0;
-  if (0 < sharedUiInfo.mapCount) {
-    pcVar4 = sharedUiInfo.mapList[0].mapLoadName;
+  uVar1 = __savegprlr_27();
+  iVar4 = 0;
+  if (0 < DAT_83f7df64) {
+    lVar3 = -0x7c082078;
     do {
-      iVar2 = I_stricmp(pcVar4,pcVar1);
+      iVar2 = I_stricmp(lVar3,uVar1);
       if (iVar2 == 0) {
-        *param_2 = iVar5;
-        uVar3 = __restgprlr_27(1);
-        return (bool)uVar3;
+        *param_2 = iVar4;
+        __restgprlr_27(1);
+        return;
       }
-      iVar5 = iVar5 + 1;
-      pcVar4 = pcVar4 + 0xa78;
-    } while (iVar5 < sharedUiInfo.mapCount);
+      iVar4 = iVar4 + 1;
+      lVar3 = lVar3 + 0xa78;
+    } while (iVar4 < DAT_83f7df64);
   }
-  uVar3 = __restgprlr_27(0);
-  return (bool)uVar3;
+  __restgprlr_27(0);
+  return;
 }
 

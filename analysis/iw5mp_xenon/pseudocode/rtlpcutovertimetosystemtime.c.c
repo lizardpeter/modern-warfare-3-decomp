@@ -2,110 +2,108 @@
 
 // 8292B9D8  RtlpCutoverTimeToSystemTime  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlpcutovertimetosystemtime.c:22)
 
-uchar RtlpCutoverTimeToSystemTime
-                (_SYSTEMTIME *param_1,_LARGE_INTEGER *param_2,_LARGE_INTEGER *param_3,uchar param_4)
+void RtlpCutoverTimeToSystemTime
+               (undefined8 param_1,LPFILETIME param_2,FILETIME *param_3,ulonglong param_4)
 
 {
-  ushort uVar1;
-  ushort uVar2;
-  ushort uVar3;
+  WORD WVar1;
+  WORD WVar2;
+  WORD WVar3;
   bool bVar4;
-  _SYSTEMTIME *p_Var6;
-  int iVar7;
+  SYSTEMTIME *lpSystemTime;
+  BOOL BVar6;
   undefined8 uVar5;
-  char cVar8;
-  uchar uVar9;
-  ulonglong uVar10;
-  short sVar11;
-  ushort uVar12;
-  short sVar13;
-  longlong local_b0 [2];
-  ushort local_a0;
-  ushort local_9e;
+  char cVar7;
+  short sVar8;
+  WORD WVar9;
+  short sVar10;
+  _FILETIME local_b0 [2];
+  WORD local_a0;
+  WORD local_9e;
   short local_9c;
-  ushort local_9a;
-  ushort local_98;
-  ushort local_96;
-  ushort local_94;
+  WORD local_9a;
+  WORD local_98;
+  WORD local_96;
+  WORD local_94;
   undefined2 local_92;
   _SYSTEMTIME local_90;
   undefined1 auStack_80 [4];
   short local_7c;
   short local_72;
   
-  uVar10 = (ulonglong)(char)param_4;
-  p_Var6 = (_SYSTEMTIME *)__savegprlr_20(param_1);
-  FileTimeToSystemTime((_FILETIME *)&param_3->_s_0,&local_90);
-  if (p_Var6->wYear == 0) {
-    uVar1 = p_Var6->wDay;
-    if (((short)uVar1 < 6) && (uVar1 != 0)) {
-      uVar2 = p_Var6->wMonth;
-      uVar3 = p_Var6->wDayOfWeek;
+  lpSystemTime = (SYSTEMTIME *)__savegprlr_20();
+  FileTimeToSystemTime(param_3,&local_90);
+  if (lpSystemTime->wYear == 0) {
+    WVar1 = lpSystemTime->wDay;
+    if (((short)WVar1 < 6) && (WVar1 != 0)) {
+      WVar2 = lpSystemTime->wMonth;
+      WVar3 = lpSystemTime->wDayOfWeek;
       bVar4 = false;
-      uVar12 = local_90.wYear;
-      if ((uVar10 & 0xff) == 0) {
-        if ((int)(short)uVar2 < (int)(uint)local_90.wMonth) {
-          uVar12 = local_90.wYear + 1;
+      WVar9 = local_90.wYear;
+      if ((param_4 & 0xff) == 0) {
+        if ((int)(short)WVar2 < (int)(uint)local_90.wMonth) {
+          WVar9 = local_90.wYear + 1;
         }
-        else if ((int)(short)uVar2 <= (int)(uint)local_90.wMonth) {
+        else if ((int)(short)WVar2 <= (int)(uint)local_90.wMonth) {
           bVar4 = true;
         }
       }
-      local_9a = p_Var6->wHour;
-      local_98 = p_Var6->wMinute;
-      local_96 = p_Var6->wSecond;
-      local_94 = p_Var6->wMilliseconds;
+      local_9a = lpSystemTime->wHour;
+      local_98 = lpSystemTime->wMinute;
+      local_96 = lpSystemTime->wSecond;
+      local_94 = lpSystemTime->wMilliseconds;
       local_9c = 1;
       local_92 = 0;
-      local_a0 = uVar12;
-      local_9e = uVar2;
-      cVar8 = RtlTimeFieldsToTime(&local_a0,local_b0);
-      while (cVar8 != '\0') {
+      local_a0 = WVar9;
+      local_9e = WVar2;
+      cVar7 = RtlTimeFieldsToTime(&local_a0,local_b0);
+      while (cVar7 != '\0') {
         RtlTimeToTimeFields(local_b0,auStack_80);
-        if ((short)uVar3 < local_72) {
-          local_9c = (uVar3 - local_72) + local_9c + 7;
+        if ((short)WVar3 < local_72) {
+          local_9c = (WVar3 - local_72) + local_9c + 7;
         }
-        else if (local_72 < (short)uVar3) {
-          local_9c = (uVar3 - local_72) + local_9c;
+        else if (local_72 < (short)WVar3) {
+          local_9c = (WVar3 - local_72) + local_9c;
         }
-        sVar11 = 1;
-        sVar13 = local_9c;
-        if (1 < (short)uVar1) {
+        sVar8 = 1;
+        sVar10 = local_9c;
+        if (1 < (short)WVar1) {
           do {
             local_9c = local_9c + 7;
-            cVar8 = RtlTimeFieldsToTime(&local_a0,local_b0);
-            if (cVar8 == '\0') break;
+            cVar7 = RtlTimeFieldsToTime(&local_a0,local_b0);
+            if (cVar7 == '\0') break;
             RtlTimeToTimeFields(local_b0,auStack_80);
-            sVar11 = sVar11 + 1;
-            sVar13 = local_7c;
-          } while (sVar11 < (short)uVar1);
+            sVar8 = sVar8 + 1;
+            sVar10 = local_7c;
+          } while (sVar8 < (short)WVar1);
         }
-        local_9c = sVar13;
-        cVar8 = RtlTimeFieldsToTime(&local_a0,local_b0);
-        if (cVar8 == '\0') break;
+        local_9c = sVar10;
+        cVar7 = RtlTimeFieldsToTime(&local_a0,local_b0);
+        if (cVar7 == '\0') break;
         if ((!bVar4) ||
            (((int)(uint)local_90.wDay <= (int)local_9c &&
-            (((int)local_9c != (uint)local_90.wDay || (param_3->QuadPart <= local_b0[0])))))) {
-          param_2->QuadPart = local_b0[0];
+            (((int)local_9c != (uint)local_90.wDay || ((longlong)*param_3 <= (longlong)local_b0[0]))
+            )))) {
+          *param_2 = local_b0[0];
           goto LAB_8292ba30;
         }
-        local_98 = p_Var6->wMinute;
-        local_96 = p_Var6->wSecond;
-        uVar12 = uVar12 + 1;
-        local_94 = p_Var6->wMilliseconds;
-        local_9a = p_Var6->wHour;
+        local_98 = lpSystemTime->wMinute;
+        local_96 = lpSystemTime->wSecond;
+        WVar9 = WVar9 + 1;
+        local_94 = lpSystemTime->wMilliseconds;
+        local_9a = lpSystemTime->wHour;
         bVar4 = false;
         local_9c = 1;
         local_92 = 0;
-        local_a0 = uVar12;
-        local_9e = uVar2;
-        cVar8 = RtlTimeFieldsToTime(&local_a0,local_b0);
+        local_a0 = WVar9;
+        local_9e = WVar2;
+        cVar7 = RtlTimeFieldsToTime(&local_a0,local_b0);
       }
     }
   }
   else {
-    iVar7 = SystemTimeToFileTime(p_Var6,(_FILETIME *)&param_2->_s_0);
-    if ((iVar7 != 0) && (param_3->QuadPart <= param_2->QuadPart)) {
+    BVar6 = SystemTimeToFileTime(lpSystemTime,param_2);
+    if ((BVar6 != 0) && ((longlong)*param_3 <= (longlong)*param_2)) {
 LAB_8292ba30:
       uVar5 = 1;
       goto LAB_8292bc24;
@@ -113,7 +111,7 @@ LAB_8292ba30:
   }
   uVar5 = 0;
 LAB_8292bc24:
-  uVar9 = __restgprlr_20(uVar5);
-  return uVar9;
+  __restgprlr_20(uVar5);
+  return;
 }
 

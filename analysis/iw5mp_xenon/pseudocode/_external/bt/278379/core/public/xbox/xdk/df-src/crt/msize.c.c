@@ -2,23 +2,23 @@
 
 // 82921FC0  _msize  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/msize.c:39)
 
-uint _msize(void *param_1)
+size_t _msize(void *_Memory)
 
 {
   int *piVar1;
-  void *pvVar2;
-  ulong uVar3;
+  HANDLE pvVar2;
+  size_t sVar3;
   
-  if (param_1 == (void *)0x0) {
+  if (_Memory == (void *)0x0) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    uVar3 = 0xffffffff;
+    sVar3 = 0xffffffff;
   }
   else {
     pvVar2 = GetProcessHeap();
-    uVar3 = RtlSizeHeap(pvVar2,0,param_1);
+    sVar3 = RtlSizeHeap(pvVar2,0,_Memory);
   }
-  return uVar3;
+  return sVar3;
 }
 

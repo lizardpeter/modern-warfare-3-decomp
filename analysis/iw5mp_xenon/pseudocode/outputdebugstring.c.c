@@ -2,16 +2,18 @@
 
 // 828A98A8  OutputDebugStringA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/outputdebugstring.c:39)
 
-void OutputDebugStringA(char *param_1)
+void OutputDebugStringA(LPCSTR lpOutputString)
 
 {
-  _STRING local_20 [2];
+  undefined2 local_20;
+  undefined2 local_1e;
+  undefined4 local_1c;
   
-  local_20[0].Length = 0;
-  local_20[0].MaximumLength = 0;
-  local_20[0].Buffer = (uchar *)0x0;
-  RtlInitAnsiString(local_20,param_1);
-  RtlOutputDebugString(local_20);
+  local_20 = 0;
+  local_1e = 0;
+  local_1c = 0;
+  RtlInitAnsiString(&local_20,lpOutputString);
+  RtlOutputDebugString(&local_20);
   return;
 }
 

@@ -58,7 +58,7 @@ LAB_82917568:
   829175E0  38800001             li r4,0x1
   829175E4  4BFFFE3C             b 0x82917420
 
-; 82917420  _asincos  (<external>/bt/278379/vctools/crt/src/fpw32/tran/asincos.c:132)
+; 82917420  asincos  (<external>/bt/278379/vctools/crt/src/fpw32/tran/asincos.c:132)
   82917420  FDA00A10             fabs f13,f1
   82917424  3D60829B             lis r11,-0x7d65
   82917428  396B0050             addi r11,r11,0x50

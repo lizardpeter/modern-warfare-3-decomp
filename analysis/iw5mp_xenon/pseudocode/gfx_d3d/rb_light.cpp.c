@@ -2,8 +2,6 @@
 
 // 827A2028  TRACK_r_light  (gfx_d3d/rb_light.cpp:69)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_r_light(void)
 
 {
@@ -12,111 +10,691 @@ void TRACK_r_light(void)
 
 
 // 827A2030  R_ShowGridOrigin  (gfx_d3d/rb_light.cpp:219)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_ShowGridOrigin(undefined4 *param_1)
+
+{
+  ulonglong uVar1;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  undefined4 local_24;
+  undefined4 local_20;
+  undefined4 local_1c;
+  
+  local_30 = *param_1;
+  local_2c = param_1[1];
+  local_28 = param_1[2];
+  uVar1 = (ulonglong)DAT_84628b00;
+  local_24 = 0x3f000000;
+  local_20 = 0x3f000000;
+  local_1c = 0x3f000000;
+  if (uVar1 == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0xdf,0,0xffffffff82000f98,0xffffffff821b90d8);
+    uVar1 = (ulonglong)DAT_84628b00;
+  }
+  R_AddDebugBox(uVar1 + 0x18f0,&local_30,0xffffffff82181818);
+  return;
+}
+
 
 // 827A20D0  R_ShowGridBox  (gfx_d3d/rb_light.cpp:229)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_ShowGridBox(uint *param_1)
+
+{
+  ulonglong uVar1;
+  float local_30;
+  float local_2c;
+  float local_28;
+  undefined4 local_24;
+  undefined4 local_20;
+  undefined4 local_1c;
+  
+  uVar1 = (ulonglong)DAT_84628b00;
+  local_1c = 0x42000000;
+  local_24 = 0x41800000;
+  local_20 = 0x41800000;
+  local_28 = ((float)param_1[2] * 64.0 - 131072.0) + 32.0;
+  local_2c = ((float)param_1[1] * 32.0 - 131072.0) + 16.0;
+  local_30 = ((float)*param_1 * 32.0 - 131072.0) + 16.0;
+  if (uVar1 == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0xee,0,0xffffffff82000f98,0xffffffff821b90d8);
+    uVar1 = (ulonglong)DAT_84628b00;
+  }
+  R_AddDebugBox(uVar1 + 0x18f0,&local_30,0xffffffff821818b8);
+  return;
+}
+
 
 // 827A21D0  R_ShowGridCorner  (gfx_d3d/rb_light.cpp:244)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_ShowGridCorner(double param_1,uint param_2,uint param_3,uint param_4,undefined8 param_5,
+                     undefined8 param_6)
+
+{
+  ulonglong uVar1;
+  float local_30;
+  float local_2c;
+  float local_28;
+  float local_24;
+  float local_20;
+  float local_1c;
+  
+  local_24 = (float)param_1;
+  local_20 = (float)param_1;
+  local_1c = (float)param_1;
+  uVar1 = (ulonglong)DAT_84628b00;
+  local_28 = (float)param_4 * 64.0 - 131072.0;
+  local_30 = (float)param_2 * 32.0 - 131072.0;
+  local_2c = (float)param_3 * 32.0 - 131072.0;
+  if (uVar1 == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0xfc,0,0xffffffff82000f98,0xffffffff821b90d8);
+    uVar1 = (ulonglong)DAT_84628b00;
+  }
+  R_AddDebugBox(uVar1 + 0x18f0,&local_30,param_6);
+  return;
+}
+
 
 // 827A22C0  R_ShowLightGrid  (gfx_d3d/rb_light.cpp:258)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_ShowLightGrid(undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4,
+                    int param_5,ulonglong param_6)
+
+{
+  int iVar1;
+  uint *puVar2;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  undefined8 uVar11;
+  
+  iVar1 = __savegprlr_19();
+  R_ShowGridOrigin(param_3);
+  R_ShowGridBox(param_2);
+  if (DAT_8461658c == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0x10e,0,0xffffffff82000f98,0xffffffff821b9c84);
+  }
+  if (*(int *)(iVar1 + 0x14) == 0) {
+    uVar6 = 4;
+    uVar5 = 2;
+  }
+  else {
+    uVar6 = 2;
+    uVar5 = 4;
+  }
+  uVar9 = 0x3ff0000000000000;
+  uVar10 = 0x3fecccccc0000000;
+  uVar11 = 0x3ff19999a0000000;
+  uVar7 = 0;
+  uVar4 = 1;
+  do {
+    puVar2 = (uint *)param_2;
+    if (*(char *)(uVar7 + param_5) == '\0') {
+      if (*(int *)param_4 != 0) {
+        if (((uint)*(byte *)(*(int *)param_4 + 3) & (uint)uVar4) == 0) {
+          uVar3 = 0xffffffff821817f8;
+          uVar8 = uVar10;
+        }
+        else {
+          uVar3 = 0xffffffff82181838;
+          uVar8 = uVar9;
+        }
+        goto LAB_827a2424;
+      }
+    }
+    else {
+      uVar3 = 0xffffffff821817e8;
+      uVar8 = uVar11;
+      if ((param_6 & 0xff) == 0) {
+        uVar3 = 0xffffffff821818f8;
+      }
+LAB_827a2424:
+      R_ShowGridCorner(uVar8,(ulonglong)((uVar7 & uVar6) != 0) + (ulonglong)*puVar2,
+                       (ulonglong)((uVar7 & uVar5) != 0) + (ulonglong)puVar2[1],
+                       (uVar7 & 1) + puVar2[2],uVar7 & uVar5,uVar3);
+    }
+    uVar7 = uVar7 + 1;
+    param_4 = param_4 + 4;
+    uVar4 = (uVar4 & 0x7fffffff) << 1 | uVar4 >> 0x1f;
+    if (7 < uVar7) {
+      __restgprlr_19();
+      return;
+    }
+  } while( true );
+}
+
 
 // 827A2450  R_ShowDetailedGridOrigin  (gfx_d3d/rb_light.cpp:313)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_ShowDetailedGridOrigin(undefined4 *param_1)
+
+{
+  ulonglong uVar1;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  undefined4 local_24;
+  undefined4 local_20;
+  undefined4 local_1c;
+  
+  local_30 = *param_1;
+  local_2c = param_1[1];
+  local_28 = param_1[2];
+  uVar1 = (ulonglong)DAT_84628b00;
+  local_24 = 0x3f000000;
+  local_20 = 0x3f000000;
+  local_1c = 0x3f000000;
+  if (uVar1 == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0x13d,0,0xffffffff82000f98,0xffffffff821b90d8);
+    uVar1 = (ulonglong)DAT_84628b00;
+  }
+  R_AddDebugBox(uVar1 + 0x18f0,&local_30,0xffffffff82181818);
+  return;
+}
+
 
 // 827A24F0  R_ShowDetailedGridBox  (gfx_d3d/rb_light.cpp:323)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_ShowDetailedGridBox(uint *param_1)
+
+{
+  ulonglong uVar1;
+  float local_30;
+  float local_2c;
+  float local_28;
+  undefined4 local_24;
+  undefined4 local_20;
+  undefined4 local_1c;
+  
+  uVar1 = (ulonglong)DAT_84628b00;
+  local_1c = 0x42000000;
+  local_24 = 0x41800000;
+  local_20 = 0x41800000;
+  local_28 = ((float)param_1[2] * 64.0 - 131072.0) + 32.0;
+  local_2c = ((float)param_1[1] * 32.0 - 131072.0) + 16.0;
+  local_30 = ((float)*param_1 * 32.0 - 131072.0) + 16.0;
+  if (uVar1 == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0x14c,0,0xffffffff82000f98,0xffffffff821b90d8);
+    uVar1 = (ulonglong)DAT_84628b00;
+  }
+  R_AddDebugBox(uVar1 + 0x18f0,&local_30,0xffffffff821818b8);
+  return;
+}
+
 
 // 827A25F0  R_GetLightGridAverageColorByIndexes  (gfx_d3d/rb_light.cpp:338)
 
 void R_GetLightGridAverageColorByIndexes
-               (GfxLightGrid *param_1,ushort param_2,uint *param_3,uint param_4,float *param_5)
+               (undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4,
+               float *param_5)
 
 {
   byte bVar1;
   byte bVar2;
   byte bVar3;
-  uint uVar4;
+  int iVar4;
   byte *pbVar5;
-  int iVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  uint uVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   
-  uVar9 = (ulonglong)(int)param_4;
-  lVar8 = (longlong)(int)param_3;
-  uVar7 = (ulonglong)(short)param_2;
-  iVar6 = __savegprlr_24(param_1);
-  if ((ulonglong)*(uint *)(iVar6 + 0x30) <= (uVar7 & 0xffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x16d,0,
-                    "%s");
+  uVar6 = __savegprlr_24();
+  uVar7 = uVar6;
+  if ((ulonglong)*(uint *)(uVar6 + 0x30) <= (param_2 & 0xffff)) {
+    uVar7 = MyAssertHandler(0xffffffff821d6bd8,0x16d,0,0xffffffff82000f98,0xffffffff821d6c44);
   }
-  iVar6 = *(int *)(iVar6 + 0x34);
+  iVar4 = *(int *)(uVar6 + 0x34);
+  uVar8 = 0xffffffff82000000;
   *param_5 = 0.0;
   param_5[1] = 0.0;
   param_5[2] = 0.0;
   param_5[3] = 0.0;
-  dVar12 = (double)(float)(1.0 / (double)(uVar9 & 0xffffffff));
-  if ((uVar9 & 0xffffffff) != 0) {
-    dVar10 = (double)(float)(dVar12 * 1.0);
-    dVar11 = 0.003921568859368563;
+  dVar11 = (double)(float)(1.0 / (double)(param_4 & 0xffffffff));
+  if ((param_4 & 0xffffffff) != 0) {
+    dVar9 = (double)(float)(dVar11 * 1.0);
+    dVar10 = 0.003921568859368563;
     do {
-      uVar4 = *(uint *)lVar8;
-      if (0x37 < uVar4) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",
-                        0x179,0,"%s");
+      uVar7 = *(uint *)param_3;
+      if (0x37 < uVar7) {
+        MyAssertHandler(0xffffffff821d6bd8,0x179,0,0xffffffff82000f98,0xffffffff821d6c18,uVar8);
       }
-      uVar9 = uVar9 - 1;
-      pbVar5 = (byte *)(uVar4 * 3 + (int)(uVar7 & 0xffff) * 0xa8 + iVar6);
-      lVar8 = lVar8 + 4;
+      param_4 = param_4 - 1;
+      pbVar5 = (byte *)(uVar7 * 3 + (int)(param_2 & 0xffff) * 0xa8 + iVar4);
+      param_3 = param_3 + 4;
       bVar1 = pbVar5[1];
       bVar2 = pbVar5[2];
+      uVar7 = (uint)bVar2;
       bVar3 = *pbVar5;
-      param_5[3] = (float)(dVar10 + (double)param_5[3]);
-      *param_5 = (float)((double)(float)((double)bVar3 * dVar11) * dVar12 + (double)*param_5);
-      param_5[2] = (float)((double)(float)((double)bVar2 * dVar11) * dVar12 + (double)param_5[2]);
-      param_5[1] = (float)((double)(float)((double)bVar1 * dVar11) * dVar12 + (double)param_5[1]);
-    } while (uVar9 != 0);
+      uVar8 = (ulonglong)bVar3;
+      param_5[3] = (float)(dVar9 + (double)param_5[3]);
+      *param_5 = (float)((double)(float)((double)bVar3 * dVar10) * dVar11 + (double)*param_5);
+      param_5[2] = (float)((double)(float)((double)bVar2 * dVar10) * dVar11 + (double)param_5[2]);
+      param_5[1] = (float)((double)(float)((double)bVar1 * dVar10) * dVar11 + (double)param_5[1]);
+    } while (param_4 != 0);
   }
-  __restgprlr_24();
+  __restgprlr_24(uVar7);
   return;
 }
 
 
 // 827A2798  R_ShowDetailedGridCornerLine  (gfx_d3d/rb_light.cpp:391)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_ShowDetailedGridCornerLine
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
+               undefined8 param_5)
+
+{
+  undefined8 uVar1;
+  ulonglong uVar2;
+  float local_48;
+  float local_44;
+  float local_40;
+  
+  uVar1 = __savegprlr_26();
+  uVar2 = (ulonglong)DAT_84628b00;
+  if (uVar2 == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0x18a,0,0xffffffff82000f98,0xffffffff821b90d8);
+    uVar2 = (ulonglong)DAT_84628b00;
+  }
+  local_40 = (float)(param_4 & 0xffffffff) * 64.0 - 131072.0;
+  local_48 = (float)(param_2 & 0xffffffff) * 32.0 - 131072.0;
+  local_44 = (float)(param_3 & 0xffffffff) * 32.0 - 131072.0;
+  R_AddDebugLine(uVar2 + 0x18f0,uVar1,&local_48,param_5);
+  __restgprlr_26();
+  return;
+}
+
 
 // 827A5750  R_ShowPrimaryLightLine  (gfx_d3d/rb_light.cpp:405)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_ShowPrimaryLightLine(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  float *pfVar3;
+  byte *pbVar4;
+  undefined8 uVar2;
+  uint uVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  float local_50;
+  float local_4c;
+  float local_48;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  float local_34;
+  
+  pfVar3 = (float *)__savegprlr_28();
+  if ((0x100 - (ulonglong)DAT_845a0824 & 0xffffffff) <= (param_2 & 0xffffffff)) {
+    param_2 = (DAT_845a0824 + param_2) - 0xff;
+  }
+  if ((param_2 & 0xffffffff) != 0) {
+    pbVar4 = (byte *)Com_GetPrimaryLight(param_2);
+    if (pbVar4 == (byte *)0x0) {
+      MyAssertHandler(0xffffffff821d6bd8,0x19f,0,0xffffffff821d6ee0,0xffffffff821d6f00,param_2);
+    }
+    uVar5 = (uint)*pbVar4;
+    dVar8 = 1.0;
+    if (uVar5 - 1 < 6) {
+      if (((uVar5 == 2) || (uVar5 == 3)) || ((uVar5 != 4 && ((uVar5 == 5 || (uVar5 != 1)))))) {
+        local_50 = *(float *)(pbVar4 + 0x28) - *pfVar3;
+        local_4c = *(float *)(pbVar4 + 0x2c) - pfVar3[1];
+        local_48 = *(float *)(pbVar4 + 0x30) - pfVar3[2];
+        dVar7 = (double)SQRT(local_4c * local_4c + local_48 * local_48 + local_50 * local_50);
+        dVar6 = dVar8;
+        if (-dVar7 < 0.0) {
+          dVar6 = dVar7;
+        }
+        fVar1 = (float)(1.0 / dVar6);
+        local_4c = fVar1 * local_4c;
+        local_50 = fVar1 * local_50;
+        local_48 = local_48 * fVar1;
+      }
+      else {
+        local_50 = *(float *)(pbVar4 + 0x10);
+        local_4c = *(float *)(pbVar4 + 0x14);
+        local_48 = *(float *)(pbVar4 + 0x18);
+      }
+    }
+    else if (DAT_84013128 == 0) {
+      uVar2 = va(0xffffffff821d6ec0);
+      MyAssertHandler(0xffffffff821d6bd8,0x1ae,0,uVar2);
+    }
+    local_48 = pfVar3[2] + local_48 * 20.0;
+    local_50 = *pfVar3 + local_50 * 20.0;
+    local_4c = pfVar3[1] + local_4c * 20.0;
+    local_40 = *(undefined4 *)(pbVar4 + 4);
+    local_3c = *(undefined4 *)(pbVar4 + 8);
+    local_38 = *(undefined4 *)(pbVar4 + 0xc);
+    local_34 = (float)dVar8;
+    R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,&local_50,pfVar3,&local_40);
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 827A5938  R_ShowSamplePosPrimaryLightLine  (gfx_d3d/rb_light.cpp:443)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_ShowSamplePosPrimaryLightLine(float *param_1,undefined8 param_2)
+
+{
+  if (DAT_84628b00 != 0) {
+    if (param_1 == (float *)0x0) {
+      MyAssertHandler(0xffffffff821bbaa8,0x1de,0,0xffffffff82000f98,0xffffffff82082338);
+    }
+    if ((ABS(*param_1 - DAT_84848444) <= DAT_84848450) &&
+       (ABS(param_1[1] - DAT_84848448) <= DAT_84848454)) {
+      if (ABS(param_1[2] - DAT_8484844c) <= DAT_84848458) {
+        R_ShowPrimaryLightLine(param_1,param_2);
+      }
+    }
+  }
+  return;
+}
+
 
 // 827A5A10  R_ShowDetailedGridCorner  (gfx_d3d/rb_light.cpp:450)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_ShowDetailedGridCorner
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5,ulonglong param_6,ulonglong param_7,ulonglong param_8)
+
+{
+  float fVar1;
+  float fVar2;
+  undefined8 uVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  int in_stack_00000054;
+  float local_d0;
+  float fStack_cc;
+  float local_c8;
+  undefined1 auStack_c0 [16];
+  float local_b0;
+  float local_ac;
+  float local_a8;
+  float local_a4;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_94;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_84;
+  
+  __savegprlr_25();
+  uVar3 = __savefpr_25();
+  fVar2 = (float)(param_6 & 0xffffffff) * 32.0 - 131072.0;
+  dVar5 = (double)fVar2;
+  fVar1 = (float)(param_5 & 0xffffffff) * 32.0 - 131072.0;
+  dVar6 = (double)fVar1;
+  _local_d0 = CONCAT44(fVar1,fVar2);
+  local_c8 = (float)(param_7 & 0xffffffff) * 64.0 - 131072.0;
+  dVar4 = (double)local_c8;
+  if (DAT_84628b00 == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0x1d2,0,0xffffffff82000f98,0xffffffff821b90d8);
+  }
+  dVar10 = 3.0;
+  local_ac = (float)(dVar5 - 3.0);
+  dVar8 = (double)local_ac;
+  local_90 = (float)(dVar4 - 3.0);
+  dVar7 = (double)local_90;
+  local_b0 = (float)(dVar6 - 3.0);
+  dVar9 = (double)local_b0;
+  local_a0 = (float)(dVar5 + 3.0);
+  dVar5 = (double)local_a0;
+  local_a8 = (float)(dVar4 + 3.0);
+  dVar4 = (double)local_a8;
+  local_a4 = local_b0;
+  local_9c = local_a8;
+  local_98 = local_b0;
+  local_94 = local_a0;
+  local_8c = local_b0;
+  local_88 = local_ac;
+  local_84 = local_90;
+  R_GetLightGridAverageColorByIndexes(uVar3,param_2,0xffffffff821d6b88,4,auStack_c0);
+  R_AddDebugPolygon((ulonglong)DAT_84628b00 + 0x18f0,auStack_c0,4,&local_b0,0);
+  local_b0 = (float)(dVar6 + dVar10);
+  dVar6 = (double)local_b0;
+  local_ac = (float)dVar8;
+  local_a8 = (float)dVar7;
+  local_a0 = (float)dVar5;
+  local_9c = (float)dVar7;
+  local_94 = (float)dVar5;
+  local_90 = (float)dVar4;
+  local_88 = (float)dVar8;
+  local_84 = (float)dVar4;
+  local_a4 = local_b0;
+  local_98 = local_b0;
+  local_8c = local_b0;
+  R_GetLightGridAverageColorByIndexes(uVar3,param_2,0xffffffff821d6b78,4,auStack_c0);
+  R_AddDebugPolygon((ulonglong)DAT_84628b00 + 0x18f0,auStack_c0,4,&local_b0,0);
+  local_b0 = (float)dVar9;
+  local_ac = (float)dVar8;
+  local_a8 = (float)dVar7;
+  local_a4 = (float)dVar6;
+  local_a0 = (float)dVar8;
+  local_9c = (float)dVar7;
+  local_98 = (float)dVar6;
+  local_94 = (float)dVar8;
+  local_90 = (float)dVar4;
+  local_8c = (float)dVar9;
+  local_88 = (float)dVar8;
+  local_84 = (float)dVar4;
+  R_GetLightGridAverageColorByIndexes(uVar3,param_2,0xffffffff821d6ba8,4,auStack_c0);
+  R_AddDebugPolygon((ulonglong)DAT_84628b00 + 0x18f0,auStack_c0,4,&local_b0,0);
+  local_8c = (float)dVar9;
+  local_88 = (float)dVar5;
+  local_84 = (float)dVar7;
+  local_98 = (float)dVar6;
+  local_94 = (float)dVar5;
+  local_90 = (float)dVar7;
+  local_a4 = (float)dVar6;
+  local_a0 = (float)dVar5;
+  local_9c = (float)dVar4;
+  local_b0 = (float)dVar9;
+  local_ac = (float)dVar5;
+  local_a8 = (float)dVar4;
+  R_GetLightGridAverageColorByIndexes(uVar3,param_2,0xffffffff821d6b98,4,auStack_c0);
+  R_AddDebugPolygon((ulonglong)DAT_84628b00 + 0x18f0,auStack_c0,4,&local_b0,0);
+  local_8c = (float)dVar9;
+  local_88 = (float)dVar8;
+  local_84 = (float)dVar7;
+  local_98 = (float)dVar6;
+  local_94 = (float)dVar8;
+  local_90 = (float)dVar7;
+  local_a4 = (float)dVar6;
+  local_a0 = (float)dVar5;
+  local_9c = (float)dVar7;
+  local_b0 = (float)dVar9;
+  local_ac = (float)dVar5;
+  local_a8 = (float)dVar7;
+  R_GetLightGridAverageColorByIndexes(uVar3,param_2,0xffffffff821d6bc8,4,auStack_c0);
+  R_AddDebugPolygon((ulonglong)DAT_84628b00 + 0x18f0,auStack_c0,4,&local_b0,0);
+  local_b0 = (float)dVar9;
+  local_ac = (float)dVar8;
+  local_a8 = (float)dVar4;
+  local_a4 = (float)dVar6;
+  local_a0 = (float)dVar8;
+  local_9c = (float)dVar4;
+  local_98 = (float)dVar6;
+  local_94 = (float)dVar5;
+  local_90 = (float)dVar4;
+  local_8c = (float)dVar9;
+  local_88 = (float)dVar5;
+  local_84 = (float)dVar4;
+  R_GetLightGridAverageColorByIndexes(uVar3,param_2,0xffffffff821d6bb8,4,auStack_c0);
+  R_AddDebugPolygon((ulonglong)DAT_84628b00 + 0x18f0,auStack_c0,4,&local_b0,0);
+  if ((in_stack_00000054 != 0) && ((param_8 & 0xff) != 0)) {
+    R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,param_4,&local_d0);
+  }
+  R_ShowPrimaryLightLine(&local_d0,param_3);
+  __restfpr_25();
+  __restgprlr_25();
+  return;
+}
+
 
 // 827A5DB0  R_ShowDetailedLightGrid  (gfx_d3d/rb_light.cpp:527)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_ShowDetailedLightGrid
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,longlong param_4,int param_5
+               ,ulonglong param_6,ulonglong param_7)
+
+{
+  undefined1 uVar1;
+  undefined2 uVar2;
+  int iVar3;
+  undefined2 *puVar4;
+  int iVar5;
+  uint *puVar7;
+  longlong lVar6;
+  float *pfVar8;
+  longlong lVar9;
+  int iVar10;
+  ulonglong uVar11;
+  uint uVar12;
+  uint uVar13;
+  uint uVar14;
+  undefined4 local_a0;
+  undefined4 local_9c;
+  undefined4 local_98;
+  undefined4 local_94;
+  undefined4 local_90;
+  char local_8c [140];
+  
+  iVar5 = __savegprlr_21();
+  local_8c[0xc] = '\0';
+  local_8c[0xd] = '\0';
+  local_8c[0xe] = '\0';
+  local_8c[0xf] = '\0';
+  local_8c[0x10] = '?';
+  local_8c[0x11] = -0x80;
+  local_8c[0x12] = '\0';
+  local_8c[0x13] = '\0';
+  local_8c[0x14] = '\0';
+  local_8c[0x15] = '\0';
+  local_8c[0x16] = '\0';
+  local_8c[0x17] = '\0';
+  local_8c[0x18] = '?';
+  local_8c[0x19] = '\0';
+  local_8c[0x1a] = '\0';
+  local_8c[0x1b] = '\0';
+  local_8c[0x1c] = '?';
+  local_8c[0x1d] = -0x80;
+  local_8c[0x1e] = '\0';
+  local_8c[0x1f] = '\0';
+  local_8c[0x20] = '?';
+  local_8c[0x21] = -0x80;
+  local_8c[0x22] = '\0';
+  local_8c[0x23] = '\0';
+  local_8c[0x24] = '\0';
+  local_8c[0x25] = '\0';
+  local_8c[0x26] = '\0';
+  local_8c[0x27] = '\0';
+  local_8c[0x28] = '?';
+  local_8c[0x29] = '\0';
+  local_8c[0x2a] = '\0';
+  local_8c[0x2b] = '\0';
+  local_90 = 0x3f800000;
+  builtin_strncpy(local_8c,"?333",5);
+  local_8c[5] = '\0';
+  local_8c[6] = '\0';
+  local_8c[7] = '\0';
+  local_8c[8] = '?';
+  local_8c[9] = '\0';
+  local_8c[10] = '\0';
+  local_8c[0xb] = '\0';
+  local_a0 = 0x3f800000;
+  local_9c = 0;
+  local_98 = 0;
+  local_94 = 0x3f000000;
+  if (*(int *)(DAT_845aa8b8 + 0xc) == 3) {
+    R_AddDebugBox((ulonglong)DAT_84628b00 + 0x18f0,0xffffffff84848444,0xffffffff821818d8);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821bbaa8,0x1de,0,0xffffffff82000f98,0xffffffff82082338);
+  }
+  pfVar8 = (float *)param_3;
+  if ((ABS(*pfVar8 - DAT_84848444) <= DAT_84848450) &&
+     (ABS(pfVar8[1] - DAT_84848448) <= DAT_84848454)) {
+    if (ABS(pfVar8[2] - DAT_8484844c) <= DAT_84848458) {
+      R_ShowDetailedGridOrigin(param_3);
+      R_ShowDetailedGridBox(param_2);
+      if ((param_7 & 0xffffffff) != 0) {
+        R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,param_3,param_7,0xffffffff82181868);
+      }
+      if (DAT_8461658c == 0) {
+        MyAssertHandler(0xffffffff821d6bd8,0x22b,0,0xffffffff82000f98,0xffffffff821b9c84);
+      }
+      if (*(int *)(iVar5 + 0x14) == 0) {
+        uVar13 = 4;
+        uVar12 = 2;
+      }
+      else {
+        uVar13 = 2;
+        uVar12 = 4;
+      }
+      uVar14 = 0;
+      uVar11 = 1;
+      do {
+        puVar7 = (uint *)param_2;
+        lVar6 = (ulonglong)((uVar14 & uVar13) != 0) + (ulonglong)*puVar7;
+        iVar10 = (uVar14 & 1) + puVar7[2];
+        lVar9 = (ulonglong)((uVar14 & uVar12) != 0) + (ulonglong)puVar7[1];
+        if (*(char *)(uVar14 + param_5) == '\0') {
+          iVar3 = *(int *)param_4;
+          if (iVar3 != 0) {
+            puVar4 = (undefined2 *)*(int *)param_4;
+            uVar1 = *(undefined1 *)(puVar4 + 1);
+            uVar2 = *puVar4;
+            if (((uint)*(byte *)(iVar3 + 3) & (uint)uVar11) == 0) {
+              R_ShowDetailedGridCorner(iVar5,uVar2,uVar1,param_3,lVar6,lVar9,iVar10,1);
+            }
+            else {
+              R_ShowDetailedGridCorner(iVar5,uVar2,uVar1,param_3,lVar6,lVar9,iVar10,1);
+            }
+          }
+        }
+        else if ((param_6 & 0xff) == 0) {
+          R_ShowDetailedGridCornerLine(param_3,lVar6,lVar9,iVar10,&local_90);
+        }
+        else {
+          R_ShowDetailedGridCornerLine(param_3,lVar6,lVar9,iVar10,&local_a0);
+        }
+        uVar14 = uVar14 + 1;
+        param_4 = param_4 + 4;
+        uVar11 = (uVar11 & 0x7fffffff) << 1 | uVar11 >> 0x1f;
+      } while (uVar14 < 8);
+    }
+  }
+  __restgprlr_21();
+  return;
+}
+
 
 // 827A2878  R_LightGridDebugEnable  (gfx_d3d/rb_light.cpp:597)
 
-void R_LightGridDebugEnable(float *param_1,int param_2)
+void R_LightGridDebugEnable(undefined8 param_1,undefined8 param_2)
 
 {
   float *pfVar1;
@@ -125,43 +703,39 @@ void R_LightGridDebugEnable(float *param_1,int param_2)
   double dVar4;
   double dVar5;
   
-  pfVar1 = (float *)__savegprlr_26(param_1);
-  if (param_2 == 2) {
-    g_lightGridDebugBounds.halfSize[0] = 131072.0;
-    g_lightGridDebugBounds.midPoint[0] = 0.0;
-    g_lightGridDebugBounds.midPoint[1] = 0.0;
-    g_lightGridDebugBounds.midPoint[2] = 0.0;
-    g_lightGridDebugBounds.halfSize[1] = g_lightGridDebugBounds.halfSize[0];
-    g_lightGridDebugBounds.halfSize[2] = g_lightGridDebugBounds.halfSize[0];
+  pfVar1 = (float *)__savegprlr_26();
+  if ((int)param_2 == 2) {
+    DAT_84848450 = 131072.0;
+    DAT_84848444 = 0.0;
+    DAT_84848448 = 0.0;
+    DAT_8484844c = 0.0;
+    DAT_84848454 = DAT_84848450;
+    DAT_84848458 = DAT_84848450;
   }
   else {
-    if (param_2 != 3) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",600,0,
-                      "%s");
+    if ((int)param_2 != 3) {
+      MyAssertHandler(0xffffffff821d6bd8,600,0,0xffffffff82000f98,0xffffffff821d6c80);
     }
     dVar5 = 32.0;
-    g_lightGridDebugBounds.halfSize[0] = 16.0;
-    g_lightGridDebugBounds.halfSize[1] = 16.0;
-    g_lightGridDebugBounds.halfSize[2] = 32.0;
+    DAT_84848450 = 16.0;
+    DAT_84848454 = 16.0;
+    DAT_84848458 = 32.0;
     dVar2 = floor((double)*pfVar1);
     dVar3 = floor((double)pfVar1[1]);
     dVar4 = floor((double)pfVar1[2]);
-    g_lightGridDebugBounds.midPoint[0] =
-         (float)((double)(longlong)((int)dVar2 + 0x20000 >> 5) * dVar5 - 131072.0) +
-         g_lightGridDebugBounds.halfSize[0];
-    g_lightGridDebugBounds.midPoint[1] =
-         (float)((double)(longlong)((int)dVar3 + 0x20000 >> 5) * dVar5 - 131072.0) +
-         g_lightGridDebugBounds.halfSize[1];
-    g_lightGridDebugBounds.midPoint[2] =
-         (float)((double)(longlong)((int)dVar4 + 0x20000 >> 6) * 64.0 - 131072.0) +
-         g_lightGridDebugBounds.halfSize[2];
+    DAT_84848444 = (float)((double)(longlong)((int)dVar2 + 0x20000 >> 5) * dVar5 - 131072.0) +
+                   DAT_84848450;
+    DAT_84848448 = (float)((double)(longlong)((int)dVar3 + 0x20000 >> 5) * dVar5 - 131072.0) +
+                   DAT_84848454;
+    DAT_8484844c = (float)((double)(longlong)((int)dVar4 + 0x20000 >> 6) * 64.0 - 131072.0) +
+                   DAT_84848458;
   }
-  Dvar_SetInt(r_showLightGrid,param_2);
-  Dvar_SetFloat(r_zfar,750.0);
-  Dvar_SetInt(r_colorMap,3);
-  Dvar_SetBool(sm_enable,false);
-  Dvar_SetBool(r_cacheModelLighting,false);
-  Dvar_SetBool(r_cacheSModelLighting,false);
+  Dvar_SetInt(DAT_845aa8b8,param_2);
+  Dvar_SetFloat(0x4087700000000000,DAT_845aa5d4);
+  Dvar_SetInt(DAT_845aa82c,3);
+  Dvar_SetBool(DAT_845aa7bc,0);
+  Dvar_SetBool(DAT_845aa738,0);
+  Dvar_SetBool(DAT_845aa604,0);
   __restgprlr_26();
   return;
 }
@@ -169,210 +743,280 @@ void R_LightGridDebugEnable(float *param_1,int param_2)
 
 // 827A2A70  R_LightGridDebugDisable  (gfx_d3d/rb_light.cpp:636)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_LightGridDebugDisable(void)
 
 {
-  Dvar_SetInt(r_showLightGrid,0);
-  Dvar_SetFloat(r_zfar,0.0);
-  Dvar_SetInt(r_colorMap,1);
-  Dvar_SetBool(sm_enable,true);
-  Dvar_SetBool(r_cacheModelLighting,true);
-  Dvar_SetBool(r_cacheSModelLighting,true);
+  Dvar_SetInt(DAT_845aa8b8,0);
+  Dvar_SetFloat(0,DAT_845aa5d4);
+  Dvar_SetInt(DAT_845aa82c,1);
+  Dvar_SetBool(DAT_845aa7bc,1);
+  Dvar_SetBool(DAT_845aa738,1);
+  Dvar_SetBool(DAT_845aa604,1);
   return;
 }
 
 
 // 827A2AF0  R_LightGridDebugToggle  (gfx_d3d/rb_light.cpp:647)
 
-void R_LightGridDebugToggle(float *param_1,bool param_2)
+void R_LightGridDebugToggle(undefined8 param_1,char param_2)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   
-  if (param_2) {
-    if ((r_showLightGrid->current).integer == 3) {
+  if (param_2 == '\0') {
+    if (*(int *)(DAT_845aa8b8 + 0xc) == 2) goto LAB_827a2b28;
+    uVar1 = 2;
+  }
+  else {
+    if (*(int *)(DAT_845aa8b8 + 0xc) == 3) {
 LAB_827a2b28:
       R_LightGridDebugDisable();
       return;
     }
-    iVar1 = 3;
+    uVar1 = 3;
   }
-  else {
-    if ((r_showLightGrid->current).integer == 2) goto LAB_827a2b28;
-    iVar1 = 2;
-  }
-  R_LightGridDebugEnable(param_1,iVar1);
+  R_LightGridDebugEnable(param_1,uVar1);
   return;
 }
 
 
 // 827A2B30  R_AddSortedHistoryEntry  (gfx_d3d/rb_light.cpp:677)
 
-bool R_AddSortedHistoryEntry(int param_1,int param_2,int param_3,int param_4)
+void R_AddSortedHistoryEntry
+               (undefined8 param_1,undefined2 param_2,undefined2 param_3,ulonglong param_4)
 
 {
   int iVar1;
   undefined2 uVar2;
-  undefined1 uVar3;
-  undefined2 uVar4;
-  undefined2 uVar5;
-  ulonglong uVar6;
   
-  uVar6 = (ulonglong)param_4;
-  uVar5 = (undefined2)param_3;
-  uVar4 = (undefined2)param_2;
-  uVar2 = __savegprlr_27(param_1);
-  if (0xfffff < s_vc_log.count) {
-    R_WarnOncePerFrame(R_WARN_TOO_MANY_LIGHT_GRID_POINTS);
-    uVar3 = __restgprlr_27(0);
-    return (bool)uVar3;
+  uVar2 = __savegprlr_27();
+  if (0xfffff < (int)DAT_84848460) {
+    R_WarnOncePerFrame(0x3c);
+    __restgprlr_27(0);
+    return;
   }
-  memmove();
-  iVar1 = (int)((uVar6 + (uVar6 & 0x7fffffff) * 2 & 0x7fffffff) << 1);
-  *(undefined2 *)((int)*s_vc_log.history + iVar1) = uVar2;
-  *(undefined2 *)((int)*s_vc_log.history + iVar1 + 2) = uVar4;
-  *(undefined2 *)((int)*s_vc_log.history + iVar1 + 4) = uVar5;
-  s_vc_log.count = s_vc_log.count + 1;
-  uVar3 = __restgprlr_27(1);
-  return (bool)uVar3;
+  iVar1 = (int)((param_4 + (param_4 & 0x7fffffff) * 2 & 0x7fffffff) << 1);
+  memmove((void *)(iVar1 + DAT_8484845c + 6),(void *)(iVar1 + DAT_8484845c),
+          (size_t)(((DAT_84848460 - param_4) + (DAT_84848460 - param_4 & 0x7fffffff) * 2 &
+                   0xffffffff) << 1));
+  *(undefined2 *)(iVar1 + DAT_8484845c) = uVar2;
+  *(undefined2 *)(iVar1 + DAT_8484845c + 2) = param_2;
+  *(undefined2 *)(iVar1 + DAT_8484845c + 4) = param_3;
+  DAT_84848460 = DAT_84848460 + 1;
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 827A2BD8  R_SortedHistoryEntry  (gfx_d3d/rb_light.cpp:694)
 
-int R_SortedHistoryEntry(int param_1,int param_2,int param_3,GfxSortedHistoryAdd param_4)
+void R_SortedHistoryEntry(undefined8 param_1,longlong param_2,longlong param_3,int param_4)
 
 {
   uint uVar1;
-  longlong lVar2;
-  longlong lVar3;
-  bool bVar5;
-  int iVar4;
-  longlong lVar6;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  longlong lVar5;
+  char cVar6;
   longlong lVar7;
   longlong lVar8;
   longlong lVar9;
-  longlong lVar10;
   
-  lVar7 = (longlong)param_3;
-  lVar6 = (longlong)param_2;
-  lVar2 = __savegprlr_27(param_1);
-  lVar10 = 0;
-  lVar8 = (ulonglong)(uint)s_vc_log.count - 1;
-  lVar3 = lVar10;
-  if (-1 < lVar8) {
+  lVar4 = __savegprlr_27();
+  lVar9 = 0;
+  lVar7 = (ulonglong)DAT_84848460 - 1;
+  lVar5 = lVar9;
+  if (-1 < lVar7) {
     do {
-      uVar1 = (int)lVar10 + (int)lVar8 >> 1;
-      lVar3 = (longlong)(int)uVar1;
-      iVar4 = (int)((lVar3 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x7fffffff) << 1);
-      lVar9 = lVar2 - (ulonglong)*(ushort *)((int)*s_vc_log.history + iVar4);
-      if (((lVar9 == 0) &&
-          (lVar9 = lVar6 - (ulonglong)*(ushort *)((int)*s_vc_log.history + iVar4 + 2), lVar9 == 0))
-         && (lVar9 = lVar7 - (ulonglong)*(ushort *)((int)*s_vc_log.history + iVar4 + 4), lVar9 == 0)
-         ) goto LAB_827a2cc8;
-      if ((int)lVar9 < 0) {
-        lVar8 = lVar3 + -1;
+      uVar1 = (int)lVar9 + (int)lVar7 >> 1;
+      lVar5 = (longlong)(int)uVar1;
+      iVar3 = (int)((lVar5 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x7fffffff) << 1);
+      iVar2 = iVar3 + DAT_8484845c;
+      lVar8 = lVar4 - (ulonglong)*(ushort *)(iVar3 + DAT_8484845c);
+      if (((lVar8 == 0) && (lVar8 = param_2 - (ulonglong)*(ushort *)(iVar2 + 2), lVar8 == 0)) &&
+         (lVar8 = param_3 - (ulonglong)*(ushort *)(iVar2 + 4), lVar8 == 0)) goto LAB_827a2cc8;
+      if ((int)lVar8 < 0) {
+        lVar7 = lVar5 + -1;
       }
       else {
-        lVar10 = lVar3 + 1;
+        lVar9 = lVar5 + 1;
       }
-      lVar3 = lVar10;
-    } while ((int)lVar10 <= (int)lVar8);
+      lVar5 = lVar9;
+    } while ((int)lVar9 <= (int)lVar7);
   }
-  if ((int)lVar3 != (int)lVar8 + 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x2d3,0,
-                    "%s");
+  if ((int)lVar5 != (int)lVar7 + 1) {
+    MyAssertHandler(0xffffffff821d6bd8,0x2d3,0,0xffffffff82000f98,0xffffffff821c6490);
   }
-  if ((param_4 == SH_ADD_NEVER) ||
-     (bVar5 = R_AddSortedHistoryEntry((int)lVar2,(int)lVar6,(int)lVar7,(int)lVar3), !bVar5)) {
-    lVar3 = -1;
+  if ((param_4 == 0) ||
+     (cVar6 = R_AddSortedHistoryEntry(lVar4,param_2,param_3,lVar5), cVar6 == '\0')) {
+    lVar5 = -1;
   }
 LAB_827a2cc8:
-  iVar4 = __restgprlr_27(lVar3);
-  return iVar4;
+  __restgprlr_27(lVar5);
+  return;
 }
 
 
 // 827A2CD0  R_ShowLightVisCachePoints  (gfx_d3d/rb_light.cpp:735)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_ShowLightVisCachePoints(void)
+
+{
+  uint uVar1;
+  float *pfVar2;
+  char cVar4;
+  int iVar3;
+  undefined8 uVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  undefined8 uVar16;
+  undefined8 uVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  
+  __savegprlr_15();
+  pfVar2 = (float *)__savefpr_27();
+  cVar4 = Sys_IsRenderThread();
+  if (cVar4 != '\0') {
+    MyAssertHandler(0xffffffff821d6bd8,0x2ec,0,0xffffffff82000f98,0xffffffff821858dc);
+  }
+  if (DAT_8484845c != 0) {
+    uVar1 = *(uint *)(DAT_845aa86c + 0xc);
+    if (0 < (int)uVar1) {
+      dVar19 = -131072.0;
+      dVar18 = 0.5;
+      dVar13 = floor((double)((*pfVar2 - -131072.0) + 0.5));
+      dVar14 = floor((double)(float)((double)(float)((double)pfVar2[1] - dVar19) + dVar18));
+      dVar15 = floor((double)(float)((double)pfVar2[2] - dVar19));
+      dVar19 = 32.0;
+      dVar20 = 131072.0;
+      dVar18 = 64.0;
+      local_c8 = (float)((double)(uint)((int)dVar13 >> 5) * 32.0 - 131072.0);
+      local_c4 = (float)((double)(uint)((int)dVar14 >> 5) * 32.0 - 131072.0);
+      local_c0 = (float)((double)(uint)((int)dVar15 >> 6) * 64.0 - 131072.0);
+      if (DAT_84628b00 == 0) {
+        MyAssertHandler(0xffffffff821d6bd8,0x2fd,0,0xffffffff82000f98,0xffffffff821b90d8);
+      }
+      uVar16 = 0x3ff0000000000000;
+      lVar6 = -1;
+      uVar17 = 0;
+      do {
+        uVar9 = lVar6 + ((int)dVar15 >> 6);
+        if ((uVar9 & 0xffffffff) < 0x1001) {
+          lVar8 = -(ulonglong)uVar1;
+          lVar7 = lVar8;
+          iVar3 = (int)lVar8;
+          while (iVar3 <= (int)uVar1) {
+            uVar11 = lVar7 + ((int)dVar14 >> 5);
+            if (((uVar11 & 0xffffffff) < 0x2001) && ((int)lVar8 <= (int)uVar1)) {
+              uVar12 = lVar8 + ((int)dVar13 >> 5);
+              lVar10 = (ulonglong)uVar1 * 2 + 1;
+              do {
+                if ((uVar12 & 0xffffffff) < 0x2001) {
+                  local_c8 = (float)((double)(uVar12 & 0xffffffff) * dVar19 - dVar20);
+                  local_c0 = (float)((double)(uVar9 & 0xffffffff) * dVar18 - dVar20);
+                  local_c4 = (float)((double)(uVar11 & 0xffffffff) * dVar19 - dVar20);
+                  cVar4 = R_CullPointAndRadius(uVar17,&local_c8);
+                  if ((cVar4 == '\0') &&
+                     (iVar3 = R_SortedHistoryEntry(uVar12,uVar11,uVar9,0), iVar3 < 0)) {
+                    if (((int)lVar6 == 0) || (uVar5 = 0xffffffff82181838, (int)lVar6 == 1)) {
+                      uVar5 = 0xffffffff821817f8;
+                    }
+                    R_AddDebugString(uVar16,(ulonglong)DAT_84628b00 + 0x18f0,&local_c8,uVar5);
+                  }
+                }
+                lVar10 = lVar10 + -1;
+                uVar12 = uVar12 + 1;
+              } while (lVar10 != 0);
+            }
+            lVar7 = lVar7 + 1;
+            iVar3 = (int)lVar7;
+          }
+        }
+        lVar6 = lVar6 + 1;
+      } while ((int)lVar6 < 2);
+    }
+  }
+  __restfpr_27();
+  __restgprlr_15();
+  return;
+}
+
 
 // 827A2FC8  R_UpdateVisHistory  (gfx_d3d/rb_light.cpp:802)
 
-void R_UpdateVisHistory(GfxLightGrid *param_1,uint *param_2,GfxLightGridEntry **param_3)
+void R_UpdateVisHistory(undefined8 param_1,uint *param_2)
 
 {
-  int iVar2;
-  longlong lVar1;
-  bool bVar3;
+  int iVar1;
+  longlong lVar2;
+  ushort *puVar3;
   longlong lVar4;
-  uint *puVar5;
+  ulonglong uVar5;
   ulonglong uVar6;
   longlong lVar7;
-  ushort (*pauVar8) [3];
-  longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  longlong lVar16;
+  longlong lVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  longlong lVar11;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_20(param_1,lVar4,param_3);
-  if (*(int *)(iVar2 + 0x14) == 0) {
-    uVar11 = 4;
-    uVar10 = 2;
+  iVar1 = __savegprlr_20();
+  if (*(int *)(iVar1 + 0x14) == 0) {
+    uVar6 = 4;
+    uVar5 = 2;
   }
   else {
-    uVar11 = 2;
-    uVar10 = 4;
+    uVar6 = 2;
+    uVar5 = 4;
   }
-  uVar14 = 0;
+  uVar9 = 0;
   do {
-    puVar5 = (uint *)lVar4;
-    uVar6 = uVar14 & uVar10;
-    lVar1 = uVar6 - 1;
-    lVar15 = (ulonglong)((uVar14 & uVar11) != 0) + (ulonglong)*puVar5;
-    lVar7 = (ulonglong)(uint)s_vc_log.count - 1;
-    lVar13 = (uVar6 - (lVar1 + (ulonglong)(uVar6 == 0))) + (ulonglong)puVar5[1];
-    lVar12 = (uVar14 & 1) + (ulonglong)puVar5[2];
-    lVar16 = 0;
-    iVar2 = 0;
-    if (-1 < lVar7) {
+    lVar10 = (ulonglong)((uVar9 & uVar6) != 0) + (ulonglong)*param_2;
+    lVar2 = (ulonglong)DAT_84848460 - 1;
+    lVar8 = (ulonglong)((uVar9 & uVar5) != 0) + (ulonglong)param_2[1];
+    lVar7 = (uVar9 & 1) + (ulonglong)param_2[2];
+    lVar11 = 0;
+    if (-1 < lVar2) {
       do {
-        iVar2 = (int)lVar16 + (int)lVar7 >> 1;
-        pauVar8 = s_vc_log.history + iVar2;
-        lVar9 = lVar15 - (ulonglong)(*pauVar8)[0];
-        if (lVar9 == 0) {
-          lVar9 = lVar13 - (ulonglong)(*pauVar8)[1];
-          if (lVar9 == 0) {
-            lVar9 = lVar12 - (ulonglong)(*pauVar8)[2];
-            if (lVar9 == 0) goto LAB_827a30f4;
+        iVar1 = (int)lVar11 + (int)lVar2 >> 1;
+        puVar3 = (ushort *)(iVar1 * 6 + DAT_8484845c);
+        lVar4 = lVar10 - (ulonglong)*puVar3;
+        if (lVar4 == 0) {
+          lVar4 = lVar8 - (ulonglong)puVar3[1];
+          if (lVar4 == 0) {
+            lVar4 = lVar7 - (ulonglong)puVar3[2];
+            if (lVar4 == 0) goto LAB_827a30f4;
           }
         }
-        if ((int)lVar9 < 0) {
-          lVar7 = (longlong)iVar2 + -1;
+        if ((int)lVar4 < 0) {
+          lVar2 = (longlong)iVar1 + -1;
         }
         else {
-          lVar16 = (longlong)iVar2 + 1;
+          lVar11 = (longlong)iVar1 + 1;
         }
-        iVar2 = (int)lVar16;
-      } while (iVar2 <= (int)lVar7);
+      } while ((int)lVar11 <= (int)lVar2);
     }
-    if (iVar2 != (int)lVar7 + 1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x2d3,
-                      0,"%s");
+    if ((int)lVar11 != (int)lVar2 + 1) {
+      MyAssertHandler(0xffffffff821d6bd8,0x2d3,0,0xffffffff82000f98,0xffffffff821c6490);
     }
-    bVar3 = R_AddSortedHistoryEntry((int)lVar15,(int)lVar13,(int)lVar12,iVar2);
-    lVar1 = (longlong)bVar3;
+    R_AddSortedHistoryEntry(lVar10,lVar8,lVar7,lVar11);
 LAB_827a30f4:
-    uVar14 = uVar14 + 1;
-    if (7 < (uVar14 & 0xffffffff)) {
-      __restgprlr_20(lVar1);
+    uVar9 = uVar9 + 1;
+    if (7 < (uVar9 & 0xffffffff)) {
+      __restgprlr_20();
       return;
     }
   } while( true );
@@ -381,25 +1025,21 @@ LAB_827a30f4:
 
 // 827A3108  R_GetPackedSunWeightFromFloat  (gfx_d3d/rb_light.cpp:837)
 
-uchar R_GetPackedSunWeightFromFloat(float param_1)
+ulonglong R_GetPackedSunWeightFromFloat(double param_1)
 
 {
-  undefined1 uStack_9;
-  
-  uStack_9 = (uchar)(longlong)(param_1 * 255.0 + 0.5);
-  return uStack_9;
+  return (longlong)(param_1 * 255.0 + 0.5) & 0xff;
 }
 
 
 // 827A3130  R_AverageLightGridColors  (gfx_d3d/rb_light.cpp:843)
 
-void R_AverageLightGridColors(GfxLightGridColors *param_1,float param_2,uchar *param_3)
+void R_AverageLightGridColors(double param_1,int param_2,undefined8 param_3,int param_4)
 
 {
   int *piVar1;
-  uchar *puVar2;
+  byte *pbVar2;
   longlong lVar3;
-  int in_r5;
   int *piVar4;
   int iVar5;
   longlong lVar6;
@@ -417,300 +1057,194 @@ void R_AverageLightGridColors(GfxLightGridColors *param_1,float param_2,uchar *p
     lVar6 = 3;
     do {
       piVar1 = piVar4 + 1;
-      puVar2 = *(uchar (*) [3])*(uchar (*) [3])param_1 + iVar5;
+      pbVar2 = (byte *)(param_2 + iVar5);
       iVar5 = iVar5 + 1;
       piVar4 = piVar4 + 1;
-      *piVar4 = (uint)*puVar2 + *piVar1;
+      *piVar4 = (uint)*pbVar2 + *piVar1;
       lVar6 = lVar6 + -1;
     } while (lVar6 != 0);
     lVar3 = lVar3 + -1;
-    param_1 = (GfxLightGridColors *)((int)param_1 + 3);
+    param_2 = param_2 + 3;
   } while (lVar3 != 0);
   piVar4 = &iStack_14;
   iVar5 = 0;
   lVar3 = 3;
   do {
     piVar4 = piVar4 + 1;
-    *(char *)(iVar5 + in_r5) = (char)(*piVar4 / 0x38);
+    *(char *)(iVar5 + param_4) = (char)(*piVar4 / 0x38);
     iVar5 = iVar5 + 1;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  uStack_9 = (undefined1)(longlong)(param_2 * 255.0 + 0.5);
-  *(undefined1 *)(in_r5 + 3) = uStack_9;
+  uStack_9 = (undefined1)(longlong)(param_1 * 255.0 + 0.5);
+  *(undefined1 *)(param_4 + 3) = uStack_9;
   return;
 }
 
 
 // 827A31D8  R_GetGridAmbientColor  (gfx_d3d/rb_light.cpp:865)
 
-uint R_GetGridAmbientColor(GfxLightGridColors *param_1,uchar param_2)
+undefined4 R_GetGridAmbientColor(byte *param_1,undefined1 param_2)
 
 {
   undefined4 local_10;
   
-  local_10 = CONCAT22(CONCAT11((char)((int)((uint)param_1->rgb[0x37][0] +
-                                            (uint)param_1->rgb[0x34][0] +
-                                            (uint)param_1->rgb[0x2b][0] +
-                                            (uint)param_1->rgb[0x28][0] + (uint)param_1->rgb[0xf][0]
-                                            + (uint)param_1->rgb[0xc][0] + (uint)param_1->rgb[3][0]
-                                            + (uint)param_1->rgb[0][0] + 4) >> 3),
-                               (char)((int)((uint)param_1->rgb[0x37][1] +
-                                            (uint)param_1->rgb[0x34][1] +
-                                            (uint)param_1->rgb[0x2b][1] +
-                                            (uint)param_1->rgb[0x28][1] + (uint)param_1->rgb[0xf][1]
-                                            + (uint)param_1->rgb[0xc][1] + (uint)param_1->rgb[3][1]
-                                            + (uint)param_1->rgb[0][1] + 4) >> 3)),
-                      CONCAT11((char)((int)((uint)param_1->rgb[0x37][2] +
-                                            (uint)param_1->rgb[0x34][2] +
-                                            (uint)param_1->rgb[0x2b][2] +
-                                            (uint)param_1->rgb[0x28][2] + (uint)param_1->rgb[0xf][2]
-                                            + (uint)param_1->rgb[0xc][2] + (uint)param_1->rgb[3][2]
-                                            + (uint)param_1->rgb[0][2] + 4) >> 3),param_2));
+  local_10 = CONCAT22(CONCAT11((char)((int)((uint)param_1[0xa5] + (uint)param_1[0x9c] +
+                                            (uint)param_1[0x81] + (uint)param_1[0x78] +
+                                            (uint)param_1[0x2d] + (uint)param_1[0x24] +
+                                            (uint)param_1[9] + (uint)*param_1 + 4) >> 3),
+                               (char)((int)((uint)param_1[0xa6] + (uint)param_1[0x9d] +
+                                            (uint)param_1[0x82] + (uint)param_1[0x79] +
+                                            (uint)param_1[0x2e] + (uint)param_1[0x25] +
+                                            (uint)param_1[10] + (uint)param_1[1] + 4) >> 3)),
+                      CONCAT11((char)((int)((uint)param_1[0xa7] + (uint)param_1[0x9e] +
+                                            (uint)param_1[0x83] + (uint)param_1[0x7a] +
+                                            (uint)param_1[0x2f] + (uint)param_1[0x26] +
+                                            (uint)param_1[0xb] + (uint)param_1[2] + 4) >> 3),param_2
+                              ));
   return local_10;
 }
 
 
 // 827A32C0  R_SetLightGridColors  (gfx_d3d/rb_light.cpp:878)
 
-void R_SetLightGridColors(GfxLightGridColors *param_1,uchar param_2,uchar *param_3)
+void R_SetLightGridColors(byte *param_1,ulonglong param_2,uint *param_3)
 
 {
-  *(uint *)param_3 =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0][0]),param_1->rgb[0][1]),param_1->rgb[0][2]
-               );
-  *(uint *)(param_3 + 4) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[1][0]),param_1->rgb[1][1]),param_1->rgb[1][2]
-               );
-  *(uint *)(param_3 + 8) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[2][0]),param_1->rgb[2][1]),param_1->rgb[2][2]
-               );
-  *(uint *)(param_3 + 0xc) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[3][0]),param_1->rgb[3][1]),param_1->rgb[3][2]
-               );
-  *(uint *)(param_3 + 0x10) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[4][0]),param_1->rgb[4][1]),param_1->rgb[4][2]
-               );
-  *(uint *)(param_3 + 0x14) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[5][0]),param_1->rgb[5][1]),param_1->rgb[5][2]
-               );
-  *(uint *)(param_3 + 0x18) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[6][0]),param_1->rgb[6][1]),param_1->rgb[6][2]
-               );
-  *(uint *)(param_3 + 0x1c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[7][0]),param_1->rgb[7][1]),param_1->rgb[7][2]
-               );
-  *(uint *)(param_3 + 0x100) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[8][0]),param_1->rgb[8][1]),param_1->rgb[8][2]
-               );
-  *(uint *)(param_3 + 0x104) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[9][0]),param_1->rgb[9][1]),param_1->rgb[9][2]
-               );
-  *(uint *)(param_3 + 0x108) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[10][0]),param_1->rgb[10][1]),
-                param_1->rgb[10][2]);
-  *(uint *)(param_3 + 0x10c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0xb][0]),param_1->rgb[0xb][1]),
-                param_1->rgb[0xb][2]);
-  *(uint *)(param_3 + 0x110) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0xc][0]),param_1->rgb[0xc][1]),
-                param_1->rgb[0xc][2]);
-  *(uint *)(param_3 + 0x114) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0xd][0]),param_1->rgb[0xd][1]),
-                param_1->rgb[0xd][2]);
-  *(uint *)(param_3 + 0x118) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0xe][0]),param_1->rgb[0xe][1]),
-                param_1->rgb[0xe][2]);
-  *(uint *)(param_3 + 0x11c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0xf][0]),param_1->rgb[0xf][1]),
-                param_1->rgb[0xf][2]);
-  *(uint *)(param_3 + 0x400) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x10][0]),param_1->rgb[0x10][1]),
-                param_1->rgb[0x10][2]);
-  *(uint *)(param_3 + 0x404) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x11][0]),param_1->rgb[0x11][1]),
-                param_1->rgb[0x11][2]);
-  *(uint *)(param_3 + 0x408) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x12][0]),param_1->rgb[0x12][1]),
-                param_1->rgb[0x12][2]);
-  *(uint *)(param_3 + 0x40c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x13][0]),param_1->rgb[0x13][1]),
-                param_1->rgb[0x13][2]);
-  *(uint *)(param_3 + 0x410) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x14][0]),param_1->rgb[0x14][1]),
-                param_1->rgb[0x14][2]);
-  *(uint *)(param_3 + 0x414) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0][0]),param_1->rgb[0][1]),param_1->rgb[0][2]
-               );
-  *(uint *)(param_3 + 0x418) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[3][0]),param_1->rgb[3][1]),param_1->rgb[3][2]
-               );
-  *(uint *)(param_3 + 0x41c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x15][0]),param_1->rgb[0x15][1]),
-                param_1->rgb[0x15][2]);
-  *(uint *)(param_3 + 0x500) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x16][0]),param_1->rgb[0x16][1]),
-                param_1->rgb[0x16][2]);
-  *(uint *)(param_3 + 0x504) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0xc][0]),param_1->rgb[0xc][1]),
-                param_1->rgb[0xc][2]);
-  *(uint *)(param_3 + 0x508) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0xf][0]),param_1->rgb[0xf][1]),
-                param_1->rgb[0xf][2]);
-  *(uint *)(param_3 + 0x50c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x17][0]),param_1->rgb[0x17][1]),
-                param_1->rgb[0x17][2]);
-  *(uint *)(param_3 + 0x510) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x18][0]),param_1->rgb[0x18][1]),
-                param_1->rgb[0x18][2]);
-  *(uint *)(param_3 + 0x514) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x19][0]),param_1->rgb[0x19][1]),
-                param_1->rgb[0x19][2]);
-  *(uint *)(param_3 + 0x518) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x1a][0]),param_1->rgb[0x1a][1]),
-                param_1->rgb[0x1a][2]);
-  *(uint *)(param_3 + 0x51c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x1b][0]),param_1->rgb[0x1b][1]),
-                param_1->rgb[0x1b][2]);
-  *(uint *)(param_3 + 0x1000) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x1c][0]),param_1->rgb[0x1c][1]),
-                param_1->rgb[0x1c][2]);
-  *(uint *)(param_3 + 0x1004) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x1d][0]),param_1->rgb[0x1d][1]),
-                param_1->rgb[0x1d][2]);
-  *(uint *)(param_3 + 0x1008) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x1e][0]),param_1->rgb[0x1e][1]),
-                param_1->rgb[0x1e][2]);
-  *(uint *)(param_3 + 0x100c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x1f][0]),param_1->rgb[0x1f][1]),
-                param_1->rgb[0x1f][2]);
-  *(uint *)(param_3 + 0x1010) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x20][0]),param_1->rgb[0x20][1]),
-                param_1->rgb[0x20][2]);
-  *(uint *)(param_3 + 0x1014) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x28][0]),param_1->rgb[0x28][1]),
-                param_1->rgb[0x28][2]);
-  *(uint *)(param_3 + 0x1018) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x2b][0]),param_1->rgb[0x2b][1]),
-                param_1->rgb[0x2b][2]);
-  *(uint *)(param_3 + 0x101c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x21][0]),param_1->rgb[0x21][1]),
-                param_1->rgb[0x21][2]);
-  *(uint *)(param_3 + 0x1100) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x22][0]),param_1->rgb[0x22][1]),
-                param_1->rgb[0x22][2]);
-  *(uint *)(param_3 + 0x1104) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x34][0]),param_1->rgb[0x34][1]),
-                param_1->rgb[0x34][2]);
-  *(uint *)(param_3 + 0x1108) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x37][0]),param_1->rgb[0x37][1]),
-                param_1->rgb[0x37][2]);
-  *(uint *)(param_3 + 0x110c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x23][0]),param_1->rgb[0x23][1]),
-                param_1->rgb[0x23][2]);
-  *(uint *)(param_3 + 0x1110) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x24][0]),param_1->rgb[0x24][1]),
-                param_1->rgb[0x24][2]);
-  *(uint *)(param_3 + 0x1114) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x25][0]),param_1->rgb[0x25][1]),
-                param_1->rgb[0x25][2]);
-  *(uint *)(param_3 + 0x1118) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x26][0]),param_1->rgb[0x26][1]),
-                param_1->rgb[0x26][2]);
-  *(uint *)(param_3 + 0x111c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x27][0]),param_1->rgb[0x27][1]),
-                param_1->rgb[0x27][2]);
-  *(uint *)(param_3 + 0x1400) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x28][0]),param_1->rgb[0x28][1]),
-                param_1->rgb[0x28][2]);
-  *(uint *)(param_3 + 0x1404) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x29][0]),param_1->rgb[0x29][1]),
-                param_1->rgb[0x29][2]);
-  *(uint *)(param_3 + 0x1408) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x2a][0]),param_1->rgb[0x2a][1]),
-                param_1->rgb[0x2a][2]);
-  *(uint *)(param_3 + 0x140c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x2b][0]),param_1->rgb[0x2b][1]),
-                param_1->rgb[0x2b][2]);
-  *(uint *)(param_3 + 0x1410) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x2c][0]),param_1->rgb[0x2c][1]),
-                param_1->rgb[0x2c][2]);
-  *(uint *)(param_3 + 0x1414) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x2d][0]),param_1->rgb[0x2d][1]),
-                param_1->rgb[0x2d][2]);
-  *(uint *)(param_3 + 0x1418) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x2e][0]),param_1->rgb[0x2e][1]),
-                param_1->rgb[0x2e][2]);
-  *(uint *)(param_3 + 0x141c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x2f][0]),param_1->rgb[0x2f][1]),
-                param_1->rgb[0x2f][2]);
-  *(uint *)(param_3 + 0x1500) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x30][0]),param_1->rgb[0x30][1]),
-                param_1->rgb[0x30][2]);
-  *(uint *)(param_3 + 0x1504) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x31][0]),param_1->rgb[0x31][1]),
-                param_1->rgb[0x31][2]);
-  *(uint *)(param_3 + 0x1508) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x32][0]),param_1->rgb[0x32][1]),
-                param_1->rgb[0x32][2]);
-  *(uint *)(param_3 + 0x150c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x33][0]),param_1->rgb[0x33][1]),
-                param_1->rgb[0x33][2]);
-  *(uint *)(param_3 + 0x1510) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x34][0]),param_1->rgb[0x34][1]),
-                param_1->rgb[0x34][2]);
-  *(uint *)(param_3 + 0x1514) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x35][0]),param_1->rgb[0x35][1]),
-                param_1->rgb[0x35][2]);
-  *(uint *)(param_3 + 0x1518) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x36][0]),param_1->rgb[0x36][1]),
-                param_1->rgb[0x36][2]);
-  *(uint *)(param_3 + 0x151c) =
-       CONCAT31(CONCAT21(CONCAT11(param_2,param_1->rgb[0x37][0]),param_1->rgb[0x37][1]),
-                param_1->rgb[0x37][2]);
+  ulonglong uVar1;
+  
+  uVar1 = (param_2 & 0xff) << 8;
+  *param_3 = (uint)(((*param_1 | uVar1) << 8 | (ulonglong)param_1[1]) << 8) | (uint)param_1[2];
+  param_3[1] = (uint)(((param_1[3] | uVar1) << 8 | (ulonglong)param_1[4]) << 8) | (uint)param_1[5];
+  param_3[2] = (uint)(((param_1[6] | uVar1) << 8 | (ulonglong)param_1[7]) << 8) | (uint)param_1[8];
+  param_3[3] = (uint)(((param_1[9] | uVar1) << 8 | (ulonglong)param_1[10]) << 8) |
+               (uint)param_1[0xb];
+  param_3[4] = (uint)(((param_1[0xc] | uVar1) << 8 | (ulonglong)param_1[0xd]) << 8) |
+               (uint)param_1[0xe];
+  param_3[5] = (uint)(((param_1[0xf] | uVar1) << 8 | (ulonglong)param_1[0x10]) << 8) |
+               (uint)param_1[0x11];
+  param_3[6] = (uint)(((param_1[0x12] | uVar1) << 8 | (ulonglong)param_1[0x13]) << 8) |
+               (uint)param_1[0x14];
+  param_3[7] = (uint)(((param_1[0x15] | uVar1) << 8 | (ulonglong)param_1[0x16]) << 8) |
+               (uint)param_1[0x17];
+  param_3[0x40] =
+       (uint)(((param_1[0x18] | uVar1) << 8 | (ulonglong)param_1[0x19]) << 8) | (uint)param_1[0x1a];
+  param_3[0x41] =
+       (uint)(((param_1[0x1b] | uVar1) << 8 | (ulonglong)param_1[0x1c]) << 8) | (uint)param_1[0x1d];
+  param_3[0x42] =
+       (uint)(((param_1[0x1e] | uVar1) << 8 | (ulonglong)param_1[0x1f]) << 8) | (uint)param_1[0x20];
+  param_3[0x43] =
+       (uint)(((param_1[0x21] | uVar1) << 8 | (ulonglong)param_1[0x22]) << 8) | (uint)param_1[0x23];
+  param_3[0x44] =
+       (uint)(((param_1[0x24] | uVar1) << 8 | (ulonglong)param_1[0x25]) << 8) | (uint)param_1[0x26];
+  param_3[0x45] =
+       (uint)(((param_1[0x27] | uVar1) << 8 | (ulonglong)param_1[0x28]) << 8) | (uint)param_1[0x29];
+  param_3[0x46] =
+       (uint)(((param_1[0x2a] | uVar1) << 8 | (ulonglong)param_1[0x2b]) << 8) | (uint)param_1[0x2c];
+  param_3[0x47] =
+       (uint)(((param_1[0x2d] | uVar1) << 8 | (ulonglong)param_1[0x2e]) << 8) | (uint)param_1[0x2f];
+  param_3[0x100] =
+       (uint)(((param_1[0x30] | uVar1) << 8 | (ulonglong)param_1[0x31]) << 8) | (uint)param_1[0x32];
+  param_3[0x101] =
+       (uint)(((param_1[0x33] | uVar1) << 8 | (ulonglong)param_1[0x34]) << 8) | (uint)param_1[0x35];
+  param_3[0x102] =
+       (uint)(((param_1[0x36] | uVar1) << 8 | (ulonglong)param_1[0x37]) << 8) | (uint)param_1[0x38];
+  param_3[0x103] =
+       (uint)(((param_1[0x39] | uVar1) << 8 | (ulonglong)param_1[0x3a]) << 8) | (uint)param_1[0x3b];
+  param_3[0x104] =
+       (uint)(((param_1[0x3c] | uVar1) << 8 | (ulonglong)param_1[0x3d]) << 8) | (uint)param_1[0x3e];
+  param_3[0x105] = (uint)(((*param_1 | uVar1) << 8 | (ulonglong)param_1[1]) << 8) | (uint)param_1[2]
+  ;
+  param_3[0x106] =
+       (uint)(((param_1[9] | uVar1) << 8 | (ulonglong)param_1[10]) << 8) | (uint)param_1[0xb];
+  param_3[0x107] =
+       (uint)(((param_1[0x3f] | uVar1) << 8 | (ulonglong)param_1[0x40]) << 8) | (uint)param_1[0x41];
+  param_3[0x140] =
+       (uint)(((param_1[0x42] | uVar1) << 8 | (ulonglong)param_1[0x43]) << 8) | (uint)param_1[0x44];
+  param_3[0x141] =
+       (uint)(((param_1[0x24] | uVar1) << 8 | (ulonglong)param_1[0x25]) << 8) | (uint)param_1[0x26];
+  param_3[0x142] =
+       (uint)(((param_1[0x2d] | uVar1) << 8 | (ulonglong)param_1[0x2e]) << 8) | (uint)param_1[0x2f];
+  param_3[0x143] =
+       (uint)(((param_1[0x45] | uVar1) << 8 | (ulonglong)param_1[0x46]) << 8) | (uint)param_1[0x47];
+  param_3[0x144] =
+       (uint)(((param_1[0x48] | uVar1) << 8 | (ulonglong)param_1[0x49]) << 8) | (uint)param_1[0x4a];
+  param_3[0x145] =
+       (uint)(((param_1[0x4b] | uVar1) << 8 | (ulonglong)param_1[0x4c]) << 8) | (uint)param_1[0x4d];
+  param_3[0x146] =
+       (uint)(((param_1[0x4e] | uVar1) << 8 | (ulonglong)param_1[0x4f]) << 8) | (uint)param_1[0x50];
+  param_3[0x147] =
+       (uint)(((param_1[0x51] | uVar1) << 8 | (ulonglong)param_1[0x52]) << 8) | (uint)param_1[0x53];
+  param_3[0x400] =
+       (uint)(((param_1[0x54] | uVar1) << 8 | (ulonglong)param_1[0x55]) << 8) | (uint)param_1[0x56];
+  param_3[0x401] =
+       (uint)(((param_1[0x57] | uVar1) << 8 | (ulonglong)param_1[0x58]) << 8) | (uint)param_1[0x59];
+  param_3[0x402] =
+       (uint)(((param_1[0x5a] | uVar1) << 8 | (ulonglong)param_1[0x5b]) << 8) | (uint)param_1[0x5c];
+  param_3[0x403] =
+       (uint)(((param_1[0x5d] | uVar1) << 8 | (ulonglong)param_1[0x5e]) << 8) | (uint)param_1[0x5f];
+  param_3[0x404] =
+       (uint)(((param_1[0x60] | uVar1) << 8 | (ulonglong)param_1[0x61]) << 8) | (uint)param_1[0x62];
+  param_3[0x405] =
+       (uint)(((param_1[0x78] | uVar1) << 8 | (ulonglong)param_1[0x79]) << 8) | (uint)param_1[0x7a];
+  param_3[0x406] =
+       (uint)(((param_1[0x81] | uVar1) << 8 | (ulonglong)param_1[0x82]) << 8) | (uint)param_1[0x83];
+  param_3[0x407] =
+       (uint)(((param_1[99] | uVar1) << 8 | (ulonglong)param_1[100]) << 8) | (uint)param_1[0x65];
+  param_3[0x440] =
+       (uint)(((param_1[0x66] | uVar1) << 8 | (ulonglong)param_1[0x67]) << 8) | (uint)param_1[0x68];
+  param_3[0x441] =
+       (uint)(((param_1[0x9c] | uVar1) << 8 | (ulonglong)param_1[0x9d]) << 8) | (uint)param_1[0x9e];
+  param_3[0x442] =
+       (uint)(((param_1[0xa5] | uVar1) << 8 | (ulonglong)param_1[0xa6]) << 8) | (uint)param_1[0xa7];
+  param_3[0x443] =
+       (uint)(((param_1[0x69] | uVar1) << 8 | (ulonglong)param_1[0x6a]) << 8) | (uint)param_1[0x6b];
+  param_3[0x444] =
+       (uint)(((param_1[0x6c] | uVar1) << 8 | (ulonglong)param_1[0x6d]) << 8) | (uint)param_1[0x6e];
+  param_3[0x445] =
+       (uint)(((param_1[0x6f] | uVar1) << 8 | (ulonglong)param_1[0x70]) << 8) | (uint)param_1[0x71];
+  param_3[0x446] =
+       (uint)(((param_1[0x72] | uVar1) << 8 | (ulonglong)param_1[0x73]) << 8) | (uint)param_1[0x74];
+  param_3[0x447] =
+       (uint)(((param_1[0x75] | uVar1) << 8 | (ulonglong)param_1[0x76]) << 8) | (uint)param_1[0x77];
+  param_3[0x500] =
+       (uint)(((param_1[0x78] | uVar1) << 8 | (ulonglong)param_1[0x79]) << 8) | (uint)param_1[0x7a];
+  param_3[0x501] =
+       (uint)(((param_1[0x7b] | uVar1) << 8 | (ulonglong)param_1[0x7c]) << 8) | (uint)param_1[0x7d];
+  param_3[0x502] =
+       (uint)(((param_1[0x7e] | uVar1) << 8 | (ulonglong)param_1[0x7f]) << 8) | (uint)param_1[0x80];
+  param_3[0x503] =
+       (uint)(((param_1[0x81] | uVar1) << 8 | (ulonglong)param_1[0x82]) << 8) | (uint)param_1[0x83];
+  param_3[0x504] =
+       (uint)(((param_1[0x84] | uVar1) << 8 | (ulonglong)param_1[0x85]) << 8) | (uint)param_1[0x86];
+  param_3[0x505] =
+       (uint)(((param_1[0x87] | uVar1) << 8 | (ulonglong)param_1[0x88]) << 8) | (uint)param_1[0x89];
+  param_3[0x506] =
+       (uint)(((param_1[0x8a] | uVar1) << 8 | (ulonglong)param_1[0x8b]) << 8) | (uint)param_1[0x8c];
+  param_3[0x507] =
+       (uint)(((param_1[0x8d] | uVar1) << 8 | (ulonglong)param_1[0x8e]) << 8) | (uint)param_1[0x8f];
+  param_3[0x540] =
+       (uint)(((param_1[0x90] | uVar1) << 8 | (ulonglong)param_1[0x91]) << 8) | (uint)param_1[0x92];
+  param_3[0x541] =
+       (uint)(((param_1[0x93] | uVar1) << 8 | (ulonglong)param_1[0x94]) << 8) | (uint)param_1[0x95];
+  param_3[0x542] =
+       (uint)(((param_1[0x96] | uVar1) << 8 | (ulonglong)param_1[0x97]) << 8) | (uint)param_1[0x98];
+  param_3[0x543] =
+       (uint)(((param_1[0x99] | uVar1) << 8 | (ulonglong)param_1[0x9a]) << 8) | (uint)param_1[0x9b];
+  param_3[0x544] =
+       (uint)(((param_1[0x9c] | uVar1) << 8 | (ulonglong)param_1[0x9d]) << 8) | (uint)param_1[0x9e];
+  param_3[0x545] =
+       (uint)(((param_1[0x9f] | uVar1) << 8 | (ulonglong)param_1[0xa0]) << 8) | (uint)param_1[0xa1];
+  param_3[0x546] =
+       (uint)(((param_1[0xa2] | uVar1) << 8 | (ulonglong)param_1[0xa3]) << 8) | (uint)param_1[0xa4];
+  param_3[0x547] =
+       (uint)(((param_1[0xa5] | uVar1) << 8 | (ulonglong)param_1[0xa6]) << 8) | (uint)param_1[0xa7];
   return;
 }
 
 
 // 827A3BC8  R_ScaleLightGridColors  (gfx_d3d/rb_light.cpp:1175)
 
-void R_ScaleLightGridColors(GfxLightGridColors *param_1,ushort param_2,ushort *param_3)
-
-{
-  int iVar1;
-  byte *pbVar2;
-  int iVar3;
-  longlong lVar4;
-  int iVar5;
-  longlong lVar6;
-  
-  lVar4 = (longlong)(int)param_3;
-  iVar3 = __savegprlr_28(param_1);
-  iVar5 = 0;
-  lVar6 = 0x15;
-  lVar4 = lVar4 + -2;
-  do {
-    iVar1 = (int)lVar4;
-    *(ushort *)(iVar1 + 2) = *(byte *)(iVar5 + iVar3) * param_2;
-    *(ushort *)(iVar1 + 4) = *(byte *)(iVar3 + 1 + iVar5) * param_2;
-    *(ushort *)(iVar1 + 6) = *(byte *)(iVar3 + 2 + iVar5) * param_2;
-    *(ushort *)(iVar1 + 8) = *(byte *)(iVar3 + 3 + iVar5) * param_2;
-    *(ushort *)(iVar1 + 10) = *(byte *)(iVar3 + 4 + iVar5) * param_2;
-    *(ushort *)(iVar1 + 0xc) = *(byte *)(iVar3 + 5 + iVar5) * param_2;
-    *(ushort *)(iVar1 + 0xe) = *(byte *)(iVar3 + 6 + iVar5) * param_2;
-    pbVar2 = (byte *)(iVar3 + 7 + iVar5);
-    iVar5 = iVar5 + 8;
-    lVar4 = lVar4 + 0x10;
-    *(short *)lVar4 = *pbVar2 * param_2;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  __restgprlr_28();
-  return;
-}
-
-
-// 827A3C70  R_WeightedAccumulateLightGridColors  (gfx_d3d/rb_light.cpp:1196)
-
-void R_WeightedAccumulateLightGridColors(GfxLightGridColors *param_1,ushort param_2,ushort *param_3)
+void R_ScaleLightGridColors(undefined8 param_1,short param_2,longlong param_3)
 
 {
   int iVar1;
@@ -718,28 +1252,64 @@ void R_WeightedAccumulateLightGridColors(GfxLightGridColors *param_1,ushort para
   int iVar3;
   int iVar4;
   longlong lVar5;
-  longlong lVar6;
   
-  lVar5 = (longlong)(int)param_3;
-  iVar3 = __savegprlr_20(param_1);
+  iVar3 = __savegprlr_28();
   iVar4 = 0;
-  lVar6 = 0x15;
-  lVar5 = lVar5 + -2;
+  lVar5 = 0x15;
+  param_3 = param_3 + -2;
   do {
-    iVar1 = (int)lVar5;
-    *(ushort *)(iVar1 + 2) = *(byte *)(iVar4 + iVar3) * param_2 + *(short *)(iVar1 + 2);
-    *(ushort *)(iVar1 + 4) = *(byte *)(iVar3 + 1 + iVar4) * param_2 + *(short *)(iVar1 + 4);
-    *(ushort *)(iVar1 + 6) = *(byte *)(iVar3 + 2 + iVar4) * param_2 + *(short *)(iVar1 + 6);
-    *(ushort *)(iVar1 + 8) = *(byte *)(iVar3 + 3 + iVar4) * param_2 + *(short *)(iVar1 + 8);
-    *(ushort *)(iVar1 + 10) = *(byte *)(iVar3 + 4 + iVar4) * param_2 + *(short *)(iVar1 + 10);
-    *(ushort *)(iVar1 + 0xc) = *(byte *)(iVar3 + 5 + iVar4) * param_2 + *(short *)(iVar1 + 0xc);
-    *(ushort *)(iVar1 + 0xe) = *(byte *)(iVar3 + 6 + iVar4) * param_2 + *(short *)(iVar1 + 0xe);
+    iVar1 = (int)param_3;
+    *(ushort *)(iVar1 + 2) = (ushort)*(byte *)(iVar4 + iVar3) * param_2;
+    *(ushort *)(iVar1 + 4) = (ushort)*(byte *)(iVar3 + 1 + iVar4) * param_2;
+    *(ushort *)(iVar1 + 6) = (ushort)*(byte *)(iVar3 + 2 + iVar4) * param_2;
+    *(ushort *)(iVar1 + 8) = (ushort)*(byte *)(iVar3 + 3 + iVar4) * param_2;
+    *(ushort *)(iVar1 + 10) = (ushort)*(byte *)(iVar3 + 4 + iVar4) * param_2;
+    *(ushort *)(iVar1 + 0xc) = (ushort)*(byte *)(iVar3 + 5 + iVar4) * param_2;
+    *(ushort *)(iVar1 + 0xe) = (ushort)*(byte *)(iVar3 + 6 + iVar4) * param_2;
     pbVar2 = (byte *)(iVar3 + 7 + iVar4);
     iVar4 = iVar4 + 8;
-    lVar5 = lVar5 + 0x10;
-    *(short *)lVar5 = *pbVar2 * param_2 + *(short *)(iVar1 + 0x10);
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
+    param_3 = param_3 + 0x10;
+    *(short *)param_3 = (ushort)*pbVar2 * param_2;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  __restgprlr_28();
+  return;
+}
+
+
+// 827A3C70  R_WeightedAccumulateLightGridColors  (gfx_d3d/rb_light.cpp:1196)
+
+void R_WeightedAccumulateLightGridColors(undefined8 param_1,short param_2,longlong param_3)
+
+{
+  int iVar1;
+  byte *pbVar2;
+  int iVar3;
+  int iVar4;
+  longlong lVar5;
+  
+  iVar3 = __savegprlr_20();
+  iVar4 = 0;
+  lVar5 = 0x15;
+  param_3 = param_3 + -2;
+  do {
+    iVar1 = (int)param_3;
+    *(ushort *)(iVar1 + 2) = (ushort)*(byte *)(iVar4 + iVar3) * param_2 + *(short *)(iVar1 + 2);
+    *(ushort *)(iVar1 + 4) = (ushort)*(byte *)(iVar3 + 1 + iVar4) * param_2 + *(short *)(iVar1 + 4);
+    *(ushort *)(iVar1 + 6) = (ushort)*(byte *)(iVar3 + 2 + iVar4) * param_2 + *(short *)(iVar1 + 6);
+    *(ushort *)(iVar1 + 8) = (ushort)*(byte *)(iVar3 + 3 + iVar4) * param_2 + *(short *)(iVar1 + 8);
+    *(ushort *)(iVar1 + 10) =
+         (ushort)*(byte *)(iVar3 + 4 + iVar4) * param_2 + *(short *)(iVar1 + 10);
+    *(ushort *)(iVar1 + 0xc) =
+         (ushort)*(byte *)(iVar3 + 5 + iVar4) * param_2 + *(short *)(iVar1 + 0xc);
+    *(ushort *)(iVar1 + 0xe) =
+         (ushort)*(byte *)(iVar3 + 6 + iVar4) * param_2 + *(short *)(iVar1 + 0xe);
+    pbVar2 = (byte *)(iVar3 + 7 + iVar4);
+    iVar4 = iVar4 + 8;
+    param_3 = param_3 + 0x10;
+    *(short *)param_3 = (ushort)*pbVar2 * param_2 + *(short *)(iVar1 + 0x10);
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   __restgprlr_20();
   return;
 }
@@ -747,7 +1317,7 @@ void R_WeightedAccumulateLightGridColors(GfxLightGridColors *param_1,ushort para
 
 // 827A3D80  R_PackAccumulatedLightGridColors  (gfx_d3d/rb_light.cpp:1217)
 
-void R_PackAccumulatedLightGridColors(ushort *param_1,GfxLightGridColors *param_2)
+void R_PackAccumulatedLightGridColors(undefined8 param_1,int param_2)
 
 {
   int iVar1;
@@ -755,20 +1325,20 @@ void R_PackAccumulatedLightGridColors(ushort *param_1,GfxLightGridColors *param_
   int iVar3;
   longlong lVar4;
   
-  iVar1 = __savegprlr_29(param_1);
+  iVar1 = __savegprlr_29();
   iVar3 = 0;
   lVar4 = 0x15;
   puVar2 = (ushort *)(iVar1 + -2);
   do {
-    param_2->rgb[0][iVar3] = (uchar)(puVar2[1] + 0x7f >> 8);
-    param_2->rgb[0][iVar3 + 1] = (uchar)(puVar2[2] + 0x7f >> 8);
-    param_2->rgb[0][iVar3 + 2] = (uchar)(puVar2[3] + 0x7f >> 8);
-    param_2->rgb[1][iVar3] = (uchar)(puVar2[4] + 0x7f >> 8);
-    param_2->rgb[1][iVar3 + 1] = (uchar)(puVar2[5] + 0x7f >> 8);
-    param_2->rgb[1][iVar3 + 2] = (uchar)(puVar2[6] + 0x7f >> 8);
-    param_2->rgb[2][iVar3] = (uchar)(puVar2[7] + 0x7f >> 8);
+    *(char *)(iVar3 + param_2) = (char)(puVar2[1] + 0x7f >> 8);
+    *(char *)(param_2 + 1 + iVar3) = (char)(puVar2[2] + 0x7f >> 8);
+    *(char *)(param_2 + 2 + iVar3) = (char)(puVar2[3] + 0x7f >> 8);
+    *(char *)(param_2 + 3 + iVar3) = (char)(puVar2[4] + 0x7f >> 8);
+    *(char *)(param_2 + 4 + iVar3) = (char)(puVar2[5] + 0x7f >> 8);
+    *(char *)(param_2 + 5 + iVar3) = (char)(puVar2[6] + 0x7f >> 8);
+    *(char *)(param_2 + 6 + iVar3) = (char)(puVar2[7] + 0x7f >> 8);
     puVar2 = puVar2 + 8;
-    param_2->rgb[2][iVar3 + 1] = (uchar)(*puVar2 + 0x7f >> 8);
+    *(char *)(param_2 + 7 + iVar3) = (char)(*puVar2 + 0x7f >> 8);
     iVar3 = iVar3 + 8;
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
@@ -780,12 +1350,11 @@ void R_PackAccumulatedLightGridColors(ushort *param_1,GfxLightGridColors *param_
 // 827A3E48  R_GetLightGridColorsFixedPointBlendWeights  (gfx_d3d/rb_light.cpp:1238)
 
 void R_GetLightGridColorsFixedPointBlendWeights
-               (float *param_1,uint param_2,float param_3,ushort *param_4)
+               (double param_1,float *param_2,uint param_3,undefined8 param_4,int param_5)
 
 {
   uint uVar1;
   int iVar2;
-  int in_r6;
   ulonglong uVar3;
   uint uVar4;
   ulonglong uVar5;
@@ -799,28 +1368,28 @@ void R_GetLightGridColorsFixedPointBlendWeights
   iVar2 = 0;
   iVar6 = 0;
   do {
-    uVar7 = (ulonglong)(*param_1 * param_3 * 256.0 + 0.5);
+    uVar7 = (ulonglong)(*param_2 * (float)(param_1 * 256.0) + 0.5);
     uStack_a = (undefined2)uVar7;
     uVar7 = uVar7 & 0xffff;
     uVar3 = uVar5 + uVar7;
-    *(undefined2 *)(iVar6 + in_r6) = uStack_a;
+    *(undefined2 *)(iVar6 + param_5) = uStack_a;
     uVar5 = uVar3 & 0xffff;
-    if (*(ushort *)(iVar2 + in_r6) < uVar7) {
+    if (*(ushort *)(iVar2 + param_5) < uVar7) {
       iVar2 = iVar6;
       uVar1 = uVar4;
     }
     uVar4 = uVar4 + 1;
-    param_1 = param_1 + 1;
+    param_2 = param_2 + 1;
     iVar6 = iVar6 + 2;
-  } while (uVar4 < param_2);
-  *(short *)(uVar1 * 2 + in_r6) = (*(short *)(uVar1 * 2 + in_r6) - (short)uVar3) + 0x100;
+  } while (uVar4 < param_3);
+  *(short *)(uVar1 * 2 + param_5) = (*(short *)(uVar1 * 2 + param_5) - (short)uVar3) + 0x100;
   return;
 }
 
 
 // 827A3EE8  R_AdjustLightColorSamples  (gfx_d3d/rb_light.cpp:1282)
 
-void R_AdjustLightColorSamples(ushort *param_1)
+void R_AdjustLightColorSamples(void)
 
 {
   int iVar1;
@@ -838,11 +1407,11 @@ void R_AdjustLightColorSamples(ushort *param_1)
   longlong lVar13;
   ushort uStack_3a;
   
-  iVar1 = __savegprlr_27(param_1);
+  iVar1 = __savegprlr_27();
   iVar11 = 0;
   puVar9 = (undefined2 *)(iVar1 + -2);
   lVar13 = 0x15;
-  uStack_3a = (ushort)(longlong)((r_lightGridIntensity->current).value * 256.0 + 0.5);
+  uStack_3a = (ushort)(longlong)(*(float *)(DAT_845aa6c8 + 0xc) * 256.0 + 0.5);
   do {
     uVar2 = (int)((uint)(ushort)puVar9[1] * (uint)uStack_3a) >> 8;
     if (0xff00 < (int)uVar2) {
@@ -892,7 +1461,7 @@ void R_AdjustLightColorSamples(ushort *param_1)
   } while (lVar13 != 0);
   puVar9 = (undefined2 *)(iVar1 + -2);
   lVar13 = 0xa8;
-  iVar1 = (int)(((r_lightGridContrast->current).value + 1.0) * 256.0 + 0.5);
+  iVar1 = (int)((*(float *)(DAT_845aa768 + 0xc) + 1.0) * 256.0 + 0.5);
   do {
     iVar10 = ((int)((uint)(ushort)puVar9[1] * iVar1) >> 8) +
              (iVar11 / 0xa8 - ((iVar11 / 0xa8) * iVar1 >> 8));
@@ -916,30 +1485,28 @@ void R_AdjustLightColorSamples(ushort *param_1)
 // 827A4100  R_ApplyLightGridTweaksToLightGridColors  (gfx_d3d/rb_light.cpp:1362)
 
 void R_ApplyLightGridTweaksToLightGridColors
-               (GfxLightGrid *param_1,uint param_2,GfxLightGridColors *param_3,
-               GfxLightGridColors **param_4,float *param_5,float (*param_6) [3],float (*param_7) [3]
-               )
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined4 *param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ushort auStack_190 [200];
+  undefined4 uVar2;
+  int iVar3;
+  undefined1 auStack_190 [400];
   
-  uVar3 = (ulonglong)(int)param_7;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
-  if (((r_heroLighting->current).enabled != false) || ((uVar3 & 0xffffffff) != 0)) {
+  iVar3 = (int)param_7;
+  uVar2 = (undefined4)((ulonglong)param_7 >> 0x20);
+  iVar1 = __savegprlr_25();
+  if ((*(char *)(DAT_845aa788 + 0xc) != '\0') || (iVar3 != 0)) {
     R_ScaleLightGridColors(*param_4,0x100,auStack_190);
-    if ((uVar2 & 0xffffffff) != (ulonglong)(*(int *)(iVar1 + 0x30) - 1)) {
-      R_AddHeroOnlyLightsToGridColors(auStack_190,param_5,param_6,(float (*) [3])uVar3);
+    if ((param_2 & 0xffffffff) != (ulonglong)(*(int *)(iVar1 + 0x30) - 1)) {
+      R_AddHeroOnlyLightsToGridColors(auStack_190,param_5,param_6,CONCAT44(uVar2,iVar3));
     }
-    if (((r_lightGridEnableTweaks->current).enabled != false) &&
-       ((r_lightGridUseTweakedValues->current).enabled != false)) {
+    if ((*(char *)(DAT_845aa844 + 0xc) != '\0') && (*(char *)(DAT_845aa644 + 0xc) != '\0')) {
       R_AdjustLightColorSamples(auStack_190);
     }
     R_PackAccumulatedLightGridColors(auStack_190,param_3);
-    *param_4 = param_3;
+    *param_4 = (int)param_3;
   }
   __restgprlr_25();
   return;
@@ -948,76 +1515,60 @@ void R_ApplyLightGridTweaksToLightGridColors
 
 // 827A41C0  R_SetLightGridColorsFromIndex  (gfx_d3d/rb_light.cpp:1398)
 
-uint R_SetLightGridColorsFromIndex
-               (GfxLightGrid *param_1,uint param_2,float param_3,uchar *param_4,float *param_5,
-               float (*param_6) [3],float (*param_7) [3])
+void R_SetLightGridColorsFromIndex
+               (double param_1,int param_2,longlong param_3,undefined8 param_4,undefined8 param_5,
+               int param_6,int param_7,int param_8)
 
 {
-  uchar uVar1;
-  GfxLightGridColors *pGVar2;
-  uint uVar3;
-  float (*in_r9) [3];
-  double dVar4;
+  undefined1 uVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
   undefined8 local_d0;
-  GfxLightGridColors GStack_c0;
+  undefined1 auStack_c0 [176];
   
-  dVar4 = (double)param_3;
-  local_d0._0_4_ = param_1->colors + param_2;
-  if (((param_6 != (float (*) [3])0x0) || (param_7 != (float (*) [3])0x0)) ||
-     (pGVar2 = local_d0._0_4_, in_r9 != (float (*) [3])0x0)) {
-    R_ApplyLightGridTweaksToLightGridColors
-              (param_1,param_2,&GStack_c0,(GfxLightGridColors **)&local_d0,*param_6,param_7,in_r9);
-    pGVar2 = local_d0._0_4_;
+  uVar2 = param_3 * 0xa8 + (ulonglong)*(uint *)(param_2 + 0x34);
+  local_d0._0_4_ = (uint)uVar2;
+  if (((param_6 != 0) || (param_7 != 0)) || (param_8 != 0)) {
+    R_ApplyLightGridTweaksToLightGridColors(param_2,param_3,auStack_c0,&local_d0);
+    uVar2 = (ulonglong)local_d0._0_4_;
   }
-  local_d0 = (longlong)(dVar4 * 255.0 + 0.5);
-  uVar1 = (uchar)local_d0;
-  R_SetLightGridColors(pGVar2,(uchar)local_d0,(uchar *)param_5);
-  uVar3 = R_GetGridAmbientColor(pGVar2,uVar1);
-  return uVar3;
+  local_d0 = (longlong)(param_1 * 255.0 + 0.5);
+  uVar1 = (undefined1)local_d0;
+  uVar3 = R_SetLightGridColors(uVar2,(undefined1)local_d0,param_5);
+  R_GetGridAmbientColor(uVar3,uVar1);
+  return;
 }
 
 
 // 827A4268  R_FixedPointBlendLightGridColors  (gfx_d3d/rb_light.cpp:1519)
 
 void R_FixedPointBlendLightGridColors
-               (GfxLightGrid *param_1,ushort *param_2,ushort *param_3,uint param_4,
-               GfxLightGridColors *param_5,float *param_6,float (*param_7) [3],float (*param_8) [3])
+               (undefined8 param_1,longlong param_2,undefined2 *param_3,ulonglong param_4,
+               undefined8 param_5,ulonglong param_6,ulonglong param_7,ulonglong param_8)
 
 {
   int iVar1;
   ushort *puVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  ushort auStack_1b0 [216];
+  undefined1 auStack_1b0 [432];
   
-  uVar6 = (ulonglong)(int)param_8;
-  uVar5 = (ulonglong)(int)param_7;
-  uVar4 = (ulonglong)(int)param_6;
-  uVar3 = (ulonglong)(int)param_4;
-  lVar8 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_22(param_1);
-  puVar2 = (ushort *)lVar8;
+  iVar1 = __savegprlr_22();
+  puVar2 = (ushort *)param_2;
   R_ScaleLightGridColors
-            ((GfxLightGridColors *)((uint)*puVar2 * 0xa8 + *(int *)(iVar1 + 0x34)),*param_3,
-             auStack_1b0);
-  uVar7 = 1;
+            ((ulonglong)*puVar2 * 0xa8 + (ulonglong)*(uint *)(iVar1 + 0x34),*param_3,auStack_1b0);
+  uVar3 = 1;
   do {
-    lVar8 = lVar8 + 2;
+    param_2 = param_2 + 2;
     R_WeightedAccumulateLightGridColors
-              ((GfxLightGridColors *)((uint)*(ushort *)lVar8 * 0xa8 + *(int *)(iVar1 + 0x34)),
-               *(ushort *)(((int)param_3 - (int)puVar2) + (int)(ushort *)lVar8),auStack_1b0);
-    uVar7 = uVar7 + 1;
-  } while ((uVar7 & 0xffffffff) < (uVar3 & 0xffffffff));
-  if (((((uVar6 & 0xffffffff) != 0) || ((uVar5 & 0xffffffff) != 0)) || ((uVar4 & 0xffffffff) != 0))
-     && (((R_AddHeroOnlyLightsToGridColors
-                     (auStack_1b0,(float *)uVar4,(float (*) [3])uVar5,(float (*) [3])uVar6),
-          (r_lightGridEnableTweaks->current).enabled != false &&
-          ((r_lightGridUseTweakedValues->current).enabled != false)) &&
-         ((r_heroLighting->current).enabled != false)))) {
+              ((ulonglong)*(ushort *)param_2 * 0xa8 + (ulonglong)*(uint *)(iVar1 + 0x34),
+               *(undefined2 *)(((int)param_3 - (int)puVar2) + (int)(ushort *)param_2),auStack_1b0);
+    uVar3 = uVar3 + 1;
+  } while ((uVar3 & 0xffffffff) < (param_4 & 0xffffffff));
+  if (((((param_8 & 0xffffffff) != 0) || ((param_7 & 0xffffffff) != 0)) ||
+      ((param_6 & 0xffffffff) != 0)) &&
+     (((R_AddHeroOnlyLightsToGridColors(auStack_1b0,param_6,param_7,param_8),
+       *(char *)(DAT_845aa844 + 0xc) != '\0' && (*(char *)(DAT_845aa644 + 0xc) != '\0')) &&
+      (*(char *)(DAT_845aa788 + 0xc) != '\0')))) {
     R_AdjustLightColorSamples(auStack_1b0);
   }
   R_PackAccumulatedLightGridColors(auStack_1b0,param_5);
@@ -1029,20 +1580,18 @@ void R_FixedPointBlendLightGridColors
 // 827A4370  R_BlendLightGridColors  (gfx_d3d/rb_light.cpp:1610)
 
 void R_BlendLightGridColors
-               (GfxLightGrid *param_1,ushort *param_2,float *param_3,uint param_4,float param_5,
-               GfxLightGridColors *param_6,float *param_7,float (*param_8) [3],float (*param_9) [3])
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-  GfxLightGrid *pGVar1;
-  double extraout_f1;
-  float (*in_stack_00000054) [3];
-  ushort auStack_50 [40];
+  undefined8 uVar1;
+  undefined4 in_stack_00000054;
+  undefined1 auStack_50 [80];
   
-  pGVar1 = (GfxLightGrid *)__savegprlr_26((double)param_5,param_1);
-  R_GetLightGridColorsFixedPointBlendWeights(param_3,param_4,(float)extraout_f1,(ushort *)param_3);
+  uVar1 = __savegprlr_26();
+  R_GetLightGridColorsFixedPointBlendWeights(param_3,param_4);
   R_FixedPointBlendLightGridColors
-            (pGVar1,param_2,auStack_50,param_4,(GfxLightGridColors *)param_7,*param_8,param_9,
-             in_stack_00000054);
+            (uVar1,param_2,auStack_50,param_4,param_6,param_7,param_8,in_stack_00000054);
   __restgprlr_26();
   return;
 }
@@ -1051,44 +1600,37 @@ void R_BlendLightGridColors
 // 827A43D0  R_BlendAndAverageLightGridColors  (gfx_d3d/rb_light.cpp:1644)
 
 void R_BlendAndAverageLightGridColors
-               (GfxLightGrid *param_1,ushort *param_2,float *param_3,uint param_4,float param_5,
-               float param_6,uchar *param_7)
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4,
+               undefined8 param_5,ulonglong param_6)
 
 {
   int iVar1;
   ushort *puVar2;
-  GfxLightGridColors *pGVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
-  ushort local_250 [8];
-  GfxLightGridColors GStack_240;
-  ushort auStack_190 [200];
+  ulonglong uVar3;
+  undefined8 extraout_f1;
+  undefined8 uVar4;
+  undefined2 local_250 [8];
+  undefined1 auStack_240 [176];
+  undefined1 auStack_190 [400];
   
-  dVar7 = (double)param_6;
-  uVar4 = (ulonglong)(int)param_4;
-  lVar6 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_26((double)param_5,param_1);
-  dVar8 = extraout_f1;
-  R_GetLightGridColorsFixedPointBlendWeights(param_3,(uint)uVar4,(float)dVar7,(ushort *)param_3);
-  puVar2 = (ushort *)lVar6;
+  iVar1 = __savegprlr_26();
+  uVar4 = extraout_f1;
+  R_GetLightGridColorsFixedPointBlendWeights(param_2,param_5,param_6);
+  puVar2 = (ushort *)param_4;
   R_ScaleLightGridColors
-            ((GfxLightGridColors *)((uint)*puVar2 * 0xa8 + *(int *)(iVar1 + 0x34)),local_250[0],
-             auStack_190);
-  uVar5 = 1;
+            ((ulonglong)*puVar2 * 0xa8 + (ulonglong)*(uint *)(iVar1 + 0x34),local_250[0],auStack_190
+            );
+  uVar3 = 1;
   do {
-    lVar6 = lVar6 + 2;
+    param_4 = param_4 + 2;
     R_WeightedAccumulateLightGridColors
-              ((GfxLightGridColors *)((uint)*(ushort *)lVar6 * 0xa8 + *(int *)(iVar1 + 0x34)),
-               *(ushort *)(((int)local_250 - (int)puVar2) + (int)(ushort *)lVar6),auStack_190);
-    uVar5 = uVar5 + 1;
-  } while ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff));
-  pGVar3 = &GStack_240;
-  R_PackAccumulatedLightGridColors(auStack_190,pGVar3);
-  R_AverageLightGridColors(&GStack_240,(float)dVar8,(uchar *)pGVar3);
+              ((ulonglong)*(ushort *)param_4 * 0xa8 + (ulonglong)*(uint *)(iVar1 + 0x34),
+               *(undefined2 *)(((int)local_250 - (int)puVar2) + (int)(ushort *)param_4),auStack_190)
+    ;
+    uVar3 = uVar3 + 1;
+  } while ((uVar3 & 0xffffffff) < (param_6 & 0xffffffff));
+  R_PackAccumulatedLightGridColors(auStack_190,auStack_240);
+  R_AverageLightGridColors(uVar4,auStack_240);
   __restgprlr_26();
   return;
 }
@@ -1096,116 +1638,115 @@ void R_BlendAndAverageLightGridColors
 
 // 827A4480  R_BlendAndSetLightGridColors  (gfx_d3d/rb_light.cpp:1660)
 
-uint R_BlendAndSetLightGridColors
-               (GfxLightGrid *param_1,ushort *param_2,float *param_3,uint param_4,float param_5,
-               float param_6,uchar *param_7,float *param_8,float (*param_9) [3],
-               float (*param_10) [3])
+void R_BlendAndSetLightGridColors
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
+               undefined8 param_9,undefined8 param_10)
 
 {
-  uchar uVar1;
-  GfxLightGrid *pGVar2;
-  uint uVar3;
+  undefined1 uVar1;
+  undefined8 uVar2;
   double extraout_f1;
-  double dVar4;
-  float (*in_stack_00000054) [3];
-  float (*in_stack_0000005c) [3];
+  undefined4 in_stack_00000054;
+  undefined4 in_stack_0000005c;
   undefined8 local_f0;
-  GfxLightGridColors GStack_e0;
+  undefined1 auStack_e0 [224];
   
-  dVar4 = (double)param_6;
-  pGVar2 = (GfxLightGrid *)__savegprlr_26((double)param_5,param_1);
+  uVar2 = __savegprlr_26();
   local_f0 = (longlong)(extraout_f1 * 255.0 + 0.5);
-  uVar1 = (uchar)local_f0;
-  R_GetLightGridColorsFixedPointBlendWeights(param_3,param_4,(float)dVar4,(ushort *)param_3);
+  uVar1 = (undefined1)local_f0;
+  R_GetLightGridColorsFixedPointBlendWeights(param_2,param_5,param_6);
   R_FixedPointBlendLightGridColors
-            (pGVar2,param_2,(ushort *)&local_f0,param_4,&GStack_e0,*param_10,in_stack_00000054,
-             in_stack_0000005c);
-  R_SetLightGridColors(&GStack_e0,uVar1,(uchar *)param_9);
-  uVar3 = R_GetGridAmbientColor(&GStack_e0,uVar1);
-  uVar3 = __restgprlr_26(uVar3);
-  return uVar3;
+            (uVar2,param_4,&local_f0,param_6,auStack_e0,param_10,in_stack_00000054,in_stack_0000005c
+            );
+  R_SetLightGridColors(auStack_e0,uVar1,param_9);
+  R_GetGridAmbientColor(auStack_e0,uVar1);
+  __restgprlr_26();
+  return;
 }
 
 
 // 827A4520  R_SetDefaultLightGridColors  (gfx_d3d/rb_light.cpp:1872)
 
-uint R_SetDefaultLightGridColors(GfxLightGrid *param_1,uchar *param_2)
+void R_SetDefaultLightGridColors(int param_1,undefined8 param_2)
 
 {
-  GfxLightGridColors *pGVar1;
-  uint uVar2;
+  undefined8 uVar1;
   
-  pGVar1 = param_1->colors + (param_1->colorCount - 1);
-  R_SetLightGridColors(pGVar1,0xff,param_2);
-  uVar2 = R_GetGridAmbientColor(pGVar1,0xff);
-  return uVar2;
+  uVar1 = R_SetLightGridColors
+                    ((ulonglong)*(uint *)(param_1 + 0x30) * 0xa8 +
+                     (ulonglong)*(uint *)(param_1 + 0x34) + -0xa8,0xff,param_2);
+  R_GetGridAmbientColor(uVar1,0xff);
+  return;
 }
 
 
 // 827A4568  R_ExtrapolateLightingAtPoint  (gfx_d3d/rb_light.cpp:1907)
 
-uchar R_ExtrapolateLightingAtPoint
-                (GfxLightGrid *param_1,uchar *param_2,GfxModelLightExtrapolation param_3,
-                uint param_4,float *param_5,float (*param_6) [3],float (*param_7) [3],
-                GfxColor *param_8)
+undefined1
+R_ExtrapolateLightingAtPoint(int param_1,undefined8 param_2,int param_3,ulonglong param_4)
 
 {
-  GfxLightGridColors *pGVar1;
-  uint uVar2;
+  undefined8 uVar1;
+  undefined4 uVar2;
+  undefined4 *in_r10;
   
-  if (((param_3 == GFX_MODELLIGHT_SHOW_MISSING) && (param_4 == 0)) &&
-     ((r_showMissingLightGrid->current).enabled != false)) {
-    pGVar1 = param_1->colors + (param_1->colorCount - 1);
-    R_SetLightGridColors(pGVar1,0xff,param_2);
-    uVar2 = R_GetGridAmbientColor(pGVar1,0xff);
-    param_8->packed = uVar2;
-    return '\0';
+  if (((param_3 == 1) && ((param_4 & 0xffffffff) == 0)) && (*(char *)(DAT_845aa7d4 + 0xc) != '\0'))
+  {
+    uVar1 = R_SetLightGridColors
+                      ((ulonglong)*(uint *)(param_1 + 0x30) * 0xa8 +
+                       (ulonglong)*(uint *)(param_1 + 0x34) + -0xa8,0xff,param_2);
+    uVar2 = R_GetGridAmbientColor(uVar1,0xff);
+    *in_r10 = uVar2;
+    return 0;
   }
-  if (param_1->colorCount <= param_4) {
-    pGVar1 = param_1->colors + (param_1->colorCount - 1);
-    R_SetLightGridColors(pGVar1,0xff,param_2);
-    uVar2 = R_GetGridAmbientColor(pGVar1,0xff);
-    param_8->packed = uVar2;
-    return '\0';
+  if ((ulonglong)*(uint *)(param_1 + 0x30) <= (param_4 & 0xffffffff)) {
+    uVar1 = R_SetLightGridColors
+                      ((ulonglong)*(uint *)(param_1 + 0x30) * 0xa8 +
+                       (ulonglong)*(uint *)(param_1 + 0x34) + -0xa8,0xff,param_2);
+    uVar2 = R_GetGridAmbientColor(uVar1,0xff);
+    *in_r10 = uVar2;
+    return 0;
   }
-  uVar2 = R_SetLightGridColorsFromIndex
-                    (param_1,param_4,1.0,(uchar *)param_3,(float *)param_2,(float (*) [3])param_5,
-                     param_6);
-  param_8->packed = uVar2;
-  return s_skyOverride.primaryLightIndex;
+  uVar2 = R_SetLightGridColorsFromIndex(0x3ff0000000000000);
+  *in_r10 = uVar2;
+  return DAT_84848394;
 }
 
 
 // 827A4670  R_AddLightGridSample  (gfx_d3d/rb_light.cpp:1952)
 
-uint R_AddLightGridSample(ushort *param_1,float *param_2,uint param_3,ushort param_4,float param_5)
+longlong R_AddLightGridSample
+                   (double param_1,short *param_2,int param_3,longlong param_4,short param_5)
 
 {
   uint uVar1;
-  ushort *puVar2;
+  uint uVar2;
+  short *psVar3;
   
-  uVar1 = 0;
-  puVar2 = param_1;
-  if (param_3 != 0) {
+  uVar1 = (uint)param_4;
+  uVar2 = 0;
+  psVar3 = param_2;
+  if (uVar1 != 0) {
     do {
-      if (*puVar2 == param_4) {
-        param_2[uVar1] = param_2[uVar1] + param_5;
-        return param_3;
+      if (*psVar3 == param_5) {
+        *(float *)(uVar2 * 4 + param_3) = (float)((double)*(float *)(uVar2 * 4 + param_3) + param_1)
+        ;
+        return param_4;
       }
-      uVar1 = uVar1 + 1;
-      puVar2 = puVar2 + 1;
-    } while (uVar1 < param_3);
+      uVar2 = uVar2 + 1;
+      psVar3 = psVar3 + 1;
+    } while (uVar2 < uVar1);
   }
-  param_1[param_3] = param_4;
-  param_2[param_3] = param_5;
-  return param_3 + 1;
+  param_2[uVar1] = param_5;
+  *(float *)(uVar1 * 4 + param_3) = (float)param_1;
+  return param_4 + 1;
 }
 
 
 // 827A46D8  R_GetLightGridSampleEntryQuad  (gfx_d3d/rb_light.cpp:1973)
 
-void R_GetLightGridSampleEntryQuad
-               (GfxLightGrid *param_1,uint *param_2,GfxLightGridEntry **param_3,uint *param_4)
+void R_GetLightGridSampleEntryQuad(undefined8 param_1,int param_2,int *param_3,undefined4 *param_4)
 
 {
   int iVar1;
@@ -1213,78 +1754,71 @@ void R_GetLightGridSampleEntryQuad
   uint uVar3;
   ulonglong uVar4;
   longlong lVar5;
-  ulonglong uVar6;
+  int iVar6;
   int iVar7;
-  uint uVar8;
+  ulonglong uVar8;
   uint uVar9;
-  GfxLightGridEntry *pGVar10;
+  uint uVar10;
   ushort *puVar11;
   ulonglong uVar12;
-  int iVar13;
-  ushort *puVar14;
+  ushort *puVar13;
   
-  iVar1 = __savegprlr_25(param_1);
-  uVar9 = *(uint *)(iVar1 + 0x14);
-  uVar3 = (uint)*(ushort *)((int)(((ulonglong)uVar9 + 4 & 0xffffffff) << 1) + iVar1);
-  uVar8 = param_2[uVar9] - uVar3;
-  if (uVar8 < (*(ushort *)((int)(((ulonglong)uVar9 + 7 & 0xffffffff) << 1) + iVar1) - uVar3) + 1) {
-    iVar13 = uVar8 * 2;
-    uVar9 = (uint)*(ushort *)(*(int *)(iVar1 + 0x1c) + iVar13);
-    if (uVar9 == 0xffff) goto LAB_827a4b18;
-    if (*(uint *)(iVar1 + 0x20) <= uVar9 << 2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x7cd,
-                      0,
-                      "lightGrid->rowDataStart[rowIndex] * 4 doesn\'t index lightGrid->rawRowDataSize\n\t%i not in [0, %i)"
-                     );
+  iVar1 = __savegprlr_25();
+  uVar10 = *(uint *)(iVar1 + 0x14);
+  uVar3 = (uint)*(ushort *)((int)(((ulonglong)uVar10 + 4 & 0xffffffff) << 1) + iVar1);
+  uVar9 = *(int *)(uVar10 * 4 + param_2) - uVar3;
+  if (uVar9 < (*(ushort *)((int)(((ulonglong)uVar10 + 7 & 0xffffffff) << 1) + iVar1) - uVar3) + 1) {
+    iVar6 = uVar9 * 2;
+    uVar10 = (uint)*(ushort *)(*(int *)(iVar1 + 0x1c) + iVar6);
+    if (uVar10 == 0xffff) goto LAB_827a4b18;
+    if (*(uint *)(iVar1 + 0x20) <= uVar10 << 2) {
+      MyAssertHandler(0xffffffff821d6bd8,0x7cd,0,0xffffffff821d6cf0);
     }
-    puVar14 = (ushort *)
-              ((uint)*(ushort *)(*(int *)(iVar1 + 0x1c) + iVar13) * 4 + *(int *)(iVar1 + 0x24));
-    if (*(uint *)(iVar1 + 0x28) <= *(uint *)(puVar14 + 4)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",1999,0
-                      ,"row->firstEntry doesn\'t index lightGrid->entryCount\n\t%i not in [0, %i)");
+    puVar13 = (ushort *)
+              ((uint)*(ushort *)(*(int *)(iVar1 + 0x1c) + iVar6) * 4 + *(int *)(iVar1 + 0x24));
+    if (*(uint *)(iVar1 + 0x28) <= *(uint *)(puVar13 + 4)) {
+      MyAssertHandler(0xffffffff821d6bd8,1999,0,0xffffffff821d6ca8);
     }
-    uVar12 = (ulonglong)param_2[2] - (ulonglong)puVar14[2];
-    uVar9 = param_2[*(int *)(iVar1 + 0x18)] - (uint)*puVar14;
-    if ((uint)puVar14[1] < uVar9 + 1) goto LAB_827a4b18;
-    uVar4 = (ulonglong)puVar14[3];
+    uVar12 = (ulonglong)*(uint *)(param_2 + 8) - (ulonglong)puVar13[2];
+    uVar10 = *(int *)(*(int *)(iVar1 + 0x18) * 4 + param_2) - (uint)*puVar13;
+    if ((uint)puVar13[1] < uVar10 + 1) goto LAB_827a4b18;
+    uVar4 = (ulonglong)puVar13[3];
     if (uVar4 < (uVar12 + 1 & 0xffffffff)) {
-      *param_3 = (GfxLightGridEntry *)0x0;
-      param_3[1] = (GfxLightGridEntry *)0x0;
-      param_3[2] = (GfxLightGridEntry *)0x0;
-      param_3[3] = (GfxLightGridEntry *)0x0;
-      if ((param_2[2] < (uint)puVar14[2]) && (*(char *)(iVar1 + 1) == '\0')) {
+      *param_3 = 0;
+      param_3[1] = 0;
+      param_3[2] = 0;
+      param_3[3] = 0;
+      if ((*(uint *)(param_2 + 8) < (uint)puVar13[2]) && (*(char *)(iVar1 + 1) == '\0')) {
         *param_4 = 0;
         __restgprlr_25();
         return;
       }
       goto LAB_827a4b2c;
     }
-    uVar2 = (ulonglong)*(uint *)(puVar14 + 4);
-    puVar11 = puVar14 + 6;
-    if (uVar9 == 0xffffffff) {
-      param_3[1] = (GfxLightGridEntry *)0x0;
-      *param_3 = (GfxLightGridEntry *)0x0;
-      uVar4 = (ulonglong)*(byte *)(puVar14 + 7);
-      if (0xff < puVar14[3]) {
-        uVar4 = (ulonglong)*(byte *)((int)puVar14 + 0xf) * 0x100 + uVar4;
+    uVar2 = (ulonglong)*(uint *)(puVar13 + 4);
+    puVar11 = puVar13 + 6;
+    if (uVar10 == 0xffffffff) {
+      param_3[1] = 0;
+      *param_3 = 0;
+      uVar4 = (ulonglong)*(byte *)(puVar13 + 7);
+      if (0xff < puVar13[3]) {
+        uVar4 = (ulonglong)*(byte *)((int)puVar13 + 0xf) * 0x100 + uVar4;
       }
-      uVar6 = uVar12 - uVar4;
-      if ((uVar6 & 0xffffffff) < (ulonglong)*(byte *)((int)puVar14 + 0xd)) {
-        pGVar10 = (GfxLightGridEntry *)
-                  ((int)((uVar6 + uVar2 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c));
-      }
-      else {
-        pGVar10 = (GfxLightGridEntry *)0x0;
-      }
-      param_3[2] = pGVar10;
-      if ((uVar6 + 1 & 0xffffffff) < (ulonglong)*(byte *)((int)puVar14 + 0xd)) {
-        pGVar10 = (GfxLightGridEntry *)
-                  ((int)((uVar6 + uVar2 + 1 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c));
+      uVar8 = uVar12 - uVar4;
+      if ((uVar8 & 0xffffffff) < (ulonglong)*(byte *)((int)puVar13 + 0xd)) {
+        iVar6 = (int)((uVar8 + uVar2 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c);
       }
       else {
-        pGVar10 = (GfxLightGridEntry *)0x0;
+        iVar6 = 0;
       }
-      param_3[3] = pGVar10;
+      param_3[2] = iVar6;
+      if ((uVar8 + 1 & 0xffffffff) < (ulonglong)*(byte *)((int)puVar13 + 0xd)) {
+        iVar1 = (int)((uVar8 + uVar2 + 1 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c);
+      }
+      else {
+        iVar1 = 0;
+      }
+      param_3[3] = iVar1;
       if ((uVar12 & 0xffffffff) < uVar4) {
         *param_4 = 0;
         __restgprlr_25();
@@ -1293,25 +1827,25 @@ void R_GetLightGridSampleEntryQuad
       goto LAB_827a4b2c;
     }
     uVar3 = (uint)*(byte *)puVar11;
-    iVar13 = (-(uint)(0xff < uVar4) & 1) + 3;
-    if (uVar3 <= uVar9) {
+    iVar6 = (-(uint)(0xff < uVar4) & 1) + 3;
+    if (uVar3 <= uVar10) {
       do {
-        uVar9 = uVar9 - uVar3;
+        uVar10 = uVar10 - uVar3;
         uVar2 = (longlong)(int)(uint)(byte)*puVar11 * (longlong)(int)uVar3 + uVar2;
         iVar7 = 2;
         if ((byte)*puVar11 != 0) {
-          iVar7 = iVar13;
+          iVar7 = iVar6;
         }
         puVar11 = (ushort *)((int)puVar11 + iVar7);
         uVar3 = (uint)*(byte *)puVar11;
-      } while (uVar3 <= uVar9);
+      } while (uVar3 <= uVar10);
     }
     if ((byte)*puVar11 == 0) {
-      param_3[1] = (GfxLightGridEntry *)0x0;
-      *param_3 = (GfxLightGridEntry *)0x0;
+      param_3[1] = 0;
+      *param_3 = 0;
       if ((ulonglong)*(byte *)((int)puVar11 + 3) != 0) {
         uVar4 = (ulonglong)*(byte *)(puVar11 + 2);
-        if (0xff < puVar14[3]) {
+        if (0xff < puVar13[3]) {
           uVar4 = (ulonglong)*(byte *)((int)puVar11 + 5) * 0x100 + uVar4;
         }
         if ((uVar12 & 0xffffffff) < *(byte *)((int)puVar11 + 3) + uVar4) {
@@ -1319,77 +1853,75 @@ void R_GetLightGridSampleEntryQuad
         }
       }
       uVar3 = (uint)*(byte *)puVar11;
-      if (uVar3 <= uVar9 + 1) goto LAB_827a4974;
+      if (uVar3 <= uVar10 + 1) goto LAB_827a4974;
     }
     else {
-      uVar6 = (ulonglong)*(byte *)(puVar11 + 1);
+      uVar8 = (ulonglong)*(byte *)(puVar11 + 1);
       if (0xff < uVar4) {
-        uVar6 = (ulonglong)*(byte *)((int)puVar11 + 3) * 0x100 + uVar6;
+        uVar8 = (ulonglong)*(byte *)((int)puVar11 + 3) * 0x100 + uVar8;
       }
-      if ((uVar12 & 0xffffffff) < uVar6) {
+      if ((uVar12 & 0xffffffff) < uVar8) {
         *param_4 = 0;
       }
-      uVar6 = uVar12 - uVar6;
-      uVar4 = (longlong)(int)(uint)(byte)*puVar11 * (longlong)(int)uVar9 + uVar6 + uVar2;
-      if ((uVar6 & 0xffffffff) < (ulonglong)(uint)(byte)*puVar11) {
-        pGVar10 = (GfxLightGridEntry *)((int)((uVar4 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c));
+      uVar8 = uVar12 - uVar8;
+      uVar4 = (longlong)(int)(uint)(byte)*puVar11 * (longlong)(int)uVar10 + uVar8 + uVar2;
+      if ((uVar8 & 0xffffffff) < (ulonglong)(uint)(byte)*puVar11) {
+        iVar7 = (int)((uVar4 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c);
       }
       else {
-        pGVar10 = (GfxLightGridEntry *)0x0;
+        iVar7 = 0;
       }
-      *param_3 = pGVar10;
-      if ((uVar6 + 1 & 0xffffffff) < (ulonglong)(byte)*puVar11) {
-        pGVar10 = (GfxLightGridEntry *)
-                  ((int)((uVar4 + 1 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c));
+      *param_3 = iVar7;
+      if ((uVar8 + 1 & 0xffffffff) < (ulonglong)(byte)*puVar11) {
+        iVar7 = (int)((uVar4 + 1 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c);
       }
       else {
-        pGVar10 = (GfxLightGridEntry *)0x0;
+        iVar7 = 0;
       }
-      param_3[1] = pGVar10;
+      param_3[1] = iVar7;
       uVar3 = (uint)*(byte *)puVar11;
-      if (uVar9 + 1 < uVar3) {
+      if (uVar10 + 1 < uVar3) {
         lVar5 = (byte)*puVar11 + uVar4;
-        if ((uVar6 & 0xffffffff) < (ulonglong)(byte)*puVar11) {
-          pGVar10 = (GfxLightGridEntry *)((int)lVar5 * 4 + *(int *)(iVar1 + 0x2c));
+        if ((uVar8 & 0xffffffff) < (ulonglong)(byte)*puVar11) {
+          iVar6 = (int)lVar5 * 4 + *(int *)(iVar1 + 0x2c);
         }
         else {
-          pGVar10 = (GfxLightGridEntry *)0x0;
+          iVar6 = 0;
         }
-        param_3[2] = pGVar10;
-        if ((ulonglong)(byte)*puVar11 <= (uVar6 + 1 & 0xffffffff)) {
-          param_3[3] = (GfxLightGridEntry *)0x0;
+        param_3[2] = iVar6;
+        if ((ulonglong)(byte)*puVar11 <= (uVar8 + 1 & 0xffffffff)) {
+          param_3[3] = 0;
           __restgprlr_25();
           return;
         }
         goto LAB_827a4acc;
       }
 LAB_827a4974:
-      if (param_2[*(int *)(iVar1 + 0x18)] + 1 != (uint)*puVar14 + (uint)puVar14[1]) {
+      if (*(int *)(*(int *)(iVar1 + 0x18) * 4 + param_2) + 1 != (uint)*puVar13 + (uint)puVar13[1]) {
         iVar7 = 2;
         if ((byte)*puVar11 != 0) {
-          iVar7 = iVar13;
+          iVar7 = iVar6;
         }
         uVar4 = (ulonglong)*(byte *)((int)puVar11 + iVar7 + 2);
-        if (0xff < puVar14[3]) {
+        if (0xff < puVar13[3]) {
           uVar4 = (ulonglong)*(byte *)((int)puVar11 + iVar7 + 3) * 0x100 + uVar4;
         }
         uVar12 = uVar12 - uVar4;
         lVar5 = uVar12 + (longlong)(int)(uint)(byte)*puVar11 * (longlong)(int)uVar3 + uVar2;
         if ((uVar12 & 0xffffffff) < (ulonglong)*(byte *)((int)puVar11 + iVar7 + 1)) {
-          pGVar10 = (GfxLightGridEntry *)((int)lVar5 * 4 + *(int *)(iVar1 + 0x2c));
+          iVar6 = (int)lVar5 * 4 + *(int *)(iVar1 + 0x2c);
         }
         else {
-          pGVar10 = (GfxLightGridEntry *)0x0;
+          iVar6 = 0;
         }
-        param_3[2] = pGVar10;
+        param_3[2] = iVar6;
         if ((ulonglong)*(byte *)((int)puVar11 + iVar7 + 1) <= (uVar12 + 1 & 0xffffffff)) {
-          param_3[3] = (GfxLightGridEntry *)0x0;
+          param_3[3] = 0;
           __restgprlr_25();
           return;
         }
 LAB_827a4acc:
-        param_3[3] = (GfxLightGridEntry *)
-                     ((int)((lVar5 + 1U & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c));
+        param_3[3] = (int)((lVar5 + 1U & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c);
         __restgprlr_25();
         return;
       }
@@ -1397,11 +1929,11 @@ LAB_827a4acc:
   }
   else {
 LAB_827a4b18:
-    param_3[1] = (GfxLightGridEntry *)0x0;
-    *param_3 = (GfxLightGridEntry *)0x0;
+    param_3[1] = 0;
+    *param_3 = 0;
   }
-  param_3[3] = (GfxLightGridEntry *)0x0;
-  param_3[2] = (GfxLightGridEntry *)0x0;
+  param_3[3] = 0;
+  param_3[2] = 0;
 LAB_827a4b2c:
   __restgprlr_25();
   return;
@@ -1409,49 +1941,78 @@ LAB_827a4b2c:
 
 
 // 827A4B38  R_SunPrimaryLightCount  (gfx_d3d/rb_light.cpp:2118)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
-// 827A4B48  R_FirstOccludedSunPrimaryLight  (gfx_d3d/rb_light.cpp:2126)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
-
-// 827A4B60  R_IsOccludedSunLight  (gfx_d3d/rb_light.cpp:2132)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
-
-// 827A4B80  R_IsPrimarySunLight  (gfx_d3d/rb_light.cpp:2138)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
-
-// 827A4BB0  R_GetPrimaryLightForOccludedSunLight  (gfx_d3d/rb_light.cpp:2144)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
-
-// 827A4BC8  R_IsBetterPrimaryLight  (gfx_d3d/rb_light.cpp:2150)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
-
-// 827A4C20  R_LightSightTrace  (gfx_d3d/rb_light.cpp:2174)
-
-int R_LightSightTrace(int param_1,float *param_2,float *param_3,Bounds *param_4,uint param_5,
-                     int param_6)
+undefined4 R_SunPrimaryLightCount(void)
 
 {
-  int iVar1;
-  CM_WorldTraceCallbacks aCStack_10 [4];
+  return DAT_845a0824;
+}
+
+
+// 827A4B48  R_FirstOccludedSunPrimaryLight  (gfx_d3d/rb_light.cpp:2126)
+
+longlong R_FirstOccludedSunPrimaryLight(void)
+
+{
+  return 0x100 - (ulonglong)DAT_845a0824;
+}
+
+
+// 827A4B60  R_IsOccludedSunLight  (gfx_d3d/rb_light.cpp:2132)
+
+longlong R_IsOccludedSunLight(ulonglong param_1)
+
+{
+  return -((ulonglong)(param_1 < 0x100 - (ulonglong)DAT_845a0824) - 1);
+}
+
+
+// 827A4B80  R_IsPrimarySunLight  (gfx_d3d/rb_light.cpp:2138)
+
+undefined8 R_IsPrimarySunLight(uint param_1)
+
+{
+  undefined8 uVar1;
   
-  aCStack_10[0].isGlassSolid = CG_Glass_IsPieceSolid;
-  iVar1 = CM_BrushModelSightTrace(param_1,param_2,param_3,param_4,param_5,param_6,aCStack_10);
-  return iVar1;
+  if ((param_1 == 0) || (uVar1 = 1, DAT_845a0824 < param_1)) {
+    uVar1 = 0;
+  }
+  return uVar1;
+}
+
+
+// 827A4BB0  R_GetPrimaryLightForOccludedSunLight  (gfx_d3d/rb_light.cpp:2144)
+
+longlong R_GetPrimaryLightForOccludedSunLight(longlong param_1)
+
+{
+  return (ulonglong)DAT_845a0824 + param_1 + -0xff;
+}
+
+
+// 827A4BC8  R_IsBetterPrimaryLight  (gfx_d3d/rb_light.cpp:2150)
+
+undefined8 R_IsBetterPrimaryLight(double param_1,double param_2,uint param_3,uint param_4)
+
+{
+  if ((param_3 & 0xff) == 0) {
+    return 1;
+  }
+  if ((param_4 & 0xff) != 0) {
+    if (0x100U - DAT_845a0824 <= (param_3 & 0xff)) {
+      return 1;
+    }
+    if (((param_4 & 0xff) < 0x100U - DAT_845a0824) && (param_1 < param_2)) {
+      return 1;
+    }
+  }
+  return 0;
 }
 
 
 // 827A4C28  R_IsValidLightGridSample  (gfx_d3d/rb_light.cpp:2188)
 
-bool R_IsValidLightGridSample
-               (GfxLightGrid *param_1,GfxLightGridEntry *param_2,int param_3,uint *param_4,
-               float *param_5)
+void R_IsValidLightGridSample(undefined8 param_1,ulonglong param_2,uint *param_3,undefined8 param_4)
 
 {
   float fVar1;
@@ -1461,212 +2022,550 @@ bool R_IsValidLightGridSample
   float fVar5;
   float fVar6;
   int iVar7;
-  undefined1 uVar8;
-  ulonglong uVar9;
+  float *pfVar8;
   float local_58 [4];
   float local_48;
   float local_44;
   float local_40;
   
-  uVar9 = (ulonglong)(int)param_2;
-  iVar7 = __savegprlr_27(param_1);
+  iVar7 = __savegprlr_27();
   if (iVar7 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x891,0,
-                    "%s");
+    MyAssertHandler(0xffffffff821d6bd8,0x891,0,0xffffffff82000f98,0xffffffff821d6dc4);
   }
   if (2 < *(uint *)(iVar7 + 0x14)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x892,0,
-                    "lightGrid->rowAxis doesn\'t index 3\n\t%i not in [0, %i)");
+    MyAssertHandler(0xffffffff821d6bd8,0x892,0,0xffffffff821d6d8c,*(uint *)(iVar7 + 0x14),3);
   }
   if (2 < *(uint *)(iVar7 + 0x18)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x893,0,
-                    "lightGrid->colAxis doesn\'t index 3\n\t%i not in [0, %i)");
+    MyAssertHandler(0xffffffff821d6bd8,0x893,0,0xffffffff821d6d54,*(uint *)(iVar7 + 0x18),3);
   }
-  fVar1 = (float)*param_4;
+  pfVar8 = (float *)param_4;
+  fVar1 = *pfVar8;
   iVar4 = *(int *)(iVar7 + 0x18);
-  fVar2 = (float)param_4[2];
-  fVar3 = (float)param_4[1];
-  local_58[2] = (float)*(uint *)(param_3 + 8) * 64.0 - 131072.0;
-  local_58[1] = (float)*(uint *)(param_3 + 4) * 32.0 - 131072.0;
-  local_58[0] = (float)*(uint *)param_3 * 32.0 - 131072.0;
-  local_58[*(int *)(iVar7 + 0x14)] = (float)((uVar9 & 4) << 3) + local_58[*(int *)(iVar7 + 0x14)];
-  local_58[iVar4] = (float)((uVar9 & 2) << 4) + local_58[iVar4];
-  local_40 = (float)((uVar9 & 1) << 6) + local_58[2];
+  fVar2 = pfVar8[2];
+  fVar3 = pfVar8[1];
+  local_58[2] = (float)param_3[2] * 64.0 - 131072.0;
+  local_58[1] = (float)param_3[1] * 32.0 - 131072.0;
+  local_58[0] = (float)*param_3 * 32.0 - 131072.0;
+  local_58[*(int *)(iVar7 + 0x14)] = (float)((param_2 & 4) << 3) + local_58[*(int *)(iVar7 + 0x14)];
+  local_58[iVar4] = (float)((param_2 & 2) << 4) + local_58[iVar4];
+  local_40 = (float)((param_2 & 1) << 6) + local_58[2];
   fVar1 = fVar1 - local_58[0];
   fVar3 = fVar3 - local_58[1];
   fVar2 = fVar2 - local_40;
-  fVar6 = SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
-  fVar5 = 1.0;
-  if (-fVar6 < 0.0) {
-    fVar5 = fVar6;
+  fVar5 = SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+  fVar6 = 1.0;
+  if (-fVar5 < 0.0) {
+    fVar6 = fVar5;
   }
-  fVar5 = 1.0 / fVar5;
-  local_48 = fVar5 * fVar1 * 0.01 + local_58[0];
-  local_44 = fVar5 * fVar3 * 0.01 + local_58[1];
-  local_40 = fVar2 * fVar5 * 0.01 + local_40;
-  iVar7 = CG_BrushModelSightTrace(0,(float *)param_4,&local_48,&bounds_origin,0,0x2001);
-  uVar8 = __restgprlr_27(iVar7 == 0);
-  return (bool)uVar8;
+  fVar6 = 1.0 / fVar6;
+  local_48 = fVar6 * fVar1 * 0.01 + local_58[0];
+  local_44 = fVar6 * fVar3 * 0.01 + local_58[1];
+  local_40 = fVar2 * fVar6 * 0.01 + local_40;
+  iVar7 = CG_BrushModelSightTrace(0,param_4,&local_48,0xffffffff82174a3c,0,0x2001);
+  __restgprlr_27(iVar7 == 0);
+  return;
 }
 
 
 // 827A6070  R_LightGridLookup  (gfx_d3d/rb_light.cpp:2215)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
-// 827A64F0  R_GetPrimaryLightFromGrid  (gfx_d3d/rb_light.cpp:2339)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
 
-// 827A4E48  R_CanLightInfluenceLightGridCorner  (gfx_d3d/rb_light.cpp:2554)
-
-bool R_CanLightInfluenceLightGridCorner
-               (GfxLightGrid *param_1,ComPrimaryLight *param_2,float *param_3,uint param_4)
+void R_LightGridLookup(undefined8 param_1,undefined8 param_2,longlong param_3,longlong param_4,
+                      undefined8 param_5,undefined8 param_6)
 
 {
   int iVar1;
   int iVar2;
-  undefined1 uVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  bool bVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  int iVar11;
+  char cVar12;
+  float *pfVar13;
+  uint uVar14;
+  byte bVar15;
+  longlong lVar16;
+  uint uVar17;
+  ulonglong uVar18;
+  double dVar19;
+  double dVar20;
+  undefined1 local_a0 [8];
+  uint local_98 [38];
+  
+  iVar11 = __savegprlr_19();
+  if (iVar11 == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0x8b6,0,0xffffffff82000f98,0xffffffff821d6dc4);
+  }
+  pfVar13 = (float *)param_2;
+  dVar19 = floor((double)*pfVar13);
+  local_98[0] = (int)dVar19 + 0x20000 >> 5;
+  dVar19 = floor((double)pfVar13[1]);
+  local_98[1] = (int)dVar19 + 0x20000 >> 5;
+  dVar19 = floor((double)pfVar13[2]);
+  uVar17 = (int)dVar19 + 0x20000 >> 6;
+  local_98[2] = uVar17;
+  if (((*(int *)(iVar11 + 0x14) != 0) || (*(int *)(iVar11 + 0x18) != 1)) &&
+     ((*(int *)(iVar11 + 0x14) != 1 || (*(int *)(iVar11 + 0x18) != 0)))) {
+    MyAssertHandler(0xffffffff821d6bd8,0x8bf,1,0xffffffff82000f98,0xffffffff821d6f10);
+  }
+  fVar3 = (pfVar13[2] - -131072.0) * 0.015625 - (float)uVar17;
+  fVar5 = (pfVar13[*(int *)(iVar11 + 0x14)] - -131072.0) * 0.03125 -
+          (float)local_98[*(int *)(iVar11 + 0x14)];
+  fVar4 = (pfVar13[*(int *)(iVar11 + 0x18)] - -131072.0) * 0.03125 -
+          (float)local_98[*(int *)(iVar11 + 0x18)];
+  fVar10 = 1.0 - fVar5;
+  fVar9 = (1.0 - fVar3) * fVar4;
+  fVar8 = (1.0 - fVar4) * (1.0 - fVar3);
+  fVar7 = (1.0 - fVar4) * fVar3;
+  pfVar13 = (float *)param_3;
+  pfVar13[6] = fVar9 * fVar5;
+  pfVar13[7] = fVar3 * fVar4 * fVar5;
+  pfVar13[2] = fVar10 * fVar9;
+  pfVar13[4] = fVar8 * fVar5;
+  pfVar13[5] = fVar7 * fVar5;
+  *pfVar13 = fVar10 * fVar8;
+  pfVar13[1] = fVar10 * fVar7;
+  pfVar13[3] = fVar10 * fVar3 * fVar4;
+  *(undefined4 *)param_5 = 1;
+  R_GetLightGridSampleEntryQuad(iVar11,local_98,param_4,param_5);
+  local_98[*(int *)(iVar11 + 0x14)] = local_98[*(int *)(iVar11 + 0x14)] + 1;
+  R_GetLightGridSampleEntryQuad(iVar11,local_98,param_4 + 0x10,param_5);
+  iVar1 = *(int *)(DAT_845aa71c + 0xc);
+  local_98[*(int *)(iVar11 + 0x14)] = local_98[*(int *)(iVar11 + 0x14)] - 1;
+  if (iVar1 != 0) {
+    R_UpdateVisHistory(iVar11,local_98);
+  }
+  bVar15 = 1;
+  uVar17 = 0;
+  lVar16 = 0;
+  dVar20 = 0.0;
+  uVar18 = 0;
+  dVar19 = 0.0010000000474974513;
+  iVar1 = (int)(void *)param_4 - (int)pfVar13;
+  do {
+    pfVar13 = (float *)param_3;
+    iVar2 = *(int *)(iVar1 + (int)pfVar13);
+    if (iVar2 != 0) {
+      if (dVar19 <= (double)*pfVar13) {
+        if ((*(byte *)(iVar2 + 3) & bVar15) == 0) {
+LAB_827a638c:
+          bVar6 = false;
+        }
+        else {
+          cVar12 = R_IsValidLightGridSample(iVar11,uVar18,local_98,param_2);
+          bVar6 = true;
+          if (cVar12 != '\0') goto LAB_827a638c;
+        }
+        local_a0[(int)uVar18] = bVar6;
+        if (bVar6) {
+          if (lVar16 == 0) {
+LAB_827a63e0:
+            uVar14 = (uint)*(byte *)(iVar2 + 2);
+            if (uVar17 == 0) {
+              bVar6 = true;
+            }
+            else if (uVar14 == 0) {
+LAB_827a6434:
+              bVar6 = false;
+            }
+            else if (uVar17 < 0x100U - DAT_845a0824) {
+              if ((0x100U - DAT_845a0824 <= uVar14) || (bVar6 = true, (double)*pfVar13 <= dVar20))
+              goto LAB_827a6434;
+            }
+            else {
+              bVar6 = true;
+            }
+            if (bVar6) {
+              dVar20 = (double)*pfVar13;
+              uVar17 = uVar14;
+            }
+          }
+          else {
+            *(undefined4 *)(iVar1 + (int)pfVar13) = 0;
+          }
+        }
+        else {
+          if (lVar16 != 0) goto LAB_827a63e0;
+          dVar20 = (double)*pfVar13;
+          uVar17 = (uint)*(byte *)(iVar2 + 2);
+          lVar16 = 1;
+          memset((void *)param_4,0,(size_t)((uVar18 & 0xffffffff) << 2));
+        }
+      }
+      else {
+        *(undefined4 *)(iVar1 + (int)pfVar13) = 0;
+      }
+    }
+    uVar18 = uVar18 + 1;
+    param_3 = param_3 + 4;
+    bVar15 = bVar15 << 1;
+    if (7 < (uVar18 & 0xffffffff)) {
+      if (DAT_84628b00 != 0) {
+        if (*(int *)(DAT_845aa8b8 + 0xc) == 1) {
+          R_ShowLightGrid(iVar11,local_98,param_2,param_4,local_a0,lVar16);
+          __restgprlr_19(uVar17);
+          return;
+        }
+        if (1 < *(int *)(DAT_845aa8b8 + 0xc)) {
+          R_ShowDetailedLightGrid(iVar11,local_98,param_2,param_4,local_a0,lVar16,param_6);
+        }
+      }
+      __restgprlr_19(uVar17);
+      return;
+    }
+  } while( true );
+}
+
+
+// 827A64F0  R_GetPrimaryLightFromGrid  (gfx_d3d/rb_light.cpp:2339)
+
+void R_GetPrimaryLightFromGrid(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  uint uVar4;
+  int *piVar5;
+  ulonglong uVar6;
+  undefined1 auStack_70 [16];
+  int local_60 [8];
+  undefined1 auStack_40 [64];
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0x92b,0,0xffffffff82000f98,0xffffffff821d6dc4);
+  }
+  uVar1 = R_LightGridLookup(uVar1,param_2,auStack_40,local_60,auStack_70,0);
+  uVar6 = (ulonglong)DAT_845a0824;
+  if ((0x100 - uVar6 & 0xffffffff) <= (uVar1 & 0xff)) {
+    uVar3 = ((uVar1 & 0xff) + uVar6) - 0xff;
+    uVar1 = uVar3 & 0xff;
+    if ((int)uVar3 != (int)uVar1) {
+      MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar3,uVar1);
+      uVar6 = (ulonglong)DAT_845a0824;
+    }
+  }
+  uVar4 = 0;
+  piVar5 = local_60;
+  do {
+    if (((*piVar5 != 0) &&
+        (uVar3 = (ulonglong)*(byte *)(*piVar5 + 2), uVar3 < (0x100 - uVar6 & 0xffffffff))) &&
+       ((uVar2 = uVar1, uVar3 == 0 || (uVar3 == (uVar1 & 0xff))))) break;
+    uVar4 = uVar4 + 1;
+    piVar5 = piVar5 + 1;
+    uVar2 = param_3;
+  } while (uVar4 < 8);
+  __restgprlr_29(uVar2);
+  return;
+}
+
+
+// 827A4E48  R_CanLightInfluenceLightGridCorner  (gfx_d3d/rb_light.cpp:2554)
+
+void R_CanLightInfluenceLightGridCorner
+               (undefined8 param_1,undefined8 param_2,float *param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   float local_48 [18];
   
-  uVar5 = (ulonglong)(int)param_4;
-  iVar2 = __savegprlr_28(param_1);
-  if (param_2->type == '\x01') {
-    uVar3 = __restgprlr_28(1);
-    return (bool)uVar3;
+  iVar2 = __savegprlr_28();
+  if (*(char *)param_2 == '\x01') {
+    __restgprlr_28(1);
+    return;
   }
-  dVar7 = 0.03125;
-  dVar6 = floor((double)(*param_3 * 0.03125));
-  dVar8 = 32.0;
-  local_48[0] = (float)dVar6 * 32.0;
-  dVar6 = floor((double)(float)((double)param_3[1] * dVar7));
-  local_48[1] = (float)((double)(float)dVar6 * dVar8);
-  dVar6 = floor((double)(*param_3 * 0.015625));
+  dVar4 = 0.03125;
+  dVar3 = floor((double)(*param_3 * 0.03125));
+  dVar5 = 32.0;
+  local_48[0] = (float)dVar3 * 32.0;
+  dVar3 = floor((double)(float)((double)param_3[1] * dVar4));
+  local_48[1] = (float)((double)(float)dVar3 * dVar5);
+  dVar3 = floor((double)(*param_3 * 0.015625));
   iVar1 = *(int *)(iVar2 + 0x18);
-  local_48[2] = (float)dVar6 * 64.0;
-  local_48[*(int *)(iVar2 + 0x14)] = (float)((uVar5 & 4) << 3) + local_48[*(int *)(iVar2 + 0x14)];
-  local_48[iVar1] = (float)((uVar5 & 2) << 4) + local_48[iVar1];
-  local_48[2] = (float)((uVar5 & 1) << 6) + local_48[2];
-  bVar4 = Com_CanPrimaryLightAffectPoint(param_2,local_48);
-  uVar3 = __restgprlr_28(bVar4);
-  return (bool)uVar3;
+  local_48[*(int *)(iVar2 + 0x14)] = (float)((param_4 & 4) << 3) + local_48[*(int *)(iVar2 + 0x14)];
+  local_48[iVar1] = (float)((param_4 & 2) << 4) + local_48[iVar1];
+  local_48[2] = (float)((param_4 & 1) << 6) + (float)dVar3 * 64.0;
+  Com_CanPrimaryLightAffectPoint(param_2,local_48);
+  __restgprlr_28();
+  return;
 }
 
 
 // 827A6600  R_IsInPointOrSpotPrimaryLight  (gfx_d3d/rb_light.cpp:2575)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_IsInPointOrSpotPrimaryLight(void)
+
+{
+  ulonglong uVar1;
+  bool bVar2;
+  undefined4 *puVar5;
+  ulonglong uVar3;
+  longlong lVar4;
+  char *pcVar6;
+  char cVar7;
+  double dVar8;
+  undefined1 auStack_a0 [16];
+  undefined4 local_90;
+  undefined4 local_8c;
+  undefined4 local_88;
+  undefined4 local_84;
+  undefined4 local_80;
+  undefined4 local_7c;
+  undefined1 auStack_70 [32];
+  undefined1 auStack_50 [80];
+  
+  puVar5 = (undefined4 *)__savegprlr_28();
+  local_90 = *puVar5;
+  local_8c = puVar5[1];
+  local_88 = puVar5[2];
+  dVar8 = 0.0;
+  local_84 = 0x42800000;
+  local_80 = 0x42800000;
+  local_7c = 0;
+  uVar3 = R_LightGridLookup(DAT_8461658c + 0xfc,puVar5,auStack_50,auStack_70,auStack_a0,0);
+  uVar1 = uVar3 & 0xff;
+  if (uVar1 == 0) {
+    lVar4 = R_GetNonSunPrimaryLightForBox(&local_90);
+    __restgprlr_28(lVar4 != 0);
+    return;
+  }
+  if (uVar1 < (0x100 - (ulonglong)DAT_845a0824 & 0xffffffff)) {
+    if ((uVar1 == 0) || (bVar2 = true, DAT_845a0824 < uVar1)) {
+      bVar2 = false;
+    }
+    if (!bVar2) {
+      pcVar6 = (char *)Com_GetPrimaryLight(uVar1);
+      if ((*pcVar6 != '\x02') && (*pcVar6 != '\x03')) {
+        MyAssertHandler(0xffffffff821d6bd8,0xa25,0,0xffffffff82083930,0xffffffff82083948);
+      }
+      if ((*pcVar6 != '\x02') || ((double)*(float *)(pcVar6 + 0x40) < dVar8)) {
+        cVar7 = CullBoxFromSphere((double)*(float *)(pcVar6 + 0x34),pcVar6 + 0x28);
+      }
+      else {
+        cVar7 = CullBoxFromConicSectionOfSphere
+                          ((double)*(float *)(pcVar6 + 0x40),(double)*(float *)(pcVar6 + 0x34),
+                           pcVar6 + 0x28,pcVar6 + 0x10);
+      }
+      if (cVar7 == '\0') {
+        cVar7 = R_CullBoxFromLightRegion
+                          ((ulonglong)*(uint *)(DAT_8461658c + 0x228) + (uVar3 & 0xff) * 8,
+                           pcVar6 + 0x28,&local_90);
+        __restgprlr_28(cVar7 == '\0');
+        return;
+      }
+    }
+  }
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 827A67B0  GetLightingAtPoint  (gfx_d3d/rb_light.cpp:2609)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void GetLightingAtPoint(undefined8 param_1,undefined8 param_2,ulonglong param_3,longlong param_4,
+                       int param_5,uint *param_6,undefined8 param_7,float *param_8)
+
+{
+  float fVar1;
+  short *psVar2;
+  bool bVar3;
+  int iVar4;
+  int iVar5;
+  char *pcVar8;
+  ulonglong uVar6;
+  undefined8 uVar7;
+  char cVar9;
+  longlong lVar10;
+  uint uVar11;
+  ulonglong uVar12;
+  uint uVar13;
+  longlong lVar14;
+  uint uVar15;
+  double dVar16;
+  float *in_stack_00000054;
+  float *in_stack_0000005c;
+  float local_c0 [8];
+  undefined4 local_a0 [40];
+  
+  pcVar8 = (char *)__savegprlr_18();
+  uVar6 = R_LightGridLookup();
+  uVar6 = uVar6 & 0xff;
+  uVar12 = (ulonglong)DAT_845a0824;
+  if (uVar6 < (0x100 - uVar12 & 0xffffffff)) {
+    if (*pcVar8 != '\0') {
+      if ((uVar6 == 0) || (bVar3 = true, uVar12 < uVar6)) {
+        bVar3 = false;
+      }
+      if (!bVar3) {
+        uVar6 = param_3;
+      }
+    }
+  }
+  else {
+    uVar6 = (uVar12 + uVar6) - 0xff;
+  }
+  if ((ulonglong)*(uint *)(DAT_8461658c + 0x20) <= (uVar6 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821d6bd8,0xa3f,0,0xffffffff821d6ff8,uVar6);
+  }
+  lVar14 = 0;
+  *param_6 = 0;
+  uVar15 = 0;
+  dVar16 = 0.0;
+  *in_stack_0000005c = 0.0;
+  *param_8 = 0.0;
+  *in_stack_00000054 = 0.0;
+  do {
+    psVar2 = *(short **)((int)local_a0 + uVar15);
+    if (psVar2 != (short *)0x0) {
+      uVar12 = (ulonglong)*(byte *)(psVar2 + 1);
+      if (uVar12 == (uVar6 & 0xffffffff)) {
+        *param_8 = *(float *)((int)local_c0 + uVar15) + *param_8;
+      }
+      else if ((uVar12 == 0) ||
+              (((0x100 - (ulonglong)DAT_845a0824 & 0xffffffff) <= uVar12 &&
+               ((uVar6 & 0xffffffff) != 0)))) {
+        uVar7 = Com_GetPrimaryLight(uVar6);
+        cVar9 = R_CanLightInfluenceLightGridCorner(pcVar8,uVar7,param_2,lVar14);
+        if (cVar9 != '\0') {
+          *in_stack_00000054 = *(float *)((int)local_c0 + uVar15) + *in_stack_00000054;
+        }
+      }
+      uVar11 = 0;
+      fVar1 = *(float *)((int)local_c0 + uVar15);
+      *in_stack_0000005c = fVar1 + *in_stack_0000005c;
+      uVar13 = *param_6;
+      lVar10 = param_4;
+      if (uVar13 != 0) {
+        do {
+          if (*(short *)lVar10 == *psVar2) {
+            *(float *)(uVar11 * 4 + param_5) = *(float *)(uVar11 * 4 + param_5) + fVar1;
+            goto LAB_827a69a4;
+          }
+          uVar11 = uVar11 + 1;
+          lVar10 = lVar10 + 2;
+        } while (uVar11 < uVar13);
+      }
+      iVar4 = uVar13 * 2;
+      iVar5 = uVar13 * 4;
+      uVar13 = uVar13 + 1;
+      *(short *)(iVar4 + (int)param_4) = *psVar2;
+      *(float *)(iVar5 + param_5) = fVar1;
+LAB_827a69a4:
+      *param_6 = uVar13;
+    }
+    uVar15 = uVar15 + 4;
+    lVar14 = lVar14 + 1;
+    if (0x1f < uVar15) {
+      if ((double)*in_stack_0000005c < dVar16) {
+        MyAssertHandler(0xffffffff821d6bd8,0xa59,0,0xffffffff821d6fc4,0xffffffff821d6fdc,
+                        (double)*in_stack_0000005c);
+      }
+      if ((double)*param_8 < dVar16) {
+        MyAssertHandler(0xffffffff821d6bd8,0xa5a,0,0xffffffff821d6f80,0xffffffff821d6fa4,
+                        (double)*param_8);
+      }
+      __restgprlr_18(uVar6);
+      return;
+    }
+  } while( true );
+}
+
 
 // 827A6A48  R_GetLightingAtPoint  (gfx_d3d/rb_light.cpp:2661)
 
-uint R_GetLightingAtPoint
-               (GfxLightGrid *param_1,float *param_2,uint param_3,uchar *param_4,
-               GfxModelLightExtrapolation param_5,float (*param_6) [3],float (*param_7) [3],
-               GfxColor *param_8,float *param_9)
+void R_GetLightingAtPoint
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,longlong param_6,undefined8 param_7,undefined8 param_8)
 
 {
-  GfxLightGrid *pGVar1;
-  bool bVar4;
-  uint uVar2;
-  byte bVar5;
-  uint uVar3;
-  float (*pafVar6) [3];
-  longlong lVar7;
-  float *pfVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  float *in_stack_fffffec8;
-  float *in_stack_fffffecc;
-  float *in_stack_fffffed0;
+  ulonglong uVar1;
+  char cVar4;
+  ulonglong uVar2;
+  undefined4 uVar3;
+  bool bVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   float local_d0;
-  float local_cc;
+  int local_cc;
   float local_c8;
   float local_c4;
-  uint local_c0 [4];
-  ushort local_b0 [8];
-  float afStack_a0 [40];
+  undefined4 local_c0 [4];
+  undefined2 local_b0 [8];
+  undefined1 auStack_a0 [160];
   
-  lVar7 = (longlong)(int)param_6;
-  pGVar1 = (GfxLightGrid *)__savegprlr_21(param_1);
-  if (pGVar1 == (GfxLightGrid *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0xa70,0,
-                    "%s");
+  uVar1 = __savegprlr_21();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0xa70,0,0xffffffff82000f98,0xffffffff821d6dc4);
   }
-  bVar4 = LightEdit_DisableModelLightingUpdate();
-  if (!bVar4) {
+  cVar4 = LightEdit_DisableModelLightingUpdate();
+  if (cVar4 == '\0') {
     Profile_Begin(0x50);
-    pfVar8 = &local_cc;
-    uVar2 = GetLightingAtPoint(pGVar1,param_2,param_3,local_b0,afStack_a0,(uint *)pfVar8,local_c0,
-                               &local_d0,in_stack_fffffec8,in_stack_fffffecc,in_stack_fffffed0);
-    dVar9 = (double)local_c8;
-    dVar10 = 1.0;
-    if (local_cc == 0.0) {
-      dVar11 = (double)local_d0;
+    uVar2 = GetLightingAtPoint(uVar1,param_2,param_3,local_b0,auStack_a0,&local_cc,local_c0,
+                               &local_d0);
+    dVar6 = (double)local_c8;
+    dVar7 = 1.0;
+    if (local_cc == 0) {
+      dVar8 = (double)local_d0;
     }
     else {
-      dVar11 = 0.0;
-      if (dVar9 <= 0.0) {
-        param_3 = 1;
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",
-                        0xa7d,1,"%s");
+      dVar8 = 0.0;
+      if (dVar6 <= 0.0) {
+        MyAssertHandler(0xffffffff821d6bd8,0xa7d,1,0xffffffff82000f98,0xffffffff821d7048);
       }
-      if (uVar2 != 0) {
-        if ((double)local_c4 == dVar11) {
-          bVar4 = (double)local_d0 != dVar11;
-          dVar11 = (double)local_d0;
-          if (bVar4) {
-            dVar11 = dVar10;
+      if ((uVar2 & 0xffffffff) != 0) {
+        if ((double)local_c4 == dVar8) {
+          bVar5 = (double)local_d0 != dVar8;
+          dVar8 = (double)local_d0;
+          if (bVar5) {
+            dVar8 = dVar7;
           }
         }
         else {
-          dVar11 = (double)(float)((double)local_d0 /
-                                  (double)(float)((double)local_d0 + (double)local_c4));
+          dVar8 = (double)(float)((double)local_d0 /
+                                 (double)(float)((double)local_d0 + (double)local_c4));
         }
       }
     }
-    pafVar6 = (float (*) [3])(-(uint)(lVar7 != 0) & (uint)param_2);
-    if (local_cc == 0.0) {
-      bVar5 = R_ExtrapolateLightingAtPoint
-                        (pGVar1,param_4,param_5,local_c0[0],(float *)pafVar6,(float (*) [3])lVar7,
-                         param_7,param_8);
-      uVar2 = (uint)bVar5;
+    if (local_cc == 0) {
+      uVar2 = R_ExtrapolateLightingAtPoint
+                        (uVar1,param_4,param_5,local_c0[0],-(ulonglong)(param_6 != 0) & param_2,
+                         param_6,param_7,param_8);
+      uVar2 = uVar2 & 0xff;
     }
     else {
-      if (local_cc == 1.4013e-45) {
-        uVar3 = R_SetLightGridColorsFromIndex
-                          (pGVar1,(uint)local_b0[0],(float)dVar11,(uchar *)param_3,(float *)param_4,
-                           pafVar6,(float (*) [3])lVar7);
+      if (local_cc == 1) {
+        uVar3 = R_SetLightGridColorsFromIndex(uVar1,local_b0[0]);
       }
       else {
         uVar3 = R_BlendAndSetLightGridColors
-                          (pGVar1,local_b0,afStack_a0,(uint)local_cc,(float)dVar11,
-                           (float)(dVar10 / dVar9),(uchar *)pafVar6,pfVar8,(float (*) [3])param_4,
-                           pafVar6);
+                          (dVar8,(double)(float)(dVar7 / dVar6),uVar1,local_b0,auStack_a0,local_cc);
       }
-      param_8->packed = uVar3;
+      *(undefined4 *)param_8 = uVar3;
     }
-    Profile_EndInternal((double *)0x0);
-    uVar2 = __restgprlr_21(uVar2);
-    return uVar2;
+    Profile_EndInternal(0);
+    __restgprlr_21(uVar2);
+    return;
   }
-  uVar2 = __restgprlr_21(0);
-  return uVar2;
+  __restgprlr_21(0);
+  return;
 }
 
 
 // 827A4F80  GetAttenuatedPrimaryLightColor  (gfx_d3d/rb_light.cpp:2736)
 
-void GetAttenuatedPrimaryLightColor(ComPrimaryLight *param_1,float *param_2,float *param_3)
+void GetAttenuatedPrimaryLightColor(char *param_1,float *param_2,float *param_3)
 
 {
   byte bVar1;
@@ -1680,20 +2579,20 @@ void GetAttenuatedPrimaryLightColor(ComPrimaryLight *param_1,float *param_2,floa
   float fVar9;
   longlong lVar10;
   
-  if (param_1->type == '\x01') {
-    *param_3 = param_1->color[0];
-    param_3[1] = param_1->color[1];
-    param_3[2] = param_1->color[2];
+  if (*param_1 == '\x01') {
+    *param_3 = *(float *)(param_1 + 4);
+    param_3[1] = *(float *)(param_1 + 8);
+    param_3[2] = *(float *)(param_1 + 0xc);
     return;
   }
   *param_3 = 0.0;
   param_3[1] = 0.0;
   param_3[2] = 0.0;
-  fVar9 = param_1->origin[1] - param_2[1];
-  fVar4 = param_1->origin[2] - param_2[2];
-  fVar8 = param_1->origin[0] - *param_2;
+  fVar9 = *(float *)(param_1 + 0x2c) - param_2[1];
+  fVar4 = *(float *)(param_1 + 0x30) - param_2[2];
+  fVar8 = *(float *)(param_1 + 0x28) - *param_2;
   fVar7 = fVar8 * fVar8 + fVar4 * fVar4 + fVar9 * fVar9;
-  if (param_1->radius * param_1->radius < fVar7) {
+  if (*(float *)(param_1 + 0x34) * *(float *)(param_1 + 0x34) < fVar7) {
     return;
   }
   fVar7 = SQRT(fVar7);
@@ -1703,16 +2602,16 @@ void GetAttenuatedPrimaryLightColor(ComPrimaryLight *param_1,float *param_2,floa
   fVar2 = 1.0;
   fVar5 = 1.0 / fVar7;
   fVar6 = fVar2;
-  if (param_1->type == '\x02') {
-    fVar3 = param_1->cosHalfFovOuter;
-    fVar4 = param_1->dir[2] * fVar4 * fVar5 +
-            param_1->dir[1] * fVar9 * fVar5 + param_1->dir[0] * fVar8 * fVar5;
+  if (*param_1 == '\x02') {
+    fVar3 = *(float *)(param_1 + 0x38);
+    fVar4 = *(float *)(param_1 + 0x18) * fVar4 * fVar5 +
+            *(float *)(param_1 + 0x14) * fVar9 * fVar5 + *(float *)(param_1 + 0x10) * fVar8 * fVar5;
     if (fVar4 <= fVar3) {
       return;
     }
-    if ((fVar4 < param_1->cosHalfFovInner) &&
-       (fVar4 = (fVar4 - fVar3) / (param_1->cosHalfFovInner - fVar3), fVar4 < 1.0)) {
-      bVar1 = param_1->exponent;
+    if ((fVar4 < *(float *)(param_1 + 0x3c)) &&
+       (fVar4 = (fVar4 - fVar3) / (*(float *)(param_1 + 0x3c) - fVar3), fVar4 < 1.0)) {
+      bVar1 = param_1[2];
       lVar10 = 0;
       if (7 < bVar1) {
         do {
@@ -1729,7 +2628,7 @@ void GetAttenuatedPrimaryLightColor(ComPrimaryLight *param_1,float *param_2,floa
       }
     }
   }
-  fVar7 = fVar7 / param_1->radius;
+  fVar7 = fVar7 / *(float *)(param_1 + 0x34);
   if (fVar7 - 1.0 < 0.0) {
     fVar2 = fVar7;
   }
@@ -1738,58 +2637,223 @@ void GetAttenuatedPrimaryLightColor(ComPrimaryLight *param_1,float *param_2,floa
     fVar4 = fVar2;
   }
   fVar6 = (1.0 - fVar4) * fVar6;
-  *param_3 = fVar6 * param_1->color[0];
-  param_3[1] = param_1->color[1] * fVar6;
-  param_3[2] = param_1->color[2] * fVar6;
+  *param_3 = fVar6 * *(float *)(param_1 + 4);
+  param_3[1] = *(float *)(param_1 + 8) * fVar6;
+  param_3[2] = *(float *)(param_1 + 0xc) * fVar6;
   return;
 }
 
 
 // 827A6C50  R_GetAverageLightingAtPoint  (gfx_d3d/rb_light.cpp:2799)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_GetAverageLightingAtPoint(undefined8 param_1,longlong param_2)
+
+{
+  undefined1 *puVar1;
+  undefined8 uVar2;
+  char cVar5;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  ulonglong uVar6;
+  float *pfVar7;
+  longlong lVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  undefined4 local_90;
+  int local_8c;
+  float local_88;
+  undefined8 local_80;
+  undefined8 local_78;
+  ushort local_70 [8];
+  undefined1 auStack_60 [96];
+  
+  uVar2 = __savegprlr_27();
+  cVar5 = LightEdit_DisableModelLightingUpdate();
+  puVar1 = (undefined1 *)param_2;
+  if (cVar5 != '\0') {
+    puVar1[3] = 0;
+    puVar1[2] = 0;
+    puVar1[1] = 0;
+    *puVar1 = 0;
+    __restgprlr_27();
+    return;
+  }
+  Profile_Begin(0x5e);
+  uVar3 = GetLightingAtPoint(DAT_8461658c + 0xfc,uVar2,0,local_70,auStack_60,&local_8c,&local_78,
+                             &local_90);
+  dVar12 = 0.0;
+  if (local_8c == 0) {
+    uVar6 = 1;
+    dVar9 = 1.0;
+    uVar3 = (ulonglong)DAT_84848394;
+  }
+  else {
+    dVar11 = (double)local_88;
+    if (dVar11 <= 0.0) {
+      MyAssertHandler(0xffffffff821d6bd8,0xb16,1,0xffffffff82000f98,0xffffffff821d7048);
+    }
+    dVar9 = dVar12;
+    if ((uVar3 & 0xffffffff) != 0) {
+      if ((double)local_80._0_4_ == dVar12) {
+        dVar9 = (double)local_90;
+      }
+      else {
+        dVar9 = (double)(float)((double)local_90 /
+                               (double)(float)((double)local_90 + (double)local_80._0_4_));
+      }
+    }
+    if (local_8c != 1) {
+      R_BlendAndAverageLightGridColors
+                (dVar9,(double)(float)(1.0 / dVar11),DAT_8461658c + 0xfc,local_70,auStack_60,
+                 local_8c);
+      goto LAB_827a6dd8;
+    }
+    uVar6 = (ulonglong)local_70[0];
+  }
+  R_AverageLightGridColors(dVar9,uVar6 * 0xa8 + (ulonglong)*(uint *)(DAT_8461658c + 0x130));
+LAB_827a6dd8:
+  if (((uVar3 & 0xffffffff) < 0xf8) && ((uVar3 & 0xffffffff) != 0)) {
+    uVar4 = Com_GetPrimaryLight(uVar3);
+    GetAttenuatedPrimaryLightColor(uVar4,uVar2,local_70);
+    pfVar7 = (float *)((int)&local_78 + 4);
+    lVar8 = 3;
+    do {
+      local_78 = (ulonglong)(byte)((undefined1 *)param_2)[(int)&local_90 - (int)puVar1];
+      pfVar7 = pfVar7 + 1;
+      dVar9 = (double)(*pfVar7 * (float)(byte)local_90 * 0.5 + (float)local_78);
+      dVar11 = 255.0;
+      if ((float)(dVar9 - 255.0) < 0.0) {
+        dVar11 = dVar9;
+      }
+      dVar10 = dVar12;
+      if (-dVar9 < 0.0) {
+        dVar10 = dVar11;
+      }
+      local_80 = (longlong)dVar10;
+      *(undefined1 *)param_2 = (undefined1)local_80;
+      param_2 = param_2 + 1;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+  }
+  else {
+    lVar8 = 3;
+    do {
+      local_78 = (ulonglong)(byte)((undefined1 *)param_2)[(int)&local_90 - (int)puVar1];
+      dVar9 = (double)local_78;
+      dVar11 = 255.0;
+      if ((float)(dVar9 - 255.0) < 0.0) {
+        dVar11 = dVar9;
+      }
+      dVar10 = dVar12;
+      if (-dVar9 < 0.0) {
+        dVar10 = dVar11;
+      }
+      local_80 = (longlong)dVar10;
+      *(undefined1 *)param_2 = (undefined1)local_80;
+      param_2 = param_2 + 1;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+  }
+  puVar1[3] = 0xff;
+  Profile_EndInternal(0);
+  __restgprlr_27();
+  return;
+}
+
 
 // 827A5120  R_SkyOverride_ColorByte  (gfx_d3d/rb_light.cpp:2914)
 
-uchar R_SkyOverride_ColorByte(float param_1)
+ulonglong R_SkyOverride_ColorByte(void)
 
 {
-  float fVar1;
-  float fVar2;
-  undefined1 uStack_9;
+  double dVar1;
+  double dVar2;
   
-  fVar1 = GammaToLinear_Srgb(param_1);
-  fVar2 = 0.0;
-  if (0.0 < fVar1) {
-    fVar2 = SQRT(fVar1);
+  dVar1 = (double)GammaToLinear_Srgb();
+  dVar2 = 0.0;
+  if (0.0 < dVar1) {
+    dVar2 = (double)(float)SQRT(dVar1);
   }
-  fVar2 = ClampFloat(fVar2,0.0,1.0);
-  uStack_9 = (uchar)(longlong)(fVar2 * 255.0 + 0.5);
-  return uStack_9;
+  dVar1 = (double)ClampFloat(dVar2,0,0x3ff0000000000000);
+  return (longlong)(dVar1 * 255.0 + 0.5) & 0xff;
 }
 
 
 // 827A5188  R_SkyOverride_Begin  (gfx_d3d/rb_light.cpp:2920)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_SkyOverride_Begin(undefined8 param_1,float *param_2)
+
+{
+  undefined8 uVar1;
+  undefined1 uVar3;
+  undefined1 uVar4;
+  undefined1 uVar5;
+  int iVar2;
+  undefined1 *puVar6;
+  longlong lVar7;
+  
+  uVar1 = __savegprlr_28();
+  if (DAT_8461658c == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0xb73,0,0xffffffff82000f98,0xffffffff821b9c84);
+  }
+  if (1 < *(uint *)(DAT_8461658c + 300)) {
+    uVar3 = R_SkyOverride_ColorByte((double)*param_2);
+    uVar4 = R_SkyOverride_ColorByte((double)param_2[1]);
+    uVar5 = R_SkyOverride_ColorByte((double)param_2[2]);
+    lVar7 = 0x38;
+    puVar6 = (undefined1 *)(*(int *)(DAT_8461658c + 0x130) + 0xa7);
+    do {
+      puVar6[1] = uVar3;
+      puVar6[2] = uVar4;
+      puVar6 = puVar6 + 3;
+      *puVar6 = uVar5;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    R_GetActiveStageIndex(uVar1);
+    iVar2 = R_GetStageByIndex();
+    DAT_84848394 = *(undefined1 *)(iVar2 + 0x12);
+    __restgprlr_28();
+    return;
+  }
+  Com_PrintError(8,0xffffffff821d6dd0);
+  __restgprlr_28();
+  return;
+}
+
 
 // 827A5268  R_SkyOverride_End  (gfx_d3d/rb_light.cpp:2985)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void * R_SkyOverride_End(void)
+
+{
+  void *pvVar1;
+  
+  if (DAT_8461658c == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0xbaa,0,0xffffffff82000f98,0xffffffff821b9c84);
+  }
+  if (1 < *(uint *)(DAT_8461658c + 300)) {
+    pvVar1 = memcpy((void *)(*(int *)(DAT_8461658c + 0x130) + 0xa8),&DAT_84848398,0xa8);
+    DAT_84848394 = 1;
+    return pvVar1;
+  }
+  pvVar1 = (void *)Com_PrintError(8,0xffffffff821d6e20);
+  return pvVar1;
+}
+
 
 // 827A5320  R_SkyOverride_IsChanged  (gfx_d3d/rb_light.cpp:3014)
 
-int R_SkyOverride_IsChanged(SkyOverride *param_1)
+undefined8 R_SkyOverride_IsChanged(int *param_1)
 
 {
-  if ((s_skyOverride.state.isActive == param_1->isActive) &&
-     ((s_skyOverride.state.isActive == 0 ||
-      ((((s_skyOverride.state.refPos[0] == param_1->refPos[0] &&
-         (s_skyOverride.state.refPos[1] == param_1->refPos[1])) &&
-        (s_skyOverride.state.refPos[2] == param_1->refPos[2])) &&
-       (((s_skyOverride.state.ambientColor[0] == param_1->ambientColor[0] &&
-         (s_skyOverride.state.ambientColor[1] == param_1->ambientColor[1])) &&
-        (s_skyOverride.state.ambientColor[2] == param_1->ambientColor[2])))))))) {
+  if ((DAT_84848378 == *param_1) &&
+     ((DAT_84848378 == 0 ||
+      ((((DAT_8484837c == (float)param_1[1] && (DAT_84848380 == (float)param_1[2])) &&
+        (DAT_84848384 == (float)param_1[3])) &&
+       (((DAT_84848388 == (float)param_1[4] && (DAT_8484838c == (float)param_1[5])) &&
+        (DAT_84848390 == (float)param_1[6])))))))) {
     return 0;
   }
   return 1;
@@ -1798,64 +2862,29 @@ int R_SkyOverride_IsChanged(SkyOverride *param_1)
 
 // 827A53B0  R_SkyOverride_Apply  (gfx_d3d/rb_light.cpp:3027)
 
-void R_SkyOverride_Apply(SkyOverride *param_1)
+void R_SkyOverride_Apply(int *param_1)
 
 {
   int iVar1;
   int *piVar2;
-  float *pfVar3;
+  int *piVar3;
   longlong lVar4;
   
-  iVar1 = R_SkyOverride_IsChanged(param_1);
+  iVar1 = R_SkyOverride_IsChanged();
   if (iVar1 != 0) {
     R_SyncRenderThread();
     R_ResetModelLighting();
-    pfVar3 = param_1[-1].ambientColor + 2;
-    piVar2 = &marker_rb_imagefilter;
+    piVar3 = param_1 + -1;
+    piVar2 = (int *)0x84848374;
     lVar4 = 7;
     do {
-      pfVar3 = pfVar3 + 1;
+      piVar3 = piVar3 + 1;
       piVar2 = piVar2 + 1;
-      *piVar2 = (int)*pfVar3;
+      *piVar2 = *piVar3;
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
-    if (param_1->isActive != 0) {
-      R_SkyOverride_Begin(param_1->refPos,param_1->ambientColor);
-      return;
-    }
-    R_SkyOverride_End();
-  }
-  return;
-}
-
-
-// 827A5440  R_SkyOverride_SetForFrame  (gfx_d3d/rb_light.cpp:3044)
-
-/* void __cdecl R_SkyOverride_SetForFrame(struct SkyOverride const *) */
-
-void R_SkyOverride_SetForFrame(SkyOverride *param_1)
-
-{
-  int iVar1;
-  int *piVar2;
-  float *pfVar3;
-  longlong lVar4;
-  
-  iVar1 = R_SkyOverride_IsChanged(param_1);
-  if (iVar1 != 0) {
-    R_SyncRenderThread();
-    R_ResetModelLighting();
-    pfVar3 = param_1[-1].ambientColor + 2;
-    piVar2 = &marker_rb_imagefilter;
-    lVar4 = 7;
-    do {
-      pfVar3 = pfVar3 + 1;
-      piVar2 = piVar2 + 1;
-      *piVar2 = (int)*pfVar3;
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
-    if (param_1->isActive != 0) {
-      R_SkyOverride_Begin(param_1->refPos,param_1->ambientColor);
+    if (*param_1 != 0) {
+      R_SkyOverride_Begin(param_1 + 1,param_1 + 4);
       return;
     }
     R_SkyOverride_End();
@@ -1865,21 +2894,34 @@ void R_SkyOverride_SetForFrame(SkyOverride *param_1)
 
 
 // 827A5448  R_SkyOverride_InitForWorld  (gfx_d3d/rb_light.cpp:3074)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void * R_SkyOverride_InitForWorld(void *param_1)
+
+{
+  if (DAT_8461658c == 0) {
+    param_1 = (void *)MyAssertHandler(0xffffffff821d6bd8,0xc03,0,0xffffffff82000f98,
+                                      0xffffffff821b9c84);
+  }
+  if (*(int *)(DAT_8461658c + 300) != 0) {
+    param_1 = memcpy(&DAT_84848398,(void *)(*(int *)(DAT_8461658c + 0x130) + 0xa8),0xa8);
+    DAT_84848394 = 1;
+    DAT_84848378 = 0;
+  }
+  return param_1;
+}
+
 
 // 827A54E8  R_LightVisHistoryFilename  (gfx_d3d/rb_light.cpp:3103)
 
-void R_LightVisHistoryFilename(char *param_1,char *param_2)
+void R_LightVisHistoryFilename(ulonglong param_1,char *param_2)
 
 {
   char cVar1;
   char *pcVar2;
   char *pcVar3;
   
-  if (param_1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0xc20,0,
-                    "%s");
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821d6bd8,0xc20,0,0xffffffff82000f98,0xffffffff821d6ea0);
   }
   Com_StripExtension(param_1,param_2);
   pcVar2 = param_2;
@@ -1888,7 +2930,7 @@ void R_LightVisHistoryFilename(char *param_1,char *param_2)
     pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
   if ((char *)0x3f < pcVar2 + (4 - (int)param_2)) {
-    Com_Error(ERR_DROP,"\x15light grid log filename \'%s.grid\' is too long\n");
+    Com_Error(1,0xffffffff821d6e70,param_2);
   }
   pcVar2 = ".grid";
   do {
@@ -1907,33 +2949,31 @@ void R_LightVisHistoryFilename(char *param_1,char *param_2)
 
 // 827A55C8  R_InitLightVisHistory  (gfx_d3d/rb_light.cpp:3113)
 
-void R_InitLightVisHistory(char *param_1)
+void R_InitLightVisHistory(void)
 
 {
-  char *pcVar1;
-  uint uVar2;
-  ulonglong uVar3;
+  undefined8 uVar1;
+  ulonglong uVar2;
   void *local_70 [4];
-  char acStack_60 [96];
+  undefined1 auStack_60 [96];
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  s_vc_log.history = (ushort (*) [3])0x0;
-  s_vc_log.count = 0;
-  if ((r_vc_makelog->current).integer != 0) {
-    s_vc_log.history = Z_VirtualAlloc(0x600000,"R_InitLightVisHistory",0);
-    if ((r_vc_makelog->current).integer == 2) {
-      R_LightVisHistoryFilename(pcVar1,acStack_60);
-      uVar2 = FS_ReadFile(acStack_60,local_70);
-      uVar3 = (ulonglong)(int)uVar2;
+  uVar1 = __savegprlr_29();
+  DAT_8484845c = (void *)0x0;
+  DAT_84848460 = 0;
+  if (*(int *)(DAT_845aa71c + 0xc) != 0) {
+    DAT_8484845c = (void *)Z_VirtualAlloc(0x600000,0xffffffff821d6ea8,0);
+    if (*(int *)(DAT_845aa71c + 0xc) == 2) {
+      R_LightVisHistoryFilename(uVar1,auStack_60);
+      uVar2 = FS_ReadFile(auStack_60,local_70);
       if (-1 < (int)uVar2) {
-        if (uVar3 == (((ulonglong)uVar2 / 6) * 6 & 0xfffffffe)) {
+        if (uVar2 == (((uVar2 & 0xffffffff) / 6) * 6 & 0xfffffffe)) {
           if (0x600000 < (int)uVar2) {
-            uVar3 = 0x600000;
+            uVar2 = 0x600000;
           }
           Profile_Begin(0x9d);
-          memcpy();
-          Profile_EndInternal((double *)0x0);
-          s_vc_log.count = (int)((uVar3 & 0xffffffff) / 6);
+          memcpy(DAT_8484845c,local_70[0],(size_t)uVar2);
+          Profile_EndInternal(0);
+          DAT_84848460 = (undefined4)((uVar2 & 0xffffffff) / 6);
         }
         FS_FreeFile(local_70[0]);
       }
@@ -1945,5 +2985,21 @@ void R_InitLightVisHistory(char *param_1)
 
 
 // 827A56C0  R_SaveLightVisHistory  (gfx_d3d/rb_light.cpp:3149)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_SaveLightVisHistory(void)
+
+{
+  undefined1 auStack_50 [64];
+  
+  if ((DAT_8484845c != 0) && (DAT_8461658c != (undefined4 *)0x0)) {
+    R_LightVisHistoryFilename(*DAT_8461658c,auStack_50);
+    FS_WriteFile(auStack_50,DAT_8484845c,
+                 ((ulonglong)DAT_84848460 + ((ulonglong)DAT_84848460 & 0x7fffffff) * 2 & 0x7fffffff)
+                 << 1);
+    Z_VirtualFree(DAT_8484845c,0);
+    DAT_8484845c = 0;
+    DAT_84848460 = 0;
+  }
+  return;
+}
+

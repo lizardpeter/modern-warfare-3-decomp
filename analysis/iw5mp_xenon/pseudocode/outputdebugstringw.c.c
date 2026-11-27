@@ -2,15 +2,15 @@
 
 // 828ABC58  OutputDebugStringW  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/outputdebugstringw.c:34)
 
-void OutputDebugStringW(wchar_t *param_1)
+void OutputDebugStringW(LPCWSTR lpOutputString)
 
 {
   longlong lVar1;
   undefined1 auStack_20 [4];
-  char *local_1c;
+  LPCSTR local_1c;
   undefined1 auStack_18 [8];
   
-  RtlInitUnicodeString(auStack_18,param_1);
+  RtlInitUnicodeString(auStack_18,lpOutputString);
   lVar1 = RtlUnicodeStringToAnsiString(auStack_20,auStack_18,1);
   if (lVar1 < 0) {
     local_1c = "";

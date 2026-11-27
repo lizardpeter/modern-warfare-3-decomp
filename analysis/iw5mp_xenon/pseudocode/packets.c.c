@@ -2,70 +2,66 @@
 
 // 828C1730  PacketQueueLength  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/packets.c:28)
 
-ulong PacketQueueLength(PACKET_QUEUE *param_1)
+longlong PacketQueueLength(int *param_1)
 
 {
-  PACKET_CONTEXT *pPVar1;
-  ulong uVar2;
+  int iVar1;
+  longlong lVar2;
   
-  uVar2 = 0;
-  for (pPVar1 = param_1->Head; pPVar1 != (PACKET_CONTEXT *)0x0; pPVar1 = pPVar1->Next) {
-    uVar2 = uVar2 + 1;
+  lVar2 = 0;
+  for (iVar1 = *param_1; iVar1 != 0; iVar1 = *(int *)(iVar1 + 4)) {
+    lVar2 = lVar2 + 1;
   }
-  return uVar2;
+  return lVar2;
 }
 
 
 // 828C1750  PacketProcessorRetireContext  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/packets.c:65)
 
-PACKET_CONTEXT * PacketProcessorRetireContext(PACKET_PROCESSOR *param_1,PACKET_CONTEXT *param_2)
+int PacketProcessorRetireContext(undefined4 *param_1,undefined4 *param_2)
 
 {
-  PACKET_CONTEXT *pPVar1;
-  PACKET_QUEUE *pPVar2;
+  int iVar1;
+  int *piVar2;
   
-  if (param_2->Packet->Status == 0x103) {
-    param_2->Packet->Status = 0;
+  if (*(int *)*param_2 == 0x103) {
+    *(int *)*param_2 = 0;
   }
-  param_2->Packet = (XMEDIAPACKET *)0x0;
-  pPVar2 = &param_1->InFlight;
-  if ((param_2 == (param_1->InFlight).Head) &&
-     (pPVar1 = pPVar2->Head, pPVar1 != (PACKET_CONTEXT *)0x0)) {
-    if (pPVar1 == (param_1->InFlight).Tail) {
-      (param_1->InFlight).Tail = (PACKET_CONTEXT *)0x0;
+  *param_2 = 0;
+  piVar2 = param_1 + 2;
+  if ((param_2 == (undefined4 *)param_1[2]) && (iVar1 = *piVar2, iVar1 != 0)) {
+    if (iVar1 == param_1[3]) {
+      param_1[3] = 0;
     }
-    pPVar2->Head = pPVar1->Next;
-    pPVar1->Next = (PACKET_CONTEXT *)0x0;
+    *piVar2 = *(int *)(iVar1 + 4);
+    *(undefined4 *)(iVar1 + 4) = 0;
   }
-  param_2->Next = (PACKET_CONTEXT *)0x0;
-  pPVar1 = (param_1->FreePacketContexts).Tail;
-  if (pPVar1 == (PACKET_CONTEXT *)0x0) {
-    (param_1->FreePacketContexts).Head = param_2;
+  param_2[1] = 0;
+  if (param_1[1] == 0) {
+    *param_1 = param_2;
   }
   else {
-    pPVar1->Next = param_2;
+    *(undefined4 **)(param_1[1] + 4) = param_2;
   }
-  pPVar1 = pPVar2->Head;
-  (param_1->FreePacketContexts).Tail = param_2;
-  return pPVar1;
+  param_1[1] = param_2;
+  return *piVar2;
 }
 
 
 // 828C17D0  PacketProcessorSubmit  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/packets.c:117)
 
-undefined4 PacketProcessorSubmit(PACKET_PROCESSOR *param_1,XMEDIAPACKET *param_2)
+void PacketProcessorSubmit(undefined8 param_1,undefined4 *param_2)
 
 {
   undefined4 *puVar1;
   undefined4 *puVar2;
-  undefined4 uVar3;
-  undefined8 uVar4;
+  undefined8 uVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_28(param_1);
+  puVar2 = (undefined4 *)__savegprlr_28();
   puVar1 = (undefined4 *)*puVar2;
-  uVar4 = 0;
+  uVar3 = 0;
   if (puVar1 == (undefined4 *)0x0) {
-    uVar4 = 0xffffffff8007007a;
+    uVar3 = 0xffffffff8007007a;
   }
   else {
     if (puVar1 == (undefined4 *)puVar2[1]) {
@@ -74,8 +70,8 @@ undefined4 PacketProcessorSubmit(PACKET_PROCESSOR *param_1,XMEDIAPACKET *param_2
     *puVar2 = puVar1[1];
     puVar1[1] = 0;
     XMemSet(puVar1,0,8);
-    param_2->Offset = 0;
-    param_2->Status = 0x103;
+    param_2[1] = 0;
+    *param_2 = 0x103;
     *puVar1 = param_2;
     puVar1[1] = 0;
     if (puVar2[3] == 0) {
@@ -86,67 +82,64 @@ undefined4 PacketProcessorSubmit(PACKET_PROCESSOR *param_1,XMEDIAPACKET *param_2
     }
     puVar2[3] = puVar1;
   }
-  uVar3 = __restgprlr_28(uVar4);
-  return uVar3;
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
 // 828C1958  PacketProcessorCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/packets.c:219)
 
-undefined4 PacketProcessorCreate(ulong param_1,PACKET_PROCESSOR **param_2)
+void PacketProcessorCreate(undefined8 param_1,undefined4 *param_2)
 
 {
-  PACKET_CONTEXT *pPVar1;
-  int iVar2;
-  PACKET_PROCESSOR *pPVar3;
-  undefined4 uVar4;
-  PACKET_CONTEXT *pPVar5;
-  undefined8 uVar6;
-  ulong uVar7;
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar5;
   
-  iVar2 = __savegprlr_27(param_1);
-  uVar6 = 0;
-  pPVar3 = XMemAlloc(0x14,0x618a8005);
-  if (pPVar3 != (PACKET_PROCESSOR *)0x0) {
-    uVar7 = iVar2 << 3;
-    pPVar5 = XMemAlloc(uVar7,0x618a0003);
-    pPVar3->PacketContextAllocation = pPVar5;
-    if (pPVar5 != (PACKET_CONTEXT *)0x0) {
-      for (; iVar2 != 0; iVar2 = iVar2 + -1) {
-        pPVar1 = (PACKET_CONTEXT *)((int)&pPVar3->PacketContextAllocation[-1].Packet + uVar7);
-        pPVar1->Next = (PACKET_CONTEXT *)0x0;
-        pPVar5 = (pPVar3->FreePacketContexts).Tail;
-        if (pPVar5 == (PACKET_CONTEXT *)0x0) {
-          (pPVar3->FreePacketContexts).Head = pPVar1;
+  iVar1 = __savegprlr_27();
+  uVar5 = 0;
+  piVar2 = (int *)XMemAlloc(0x14,0x618a8005);
+  if (piVar2 != (int *)0x0) {
+    iVar4 = iVar1 << 3;
+    iVar3 = XMemAlloc(iVar4,0x618a0003);
+    piVar2[4] = iVar3;
+    if (iVar3 != 0) {
+      for (; iVar1 != 0; iVar1 = iVar1 + -1) {
+        iVar4 = iVar4 + -8;
+        iVar3 = piVar2[4] + iVar4;
+        *(undefined4 *)(iVar3 + 4) = 0;
+        if (piVar2[1] == 0) {
+          *piVar2 = iVar3;
         }
         else {
-          pPVar5->Next = pPVar1;
+          *(int *)(piVar2[1] + 4) = iVar3;
         }
-        (pPVar3->FreePacketContexts).Tail = pPVar1;
-        uVar7 = uVar7 - 8;
+        piVar2[1] = iVar3;
       }
       goto LAB_828c199c;
     }
   }
-  uVar6 = 0xffffffff8007000e;
-  PacketProcessorDestroy(pPVar3);
-  pPVar3 = (PACKET_PROCESSOR *)0x0;
+  uVar5 = 0xffffffff8007000e;
+  PacketProcessorDestroy(piVar2);
+  piVar2 = (int *)0x0;
 LAB_828c199c:
-  *param_2 = pPVar3;
-  uVar4 = __restgprlr_27(uVar6);
-  return uVar4;
+  *param_2 = piVar2;
+  __restgprlr_27(uVar5);
+  return;
 }
 
 
 // 828C1870  PacketProcessorDestroy  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/packets.c:290)
 
-void PacketProcessorDestroy(PACKET_PROCESSOR *param_1)
+void PacketProcessorDestroy(int param_1)
 
 {
-  if (param_1 != (PACKET_PROCESSOR *)0x0) {
-    if (param_1->PacketContextAllocation != (PACKET_CONTEXT *)0x0) {
-      XMemFree(param_1->PacketContextAllocation,0x618a0003);
-      param_1->PacketContextAllocation = (PACKET_CONTEXT *)0x0;
+  if (param_1 != 0) {
+    if (*(int *)(param_1 + 0x10) != 0) {
+      XMemFree(*(int *)(param_1 + 0x10),0x618a0003);
+      *(undefined4 *)(param_1 + 0x10) = 0;
     }
     XMemFree(param_1,0x618a8005);
   }
@@ -156,71 +149,65 @@ void PacketProcessorDestroy(PACKET_PROCESSOR *param_1)
 
 // 828C1A18  PacketBufferCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/packets.c:333)
 
-undefined4
-PacketBufferCreate(ulong param_1,ulong param_2,ulong param_3,ulong param_4,PACKET_BUFFER **param_5)
+void PacketBufferCreate(undefined8 param_1,int param_2,ulonglong param_3,int param_4,
+                       undefined4 *param_5)
 
 {
-  int iVar1;
-  PACKET_BUFFER *pPVar2;
-  uchar *puVar3;
-  XMEDIAPACKET *pXVar4;
-  undefined4 uVar5;
-  int iVar6;
-  ulong uVar7;
-  undefined8 uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
+  longlong lVar1;
+  int *piVar2;
+  int iVar3;
+  undefined8 uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
   
-  uVar9 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_24(param_1);
-  uVar8 = 0;
-  pPVar2 = XMemAlloc(0xc,0x618a8006);
-  if (pPVar2 != (PACKET_BUFFER *)0x0) {
-    pPVar2->PacketDescriptorSize = param_2;
-    uVar7 = iVar1 * (int)uVar9;
-    puVar3 = XMemAlloc(uVar7,0x608a2002);
-    pPVar2->Buffer = puVar3;
-    pXVar4 = XMemAlloc(param_2 * (int)uVar9,0x618a0009);
-    pPVar2->Packets = pXVar4;
-    if ((pPVar2->Buffer != (uchar *)0x0) && (pXVar4 != (XMEDIAPACKET *)0x0)) {
-      if ((uVar9 & 0xffffffff) != 0) {
-        uVar10 = uVar9;
+  lVar1 = __savegprlr_24();
+  uVar4 = 0;
+  piVar2 = (int *)XMemAlloc(0xc,0x618a8006);
+  if (piVar2 != (int *)0x0) {
+    piVar2[2] = param_2;
+    lVar5 = (longlong)(int)lVar1 * (longlong)(int)param_3;
+    iVar3 = XMemAlloc(lVar5,0x608a2002);
+    *piVar2 = iVar3;
+    iVar3 = XMemAlloc((longlong)param_2 * (longlong)(int)param_3,0x618a0009);
+    piVar2[1] = iVar3;
+    if ((*piVar2 != 0) && (iVar3 != 0)) {
+      if ((param_3 & 0xffffffff) != 0) {
+        uVar6 = param_3;
         do {
-          uVar9 = uVar9 - 1;
-          pXVar4 = pPVar2->Packets;
-          uVar7 = uVar7 - iVar1;
-          iVar6 = pPVar2->PacketDescriptorSize * (int)uVar9;
-          *(ulong *)((int)&pXVar4->Length + iVar6) = iVar1 - param_4;
-          *(uchar **)((int)&pXVar4->Buffer + iVar6) = pPVar2->Buffer + param_4 + uVar7;
-          uVar10 = uVar10 - 1;
-        } while (uVar10 != 0);
+          param_3 = param_3 - 1;
+          lVar5 = lVar5 - lVar1;
+          iVar3 = piVar2[2] * (int)param_3 + piVar2[1];
+          *(int *)(iVar3 + 0xc) = (int)lVar1 - param_4;
+          *(int *)(iVar3 + 8) = *piVar2 + (int)lVar5 + param_4;
+          uVar6 = uVar6 - 1;
+        } while (uVar6 != 0);
       }
       goto LAB_828c1af4;
     }
   }
-  uVar8 = 0xffffffff8007000e;
-  PacketBufferDestroy(pPVar2);
-  pPVar2 = (PACKET_BUFFER *)0x0;
+  uVar4 = 0xffffffff8007000e;
+  PacketBufferDestroy(piVar2);
+  piVar2 = (int *)0x0;
 LAB_828c1af4:
-  *param_5 = pPVar2;
-  uVar5 = __restgprlr_24(uVar8);
-  return uVar5;
+  *param_5 = piVar2;
+  __restgprlr_24(uVar4);
+  return;
 }
 
 
 // 828C18D0  PacketBufferDestroy  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/packets.c:404)
 
-void PacketBufferDestroy(PACKET_BUFFER *param_1)
+void PacketBufferDestroy(int *param_1)
 
 {
-  if (param_1 != (PACKET_BUFFER *)0x0) {
-    if (param_1->Buffer != (uchar *)0x0) {
-      XMemFree(param_1->Buffer,0x608a2002);
-      param_1->Buffer = (uchar *)0x0;
+  if (param_1 != (int *)0x0) {
+    if (*param_1 != 0) {
+      XMemFree(*param_1,0x608a2002);
+      *param_1 = 0;
     }
-    if (param_1->Packets != (XMEDIAPACKET *)0x0) {
-      XMemFree(param_1->Packets,0x618a0009);
-      param_1->Packets = (XMEDIAPACKET *)0x0;
+    if (param_1[1] != 0) {
+      XMemFree(param_1[1],0x618a0009);
+      param_1[1] = 0;
     }
     XMemFree(param_1,0x618a8006);
   }

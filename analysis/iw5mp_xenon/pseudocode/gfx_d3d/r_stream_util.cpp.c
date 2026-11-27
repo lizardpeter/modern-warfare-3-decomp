@@ -2,8 +2,6 @@
 
 // 82783230  WorkAroundLinkerWarning  (gfx_d3d/r_stream_util.cpp:20)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void WorkAroundLinkerWarning(void)
 
 {

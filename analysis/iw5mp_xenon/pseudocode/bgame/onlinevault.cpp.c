@@ -2,53 +2,44 @@
 
 // 82841DA8  Com_BlockChecksum32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/checksum.h:9)
 
-uint Com_BlockChecksum32(void *param_1,uint param_2)
+void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
 
 {
-  uint uVar1;
-  
-  uVar1 = Com_BlockChecksumKey32(param_1,param_2,0);
-  return uVar1;
+  Com_BlockChecksumKey32(param_1,param_2,0);
+  return;
 }
 
 
 // 82842F28  OnlineVault_Notify  (bgame/onlinevault.cpp:165)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_Notify(int param_1,VaultNotify param_2,int param_3)
+void OnlineVault_Notify(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  <unnamed_type_s_vaultNotifyLocStrings> *p<Var6;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char cVar3;
+  undefined **ppuVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (4 < (uVar5 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0xa6,0,
-                    "notify doesn\'t index ARRAY_COUNT(s_vaultNotifyLocStrings)\n\t%i not in [0, %i)"
-                   );
+  uVar1 = __savegprlr_29();
+  if (4 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821ee130,0xa6,0,0xffffffff821ee590,param_2,5);
   }
-  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-  UI_CloseMenu(LVar2,s_uiProgressIndicatorMenu);
-  pcVar3 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-  Dvar_SetFromStringByName("cl_vault_notify_title",pcVar3);
+  uVar1 = CL_LocalClientNumFromControllerIndex(uVar1);
+  UI_CloseMenu(uVar1,PTR_s_vault_task_in_progress_829a63b4);
+  uVar2 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar2);
   if (param_3 == 0) {
-    p<Var6 = (<unnamed_type_s_vaultNotifyLocStrings> *)0x821ee108;
+    ppuVar4 = &PTR_s_MENU_VAULT_COPY_FAILED_821ee108;
   }
   else {
-    p<Var6 = s_vaultNotifyLocStrings;
+    ppuVar4 = &PTR_s_MENU_VAULT_COPY_SUCCESS_821ee104;
   }
-  pcVar3 = UI_SafeTranslateString
-                     (*(char **)((int)&p<Var6->successMessage + (int)((uVar5 & 0xffffffff) << 3)));
-  Dvar_SetFromStringByName("cl_vault_notify_message",pcVar3);
-  bVar4 = Menu_IsMenuOpenAndVisible(LVar2,"popup_vault_notify");
-  if (!bVar4) {
-    UI_OpenMenu(LVar2,"popup_vault_notify");
+  uVar2 = UI_SafeTranslateString(*(undefined4 *)((int)((param_2 & 0xffffffff) << 3) + (int)ppuVar4))
+  ;
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar2);
+  cVar3 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff821e2738);
+  if (cVar3 == '\0') {
+    UI_OpenMenu(uVar1,0xffffffff821e2738);
   }
   __restgprlr_29();
   return;
@@ -57,185 +48,205 @@ void OnlineVault_Notify(int param_1,VaultNotify param_2,int param_3)
 
 // 82841DB0  OnlineVaultUI_GetHead  (bgame/onlinevault.cpp:184)
 
-OnlineVaultUIStack * OnlineVaultUI_GetHead(int param_1)
+undefined4 * OnlineVaultUI_GetHead(int param_1)
 
 {
-  if (s_feederState.stackCount != 0) {
-    if ((s_feederState.stackCount < 1) || (0x80 < (uint)s_feederState.stackCount)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0xbb,
-                      0,
-                      "s_feederState.stackCount not in [1, sizeof(s_feederState.stack)]\n\t%i not in [%i, %i]"
-                     );
+  if (DAT_8487cdc8 != 0) {
+    if (((int)DAT_8487cdc8 < 1) || (0x80 < DAT_8487cdc8)) {
+      MyAssertHandler(0xffffffff821ee130,0xbb,0,0xffffffff821ee170,DAT_8487cdc8,1,0x80);
     }
-    if ((&vp8_horizontal_line_2_3_scale)[s_feederState.stackCount * 0x10] ==
-        (_func___cdecl_void_uchar_ptr_uint_uchar_ptr_uint *)param_1) {
-      return (OnlineVaultUIStack *)
-             (&vp8_horizontal_line_3_5_scale + s_feederState.stackCount * 0x10);
+    if ((&DAT_8487cd98)[DAT_8487cdc8 * 0x10] == param_1) {
+      return &DAT_8487cd90 + DAT_8487cdc8 * 0x10;
     }
   }
-  return (OnlineVaultUIStack *)0x0;
+  return (undefined4 *)0x0;
 }
 
 
 // 82841E58  OnlineVaultUI_GetSelectedIndexOfHead  (bgame/onlinevault.cpp:198)
 
-int OnlineVaultUI_GetSelectedIndexOfHead(int param_1)
+ulonglong OnlineVaultUI_GetSelectedIndexOfHead(void)
 
 {
-  OnlineVaultUIStack *pOVar1;
+  uint *puVar1;
   
-  pOVar1 = OnlineVaultUI_GetHead(param_1);
-  if (pOVar1 == (OnlineVaultUIStack *)0x0) {
-    return -1;
+  puVar1 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar1 == (uint *)0x0) {
+    return 0xffffffffffffffff;
   }
-  return pOVar1->selected;
+  return (ulonglong)*puVar1;
 }
 
 
 // 82841E98  OnlineVaultUI_GetStackCount  (bgame/onlinevault.cpp:207)
 
-int OnlineVaultUI_GetStackCount(int param_1)
+undefined4 OnlineVaultUI_GetStackCount(void)
 
 {
-  return s_feederState.stackCount;
+  return DAT_8487cdc8;
 }
 
 
 // 82845948  StructuredData_GetData<char_const_*>  (universal/com_structureddatadef.h:208)
 
-char * StructuredData_GetData<char_const_*>
-                 (StructuredDataDef *param_1,StructuredDataBuffer *param_2)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+undefined1 *
+StructuredData_GetData<char_const_*>
+          (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4,
+          undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-  StructuredDataBuffer *pSStack0000001c;
-  char *local_10 [4];
+  undefined4 uStack0000001c;
+  undefined8 uStack00000020;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
+  undefined1 local_10 [16];
   
-  local_10[0] = &stack0x00000020;
-  pSStack0000001c = param_2;
-  StructuredData_VardicGetLookupByVaList(param_1,param_2,local_10,local_10[0]);
-  return local_10[0];
+  uStack00000020 = param_3;
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
+  uStack0000001c = param_2;
+  StructuredData_VardicGetLookupByVaList(param_1,param_2,local_10,&stack0x00000020);
+  return (undefined1 *)&stack0x00000020;
 }
 
 
 // 828459A0  StructuredData_GetData<int>  (universal/com_structureddatadef.h:208)
 
-int StructuredData_GetData<int>(StructuredDataDef *param_1,StructuredDataBuffer *param_2)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+undefined1 *
+StructuredData_GetData<int>
+          (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4,
+          undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-  StructuredDataBuffer *pSStack0000001c;
-  char *local_10 [4];
+  undefined4 uStack0000001c;
+  undefined8 uStack00000020;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
+  undefined1 local_10 [16];
   
-  local_10[0] = &stack0x00000020;
-  pSStack0000001c = param_2;
-  StructuredData_VardicGetLookupByVaList(param_1,param_2,local_10,local_10[0]);
-  return (int)local_10[0];
+  uStack00000020 = param_3;
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
+  uStack0000001c = param_2;
+  StructuredData_VardicGetLookupByVaList(param_1,param_2,local_10,&stack0x00000020);
+  return (undefined1 *)&stack0x00000020;
 }
 
 
 // 82841EA8  OnlineVaultUI_GetSelectedFeederParam  (bgame/onlinevault.cpp:213)
 
-int OnlineVaultUI_GetSelectedFeederParam(int param_1,int *param_2,int *param_3)
+bool OnlineVaultUI_GetSelectedFeederParam
+               (undefined8 param_1,undefined4 *param_2,undefined4 *param_3)
 
 {
-  OnlineVaultUIStack *pOVar1;
+  undefined4 *puVar1;
   
-  pOVar1 = OnlineVaultUI_GetHead(param_1);
-  if (pOVar1 != (OnlineVaultUIStack *)0x0) {
-    *param_2 = pOVar1->selected;
-    *param_3 = pOVar1->selectedIndexTime;
+  puVar1 = (undefined4 *)OnlineVaultUI_GetHead();
+  if (puVar1 != (undefined4 *)0x0) {
+    *param_2 = *puVar1;
+    *param_3 = puVar1[1];
   }
-  return (uint)(pOVar1 != (OnlineVaultUIStack *)0x0);
+  return puVar1 != (undefined4 *)0x0;
 }
 
 
 // 82841F00  OnlineVaultUI_PushMenu  (bgame/onlinevault.cpp:225)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int OnlineVaultUI_PushMenu
-              (int param_1,OnlineVaultUIParadigm param_2,char *param_3,ulong64 param_4,
-              dwContentServerFileCategory param_5)
+void OnlineVaultUI_PushMenu
+               (undefined8 param_1,int param_2,undefined8 param_3,longlong param_4,int param_5)
 
 {
-  int iVar1;
-  int iVar2;
+  bool bVar1;
+  undefined8 uVar2;
   int iVar3;
-  contentServerPrivateData *pcVar4;
-  bool bVar5;
-  OnlineVaultUIStack *pOVar6;
+  undefined1 *puVar4;
+  char cVar5;
+  int iVar6;
   
-  iVar1 = __savegprlr_24(param_1);
-  iVar2 = s_feederState.stackCount;
-  if (s_feederState.stackCount == 2) {
-    Com_PrintError(0xd,"[OnlineVaultUIStack_PushMenu] Stack overflow when trying to open %s.");
-    iVar2 = __restgprlr_24(0);
-    return iVar2;
+  uVar2 = __savegprlr_24();
+  if (DAT_8487cdc8 == 2) {
+    Com_PrintError(0xd,0xffffffff821ee1c8);
+    __restgprlr_24(0);
+    return;
   }
-  pOVar6 = s_feederState.stack + s_feederState.stackCount;
-  if ((((s_feederState.stack[s_feederState.stackCount].controllerIndex == iVar1) &&
-       (s_feederState.stack[s_feederState.stackCount].remoteXuid == param_4)) &&
-      (s_feederState.stack[s_feederState.stackCount].filterType == param_5)) &&
-     (s_feederState.stack[s_feederState.stackCount].paradigm == param_2)) {
-    iVar3 = I_strcmp(s_feederState.stack[s_feederState.stackCount].menu,param_3);
-    bVar5 = true;
+  iVar6 = DAT_8487cdc8 * 0x40;
+  if ((((*(int *)(&DAT_8487cdd8 + iVar6) == (int)uVar2) &&
+       (*(longlong *)(&DAT_8487cde0 + iVar6) == param_4)) &&
+      (*(int *)(&DAT_8487cdec + iVar6) == param_5)) && (*(int *)(&DAT_8487cde8 + iVar6) == param_2))
+  {
+    iVar3 = I_strcmp(iVar6 + -0x7b783210,param_3);
+    bVar1 = true;
     if (iVar3 == 0) goto LAB_82841fb0;
   }
-  bVar5 = false;
+  bVar1 = false;
 LAB_82841fb0:
-  if (!bVar5) {
-    s_feederState.stack[iVar2].controllerIndex = iVar1;
-    s_feederState.stack[iVar2].remoteXuid = param_4;
-    pOVar6->selected = 0;
-    s_feederState.stack[iVar2].filterType = param_5;
-    s_feederState.stack[iVar2].paradigm = param_2;
-    I_strncpyz(s_feederState.stack[iVar2].menu,param_3,0x20);
+  if (!bVar1) {
+    *(int *)(&DAT_8487cdd8 + iVar6) = (int)uVar2;
+    *(longlong *)(&DAT_8487cde0 + iVar6) = param_4;
+    *(undefined4 *)(&DAT_8487cdd0 + iVar6) = 0;
+    *(int *)(&DAT_8487cdec + iVar6) = param_5;
+    *(int *)(&DAT_8487cde8 + iVar6) = param_2;
+    I_strncpyz(iVar6 + -0x7b783210,param_3,0x20);
   }
-  if (((param_2 == OV_FRIEND_BROWSE) || (param_2 == OV_FRIEND_LOAD)) &&
-     (pcVar4 = LiveStorage_CS_GetFriendPrivateData(iVar1,param_4),
-     pcVar4 != (contentServerPrivateData *)0x0)) {
-    pcVar4->m_valid = false;
+  if (((param_2 == 4) || (param_2 == 5)) &&
+     (puVar4 = (undefined1 *)LiveStorage_CS_GetFriendPrivateData(uVar2,param_4),
+     puVar4 != (undefined1 *)0x0)) {
+    *puVar4 = 0;
   }
-  s_feederState.stackCount = s_feederState.stackCount + 1;
-  bVar5 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,param_3);
-  if (bVar5) {
-    UI_CloseMenu(LOCAL_CLIENT_0,param_3);
+  DAT_8487cdc8 = DAT_8487cdc8 + 1;
+  cVar5 = Menu_IsMenuOpenAndVisible(0,param_3);
+  if (cVar5 != '\0') {
+    UI_CloseMenu(0,param_3);
   }
-  UI_OpenMenu(LOCAL_CLIENT_0,param_3);
-  iVar2 = __restgprlr_24(1);
-  return iVar2;
+  UI_OpenMenu(0,param_3);
+  __restgprlr_24(1);
+  return;
 }
 
 
 // 82842050  OnlineVaultUI_PopMenu  (bgame/onlinevault.cpp:267)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVaultUI_PopMenu(int param_1)
+void OnlineVaultUI_PopMenu(void)
 
 {
   int iVar1;
-  _func___cdecl_void_uchar_ptr_uint_uchar_ptr_uint *p_Var2;
-  OnlineVaultUIStack *pOVar3;
-  bool bVar4;
+  undefined8 uVar2;
+  longlong lVar3;
+  char cVar4;
   
-  p_Var2 = (_func___cdecl_void_uchar_ptr_uint_uchar_ptr_uint *)__savegprlr_29(param_1);
-  iVar1 = s_feederState.stackCount;
-  if (s_feederState.stackCount == 0) {
-    Com_PrintError(0xd,"[OnlineVaultUIStack_PopMenu] Stack underflow when trying to close.");
+  uVar2 = __savegprlr_29();
+  iVar1 = DAT_8487cdc8;
+  if (DAT_8487cdc8 == 0) {
+    Com_PrintError(0xd,0xffffffff821ee240);
     __restgprlr_29();
     return;
   }
-  if ((&vp8_horizontal_line_2_3_scale)[s_feederState.stackCount * 0x10] != p_Var2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x114,0
-                    ,"%s");
+  if ((&DAT_8487cd98)[DAT_8487cdc8 * 0x10] != (int)uVar2) {
+    MyAssertHandler(0xffffffff821ee130,0x114,0,0xffffffff82000f98,0xffffffff821ee210);
   }
-  s_feederState.stackCount = s_feederState.stackCount + -1;
-  UI_CloseMenu(LOCAL_CLIENT_0,(char *)(&vp8_vertical_band_2_1_scale + iVar1 * 0x10));
-  if (0 < s_feederState.stackCount) {
-    pOVar3 = OnlineVaultUI_GetHead((int)p_Var2);
-    bVar4 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,pOVar3->menu);
-    if (!bVar4) {
-      UI_OpenMenu(LOCAL_CLIENT_0,pOVar3->menu);
+  DAT_8487cdc8 = DAT_8487cdc8 + -1;
+  UI_CloseMenu(0,&DAT_8487cdb0 + iVar1 * 0x10);
+  if (0 < DAT_8487cdc8) {
+    lVar3 = OnlineVaultUI_GetHead(uVar2);
+    cVar4 = Menu_IsMenuOpenAndVisible(0,lVar3 + 0x20);
+    if (cVar4 == '\0') {
+      UI_OpenMenu(0,lVar3 + 0x20);
     }
   }
   __restgprlr_29();
@@ -245,39 +256,35 @@ void OnlineVaultUI_PopMenu(int param_1)
 
 // 82842128  OnlineVaultUI_ClearStack  (bgame/onlinevault.cpp:290)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void OnlineVaultUI_ClearStack(void)
 
 {
-  _func___cdecl_void_uchar_ptr_uint_uchar_ptr_uint *p_Var1;
+  int iVar1;
   int iVar2;
-  OnlineVaultUIStack *pOVar3;
-  bool bVar4;
+  longlong lVar3;
+  char cVar4;
   
   __savegprlr_25();
-  iVar2 = s_feederState.stackCount;
-  while (s_feederState.stackCount = iVar2, 0 < iVar2) {
-    p_Var1 = (&vp8_horizontal_line_2_3_scale)[iVar2 * 0x10];
+  iVar2 = DAT_8487cdc8;
+  while (DAT_8487cdc8 = iVar2, 0 < iVar2) {
+    iVar1 = (&DAT_8487cd98)[iVar2 * 0x10];
     if (iVar2 == 0) {
-      Com_PrintError(0xd,"[OnlineVaultUIStack_PopMenu] Stack underflow when trying to close.");
-      iVar2 = s_feederState.stackCount;
+      Com_PrintError(0xd,0xffffffff821ee240);
+      iVar2 = DAT_8487cdc8;
     }
     else {
-      if ((&vp8_horizontal_line_2_3_scale)[iVar2 * 0x10] != p_Var1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",
-                        0x114,0,"%s");
+      if ((&DAT_8487cd98)[iVar2 * 0x10] != iVar1) {
+        MyAssertHandler(0xffffffff821ee130,0x114,0,0xffffffff82000f98,0xffffffff821ee210);
       }
-      s_feederState.stackCount = s_feederState.stackCount + -1;
-      UI_CloseMenu(LOCAL_CLIENT_0,(char *)(&vp8_vertical_band_2_1_scale + iVar2 * 0x10));
-      if (s_feederState.stackCount < 1) break;
-      pOVar3 = OnlineVaultUI_GetHead((int)p_Var1);
-      bVar4 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,pOVar3->menu);
-      iVar2 = s_feederState.stackCount;
-      if (!bVar4) {
-        UI_OpenMenu(LOCAL_CLIENT_0,pOVar3->menu);
-        iVar2 = s_feederState.stackCount;
+      DAT_8487cdc8 = DAT_8487cdc8 + -1;
+      UI_CloseMenu(0,&DAT_8487cdb0 + iVar2 * 0x10);
+      if (DAT_8487cdc8 < 1) break;
+      lVar3 = OnlineVaultUI_GetHead(iVar1);
+      cVar4 = Menu_IsMenuOpenAndVisible(0,lVar3 + 0x20);
+      iVar2 = DAT_8487cdc8;
+      if (cVar4 == '\0') {
+        UI_OpenMenu(0,lVar3 + 0x20);
+        iVar2 = DAT_8487cdc8;
       }
     }
   }
@@ -288,49 +295,45 @@ void OnlineVaultUI_ClearStack(void)
 
 // 82842220  OnlineVault_GetPrivateData  (bgame/onlinevault.cpp:301)
 
-contentServerPrivateData * OnlineVault_GetPrivateData(int param_1)
+void OnlineVault_GetPrivateData(undefined8 param_1)
 
 {
-  OnlineVaultUIStack *pOVar1;
-  contentServerPrivateData *pcVar2;
+  int iVar1;
   
-  pOVar1 = OnlineVaultUI_GetHead(param_1);
-  if (pOVar1 == (OnlineVaultUIStack *)0x0) {
-    return (contentServerPrivateData *)0x0;
+  iVar1 = OnlineVaultUI_GetHead();
+  if (iVar1 == 0) {
+    return;
   }
-  if ((pOVar1->paradigm != OV_FRIEND_LOAD) && (pOVar1->paradigm != OV_FRIEND_BROWSE)) {
-    pcVar2 = LiveStorage_CS_GetPrivateData(param_1);
-    return pcVar2;
+  if ((*(int *)(iVar1 + 0x18) != 5) && (*(int *)(iVar1 + 0x18) != 4)) {
+    LiveStorage_CS_GetPrivateData(param_1);
+    return;
   }
-  pcVar2 = LiveStorage_CS_GetFriendPrivateData(param_1,pOVar1->remoteXuid);
-  return pcVar2;
+  LiveStorage_CS_GetFriendPrivateData(param_1,*(undefined8 *)(iVar1 + 0x10));
+  return;
 }
 
 
 // 828422A8  GetPlayerMaxFileSlots  (bgame/onlinevault.cpp:313)
 
-uint GetPlayerMaxFileSlots(int param_1)
+undefined4 GetPlayerMaxFileSlots(undefined8 param_1)
 
 {
-  OnlineVaultUIStack *pOVar1;
-  ELITE_SUBSCRIPTION_LEVEL EVar2;
+  int iVar1;
+  uint uVar2;
   
-  pOVar1 = OnlineVaultUI_GetHead(param_1);
-  if (((onlinevault_active->current).integer != 0) && (pOVar1 != (OnlineVaultUIStack *)0x0)) {
-    if ((pOVar1->paradigm == OV_FRIEND_LOAD) || (pOVar1->paradigm == OV_FRIEND_BROWSE)) {
-      EVar2 = Commerce_XUIDEliteSubscription(param_1,pOVar1->remoteXuid);
+  iVar1 = OnlineVaultUI_GetHead();
+  if ((*(int *)(DAT_84545c9c + 0xc) != 0) && (iVar1 != 0)) {
+    if ((*(int *)(iVar1 + 0x18) == 5) || (*(int *)(iVar1 + 0x18) == 4)) {
+      uVar2 = Commerce_XUIDEliteSubscription(param_1,*(undefined8 *)(iVar1 + 0x10));
     }
     else {
-      EVar2 = Commerce_LocalEliteSubscription(param_1);
+      uVar2 = Commerce_LocalEliteSubscription(param_1);
     }
-    if (EVar2 != ELITE_SUBSCRIPTION_LEVEL_UNKNOWN) {
-      if (ELITE_SUBSCRIPTION_LEVEL_PAYING < EVar2) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",
-                        0x14e,0,
-                        "sub_level doesn\'t index ARRAY_COUNT( onlinevault_maxslots )\n\t%i not in [0, %i)"
-                       );
+    if (uVar2 != 0xffffffff) {
+      if (2 < uVar2) {
+        MyAssertHandler(0xffffffff821ee130,0x14e,0,0xffffffff821ee288,uVar2,3);
       }
-      return (onlinevault_maxslots[EVar2]->current).unsignedInt;
+      return *(undefined4 *)((&DAT_84546cf8)[uVar2] + 0xc);
     }
   }
   return 0;
@@ -339,63 +342,61 @@ uint GetPlayerMaxFileSlots(int param_1)
 
 // 82842388  GetFileslotDescriptor  (bgame/onlinevault.cpp:344)
 
-bdFileMetaData * GetFileslotDescriptor(int param_1,int param_2)
+void GetFileslotDescriptor(undefined8 param_1,uint param_2)
 
 {
-  uint uVar1;
+  int iVar1;
   int iVar2;
-  contentServerPrivateData *pcVar3;
-  StructuredDataDef *pSVar4;
+  ushort *puVar3;
+  int iVar4;
   int iVar5;
-  bdFileMetaData *pbVar6;
-  ushort *puVar7;
-  uchar *puVar8;
-  StructuredDataBuffer local_30 [6];
+  int iVar6;
+  int local_30;
+  int local_2c;
   
-  iVar2 = __savegprlr_28(param_1);
-  pcVar3 = OnlineVault_GetPrivateData(iVar2);
-  if (pcVar3 != (contentServerPrivateData *)0x0) {
-    pSVar4 = StructuredDataDef_GetAsset("mp/onlinevault_metadata.def",0xff);
-    iVar2 = 0;
-    for (puVar7 = &pcVar3->m_descriptors[0].m_fileSlot;
-        (iVar2 < pcVar3->m_descriptorCount && ((uint)*puVar7 != param_2)); puVar7 = puVar7 + 0x3c8)
-    {
-      iVar2 = iVar2 + 1;
+  __savegprlr_28();
+  iVar1 = OnlineVault_GetPrivateData();
+  if (iVar1 != 0) {
+    iVar2 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+    iVar4 = 0;
+    for (puVar3 = (ushort *)(iVar1 + 0x78);
+        (iVar4 < *(int *)(iVar1 + 0x4bb0) && (*puVar3 != param_2)); puVar3 = puVar3 + 0x3c8) {
+      iVar4 = iVar4 + 1;
     }
-    if (iVar2 != pcVar3->m_descriptorCount) {
-      pbVar6 = pcVar3->m_descriptors + iVar2;
-      puVar8 = pcVar3->m_descriptors[iVar2].m_metaData;
-      uVar1 = pcVar3->m_descriptors[iVar2].m_metaDataSize;
-      if ((puVar8 == (uchar *)0x0) && (uVar1 != 0)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
-                        ,0x54,0,"%s");
+    if (iVar4 != *(int *)(iVar1 + 0x4bb0)) {
+      iVar1 = iVar4 * 0x790 + iVar1;
+      iVar6 = iVar1 + 0x10;
+      iVar5 = iVar1 + 0x280;
+      iVar4 = *(int *)(iVar1 + 0x480);
+      if ((iVar5 == 0) && (iVar4 != 0)) {
+        MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
       }
-      local_30[0].data = puVar8;
-      local_30[0].size = uVar1;
-      if (pcVar3->m_descriptors[iVar2].m_metaDataSize == pSVar4->size) {
-        iVar2 = StructuredData_GetVersion(pSVar4);
-        iVar5 = StructuredData_GetDataVersion(local_30);
-        if (iVar5 == iVar2) goto LAB_82842470;
+      local_30 = iVar5;
+      local_2c = iVar4;
+      if (*(int *)(iVar1 + 0x480) == *(int *)(iVar2 + 0x30)) {
+        iVar1 = StructuredData_GetVersion(iVar2);
+        iVar2 = StructuredData_GetDataVersion(&local_30);
+        if (iVar2 == iVar1) goto LAB_82842470;
       }
     }
   }
-  pbVar6 = (bdFileMetaData *)0x0;
+  iVar6 = 0;
 LAB_82842470:
-  pbVar6 = (bdFileMetaData *)__restgprlr_28(pbVar6);
-  return pbVar6;
+  __restgprlr_28(iVar6);
+  return;
 }
 
 
 // 82842478  OnlineVault_GetCurrentXUID  (bgame/onlinevault.cpp:374)
 
-ulong64 OnlineVault_GetCurrentXUID(int param_1)
+undefined8 OnlineVault_GetCurrentXUID(void)
 
 {
-  OnlineVaultUIStack *pOVar1;
+  int iVar1;
   
-  pOVar1 = OnlineVaultUI_GetHead(param_1);
-  if (pOVar1 != (OnlineVaultUIStack *)0x0) {
-    return pOVar1->remoteXuid;
+  iVar1 = OnlineVaultUI_GetHead();
+  if (iVar1 != 0) {
+    return *(undefined8 *)(iVar1 + 0x10);
   }
   return 0;
 }
@@ -403,48 +404,46 @@ ulong64 OnlineVault_GetCurrentXUID(int param_1)
 
 // 828424B8  OnlineVault_ShowVault  (bgame/onlinevault.cpp:384)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_ShowVault(LocalClientNum_t param_1,char **param_2)
+void OnlineVault_ShowVault(undefined8 param_1,undefined8 param_2)
 
 {
   uint uVar1;
   bool bVar2;
   bool bVar3;
   bool bVar4;
-  LocalClientNum_t LVar5;
+  undefined8 uVar5;
   int iVar6;
-  int iVar7;
-  dwContentServerFileCategory dVar8;
-  OnlineVaultUIParadigm OVar9;
-  char **ppcVar10;
-  char **ppcVar11;
-  dwContentServerFileCategory dVar12;
-  ulong64 local_450 [2];
-  char acStack_440 [1088];
+  undefined4 uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  undefined **ppuVar10;
+  undefined **ppuVar12;
+  ulonglong uVar11;
+  longlong local_450 [2];
+  undefined1 auStack_440 [1088];
   
-  LVar5 = __savegprlr_25(param_1);
-  iVar6 = CL_ControllerIndexFromClientNum(LVar5);
+  __savegprlr_25();
+  uVar5 = CL_ControllerIndexFromClientNum();
   local_450[0] = 0;
-  String_Parse(param_2,acStack_440,0x400);
-  OVar9 = OV_BROWSE;
-  ppcVar10 = s_onlineVaultFileCategory;
-  ppcVar11 = s_onlineVaultUIParadigm;
+  String_Parse(param_2,auStack_440,0x400);
+  uVar9 = 0;
+  ppuVar10 = &PTR_DAT_829a6390;
+  ppuVar12 = &PTR_s_browse_829a6380;
   do {
-    iVar7 = I_stricmp(*ppcVar11,acStack_440);
-    if (iVar7 == 0) break;
-    OVar9 = OVar9 + OV_LOAD;
-    ppcVar11 = ppcVar11 + 1;
-  } while (OVar9 < OV_FRIEND_BROWSE);
-  if (OVar9 == OV_FRIEND_BROWSE) {
-    Com_PrintError(0xd,"[OnlineVault_ShowVault] Paradigm type not found.\n");
+    iVar6 = I_stricmp(*ppuVar12,auStack_440);
+    if (iVar6 == 0) break;
+    uVar9 = uVar9 + 1;
+    ppuVar12 = ppuVar12 + 1;
+  } while ((uVar9 & 0xffffffff) < 4);
+  if ((uVar9 & 0xffffffff) == 4) {
+    Com_PrintError(0xd,0xffffffff821ee3ac);
     __restgprlr_25();
     return;
   }
-  String_Parse(param_2,acStack_440,0x400);
-  iVar7 = I_stricmp(acStack_440,"fb");
-  uVar1 = (uint)LZCOUNT(iVar7) >> 5;
-  if ((uVar1 == 0) && (iVar7 = I_stricmp(acStack_440,"elite"), iVar7 == 0)) {
+  String_Parse(param_2,auStack_440,0x400);
+  uVar7 = I_stricmp(auStack_440,0xffffffff821ee3a8);
+  uVar1 = (uint)LZCOUNT(uVar7) >> 5;
+  if ((uVar1 == 0) && (iVar6 = I_stricmp(auStack_440,0xffffffff82127f1c), iVar6 == 0)) {
     bVar2 = true;
 LAB_82842588:
     bVar4 = false;
@@ -454,60 +453,58 @@ LAB_82842588:
   else {
     bVar2 = false;
     bVar3 = false;
-    if ((uVar1 != 0) || (iVar7 = I_stricmp(acStack_440,"live"), iVar7 != 0)) goto LAB_82842588;
+    if ((uVar1 != 0) || (iVar6 = I_stricmp(auStack_440,0xffffffff8217db20), iVar6 != 0))
+    goto LAB_82842588;
     bVar4 = true;
 LAB_8284259c:
-    if (OVar9 == OV_BROWSE) {
-      OVar9 = OV_FRIEND_BROWSE;
+    if ((int)uVar9 == 0) {
+      uVar9 = 4;
     }
     else {
-      if (OVar9 != OV_LOAD) {
-        Com_PrintError(0xd,
-                       "[OnlineVault_ShowVault] Friend type specified but paradigm type is not supported.\n"
-                      );
+      if ((int)uVar9 != 1) {
+        Com_PrintError(0xd,0xffffffff821ee2d8);
         goto LAB_82842718;
       }
-      OVar9 = OV_FRIEND_LOAD;
+      uVar9 = 5;
     }
     if (uVar1 == 0) {
       if (bVar3) {
-        iVar7 = EliteClan_GetSelectedFeederXuid(iVar6,local_450);
+        iVar6 = EliteClan_GetSelectedFeederXuid(uVar5,local_450);
       }
       else {
         if (!bVar4) goto LAB_82842630;
-        iVar7 = FriendsMenu_GetSelectedFeederXuid(iVar6,local_450);
+        iVar6 = FriendsMenu_GetSelectedFeederXuid(uVar5,local_450);
       }
     }
     else {
-      iVar7 = Facebook_GetSelectedFeederXuid(iVar6,local_450);
+      iVar6 = Facebook_GetSelectedFeederXuid(uVar5,local_450);
     }
-    if (iVar7 == 0) {
+    if (iVar6 == 0) {
 LAB_82842630:
-      Com_PrintError(0xd,"[OnlineVault_ShowVault] Failed to get XUID of friend.\n");
+      Com_PrintError(0xd,0xffffffff821ee370);
       __restgprlr_25();
       return;
     }
     if (local_450[0] == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x1bc
-                      ,0,"%s");
+      MyAssertHandler(0xffffffff821ee130,0x1bc,0,0xffffffff82000f98,0xffffffff821ee360);
     }
-    String_Parse(param_2,acStack_440,0x400);
+    String_Parse(param_2,auStack_440,0x400);
   }
-  dVar12 = FILE_CATEGORY_ALL;
+  uVar11 = 0;
   do {
-    iVar7 = I_stricmp(*ppcVar10,acStack_440);
-    if (iVar7 == 0) break;
-    dVar12 = dVar12 + FILE_CATEGORY_FILM;
-    ppcVar10 = ppcVar10 + 1;
-  } while (dVar12 < FILE_CATEGORY_COUNT);
-  dVar8 = FILE_CATEGORY_ALL;
-  if (dVar12 != FILE_CATEGORY_COUNT) {
-    String_Parse(param_2,acStack_440,0x400);
-    dVar8 = dVar12;
+    iVar6 = I_stricmp(*ppuVar10,auStack_440);
+    if (iVar6 == 0) break;
+    uVar11 = uVar11 + 1;
+    ppuVar10 = ppuVar10 + 1;
+  } while ((uVar11 & 0xffffffff) < 8);
+  uVar8 = 0;
+  if ((uVar11 & 0xffffffff) != 8) {
+    String_Parse(param_2,auStack_440,0x400);
+    uVar8 = uVar11;
   }
-  iVar6 = OnlineVaultUI_PushMenu(iVar6,OVar9,acStack_440,local_450[0],dVar8);
+  iVar6 = OnlineVaultUI_PushMenu(uVar5,uVar9,auStack_440,local_450[0],uVar8);
   if (iVar6 == 0) {
-    Com_PrintError(0xd,"[OnlineVaultUI_PushMenu] Failed to open menu %s\n");
+    Com_PrintError(0xd,0xffffffff821ee32c,auStack_440);
     __restgprlr_25();
     return;
   }
@@ -519,50 +516,48 @@ LAB_82842718:
 
 // 82842720  OnlineVault_CanAbort  (bgame/onlinevault.cpp:470)
 
-bool OnlineVault_CanAbort(int param_1)
+/* WARNING: Type propagation algorithm not settling */
+
+byte OnlineVault_CanAbort(undefined8 param_1)
 
 {
-  bool bVar2;
-  uint uVar1;
-  ulonglong uVar3;
-  uint local_20;
-  float local_1c;
+  char cVar1;
+  ulonglong uVar2;
+  uint local_20 [2];
   
-  local_20 = 0;
-  uVar3 = 0xffffffffffffffff;
-  local_1c = 0.0;
-  bVar2 = LiveStorage_CS_IsTaskInProgress(param_1,"readfile");
-  if (bVar2) {
-    uVar1 = LiveStorage_CS_GetDownloadingFileTotalSize(param_1);
-    uVar3 = (ulonglong)(int)uVar1;
-    LiveStorage_CS_GetDownloadProgress(param_1,&local_20,&local_1c);
-  }
-  else {
-    bVar2 = LiveStorage_CS_IsTaskInProgress(param_1,"writefile");
-    if (bVar2) {
-      uVar1 = LiveStorage_CS_GetUploadingFileTotalSize(param_1);
-      uVar3 = (ulonglong)(int)uVar1;
-      LiveStorage_CS_GetUploadProgress(param_1,&local_20,&local_1c);
+  local_20[0] = 0;
+  uVar2 = 0xffffffffffffffff;
+  local_20[1] = 0;
+  cVar1 = LiveStorage_CS_IsTaskInProgress(param_1,0xffffffff8208a3e4);
+  if (cVar1 == '\0') {
+    cVar1 = LiveStorage_CS_IsTaskInProgress(param_1,0xffffffff8208a3cc);
+    if (cVar1 != '\0') {
+      uVar2 = LiveStorage_CS_GetUploadingFileTotalSize(param_1);
+      LiveStorage_CS_GetUploadProgress(param_1,local_20,local_20 + 1);
     }
   }
-  Com_Printf(0x10,"OnlineVault_CanAbort: total = %d, bytesDone = %d\n");
-  return (bool)(-(local_20 < uVar3) & 1);
+  else {
+    uVar2 = LiveStorage_CS_GetDownloadingFileTotalSize();
+    LiveStorage_CS_GetDownloadProgress(param_1,local_20,local_20 + 1);
+  }
+  Com_Printf(0x10,0xffffffff821ee3e0,uVar2,local_20[0]);
+  return -(local_20[0] < uVar2) & 1;
 }
 
 
 // 82842800  OnlineVault_AbortOperation  (bgame/onlinevault.cpp:495)
 
-void OnlineVault_AbortOperation(int param_1)
+void OnlineVault_AbortOperation(undefined8 param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = OnlineVault_CanAbort(param_1);
-  if (bVar1) {
-    g_onlineVaultIgnoreDownloadErrorMessage = true;
+  cVar1 = OnlineVault_CanAbort();
+  if (cVar1 != '\0') {
+    DAT_8487cf4f = 1;
     dwCSAbortOperation(param_1);
-    if (webmTranscode.isTranscodeInProgress != false) {
-      WebmTranscode::End(&webmTranscode);
+    if (DAT_848764b4 != '\0') {
+      WebmTranscode__End();
     }
     DCache_ClearStreaming();
   }
@@ -572,30 +567,28 @@ void OnlineVault_AbortOperation(int param_1)
 
 // 82842868  OnlineVault_AbortOperationForAllControllers  (bgame/onlinevault.cpp:519)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void OnlineVault_AbortOperationForAllControllers(void)
 
 {
-  bool bVar2;
-  DWOnlineStatus DVar1;
-  int iVar3;
+  char cVar2;
+  int iVar1;
+  longlong lVar3;
   
   __savegprlr_29();
-  iVar3 = 0;
+  lVar3 = 0;
   do {
-    bVar2 = LiveStorage_CS_IsAvailable(iVar3);
-    if (((bVar2) && (DVar1 = dwGetLogOnStatus(iVar3), DVar1 == DW_LIVE_CONNECTED)) &&
-       (bVar2 = OnlineVault_CanAbort(iVar3), bVar2)) {
-      g_onlineVaultIgnoreDownloadErrorMessage = true;
-      dwCSAbortOperation(iVar3);
-      if (webmTranscode.isTranscodeInProgress != false) {
-        WebmTranscode::End(&webmTranscode);
+    cVar2 = LiveStorage_CS_IsAvailable(lVar3);
+    if (((cVar2 != '\0') && (iVar1 = dwGetLogOnStatus(lVar3), iVar1 == 2)) &&
+       (cVar2 = OnlineVault_CanAbort(lVar3), cVar2 != '\0')) {
+      DAT_8487cf4f = 1;
+      dwCSAbortOperation(lVar3);
+      if (DAT_848764b4 != '\0') {
+        WebmTranscode__End(0xffffffff848764a8);
       }
       DCache_ClearStreaming();
     }
-    iVar3 = iVar3 + 1;
-  } while (iVar3 < 4);
+    lVar3 = lVar3 + 1;
+  } while ((int)lVar3 < 4);
   __restgprlr_29();
   return;
 }
@@ -603,23 +596,18 @@ void OnlineVault_AbortOperationForAllControllers(void)
 
 // 828428F8  OnlineVault_OpenProgressIndicatorMenu  (bgame/onlinevault.cpp:538)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void OnlineVault_OpenProgressIndicatorMenu(LocalClientNum_t param_1)
+void OnlineVault_OpenProgressIndicatorMenu(undefined8 param_1)
 
 {
-  char *pcVar1;
-  bool bVar3;
-  UiContext *pUVar2;
+  undefined *puVar1;
+  char cVar3;
+  undefined8 uVar2;
   
-  bVar3 = Menu_IsMenuOpenAndVisible(param_1,s_uiProgressIndicatorMenu);
-  pcVar1 = s_uiProgressIndicatorMenu;
-  if (!bVar3) {
-    pUVar2 = UI_GetClientDC(param_1);
-    Menus_OpenByName(pUVar2,pcVar1);
+  cVar3 = Menu_IsMenuOpenAndVisible(param_1,PTR_s_vault_task_in_progress_829a63b4);
+  puVar1 = PTR_s_vault_task_in_progress_829a63b4;
+  if (cVar3 == '\0') {
+    uVar2 = UI_GetClientDC(param_1);
+    Menus_OpenByName(uVar2,puVar1);
   }
   return;
 }
@@ -627,37 +615,33 @@ void OnlineVault_OpenProgressIndicatorMenu(LocalClientNum_t param_1)
 
 // 82842958  OnlineVault_CloseProgressIndicatorMenu  (bgame/onlinevault.cpp:546)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_CloseProgressIndicatorMenu(LocalClientNum_t param_1)
+void OnlineVault_CloseProgressIndicatorMenu(undefined8 param_1)
 
 {
-  UI_CloseMenu(param_1,s_uiProgressIndicatorMenu);
+  UI_CloseMenu(param_1,PTR_s_vault_task_in_progress_829a63b4);
   return;
 }
 
 
 // 82842968  OnlineVault_CloseFeederMenu  (bgame/onlinevault.cpp:551)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_CloseFeederMenu(LocalClientNum_t param_1,int param_2)
+void OnlineVault_CloseFeederMenu(undefined8 param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  OnlineVaultUIStack *pOVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
   
-  LVar1 = __savegprlr_27(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pOVar3 = OnlineVaultUI_GetHead(iVar2);
-  if (pOVar3 != (OnlineVaultUIStack *)0x0) {
-    UI_CloseMenu(LVar1,s_uiProgressIndicatorMenu);
-    if ((pOVar3->paradigm == OV_SAVE) || (pOVar3->paradigm == OV_COPY)) {
-      UI_CloseMenu(LVar1,s_uiConfirmOverwriteMenu);
+  uVar1 = __savegprlr_27();
+  uVar2 = CL_ControllerIndexFromClientNum();
+  iVar3 = OnlineVaultUI_GetHead();
+  if (iVar3 != 0) {
+    UI_CloseMenu(uVar1,PTR_s_vault_task_in_progress_829a63b4);
+    if ((*(int *)(iVar3 + 0x18) == 2) || (*(int *)(iVar3 + 0x18) == 3)) {
+      UI_CloseMenu(uVar1,PTR_s_vault_confirmOverwrite_829a62bc);
     }
     if (param_2 == 0) {
-      OnlineVaultUI_PopMenu(iVar2);
+      OnlineVaultUI_PopMenu(uVar2);
       __restgprlr_27();
       return;
     }
@@ -670,9 +654,7 @@ void OnlineVault_CloseFeederMenu(LocalClientNum_t param_1,int param_2)
 
 // 828429F0  OnlineVault_IsRestrictedByTULevel  (bgame/onlinevault.cpp:573)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int OnlineVault_IsRestrictedByTULevel(void)
+undefined8 OnlineVault_IsRestrictedByTULevel(void)
 
 {
   return 0;
@@ -681,243 +663,220 @@ int OnlineVault_IsRestrictedByTULevel(void)
 
 // 828429F8  OnlineVault_IsRestricted  (bgame/onlinevault.cpp:579)
 
-int OnlineVault_IsRestricted(int param_1)
+bool OnlineVault_IsRestricted(void)
 
 {
-  return (uint)LZCOUNT((onlinevault_active->current).unsignedInt) >> 5;
+  return *(int *)(DAT_84545c9c + 0xc) == 0;
 }
 
 
 // 82842A10  OnlineVault_FeederGetCount  (bgame/onlinevault.cpp:591)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int OnlineVault_FeederGetCount(int param_1)
+void OnlineVault_FeederGetCount(void)
 
 {
-  char *pcVar1;
-  int iVar2;
-  contentServerPrivateData *pcVar3;
-  bool bVar6;
-  LocalClientNum_t LVar4;
-  uint uVar5;
+  undefined *puVar1;
+  undefined8 uVar2;
+  int iVar4;
+  char cVar5;
+  undefined8 uVar3;
   
-  iVar2 = __savegprlr_29(param_1);
-  pcVar3 = OnlineVault_GetPrivateData(iVar2);
-  if ((pcVar3 != (contentServerPrivateData *)0x0) &&
-     (bVar6 = Commerce_SubscriptionAcquired(iVar2), pcVar1 = s_uiFetchingDataMenu, bVar6)) {
-    LVar4 = CL_LocalClientNumFromControllerIndex(iVar2);
-    bVar6 = Menu_IsMenuOpenAndVisible(LVar4,pcVar1);
-    pcVar1 = s_uiFetchingDataMenu;
-    if (bVar6) {
-      LVar4 = CL_LocalClientNumFromControllerIndex(iVar2);
-      UI_CloseMenu(LVar4,pcVar1);
+  uVar2 = __savegprlr_29();
+  iVar4 = OnlineVault_GetPrivateData();
+  if ((iVar4 != 0) &&
+     (cVar5 = Commerce_SubscriptionAcquired(uVar2), puVar1 = PTR_s_popup_vault_fetching_829a63b0,
+     cVar5 != '\0')) {
+    uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+    cVar5 = Menu_IsMenuOpenAndVisible(uVar3,puVar1);
+    puVar1 = PTR_s_popup_vault_fetching_829a63b0;
+    if (cVar5 != '\0') {
+      uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+      UI_CloseMenu(uVar3,puVar1);
     }
-    uVar5 = GetPlayerMaxFileSlots(iVar2);
-    iVar2 = __restgprlr_29(uVar5);
-    return iVar2;
+    GetPlayerMaxFileSlots(uVar2);
+    __restgprlr_29();
+    return;
   }
-  pcVar1 = s_uiFetchingDataMenu;
-  LVar4 = CL_LocalClientNumFromControllerIndex(iVar2);
-  bVar6 = Menu_IsMenuOpenAndVisible(LVar4,pcVar1);
-  pcVar1 = s_uiFetchingDataMenu;
-  if (!bVar6) {
-    LVar4 = CL_LocalClientNumFromControllerIndex(iVar2);
-    UI_OpenMenu(LVar4,pcVar1);
+  puVar1 = PTR_s_popup_vault_fetching_829a63b0;
+  uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar3,puVar1);
+  puVar1 = PTR_s_popup_vault_fetching_829a63b0;
+  if (cVar5 == '\0') {
+    uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+    UI_OpenMenu(uVar2,puVar1);
   }
-  iVar2 = __restgprlr_29(0);
-  return iVar2;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 82842AD0  OnlineVault_GetTypeIconName  (bgame/onlinevault.cpp:610)
 
-bool OnlineVault_GetTypeIconName(int param_1,char **param_2)
+undefined8 OnlineVault_GetTypeIconName(longlong param_1,undefined4 *param_2)
 
 {
   bool bVar1;
-  longlong lVar2;
   
-  lVar2 = (longlong)param_1;
-  if ((lVar2 - 1U & 0xffffffff) < 5) {
-    bVar1 = (int)(lVar2 - 1U) != 0;
-    if (lVar2 == 2 && bVar1) {
+  if ((param_1 - 1U & 0xffffffff) < 5) {
+    bVar1 = (int)(param_1 - 1U) != 0;
+    if (param_1 == 2 && bVar1) {
       *param_2 = "menu_mp_lobby_icon_clip";
-      return true;
+      return 1;
     }
-    if (lVar2 == 3 && bVar1) {
+    if (param_1 == 3 && bVar1) {
       *param_2 = "menu_mp_lobby_icon_screenshot";
-      return true;
+      return 1;
     }
-    if (lVar2 != 4 || !bVar1) {
+    if (param_1 != 4 || !bVar1) {
       if (!bVar1) {
         *param_2 = "menu_mp_lobby_icon_film";
-        return true;
+        return 1;
       }
       *param_2 = "menu_mp_lobby_icon_customgamemode";
-      return true;
+      return 1;
     }
   }
-  *param_2 = "";
-  return false;
+  *param_2 = &DAT_820068af;
+  return 0;
 }
 
 
 // 82845298  OnlineVault_FeederItemText  (bgame/onlinevault.cpp:636)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-char * OnlineVault_FeederItemText
-                 (int param_1,int param_2,int param_3,Material **param_4,itemDef_t *param_5,
-                 float param_6)
+void OnlineVault_FeederItemText
+               (undefined8 param_1,longlong param_2,ulonglong param_3,undefined4 *param_4,
+               int param_5)
 
 {
-  int iVar1;
-  int iVar2;
-  bdFileMetaData *pbVar3;
-  LocalClientNum_t LVar4;
-  UiContext *pUVar5;
-  menuDef_t *pmVar6;
-  OnlineVaultUIStack *pOVar7;
-  char *pcVar8;
-  bool bVar12;
-  Material *pMVar9;
-  ScreenPlacement *pSVar10;
-  Font_s *pFVar11;
-  ulonglong uVar13;
-  Font_s *pFVar14;
+  undefined8 uVar1;
+  int iVar4;
+  undefined8 uVar2;
+  undefined4 *puVar5;
+  int *piVar6;
+  char cVar8;
+  undefined4 uVar7;
+  ulonglong uVar3;
+  int iVar9;
   double extraout_f1;
-  double dVar15;
-  double dVar16;
+  double dVar10;
+  double dVar11;
   longlong local_60;
-  Operand aOStack_58 [11];
+  undefined1 auStack_58 [4];
+  undefined4 local_54;
   
-  uVar13 = (ulonglong)param_3;
-  iVar2 = __savegprlr_26((double)param_6,param_1);
-  dVar16 = extraout_f1;
-  pbVar3 = GetFileslotDescriptor(iVar2,param_2);
-  if ((uVar13 & 0xffffffff) == 0) {
-    pcVar8 = va("%d");
-    pcVar8 = (char *)__restgprlr_26(pcVar8);
-    return pcVar8;
+  uVar1 = __savegprlr_26();
+  dVar11 = extraout_f1;
+  iVar4 = GetFileslotDescriptor();
+  if ((param_3 & 0xffffffff) == 0) {
+    va(0xffffffff82013b64,param_2 + 1);
+    __restgprlr_26();
+    return;
   }
-  if ((uVar13 & 0xffffffff) == 1) {
-    if (pbVar3 == (bdFileMetaData *)0x0) {
-      pcVar8 = UI_SafeTranslateString("MPUI_EMPTY");
-      pcVar8 = (char *)__restgprlr_26(pcVar8);
-      return pcVar8;
+  if ((param_3 & 0xffffffff) == 1) {
+    if (iVar4 == 0) {
+      UI_SafeTranslateString(0xffffffff821eeca8);
+      __restgprlr_26();
+      return;
     }
-    OnlineVault_FeederGetData(iVar2,"localizedName",param_2,aOStack_58);
-    dVar15 = (double)param_5->textscale;
-    iVar1 = param_5->fontEnum;
-    LVar4 = CL_LocalClientNumFromControllerIndex(iVar2);
-    pSVar10 = ScrPlace_GetViewPlacement(LVar4);
-    pFVar11 = UI_GetFontHandle(pSVar10,iVar1,(float)dVar15);
-    if (pFVar11 != (Font_s *)0x0) {
-      pFVar14 = pFVar11;
-      UI_TextWidth("...",0,pFVar11,param_5->textscale);
-      local_60 = (longlong)(int)dVar16;
-      pcVar8 = UI_TruncateEscapeCharacterTextWithEllipsis
-                         ((char *)aOStack_58[0].internals.function,pFVar11,param_5->textscale,
-                          (int)pFVar14);
-      pcVar8 = (char *)__restgprlr_26(pcVar8);
-      return pcVar8;
+    OnlineVault_FeederGetData(uVar1,0xffffffff821ee640,param_2,auStack_58);
+    dVar10 = (double)*(float *)(param_5 + 0x11c);
+    uVar7 = *(undefined4 *)(param_5 + 0x10c);
+    CL_LocalClientNumFromControllerIndex(uVar1);
+    uVar1 = ScrPlace_GetViewPlacement();
+    uVar3 = UI_GetFontHandle(dVar10,uVar1,uVar7);
+    if ((uVar3 & 0xffffffff) != 0) {
+      UI_TextWidth((double)*(float *)(param_5 + 0x11c),0xffffffff820185bc,0,uVar3);
+      local_60 = (longlong)(int)dVar11;
+      UI_TruncateEscapeCharacterTextWithEllipsis((double)*(float *)(param_5 + 0x11c),local_54,uVar3)
+      ;
+      __restgprlr_26();
+      return;
     }
-    pcVar8 = (char *)__restgprlr_26(aOStack_58[0].internals.intVal);
-    return pcVar8;
+    __restgprlr_26(local_54);
+    return;
   }
-  if ((uVar13 & 0xffffffff) < 3) {
-    LVar4 = CL_LocalClientNumFromControllerIndex(iVar2);
-    pUVar5 = UI_GetClientDC(LVar4);
-    pmVar6 = Menu_GetTopOfStack(pUVar5,0);
-    if ((pmVar6 != (menuDef_t *)0x0) && (pmVar6->data->fullScreen != 0)) {
-      pOVar7 = OnlineVaultUI_GetHead(iVar2);
-      iVar2 = -1;
-      if (pOVar7 != (OnlineVaultUIStack *)0x0) {
-        iVar2 = pOVar7->selected;
+  if ((param_3 & 0xffffffff) < 3) {
+    CL_LocalClientNumFromControllerIndex(uVar1);
+    uVar2 = UI_GetClientDC();
+    puVar5 = (undefined4 *)Menu_GetTopOfStack(uVar2,0);
+    if ((puVar5 != (undefined4 *)0x0) && (*(int *)*puVar5 != 0)) {
+      piVar6 = (int *)OnlineVaultUI_GetHead(uVar1);
+      iVar9 = -1;
+      if (piVar6 != (int *)0x0) {
+        iVar9 = *piVar6;
       }
-      if (iVar2 == param_2) goto LAB_8284532c;
+      if (iVar9 == (int)param_2) goto LAB_8284532c;
     }
-    if ((pbVar3 != (bdFileMetaData *)0x0) &&
-       (bVar12 = OnlineVault_GetTypeIconName((uint)pbVar3->m_category,(char **)&local_60), bVar12))
-    {
-      pMVar9 = Material_RegisterHandle(local_60._0_4_,7);
-      *param_4 = pMVar9;
-      pcVar8 = (char *)__restgprlr_26(0xffffffff820068af);
-      return pcVar8;
+    if ((iVar4 != 0) &&
+       (cVar8 = OnlineVault_GetTypeIconName(*(undefined2 *)(iVar4 + 0x26a),&local_60), cVar8 != '\0'
+       )) {
+      uVar7 = Material_RegisterHandle(local_60._0_4_,7);
+      *param_4 = uVar7;
+      __restgprlr_26(0xffffffff820068af);
+      return;
     }
   }
 LAB_8284532c:
-  pcVar8 = (char *)__restgprlr_26(0xffffffff820068af);
-  return pcVar8;
+  __restgprlr_26(0xffffffff820068af);
+  return;
 }
 
 
 // 82842B58  OnlineVault_FeederItemEnabled  (bgame/onlinevault.cpp:699)
 
-int OnlineVault_FeederItemEnabled(int param_1,int param_2)
+void OnlineVault_FeederItemEnabled(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  OnlineVaultUIStack *pOVar2;
-  bdFileMetaData *pbVar3;
-  contentServerPrivateData *pcVar4;
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  longlong lVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  pOVar2 = OnlineVaultUI_GetHead(iVar1);
-  if (pOVar2 != (OnlineVaultUIStack *)0x0) {
-    if ((pOVar2->paradigm == OV_SAVE) || (pOVar2->paradigm == OV_COPY)) {
-      pcVar4 = OnlineVault_GetPrivateData(iVar1);
-      iVar1 = __restgprlr_29(pcVar4 != (contentServerPrivateData *)0x0);
-      return iVar1;
+  uVar1 = __savegprlr_29();
+  iVar3 = OnlineVaultUI_GetHead();
+  if (iVar3 != 0) {
+    if ((*(int *)(iVar3 + 0x18) == 2) || (*(int *)(iVar3 + 0x18) == 3)) {
+      lVar2 = OnlineVault_GetPrivateData(uVar1);
+      __restgprlr_29(lVar2 != 0);
+      return;
     }
-    pbVar3 = GetFileslotDescriptor(iVar1,param_2);
-    if ((pbVar3 != (bdFileMetaData *)0x0) &&
-       ((pOVar2->filterType == FILE_CATEGORY_ALL || ((uint)pbVar3->m_category == pOVar2->filterType)
-        ))) {
-      iVar1 = __restgprlr_29(1);
-      return iVar1;
+    iVar4 = GetFileslotDescriptor(uVar1,param_2);
+    if ((iVar4 != 0) &&
+       ((*(uint *)(iVar3 + 0x1c) == 0 ||
+        ((uint)*(ushort *)(iVar4 + 0x26a) == *(uint *)(iVar3 + 0x1c))))) {
+      __restgprlr_29(1);
+      return;
     }
   }
-  iVar1 = __restgprlr_29(0);
-  return iVar1;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 82842BF0  OnlineVault_FeederOverrideCursorPos  (bgame/onlinevault.cpp:724)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_FeederOverrideCursorPos(int param_1,itemDef_t *param_2)
+void OnlineVault_FeederOverrideCursorPos(undefined8 param_1,int param_2)
 
 {
-  int iVar1;
-  OnlineVaultUIStack *pOVar2;
-  uint uVar3;
-  LocalClientNum_t LVar4;
-  int iVar5;
+  undefined8 uVar1;
+  int *piVar2;
+  int iVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  pOVar2 = OnlineVaultUI_GetHead(iVar1);
-  if (pOVar2 == (OnlineVaultUIStack *)0x0) goto LAB_82842c58;
-  uVar3 = GetPlayerMaxFileSlots(iVar1);
-  if (uVar3 == 0) {
-    iVar5 = 0;
+  uVar1 = __savegprlr_29();
+  piVar2 = (int *)OnlineVaultUI_GetHead();
+  if (piVar2 == (int *)0x0) goto LAB_82842c58;
+  iVar3 = GetPlayerMaxFileSlots(uVar1);
+  if (iVar3 == 0) {
+    iVar3 = 0;
 LAB_82842c3c:
-    pOVar2->selected = iVar5;
+    *piVar2 = iVar3;
   }
-  else if ((int)uVar3 <= pOVar2->selected) {
-    iVar5 = uVar3 - 1;
+  else if (iVar3 <= *piVar2) {
+    iVar3 = iVar3 + -1;
     goto LAB_82842c3c;
   }
-  LVar4 = CL_LocalClientNumFromControllerIndex(iVar1);
-  param_2->cursorPos[LVar4] = pOVar2->selected;
+  iVar3 = CL_LocalClientNumFromControllerIndex(uVar1);
+  *(int *)((iVar3 + 0x5f) * 4 + param_2) = *piVar2;
 LAB_82842c58:
   __restgprlr_29();
   return;
@@ -926,17 +885,17 @@ LAB_82842c58:
 
 // 82842C60  OnlineVault_FeederSelection  (bgame/onlinevault.cpp:741)
 
-void OnlineVault_FeederSelection(int param_1,int param_2)
+void OnlineVault_FeederSelection(undefined8 param_1,undefined4 param_2)
 
 {
-  OnlineVaultUIStack *pOVar1;
-  int iVar2;
+  undefined4 *puVar1;
+  undefined4 uVar2;
   
-  pOVar1 = OnlineVaultUI_GetHead(param_1);
-  if (pOVar1 != (OnlineVaultUIStack *)0x0) {
-    pOVar1->selected = param_2;
-    iVar2 = Sys_Milliseconds();
-    pOVar1->selectedIndexTime = iVar2;
+  puVar1 = (undefined4 *)OnlineVaultUI_GetHead();
+  if (puVar1 != (undefined4 *)0x0) {
+    *puVar1 = param_2;
+    uVar2 = Sys_Milliseconds();
+    puVar1[1] = uVar2;
   }
   return;
 }
@@ -944,19 +903,17 @@ void OnlineVault_FeederSelection(int param_1,int param_2)
 
 // 82845480  OnlineVault_FeederGetDataForSelectedIndex  (bgame/onlinevault.cpp:751)
 
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-
-void OnlineVault_FeederGetDataForSelectedIndex(int param_1,char *param_2,Operand *param_3)
+void OnlineVault_FeederGetDataForSelectedIndex
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  OnlineVaultUIStack *pOVar2;
+  undefined8 uVar1;
+  int *piVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  pOVar2 = OnlineVaultUI_GetHead(iVar1);
-  if ((pOVar2 != (OnlineVaultUIStack *)0x0) && (-1 < pOVar2->selected)) {
-    OnlineVault_FeederGetData(iVar1,param_2,pOVar2->selected,param_3);
+  uVar1 = __savegprlr_29();
+  piVar2 = (int *)OnlineVaultUI_GetHead();
+  if ((piVar2 != (int *)0x0) && (-1 < *piVar2)) {
+    OnlineVault_FeederGetData(uVar1,param_2,*piVar2,param_3);
   }
   __restgprlr_29();
   return;
@@ -965,141 +922,149 @@ void OnlineVault_FeederGetDataForSelectedIndex(int param_1,char *param_2,Operand
 
 // 82843010  OnlineVault_FeederGetData  (bgame/onlinevault.cpp:762)
 
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void OnlineVault_FeederGetData(int param_1,char *param_2,int param_3,Operand *param_4)
+void OnlineVault_FeederGetData
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  int iVar1;
-  bdFileMetaData *pbVar2;
-  StructuredDataDef *pSVar3;
-  bool bVar7;
-  char *pcVar4;
-  uint uVar5;
-  int iVar6;
-  char **ppcVar8;
-  ulong64 *puVar10;
-  ulonglong uVar9;
-  StructuredDataBuffer SStack_4b0;
-  char *local_4a8 [2];
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  longlong lVar2;
+  longlong lVar6;
+  longlong *plVar7;
+  ulonglong uVar8;
+  uint uVar9;
+  char **ppcVar10;
+  ulonglong *puVar12;
+  ulonglong uVar11;
+  undefined1 auStack_4b0 [8];
+  undefined4 local_4a8 [2];
   char *local_4a0 [4];
   char *local_490;
-  qtime_s qStack_480;
-  char acStack_450 [1104];
+  undefined1 auStack_480 [4];
+  undefined4 local_47c;
+  undefined4 local_478;
+  undefined4 local_474;
+  uint local_470;
+  uint local_46c;
+  undefined1 auStack_450 [1104];
   
-  iVar1 = __savegprlr_23(param_1);
+  uVar1 = __savegprlr_23();
   local_4a0[0] = "name";
   local_4a0[1] = "desc";
   local_4a0[3] = "duration";
   local_490 = "createTime";
   local_4a0[2] = "author";
-  Operand_SetString(param_4,"");
-  pbVar2 = GetFileslotDescriptor(iVar1,param_3);
-  iVar1 = I_stricmp(param_2,"localizedName");
-  if (iVar1 == 0) {
-    if (pbVar2 == (bdFileMetaData *)0x0) goto LAB_82843754;
-    pSVar3 = StructuredDataDef_GetAsset("mp/onlinevault_metadata.def",0xff);
-    StructuredData_MakeBuffer(&SStack_4b0,pbVar2->m_metaData,pbVar2->m_metaDataSize);
-    pcVar4 = (char *)0x0;
-    bVar7 = StructuredData_GetData<bool>(pSVar3,&SStack_4b0);
-    if (((!bVar7) && (pbVar2->m_category == 5)) && (uVar5 = 0, pbVar2->m_numTags != 0)) {
-      puVar10 = &pbVar2->m_tags[0].m_secTag;
+  Operand_SetString(param_4,0xffffffff820068af);
+  iVar3 = GetFileslotDescriptor(uVar1,param_3);
+  iVar4 = I_stricmp(param_2,0xffffffff821ee640);
+  if (iVar4 == 0) {
+    if (iVar3 == 0) goto LAB_82843754;
+    uVar1 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+    StructuredData_MakeBuffer(auStack_4b0,iVar3 + 0x270,*(undefined4 *)(iVar3 + 0x470));
+    uVar8 = 0;
+    cVar5 = StructuredData_GetData<bool>(uVar1,auStack_4b0,0xffffffff821dc408);
+    if (((cVar5 == '\0') && (*(short *)(iVar3 + 0x26a) == 5)) &&
+       (uVar9 = 0, *(int *)(iVar3 + 0x26c) != 0)) {
+      puVar12 = (ulonglong *)(iVar3 + 0x488);
       do {
-        if (puVar10[-1] == 0) {
-          pcVar4 = BG_MatchRulesData_GetGameTypeFromIndex((uint)*puVar10);
-          pcVar4 = UI_GetCustomizedGameTypeDefaultDisplayName(pcVar4);
+        if (puVar12[-1] == 0) {
+          BG_MatchRulesData_GetGameTypeFromIndex(*puVar12 & 0xffffffff);
+          uVar8 = UI_GetCustomizedGameTypeDefaultDisplayName();
         }
-        uVar5 = uVar5 + 1;
-        puVar10 = puVar10 + 3;
-      } while (uVar5 < pbVar2->m_numTags);
-      if (pcVar4 != (char *)0x0) goto LAB_82843164;
+        uVar9 = uVar9 + 1;
+        puVar12 = puVar12 + 3;
+      } while (uVar9 < *(uint *)(iVar3 + 0x26c));
+      if ((uVar8 & 0xffffffff) != 0) goto LAB_82843164;
     }
-    pcVar4 = StructuredData_GetData<char_const_*>(pSVar3,&SStack_4b0);
+    uVar8 = StructuredData_GetData<char_const_*>(uVar1,auStack_4b0,0xffffffff82021a74);
 LAB_82843164:
-    Operand_SetString(param_4,pcVar4);
+    Operand_SetString(param_4,uVar8);
     __restgprlr_23();
     return;
   }
-  iVar1 = I_stricmp(param_2,"localizedDesc");
-  if (iVar1 == 0) {
-    if (pbVar2 == (bdFileMetaData *)0x0) goto LAB_82843754;
-    pSVar3 = StructuredDataDef_GetAsset("mp/onlinevault_metadata.def",0xff);
-    StructuredData_MakeBuffer(&SStack_4b0,pbVar2->m_metaData,pbVar2->m_metaDataSize);
-    pcVar4 = (char *)0x0;
-    bVar7 = StructuredData_GetData<bool>(pSVar3,&SStack_4b0);
-    if (((!bVar7) && (pbVar2->m_category == 5)) && (uVar5 = 0, pbVar2->m_numTags != 0)) {
-      puVar10 = &pbVar2->m_tags[0].m_secTag;
+  iVar4 = I_stricmp(param_2,0xffffffff821ee630);
+  if (iVar4 == 0) {
+    if (iVar3 == 0) goto LAB_82843754;
+    uVar1 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+    StructuredData_MakeBuffer(auStack_4b0,iVar3 + 0x270,*(undefined4 *)(iVar3 + 0x470));
+    uVar8 = 0;
+    cVar5 = StructuredData_GetData<bool>(uVar1,auStack_4b0,0xffffffff821dc3f8);
+    if (((cVar5 == '\0') && (*(short *)(iVar3 + 0x26a) == 5)) &&
+       (uVar9 = 0, *(int *)(iVar3 + 0x26c) != 0)) {
+      puVar12 = (ulonglong *)(iVar3 + 0x488);
       do {
-        if (puVar10[-1] == 0) {
-          pcVar4 = BG_MatchRulesData_GetGameTypeFromIndex((uint)*puVar10);
-          pcVar4 = UI_GetCustomizedGameTypeDefaultDisplayDesc(pcVar4);
+        if (puVar12[-1] == 0) {
+          BG_MatchRulesData_GetGameTypeFromIndex(*puVar12 & 0xffffffff);
+          uVar8 = UI_GetCustomizedGameTypeDefaultDisplayDesc();
         }
-        uVar5 = uVar5 + 1;
-        puVar10 = puVar10 + 3;
-      } while (uVar5 < pbVar2->m_numTags);
-      if (pcVar4 != (char *)0x0) goto LAB_82843250;
+        uVar9 = uVar9 + 1;
+        puVar12 = puVar12 + 3;
+      } while (uVar9 < *(uint *)(iVar3 + 0x26c));
+      if ((uVar8 & 0xffffffff) != 0) goto LAB_82843250;
     }
-    pcVar4 = StructuredData_GetData<char_const_*>(pSVar3,&SStack_4b0);
+    uVar8 = StructuredData_GetData<char_const_*>(uVar1,auStack_4b0,0xffffffff82132868);
 LAB_82843250:
-    Operand_SetString(param_4,pcVar4);
+    Operand_SetString(param_4,uVar8);
     __restgprlr_23();
     return;
   }
-  uVar5 = 0;
-  ppcVar8 = local_4a0;
+  uVar9 = 0;
+  ppcVar10 = local_4a0;
   do {
-    iVar1 = I_stricmp(param_2,*ppcVar8);
-    if (iVar1 == 0) {
-      if (pbVar2 != (bdFileMetaData *)0x0) {
-        pSVar3 = StructuredDataDef_GetAsset("mp/onlinevault_metadata.def",0xff);
-        StructuredData_MakeBuffer(&SStack_4b0,pbVar2->m_metaData,pbVar2->m_metaDataSize);
-        iVar1 = I_stricmp(param_2,"duration");
-        if (iVar1 == 0) {
-          iVar1 = StructuredData_GetData<int>(pSVar3,&SStack_4b0);
-          CL_Demo_GetDuration(acStack_450,0x400,iVar1);
-          Operand_SetString(param_4,acStack_450);
+    iVar4 = I_stricmp(param_2,*ppcVar10);
+    if (iVar4 == 0) {
+      if (iVar3 != 0) {
+        uVar1 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+        StructuredData_MakeBuffer(auStack_4b0,iVar3 + 0x270,*(undefined4 *)(iVar3 + 0x470));
+        iVar3 = I_stricmp(param_2,0xffffffff82003578);
+        if (iVar3 == 0) {
+          uVar1 = StructuredData_GetData<int>(uVar1,auStack_4b0,local_4a0[uVar9]);
+          CL_Demo_GetDuration(auStack_450,0x400,uVar1);
+          Operand_SetString(param_4,auStack_450);
           __restgprlr_23();
           return;
         }
-        iVar1 = I_stricmp(param_2,"createTime");
-        if (iVar1 == 0) {
-          iVar1 = StructuredData_GetData<int>(pSVar3,&SStack_4b0);
-          bVar7 = LiveStorage_IsTimeSynced();
-          if (bVar7) {
-            uVar5 = LiveStorage_GetUTCOffset();
-            iVar1 = uVar5 + iVar1;
+        iVar3 = I_stricmp(param_2,0xffffffff821dc3ec);
+        if (iVar3 == 0) {
+          lVar6 = StructuredData_GetData<int>();
+          cVar5 = LiveStorage_IsTimeSynced();
+          if (cVar5 != '\0') {
+            lVar2 = LiveStorage_GetUTCOffset();
+            lVar6 = lVar2 + lVar6;
           }
-          Com_RealTime(iVar1,&qStack_480);
-          Com_sprintf(acStack_450,0x400,"%d/%d/%d  %.2d:%.2d");
-          Operand_SetString(param_4,acStack_450);
+          Com_RealTime(lVar6,auStack_480);
+          Com_sprintf(auStack_450,0x400,0xffffffff821dedbc,(ulonglong)local_470 + 1,local_474,
+                      (ulonglong)local_46c + 0x76c,local_478,local_47c);
+          Operand_SetString(param_4,auStack_450);
           __restgprlr_23();
           return;
         }
-        pcVar4 = StructuredData_GetData<char_const_*>(pSVar3,&SStack_4b0);
-        Operand_SetString(param_4,pcVar4);
+        uVar1 = StructuredData_GetData<char_const_*>(uVar1,auStack_4b0,local_4a0[uVar9]);
+        Operand_SetString(param_4,uVar1);
         __restgprlr_23();
         return;
       }
       goto LAB_82843754;
     }
-    uVar5 = uVar5 + 1;
-    ppcVar8 = ppcVar8 + 1;
-  } while (uVar5 < 5);
-  iVar1 = I_stricmp(param_2,"filetypeIcon");
-  if (iVar1 == 0) {
-    if ((pbVar2 != (bdFileMetaData *)0x0) &&
-       (bVar7 = OnlineVault_GetTypeIconName((uint)pbVar2->m_category,local_4a8), bVar7)) {
+    uVar9 = uVar9 + 1;
+    ppcVar10 = ppcVar10 + 1;
+  } while (uVar9 < 5);
+  iVar4 = I_stricmp(param_2,0xffffffff821ee620);
+  if (iVar4 == 0) {
+    if ((iVar3 != 0) &&
+       (cVar5 = OnlineVault_GetTypeIconName(*(undefined2 *)(iVar3 + 0x26a),local_4a8), cVar5 != '\0'
+       )) {
       Operand_SetString(param_4,local_4a8[0]);
       __restgprlr_23();
       return;
     }
     goto LAB_82843754;
   }
-  iVar1 = I_stricmp(param_2,"isScreenshot");
-  if (iVar1 == 0) {
-    if ((pbVar2 != (bdFileMetaData *)0x0) && (pbVar2->m_category == 3)) {
+  iVar4 = I_stricmp(param_2,0xffffffff8216f884);
+  if (iVar4 == 0) {
+    if ((iVar3 != 0) && (*(short *)(iVar3 + 0x26a) == 3)) {
       Operand_SetBool(param_4,1);
       __restgprlr_23();
       return;
@@ -1109,36 +1074,36 @@ LAB_82843448:
     __restgprlr_23();
     return;
   }
-  iVar1 = I_stricmp(param_2,"isFilm");
-  if (iVar1 == 0) {
-    if ((pbVar2 != (bdFileMetaData *)0x0) && (pbVar2->m_category == 1)) {
+  iVar4 = I_stricmp(param_2,0xffffffff821ee618);
+  if (iVar4 == 0) {
+    if ((iVar3 != 0) && (*(short *)(iVar3 + 0x26a) == 1)) {
       Operand_SetBool(param_4,1);
       __restgprlr_23();
       return;
     }
     goto LAB_82843448;
   }
-  iVar1 = I_stricmp(param_2,"isClip");
-  if (iVar1 == 0) {
-    if ((pbVar2 != (bdFileMetaData *)0x0) && (pbVar2->m_category == 2)) {
+  iVar4 = I_stricmp(param_2,0xffffffff8216f87c);
+  if (iVar4 == 0) {
+    if ((iVar3 != 0) && (*(short *)(iVar3 + 0x26a) == 2)) {
       Operand_SetBool(param_4,1);
       __restgprlr_23();
       return;
     }
     goto LAB_82843448;
   }
-  iVar1 = I_stricmp(param_2,"isCustomGameMode");
-  if (iVar1 == 0) {
-    if ((pbVar2 != (bdFileMetaData *)0x0) && (pbVar2->m_category == 5)) {
+  iVar4 = I_stricmp(param_2,0xffffffff821dec38);
+  if (iVar4 == 0) {
+    if ((iVar3 != 0) && (*(short *)(iVar3 + 0x26a) == 5)) {
       Operand_SetBool(param_4,1);
       __restgprlr_23();
       return;
     }
     goto LAB_82843448;
   }
-  iVar1 = I_stricmp(param_2,"isEmptySlot");
-  if (iVar1 == 0) {
-    if (pbVar2 == (bdFileMetaData *)0x0) {
+  iVar4 = I_stricmp(param_2,0xffffffff821ee60c);
+  if (iVar4 == 0) {
+    if (iVar3 == 0) {
 LAB_82843580:
       Operand_SetBool(param_4,1);
       __restgprlr_23();
@@ -1149,118 +1114,112 @@ LAB_82843540:
     __restgprlr_23();
     return;
   }
-  iVar1 = I_stricmp(param_2,"isThumbnailLoaded");
-  if (iVar1 == 0) {
-    bVar7 = UI_ScreenshotIsFinishedLoading(UI_SCREENSHOT_TYPE_THUMBNAIL);
-    if (bVar7) goto LAB_82843580;
+  iVar4 = I_stricmp(param_2,0xffffffff821ee5f8);
+  if (iVar4 == 0) {
+    cVar5 = UI_ScreenshotIsFinishedLoading(1);
+    if (cVar5 != '\0') goto LAB_82843580;
     goto LAB_82843540;
   }
-  iVar1 = I_stricmp(param_2,"fileID");
-  if (iVar1 == 0) {
-    if (pbVar2 != (bdFileMetaData *)0x0) {
-      pcVar4 = va("%lld");
-      Operand_SetString(param_4,pcVar4);
+  iVar4 = I_stricmp(param_2,0xffffffff8216f894);
+  if (iVar4 == 0) {
+    if (iVar3 != 0) {
+      uVar1 = va(0xffffffff821ee5f0,*(undefined8 *)(iVar3 + 8));
+      Operand_SetString(param_4,uVar1);
       __restgprlr_23();
       return;
     }
     goto LAB_82843754;
   }
-  iVar1 = I_stricmp(param_2,"summaryFileSize");
-  if (iVar1 == 0) {
-    if (pbVar2 != (bdFileMetaData *)0x0) {
-      Operand_SetInt(param_4,pbVar2->m_summaryFileSize);
+  iVar4 = I_stricmp(param_2,0xffffffff8216faec);
+  if (iVar4 == 0) {
+    if (iVar3 != 0) {
+      Operand_SetInt(param_4,*(undefined4 *)(iVar3 + 0x474));
       __restgprlr_23();
       return;
     }
     goto LAB_82843754;
   }
-  iVar1 = I_stricmp(param_2,"mapImage");
-  if ((iVar1 == 0) || (iVar1 = I_stricmp(param_2,"map"), iVar1 == 0)) {
-    iVar1 = 1;
+  iVar4 = I_stricmp(param_2,0xffffffff821dee34);
+  if ((iVar4 == 0) || (iVar4 = I_stricmp(param_2,0xffffffff82043710), iVar4 == 0)) {
+    iVar4 = 1;
   }
   else {
-    iVar1 = I_stricmp(param_2,"gametype");
-    if (iVar1 == 0) {
-      iVar1 = 0;
+    iVar4 = I_stricmp(param_2,0xffffffff820337c4);
+    if (iVar4 == 0) {
+      iVar4 = 0;
     }
     else {
-      iVar1 = I_stricmp(param_2,"gametype_raw");
-      if (iVar1 != 0) goto LAB_82843754;
-      iVar1 = 9;
+      iVar4 = I_stricmp(param_2,0xffffffff821ee5e0);
+      if (iVar4 != 0) goto LAB_82843754;
+      iVar4 = 9;
     }
   }
-  if (pbVar2 == (bdFileMetaData *)0x0) goto LAB_82843754;
-  uVar5 = pbVar2->m_numTags;
-  uVar9 = 0;
-  if (uVar5 != 0) {
-    puVar10 = &pbVar2->m_tags[0].m_priTag;
+  if (iVar3 == 0) goto LAB_82843754;
+  uVar8 = (ulonglong)*(uint *)(iVar3 + 0x26c);
+  uVar11 = 0;
+  if (uVar8 != 0) {
+    plVar7 = (longlong *)(iVar3 + 0x480);
     do {
-      if (*puVar10 == (longlong)iVar1) break;
-      uVar9 = uVar9 + 1;
-      puVar10 = puVar10 + 3;
-    } while ((uVar9 & 0xffffffff) < (ulonglong)uVar5);
+      if (*plVar7 == (longlong)iVar4) break;
+      uVar11 = uVar11 + 1;
+      plVar7 = plVar7 + 3;
+    } while ((uVar11 & 0xffffffff) < uVar8);
   }
-  if ((ulonglong)uVar5 <= (uVar9 & 0xffffffff)) goto LAB_82843754;
-  if (iVar1 == 0) {
+  if (uVar8 <= (uVar11 & 0xffffffff)) goto LAB_82843754;
+  if (iVar4 == 0) {
     UI_UpdateGameTypesList();
-    uVar9 = *(ulonglong *)
-             ((int)&pbVar2->m_tags[0].m_secTag +
-             (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 3));
-    uVar5 = (uint)uVar9;
-    if (pbVar2->m_category == 5) {
-      pcVar4 = BG_MatchRulesData_GetGameTypeFromIndex(uVar5);
-      uVar9 = (ulonglong)(int)pcVar4;
+    uVar8 = *(ulonglong *)
+             ((int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3) + iVar3 + 0x488);
+    if (*(short *)(iVar3 + 0x26a) == 5) {
+      uVar8 = BG_MatchRulesData_GetGameTypeFromIndex();
     }
     else {
-      if (((int)uVar5 < 0) || (sharedUiInfo.numGameTypes <= (int)uVar5)) goto LAB_82843748;
-      uVar9 = (uVar9 & 0xffffffff) * 0x6c - 0x7c085128;
+      iVar3 = (int)uVar8;
+      if ((iVar3 < 0) || (DAT_83f7aed4 <= iVar3)) goto LAB_82843748;
+      uVar8 = (uVar8 & 0xffffffff) * 0x6c - 0x7c085128;
     }
-    if (((uVar9 & 0xffffffff) != 0) && (*(char *)uVar9 != '\0')) {
-      pcVar4 = UI_GetGameTypeDisplayName((char *)uVar9);
-      Operand_SetString(param_4,pcVar4);
+    if (((uVar8 & 0xffffffff) != 0) && (*(char *)uVar8 != '\0')) {
+      uVar1 = UI_GetGameTypeDisplayName();
+      Operand_SetString(param_4,uVar1);
       __restgprlr_23();
       return;
     }
 LAB_82843748:
-    pcVar4 = "";
+    uVar8 = 0xffffffff820068af;
   }
   else {
-    if (iVar1 == 1) {
-      iVar1 = (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-      if (*(ulonglong *)((int)&pbVar2->m_tags[0].m_secTag + iVar1) <
-          (ulonglong)(longlong)sharedUiInfo.mapCount) {
-        iVar6 = I_stricmp(param_2,"mapImage");
-        iVar1 = (int)*(undefined8 *)((int)&pbVar2->m_tags[0].m_secTag + iVar1);
-        if (iVar6 == 0) {
-          Operand_SetString(param_4,sharedUiInfo.mapList[iVar1].mapLoadImage);
+    if (iVar4 == 1) {
+      iVar3 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3) + iVar3;
+      if (*(ulonglong *)(iVar3 + 0x488) < (ulonglong)(longlong)DAT_83f7df64) {
+        iVar4 = I_stricmp(param_2,0xffffffff821dee34);
+        lVar6 = (*(ulonglong *)(iVar3 + 0x488) & 0xffffffff) * 0xa78;
+        if (iVar4 == 0) {
+          Operand_SetString(param_4,lVar6 + -0x7c082048);
           __restgprlr_23();
           return;
         }
-        pcVar4 = UI_GetMapDisplayName(sharedUiInfo.mapList[iVar1].mapLoadName);
-        Operand_SetString(param_4,pcVar4);
+        uVar1 = UI_GetMapDisplayName(lVar6 + -0x7c082078);
+        Operand_SetString(param_4,uVar1);
         __restgprlr_23();
         return;
       }
       goto LAB_82843754;
     }
-    if (iVar1 != 9) goto LAB_82843754;
+    if (iVar4 != 9) goto LAB_82843754;
     UI_UpdateGameTypesList();
-    uVar9 = *(ulonglong *)
-             ((int)&pbVar2->m_tags[0].m_secTag +
-             (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 3));
-    uVar5 = (uint)uVar9;
-    if (pbVar2->m_category == 5) {
-      pcVar4 = BG_MatchRulesData_GetGameTypeFromIndex(uVar5);
-      uVar9 = (ulonglong)(int)pcVar4;
+    uVar8 = *(ulonglong *)
+             ((int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3) + iVar3 + 0x488);
+    if (*(short *)(iVar3 + 0x26a) == 5) {
+      uVar8 = BG_MatchRulesData_GetGameTypeFromIndex();
     }
     else {
-      if (((int)uVar5 < 0) || (sharedUiInfo.numGameTypes <= (int)uVar5)) goto LAB_82843748;
-      uVar9 = (uVar9 & 0xffffffff) * 0x6c - 0x7c085128;
+      iVar3 = (int)uVar8;
+      if ((iVar3 < 0) || (DAT_83f7aed4 <= iVar3)) goto LAB_82843748;
+      uVar8 = (uVar8 & 0xffffffff) * 0x6c - 0x7c085128;
     }
-    if (((uVar9 & 0xffffffff) == 0) || (pcVar4 = (char *)uVar9, *(char *)uVar9 == '\0'))
-    goto LAB_82843748;
+    if (((uVar8 & 0xffffffff) == 0) || (*(char *)uVar8 == '\0')) goto LAB_82843748;
   }
-  Operand_SetString(param_4,pcVar4);
+  Operand_SetString(param_4,uVar8);
 LAB_82843754:
   __restgprlr_23();
   return;
@@ -1269,36 +1228,29 @@ LAB_82843754:
 
 // 82843868  OnlineVault_CanRenderClip  (bgame/onlinevault.cpp:1068)
 
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-
-void OnlineVault_CanRenderClip(int param_1,Operand *param_2)
+void OnlineVault_CanRenderClip(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  OnlineVaultUIStack *pOVar2;
-  bdFileMetaData *pbVar3;
-  StructuredDataDef *pSVar4;
-  int iVar5;
-  ELITE_SUBSCRIPTION_LEVEL EVar6;
-  StructuredDataBuffer aSStack_30 [6];
+  undefined8 uVar1;
+  int *piVar3;
+  int iVar4;
+  undefined8 uVar2;
+  uint uVar5;
+  undefined1 auStack_30 [48];
   
-  iVar1 = __savegprlr_28(param_1);
+  uVar1 = __savegprlr_28();
   Operand_SetBool(param_2,0);
-  pOVar2 = OnlineVaultUI_GetHead(iVar1);
-  if (((pOVar2 != (OnlineVaultUIStack *)0x0) && (-1 < pOVar2->selected)) &&
-     (pbVar3 = GetFileslotDescriptor(iVar1,pOVar2->selected), pbVar3 != (bdFileMetaData *)0x0)) {
-    pSVar4 = StructuredDataDef_GetAsset("mp/onlinevault_metadata.def",0xff);
-    StructuredData_MakeBuffer(aSStack_30,pbVar3->m_metaData,pbVar3->m_metaDataSize);
-    iVar5 = StructuredData_GetData<int>(pSVar4,aSStack_30);
-    EVar6 = Commerce_LocalEliteSubscription(iVar1);
-    if (ELITE_SUBSCRIPTION_LEVEL_PAYING < EVar6) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x444
-                      ,0,
-                      "sub_level doesn\'t index ARRAY_COUNT( onlinevault_maxtime )\n\t%i not in [0, %i)"
-                     );
+  piVar3 = (int *)OnlineVaultUI_GetHead(uVar1);
+  if (((piVar3 != (int *)0x0) && (-1 < *piVar3)) &&
+     (iVar4 = GetFileslotDescriptor(uVar1), iVar4 != 0)) {
+    uVar2 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+    StructuredData_MakeBuffer(auStack_30,iVar4 + 0x270,*(undefined4 *)(iVar4 + 0x470));
+    iVar4 = StructuredData_GetData<int>(uVar2,auStack_30,0xffffffff82003578);
+    uVar5 = Commerce_LocalEliteSubscription(uVar1);
+    if (2 < uVar5) {
+      MyAssertHandler(0xffffffff821ee130,0x444,0,0xffffffff821ee650,uVar5,3);
     }
-    if (iVar5 < (onlinevault_maxtime[EVar6]->current).integer * 1000) {
+    if (iVar4 < *(int *)((&DAT_84546d88)[uVar5] + 0xc) * 1000) {
       Operand_SetBool(param_2,1);
     }
   }
@@ -1309,14 +1261,14 @@ void OnlineVault_CanRenderClip(int param_1,Operand *param_2)
 
 // 82842CB0  OnlineVault_Refresh  (bgame/onlinevault.cpp:1108)
 
-void OnlineVault_Refresh(int param_1)
+void OnlineVault_Refresh(void)
 
 {
-  contentServerPrivateData *pcVar1;
+  undefined1 *puVar1;
   
-  pcVar1 = LiveStorage_CS_GetPrivateData(param_1);
-  if (pcVar1 != (contentServerPrivateData *)0x0) {
-    pcVar1->m_valid = false;
+  puVar1 = (undefined1 *)LiveStorage_CS_GetPrivateData();
+  if (puVar1 != (undefined1 *)0x0) {
+    *puVar1 = 0;
   }
   return;
 }
@@ -1324,62 +1276,59 @@ void OnlineVault_Refresh(int param_1)
 
 // 828454C8  OnlineVault_FeederSelectedItem_Load  (bgame/onlinevault.cpp:1117)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_FeederSelectedItem_Load(int param_1,bool param_2)
+void OnlineVault_FeederSelectedItem_Load(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  OnlineVaultUIStack *pOVar3;
-  OnlineVaultUIStack *pOVar4;
-  int iVar5;
-  bdFileMetaData *pbVar6;
-  LocalClientNum_t LVar7;
+  undefined4 uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  int *piVar5;
+  int iVar6;
+  int iVar7;
+  undefined8 uVar3;
   uint uVar8;
-  ulong64 uVar9;
+  undefined8 uVar9;
   
-  iVar2 = __savegprlr_28(param_1);
-  pOVar3 = OnlineVaultUI_GetHead(iVar2);
-  pOVar4 = OnlineVaultUI_GetHead(iVar2);
-  if ((((pOVar4 == (OnlineVaultUIStack *)0x0) || (iVar1 = pOVar4->selected, iVar1 < 0)) ||
-      (iVar5 = OnlineVault_FeederItemEnabled(iVar2,iVar1), iVar5 == 0)) ||
-     (pbVar6 = GetFileslotDescriptor(iVar2,iVar1), pbVar6 == (bdFileMetaData *)0x0))
-  goto LAB_82845628;
-  uVar8 = (uint)pbVar6->m_category;
+  uVar2 = __savegprlr_28();
+  iVar4 = OnlineVaultUI_GetHead();
+  piVar5 = (int *)OnlineVaultUI_GetHead(uVar2);
+  if ((((piVar5 == (int *)0x0) || (iVar7 = *piVar5, iVar7 < 0)) ||
+      (iVar6 = OnlineVault_FeederItemEnabled(uVar2,iVar7), iVar6 == 0)) ||
+     (iVar7 = GetFileslotDescriptor(uVar2,iVar7), iVar7 == 0)) goto LAB_82845628;
+  uVar8 = (uint)*(ushort *)(iVar7 + 0x26a);
   if (uVar8 - 1 < 5) {
     if (uVar8 == 2) {
-      Com_Printf(0x10,"OnlineVault Load: Clip\n");
-      OnlineVault_TheaterFile_Load(iVar2,param_2);
+      Com_Printf(0x10,0xffffffff821eed18);
+      OnlineVault_TheaterFile_Load(uVar2,param_2);
     }
     else if (uVar8 == 3) {
-      Com_Printf(0x10,"OnlineVault Load: Screenshot\n");
-      LVar7 = CL_LocalClientNumFromControllerIndex(iVar2);
-      UI_OpenMenu(LVar7,"menu_screenshot");
-      uVar8 = pbVar6->m_fileSize;
-      uVar9 = pbVar6->m_fileID;
-      LVar7 = CL_LocalClientNumFromControllerIndex(iVar2);
-      UI_ScreenshotDownload(LVar7,uVar9,uVar8);
+      Com_Printf(0x10,0xffffffff821eecf8);
+      uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+      UI_OpenMenu(uVar3,0xffffffff8216f794);
+      uVar1 = *(undefined4 *)(iVar7 + 0x18);
+      uVar9 = *(undefined8 *)(iVar7 + 8);
+      uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+      UI_ScreenshotDownload(uVar3,uVar9,uVar1);
     }
     else {
       if (uVar8 == 4) goto LAB_828455f4;
       if (uVar8 == 1) {
-        Com_Printf(0x10,"OnlineVault Load: Film\n");
-        OnlineVault_TheaterFile_Load(iVar2,false);
+        Com_Printf(0x10,0xffffffff821eed30);
+        OnlineVault_TheaterFile_Load(uVar2,0);
       }
       else {
-        Com_Printf(0x10,"OnlineVault Load: CGM\n");
-        OnlineVault_CustomGameMode_Load(iVar2);
+        Com_Printf(0x10,0xffffffff821eece0);
+        OnlineVault_CustomGameMode_Load(uVar2);
       }
     }
   }
   else {
 LAB_828455f4:
-    Com_Printf(0x10,"OnlineVault Load: Filetype not recognized.\n");
+    Com_Printf(0x10,0xffffffff821eecb4);
   }
-  if ((pOVar3->paradigm == OV_LOAD) || (pOVar3->paradigm == OV_FRIEND_LOAD)) {
-    LVar7 = CL_LocalClientNumFromControllerIndex(iVar2);
-    OnlineVault_CloseFeederMenu(LVar7,0);
+  if ((*(int *)(iVar4 + 0x18) == 1) || (*(int *)(iVar4 + 0x18) == 5)) {
+    uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+    OnlineVault_CloseFeederMenu(uVar2,0);
   }
 LAB_82845628:
   __restgprlr_28();
@@ -1389,53 +1338,48 @@ LAB_82845628:
 
 // 82845788  OnlineVault_FeederSelectedItem_TrySave  (bgame/onlinevault.cpp:1163)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_FeederSelectedItem_TrySave(int param_1)
+void OnlineVault_FeederSelectedItem_TrySave(void)
 
 {
-  char *pcVar1;
-  int iVar2;
-  OnlineVaultUIStack *pOVar3;
-  bdFileMetaData *pbVar4;
-  LocalClientNum_t LVar5;
-  int iVar6;
+  undefined *puVar1;
+  undefined8 uVar2;
+  uint *puVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
   
-  iVar2 = __savegprlr_27(param_1);
-  pOVar3 = OnlineVaultUI_GetHead(iVar2);
-  if (pOVar3 == (OnlineVaultUIStack *)0x0) {
-    iVar6 = -1;
+  uVar2 = __savegprlr_27();
+  puVar3 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar3 == (uint *)0x0) {
+    uVar6 = 0xffffffffffffffff;
   }
   else {
-    iVar6 = pOVar3->selected;
-    if (-1 < iVar6) goto LAB_828457e4;
+    uVar6 = (ulonglong)*puVar3;
+    if (-1 < (int)*puVar3) goto LAB_828457e4;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x48d,0,
-                  "%s");
+  MyAssertHandler(0xffffffff821ee130,0x48d,0,0xffffffff82000f98,0xffffffff821ee498);
 LAB_828457e4:
-  pOVar3 = OnlineVaultUI_GetHead(iVar2);
-  if (pOVar3 == (OnlineVaultUIStack *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x48f,0
-                    ,"%s");
+  iVar4 = OnlineVaultUI_GetHead(uVar2);
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x48f,0,0xffffffff82000f98,0xffffffff8206f294);
   }
-  if ((pOVar3->paradigm != OV_SAVE) && (pOVar3->paradigm != OV_COPY)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x491,0
-                    ,"%s");
+  if ((*(int *)(iVar4 + 0x18) != 2) && (*(int *)(iVar4 + 0x18) != 3)) {
+    MyAssertHandler(0xffffffff821ee130,0x491,0,0xffffffff82000f98,0xffffffff821eee18);
   }
-  pbVar4 = GetFileslotDescriptor(iVar2,iVar6);
-  pcVar1 = s_uiConfirmOverwriteMenu;
-  if (pbVar4 != (bdFileMetaData *)0x0) {
-    LVar5 = CL_LocalClientNumFromControllerIndex(iVar2);
-    UI_OpenMenu(LVar5,pcVar1);
+  iVar5 = GetFileslotDescriptor(uVar2,uVar6);
+  puVar1 = PTR_s_vault_confirmOverwrite_829a62bc;
+  if (iVar5 != 0) {
+    uVar2 = CL_LocalClientNumFromControllerIndex();
+    UI_OpenMenu(uVar2,puVar1);
     __restgprlr_27();
     return;
   }
-  if (pOVar3->paradigm == OV_COPY) {
-    OnlineVault_ExecuteCopy(iVar2);
+  if (*(int *)(iVar4 + 0x18) == 3) {
+    OnlineVault_ExecuteCopy();
     __restgprlr_27();
     return;
   }
-  OnlineVault_ExecuteSave(iVar2);
+  OnlineVault_ExecuteSave(uVar2);
   __restgprlr_27();
   return;
 }
@@ -1443,28 +1387,26 @@ LAB_828457e4:
 
 // 828458A0  OnlineVault_FeederSelectedItem_Save  (bgame/onlinevault.cpp:1182)
 
-void OnlineVault_FeederSelectedItem_Save(int param_1)
+void OnlineVault_FeederSelectedItem_Save(void)
 
 {
-  int iVar1;
-  OnlineVaultUIStack *pOVar2;
+  undefined8 uVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  pOVar2 = OnlineVaultUI_GetHead(iVar1);
-  if (pOVar2 == (OnlineVaultUIStack *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x4a0,0
-                    ,"%s");
+  uVar1 = __savegprlr_28();
+  iVar2 = OnlineVaultUI_GetHead();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x4a0,0,0xffffffff82000f98,0xffffffff8206f294);
   }
-  if ((pOVar2->paradigm != OV_SAVE) && (pOVar2->paradigm != OV_COPY)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x4a2,0
-                    ,"%s");
+  if ((*(int *)(iVar2 + 0x18) != 2) && (*(int *)(iVar2 + 0x18) != 3)) {
+    MyAssertHandler(0xffffffff821ee130,0x4a2,0,0xffffffff82000f98,0xffffffff821eee18);
   }
-  if (pOVar2->paradigm == OV_COPY) {
-    OnlineVault_ExecuteCopy(iVar1);
+  if (*(int *)(iVar2 + 0x18) == 3) {
+    OnlineVault_ExecuteCopy();
     __restgprlr_28();
     return;
   }
-  OnlineVault_ExecuteSave(iVar1);
+  OnlineVault_ExecuteSave(uVar1);
   __restgprlr_28();
   return;
 }
@@ -1472,32 +1414,30 @@ void OnlineVault_FeederSelectedItem_Save(int param_1)
 
 // 82843960  OnlineVault_ExecuteCopyComplete  (bgame/onlinevault.cpp:1195)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_ExecuteCopyComplete(int param_1)
+void OnlineVault_ExecuteCopyComplete(void)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
-  bool bVar5;
-  contentServerPrivateData *pcVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
   
-  iVar1 = __savegprlr_29(param_1);
-  Com_Printf(0xd,"[OnlineVault_ExecuteCopy] Succeeded.\n");
-  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-  UI_CloseMenu(LVar2,s_uiProgressIndicatorMenu);
-  pcVar3 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-  Dvar_SetFromStringByName("cl_vault_notify_title",pcVar3);
-  pcVar3 = UI_SafeTranslateString("MENU_VAULT_COPY_SUCCESS");
-  Dvar_SetFromStringByName("cl_vault_notify_message",pcVar3);
-  bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"popup_vault_notify");
-  if (!bVar5) {
-    UI_OpenMenu(LVar2,"popup_vault_notify");
+  uVar1 = __savegprlr_29();
+  Com_Printf(0xd,0xffffffff821ee6a0);
+  uVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_VAULT_COPY_SUCCESS");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
   }
-  pcVar4 = LiveStorage_CS_GetPrivateData(iVar1);
-  if (pcVar4 != (contentServerPrivateData *)0x0) {
-    pcVar4->m_valid = false;
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
   }
   __restgprlr_29();
   return;
@@ -1506,31 +1446,29 @@ void OnlineVault_ExecuteCopyComplete(int param_1)
 
 // 82843A20  OnlineVault_ExecuteCopyFailed  (bgame/onlinevault.cpp:1203)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_ExecuteCopyFailed(int param_1,bdLobbyErrorCode param_2)
+void OnlineVault_ExecuteCopyFailed(void)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
-  bool bVar5;
-  contentServerPrivateData *pcVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
   
-  iVar1 = __savegprlr_29(param_1,param_2);
-  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-  UI_CloseMenu(LVar2,s_uiProgressIndicatorMenu);
-  pcVar3 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-  Dvar_SetFromStringByName("cl_vault_notify_title",pcVar3);
-  pcVar3 = UI_SafeTranslateString("MENU_VAULT_COPY_FAILED");
-  Dvar_SetFromStringByName("cl_vault_notify_message",pcVar3);
-  bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"popup_vault_notify");
-  if (!bVar5) {
-    UI_OpenMenu(LVar2,"popup_vault_notify");
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_VAULT_COPY_FAILED");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
   }
-  pcVar4 = LiveStorage_CS_GetPrivateData(iVar1);
-  if (pcVar4 != (contentServerPrivateData *)0x0) {
-    pcVar4->m_valid = false;
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
   }
   __restgprlr_29();
   return;
@@ -1539,59 +1477,61 @@ void OnlineVault_ExecuteCopyFailed(int param_1,bdLobbyErrorCode param_2)
 
 // 8293F700  `dynamic_initializer_for_'s_copiedFileID''  (bgame/onlinevault.cpp:1211)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__s_copiedFileID__(void)
+int _dynamic_initializer_for__s_copiedFileID__(void)
 
 {
-  bdFileID *this;
-  longlong lVar1;
+  int iVar1;
+  longlong lVar2;
+  longlong lVar3;
   
-  lVar1 = 3;
-  this = s_copiedFileID;
+  lVar3 = 3;
+  lVar2 = -0x7b7830a8;
   do {
-    bdFileID::bdFileID(this);
-    lVar1 = lVar1 + -1;
-    this = this + 1;
-  } while (-1 < lVar1);
-  atexit(_dynamic_atexit_destructor_for__s_copiedFileID__);
-  return;
+    bdFileID__bdFileID(lVar2);
+    lVar3 = lVar3 + -1;
+    lVar2 = lVar2 + 0x10;
+  } while (-1 < lVar3);
+  iVar1 = atexit(_dynamic_atexit_destructor_for__s_copiedFileID__);
+  return iVar1;
 }
 
 
 // 82843AD0  OnlineVault_ExecuteCopy  (bgame/onlinevault.cpp:1213)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void OnlineVault_ExecuteCopy(int param_1)
+void OnlineVault_ExecuteCopy(void)
 
 {
-  int iVar1;
-  OnlineVaultUIStack *pOVar2;
-  uint uVar3;
-  bdFileMetaData *pbVar4;
-  LocalClientNum_t LVar5;
-  bool bVar9;
-  UiContext *pUVar6;
-  int iVar7;
-  char *pcVar8;
+  undefined *puVar1;
+  int iVar5;
+  int iVar6;
+  uint *puVar7;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  int iVar8;
+  char cVar9;
+  undefined8 uVar4;
   undefined8 *puVar10;
-  uint uVar11;
+  ulonglong uVar11;
   longlong lVar12;
   undefined8 uStack_68;
-  contentServerCopyFromOtherUserInfo local_60 [2];
+  undefined8 local_60;
+  undefined2 local_58;
+  int local_54;
+  undefined2 local_50;
+  int local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  int local_40;
+  undefined *local_3c;
+  code *local_38;
+  code *local_34;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (((s_feederState.stackCount < 2) ||
-      ((&vp8_vertical_band_5_4_scale)[s_feederState.stackCount * 0x10] !=
-       (_func___cdecl_void_uchar_ptr_uint_uchar_ptr_uint_uint *)0x3)) ||
-     (s_feederState.stack[s_feederState.stackCount + -2].paradigm != OV_FRIEND_BROWSE)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x4c2,0
-                    ,"%s");
+  iVar5 = __savegprlr_28();
+  if ((1 < DAT_8487cdc8) && ((&DAT_8487cda8)[DAT_8487cdc8 * 0x10] == 3)) {
+    if (*(int *)(&DAT_8487cde8 + (DAT_8487cdc8 + -2) * 0x40) == 4) goto LAB_82843b50;
   }
+  MyAssertHandler(0xffffffff821ee130,0x4c2,0,0xffffffff82000f98,0xffffffff821ee8c0);
+LAB_82843b50:
   puVar10 = &uStack_68;
   lVar12 = 6;
   do {
@@ -1599,84 +1539,73 @@ void OnlineVault_ExecuteCopy(int param_1)
     *puVar10 = 0;
     lVar12 = lVar12 + -1;
   } while (lVar12 != 0);
-  pOVar2 = OnlineVaultUI_GetHead(iVar1);
-  if ((pOVar2 == (OnlineVaultUIStack *)0x0) ||
-     (pOVar2 = OnlineVaultUI_GetHead(iVar1), pOVar2->paradigm != OV_COPY)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x4c7,0
-                    ,"%s");
+  iVar6 = OnlineVaultUI_GetHead(iVar5);
+  if ((iVar6 == 0) || (iVar6 = OnlineVaultUI_GetHead(iVar5), *(int *)(iVar6 + 0x18) != 3)) {
+    MyAssertHandler(0xffffffff821ee130,0x4c7,0,0xffffffff82000f98,0xffffffff821ee850);
   }
-  pOVar2 = OnlineVaultUI_GetHead(iVar1);
-  uVar11 = 0xffffffff;
-  if (pOVar2 != (OnlineVaultUIStack *)0x0) {
-    uVar11 = pOVar2->selected;
+  puVar7 = (uint *)OnlineVaultUI_GetHead(iVar5);
+  uVar11 = 0xffffffffffffffff;
+  if (puVar7 != (uint *)0x0) {
+    uVar11 = (ulonglong)*puVar7;
   }
-  uVar3 = GetPlayerMaxFileSlots(iVar1);
-  if (uVar3 <= uVar11) {
-    GetPlayerMaxFileSlots(iVar1);
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x4c9,0
-                    ,
-                    "copyToSlot doesn\'t index GetPlayerMaxFileSlots( controllerIndex )\n\t%i not in [0, %i)"
-                   );
+  uVar2 = GetPlayerMaxFileSlots(iVar5);
+  if ((uVar2 & 0xffffffff) <= (uVar11 & 0xffffffff)) {
+    uVar3 = GetPlayerMaxFileSlots(iVar5);
+    MyAssertHandler(0xffffffff821ee130,0x4c9,0,0xffffffff821ee7f8,uVar11,uVar3);
   }
-  local_60[0].m_fileSlot = (ushort)uVar11;
-  OnlineVaultUI_PopMenu(iVar1);
-  pOVar2 = OnlineVaultUI_GetHead(iVar1);
-  if ((pOVar2 == (OnlineVaultUIStack *)0x0) ||
-     (pOVar2 = OnlineVaultUI_GetHead(iVar1), pOVar2->paradigm != OV_FRIEND_BROWSE)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x4cf,0
-                    ,"%s");
+  local_58 = (undefined2)uVar11;
+  OnlineVaultUI_PopMenu(iVar5);
+  iVar6 = OnlineVaultUI_GetHead(iVar5);
+  if ((iVar6 == 0) || (iVar6 = OnlineVaultUI_GetHead(iVar5), *(int *)(iVar6 + 0x18) != 4)) {
+    MyAssertHandler(0xffffffff821ee130,0x4cf,0,0xffffffff82000f98,0xffffffff821ee780);
   }
-  pOVar2 = OnlineVaultUI_GetHead(iVar1);
-  uVar11 = 0xffffffff;
-  if (pOVar2 != (OnlineVaultUIStack *)0x0) {
-    uVar11 = pOVar2->selected;
+  puVar7 = (uint *)OnlineVaultUI_GetHead(iVar5);
+  uVar11 = 0xffffffffffffffff;
+  if (puVar7 != (uint *)0x0) {
+    uVar11 = (ulonglong)*puVar7;
   }
-  uVar3 = GetPlayerMaxFileSlots(iVar1);
-  if (uVar3 <= uVar11) {
-    GetPlayerMaxFileSlots(iVar1);
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x4d1,0
-                    ,
-                    "copyFromSlot doesn\'t index GetPlayerMaxFileSlots( controllerIndex )\n\t%i not in [0, %i)"
-                   );
+  uVar2 = GetPlayerMaxFileSlots(iVar5);
+  if ((uVar2 & 0xffffffff) <= (uVar11 & 0xffffffff)) {
+    uVar3 = GetPlayerMaxFileSlots(iVar5);
+    MyAssertHandler(0xffffffff821ee130,0x4d1,0,0xffffffff821ee728,uVar11,uVar3);
   }
-  pbVar4 = GetFileslotDescriptor(iVar1,uVar11);
-  if ((pbVar4 == (bdFileMetaData *)0x0) ||
-     (pOVar2 = OnlineVaultUI_GetHead(iVar1), pbVar4->m_ownerID != pOVar2->remoteXuid)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x4d4,0
-                    ,"%s");
+  iVar6 = GetFileslotDescriptor(iVar5,uVar11);
+  if ((iVar6 == 0) ||
+     (iVar8 = OnlineVaultUI_GetHead(iVar5),
+     *(longlong *)(iVar6 + 0x20) != *(longlong *)(iVar8 + 0x10))) {
+    MyAssertHandler(0xffffffff821ee130,0x4d4,0,0xffffffff82000f98,0xffffffff821ee6c8);
   }
-  if (3 < iVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x4d5,0
-                    ,"%s");
+  if (3 < iVar5) {
+    MyAssertHandler(0xffffffff821ee130,0x4d5,0,0xffffffff82000f98,0xffffffff82092310);
   }
-  local_60[0].m_category = pbVar4->m_category;
-  local_60[0].m_fileName = pbVar4->m_fileName;
-  local_60[0].m_metaData = pbVar4->m_metaData;
-  local_60[0].m_userFileID = pbVar4->m_fileID;
-  local_60[0].m_tags = pbVar4->m_tags;
-  local_60[0].m_metaDataSize = pbVar4->m_metaDataSize;
-  local_60[0].m_outFileID = s_copiedFileID + iVar1;
-  local_60[0].m_numTags = pbVar4->m_numTags;
-  local_60[0].m_successCallback = OnlineVault_ExecuteCopyComplete;
-  local_60[0].m_failureCallback = OnlineVault_ExecuteCopyFailed;
-  LVar5 = CL_LocalClientNumFromControllerIndex(iVar1);
-  bVar9 = Menu_IsMenuOpenAndVisible(LVar5,s_uiProgressIndicatorMenu);
-  pcVar8 = s_uiProgressIndicatorMenu;
-  if (!bVar9) {
-    pUVar6 = UI_GetClientDC(LVar5);
-    Menus_OpenByName(pUVar6,pcVar8);
+  local_50 = *(undefined2 *)(iVar6 + 0x26a);
+  local_54 = iVar6 + 0x6a;
+  local_4c = iVar6 + 0x270;
+  local_60 = *(undefined8 *)(iVar6 + 8);
+  local_40 = iVar6 + 0x478;
+  local_48 = *(undefined4 *)(iVar6 + 0x470);
+  local_3c = &DAT_8487cf58 + iVar5 * 0x10;
+  local_44 = *(undefined4 *)(iVar6 + 0x26c);
+  local_38 = OnlineVault_ExecuteCopyComplete;
+  local_34 = OnlineVault_ExecuteCopyFailed;
+  uVar3 = CL_LocalClientNumFromControllerIndex(iVar5);
+  cVar9 = Menu_IsMenuOpenAndVisible(uVar3,PTR_s_vault_task_in_progress_829a63b4);
+  puVar1 = PTR_s_vault_task_in_progress_829a63b4;
+  if (cVar9 == '\0') {
+    uVar3 = UI_GetClientDC(uVar3);
+    Menus_OpenByName(uVar3,puVar1);
   }
-  iVar7 = LiveStorage_CS_CopyFromOtherUser(iVar1,local_60);
-  if (iVar7 == 0) {
-    LVar5 = CL_LocalClientNumFromControllerIndex(iVar1);
-    UI_CloseMenu(LVar5,s_uiProgressIndicatorMenu);
-    pcVar8 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-    Dvar_SetFromStringByName("cl_vault_notify_title",pcVar8);
-    pcVar8 = UI_SafeTranslateString("MENU_VAULT_COPY_FAILED");
-    Dvar_SetFromStringByName("cl_vault_notify_message",pcVar8);
-    bVar9 = Menu_IsMenuOpenAndVisible(LVar5,"popup_vault_notify");
-    if (!bVar9) {
-      UI_OpenMenu(LVar5,"popup_vault_notify");
+  iVar6 = LiveStorage_CS_CopyFromOtherUser(iVar5,&local_60);
+  if (iVar6 == 0) {
+    uVar3 = CL_LocalClientNumFromControllerIndex(iVar5);
+    UI_CloseMenu(uVar3,PTR_s_vault_task_in_progress_829a63b4);
+    uVar4 = UI_SafeTranslateString(0xffffffff821ee578);
+    Dvar_SetFromStringByName(0xffffffff821e2764,uVar4);
+    uVar4 = UI_SafeTranslateString("MENU_VAULT_COPY_FAILED");
+    Dvar_SetFromStringByName(0xffffffff821e274c,uVar4);
+    cVar9 = Menu_IsMenuOpenAndVisible(uVar3,0xffffffff821e2738);
+    if (cVar9 == '\0') {
+      UI_OpenMenu(uVar3,0xffffffff821e2738);
     }
   }
   __restgprlr_28();
@@ -1686,60 +1615,55 @@ void OnlineVault_ExecuteCopy(int param_1)
 
 // 82845630  OnlineVault_ExecuteSave  (bgame/onlinevault.cpp:1257)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_ExecuteSave(int param_1)
+void OnlineVault_ExecuteSave(void)
 
 {
-  dwContentServerFileCategory dVar1;
+  undefined8 uVar1;
   int iVar2;
-  OnlineVaultUIStack *pOVar3;
-  OnlineVaultUIStack *pOVar4;
-  LocalClientNum_t LVar5;
-  int iVar6;
+  uint *puVar3;
+  ulonglong uVar4;
   
-  iVar2 = __savegprlr_29(param_1);
-  pOVar3 = OnlineVaultUI_GetHead(iVar2);
-  pOVar4 = OnlineVaultUI_GetHead(iVar2);
-  iVar6 = -1;
-  if (pOVar4 != (OnlineVaultUIStack *)0x0) {
-    iVar6 = pOVar4->selected;
+  uVar1 = __savegprlr_29();
+  iVar2 = OnlineVaultUI_GetHead();
+  puVar3 = (uint *)OnlineVaultUI_GetHead(uVar1);
+  uVar4 = 0xffffffffffffffff;
+  if (puVar3 != (uint *)0x0) {
+    uVar4 = (ulonglong)*puVar3;
   }
-  if (pOVar3 != (OnlineVaultUIStack *)0x0) {
-    if ((iVar6 < 0) || ((pOVar3->paradigm != OV_SAVE && (pOVar3->paradigm != OV_COPY)))) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x4f0
-                      ,0,"%s");
+  if (iVar2 != 0) {
+    if (((int)uVar4 < 0) || ((*(int *)(iVar2 + 0x18) != 2 && (*(int *)(iVar2 + 0x18) != 3)))) {
+      MyAssertHandler(0xffffffff821ee130,0x4f0,0,0xffffffff82000f98,0xffffffff821eeddc);
     }
-    dVar1 = pOVar3->filterType;
-    if (dVar1 - FILE_CATEGORY_FILM < 5) {
-      if (dVar1 == FILE_CATEGORY_CLIP) {
-        Com_Printf(0x10,"OnlineVault Save: Clip\n");
-        CL_Demo_SaveClip(iVar2,iVar6);
+    iVar2 = *(int *)(iVar2 + 0x1c);
+    if (iVar2 - 1U < 5) {
+      if (iVar2 == 2) {
+        Com_Printf(0x10,0xffffffff821eedac);
+        CL_Demo_SaveClip(uVar1,uVar4);
         __restgprlr_29();
         return;
       }
-      if (dVar1 == FILE_CATEGORY_SCREENSHOT) {
-        Com_Printf(0x10,"OnlineVault Save: Screenshot\n");
-        CL_Demo_SaveScreenshot(iVar2,iVar6);
+      if (iVar2 == 3) {
+        Com_Printf(0x10,0xffffffff821eed8c);
+        CL_Demo_SaveScreenshot(uVar1,uVar4);
         __restgprlr_29();
         return;
       }
-      if (dVar1 != FILE_CATEGORY_AVI) {
-        if (dVar1 == FILE_CATEGORY_FILM) {
-          Com_Printf(0x10,"OnlineVault Save: Film\n");
-          CL_Demo_SaveFilm(iVar2,iVar6);
+      if (iVar2 != 4) {
+        if (iVar2 == 1) {
+          Com_Printf(0x10,0xffffffff821eedc4);
+          CL_Demo_SaveFilm(uVar1,uVar4);
           __restgprlr_29();
           return;
         }
-        Com_Printf(0x10,"OnlineVault Save: CGM\n");
-        OnlineVault_CustomGameMode_Save(iVar2);
-        LVar5 = CL_LocalClientNumFromControllerIndex(iVar2);
-        OnlineVault_CloseFeederMenu(LVar5,0);
+        Com_Printf(0x10,0xffffffff821eed74);
+        OnlineVault_CustomGameMode_Save(uVar1);
+        uVar1 = CL_LocalClientNumFromControllerIndex(uVar1);
+        OnlineVault_CloseFeederMenu(uVar1,0);
         __restgprlr_29();
         return;
       }
     }
-    Com_Printf(0x10,"OnlineVault Save: Filetype not recognized.\n");
+    Com_Printf(0x10,0xffffffff821eed48);
   }
   __restgprlr_29();
   return;
@@ -1748,31 +1672,29 @@ void OnlineVault_ExecuteSave(int param_1)
 
 // 82843E38  EditMetaDataComplete  (bgame/onlinevault.cpp:1298)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void EditMetaDataComplete(int param_1)
+void EditMetaDataComplete(void)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
-  bool bVar5;
-  contentServerPrivateData *pcVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
   
-  iVar1 = __savegprlr_29(param_1);
-  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-  UI_CloseMenu(LVar2,s_uiProgressIndicatorMenu);
-  pcVar3 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-  Dvar_SetFromStringByName("cl_vault_notify_title",pcVar3);
-  pcVar3 = UI_SafeTranslateString("MENU_VAULT_EDIT_SUCCESS");
-  Dvar_SetFromStringByName("cl_vault_notify_message",pcVar3);
-  bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"popup_vault_notify");
-  if (!bVar5) {
-    UI_OpenMenu(LVar2,"popup_vault_notify");
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_VAULT_EDIT_SUCCESS");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
   }
-  pcVar4 = LiveStorage_CS_GetPrivateData(iVar1);
-  if (pcVar4 != (contentServerPrivateData *)0x0) {
-    pcVar4->m_valid = false;
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
   }
   __restgprlr_29();
   return;
@@ -1781,33 +1703,31 @@ void EditMetaDataComplete(int param_1)
 
 // 82843EE8  EditMetaDataFailed  (bgame/onlinevault.cpp:1305)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void EditMetaDataFailed(int param_1,bdLobbyErrorCode param_2)
+void EditMetaDataFailed(void)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
-  bool bVar5;
-  contentServerPrivateData *pcVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
   
-  iVar1 = __savegprlr_29(param_1,param_2);
-  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-  UI_CloseMenu(LVar2,s_uiProgressIndicatorMenu);
-  pcVar3 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-  Dvar_SetFromStringByName("cl_vault_notify_title",pcVar3);
-  pcVar3 = UI_SafeTranslateString("MENU_VAULT_EDIT_FAILED");
-  Dvar_SetFromStringByName("cl_vault_notify_message",pcVar3);
-  bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"popup_vault_notify");
-  if (!bVar5) {
-    UI_OpenMenu(LVar2,"popup_vault_notify");
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_VAULT_EDIT_FAILED");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
   }
-  pcVar4 = LiveStorage_CS_GetPrivateData(iVar1);
-  if (pcVar4 != (contentServerPrivateData *)0x0) {
-    pcVar4->m_valid = false;
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
   }
-  Com_PrintError(0x10,"Failed to edit metadata for file in client %d\'s vault\n");
+  Com_PrintError(0x10,0xffffffff821ee978,uVar1);
   __restgprlr_29();
   return;
 }
@@ -1815,129 +1735,115 @@ void EditMetaDataFailed(int param_1,bdLobbyErrorCode param_2)
 
 // 82843FA8  EditMetaData  (bgame/onlinevault.cpp:1315)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void EditMetaData(int param_1,int param_2,char *param_3,char *param_4)
+void EditMetaData(undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
 
 {
-  int iVar1;
-  int iVar2;
-  bdFileMetaData *pbVar3;
-  StructuredDataDef *pSVar4;
-  char *pcVar5;
-  LocalClientNum_t LVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  bdTag *pbVar11;
-  StructuredDataBuffer aSStack_3b0 [2];
-  contentServerUploadSummaryInfo local_3a0;
-  bdTag abStack_370 [33];
-  bdTag abStack_58 [3];
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar3;
+  int iVar6;
+  char cVar7;
+  longlong lVar8;
+  undefined1 *puVar9;
+  undefined1 auStack_3b0 [16];
+  undefined1 local_3a0 [8];
+  undefined8 local_398;
+  undefined *local_390;
+  undefined4 uStack_38c;
+  undefined4 local_388;
+  undefined1 *puStack_384;
+  undefined8 local_380;
+  undefined1 auStack_370 [792];
+  undefined1 auStack_58 [88];
   
-  uVar9 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_23(param_1);
-  pbVar11 = abStack_370;
-  lVar10 = 0x20;
+  uVar2 = __savegprlr_23();
+  puVar9 = auStack_370;
+  lVar8 = 0x20;
   do {
-    bdTag::bdTag(pbVar11);
-    lVar10 = lVar10 + -1;
-    pbVar11 = pbVar11 + 1;
-  } while (-1 < lVar10);
-  iVar2 = OnlineVault_FeederItemEnabled(iVar1,param_2);
-  if (iVar2 == 0) {
-    Com_PrintError(0x10,"Tried to edit metadata of invalid file in slot %d\n");
-    pbVar11 = abStack_58;
-    lVar10 = 0x20;
+    bdTag__bdTag(puVar9);
+    lVar8 = lVar8 + -1;
+    puVar9 = puVar9 + 0x18;
+  } while (-1 < lVar8);
+  iVar4 = OnlineVault_FeederItemEnabled(uVar2,param_2);
+  if (iVar4 == 0) {
+    Com_PrintError(0x10,0xffffffff821eea08,param_2);
+    puVar9 = auStack_58;
+    lVar8 = 0x20;
     do {
-      pbVar11 = pbVar11 + -1;
-      bdTag::~bdTag(pbVar11);
-      lVar10 = lVar10 + -1;
-    } while (-1 < lVar10);
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
     __restgprlr_23();
     return;
   }
-  pbVar3 = GetFileslotDescriptor(iVar1,param_2);
-  if (pbVar3 == (bdFileMetaData *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x530,0
-                    ,"%s");
+  iVar4 = GetFileslotDescriptor(uVar2,param_2);
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x530,0,0xffffffff82000f98,0xffffffff821ee510);
   }
-  pSVar4 = StructuredDataDef_GetAsset("mp/onlinevault_metadata.def",0xff);
-  if (pSVar4->size != pbVar3->m_metaDataSize) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x533,0
-                    ,"%s");
+  iVar5 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+  if (*(int *)(iVar5 + 0x30) != *(int *)(iVar4 + 0x470)) {
+    MyAssertHandler(0xffffffff821ee130,0x533,0,0xffffffff82000f98,0xffffffff821ee9e0);
   }
-  memcpy();
-  if (0x21 < pbVar3->m_numTags) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x535,0
-                    ,"%s");
+  memcpy(&DAT_8487ce50,(void *)(iVar4 + 0x270),*(size_t *)(iVar4 + 0x470));
+  if (0x21 < *(uint *)(iVar4 + 0x26c)) {
+    MyAssertHandler(0xffffffff821ee130,0x535,0,0xffffffff82000f98,0xffffffff821ee9b0);
   }
-  memcpy();
-  StructuredData_MakeBuffer(aSStack_3b0,g_onlineVaultWriteBuffer.thumb,pbVar3->m_metaDataSize);
-  bVar7 = false;
-  pcVar5 = StructuredData_GetData<char_const_*>(pSVar4,aSStack_3b0);
-  if ((uVar8 & 0xffffffff) != 0) {
-    iVar2 = I_strncmp(pcVar5,(char *)uVar8,0x40);
-    if (iVar2 != 0) {
-      bVar7 = true;
-      StructuredData_SetData<char_const_*>(pSVar4,aSStack_3b0,(char *)uVar8);
-      StructuredData_SetData<bool>(pSVar4,aSStack_3b0,true);
+  memcpy(auStack_370,(void *)(iVar4 + 0x478),*(int *)(iVar4 + 0x26c) * 0x18);
+  StructuredData_MakeBuffer(auStack_3b0,0xffffffff8487ce50,*(undefined4 *)(iVar4 + 0x470));
+  bVar1 = false;
+  uVar3 = StructuredData_GetData<char_const_*>(iVar5,auStack_3b0,0xffffffff82021a74);
+  if (((param_3 & 0xffffffff) != 0) && (iVar6 = I_strncmp(uVar3,param_3,0x40), iVar6 != 0)) {
+    bVar1 = true;
+    StructuredData_SetData<char_const_*>(iVar5,auStack_3b0,param_3,0xffffffff82021a74);
+    StructuredData_SetData<bool>(iVar5,auStack_3b0,1,0xffffffff821dc408);
+  }
+  uVar3 = StructuredData_GetData<char_const_*>(iVar5,auStack_3b0,0xffffffff82132868);
+  if (((param_4 & 0xffffffff) == 0) || (iVar6 = I_strncmp(uVar3,param_4,0x40), iVar6 == 0)) {
+    if (!bVar1) {
+      puVar9 = auStack_58;
+      lVar8 = 0x20;
+      do {
+        puVar9 = puVar9 + -0x18;
+        bdTag___bdTag(puVar9);
+        lVar8 = lVar8 + -1;
+      } while (-1 < lVar8);
+      __restgprlr_23();
+      return;
     }
   }
-  pcVar5 = StructuredData_GetData<char_const_*>(pSVar4,aSStack_3b0);
-  if ((uVar9 & 0xffffffff) != 0) {
-    iVar2 = I_strncmp(pcVar5,(char *)uVar9,0x40);
-    if (iVar2 != 0) {
-      StructuredData_SetData<char_const_*>(pSVar4,aSStack_3b0,(char *)uVar9);
-      StructuredData_SetData<bool>(pSVar4,aSStack_3b0,true);
-      goto LAB_828441e8;
+  else {
+    StructuredData_SetData<char_const_*>(iVar5,auStack_3b0,param_4,0xffffffff82132868);
+    StructuredData_SetData<bool>(iVar5,auStack_3b0,1,0xffffffff821dc3f8);
+  }
+  local_398 = 0;
+  _local_390 = CONCAT44(&DAT_8487ce50,*(undefined4 *)(iVar5 + 0x30));
+  _local_388 = CONCAT44(*(undefined4 *)(iVar4 + 0x26c),auStack_370);
+  local_380 = 0x82843e3882843ee8;
+  CL_LocalClientNumFromControllerIndex(uVar2);
+  OnlineVault_OpenProgressIndicatorMenu();
+  iVar4 = LiveStorage_CS_UploadSummaryMetadata(uVar2,local_3a0);
+  if (iVar4 == 0) {
+    uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+    UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+    uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+    Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+    uVar3 = UI_SafeTranslateString("MENU_VAULT_EDIT_FAILED");
+    Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+    cVar7 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+    if (cVar7 == '\0') {
+      UI_OpenMenu(uVar2,0xffffffff821e2738);
     }
   }
-  if (!bVar7) {
-    pbVar11 = abStack_58;
-    lVar10 = 0x20;
-    do {
-      pbVar11 = pbVar11 + -1;
-      bdTag::~bdTag(pbVar11);
-      lVar10 = lVar10 + -1;
-    } while (-1 < lVar10);
-    __restgprlr_23();
-    return;
-  }
-LAB_828441e8:
-  local_3a0.m_summaryData = (void *)0x0;
-  local_3a0.m_summaryDataSize = 0;
-  local_3a0.m_fileID = pbVar3->m_fileID;
-  local_3a0.m_metaData = &g_onlineVaultWriteBuffer;
-  local_3a0.m_metaDataSize = pSVar4->size;
-  local_3a0.m_numTags = pbVar3->m_numTags;
-  local_3a0.m_tags = abStack_370;
-  local_3a0.m_successCallback = EditMetaDataComplete;
-  local_3a0.m_failureCallback = EditMetaDataFailed;
-  LVar6 = CL_LocalClientNumFromControllerIndex(iVar1);
-  OnlineVault_OpenProgressIndicatorMenu(LVar6);
-  iVar2 = LiveStorage_CS_UploadSummaryMetadata(iVar1,&local_3a0);
-  if (iVar2 == 0) {
-    LVar6 = CL_LocalClientNumFromControllerIndex(iVar1);
-    UI_CloseMenu(LVar6,s_uiProgressIndicatorMenu);
-    pcVar5 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-    Dvar_SetFromStringByName("cl_vault_notify_title",pcVar5);
-    pcVar5 = UI_SafeTranslateString("MENU_VAULT_EDIT_FAILED");
-    Dvar_SetFromStringByName("cl_vault_notify_message",pcVar5);
-    bVar7 = Menu_IsMenuOpenAndVisible(LVar6,"popup_vault_notify");
-    if (!bVar7) {
-      UI_OpenMenu(LVar6,"popup_vault_notify");
-    }
-  }
-  pbVar11 = abStack_58;
-  lVar10 = 0x20;
+  puVar9 = auStack_58;
+  lVar8 = 0x20;
   do {
-    pbVar11 = pbVar11 + -1;
-    bdTag::~bdTag(pbVar11);
-    lVar10 = lVar10 + -1;
-  } while (-1 < lVar10);
+    puVar9 = puVar9 + -0x18;
+    bdTag___bdTag(puVar9);
+    lVar8 = lVar8 + -1;
+  } while (-1 < lVar8);
   __restgprlr_23();
   return;
 }
@@ -1945,26 +1851,25 @@ LAB_828441e8:
 
 // 82844330  OnlineVault_EditMetaData  (bgame/onlinevault.cpp:1377)
 
-void OnlineVault_EditMetaData(int param_1,char *param_2,char *param_3)
+void OnlineVault_EditMetaData(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  OnlineVaultUIStack *pOVar2;
-  int iVar3;
+  undefined8 uVar1;
+  uint *puVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_28(param_1);
-  pOVar2 = OnlineVaultUI_GetHead(iVar1);
-  if (pOVar2 == (OnlineVaultUIStack *)0x0) {
-    iVar3 = -1;
+  uVar1 = __savegprlr_28();
+  puVar2 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar2 == (uint *)0x0) {
+    uVar3 = 0xffffffffffffffff;
   }
   else {
-    iVar3 = pOVar2->selected;
-    if (-1 < iVar3) goto LAB_8284438c;
+    uVar3 = (ulonglong)*puVar2;
+    if (-1 < (int)*puVar2) goto LAB_8284438c;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x563,0,
-                  "%s");
+  MyAssertHandler(0xffffffff821ee130,0x563,0,0xffffffff82000f98,0xffffffff821ee498);
 LAB_8284438c:
-  EditMetaData(iVar1,iVar3,param_2,param_3);
+  EditMetaData(uVar1,uVar3,param_2,param_3);
   __restgprlr_28();
   return;
 }
@@ -1972,30 +1877,28 @@ LAB_8284438c:
 
 // 82842CE0  OnlineVault_FeederSelectedItem_Rename  (bgame/onlinevault.cpp:1385)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_FeederSelectedItem_Rename(int param_1)
+void OnlineVault_FeederSelectedItem_Rename(undefined8 param_1)
 
 {
-  OnlineVaultUIStack *pOVar1;
-  int iVar2;
-  LocalClientNum_t LVar3;
+  uint *puVar2;
+  int iVar3;
+  undefined8 uVar1;
+  ulonglong uVar4;
   
-  pOVar1 = OnlineVaultUI_GetHead(param_1);
-  if (pOVar1 == (OnlineVaultUIStack *)0x0) {
-    iVar2 = -1;
+  puVar2 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar2 == (uint *)0x0) {
+    uVar4 = 0xffffffffffffffff;
   }
   else {
-    iVar2 = pOVar1->selected;
-    if (-1 < iVar2) goto LAB_82842d3c;
+    uVar4 = (ulonglong)*puVar2;
+    if (-1 < (int)*puVar2) goto LAB_82842d3c;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x56b,0,
-                  "%s");
+  MyAssertHandler(0xffffffff821ee130,0x56b,0,0xffffffff82000f98,0xffffffff821ee498);
 LAB_82842d3c:
-  iVar2 = OnlineVault_FeederItemEnabled(param_1,iVar2);
-  if (iVar2 != 0) {
-    LVar3 = CL_LocalClientNumFromControllerIndex(param_1);
-    UI_OpenMenu(LVar3,"vault_editmeta");
+  iVar3 = OnlineVault_FeederItemEnabled(param_1,uVar4);
+  if (iVar3 != 0) {
+    uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+    UI_OpenMenu(uVar1,0xffffffff821ee488);
   }
   return;
 }
@@ -2003,31 +1906,29 @@ LAB_82842d3c:
 
 // 828443A8  DeleteSuccess  (bgame/onlinevault.cpp:1396)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void DeleteSuccess(int param_1)
+void DeleteSuccess(void)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
-  bool bVar5;
-  contentServerPrivateData *pcVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
   
-  iVar1 = __savegprlr_29(param_1);
-  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-  UI_CloseMenu(LVar2,s_uiProgressIndicatorMenu);
-  pcVar3 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-  Dvar_SetFromStringByName("cl_vault_notify_title",pcVar3);
-  pcVar3 = UI_SafeTranslateString("MENU_VAULT_DEL_SUCCESS");
-  Dvar_SetFromStringByName("cl_vault_notify_message",pcVar3);
-  bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"popup_vault_notify");
-  if (!bVar5) {
-    UI_OpenMenu(LVar2,"popup_vault_notify");
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_VAULT_DEL_SUCCESS");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
   }
-  pcVar4 = LiveStorage_CS_GetPrivateData(iVar1);
-  if (pcVar4 != (contentServerPrivateData *)0x0) {
-    pcVar4->m_valid = false;
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
   }
   __restgprlr_29();
   return;
@@ -2036,31 +1937,29 @@ void DeleteSuccess(int param_1)
 
 // 82844458  DeleteFailed  (bgame/onlinevault.cpp:1403)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void DeleteFailed(int param_1,bdLobbyErrorCode param_2)
+void DeleteFailed(void)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
-  bool bVar5;
-  contentServerPrivateData *pcVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
   
-  iVar1 = __savegprlr_29(param_1,param_2);
-  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-  UI_CloseMenu(LVar2,s_uiProgressIndicatorMenu);
-  pcVar3 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-  Dvar_SetFromStringByName("cl_vault_notify_title",pcVar3);
-  pcVar3 = UI_SafeTranslateString("MENU_VAULT_DEL_FAILED");
-  Dvar_SetFromStringByName("cl_vault_notify_message",pcVar3);
-  bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"popup_vault_notify");
-  if (!bVar5) {
-    UI_OpenMenu(LVar2,"popup_vault_notify");
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_VAULT_DEL_FAILED");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
   }
-  pcVar4 = LiveStorage_CS_GetPrivateData(iVar1);
-  if (pcVar4 != (contentServerPrivateData *)0x0) {
-    pcVar4->m_valid = false;
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
   }
   __restgprlr_29();
   return;
@@ -2069,56 +1968,51 @@ void DeleteFailed(int param_1,bdLobbyErrorCode param_2)
 
 // 82844508  OnlineVault_FeederSelectedItem_Delete  (bgame/onlinevault.cpp:1412)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_FeederSelectedItem_Delete(int param_1)
+void OnlineVault_FeederSelectedItem_Delete(undefined8 param_1)
 
 {
-  OnlineVaultUIStack *pOVar1;
-  int iVar2;
-  bdFileMetaData *pbVar3;
-  LocalClientNum_t LVar4;
-  int iVar5;
-  char *pcVar6;
-  bool bVar7;
-  contentServerRemoveFileInfo local_30 [2];
+  uint *puVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char cVar5;
+  ulonglong uVar6;
+  undefined8 local_30;
+  code *local_28;
   
-  pOVar1 = OnlineVaultUI_GetHead(param_1);
-  if (pOVar1 == (OnlineVaultUIStack *)0x0) {
-    iVar5 = -1;
+  puVar3 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar3 == (uint *)0x0) {
+    uVar6 = 0xffffffffffffffff;
   }
   else {
-    iVar5 = pOVar1->selected;
-    if (-1 < iVar5) goto LAB_82844564;
+    uVar6 = (ulonglong)*puVar3;
+    if (-1 < (int)*puVar3) goto LAB_82844564;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x588,0,
-                  "%s");
+  MyAssertHandler(0xffffffff821ee130,0x588,0,0xffffffff82000f98,0xffffffff821ee498);
 LAB_82844564:
-  iVar2 = OnlineVault_FeederItemEnabled(param_1,iVar5);
-  if (iVar2 != 0) {
-    pbVar3 = GetFileslotDescriptor(param_1,iVar5);
-    if (pbVar3 == (bdFileMetaData *)0x0) {
-      Com_PrintError(0xd,
-                     "OnlineVault_FeederSelectedItem_Delete - Trying to delete from an empty or invalid slot."
-                    );
+  iVar4 = OnlineVault_FeederItemEnabled(param_1,uVar6);
+  if (iVar4 != 0) {
+    iVar4 = GetFileslotDescriptor(param_1,uVar6);
+    if (iVar4 == 0) {
+      Com_PrintError(0xd,0xffffffff821ee520);
     }
     else {
-      local_30[0]._0_8_ = (ulonglong)(ushort)iVar5 << 0x30;
-      local_30[0].m_successCallback = DeleteSuccess;
-      local_30[0].m_failureCallback = DeleteFailed;
-      LVar4 = CL_LocalClientNumFromControllerIndex(param_1);
-      OnlineVault_OpenProgressIndicatorMenu(LVar4);
-      iVar5 = LiveStorage_CS_RemoveFile(param_1,local_30);
-      if (iVar5 == 0) {
-        LVar4 = CL_LocalClientNumFromControllerIndex(param_1);
-        UI_CloseMenu(LVar4,s_uiProgressIndicatorMenu);
-        pcVar6 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-        Dvar_SetFromStringByName("cl_vault_notify_title",pcVar6);
-        pcVar6 = UI_SafeTranslateString("MENU_VAULT_DEL_FAILED");
-        Dvar_SetFromStringByName("cl_vault_notify_message",pcVar6);
-        bVar7 = Menu_IsMenuOpenAndVisible(LVar4,"popup_vault_notify");
-        if (!bVar7) {
-          UI_OpenMenu(LVar4,"popup_vault_notify");
+      local_30 = uVar6 << 0x30;
+      local_30 = CONCAT44(local_30._0_4_,DeleteSuccess);
+      local_28 = DeleteFailed;
+      CL_LocalClientNumFromControllerIndex(param_1);
+      OnlineVault_OpenProgressIndicatorMenu();
+      iVar4 = LiveStorage_CS_RemoveFile(param_1,&local_30);
+      if (iVar4 == 0) {
+        uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+        UI_CloseMenu(uVar1,PTR_s_vault_task_in_progress_829a63b4);
+        uVar2 = UI_SafeTranslateString(0xffffffff821ee578);
+        Dvar_SetFromStringByName(0xffffffff821e2764,uVar2);
+        uVar2 = UI_SafeTranslateString("MENU_VAULT_DEL_FAILED");
+        Dvar_SetFromStringByName(0xffffffff821e274c,uVar2);
+        cVar5 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff821e2738);
+        if (cVar5 == '\0') {
+          UI_OpenMenu(uVar1,0xffffffff821e2738);
         }
       }
     }
@@ -2129,112 +2023,103 @@ LAB_82844564:
 
 // 82844688  OnlineVault_CustomGameMode_LoadSuccess  (bgame/onlinevault.cpp:1444)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_CustomGameMode_LoadSuccess(int param_1,dwCSReadFileTask *param_2)
+void OnlineVault_CustomGameMode_LoadSuccess(undefined8 param_1,longlong param_2)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
-  GameStateInfo *pGVar3;
-  uint uVar4;
-  StructuredDataDef *pSVar5;
-  uint uVar6;
-  uint uVar7;
-  StructuredDataDef *pSVar8;
+  undefined8 uVar3;
+  int iVar8;
+  ulonglong uVar4;
+  undefined8 uVar5;
+  longlong lVar6;
+  undefined8 uVar7;
   int iVar9;
   int iVar10;
-  bool bVar13;
-  LocalClientNum_t LVar11;
-  char *pcVar12;
-  longlong lVar14;
-  longlong lVar15;
-  byte bVar16;
-  uint uVar17;
-  StructuredDataBuffer local_70;
-  StructuredDataBuffer local_68 [13];
+  char cVar11;
+  longlong lVar12;
+  byte bVar13;
+  uint uVar14;
+  undefined4 local_70;
+  int local_6c;
+  int local_68 [26];
   
-  lVar14 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_22(param_1);
-  pGVar3 = GameStateInfo_Get();
-  iVar1 = (int)lVar14;
-  if (*(MatchRules **)(iVar1 + 0x79c) != pGVar3->matchRules) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x5ab,0
-                    ,"%s");
+  uVar3 = __savegprlr_22();
+  iVar8 = GameStateInfo_Get();
+  iVar2 = (int)param_2;
+  if (*(int *)(iVar2 + 0x79c) != *(int *)(iVar8 + 8)) {
+    MyAssertHandler(0xffffffff821ee130,0x5ab,0,0xffffffff82000f98);
   }
-  bVar16 = 1;
-  uVar17 = 0;
-  if (*(uint *)(iVar1 + 0x274) != 0) {
-    lVar15 = lVar14 + 0x488;
+  bVar13 = 1;
+  uVar14 = 0;
+  if (*(uint *)(iVar2 + 0x274) != 0) {
+    lVar12 = param_2 + 0x488;
     do {
-      if (*(longlong *)lVar15 == 0) {
-        uVar4 = BG_MatchRulesData_GetGameTypeIndex(pGVar3->matchRules);
-        if (*(ulonglong *)(uVar17 * 0x18 + iVar1 + 0x490) != (ulonglong)uVar4) {
-          bVar16 = 0;
+      if (*(longlong *)lVar12 == 0) {
+        uVar4 = BG_MatchRulesData_GetGameTypeIndex(*(undefined4 *)(iVar8 + 8));
+        if (*(ulonglong *)(uVar14 * 0x18 + iVar2 + 0x490) != (uVar4 & 0xffffffff)) {
+          bVar13 = 0;
         }
         break;
       }
-      uVar17 = uVar17 + 1;
-      lVar15 = lVar15 + 0x18;
-    } while (uVar17 < *(uint *)(iVar1 + 0x274));
+      uVar14 = uVar14 + 1;
+      lVar12 = lVar12 + 0x18;
+    } while (uVar14 < *(uint *)(iVar2 + 0x274));
   }
-  uVar4 = *(uint *)(iVar1 + 0x274);
-  pSVar5 = StructuredDataDef_GetAsset("mp/onlinevault_metadata.def",0xff);
-  local_70.size = *(uint *)(iVar1 + 0x478);
-  if ((lVar14 + 0x278 == 0) && (local_70.size != 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
-                    ,0x54,0,"%s");
+  uVar1 = *(uint *)(iVar2 + 0x274);
+  uVar5 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+  local_6c = *(int *)(iVar2 + 0x478);
+  if ((param_2 + 0x278 == 0) && (local_6c != 0)) {
+    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
   }
-  local_70.data = (uchar *)(lVar14 + 0x278);
-  uVar6 = StructuredData_GetData<int>(pSVar5,&local_70);
-  uVar7 = Com_BlockChecksumKey32(pGVar3->matchRules,*(uint *)(iVar1 + 0x798),0);
-  pSVar8 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
-  local_68[0].data = pGVar3->matchRules->data;
-  if ((MatchRules *)local_68[0].data == (MatchRules *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
-                    ,0x54,0,"%s");
+  local_70 = (undefined4)(param_2 + 0x278);
+  lVar12 = StructuredData_GetData<int>(uVar5,&local_70,0xffffffff821eeadc);
+  lVar6 = Com_BlockChecksumKey32(*(undefined4 *)(iVar8 + 8),*(undefined4 *)(iVar2 + 0x798),0);
+  uVar7 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
+  local_68[0] = *(int *)(iVar8 + 8);
+  if (local_68[0] == 0) {
+    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
   }
-  local_68[0].size = 0xc00;
+  local_68[1] = 0xc00;
   iVar9 = StructuredData_GetDataVersion(local_68);
-  iVar10 = StructuredData_GetVersion(pSVar8);
-  if (((bool)(uVar7 == uVar6 & uVar4 != uVar17 & bVar16)) &&
+  iVar10 = StructuredData_GetVersion(uVar7);
+  if (((bool)(lVar6 == lVar12 & uVar1 != uVar14 & bVar13)) &&
      ((iVar9 == iVar10 ||
-      (bVar13 = UpdateMatchRulesDataFromOldDef(pGVar3->matchRules->data,*(int *)(iVar1 + 0x798)),
-      bVar13)))) {
-    bVar13 = StructuredData_GetData<bool>(pSVar5,&local_70);
-    if (bVar13) {
-      pcVar12 = StructuredData_GetData<char_const_*>(pSVar5,&local_70);
+      (cVar11 = UpdateMatchRulesDataFromOldDef
+                          (*(undefined4 *)(iVar8 + 8),*(undefined4 *)(iVar2 + 0x798)),
+      cVar11 != '\0')))) {
+    cVar11 = StructuredData_GetData<bool>(uVar5,&local_70,0xffffffff821dc408);
+    if (cVar11 == '\0') {
+      uVar5 = 0xffffffff820068af;
     }
     else {
-      pcVar12 = "";
+      uVar5 = StructuredData_GetData<char_const_*>(uVar5,&local_70,0xffffffff82021a74);
     }
-    StructuredData_SetData<char_const_*>(pSVar8,local_68,pcVar12);
-    MatchRulesChanged(pGVar3->matchRules);
-    pGVar3->usingRecipe = 1;
-    Com_Printf(0x10,
-               "[OnlineVault_CustomGameMode_Load] Succeeded in reading file from online storage.\n")
-    ;
-    LVar11 = CL_LocalClientNumFromControllerIndex(iVar2);
-    UI_CloseMenu(LVar11,s_uiProgressIndicatorMenu);
-    pcVar12 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-    Dvar_SetFromStringByName("cl_vault_notify_title",pcVar12);
-    pcVar12 = UI_SafeTranslateString("MENU_CGM_LOAD_SUCCESS");
-    Dvar_SetFromStringByName("cl_vault_notify_message",pcVar12);
-    bVar13 = Menu_IsMenuOpenAndVisible(LVar11,"popup_vault_notify");
+    StructuredData_SetData<char_const_*>(uVar7,local_68,uVar5,0xffffffff821e29b0);
+    MatchRulesChanged(*(undefined4 *)(iVar8 + 8));
+    *(undefined4 *)(iVar8 + 4) = 1;
+    Com_Printf(0x10,0xffffffff821eea40);
+    uVar3 = CL_LocalClientNumFromControllerIndex(uVar3);
+    UI_CloseMenu(uVar3,PTR_s_vault_task_in_progress_829a63b4);
+    uVar5 = UI_SafeTranslateString(0xffffffff821ee578);
+    Dvar_SetFromStringByName(0xffffffff821e2764,uVar5);
+    uVar5 = UI_SafeTranslateString("MENU_CGM_LOAD_SUCCESS");
+    Dvar_SetFromStringByName(0xffffffff821e274c,uVar5);
+    cVar11 = Menu_IsMenuOpenAndVisible(uVar3,0xffffffff821e2738);
   }
   else {
-    Com_PrintError(0x10,"[OnlineVault_CustomGameMode_Load] Unable to verify metadata/tags.\n");
-    InitializeMatchRules(pGVar3->matchRules);
-    LVar11 = CL_LocalClientNumFromControllerIndex(iVar2);
-    UI_CloseMenu(LVar11,s_uiProgressIndicatorMenu);
-    pcVar12 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-    Dvar_SetFromStringByName("cl_vault_notify_title",pcVar12);
-    pcVar12 = UI_SafeTranslateString("MENU_CGM_LOAD_FAILED");
-    Dvar_SetFromStringByName("cl_vault_notify_message",pcVar12);
-    bVar13 = Menu_IsMenuOpenAndVisible(LVar11,"popup_vault_notify");
+    Com_PrintError(0x10,0xffffffff821eea98);
+    InitializeMatchRules(*(undefined4 *)(iVar8 + 8));
+    uVar3 = CL_LocalClientNumFromControllerIndex(uVar3);
+    UI_CloseMenu(uVar3,PTR_s_vault_task_in_progress_829a63b4);
+    uVar5 = UI_SafeTranslateString(0xffffffff821ee578);
+    Dvar_SetFromStringByName(0xffffffff821e2764,uVar5);
+    uVar5 = UI_SafeTranslateString("MENU_CGM_LOAD_FAILED");
+    Dvar_SetFromStringByName(0xffffffff821e274c,uVar5);
+    cVar11 = Menu_IsMenuOpenAndVisible(uVar3,0xffffffff821e2738);
   }
-  if (!bVar13) {
-    UI_OpenMenu(LVar11,"popup_vault_notify");
+  if (cVar11 == '\0') {
+    UI_OpenMenu(uVar3,0xffffffff821e2738);
   }
   __restgprlr_22();
   return;
@@ -2243,120 +2128,113 @@ void OnlineVault_CustomGameMode_LoadSuccess(int param_1,dwCSReadFileTask *param_
 
 // 82844A00  OnlineVault_CustomGameMode_LoadFailed  (bgame/onlinevault.cpp:1518)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_CustomGameMode_LoadFailed(int param_1,bdLobbyErrorCode param_2)
+void OnlineVault_CustomGameMode_LoadFailed(undefined8 param_1)
 
 {
-  GameStateInfo *pGVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
-  bool bVar4;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char cVar4;
   
-  pGVar1 = GameStateInfo_Get();
-  InitializeMatchRules(pGVar1->matchRules);
-  LVar2 = CL_LocalClientNumFromControllerIndex(param_1);
-  UI_CloseMenu(LVar2,s_uiProgressIndicatorMenu);
-  pcVar3 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-  Dvar_SetFromStringByName("cl_vault_notify_title",pcVar3);
-  pcVar3 = UI_SafeTranslateString("MENU_CGM_LOAD_FAILED");
-  Dvar_SetFromStringByName("cl_vault_notify_message",pcVar3);
-  bVar4 = Menu_IsMenuOpenAndVisible(LVar2,"popup_vault_notify");
-  if (!bVar4) {
-    UI_OpenMenu(LVar2,"popup_vault_notify");
+  iVar3 = GameStateInfo_Get();
+  InitializeMatchRules(*(undefined4 *)(iVar3 + 8));
+  uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+  UI_CloseMenu(uVar1,PTR_s_vault_task_in_progress_829a63b4);
+  uVar2 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar2);
+  uVar2 = UI_SafeTranslateString("MENU_CGM_LOAD_FAILED");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar2);
+  cVar4 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff821e2738);
+  if (cVar4 == '\0') {
+    UI_OpenMenu(uVar1,0xffffffff821e2738);
   }
-  Com_PrintError(0x10,"[OnlineVault_CustomGameMode_Load] Failed to read file from online storage.\n"
-                );
+  Com_PrintError(0x10,0xffffffff821eeb18);
   return;
 }
 
 
 // 82844AD0  OnlineVault_CustomGameMode_Load  (bgame/onlinevault.cpp:1527)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void OnlineVault_CustomGameMode_Load(int param_1)
+void OnlineVault_CustomGameMode_Load(void)
 
 {
-  int iVar1;
-  bool bVar9;
-  GameStateInfo *pGVar2;
-  OnlineVaultUIStack *pOVar3;
-  bdFileMetaData *pbVar4;
-  LocalClientNum_t LVar5;
-  UiContext *pUVar6;
-  int iVar7;
-  char *pcVar8;
-  undefined8 *puVar10;
-  longlong lVar11;
+  undefined *puVar1;
+  undefined8 uVar2;
+  char cVar7;
+  int iVar4;
+  uint *puVar5;
+  int iVar6;
+  undefined8 uVar3;
+  undefined8 *puVar8;
+  ulonglong uVar9;
+  longlong lVar10;
   undefined8 uStack_68;
-  contentServerReadFileInfo local_60 [2];
+  undefined8 local_60;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined4 local_50;
+  undefined1 local_48;
+  code *local_3c;
+  code *local_38;
   
-  iVar1 = __savegprlr_27(param_1);
-  bVar9 = LiveStorage_CS_IsInited(iVar1);
-  if (!bVar9) {
-    LiveStorage_CS_Init(iVar1);
+  uVar2 = __savegprlr_27();
+  cVar7 = LiveStorage_CS_IsInited();
+  if (cVar7 == '\0') {
+    LiveStorage_CS_Init(uVar2);
   }
-  bVar9 = LiveStorage_CS_IsAvailable(iVar1);
-  if (!bVar9) {
-    Com_PrintError(0x10,
-                   "[OnlineVault_CustomGameMode_Load] Failed to write, LiveStorage_CS_IsAvailable = false\n"
-                  );
+  cVar7 = LiveStorage_CS_IsAvailable(uVar2);
+  if (cVar7 == '\0') {
+    Com_PrintError(0x10,0xffffffff821eeb68);
     __restgprlr_27();
     return;
   }
-  pGVar2 = GameStateInfo_Get();
-  if (pGVar2->matchRules == (MatchRules *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x605,0
-                    ,"%s");
+  iVar4 = GameStateInfo_Get();
+  if (*(int *)(iVar4 + 8) == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x605,0,0xffffffff82000f98,0xffffffff82042524);
   }
-  puVar10 = &uStack_68;
-  lVar11 = 6;
+  puVar8 = &uStack_68;
+  lVar10 = 6;
   do {
-    puVar10 = puVar10 + 1;
-    *puVar10 = 0;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
-  pOVar3 = OnlineVaultUI_GetHead(iVar1);
-  if (pOVar3 == (OnlineVaultUIStack *)0x0) {
-    iVar7 = -1;
+    puVar8 = puVar8 + 1;
+    *puVar8 = 0;
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  puVar5 = (uint *)OnlineVaultUI_GetHead(uVar2);
+  if (puVar5 == (uint *)0x0) {
+    uVar9 = 0xffffffffffffffff;
   }
   else {
-    iVar7 = pOVar3->selected;
-    if (-1 < iVar7) goto LAB_82844bbc;
+    uVar9 = (ulonglong)*puVar5;
+    if (-1 < (int)*puVar5) goto LAB_82844bbc;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x60a,0,
-                  "%s");
+  MyAssertHandler(0xffffffff821ee130,0x60a,0,0xffffffff82000f98,0xffffffff821ee498);
 LAB_82844bbc:
-  pbVar4 = GetFileslotDescriptor(iVar1,iVar7);
-  local_60[0].m_fileID = pbVar4->m_fileID;
-  local_60[0].m_fileSize = pbVar4->m_fileSize;
-  local_60[0].m_buffer = (char *)pGVar2->matchRules;
-  local_60[0].m_bufferSize = 0xc00;
-  local_60[0].m_successCallback = OnlineVault_CustomGameMode_LoadSuccess;
-  local_60[0].m_failureCallback = OnlineVault_CustomGameMode_LoadFailed;
-  local_60[0].m_isStreamed = false;
-  LVar5 = CL_LocalClientNumFromControllerIndex(iVar1);
-  bVar9 = Menu_IsMenuOpenAndVisible(LVar5,s_uiProgressIndicatorMenu);
-  pcVar8 = s_uiProgressIndicatorMenu;
-  if (!bVar9) {
-    pUVar6 = UI_GetClientDC(LVar5);
-    Menus_OpenByName(pUVar6,pcVar8);
+  iVar6 = GetFileslotDescriptor(uVar2,uVar9);
+  local_60 = *(undefined8 *)(iVar6 + 8);
+  local_58 = *(undefined4 *)(iVar6 + 0x18);
+  local_54 = *(undefined4 *)(iVar4 + 8);
+  local_50 = 0xc00;
+  local_3c = OnlineVault_CustomGameMode_LoadSuccess;
+  local_38 = OnlineVault_CustomGameMode_LoadFailed;
+  local_48 = 0;
+  uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+  cVar7 = Menu_IsMenuOpenAndVisible(uVar3,PTR_s_vault_task_in_progress_829a63b4);
+  puVar1 = PTR_s_vault_task_in_progress_829a63b4;
+  if (cVar7 == '\0') {
+    uVar3 = UI_GetClientDC(uVar3);
+    Menus_OpenByName(uVar3,puVar1);
   }
-  iVar7 = LiveStorage_CS_ReadFile(iVar1,local_60);
-  if (iVar7 == 0) {
-    LVar5 = CL_LocalClientNumFromControllerIndex(iVar1);
-    UI_CloseMenu(LVar5,s_uiProgressIndicatorMenu);
-    pcVar8 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-    Dvar_SetFromStringByName("cl_vault_notify_title",pcVar8);
-    pcVar8 = UI_SafeTranslateString("MENU_CGM_LOAD_FAILED");
-    Dvar_SetFromStringByName("cl_vault_notify_message",pcVar8);
-    bVar9 = Menu_IsMenuOpenAndVisible(LVar5,"popup_vault_notify");
-    if (!bVar9) {
-      UI_OpenMenu(LVar5,"popup_vault_notify");
+  iVar4 = LiveStorage_CS_ReadFile(uVar2,&local_60);
+  if (iVar4 == 0) {
+    uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+    UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+    uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+    Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+    uVar3 = UI_SafeTranslateString("MENU_CGM_LOAD_FAILED");
+    Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+    cVar7 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+    if (cVar7 == '\0') {
+      UI_OpenMenu(uVar2,0xffffffff821e2738);
     }
   }
   __restgprlr_27();
@@ -2366,33 +2244,31 @@ LAB_82844bbc:
 
 // 82844CE0  OnlineVault_CustomGameMode_SaveSucceeded  (bgame/onlinevault.cpp:1564)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_CustomGameMode_SaveSucceeded(int param_1,ulong64 param_2)
+void OnlineVault_CustomGameMode_SaveSucceeded(void)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
-  bool bVar5;
-  contentServerPrivateData *pcVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
   
-  iVar1 = __savegprlr_29(param_1);
-  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-  UI_CloseMenu(LVar2,s_uiProgressIndicatorMenu);
-  pcVar3 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-  Dvar_SetFromStringByName("cl_vault_notify_title",pcVar3);
-  pcVar3 = UI_SafeTranslateString("MENU_CGM_SAVE_SUCCESS");
-  Dvar_SetFromStringByName("cl_vault_notify_message",pcVar3);
-  bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"popup_vault_notify");
-  if (!bVar5) {
-    UI_OpenMenu(LVar2,"popup_vault_notify");
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_CGM_SAVE_SUCCESS");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
   }
-  pcVar4 = LiveStorage_CS_GetPrivateData(iVar1);
-  if (pcVar4 != (contentServerPrivateData *)0x0) {
-    pcVar4->m_valid = false;
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
   }
-  Com_Printf(0x10,"[OnlineVault_CustomGameMode_Save] Finished writing\n");
+  Com_Printf(0x10,0xffffffff821eebc0);
   __restgprlr_29();
   return;
 }
@@ -2400,33 +2276,31 @@ void OnlineVault_CustomGameMode_SaveSucceeded(int param_1,ulong64 param_2)
 
 // 82844DA0  OnlineVault_CustomGameMode_SaveFailed  (bgame/onlinevault.cpp:1572)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void OnlineVault_CustomGameMode_SaveFailed(int param_1,bdLobbyErrorCode param_2)
+void OnlineVault_CustomGameMode_SaveFailed(void)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
-  bool bVar5;
-  contentServerPrivateData *pcVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
   
-  iVar1 = __savegprlr_29(param_1,param_2);
-  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-  UI_CloseMenu(LVar2,s_uiProgressIndicatorMenu);
-  pcVar3 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-  Dvar_SetFromStringByName("cl_vault_notify_title",pcVar3);
-  pcVar3 = UI_SafeTranslateString("MENU_CGM_SAVE_FAILED");
-  Dvar_SetFromStringByName("cl_vault_notify_message",pcVar3);
-  bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"popup_vault_notify");
-  if (!bVar5) {
-    UI_OpenMenu(LVar2,"popup_vault_notify");
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_CGM_SAVE_FAILED");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
   }
-  pcVar4 = LiveStorage_CS_GetPrivateData(iVar1);
-  if (pcVar4 != (contentServerPrivateData *)0x0) {
-    pcVar4->m_valid = false;
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
   }
-  Com_PrintError(0x10,"[OnlineVault_CustomGameMode_Save] Failed to write\n");
+  Com_PrintError(0x10,0xffffffff821eebf4);
   __restgprlr_29();
   return;
 }
@@ -2434,159 +2308,159 @@ void OnlineVault_CustomGameMode_SaveFailed(int param_1,bdLobbyErrorCode param_2)
 
 // 82844E60  OnlineVault_CustomGameMode_Save  (bgame/onlinevault.cpp:1582)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void OnlineVault_CustomGameMode_Save(int param_1)
+void OnlineVault_CustomGameMode_Save(void)
 
 {
-  uint *puVar1;
-  int iVar3;
-  bool bVar13;
-  OnlineVaultUIStack *pOVar4;
-  GameStateInfo *pGVar5;
-  StructuredDataDef *pSVar6;
-  char *pcVar7;
+  undefined *puVar1;
+  undefined8 *puVar2;
+  undefined8 uVar3;
+  char cVar9;
+  uint *puVar5;
+  int iVar6;
+  undefined8 uVar4;
+  int iVar7;
   char *pcVar8;
-  ulong64 uVar2;
-  uint uVar9;
-  LocalClientNum_t LVar10;
-  UiContext *pUVar11;
-  int iVar12;
-  uint *puVar14;
-  longlong lVar15;
-  bdTag *pbVar16;
-  StructuredDataBuffer local_4a0;
-  uint local_498 [2];
-  contentServerWriteFileInfo local_490;
-  char acStack_450 [256];
-  bdTag abStack_350 [33];
-  bdTag abStack_38 [2];
+  undefined1 uVar10;
+  undefined8 uVar11;
+  undefined8 *puVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  undefined1 *puVar15;
+  undefined *local_4a0;
+  undefined4 local_49c;
+  undefined8 local_498;
+  undefined2 local_490 [2];
+  undefined4 uStack_48c;
+  undefined4 local_488;
+  undefined1 *local_484;
+  undefined2 local_480;
+  undefined *local_47c;
+  undefined4 local_478;
+  undefined4 local_474;
+  undefined1 *local_470;
+  code *local_464;
+  code *local_460;
+  undefined1 auStack_450 [256];
+  undefined1 auStack_350 [792];
+  undefined1 auStack_38 [56];
   
-  iVar3 = __savegprlr_26(param_1);
-  pbVar16 = abStack_350;
-  lVar15 = 0x20;
+  uVar3 = __savegprlr_26();
+  puVar15 = auStack_350;
+  lVar13 = 0x20;
   do {
-    bdTag::bdTag(pbVar16);
-    lVar15 = lVar15 + -1;
-    pbVar16 = pbVar16 + 1;
-  } while (-1 < lVar15);
-  bVar13 = LiveStorage_CS_IsInited(iVar3);
-  if (!bVar13) {
-    LiveStorage_CS_Init(iVar3);
+    bdTag__bdTag(puVar15);
+    lVar13 = lVar13 + -1;
+    puVar15 = puVar15 + 0x18;
+  } while (-1 < lVar13);
+  cVar9 = LiveStorage_CS_IsInited(uVar3);
+  if (cVar9 == '\0') {
+    LiveStorage_CS_Init(uVar3);
   }
-  bVar13 = LiveStorage_CS_IsAvailable(iVar3);
-  if (!bVar13) {
-    Com_PrintError(0x10,
-                   "[OnlineVault_CustomGameMode_Save] Failed to write, LiveStorage_CS_IsAvailable = false\n"
-                  );
-    pbVar16 = abStack_38;
-    lVar15 = 0x20;
+  cVar9 = LiveStorage_CS_IsAvailable(uVar3);
+  if (cVar9 == '\0') {
+    Com_PrintError(0x10,0xffffffff821eec50);
+    puVar15 = auStack_38;
+    lVar13 = 0x20;
     do {
-      pbVar16 = pbVar16 + -1;
-      bdTag::~bdTag(pbVar16);
-      lVar15 = lVar15 + -1;
-    } while (-1 < lVar15);
+      puVar15 = puVar15 + -0x18;
+      bdTag___bdTag(puVar15);
+      lVar13 = lVar13 + -1;
+    } while (-1 < lVar13);
     __restgprlr_26();
     return;
   }
-  pOVar4 = OnlineVaultUI_GetHead(iVar3);
-  if (pOVar4 == (OnlineVaultUIStack *)0x0) {
-    iVar12 = -1;
+  puVar5 = (uint *)OnlineVaultUI_GetHead(uVar3);
+  if (puVar5 == (uint *)0x0) {
+    uVar14 = 0xffffffffffffffff;
   }
   else {
-    iVar12 = pOVar4->selected;
-    if (-1 < iVar12) goto LAB_82844f40;
+    uVar14 = (ulonglong)*puVar5;
+    if (-1 < (int)*puVar5) goto LAB_82844f40;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x63f,0,
-                  "%s");
+  MyAssertHandler(0xffffffff821ee130,0x63f,0,0xffffffff82000f98,0xffffffff821ee498);
 LAB_82844f40:
-  pGVar5 = GameStateInfo_Get();
-  if (pGVar5->usingRecipe == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x641,0
-                    ,"%s");
+  iVar6 = GameStateInfo_Get();
+  if (*(int *)(iVar6 + 4) == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x641,0,0xffffffff82000f98,0xffffffff821eec38);
   }
-  if (pGVar5->matchRules == (MatchRules *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x642,0
-                    ,"%s");
+  if (*(int *)(iVar6 + 8) == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x642,0,0xffffffff82000f98,0xffffffff82042524);
   }
-  lVar15 = 6;
-  puVar1 = local_498;
+  lVar13 = 6;
+  puVar2 = &local_498;
   do {
-    puVar14 = puVar1;
-    puVar1 = puVar14 + 2;
-    puVar1[0] = 0;
-    puVar1[1] = 0;
-    lVar15 = lVar15 + -1;
-  } while (lVar15 != 0);
-  puVar14[4] = 0;
-  CL_GetUsernameForLocalClient(iVar3);
-  Com_sprintf(acStack_450,0x100,"%s-slot%d_cgm");
-  local_490.m_fileName = acStack_450;
-  local_490.m_fileSlot = (ushort)iVar12;
-  local_490.m_category = 5;
-  pSVar6 = StructuredDataDef_GetAsset("mp/onlinevault_metadata.def",0xff);
-  memset();
-  local_4a0.data = g_onlineVaultWriteBuffer.thumb;
-  local_4a0.size = 0xff;
-  StructuredData_SetDataVersion(pSVar6,&local_4a0);
-  pcVar7 = CL_GetUsernameForLocalClient(iVar3);
-  StructuredData_SetData<char_const_*>(pSVar6,&local_4a0,pcVar7);
-  pcVar7 = BG_MatchRulesData_GetGameType(pGVar5->matchRules);
-  pcVar8 = BG_MatchRulesData_GetRecipeName(pGVar5->matchRules);
-  if ((pcVar8 == (char *)0x0) || (bVar13 = true, *pcVar8 == '\0')) {
-    bVar13 = false;
+    puVar12 = puVar2;
+    puVar2 = puVar12 + 1;
+    *puVar2 = 0;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  *(undefined4 *)(puVar12 + 2) = 0;
+  uVar4 = CL_GetUsernameForLocalClient(uVar3);
+  Com_sprintf(auStack_450,0x100,0xffffffff821eec28,uVar4,uVar14);
+  local_484 = auStack_450;
+  local_490[0] = (undefined2)uVar14;
+  local_480 = 5;
+  iVar7 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+  memset(&DAT_8487ce50,0,0xff);
+  local_4a0 = &DAT_8487ce50;
+  local_49c = 0xff;
+  StructuredData_SetDataVersion(iVar7,&local_4a0);
+  uVar4 = CL_GetUsernameForLocalClient(uVar3);
+  StructuredData_SetData<char_const_*>(iVar7,&local_4a0,uVar4,0xffffffff821dc418);
+  uVar4 = BG_MatchRulesData_GetGameType(*(undefined4 *)(iVar6 + 8));
+  pcVar8 = (char *)BG_MatchRulesData_GetRecipeName(*(undefined4 *)(iVar6 + 8));
+  if ((pcVar8 == (char *)0x0) || (uVar11 = 1, *pcVar8 == '\0')) {
+    uVar11 = 0;
   }
-  StructuredData_SetData<bool>(pSVar6,&local_4a0,bVar13);
-  pcVar8 = GetLocalizedMatchRulesName(pcVar8,pcVar7);
-  StructuredData_SetData<char_const_*>(pSVar6,&local_4a0,pcVar8);
-  StructuredData_SetData<bool>(pSVar6,&local_4a0,false);
-  pcVar7 = UI_GetCustomizedGameTypeDefaultDisplayDesc(pcVar7);
-  StructuredData_SetData<char_const_*>(pSVar6,&local_4a0,pcVar7);
-  StructuredData_SetData<int>(pSVar6,&local_4a0,pGVar5->matchRules->checksum);
-  local_490.m_thumbData = &g_onlineVaultWriteBuffer;
-  local_490.m_thumbDataSize = pSVar6->size;
-  local_498[0] = 0;
-  uVar2 = Live_GetXuid(iVar3);
-  LiveStorage_CS_AddTag(3,uVar2,(int *)local_498,abStack_350,0x21);
-  uVar9 = BG_MatchRulesData_GetGameTypeIndex(pGVar5->matchRules);
-  LiveStorage_CS_AddTag(0,(ulonglong)uVar9 & 0xff,(int *)local_498,abStack_350,0x21);
-  local_490.m_tags = abStack_350;
-  local_490.m_numTags = local_498[0];
-  pSVar6 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
-  local_490.m_fileSize = pSVar6->size;
-  local_490.m_fileData = pGVar5->matchRules;
-  local_490.m_successCallback = OnlineVault_CustomGameMode_SaveSucceeded;
-  local_490.m_failureCallback = OnlineVault_CustomGameMode_SaveFailed;
-  LVar10 = CL_LocalClientNumFromControllerIndex(iVar3);
-  bVar13 = Menu_IsMenuOpenAndVisible(LVar10,s_uiProgressIndicatorMenu);
-  pcVar7 = s_uiProgressIndicatorMenu;
-  if (!bVar13) {
-    pUVar11 = UI_GetClientDC(LVar10);
-    Menus_OpenByName(pUVar11,pcVar7);
+  StructuredData_SetData<bool>(iVar7,&local_4a0,uVar11,0xffffffff821dc408);
+  uVar11 = GetLocalizedMatchRulesName(pcVar8,uVar4);
+  StructuredData_SetData<char_const_*>(iVar7,&local_4a0,uVar11,0xffffffff82021a74);
+  StructuredData_SetData<bool>(iVar7,&local_4a0,0,0xffffffff821dc3f8);
+  uVar4 = UI_GetCustomizedGameTypeDefaultDisplayDesc(uVar4);
+  StructuredData_SetData<char_const_*>(iVar7,&local_4a0,uVar4,0xffffffff82132868);
+  StructuredData_SetData<int>
+            (iVar7,&local_4a0,*(undefined4 *)(*(int *)(iVar6 + 8) + 0xc04),0xffffffff821eeadc);
+  local_47c = &DAT_8487ce50;
+  local_478 = *(undefined4 *)(iVar7 + 0x30);
+  local_498._0_4_ = 0;
+  uVar4 = Live_GetXuid(uVar3);
+  LiveStorage_CS_AddTag(3,uVar4,&local_498,auStack_350,0x21);
+  uVar10 = BG_MatchRulesData_GetGameTypeIndex(*(undefined4 *)(iVar6 + 8));
+  LiveStorage_CS_AddTag(0,uVar10,&local_498,auStack_350,0x21);
+  local_470 = auStack_350;
+  local_474 = local_498._0_4_;
+  iVar7 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
+  local_488 = *(undefined4 *)(iVar7 + 0x30);
+  uStack_48c = *(undefined4 *)(iVar6 + 8);
+  local_464 = OnlineVault_CustomGameMode_SaveSucceeded;
+  local_460 = OnlineVault_CustomGameMode_SaveFailed;
+  uVar4 = CL_LocalClientNumFromControllerIndex(uVar3);
+  cVar9 = Menu_IsMenuOpenAndVisible(uVar4,PTR_s_vault_task_in_progress_829a63b4);
+  puVar1 = PTR_s_vault_task_in_progress_829a63b4;
+  if (cVar9 == '\0') {
+    uVar4 = UI_GetClientDC(uVar4);
+    Menus_OpenByName(uVar4,puVar1);
   }
-  iVar12 = LiveStorage_CS_WriteFile(iVar3,&local_490);
-  if (iVar12 == 0) {
-    LVar10 = CL_LocalClientNumFromControllerIndex(iVar3);
-    UI_CloseMenu(LVar10,s_uiProgressIndicatorMenu);
-    pcVar7 = UI_SafeTranslateString("MENU_ONLINEVAULT_CAPS");
-    Dvar_SetFromStringByName("cl_vault_notify_title",pcVar7);
-    pcVar7 = UI_SafeTranslateString("MENU_CGM_SAVE_FAILED");
-    Dvar_SetFromStringByName("cl_vault_notify_message",pcVar7);
-    bVar13 = Menu_IsMenuOpenAndVisible(LVar10,"popup_vault_notify");
-    if (!bVar13) {
-      UI_OpenMenu(LVar10,"popup_vault_notify");
+  iVar6 = LiveStorage_CS_WriteFile(uVar3,local_490);
+  if (iVar6 == 0) {
+    uVar3 = CL_LocalClientNumFromControllerIndex(uVar3);
+    UI_CloseMenu(uVar3,PTR_s_vault_task_in_progress_829a63b4);
+    uVar4 = UI_SafeTranslateString(0xffffffff821ee578);
+    Dvar_SetFromStringByName(0xffffffff821e2764,uVar4);
+    uVar4 = UI_SafeTranslateString("MENU_CGM_SAVE_FAILED");
+    Dvar_SetFromStringByName(0xffffffff821e274c,uVar4);
+    cVar9 = Menu_IsMenuOpenAndVisible(uVar3,0xffffffff821e2738);
+    if (cVar9 == '\0') {
+      UI_OpenMenu(uVar3,0xffffffff821e2738);
     }
   }
-  pbVar16 = abStack_38;
-  lVar15 = 0x20;
+  puVar15 = auStack_38;
+  lVar13 = 0x20;
   do {
-    pbVar16 = pbVar16 + -1;
-    bdTag::~bdTag(pbVar16);
-    lVar15 = lVar15 + -1;
-  } while (-1 < lVar15);
+    puVar15 = puVar15 + -0x18;
+    bdTag___bdTag(puVar15);
+    lVar13 = lVar13 + -1;
+  } while (-1 < lVar13);
   __restgprlr_26();
   return;
 }
@@ -2594,36 +2468,34 @@ LAB_82844f40:
 
 // 82842D80  OnlineVault_TheaterFile_Load  (bgame/onlinevault.cpp:1658)
 
-void OnlineVault_TheaterFile_Load(int param_1,bool param_2)
+void OnlineVault_TheaterFile_Load(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  OnlineVaultUIStack *pOVar2;
-  bdFileMetaData *pbVar3;
-  int iVar4;
+  undefined8 uVar1;
+  uint *puVar2;
+  int iVar3;
+  ulonglong uVar4;
   
-  iVar1 = __savegprlr_27(param_1);
-  pOVar2 = OnlineVaultUI_GetHead(iVar1);
-  if (pOVar2 == (OnlineVaultUIStack *)0x0) {
-    iVar4 = -1;
+  uVar1 = __savegprlr_27();
+  puVar2 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar2 == (uint *)0x0) {
+    uVar4 = 0xffffffffffffffff;
   }
   else {
-    iVar4 = pOVar2->selected;
-    if (-1 < iVar4) goto LAB_82842de0;
+    uVar4 = (ulonglong)*puVar2;
+    if (-1 < (int)*puVar2) goto LAB_82842de0;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x67c,0,
-                  "%s");
+  MyAssertHandler(0xffffffff821ee130,0x67c,0,0xffffffff82000f98,0xffffffff821ee498);
 LAB_82842de0:
-  pbVar3 = GetFileslotDescriptor(iVar1,iVar4);
-  if (pbVar3 == (bdFileMetaData *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x67f,0
-                    ,"%s");
+  iVar3 = GetFileslotDescriptor(uVar1,uVar4);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x67f,0,0xffffffff82000f98,0xffffffff821ee510);
   }
-  if ((pbVar3->m_category != 1) && (pbVar3->m_category != 2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x680,0
-                    ,"%s");
+  if ((*(short *)(iVar3 + 0x26a) != 1) && (*(short *)(iVar3 + 0x26a) != 2)) {
+    MyAssertHandler(0xffffffff821ee130,0x680,0,0xffffffff82000f98,0xffffffff821ee4b0);
   }
-  CL_Demo_DownloadFile(iVar1,pbVar3->m_fileName,pbVar3->m_fileID,pbVar3->m_fileSize,param_2);
+  CL_Demo_DownloadFile
+            (uVar1,iVar3 + 0x6a,*(undefined8 *)(iVar3 + 8),*(undefined4 *)(iVar3 + 0x18),param_2);
   __restgprlr_27();
   return;
 }
@@ -2631,35 +2503,31 @@ LAB_82842de0:
 
 // 82842E68  OnlineVault_FeederSelectedItem_FacebookUploadPhoto  (bgame/onlinevault.cpp:1673)
 
-void OnlineVault_FeederSelectedItem_FacebookUploadPhoto(int param_1)
+void OnlineVault_FeederSelectedItem_FacebookUploadPhoto(undefined8 param_1)
 
 {
-  OnlineVaultUIStack *pOVar1;
+  uint *puVar1;
   int iVar2;
-  bdFileMetaData *pbVar3;
-  int iVar4;
+  ulonglong uVar3;
   
-  pOVar1 = OnlineVaultUI_GetHead(param_1);
-  if (pOVar1 == (OnlineVaultUIStack *)0x0) {
-    iVar4 = -1;
+  puVar1 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar1 == (uint *)0x0) {
+    uVar3 = 0xffffffffffffffff;
   }
   else {
-    iVar4 = pOVar1->selected;
-    if (-1 < iVar4) goto LAB_82842ec4;
+    uVar3 = (ulonglong)*puVar1;
+    if (-1 < (int)*puVar1) goto LAB_82842ec4;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\onlinevault.cpp",0x68d,0,
-                  "%s");
+  MyAssertHandler(0xffffffff821ee130,0x68d,0,0xffffffff82000f98,0xffffffff821ee498);
 LAB_82842ec4:
-  iVar2 = OnlineVault_FeederItemEnabled(param_1,iVar4);
+  iVar2 = OnlineVault_FeederItemEnabled(param_1,uVar3);
   if (iVar2 != 0) {
-    pbVar3 = GetFileslotDescriptor(param_1,iVar4);
-    if (pbVar3 == (bdFileMetaData *)0x0) {
-      Com_PrintError(0xd,
-                     "OnlineVault_FeederSelectedItem_Delete - Trying to delete from an empty or invalid slot."
-                    );
+    iVar2 = GetFileslotDescriptor(param_1,uVar3);
+    if (iVar2 == 0) {
+      Com_PrintError(0xd,0xffffffff821ee520);
     }
     else {
-      Facebook_PostScreenshot(param_1,pbVar3->m_fileID);
+      Facebook_PostScreenshot(param_1,*(undefined8 *)(iVar2 + 8));
     }
   }
   return;
@@ -2668,19 +2536,17 @@ LAB_82842ec4:
 
 // 82941168  `dynamic_atexit_destructor_for_'s_copiedFileID''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__s_copiedFileID__(void)
 
 {
   longlong lVar1;
-  dvar_t **this;
+  longlong lVar2;
   
   lVar1 = 3;
-  this = &snd_cinematicVolumeScale;
+  lVar2 = -0x7b783068;
   do {
-    this = (dvar_t **)((int)this + -0x10);
-    bdFileID::~bdFileID((bdFileID *)this);
+    lVar2 = lVar2 + -0x10;
+    bdFileID___bdFileID(lVar2);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
   return;

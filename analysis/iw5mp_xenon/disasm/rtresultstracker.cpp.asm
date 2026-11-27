@@ -163,7 +163,7 @@ LAB_828998a4:
   828998B8  EBE1FFF0             ld r31,-0x10(r1)
   828998BC  4E800020             blr
 
-; 8289CD08  CRTResultsTracker_CollectorMain  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:70)
+; 8289CD08  D3D::CRTResultsTracker_CollectorMain  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:70)
   8289CD08  7D8802A6             mfspr r12,LR
   8289CD0C  9181FFF8             stw r12,-0x8(r1)
   8289CD10  FBE1FFF0             std r31,-0x10(r1)
@@ -183,7 +183,7 @@ LAB_828998a4:
   8289CD48  EBE1FFF0             ld r31,-0x10(r1)
   8289CD4C  4E800020             blr
 
-; 828998C0  Allocate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:79)
+; 828998C0  D3D::RTTextureUsageResults::Allocate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:79)
   828998C0  7D8802A6             mfspr r12,LR
   828998C4  9181FFF8             stw r12,-0x8(r1)
   828998C8  FBE1FFF0             std r31,-0x10(r1)
@@ -230,7 +230,7 @@ LAB_82899948:
   8289995C  EBE1FFF0             ld r31,-0x10(r1)
   82899960  4E800020             blr
 
-; 828994A0  Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:95)
+; 828994A0  D3D::RecycleQueue<D3D::RTPerfCounterMipResultsBuffer,&D3D::RTMemFreePhysicalReadWrite>::Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:95)
   828994A0  7D8802A6             mfspr r12,LR
   828994A4  4807D219             bl 0x829166bc
   828994A8  9421FF50             stwu r1,-0xb0(r1)
@@ -266,7 +266,7 @@ LAB_82899514:
   8289951C  382100B0             addi r1,r1,0xb0
   82899520  4807D1EC             b 0x8291670c
 
-; 82899528  Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:95)
+; 82899528  D3D::RecycleQueue<D3D::RTPerfCounterMipResultsDescription,&D3D::RTDebugMemFree>::Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:95)
   82899528  7D8802A6             mfspr r12,LR
   8289952C  4807D191             bl 0x829166bc
   82899530  9421FF50             stwu r1,-0xb0(r1)
@@ -302,7 +302,7 @@ LAB_8289959c:
   828995A4  382100B0             addi r1,r1,0xb0
   828995A8  4807D164             b 0x8291670c
 
-; 8289B960  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:112)
+; 8289B960  D3D::RecycleQueue<D3D::RTPerfCounterMipResultsBuffer,&D3D::RTMemFreePhysicalReadWrite>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:112)
   8289B960  7D8802A6             mfspr r12,LR
   8289B964  9181FFF8             stw r12,-0x8(r1)
   8289B968  FBE1FFF0             std r31,-0x10(r1)
@@ -328,7 +328,7 @@ LAB_8289b9a4:
   8289B9B4  EBE1FFF0             ld r31,-0x10(r1)
   8289B9B8  4E800020             blr
 
-; 8289B9C0  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:112)
+; 8289B9C0  D3D::RecycleQueue<D3D::RTPerfCounterMipResultsDescription,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:112)
   8289B9C0  7D8802A6             mfspr r12,LR
   8289B9C4  9181FFF8             stw r12,-0x8(r1)
   8289B9C8  FBE1FFF0             std r31,-0x10(r1)
@@ -354,7 +354,7 @@ LAB_8289ba04:
   8289BA14  EBE1FFF0             ld r31,-0x10(r1)
   8289BA18  4E800020             blr
 
-; 8289B330  Put  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:124)
+; 8289B330  D3D::RecycleQueue<D3D::RTPerfCounterMipResultsBuffer,&D3D::RTMemFreePhysicalReadWrite>::Put  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:124)
   8289B330  7D8802A6             mfspr r12,LR
   8289B334  9181FFF8             stw r12,-0x8(r1)
   8289B338  FBC1FFE8             std r30,-0x18(r1)
@@ -396,7 +396,7 @@ LAB_8289b3a8:
   8289B3C0  EBE1FFF0             ld r31,-0x10(r1)
   8289B3C4  4E800020             blr
 
-; 8289B3C8  Put  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:124)
+; 8289B3C8  D3D::RecycleQueue<D3D::RTPerfCounterMipResultsDescription,&D3D::RTDebugMemFree>::Put  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:124)
   8289B3C8  7D8802A6             mfspr r12,LR
   8289B3CC  9181FFF8             stw r12,-0x8(r1)
   8289B3D0  FBC1FFE8             std r30,-0x18(r1)
@@ -434,7 +434,7 @@ LAB_8289b430:
   8289B448  EBE1FFF0             ld r31,-0x10(r1)
   8289B44C  4E800020             blr
 
-; 828995B0  Get  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:138)
+; 828995B0  D3D::RecycleQueue<D3D::RTPerfCounterMipResultsBuffer,&D3D::RTMemFreePhysicalReadWrite>::Get  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:138)
   828995B0  7D8802A6             mfspr r12,LR
   828995B4  9181FFF8             stw r12,-0x8(r1)
   828995B8  FBC1FFE8             std r30,-0x18(r1)
@@ -462,7 +462,7 @@ LAB_8289b430:
   82899610  EBE1FFF0             ld r31,-0x10(r1)
   82899614  4E800020             blr
 
-; 82899618  Get  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:138)
+; 82899618  D3D::RecycleQueue<D3D::RTPerfCounterMipResultsDescription,&D3D::RTDebugMemFree>::Get  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:138)
   82899618  7D8802A6             mfspr r12,LR
   8289961C  9181FFF8             stw r12,-0x8(r1)
   82899620  FBC1FFE8             std r30,-0x18(r1)
@@ -490,7 +490,7 @@ LAB_8289b430:
   82899678  EBE1FFF0             ld r31,-0x10(r1)
   8289967C  4E800020             blr
 
-; 8289B450  Drain  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:148)
+; 8289B450  D3D::RecycleQueue<D3D::RTPerfCounterMipResultsBuffer,&D3D::RTMemFreePhysicalReadWrite>::Drain  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:148)
   8289B450  7D8802A6             mfspr r12,LR
   8289B454  9181FFF8             stw r12,-0x8(r1)
   8289B458  FBC1FFE8             std r30,-0x18(r1)
@@ -534,7 +534,7 @@ LAB_8289b4c8:
   8289B4E0  EBE1FFF0             ld r31,-0x10(r1)
   8289B4E4  4E800020             blr
 
-; 8289B4E8  Drain  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:148)
+; 8289B4E8  D3D::RecycleQueue<D3D::RTPerfCounterMipResultsDescription,&D3D::RTDebugMemFree>::Drain  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:148)
   8289B4E8  7D8802A6             mfspr r12,LR
   8289B4EC  9181FFF8             stw r12,-0x8(r1)
   8289B4F0  FBC1FFE8             std r30,-0x18(r1)
@@ -576,7 +576,7 @@ LAB_8289b558:
   8289B570  EBE1FFF0             ld r31,-0x10(r1)
   8289B574  4E800020             blr
 
-; 8289CD50  InitializeCollectorThread  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:167)
+; 8289CD50  D3D::CRTResultsTracker::InitializeCollectorThread  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:167)
   8289CD50  7D8802A6             mfspr r12,LR
   8289CD54  48079969             bl 0x829166bc
   8289CD58  9421FF80             stwu r1,-0x80(r1)
@@ -624,7 +624,7 @@ LAB_8289cdf4:
   8289CDF4  38210080             addi r1,r1,0x80
   8289CDF8  48079914             b 0x8291670c
 
-; 8289AC20  FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
+; 8289AC20  D3D::CTSSortedList<D3D::RTUnusedTextureInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
   8289AC20  7D8802A6             mfspr r12,LR
   8289AC24  4807BA99             bl 0x829166bc
   8289AC28  9421FF90             stwu r1,-0x70(r1)
@@ -684,7 +684,7 @@ LAB_8289ace0:
   8289ACE0  38210070             addi r1,r1,0x70
   8289ACE4  4807BA28             b 0x8291670c
 
-; 8289AD50  FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
+; 8289AD50  D3D::CTSSortedList<D3D::RTResolveTargetInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
   8289AD50  7D8802A6             mfspr r12,LR
   8289AD54  4807B969             bl 0x829166bc
   8289AD58  9421FF90             stwu r1,-0x70(r1)
@@ -744,7 +744,7 @@ LAB_8289ae10:
   8289AE10  38210070             addi r1,r1,0x70
   8289AE14  4807B8F8             b 0x8291670c
 
-; 8289AE80  FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
+; 8289AE80  D3D::CTSSortedList<D3D::CRTUniqueNameDimensionsInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
   8289AE80  7D8802A6             mfspr r12,LR
   8289AE84  4807B839             bl 0x829166bc
   8289AE88  9421FF90             stwu r1,-0x70(r1)
@@ -804,7 +804,7 @@ LAB_8289af40:
   8289AF40  38210070             addi r1,r1,0x70
   8289AF44  4807B7C8             b 0x8291670c
 
-; 8289AFB8  FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
+; 8289AFB8  D3D::CTSSortedList<D3D::StringWithList<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
   8289AFB8  7D8802A6             mfspr r12,LR
   8289AFBC  4807B701             bl 0x829166bc
   8289AFC0  9421FF90             stwu r1,-0x70(r1)
@@ -864,7 +864,7 @@ LAB_8289b078:
   8289B078  38210070             addi r1,r1,0x70
   8289B07C  4807B690             b 0x8291670c
 
-; 8289B080  FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
+; 8289B080  D3D::CTSSortedList<D3D::StringWithList<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
   8289B080  7D8802A6             mfspr r12,LR
   8289B084  4807B639             bl 0x829166bc
   8289B088  9421FF90             stwu r1,-0x70(r1)
@@ -924,7 +924,7 @@ LAB_8289b140:
   8289B140  38210070             addi r1,r1,0x70
   8289B144  4807B5C8             b 0x8291670c
 
-; 8289B148  FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
+; 8289B148  D3D::CTSSortedList<D3D::StringWithList<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
   8289B148  7D8802A6             mfspr r12,LR
   8289B14C  4807B571             bl 0x829166bc
   8289B150  9421FF90             stwu r1,-0x70(r1)
@@ -984,7 +984,7 @@ LAB_8289b208:
   8289B208  38210070             addi r1,r1,0x70
   8289B20C  4807B500             b 0x8291670c
 
-; 8289CE00  Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:208)
+; 8289CE00  D3D::CRTResultsTracker::Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:208)
   8289CE00  7D8802A6             mfspr r12,LR
   8289CE04  480798A5             bl 0x829166a8
   8289CE08  9421FF30             stwu r1,-0xd0(r1)
@@ -1075,7 +1075,7 @@ LAB_8289cf3c:
   8289CF44  382100D0             addi r1,r1,0xd0
   8289CF48  480797B0             b 0x829166f8
 
-; 8289ACE8  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
+; 8289ACE8  D3D::CTSSortedList<D3D::RTUnusedTextureInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
   8289ACE8  7D8802A6             mfspr r12,LR
   8289ACEC  4807B9D1             bl 0x829166bc
   8289ACF0  9421FF90             stwu r1,-0x70(r1)
@@ -1106,7 +1106,7 @@ LAB_8289ad38:
   8289AD44  38210070             addi r1,r1,0x70
   8289AD48  4807B9C4             b 0x8291670c
 
-; 8289AE18  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
+; 8289AE18  D3D::CTSSortedList<D3D::RTResolveTargetInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
   8289AE18  7D8802A6             mfspr r12,LR
   8289AE1C  4807B8A1             bl 0x829166bc
   8289AE20  9421FF90             stwu r1,-0x70(r1)
@@ -1137,7 +1137,7 @@ LAB_8289ae68:
   8289AE74  38210070             addi r1,r1,0x70
   8289AE78  4807B894             b 0x8291670c
 
-; 8289AF48  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
+; 8289AF48  D3D::CTSSortedList<D3D::CRTUniqueNameDimensionsInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
   8289AF48  7D8802A6             mfspr r12,LR
   8289AF4C  4807B76D             bl 0x829166b8
   8289AF50  9421FF80             stwu r1,-0x80(r1)
@@ -1171,7 +1171,7 @@ LAB_8289afa4:
   8289AFB0  38210080             addi r1,r1,0x80
   8289AFB4  4807B754             b 0x82916708
 
-; 8289B810  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
+; 8289B810  D3D::CTSSortedList<D3D::StringWithList<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
   8289B810  7D8802A6             mfspr r12,LR
   8289B814  4807AEA5             bl 0x829166b8
   8289B818  9421FF80             stwu r1,-0x80(r1)
@@ -1205,7 +1205,7 @@ LAB_8289b86c:
   8289B878  38210080             addi r1,r1,0x80
   8289B87C  4807AE8C             b 0x82916708
 
-; 8289B880  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
+; 8289B880  D3D::CTSSortedList<D3D::StringWithList<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
   8289B880  7D8802A6             mfspr r12,LR
   8289B884  4807AE35             bl 0x829166b8
   8289B888  9421FF80             stwu r1,-0x80(r1)
@@ -1239,7 +1239,7 @@ LAB_8289b8dc:
   8289B8E8  38210080             addi r1,r1,0x80
   8289B8EC  4807AE1C             b 0x82916708
 
-; 8289B8F0  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
+; 8289B8F0  D3D::CTSSortedList<D3D::StringWithList<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
   8289B8F0  7D8802A6             mfspr r12,LR
   8289B8F4  4807ADC5             bl 0x829166b8
   8289B8F8  9421FF80             stwu r1,-0x80(r1)
@@ -1273,7 +1273,7 @@ LAB_8289b94c:
   8289B958  38210080             addi r1,r1,0x80
   8289B95C  4807ADAC             b 0x82916708
 
-; 8289C790  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:274)
+; 8289C790  D3D::CRTResultsTracker::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:274)
   8289C790  7D8802A6             mfspr r12,LR
   8289C794  48079F29             bl 0x829166bc
   8289C798  9421FF80             stwu r1,-0x80(r1)
@@ -1343,7 +1343,7 @@ LAB_8289c880:
   8289C884  38210080             addi r1,r1,0x80
   8289C888  48079E84             b 0x8291670c
 
-; 8289B720  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:287)
+; 8289B720  D3D::CTSHashTable<D3D::RTUnusedTextureInfo,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:287)
   8289B720  7D8802A6             mfspr r12,LR
   8289B724  9181FFF8             stw r12,-0x8(r1)
   8289B728  FBC1FFE8             std r30,-0x18(r1)
@@ -1366,7 +1366,7 @@ LAB_8289b740:
   8289B768  EBE1FFF0             ld r31,-0x10(r1)
   8289B76C  4E800020             blr
 
-; 8289B770  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:287)
+; 8289B770  D3D::CTSHashTable<D3D::RTResolveTargetInfo,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:287)
   8289B770  7D8802A6             mfspr r12,LR
   8289B774  9181FFF8             stw r12,-0x8(r1)
   8289B778  FBC1FFE8             std r30,-0x18(r1)
@@ -1389,7 +1389,7 @@ LAB_8289b790:
   8289B7B8  EBE1FFF0             ld r31,-0x10(r1)
   8289B7BC  4E800020             blr
 
-; 8289B7C0  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:287)
+; 8289B7C0  D3D::CTSHashTable<D3D::CRTUniqueNameDimensionsInfo,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:287)
   8289B7C0  7D8802A6             mfspr r12,LR
   8289B7C4  9181FFF8             stw r12,-0x8(r1)
   8289B7C8  FBC1FFE8             std r30,-0x18(r1)
@@ -1412,7 +1412,7 @@ LAB_8289b7e0:
   8289B808  EBE1FFF0             ld r31,-0x10(r1)
   8289B80C  4E800020             blr
 
-; 8289BD20  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:287)
+; 8289BD20  D3D::CTSHashTable<D3D::StringWithList<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:287)
   8289BD20  7D8802A6             mfspr r12,LR
   8289BD24  9181FFF8             stw r12,-0x8(r1)
   8289BD28  FBC1FFE8             std r30,-0x18(r1)
@@ -1435,7 +1435,7 @@ LAB_8289bd40:
   8289BD68  EBE1FFF0             ld r31,-0x10(r1)
   8289BD6C  4E800020             blr
 
-; 8289BD70  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:287)
+; 8289BD70  D3D::CTSHashTable<D3D::StringWithList<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:287)
   8289BD70  7D8802A6             mfspr r12,LR
   8289BD74  9181FFF8             stw r12,-0x8(r1)
   8289BD78  FBC1FFE8             std r30,-0x18(r1)
@@ -1458,7 +1458,7 @@ LAB_8289bd90:
   8289BDB8  EBE1FFF0             ld r31,-0x10(r1)
   8289BDBC  4E800020             blr
 
-; 8289BDC0  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:287)
+; 8289BDC0  D3D::CTSHashTable<D3D::StringWithList<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:287)
   8289BDC0  7D8802A6             mfspr r12,LR
   8289BDC4  9181FFF8             stw r12,-0x8(r1)
   8289BDC8  FBC1FFE8             std r30,-0x18(r1)
@@ -1481,7 +1481,7 @@ LAB_8289bde0:
   8289BE08  EBE1FFF0             ld r31,-0x10(r1)
   8289BE0C  4E800020             blr
 
-; 828990A0  EndCapture_Now  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:314)
+; 828990A0  D3D::CRTResultsTracker::EndCapture_Now  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:314)
   828990A0  7D8802A6             mfspr r12,LR
   828990A4  9181FFF8             stw r12,-0x8(r1)
   828990A8  FBE1FFF0             std r31,-0x10(r1)
@@ -1502,7 +1502,7 @@ LAB_8289bde0:
   828990E4  EBE1FFF0             ld r31,-0x10(r1)
   828990E8  4E800020             blr
 
-; 828990F0  EndCapture_WhenDone  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:328)
+; 828990F0  D3D::CRTResultsTracker::EndCapture_WhenDone  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:328)
   828990F0  7D8802A6             mfspr r12,LR
   828990F4  9181FFF8             stw r12,-0x8(r1)
   828990F8  FBE1FFF0             std r31,-0x10(r1)
@@ -1523,7 +1523,7 @@ LAB_8289bde0:
   82899134  EBE1FFF0             ld r31,-0x10(r1)
   82899138  4E800020             blr
 
-; 82899140  GpuCallbackFenceUpdate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:343)
+; 82899140  D3D::CRTResultsTracker::GpuCallbackFenceUpdate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:343)
   82899140  7D8802A6             mfspr r12,LR
   82899144  9181FFF8             stw r12,-0x8(r1)
   82899148  FBE1FFF0             std r31,-0x10(r1)
@@ -1551,7 +1551,7 @@ LAB_8289915c:
   8289919C  EBE1FFF0             ld r31,-0x10(r1)
   828991A0  4E800020             blr
 
-; 828991A8  AddStuffToWorkerCollectorQueue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:358)
+; 828991A8  D3D::CRTResultsTracker::AddStuffToWorkerCollectorQueue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:358)
   828991A8  7D8802A6             mfspr r12,LR
   828991AC  9181FFF8             stw r12,-0x8(r1)
   828991B0  FBC1FFE8             std r30,-0x18(r1)
@@ -1577,7 +1577,7 @@ LAB_8289915c:
   82899200  EBE1FFF0             ld r31,-0x10(r1)
   82899204  4E800020             blr
 
-; 82899208  AddToUnusedQueue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:366)
+; 82899208  D3D::CRTResultsTracker::AddToUnusedQueue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:366)
   82899208  7D8802A6             mfspr r12,LR
   8289920C  9181FFF8             stw r12,-0x8(r1)
   82899210  FBC1FFE8             std r30,-0x18(r1)
@@ -1603,7 +1603,7 @@ LAB_8289915c:
   82899260  EBE1FFF0             ld r31,-0x10(r1)
   82899264  4E800020             blr
 
-; 82899268  WaitForGpu  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:389)
+; 82899268  D3D::CRTResultsTracker::WaitForGpu  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:389)
   82899268  7D8802A6             mfspr r12,LR
   8289926C  9181FFF8             stw r12,-0x8(r1)
   82899270  FBC1FFE8             std r30,-0x18(r1)
@@ -1640,7 +1640,7 @@ LAB_828992d4:
   828992E4  EBE1FFF0             ld r31,-0x10(r1)
   828992E8  4E800020             blr
 
-; 8289B210  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:414)
+; 8289B210  D3D::StringWithList<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:414)
   8289B210  7D8802A6             mfspr r12,LR
   8289B214  9181FFF8             stw r12,-0x8(r1)
   8289B218  FBE1FFF0             std r31,-0x10(r1)
@@ -1667,7 +1667,7 @@ LAB_8289b24c:
   8289B264  EBE1FFF0             ld r31,-0x10(r1)
   8289B268  4E800020             blr
 
-; 8289B270  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:414)
+; 8289B270  D3D::StringWithList<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:414)
   8289B270  7D8802A6             mfspr r12,LR
   8289B274  9181FFF8             stw r12,-0x8(r1)
   8289B278  FBE1FFF0             std r31,-0x10(r1)
@@ -1694,7 +1694,7 @@ LAB_8289b2ac:
   8289B2C4  EBE1FFF0             ld r31,-0x10(r1)
   8289B2C8  4E800020             blr
 
-; 8289B2D0  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:414)
+; 8289B2D0  D3D::StringWithList<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:414)
   8289B2D0  7D8802A6             mfspr r12,LR
   8289B2D4  9181FFF8             stw r12,-0x8(r1)
   8289B2D8  FBE1FFF0             std r31,-0x10(r1)
@@ -1721,7 +1721,7 @@ LAB_8289b30c:
   8289B324  EBE1FFF0             ld r31,-0x10(r1)
   8289B328  4E800020             blr
 
-; 82899968  FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:428)
+; 82899968  D3D::CRTUniqueNameDimensionsInfo::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:428)
   82899968  7D8802A6             mfspr r12,LR
   8289996C  4807CD4D             bl 0x829166b8
   82899970  9421FF80             stwu r1,-0x80(r1)
@@ -1776,7 +1776,7 @@ LAB_82899a18:
   82899A20  38210080             addi r1,r1,0x80
   82899A24  4807CCE4             b 0x82916708
 
-; 8289BA20  FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:440)
+; 8289BA20  D3D::CStringHashOfLists<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:440)
   8289BA20  7D8802A6             mfspr r12,LR
   8289BA24  4807AC91             bl 0x829166b4
   8289BA28  9421FF80             stwu r1,-0x80(r1)
@@ -1849,7 +1849,7 @@ LAB_8289bb14:
   8289BB14  38210080             addi r1,r1,0x80
   8289BB18  4807ABEC             b 0x82916704
 
-; 8289BB20  FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:440)
+; 8289BB20  D3D::CStringHashOfLists<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:440)
   8289BB20  7D8802A6             mfspr r12,LR
   8289BB24  4807AB91             bl 0x829166b4
   8289BB28  9421FF80             stwu r1,-0x80(r1)
@@ -1922,7 +1922,7 @@ LAB_8289bc14:
   8289BC14  38210080             addi r1,r1,0x80
   8289BC18  4807AAEC             b 0x82916704
 
-; 8289BC20  FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:440)
+; 8289BC20  D3D::CStringHashOfLists<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:440)
   8289BC20  7D8802A6             mfspr r12,LR
   8289BC24  4807AA91             bl 0x829166b4
   8289BC28  9421FF80             stwu r1,-0x80(r1)
@@ -1995,7 +1995,7 @@ LAB_8289bd14:
   8289BD14  38210080             addi r1,r1,0x80
   8289BD18  4807A9EC             b 0x82916704
 
-; 82899A28  FindOrAdd2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:467)
+; 82899A28  D3D::CRTUniqueNameDimensionsInfo::FindOrAdd2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:467)
   82899A28  7D8802A6             mfspr r12,LR
   82899A2C  4807CC8D             bl 0x829166b8
   82899A30  9421FF80             stwu r1,-0x80(r1)
@@ -2063,7 +2063,7 @@ LAB_82899b0c:
   82899B14  38210080             addi r1,r1,0x80
   82899B18  4807CBF0             b 0x82916708
 
-; 82899B20  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:505)
+; 82899B20  D3D::CRTUniqueNameDimensionsInfo::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:505)
   82899B20  7D8802A6             mfspr r12,LR
   82899B24  9181FFF8             stw r12,-0x8(r1)
   82899B28  FBC1FFE8             std r30,-0x18(r1)
@@ -2098,7 +2098,7 @@ LAB_82899b78:
   82899B8C  EBE1FFF0             ld r31,-0x10(r1)
   82899B90  4E800020             blr
 
-; 828992F0  UpdateUsageCreationTime  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:596)
+; 828992F0  D3D::CRTResultsTracker::UpdateUsageCreationTime  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:596)
   828992F0  7D8802A6             mfspr r12,LR
   828992F4  9181FFF8             stw r12,-0x8(r1)
   828992F8  FBC1FFE8             std r30,-0x18(r1)
@@ -2130,7 +2130,7 @@ LAB_82899344:
   82899358  EBE1FFF0             ld r31,-0x10(r1)
   8289935C  4E800020             blr
 
-; 8289BE10  FindOrMakeResultsObject  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:611)
+; 8289BE10  D3D::CRTResultsTracker::FindOrMakeResultsObject  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:611)
   8289BE10  7D8802A6             mfspr r12,LR
   8289BE14  4807A8A5             bl 0x829166b8
   8289BE18  9421FF80             stwu r1,-0x80(r1)
@@ -2196,7 +2196,7 @@ LAB_8289bef4:
   8289BEF4  38210080             addi r1,r1,0x80
   8289BEF8  4807A810             b 0x82916708
 
-; 8289BF00  FindOrMakeResultsObject2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:678)
+; 8289BF00  D3D::CRTResultsTracker::FindOrMakeResultsObject2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:678)
   8289BF00  7D8802A6             mfspr r12,LR
   8289BF04  4807A7B5             bl 0x829166b8
   8289BF08  9421FF80             stwu r1,-0x80(r1)
@@ -2262,7 +2262,7 @@ LAB_8289bfe4:
   8289BFE4  38210080             addi r1,r1,0x80
   8289BFE8  4807A720             b 0x82916708
 
-; 82899B98  GenerateHashOfThumbnail  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:730)
+; 82899B98  D3D::CRTResultsTracker::GenerateHashOfThumbnail  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:730)
   82899B98  7D8802A6             mfspr r12,LR
   82899B9C  9181FFF8             stw r12,-0x8(r1)
   82899BA0  FBE1FFF0             std r31,-0x10(r1)
@@ -2315,7 +2315,7 @@ LAB_82899c34:
   82899C54  EBE1FFF0             ld r31,-0x10(r1)
   82899C58  4E800020             blr
 
-; 8289BFF0  ProcessThumbnailForHash  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:749)
+; 8289BFF0  D3D::CRTResultsTracker::ProcessThumbnailForHash  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:749)
   8289BFF0  7D8802A6             mfspr r12,LR
   8289BFF4  4807A6C5             bl 0x829166b8
   8289BFF8  9421FF80             stwu r1,-0x80(r1)
@@ -2407,7 +2407,7 @@ LAB_8289c11c:
   8289C134  38210080             addi r1,r1,0x80
   8289C138  4807A5D0             b 0x82916708
 
-; 8289C140  ProcessThumbnailForHash2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:805)
+; 8289C140  D3D::CRTResultsTracker::ProcessThumbnailForHash2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:805)
   8289C140  7D8802A6             mfspr r12,LR
   8289C144  4807A571             bl 0x829166b4
   8289C148  9421FF60             stwu r1,-0xa0(r1)
@@ -2544,7 +2544,7 @@ LAB_8289c314:
   8289C328  382100A0             addi r1,r1,0xa0
   8289C32C  4807A3D8             b 0x82916704
 
-; 82899C60  ProcessThumbnailForChannelCheck  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:865)
+; 82899C60  D3D::CRTResultsTracker::ProcessThumbnailForChannelCheck  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:865)
   82899C60  7D8802A6             mfspr r12,LR
   82899C64  4807CA59             bl 0x829166bc
   82899C68  9421FF90             stwu r1,-0x70(r1)
@@ -2646,7 +2646,7 @@ LAB_82899da8:
   82899DC0  38210070             addi r1,r1,0x70
   82899DC4  4807C948             b 0x8291670c
 
-; 82899DC8  SaveThumbnailToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1043)
+; 82899DC8  D3D::CRTResultsTracker::SaveThumbnailToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1043)
   82899DC8  7D8802A6             mfspr r12,LR
   82899DCC  4807C8E1             bl 0x829166ac
   82899DD0  9421FF50             stwu r1,-0xb0(r1)
@@ -2747,7 +2747,7 @@ LAB_82899efc:
   82899F40  382100B0             addi r1,r1,0xb0
   82899F44  4807C7B8             b 0x829166fc
 
-; 82899F48  ProcessThumbnailForPix  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1098)
+; 82899F48  D3D::CRTResultsTracker::ProcessThumbnailForPix  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1098)
   82899F48  7D8802A6             mfspr r12,LR
   82899F4C  4807C76D             bl 0x829166b8
   82899F50  9421FF80             stwu r1,-0x80(r1)
@@ -2804,7 +2804,7 @@ LAB_82899ff8:
   8289A010  38210080             addi r1,r1,0x80
   8289A014  4807C6F4             b 0x82916708
 
-; 8289B578  ProcessMipData  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1152)
+; 8289B578  D3D::CRTResultsTracker::ProcessMipData  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1152)
   8289B578  7D8802A6             mfspr r12,LR
   8289B57C  4807B139             bl 0x829166b4
   8289B580  9421FF80             stwu r1,-0x80(r1)
@@ -2920,7 +2920,7 @@ LAB_8289b6f4:
   8289B714  38210080             addi r1,r1,0x80
   8289B718  4807AFEC             b 0x82916704
 
-; 82899360  ProcessUpdateIssue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1227)
+; 82899360  D3D::CRTResultsTracker::ProcessUpdateIssue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1227)
   82899360  7D8802A6             mfspr r12,LR
   82899364  9181FFF8             stw r12,-0x8(r1)
   82899368  FBC1FFE8             std r30,-0x18(r1)
@@ -3009,7 +3009,7 @@ LAB_82899474:
   82899494  EBE1FFF0             ld r31,-0x10(r1)
   82899498  4E800020             blr
 
-; 8289A018  ProcessScreenshot  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1304)
+; 8289A018  D3D::CRTResultsTracker::ProcessScreenshot  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1304)
   8289A018  7D8802A6             mfspr r12,LR
   8289A01C  4807C69D             bl 0x829166b8
   8289A020  9421FF60             stwu r1,-0xa0(r1)
@@ -3081,7 +3081,7 @@ LAB_8289a110:
   8289A118  382100A0             addi r1,r1,0xa0
   8289A11C  4807C5EC             b 0x82916708
 
-; 8289A120  UpdateUsageResults  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1334)
+; 8289A120  D3D::CRTResultsTracker::UpdateUsageResults  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1334)
   8289A120  7D8802A6             mfspr r12,LR
   8289A124  4807C589             bl 0x829166ac
   8289A128  9421FEB0             stwu r1,-0x150(r1)
@@ -3237,7 +3237,7 @@ LAB_8289a350:
   8289A358  38210150             addi r1,r1,0x150
   8289A35C  4807C3A0             b 0x829166fc
 
-; 8289A360  SaveNamedUsedTexturesToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1416)
+; 8289A360  D3D::CRTResultsTracker::SaveNamedUsedTexturesToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1416)
   8289A360  7D8802A6             mfspr r12,LR
   8289A364  4807C345             bl 0x829166a8
   8289A368  9421FF60             stwu r1,-0xa0(r1)
@@ -3291,7 +3291,7 @@ LAB_8289a3ec:
   8289A408  382100A0             addi r1,r1,0xa0
   8289A40C  4807C2EC             b 0x829166f8
 
-; 8289A410  SaveUnnamedUsedTexturesToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1456)
+; 8289A410  D3D::CRTResultsTracker::SaveUnnamedUsedTexturesToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1456)
   8289A410  7D8802A6             mfspr r12,LR
   8289A414  4807C299             bl 0x829166ac
   8289A418  9421FF60             stwu r1,-0xa0(r1)
@@ -3339,7 +3339,7 @@ LAB_8289a48c:
   8289A4A8  382100A0             addi r1,r1,0xa0
   8289A4AC  4807C250             b 0x829166fc
 
-; 8289C330  ProcessResolveData  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1488)
+; 8289C330  D3D::CRTResultsTracker::ProcessResolveData  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1488)
   8289C330  7D8802A6             mfspr r12,LR
   8289C334  4807A381             bl 0x829166b4
   8289C338  9421FF80             stwu r1,-0x80(r1)
@@ -3492,7 +3492,7 @@ LAB_8289c548:
   8289C550  38210080             addi r1,r1,0x80
   8289C554  4807A1B0             b 0x82916704
 
-; 8289A4B0  UpdateResolveTargetResults  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1609)
+; 8289A4B0  D3D::CRTResultsTracker::UpdateResolveTargetResults  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1609)
   8289A4B0  7D8802A6             mfspr r12,LR
   8289A4B4  4807C1F9             bl 0x829166ac
   8289A4B8  9421FF30             stwu r1,-0xd0(r1)
@@ -3619,7 +3619,7 @@ LAB_8289a678:
   8289A680  382100D0             addi r1,r1,0xd0
   8289A684  4807C078             b 0x829166fc
 
-; 8289A688  SaveNamedResolveTargetsToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1642)
+; 8289A688  D3D::CRTResultsTracker::SaveNamedResolveTargetsToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1642)
   8289A688  7D8802A6             mfspr r12,LR
   8289A68C  4807C025             bl 0x829166b0
   8289A690  9421FF70             stwu r1,-0x90(r1)
@@ -3663,7 +3663,7 @@ LAB_8289a6f8:
   8289A714  38210090             addi r1,r1,0x90
   8289A718  4807BFE8             b 0x82916700
 
-; 8289A720  SaveUnnamedResolveTargetsToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1679)
+; 8289A720  D3D::CRTResultsTracker::SaveUnnamedResolveTargetsToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1679)
   8289A720  7D8802A6             mfspr r12,LR
   8289A724  4807BF91             bl 0x829166b4
   8289A728  9421FF70             stwu r1,-0x90(r1)
@@ -3701,7 +3701,7 @@ LAB_8289a780:
   8289A79C  38210090             addi r1,r1,0x90
   8289A7A0  4807BF64             b 0x82916704
 
-; 8289A7A8  UpdateUnusedResults  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1716)
+; 8289A7A8  D3D::CRTResultsTracker::UpdateUnusedResults  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1716)
   8289A7A8  7D8802A6             mfspr r12,LR
   8289A7AC  4807BF01             bl 0x829166ac
   8289A7B0  9421FF30             stwu r1,-0xd0(r1)
@@ -3828,7 +3828,7 @@ LAB_8289a970:
   8289A978  382100D0             addi r1,r1,0xd0
   8289A97C  4807BD80             b 0x829166fc
 
-; 8289A980  SaveNamedUnusedTexturesToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1749)
+; 8289A980  D3D::CRTResultsTracker::SaveNamedUnusedTexturesToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1749)
   8289A980  7D8802A6             mfspr r12,LR
   8289A984  4807BD2D             bl 0x829166b0
   8289A988  9421FF70             stwu r1,-0x90(r1)
@@ -3872,7 +3872,7 @@ LAB_8289a9f0:
   8289AA0C  38210090             addi r1,r1,0x90
   8289AA10  4807BCF0             b 0x82916700
 
-; 8289AA18  SaveUnnamedUnusedTexturesToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1786)
+; 8289AA18  D3D::CRTResultsTracker::SaveUnnamedUnusedTexturesToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1786)
   8289AA18  7D8802A6             mfspr r12,LR
   8289AA1C  4807BC99             bl 0x829166b4
   8289AA20  9421FF70             stwu r1,-0x90(r1)
@@ -3910,7 +3910,7 @@ LAB_8289aa78:
   8289AA94  38210090             addi r1,r1,0x90
   8289AA98  4807BC6C             b 0x82916704
 
-; 8289AAA0  AutoSave  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1826)
+; 8289AAA0  D3D::CRTResultsTracker::AutoSave  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1826)
   8289AAA0  7D8802A6             mfspr r12,LR
   8289AAA4  4807BC15             bl 0x829166b8
   8289AAA8  9421FF40             stwu r1,-0xc0(r1)
@@ -4015,7 +4015,7 @@ LAB_8289ac10:
   8289AC18  382100C0             addi r1,r1,0xc0
   8289AC1C  4807BAEC             b 0x82916708
 
-; 8289C890  FinishCapture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1875)
+; 8289C890  D3D::CRTResultsTracker::FinishCapture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1875)
   8289C890  7D8802A6             mfspr r12,LR
   8289C894  48079E29             bl 0x829166bc
   8289C898  9421FF80             stwu r1,-0x80(r1)
@@ -4062,7 +4062,7 @@ LAB_8289c920:
   8289C930  38210080             addi r1,r1,0x80
   8289C934  48079DD8             b 0x8291670c
 
-; 8289C558  AddUnusedTexture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1909)
+; 8289C558  D3D::CRTResultsTracker::AddUnusedTexture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1909)
   8289C558  7D8802A6             mfspr r12,LR
   8289C55C  9181FFF8             stw r12,-0x8(r1)
   8289C560  FBC1FFE8             std r30,-0x18(r1)
@@ -4158,7 +4158,7 @@ LAB_8289c698:
   8289C6AC  EBE1FFF0             ld r31,-0x10(r1)
   8289C6B0  4E800020             blr
 
-; 8289C6B8  DrainUnusedTextureQueue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1987)
+; 8289C6B8  D3D::CRTResultsTracker::DrainUnusedTextureQueue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1987)
   8289C6B8  7D8802A6             mfspr r12,LR
   8289C6BC  4807A001             bl 0x829166bc
   8289C6C0  9421FF80             stwu r1,-0x80(r1)
@@ -4221,7 +4221,7 @@ LAB_8289c780:
   8289C788  38210080             addi r1,r1,0x80
   8289C78C  48079F80             b 0x8291670c
 
-; 8289C938  CollectorMain  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:2018)
+; 8289C938  D3D::CRTResultsTracker::CollectorMain  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:2018)
   8289C938  7D8802A6             mfspr r12,LR
   8289C93C  48079D75             bl 0x829166b0
   8289C940  9421FF70             stwu r1,-0x90(r1)
@@ -4286,7 +4286,9 @@ LAB_8289c9f4:
   8289CA04  7FE3FB78             or r3,r31,r31
   8289CA08  4BFFC861             bl 0x82899268
   8289CA0C  3FA08489             lis r29,-0x7b77
+LAB_8289ca10:
   8289CA10  81610050             lwz r11,0x50(r1)
+LAB_8289ca14:
   8289CA14  815F1828             lwz r10,0x1828(r31)
   8289CA18  2F0A0000             cmpwi cr6,r10,0x0
   8289CA1C  419A0020             beq cr6,0x8289ca3c
@@ -4336,10 +4338,66 @@ LAB_8289ca70:
   8289CAC0  398CCAD0             subi r12,r12,0x3530
   8289CAC4  7D8C0214             add r12,r12,r0
   8289CAC8  7D8903A6             mtspr CTR,r12
+switchD:
   8289CACC  4E800420             bctr
+caseD_0:
+  8289CAD0  815F1828             lwz r10,0x1828(r31)
+  8289CAD4  2F0A0000             cmpwi cr6,r10,0x0
+  8289CAD8  419A0020             beq cr6,0x8289caf8
+  8289CADC  817E0188             lwz r11,0x188(r30)
+  8289CAE0  807F1800             lwz r3,0x1800(r31)
+  8289CAE4  7D6903A6             mtspr CTR,r11
+  8289CAE8  4E800421             bctrl
+  8289CAEC  2C030000             cmpwi r3,0x0
+  8289CAF0  408200A8             bne 0x8289cb98
+  8289CAF4  81610050             lwz r11,0x50(r1)
+LAB_8289caf8:
+  8289CAF8  7FE3FB78             or r3,r31,r31
+  8289CAFC  808B0004             lwz r4,0x4(r11)
+  8289CB00  4BFFC769             bl 0x82899268
+  8289CB04  7FE3FB78             or r3,r31,r31
+  8289CB08  4BFFFBB1             bl 0x8289c6b8
+  8289CB0C  2C030000             cmpwi r3,0x0
+  8289CB10  41800088             blt 0x8289cb98
+  8289CB14  81610050             lwz r11,0x50(r1)
+  8289CB18  814B0008             lwz r10,0x8(r11)
+  8289CB1C  2F0A0000             cmpwi cr6,r10,0x0
+  8289CB20  419AFEF4             beq cr6,0x8289ca14
+  8289CB24  817F1838             lwz r11,0x1838(r31)
+  8289CB28  396B0001             addi r11,r11,0x1
+  8289CB2C  917F1838             stw r11,0x1838(r31)
+  8289CB30  807E0138             lwz r3,0x138(r30)
+  8289CB34  4800C6DD             bl 0x828a9210
+  8289CB38  817F1834             lwz r11,0x1834(r31)
+  8289CB3C  2B0B0000             cmplwi cr6,r11,0x0
+  8289CB40  419A001C             beq cr6,0x8289cb5c
+  8289CB44  815F1838             lwz r10,0x1838(r31)
+  8289CB48  0CCB0000             twllei r11,0x0
+  8289CB4C  7D2A5B96             divwu r9,r10,r11
+  8289CB50  7D6959D6             mullw r11,r9,r11
+  8289CB54  7D6B5051             subf. r11,r11,r10
+  8289CB58  41820028             beq 0x8289cb80
+LAB_8289cb5c:
+  8289CB5C  817F1840             lwz r11,0x1840(r31)
+  8289CB60  2F0B0000             cmpwi cr6,r11,0x0
+  8289CB64  419AFEAC             beq cr6,0x8289ca10
+  8289CB68  817F1838             lwz r11,0x1838(r31)
+  8289CB6C  7D6A2670             srawi r10,r11,0x4
+  8289CB70  7D4A0194             addze r10,r10
+  8289CB74  554A2036             rlwinm r10,r10,0x4,0x0,0x1b
+  8289CB78  7D6A5851             subf. r11,r10,r11
+  8289CB7C  4082FE94             bne 0x8289ca10
+LAB_8289cb80:
+  8289CB80  38800000             li r4,0x0
+  8289CB84  7FE3FB78             or r3,r31,r31
+  8289CB88  4BFFDF19             bl 0x8289aaa0
+  8289CB8C  939F1840             stw r28,0x1840(r31)
+LAB_8289cb90:
+  8289CB90  2C030000             cmpwi r3,0x0
+  8289CB94  4080FE7C             bge 0x8289ca10
 LAB_8289cb98:
   8289CB98  81610050             lwz r11,0x50(r1)
-LAB_8289cb9c:
+default:
   8289CB9C  2B0B0000             cmplwi cr6,r11,0x0
   8289CBA0  419A00EC             beq cr6,0x8289cc8c
   8289CBA4  815D0370             lwz r10,0x370(r29)
@@ -4348,6 +4406,67 @@ LAB_8289cb9c:
   8289CBB0  419A00D4             beq cr6,0x8289cc84
   8289CBB4  4805794D             bl 0x828f4500
   8289CBB8  480000D4             b 0x8289cc8c
+caseD_3:
+  8289CBBC  388B0004             addi r4,r11,0x4
+  8289CBC0  7FE3FB78             or r3,r31,r31
+  8289CBC4  4BFFD385             bl 0x82899f48
+  8289CBC8  4BFFFFC8             b 0x8289cb90
+caseD_1:
+  8289CBCC  388B0004             addi r4,r11,0x4
+  8289CBD0  7FE3FB78             or r3,r31,r31
+  8289CBD4  4BFFF41D             bl 0x8289bff0
+  8289CBD8  4BFFFFB8             b 0x8289cb90
+caseD_2:
+  8289CBDC  388B0004             addi r4,r11,0x4
+  8289CBE0  7FE3FB78             or r3,r31,r31
+  8289CBE4  4BFFF55D             bl 0x8289c140
+  8289CBE8  4BFFFFA8             b 0x8289cb90
+caseD_4:
+  8289CBEC  388B0004             addi r4,r11,0x4
+  8289CBF0  7FE3FB78             or r3,r31,r31
+  8289CBF4  4BFFD06D             bl 0x82899c60
+  8289CBF8  4BFFFF98             b 0x8289cb90
+caseD_5:
+  8289CBFC  7FE3FB78             or r3,r31,r31
+  8289CC00  80AB0004             lwz r5,0x4(r11)
+  8289CC04  808B0008             lwz r4,0x8(r11)
+  8289CC08  4BFFE971             bl 0x8289b578
+  8289CC0C  4BFFFF84             b 0x8289cb90
+caseD_6:
+  8289CC10  7FE3FB78             or r3,r31,r31
+  8289CC14  808B0004             lwz r4,0x4(r11)
+  8289CC18  4BFFF719             bl 0x8289c330
+  8289CC1C  4BFFFF74             b 0x8289cb90
+caseD_7:
+  8289CC20  7FE3FB78             or r3,r31,r31
+  8289CC24  808B0004             lwz r4,0x4(r11)
+  8289CC28  4BFFC739             bl 0x82899360
+  8289CC2C  4BFFFF64             b 0x8289cb90
+caseD_a:
+  8289CC30  388B0004             addi r4,r11,0x4
+  8289CC34  80AB0014             lwz r5,0x14(r11)
+  8289CC38  7FE3FB78             or r3,r31,r31
+  8289CC3C  4BFFD3DD             bl 0x8289a018
+  8289CC40  4BFFFF50             b 0x8289cb90
+caseD_9:
+  8289CC44  807E0130             lwz r3,0x130(r30)
+  8289CC48  4800C5C9             bl 0x828a9210
+  8289CC4C  4BFFFDC4             b 0x8289ca10
+caseD_b:
+  8289CC50  814B0004             lwz r10,0x4(r11)
+  8289CC54  E96B0028             ld r11,0x28(r11)
+  8289CC58  7D690676             sradi r9,r11,0x20
+  8289CC5C  810A0008             lwz r8,0x8(r10)
+  8289CC60  5529003E             rlwinm r9,r9,0x0,0x0,0x1f
+  8289CC64  916A007C             stw r11,0x7c(r10)
+  8289CC68  650B8000             oris r11,r8,0x8000
+  8289CC6C  912A0078             stw r9,0x78(r10)
+  8289CC70  916A0008             stw r11,0x8(r10)
+  8289CC74  4BFFFD9C             b 0x8289ca10
+caseD_8:
+  8289CC78  937F1828             stw r27,0x1828(r31)
+  8289CC7C  937F182C             stw r27,0x182c(r31)
+  8289CC80  4BFFFF1C             b 0x8289cb9c
 LAB_8289cc84:
   8289CC84  3C802480             lis r4,0x2480
   8289CC88  4BD6A7F1             bl 0x82607478

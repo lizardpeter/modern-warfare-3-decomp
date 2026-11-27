@@ -2,183 +2,139 @@
 
 // 8226D228  Jump_RegisterDvars  (bgame/bg_jump.cpp:78)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Jump_RegisterDvars(void)
 
 {
-  ushort in_r4;
-  ushort uVar1;
-  char *in_r5;
-  IMAGE_DOS_HEADER *pIVar2;
-  double dVar3;
-  double dVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  dVar4 = 0.0;
-  jump_height = Dvar_RegisterFloat("jump_height",39.0,0.0,1000.0,in_r4,in_r5);
-  dVar3 = 64.0;
-  DAT_829c4000 = Dvar_RegisterFloat("jump_stepSize",18.0,(float)dVar4,64.0,0,
-                                    IMAGE_DOS_HEADER_82000000.e_magic);
-  jump_slowdownEnable =
-       Dvar_RegisterBool("jump_slowdownEnable",true,0x8c,"Slow player movement after jumping");
-  pIVar2 = &IMAGE_DOS_HEADER_82000000;
-  uVar1 = 0;
-  jump_ladderPushVel =
-       Dvar_RegisterFloat("jump_ladderPushVel",128.0,(float)dVar4,1024.0,0,
-                          IMAGE_DOS_HEADER_82000000.e_magic);
-  jump_spreadAdd =
-       Dvar_RegisterFloat("jump_spreadAdd",(float)dVar3,(float)dVar4,512.0,uVar1,pIVar2->e_magic);
+  uVar2 = 0;
+  DAT_829c4004 = Dvar_RegisterFloat(0x4043800000000000,0,0x408f400000000000,0xffffffff82004838);
+  uVar1 = 0x4050000000000000;
+  DAT_829c4000 = Dvar_RegisterFloat(0x4032000000000000,uVar2,0x4050000000000000,0xffffffff820047c8);
+  DAT_829c3ffc = Dvar_RegisterBool(0xffffffff82004790,1,0x8c,0xffffffff820047a4);
+  DAT_829c3ff4 = Dvar_RegisterFloat(0x4060000000000000,uVar2,0x4090000000000000,0xffffffff82004750);
+  DAT_829c3ff8 = Dvar_RegisterFloat(uVar1,uVar2,0x4080000000000000,0xffffffff820046fc);
   return;
 }
 
 
 // 8226D358  Jump_GetJumpHeight  (bgame/bg_jump.cpp:116)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float Jump_GetJumpHeight(void)
+double Jump_GetJumpHeight(void)
 
 {
-  return (jump_height->current).value;
+  return (double)*(float *)(DAT_829c4004 + 0xc);
 }
 
 
 // 8226D368  Jump_ClearState  (bgame/bg_jump.cpp:129)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-void Jump_ClearState(playerState_s *param_1)
+void Jump_ClearState(int param_1)
 
 {
-  (param_1->field0_0x0).jumpOriginZ = 0.0;
-  *(uint *)&(param_1->field0_0x0).field_0xc = *(uint *)&(param_1->field0_0x0).field_0xc & 0xffbfdfff
-  ;
+  *(undefined4 *)(param_1 + 0x80) = 0;
+  *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) & 0xffbfdfff;
   return;
 }
 
 
 // 8226D388  Jump_GetStepHeight  (bgame/bg_jump.cpp:142)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-bool Jump_GetStepHeight(playerState_s *param_1,float *param_2,float *param_3)
+void Jump_GetStepHeight(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   float fVar1;
   float fVar2;
-  dvar_t *pdVar3;
+  int iVar3;
   int iVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
+  iVar4 = __savegprlr_27();
   if ((*(uint *)(iVar4 + 0xc) & 0x2000) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x8f,0,"%s"
-                   );
+    MyAssertHandler(0xffffffff82004878,0x8f,0,0xffffffff82000f98,0xffffffff8200485c);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x90,0,"%s"
-                   );
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82004878,0x90,0,0xffffffff82000f98,0xffffffff82004854);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x91,0,"%s"
-                   );
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82004878,0x91,0,0xffffffff82000f98,0xffffffff82004848);
   }
-  pdVar3 = jump_height;
-  if (*(float *)((int)uVar6 + 8) < (jump_height->current).value + *(float *)(iVar4 + 0x80)) {
+  iVar3 = DAT_829c4004;
+  if (*(float *)((int)param_2 + 8) < *(float *)(DAT_829c4004 + 0xc) + *(float *)(iVar4 + 0x80)) {
     fVar1 = *(float *)(DAT_829c4000 + 0xc);
-    *(float *)uVar7 = fVar1;
-    fVar2 = *(float *)((int)uVar6 + 8);
-    if (*(float *)(iVar4 + 0x80) + (pdVar3->current).value < fVar1 + fVar2) {
-      *(float *)uVar7 = (*(float *)(iVar4 + 0x80) + (pdVar3->current).value) - fVar2;
+    *(float *)param_3 = fVar1;
+    fVar2 = *(float *)((int)param_2 + 8);
+    if (*(float *)(iVar4 + 0x80) + *(float *)(iVar3 + 0xc) < fVar1 + fVar2) {
+      *(float *)param_3 = (*(float *)(iVar4 + 0x80) + *(float *)(iVar3 + 0xc)) - fVar2;
     }
-    uVar5 = __restgprlr_27(1);
-    return (bool)uVar5;
+    __restgprlr_27(1);
+    return;
   }
-  uVar5 = __restgprlr_27(0);
-  return (bool)uVar5;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 8226D498  Jump_IsPlayerAboveMax  (bgame/bg_jump.cpp:166)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-bool Jump_IsPlayerAboveMax(playerState_s *param_1)
+bool Jump_IsPlayerAboveMax(int param_1)
 
 {
-  if ((*(uint *)&(param_1->field0_0x0).field_0xc & 0x2000) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0xa7,0,"%s"
-                   );
+  if ((*(uint *)(param_1 + 0xc) & 0x2000) == 0) {
+    MyAssertHandler(0xffffffff82004878,0xa7,0,0xffffffff82000f98,0xffffffff8200485c);
   }
-  return (jump_height->current).value + (param_1->field0_0x0).jumpOriginZ <=
-         *(float *)&(param_1->field0_0x0).field_0x24;
+  return *(float *)(DAT_829c4004 + 0xc) + *(float *)(param_1 + 0x80) <= *(float *)(param_1 + 0x24);
 }
 
 
 // 8226D520  Jump_ActivateSlowdown  (bgame/bg_jump.cpp:177)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-void Jump_ActivateSlowdown(playerState_s *param_1)
+void Jump_ActivateSlowdown(int param_1)
 
 {
-  if (*(int *)&(param_1->field0_0x0).field_0x8 != 0) {
+  if (*(int *)(param_1 + 8) != 0) {
     return;
   }
-  *(undefined4 *)&(param_1->field0_0x0).field_0x8 = 0x708;
-  *(uint *)&(param_1->field0_0x0).field_0xc = *(uint *)&(param_1->field0_0x0).field_0xc | 0x2000;
+  *(undefined4 *)(param_1 + 8) = 0x708;
+  *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) | 0x2000;
   return;
 }
 
 
 // 8226D548  Jump_ApplySlowdown  (bgame/bg_jump.cpp:190)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-void Jump_ApplySlowdown(playerState_s *param_1)
+void Jump_ApplySlowdown(int param_1)
 
 {
   float fVar1;
-  int iVar2;
-  undefined4 uVar3;
+  undefined4 uVar2;
   
-  if ((*(uint *)&(param_1->field0_0x0).field_0xc & 0x2000) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0xc1,0,"%s"
-                   );
+  if ((*(uint *)(param_1 + 0xc) & 0x2000) == 0) {
+    MyAssertHandler(0xffffffff82004878,0xc1,0,0xffffffff82000f98,0xffffffff8200485c);
   }
-  iVar2 = *(int *)&(param_1->field0_0x0).field_0x8;
   fVar1 = 1.0;
-  if (iVar2 < 0x709) {
-    if (iVar2 == 0) {
-      if ((param_1->field0_0x0).jumpOriginZ + 18.0 <= *(float *)&(param_1->field0_0x0).field_0x24) {
-        uVar3 = 0x4b0;
+  if (*(int *)(param_1 + 8) < 0x709) {
+    if (*(int *)(param_1 + 8) == 0) {
+      if (*(float *)(param_1 + 0x80) + 18.0 <= *(float *)(param_1 + 0x24)) {
+        uVar2 = 0x4b0;
         fVar1 = 0.5;
       }
       else {
-        uVar3 = 0x708;
-        fVar1 = 0.65;
+        uVar2 = 0x708;
+        fVar1 = (float)0x3f266666;
       }
-      *(undefined4 *)&(param_1->field0_0x0).field_0x8 = uVar3;
+      *(undefined4 *)(param_1 + 8) = uVar2;
     }
   }
   else {
-    fVar1 = 0.65;
-    *(uint *)&(param_1->field0_0x0).field_0xc =
-         *(uint *)&(param_1->field0_0x0).field_0xc & 0xffbfdfff;
-    (param_1->field0_0x0).jumpOriginZ = 0.0;
+    fVar1 = (float)0x3f266666;
+    *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) & 0xffbfdfff;
+    *(undefined4 *)(param_1 + 0x80) = 0;
   }
-  if (((*(uint *)&(param_1->field0_0x0).field_0xc & 0x400000) == 0) &&
-     ((jump_slowdownEnable->current).enabled != false)) {
-    *(float *)&(param_1->field0_0x0).field_0x28 =
-         *(float *)&(param_1->field0_0x0).field_0x28 * fVar1;
-    *(float *)&(param_1->field0_0x0).field_0x2c =
-         *(float *)&(param_1->field0_0x0).field_0x2c * fVar1;
-    *(float *)&(param_1->field0_0x0).field_0x30 =
-         *(float *)&(param_1->field0_0x0).field_0x30 * fVar1;
+  if (((*(uint *)(param_1 + 0xc) & 0x400000) == 0) && (*(char *)(DAT_829c3ffc + 0xc) != '\0')) {
+    *(float *)(param_1 + 0x28) = *(float *)(param_1 + 0x28) * fVar1;
+    *(float *)(param_1 + 0x2c) = *(float *)(param_1 + 0x2c) * fVar1;
+    *(float *)(param_1 + 0x30) = *(float *)(param_1 + 0x30) * fVar1;
   }
   return;
 }
@@ -186,85 +142,68 @@ void Jump_ApplySlowdown(playerState_s *param_1)
 
 // 8226D670  Jump_GetSlowdownFriction  (bgame/bg_jump.cpp:228)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-float Jump_GetSlowdownFriction(playerState_s *param_1)
+void Jump_GetSlowdownFriction(void)
 
 {
   int iVar1;
-  double dVar2;
   
-  iVar1 = __savegprlr_29(param_1);
+  iVar1 = __savegprlr_29();
   if ((*(uint *)(iVar1 + 0xc) & 0x2000) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0xe5,0,"%s"
-                   );
+    MyAssertHandler(0xffffffff82004878,0xe5,0,0xffffffff82000f98,0xffffffff8200485c);
   }
   if (0x708 < *(int *)(iVar1 + 8)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0xe6,0,"%s"
-                   );
+    MyAssertHandler(0xffffffff82004878,0xe6,0,0xffffffff82000f98,0xffffffff820048bc);
   }
-  if (((jump_slowdownEnable->current).enabled != false) &&
-     ((*(uint *)(iVar1 + 0xc) & 0x400000) == 0)) {
+  if ((*(char *)(DAT_829c3ffc + 0xc) != '\0') && ((*(uint *)(iVar1 + 0xc) & 0x400000) == 0)) {
     if (0x6a3 < *(int *)(iVar1 + 8)) {
-      dVar2 = (double)__restgprlr_29(0x4004000000000000);
-      return (float)dVar2;
+      __restgprlr_29(0x4004000000000000);
+      return;
     }
-    dVar2 = (double)__restgprlr_29((double)((float)(longlong)*(int *)(iVar1 + 8) * 0.00088235294 +
-                                           1.0));
-    return (float)dVar2;
+    __restgprlr_29((double)((float)(longlong)*(int *)(iVar1 + 8) * 0.00088235294 + 1.0));
+    return;
   }
-  dVar2 = (double)__restgprlr_29(0x3ff0000000000000);
-  return (float)dVar2;
+  __restgprlr_29(0x3ff0000000000000);
+  return;
 }
 
 
 // 8226D768  Jump_ReduceFriction  (bgame/bg_jump.cpp:251)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-float Jump_ReduceFriction(playerState_s *param_1)
+undefined8 Jump_ReduceFriction(int param_1)
 
 {
-  float fVar1;
+  undefined8 uVar1;
   
-  if ((*(uint *)&(param_1->field0_0x0).field_0xc & 0x2000) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0xfe,0,"%s"
-                   );
+  if ((*(uint *)(param_1 + 0xc) & 0x2000) == 0) {
+    MyAssertHandler(0xffffffff82004878,0xfe,0,0xffffffff82000f98,0xffffffff8200485c);
   }
-  if (*(int *)&(param_1->field0_0x0).field_0x8 < 0x709) {
-    fVar1 = Jump_GetSlowdownFriction(param_1);
-    return fVar1;
+  if (*(int *)(param_1 + 8) < 0x709) {
+    uVar1 = Jump_GetSlowdownFriction(param_1);
+    return uVar1;
   }
-  *(uint *)&(param_1->field0_0x0).field_0xc = *(uint *)&(param_1->field0_0x0).field_0xc & 0xffbfdfff
-  ;
-  (param_1->field0_0x0).jumpOriginZ = 0.0;
-  return 1.0;
+  *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) & 0xffbfdfff;
+  *(undefined4 *)(param_1 + 0x80) = 0;
+  return 0x3ff0000000000000;
 }
 
 
 // 8226D810  Jump_ClampVelocity  (bgame/bg_jump.cpp:274)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-void Jump_ClampVelocity(playerState_s *param_1,float *param_2)
+void Jump_ClampVelocity(undefined8 param_1,ulonglong param_2)
 
 {
   float fVar1;
   int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
+  iVar2 = __savegprlr_28();
   if ((*(uint *)(iVar2 + 0xc) & 0x2000) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x116,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82004878,0x116,0,0xffffffff82000f98,0xffffffff8200485c);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x117,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82004878,0x117,0,0xffffffff82000f98,0xffffffff82004854);
   }
-  if (0.0 < *(float *)(iVar2 + 0x24) - *(float *)((int)uVar3 + 8)) {
-    fVar1 = ((jump_height->current).value + *(float *)(iVar2 + 0x80)) - *(float *)(iVar2 + 0x24);
+  if (0.0 < *(float *)(iVar2 + 0x24) - *(float *)((int)param_2 + 8)) {
+    fVar1 = (*(float *)(DAT_829c4004 + 0xc) + *(float *)(iVar2 + 0x80)) - *(float *)(iVar2 + 0x24);
     if (fVar1 < 0.1) {
       *(undefined4 *)(iVar2 + 0x30) = 0;
       __restgprlr_28();
@@ -282,141 +221,266 @@ void Jump_ClampVelocity(playerState_s *param_1,float *param_2)
 
 // 8226D918  Jump_GetLandFactor  (bgame/bg_jump.cpp:304)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-float Jump_GetLandFactor(playerState_s *param_1)
+void Jump_GetLandFactor(void)
 
 {
   int iVar1;
-  double dVar2;
   
-  iVar1 = __savegprlr_29(param_1);
+  iVar1 = __savegprlr_29();
   if ((*(uint *)(iVar1 + 0xc) & 0x2000) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x131,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82004878,0x131,0,0xffffffff82000f98,0xffffffff8200485c);
   }
   if (0x708 < *(int *)(iVar1 + 8)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x132,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82004878,0x132,0,0xffffffff82000f98,0xffffffff820048bc);
   }
-  if (((jump_slowdownEnable->current).enabled != false) &&
-     ((*(uint *)(iVar1 + 0xc) & 0x400000) == 0)) {
+  if ((*(char *)(DAT_829c3ffc + 0xc) != '\0') && ((*(uint *)(iVar1 + 0xc) & 0x400000) == 0)) {
     if (0x6a3 < *(int *)(iVar1 + 8)) {
-      dVar2 = (double)__restgprlr_29(0x4004000000000000);
-      return (float)dVar2;
+      __restgprlr_29(0x4004000000000000);
+      return;
     }
-    dVar2 = (double)__restgprlr_29((double)((float)(longlong)*(int *)(iVar1 + 8) * 0.00088235294 +
-                                           1.0));
-    return (float)dVar2;
+    __restgprlr_29((double)((float)(longlong)*(int *)(iVar1 + 8) * 0.00088235294 + 1.0));
+    return;
   }
-  dVar2 = (double)__restgprlr_29(0x3ff0000000000000);
-  return (float)dVar2;
+  __restgprlr_29(0x3ff0000000000000);
+  return;
 }
 
 
 // 8226DA10  PM_Diving  (bgame/bg_jump.cpp:324)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-bool PM_Diving(playerState_s *param_1)
+undefined8 PM_Diving(int param_1)
 
 {
-  uint uVar1;
-  bool bVar2;
+  undefined8 uVar1;
   
-  uVar1 = *(uint *)&(param_1->field0_0x0).field_0xc;
-  if ((uVar1 & 0x800) != 0) {
-    return false;
+  if ((*(uint *)(param_1 + 0xc) & 0x800) != 0) {
+    return 0;
   }
-  if (((uVar1 & 0x400000) == 0) || (bVar2 = true, *(int *)&(param_1->field0_0x0).field_0x8 != 0)) {
-    bVar2 = false;
+  if (((*(uint *)(param_1 + 0xc) & 0x400000) == 0) || (uVar1 = 1, *(int *)(param_1 + 8) != 0)) {
+    uVar1 = 0;
   }
-  return bVar2;
+  return uVar1;
 }
 
 
 // 8226DA50  BG_Diving  (bgame/bg_jump.cpp:337)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-bool BG_Diving(playerState_s *param_1)
+undefined8 BG_Diving(int param_1)
 
 {
-  uint uVar1;
-  bool bVar2;
+  undefined8 uVar1;
   
-  uVar1 = *(uint *)&(param_1->field0_0x0).field_0xc;
-  if ((uVar1 & 0x800) != 0) {
-    return false;
+  if ((*(uint *)(param_1 + 0xc) & 0x800) != 0) {
+    return 0;
   }
-  if (((uVar1 & 0x400000) == 0) || (bVar2 = true, *(int *)&(param_1->field0_0x0).field_0x8 != 0)) {
-    bVar2 = false;
+  if (((*(uint *)(param_1 + 0xc) & 0x400000) == 0) || (uVar1 = 1, *(int *)(param_1 + 8) != 0)) {
+    uVar1 = 0;
   }
-  return bVar2;
+  return uVar1;
 }
 
 
 // 8226DA90  BG_GetPlayerDiveState  (bgame/bg_jump.cpp:342)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-PlayerDiveState BG_GetPlayerDiveState(playerState_s *param_1)
+longlong BG_GetPlayerDiveState(int param_1)
 
 {
-  uint uVar1;
-  bool bVar2;
+  bool bVar1;
   
-  uVar1 = *(uint *)&(param_1->field0_0x0).field_0xc;
-  if ((uVar1 & 0x800) == 0) {
-    if (((uVar1 & 0x400000) == 0) || (bVar2 = true, *(int *)&(param_1->field0_0x0).field_0x8 != 0))
+  if ((*(uint *)(param_1 + 0xc) & 0x800) == 0) {
+    if (((*(uint *)(param_1 + 0xc) & 0x400000) == 0) || (bVar1 = true, *(int *)(param_1 + 8) != 0))
     {
-      bVar2 = false;
+      bVar1 = false;
     }
   }
   else {
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    return param_1->diveDirection + DIVE_FORWARD;
+  if (bVar1) {
+    return (ulonglong)*(uint *)(param_1 + 0x32e0) + 1;
   }
-  return DIVE_NONE;
+  return 0;
 }
 
 
 // 8226DAF0  BG_GetMoveDirection  (bgame/bg_jump.cpp:354)
 
-int BG_GetMoveDirection(float *param_1,float param_2)
+longlong BG_GetMoveDirection(double param_1,float *param_2)
 
 {
   uint uVar1;
   double dVar2;
-  double dVar3;
-  float fVar4;
   
-  dVar2 = (double)param_2;
-  if (((double)*param_1 == 0.0) && (param_1[1] == 0.0)) {
+  if (((double)*param_2 == 0.0) && (param_2[1] == 0.0)) {
     return 0x2d;
   }
-  dVar3 = atan2((double)param_1[1],(double)*param_1);
-  fVar4 = AngleNormalize360((float)((double)((float)dVar3 * 57.295776) - dVar2));
-  uVar1 = (uint)((fVar4 + 22.5) * 0.022222223);
-  return uVar1 + (((int)uVar1 >> 3) + (uint)((int)uVar1 < 0 && (uVar1 & 7) != 0)) * -8;
+  dVar2 = atan2((double)param_2[1],(double)*param_2);
+  dVar2 = (double)AngleNormalize360((double)(float)((double)((float)dVar2 * 57.295776) - param_1));
+  uVar1 = (uint)((float)(dVar2 + 22.5) * 0.022222223);
+  return (ulonglong)uVar1 +
+         ((longlong)((int)uVar1 >> 3) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 7) != 0) & 0x1fffffff
+         ) * -8;
 }
 
 
 // 8226DBA8  Jump_CheckDive  (bgame/bg_jump.cpp:372)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void Jump_CheckDive(undefined8 param_1,float *param_2,longlong param_3)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  float local_c0;
+  float local_bc;
+  undefined4 local_b8;
+  undefined4 local_b4;
+  undefined4 local_b0;
+  undefined4 local_ac;
+  float local_a0 [40];
+  
+  __savegprlr_26();
+  iVar3 = __savefpr_27();
+  if (param_3 == -0x4ec) {
+    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+  }
+  iVar2 = (int)param_3;
+  if (((*(uint *)(iVar2 + 0x4f0) & 2) != 0) &&
+     (((*(uint *)(iVar2 + 0xc) & 0x2000) == 0 || (*(int *)(iVar2 + 8) < 800)))) {
+    dVar5 = 0.0;
+    dVar7 = (double)((float)(longlong)*(char *)(iVar3 + 0x21) * 0.007874016);
+    dVar8 = (double)((float)(longlong)*(char *)(iVar3 + 0x20) * 0.007874016);
+    if (dVar8 < 0.0) {
+      dVar8 = (double)(float)(dVar8 * 0.30000001192092896);
+    }
+    dVar6 = 1.0;
+    dVar4 = 0.0020000000949949026;
+    if (0.002 <= ABS((param_2[2] * param_2[2] + *param_2 * *param_2 + param_2[1] * param_2[1]) - 1.0
+                    )) {
+      MyAssertHandler(0xffffffff82004878,0x18b,0,0xffffffff82000f98,0xffffffff82004918);
+    }
+    if (dVar4 <= ABS((double)(float)((double)(param_2[5] * param_2[5] +
+                                             param_2[3] * param_2[3] + param_2[4] * param_2[4]) -
+                                    dVar6))) {
+      MyAssertHandler(0xffffffff82004878,0x18c,0,0xffffffff82000f98,0xffffffff820048f8);
+    }
+    dVar9 = (double)(float)((double)param_2[3] * dVar7 + (double)(float)((double)*param_2 * dVar8));
+    dVar4 = (double)(float)(dVar7 * (double)param_2[4] + (double)(float)(dVar8 * (double)param_2[1])
+                           );
+    dVar8 = (double)SQRT((float)(dVar4 * dVar4 + (double)(float)(dVar9 * dVar9)));
+    dVar7 = dVar6;
+    if (-dVar8 < 0.0) {
+      dVar7 = dVar8;
+    }
+    dVar7 = (double)(float)(dVar6 / dVar7);
+    if (0.10000000149011612 <= dVar8) {
+      local_c0 = (float)dVar5;
+      local_bc = (float)dVar5;
+      local_b8 = 0x42300000;
+      local_b4 = 0x41700000;
+      local_b0 = 0x41700000;
+      local_ac = 0x41d00000;
+      fVar1 = *(float *)(DAT_829d7edc + 0xc);
+      local_d8 = fVar1 * (float)(dVar7 * dVar9) + *(float *)(iVar2 + 0x1c);
+      local_d4 = (float)(dVar4 * dVar7) * fVar1 + *(float *)(iVar2 + 0x20);
+      local_d0 = (float)(dVar7 * dVar5) * fVar1 + *(float *)(iVar2 + 0x24);
+      PM_trace(iVar3,local_a0,param_3 + 0x1c,&local_d8,&local_c0,*(undefined4 *)(iVar2 + 0x150),
+               *(undefined4 *)(iVar3 + 0x5c));
+      if (dVar6 <= (double)local_a0[0]) {
+        fVar1 = *(float *)(DAT_829d7eec + 0xc);
+        *(float *)(iVar2 + 0x28) = (float)(dVar9 * (double)fVar1);
+        *(float *)(iVar2 + 0x2c) = (float)(dVar4 * (double)fVar1);
+        __restfpr_27(1);
+        __restgprlr_26();
+        return;
+      }
+    }
+  }
+  __restfpr_27(0);
+  __restgprlr_26();
+  return;
+}
+
 
 // 8226DE48  Jump_Start  (bgame/bg_jump.cpp:429)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void Jump_Start(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  float fVar4;
+  uint uVar5;
+  int iVar6;
+  int *piVar7;
+  char cVar9;
+  undefined4 uVar8;
+  double extraout_f1;
+  double dVar10;
+  double dVar11;
+  
+  piVar7 = (int *)__savegprlr_26();
+  iVar1 = *piVar7;
+  dVar11 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82004878,0x1b4,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  dVar11 = (double)((float)(longlong)*(int *)(iVar1 + 0x58) * (float)(dVar11 * 2.0));
+  cVar9 = Jump_CheckDive(piVar7,param_2,iVar1);
+  if ((((*(uint *)(iVar1 + 0xc) & 0x2000) != 0) && (*(int *)(iVar1 + 8) < 0x709)) && (cVar9 == '\0')
+     ) {
+    dVar10 = (double)Jump_GetLandFactor(iVar1);
+    if (dVar10 == 0.0) {
+      MyAssertHandler(0xffffffff82004878,0x1bf,0,0xffffffff82000f98,0xffffffff82004940);
+    }
+    dVar11 = (double)(float)(dVar11 / dVar10);
+  }
+  iVar3 = (int)param_2;
+  *(undefined4 *)(iVar3 + 0x30) = 0;
+  *(undefined4 *)(iVar3 + 0x34) = 0;
+  *(undefined4 *)(iVar3 + 0x2c) = 0;
+  *(undefined4 *)(iVar1 + 0x6c) = 0x7ff;
+  iVar6 = DAT_829c3ff8;
+  uVar2 = *(uint *)(iVar1 + 0xc);
+  iVar3 = piVar7[1];
+  *(undefined4 *)(iVar1 + 0x80) = *(undefined4 *)(iVar1 + 0x24);
+  uVar5 = uVar2 & 0xfffffe7f;
+  *(float *)(iVar1 + 0x30) = (float)SQRT(dVar11);
+  *(undefined4 *)(iVar1 + 8) = 0;
+  *(undefined4 *)(iVar1 + 0x20c) = 0;
+  *(int *)(iVar1 + 0x7c) = iVar3;
+  *(uint *)(iVar1 + 0xc) = uVar5 | 0x2000;
+  fVar4 = *(float *)(iVar6 + 0xc) + *(float *)(iVar1 + 0x37c);
+  if (255.0 - fVar4 < 0.0) {
+    fVar4 = 255.0;
+  }
+  *(float *)(iVar1 + 0x37c) = fVar4;
+  if (cVar9 != '\0') {
+    *(uint *)(iVar1 + 0xc) = uVar5 | 0x402000;
+    uVar8 = BG_GetMoveDirection((double)*(float *)(iVar1 + 0x15c),iVar1 + 0x28);
+    *(undefined4 *)(iVar1 + 0x32e0) = uVar8;
+    __restgprlr_26();
+    return;
+  }
+  *(uint *)(iVar1 + 0xc) = uVar2 & 0xffbffe7f | 0x2000;
+  __restgprlr_26();
+  return;
+}
+
 
 // 8226E000  Jump_PushOffLadder  (bgame/bg_jump.cpp:491)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-void Jump_PushOffLadder(playerState_s *param_1,pml_t *param_2)
+void Jump_PushOffLadder(int param_1,float *param_2)
 
 {
   float fVar1;
@@ -425,62 +489,55 @@ void Jump_PushOffLadder(playerState_s *param_1,pml_t *param_2)
   float fVar4;
   float fVar5;
   float fVar6;
-  float fVar7;
-  float fVar8;
   
-  if ((*(uint *)&(param_1->field0_0x0).field_0xc & 8) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x1f0,0,
-                    "%s");
+  if ((*(uint *)(param_1 + 0xc) & 8) == 0) {
+    MyAssertHandler(0xffffffff82004878,0x1f0,0,0xffffffff82000f98,0xffffffff8200494c);
   }
-  *(float *)&(param_1->field0_0x0).field_0x30 = *(float *)&(param_1->field0_0x0).field_0x30 * 0.75;
-  fVar1 = param_2->forward[1];
-  fVar2 = (param_1->field0_0x0).vLadderVec[1];
-  fVar3 = param_2->forward[0];
-  fVar4 = (param_1->field0_0x0).vLadderVec[0];
-  fVar5 = (param_1->field0_0x0).vLadderVec[2];
-  fVar6 = SQRT(fVar1 * fVar1 + fVar3 * fVar3);
-  fVar8 = 1.0;
-  if (-fVar6 < 0.0) {
-    fVar8 = fVar6;
+  *(float *)(param_1 + 0x30) = *(float *)(param_1 + 0x30) * 0.75;
+  fVar1 = param_2[1];
+  fVar2 = *param_2;
+  fVar3 = *(float *)(param_1 + 0x70);
+  fVar4 = SQRT(fVar1 * fVar1 + fVar2 * fVar2);
+  fVar6 = 1.0;
+  if (-fVar4 < 0.0) {
+    fVar6 = fVar4;
   }
-  fVar8 = 1.0 / fVar8;
-  fVar7 = fVar8 * fVar3;
-  fVar6 = fVar1 * fVar8;
-  if (param_2->forward[2] * fVar5 + fVar4 * fVar3 + fVar2 * fVar1 < 0.0) {
-    fVar3 = ((param_1->field0_0x0).vLadderVec[2] * fVar8 * 0.0 +
-            fVar4 * fVar7 + (param_1->field0_0x0).vLadderVec[1] * fVar6) * -2.0;
-    fVar6 = fVar2 * fVar3 + fVar6;
-    fVar1 = fVar5 * fVar3 + fVar8 * 0.0;
-    fVar7 = fVar4 * fVar3 + fVar7;
-    fVar2 = SQRT(fVar7 * fVar7 + fVar1 * fVar1 + fVar6 * fVar6);
+  fVar6 = 1.0 / fVar6;
+  fVar5 = fVar6 * fVar2;
+  fVar4 = fVar1 * fVar6;
+  if (param_2[2] * *(float *)(param_1 + 0x78) + fVar3 * fVar2 + *(float *)(param_1 + 0x74) * fVar1 <
+      0.0) {
+    fVar2 = (*(float *)(param_1 + 0x78) * fVar6 * 0.0 +
+            fVar3 * fVar5 + *(float *)(param_1 + 0x74) * fVar4) * -2.0;
+    fVar4 = *(float *)(param_1 + 0x74) * fVar2 + fVar4;
+    fVar1 = *(float *)(param_1 + 0x78) * fVar2 + fVar6 * 0.0;
+    fVar5 = fVar3 * fVar2 + fVar5;
+    fVar2 = SQRT(fVar5 * fVar5 + fVar1 * fVar1 + fVar4 * fVar4);
     fVar1 = 1.0;
     if (-fVar2 < 0.0) {
       fVar1 = fVar2;
     }
-    fVar7 = (1.0 / fVar1) * fVar7;
-    fVar6 = fVar6 * (1.0 / fVar1);
+    fVar5 = (1.0 / fVar1) * fVar5;
+    fVar4 = fVar4 * (1.0 / fVar1);
   }
-  fVar1 = (jump_ladderPushVel->current).value;
-  *(float *)&(param_1->field0_0x0).field_0x28 = fVar7 * fVar1;
-  *(float *)&(param_1->field0_0x0).field_0x2c = fVar6 * fVar1;
-  *(uint *)&(param_1->field0_0x0).field_0xc = *(uint *)&(param_1->field0_0x0).field_0xc & 0xfffffff7
-  ;
+  fVar1 = *(float *)(DAT_829c3ff4 + 0xc);
+  *(float *)(param_1 + 0x28) = fVar5 * fVar1;
+  *(float *)(param_1 + 0x2c) = fVar4 * fVar1;
+  *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) & 0xfffffff7;
   return;
 }
 
 
 // 8226E160  Jump_AddSurfaceEvent  (bgame/bg_jump.cpp:529)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-void Jump_AddSurfaceEvent(playerState_s *param_1,pml_t *param_2)
+void Jump_AddSurfaceEvent(int param_1,undefined8 param_2)
 
 {
-  uint uVar1;
+  ulonglong uVar1;
   
-  if ((*(uint *)&(param_1->field0_0x0).field_0xc & 8) == 0) {
+  if ((*(uint *)(param_1 + 0xc) & 8) == 0) {
     uVar1 = PM_GroundSurfaceType(param_2);
-    if (uVar1 == 0) {
+    if ((uVar1 & 0xffffffff) == 0) {
       return;
     }
   }
@@ -493,5 +550,59 @@ void Jump_AddSurfaceEvent(playerState_s *param_1,pml_t *param_2)
 
 
 // 8226E1C0  Jump_Check  (bgame/bg_jump.cpp:552)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void Jump_Check(undefined8 param_1,longlong param_2)
+
+{
+  int iVar1;
+  uint uVar2;
+  int *piVar3;
+  int iVar4;
+  undefined8 uVar5;
+  
+  piVar3 = (int *)__savegprlr_26();
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82004878,0x22e,0,0xffffffff82000f98,0xffffffff82004978);
+  }
+  iVar1 = *piVar3;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82004878,0x231,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  uVar2 = *(uint *)(iVar1 + 0xc);
+  if ((uVar2 & 0x40000) == 0) {
+    if (((((499 < piVar3[1] - *(int *)(iVar1 + 0x7c)) && ((uVar2 & 0x400) == 0)) &&
+         ((uVar2 & 4) == 0)) &&
+        ((*(int *)(iVar1 + 4) < 8 && (iVar4 = PM_GetEffectiveStance(iVar1), iVar4 == 0)))) &&
+       ((piVar3[2] & 0x400U) != 0)) {
+      if ((piVar3[0xd] & 0x400U) != 0) {
+        piVar3[2] = piVar3[2] & 0xfffffbff;
+        __restgprlr_26();
+        return;
+      }
+      if (*(short *)((int)param_2 + 0x58) != 0x7ff) {
+        iVar4 = BG_GetEntityState(*(undefined1 *)(piVar3 + 0x4d));
+        if (iVar4 == 0) {
+          MyAssertHandler(0xffffffff82004878,599,0,0xffffffff82000f98,0xffffffff82004968);
+        }
+        if ((*(int *)(iVar4 + 4) == 0xc) || (*(int *)(iVar4 + 4) == 0xe)) goto LAB_8226e240;
+      }
+      Jump_Start((double)*(float *)(DAT_829c4004 + 0xc),piVar3,param_2);
+      Jump_AddSurfaceEvent(iVar1,param_2);
+      if ((*(uint *)(iVar1 + 0xc) & 8) != 0) {
+        Jump_PushOffLadder(iVar1,param_2);
+      }
+      BG_AnimUpdatePlayerStateConditions(piVar3);
+      uVar5 = 3;
+      if (0x7f < *(byte *)(piVar3 + 8)) {
+        uVar5 = 4;
+      }
+      BG_AnimScriptEvent(iVar1,uVar5,0,1,param_2 + 0x88);
+      __restgprlr_26(1);
+      return;
+    }
+  }
+LAB_8226e240:
+  __restgprlr_26(0);
+  return;
+}
+

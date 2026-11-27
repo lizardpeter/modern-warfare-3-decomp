@@ -3,7 +3,7 @@
 ; 8265C940  tr_static_init  (zlib/trees.c:243)
   8265C940  4E800020             blr
 
-; 8265DE58  _tr_init  (zlib/trees.c:388)
+; 8265DE58  tr_init  (zlib/trees.c:388)
   8265DE58  3D608299             lis r11,-0x7d67
   8265DE5C  3900011E             li r8,0x11e
   8265DE60  396B70DC             addi r11,r11,0x70dc
@@ -1247,7 +1247,7 @@ LAB_8265d640:
   8265D668  EBE1FFF0             ld r31,-0x10(r1)
   8265D66C  4E800020             blr
 
-; 8265E2E8  _tr_stored_block  (zlib/trees.c:875)
+; 8265E2E8  tr_stored_block  (zlib/trees.c:875)
   8265E2E8  816316B4             lwz r11,0x16b4(r3)
   8265E2EC  A14316B0             lhz r10,0x16b0(r3)
   8265E2F0  7CC95830             slw r9,r6,r11
@@ -1285,7 +1285,7 @@ LAB_8265e368:
   8265E368  38C00001             li r6,0x1
   8265E36C  4BFFFA14             b 0x8265dd80
 
-; 8265E370  _tr_align  (zlib/trees.c:897)
+; 8265E370  tr_align  (zlib/trees.c:897)
   8265E370  7D8802A6             mfspr r12,LR
   8265E374  9181FFF8             stw r12,-0x8(r1)
   8265E378  FBC1FFE8             std r30,-0x18(r1)
@@ -1448,7 +1448,7 @@ LAB_8265e5b0:
   8265E5C8  EBE1FFF0             ld r31,-0x10(r1)
   8265E5CC  4E800020             blr
 
-; 8265E5D0  _tr_flush_block  (zlib/trees.c:929)
+; 8265E5D0  tr_flush_block  (zlib/trees.c:929)
   8265E5D0  7D8802A6             mfspr r12,LR
   8265E5D4  482B80E1             bl 0x829166b4
   8265E5D8  9421FF80             stwu r1,-0x80(r1)
@@ -1625,7 +1625,7 @@ LAB_8265e848:
   8265E848  38210080             addi r1,r1,0x80
   8265E84C  482B7EB8             b 0x82916704
 
-; 8265D670  _tr_tally  (zlib/trees.c:1028)
+; 8265D670  tr_tally  (zlib/trees.c:1028)
   8265D670  81631698             lwz r11,0x1698(r3)
   8265D674  2B040000             cmplwi cr6,r4,0x0
   8265D678  8123169C             lwz r9,0x169c(r3)

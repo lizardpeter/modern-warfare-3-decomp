@@ -2,18 +2,18 @@
 
 // 828182F8  vp8_recon_b_c  (WebM_atvi_opt/vpx/vp8/common/recon.c:27)
 
-void vp8_recon_b_c(uchar *param_1,short *param_2,uchar *param_3,int param_4)
+void vp8_recon_b_c(int param_1,int param_2,int param_3,int param_4)
 
 {
-  uchar *puVar1;
+  undefined1 *puVar1;
   byte *pbVar2;
   short *psVar3;
   longlong lVar4;
   longlong lVar5;
   
-  puVar1 = param_3 + 2;
-  pbVar2 = param_1 + 2;
-  psVar3 = param_2 + 2;
+  puVar1 = (undefined1 *)(param_3 + 2);
+  pbVar2 = (byte *)(param_1 + 2);
+  psVar3 = (short *)(param_2 + 4);
   lVar5 = 4;
   do {
     lVar4 = (longlong)psVar3[-2] + (ulonglong)pbVar2[-2];
@@ -23,7 +23,7 @@ void vp8_recon_b_c(uchar *param_1,short *param_2,uchar *param_3,int param_4)
     else if (0xff < (int)lVar4) {
       lVar4 = 0xff;
     }
-    puVar1[-2] = (uchar)lVar4;
+    puVar1[-2] = (char)lVar4;
     lVar4 = (longlong)psVar3[-1] + (ulonglong)pbVar2[-1];
     if (lVar4 < 0) {
       lVar4 = 0;
@@ -31,7 +31,7 @@ void vp8_recon_b_c(uchar *param_1,short *param_2,uchar *param_3,int param_4)
     else if (0xff < (int)lVar4) {
       lVar4 = 0xff;
     }
-    puVar1[-1] = (uchar)lVar4;
+    puVar1[-1] = (char)lVar4;
     lVar4 = (longlong)*psVar3 + (ulonglong)*pbVar2;
     if (lVar4 < 0) {
       lVar4 = 0;
@@ -39,7 +39,7 @@ void vp8_recon_b_c(uchar *param_1,short *param_2,uchar *param_3,int param_4)
     else if (0xff < (int)lVar4) {
       lVar4 = 0xff;
     }
-    *puVar1 = (uchar)lVar4;
+    *puVar1 = (char)lVar4;
     lVar4 = (longlong)psVar3[1] + (ulonglong)pbVar2[1];
     if (lVar4 < 0) {
       lVar4 = 0;
@@ -48,7 +48,7 @@ void vp8_recon_b_c(uchar *param_1,short *param_2,uchar *param_3,int param_4)
       lVar4 = 0xff;
     }
     psVar3 = psVar3 + 0x10;
-    puVar1[1] = (uchar)lVar4;
+    puVar1[1] = (char)lVar4;
     puVar1 = puVar1 + param_4;
     pbVar2 = pbVar2 + 0x10;
     lVar5 = lVar5 + -1;
@@ -59,74 +59,68 @@ void vp8_recon_b_c(uchar *param_1,short *param_2,uchar *param_3,int param_4)
 
 // 828183D8  vp8_recon4b_c  (WebM_atvi_opt/vpx/vp8/common/recon.c:58)
 
-void vp8_recon4b_c(uchar *param_1,short *param_2,uchar *param_3,int param_4)
+void vp8_recon4b_c(undefined8 param_1,longlong param_2,longlong param_3,longlong param_4)
 
 {
   short *psVar1;
   int iVar2;
   int iVar3;
   longlong lVar4;
-  longlong lVar5;
+  int iVar5;
   longlong lVar6;
   longlong lVar7;
-  int iVar8;
-  longlong lVar9;
-  longlong lVar10;
   
-  lVar5 = (longlong)param_4;
-  lVar4 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_26(param_1);
-  lVar7 = lVar7 + 4;
+  iVar3 = __savegprlr_26();
+  param_2 = param_2 + 4;
   iVar3 = iVar3 + 2;
-  lVar9 = 4;
+  lVar6 = 4;
   do {
-    iVar2 = (int)lVar4;
-    iVar8 = 0;
-    lVar10 = 4;
+    iVar2 = (int)param_3;
+    iVar5 = 0;
+    lVar7 = 4;
     do {
-      psVar1 = (short *)lVar7;
-      lVar6 = (ulonglong)(byte)((undefined1 *)(iVar8 + iVar2))[(iVar3 - iVar2) + -2] +
+      psVar1 = (short *)param_2;
+      lVar4 = (ulonglong)(byte)((undefined1 *)(iVar5 + iVar2))[(iVar3 - iVar2) + -2] +
               (longlong)psVar1[-2];
-      if (lVar6 < 0) {
-        lVar6 = 0;
+      if (lVar4 < 0) {
+        lVar4 = 0;
       }
-      else if (0xff < (int)lVar6) {
-        lVar6 = 0xff;
+      else if (0xff < (int)lVar4) {
+        lVar4 = 0xff;
       }
-      *(undefined1 *)(iVar8 + iVar2) = (char)lVar6;
-      lVar6 = (ulonglong)*(byte *)(iVar3 + -1 + iVar8) + (longlong)psVar1[-1];
-      if (lVar6 < 0) {
-        lVar6 = 0;
+      *(undefined1 *)(iVar5 + iVar2) = (char)lVar4;
+      lVar4 = (ulonglong)*(byte *)(iVar3 + -1 + iVar5) + (longlong)psVar1[-1];
+      if (lVar4 < 0) {
+        lVar4 = 0;
       }
-      else if (0xff < (int)lVar6) {
-        lVar6 = 0xff;
+      else if (0xff < (int)lVar4) {
+        lVar4 = 0xff;
       }
-      *(char *)(iVar2 + 1 + iVar8) = (char)lVar6;
-      lVar6 = (ulonglong)*(byte *)(iVar3 + iVar8) + (longlong)*psVar1;
-      if (lVar6 < 0) {
-        lVar6 = 0;
+      *(char *)(iVar2 + 1 + iVar5) = (char)lVar4;
+      lVar4 = (ulonglong)*(byte *)(iVar3 + iVar5) + (longlong)*psVar1;
+      if (lVar4 < 0) {
+        lVar4 = 0;
       }
-      else if (0xff < (int)lVar6) {
-        lVar6 = 0xff;
+      else if (0xff < (int)lVar4) {
+        lVar4 = 0xff;
       }
-      *(char *)(iVar2 + 2 + iVar8) = (char)lVar6;
-      lVar6 = (ulonglong)*(byte *)(iVar3 + 1 + iVar8) + (longlong)psVar1[1];
-      if (lVar6 < 0) {
-        lVar6 = 0;
+      *(char *)(iVar2 + 2 + iVar5) = (char)lVar4;
+      lVar4 = (ulonglong)*(byte *)(iVar3 + 1 + iVar5) + (longlong)psVar1[1];
+      if (lVar4 < 0) {
+        lVar4 = 0;
       }
-      else if (0xff < (int)lVar6) {
-        lVar6 = 0xff;
+      else if (0xff < (int)lVar4) {
+        lVar4 = 0xff;
       }
-      lVar7 = lVar7 + 8;
-      *(char *)(iVar2 + 3 + iVar8) = (char)lVar6;
-      iVar8 = iVar8 + 4;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    lVar9 = lVar9 + -1;
-    lVar4 = lVar4 + lVar5;
+      param_2 = param_2 + 8;
+      *(char *)(iVar2 + 3 + iVar5) = (char)lVar4;
+      iVar5 = iVar5 + 4;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    lVar6 = lVar6 + -1;
+    param_3 = param_3 + param_4;
     iVar3 = iVar3 + 0x10;
-  } while (lVar9 != 0);
+  } while (lVar6 != 0);
   __restgprlr_26();
   return;
 }
@@ -134,74 +128,68 @@ void vp8_recon4b_c(uchar *param_1,short *param_2,uchar *param_3,int param_4)
 
 // 828184F0  vp8_recon2b_c  (WebM_atvi_opt/vpx/vp8/common/recon.c:89)
 
-void vp8_recon2b_c(uchar *param_1,short *param_2,uchar *param_3,int param_4)
+void vp8_recon2b_c(undefined8 param_1,longlong param_2,longlong param_3,longlong param_4)
 
 {
   short *psVar1;
   int iVar2;
   int iVar3;
   longlong lVar4;
-  longlong lVar5;
+  int iVar5;
   longlong lVar6;
   longlong lVar7;
-  int iVar8;
-  longlong lVar9;
-  longlong lVar10;
   
-  lVar5 = (longlong)param_4;
-  lVar4 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_26(param_1);
-  lVar7 = lVar7 + 4;
+  iVar3 = __savegprlr_26();
+  param_2 = param_2 + 4;
   iVar3 = iVar3 + 2;
-  lVar9 = 4;
+  lVar6 = 4;
   do {
-    iVar2 = (int)lVar4;
-    iVar8 = 0;
-    lVar10 = 2;
+    iVar2 = (int)param_3;
+    iVar5 = 0;
+    lVar7 = 2;
     do {
-      psVar1 = (short *)lVar7;
-      lVar6 = (ulonglong)(byte)((undefined1 *)(iVar8 + iVar2))[(iVar3 - iVar2) + -2] +
+      psVar1 = (short *)param_2;
+      lVar4 = (ulonglong)(byte)((undefined1 *)(iVar5 + iVar2))[(iVar3 - iVar2) + -2] +
               (longlong)psVar1[-2];
-      if (lVar6 < 0) {
-        lVar6 = 0;
+      if (lVar4 < 0) {
+        lVar4 = 0;
       }
-      else if (0xff < (int)lVar6) {
-        lVar6 = 0xff;
+      else if (0xff < (int)lVar4) {
+        lVar4 = 0xff;
       }
-      *(undefined1 *)(iVar8 + iVar2) = (char)lVar6;
-      lVar6 = (ulonglong)*(byte *)(iVar3 + -1 + iVar8) + (longlong)psVar1[-1];
-      if (lVar6 < 0) {
-        lVar6 = 0;
+      *(undefined1 *)(iVar5 + iVar2) = (char)lVar4;
+      lVar4 = (ulonglong)*(byte *)(iVar3 + -1 + iVar5) + (longlong)psVar1[-1];
+      if (lVar4 < 0) {
+        lVar4 = 0;
       }
-      else if (0xff < (int)lVar6) {
-        lVar6 = 0xff;
+      else if (0xff < (int)lVar4) {
+        lVar4 = 0xff;
       }
-      *(char *)(iVar2 + 1 + iVar8) = (char)lVar6;
-      lVar6 = (ulonglong)*(byte *)(iVar3 + iVar8) + (longlong)*psVar1;
-      if (lVar6 < 0) {
-        lVar6 = 0;
+      *(char *)(iVar2 + 1 + iVar5) = (char)lVar4;
+      lVar4 = (ulonglong)*(byte *)(iVar3 + iVar5) + (longlong)*psVar1;
+      if (lVar4 < 0) {
+        lVar4 = 0;
       }
-      else if (0xff < (int)lVar6) {
-        lVar6 = 0xff;
+      else if (0xff < (int)lVar4) {
+        lVar4 = 0xff;
       }
-      *(char *)(iVar2 + 2 + iVar8) = (char)lVar6;
-      lVar6 = (ulonglong)*(byte *)(iVar3 + 1 + iVar8) + (longlong)psVar1[1];
-      if (lVar6 < 0) {
-        lVar6 = 0;
+      *(char *)(iVar2 + 2 + iVar5) = (char)lVar4;
+      lVar4 = (ulonglong)*(byte *)(iVar3 + 1 + iVar5) + (longlong)psVar1[1];
+      if (lVar4 < 0) {
+        lVar4 = 0;
       }
-      else if (0xff < (int)lVar6) {
-        lVar6 = 0xff;
+      else if (0xff < (int)lVar4) {
+        lVar4 = 0xff;
       }
-      lVar7 = lVar7 + 8;
-      *(char *)(iVar2 + 3 + iVar8) = (char)lVar6;
-      iVar8 = iVar8 + 4;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    lVar9 = lVar9 + -1;
-    lVar4 = lVar4 + lVar5;
+      param_2 = param_2 + 8;
+      *(char *)(iVar2 + 3 + iVar5) = (char)lVar4;
+      iVar5 = iVar5 + 4;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    lVar6 = lVar6 + -1;
+    param_3 = param_3 + param_4;
     iVar3 = iVar3 + 8;
-  } while (lVar9 != 0);
+  } while (lVar6 != 0);
   __restgprlr_26();
   return;
 }
@@ -209,25 +197,23 @@ void vp8_recon2b_c(uchar *param_1,short *param_2,uchar *param_3,int param_4)
 
 // 82818608  vp8_recon_mby_c  (WebM_atvi_opt/vpx/vp8/common/recon.c:114)
 
-void vp8_recon_mby_c(vp8_recon_rtcd_vtable *param_1,MACROBLOCKD *param_2)
+void vp8_recon_mby_c(undefined8 param_1,longlong param_2)
 
 {
   int iVar1;
   int iVar2;
   longlong lVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  lVar4 = lVar4 + 0xa38;
+  iVar2 = __savegprlr_29();
+  param_2 = param_2 + 0xa38;
   lVar3 = 4;
   do {
-    iVar1 = (int)lVar4;
-    lVar4 = lVar4 + 0xf0;
+    iVar1 = (int)param_2;
+    param_2 = param_2 + 0xf0;
     (**(code **)(iVar2 + 0x14))
               (*(undefined4 *)(iVar1 + 0xcc),*(undefined4 *)(iVar1 + 0xd0),
                (ulonglong)*(uint *)(iVar1 + 0xec) + (ulonglong)**(uint **)(iVar1 + 0xe8),
-               *(undefined4 *)lVar4);
+               *(undefined4 *)param_2);
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
   __restgprlr_29();
@@ -237,18 +223,16 @@ void vp8_recon_mby_c(vp8_recon_rtcd_vtable *param_1,MACROBLOCKD *param_2)
 
 // 82818658  vp8_recon_mb_c  (WebM_atvi_opt/vpx/vp8/common/recon.c:143)
 
-void vp8_recon_mb_c(vp8_recon_rtcd_vtable *param_1,MACROBLOCKD *param_2)
+void vp8_recon_mb_c(undefined8 param_1,longlong param_2)
 
 {
   int iVar1;
   int iVar2;
   longlong lVar3;
   longlong lVar4;
-  longlong lVar5;
   
-  lVar5 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  lVar4 = lVar5 + 0xa38;
+  iVar2 = __savegprlr_28();
+  lVar4 = param_2 + 0xa38;
   lVar3 = 4;
   do {
     iVar1 = (int)lVar4;
@@ -259,15 +243,15 @@ void vp8_recon_mb_c(vp8_recon_rtcd_vtable *param_1,MACROBLOCKD *param_2)
                *(undefined4 *)lVar4);
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  lVar5 = lVar5 + 0xe70;
+  param_2 = param_2 + 0xe70;
   lVar4 = 4;
   do {
-    iVar1 = (int)lVar5;
-    lVar5 = lVar5 + 0x78;
+    iVar1 = (int)param_2;
+    param_2 = param_2 + 0x78;
     (**(code **)(iVar2 + 0x10))
               (*(undefined4 *)(iVar1 + 0x54),*(undefined4 *)(iVar1 + 0x58),
                (ulonglong)*(uint *)(iVar1 + 0x74) + (ulonglong)**(uint **)(iVar1 + 0x70),
-               *(undefined4 *)lVar5);
+               *(undefined4 *)param_2);
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
   __restgprlr_28();

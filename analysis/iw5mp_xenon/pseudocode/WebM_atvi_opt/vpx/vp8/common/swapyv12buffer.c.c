@@ -2,23 +2,23 @@
 
 // 8281B4F0  vp8_swap_yv12_buffer  (WebM_atvi_opt/vpx/vp8/common/swapyv12buffer.c:19)
 
-void vp8_swap_yv12_buffer(YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2)
+void vp8_swap_yv12_buffer(int param_1,int param_2)
 
 {
-  uchar *puVar1;
+  undefined4 uVar1;
   
-  puVar1 = param_2->buffer_alloc;
-  param_2->buffer_alloc = param_1->buffer_alloc;
-  param_1->buffer_alloc = puVar1;
-  puVar1 = param_2->y_buffer;
-  param_2->y_buffer = param_1->y_buffer;
-  param_1->y_buffer = puVar1;
-  puVar1 = param_2->u_buffer;
-  param_2->u_buffer = param_1->u_buffer;
-  param_1->u_buffer = puVar1;
-  puVar1 = param_2->v_buffer;
-  param_2->v_buffer = param_1->v_buffer;
-  param_1->v_buffer = puVar1;
+  uVar1 = *(undefined4 *)(param_2 + 0x24);
+  *(undefined4 *)(param_2 + 0x24) = *(undefined4 *)(param_1 + 0x24);
+  *(undefined4 *)(param_1 + 0x24) = uVar1;
+  uVar1 = *(undefined4 *)(param_2 + 0x18);
+  *(undefined4 *)(param_2 + 0x18) = *(undefined4 *)(param_1 + 0x18);
+  *(undefined4 *)(param_1 + 0x18) = uVar1;
+  uVar1 = *(undefined4 *)(param_2 + 0x1c);
+  *(undefined4 *)(param_2 + 0x1c) = *(undefined4 *)(param_1 + 0x1c);
+  *(undefined4 *)(param_1 + 0x1c) = uVar1;
+  uVar1 = *(undefined4 *)(param_2 + 0x20);
+  *(undefined4 *)(param_2 + 0x20) = *(undefined4 *)(param_1 + 0x20);
+  *(undefined4 *)(param_1 + 0x20) = uVar1;
   return;
 }
 

@@ -5,17 +5,17 @@
 ulonglong RADTimerRead(void)
 
 {
-  ulong uVar2;
+  DWORD DVar2;
   ulonglong uVar1;
   ulonglong uVar3;
   
-  uVar2 = GetTickCount();
+  DVar2 = GetTickCount();
   uVar3 = (ulonglong)DAT_8489bee0;
   if ((ulonglong)DAT_8489bee0 == 0) {
-    uVar3 = (longlong)(int)uVar2;
-    DAT_8489bee0 = uVar2;
+    uVar3 = (longlong)(int)DVar2;
+    DAT_8489bee0 = DVar2;
   }
-  uVar3 = (longlong)(int)uVar2 - uVar3;
+  uVar3 = (longlong)(int)DVar2 - uVar3;
   uVar1 = (ulonglong)DAT_8489bee4;
   if ((uVar3 - DAT_8489bee4 & 0xffffffff) < 0xc0000001) {
     DAT_8489bee4 = (uint)uVar3;

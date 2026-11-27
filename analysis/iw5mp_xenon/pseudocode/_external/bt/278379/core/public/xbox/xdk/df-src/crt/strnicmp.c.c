@@ -2,7 +2,7 @@
 
 // 8291DD50  __ascii_strnicmp  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/strnicmp.c:89)
 
-int __ascii_strnicmp(char *param_1,char *param_2,uint param_3)
+int __ascii_strnicmp(char *_Str1,char *_Str2,size_t _MaxCount)
 
 {
   byte bVar1;
@@ -12,10 +12,10 @@ int __ascii_strnicmp(char *param_1,char *param_2,uint param_3)
   uint uVar5;
   uint uVar6;
   
-  lVar2 = (longlong)(int)param_3;
-  if (param_3 != 0) {
-    pbVar3 = (byte *)(param_1 + -1);
-    pbVar4 = (byte *)(param_2 + -1);
+  lVar2 = (longlong)(int)_MaxCount;
+  if (_MaxCount != 0) {
+    pbVar3 = (byte *)(_Str1 + -1);
+    pbVar4 = (byte *)(_Str2 + -1);
     do {
       pbVar3 = pbVar3 + 1;
       bVar1 = *pbVar3;
@@ -39,13 +39,13 @@ int __ascii_strnicmp(char *param_1,char *param_2,uint param_3)
 
 // 8291DDB8  _strnicmp  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/strnicmp.c:123)
 
-int _strnicmp(char *param_1,char *param_2,uint param_3)
+int _strnicmp(char *_Str1,char *_Str2,size_t _MaxCount)
 
 {
   int *piVar1;
   int iVar2;
   
-  if ((param_1 == (char *)0x0) || (param_2 == (char *)0x0)) {
+  if ((_Str1 == (char *)0x0) || (_Str2 == (char *)0x0)) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
@@ -53,8 +53,8 @@ int _strnicmp(char *param_1,char *param_2,uint param_3)
   }
   else {
     iVar2 = 0x7fffffff;
-    if (param_3 < 0x80000000) {
-      iVar2 = __ascii_strnicmp(param_1,param_2,param_3);
+    if (_MaxCount < 0x80000000) {
+      iVar2 = __ascii_strnicmp(_Str1,_Str2,_MaxCount);
     }
     else {
       piVar1 = _errno();

@@ -2,55 +2,51 @@
 
 // 82302E08  CG_RegisterSurfaceTypeSounds  (cgame/cg_sound.cpp:20)
 
-void CG_RegisterSurfaceTypeSounds(char *param_1,snd_alias_list_t **param_2,bool param_3)
+void CG_RegisterSurfaceTypeSounds(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-  char *pcVar1;
-  snd_alias_list_t *psVar2;
-  snd_alias_list_t *psVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  int iVar6;
-  longlong lVar7;
+  char *pcVar2;
+  undefined4 uVar3;
+  int iVar4;
+  undefined8 uVar1;
+  int iVar5;
+  longlong lVar6;
   char acStack_140 [320];
   
-  uVar4 = (ulonglong)param_3;
-  lVar5 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x19,0,
-                    "%s");
+  pcVar2 = (char *)__savegprlr_26();
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82024f68,0x19,0,0xffffffff82000f98,0xffffffff82024fa8);
   }
-  if (*pcVar1 == '\0') {
-    psVar2 = Com_FindSoundAlias("collision_default");
-    lVar5 = lVar5 + -4;
-    lVar7 = 0x1f;
+  if (*pcVar2 == '\0') {
+    uVar3 = Com_FindSoundAlias(0xffffffff82024f54);
+    param_2 = param_2 + -4;
+    lVar6 = 0x1f;
     do {
-      lVar5 = lVar5 + 4;
-      *(undefined4 *)lVar5 = psVar2;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
+      param_2 = param_2 + 4;
+      *(undefined4 *)param_2 = uVar3;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
     __restgprlr_26();
     return;
   }
-  sprintf(acStack_140,"%s_default");
-  psVar2 = Com_FindSoundAlias(acStack_140);
-  iVar6 = 0;
+  sprintf(acStack_140,"%s_default",pcVar2);
+  iVar4 = Com_FindSoundAlias(acStack_140);
+  lVar6 = 0;
   do {
-    if ((uVar4 & 0xff) == 0) {
+    if ((param_3 & 0xff) == 0) {
 LAB_82302ee8:
-      *(undefined4 *)lVar5 = psVar2;
+      *(int *)param_2 = iVar4;
     }
     else {
-      Com_SurfaceTypeToName(iVar6);
-      sprintf(acStack_140,"%s_%s");
-      psVar3 = Com_FindSoundAlias(acStack_140);
-      *(undefined4 *)lVar5 = psVar3;
-      if (psVar3 == (snd_alias_list_t *)0x0) goto LAB_82302ee8;
+      uVar1 = Com_SurfaceTypeToName(lVar6);
+      sprintf(acStack_140,"%s_%s",pcVar2,uVar1);
+      iVar5 = Com_FindSoundAlias(acStack_140);
+      *(int *)param_2 = iVar5;
+      if (iVar5 == 0) goto LAB_82302ee8;
     }
-    iVar6 = iVar6 + 1;
-    lVar5 = lVar5 + 4;
-    if (0x1e < iVar6) {
+    lVar6 = lVar6 + 1;
+    param_2 = param_2 + 4;
+    if (0x1e < (int)lVar6) {
       __restgprlr_26();
       return;
     }
@@ -60,53 +56,47 @@ LAB_82302ee8:
 
 // 82302F08  CG_RegisterWhizbySounds  (cgame/cg_sound.cpp:56)
 
-void CG_RegisterWhizbySounds
-               (char *param_1,snd_alias_list_t **param_2,snd_alias_list_t **param_3,int *param_4)
+void CG_RegisterWhizbySounds(undefined8 param_1,ulonglong param_2,ulonglong param_3,int *param_4)
 
 {
   int iVar1;
-  snd_alias_list_t *psVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  int iVar5;
+  ulonglong uVar2;
+  int iVar3;
+  undefined4 uVar4;
+  longlong lVar5;
   char acStack_250 [256];
   char acStack_150 [336];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_23(param_1);
-  if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x3c,0,
-                    "%s");
+  uVar2 = __savegprlr_23();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x3c,0,0xffffffff82000f98,0xffffffff82024fa8);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x3d,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x3d,0,0xffffffff82000f98,0xffffffff82024fe4);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x3e,0,
-                    "%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x3e,0,0xffffffff82000f98,0xffffffff82024fd0);
   }
-  iVar5 = 0;
+  lVar5 = 0;
   *param_4 = 0;
-  iVar1 = (int)uVar4;
+  iVar1 = (int)param_3;
   do {
-    sprintf(acStack_150,"%s_%02d");
-    sprintf(acStack_250,"%s_L");
-    psVar2 = Com_TryFindSoundAlias(acStack_250);
-    *(snd_alias_list_t **)(((int)(undefined4 *)uVar3 - iVar1) + (int)(undefined4 *)uVar4) = psVar2;
-    if (psVar2 == (snd_alias_list_t *)0x0) break;
+    sprintf(acStack_150,"%s_%02d",uVar2,lVar5);
+    sprintf(acStack_250,"%s_L",acStack_150);
+    iVar3 = Com_TryFindSoundAlias(acStack_250);
+    *(int *)(((int)(undefined4 *)param_2 - iVar1) + (int)(undefined4 *)param_3) = iVar3;
+    if (iVar3 == 0) break;
     *param_4 = *param_4 + 1;
-    sprintf(acStack_250,"%s_R");
-    psVar2 = Com_FindSoundAlias(acStack_250);
-    iVar5 = iVar5 + 1;
-    *(undefined4 *)uVar4 = psVar2;
-    uVar4 = uVar4 + 4;
-  } while (iVar5 < 0x10);
+    sprintf(acStack_250,"%s_R",acStack_150);
+    uVar4 = Com_FindSoundAlias(acStack_250);
+    lVar5 = lVar5 + 1;
+    *(undefined4 *)param_3 = uVar4;
+    param_3 = param_3 + 4;
+  } while ((int)lVar5 < 0x10);
   if (*param_4 == 0) {
     *param_4 = 1;
-    psVar2 = Com_FindSoundAlias("whizby");
-    *(undefined4 *)uVar3 = psVar2;
+    uVar4 = Com_FindSoundAlias(0xffffffff82024fb0);
+    *(undefined4 *)param_2 = uVar4;
   }
   __restgprlr_23();
   return;
@@ -115,164 +105,207 @@ void CG_RegisterWhizbySounds
 
 // 82303060  CG_AddAudioPhysicsClass  (cgame/cg_sound.cpp:112)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void CG_AddAudioPhysicsClass(PhysPreset *param_1,char (*param_2) [64],int *param_3)
+void CG_AddAudioPhysicsClass(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  int *piVar5;
-  int iVar6;
+  int iVar3;
+  uint *puVar4;
+  int iVar5;
+  ulonglong uVar6;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x73,0,
-                    "%s");
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x73,0,0xffffffff82000f98,0xffffffff82025024);
   }
-  if (*(int *)(iVar1 + 0x1c) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x74,0,
-                    "%s");
+  if (*(int *)(iVar2 + 0x1c) == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x74,0,0xffffffff82000f98,0xffffffff82025008);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x75,0,
-                    "%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x75,0,0xffffffff82000f98,0xffffffff82024ffc);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x76,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x76,0,0xffffffff82000f98,0xffffffff82024ff4);
   }
-  piVar5 = (int *)uVar4;
-  iVar6 = 0;
-  uVar4 = uVar3;
-  if (0 < *piVar5) {
+  puVar4 = (uint *)param_3;
+  iVar5 = 0;
+  uVar6 = param_2;
+  if (0 < (int)*puVar4) {
     do {
-      iVar2 = I_stricmp(*(char **)(iVar1 + 0x1c),(char *)uVar4);
-      if (iVar2 == 0) {
-        *(int *)(iVar1 + 4) = iVar6;
+      iVar3 = I_stricmp(*(undefined4 *)(iVar2 + 0x1c),uVar6);
+      if (iVar3 == 0) {
+        *(int *)(iVar2 + 4) = iVar5;
         __restgprlr_27();
         return;
       }
-      iVar6 = iVar6 + 1;
-      uVar4 = uVar4 + 0x40;
-    } while (iVar6 < *piVar5);
+      iVar5 = iVar5 + 1;
+      uVar6 = uVar6 + 0x40;
+    } while (iVar5 < (int)*puVar4);
   }
-  iVar6 = *piVar5;
-  *(int *)(iVar1 + 4) = iVar6;
-  cgMedia.physCollisionSoundInfo[iVar6].minMomentum = *(float *)(iVar1 + 0x28);
-  cgMedia.physCollisionSoundInfo[*(int *)(iVar1 + 4)].maxMomentum = *(float *)(iVar1 + 0x2c);
-  cgMedia.physCollisionSoundInfo[*(int *)(iVar1 + 4)].minPitch = *(float *)(iVar1 + 0x30);
-  cgMedia.physCollisionSoundInfo[*(int *)(iVar1 + 4)].maxPitch = *(float *)(iVar1 + 0x34);
-  cgMedia.physCollisionSoundInfo[*(int *)(iVar1 + 4)].volumeType =
-       *(PhysPresetScaling *)(iVar1 + 0x38);
-  cgMedia.physCollisionSoundInfo[*(int *)(iVar1 + 4)].pitchType =
-       *(PhysPresetScaling *)(iVar1 + 0x3c);
+  uVar1 = *puVar4;
+  *(uint *)(iVar2 + 4) = uVar1;
+  (&DAT_82a3a4cc)[uVar1 * 0x25] = *(undefined4 *)(iVar2 + 0x28);
+  *(undefined4 *)(&DAT_82a3a4d0 + *(int *)(iVar2 + 4) * 0x94) = *(undefined4 *)(iVar2 + 0x2c);
+  *(undefined4 *)(&DAT_82a3a4d4 + *(int *)(iVar2 + 4) * 0x94) = *(undefined4 *)(iVar2 + 0x30);
+  *(undefined4 *)(&DAT_82a3a4d8 + *(int *)(iVar2 + 4) * 0x94) = *(undefined4 *)(iVar2 + 0x34);
+  *(undefined4 *)(&DAT_82a3a4dc + *(int *)(iVar2 + 4) * 0x94) = *(undefined4 *)(iVar2 + 0x38);
+  *(undefined4 *)(&DAT_82a3a4e0 + *(int *)(iVar2 + 4) * 0x94) = *(undefined4 *)(iVar2 + 0x3c);
   CG_RegisterSurfaceTypeSounds
-            (*(char **)(iVar1 + 0x1c),cgMedia.physCollisionSoundInfo[*(int *)(iVar1 + 4)].sound,
-             *(bool *)(iVar1 + 0x41));
-  I_strncpyz((char *)(*piVar5 * 0x40 + (int)uVar3),*(char **)(iVar1 + 0x1c),0x40);
-  *piVar5 = *piVar5 + 1;
+            (*(undefined4 *)(iVar2 + 0x1c),(ulonglong)*(uint *)(iVar2 + 4) * 0x94 + -0x7d5c5bb0,
+             *(undefined1 *)(iVar2 + 0x41));
+  I_strncpyz(((ulonglong)*puVar4 & 0x3ffffff) * 0x40 + param_2,*(undefined4 *)(iVar2 + 0x1c),0x40);
+  *puVar4 = *puVar4 + 1;
   __restgprlr_27();
   return;
 }
 
 
 // 82303230  CG_RegisterPhysicsSounds_FastFile  (cgame/cg_sound.cpp:147)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void CG_RegisterPhysicsSounds_FastFile(void)
+
+{
+  int iVar1;
+  longlong lVar2;
+  int iVar3;
+  int *piVar4;
+  undefined1 *puVar5;
+  int iVar6;
+  undefined1 *puVar7;
+  int iVar8;
+  int local_1170 [64];
+  undefined1 auStack_1070 [4208];
+  
+  __savegprlr_20();
+  iVar6 = 0;
+  lVar2 = DB_GetAllXAssetOfType(0,local_1170,0x40);
+  if (0 < (int)lVar2) {
+    puVar5 = auStack_1070;
+    piVar4 = local_1170;
+    do {
+      iVar1 = *piVar4;
+      if (iVar1 == 0) {
+        MyAssertHandler(0xffffffff82024f68,0x73,0,0xffffffff82000f98,0xffffffff82025024);
+      }
+      if (*(int *)(iVar1 + 0x1c) == 0) {
+        MyAssertHandler(0xffffffff82024f68,0x74,0,0xffffffff82000f98,0xffffffff82025008);
+      }
+      iVar8 = 0;
+      if (0 < iVar6) {
+        puVar7 = auStack_1070;
+        do {
+          iVar3 = I_stricmp(*(undefined4 *)(iVar1 + 0x1c),puVar7);
+          if (iVar3 == 0) {
+            *(int *)(iVar1 + 4) = iVar8;
+            goto LAB_823033b8;
+          }
+          iVar8 = iVar8 + 1;
+          puVar7 = puVar7 + 0x40;
+        } while (iVar8 < iVar6);
+      }
+      *(int *)(iVar1 + 4) = iVar6;
+      (&DAT_82a3a4cc)[iVar6 * 0x25] = *(undefined4 *)(iVar1 + 0x28);
+      *(undefined4 *)(&DAT_82a3a4d0 + *(int *)(iVar1 + 4) * 0x94) = *(undefined4 *)(iVar1 + 0x2c);
+      *(undefined4 *)(&DAT_82a3a4d4 + *(int *)(iVar1 + 4) * 0x94) = *(undefined4 *)(iVar1 + 0x30);
+      *(undefined4 *)(&DAT_82a3a4d8 + *(int *)(iVar1 + 4) * 0x94) = *(undefined4 *)(iVar1 + 0x34);
+      *(undefined4 *)(&DAT_82a3a4dc + *(int *)(iVar1 + 4) * 0x94) = *(undefined4 *)(iVar1 + 0x38);
+      *(undefined4 *)(&DAT_82a3a4e0 + *(int *)(iVar1 + 4) * 0x94) = *(undefined4 *)(iVar1 + 0x3c);
+      CG_RegisterSurfaceTypeSounds
+                (*(undefined4 *)(iVar1 + 0x1c),(ulonglong)*(uint *)(iVar1 + 4) * 0x94 + -0x7d5c5bb0,
+                 *(undefined1 *)(iVar1 + 0x41));
+      I_strncpyz(puVar5,*(undefined4 *)(iVar1 + 0x1c),0x40);
+      iVar6 = iVar6 + 1;
+      puVar5 = puVar5 + 0x40;
+LAB_823033b8:
+      lVar2 = lVar2 + -1;
+      piVar4 = piVar4 + 1;
+    } while (lVar2 != 0);
+  }
+  __restgprlr_20();
+  return;
+}
+
 
 // 823033E0  CG_RegisterSounds  (cgame/cg_sound.cpp:208)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
 
 void CG_RegisterSounds(void)
 
 {
-  int iStack_20;
-  int iStack_1c;
-  int aiStack_18 [2];
+  undefined1 auStack_20 [4];
+  undefined1 auStack_1c [4];
+  undefined1 auStack_18 [8];
   
-  cgMedia.landDmgSound = Com_FindSoundAlias("land_damage");
-  cgMedia.landDmgSoundPlayer = Com_FindSoundAlias("land_plr_damage");
-  CG_RegisterSurfaceTypeSounds("grenade_explode",cgMedia.grenadeExplodeSound,true);
-  CG_RegisterSurfaceTypeSounds("rocket_explode",cgMedia.rocketExplodeSound,true);
-  CG_RegisterSurfaceTypeSounds("bullet_explode",cgMedia.bulletExplodeSound,true);
-  cgMedia.trophyExplodeSound = Com_FindSoundAlias("trophy_explode");
-  CG_RegisterSurfaceTypeSounds("bullet_small",cgMedia.bulletHitSmallSound,true);
-  CG_RegisterSurfaceTypeSounds("bullet_large",cgMedia.bulletHitLargeSound,true);
-  CG_RegisterSurfaceTypeSounds("bullet_ap",cgMedia.bulletHitAPSound,true);
-  CG_RegisterSurfaceTypeSounds("bulletspray_small",cgMedia.shotgunHitSound,true);
-  CG_RegisterSurfaceTypeSounds("bullet_small_exit",cgMedia.bulletExitSmallSound,true);
-  CG_RegisterSurfaceTypeSounds("bullet_large_exit",cgMedia.bulletExitLargeSound,true);
-  CG_RegisterSurfaceTypeSounds("bullet_ap_exit",cgMedia.bulletExitAPSound,true);
-  CG_RegisterSurfaceTypeSounds("bulletspray_small_exit",cgMedia.shotgunExitSound,true);
-  CG_RegisterSurfaceTypeSounds("step_sprint",cgMedia.stepSprintSound,true);
-  CG_RegisterSurfaceTypeSounds("step_sprint_plr",cgMedia.stepSprintSoundPlayer,true);
-  CG_RegisterSurfaceTypeSounds("step_run",cgMedia.stepRunSound,true);
-  CG_RegisterSurfaceTypeSounds("step_run_plr",cgMedia.stepRunSoundPlayer,true);
-  CG_RegisterSurfaceTypeSounds("step_walk",cgMedia.stepWalkSound,true);
-  CG_RegisterSurfaceTypeSounds("step_walk_plr",cgMedia.stepWalkSoundPlayer,true);
-  CG_RegisterSurfaceTypeSounds("step_prone",cgMedia.stepProneSound,true);
-  CG_RegisterSurfaceTypeSounds("step_prone_plr",cgMedia.stepProneSoundPlayer,true);
-  CG_RegisterSurfaceTypeSounds("land",cgMedia.landSound,true);
-  CG_RegisterSurfaceTypeSounds("land_plr",cgMedia.landSoundPlayer,true);
+  DAT_82a39358 = Com_FindSoundAlias(0xffffffff820254a8);
+  DAT_82a3935c = Com_FindSoundAlias(0xffffffff82025498);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025488,0xffffffff82a39360,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025478,0xffffffff82a393dc,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025468,0xffffffff82a39458,1);
+  DAT_82a394d4 = Com_FindSoundAlias(0xffffffff82025458);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025448,0xffffffff82a394d8,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025438,0xffffffff82a39554,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff8202542c,0xffffffff82a395d0,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025418,0xffffffff82a3964c,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025404,0xffffffff82a396c8,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff820253f0,0xffffffff82a39744,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff820253e0,0xffffffff82a397c0,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff820253c8,0xffffffff82a3983c,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff820253bc,0xffffffff82a398b8,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff820253ac,0xffffffff82a399b0,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff820253a0,0xffffffff82a39aa8,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025390,0xffffffff82a39ba0,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025384,0xffffffff82a39c98,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025374,0xffffffff82a39d90,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025368,0xffffffff82a39e88,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025358,0xffffffff82a39f80,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025350,0xffffffff82a3a078,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025344,0xffffffff82a3a170,1);
   CG_RegisterPhysicsSounds_FastFile();
-  cgMedia.sprintingEquipmentSound = Com_FindSoundAlias("gear_rattle_sprint");
-  cgMedia.sprintingEquipmentSoundPlayer = Com_FindSoundAlias("gear_rattle_plr_sprint");
-  cgMedia.runningEquipmentSound = Com_FindSoundAlias("gear_rattle_run");
-  cgMedia.runningEquipmentSoundPlayer = Com_FindSoundAlias("gear_rattle_plr_run");
-  cgMedia.walkingEquipmentSound = Com_FindSoundAlias("gear_rattle_walk");
-  cgMedia.walkingEquipmentSoundPlayer = Com_FindSoundAlias("gear_rattle_plr_walk");
-  CG_RegisterSurfaceTypeSounds("qstep_sprint",cgMedia.stepSprintSound + 0x1f,true);
-  CG_RegisterSurfaceTypeSounds("qstep_sprint_plr",cgMedia.stepSprintSoundPlayer + 0x1f,true);
-  CG_RegisterSurfaceTypeSounds("qstep_run",cgMedia.stepRunSound + 0x1f,true);
-  CG_RegisterSurfaceTypeSounds("qstep_run_plr",cgMedia.stepRunSoundPlayer + 0x1f,true);
-  CG_RegisterSurfaceTypeSounds("qstep_walk",cgMedia.stepWalkSound + 0x1f,true);
-  CG_RegisterSurfaceTypeSounds("qstep_walk_plr",cgMedia.stepWalkSoundPlayer + 0x1f,true);
-  CG_RegisterSurfaceTypeSounds("qstep_prone",cgMedia.stepProneSound + 0x1f,true);
-  CG_RegisterSurfaceTypeSounds("qstep_prone_plr",cgMedia.stepProneSoundPlayer + 0x1f,true);
-  CG_RegisterSurfaceTypeSounds("qland",cgMedia.landSound + 0x1f,true);
-  CG_RegisterSurfaceTypeSounds("qland_plr",cgMedia.landSoundPlayer + 0x1f,true);
-  cgMedia.qsprintingEquipmentSound = Com_FindSoundAlias("qgear_rattle_sprint");
-  cgMedia.qsprintingEquipmentSoundPlayer = Com_FindSoundAlias("qgear_rattle_plr_sprint");
-  cgMedia.qrunningEquipmentSound = Com_FindSoundAlias("qgear_rattle_run");
-  cgMedia.qrunningEquipmentSoundPlayer = Com_FindSoundAlias("qgear_rattle_plr_run");
-  cgMedia.qwalkingEquipmentSound = Com_FindSoundAlias("qgear_rattle_walk");
-  cgMedia.qwalkingEquipmentSoundPlayer = Com_FindSoundAlias("qgear_rattle_plr_walk");
-  cgMedia.foliageMovement = Com_FindSoundAlias("movement_foliage");
-  CG_RegisterWhizbySounds
-            ("whizby_near",cgMedia.bulletWhizbyNearLeft,cgMedia.bulletWhizbyNearRight,&iStack_20);
-  CG_RegisterWhizbySounds
-            ("whizby_medium",cgMedia.bulletWhizbyMediumLeft,cgMedia.bulletWhizbyMediumRight,
-             &iStack_1c);
-  CG_RegisterWhizbySounds
-            ("whizby_far",cgMedia.bulletWhizbyFarLeft,cgMedia.bulletWhizbyFarRight,aiStack_18);
-  SND_SetWhizbyNumVariations(&iStack_20);
+  DAT_82a3a280 = Com_FindSoundAlias(0xffffffff82025330);
+  DAT_82a3a284 = Com_FindSoundAlias(0xffffffff82025318);
+  DAT_82a3a288 = Com_FindSoundAlias(0xffffffff82025308);
+  DAT_82a3a28c = Com_FindSoundAlias(0xffffffff820252f4);
+  DAT_82a3a290 = Com_FindSoundAlias(0xffffffff820252e0);
+  DAT_82a3a294 = Com_FindSoundAlias(0xffffffff820252c8);
+  CG_RegisterSurfaceTypeSounds(0xffffffff820252b8,0xffffffff82a39934,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff820252a4,0xffffffff82a39a2c,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025298,0xffffffff82a39b24,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025288,0xffffffff82a39c1c,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff8202527c,0xffffffff82a39d14,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff8202526c,0xffffffff82a39e0c,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025260,0xffffffff82a39f04,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025250,0xffffffff82a39ffc,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff82025248,0xffffffff82a3a0f4,1);
+  CG_RegisterSurfaceTypeSounds(0xffffffff8202523c,0xffffffff82a3a1ec,1);
+  DAT_82a3a268 = Com_FindSoundAlias(0xffffffff82025228);
+  DAT_82a3a26c = Com_FindSoundAlias(0xffffffff82025210);
+  DAT_82a3a270 = Com_FindSoundAlias(0xffffffff820251fc);
+  DAT_82a3a274 = Com_FindSoundAlias(0xffffffff820251e4);
+  DAT_82a3a278 = Com_FindSoundAlias(0xffffffff820251d0);
+  DAT_82a3a27c = Com_FindSoundAlias(0xffffffff820251b8);
+  DAT_82a3a298 = Com_FindSoundAlias(0xffffffff820251a4);
+  CG_RegisterWhizbySounds(0xffffffff82025198,0xffffffff82a3a29c,0xffffffff82a3a2dc,auStack_20);
+  CG_RegisterWhizbySounds(0xffffffff82025188,0xffffffff82a3a31c,0xffffffff82a3a35c,auStack_1c);
+  CG_RegisterWhizbySounds(0xffffffff8202517c,0xffffffff82a3a39c,0xffffffff82a3a3dc,auStack_18);
+  SND_SetWhizbyNumVariations(auStack_20);
   SND_InitWhizbyVariations();
-  cgMedia.bulletWhizby = Com_FindSoundAlias("whizby");
-  cgMedia.meleeHit = Com_FindSoundAlias("melee_hit");
-  cgMedia.meleeHitOther = Com_FindSoundAlias("melee_hit_other");
-  cgMedia.meleeKnifeHit = Com_FindSoundAlias("melee_knife_hit_body");
-  cgMedia.meleeKnifeHitOther = Com_FindSoundAlias("melee_knife_hit_other");
-  cgMedia.meleeKnifeHitShield = Com_FindSoundAlias("melee_knife_hit_shield");
-  cgMedia.nightVisionOn = Com_FindSoundAlias("item_nightvision_on");
-  cgMedia.nightVisionOff = Com_FindSoundAlias("item_nightvision_off");
-  cgMedia.playerHeartBeatSound = Com_FindSoundAlias("weap_sniper_heartbeat");
-  cgMedia.playerBreathInSound = Com_FindSoundAlias("weap_sniper_breathin");
-  cgMedia.playerBreathOutSound = Com_FindSoundAlias("weap_sniper_breathout");
-  cgMedia.playerBreathGaspSound = Com_FindSoundAlias("weap_sniper_breathgasp");
-  cgMedia.playerSwapOffhand = Com_FindSoundAlias("weap_offhand_select");
-  cgMedia.glassDamaged = Com_FindSoundAlias("glass_pane_shatter");
-  cgMedia.glassDestroyed = Com_FindSoundAlias("glass_pane_blowout");
-  cgMedia.glassDestroyedQuiet = Com_FindSoundAlias("glass_pane_breakout");
-  cgMedia.uavPing = Com_FindSoundAlias("uav_ping");
+  DAT_82a3a41c = Com_FindSoundAlias(0xffffffff82024fb0);
+  DAT_82a3a420 = Com_FindSoundAlias(0xffffffff82025170);
+  DAT_82a3a424 = Com_FindSoundAlias(0xffffffff82025160);
+  DAT_82a3a428 = Com_FindSoundAlias(0xffffffff82025148);
+  DAT_82a3a42c = Com_FindSoundAlias(0xffffffff82025130);
+  DAT_82a3a430 = Com_FindSoundAlias(0xffffffff82025118);
+  DAT_82a3a434 = Com_FindSoundAlias(0xffffffff82025104);
+  DAT_82a3a438 = Com_FindSoundAlias(0xffffffff820250ec);
+  DAT_82a3a43c = Com_FindSoundAlias(0xffffffff820250d4);
+  DAT_82a3a440 = Com_FindSoundAlias(0xffffffff820250bc);
+  DAT_82a3a444 = Com_FindSoundAlias(0xffffffff820250a4);
+  DAT_82a3a448 = Com_FindSoundAlias(0xffffffff8202508c);
+  DAT_82a3a44c = Com_FindSoundAlias(0xffffffff82025078);
+  DAT_82a3c950 = Com_FindSoundAlias(0xffffffff82025064);
+  DAT_82a3c954 = Com_FindSoundAlias(0xffffffff82025050);
+  DAT_82a3c958 = Com_FindSoundAlias(0xffffffff8202503c);
+  DAT_82a3c95c = Com_FindSoundAlias(0xffffffff82025030);
   return;
 }
 

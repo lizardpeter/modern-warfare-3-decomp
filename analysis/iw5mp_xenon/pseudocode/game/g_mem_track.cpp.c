@@ -2,48 +2,44 @@
 
 // 8247D1B8  TRACK_g_memtrack  (game/g_mem_track.cpp:21)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_g_memtrack(void)
 
 {
-  g_mem_track_filename = "";
+  DAT_8367aa78 = &DAT_820068af;
   return;
 }
 
 
 // 8247D1D0  G_track_init  (game/g_mem_track.cpp:76)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void G_track_init(void)
 
 {
-  g_mem_track_filename = "g_main";
+  DAT_8367aa78 = "g_main";
   TRACK_g_main();
-  g_mem_track_filename = "g_svcmds";
+  DAT_8367aa78 = "g_svcmds";
   TRACK_g_svcmds();
-  g_mem_track_filename = "g_utils";
+  DAT_8367aa78 = "g_utils";
   TRACK_g_utils();
-  g_mem_track_filename = "bg_weapons";
+  DAT_8367aa78 = "bg_weapons";
   TRACK_bg_weapons();
-  g_mem_track_filename = "bg_weapons_load_obj";
+  DAT_8367aa78 = "bg_weapons_load_obj";
   TRACK_bg_weapons_load_obj();
-  g_mem_track_filename = "g_combat";
+  DAT_8367aa78 = "g_combat";
   TRACK_g_combat();
-  g_mem_track_filename = "g_scr_main";
+  DAT_8367aa78 = "g_scr_main";
   TRACK_g_scr_main();
-  g_mem_track_filename = "g_mover";
+  DAT_8367aa78 = "g_mover";
   TRACK_g_mover();
-  g_mem_track_filename = "g_hudelem";
+  DAT_8367aa78 = "g_hudelem";
   TRACK_g_hudelem();
-  g_mem_track_filename = "turret";
+  DAT_8367aa78 = "turret";
   TRACK_turret();
-  g_mem_track_filename = "vehicle";
+  DAT_8367aa78 = "vehicle";
   TRACK_vehicle();
-  g_mem_track_filename = "vehicle_path";
+  DAT_8367aa78 = "vehicle_path";
   TRACK_vehicle_path();
-  g_mem_track_filename = "bg_animation_mp";
+  DAT_8367aa78 = "bg_animation_mp";
   TRACK_bg_animation_mp();
   return;
 }

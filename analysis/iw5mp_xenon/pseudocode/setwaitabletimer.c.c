@@ -2,27 +2,29 @@
 
 // 8292B658  SetWaitableTimer  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/setwaitabletimer.c:25)
 
-int SetWaitableTimer(void *param_1,_LARGE_INTEGER *param_2,long param_3,
-                    _func___cdecl_void_void_ptr_ulong_ulong *param_4,void *param_5,int param_6)
+BOOL SetWaitableTimer(HANDLE hTimer,LARGE_INTEGER *lpDueTime,LONG lPeriod,
+                     PTIMERAPCROUTINE pfnCompletionRoutine,LPVOID lpArgToCompletionRoutine,
+                     BOOL fResume)
 
 {
-  long lVar1;
-  int iVar2;
-  ulong uVar3;
+  int iVar1;
+  BOOL BVar2;
+  DWORD dwErrCode;
   
-  lVar1 = NtSetTimerEx(param_1,param_2,param_4,1,param_5,param_6 & 0xff,param_3,0);
-  if (lVar1 < 0) {
-    RtlSetLastNTError(lVar1);
-    iVar2 = 0;
+  iVar1 = NtSetTimerEx(hTimer,lpDueTime,pfnCompletionRoutine,1,lpArgToCompletionRoutine,
+                       fResume & 0xff,lPeriod,0);
+  if (iVar1 < 0) {
+    RtlSetLastNTError();
+    BVar2 = 0;
   }
   else {
-    uVar3 = 0x32;
-    if (lVar1 != 0x40000025) {
-      uVar3 = 0;
+    dwErrCode = 0x32;
+    if (iVar1 != 0x40000025) {
+      dwErrCode = 0;
     }
-    SetLastError(uVar3);
-    iVar2 = 1;
+    SetLastError(dwErrCode);
+    BVar2 = 1;
   }
-  return iVar2;
+  return BVar2;
 }
 

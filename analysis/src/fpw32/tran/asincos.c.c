@@ -2,31 +2,31 @@
 
 // 82917518  asin  (<external>/bt/278379/vctools/crt/src/fpw32/tran/asincos.c:122)
 
-double asin(double param_1)
+double asin(double _X)
 
 {
   int iVar1;
   double dVar2;
   double dVar3;
   
-  dVar3 = ABS(param_1);
-  if (dVar3 <= (double)gConstASin.one_half) {
+  dVar3 = ABS(_X);
+  if (dVar3 <= (double)DAT_829b005c) {
     iVar1 = 0;
     dVar2 = dVar3 * dVar3;
-    if (param_1 == (double)gConstASin.zero) {
-      return param_1;
+    if (_X == (double)DAT_829b0050) {
+      return _X;
     }
   }
   else {
     iVar1 = 1;
-    dVar2 = ((double)gConstASin.one - dVar3) * (double)gConstASin.one_half;
-    dVar3 = -(SQRT(dVar2) * (double)gConstASin.two);
+    dVar2 = ((double)DAT_829b0054 - dVar3) * (double)DAT_829b005c;
+    dVar3 = -(SQRT(dVar2) * (double)DAT_829b0058);
   }
-  dVar3 = (((((gConstASin.p5 * dVar2 + gConstASin.p4) * dVar2 + gConstASin.p3) * dVar2 +
-            gConstASin.p2) * dVar2 + gConstASin.p1) * dVar2 * dVar3) /
-          (((((gConstASin.q4 + dVar2) * dVar2 + gConstASin.q3) * dVar2 + gConstASin.q2) * dVar2 +
-           gConstASin.q1) * dVar2 + gConstASin.q0) + dVar3 + gConstASin.a[iVar1];
-  if (param_1 < 0.0) {
+  dVar3 = (((((DAT_829b00a0 * dVar2 + DAT_829b0098) * dVar2 + DAT_829b0090) * dVar2 + DAT_829b0088)
+            * dVar2 + DAT_829b0080) * dVar2 * dVar3) /
+          (((((DAT_829b00c8 + dVar2) * dVar2 + DAT_829b00c0) * dVar2 + DAT_829b00b8) * dVar2 +
+           DAT_829b00b0) * dVar2 + DAT_829b00a8) + dVar3 + (double)(&DAT_829b0060)[iVar1];
+  if (_X < 0.0) {
     dVar3 = -dVar3;
   }
   return dVar3;
@@ -35,54 +35,56 @@ double asin(double param_1)
 
 // 829175E0  acos  (<external>/bt/278379/vctools/crt/src/fpw32/tran/asincos.c:127)
 
-double acos(double param_1)
+double acos(double _X)
 
 {
-  int in_r3;
+  undefined8 in_r3;
   double dVar1;
   
-  dVar1 = _asincos(param_1,in_r3);
+  dVar1 = (double)asincos(in_r3,1);
   return dVar1;
 }
 
 
-// 82917420  _asincos  (<external>/bt/278379/vctools/crt/src/fpw32/tran/asincos.c:132)
+// 82917420  asincos  (<external>/bt/278379/vctools/crt/src/fpw32/tran/asincos.c:132)
 
-double _asincos(double param_1,int param_2)
+/* WARNING: Unknown calling convention: __cdecl */
+/* asincos */
+
+double __cdecl asincos(double param_1,undefined8 param_2,int param_3)
 
 {
-  int in_r4;
   int iVar1;
   double dVar2;
   double dVar3;
   
   dVar3 = ABS(param_1);
-  if (dVar3 <= (double)gConstASin.one_half) {
+  if (dVar3 <= (double)DAT_829b005c) {
     dVar2 = dVar3 * dVar3;
-    iVar1 = in_r4;
-    if ((in_r4 == 0) && (param_1 == (double)gConstASin.zero)) {
+    iVar1 = param_3;
+    if ((param_3 == 0) && (param_1 == (double)DAT_829b0050)) {
       return param_1;
     }
   }
   else {
-    dVar2 = ((double)gConstASin.one - dVar3) * (double)gConstASin.one_half;
-    dVar3 = -(SQRT(dVar2) * (double)gConstASin.two);
-    iVar1 = 1 - in_r4;
+    dVar2 = ((double)DAT_829b0054 - dVar3) * (double)DAT_829b005c;
+    dVar3 = -(SQRT(dVar2) * (double)DAT_829b0058);
+    iVar1 = 1 - param_3;
   }
-  dVar3 = (((((gConstASin.p5 * dVar2 + gConstASin.p4) * dVar2 + gConstASin.p3) * dVar2 +
-            gConstASin.p2) * dVar2 + gConstASin.p1) * dVar2 * dVar3) /
-          (((((gConstASin.q4 + dVar2) * dVar2 + gConstASin.q3) * dVar2 + gConstASin.q2) * dVar2 +
-           gConstASin.q1) * dVar2 + gConstASin.q0) + dVar3;
-  if (in_r4 == 0) {
-    dVar3 = gConstASin.a[iVar1] + dVar3;
+  dVar3 = (((((DAT_829b00a0 * dVar2 + DAT_829b0098) * dVar2 + DAT_829b0090) * dVar2 + DAT_829b0088)
+            * dVar2 + DAT_829b0080) * dVar2 * dVar3) /
+          (((((DAT_829b00c8 + dVar2) * dVar2 + DAT_829b00c0) * dVar2 + DAT_829b00b8) * dVar2 +
+           DAT_829b00b0) * dVar2 + DAT_829b00a8) + dVar3;
+  if (param_3 == 0) {
+    dVar2 = (double)(&DAT_829b0060)[iVar1] + dVar3;
     if (param_1 < 0.0) {
-      dVar3 = -dVar3;
+      dVar2 = -((double)(&DAT_829b0060)[iVar1] + dVar3);
     }
-    return dVar3;
+    return dVar2;
   }
-  dVar2 = gConstASin.a[iVar1] - dVar3;
+  dVar2 = (double)(&DAT_829b0060)[iVar1] - dVar3;
   if (param_1 < 0.0) {
-    dVar2 = gConstASin.b[iVar1] + dVar3;
+    dVar2 = *(double *)(&DAT_829b0070 + iVar1 * 8) + dVar3;
   }
   return dVar2;
 }

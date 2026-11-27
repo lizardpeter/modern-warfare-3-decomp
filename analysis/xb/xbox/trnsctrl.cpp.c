@@ -2,124 +2,125 @@
 
 // 8291D140  _SaveUnwindContext  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:53)
 
-void _SaveUnwindContext(_CONTEXT *param_1)
+void _SaveUnwindContext(int param_1)
 
 {
-  _tiddata *p_Var1;
+  _ptiddata p_Var1;
   
   p_Var1 = _getptd();
-  p_Var1->_pUnwindContext = param_1;
+  p_Var1->_ProcessingThrow = param_1;
   return;
 }
 
 
 // 8291D170  _GetUnwindContext  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:61)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-_CONTEXT * _GetUnwindContext(void)
+int _GetUnwindContext(void)
 
 {
-  _tiddata *p_Var1;
+  _ptiddata p_Var1;
   
   p_Var1 = _getptd();
-  return p_Var1->_pUnwindContext;
+  return p_Var1->_ProcessingThrow;
 }
 
 
 // 8291D198  _GetEstablisherFrame  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:78)
 
-ulong * _GetEstablisherFrame(ulong *param_1,_s_FuncInfo *param_2)
+int _GetEstablisherFrame(int param_1,int param_2)
 
 {
-  if (param_2->nTryBlocks == 0) {
+  if (*(int *)(param_2 + 0xc) == 0) {
     return param_1;
   }
-  if (param_1[1] == 0) {
+  if (*(int *)(param_1 + 4) == 0) {
     return param_1;
   }
-  return *(ulong **)(param_1[1] + 4);
+  return *(int *)(*(int *)(param_1 + 4) + 4);
 }
 
 
 // 8291D1B8  _MoveContext  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:103)
 
-void _MoveContext(_CONTEXT *param_1,_CONTEXT *param_2)
+void * _MoveContext(void *param_1,void *param_2)
 
 {
-  memmove();
-  return;
+  void *pvVar1;
+  
+  pvVar1 = memmove(param_1,param_2,0xa40);
+  return pvVar1;
 }
 
 
 // 8291D1C0  _ExecutionInCatch  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:135)
 
-int _ExecutionInCatch(_xDISPATCHER_CONTEXT *param_1,_s_FuncInfo *param_2)
+bool _ExecutionInCatch(undefined4 *param_1,int param_2)
 
 {
-  _s_TryBlockMapEntry *p_Var1;
+  int iVar1;
   int iVar2;
-  uint uVar3;
+  int iVar3;
   int iVar4;
   int iVar5;
   
-  iVar2 = __StateFromControlPc(param_2,param_1->ControlPc);
-  uVar3 = param_2->nTryBlocks;
-  if (uVar3 != 0) {
-    p_Var1 = param_2->pTryBlockMap;
-    iVar4 = uVar3 * 0x14;
+  iVar1 = __StateFromControlPc(param_2,*param_1);
+  iVar2 = *(int *)(param_2 + 0xc);
+  if (iVar2 != 0) {
+    iVar3 = iVar2 * 0x14;
     do {
-      iVar5 = (int)&p_Var1[-1].tryLow + iVar4;
-      if ((*(int *)((int)p_Var1 + iVar4 + -0x10) < iVar2) &&
-         (iVar2 <= *(int *)((int)p_Var1 + iVar4 + -0xc))) goto LAB_8291d228;
-      uVar3 = uVar3 - 1;
-      iVar4 = iVar4 + -0x14;
-    } while (uVar3 != 0);
+      iVar4 = iVar3 + *(int *)(param_2 + 0x10);
+      iVar5 = iVar4 + -0x14;
+      if ((*(int *)(iVar4 + -0x10) < iVar1) && (iVar1 <= *(int *)(iVar4 + -0xc))) goto LAB_8291d228;
+      iVar2 = iVar2 + -1;
+      iVar3 = iVar3 + -0x14;
+    } while (iVar2 != 0);
   }
   iVar5 = 0;
 LAB_8291d228:
-  return (uint)(iVar5 != 0);
+  return iVar5 != 0;
 }
 
 
 // 8291D248  __FrameUnwindToEmptyState  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:146)
 
-void __FrameUnwindToEmptyState(ulong *param_1,_xDISPATCHER_CONTEXT *param_2,_s_FuncInfo *param_3)
+void __FrameUnwindToEmptyState(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  _s_TryBlockMapEntry *p_Var1;
-  ulong *puVar2;
+  int iVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  uint uVar5;
+  longlong lVar4;
+  int iVar5;
   int iVar6;
+  int iVar7;
+  int iVar8;
   
-  puVar2 = (ulong *)__savegprlr_29(param_1);
-  if ((param_3->nTryBlocks != 0) && (puVar2[1] != 0)) {
-    puVar2 = *(ulong **)(puVar2[1] + 4);
+  iVar2 = __savegprlr_29();
+  iVar1 = (int)param_3;
+  if ((*(int *)(iVar1 + 0xc) != 0) && (*(int *)(iVar2 + 4) != 0)) {
+    iVar2 = *(int *)(*(int *)(iVar2 + 4) + 4);
   }
-  iVar3 = __StateFromControlPc(param_3,param_2->ControlPc);
-  uVar5 = param_3->nTryBlocks;
-  if (uVar5 != 0) {
-    p_Var1 = param_3->pTryBlockMap;
-    iVar4 = uVar5 * 0x14;
+  iVar3 = __StateFromControlPc(param_3,*(undefined4 *)param_2);
+  iVar6 = *(int *)(iVar1 + 0xc);
+  if (iVar6 != 0) {
+    iVar5 = iVar6 * 0x14;
     do {
-      iVar6 = (int)&p_Var1[-1].tryLow + iVar4;
-      if ((*(int *)((int)p_Var1 + iVar4 + -0x10) < iVar3) &&
-         (iVar3 <= *(int *)((int)p_Var1 + iVar4 + -0xc))) goto LAB_8291d2d0;
-      uVar5 = uVar5 - 1;
-      iVar4 = iVar4 + -0x14;
-    } while (uVar5 != 0);
+      iVar7 = iVar5 + *(int *)(iVar1 + 0x10);
+      iVar8 = iVar7 + -0x14;
+      if ((*(int *)(iVar7 + -0x10) < iVar3) && (iVar3 <= *(int *)(iVar7 + -0xc))) goto LAB_8291d2d0;
+      iVar6 = iVar6 + -1;
+      iVar5 = iVar5 + -0x14;
+    } while (iVar6 != 0);
   }
-  iVar6 = 0;
+  iVar8 = 0;
 LAB_8291d2d0:
-  if (iVar6 == 0) {
-    iVar3 = -1;
+  if (iVar8 == 0) {
+    lVar4 = -1;
   }
   else {
-    iVar3 = *(int *)(iVar6 + 4) + 1;
+    lVar4 = (ulonglong)*(uint *)(iVar8 + 4) + 1;
   }
-  __FrameUnwindToState(puVar2,param_2,param_3,iVar3);
+  __FrameUnwindToState(iVar2,param_2,param_3,lVar4);
   __restgprlr_29();
   return;
 }
@@ -127,192 +128,169 @@ LAB_8291d2d0:
 
 // 8291D300  __CxxFrameHandler  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:180)
 
-_EXCEPTION_DISPOSITION
-__CxxFrameHandler(EHExceptionRecord *param_1,ulong *param_2,_CONTEXT *param_3,
-                 _xDISPATCHER_CONTEXT *param_4)
+void __CxxFrameHandler(undefined8 param_1,int param_2,undefined8 param_3,int param_4)
 
 {
-  _s_FuncInfo *p_Var1;
-  _EXCEPTION_DISPOSITION _Var2;
-  
-  p_Var1 = *(_s_FuncInfo **)(param_4->FunctionEntry->BeginAddress - 4);
-  if ((p_Var1->nTryBlocks != 0) && (param_2[1] != 0)) {
-    param_2 = *(ulong **)(param_2[1] + 4);
+  if ((*(int *)(*(int *)(**(int **)(param_4 + 4) + -4) + 0xc) != 0) && (*(int *)(param_2 + 4) != 0))
+  {
+    param_2 = *(int *)(*(int *)(param_2 + 4) + 4);
   }
-  _Var2 = __InternalCxxFrameHandler(param_1,param_2,param_3,param_4,p_Var1,0,(ulong *)0x0,'\0');
-  return _Var2;
+  __InternalCxxFrameHandler(param_1,param_2);
+  return;
 }
 
 
 // 8291D338  __SehTransFilter  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:200)
 
-int __SehTransFilter(_EXCEPTION_POINTERS *param_1,EHExceptionRecord *param_2,ulong *param_3,
-                    _CONTEXT *param_4,_xDISPATCHER_CONTEXT *param_5,_s_FuncInfo *param_6,
-                    int *param_7)
+void __SehTransFilter(undefined8 param_1,BOOL param_2,undefined8 param_3,undefined8 param_4,
+                     undefined8 param_5,undefined8 param_6,undefined4 *param_7)
 
 {
   undefined4 *puVar1;
-  _tiddata *p_Var2;
-  int iVar3;
+  _ptiddata p_Var2;
   
-  puVar1 = (undefined4 *)__savegprlr_25(param_1);
+  puVar1 = (undefined4 *)__savegprlr_25();
   p_Var2 = _getptd();
-  p_Var2->_pForeignException = param_2;
-  __InternalCxxFrameHandler
-            ((EHExceptionRecord *)*puVar1,param_3,param_4,param_5,param_6,0,(ulong *)0x0,'\x01');
+  (p_Var2->_setloc_data).bAbbrevCountry = param_2;
+  __InternalCxxFrameHandler(*puVar1,param_3,param_4,param_5,param_6,0,0,1);
   p_Var2 = _getptd();
-  p_Var2->_pForeignException = (void *)0x0;
+  (p_Var2->_setloc_data).bAbbrevCountry = 0;
   *param_7 = 1;
-  iVar3 = __restgprlr_25(1);
-  return iVar3;
+  __restgprlr_25(1);
+  return;
 }
 
 
 // 8291D3B8  _CallSETranslator  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:222)
 
-int _CallSETranslator(EHExceptionRecord *param_1,ulong *param_2,_CONTEXT *param_3,
-                     _xDISPATCHER_CONTEXT *param_4,_s_FuncInfo *param_5,ulong param_6,ulong *param_7
-                     )
+void _CallSETranslator(void)
 
 {
   undefined4 *puVar1;
-  _tiddata *p_Var2;
-  int iVar3;
-  undefined4 *puStack00000014;
-  ulong *puStack0000001c;
-  _CONTEXT *p_Stack00000024;
-  _xDISPATCHER_CONTEXT *p_Stack0000002c;
-  _s_FuncInfo *p_Stack00000034;
+  _ptiddata p_Var2;
   undefined1 local_28 [40];
   
-  p_Stack00000024 = param_3;
-  puStack0000001c = param_2;
-  p_Stack0000002c = param_4;
-  p_Stack00000034 = param_5;
-  puVar1 = (undefined4 *)__savegprlr_29(param_1);
-  puStack00000014 = puVar1;
+  puVar1 = (undefined4 *)__savegprlr_29();
   p_Var2 = _getptd();
-  (*p_Var2->_translator)(*puVar1,local_28);
-  iVar3 = __restgprlr_29(0);
-  return iVar3;
+  (*(code *)p_Var2->_NLG_dwCode)(*puVar1,local_28);
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 8291D478  _GetRangeOfTrysToCheck  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:269)
 
-_s_TryBlockMapEntry *
-_GetRangeOfTrysToCheck
-          (ulong *param_1,_s_FuncInfo *param_2,int param_3,uint *param_4,uint *param_5,
-          _xDISPATCHER_CONTEXT *param_6)
+void _GetRangeOfTrysToCheck
+               (undefined8 param_1,undefined8 param_2,int param_3,uint *param_4,int *param_5,
+               undefined4 *param_6)
 
 {
+  int iVar1;
   int iVar2;
-  longlong lVar1;
-  _s_TryBlockMapEntry *p_Var3;
-  uint uVar4;
+  int iVar4;
+  longlong lVar3;
   int iVar5;
-  int *piVar6;
-  uint uVar7;
+  uint uVar6;
+  int iVar7;
+  int *piVar8;
+  int iVar9;
+  int iVar10;
   
-  __savegprlr_24(param_1);
-  uVar7 = param_2->nTryBlocks;
-  p_Var3 = (_s_TryBlockMapEntry *)0x0;
-  iVar2 = __StateFromControlPc(param_2,param_6->ControlPc);
-  if (uVar7 == 0) {
-                    /* WARNING: Subroutine does not return */
-    _inconsistency();
+  __savegprlr_24();
+  iVar1 = (int)param_2;
+  iVar10 = *(int *)(iVar1 + 0xc);
+  iVar9 = 0;
+  iVar4 = __StateFromControlPc(param_2,*param_6);
+  if (iVar10 == 0) {
+    inconsistency();
   }
-  *param_5 = 0xffffffff;
+  *param_5 = -1;
   *param_4 = 0xffffffff;
-  uVar4 = uVar7;
-  if (uVar7 != 0) {
-    iVar5 = uVar7 * 0x14;
+  iVar5 = iVar10;
+  if (iVar10 != 0) {
+    iVar7 = iVar10 * 0x14;
     do {
-      if ((*(int *)((int)param_2->pTryBlockMap + iVar5 + -0x10) < iVar2) &&
-         (iVar2 <= *(int *)((int)param_2->pTryBlockMap + iVar5 + -0xc))) break;
-      uVar4 = uVar4 - 1;
-      iVar5 = iVar5 + -0x14;
-    } while (uVar4 != 0);
+      iVar2 = iVar7 + *(int *)(iVar1 + 0x10);
+      if ((*(int *)(iVar2 + -0x10) < iVar4) && (iVar4 <= *(int *)(iVar2 + -0xc))) break;
+      iVar5 = iVar5 + -1;
+      iVar7 = iVar7 + -0x14;
+    } while (iVar5 != 0);
   }
-  if (uVar4 != 0) {
-    p_Var3 = param_2->pTryBlockMap + (uVar4 - 1);
+  if (iVar5 != 0) {
+    iVar9 = iVar5 * 0x14 + *(int *)(iVar1 + 0x10) + -0x14;
   }
-  uVar4 = 0;
-  if (uVar7 != 0) {
-    iVar2 = 0;
+  uVar6 = 0;
+  if (iVar10 != 0) {
+    iVar4 = 0;
     do {
-      piVar6 = (int *)((int)&param_2->pTryBlockMap->tryLow + iVar2);
-      if ((((p_Var3 == (_s_TryBlockMapEntry *)0x0) ||
-           ((p_Var3->tryHigh < *piVar6 && (piVar6[1] <= p_Var3->catchHigh)))) &&
-          (*piVar6 <= param_3)) && (param_3 <= piVar6[1])) {
+      piVar8 = (int *)(*(int *)(iVar1 + 0x10) + iVar4);
+      if ((((iVar9 == 0) || ((*(int *)(iVar9 + 4) < *piVar8 && (piVar8[1] <= *(int *)(iVar9 + 8)))))
+          && (*piVar8 <= param_3)) && (param_3 <= piVar8[1])) {
         if (*param_4 == 0xffffffff) {
-          *param_4 = uVar4;
+          *param_4 = uVar6;
         }
-        *param_5 = uVar4 + 1;
+        *param_5 = uVar6 + 1;
       }
-      uVar4 = uVar4 + 1;
-      iVar2 = iVar2 + 0x14;
-      uVar7 = uVar7 - 1;
-    } while (uVar7 != 0);
+      uVar6 = uVar6 + 1;
+      iVar4 = iVar4 + 0x14;
+      iVar10 = iVar10 + -1;
+    } while (iVar10 != 0);
     if (*param_4 != 0xffffffff) {
-      lVar1 = (ulonglong)*param_4 * 0x14 + ZEXT48(param_2->pTryBlockMap);
+      lVar3 = (ulonglong)*param_4 * 0x14 + (ulonglong)*(uint *)(iVar1 + 0x10);
       goto LAB_8291d5c4;
     }
   }
   *param_4 = 0;
-  lVar1 = 0;
+  lVar3 = 0;
   *param_5 = 0;
 LAB_8291d5c4:
-  p_Var3 = (_s_TryBlockMapEntry *)__restgprlr_24(lVar1);
-  return p_Var3;
+  __restgprlr_24(lVar3);
+  return;
 }
 
 
 // 8291D5D0  _CreateFrameInfo  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:316)
 
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
-FrameInfo * _CreateFrameInfo(FrameInfo *param_1,void *param_2)
+int * _CreateFrameInfo(int *param_1,int *param_2)
 
 {
-  int iVar1;
-  _tiddata *p_Var2;
-  float fVar3;
+  _ptiddata p_Var1;
+  int iVar2;
   
-  if (((*(int *)param_2 == -0x1f928c9d) && (*(int *)((int)param_2 + 0x10) == 3)) &&
-     ((iVar1 = *(int *)((int)param_2 + 0x14), iVar1 == 0x19930520 ||
-      ((iVar1 == 0x19930521 || (iVar1 == 0x19930522)))))) {
-    param_1->worldIndex = *(int *)((int)param_2 + 0x18);
-    fVar3 = *(float *)(*(int *)((int)param_2 + 0x1c) + 4);
+  if (((*param_2 == -0x1f928c9d) && (param_2[4] == 3)) &&
+     ((iVar2 = param_2[5], iVar2 == 0x19930520 || ((iVar2 == 0x19930521 || (iVar2 == 0x19930522)))))
+     ) {
+    *param_1 = param_2[6];
+    iVar2 = *(int *)(param_2[7] + 4);
   }
   else {
-    fVar3 = 0.0;
-    param_1->worldIndex = 0;
+    iVar2 = 0;
+    *param_1 = 0;
   }
-  param_1->timestep = fVar3;
-  p_Var2 = _getptd();
-  param_1->reducedContactListBase = p_Var2->_pFrameInfoChain;
-  p_Var2 = _getptd();
-  p_Var2->_pFrameInfoChain = param_1;
+  param_1[1] = iVar2;
+  p_Var1 = _getptd();
+  param_1[2] = (int)p_Var1->_curexcspec;
+  p_Var1 = _getptd();
+  p_Var1->_curexcspec = param_1;
   return param_1;
 }
 
 
 // 8291D688  _IsExceptionObjectToBeDestroyed  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:343)
 
-int _IsExceptionObjectToBeDestroyed(void *param_1)
+undefined8 _IsExceptionObjectToBeDestroyed(int param_1)
 
 {
   int *piVar1;
-  _tiddata *p_Var2;
+  _ptiddata p_Var2;
   
   p_Var2 = _getptd();
-  piVar1 = p_Var2->_pFrameInfoChain;
+  piVar1 = p_Var2->_curexcspec;
   while( true ) {
     if (piVar1 == (int *)0x0) {
       return 1;
     }
-    if ((void *)*piVar1 == param_1) break;
+    if (*piVar1 == param_1) break;
     piVar1 = (int *)piVar1[2];
   }
   return 0;
@@ -321,42 +299,38 @@ int _IsExceptionObjectToBeDestroyed(void *param_1)
 
 // 8291D6E0  _FindAndUnlinkFrame  (<external>/bt/278379/vctools/crt/xb/xbox/trnsctrl.cpp:363)
 
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
-void _FindAndUnlinkFrame(FrameInfo *param_1)
+void _FindAndUnlinkFrame(void *param_1)
 
 {
-  ReducedContactList *pRVar1;
-  ReducedContactList *pRVar2;
-  _tiddata *p_Var3;
-  ReducedContactList **ppRVar4;
+  int iVar1;
+  void *pvVar2;
+  _ptiddata p_Var3;
+  int *piVar4;
   
   p_Var3 = _getptd();
-  if ((p_Var3->_pFrameInfoChain != (void *)0x0) && (param_1 != (FrameInfo *)0x0)) {
-    p_Var3 = _getptd();
-    if (param_1 == p_Var3->_pFrameInfoChain) {
-      p_Var3 = _getptd();
-      p_Var3->_pFrameInfoChain = param_1->reducedContactListBase;
-    }
-    else {
-      p_Var3 = _getptd();
-      ppRVar4 = (ReducedContactList **)((int)p_Var3->_pFrameInfoChain + 8);
-      pRVar1 = *ppRVar4;
-      while( true ) {
-        if (pRVar1 == (ReducedContactList *)0x0) {
-                    /* WARNING: Subroutine does not return */
-          _inconsistency();
-        }
-        pRVar2 = *ppRVar4;
-        if ((ReducedContactList *)param_1 == pRVar2) break;
-        pRVar1 = *(ReducedContactList **)((int)pRVar2->contacts + 8);
-        ppRVar4 = (ReducedContactList **)((int)pRVar2->contacts + 8);
-      }
-      *ppRVar4 = param_1->reducedContactListBase;
-    }
-    return;
+  if ((p_Var3->_curexcspec == (void *)0x0) || (param_1 == (void *)0x0)) {
+    inconsistency();
   }
-                    /* WARNING: Subroutine does not return */
-  _inconsistency();
+  p_Var3 = _getptd();
+  if (param_1 == p_Var3->_curexcspec) {
+    p_Var3 = _getptd();
+    p_Var3->_curexcspec = *(void **)((int)param_1 + 8);
+  }
+  else {
+    p_Var3 = _getptd();
+    piVar4 = (int *)((int)p_Var3->_curexcspec + 8);
+    iVar1 = *piVar4;
+    while (iVar1 != 0) {
+      pvVar2 = (void *)*piVar4;
+      if (param_1 == pvVar2) {
+        *piVar4 = *(int *)((int)param_1 + 8);
+        return;
+      }
+      piVar4 = (int *)((int)pvVar2 + 8);
+      iVar1 = *(int *)((int)pvVar2 + 8);
+    }
+    inconsistency();
+  }
+  return;
 }
 

@@ -2,22 +2,20 @@
 
 // 82503490  TRACK_memtrack  (qcommon/mem_track.cpp:149)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_memtrack(void)
 
 {
-  track_static_alloc_internal(&DAT_8367ab28,0x5000,"g_mem_track",0);
-  track_static_alloc_internal(&g_crit,0x1c,"g_crit",0);
-  track_static_alloc_internal(g_sorted_mem_track,0xa000,"g_sorted_mem_track",0);
-  g_mem_track_filename = "";
+  track_static_alloc_internal(0xffffffff8367ab28,0x5000,0xffffffff8208ece0,0);
+  track_static_alloc_internal(0xffffffff83689b28,0x1c,0xffffffff8208ecd8,0);
+  track_static_alloc_internal(0xffffffff8367fb28,0xa000,0xffffffff8208ecc4,0);
+  DAT_8367aa78 = &DAT_820068af;
   return;
 }
 
 
 // 825025E0  track_IsXenonType  (qcommon/mem_track.h:172)
 
-int track_IsXenonType(int param_1)
+undefined8 track_IsXenonType(undefined4 param_1)
 
 {
   switch(param_1) {
@@ -34,7 +32,7 @@ int track_IsXenonType(int param_1)
 
 // 82502650  track_IsSubType  (qcommon/mem_track.cpp:263)
 
-bool track_IsSubType(int param_1)
+undefined8 track_IsSubType(undefined4 param_1)
 
 {
   switch(param_1) {
@@ -47,26 +45,26 @@ bool track_IsSubType(int param_1)
   case 0x1a:
   case 0x1b:
   case 0x1c:
-    return true;
+    return 1;
   default:
-    return false;
+    return 0;
   }
 }
 
 
 // 825026B0  track_addbasicinfo  (qcommon/mem_track.cpp:299)
 
-void track_addbasicinfo(meminfo_t *param_1,int param_2,int param_3)
+void track_addbasicinfo(int *param_1,int param_2,int param_3)
 
 {
   int iVar1;
   
-  param_1->typeTotal[param_2] = param_1->typeTotal[param_2] + param_3;
-  param_1->total = param_1->total + param_3;
-  param_1->nonSwapTotal = param_1->nonSwapTotal + param_3;
+  param_1[param_2 + 3] = param_1[param_2 + 3] + param_3;
+  *param_1 = *param_1 + param_3;
+  param_1[1] = param_1[1] + param_3;
   iVar1 = track_IsXenonType(param_2);
   if (iVar1 != 0) {
-    param_1->xenonTotal = param_1->xenonTotal + param_3;
+    param_1[2] = param_1[2] + param_3;
   }
   return;
 }
@@ -74,15 +72,15 @@ void track_addbasicinfo(meminfo_t *param_1,int param_2,int param_3)
 
 // 82502730  track_addbasicmeminfo  (qcommon/mem_track.cpp:324)
 
-void track_addbasicmeminfo(meminfo_t *param_1,meminfo_t *param_2)
+void track_addbasicmeminfo(int *param_1,int *param_2)
 
 {
   int *piVar1;
   int *piVar2;
   longlong lVar3;
   
-  piVar1 = &param_2->xenonTotal;
-  piVar2 = param_1->typeTotal;
+  piVar1 = param_2 + 2;
+  piVar2 = param_1 + 3;
   lVar3 = 0x13;
   do {
     *piVar2 = *(int *)(((int)param_2 - (int)param_1) + (int)piVar2) + *piVar2;
@@ -91,16 +89,17 @@ void track_addbasicmeminfo(meminfo_t *param_1,meminfo_t *param_2)
     piVar2 = piVar2 + 2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  param_1->total = param_1->total + param_2->total;
-  param_1->nonSwapTotal = param_2->nonSwapTotal + param_1->nonSwapTotal;
-  param_1->xenonTotal = param_2->xenonTotal + param_1->xenonTotal;
+  *param_1 = *param_1 + *param_2;
+  param_1[1] = param_2[1] + param_1[1];
+  param_1[2] = param_2[2] + param_1[2];
   return;
 }
 
 
 // 825027A0  track_static_alloc_internal  (qcommon/mem_track.cpp:348)
 
-void track_static_alloc_internal(void *param_1,int param_2,char *param_3,int param_4)
+void track_static_alloc_internal
+               (undefined8 param_1,undefined8 param_2,char *param_3,undefined8 param_4)
 
 {
   int iVar1;
@@ -108,27 +107,25 @@ void track_static_alloc_internal(void *param_1,int param_2,char *param_3,int par
   int iVar3;
   int iVar4;
   
-  __savegprlr_23(param_1);
+  __savegprlr_23();
   RtlEnterCriticalSection(0xffffffff83689b28);
   if (0x3ff < DAT_8367aa7c) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\mem_track.cpp",0x162,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8208e9b0,0x162,0,0xffffffff82000f98,0xffffffff8208e98c);
   }
   iVar2 = DAT_8367aa7c;
   iVar3 = DAT_8367aa7c * 0x14;
   iVar1 = DAT_8367aa7c * 5;
-  (&DAT_8367ab30)[DAT_8367aa7c * 5] = param_2;
+  (&DAT_8367ab30)[DAT_8367aa7c * 5] = (int)param_2;
   iVar4 = iVar2;
   if (*param_3 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\mem_track.cpp",0x166,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8208e9b0,0x166,0,0xffffffff82000f98,0xffffffff8207e370);
     iVar4 = DAT_8367aa7c;
   }
   (&DAT_8367ab28)[iVar1] = param_3;
   (&DAT_8367ab38)[iVar3] = (char)param_4;
   (&DAT_8367ab39)[iVar3] = 0;
-  (&DAT_8367ab2c)[iVar2 * 5] = g_mem_track_filename;
-  track_addbasicinfo(&g_info,param_4,param_2);
+  (&DAT_8367ab2c)[iVar2 * 5] = DAT_8367aa78;
+  track_addbasicinfo(0xffffffff8367aa80,param_4,param_2);
   DAT_8367aa7c = iVar4 + 1;
   RtlLeaveCriticalSection(0xffffffff83689b28);
   __restgprlr_23();
@@ -138,13 +135,13 @@ void track_static_alloc_internal(void *param_1,int param_2,char *param_3,int par
 
 // 82502898  track_z_commit  (qcommon/mem_track.cpp:596)
 
-void track_z_commit(void *param_1,int param_2,int param_3)
+void track_z_commit(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  __savegprlr_29(param_1);
+  __savegprlr_29();
   RtlEnterCriticalSection(0xffffffff83689b28);
-  track_addbasicinfo(&g_virtualMemInfo,param_3,param_2);
-  track_addbasicinfo(&g_info,param_3,param_2);
+  track_addbasicinfo(0xffffffff83689b48,param_3,param_2);
+  track_addbasicinfo(0xffffffff8367aa80,param_3,param_2);
   RtlLeaveCriticalSection(0xffffffff83689b28);
   __restgprlr_29();
   return;
@@ -153,13 +150,13 @@ void track_z_commit(void *param_1,int param_2,int param_3)
 
 // 825028F0  track_z_decommit  (qcommon/mem_track.cpp:622)
 
-void track_z_decommit(void *param_1,int param_2,int param_3)
+void track_z_decommit(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-  __savegprlr_29(param_1);
+  __savegprlr_29();
   RtlEnterCriticalSection(0xffffffff83689b28);
-  track_addbasicinfo(&g_virtualMemInfo,param_3,-param_2);
-  track_addbasicinfo(&g_info,param_3,-param_2);
+  track_addbasicinfo(0xffffffff83689b48,param_3,-param_2);
+  track_addbasicinfo(0xffffffff8367aa80,param_3,-param_2);
   RtlLeaveCriticalSection(0xffffffff83689b28);
   __restgprlr_29();
   return;
@@ -168,7 +165,7 @@ void track_z_decommit(void *param_1,int param_2,int param_3)
 
 // 82502950  track_physical_alloc  (qcommon/mem_track.cpp:651)
 
-void track_physical_alloc(int param_1,char *param_2,int param_3)
+void track_physical_alloc(void)
 
 {
   return;
@@ -177,7 +174,7 @@ void track_physical_alloc(int param_1,char *param_2,int param_3)
 
 // 82502958  track_hunk_alloc  (qcommon/mem_track.cpp:791)
 
-void track_hunk_alloc(int param_1,int param_2,char *param_3,int param_4)
+void track_hunk_alloc(void)
 
 {
   return;
@@ -186,7 +183,7 @@ void track_hunk_alloc(int param_1,int param_2,char *param_3,int param_4)
 
 // 82502960  track_hunk_allocLow  (qcommon/mem_track.cpp:825)
 
-void track_hunk_allocLow(int param_1,int param_2,char *param_3,int param_4)
+void track_hunk_allocLow(void)
 
 {
   return;
@@ -195,19 +192,18 @@ void track_hunk_allocLow(int param_1,int param_2,char *param_3,int param_4)
 
 // 82502968  track_set_hunk_size  (qcommon/mem_track.cpp:859)
 
-void track_set_hunk_size(int param_1)
+void track_set_hunk_size(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   
-  iVar1 = __savegprlr_29(param_1);
+  uVar1 = __savegprlr_29();
   RtlEnterCriticalSection(0xffffffff83689b28);
   if (DAT_8367ab44 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\mem_track.cpp",0x35e,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8208e9b0,0x35e,0,0xffffffff82000f98,0xffffffff8208e9f0);
   }
-  DAT_8367ab44 = iVar1;
-  track_addbasicinfo(&g_info,1,iVar1);
+  DAT_8367ab44 = (int)uVar1;
+  track_addbasicinfo(0xffffffff8367aa80,1,uVar1);
   RtlLeaveCriticalSection(0xffffffff83689b28);
   __restgprlr_29();
   return;
@@ -216,7 +212,7 @@ void track_set_hunk_size(int param_1)
 
 // 825029E8  track_hunk_ClearToMarkHigh  (qcommon/mem_track.cpp:871)
 
-void track_hunk_ClearToMarkHigh(int param_1)
+void track_hunk_ClearToMarkHigh(void)
 
 {
   return;
@@ -225,7 +221,7 @@ void track_hunk_ClearToMarkHigh(int param_1)
 
 // 825029F0  track_hunk_ClearToMarkLow  (qcommon/mem_track.cpp:905)
 
-void track_hunk_ClearToMarkLow(int param_1)
+void track_hunk_ClearToMarkLow(void)
 
 {
   return;
@@ -233,8 +229,6 @@ void track_hunk_ClearToMarkLow(int param_1)
 
 
 // 825029F8  track_hunk_ClearToStart  (qcommon/mem_track.cpp:939)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void track_hunk_ClearToStart(void)
 
@@ -245,178 +239,177 @@ void track_hunk_ClearToStart(void)
 
 // 82503520  track_init  (qcommon/mem_track.cpp:1156)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void track_init(void)
 
 {
-  undefined1 uVar1;
-  int *piVar2;
-  longlong lVar3;
+  void *pvVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
   
   __savegprlr_28();
   RtlInitializeCriticalSection(0xffffffff83689b28);
-  memset();
-  memset();
-  DAT_8367aa7c = 0;
-  lVar3 = 0x26;
-  piVar2 = g_info.typeTotal + 0x23;
+  memset(&DAT_8367aa80,0,0xa4);
+  pvVar1 = memset(&DAT_83689b48,0,0xa4);
+  lVar4 = 0x26;
+  puVar3 = (undefined4 *)0x8367ab18;
+  iVar2 = 0;
   do {
-    uVar1 = (undefined1)DAT_8367aa7c;
-    piVar2[4] = (int)"internal";
-    piVar2[6] = 0;
-    DAT_8367aa7c = DAT_8367aa7c + 1;
-    *(undefined1 *)(piVar2 + 8) = uVar1;
-    *(undefined1 *)((int)piVar2 + 0x21) = 4;
-    piVar2 = piVar2 + 5;
-    *piVar2 = (int)"";
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
+    puVar3[4] = "internal";
+    puVar3[6] = 0;
+    DAT_8367aa7c = iVar2 + 1;
+    *(char *)(puVar3 + 8) = (char)iVar2;
+    *(undefined1 *)((int)puVar3 + 0x21) = 4;
+    puVar3 = puVar3 + 5;
+    *puVar3 = &DAT_820068af;
+    lVar4 = lVar4 + -1;
+    iVar2 = DAT_8367aa7c;
+  } while (lVar4 != 0);
   DAT_8367ab3c = "(hunk memory)";
   DAT_8367ace0 = "(agp memory)";
-  g_mem_track_filename = "scr_memorytree";
-  TRACK_scr_memorytree();
-  g_mem_track_filename = "scr_stringlist";
+  DAT_8367aa78 = "scr_memorytree";
+  TRACK_scr_memorytree(pvVar1);
+  DAT_8367aa78 = "scr_stringlist";
   TRACK_scr_stringlist();
-  g_mem_track_filename = "scr_variable";
+  DAT_8367aa78 = "scr_variable";
   TRACK_scr_variable();
-  g_mem_track_filename = "scr_vm";
+  DAT_8367aa78 = "scr_vm";
   TRACK_scr_vm();
-  g_mem_track_filename = "scr_debugger";
+  DAT_8367aa78 = "scr_debugger";
   TRACK_scr_debugger();
-  g_mem_track_filename = "scr_evaluate";
+  DAT_8367aa78 = "scr_evaluate";
   TRACK_scr_evaluate();
-  g_mem_track_filename = "xenon_remote";
+  DAT_8367aa78 = "xenon_remote";
   TRACK_xenon_remote();
-  g_mem_track_filename = "debugsockets_host";
+  DAT_8367aa78 = "debugsockets_host";
   TRACK_debugsockets_host();
-  g_mem_track_filename = "scr_compiler";
+  DAT_8367aa78 = "scr_compiler";
   TRACK_scr_compiler();
-  g_mem_track_filename = "scr_parser";
+  DAT_8367aa78 = "scr_parser";
   TRACK_scr_parser();
-  g_mem_track_filename = "xanim";
+  DAT_8367aa78 = "xanim";
   TRACK_xanim();
-  g_mem_track_filename = "xmodel";
+  DAT_8367aa78 = "xmodel";
   TRACK_xmodel();
-  g_mem_track_filename = "sv_main";
+  DAT_8367aa78 = "sv_main";
   TRACK_sv_main();
-  g_mem_track_filename = "cm_load";
+  DAT_8367aa78 = "cm_load";
   TRACK_cm_load();
-  g_mem_track_filename = "cm_showcollision";
+  DAT_8367aa78 = "cm_showcollision";
   TRACK_cm_showcollision();
-  g_mem_track_filename = "cm_world";
+  DAT_8367aa78 = "cm_world";
   TRACK_cm_world();
-  g_mem_track_filename = "cmd";
+  DAT_8367aa78 = &DAT_8200b0fc;
   TRACK_cmd();
-  g_mem_track_filename = "com_math";
+  DAT_8367aa78 = "com_math";
   TRACK_com_math();
-  g_mem_track_filename = "fx_draw";
+  DAT_8367aa78 = "fx_draw";
   TRACK_fx_draw();
-  g_mem_track_filename = "fx_random";
+  DAT_8367aa78 = "fx_random";
   TRACK_fx_random();
-  g_mem_track_filename = "fx_system";
+  DAT_8367aa78 = "fx_system";
   TRACK_fx_system();
-  g_mem_track_filename = "fx_marks";
+  DAT_8367aa78 = "fx_marks";
   TRACK_fx_marks();
-  g_mem_track_filename = "dvar";
+  DAT_8367aa78 = &DAT_8201ec3c;
   TRACK_dvar();
-  g_mem_track_filename = "dvar_cmds";
+  DAT_8367aa78 = "dvar_cmds";
   TRACK_dvar_cmds();
-  g_mem_track_filename = "msg";
+  DAT_8367aa78 = &DAT_82004d74;
   TRACK_msg();
-  g_mem_track_filename = "profile";
+  DAT_8367aa78 = "profile";
   TRACK_profile();
-  g_mem_track_filename = "profile_display";
+  DAT_8367aa78 = "profile_display";
   TRACK_profile_display();
-  g_mem_track_filename = "q_parse";
+  DAT_8367aa78 = "q_parse";
   TRACK_q_parse();
-  g_mem_track_filename = "xenon_common";
+  DAT_8367aa78 = "xenon_common";
   TRACK_xenon_common();
-  g_mem_track_filename = "xenon_net";
+  DAT_8367aa78 = "xenon_net";
   TRACK_xenon_net();
-  g_mem_track_filename = "xenon_gamerprofile";
+  DAT_8367aa78 = "xenon_gamerprofile";
   TRACK_xenon_gamerprofile();
-  g_mem_track_filename = "xenon_memorycard";
+  DAT_8367aa78 = "xenon_memorycard";
   TRACK_xenon_memorycard();
-  g_mem_track_filename = "xenon_main";
+  DAT_8367aa78 = "xenon_main";
   TRACK_xenon_main();
-  g_mem_track_filename = "q_shared";
+  DAT_8367aa78 = "q_shared";
   TRACK_q_shared();
-  g_mem_track_filename = "common";
+  DAT_8367aa78 = "common";
   TRACK_common();
-  g_mem_track_filename = "dobj_management";
+  DAT_8367aa78 = "dobj_management";
   TRACK_dobj_management();
-  g_mem_track_filename = "memtrack";
-  track_static_alloc_internal(&DAT_8367ab28,0x5000,"g_mem_track",0);
-  track_static_alloc_internal(&g_crit,0x1c,"g_crit",0);
-  track_static_alloc_internal(g_sorted_mem_track,0xa000,"g_sorted_mem_track",0);
-  g_mem_track_filename = "scr_animtree";
+  DAT_8367aa78 = "memtrack";
+  track_static_alloc_internal(0xffffffff8367ab28,0x5000,0xffffffff8208ece0,0);
+  track_static_alloc_internal(0xffffffff83689b28,0x1c,0xffffffff8208ecd8,0);
+  track_static_alloc_internal(0xffffffff8367fb28,0xa000,0xffffffff8208ecc4,0);
+  DAT_8367aa78 = "scr_animtree";
   TRACK_scr_animtree();
-  g_mem_track_filename = "com_memory";
+  DAT_8367aa78 = "com_memory";
   TRACK_com_memory();
-  g_mem_track_filename = "sv_game";
+  DAT_8367aa78 = "sv_game";
   TRACK_sv_game();
-  g_mem_track_filename = "sv_init";
+  DAT_8367aa78 = "sv_init";
   TRACK_sv_init();
-  g_mem_track_filename = "zutil";
+  DAT_8367aa78 = "zutil";
   TRACK_zutil();
-  g_mem_track_filename = "memfile";
+  DAT_8367aa78 = "memfile";
   TRACK_memfile();
-  g_mem_track_filename = "cl_main";
+  DAT_8367aa78 = "cl_main";
   TRACK_cl_main();
-  g_mem_track_filename = "cl_console";
+  DAT_8367aa78 = "cl_console";
   TRACK_cl_console();
-  g_mem_track_filename = "cl_input";
+  DAT_8367aa78 = "cl_input";
   TRACK_cl_input();
-  g_mem_track_filename = "cl_keys";
+  DAT_8367aa78 = "cl_keys";
   TRACK_cl_keys();
-  g_mem_track_filename = "cl_parse";
+  DAT_8367aa78 = "cl_parse";
   TRACK_cl_parse();
-  g_mem_track_filename = "xenon_input";
+  DAT_8367aa78 = "xenon_input";
   TRACK_xenon_input();
-  g_mem_track_filename = "cl_srcn";
+  DAT_8367aa78 = "cl_srcn";
   TRACK_cl_srcn();
-  g_mem_track_filename = "cl_cgame";
+  DAT_8367aa78 = "cl_cgame";
   TRACK_cl_cgame();
-  g_mem_track_filename = "statmonitor";
+  DAT_8367aa78 = "statmonitor";
   TRACK_statmonitor();
-  g_mem_track_filename = "snd";
+  DAT_8367aa78 = &DAT_8208edb0;
   TRACK_snd();
-  g_mem_track_filename = "snd_driver";
+  DAT_8367aa78 = "snd_driver";
   TRACK_snd_driver();
-  g_mem_track_filename = "stringed_hooks";
+  DAT_8367aa78 = "stringed_hooks";
   TRACK_stringed_hooks();
-  g_mem_track_filename = "devgui";
+  DAT_8367aa78 = "devgui";
   TRACK_devgui();
-  g_mem_track_filename = "xenon_gamepad";
+  DAT_8367aa78 = "xenon_gamepad";
   TRACK_xenon_gamepad();
-  g_mem_track_filename = "assertive";
+  DAT_8367aa78 = "assertive";
   TRACK_assertive();
-  g_mem_track_filename = "db_registry";
+  DAT_8367aa78 = "db_registry";
   TRACK_db_registry();
-  g_mem_track_filename = "com_profilemapload";
+  DAT_8367aa78 = "com_profilemapload";
   TRACK_com_profilemapload();
-  g_mem_track_filename = "save_memory";
+  DAT_8367aa78 = "save_memory";
   TRACK_save_memory();
-  g_mem_track_filename = "phys";
+  DAT_8367aa78 = &DAT_8208ed44;
   TRACK_phys();
-  g_mem_track_filename = "phys_ode";
+  DAT_8367aa78 = "phys_ode";
   TRACK_phys_ode();
-  g_mem_track_filename = "phys_vehicle";
+  DAT_8367aa78 = "phys_vehicle";
   TRACK_phys_vehicle();
-  g_mem_track_filename = "profileMem";
+  DAT_8367aa78 = "profileMem";
   TRACK_profileMem();
-  g_mem_track_filename = "missile_attractors";
+  DAT_8367aa78 = "missile_attractors";
   TRACK_missile_attractors();
-  g_mem_track_filename = "DynEntityCollWorld";
+  DAT_8367aa78 = "DynEntityCollWorld";
   TRACK_DynEntityCollWorld();
-  g_mem_track_filename = "ragdoll";
+  DAT_8367aa78 = "ragdoll";
   TRACK_ragdoll();
   CG_track_init();
   G_track_init();
   UI_track_init();
   R_Track_Init();
-  g_mem_track_filename = "";
+  DAT_8367aa78 = &DAT_820068af;
   __restgprlr_28();
   return;
 }
@@ -427,10 +420,11 @@ void track_init(void)
 void track_shutdown(int param_1)
 
 {
-  if ((param_1 == 0) && (g_virtualMemInfo.total != 0)) {
-    va("virtual memory leak of %d bytes");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\mem_track.cpp",0x589,0
-                    ,"%s\n\t%s");
+  undefined8 uVar1;
+  
+  if ((param_1 == 0) && (DAT_83689b48 != 0)) {
+    uVar1 = va(0xffffffff8208ea28);
+    MyAssertHandler(0xffffffff8208e9b0,0x589,0,0xffffffff820011f4,0xffffffff8208ea10,uVar1);
   }
   return;
 }
@@ -438,31 +432,30 @@ void track_shutdown(int param_1)
 
 // 82502A70  mem_track_compare  (qcommon/mem_track.cpp:1423)
 
-int mem_track_compare(void *param_1,void *param_2)
+longlong mem_track_compare(int param_1,int param_2)
 
 {
-  if (*(byte *)((int)param_1 + 0x10) < *(byte *)((int)param_2 + 0x10)) {
+  if (*(byte *)(param_1 + 0x10) < *(byte *)(param_2 + 0x10)) {
     return -1;
   }
-  if (*(byte *)((int)param_2 + 0x10) < *(byte *)((int)param_1 + 0x10)) {
+  if (*(byte *)(param_2 + 0x10) < *(byte *)(param_1 + 0x10)) {
     return 1;
   }
-  return *(int *)((int)param_1 + 8) - *(int *)((int)param_2 + 8);
+  return (ulonglong)*(uint *)(param_1 + 8) - (ulonglong)*(uint *)(param_2 + 8);
 }
 
 
 // 82502AA8  track_getbasicinfo  (qcommon/mem_track.cpp:1445)
 
-void track_getbasicinfo(meminfo_t *param_1)
+void track_getbasicinfo(ulonglong param_1)
 
 {
-  if (param_1 == (meminfo_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\mem_track.cpp",0x5a6,0
-                    ,"%s");
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208e9b0,0x5a6,0,0xffffffff82000f98,0xffffffff82021a7c);
   }
   RtlEnterCriticalSection(0xffffffff83689b28);
-  memset();
-  track_addbasicmeminfo(param_1,&g_info);
+  memset((void *)param_1,0,0xa4);
+  track_addbasicmeminfo(param_1,0xffffffff8367aa80);
   RtlLeaveCriticalSection(0xffffffff83689b28);
   return;
 }
@@ -470,23 +463,40 @@ void track_getbasicinfo(meminfo_t *param_1)
 
 // 82502B40  ConvertToMB  (qcommon/mem_track.cpp:1471)
 
-float ConvertToMB(int param_1)
+double ConvertToMB(int param_1)
 
 {
-  return (float)(longlong)param_1 * 9.536743e-07;
+  return (double)((float)(longlong)param_1 * 9.536743e-07);
 }
 
 
 // 82502B68  track_print  (qcommon/mem_track.cpp:1480)
 
-void track_print(char *param_1)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void track_print(char *param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
   char *pcStack00000014;
+  undefined8 uStack00000018;
+  undefined8 uStack00000020;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
   char acStack_110 [272];
   
+  uStack00000018 = param_2;
+  uStack00000020 = param_3;
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
   pcStack00000014 = param_1;
-  vsprintf_s(acStack_110,0x100,param_1,&stack0x00000018);
+  vsprintf_s(acStack_110,0x100,param_1,(va_list)&stack0x00000018);
   Com_Printf(0,acStack_110);
   return;
 }
@@ -494,32 +504,41 @@ void track_print(char *param_1)
 
 // 82502BD0  track_printLine  (qcommon/mem_track.cpp:1492)
 
-void track_printLine(int param_1,char *param_2,float param_3)
+void track_printLine(ulonglong param_1,undefined8 param_2)
 
 {
-  track_print("%*s%-*s %*s%*.1f\n");
+  ulonglong uVar1;
+  
+  uVar1 = -(ulonglong)(param_1 == 0) & 2;
+  track_print(0xffffffff8208ea48,uVar1,0xffffffff820068af,0x18 - uVar1,param_2,
+              param_1 + (param_1 & 0x1fffffff) * 8,0xffffffff820068af,9);
   return;
 }
 
 
 // 82502C40  track_printSum  (qcommon/mem_track.cpp:1500)
 
-void track_printSum(int param_1,int param_2,char *param_3,float param_4)
+void track_printSum(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  double extraout_f1;
-  double dVar2;
+  ulonglong uVar1;
+  longlong lVar2;
+  undefined8 extraout_f1;
+  undefined8 uVar3;
   
-  iVar1 = __savegprlr_27((double)param_4,param_1);
-  dVar2 = extraout_f1;
-  track_print("%*s %*s%*.6s\n");
-  if (param_2 != -1) {
-    track_print("%-*s %*s%*.1f%*s%*.1f\n");
+  uVar1 = __savegprlr_27();
+  lVar2 = uVar1 + (uVar1 & 0x1fffffff) * 8;
+  uVar3 = extraout_f1;
+  track_print(0xffffffff8208ea74,0x18,0xffffffff820068af,lVar2,0xffffffff820068af,9,
+              0xffffffff8208ea84);
+  if ((int)param_2 != -1) {
+    uVar1 = (param_2 - uVar1) - 1;
+    track_print(uVar3,uVar3,0xffffffff8208ea5c,0x18,param_3,lVar2,0xffffffff820068af,9,uVar3,
+                uVar1 + (uVar1 & 0x1fffffff) * 8);
     __restgprlr_27();
     return;
   }
-  track_printLine(iVar1,param_3,(float)dVar2);
+  track_printLine(uVar3,uVar1,param_3);
   __restgprlr_27();
   return;
 }
@@ -527,44 +546,48 @@ void track_printSum(int param_1,int param_2,char *param_3,float param_4)
 
 // 82502D18  track_PrintInfo  (qcommon/mem_track.cpp:1510)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void track_PrintInfo(void)
 
 {
   byte bVar1;
-  int iVar2;
-  int iVar3;
-  undefined4 *puVar4;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  int iVar4;
   undefined4 *puVar5;
   char cVar6;
   bool bVar7;
   bool bVar8;
-  bool bVar9;
-  longlong *plVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  ulonglong uVar13;
+  longlong *plVar9;
+  uint uVar10;
+  uint uVar11;
+  uint uVar12;
+  longlong lVar13;
   longlong lVar14;
   longlong lVar15;
-  int *piVar16;
+  undefined4 *puVar16;
   char cVar18;
   char *pcVar17;
-  longlong *plVar19;
-  char *pcVar20;
-  ulonglong uVar21;
-  uint uVar22;
+  longlong *plVar20;
+  ulonglong uVar19;
+  char *pcVar21;
+  ulonglong uVar22;
+  size_t _NumOfElements;
   int iVar23;
   longlong lVar24;
-  int iVar25;
-  longlong lVar26;
-  longlong lVar27;
-  longlong lVar28;
-  double dVar29;
+  int *piVar25;
+  bool bVar26;
+  ulonglong uVar27;
+  uint *puVar28;
+  int iVar29;
+  longlong lVar30;
+  longlong lVar31;
+  longlong lVar32;
+  double dVar33;
   longlong local_128;
   int local_120;
   int iStack_11c;
-  int local_118 [5];
+  int local_118;
+  int local_114 [4];
   undefined4 local_104;
   undefined4 local_d0;
   int local_cc;
@@ -584,114 +607,114 @@ void track_PrintInfo(void)
   
   __savegprlr_19();
   RtlEnterCriticalSection(0xffffffff83689b28);
-  lVar26 = 0x14;
-  plVar10 = &local_128;
+  lVar30 = 0x14;
+  plVar9 = &local_128;
   do {
-    plVar19 = plVar10;
-    plVar10 = plVar19 + 1;
-    *plVar10 = 0;
-    lVar26 = lVar26 + -1;
-  } while (lVar26 != 0);
-  *(undefined4 *)(plVar19 + 2) = 0;
-  iVar23 = DAT_8367aa7c + 0x26;
-  if (0x800 < DAT_8367aa7c + 0x26) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\mem_track.cpp",0x63e,0
-                    ,"%s\n\t(len2) = %i");
+    plVar20 = plVar9;
+    plVar9 = plVar20 + 1;
+    *plVar9 = 0;
+    lVar30 = lVar30 + -1;
+  } while (lVar30 != 0);
+  *(undefined4 *)(plVar20 + 2) = 0;
+  uVar19 = (ulonglong)DAT_8367aa7c;
+  uVar27 = uVar19 + 0x26;
+  if (0x800 < (uVar27 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8208e9b0,0x63e,0,0xffffffff8208ec14,0xffffffff8208ec28,uVar27);
+    uVar19 = (ulonglong)DAT_8367aa7c;
   }
-  Com_Memcpy(g_sorted_mem_track,&DAT_8367ab28,DAT_8367aa7c * 0x14);
-  uVar13 = (ulonglong)DAT_8367aa7c;
+  Com_Memcpy(0xffffffff8367fb28,0xffffffff8367ab28,
+             (uVar19 + (uVar19 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
+  uVar19 = (ulonglong)DAT_8367aa7c;
   cVar18 = '\0';
-  piVar16 = &g_virtualMemInfo.xenonTotal;
-  lVar27 = 0x13;
-  lVar26 = (uVar13 + ((ulonglong)DAT_8367aa7c & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7c9804e8;
+  puVar16 = (undefined4 *)0x83689b50;
+  lVar31 = 0x13;
+  lVar30 = (uVar19 + ((ulonglong)DAT_8367aa7c & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7c9804e8;
   do {
-    iVar25 = piVar16[1];
+    uVar2 = puVar16[1];
     cVar6 = cVar18 + '\x01';
-    piVar16 = piVar16 + 2;
-    iVar2 = *piVar16;
-    iVar3 = (int)lVar26;
-    *(char **)(iVar3 + 0x10) = "virtual alloc";
-    *(char *)(iVar3 + 0x20) = cVar18;
+    puVar16 = puVar16 + 2;
+    uVar3 = *puVar16;
+    iVar23 = (int)lVar30;
+    *(char **)(iVar23 + 0x10) = "virtual alloc";
+    *(char *)(iVar23 + 0x20) = cVar18;
     cVar18 = cVar18 + '\x02';
-    *(undefined1 *)(iVar3 + 0x21) = 2;
-    *(int *)(iVar3 + 0x18) = iVar25;
-    *(int *)(iVar3 + 0x2c) = iVar2;
-    *(char **)(iVar3 + 0x14) = "";
-    *(char **)(iVar3 + 0x24) = "virtual alloc";
-    *(char *)(iVar3 + 0x34) = cVar6;
-    *(undefined1 *)(iVar3 + 0x35) = 2;
-    lVar26 = lVar26 + 0x28;
-    *(undefined4 *)lVar26 = "";
-    lVar27 = lVar27 + -1;
-  } while (lVar27 != 0);
-  uVar21 = uVar13 + 0x26;
-  if ((int)uVar21 != iVar23) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\mem_track.cpp",0x68d,0
-                    ,"%s");
+    *(undefined1 *)(iVar23 + 0x21) = 2;
+    *(undefined4 *)(iVar23 + 0x18) = uVar2;
+    *(undefined4 *)(iVar23 + 0x2c) = uVar3;
+    *(undefined1 **)(iVar23 + 0x14) = &DAT_820068af;
+    *(char **)(iVar23 + 0x24) = "virtual alloc";
+    *(char *)(iVar23 + 0x34) = cVar6;
+    *(undefined1 *)(iVar23 + 0x35) = 2;
+    lVar30 = lVar30 + 0x28;
+    *(undefined4 *)lVar30 = &DAT_820068af;
+    lVar31 = lVar31 + -1;
+  } while (lVar31 != 0);
+  uVar22 = uVar19 + 0x26;
+  if ((int)uVar22 != (int)uVar27) {
+    MyAssertHandler(0xffffffff8208e9b0,0x68d,0,0xffffffff82000f98,0xffffffff8208ebf8);
   }
-  uVar11 = uVar13 + 0x25;
-  lVar24 = uVar13 + 0x24;
-  lVar27 = (uVar21 + (uVar21 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7c9804d8;
-  lVar26 = (uVar11 + (uVar11 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7c9804d8;
+  uVar27 = uVar19 + 0x25;
+  lVar24 = uVar19 + 0x24;
+  lVar31 = (uVar22 + (uVar22 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7c9804d8;
+  lVar30 = (uVar27 + (uVar27 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7c9804d8;
   do {
     if (-1 < (int)lVar24) {
-      puVar4 = (undefined4 *)lVar26;
-      lVar12 = lVar24;
-      lVar15 = lVar26 + -0x14;
+      puVar16 = (undefined4 *)lVar30;
+      lVar13 = lVar24;
+      lVar15 = lVar30 + -0x14;
 LAB_82502eac:
       puVar5 = (undefined4 *)lVar15;
-      if (*(char *)(puVar4 + 4) != *(char *)(puVar5 + 4)) goto LAB_82502f20;
+      if (*(char *)(puVar16 + 4) != *(char *)(puVar5 + 4)) goto LAB_82502f20;
       pcVar17 = (char *)*puVar5;
-      pcVar20 = (char *)*puVar4;
+      pcVar21 = (char *)*puVar16;
       do {
-        cVar18 = *pcVar20;
+        cVar18 = *pcVar21;
         cVar6 = *pcVar17;
         if (cVar18 == '\0') break;
-        pcVar20 = pcVar20 + 1;
+        pcVar21 = pcVar21 + 1;
         pcVar17 = pcVar17 + 1;
       } while (cVar18 == cVar6);
       if (cVar18 != cVar6) goto LAB_82502f20;
       pcVar17 = (char *)puVar5[1];
-      pcVar20 = (char *)puVar4[1];
+      pcVar21 = (char *)puVar16[1];
       do {
-        cVar18 = *pcVar20;
+        cVar18 = *pcVar21;
         cVar6 = *pcVar17;
         if (cVar18 == '\0') break;
-        pcVar20 = pcVar20 + 1;
+        pcVar21 = pcVar21 + 1;
         pcVar17 = pcVar17 + 1;
       } while (cVar18 == cVar6);
       if (cVar18 != cVar6) goto LAB_82502f20;
-      lVar14 = lVar27 + -0x14;
-      uVar21 = uVar21 - 1;
-      lVar12 = lVar27 + -0x18;
-      puVar5[2] = puVar4[2] + puVar5[2];
-      lVar15 = lVar26 + -4;
-      lVar28 = 5;
+      lVar14 = lVar31 + -0x14;
+      uVar22 = uVar22 - 1;
+      lVar13 = lVar31 + -0x18;
+      puVar5[2] = puVar16[2] + puVar5[2];
+      lVar15 = lVar30 + -4;
+      lVar32 = 5;
       do {
-        lVar12 = lVar12 + 4;
+        lVar13 = lVar13 + 4;
         lVar15 = lVar15 + 4;
-        *(undefined4 *)lVar15 = *(undefined4 *)lVar12;
-        lVar28 = lVar28 + -1;
-        lVar27 = lVar14;
-      } while (lVar28 != 0);
+        *(undefined4 *)lVar15 = *(undefined4 *)lVar13;
+        lVar32 = lVar32 + -1;
+        lVar31 = lVar14;
+      } while (lVar32 != 0);
     }
 LAB_82502f64:
-    uVar11 = uVar11 - 1;
+    uVar27 = uVar27 - 1;
     lVar24 = lVar24 + -1;
-    lVar26 = lVar26 + -0x14;
-  } while (-1 < (longlong)uVar11);
-  uVar22 = (uint)uVar21;
-  if (0 < (int)uVar22) {
-    piVar16 = &g_sorted_mem_track[0].size;
-    uVar13 = uVar21;
+    lVar30 = lVar30 + -0x14;
+  } while (-1 < (longlong)uVar27);
+  _NumOfElements = (size_t)uVar22;
+  if (0 < (int)_NumOfElements) {
+    piVar25 = &DAT_8367fb30;
+    uVar19 = uVar22;
     do {
-      bVar1 = *(byte *)(piVar16 + 2);
-      if (*piVar16 < 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\mem_track.cpp",
-                        0x6a4,0,"%s\n\t(mem_track->size) = %i");
+      bVar1 = *(byte *)(piVar25 + 2);
+      if (*piVar25 < 0) {
+        MyAssertHandler(0xffffffff8208e9b0,0x6a4,0,0xffffffff8208ebdc,0xffffffff8208ebc4);
       }
-      iVar23 = *piVar16;
-      local_118[bVar1 + 1] = local_118[bVar1 + 1] + iVar23;
+      iVar23 = *piVar25;
+      local_114[bVar1] = local_114[bVar1] + iVar23;
       iStack_11c = iVar23 + iStack_11c;
       local_120 = iVar23 + local_120;
       switch(bVar1) {
@@ -701,13 +724,13 @@ LAB_82502f64:
       case 0xf:
         break;
       default:
-        local_118[0] = iVar23 + local_118[0];
+        local_118 = iVar23 + local_118;
       }
-      uVar13 = uVar13 - 1;
-      piVar16 = piVar16 + 5;
-    } while (uVar13 != 0);
+      uVar19 = uVar19 - 1;
+      piVar25 = piVar25 + 5;
+    } while (uVar19 != 0);
   }
-  qsort(g_sorted_mem_track,uVar22,0x14,mem_track_compare);
+  qsort(&DAT_8367fb28,_NumOfElements,0x14,mem_track_compare);
   local_104 = 0xffffffff;
   local_d0 = 0xffffffff;
   local_a0 = local_a8 + local_a4 + local_ac + local_b0;
@@ -715,43 +738,53 @@ LAB_82502f64:
   local_b8 = local_c8 + local_bc + local_c0 + local_c4 + local_cc;
   local_90 = 0xffffffff;
   local_80 = 0xffffffff;
-  if (0 < (int)uVar22) {
-    piVar16 = &g_sorted_mem_track[0].size;
+  if (0 < (int)_NumOfElements) {
+    puVar28 = &DAT_8367fb30;
     do {
-      if (0x1fff < *piVar16) {
-        if (*((mem_track_t *)(piVar16 + -2))->name == '\0') {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\mem_track.cpp",
-                          0x6d4,0,"%s");
+      bVar1 = *(byte *)(puVar28 + 2);
+      if (0x1fff < (int)*puVar28) {
+        if (*(char *)puVar28[-2] == '\0') {
+          MyAssertHandler(0xffffffff8208e9b0,0x6d4,0,0xffffffff82000f98,0xffffffff8208eb98);
         }
-        track_print("%-*s %s %7i  %-24s %s\n");
+        uVar10 = *puVar28;
+        track_print(0xffffffff8208ebac,0x18,(&PTR_s_debug_8296c598)[bVar1],
+                    (&PTR_s_static_8296c630)[*(byte *)((int)puVar28 + 9)],
+                    (longlong)((int)uVar10 >> 10) +
+                    (ulonglong)((int)uVar10 < 0 && (uVar10 & 0x3ff) != 0),puVar28[-2],puVar28[-1]);
       }
-      uVar21 = uVar21 - 1;
-      piVar16 = piVar16 + 5;
-    } while (uVar21 != 0);
+      uVar22 = uVar22 - 1;
+      puVar28 = puVar28 + 5;
+    } while (uVar22 != 0);
   }
-  track_print("\n");
-  XAnimGetTreeMaxMemUsage();
-  XAnimGetTreeHighMemUsage();
-  XAnimGetTreeMemUsage();
-  track_print("%-*s %7i (high: %7i, max: %7i)\n");
-  track_print("\ntotals:\n");
-  track_print("%-*s %*s%*s%*s%*s%*s\n");
-  track_print("%.*s  %.*s %.*s %.*s %.*s %.*s\n");
-  bVar9 = false;
+  track_print(0xffffffff820044d8);
+  uVar10 = XAnimGetTreeMaxMemUsage();
+  uVar11 = XAnimGetTreeHighMemUsage();
+  uVar12 = XAnimGetTreeMemUsage();
+  track_print(0xffffffff8208eb6c,0x18,0xffffffff8208eb8c,
+              (longlong)((int)uVar12 >> 10) + (ulonglong)((int)uVar12 < 0 && (uVar12 & 0x3ff) != 0),
+              (longlong)((int)uVar11 >> 10) + (ulonglong)((int)uVar11 < 0 && (uVar11 & 0x3ff) != 0),
+              (longlong)((int)uVar10 >> 10) + (ulonglong)((int)uVar10 < 0 && (uVar10 & 0x3ff) != 0))
+  ;
+  track_print(0xffffffff8208eb60);
+  track_print(0xffffffff8208eb20,0x18,0xffffffff8208eb38,9,0xffffffff8200e050,9,0xffffffff8208eb40,9
+             );
+  track_print(0xffffffff8208eac4,0x18,0xffffffff8208eae4,8,0xffffffff8208eb10,8,0xffffffff8208eb10,8
+             );
   bVar8 = false;
-  dVar29 = 9.5367431640625e-07;
+  bVar26 = false;
+  dVar33 = 9.5367431640625e-07;
   iVar23 = -0x12;
-  iVar25 = 0;
-  lVar26 = 0x26;
+  iVar29 = 0;
+  lVar30 = 0x26;
   do {
-    iVar2 = *(int *)((int)local_118 + iVar25 + 4);
-    if (iVar2 < 0) {
-      if (bVar9) {
-        track_print("...\n");
+    iVar4 = *(int *)((int)local_114 + iVar29);
+    if (iVar4 < 0) {
+      if (bVar8) {
+        track_print(0xffffffff8208eabc);
       }
     }
-    else if (0xc800 < iVar2) {
-      bVar9 = true;
+    else if (0xc800 < iVar4) {
+      bVar8 = true;
       switch(iVar23) {
       case 0:
       case 1:
@@ -768,23 +801,32 @@ LAB_82502f64:
         bVar7 = false;
       }
       if (bVar7) {
-        bVar8 = true;
+        lVar31 = 0;
+        bVar26 = true;
       }
-      else if (bVar8) {
-        local_128 = (longlong)iVar2;
-        track_printSum(0,1,*(char **)((int)typeName + iVar25),(float)((double)local_128 * dVar29));
-        bVar8 = false;
-        goto LAB_825033ec;
+      else {
+        lVar31 = 1;
+        if (bVar26) {
+          local_128 = (longlong)iVar4;
+          track_printSum((double)(float)((double)local_128 * dVar33),0,1,
+                         *(undefined4 *)((int)&PTR_s_debug_8296c598 + iVar29));
+          bVar26 = false;
+          goto LAB_825033ec;
+        }
       }
-      track_print("%*s%-*s %*s%*.1f\n");
+      uVar19 = -(ulonglong)(lVar31 == 0) & 2;
+      track_print(0xffffffff8208ea48,uVar19,0xffffffff820068af,0x18 - uVar19,
+                  *(undefined4 *)((int)&PTR_s_debug_8296c598 + iVar29),lVar31 * 9,0xffffffff820068af
+                  ,9);
     }
 LAB_825033ec:
-    lVar26 = lVar26 + -1;
+    lVar30 = lVar30 + -1;
     iVar23 = iVar23 + 1;
-    iVar25 = iVar25 + 4;
-    if (lVar26 == 0) {
-      track_print("%24s %5.1f\n");
-      track_print("\n");
+    iVar29 = iVar29 + 4;
+    if (lVar30 == 0) {
+      track_print(0xffffffff8208eaa4,0xffffffff8208eab0,
+                  (double)(float)((double)(longlong)local_118 * dVar33));
+      track_print(0xffffffff820044d8);
       DumpMemStats(iStack_11c);
       RtlLeaveCriticalSection(0xffffffff83689b28);
       __restgprlr_19();
@@ -792,24 +834,22 @@ LAB_825033ec:
     }
   } while( true );
 LAB_82502f20:
-  lVar12 = lVar12 + -1;
+  lVar13 = lVar13 + -1;
   lVar15 = lVar15 + -0x14;
-  if (lVar12 < 0) goto LAB_82502f64;
+  if (lVar13 < 0) goto LAB_82502f64;
   goto LAB_82502eac;
 }
 
 
 // 82503460  track_PrintAllInfo  (qcommon/mem_track.cpp:2000)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void track_PrintAllInfo(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (bVar1) {
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 != '\0') {
     track_PrintInfo();
   }
   return;

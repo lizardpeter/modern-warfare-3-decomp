@@ -2,104 +2,109 @@
 
 // 8291C748  _beginthreadex  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/threadex.c:102)
 
-uint _beginthreadex(void *param_1,uint param_2,_func___cdecl_uint_void_ptr *param_3,void *param_4,
-                   uint param_5,uint *param_6)
+uintptr_t _beginthreadex(void *_Security,uint _StackSize,_StartAddress *_StartAddress,void *_ArgList
+                        ,uint _InitFlag,uint *_ThrdAddr)
 
 {
-  void *pvVar1;
-  int *piVar2;
-  _tiddata *p_Var3;
-  ulong uVar4;
-  uint uVar5;
+  LPSECURITY_ATTRIBUTES lpThreadAttributes;
+  int *piVar1;
+  _ptiddata _Ptd;
+  HANDLE pvVar2;
+  DWORD DVar3;
+  uintptr_t uVar4;
+  ulonglong uVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
-  ulong *puVar8;
-  ulong auStack_50 [20];
+  LPDWORD lpThreadId;
+  DWORD aDStack_50 [20];
   
-  uVar7 = (ulonglong)(int)param_6;
-  uVar6 = (ulonglong)(int)param_3;
-  pvVar1 = (void *)__savegprlr_24(param_1);
-  puVar8 = (ulong *)uVar7;
-  uVar4 = 0;
-  if ((uVar6 & 0xffffffff) == 0) {
-    piVar2 = _errno();
-    *piVar2 = 0x16;
+  uVar6 = (ulonglong)(int)_ThrdAddr;
+  uVar5 = (ulonglong)(int)_StartAddress;
+  lpThreadAttributes = (LPSECURITY_ATTRIBUTES)__savegprlr_24(_Security);
+  lpThreadId = (LPDWORD)uVar6;
+  DVar3 = 0;
+  if ((uVar5 & 0xffffffff) == 0) {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
     _invalid_parameter_noinfo();
   }
   else {
     __set_flsgetvalue();
-    p_Var3 = calloc(1,0xc4);
-    if (p_Var3 != (_tiddata *)0x0) {
-      _initptd(p_Var3,(threadlocaleinfostruct *)0x0);
-      p_Var3->_initaddr = (void *)uVar6;
-      p_Var3->_initarg = param_4;
-      p_Var3->_thandle = 0xffffffff;
-      if ((uVar7 & 0xffffffff) == 0) {
-        puVar8 = auStack_50;
+    _Ptd = calloc(1,0xc4);
+    if (_Ptd != (_ptiddata)0x0) {
+      _initptd(_Ptd,(pthreadlocinfo)0x0);
+      _Ptd->_initaddr = (void *)uVar5;
+      _Ptd->_initarg = _ArgList;
+      _Ptd->_thandle = 0xffffffff;
+      if ((uVar6 & 0xffffffff) == 0) {
+        lpThreadId = aDStack_50;
       }
-      pvVar1 = CreateThread(pvVar1,param_2,_threadstartex,p_Var3,param_5,puVar8);
-      if (pvVar1 != (void *)0x0) goto LAB_8291c818;
-      uVar4 = GetLastError();
+      pvVar2 = CreateThread(lpThreadAttributes,_StackSize,threadstartex,_Ptd,_InitFlag,lpThreadId);
+      if (pvVar2 != (HANDLE)0x0) goto LAB_8291c818;
+      DVar3 = GetLastError();
     }
-    free(p_Var3);
-    if (uVar4 != 0) {
-      _dosmaperr(uVar4);
+    free(_Ptd);
+    if (DVar3 != 0) {
+      _dosmaperr(DVar3);
     }
   }
-  pvVar1 = (void *)0x0;
+  pvVar2 = (HANDLE)0x0;
 LAB_8291c818:
-  uVar5 = __restgprlr_24(pvVar1);
-  return uVar5;
+  uVar4 = __restgprlr_24(pvVar2);
+  return uVar4;
 }
 
 
-// 8291C6B8  _threadstartex  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/threadex.c:202)
+// 8291C6B8  threadstartex  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/threadex.c:202)
 
-ulong _threadstartex(void *param_1)
+/* WARNING: Unknown calling convention: __cdecl */
+/* threadstartex */
+
+undefined8 __cdecl threadstartex(DWORD *param_1)
 
 {
   ulong uVar1;
-  void *pvVar2;
-  int iVar3;
+  int iVar2;
+  DWORD DVar3;
   
   __set_flsgetvalue();
   uVar1 = __get_flsindex();
-  pvVar2 = __fls_getvalue(uVar1);
-  if (pvVar2 == (void *)0x0) {
+  iVar2 = __fls_getvalue(uVar1);
+  if (iVar2 == 0) {
     uVar1 = __get_flsindex();
-    iVar3 = __fls_setvalue(uVar1,param_1);
-    if (iVar3 == 0) {
-      uVar1 = GetLastError();
+    iVar2 = __fls_setvalue(uVar1,param_1);
+    if (iVar2 == 0) {
+      DVar3 = GetLastError();
                     /* WARNING: Subroutine does not return */
-      ExitThread(uVar1);
+      ExitThread(DVar3);
     }
-    uVar1 = GetCurrentThreadId();
-    *(ulong *)param_1 = uVar1;
+    DVar3 = GetCurrentThreadId();
+    *param_1 = DVar3;
   }
   else {
-    *(undefined4 *)((int)pvVar2 + 0x54) = *(undefined4 *)((int)param_1 + 0x54);
-    *(undefined4 *)((int)pvVar2 + 0x58) = *(undefined4 *)((int)param_1 + 0x58);
-    *(undefined4 *)((int)pvVar2 + 4) = *(undefined4 *)((int)param_1 + 4);
+    *(DWORD *)(iVar2 + 0x54) = param_1[0x15];
+    *(DWORD *)(iVar2 + 0x58) = param_1[0x16];
+    *(DWORD *)(iVar2 + 4) = param_1[1];
     _freefls(param_1);
   }
-  _callthreadstartex();
+  callthreadstartex();
   return 0;
 }
 
 
-// 8291C638  _callthreadstartex  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/threadex.c:244)
+// 8291C638  callthreadstartex  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/threadex.c:244)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Unknown calling convention: __cdecl */
+/* callthreadstartex */
 
-void _callthreadstartex(void)
+void __cdecl callthreadstartex(void)
 
 {
-  _tiddata *p_Var1;
-  ulong uVar2;
+  _ptiddata p_Var1;
+  DWORD dwExitCode;
   
   p_Var1 = _getptd();
-  uVar2 = (*p_Var1->_initaddr)(p_Var1->_initarg);
+  dwExitCode = (*p_Var1->_initaddr)(p_Var1->_initarg);
                     /* WARNING: Subroutine does not return */
-  ExitThread(uVar2);
+  ExitThread(dwExitCode);
 }
 

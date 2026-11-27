@@ -2,79 +2,78 @@
 
 // 82924DF8  _filbuf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_filbuf.c:100)
 
-int _filbuf(_iobuf *param_1)
+int _filbuf(FILE *_File)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var3;
-  int *piVar4;
-  ulonglong uVar2;
-  int iVar5;
-  uint uVar6;
-  ioinfo *piVar7;
+  char *_DstBuf;
+  FILE *_File_00;
+  int *piVar2;
+  ulonglong uVar1;
+  int iVar3;
+  uint uVar4;
+  undefined *puVar5;
   
-  p_Var3 = (_iobuf *)__savegprlr_29(param_1);
-  if (p_Var3 == (_iobuf *)0x0) {
-    piVar4 = _errno();
-    *piVar4 = 0x16;
+  _File_00 = (FILE *)__savegprlr_29(_File);
+  if (_File_00 == (FILE *)0x0) {
+    piVar2 = _errno();
+    *piVar2 = 0x16;
     _invalid_parameter_noinfo();
   }
   else {
-    uVar6 = p_Var3->_flag;
-    if ((uVar6 & 0x83) != 0) {
-      if ((uVar6 & 0x40) == 0) {
-        if ((uVar6 & 2) == 0) {
-          p_Var3->_flag = uVar6 | 1;
-          if ((uVar6 & 0x10c) == 0) {
-            _getbuf(p_Var3);
+    uVar4 = _File_00->_flag;
+    if ((uVar4 & 0x83) != 0) {
+      if ((uVar4 & 0x40) == 0) {
+        if ((uVar4 & 2) == 0) {
+          _File_00->_flag = uVar4 | 1;
+          if ((uVar4 & 0x10c) == 0) {
+            _getbuf(_File_00);
           }
           else {
-            p_Var3->_ptr = p_Var3->_base;
+            _File_00->_ptr = _File_00->_base;
           }
-          pcVar1 = p_Var3->_base;
-          uVar6 = p_Var3->_bufsiz;
-          iVar5 = _fileno(p_Var3);
-          iVar5 = _read(iVar5,pcVar1,uVar6);
-          p_Var3->_cnt = iVar5;
-          if ((iVar5 != 0) && (iVar5 != -1)) {
-            if ((p_Var3->_flag & 0x82U) == 0) {
-              iVar5 = _fileno(p_Var3);
-              if ((iVar5 == -1) || (iVar5 = _fileno(p_Var3), iVar5 == -2)) {
-                piVar7 = &__badioinfo;
+          _DstBuf = _File_00->_base;
+          uVar4 = _File_00->_bufsiz;
+          iVar3 = _fileno(_File_00);
+          iVar3 = _read(iVar3,_DstBuf,uVar4);
+          _File_00->_cnt = iVar3;
+          if ((iVar3 != 0) && (iVar3 != -1)) {
+            if ((_File_00->_flag & 0x82U) == 0) {
+              iVar3 = _fileno(_File_00);
+              if ((iVar3 == -1) || (iVar3 = _fileno(_File_00), iVar3 == -2)) {
+                puVar5 = &DAT_829b0a68;
               }
               else {
-                iVar5 = _fileno(p_Var3);
-                uVar6 = _fileno(p_Var3);
-                piVar7 = (ioinfo *)((uVar6 & 0x1f) * 0x48 + *(int *)(&__pioinfo + (iVar5 >> 5) * 4))
-                ;
+                iVar3 = _fileno(_File_00);
+                uVar4 = _fileno(_File_00);
+                puVar5 = (undefined *)((uVar4 & 0x1f) * 0x48 + (&DAT_84897dc0)[iVar3 >> 5]);
               }
-              if ((piVar7->osfile & 0x82U) == 0x82) {
-                p_Var3->_flag = p_Var3->_flag | 0x2000;
-              }
-            }
-            if (p_Var3->_bufsiz == 0x200) {
-              if (((p_Var3->_flag & 8U) != 0) && ((p_Var3->_flag & 0x400U) == 0)) {
-                p_Var3->_bufsiz = 0x1000;
+              if ((puVar5[4] & 0x82) == 0x82) {
+                _File_00->_flag = _File_00->_flag | 0x2000;
               }
             }
-            p_Var3->_cnt = p_Var3->_cnt + -1;
-            uVar2 = (ulonglong)(byte)*p_Var3->_ptr;
-            p_Var3->_ptr = p_Var3->_ptr + 1;
+            if (_File_00->_bufsiz == 0x200) {
+              if (((_File_00->_flag & 8U) != 0) && ((_File_00->_flag & 0x400U) == 0)) {
+                _File_00->_bufsiz = 0x1000;
+              }
+            }
+            _File_00->_cnt = _File_00->_cnt + -1;
+            uVar1 = (ulonglong)(byte)*_File_00->_ptr;
+            _File_00->_ptr = _File_00->_ptr + 1;
             goto LAB_82924f9c;
           }
-          p_Var3->_cnt = 0;
-          uVar6 = (-(uint)(iVar5 != 0) & 0x10) + 0x10 | p_Var3->_flag;
+          _File_00->_cnt = 0;
+          uVar4 = (-(uint)(iVar3 != 0) & 0x10) + 0x10 | _File_00->_flag;
         }
         else {
-          uVar6 = uVar6 | 0x20;
+          uVar4 = uVar4 | 0x20;
         }
-        p_Var3->_flag = uVar6;
+        _File_00->_flag = uVar4;
       }
     }
   }
-  uVar2 = 0xffffffffffffffff;
+  uVar1 = 0xffffffffffffffff;
 LAB_82924f9c:
-  iVar5 = __restgprlr_29(uVar2);
-  return iVar5;
+  iVar3 = __restgprlr_29(uVar1);
+  return iVar3;
 }
 

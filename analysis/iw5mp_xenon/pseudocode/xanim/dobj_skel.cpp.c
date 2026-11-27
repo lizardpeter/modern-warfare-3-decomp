@@ -2,68 +2,63 @@
 
 // 8261A448  GetControlAndDuplicatePartBits  (xanim/dobj_skel.cpp:78)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
 void GetControlAndDuplicatePartBits
-               (DObj *param_1,int *param_2,int *param_3,int *param_4,int *param_5,int *param_6,
-               int *param_7)
+               (undefined8 param_1,int param_2,int param_3,int param_4,int param_5,int param_6,
+               longlong param_7)
 
 {
   uint uVar1;
-  uint *puVar2;
-  int iVar3;
-  longlong lVar4;
-  char *pcVar5;
-  int iVar6;
-  uint uVar7;
-  longlong lVar8;
+  int iVar2;
+  uint *puVar3;
+  int iVar4;
+  longlong lVar5;
+  undefined8 uVar6;
+  int iVar7;
+  uint uVar8;
   longlong lVar9;
-  uint *puVar10;
-  longlong lVar11;
+  longlong lVar10;
+  uint *puVar11;
   
-  lVar11 = (longlong)(int)param_7;
-  lVar4 = __savegprlr_17(param_1);
-  if (lVar4 == -0x14) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x58,0,
-                    "%s");
+  lVar5 = __savegprlr_17();
+  if (lVar5 == -0x14) {
+    MyAssertHandler(0xffffffff8218526c,0x58,0,0xffffffff82000f98,0xffffffff82185264);
   }
-  iVar3 = (int)lVar11;
-  lVar9 = lVar4 + 0x5c;
-  lVar8 = 6;
+  iVar4 = (int)param_7;
+  lVar10 = lVar5 + 0x5c;
+  lVar9 = 6;
   do {
-    puVar10 = (uint *)lVar9;
-    puVar2 = (uint *)lVar11;
-    *puVar10 = *(uint *)(((int)param_2 - iVar3) + (int)puVar2) | *puVar10;
-    *(uint *)(((int)param_6 - iVar3) + (int)puVar2) = puVar10[-0xc];
-    *puVar2 = puVar10[-6];
-    *(uint *)(((int)param_5 - iVar3) + (int)puVar2) =
-         ~(*(uint *)(((int)param_3 - iVar3) + (int)puVar2) |
-          *(uint *)(((int)param_4 - iVar3) + (int)puVar2));
-    if ((*(uint *)(((int)param_6 - iVar3) + (int)puVar2) &
-        *(uint *)(((int)param_4 - iVar3) + (int)puVar2)) != 0) {
-      DObjDumpInfo((DObj *)lVar4);
-      iVar6 = 0;
-      uVar7 = (uint)((DObj *)lVar4)->numBones;
-      if (uVar7 != 0) {
+    puVar11 = (uint *)lVar10;
+    puVar3 = (uint *)param_7;
+    *puVar11 = *(uint *)((param_2 - iVar4) + (int)puVar3) | *puVar11;
+    *(uint *)((param_6 - iVar4) + (int)puVar3) = puVar11[-0xc];
+    *puVar3 = puVar11[-6];
+    *(uint *)((param_5 - iVar4) + (int)puVar3) =
+         ~(*(uint *)((param_3 - iVar4) + (int)puVar3) | *(uint *)((param_4 - iVar4) + (int)puVar3));
+    if ((*(uint *)((param_6 - iVar4) + (int)puVar3) & *(uint *)((param_4 - iVar4) + (int)puVar3)) !=
+        0) {
+      DObjDumpInfo(lVar5);
+      iVar7 = 0;
+      uVar8 = (uint)*(byte *)((int)lVar5 + 10);
+      if (uVar8 != 0) {
         uVar1 = 0;
         do {
-          if (((param_6[iVar6 >> 5] & *(uint *)(&g_bitShift + (uVar1 & 0x7c))) != 0) &&
-             ((param_4[iVar6 >> 5] & *(uint *)(&g_bitShift + (uVar1 & 0x7c))) != 0)) break;
-          iVar6 = iVar6 + 1;
-          uVar1 = iVar6 * 4;
-        } while (iVar6 < (int)uVar7);
+          uVar1 = *(uint *)((int)&DAT_82992400 + (uVar1 & 0x7c));
+          iVar2 = (iVar7 >> 5) * 4;
+          if (((*(uint *)(iVar2 + param_6) & uVar1) != 0) &&
+             ((*(uint *)(iVar2 + param_4) & uVar1) != 0)) break;
+          iVar7 = iVar7 + 1;
+          uVar1 = iVar7 * 4;
+        } while (iVar7 < (int)uVar8);
       }
-      if (alwaysfails == 0) {
-        pcVar5 = va("control/meld conflict on bone %d - see the console log for details");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x6e,
-                        0,pcVar5);
+      if (DAT_84013128 == 0) {
+        uVar6 = va(0xffffffff82185220);
+        MyAssertHandler(0xffffffff8218526c,0x6e,0,uVar6);
       }
     }
-    lVar8 = lVar8 + -1;
-    lVar9 = lVar9 + 4;
-    lVar11 = lVar11 + 4;
-    if (lVar8 == 0) {
+    lVar9 = lVar9 + -1;
+    lVar10 = lVar10 + 4;
+    param_7 = param_7 + 4;
+    if (lVar9 == 0) {
       __restgprlr_17();
       return;
     }
@@ -73,7 +68,7 @@ void GetControlAndDuplicatePartBits
 
 // 8261A440  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
 
-void __stvx(__vector4 param_1,void *param_2,int param_3)
+void __stvx(int param_1,int param_2)
 
 {
   undefined4 *puVar1;
@@ -82,7 +77,7 @@ void __stvx(__vector4 param_1,void *param_2,int param_3)
   undefined4 in_vr1_32_2;
   undefined4 in_vr1_32_3;
   
-  puVar1 = (undefined4 *)((int)param_2 + param_3 & 0xfffffff0);
+  puVar1 = (undefined4 *)(param_1 + param_2 & 0xfffffff0);
   *puVar1 = in_vr1_32_0;
   puVar1[1] = in_vr1_32_1;
   puVar1[2] = in_vr1_32_2;
@@ -93,151 +88,136 @@ void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 // 8261A5B0  CalcSkelDuplicateBones  (xanim/dobj_skel.cpp:118)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-uchar * CalcSkelDuplicateBones(XModel *param_1,DSkel *param_2,int param_3,uchar *param_4)
+void CalcSkelDuplicateBones(undefined8 param_1,int param_2,longlong param_3,longlong param_4)
 
 {
-  DObjAnimMat *pDVar1;
+  uint uVar1;
   int iVar2;
-  uchar *puVar3;
+  longlong lVar3;
   longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  ulonglong uVar5;
+  uint uVar6;
   ulonglong uVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
+  longlong lVar8;
   
-  lVar4 = (longlong)(int)param_4;
-  lVar5 = (longlong)param_3;
-  iVar2 = __savegprlr_24(param_1);
-  uVar7 = (ulonglong)*(byte *)(iVar2 + 4) + lVar5;
-  pDVar1 = param_2->mat;
-  uVar9 = (ulonglong)*(byte *)lVar4 - 1;
-  if ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff)) {
+  iVar2 = __savegprlr_24();
+  uVar5 = (ulonglong)*(byte *)(iVar2 + 4) + param_3;
+  uVar1 = *(uint *)(param_2 + 100);
+  uVar7 = (ulonglong)*(byte *)param_4 - 1;
+  if ((uVar7 & 0xffffffff) < (uVar5 & 0xffffffff)) {
     do {
-      uVar8 = *(byte *)((int)lVar4 + 1) - 1;
-      if ((int)uVar9 <= (int)uVar8) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x86,
-                        0,"%s");
+      uVar6 = *(byte *)((int)param_4 + 1) - 1;
+      if ((int)uVar7 <= (int)uVar6) {
+        MyAssertHandler(0xffffffff8218526c,0x86,0,0xffffffff82000f98,0xffffffff821852ac);
       }
-      lVar5 = ((ulonglong)uVar8 & 0x7ffffff) * 0x20 + ZEXT48(pDVar1) + -4;
-      lVar6 = (uVar9 & 0x7ffffff) * 0x20 + ZEXT48(pDVar1) + -4;
-      lVar10 = 8;
+      lVar3 = ((ulonglong)uVar6 & 0x7ffffff) * 0x20 + (ulonglong)uVar1 + -4;
+      lVar4 = (uVar7 & 0x7ffffff) * 0x20 + (ulonglong)uVar1 + -4;
+      lVar8 = 8;
       do {
-        lVar5 = lVar5 + 4;
-        lVar6 = lVar6 + 4;
-        *(undefined4 *)lVar6 = *(undefined4 *)lVar5;
-        lVar10 = lVar10 + -1;
-      } while (lVar10 != 0);
-      lVar4 = lVar4 + 2;
-      uVar9 = (ulonglong)*(byte *)lVar4 - 1;
-    } while ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff));
+        lVar3 = lVar3 + 4;
+        lVar4 = lVar4 + 4;
+        *(undefined4 *)lVar4 = *(undefined4 *)lVar3;
+        lVar8 = lVar8 + -1;
+      } while (lVar8 != 0);
+      param_4 = param_4 + 2;
+      uVar7 = (ulonglong)*(byte *)param_4 - 1;
+    } while ((uVar7 & 0xffffffff) < (uVar5 & 0xffffffff));
   }
-  puVar3 = (uchar *)__restgprlr_24(lVar4);
-  return puVar3;
+  __restgprlr_24(param_4);
+  return;
 }
 
 
 // 8261A668  CalcSkelRootBonesNoParentOrDuplicate  (xanim/dobj_skel.cpp:142)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void CalcSkelRootBonesNoParentOrDuplicate(XModel *param_1,DSkel *param_2,int param_3,int *param_4)
+void CalcSkelRootBonesNoParentOrDuplicate
+               (undefined8 param_1,int param_2,longlong param_3,longlong param_4)
 
 {
-  DObjAnimMat *pDVar1;
+  int iVar1;
   uint uVar2;
   int iVar3;
-  longlong lVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  int iVar7;
-  longlong lVar8;
+  undefined4 *puVar5;
+  undefined8 uVar4;
+  uint uVar6;
+  ulonglong uVar7;
+  int iVar8;
   uint uVar9;
-  DObjAnimMat *pDVar10;
-  double dVar11;
+  longlong lVar10;
+  float *pfVar11;
   double dVar12;
   double dVar13;
   double dVar14;
+  double dVar15;
   uint local_ec;
   
-  lVar8 = (longlong)(int)param_4;
-  lVar4 = (longlong)param_3;
-  __savegprlr();
-  uVar5 = (int)lVar4 >> 5;
-  pDVar1 = param_2->mat;
-  lVar4 = (ulonglong)param_1->numRootBones + lVar4;
-  uVar6 = lVar4 + ((ulonglong)uVar5 & 0x7ffffff) * -0x20;
-  iVar3 = (int)lVar4 + -1 >> 5;
-  local_ec = (uint)uVar6;
-  if ((int)uVar5 <= iVar3) {
-    lVar8 = ((ulonglong)uVar5 & 0x3fffffff) * 4 + lVar8;
-    dVar12 = 1.0;
-    dVar14 = 2.0;
-    dVar13 = 1e-06;
+  puVar5 = (undefined4 *)__savegprlr();
+  uVar6 = (int)param_3 >> 5;
+  iVar1 = *(int *)(param_2 + 100);
+  param_3 = (ulonglong)*(byte *)((int)puVar5 + 5) + param_3;
+  uVar7 = param_3 + ((ulonglong)uVar6 & 0x7ffffff) * -0x20;
+  iVar3 = (int)param_3 + -1 >> 5;
+  local_ec = (uint)uVar7;
+  if ((int)uVar6 <= iVar3) {
+    param_4 = ((ulonglong)uVar6 & 0x3fffffff) * 4 + param_4;
+    dVar13 = 1.0;
+    dVar15 = 2.0;
+    dVar14 = 1e-06;
     while( true ) {
-      uVar9 = *(uint *)lVar8;
-      iVar7 = (int)uVar6;
-      if (0x20 < iVar7) {
-        iVar7 = 0x20;
+      uVar9 = *(uint *)param_4;
+      iVar8 = (int)uVar7;
+      if (0x20 < iVar8) {
+        iVar8 = 0x20;
       }
-      uVar6 = LZCOUNT(uVar9);
-      if ((int)uVar6 < iVar7) {
+      uVar7 = LZCOUNT(uVar9);
+      if ((int)uVar7 < iVar8) {
         do {
-          if (0x20 < uVar6) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
-                            0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
+          lVar10 = ((ulonglong)uVar6 & 0x7ffffff) * 0x20 + uVar7;
+          if (0x20 < uVar7) {
+            MyAssertHandler(0xffffffff82003018,0x475,0,
+                            "count doesn\'t index 33\n\t%i not in [0, %i)",uVar7,0x21);
           }
-          uVar2 = *(uint *)(&g_bitShift + (int)(uVar6 << 2));
+          uVar2 = *(uint *)((int)&DAT_82992400 + (int)(uVar7 << 2));
           if ((uVar2 & uVar9) == 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0xb1,0,"%s");
+            MyAssertHandler(0xffffffff8218526c,0xb1,0,0xffffffff82000f98,"bits & boneBit");
           }
           uVar9 = uVar9 & ~uVar2;
-          pDVar10 = pDVar1 + uVar5 * 0x20 + (int)uVar6;
-          *(uint *)lVar8 = uVar9;
-          dVar11 = (double)(pDVar10->quat[3] * pDVar10->quat[3] +
-                           pDVar10->quat[2] * pDVar10->quat[2] +
-                           pDVar10->quat[0] * pDVar10->quat[0] + pDVar10->quat[1] * pDVar10->quat[1]
-                           );
-          if (dVar11 <= dVar13) {
-            pDVar10->quat[3] = (float)dVar12;
-            pDVar10->transWeight = (float)dVar14;
+          pfVar11 = (float *)((int)lVar10 * 0x20 + iVar1);
+          *(uint *)param_4 = uVar9;
+          dVar12 = (double)(pfVar11[3] * pfVar11[3] +
+                           pfVar11[2] * pfVar11[2] + *pfVar11 * *pfVar11 + pfVar11[1] * pfVar11[1]);
+          if (dVar12 <= dVar14) {
+            pfVar11[3] = (float)dVar13;
+            pfVar11[7] = (float)dVar15;
           }
           else {
-            pDVar10->transWeight = (float)(dVar14 / dVar11);
+            pfVar11[7] = (float)(dVar15 / dVar12);
           }
-          if (((uint)pDVar10->transWeight & 0x7f800000) == 0x7f800000) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h",
-                            0x2fa,0,"%s");
+          if (((uint)pfVar11[7] & 0x7f800000) == 0x7f800000) {
+            MyAssertHandler(0xffffffff82184800,0x2fa,0,0xffffffff82000f98,0xffffffff820159d4);
           }
-          if ((((((uint)pDVar10->quat[0] & 0x7f800000) == 0x7f800000) ||
-               (((uint)pDVar10->quat[1] & 0x7f800000) == 0x7f800000)) ||
-              (((uint)pDVar10->quat[2] & 0x7f800000) == 0x7f800000)) ||
-             (((uint)pDVar10->quat[3] & 0x7f800000) == 0x7f800000)) {
-            va("model: \'%s\' boneIndex: %d");
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0xb7,0,"%s\n\t%s");
+          if ((((((uint)*pfVar11 & 0x7f800000) == 0x7f800000) ||
+               (((uint)pfVar11[1] & 0x7f800000) == 0x7f800000)) ||
+              (((uint)pfVar11[2] & 0x7f800000) == 0x7f800000)) ||
+             (((uint)pfVar11[3] & 0x7f800000) == 0x7f800000)) {
+            uVar4 = va(0xffffffff821852c4,*puVar5,lVar10);
+            MyAssertHandler(0xffffffff8218526c,0xb7,0,0xffffffff820011f4,0xffffffff821852e0,uVar4);
           }
-          if (((((uint)pDVar10->trans[0] & 0x7f800000) == 0x7f800000) ||
-              (((uint)pDVar10->trans[1] & 0x7f800000) == 0x7f800000)) ||
-             (((uint)pDVar10->trans[2] & 0x7f800000) == 0x7f800000)) {
-            va("model: \'%s\' boneIndex: %d");
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0xb8,0,"%s\n\t%s");
+          if (((((uint)pfVar11[4] & 0x7f800000) == 0x7f800000) ||
+              (((uint)pfVar11[5] & 0x7f800000) == 0x7f800000)) ||
+             (((uint)pfVar11[6] & 0x7f800000) == 0x7f800000)) {
+            uVar4 = va(0xffffffff821852c4,*puVar5,lVar10);
+            MyAssertHandler(0xffffffff8218526c,0xb8,0,0xffffffff820011f4,0xffffffff82185378,uVar4);
           }
-          uVar6 = LZCOUNT(uVar9);
-        } while ((int)uVar6 < iVar7);
+          uVar7 = LZCOUNT(uVar9);
+        } while ((int)uVar7 < iVar8);
       }
-      uVar5 = uVar5 + 1;
-      lVar8 = lVar8 + 4;
-      local_ec = local_ec - 0x20;
-      if (iVar3 < (int)uVar5) break;
-      uVar6 = (ulonglong)local_ec;
+      uVar7 = (ulonglong)local_ec;
+      uVar6 = uVar6 + 1;
+      param_4 = param_4 + 4;
+      local_ec = (uint)(uVar7 - 0x20);
+      if (iVar3 < (int)uVar6) break;
+      uVar7 = uVar7 - 0x20 & 0xffffffff;
     }
   }
   __restgprlr();
@@ -247,12 +227,9 @@ void CalcSkelRootBonesNoParentOrDuplicate(XModel *param_1,DSkel *param_2,int par
 
 // 8261A990  CalcSkelRootBonesWithParent  (xanim/dobj_skel.cpp:191)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
 void CalcSkelRootBonesWithParent
-               (XModel *param_1,DSkel *param_2,uint param_3,uint param_4,int *param_5,int *param_6,
-               int *param_7)
+               (undefined8 param_1,uint *param_2,ulonglong param_3,ulonglong param_4,int param_5,
+               int param_6,int param_7)
 
 {
   float fVar1;
@@ -267,7 +244,7 @@ void CalcSkelRootBonesWithParent
   float fVar10;
   float fVar11;
   float fVar12;
-  DObjAnimMat *pDVar13;
+  float *pfVar13;
   uint uVar14;
   uint uVar15;
   int iVar16;
@@ -275,236 +252,224 @@ void CalcSkelRootBonesWithParent
   float fVar18;
   float fVar19;
   float fVar20;
-  DObjAnimMat *pDVar21;
+  float *pfVar21;
   int iVar22;
-  ulonglong uVar23;
-  longlong lVar24;
-  ulonglong uVar25;
-  DObjAnimMat *pDVar26;
-  uint uVar27;
-  ulonglong uVar28;
+  longlong lVar23;
+  ulonglong uVar24;
+  float *pfVar25;
+  uint uVar26;
+  ulonglong uVar27;
+  double dVar28;
   double dVar29;
   double dVar30;
   double dVar31;
   double dVar32;
   double dVar33;
   double dVar34;
-  double dVar35;
-  int *piStack00000034;
-  int *piStack0000003c;
-  int *piStack00000044;
   uint local_160;
   uint local_15c;
   uint local_158;
   
-  uVar23 = (ulonglong)(int)param_4;
-  uVar25 = (ulonglong)(int)param_3;
   __savegprlr();
   iVar22 = __savefpr_25();
-  lVar24 = *(byte *)(iVar22 + 5) + uVar25;
-  uVar28 = (uVar25 & 0xffffffff) >> 5;
-  pDVar13 = param_2->mat;
-  uVar25 = lVar24 - (uVar25 & 0xffffffe0);
-  dVar30 = (double)*(float *)(iVar22 + 8);
-  uVar15 = (int)lVar24 - 1U >> 5;
-  local_15c = (uint)uVar28;
-  local_160 = (uint)uVar25;
-  pDVar26 = pDVar13 + (uint)uVar23;
-  piStack00000034 = param_5;
-  piStack0000003c = param_6;
-  piStack00000044 = param_7;
-  if (uVar28 <= uVar15) {
-    lVar24 = uVar28 << 2;
-    dVar32 = 2.0;
-    dVar31 = 1e-06;
-    dVar33 = 1.0;
+  lVar23 = *(byte *)(iVar22 + 5) + param_3;
+  uVar27 = (param_3 & 0xffffffff) >> 5;
+  pfVar13 = (float *)param_2[0x19];
+  uVar24 = lVar23 - (param_3 & 0xffffffe0);
+  dVar29 = (double)*(float *)(iVar22 + 8);
+  uVar15 = (int)lVar23 - 1U >> 5;
+  local_15c = (uint)uVar27;
+  local_160 = (uint)uVar24;
+  pfVar25 = pfVar13 + (uint)param_4 * 8;
+  if (uVar27 <= uVar15) {
+    lVar23 = uVar27 << 2;
+    dVar31 = 2.0;
+    dVar30 = 1e-06;
+    dVar32 = 1.0;
     while( true ) {
-      local_158 = (uint)uVar25;
-      iVar16 = (int)lVar24;
-      uVar27 = *(uint *)(iVar16 + (int)piStack00000034);
+      local_158 = (uint)uVar24;
+      iVar16 = (int)lVar23;
+      uVar26 = *(uint *)(iVar16 + param_5);
       if (0x20 < (int)local_158) {
         local_158 = 0x20;
       }
-      uVar28 = LZCOUNT(uVar27);
-      if (uVar28 < local_158) {
-        uVar17 = (uint)((uVar23 & 0xffffffff) << 2) & 0x7c;
+      uVar27 = LZCOUNT(uVar26);
+      if (uVar27 < local_158) {
+        uVar17 = (uint)((param_4 & 0xffffffff) << 2) & 0x7c;
         do {
-          uVar25 = ((ulonglong)local_15c & 0x7ffffff) * 0x20 + uVar28;
-          if (0x20 < uVar28) {
+          uVar24 = ((ulonglong)local_15c & 0x7ffffff) * 0x20 + uVar27;
+          if (0x20 < uVar27) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
-                            0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
+                            0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)",uVar27,0x21);
           }
-          uVar14 = *(uint *)(&g_bitShift + (int)(uVar28 << 2));
-          if ((uVar14 & uVar27) == 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0xeb,0,"%s");
+          uVar14 = *(uint *)((int)&DAT_82992400 + (int)(uVar27 << 2));
+          if ((uVar14 & uVar26) == 0) {
+            MyAssertHandler(0xffffffff8218526c,0xeb,0,0xffffffff82000f98,"bits & boneBit");
           }
-          uVar27 = uVar27 & ~uVar14;
-          *(uint *)(iVar16 + (int)piStack00000034) = uVar27;
-          if ((uVar25 & 0xffffffff) <= (uVar23 & 0xffffffff)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0xef,0,"%s");
+          uVar26 = uVar26 & ~uVar14;
+          *(uint *)(iVar16 + param_5) = uVar26;
+          if ((uVar24 & 0xffffffff) <= (param_4 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8218526c,0xef,0,0xffffffff82000f98,"modelParent < boneIndex");
           }
-          if ((*(uint *)((int)(param_2->partBits).anim + iVar16) & uVar14) == 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0xf0,0,"%s");
+          if ((*(uint *)(iVar16 + (int)param_2) & uVar14) == 0) {
+            MyAssertHandler(0xffffffff8218526c,0xf0,0,0xffffffff82000f98,
+                            "skel->partBits.anim[boneIndexHigh] & boneBit");
           }
-          if (((param_2->partBits).skel[(int)((uVar23 & 0xffffffff) >> 5)] &
-              *(uint *)(&g_bitShift + uVar17)) == 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0xf1,0,"%s");
+          if ((param_2[(int)((param_4 & 0xffffffff) >> 5) + 0x12] &
+              *(uint *)((int)&DAT_82992400 + uVar17)) == 0) {
+            MyAssertHandler(0xffffffff8218526c,0xf1,0,0xffffffff82000f98,
+                            "skel->partBits.skel[modelParent >> 5] & BitShiftMasked( modelParent )")
+            ;
           }
-          if ((*(uint *)(&g_bitShift + uVar17) &
-              *(uint *)((int)(param_2->partBits).anim + ((uint)uVar23 >> 3 & 0x1ffffffc))) == 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0xf2,0,"%s");
+          if ((*(uint *)((int)&DAT_82992400 + uVar17) &
+              *(uint *)(((uint)param_4 >> 3 & 0x1ffffffc) + (int)param_2)) == 0) {
+            MyAssertHandler(0xffffffff8218526c,0xf2,0,0xffffffff82000f98,
+                            "skel->partBits.anim[modelParent >> 5] & BitShiftMasked( modelParent )")
+            ;
           }
-          pDVar21 = param_2->mat + (int)uVar25;
-          if ((*(uint *)(iVar16 + (int)piStack00000044) & uVar14) == 0) {
-            if ((*(uint *)(iVar16 + (int)piStack0000003c) & uVar14) == 0) {
-              fVar1 = pDVar26->quat[3];
-              fVar2 = pDVar26->quat[0];
-              fVar3 = pDVar21->quat[0];
-              fVar4 = pDVar21->quat[2];
-              fVar5 = pDVar21->quat[3];
-              fVar6 = pDVar21->quat[1];
-              fVar7 = pDVar26->quat[1];
-              fVar8 = pDVar26->quat[2];
-              pDVar21->quat[0] = -(fVar8 * fVar6 - (fVar7 * fVar4 + fVar2 * fVar5 + fVar3 * fVar1));
-              pDVar21->quat[3] =
-                   -(fVar8 * fVar4 - -(fVar6 * fVar7 - (fVar5 * fVar1 - fVar2 * fVar3)));
-              pDVar21->quat[1] = fVar5 * fVar7 + fVar8 * fVar3 + (fVar6 * fVar1 - fVar2 * fVar4);
-              pDVar21->quat[2] = fVar8 * fVar5 + -(fVar3 * fVar7 - (fVar6 * fVar2 + fVar1 * fVar4));
+          pfVar21 = (float *)((int)uVar24 * 0x20 + param_2[0x19]);
+          if ((*(uint *)(iVar16 + param_7) & uVar14) == 0) {
+            if ((*(uint *)(iVar16 + param_6) & uVar14) == 0) {
+              fVar1 = pfVar25[3];
+              fVar2 = *pfVar25;
+              fVar3 = *pfVar21;
+              fVar4 = pfVar21[2];
+              fVar5 = pfVar21[3];
+              fVar6 = pfVar21[1];
+              fVar7 = pfVar25[1];
+              fVar8 = pfVar25[2];
+              *pfVar21 = -(fVar8 * fVar6 - (fVar7 * fVar4 + fVar2 * fVar5 + fVar3 * fVar1));
+              pfVar21[3] = -(fVar8 * fVar4 - -(fVar6 * fVar7 - (fVar5 * fVar1 - fVar2 * fVar3)));
+              pfVar21[1] = fVar5 * fVar7 + fVar8 * fVar3 + (fVar6 * fVar1 - fVar2 * fVar4);
+              pfVar21[2] = fVar8 * fVar5 + -(fVar3 * fVar7 - (fVar6 * fVar2 + fVar1 * fVar4));
             }
             else {
-              if (((param_2->partBits).skel[0] & 0x80000000U) == 0) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp"
-                                ,0xfe,0,"%s");
+              if ((param_2[0x12] & 0x80000000) == 0) {
+                MyAssertHandler(0xffffffff8218526c,0xfe,0,0xffffffff82000f98,
+                                "skel->partBits.skel[0] & HIGH_BIT");
               }
-              if (((param_2->partBits).anim[0] & 0x80000000U) == 0) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp"
-                                ,0xff,0,"%s");
+              if ((*param_2 & 0x80000000) == 0) {
+                MyAssertHandler(0xffffffff8218526c,0xff,0,0xffffffff82000f98,
+                                "skel->partBits.anim[0] & HIGH_BIT");
               }
-              fVar1 = pDVar13->quat[0];
-              fVar2 = pDVar26->quat[3];
-              fVar3 = pDVar13->quat[3];
-              fVar4 = pDVar26->quat[1];
-              fVar5 = pDVar13->quat[1];
-              fVar6 = pDVar26->quat[0];
-              fVar7 = pDVar26->quat[2];
-              fVar8 = pDVar13->quat[2];
-              fVar9 = pDVar21->quat[3];
-              fVar10 = pDVar21->quat[0];
-              fVar11 = pDVar21->quat[1];
-              fVar12 = pDVar21->quat[2];
+              fVar1 = *pfVar13;
+              fVar2 = pfVar25[3];
+              fVar3 = pfVar13[3];
+              fVar4 = pfVar25[1];
+              fVar5 = pfVar13[1];
+              fVar6 = *pfVar25;
+              fVar7 = pfVar25[2];
+              fVar8 = pfVar13[2];
+              fVar9 = pfVar21[3];
+              fVar10 = *pfVar21;
+              fVar11 = pfVar21[1];
+              fVar12 = pfVar21[2];
               fVar18 = fVar8 * fVar4 + -(fVar5 * fVar7 - (fVar6 * fVar3 - fVar1 * fVar2));
               fVar19 = -(fVar6 * fVar8 - -(fVar5 * fVar2 - (fVar7 * fVar1 + fVar4 * fVar3)));
               fVar20 = -(fVar8 * fVar2 - (fVar6 * fVar5 + (fVar7 * fVar3 - fVar4 * fVar1)));
               fVar1 = fVar2 * fVar3 + fVar8 * fVar7 + fVar6 * fVar1 + fVar4 * fVar5;
               fVar7 = -(fVar12 * fVar19 - (fVar1 * fVar10 + fVar11 * fVar20 + fVar9 * fVar18));
-              pDVar21->quat[0] = fVar7;
+              *pfVar21 = fVar7;
               fVar8 = -(fVar12 * fVar20 - -(fVar11 * fVar19 - (fVar9 * fVar1 - fVar10 * fVar18)));
-              pDVar21->quat[3] = fVar8;
+              pfVar21[3] = fVar8;
               fVar6 = fVar12 * fVar1 + -(fVar11 * fVar18 - (fVar9 * fVar20 + fVar10 * fVar19));
-              pDVar21->quat[2] = fVar6;
+              pfVar21[2] = fVar6;
               fVar5 = fVar12 * fVar18 + fVar11 * fVar1 + (fVar9 * fVar19 - fVar10 * fVar20);
-              pDVar21->quat[1] = fVar5;
-              fVar1 = pDVar13->quat[1];
-              fVar2 = pDVar13->quat[3];
-              fVar3 = pDVar13->quat[2];
-              fVar4 = pDVar13->quat[0];
-              pDVar21->quat[3] =
-                   -(fVar6 * fVar3 - -(fVar5 * fVar1 - (fVar8 * fVar2 - fVar7 * fVar4)));
-              pDVar21->quat[0] = -(fVar5 * fVar3 - (fVar7 * fVar2 + fVar8 * fVar4 + fVar6 * fVar1));
-              pDVar21->quat[1] = fVar8 * fVar1 + fVar7 * fVar3 + (fVar5 * fVar2 - fVar6 * fVar4);
-              pDVar21->quat[2] = fVar8 * fVar3 + -(fVar7 * fVar1 - (fVar5 * fVar4 + fVar6 * fVar2));
+              pfVar21[1] = fVar5;
+              fVar1 = pfVar13[1];
+              fVar2 = pfVar13[3];
+              fVar3 = pfVar13[2];
+              fVar4 = *pfVar13;
+              pfVar21[3] = -(fVar6 * fVar3 - -(fVar5 * fVar1 - (fVar8 * fVar2 - fVar7 * fVar4)));
+              *pfVar21 = -(fVar5 * fVar3 - (fVar7 * fVar2 + fVar8 * fVar4 + fVar6 * fVar1));
+              pfVar21[1] = fVar8 * fVar1 + fVar7 * fVar3 + (fVar5 * fVar2 - fVar6 * fVar4);
+              pfVar21[2] = fVar8 * fVar3 + -(fVar7 * fVar1 - (fVar5 * fVar4 + fVar6 * fVar2));
             }
           }
-          if ((((((uint)pDVar21->quat[0] & 0x7f800000) == 0x7f800000) ||
-               (((uint)pDVar21->quat[1] & 0x7f800000) == 0x7f800000)) ||
-              (((uint)pDVar21->quat[2] & 0x7f800000) == 0x7f800000)) ||
-             (((uint)pDVar21->quat[3] & 0x7f800000) == 0x7f800000)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0x107,0,"%s");
-          }
-          if (((((uint)pDVar21->trans[0] & 0x7f800000) == 0x7f800000) ||
-              (((uint)pDVar21->trans[1] & 0x7f800000) == 0x7f800000)) ||
-             (((uint)pDVar21->trans[2] & 0x7f800000) == 0x7f800000)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0x108,0,"%s");
-          }
-          dVar29 = (double)(pDVar21->quat[2] * pDVar21->quat[2] +
-                           pDVar21->quat[0] * pDVar21->quat[0] +
-                           pDVar21->quat[1] * pDVar21->quat[1] + pDVar21->quat[3] * pDVar21->quat[3]
+          if ((((((uint)*pfVar21 & 0x7f800000) == 0x7f800000) ||
+               (((uint)pfVar21[1] & 0x7f800000) == 0x7f800000)) ||
+              (((uint)pfVar21[2] & 0x7f800000) == 0x7f800000)) ||
+             (((uint)pfVar21[3] & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler(0xffffffff8218526c,0x107,0,0xffffffff82000f98,
+                            "!IS_NAN((childMat->quat)[0]) && !IS_NAN((childMat->quat)[1]) && !IS_NAN((childMat->quat)[2]) && !IS_NAN((childMat->quat)[3])"
                            );
-          if (dVar29 <= dVar31) {
-            pDVar21->quat[3] = (float)dVar33;
-            pDVar21->transWeight = (float)dVar32;
+          }
+          if (((((uint)pfVar21[4] & 0x7f800000) == 0x7f800000) ||
+              (((uint)pfVar21[5] & 0x7f800000) == 0x7f800000)) ||
+             (((uint)pfVar21[6] & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler(0xffffffff8218526c,0x108,0,0xffffffff82000f98,
+                            "!IS_NAN((childMat->trans)[0]) && !IS_NAN((childMat->trans)[1]) && !IS_NAN((childMat->trans)[2])"
+                           );
+          }
+          dVar28 = (double)(pfVar21[2] * pfVar21[2] +
+                           *pfVar21 * *pfVar21 + pfVar21[1] * pfVar21[1] + pfVar21[3] * pfVar21[3]);
+          if (dVar28 <= dVar30) {
+            pfVar21[3] = (float)dVar32;
+            pfVar21[7] = (float)dVar31;
           }
           else {
-            pDVar21->transWeight = (float)(dVar32 / dVar29);
+            pfVar21[7] = (float)(dVar31 / dVar28);
           }
-          if (((uint)pDVar21->transWeight & 0x7f800000) == 0x7f800000) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h",
-                            0x2fa,0,"%s");
+          if (((uint)pfVar21[7] & 0x7f800000) == 0x7f800000) {
+            MyAssertHandler(0xffffffff82184800,0x2fa,0,0xffffffff82000f98,0xffffffff820159d4);
           }
-          dVar29 = dVar33;
+          dVar28 = dVar32;
           if ((*(uint *)(iVar22 + 0xc + iVar16) & uVar14) == 0) {
-            dVar29 = dVar30;
+            dVar28 = dVar29;
           }
-          dVar35 = (double)(float)((double)pDVar21->trans[0] * dVar29);
-          dVar34 = (double)(float)((double)pDVar21->trans[1] * dVar29);
-          dVar29 = (double)(float)((double)pDVar21->trans[2] * dVar29);
-          if (((((uint)pDVar26->quat[0] & 0x7f800000) == 0x7f800000) ||
-              (((uint)pDVar26->quat[1] & 0x7f800000) == 0x7f800000)) ||
-             ((((uint)pDVar26->quat[2] & 0x7f800000) == 0x7f800000 ||
-              (((uint)pDVar26->quat[3] & 0x7f800000) == 0x7f800000)))) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h",
-                            0x205,0,"%s");
+          dVar34 = (double)(float)((double)pfVar21[4] * dVar28);
+          dVar33 = (double)(float)((double)pfVar21[5] * dVar28);
+          dVar28 = (double)(float)((double)pfVar21[6] * dVar28);
+          if (((((uint)*pfVar25 & 0x7f800000) == 0x7f800000) ||
+              (((uint)pfVar25[1] & 0x7f800000) == 0x7f800000)) ||
+             ((((uint)pfVar25[2] & 0x7f800000) == 0x7f800000 ||
+              (((uint)pfVar25[3] & 0x7f800000) == 0x7f800000)))) {
+            MyAssertHandler(0xffffffff82184800,0x205,0,0xffffffff82000f98,
+                            "!IS_NAN((mat->quat)[0]) && !IS_NAN((mat->quat)[1]) && !IS_NAN((mat->quat)[2]) && !IS_NAN((mat->quat)[3])"
+                           );
           }
-          if (((uint)pDVar26->transWeight & 0x7f800000) == 0x7f800000) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h",
-                            0x206,0,"%s");
+          if (((uint)pfVar25[7] & 0x7f800000) == 0x7f800000) {
+            MyAssertHandler(0xffffffff82184800,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
           }
-          fVar1 = pDVar26->quat[2];
-          fVar2 = pDVar26->transWeight;
-          fVar3 = pDVar26->quat[1];
+          fVar1 = pfVar25[2];
+          fVar2 = pfVar25[7];
+          fVar3 = pfVar25[1];
           fVar7 = fVar2 * fVar3;
-          fVar8 = pDVar26->quat[0] * fVar2;
-          fVar4 = pDVar26->quat[3];
+          fVar8 = *pfVar25 * fVar2;
+          fVar4 = pfVar25[3];
           fVar5 = fVar2 * fVar1 * fVar1;
-          fVar6 = pDVar26->quat[0] * fVar8;
+          fVar6 = *pfVar25 * fVar8;
           fVar2 = fVar2 * fVar1 * fVar4;
-          fVar9 = (float)(dVar29 * (double)(fVar7 * fVar4 + fVar8 * fVar1) +
-                         (double)(float)(dVar34 * (double)(fVar8 * fVar3 - fVar2) +
-                                        (double)(float)((double)(float)(dVar33 - (double)(fVar5 + 
-                                                  fVar7 * fVar3)) * dVar35))) + pDVar26->trans[0];
-          pDVar21->trans[0] = fVar9;
-          pDVar21->trans[1] =
-               (float)(dVar34 * (double)(float)(dVar33 - (double)(fVar5 + fVar6)) +
-                      (double)(float)((double)(fVar2 + fVar8 * fVar3) * dVar35 +
-                                     (double)(float)(dVar29 * (double)(fVar7 * fVar1 - fVar8 * fVar4
-                                                                      )))) + pDVar26->trans[1];
-          pDVar21->trans[2] =
-               (float)(dVar34 * (double)(fVar7 * fVar1 + fVar8 * fVar4) +
-                      (double)(float)((double)(fVar8 * fVar1 - fVar7 * fVar4) * dVar35 +
-                                     (double)(float)(dVar29 * (double)(float)(dVar33 - (double)(
-                                                  fVar7 * fVar3 + fVar6))))) + pDVar26->trans[2];
+          fVar9 = (float)(dVar28 * (double)(fVar7 * fVar4 + fVar8 * fVar1) +
+                         (double)(float)(dVar33 * (double)(fVar8 * fVar3 - fVar2) +
+                                        (double)(float)((double)(float)(dVar32 - (double)(fVar5 + 
+                                                  fVar7 * fVar3)) * dVar34))) + pfVar25[4];
+          pfVar21[4] = fVar9;
+          pfVar21[5] = (float)(dVar33 * (double)(float)(dVar32 - (double)(fVar5 + fVar6)) +
+                              (double)(float)((double)(fVar2 + fVar8 * fVar3) * dVar34 +
+                                             (double)(float)(dVar28 * (double)(fVar7 * fVar1 -
+                                                                              fVar8 * fVar4)))) +
+                       pfVar25[5];
+          pfVar21[6] = (float)(dVar33 * (double)(fVar7 * fVar1 + fVar8 * fVar4) +
+                              (double)(float)((double)(fVar8 * fVar1 - fVar7 * fVar4) * dVar34 +
+                                             (double)(float)(dVar28 * (double)(float)(dVar32 - (
+                                                  double)(fVar7 * fVar3 + fVar6))))) + pfVar25[6];
           if (((((uint)fVar9 & 0x7f800000) == 0x7f800000) ||
-              (((uint)pDVar21->trans[1] & 0x7f800000) == 0x7f800000)) ||
-             (((uint)pDVar21->trans[2] & 0x7f800000) == 0x7f800000)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0x10f,0,"%s");
+              (((uint)pfVar21[5] & 0x7f800000) == 0x7f800000)) ||
+             (((uint)pfVar21[6] & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler(0xffffffff8218526c,0x10f,0,0xffffffff82000f98,
+                            "!IS_NAN((childMat->trans)[0]) && !IS_NAN((childMat->trans)[1]) && !IS_NAN((childMat->trans)[2])"
+                           );
           }
-          uVar28 = LZCOUNT(uVar27);
-        } while (uVar28 < local_158);
-        uVar25 = (ulonglong)local_160;
+          uVar27 = LZCOUNT(uVar26);
+        } while (uVar27 < local_158);
+        uVar24 = (ulonglong)local_160;
       }
-      lVar24 = lVar24 + 4;
+      lVar23 = lVar23 + 4;
       local_15c = local_15c + 1;
-      local_160 = (uint)(uVar25 - 0x20);
+      local_160 = (uint)(uVar24 - 0x20);
       if (uVar15 < local_15c) break;
-      uVar25 = uVar25 - 0x20 & 0xffffffff;
+      uVar24 = uVar24 - 0x20 & 0xffffffff;
     }
   }
   __restfpr_25();
@@ -515,11 +480,9 @@ void CalcSkelRootBonesWithParent
 
 // 8261B1D8  CalcSkelNonRootBones  (xanim/dobj_skel.cpp:278)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
 void CalcSkelNonRootBones
-               (XModel *param_1,DSkel *param_2,int param_3,int *param_4,int *param_5,int *param_6)
+               (undefined8 param_1,uint *param_2,longlong param_3,int param_4,int param_5,
+               int param_6)
 
 {
   byte bVar1;
@@ -535,257 +498,246 @@ void CalcSkelNonRootBones
   float fVar11;
   float fVar12;
   float fVar13;
-  DObjAnimMat *pDVar14;
+  float *pfVar14;
   uint uVar15;
   int iVar16;
-  int iVar17;
-  uint uVar18;
+  uint uVar17;
+  float fVar18;
   float fVar19;
   float fVar20;
-  float fVar21;
+  float *pfVar21;
   float *pfVar22;
-  DObjAnimMat *pDVar23;
-  int *piVar24;
+  int iVar23;
+  ulonglong uVar24;
   int iVar25;
-  longlong lVar26;
-  int iVar27;
-  int iVar28;
-  uint uVar29;
-  DObjAnimMat *pDVar30;
-  longlong lVar31;
-  ulonglong uVar32;
-  int iVar33;
+  int iVar26;
+  uint uVar27;
+  float *pfVar28;
+  longlong lVar29;
+  ulonglong uVar30;
+  int iVar31;
+  double dVar32;
+  double dVar33;
   double dVar34;
   double dVar35;
   double dVar36;
   double dVar37;
   double dVar38;
-  double dVar39;
-  double dVar40;
-  int *piStack0000002c;
-  int *piStack00000034;
-  int *piStack0000003c;
   uint local_170;
   int local_16c;
   
-  lVar26 = (longlong)param_3;
   __savegprlr();
-  iVar25 = __savefpr_25();
-  local_170 = (int)lVar26 >> 5;
-  dVar35 = (double)*(float *)(iVar25 + 8);
-  iVar17 = ((uint)*(byte *)(iVar25 + 4) - (uint)*(byte *)(iVar25 + 5)) + (int)lVar26;
-  pDVar14 = param_2->mat;
-  local_16c = iVar17 + local_170 * -0x20;
-  iVar17 = iVar17 + -1 >> 5;
-  piStack0000002c = param_4;
-  piStack00000034 = param_5;
-  piStack0000003c = param_6;
-  if ((int)local_170 <= iVar17) {
-    iVar27 = local_170 << 2;
-    dVar36 = 1e-06;
-    dVar38 = 1.0;
-    dVar37 = 2.0;
-    piStack0000002c = param_4;
+  iVar23 = __savefpr_25();
+  local_170 = (int)param_3 >> 5;
+  dVar33 = (double)*(float *)(iVar23 + 8);
+  iVar16 = ((uint)*(byte *)(iVar23 + 4) - (uint)*(byte *)(iVar23 + 5)) + (int)param_3;
+  pfVar14 = (float *)param_2[0x19];
+  local_16c = iVar16 + local_170 * -0x20;
+  iVar16 = iVar16 + -1 >> 5;
+  if ((int)local_170 <= iVar16) {
+    iVar25 = local_170 << 2;
+    dVar34 = 1e-06;
+    dVar36 = 1.0;
+    dVar35 = 2.0;
     do {
-      uVar29 = *(uint *)(iVar27 + (int)piStack0000002c);
-      iVar28 = local_16c;
+      uVar27 = *(uint *)(iVar25 + param_4);
+      iVar26 = local_16c;
       if (0x20 < local_16c) {
-        iVar28 = 0x20;
+        iVar26 = 0x20;
       }
-      uVar32 = LZCOUNT(uVar29);
-      iVar33 = (int)uVar32;
-      piVar24 = piStack0000002c;
-      while (piStack0000002c = piVar24, iVar33 < iVar28) {
-        lVar31 = ((ulonglong)local_170 & 0x7ffffff) * 0x20 + uVar32;
-        if (0x20 < uVar32) {
+      uVar30 = LZCOUNT(uVar27);
+      iVar31 = (int)uVar30;
+      while (iVar31 < iVar26) {
+        lVar29 = ((ulonglong)local_170 & 0x7ffffff) * 0x20 + uVar30;
+        if (0x20 < uVar30) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
-                          0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
+                          0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)",uVar30,0x21);
         }
-        uVar15 = *(uint *)(&g_bitShift + (int)(uVar32 << 2));
-        if ((uVar15 & uVar29) == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                          0x145,0,"%s");
+        uVar15 = *(uint *)((int)&DAT_82992400 + (int)(uVar30 << 2));
+        if ((uVar15 & uVar27) == 0) {
+          MyAssertHandler(0xffffffff8218526c,0x145,0,0xffffffff82000f98,"bits & boneBit");
         }
-        uVar29 = uVar29 & ~uVar15;
-        *(uint *)(iVar27 + (int)piVar24) = uVar29;
-        pDVar23 = pDVar14 + (int)lVar31;
-        if (((ulonglong)*(byte *)(iVar25 + 4) - (ulonglong)*(byte *)(iVar25 + 5) & 0xffffffff) <=
-            (lVar31 - lVar26 & 0xffffffffU)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                          0x14c,0,
+        uVar27 = uVar27 & ~uVar15;
+        *(uint *)(iVar25 + param_4) = uVar27;
+        uVar30 = lVar29 - param_3;
+        pfVar22 = pfVar14 + (int)lVar29 * 8;
+        if (((ulonglong)*(byte *)(iVar23 + 4) - (ulonglong)*(byte *)(iVar23 + 5) & 0xffffffff) <=
+            (uVar30 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8218526c,0x14c,0,
                           "boneOffset doesn\'t index model->numBones - model->numRootBones\n\t%i not in [0, %i)"
+                          ,uVar30);
+        }
+        bVar1 = *(byte *)((int)uVar30 + *(int *)(iVar23 + 0x28));
+        pfVar28 = pfVar22 + (uint)bVar1 * -8;
+        if ((*(uint *)(iVar25 + (int)param_2) & uVar15) == 0) {
+          MyAssertHandler(0xffffffff8218526c,0x152,0,0xffffffff82000f98,
+                          "skel->partBits.anim[boneIndexHigh] & boneBit");
+        }
+        uVar24 = lVar29 - (ulonglong)bVar1;
+        iVar31 = (int)uVar24 >> 5;
+        uVar17 = (uint)((uVar24 & 0xffffffff) << 2) & 0x7c;
+        if ((param_2[iVar31 + 0x12] & *(uint *)((int)&DAT_82992400 + uVar17)) == 0) {
+          MyAssertHandler(0xffffffff8218526c,0x153,0,0xffffffff82000f98,
+                          "skel->partBits.skel[(boneIndex - parentOffset) >> 5] & BitShiftMasked( boneIndex - parentOffset )"
                          );
         }
-        iVar33 = (int)(lVar31 - lVar26);
-        bVar1 = *(byte *)(iVar33 + *(int *)(iVar25 + 0x28));
-        pDVar30 = pDVar23 + -(uint)bVar1;
-        if ((*(uint *)((int)(param_2->partBits).anim + iVar27) & uVar15) == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                          0x152,0,"%s");
+        if ((param_2[iVar31] & *(uint *)((int)&DAT_82992400 + uVar17)) == 0) {
+          MyAssertHandler(0xffffffff8218526c,0x154,0,0xffffffff82000f98,
+                          "skel->partBits.anim[(boneIndex - parentOffset) >> 5] & BitShiftMasked( boneIndex - parentOffset )"
+                         );
         }
-        uVar32 = lVar31 - (ulonglong)bVar1;
-        iVar16 = (int)uVar32 >> 5;
-        uVar18 = (uint)((uVar32 & 0xffffffff) << 2) & 0x7c;
-        if (((param_2->partBits).skel[iVar16] & *(uint *)(&g_bitShift + uVar18)) == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                          0x153,0,"%s");
-        }
-        if (((param_2->partBits).anim[iVar16] & *(uint *)(&g_bitShift + uVar18)) == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                          0x154,0,"%s");
-        }
-        if ((*(uint *)(iVar27 + (int)piStack0000003c) & uVar15) == 0) {
-          if ((*(uint *)(iVar27 + (int)piStack00000034) & uVar15) == 0) {
-            fVar2 = pDVar30->quat[0];
-            fVar3 = pDVar23->quat[0];
-            fVar4 = pDVar23->quat[3];
-            fVar5 = pDVar23->quat[2];
-            fVar6 = pDVar23->quat[1];
-            fVar7 = pDVar30->quat[3];
-            fVar8 = pDVar30->quat[1];
-            fVar9 = pDVar30->quat[2];
-            pDVar23->quat[3] = -(fVar5 * fVar9 - -(fVar8 * fVar6 - (fVar4 * fVar7 - fVar2 * fVar3)))
-            ;
-            pDVar23->quat[0] = -(fVar6 * fVar9 - (fVar3 * fVar7 + fVar5 * fVar8 + fVar2 * fVar4));
-            pDVar23->quat[1] = fVar8 * fVar4 + fVar9 * fVar3 + (fVar6 * fVar7 - fVar5 * fVar2);
-            pDVar23->quat[2] = fVar9 * fVar4 + -(fVar8 * fVar3 - (fVar5 * fVar7 + fVar6 * fVar2));
+        if ((*(uint *)(iVar25 + param_6) & uVar15) == 0) {
+          if ((*(uint *)(iVar25 + param_5) & uVar15) == 0) {
+            fVar2 = *pfVar28;
+            fVar3 = *pfVar22;
+            fVar4 = pfVar22[3];
+            fVar5 = pfVar22[2];
+            fVar6 = pfVar22[1];
+            fVar7 = pfVar28[3];
+            fVar8 = pfVar28[1];
+            fVar9 = pfVar28[2];
+            pfVar22[3] = -(fVar5 * fVar9 - -(fVar8 * fVar6 - (fVar4 * fVar7 - fVar2 * fVar3)));
+            *pfVar22 = -(fVar6 * fVar9 - (fVar3 * fVar7 + fVar5 * fVar8 + fVar2 * fVar4));
+            pfVar22[1] = fVar8 * fVar4 + fVar9 * fVar3 + (fVar6 * fVar7 - fVar5 * fVar2);
+            pfVar22[2] = fVar9 * fVar4 + -(fVar8 * fVar3 - (fVar5 * fVar7 + fVar6 * fVar2));
           }
           else {
-            if (((param_2->partBits).skel[0] & 0x80000000U) == 0) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp"
-                              ,0x15e,0,"%s");
+            if ((param_2[0x12] & 0x80000000) == 0) {
+              MyAssertHandler(0xffffffff8218526c,0x15e,0,0xffffffff82000f98,
+                              "skel->partBits.skel[0] & HIGH_BIT");
             }
-            if (((param_2->partBits).anim[0] & 0x80000000U) == 0) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp"
-                              ,0x15f,0,"%s");
+            if ((*param_2 & 0x80000000) == 0) {
+              MyAssertHandler(0xffffffff8218526c,0x15f,0,0xffffffff82000f98,
+                              "skel->partBits.anim[0] & HIGH_BIT");
             }
-            fVar2 = pDVar14->quat[3];
-            fVar3 = pDVar30->quat[1];
-            fVar4 = pDVar30->quat[3];
-            fVar5 = pDVar14->quat[0];
-            fVar6 = pDVar14->quat[2];
-            fVar7 = pDVar30->quat[2];
-            fVar8 = pDVar30->quat[0];
-            fVar9 = pDVar14->quat[1];
-            fVar10 = pDVar23->quat[0];
-            fVar11 = pDVar23->quat[1];
-            fVar12 = pDVar23->quat[3];
-            fVar13 = pDVar23->quat[2];
-            fVar20 = -(fVar6 * fVar8 - -(fVar9 * fVar4 - (fVar7 * fVar5 + fVar3 * fVar2)));
-            fVar21 = -(fVar6 * fVar4 - (fVar9 * fVar8 + (fVar7 * fVar2 - fVar3 * fVar5)));
-            fVar19 = fVar6 * fVar3 + -(fVar9 * fVar7 - (fVar2 * fVar8 - fVar5 * fVar4));
+            fVar2 = pfVar14[3];
+            fVar3 = pfVar28[1];
+            fVar4 = pfVar28[3];
+            fVar5 = *pfVar14;
+            fVar6 = pfVar14[2];
+            fVar7 = pfVar28[2];
+            fVar8 = *pfVar28;
+            fVar9 = pfVar14[1];
+            fVar10 = *pfVar22;
+            fVar11 = pfVar22[1];
+            fVar12 = pfVar22[3];
+            fVar13 = pfVar22[2];
+            fVar19 = -(fVar6 * fVar8 - -(fVar9 * fVar4 - (fVar7 * fVar5 + fVar3 * fVar2)));
+            fVar20 = -(fVar6 * fVar4 - (fVar9 * fVar8 + (fVar7 * fVar2 - fVar3 * fVar5)));
+            fVar18 = fVar6 * fVar3 + -(fVar9 * fVar7 - (fVar2 * fVar8 - fVar5 * fVar4));
             fVar2 = fVar5 * fVar8 + fVar4 * fVar2 + fVar3 * fVar9 + fVar6 * fVar7;
-            fVar6 = fVar13 * fVar2 + -(fVar19 * fVar11 - (fVar21 * fVar12 + fVar20 * fVar10));
-            pDVar23->quat[2] = fVar6;
-            fVar7 = fVar13 * fVar19 + fVar2 * fVar11 + (fVar20 * fVar12 - fVar21 * fVar10);
-            pDVar23->quat[1] = fVar7;
-            fVar9 = -(fVar13 * fVar21 - -(fVar20 * fVar11 - (fVar2 * fVar12 - fVar19 * fVar10)));
-            pDVar23->quat[3] = fVar9;
-            fVar8 = -(fVar13 * fVar20 - (fVar19 * fVar12 + fVar2 * fVar10 + fVar21 * fVar11));
-            pDVar23->quat[0] = fVar8;
-            fVar2 = pDVar14->quat[3];
-            fVar3 = pDVar14->quat[1];
-            fVar4 = pDVar14->quat[2];
-            fVar5 = pDVar14->quat[0];
-            pDVar23->quat[1] = fVar3 * fVar9 + fVar8 * fVar4 + (fVar7 * fVar2 - fVar6 * fVar5);
-            pDVar23->quat[2] = fVar4 * fVar9 + -(fVar8 * fVar3 - (fVar7 * fVar5 + fVar6 * fVar2));
-            pDVar23->quat[3] = -(fVar6 * fVar4 - -(fVar7 * fVar3 - (fVar2 * fVar9 - fVar8 * fVar5)))
-            ;
-            pDVar23->quat[0] = -(fVar7 * fVar4 - (fVar5 * fVar9 + fVar6 * fVar3 + fVar8 * fVar2));
+            fVar6 = fVar13 * fVar2 + -(fVar18 * fVar11 - (fVar20 * fVar12 + fVar19 * fVar10));
+            pfVar22[2] = fVar6;
+            fVar7 = fVar13 * fVar18 + fVar2 * fVar11 + (fVar19 * fVar12 - fVar20 * fVar10);
+            pfVar22[1] = fVar7;
+            fVar8 = -(fVar13 * fVar20 - -(fVar19 * fVar11 - (fVar2 * fVar12 - fVar18 * fVar10)));
+            pfVar22[3] = fVar8;
+            fVar9 = -(fVar13 * fVar19 - (fVar18 * fVar12 + fVar2 * fVar10 + fVar20 * fVar11));
+            *pfVar22 = fVar9;
+            fVar2 = pfVar14[3];
+            fVar3 = pfVar14[1];
+            fVar4 = pfVar14[2];
+            fVar5 = *pfVar14;
+            pfVar22[1] = fVar3 * fVar8 + fVar9 * fVar4 + (fVar7 * fVar2 - fVar6 * fVar5);
+            pfVar22[2] = fVar4 * fVar8 + -(fVar9 * fVar3 - (fVar7 * fVar5 + fVar6 * fVar2));
+            pfVar22[3] = -(fVar6 * fVar4 - -(fVar7 * fVar3 - (fVar2 * fVar8 - fVar9 * fVar5)));
+            *pfVar22 = -(fVar7 * fVar4 - (fVar5 * fVar8 + fVar6 * fVar3 + fVar9 * fVar2));
           }
         }
-        if ((((((uint)pDVar23->quat[0] & 0x7f800000) == 0x7f800000) ||
-             (((uint)pDVar23->quat[1] & 0x7f800000) == 0x7f800000)) ||
-            (((uint)pDVar23->quat[2] & 0x7f800000) == 0x7f800000)) ||
-           (((uint)pDVar23->quat[3] & 0x7f800000) == 0x7f800000)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                          0x167,0,"%s");
+        if ((((((uint)*pfVar22 & 0x7f800000) == 0x7f800000) ||
+             (((uint)pfVar22[1] & 0x7f800000) == 0x7f800000)) ||
+            (((uint)pfVar22[2] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)pfVar22[3] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler(0xffffffff8218526c,0x167,0,0xffffffff82000f98,
+                          "!IS_NAN((childMat->quat)[0]) && !IS_NAN((childMat->quat)[1]) && !IS_NAN((childMat->quat)[2]) && !IS_NAN((childMat->quat)[3])"
+                         );
         }
-        if (((((uint)pDVar23->trans[0] & 0x7f800000) == 0x7f800000) ||
-            (((uint)pDVar23->trans[1] & 0x7f800000) == 0x7f800000)) ||
-           (((uint)pDVar23->trans[2] & 0x7f800000) == 0x7f800000)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                          0x168,0,"%s");
+        if (((((uint)pfVar22[4] & 0x7f800000) == 0x7f800000) ||
+            (((uint)pfVar22[5] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)pfVar22[6] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler(0xffffffff8218526c,0x168,0,0xffffffff82000f98,
+                          "!IS_NAN((childMat->trans)[0]) && !IS_NAN((childMat->trans)[1]) && !IS_NAN((childMat->trans)[2])"
+                         );
         }
-        dVar34 = (double)(pDVar23->quat[0] * pDVar23->quat[0] +
-                         pDVar23->quat[3] * pDVar23->quat[3] +
-                         pDVar23->quat[2] * pDVar23->quat[2] + pDVar23->quat[1] * pDVar23->quat[1]);
-        if (dVar34 <= dVar36) {
-          pDVar23->quat[3] = (float)dVar38;
-          pDVar23->transWeight = (float)dVar37;
+        dVar32 = (double)(*pfVar22 * *pfVar22 +
+                         pfVar22[3] * pfVar22[3] + pfVar22[2] * pfVar22[2] + pfVar22[1] * pfVar22[1]
+                         );
+        if (dVar32 <= dVar34) {
+          pfVar22[3] = (float)dVar36;
+          pfVar22[7] = (float)dVar35;
         }
         else {
-          pDVar23->transWeight = (float)(dVar37 / dVar34);
+          pfVar22[7] = (float)(dVar35 / dVar32);
         }
-        if (((uint)pDVar23->transWeight & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h",
-                          0x2fa,0,"%s");
+        if (((uint)pfVar22[7] & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler(0xffffffff82184800,0x2fa,0,0xffffffff82000f98,"!IS_NAN(mat->transWeight)")
+          ;
         }
-        iVar33 = iVar33 * 0xc;
-        pfVar22 = (float *)(iVar33 + *(int *)(iVar25 + 0x30));
-        if ((((*(uint *)(iVar33 + *(int *)(iVar25 + 0x30)) & 0x7f800000) == 0x7f800000) ||
-            (((uint)pfVar22[1] & 0x7f800000) == 0x7f800000)) ||
-           (((uint)pfVar22[2] & 0x7f800000) == 0x7f800000)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                          0x16d,0,"%s");
+        iVar31 = (int)uVar30 * 0xc;
+        pfVar21 = (float *)(iVar31 + *(int *)(iVar23 + 0x30));
+        if ((((*(uint *)(iVar31 + *(int *)(iVar23 + 0x30)) & 0x7f800000) == 0x7f800000) ||
+            (((uint)pfVar21[1] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)pfVar21[2] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler(0xffffffff8218526c,0x16d,0,0xffffffff82000f98,
+                          "!IS_NAN((trans)[0]) && !IS_NAN((trans)[1]) && !IS_NAN((trans)[2])");
         }
-        dVar34 = dVar38;
-        if ((uVar15 & *(uint *)(iVar25 + 0xc + iVar27)) == 0) {
-          dVar34 = dVar35;
+        dVar32 = dVar36;
+        if ((uVar15 & *(uint *)(iVar23 + 0xc + iVar25)) == 0) {
+          dVar32 = dVar33;
         }
-        dVar40 = (double)(float)(dVar34 * (double)pDVar23->trans[0] + (double)*pfVar22);
-        dVar39 = (double)(float)(dVar34 * (double)pDVar23->trans[1] + (double)pfVar22[1]);
-        dVar34 = (double)(float)((double)pDVar23->trans[2] * dVar34 + (double)pfVar22[2]);
-        if ((((((uint)pDVar30->quat[0] & 0x7f800000) == 0x7f800000) ||
-             (((uint)pDVar30->quat[1] & 0x7f800000) == 0x7f800000)) ||
-            (((uint)pDVar30->quat[2] & 0x7f800000) == 0x7f800000)) ||
-           (((uint)pDVar30->quat[3] & 0x7f800000) == 0x7f800000)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h",
-                          0x205,0,"%s");
+        dVar38 = (double)(float)(dVar32 * (double)pfVar22[4] + (double)*pfVar21);
+        dVar37 = (double)(float)(dVar32 * (double)pfVar22[5] + (double)pfVar21[1]);
+        dVar32 = (double)(float)((double)pfVar22[6] * dVar32 + (double)pfVar21[2]);
+        if ((((((uint)*pfVar28 & 0x7f800000) == 0x7f800000) ||
+             (((uint)pfVar28[1] & 0x7f800000) == 0x7f800000)) ||
+            (((uint)pfVar28[2] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)pfVar28[3] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler(0xffffffff82184800,0x205,0,0xffffffff82000f98,
+                          "!IS_NAN((mat->quat)[0]) && !IS_NAN((mat->quat)[1]) && !IS_NAN((mat->quat)[2]) && !IS_NAN((mat->quat)[3])"
+                         );
         }
-        if (((uint)pDVar30->transWeight & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h",
-                          0x206,0,"%s");
+        if (((uint)pfVar28[7] & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler(0xffffffff82184800,0x206,0,0xffffffff82000f98,"!IS_NAN(mat->transWeight)")
+          ;
         }
-        fVar2 = pDVar30->transWeight;
-        fVar3 = pDVar30->quat[1];
+        fVar2 = pfVar28[7];
+        fVar3 = pfVar28[1];
         fVar6 = fVar2 * fVar3;
-        fVar4 = pDVar30->quat[2];
-        fVar7 = fVar2 * pDVar30->quat[0];
-        fVar5 = pDVar30->quat[3];
-        fVar9 = fVar7 * pDVar30->quat[0];
+        fVar4 = pfVar28[2];
+        fVar7 = fVar2 * *pfVar28;
+        fVar5 = pfVar28[3];
+        fVar9 = fVar7 * *pfVar28;
         fVar8 = fVar2 * fVar4 * fVar4;
         fVar2 = fVar2 * fVar4 * fVar5;
-        fVar10 = (float)(dVar39 * (double)(fVar7 * fVar3 - fVar2) +
-                        (double)(float)((double)(float)(dVar38 - (double)(fVar8 + fVar6 * fVar3)) *
-                                        dVar40 + (double)(float)(dVar34 * (double)(fVar6 * fVar5 +
+        fVar10 = (float)(dVar37 * (double)(fVar7 * fVar3 - fVar2) +
+                        (double)(float)((double)(float)(dVar36 - (double)(fVar8 + fVar6 * fVar3)) *
+                                        dVar38 + (double)(float)(dVar32 * (double)(fVar6 * fVar5 +
                                                                                   fVar7 * fVar4))))
-                 + pDVar30->trans[0];
-        pDVar23->trans[0] = fVar10;
-        pDVar23->trans[1] =
-             (float)(dVar39 * (double)(float)(dVar38 - (double)(fVar8 + fVar9)) +
-                    (double)(float)((double)(fVar2 + fVar7 * fVar3) * dVar40 +
-                                   (double)(float)(dVar34 * (double)(fVar6 * fVar4 - fVar7 * fVar5))
-                                   )) + pDVar30->trans[1];
-        pDVar23->trans[2] =
-             (float)(dVar39 * (double)(fVar6 * fVar4 + fVar7 * fVar5) +
-                    (double)(float)((double)(fVar7 * fVar4 - fVar6 * fVar5) * dVar40 +
-                                   (double)(float)(dVar34 * (double)(float)(dVar38 - (double)(fVar6 
-                                                  * fVar3 + fVar9))))) + pDVar30->trans[2];
+                 + pfVar28[4];
+        pfVar22[4] = fVar10;
+        pfVar22[5] = (float)(dVar37 * (double)(float)(dVar36 - (double)(fVar8 + fVar9)) +
+                            (double)(float)((double)(fVar2 + fVar7 * fVar3) * dVar38 +
+                                           (double)(float)(dVar32 * (double)(fVar6 * fVar4 -
+                                                                            fVar7 * fVar5)))) +
+                     pfVar28[5];
+        pfVar22[6] = (float)(dVar37 * (double)(fVar6 * fVar4 + fVar7 * fVar5) +
+                            (double)(float)((double)(fVar7 * fVar4 - fVar6 * fVar5) * dVar38 +
+                                           (double)(float)(dVar32 * (double)(float)(dVar36 - (double
+                                                  )(fVar6 * fVar3 + fVar9))))) + pfVar28[6];
         if (((((uint)fVar10 & 0x7f800000) == 0x7f800000) ||
-            (((uint)pDVar23->trans[1] & 0x7f800000) == 0x7f800000)) ||
-           (((uint)pDVar23->trans[2] & 0x7f800000) == 0x7f800000)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                          0x173,0,"%s");
+            (((uint)pfVar22[5] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)pfVar22[6] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler(0xffffffff8218526c,0x173,0,0xffffffff82000f98,
+                          "!IS_NAN((childMat->trans)[0]) && !IS_NAN((childMat->trans)[1]) && !IS_NAN((childMat->trans)[2])"
+                         );
         }
-        uVar32 = LZCOUNT(uVar29);
-        piVar24 = piStack0000002c;
-        iVar33 = (int)uVar32;
+        uVar30 = LZCOUNT(uVar27);
+        iVar31 = (int)uVar30;
       }
       local_16c = local_16c + -0x20;
-      iVar27 = iVar27 + 4;
+      iVar25 = iVar25 + 4;
       local_170 = local_170 + 1;
-    } while ((int)local_170 <= iVar17);
+    } while ((int)local_170 <= iVar16);
   }
   __restfpr_25();
   __restgprlr();
@@ -795,456 +747,417 @@ void CalcSkelNonRootBones
 
 // 8261BAC8  DObjCalcAnimUseLargeLocal  (xanim/dobj_skel.cpp:380)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjCalcAnimUseLargeLocal(DObj *param_1,int *param_2)
+void DObjCalcAnimUseLargeLocal(undefined8 param_1,undefined8 param_2)
 
 {
-  XAnimCalcAnimInfo *pXVar1;
-  LargeLocal LStack_20;
+  undefined8 uVar1;
+  undefined1 auStack_20 [8];
   
-  LargeLocal::LargeLocal(&LStack_20,0x9030);
-  pXVar1 = LargeLocal::GetBuf(&LStack_20);
-  DObjCalcAnim(param_1,param_2,pXVar1);
-  LargeLocal::~LargeLocal(&LStack_20);
+  LargeLocal__LargeLocal(auStack_20,0x9030);
+  uVar1 = LargeLocal__GetBuf(auStack_20);
+  DObjCalcAnim(param_1,param_2,uVar1);
+  LargeLocal___LargeLocal(auStack_20);
   return;
 }
 
 
 // 8261BB30  DObjCalcAnimUseStack  (xanim/dobj_skel.cpp:390)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjCalcAnimUseStack(DObj *param_1,int *param_2)
+void DObjCalcAnimUseStack(undefined8 param_1,undefined8 param_2)
 
 {
-  DObj *pDVar1;
-  int iVar2;
+  undefined8 uVar1;
+  longlong lVar2;
   
-  iVar2 = -0x9090;
-  pDVar1 = (DObj *)_RtlCheckStack12(param_1);
-  *(BADSPACEBASE **)(&stack0x00000000 + iVar2) = register0x0000000c;
-  DObjCalcAnim(pDVar1,param_2,(XAnimCalcAnimInfo *)(&stack0x00000000 + iVar2 + 0x50));
+  lVar2 = -0x9090;
+  uVar1 = _RtlCheckStack12();
+  *(BADSPACEBASE **)(int)(ZEXT48(&stack0x00000000) + lVar2) = register0x0000000c;
+  DObjCalcAnim(uVar1,param_2,ZEXT48(&stack0x00000000) + lVar2 + 0x50);
   return;
 }
 
 
 // 8261BB60  DObjCalcSkel  (xanim/dobj_skel.cpp:410)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjCalcSkel(DObj *param_1,int *param_2)
+void DObjCalcSkel(undefined8 param_1,undefined8 param_2)
 
 {
   byte bVar1;
-  byte bVar2;
-  XModel **ppXVar3;
-  XModel *pXVar4;
-  DObjAnimMat *pDVar5;
-  longlong lVar6;
-  DObj *pDVar7;
-  bool bVar10;
-  int *piVar8;
-  int iVar9;
+  int *piVar2;
+  int iVar3;
+  char cVar6;
+  int iVar4;
+  char *pcVar5;
+  uint *puVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
   ulonglong uVar11;
   ulonglong uVar12;
   ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  uint *puVar17;
-  XModel **ppXVar18;
-  DSkel *pDVar19;
-  uint uVar20;
-  int local_e0;
+  int iVar14;
+  int *piVar15;
+  int iVar16;
+  longlong lVar17;
+  undefined4 local_e0;
   undefined4 local_dc;
   undefined4 local_d8;
   undefined4 local_d4;
   undefined4 local_d0;
   undefined4 local_cc;
-  int aiStack_c0 [8];
-  int aiStack_a0 [8];
-  int aiStack_80 [32];
+  undefined1 auStack_c0 [32];
+  undefined1 auStack_a0 [32];
+  undefined1 auStack_80 [128];
   
-  pDVar7 = (DObj *)__savegprlr_20(param_1);
+  iVar3 = __savegprlr_20();
   Profile_Begin(0x131);
-  if (pDVar7 == (DObj *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x1af,0,
-                    "%s");
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8218526c,0x1af,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  pDVar19 = &pDVar7->skel;
-  if (pDVar19 == (DSkel *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x1b2,0,
-                    "%s");
+  iVar16 = iVar3 + 0x14;
+  if (iVar16 == 0) {
+    MyAssertHandler(0xffffffff8218526c,0x1b2,0,0xffffffff82000f98,0xffffffff82185264);
   }
-  uVar16 = (ulonglong)(uint)(pDVar7->skel).partBits.skel[0] | ~(ulonglong)(uint)*param_2;
-  uVar15 = (ulonglong)(uint)(pDVar7->skel).partBits.skel[1] | ~(ulonglong)(uint)param_2[1];
-  uVar14 = (ulonglong)(uint)(pDVar7->skel).partBits.skel[2] | ~(ulonglong)(uint)param_2[2];
-  local_e0 = (int)uVar16;
-  local_d8 = (undefined4)uVar14;
-  uVar13 = (ulonglong)(uint)(pDVar7->skel).partBits.skel[3] | ~(ulonglong)(uint)param_2[3];
-  local_dc = (undefined4)uVar15;
-  local_d4 = (undefined4)uVar13;
-  uVar12 = (ulonglong)(uint)(pDVar7->skel).partBits.skel[4] | ~(ulonglong)(uint)param_2[4];
-  local_d0 = (undefined4)uVar12;
-  uVar11 = (ulonglong)(uint)(pDVar7->skel).partBits.skel[5] | ~(ulonglong)(uint)param_2[5];
-  local_cc = (undefined4)uVar11;
-  if (uVar11 != 0xffffffffffffffff ||
-      (uVar12 != 0xffffffffffffffff ||
-      (uVar13 != 0xffffffffffffffff ||
-      (uVar14 != 0xffffffffffffffff ||
-      (uVar15 != 0xffffffffffffffff || uVar16 != 0xffffffffffffffff))))) {
-    bVar10 = Sys_IsRenderThread();
-    if (bVar10) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x1c4,0
-                      ,"%s");
+  puVar7 = (uint *)param_2;
+  uVar13 = (ulonglong)*(uint *)(iVar3 + 0x5c) | ~(ulonglong)*puVar7;
+  uVar12 = (ulonglong)*(uint *)(iVar3 + 0x60) | ~(ulonglong)puVar7[1];
+  uVar11 = (ulonglong)*(uint *)(iVar3 + 100) | ~(ulonglong)puVar7[2];
+  local_e0 = (undefined4)uVar13;
+  local_d8 = (undefined4)uVar11;
+  uVar10 = (ulonglong)*(uint *)(iVar3 + 0x68) | ~(ulonglong)puVar7[3];
+  local_dc = (undefined4)uVar12;
+  local_d4 = (undefined4)uVar10;
+  uVar9 = (ulonglong)*(uint *)(iVar3 + 0x6c) | ~(ulonglong)puVar7[4];
+  local_d0 = (undefined4)uVar9;
+  uVar8 = (ulonglong)*(uint *)(iVar3 + 0x70) | ~(ulonglong)puVar7[5];
+  local_cc = (undefined4)uVar8;
+  if (uVar8 != 0xffffffffffffffff ||
+      (uVar9 != 0xffffffffffffffff ||
+      (uVar10 != 0xffffffffffffffff ||
+      (uVar11 != 0xffffffffffffffff ||
+      (uVar12 != 0xffffffffffffffff || uVar13 != 0xffffffffffffffff))))) {
+    cVar6 = Sys_IsRenderThread();
+    if (cVar6 != '\0') {
+      MyAssertHandler(0xffffffff8218526c,0x1c4,0,0xffffffff82000f98,0xffffffff821858dc);
     }
-    bVar10 = Sys_IsMainThread();
-    if (bVar10) {
-      DObjCalcAnimUseLargeLocal(pDVar7,param_2);
-    }
-    else {
-      bVar10 = Sys_IsServerThread();
-      if ((bVar10) && (iVar9 = SV_GetServerThreadOwnsGame(), iVar9 != 0)) {
-        DObjCalcAnimUseLargeLocal(pDVar7,param_2);
+    cVar6 = Sys_IsMainThread();
+    if (cVar6 == '\0') {
+      cVar6 = Sys_IsServerThread();
+      if ((cVar6 == '\0') || (iVar4 = SV_GetServerThreadOwnsGame(), iVar4 == 0)) {
+        DObjCalcAnimUseStack(iVar3,param_2);
       }
       else {
-        DObjCalcAnimUseStack(pDVar7,param_2);
+        DObjCalcAnimUseLargeLocal(iVar3,param_2);
       }
     }
-    if (pDVar7->duplicateParts == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x1da,0
-                      ,"%s");
+    else {
+      DObjCalcAnimUseLargeLocal(iVar3,param_2);
     }
-    piVar8 = (int *)SL_ConvertToString((uint)pDVar7->duplicateParts);
-    if ((pDVar7->duplicateParts != 0) && (piVar8 == (int *)0x0)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x1dc,0
-                      ,"%s");
+    if (*(short *)(iVar3 + 4) == 0) {
+      MyAssertHandler(0xffffffff8218526c,0x1da,0,0xffffffff82000f98,0xffffffff82184c00);
     }
-    GetControlAndDuplicatePartBits(pDVar7,param_2,&local_e0,piVar8,aiStack_c0,aiStack_80,aiStack_a0)
-    ;
-    piVar8 = piVar8 + 6;
-    uVar20 = 0;
-    iVar9 = 0;
-    bVar1 = pDVar7->numModels;
-    ppXVar3 = pDVar7->models;
-    ppXVar18 = ppXVar3;
+    iVar4 = SL_ConvertToString(*(undefined2 *)(iVar3 + 4));
+    if ((*(short *)(iVar3 + 4) != 0) && (iVar4 == 0)) {
+      MyAssertHandler(0xffffffff8218526c,0x1dc,0,0xffffffff82000f98,0xffffffff821858ac);
+    }
+    GetControlAndDuplicatePartBits(iVar3,param_2,&local_e0,iVar4,auStack_c0,auStack_80,auStack_a0);
+    pcVar5 = (char *)(iVar4 + 0x18);
+    lVar17 = 0;
+    iVar4 = 0;
+    bVar1 = *(byte *)(iVar3 + 9);
+    piVar2 = *(int **)(iVar3 + 0x98);
+    piVar15 = piVar2;
     if (bVar1 != 0) {
       do {
-        pXVar4 = *ppXVar18;
-        bVar2 = *(byte *)((int)ppXVar3 + iVar9 + (uint)bVar1 * 4);
-        piVar8 = (int *)CalcSkelDuplicateBones(pXVar4,pDVar19,uVar20,(uchar *)piVar8);
-        if (bVar2 == 0xff) {
-          CalcSkelRootBonesNoParentOrDuplicate(pXVar4,pDVar19,uVar20,aiStack_c0);
+        iVar14 = *piVar15;
+        cVar6 = *(char *)((int)piVar2 + iVar4 + (uint)bVar1 * 4);
+        pcVar5 = (char *)CalcSkelDuplicateBones(iVar14,iVar16,lVar17,pcVar5);
+        if (cVar6 == -1) {
+          CalcSkelRootBonesNoParentOrDuplicate();
         }
         else {
-          CalcSkelRootBonesWithParent
-                    (pXVar4,pDVar19,uVar20,(uint)bVar2,aiStack_c0,aiStack_80,aiStack_a0);
+          CalcSkelRootBonesWithParent(iVar14,iVar16,lVar17,cVar6,auStack_c0,auStack_80,auStack_a0);
         }
         CalcSkelNonRootBones
-                  (pXVar4,pDVar19,pXVar4->numRootBones + uVar20,aiStack_c0,aiStack_80,aiStack_a0);
-        iVar9 = iVar9 + 1;
-        ppXVar18 = ppXVar18 + 1;
-        uVar20 = pXVar4->numBones + uVar20;
-      } while (iVar9 < (int)(uint)bVar1);
+                  (iVar14,iVar16,(ulonglong)*(byte *)(iVar14 + 5) + lVar17,auStack_c0,auStack_80,
+                   auStack_a0);
+        iVar4 = iVar4 + 1;
+        piVar15 = piVar15 + 1;
+        lVar17 = (ulonglong)*(byte *)(iVar14 + 4) + lVar17;
+      } while (iVar4 < (int)(uint)bVar1);
     }
-    if (*(char *)piVar8 != '\0') {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x1f8,0
-                      ,"%s");
+    if (*pcVar5 != '\0') {
+      MyAssertHandler(0xffffffff8218526c,0x1f8,0,0xffffffff82000f98,0xffffffff821858a4);
     }
-    uVar11 = 0;
-    if (pDVar7->numBones != '\0') {
-      iVar9 = 0;
-      uVar12 = 0;
-      lVar6 = 0;
+    uVar8 = 0;
+    if (*(char *)(iVar3 + 10) != '\0') {
+      iVar4 = 0;
+      uVar9 = 0;
+      lVar17 = 0;
       do {
-        if ((*(uint *)((int)(pDVar19->partBits).anim + ((uint)uVar12 & 0x1ffffffc)) &
-            *(uint *)(&g_bitShift + ((uint)lVar6 & 0x7c))) != 0) {
-          puVar17 = (uint *)((int)((pDVar7->skel).mat)->quat + iVar9);
-          if (((((*puVar17 & 0x7f800000) == 0x7f800000) || ((puVar17[1] & 0x7f800000) == 0x7f800000)
-               ) || ((puVar17[2] & 0x7f800000) == 0x7f800000)) ||
-             ((puVar17[3] & 0x7f800000) == 0x7f800000)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0x1ff,0,"%s");
+        if ((*(uint *)(((uint)uVar9 & 0x1ffffffc) + iVar16) &
+            *(uint *)((int)&DAT_82992400 + ((uint)lVar17 & 0x7c))) != 0) {
+          puVar7 = (uint *)(iVar4 + *(int *)(iVar3 + 0x78));
+          if ((*puVar7 & 0x7f800000) == 0x7f800000) {
+LAB_8261bf38:
+            MyAssertHandler(0xffffffff8218526c,0x1ff,0,0xffffffff82000f98,0xffffffff82185770);
           }
-          pDVar5 = (pDVar7->skel).mat;
-          if ((((*(uint *)((int)pDVar5->trans + iVar9) & 0x7f800000) == 0x7f800000) ||
-              ((*(uint *)((int)pDVar5->trans + iVar9 + 4) & 0x7f800000) == 0x7f800000)) ||
-             ((*(uint *)((int)pDVar5->trans + iVar9 + 8) & 0x7f800000) == 0x7f800000)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",
-                            0x200,0,"%s");
+          else {
+            if ((puVar7[1] & 0x7f800000) == 0x7f800000) goto LAB_8261bf38;
+            if ((puVar7[2] & 0x7f800000) == 0x7f800000) goto LAB_8261bf38;
+            if ((puVar7[3] & 0x7f800000) == 0x7f800000) goto LAB_8261bf38;
           }
+          iVar14 = iVar4 + *(int *)(iVar3 + 0x78);
+          if ((*(uint *)(iVar14 + 0x10) & 0x7f800000) != 0x7f800000) {
+            if ((*(uint *)(iVar14 + 0x14) & 0x7f800000) != 0x7f800000) {
+              if ((*(uint *)(iVar14 + 0x18) & 0x7f800000) != 0x7f800000) goto LAB_8261bfb8;
+            }
+          }
+          MyAssertHandler(0xffffffff8218526c,0x200,0,0xffffffff82000f98,0xffffffff82185820);
         }
-        uVar11 = uVar11 + 1;
-        iVar9 = iVar9 + 0x20;
-        uVar12 = (uVar11 & 0xffffffff) >> 3;
-        lVar6 = (uVar11 & 0xffffffff) << 2;
-      } while ((uVar11 & 0xffffffff) < (ulonglong)pDVar7->numBones);
+LAB_8261bfb8:
+        uVar8 = uVar8 + 1;
+        iVar4 = iVar4 + 0x20;
+        uVar9 = (uVar8 & 0xffffffff) >> 3;
+        lVar17 = (uVar8 & 0xffffffff) << 2;
+      } while ((uVar8 & 0xffffffff) < (ulonglong)*(byte *)(iVar3 + 10));
     }
   }
-  iVar9 = Profile_EndInternal((double *)0x0);
-  __restgprlr_20(iVar9);
+  Profile_EndInternal(0);
+  __restgprlr_20();
   return;
 }
 
 
 // 8261C4B0  DObjCalcSkelNoAnim  (xanim/dobj_skel.cpp:522)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjCalcSkelNoAnim(DObj *param_1,int *param_2)
+void DObjCalcSkelNoAnim(undefined8 param_1,longlong param_2)
 
 {
   byte bVar1;
-  byte bVar2;
+  char cVar2;
   uint uVar3;
-  uint uVar4;
-  uint uVar5;
-  XModel *pXVar6;
-  bool bVar7;
-  DObj *pDVar8;
-  int *piVar9;
-  int iVar10;
-  uint *puVar11;
+  int iVar4;
+  bool bVar5;
+  int iVar6;
+  int iVar7;
+  char *pcVar8;
+  uint *puVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   ulonglong uVar12;
   ulonglong uVar13;
   ulonglong uVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  undefined4 *puVar17;
-  uint *puVar18;
-  ulonglong uVar19;
-  longlong lVar20;
-  XModel **ppXVar21;
-  XModel **ppXVar22;
-  uint uVar23;
-  DObjAnimMat *pDVar24;
-  DSkel *pDVar25;
-  uint uVar26;
-  float *pfVar27;
-  longlong lVar28;
-  double dVar29;
-  double dVar30;
+  undefined4 *puVar15;
+  uint *puVar16;
+  ulonglong uVar17;
+  longlong lVar18;
+  int *piVar19;
+  int *piVar20;
+  uint uVar21;
+  float *pfVar22;
+  uint *puVar23;
+  float *pfVar24;
+  longlong lVar25;
+  double dVar26;
+  double dVar27;
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
+  undefined1 auVar30 [16];
   undefined1 auVar31 [16];
-  undefined1 auVar32 [16];
-  undefined1 auVar33 [16];
-  undefined1 auVar34 [16];
   undefined4 uStack_124;
   uint local_120 [4];
   uint local_110;
   uint local_10c;
-  int local_100;
+  undefined4 local_100;
   undefined4 local_fc;
   undefined4 local_f8;
   undefined4 local_f4;
   undefined4 local_f0;
   undefined4 local_ec;
-  int aiStack_e0 [8];
-  int aiStack_c0 [48];
+  undefined1 auStack_e0 [32];
+  undefined1 auStack_c0 [192];
   
-  lVar20 = (longlong)(int)param_2;
-  pDVar8 = (DObj *)__savegprlr_15(param_1);
+  iVar6 = __savegprlr_15();
   Profile_Begin(0x131);
-  if (pDVar8 == (DObj *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x226,0,
-                    "%s");
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff8218526c,0x226,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  pDVar25 = &pDVar8->skel;
-  if (pDVar25 == (DSkel *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x229,0,
-                    "%s");
+  puVar23 = (uint *)(iVar6 + 0x14);
+  if (puVar23 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff8218526c,0x229,0,0xffffffff82000f98,0xffffffff82185264);
   }
-  puVar11 = (uint *)lVar20;
-  uVar26 = *puVar11;
-  uVar19 = (ulonglong)(uint)(pDVar8->skel).partBits.skel[0] | ~(ulonglong)uVar26;
-  uVar16 = (ulonglong)(uint)(pDVar8->skel).partBits.skel[1] | ~(ulonglong)puVar11[1];
-  uVar15 = (ulonglong)(uint)(pDVar8->skel).partBits.skel[2] | ~(ulonglong)puVar11[2];
-  local_100 = (int)uVar19;
-  local_f8 = (int)uVar15;
-  uVar14 = (ulonglong)(uint)(pDVar8->skel).partBits.skel[3] | ~(ulonglong)puVar11[3];
-  local_fc = (int)uVar16;
-  local_f4 = (int)uVar14;
-  uVar13 = (ulonglong)(uint)(pDVar8->skel).partBits.skel[4] | ~(ulonglong)puVar11[4];
-  local_f0 = (int)uVar13;
-  uVar12 = (ulonglong)(uint)(pDVar8->skel).partBits.skel[5] | ~(ulonglong)puVar11[5];
-  local_ec = (int)uVar12;
-  if (uVar12 != 0xffffffffffffffff ||
+  puVar9 = (uint *)param_2;
+  uVar3 = *puVar9;
+  uVar17 = (ulonglong)*(uint *)(iVar6 + 0x5c) | ~(ulonglong)uVar3;
+  uVar14 = (ulonglong)*(uint *)(iVar6 + 0x60) | ~(ulonglong)puVar9[1];
+  uVar13 = (ulonglong)*(uint *)(iVar6 + 100) | ~(ulonglong)puVar9[2];
+  local_100 = (undefined4)uVar17;
+  local_f8 = (undefined4)uVar13;
+  uVar12 = (ulonglong)*(uint *)(iVar6 + 0x68) | ~(ulonglong)puVar9[3];
+  local_fc = (undefined4)uVar14;
+  local_f4 = (undefined4)uVar12;
+  uVar11 = (ulonglong)*(uint *)(iVar6 + 0x6c) | ~(ulonglong)puVar9[4];
+  local_f0 = (undefined4)uVar11;
+  uVar10 = (ulonglong)*(uint *)(iVar6 + 0x70) | ~(ulonglong)puVar9[5];
+  local_ec = (undefined4)uVar10;
+  if (uVar10 != 0xffffffffffffffff ||
+      (uVar11 != 0xffffffffffffffff ||
+      (uVar12 != 0xffffffffffffffff ||
       (uVar13 != 0xffffffffffffffff ||
-      (uVar14 != 0xffffffffffffffff ||
-      (uVar15 != 0xffffffffffffffff ||
-      (uVar16 != 0xffffffffffffffff || uVar19 != 0xffffffffffffffff))))) {
-    puVar17 = &uStack_124;
-    lVar20 = lVar20 + -4;
-    lVar28 = 6;
+      (uVar14 != 0xffffffffffffffff || uVar17 != 0xffffffffffffffff))))) {
+    puVar15 = &uStack_124;
+    lVar18 = param_2 + -4;
+    lVar25 = 6;
     do {
-      lVar20 = lVar20 + 4;
-      puVar17 = puVar17 + 1;
-      *puVar17 = *(undefined4 *)lVar20;
-      lVar28 = lVar28 + -1;
-    } while (lVar28 != 0);
-    iVar10 = 0;
-    puVar18 = local_120;
-    local_120[0] = ~local_120[0] | (pDVar25->partBits).anim[0];
-    local_120[1] = (pDVar8->skel).partBits.anim[1] | ~local_120[1];
-    local_120[2] = ~local_120[2] | (pDVar8->skel).partBits.anim[2];
-    local_120[3] = ~local_120[3] | (pDVar8->skel).partBits.anim[3];
-    local_110 = ~local_110 | (pDVar8->skel).partBits.anim[4];
-    local_10c = ~local_10c | (pDVar8->skel).partBits.anim[5];
+      lVar18 = lVar18 + 4;
+      puVar15 = puVar15 + 1;
+      *puVar15 = *(undefined4 *)lVar18;
+      lVar25 = lVar25 + -1;
+    } while (lVar25 != 0);
+    iVar7 = 0;
+    puVar16 = local_120;
+    local_120[0] = ~local_120[0] | *puVar23;
+    local_120[1] = *(uint *)(iVar6 + 0x18) | ~local_120[1];
+    local_120[2] = ~local_120[2] | *(uint *)(iVar6 + 0x1c);
+    local_120[3] = ~local_120[3] | *(uint *)(iVar6 + 0x20);
+    local_110 = ~local_110 | *(uint *)(iVar6 + 0x24);
+    local_10c = ~local_10c | *(uint *)(iVar6 + 0x28);
     do {
-      if (*puVar18 != 0xffffffff) {
-        bVar7 = false;
+      if (*puVar16 != 0xffffffff) {
+        bVar5 = false;
         goto LAB_8261c6bc;
       }
-      iVar10 = iVar10 + 1;
-      puVar18 = puVar18 + 1;
-    } while (iVar10 < 6);
-    bVar7 = true;
+      iVar7 = iVar7 + 1;
+      puVar16 = puVar16 + 1;
+    } while (iVar7 < 6);
+    bVar5 = true;
 LAB_8261c6bc:
-    if (!bVar7) {
-      uVar23 = 0;
-      uVar3 = (pDVar8->skel).partBits.anim[1];
-      uVar4 = (pDVar8->skel).partBits.anim[2];
-      uVar5 = (pDVar8->skel).partBits.anim[3];
-      (pDVar25->partBits).anim[0] = uVar26 | (pDVar25->partBits).anim[0];
-      (pDVar8->skel).partBits.anim[1] = uVar3 | puVar11[1];
-      (pDVar8->skel).partBits.anim[2] = uVar4 | puVar11[2];
-      uVar26 = (pDVar8->skel).partBits.anim[4];
-      (pDVar8->skel).partBits.anim[3] = puVar11[3] | uVar5;
-      uVar3 = (pDVar8->skel).partBits.anim[5];
-      (pDVar8->skel).partBits.anim[4] = uVar26 | puVar11[4];
-      (pDVar8->skel).partBits.anim[5] = puVar11[5] | uVar3;
-      ppXVar21 = pDVar8->models;
-      pDVar24 = (pDVar8->skel).mat;
-      if (ppXVar21 == (XModel **)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x248
-                        ,0,"%s");
+    if (!bVar5) {
+      uVar21 = 0;
+      *puVar23 = uVar3 | *puVar23;
+      *(uint *)(iVar6 + 0x18) = *(uint *)(iVar6 + 0x18) | puVar9[1];
+      *(uint *)(iVar6 + 0x1c) = *(uint *)(iVar6 + 0x1c) | puVar9[2];
+      *(uint *)(iVar6 + 0x20) = puVar9[3] | *(uint *)(iVar6 + 0x20);
+      *(uint *)(iVar6 + 0x24) = *(uint *)(iVar6 + 0x24) | puVar9[4];
+      *(uint *)(iVar6 + 0x28) = puVar9[5] | *(uint *)(iVar6 + 0x28);
+      piVar19 = *(int **)(iVar6 + 0x98);
+      pfVar22 = *(float **)(iVar6 + 0x78);
+      if (piVar19 == (int *)0x0) {
+        MyAssertHandler(0xffffffff8218526c,0x248,0,0xffffffff82000f98,0xffffffff82185950);
       }
-      iVar10 = 0;
-      if (pDVar8->numModels != '\0') {
-        dVar29 = 1.0;
-        dVar30 = 0.0;
+      iVar7 = 0;
+      if (*(char *)(iVar6 + 9) != '\0') {
+        dVar26 = 1.0;
+        dVar27 = 0.0;
         do {
-          pXVar6 = *ppXVar21;
-          uVar12 = (ulonglong)pXVar6->numRootBones;
-          if (pXVar6->numRootBones != 0) {
-            pfVar27 = pDVar24->trans + 2;
+          iVar4 = *piVar19;
+          uVar10 = (ulonglong)*(byte *)(iVar4 + 5);
+          if (*(byte *)(iVar4 + 5) != 0) {
+            pfVar24 = pfVar22 + 6;
             do {
-              if (0xbf < uVar23) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                                ,0x42,0,"%s");
+              if (0xbf < uVar21) {
+                MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
               }
-              if ((*(uint *)((int)local_120 + (uVar23 >> 3 & 0x1ffffffc)) &
-                  *(uint *)(&g_bitShift + (uVar23 & 0x1f) * 4)) == 0) {
-                pDVar24->quat[0] = (float)dVar30;
-                pfVar27[-5] = (float)dVar30;
-                pfVar27[-4] = (float)dVar30;
-                pfVar27[-3] = (float)dVar29;
-                pfVar27[-2] = (float)dVar30;
-                pfVar27[-1] = (float)dVar30;
-                *pfVar27 = (float)dVar30;
-                pfVar27[1] = (float)dVar30;
+              if ((*(uint *)((int)local_120 + (uVar21 >> 3 & 0x1ffffffc)) &
+                  (&DAT_82992400)[uVar21 & 0x1f]) == 0) {
+                *pfVar22 = (float)dVar27;
+                pfVar24[-5] = (float)dVar27;
+                pfVar24[-4] = (float)dVar27;
+                pfVar24[-3] = (float)dVar26;
+                pfVar24[-2] = (float)dVar27;
+                pfVar24[-1] = (float)dVar27;
+                *pfVar24 = (float)dVar27;
+                pfVar24[1] = (float)dVar27;
               }
-              uVar12 = uVar12 - 1;
-              pDVar24 = pDVar24 + 1;
-              pfVar27 = pfVar27 + 8;
-              uVar23 = uVar23 + 1;
-            } while (uVar12 != 0);
+              uVar10 = uVar10 - 1;
+              pfVar22 = pfVar22 + 8;
+              pfVar24 = pfVar24 + 8;
+              uVar21 = uVar21 + 1;
+            } while (uVar10 != 0);
           }
-          uVar12 = ZEXT48(pXVar6->quats);
-          lVar20 = (ulonglong)pXVar6->numBones - (ulonglong)pXVar6->numRootBones;
-          if (lVar20 != 0) {
-            pfVar27 = pDVar24->trans + 2;
+          uVar10 = (ulonglong)*(uint *)(iVar4 + 0x2c);
+          lVar18 = (ulonglong)*(byte *)(iVar4 + 4) - (ulonglong)*(byte *)(iVar4 + 5);
+          if (lVar18 != 0) {
+            pfVar24 = pfVar22 + 6;
             do {
-              if (0xbf < uVar23) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                                ,0x42,0,"%s");
+              if (0xbf < uVar21) {
+                MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
               }
-              if ((*(uint *)((int)local_120 + (uVar23 >> 3 & 0x1ffffffc)) &
-                  *(uint *)(&g_bitShift + (uVar23 & 0x1f) * 4)) == 0) {
-                auVar34 = loadVectorRightIndexed(uVar12 + 8);
-                auVar33 = loadVectorLeftIndexed(uVar12);
-                auVar32 = vectorShiftLeftDoubleByOctetImmediate(auVar34,auVar34,8);
-                auVar34 = loadVectorLeftIndexed(0xffffffff82067624);
-                auVar31 = vectorSplatWord(auVar34,0);
-                auVar34 = vectorUnpackHighSignedByte(auVar33 | auVar32);
-                auVar34 = vectorConvertFromSignedFixedPointWord128(auVar34,0);
-                auVar34 = vectorMultiplyFloatingPoint(auVar31,auVar34);
-                *(undefined1 (*) [16])((uint)pDVar24 & 0xfffffff0) = auVar34;
-                pfVar27[-2] = (float)dVar30;
-                pfVar27[-1] = (float)dVar30;
-                *pfVar27 = (float)dVar30;
-                pfVar27[1] = (float)dVar30;
+              if ((*(uint *)((int)local_120 + (uVar21 >> 3 & 0x1ffffffc)) &
+                  (&DAT_82992400)[uVar21 & 0x1f]) == 0) {
+                auVar31 = loadVectorRightIndexed(uVar10 + 8);
+                auVar30 = loadVectorLeftIndexed(uVar10);
+                auVar29 = vectorShiftLeftDoubleByOctetImmediate(auVar31,auVar31,8);
+                auVar31 = loadVectorLeftIndexed(0xffffffff82067624);
+                auVar28 = vectorSplatWord(auVar31,0);
+                auVar31 = vectorUnpackHighSignedByte(auVar30 | auVar29);
+                auVar31 = vectorConvertFromSignedFixedPointWord128(auVar31,0);
+                auVar31 = vectorMultiplyFloatingPoint(auVar28,auVar31);
+                *(undefined1 (*) [16])((uint)pfVar22 & 0xfffffff0) = auVar31;
+                pfVar24[-2] = (float)dVar27;
+                pfVar24[-1] = (float)dVar27;
+                *pfVar24 = (float)dVar27;
+                pfVar24[1] = (float)dVar27;
               }
-              lVar20 = lVar20 + -1;
-              pDVar24 = pDVar24 + 1;
-              pfVar27 = pfVar27 + 8;
-              uVar23 = uVar23 + 1;
-              uVar12 = uVar12 + 8;
-            } while (lVar20 != 0);
+              lVar18 = lVar18 + -1;
+              pfVar22 = pfVar22 + 8;
+              pfVar24 = pfVar24 + 8;
+              uVar21 = uVar21 + 1;
+              uVar10 = uVar10 + 8;
+            } while (lVar18 != 0);
           }
-          iVar10 = iVar10 + 1;
-          ppXVar21 = ppXVar21 + 1;
-        } while (iVar10 < (int)(uint)pDVar8->numModels);
+          iVar7 = iVar7 + 1;
+          piVar19 = piVar19 + 1;
+        } while (iVar7 < (int)(uint)*(byte *)(iVar6 + 9));
       }
     }
-    if (pDVar8->duplicateParts == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x270,0
-                      ,"%s");
+    if (*(short *)(iVar6 + 4) == 0) {
+      MyAssertHandler(0xffffffff8218526c,0x270,0,0xffffffff82000f98,0xffffffff82184c00);
     }
-    piVar9 = (int *)SL_ConvertToString((uint)pDVar8->duplicateParts);
-    if ((pDVar8->duplicateParts != 0) && (piVar9 == (int *)0x0)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x272,0
-                      ,"%s");
+    iVar7 = SL_ConvertToString(*(undefined2 *)(iVar6 + 4));
+    if ((*(short *)(iVar6 + 4) != 0) && (iVar7 == 0)) {
+      MyAssertHandler(0xffffffff8218526c,0x272,0,0xffffffff82000f98,0xffffffff821858ac);
     }
-    GetControlAndDuplicatePartBits
-              (pDVar8,(int *)puVar11,&local_100,piVar9,(int *)local_120,aiStack_c0,aiStack_e0);
-    uVar26 = 0;
-    piVar9 = piVar9 + 6;
-    iVar10 = 0;
-    bVar1 = pDVar8->numModels;
-    ppXVar21 = pDVar8->models;
-    ppXVar22 = ppXVar21;
+    GetControlAndDuplicatePartBits(iVar6,param_2,&local_100,iVar7,local_120,auStack_c0,auStack_e0);
+    lVar18 = 0;
+    pcVar8 = (char *)(iVar7 + 0x18);
+    iVar7 = 0;
+    bVar1 = *(byte *)(iVar6 + 9);
+    piVar19 = *(int **)(iVar6 + 0x98);
+    piVar20 = piVar19;
     if (bVar1 != 0) {
       do {
-        pXVar6 = *ppXVar22;
-        bVar2 = *(byte *)((int)ppXVar21 + iVar10 + (uint)bVar1 * 4);
-        piVar9 = (int *)CalcSkelDuplicateBones(pXVar6,pDVar25,uVar26,(uchar *)piVar9);
-        if (bVar2 == 0xff) {
-          CalcSkelRootBonesNoParentOrDuplicate(pXVar6,pDVar25,uVar26,(int *)local_120);
+        iVar6 = *piVar20;
+        cVar2 = *(char *)((int)piVar19 + iVar7 + (uint)bVar1 * 4);
+        pcVar8 = (char *)CalcSkelDuplicateBones(iVar6,puVar23,lVar18,pcVar8);
+        if (cVar2 == -1) {
+          CalcSkelRootBonesNoParentOrDuplicate();
         }
         else {
-          CalcSkelRootBonesWithParent
-                    (pXVar6,pDVar25,uVar26,(uint)bVar2,(int *)local_120,aiStack_c0,aiStack_e0);
+          CalcSkelRootBonesWithParent(iVar6,puVar23,lVar18,cVar2,local_120,auStack_c0,auStack_e0);
         }
         CalcSkelNonRootBones
-                  (pXVar6,pDVar25,pXVar6->numRootBones + uVar26,(int *)local_120,aiStack_c0,
-                   aiStack_e0);
-        iVar10 = iVar10 + 1;
-        ppXVar22 = ppXVar22 + 1;
-        uVar26 = pXVar6->numBones + uVar26;
-      } while (iVar10 < (int)(uint)bVar1);
+                  (iVar6,puVar23,(ulonglong)*(byte *)(iVar6 + 5) + lVar18,local_120,auStack_c0,
+                   auStack_e0);
+        iVar7 = iVar7 + 1;
+        piVar20 = piVar20 + 1;
+        lVar18 = (ulonglong)*(byte *)(iVar6 + 4) + lVar18;
+      } while (iVar7 < (int)(uint)bVar1);
     }
-    if (*(char *)piVar9 != '\0') {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x28c,0
-                      ,"%s");
+    if (*pcVar8 != '\0') {
+      MyAssertHandler(0xffffffff8218526c,0x28c,0,0xffffffff82000f98,0xffffffff821858a4);
     }
   }
-  iVar10 = Profile_EndInternal((double *)0x0);
-  __restgprlr_15(iVar10);
+  Profile_EndInternal(0);
+  __restgprlr_15();
   return;
 }
 
 
 // 8261BFE8  DObjCalcBaseAnim  (xanim/dobj_skel.cpp:707)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjCalcBaseAnim(DObj *param_1,DObjAnimMat *param_2,int *param_3)
+void DObjCalcBaseAnim(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
   int iVar1;
@@ -1258,17 +1171,13 @@ void DObjCalcBaseAnim(DObj *param_1,DObjAnimMat *param_2,int *param_3)
   short *psVar9;
   longlong lVar10;
   longlong lVar11;
-  ulonglong uVar12;
   
-  uVar12 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
+  iVar4 = __savegprlr_27();
   if (iVar4 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x2ca,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8218526c,0x2ca,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  if ((uVar12 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x2cb,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218526c,0x2cb,0,0xffffffff82000f98,0xffffffff821858f4);
   }
   uVar7 = 0;
   iVar5 = 0;
@@ -1278,11 +1187,11 @@ void DObjCalcBaseAnim(DObj *param_1,DObjAnimMat *param_2,int *param_3)
       iVar1 = *(int *)(iVar6 + *(int *)(iVar4 + 0x98));
       uVar8 = (ulonglong)*(byte *)(iVar1 + 5);
       if (*(byte *)(iVar1 + 5) != 0) {
-        lVar10 = uVar12 - 8;
+        lVar10 = param_2 - 8;
         uVar7 = uVar8 + uVar7;
         do {
-          *(undefined4 *)uVar12 = 0;
-          uVar12 = uVar12 + 0x20;
+          *(undefined4 *)param_2 = 0;
+          param_2 = param_2 + 0x20;
           iVar2 = (int)lVar10;
           *(undefined4 *)(iVar2 + 0xc) = 0;
           *(undefined4 *)(iVar2 + 0x10) = 0;
@@ -1297,11 +1206,11 @@ void DObjCalcBaseAnim(DObj *param_1,DObjAnimMat *param_2,int *param_3)
       psVar9 = *(short **)(iVar1 + 0x2c);
       lVar10 = (ulonglong)*(byte *)(iVar1 + 4) - (ulonglong)*(byte *)(iVar1 + 5);
       if (lVar10 != 0) {
-        lVar11 = uVar12 + 0x18;
+        lVar11 = param_2 + 0x18;
         do {
-          if ((*(uint *)(&g_bitShift + ((uint)((uVar7 & 0xffffffff) << 2) & 0x7c)) &
-              param_3[(int)uVar7 >> 5]) != 0) {
-            *(float *)uVar12 = (float)(longlong)*psVar9 * 3.051851e-05;
+          if ((*(uint *)((int)&DAT_82992400 + ((uint)((uVar7 & 0xffffffff) << 2) & 0x7c)) &
+              *(uint *)(((int)uVar7 >> 5) * 4 + param_3)) != 0) {
+            *(float *)param_2 = (float)(longlong)*psVar9 * 3.051851e-05;
             puVar3 = (undefined4 *)lVar11;
             puVar3[-5] = (float)(longlong)psVar9[1] * 3.051851e-05;
             puVar3[-4] = (float)(longlong)psVar9[2] * 3.051851e-05;
@@ -1311,7 +1220,7 @@ void DObjCalcBaseAnim(DObj *param_1,DObjAnimMat *param_2,int *param_3)
             *puVar3 = 0;
           }
           uVar7 = uVar7 + 1;
-          uVar12 = uVar12 + 0x20;
+          param_2 = param_2 + 0x20;
           lVar11 = lVar11 + 0x20;
           psVar9 = psVar9 + 4;
           lVar10 = lVar10 + -1;
@@ -1328,141 +1237,122 @@ void DObjCalcBaseAnim(DObj *param_1,DObjAnimMat *param_2,int *param_3)
 
 // 8261C1D0  DObjGetBaseControlAndDuplicatePartBits  (xanim/dobj_skel.cpp:756)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjGetBaseControlAndDuplicatePartBits
-               (DObj *param_1,int *param_2,int *param_3,int *param_4,int *param_5)
+void DObjGetBaseControlAndDuplicatePartBits(uint *param_1,uint *param_2,uint *param_3)
 
 {
-  uint uVar1;
-  uint uVar2;
-  
-  *param_3 = ~((uint)param_1->tree | *param_2);
-  uVar1._0_2_ = param_1->duplicateParts;
-  uVar1._2_2_ = param_1->entnum;
-  param_3[1] = ~(uVar1 | param_2[1]);
-  uVar2._0_1_ = param_1->duplicatePartsSize;
-  uVar2._1_1_ = param_1->numModels;
-  uVar2._2_1_ = param_1->numBones;
-  uVar2._3_1_ = param_1->flags;
-  param_3[2] = ~(uVar2 | param_2[2]);
-  param_3[3] = ~(param_1->ignoreCollision | param_2[3]);
-  param_3[4] = ~(param_1->locked | param_2[4]);
-  param_3[5] = ~((param_1->skel).partBits.anim[0] | param_2[5]);
+  *param_3 = ~(*param_1 | *param_2);
+  param_3[1] = ~(param_1[1] | param_2[1]);
+  param_3[2] = ~(param_1[2] | param_2[2]);
+  param_3[3] = ~(param_1[3] | param_2[3]);
+  param_3[4] = ~(param_1[4] | param_2[4]);
+  param_3[5] = ~(param_1[5] | param_2[5]);
   return;
 }
 
 
 // 8261C238  DObjCalcBaseSkel  (xanim/dobj_skel.cpp:765)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjCalcBaseSkel(DObj *param_1,DObjAnimMat *param_2,int *param_3)
+void DObjCalcBaseSkel(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
   byte bVar1;
-  byte bVar2;
-  XModel **ppXVar3;
-  XModel *pXVar4;
-  uint uVar5;
-  DObj *pDVar6;
+  char cVar2;
+  int *piVar3;
+  uint uVar4;
+  int iVar5;
+  uint *puVar6;
   uint *puVar7;
-  uint *puVar8;
-  ulonglong uVar9;
+  undefined4 *puVar8;
+  int *piVar9;
   int iVar10;
-  undefined4 *puVar11;
-  XModel **ppXVar12;
-  uint uVar13;
-  longlong lVar14;
+  longlong lVar11;
+  longlong lVar12;
   uint local_110 [4];
   uint local_100;
   uint local_fc;
   undefined4 uStack_f4;
-  int local_f0 [7];
+  undefined1 local_f0 [28];
   undefined4 uStack_d4;
-  int local_d0 [8];
-  DSkel local_b0;
+  undefined1 local_d0 [32];
+  uint local_b0 [6];
+  undefined4 local_98 [6];
+  undefined4 local_80 [6];
+  uint local_68 [6];
+  undefined4 local_50;
+  undefined4 local_4c;
   
-  uVar9 = (ulonglong)(int)param_2;
-  pDVar6 = (DObj *)__savegprlr_24(param_1);
-  if (pDVar6 == (DObj *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x30f,0,
-                    "%s");
+  iVar5 = __savegprlr_24();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff8218526c,0x30f,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  if ((uVar9 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x310,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218526c,0x310,0,0xffffffff82000f98,0xffffffff821858f4);
   }
-  local_b0.mat = (DObjAnimMat *)uVar9;
-  uVar13 = 0;
-  puVar11 = &uStack_f4;
-  local_b0.timeStamp = 0;
-  lVar14 = 6;
+  local_4c = (undefined4)param_2;
+  lVar11 = 0;
+  puVar8 = &uStack_f4;
+  local_50 = 0;
+  lVar12 = 6;
   do {
-    puVar11 = puVar11 + 1;
-    *puVar11 = 0;
-    lVar14 = lVar14 + -1;
-  } while (lVar14 != 0);
-  puVar11 = &uStack_d4;
-  lVar14 = 6;
+    puVar8 = puVar8 + 1;
+    *puVar8 = 0;
+    lVar12 = lVar12 + -1;
+  } while (lVar12 != 0);
+  puVar8 = &uStack_d4;
+  lVar12 = 6;
   do {
-    puVar11 = puVar11 + 1;
-    *puVar11 = 0;
-    lVar14 = lVar14 + -1;
-  } while (lVar14 != 0);
-  lVar14 = 6;
+    puVar8 = puVar8 + 1;
+    *puVar8 = 0;
+    lVar12 = lVar12 + -1;
+  } while (lVar12 != 0);
+  lVar12 = 6;
   iVar10 = 0;
   do {
-    puVar7 = (uint *)((int)local_b0.partBits.anim + iVar10);
-    uVar5 = *(uint *)(((int)param_3 - (int)&local_b0) + (int)puVar7);
-    *(uint *)((int)local_110 + iVar10) = ~uVar5;
-    *(uint *)((int)local_b0.partBits.skel + iVar10) = uVar5;
-    *puVar7 = uVar5;
-    *(undefined4 *)((int)local_b0.partBits.control + iVar10) = 0;
-    *(undefined4 *)((int)local_b0.partBits.worldCtrl + iVar10) = 0;
-    lVar14 = lVar14 + -1;
+    uVar4 = *(uint *)(((int)param_3 - (int)local_b0) + (int)local_b0 + iVar10);
+    *(uint *)((int)local_110 + iVar10) = ~uVar4;
+    *(uint *)((int)local_68 + iVar10) = uVar4;
+    *(uint *)((int)local_b0 + iVar10) = uVar4;
+    *(undefined4 *)((int)local_98 + iVar10) = 0;
+    *(undefined4 *)((int)local_80 + iVar10) = 0;
+    lVar12 = lVar12 + -1;
     iVar10 = iVar10 + 4;
-  } while (lVar14 != 0);
-  DObjCalcBaseAnim(pDVar6,(DObjAnimMat *)uVar9,param_3);
-  if (pDVar6->duplicateParts == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x321,0,
-                    "%s");
+  } while (lVar12 != 0);
+  DObjCalcBaseAnim(iVar5,param_2,param_3);
+  if (*(short *)(iVar5 + 4) == 0) {
+    MyAssertHandler(0xffffffff8218526c,0x321,0,0xffffffff82000f98,0xffffffff82184c00);
   }
-  puVar7 = (uint *)SL_ConvertToString((uint)pDVar6->duplicateParts);
-  if ((pDVar6->duplicateParts != 0) && (puVar7 == (uint *)0x0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_skel.cpp",0x323,0,
-                    "%s");
+  puVar6 = (uint *)SL_ConvertToString(*(undefined2 *)(iVar5 + 4));
+  if ((*(short *)(iVar5 + 4) != 0) && (puVar6 == (uint *)0x0)) {
+    MyAssertHandler(0xffffffff8218526c,0x323,0,0xffffffff82000f98,0xffffffff821858ac);
   }
-  puVar8 = puVar7 + 6;
+  puVar7 = puVar6 + 6;
   iVar10 = 0;
-  local_110[0] = ~(local_110[0] | *puVar7);
-  local_110[1] = ~(puVar7[1] | local_110[1]);
-  local_110[2] = ~(puVar7[2] | local_110[2]);
-  local_110[3] = ~(puVar7[3] | local_110[3]);
-  bVar1 = pDVar6->numModels;
-  local_100 = ~(puVar7[4] | local_100);
-  ppXVar3 = pDVar6->models;
-  local_fc = ~(puVar7[5] | local_fc);
-  ppXVar12 = ppXVar3;
+  local_110[0] = ~(local_110[0] | *puVar6);
+  local_110[1] = ~(puVar6[1] | local_110[1]);
+  local_110[2] = ~(puVar6[2] | local_110[2]);
+  local_110[3] = ~(puVar6[3] | local_110[3]);
+  bVar1 = *(byte *)(iVar5 + 9);
+  local_100 = ~(puVar6[4] | local_100);
+  piVar3 = *(int **)(iVar5 + 0x98);
+  local_fc = ~(puVar6[5] | local_fc);
+  piVar9 = piVar3;
   if (bVar1 != 0) {
     do {
-      pXVar4 = *ppXVar12;
-      bVar2 = *(byte *)((int)ppXVar3 + iVar10 + (uint)bVar1 * 4);
-      puVar8 = (uint *)CalcSkelDuplicateBones(pXVar4,&local_b0,uVar13,(uchar *)puVar8);
-      if (bVar2 == 0xff) {
-        CalcSkelRootBonesNoParentOrDuplicate(pXVar4,&local_b0,uVar13,(int *)local_110);
+      iVar5 = *piVar9;
+      cVar2 = *(char *)((int)piVar3 + iVar10 + (uint)bVar1 * 4);
+      puVar7 = (uint *)CalcSkelDuplicateBones(iVar5,local_b0,lVar11,puVar7);
+      if (cVar2 == -1) {
+        CalcSkelRootBonesNoParentOrDuplicate();
       }
       else {
-        CalcSkelRootBonesWithParent
-                  (pXVar4,&local_b0,uVar13,(uint)bVar2,(int *)local_110,local_d0,local_f0);
+        CalcSkelRootBonesWithParent(iVar5,local_b0,lVar11,cVar2,local_110,local_d0,local_f0);
       }
       CalcSkelNonRootBones
-                (pXVar4,&local_b0,pXVar4->numRootBones + uVar13,(int *)local_110,local_d0,local_f0);
+                (iVar5,local_b0,(ulonglong)*(byte *)(iVar5 + 5) + lVar11,local_110,local_d0,local_f0
+                );
       iVar10 = iVar10 + 1;
-      ppXVar12 = ppXVar12 + 1;
-      uVar13 = pXVar4->numBones + uVar13;
+      piVar9 = piVar9 + 1;
+      lVar11 = (ulonglong)*(byte *)(iVar5 + 4) + lVar11;
     } while (iVar10 < (int)(uint)bVar1);
   }
   __restgprlr_24();

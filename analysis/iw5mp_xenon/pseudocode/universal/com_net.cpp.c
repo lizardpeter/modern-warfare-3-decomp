@@ -2,65 +2,55 @@
 
 // 825E4EC0  NetadrToSockadr  (universal/com_net.cpp:20)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void NetadrToSockadr(netadr_t *param_1,sockaddr *param_2)
+void NetadrToSockadr(int *param_1,undefined2 *param_2)
 
 {
-  ushort uVar1;
-  char *pcVar2;
+  undefined2 uVar1;
+  undefined2 *puVar2;
   longlong lVar3;
   
-  pcVar2 = param_2[-1].sa_data + 0xc;
+  puVar2 = param_2 + -1;
   lVar3 = 8;
   do {
-    pcVar2 = pcVar2 + 2;
-    pcVar2[0] = '\0';
-    pcVar2[1] = '\0';
+    puVar2 = puVar2 + 1;
+    *puVar2 = 0;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  if (param_1->type == NA_BROADCAST) {
-    param_2->sa_family = 2;
-    uVar1 = param_1->port;
-    param_2->sa_data[2] = -1;
-    param_2->sa_data[3] = -1;
-    param_2->sa_data[4] = -1;
-    param_2->sa_data[5] = -1;
-    *(ushort *)param_2->sa_data = uVar1;
+  if (*param_1 == 3) {
+    *param_2 = 2;
+    uVar1 = *(undefined2 *)(param_1 + 2);
+    *(undefined4 *)(param_2 + 2) = 0xffffffff;
+    param_2[1] = uVar1;
     return;
   }
-  if (param_1->type != NA_IP) {
+  if (*param_1 != 4) {
     return;
   }
-  param_2->sa_family = 2;
-  *(undefined4 *)(param_2->sa_data + 2) = *(undefined4 *)param_1->ip;
-  *(ushort *)param_2->sa_data = param_1->port;
+  *param_2 = 2;
+  *(int *)(param_2 + 2) = param_1[1];
+  param_2[1] = *(undefined2 *)(param_1 + 2);
   return;
 }
 
 
 // 825E4F28  SockadrToNetadr  (universal/com_net.cpp:55)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void SockadrToNetadr(sockaddr *param_1,netadr_t *param_2)
+void SockadrToNetadr(short *param_1,undefined4 *param_2)
 
 {
-  if (param_1->sa_family != 2) {
+  if (*param_1 != 2) {
     return;
   }
-  param_2->type = NA_IP;
-  *(undefined4 *)param_2->ip = *(undefined4 *)(param_1->sa_data + 2);
-  param_2->port = *(ushort *)param_1->sa_data;
+  *param_2 = 4;
+  param_2[1] = *(undefined4 *)(param_1 + 2);
+  *(short *)(param_2 + 2) = param_1[1];
   return;
 }
 
 
 // 825E4F50  NET_ErrorString  (universal/com_net.cpp:81)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char * NET_ErrorString(void)
+undefined8 NET_ErrorString(void)
 
 {
   bool bVar1;
@@ -70,94 +60,94 @@ char * NET_ErrorString(void)
   iVar2 = WSAGetLastError();
   if (iVar2 < 0x2744) {
     if (iVar2 == 0x2743) {
-      return "WSAENETUNREACH";
+      return 0xffffffff82176314;
     }
     switch(iVar2 + -0x2714) {
     case 0:
-      return "WSAEINTR";
+      return 0xffffffff8217645c;
     case 5:
-      return "WSAEBADF";
+      return 0xffffffff82176450;
     case 9:
-      return "WSAEACCES";
+      return 0xffffffff82176444;
     case 10:
-      return "WSAEFAULT";
+      return 0xffffffff82176438;
     case 0x12:
-      return "WSAEINVAL";
+      return 0xffffffff8217642c;
     case 0x14:
-      return "WSAEMFILE";
+      return 0xffffffff82176420;
     case 0x1f:
-      return "WSAEWOULDBLOCK";
+      return 0xffffffff82176410;
     case 0x20:
-      return "WSAEINPROGRESS";
+      return 0xffffffff82176400;
     case 0x21:
-      return "WSAEALREADY";
+      return 0xffffffff821763f4;
     case 0x22:
-      return "WSAENOTSOCK";
+      return 0xffffffff821763e8;
     case 0x23:
-      return "WSAEDESTADDRREQ";
+      return 0xffffffff821763d8;
     case 0x24:
-      return "WSAEMSGSIZE";
+      return 0xffffffff821763cc;
     case 0x25:
-      return "WSAEPROTOTYPE";
+      return 0xffffffff821763bc;
     case 0x26:
-      return "WSAENOPROTOOPT";
+      return 0xffffffff821763ac;
     case 0x27:
-      return "WSAEPROTONOSUPPORT";
+      return 0xffffffff82176398;
     case 0x28:
-      return "WSAESOCKTNOSUPPORT";
+      return 0xffffffff82176384;
     case 0x29:
-      return "WSAEOPNOTSUPP";
+      return 0xffffffff82176374;
     case 0x2a:
-      return "WSAEPFNOSUPPORT";
+      return 0xffffffff82176364;
     case 0x2b:
-      return "WSAEAFNOSUPPORT";
+      return 0xffffffff82176354;
     case 0x2c:
-      return "WSAEADDRINUSE";
+      return 0xffffffff82176344;
     case 0x2d:
-      return "WSAEADDRNOTAVAIL";
+      return 0xffffffff82176330;
     case 0x2e:
-      return "WSAENETDOWN";
+      return 0xffffffff82176324;
     }
   }
   else if (iVar2 < 0x2776) {
     if (iVar2 == 0x2775) {
-      return "WSAEDISCON";
+      return 0xffffffff821761f4;
     }
     switch(iVar2 + -0x2744) {
     case 0:
-      return "WSAENETRESET";
+      return 0xffffffff82176304;
     case 1:
-      return "WSWSAECONNABORTEDAEINTR";
+      return 0xffffffff821762ec;
     case 2:
-      return "WSAECONNRESET";
+      return 0xffffffff821762dc;
     case 3:
-      return "WSAENOBUFS";
+      return 0xffffffff821762d0;
     case 4:
-      return "WSAEISCONN";
+      return 0xffffffff821762c4;
     case 5:
-      return "WSAENOTCONN";
+      return 0xffffffff821762b8;
     case 6:
-      return "WSAESHUTDOWN";
+      return 0xffffffff821762a8;
     case 7:
-      return "WSAETOOMANYREFS";
+      return 0xffffffff82176298;
     case 8:
-      return "WSAETIMEDOUT";
+      return 0xffffffff82176288;
     case 9:
-      return "WSAECONNREFUSED";
+      return 0xffffffff82176278;
     case 10:
-      return "WSAELOOP";
+      return 0xffffffff8217626c;
     case 0xb:
-      return "WSAENAMETOOLONG";
+      return 0xffffffff8217625c;
     case 0xc:
-      return "WSAEHOSTDOWN";
+      return 0xffffffff8217624c;
     case 0xd:
-      return "WSAEHOSTUNREACHABLE";
+      return 0xffffffff82176200;
     case 0x27:
-      return "WSASYSNOTREADY";
+      return 0xffffffff8217623c;
     case 0x28:
-      return "WSAVERNOTSUPPORTED";
+      return 0xffffffff82176228;
     case 0x29:
-      return "WSANOTINITIALISED";
+      return 0xffffffff82176214;
     }
   }
   else {
@@ -165,69 +155,67 @@ char * NET_ErrorString(void)
     if ((uVar3 & 0xffffffff) < 4) {
       bVar1 = (int)uVar3 != 0;
       if ((longlong)iVar2 == 0x2afa && bVar1) {
-        return "WSATRY_AGAIN";
+        return 0xffffffff821761d0;
       }
       if (uVar3 != 2 || !bVar1) {
         if (!bVar1) {
-          return "WSAHOST_NOT_FOUND";
+          return 0xffffffff821761e0;
         }
-        return "WSANO_DATA";
+        return 0xffffffff821761b4;
       }
-      return "WSANO_RECOVERY";
+      return 0xffffffff821761c0;
     }
   }
-  return "UNKNOWN ERROR";
+  return 0xffffffff821761a4;
 }
 
 
 // 825E5598  Sys_StringToSockaddr  (universal/com_net.cpp:193)
 
-int Sys_StringToSockaddr(char *param_1,sockaddr *param_2)
+bool Sys_StringToSockaddr(char *param_1,undefined2 *param_2)
 
 {
-  bool bVar2;
+  char cVar2;
   ulong uVar1;
-  char *pcVar3;
+  undefined2 *puVar3;
   longlong lVar4;
   
-  pcVar3 = param_2[-1].sa_data + 0xc;
+  puVar3 = param_2 + -1;
   lVar4 = 8;
   do {
-    pcVar3 = pcVar3 + 2;
-    pcVar3[0] = '\0';
-    pcVar3[1] = '\0';
+    puVar3 = puVar3 + 1;
+    *puVar3 = 0;
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
-  param_2->sa_data[0] = '\0';
-  param_2->sa_data[1] = '\0';
-  param_2->sa_family = 2;
-  bVar2 = I_isdigit((int)*param_1);
-  if (bVar2) {
+  param_2[1] = 0;
+  *param_2 = 2;
+  cVar2 = I_isdigit(*param_1);
+  if (cVar2 != '\0') {
     uVar1 = inet_addr(param_1);
-    *(ulong *)(param_2->sa_data + 2) = uVar1;
+    *(ulong *)(param_2 + 2) = uVar1;
   }
-  return (int)bVar2;
+  return cVar2 != '\0';
 }
 
 
 // 825E5620  Sys_StringToAdr  (universal/com_net.cpp:269)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int Sys_StringToAdr(char *param_1,netadr_t *param_2)
+undefined8 Sys_StringToAdr(undefined8 param_1,undefined4 *param_2)
 
 {
-  int iVar1;
-  sockaddr local_20;
+  undefined8 uVar1;
+  short local_20;
+  undefined2 local_1e;
+  undefined4 local_1c;
   
-  iVar1 = Sys_StringToSockaddr(param_1,&local_20);
-  if (iVar1 == 0) {
-    return 0;
+  uVar1 = Sys_StringToSockaddr(param_1,&local_20);
+  if ((int)uVar1 == 0) {
+    return uVar1;
   }
-  if (local_20.sa_family == 2) {
-    param_2->type = NA_IP;
-    *(undefined4 *)param_2->ip = local_20.sa_data._2_4_;
-    param_2->port = local_20.sa_data._0_2_;
+  if (local_20 == 2) {
+    *param_2 = 4;
+    param_2[1] = local_1c;
+    *(undefined2 *)(param_2 + 2) = local_1e;
   }
   return 1;
 }

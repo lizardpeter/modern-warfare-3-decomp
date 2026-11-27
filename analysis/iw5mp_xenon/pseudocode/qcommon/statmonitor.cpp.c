@@ -2,29 +2,53 @@
 
 // 825130E0  TRACK_statmonitor  (qcommon/statmonitor.cpp:28)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void TRACK_statmonitor(void)
 
 {
-  track_static_alloc_internal(stats,0x58,"stats",10);
+  track_static_alloc_internal(0xffffffff836fda38,0x58,0xffffffff82012e44,10);
   return;
 }
 
 
 // 82513100  StatMon_Warning  (qcommon/statmonitor.cpp:41)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void StatMon_Warning(undefined8 param_1,int param_2,undefined8 param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  
+  uVar1 = __savegprlr_27();
+  if (*(char *)(DAT_8365e12c + 0xc) != '\0') {
+    if (10 < uVar1) {
+      MyAssertHandler(0xffffffff820926e0,0x2d,0,0xffffffff82092724,uVar1,0xb);
+    }
+    Sys_EnterCriticalSection(3);
+    iVar4 = uVar1 * 8;
+    iVar2 = Sys_Milliseconds();
+    *(int *)(&DAT_836fda38 + iVar4) = iVar2 + param_2;
+    if ((*(int *)(&DAT_836fda3c + iVar4) == 0) && (DAT_82aa1c08 != 0)) {
+      uVar3 = Material_RegisterHandle(param_3,1);
+      *(undefined4 *)(&DAT_836fda3c + iVar4) = uVar3;
+    }
+    if (DAT_836fda90 <= (int)uVar1) {
+      DAT_836fda90 = uVar1 + 1;
+    }
+    Sys_LeaveCriticalSection(3);
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 825131D0  StatMon_GetStatsArray  (qcommon/statmonitor.cpp:72)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void StatMon_GetStatsArray(statmonitor_s **param_1,int *param_2)
+void StatMon_GetStatsArray(undefined4 *param_1,undefined4 *param_2)
 
 {
-  *param_1 = stats;
+  *param_1 = &DAT_836fda38;
   *param_2 = DAT_836fda90;
   return;
 }
@@ -32,13 +56,13 @@ void StatMon_GetStatsArray(statmonitor_s **param_1,int *param_2)
 
 // 825131E8  StatMon_Reset  (qcommon/statmonitor.cpp:84)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void StatMon_Reset(void)
+void * StatMon_Reset(void)
 
 {
-  memset();
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_836fda38,0,0x58);
   DAT_836fda90 = 0;
-  return;
+  return pvVar1;
 }
 

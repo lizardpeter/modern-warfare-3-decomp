@@ -7,8 +7,7 @@ void __unwind_71773(void)
 {
   int in_r12;
   
-  bdArray<bdString>::__1__bdArray_VbdString____QAA_XZ
-            ((bdArray<bdString> *)(*(int *)(in_r12 + 0x14) + 8));
+  bdArray<bdString>___bdArray<bdString>((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
   return;
 }
 
@@ -20,8 +19,7 @@ void __unwind_71774(void)
 {
   int in_r12;
   
-  bdArray<bdInetAddr>::__1__bdArray_VbdInetAddr____QAA_XZ
-            ((bdArray<bdInetAddr> *)(*(int *)(in_r12 + 0x14) + 0x18));
+  bdArray<bdInetAddr>___bdArray<bdInetAddr>((ulonglong)*(uint *)(in_r12 + 0x14) + 0x18);
   return;
 }
 
@@ -31,9 +29,9 @@ void __unwind_71774(void)
 void __unwind_71775(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdString::~bdString((bdString *)(in_r12 + -0x30));
+  bdString___bdString(in_r12 + -0x30);
   return;
 }
 
@@ -43,9 +41,9 @@ void __unwind_71775(void)
 void __unwind_71776(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdString::~bdString((bdString *)(in_r12 + -0x30));
+  bdString___bdString(in_r12 + -0x30);
   return;
 }
 
@@ -55,9 +53,9 @@ void __unwind_71776(void)
 void __unwind_71777(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdString::~bdString((bdString *)(in_r12 + -0x30));
+  bdString___bdString(in_r12 + -0x30);
   return;
 }
 
@@ -67,9 +65,9 @@ void __unwind_71777(void)
 void __unwind_71778(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdString::~bdString((bdString *)(in_r12 + -0x30));
+  bdString___bdString(in_r12 + -0x30);
   return;
 }
 

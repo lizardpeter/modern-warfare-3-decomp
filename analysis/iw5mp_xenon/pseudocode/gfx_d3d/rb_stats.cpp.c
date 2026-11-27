@@ -2,8 +2,6 @@
 
 // 827ACBE8  TRACK_rb_stats  (gfx_d3d/rb_stats.cpp:84)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_rb_stats(void)
 
 {
@@ -13,12 +11,10 @@ void TRACK_rb_stats(void)
 
 // 827ACBF0  RB_Stats_f  (gfx_d3d/rb_stats.cpp:377)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void RB_Stats_f(void)
 
 {
-  R_Stats_Display(&g_frontEndStatsCur);
+  R_Stats_Display(0xffffffff847eebe4);
   return;
 }
 

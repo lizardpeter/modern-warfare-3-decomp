@@ -2,36 +2,37 @@
 
 // 828CC8C8  NellyWarpSC36  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/warp.c:89)
 
-void NellyWarpSC36(float *param_1,float *param_2)
+void NellyWarpSC36(int param_1,int param_2)
 
 {
   longlong lVar1;
-  float *pfVar2;
+  undefined4 *puVar2;
   int iVar3;
   uint uVar4;
-  float *pfVar5;
+  undefined4 *puVar5;
   longlong lVar6;
   
   uVar4 = 0xa280;
   iVar3 = 0xff;
   lVar6 = 0xa9;
-  pfVar2 = param_2 + 0xff;
+  puVar2 = (undefined4 *)(param_2 + 0x3fc);
   do {
-    pfVar5 = pfVar2;
+    puVar5 = puVar2;
     uVar4 = uVar4 - 0xa2;
     lVar1 = (longlong)iVar3;
     iVar3 = iVar3 + -1;
-    *pfVar5 = param_1[((uint)((ulonglong)((int)((uVar4 >> 8) + 0x41) * lVar1 + 0xd1) >> 8) &
-                      0xffffff) + 0x1d];
+    *puVar5 = *(undefined4 *)
+               ((((uint)((ulonglong)((int)((uVar4 >> 8) + 0x41) * lVar1 + 0xd1) >> 8) & 0xffffff) +
+                0x1d) * 4 + param_1);
     lVar6 = lVar6 + -1;
-    pfVar2 = pfVar5 + -1;
+    puVar2 = puVar5 + -1;
   } while (lVar6 != 0);
   uVar4 = 0x457d;
   lVar6 = 0x57;
   do {
     uVar4 = uVar4 - 0xcb;
-    pfVar5 = pfVar5 + -1;
-    *pfVar5 = *(float *)((uVar4 >> 6 & 0x3fffffc) + (int)param_1);
+    puVar5 = puVar5 + -1;
+    *puVar5 = *(undefined4 *)((uVar4 >> 6 & 0x3fffffc) + param_1);
     lVar6 = lVar6 + -1;
   } while (lVar6 != 0);
   return;

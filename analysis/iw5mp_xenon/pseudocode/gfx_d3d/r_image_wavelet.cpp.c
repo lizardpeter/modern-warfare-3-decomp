@@ -2,8 +2,6 @@
 
 // 827484E0  TRACK_r_image_wavelet  (gfx_d3d/r_image_wavelet.cpp:12)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_r_image_wavelet(void)
 
 {

@@ -2,65 +2,133 @@
 
 // 82813810  recon_dcblock  (WebM_atvi_opt/vpx/vp8/common/invtrans.c:21)
 
-void recon_dcblock(MACROBLOCKD *param_1)
+void recon_dcblock(int param_1)
 
 {
-  short **ppsVar1;
+  int iVar1;
   int iVar2;
-  longlong lVar3;
+  undefined4 *puVar3;
+  int iVar4;
+  longlong lVar5;
   
-  ppsVar1 = (short **)(param_1->dqcoeff + 0x182);
-  lVar3 = 4;
-  iVar2 = 0;
+  iVar4 = 0;
+  puVar3 = (undefined4 *)(param_1 + 0xac4);
+  lVar5 = 4;
   do {
-    *ppsVar1[0xf] = *(short *)((int)param_1->block[0x18].diff + iVar2);
-    *ppsVar1[0x1e] = *(short *)((int)param_1->block[0x18].diff + iVar2 + 2);
-    *ppsVar1[0x2d] = *(short *)((int)param_1->block[0x18].diff + iVar2 + 4);
-    ppsVar1 = ppsVar1 + 0x3c;
-    **ppsVar1 = *(short *)((int)param_1->block[0x18].diff + iVar2 + 6);
-    lVar3 = lVar3 + -1;
-    iVar2 = iVar2 + 8;
-  } while (lVar3 != 0);
+    iVar2 = iVar4 + 6;
+    *(undefined2 *)puVar3[0xf] = *(undefined2 *)(*(int *)(param_1 + 0x10a8) + iVar4);
+    iVar1 = *(int *)(param_1 + 0x10a8) + iVar4;
+    iVar4 = iVar4 + 8;
+    *(undefined2 *)puVar3[0x1e] = *(undefined2 *)(iVar1 + 2);
+    *(undefined2 *)puVar3[0x2d] = *(undefined2 *)(*(int *)(param_1 + 0x10a8) + iVar2 + -2);
+    puVar3 = puVar3 + 0x3c;
+    *(undefined2 *)*puVar3 = *(undefined2 *)(*(int *)(param_1 + 0x10a8) + iVar2);
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   return;
 }
 
 
 // 82813880  vp8_inverse_transform_b  (WebM_atvi_opt/vpx/vp8/common/invtrans.c:33)
 
-void vp8_inverse_transform_b(vp8_idct_rtcd_vtable_t *param_1,BLOCKD *param_2,int param_3)
+void vp8_inverse_transform_b(undefined4 *param_1,int param_2)
 
 {
-  if (1 < param_2->eob) {
+  if (1 < *(int *)(param_2 + 0x30)) {
                     /* WARNING: Could not recover jumptable at 0x828138a0. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    (*param_1->idct16)(param_2->dqcoeff,param_2->diff,param_3);
+    (*(code *)param_1[1])(*(undefined4 *)(param_2 + 4));
     return;
   }
                     /* WARNING: Could not recover jumptable at 0x828138b0. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  (*param_1->idct1)(param_2->dqcoeff,param_2->diff,param_3);
+  (*(code *)*param_1)(*(undefined4 *)(param_2 + 4),*(undefined4 *)(param_2 + 0xc));
   return;
 }
 
 
 // 828138B8  vp8_inverse_transform_mby  (WebM_atvi_opt/vpx/vp8/common/invtrans.c:42)
 
-void vp8_inverse_transform_mby(vp8_idct_rtcd_vtable_t *param_1,MACROBLOCKD *param_2)
+void vp8_inverse_transform_mby(undefined8 param_1,longlong param_2)
 
 {
   code *pcVar1;
-  MACROBLOCKD *pMVar2;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  (*(code *)puVar3[4])
+            (*(undefined4 *)((int)param_2 + 0x10a0),*(undefined4 *)((int)param_2 + 0x10a8));
+  recon_dcblock(param_2);
+  param_2 = param_2 + 0xb08;
+  lVar4 = 0x10;
+  do {
+    puVar2 = (undefined4 *)param_2;
+    if ((int)puVar2[9] < 2) {
+      pcVar1 = (code *)*puVar3;
+    }
+    else {
+      pcVar1 = (code *)puVar3[1];
+    }
+    (*pcVar1)(puVar2[-2],*puVar2,0x20);
+    lVar4 = lVar4 + -1;
+    param_2 = param_2 + 0x3c;
+  } while (lVar4 != 0);
+  __restgprlr_29();
+  return;
+}
+
+
+// 82813930  vp8_inverse_transform_mbuv  (WebM_atvi_opt/vpx/vp8/common/invtrans.c:57)
+
+void vp8_inverse_transform_mbuv(undefined8 param_1,longlong param_2)
+
+{
+  code *pcVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  param_2 = param_2 + 0xec8;
+  lVar4 = 8;
+  do {
+    puVar2 = (undefined4 *)param_2;
+    if ((int)puVar2[9] < 2) {
+      pcVar1 = (code *)*puVar3;
+    }
+    else {
+      pcVar1 = (code *)puVar3[1];
+    }
+    (*pcVar1)(puVar2[-2],*puVar2,0x10);
+    lVar4 = lVar4 + -1;
+    param_2 = param_2 + 0x3c;
+  } while (lVar4 != 0);
+  __restgprlr_29();
+  return;
+}
+
+
+// 82813988  vp8_inverse_transform_mb  (WebM_atvi_opt/vpx/vp8/common/invtrans.c:69)
+
+void vp8_inverse_transform_mb(undefined8 param_1,longlong param_2)
+
+{
+  code *pcVar1;
+  int iVar2;
   undefined4 *puVar3;
   undefined4 *puVar4;
   longlong lVar5;
   longlong lVar6;
   
-  lVar6 = (longlong)(int)param_2;
-  puVar4 = (undefined4 *)__savegprlr_29(param_1);
-  pMVar2 = (MACROBLOCKD *)lVar6;
-  (*(code *)puVar4[4])(pMVar2->block[0x18].dqcoeff,pMVar2->block[0x18].diff);
-  recon_dcblock(pMVar2);
-  lVar6 = lVar6 + 0xb08;
+  puVar4 = (undefined4 *)__savegprlr_28();
+  iVar2 = (int)param_2;
+  if ((**(int **)(iVar2 + 0x1140) != 4) && (**(int **)(iVar2 + 0x1140) != 9)) {
+    (*(code *)puVar4[4])(*(undefined4 *)(iVar2 + 0x10a0),*(undefined4 *)(iVar2 + 0x10a8));
+    recon_dcblock(param_2);
+  }
+  lVar6 = param_2 + 0xb08;
   lVar5 = 0x10;
   do {
     puVar3 = (undefined4 *)lVar6;
@@ -74,93 +142,20 @@ void vp8_inverse_transform_mby(vp8_idct_rtcd_vtable_t *param_1,MACROBLOCKD *para
     lVar5 = lVar5 + -1;
     lVar6 = lVar6 + 0x3c;
   } while (lVar5 != 0);
-  __restgprlr_29();
-  return;
-}
-
-
-// 82813930  vp8_inverse_transform_mbuv  (WebM_atvi_opt/vpx/vp8/common/invtrans.c:57)
-
-void vp8_inverse_transform_mbuv(vp8_idct_rtcd_vtable_t *param_1,MACROBLOCKD *param_2)
-
-{
-  code *pcVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
-  longlong lVar5;
-  
-  lVar5 = (longlong)(int)param_2;
-  puVar3 = (undefined4 *)__savegprlr_29(param_1);
-  lVar5 = lVar5 + 0xec8;
-  lVar4 = 8;
+  param_2 = param_2 + 0xec8;
+  lVar5 = 8;
   do {
-    puVar2 = (undefined4 *)lVar5;
-    if ((int)puVar2[9] < 2) {
-      pcVar1 = (code *)*puVar3;
+    puVar3 = (undefined4 *)param_2;
+    if ((int)puVar3[9] < 2) {
+      pcVar1 = (code *)*puVar4;
     }
     else {
-      pcVar1 = (code *)puVar3[1];
+      pcVar1 = (code *)puVar4[1];
     }
-    (*pcVar1)(puVar2[-2],*puVar2,0x10);
-    lVar4 = lVar4 + -1;
-    lVar5 = lVar5 + 0x3c;
-  } while (lVar4 != 0);
-  __restgprlr_29();
-  return;
-}
-
-
-// 82813988  vp8_inverse_transform_mb  (WebM_atvi_opt/vpx/vp8/common/invtrans.c:69)
-
-void vp8_inverse_transform_mb(vp8_idct_rtcd_vtable_t *param_1,MACROBLOCKD *param_2)
-
-{
-  MB_PREDICTION_MODE MVar1;
-  code *pcVar2;
-  MACROBLOCKD *pMVar3;
-  undefined4 *puVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  
-  lVar8 = (longlong)(int)param_2;
-  puVar5 = (undefined4 *)__savegprlr_28(param_1);
-  pMVar3 = (MACROBLOCKD *)lVar8;
-  MVar1 = (pMVar3->mode_info_context->mbmi).mode;
-  if ((MVar1 != B_PRED) && (MVar1 != SPLITMV)) {
-    (*(code *)puVar5[4])(pMVar3->block[0x18].dqcoeff,pMVar3->block[0x18].diff);
-    recon_dcblock(pMVar3);
-  }
-  lVar7 = lVar8 + 0xb08;
-  lVar6 = 0x10;
-  do {
-    puVar4 = (undefined4 *)lVar7;
-    if ((int)puVar4[9] < 2) {
-      pcVar2 = (code *)*puVar5;
-    }
-    else {
-      pcVar2 = (code *)puVar5[1];
-    }
-    (*pcVar2)(puVar4[-2],*puVar4,0x20);
-    lVar6 = lVar6 + -1;
-    lVar7 = lVar7 + 0x3c;
-  } while (lVar6 != 0);
-  lVar8 = lVar8 + 0xec8;
-  lVar6 = 8;
-  do {
-    puVar4 = (undefined4 *)lVar8;
-    if ((int)puVar4[9] < 2) {
-      pcVar2 = (code *)*puVar5;
-    }
-    else {
-      pcVar2 = (code *)puVar5[1];
-    }
-    (*pcVar2)(puVar4[-2],*puVar4,0x10);
-    lVar6 = lVar6 + -1;
-    lVar8 = lVar8 + 0x3c;
-  } while (lVar6 != 0);
+    (*pcVar1)(puVar3[-2],*puVar3,0x10);
+    lVar5 = lVar5 + -1;
+    param_2 = param_2 + 0x3c;
+  } while (lVar5 != 0);
   __restgprlr_28();
   return;
 }

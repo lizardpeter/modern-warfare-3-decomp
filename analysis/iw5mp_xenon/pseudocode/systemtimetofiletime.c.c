@@ -2,35 +2,35 @@
 
 // 828AAE08  SystemTimeToFileTime  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/systemtimetofiletime.c:45)
 
-int SystemTimeToFileTime(_SYSTEMTIME *param_1,_FILETIME *param_2)
+BOOL SystemTimeToFileTime(SYSTEMTIME *lpSystemTime,LPFILETIME lpFileTime)
 
 {
   char cVar1;
-  ulong local_40;
-  ulong local_3c;
-  ushort local_30;
-  ushort local_2e;
-  ushort local_2c;
-  ushort local_2a;
-  ushort local_28;
-  ushort local_26;
-  ushort local_24;
+  DWORD local_40;
+  DWORD local_3c;
+  WORD local_30;
+  WORD local_2e;
+  WORD local_2c;
+  WORD local_2a;
+  WORD local_28;
+  WORD local_26;
+  WORD local_24;
   
-  local_30 = param_1->wYear;
-  local_2e = param_1->wMonth;
-  local_2c = param_1->wDay;
-  local_2a = param_1->wHour;
-  local_28 = param_1->wMinute;
-  local_26 = param_1->wSecond;
-  local_24 = param_1->wMilliseconds;
+  local_30 = lpSystemTime->wYear;
+  local_2e = lpSystemTime->wMonth;
+  local_2c = lpSystemTime->wDay;
+  local_2a = lpSystemTime->wHour;
+  local_28 = lpSystemTime->wMinute;
+  local_26 = lpSystemTime->wSecond;
+  local_24 = lpSystemTime->wMilliseconds;
   cVar1 = RtlTimeFieldsToTime(&local_30,&local_40);
   if (cVar1 != '\0') {
-    param_2->dwLowDateTime = local_3c;
-    param_2->dwHighDateTime = local_40;
+    lpFileTime->dwHighDateTime = local_3c;
+    lpFileTime->dwLowDateTime = local_40;
   }
   else {
-    RtlSetLastNTError(-0x3ffffff3);
+    RtlSetLastNTError(0xffffffffc000000d);
   }
-  return (int)(cVar1 != '\0');
+  return (BOOL)(cVar1 != '\0');
 }
 

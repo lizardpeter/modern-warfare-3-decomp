@@ -10,27 +10,27 @@ int _mtinitlocks(void)
   int iVar2;
   undefined8 uVar1;
   int iVar3;
-  _RTL_CRITICAL_SECTION *p_Var4;
-  <unnamed_tag_0001493F> *p<Var5;
+  undefined *puVar4;
+  undefined4 *puVar5;
   
   __savegprlr_28();
-  p<Var5 = _locktable;
-  p_Var4 = lclcritsects;
+  puVar5 = &DAT_829b0940;
+  puVar4 = &DAT_84895ed0;
   iVar3 = 0;
   do {
-    if (p<Var5->kind == lkPrealloc) {
-      p<Var5->lock = p_Var4;
-      iVar2 = __crtInitCritSecAndSpinCount(p_Var4,4000);
-      p_Var4 = p_Var4 + 1;
+    if (puVar5[1] == 1) {
+      *puVar5 = puVar4;
+      iVar2 = __crtInitCritSecAndSpinCount(puVar4,4000);
+      puVar4 = puVar4 + 0x1c;
       if (iVar2 == 0) {
         uVar1 = 0;
-        _locktable[iVar3].lock = (_RTL_CRITICAL_SECTION *)0x0;
+        (&DAT_829b0940)[iVar3 * 2] = 0;
         goto LAB_82924674;
       }
     }
-    p<Var5 = p<Var5 + 1;
+    puVar5 = puVar5 + 2;
     iVar3 = iVar3 + 1;
-  } while ((int)p<Var5 < -0x7d64f5a0);
+  } while ((int)puVar5 < -0x7d64f5a0);
   uVar1 = 1;
 LAB_82924674:
   iVar3 = __restgprlr_28(uVar1);
@@ -45,64 +45,64 @@ LAB_82924674:
 void _mtdeletelocks(void)
 
 {
-  <unnamed_tag_0001493F> *p<Var1;
+  undefined4 *puVar1;
   
-  p<Var1 = _locktable;
+  puVar1 = &DAT_829b0940;
   do {
-    if ((p<Var1->lock != (_RTL_CRITICAL_SECTION *)0x0) && (p<Var1->kind != lkPrealloc)) {
-      free(p<Var1->lock);
-      p<Var1->lock = (_RTL_CRITICAL_SECTION *)0x0;
+    if (((void *)*puVar1 != (void *)0x0) && (puVar1[1] != 1)) {
+      free((void *)*puVar1);
+      *puVar1 = 0;
     }
-    p<Var1 = p<Var1 + 1;
-  } while ((int)p<Var1 < -0x7d64f5a0);
+    puVar1 = puVar1 + 2;
+  } while ((int)puVar1 < -0x7d64f5a0);
   return;
 }
 
 
 // 82924698  _mtinitlocknum  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/mlock.c:265)
 
-int _mtinitlocknum(int param_1)
+int _mtinitlocknum(int _LockNum)
 
 {
   int iVar1;
-  void *pvVar2;
-  _RTL_CRITICAL_SECTION *p_Var3;
-  int *piVar4;
-  int iVar5;
+  HANDLE pvVar2;
+  void *_Memory;
+  int *piVar3;
+  int iVar4;
   undefined4 local_30;
   
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28(_LockNum);
   local_30 = 1;
   pvVar2 = GetProcessHeap();
-  if (pvVar2 == (void *)0x0) {
+  if (pvVar2 == (HANDLE)0x0) {
     _FF_MSGBANNER();
     _NMSG_WRITE(0x1e);
                     /* WARNING: Subroutine does not return */
     __crtExitProcess(0xff);
   }
-  if (_locktable[iVar1].lock == (_RTL_CRITICAL_SECTION *)0x0) {
-    p_Var3 = malloc(0x1c);
-    if (p_Var3 == (_RTL_CRITICAL_SECTION *)0x0) {
-      piVar4 = _errno();
+  if ((&DAT_829b0940)[iVar1 * 2] == 0) {
+    _Memory = malloc(0x1c);
+    if (_Memory == (void *)0x0) {
+      piVar3 = _errno();
       local_30 = 0;
-      *piVar4 = 0xc;
+      *piVar3 = 0xc;
     }
     else {
       _lock(10);
-      if (_locktable[iVar1].lock == (_RTL_CRITICAL_SECTION *)0x0) {
-        iVar5 = __crtInitCritSecAndSpinCount(p_Var3,4000);
-        if (iVar5 == 0) {
-          free(p_Var3);
-          piVar4 = _errno();
-          *piVar4 = 0xc;
+      if ((&DAT_829b0940)[iVar1 * 2] == 0) {
+        iVar4 = __crtInitCritSecAndSpinCount(_Memory,4000);
+        if (iVar4 == 0) {
+          free(_Memory);
+          piVar3 = _errno();
+          *piVar3 = 0xc;
           local_30 = 0;
         }
         else {
-          _locktable[iVar1].lock = p_Var3;
+          (&DAT_829b0940)[iVar1 * 2] = _Memory;
         }
       }
       else {
-        free(p_Var3);
+        free(_Memory);
       }
       FUN_829247a8();
     }
@@ -117,37 +117,35 @@ int _mtinitlocknum(int param_1)
 
 // 829247D8  _lock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/mlock.c:339)
 
-void _lock(int param_1)
+void _lock(int _File)
 
 {
   int iVar1;
   
-  if ((_locktable[param_1].lock == (_RTL_CRITICAL_SECTION *)0x0) &&
-     (iVar1 = _mtinitlocknum(param_1), iVar1 == 0)) {
-                    /* WARNING: Subroutine does not return */
+  if (((&DAT_829b0940)[_File * 2] == 0) && (iVar1 = _mtinitlocknum(_File), iVar1 == 0)) {
     _amsg_exit(0x11);
   }
-  RtlEnterCriticalSection(_locktable[param_1].lock);
+  RtlEnterCriticalSection((&DAT_829b0940)[_File * 2]);
   return;
 }
 
 
 // 82924558  _unlock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/mlock.c:377)
 
-void _unlock(int param_1)
+void _unlock(int _File)
 
 {
-  RtlLeaveCriticalSection(_locktable[param_1].lock);
+  RtlLeaveCriticalSection((&DAT_829b0940)[_File * 2]);
   return;
 }
 
 
 // 82924578  __crtInitCritSecAndSpinCount  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/mlock.c:413)
 
-int __crtInitCritSecAndSpinCount(_RTL_CRITICAL_SECTION *param_1,ulong param_2)
+void __crtInitCritSecAndSpinCount(void)
 
 {
-  RtlInitializeCriticalSectionAndSpinCount(param_1,param_2);
-  return 1;
+  RtlInitializeCriticalSectionAndSpinCount();
+  return;
 }
 

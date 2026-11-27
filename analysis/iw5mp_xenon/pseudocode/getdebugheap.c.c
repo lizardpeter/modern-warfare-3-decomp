@@ -2,11 +2,9 @@
 
 // 828ABA50  GetDebugHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/getdebugheap.c:35)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void * GetDebugHeap(void)
+undefined4 GetDebugHeap(void)
 
 {
-  return XapiDebugHeap;
+  return DAT_84897d4c;
 }
 

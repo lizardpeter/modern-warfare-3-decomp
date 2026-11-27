@@ -2,191 +2,178 @@
 
 // 8293F260  `dynamic_initializer_for_'s_dwPresenceSetTask''  (social/social_presence.cpp:93)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__s_dwPresenceSetTask__(void)
+int _dynamic_initializer_for__s_dwPresenceSetTask__(void)
 
 {
-  atexit(_dynamic_atexit_destructor_for__s_dwPresenceSetTask__);
-  return;
+  int iVar1;
+  
+  iVar1 = atexit(_dynamic_atexit_destructor_for__s_dwPresenceSetTask__);
+  return iVar1;
 }
 
 
 // 8293F270  `dynamic_initializer_for_'s_dwPresenceStore''  (social/social_presence.cpp:110)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__s_dwPresenceStore__(void)
+int _dynamic_initializer_for__s_dwPresenceStore__(void)
 
 {
-  SocialPresenceStore *pSVar1;
+  int iVar1;
   longlong lVar2;
+  longlong lVar3;
   
-  lVar2 = 3;
-  pSVar1 = s_dwPresenceStore;
+  lVar3 = 3;
+  lVar2 = -0x7ba9fc78;
   do {
-    _vector_constructor_iterator_(pSVar1,0x2c,200,bdRichPresenceInfo::_default_constructor_closure_)
-    ;
-    lVar2 = lVar2 + -1;
-    pSVar1 = pSVar1 + 1;
-  } while (-1 < lVar2);
-  atexit(_dynamic_atexit_destructor_for__s_dwPresenceStore__);
-  return;
+    _vector_constructor_iterator_(lVar2,0x2c,200,0xffffffff82706fe8);
+    lVar3 = lVar3 + -1;
+    lVar2 = lVar2 + 0x28a8;
+  } while (-1 < lVar3);
+  iVar1 = atexit(_dynamic_atexit_destructor_for__s_dwPresenceStore__);
+  return iVar1;
 }
 
 
 // 8293F2D8  `dynamic_initializer_for_'s_dwGetTaskBuffer''  (social/social_presence.cpp:117)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__s_dwGetTaskBuffer__(void)
+int _dynamic_initializer_for__s_dwGetTaskBuffer__(void)
 
 {
-  SocialPresenceStore *this;
-  longlong lVar1;
+  int iVar1;
+  longlong lVar2;
+  longlong lVar3;
   
-  lVar1 = 199;
-  this = &s_dwGetTaskBuffer;
+  lVar3 = 199;
+  lVar2 = -0x7ba959d8;
   do {
-    bdRichPresenceInfo::bdRichPresenceInfo(this->presence,(uchar *)0x0,0);
-    lVar1 = lVar1 + -1;
-    this = (SocialPresenceStore *)(this->presence + 1);
-  } while (-1 < lVar1);
-  atexit(_dynamic_atexit_destructor_for__s_dwGetTaskBuffer__);
-  return;
+    bdRichPresenceInfo__bdRichPresenceInfo(lVar2,0,0);
+    lVar3 = lVar3 + -1;
+    lVar2 = lVar2 + 0x2c;
+  } while (-1 < lVar3);
+  iVar1 = atexit(_dynamic_atexit_destructor_for__s_dwGetTaskBuffer__);
+  return iVar1;
 }
 
 
 // 8293F338  `dynamic_initializer_for_'s_dwPresenceGetTask''  (social/social_presence.cpp:120)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__s_dwPresenceGetTask__(void)
+int _dynamic_initializer_for__s_dwPresenceGetTask__(void)
 
 {
-  atexit(_dynamic_atexit_destructor_for__s_dwPresenceGetTask__);
-  return;
+  int iVar1;
+  
+  iVar1 = atexit(_dynamic_atexit_destructor_for__s_dwPresenceGetTask__);
+  return iVar1;
 }
 
 
 // 82707000  Social_getCurrentPresenceStruct  (social/social_presence.cpp:222)
 
-SocialPresence * Social_getCurrentPresenceStruct(int param_1)
+longlong Social_getCurrentPresenceStruct(uint param_1)
 
 {
-  if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                    0xdf,0,"%s");
+  if (((int)param_1 < 0) || (3 < (int)param_1)) {
+    MyAssertHandler(0xffffffff821b4200,0xdf,0,0xffffffff82000f98,0xffffffff821b4248);
   }
-  if ((-1 < param_1) && (param_1 < 4)) {
-    return s_currentPresence + param_1;
+  if ((-1 < (int)param_1) && ((int)param_1 < 4)) {
+    return ((ulonglong)param_1 & 0xfffffff) * 0x10 + -0x7baa0128;
   }
-  return (SocialPresence *)0x0;
+  return 0;
 }
 
 
 // 82707098  Social_FormatPresenceStatus  (social/social_presence.cpp:233)
 
-void Social_FormatPresenceStatus(int param_1,int param_2,int param_3,char *param_4,int param_5)
+void Social_FormatPresenceStatus
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
   undefined4 uVar1;
-  char *pcVar2;
-  char *pcVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ConversionArguments local_60 [2];
+  undefined8 uVar2;
+  undefined1 local_60 [8];
+  undefined8 local_58;
+  undefined8 local_50;
+  undefined8 local_48;
+  undefined8 local_40;
   
-  uVar4 = (ulonglong)param_3;
-  uVar5 = (ulonglong)param_2;
-  uVar1 = __savegprlr_26(param_1);
-  local_60[0].args[1] = (char *)0x0;
-  local_60[0].args[2] = (char *)0x0;
-  local_60[0].args[3] = (char *)0x0;
-  local_60[0].args[4] = (char *)0x0;
-  pcVar3 = (char *)0x0;
-  local_60[0].args[5] = (char *)0x0;
-  local_60[0].args[6] = (char *)0x0;
-  local_60[0].args[7] = (char *)0x0;
-  local_60[0].args[8] = (char *)0x0;
-  local_60[0].argCount = 0;
-  local_60[0].args[0] = (char *)0x0;
+  uVar1 = __savegprlr_26();
+  local_58 = 0;
+  local_50 = 0;
+  uVar2 = 0;
+  local_48 = 0;
+  local_40 = 0;
   switch(uVar1) {
   case 0:
   case 5:
-    pcVar3 = "PRESENCE_NOTINGAME";
+    uVar2 = 0xffffffff821b437c;
     break;
   case 1:
-    pcVar3 = UI_SafeTranslateString("PRESENCE_PLAYINGMP");
-    if (0xf < (uVar4 & 0xffffffff)) {
-      Com_PrintWarning(0x10,"WARNING: Presence gametype index %i is invalid\n");
-      uVar4 = 0;
+    uVar2 = UI_SafeTranslateString(0xffffffff821b4340);
+    if (0xf < (param_3 & 0xffffffff)) {
+      Com_PrintWarning(0x10,0xffffffff821b4310,param_3);
+      param_3 = 0;
     }
-    if (0x10 < (uVar5 & 0xffffffff)) {
-      Com_PrintWarning(0x10,"WARNING: Presence map index %i is invalid\n");
-      uVar5 = 0;
+    if (0x10 < (param_2 & 0xffffffff)) {
+      Com_PrintWarning(0x10,0xffffffff821b42e4,param_2);
+      param_2 = 0;
     }
-    local_60[0].argCount = 2;
-    local_60[0].args[0] =
-         UI_SafeTranslateString
-                   (*(char **)((int)gametypePresenceNameReference + (int)((uVar4 & 0xffffffff) << 2)
-                              ));
-    pcVar2 = UI_SafeTranslateString
-                       (*(char **)((int)mapPresenceNameReferenceMP +
-                                  (int)((uVar5 & 0xffffffff) << 2)));
-    local_60[0].args[1] = pcVar2;
+    UI_SafeTranslateString
+              (*(undefined4 *)
+                ((int)&PTR_s_PRESENCE_CONF_82999688 + (int)((param_3 & 0xffffffff) << 2)));
+    uVar1 = UI_SafeTranslateString
+                      (*(undefined4 *)
+                        ((int)&PTR_s_PRESENCE_UNKNOWN_MAP_829995a8 +
+                        (int)((param_2 & 0xffffffff) << 2)));
+    local_58 = CONCAT44(uVar1,local_58._4_4_);
     goto switchD_827070f4_default;
   case 2:
-    pcVar3 = UI_SafeTranslateString("PRESENCE_PLAYINGSP");
-    if (0x13 < (uVar5 & 0xffffffff)) {
-      Com_PrintWarning(0x10,"WARNING: Presence map index %i is invalid\n");
-      uVar5 = 0;
+    uVar2 = UI_SafeTranslateString(0xffffffff821b42d0);
+    if (0x13 < (param_2 & 0xffffffff)) {
+      Com_PrintWarning(0x10,0xffffffff821b42e4,param_2);
+      param_2 = 0;
     }
-    local_60[0].argCount = 1;
-    local_60[0].args[0] =
-         UI_SafeTranslateString
-                   (*(char **)((int)mapPresenceNameReferenceSP + (int)((uVar5 & 0xffffffff) << 2)));
+    UI_SafeTranslateString
+              (*(undefined4 *)
+                ((int)&PTR_s_PRESENCE_UNKNOWN_MAP_829995f0 + (int)((param_2 & 0xffffffff) << 2)));
     goto switchD_827070f4_default;
   case 3:
-    pcVar3 = "PRESENCE_LOBBY";
+    uVar2 = 0xffffffff821b4390;
     break;
   case 4:
-    pcVar3 = "PRESENCE_PARTY";
+    uVar2 = 0xffffffff821b436c;
     break;
   case 6:
-    pcVar3 = UI_SafeTranslateString("PRESENCE_PLAYINGSO");
-    if (0x10 < (uVar5 & 0xffffffff)) {
-      Com_PrintWarning(0x10,"WARNING: Presence map index %i is invalid\n");
-      uVar5 = 0;
+    uVar2 = UI_SafeTranslateString(0xffffffff821b42bc);
+    if (0x10 < (param_2 & 0xffffffff)) {
+      Com_PrintWarning(0x10,0xffffffff821b42e4,param_2);
+      param_2 = 0;
     }
-    local_60[0].argCount = 1;
-    local_60[0].args[0] =
-         UI_SafeTranslateString
-                   (*(char **)((int)mapPresenceNameReferenceSO + (int)((uVar5 & 0xffffffff) << 2)));
+    UI_SafeTranslateString
+              (*(undefined4 *)
+                ((int)&PTR_s_PRESENCE_UNKNOWN_MAP_82999640 + (int)((param_2 & 0xffffffff) << 2)));
     goto switchD_827070f4_default;
   case 7:
-    pcVar3 = "PRESENCE_SO_LOBBY";
+    uVar2 = 0xffffffff821b428c;
     break;
   case 8:
-    pcVar3 = UI_SafeTranslateString("PRESENCE_PLAYINGSO_SURVIVAL");
-    if (0x10 < (uVar5 & 0xffffffff)) {
-      Com_PrintWarning(0x10,"WARNING: Presence map index %i is invalid\n");
-      uVar5 = 0;
+    uVar2 = UI_SafeTranslateString(0xffffffff821b42a0);
+    if (0x10 < (param_2 & 0xffffffff)) {
+      Com_PrintWarning(0x10,0xffffffff821b42e4,param_2);
+      param_2 = 0;
     }
-    local_60[0].argCount = 1;
-    local_60[0].args[0] =
-         UI_SafeTranslateString
-                   (*(char **)((int)mapPresenceNameReferenceMP + (int)((uVar5 & 0xffffffff) << 2)));
+    UI_SafeTranslateString
+              (*(undefined4 *)
+                ((int)&PTR_s_PRESENCE_UNKNOWN_MAP_829995a8 + (int)((param_2 & 0xffffffff) << 2)));
     goto switchD_827070f4_default;
   case 9:
-    pcVar3 = "PRESENCE_PLAYINGTHEATRE";
+    uVar2 = 0xffffffff821b4354;
     break;
   default:
     goto switchD_827070f4_default;
   }
-  pcVar3 = UI_SafeTranslateString(pcVar3);
+  uVar2 = UI_SafeTranslateString(uVar2);
 switchD_827070f4_default:
-  UI_ReplaceConversions(pcVar3,local_60,param_4,param_5);
+  UI_ReplaceConversions(uVar2,local_60,param_4,param_5);
   __restgprlr_26();
   return;
 }
@@ -194,13 +181,11 @@ switchD_827070f4_default:
 
 // 827081F8  Social_InitPresence  (social/social_presence.cpp:321)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Social_InitPresence(void)
 
 {
   uint uVar1;
-  bdReference<bdRemoteTask> bVar2;
+  undefined4 *puVar2;
   longlong lVar3;
   uint *puVar4;
   int iVar5;
@@ -208,9 +193,9 @@ void Social_InitPresence(void)
   byte in_cr0;
   
   __savegprlr_28();
-  bVar2 = s_dwPresenceSetTask;
-  if (ZEXT48(s_dwPresenceSetTask.m_ptr) != 0) {
-    lVar3 = ZEXT48(s_dwPresenceSetTask.m_ptr) + 4;
+  puVar2 = DAT_8456ced0;
+  if (ZEXT48(DAT_8456ced0) != 0) {
+    lVar3 = ZEXT48(DAT_8456ced0) + 4;
     do {
       puVar4 = (uint *)lVar3;
       if (in_RESERVE != '\0') {
@@ -219,16 +204,16 @@ void Social_InitPresence(void)
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (*(int *)&(bVar2.m_ptr)->field_0x4 == 0) {
-      if (s_dwPresenceSetTask.m_ptr != (bdRemoteTask *)0x0) {
-        (**(code **)(s_dwPresenceSetTask.m_ptr)->_padding_)(s_dwPresenceSetTask.m_ptr,1);
+    if (puVar2[1] == 0) {
+      if (DAT_8456ced0 != (undefined4 *)0x0) {
+        (**(code **)*DAT_8456ced0)(DAT_8456ced0,1);
       }
     }
   }
-  bVar2.m_ptr = s_dwPresenceGetTask.m_ptr;
-  s_dwPresenceSetTask.m_ptr = (bdRemoteTask *)0x0;
-  if (ZEXT48(s_dwPresenceGetTask.m_ptr) != 0) {
-    lVar3 = ZEXT48(s_dwPresenceGetTask.m_ptr) + 4;
+  puVar2 = DAT_84560384;
+  DAT_8456ced0 = (undefined4 *)0x0;
+  if (ZEXT48(DAT_84560384) != 0) {
+    lVar3 = ZEXT48(DAT_84560384) + 4;
     do {
       puVar4 = (uint *)lVar3;
       if (in_RESERVE != '\0') {
@@ -237,17 +222,17 @@ void Social_InitPresence(void)
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (*(int *)&(bVar2.m_ptr)->field_0x4 == 0) {
-      if (s_dwPresenceGetTask.m_ptr != (bdRemoteTask *)0x0) {
-        (**(code **)(s_dwPresenceGetTask.m_ptr)->_padding_)(s_dwPresenceGetTask.m_ptr,1);
+    if (puVar2[1] == 0) {
+      if (DAT_84560384 != (undefined4 *)0x0) {
+        (**(code **)*DAT_84560384)(DAT_84560384,1);
       }
     }
   }
-  s_dwPresenceGetTask.m_ptr = (bdRemoteTask *)0x0;
+  DAT_84560384 = (undefined4 *)0x0;
   iVar5 = 0;
   do {
-    Com_Memset(s_currentPresence[0].sessionId.ab + iVar5 + -4,0,0x10);
-    s_currentPresence[0].sessionId.ab[iVar5 + -4] = '\0';
+    Com_Memset(&DAT_8455fed8 + iVar5,0,0x10);
+    (&DAT_8455fed8)[iVar5] = 0;
     (&DAT_8455ff30)[iVar5] = 0xff;
     iVar5 = iVar5 + 0x10;
   } while (iVar5 < 0x40);
@@ -258,16 +243,14 @@ void Social_InitPresence(void)
 
 // 82708310  Social_ShutdownPresence  (social/social_presence.cpp:338)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Social_ShutdownPresence(void)
 
 {
-  if (s_dwPresenceSetTask.m_ptr != (bdRemoteTask *)0x0) {
-    bdReference<bdRemoteTask>::operator=(&s_dwPresenceSetTask,(bdRemoteTask *)0x0);
+  if (DAT_8456ced0 != 0) {
+    bdReference<bdRemoteTask>__operator_(0xffffffff8456ced0,0);
   }
-  if (s_dwPresenceGetTask.m_ptr != (bdRemoteTask *)0x0) {
-    bdReference<bdRemoteTask>::operator=(&s_dwPresenceGetTask,(bdRemoteTask *)0x0);
+  if (DAT_84560384 != 0) {
+    bdReference<bdRemoteTask>__operator_(0xffffffff84560384,0);
   }
   return;
 }
@@ -275,166 +258,159 @@ void Social_ShutdownPresence(void)
 
 // 82707308  Social_PresenceNeeded  (social/social_presence.cpp:352)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool Social_PresenceNeeded(int param_1)
+undefined8 Social_PresenceNeeded(ulonglong param_1)
 
 {
-  bool bVar1;
-  LocalClientNum_t local_20 [4];
+  char cVar1;
+  undefined4 local_20 [4];
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                    0x163,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821b4200,0x163,0,0xffffffff82031880,param_1,4);
   }
-  bVar1 = Live_IsUserSignedInToDemonware(param_1);
-  if (((bVar1) && (bVar1 = CL_IsControllerActive(param_1), bVar1)) &&
-     (bVar1 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_20), bVar1)) {
-    bVar1 = Menu_IsMenuOpenAndVisible(local_20[0],"popup_friends");
-    if (((!bVar1) &&
-        (bVar1 = Menu_IsMenuOpenAndVisible(local_20[0],"popup_vault_friends_load"), !bVar1)) &&
-       (bVar1 = Menu_IsMenuOpenAndVisible(local_20[0],"popup_vault_friends_browse"), !bVar1)) {
-      return false;
+  cVar1 = Live_IsUserSignedInToDemonware(param_1);
+  if (cVar1 == '\0') {
+    return 0;
+  }
+  cVar1 = CL_IsControllerActive(param_1);
+  if (cVar1 == '\0') {
+    return 0;
+  }
+  cVar1 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_20);
+  if (cVar1 != '\0') {
+    cVar1 = Menu_IsMenuOpenAndVisible(local_20[0],0xffffffff8218e804);
+    if (((cVar1 == '\0') &&
+        (cVar1 = Menu_IsMenuOpenAndVisible(local_20[0],0xffffffff821b43bc), cVar1 == '\0')) &&
+       (cVar1 = Menu_IsMenuOpenAndVisible(local_20[0],0xffffffff821b43a0), cVar1 == '\0')) {
+      return 0;
     }
-    return true;
+    return 1;
   }
-  return false;
+  return 0;
 }
 
 
 // 82708368  Social_UpdatePresenceSet  (social/social_presence.cpp:373)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Social_UpdatePresenceSet(void)
 
 {
   byte bVar1;
   byte bVar2;
-  int iVar3;
-  bdLobbyErrorCode bVar4;
-  int iVar5;
-  bool bVar11;
-  SessionData *pSVar6;
-  uint uVar7;
+  int iVar7;
+  undefined8 uVar3;
+  undefined8 uVar4;
   int iVar8;
-  bdRichPresenceInfo *pbVar9;
-  bdReference<bdRemoteTask> bVar10;
+  char cVar10;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  int iVar9;
+  uint uVar11;
   byte *pbVar12;
-  uchar *puVar13;
+  byte *pbVar13;
   uint uVar14;
   uint uVar15;
   int *piVar16;
   int iVar17;
-  uint *puVar18;
-  bdReference<bdRemoteTask> local_b0 [4];
-  bdRichPresenceInfo abStack_a0 [3];
+  undefined1 *puVar18;
+  uint *puVar19;
+  undefined8 local_b0 [2];
+  undefined1 auStack_a0 [160];
   
   __savegprlr_20();
-  if (s_dwPresenceSetTask.m_ptr != (bdRemoteTask *)0x0) {
-    iVar3 = (**(code **)((s_dwPresenceSetTask.m_ptr)->_padding_ + 4))();
-    if (iVar3 != 1) {
+  if (DAT_8456ced0 != (int *)0x0) {
+    iVar7 = (**(code **)(*DAT_8456ced0 + 4))();
+    if (iVar7 != 1) {
       if (3 < DAT_8455ff2c) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp"
-                        ,0x181,0,
-                        "s_dwSetTaskController doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+        MyAssertHandler(0xffffffff821b4200,0x181,0,0xffffffff821b4740,DAT_8455ff2c,4);
       }
-      bVar4 = bdRemoteTask::getErrorCode(s_dwPresenceSetTask.m_ptr);
-      bVar10 = s_dwPresenceSetTask;
-      if (bVar4 == BD_NO_ERROR) {
-        bdRemoteTask::getTransactionID(s_dwPresenceSetTask.m_ptr);
-        Com_Printf(0x10,"Demonware presence set complete: controller %d, transaction %llu\n");
+      iVar7 = bdRemoteTask__getErrorCode(DAT_8456ced0);
+      piVar16 = DAT_8456ced0;
+      if (iVar7 == 0) {
+        uVar3 = bdRemoteTask__getTransactionID(DAT_8456ced0);
+        Com_Printf(0x10,0xffffffff821b46a8,DAT_8455ff2c,uVar3);
       }
       else {
-        bdRemoteTask::getTransactionID(s_dwPresenceSetTask.m_ptr);
-        bdRemoteTask::getErrorCode(bVar10.m_ptr);
-        Com_PrintWarning(0x10,
-                         "Demonware presence set error: controller %d, code %d, transaction Id %llu\n"
-                        );
+        uVar3 = bdRemoteTask__getTransactionID(DAT_8456ced0);
+        uVar4 = bdRemoteTask__getErrorCode(piVar16);
+        Com_PrintWarning(0x10,0xffffffff821b46f0,DAT_8455ff2c,uVar4,uVar3);
       }
       DAT_8455ff2c = 4;
-      bdReference<bdRemoteTask>::operator=(&s_dwPresenceSetTask,(bdRemoteTask *)0x0);
+      bdReference<bdRemoteTask>__operator_(0xffffffff8456ced0,0);
     }
-    if (s_dwPresenceSetTask.m_ptr != (bdRemoteTask *)0x0) goto LAB_827086d0;
+    if (DAT_8456ced0 != (int *)0x0) goto LAB_827086d0;
   }
-  if (dw_presence_put_rate == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                    399,0,"%s");
+  if (DAT_84546db8 == 0) {
+    MyAssertHandler(0xffffffff821b4200,399,0,0xffffffff82000f98,0xffffffff821b1ffc);
   }
-  iVar3 = (dw_presence_put_rate->current).integer;
+  iVar7 = *(int *)(DAT_84546db8 + 0xc);
   uVar14 = 4;
-  iVar5 = Sys_Milliseconds();
-  piVar16 = s_presenceUpdateTime;
+  iVar8 = Sys_Milliseconds();
+  piVar16 = &DAT_8455ff1c;
   uVar15 = 0;
   iVar17 = 0;
   do {
-    bVar11 = Live_IsUserSignedInToDemonware(uVar15);
-    if (bVar11) {
-      puVar18 = (uint *)((int)(&s_currentPresence[0].sessionId + 1) + iVar17);
-      *(undefined4 *)((int)(&s_currentPresence[0].sessionId + 1) + iVar17) = 0;
-      pSVar6 = Live_GetSharableSession();
-      bVar11 = Session_IsValid(pSVar6);
-      puVar13 = s_currentPresence[0].sessionId.ab + iVar17;
-      if (bVar11) {
-        Com_Memcpy(puVar13,&(pSVar6->dyn).sessionInfo,8);
-        bVar11 = Session_IsFull(pSVar6);
-        if (bVar11) {
-          *puVar18 = *puVar18 | 1;
+    cVar10 = Live_IsUserSignedInToDemonware(uVar15);
+    if (cVar10 != '\0') {
+      puVar19 = (uint *)((int)&DAT_8455fee4 + iVar17);
+      *(undefined4 *)((int)&DAT_8455fee4 + iVar17) = 0;
+      uVar5 = Live_GetSharableSession();
+      cVar10 = Session_IsValid();
+      if (cVar10 == '\0') {
+        Com_Memset(&DAT_8455fedc + iVar17,0,8);
+        uVar11 = *puVar19 | 4;
+LAB_8270857c:
+        *puVar19 = uVar11;
+      }
+      else {
+        Com_Memcpy(&DAT_8455fedc + iVar17,uVar5 + 0x14);
+        cVar10 = Session_IsFull(uVar5);
+        if (cVar10 != '\0') {
+          *puVar19 = *puVar19 | 1;
         }
-        uVar7 = Session_CurrentFlags(pSVar6);
-        if ((uVar7 & 0x200) != 0) {
-          *puVar18 = *puVar18 | 2;
+        uVar6 = Session_CurrentFlags(uVar5);
+        if ((uVar6 & 0x200) != 0) {
+          *puVar19 = *puVar19 | 2;
         }
-        iVar8 = Party_InParty(&g_partyData);
-        if ((iVar8 != 0) && (g_partyData.session == pSVar6)) {
-          uVar7 = *puVar18 | 2;
+        iVar9 = Party_InParty(0xffffffff82b55118);
+        if ((iVar9 != 0) && ((ulonglong)DAT_82b55118 == (uVar5 & 0xffffffff))) {
+          uVar11 = *puVar19 | 2;
           goto LAB_8270857c;
         }
       }
-      else {
-        Com_Memset(puVar13,0,8);
-        uVar7 = *puVar18 | 4;
-LAB_8270857c:
-        *puVar18 = uVar7;
-      }
-      puVar13 = s_currentPresence[0].sessionId.ab + iVar17 + -4;
+      pbVar13 = &DAT_8455fed8 + iVar17;
       pbVar12 = &DAT_8455ff30 + iVar17;
       do {
-        bVar1 = *puVar13;
+        bVar1 = *pbVar13;
         bVar2 = *pbVar12;
         if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-        puVar13 = puVar13 + 1;
+        pbVar13 = pbVar13 + 1;
         pbVar12 = pbVar12 + 1;
-      } while (puVar13 != s_currentPresence[1].sessionId.ab + iVar17 + -4);
-      if (((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) && (iVar3 < iVar5 - *piVar16)) {
+      } while (pbVar13 != &DAT_8455fee8 + iVar17);
+      if (((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) && (iVar7 < iVar8 - *piVar16)) {
         uVar14 = uVar15;
-        iVar3 = iVar5 - *piVar16;
+        iVar7 = iVar8 - *piVar16;
       }
     }
     piVar16 = piVar16 + 1;
     uVar15 = uVar15 + 1;
     iVar17 = iVar17 + 0x10;
   } while ((int)piVar16 < -0x7baa00d4);
-  if (((int)uVar14 < 4) &&
-     (pbVar9 = (bdRichPresenceInfo *)dwGetRichPresence(uVar14), pbVar9 != (bdRichPresenceInfo *)0x0)
-     ) {
-    bdRichPresenceInfo::bdRichPresenceInfo(abStack_a0,&s_currentPresence[uVar14].version,0x10);
-    bVar10 = bdRichPresenceService::setInfo((bdRichPresenceService *)local_b0,pbVar9);
-    bdReference<bdRemoteTask>::operator=
-              (&s_dwPresenceSetTask,(bdReference<bdRemoteTask> *)bVar10.m_ptr);
-    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_b0);
-    if (s_dwPresenceSetTask.m_ptr != (bdRemoteTask *)0x0) {
-      Com_Memcpy(local_b0,&s_currentPresence[uVar14].sessionId,8);
-      Com_Printf(0x10,
-                 "Setting demonware presence for ctrl %d: version %d, context %d, gametype %d, mapIndex %d, sessionId %llx, sessionFlags 0x%08x\n"
-                );
+  if (((int)uVar14 < 4) && (uVar5 = dwGetRichPresence(uVar14), (uVar5 & 0xffffffff) != 0)) {
+    iVar7 = uVar14 * 0x10;
+    puVar18 = &DAT_8455fed8 + iVar7;
+    bdRichPresenceInfo__bdRichPresenceInfo(auStack_a0,puVar18,0x10);
+    uVar3 = bdRichPresenceService__setInfo(local_b0,uVar5,auStack_a0);
+    bdReference<bdRemoteTask>__operator_(0xffffffff8456ced0,uVar3);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_b0);
+    if (DAT_8456ced0 != (int *)0x0) {
+      Com_Memcpy(local_b0,&DAT_8455fedc + iVar7,8);
+      Com_Printf(0x10,0xffffffff821b4628,uVar14,*puVar18,(&DAT_8455fed9)[iVar7],
+                 (&DAT_8455feda)[iVar7],(&DAT_8455fedb)[iVar7],local_b0[0]);
       DAT_8455ff2c = uVar14;
-      s_presenceUpdateTime[uVar14] = iVar5;
-      Com_Memcpy(&DAT_8455ff30 + uVar14 * 0x10,s_currentPresence + uVar14,0x10);
+      (&DAT_8455ff1c)[uVar14] = iVar8;
+      Com_Memcpy(&DAT_8455ff30 + iVar7,puVar18,0x10);
     }
-    bdTaskResult::~bdTaskResult((bdTaskResult *)abStack_a0);
+    bdTaskResult___bdTaskResult(auStack_a0);
   }
 LAB_827086d0:
   __restgprlr_20();
@@ -444,104 +420,101 @@ LAB_827086d0:
 
 // 82707418  Social_HasPlatformPresence  (social/social_presence.cpp:489)
 
-bool Social_HasPlatformPresence(int param_1,ulong64 param_2)
+ulonglong Social_HasPlatformPresence(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  FriendStatus FVar2;
-  bool bVar3;
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar2;
   
-  iVar1 = Friends_FindIndex(param_1,param_2);
-  if ((iVar1 == -1) || (FVar2 = FriendsMenu_GetStatus(param_1,iVar1), (int)FVar2 < 2)) {
-    iVar1 = Xenon_PresenceIndex(param_1,param_2);
-    bVar3 = (bool)((byte)((uint)iVar1 >> 0x1f) ^ 1);
+  uVar1 = Friends_FindIndex();
+  if (((int)uVar1 == -1) || (iVar3 = FriendsMenu_GetStatus(param_1,uVar1), iVar3 < 2)) {
+    uVar2 = Xenon_PresenceIndex(param_1,param_2);
+    uVar2 = (uVar2 & 0xffffffff) >> 0x1f ^ 1;
   }
   else {
-    bVar3 = true;
+    uVar2 = 1;
   }
-  return bVar3;
+  return uVar2;
 }
 
 
 // 82707488  Social_GatherPresenceUsers  (social/social_presence.cpp:514)
 
-void Social_GatherPresenceUsers(int param_1,ulong64 *param_2,int *param_3)
+void Social_GatherPresenceUsers(undefined8 param_1,longlong param_2,undefined4 *param_3)
 
 {
-  int iVar1;
   int iVar2;
-  FriendStatus FVar3;
-  uint uVar4;
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar4;
   longlong lVar5;
   ulonglong uVar6;
-  longlong lVar7;
+  int iVar7;
   int iVar8;
   int iVar9;
-  ulong64 uVar10;
+  undefined8 uVar10;
   
-  lVar7 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_19(param_1);
+  iVar2 = __savegprlr_19();
+  iVar9 = iVar2 * 0x70a0;
   uVar6 = 0;
-  iVar8 = 0;
-  if (0 < g_FacebookFriendStore[iVar1].facebookFriendCount) {
-    iVar9 = 0;
-    lVar5 = lVar7 + -8;
-    iVar2 = iVar1 * 0x70a0;
+  iVar7 = 0;
+  if (0 < *(int *)(&DAT_84525120 + iVar9)) {
+    iVar8 = 0;
+    lVar5 = param_2 + -8;
+    iVar3 = iVar9;
     do {
-      uVar10 = *(ulong64 *)(g_FacebookFriendStore[0].facebookFriends[0].m_userName + iVar2 + -8);
-      iVar2 = Friends_FindIndex(iVar1,uVar10);
-      if ((iVar2 == -1) || (FVar3 = FriendsMenu_GetStatus(iVar1,iVar2), (int)FVar3 < 2)) {
-        uVar4 = Xenon_PresenceIndex(iVar1,uVar10);
-        uVar4 = uVar4 >> 0x1f ^ 1;
+      uVar10 = *(undefined8 *)(&DAT_8451e130 + iVar3);
+      uVar1 = Friends_FindIndex(iVar2,uVar10);
+      if (((int)uVar1 == -1) || (iVar3 = FriendsMenu_GetStatus(iVar2,uVar1), iVar3 < 2)) {
+        uVar4 = Xenon_PresenceIndex(iVar2,uVar10);
+        uVar4 = (uVar4 & 0xffffffff) >> 0x1f ^ 1;
       }
       else {
         uVar4 = 1;
       }
-      if ((uVar4 == 0) && (iVar2 = MeetPlayer_GetPositionByXuid(iVar1,uVar10), iVar2 < 0)) {
+      if ((uVar4 == 0) && (iVar3 = MeetPlayer_GetPositionByXuid(iVar2,uVar10), iVar3 < 0)) {
         uVar6 = uVar6 + 1;
         lVar5 = lVar5 + 8;
-        *(ulong64 *)lVar5 = uVar10;
+        *(undefined8 *)lVar5 = uVar10;
         if (((longlong)uVar6 < 0) || (200 < (int)uVar6)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp"
-                          ,0x227,0,
-                          "userCount not in [0, MAX_DW_PRESENCE_FRIENDS]\n\t%i not in [%i, %i]");
+          MyAssertHandler(0xffffffff821b4200,0x227,0,0xffffffff821b43d8,uVar6,0,200);
         }
       }
-      iVar8 = iVar8 + 1;
-      iVar9 = iVar9 + 0x120;
-      iVar2 = iVar9 + iVar1 * 0x70a0;
-    } while (iVar8 < g_FacebookFriendStore[iVar1].facebookFriendCount);
+      iVar7 = iVar7 + 1;
+      iVar8 = iVar8 + 0x120;
+      iVar3 = iVar8 + iVar9;
+    } while (iVar7 < *(int *)(&DAT_84525120 + iVar9));
   }
-  iVar8 = 0;
-  if (0 < g_EliteClanStore[iVar1].numMembers) {
-    iVar9 = 0;
-    lVar7 = (uVar6 & 0x1fffffff) * 8 + lVar7 + -8;
-    iVar2 = iVar1 * 0x66b8;
+  iVar9 = iVar2 * 0x66b8;
+  iVar7 = 0;
+  if (0 < *(int *)(&DAT_84500688 + iVar9)) {
+    iVar8 = 0;
+    lVar5 = (uVar6 & 0x1fffffff) * 8 + param_2 + -8;
+    iVar3 = iVar9;
     do {
-      uVar10 = *(ulong64 *)(g_EliteClanStore[0].members[0].m_userName + iVar2 + -8);
-      iVar2 = Friends_FindIndex(iVar1,uVar10);
-      if ((iVar2 == -1) || (FVar3 = FriendsMenu_GetStatus(iVar1,iVar2), (int)FVar3 < 2)) {
-        uVar4 = Xenon_PresenceIndex(iVar1,uVar10);
-        uVar4 = uVar4 >> 0x1f ^ 1;
+      uVar10 = *(undefined8 *)(&DAT_844fa060 + iVar3);
+      uVar1 = Friends_FindIndex(iVar2,uVar10);
+      if (((int)uVar1 == -1) || (iVar3 = FriendsMenu_GetStatus(iVar2,uVar1), iVar3 < 2)) {
+        uVar4 = Xenon_PresenceIndex(iVar2,uVar10);
+        uVar4 = (uVar4 & 0xffffffff) >> 0x1f ^ 1;
       }
       else {
         uVar4 = 1;
       }
-      if (((uVar4 == 0) && (iVar2 = MeetPlayer_GetPositionByXuid(iVar1,uVar10), iVar2 < 0)) &&
-         (iVar2 = Facebook_GetPositionByXuid(iVar1,uVar10), iVar2 < 0)) {
+      if (((uVar4 == 0) && (iVar3 = MeetPlayer_GetPositionByXuid(iVar2,uVar10), iVar3 < 0)) &&
+         (iVar3 = Facebook_GetPositionByXuid(iVar2,uVar10), iVar3 < 0)) {
         uVar6 = uVar6 + 1;
-        lVar7 = lVar7 + 8;
-        *(ulong64 *)lVar7 = uVar10;
+        lVar5 = lVar5 + 8;
+        *(undefined8 *)lVar5 = uVar10;
         if (((longlong)uVar6 < 0) || (200 < (int)uVar6)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp"
-                          ,0x241,0,
-                          "userCount not in [0, MAX_DW_PRESENCE_FRIENDS]\n\t%i not in [%i, %i]");
+          MyAssertHandler(0xffffffff821b4200,0x241,0,0xffffffff821b43d8,uVar6,0,200);
         }
       }
-      iVar8 = iVar8 + 1;
-      iVar9 = iVar9 + 0x60;
-      iVar2 = iVar9 + iVar1 * 0x66b8;
-    } while (iVar8 < g_EliteClanStore[iVar1].numMembers);
+      iVar7 = iVar7 + 1;
+      iVar8 = iVar8 + 0x60;
+      iVar3 = iVar8 + iVar9;
+    } while (iVar7 < *(int *)(&DAT_84500688 + iVar9));
   }
   *param_3 = (int)uVar6;
   __restgprlr_19();
@@ -551,121 +524,116 @@ void Social_GatherPresenceUsers(int param_1,ulong64 *param_2,int *param_3)
 
 // 827086D8  Social_UpdatePresenceGet  (social/social_presence.cpp:586)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Social_UpdatePresenceGet(void)
 
 {
-  int iVar1;
-  bdLobbyErrorCode bVar2;
-  uint uVar3;
-  int iVar4;
-  bool bVar7;
-  bdRichPresenceService *pbVar5;
-  bdReference<bdRemoteTask> bVar6;
-  uint uVar8;
-  int *piVar9;
-  bdReference<bdRemoteTask> abStack_50 [20];
+  int *piVar1;
+  int iVar7;
+  ulonglong uVar2;
+  longlong lVar3;
+  undefined4 uVar8;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  int iVar9;
+  char cVar10;
+  uint uVar11;
+  uint uVar12;
+  undefined8 *puVar13;
+  int *piVar14;
+  undefined1 auStack_50 [80];
   
   __savegprlr_24();
-  piVar9 = s_presenceFetchTime;
-  if (s_dwPresenceGetTask.m_ptr != (bdRemoteTask *)0x0) {
-    iVar1 = (**(code **)((s_dwPresenceGetTask.m_ptr)->_padding_ + 4))();
-    if (iVar1 != 1) {
-      bVar2 = bdRemoteTask::getErrorCode(s_dwPresenceGetTask.m_ptr);
-      bVar6 = s_dwPresenceGetTask;
-      if (bVar2 == BD_NO_ERROR) {
+  piVar14 = &DAT_84560370;
+  if (DAT_84560384 != (int *)0x0) {
+    iVar7 = (**(code **)(*DAT_84560384 + 4))();
+    if (iVar7 != 1) {
+      iVar7 = bdRemoteTask__getErrorCode(DAT_84560384);
+      piVar1 = DAT_84560384;
+      if (iVar7 == 0) {
         if (3 < DAT_84560380) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp"
-                          ,0x256,0,
-                          "s_dwGetTaskController doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)"
-                         );
+          MyAssertHandler(0xffffffff821b4200,0x256,0,0xffffffff821b4930,DAT_84560380,4);
         }
-        uVar3 = bdRemoteTask::getNumResults(s_dwPresenceGetTask.m_ptr);
-        if ((int)uVar3 < s_dwGetTaskBuffer.count) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp"
-                          ,599,0,"%s\n\t%s");
+        iVar7 = bdRemoteTask__getNumResults(DAT_84560384);
+        if (iVar7 < DAT_8456cec8) {
+          MyAssertHandler(0xffffffff821b4200,599,0,0xffffffff820011f4,0xffffffff821b4898,
+                          0xffffffff821b48ec);
         }
-        uVar3 = bdRemoteTask::getNumResults(s_dwPresenceGetTask.m_ptr);
-        Com_Memcpy(s_dwPresenceStore[DAT_84560380].userId,s_dwGetTaskBuffer.userId,uVar3 << 3);
-        uVar3 = bdRemoteTask::getNumResults(s_dwPresenceGetTask.m_ptr);
-        Com_Memcpy(s_dwPresenceStore + DAT_84560380,&s_dwGetTaskBuffer,uVar3 * 0x2c);
-        uVar3 = bdRemoteTask::getNumResults(s_dwPresenceGetTask.m_ptr);
-        bVar6 = s_dwPresenceGetTask;
-        s_dwPresenceStore[DAT_84560380].count = uVar3;
-        uVar3 = bdRemoteTask::getTotalNumResults(bVar6.m_ptr);
-        bVar6 = s_dwPresenceGetTask;
-        s_dwPresenceStore[DAT_84560380].total = uVar3;
-        bdRemoteTask::getTransactionID(bVar6.m_ptr);
-        bdRemoteTask::getTotalNumResults(bVar6.m_ptr);
-        bdRemoteTask::getNumResults(bVar6.m_ptr);
-        Com_Printf(0x10,
-                   "Demonware presence request completed: controller %d, count %d, total %d, transaction %llu\n"
-                  );
+        uVar2 = bdRemoteTask__getNumResults(DAT_84560384);
+        Com_Memcpy((ulonglong)DAT_84560380 * 0x28a8 + -0x7ba9da18,0xffffffff8456c888,
+                   (uVar2 & 0x1fffffff) << 3);
+        lVar3 = bdRemoteTask__getNumResults(DAT_84560384);
+        Com_Memcpy((ulonglong)DAT_84560380 * 0x28a8 + -0x7ba9fc78,0xffffffff8456a628,lVar3 * 0x2c);
+        uVar8 = bdRemoteTask__getNumResults(DAT_84560384);
+        piVar1 = DAT_84560384;
+        *(undefined4 *)(&DAT_84562c28 + DAT_84560380 * 0x28a8) = uVar8;
+        uVar8 = bdRemoteTask__getTotalNumResults(piVar1);
+        piVar1 = DAT_84560384;
+        *(undefined4 *)(&DAT_84562c2c + DAT_84560380 * 0x28a8) = uVar8;
+        uVar4 = bdRemoteTask__getTransactionID(piVar1);
+        uVar5 = bdRemoteTask__getTotalNumResults(piVar1);
+        uVar6 = bdRemoteTask__getNumResults(piVar1);
+        Com_Printf(0x10,0xffffffff821b4838,DAT_84560380,uVar6,uVar5,uVar4);
       }
       else {
-        bdRemoteTask::getTransactionID(s_dwPresenceGetTask.m_ptr);
-        bdRemoteTask::getErrorCode(bVar6.m_ptr);
-        Com_PrintWarning(0x10,
-                         "Demonware presence request returned error: controller %d, code %d, transaction %llu\n"
-                        );
+        uVar4 = bdRemoteTask__getTransactionID(DAT_84560384);
+        uVar5 = bdRemoteTask__getErrorCode(piVar1);
+        Com_PrintWarning(0x10,0xffffffff821b47e0,DAT_84560380,uVar5,uVar4);
       }
       DAT_84560380 = 4;
-      bdReference<bdRemoteTask>::operator=(&s_dwPresenceGetTask,(bdRemoteTask *)0x0);
+      bdReference<bdRemoteTask>__operator_(0xffffffff84560384,0);
     }
-    if (s_dwPresenceGetTask.m_ptr != (bdRemoteTask *)0x0) goto LAB_82708a74;
+    if (DAT_84560384 != (int *)0x0) goto LAB_82708a74;
   }
-  if (dw_presence_get_rate == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                    0x269,0,"%s");
+  if (DAT_84546d84 == 0) {
+    MyAssertHandler(0xffffffff821b4200,0x269,0,0xffffffff82000f98,0xffffffff821b1f28);
   }
-  if (dw_presence_get_delay == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                    0x26a,0,"%s");
+  if (DAT_84546d1c == 0) {
+    MyAssertHandler(0xffffffff821b4200,0x26a,0,0xffffffff82000f98,0xffffffff821b1f40);
   }
   if (DAT_8455ff18 == 0) {
-    iVar1 = (dw_presence_get_rate->current).integer;
-    if ((dw_presence_get_delay->current).integer < (dw_presence_get_rate->current).integer) {
-      iVar1 = (dw_presence_get_delay->current).integer;
+    iVar7 = *(int *)(DAT_84546d84 + 0xc);
+    if (*(int *)(DAT_84546d1c + 0xc) < *(int *)(DAT_84546d84 + 0xc)) {
+      iVar7 = *(int *)(DAT_84546d1c + 0xc);
     }
   }
   else {
-    iVar1 = (dw_presence_get_rate->current).integer;
+    iVar7 = *(int *)(DAT_84546d84 + 0xc);
   }
-  uVar3 = 4;
-  iVar4 = Sys_Milliseconds();
-  uVar8 = 0;
+  uVar11 = 4;
+  iVar9 = Sys_Milliseconds();
+  uVar12 = 0;
   do {
-    bVar7 = Social_PresenceNeeded(uVar8);
-    if ((bVar7) && (iVar1 < iVar4 - *piVar9)) {
-      uVar3 = uVar8;
-      iVar1 = iVar4 - *piVar9;
+    cVar10 = Social_PresenceNeeded(uVar12);
+    if ((cVar10 != '\0') && (iVar7 < iVar9 - *piVar14)) {
+      uVar11 = uVar12;
+      iVar7 = iVar9 - *piVar14;
     }
-    piVar9 = piVar9 + 1;
-    uVar8 = uVar8 + 1;
-  } while ((int)piVar9 < -0x7ba9fc80);
-  if ((((int)uVar3 < 4) &&
-      (pbVar5 = dwGetRichPresence(uVar3), pbVar5 != (bdRichPresenceService *)0x0)) &&
-     (Social_GatherPresenceUsers(uVar3,s_dwGetTaskBuffer.userId,&s_dwGetTaskBuffer.count),
-     0 < s_dwGetTaskBuffer.count)) {
-    bVar6 = bdRichPresenceService::getInfo
-                      ((bdRichPresenceService *)abStack_50,(ulong64 *)pbVar5,
-                       (bdRichPresenceInfo *)s_dwGetTaskBuffer.userId,-0x7ba959d8);
-    bdReference<bdRemoteTask>::operator=
-              (&s_dwPresenceGetTask,(bdReference<bdRemoteTask> *)bVar6.m_ptr);
-    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_50);
-    if (s_dwPresenceGetTask.m_ptr != (bdRemoteTask *)0x0) {
-      Com_Printf(0x10,"Demonware presence requesting presence for controller %d with users:\n");
-      iVar1 = 0;
-      if (0 < s_dwGetTaskBuffer.count) {
-        do {
-          Com_Printf(0x10,"UserId:%llu\n");
-          iVar1 = iVar1 + 1;
-        } while (iVar1 < s_dwGetTaskBuffer.count);
+    piVar14 = piVar14 + 1;
+    uVar12 = uVar12 + 1;
+  } while ((int)piVar14 < -0x7ba9fc80);
+  if (((int)uVar11 < 4) && (uVar2 = dwGetRichPresence(uVar11), (uVar2 & 0xffffffff) != 0)) {
+    Social_GatherPresenceUsers(uVar11,0xffffffff8456c888,0xffffffff8456cec8);
+    if (0 < DAT_8456cec8) {
+      uVar4 = bdRichPresenceService__getInfo(auStack_50,uVar2,0xffffffff8456c888,0xffffffff8456a628)
+      ;
+      bdReference<bdRemoteTask>__operator_(0xffffffff84560384,uVar4);
+      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_50);
+      if (DAT_84560384 != (int *)0x0) {
+        Com_Printf(0x10,0xffffffff821b4798,uVar11);
+        iVar7 = 0;
+        if (0 < DAT_8456cec8) {
+          puVar13 = (undefined8 *)0x8456c880;
+          do {
+            puVar13 = puVar13 + 1;
+            Com_Printf(0x10,0xffffffff821b4788,*puVar13);
+            iVar7 = iVar7 + 1;
+          } while (iVar7 < DAT_8456cec8);
+        }
+        DAT_8455ff18 = 1;
+        DAT_84560380 = uVar11;
+        (&DAT_84560370)[uVar11] = iVar9;
       }
-      DAT_8455ff18 = 1;
-      DAT_84560380 = uVar3;
-      s_presenceFetchTime[uVar3] = iVar4;
     }
   }
 LAB_82708a74:
@@ -676,25 +644,22 @@ LAB_82708a74:
 
 // 82708A80  Social_UpdatePresence  (social/social_presence.cpp:671)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Social_UpdatePresence(void)
 
 {
-  if (dw_presence_active == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                    0x2a0,0,"%s");
+  if (DAT_84546d0c == 0) {
+    MyAssertHandler(0xffffffff821b4200,0x2a0,0,0xffffffff82000f98,0xffffffff821b20fc);
   }
-  if ((dw_presence_active->current).integer != 0) {
+  if (*(int *)(DAT_84546d0c + 0xc) != 0) {
     Social_UpdatePresenceSet();
     Social_UpdatePresenceGet();
     return;
   }
-  if (s_dwPresenceSetTask.m_ptr != (bdRemoteTask *)0x0) {
-    bdReference<bdRemoteTask>::operator=(&s_dwPresenceSetTask,(bdRemoteTask *)0x0);
+  if (DAT_8456ced0 != 0) {
+    bdReference<bdRemoteTask>__operator_(0xffffffff8456ced0,0);
   }
-  if (s_dwPresenceGetTask.m_ptr != (bdRemoteTask *)0x0) {
-    bdReference<bdRemoteTask>::operator=(&s_dwPresenceGetTask,(bdRemoteTask *)0x0);
+  if (DAT_84560384 != 0) {
+    bdReference<bdRemoteTask>__operator_(0xffffffff84560384,0);
   }
   return;
 }
@@ -702,147 +667,142 @@ void Social_UpdatePresence(void)
 
 // 827076A8  Social_GetDWPresence  (social/social_presence.cpp:686)
 
-bdRichPresenceInfo * Social_GetDWPresence(int param_1,ulong64 param_2)
-
-{
-  int iVar1;
-  bdRichPresenceInfo *pbVar2;
-  int iVar3;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (dw_presence_active == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                    0x2b1,0,"%s");
-  }
-  if ((dw_presence_active->current).integer != 0) {
-    iVar3 = 0;
-    if (0 < s_dwPresenceStore[iVar1].count) {
-      do {
-        if (s_dwPresenceStore[iVar1].userId[iVar3] == param_2) {
-          pbVar2 = (bdRichPresenceInfo *)__restgprlr_29(s_dwPresenceStore[iVar1].presence + iVar3);
-          return pbVar2;
-        }
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < s_dwPresenceStore[iVar1].count);
-    }
-  }
-  pbVar2 = (bdRichPresenceInfo *)__restgprlr_29(0);
-  return pbVar2;
-}
-
-
-// 82707768  Social_GetPresence  (social/social_presence.cpp:704)
-
-SocialPresence * Social_GetPresence(int param_1,ulong64 param_2)
-
-{
-  bdRichPresenceInfo *pbVar1;
-  SocialPresence *pSVar2;
-  
-  pbVar1 = Social_GetDWPresence(param_1,param_2);
-  if ((pbVar1 == (bdRichPresenceInfo *)0x0) ||
-     (pSVar2 = (SocialPresence *)pbVar1->m_richPresence, pbVar1->m_online == false)) {
-    pSVar2 = (SocialPresence *)0x0;
-  }
-  return pSVar2;
-}
-
-
-// 827077A8  Social_GetPresenceString  (social/social_presence.cpp:717)
-
-char * Social_GetPresenceString(int param_1,ulong64 param_2)
-
-{
-  ulonglong uVar1;
-  uint uVar2;
-  int iVar3;
-  FriendStatus FVar4;
-  char *pcVar5;
-  _XONLINE_PRESENCE *p_Var6;
-  bdRichPresenceInfo *pbVar7;
-  
-  uVar2 = __savegprlr_29(param_1);
-  if (3 < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                    0x2d3,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
-  }
-  iVar3 = Friends_FindIndex(uVar2,param_2);
-  if ((iVar3 != -1) && (FVar4 = FriendsMenu_GetStatus(uVar2,iVar3), 1 < (int)FVar4)) {
-    Friends_GetPresence(uVar2,param_2,s_presenceString,0x400);
-    pcVar5 = (char *)__restgprlr_29(0xffffffff8455ff70);
-    return pcVar5;
-  }
-  p_Var6 = MeetPlayer_GetPresence(uVar2,param_2);
-  if ((p_Var6 != (_XONLINE_PRESENCE *)0x0) ||
-     (p_Var6 = LiveParty_GetPresence(param_2), p_Var6 != (_XONLINE_PRESENCE *)0x0)) {
-    Xenon_GetPresenceString(p_Var6,s_presenceString,0x400);
-    pcVar5 = (char *)__restgprlr_29(0xffffffff8455ff70);
-    return pcVar5;
-  }
-  pbVar7 = Social_GetDWPresence(uVar2,param_2);
-  if (pbVar7 != (bdRichPresenceInfo *)0x0) {
-    if (pbVar7->m_online != false) {
-      Social_FormatPresenceStatus
-                ((uint)pbVar7->m_richPresence[1],(uint)pbVar7->m_richPresence[3],
-                 (uint)pbVar7->m_richPresence[2],s_presenceString,0x400);
-      pcVar5 = (char *)__restgprlr_29(0xffffffff8455ff70);
-      return pcVar5;
-    }
-    pcVar5 = SEH_SafeTranslateString("XBOXLIVE_OFFLINE");
-    pcVar5 = (char *)__restgprlr_29(pcVar5);
-    return pcVar5;
-  }
-  if ((dw_presence_active->current).integer == 0) {
-    pcVar5 = SEH_SafeTranslateString("XBOXLIVE_AWAY");
-    pcVar5 = (char *)__restgprlr_29(pcVar5);
-    return pcVar5;
-  }
-  iVar3 = Sys_Milliseconds();
-  uVar1 = ((param_2 & 7) + 0x1e) * 10;
-  trapDoubleWordImmediate(6,uVar1,0);
-  uVar1 = (ulonglong)(longlong)iVar3 / uVar1 & 3;
-  if (uVar1 != 0) {
-    if (uVar1 == 1) {
-      pcVar5 = (char *)__restgprlr_29(0xffffffff820185b8);
-      return pcVar5;
-    }
-    if (2 < uVar1) {
-      pcVar5 = (char *)__restgprlr_29(0xffffffff820068af);
-      return pcVar5;
-    }
-    pcVar5 = (char *)__restgprlr_29(0xffffffff820185b4);
-    return pcVar5;
-  }
-  pcVar5 = (char *)__restgprlr_29(0xffffffff820185bc);
-  return pcVar5;
-}
-
-
-// 82707980  Social_PresenceChanged  (social/social_presence.cpp:797)
-
-void Social_PresenceChanged(int param_1)
+void Social_GetDWPresence(undefined8 param_1,longlong param_2)
 
 {
   int iVar1;
   int iVar2;
   
-  iVar1 = __savegprlr_27(param_1);
-  if (dw_presence_put_rate == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                    0x31e,0,"%s");
+  iVar1 = __savegprlr_29();
+  if (DAT_84546d0c == 0) {
+    MyAssertHandler(0xffffffff821b4200,0x2b1,0,0xffffffff82000f98,0xffffffff821b20fc);
   }
-  if (dw_presence_put_delay == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                    799,0,"%s");
+  if (*(int *)(DAT_84546d0c + 0xc) != 0) {
+    iVar2 = 0;
+    if (0 < *(int *)(&DAT_84562c28 + iVar1 * 0x28a8)) {
+      do {
+        if (*(longlong *)(&DAT_845625e8 + (iVar1 * 0x515 + iVar2) * 8) == param_2) {
+          __restgprlr_29(&DAT_84560388 + iVar2 * 0x2c + iVar1 * 0x28a8);
+          return;
+        }
+        iVar2 = iVar2 + 1;
+      } while (iVar2 < *(int *)(&DAT_84562c28 + iVar1 * 0x28a8));
+    }
   }
-  iVar2 = Sys_Milliseconds();
-  if ((int)((dw_presence_put_rate->current).string + s_presenceUpdateTime[iVar1]) <
-      (int)((dw_presence_put_delay->current).string + iVar2)) {
-    s_presenceUpdateTime[iVar1] =
-         (int)((dw_presence_put_delay->current).string +
-              (iVar2 - (dw_presence_put_rate->current).integer));
-    Com_Printf(0x10,"Delaying social presence update until %d -- currentTime:%d delay:%d rate:%d\n")
-    ;
+  __restgprlr_29(0);
+  return;
+}
+
+
+// 82707768  Social_GetPresence  (social/social_presence.cpp:704)
+
+int Social_GetPresence(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = Social_GetDWPresence();
+  if ((iVar1 == 0) || (iVar2 = iVar1 + 5, *(char *)(iVar1 + 4) == '\0')) {
+    iVar2 = 0;
+  }
+  return iVar2;
+}
+
+
+// 827077A8  Social_GetPresenceString  (social/social_presence.cpp:717)
+
+void Social_GetPresenceString(undefined8 param_1,ulonglong param_2)
+
+{
+  ulonglong uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  ulonglong uVar3;
+  
+  uVar1 = __savegprlr_29();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821b4200,0x2d3,0,0xffffffff82031880,uVar1,4);
+  }
+  uVar2 = Friends_FindIndex(uVar1,param_2);
+  if (((int)uVar2 != -1) && (iVar4 = FriendsMenu_GetStatus(uVar1,uVar2), 1 < iVar4)) {
+    Friends_GetPresence(uVar1,param_2,0xffffffff8455ff70,0x400);
+    __restgprlr_29(0xffffffff8455ff70);
+    return;
+  }
+  uVar3 = MeetPlayer_GetPresence(uVar1,param_2);
+  if (((uVar3 & 0xffffffff) != 0) ||
+     (uVar3 = LiveParty_GetPresence(param_2), (uVar3 & 0xffffffff) != 0)) {
+    Xenon_GetPresenceString(uVar3,0xffffffff8455ff70,0x400);
+    __restgprlr_29(0xffffffff8455ff70);
+    return;
+  }
+  iVar4 = Social_GetDWPresence(uVar1,param_2);
+  if (iVar4 != 0) {
+    if (*(char *)(iVar4 + 4) != '\0') {
+      Social_FormatPresenceStatus
+                (*(undefined1 *)(iVar4 + 6),*(undefined1 *)(iVar4 + 8),*(undefined1 *)(iVar4 + 7),
+                 0xffffffff8455ff70,0x400);
+      __restgprlr_29(0xffffffff8455ff70);
+      return;
+    }
+    SEH_SafeTranslateString(0xffffffff8218adc8);
+    __restgprlr_29();
+    return;
+  }
+  if (*(int *)(DAT_84546d0c + 0xc) == 0) {
+    SEH_SafeTranslateString(0xffffffff8218adec);
+    __restgprlr_29();
+    return;
+  }
+  iVar4 = Sys_Milliseconds();
+  uVar1 = ((param_2 & 7) + 0x1e) * 10;
+  trapDoubleWordImmediate(6,uVar1,0);
+  uVar1 = (ulonglong)(longlong)iVar4 / uVar1 & 3;
+  if (uVar1 != 0) {
+    if (uVar1 == 1) {
+      __restgprlr_29(0xffffffff820185b8);
+      return;
+    }
+    if (2 < uVar1) {
+      __restgprlr_29(0xffffffff820068af);
+      return;
+    }
+    __restgprlr_29(0xffffffff820185b4);
+    return;
+  }
+  __restgprlr_29(0xffffffff820185bc);
+  return;
+}
+
+
+// 82707980  Social_PresenceChanged  (social/social_presence.cpp:797)
+
+void Social_PresenceChanged(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar4;
+  undefined8 uVar3;
+  
+  iVar4 = __savegprlr_27();
+  if (DAT_84546db8 == 0) {
+    MyAssertHandler(0xffffffff821b4200,0x31e,0,0xffffffff82000f98,0xffffffff821b1ffc);
+  }
+  if (DAT_84545ce0 == 0) {
+    MyAssertHandler(0xffffffff821b4200,799,0,0xffffffff82000f98,0xffffffff821b2014);
+  }
+  uVar3 = Sys_Milliseconds();
+  iVar2 = DAT_84546db8;
+  iVar1 = DAT_84545ce0;
+  if ((&DAT_8455ff1c)[iVar4] + *(int *)(DAT_84546db8 + 0xc) <
+      *(int *)(DAT_84545ce0 + 0xc) + (int)uVar3) {
+    (&DAT_8455ff1c)[iVar4] =
+         (*(int *)(DAT_84545ce0 + 0xc) - *(int *)(DAT_84546db8 + 0xc)) + (int)uVar3;
+    Com_Printf(0x10,0xffffffff821b4420,
+               (ulonglong)(uint)(&DAT_8455ff1c)[iVar4] + (ulonglong)*(uint *)(iVar2 + 0xc),uVar3,
+               *(undefined4 *)(iVar1 + 0xc));
   }
   __restgprlr_27();
   return;
@@ -854,8 +814,8 @@ void Social_PresenceChanged(int param_1)
 void Social_SetWatchingTheatrePresence(int param_1)
 
 {
-  s_currentPresence[param_1].context = '\t';
-  Social_PresenceChanged(param_1);
+  (&DAT_8455fed9)[param_1 * 0x10] = 9;
+  Social_PresenceChanged();
   return;
 }
 
@@ -865,8 +825,8 @@ void Social_SetWatchingTheatrePresence(int param_1)
 void Social_SetNotPlayingPresence(int param_1)
 
 {
-  s_currentPresence[param_1].context = '\x05';
-  Social_PresenceChanged(param_1);
+  (&DAT_8455fed9)[param_1 * 0x10] = 5;
+  Social_PresenceChanged();
   return;
 }
 
@@ -876,8 +836,8 @@ void Social_SetNotPlayingPresence(int param_1)
 void Social_SetMainMenuPresence(int param_1)
 
 {
-  s_currentPresence[param_1].context = '\0';
-  Social_PresenceChanged(param_1);
+  (&DAT_8455fed9)[param_1 * 0x10] = 0;
+  Social_PresenceChanged();
   return;
 }
 
@@ -887,8 +847,8 @@ void Social_SetMainMenuPresence(int param_1)
 void Social_SetLobbyPresence(int param_1)
 
 {
-  s_currentPresence[param_1].context = '\x03';
-  Social_PresenceChanged(param_1);
+  (&DAT_8455fed9)[param_1 * 0x10] = 3;
+  Social_PresenceChanged();
   return;
 }
 
@@ -898,8 +858,8 @@ void Social_SetLobbyPresence(int param_1)
 void Social_SetSpecOpsLobbyPresence(int param_1)
 
 {
-  s_currentPresence[param_1].context = '\a';
-  Social_PresenceChanged(param_1);
+  (&DAT_8455fed9)[param_1 * 0x10] = 7;
+  Social_PresenceChanged();
   return;
 }
 
@@ -909,80 +869,76 @@ void Social_SetSpecOpsLobbyPresence(int param_1)
 void Social_SetPartyPresence(int param_1)
 
 {
-  s_currentPresence[param_1].context = '\x04';
-  Social_PresenceChanged(param_1);
+  (&DAT_8455fed9)[param_1 * 0x10] = 4;
+  Social_PresenceChanged();
   return;
 }
 
 
 // 82707B30  Social_SetMapPresence  (social/social_presence.cpp:903)
 
-void Social_SetMapPresence(int param_1,int param_2,int param_3)
+void Social_SetMapPresence(int param_1,undefined1 param_2,undefined1 param_3)
 
 {
-  s_currentPresence[param_1].context = (uchar)param_2;
-  s_currentPresence[param_1].mapIndex = (uchar)param_3;
+  (&DAT_8455fed9)[param_1 * 0x10] = param_2;
+  (&DAT_8455fedb)[param_1 * 0x10] = param_3;
   return;
 }
 
 
 // 82707B50  Social_SetGameTypePresence  (social/social_presence.cpp:913)
 
-void Social_SetGameTypePresence(int param_1,int param_2)
+void Social_SetGameTypePresence(int param_1,undefined1 param_2)
 
 {
-  s_currentPresence[param_1].gametype = (uchar)param_2;
+  (&DAT_8455feda)[param_1 * 0x10] = param_2;
   return;
 }
 
 
 // 82707B68  Social_IsAlreadyConnected  (social/social_presence.cpp:924)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool Social_IsAlreadyConnected(int param_1,XNKID param_2,ulong64 param_3,char **param_4)
+void Social_IsAlreadyConnected
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 *param_4)
 
 {
   int iVar1;
-  undefined1 uVar2;
   
-  __savegprlr_29(param_1);
-  iVar1 = Party_InParty(&g_partyData);
+  __savegprlr_29();
+  iVar1 = Party_InParty(0xffffffff82b55118);
   if (iVar1 != 0) {
-    if (g_partyData.session == (SessionData *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                      0x3a1,0,"%s");
+    if (DAT_82b55118 == 0) {
+      MyAssertHandler(0xffffffff821b4200,0x3a1,0,0xffffffff82000f98,0xffffffff821b3000);
     }
-    iVar1 = Session_FindRegisteredUser(g_partyData.session,param_3);
+    iVar1 = Session_FindRegisteredUser(DAT_82b55118,param_3);
     if (-1 < iVar1) goto LAB_82707bd8;
   }
-  iVar1 = Session_FindRegisteredUser(&g_serverSession,param_3);
+  iVar1 = Session_FindRegisteredUser(0xffffffff844c7860,param_3);
   if (iVar1 < 0) {
-    uVar2 = __restgprlr_29(0);
-    return (bool)uVar2;
+    __restgprlr_29(0);
+    return;
   }
 LAB_82707bd8:
   *param_4 = "MENU_FRIEND_ALREADY_CONNECTED";
-  uVar2 = __restgprlr_29(1);
-  return (bool)uVar2;
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 82707C18  Social_IsSessionValid  (social/social_presence.cpp:951)
 
-bool Social_IsSessionValid(XNKID param_1)
+bool Social_IsSessionValid(undefined8 param_1)
 
 {
   char cVar1;
   char cVar2;
   char *pcVar3;
   char *pcVar4;
-  XNKID XStack00000010;
+  undefined8 uStack00000010;
   char local_10 [8];
   char local_8 [8];
   
-  XStack00000010.ab = param_1.ab;
+  uStack00000010 = param_1;
   Com_Memset(local_10,0,8);
   pcVar4 = local_10;
   pcVar3 = (char *)&stack0x00000010;
@@ -993,161 +949,151 @@ bool Social_IsSessionValid(XNKID param_1)
     pcVar4 = pcVar4 + 1;
     pcVar3 = pcVar3 + 1;
   } while (pcVar4 != local_8);
-  return (bool)('\x01' - (cVar1 == cVar2));
+  return cVar1 != cVar2;
 }
 
 
 // 82707C80  Social_IsPresenceJoinable  (social/social_presence.cpp:973)
 
-bool Social_IsPresenceJoinable(SocialPresence *param_1,bool param_2,char **param_3)
+undefined8 Social_IsPresenceJoinable(int param_1,char param_2,undefined4 *param_3)
 
 {
   uint uVar1;
   
-  uVar1 = param_1->sessionFlags;
+  uVar1 = *(uint *)(param_1 + 0xc);
   if ((uVar1 & 4) != 0) {
     *param_3 = "MENU_JOIN_SESSION_INVALID";
-    return false;
+    return 0;
   }
   if ((uVar1 & 1) != 0) {
     *param_3 = "XBOXLIVE_JOIN_FULL_GAME";
-    return false;
+    return 0;
   }
-  if ((!param_2) && ((uVar1 & 2) != 0)) {
+  if ((param_2 == '\0') && ((uVar1 & 2) != 0)) {
     *param_3 = "MENU_JOIN_SESSION_PRIVATE";
-    return false;
+    return 0;
   }
-  return true;
+  return 1;
 }
 
 
 // 82707CF8  Social_IsUserJoinable  (social/social_presence.cpp:997)
 
-bool Social_IsUserJoinable(int param_1,XNKID param_2,ulong64 param_3,char **param_4)
+void Social_IsUserJoinable
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-  uchar uVar1;
-  uchar uVar2;
-  int iVar3;
-  undefined1 uVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  char **ppcVar7;
-  uchar *puVar8;
-  uchar *puVar9;
-  uchar local_50 [8];
-  uchar local_48 [9] [8];
+  char cVar1;
+  undefined8 uVar2;
+  char cVar3;
+  char *pcVar4;
+  char *pcVar5;
+  char local_50 [8];
+  undefined8 local_48 [9];
   
-  uVar6 = (ulonglong)(int)param_4;
-  iVar3 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                    0x3e6,0,"%s");
+  uVar2 = __savegprlr_26();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821b4200,0x3e6,0,0xffffffff82000f98,0xffffffff8207965c);
   }
-  local_48[0] = param_2.ab;
+  local_48[0] = param_2;
   Com_Memset(local_50,0,8);
-  puVar9 = local_50;
-  puVar8 = local_48[0];
+  pcVar5 = local_50;
+  pcVar4 = (char *)local_48;
   do {
-    uVar1 = *puVar9;
-    uVar2 = *puVar8;
-    if (uVar1 != uVar2) break;
-    puVar9 = puVar9 + 1;
-    puVar8 = puVar8 + 1;
-  } while ((uchar (*) [8])puVar9 != local_48);
-  ppcVar7 = (char **)uVar6;
-  if (uVar1 == uVar2) {
-    *ppcVar7 = "MENU_JOIN_SESSION_INVALID";
-    uVar4 = __restgprlr_26(0);
-    return (bool)uVar4;
+    cVar3 = *pcVar5;
+    cVar1 = *pcVar4;
+    if (cVar3 != cVar1) break;
+    pcVar5 = pcVar5 + 1;
+    pcVar4 = pcVar4 + 1;
+  } while (pcVar5 != (char *)local_48);
+  if (cVar3 == cVar1) {
+    *(int *)param_4 = (int)"MENU_JOIN_SESSION_INVALID";
+    __restgprlr_26(0);
+    return;
   }
-  bVar5 = Social_IsAlreadyConnected(iVar3,param_2,param_3,ppcVar7);
-  if (bVar5) {
-    if (*ppcVar7 == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                      0x3f0,0,"%s");
+  cVar3 = Social_IsAlreadyConnected(uVar2,param_2,param_3,param_4);
+  if (cVar3 != '\0') {
+    if (*(int *)param_4 == 0) {
+      MyAssertHandler(0xffffffff821b4200,0x3f0,0,0xffffffff82000f98,0xffffffff8218ea18);
     }
-    uVar4 = __restgprlr_26(0);
-    return (bool)uVar4;
+    __restgprlr_26(0);
+    return;
   }
-  uVar4 = __restgprlr_26(1);
-  return (bool)uVar4;
+  __restgprlr_26(1);
+  return;
 }
 
 
 // 82707E18  Social_StartJoiningFriend  (social/social_presence.cpp:1017)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Social_StartJoiningFriend(int param_1,ulong64 param_2,XNKID param_3)
+void Social_StartJoiningFriend(undefined8 param_1,undefined8 param_2)
 
 {
   char cVar1;
-  char cVar2;
-  bool bVar5;
-  PartyData *pPVar3;
+  byte bVar2;
+  byte bVar3;
+  char cVar5;
   int iVar4;
-  longlong lVar6;
-  ulong64 *puVar7;
-  byte *pbVar8;
-  ulong64 *puVar9;
-  _XSESSION_INFO *p_Var10;
-  ulong64 uStack00000018;
-  ulong64 local_30;
-  ulong64 local_28 [2];
+  char *pcVar6;
+  byte *pbVar7;
+  char *pcVar8;
+  byte *pbVar9;
+  undefined8 uStack00000018;
+  char local_30 [8];
+  undefined8 local_28 [2];
   
   uStack00000018 = param_2;
   local_28[0] = param_2;
-  Com_Memset(&local_30,0,8);
-  puVar9 = &local_30;
-  puVar7 = local_28;
+  Com_Memset(local_30,0,8);
+  pcVar8 = local_30;
+  pcVar6 = (char *)local_28;
   do {
-    cVar1 = *(char *)puVar9;
-    cVar2 = *(char *)puVar7;
-    if (cVar1 != cVar2) break;
-    puVar9 = (ulong64 *)((int)puVar9 + 1);
-    puVar7 = (ulong64 *)((int)puVar7 + 1);
-  } while (puVar9 != local_28);
-  if (cVar1 == cVar2) {
-    Com_PrintError(0x10,"Social_StartJoiningFriend() found session but session id is blank\n");
-    Live_ThrowError(ERR_DROP,"EXE_HOSTUNREACH");
+    cVar5 = *pcVar8;
+    cVar1 = *pcVar6;
+    if (cVar5 != cVar1) break;
+    pcVar8 = pcVar8 + 1;
+    pcVar6 = pcVar6 + 1;
+  } while (pcVar8 != (char *)local_28);
+  if (cVar5 == cVar1) {
+    Com_PrintError(0x10,0xffffffff821b4470);
+    Live_ThrowError(1,0xffffffff8203252c);
     return;
   }
-  Com_Memcpy(g_launchData.inviteHostInfo,&stack0x00000018,8);
-  g_launchData.invitedXUID = Live_GetXuid(param_1);
-  g_launchData.fromGameInvite = false;
-  g_launchData.inviteState = INVITE_NONE;
+  Com_Memcpy(0xffffffff8425a060,&stack0x00000018,8);
+  DAT_8425a058 = Live_GetXuid(param_1);
+  DAT_8425a09c = 0;
+  DAT_8425a054 = 0;
   XSetLaunchData(0xffffffff84259cc8,1000);
   Session_SetInviteSessionPending();
-  if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
-    p_Var10 = &g_serverSession.dyn.sessionInfo;
-    pbVar8 = (byte *)&stack0x00000018;
+  if (DAT_844c7870 != 0) {
+    pbVar9 = &DAT_844c7874;
+    pbVar7 = (byte *)&stack0x00000018;
     do {
-      lVar6 = (ulonglong)(p_Var10->sessionID).ab[0] - (ulonglong)*pbVar8;
-      if (lVar6 != 0) break;
-      p_Var10 = (_XSESSION_INFO *)((p_Var10->sessionID).ab + 1);
-      pbVar8 = pbVar8 + 1;
-    } while (p_Var10 != (_XSESSION_INFO *)&g_serverSession.dyn.sessionInfo.hostAddress);
-    if ((int)lVar6 == 0) {
-      bVar5 = CL_AllLocalClientsDisconnected();
-      if (bVar5) {
-        pPVar3 = Lobby_GetPartyData();
-        iVar4 = Party_InParty(pPVar3);
+      bVar2 = *pbVar9;
+      bVar3 = *pbVar7;
+      if ((ulonglong)bVar2 - (ulonglong)bVar3 != 0) break;
+      pbVar9 = pbVar9 + 1;
+      pbVar7 = pbVar7 + 1;
+    } while (pbVar9 != &DAT_844c787c);
+    if ((int)((ulonglong)bVar2 - (ulonglong)bVar3) == 0) {
+      cVar5 = CL_AllLocalClientsDisconnected();
+      if (cVar5 != '\0') {
+        Lobby_GetPartyData();
+        iVar4 = Party_InParty();
         if (iVar4 == 0) goto LAB_82707f4c;
       }
-      Com_Printf(0x10,"Received invite to current session.  Not doing anything about it\n");
+      Com_Printf(0x10,0xffffffff8218af48);
       return;
     }
   }
 LAB_82707f4c:
-  bVar5 = CL_AllLocalClientsDisconnected();
-  if (((bVar5) && (iVar4 = Party_InParty(&g_partyData), iVar4 != 0)) &&
-     (bVar5 = PartyUI_ShouldShowInviteWarning(&g_partyData), bVar5)) {
-    UI_ShowAcceptInviteWarning(LOCAL_CLIENT_0);
+  cVar5 = CL_AllLocalClientsDisconnected();
+  if (((cVar5 == '\0') || (iVar4 = Party_InParty(0xffffffff82b55118), iVar4 == 0)) ||
+     (cVar5 = PartyUI_ShouldShowInviteWarning(0xffffffff82b55118), cVar5 == '\0')) {
+    Live_StartConfirmAcceptInvitation();
   }
   else {
-    Live_StartConfirmAcceptInvitation();
+    UI_ShowAcceptInviteWarning(0);
   }
   return;
 }
@@ -1155,53 +1101,46 @@ LAB_82707f4c:
 
 // 82707FD8  Social_JoinPlayer  (social/social_presence.cpp:1065)
 
-void Social_JoinPlayer(int param_1,ulong64 param_2,SocialPresence *param_3)
+void Social_JoinPlayer(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  SocialPresence *pSVar1;
-  uint uVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  XNKID XVar5;
+  ulonglong uVar1;
+  char cVar2;
   char *local_30 [12];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = __savegprlr_29(param_1);
-  if (3 < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
-                    0x42c,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar1 = __savegprlr_29();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821b4200,0x42c,0,0xffffffff82031880,uVar1,4);
   }
   local_30[0] = "XBOXLIVE_CANTJOINSESSION";
-  if ((uVar4 & 0xffffffff) == 0) {
-    Com_PrintError(0x10,"Social_JoinPlayer() failed because the friend info was not found.\n");
-    FriendsMenu_ShowErrorMessage("MENU_JOIN_SESSION_INVALID");
+  if ((param_3 & 0xffffffff) == 0) {
+    Com_PrintError(0x10,0xffffffff821b4588);
+    FriendsMenu_ShowErrorMessage(0xffffffff821aee9c);
     __restgprlr_29();
     return;
   }
-  pSVar1 = (SocialPresence *)uVar4;
-  bVar3 = Social_IsUserJoinable(uVar2,(XNKID)*&(pSVar1->sessionId).ab,param_2,local_30);
-  if (!bVar3) {
-    Com_PrintError(0x10,"Social_JoinPlayer() failed because the player is not available.\n");
+  cVar2 = Social_IsUserJoinable(uVar1,*(undefined8 *)((int)param_3 + 4),param_2,local_30);
+  if (cVar2 == '\0') {
+    Com_PrintError(0x10,0xffffffff821b4540);
     FriendsMenu_ShowErrorMessage(local_30[0]);
     __restgprlr_29();
     return;
   }
-  XVar5.ab = (uchar  [8])(ZEXT48(&stack0x00000000) - 0x30);
-  bVar3 = Social_IsPresenceJoinable(pSVar1,false,XVar5.ab._4_4_);
-  if (!bVar3) {
-    Com_PrintError(0x10,"Social_JoinPlayer() failed because the player presence is not joinable\n");
+  cVar2 = Social_IsPresenceJoinable(param_3,0,local_30);
+  if (cVar2 == '\0') {
+    Com_PrintError(0x10,0xffffffff821b44f8);
     FriendsMenu_ShowErrorMessage(local_30[0]);
     __restgprlr_29();
     return;
   }
-  bVar3 = FriendsMenu_IsAllowedToJoin_Platform(uVar2,local_30);
-  if (!bVar3) {
-    Com_PrintError(0x10,"Social_JoinPlayer() failed because the player is not joinable.\n");
+  cVar2 = FriendsMenu_IsAllowedToJoin_Platform(uVar1,local_30);
+  if (cVar2 == '\0') {
+    Com_PrintError(0x10,0xffffffff821b44b8);
     FriendsMenu_ShowErrorMessage(local_30[0]);
     __restgprlr_29();
     return;
   }
-  Social_StartJoiningFriend(uVar2,*(ulong64 *)(pSVar1->sessionId).ab,XVar5);
+  Social_StartJoiningFriend(uVar1,*(undefined8 *)((int)param_3 + 4));
   __restgprlr_29();
   return;
 }
@@ -1209,81 +1148,62 @@ void Social_JoinPlayer(int param_1,ulong64 param_2,SocialPresence *param_3)
 
 // 82708120  Social_InvitePlayer  (social/social_presence.cpp:1109)
 
-void Social_InvitePlayer(int param_1,ulong64 param_2,SocialPresence *param_3)
+void Social_InvitePlayer(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  int iVar1;
-  bool bVar2;
-  ulonglong uVar3;
+  undefined8 uVar1;
+  char cVar2;
   char *local_30 [12];
   
-  uVar3 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_28(param_1);
+  uVar1 = __savegprlr_28();
   local_30[0] = "PLATFORM_INVITE_SYSTEM_ERROR";
-  bVar2 = FriendsMenu_IsAllowedToInvite(iVar1,local_30);
-  if (!bVar2) {
-    Com_PrintError(0x10,
-                   "Social_InvitePlayer() failed because we are not allowed to invite anyone right now.\n"
-                  );
+  cVar2 = FriendsMenu_IsAllowedToInvite(uVar1,local_30);
+  if (cVar2 == '\0') {
+    Com_PrintError(0x10,0xffffffff821b45d0);
     FriendsMenu_ShowErrorMessage(local_30[0]);
     __restgprlr_28();
     return;
   }
-  if (((uVar3 & 0xffffffff) != 0) &&
-     (bVar2 = Social_IsAlreadyConnected
-                        (iVar1,(XNKID)*(uchar (*) [8])((int)uVar3 + 4),param_2,local_30), bVar2)) {
-    Com_PrintError(0x10,
-                   "MeetPlayer_FeederOnInviteRequest() failed because the player is already connected.\n"
-                  );
+  if (((param_3 & 0xffffffff) != 0) &&
+     (cVar2 = Social_IsAlreadyConnected(uVar1,*(undefined8 *)((int)param_3 + 4),param_2,local_30),
+     cVar2 != '\0')) {
+    Com_PrintError(0x10,0xffffffff821b3988);
     FriendsMenu_ShowErrorMessage(local_30[0]);
     __restgprlr_28();
     return;
   }
-  iVar1 = Friends_SendInviteMessage_Platform(iVar1,param_2);
-  if (iVar1 < 0) {
-    Com_PrintError(0x10,
-                   "FriendsMenu_FeederOnInviteRequest() FriendsMenu_SendInviteMessage_Platform failed with error code %x.\n"
-                  );
-    FriendsMenu_ShowErrorMessage("PLATFORM_INVITE_SYSTEM_ERROR");
+  uVar1 = Friends_SendInviteMessage_Platform(uVar1,param_2);
+  if ((int)uVar1 < 0) {
+    Com_PrintError(0x10,0xffffffff821b3198,uVar1);
+    FriendsMenu_ShowErrorMessage(0xffffffff8218bbfc);
   }
   __restgprlr_28();
   return;
 }
 
 
-// 82706FE8  `default_constructor_closure'  (line unknown)
+// 82706FE8  bdRichPresenceInfo::`default_constructor_closure'  (line unknown)
 
-void __thiscall bdRichPresenceInfo::_default_constructor_closure_(bdRichPresenceInfo *this)
+void bdRichPresenceInfo___default_constructor_closure_(undefined8 param_1)
 
 {
-  bdRichPresenceInfo(this,(uchar *)0x0,0);
+  bdRichPresenceInfo__bdRichPresenceInfo(param_1,0,0);
   return;
 }
 
 
-// 82706FF8  ~bdRichPresenceInfo  (line unknown)
+// 82708B40  SocialPresenceStore::~SocialPresenceStore  (line unknown)
 
-void __thiscall bdRichPresenceInfo::~bdRichPresenceInfo(bdRichPresenceInfo *this)
-
-{
-  this->_padding_ = (int)&bdTaskResult::_vftable_;
-  return;
-}
-
-
-// 82708B40  ~SocialPresenceStore  (line unknown)
-
-void __thiscall SocialPresenceStore::~SocialPresenceStore(SocialPresenceStore *this)
+void SocialPresenceStore___SocialPresenceStore(longlong param_1)
 
 {
   longlong lVar1;
-  bdTaskResult *this_00;
   
-  this_00 = (bdTaskResult *)this->userId;
+  param_1 = param_1 + 0x2260;
   lVar1 = 199;
   do {
-    this_00 = this_00 + -0xb;
-    bdTaskResult::~bdTaskResult(this_00);
+    param_1 = param_1 + -0x2c;
+    bdTaskResult___bdTaskResult(param_1);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
   return;
@@ -1292,55 +1212,47 @@ void __thiscall SocialPresenceStore::~SocialPresenceStore(SocialPresenceStore *t
 
 // 82940CF8  `dynamic_atexit_destructor_for_'s_dwPresenceSetTask''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__s_dwPresenceSetTask__(void)
 
 {
-  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&s_dwPresenceSetTask);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(0xffffffff8456ced0);
   return;
 }
 
 
 // 82940D08  `dynamic_atexit_destructor_for_'s_dwGetTaskBuffer''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__s_dwGetTaskBuffer__(void)
 
 {
-  SocialPresenceStore::~SocialPresenceStore(&s_dwGetTaskBuffer);
+  SocialPresenceStore___SocialPresenceStore(0xffffffff8456a628);
   return;
 }
 
 
 // 82940D18  `dynamic_atexit_destructor_for_'s_dwPresenceGetTask''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__s_dwPresenceGetTask__(void)
 
 {
-  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&s_dwPresenceGetTask);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(0xffffffff84560384);
   return;
 }
 
 
 // 82940D28  `dynamic_atexit_destructor_for_'s_dwPresenceStore''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__s_dwPresenceStore__(void)
 
 {
   longlong lVar1;
-  SocialPresenceStore *pSVar2;
+  longlong lVar2;
   
   lVar1 = 3;
-  pSVar2 = &s_dwGetTaskBuffer;
+  lVar2 = -0x7ba959d8;
   do {
-    pSVar2 = pSVar2 + -1;
-    _vector_destructor_iterator_(pSVar2,0x2c,200,bdRichPresenceInfo::~bdRichPresenceInfo);
+    lVar2 = lVar2 + -0x28a8;
+    _vector_destructor_iterator_(lVar2,0x2c,200,0xffffffff82706ff8);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
   return;

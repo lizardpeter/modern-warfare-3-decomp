@@ -2,47 +2,34 @@
 
 // 827830E0  R_Stats_PrintBspTess  (gfx_d3d/r_stats.cpp:28)
 
-void R_Stats_PrintBspTess(GfxFrontEndStats *param_1)
+void R_Stats_PrintBspTess(void)
 
 {
-  char **ppcVar1;
+  uint *puVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  undefined **ppuVar4;
+  double dVar5;
+  double dVar6;
   
-  __savegprlr_27(param_1);
-  Com_Printf(8,"\n=== Front End Bsp Tess ===\n");
-  Com_Printf(8,"|--------------------|-------|--------|--------|\n");
-  Com_Printf(8,"| merge result       | excl  | excl %% | total  |\n");
-  Com_Printf(8,"|--------------------|-------|--------|--------|\n");
-  ppcVar1 = bspTessStatsLabel;
+  iVar2 = __savegprlr_27();
+  Com_Printf(8,0xffffffff821d1d34);
+  Com_Printf(8,0xffffffff821d1d00);
+  Com_Printf(8,0xffffffff821d1ccc);
+  Com_Printf(8,0xffffffff821d1d00);
+  puVar3 = (undefined4 *)(iVar2 + -4);
+  ppuVar4 = &PTR_s_lighting_829a2ed4;
+  dVar6 = 100.0;
+  dVar5 = (double)(uint)(*(int *)(iVar2 + 0x24) + *(int *)(iVar2 + 0x20) + *(int *)(iVar2 + 0x1c) +
+                         *(int *)(iVar2 + 0x18) + *(int *)(iVar2 + 0x14));
   do {
-    Com_Printf(8,"| %18s | %5d | %6.2f | %6d |\n");
-    ppcVar1 = ppcVar1 + 1;
-  } while ((int)ppcVar1 < -0x7d65d118);
-  Com_Printf(8,"|--------------------|-------|--------|--------|\n");
-  __restgprlr_27();
-  return;
-}
-
-
-// 82783200  R_Stats_Display  (gfx_d3d/r_stats.cpp:49)
-
-/* void __cdecl R_Stats_Display(struct GfxFrontEndStats const *) */
-
-void R_Stats_Display(GfxFrontEndStats *param_1)
-
-{
-  char **ppcVar1;
-  
-  __savegprlr_27(param_1);
-  Com_Printf(8,"\n=== Front End Bsp Tess ===\n");
-  Com_Printf(8,"|--------------------|-------|--------|--------|\n");
-  Com_Printf(8,"| merge result       | excl  | excl %% | total  |\n");
-  Com_Printf(8,"|--------------------|-------|--------|--------|\n");
-  ppcVar1 = bspTessStatsLabel;
-  do {
-    Com_Printf(8,"| %18s | %5d | %6.2f | %6d |\n");
-    ppcVar1 = ppcVar1 + 1;
-  } while ((int)ppcVar1 < -0x7d65d118);
-  Com_Printf(8,"|--------------------|-------|--------|--------|\n");
+    puVar1 = puVar3 + 6;
+    puVar3 = puVar3 + 1;
+    Com_Printf(8,0xffffffff821d1cac,*ppuVar4,*puVar1,
+               (double)(float)((double)(float)((double)*puVar1 / dVar5) * dVar6),*puVar3);
+    ppuVar4 = ppuVar4 + 1;
+  } while ((int)ppuVar4 < -0x7d65d118);
+  Com_Printf(8,0xffffffff821d1d00);
   __restgprlr_27();
   return;
 }
@@ -50,19 +37,17 @@ void R_Stats_Display(GfxFrontEndStats *param_1)
 
 // 82783208  R_ResetStatTracking  (gfx_d3d/r_stats.cpp:55)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_ResetStatTracking(void)
 
 {
-  int *piVar1;
+  undefined4 *puVar1;
   longlong lVar2;
   
-  piVar1 = &marker_r_staticmodelcache_load_obj;
+  puVar1 = (undefined4 *)0x847eebe0;
   lVar2 = 10;
   do {
-    piVar1 = piVar1 + 1;
-    *piVar1 = 0;
+    puVar1 = puVar1 + 1;
+    *puVar1 = 0;
     lVar2 = lVar2 + -1;
   } while (lVar2 != 0);
   return;

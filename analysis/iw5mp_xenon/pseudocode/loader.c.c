@@ -2,54 +2,54 @@
 
 // 828AAEC0  FreeLibrary  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/loader.c:23)
 
-int FreeLibrary(HINSTANCE__ *param_1)
+BOOL FreeLibrary(HMODULE hLibModule)
 
 {
-  long lVar1;
+  int iVar1;
   
-  lVar1 = XexUnloadImage(param_1);
-  if (-1 >= lVar1) {
-    XapiSetLastNTError(lVar1);
+  iVar1 = XexUnloadImage(hLibModule);
+  if (-1 >= iVar1) {
+    XapiSetLastNTError();
   }
-  return (int)(-1 < lVar1);
+  return (BOOL)(-1 < iVar1);
 }
 
 
 // 828AAF18  GetProcAddress  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/loader.c:56)
 
-_func___cdecl_int * GetProcAddress(HINSTANCE__ *param_1,char *param_2)
+FARPROC GetProcAddress(HMODULE hModule,LPCSTR lpProcName)
 
 {
-  long lVar1;
-  _func___cdecl_int *local_20 [2];
+  int iVar1;
+  FARPROC local_20 [2];
   
-  lVar1 = XexGetProcedureAddress(param_1,param_2,local_20);
-  if (-1 < lVar1) {
-    if (local_20[0] == (_func___cdecl_int *)param_1[6].unused) {
-      local_20[0] = (_func___cdecl_int *)0x0;
-      lVar1 = -0x3ffffd9d;
+  iVar1 = XexGetProcedureAddress(hModule,lpProcName,local_20);
+  if (-1 < iVar1) {
+    if (local_20[0] == (FARPROC)hModule[6].unused) {
+      local_20[0] = (FARPROC)0x0;
+      iVar1 = -0x3ffffd9d;
     }
-    if (-1 < lVar1) {
+    if (-1 < iVar1) {
       return local_20[0];
     }
   }
-  XapiSetLastNTError(lVar1);
-  return (_func___cdecl_int *)0x0;
+  XapiSetLastNTError();
+  return (FARPROC)0x0;
 }
 
 
 // 828AAFA8  LoadLibraryA  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/loader.c:92)
 
-HINSTANCE__ * LoadLibraryA(char *param_1)
+HMODULE LoadLibraryA(LPCSTR lpLibFileName)
 
 {
-  long lVar1;
-  HINSTANCE__ *local_20 [4];
+  int iVar1;
+  HMODULE local_20 [4];
   
-  lVar1 = XexLoadImage(param_1,9,0,local_20);
-  if (lVar1 < 0) {
-    XapiSetLastNTError(lVar1);
-    local_20[0] = (HINSTANCE__ *)0x0;
+  iVar1 = XexLoadImage(lpLibFileName,9,0,local_20);
+  if (iVar1 < 0) {
+    XapiSetLastNTError();
+    local_20[0] = (HMODULE)0x0;
   }
   return local_20[0];
 }
@@ -57,25 +57,18 @@ HINSTANCE__ * LoadLibraryA(char *param_1)
 
 // 828AB008  XGetModuleSection  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/loader.c:144)
 
-int XGetModuleSection(void *param_1,char *param_2,void **param_3,ulong *param_4)
+void XGetModuleSection(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
   undefined8 uVar1;
-  long lVar2;
-  int iVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  int iVar2;
   
-  lVar6 = (longlong)(int)param_4;
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1,lVar4,lVar5,lVar6);
-  lVar2 = XexGetModuleSection(uVar1,lVar4,lVar5,lVar6);
-  if (-1 >= lVar2) {
-    XapiSetLastNTError(lVar2);
+  uVar1 = __savegprlr_28();
+  iVar2 = XexGetModuleSection(uVar1,param_2,param_3,param_4);
+  if (-1 >= iVar2) {
+    XapiSetLastNTError();
   }
-  iVar3 = __restgprlr_28(-1 < lVar2);
-  return iVar3;
+  __restgprlr_28(-1 < iVar2);
+  return;
 }
 

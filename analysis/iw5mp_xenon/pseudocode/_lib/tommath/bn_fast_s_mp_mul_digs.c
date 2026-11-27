@@ -24,7 +24,7 @@ void fast_s_mp_mul_digs(undefined8 param_1,uint *param_2,undefined8 param_3,long
   uint uVar18;
   ulonglong uVar19;
   uint uStack_864;
-  uint local_860 [536];
+  undefined1 local_860 [2144];
   uint *puVar15;
   
   puVar7 = (uint *)__savegprlr_21();
@@ -88,7 +88,7 @@ void fast_s_mp_mul_digs(undefined8 param_1,uint *param_2,undefined8 param_3,long
     *puVar4 = uVar18;
     uVar19 = 0;
     if (0 < (longlong)uVar17) {
-      _blkmov();
+      blkmov(uVar6,local_860,(uVar17 & 0x3fffffff) << 2);
       uVar6 = (uVar17 & 0x3fffffff) * 4 + uVar6;
       uVar19 = uVar17;
     }

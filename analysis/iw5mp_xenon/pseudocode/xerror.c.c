@@ -2,10 +2,10 @@
 
 // 828AC2E8  XapiSetLastNTError  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xerror.c:39)
 
-ulong XapiSetLastNTError(long param_1)
+undefined8 XapiSetLastNTError(undefined8 param_1)
 
 {
-  ulong uVar1;
+  undefined8 uVar1;
   
   uVar1 = RtlSetLastNTError(param_1);
   return uVar1;

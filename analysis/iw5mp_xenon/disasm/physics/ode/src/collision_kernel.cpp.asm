@@ -56,7 +56,7 @@ LAB_82683008:
   8268306C  EBE1FFF0             ld r31,-0x10(r1)
   82683070  4E800020             blr
 
-; 82681858  AABBTest  (physics/ode/src/collision_kernel.h:108)
+; 82681858  dxGeom::AABBTest  (physics/ode/src/collision_kernel.h:108)
   82681858  38600001             li r3,0x1
   8268185C  4E800020             blr
 
@@ -470,7 +470,7 @@ LAB_82681d10:
   82681D10  382100A0             addi r1,r1,0xa0
   82681D14  482949E4             b 0x829166f8
 
-; 82683208  dxGeom  (physics/ode/src/collision_kernel.cpp:202)
+; 82683208  dxGeom::dxGeom  (physics/ode/src/collision_kernel.cpp:202)
   82683208  7D8802A6             mfspr r12,LR
   8268320C  482934A9             bl 0x829166b4
   82683210  9421FF80             stwu r1,-0x80(r1)
@@ -549,7 +549,7 @@ LAB_82683314:
   82683320  38210080             addi r1,r1,0x80
   82683324  482933E0             b 0x82916704
 
-; 82681D18  bodyRemove  (physics/ode/src/collision_kernel.cpp:242)
+; 82681D18  dxGeom::bodyRemove  (physics/ode/src/collision_kernel.cpp:242)
   82681D18  81430010             lwz r10,0x10(r3)
   82681D1C  2B0A0000             cmplwi cr6,r10,0x0
   82681D20  4D9A0020             beqlr cr6
@@ -1667,7 +1667,7 @@ LAB_82682bec:
   82682C00  EBE1FFF0             ld r31,-0x10(r1)
   82682C04  4E800020             blr
 
-; 826833E8  dxUserGeom  (physics/ode/src/collision_kernel.cpp:537)
+; 826833E8  dxUserGeom::dxUserGeom  (physics/ode/src/collision_kernel.cpp:537)
   826833E8  7D8802A6             mfspr r12,LR
   826833EC  482932C9             bl 0x829166b4
   826833F0  9421FF80             stwu r1,-0x80(r1)
@@ -1724,7 +1724,7 @@ LAB_8268349c:
   826834B0  38210080             addi r1,r1,0x80
   826834B4  48293250             b 0x82916704
 
-; 82682C08  computeAABB  (physics/ode/src/collision_kernel.cpp:550)
+; 82682C08  dxUserGeom::computeAABB  (physics/ode/src/collision_kernel.cpp:550)
   82682C08  81630004             lwz r11,0x4(r3)
   82682C0C  3D40843D             lis r10,-0x7bc3
   82682C10  3883002C             addi r4,r3,0x2c
@@ -1738,7 +1738,7 @@ LAB_8268349c:
   82682C30  7CC903A6             mtspr CTR,r6
   82682C34  4E800420             bctr
 
-; 82682C38  AABBTest  (physics/ode/src/collision_kernel.cpp:556)
+; 82682C38  dxUserGeom::AABBTest  (physics/ode/src/collision_kernel.cpp:556)
   82682C38  81630004             lwz r11,0x4(r3)
   82682C3C  3D40843D             lis r10,-0x7bc3
   82682C40  396BFFFD             subi r11,r11,0x3
@@ -2204,7 +2204,7 @@ LAB_826837d4:
   82682FA8  80630008             lwz r3,0x8(r3)
   82682FAC  4E800020             blr
 
-; 82681860  `scalar_deleting_destructor'  (line unknown)
+; 82681860  dxGeom::`scalar_deleting_destructor'  (line unknown)
   82681860  7D8802A6             mfspr r12,LR
   82681864  9181FFF8             stw r12,-0x8(r1)
   82681868  FBE1FFF0             std r31,-0x10(r1)
@@ -2235,7 +2235,7 @@ LAB_826818b8:
   826818C8  EBE1FFF0             ld r31,-0x10(r1)
   826818CC  4E800020             blr
 
-; 826837E0  `scalar_deleting_destructor'  (line unknown)
+; 826837E0  dxUserGeom::`scalar_deleting_destructor'  (line unknown)
   826837E0  7D8802A6             mfspr r12,LR
   826837E4  9181FFF8             stw r12,-0x8(r1)
   826837E8  FBE1FFF0             std r31,-0x10(r1)

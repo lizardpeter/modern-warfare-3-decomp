@@ -2,10 +2,10 @@
 
 // 828B3B48  SetFileAttributesA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/setfileattributesa.c:63)
 
-int SetFileAttributesA(char *param_1,ulong param_2)
+BOOL SetFileAttributesA(LPCSTR lpFileName,DWORD dwFileAttributes)
 
 {
-  long lVar1;
+  undefined8 uVar1;
   undefined4 local_70 [2];
   undefined1 auStack_68 [8];
   undefined1 auStack_60 [8];
@@ -18,24 +18,24 @@ int SetFileAttributesA(char *param_1,ulong param_2)
   undefined8 local_28;
   ulonglong local_20;
   
-  RtlInitAnsiString(auStack_68,param_1);
+  RtlInitAnsiString(auStack_68,lpFileName);
   local_54 = auStack_68;
   local_58 = 0xfffffffd;
   local_50 = 0x40;
-  lVar1 = NtOpenFile(local_70,0x100100,&local_58,auStack_60,7,0x4020);
-  if (-1 < lVar1) {
+  uVar1 = NtOpenFile(local_70,0x100100,&local_58,auStack_60,7,0x4020);
+  if (-1 < (int)uVar1) {
     local_40 = 0;
     local_38 = 0;
     local_30 = 0;
     local_28 = 0;
-    local_20 = ((ulonglong)param_2 & 0x3127) << 0x20 | 0x8000000000;
-    lVar1 = NtSetInformationFile(local_70[0],auStack_60,&local_40,0x28,4);
+    local_20 = ((ulonglong)dwFileAttributes & 0x3127) << 0x20 | 0x8000000000;
+    uVar1 = NtSetInformationFile(local_70[0],auStack_60,&local_40,0x28,4);
     NtClose(local_70[0]);
-    if (-1 < lVar1) {
+    if (-1 < (int)uVar1) {
       return 1;
     }
   }
-  RtlSetLastNTError(lVar1);
+  RtlSetLastNTError(uVar1);
   return 0;
 }
 

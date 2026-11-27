@@ -2,36 +2,34 @@
 
 // 82782A78  AssertValidVertexDeclOffsets  (gfx_d3d/r_state_vertex.cpp:830)
 
-void AssertValidVertexDeclOffsets(stream_source_info_t *param_1)
+void AssertValidVertexDeclOffsets(void)
 
 {
-  ushort *puVar1;
-  int iVar2;
-  ushort *puVar3;
-  uint uVar4;
+  ushort uVar1;
+  ushort *puVar2;
+  int iVar3;
+  ushort *puVar4;
   int local_60 [24];
   
-  puVar1 = (ushort *)__savegprlr_22(param_1);
+  puVar2 = (ushort *)__savegprlr_22();
   local_60[0] = -1;
   local_60[1] = 0xffffffff;
-  iVar2 = 0;
-  puVar3 = puVar1;
+  iVar3 = 0;
+  puVar4 = puVar2;
   do {
-    uVar4 = (uint)*puVar3;
-    if (*puVar3 != 0xff) {
-      if (1 < uVar4) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_vertex.cpp"
-                        ,0x34a,0,"%s\n\t(stream) = %i");
+    uVar1 = *puVar4;
+    if (uVar1 != 0xff) {
+      if (1 < uVar1) {
+        MyAssertHandler(0xffffffff821d1a60,0x34a,0,0xffffffff821d1a48,0xffffffff821d19c0,uVar1);
       }
-      if ((-1 < local_60[uVar4]) && (puVar3[1] < puVar1[local_60[uVar4] * 4 + 1])) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_vertex.cpp"
-                        ,0x34c,0,"%s");
+      if ((-1 < local_60[uVar1]) && (puVar4[1] < puVar2[local_60[uVar1] * 4 + 1])) {
+        MyAssertHandler(0xffffffff821d1a60,0x34c,0,0xffffffff82000f98,0xffffffff821d1aa8);
       }
-      local_60[uVar4] = iVar2;
+      local_60[uVar1] = iVar3;
     }
-    iVar2 = iVar2 + 1;
-    puVar3 = puVar3 + 4;
-  } while (iVar2 < 9);
+    iVar3 = iVar3 + 1;
+    puVar4 = puVar4 + 4;
+  } while (iVar3 < 9);
   __restgprlr_22();
   return;
 }
@@ -39,51 +37,47 @@ void AssertValidVertexDeclOffsets(stream_source_info_t *param_1)
 
 // 82782B60  Material_BuildVertexDecl  (gfx_d3d/r_state_vertex.cpp:852)
 
-D3DVertexDeclaration *
-Material_BuildVertexDecl(MaterialStreamRouting *param_1,int param_2,stream_source_info_t *param_3)
+void Material_BuildVertexDecl(undefined8 param_1,longlong param_2,int param_3)
 
 {
   byte bVar1;
-  uchar uVar2;
-  uchar uVar3;
+  undefined1 uVar2;
+  undefined1 uVar3;
   int iVar4;
-  byte *pbVar5;
-  D3DVertexDeclaration *pDVar6;
-  stream_source_info_t *psVar7;
+  byte *pbVar6;
+  undefined8 uVar5;
+  ushort *puVar7;
   ushort *puVar8;
   ulonglong uVar9;
   ushort *puVar10;
-  longlong lVar11;
-  ulonglong uVar12;
-  uint uVar13;
+  ulonglong uVar11;
   ushort local_c7c [2];
   undefined4 local_c78;
-  _D3DVERTEXELEMENT9 local_c70 [265];
+  ushort local_c70 [2];
+  undefined4 local_c6c;
+  undefined4 local_c68;
   
-  lVar11 = (longlong)param_2;
-  pbVar5 = (byte *)__savegprlr_20(param_1);
+  pbVar6 = (byte *)__savegprlr_20();
   local_c78._2_2_ = local_c78._2_2_ & 0xff;
   local_c78 = (uint)local_c78._2_2_;
-  uVar12 = 0;
-  if ((int)lVar11 != 0) {
+  uVar11 = 0;
+  if ((int)param_2 != 0) {
     puVar10 = local_c7c;
     do {
-      if (8 < *pbVar5) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_vertex.cpp"
-                        ,0x366,0,
-                        "routingData->source doesn\'t index STREAM_SRC_COUNT\n\t%i not in [0, %i)");
+      if (8 < *pbVar6) {
+        MyAssertHandler(0xffffffff821d1a60,0x366,0,0xffffffff821d1b88,*pbVar6,9);
       }
-      psVar7 = param_3 + *pbVar5;
-      if (param_3[*pbVar5].Stream == 0xff) {
-        pDVar6 = (D3DVertexDeclaration *)__restgprlr_20(0);
-        return pDVar6;
+      puVar7 = (ushort *)((uint)*pbVar6 * 8 + param_3);
+      if (*(short *)((uint)*pbVar6 * 8 + param_3) == 0xff) {
+        __restgprlr_20(0);
+        return;
       }
-      bVar1 = pbVar5[1];
-      uVar9 = uVar12;
+      bVar1 = pbVar6[1];
+      uVar9 = uVar11;
       puVar8 = puVar10;
-      if (0 < (int)uVar12) {
+      if (0 < (int)uVar11) {
         do {
-          if (*puVar8 <= psVar7->Stream) break;
+          if (*puVar8 <= *puVar7) break;
           uVar9 = uVar9 - 1;
           *(undefined4 *)(puVar8 + 6) = *(undefined4 *)puVar8;
           *(undefined4 *)(puVar8 + 8) = *(undefined4 *)(puVar8 + 2);
@@ -91,58 +85,58 @@ Material_BuildVertexDecl(MaterialStreamRouting *param_1,int param_2,stream_sourc
           puVar8 = puVar8 + -6;
         } while (0 < (longlong)uVar9);
       }
-      uVar2 = s_streamDestInfo[bVar1].Usage;
-      uVar3 = s_streamDestInfo[bVar1].UsageIndex;
+      uVar2 = (&DAT_821d13bc)[(uint)bVar1 * 2];
+      uVar3 = (&DAT_821d13bd)[(uint)bVar1 * 2];
       iVar4 = (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
-      *(ushort *)((int)&local_c70[0].Stream + iVar4) = psVar7->Stream;
-      lVar11 = lVar11 + -1;
-      uVar12 = uVar12 + 1;
-      *(ushort *)((int)&local_c70[0].Offset + iVar4) = psVar7->Offset;
+      *(ushort *)((int)local_c70 + iVar4) = *puVar7;
+      param_2 = param_2 + -1;
+      uVar11 = uVar11 + 1;
+      *(ushort *)((int)local_c70 + iVar4 + 2) = puVar7[1];
       puVar10 = puVar10 + 6;
-      pbVar5 = pbVar5 + 2;
-      *(ulong *)((int)&local_c70[0].Type + iVar4) = psVar7->Type;
-      (&local_c70[0].Method)[iVar4] = '\0';
-      (&local_c70[0].Usage)[iVar4] = uVar2;
-      (&local_c70[0].UsageIndex)[iVar4] = uVar3;
-    } while (lVar11 != 0);
+      pbVar6 = pbVar6 + 2;
+      *(undefined4 *)((int)local_c70 + iVar4 + 4) = *(undefined4 *)(puVar7 + 2);
+      *(undefined1 *)((int)&local_c68 + iVar4) = 0;
+      *(undefined1 *)((int)&local_c68 + iVar4 + 1) = uVar2;
+      *(undefined1 *)((int)&local_c68 + iVar4 + 2) = uVar3;
+    } while (param_2 != 0);
   }
-  iVar4 = (int)((uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
-  *(undefined4 *)((int)&local_c70[0].Stream + iVar4) = 0xff0000;
-  *(undefined4 *)((int)&local_c70[0].Type + iVar4) = 0xffffffff;
-  *(uint *)(&local_c70[0].Method + iVar4) = local_c78;
+  iVar4 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+  *(undefined4 *)((int)local_c70 + iVar4) = 0xff0000;
+  *(undefined4 *)((int)local_c70 + iVar4 + 4) = 0xffffffff;
+  *(uint *)((int)&local_c68 + iVar4) = local_c78;
   do {
-    pDVar6 = D3DDevice_CreateVertexDeclaration(local_c70);
-    uVar13 = -(uint)(pDVar6 == (D3DVertexDeclaration *)0x0) & 0x8007000e;
-    if ((int)uVar13 < 0) {
-      R_ErrorDescription(uVar13);
-                    /* WARNING: Subroutine does not return */
-      Sys_Error(
-               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_vertex.cpp (%i) dx.device->CreateVertexDeclaration( elemTable, &decl ) failed: %s\n"
-               );
-    }
-  } while (alwaysfails != 0);
-  if (pDVar6 == (D3DVertexDeclaration *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_vertex.cpp",
-                    0x37e,0,"%s");
+    uVar11 = D3DDevice_CreateVertexDeclaration(local_c70);
+    uVar9 = -(ulonglong)(uVar11 == 0) & 0xffffffff8007000e;
+    if ((int)uVar9 < 0) goto LAB_82782d30;
+  } while (DAT_84013128 != 0);
+LAB_82782d54:
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821d1a60,0x37e,0,0xffffffff82000f98,0xffffffff821d1af0);
   }
-  pDVar6 = (D3DVertexDeclaration *)__restgprlr_20(pDVar6);
-  return pDVar6;
+  __restgprlr_20(uVar11);
+  return;
+LAB_82782d30:
+  do {
+    uVar5 = R_ErrorDescription(uVar9);
+    Sys_Error(0xffffffff821d1af8,0x37c,uVar5);
+  } while (DAT_84013128 != 0);
+  goto LAB_82782d54;
 }
 
 
 // 82782D88  Load_BuildVertexDecl  (gfx_d3d/r_state_vertex.cpp:927)
 
-void Load_BuildVertexDecl(MaterialVertexDeclaration **param_1)
+void Load_BuildVertexDecl(void)
 
 {
   byte bVar1;
-  uchar uVar2;
-  uchar uVar3;
-  ushort uVar4;
+  undefined1 uVar2;
+  undefined1 uVar3;
+  undefined2 uVar4;
   ushort uVar5;
-  ulong uVar6;
-  int *piVar7;
-  D3DVertexDeclaration *pDVar8;
+  undefined4 uVar6;
+  int *piVar8;
+  undefined8 uVar7;
   ushort *puVar9;
   int iVar11;
   ulonglong uVar10;
@@ -150,97 +144,96 @@ void Load_BuildVertexDecl(MaterialVertexDeclaration **param_1)
   ushort *puVar13;
   ulonglong uVar14;
   byte *pbVar15;
-  ulonglong uVar16;
-  uint uVar17;
+  uint uVar16;
+  ulonglong uVar17;
   int local_cd0;
   undefined4 local_cc0;
   byte local_cb0 [20];
   ushort local_c9c [6];
-  _D3DVERTEXELEMENT9 local_c90 [268];
+  ushort local_c90 [2];
+  undefined4 local_c8c;
+  undefined4 local_c88;
   
-  piVar7 = (int *)__savegprlr_15(param_1);
-  memcpy();
+  piVar8 = (int *)__savegprlr_15();
+  memcpy(local_cb0,(void *)(*piVar8 + 4),0x1a);
   local_cd0 = 0;
   iVar12 = 0;
-  do {
-    pbVar15 = local_cb0;
-    uVar16 = 0;
-    uVar5 = (ushort)local_cc0;
-    uVar14 = (ulonglong)*(byte *)*piVar7;
-    local_cc0 = (uint)(uVar5 & 0xff);
-    if (*(byte *)*piVar7 != 0) {
-      puVar13 = local_c9c;
-      do {
-        bVar1 = *pbVar15;
-        if (8 < bVar1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_vertex.cpp"
-                          ,0x366,0,
-                          "routingData->source doesn\'t index STREAM_SRC_COUNT\n\t%i not in [0, %i)"
-                         );
-        }
-        iVar11 = iVar12 + (uint)bVar1;
-        uVar5 = s_streamSourceInfo[0][iVar11].Stream;
-        if (uVar5 == 0xff) {
-          pDVar8 = (D3DVertexDeclaration *)0x0;
-          goto LAB_82782fd8;
-        }
-        bVar1 = pbVar15[1];
-        uVar10 = uVar16;
-        puVar9 = puVar13;
-        if (0 < (int)uVar16) {
-          do {
-            if (*puVar9 <= uVar5) break;
-            uVar10 = uVar10 - 1;
-            *(undefined4 *)(puVar9 + 6) = *(undefined4 *)puVar9;
-            *(undefined4 *)(puVar9 + 8) = *(undefined4 *)(puVar9 + 2);
-            *(undefined4 *)(puVar9 + 10) = *(undefined4 *)(puVar9 + 4);
-            puVar9 = puVar9 + -6;
-          } while (0 < (longlong)uVar10);
-        }
-        uVar4 = s_streamSourceInfo[0][iVar11].Offset;
-        uVar6 = s_streamSourceInfo[0][iVar11].Type;
-        uVar2 = s_streamDestInfo[bVar1].Usage;
-        uVar3 = s_streamDestInfo[bVar1].UsageIndex;
-        uVar14 = uVar14 - 1;
-        iVar11 = (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
-        *(ushort *)((int)&local_c90[0].Stream + iVar11) = uVar5;
-        *(ushort *)((int)&local_c90[0].Offset + iVar11) = uVar4;
-        uVar16 = uVar16 + 1;
-        *(ulong *)((int)&local_c90[0].Type + iVar11) = uVar6;
-        puVar13 = puVar13 + 6;
-        (&local_c90[0].Method)[iVar11] = '\0';
-        pbVar15 = pbVar15 + 2;
-        (&local_c90[0].Usage)[iVar11] = uVar2;
-        (&local_c90[0].UsageIndex)[iVar11] = uVar3;
-      } while (uVar14 != 0);
-    }
-    iVar11 = (int)((uVar16 + (uVar16 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
-    *(undefined4 *)((int)&local_c90[0].Stream + iVar11) = 0xff0000;
-    *(undefined4 *)((int)&local_c90[0].Type + iVar11) = 0xffffffff;
-    *(uint *)(&local_c90[0].Method + iVar11) = local_cc0;
+LAB_82782e00:
+  pbVar15 = local_cb0;
+  uVar17 = 0;
+  uVar5 = (ushort)local_cc0;
+  uVar14 = (ulonglong)*(byte *)*piVar8;
+  local_cc0 = (uint)(uVar5 & 0xff);
+  if (*(byte *)*piVar8 != 0) {
+    puVar13 = local_c9c;
     do {
-      pDVar8 = D3DDevice_CreateVertexDeclaration(local_c90);
-      uVar17 = -(uint)(pDVar8 == (D3DVertexDeclaration *)0x0) & 0x8007000e;
-      if ((int)uVar17 < 0) {
-        R_ErrorDescription(uVar17);
-                    /* WARNING: Subroutine does not return */
-        Sys_Error(
-                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_vertex.cpp (%i) dx.device->CreateVertexDeclaration( elemTable, &decl ) failed: %s\n"
-                 );
+      uVar16 = (uint)*pbVar15;
+      if (8 < uVar16) {
+        MyAssertHandler(0xffffffff821d1a60,0x366,0,0xffffffff821d1b88,uVar16,9);
       }
-    } while (alwaysfails != 0);
-    if (pDVar8 == (D3DVertexDeclaration *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_vertex.cpp",
-                      0x37e,0,"%s");
-    }
+      iVar11 = (iVar12 + uVar16) * 8;
+      uVar5 = *(ushort *)(&DAT_821d13d8 + iVar11);
+      if (uVar5 == 0xff) {
+        uVar14 = 0;
+        goto LAB_82782fd8;
+      }
+      bVar1 = pbVar15[1];
+      uVar10 = uVar17;
+      puVar9 = puVar13;
+      if (0 < (int)uVar17) {
+        do {
+          if (*puVar9 <= uVar5) break;
+          uVar10 = uVar10 - 1;
+          *(undefined4 *)(puVar9 + 6) = *(undefined4 *)puVar9;
+          *(undefined4 *)(puVar9 + 8) = *(undefined4 *)(puVar9 + 2);
+          *(undefined4 *)(puVar9 + 10) = *(undefined4 *)(puVar9 + 4);
+          puVar9 = puVar9 + -6;
+        } while (0 < (longlong)uVar10);
+      }
+      uVar4 = *(undefined2 *)(&DAT_821d13da + iVar11);
+      uVar6 = *(undefined4 *)(&DAT_821d13dc + iVar11);
+      uVar2 = (&DAT_821d13bc)[(uint)bVar1 * 2];
+      uVar3 = (&DAT_821d13bd)[(uint)bVar1 * 2];
+      uVar14 = uVar14 - 1;
+      iVar11 = (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+      *(ushort *)((int)local_c90 + iVar11) = uVar5;
+      *(undefined2 *)((int)local_c90 + iVar11 + 2) = uVar4;
+      uVar17 = uVar17 + 1;
+      *(undefined4 *)((int)local_c90 + iVar11 + 4) = uVar6;
+      puVar13 = puVar13 + 6;
+      *(undefined1 *)((int)&local_c88 + iVar11) = 0;
+      pbVar15 = pbVar15 + 2;
+      *(undefined1 *)((int)&local_c88 + iVar11 + 1) = uVar2;
+      *(undefined1 *)((int)&local_c88 + iVar11 + 2) = uVar3;
+    } while (uVar14 != 0);
+  }
+  iVar11 = (int)((uVar17 + (uVar17 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+  *(undefined4 *)((int)local_c90 + iVar11) = 0xff0000;
+  *(undefined4 *)((int)local_c90 + iVar11 + 4) = 0xffffffff;
+  *(uint *)((int)&local_c88 + iVar11) = local_cc0;
+  do {
+    uVar14 = D3DDevice_CreateVertexDeclaration(local_c90);
+    uVar17 = -(ulonglong)(uVar14 == 0) & 0xffffffff8007000e;
+    if ((int)uVar17 < 0) goto LAB_82782f90;
+  } while (DAT_84013128 != 0);
+  goto LAB_82782fb4;
+LAB_82782f90:
+  do {
+    uVar7 = R_ErrorDescription(uVar17);
+    Sys_Error(0xffffffff821d1af8,0x37c,uVar7);
+  } while (DAT_84013128 != 0);
+LAB_82782fb4:
+  if ((uVar14 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821d1a60,0x37e,0,&DAT_82000f98,&DAT_821d1af0);
+  }
 LAB_82782fd8:
-    iVar12 = iVar12 + 9;
-    *(D3DVertexDeclaration **)(local_cd0 + *piVar7 + 4) = pDVar8;
-    local_cd0 = local_cd0 + 4;
-    if (0xbc < iVar12) {
-      __restgprlr_15();
-      return;
-    }
-  } while( true );
+  iVar12 = iVar12 + 9;
+  *(int *)(local_cd0 + *piVar8 + 4) = (int)uVar14;
+  local_cd0 = local_cd0 + 4;
+  if (0xbc < iVar12) {
+    __restgprlr_15();
+    return;
+  }
+  goto LAB_82782e00;
 }
 

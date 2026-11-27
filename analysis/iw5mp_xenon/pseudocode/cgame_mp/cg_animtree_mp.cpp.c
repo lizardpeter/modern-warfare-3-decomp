@@ -2,8 +2,6 @@
 
 // 822A4D18  CGScr_LoadAnimTrees  (cgame_mp/cg_animtree_mp.cpp:22)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CGScr_LoadAnimTrees(void)
 
 {
@@ -13,37 +11,300 @@ void CGScr_LoadAnimTrees(void)
 
 
 // 822A4D20  CG_SetDObjInfo  (cgame_mp/cg_animtree_mp.cpp:36)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_SetDObjInfo(undefined8 param_1,longlong param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  if (((int)param_2 < 0) || (0x7ff < (int)param_2)) {
+    MyAssertHandler(0xffffffff82010020,0x27,0,0xffffffff82000f98,0xffffffff82010068);
+  }
+  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  *(undefined4 *)((int)((param_2 + 0x1c161U & 0xffffffff) << 2) + iVar2) = param_3;
+  *(undefined4 *)((int)((param_2 + 0x1c961U & 0xffffffff) << 2) + iVar2) = param_4;
+  __restgprlr_28();
+  return;
+}
+
 
 // 822A4DA0  CG_CheckDObjInfoMatches  (cgame_mp/cg_animtree_mp.cpp:56)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_CheckDObjInfoMatches(undefined8 param_1,longlong param_2,int param_3,ulonglong param_4)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  if (((int)param_2 < 0) || (0x7ff < (int)param_2)) {
+    MyAssertHandler(0xffffffff82010020,0x3b,0,0xffffffff82000f98,0xffffffff82010068);
+  }
+  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  if (*(int *)((int)((param_2 + 0x1c161U & 0xffffffff) << 2) + iVar2) == param_3) {
+    uVar1 = 1;
+    if ((ulonglong)*(uint *)((int)((param_2 + 0x1c961U & 0xffffffff) << 2) + iVar2) ==
+        (param_4 & 0xffffffff)) goto LAB_822a4e30;
+  }
+  uVar1 = 0;
+LAB_822a4e30:
+  __restgprlr_28(uVar1);
+  return;
+}
+
 
 // 822A4E38  CG_SetDObjWeaponID  (cgame_mp/cg_animtree_mp.cpp:77)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_SetDObjWeaponID(undefined8 param_1,longlong param_2,undefined4 param_3)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  if (((int)param_2 < 0) || (0x7ff < (int)param_2)) {
+    MyAssertHandler(0xffffffff82010020,0x50,0,0xffffffff82000f98,0xffffffff82010068);
+  }
+  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  *(undefined4 *)(iVar2 + (int)((param_2 + 0x1d161U & 0xffffffff) << 2)) = param_3;
+  __restgprlr_29();
+  return;
+}
+
 
 // 822A4EA8  CG_CheckDObjWeaponID  (cgame_mp/cg_animtree_mp.cpp:95)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_CheckDObjWeaponID(undefined8 param_1,longlong param_2,int param_3)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  if (((int)param_2 < 0) || (0x7ff < (int)param_2)) {
+    MyAssertHandler(0xffffffff82010020,0x62,0,0xffffffff82000f98,0xffffffff82010068);
+  }
+  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  __restgprlr_29(param_3 == *(int *)((int)((param_2 + 0x1d161U & 0xffffffff) << 2) + iVar2));
+  return;
+}
+
 
 // 822A5348  CG_SafeDObjFree  (cgame_mp/cg_animtree_mp.cpp:118)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
+
+void CG_SafeDObjFree(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = CG_GetEntity();
+  if (*(int *)(iVar2 + 200) == 6) {
+    CG_FreeScriptModelAnim(uVar1,*(undefined4 *)(iVar2 + 0xc4));
+  }
+  Com_SafeClientDObjFree(param_2,uVar1);
+  CG_SetDObjInfo(uVar1,param_2,0,0);
+  if (*(int *)(iVar2 + 0x1e0) != 0) {
+    Com_XAnimFreeSmallTree();
+    *(undefined4 *)(iVar2 + 0x1e0) = 0;
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 822A53C0  CG_FreeEntityDObjInfo  (cgame_mp/cg_animtree_mp.cpp:147)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_FreeEntityDObjInfo(void)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar5;
+  
+  uVar2 = __savegprlr_17();
+  uVar5 = 0;
+  iVar4 = 0x72584;
+  do {
+    if (0x7ff < (uVar5 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8200ffd8,0x6b4,0,0xffffffff820012f4,uVar5,0x800);
+    }
+    if ((ulonglong)DAT_82a38328 <= (uVar2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8200ffd8,0x6b9,0,0xffffffff820012b0,uVar2);
+    }
+    iVar3 = (int)uVar5;
+    iVar1 = ((int)uVar2 * 0x800 + iVar3) * 0x1ec + DAT_82a3ce28;
+    if (*(int *)(iVar1 + 200) == 6) {
+      CG_FreeScriptModelAnim(uVar2,*(undefined4 *)(iVar1 + 0xc4));
+    }
+    Com_SafeClientDObjFree(uVar5,uVar2);
+    if ((iVar3 < 0) || (0x7ff < iVar3)) {
+      MyAssertHandler(0xffffffff82010020,0x27,0,0xffffffff82000f98,0xffffffff82010068);
+    }
+    iVar3 = CG_GetLocalClientGlobals(uVar2);
+    *(undefined4 *)(iVar4 + iVar3) = 0;
+    *(undefined4 *)(iVar4 + iVar3 + -0x2000) = 0;
+    if (*(int *)(iVar1 + 0x1e0) != 0) {
+      Com_XAnimFreeSmallTree();
+      *(undefined4 *)(iVar1 + 0x1e0) = 0;
+    }
+    iVar4 = iVar4 + 4;
+    uVar5 = uVar5 + 1;
+  } while (iVar4 < 0x74584);
+  __restgprlr_17();
+  return;
+}
+
 
 // 822A4F20  CG_FreeScriptModelAnim  (cgame_mp/cg_animtree_mp.cpp:156)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
+
+void CG_FreeScriptModelAnim(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  
+  uVar1 = __savegprlr_28();
+  uVar2 = Com_GetClientDObj(param_2,uVar1);
+  if (((uVar2 & 0xffffffff) != 0) && (uVar3 = DObjGetTree(), (uVar3 & 0xffffffff) != 0)) {
+    DObjSetTree(uVar2,0);
+    iVar4 = CG_GetEntity(uVar1,param_2);
+    if ((uVar3 & 0xffffffff) != (ulonglong)*(uint *)(iVar4 + 0x1e0)) {
+      if (*(uint *)(iVar4 + 0x1e0) != 0) {
+        MyAssertHandler(0xffffffff82010020,0xb0,0,0xffffffff82000f98,0xffffffff82010090);
+      }
+      if (*(char *)(iVar4 + 2) == '\x06') {
+        XAnimFreeSimpleTree(uVar3);
+      }
+    }
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 822A4FD0  CG_ClearScriptModelAnims  (cgame_mp/cg_animtree_mp.cpp:184)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ClearScriptModelAnims(void)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = CG_GetLocalClientGlobals();
+  iVar2 = *(int *)(iVar2 + 0x335c);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82010020,0xc0,0,0xffffffff82000f98,0xffffffff8201009c);
+  }
+  iVar3 = 0;
+  if (0 < *(int *)(iVar2 + 0x330c)) {
+    puVar4 = (undefined4 *)(iVar2 + 0x3314);
+    do {
+      if (puVar4[1] == 6) {
+        CG_FreeScriptModelAnim(uVar1,*puVar4);
+      }
+      iVar3 = iVar3 + 1;
+      puVar4 = puVar4 + 0x40;
+    } while (iVar3 < *(int *)(iVar2 + 0x330c));
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 822A5060  CG_UpdateScriptModelAnim  (cgame_mp/cg_animtree_mp.cpp:204)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
+
+void CG_UpdateScriptModelAnim(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  bool bVar2;
+  bool bVar3;
+  undefined8 uVar4;
+  ulonglong uVar5;
+  char cVar7;
+  int iVar6;
+  double dVar8;
+  
+  uVar4 = __savegprlr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82010020,0xd3,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82010020,0xd4,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  uVar5 = DObjGetTree(param_3);
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 0x120) == 0) {
+    if ((uVar5 & 0xffffffff) != 0) {
+      DObjSetTree(param_3,0);
+      if (*(int *)(iVar1 + 0x1e0) != 0) {
+        MyAssertHandler(0xffffffff82010020,0xe0,0,0xffffffff82000f98,0xffffffff82010090);
+      }
+      XAnimFreeSimpleTree(uVar5);
+      __restgprlr_23();
+      return;
+    }
+  }
+  else {
+    bVar3 = true;
+    bVar2 = false;
+    cVar7 = CL_Demo_IsPlaying(uVar4);
+    if (cVar7 != '\0') {
+      cVar7 = CL_Demo_GetJumpTimeFlag();
+      if (((cVar7 == '\0') || ((undefined4 *)*(int *)param_3 == (undefined4 *)0x0)) ||
+         (cVar7 = XAnimIsLooped(*(undefined4 *)*(int *)param_3,1), cVar7 == '\0')) {
+        if ((*(int *)(iVar1 + 0x124) == 0) || (*(int *)(iVar1 + 0xb4) == 0)) {
+          bVar3 = false;
+        }
+      }
+      else {
+        bVar2 = true;
+      }
+    }
+    if (((((uVar5 & 0xffffffff) == 0) || (*(int *)(iVar1 + 0x120) != *(int *)(iVar1 + 0xb0))) ||
+        ((*(int *)(iVar1 + 0x124) != *(int *)(iVar1 + 0xb4) || (bVar2)))) && (bVar3)) {
+      iVar6 = CG_GetLocalClientGlobals(uVar4);
+      if (*(int *)(iVar6 + 0x335c) == 0) {
+        MyAssertHandler(0xffffffff82010020,0xfe,0,0xffffffff82000f98,0xffffffff82002858);
+      }
+      if (0x3e < *(uint *)(iVar1 + 0x120)) {
+        MyAssertHandler(0xffffffff82010020,0x100,0,0xffffffff820100b0,*(uint *)(iVar1 + 0x120),0x3f)
+        ;
+      }
+      uVar4 = CL_GetConfigString((ulonglong)*(uint *)(iVar1 + 0x120) + 0xe29);
+      dVar8 = (double)((float)(longlong)
+                              (*(int *)(*(int *)(iVar6 + 0x335c) + 0x3308) - *(int *)(iVar1 + 0x124)
+                              ) * 0.001);
+      if ((uVar5 & 0xffffffff) != 0) {
+        DObjSetTree(param_3,0);
+        if (*(int *)(iVar1 + 0x1e0) != 0) {
+          MyAssertHandler(0xffffffff82010020,0x107,0,0xffffffff82000f98,0xffffffff82010090);
+        }
+        XAnimFreeSimpleTree(uVar5);
+      }
+      if (*(int *)(iVar1 + 0x1e0) != 0) {
+        MyAssertHandler(0xffffffff82010020,0x10b,0,0xffffffff82000f98,0xffffffff82010090);
+      }
+      uVar5 = XAnimCreateSimpleTree(uVar4);
+      if ((uVar5 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff82010020,0x10d,0,0xffffffff82000f98,0xffffffff820100a4);
+      }
+      DObjSetTree(param_3,uVar5);
+      XAnimPlaySimpleTreeAnim(dVar8,param_3);
+    }
+  }
+  __restgprlr_23();
+  return;
+}
+

@@ -2,15 +2,13 @@
 
 // 826EBCF8  DW_InitMemoryFuncs  (DW/dwMemory.cpp:20)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DW_InitMemoryFuncs(void)
 
 {
-  if (!s_dwMemInited) {
-    s_dwMemInited = true;
-    bdHeap::init(s_Flags,0x20000);
-    bdCore::init(true);
+  if (DAT_844f65cc == '\0') {
+    DAT_844f65cc = '\x01';
+    bdHeap__init(DAT_844f65c8,0x20000);
+    bdCore__init(1);
   }
   return;
 }
@@ -18,15 +16,13 @@ void DW_InitMemoryFuncs(void)
 
 // 826EBD48  DW_ShutdownMemoryFuncs  (DW/dwMemory.cpp:33)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DW_ShutdownMemoryFuncs(void)
 
 {
-  if (s_dwMemInited) {
-    bdHeap::quit();
-    bdCore::quit();
-    s_dwMemInited = false;
+  if (DAT_844f65cc != '\0') {
+    bdHeap__quit();
+    bdCore__quit();
+    DAT_844f65cc = '\0';
   }
   return;
 }

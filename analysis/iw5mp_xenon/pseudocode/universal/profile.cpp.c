@@ -2,95 +2,88 @@
 
 // 82607D90  TRACK_profile  (universal/profile.cpp:300)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_profile(void)
 
 {
-  track_static_alloc_internal(g_profileStack,0x400,"g_profileStack",0);
-  track_static_alloc_internal(g_prof_stack,0x416b8,"g_prof_stack",0);
-  track_static_alloc_internal(&profileScript,0x68c,"profileScript",0);
+  track_static_alloc_internal(0xffffffff841849f8,0x400,0xffffffff8217fce0,0);
+  track_static_alloc_internal(0xffffffff841432e0,0x416b8,0xffffffff8217fcd0,0);
+  track_static_alloc_internal(0xffffffff84184f78,0x68c,0xffffffff8217fcc0,0);
   return;
 }
 
 
 // 82607E08  Profile_Init  (universal/profile.cpp:316)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Profile_Init(void)
 
 {
   char cVar1;
   char cVar2;
-  char *pcVar3;
+  undefined8 uVar3;
   char *pcVar4;
-  int iVar5;
-  char **ppcVar6;
-  undefined4 *puVar7;
+  char *pcVar5;
+  int iVar6;
+  undefined **ppuVar7;
+  undefined **ppuVar8;
   
   __savegprlr_21();
-  puVar7 = (undefined4 *)&s_profileArrays;
-  iVar5 = 0;
-  ppcVar6 = prof_pageNames + 8;
+  ppuVar8 = &PTR_DAT_82180c40;
+  iVar6 = 0;
+  ppuVar7 = &PTR_DAT_82993e88;
   do {
-    if (*ppcVar6 == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x142
-                      ,0,"%s\n\t(s_profileArrays[profPageIter].name) = %s");
+    if (*ppuVar7 == (undefined *)0x0) {
+      MyAssertHandler(0xffffffff8217ff48,0x142,0,0xffffffff8217ff18,0xffffffff8217fe78,*ppuVar8);
     }
-    pcVar3 = *ppcVar6;
-    pcVar4 = (char *)*puVar7;
+    pcVar4 = *ppuVar7;
+    pcVar5 = *ppuVar8;
     do {
-      cVar1 = *pcVar4;
-      cVar2 = *pcVar3;
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar4;
       if (cVar1 == '\0') break;
+      pcVar5 = pcVar5 + 1;
       pcVar4 = pcVar4 + 1;
-      pcVar3 = pcVar3 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      va("%s != %s");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x143
-                      ,0,"%s\n\t%s");
+      uVar3 = va(0xffffffff8217ff88);
+      MyAssertHandler(0xffffffff8217ff48,0x143,0,0xffffffff820011f4,0xffffffff8217feb0,uVar3);
     }
-    iVar5 = iVar5 + 1;
-    ppcVar6 = ppcVar6 + 1;
-    puVar7 = (undefined4 *)(&s_profileArrays + iVar5 * 0x20);
-  } while (*(int *)(&s_profileArrays + iVar5 * 0x20) != 0);
-  iVar5 = 0;
-  puVar7 = (undefined4 *)&s_profile2Arrays;
-  ppcVar6 = prof2_pageNames;
+    iVar6 = iVar6 + 1;
+    ppuVar7 = ppuVar7 + 1;
+    ppuVar8 = &PTR_DAT_82180c40 + iVar6 * 8;
+  } while ((&PTR_DAT_82180c40)[iVar6 * 8] != (undefined *)0x0);
+  iVar6 = 0;
+  ppuVar8 = &PTR_s_default_821810b8;
+  ppuVar7 = &PTR_s_default_82993f0c;
   do {
-    ppcVar6 = ppcVar6 + 1;
-    if (*ppcVar6 == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x148
-                      ,0,"%s\n\t(s_profile2Arrays[profPageIter].name) = %s");
+    if (*ppuVar7 == (undefined *)0x0) {
+      MyAssertHandler(0xffffffff8217ff48,0x148,0,0xffffffff8217fe48,0xffffffff8217fda4,*ppuVar8);
     }
-    pcVar3 = *ppcVar6;
-    pcVar4 = (char *)*puVar7;
+    pcVar4 = *ppuVar7;
+    pcVar5 = *ppuVar8;
     do {
-      cVar1 = *pcVar4;
-      cVar2 = *pcVar3;
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar4;
       if (cVar1 == '\0') break;
+      pcVar5 = pcVar5 + 1;
       pcVar4 = pcVar4 + 1;
-      pcVar3 = pcVar3 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      va("%s != %s");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x149
-                      ,0,"%s\n\t%s");
+      uVar3 = va(0xffffffff8217ff88);
+      MyAssertHandler(0xffffffff8217ff48,0x149,0,0xffffffff820011f4,0xffffffff8217fde0,uVar3);
     }
-    iVar5 = iVar5 + 1;
-    puVar7 = (undefined4 *)(&s_profile2Arrays + iVar5 * 0x20);
-    if (*(int *)(&s_profile2Arrays + iVar5 * 0x20) == 0) {
-      profile = Dvar_RegisterEnum("profile",prof_pageNames,0,0,"Type of profiling");
-      profile2 = Dvar_RegisterEnum("profile2",prof2_pageNames,0,0,"Type of profiling");
-      profile2_mode = Dvar_RegisterInt("profile2_mode",0,0,1,0,"Reporting mode");
-      profile2_frames =
-           Dvar_RegisterInt("profile2_frames",0x3c,1,0x7fffffff,0,"Profile frame count");
-      profile_rowcount = Dvar_RegisterInt("profile_rowcount",0x14,0,0x28,0,"Profile row count");
-      profile_thread =
-           Dvar_RegisterEnum("profile_thread",g_profile_thread_values,0xe,0,"Thread being profiled")
+    iVar6 = iVar6 + 1;
+    ppuVar7 = ppuVar7 + 1;
+    ppuVar8 = &PTR_s_default_821810b8 + iVar6 * 8;
+    if ((&PTR_s_default_821810b8)[iVar6 * 8] == (undefined *)0x0) {
+      DAT_841849ac = Dvar_RegisterEnum(0xffffffff820386ac,0xffffffff82993e68,0,0,0xffffffff8217fd90)
       ;
+      DAT_84184998 = Dvar_RegisterEnum(0xffffffff8217fd84,0xffffffff82993f08,0,0,0xffffffff8217fd90)
+      ;
+      DAT_841849a8 = Dvar_RegisterInt(0xffffffff8217fd64,0,0,1,0,0xffffffff8217fd74);
+      DAT_841849b4 = Dvar_RegisterInt(0xffffffff8217fd40,0x3c,1,0x7fffffff,0,0xffffffff8217fd50);
+      DAT_841432a0 = Dvar_RegisterInt(0xffffffff8217fd2c,0x14,0,0x28,0,0xffffffff8217fd18);
+      DAT_841849b8 = Dvar_RegisterEnum(0xffffffff8217fcf0,0xffffffff82993f18,0xe,0,
+                                       0xffffffff8217fd00);
       __restgprlr_21();
       return;
     }
@@ -100,55 +93,52 @@ void Profile_Init(void)
 
 // 826089F8  Profile_InitContext  (universal/profile.cpp:353)
 
-void Profile_InitContext(int param_1)
+void Profile_InitContext(void)
 
 {
-  uint uVar1;
+  ulonglong uVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  double extraout_f1;
-  double dVar8;
+  int iVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  double dVar7;
   
-  iVar4 = __savegprlr_27(param_1);
-  dVar8 = extraout_f1;
-  Sys_SetValue(0,g_prof_stack + iVar4);
-  g_prof_stack[iVar4].prof_pStack[0] = &g_prof_stack[iVar4].prof_root;
-  g_prof_stack[iVar4].prof_ppStack = (profile_t **)(iVar4 * 0x4ac4 + -0x7bebccf8);
-  g_prof_stack[iVar4].prof_overhead_internal.value[0] = 0;
-  g_prof_stack[iVar4].prof_overhead_external.value[0] = 0;
-  g_prof_stack[iVar4].prof_guardpos = 0;
-  g_prof_stack[iVar4].prof_timescale = 0.0;
+  iVar3 = __savegprlr_27();
+  iVar3 = iVar3 * 0x4ac4;
+  Sys_SetValue(0,&DAT_841432e0 + iVar3);
+  *(undefined **)(&DAT_84143308 + iVar3) = &DAT_841432e0 + iVar3;
+  *(undefined **)(&DAT_84143708 + iVar3) = &DAT_84143308 + iVar3;
+  *(undefined4 *)(&DAT_84147c94 + iVar3) = 0;
+  *(undefined4 *)(&DAT_84147c98 + iVar3) = 0;
+  *(undefined4 *)(&DAT_84147d9c + iVar3) = 0;
+  *(undefined4 *)(&DAT_84147da0 + iVar3) = 0;
   Profile_Begin(0);
-  Profile_EndInternal((double *)0x0);
-  g_prof_stack[iVar4].prof_array[0].write.total.value[0] = 0;
-  g_prof_stack[iVar4].prof_root.write.total.value[0] = 0;
-  g_prof_stack[iVar4].prof_root.write.child.value[0] = 0;
-  lVar6 = 1000;
-  uVar7 = 0;
+  Profile_EndInternal(0);
+  *(undefined4 *)(&DAT_84143720 + iVar3) = 0;
+  *(undefined4 *)(&DAT_841432f4 + iVar3) = 0;
+  *(undefined4 *)(&DAT_841432f8 + iVar3) = 0;
+  lVar5 = 1000;
+  uVar6 = 0;
   do {
-    uVar2 = TBLr;
+    uVar1 = TBLr;
     Profile_Begin(0);
-    Profile_EndInternal((double *)0x0);
-    uVar3 = TBLr;
-    lVar6 = lVar6 + -1;
-    uVar7 = ((uVar3 & 0xffffffff) - (uVar2 & 0xffffffff)) + uVar7;
-  } while (lVar6 != 0);
-  uVar1 = g_prof_stack[iVar4].prof_array[0].write.total.value[0];
-  g_prof_stack[iVar4].prof_overhead_external.value[0] = (uint)((uVar7 & 0xffffffff) / 1000);
-  g_prof_stack[iVar4].prof_overhead_internal.value[0] = uVar1 / 1000;
-  __u64tod();
-  puVar5 = (undefined4 *)(iVar4 * 0x4ac4 + -0x7bebc91c);
-  lVar6 = 0x1bd;
-  g_prof_stack[iVar4].prof_timescale = (float)(msecPerRawTimerTick * dVar8);
+    Profile_EndInternal(0);
+    uVar2 = TBLr;
+    lVar5 = lVar5 + -1;
+    uVar6 = ((uVar2 & 0xffffffff) - (uVar1 & 0xffffffff)) + uVar6;
+  } while (lVar5 != 0);
+  *(int *)(&DAT_84147c98 + iVar3) = (int)((uVar6 & 0xffffffff) / 1000);
+  *(uint *)(&DAT_84147c94 + iVar3) = *(uint *)(&DAT_84143720 + iVar3) / 1000;
+  dVar7 = (double)__u64tod(1);
+  puVar4 = (undefined4 *)(iVar3 + -0x7bebc91c);
+  lVar5 = 0x1bd;
+  *(float *)(&DAT_84147da0 + iVar3) = (float)(DAT_841db430 * dVar7);
   do {
-    puVar5 = puVar5 + 10;
-    *puVar5 = 0xffffffff;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
+    puVar4 = puVar4 + 10;
+    *puVar4 = 0xffffffff;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   __restgprlr_27();
   return;
 }
@@ -156,42 +146,40 @@ void Profile_InitContext(int param_1)
 
 // 82608100  Profile_GetProbeIndexFromName  (universal/profile.cpp:417)
 
-int Profile_GetProbeIndexFromName(char *param_1)
+void Profile_GetProbeIndexFromName(void)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
   ulonglong uVar3;
   undefined **ppuVar4;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
+  uVar1 = __savegprlr_29();
   uVar3 = 1;
   ppuVar4 = &PTR_s_Probe1_8299303c;
   do {
-    iVar2 = I_stricmp(*ppuVar4,pcVar1);
+    iVar2 = I_stricmp(*ppuVar4,uVar1);
     if (iVar2 == 0) {
-      iVar2 = __restgprlr_29(uVar3);
-      return iVar2;
+      __restgprlr_29(uVar3);
+      return;
     }
     uVar3 = uVar3 + 1;
     ppuVar4 = ppuVar4 + 1;
   } while ((uVar3 & 0xffffffff) < 0x1bd);
-  iVar2 = __restgprlr_29(0);
-  return iVar2;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 82608160  Profile_IsStackEmpty  (universal/profile.cpp:436)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 bool Profile_IsStackEmpty(void)
 
 {
-  void *pvVar1;
+  int iVar1;
   
-  pvVar1 = Sys_GetValue(0);
-  return pvVar1 == (void *)**(int **)((int)pvVar1 + 0x428);
+  iVar1 = Sys_GetValue(0);
+  return iVar1 == **(int **)(iVar1 + 0x428);
 }
 
 
@@ -200,86 +188,80 @@ bool Profile_IsStackEmpty(void)
 void Profile_ResetCountersForContext(int param_1,int param_2)
 
 {
-  uint uVar1;
-  int *piVar2;
-  longlong lVar3;
-  ProfileAtom *pPVar4;
-  uint *puVar5;
+  int *piVar1;
+  longlong lVar2;
+  uint *puVar3;
+  undefined4 *puVar4;
   
-  piVar2 = prof_enumSystems;
-  lVar3 = 0x1bd;
-  puVar5 = &g_prof_stack[param_1].prof_array[0].write.hits;
-  pPVar4 = &g_prof_stack[param_1].prof_array[0].write.total;
+  piVar1 = &DAT_82993730;
+  lVar2 = 0x1bd;
+  puVar4 = (undefined4 *)(&DAT_84143710 + param_1 * 0x4ac4);
+  puVar3 = (uint *)(&DAT_84143720 + param_1 * 0x4ac4);
   do {
-    if (*piVar2 == param_2) {
-      uVar1 = ((ProfileAtom *)(puVar5 + 4))->value[0];
-      puVar5[6] = *puVar5;
-      puVar5[7] = uVar1;
-      if (pPVar4->value[0] < pPVar4[1].value[0]) {
-        pPVar4[4] = (uint  [1])0x0;
+    if (*piVar1 == param_2) {
+      puVar4[6] = *puVar4;
+      puVar4[7] = puVar4[4];
+      if (*puVar3 < puVar3[1]) {
+        puVar3[4] = 0;
       }
       else {
-        pPVar4[4] = (ProfileAtom)(pPVar4->value[0] - pPVar4[1].value[0]);
+        puVar3[4] = *puVar3 - puVar3[1];
       }
-      *puVar5 = 0;
-      ((ProfileAtom *)(puVar5 + 4))->value[0] = 0;
-      ((ProfileAtom *)(puVar5 + 5))->value[0] = 0;
+      *puVar4 = 0;
+      puVar4[4] = 0;
+      puVar4[5] = 0;
     }
-    lVar3 = lVar3 + -1;
-    piVar2 = piVar2 + 1;
-    pPVar4 = pPVar4 + 10;
-    puVar5 = puVar5 + 10;
-  } while (lVar3 != 0);
+    lVar2 = lVar2 + -1;
+    piVar1 = piVar1 + 1;
+    puVar3 = puVar3 + 10;
+    puVar4 = puVar4 + 10;
+  } while (lVar2 != 0);
   return;
 }
 
 
 // 82608B88  Profile_ResetCounters  (universal/profile.cpp:493)
 
-void Profile_ResetCounters(int param_1)
+void Profile_ResetCounters(void)
 
 {
   int iVar2;
-  void *pvVar3;
-  int iVar4;
+  int iVar3;
+  undefined4 uVar4;
   longlong lVar1;
-  long *plVar5;
-  int *piVar6;
-  uint uVar7;
+  undefined4 *puVar5;
+  uint uVar6;
   
-  iVar2 = __savegprlr_24(param_1);
-  if ((profile->current).integer != 0) {
-    pvVar3 = Sys_GetValue(0);
-    uVar7 = 0;
-    if (*(int *)((int)pvVar3 + 0x428) != (int)pvVar3 + 0x28) {
-      plVar5 = g_prof2_total + 0xe;
+  iVar2 = __savegprlr_24();
+  if (*(int *)(DAT_841849ac + 0xc) != 0) {
+    iVar3 = Sys_GetValue(0);
+    uVar6 = 0;
+    if (*(int *)(iVar3 + 0x428) != iVar3 + 0x28) {
+      puVar5 = &DAT_841849f4;
       do {
-        if (0xff < uVar7) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",
-                          0x1fa,0,
-                          "profileStackPos doesn\'t index ARRAY_COUNT( g_profileStack )\n\t%i not in [0, %i)"
-                         );
+        if (0xff < uVar6) {
+          MyAssertHandler(0xffffffff8217ff48,0x1fa,0,0xffffffff821801e8,uVar6,0x100);
         }
-        iVar4 = Profile_EndInternal((double *)0x0);
-        plVar5 = plVar5 + 1;
-        *plVar5 = iVar4;
-        uVar7 = uVar7 + 1;
-      } while (*(int *)((int)pvVar3 + 0x428) != (int)pvVar3 + 0x28);
+        uVar4 = Profile_EndInternal(0);
+        puVar5 = puVar5 + 1;
+        *puVar5 = uVar4;
+        uVar6 = uVar6 + 1;
+      } while (*(int *)(iVar3 + 0x428) != iVar3 + 0x28);
     }
     lVar1 = 0;
     do {
-      Profile_ResetCountersForContext((int)lVar1,iVar2);
+      lVar1 = Profile_ResetCountersForContext(lVar1,iVar2);
       lVar1 = lVar1 + 1;
     } while ((int)lVar1 < 0xe);
-    if (uVar7 != 0) {
-      piVar6 = g_profileStack + uVar7;
+    if (uVar6 != 0) {
+      puVar5 = &DAT_841849f8 + uVar6;
       do {
-        piVar6 = piVar6 + -1;
-        uVar7 = uVar7 - 1;
-        Profile_Begin(*piVar6);
-      } while (uVar7 != 0);
+        puVar5 = puVar5 + -1;
+        uVar6 = uVar6 - 1;
+        Profile_Begin(*puVar5);
+      } while (uVar6 != 0);
     }
-    prof_parity[iVar2] = prof_parity[iVar2] + 1;
+    *(int *)(&DAT_8418499c + iVar2 * 4) = *(int *)(&DAT_8418499c + iVar2 * 4) + 1;
   }
   __restgprlr_24();
   return;
@@ -288,143 +270,134 @@ void Profile_ResetCounters(int param_1)
 
 // 82608198  Profile_ResetScriptCounters  (universal/profile.cpp:530)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Profile_ResetScriptCounters(void)
 
 {
-  void *pvVar1;
-  uint *puVar2;
+  int iVar1;
+  void *pvVar2;
   uint *puVar3;
+  uint *puVar4;
   
   __savegprlr_28();
-  puVar3 = profileScript.totalTime;
-  puVar2 = &profileScript.write[0].totalTime;
+  puVar4 = &DAT_841850f8;
+  puVar3 = &DAT_84184f80;
   do {
-    *puVar3 = *puVar2;
-    puVar3[0x20] = (uint)((((ulonglong)puVar3[0x20] & 0x3fffffff) * 4 + (ulonglong)*puVar3 &
+    *puVar4 = *puVar3;
+    puVar4[0x20] = (uint)((((ulonglong)puVar4[0x20] & 0x3fffffff) * 4 + (ulonglong)*puVar4 &
                           0xffffffff) / 5);
-    if (puVar3[0x40] < *puVar3) {
-      puVar3[0x40] = *puVar3;
+    if (puVar4[0x40] < *puVar4) {
+      puVar4[0x40] = *puVar4;
     }
-    pvVar1 = Sys_GetValue(0);
-    puVar2 = puVar2 + 3;
-    puVar3[0x60] = (uint)((float)*puVar3 * *(float *)((int)pvVar1 + 0x4ac0) + (float)puVar3[0x60]);
-    puVar3 = puVar3 + 1;
-  } while ((int)puVar2 < -0x7be7af00);
-  memset();
-  __restgprlr_28();
+    iVar1 = Sys_GetValue(0);
+    puVar3 = puVar3 + 3;
+    puVar4[0x60] = (uint)((float)*puVar4 * *(float *)(iVar1 + 0x4ac0) + (float)puVar4[0x60]);
+    puVar4 = puVar4 + 1;
+  } while ((int)puVar3 < -0x7be7af00);
+  pvVar2 = memset(&DAT_84184f78,0,0x180);
+  __restgprlr_28(pvVar2);
   return;
 }
 
 
 // 82608250  Profile_ClearScriptCounters  (universal/profile.cpp:548)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Profile_ClearScriptCounters(void)
+void * Profile_ClearScriptCounters(void)
 
 {
-  float *pfVar1;
-  longlong lVar2;
+  void *pvVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
   
-  lVar2 = 0x20;
-  pfVar1 = (float *)(profileScript.maxTime + 0x1f);
+  lVar3 = 0x20;
+  puVar2 = (undefined4 *)0x84185274;
   do {
-    pfVar1[-0x5f] = 0.0;
-    pfVar1[-0x3f] = 0.0;
-    pfVar1[-0x1f] = 0.0;
-    pfVar1 = pfVar1 + 1;
-    *pfVar1 = 0.0;
-    lVar2 = lVar2 + -1;
-  } while (lVar2 != 0);
-  memset();
-  return;
+    puVar2[-0x5f] = 0;
+    puVar2[-0x3f] = 0;
+    puVar2[-0x1f] = 0;
+    puVar2 = puVar2 + 1;
+    *puVar2 = 0;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  pvVar1 = memset(&DAT_84184f78,0,0x180);
+  return pvVar1;
 }
 
 
 // 82608290  Profile_GetEnumParity  (universal/profile.cpp:563)
 
-int Profile_GetEnumParity(int param_1)
+undefined4 Profile_GetEnumParity(uint param_1)
 
 {
-  if (0x1bc < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x234,0
-                    ,"profEnum doesn\'t index ARRAY_COUNT( prof_enumSystems )\n\t%i not in [0, %i)")
-    ;
+  if (0x1bc < param_1) {
+    MyAssertHandler(0xffffffff8217ff48,0x234,0,0xffffffff8217ff98,param_1,0x1bd);
   }
-  return prof_parity[prof_enumSystems[param_1]];
+  return *(undefined4 *)(&DAT_8418499c + (&DAT_82993730)[param_1] * 4);
 }
 
 
 // 82608308  Profile_MissingEnd  (universal/profile.cpp:571)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-char * Profile_MissingEnd(void)
+void Profile_MissingEnd(void)
 
 {
-  void *pvVar1;
-  char *pcVar2;
+  int iVar1;
+  ulonglong uVar2;
   int *piVar3;
   longlong lVar4;
-  undefined4 *puVar5;
+  undefined **ppuVar5;
   
   __savegprlr_28();
-  pvVar1 = Sys_GetValue(0);
-  pcVar2 = (char *)0x0;
-  puVar5 = (undefined4 *)&prof_enumNames;
-  piVar3 = (int *)((int)pvVar1 + 0x42c);
+  iVar1 = Sys_GetValue(0);
+  uVar2 = 0;
+  ppuVar5 = &PTR_DAT_82993038;
+  piVar3 = (int *)(iVar1 + 0x42c);
   lVar4 = 0x1bd;
   do {
     if (-1 < *piVar3) {
-      if (pcVar2 == (char *)0x0) {
-        pcVar2 = (char *)*puVar5;
+      if ((uVar2 & 0xffffffff) == 0) {
+        uVar2 = ZEXT48(*ppuVar5);
       }
       else {
-        pcVar2 = va("%s, %s");
+        uVar2 = va(0xffffffff82180024,uVar2,*ppuVar5);
       }
     }
     lVar4 = lVar4 + -1;
     piVar3 = piVar3 + 10;
-    puVar5 = puVar5 + 1;
+    ppuVar5 = ppuVar5 + 1;
   } while (lVar4 != 0);
-  if (pcVar2 != (char *)0x0) {
-    pcVar2 = va("probes missing PROF_END: %s");
-    pcVar2 = (char *)__restgprlr_28(pcVar2);
-    return pcVar2;
+  if ((uVar2 & 0xffffffff) != 0) {
+    va(0xffffffff82180008);
+    __restgprlr_28();
+    return;
   }
-  pcVar2 = (char *)__restgprlr_28(0xffffffff8217ffe4);
-  return pcVar2;
+  __restgprlr_28(0xffffffff8217ffe4);
+  return;
 }
 
 
 // 826083A0  Profile_Unguard  (universal/profile.cpp:601)
 
-void Profile_Unguard(int param_1)
+void Profile_Unguard(void)
 
 {
-  int iVar1;
-  void *pvVar2;
+  int iVar2;
   int iVar3;
+  undefined8 uVar1;
+  int iVar4;
   
-  iVar1 = __savegprlr_28(param_1);
-  pvVar2 = Sys_GetValue(0);
-  if (*(int *)((int)pvVar2 + 0x4abc) < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x25e,0
-                    ,"%s");
+  iVar2 = __savegprlr_28();
+  iVar3 = Sys_GetValue(0);
+  if (*(int *)(iVar3 + 0x4abc) < 1) {
+    MyAssertHandler(0xffffffff8217ff48,0x25e,0,0xffffffff82000f98,0xffffffff821800f0);
   }
-  iVar3 = *(int *)((int)pvVar2 + 0x4abc) + -1;
-  *(int *)((int)pvVar2 + 0x4abc) = iVar3;
-  if (*(int *)((int)pvVar2 + iVar3 * 8 + 0x49bc) != iVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x262,0
-                    ,"%s");
+  iVar4 = *(int *)(iVar3 + 0x4abc) + -1;
+  *(int *)(iVar3 + 0x4abc) = iVar4;
+  if (*(int *)(iVar4 * 8 + iVar3 + 0x49bc) != iVar2) {
+    MyAssertHandler(0xffffffff8217ff48,0x262,0,0xffffffff82000f98,0xffffffff821800b0);
   }
-  if (*(int *)((*(int *)((int)pvVar2 + 0x4abc) + 0x938) * 8 + (int)pvVar2) !=
-      *(int *)((int)pvVar2 + 0x428)) {
-    Profile_MissingEnd();
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x263,0
-                    ,"%s\n\t(Profile_MissingEnd()) = %s");
+  if (*(int *)((*(int *)(iVar3 + 0x4abc) + 0x938) * 8 + iVar3) != *(int *)(iVar3 + 0x428)) {
+    uVar1 = Profile_MissingEnd();
+    MyAssertHandler(0xffffffff8217ff48,0x263,0,0xffffffff8218002c,0xffffffff82180050,uVar1);
   }
   __restgprlr_28();
   return;
@@ -433,43 +406,40 @@ void Profile_Unguard(int param_1)
 
 // 82608480  Profile_GetStackForContext  (universal/profile.cpp:621)
 
-ProfileStack * Profile_GetStackForContext(int param_1)
+longlong Profile_GetStackForContext(longlong param_1)
 
 {
-  return g_prof_stack + param_1;
+  return param_1 * 0x4ac4 + -0x7bebcd20;
 }
 
 
 // 82608498  Profile_GetScript  (universal/profile.cpp:632)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ProfileScript * Profile_GetScript(void)
+undefined8 Profile_GetScript(void)
 
 {
-  return &profileScript;
+  return 0xffffffff84184f78;
 }
 
 
 // 826084A8  Profile_BeginScripts  (universal/profile.cpp:643)
 
-void Profile_BeginScripts(uint param_1)
+void Profile_BeginScripts(void)
 
 {
   undefined8 uVar1;
   ulonglong uVar2;
   int iVar3;
-  ProfileScript *pPVar4;
+  int *piVar4;
   ulonglong uVar5;
   int iVar6;
-  ProfileScript *pPVar7;
+  int *piVar7;
   
-  uVar5 = __savegprlr_26(param_1);
+  uVar5 = __savegprlr_26();
   if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x286,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff8217ff48,0x286,0,0xffffffff82000f98,0xffffffff82180110);
   }
-  pPVar7 = &profileScript;
+  piVar7 = &DAT_84184f78;
   iVar6 = 0;
   do {
     if ((uVar5 & 1) == 0) {
@@ -477,29 +447,28 @@ void Profile_BeginScripts(uint param_1)
       uVar2 = uVar5 & 0xffffffff;
       uVar5 = uVar2 >> 4;
       iVar3 = iVar6 + 4;
-      pPVar4 = (ProfileScript *)(pPVar7->write + 4);
+      piVar4 = piVar7 + 0xc;
       if ((uVar5 & 0xff) == 0) {
         uVar5 = uVar2 >> 0xc;
         iVar3 = iVar6 + 0xc;
-        pPVar4 = (ProfileScript *)(pPVar7->write + 0xc);
+        piVar4 = piVar7 + 0x24;
       }
     }
     else {
       if (0x1f < iVar6) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.h",0x141
-                        ,0,"%s");
+        MyAssertHandler(0xffffffff8217fc80,0x141,0,0xffffffff82000f98,0xffffffff8214f044);
       }
-      if (pPVar7->write[0].refCount == 0) {
+      if (*piVar7 == 0) {
         uVar1 = TBLr;
-        pPVar7->write[0].startTime = (uint)uVar1;
+        piVar7[1] = (int)uVar1;
       }
-      pPVar7->write[0].refCount = pPVar7->write[0].refCount + 1;
+      *piVar7 = *piVar7 + 1;
 LAB_82608550:
       uVar5 = (uVar5 & 0xffffffff) >> 1;
       iVar3 = iVar6 + 1;
-      pPVar4 = (ProfileScript *)(pPVar7->write + 1);
+      piVar4 = piVar7 + 3;
     }
-    pPVar7 = pPVar4;
+    piVar7 = piVar4;
     iVar6 = iVar3;
     if (uVar5 == 0) {
       __restgprlr_26();
@@ -511,58 +480,55 @@ LAB_82608550:
 
 // 826085A0  Profile_EndScripts  (universal/profile.cpp:679)
 
-void Profile_EndScripts(uint param_1)
+void Profile_EndScripts(void)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  ProfileScript *pPVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  uint uVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  uint *puVar5;
+  ulonglong uVar6;
   int iVar7;
-  ProfileScript *pPVar8;
+  uint *puVar8;
   
-  uVar5 = __savegprlr_25(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x2aa,0
-                    ,"%s");
+  uVar6 = __savegprlr_25();
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8217ff48,0x2aa,0,0xffffffff82000f98,0xffffffff82180110);
   }
-  pPVar8 = &profileScript;
+  puVar8 = &DAT_84184f78;
   iVar7 = 0;
   do {
-    if ((uVar5 & 1) == 0) {
-      if ((uVar5 & 0xe) != 0) goto LAB_82608654;
-      uVar2 = uVar5 & 0xffffffff;
-      uVar5 = uVar2 >> 4;
-      iVar3 = iVar7 + 4;
-      pPVar4 = (ProfileScript *)(pPVar8->write + 4);
-      if ((uVar5 & 0xff) == 0) {
-        uVar5 = uVar2 >> 0xc;
-        iVar3 = iVar7 + 0xc;
-        pPVar4 = (ProfileScript *)(pPVar8->write + 0xc);
+    if ((uVar6 & 1) == 0) {
+      if ((uVar6 & 0xe) != 0) goto LAB_82608654;
+      uVar3 = uVar6 & 0xffffffff;
+      uVar6 = uVar3 >> 4;
+      iVar4 = iVar7 + 4;
+      puVar5 = puVar8 + 0xc;
+      if ((uVar6 & 0xff) == 0) {
+        uVar6 = uVar3 >> 0xc;
+        iVar4 = iVar7 + 0xc;
+        puVar5 = puVar8 + 0x24;
       }
     }
     else {
-      uVar1 = TBLr;
+      uVar2 = TBLr;
       if (0x1f < iVar7) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.h",0x152
-                        ,0,"%s");
+        MyAssertHandler(0xffffffff8217fc80,0x152,0,0xffffffff82000f98,0xffffffff8214f044);
       }
-      lVar6 = (ulonglong)(uint)pPVar8->write[0].refCount - 1;
-      pPVar8->write[0].refCount = (int)lVar6;
-      if (lVar6 == 0) {
-        pPVar8->write[0].totalTime =
-             (pPVar8->write[0].totalTime - pPVar8->write[0].startTime) + (int)uVar1;
+      uVar1 = *puVar8;
+      *puVar8 = (uint)((ulonglong)uVar1 - 1);
+      if ((ulonglong)uVar1 - 1 == 0) {
+        puVar8[2] = (puVar8[2] - puVar8[1]) + (int)uVar2;
       }
 LAB_82608654:
-      uVar5 = (uVar5 & 0xffffffff) >> 1;
-      iVar3 = iVar7 + 1;
-      pPVar4 = (ProfileScript *)(pPVar8->write + 1);
+      uVar6 = (uVar6 & 0xffffffff) >> 1;
+      iVar4 = iVar7 + 1;
+      puVar5 = puVar8 + 3;
     }
-    pPVar8 = pPVar4;
-    iVar7 = iVar3;
-    if (uVar5 == 0) {
+    puVar8 = puVar5;
+    iVar7 = iVar4;
+    if (uVar6 == 0) {
       __restgprlr_25();
       return;
     }
@@ -572,123 +538,112 @@ LAB_82608654:
 
 // 826086A8  Profile_AddScriptName  (universal/profile.cpp:715)
 
-int Profile_AddScriptName(char *param_1)
+void Profile_AddScriptName(void)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
-  int iVar3;
-  uint uVar4;
-  char (*pacVar5) [20];
+  uint uVar3;
+  int iVar4;
+  char *pcVar5;
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  iVar3 = 0;
-  uVar4 = 0;
-  pacVar5 = profileScript.profileScriptNames;
+  uVar1 = __savegprlr_26();
+  iVar4 = 0;
+  uVar3 = 0;
+  pcVar5 = &DAT_841852f8;
   while( true ) {
-    iVar2 = I_strnicmp(pcVar1,*pacVar5,0x13);
+    iVar2 = I_strnicmp(uVar1,pcVar5,0x13);
     if (iVar2 == 0) {
-      iVar3 = __restgprlr_26(iVar3);
-      return iVar3;
+      __restgprlr_26(iVar4);
+      return;
     }
-    if ((*pacVar5)[0] == '\0') break;
-    uVar4 = uVar4 + 0x14;
-    iVar3 = iVar3 + 1;
-    pacVar5 = pacVar5 + 1;
-    if (0x27f < uVar4) {
-      iVar3 = __restgprlr_26(0xffffffffffffffff);
-      return iVar3;
+    if (*pcVar5 == '\0') break;
+    uVar3 = uVar3 + 0x14;
+    iVar4 = iVar4 + 1;
+    pcVar5 = pcVar5 + 0x14;
+    if (0x27f < uVar3) {
+      __restgprlr_26(0xffffffffffffffff);
+      return;
     }
   }
-  I_strncpyz(*pacVar5,pcVar1,0x14);
-  profileScript.avgTime[iVar3] = 0;
-  profileScript.maxTime[iVar3] = 0;
-  profileScript.cumulative[iVar3] = 0.0;
-  iVar3 = __restgprlr_26(iVar3);
-  return iVar3;
+  I_strncpyz(pcVar5,uVar1,0x14);
+  (&DAT_84185178)[iVar4] = 0;
+  (&DAT_841851f8)[iVar4] = 0;
+  (&DAT_84185278)[iVar4] = 0;
+  __restgprlr_26(iVar4);
+  return;
 }
 
 
 // 82608760  Profile_SetTotal  (universal/profile.cpp:738)
 
-void Profile_SetTotal(int param_1,int param_2)
+void Profile_SetTotal(int param_1,undefined4 param_2)
 
 {
-  void *pvVar1;
+  int iVar1;
   
-  pvVar1 = Sys_GetValue(0);
-  *(int *)((int)pvVar1 + param_1 * 0x28 + 0x440) = param_2;
+  iVar1 = Sys_GetValue(0);
+  *(undefined4 *)(iVar1 + param_1 * 0x28 + 0x440) = param_2;
   return;
 }
 
 
 // 826087B0  Profile_GetDisplayThread  (universal/profile.cpp:756)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Profile_GetDisplayThread(void)
+undefined4 Profile_GetDisplayThread(void)
 
 {
-  if (profile_thread == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x2f5,0
-                    ,"%s");
+  if (DAT_841849b8 == 0) {
+    MyAssertHandler(0xffffffff8217ff48,0x2f5,0,0xffffffff82000f98,0xffffffff8217fcf0);
   }
-  return (profile_thread->current).integer;
+  return *(undefined4 *)(DAT_841849b8 + 0xc);
 }
 
 
 // 82608810  Profile_Recover  (universal/profile.cpp:806)
 
-void Profile_Recover(int param_1)
+void Profile_Recover(void)
 
 {
   int iVar1;
   int iVar2;
-  void *pvVar3;
+  int iVar3;
   int iVar4;
   uint uVar5;
   
-  iVar2 = __savegprlr_25(param_1);
-  pvVar3 = Sys_GetValue(0);
-  if (*(int *)((int)pvVar3 + 0x4abc) < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x32b,0
-                    ,"%s");
+  iVar2 = __savegprlr_25();
+  iVar3 = Sys_GetValue(0);
+  if (*(int *)(iVar3 + 0x4abc) < 1) {
+    MyAssertHandler(0xffffffff8217ff48,0x32b,0,0xffffffff82000f98,0xffffffff821800f0);
   }
-  iVar4 = *(int *)((int)pvVar3 + 0x4abc);
+  iVar4 = *(int *)(iVar3 + 0x4abc);
   do {
     iVar1 = iVar4;
     if (iVar1 < 1) {
-      if (alwaysfails == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",
-                        0x33e,0,"Profile_Recover: id not found");
+      if (DAT_84013128 == 0) {
+        MyAssertHandler(0xffffffff8217ff48,0x33e,0,0xffffffff821801a4);
       }
       goto LAB_826088c0;
     }
     iVar4 = iVar1 + -1;
-    *(int *)((int)pvVar3 + 0x4abc) = iVar4;
-  } while (*(int *)((int)pvVar3 + iVar4 * 8 + 0x49bc) != iVar2);
-  if (*(int *)((int)pvVar3 + 0x428) != *(int *)((iVar1 + 0x937) * 8 + (int)pvVar3)) {
+    *(int *)(iVar3 + 0x4abc) = iVar4;
+  } while (*(int *)(iVar4 * 8 + iVar3 + 0x49bc) != iVar2);
+  if (*(int *)(iVar3 + 0x428) != *(int *)((iVar1 + 0x937) * 8 + iVar3)) {
     do {
-      if (2 < *(uint *)**(undefined4 **)((int)pvVar3 + 0x428)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",
-                        0x334,0,
-                        "(*prof_stack->prof_ppStack)->write.nesting doesn\'t index ARRAY_COUNT( (*prof_stack->prof_ppStack)->write.start )\n\t%i not in [0, %i)"
-                       );
+      if (2 < *(uint *)**(undefined4 **)(iVar3 + 0x428)) {
+        MyAssertHandler(0xffffffff8217ff48,0x334,0,0xffffffff82180120,
+                        *(uint *)**(undefined4 **)(iVar3 + 0x428),3);
       }
-      if (*(uint *)((int)pvVar3 + 0x428) <= (int)pvVar3 + 0x28U) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",
-                        0x335,0,"%s");
+      if (*(uint *)(iVar3 + 0x428) <= iVar3 + 0x28U) {
+        MyAssertHandler(0xffffffff8217ff48,0x335,0,0xffffffff82000f98,0xffffffff82000fec);
       }
-      *(int *)**(undefined4 **)((int)pvVar3 + 0x428) =
-           *(int *)**(undefined4 **)((int)pvVar3 + 0x428) + -1;
-      uVar5 = *(int *)((int)pvVar3 + 0x428) - 4;
-      *(uint *)((int)pvVar3 + 0x428) = uVar5;
-      if (uVar5 < (int)pvVar3 + 0x28U) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",
-                        0x338,0,"%s");
+      *(int *)**(undefined4 **)(iVar3 + 0x428) = *(int *)**(undefined4 **)(iVar3 + 0x428) + -1;
+      uVar5 = *(int *)(iVar3 + 0x428) - 4;
+      *(uint *)(iVar3 + 0x428) = uVar5;
+      if (uVar5 < iVar3 + 0x28U) {
+        MyAssertHandler(0xffffffff8217ff48,0x338,0,0xffffffff82000f98,0xffffffff82001020);
       }
-    } while (*(int *)((int)pvVar3 + 0x428) !=
-             *(int *)((*(int *)((int)pvVar3 + 0x4abc) + 0x938) * 8 + (int)pvVar3));
+    } while (*(int *)(iVar3 + 0x428) != *(int *)((*(int *)(iVar3 + 0x4abc) + 0x938) * 8 + iVar3));
     __restgprlr_25();
     return;
   }
@@ -700,9 +655,7 @@ LAB_826088c0:
 
 // 82608C88  Profile2_Update  (universal/profile.cpp:922)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Profile2_Update(void)
+void Profile2_Update(void)
 
 {
   int iVar1;
@@ -713,90 +666,92 @@ int Profile2_Update(void)
   undefined8 uVar6;
   ulonglong uVar7;
   int iVar8;
-  int *piVar9;
-  uint *puVar10;
-  undefined4 *puVar11;
-  int iVar13;
-  longlong lVar12;
+  int iVar9;
+  int *piVar10;
+  uint *puVar11;
+  undefined4 *puVar12;
   int iVar14;
-  ulonglong uVar15;
+  longlong lVar13;
+  longlong lVar15;
+  ulonglong uVar16;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_22();
-  iVar8 = DAT_841849b0;
-  if ((profile2->current).integer != 0) {
-    g_prof2_inc = g_prof2_inc + 1;
-    if ((profile2_frames->current).integer <= g_prof2_inc) {
-      g_prof2_inc = 0;
+  iVar9 = DAT_841849b0;
+  if (*(int *)(DAT_84184998 + 0xc) != 0) {
+    DAT_841849a4 = DAT_841849a4 + 1;
+    if (*(int *)(DAT_841849b4 + 0xc) <= DAT_841849a4) {
+      iVar8 = DAT_841849b0 * 0x3c;
+      DAT_841849a4 = 0;
       uVar6 = TBLr;
-      iVar14 = 0;
-      uVar15 = 0;
+      lVar15 = 0;
+      uVar16 = 0;
       do {
-        iVar13 = *(int *)((int)g_prof2_begin_count + (int)uVar15);
-        if (iVar13 < 0) {
-          Profile2_ClearEntry(iVar14);
-          iVar13 = 0;
+        iVar14 = *(int *)((int)&DAT_84184df8 + (int)uVar16);
+        if (iVar14 < 0) {
+          Profile2_ClearEntry(lVar15);
+          iVar14 = 0;
         }
         sync(1);
         uVar7 = TBLr;
         do {
-          piVar9 = (int *)(uVar15 - 0x7bebcd5c);
-          iVar1 = *piVar9;
+          piVar10 = (int *)(uVar16 - 0x7bebcd5c);
+          iVar1 = *piVar10;
           if (in_RESERVE != '\0') {
-            iVar3 = storeWordConditionalIndexed(uVar7 & 0xffffffff,0,uVar15 - 0x7bebcd5c);
-            *piVar9 = iVar3;
+            iVar3 = storeWordConditionalIndexed(uVar7 & 0xffffffff,0,uVar16 - 0x7bebcd5c);
+            *piVar10 = iVar3;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        lVar12 = (longlong)((int)uVar7 - iVar1) * (longlong)iVar13;
-        in_cr0 = (lVar12 == 0) << 1;
-        if (0 < lVar12) {
+        lVar13 = (longlong)((int)uVar7 - iVar1) * (longlong)iVar14;
+        in_cr0 = (lVar13 == 0) << 1;
+        if (0 < lVar13) {
           do {
-            puVar10 = (uint *)(uVar15 - 0x7be7b644);
+            puVar11 = (uint *)(uVar16 - 0x7be7b644);
             if (in_RESERVE != '\0') {
               uVar4 = storeWordConditionalIndexed
-                                (lVar12 + (ulonglong)*puVar10,0,uVar15 - 0x7be7b644);
-              *puVar10 = uVar4;
+                                (lVar13 + (ulonglong)*puVar11,0,uVar16 - 0x7be7b644);
+              *puVar11 = uVar4;
               in_cr0 = 2;
             }
           } while (!(bool)(in_cr0 >> 1));
         }
         sync(1);
         do {
-          puVar11 = (undefined4 *)(uVar15 - 0x7be7b644);
-          uVar2 = *puVar11;
+          puVar12 = (undefined4 *)(uVar16 - 0x7be7b644);
+          uVar2 = *puVar12;
           if (in_RESERVE != '\0') {
-            uVar5 = storeWordConditionalIndexed(0,0,uVar15 - 0x7be7b644);
-            *puVar11 = uVar5;
+            uVar5 = storeWordConditionalIndexed(0,0,uVar16 - 0x7be7b644);
+            *puVar12 = uVar5;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1));
-        iVar14 = iVar14 + 1;
-        *(undefined4 *)((int)g_prof2_history[iVar8] + (int)uVar15) = uVar2;
-        uVar15 = uVar15 + 4;
-      } while ((uVar15 & 0xffffffff) < 0x3c);
-      g_prof2_history_update_times[iVar8] = (int)uVar6;
+        lVar15 = lVar15 + 1;
+        *(undefined4 *)(&DAT_84184e38 + (int)uVar16 + iVar8) = uVar2;
+        uVar16 = uVar16 + 4;
+      } while ((uVar16 & 0xffffffff) < 0x3c);
+      *(int *)(&DAT_84184f64 + iVar9 * 4) = (int)uVar6;
       sync(1);
-      iVar13 = iVar8 + 1;
-      iVar14 = iVar13 / 5 + (iVar13 >> 0x1f);
-      DAT_841849b0 = iVar13 + (iVar14 - (iVar14 >> 0x1f)) * -5;
+      iVar14 = iVar9 + 1;
+      iVar8 = iVar14 / 5 + (iVar14 >> 0x1f);
+      DAT_841849b0 = iVar14 + (iVar8 - (iVar8 >> 0x1f)) * -5;
     }
   }
-  iVar8 = __restgprlr_22(iVar8);
-  return iVar8;
+  __restgprlr_22(iVar9);
+  return;
 }
 
 
 // 826089B0  Profile2_Recover  (universal/profile.cpp:996)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Profile2_Recover(void)
+void * Profile2_Recover(void)
 
 {
-  memset();
-  return;
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_84184df8,0,0x3c);
+  return pvVar1;
 }
 
 
@@ -805,8 +760,8 @@ void Profile2_Recover(void)
 void Profile2_ClearEntry(int param_1)
 
 {
-  g_prof2_begin_count[param_1] = 0;
-  Com_PrintWarning(0,"Cleared profile entry \'%s\'.\n");
+  (&DAT_84184df8)[param_1] = 0;
+  Com_PrintWarning(0,0xffffffff821801c4,(&PTR_DAT_82993e28)[param_1]);
   return;
 }
 

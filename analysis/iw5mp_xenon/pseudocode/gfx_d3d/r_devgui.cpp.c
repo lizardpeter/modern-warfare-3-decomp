@@ -2,8 +2,6 @@
 
 // 82725C30  TRACK_r_devgui  (gfx_d3d/r_devgui.cpp:10)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_r_devgui(void)
 
 {
@@ -13,14 +11,11 @@ void TRACK_r_devgui(void)
 
 // 82725C38  R_CreateDevGui  (gfx_d3d/r_devgui.cpp:16)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void R_CreateDevGui(void)
 
 {
-  Cbuf_InsertText(LOCAL_CLIENT_0,"exec devgui_renderer");
-  Cbuf_InsertText(LOCAL_CLIENT_0,"exec devgui_visibility");
+  Cbuf_InsertText(0,0xffffffff821bbf3c);
+  Cbuf_InsertText(0,0xffffffff821bbf24);
   RB_ProfileDevGui();
   return;
 }

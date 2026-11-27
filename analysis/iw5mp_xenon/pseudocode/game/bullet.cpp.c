@@ -2,134 +2,818 @@
 
 // 824512A8  Bullet_RandomDir  (game/bullet.cpp:38)
 
-void Bullet_RandomDir(uint *param_1,float *param_2,float *param_3)
+void Bullet_RandomDir(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  uint *puVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
+  undefined8 uVar1;
+  double dVar2;
+  double dVar3;
   double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  float fVar8;
+  double _X;
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  puVar1 = (uint *)__savegprlr_27(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x29,0,"%s");
+  uVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x29,0,0xffffffff82000f98,0xffffffff8200fdbc);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x2a,0,"%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x2a,0,0xffffffff82000f98,0xffffffff8200fdb8);
   }
-  fVar8 = BG_random(puVar1);
-  dVar6 = (double)(fVar8 * 360.0);
-  fVar8 = BG_random(puVar1);
-  dVar4 = (double)fVar8;
-  dVar7 = (double)(float)(dVar6 * 0.01745329238474369);
-  dVar6 = sin(dVar7);
-  dVar5 = (double)(float)dVar6;
-  dVar6 = cos(dVar7);
-  *(float *)uVar2 = (float)((double)(float)dVar6 * dVar4);
-  *(float *)uVar3 = (float)(dVar5 * dVar4);
+  dVar2 = (double)BG_random(uVar1);
+  dVar4 = (double)(float)(dVar2 * 360.0);
+  dVar2 = (double)BG_random(uVar1);
+  _X = (double)(float)(dVar4 * 0.01745329238474369);
+  dVar4 = sin(_X);
+  dVar3 = (double)(float)dVar4;
+  dVar4 = cos(_X);
+  *(float *)param_2 = (float)((double)(float)dVar4 * dVar2);
+  *(float *)param_3 = (float)(dVar3 * dVar2);
   __restgprlr_27();
   return;
 }
 
 
 // 82451390  Bullet_Endpos  (game/bullet.cpp:62)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure weaponParms
+
+void Bullet_Endpos(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
+                  ulonglong param_5,ulonglong param_6,ulonglong param_7)
+
+{
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
+  undefined8 uVar4;
+  float *pfVar5;
+  float *pfVar6;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  float local_70;
+  float local_6c [27];
+  
+  uVar4 = __savegprlr_24();
+  local_70 = (float)extraout_f1;
+  dVar7 = extraout_f1;
+  if (((uint)local_70 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff8206b0e4,0x43,0,0xffffffff82000f98,0xffffffff8202ac68);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x47,0,0xffffffff82000f98,0xffffffff8202a874);
+  }
+  if ((param_7 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x48,0,0xffffffff82000f98,0xffffffff8206b270);
+  }
+  dVar7 = tan((double)(float)(dVar7 * 0.01745329238474369));
+  local_70 = (float)((double)(float)dVar7 * param_2);
+  dVar7 = (double)local_70;
+  if (((uint)local_70 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff8206b0e4,0x4d,0,0xffffffff82000f98,0xffffffff8202ac54);
+  }
+  Bullet_RandomDir(uVar4,&local_70,local_6c);
+  local_70 = (float)((double)local_70 * dVar7);
+  dVar10 = (double)local_70;
+  dVar7 = (double)(float)((double)local_6c[0] * dVar7);
+  if (((uint)local_70 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff8206b0e4,0x57,0,0xffffffff82000f98,0xffffffff8202ac44);
+  }
+  local_6c[0] = (float)dVar7;
+  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff8206b0e4,0x58,0,0xffffffff82000f98,0xffffffff8202ac38);
+  }
+  pfVar3 = (float *)param_7;
+  local_6c[0] = pfVar3[9];
+  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
+LAB_82451560:
+    MyAssertHandler(0xffffffff8206b0e4,0x59,0,0xffffffff82000f98,0xffffffff8206b210);
+  }
+  else {
+    local_6c[0] = pfVar3[10];
+    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_82451560;
+    local_6c[0] = pfVar3[0xb];
+    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_82451560;
+  }
+  local_6c[0] = *pfVar3;
+  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
+LAB_824515c4:
+    MyAssertHandler(0xffffffff8206b0e4,0x5a,0,0xffffffff82000f98,0xffffffff8206b1b8);
+  }
+  else {
+    local_6c[0] = pfVar3[1];
+    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_824515c4;
+    local_6c[0] = pfVar3[2];
+    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_824515c4;
+  }
+  local_6c[0] = pfVar3[3];
+  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
+LAB_82451628:
+    MyAssertHandler(0xffffffff8206b0e4,0x5b,0,0xffffffff82000f98,0xffffffff8206b168);
+  }
+  else {
+    local_6c[0] = pfVar3[4];
+    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_82451628;
+    local_6c[0] = pfVar3[5];
+    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_82451628;
+  }
+  local_6c[0] = pfVar3[6];
+  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
+LAB_8245168c:
+    MyAssertHandler(0xffffffff8206b0e4,0x5c,0,0xffffffff82000f98,0xffffffff8206b120);
+  }
+  else {
+    local_6c[0] = pfVar3[7];
+    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_8245168c;
+    local_6c[0] = pfVar3[8];
+    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_8245168c;
+  }
+  local_6c[0] = (float)((double)*pfVar3 * param_2 + (double)pfVar3[9]);
+  pfVar5 = (float *)param_5;
+  *pfVar5 = local_6c[0];
+  fVar1 = (float)((double)pfVar3[1] * param_2 + (double)pfVar3[10]);
+  pfVar5[1] = fVar1;
+  fVar2 = (float)((double)pfVar3[2] * param_2 + (double)pfVar3[0xb]);
+  pfVar5[2] = fVar2;
+  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
+LAB_82451724:
+    MyAssertHandler(0xffffffff8206b0e4,99,0,0xffffffff82000f98,0xffffffff8202abfc);
+  }
+  else {
+    local_6c[0] = fVar1;
+    if (((uint)fVar1 & 0x7f800000) == 0x7f800000) goto LAB_82451724;
+    local_6c[0] = fVar2;
+    if (((uint)fVar2 & 0x7f800000) == 0x7f800000) goto LAB_82451724;
+  }
+  fVar1 = (float)(dVar10 * (double)pfVar3[3] + (double)*pfVar5);
+  *pfVar5 = fVar1;
+  fVar2 = (float)((double)pfVar3[4] * dVar10 + (double)pfVar5[1]);
+  dVar9 = (double)fVar2;
+  pfVar5[1] = fVar2;
+  fVar2 = (float)((double)pfVar3[5] * dVar10 + (double)pfVar5[2]);
+  pfVar5[2] = fVar2;
+  local_6c[0] = (float)((double)pfVar3[6] * dVar7 + (double)fVar1);
+  *pfVar5 = local_6c[0];
+  fVar1 = (float)((double)pfVar3[7] * dVar7 + dVar9);
+  pfVar5[1] = fVar1;
+  fVar2 = (float)((double)pfVar3[8] * dVar7 + (double)fVar2);
+  pfVar5[2] = fVar2;
+  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
+LAB_824517e0:
+    MyAssertHandler(dVar9,0xffffffff8206b0e4,0x68,0,0xffffffff82000f98,0xffffffff8202abfc);
+  }
+  else {
+    local_6c[0] = fVar1;
+    if (((uint)fVar1 & 0x7f800000) == 0x7f800000) goto LAB_824517e0;
+    local_6c[0] = fVar2;
+    if (((uint)fVar2 & 0x7f800000) == 0x7f800000) goto LAB_824517e0;
+  }
+  if ((param_6 & 0xffffffff) != 0) {
+    fVar1 = *pfVar5 - pfVar3[9];
+    dVar9 = (double)fVar1;
+    pfVar6 = (float *)param_6;
+    *pfVar6 = fVar1;
+    dVar10 = (double)(pfVar5[1] - pfVar3[10]);
+    pfVar6[1] = pfVar5[1] - pfVar3[10];
+    dVar7 = (double)(pfVar5[2] - pfVar3[0xb]);
+    pfVar6[2] = pfVar5[2] - pfVar3[0xb];
+    fVar2 = SQRT((float)(dVar7 * dVar7 +
+                        (double)(float)(dVar9 * dVar9 + (double)(float)(dVar10 * dVar10))));
+    fVar1 = 1.0;
+    if (-fVar2 < 0.0) {
+      fVar1 = fVar2;
+    }
+    dVar8 = (double)(1.0 / fVar1);
+    fVar1 = (float)(dVar9 * dVar8);
+    fVar2 = (float)(dVar10 * dVar8);
+    *pfVar6 = fVar1;
+    local_6c[0] = (float)(dVar7 * dVar8);
+    pfVar6[1] = fVar2;
+    pfVar6[2] = local_6c[0];
+    if (((uint)fVar1 & 0x7f800000) != 0x7f800000) {
+      fVar1 = fVar2;
+      if (((uint)fVar2 & 0x7f800000) != 0x7f800000) {
+        fVar1 = local_6c[0];
+        if (((uint)local_6c[0] & 0x7f800000) != 0x7f800000) goto LAB_824518d4;
+      }
+    }
+    local_6c[0] = fVar1;
+    MyAssertHandler(dVar7,0xffffffff8206b0e4,0x71,0,0xffffffff82000f98,0xffffffff8202854c);
+  }
+LAB_824518d4:
+  __restgprlr_24();
+  return;
+}
+
 
 // 824518E8  Bullet_GetDamage  (game/bullet.cpp:123)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_GetDamage(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+                     ulonglong param_5)
+
+{
+  int iVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  ulonglong uVar8;
+  int iVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  float local_80 [2];
+  longlong local_78 [15];
+  
+  iVar5 = __savegprlr_23();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x85,0,0xffffffff82000f98,0xffffffff8200e950);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x86,0,0xffffffff82000f98,0xffffffff8200e94c);
+  }
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 0x1c) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x87,0,0xffffffff82000f98,0xffffffff8200e924);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x88,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  iVar6 = BG_GetDamage(param_3,param_4);
+  iVar7 = BG_GetMinDamage(param_3,param_4);
+  iVar9 = iVar6;
+  if (iVar6 != iVar7) {
+    uVar8 = (ulonglong)*(uint *)((int)param_5 + 0x158);
+    if (uVar8 == 0) {
+      BG_GetDamageRange(param_3,param_4,local_78,local_80);
+    }
+    else {
+      BG_GetPlayerDamageRange(uVar8 + 0x4ec,param_3,param_4,local_78,local_80);
+    }
+    fVar2 = *(float *)(iVar1 + 0x40) - *(float *)(iVar5 + 0x1c);
+    fVar3 = *(float *)(iVar1 + 0x38) - *(float *)(iVar5 + 0x14);
+    fVar4 = *(float *)(iVar1 + 0x3c) - *(float *)(iVar5 + 0x18);
+    dVar10 = (double)local_80[0];
+    dVar11 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+    if ((dVar10 <= dVar11) && (iVar9 = iVar7, dVar11 < (double)local_78[0]._0_4_)) {
+      dVar14 = (double)(float)((double)local_78[0]._0_4_ - dVar10);
+      dVar13 = 0.0;
+      if (dVar14 == 0.0) {
+        MyAssertHandler(0xffffffff8206b0e4,0xb7,0,0xffffffff82000f98,0xffffffff8206b2bc);
+        dVar10 = (double)local_80[0];
+      }
+      dVar12 = 1.0;
+      dVar10 = (double)(float)((double)(float)(dVar11 - dVar10) / dVar14);
+      if ((dVar10 < dVar13) || (1.0 < dVar10)) {
+        MyAssertHandler(dVar10,0xffffffff8206b0e4,0xb9,0,0xffffffff8206b274,0xffffffff8206b28c,
+                        dVar10);
+      }
+      iVar9 = (int)((float)(dVar12 - dVar10) * (float)(longlong)iVar6 +
+                   (float)((double)(longlong)iVar7 * dVar10));
+    }
+  }
+  iVar5 = (int)(*(float *)(iVar5 + 8) * (float)(longlong)iVar9);
+  local_78[0] = (longlong)iVar5;
+  __restgprlr_23(iVar5);
+  return;
+}
+
 
 // 82451B78  Bullet_GetMethodOfDeath  (game/bullet.cpp:247)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_GetMethodOfDeath(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  undefined1 auStack_30 [48];
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0xfc,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0xfd,0,0xffffffff82000f98,0xffffffff8206b270);
+  }
+  if ((ulonglong)*(uint *)(iVar1 + 0x158) == 0) {
+    BG_ClearPerks(auStack_30);
+  }
+  else {
+    BG_CopyPerks((ulonglong)*(uint *)(iVar1 + 0x158) + 0x4ec,auStack_30);
+  }
+  BG_WeaponBulletFire_GetMethodOfDeath
+            (auStack_30,*(undefined4 *)((int)param_2 + 0x3c),*(undefined1 *)((int)param_2 + 0x40));
+  __restgprlr_28();
+  return;
+}
+
 
 // 82451C20  Bullet_ImpactExplosion_ComputeImpactLocation  (game/bullet.cpp:272)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_ImpactExplosion_ComputeImpactLocation
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  float *pfVar4;
+  
+  iVar3 = __savegprlr_27();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x114,0,0xffffffff82000f98,0xffffffff8200e950);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x115,0,0xffffffff82000f98,0xffffffff8200e94c);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x116,0,0xffffffff82000f98,0xffffffff8206b2d8);
+  }
+  iVar2 = (int)param_2;
+  fVar1 = -(*(float *)(iVar2 + 0xc) * *(float *)(iVar3 + 0x40) +
+           *(float *)(iVar2 + 8) * *(float *)(iVar3 + 0x3c) +
+           *(float *)(iVar2 + 4) * *(float *)(iVar3 + 0x38));
+  if (0.125 <= fVar1) {
+    fVar1 = 0.25 / fVar1;
+  }
+  else {
+    fVar1 = 2.0;
+  }
+  fVar1 = -fVar1;
+  pfVar4 = (float *)param_3;
+  *pfVar4 = *(float *)(iVar3 + 0x38) * fVar1 + *(float *)(iVar2 + 0x38);
+  pfVar4[1] = *(float *)(iVar3 + 0x3c) * fVar1 + *(float *)(iVar2 + 0x3c);
+  pfVar4[2] = *(float *)(iVar3 + 0x40) * fVar1 + *(float *)(iVar2 + 0x40);
+  __restgprlr_27();
+  return;
+}
+
 
 // 82451D40  Bullet_ImpactExplosion  (game/bullet.cpp:291)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_ImpactExplosion
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
+
+{
+  int iVar1;
+  int iVar3;
+  undefined8 uVar2;
+  int iVar4;
+  undefined8 uVar5;
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_24();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x12d,0,0xffffffff82000f98,0xffffffff8200e950);
+  }
+  if (*(int *)(iVar3 + 0xc) != 3) {
+    MyAssertHandler(0xffffffff8206b0e4,0x12e,0,0xffffffff82000f98,0xffffffff8206b348);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x12f,0,0xffffffff82000f98,0xffffffff8200e94c);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x130,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  iVar1 = (int)param_2;
+  iVar4 = *(int *)(iVar1 + 0x34);
+  if (((iVar4 != 0) && (*(int *)(iVar4 + 0x158) != 0)) &&
+     (iVar4 = *(int *)(iVar4 + 0x90), *(int *)(iVar1 + 0x4c) = iVar4, 0x11 < iVar4)) {
+    MyAssertHandler(0xffffffff8206b0e4,0x139,0,0xffffffff82000f98,0xffffffff8206b328);
+  }
+  iVar4 = *(int *)((int)param_5 + 4);
+  if ((iVar4 != 1) && (iVar4 != 0xc)) {
+    uVar2 = BG_GetEntityTypeName();
+    Com_Error(1,0xffffffff8206b2e8,uVar2);
+  }
+  uVar2 = BG_WeaponBulletFire_GetExplDmg(param_3,param_4);
+  uVar5 = BG_WeaponBulletFire_GetExplRadius(param_3,param_4);
+  iVar4 = *(int *)(iVar1 + 0x34);
+  if ((iVar4 == 0) || (*(char *)(iVar4 + 0x16b) == '\0')) {
+    iVar4 = 0;
+  }
+  Bullet_ImpactExplosion_ComputeImpactLocation(iVar3,param_2,auStack_70);
+  G_RadiusDamage(uVar2,0,uVar5,0xbff0000000000000,auStack_70,param_5,param_5);
+  if ((iVar4 != 0) && (*(int *)(iVar4 + 0x160) != 0)) {
+    Vehicle_Knockback(0x3ff0000000000000,*(int *)(iVar4 + 0x160),iVar3 + 0x38,3);
+  }
+  __restgprlr_24();
+  return;
+}
+
 
 // 82451F68  Bullet_ImpactEffect_SetAdditionalFlags  (game/bullet.cpp:346)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_ImpactEffect_SetAdditionalFlags(undefined8 param_1,undefined8 param_2)
+
+{
+  uint uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x15b,0,0xffffffff82000f98,0xffffffff8206b4cc);
+  }
+  uVar1 = (uint)param_2;
+  if ((uVar1 & 0x1f) != uVar1) {
+    uVar2 = va(0xffffffff8206b488,param_2);
+    MyAssertHandler(0xffffffff8206b0e4,0x15c,0,0xffffffff820011f4,0xffffffff8206b438,uVar2);
+  }
+  if ((*(uint *)(iVar3 + 0xd8) & 0x1f) != *(uint *)(iVar3 + 0xd8)) {
+    uVar2 = va(0xffffffff8206b3e8);
+    MyAssertHandler(0xffffffff8206b0e4,0x15d,0,0xffffffff820011f4,0xffffffff8206b378,uVar2);
+  }
+  *(uint *)(iVar3 + 0xd8) = uVar1 & 0xff | *(uint *)(iVar3 + 0xd8);
+  __restgprlr_28();
+  return;
+}
+
 
 // 82452048  SetTempEventEntNormal  (game/bullet.cpp:355)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SetTempEventEntNormal(int param_1,undefined8 param_2)
+
+{
+  uint uVar1;
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x164,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  uVar1 = DirToByte(param_2);
+  *(uint *)(param_1 + 0xa0) = uVar1 & 0xff;
+  return;
+}
+
 
 // 824520B8  BroadcastShieldHitEvent  (game/bullet.cpp:368)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void BroadcastShieldHitEvent
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,uint param_4,uint param_5,
+               ulonglong param_6)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  uint uVar4;
+  
+  uVar2 = __savegprlr_26();
+  iVar3 = G_TempEntity(uVar2,0x3d);
+  *(undefined4 *)(iVar3 + 200) = param_3;
+  *(uint *)(iVar3 + 0xcc) = param_4 & 0xff;
+  *(undefined4 *)(iVar3 + 0xd8) = 0;
+  uVar4 = DirToByte(param_2);
+  *(uint *)(iVar3 + 0xa0) = uVar4 & 0xff;
+  if (((int)param_6 != 0x7ff) && ((int)param_6 != 0x7fe)) {
+    iVar1 = *(int *)((int)&DAT_833737d8 +
+                    (int)((param_6 + (param_6 & 0x3fffffff) * 4 & 0xffffffff) << 7));
+    if (iVar1 != 0) {
+      uVar4 = *(uint *)(iVar1 + 0x150);
+      *(uint *)(iVar3 + 0x78) = param_5 & 0xffff;
+      *(uint *)(iVar3 + 0x80) = uVar4 & 0xffff;
+      *(uint *)(iVar3 + 0x88) = DAT_82968ef0 & 0xff;
+    }
+  }
+  __restgprlr_26();
+  return;
+}
+
 
 // 82451240  Vec3NormalizeFast  (universal/com_vector.h:405)
 
 void Vec3NormalizeFast(float *param_1)
 
 {
-  float fVar1;
+  double dVar1;
   
-  fVar1 = I_rsqrt(param_1[2] * param_1[2] + *param_1 * *param_1 + param_1[1] * param_1[1]);
-  *param_1 = *param_1 * fVar1;
-  param_1[1] = fVar1 * param_1[1];
-  param_1[2] = fVar1 * param_1[2];
+  dVar1 = (double)I_rsqrt((double)(param_1[2] * param_1[2] +
+                                  *param_1 * *param_1 + param_1[1] * param_1[1]));
+  *param_1 = (float)((double)*param_1 * dVar1);
+  param_1[1] = (float)(dVar1 * (double)param_1[1]);
+  param_1[2] = (float)(dVar1 * (double)param_1[2]);
   return;
 }
 
 
 // 82452168  EncodeShieldHitPos  (game/bullet.cpp:412)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void EncodeShieldHitPos(undefined8 param_1,float *param_2,float *param_3)
+
+{
+  int iVar1;
+  char cVar2;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  float local_b0 [4];
+  undefined1 auStack_a0 [16];
+  undefined1 auStack_90 [48];
+  undefined1 auStack_60 [36];
+  float local_3c;
+  float local_38;
+  float local_34;
+  
+  iVar1 = __savegprlr_27();
+  if ((&DAT_833737d8)[iVar1 * 0xa0] == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x1a5,0,0xffffffff82000f98,0xffffffff8206b510);
+  }
+  cVar2 = G_GetShieldTagMatrix(&DAT_83373680 + iVar1 * 0xa0,auStack_60);
+  if (cVar2 == '\0') {
+    Com_PrintWarning(0xf,0xffffffff8206b4dc,iVar1);
+    __restgprlr_27(0);
+    return;
+  }
+  MatrixInverse(auStack_60,auStack_90);
+  local_c0 = *param_2 - local_3c;
+  local_bc = param_2[1] - local_38;
+  local_b8 = param_2[2] - local_34;
+  MatrixTransformVector(&local_c0,auStack_90,auStack_a0);
+  local_c0 = *param_3 - local_3c;
+  local_bc = param_3[1] - local_38;
+  local_b8 = param_3[2] - local_34;
+  MatrixTransformVector(&local_c0,auStack_90,local_b0);
+  BG_ShieldHitEncode(auStack_a0,0.0 < local_b0[0]);
+  __restgprlr_27();
+  return;
+}
+
 
 // 824522C0  BroadcastShieldHitEventToVictim  (game/bullet.cpp:443)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void BroadcastShieldHitEventToVictim
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,uint param_4,
+               undefined4 param_5,ulonglong param_6)
+
+{
+  uint uVar1;
+  int iVar2;
+  undefined8 uVar3;
+  int iVar4;
+  uint uVar5;
+  
+  uVar3 = __savegprlr_23();
+  if (((int)param_6 != 0x7ff) && ((int)param_6 != 0x7fe)) {
+    iVar2 = *(int *)((int)&DAT_833737d8 +
+                    (int)((param_6 + (param_6 & 0x3fffffff) * 4 & 0xffffffff) << 7));
+    if (iVar2 != 0) {
+      uVar1 = *(uint *)(iVar2 + 0x150);
+      iVar4 = G_TempEntity(uVar3,0x41);
+      *(undefined4 *)(iVar4 + 200) = param_3;
+      *(uint *)(iVar4 + 0xcc) = param_4 & 0xff;
+      *(undefined4 *)(iVar4 + 0xd8) = 0;
+      uVar5 = EncodeShieldHitPos(param_6,uVar3,param_2);
+      *(undefined4 *)(iVar4 + 0x78) = param_5;
+      *(uint *)(iVar4 + 0x90) = uVar1;
+      *(uint *)(iVar4 + 0xa0) = uVar5 & 0xff;
+      *(undefined4 *)(iVar4 + 0xfc) = 0xffffffff;
+      iVar2 = (((int)uVar1 >> 5) + 0x3f) * 4;
+      *(undefined4 *)(iVar4 + 0x88) = DAT_82968ef4;
+      *(uint *)(iVar2 + iVar4) = *(uint *)(iVar2 + iVar4) & ~(1 << (uVar1 & 0x1f));
+    }
+  }
+  __restgprlr_23();
+  return;
+}
+
 
 // 824523A0  Bullet_ImpactEffect  (game/bullet.cpp:618)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_ImpactEffect(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+                        undefined8 param_5,ulonglong param_6,ulonglong param_7)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  
+  puVar3 = (undefined4 *)__savegprlr_23();
+  if (puVar3 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x272,0,0xffffffff82000f98,0xffffffff8200e950);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x273,0,0xffffffff82000f98,0xffffffff8200e94c);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x274,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  if ((param_7 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x275,0,0xffffffff82000f98,0xffffffff8206b52c);
+  }
+  iVar2 = (int)param_2;
+  if ((((*(char *)(iVar2 + 0x44) == '\0') &&
+       (puVar1 = *(undefined4 **)(iVar2 + 0x34), puVar1 != (undefined4 *)0x0)) &&
+      (puVar1[0x56] != 0)) && (*(short *)(iVar2 + 0x2c) == 0x13)) {
+    BroadcastShieldHitEvent(param_2 + 0x38,param_3,param_4,param_5,*puVar3,*puVar1);
+    BroadcastShieldHitEventToVictim
+              (param_2 + 0x38,puVar3 + 8,param_4,param_5,*puVar3,**(undefined4 **)(iVar2 + 0x34));
+  }
+  *(undefined4 *)param_7 = 0;
+  __restgprlr_23();
+  return;
+}
+
 
 // 824524E8  Bullet_DamageGlass  (game/bullet.cpp:757)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_DamageGlass(undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4,
+                       undefined8 param_5)
+
+{
+  longlong lVar1;
+  short sVar4;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  
+  lVar1 = __savegprlr_27();
+  sVar4 = Trace_GetGlassHitId(param_2);
+  if (sVar4 == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x2f6,0,0xffffffff82000f98,0xffffffff8206b53c);
+  }
+  uVar2 = Bullet_GetDamage(lVar1,param_2,param_3,param_4,param_5);
+  uVar3 = Trace_GetGlassHitId(param_2);
+  G_Glass_DamagePiece((uVar3 & 0xffff) - 1,uVar2,param_2 + 0x38,lVar1 + 0x38);
+  __restgprlr_27();
+  return;
+}
+
 
 // 82452590  Bullet_IgnoreHitEntity  (game/bullet.cpp:767)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_IgnoreHitEntity(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar4;
+  undefined8 uVar3;
+  
+  iVar4 = __savegprlr_28();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x300,0,0xffffffff82000f98,0xffffffff8200e950);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x301,0,0xffffffff82000f98,0xffffffff8200e94c);
+  }
+  iVar4 = (int)param_2;
+  if (*(int *)(iVar4 + 0x34) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x302,0,0xffffffff82000f98,0xffffffff8206b564);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x303,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  iVar2 = (int)param_3;
+  iVar1 = *(int *)(iVar2 + 0x158);
+  if (iVar1 != 0) {
+    if ((((*(uint *)(iVar1 + 0x14) & 4) == 0) && (*(int *)(iVar1 + 0xac) == 0x7ff)) &&
+       ((ulonglong)*(uint *)(iVar4 + 0x34) == (param_3 & 0xffffffff))) {
+      __restgprlr_28(1);
+      return;
+    }
+  }
+  if (((*(int *)(iVar2 + 0x15c) == 0) || (*(int **)(iVar2 + 0x214) == (int *)0x0)) ||
+     (uVar3 = 1, **(int **)(iVar2 + 0x214) != *(int *)(iVar4 + 0x34))) {
+    uVar3 = 0;
+  }
+  __restgprlr_28(uVar3);
+  return;
+}
+
 
 // 824526C0  Bullet_Trace  (game/bullet.cpp:833)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
-// 82452938  Bullet_HitNothing  (game/bullet.cpp:896)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 824529D8  CalcRicochet  (game/bullet.cpp:913)
-
-void CalcRicochet(float *param_1,float *param_2,float *param_3)
+void Bullet_Trace(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+                 ulonglong param_5,ulonglong param_6)
 
 {
   float fVar1;
-  float local_40;
-  float local_3c;
+  int iVar2;
+  float *pfVar3;
+  uint uVar4;
+  int iVar5;
+  char cVar7;
+  uint uVar6;
+  undefined1 uVar8;
+  undefined8 uVar9;
+  float fVar10;
+  
+  iVar5 = __savegprlr_24();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x344,0,0xffffffff82000f98,0xffffffff8200e950);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x345,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x346,0,0xffffffff82000f98,0xffffffff8200e94c);
+  }
+  if (0x1e < (param_6 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8206b0e4,0x347,0,0xffffffff8202aa08,param_6,0x1f);
+  }
+  cVar7 = BG_IsRifleBullet(param_2,param_3);
+  if (cVar7 == '\0') {
+    uVar9 = 0xffffffff82969400;
+  }
+  else {
+    uVar9 = 0xffffffff82969414;
+  }
+  G_LocationalTraceAllowChildren
+            (param_5,(float *)(iVar5 + 0x20),(float *)(iVar5 + 0x2c),*(undefined4 *)(iVar5 + 4),
+             0x2806831,uVar9);
+  uVar6 = Trace_GetEntityHitId(param_5);
+  uVar4 = uVar6 & 0xffff;
+  pfVar3 = (float *)param_5;
+  if ((uVar4 == 0x7ff) || (uVar4 == 0x7fe)) {
+    pfVar3[0xd] = 0.0;
+  }
+  else {
+    pfVar3[0xd] = (float)(&DAT_83373680 + (uVar4 + (uVar6 & 0xffff) * 4) * 0x20);
+  }
+  fVar10 = *(float *)(iVar5 + 0x20);
+  fVar1 = *pfVar3;
+  pfVar3[0xe] = (*(float *)(iVar5 + 0x2c) - fVar10) * fVar1 + fVar10;
+  pfVar3[0xf] = (*(float *)(iVar5 + 0x30) - *(float *)(iVar5 + 0x24)) * fVar1 +
+                *(float *)(iVar5 + 0x24);
+  pfVar3[0x10] = (*(float *)(iVar5 + 0x34) - *(float *)(iVar5 + 0x28)) * fVar1 +
+                 *(float *)(iVar5 + 0x28);
+  if (pfVar3[0xd] == 0.0) {
+    *(undefined1 *)(pfVar3 + 0x11) = 0;
+    goto LAB_824528c0;
+  }
+  if (*(short *)(pfVar3 + 0xb) == 0x13) {
+    fVar10 = 7.6407133e-38;
+LAB_824528a0:
+    pfVar3[4] = fVar10;
+  }
+  else {
+    iVar2 = *(int *)((int)pfVar3[0xd] + 4);
+    if (((iVar2 == 1) || (iVar2 == 2)) && (pfVar3[4] == 0.0)) {
+      fVar10 = 1.0285576e-38;
+      goto LAB_824528a0;
+    }
+  }
+  uVar8 = Bullet_IgnoreHitEntity(iVar5,param_5,param_4);
+  *(undefined1 *)(pfVar3 + 0x11) = uVar8;
+LAB_824528c0:
+  fVar10 = (float)((int)pfVar3[4] >> 0x14 & 0x1f);
+  pfVar3[0x12] = fVar10;
+  if (((uint)pfVar3[4] & 0x100) == 0) {
+    if ((fVar10 == 0.0) && ((float)param_6 != 0.0)) {
+      pfVar3[0x12] = (float)param_6;
+    }
+  }
+  else {
+    pfVar3[0x12] = 0.0;
+  }
+  if (0x1e < (uint)pfVar3[0x12]) {
+    MyAssertHandler(0xffffffff8206b0e4,0x378,1,0xffffffff8202a9c0,pfVar3[0x12],0x1f);
+  }
+  __restgprlr_24(pfVar3[7] != 0.0);
+  return;
+}
+
+
+// 82452938  Bullet_HitNothing  (game/bullet.cpp:896)
+
+void Bullet_HitNothing(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+                      undefined8 param_5)
+
+{
+  ulonglong uVar1;
+  undefined1 auStack_50 [80];
+  
+  uVar1 = __savegprlr_25();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,899,0,0xffffffff82000f98,0xffffffff8200e950);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,900,0,0xffffffff82000f98,0xffffffff8200e94c);
+  }
+  Bullet_ImpactEffect(uVar1,param_2,param_2 + 4,param_3,param_4,param_5,auStack_50);
+  __restgprlr_25();
+  return;
+}
+
+
+// 824529D8  CalcRicochet  (game/bullet.cpp:913)
+
+void CalcRicochet(float *param_1,undefined4 *param_2,float *param_3)
+
+{
+  double dVar1;
+  undefined4 local_40;
+  undefined4 local_3c;
   float local_38;
   float local_30;
   float local_2c;
   float local_28;
-  float afStack_20 [4];
+  undefined1 auStack_20 [16];
   
   local_30 = -*param_1;
   local_2c = -param_1[1];
-  local_38 = param_2[2];
+  local_38 = (float)param_2[2];
   local_28 = -param_1[2];
   local_40 = *param_2;
   local_3c = param_2[1];
@@ -140,52 +824,856 @@ void CalcRicochet(float *param_1,float *param_2,float *param_3)
     }
     Vec3NormalizeFast(&local_40);
   }
-  Vec3Cross(&local_40,&local_30,afStack_20);
-  Vec3Cross(&local_30,afStack_20,param_3);
-  fVar1 = I_rsqrt(param_3[2] * param_3[2] + *param_3 * *param_3 + param_3[1] * param_3[1]);
-  *param_3 = *param_3 * fVar1;
-  param_3[1] = param_3[1] * fVar1;
-  param_3[2] = param_3[2] * fVar1;
+  Vec3Cross(&local_40,&local_30,auStack_20);
+  Vec3Cross(&local_30,auStack_20,param_3);
+  dVar1 = (double)I_rsqrt((double)(param_3[2] * param_3[2] +
+                                  *param_3 * *param_3 + param_3[1] * param_3[1]));
+  *param_3 = (float)((double)*param_3 * dVar1);
+  param_3[1] = (float)((double)param_3[1] * dVar1);
+  param_3[2] = (float)((double)param_3[2] * dVar1);
   return;
 }
 
 
 // 82452AD8  BulletRicochet  (game/bullet.cpp:942)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void BulletRicochet(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+                   undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  undefined8 uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  float *pfVar5;
+  float *pfVar6;
+  double dVar7;
+  double dVar8;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  undefined4 local_b4;
+  undefined4 local_b0;
+  undefined4 local_ac;
+  undefined4 local_a8;
+  undefined4 local_a4;
+  undefined4 local_a0;
+  float local_9c;
+  float local_98;
+  float local_94;
+  undefined4 local_84;
+  undefined1 local_80;
+  int local_7c;
+  undefined4 local_78;
+  
+  uVar1 = __savegprlr_21();
+  uVar2 = BG_GetAlternateWeapon(param_4,param_5);
+  iVar4 = (&DAT_829d84a0)[uVar2 & 0xff];
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x3b9,0,0xffffffff82000f98,0xffffffff8206b570);
+  }
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x3ba,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  iVar3 = BG_GetWeaponType(param_4,param_5);
+  if (iVar3 != 1) {
+    MyAssertHandler(0xffffffff8206b0e4,0x3bb,0,0xffffffff82000f98,0xffffffff8200f520);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    param_3 = param_2;
+  }
+  iVar3 = BG_GetWeaponType(param_4,param_5);
+  if (((iVar3 == 1) && (*(char *)(iVar4 + 0x778) == '\0')) &&
+     (iVar3 = BG_GetWeaponClass(param_4,param_5), iVar3 != 4)) {
+    dVar8 = (double)(*(float *)(iVar4 + 0x538) * *(float *)(DAT_829c7cc4 + 0xc));
+    dVar7 = (double)BG_random(uVar1);
+    if (dVar7 <= dVar8) {
+      pfVar5 = (float *)param_7;
+      pfVar6 = (float *)param_8;
+      if (pfVar5[2] * pfVar6[2] + pfVar5[1] * pfVar6[1] + *pfVar5 * *pfVar6 <= 0.0) {
+        local_80 = (undefined1)param_5;
+        local_84 = (int)param_4;
+        local_7c = iVar4;
+        uVar2 = BG_GetAlternateWeapon(param_4,param_5);
+        local_78 = (&DAT_829d80d8)[uVar2 & 0xff];
+        CalcRicochet(param_8,param_7,&local_c0);
+        pfVar5 = (float *)param_6;
+        local_9c = *pfVar5 + local_c0;
+        local_98 = pfVar5[1] + local_bc;
+        local_94 = pfVar5[2] + local_b8;
+        local_b4 = 0;
+        local_b0 = 0;
+        local_ac = 0;
+        local_a8 = 0;
+        local_a4 = 0;
+        local_a0 = 0;
+        if (DAT_8333cb38 != '\0') {
+          G_DebugStar(param_6,0xffffffff82181838);
+          local_d0 = local_c0 * 100.0 + local_9c;
+          local_cc = local_bc * 100.0 + local_98;
+          local_c8 = local_b8 * 100.0 + local_94;
+          G_DebugLineWithDuration(&local_9c,&local_d0,0xffffffff821818f8,1,100);
+          G_DebugStar(&local_d0,0xffffffff82181818);
+        }
+        Bullet_Fire_Internal(0,param_3);
+        iVar4 = G_TempEntity(&local_9c,0x20);
+        *(int *)(iVar4 + 200) = (int)param_4;
+        *(uint *)(iVar4 + 0xcc) = (uint)param_5 & 0xff;
+        *(undefined4 *)(iVar4 + 0xd8) = 0;
+        SetTempEventEntNormal(iVar4,&local_c0);
+        *(undefined4 *)(iVar4 + 0x78) = *(undefined4 *)param_2;
+      }
+    }
+  }
+  __restgprlr_21();
+  return;
+}
+
 
 // 82452DB0  Bullet_ProcessShieldHit  (game/bullet.cpp:1015)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_ProcessShieldHit
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+               undefined8 param_5,ulonglong param_6)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  undefined1 auStack_60 [96];
+  
+  uVar2 = __savegprlr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x3f8,0,0xffffffff82000f98,0xffffffff8200e950);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x3f9,0,0xffffffff82000f98,0xffffffff8200e94c);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x3fa,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  if ((*(char *)((int)param_2 + 0x10) == '\0') &&
+     (iVar1 = *(int *)((int)param_3 + 0x34), *(int *)(iVar1 + 4) == 1)) {
+    G_GetShieldTagNormal(iVar1,auStack_60);
+    BulletRicochet(uVar2,*(undefined4 *)((int)param_3 + 0x34),param_6,param_4,param_5,param_3 + 0x38
+                   ,auStack_60,param_2 + 0x38);
+    __restgprlr_23(0);
+    return;
+  }
+  __restgprlr_23(1);
+  return;
+}
+
 
 // 82452EB8  Bullet_Process  (game/bullet.cpp:1050)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_Process(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+                   undefined8 param_5,ulonglong param_6,ulonglong param_7,undefined8 param_8)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  bool bVar4;
+  int iVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  char cVar8;
+  ulonglong uVar9;
+  undefined8 uVar10;
+  ulonglong uVar11;
+  longlong lVar12;
+  uint *in_stack_00000054;
+  char in_stack_0000005f;
+  int local_c0;
+  undefined1 auStack_bc [12];
+  undefined8 local_b0;
+  undefined8 local_a8;
+  undefined8 local_a0;
+  
+  uVar6 = __savegprlr();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x425,0,0xffffffff82000f98,0xffffffff8200e950);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x426,0,0xffffffff82000f98,0xffffffff8200e94c);
+  }
+  iVar3 = (int)param_3;
+  if (*(int *)(iVar3 + 0x1c) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x427,0,0xffffffff82000f98,0xffffffff8200e924);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x428,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  uVar10 = 1;
+  *in_stack_00000054 = 0;
+  iVar1 = *(int *)((int)param_6 + 0x158);
+  uVar11 = param_6;
+  if ((iVar1 != 0) && ((*(uint *)(iVar1 + 0xf8) & 0x2000) != 0)) {
+    if (0x7fd < *(uint *)(iVar1 + 0x1bc)) {
+      MyAssertHandler(0xffffffff8206b0e4,0x437,0,0xffffffff8206b590,*(uint *)(iVar1 + 0x1bc),0x7fe);
+    }
+    uVar2 = *(uint *)(*(int *)((int)param_6 + 0x158) + 0x1bc);
+    uVar11 = ((ulonglong)uVar2 + ((ulonglong)uVar2 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 -
+             0x7cc8c980;
+  }
+  uVar7 = Bullet_GetDamage(param_2,param_3,param_4,param_5,param_6);
+  lVar12 = param_3 + 0x38;
+  iVar1 = (int)param_2;
+  G_CheckHitTriggerDamage
+            (param_6,param_2 + 0x14,param_2 + 0x20,lVar12,uVar7,*(undefined4 *)(iVar1 + 0xc));
+  local_c0 = 0;
+  if (in_stack_0000005f != '\0') {
+    Bullet_ImpactEffect(param_2,param_3,param_3 + 4,param_4,param_5,param_6,&local_c0);
+  }
+  iVar5 = local_c0;
+  Trace_GetDynEntHitId(param_3,auStack_bc);
+  if (*(char *)(iVar3 + 0x44) == '\0') {
+    if (*(int *)(iVar3 + 0x34) != 0) {
+      if (*(short *)(iVar3 + 0x2c) == 0x13) {
+        uVar10 = Bullet_ProcessShieldHit(uVar6,param_2,param_3,param_4,param_5,param_6,param_8);
+        if (*(int *)(*(int *)(iVar3 + 0x34) + 0x158) != 0) {
+          G_ShieldNotifyAndDamage
+                    (*(int *)(iVar3 + 0x34),param_6,param_6,param_2 + 0x38,lVar12,uVar7,param_7,
+                     *(undefined4 *)(iVar1 + 0xc));
+        }
+      }
+      else if (*(char *)(*(int *)(iVar3 + 0x34) + 0x16b) != '\0') {
+        cVar8 = BG_IsArmorPiercing(param_4,param_5);
+        if (cVar8 != '\0') {
+          param_7 = param_7 | 2;
+        }
+        if (*(char *)(*(int *)(iVar3 + 0x34) + 0x103) == '\0') {
+          MyAssertHandler(0xffffffff8206b0e4,0x472,0,0xffffffff82000f98,0xffffffff8206b578);
+        }
+        uVar9 = (ulonglong)*(uint *)(*(int *)(iVar3 + 0x34) + 0x19c);
+        if ((*(short *)(iVar3 + 0x2c) == 2) || (*(short *)(iVar3 + 0x2c) == 1)) {
+          *in_stack_00000054 = *in_stack_00000054 | 1;
+        }
+        if (*(int *)(DAT_8353ff64 + 0xc) == **(int **)(iVar3 + 0x34)) {
+          CL_AddDebugStar(lVar12,0xffffffff821817e8,100,1);
+        }
+        if (*(int *)(DAT_83373634 + 0xc) == **(int **)(iVar3 + 0x34)) {
+          local_b0 = 0xffffffffffffffff;
+          local_a8 = 0xffffffffffffffff;
+          local_a0 = 0xffffffffffffffff;
+          G_DObjCalcPose(*(int **)(iVar3 + 0x34),&local_b0);
+          SV_XModelDebugBoxes(*(undefined4 *)(iVar3 + 0x34),0xffffffff82181838,
+                              *(undefined4 *)(DAT_8353feb4 + 0xc));
+          CL_AddDebugLine(param_2 + 0x20,lVar12,0xffffffff821817f8,0,
+                          *(undefined4 *)(DAT_8353feb4 + 0xc),1);
+          CL_AddDebugStar(lVar12,0xffffffff821817e8,*(undefined4 *)(DAT_8353feb4 + 0xc),1);
+        }
+        G_Damage(*(undefined4 *)(iVar3 + 0x34),uVar11,param_6,param_2 + 0x38,lVar12,uVar7,param_7,
+                 *(undefined4 *)(iVar1 + 0xc));
+        if ((*(char *)(*(int *)(iVar3 + 0x34) + 0x103) == '\0') ||
+           (bVar4 = true, *(int *)(*(int *)(iVar3 + 0x34) + 0x19c) < 1)) {
+          bVar4 = false;
+        }
+        if (((-uVar9 & ~uVar9 & 0xffffffff) >> 0x1f != 0) && (!bVar4)) {
+          *in_stack_00000054 = *in_stack_00000054 | 2;
+        }
+      }
+    }
+    if ((*(int *)(iVar1 + 0xc) == 3) && ((*(uint *)(iVar3 + 0x14) & 0x10) == 0)) {
+      Bullet_ImpactExplosion(param_2,param_3,param_4,param_5,param_6);
+      uVar10 = 0;
+    }
+  }
+  if (iVar5 != 0) {
+    Bullet_ImpactEffect_SetAdditionalFlags(iVar5,*in_stack_00000054);
+  }
+  __restgprlr(uVar10);
+  return;
+}
+
 
 // 82453370  Bullet_FireExtended  (game/bullet.cpp:1195)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_FireExtended(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+                        undefined8 param_5,ulonglong param_6,undefined8 param_7)
+
+{
+  undefined8 uVar1;
+  char cVar4;
+  short sVar3;
+  int iVar2;
+  int iVar5;
+  undefined8 uVar6;
+  double dVar7;
+  undefined8 uVar8;
+  
+  uVar1 = __savegprlr_22();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x4af,0,0xffffffff82000f98,0xffffffff8200e950);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x4b0,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  iVar5 = 0;
+  dVar7 = 0.5;
+  uVar8 = 0;
+  uVar6 = 0x3fc147ae20000000;
+  while (cVar4 = Bullet_Trace(param_2,param_4,param_5,param_6,param_3,0), cVar4 != '\0') {
+    cVar4 = Bullet_Process(uVar1,param_2,param_3,param_4,param_5,param_6,0,param_7);
+    if (cVar4 == '\0') goto LAB_824535a0;
+    iVar2 = (int)param_3;
+    if ((*(uint *)(iVar2 + 0x14) & 0x10) == 0) {
+      if ((*(int *)(iVar2 + 0x34) == 0) || (*(char *)(*(int *)(iVar2 + 0x34) + 0x16b) == '\0'))
+      goto LAB_824535a0;
+      if (*(char *)(iVar2 + 0x44) == '\0') {
+        if ((((*(char *)(DAT_829c7df4 + 0xc) == '\0') ||
+             (cVar4 = BG_IsRifleBullet(param_4,param_5), cVar4 == '\0')) ||
+            (*(int *)(*(int *)(iVar2 + 0x34) + 0x158) == 0)) ||
+           (iVar2 = OnSameTeam(*(int *)(iVar2 + 0x34),param_6), iVar2 != 0)) goto LAB_824535a0;
+        *(float *)((int)param_2 + 8) = (float)((double)*(float *)((int)param_2 + 8) * dVar7);
+      }
+      BG_AdvanceTrace(uVar8,param_2,param_3);
+    }
+    else {
+      sVar3 = Trace_GetGlassHitId(param_3);
+      if (sVar3 != 0) {
+        Bullet_DamageGlass(param_2,param_3,param_4,param_5,param_6);
+      }
+      cVar4 = BG_AdvanceTrace(uVar6,param_2,param_3);
+      if (cVar4 == '\0') goto LAB_824535a0;
+    }
+    iVar5 = iVar5 + 1;
+    if (0xb < iVar5) {
+      __restgprlr_22();
+      return;
+    }
+  }
+  Bullet_HitNothing(param_2,param_3,param_4,param_5,param_6);
+LAB_824535a0:
+  __restgprlr_22();
+  return;
+}
+
 
 // 824535B8  Bullet_FirePenetrate  (game/bullet.cpp:1259)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_FirePenetrate
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,ulonglong param_6,undefined8 param_7)
+
+{
+  int iVar1;
+  int iVar2;
+  float fVar3;
+  float fVar4;
+  bool bVar5;
+  float fVar6;
+  undefined8 uVar7;
+  char cVar9;
+  short sVar8;
+  char cVar10;
+  char cVar11;
+  ulonglong uVar12;
+  int iVar13;
+  uint *puVar14;
+  double dVar15;
+  undefined8 uVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  undefined1 auStack_180 [4];
+  undefined4 local_17c;
+  float local_160;
+  float local_15c;
+  float local_158;
+  float local_154;
+  float local_150;
+  float local_14c;
+  float local_148;
+  float local_144;
+  float local_140;
+  undefined1 auStack_130 [4];
+  float local_12c;
+  float local_128;
+  float local_124;
+  int local_120;
+  char local_102;
+  char local_101;
+  float local_f8;
+  float local_f4;
+  float local_f0;
+  undefined4 local_e8;
+  undefined1 auStack_e0 [224];
+  
+  __savegprlr();
+  uVar7 = __savefpr_24();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x4f0,0,0xffffffff82000f98,0xffffffff8200e950);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x4f1,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  cVar9 = Bullet_Trace(param_2,param_4,param_5,param_6,param_3,0);
+  if (cVar9 == '\0') {
+    Bullet_HitNothing(param_2,param_3,param_4,param_5,param_6);
+    __restfpr_24();
+    __restgprlr();
+    return;
+  }
+  cVar9 = Bullet_Process(uVar7,param_2,param_3,param_4,param_5,param_6,0,param_7);
+  if (cVar9 != '\0') {
+    dVar17 = 1.0;
+    dVar19 = 0.009999999776482582;
+    iVar13 = 0;
+    uVar16 = 0x3fc147ae20000000;
+    dVar18 = 0.0;
+    while( true ) {
+      iVar2 = (int)param_3;
+      dVar15 = (double)BG_GetSurfacePenetrationDepth(param_4,param_5,*(undefined4 *)(iVar2 + 0x48));
+      iVar1 = *(int *)((int)param_6 + 0x158);
+      if (iVar1 != 0) {
+        puVar14 = (uint *)(iVar1 + 0x4ec);
+        if (puVar14 == (uint *)0x0) {
+          MyAssertHandler(0xffffffff82000fa8,0x4f,0,&DAT_82000f98,0xffffffff82000f9c);
+        }
+        if ((*puVar14 & 0x4000000) != 0) {
+          dVar15 = (double)(float)((double)*(float *)(DAT_829d7ec8 + 0xc) * dVar15);
+        }
+      }
+      if (dVar15 <= dVar18) break;
+      dVar22 = (double)*(float *)(iVar2 + 0x38);
+      dVar21 = (double)*(float *)(iVar2 + 0x3c);
+      dVar20 = (double)*(float *)(iVar2 + 0x40);
+      sVar8 = Trace_GetGlassHitId(param_3);
+      if (sVar8 != 0) {
+        Bullet_DamageGlass(param_2,param_3,param_4,param_5,param_6);
+      }
+      cVar10 = BG_AdvanceTrace(uVar16,param_2,param_3);
+      if (cVar10 == '\0') break;
+      cVar10 = Bullet_Trace(param_2,param_4,param_5,param_6,param_3,*(undefined4 *)(iVar2 + 0x48));
+      Com_Memcpy(auStack_180,param_2,0x44);
+      iVar1 = (int)param_2;
+      local_160 = *(float *)(iVar1 + 0x2c);
+      local_15c = *(float *)(iVar1 + 0x30);
+      local_158 = *(float *)(iVar1 + 0x34);
+      local_148 = (float)-(double)*(float *)(iVar1 + 0x38);
+      local_144 = (float)-(double)*(float *)(iVar1 + 0x3c);
+      local_140 = (float)-(double)*(float *)(iVar1 + 0x40);
+      local_154 = (float)(-(double)*(float *)(iVar1 + 0x38) * dVar19 + dVar22);
+      local_150 = (float)(-(double)*(float *)(iVar1 + 0x3c) * dVar19 + dVar21);
+      local_14c = (float)(-(double)*(float *)(iVar1 + 0x40) * dVar19 + dVar20);
+      Com_Memcpy(auStack_130,param_3,0x50);
+      local_12c = -local_12c;
+      local_128 = -local_128;
+      local_124 = -local_124;
+      if (cVar10 == '\0') {
+        local_17c = 0x7ff;
+      }
+      else {
+        BG_AdvanceTrace(dVar19,auStack_180,auStack_130);
+      }
+      cVar11 = Bullet_Trace(auStack_180,param_4,param_5,param_6,auStack_130,local_e8);
+      if (((cVar11 == '\0') || (local_102 == '\0')) &&
+         ((*(char *)(iVar2 + 0x2f) == '\0' || (local_101 == '\0')))) {
+        bVar5 = false;
+      }
+      else {
+        bVar5 = true;
+      }
+      if ((cVar11 != '\0') || (bVar5)) {
+        if (bVar5) {
+          fVar3 = (local_154 - local_160) * (local_154 - local_160) +
+                  (local_14c - local_158) * (local_14c - local_158) +
+                  (local_150 - local_15c) * (local_150 - local_15c);
+        }
+        else {
+          fVar3 = (float)(dVar22 - (double)local_f8) * (float)(dVar22 - (double)local_f8) +
+                  (float)(dVar20 - (double)local_f0) * (float)(dVar20 - (double)local_f0) +
+                  (float)(dVar21 - (double)local_f4) * (float)(dVar21 - (double)local_f4);
+        }
+        dVar20 = (double)SQRT(fVar3);
+        if ((double)SQRT(fVar3) < dVar17) {
+          dVar20 = dVar17;
+        }
+        if (cVar11 != '\0') {
+          uVar12 = (ulonglong)*(uint *)((int)param_6 + 0x158);
+          if ((uVar12 == 0) || (cVar11 = BG_HasPerk(uVar12 + 0x4ec,0x1a), cVar11 == '\0')) {
+            dVar21 = (double)BG_GetSurfacePenetrationDepth(param_4,param_5,local_e8);
+            if ((float)(dVar21 - dVar15) < 0.0) {
+              dVar15 = dVar21;
+            }
+          }
+          else {
+            dVar21 = (double)BG_GetSurfacePenetrationDepth(param_4,param_5,local_e8);
+            dVar21 = (double)(float)(dVar21 * (double)*(float *)(DAT_829d7ec8 + 0xc));
+            if ((float)(dVar21 - dVar15) < 0.0) {
+              dVar15 = dVar21;
+            }
+          }
+          if (dVar15 <= dVar18) break;
+        }
+        fVar3 = *(float *)(iVar1 + 8) - (float)(dVar20 / dVar15);
+        *(float *)(iVar1 + 8) = fVar3;
+        if ((double)fVar3 <= dVar18) break;
+        if (!bVar5) {
+          if (((local_120 >> 0x14 & 0x1fU) == 7) ||
+             (fVar6 = local_f4 - *(float *)(iVar2 + 0x3c),
+             fVar3 = local_f0 - *(float *)(iVar2 + 0x40),
+             fVar4 = local_f8 - *(float *)(iVar2 + 0x38), bVar5 = false,
+             *(float *)(DAT_829c5470 + 0xc) * *(float *)(DAT_829c5470 + 0xc) <
+             fVar4 * fVar4 + fVar3 * fVar3 + fVar6 * fVar6)) {
+            bVar5 = true;
+          }
+          if ((bVar5) && ((cVar10 == '\0' || ((*(uint *)(iVar2 + 0x10) & 4) == 0)))) {
+            Bullet_ImpactEffect(auStack_180,auStack_130,param_2 + 0x38,param_4,param_5,param_6,
+                                auStack_e0);
+          }
+          if (cVar10 == '\0') break;
+          cVar9 = Bullet_Process(uVar7,param_2,param_3,param_4,param_5,param_6,8,param_7);
+        }
+      }
+      else {
+        if (cVar10 == '\0') break;
+        cVar9 = Bullet_Process(uVar7,param_2,param_3,param_4,param_5,param_6,8,param_7);
+      }
+      if (((cVar10 == '\0') || (cVar9 == '\0')) || (iVar13 = iVar13 + 1, 4 < iVar13)) break;
+    }
+  }
+  __restfpr_24();
+  __restgprlr();
+  return;
+}
+
 
 // 82453BD8  Bullet_CheckSpreadFireAtPos  (game/bullet.cpp:1397)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure weaponParms
+
+void Bullet_CheckSpreadFireAtPos
+               (undefined8 param_1,undefined8 param_2,longlong param_3,int param_4,
+               undefined4 *param_5)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  longlong lVar4;
+  longlong lVar5;
+  undefined1 auStack_a0 [28];
+  undefined4 local_84;
+  undefined4 *local_6c;
+  float local_68;
+  undefined4 local_64;
+  undefined4 local_60;
+  
+  uVar1 = __savegprlr_23();
+  lVar5 = param_3 + 0x2c;
+  lVar4 = param_3 + 0x20;
+  iVar3 = SV_TracePassed(lVar4,lVar5,0xffffffff82174a3c,*(undefined4 *)param_2,*param_5,0x2806831,0,
+                         0);
+  if (iVar3 != 0) {
+    local_68 = *(float *)lVar5;
+    local_84 = 1;
+    iVar3 = (int)param_3;
+    local_64 = *(undefined4 *)(iVar3 + 0x30);
+    local_60 = *(undefined4 *)(iVar3 + 0x34);
+    *(float *)(iVar3 + 0x38) = local_68 - *(float *)lVar4;
+    *(float *)(iVar3 + 0x3c) = *(float *)(iVar3 + 0x30) - *(float *)(iVar3 + 0x24);
+    *(float *)(iVar3 + 0x40) = *(float *)(iVar3 + 0x34) - *(float *)(iVar3 + 0x28);
+    local_6c = (undefined4 *)param_2;
+    uVar2 = Bullet_GetDamage(param_3,auStack_a0,*(undefined4 *)(param_4 + 0x3c),
+                             *(undefined1 *)(param_4 + 0x40),uVar1);
+    G_Damage(param_2,uVar1,uVar1,param_3 + 0x38,lVar5,uVar2,0,*(undefined4 *)(iVar3 + 0xc));
+    if ((*(int *)(DAT_83373654 + 0xc) == 1) || (*(int *)(DAT_83373654 + 0xc) == 2)) {
+      G_DebugLineWithDuration(lVar4,lVar5,0xffffffff821818f8,1,100);
+    }
+    __restgprlr_23(1);
+    return;
+  }
+  if ((*(int *)(DAT_83373654 + 0xc) == 1) || (*(int *)(DAT_83373654 + 0xc) == 2)) {
+    G_DebugLineWithDuration(lVar4,lVar5,0xffffffff821817e8,1,100);
+  }
+  __restgprlr_23(0);
+  return;
+}
+
 
 // 82453D78  Bullet_SpreadFire_NextTarget  (game/bullet.cpp:1465)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_SpreadFire_NextTarget(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  int *piVar3;
+  int iVar4;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x5be,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x5bf,0,0xffffffff82000f98,0xffffffff8206b5f0);
+  }
+  iVar4 = *(int *)param_2;
+  if (iVar4 < DAT_83580fa4) {
+    puVar2 = &DAT_83373680 + iVar4 * 0xa0;
+    piVar3 = (int *)(iVar4 * 0x3980 + DAT_83580b00 + 0x3300);
+    do {
+      if (((piVar3[0xb] == 2) && (*piVar3 == 0)) && (puVar2 != puVar1)) {
+        if (*(int *)(DAT_8353fedc + 0xc) != 0) {
+LAB_82453e98:
+          *(int *)param_2 = iVar4 + 1;
+          __restgprlr_28();
+          return;
+        }
+        if (*(int *)(puVar2[0x56] + 0x33d4) != *(int *)(puVar1[0x56] + 0x33d4)) goto LAB_82453e98;
+      }
+      iVar4 = iVar4 + 1;
+      piVar3 = piVar3 + 0xe60;
+      puVar2 = puVar2 + 0xa0;
+    } while (iVar4 < DAT_83580fa4);
+  }
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 82453EA8  Bullet_SpreadFireTargets  (game/bullet.cpp:1499)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_SpreadFireTargets(undefined8 param_1,double param_2)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  char cVar4;
+  int iVar3;
+  longlong in_r6;
+  float *pfVar5;
+  ulonglong in_r7;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  uint local_d0 [2];
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  undefined4 local_b0;
+  undefined4 local_ac;
+  undefined4 local_a8;
+  int local_a4;
+  float local_9c;
+  float local_98;
+  float local_94;
+  float local_90;
+  float local_8c;
+  float local_88;
+  undefined4 local_84;
+  undefined4 local_80;
+  float local_7c;
+  
+  uVar1 = __savegprlr_24();
+  dVar9 = extraout_f1;
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x5e4,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  dVar8 = (double)(float)(dVar9 * dVar9);
+  dVar6 = cos((double)(float)(param_2 * 0.01745329238474369));
+  pfVar5 = (float *)in_r6;
+  local_c8 = *pfVar5;
+  local_c4 = pfVar5[1];
+  dVar6 = (double)(float)dVar6;
+  Vec2Normalize(&local_c8);
+  local_b0 = 0x7fe;
+  if ((in_r7 & 0xffffffff) != 0) {
+    local_b0 = *(undefined4 *)in_r7;
+  }
+  local_a8 = 0x3f800000;
+  local_ac = local_b0;
+  local_a4 = Bullet_GetMethodOfDeath(uVar1,in_r6);
+  if (local_a4 == 3) {
+    MyAssertHandler(0xffffffff8206b0e4,0x5f2,1,0xffffffff82000f98,0xffffffff8206b5fc);
+  }
+  local_9c = pfVar5[9];
+  local_98 = pfVar5[10];
+  local_94 = pfVar5[0xb];
+  local_d0[0] = 0;
+  local_90 = local_9c;
+  local_8c = local_98;
+  local_88 = local_94;
+  iVar2 = Bullet_SpreadFire_NextTarget(uVar1,local_d0);
+  while (iVar2 != 0) {
+    local_c0 = *(float *)(iVar2 + 0x138) - *(float *)(in_r6 + 0x24);
+    local_bc = *(float *)(iVar2 + 0x13c) - pfVar5[10];
+    local_b8 = *(float *)(iVar2 + 0x140) - pfVar5[0xb];
+    if (((double)(local_c0 * local_c0 + local_b8 * local_b8 + local_bc * local_bc) <= dVar8) &&
+       (Vec2Normalize(&local_c0), dVar6 <= (double)(local_bc * local_c4 + local_c0 * local_c8))) {
+      local_84 = *(undefined4 *)(iVar2 + 0x138);
+      local_80 = *(undefined4 *)(iVar2 + 0x13c);
+      local_7c = *(float *)(iVar2 + 0x118) + *(float *)(iVar2 + 0x140);
+      if (((*(int *)(iVar2 + 0x158) == 0) ||
+          (((*(uint *)(*(int *)(iVar2 + 0x158) + 0x10) & 0x100) == 0 ||
+           (dVar7 = (double)G_GetShieldCosOfAngleToPoint(iVar2,in_r6 + 0x24),
+           dVar7 <= (double)DAT_82968ef8)))) &&
+         ((cVar4 = PointInsideCone(dVar6,dVar9,&local_90,in_r6), cVar4 == '\0' ||
+          (iVar3 = Bullet_CheckSpreadFireAtPos(uVar1,iVar2,&local_b0,in_r6,in_r7,5), iVar3 == 0))))
+      {
+        G_GetPlayerEyePosition
+                  ((ulonglong)local_d0[0] * 0x3980 + (ulonglong)DAT_83580b00 + -0x3980,&local_84);
+        cVar4 = PointInsideCone(dVar6,dVar9,&local_90,in_r6);
+        if (cVar4 != '\0') {
+          Bullet_CheckSpreadFireAtPos(uVar1,iVar2,&local_b0,in_r6,in_r7,2);
+        }
+      }
+    }
+    iVar2 = Bullet_SpreadFire_NextTarget(uVar1,local_d0);
+  }
+  __restgprlr_24();
+  return;
+}
+
 
 // 82454178  Bullet_Fire_Internal  (game/bullet.cpp:1590)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_Fire_Internal
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               int param_5,undefined8 param_6,undefined1 param_7)
+
+{
+  int iVar1;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  longlong lVar2;
+  char cVar6;
+  undefined8 extraout_f1;
+  undefined8 uVar7;
+  double dVar8;
+  double dVar9;
+  int local_310;
+  float local_30c;
+  undefined1 auStack_308 [8];
+  undefined1 auStack_300 [16];
+  undefined4 local_2f0;
+  undefined4 local_2ec;
+  float local_2e8;
+  undefined4 local_2e4;
+  undefined1 local_2e0;
+  undefined4 local_2dc;
+  undefined4 local_2d8;
+  undefined4 local_2d4;
+  undefined4 local_2d0;
+  undefined4 local_2cc;
+  undefined4 local_2c8;
+  undefined1 auStack_2c4 [36];
+  undefined1 auStack_2a0 [76];
+  int local_254;
+  undefined1 auStack_250 [592];
+  
+  iVar3 = __savegprlr_19();
+  uVar7 = extraout_f1;
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x644,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x645,0,0xffffffff82000f98,0xffffffff8206b270);
+  }
+  iVar1 = (int)param_3;
+  if (*(int *)(iVar1 + 0x44) == 0) {
+    MyAssertHandler(0xffffffff8206b0e4,0x646,0,0xffffffff82000f98,0xffffffff8206b6a4);
+  }
+  iVar4 = BG_GetWeaponType(*(undefined4 *)(iVar1 + 0x3c),*(undefined1 *)(iVar1 + 0x40));
+  if (iVar4 != 1) {
+    MyAssertHandler(0xffffffff8206b0e4,0x647,0,0xffffffff82000f98,0xffffffff8206b660);
+  }
+  G_AntiLagRewindClientPos(param_6,auStack_250);
+  if ((ulonglong)*(uint *)(iVar3 + 0x158) == 0) {
+    BG_ClearPerks(auStack_308);
+  }
+  else {
+    BG_CopyPerks((ulonglong)*(uint *)(iVar3 + 0x158) + 0x4ec,auStack_308);
+  }
+  cVar5 = BG_WeaponBulletFire_ShouldSpread
+                    (auStack_308,*(undefined4 *)(iVar1 + 0x3c),*(undefined1 *)(iVar1 + 0x40));
+  if ((ulonglong)*(uint *)(iVar3 + 0x158) == 0) {
+    BG_GetDamageRange(*(undefined4 *)(iVar1 + 0x3c),*(undefined1 *)(iVar1 + 0x40),&local_30c,
+                      auStack_300);
+  }
+  else {
+    BG_GetPlayerDamageRange
+              ((ulonglong)*(uint *)(iVar3 + 0x158) + 0x4ec,*(undefined4 *)(iVar1 + 0x3c),
+               *(undefined1 *)(iVar1 + 0x40),&local_30c,auStack_300);
+  }
+  if (cVar5 == '\0') {
+    lVar2 = 1;
+    local_30c = 8192.0;
+  }
+  else {
+    lVar2 = BG_ShotCount(*(undefined4 *)(iVar1 + 0x3c),*(undefined1 *)(iVar1 + 0x40));
+    lVar2 = lVar2 + -1;
+  }
+  dVar9 = (double)local_30c;
+  local_310 = (int)param_6;
+  if (param_5 != 0) {
+    local_310 = local_310 + 10;
+  }
+  BG_srand(&local_310);
+  iVar4 = (int)lVar2;
+  local_254 = -1;
+  if (0 < iVar4) {
+    dVar8 = 1.0;
+    do {
+      local_2f0 = 0x7fe;
+      if ((param_4 & 0xffffffff) != 0) {
+        local_2f0 = *(undefined4 *)param_4;
+      }
+      local_2e8 = (float)dVar8;
+      local_2ec = local_2f0;
+      local_2e4 = Bullet_GetMethodOfDeath(iVar3,param_3);
+      local_2dc = *(undefined4 *)(iVar1 + 0x24);
+      local_2d8 = *(undefined4 *)(iVar1 + 0x28);
+      local_2d4 = *(undefined4 *)(iVar1 + 0x2c);
+      local_2e0 = param_7;
+      local_2d0 = local_2dc;
+      local_2cc = local_2d8;
+      local_2c8 = local_2d4;
+      Bullet_Endpos(uVar7,dVar9,&local_310);
+      if (*(int *)(DAT_83373654 + 0xc) == 1) {
+        G_DebugLineWithDuration(&local_2d0,auStack_2c4,0xffffffff821818b8,1,100);
+      }
+      cVar6 = BG_WeaponBulletFire_ShouldPenetrate
+                        (auStack_308,*(undefined4 *)(iVar1 + 0x3c),*(undefined1 *)(iVar1 + 0x40));
+      if (cVar6 == '\0') {
+        Bullet_FireExtended(&local_310,&local_2f0,auStack_2a0,*(undefined4 *)(iVar1 + 0x3c),
+                            *(undefined1 *)(iVar1 + 0x40),iVar3,param_6);
+      }
+      else {
+        Bullet_FirePenetrate();
+      }
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
+  }
+  if (cVar5 != '\0') {
+    Bullet_SpreadFireTargets(dVar9,uVar7,iVar3);
+  }
+  G_AntiLag_RestoreClientPos(auStack_250);
+  if ((local_254 != -1) && (iVar4 != 1)) {
+    MyAssertHandler(0xffffffff8206b0e4,0x6b7,0,0xffffffff82000f98,0xffffffff8206b628);
+  }
+  __restgprlr_19(local_254);
+  return;
+}
+
 
 // 824544A8  Bullet_Fire  (game/bullet.cpp:1737)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Bullet_Fire(void)
+
+{
+  Bullet_Fire_Internal();
+  return;
+}
+

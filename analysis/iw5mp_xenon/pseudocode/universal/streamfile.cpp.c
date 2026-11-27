@@ -2,92 +2,93 @@
 
 // 82612338  FileIndexIsInPackfile  (universal/streamfile.cpp:39)
 
-bool FileIndexIsInPackfile(uint param_1)
+bool FileIndexIsInPackfile(longlong param_1)
 
 {
-  return (bool)('\x01' - (param_1 == 0));
+  return param_1 != 0;
 }
 
 
 // 82612CD8  PakFile_Open  (universal/streamfile.cpp:51)
 
-Sys_File PakFile_Open(Sys_File *param_1,PackfileUser param_2,uint param_3)
+void PakFile_Open(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
   int iVar1;
   int iVar2;
-  Sys_File SVar3;
-  void *pvVar4;
-  ulonglong uVar5;
-  char acStack_130 [304];
+  int iVar3;
+  undefined8 uVar4;
+  undefined1 auStack_130 [304];
   
-  uVar5 = (ulonglong)(int)param_3;
-  iVar2 = __savegprlr_28(param_1);
-  iVar1 = (int)((uVar5 & 0x3fffffff) << 2);
+  iVar2 = __savegprlr_28();
+  iVar1 = (int)((param_3 & 0x3fffffff) << 2);
   if (*(int *)(iVar1 + iVar2) == 0) {
-    if ((param_2 != PACKFILE_USER_SOUND) && (param_2 != PACKFILE_USER_IMAGE)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
-                      0x40,0,"%s\n\t(user) = %i");
+    if (param_2 == 0) {
+      uVar4 = 0xffffffff82183de4;
     }
-    Com_sprintf(acStack_130,0x100,"%s%d.pak");
-    SVar3 = Sys_CreateFile("",acStack_130);
-    if (SVar3.handle != (void *)0xffffffff) {
-      if (SVar3.handle == (void *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
-                        0x48,0,"%s");
+    else {
+      if (param_2 != 1) {
+        MyAssertHandler(0xffffffff82183c30,0x40,0,0xffffffff82183db4,0xffffffff82183dc4);
       }
-      *(void **)(iVar1 + iVar2) = SVar3.handle;
+      uVar4 = 0xffffffff82183da8;
+    }
+    Com_sprintf(auStack_130,0x100,0xffffffff82183d9c,uVar4,param_3);
+    iVar3 = Sys_CreateFile(0xffffffff820068af,auStack_130);
+    if (iVar3 != -1) {
+      if (iVar3 == 0) {
+        MyAssertHandler(0xffffffff82183c30,0x48,0,0xffffffff82000f98,0xffffffff82183d8c);
+      }
+      *(int *)(iVar1 + iVar2) = iVar3;
     }
   }
-  pvVar4 = (void *)__restgprlr_28(*(undefined4 *)(iVar1 + iVar2));
-  return (Sys_File)pvVar4;
+  __restgprlr_28(*(undefined4 *)(iVar1 + iVar2));
+  return;
 }
 
 
 // 82612DB8  StreamFileOpen  (universal/streamfile.cpp:87)
 
-void StreamFileOpen(StreamFile *param_1,CacheFileName *param_2)
+void StreamFileOpen(undefined8 param_1,longlong param_2)
 
 {
-  StreamFile *pSVar1;
-  Sys_File SVar2;
-  void *pvVar3;
-  char acStack_120 [288];
+  uint uVar1;
+  int *piVar3;
+  int iVar4;
+  undefined8 uVar2;
+  uint *puVar5;
+  undefined1 auStack_120 [288];
   
-  pSVar1 = (StreamFile *)__savegprlr_29(param_1);
-  if (param_2->fileIndex == 0) {
-    Sys_DefaultInstallPath();
-    Com_sprintf(acStack_120,0x100,"%s\\%s.xma");
-    pvVar3 = Sys_OpenFileReliable(acStack_120);
-    (pSVar1->handle).handle = pvVar3;
-    if (pvVar3 == (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
-                      0x70,0,"%s");
+  piVar3 = (int *)__savegprlr_29();
+  puVar5 = (uint *)param_2;
+  uVar1 = *puVar5;
+  if (uVar1 == 0) {
+    uVar2 = Sys_DefaultInstallPath();
+    Com_sprintf(auStack_120,0x100,0xffffffff82183e0c,uVar2,param_2 + 4);
+    iVar4 = Sys_OpenFileReliable(auStack_120);
+    *piVar3 = iVar4;
+    if (iVar4 == 0) {
+      MyAssertHandler(0xffffffff82183c30,0x70,0,0xffffffff82000f98,0xffffffff82183df0);
     }
-    pSVar1->length = 0;
-    pSVar1->startOffset = 0;
+    piVar3[1] = 0;
+    piVar3[2] = 0;
     __restgprlr_29();
     return;
   }
-  if (9 < param_2->fileIndex) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",0x5d
-                    ,0,
-                    "fileName->fileIndex doesn\'t index ARRAY_COUNT( g_streamFile )\n\t%i not in [0, %i)"
-                   );
+  if (9 < uVar1) {
+    MyAssertHandler(0xffffffff82183c30,0x5d,0,0xffffffff82183e30,uVar1,10);
   }
-  SVar2 = PakFile_Open(g_streamFile,PACKFILE_USER_SOUND,param_2->fileIndex);
-  if (SVar2.handle == (void *)0x0) {
-    StreamFileSetMissing(pSVar1);
+  iVar4 = PakFile_Open(0xffffffff841db3fc,0,*puVar5);
+  if (iVar4 == 0) {
+    StreamFileSetMissing(piVar3);
     __restgprlr_29();
     return;
   }
-  (pSVar1->handle).handle = SVar2.handle;
-  pSVar1->length = (param_2->field1_0x4).packed.length;
-  if ((param_2->field1_0x4).packed.offset == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",0x68
-                    ,0,"%s");
+  *piVar3 = iVar4;
+  piVar3[1] = puVar5[2];
+  if (puVar5[1] == 0) {
+    MyAssertHandler(0xffffffff82183c30,0x68,0,0xffffffff82000f98,0xffffffff82183e18);
   }
-  pSVar1->startOffset = (param_2->field1_0x4).packed.offset;
+  piVar3[2] = puVar5[1];
   __restgprlr_29();
   return;
 }
@@ -95,62 +96,65 @@ void StreamFileOpen(StreamFile *param_1,CacheFileName *param_2)
 
 // 82612348  StreamFileClose  (universal/streamfile.cpp:122)
 
-void StreamFileClose(StreamFile *param_1)
+ulonglong StreamFileClose(undefined4 *param_1)
 
 {
-  void *pvVar1;
+  HANDLE hObject;
+  ulonglong uVar1;
+  BOOL BVar2;
   
-  pvVar1 = (param_1->handle).handle;
-  if (((pvVar1 != (void *)0x0) && (param_1->startOffset == 0)) && (pvVar1 != (void *)0xffffffff)) {
-    CloseHandle(pvVar1);
+  hObject = (HANDLE)*param_1;
+  uVar1 = ZEXT48(hObject);
+  if (((uVar1 != 0) && (param_1[2] == 0)) && (hObject != (HANDLE)0xffffffff)) {
+    BVar2 = CloseHandle(hObject);
+    uVar1 = (ulonglong)BVar2;
   }
-  (param_1->handle).handle = (void *)0x0;
-  param_1->length = 0;
-  param_1->startOffset = 0;
-  return;
+  *param_1 = 0;
+  param_1[1] = 0;
+  param_1[2] = 0;
+  return uVar1;
 }
 
 
 // 826123A8  StreamFileSetMissing  (universal/streamfile.cpp:141)
 
-void StreamFileSetMissing(StreamFile *param_1)
+void StreamFileSetMissing(int *param_1)
 
 {
-  if ((param_1->handle).handle != (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",0x8e
-                    ,0,"%s");
+  if (*param_1 != 0) {
+    MyAssertHandler(0xffffffff82183c30,0x8e,0,0xffffffff82000f98,0xffffffff82183c74);
   }
-  param_1->length = 0;
-  (param_1->handle).handle = (void *)0xffffffff;
-  param_1->startOffset = 0;
+  param_1[1] = 0;
+  *param_1 = -1;
+  param_1[2] = 0;
   return;
 }
 
 
 // 82612418  StreamFileMissing  (universal/streamfile.cpp:154)
 
-int StreamFileMissing(StreamFile *param_1)
+bool StreamFileMissing(int *param_1)
 
 {
-  return (uint)LZCOUNT(-1 - (int)(param_1->handle).handle) >> 5;
+  return *param_1 == -1;
 }
 
 
 // 82612430  StreamFileDefined  (universal/streamfile.cpp:160)
 
-int StreamFileDefined(StreamFile *param_1)
+bool StreamFileDefined(int *param_1)
 
 {
-  return (uint)((param_1->handle).handle != (void *)0x0);
+  return *param_1 != 0;
 }
 
 
 // 82612440  StreamFileReadCompletion  (universal/streamfile.cpp:166)
 
-void StreamFileReadCompletion(ulong param_1,ulong param_2,_OVERLAPPED *param_3)
+void StreamFileReadCompletion(longlong param_1,uint param_2)
 
 {
-  g_streamFileReadError = param_1;
+  DAT_841db3f8 = (int)param_1;
   DAT_841db424 = -(uint)(param_1 == 0) & param_2;
   return;
 }
@@ -158,186 +162,179 @@ void StreamFileReadCompletion(ulong param_1,ulong param_2,_OVERLAPPED *param_3)
 
 // 82612460  StreamFileRead  (universal/streamfile.cpp:173)
 
-int StreamFileRead(StreamFile *param_1,uchar **param_2,int param_3,int param_4)
+void StreamFileRead(undefined8 param_1,int *param_2,ulonglong param_3,ulonglong param_4)
 
 {
-  undefined4 *puVar1;
-  bool bVar4;
-  int iVar2;
-  int iVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  ulonglong uVar1;
+  ulonglong uVar2;
+  undefined4 *puVar3;
+  char cVar7;
+  int iVar4;
+  BOOL BVar5;
+  DWORD DVar6;
+  longlong lVar8;
+  ulonglong uVar9;
   _OVERLAPPED local_70 [5];
   
-  uVar5 = (ulonglong)param_4;
-  uVar6 = (ulonglong)param_3;
-  puVar1 = (undefined4 *)__savegprlr_23(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",0xb4
-                    ,0,"%s");
+  puVar3 = (undefined4 *)__savegprlr_23();
+  cVar7 = Sys_IsMainThread();
+  if (cVar7 != '\0') {
+    MyAssertHandler(0xffffffff82183c30,0xb4,0,0xffffffff82000f98,0xffffffff82183cd0);
   }
-  uVar7 = uVar5;
-  if (puVar1[1] == 0) {
-    if (puVar1[2] != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
-                      0xc9,0,"%s");
+  uVar9 = param_4;
+  if (puVar3[1] == 0) {
+    if (puVar3[2] != 0) {
+      MyAssertHandler(0xffffffff82183c30,0xc9,0,0xffffffff82000f98,0xffffffff82183c90);
     }
   }
   else {
-    uVar7 = (uint)puVar1[1] - uVar6;
-    if ((longlong)uVar7 < 1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
-                      0xb9,0,"%s\n\t(maxBytes) = %i");
+    uVar9 = (uint)puVar3[1] - param_3;
+    if ((longlong)uVar9 < 1) {
+      MyAssertHandler(0xffffffff82183c30,0xb9,0,0xffffffff82183cac,0xffffffff82183cc0,uVar9);
     }
-    uVar6 = (uint)puVar1[2] + uVar6;
-    if (((int)uVar5 < (int)uVar7) &&
-       (uVar7 = uVar5, ((ulonglong)(uint)puVar1[1] + (ulonglong)(uint)puVar1[2] & 0x7ff) == 0)) {
-      uVar7 = (uVar6 + uVar5 & 0xffff8000) - uVar6;
+    param_3 = (uint)puVar3[2] + param_3;
+    if (((int)param_4 < (int)uVar9) &&
+       (uVar9 = param_4, ((ulonglong)(uint)puVar3[1] + (ulonglong)(uint)puVar3[2] & 0x7ff) == 0)) {
+      uVar9 = (param_3 + param_4 & 0xffff8000) - param_3;
     }
   }
-  iVar3 = (int)(uVar6 & 0x7ff);
+  uVar1 = param_3 & 0x7ff;
+  lVar8 = param_3 - uVar1;
   local_70[0].Internal = 0;
   local_70[0].InternalHigh = 0;
-  local_70[0].hEvent = (void *)0x0;
-  local_70[0]._8_8_ = (ulonglong)(uint)((int)uVar6 - iVar3) << 0x20;
-  iVar2 = R_HasDeviceOwnership();
-  if (iVar2 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",0xdb
-                    ,0,"%s");
+  local_70[0].hEvent = (HANDLE)0x0;
+  local_70[0].u = (_union_518)(lVar8 << 0x20);
+  uVar2 = uVar1 + uVar9 + 0x7ff & 0xfffff800;
+  iVar4 = R_HasDeviceOwnership();
+  if (iVar4 != 0) {
+    MyAssertHandler(0xffffffff82183c30,0xdb,0,0xffffffff82000f98,0xffffffff82059658);
   }
   Sys_LockFileRead();
   Sys_Sleep(100);
-  PIXBeginNamedEvent_Copy_VarArgs(0xffffffff,"ReadFileEx: %x %x");
-  *param_2 = *param_2 + -(-iVar3 & 3U);
-  g_recentReadFile = (DBFile *)0x0;
-  iVar3 = ReadFileEx((void *)*puVar1,*param_2 + -iVar3,iVar3 + (int)uVar7 + 0x7ffU & 0xfffff800,
-                     local_70,StreamFileReadCompletion);
+  PIXBeginNamedEvent_Copy_VarArgs(0xffffffffffffffff,0xffffffff820596fc,lVar8,uVar2 + lVar8);
+  *param_2 = *param_2 - (-(int)uVar1 & 3U);
+  DAT_82c45b80 = 0;
+  BVar5 = ReadFileEx((HANDLE)*puVar3,(LPVOID)(*param_2 - (int)uVar1),(DWORD)uVar2,local_70,
+                     StreamFileReadCompletion);
   PIXEndNamedEvent();
-  if (iVar3 != 0) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"SleepEx");
-    SleepEx(0xffffffff,1);
-    PIXEndNamedEvent();
-    if (g_streamFileReadError == 0) {
+  if (BVar5 != 0) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205977c);
+    DVar6 = SleepEx(0xffffffff,1);
+    PIXEndNamedEvent(DVar6);
+    if (DAT_841db3f8 == 0) {
       Sys_UnlockFileRead(0x1e);
-      uVar6 = (ulonglong)DAT_841db424 - (uVar6 & 0x7ff);
-      if ((int)uVar6 < (int)uVar7) {
-        uVar7 = uVar6;
+      if ((int)(DAT_841db424 - uVar1) < (int)uVar9) {
+        uVar9 = DAT_841db424 - uVar1;
       }
-      iVar3 = __restgprlr_23(((uVar7 & 0xffffffff) >> 0x1f) - 1 & uVar7);
-      return iVar3;
+      __restgprlr_23(((uVar9 & 0xffffffff) >> 0x1f) - 1 & uVar9);
+      return;
     }
   }
   Sys_UnlockFileRead(0);
-  iVar3 = __restgprlr_23(0);
-  return iVar3;
+  __restgprlr_23(0);
+  return;
 }
 
 
 // 82612698  CacheFileNameEqual  (universal/streamfile.cpp:729)
 
-int CacheFileNameEqual(CacheFileName2 *param_1,CacheFileName *param_2)
+bool CacheFileNameEqual(int *param_1,int *param_2)
 
 {
-  int iVar1;
-  CacheFileName_u_4 *pCVar2;
-  byte *pbVar3;
+  char cVar1;
+  char cVar2;
+  char *pcVar3;
   
-  if (param_1->fileIndex == param_2->fileIndex) {
-    pbVar3 = (byte *)(param_1->field1_0x4).packed.offset;
-    if (param_1->fileIndex == 0) {
-      pCVar2 = &param_2->field1_0x4;
+  if (*param_1 == *param_2) {
+    pcVar3 = (char *)param_1[1];
+    if (*param_1 == 0) {
+      param_2 = param_2 + 1;
       do {
-        iVar1 = (uint)*pbVar3 - (uint)(byte)(pCVar2->raw).name[0];
-        if (*pbVar3 == 0) break;
-        pbVar3 = pbVar3 + 1;
-        pCVar2 = (CacheFileName_u_4 *)((int)pCVar2 + 1);
-      } while (iVar1 == 0);
-      return (uint)LZCOUNT(iVar1) >> 5;
+        cVar1 = *pcVar3;
+        cVar2 = *(char *)param_2;
+        if (cVar1 == '\0') break;
+        pcVar3 = pcVar3 + 1;
+        param_2 = (int *)((int)param_2 + 1);
+      } while (cVar1 == cVar2);
+      return cVar1 == cVar2;
     }
-    if ((pbVar3 == (byte *)(param_2->field1_0x4).packed.offset) &&
-       ((param_1->field1_0x4).packed.length == (param_2->field1_0x4).packed.length)) {
-      return 1;
+    if ((pcVar3 == (char *)param_2[1]) && (param_1[2] == param_2[2])) {
+      return true;
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 82612710  CacheFileNameDefined  (universal/streamfile.cpp:740)
 
-int CacheFileNameDefined(CacheFileName *param_1)
+bool CacheFileNameDefined(int *param_1)
 
 {
-  byte bVar1;
-  
-  if (param_1->fileIndex != 0) {
-    return 1;
+  if (*param_1 != 0) {
+    return true;
   }
-  bVar1 = (param_1->field1_0x4).raw.name[0];
-  return (uint)bVar1 + (-(uint)(bVar1 == 0) - (bVar1 - 1));
+  return *(char *)(param_1 + 1) != '\0';
 }
 
 
 // 82612738  CacheFileNameDefined2  (universal/streamfile.cpp:749)
 
-int CacheFileNameDefined2(CacheFileName2 *param_1)
+bool CacheFileNameDefined2(int *param_1)
 
 {
-  byte bVar1;
-  
-  if (param_1->fileIndex != 0) {
-    return 1;
+  if (*param_1 != 0) {
+    return true;
   }
-  bVar1 = **(byte **)&param_1->field1_0x4;
-  return (uint)bVar1 + (-(uint)(bVar1 == 0) - (bVar1 - 1));
+  return *(char *)param_1[1] != '\0';
 }
 
 
 // 82612760  CacheFileNameClear2  (universal/streamfile.cpp:758)
 
-void CacheFileNameClear2(CacheFileName2 *param_1,char *param_2)
+void CacheFileNameClear2(undefined4 *param_1,undefined1 *param_2)
 
 {
-  (param_1->field1_0x4).raw.name = param_2;
-  param_1->fileIndex = 0;
-  *param_2 = '\0';
+  param_1[1] = param_2;
+  *param_1 = 0;
+  *param_2 = 0;
   return;
 }
 
 
 // 82612778  CacheFileNameCopy  (universal/streamfile.cpp:766)
 
-void CacheFileNameCopy(CacheFileName *param_1,CacheFileName *param_2)
+void CacheFileNameCopy(int *param_1,int *param_2)
 
 {
   char cVar1;
-  char *pcVar2;
-  CacheFileName_u_4 *pCVar3;
-  CacheFileName_u_4 *pCVar4;
+  char cVar2;
+  undefined8 uVar3;
+  int *piVar4;
+  int *piVar5;
   
-  param_2->fileIndex = param_1->fileIndex;
-  if (param_1->fileIndex == 0) {
-    pCVar3 = &param_1->field1_0x4;
-    pCVar4 = &param_2->field1_0x4;
-    I_strncpyz((char *)pCVar4,(char *)pCVar3,0x40);
+  *param_2 = *param_1;
+  if (*param_1 == 0) {
+    param_1 = param_1 + 1;
+    param_2 = param_2 + 1;
+    I_strncpyz(param_2,param_1,0x40);
+    piVar4 = param_1;
+    piVar5 = param_2;
     do {
-      cVar1 = (pCVar4->raw).name[0];
-      pcVar2 = (pCVar3->raw).name;
+      cVar1 = *(char *)piVar5;
+      cVar2 = *(char *)piVar4;
       if (cVar1 == '\0') break;
-      pCVar4 = (CacheFileName_u_4 *)((int)pCVar4 + 1);
-      pCVar3 = (CacheFileName_u_4 *)((int)pCVar3 + 1);
-    } while (cVar1 == *pcVar2);
-    if (cVar1 != *pcVar2) {
-      va("\'%s\' \'%s\'");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
-                      0x307,0,"%s\n\t%s");
+      piVar5 = (int *)((int)piVar5 + 1);
+      piVar4 = (int *)((int)piVar4 + 1);
+    } while (cVar1 == cVar2);
+    if (cVar1 != cVar2) {
+      uVar3 = va(0xffffffff82183d10,param_2,param_1);
+      MyAssertHandler(0xffffffff82183c30,0x307,0,0xffffffff820011f4,0xffffffff82183ce4,uVar3);
     }
   }
   else {
-    (param_2->field1_0x4).packed.offset = (param_1->field1_0x4).packed.offset;
-    (param_2->field1_0x4).packed.length = (param_1->field1_0x4).packed.length;
+    param_2[1] = param_1[1];
+    param_2[2] = param_1[2];
   }
   return;
 }
@@ -345,36 +342,37 @@ void CacheFileNameCopy(CacheFileName *param_1,CacheFileName *param_2)
 
 // 82612858  CacheFileNameCopy2  (universal/streamfile.cpp:780)
 
-void CacheFileNameCopy2(CacheFileName *param_1,CacheFileName2 *param_2,char *param_3,uint param_4)
+void CacheFileNameCopy2(int *param_1,int *param_2,undefined8 param_3,undefined8 param_4)
 
 {
   char cVar1;
-  char *pcVar2;
-  CacheFileName_u_4 *pCVar3;
-  char *pcVar4;
+  char cVar2;
+  undefined8 uVar3;
+  int *piVar4;
+  char *pcVar5;
   
-  param_2->fileIndex = param_1->fileIndex;
-  if (param_1->fileIndex == 0) {
-    (param_2->field1_0x4).raw.name = param_3;
-    pCVar3 = &param_1->field1_0x4;
-    I_strncpyz(param_3,(char *)pCVar3,param_4);
-    pcVar4 = (char *)(param_2->field1_0x4).packed.offset;
+  *param_2 = *param_1;
+  if (*param_1 == 0) {
+    param_2[1] = (int)param_3;
+    param_1 = param_1 + 1;
+    I_strncpyz(param_3,param_1,param_4);
+    piVar4 = param_1;
+    pcVar5 = (char *)param_2[1];
     do {
-      cVar1 = *pcVar4;
-      pcVar2 = (pCVar3->raw).name;
+      cVar1 = *pcVar5;
+      cVar2 = *(char *)piVar4;
       if (cVar1 == '\0') break;
-      pcVar4 = pcVar4 + 1;
-      pCVar3 = (CacheFileName_u_4 *)((int)pCVar3 + 1);
-    } while (cVar1 == *pcVar2);
-    if (cVar1 != *pcVar2) {
-      va("\'%s\' \'%s\'");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
-                      0x316,0,"%s\n\t%s");
+      pcVar5 = pcVar5 + 1;
+      piVar4 = (int *)((int)piVar4 + 1);
+    } while (cVar1 == cVar2);
+    if (cVar1 != cVar2) {
+      uVar3 = va(0xffffffff82183d10,(char *)param_2[1],param_1);
+      MyAssertHandler(0xffffffff82183c30,0x316,0,0xffffffff820011f4,0xffffffff82183ce4,uVar3);
     }
   }
   else {
-    (param_2->field1_0x4).raw.name = (char *)(param_1->field1_0x4).packed.offset;
-    (param_2->field1_0x4).packed.length = (param_1->field1_0x4).packed.length;
+    param_2[1] = param_1[1];
+    param_2[2] = param_1[2];
   }
   return;
 }
@@ -382,28 +380,27 @@ void CacheFileNameCopy2(CacheFileName *param_1,CacheFileName2 *param_2,char *par
 
 // 82612940  CacheFileNameHash  (universal/streamfile.cpp:798)
 
-uint CacheFileNameHash(CacheFileName *param_1)
+ulonglong CacheFileNameHash(int *param_1)
 
 {
   char cVar1;
-  uint uVar2;
-  CacheFileName_u_4 *pCVar3;
-  int iVar4;
+  ulonglong uVar2;
+  longlong lVar3;
   
-  if (param_1->fileIndex != 0) {
-    return (param_1->field1_0x4).packed.offset >> 0xb;
+  if (*param_1 != 0) {
+    return (ulonglong)((uint)param_1[1] >> 0xb);
   }
-  pCVar3 = &param_1->field1_0x4;
+  param_1 = param_1 + 1;
   uVar2 = 0;
-  cVar1 = (pCVar3->raw).name[0];
+  cVar1 = *(char *)param_1;
   if (cVar1 == '\0') {
-    return 0;
+    return uVar2;
   }
   do {
-    iVar4 = (int)cVar1;
-    pCVar3 = (CacheFileName_u_4 *)((pCVar3->raw).name + 1);
-    cVar1 = (pCVar3->raw).name[0];
-    uVar2 = uVar2 * 0x1f + iVar4;
+    lVar3 = (longlong)cVar1;
+    param_1 = (int *)((int)param_1 + 1);
+    cVar1 = *(char *)param_1;
+    uVar2 = ((uVar2 & 0x7ffffff) * 0x20 - uVar2) + lVar3;
   } while (cVar1 != '\0');
   return uVar2;
 }
@@ -411,55 +408,55 @@ uint CacheFileNameHash(CacheFileName *param_1)
 
 // 82612990  CacheFileNameGetDebugName  (universal/streamfile.cpp:833)
 
-char * CacheFileNameGetDebugName(CacheFileName *param_1)
+char * CacheFileNameGetDebugName(int *param_1)
 
 {
-  if (param_1->fileIndex != 0) {
+  if (*param_1 != 0) {
     return "<PACKED FILE>";
   }
-  return (char *)&param_1->field1_0x4;
+  return (char *)(param_1 + 1);
 }
 
 
 // 826129B0  StreamFileNameGetCacheName  (universal/streamfile.cpp:847)
 
-void StreamFileNameGetCacheName(StreamFileName *param_1,CacheFileName *param_2)
+void StreamFileNameGetCacheName(int *param_1,int *param_2)
 
 {
-  param_2->fileIndex = param_1->fileIndex;
-  if (param_1->fileIndex != 0) {
-    (param_2->field1_0x4).packed.offset = (uint)(param_1->info).raw.dir;
-    (param_2->field1_0x4).packed.length = (uint)(param_1->info).raw.name;
+  *param_2 = *param_1;
+  if (*param_1 != 0) {
+    param_2[1] = param_1[1];
+    param_2[2] = param_1[2];
     return;
   }
-  Com_sprintf((char *)&param_2->field1_0x4,0x40,"%s\\%s");
+  Com_sprintf(param_2 + 1,0x40,0xffffffff8208b130,param_1[1],param_1[2]);
   return;
 }
 
 
 // 826129F8  StreamFileNameGetName  (universal/streamfile.cpp:862)
 
-void StreamFileNameGetName(StreamFileName *param_1,char *param_2,int param_3)
+void StreamFileNameGetName(int *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  if (param_1->fileIndex != 0) {
-    I_strncpyz(param_2,"<PACKED FILE>",param_3);
+  if (*param_1 != 0) {
+    I_strncpyz(param_2,0xffffffff82183d1c);
     return;
   }
-  Com_sprintf(param_2,param_3,"%s\\%s");
+  Com_sprintf(param_2,param_3,0xffffffff8208b130,param_1[1],param_1[2]);
   return;
 }
 
 
 // 82612A30  StreamFileNameIsNullSound  (universal/streamfile.cpp:884)
 
-int StreamFileNameIsNullSound(StreamFileName *param_1)
+undefined8 StreamFileNameIsNullSound(int *param_1)
 
 {
   int iVar1;
   
-  if (((param_1->fileIndex == 0) && (*(param_1->info).raw.dir == '\0')) &&
-     (iVar1 = I_stricmp("null",(param_1->info).raw.name), iVar1 == 0)) {
+  if (((*param_1 == 0) && (*(char *)param_1[1] == '\0')) &&
+     (iVar1 = I_stricmp(0xffffffff8205b0bc,param_1[2]), iVar1 == 0)) {
     return 1;
   }
   return 0;
@@ -468,15 +465,14 @@ int StreamFileNameIsNullSound(StreamFileName *param_1)
 
 // 82612A88  Sys_OpenFileReliable  (universal/streamfile.cpp:903)
 
-void * Sys_OpenFileReliable(char *param_1)
+HANDLE Sys_OpenFileReliable(LPCSTR param_1)
 
 {
-  void *pvVar1;
+  HANDLE pvVar1;
   
-  pvVar1 = CreateFileA(param_1,0x80000000,1,(void *)0x0,3,0x60000000,(void *)0x0);
-  if (pvVar1 == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
-                    0x38b,0,"%s");
+  pvVar1 = CreateFileA(param_1,0x80000000,1,(LPSECURITY_ATTRIBUTES)0x0,3,0x60000000,(HANDLE)0x0);
+  if (pvVar1 == (HANDLE)0x0) {
+    MyAssertHandler(0xffffffff82183c30,0x38b,0,0xffffffff82000f98,0xffffffff820363b8);
   }
   return pvVar1;
 }
@@ -484,65 +480,62 @@ void * Sys_OpenFileReliable(char *param_1)
 
 // 82612B00  Sys_CreateFile  (universal/streamfile.cpp:943)
 
-Sys_File Sys_CreateFile(char *param_1,char *param_2)
+void Sys_CreateFile(undefined8 param_1,undefined8 param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  void *pvVar3;
-  char *pcVar4;
-  char acStack_230 [256];
-  char acStack_130 [304];
+  char *pcVar2;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  CHAR aCStack_230 [256];
+  CHAR aCStack_130 [304];
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (*pcVar1 != '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
-                    0x3b6,0,"%s");
+  pcVar2 = (char *)__savegprlr_28();
+  if (*pcVar2 != '\0') {
+    MyAssertHandler(0xffffffff82183c30,0x3b6,0,0xffffffff82000f98,0xffffffff82183d84);
   }
-  iVar2 = I_strncmp(param_2,"patch",5);
-  if ((iVar2 == 0) || (iVar2 = I_strncmp(param_2,"dlc",3), iVar2 == 0)) {
-    Com_sprintf(acStack_230,0x100,"update:\\%s");
-    pvVar3 = Sys_OpenFileReliable(acStack_230);
-    if (pvVar3 != (void *)0xffffffff) goto LAB_82612cd0;
-    Com_Printf(0x10,"Loading %s from disc, not from the update drive\n");
+  iVar3 = I_strncmp(param_2,0xffffffff8205c5a4,5);
+  if ((iVar3 == 0) || (iVar3 = I_strncmp(param_2,0xffffffff8205c59c,3), iVar3 == 0)) {
+    Com_sprintf(aCStack_230,0x100,0xffffffff82183d78,param_2);
+    uVar1 = Sys_OpenFileReliable(aCStack_230);
+    if ((int)uVar1 != -1) goto LAB_82612cd0;
+    Com_Printf(0x10,0xffffffff82183d44,param_2);
   }
-  iVar2 = I_strncmp(param_2,"dev_",4);
-  pcVar1 = "%s\\%sd";
-  if (iVar2 == 0) {
-    Sys_DefaultInstallPath();
-    Com_sprintf(acStack_130,0x100,"%s\\%sd");
-    Sys_DefaultInstallPath();
-    pcVar4 = "%s\\%sdm";
+  iVar3 = I_strncmp(param_2,0xffffffff820599d0,4);
+  uVar5 = 0xffffffff82183d3c;
+  if (iVar3 == 0) {
+    uVar1 = Sys_DefaultInstallPath();
+    Com_sprintf(aCStack_130,0x100,0xffffffff82183d3c,uVar1,param_2);
+    uVar1 = Sys_DefaultInstallPath();
+    uVar4 = 0xffffffff82183d34;
   }
   else {
-    Sys_DefaultInstallPath();
-    Com_sprintf(acStack_130,0x100,"%s\\%s");
-    Sys_DefaultInstallPath();
-    pcVar4 = "%s\\%sm";
+    uVar1 = Sys_DefaultInstallPath();
+    Com_sprintf(aCStack_130,0x100,0xffffffff8208b130,uVar1,param_2);
+    uVar1 = Sys_DefaultInstallPath();
+    uVar4 = 0xffffffff82183d2c;
   }
-  Com_sprintf(acStack_230,0x100,pcVar4);
-  MoveFileExA(acStack_130,acStack_230,1);
-  pvVar3 = Sys_OpenFileReliable(acStack_230);
-  if (pvVar3 == (void *)0xffffffff) {
-    iVar2 = I_strncmp(param_2,"dev_",4);
-    if (iVar2 == 0) {
-      Sys_DefaultInstallPath();
+  Com_sprintf(aCStack_230,0x100,uVar4,uVar1,param_2);
+  MoveFileExA(aCStack_130,aCStack_230,1);
+  uVar1 = Sys_OpenFileReliable(aCStack_230);
+  if ((int)uVar1 == -1) {
+    iVar3 = I_strncmp(param_2,0xffffffff820599d0,4);
+    if (iVar3 == 0) {
+      uVar1 = Sys_DefaultInstallPath();
     }
     else {
-      Sys_DefaultInstallPath();
-      pcVar1 = "%s\\%s";
+      uVar1 = Sys_DefaultInstallPath();
+      uVar5 = 0xffffffff8208b130;
     }
-    Com_sprintf(acStack_230,0x100,pcVar1);
-    pvVar3 = Sys_OpenFileReliable(acStack_230);
-    if (pvVar3 == (void *)0xffffffff) {
-      pvVar3 = Content_CreateFile(param_2);
-      if (pvVar3 == (void *)0xffffffff) {
-        pvVar3 = (void *)0xffffffff;
-      }
+    Com_sprintf(aCStack_230,0x100,uVar5,uVar1,param_2);
+    uVar1 = Sys_OpenFileReliable(aCStack_230);
+    if (((int)uVar1 == -1) && (uVar1 = Content_CreateFile(param_2), (int)uVar1 == -1)) {
+      uVar1 = 0xffffffffffffffff;
     }
   }
 LAB_82612cd0:
-  pvVar3 = (void *)__restgprlr_28(pvVar3);
-  return (Sys_File)pvVar3;
+  __restgprlr_28(uVar1);
+  return;
 }
 

@@ -2,36 +2,31 @@
 
 // 824C8C78  CM_PointLeafnum  (qcommon/cm_test.cpp:13)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
 int CM_PointLeafnum(float *param_1,int param_2)
 
 {
-  cplane_s *pcVar1;
+  float *pfVar1;
   float fVar2;
   int iVar3;
   short sVar4;
   
-  iVar3 = param_2;
   if (-1 < param_2) {
     do {
-      pcVar1 = cm.nodes[iVar3].plane;
-      if (pcVar1->type < 3) {
-        fVar2 = param_1[pcVar1->type] - pcVar1->dist;
+      iVar3 = param_2 * 8 + DAT_835a28d8;
+      pfVar1 = *(float **)(param_2 * 8 + DAT_835a28d8);
+      if (*(byte *)(pfVar1 + 4) < 3) {
+        fVar2 = param_1[*(byte *)(pfVar1 + 4)] - pfVar1[3];
       }
       else {
-        fVar2 = (pcVar1->normal[2] * param_1[2] +
-                pcVar1->normal[1] * param_1[1] + pcVar1->normal[0] * *param_1) - pcVar1->dist;
+        fVar2 = (pfVar1[2] * param_1[2] + pfVar1[1] * param_1[1] + *pfVar1 * *param_1) - pfVar1[3];
       }
       if (0.0 <= fVar2) {
-        sVar4 = cm.nodes[iVar3].children[0];
+        sVar4 = *(short *)(iVar3 + 4);
       }
       else {
-        sVar4 = cm.nodes[iVar3].children[1];
+        sVar4 = *(short *)(iVar3 + 6);
       }
       param_2 = (int)sVar4;
-      iVar3 = (int)sVar4;
     } while (-1 < sVar4);
   }
   return -1 - param_2;
@@ -40,22 +35,21 @@ int CM_PointLeafnum(float *param_1,int param_2)
 
 // 824C8D18  CM_StoreLeafs  (qcommon/cm_test.cpp:46)
 
-void CM_StoreLeafs(leafList_t *param_1,int param_2)
+void CM_StoreLeafs(int *param_1,int param_2)
 
 {
   uint uVar1;
   
   uVar1 = -param_2 - 1;
-  if (param_1->count < param_1->maxcount) {
+  if (*param_1 < param_1[1]) {
     if ((uVar1 & 0xffff) != uVar1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0x38,0,
-                      "%s");
+      MyAssertHandler(0xffffffff82082390,0x38,0,0xffffffff82000f98,0xffffffff820823d0);
     }
-    param_1->list[param_1->count] = (ushort)uVar1;
-    param_1->count = param_1->count + 1;
+    *(short *)(*param_1 * 2 + param_1[3]) = (short)uVar1;
+    *param_1 = *param_1 + 1;
   }
   else {
-    param_1->overflowed = 1;
+    param_1[2] = 1;
   }
   return;
 }
@@ -63,64 +57,54 @@ void CM_StoreLeafs(leafList_t *param_1,int param_2)
 
 // 824C8DB8  CM_BoxLeafnums_r  (qcommon/cm_test.cpp:69)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void CM_BoxLeafnums_r(leafList_t *param_1,int param_2)
+void CM_BoxLeafnums_r(undefined8 param_1,longlong param_2)
 
 {
   float fVar1;
   short sVar2;
-  cplane_s *pcVar3;
-  float fVar4;
-  cNode_t *pcVar5;
-  leafList_t *plVar6;
+  float *pfVar3;
+  int iVar4;
+  float fVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  longlong lVar9;
-  double dVar10;
+  double dVar8;
   
-  lVar9 = (longlong)param_2;
-  plVar6 = (leafList_t *)__savegprlr_27(param_1);
-  iVar7 = (int)lVar9;
-  if (cm.nodes == (cNode_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0x4a,0,
-                    "%s");
+  iVar6 = __savegprlr_27();
+  if (DAT_835a28d8 == 0) {
+    MyAssertHandler(0xffffffff82082390,0x4a,0,0xffffffff82000f98,0xffffffff82082400);
   }
-  if (plVar6 == (leafList_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0x4b,0,
-                    "%s");
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff82082390,0x4b,0,0xffffffff82000f98,0xffffffff820823fc);
   }
-  if (-1 < iVar7) {
-    dVar10 = 0.0010000000474974513;
+  if (-1 < (int)param_2) {
+    dVar8 = 0.0010000000474974513;
     do {
-      pcVar5 = cm.nodes;
-      iVar7 = (int)lVar9;
-      pcVar3 = cm.nodes[iVar7].plane;
-      fVar4 = ((plVar6->bounds).midPoint[2] * pcVar3->normal[2] +
-              (plVar6->bounds).midPoint[0] * pcVar3->normal[0] +
-              pcVar3->normal[1] * (plVar6->bounds).midPoint[1]) - pcVar3->dist;
-      fVar1 = (float)((double)(ABS(pcVar3->normal[1]) * (plVar6->bounds).halfSize[1] +
-                              ABS(pcVar3->normal[0]) * (plVar6->bounds).halfSize[0] +
-                              ABS(pcVar3->normal[2]) * (plVar6->bounds).halfSize[2]) - dVar10);
-      if (fVar4 <= fVar1) {
-        if (fVar4 < -fVar1) {
-          iVar8 = 1;
+      iVar7 = (int)param_2 * 8;
+      iVar4 = iVar7 + DAT_835a28d8;
+      pfVar3 = *(float **)(iVar7 + DAT_835a28d8);
+      fVar5 = (*(float *)(iVar6 + 0x18) * pfVar3[2] +
+              *(float *)(iVar6 + 0x10) * *pfVar3 + pfVar3[1] * *(float *)(iVar6 + 0x14)) - pfVar3[3]
+      ;
+      fVar1 = (float)((double)(ABS(pfVar3[1]) * *(float *)(iVar6 + 0x20) +
+                              ABS(*pfVar3) * *(float *)(iVar6 + 0x1c) +
+                              ABS(pfVar3[2]) * *(float *)(iVar6 + 0x24)) - dVar8);
+      if (fVar5 <= fVar1) {
+        if (fVar5 < -fVar1) {
+          iVar7 = 1;
           goto LAB_824c8eb8;
         }
-        CM_BoxLeafnums_r(plVar6,(int)cm.nodes[iVar7].children[0]);
-        sVar2 = pcVar5[iVar7].children[1];
+        CM_BoxLeafnums_r(iVar6,*(undefined2 *)(iVar4 + 4));
+        sVar2 = *(short *)(iVar4 + 6);
       }
       else {
-        iVar8 = 0;
+        iVar7 = 0;
 LAB_824c8eb8:
-        sVar2 = cm.nodes[iVar7].children[iVar8];
+        sVar2 = *(short *)((iVar7 + 2) * 2 + iVar4);
       }
-      lVar9 = (longlong)sVar2;
-      iVar7 = (int)sVar2;
+      param_2 = (longlong)sVar2;
     } while (-1 < sVar2);
   }
-  CM_StoreLeafs(plVar6,iVar7);
+  CM_StoreLeafs(iVar6,param_2);
   __restgprlr_27();
   return;
 }
@@ -130,170 +114,163 @@ LAB_824c8eb8:
 
 /* WARNING: Removing unreachable block (ram,0x824c905c) */
 
-int CM_PointContentsLeafBrushNode_r(ClipInfo *param_1,float *param_2,cLeafBrushNode_s *param_3)
+void CM_PointContentsLeafBrushNode_r(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
   short sVar1;
   ushort uVar2;
   ushort uVar3;
-  cplane_s *pcVar4;
-  byte *pbVar5;
+  byte *pbVar4;
+  float *pfVar5;
   int iVar6;
-  ClipInfo *pCVar7;
   int iVar8;
+  ulonglong uVar7;
   int iVar9;
-  Bounds *pBVar10;
-  ulonglong uVar11;
-  int iVar12;
-  ulonglong uVar13;
-  cbrushside_t *pcVar14;
+  float *pfVar10;
+  ushort *puVar11;
+  ulonglong uVar12;
+  int iVar13;
+  int iVar14;
+  undefined4 *puVar15;
   
-  uVar13 = (ulonglong)(int)param_3;
-  pCVar7 = (ClipInfo *)__savegprlr_20(param_1);
-  if ((uVar13 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0x7d,0,
-                    "%s");
+  iVar8 = __savegprlr_20();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082390,0x7d,0,0xffffffff82000f98,0xffffffff8206f7e8);
   }
-  uVar11 = 0;
+  uVar12 = 0;
   do {
-    pbVar5 = (byte *)uVar13;
-    sVar1 = *(short *)(pbVar5 + 2);
+    pbVar4 = (byte *)param_3;
+    sVar1 = *(short *)(pbVar4 + 2);
+    pfVar5 = (float *)param_2;
     if (sVar1 != 0) {
       if (0 < sVar1) {
-        iVar8 = 0;
+        iVar13 = 0;
         if (0 < sVar1) {
-          iVar12 = 0;
+          iVar14 = 0;
           do {
             iVar9 = 0;
-            uVar3 = *(ushort *)(iVar12 + *(int *)(pbVar5 + 8));
-            pBVar10 = pCVar7->brushBounds + uVar3;
-            iVar6 = (int)param_2 - (int)pBVar10;
+            uVar3 = *(ushort *)(iVar14 + *(int *)(pbVar4 + 8));
+            pfVar10 = (float *)((uint)uVar3 * 0x18 + *(int *)(iVar8 + 0x38));
+            iVar6 = (int)pfVar5 - (int)pfVar10;
             do {
-              if (pBVar10->halfSize[0] <
-                  ABS(*(float *)(iVar6 + (int)pBVar10) - pBVar10->midPoint[0])) goto LAB_824c90cc;
+              if (pfVar10[3] < ABS(*(float *)(iVar6 + (int)pfVar10) - *pfVar10)) goto LAB_824c90cc;
               iVar9 = iVar9 + 1;
-              pBVar10 = (Bounds *)(pBVar10->midPoint + 1);
+              pfVar10 = pfVar10 + 1;
             } while (iVar9 < 3);
-            uVar2 = pCVar7->brushes[uVar3].numsides;
-            uVar13 = (ulonglong)uVar2;
-            pcVar14 = pCVar7->brushes[uVar3].sides;
+            puVar11 = (ushort *)((uint)uVar3 * 0x24 + *(int *)(iVar8 + 0x34));
+            uVar2 = *puVar11;
+            uVar7 = (ulonglong)uVar2;
+            puVar15 = *(undefined4 **)(puVar11 + 2);
             if (uVar2 != 0) {
               do {
-                pcVar4 = pcVar14->plane;
-                if (pcVar4->dist <
-                    pcVar4->normal[2] * param_2[2] +
-                    pcVar4->normal[1] * param_2[1] + pcVar4->normal[0] * *param_2)
+                pfVar10 = (float *)*puVar15;
+                if (pfVar10[3] <
+                    pfVar10[2] * pfVar5[2] + pfVar10[1] * pfVar5[1] + *pfVar10 * *pfVar5)
                 goto LAB_824c90cc;
-                uVar13 = uVar13 - 1;
-                pcVar14 = pcVar14 + 1;
-              } while (uVar13 != 0);
+                uVar7 = uVar7 - 1;
+                puVar15 = puVar15 + 2;
+              } while (uVar7 != 0);
             }
-            uVar11 = (uint)pCVar7->brushContents[uVar3] | uVar11;
+            uVar12 = *(uint *)(*(int *)(iVar8 + 0x3c) + (uint)uVar3 * 4) | uVar12;
 LAB_824c90cc:
-            iVar8 = iVar8 + 1;
-            iVar12 = iVar12 + 2;
-          } while (iVar8 < *(short *)(pbVar5 + 2));
+            iVar13 = iVar13 + 1;
+            iVar14 = iVar14 + 2;
+          } while (iVar13 < *(short *)(pbVar4 + 2));
         }
-        iVar8 = __restgprlr_20(uVar11);
-        return iVar8;
+        __restgprlr_20(uVar12);
+        return;
       }
-      iVar8 = CM_PointContentsLeafBrushNode_r(pCVar7,param_2,(cLeafBrushNode_s *)(pbVar5 + 0x14));
-      uVar11 = (longlong)iVar8 | uVar11;
+      uVar7 = CM_PointContentsLeafBrushNode_r(iVar8,param_2,param_3 + 0x14);
+      uVar12 = uVar7 | uVar12;
     }
-    uVar13 = (ulonglong)*(ushort *)(pbVar5 + ((param_2[*pbVar5] <= *(float *)(pbVar5 + 8)) + 8) * 2)
-             * 0x14 + uVar13;
+    param_3 = (ulonglong)*(ushort *)(pbVar4 + ((pfVar5[*pbVar4] <= *(float *)(pbVar4 + 8)) + 8) * 2)
+              * 0x14 + param_3;
   } while( true );
 }
 
 
 // 824C90F0  CM_CapsulePointContents  (qcommon/cm_test.cpp:174)
 
-int CM_CapsulePointContents(Bounds *param_1,int param_2,float *param_3)
+void CM_CapsulePointContents(undefined8 param_1,undefined8 param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
   float *pfVar4;
-  longlong lVar3;
-  int iVar5;
-  longlong lVar6;
+  undefined8 uVar3;
   
-  lVar6 = (longlong)param_2;
-  pfVar4 = (float *)__savegprlr_28(param_1,lVar6);
-  if (pfVar4[3] != pfVar4[4]) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0xb4,0,
-                    "bounds->halfSize[0] == bounds->halfSize[1]\n\t%g, %g");
+  pfVar4 = (float *)__savegprlr_28();
+  if ((double)pfVar4[3] != (double)pfVar4[4]) {
+    MyAssertHandler(0xffffffff82082390,0xb4,0,0xffffffff82082448,(double)pfVar4[3],(double)pfVar4[4]
+                   );
   }
-  if (pfVar4[5] < pfVar4[3]) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0xb5,0,
-                    "bounds->halfSize[0] <= bounds->halfSize[2]\n\t%g, %g");
+  if ((double)pfVar4[5] < (double)pfVar4[3]) {
+    MyAssertHandler(0xffffffff82082390,0xb5,0,0xffffffff82082414,(double)pfVar4[3],(double)pfVar4[5]
+                   );
   }
   fVar1 = pfVar4[3];
   fVar2 = ABS(param_3[2] - pfVar4[2]) - (pfVar4[5] - fVar1);
   if (fVar2 < 0.0) {
     fVar2 = 0.0;
   }
-  lVar3 = 0;
+  uVar3 = 0;
   if (fVar2 * fVar2 +
       (param_3[1] - pfVar4[1]) * (param_3[1] - pfVar4[1]) +
       (*param_3 - *pfVar4) * (*param_3 - *pfVar4) <= fVar1 * fVar1) {
-    lVar3 = lVar6;
+    uVar3 = param_2;
   }
-  iVar5 = __restgprlr_28(lVar3);
-  return iVar5;
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
 // 824C91F0  CM_BrushModelPointContents  (qcommon/cm_test.cpp:197)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int CM_BrushModelPointContents(uint param_1,float *param_2)
+void CM_BrushModelPointContents(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
   float *pfVar2;
-  ulonglong uVar3;
-  ClipInfo *pCVar4;
-  cLeaf_t *pcVar5;
+  int iVar3;
+  undefined *puVar4;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  if (cm.numNodes == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0xcb,0,
-                    "%s");
+  iVar1 = __savegprlr_26();
+  if (DAT_835a28d4 == 0) {
+    MyAssertHandler(0xffffffff82082390,0xcb,0,0xffffffff82000f98,0xffffffff8208247c);
   }
-  pfVar2 = (float *)uVar3;
   if (iVar1 == 0) {
-    iVar1 = CM_PointLeafnum(pfVar2,0);
-    pCVar4 = &cm.info;
-    pcVar5 = cm.leafs + iVar1;
+    iVar1 = CM_PointLeafnum(param_2,0);
+    puVar4 = &DAT_835a2888;
+    iVar1 = iVar1 * 0x28 + DAT_835a28e0;
   }
   else {
-    pcVar5 = &cm.cmodels[iVar1].leaf;
-    pCVar4 = cm.cmodels[iVar1].info;
+    iVar3 = iVar1 * 0x48 + DAT_835a2914;
+    iVar1 = iVar3 + 0x20;
+    puVar4 = *(undefined **)(iVar3 + 0x1c);
   }
-  if (pcVar5->leafBrushNode != 0) {
-    if (&pcVar5->bounds == (Bounds *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
-                      ,0x1c1,0,"%s");
+  if (*(int *)(iVar1 + 0x24) != 0) {
+    if ((float *)(iVar1 + 0xc) == (float *)0x0) {
+      MyAssertHandler(0xffffffff82082340,0x1c1,0,0xffffffff82000f98,0xffffffff82002044);
     }
-    if ((uVar3 & 0xffffffff) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
-                      ,0x1c2,0,"%s");
+    if ((param_2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82082340,0x1c2,0,0xffffffff82000f98,0xffffffff82082338);
     }
-    if (((ABS(*pfVar2 - (pcVar5->bounds).midPoint[0]) < (pcVar5->bounds).halfSize[0]) &&
-        (ABS(pfVar2[1] - (pcVar5->bounds).midPoint[1]) < (pcVar5->bounds).halfSize[1])) &&
-       (ABS(pfVar2[2] - (pcVar5->bounds).midPoint[2]) < (pcVar5->bounds).halfSize[2])) {
-      iVar1 = CM_PointContentsLeafBrushNode_r
-                        (pCVar4,pfVar2,pCVar4->leafbrushNodes + pcVar5->leafBrushNode);
-      iVar1 = __restgprlr_26(iVar1);
-      return iVar1;
+    pfVar2 = (float *)param_2;
+    if ((ABS(*pfVar2 - *(float *)(iVar1 + 0xc)) < *(float *)(iVar1 + 0x18)) &&
+       (ABS(pfVar2[1] - *(float *)(iVar1 + 0x10)) < *(float *)(iVar1 + 0x1c))) {
+      if (ABS(pfVar2[2] - *(float *)(iVar1 + 0x14)) < *(float *)(iVar1 + 0x20)) {
+        CM_PointContentsLeafBrushNode_r
+                  (puVar4,param_2,
+                   ((ulonglong)*(uint *)(iVar1 + 0x24) +
+                    ((ulonglong)*(uint *)(iVar1 + 0x24) & 0x3fffffff) * 4 & 0x3fffffff) * 4 +
+                   (ulonglong)*(uint *)(puVar4 + 0x24));
+        __restgprlr_26();
+        return;
+      }
     }
   }
-  iVar1 = __restgprlr_26(0);
-  return iVar1;
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -302,7 +279,7 @@ int CM_BrushModelPointContents(uint param_1,float *param_2)
 void CM_TransformPoint(float *param_1,float *param_2,float *param_3,float *param_4)
 
 {
-  float afStack_40 [10];
+  undefined1 auStack_40 [40];
   
   if (((*param_3 == 0.0) && (param_3[1] == 0.0)) && (param_3[2] == 0.0)) {
     *param_4 = *param_1 - *param_2;
@@ -310,8 +287,8 @@ void CM_TransformPoint(float *param_1,float *param_2,float *param_3,float *param
     param_4[2] = param_1[2] - param_2[2];
   }
   else {
-    AnglesToAxis(param_3,(float (*) [3])afStack_40);
-    Vec3Rotate(param_1,(float (*) [3])afStack_40,param_4);
+    AnglesToAxis(param_3,auStack_40);
+    Vec3Rotate(param_1,auStack_40,param_4);
   }
   return;
 }

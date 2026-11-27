@@ -2,80 +2,69 @@
 
 // 8244ED38  FXW_SystemUpdateElement  (EffectsCore/fx_update_elem_system.cpp:126)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FXW_SystemUpdateElement(FxSystem *param_1)
+void FXW_SystemUpdateElement(void)
 
 {
   byte bVar1;
-  ushort uVar2;
+  short sVar2;
   ushort uVar3;
-  FxPool<FxElem> *pFVar4;
-  FxSystem *pFVar5;
-  FxEffect *pFVar6;
-  FxUpdateResult FVar7;
-  uint uVar8;
-  ushort *puVar9;
+  int iVar5;
+  int *piVar6;
+  undefined8 uVar4;
+  int iVar7;
+  short *psVar8;
+  int iVar9;
   int iVar10;
-  int iVar11;
-  FxElem *pFVar12;
+  uint uVar11;
+  byte *pbVar12;
   
-  pFVar5 = (FxSystem *)__savegprlr_15(param_1);
-  if (pFVar5->numUpdateElement == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem_system.cpp"
-                    ,0x87,0,"%s");
+  iVar5 = __savegprlr_15();
+  if (*(int *)(iVar5 + 0xd0) == 0) {
+    MyAssertHandler(0xffffffff8206a8b8,0x87,0,0xffffffff82000f98,0xffffffff8206a89c);
   }
   FX_AutoAddElemForUpdate(1);
-  iVar10 = 0;
-  if (0 < pFVar5->numUpdateElement) {
-    iVar11 = 0;
+  iVar9 = 0;
+  if (0 < *(int *)(iVar5 + 0xd0)) {
+    iVar10 = 0;
     do {
-      puVar9 = (ushort *)((int)&pFVar5->updateElement->effectHandle + iVar11);
-      uVar2 = *puVar9;
-      uVar3 = puVar9[1];
-      if (uVar2 == 0xffff) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem_system.cpp"
-                        ,0x8e,0,"%s");
+      psVar8 = (short *)(iVar10 + *(int *)(iVar5 + 0xcc));
+      sVar2 = *psVar8;
+      uVar3 = psVar8[1];
+      uVar11 = (uint)uVar3;
+      if (sVar2 == -1) {
+        MyAssertHandler(0xffffffff8206a8b8,0x8e,0,0xffffffff82000f98,0xffffffff82069424);
       }
-      if (uVar3 == 0xffff) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem_system.cpp"
-                        ,0x8f,0,"%s");
+      if (uVar11 == 0xffff) {
+        MyAssertHandler(0xffffffff8206a8b8,0x8f,0,0xffffffff82000f98,0xffffffff82069404);
       }
-      pFVar6 = FX_EffectFromHandle(pFVar5,uVar2);
-      pFVar4 = pFVar5->elems;
-      if ((0x3fff < uVar3) || ((uVar3 & 7) != 0)) {
-        va("%p %i");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                        ,0x54,0,"%s\n\t%s");
+      piVar6 = (int *)FX_EffectFromHandle(iVar5,sVar2);
+      iVar7 = *(int *)(iVar5 + 0x3c);
+      if ((0x3fff < uVar11) || ((uVar3 & 7) != 0)) {
+        uVar4 = va(0xffffffff82060820,iVar7,uVar11);
+        MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar4);
       }
-      pFVar12 = (FxElem *)((int)&pFVar4->field0_0x0 + (uint)uVar3 * 4);
-      if (pFVar5->msecNow < pFVar6->msecLastUpdate) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem_system.cpp"
-                        ,0x93,0,"%s");
+      pbVar12 = (byte *)(uVar11 * 4 + iVar7);
+      if (*(int *)(iVar5 + 0x88) < piVar6[0xc]) {
+        MyAssertHandler(0xffffffff8206a8b8,0x93,0,0xffffffff82000f98,0xffffffff8206a86c);
       }
-      if (((pFVar12->field0_0x0).defer & 1) != 0) {
-        FVar7 = FXW_UpdateElement(pFVar5,pFVar6,uVar2,pFVar12,uVar3,pFVar6->msecLastUpdate,
-                                  pFVar5->msecNow);
-        if (FVar7 == FX_UPDATE_REMOVE) {
-          bVar1 = *(byte *)((int)&pFVar6->def->elemDefs->collBounds +
-                           ((byte)(pFVar12->field0_0x0).defer & 0x3fffffc) * 0x40 + -0x10);
-          if (bVar1 < 4) {
-            uVar8 = 0;
-          }
-          else if ((bVar1 == 4) || (uVar8 = 1, bVar1 == 5)) {
-            uVar8 = 2;
-          }
-          FXW_FreeElem(pFVar5,uVar3,pFVar6,uVar2,uVar8);
+      if (((*pbVar12 & 1) != 0) &&
+         (iVar7 = FXW_UpdateElement(iVar5,piVar6,sVar2,pbVar12,uVar11,piVar6[0xc],
+                                    *(undefined4 *)(iVar5 + 0x88)), iVar7 == 0)) {
+        bVar1 = *(byte *)((*pbVar12 & 0x3fffffc) * 0x40 + *(int *)(*piVar6 + 0x30) + 0xb0);
+        if (bVar1 < 4) {
+          uVar4 = 0;
         }
+        else if ((bVar1 == 4) || (uVar4 = 1, bVar1 == 5)) {
+          uVar4 = 2;
+        }
+        FXW_FreeElem(iVar5,uVar11,piVar6,sVar2,uVar4);
       }
-      iVar10 = iVar10 + 1;
-      iVar11 = iVar11 + 4;
-    } while (iVar10 < pFVar5->numUpdateElement);
+      iVar9 = iVar9 + 1;
+      iVar10 = iVar10 + 4;
+    } while (iVar9 < *(int *)(iVar5 + 0xd0));
   }
   FX_AutoAddElemForUpdate(0);
-  pFVar5->numUpdateElement = 0;
+  *(undefined4 *)(iVar5 + 0xd0) = 0;
   __restgprlr_15();
   return;
 }
@@ -83,13 +72,13 @@ void FXW_SystemUpdateElement(FxSystem *param_1)
 
 // 8244ED08  FX_ClassForElemType  (EffectsCore/fx_update_elem_system.cpp:167)
 
-uint FX_ClassForElemType(uchar param_1)
+undefined8 FX_ClassForElemType(byte param_1)
 
 {
   if (param_1 < 4) {
     return 0;
   }
-  if ((param_1 != '\x04') && (param_1 != '\x05')) {
+  if ((param_1 != 4) && (param_1 != 5)) {
     return 1;
   }
   return 2;

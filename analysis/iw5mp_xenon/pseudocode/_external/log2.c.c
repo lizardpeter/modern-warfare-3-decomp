@@ -2,10 +2,10 @@
 
 // 828C96E8  NellyLog2  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/log2.c:109)
 
-float NellyLog2(float param_1)
+double NellyLog2(double param_1)
 
 {
-  return ((float)((uint)param_1 & 0x7fffff | 0x3f800000) * 0.5 - 1.0) * 2.0 +
-         (float)(longlong)(int)(((int)param_1 >> 0x17 & 0xffU) - 0x7e);
+  return (double)(((float)((uint)(float)param_1 & 0x7fffff | 0x3f800000) * 0.5 - 1.0) * 2.0 +
+                 (float)(longlong)(int)(((int)(float)param_1 >> 0x17 & 0xffU) - 0x7e));
 }
 

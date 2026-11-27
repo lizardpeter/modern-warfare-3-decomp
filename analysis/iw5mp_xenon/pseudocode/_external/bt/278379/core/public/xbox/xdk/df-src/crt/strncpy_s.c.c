@@ -2,86 +2,88 @@
 
 // 8291C850  strncpy_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tcsncpy_s.inl:13)
 
-int strncpy_s(char *param_1,uint param_2,char *param_3,uint param_4)
+errno_t strncpy_s(char *_Dst,rsize_t _SizeInBytes,char *_Src,rsize_t _MaxCount)
 
 {
   char cVar1;
   int iVar2;
-  int iVar3;
+  errno_t eVar3;
   int *piVar4;
-  ulonglong uVar5;
+  errno_t *peVar5;
   ulonglong uVar6;
-  char *pcVar7;
+  int iVar7;
+  ulonglong uVar8;
+  char *pcVar9;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  if (param_4 == 0) {
-    if (param_1 == (char *)0x0) {
-      if (param_2 != 0) goto LAB_8291c8a4;
+  uVar6 = (ulonglong)(int)_MaxCount;
+  uVar8 = (ulonglong)(int)_SizeInBytes;
+  if (_MaxCount == 0) {
+    if (_Dst == (char *)0x0) {
+      if (_SizeInBytes != 0) goto LAB_8291c8a4;
     }
     else {
 LAB_8291c89c:
-      if (param_2 == 0) goto LAB_8291c8a4;
-      if (param_4 == 0) {
-        *param_1 = '\0';
+      if (_SizeInBytes == 0) goto LAB_8291c8a4;
+      if (_MaxCount == 0) {
+        *_Dst = '\0';
       }
       else {
-        if (param_3 == (char *)0x0) {
-          *param_1 = '\0';
-          piVar4 = _errno();
-          iVar3 = 0x16;
+        if (_Src == (char *)0x0) {
+          *_Dst = '\0';
+          peVar5 = _errno();
+          eVar3 = 0x16;
 LAB_8291c8e8:
-          *piVar4 = iVar3;
+          *peVar5 = eVar3;
           _invalid_parameter_noinfo();
-          return iVar3;
+          return eVar3;
         }
-        if (param_4 == 0xffffffff) {
-          iVar2 = (int)param_1 - (int)param_3;
+        if (_MaxCount == 0xffffffff) {
+          iVar2 = (int)_Dst - (int)_Src;
           do {
-            cVar1 = *param_3;
-            param_3[iVar2] = cVar1;
-            param_3 = param_3 + 1;
-            iVar3 = -1;
+            cVar1 = *_Src;
+            _Src[iVar2] = cVar1;
+            _Src = _Src + 1;
+            iVar7 = -1;
             if (cVar1 == '\0') break;
-            uVar6 = uVar6 - 1;
-          } while (uVar6 != 0);
+            uVar8 = uVar8 - 1;
+          } while (uVar8 != 0);
         }
         else {
-          pcVar7 = param_1;
+          pcVar9 = _Dst;
           do {
-            cVar1 = pcVar7[(int)param_3 - (int)param_1];
-            *pcVar7 = cVar1;
-            pcVar7 = pcVar7 + 1;
-            if ((cVar1 == '\0') || (uVar6 = uVar6 - 1, uVar6 == 0)) break;
-            uVar5 = uVar5 - 1;
-          } while (uVar5 != 0);
-          iVar3 = (int)uVar5;
-          if ((uVar5 & 0xffffffff) == 0) {
-            *pcVar7 = '\0';
+            cVar1 = pcVar9[(int)_Src - (int)_Dst];
+            *pcVar9 = cVar1;
+            pcVar9 = pcVar9 + 1;
+            if ((cVar1 == '\0') || (uVar8 = uVar8 - 1, uVar8 == 0)) break;
+            uVar6 = uVar6 - 1;
+          } while (uVar6 != 0);
+          iVar7 = (int)uVar6;
+          if ((uVar6 & 0xffffffff) == 0) {
+            *pcVar9 = '\0';
           }
         }
-        if ((uVar6 & 0xffffffff) == 0) {
-          if (iVar3 == -1) {
-            param_1[param_2 - 1] = '\0';
+        if ((uVar8 & 0xffffffff) == 0) {
+          if (iVar7 == -1) {
+            _Dst[_SizeInBytes - 1] = '\0';
             return 0x50;
           }
-          *param_1 = '\0';
-          piVar4 = _errno();
-          iVar3 = 0x22;
+          *_Dst = '\0';
+          peVar5 = _errno();
+          eVar3 = 0x22;
           goto LAB_8291c8e8;
         }
       }
     }
-    iVar3 = 0;
+    eVar3 = 0;
   }
   else {
-    if (param_1 != (char *)0x0) goto LAB_8291c89c;
+    if (_Dst != (char *)0x0) goto LAB_8291c89c;
 LAB_8291c8a4:
     piVar4 = _errno();
     *piVar4 = 0x16;
     _invalid_parameter_noinfo();
-    iVar3 = 0x16;
+    eVar3 = 0x16;
   }
-  return iVar3;
+  return eVar3;
 }
 

@@ -2,14 +2,26 @@
 
 // 824DD160  Com_BuildPlayerProfilePath  (qcommon/com_playerprofile.cpp:304)
 
-int Com_BuildPlayerProfilePath(char *param_1,int param_2,char *param_3)
+int Com_BuildPlayerProfilePath
+              (char *param_1,size_t param_2,char *param_3,undefined8 param_4,undefined8 param_5,
+              undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
   int iVar1;
   char *pcStack00000024;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
   
   pcStack00000024 = param_3;
-  iVar1 = _vsnprintf(param_1,param_2,param_3,&stack0x00000028);
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
+  iVar1 = _vsnprintf(param_1,param_2,param_3,(va_list)&stack0x00000028);
   return iVar1;
 }
 

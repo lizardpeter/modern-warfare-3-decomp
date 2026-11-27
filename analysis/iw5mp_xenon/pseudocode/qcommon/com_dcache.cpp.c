@@ -2,7 +2,7 @@
 
 // 824D6F50  DCache_Throttle  (qcommon/com_dcache.cpp:64)
 
-int DCache_Throttle(uint param_1)
+int DCache_Throttle(ulonglong param_1)
 
 {
   uint uVar1;
@@ -10,20 +10,20 @@ int DCache_Throttle(uint param_1)
   int iVar3;
   ulonglong uVar4;
   
-  if ((dcacheThrottleEnabled->current).enabled == false) {
+  if (*(char *)(DAT_8365e148 + 0xc) == '\0') {
     iVar3 = 0;
   }
   else {
-    uVar1 = (dcacheThrottleKBytesPerSec->current).integer;
+    uVar1 = *(uint *)(DAT_83667348 + 0xc);
     iVar2 = Sys_Milliseconds();
     iVar3 = 0;
-    uVar4 = (longlong)(iVar2 - s_xferThrottleStartTime) * (longlong)(int)uVar1;
-    if ((uVar4 & 0xffffffff) < (ulonglong)param_1) {
-      uVar4 = (longlong)(int)param_1 - uVar4;
+    uVar4 = (longlong)(iVar2 - DAT_835f1610) * (longlong)(int)uVar1;
+    if ((uVar4 & 0xffffffff) < (param_1 & 0xffffffff)) {
+      param_1 = param_1 - uVar4;
       trapWord(6,(ulonglong)uVar1,0);
-      iVar3 = (int)uVar4 / (int)uVar1;
+      iVar3 = (int)param_1 / (int)uVar1;
       trapWord(5,(ulonglong)uVar1 &
-                 ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1),0xffff);
+                 ~(((param_1 & 0x7fffffff) << 1 | (param_1 & 0xffffffff) >> 0x1f) - 1),0xffff);
     }
   }
   return iVar3;
@@ -32,29 +32,25 @@ int DCache_Throttle(uint param_1)
 
 // 824D6FE8  DCache_ThrottleSetup  (qcommon/com_dcache.cpp:87)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DCache_ThrottleSetup(void)
 
 {
-  s_xferThrottleStartTime = Sys_Milliseconds();
+  DAT_835f1610 = Sys_Milliseconds();
   return;
 }
 
 
 // 824D7010  DCache_CheckForHDD  (qcommon/com_dcache.cpp:92)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DCache_CheckForHDD(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  s_dcacheHDDAvailable = false;
-  bVar1 = Live_IsDCacheInitialized();
-  if (bVar1) {
-    s_dcacheHDDAvailable = true;
+  DAT_835f160c = 0;
+  cVar1 = Live_IsDCacheInitialized();
+  if (cVar1 != '\0') {
+    DAT_835f160c = 1;
   }
   return;
 }
@@ -62,311 +58,266 @@ void DCache_CheckForHDD(void)
 
 // 824D7058  DCache_IsHDDPresent  (qcommon/com_dcache.cpp:106)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool DCache_IsHDDPresent(void)
+undefined1 DCache_IsHDDPresent(void)
 
 {
-  bool bVar1;
+  char cVar1;
   undefined1 uVar2;
   
-  s_dcacheHDDAvailable = false;
-  bVar1 = Live_IsDCacheInitialized();
-  if (bVar1) {
-    s_dcacheHDDAvailable = true;
+  DAT_835f160c = 0;
+  cVar1 = Live_IsDCacheInitialized();
+  if (cVar1 != '\0') {
+    DAT_835f160c = 1;
   }
-  uVar2 = s_dcacheHDDAvailable;
-  if ((dcacheSimulateNoHDD != (dvar_t *)0x0) && ((dcacheSimulateNoHDD->current).enabled != false)) {
+  uVar2 = DAT_835f160c;
+  if ((DAT_835f1608 != 0) && (*(char *)(DAT_835f1608 + 0xc) != '\0')) {
     uVar2 = 0;
   }
-  return (bool)uVar2;
+  return uVar2;
 }
 
 
 // 824D70C8  DCache_IsCachedInternal  (qcommon/com_dcache.cpp:117)
 
-dcacheResult_t DCache_IsCachedInternal(ulong64 param_1,dcacheLocation_t param_2)
+char DCache_IsCachedInternal(undefined8 param_1,undefined8 param_2)
 
 {
-  bool bVar2;
-  dcacheResult_t dVar1;
+  char cVar1;
   
-  bVar2 = DCache_IsHDDPresent();
-  if (bVar2) {
-    bVar2 = DCache_TOC_IsCached(param_1,param_2);
-    dVar1 = ((uint)LZCOUNT((uint)bVar2) >> 5 ^ 1) + DCACHE_RESULT_NOTFOUND;
+  cVar1 = DCache_IsHDDPresent();
+  if (cVar1 == '\0') {
+    cVar1 = '\x03';
   }
   else {
-    dVar1 = DCACHE_RESULT_NOHDD;
+    cVar1 = DCache_TOC_IsCached(param_1,param_2);
+    cVar1 = (cVar1 != '\0') + '\x01';
   }
-  return dVar1;
+  return cVar1;
 }
 
 
 // 824D7138  DCache_IsCached  (qcommon/com_dcache.cpp:132)
 
-bool DCache_IsCached(ulong64 param_1,dcacheLocation_t param_2)
+undefined8 DCache_IsCached(undefined8 param_1,undefined8 param_2)
 
 {
-  bool bVar1;
-  char *pcVar2;
-  int iVar3;
+  char cVar2;
+  uint uVar1;
+  undefined8 uVar3;
+  int iVar4;
   
-  bVar1 = DCache_IsHDDPresent();
-  if (bVar1) {
-    bVar1 = DCache_TOC_IsCached(param_1,param_2);
-    iVar3 = ((uint)LZCOUNT((uint)bVar1) >> 5 ^ 1) + 1;
+  cVar2 = DCache_IsHDDPresent();
+  if (cVar2 == '\0') {
+    iVar4 = 3;
   }
   else {
-    iVar3 = 3;
+    uVar1 = DCache_TOC_IsCached(param_1,param_2);
+    iVar4 = ((uint)LZCOUNT(uVar1 & 0xff) >> 5 ^ 1) + 1;
   }
-  Com_Printf(0x10,"dcache: Cache Lookup Result - ");
-  if (iVar3 == 1) {
-    pcVar2 = "NOT FOUND IN CACHE\n";
+  Com_Printf(0x10,0xffffffff82083ab8);
+  if (iVar4 == 1) {
+    uVar3 = 0xffffffff82083a74;
   }
   else {
-    if (iVar3 == 2) {
-      Com_Printf(0x10,"FOUND IN CACHE\n");
-      return true;
+    if (iVar4 == 2) {
+      Com_Printf(0x10,0xffffffff82083a88);
+      return 1;
     }
-    if (iVar3 == 3) {
-      pcVar2 = "NO HDD FOUND\n";
+    if (iVar4 == 3) {
+      uVar3 = 0xffffffff82083a98;
     }
     else {
-      pcVar2 = "CACHE ERROR\n";
+      uVar3 = 0xffffffff82083aa8;
     }
   }
-  Com_Printf(0x10,pcVar2);
-  return false;
+  Com_Printf(0x10,uVar3);
+  return 0;
 }
 
 
 // 824D7210  DCache_WriteToCache  (qcommon/com_dcache.cpp:157)
 
-bool DCache_WriteToCache(ulong64 param_1,int param_2,dcacheLocation_t param_3,char *param_4)
+void DCache_WriteToCache(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
+                        )
 
 {
-  ulong64 uVar1;
-  bool bVar4;
-  dcacheResult_t dVar2;
-  undefined1 uVar5;
-  dcacheTOC_t *pdVar3;
+  bool bVar1;
+  undefined8 uVar2;
+  char cVar5;
+  int iVar4;
+  undefined8 uVar3;
   
-  uVar1 = __savegprlr_27();
-  bVar4 = DCache_IsHDDPresent();
-  if (bVar4) {
-    dVar2 = DCache_IsCachedInternal(uVar1,param_3);
-    if (dVar2 != DCACHE_RESULT_NOTFOUND) {
-      if (dVar2 != DCACHE_RESULT_FOUND) {
-        if (dVar2 == DCACHE_RESULT_NOHDD) {
-          Com_PrintWarning(0x10,"dcache: No HDD detected.\n");
-          uVar5 = __restgprlr_27(0);
-          return (bool)uVar5;
+  uVar2 = __savegprlr_27();
+  cVar5 = DCache_IsHDDPresent();
+  if (cVar5 != '\0') {
+    iVar4 = DCache_IsCachedInternal(uVar2,param_3);
+    if (iVar4 != 1) {
+      if (iVar4 != 2) {
+        if (iVar4 == 3) {
+          Com_PrintWarning(0x10,0xffffffff82083b40);
+          __restgprlr_27(0);
+          return;
         }
-        Com_PrintError(0x10,
-                       "dcache: Tried to cache a file that already exists or a fatal error occurred during cache lookup.\n"
-                      );
+        Com_PrintError(0x10,0xffffffff82083b60);
         goto LAB_824d7270;
       }
-      Com_PrintWarning(0x10,"dcache: File already exists in dcache. Overwriting.\n");
+      Com_PrintWarning(0x10,0xffffffff82083b08);
       DCache_TOC_FlushTOC();
     }
-    bVar4 = param_2 == 0;
-    if (bVar4) {
+    bVar1 = (int)param_2 == 0;
+    if (bVar1) {
       param_2 = 0x10000000;
     }
-    dVar2 = DCache_TOC_Allocate(uVar1,param_2,param_3);
-    if (dVar2 != DCACHE_RESULT_ALLOCATED) {
-      Com_PrintError(0x10,"dcache: Error %d occurred while allocating.\n");
-      uVar5 = __restgprlr_27(0);
-      return (bool)uVar5;
+    uVar3 = DCache_TOC_Allocate(uVar2,param_2,param_3);
+    if ((int)uVar3 != 4) {
+      Com_PrintError(0x10,0xffffffff82083ad8,uVar3);
+      __restgprlr_27(0);
+      return;
     }
-    if (!bVar4) {
-      bVar4 = DCache_IO_WriteToCache(uVar1,param_3,param_2,param_4);
-      if (!bVar4) goto LAB_824d7270;
-      pdVar3 = DCache_TOC_GetTOC();
-      DCache_IO_SerializeTOC(pdVar3);
+    if (!bVar1) {
+      cVar5 = DCache_IO_WriteToCache(uVar2,param_3,param_2,param_4);
+      if (cVar5 == '\0') goto LAB_824d7270;
+      DCache_TOC_GetTOC();
+      DCache_IO_SerializeTOC();
     }
-    uVar5 = __restgprlr_27(1);
-    return (bool)uVar5;
+    __restgprlr_27(1);
+    return;
   }
 LAB_824d7270:
-  uVar5 = __restgprlr_27(0);
-  return (bool)uVar5;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 824D7338  DCache_StreamToCache  (qcommon/com_dcache.cpp:215)
 
-int DCache_StreamToCache
-              (ulong64 param_1,dcacheLocation_t param_2,int param_3,int param_4,char *param_5)
+void DCache_StreamToCache
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-  ulong64 uVar1;
-  bool bVar3;
-  int iVar2;
+  undefined8 uVar1;
+  char cVar2;
   
   uVar1 = __savegprlr_27();
-  bVar3 = DCache_IsHDDPresent();
-  if (!bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0xd8,0
-                    ,"%s");
+  cVar2 = DCache_IsHDDPresent();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82083bc8,0xd8,0,0xffffffff82000f98,0xffffffff82083c0c);
   }
-  iVar2 = DCache_IO_StreamToCache(uVar1,param_2,param_3,param_4,param_5);
-  iVar2 = __restgprlr_27(iVar2);
-  return iVar2;
-}
-
-
-// 824D73B0  DCache_StreamToCacheComplete  (qcommon/com_dcache.cpp:225)
-
-/* bool __cdecl DCache_StreamToCacheComplete(unsigned __int64,enum dcacheLocation_t,int) */
-
-bool DCache_StreamToCacheComplete(__uint64 param_1,dcacheLocation_t param_2,int param_3)
-
-{
-  ulong64 uVar1;
-  int iVar2;
-  undefined1 uVar4;
-  dcacheTOC_t *pdVar3;
-  
-  uVar1 = __savegprlr_29();
-  iVar2 = DCache_GetFileIndex(uVar1,param_2);
-  if (iVar2 == -1) {
-    Com_PrintError(0x10,"dcache: Tried to complete a streamed file that is not allocated.\n");
-    uVar4 = __restgprlr_29(0);
-    return (bool)uVar4;
-  }
-  pdVar3 = DCache_TOC_GetTOC();
-  pdVar3->m_fileInfo[iVar2].m_size = param_3;
-  if (pdVar3->m_version != '\x02') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
-                    0x202,0,"%s");
-  }
-  DCache_IO_SerializeTOC(pdVar3);
-  XFlushUtilityDrive();
-  uVar4 = __restgprlr_29(1);
-  return (bool)uVar4;
+  DCache_IO_StreamToCache(uVar1,param_2,param_3,param_4,param_5);
+  __restgprlr_27();
+  return;
 }
 
 
 // 824D73B8  DCache_ReadFromCache  (qcommon/com_dcache.cpp:233)
 
-bool DCache_ReadFromCache(ulong64 param_1,int param_2,dcacheLocation_t param_3,char *param_4)
+void DCache_ReadFromCache
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  ulong64 uVar1;
-  bool bVar3;
-  dcacheResult_t dVar2;
-  undefined1 uVar4;
+  undefined8 uVar1;
+  char cVar3;
+  int iVar2;
   
   uVar1 = __savegprlr_27();
-  bVar3 = DCache_IsHDDPresent();
-  if (bVar3) {
-    dVar2 = DCache_IsCachedInternal(uVar1,param_3);
-    if (dVar2 == DCACHE_RESULT_FOUND) {
-      bVar3 = DCache_IO_ReadFromCache(uVar1,param_3,param_2,param_4);
-      if (!bVar3) {
-        Com_PrintError(0x10,
-                       "dcache: An error occurred that didn\'t allow file %llu to be read. Removing from cache.\n"
-                      );
+  cVar3 = DCache_IsHDDPresent();
+  if (cVar3 != '\0') {
+    iVar2 = DCache_IsCachedInternal(uVar1,param_3);
+    if (iVar2 == 2) {
+      cVar3 = DCache_IO_ReadFromCache(uVar1,param_3,param_2,param_4);
+      if (cVar3 == '\0') {
+        Com_PrintError(0x10,0xffffffff82083c60,uVar1);
         DCache_TOC_FlushTOC();
-        uVar4 = __restgprlr_27(0);
-        return (bool)uVar4;
+        __restgprlr_27(0);
+        return;
       }
-      Com_Printf(0x10,"dcache: Load from cache successful. Enjoy your file!\n");
-      uVar4 = __restgprlr_27(1);
-      return (bool)uVar4;
+      Com_Printf(0x10,0xffffffff82083c24);
+      __restgprlr_27(1);
+      return;
     }
-    if ((dVar2 != DCACHE_RESULT_NOHDD) &&
-       (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",
-                        0xf4,0,"%s"), dVar2 != DCACHE_RESULT_NOHDD)) {
-      Com_PrintError(0x10,
-                     "dcache: Tried to read a file that doesn\'t exist or a fatal error occurred during cache lookup.\n"
-                    );
-      uVar4 = __restgprlr_27(0);
-      return (bool)uVar4;
+    if ((iVar2 != 3) &&
+       (MyAssertHandler(0xffffffff82083bc8,0xf4,0,0xffffffff82000f98,0xffffffff82083d18), iVar2 != 3
+       )) {
+      Com_PrintError(0x10,0xffffffff82083cb8);
+      __restgprlr_27(0);
+      return;
     }
-    Com_PrintWarning(0x10,"dcache: No HDD detected.\n");
+    Com_PrintWarning(0x10,0xffffffff82083b40);
   }
-  uVar4 = __restgprlr_27(0);
-  return (bool)uVar4;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 824D74C8  DCache_GetFileIndex  (qcommon/com_dcache.cpp:271)
 
-int DCache_GetFileIndex(ulong64 param_1,dcacheLocation_t param_2)
+void DCache_GetFileIndex(undefined8 param_1,int param_2)
 
 {
-  ulong64 uVar1;
-  bool bVar4;
-  dcacheTOC_t *pdVar2;
-  int iVar3;
-  longlong lVar5;
-  dcacheLocation_t *pdVar6;
+  longlong lVar1;
+  char cVar3;
+  int iVar2;
+  longlong lVar4;
+  int *piVar5;
   
-  uVar1 = __savegprlr_28();
-  bVar4 = DCache_IsHDDPresent();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x110,
-                    0,"%s");
+  lVar1 = __savegprlr_28();
+  cVar3 = DCache_IsHDDPresent();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82083bc8,0x110,0,0xffffffff82000f98,0xffffffff82083c0c);
   }
-  pdVar2 = DCache_TOC_GetTOC();
-  if (pdVar2 == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x112,
-                    0,"%s");
+  iVar2 = DCache_TOC_GetTOC();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82083bc8,0x112,0,0xffffffff82000f98,0xffffffff82083d58);
   }
   else {
-    lVar5 = 0;
-    if (0 < pdVar2->m_numFiles) {
-      pdVar6 = &pdVar2->m_fileInfo[0].m_location;
-      while ((((dcacheFileInfo_t *)(pdVar6 + -2))->m_fileID != uVar1 || (*pdVar6 != param_2))) {
-        lVar5 = lVar5 + 1;
-        pdVar6 = pdVar6 + 0x46;
-        if (pdVar2->m_numFiles <= (int)lVar5) {
-          iVar3 = __restgprlr_28(0xffffffffffffffff);
-          return iVar3;
+    lVar4 = 0;
+    if (0 < *(int *)(iVar2 + 0xad08)) {
+      piVar5 = (int *)(iVar2 + 0x10);
+      while ((*(longlong *)(piVar5 + -2) != lVar1 || (*piVar5 != param_2))) {
+        lVar4 = lVar4 + 1;
+        piVar5 = piVar5 + 0x46;
+        if (*(int *)(iVar2 + 0xad08) <= (int)lVar4) {
+          __restgprlr_28(0xffffffffffffffff);
+          return;
         }
       }
-      iVar3 = __restgprlr_28(lVar5);
-      return iVar3;
+      __restgprlr_28(lVar4);
+      return;
     }
   }
-  iVar3 = __restgprlr_28(0xffffffffffffffff);
-  return iVar3;
+  __restgprlr_28(0xffffffffffffffff);
+  return;
 }
 
 
 // 824D75A8  DCache_DeleteFromCache  (qcommon/com_dcache.cpp:289)
 
-bool DCache_DeleteFromCache(ulong64 param_1,dcacheLocation_t param_2)
+undefined8 DCache_DeleteFromCache(undefined8 param_1,undefined8 param_2)
 
 {
-  bool bVar1;
-  int local_10 [4];
+  char cVar1;
+  undefined4 local_10 [4];
   
   local_10[0] = 0;
-  bVar1 = DCache_TOC_GetIndex(param_1,param_2,local_10);
-  if (bVar1) {
+  cVar1 = DCache_TOC_GetIndex(param_1,param_2,local_10);
+  if (cVar1 != '\0') {
     DCache_TOC_RemoveFile(local_10[0]);
-    return true;
+    return 1;
   }
-  return false;
+  return 0;
 }
 
 
 // 824D7600  DCache_TranscodeEnd  (qcommon/com_dcache.cpp:303)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DCache_TranscodeEnd(void)
 
 {
-  if (!s_dcacheUploadState.m_isStreamingInProgress) {
+  if (DAT_835f1604 == '\0') {
     return;
   }
-  s_dcacheUploadState.m_isStreamingInProgress = false;
+  DAT_835f1604 = 0;
   DCache_TOC_FlushTOC();
   return;
 }
@@ -374,119 +325,99 @@ void DCache_TranscodeEnd(void)
 
 // 824D7628  DCache_UploadDataCallbackTranscode  (qcommon/com_dcache.cpp:312)
 
-uint DCache_UploadDataCallbackTranscode(void *param_1,uint param_2,uint param_3)
+void DCache_UploadDataCallbackTranscode(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  void *pvVar1;
-  bool bVar4;
-  int iVar2;
-  uint uVar3;
-  ulonglong uVar5;
+  undefined8 uVar1;
+  char cVar2;
   
-  uVar5 = (ulonglong)(int)param_3;
-  pvVar1 = (void *)__savegprlr_27(param_1);
-  bVar4 = DCache_IsHDDPresent();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x13b,
-                    0,"%s");
+  uVar1 = __savegprlr_27();
+  cVar2 = DCache_IsHDDPresent();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82083bc8,0x13b,0,0xffffffff82000f98,0xffffffff82083c0c);
   }
-  if ((ulonglong)(uint)s_dcacheUploadState.m_fileSize < (uVar5 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x13c,
-                    0,"%s");
+  if ((ulonglong)DAT_835f15fc < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82083bc8,0x13c,0,0xffffffff82000f98,0xffffffff82083d60);
   }
-  iVar2 = DCache_Throttle((uint)uVar5);
-  Sys_Sleep(iVar2);
-  iVar2 = WebmTranscode::Step(&webmTranscode,pvVar1,param_2,(uint)uVar5);
-  uVar3 = __restgprlr_27(iVar2);
-  return uVar3;
+  DCache_Throttle(param_3);
+  Sys_Sleep();
+  WebmTranscode__Step(0xffffffff848764a8,uVar1,param_2,param_3);
+  __restgprlr_27();
+  return;
 }
 
 
 // 824D76D8  DCache_UploadDataCallback  (qcommon/com_dcache.cpp:328)
 
-uint DCache_UploadDataCallback(void *param_1,uint param_2,uint param_3)
+void DCache_UploadDataCallback(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-  char *pcVar1;
-  bool bVar4;
-  uint uVar2;
-  int iVar3;
-  longlong lVar5;
-  ulonglong uVar6;
-  int iVar7;
+  bool bVar1;
+  undefined8 uVar2;
+  char cVar3;
   int local_40 [16];
   
-  uVar6 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  iVar7 = (int)lVar5;
-  bVar4 = DCache_IsHDDPresent();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x149,
-                    0,"%s");
+  uVar2 = __savegprlr_26();
+  cVar3 = DCache_IsHDDPresent();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82083bc8,0x149,0,0xffffffff82000f98,0xffffffff82083c0c);
   }
-  bVar4 = (uVar6 & 0xffffffff) == (ulonglong)(uint)s_dcacheUploadState.m_fileSize;
-  if ((ulonglong)(uint)s_dcacheUploadState.m_fileSize < (uVar6 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x14a,
-                    0,"%s");
-    bVar4 = (uVar6 & 0xffffffff) == (ulonglong)(uint)s_dcacheUploadState.m_fileSize;
+  bVar1 = (param_3 & 0xffffffff) == (ulonglong)DAT_835f15fc;
+  if ((ulonglong)DAT_835f15fc < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82083bc8,0x14a,0,0xffffffff82000f98,0xffffffff82083d60);
+    bVar1 = (param_3 & 0xffffffff) == (ulonglong)DAT_835f15fc;
   }
-  if (bVar4) {
-    Com_Printf(0x10,"dcache: Upload done. %d bytes.\n");
+  if (bVar1) {
+    Com_Printf(0x10,0xffffffff82083dd0,param_3);
   }
   else {
-    uVar2 = (uint)uVar6;
-    if ((ulonglong)(uint)s_dcacheUploadState.m_fileSize < (lVar5 + uVar6 & 0xffffffff)) {
-      Com_Printf(0x10,"dcache: About to finish up..\n");
-      iVar7 = s_dcacheUploadState.m_fileSize - uVar2;
+    if ((ulonglong)DAT_835f15fc < (param_2 + param_3 & 0xffffffff)) {
+      Com_Printf(0x10,0xffffffff82083db0);
+      param_2 = DAT_835f15fc - param_3;
     }
-    iVar3 = DCache_Throttle(uVar2);
-    Sys_Sleep(iVar3);
-    bVar4 = DCache_IO_ReadFromCacheByOffset
-                      (s_dcacheUploadState.m_fileID,s_dcacheUploadState.m_location,uVar2,
-                       iVar7 + uVar2,pcVar1,local_40);
-    if (bVar4) {
+    DCache_Throttle(param_3);
+    Sys_Sleep();
+    cVar3 = DCache_IO_ReadFromCacheByOffset
+                      (DAT_835f15f0,DAT_835f1600,param_3,param_2 + param_3,uVar2,local_40);
+    if (cVar3 != '\0') {
       if (local_40[0] < 1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",
-                        0x160,0,"%s");
+        MyAssertHandler(0xffffffff82083bc8,0x160,0,0xffffffff82000f98,0xffffffff82083da0);
       }
       if (local_40[0] == 0) {
-        s_dcacheUploadState.m_isStreamingInProgress = false;
+        DAT_835f1604 = 0;
         DCache_TOC_FlushTOC();
       }
-      uVar2 = __restgprlr_26(local_40[0]);
-      return uVar2;
+      __restgprlr_26(local_40[0]);
+      return;
     }
   }
-  s_dcacheUploadState.m_isStreamingInProgress = false;
+  DAT_835f1604 = 0;
   DCache_TOC_FlushTOC();
-  uVar2 = __restgprlr_26(0);
-  return uVar2;
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 824D7838  DCache_GetUploadFileInformation  (qcommon/com_dcache.cpp:368)
 
-void DCache_GetUploadFileInformation(ulong64 *param_1,int *param_2)
+void DCache_GetUploadFileInformation(undefined8 *param_1,undefined4 *param_2)
 
 {
-  int iVar1;
+  undefined4 uVar1;
   
-  iVar1 = s_dcacheUploadState.m_fileSize;
-  *param_1 = s_dcacheUploadState.m_fileID;
-  *param_2 = iVar1;
+  uVar1 = DAT_835f15fc;
+  *param_1 = DAT_835f15f0;
+  *param_2 = uVar1;
   return;
 }
 
 
 // 824D7858  DCache_ClearStreaming  (qcommon/com_dcache.cpp:376)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DCache_ClearStreaming(void)
 
 {
-  s_dcacheUploadState.m_isStreamingInProgress = false;
+  DAT_835f1604 = 0;
   DCache_TOC_FlushTOC();
   return;
 }
@@ -494,70 +425,59 @@ void DCache_ClearStreaming(void)
 
 // 824D7870  DCache_UploadFromCache  (qcommon/com_dcache.cpp:382)
 
-bool DCache_UploadFromCache
-               (int param_1,ulong64 param_2,dcacheLocation_t param_3,
-               contentServerWriteFileInfo *param_4)
+void DCache_UploadFromCache
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-  contentServerWriteFileInfo *pcVar1;
+  undefined8 uVar1;
   int iVar2;
-  dcacheTOC_t *pdVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
+  char cVar3;
   
-  uVar6 = (ulonglong)(int)param_4;
-  iVar2 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x17f,
-                    0,"%s");
+  uVar1 = __savegprlr_26();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82083bc8,0x17f,0,0xffffffff82000f98,0xffffffff82021a7c);
   }
-  pdVar3 = DCache_TOC_GetTOC();
-  if (pdVar3 == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x180,
-                    0,"%s");
+  iVar2 = DCache_TOC_GetTOC();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82083bc8,0x180,0,0xffffffff82000f98,0xffffffff82083e4c);
   }
-  bVar4 = DCache_IsHDDPresent();
-  if (bVar4) {
-    if (s_dcacheUploadState.m_isStreamingInProgress == false) {
-      s_dcacheUploadState.m_fileIndex = DCache_GetFileIndex(param_2,param_3);
-      if (s_dcacheUploadState.m_fileIndex != -1) {
-        pdVar3 = DCache_TOC_GetTOC();
-        s_dcacheUploadState.m_fileSize = pdVar3->m_fileInfo[s_dcacheUploadState.m_fileIndex].m_size;
-        pcVar1 = (contentServerWriteFileInfo *)uVar6;
-        s_dcacheUploadState.m_fileID = param_2;
-        s_dcacheUploadState.m_location = param_3;
-        pcVar1->m_fileSize = s_dcacheUploadState.m_fileSize;
-        if ((cl_demo_uploadfb->current).enabled == false) {
-          WebmTranscode::Start(&webmTranscode);
-          pcVar1->m_dataCallback = DCache_UploadDataCallbackTranscode;
+  cVar3 = DCache_IsHDDPresent();
+  if (cVar3 != '\0') {
+    if (DAT_835f1604 == '\0') {
+      DAT_835f15f8 = DCache_GetFileIndex(param_2,param_3);
+      if (DAT_835f15f8 != -1) {
+        iVar2 = DCache_TOC_GetTOC();
+        DAT_835f1600 = (undefined4)param_3;
+        DAT_835f15fc = *(undefined4 *)(iVar2 + DAT_835f15f8 * 0x118 + 0x14);
+        iVar2 = (int)param_4;
+        DAT_835f15f0 = param_2;
+        *(undefined4 *)(iVar2 + 8) = DAT_835f15fc;
+        if (*(char *)(DAT_8484f0cc + 0xc) == '\0') {
+          WebmTranscode__Start(0xffffffff848764a8);
+          *(code **)(iVar2 + 0x28) = DCache_UploadDataCallbackTranscode;
         }
         else {
-          pcVar1->m_dataCallback = DCache_UploadDataCallback;
+          *(code **)(iVar2 + 0x28) = DCache_UploadDataCallback;
         }
-        s_xferThrottleStartTime = Sys_Milliseconds();
-        iVar2 = LiveStorage_CS_WriteFile(iVar2,pcVar1);
+        DAT_835f1610 = Sys_Milliseconds();
+        iVar2 = LiveStorage_CS_WriteFile(uVar1,param_4);
         if (iVar2 != 0) {
-          s_dcacheUploadState.m_isStreamingInProgress = true;
-          uVar5 = __restgprlr_26(1);
-          return (bool)uVar5;
+          DAT_835f1604 = 1;
+          __restgprlr_26(1);
+          return;
         }
       }
     }
     else {
-      Com_PrintError(0x10,
-                     "Tried to start an upload from cache to upload file %llu while already uploading file %llu.\n"
-                    );
+      Com_PrintError(0x10,0xffffffff82083df0,param_2,DAT_835f15f0);
     }
   }
-  uVar5 = __restgprlr_26(0);
-  return (bool)uVar5;
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 824D79D8  DCache_Shutdown  (qcommon/com_dcache.cpp:438)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DCache_Shutdown(void)
 
@@ -570,44 +490,36 @@ void DCache_Shutdown(void)
 
 // 824D7A00  DCache_Setup  (qcommon/com_dcache.cpp:459)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool DCache_Setup(void)
+undefined8 DCache_Setup(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  s_dcacheHDDAvailable = false;
-  bVar1 = Live_IsDCacheInitialized();
-  if (bVar1) {
-    s_dcacheHDDAvailable = true;
+  DAT_835f160c = 0;
+  cVar1 = Live_IsDCacheInitialized();
+  if (cVar1 != '\0') {
+    DAT_835f160c = 1;
   }
-  bVar1 = DCache_IsHDDPresent();
-  if (bVar1) {
-    bVar1 = DCache_TOC_Init();
-    if ((bVar1) && (bVar1 = DCache_IO_Init(), bVar1)) {
-      return true;
+  cVar1 = DCache_IsHDDPresent();
+  if (cVar1 != '\0') {
+    cVar1 = DCache_TOC_Init();
+    if ((cVar1 != '\0') && (cVar1 = DCache_IO_Init(), cVar1 != '\0')) {
+      return 1;
     }
-    return false;
+    return 0;
   }
-  return false;
+  return 0;
 }
 
 
 // 824D7AA0  DCache_Init  (qcommon/com_dcache.cpp:471)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool DCache_Init(void)
+void DCache_Init(void)
 
 {
-  bool bVar1;
-  
   Live_DCacheInitialize();
-  dcacheSimulateNoHDD =
-       Dvar_RegisterBool("dcacheSimulateNoHDD",false,0,
-                         "When turned on, simulate no HDD for caching.");
-  bVar1 = DCache_Setup();
-  return bVar1;
+  DAT_835f1608 = Dvar_RegisterBool(0xffffffff82083e60,0,0,0xffffffff82083e74);
+  DCache_Setup();
+  return;
 }
 

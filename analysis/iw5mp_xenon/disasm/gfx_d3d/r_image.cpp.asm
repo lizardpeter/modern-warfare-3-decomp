@@ -443,12 +443,19 @@ LAB_82741b20:
 LAB_82741b58:
   82741B58  3D60821C             lis r11,-0x7de4
   82741B5C  3BCB3F10             addi r30,r11,0x3f10
+LAB_82741b60:
   82741B60  7FE3FB78             or r3,r31,r31
   82741B64  48006A9D             bl 0x82748600
   82741B68  7C651B78             or r5,r3,r3
   82741B6C  38800506             li r4,0x506
   82741B70  7FC3F378             or r3,r30,r30
   82741B74  4BF0C85D             bl 0x8264e3d0
+  82741B78  817B3128             lwz r11,0x3128(r27)
+  82741B7C  2F0B0000             cmpwi cr6,r11,0x0
+  82741B80  409AFFE0             bne cr6,0x82741b60
+  82741B84  7F83E378             or r3,r28,r28
+  82741B88  38210080             addi r1,r1,0x80
+  82741B8C  481D4B78             b 0x82916704
 
 ; 82741B90  R_InitCodeImages  (gfx_d3d/r_image.cpp:1338)
   82741B90  7D8802A6             mfspr r12,LR

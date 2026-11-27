@@ -2,139 +2,136 @@
 
 // 824D6E88  LiveStorage_CS_AllocCacheMemory  (qcommon/com_contentserver_cache.cpp:22)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void LiveStorage_CS_AllocCacheMemory(void)
 
 {
-  if (g_csCache != (csCacheFileDetails_t *)0x0) {
+  if (DAT_835f15ec != 0) {
     return;
   }
-  AllocContentServerArray<csCacheFileDetails_t>
-            (&g_csCache,100,"LiveStorage_CS_AllocCacheMemory:g_csCache");
+  AllocContentServerArray<csCacheFileDetails_t>(0xffffffff835f15ec,100,0xffffffff82083a48);
   return;
 }
 
 
 // 824D6CF0  LiveStorage_CS_ClearCacheMemory  (qcommon/com_contentserver_cache.cpp:36)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void LiveStorage_CS_ClearCacheMemory(void)
 
 {
-  g_csCache = (csCacheFileDetails_t *)0x0;
+  DAT_835f15ec = 0;
   return;
 }
 
 
 // 824D6D00  LiveStorage_CS_Hash  (qcommon/com_contentserver_cache.cpp:44)
 
-int LiveStorage_CS_Hash(ulong64 param_1)
+ulonglong LiveStorage_CS_Hash(ulonglong param_1)
 
 {
-  ulonglong uVar1;
-  
-  uVar1 = param_1 >> 0x20 ^ param_1 & 0xffffffff;
-  return (int)uVar1 + (int)(uVar1 / 100) * -100;
+  return (param_1 >> 0x20 ^ param_1 & 0xffffffff) % 100;
 }
 
 
 // 824D6D28  LiveStorage_CS_IsCached  (qcommon/com_contentserver_cache.cpp:52)
 
-bool LiveStorage_CS_IsCached(ulong64 param_1,int *param_2)
+undefined8 LiveStorage_CS_IsCached(ulonglong param_1,int *param_2)
 
 {
   int iVar1;
   ulonglong uVar2;
   
-  if (g_csCache != (csCacheFileDetails_t *)0x0) {
+  if (DAT_835f15ec != 0) {
     uVar2 = param_1 >> 0x20 ^ param_1 & 0xffffffff;
     iVar1 = (int)uVar2 + (int)(uVar2 / 100) * -100;
-    if (g_csCache[iVar1].descriptor.m_fileID == param_1) {
+    if (*(ulonglong *)(iVar1 * 0x790 + DAT_835f15ec + 8) == param_1) {
       *param_2 = iVar1;
-      return true;
+      return 1;
     }
   }
-  return false;
+  return 0;
 }
 
 
 // 824D6D88  LiveStorage_CSCache_AddDescriptor  (qcommon/com_contentserver_cache.cpp:69)
 
-void LiveStorage_CSCache_AddDescriptor(ulong64 param_1,bdFileMetaData *param_2)
+ulonglong LiveStorage_CSCache_AddDescriptor(ulonglong param_1,void *param_2)
 
 {
-  if (g_csCache == (csCacheFileDetails_t *)0x0) {
-    return;
+  void *pvVar1;
+  ulonglong uVar2;
+  
+  if (DAT_835f15ec == 0) {
+    return param_1;
   }
-  memcpy();
-  return;
+  uVar2 = param_1 >> 0x20 ^ param_1 & 0xffffffff;
+  pvVar1 = memcpy((void *)(((int)uVar2 + (int)(uVar2 / 100) * -100) * 0x790 + DAT_835f15ec),param_2,
+                  0x790);
+  return (longlong)(int)pvVar1;
 }
 
 
 // 824D6DD0  LiveStorage_CSCache_GetDescriptor  (qcommon/com_contentserver_cache.cpp:80)
 
-bool LiveStorage_CSCache_GetDescriptor(ulong64 param_1,bdFileMetaData *param_2)
+undefined8 LiveStorage_CSCache_GetDescriptor(ulonglong param_1,void *param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
+  int iVar1;
+  bool bVar2;
+  int iVar3;
   
-  if ((g_csCache == (csCacheFileDetails_t *)0x0) ||
-     (uVar2 = param_1 >> 0x20 ^ param_1 & 0xffffffff,
-     g_csCache[(int)uVar2 + (int)(uVar2 / 100) * -100].descriptor.m_fileID != param_1)) {
-    bVar1 = false;
+  iVar3 = 0;
+  if (DAT_835f15ec != 0) {
+    iVar1 = (int)((param_1 >> 0x20 ^ param_1 & 0xffffffff) % 100);
+    if (*(ulonglong *)(iVar1 * 0x790 + DAT_835f15ec + 8) == param_1) {
+      bVar2 = true;
+      iVar3 = iVar1;
+      goto LAB_824d6e40;
+    }
   }
-  else {
-    bVar1 = true;
+  bVar2 = false;
+LAB_824d6e40:
+  if (bVar2) {
+    memcpy(param_2,(void *)(iVar3 * 0x790 + DAT_835f15ec),0x790);
+    return 1;
   }
-  if (bVar1) {
-    memcpy();
-    return true;
-  }
-  return false;
+  return 0;
 }
 
 
 // 824D6EB0  AllocContentServerArray<csCacheFileDetails_t>  (qcommon/com_storage_contentserver.h:211)
 
-bool AllocContentServerArray<csCacheFileDetails_t>
-               (csCacheFileDetails_t **param_1,int param_2,char *param_3)
+void AllocContentServerArray<csCacheFileDetails_t>(undefined8 param_1,longlong param_2)
 
 {
   uint *puVar1;
-  undefined1 uVar4;
   uint uVar2;
-  void *pvVar3;
-  longlong lVar5;
-  longlong lVar6;
+  longlong lVar3;
+  longlong lVar4;
   
-  lVar5 = (longlong)param_2;
-  puVar1 = (uint *)__savegprlr_28(param_1,lVar5,param_3);
+  puVar1 = (uint *)__savegprlr_28();
   if (*puVar1 != 0) {
-    uVar4 = __restgprlr_28(1);
-    return (bool)uVar4;
+    __restgprlr_28(1);
+    return;
   }
-  uVar2 = (int)lVar5 * 0x790;
-  pvVar3 = PMem_AllocFromSource_NoDebug(uVar2,8,4,PMEM_SOURCE_DATABASE);
-  if (pvVar3 != (void *)0x0) {
-    *puVar1 = (uint)pvVar3;
-    if (0 < (int)lVar5) {
-      lVar6 = 0;
+  lVar3 = param_2 * 0x790;
+  uVar2 = PMem_AllocFromSource_NoDebug(lVar3,8,4,1);
+  if (uVar2 != 0) {
+    *puVar1 = uVar2;
+    if (0 < (int)param_2) {
+      lVar4 = 0;
       do {
-        if ((ulonglong)*puVar1 + lVar6 != 0) {
-          bdFileMetaData::bdFileMetaData((bdFileMetaData *)((ulonglong)*puVar1 + lVar6));
+        if ((ulonglong)*puVar1 + lVar4 != 0) {
+          bdFileMetaData__bdFileMetaData();
         }
-        lVar5 = lVar5 + -1;
-        lVar6 = lVar6 + 0x790;
-      } while (lVar5 != 0);
+        param_2 = param_2 + -1;
+        lVar4 = lVar4 + 0x790;
+      } while (param_2 != 0);
     }
-    s_AllocatedContentServerMemorySize = s_AllocatedContentServerMemorySize + uVar2;
-    uVar4 = __restgprlr_28(1);
-    return (bool)uVar4;
+    DAT_835f15e8 = DAT_835f15e8 + (int)lVar3;
+    __restgprlr_28(1);
+    return;
   }
-  uVar4 = __restgprlr_28(0);
-  return (bool)uVar4;
+  __restgprlr_28(0);
+  return;
 }
 

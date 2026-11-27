@@ -2307,7 +2307,7 @@ LAB_827cfaa8:
   827CFAC0  382100B0             addi r1,r1,0xb0
   827CFAC4  48146C44             b 0x82916708
 
-; 827D06F0  ~renderedMovieInformation_s  (line unknown)
+; 827D06F0  renderedMovieInformation_s::~renderedMovieInformation_s  (line unknown)
   827D06F0  7D8802A6             mfspr r12,LR
   827D06F4  9181FFF8             stw r12,-0x8(r1)
   827D06F8  FBC1FFE8             std r30,-0x18(r1)

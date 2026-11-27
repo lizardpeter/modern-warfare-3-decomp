@@ -2,12 +2,12 @@
 
 // 828A9358  WaitForSingleObject  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/waitforsingleobject.c:68)
 
-ulong WaitForSingleObject(void *param_1,ulong param_2)
+DWORD WaitForSingleObject(HANDLE hHandle,DWORD dwMilliseconds)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = WaitForSingleObjectEx(param_1,param_2,0);
-  return uVar1;
+  DVar1 = WaitForSingleObjectEx(hHandle,dwMilliseconds,0);
+  return DVar1;
 }
 

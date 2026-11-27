@@ -2,7 +2,7 @@
 
 // 82501D50  Huff_putBit  (qcommon/huffman.cpp:16)
 
-void Huff_putBit(int param_1,uchar *param_2,int *param_3)
+void Huff_putBit(int param_1,int param_2,uint *param_3)
 
 {
   byte bVar1;
@@ -14,12 +14,12 @@ void Huff_putBit(int param_1,uchar *param_2,int *param_3)
   iVar3 = *in_r13;
   *(uint *)(iVar3 + 0x14) = uVar2;
   if ((uVar2 & 7) == 0) {
-    param_2[(int)uVar2 >> 3] = '\0';
+    *(undefined1 *)(((int)uVar2 >> 3) + param_2) = 0;
   }
   uVar2 = *(uint *)(iVar3 + 0x14);
-  bVar1 = param_2[(int)uVar2 >> 3];
+  bVar1 = *(byte *)(((int)uVar2 >> 3) + param_2);
   *(uint *)(iVar3 + 0x14) = uVar2 + 1;
-  param_2[(int)uVar2 >> 3] = (byte)(param_1 << (uVar2 & 7)) | bVar1;
+  *(byte *)(((int)uVar2 >> 3) + param_2) = (byte)(param_1 << (uVar2 & 7)) | bVar1;
   *param_3 = uVar2 + 1;
   return;
 }
@@ -27,7 +27,7 @@ void Huff_putBit(int param_1,uchar *param_2,int *param_3)
 
 // 82501DA8  Huff_getBit  (qcommon/huffman.cpp:29)
 
-int Huff_getBit(uchar *param_1,int *param_2)
+byte Huff_getBit(int param_1,uint *param_2)
 
 {
   byte bVar1;
@@ -36,7 +36,7 @@ int Huff_getBit(uchar *param_1,int *param_2)
   
   uVar2 = *param_2;
   *(uint *)(*in_r13 + 0x14) = uVar2 + 1;
-  bVar1 = param_1[(int)uVar2 >> 3];
+  bVar1 = *(byte *)(((int)uVar2 >> 3) + param_1);
   *param_2 = uVar2 + 1;
   return bVar1 >> (uVar2 & 7) & 1;
 }
@@ -44,7 +44,7 @@ int Huff_getBit(uchar *param_1,int *param_2)
 
 // 82501DD8  add_bit  (qcommon/huffman.cpp:42)
 
-void add_bit(char param_1,uchar *param_2)
+void add_bit(uint param_1,int param_2)
 
 {
   byte bVar1;
@@ -57,18 +57,18 @@ void add_bit(char param_1,uchar *param_2)
   uVar3 = *(uint *)(iVar2 + 0x14);
   iVar4 = (int)uVar3 >> 3;
   if ((uVar3 & 7) == 0) {
-    param_2[iVar4] = '\0';
+    *(undefined1 *)(iVar4 + param_2) = 0;
   }
-  bVar1 = param_2[iVar4];
+  bVar1 = *(byte *)(iVar4 + param_2);
   *(uint *)(iVar2 + 0x14) = uVar3 + 1;
-  param_2[iVar4] = param_1 << (uVar3 & 7) | bVar1;
+  *(byte *)(iVar4 + param_2) = (byte)((param_1 & 0xff) << (uVar3 & 7)) | bVar1;
   return;
 }
 
 
 // 82501E20  get_bit  (qcommon/huffman.cpp:54)
 
-int get_bit(uchar *param_1)
+byte get_bit(int param_1)
 
 {
   uint uVar1;
@@ -76,13 +76,13 @@ int get_bit(uchar *param_1)
   
   uVar1 = *(uint *)(*in_r13 + 0x14);
   *(uint *)(*in_r13 + 0x14) = uVar1 + 1;
-  return param_1[(int)uVar1 >> 3] >> (uVar1 & 7) & 1;
+  return *(byte *)(((int)uVar1 >> 3) + param_1) >> (uVar1 & 7) & 1;
 }
 
 
 // 82501E50  Huff_Receive  (qcommon/huffman.cpp:64)
 
-int Huff_Receive(nodetype *param_1,int *param_2,uchar *param_3)
+int Huff_Receive(undefined4 *param_1,int *param_2,int param_3)
 
 {
   int iVar1;
@@ -90,18 +90,18 @@ int Huff_Receive(nodetype *param_1,int *param_2,uchar *param_3)
   int *in_r13;
   
   while( true ) {
-    if (param_1 == (nodetype *)0x0) {
+    if (param_1 == (undefined4 *)0x0) {
       return 0;
     }
-    iVar1 = param_1->symbol;
+    iVar1 = param_1[4];
     if (iVar1 != 0x101) break;
     uVar2 = *(uint *)(*in_r13 + 0x14);
     *(uint *)(*in_r13 + 0x14) = uVar2 + 1;
-    if ((param_3[(int)uVar2 >> 3] >> (uVar2 & 7) & 1) == 0) {
-      param_1 = param_1->left;
+    if ((*(byte *)(((int)uVar2 >> 3) + param_3) >> (uVar2 & 7) & 1) == 0) {
+      param_1 = (undefined4 *)*param_1;
     }
     else {
-      param_1 = param_1->right;
+      param_1 = (undefined4 *)param_1[1];
     }
   }
   *param_2 = iVar1;
@@ -111,40 +111,41 @@ int Huff_Receive(nodetype *param_1,int *param_2,uchar *param_3)
 
 // 82501EC0  Huff_offsetReceive  (qcommon/huffman.cpp:87)
 
-void Huff_offsetReceive(nodetype *param_1,int *param_2,uchar *param_3,int *param_4)
+void Huff_offsetReceive(undefined4 *param_1,int *param_2,int param_3,undefined4 *param_4)
 
 {
   int iVar1;
   uint uVar2;
+  undefined4 uVar3;
   int *in_r13;
   
   iVar1 = *in_r13;
-  *(int *)(iVar1 + 0x14) = *param_4;
+  *(undefined4 *)(iVar1 + 0x14) = *param_4;
   while( true ) {
-    if (param_1 == (nodetype *)0x0) {
+    if (param_1 == (undefined4 *)0x0) {
       *param_2 = 0;
       return;
     }
-    if (param_1->symbol != 0x101) break;
+    if (param_1[4] != 0x101) break;
     uVar2 = *(uint *)(iVar1 + 0x14);
     *(uint *)(iVar1 + 0x14) = uVar2 + 1;
-    if ((param_3[(int)uVar2 >> 3] >> (uVar2 & 7) & 1) == 0) {
-      param_1 = param_1->left;
+    if ((*(byte *)(((int)uVar2 >> 3) + param_3) >> (uVar2 & 7) & 1) == 0) {
+      param_1 = (undefined4 *)*param_1;
     }
     else {
-      param_1 = param_1->right;
+      param_1 = (undefined4 *)param_1[1];
     }
   }
-  iVar1 = *(int *)(iVar1 + 0x14);
-  *param_2 = param_1->symbol;
-  *param_4 = iVar1;
+  uVar3 = *(undefined4 *)(iVar1 + 0x14);
+  *param_2 = param_1[4];
+  *param_4 = uVar3;
   return;
 }
 
 
 // 82501F40  huffman_send  (qcommon/huffman.cpp:113)
 
-void huffman_send(nodetype *param_1,nodetype *param_2,uchar *param_3)
+void huffman_send(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
   byte bVar1;
@@ -152,36 +153,34 @@ void huffman_send(nodetype *param_1,nodetype *param_2,uchar *param_3)
   uint uVar3;
   int iVar4;
   uint uVar5;
-  nodetype *pnVar6;
-  ulonglong uVar7;
+  int iVar6;
   int *in_r13;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pnVar6 = (nodetype *)__savegprlr_29(param_1);
-  if (pnVar6->parent != (nodetype *)0x0) {
-    huffman_send(pnVar6->parent,pnVar6,param_3);
+  iVar6 = __savegprlr_29();
+  if (*(int *)(iVar6 + 8) != 0) {
+    huffman_send(*(int *)(iVar6 + 8),iVar6);
   }
-  if ((uVar7 & 0xffffffff) != 0) {
+  if ((param_2 & 0xffffffff) != 0) {
     iVar2 = *in_r13;
     uVar3 = *(uint *)(iVar2 + 0x14);
     uVar5 = uVar3 & 7;
     iVar4 = (int)uVar3 >> 3;
-    if (ZEXT48(pnVar6->right) == (uVar7 & 0xffffffff)) {
+    if ((ulonglong)*(uint *)(iVar6 + 4) == (param_2 & 0xffffffff)) {
       if (uVar5 == 0) {
-        param_3[iVar4] = '\0';
+        *(undefined1 *)(iVar4 + param_3) = 0;
       }
-      bVar1 = param_3[iVar4];
+      bVar1 = *(byte *)(iVar4 + param_3);
       *(uint *)(iVar2 + 0x14) = uVar3 + 1;
-      param_3[iVar4] = (byte)(1 << uVar5) | bVar1;
+      *(byte *)(iVar4 + param_3) = (byte)(1 << uVar5) | bVar1;
       __restgprlr_29();
       return;
     }
     if (uVar5 == 0) {
-      param_3[iVar4] = '\0';
+      *(undefined1 *)(iVar4 + param_3) = 0;
     }
-    bVar1 = param_3[iVar4];
+    bVar1 = *(byte *)(iVar4 + param_3);
     *(uint *)(iVar2 + 0x14) = uVar3 + 1;
-    param_3[iVar4] = (byte)(0 << uVar5) | bVar1;
+    *(byte *)(iVar4 + param_3) = (byte)(0 << uVar5) | bVar1;
   }
   __restgprlr_29();
   return;
@@ -190,92 +189,85 @@ void huffman_send(nodetype *param_1,nodetype *param_2,uchar *param_3)
 
 // 82502008  huffman_bitCountForNode  (qcommon/huffman.cpp:133)
 
-int huffman_bitCountForNode(nodetype *param_1,nodetype *param_2)
+longlong huffman_bitCountForNode(int param_1,int param_2)
 
 {
-  int iVar1;
+  longlong lVar1;
   
-  iVar1 = 0;
-  if (param_1->parent != (nodetype *)0x0) {
-    iVar1 = huffman_bitCountForNode(param_1->parent,param_1);
+  lVar1 = 0;
+  if (*(int *)(param_1 + 8) != 0) {
+    lVar1 = huffman_bitCountForNode(*(int *)(param_1 + 8),param_1);
   }
-  if (param_2 != (nodetype *)0x0) {
-    iVar1 = iVar1 + 1;
+  if (param_2 != 0) {
+    lVar1 = lVar1 + 1;
   }
-  return iVar1;
+  return lVar1;
 }
 
 
 // 82502060  Huff_bitCount  (qcommon/huffman.cpp:151)
 
-int Huff_bitCount(huff_t *param_1,int param_2)
+void Huff_bitCount(undefined8 param_1,ulonglong param_2)
 
 {
-  nodetype *pnVar1;
-  nodetype *pnVar2;
+  int iVar1;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
+  undefined8 uVar2;
   
-  uVar5 = (ulonglong)param_2;
-  iVar4 = __savegprlr_29(param_1);
-  if (0xff < (uVar5 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\huffman.cpp",0x98,0,
-                    "ch doesn\'t index 256\n\t%i not in [0, %i)");
+  iVar3 = __savegprlr_29();
+  if (0xff < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8208e670,0x98,0,0xffffffff8208e648,param_2,0x100);
   }
-  iVar3 = (int)((uVar5 + 3 & 0xffffffff) << 2);
-  if (*(int *)(iVar3 + iVar4) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\huffman.cpp",0x99,0,
-                    "%s");
+  iVar1 = (int)((param_2 + 3 & 0xffffffff) << 2);
+  if (*(int *)(iVar1 + iVar3) == 0) {
+    MyAssertHandler(0xffffffff8208e670,0x99,0,0xffffffff82000f98,0xffffffff8208e630);
   }
-  pnVar2 = *(nodetype **)(iVar3 + iVar4);
-  iVar4 = 0;
-  pnVar1 = pnVar2->parent;
-  if (pnVar1 != (nodetype *)0x0) {
-    iVar4 = huffman_bitCountForNode(pnVar1,pnVar2);
+  uVar2 = 0;
+  iVar3 = *(int *)(*(int *)(iVar1 + iVar3) + 8);
+  if (iVar3 != 0) {
+    uVar2 = huffman_bitCountForNode(iVar3);
   }
-  iVar4 = __restgprlr_29(iVar4);
-  return iVar4;
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 82502100  Huff_transmit  (qcommon/huffman.cpp:162)
 
-void Huff_transmit(huff_t *param_1,int param_2,uchar *param_3)
+void Huff_transmit(int param_1,int param_2,int param_3)
 
 {
   byte bVar1;
   int iVar2;
-  nodetype *pnVar3;
+  uint uVar3;
   uint uVar4;
-  uint uVar5;
-  int iVar6;
-  uint uVar7;
+  int iVar5;
+  uint uVar6;
   int *in_r13;
-  longlong lVar8;
+  longlong lVar7;
   
-  pnVar3 = param_1->loc[param_2];
-  if (pnVar3 == (nodetype *)0x0) {
-    Huff_transmit(param_1,0x100,param_3);
+  iVar2 = *(int *)((param_2 + 3) * 4 + param_1);
+  if (iVar2 == 0) {
+    Huff_transmit(param_1,0x100);
     iVar2 = *in_r13;
-    uVar7 = 7;
-    lVar8 = 8;
+    uVar6 = 7;
+    lVar7 = 8;
     do {
-      uVar4 = *(uint *)(iVar2 + 0x14);
-      iVar6 = (int)uVar4 >> 3;
-      if ((uVar4 & 7) == 0) {
-        param_3[iVar6] = '\0';
+      uVar3 = *(uint *)(iVar2 + 0x14);
+      iVar5 = (int)uVar3 >> 3;
+      if ((uVar3 & 7) == 0) {
+        *(undefined1 *)(iVar5 + param_3) = 0;
       }
-      uVar5 = uVar7 & 0x3f;
-      bVar1 = param_3[iVar6];
-      *(uint *)(iVar2 + 0x14) = uVar4 + 1;
-      uVar7 = uVar7 - 1;
-      param_3[iVar6] = (byte)((param_2 >> uVar5 & 1U) << (uVar4 & 7)) | bVar1;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
+      uVar4 = uVar6 & 0x3f;
+      bVar1 = *(byte *)(iVar5 + param_3);
+      *(uint *)(iVar2 + 0x14) = uVar3 + 1;
+      uVar6 = uVar6 - 1;
+      *(byte *)(iVar5 + param_3) = (byte)((param_2 >> uVar4 & 1U) << (uVar3 & 7)) | bVar1;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
-  else if (pnVar3->parent != (nodetype *)0x0) {
-    huffman_send(pnVar3->parent,pnVar3,param_3);
+  else if (*(int *)(iVar2 + 8) != 0) {
+    huffman_send(*(int *)(iVar2 + 8),iVar2,param_3);
   }
   return;
 }
@@ -283,26 +275,20 @@ void Huff_transmit(huff_t *param_1,int param_2,uchar *param_3)
 
 // 825021C8  Huff_offsetTransmit  (qcommon/huffman.cpp:182)
 
-void Huff_offsetTransmit(huff_t *param_1,int param_2,uchar *param_3,int *param_4)
+void Huff_offsetTransmit(undefined8 param_1,longlong param_2,undefined8 param_3,undefined4 *param_4)
 
 {
   int iVar1;
-  nodetype *pnVar2;
-  nodetype *pnVar3;
-  int iVar4;
-  longlong lVar5;
+  int iVar2;
   int *in_r13;
   
-  lVar5 = (longlong)param_2;
-  iVar4 = __savegprlr_29(param_1);
+  iVar2 = __savegprlr_29();
   iVar1 = *in_r13;
-  *(int *)(iVar1 + 0x14) = *param_4;
-  pnVar3 = *(nodetype **)((int)((lVar5 + 3U & 0xffffffff) << 2) + iVar4);
-  pnVar2 = pnVar3->parent;
-  if (pnVar2 != (nodetype *)0x0) {
-    huffman_send(pnVar2,pnVar3,param_3);
+  *(undefined4 *)(iVar1 + 0x14) = *param_4;
+  if (*(int *)(*(int *)((int)((param_2 + 3U & 0xffffffff) << 2) + iVar2) + 8) != 0) {
+    huffman_send();
   }
-  *param_4 = *(int *)(iVar1 + 0x14);
+  *param_4 = *(undefined4 *)(iVar1 + 0x14);
   __restgprlr_29();
   return;
 }
@@ -310,58 +296,56 @@ void Huff_offsetTransmit(huff_t *param_1,int param_2,uchar *param_3,int *param_4
 
 // 82502218  Huff_Init  (qcommon/huffman.cpp:192)
 
-void Huff_Init(huffman_t *param_1)
+void Huff_Init(int *param_1)
 
 {
   int iVar1;
-  nodetype *pnVar2;
   
   Com_Memset(param_1,0,0x4c14);
-  iVar1 = (param_1->compressDecompress).blocNode;
-  (param_1->compressDecompress).blocNode = iVar1 + 1;
-  pnVar2 = (param_1->compressDecompress).nodeList + iVar1;
-  (param_1->compressDecompress).loc[0x100] = pnVar2;
-  (param_1->compressDecompress).tree = pnVar2;
-  (param_1->compressDecompress).nodeList[iVar1].symbol = 0x100;
-  ((param_1->compressDecompress).tree)->weight = 0;
-  ((param_1->compressDecompress).tree)->parent = (nodetype *)0x0;
-  ((param_1->compressDecompress).tree)->left = (nodetype *)0x0;
-  ((param_1->compressDecompress).tree)->right = (nodetype *)0x0;
+  iVar1 = *param_1;
+  *param_1 = iVar1 + 1;
+  param_1[0x103] = (int)(param_1 + iVar1 * 5 + 0x105);
+  param_1[2] = (int)(param_1 + iVar1 * 5 + 0x105);
+  param_1[iVar1 * 5 + 0x109] = 0x100;
+  *(undefined4 *)(param_1[2] + 0xc) = 0;
+  *(undefined4 *)(param_1[2] + 8) = 0;
+  *(undefined4 *)param_1[2] = 0;
+  *(undefined4 *)(param_1[2] + 4) = 0;
   return;
 }
 
 
 // 825022A8  Huff_initNode  (qcommon/huffman.cpp:205)
 
-nodetype * Huff_initNode(huff_t *param_1,int param_2,int param_3)
+void Huff_initNode(int *param_1,int param_2,int param_3)
 
 {
   int iVar1;
   
-  iVar1 = param_1->blocNode;
-  param_1->blocNode = iVar1 + 1;
-  param_1->nodeList[iVar1].symbol = param_2;
-  param_1->nodeList[iVar1].weight = param_3;
-  param_1->nodeList[iVar1].left = (nodetype *)0x0;
-  param_1->nodeList[iVar1].right = (nodetype *)0x0;
-  param_1->nodeList[iVar1].parent = (nodetype *)0x0;
-  param_1->loc[param_2] = param_1->nodeList + iVar1;
-  return param_1->nodeList + iVar1;
+  iVar1 = *param_1;
+  *param_1 = iVar1 + 1;
+  param_1[iVar1 * 5 + 0x109] = param_2;
+  param_1[iVar1 * 5 + 0x108] = param_3;
+  param_1[iVar1 * 5 + 0x105] = 0;
+  param_1[iVar1 * 5 + 0x106] = 0;
+  param_1[iVar1 * 5 + 0x107] = 0;
+  param_1[param_2 + 3] = (int)(param_1 + iVar1 * 5 + 0x105);
+  return;
 }
 
 
 // 825022F8  nodeCmp  (qcommon/huffman.cpp:222)
 
-int nodeCmp(void *param_1,void *param_2)
+longlong nodeCmp(int *param_1,int *param_2)
 
 {
-  return *(int *)(*(int *)param_1 + 0xc) - *(int *)(*(int *)param_2 + 0xc);
+  return (ulonglong)*(uint *)(*param_1 + 0xc) - (ulonglong)*(uint *)(*param_2 + 0xc);
 }
 
 
 // 82502310  Huff_BuildFromData  (qcommon/huffman.cpp:227)
 
-void Huff_BuildFromData(huff_t *param_1,int *param_2)
+void Huff_BuildFromData(undefined8 param_1,longlong param_2)
 
 {
   int iVar1;
@@ -372,34 +356,33 @@ void Huff_BuildFromData(huff_t *param_1,int *param_2)
   int *piVar6;
   int *piVar7;
   int *piVar8;
-  longlong lVar9;
+  int iVar9;
   int iVar10;
-  int iVar11;
-  int **ppiVar12;
+  longlong lVar11;
+  int **_Base;
   undefined4 auStack_47c [3];
   int *local_470;
   int local_46c [283];
   
-  lVar9 = (longlong)(int)param_2;
-  piVar2 = (int *)__savegprlr_19(param_1);
-  iVar10 = (int)lVar9;
+  piVar2 = (int *)__savegprlr_19();
+  iVar9 = (int)param_2;
   puVar3 = auStack_47c;
-  lVar9 = lVar9 + 8;
+  param_2 = param_2 + 8;
   iVar5 = 2;
   do {
-    iVar11 = *piVar2;
-    piVar7 = (int *)lVar9;
+    iVar10 = *piVar2;
+    piVar7 = (int *)param_2;
     iVar1 = piVar7[-2];
-    *piVar2 = iVar11 + 1;
-    piVar2[iVar11 * 5 + 0x105] = 0;
-    piVar2[iVar11 * 5 + 0x108] = iVar1;
-    piVar2[iVar11 * 5 + 0x109] = iVar5 + -2;
-    piVar2[iVar11 * 5 + 0x106] = 0;
-    piVar2[iVar11 * 5 + 0x107] = 0;
-    *(int **)((4 - iVar10) + (int)piVar7 + (int)piVar2) = piVar2 + iVar11 * 5 + 0x105;
+    *piVar2 = iVar10 + 1;
+    piVar2[iVar10 * 5 + 0x105] = 0;
+    piVar2[iVar10 * 5 + 0x108] = iVar1;
+    piVar2[iVar10 * 5 + 0x109] = iVar5 + -2;
+    piVar2[iVar10 * 5 + 0x106] = 0;
+    piVar2[iVar10 * 5 + 0x107] = 0;
+    *(int **)((4 - iVar9) + (int)piVar7 + (int)piVar2) = piVar2 + iVar10 * 5 + 0x105;
     iVar1 = piVar7[-1];
     iVar4 = *piVar2;
-    puVar3[3] = piVar2 + iVar11 * 5 + 0x105;
+    puVar3[3] = piVar2 + iVar10 * 5 + 0x105;
     *piVar2 = iVar4 + 1;
     piVar6 = piVar2 + iVar4 * 5 + 0x105;
     piVar2[iVar4 * 5 + 0x109] = iVar5 + -1;
@@ -407,62 +390,62 @@ void Huff_BuildFromData(huff_t *param_1,int *param_2)
     *piVar6 = 0;
     piVar2[iVar4 * 5 + 0x106] = 0;
     piVar2[iVar4 * 5 + 0x107] = 0;
-    *(int **)((8 - iVar10) + (int)piVar7 + (int)piVar2) = piVar6;
-    iVar11 = *piVar7;
+    *(int **)((8 - iVar9) + (int)piVar7 + (int)piVar2) = piVar6;
+    iVar10 = *piVar7;
     iVar1 = *piVar2;
     puVar3 = puVar3 + 4;
     *puVar3 = piVar6;
     *piVar2 = iVar1 + 1;
     piVar6 = piVar2 + iVar1 * 5 + 0x105;
     piVar2[iVar1 * 5 + 0x109] = iVar5;
-    piVar2[iVar1 * 5 + 0x108] = iVar11;
+    piVar2[iVar1 * 5 + 0x108] = iVar10;
     *piVar6 = 0;
     iVar4 = iVar5 + 2;
     piVar2[iVar1 * 5 + 0x106] = 0;
     piVar2[iVar1 * 5 + 0x107] = 0;
-    *(int **)((0xc - iVar10) + (int)piVar7 + (int)piVar2) = piVar6;
-    iVar11 = piVar7[1];
+    *(int **)((0xc - iVar9) + (int)piVar7 + (int)piVar2) = piVar6;
+    iVar10 = piVar7[1];
     iVar1 = *piVar2;
-    *(int **)(((int)&local_470 - iVar10) + (int)piVar7) = piVar6;
+    *(int **)(((int)&local_470 - iVar9) + (int)piVar7) = piVar6;
     *piVar2 = iVar1 + 1;
     piVar6 = piVar2 + iVar1 * 5 + 0x105;
     piVar2[iVar1 * 5 + 0x109] = iVar5 + 1;
-    piVar2[iVar1 * 5 + 0x108] = iVar11;
+    piVar2[iVar1 * 5 + 0x108] = iVar10;
     *piVar6 = 0;
     piVar2[iVar1 * 5 + 0x106] = 0;
     piVar2[iVar1 * 5 + 0x107] = 0;
-    *(int **)(((int)local_46c - iVar10) + (int)piVar7) = piVar6;
-    lVar9 = lVar9 + 0x10;
-    *(int **)((0x10 - iVar10) + (int)piVar7 + (int)piVar2) = piVar6;
+    *(int **)(((int)local_46c - iVar9) + (int)piVar7) = piVar6;
+    param_2 = param_2 + 0x10;
+    *(int **)((0x10 - iVar9) + (int)piVar7 + (int)piVar2) = piVar6;
     iVar5 = iVar5 + 4;
   } while (iVar4 < 0x100);
   qsort(&local_470,0x100,4,nodeCmp);
-  iVar10 = *piVar2;
-  *piVar2 = iVar10 + 1;
-  ppiVar12 = &local_470;
-  iVar11 = 0;
-  piVar7 = piVar2 + iVar10 * 5 + 0x105;
-  lVar9 = 0xff;
-  piVar2[iVar10 * 5 + 0x105] = 0;
-  piVar2[iVar10 * 5 + 0x106] = 0;
-  piVar2[iVar10 * 5 + 0x108] = 1;
-  piVar2[iVar10 * 5 + 0x109] = 0x101;
-  piVar2[iVar10 * 5 + 0x107] = 0;
+  iVar9 = *piVar2;
+  *piVar2 = iVar9 + 1;
+  _Base = &local_470;
+  iVar10 = 0;
+  piVar7 = piVar2 + iVar9 * 5 + 0x105;
+  lVar11 = 0xff;
+  piVar2[iVar9 * 5 + 0x105] = 0;
+  piVar2[iVar9 * 5 + 0x106] = 0;
+  piVar2[iVar9 * 5 + 0x108] = 1;
+  piVar2[iVar9 * 5 + 0x109] = 0x101;
+  piVar2[iVar9 * 5 + 0x107] = 0;
   piVar2[0x104] = (int)piVar7;
   iVar5 = piVar2[2];
-  piVar2[iVar10 * 5 + 0x105] = iVar5;
-  piVar2[iVar10 * 5 + 0x106] = (int)local_470;
+  piVar2[iVar9 * 5 + 0x105] = iVar5;
+  piVar2[iVar9 * 5 + 0x106] = (int)local_470;
   *(int **)(iVar5 + 8) = piVar7;
-  *(int **)(piVar2[iVar10 * 5 + 0x106] + 8) = piVar7;
-  piVar2[iVar10 * 5 + 0x108] =
-       *(int *)(piVar2[iVar10 * 5 + 0x105] + 0xc) + *(int *)(piVar2[iVar10 * 5 + 0x106] + 0xc);
-  iVar10 = 0;
+  *(int **)(piVar2[iVar9 * 5 + 0x106] + 8) = piVar7;
+  piVar2[iVar9 * 5 + 0x108] =
+       *(int *)(piVar2[iVar9 * 5 + 0x105] + 0xc) + *(int *)(piVar2[iVar9 * 5 + 0x106] + 0xc);
+  iVar9 = 0;
   local_470 = piVar7;
   do {
-    qsort(ppiVar12,0x100 - iVar10,4,nodeCmp);
+    qsort(_Base,0x100 - iVar9,4,nodeCmp);
     iVar5 = *piVar2;
     *piVar2 = iVar5 + 1;
-    lVar9 = lVar9 + -1;
+    lVar11 = lVar11 + -1;
     piVar8 = piVar2 + iVar5 * 5 + 0x105;
     piVar2[iVar5 * 5 + 0x106] = 0;
     piVar2[iVar5 * 5 + 0x105] = 0;
@@ -470,19 +453,19 @@ void Huff_BuildFromData(huff_t *param_1,int *param_2)
     piVar2[iVar5 * 5 + 0x107] = 0;
     piVar2[iVar5 * 5 + 0x108] = 1;
     piVar2[0x104] = (int)piVar8;
-    piVar7 = *ppiVar12;
+    piVar7 = *_Base;
     piVar2[iVar5 * 5 + 0x105] = (int)piVar7;
-    piVar6 = (int *)((int)local_46c + iVar11);
-    iVar11 = (iVar10 + 1) * 4;
+    piVar6 = (int *)((int)local_46c + iVar10);
+    iVar10 = (iVar9 + 1) * 4;
     piVar2[iVar5 * 5 + 0x106] = *piVar6;
     piVar7[2] = (int)piVar8;
-    ppiVar12 = &local_470 + iVar10 + 1;
+    _Base = &local_470 + iVar9 + 1;
     *(int **)(piVar2[iVar5 * 5 + 0x106] + 8) = piVar8;
     piVar2[iVar5 * 5 + 0x108] =
          *(int *)(piVar2[iVar5 * 5 + 0x105] + 0xc) + *(int *)(piVar2[iVar5 * 5 + 0x106] + 0xc);
-    *ppiVar12 = piVar8;
-    iVar10 = iVar10 + 1;
-  } while (lVar9 != 0);
+    *_Base = piVar8;
+    iVar9 = iVar9 + 1;
+  } while (lVar11 != 0);
   piVar2[2] = (int)piVar8;
   __restgprlr_19();
   return;

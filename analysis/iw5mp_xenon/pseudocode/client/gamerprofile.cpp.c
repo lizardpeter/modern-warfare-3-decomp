@@ -2,18 +2,21 @@
 
 // 8235AC08  GamerProfile_ListProfileArgsToConsole  (client/gamerprofile.cpp:380)
 
-void GamerProfile_ListProfileArgsToConsole(int param_1)
+void GamerProfile_ListProfileArgsToConsole(void)
 
 {
-  int iVar1;
-  longlong lVar2;
+  undefined8 uVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
   
-  iVar1 = __savegprlr_28(param_1);
-  lVar2 = 0x30;
+  uVar1 = __savegprlr_28();
+  lVar3 = 0x30;
+  puVar2 = (undefined4 *)&UNK_82038f18;
   do {
-    Com_Printf(iVar1,"  %s\n");
-    lVar2 = lVar2 + -1;
-  } while (lVar2 != 0);
+    puVar2 = puVar2 + 4;
+    Com_Printf(uVar1,0xffffffff82039718,*puVar2);
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
   __restgprlr_28();
   return;
 }
@@ -21,231 +24,222 @@ void GamerProfile_ListProfileArgsToConsole(int param_1)
 
 // 8235AC50  TRACK_xenon_gamerprofile  (client/gamerprofile.cpp:424)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_xenon_gamerprofile(void)
 
 {
-  track_static_alloc_internal(gamerSettings,0x32a0,"gamerSettings",10);
+  track_static_alloc_internal(0xffffffff82b43d98,0x32a0,0xffffffff82039720,10);
   return;
 }
 
 
 // 8235AC70  GamerProfile_GetProfileSettings  (client/gamerprofile.cpp:431)
 
-GamerSettingState * GamerProfile_GetProfileSettings(int param_1)
+longlong GamerProfile_GetProfileSettings(longlong param_1)
 
 {
-  if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x1b0
-                    ,0,"%s\n\t(controllerIndex) = %i");
+  if (((int)param_1 < 0) || (3 < (int)param_1)) {
+    MyAssertHandler(0xffffffff82039730,0x1b0,0,0xffffffff82039774,0xffffffff82039790,param_1);
   }
-  return gamerSettings + param_1;
+  return param_1 * 0xca8 + -0x7d4bc268;
 }
 
 
 // 8235ACE0  GamerProfile_IsProfileLoggedIn  (client/gamerprofile.cpp:438)
 
-bool GamerProfile_IsProfileLoggedIn(int param_1)
+undefined1 GamerProfile_IsProfileLoggedIn(undefined8 param_1)
 
 {
-  if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x1b7
-                    ,0,"%s\n\t(controllerIndex) = %i");
+  int iVar1;
+  
+  iVar1 = (int)param_1;
+  if ((iVar1 < 0) || (3 < iVar1)) {
+    MyAssertHandler(0xffffffff82039730,0x1b7,0,0xffffffff82039774,0xffffffff82039790,param_1);
   }
-  return gamerSettings[param_1].isProfileLoggedIn;
+  return (&DAT_82b43d98)[iVar1 * 0xca8];
 }
 
 
 // 8235AD50  GamerProfile_WasErrorOnRead  (client/gamerprofile.cpp:449)
 
-bool GamerProfile_WasErrorOnRead(int param_1)
+undefined1 GamerProfile_WasErrorOnRead(undefined8 param_1)
 
 {
-  if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x1c2
-                    ,0,"%s\n\t(controllerIndex) = %i");
+  int iVar1;
+  
+  iVar1 = (int)param_1;
+  if ((iVar1 < 0) || (3 < iVar1)) {
+    MyAssertHandler(0xffffffff82039730,0x1c2,0,0xffffffff82039774,0xffffffff82039790,param_1);
   }
-  return gamerSettings[param_1].errorOnRead;
+  return (&DAT_82b43d99)[iVar1 * 0xca8];
 }
 
 
 // 8235ADC8  GamerProfile_CheckForErrors  (client/gamerprofile.cpp:456)
 
-bool GamerProfile_CheckForErrors(ulong param_1,int param_2,char *param_3)
+void GamerProfile_CheckForErrors(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  int iVar1;
-  undefined1 uVar3;
-  char *pcVar2;
-  ulonglong uVar4;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  int iVar3;
   
-  uVar4 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
-    uVar3 = __restgprlr_27();
-    return (bool)uVar3;
+  uVar1 = __savegprlr_27();
+  if ((uVar1 & 0xffffffff) == 0) {
+    __restgprlr_27();
+    return;
   }
-  if ((param_2 < 0) || (3 < param_2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x1cc
-                    ,0,"%s\n\t(controllerIndex) = %i");
+  iVar3 = (int)param_2;
+  if ((iVar3 < 0) || (3 < iVar3)) {
+    MyAssertHandler(0xffffffff82039730,0x1cc,0,0xffffffff82039774,0xffffffff82039790,param_2);
   }
-  if (gamerSettings[param_2].isProfileLoggedIn == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x1cd
-                    ,0,"%s");
+  if ((&DAT_82b43d98)[iVar3 * 0xca8] == '\0') {
+    MyAssertHandler(0xffffffff82039730,0x1cd,0,0xffffffff82000f98,0xffffffff82039814);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x1ce
-                    ,0,"%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x1ce,0,0xffffffff82000f98,0xffffffff8203980c);
   }
-  pcVar2 = va("Profile for controller %i unavailable for %s.  Error code: 0x0%x\n");
-  Com_PrintError(0x10,pcVar2);
-  uVar3 = __restgprlr_27(1);
-  return (bool)uVar3;
+  uVar2 = va(0xffffffff820397c8,param_2,param_3,uVar1);
+  Com_PrintError(0x10,uVar2);
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 8235AEC0  StoreSettingsToLastSaved  (client/gamerprofile.cpp:470)
 
-void StoreSettingsToLastSaved(int param_1)
+void StoreSettingsToLastSaved(ulonglong param_1)
 
 {
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x1da
-                    ,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82039730,0x1da,0,0xffffffff82031880,param_1,4);
   }
-  Com_Memcpy(gamerSettingsLastSaved + param_1,gamerSettings + param_1,0xca8);
+  Com_Memcpy(param_1 * 0xca8 + -0x7d4b8de8,param_1 * 0xca8 + -0x7d4bc268,0xca8);
   return;
 }
 
 
 // 8235AF38  SettingsHaveChangedEnoughToSave  (client/gamerprofile.cpp:483)
 
-bool SettingsHaveChangedEnoughToSave(int param_1)
+undefined8 SettingsHaveChangedEnoughToSave(uint param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  byte bVar1;
+  byte bVar2;
   int iVar3;
   int iVar4;
-  uint uVar5;
+  int iVar5;
   uint uVar6;
-  longlong lVar7;
-  GamerSettingState *pGVar8;
-  GamerSettingState *pGVar9;
+  uint uVar7;
+  int iVar8;
+  byte *pbVar9;
+  byte *pbVar10;
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x1ea
-                    ,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff82039730,0x1ea,0,0xffffffff82031880,param_1,4);
   }
-  pGVar8 = gamerSettingsLastSaved + param_1;
-  pGVar9 = gamerSettings + param_1;
-  if ((pGVar9->isProfileLoggedIn != false) && (gamerSettings[param_1].errorOnRead == false)) {
-    iVar1 = gamerSettings[param_1].commonConfig.playTimeSP;
-    iVar2 = gamerSettingsLastSaved[param_1].commonConfig.playTimeSP;
-    iVar3 = gamerSettingsLastSaved[param_1].commonConfig.playTimeSO;
-    uVar6 = iVar2 - iVar1;
-    iVar4 = gamerSettingsLastSaved[param_1].commonConfig.playTimeMP;
-    uVar5 = (int)uVar6 >> 0x1f;
-    if ((int)((uVar6 ^ uVar5) - uVar5) < 300) {
-      gamerSettingsLastSaved[param_1].commonConfig.playTimeSP = iVar1;
+  iVar8 = param_1 * 0xca8;
+  pbVar9 = &DAT_82b47218 + iVar8;
+  pbVar10 = &DAT_82b43d98 + iVar8;
+  if ((*pbVar10 != 0) && ((&DAT_82b43d99)[iVar8] == '\0')) {
+    iVar3 = *(int *)(&DAT_82b47238 + iVar8);
+    iVar4 = *(int *)(&DAT_82b47240 + iVar8);
+    uVar7 = iVar3 - *(int *)(&DAT_82b43db8 + iVar8);
+    iVar5 = *(int *)(&DAT_82b4723c + iVar8);
+    uVar6 = (int)uVar7 >> 0x1f;
+    if ((int)((uVar7 ^ uVar6) - uVar6) < 300) {
+      *(int *)(&DAT_82b47238 + iVar8) = *(int *)(&DAT_82b43db8 + iVar8);
     }
-    iVar1 = gamerSettings[param_1].commonConfig.playTimeSO;
-    uVar6 = iVar3 - iVar1;
-    uVar5 = (int)uVar6 >> 0x1f;
-    if ((int)((uVar6 ^ uVar5) - uVar5) < 300) {
-      gamerSettingsLastSaved[param_1].commonConfig.playTimeSO = iVar1;
+    uVar7 = iVar4 - *(int *)(&DAT_82b43dc0 + iVar8);
+    uVar6 = (int)uVar7 >> 0x1f;
+    if ((int)((uVar7 ^ uVar6) - uVar6) < 300) {
+      *(int *)(&DAT_82b47240 + iVar8) = *(int *)(&DAT_82b43dc0 + iVar8);
     }
-    iVar1 = gamerSettings[param_1].commonConfig.playTimeMP;
-    uVar6 = iVar4 - iVar1;
-    uVar5 = (int)uVar6 >> 0x1f;
-    if ((int)((uVar6 ^ uVar5) - uVar5) < 300) {
-      gamerSettingsLastSaved[param_1].commonConfig.playTimeMP = iVar1;
+    uVar7 = iVar5 - (&DAT_82b43dbc)[param_1 * 0x32a];
+    uVar6 = (int)uVar7 >> 0x1f;
+    if ((int)((uVar7 ^ uVar6) - uVar6) < 300) {
+      *(undefined4 *)(&DAT_82b4723c + iVar8) = (&DAT_82b43dbc)[param_1 * 0x32a];
     }
     do {
-      lVar7 = (ulonglong)pGVar9->isProfileLoggedIn - (ulonglong)pGVar8->isProfileLoggedIn;
-      if (lVar7 != 0) break;
-      pGVar9 = (GamerSettingState *)&pGVar9->errorOnRead;
-      pGVar8 = (GamerSettingState *)&pGVar8->errorOnRead;
-    } while (pGVar9 != gamerSettings + param_1 + 1);
-    if ((int)lVar7 != 0) {
-      return true;
+      bVar1 = *pbVar10;
+      bVar2 = *pbVar9;
+      if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+      pbVar10 = pbVar10 + 1;
+      pbVar9 = pbVar9 + 1;
+    } while (pbVar10 != (byte *)(iVar8 + -0x7d4bb5c0));
+    if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
+      return 1;
     }
-    gamerSettingsLastSaved[param_1].commonConfig.playTimeSP = iVar2;
-    gamerSettingsLastSaved[param_1].commonConfig.playTimeSO = iVar3;
-    gamerSettingsLastSaved[param_1].commonConfig.playTimeMP = iVar4;
+    *(int *)(&DAT_82b47238 + iVar8) = iVar3;
+    *(int *)(&DAT_82b47240 + iVar8) = iVar4;
+    *(int *)(&DAT_82b4723c + iVar8) = iVar5;
   }
-  return false;
+  return 0;
 }
 
 
 // 8235B080  GamerProfile_ReadString  (client/gamerprofile.cpp:530)
 
-bool GamerProfile_ReadString(char *param_1,int param_2,char **param_3,int *param_4)
+void GamerProfile_ReadString(undefined8 param_1,int param_2,int *param_3,int *param_4)
 
 {
   int iVar1;
-  undefined1 uVar2;
-  int iVar3;
+  int iVar2;
   
-  iVar1 = __savegprlr_26(param_1);
+  iVar1 = __savegprlr_26();
   if (*param_4 != 0) {
-    iVar3 = 0;
+    iVar2 = 0;
     if (0 < param_2) {
-      while (iVar3 < *param_4) {
-        *(char *)(iVar3 + iVar1) = (*param_3)[iVar3];
-        if ((*param_3)[iVar3] == '\0') {
-          if (iVar3 < param_2) {
-            if (*param_4 <= iVar3) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp"
-                              ,0x226,1,"%s");
+      while (iVar2 < *param_4) {
+        *(undefined1 *)(iVar2 + iVar1) = *(undefined1 *)(*param_3 + iVar2);
+        if (*(char *)(*param_3 + iVar2) == '\0') {
+          if (iVar2 < param_2) {
+            if (*param_4 <= iVar2) {
+              MyAssertHandler(0xffffffff82039730,0x226,1,0xffffffff82000f98,0xffffffff8203985c);
             }
-            if (*(char *)(iVar3 + iVar1) != '\0') {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp"
-                              ,0x227,1,"%s");
+            if (*(char *)(iVar2 + iVar1) != '\0') {
+              MyAssertHandler(0xffffffff82039730,0x227,1,0xffffffff82000f98,0xffffffff82039848);
             }
-            *(undefined1 *)(iVar3 + iVar1) = 0;
-            *param_3 = *param_3 + iVar3 + 1;
-            *param_4 = (*param_4 - iVar3) + -1;
-            uVar2 = __restgprlr_26(1);
-            return (bool)uVar2;
+            *(undefined1 *)(iVar2 + iVar1) = 0;
+            *param_3 = *param_3 + iVar2 + 1;
+            *param_4 = (*param_4 - iVar2) + -1;
+            __restgprlr_26(1);
+            return;
           }
           break;
         }
-        iVar3 = iVar3 + 1;
-        if (param_2 <= iVar3) {
-          uVar2 = __restgprlr_26(0);
-          return (bool)uVar2;
+        iVar2 = iVar2 + 1;
+        if (param_2 <= iVar2) {
+          __restgprlr_26(0);
+          return;
         }
       }
     }
   }
-  uVar2 = __restgprlr_26(0);
-  return (bool)uVar2;
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 8235B198  GamerProfile_WriteString  (client/gamerprofile.cpp:562)
 
-void GamerProfile_WriteString(char *param_1,char **param_2,int *param_3)
+void GamerProfile_WriteString(undefined8 param_1,undefined4 *param_2,int *param_3)
 
 {
   char cVar1;
   char *pcVar2;
   char *pcVar3;
   
-  pcVar2 = (char *)__savegprlr_29(param_1);
+  pcVar2 = (char *)__savegprlr_29();
   pcVar3 = pcVar2;
   do {
     cVar1 = *pcVar3;
     pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
   if (*param_3 <= (int)(pcVar3 + (-1 - (int)pcVar2))) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x234
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0x234,0,0xffffffff82000f98,0xffffffff82039870);
   }
   I_strncpyz(*param_2,pcVar2,*param_3);
-  pcVar3 = *param_2;
+  pcVar3 = (char *)*param_2;
   pcVar2 = pcVar3;
   do {
     cVar1 = *pcVar2;
@@ -260,71 +254,66 @@ void GamerProfile_WriteString(char *param_1,char **param_2,int *param_3)
 
 // 8235B258  GamerProfile_ReadBitfield  (client/gamerprofile.cpp:573)
 
-bool GamerProfile_ReadBitfield(char *param_1,int param_2,char **param_3,int *param_4)
+void GamerProfile_ReadBitfield(undefined8 param_1,size_t param_2,int *param_3,int *param_4)
 
 {
-  undefined1 uVar1;
+  void *_Dst;
   
-  __savegprlr_29(param_1);
-  if (*param_4 < param_2) {
-    uVar1 = __restgprlr_29(0);
-    return (bool)uVar1;
+  _Dst = (void *)__savegprlr_29();
+  if (*param_4 < (int)param_2) {
+    __restgprlr_29(0);
+    return;
   }
-  memcpy();
+  memcpy(_Dst,(void *)*param_3,param_2);
   *param_3 = *param_3 + param_2;
   *param_4 = *param_4 - param_2;
-  uVar1 = __restgprlr_29(1);
-  return (bool)uVar1;
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 8235B2B8  GamerProfile_WriteBitfield  (client/gamerprofile.cpp:587)
 
-void GamerProfile_WriteBitfield(char *param_1,char **param_2,int param_3,int *param_4)
+void GamerProfile_WriteBitfield(undefined8 param_1,ulonglong param_2,size_t param_3,int *param_4)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  int *piVar3;
+  void *pvVar1;
+  int *piVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  piVar3 = (int *)uVar2;
-  if (((uVar2 & 0xffffffff) == 0) || (*piVar3 == 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x24c
-                    ,0,"%s");
+  pvVar1 = (void *)__savegprlr_26();
+  piVar2 = (int *)param_2;
+  if (((param_2 & 0xffffffff) == 0) || (*piVar2 == 0)) {
+    MyAssertHandler(0xffffffff82039730,0x24c,0,0xffffffff82000f98,0xffffffff820398a8);
   }
-  if (*param_4 < param_3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x24d
-                    ,0,"%s");
+  if (*param_4 < (int)param_3) {
+    MyAssertHandler(0xffffffff82039730,0x24d,0,0xffffffff82000f98,0xffffffff82039890);
   }
-  if (iVar1 == 0) {
-    memset();
+  if (pvVar1 == (void *)0x0) {
+    pvVar1 = memset((void *)*piVar2,0,param_3);
   }
   else {
-    memcpy();
+    pvVar1 = memcpy((void *)*piVar2,pvVar1,param_3);
   }
-  *piVar3 = *piVar3 + param_3;
+  *piVar2 = *piVar2 + param_3;
   *param_4 = *param_4 - param_3;
-  __restgprlr_26();
+  __restgprlr_26(pvVar1);
   return;
 }
 
 
 // 8235FE88  ReadType<unsigned_char>  (client/gamerprofile.cpp:603)
 
-uchar ReadType<unsigned_char>(char **param_1,int *param_2)
+undefined1 ReadType<unsigned_char>(int *param_1,int *param_2)
 
 {
-  uchar local_20 [8];
+  undefined1 local_20 [8];
   
   if (*param_2 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x25e
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0x25e,0,0xffffffff82000f98,0xffffffff8203ab90);
     if (*param_2 < 1) {
       *param_1 = *param_1 + *param_2;
       *param_2 = 0;
-      return '\0';
+      return 0;
     }
   }
   Com_Memcpy(local_20,*param_1,1);
@@ -336,37 +325,35 @@ uchar ReadType<unsigned_char>(char **param_1,int *param_2)
 
 // 8235FF40  ReadType<bool>  (client/gamerprofile.cpp:603)
 
-bool ReadType<bool>(char **param_1,int *param_2)
+undefined1 ReadType<bool>(int *param_1,int *param_2)
 
 {
   undefined1 local_20 [8];
   
   if (*param_2 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x25e
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0x25e,0,0xffffffff82000f98,0xffffffff8203ab90);
     if (*param_2 < 1) {
       *param_1 = *param_1 + *param_2;
       *param_2 = 0;
-      return false;
+      return 0;
     }
   }
   Com_Memcpy(local_20,*param_1,1);
   *param_1 = *param_1 + 1;
   *param_2 = *param_2 + -1;
-  return (bool)local_20[0];
+  return local_20[0];
 }
 
 
 // 8235FFF8  ReadType<short>  (client/gamerprofile.cpp:603)
 
-short ReadType<short>(char **param_1,int *param_2)
+undefined2 ReadType<short>(int *param_1,int *param_2)
 
 {
-  short local_20 [4];
+  undefined2 local_20 [4];
   
   if (*param_2 < 2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x25e
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0x25e,0,0xffffffff82000f98,0xffffffff8203ab90);
     if (*param_2 < 2) {
       *param_1 = *param_1 + *param_2;
       *param_2 = 0;
@@ -382,14 +369,13 @@ short ReadType<short>(char **param_1,int *param_2)
 
 // 823600B0  ReadType<int>  (client/gamerprofile.cpp:603)
 
-int ReadType<int>(char **param_1,int *param_2)
+undefined4 ReadType<int>(int *param_1,int *param_2)
 
 {
-  int local_20 [2];
+  undefined4 local_20 [2];
   
   if (*param_2 < 4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x25e
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0x25e,0,0xffffffff82000f98,0xffffffff8203ab90);
     if (*param_2 < 4) {
       *param_1 = *param_1 + *param_2;
       *param_2 = 0;
@@ -405,38 +391,38 @@ int ReadType<int>(char **param_1,int *param_2)
 
 // 82360168  ReadType<float>  (client/gamerprofile.cpp:603)
 
-float ReadType<float>(char **param_1,int *param_2)
+double ReadType<float>(int *param_1,int *param_2)
 
 {
   float local_20 [2];
   
   if (*param_2 < 4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x25e
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0x25e,0,0xffffffff82000f98,0xffffffff8203ab90);
     if (*param_2 < 4) {
       *param_1 = *param_1 + *param_2;
+      local_20[0] = 0.0;
       *param_2 = 0;
-      return 0.0;
+      goto LAB_8236020c;
     }
   }
   Com_Memcpy(local_20,*param_1,4);
   *param_1 = *param_1 + 4;
   *param_2 = *param_2 + -4;
-  return local_20[0];
+LAB_8236020c:
+  return (double)local_20[0];
 }
 
 
 // 82360228  WriteType<unsigned_char>  (client/gamerprofile.cpp:628)
 
-void WriteType<unsigned_char>(char **param_1,int *param_2,uchar param_3)
+void WriteType<unsigned_char>(int *param_1,int *param_2,undefined1 param_3)
 
 {
-  uchar uStack00000027;
+  undefined1 uStack00000027;
   
   uStack00000027 = param_3;
   if (*param_2 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x275
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0x275,0,0xffffffff82000f98,0xffffffff8203abb0);
   }
   Com_Memcpy(*param_1,&stack0x00000027,1);
   *param_1 = *param_1 + 1;
@@ -447,15 +433,14 @@ void WriteType<unsigned_char>(char **param_1,int *param_2,uchar param_3)
 
 // 823602B8  WriteType<bool>  (client/gamerprofile.cpp:628)
 
-void WriteType<bool>(char **param_1,int *param_2,bool param_3)
+void WriteType<bool>(int *param_1,int *param_2,undefined1 param_3)
 
 {
   undefined1 uStack00000027;
   
   uStack00000027 = param_3;
   if (*param_2 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x275
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0x275,0,0xffffffff82000f98,0xffffffff8203abb0);
   }
   Com_Memcpy(*param_1,&stack0x00000027,1);
   *param_1 = *param_1 + 1;
@@ -466,15 +451,14 @@ void WriteType<bool>(char **param_1,int *param_2,bool param_3)
 
 // 82360348  WriteType<short>  (client/gamerprofile.cpp:628)
 
-void WriteType<short>(char **param_1,int *param_2,short param_3)
+void WriteType<short>(int *param_1,int *param_2,undefined2 param_3)
 
 {
-  short sStack00000026;
+  undefined2 uStack00000026;
   
-  sStack00000026 = param_3;
+  uStack00000026 = param_3;
   if (*param_2 < 2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x275
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0x275,0,0xffffffff82000f98,0xffffffff8203abb0);
   }
   Com_Memcpy(*param_1,&stack0x00000026,2);
   *param_1 = *param_1 + 2;
@@ -485,15 +469,14 @@ void WriteType<short>(char **param_1,int *param_2,short param_3)
 
 // 823603D8  WriteType<int>  (client/gamerprofile.cpp:628)
 
-void WriteType<int>(char **param_1,int *param_2,int param_3)
+void WriteType<int>(int *param_1,int *param_2,undefined4 param_3)
 
 {
-  int iStack00000024;
+  undefined4 uStack00000024;
   
-  iStack00000024 = param_3;
+  uStack00000024 = param_3;
   if (*param_2 < 4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x275
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0x275,0,0xffffffff82000f98,0xffffffff8203abb0);
   }
   Com_Memcpy(*param_1,&stack0x00000024,4);
   *param_1 = *param_1 + 4;
@@ -504,383 +487,361 @@ void WriteType<int>(char **param_1,int *param_2,int param_3)
 
 // 82360468  WriteType<float>  (client/gamerprofile.cpp:628)
 
-void WriteType<float>(char **param_1,int *param_2,float param_3)
+void WriteType<float>(double param_1,int *param_2,int *param_3)
 
 {
   float fStack00000024;
   
-  fStack00000024 = param_3;
-  if (*param_2 < 4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x275
-                    ,0,"%s");
+  fStack00000024 = (float)param_1;
+  if (*param_3 < 4) {
+    MyAssertHandler(0xffffffff82039730,0x275,0,0xffffffff82000f98,0xffffffff8203abb0);
   }
-  Com_Memcpy(*param_1,&stack0x00000024,4);
-  *param_1 = *param_1 + 4;
-  *param_2 = *param_2 + -4;
+  Com_Memcpy(*param_2,&stack0x00000024,4);
+  *param_2 = *param_2 + 4;
+  *param_3 = *param_3 + -4;
   return;
 }
 
 
 // 8235B380  KeyPairTypeIsValidForRead  (client/gamerprofile.cpp:646)
 
-bool KeyPairTypeIsValidForRead(GamerProfileDataType param_1)
+undefined8 KeyPairTypeIsValidForRead(int param_1)
 
 {
-  if ((0 < (int)param_1) && ((int)param_1 < 8)) {
-    return true;
+  if ((0 < param_1) && (param_1 < 8)) {
+    return 1;
   }
-  return false;
+  return 0;
 }
 
 
 // 8235B3A0  KeyPairStringValuesAreValid  (client/gamerprofile.cpp:669)
 
-bool KeyPairStringValuesAreValid(int param_1,int param_2)
+ulonglong KeyPairStringValuesAreValid(longlong param_1,longlong param_2)
 
 {
-  if ((-1 < param_1) && (0 < param_2)) {
-    return (bool)((char)((~((longlong)param_1 + (longlong)param_2) & 0xffffffffU) >> 0x1f) +
-                  (0x276U < (ulonglong)((longlong)param_1 + (longlong)param_2)) & 1);
+  if ((-1 < (int)param_1) && (0 < (int)param_2)) {
+    return ((~(param_1 + param_2) & 0xffffffffU) >> 0x1f) +
+           (ulonglong)(0x276 < (ulonglong)(param_1 + param_2)) & 1;
   }
-  return false;
+  return 0;
 }
 
 
 // 82360500  ReadKeyPairValueAfterIndex  (client/gamerprofile.cpp:682)
 
-bool ReadKeyPairValueAfterIndex
-               (char **param_1,int *param_2,GamerSettingKeyPair *param_3,char *param_4)
+void ReadKeyPairValueAfterIndex
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,longlong param_4)
 
 {
-  uint uVar1;
-  char **ppcVar2;
-  byte bVar7;
-  undefined1 uVar8;
-  int iVar3;
-  short sVar5;
-  short sVar6;
-  bool bVar9;
-  char *pcVar4;
+  short sVar1;
+  uint uVar2;
+  bool bVar3;
+  undefined8 uVar4;
+  byte bVar8;
+  undefined4 uVar5;
+  undefined2 uVar6;
+  short sVar7;
+  char cVar9;
   byte *pbVar10;
   ulonglong uVar11;
+  char *pcVar14;
   longlong lVar12;
   longlong lVar13;
-  float fVar14;
+  double dVar15;
   
-  lVar13 = (longlong)(int)param_4;
-  uVar11 = (ulonglong)(int)param_3;
-  ppcVar2 = (char **)__savegprlr_27(param_1);
-  if ((uVar11 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x2ab
-                    ,0,"%s");
+  uVar4 = __savegprlr_27();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x2ab,0,0xffffffff82000f98,0xffffffff82039918);
   }
-  bVar7 = ReadType<unsigned_char>(ppcVar2,param_2);
-  pbVar10 = (byte *)uVar11;
-  *pbVar10 = bVar7;
-  if (*param_2 != 0) {
-    uVar1 = (uint)bVar7;
-    if ((bVar7 == 0) || (bVar9 = true, 7 < bVar7)) {
-      bVar9 = false;
+  bVar8 = ReadType<unsigned_char>(uVar4,param_2);
+  pbVar10 = (byte *)param_3;
+  *pbVar10 = bVar8;
+  if (*(int *)param_2 != 0) {
+    uVar2 = (uint)bVar8;
+    if ((bVar8 == 0) || (bVar3 = true, 7 < bVar8)) {
+      bVar3 = false;
     }
-    if (bVar9) {
-      if (6 < uVar1 - 1) {
-        if (alwaysfails == 0) {
-          pcVar4 = va("Unhandled type \'%i\'.");
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp"
-                          ,0x2e9,0,pcVar4);
+    if (bVar3) {
+      if (6 < uVar2 - 1) {
+        if (DAT_84013128 == 0) {
+          uVar4 = va(0xffffffff8203abd0);
+          MyAssertHandler(0xffffffff82039730,0x2e9,0,uVar4);
         }
 LAB_8236084c:
-        uVar8 = __restgprlr_27(1);
-        return (bool)uVar8;
+        __restgprlr_27(1);
+        return;
       }
-      if (uVar1 == 2) {
-        bVar9 = ReadType<bool>(ppcVar2,param_2);
-        pbVar10[4] = bVar9;
-        uVar8 = __restgprlr_27(1);
-        return (bool)uVar8;
+      if (uVar2 == 2) {
+        bVar8 = ReadType<bool>(uVar4,param_2);
+        pbVar10[4] = bVar8;
+        __restgprlr_27(1);
+        return;
       }
-      if (uVar1 == 3) {
-        sVar5 = ReadType<short>(ppcVar2,param_2);
-        *(short *)(pbVar10 + 4) = sVar5;
-        uVar8 = __restgprlr_27(1);
-        return (bool)uVar8;
+      if (uVar2 == 3) {
+        uVar6 = ReadType<short>(uVar4,param_2);
+        *(undefined2 *)(pbVar10 + 4) = uVar6;
+        __restgprlr_27(1);
+        return;
       }
-      if (uVar1 == 4) {
-        iVar3 = ReadType<int>(ppcVar2,param_2);
-        *(int *)(pbVar10 + 4) = iVar3;
-        uVar8 = __restgprlr_27(1);
-        return (bool)uVar8;
+      if (uVar2 == 4) {
+        uVar5 = ReadType<int>(uVar4,param_2);
+        *(undefined4 *)(pbVar10 + 4) = uVar5;
+        __restgprlr_27(1);
+        return;
       }
-      if (uVar1 == 5) {
-        fVar14 = ReadType<float>(ppcVar2,param_2);
-        *(float *)(pbVar10 + 4) = fVar14;
-        uVar8 = __restgprlr_27(1);
-        return (bool)uVar8;
+      if (uVar2 == 5) {
+        dVar15 = (double)ReadType<float>(uVar4,param_2);
+        *(float *)(pbVar10 + 4) = (float)dVar15;
+        __restgprlr_27(1);
+        return;
       }
-      if (uVar1 == 6) {
-        sVar5 = ReadType<short>(ppcVar2,param_2);
-        *(short *)(pbVar10 + 4) = sVar5;
-        sVar6 = ReadType<short>(ppcVar2,param_2);
-        sVar5 = *(short *)(pbVar10 + 4);
-        *(short *)(pbVar10 + 6) = sVar6;
-        if (sVar5 < 0) {
+      if (uVar2 == 6) {
+        uVar6 = ReadType<short>(uVar4,param_2);
+        *(undefined2 *)(pbVar10 + 4) = uVar6;
+        sVar7 = ReadType<short>(uVar4,param_2);
+        sVar1 = *(short *)(pbVar10 + 4);
+        *(short *)(pbVar10 + 6) = sVar7;
+        if (sVar1 < 0) {
           uVar11 = 0;
         }
-        else if (sVar6 < 1) {
+        else if (sVar7 < 1) {
           uVar11 = 0;
         }
         else {
-          uVar11 = (longlong)sVar5 + (longlong)sVar6;
+          uVar11 = (longlong)sVar1 + (longlong)sVar7;
           uVar11 = ((~uVar11 & 0xffffffff) >> 0x1f) + (ulonglong)(0x276 < uVar11) & 1;
         }
         if (uVar11 != 0) {
-          lVar13 = sVar5 + lVar13;
-          *(char *)lVar13 = '\0';
-          bVar9 = GamerProfile_ReadString
-                            ((char *)lVar13,(int)*(short *)(pbVar10 + 6),ppcVar2,param_2);
-          lVar12 = lVar13;
-          if (bVar9) {
+          param_4 = sVar1 + param_4;
+          *(undefined1 *)param_4 = 0;
+          cVar9 = GamerProfile_ReadString(param_4,*(undefined2 *)(pbVar10 + 6),uVar4,param_2);
+          lVar12 = param_4;
+          if (cVar9 != '\0') {
             do {
-              pcVar4 = (char *)lVar12;
+              pcVar14 = (char *)lVar12;
               lVar12 = lVar12 + 1;
-            } while (*pcVar4 != '\0');
+            } while (*pcVar14 != '\0');
+            lVar13 = param_4;
             if (((longlong)*(short *)(pbVar10 + 6) & 0xffffffffU) <
-                (((lVar12 - lVar13) - 1U & 0xffffffff) + 1 & 0xffffffff)) {
+                (((lVar12 - param_4) - 1U & 0xffffffff) + 1 & 0xffffffff)) {
               do {
-                pcVar4 = (char *)lVar13;
+                pcVar14 = (char *)lVar13;
                 lVar13 = lVar13 + 1;
-              } while (*pcVar4 != '\0');
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp"
-                              ,0x2d5,0,
-                              "(uint)kp->u.stringData.maxSize >= (I_strlen( destPos ) + 1)\n\t%i, %i"
-                             );
-              uVar8 = __restgprlr_27(1);
-              return (bool)uVar8;
+              } while (*pcVar14 != '\0');
+              MyAssertHandler(0xffffffff82039730,0x2d5,0,0xffffffff8203abe8,
+                              (longlong)*(short *)(pbVar10 + 6),
+                              ((lVar13 - param_4) - 1U & 0xffffffff) + 1);
+              __restgprlr_27(1);
+              return;
             }
             goto LAB_8236084c;
           }
         }
       }
       else {
-        if (uVar1 == 1) {
-          bVar7 = ReadType<unsigned_char>(ppcVar2,param_2);
-          pbVar10[4] = bVar7;
-          uVar8 = __restgprlr_27(1);
-          return (bool)uVar8;
+        if (uVar2 == 1) {
+          bVar8 = ReadType<unsigned_char>(uVar4,param_2);
+          pbVar10[4] = bVar8;
+          __restgprlr_27(1);
+          return;
         }
-        sVar5 = ReadType<short>(ppcVar2,param_2);
-        *(short *)(pbVar10 + 4) = sVar5;
-        sVar6 = ReadType<short>(ppcVar2,param_2);
-        sVar5 = *(short *)(pbVar10 + 4);
-        *(short *)(pbVar10 + 6) = sVar6;
-        if (sVar5 < 0) {
+        uVar6 = ReadType<short>(uVar4,param_2);
+        *(undefined2 *)(pbVar10 + 4) = uVar6;
+        sVar7 = ReadType<short>(uVar4,param_2);
+        sVar1 = *(short *)(pbVar10 + 4);
+        *(short *)(pbVar10 + 6) = sVar7;
+        if (sVar1 < 0) {
           uVar11 = 0;
         }
-        else if (sVar6 < 1) {
+        else if (sVar7 < 1) {
           uVar11 = 0;
         }
         else {
-          uVar11 = ((~((longlong)sVar5 + (longlong)sVar6) & 0xffffffffU) >> 0x1f) +
-                   (ulonglong)(0x276 < (ulonglong)((longlong)sVar5 + (longlong)sVar6)) & 1;
+          uVar11 = (longlong)sVar1 + (longlong)sVar7;
+          uVar11 = ((~uVar11 & 0xffffffff) >> 0x1f) + (ulonglong)(0x276 < uVar11) & 1;
         }
         if (uVar11 != 0) {
-          memset();
-          bVar9 = GamerProfile_ReadBitfield
-                            ((char *)((int)sVar5 + (int)lVar13),(int)*(short *)(pbVar10 + 6),ppcVar2
-                             ,param_2);
-          if (bVar9) goto LAB_8236084c;
+          param_4 = sVar1 + param_4;
+          memset((void *)param_4,0,(int)sVar7);
+          cVar9 = GamerProfile_ReadBitfield(param_4,*(undefined2 *)(pbVar10 + 6),uVar4,param_2);
+          if (cVar9 != '\0') goto LAB_8236084c;
         }
       }
     }
   }
-  uVar8 = __restgprlr_27(0);
-  return (bool)uVar8;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 8235B3D8  GetKeyPairString  (client/gamerprofile.cpp:754)
 
-char * GetKeyPairString(GamerSettingKeyPair *param_1,char *param_2)
+void GetKeyPairString(undefined8 param_1,ulonglong param_2)
 
 {
   short sVar1;
-  short sVar2;
-  char *pcVar3;
+  char *pcVar2;
+  ulonglong uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
+  longlong lVar5;
   longlong lVar6;
   longlong lVar7;
-  longlong lVar8;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_28(param_1);
-  if (pcVar3 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x2f5
-                    ,0,"%s");
+  pcVar2 = (char *)__savegprlr_28();
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82039730,0x2f5,0,0xffffffff82000f98,0xffffffff82039918);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x2f6
-                    ,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x2f6,0,0xffffffff82000f98,0xffffffff82039904);
   }
-  if (*pcVar3 == '\x06') {
-    sVar1 = *(short *)(pcVar3 + 4);
-    sVar2 = *(short *)(pcVar3 + 6);
+  if (*pcVar2 == '\x06') {
+    sVar1 = *(short *)(pcVar2 + 4);
+    uVar3 = (ulonglong)*(short *)(pcVar2 + 6);
     if (sVar1 < 0) {
-      uVar5 = 0;
+      uVar4 = 0;
     }
-    else if (sVar2 < 1) {
-      uVar5 = 0;
+    else if (*(short *)(pcVar2 + 6) < 1) {
+      uVar4 = 0;
     }
     else {
-      uVar5 = (longlong)sVar1 + (longlong)sVar2;
-      uVar5 = ((~uVar5 & 0xffffffff) >> 0x1f) + (ulonglong)(0x276 < uVar5) & 1;
+      uVar4 = (longlong)sVar1 + uVar3;
+      uVar4 = ((~uVar4 & 0xffffffff) >> 0x1f) + (ulonglong)(0x276 < uVar4) & 1;
     }
-    if (uVar5 != 0) {
-      lVar8 = (longlong)sVar1 + uVar4;
-      lVar6 = lVar8;
+    if (uVar4 != 0) {
+      lVar7 = (longlong)sVar1 + param_2;
+      lVar5 = lVar7;
       do {
-        pcVar3 = (char *)lVar6;
-        lVar6 = lVar6 + 1;
-      } while (*pcVar3 != '\0');
-      lVar7 = lVar8;
-      if (((longlong)sVar2 & 0xffffffffU) < (((lVar6 - lVar8) - 1U & 0xffffffff) + 1 & 0xffffffff))
-      {
+        pcVar2 = (char *)lVar5;
+        lVar5 = lVar5 + 1;
+      } while (*pcVar2 != '\0');
+      lVar6 = lVar7;
+      if ((uVar3 & 0xffffffff) < (((lVar5 - lVar7) - 1U & 0xffffffff) + 1 & 0xffffffff)) {
         do {
-          pcVar3 = (char *)lVar7;
-          lVar7 = lVar7 + 1;
-        } while (*pcVar3 != '\0');
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                        0x2fe,0,
-                        "(uint)kp->u.stringData.maxSize >= (I_strlen( result ) + 1)\n\t%i, %i");
+          pcVar2 = (char *)lVar6;
+          lVar6 = lVar6 + 1;
+        } while (*pcVar2 != '\0');
+        MyAssertHandler(0xffffffff82039730,0x2fe,0,0xffffffff820398c0,uVar3,
+                        ((lVar6 - lVar7) - 1U & 0xffffffff) + 1);
       }
-      pcVar3 = (char *)__restgprlr_28(lVar8);
-      return pcVar3;
+      __restgprlr_28(lVar7);
+      return;
     }
   }
-  pcVar3 = (char *)__restgprlr_28(0xffffffff820068af);
-  return pcVar3;
+  __restgprlr_28(0xffffffff820068af);
+  return;
 }
 
 
 // 8235B530  GetKeyPairBitfield  (client/gamerprofile.cpp:772)
 
-char * GetKeyPairBitfield(GamerSettingKeyPair *param_1,char *param_2)
+void GetKeyPairBitfield(undefined8 param_1,ulonglong param_2)
 
 {
   short sVar1;
   char *pcVar3;
   longlong lVar2;
   ulonglong uVar4;
-  ulonglong uVar5;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_28(param_1);
+  pcVar3 = (char *)__savegprlr_28();
   if (pcVar3 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x307
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0x307,0,0xffffffff82000f98,0xffffffff82039918);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x308
-                    ,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x308,0,0xffffffff82000f98,0xffffffff82039904);
   }
   if (*pcVar3 != '\a') {
-    pcVar3 = (char *)__restgprlr_28(0);
-    return pcVar3;
+    __restgprlr_28(0);
+    return;
   }
   sVar1 = *(short *)(pcVar3 + 4);
   if (sVar1 < 0) {
-    uVar5 = 0;
+    uVar4 = 0;
   }
   else if (*(short *)(pcVar3 + 6) < 1) {
-    uVar5 = 0;
+    uVar4 = 0;
   }
   else {
-    uVar5 = (longlong)sVar1 + (longlong)*(short *)(pcVar3 + 6);
-    uVar5 = ((~uVar5 & 0xffffffff) >> 0x1f) + (ulonglong)(0x276 < uVar5) & 1;
+    uVar4 = (longlong)sVar1 + (longlong)*(short *)(pcVar3 + 6);
+    uVar4 = ((~uVar4 & 0xffffffff) >> 0x1f) + (ulonglong)(0x276 < uVar4) & 1;
   }
   lVar2 = 0;
-  if (uVar5 != 0) {
-    lVar2 = (longlong)sVar1 + uVar4;
+  if (uVar4 != 0) {
+    lVar2 = (longlong)sVar1 + param_2;
   }
-  pcVar3 = (char *)__restgprlr_28(lVar2);
-  return pcVar3;
+  __restgprlr_28(lVar2);
+  return;
 }
 
 
 // 82360858  WriteKeyPair  (client/gamerprofile.cpp:789)
 
-void WriteKeyPair(char **param_1,int *param_2,GamerSettingKeyPair *param_3,int param_4,char *param_5
-                 )
+void WriteKeyPair(undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+                 undefined8 param_5)
 
 {
   byte bVar1;
-  short sVar2;
-  char **ppcVar3;
-  char *pcVar4;
-  ulonglong uVar5;
-  GamerSettingKeyPair *pGVar6;
-  uchar uVar7;
+  undefined2 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  byte *pbVar5;
   
-  uVar7 = (uchar)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  ppcVar3 = (char **)__savegprlr_26(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x316
-                    ,0,"%s");
+  uVar3 = __savegprlr_26();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x316,0,0xffffffff82000f98,0xffffffff82039918);
   }
-  pGVar6 = (GamerSettingKeyPair *)uVar5;
-  if (pGVar6->type != '\0') {
-    WriteType<unsigned_char>(ppcVar3,param_2,uVar7);
-    WriteType<unsigned_char>(ppcVar3,param_2,pGVar6->type);
-    bVar1 = pGVar6->type;
+  pbVar5 = (byte *)param_3;
+  if (*pbVar5 != 0) {
+    WriteType<unsigned_char>(uVar3,param_2,param_4 & 0xff);
+    WriteType<unsigned_char>(uVar3,param_2,*pbVar5);
+    bVar1 = *pbVar5;
     if (bVar1 < 8) {
       if (bVar1 != 0) {
         if (bVar1 == 1) {
-          WriteType<unsigned_char>(ppcVar3,param_2,(pGVar6->u).byteVal);
+          WriteType<unsigned_char>(uVar3,param_2,pbVar5[4]);
           __restgprlr_26();
           return;
         }
         if (bVar1 == 2) {
-          WriteType<bool>(ppcVar3,param_2,(pGVar6->u).boolVal);
+          WriteType<bool>(uVar3,param_2,pbVar5[4]);
           __restgprlr_26();
           return;
         }
         if (bVar1 == 3) {
-          WriteType<short>(ppcVar3,param_2,(pGVar6->u).shortVal);
+          WriteType<short>(uVar3,param_2,*(undefined2 *)(pbVar5 + 4));
           __restgprlr_26();
           return;
         }
         if (bVar1 != 4) {
           if (bVar1 == 5) {
-            WriteType<float>(ppcVar3,param_2,(pGVar6->u).floatVal);
+            WriteType<float>((double)*(float *)(pbVar5 + 4),uVar3,param_2);
             __restgprlr_26();
             return;
           }
           if (bVar1 != 6) {
-            WriteType<short>(ppcVar3,param_2,(pGVar6->u).shortVal);
-            WriteType<short>(ppcVar3,param_2,(pGVar6->u).stringData.maxSize);
-            sVar2 = (pGVar6->u).stringData.maxSize;
-            pcVar4 = GetKeyPairBitfield(pGVar6,param_5);
-            GamerProfile_WriteBitfield(pcVar4,ppcVar3,(int)sVar2,param_2);
+            WriteType<short>(uVar3,param_2,*(undefined2 *)(pbVar5 + 4));
+            WriteType<short>(uVar3,param_2,*(undefined2 *)(pbVar5 + 6));
+            uVar2 = *(undefined2 *)(pbVar5 + 6);
+            uVar4 = GetKeyPairBitfield(param_3,param_5);
+            GamerProfile_WriteBitfield(uVar4,uVar3,uVar2,param_2);
             __restgprlr_26();
             return;
           }
-          WriteType<short>(ppcVar3,param_2,(pGVar6->u).shortVal);
-          WriteType<short>(ppcVar3,param_2,(pGVar6->u).stringData.maxSize);
-          pcVar4 = GetKeyPairString(pGVar6,param_5);
-          GamerProfile_WriteString(pcVar4,ppcVar3,param_2);
+          WriteType<short>(uVar3,param_2,*(undefined2 *)(pbVar5 + 4));
+          WriteType<short>(uVar3,param_2,*(undefined2 *)(pbVar5 + 6));
+          uVar4 = GetKeyPairString(param_3,param_5);
+          GamerProfile_WriteString(uVar4,uVar3,param_2);
           __restgprlr_26();
           return;
         }
-        WriteType<int>(ppcVar3,param_2,(pGVar6->u).intVal);
+        WriteType<int>(uVar3,param_2,*(undefined4 *)(pbVar5 + 4));
         __restgprlr_26();
         return;
       }
     }
-    else if (alwaysfails == 0) {
-      pcVar4 = va("Unhandled type \'%i\'.");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                      0x33c,0,pcVar4);
+    else if (DAT_84013128 == 0) {
+      uVar3 = va(0xffffffff8203abd0);
+      MyAssertHandler(0xffffffff82039730,0x33c,0,uVar3);
     }
   }
   __restgprlr_26();
@@ -890,112 +851,104 @@ void WriteKeyPair(char **param_1,int *param_2,GamerSettingKeyPair *param_3,int p
 
 // 82360A40  Save_BinaryFromKeyPairs  (client/gamerprofile.cpp:837)
 
-uint Save_BinaryFromKeyPairs(GamerSettingKeyPair *param_1,char *param_2,char *param_3,int param_4)
+void Save_BinaryFromKeyPairs
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,longlong param_4)
 
 {
-  GamerSettingKeyPair *pGVar1;
-  uint uVar2;
-  longlong lVar3;
-  int iVar4;
-  char *pcStack00000024;
+  longlong lVar1;
+  longlong lVar2;
+  undefined4 in_stack_00000024;
   uint local_30 [12];
   
-  lVar3 = (longlong)param_4;
-  pcStack00000024 = param_3;
-  pGVar1 = (GamerSettingKeyPair *)__savegprlr_28(param_1);
-  local_30[0] = (uint)lVar3;
+  lVar1 = __savegprlr_28();
+  local_30[0] = (uint)param_4;
+  in_stack_00000024 = param_3;
   if ((int)local_30[0] < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x34b
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0x34b,0,0xffffffff82000f98,0xffffffff8203ac2c);
   }
-  WriteType<unsigned_char>(&stack0x00000024,(int *)local_30,'S');
-  WriteType<unsigned_char>(&stack0x00000024,(int *)local_30,'E');
-  WriteType<unsigned_char>(&stack0x00000024,(int *)local_30,'M');
-  WriteType<unsigned_char>(&stack0x00000024,(int *)local_30,'V');
-  WriteType<int>(&stack0x00000024,(int *)local_30,4);
-  WriteType<int>(&stack0x00000024,(int *)local_30,1);
-  iVar4 = 0;
+  WriteType<unsigned_char>(&stack0x00000024,local_30,0x53);
+  WriteType<unsigned_char>(&stack0x00000024,local_30,0x45);
+  WriteType<unsigned_char>(&stack0x00000024,local_30,0x4d);
+  WriteType<unsigned_char>(&stack0x00000024,local_30,0x56);
+  WriteType<int>(&stack0x00000024,local_30,4);
+  WriteType<int>(&stack0x00000024,local_30,1);
+  lVar2 = 0;
   do {
-    WriteKeyPair(&stack0x00000024,(int *)local_30,pGVar1,iVar4,param_2);
-    iVar4 = iVar4 + 1;
-    pGVar1 = pGVar1 + 1;
-  } while (iVar4 < 0x3a);
-  uVar2 = __restgprlr_28(lVar3 - (ulonglong)local_30[0]);
-  return uVar2;
+    WriteKeyPair(&stack0x00000024,local_30,lVar1,lVar2,param_2);
+    lVar2 = lVar2 + 1;
+    lVar1 = lVar1 + 8;
+  } while ((int)lVar2 < 0x3a);
+  __restgprlr_28(param_4 - (ulonglong)local_30[0]);
+  return;
 }
 
 
 // 82360B28  Load_KeyPairsFromBinary  (client/gamerprofile.cpp:861)
 
-bool Load_KeyPairsFromBinary(char *param_1,int param_2,GamerSettingKeyPair *param_3,char *param_4)
+void Load_KeyPairsFromBinary(undefined8 param_1,int param_2,longlong param_3,undefined8 param_4)
 
 {
   int iVar1;
-  uchar uVar3;
-  int iVar2;
-  undefined1 uVar4;
-  byte bVar5;
-  bool bVar6;
-  char *pcStack00000014;
+  char cVar3;
+  undefined8 uVar2;
+  byte bVar4;
+  int iVar5;
+  undefined4 in_stack_00000014;
   int local_30 [12];
   
+  in_stack_00000014 = __savegprlr_28();
+  iVar5 = 0;
   local_30[0] = param_2;
-  pcStack00000014 = (char *)__savegprlr_28(param_1);
-  iVar2 = 0;
   do {
-    uVar3 = ReadType<unsigned_char>(&stack0x00000014,local_30);
-    if (uVar3 != "SEMV"[iVar2]) goto LAB_82360ba4;
-    iVar2 = iVar2 + 1;
-  } while (iVar2 < 4);
-  iVar2 = ReadType<int>(&stack0x00000014,local_30);
-  if (iVar2 == 4) {
-    ReadType<int>(&stack0x00000014,local_30);
-    iVar2 = -1;
-    iVar1 = local_30[0];
+    cVar3 = ReadType<unsigned_char>(&stack0x00000014,local_30);
+    if (cVar3 != (&DAT_82038f24)[iVar5]) goto LAB_82360ba4;
+    iVar5 = iVar5 + 1;
+  } while (iVar5 < 4);
+  uVar2 = ReadType<int>(&stack0x00000014,local_30);
+  if ((int)uVar2 == 4) {
+    ReadType<int>(&stack0x00000014,local_30,uVar2);
+    iVar5 = -1;
     do {
-      local_30[0] = iVar1;
-      if (iVar1 < 1) {
+      iVar1 = local_30[0];
+      if (local_30[0] < 1) {
 LAB_82360c34:
-        uVar4 = __restgprlr_28(1);
-        return (bool)uVar4;
+        __restgprlr_28(1);
+        return;
       }
-      if (iVar2 == iVar1) {
-        Com_PrintError(0xe,
-                       "GamerProfile - Loop inside of Load_KeyPairsFromBinary() seems to be frozen.  %i bytes remain, but the loop isn\'t making progress.\n"
-                      );
-        uVar4 = __restgprlr_28(0);
-        return (bool)uVar4;
+      if (iVar5 == local_30[0]) {
+        Com_PrintError(0xe,0xffffffff8203ac48);
+        __restgprlr_28(0);
+        return;
       }
-      bVar5 = ReadType<unsigned_char>(&stack0x00000014,local_30);
+      bVar4 = ReadType<unsigned_char>(&stack0x00000014,local_30);
       if (local_30[0] == 0) goto LAB_82360c34;
-    } while ((bVar5 < 0x3a) &&
-            (bVar6 = ReadKeyPairValueAfterIndex(&stack0x00000014,local_30,param_3 + bVar5,param_4),
-            iVar2 = iVar1, iVar1 = local_30[0], bVar6));
+    } while ((bVar4 < 0x3a) &&
+            (cVar3 = ReadKeyPairValueAfterIndex
+                               (&stack0x00000014,local_30,(ulonglong)bVar4 * 8 + param_3,param_4),
+            iVar5 = iVar1, cVar3 != '\0'));
   }
   else {
-    Com_PrintWarning(0xe,
-                     "GamerProfile - Attempting to load a profile of version %i, but version %i is required.  Canceling load.\n"
-                    );
+    Com_PrintWarning(0xe,0xffffffff8203acd0,uVar2,4);
   }
 LAB_82360ba4:
-  uVar4 = __restgprlr_28(0);
-  return (bool)uVar4;
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 8235B620  KeyPairsResetAll  (client/gamerprofile.cpp:1239)
 
-void KeyPairsResetAll(int param_1)
+void KeyPairsResetAll(longlong param_1)
 
 {
-  if ((param_1 < 0) || (4 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x4da
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  if (((int)param_1 < 0) || (4 < (int)param_1)) {
+    MyAssertHandler(0xffffffff82039730,0x4da,0,0xffffffff8203991c,param_1,0,4);
   }
-  Com_Memset(gamerSettings[param_1].commonKeyPairs,0,0x1d0);
-  Com_Memset(gamerSettings[param_1].commonKeyPairsStringPool,0,0x277);
-  Com_Memset(gamerSettings[param_1].exeKeyPairs,0,0x1d0);
-  Com_Memset(gamerSettings[param_1].exeKeyPairsStringPool,0,0x277);
+  param_1 = param_1 * 0xca8;
+  Com_Memset(param_1 + -0x7d4bbf68,0,0x1d0);
+  Com_Memset(param_1 + -0x7d4bbd98,0,0x277);
+  Com_Memset(param_1 + -0x7d4bba08,0,0x1d0);
+  Com_Memset(param_1 + -0x7d4bb838,0,0x277);
   return;
 }
 
@@ -1003,8 +956,8 @@ void KeyPairsResetAll(int param_1)
 // 8235B6D0  Save_KeyPairsFromProfile  (client/gamerprofile.cpp:1253)
 
 void Save_KeyPairsFromProfile
-               (int param_1,ProfileKeyPairMapping *param_2,int param_3,GamerSettingKeyPair *param_4,
-               char *param_5)
+               (undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4,ulonglong param_5
+               )
 
 {
   short sVar1;
@@ -1013,48 +966,45 @@ void Save_KeyPairsFromProfile
   int *piVar4;
   short *psVar5;
   uint uVar6;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  void *pvVar8;
+  void *pvVar9;
+  undefined8 uVar7;
   ulonglong uVar10;
-  int iVar11;
+  longlong lVar11;
   longlong lVar12;
   longlong lVar13;
   
-  uVar9 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_2;
-  iVar7 = __savegprlr_17(param_1);
-  if ((uVar10 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x4ea
-                    ,0,"%s");
+  pvVar8 = (void *)__savegprlr_17();
+  pvVar9 = pvVar8;
+  if ((param_2 & 0xffffffff) == 0) {
+    pvVar9 = (void *)MyAssertHandler(0xffffffff82039730,0x4ea,0,0xffffffff82000f98,
+                                     0xffffffff82039ad4);
   }
-  if ((uVar8 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x4eb
-                    ,0,"%s");
+  if ((param_4 & 0xffffffff) == 0) {
+    pvVar9 = (void *)MyAssertHandler(0xffffffff82039730,0x4eb,0,0xffffffff82000f98,
+                                     0xffffffff82039ac8);
   }
-  if ((uVar9 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x4ec
-                    ,0,"%s");
+  if ((param_5 & 0xffffffff) == 0) {
+    pvVar9 = (void *)MyAssertHandler(0xffffffff82039730,0x4ec,0,0xffffffff82000f98,
+                                     0xffffffff82039904);
   }
   if (0x3a < param_3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x4ed
-                    ,0,"%s");
+    pvVar9 = (void *)MyAssertHandler(0xffffffff82039730,0x4ed,0,0xffffffff82000f98,
+                                     0xffffffff82039aa4);
   }
-  if ((iVar7 < 0) || (4 < iVar7)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x4ef
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  if (((int)pvVar8 < 0) || (4 < (int)pvVar8)) {
+    pvVar9 = (void *)MyAssertHandler(0xffffffff82039730,0x4ef,0,0xffffffff8203991c,pvVar8,0,4);
   }
-  iVar11 = 0;
+  lVar11 = 0;
   if (0 < param_3) {
-    lVar13 = uVar8 + 4;
-    lVar12 = uVar10 + 4;
+    lVar13 = param_4 + 4;
+    lVar12 = param_2 + 4;
     do {
       piVar4 = (int *)lVar12;
-      if (iVar11 != piVar4[-1]) {
-        va("Keymap Entry %i has a sanity-check index of %i.");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                        0x4fb,0,"%s\n\t%s");
+      if ((int)lVar11 != piVar4[-1]) {
+        uVar7 = va(0xffffffff8203995c,lVar11);
+        pvVar9 = (void *)MyAssertHandler(0xffffffff82039730,0x4fb,0,0xffffffff820011f4,
+                                         0xffffffff8203998c,uVar7);
       }
       uVar3 = piVar4[1];
       if (uVar3 != 0) {
@@ -1064,21 +1014,16 @@ void Save_KeyPairsFromProfile
         if (uVar6 - 1 < 7) {
           if (uVar6 == 2) {
 LAB_8235b898:
-            *(char *)psVar5 = gamerSettings[iVar7].commonConfig.gpadButtonsConfig[*piVar4 + -0x49];
+            *(undefined *)psVar5 = (&DAT_82b43d98)[*piVar4 + (int)pvVar8 * 0xca8];
           }
           else if (uVar6 == 3) {
-            *psVar5 = *(short *)(gamerSettings[iVar7].commonConfig.gpadButtonsConfig +
-                                *piVar4 + -0x49);
+            *psVar5 = *(short *)(&DAT_82b43d98 + *piVar4 + (int)pvVar8 * 0xca8);
           }
           else if (uVar6 == 4) {
-            *(undefined4 *)psVar5 =
-                 *(undefined4 *)
-                  (gamerSettings[iVar7].commonConfig.gpadButtonsConfig + *piVar4 + -0x49);
+            *(undefined4 *)psVar5 = *(undefined4 *)(&DAT_82b43d98 + *piVar4 + (int)pvVar8 * 0xca8);
           }
           else if (uVar6 == 5) {
-            *(undefined4 *)psVar5 =
-                 *(undefined4 *)
-                  (gamerSettings[iVar7].commonConfig.gpadButtonsConfig + *piVar4 + -0x49);
+            *(undefined4 *)psVar5 = *(undefined4 *)(&DAT_82b43d98 + *piVar4 + (int)pvVar8 * 0xca8);
           }
           else if (uVar6 == 6) {
             sVar1 = *(short *)(piVar4 + 2);
@@ -1096,13 +1041,12 @@ LAB_8235b898:
                        (ulonglong)(0x276 < (ulonglong)((longlong)sVar1 + (longlong)sVar2)) & 1;
             }
             if (uVar10 == 0) {
-              va("Keymap #%i has invalid string values %i & %i.\n");
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp"
-                              ,0x51d,0,"%s\n\t%s");
+              uVar7 = va(0xffffffff820399b4,lVar11);
+              MyAssertHandler(0xffffffff82039730,0x51d,0,0xffffffff820011f4,0xffffffff820399e8,uVar7
+                             );
             }
-            I_strncpyz((char *)((int)*psVar5 + (int)uVar9),
-                       gamerSettings[iVar7].commonConfig.gpadButtonsConfig + *piVar4 + -0x49,
-                       (int)psVar5[1]);
+            pvVar9 = (void *)I_strncpyz((longlong)*psVar5 + param_5,
+                                        &DAT_82b43d98 + *piVar4 + (int)pvVar8 * 0xca8,psVar5[1]);
           }
           else {
             if (uVar6 == 1) goto LAB_8235b898;
@@ -1121,24 +1065,25 @@ LAB_8235b898:
                        (ulonglong)(0x276 < (ulonglong)((longlong)sVar1 + (longlong)sVar2)) & 1;
             }
             if (uVar10 == 0) {
-              va("Keymap #%i has invalid bitfield values %i & %i.\n");
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp"
-                              ,0x52b,0,"%s\n\t%s");
+              uVar7 = va(0xffffffff82039a44,lVar11);
+              MyAssertHandler(0xffffffff82039730,0x52b,0,0xffffffff820011f4,0xffffffff820399e8,uVar7
+                             );
             }
-            memcpy();
+            pvVar9 = memcpy((void *)((int)*psVar5 + (int)param_5),
+                            &DAT_82b43d98 + *piVar4 + (int)pvVar8 * 0xca8,(int)psVar5[1]);
           }
         }
         else {
           *(undefined1 *)(psVar5 + -2) = 0;
-          Com_PrintError(0xe,"Keymap entry #%i has unhandled type \'%i\'.\n");
+          pvVar9 = (void *)Com_PrintError(0xe,0xffffffff82039a78,lVar11,piVar4[1]);
         }
       }
-      iVar11 = iVar11 + 1;
+      lVar11 = lVar11 + 1;
       lVar12 = lVar12 + 0x10;
       lVar13 = lVar13 + 8;
-    } while (iVar11 < param_3);
+    } while ((int)lVar11 < param_3);
   }
-  __restgprlr_17();
+  __restgprlr_17(pvVar9);
   return;
 }
 
@@ -1146,328 +1091,299 @@ LAB_8235b898:
 // 8235BA70  Load_ProfileFromKeyPairs  (client/gamerprofile.cpp:1340)
 
 void Load_ProfileFromKeyPairs
-               (int param_1,ProfileKeyPairMapping *param_2,int param_3,GamerSettingKeyPair *param_4,
-               char *param_5)
+               (undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4,ulonglong param_5
+               )
 
 {
   byte bVar1;
   short *psVar2;
   short *psVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
+  longlong lVar4;
+  longlong lVar5;
+  undefined8 uVar6;
+  void *pvVar7;
+  ulonglong uVar8;
   longlong lVar9;
   longlong lVar10;
+  longlong lVar11;
+  longlong lVar12;
   
-  uVar6 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_17(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x541
-                    ,0,"%s");
+  lVar4 = __savegprlr_17();
+  lVar5 = lVar4;
+  if ((param_2 & 0xffffffff) == 0) {
+    lVar5 = MyAssertHandler(0xffffffff82039730,0x541,0,0xffffffff82000f98,0xffffffff82039ad4);
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x542
-                    ,0,"%s");
+  if ((param_4 & 0xffffffff) == 0) {
+    lVar5 = MyAssertHandler(0xffffffff82039730,0x542,0,0xffffffff82000f98,0xffffffff82039ac8);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x543
-                    ,0,"%s");
+  if ((param_5 & 0xffffffff) == 0) {
+    lVar5 = MyAssertHandler(0xffffffff82039730,0x543,0,0xffffffff82000f98,0xffffffff82039904);
   }
   if (0x3a < param_3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x544
-                    ,0,"%s");
+    lVar5 = MyAssertHandler(0xffffffff82039730,0x544,0,0xffffffff82000f98,0xffffffff82039aa4);
   }
-  if ((iVar4 < 0) || (4 < iVar4)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x546
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  if (((int)lVar4 < 0) || (4 < (int)lVar4)) {
+    lVar5 = MyAssertHandler(0xffffffff82039730,0x546,0,0xffffffff8203991c,lVar4,0,4);
   }
-  iVar8 = 0;
+  lVar10 = 0;
+  lVar9 = lVar4 * 0xca8 + -0x7d4bc268;
   if (0 < param_3) {
-    lVar10 = uVar7 + 0xe;
-    lVar9 = uVar5 + 4;
+    lVar12 = param_2 + 0xe;
+    lVar11 = param_4 + 4;
     do {
-      psVar2 = (short *)lVar10;
-      if (iVar8 != *(int *)(psVar2 + -7)) {
-        va("Keymap Entry %i has a sanity-check index of %i.");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                        0x552,0,"%s\n\t%s");
+      psVar2 = (short *)lVar12;
+      if ((int)lVar10 != *(int *)(psVar2 + -7)) {
+        uVar6 = va(0xffffffff8203995c,lVar10);
+        lVar5 = MyAssertHandler(0xffffffff82039730,0x552,0,0xffffffff820011f4,0xffffffff8203998c,
+                                uVar6);
       }
-      psVar3 = (short *)lVar9;
+      psVar3 = (short *)lVar11;
       bVar1 = *(byte *)(psVar3 + -2);
       if ((uint)bVar1 == *(uint *)(psVar2 + -3)) {
         if (bVar1 < 8) {
           if (bVar1 != 0) {
             if ((bVar1 == 1) || (bVar1 == 2)) {
-              Com_Memcpy(gamerSettings[iVar4].commonConfig.gpadButtonsConfig +
-                         *(int *)(psVar2 + -5) + -0x49,psVar3,1);
+              lVar5 = Com_Memcpy((ulonglong)*(uint *)(psVar2 + -5) + lVar9,lVar11,1);
             }
             else if (bVar1 == 3) {
-              Com_Memcpy(gamerSettings[iVar4].commonConfig.gpadButtonsConfig +
-                         *(int *)(psVar2 + -5) + -0x49,psVar3,2);
+              lVar5 = Com_Memcpy((ulonglong)*(uint *)(psVar2 + -5) + lVar9,lVar11,2);
             }
             else if ((bVar1 == 4) || (bVar1 == 5)) {
-              Com_Memcpy(gamerSettings[iVar4].commonConfig.gpadButtonsConfig +
-                         *(int *)(psVar2 + -5) + -0x49,psVar3,4);
+              lVar5 = Com_Memcpy((ulonglong)*(uint *)(psVar2 + -5) + lVar9,lVar11,4);
             }
             else if (bVar1 == 6) {
               if (psVar2[-1] < 0) {
-                uVar7 = 0;
+                uVar8 = 0;
               }
               else if (*psVar2 < 1) {
-                uVar7 = 0;
+                uVar8 = 0;
               }
               else {
-                uVar7 = (longlong)psVar2[-1] + (longlong)*psVar2;
-                uVar7 = ((~uVar7 & 0xffffffff) >> 0x1f) + (ulonglong)(0x276 < uVar7) & 1;
+                uVar8 = (longlong)psVar2[-1] + (longlong)*psVar2;
+                uVar8 = ((~uVar8 & 0xffffffff) >> 0x1f) + (ulonglong)(0x276 < uVar8) & 1;
               }
-              if (uVar7 == 0) {
-                va("Keymap #%i has invalid string values %i & %i.\n");
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp"
-                                ,0x570,0,"%s\n\t%s");
+              if (uVar8 == 0) {
+                uVar6 = va(0xffffffff820399b4,lVar10);
+                MyAssertHandler(0xffffffff82039730,0x570,0,0xffffffff820011f4,0xffffffff82039b50,
+                                uVar6);
               }
-              I_strncpyz(gamerSettings[iVar4].commonConfig.gpadButtonsConfig +
-                         *(int *)(psVar2 + -5) + -0x49,(char *)((int)*psVar3 + (int)uVar6),
-                         (int)*psVar2);
+              lVar5 = I_strncpyz((ulonglong)*(uint *)(psVar2 + -5) + lVar9,
+                                 (longlong)*psVar3 + param_5,*psVar2);
             }
             else {
               if (psVar2[-1] < 0) {
-                uVar7 = 0;
+                uVar8 = 0;
               }
               else if (*psVar2 < 1) {
-                uVar7 = 0;
+                uVar8 = 0;
               }
               else {
-                uVar7 = (longlong)psVar2[-1] + (longlong)*psVar2;
-                uVar7 = ((~uVar7 & 0xffffffff) >> 0x1f) + (ulonglong)(0x276 < uVar7) & 1;
+                uVar8 = (longlong)psVar2[-1] + (longlong)*psVar2;
+                uVar8 = ((~uVar8 & 0xffffffff) >> 0x1f) + (ulonglong)(0x276 < uVar8) & 1;
               }
-              if (uVar7 == 0) {
-                va("Keymap #%i has invalid string values %i & %i.\n");
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp"
-                                ,0x57c,0,"%s\n\t%s");
+              if (uVar8 == 0) {
+                uVar6 = va(0xffffffff820399b4,lVar10);
+                MyAssertHandler(0xffffffff82039730,0x57c,0,0xffffffff820011f4,0xffffffff82039b50,
+                                uVar6);
               }
-              memcpy();
+              pvVar7 = memcpy((void *)(*(int *)(psVar2 + -5) + (int)lVar9),
+                              (void *)((int)*psVar3 + (int)param_5),(int)*psVar2);
+              lVar5 = (longlong)(int)pvVar7;
             }
           }
         }
         else {
-          Com_PrintError(0xe,"Keymap Entry %i has an invalid type of \'%i\'.");
+          lVar5 = Com_PrintError(0xe,0xffffffff82039ba0,lVar10,bVar1);
         }
       }
       else {
-        Com_PrintError(0xe,
-                       "Error reading controller #%i\'s profile.  Keypair #%i has type %i different from the keymap entry\'s type %i.\n"
-                      );
+        lVar5 = Com_PrintError(0xe,0xffffffff82039ae0,lVar4,lVar10);
       }
-      iVar8 = iVar8 + 1;
-      lVar10 = lVar10 + 0x10;
-      lVar9 = lVar9 + 8;
-    } while (iVar8 < param_3);
+      lVar10 = lVar10 + 1;
+      lVar12 = lVar12 + 0x10;
+      lVar11 = lVar11 + 8;
+    } while ((int)lVar10 < param_3);
   }
-  __restgprlr_17();
+  __restgprlr_17(lVar5);
   return;
 }
 
 
 // 823618E0  GamerProfile_ParseBinaryExeProfile  (client/gamerprofile.cpp:1422)
 
-bool GamerProfile_ParseBinaryExeProfile(int param_1,char *param_2,int param_3)
+void GamerProfile_ParseBinaryExeProfile(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  bool bVar2;
-  undefined1 uVar3;
+  longlong lVar1;
+  char cVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  iVar1 = __savegprlr_29(param_1);
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x592
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  lVar1 = __savegprlr_29();
+  if (((int)lVar1 < 0) || (4 < (int)lVar1)) {
+    MyAssertHandler(0xffffffff82039730,0x592,0,0xffffffff8203991c,lVar1,0,4);
   }
-  bVar2 = Load_KeyPairsFromBinary
-                    (param_2,param_3,gamerSettings[iVar1].exeKeyPairs,
-                     gamerSettings[iVar1].exeKeyPairsStringPool);
-  if (!bVar2) {
-    Com_PrintError(0xe,
-                   "Error parsing binary \'Exe\' profile to keypairs for controller #%i.  Resetting profile.\n"
-                  );
-    KeyPairsResetAll(iVar1);
-    uVar3 = __restgprlr_29(0);
-    return (bool)uVar3;
+  lVar4 = lVar1 * 0xca8 + -0x7d4bb838;
+  lVar3 = lVar1 * 0xca8 + -0x7d4bba08;
+  cVar2 = Load_KeyPairsFromBinary(param_2,param_3,lVar3,lVar4);
+  if (cVar2 == '\0') {
+    Com_PrintError(0xe,0xffffffff8203af00,lVar1);
+    KeyPairsResetAll(lVar1);
+    __restgprlr_29(0);
+    return;
   }
-  Load_ProfileFromKeyPairs
-            (iVar1,g_profileKeyMap_Exe,0x14,gamerSettings[iVar1].exeKeyPairs,
-             gamerSettings[iVar1].exeKeyPairsStringPool);
-  GamerProfile_UpdateSystemVarsFromProfile(iVar1);
-  uVar3 = __restgprlr_29(1);
-  return (bool)uVar3;
+  Load_ProfileFromKeyPairs(lVar1,0xffffffff820395d8,0x14,lVar3,lVar4);
+  GamerProfile_UpdateSystemVarsFromProfile(lVar1);
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 823619C0  GamerProfile_ParseBinaryCommonProfile  (client/gamerprofile.cpp:1444)
 
-bool GamerProfile_ParseBinaryCommonProfile(int param_1,char *param_2,int param_3)
+void GamerProfile_ParseBinaryCommonProfile(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
-  uint uVar2;
-  bool bVar3;
-  undefined1 uVar4;
+  DWORD DVar2;
+  char cVar3;
+  int iVar4;
+  int iVar5;
   
-  iVar1 = __savegprlr_26(param_1);
+  iVar1 = __savegprlr_26();
   if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x5a8
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+    MyAssertHandler(0xffffffff82039730,0x5a8,0,0xffffffff8203991c,iVar1,0,4);
   }
-  uVar2 = Sys_MillisecondsRaw();
-  g_playStartTime[iVar1] = uVar2;
-  bVar3 = Load_KeyPairsFromBinary
-                    (param_2,param_3,gamerSettings[iVar1].commonKeyPairs,
-                     gamerSettings[iVar1].commonKeyPairsStringPool);
-  if (!bVar3) {
-    Com_PrintError(0xe,
-                   "Error parsing binary \'Common\' profile to keypairs for controller #%i.  Resetting profile.\n"
-                  );
+  DVar2 = Sys_MillisecondsRaw();
+  iVar4 = iVar1 * 0xca8 + -0x7d4bbd98;
+  iVar5 = iVar1 * 0xca8 + -0x7d4bbf68;
+  (&DAT_82b470b0)[iVar1] = DVar2;
+  cVar3 = Load_KeyPairsFromBinary(param_2,param_3,iVar5,iVar4);
+  if (cVar3 == '\0') {
+    Com_PrintError(0xe,0xffffffff8203af58,iVar1);
     KeyPairsResetAll(iVar1);
-    uVar4 = __restgprlr_26(0);
-    return (bool)uVar4;
+    __restgprlr_26(0);
+    return;
   }
-  Load_ProfileFromKeyPairs
-            (iVar1,g_profileKeyMap_Common,0x39,gamerSettings[iVar1].commonKeyPairs,
-             gamerSettings[iVar1].commonKeyPairsStringPool);
+  Load_ProfileFromKeyPairs(iVar1,0xffffffff82039248,0x39,iVar5,iVar4);
   GamerProfile_UpdateSystemVarsFromProfile(iVar1);
-  uVar4 = __restgprlr_26(1);
-  return (bool)uVar4;
+  __restgprlr_26(1);
+  return;
 }
 
 
 // 82360C60  GamerProfile_CreateExeBindingsConfig  (client/gamerprofile.cpp:1471)
 
-uint GamerProfile_CreateExeBindingsConfig(int param_1,char *param_2,uint param_3)
+void GamerProfile_CreateExeBindingsConfig(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  uint uVar2;
+  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
   
-  iVar1 = __savegprlr_27(param_1);
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x5c3
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  iVar2 = __savegprlr_27();
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0x5c3,0,0xffffffff8203991c,iVar2,0,4);
   }
-  if (gamerSettings[iVar1].isProfileLoggedIn == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x5c4
-                    ,0,"%s");
+  iVar3 = iVar2 * 0xca8;
+  if ((&DAT_82b43d98)[iVar3] == '\0') {
+    MyAssertHandler(0xffffffff82039730,0x5c4,0,0xffffffff82000f98,0xffffffff82039814);
   }
-  Save_KeyPairsFromProfile
-            (iVar1,g_profileKeyMap_Exe,0x14,gamerSettings[iVar1].exeKeyPairs,
-             gamerSettings[iVar1].exeKeyPairsStringPool);
-  memset();
-  uVar2 = Save_BinaryFromKeyPairs
-                    (gamerSettings[iVar1].exeKeyPairs,gamerSettings[iVar1].exeKeyPairsStringPool,
-                     param_2,param_3);
-  Com_Printf(0xe,"GamerProfile - Compressed \'Exe\' keypairs for storage.  Used %i/%i bytes.\n");
-  uVar2 = __restgprlr_27(uVar2);
-  return uVar2;
+  Save_KeyPairsFromProfile(iVar2,0xffffffff820395d8,0x14,iVar3 + -0x7d4bba08,iVar3 + -0x7d4bb838);
+  memset((void *)param_2,0,(size_t)param_3);
+  uVar1 = Save_BinaryFromKeyPairs(iVar3 + -0x7d4bba08,iVar3 + -0x7d4bb838,param_2,param_3);
+  Com_Printf(0xe,0xffffffff8203ad40,uVar1,param_3);
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
 // 82360D60  GamerProfile_CreateCommonBindingsConfig  (client/gamerprofile.cpp:1489)
 
-uint GamerProfile_CreateCommonBindingsConfig(int param_1,char *param_2,uint param_3)
+void GamerProfile_CreateCommonBindingsConfig
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  uint uVar2;
+  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
   
-  iVar1 = __savegprlr_27(param_1);
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x5d5
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  iVar2 = __savegprlr_27();
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0x5d5,0,0xffffffff8203991c,iVar2,0,4);
   }
-  if (gamerSettings[iVar1].isProfileLoggedIn == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x5d6
-                    ,0,"%s");
+  iVar3 = iVar2 * 0xca8;
+  if ((&DAT_82b43d98)[iVar3] == '\0') {
+    MyAssertHandler(0xffffffff82039730,0x5d6,0,0xffffffff82000f98,0xffffffff82039814);
   }
-  Save_KeyPairsFromProfile
-            (iVar1,g_profileKeyMap_Common,0x39,gamerSettings[iVar1].commonKeyPairs,
-             gamerSettings[iVar1].commonKeyPairsStringPool);
-  memset();
-  uVar2 = Save_BinaryFromKeyPairs
-                    (gamerSettings[iVar1].commonKeyPairs,
-                     gamerSettings[iVar1].commonKeyPairsStringPool,param_2,param_3);
-  Com_Printf(0xe,"GamerProfile - Compressed \'Common\' keypairs for storage.  Used %i/%i bytes.\n");
-  uVar2 = __restgprlr_27(uVar2);
-  return uVar2;
+  Save_KeyPairsFromProfile(iVar2,0xffffffff82039248,0x39,iVar3 + -0x7d4bbf68,iVar3 + -0x7d4bbd98);
+  memset((void *)param_2,0,(size_t)param_3);
+  uVar1 = Save_BinaryFromKeyPairs(iVar3 + -0x7d4bbf68,iVar3 + -0x7d4bbd98,param_2,param_3);
+  Com_Printf(0xe,0xffffffff8203ad90,uVar1,param_3);
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
 // 8235BE10  GamerProfile_WriteSettings  (client/gamerprofile.cpp:1509)
 
-void GamerProfile_WriteSettings(int param_1,char *param_2,uint param_3,char *param_4,uint param_5)
+void GamerProfile_WriteSettings
+               (undefined8 param_1,void *param_2,undefined4 param_3,void *param_4,undefined4 param_5
+               )
 
 {
-  int iVar1;
-  ulong uVar2;
-  _XUSER_PROFILE_SETTING *p_Var3;
-  _XUSER_SIGNIN_STATE _Var5;
-  ulong uVar4;
-  bool bVar6;
-  longlong lVar7;
-  _XOVERLAPPED *p_Var8;
+  int iVar2;
+  void *pvVar3;
+  int iVar4;
+  ulonglong uVar1;
+  int *piVar5;
+  undefined4 *puVar6;
   
-  lVar7 = (longlong)(int)param_3;
-  uVar2 = __savegprlr_21(param_1,param_2,lVar7,param_4);
-  if (((int)uVar2 < 0) || (3 < (int)uVar2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x5ea
-                    ,0,"%s\n\t(controllerIndex) = %i");
+  iVar2 = __savegprlr_21();
+  if ((iVar2 < 0) || (3 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0x5ea,0,0xffffffff82039774,0xffffffff82039790,iVar2);
   }
-  if (gamerSettings[uVar2].isProfileLoggedIn == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x5eb
-                    ,0,"%s");
+  if ((&DAT_82b43d98)[iVar2 * 0xca8] == '\0') {
+    MyAssertHandler(0xffffffff82039730,0x5eb,0,0xffffffff82000f98,0xffffffff82039814);
   }
-  if (gamerSettings[uVar2].errorOnRead != false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x5ec
-                    ,0,"%s");
+  if ((&DAT_82b43d99)[iVar2 * 0xca8] != '\0') {
+    MyAssertHandler(0xffffffff82039730,0x5ec,0,0xffffffff82000f98,0xffffffff82039c74);
   }
-  p_Var8 = (_XOVERLAPPED *)(&DAT_82b47040 + uVar2 * 0x1c);
-  uVar4 = *(ulong *)(&DAT_82b47040 + uVar2 * 0x1c);
-  while (uVar4 == 0x3e5) {
+  piVar5 = (int *)(&DAT_82b47040 + iVar2 * 0x1c);
+  iVar4 = *(int *)(&DAT_82b47040 + iVar2 * 0x1c);
+  while (iVar4 == 0x3e5) {
     Sys_Sleep(1);
-    uVar4 = p_Var8->InternalLow;
+    iVar4 = *piVar5;
   }
-  iVar1 = uVar2 * 0x50;
-  p_Var3 = (_XUSER_PROFILE_SETTING *)(&DAT_82b470c0 + iVar1);
-  XMemSet(p_Var3,0,0x50);
-  *(ulong *)(&DAT_82b470c8 + iVar1) = uVar2;
-  *(uchar (**) [2] [1000])(&DAT_82b470e4 + iVar1) = titleSettingsBuffers + uVar2;
-  *(undefined4 *)(&DAT_82b470d0 + iVar1) = 0x63e83fff;
-  *(undefined4 *)p_Var3 = 2;
-  memcpy();
-  *(int *)(&DAT_82b470e0 + iVar1) = (int)lVar7;
-  *(ulong *)(&DAT_82b470f0 + iVar1) = uVar2;
-  *(undefined4 *)(&DAT_82b470e8 + iVar1) = 2;
-  *(ulong *)(&DAT_82b4710c + iVar1) = uVar2 * 2000 + -0x7d4bddc0;
-  *(undefined4 *)(&DAT_82b470f8 + iVar1) = 0x63e83ffd;
-  memcpy();
-  *(uint *)(&DAT_82b47108 + iVar1) = param_5;
-  Com_Printf(0x10,"Writing to profile for controller %i.\n");
-  _Var5 = XUserGetSigninState(uVar2);
-  if (_Var5 != eXUserSigninState_NotSignedIn) {
-    XMemSet(p_Var8,0,0x1c);
-    uVar4 = XUserWriteProfileSettings(uVar2,2,p_Var3,p_Var8);
-    lVar7 = (longlong)(int)uVar4;
-    if (uVar4 != 0x3e5) {
-      bVar6 = GamerProfile_CheckForErrors(uVar4,uVar2,"start async write");
-      lVar7 = (longlong)bVar6;
+  iVar4 = iVar2 * 0x50;
+  puVar6 = (undefined4 *)(&DAT_82b470c0 + iVar4);
+  XMemSet(puVar6,0,0x50);
+  *(int *)(&DAT_82b470c8 + iVar4) = iVar2;
+  pvVar3 = (void *)(iVar2 * 2000 + -0x7d4be1a8);
+  *(void **)(&DAT_82b470e4 + iVar4) = pvVar3;
+  *(undefined4 *)(&DAT_82b470d0 + iVar4) = 0x63e83fff;
+  *puVar6 = 2;
+  memcpy(pvVar3,param_2,1000);
+  *(undefined4 *)(&DAT_82b470e0 + iVar4) = param_3;
+  pvVar3 = (void *)(iVar2 * 2000 + -0x7d4bddc0);
+  *(int *)(&DAT_82b470f0 + iVar4) = iVar2;
+  *(undefined4 *)(&DAT_82b470e8 + iVar4) = 2;
+  *(void **)(&DAT_82b4710c + iVar4) = pvVar3;
+  *(undefined4 *)(&DAT_82b470f8 + iVar4) = 0x63e83ffd;
+  memcpy(pvVar3,param_4,1000);
+  *(undefined4 *)(&DAT_82b47108 + iVar4) = param_5;
+  Com_Printf(0x10,0xffffffff82039c4c,iVar2);
+  iVar4 = XUserGetSigninState(iVar2);
+  if (iVar4 != 0) {
+    XMemSet(piVar5,0,0x1c);
+    uVar1 = XUserWriteProfileSettings(iVar2,2,puVar6,piVar5);
+    if ((uVar1 & 0xffffffff) != 0x3e5) {
+      GamerProfile_CheckForErrors(uVar1,iVar2,0xffffffff82039bd0);
     }
-    __restgprlr_21(lVar7);
+    __restgprlr_21();
     return;
   }
-  Com_PrintError(0x10,
-                 "Cannot call XUserWriteProfileSettings() when the controller is not signed in. Limbo signin state.\n"
-                );
+  Com_PrintError(0x10,0xffffffff82039be8);
   __restgprlr_21();
   return;
 }
@@ -1475,31 +1391,30 @@ void GamerProfile_WriteSettings(int param_1,char *param_2,uint param_3,char *par
 
 // 82360E60  GamerProfile_SaveProfile  (client/gamerprofile.cpp:1757)
 
-void GamerProfile_SaveProfile(int param_1)
+void GamerProfile_SaveProfile(void)
 
 {
-  int iVar1;
-  uint uVar2;
-  uint uVar3;
-  char acStack_810 [1008];
-  char acStack_420 [1056];
+  undefined8 uVar1;
+  int iVar4;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined1 auStack_810 [1008];
+  undefined1 auStack_420 [1056];
   
-  iVar1 = __savegprlr_27(param_1);
-  if ((iVar1 < 0) || (3 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x6e5
-                    ,0,"%s\n\t(controllerIndex) = %i");
+  uVar1 = __savegprlr_27();
+  iVar4 = (int)uVar1;
+  if ((iVar4 < 0) || (3 < iVar4)) {
+    MyAssertHandler(0xffffffff82039730,0x6e5,0,0xffffffff82039774,0xffffffff82039790,uVar1);
   }
-  if (gamerSettings[iVar1].isProfileLoggedIn == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x6e6
-                    ,0,"%s");
+  if ((&DAT_82b43d98)[iVar4 * 0xca8] == '\0') {
+    MyAssertHandler(0xffffffff82039730,0x6e6,0,0xffffffff82000f98,0xffffffff82039814);
   }
-  if (gamerSettings[iVar1].errorOnRead != false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x6e7
-                    ,0,"%s");
+  if ((&DAT_82b43d99)[iVar4 * 0xca8] != '\0') {
+    MyAssertHandler(0xffffffff82039730,0x6e7,0,0xffffffff82000f98,0xffffffff82039c74);
   }
-  uVar2 = GamerProfile_CreateExeBindingsConfig(iVar1,acStack_810,1000);
-  uVar3 = GamerProfile_CreateCommonBindingsConfig(iVar1,acStack_420,1000);
-  GamerProfile_WriteSettings(iVar1,acStack_420,uVar3,acStack_810,uVar2);
+  uVar2 = GamerProfile_CreateExeBindingsConfig(uVar1,auStack_810,1000);
+  uVar3 = GamerProfile_CreateCommonBindingsConfig(uVar1,auStack_420,1000);
+  GamerProfile_WriteSettings(uVar1,auStack_420,uVar3,auStack_810,uVar2);
   __restgprlr_27();
   return;
 }
@@ -1507,33 +1422,31 @@ void GamerProfile_SaveProfile(int param_1)
 
 // 8235C020  GamerProfile_ResetDvarsFromList  (client/gamerprofile.cpp:1792)
 
-void GamerProfile_ResetDvarsFromList(GamerProfileSetting *param_1)
+void GamerProfile_ResetDvarsFromList(int param_1)
 
 {
-  char *pcVar1;
-  dvar_t *pdVar2;
-  char **ppcVar3;
+  int iVar1;
+  ulonglong uVar2;
+  int *piVar3;
   
-  ppcVar3 = &param_1->dvarName;
-  pcVar1 = param_1->dvarName;
-  while (pcVar1 != (char *)0x0) {
-    pdVar2 = Dvar_FindVar(*ppcVar3);
-    if (pdVar2 == (dvar_t *)0x0) {
-      Com_Printf(0x10,"Couldn\'t find profile dvar: %s.\n");
+  piVar3 = (int *)(param_1 + 4);
+  iVar1 = *(int *)(param_1 + 4);
+  while (iVar1 != 0) {
+    uVar2 = Dvar_FindVar(*piVar3);
+    if ((uVar2 & 0xffffffff) == 0) {
+      Com_Printf(0x10,0xffffffff82039ca0,*piVar3);
     }
     else {
-      Dvar_Reset(pdVar2,DVAR_SOURCE_INTERNAL);
+      Dvar_Reset(uVar2,0);
     }
-    ppcVar3 = ppcVar3 + 2;
-    pcVar1 = *ppcVar3;
+    piVar3 = piVar3 + 2;
+    iVar1 = *piVar3;
   }
   return;
 }
 
 
 // 8235C0A0  GamerProfile_ResetXProfileDvars  (client/gamerprofile.cpp:1813)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void GamerProfile_ResetXProfileDvars(void)
 
@@ -1544,163 +1457,151 @@ void GamerProfile_ResetXProfileDvars(void)
 
 // 8235C0A8  GamerProfile_ResetMPDvars  (client/gamerprofile.cpp:1840)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void GamerProfile_ResetMPDvars(void)
 
 {
-  GamerProfile_ResetDvarsFromList(mpDvarList);
+  GamerProfile_ResetDvarsFromList(0xffffffff82039228);
   return;
 }
 
 
 // 8235C0B8  GamerProfile_GetPlaylistNum  (client/gamerprofile.cpp:1848)
 
-int GamerProfile_GetPlaylistNum(int param_1)
+undefined4 GamerProfile_GetPlaylistNum(int param_1)
 
 {
-  return gamerSettings[param_1].exeConfig.playlist;
+  return *(undefined4 *)(&DAT_82b444e0 + param_1 * 0xca8);
 }
 
 
 // 8235C0D0  GamerProfile_SetPlaylistNum  (client/gamerprofile.cpp:1854)
 
-void GamerProfile_SetPlaylistNum(int param_1,int param_2)
+void GamerProfile_SetPlaylistNum(int param_1,undefined4 param_2)
 
 {
-  gamerSettings[param_1].exeConfig.playlist = param_2;
+  *(undefined4 *)(&DAT_82b444e0 + param_1 * 0xca8) = param_2;
   return;
 }
 
 
 // 8235C0E8  GetConfigFromWhitelist  (client/gamerprofile.cpp:1891)
 
-char * GetConfigFromWhitelist(char *param_1,char **param_2,int param_3)
+void GetConfigFromWhitelist(undefined8 param_1,longlong param_2,int param_3)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
   undefined4 *puVar3;
-  longlong lVar4;
-  int iVar5;
+  int iVar4;
   
-  lVar4 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  iVar5 = 0;
-  puVar3 = (undefined4 *)lVar4;
+  uVar1 = __savegprlr_27();
+  iVar4 = 0;
+  puVar3 = (undefined4 *)param_2;
   if (0 < param_3) {
     do {
-      iVar2 = I_stricmp(pcVar1,(char *)*(undefined4 *)lVar4);
+      iVar2 = I_stricmp(uVar1,*(undefined4 *)param_2);
       if (iVar2 == 0) {
-        pcVar1 = (char *)__restgprlr_27(puVar3[iVar5]);
-        return pcVar1;
+        __restgprlr_27(puVar3[iVar4]);
+        return;
       }
-      iVar5 = iVar5 + 1;
-      lVar4 = lVar4 + 4;
-    } while (iVar5 < param_3);
+      iVar4 = iVar4 + 1;
+      param_2 = param_2 + 4;
+    } while (iVar4 < param_3);
   }
-  Com_Printf(0xe,
-             "Requested config \"%s\" is not on the hard-coded whitelist.  Using \"%s\" instead.\n")
-  ;
-  pcVar1 = va("BADCONFIG: \"%s\"");
-  LSP_LogStringEvenIfControllerIsInactive(pcVar1);
-  pcVar1 = (char *)__restgprlr_27(*puVar3);
-  return pcVar1;
+  Com_Printf(0xe,0xffffffff82039cd8,uVar1,*puVar3);
+  va(0xffffffff82039cc4,uVar1);
+  LSP_LogStringEvenIfControllerIsInactive();
+  __restgprlr_27(*puVar3);
+  return;
 }
 
 
 // 8235C180  GetButtonsConfig  (client/gamerprofile.cpp:1912)
 
-char * GetButtonsConfig(char *param_1)
+void GetButtonsConfig(void)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
   int iVar3;
-  char **ppcVar4;
+  undefined **ppuVar4;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  ppcVar4 = g_configWhiteList_Buttons;
+  uVar1 = __savegprlr_28();
+  ppuVar4 = &PTR_s_buttons_default_829663d0;
   iVar3 = 0;
   do {
-    iVar2 = I_stricmp(pcVar1,*ppcVar4);
+    iVar2 = I_stricmp(uVar1,*ppuVar4);
     if (iVar2 == 0) {
-      pcVar1 = (char *)__restgprlr_28(g_configWhiteList_Buttons[iVar3]);
-      return pcVar1;
+      __restgprlr_28((&PTR_s_buttons_default_829663d0)[iVar3]);
+      return;
     }
-    ppcVar4 = ppcVar4 + 1;
+    ppuVar4 = ppuVar4 + 1;
     iVar3 = iVar3 + 1;
-  } while ((int)ppcVar4 < -0x7d699c00);
-  Com_Printf(0xe,
-             "Requested config \"%s\" is not on the hard-coded whitelist.  Using \"%s\" instead.\n")
-  ;
-  pcVar1 = va("BADCONFIG: \"%s\"");
-  LSP_LogStringEvenIfControllerIsInactive(pcVar1);
-  pcVar1 = (char *)__restgprlr_28(g_configWhiteList_Buttons[0]);
-  return pcVar1;
+  } while ((int)ppuVar4 < -0x7d699c00);
+  Com_Printf(0xe,0xffffffff82039cd8,uVar1,PTR_s_buttons_default_829663d0);
+  va(0xffffffff82039cc4,uVar1);
+  LSP_LogStringEvenIfControllerIsInactive();
+  __restgprlr_28(PTR_s_buttons_default_829663d0);
+  return;
 }
 
 
 // 8235C210  GetSticksConfig  (client/gamerprofile.cpp:1918)
 
-char * GetSticksConfig(char *param_1)
+void GetSticksConfig(void)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
   int iVar3;
-  char **ppcVar4;
+  undefined **ppuVar4;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  ppcVar4 = g_configWhiteList_Sticks;
+  uVar1 = __savegprlr_28();
+  ppuVar4 = &PTR_s_thumbstick_default_82966400;
   iVar3 = 0;
   do {
-    iVar2 = I_stricmp(pcVar1,*ppcVar4);
+    iVar2 = I_stricmp(uVar1,*ppuVar4);
     if (iVar2 == 0) {
-      pcVar1 = (char *)__restgprlr_28(g_configWhiteList_Sticks[iVar3]);
-      return pcVar1;
+      __restgprlr_28((&PTR_s_thumbstick_default_82966400)[iVar3]);
+      return;
     }
-    ppcVar4 = ppcVar4 + 1;
+    ppuVar4 = ppuVar4 + 1;
     iVar3 = iVar3 + 1;
-  } while ((int)ppcVar4 < -0x7d699bf0);
-  Com_Printf(0xe,
-             "Requested config \"%s\" is not on the hard-coded whitelist.  Using \"%s\" instead.\n")
-  ;
-  pcVar1 = va("BADCONFIG: \"%s\"");
-  LSP_LogStringEvenIfControllerIsInactive(pcVar1);
-  pcVar1 = (char *)__restgprlr_28(g_configWhiteList_Sticks[0]);
-  return pcVar1;
+  } while ((int)ppuVar4 < -0x7d699bf0);
+  Com_Printf(0xe,0xffffffff82039cd8,uVar1,PTR_s_thumbstick_default_82966400);
+  va(0xffffffff82039cc4,uVar1);
+  LSP_LogStringEvenIfControllerIsInactive();
+  __restgprlr_28(PTR_s_thumbstick_default_82966400);
+  return;
 }
 
 
 // 8235C2A0  GamerProfile_ExecControllerBindings  (client/gamerprofile.cpp:1924)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void GamerProfile_ExecControllerBindings(int param_1)
+void GamerProfile_ExecControllerBindings(void)
 
 {
-  uint uVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
   
-  uVar1 = __savegprlr_27(param_1);
-  if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x789
-                    ,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar1 = __savegprlr_27();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82039730,0x789,0,0xffffffff82031880,uVar1,4);
   }
-  if (cl_multi_gamepads_enabled == 0) {
-    LVar2 = LOCAL_CLIENT_0;
+  if (DAT_82966e98 == 0) {
+    uVar2 = 0;
   }
   else {
-    LVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
+    uVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
   }
-  GetButtonsConfig(gamerSettings[uVar1].commonConfig.gpadButtonsConfig);
-  GetSticksConfig(gamerSettings[uVar1].commonConfig.gpadSticksConfig);
-  pcVar3 = va("exec %s\n");
-  Cmd_ExecuteSingleCommand(LVar2,uVar1,pcVar3);
-  pcVar3 = va("exec %s\n");
-  Cmd_ExecuteSingleCommand(LVar2,uVar1,pcVar3);
+  uVar3 = GetButtonsConfig(uVar1 * 0xca8 + -0x7d4bc21f);
+  uVar4 = GetSticksConfig(uVar1 * 0xca8 + -0x7d4bc1ff);
+  uVar3 = va(0xffffffff82039d28,uVar3);
+  Cmd_ExecuteSingleCommand(uVar2,uVar1,uVar3);
+  uVar3 = va(0xffffffff82039d28,uVar4);
+  Cmd_ExecuteSingleCommand(uVar2,uVar1,uVar3);
   __restgprlr_27();
   return;
 }
@@ -1708,30 +1609,27 @@ void GamerProfile_ExecControllerBindings(int param_1)
 
 // 82360F58  GamerProfile_UpdateSystemVarsFromProfile  (client/gamerprofile.cpp:1947)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void GamerProfile_UpdateSystemVarsFromProfile(int param_1)
+void GamerProfile_UpdateSystemVarsFromProfile(void)
 
 {
-  uint uVar1;
-  LocalClientNum_t LVar2;
+  uint uVar2;
+  undefined8 uVar1;
   
-  uVar1 = __savegprlr_29(param_1);
-  if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x79c
-                    ,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar2 = __savegprlr_29();
+  if (3 < uVar2) {
+    MyAssertHandler(0xffffffff82039730,0x79c,0,0xffffffff82031880,uVar2,4);
   }
-  va("GamerProfile - Updating vars for controller #%i.\n");
-  Com_Printf(0x10,"%s\n");
-  LVar2 = LOCAL_CLIENT_0;
-  if (cl_multi_gamepads_enabled != 0) {
-    LVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
+  uVar1 = va(0xffffffff8203ade0,uVar2);
+  Com_Printf(0x10,0xffffffff82004d30,uVar1);
+  uVar1 = 0;
+  if (DAT_82966e98 != 0) {
+    uVar1 = CL_LocalClientNumFromControllerIndex(uVar2);
   }
-  Cmd_ExecuteSingleCommand(LVar2,uVar1,"resetViewport");
-  Dvar_SetString(motd,gamerSettings[uVar1].exeConfig.motd);
-  Dvar_SetInt(playlist,gamerSettings[uVar1].exeConfig.playlist);
+  Cmd_ExecuteSingleCommand(uVar1,uVar2,0xffffffff82032960);
+  Dvar_SetString(DAT_82aa1abc,uVar2 * 0xca8 + -0x7d4bbb0c);
+  Dvar_SetInt(DAT_82aa1adc,*(undefined4 *)(&DAT_82b444e0 + uVar2 * 0xca8));
   PlaylistFeeder_SetInitialSelected();
-  GamerProfile_SanitizeClanName(uVar1);
+  GamerProfile_SanitizeClanName(uVar2);
   __restgprlr_29();
   return;
 }
@@ -1739,35 +1637,27 @@ void GamerProfile_UpdateSystemVarsFromProfile(int param_1)
 
 // 8235C378  GamerProfile_UpdateProfilePlayTimes  (client/gamerprofile.cpp:1980)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void GamerProfile_UpdateProfilePlayTimes(void)
 
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  bool bVar4;
-  int iVar5;
-  int *piVar6;
+  DWORD DVar3;
+  char cVar4;
+  longlong lVar5;
+  DWORD *pDVar6;
   int *piVar7;
   
   __savegprlr_23();
-  iVar3 = Sys_MillisecondsRaw();
-  iVar5 = 0;
-  piVar7 = &gamerSettings[0].commonConfig.playTimeSO;
-  piVar6 = (int *)0x82b470ac;
+  DVar3 = Sys_MillisecondsRaw();
+  lVar5 = 0;
+  piVar7 = (int *)&DAT_82b43dc0;
+  pDVar6 = (DWORD *)0x82b470ac;
   do {
-    if (cl_multi_gamepads_enabled == 0) {
-LAB_8235c3d4:
-      if (iVar5 == cl_controller_in_use) goto LAB_8235c3e0;
-    }
-    else {
-      bVar4 = CL_IsSplitscreenControllerActive(iVar5);
-      if (!bVar4) goto LAB_8235c3d4;
-LAB_8235c3e0:
-      iVar1 = (g_gameMode->current).integer;
-      iVar2 = (int)(((longlong)iVar3 - (ulonglong)(uint)piVar6[1] & 0xffffffff) / 1000);
+    if (((DAT_82966e98 != 0) && (cVar4 = CL_IsSplitscreenControllerActive(lVar5), cVar4 != '\0')) ||
+       ((int)lVar5 == DAT_82b5c820)) {
+      iVar1 = *(int *)(DAT_83ced660 + 0xc);
+      iVar2 = (int)(((longlong)(int)DVar3 - (ulonglong)pDVar6[1] & 0xffffffff) / 1000);
       if (iVar1 == 1) {
         piVar7[-2] = piVar7[-2] + iVar2;
       }
@@ -1779,110 +1669,103 @@ LAB_8235c3e0:
       }
     }
     piVar7 = piVar7 + 0x32a;
-    piVar6 = piVar6 + 1;
-    *piVar6 = iVar3;
-    iVar5 = iVar5 + 1;
-    if (-0x7d4b8fa1 < (int)piVar7) {
-      __restgprlr_23();
-      return;
-    }
-  } while( true );
+    pDVar6 = pDVar6 + 1;
+    *pDVar6 = DVar3;
+    lVar5 = lVar5 + 1;
+  } while ((int)piVar7 < -0x7d4b8fa0);
+  __restgprlr_23();
+  return;
 }
 
 
 // 8235C458  GamerProfile_GetPlayTimeSP  (client/gamerprofile.cpp:2016)
 
-uint GamerProfile_GetPlayTimeSP(int param_1)
+void GamerProfile_GetPlayTimeSP(void)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
-  uint uVar3;
-  longlong lVar4;
+  DWORD DVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  lVar4 = (ulonglong)(uint)gamerSettings[iVar1].commonConfig.playTimeSP * 100;
-  if ((g_gameMode->current).integer == 1) {
-    iVar2 = Sys_MillisecondsRaw();
-    uVar3 = __restgprlr_29(((longlong)iVar2 - (ulonglong)g_playStartTime[iVar1] & 0xffffffff) / 10 +
-                           lVar4);
-    return uVar3;
+  iVar2 = __savegprlr_29();
+  uVar1 = *(uint *)(&DAT_82b43db8 + iVar2 * 0xca8);
+  if (*(int *)(DAT_83ced660 + 0xc) == 1) {
+    DVar3 = Sys_MillisecondsRaw();
+    __restgprlr_29(((longlong)(int)DVar3 - (ulonglong)(uint)(&DAT_82b470b0)[iVar2] & 0xffffffff) /
+                   10 + (ulonglong)uVar1 * 100);
+    return;
   }
-  uVar3 = __restgprlr_29(lVar4);
-  return uVar3;
+  __restgprlr_29((ulonglong)uVar1 * 100);
+  return;
 }
 
 
 // 8235C4C8  GamerProfile_GetPlayTimeSO  (client/gamerprofile.cpp:2087)
 
-uint GamerProfile_GetPlayTimeSO(int param_1)
+void GamerProfile_GetPlayTimeSO(void)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
-  uint uVar3;
-  longlong lVar4;
+  DWORD DVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  lVar4 = (ulonglong)(uint)gamerSettings[iVar1].commonConfig.playTimeSO * 100;
-  if ((g_gameMode->current).integer == 2) {
-    iVar2 = Sys_MillisecondsRaw();
-    uVar3 = __restgprlr_29(((longlong)iVar2 - (ulonglong)g_playStartTime[iVar1] & 0xffffffff) / 10 +
-                           lVar4);
-    return uVar3;
+  iVar2 = __savegprlr_29();
+  uVar1 = *(uint *)(&DAT_82b43dc0 + iVar2 * 0xca8);
+  if (*(int *)(DAT_83ced660 + 0xc) == 2) {
+    DVar3 = Sys_MillisecondsRaw();
+    __restgprlr_29(((longlong)(int)DVar3 - (ulonglong)(uint)(&DAT_82b470b0)[iVar2] & 0xffffffff) /
+                   10 + (ulonglong)uVar1 * 100);
+    return;
   }
-  uVar3 = __restgprlr_29(lVar4);
-  return uVar3;
+  __restgprlr_29((ulonglong)uVar1 * 100);
+  return;
 }
 
 
 // 8235C538  GamerProfile_GetPlayTimeMP  (client/gamerprofile.cpp:2100)
 
-uint GamerProfile_GetPlayTimeMP(int param_1)
+void GamerProfile_GetPlayTimeMP(void)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
-  uint uVar3;
-  longlong lVar4;
+  DWORD DVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  lVar4 = (ulonglong)(uint)gamerSettings[iVar1].commonConfig.playTimeMP * 100;
-  if ((g_gameMode->current).integer == 3) {
-    iVar2 = Sys_MillisecondsRaw();
-    uVar3 = __restgprlr_29(((longlong)iVar2 - (ulonglong)g_playStartTime[iVar1] & 0xffffffff) / 10 +
-                           lVar4);
-    return uVar3;
+  iVar2 = __savegprlr_29();
+  uVar1 = (&DAT_82b43dbc)[iVar2 * 0x32a];
+  if (*(int *)(DAT_83ced660 + 0xc) == 3) {
+    DVar3 = Sys_MillisecondsRaw();
+    __restgprlr_29(((longlong)(int)DVar3 - (ulonglong)(uint)(&DAT_82b470b0)[iVar2] & 0xffffffff) /
+                   10 + (ulonglong)uVar1 * 100);
+    return;
   }
-  uVar3 = __restgprlr_29(lVar4);
-  return uVar3;
+  __restgprlr_29((ulonglong)uVar1 * 100);
+  return;
 }
 
 
 // 82361030  UpdateProfileFromSystem  (client/gamerprofile.cpp:2113)
 
-void UpdateProfileFromSystem(int param_1,profileWriteState_t param_2)
+void UpdateProfileFromSystem(undefined8 param_1,int param_2)
 
 {
   uint uVar1;
-  bool bVar3;
-  uint uVar2;
+  char cVar3;
+  undefined4 uVar2;
   
-  uVar1 = __savegprlr_28(param_1);
+  uVar1 = __savegprlr_28();
   if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x844
-                    ,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+    MyAssertHandler(0xffffffff82039730,0x844,0,0xffffffff82031880,uVar1,4);
   }
   GamerProfile_ExecControllerBindings(uVar1);
   GamerProfile_UpdateProfilePlayTimes();
-  I_strncpyz(gamerSettings[uVar1].exeConfig.motd,(motd->current).string,0x100);
-  gamerSettings[uVar1].exeConfig.playlist = (playlist->current).integer;
-  if ((param_2 == PROFILE_WRITE_IF_CHANGED) &&
-     (bVar3 = SettingsHaveChangedEnoughToSave(uVar1), bVar3)) {
+  I_strncpyz(uVar1 * 0xca8 + -0x7d4bbb0c,*(undefined4 *)(DAT_82aa1abc + 0xc),0x100);
+  *(undefined4 *)(&DAT_82b444e0 + uVar1 * 0xca8) = *(undefined4 *)(DAT_82aa1adc + 0xc);
+  if ((param_2 == 1) && (cVar3 = SettingsHaveChangedEnoughToSave(uVar1), cVar3 != '\0')) {
     GamerProfile_SaveProfile(uVar1);
     StoreSettingsToLastSaved(uVar1);
     uVar2 = Sys_GetTimeAsSeconds();
-    g_lastProfileUpdateTime[uVar1] = uVar2;
+    (&DAT_82b47204)[uVar1] = uVar2;
   }
   __restgprlr_28();
   return;
@@ -1891,153 +1774,152 @@ void UpdateProfileFromSystem(int param_1,profileWriteState_t param_2)
 
 // 823610F8  GamerProfile_UpdateProfileAndSaveIfNeeded  (client/gamerprofile.cpp:2154)
 
-void GamerProfile_UpdateProfileAndSaveIfNeeded(int param_1)
+void GamerProfile_UpdateProfileAndSaveIfNeeded(undefined8 param_1)
 
 {
-  va("GamerProfile - Updating and possibly saving for controller #%i.\n");
-  Com_Printf(0x10,"%s\n");
-  UpdateProfileFromSystem(param_1,PROFILE_WRITE_IF_CHANGED);
+  undefined8 uVar1;
+  
+  uVar1 = va(0xffffffff8203ae18,param_1);
+  Com_Printf(0x10,0xffffffff82004d30,uVar1);
+  UpdateProfileFromSystem(param_1,1);
   return;
 }
 
 
 // 82361150  GamerProfile_UpdateProfileWithoutSaving  (client/gamerprofile.cpp:2161)
 
-void GamerProfile_UpdateProfileWithoutSaving(int param_1)
+void GamerProfile_UpdateProfileWithoutSaving(uint param_1)
 
 {
-  va("GamerProfile - Updating for controller #%i without saving.\n");
-  Com_Printf(0x10,"%s\n");
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x844
-                    ,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  undefined8 uVar1;
+  
+  uVar1 = va(0xffffffff8203ae5c,param_1);
+  Com_Printf(0x10,0xffffffff82004d30,uVar1);
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff82039730,0x844,0,0xffffffff82031880,param_1,4);
   }
   GamerProfile_ExecControllerBindings(param_1);
   GamerProfile_UpdateProfilePlayTimes();
-  I_strncpyz(gamerSettings[param_1].exeConfig.motd,(motd->current).string,0x100);
-  gamerSettings[param_1].exeConfig.playlist = (playlist->current).integer;
+  I_strncpyz(param_1 * 0xca8 + -0x7d4bbb0c,*(undefined4 *)(DAT_82aa1abc + 0xc),0x100);
+  *(undefined4 *)(&DAT_82b444e0 + param_1 * 0xca8) = *(undefined4 *)(DAT_82aa1adc + 0xc);
   return;
 }
 
 
 // 82361210  GamerProfile_UpdateCommand  (client/gamerprofile.cpp:2200)
 
-void GamerProfile_UpdateCommand(int param_1,bool param_2)
+void GamerProfile_UpdateCommand(undefined8 param_1)
 
 {
-  va("GamerProfile - Updating and possibly saving for controller #%i.\n");
-  Com_Printf(0x10,"%s\n");
-  UpdateProfileFromSystem(param_1,PROFILE_WRITE_IF_CHANGED);
+  undefined8 uVar1;
+  
+  uVar1 = va(0xffffffff8203ae18,param_1);
+  Com_Printf(0x10,0xffffffff82004d30,uVar1);
+  UpdateProfileFromSystem(param_1,1);
   return;
 }
 
 
 // 82361AB0  GamerProfile_ApplySettingToProfile  (client/gamerprofile.cpp:2305)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void GamerProfile_ApplySettingToProfile(int param_1,ulong param_2,_XUSER_PROFILE_SETTING *param_3)
+void GamerProfile_ApplySettingToProfile(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
-  LocalClientNum_t LVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  longlong lVar3;
+  char cVar4;
+  undefined8 uVar5;
+  int iVar6;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x905
-                    ,0,"%s");
+  lVar3 = __savegprlr_27();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x905,0,0xffffffff82000f98,0xffffffff8203b0dc);
   }
-  if ((cl_multi_gamepads_enabled == 0) && (cl_controller_in_use != iVar3)) {
-    LVar4 = LOCAL_CLIENT_0;
+  iVar6 = (int)lVar3;
+  if ((DAT_82966e98 == 0) && (DAT_82b5c820 != iVar6)) {
+    uVar5 = 0;
   }
   else {
-    LVar4 = CL_LocalClientNumFromControllerIndex(iVar3);
+    uVar5 = CL_LocalClientNumFromControllerIndex(lVar3);
   }
-  iVar2 = (int)uVar6;
-  if ((uVar7 & 0xffffffff) < 0x10040023) {
-    if ((uVar7 & 0xffffffff) == 0x10040022) {
-      *(bool *)(iVar3 * 0xca8 + -0x7d4bc223) = *(int *)(iVar2 + 0x20) == 1;
+  iVar2 = (int)param_3;
+  if ((param_2 & 0xffffffff) < 0x10040023) {
+    if ((param_2 & 0xffffffff) == 0x10040022) {
+      (&DAT_82b43ddd)[iVar6 * 0xca8] = *(int *)(iVar2 + 0x20) == 1;
       __restgprlr_27();
       return;
     }
-    uVar7 = uVar7 - 0x10040002;
-    if (uVar7 == 0) {
-      *(bool *)(iVar3 * 0xca8 + -0x7d4bc224) = *(int *)(iVar2 + 0x20) == 1;
+    param_2 = param_2 - 0x10040002;
+    if (param_2 == 0) {
+      (&DAT_82b43ddc)[iVar6 * 0xca8] = *(int *)(iVar2 + 0x20) == 1;
       __restgprlr_27();
       return;
     }
-    if ((uVar7 & 0xffffffff) == 1) {
-      gamerSettings[iVar3].commonConfig.gpadRumble = (bool)('\x01' - (*(int *)(iVar2 + 0x20) == 0));
+    if ((param_2 & 0xffffffff) == 1) {
+      (&DAT_82b43de0)[iVar6 * 0xca8] = '\x01' - (*(int *)(iVar2 + 0x20) == 0);
       __restgprlr_27();
       return;
     }
-    if ((uVar7 & 0xffffffff) == 0x16) {
+    if ((param_2 & 0xffffffff) == 0x16) {
       uVar1 = *(uint *)(iVar2 + 0x20);
       if (uVar1 != 0) {
         if (uVar1 == 1) {
-          Cmd_ExecuteSingleCommand(LVar4,iVar3,"exec viewSensitivity_low");
+          Cmd_ExecuteSingleCommand(uVar5,lVar3,0xffffffff8203b04c);
           __restgprlr_27();
           return;
         }
         if (uVar1 < 3) {
-          Cmd_ExecuteSingleCommand(LVar4,iVar3,"exec viewSensitivity_high");
+          Cmd_ExecuteSingleCommand(uVar5,lVar3,0xffffffff8203b068);
           __restgprlr_27();
           return;
         }
-        if (alwaysfails == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp"
-                          ,0x91e,0,"Received invalid XPROFILE_GAMER_CONTROL_SENSITIVITY value");
+        if (DAT_84013128 == 0) {
+          MyAssertHandler(0xffffffff82039730,0x91e,0,0xffffffff8203b0a0);
         }
       }
-      Cmd_ExecuteSingleCommand(LVar4,iVar3,"exec viewSensitivity_med");
+      Cmd_ExecuteSingleCommand(uVar5,lVar3,0xffffffff8203b084);
       __restgprlr_27();
       return;
     }
   }
   else {
-    if ((uVar7 & 0xffffffff) == 0x10040024) {
+    if ((param_2 & 0xffffffff) == 0x10040024) {
       if (*(int *)(iVar2 + 0x20) == 1) {
-        I_strncpyz(gamerSettings[iVar3].commonConfig.gpadSticksConfig,"thumbstick_southpaw",0x20);
+        I_strncpyz(lVar3 * 0xca8 + -0x7d4bc1ff,0xffffffff82038ae0,0x20);
       }
       goto LAB_82361d9c;
     }
-    if (uVar7 - 0x63e83ffd == 0) {
+    if (param_2 - 0x63e83ffd == 0) {
       if (**(char **)(iVar2 + 0x24) == '\0') {
-        GamerProfile_ResetDvarsFromList(mpDvarList);
+        GamerProfile_ResetDvarsFromList(0xffffffff82039228);
         __restgprlr_27();
         return;
       }
-      bVar5 = GamerProfile_ParseBinaryExeProfile
-                        (iVar3,*(char **)(iVar2 + 0x24),*(int *)(iVar2 + 0x20));
-      if (!bVar5) {
-        GamerProfile_ResetDvarsFromList(mpDvarList);
-        Com_PrintWarning(0x10,"Unable to read gamerprofile (exeprofile) for controller %i.\n");
+      cVar4 = GamerProfile_ParseBinaryExeProfile
+                        (lVar3,*(char **)(iVar2 + 0x24),*(undefined4 *)(iVar2 + 0x20));
+      if (cVar4 == '\0') {
+        GamerProfile_ResetDvarsFromList(0xffffffff82039228);
+        Com_PrintWarning(0x10,0xffffffff8203afb4,lVar3);
         __restgprlr_27();
         return;
       }
       goto LAB_82361d9c;
     }
-    if ((uVar7 - 0x63e83ffd & 0xffffffff) == 2) {
+    if ((param_2 - 0x63e83ffd & 0xffffffff) == 2) {
       if ((**(char **)(iVar2 + 0x24) != '\0') &&
-         (bVar5 = GamerProfile_ParseBinaryCommonProfile
-                            (iVar3,*(char **)(iVar2 + 0x24),*(int *)(iVar2 + 0x20)), !bVar5)) {
-        Com_PrintWarning(0x10,"Unable to read gamerprofile (common) for controller %i.\n");
+         (cVar4 = GamerProfile_ParseBinaryCommonProfile
+                            (lVar3,*(char **)(iVar2 + 0x24),*(undefined4 *)(iVar2 + 0x20)),
+         cVar4 == '\0')) {
+        Com_PrintWarning(0x10,0xffffffff8203aff4,lVar3);
         __restgprlr_27();
         return;
       }
       goto LAB_82361d9c;
     }
   }
-  if (alwaysfails == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x969
-                    ,0,"Invalid xprofile setting ID");
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff82039730,0x969,0,0xffffffff8203b030);
     __restgprlr_27();
     return;
   }
@@ -2049,26 +1931,29 @@ LAB_82361d9c:
 
 // 8235C5A8  GamerProfile_UpdateMotd  (client/gamerprofile.cpp:2474)
 
-void GamerProfile_UpdateMotd(int param_1,char *param_2)
+void GamerProfile_UpdateMotd(longlong param_1,undefined8 param_2)
 
 {
-  I_strncpyz(gamerSettings[param_1].exeConfig.motd,param_2,0x100);
+  I_strncpyz(param_1 * 0xca8 + -0x7d4bbb0c,param_2,0x100);
   return;
 }
 
 
 // 8235C5C8  GamerProfile_FilterChar  (client/gamerprofile.cpp:2483)
 
-uchar GamerProfile_FilterChar(uchar param_1)
+ulonglong GamerProfile_FilterChar(ulonglong param_1)
 
 {
-  if (param_1 == '^') {
-    return ' ';
+  ulonglong uVar1;
+  
+  uVar1 = param_1 & 0xff;
+  if (uVar1 == 0x5e) {
+    return 0x20;
   }
-  if (((0x1f < param_1) && (param_1 != 0xbc)) && (param_1 != 0xbd)) {
+  if (((0x1f < uVar1) && (uVar1 != 0xbc)) && (uVar1 != 0xbd)) {
     return param_1;
   }
-  return '\0';
+  return 0;
 }
 
 
@@ -2086,7 +1971,7 @@ void GamerProfile_SanitizeClanName(int param_1)
   byte bStack_11;
   byte local_10 [16];
   
-  pcVar4 = gamerSettings[param_1].commonConfig.clanPrefix;
+  pcVar4 = &DAT_82b44042 + param_1 * 0xca8;
   pcVar5 = pcVar4;
   if (pcVar4 == (char *)0x0) {
     return;
@@ -2122,19 +2007,19 @@ void GamerProfile_SanitizeClanName(int param_1)
 
 // 8235C6B0  GamerProfile_GetClanName  (client/gamerprofile.cpp:2527)
 
-char * GamerProfile_GetClanName(int param_1)
+longlong GamerProfile_GetClanName(longlong param_1)
 
 {
-  return gamerSettings[param_1].commonConfig.clanPrefix;
+  return param_1 * 0xca8 + -0x7d4bbfbe;
 }
 
 
 // 8235C6C8  GamerProfile_SetClanName  (client/gamerprofile.cpp:2533)
 
-void GamerProfile_SetClanName(int param_1,char *param_2)
+void GamerProfile_SetClanName(longlong param_1,undefined8 param_2)
 
 {
-  I_strncpyz(gamerSettings[param_1].commonConfig.clanPrefix,param_2,5);
+  I_strncpyz(param_1 * 0xca8 + -0x7d4bbfbe,param_2,5);
   GamerProfile_SanitizeClanName(param_1);
   return;
 }
@@ -2142,134 +2027,135 @@ void GamerProfile_SetClanName(int param_1,char *param_2)
 
 // 82361DA8  GamerProfile_ProcessReadResults  (client/gamerprofile.cpp:2543)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void GamerProfile_ProcessReadResults(int param_1,_XUSER_READ_PROFILE_SETTING_RESULT *param_2)
+void GamerProfile_ProcessReadResults(undefined8 param_1,ulonglong param_2)
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  _XUSER_PROFILE_SOURCE *p_Var5;
-  _XUSER_READ_PROFILE_SETTING_RESULT *p_Stack0000001c;
+  longlong lVar2;
+  char *pcVar3;
+  int iVar4;
+  ulonglong uVar5;
+  int *piVar6;
+  char *pcVar7;
   int local_4d0;
-  ulong *local_4c8;
+  uint *local_4c8;
   uint local_4c0;
   uint local_490;
   char *local_48c;
   char local_480 [1152];
   
-  __savegprlr();
-  p_Stack0000001c = param_2;
-  if (param_2 == (_XUSER_READ_PROFILE_SETTING_RESULT *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0x9f7
-                    ,0,"%s");
+  lVar2 = __savegprlr();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x9f7,0,0xffffffff82000f98,0xffffffff82039d58);
   }
   local_4d0 = 0;
   local_4c0 = 7;
-  local_4c8 = xProfileSettingIDs;
+  local_4c8 = &DAT_82038ee0;
+  pcVar3 = "s - not in that party\n";
   do {
-    uVar4 = (ulonglong)*local_4c8;
+    uVar5 = (ulonglong)*local_4c8;
     uVar1 = *local_4c8 >> 0x1c;
-    p_Var5 = &p_Stack0000001c->pSettings->source + local_4d0;
+    piVar6 = (int *)(*(int *)((int)param_2 + 4) + local_4d0);
     if (uVar1 == 1) {
       local_490 = 0;
-      if (*(int *)p_Var5 != 0) {
+      if (*piVar6 != 0) {
 LAB_82361f08:
-        local_490 = (((_XUSER_DATA_u_8 *)(p_Var5 + 0x20))->string).cbData;
+        local_490 = piVar6[8];
       }
     }
     else if (uVar1 == 6) {
       local_48c = local_480;
-      if (*(int *)(p_Var5 + 0x24) != 0) {
-        memcpy();
+      if ((void *)piVar6[9] != (void *)0x0) {
+        pcVar3 = memcpy(local_480,(void *)piVar6[9],piVar6[8]);
         goto LAB_82361f08;
       }
       local_490 = 1000;
       local_480[0] = '\0';
     }
-    else if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                      0xa16,0,"Invalid profile setting type.");
+    else if (DAT_84013128 == 0) {
+      pcVar3 = (char *)MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp"
+                                       ,0xa16,0,0xffffffff8203b0ec);
     }
-    if ((cl_multi_gamepads_enabled == 0) && (cl_controller_in_use != param_1)) {
-      LVar2 = LOCAL_CLIENT_0;
+    iVar4 = (int)lVar2;
+    if ((DAT_82966e98 == 0) && (DAT_82b5c820 != iVar4)) {
+      pcVar7 = (char *)0x0;
     }
     else {
-      LVar2 = CL_LocalClientNumFromControllerIndex(param_1);
+      pcVar3 = (char *)CL_LocalClientNumFromControllerIndex(lVar2);
+      pcVar7 = pcVar3;
     }
-    if (uVar4 < 0x10040023) {
-      if (uVar4 == 0x10040022) {
-        *(bool *)(param_1 * 0xca8 + -0x7d4bc223) = local_490 == 1;
+    if (uVar5 < 0x10040023) {
+      if (uVar5 == 0x10040022) {
+        (&DAT_82b43ddd)[iVar4 * 0xca8] = local_490 == 1;
       }
       else {
-        uVar4 = uVar4 - 0x10040002;
-        if (uVar4 == 0) {
-          *(bool *)(param_1 * 0xca8 + -0x7d4bc224) = local_490 == 1;
+        uVar5 = uVar5 - 0x10040002;
+        if (uVar5 == 0) {
+          (&DAT_82b43ddc)[iVar4 * 0xca8] = local_490 == 1;
         }
-        else if ((uVar4 & 0xffffffff) == 1) {
-          gamerSettings[param_1].commonConfig.gpadRumble = (bool)('\x01' - (local_490 == 0));
+        else if ((uVar5 & 0xffffffff) == 1) {
+          (&DAT_82b43de0)[iVar4 * 0xca8] = '\x01' - (local_490 == 0);
         }
         else {
-          if ((uVar4 & 0xffffffff) != 0x16) goto LAB_8236204c;
+          if ((uVar5 & 0xffffffff) != 0x16) goto LAB_8236204c;
           if (local_490 == 0) {
 LAB_82361f9c:
-            Cmd_ExecuteSingleCommand(LVar2,param_1,"exec viewSensitivity_med");
+            pcVar3 = (char *)Cmd_ExecuteSingleCommand(pcVar7,lVar2,0xffffffff8203b084);
           }
           else if (local_490 == 1) {
-            Cmd_ExecuteSingleCommand(LVar2,param_1,"exec viewSensitivity_low");
+            pcVar3 = (char *)Cmd_ExecuteSingleCommand(pcVar7,lVar2,0xffffffff8203b04c);
           }
           else {
             if (2 < local_490) {
-              if (alwaysfails == 0) {
+              if (DAT_84013128 == 0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp"
-                                ,0x91e,0,"Received invalid XPROFILE_GAMER_CONTROL_SENSITIVITY value"
-                               );
+                                ,0x91e,0,0xffffffff8203b0a0);
               }
               goto LAB_82361f9c;
             }
-            Cmd_ExecuteSingleCommand(LVar2,param_1,"exec viewSensitivity_high");
+            pcVar3 = (char *)Cmd_ExecuteSingleCommand(pcVar7,lVar2,0xffffffff8203b068);
           }
         }
       }
     }
-    else if (uVar4 == 0x10040024) {
+    else if (uVar5 == 0x10040024) {
       if (local_490 == 1) {
-        I_strncpyz(gamerSettings[param_1].commonConfig.gpadSticksConfig,"thumbstick_southpaw",0x20);
+        pcVar3 = (char *)I_strncpyz(lVar2 * 0xca8 + -0x7d4bc1ff,0xffffffff82038ae0,0x20);
       }
     }
-    else if (uVar4 - 0x63e83ffd == 0) {
+    else if (uVar5 - 0x63e83ffd == 0) {
       if (*local_48c == '\0') {
-        GamerProfile_ResetDvarsFromList(mpDvarList);
+        pcVar3 = (char *)GamerProfile_ResetDvarsFromList(&PTR_s_playlist_82039228);
       }
       else {
-        bVar3 = GamerProfile_ParseBinaryExeProfile(param_1,local_48c,local_490);
-        if (!bVar3) {
-          GamerProfile_ResetDvarsFromList(mpDvarList);
-          Com_PrintWarning(0x10,"Unable to read gamerprofile (exeprofile) for controller %i.\n");
+        pcVar3 = (char *)GamerProfile_ParseBinaryExeProfile(lVar2,local_48c,local_490);
+        if (((uint)pcVar3 & 0xff) == 0) {
+          GamerProfile_ResetDvarsFromList(&PTR_s_playlist_82039228);
+          pcVar3 = (char *)Com_PrintWarning(0x10,0xffffffff8203afb4,lVar2);
         }
       }
     }
-    else if ((uVar4 - 0x63e83ffd & 0xffffffff) == 2) {
-      if ((*local_48c != '\0') &&
-         (bVar3 = GamerProfile_ParseBinaryCommonProfile(param_1,local_48c,local_490), !bVar3)) {
-        Com_PrintWarning(0x10,"Unable to read gamerprofile (common) for controller %i.\n");
+    else if ((uVar5 - 0x63e83ffd & 0xffffffff) == 2) {
+      if (*local_48c != '\0') {
+        pcVar3 = (char *)GamerProfile_ParseBinaryCommonProfile(lVar2,local_48c,local_490);
+        if (((uint)pcVar3 & 0xff) == 0) {
+          pcVar3 = (char *)Com_PrintWarning(0x10,0xffffffff8203aff4,lVar2);
+        }
       }
     }
     else {
 LAB_8236204c:
-      if (alwaysfails == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                        0x969,0,"Invalid xprofile setting ID");
+      if (DAT_84013128 == 0) {
+        pcVar3 = (char *)MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp"
+                                         ,0x969,0,0xffffffff8203b030);
       }
     }
-    uVar4 = (ulonglong)local_4c0;
+    uVar5 = (ulonglong)local_4c0;
     local_4d0 = local_4d0 + 0x28;
     local_4c8 = local_4c8 + 1;
-    local_4c0 = (uint)(uVar4 - 1);
-    if (uVar4 - 1 == 0) {
-      __restgprlr();
+    local_4c0 = (uint)(uVar5 - 1);
+    if (uVar5 - 1 == 0) {
+      __restgprlr(pcVar3);
       return;
     }
   } while( true );
@@ -2278,88 +2164,79 @@ LAB_8236204c:
 
 // 8235C718  GamerProfile_ReadDelayedXProfileSettings  (client/gamerprofile.cpp:2591)
 
-ulong GamerProfile_ReadDelayedXProfileSettings
-                (int param_1,ulong *param_2,_XUSER_READ_PROFILE_SETTING_RESULT *param_3)
+void GamerProfile_ReadDelayedXProfileSettings
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  ulong uVar1;
-  _XUSER_SIGNIN_STATE _Var3;
-  ulong uVar2;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  int iVar6;
+  undefined8 uVar1;
+  int iVar4;
+  longlong lVar2;
+  longlong lVar3;
+  int iVar5;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_24(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xa26
-                    ,0,"%s");
+  uVar1 = __savegprlr_24();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0xa26,0,0xffffffff82000f98,0xffffffff82039d64);
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xa27
-                    ,0,"%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0xa27,0,0xffffffff82000f98,0xffffffff82039d58);
   }
-  iVar6 = 0;
+  iVar5 = 0;
   do {
-    _Var3 = XUserGetSigninState(uVar1);
-    if (_Var3 == eXUserSigninState_NotSignedIn) break;
-    Sys_Milliseconds();
-    uVar2 = XUserReadProfileSettings
-                      (0,uVar1,7,xProfileSettingIDs,(ulong *)uVar4,
-                       (_XUSER_READ_PROFILE_SETTING_RESULT *)uVar5,(_XOVERLAPPED *)0x0);
-    Sys_Milliseconds();
-    Com_Printf(0xe,"XUserReadProfileSettings took %ims\n");
-    if (uVar2 == 0) {
-      uVar1 = __restgprlr_24(0);
-      return uVar1;
+    iVar4 = XUserGetSigninState(uVar1);
+    if (iVar4 == 0) break;
+    lVar2 = Sys_Milliseconds();
+    iVar4 = XUserReadProfileSettings(0,uVar1,7,0xffffffff82038ee0,param_2,param_3,0);
+    lVar3 = Sys_Milliseconds();
+    Com_Printf(0xe,0xffffffff82039d34,lVar3 - lVar2);
+    if (iVar4 == 0) {
+      __restgprlr_24(0);
+      return;
     }
     Sys_Sleep(0xfa);
-    iVar6 = iVar6 + 1;
-  } while (iVar6 < 0xc);
-  uVar1 = __restgprlr_24(0x65b);
-  return uVar1;
+    iVar5 = iVar5 + 1;
+  } while (iVar5 < 0xc);
+  __restgprlr_24(0x65b);
+  return;
 }
 
 
 // 82362158  GamerProfile_ReadXProfileSettings  (client/gamerprofile.cpp:2626)
 
-void GamerProfile_ReadXProfileSettings(int param_1)
+void GamerProfile_ReadXProfileSettings(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulong uVar3;
-  bool bVar4;
-  ulong local_4050 [4];
-  _XUSER_READ_PROFILE_SETTING_RESULT a_Stack_4040 [2056];
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  char cVar4;
+  int local_4050 [4];
+  undefined1 auStack_4040 [16448];
   
-  iVar1 = __savegprlr_26(param_1);
-  if ((iVar1 < 0) || (3 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xa49
-                    ,0,"%s\n\t(controllerIndex) = %i");
+  uVar1 = __savegprlr_26();
+  iVar3 = (int)uVar1;
+  if ((iVar3 < 0) || (3 < iVar3)) {
+    MyAssertHandler(0xffffffff82039730,0xa49,0,0xffffffff82039774,0xffffffff82039790,uVar1);
   }
-  if (gamerSettings[iVar1].isProfileLoggedIn == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xa4a
-                    ,0,"%s");
+  if ((&DAT_82b43d98)[iVar3 * 0xca8] == '\0') {
+    MyAssertHandler(0xffffffff82039730,0xa4a,0,0xffffffff82000f98,0xffffffff82039814);
   }
-  pcVar2 = va("Reading profile for controller %i\n");
-  Com_Printf(0x10,pcVar2);
+  uVar2 = va(0xffffffff8203b138,uVar1);
+  Com_Printf(0x10,uVar2);
   R_BeginRemoteScreenUpdate();
   local_4050[0] = 0x4000;
-  uVar3 = GamerProfile_ReadDelayedXProfileSettings(iVar1,local_4050,a_Stack_4040);
+  uVar2 = GamerProfile_ReadDelayedXProfileSettings(uVar1,local_4050,auStack_4040);
   if (local_4050[0] != 0x4000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xa5c
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff82039730,0xa5c,0,0xffffffff82000f98,0xffffffff8203b114);
   }
-  bVar4 = GamerProfile_CheckForErrors(uVar3,iVar1,"reading");
-  if (bVar4) {
-    gamerSettings[iVar1].errorOnRead = true;
+  cVar4 = GamerProfile_CheckForErrors(uVar2,uVar1,0xffffffff8203b10c);
+  if (cVar4 != '\0') {
+    (&DAT_82b43d99)[iVar3 * 0xca8] = 1;
     R_EndRemoteScreenUpdate();
     __restgprlr_26();
     return;
   }
-  GamerProfile_ProcessReadResults(iVar1,a_Stack_4040);
+  GamerProfile_ProcessReadResults(uVar1,auStack_4040);
   R_EndRemoteScreenUpdate();
   __restgprlr_26();
   return;
@@ -2367,61 +2244,100 @@ void GamerProfile_ReadXProfileSettings(int param_1)
 
 
 // 823622A8  GamerProfile_LoadSettings  (client/gamerprofile.cpp:2685)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void GamerProfile_LoadSettings(void)
+
+{
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char cVar4;
+  undefined8 uVar5;
+  
+  uVar2 = __savegprlr_29();
+  iVar3 = (int)uVar2;
+  if ((iVar3 < 0) || (3 < iVar3)) {
+    MyAssertHandler(0xffffffff82039730,0xa85,0,0xffffffff82039774,0xffffffff82039790,uVar2);
+  }
+  if ((&DAT_82b43d98)[iVar3 * 0xca8] == '\0') {
+    MyAssertHandler(0xffffffff82039730,0xa86,0,0xffffffff82000f98,0xffffffff82039814);
+  }
+  if (DAT_82aa1c14 != 0) {
+    cVar4 = CL_IsControllerActive(uVar2);
+    bVar1 = true;
+    if (cVar4 != '\0') goto LAB_8236235c;
+  }
+  bVar1 = false;
+LAB_8236235c:
+  uVar5 = 0;
+  if (bVar1) {
+    uVar5 = CL_LocalClientNumFromControllerIndex(uVar2);
+    UI_BeginReadingDeviceUI();
+  }
+  GamerProfile_ReadXProfileSettings(uVar2);
+  Com_RunAutoExec(0,uVar2);
+  GamerProfile_UpdateProfileWithoutSaving(uVar2);
+  StoreSettingsToLastSaved(uVar2);
+  if (bVar1) {
+    UI_EndReadingSaveDeviceUI(uVar5);
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 8235C820  SetProfileDefaults  (client/gamerprofile.cpp:2737)
 
-void SetProfileDefaults(GamerSettingState *param_1)
+void SetProfileDefaults(void)
 
 {
-  char *pcVar1;
-  int iVar2;
+  undefined *puVar1;
+  void *_Dst;
   
-  iVar2 = __savegprlr_29(param_1);
-  memset();
-  *(undefined1 *)(iVar2 + 0x45) = 1;
-  *(undefined1 *)(iVar2 + 0x48) = 1;
-  *(undefined4 *)(iVar2 + 0x10) = 0x3f800000;
-  *(undefined4 *)(iVar2 + 0x14) = 0x3f800000;
-  pcVar1 = MY_DEF_BUTTONS;
-  *(undefined4 *)(iVar2 + 0x18) = 0x3f59999a;
-  *(undefined4 *)(iVar2 + 0x1c) = 0x3f59999a;
-  *(undefined4 *)(iVar2 + 0x3c) = 0x3f800000;
-  *(undefined4 *)(iVar2 + 0xc) = 0;
-  *(undefined4 *)(iVar2 + 8) = 0x3f4ccccd;
-  *(undefined4 *)(iVar2 + 4) = 0x3f800000;
-  I_strncpyz((char *)(iVar2 + 0x49),pcVar1,0x20);
-  I_strncpyz((char *)(iVar2 + 0x69),MY_DEF_STICKS,0x20);
-  *(undefined4 *)(iVar2 + 0x8c) = 0;
-  *(undefined4 *)(iVar2 + 0x90) = 0;
-  *(undefined2 *)(iVar2 + 0x94) = 0;
-  *(undefined2 *)(iVar2 + 0x96) = 0;
-  *(undefined4 *)(iVar2 + 0x98) = 0;
-  *(undefined4 *)(iVar2 + 0x9c) = 0;
-  *(undefined4 *)(iVar2 + 0xa0) = 0;
-  *(undefined4 *)(iVar2 + 0xa4) = 0;
-  memset();
-  memset();
-  memset();
-  memset();
-  *(undefined1 *)(iVar2 + 0x2a8) = 0;
-  *(undefined1 *)(iVar2 + 0x2a9) = 0;
-  *(undefined1 *)(iVar2 + 0x2af) = 0;
-  *(undefined1 *)(iVar2 + 0x2b0) = 0;
-  I_strncpyz((char *)(iVar2 + 0x2b1),"",4);
-  *(undefined4 *)(iVar2 + 0x2cc) = 0;
-  I_strncpyz((char *)(iVar2 + 0x2d0),"",4);
-  *(undefined4 *)(iVar2 + 0x2d8) = 0;
-  *(undefined4 *)(iVar2 + 0x2dc) = 0;
-  *(undefined4 *)(iVar2 + 0x2e0) = 0;
-  *(undefined4 *)(iVar2 + 0x2e4) = 0;
-  *(undefined4 *)(iVar2 + 0x2e8) = 0;
-  *(undefined4 *)(iVar2 + 0x2ec) = 0;
-  *(undefined4 *)(iVar2 + 0x2f0) = 0;
-  *(undefined4 *)(iVar2 + 0x2f4) = 0;
-  *(undefined4 *)(iVar2 + 0x2f8) = 0;
-  *(undefined1 *)(iVar2 + 0x2fc) = 0;
+  _Dst = (void *)__savegprlr_29();
+  memset(_Dst,0,0xca8);
+  *(undefined1 *)((int)_Dst + 0x45) = 1;
+  *(undefined1 *)((int)_Dst + 0x48) = 1;
+  *(undefined4 *)((int)_Dst + 0x10) = 0x3f800000;
+  *(undefined4 *)((int)_Dst + 0x14) = 0x3f800000;
+  puVar1 = PTR_s_buttons_default_82966430;
+  *(undefined4 *)((int)_Dst + 0x18) = 0x3f59999a;
+  *(undefined4 *)((int)_Dst + 0x1c) = 0x3f59999a;
+  *(undefined4 *)((int)_Dst + 0x3c) = 0x3f800000;
+  *(undefined4 *)((int)_Dst + 0xc) = 0;
+  *(undefined4 *)((int)_Dst + 8) = 0x3f4ccccd;
+  *(undefined4 *)((int)_Dst + 4) = 0x3f800000;
+  I_strncpyz((int)_Dst + 0x49,puVar1,0x20);
+  I_strncpyz((int)_Dst + 0x69,PTR_s_thumbstick_default_8296642c,0x20);
+  *(undefined4 *)((int)_Dst + 0x8c) = 0;
+  *(undefined4 *)((int)_Dst + 0x90) = 0;
+  *(undefined2 *)((int)_Dst + 0x94) = 0;
+  *(undefined2 *)((int)_Dst + 0x96) = 0;
+  *(undefined4 *)((int)_Dst + 0x98) = 0;
+  *(undefined4 *)((int)_Dst + 0x9c) = 0;
+  *(undefined4 *)((int)_Dst + 0xa0) = 0;
+  *(undefined4 *)((int)_Dst + 0xa4) = 0;
+  memset((void *)((int)_Dst + 0xa8),0,0x80);
+  memset((void *)((int)_Dst + 0x128),0,0x80);
+  memset((void *)((int)_Dst + 0x1a8),0,0x80);
+  memset((void *)((int)_Dst + 0x228),0,0x80);
+  *(undefined1 *)((int)_Dst + 0x2a8) = 0;
+  *(undefined1 *)((int)_Dst + 0x2a9) = 0;
+  *(undefined1 *)((int)_Dst + 0x2af) = 0;
+  *(undefined1 *)((int)_Dst + 0x2b0) = 0;
+  I_strncpyz((int)_Dst + 0x2b1,0xffffffff820068af,4);
+  *(undefined4 *)((int)_Dst + 0x2cc) = 0;
+  I_strncpyz((int)_Dst + 0x2d0,0xffffffff820068af,4);
+  *(undefined4 *)((int)_Dst + 0x2d8) = 0;
+  *(undefined4 *)((int)_Dst + 0x2dc) = 0;
+  *(undefined4 *)((int)_Dst + 0x2e0) = 0;
+  *(undefined4 *)((int)_Dst + 0x2e4) = 0;
+  *(undefined4 *)((int)_Dst + 0x2e8) = 0;
+  *(undefined4 *)((int)_Dst + 0x2ec) = 0;
+  *(undefined4 *)((int)_Dst + 0x2f0) = 0;
+  *(undefined4 *)((int)_Dst + 0x2f4) = 0;
+  *(undefined4 *)((int)_Dst + 0x2f8) = 0;
+  *(undefined1 *)((int)_Dst + 0x2fc) = 0;
   __restgprlr_29();
   return;
 }
@@ -2429,60 +2345,55 @@ void SetProfileDefaults(GamerSettingState *param_1)
 
 // 8235C980  GamerProfile_ResetProfileDvars  (client/gamerprofile.cpp:2833)
 
-void GamerProfile_ResetProfileDvars(int param_1)
+void GamerProfile_ResetProfileDvars(longlong param_1)
 
 {
-  if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xb12
-                    ,0,"%s\n\t(controllerIndex) = %i");
+  if (((int)param_1 < 0) || (3 < (int)param_1)) {
+    MyAssertHandler(0xffffffff82039730,0xb12,0,0xffffffff82039774,0xffffffff82039790,param_1);
   }
-  SetProfileDefaults(gamerSettings + param_1);
-  GamerProfile_ResetDvarsFromList(mpDvarList);
+  SetProfileDefaults(param_1 * 0xca8 + -0x7d4bc268);
+  GamerProfile_ResetDvarsFromList(0xffffffff82039228);
   return;
 }
 
 
 // 82361268  GamerProfile_InitAllProfiles  (client/gamerprofile.cpp:2851)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void GamerProfile_InitAllProfiles(void)
 
 {
-  int iVar1;
+  DWORD DVar1;
   int iVar2;
-  uint uVar3;
-  GamerSettingState *pGVar4;
-  int iVar5;
+  longlong lVar3;
+  ulonglong uVar4;
+  longlong lVar5;
   
   __savegprlr_24();
-  iVar1 = 0;
-  pGVar4 = gamerSettings;
+  lVar3 = 0;
+  lVar5 = -0x7d4bc268;
   do {
-    KeyPairsResetAll(iVar1);
-    SetProfileDefaults(pGVar4);
-    pGVar4 = pGVar4 + 1;
-    iVar1 = iVar1 + 1;
-  } while ((int)pGVar4 < -0x7d4b8fc8);
-  GamerProfile_ResetDvarsFromList(mpDvarList);
-  iVar1 = Sys_MillisecondsRaw();
-  uVar3 = 0;
+    KeyPairsResetAll(lVar3);
+    SetProfileDefaults(lVar5);
+    lVar5 = lVar5 + 0xca8;
+    lVar3 = lVar3 + 1;
+  } while ((int)lVar5 < -0x7d4b8fc8);
+  GamerProfile_ResetDvarsFromList(0xffffffff82039228);
+  DVar1 = Sys_MillisecondsRaw();
+  uVar4 = 0;
   iVar2 = 0;
-  iVar5 = 0;
+  lVar3 = 0;
   do {
-    *(int *)((int)g_playStartTime + iVar2) = iVar1;
-    GamerProfile_UpdateProfileWithoutSaving(uVar3);
-    if (3 < uVar3) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                      0x1da,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+    *(DWORD *)((int)&DAT_82b470b0 + iVar2) = DVar1;
+    GamerProfile_UpdateProfileWithoutSaving(uVar4);
+    if (3 < (uVar4 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82039730,0x1da,0,0xffffffff82031880,uVar4,4);
     }
-    Com_Memcpy(gamerSettingsLastSaved[0].commonConfig.gpadButtonsConfig + iVar5 + -0x49,
-               gamerSettings[0].commonConfig.gpadButtonsConfig + iVar5 + -0x49,0xca8);
-    iVar5 = iVar5 + 0xca8;
-    uVar3 = uVar3 + 1;
-    *(undefined4 *)((int)g_lastProfileUpdateTime + iVar2) = 0;
+    Com_Memcpy(lVar3 + -0x7d4b8de8,lVar3 + -0x7d4bc268,0xca8);
+    lVar3 = lVar3 + 0xca8;
+    uVar4 = uVar4 + 1;
+    *(undefined4 *)((int)&DAT_82b47204 + iVar2) = 0;
     iVar2 = iVar2 + 4;
-  } while (iVar5 < 0x32a0);
+  } while ((int)lVar3 < 0x32a0);
   __restgprlr_24();
   return;
 }
@@ -2490,19 +2401,21 @@ void GamerProfile_InitAllProfiles(void)
 
 // 823623C0  GamerProfile_LogInProfile  (client/gamerprofile.cpp:2893)
 
-void GamerProfile_LogInProfile(int param_1)
+void GamerProfile_LogInProfile(undefined8 param_1)
 
 {
-  if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xb4e
-                    ,0,"%s\n\t(controllerIndex) = %i");
+  int iVar1;
+  
+  iVar1 = (int)param_1;
+  if ((iVar1 < 0) || (3 < iVar1)) {
+    MyAssertHandler(0xffffffff82039730,0xb4e,0,0xffffffff82039774,0xffffffff82039790,param_1);
   }
-  gamerSettings[param_1].isProfileLoggedIn = true;
-  gamerSettings[param_1].errorOnRead = false;
+  (&DAT_82b43d98)[iVar1 * 0xca8] = 1;
+  (&DAT_82b43d99)[iVar1 * 0xca8] = 0;
   GamerProfile_LoadSettings(param_1);
-  if ((cl_multi_gamepads_enabled == 0) && (param_1 != cl_controller_in_use)) {
-    GamerProfile_UpdateSystemVarsFromProfile(cl_controller_in_use);
-    GamerProfile_ExecControllerBindings(cl_controller_in_use);
+  if ((DAT_82966e98 == 0) && (iVar1 != DAT_82b5c820)) {
+    GamerProfile_UpdateSystemVarsFromProfile();
+    GamerProfile_ExecControllerBindings(DAT_82b5c820);
   }
   return;
 }
@@ -2510,18 +2423,20 @@ void GamerProfile_LogInProfile(int param_1)
 
 // 82361350  GamerProfile_LogOutProfile  (client/gamerprofile.cpp:2928)
 
-void GamerProfile_LogOutProfile(int param_1)
+void GamerProfile_LogOutProfile(undefined8 param_1)
 
 {
-  if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xb71
-                    ,0,"%s\n\t(controllerIndex) = %i");
+  int iVar1;
+  
+  iVar1 = (int)param_1;
+  if ((iVar1 < 0) || (3 < iVar1)) {
+    MyAssertHandler(0xffffffff82039730,0xb71,0,0xffffffff82039774,0xffffffff82039790,param_1);
   }
-  Com_Printf(0x10,"Logging out gamerprofile on controller %i\n");
+  Com_Printf(0x10,0xffffffff8203ae98,param_1);
   GamerProfile_ResetProfileDvars(param_1);
   GamerProfile_UpdateProfileWithoutSaving(param_1);
-  if ((cl_multi_gamepads_enabled == 0) && (param_1 != cl_controller_in_use)) {
-    GamerProfile_UpdateSystemVarsFromProfile(cl_controller_in_use);
+  if ((DAT_82966e98 == 0) && (iVar1 != DAT_82b5c820)) {
+    GamerProfile_UpdateSystemVarsFromProfile();
   }
   return;
 }
@@ -2529,164 +2444,172 @@ void GamerProfile_LogOutProfile(int param_1)
 
 // 8235CA00  GamerProfile_GetDvarValueFromList  (client/gamerprofile.cpp:2952)
 
-char * GamerProfile_GetDvarValueFromList(char *param_1,GamerProfileSetting *param_2)
+undefined8 GamerProfile_GetDvarValueFromList(undefined8 param_1,undefined4 *param_2)
 
 {
-  int iVar1;
-  char *pcVar2;
+  int iVar2;
+  undefined8 uVar1;
   
-  if (param_2 == (GamerProfileSetting *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xb89
-                    ,0,"%s");
+  if (param_2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82039730,0xb89,0,0xffffffff82000f98,0xffffffff82039d70);
   }
-  pcVar2 = param_2->dvarName;
+  iVar2 = param_2[1];
   while( true ) {
-    if (pcVar2 == (char *)0x0) {
-      return (char *)0x0;
+    if (iVar2 == 0) {
+      return 0;
     }
-    iVar1 = I_stricmp(param_1,param_2->settingName);
-    if (iVar1 == 0) break;
-    pcVar2 = param_2[1].dvarName;
-    param_2 = param_2 + 1;
+    iVar2 = I_stricmp(param_1,*param_2);
+    if (iVar2 == 0) break;
+    iVar2 = param_2[3];
+    param_2 = param_2 + 2;
   }
-  pcVar2 = Dvar_GetVariantString(param_2->dvarName);
-  return pcVar2;
+  uVar1 = Dvar_GetVariantString(param_2[1]);
+  return uVar1;
 }
 
 
 // 8235CAA0  GamerProfile_GetDvarSettingByName  (client/gamerprofile.cpp:2965)
 
-char * GamerProfile_GetDvarSettingByName(char *param_1)
+void GamerProfile_GetDvarSettingByName(void)
 
 {
-  GamerProfileSetting *pGVar1;
-  char *pcVar2;
-  int iVar3;
-  char *pcVar4;
-  GamerProfileSetting **ppGVar5;
+  undefined4 *puVar1;
+  undefined *puVar2;
+  undefined8 uVar3;
+  int iVar5;
+  ulonglong uVar4;
+  undefined **ppuVar6;
   
-  pcVar2 = (char *)__savegprlr_26(param_1);
-  ppGVar5 = listList;
-  pGVar1 = listList[0];
+  uVar3 = __savegprlr_26();
+  ppuVar6 = &PTR_PTR_82966434;
+  puVar2 = PTR_PTR_82966434;
   do {
-    if (pGVar1 == (GamerProfileSetting *)0x0) {
-      pcVar4 = (char *)0x0;
+    if (puVar2 == (undefined *)0x0) {
+      uVar4 = 0;
 LAB_8235cb54:
-      pcVar2 = (char *)__restgprlr_26(pcVar4);
-      return pcVar2;
+      __restgprlr_26(uVar4);
+      return;
     }
-    pGVar1 = *ppGVar5;
-    if (pGVar1 == (GamerProfileSetting *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                      0xb89,0,"%s");
+    puVar1 = (undefined4 *)*ppuVar6;
+    if (puVar1 == (undefined4 *)0x0) {
+      MyAssertHandler(0xffffffff82039730,0xb89,0,0xffffffff82000f98,0xffffffff82039d70);
     }
-    pcVar4 = pGVar1->dvarName;
-    while (pcVar4 != (char *)0x0) {
-      iVar3 = I_stricmp(pcVar2,pGVar1->settingName);
-      if (iVar3 == 0) {
-        pcVar4 = Dvar_GetVariantString(pGVar1->dvarName);
-        if (pcVar4 != (char *)0x0) goto LAB_8235cb54;
+    iVar5 = puVar1[1];
+    while (iVar5 != 0) {
+      iVar5 = I_stricmp(uVar3,*puVar1);
+      if (iVar5 == 0) {
+        uVar4 = Dvar_GetVariantString(puVar1[1]);
+        if ((uVar4 & 0xffffffff) != 0) goto LAB_8235cb54;
         break;
       }
-      pcVar4 = pGVar1[1].dvarName;
-      pGVar1 = pGVar1 + 1;
+      iVar5 = puVar1[3];
+      puVar1 = puVar1 + 2;
     }
-    ppGVar5 = ppGVar5 + 1;
-    pGVar1 = *ppGVar5;
+    ppuVar6 = ppuVar6 + 1;
+    puVar2 = *ppuVar6;
   } while( true );
 }
 
 
 // 8235CB60  GamerProfile_InvertedPitch  (client/gamerprofile.cpp:3106)
 
-bool GamerProfile_InvertedPitch(int param_1)
+undefined1 GamerProfile_InvertedPitch(undefined8 param_1)
 
 {
-  if ((param_1 < 0) || (4 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xc25
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  int iVar1;
+  
+  iVar1 = (int)param_1;
+  if ((iVar1 < 0) || (4 < iVar1)) {
+    MyAssertHandler(0xffffffff82039730,0xc25,0,0xffffffff8203991c,param_1,0,4);
   }
-  return gamerSettings[param_1].commonConfig.invertPitch;
+  return (&DAT_82b43ddc)[iVar1 * 0xca8];
 }
 
 
 // 8235CBD8  GamerProfile_SetInvertedPitch  (client/gamerprofile.cpp:3117)
 
-void GamerProfile_SetInvertedPitch(int param_1,bool param_2)
+void GamerProfile_SetInvertedPitch(undefined8 param_1,undefined1 param_2)
 
 {
-  if ((param_1 < 0) || (4 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xc30
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  int iVar1;
+  
+  iVar1 = (int)param_1;
+  if ((iVar1 < 0) || (4 < iVar1)) {
+    MyAssertHandler(0xffffffff82039730,0xc30,0,0xffffffff8203991c,param_1,0,4);
   }
-  *(bool *)(param_1 * 0xca8 + -0x7d4bc224) = param_2;
+  (&DAT_82b43ddc)[iVar1 * 0xca8] = param_2;
   return;
 }
 
 
 // 8235CC58  InvertedPitchToggle_f  (client/gamerprofile.cpp:3171)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void InvertedPitchToggle_f(void)
 
 {
-  int iVar1;
-  bool bVar4;
+  undefined8 uVar1;
+  char cVar3;
   int iVar2;
-  char *pcVar3;
+  char *_Str;
+  undefined8 uVar4;
   bool bVar5;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  bVar4 = GamerProfile_InvertedPitch(iVar1);
+  uVar1 = Cmd_LocalControllerIndex();
+  cVar3 = GamerProfile_InvertedPitch();
   iVar2 = Cmd_Argc();
   if (iVar2 < 2) {
-    bVar5 = !bVar4;
+    bVar5 = cVar3 == '\0';
   }
   else {
-    pcVar3 = Cmd_Argv(1);
-    iVar2 = atoi(pcVar3);
+    _Str = (char *)Cmd_Argv(1);
+    iVar2 = atoi(_Str);
     bVar5 = iVar2 != 0;
-    if (bVar5 == bVar4) {
+    if (bVar5 == (bool)cVar3) {
       return;
     }
   }
-  GamerProfile_SetInvertedPitch(iVar1,bVar5);
-  Com_Printf(0xe,"Pitch inversion toggled %s for controller #%i.\n");
+  GamerProfile_SetInvertedPitch(uVar1,bVar5);
+  if (bVar5 == false) {
+    uVar4 = 0xffffffff82039da8;
+  }
+  else {
+    uVar4 = 0xffffffff82039dac;
+  }
+  Com_Printf(0xe,0xffffffff82039d78,uVar4,uVar1);
   return;
 }
 
 
 // 8235CD18  SetViewSensitivity_f  (client/gamerprofile.cpp:3199)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SetViewSensitivity_f(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   int iVar2;
-  char *pcVar3;
+  int iVar3;
+  char *_String;
   double dVar4;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xc85
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = Cmd_LocalControllerIndex();
+  iVar2 = (int)uVar1;
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0xc85,0,0xffffffff8203991c,uVar1,0,4);
   }
-  iVar2 = Cmd_Argc();
-  if (iVar2 < 2) {
-    Cmd_Argv(0);
-    Com_PrintError(0xf,"Not enough arguments for \"%s\".\n");
+  iVar2 = iVar2 * 0xca8;
+  iVar3 = Cmd_Argc();
+  if (iVar3 < 2) {
+    uVar1 = Cmd_Argv(0);
+    Com_PrintError(0xf,0xffffffff82039de8,uVar1);
   }
   else {
-    pcVar3 = Cmd_Argv(1);
-    dVar4 = atof(pcVar3);
-    gamerSettings[iVar1].commonConfig.viewSensitivity = (float)dVar4;
+    _String = (char *)Cmd_Argv(1);
+    dVar4 = atof(_String);
+    *(float *)(&DAT_82b43d9c + iVar2) = (float)dVar4;
     if ((float)dVar4 < 0.01) {
-      gamerSettings[iVar1].commonConfig.viewSensitivity = 0.01;
+      *(undefined4 *)(&DAT_82b43d9c + iVar2) = 0x3c23d70a;
     }
-    Com_Printf(0xe,"View sensitivity set to %.2f for controller #%i.\n");
+    Com_Printf(0xe,0xffffffff82039db0,(double)*(float *)(&DAT_82b43d9c + iVar2),uVar1);
   }
   return;
 }
@@ -2694,32 +2617,27 @@ void SetViewSensitivity_f(void)
 
 // 8235CE08  GamerProfile_GetSafeareaAdjustments  (client/gamerprofile.cpp:3223)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void GamerProfile_GetSafeareaAdjustments(float *param_1,float *param_2)
+void GamerProfile_GetSafeareaAdjustments(undefined8 param_1,ulonglong param_2)
 
 {
-  float *pfVar1;
-  int iVar2;
-  ulonglong uVar3;
+  undefined4 *puVar2;
+  undefined8 uVar1;
+  int iVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pfVar1 = (float *)__savegprlr_28(param_1);
-  if (pfVar1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xc9b
-                    ,0,"%s");
+  puVar2 = (undefined4 *)__savegprlr_28();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82039730,0xc9b,0,0xffffffff82000f98,0xffffffff82039e10);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xc9c
-                    ,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0xc9c,0,0xffffffff82000f98,0xffffffff82039e08);
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
-  if ((iVar2 < 0) || (4 < iVar2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xc9f
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = CL_ControllerIndexFromClientNum(0);
+  iVar3 = (int)uVar1;
+  if ((iVar3 < 0) || (4 < iVar3)) {
+    MyAssertHandler(0xffffffff82039730,0xc9f,0,0xffffffff8203991c,uVar1,0,4);
   }
-  *pfVar1 = gamerSettings[iVar2].commonConfig.safearea_adjusted_horizontal;
-  *(float *)uVar3 = gamerSettings[iVar2].commonConfig.safearea_adjusted_vertical;
+  *puVar2 = *(undefined4 *)(&DAT_82b43db0 + iVar3 * 0xca8);
+  *(undefined4 *)param_2 = *(undefined4 *)(&DAT_82b43db4 + iVar3 * 0xca8);
   __restgprlr_28();
   return;
 }
@@ -2727,123 +2645,99 @@ void GamerProfile_GetSafeareaAdjustments(float *param_1,float *param_2)
 
 // 8235CEE0  GamerProfile_RegisterDvars  (client/gamerprofile.cpp:3257)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void GamerProfile_RegisterDvars(void)
 
 {
-  ushort in_r4;
-  ushort uVar1;
-  char *in_r5;
-  char *pcVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
   
-  dVar5 = 1.0;
-  profileMenuOption_gamma = Dvar_RegisterFloat("profileMenuOption_gamma",1.0,0.5,3.0,in_r4,in_r5);
-  uVar1 = 0;
-  dVar4 = 0.0;
-  profileMenuOption_blacklevel =
-       Dvar_RegisterFloat("profileMenuOption_blacklevel",0.0,-0.99,0.99,0,
-                          pcGlob.openChannels[0x2c].name + 0x1c);
-  pcVar2 = "s - not in that party\n";
-  profileMenuOption_volume =
-       Dvar_RegisterFloat("profileMenuOption_volume",0.8,(float)dVar4,0.8,uVar1,
-                          "s - not in that party\n");
-  uVar1 = 0;
-  dVar3 = 0.8500000238418579;
-  profileMenuOption_safeAreaHorz =
-       Dvar_RegisterFloat("profileMenuOption_safeAreaHorz",0.85,(float)dVar4,(float)dVar5,0,pcVar2);
-  profileMenuOption_safeAreaVert =
-       Dvar_RegisterFloat("profileMenuOption_safeAreaVert",(float)dVar3,(float)dVar4,(float)dVar5,
-                          uVar1,pcVar2);
-  profileMenuOption_sensitivity =
-       Dvar_RegisterFloat("profileMenuOption_sensitivity",2.0,(float)dVar5,10.0,0,
-                          pcGlob.openChannels[0x2c].name + 0x1c);
-  profileMenuOption_offensiveContentMode =
-       Dvar_RegisterInt("profileMenuOption_offensiveContentMode",0,0,2,0,
-                        "Mode of the offensive content warning at startup - 0, skip and turn on; 1, skip and turn off; 2, ask user"
-                       );
+  uVar3 = 0x3ff0000000000000;
+  DAT_82b47214 = Dvar_RegisterFloat(0x3ff0000000000000,0x3fe0000000000000,0x4008000000000000,
+                                    0xffffffff82039f4c);
+  uVar2 = 0;
+  DAT_82b47038 = Dvar_RegisterFloat(0,0xbfefae1480000000,0x3fefae1480000000,0xffffffff82039f28);
+  DAT_82b41e54 = Dvar_RegisterFloat(0x3fe99999a0000000,uVar2,0xffffffff82039f0c);
+  uVar1 = 0x3feb333340000000;
+  DAT_82b4a4b8 = Dvar_RegisterFloat(0x3feb333340000000,uVar2,uVar3,0xffffffff82039eec);
+  DAT_82b41e50 = Dvar_RegisterFloat(uVar1,uVar2,uVar3,0xffffffff82039ecc);
+  DAT_82b4703c = Dvar_RegisterFloat(0x4000000000000000,uVar3,0x4024000000000000,0xffffffff82039eac);
+  DAT_82b47200 = Dvar_RegisterInt(0xffffffff82039e18,0,0,2,0,0xffffffff82039e40);
   return;
 }
 
 
 // 8235D080  GamerProfile_OptionsMenuDvarsSetup_f  (client/gamerprofile.cpp:3279)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void GamerProfile_OptionsMenuDvarsSetup_f(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   int iVar2;
-  float *pfVar3;
+  int iVar3;
+  float *pfVar4;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xcd4
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = Cmd_LocalControllerIndex();
+  iVar2 = (int)uVar1;
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0xcd4,0,0xffffffff8203991c,uVar1,0,4);
   }
-  Com_Printf(0xe,"Profile: Setting option-menu dvars from controller #%i\'s profile.\n");
-  Dvar_SetFloat(profileMenuOption_gamma,gamerSettings[iVar1].commonConfig.gamma);
-  Dvar_SetFloat(profileMenuOption_blacklevel,gamerSettings[iVar1].commonConfig.blacklevel);
-  Dvar_SetFloat(profileMenuOption_volume,gamerSettings[iVar1].commonConfig.snd_volume);
-  Dvar_SetFloat(profileMenuOption_safeAreaHorz,
-                gamerSettings[iVar1].commonConfig.safearea_adjusted_horizontal);
-  Dvar_SetFloat(profileMenuOption_safeAreaVert,
-                gamerSettings[iVar1].commonConfig.safearea_adjusted_vertical);
-  pfVar3 = sensitivityMap;
-  iVar2 = 0;
+  iVar2 = iVar2 * 0xca8;
+  Com_Printf(0xe,0xffffffff82039f68,uVar1);
+  Dvar_SetFloat((double)*(float *)(&DAT_82b43dd4 + iVar2),DAT_82b47214);
+  Dvar_SetFloat((double)*(float *)(&DAT_82b43da4 + iVar2),DAT_82b47038);
+  Dvar_SetFloat((double)*(float *)(&DAT_82b43da0 + iVar2),DAT_82b41e54);
+  Dvar_SetFloat((double)*(float *)(&DAT_82b43db0 + iVar2),DAT_82b4a4b8);
+  Dvar_SetFloat((double)*(float *)(&DAT_82b43db4 + iVar2),DAT_82b41e50);
+  pfVar4 = (float *)&DAT_82038efc;
+  iVar3 = 0;
   do {
-    if (gamerSettings[iVar1].commonConfig.viewSensitivity <= *pfVar3 + 0.01) {
-      Dvar_SetFloat(profileMenuOption_sensitivity,(float)(longlong)(iVar2 + 1));
+    if (*(float *)(&DAT_82b43d9c + iVar2) <= *pfVar4 + 0.01) {
+      Dvar_SetFloat((double)(longlong)(iVar3 + 1),DAT_82b4703c);
       return;
     }
-    pfVar3 = pfVar3 + 1;
-    iVar2 = iVar2 + 1;
-  } while ((int)pfVar3 < -0x7dfc70dc);
+    pfVar4 = pfVar4 + 1;
+    iVar3 = iVar3 + 1;
+  } while ((int)pfVar4 < -0x7dfc70dc);
   return;
 }
 
 
 // 8235D1D0  GamerProfile_OptionsMenuDvarsFinish_f  (client/gamerprofile.cpp:3316)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void GamerProfile_OptionsMenuDvarsFinish_f(void)
 
 {
-  dvar_t *pdVar1;
-  dvar_t *pdVar2;
-  dvar_t *pdVar3;
-  dvar_t *pdVar4;
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
   int iVar5;
-  uint uVar6;
+  int iVar6;
   
   __savegprlr_29();
-  iVar5 = Cmd_LocalControllerIndex();
+  uVar4 = Cmd_LocalControllerIndex();
+  iVar5 = (int)uVar4;
   if ((iVar5 < 0) || (4 < iVar5)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xcfa
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+    MyAssertHandler(0xffffffff82039730,0xcfa,0,0xffffffff8203991c,uVar4,0,4);
   }
-  pdVar1 = profileMenuOption_blacklevel;
-  pdVar2 = profileMenuOption_volume;
-  gamerSettings[iVar5].commonConfig.gamma = (float)(profileMenuOption_gamma->current).integer;
-  pdVar4 = profileMenuOption_safeAreaHorz;
-  gamerSettings[iVar5].commonConfig.blacklevel = (float)(pdVar1->current).integer;
-  pdVar3 = profileMenuOption_sensitivity;
-  pdVar1 = profileMenuOption_safeAreaVert;
-  gamerSettings[iVar5].commonConfig.snd_volume = (float)(pdVar2->current).integer;
-  gamerSettings[iVar5].commonConfig.safearea_adjusted_horizontal = (float)(pdVar4->current).integer;
-  gamerSettings[iVar5].commonConfig.safearea_adjusted_vertical = (float)(pdVar1->current).integer;
-  uVar6 = (int)((pdVar3->current).value + 0.5) - 1;
-  if (9 < uVar6) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xd10
-                    ,0,"sensitivityIndex doesn\'t index NUM_SENSITIVITY_VALUES\n\t%i not in [0, %i)"
-                   );
+  iVar1 = DAT_82b47038;
+  iVar6 = DAT_82b41e54;
+  iVar5 = iVar5 * 0xca8;
+  *(undefined4 *)(&DAT_82b43dd4 + iVar5) = *(undefined4 *)(DAT_82b47214 + 0xc);
+  iVar3 = DAT_82b4a4b8;
+  *(undefined4 *)(&DAT_82b43da4 + iVar5) = *(undefined4 *)(iVar1 + 0xc);
+  iVar2 = DAT_82b4703c;
+  iVar1 = DAT_82b41e50;
+  *(undefined4 *)(&DAT_82b43da0 + iVar5) = *(undefined4 *)(iVar6 + 0xc);
+  *(undefined4 *)(&DAT_82b43db0 + iVar5) = *(undefined4 *)(iVar3 + 0xc);
+  *(undefined4 *)(&DAT_82b43db4 + iVar5) = *(undefined4 *)(iVar1 + 0xc);
+  iVar1 = (int)(*(float *)(iVar2 + 0xc) + 0.5);
+  iVar6 = iVar1 + -1;
+  if (9 < iVar1 - 1U) {
+    MyAssertHandler(0xffffffff82039730,0xd10,0,0xffffffff82039fb0,iVar6,10);
   }
-  gamerSettings[iVar5].commonConfig.viewSensitivity = sensitivityMap[uVar6];
+  *(undefined4 *)(&DAT_82b43d9c + iVar5) = (&DAT_82038efc)[iVar6];
   __restgprlr_29();
   return;
 }
@@ -2851,66 +2745,70 @@ void GamerProfile_OptionsMenuDvarsFinish_f(void)
 
 // 8235D2F0  GamerProfile_ExecControllerBindings_f  (client/gamerprofile.cpp:3351)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void GamerProfile_ExecControllerBindings_f(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xd1b
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = Cmd_LocalControllerIndex();
+  if (((int)uVar1 < 0) || (4 < (int)uVar1)) {
+    MyAssertHandler(0xffffffff82039730,0xd1b,0,0xffffffff8203991c,uVar1,0,4);
   }
-  GamerProfile_ExecControllerBindings(iVar1);
+  GamerProfile_ExecControllerBindings(uVar1);
   return;
 }
 
 
 // 8235D360  SetBindingsConfig  (client/gamerprofile.cpp:3363)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void SetBindingsConfig(bool param_1)
+void SetBindingsConfig(void)
 
 {
-  char cVar6;
-  int iVar1;
-  int iVar2;
-  char *pcVar3;
-  LocalClientNum_t LVar4;
-  char *pcVar5;
+  char cVar5;
+  longlong lVar1;
+  int iVar4;
+  undefined8 uVar2;
+  longlong lVar3;
+  longlong lVar6;
+  longlong lVar7;
   
-  cVar6 = __savegprlr_28(param_1);
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xd28
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  cVar5 = __savegprlr_28();
+  lVar1 = Cmd_LocalControllerIndex();
+  if (((int)lVar1 < 0) || (4 < (int)lVar1)) {
+    MyAssertHandler(0xffffffff82039730,0xd28,0,0xffffffff8203991c,lVar1,0,4);
   }
-  iVar2 = Cmd_Argc();
-  if (1 < iVar2) {
-    pcVar5 = gamerSettings[iVar1].commonConfig.gpadButtonsConfig;
-    pcVar3 = Cmd_Argv(1);
-    iVar2 = I_stricmp(pcVar5,pcVar3);
-    if (iVar2 != 0) {
-      LVar4 = Cmd_LocalClientNum();
-      Key_ClearStates(LVar4);
+  lVar6 = lVar1 * 0xca8;
+  iVar4 = Cmd_Argc();
+  if (1 < iVar4) {
+    lVar7 = lVar6 + -0x7d4bc21f;
+    uVar2 = Cmd_Argv(1);
+    iVar4 = I_stricmp(lVar7,uVar2);
+    if (iVar4 != 0) {
+      Cmd_LocalClientNum();
+      Key_ClearStates();
     }
-    if (cVar6 == '\0') {
-      pcVar3 = Cmd_Argv(1);
-      pcVar5 = gamerSettings[iVar1].commonConfig.gpadSticksConfig;
+    if (cVar5 == '\0') {
+      uVar2 = Cmd_Argv(1);
+      lVar3 = lVar6 + -0x7d4bc1ff;
     }
     else {
-      pcVar3 = Cmd_Argv(1);
+      uVar2 = Cmd_Argv(1);
+      lVar3 = lVar7;
     }
-    I_strncpyz(pcVar5,pcVar3,0x20);
-    Com_Printf(0xe,"Profile: %s config set to \"%s\" for controller #%i.\n");
+    I_strncpyz(lVar3,uVar2,0x20);
+    if (cVar5 == '\0') {
+      lVar7 = lVar6 + -0x7d4bc1ff;
+      uVar2 = 0xffffffff8203a030;
+    }
+    else {
+      uVar2 = 0xffffffff8203a038;
+    }
+    Com_Printf(0xe,0xffffffff82039ffc,uVar2,lVar7,lVar1);
     __restgprlr_28();
     return;
   }
-  Cmd_Argv(0);
-  Com_PrintError(0xf,"Not enough arguments for \"%s\".\n");
+  uVar2 = Cmd_Argv(0);
+  Com_PrintError(0xf,0xffffffff82039de8,uVar2);
   __restgprlr_28();
   return;
 }
@@ -2918,107 +2816,123 @@ void SetBindingsConfig(bool param_1)
 
 // 8235D490  SetButtonsConfig_f  (client/gamerprofile.cpp:3390)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SetButtonsConfig_f(void)
 
 {
-  SetBindingsConfig(true);
+  SetBindingsConfig(1);
   return;
 }
 
 
 // 8235D498  SetSticksConfig_f  (client/gamerprofile.cpp:3396)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SetSticksConfig_f(void)
 
 {
-  SetBindingsConfig(false);
+  SetBindingsConfig(0);
   return;
 }
 
 
 // 8235D4A0  AutoAimToggle_f  (client/gamerprofile.cpp:3402)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void AutoAimToggle_f(void)
 
 {
-  int iVar1;
+  char cVar1;
+  undefined8 uVar2;
+  int iVar3;
+  undefined8 uVar4;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xd4f
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar2 = Cmd_LocalControllerIndex();
+  iVar3 = (int)uVar2;
+  if ((iVar3 < 0) || (4 < iVar3)) {
+    MyAssertHandler(0xffffffff82039730,0xd4f,0,0xffffffff8203991c,uVar2,0,4);
   }
-  *(bool *)(iVar1 * 0xca8 + -0x7d4bc223) = gamerSettings[iVar1].commonConfig.autoAim == false;
-  Com_Printf(0xe,"Profile: Autoaim toggled %s for controller #%i.\n");
+  cVar1 = (&DAT_82b43ddd)[iVar3 * 0xca8];
+  (&DAT_82b43ddd)[iVar3 * 0xca8] = cVar1 == '\0';
+  if (cVar1 == '\0') {
+    uVar4 = 0xffffffff82039dac;
+  }
+  else {
+    uVar4 = 0xffffffff82039da8;
+  }
+  Com_Printf(0xe,0xffffffff8203a040,uVar4,uVar2);
   return;
 }
 
 
 // 8235D558  ColorBlindToggle_f  (client/gamerprofile.cpp:3415)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void ColorBlindToggle_f(void)
 
 {
-  int iVar1;
+  char cVar1;
+  undefined8 uVar2;
+  int iVar3;
+  undefined8 uVar4;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xd5c
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar2 = Cmd_LocalControllerIndex();
+  iVar3 = (int)uVar2;
+  if ((iVar3 < 0) || (4 < iVar3)) {
+    MyAssertHandler(0xffffffff82039730,0xd5c,0,0xffffffff8203991c,uVar2,0,4);
   }
-  *(bool *)(iVar1 * 0xca8 + -0x7d4bc221) = gamerSettings[iVar1].commonConfig.colorBlind == false;
-  Com_Printf(0xe,"Profile: Color Blind Mode toggled %s for controller #%i.\n");
+  cVar1 = (&DAT_82b43ddf)[iVar3 * 0xca8];
+  (&DAT_82b43ddf)[iVar3 * 0xca8] = cVar1 == '\0';
+  if (cVar1 == '\0') {
+    uVar4 = 0xffffffff82039dac;
+  }
+  else {
+    uVar4 = 0xffffffff82039da8;
+  }
+  Com_Printf(0xe,0xffffffff8203a074,uVar4,uVar2);
   return;
 }
 
 
 // 8235D610  RumbleToggle_f  (client/gamerprofile.cpp:3430)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void RumbleToggle_f(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
+  int iVar2;
+  undefined8 uVar3;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xd6b
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = Cmd_LocalControllerIndex();
+  iVar2 = (int)uVar1;
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0xd6b,0,0xffffffff8203991c,uVar1,0,4);
   }
-  *(bool *)(iVar1 * 0xca8 + -0x7d4bc220) = gamerSettings[iVar1].commonConfig.gpadRumble == false;
-  Com_Printf(0xe,"Profile: Rumble toggled %s for controller #%i.\n");
+  iVar2 = iVar2 * 0xca8;
+  (&DAT_82b43de0)[iVar2] = (&DAT_82b43de0)[iVar2] == '\0';
+  if ((&DAT_82b43ddd)[iVar2] == '\0') {
+    uVar3 = 0xffffffff82039da8;
+  }
+  else {
+    uVar3 = 0xffffffff82039dac;
+  }
+  Com_Printf(0xe,0xffffffff8203a0b0,uVar3,uVar1);
   return;
 }
 
 
 // 8235D6C8  SetHasEverPlayed_MainMenu_f  (client/gamerprofile.cpp:3445)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SetHasEverPlayed_MainMenu_f(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
+  int iVar2;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xd7a
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = Cmd_LocalControllerIndex();
+  iVar2 = (int)uVar1;
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0xd7a,0,0xffffffff8203991c,uVar1,0,4);
   }
-  if (gamerSettings[iVar1].commonConfig.hasEverPlayed_MainMenu == false) {
-    gamerSettings[iVar1].commonConfig.hasEverPlayed_MainMenu = true;
-    Com_Printf(0xe,
-               "Profile: Marking that profile has ever played the main menu, for controller #%i.\n")
-    ;
+  if ((&DAT_82b43dd8)[iVar2 * 0xca8] == '\0') {
+    (&DAT_82b43dd8)[iVar2 * 0xca8] = 1;
+    Com_Printf(0xe,0xffffffff8203a0e0,uVar1);
   }
   return;
 }
@@ -3026,21 +2940,20 @@ void SetHasEverPlayed_MainMenu_f(void)
 
 // 8235D768  SetHasEverPlayed_SP_f  (client/gamerprofile.cpp:3463)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SetHasEverPlayed_SP_f(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
+  int iVar2;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xd8c
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = Cmd_LocalControllerIndex();
+  iVar2 = (int)uVar1;
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0xd8c,0,0xffffffff8203991c,uVar1,0,4);
   }
-  if (gamerSettings[iVar1].commonConfig.hasEverPlayed_SP == false) {
-    gamerSettings[iVar1].commonConfig.hasEverPlayed_SP = true;
-    Com_Printf(0xe,"Profile: Marking that profile has ever played SP, for controller #%i.\n");
+  if ((&DAT_82b43dd9)[iVar2 * 0xca8] == '\0') {
+    (&DAT_82b43dd9)[iVar2 * 0xca8] = 1;
+    Com_Printf(0xe,0xffffffff8203a138,uVar1);
   }
   return;
 }
@@ -3048,21 +2961,20 @@ void SetHasEverPlayed_SP_f(void)
 
 // 8235D808  SetHasEverPlayed_SO_f  (client/gamerprofile.cpp:3480)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SetHasEverPlayed_SO_f(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
+  int iVar2;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xd9d
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = Cmd_LocalControllerIndex();
+  iVar2 = (int)uVar1;
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0xd9d,0,0xffffffff8203991c,uVar1,0,4);
   }
-  if (gamerSettings[iVar1].commonConfig.hasEverPlayed_SO == false) {
-    gamerSettings[iVar1].commonConfig.hasEverPlayed_SO = true;
-    Com_Printf(0xe,"Profile: Marking that profile has ever played SO, for controller #%i.\n");
+  if ((&DAT_82b43dda)[iVar2 * 0xca8] == '\0') {
+    (&DAT_82b43dda)[iVar2 * 0xca8] = 1;
+    Com_Printf(0xe,0xffffffff8203a180,uVar1);
   }
   return;
 }
@@ -3070,21 +2982,20 @@ void SetHasEverPlayed_SO_f(void)
 
 // 8235D8A8  SetHasEverPlayed_MP_f  (client/gamerprofile.cpp:3497)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SetHasEverPlayed_MP_f(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
+  int iVar2;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xdae
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = Cmd_LocalControllerIndex();
+  iVar2 = (int)uVar1;
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0xdae,0,0xffffffff8203991c,uVar1,0,4);
   }
-  if (gamerSettings[iVar1].commonConfig.hasEverPlayed_MP == false) {
-    gamerSettings[iVar1].commonConfig.hasEverPlayed_MP = true;
-    Com_Printf(0xe,"Profile: Marking that profile has ever played MP, for controller #%i.\n");
+  if ((&DAT_82b43ddb)[iVar2 * 0xca8] == '\0') {
+    (&DAT_82b43ddb)[iVar2 * 0xca8] = 1;
+    Com_Printf(0xe,0xffffffff8203a1c8,uVar1);
   }
   return;
 }
@@ -3092,37 +3003,37 @@ void SetHasEverPlayed_MP_f(void)
 
 // 8235D948  SetVolume_f  (client/gamerprofile.cpp:3515)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SetVolume_f(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   int iVar2;
-  char *pcVar3;
+  int iVar3;
+  char *_String;
   double dVar4;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xdc2
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = Cmd_LocalControllerIndex();
+  iVar2 = (int)uVar1;
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0xdc2,0,0xffffffff8203991c,uVar1,0,4);
   }
-  iVar2 = Cmd_Argc();
-  if (iVar2 < 2) {
-    Cmd_Argv(0);
-    Com_PrintError(0xf,"Not enough arguments for \"%s\".\n");
+  iVar2 = iVar2 * 0xca8;
+  iVar3 = Cmd_Argc();
+  if (iVar3 < 2) {
+    uVar1 = Cmd_Argv(0);
+    Com_PrintError(0xf,0xffffffff82039de8,uVar1);
   }
   else {
-    pcVar3 = Cmd_Argv(1);
-    dVar4 = atof(pcVar3);
-    gamerSettings[iVar1].commonConfig.snd_volume = (float)dVar4;
+    _String = (char *)Cmd_Argv(1);
+    dVar4 = atof(_String);
+    *(float *)(&DAT_82b43da0 + iVar2) = (float)dVar4;
     if ((float)dVar4 < 0.0) {
-      gamerSettings[iVar1].commonConfig.snd_volume = 0.0;
+      *(undefined4 *)(&DAT_82b43da0 + iVar2) = 0;
     }
-    if (5.0 < gamerSettings[iVar1].commonConfig.snd_volume) {
-      gamerSettings[iVar1].commonConfig.snd_volume = 5.0;
+    if (5.0 < *(float *)(&DAT_82b43da0 + iVar2)) {
+      *(undefined4 *)(&DAT_82b43da0 + iVar2) = 0x40a00000;
     }
-    Com_Printf(0xe,"Profile: Volume set to %.2f for controller #%i.\n");
+    Com_Printf(0xe,0xffffffff8203a210,(double)*(float *)(&DAT_82b43da0 + iVar2),uVar1);
   }
   return;
 }
@@ -3130,43 +3041,41 @@ void SetVolume_f(void)
 
 // 8235DA50  SetGamma_f  (client/gamerprofile.cpp:3543)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SetGamma_f(void)
 
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  int iVar4;
-  int iVar5;
-  char *pcVar6;
-  double dVar7;
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  char *_String;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   
-  iVar4 = Cmd_LocalControllerIndex();
-  if ((iVar4 < 0) || (4 < iVar4)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xddc
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = Cmd_LocalControllerIndex();
+  iVar2 = (int)uVar1;
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0xddc,0,0xffffffff8203991c,uVar1,0,4);
   }
-  iVar5 = Cmd_Argc();
-  if (iVar5 < 2) {
-    Cmd_Argv(0);
-    Com_PrintError(0xf,"Not enough arguments for \"%s\".\n");
+  iVar3 = Cmd_Argc();
+  if (iVar3 < 2) {
+    uVar1 = Cmd_Argv(0);
+    Com_PrintError(0xf,0xffffffff82039de8,uVar1);
   }
   else {
-    pcVar6 = Cmd_Argv(1);
-    dVar7 = atof(pcVar6);
-    fVar1 = (float)dVar7;
-    fVar2 = 3.0;
-    if (fVar1 - 3.0 < 0.0) {
-      fVar2 = fVar1;
+    _String = (char *)Cmd_Argv(1);
+    dVar4 = atof(_String);
+    dVar6 = (double)(float)dVar4;
+    dVar4 = 3.0;
+    if ((float)(dVar6 - 3.0) < 0.0) {
+      dVar4 = dVar6;
     }
-    fVar3 = 0.5;
-    if (0.5 - fVar1 < 0.0) {
-      fVar3 = fVar2;
+    dVar5 = 0.5;
+    if ((float)(0.5 - dVar6) < 0.0) {
+      dVar5 = dVar4;
     }
-    gamerSettings[iVar4].commonConfig.gamma = fVar3;
-    Com_Printf(0xe,"Profile: Gamma set to %.2f for controller #%i.\n");
+    *(float *)(&DAT_82b43dd4 + iVar2 * 0xca8) = (float)dVar5;
+    Com_Printf(0xe,0xffffffff8203a248,dVar5,uVar1);
   }
   return;
 }
@@ -3174,43 +3083,41 @@ void SetGamma_f(void)
 
 // 8235DB48  SetBlacklevel_f  (client/gamerprofile.cpp:3564)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SetBlacklevel_f(void)
 
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  int iVar4;
-  int iVar5;
-  char *pcVar6;
-  double dVar7;
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  char *_String;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   
-  iVar4 = Cmd_LocalControllerIndex();
-  if ((iVar4 < 0) || (4 < iVar4)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xdf1
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = Cmd_LocalControllerIndex();
+  iVar2 = (int)uVar1;
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0xdf1,0,0xffffffff8203991c,uVar1,0,4);
   }
-  iVar5 = Cmd_Argc();
-  if (iVar5 < 2) {
-    Cmd_Argv(0);
-    Com_PrintError(0xf,"Not enough arguments for \"%s\".\n");
+  iVar3 = Cmd_Argc();
+  if (iVar3 < 2) {
+    uVar1 = Cmd_Argv(0);
+    Com_PrintError(0xf,0xffffffff82039de8,uVar1);
   }
   else {
-    pcVar6 = Cmd_Argv(1);
-    dVar7 = atof(pcVar6);
-    fVar1 = (float)dVar7;
-    fVar2 = 0.99;
-    if (fVar1 - 0.99 < 0.0) {
-      fVar2 = fVar1;
+    _String = (char *)Cmd_Argv(1);
+    dVar4 = atof(_String);
+    dVar6 = (double)(float)dVar4;
+    dVar4 = 0.9900000095367432;
+    if ((float)(dVar6 - 0.9900000095367432) < 0.0) {
+      dVar4 = dVar6;
     }
-    fVar3 = -0.99;
-    if (-0.99 - fVar1 < 0.0) {
-      fVar3 = fVar2;
+    dVar5 = -0.9900000095367432;
+    if ((float)(-0.9900000095367432 - dVar6) < 0.0) {
+      dVar5 = dVar4;
     }
-    gamerSettings[iVar4].commonConfig.blacklevel = fVar3;
-    Com_Printf(0xe,"Profile: Blacklevel set to %.2f for controller #%i.\n");
+    *(float *)(&DAT_82b43da4 + iVar2 * 0xca8) = (float)dVar5;
+    Com_Printf(0xe,0xffffffff8203a278,dVar5,uVar1);
   }
   return;
 }
@@ -3218,36 +3125,42 @@ void SetBlacklevel_f(void)
 
 // 8235DC40  ToggleCanSkipOffensiveMissions_f  (client/gamerprofile.cpp:3585)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void ToggleCanSkipOffensiveMissions_f(void)
 
 {
-  bool bVar1;
-  int iVar2;
+  char cVar1;
+  undefined8 uVar2;
   int iVar3;
-  char *pcVar4;
-  bool bVar5;
+  int iVar4;
+  char *_Str;
+  undefined8 uVar5;
+  bool bVar6;
   
   __savegprlr_29();
-  iVar2 = Cmd_LocalControllerIndex();
-  if ((iVar2 < 0) || (4 < iVar2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xe07
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar2 = Cmd_LocalControllerIndex();
+  iVar3 = (int)uVar2;
+  if ((iVar3 < 0) || (4 < iVar3)) {
+    MyAssertHandler(0xffffffff82039730,0xe07,0,0xffffffff8203991c,uVar2,0,4);
   }
-  bVar1 = gamerSettings[iVar2].commonConfig.delicateFlower;
-  iVar3 = Cmd_Argc();
-  if (iVar3 < 2) {
-    bVar5 = bVar1 == false;
+  cVar1 = (&DAT_82b43dde)[iVar3 * 0xca8];
+  iVar4 = Cmd_Argc();
+  if (iVar4 < 2) {
+    bVar6 = cVar1 == '\0';
   }
   else {
-    pcVar4 = Cmd_Argv(1);
-    iVar3 = atoi(pcVar4);
-    bVar5 = iVar3 != 0;
-    if (bVar5 == bVar1) goto LAB_8235dd18;
+    _Str = (char *)Cmd_Argv(1);
+    iVar4 = atoi(_Str);
+    bVar6 = iVar4 != 0;
+    if (bVar6 == (bool)cVar1) goto LAB_8235dd18;
   }
-  *(bool *)(iVar2 * 0xca8 + -0x7d4bc222) = bVar5;
-  Com_Printf(0xe,"Profile: canSkipOffensiveMissions toggled %s for controller #%i.\n");
+  (&DAT_82b43dde)[iVar3 * 0xca8] = bVar6;
+  if (bVar6 == false) {
+    uVar5 = 0xffffffff82039da8;
+  }
+  else {
+    uVar5 = 0xffffffff82039dac;
+  }
+  Com_Printf(0xe,0xffffffff8203a2b0,uVar5,uVar2);
 LAB_8235dd18:
   __restgprlr_29();
   return;
@@ -3255,8 +3168,6 @@ LAB_8235dd18:
 
 
 // 8235DD20  UpdatePatchNotesVersion_f  (client/gamerprofile.cpp:3616)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void UpdatePatchNotesVersion_f(void)
 
@@ -3267,8 +3178,6 @@ void UpdatePatchNotesVersion_f(void)
 
 // 8235DD28  UpdateGameInfosVersion_f  (client/gamerprofile.cpp:3640)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void UpdateGameInfosVersion_f(void)
 
 {
@@ -3278,47 +3187,40 @@ void UpdateGameInfosVersion_f(void)
 
 // 8235DD30  DevReset_f  (client/gamerprofile.cpp:3810)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DevReset_f(void)
 
 {
-  int iVar1;
+  longlong lVar1;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xee7
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  lVar1 = Cmd_LocalControllerIndex();
+  if (((int)lVar1 < 0) || (4 < (int)lVar1)) {
+    MyAssertHandler(0xffffffff82039730,0xee7,0,0xffffffff8203991c,lVar1,0,4);
   }
-  Com_Memset(gamerSettings + iVar1,0,0xca8);
-  SetProfileDefaults(gamerSettings + iVar1);
+  lVar1 = lVar1 * 0xca8 + -0x7d4bc268;
+  Com_Memset(lVar1,0,0xca8);
+  SetProfileDefaults(lVar1);
   return;
 }
 
 
 // 8235DDC0  DevTest_f  (client/gamerprofile.cpp:3824)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DevTest_f(void)
 
 {
-  int iVar1;
+  longlong lVar1;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xef5
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  lVar1 = Cmd_LocalControllerIndex();
+  if (((int)lVar1 < 0) || (4 < (int)lVar1)) {
+    MyAssertHandler(0xffffffff82039730,0xef5,0,0xffffffff8203991c,lVar1,0,4);
   }
-  I_strncpyz(gamerSettings[iVar1].commonConfig.gpadButtonsConfig,"hahahlol",0x20);
-  I_strncpyz(gamerSettings[iVar1].commonConfig.gpadSticksConfig,"no_no fu",0x20);
+  I_strncpyz(lVar1 * 0xca8 + -0x7d4bc21f,0xffffffff8203a300,0x20);
+  I_strncpyz(lVar1 * 0xca8 + -0x7d4bc1ff,0xffffffff8203a2f4,0x20);
   return;
 }
 
 
 // 8235DE60  DevResetCheats_f  (client/gamerprofile.cpp:3839)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DevResetCheats_f(void)
 
@@ -3329,21 +3231,20 @@ void DevResetCheats_f(void)
 
 // 8235DE68  SetHasEverLaunchedEliteApp_f  (client/gamerprofile.cpp:3870)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SetHasEverLaunchedEliteApp_f(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
+  int iVar2;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xf23
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = Cmd_LocalControllerIndex();
+  iVar2 = (int)uVar1;
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0xf23,0,0xffffffff8203991c,uVar1,0,4);
   }
-  if (gamerSettings[iVar1].commonConfig.hasEverLaunchedEliteApp == false) {
-    gamerSettings[iVar1].commonConfig.hasEverLaunchedEliteApp = true;
-    Com_Printf(0xe,"Profile: Marking that profile has launched elite app, for controller #%i.\n");
+  if ((&DAT_82b44094)[iVar2 * 0xca8] == '\0') {
+    (&DAT_82b44094)[iVar2 * 0xca8] = 1;
+    Com_Printf(0xe,0xffffffff8203a310,uVar1);
   }
   return;
 }
@@ -3351,101 +3252,84 @@ void SetHasEverLaunchedEliteApp_f(void)
 
 // 8235DF08  TheaterRecordingToggle_f  (client/gamerprofile.cpp:3888)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TheaterRecordingToggle_f(void)
 
 {
-  int iVar1;
+  char cVar1;
+  undefined8 uVar2;
+  int iVar3;
+  undefined8 uVar4;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xf35
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar2 = Cmd_LocalControllerIndex();
+  iVar3 = (int)uVar2;
+  if ((iVar3 < 0) || (4 < iVar3)) {
+    MyAssertHandler(0xffffffff82039730,0xf35,0,0xffffffff8203991c,uVar2,0,4);
   }
-  *(bool *)(iVar1 * 0xca8 + -0x7d4bba0c) =
-       gamerSettings[iVar1].exeConfig.isTheaterRecordingDisabled == false;
-  Com_Printf(0xe,"Profile: Theater toggled %s for controller #%i.\n");
+  cVar1 = (&DAT_82b445f4)[iVar3 * 0xca8];
+  (&DAT_82b445f4)[iVar3 * 0xca8] = cVar1 == '\0';
+  if (cVar1 == '\0') {
+    uVar4 = 0xffffffff82039da8;
+  }
+  else {
+    uVar4 = 0xffffffff82039dac;
+  }
+  Com_Printf(0xe,0xffffffff8203a35c,uVar4,uVar2);
   return;
 }
 
 
 // 8235DFC0  GamerProfile_RegisterCommands  (client/gamerprofile.cpp:3903)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void GamerProfile_RegisterCommands(void)
 
 {
-  Cmd_AddCommandInternal
-            ("profile_menuDvarsSetup",GamerProfile_OptionsMenuDvarsSetup_f,
-             &GamerProfile_OptionsMenuDvarsSetup_f_VAR);
-  Cmd_AddCommandInternal
-            ("profile_menuDvarsFinish",GamerProfile_OptionsMenuDvarsFinish_f,
-             &GamerProfile_OptionsMenuDvarsFinish_f_VAR);
-  Cmd_AddCommandInternal
-            ("profile_toggleInvertedPitch",InvertedPitchToggle_f,&InvertedPitchToggle_f_VAR);
-  Cmd_AddCommandInternal
-            ("profile_setViewSensitivity",SetViewSensitivity_f,&SetViewSensitivity_f_VAR);
-  Cmd_AddCommandInternal("profile_setButtonsConfig",SetButtonsConfig_f,&SetButtonsConfig_f_VAR);
-  Cmd_AddCommandInternal("profile_setSticksConfig",SetSticksConfig_f,&SetSticksConfig_f_VAR);
-  Cmd_AddCommandInternal
-            ("profile_execControllerBindings",GamerProfile_ExecControllerBindings_f,
-             &GamerProfile_ExecControllerBindings_f_VAR);
-  Cmd_AddCommandInternal("profile_toggleAutoAim",AutoAimToggle_f,&AutoAimToggle_f_VAR);
-  Cmd_AddCommandInternal("profile_toggleColorBlind",ColorBlindToggle_f,&ColorBlindToggle_f_VAR);
-  Cmd_AddCommandInternal
-            ("profile_SetHasEverPlayed_MainMenu",SetHasEverPlayed_MainMenu_f,
-             &SetHasEverPlayed_MainMenu_f_VAR);
-  Cmd_AddCommandInternal
-            ("profile_SetHasEverPlayed_SP",SetHasEverPlayed_SP_f,&SetHasEverPlayed_SP_f_VAR);
-  Cmd_AddCommandInternal
-            ("profile_SetHasEverPlayed_SO",SetHasEverPlayed_SO_f,&SetHasEverPlayed_SO_f_VAR);
-  Cmd_AddCommandInternal
-            ("profile_SetHasEverPlayed_MP",SetHasEverPlayed_MP_f,&SetHasEverPlayed_MP_f_VAR);
-  Cmd_AddCommandInternal("profile_setVolume",SetVolume_f,&SetVolume_f_VAR);
-  Cmd_AddCommandInternal("profile_setGamma",SetGamma_f,&SetGamma_f_VAR);
-  Cmd_AddCommandInternal("profile_setBlacklevel",SetBlacklevel_f,&SetBlacklevel_f_VAR);
-  Cmd_AddCommandInternal
-            ("profile_toggleCanSkipOffensiveMissions",ToggleCanSkipOffensiveMissions_f,
-             &ToggleCanSkipOffensiveMissions_f_VAR);
-  Cmd_AddCommandInternal("profile_resetCheats",DevResetCheats_f,&DevResetCheats_f_VAR);
-  Cmd_AddCommandInternal("profile_devReset",DevReset_f,&DevReset_f_VAR);
-  Cmd_AddCommandInternal("profile_devTest",DevTest_f,&DevTest_f_VAR);
-  Cmd_AddCommandInternal("profile_toggleRumble",RumbleToggle_f,&RumbleToggle_f_VAR);
-  Cmd_AddCommandInternal
-            ("profile_updatePatchNotesVersion",UpdatePatchNotesVersion_f,
-             &UpdatePatchNotesVersion_f_VAR);
-  Cmd_AddCommandInternal
-            ("profile_updateGameInfosVersion",UpdateGameInfosVersion_f,&UpdateGameInfosVersion_f_VAR
-            );
-  Cmd_AddCommandInternal
-            ("profile_SetHasEverLaunchedEliteApp",SetHasEverLaunchedEliteApp_f,
-             &SetHasEverLaunchedEliteApp_f_VAR);
-  Cmd_AddCommandInternal
-            ("profile_toggleTheaterRecording",TheaterRecordingToggle_f,&TheaterRecordingToggle_f_VAR
-            );
+  Cmd_AddCommandInternal(0xffffffff8203a61c,0xffffffff8235d080,0xffffffff82b4a69c);
+  Cmd_AddCommandInternal(0xffffffff8203a604,0xffffffff8235d1d0,0xffffffff82b4a688);
+  Cmd_AddCommandInternal(0xffffffff8203a5e8,0xffffffff8235cc58,0xffffffff82b4a674);
+  Cmd_AddCommandInternal(0xffffffff8203a5cc,0xffffffff8235cd18,0xffffffff82b4a660);
+  Cmd_AddCommandInternal(0xffffffff8203a5b0,0xffffffff8235d490,0xffffffff82b4a64c);
+  Cmd_AddCommandInternal(0xffffffff8203a598,0xffffffff8235d498,0xffffffff82b4a638);
+  Cmd_AddCommandInternal(0xffffffff8203a578,0xffffffff8235d2f0,0xffffffff82b4a624);
+  Cmd_AddCommandInternal(0xffffffff8203a560,0xffffffff8235d4a0,0xffffffff82b4a610);
+  Cmd_AddCommandInternal(0xffffffff8203a544,0xffffffff8235d558,0xffffffff82b4a5fc);
+  Cmd_AddCommandInternal(0xffffffff8203a520,0xffffffff8235d6c8,0xffffffff82b4a5e8);
+  Cmd_AddCommandInternal(0xffffffff8203a504,0xffffffff8235d768,0xffffffff82b4a5d4);
+  Cmd_AddCommandInternal(0xffffffff8203a4e8,0xffffffff8235d808,0xffffffff82b4a5c0);
+  Cmd_AddCommandInternal(0xffffffff8203a4cc,0xffffffff8235d8a8,0xffffffff82b4a5ac);
+  Cmd_AddCommandInternal(0xffffffff8203a4b8,0xffffffff8235d948,0xffffffff82b4a598);
+  Cmd_AddCommandInternal(0xffffffff8203a4a4,0xffffffff8235da50,0xffffffff82b4a584);
+  Cmd_AddCommandInternal(0xffffffff8203a48c,0xffffffff8235db48,0xffffffff82b4a570);
+  Cmd_AddCommandInternal(0xffffffff8203a464,0xffffffff8235dc40,0xffffffff82b4a55c);
+  Cmd_AddCommandInternal(0xffffffff8203a450,0xffffffff8235de60,0xffffffff82b4a548);
+  Cmd_AddCommandInternal(0xffffffff8203a43c,0xffffffff8235dd30,0xffffffff82b4a534);
+  Cmd_AddCommandInternal(0xffffffff8203a42c,0xffffffff8235ddc0,0xffffffff82b4a520);
+  Cmd_AddCommandInternal(0xffffffff8203a414,0xffffffff8235d610,0xffffffff82b4a50c);
+  Cmd_AddCommandInternal(0xffffffff8203a3f4,0xffffffff8235dd20,0xffffffff82b4a4f8);
+  Cmd_AddCommandInternal(0xffffffff8203a3d4,0xffffffff8235dd28,0xffffffff82b4a4e4);
+  Cmd_AddCommandInternal(0xffffffff8203a3b0,0xffffffff8235de68,0xffffffff82b4a4d0);
+  Cmd_AddCommandInternal(0xffffffff8203a390,0xffffffff8235df08,0xffffffff82b4a4bc);
   return;
 }
 
 
 // 823613F8  GamerProfile_SetPercentCompleteMP  (client/gamerprofile.cpp:3973)
 
-void GamerProfile_SetPercentCompleteMP(int param_1,int param_2)
+void GamerProfile_SetPercentCompleteMP(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
+  undefined8 uVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xf88
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  uVar1 = __savegprlr_29();
+  iVar2 = (int)uVar1;
+  if ((iVar2 < 0) || (4 < iVar2)) {
+    MyAssertHandler(0xffffffff82039730,0xf88,0,0xffffffff8203991c,uVar1,0,4);
   }
-  if (gamerSettings[iVar1].commonConfig.percentCompleteMP != param_2) {
-    Com_Printf(0xe,"Setting MP Completion to %i percent for controller #%i.\n");
-    gamerSettings[iVar1].commonConfig.percentCompleteMP = param_2;
-    GamerProfile_SaveProfile(iVar1);
-    StoreSettingsToLastSaved(iVar1);
+  if (*(int *)(&DAT_82b43dc8 + iVar2 * 0xca8) != (int)param_2) {
+    Com_Printf(0xe,0xffffffff8203aec4,param_2,uVar1);
+    *(int *)(&DAT_82b43dc8 + iVar2 * 0xca8) = (int)param_2;
+    GamerProfile_SaveProfile(uVar1);
+    StoreSettingsToLastSaved(uVar1);
   }
   __restgprlr_29();
   return;
@@ -3454,52 +3338,42 @@ void GamerProfile_SetPercentCompleteMP(int param_1,int param_2)
 
 // 8235E298  GamerProfile_UpdateSystemDvars  (client/gamerprofile.cpp:3997)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void GamerProfile_UpdateSystemDvars(void)
 
 {
-  float fVar1;
+  undefined8 uVar1;
   int iVar2;
   
   __savegprlr_27();
-  iVar2 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
+  uVar1 = CL_ControllerIndexFromClientNum(0);
+  iVar2 = (int)uVar1;
   if ((iVar2 < 0) || (4 < iVar2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xfa2
-                    ,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+    MyAssertHandler(0xffffffff82039730,0xfa2,0,0xffffffff8203991c,uVar1,0,4);
   }
-  fVar1 = gamerSettings[iVar2].commonConfig.gamma;
-  if ((r_gamma->current).value != fVar1) {
-    Dvar_SetFloat(r_gamma,fVar1);
+  iVar2 = iVar2 * 0xca8;
+  if (*(float *)(DAT_845aa5e0 + 0xc) != *(float *)(&DAT_82b43dd4 + iVar2)) {
+    Dvar_SetFloat();
   }
-  fVar1 = gamerSettings[iVar2].commonConfig.blacklevel;
-  if ((r_blacklevel->current).value != fVar1) {
-    Dvar_SetFloat(r_blacklevel,fVar1);
+  if (*(float *)(DAT_845aa6fc + 0xc) != *(float *)(&DAT_82b43da4 + iVar2)) {
+    Dvar_SetFloat();
   }
-  if (snd_volume == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xfae
-                    ,0,"%s");
+  if (DAT_8487d9b8 == 0) {
+    MyAssertHandler(0xffffffff82039730,0xfae,0,0xffffffff82000f98,0xffffffff8203a670);
   }
-  fVar1 = gamerSettings[iVar2].commonConfig.snd_volume;
-  if ((snd_volume->current).value != fVar1) {
-    Dvar_SetFloat(snd_volume,fVar1);
+  if (*(float *)(DAT_8487d9b8 + 0xc) != *(float *)(&DAT_82b43da0 + iVar2)) {
+    Dvar_SetFloat();
   }
-  if (safeArea_adjusted_horizontal == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xfb4
-                    ,0,"%s");
+  if (DAT_82b5c718 == 0) {
+    MyAssertHandler(0xffffffff82039730,0xfb4,0,0xffffffff82000f98,0xffffffff8203a650);
   }
-  if (safeArea_adjusted_vertical == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xfb5
-                    ,0,"%s");
+  if (DAT_82b5c55c == 0) {
+    MyAssertHandler(0xffffffff82039730,0xfb5,0,0xffffffff82000f98,0xffffffff8203a634);
   }
-  fVar1 = gamerSettings[iVar2].commonConfig.safearea_adjusted_horizontal;
-  if ((safeArea_adjusted_horizontal->current).value != fVar1) {
-    Dvar_SetFloat(safeArea_adjusted_horizontal,fVar1);
+  if (*(float *)(DAT_82b5c718 + 0xc) != *(float *)(&DAT_82b43db0 + iVar2)) {
+    Dvar_SetFloat(DAT_82b5c718);
   }
-  fVar1 = gamerSettings[iVar2].commonConfig.safearea_adjusted_vertical;
-  if ((safeArea_adjusted_vertical->current).value != fVar1) {
-    Dvar_SetFloat(safeArea_adjusted_vertical,fVar1);
+  if (*(float *)(DAT_82b5c55c + 0xc) != *(float *)(&DAT_82b43db4 + iVar2)) {
+    Dvar_SetFloat();
   }
   __restgprlr_27();
   return;
@@ -3508,220 +3382,195 @@ void GamerProfile_UpdateSystemDvars(void)
 
 // 8235E420  GamerProfile_GetDataType  (client/gamerprofile.cpp:4031)
 
-GamerProfileDataType GamerProfile_GetDataType(int param_1)
+undefined4 GamerProfile_GetDataType(uint param_1)
 
 {
-  if (0x2f < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xfc0
-                    ,0,
-                    "dataIndex doesn\'t index ARRAY_COUNT( g_profileDataFields ) + ARCADE_MAX_SCORES\n\t%i not in [0, %i)"
-                   );
+  if (0x2f < param_1) {
+    MyAssertHandler(0xffffffff82039730,0xfc0,0,0xffffffff8203a680,param_1,0x30);
   }
-  return g_profileDataFields[param_1].type;
+  return *(undefined4 *)(&DAT_82038f30 + param_1 * 0x10);
 }
 
 
 // 8235E488  GamerProfile_GetDataIndexByName  (client/gamerprofile.cpp:4044)
 
-int GamerProfile_GetDataIndexByName(char *param_1)
+void GamerProfile_GetDataIndexByName(void)
 
 {
-  char *pcVar1;
+  ulonglong uVar1;
   int iVar2;
   ulonglong uVar3;
-  GamerProfileDataField *pGVar4;
+  undefined **ppuVar4;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xfcf
-                    ,0,"%s");
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0xfcf,0,0xffffffff82000f98,0xffffffff8203a6e4);
   }
   uVar3 = 0;
-  pGVar4 = g_profileDataFields;
+  ppuVar4 = &PTR_s_percentcompletesp_82038f28;
   do {
-    iVar2 = I_stricmp(pcVar1,pGVar4->settingName);
+    iVar2 = I_stricmp(uVar1,*ppuVar4);
     if (iVar2 == 0) {
-      iVar2 = __restgprlr_29(uVar3);
-      return iVar2;
+      __restgprlr_29(uVar3);
+      return;
     }
     uVar3 = uVar3 + 1;
-    pGVar4 = pGVar4 + 1;
+    ppuVar4 = ppuVar4 + 4;
   } while ((uVar3 & 0xffffffff) < 0x30);
-  iVar2 = __restgprlr_29(0xffffffffffffffff);
-  return iVar2;
+  __restgprlr_29(0xffffffffffffffff);
+  return;
 }
 
 
 // 8235E510  GetDataByName  (client/gamerprofile.cpp:4071)
 
-GamerProfileData GetDataByName(GamerSettingState *param_1,char *param_2)
+void GetDataByName(undefined8 param_1,ulonglong param_2)
 
 {
   undefined4 uVar1;
-  undefined2 uVar2;
+  int iVar2;
+  uint uVar3;
   int iVar4;
-  uint uVar5;
-  GamerProfileData GVar3;
-  ulonglong uVar6;
-  GamerProfileDataType local_30;
+  int local_30;
   undefined1 uStack_2c;
   undefined1 uStack_2b;
   undefined2 uStack_2a;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_29(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",0xfec
-                    ,0,"%s");
+  iVar2 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0xfec,0,0xffffffff82000f98,0xffffffff8203a6e4);
   }
-  local_30 = TYPE_INVALID;
+  local_30 = 0;
   uStack_2c = 0;
   uStack_2b = 0;
   uStack_2a = 0;
-  uVar5 = GamerProfile_GetDataIndexByName((char *)uVar6);
-  if (-1 < (int)uVar5) {
-    if (0x2f < uVar5) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                      0xfff,0,
-                      "index doesn\'t index ARRAY_COUNT( g_profileDataFields )\n\t%i not in [0, %i)"
-                     );
+  uVar3 = GamerProfile_GetDataIndexByName(param_2);
+  if (-1 < (int)uVar3) {
+    if (0x2f < uVar3) {
+      MyAssertHandler(0xffffffff82039730,0xfff,0,0xffffffff8203a6f0,uVar3,0x30);
     }
-    local_30 = g_profileDataFields[uVar5].type;
-    if (local_30 - TYPE_BYTE < 7) {
-      if (local_30 != TYPE_BOOL) {
-        if (local_30 == TYPE_SHORT) {
-          uVar2 = *(undefined2 *)(g_profileDataFields[uVar5].offset + iVar4);
-          uStack_2c = (undefined1)((ushort)uVar2 >> 8);
-          uStack_2b = (undefined1)uVar2;
-          GVar3 = (GamerProfileData)
-                  __restgprlr_29((ulonglong)CONCAT51(CONCAT41(3,uStack_2c),uStack_2b) << 0x10);
-          return GVar3;
+    iVar4 = uVar3 * 0x10;
+    local_30 = *(int *)(&DAT_82038f30 + iVar4);
+    if (local_30 - 1U < 7) {
+      if (local_30 != 2) {
+        if (local_30 == 3) {
+          uStack_2c = (undefined1)
+                      ((ushort)*(undefined2 *)(*(int *)(&DAT_82038f2c + iVar4) + iVar2) >> 8);
+          uStack_2b = (undefined1)*(undefined2 *)(*(int *)(&DAT_82038f2c + iVar4) + iVar2);
+          __restgprlr_29((ulonglong)CONCAT51(CONCAT41(3,uStack_2c),uStack_2b) << 0x10);
+          return;
         }
-        if (local_30 == TYPE_INT) {
-          uVar1 = *(undefined4 *)(g_profileDataFields[uVar5].offset + iVar4);
+        if (local_30 == 4) {
+          uVar1 = *(undefined4 *)(*(int *)(&DAT_82038f2c + iVar4) + iVar2);
           uStack_2c = (undefined1)((uint)uVar1 >> 0x18);
           uStack_2b = (undefined1)((uint)uVar1 >> 0x10);
           uStack_2a = (undefined2)uVar1;
-          GVar3 = (GamerProfileData)
-                  __restgprlr_29(CONCAT62(CONCAT51(CONCAT41(4,uStack_2c),uStack_2b),uStack_2a));
-          return GVar3;
+          __restgprlr_29(CONCAT62(CONCAT51(CONCAT41(4,uStack_2c),uStack_2b),uStack_2a));
+          return;
         }
-        if (local_30 == TYPE_FLOAT) {
-          uVar1 = *(undefined4 *)(g_profileDataFields[uVar5].offset + iVar4);
+        if (local_30 == 5) {
+          uVar1 = *(undefined4 *)(*(int *)(&DAT_82038f2c + iVar4) + iVar2);
           uStack_2c = (undefined1)((uint)uVar1 >> 0x18);
           uStack_2b = (undefined1)((uint)uVar1 >> 0x10);
           uStack_2a = (undefined2)uVar1;
-          GVar3 = (GamerProfileData)
-                  __restgprlr_29(CONCAT62(CONCAT51(CONCAT41(5,uStack_2c),uStack_2b),uStack_2a));
-          return GVar3;
+          __restgprlr_29(CONCAT62(CONCAT51(CONCAT41(5,uStack_2c),uStack_2b),uStack_2a));
+          return;
         }
-        if ((local_30 == TYPE_STRING) || (local_30 != TYPE_BYTE)) {
-          iVar4 = g_profileDataFields[uVar5].offset + iVar4;
-          uStack_2c = (undefined1)((uint)iVar4 >> 0x18);
-          uStack_2b = (undefined1)((uint)iVar4 >> 0x10);
-          uStack_2a = (undefined2)iVar4;
+        if ((local_30 == 6) || (local_30 != 1)) {
+          iVar2 = *(int *)(&DAT_82038f2c + iVar4) + iVar2;
+          uStack_2c = (undefined1)((uint)iVar2 >> 0x18);
+          uStack_2b = (undefined1)((uint)iVar2 >> 0x10);
+          uStack_2a = (undefined2)iVar2;
           goto LAB_8235e660;
         }
       }
-      GVar3 = (GamerProfileData)
-              __restgprlr_29((ulonglong)
-                             CONCAT41(local_30,*(undefined1 *)
-                                                (g_profileDataFields[uVar5].offset + iVar4)) << 0x18
-                            );
-      return GVar3;
+      __restgprlr_29((ulonglong)
+                     CONCAT41(local_30,*(undefined1 *)(*(int *)(&DAT_82038f2c + iVar4) + iVar2)) <<
+                     0x18);
+      return;
     }
   }
 LAB_8235e660:
-  GVar3 = (GamerProfileData)
-          __restgprlr_29(CONCAT62(CONCAT51(CONCAT41(local_30,uStack_2c),uStack_2b),uStack_2a));
-  return GVar3;
+  __restgprlr_29(CONCAT62(CONCAT51(CONCAT41(local_30,uStack_2c),uStack_2b),uStack_2a));
+  return;
 }
 
 
 // 8235E670  GamerProfile_GetDataByName  (client/gamerprofile.cpp:4133)
 
-GamerProfileData GamerProfile_GetDataByName(int param_1,char *param_2)
+void GamerProfile_GetDataByName(longlong param_1,undefined8 param_2)
 
 {
-  GamerProfileData GVar1;
-  
-  if ((param_1 < 0) || (4 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1026,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  if (((int)param_1 < 0) || (4 < (int)param_1)) {
+    MyAssertHandler(0xffffffff82039730,0x1026,0,0xffffffff8203991c,param_1,0,4);
   }
-  GVar1 = GetDataByName(gamerSettings + param_1,param_2);
-  return GVar1;
+  GetDataByName(param_1 * 0xca8 + -0x7d4bc268,param_2);
+  return;
 }
 
 
 // 8235E6F8  SetData  (client/gamerprofile.cpp:4148)
 
-void SetData(GamerSettingState *param_1,int param_2,GamerProfileData param_3)
+void * SetData(void *param_1,uint param_2,ulonglong param_3)
 
 {
-  GamerProfileDataType GVar1;
-  GamerProfileData GStack00000020;
+  int iVar1;
+  void *pvVar2;
+  int iVar3;
+  ulonglong uStack00000020;
   
-  GStack00000020 = param_3;
-  if (0x2f < (uint)param_2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1037,0,
-                    "dataIndex doesn\'t index ARRAY_COUNT( g_profileDataFields ) + ARCADE_MAX_SCORES\n\t%i not in [0, %i)"
-                   );
+  uStack00000020 = param_3;
+  pvVar2 = param_1;
+  if (0x2f < param_2) {
+    pvVar2 = (void *)MyAssertHandler(0xffffffff82039730,0x1037,0,0xffffffff8203a680,param_2,0x30);
   }
-  GVar1 = g_profileDataFields[param_2].type;
-  if (6 < GVar1 - TYPE_BYTE) {
-    return;
+  iVar3 = param_2 * 0x10;
+  iVar1 = *(int *)(&DAT_82038f30 + iVar3);
+  if (6 < iVar1 - 1U) {
+    return pvVar2;
   }
-  if (GVar1 != TYPE_BOOL) {
-    if (GVar1 == TYPE_SHORT) {
-      *(undefined2 *)
-       ((param_1->commonConfig).gpadButtonsConfig + g_profileDataFields[param_2].offset + -0x49) =
-           GStack00000020.u.shortVal;
-      return;
+  if (iVar1 != 2) {
+    if (iVar1 == 3) {
+      *(undefined2 *)(*(int *)(&DAT_82038f2c + iVar3) + (int)param_1) = uStack00000020._4_2_;
+      return pvVar2;
     }
-    if (GVar1 == TYPE_INT) {
-      ((GamerProfileDataUnion *)
-      ((param_1->commonConfig).gpadButtonsConfig + g_profileDataFields[param_2].offset + -0x49))->
-      stringVal = (char *)GStack00000020.u;
-      return;
+    if (iVar1 == 4) {
+      *(void **)(*(int *)(&DAT_82038f2c + iVar3) + (int)param_1) = uStack00000020._4_4_;
+      return pvVar2;
     }
-    if (GVar1 == TYPE_FLOAT) {
-      ((GamerProfileDataUnion *)
-      ((param_1->commonConfig).gpadButtonsConfig + g_profileDataFields[param_2].offset + -0x49))->
-      stringVal = (char *)GStack00000020.u;
-      return;
+    if (iVar1 == 5) {
+      *(void **)(*(int *)(&DAT_82038f2c + iVar3) + (int)param_1) = uStack00000020._4_4_;
+      return pvVar2;
     }
-    if (GVar1 == TYPE_STRING) {
-      I_strncpyz((param_1->commonConfig).gpadButtonsConfig +
-                 g_profileDataFields[param_2].offset + -0x49,GStack00000020.u.stringVal,
-                 g_profileDataFields[param_2].size);
-      return;
+    if (iVar1 == 6) {
+      pvVar2 = (void *)I_strncpyz(*(int *)(&DAT_82038f2c + iVar3) + (int)param_1,
+                                  uStack00000020 & 0xffffffff,*(undefined4 *)(&DAT_82038f34 + iVar3)
+                                 );
+      return pvVar2;
     }
-    if (GVar1 != TYPE_BYTE) {
-      memcpy();
-      return;
+    if (iVar1 != 1) {
+      pvVar2 = memcpy((void *)(*(int *)(&DAT_82038f2c + iVar3) + (int)param_1),uStack00000020._4_4_,
+                      *(size_t *)(&DAT_82038f34 + iVar3));
+      return pvVar2;
     }
   }
-  (param_1->commonConfig).gpadButtonsConfig[g_profileDataFields[param_2].offset + -0x49] =
-       GStack00000020.u.byteVal;
-  return;
+  *(undefined1 *)(*(int *)(&DAT_82038f2c + iVar3) + (int)param_1) = uStack00000020._4_1_;
+  return pvVar2;
 }
 
 
 // 8235E828  GamerProfile_SetData  (client/gamerprofile.cpp:4197)
 
-void GamerProfile_SetData(int param_1,int param_2,GamerProfileData param_3)
+void GamerProfile_SetData(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
+  longlong lVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  if ((iVar1 < 0) || (4 < iVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1066,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  lVar1 = __savegprlr_29();
+  if (((int)lVar1 < 0) || (4 < (int)lVar1)) {
+    MyAssertHandler(0xffffffff82039730,0x1066,0,0xffffffff8203991c,lVar1,0,4);
   }
-  SetData(gamerSettings + iVar1,param_2,param_3);
+  SetData(lVar1 * 0xca8 + -0x7d4bc268,param_2,param_3);
   __restgprlr_29();
   return;
 }
@@ -3729,92 +3578,134 @@ void GamerProfile_SetData(int param_1,int param_2,GamerProfileData param_3)
 
 // 8235E8A0  GamerProfile_GetSticksConfig  (client/gamerprofile.cpp:4222)
 
-char * GamerProfile_GetSticksConfig(int param_1)
+longlong GamerProfile_GetSticksConfig(longlong param_1)
 
 {
-  if ((param_1 < 0) || (4 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1081,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  if (((int)param_1 < 0) || (4 < (int)param_1)) {
+    MyAssertHandler(0xffffffff82039730,0x1081,0,0xffffffff8203991c,param_1,0,4);
   }
-  return gamerSettings[param_1].commonConfig.gpadSticksConfig;
+  return param_1 * 0xca8 + -0x7d4bc1ff;
 }
 
 
 // 8235E918  GamerProfile_GetButtonsConfig  (client/gamerprofile.cpp:4233)
 
-char * GamerProfile_GetButtonsConfig(int param_1)
+longlong GamerProfile_GetButtonsConfig(longlong param_1)
 
 {
-  if ((param_1 < 0) || (4 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x108c,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  if (((int)param_1 < 0) || (4 < (int)param_1)) {
+    MyAssertHandler(0xffffffff82039730,0x108c,0,0xffffffff8203991c,param_1,0,4);
   }
-  return gamerSettings[param_1].commonConfig.gpadButtonsConfig;
+  return param_1 * 0xca8 + -0x7d4bc21f;
 }
 
 
 // 8235E990  GetControllerIndexForDisplay  (client/gamerprofile.cpp:4246)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int GetControllerIndexForDisplay(int param_1)
+undefined8 GetControllerIndexForDisplay(undefined8 param_1)
 
 {
-  bool bVar2;
-  LocalClientNum_t LVar1;
+  char cVar2;
+  undefined8 uVar1;
   
-  bVar2 = CL_IsControllerActive(param_1);
-  if ((bVar2) &&
-     ((cl_multi_gamepads_enabled == 0 || (bVar2 = CL_IsSplitscreenControllerActive(param_1), bVar2))
-     )) {
-    LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-    return LVar1;
+  cVar2 = CL_IsControllerActive();
+  if ((cVar2 != '\0') &&
+     ((DAT_82966e98 == 0 || (cVar2 = CL_IsSplitscreenControllerActive(param_1), cVar2 != '\0')))) {
+    uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+    return uVar1;
   }
-  return -1;
+  return 0xffffffffffffffff;
 }
 
 
 // 8235EA10  GamerProfile_DebugDrawFullscreenInfo  (client/gamerprofile.cpp:4265)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void GamerProfile_DebugDrawFullscreenInfo(void)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  char *pcVar4;
+  undefined8 uVar2;
+  char cVar5;
+  ulonglong uVar6;
+  int iVar7;
+  char *pcVar8;
+  char *pcVar9;
+  uint local_8d0;
+  char *local_8c4;
+  undefined1 auStack_8a0 [2208];
+  
+  __savegprlr();
+  if (((DAT_82aa2964 != 0) && (DAT_82a9a00c != 0)) && (*(int *)(DAT_82a9a00c + 0xc) == 4)) {
+    uVar1 = ScrPlace_GetActivePlacement(0);
+    iVar3 = UI_GetFontHandle((double)DAT_82966460,uVar1,DAT_82966464);
+    if (iVar3 != 0) {
+      if (DAT_82aa295c != 0) {
+        CL_DrawStretchPic(0,0,0x4084000000000000,0x407e000000000000,0,0,0x3ff0000000000000,uVar1);
+      }
+      uVar6 = 0;
+      local_8d0 = 0;
+      local_8c4 = "^2-ACTIVE-";
+      iVar7 = 0;
+      do {
+        if ((int)uVar6 < 4) {
+          pcVar4 = (char *)GamerProfile_GetProfileSettings(uVar6);
+          pcVar8 = "yes";
+          if (pcVar4[1] == '\0') {
+            pcVar8 = "no";
+          }
+          pcVar9 = "^2yes";
+          if (*pcVar4 == '\0') {
+            pcVar9 = "no";
+          }
+          uVar2 = GetControllerIndexForDisplay(uVar6);
+          cVar5 = CL_IsControllerActive(uVar6);
+          pcVar4 = local_8c4;
+          if (cVar5 == '\0') {
+            pcVar4 = "(not active)";
+          }
+          Com_sprintf(auStack_8a0,0x800,0xffffffff8203a740,uVar6,pcVar4,uVar2,pcVar9,pcVar8);
+          UI_DrawText((double)((float)(longlong)iVar7 * DAT_8296644c + DAT_82966440),
+                      (double)DAT_82966444,(double)DAT_82966460,(int)uVar1,auStack_8a0,0x800,iVar3);
+          uVar6 = (ulonglong)local_8d0;
+          iVar7 = iVar7 + 1;
+        }
+        uVar6 = uVar6 + 1;
+        local_8d0 = (uint)uVar6;
+      } while ((int)local_8d0 < 5);
+    }
+  }
+  __restgprlr();
+  return;
+}
+
 
 // 8235ED70  GamerProfile_GetBitInfo  (client/gamerprofile.cpp:4447)
 
-void GamerProfile_GetBitInfo(int param_1,int param_2,int *param_3,int *param_4)
+void GamerProfile_GetBitInfo(undefined8 param_1,uint param_2,ulonglong param_3,ulonglong param_4)
 
 {
   uint uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_4;
-  uVar2 = (ulonglong)(int)param_3;
-  uVar1 = __savegprlr_26(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1160,0,"%s");
+  uVar1 = __savegprlr_26();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x1160,0,0xffffffff82000f98,0xffffffff8203aaac);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1161,0,"%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x1161,0,0xffffffff82000f98,0xffffffff8203aaa0);
   }
   if (0x2f < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1162,0,
-                    "dataIndex doesn\'t index ARRAY_COUNT( g_profileDataFields )\n\t%i not in [0, %i)"
-                   );
+    MyAssertHandler(0xffffffff82039730,0x1162,0,0xffffffff8203aa50,uVar1,0x30);
   }
-  *(uint *)uVar2 = param_2 >> 3;
-  if ((uint)g_profileDataFields[uVar1].size <= (uint)(param_2 >> 3)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1165,0,
-                    "*byteIndex doesn\'t index g_profileDataFields[dataIndex].size\n\t%i not in [0, %i)"
-                   );
-    *(uint *)uVar3 = param_2 & 7;
+  *(uint *)param_3 = (int)param_2 >> 3;
+  if (*(uint *)(&DAT_82038f34 + uVar1 * 0x10) <= (uint)((int)param_2 >> 3)) {
+    MyAssertHandler(0xffffffff82039730,0x1165,0,0xffffffff8203aa00);
+    *(uint *)param_4 = param_2 & 7;
     __restgprlr_26();
     return;
   }
-  *(uint *)uVar3 = param_2 & 7;
+  *(uint *)param_4 = param_2 & 7;
   __restgprlr_26();
   return;
 }
@@ -3822,42 +3713,33 @@ void GamerProfile_GetBitInfo(int param_1,int param_2,int *param_3,int *param_4)
 
 // 8235EE68  GamerProfile_SetBit  (client/gamerprofile.cpp:4460)
 
-void GamerProfile_SetBit(int param_1,int param_2,char *param_3)
+void GamerProfile_SetBit(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  uint uVar1;
-  uint uVar2;
-  ulonglong uVar3;
+  int iVar1;
+  ulonglong uVar2;
+  uint uVar3;
   int local_50;
   uint local_4c [19];
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar1 = __savegprlr_25(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1173,0,"%s");
+  uVar2 = __savegprlr_25();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x1173,0,0xffffffff82000f98,0xffffffff8203a6e4);
   }
-  if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1174,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82039730,0x1174,0,0xffffffff82031880,uVar2,4);
   }
-  uVar2 = GamerProfile_GetDataIndexByName((char *)uVar3);
-  if (0x2f < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1177,0,
-                    "dataIndex doesn\'t index ARRAY_COUNT( g_profileDataFields )\n\t%i not in [0, %i)"
-                   );
+  uVar3 = GamerProfile_GetDataIndexByName(param_3);
+  if (0x2f < uVar3) {
+    MyAssertHandler(0xffffffff82039730,0x1177,0,0xffffffff8203aa50,uVar3,0x30);
   }
-  if (g_profileDataFields[uVar2].type != TYPE_BITFIELD) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1178,0,"%s");
+  if (*(int *)(&DAT_82038f30 + uVar3 * 0x10) != 7) {
+    MyAssertHandler(0xffffffff82039730,0x1178,0,0xffffffff82000f98,0xffffffff8203aab8);
   }
-  GamerProfile_GetBitInfo(uVar2,param_2,&local_50,(int *)local_4c);
-  gamerSettings[uVar1].commonConfig.gpadButtonsConfig
-  [local_50 + g_profileDataFields[uVar2].offset + -0x49] =
-       (byte)(1 << (local_4c[0] & 0x3f)) |
-       gamerSettings[uVar1].commonConfig.gpadButtonsConfig
-       [local_50 + g_profileDataFields[uVar2].offset + -0x49];
+  GamerProfile_GetBitInfo(uVar3,param_2,&local_50,local_4c);
+  iVar1 = *(int *)(&DAT_82038f2c + uVar3 * 0x10) + (int)uVar2 * 0xca8;
+  (&DAT_82b43d98)[local_50 + iVar1] =
+       (byte)(1 << (local_4c[0] & 0x3f)) | (&DAT_82b43d98)[local_50 + iVar1];
   __restgprlr_25();
   return;
 }
@@ -3865,41 +3747,33 @@ void GamerProfile_SetBit(int param_1,int param_2,char *param_3)
 
 // 8235EFA0  GamerProfile_ClearBit  (client/gamerprofile.cpp:4484)
 
-void GamerProfile_ClearBit(int param_1,int param_2,char *param_3)
+void GamerProfile_ClearBit(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  uint uVar1;
-  uint uVar2;
-  ulonglong uVar3;
+  int iVar1;
+  ulonglong uVar2;
+  uint uVar3;
   int local_50;
   uint local_4c [19];
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar1 = __savegprlr_25(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x118b,0,"%s");
+  uVar2 = __savegprlr_25();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x118b,0,0xffffffff82000f98,0xffffffff8203a6e4);
   }
-  if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x118c,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82039730,0x118c,0,0xffffffff82031880,uVar2,4);
   }
-  uVar2 = GamerProfile_GetDataIndexByName((char *)uVar3);
-  if (0x2f < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x118f,0,
-                    "dataIndex doesn\'t index ARRAY_COUNT( g_profileDataFields )\n\t%i not in [0, %i)"
-                   );
+  uVar3 = GamerProfile_GetDataIndexByName(param_3);
+  if (0x2f < uVar3) {
+    MyAssertHandler(0xffffffff82039730,0x118f,0,0xffffffff8203aa50,uVar3,0x30);
   }
-  if (g_profileDataFields[uVar2].type != TYPE_BITFIELD) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1190,0,"%s");
+  if (*(int *)(&DAT_82038f30 + uVar3 * 0x10) != 7) {
+    MyAssertHandler(0xffffffff82039730,0x1190,0,0xffffffff82000f98,0xffffffff8203aab8);
   }
-  GamerProfile_GetBitInfo(uVar2,param_2,&local_50,(int *)local_4c);
-  gamerSettings[uVar1].commonConfig.gpadButtonsConfig
-  [local_50 + g_profileDataFields[uVar2].offset + -0x49] =
-       gamerSettings[uVar1].commonConfig.gpadButtonsConfig
-       [local_50 + g_profileDataFields[uVar2].offset + -0x49] & ~(byte)(1 << (local_4c[0] & 0x3f));
+  GamerProfile_GetBitInfo(uVar3,param_2,&local_50,local_4c);
+  iVar1 = *(int *)(&DAT_82038f2c + uVar3 * 0x10) + (int)uVar2 * 0xca8;
+  (&DAT_82b43d98)[local_50 + iVar1] =
+       (&DAT_82b43d98)[local_50 + iVar1] & ~(byte)(1 << (local_4c[0] & 0x3f));
   __restgprlr_25();
   return;
 }
@@ -3907,159 +3781,140 @@ void GamerProfile_ClearBit(int param_1,int param_2,char *param_3)
 
 // 8235F0D8  GamerProfile_GetBit  (client/gamerprofile.cpp:4508)
 
-bool GamerProfile_GetBit(int param_1,int param_2,char *param_3)
+void GamerProfile_GetBit(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  uint uVar1;
+  ulonglong uVar1;
   uint uVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
   int local_50;
   uint local_4c [19];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar1 = __savegprlr_25(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x11a3,0,"%s");
+  uVar1 = __savegprlr_25();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x11a3,0,0xffffffff82000f98,0xffffffff8203a6e4);
   }
-  if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x11a4,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82039730,0x11a4,0,0xffffffff82031880,uVar1,4);
   }
-  uVar2 = GamerProfile_GetDataIndexByName((char *)uVar4);
+  uVar2 = GamerProfile_GetDataIndexByName(param_3);
   if (0x2f < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x11a7,0,
-                    "dataIndex doesn\'t index ARRAY_COUNT( g_profileDataFields )\n\t%i not in [0, %i)"
-                   );
+    MyAssertHandler(0xffffffff82039730,0x11a7,0,0xffffffff8203aa50,uVar2,0x30);
   }
-  if (g_profileDataFields[uVar2].type != TYPE_BITFIELD) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x11a8,0,"%s");
+  if (*(int *)(&DAT_82038f30 + uVar2 * 0x10) != 7) {
+    MyAssertHandler(0xffffffff82039730,0x11a8,0,0xffffffff82000f98,0xffffffff8203aab8);
   }
-  GamerProfile_GetBitInfo(uVar2,param_2,&local_50,(int *)local_4c);
-  uVar3 = __restgprlr_25(((uint)(byte)gamerSettings[uVar1].commonConfig.gpadButtonsConfig
-                                      [local_50 + g_profileDataFields[uVar2].offset + -0x49] &
-                         1 << (local_4c[0] & 0x3f)) != 0);
-  return (bool)uVar3;
+  GamerProfile_GetBitInfo(uVar2,param_2,&local_50,local_4c);
+  __restgprlr_25(((uint)(byte)(&DAT_82b43d98)
+                              [*(int *)(&DAT_82038f2c + uVar2 * 0x10) + (int)uVar1 * 0xca8 +
+                               local_50] & 1 << (local_4c[0] & 0x3f)) != 0);
+  return;
 }
 
 
 // 8235F210  GamerProfile_AnyBit  (client/gamerprofile.cpp:4533)
 
-bool GamerProfile_AnyBit(int param_1,char *param_2)
+void GamerProfile_AnyBit(undefined8 param_1,ulonglong param_2)
 
 {
-  uint uVar1;
+  ulonglong uVar1;
   uint uVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  int iVar5;
+  int iVar3;
+  int iVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x11ba,0,"%s");
+  uVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82039730,0x11ba,0,0xffffffff82000f98,0xffffffff8203a6e4);
   }
-  if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x11bb,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82039730,0x11bb,0,0xffffffff82031880,uVar1,4);
   }
-  uVar2 = GamerProfile_GetDataIndexByName((char *)uVar4);
+  uVar2 = GamerProfile_GetDataIndexByName(param_2);
   if (0x2f < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x11be,0,
-                    "dataIndex doesn\'t index ARRAY_COUNT( g_profileDataFields )\n\t%i not in [0, %i)"
-                   );
+    MyAssertHandler(0xffffffff82039730,0x11be,0,0xffffffff8203aa50,uVar2,0x30);
   }
-  if (g_profileDataFields[uVar2].type == TYPE_BITFIELD) {
-    iVar5 = 0;
-    if (0 < g_profileDataFields[uVar2].size) {
+  iVar3 = uVar2 * 0x10;
+  if (*(int *)(&DAT_82038f30 + iVar3) == 7) {
+    iVar4 = 0;
+    if (0 < *(int *)(&DAT_82038f34 + iVar3)) {
       do {
-        if (gamerSettings[uVar1].commonConfig.gpadButtonsConfig
-            [iVar5 + g_profileDataFields[uVar2].offset + -0x49] != '\0') {
-          uVar3 = __restgprlr_29(1);
-          return (bool)uVar3;
+        if ((&DAT_82b43d98)[iVar4 + *(int *)(&DAT_82038f2c + iVar3) + (int)uVar1 * 0xca8] != '\0') {
+          __restgprlr_29(1);
+          return;
         }
-        iVar5 = iVar5 + 1;
-      } while (iVar5 < g_profileDataFields[uVar2].size);
+        iVar4 = iVar4 + 1;
+      } while (iVar4 < *(int *)(&DAT_82038f34 + iVar3));
     }
   }
-  uVar3 = __restgprlr_29(0);
-  return (bool)uVar3;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 8235F330  GamerProfile_UpdateProfileCardUnlocks  (client/gamerprofile.cpp:4561)
 
-void GamerProfile_UpdateProfileCardUnlocks(int param_1,StatsSource param_2)
+void GamerProfile_UpdateProfileCardUnlocks(void)
 
 {
-  char *pcVar1;
-  char *pcVar2;
-  int iVar3;
-  bool bVar7;
-  int iVar4;
-  char *pcVar5;
-  int iVar6;
-  uint uVar8;
-  int iVar9;
-  StringTable *local_80;
-  StringTable *local_7c;
-  int local_78 [2];
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined8 uVar3;
+  char cVar6;
+  int iVar5;
+  undefined8 uVar4;
+  uint uVar7;
+  longlong lVar8;
+  int local_80;
+  int local_7c [3];
   char *local_70 [6];
-  StructuredDataBuffer aSStack_58 [11];
+  undefined1 auStack_58 [88];
   
-  iVar3 = __savegprlr_23(param_1,param_2);
+  uVar3 = __savegprlr_23();
   local_70[3] = "titleUnlocked";
   local_70[0] = "mp/cardIconTable.csv";
-  uVar8 = 0;
+  uVar7 = 0;
   local_70[2] = "iconUnlocked";
-  local_78[0] = 0;
+  local_7c[1] = 0;
   local_70[1] = "mp/cardTitleTable.csv";
   local_70[4] = "iconNew";
   local_70[5] = "titleNew";
-  local_78[1] = 0;
-  bVar7 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_58,iVar3);
-  if (bVar7) {
-    StringTable_GetAsset("mp/unlocktable.csv",&local_7c);
-    if (local_7c == (StringTable *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                      0x11e7,0,"%s");
+  local_7c[2] = 0;
+  cVar6 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_58,uVar3);
+  if (cVar6 != '\0') {
+    StringTable_GetAsset(0xffffffff82026898,local_7c);
+    if (local_7c[0] == 0) {
+      MyAssertHandler(0xffffffff82039730,0x11e7,0,0xffffffff82000f98,0xffffffff8203aafc);
     }
     do {
-      StringTable_GetAsset(*(char **)((int)local_70 + uVar8),&local_80);
-      if (local_80 == (StringTable *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                        0x11ec,0,"%s");
+      StringTable_GetAsset(*(undefined4 *)((int)local_70 + uVar7),&local_80);
+      if (local_80 == 0) {
+        MyAssertHandler(0xffffffff82039730,0x11ec,0,0xffffffff82000f98,0xffffffff8203aaf0);
       }
-      iVar4 = StringTable_GetRowCount(local_80);
-      pcVar1 = *(char **)((int)local_70 + uVar8 + 8);
-      GamerProfile_SetBit(iVar3,0,pcVar1);
-      pcVar2 = *(char **)((int)local_70 + uVar8 + 0x10);
-      GamerProfile_ClearBit(iVar3,0,pcVar2);
-      iVar9 = 1;
-      if (1 < iVar4) {
+      iVar5 = StringTable_GetRowCount(local_80);
+      uVar1 = *(undefined4 *)((int)local_70 + uVar7 + 8);
+      GamerProfile_SetBit(uVar3,0,uVar1);
+      uVar2 = *(undefined4 *)((int)local_70 + uVar7 + 0x10);
+      GamerProfile_ClearBit(uVar3,0,uVar2);
+      lVar8 = 1;
+      if (1 < iVar5) {
         do {
-          pcVar5 = StringTable_GetColumnValueForRow(local_80,iVar9,*(int *)((int)local_78 + uVar8));
-          iVar6 = StringTable_LookupRowNumForValue(local_7c,0,pcVar5);
-          if (-1 < iVar6) {
-            bVar7 = LiveStorage_IsItemUnlockedFromTable(aSStack_58,local_7c,iVar6);
-            if (bVar7) {
-              GamerProfile_SetBit(iVar3,iVar9,pcVar1);
+          uVar4 = StringTable_GetColumnValueForRow
+                            (local_80,lVar8,*(undefined4 *)((int)local_7c + uVar7 + 4));
+          uVar4 = StringTable_LookupRowNumForValue(local_7c[0],0,uVar4);
+          if (-1 < (int)uVar4) {
+            cVar6 = LiveStorage_IsItemUnlockedFromTable(auStack_58,local_7c[0],uVar4);
+            if (cVar6 == '\0') {
+              GamerProfile_ClearBit(uVar3,lVar8,uVar1);
+              GamerProfile_ClearBit(uVar3,lVar8,uVar2);
             }
             else {
-              GamerProfile_ClearBit(iVar3,iVar9,pcVar1);
-              GamerProfile_ClearBit(iVar3,iVar9,pcVar2);
+              GamerProfile_SetBit();
             }
           }
-          iVar9 = iVar9 + 1;
-        } while (iVar9 < iVar4);
+          lVar8 = lVar8 + 1;
+        } while ((int)lVar8 < iVar5);
       }
-      uVar8 = uVar8 + 4;
-    } while (uVar8 < 8);
+      uVar7 = uVar7 + 4;
+    } while (uVar7 < 8);
   }
   __restgprlr_23();
   return;
@@ -4068,97 +3923,86 @@ void GamerProfile_UpdateProfileCardUnlocks(int param_1,StatsSource param_2)
 
 // 8235F510  GamerProfile_IsCardIconNew  (client/gamerprofile.cpp:4633)
 
-bool GamerProfile_IsCardIconNew(int param_1,int param_2)
+void GamerProfile_IsCardIconNew(undefined8 param_1,undefined8 param_2)
 
 {
-  bool bVar1;
-  
-  bVar1 = GamerProfile_GetBit(param_1,param_2,"iconNew");
-  return bVar1;
+  GamerProfile_GetBit(param_1,param_2,0xffffffff820269fc);
+  return;
 }
 
 
 // 8235F520  GamerProfile_IsCardTitleNew  (client/gamerprofile.cpp:4639)
 
-bool GamerProfile_IsCardTitleNew(int param_1,int param_2)
+void GamerProfile_IsCardTitleNew(undefined8 param_1,undefined8 param_2)
 
 {
-  bool bVar1;
-  
-  bVar1 = GamerProfile_GetBit(param_1,param_2,"titleNew");
-  return bVar1;
+  GamerProfile_GetBit(param_1,param_2,0xffffffff820269f0);
+  return;
 }
 
 
 // 8235F530  GamerProfile_IsCardIconUnlocked  (client/gamerprofile.cpp:4645)
 
-bool GamerProfile_IsCardIconUnlocked(int param_1,int param_2)
+void GamerProfile_IsCardIconUnlocked(undefined8 param_1,undefined8 param_2)
 
 {
-  bool bVar1;
-  
-  bVar1 = GamerProfile_GetBit(param_1,param_2,"iconUnlocked");
-  return bVar1;
+  GamerProfile_GetBit(param_1,param_2,0xffffffff82026918);
+  return;
 }
 
 
 // 8235F540  GamerProfile_IsCardTitleUnlocked  (client/gamerprofile.cpp:4651)
 
-bool GamerProfile_IsCardTitleUnlocked(int param_1,int param_2)
+void GamerProfile_IsCardTitleUnlocked(undefined8 param_1,undefined8 param_2)
 
 {
-  bool bVar1;
-  
-  bVar1 = GamerProfile_GetBit(param_1,param_2,"titleUnlocked");
-  return bVar1;
+  GamerProfile_GetBit(param_1,param_2,0xffffffff820268e8);
+  return;
 }
 
 
 // 8235F550  GamerProfile_UpdateProfileItemUnlocks  (client/gamerprofile.cpp:4659)
 
-void GamerProfile_UpdateProfileItemUnlocks(int param_1,StatsSource param_2)
+void GamerProfile_UpdateProfileItemUnlocks(void)
 
 {
-  int iVar1;
-  bool bVar5;
-  int iVar2;
-  char *pcVar3;
-  int iVar4;
-  int iVar6;
-  StringTable *local_40;
-  StringTable *local_3c;
-  StructuredDataBuffer aSStack_38 [7];
+  undefined8 uVar1;
+  char cVar4;
+  int iVar3;
+  undefined8 uVar2;
+  longlong lVar5;
+  int local_40;
+  int local_3c;
+  undefined1 auStack_38 [56];
   
-  iVar1 = __savegprlr_28(param_1,param_2);
-  bVar5 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_38,iVar1);
-  if (bVar5) {
-    StringTable_GetAsset("mp/unlocktable.csv",&local_3c);
-    if (local_3c == (StringTable *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                      0x123f,0,"%s");
+  uVar1 = __savegprlr_28();
+  cVar4 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_38,uVar1);
+  if (cVar4 != '\0') {
+    StringTable_GetAsset(0xffffffff82026898,&local_3c);
+    if (local_3c == 0) {
+      MyAssertHandler(0xffffffff82039730,0x123f,0,0xffffffff82000f98,0xffffffff8203ab08);
     }
-    StringTable_GetAsset("mp/profileUnlockTable.csv",&local_40);
-    if (local_40 == (StringTable *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                      0x1242,0,"%s");
+    StringTable_GetAsset(0xffffffff82026958,&local_40);
+    if (local_40 == 0) {
+      MyAssertHandler(0xffffffff82039730,0x1242,0,0xffffffff82000f98,0xffffffff82026698);
     }
-    iVar2 = StringTable_GetRowCount(local_40);
-    iVar6 = 0;
-    if (0 < iVar2) {
+    iVar3 = StringTable_GetRowCount(local_40);
+    lVar5 = 0;
+    if (0 < iVar3) {
       do {
-        pcVar3 = StringTable_GetColumnValueForRow(local_40,iVar6,0);
-        iVar4 = StringTable_LookupRowNumForValue(local_3c,0,pcVar3);
-        if (-1 < iVar4) {
-          bVar5 = LiveStorage_IsItemUnlockedFromTable(aSStack_38,local_3c,iVar4);
-          if (bVar5) {
-            GamerProfile_SetBit(iVar1,iVar6,"unlock");
+        uVar2 = StringTable_GetColumnValueForRow(local_40,lVar5,0);
+        uVar2 = StringTable_LookupRowNumForValue(local_3c,0,uVar2);
+        if (-1 < (int)uVar2) {
+          cVar4 = LiveStorage_IsItemUnlockedFromTable(auStack_38,local_3c,uVar2);
+          if (cVar4 == '\0') {
+            GamerProfile_ClearBit(uVar1,lVar5,0xffffffff82026950);
           }
           else {
-            GamerProfile_ClearBit(iVar1,iVar6,"unlock");
+            GamerProfile_SetBit();
           }
         }
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < iVar2);
+        lVar5 = lVar5 + 1;
+      } while ((int)lVar5 < iVar3);
     }
   }
   __restgprlr_28();
@@ -4168,55 +4012,45 @@ void GamerProfile_UpdateProfileItemUnlocks(int param_1,StatsSource param_2)
 
 // 8235F688  GamerProfile_IsItemNew  (client/gamerprofile.cpp:4701)
 
-bool GamerProfile_IsItemNew(int param_1,int param_2)
+void GamerProfile_IsItemNew(undefined8 param_1,undefined8 param_2)
 
 {
-  bool bVar1;
-  
-  bVar1 = GamerProfile_GetBit(param_1,param_2,"unlockNew");
-  return bVar1;
+  GamerProfile_GetBit(param_1,param_2,0xffffffff820269e4);
+  return;
 }
 
 
 // 8235F698  GamerProfile_IsItemUnlocked  (client/gamerprofile.cpp:4707)
 
-bool GamerProfile_IsItemUnlocked(int param_1,int param_2)
+void GamerProfile_IsItemUnlocked(undefined8 param_1,undefined8 param_2)
 
 {
-  bool bVar1;
-  
-  bVar1 = GamerProfile_GetBit(param_1,param_2,"unlock");
-  return bVar1;
+  GamerProfile_GetBit(param_1,param_2,0xffffffff82026950);
+  return;
 }
 
 
 // 8235F6A8  GamerProfile_UpdateProfileExperience  (client/gamerprofile.cpp:4715)
 
-void GamerProfile_UpdateProfileExperience(int param_1,StatsSource param_2)
+void GamerProfile_UpdateProfileExperience(void)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileData GVar2;
-  int iVar3;
-  bool bVar7;
-  GamerProfileDataType GVar4;
-  GamerProfileDataType GVar5;
-  int iVar6;
-  StructuredDataBuffer aSStack_28 [5];
+  undefined8 uVar1;
+  char cVar5;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  undefined8 uVar2;
+  undefined1 auStack_28 [40];
   
-  iVar3 = __savegprlr_29(param_1,param_2);
-  bVar7 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_28,iVar3);
-  if (bVar7) {
-    GVar4 = LiveStorage_PlayerDataGetIntByName(iVar3,"experience");
-    GVar5 = LiveStorage_PlayerDataGetIntByName(iVar3,"prestige");
-    iVar6 = GamerProfile_GetDataIndexByName("experience_MP");
-    GVar1.type = 4;
-    GVar1.u.intVal = GVar4;
-    GamerProfile_SetData(iVar3,iVar6,GVar1);
-    iVar6 = GamerProfile_GetDataIndexByName("prestige_MP");
-    GVar2.type = 4;
-    GVar2.u.intVal = GVar5;
-    GamerProfile_SetData(iVar3,iVar6,GVar2);
+  uVar1 = __savegprlr_29();
+  cVar5 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_28,uVar1);
+  if (cVar5 != '\0') {
+    uVar3 = LiveStorage_PlayerDataGetIntByName(uVar1,0xffffffff8203ab24);
+    uVar4 = LiveStorage_PlayerDataGetIntByName(uVar1,0xffffffff8203ab18);
+    uVar2 = GamerProfile_GetDataIndexByName(0xffffffff82038d50);
+    GamerProfile_SetData(uVar1,uVar2,CONCAT44(4,uVar3));
+    uVar2 = GamerProfile_GetDataIndexByName(0xffffffff82038d34);
+    GamerProfile_SetData(uVar1,uVar2,CONCAT44(4,uVar4));
   }
   __restgprlr_29();
   return;
@@ -4225,93 +4059,81 @@ void GamerProfile_UpdateProfileExperience(int param_1,StatsSource param_2)
 
 // 8235F748  GamerProfile_GetExperienceMP  (client/gamerprofile.cpp:4749)
 
-int GamerProfile_GetExperienceMP(int param_1)
+ulonglong GamerProfile_GetExperienceMP(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"experience_MP");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1291,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038d50);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x1291,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235F7A8  GamerProfile_GetExperienceSO  (client/gamerprofile.cpp:4760)
 
-int GamerProfile_GetExperienceSO(int param_1)
+ulonglong GamerProfile_GetExperienceSO(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"experience_SO");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x129c,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038d40);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x129c,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235F808  GamerProfile_GetPrestigeMP  (client/gamerprofile.cpp:4771)
 
-int GamerProfile_GetPrestigeMP(int param_1)
+ulonglong GamerProfile_GetPrestigeMP(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"prestige_MP");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x12a7,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038d34);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x12a7,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235F868  GamerProfile_GetPrestigeSO  (client/gamerprofile.cpp:4782)
 
-int GamerProfile_GetPrestigeSO(int param_1)
+ulonglong GamerProfile_GetPrestigeSO(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"prestige_SO");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x12b2,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038d28);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x12b2,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235F8C8  GamerProfile_UpdateProfileFromStats  (client/gamerprofile.cpp:4795)
 
-void GamerProfile_UpdateProfileFromStats(int param_1,StatsSource param_2)
+void GamerProfile_UpdateProfileFromStats(undefined8 param_1,int param_2)
 
 {
-  if (param_2 == STATS_ONLINE) {
-    GamerProfile_UpdateProfileCardUnlocks(param_1,STATS_ONLINE);
-    GamerProfile_UpdateProfileItemUnlocks(param_1,param_2);
-    GamerProfile_UpdateProfileExperience(param_1,param_2);
+  if (param_2 == 0) {
+    GamerProfile_UpdateProfileCardUnlocks();
+    GamerProfile_UpdateProfileItemUnlocks(param_1);
+    GamerProfile_UpdateProfileExperience(param_1);
   }
   return;
 }
@@ -4319,56 +4141,56 @@ void GamerProfile_UpdateProfileFromStats(int param_1,StatsSource param_2)
 
 // 8235F910  GamerProfile_IsColorBlind  (client/gamerprofile.cpp:4832)
 
-bool GamerProfile_IsColorBlind(int param_1)
+undefined1 GamerProfile_IsColorBlind(int param_1)
 
 {
-  return gamerSettings[param_1].commonConfig.colorBlind;
+  return (&DAT_82b43ddf)[param_1 * 0xca8];
 }
 
 
 // 8235F928  GamerProfile_IsFacebookEnabled  (client/gamerprofile.cpp:4838)
 
-bool GamerProfile_IsFacebookEnabled(int param_1)
+undefined8 GamerProfile_IsFacebookEnabled(void)
 
 {
-  return true;
+  return 1;
 }
 
 
 // 8235F930  GamerProfile_IsTheaterRecordingDisabled  (client/gamerprofile.cpp:4848)
 
-bool GamerProfile_IsTheaterRecordingDisabled(int param_1)
+undefined1 GamerProfile_IsTheaterRecordingDisabled(int param_1)
 
 {
-  return gamerSettings[param_1].exeConfig.isTheaterRecordingDisabled;
+  return (&DAT_82b445f4)[param_1 * 0xca8];
 }
 
 
 // 82361498  GamerProfile_UpdateProfileFromEliteClan  (client/gamerprofile.cpp:4859)
 
-void GamerProfile_UpdateProfileFromEliteClan(int param_1)
+void GamerProfile_UpdateProfileFromEliteClan(void)
 
 {
+  undefined4 extraout_var;
   int iVar2;
+  undefined8 uVar1;
   int iVar3;
-  GamerProfileData GVar1;
-  GamerProfileData local_40;
+  int iVar4;
+  undefined8 local_40;
   
-  iVar2 = __savegprlr_26(param_1);
-  iVar3 = GamerProfile_GetDataIndexByName("eliteClanTitleBg");
-  GVar1 = GamerProfile_GetDataByName(iVar2,"eliteClanTitleBg");
-  local_40.type = GVar1.type;
-  local_40.u.intVal = g_EliteClanStore[iVar2].publicProfile.m_membermotto_bg;
+  iVar2 = __savegprlr_26();
+  uVar1 = GamerProfile_GetDataIndexByName(0xffffffff82038cd0);
+  GamerProfile_GetDataByName(iVar2,0xffffffff82038cd0);
+  iVar3 = iVar2 * 0x66b8;
+  local_40 = CONCAT44(extraout_var,*(undefined4 *)(&DAT_84500664 + iVar3));
   if ((iVar2 < 0) || (4 < iVar2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1066,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+    MyAssertHandler(0xffffffff82039730,0x1066,0,0xffffffff8203991c,iVar2,0,4);
   }
-  SetData(gamerSettings + iVar2,iVar3,local_40);
-  I_strncpyz(gamerSettings[iVar2].commonConfig.eliteClanTitleText,
-             g_EliteClanStore[iVar2].publicProfile.m_membermotto,0x18);
-  I_strncpyz(gamerSettings[iVar2].commonConfig.eliteClanTagText,
-             g_EliteClanStore[iVar2].publicProfile.m_memberclantag,5);
-  if (gamerSettings[iVar2].isProfileLoggedIn != false) {
+  iVar4 = iVar2 * 0xca8;
+  SetData(&DAT_82b43d98 + iVar4,uVar1,local_40);
+  I_strncpyz(&DAT_82b44049 + iVar4,&DAT_8450066e + iVar3,0x18);
+  I_strncpyz(iVar4 + -0x7d4bbf98,&DAT_84500668 + iVar3,5);
+  if ((&DAT_82b43d98)[iVar4] != '\0') {
     GamerProfile_SaveProfile(iVar2);
     StoreSettingsToLastSaved(iVar2);
   }
@@ -4379,18 +4201,20 @@ void GamerProfile_UpdateProfileFromEliteClan(int param_1)
 
 // 82361590  GamerProfile_ClearEliteClan  (client/gamerprofile.cpp:4880)
 
-void GamerProfile_ClearEliteClan(int param_1)
+void GamerProfile_ClearEliteClan(void)
 
 {
   int iVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  gamerSettings[iVar1].commonConfig.eliteClanTitleBg = 0;
-  gamerSettings[iVar1].commonConfig.useEliteClanTitle = false;
-  gamerSettings[iVar1].commonConfig.useEliteClanTag = false;
-  I_strncpyz(gamerSettings[iVar1].commonConfig.eliteClanTitleText,"",0x18);
-  I_strncpyz(gamerSettings[iVar1].commonConfig.eliteClanTagText,"",5);
-  if (gamerSettings[iVar1].isProfileLoggedIn != false) {
+  iVar1 = __savegprlr_28();
+  iVar2 = iVar1 * 0xca8;
+  *(undefined4 *)(&DAT_82b44064 + iVar2) = 0;
+  (&DAT_82b44048)[iVar2] = 0;
+  (&DAT_82b44047)[iVar2] = 0;
+  I_strncpyz(&DAT_82b44049 + iVar2,0xffffffff820068af,0x18);
+  I_strncpyz(iVar2 + -0x7d4bbf98,0xffffffff820068af,5);
+  if ((&DAT_82b43d98)[iVar2] != '\0') {
     GamerProfile_SaveProfile(iVar1);
     StoreSettingsToLastSaved(iVar1);
   }
@@ -4401,58 +4225,55 @@ void GamerProfile_ClearEliteClan(int param_1)
 
 // 8235F948  GamerProfile_GetUsingEliteClanTag  (client/gamerprofile.cpp:4898)
 
-bool GamerProfile_GetUsingEliteClanTag(int param_1)
+undefined1 GamerProfile_GetUsingEliteClanTag(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
+  undefined8 uVar1;
+  undefined4 local_10;
   undefined1 uStack_c;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"useEliteClanTag");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_BOOL) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1326,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038d0c);
+  local_10 = (int)((ulonglong)uVar1 >> 0x20);
+  if (local_10 != 2) {
+    MyAssertHandler(0xffffffff82039730,0x1326,0,0xffffffff82000f98,0xffffffff8203ab50);
   }
-  uStack_c = GVar1.u._0_1_;
-  return (bool)uStack_c;
+  uStack_c = (undefined1)((ulonglong)uVar1 >> 0x18);
+  return uStack_c;
 }
 
 
 // 8235F9A8  GamerProfile_GetUsingEliteClanTitle  (client/gamerprofile.cpp:4909)
 
-bool GamerProfile_GetUsingEliteClanTitle(int param_1)
+undefined1 GamerProfile_GetUsingEliteClanTitle(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
+  undefined8 uVar1;
+  undefined4 local_10;
   undefined1 uStack_c;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"useEliteClanTitle");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_BOOL) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1331,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038cf8);
+  local_10 = (int)((ulonglong)uVar1 >> 0x20);
+  if (local_10 != 2) {
+    MyAssertHandler(0xffffffff82039730,0x1331,0,0xffffffff82000f98,0xffffffff8203ab50);
   }
-  uStack_c = GVar1.u._0_1_;
-  return (bool)uStack_c;
+  uStack_c = (undefined1)((ulonglong)uVar1 >> 0x18);
+  return uStack_c;
 }
 
 
 // 82361620  GamerProfile_SetUsingEliteClanTag  (client/gamerprofile.cpp:4919)
 
-void GamerProfile_SetUsingEliteClanTag(int param_1,bool param_2)
+void GamerProfile_SetUsingEliteClanTag(undefined8 param_1,undefined1 param_2)
 
 {
-  bool bVar1;
+  int iVar1;
   
-  if ((param_1 < 0) || (4 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x133a,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  iVar1 = (int)param_1;
+  if ((iVar1 < 0) || (4 < iVar1)) {
+    MyAssertHandler(0xffffffff82039730,0x133a,0,0xffffffff8203991c,param_1,0,4);
   }
-  bVar1 = gamerSettings[param_1].isProfileLoggedIn;
-  *(bool *)(param_1 * 0xca8 + -0x7d4bbfb9) = param_2;
-  if (bVar1 != false) {
+  (&DAT_82b44047)[iVar1 * 0xca8] = param_2;
+  if ((&DAT_82b43d98)[iVar1 * 0xca8] != '\0') {
     GamerProfile_SaveProfile(param_1);
     StoreSettingsToLastSaved(param_1);
   }
@@ -4462,18 +4283,17 @@ void GamerProfile_SetUsingEliteClanTag(int param_1,bool param_2)
 
 // 823616C0  GamerProfile_SetUsingEliteClanTitle  (client/gamerprofile.cpp:4936)
 
-void GamerProfile_SetUsingEliteClanTitle(int param_1,bool param_2)
+void GamerProfile_SetUsingEliteClanTitle(undefined8 param_1,undefined1 param_2)
 
 {
-  bool bVar1;
+  int iVar1;
   
-  if ((param_1 < 0) || (4 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x134b,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  iVar1 = (int)param_1;
+  if ((iVar1 < 0) || (4 < iVar1)) {
+    MyAssertHandler(0xffffffff82039730,0x134b,0,0xffffffff8203991c,param_1,0,4);
   }
-  bVar1 = gamerSettings[param_1].isProfileLoggedIn;
-  *(bool *)(param_1 * 0xca8 + -0x7d4bbfb8) = param_2;
-  if (bVar1 != false) {
+  (&DAT_82b44048)[iVar1 * 0xca8] = param_2;
+  if ((&DAT_82b43d98)[iVar1 * 0xca8] != '\0') {
     GamerProfile_SaveProfile(param_1);
     StoreSettingsToLastSaved(param_1);
   }
@@ -4483,91 +4303,84 @@ void GamerProfile_SetUsingEliteClanTitle(int param_1,bool param_2)
 
 // 8235FA08  GamerProfile_GetEliteClanTitleText  (client/gamerprofile.cpp:4953)
 
-char * GamerProfile_GetEliteClanTitleText(int param_1)
+ulonglong GamerProfile_GetEliteClanTitleText(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"eliteClanTitleText");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_STRING) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x135d,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038ce4);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 6) {
+    MyAssertHandler(0xffffffff82039730,0x135d,0,0xffffffff82000f98,0xffffffff8203ab70);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.stringVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235FA68  GamerProfile_GetEliteClanTitleBgIndex  (client/gamerprofile.cpp:4964)
 
-int GamerProfile_GetEliteClanTitleBgIndex(int param_1)
+ulonglong GamerProfile_GetEliteClanTitleBgIndex(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"eliteClanTitleBg");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1368,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038cd0);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x1368,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235FAC8  GamerProfile_GetEliteClanClanTagText  (client/gamerprofile.cpp:4975)
 
-char * GamerProfile_GetEliteClanClanTagText(int param_1)
+ulonglong GamerProfile_GetEliteClanClanTagText(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"eliteClanTagText");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_STRING) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1373,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038cbc);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 6) {
+    MyAssertHandler(0xffffffff82039730,0x1373,0,0xffffffff82000f98,0xffffffff8203ab70);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.stringVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 82361760  GamerProfile_UpdateProfilePastTitleData  (client/gamerprofile.cpp:4989)
 
-void GamerProfile_UpdateProfilePastTitleData(int param_1)
+void GamerProfile_UpdateProfilePastTitleData(void)
 
 {
   int iVar1;
-  ulong uVar2;
+  undefined8 uVar2;
+  undefined4 uVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  uVar2 = GetPastTitlePrestigeLevel(0x1442,iVar1);
-  gamerSettings[iVar1].commonConfig.prestige_black_ops = uVar2;
-  uVar2 = GetPastTitleRank(0x1442,iVar1);
-  gamerSettings[iVar1].commonConfig.rank_black_ops = uVar2;
-  uVar2 = GetPastTitlePrestigeLevel(0x41560817,iVar1);
-  gamerSettings[iVar1].commonConfig.prestige_mw2 = uVar2;
-  uVar2 = GetPastTitleRank(0x41560817,iVar1);
-  gamerSettings[iVar1].commonConfig.rank_mw2 = uVar2;
-  uVar2 = GetPastTitlePrestigeLevel(0x4156081c,iVar1);
-  gamerSettings[iVar1].commonConfig.prestige_world_at_war = uVar2;
-  uVar2 = GetPastTitleRank(0x4156081c,iVar1);
-  gamerSettings[iVar1].commonConfig.rank_world_at_war = uVar2;
-  uVar2 = GetPastTitlePrestigeLevel(0x415607e6,iVar1);
-  gamerSettings[iVar1].commonConfig.prestige_mw = uVar2;
-  uVar2 = GetPastTitleRank(0x415607e6,iVar1);
-  gamerSettings[iVar1].commonConfig.rank_mw = uVar2;
-  GamerProfile_SaveProfile(iVar1);
-  StoreSettingsToLastSaved(iVar1);
+  uVar2 = __savegprlr_29();
+  iVar1 = (int)uVar2 * 0xca8;
+  uVar3 = GetPastTitlePrestigeLevel(0x1442);
+  *(undefined4 *)(&DAT_82b44070 + iVar1) = uVar3;
+  uVar3 = GetPastTitleRank(0x1442,uVar2);
+  *(undefined4 *)(&DAT_82b44074 + iVar1) = uVar3;
+  uVar3 = GetPastTitlePrestigeLevel(0x41560817,uVar2);
+  *(undefined4 *)(&DAT_82b44078 + iVar1) = uVar3;
+  uVar3 = GetPastTitleRank(0x41560817,uVar2);
+  *(undefined4 *)(&DAT_82b4407c + iVar1) = uVar3;
+  uVar3 = GetPastTitlePrestigeLevel(0x4156081c,uVar2);
+  *(undefined4 *)(&DAT_82b44080 + iVar1) = uVar3;
+  uVar3 = GetPastTitleRank(0x4156081c,uVar2);
+  *(undefined4 *)(&DAT_82b44084 + iVar1) = uVar3;
+  uVar3 = GetPastTitlePrestigeLevel(0x415607e6,uVar2);
+  *(undefined4 *)(&DAT_82b44088 + iVar1) = uVar3;
+  uVar3 = GetPastTitleRank(0x415607e6,uVar2);
+  *(undefined4 *)(&DAT_82b4408c + iVar1) = uVar3;
+  GamerProfile_SaveProfile(uVar2);
+  StoreSettingsToLastSaved(uVar2);
   __restgprlr_29();
   return;
 }
@@ -4575,194 +4388,169 @@ void GamerProfile_UpdateProfilePastTitleData(int param_1)
 
 // 8235FB28  GamerProfile_GetPrestigeBlackOps  (client/gamerprofile.cpp:5005)
 
-int GamerProfile_GetPrestigeBlackOps(int param_1)
+ulonglong GamerProfile_GetPrestigeBlackOps(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"prestige_black_ops");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x1391,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038ca8);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x1391,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235FB88  GamerProfile_GetPrestigeMW2  (client/gamerprofile.cpp:5016)
 
-int GamerProfile_GetPrestigeMW2(int param_1)
+ulonglong GamerProfile_GetPrestigeMW2(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"prestige_mw2");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x139c,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038c88);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x139c,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235FBE8  GamerProfile_GetPrestigeWorldAtWar  (client/gamerprofile.cpp:5027)
 
-int GamerProfile_GetPrestigeWorldAtWar(int param_1)
+ulonglong GamerProfile_GetPrestigeWorldAtWar(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"prestige_world_at_war");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x13a7,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038c64);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x13a7,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235FC48  GamerProfile_GetPrestigeMW  (client/gamerprofile.cpp:5038)
 
-int GamerProfile_GetPrestigeMW(int param_1)
+ulonglong GamerProfile_GetPrestigeMW(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"prestige_mw");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x13b2,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038c44);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x13b2,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235FCA8  GamerProfile_GetRankBlackOps  (client/gamerprofile.cpp:5049)
 
-int GamerProfile_GetRankBlackOps(int param_1)
+ulonglong GamerProfile_GetRankBlackOps(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"rank_black_ops");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x13bd,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038c98);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x13bd,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235FD08  GamerProfile_GetRankMW2  (client/gamerprofile.cpp:5060)
 
-int GamerProfile_GetRankMW2(int param_1)
+ulonglong GamerProfile_GetRankMW2(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"rank_mw2");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x13c8,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038c7c);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x13c8,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235FD68  GamerProfile_GetRankWorldAtWar  (client/gamerprofile.cpp:5071)
 
-int GamerProfile_GetRankWorldAtWar(int param_1)
+ulonglong GamerProfile_GetRankWorldAtWar(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"rank_world_at_war");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x13d3,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038c50);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x13d3,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235FDC8  GamerProfile_GetRankMW  (client/gamerprofile.cpp:5082)
 
-int GamerProfile_GetRankMW(int param_1)
+ulonglong GamerProfile_GetRankMW(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"rank_mw");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x13de,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038c3c);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x13de,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 8235FE28  GamerProfile_GetInitialGameMode  (client/gamerprofile.cpp:5095)
 
-initialGameMode_t GamerProfile_GetInitialGameMode(int param_1)
+ulonglong GamerProfile_GetInitialGameMode(undefined8 param_1)
 
 {
-  GamerProfileData GVar1;
-  GamerProfileDataType local_10;
-  GamerProfileDataUnion GStack_c;
+  ulonglong uVar1;
+  undefined4 local_10;
   
-  GVar1 = GamerProfile_GetDataByName(param_1,"initialGameMode");
-  local_10 = GVar1.type;
-  if (local_10 != TYPE_INT) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x13eb,0,"%s");
+  uVar1 = GamerProfile_GetDataByName(param_1,0xffffffff82038c2c);
+  local_10 = (int)(uVar1 >> 0x20);
+  if (local_10 != 4) {
+    MyAssertHandler(0xffffffff82039730,0x13eb,0,0xffffffff82000f98,0xffffffff8203ab30);
   }
-  GStack_c = GVar1.u;
-  return GStack_c.intVal;
+  return uVar1 & 0xffffffff;
 }
 
 
 // 82361850  GamerProfile_SetInitialGameMode  (client/gamerprofile.cpp:5106)
 
-void GamerProfile_SetInitialGameMode(int param_1,initialGameMode_t param_2)
+void GamerProfile_SetInitialGameMode(undefined8 param_1,undefined4 param_2)
 
 {
-  if ((param_1 < 0) || (4 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
-                    0x13f5,0,"controllerIndex not in [0, MAX_GPAD_COUNT]\n\t%i not in [%i, %i]");
+  int iVar1;
+  
+  iVar1 = (int)param_1;
+  if ((iVar1 < 0) || (4 < iVar1)) {
+    MyAssertHandler(0xffffffff82039730,0x13f5,0,0xffffffff8203991c,param_1,0,4);
   }
-  gamerSettings[param_1].commonConfig.initialGameMode = param_2;
+  *(undefined4 *)(&DAT_82b44090 + iVar1 * 0xca8) = param_2;
   GamerProfile_SaveProfile(param_1);
   StoreSettingsToLastSaved(param_1);
   return;

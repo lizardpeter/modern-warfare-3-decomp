@@ -2,184 +2,163 @@
 
 // 828D1980  XAudioFrameBuffer_AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:17)
 
-ulong XAudioFrameBuffer_AddRef(IXAudioFrameBuffer *param_1)
+void XAudioFrameBuffer_AddRef(int param_1)
 
 {
-  IXAudioFrameBuffer *pIVar1;
-  ulong uVar2;
+  int *piVar1;
   
-  pIVar1 = param_1 + -8;
-  if (param_1 == (IXAudioFrameBuffer *)0x0) {
-    pIVar1 = (IXAudioFrameBuffer *)0x0;
+  piVar1 = (int *)(param_1 + -8);
+  if (param_1 == 0) {
+    piVar1 = (int *)0x0;
   }
                     /* WARNING: Could not recover jumptable at 0x828d199c. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  uVar2 = (**(code **)(*(int *)pIVar1 + 4))();
-  return uVar2;
+  (**(code **)(*piVar1 + 4))();
+  return;
 }
 
 
 // 828D19A0  XAudioFrameBuffer_Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:22)
 
-ulong XAudioFrameBuffer_Release(IXAudioFrameBuffer *param_1)
+void XAudioFrameBuffer_Release(int param_1)
 
 {
-  IXAudioFrameBuffer *pIVar1;
-  ulong uVar2;
+  int *piVar1;
   
-  pIVar1 = param_1 + -8;
-  if (param_1 == (IXAudioFrameBuffer *)0x0) {
-    pIVar1 = (IXAudioFrameBuffer *)0x0;
+  piVar1 = (int *)(param_1 + -8);
+  if (param_1 == 0) {
+    piVar1 = (int *)0x0;
   }
                     /* WARNING: Could not recover jumptable at 0x828d19bc. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  uVar2 = (**(code **)(*(int *)pIVar1 + 8))();
-  return uVar2;
+  (**(code **)(*piVar1 + 8))();
+  return;
 }
 
 
 // 828D19E8  XAudioFrameBuffer_GetProcessingData  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:32)
 
-undefined4
-XAudioFrameBuffer_GetProcessingData(IXAudioFrameBuffer *param_1,XAUDIOFRAMEBUFDATA *param_2)
+undefined8 XAudioFrameBuffer_GetProcessingData(int param_1,undefined4 *param_2)
 
 {
-  IXAudioFrameBuffer *pIVar1;
+  int iVar1;
   
-  pIVar1 = param_1 + -8;
-  if (param_1 == (IXAudioFrameBuffer *)0x0) {
-    pIVar1 = (IXAudioFrameBuffer *)0x0;
+  iVar1 = param_1 + -8;
+  if (param_1 == 0) {
+    iVar1 = 0;
   }
-  *(undefined4 *)&param_2->Format = *(undefined4 *)(pIVar1 + 0x14);
-  (param_2->Format)._s_0.SampleRate = *(ulong *)(pIVar1 + 0x18);
-  param_2->pSampleBuffer = *(float **)(pIVar1 + 0x1c);
+  *param_2 = *(undefined4 *)(iVar1 + 0x14);
+  param_2[1] = *(undefined4 *)(iVar1 + 0x18);
+  param_2[2] = *(undefined4 *)(iVar1 + 0x1c);
   return 0;
 }
 
 
 // 828D1D28  XAudioFrameBuffer_Prepare  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:42)
 
-undefined4
-XAudioFrameBuffer_Prepare(IXAudioFrameBuffer *param_1,XAUDIOFORMAT *param_2,uchar param_3)
+void XAudioFrameBuffer_Prepare(ulonglong param_1)
 
 {
-  CFrameBuffer *this;
-  T_HRESULT TVar1;
+  longlong lVar1;
   
-  this = (CFrameBuffer *)(param_1 + -8);
-  if (param_1 == (IXAudioFrameBuffer *)0x0) {
-    this = (CFrameBuffer *)0x0;
+  lVar1 = param_1 - 8;
+  if ((param_1 & 0xffffffff) == 0) {
+    lVar1 = 0;
   }
-  TVar1 = XAUDIO::CFrameBuffer::Prepare(this,param_2,param_3);
-  return TVar1;
+  XAUDIO__CFrameBuffer__Prepare(lVar1);
+  return;
 }
 
 
 // 828D1D40  XAudioQueryFrameBufferSize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:79)
 
-undefined4 XAudioQueryFrameBufferSize(XAUDIOFRAMEBUFINIT *param_1,ulong *param_2)
+undefined8 XAudioQueryFrameBufferSize(char *param_1,int *param_2)
 
 {
   ulonglong uVar1;
   int iVar2;
   
   iVar2 = 0;
-  if (param_1->Type == '\0') {
-    uVar1 = (ulonglong)(param_1->MaxFormat)._s_0.SampleRate;
+  if (*param_1 == '\0') {
+    trapWord(6,(ulonglong)*(uint *)(param_1 + 8),0);
+    uVar1 = 48000 / (ulonglong)*(uint *)(param_1 + 8);
     trapWord(6,uVar1,0);
-    uVar1 = 48000 / uVar1;
-    trapWord(6,uVar1,0);
-    iVar2 = ((int)(0x100 / uVar1) * (uint)(param_1->MaxFormat)._s_0.ChannelCount + 0x20) * 4;
+    iVar2 = ((int)(0x100 / uVar1) * (uint)(byte)param_1[5] + 0x20) * 4;
   }
   *param_2 = iVar2 + 0x24;
   return 0;
 }
 
 
-// 828D1B20  AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.h:105)
+// 828D1B20  XAUDIO::CFrameBuffer::AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.h:105)
 
-ulong __thiscall XAUDIO::CFrameBuffer::AddRef(CFrameBuffer *this)
+void XAUDIO__CFrameBuffer__AddRef(int param_1)
 
 {
-  ulong uVar1;
-  
-  uVar1 = *(int *)&this->field_0x4 + 1;
-  *(ulong *)&this->field_0x4 = uVar1;
-  return uVar1;
+  *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
+  return;
 }
 
 
 // 828D1D98  XAudioCreateFrameBuffer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:109)
 
-undefined4
-XAudioCreateFrameBuffer
-          (XAUDIOFRAMEBUFINIT *param_1,IXAudioBatchAllocator *param_2,IXAudioFrameBuffer **param_3)
+void XAudioCreateFrameBuffer(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  XAUDIOFRAMEBUFINIT *pXVar1;
-  CFrameBuffer *pCVar2;
-  undefined4 uVar3;
-  longlong lVar4;
-  longlong lVar5;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int *piVar3;
   
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  pXVar1 = (XAUDIOFRAMEBUFINIT *)__savegprlr_29(param_1,lVar4,lVar5);
-  pCVar2 = (CFrameBuffer *)(**(code **)((int)*(IXAudioBatchAllocator *)lVar4 + 0x14))(lVar4,0x24);
-  if (pCVar2 != (CFrameBuffer *)0x0) {
-    pCVar2 = XAUDIO::CFrameBuffer::CFrameBuffer(pCVar2,pXVar1,(IXAudioBatchAllocator *)lVar4);
-    if (pCVar2 != (CFrameBuffer *)0x0) {
-      (**(code **)(*(int *)pCVar2 + 0x14))(pCVar2,lVar5);
-      uVar3 = __restgprlr_29(0);
-      return uVar3;
-    }
+  uVar1 = __savegprlr_29();
+  uVar2 = (**(code **)(*(int *)param_2 + 0x14))(param_2,0x24);
+  if (((uVar2 & 0xffffffff) != 0) &&
+     (piVar3 = (int *)XAUDIO__CFrameBuffer__CFrameBuffer(uVar2,uVar1,param_2), piVar3 != (int *)0x0)
+     ) {
+    (**(code **)(*piVar3 + 0x14))(piVar3,param_3);
+    __restgprlr_29(0);
+    return;
   }
-  uVar3 = __restgprlr_29(0xffffffff8007000e);
-  return uVar3;
-}
-
-
-// 828D1B38  Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.h:110)
-
-ulong __thiscall XAUDIO::CFrameBuffer::Release(CFrameBuffer *this)
-
-{
-  longlong lVar1;
-  ulong uVar2;
-  
-  lVar1 = (ulonglong)*(uint *)&this->field_0x4 - 1;
-  uVar2 = (ulong)lVar1;
-  *(ulong *)&this->field_0x4 = uVar2;
-  if (lVar1 == 0) {
-    (**(code **)(*(int *)this + 0xc))();
-    return 0;
-  }
-  return uVar2;
-}
-
-
-// 828D1B90  QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.h:127)
-
-void __thiscall
-XAUDIO::CFrameBuffer::QueryInterface(CFrameBuffer *this,IXAudioFrameBuffer **param_1)
-
-{
-  IXAudioFrameBuffer *pIVar1;
-  
-  pIVar1 = (IXAudioFrameBuffer *)&this->m_Type;
-  if (this == (CFrameBuffer *)0x0) {
-    pIVar1 = (IXAudioFrameBuffer *)0x0;
-  }
-  *param_1 = pIVar1;
+  __restgprlr_29(0xffffffff8007000e);
   return;
 }
 
 
-// 828D1A18  CFrameBuffer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:149)
+// 828D1B38  XAUDIO::CFrameBuffer::Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.h:110)
 
-CFrameBuffer * __thiscall
-XAUDIO::CFrameBuffer::CFrameBuffer
-          (CFrameBuffer *this,XAUDIOFRAMEBUFINIT *param_1,IXAudioBatchAllocator *param_2)
+longlong XAUDIO__CFrameBuffer__Release(int *param_1)
+
+{
+  longlong lVar1;
+  
+  lVar1 = (ulonglong)(uint)param_1[1] - 1;
+  param_1[1] = (int)lVar1;
+  if (lVar1 == 0) {
+    (**(code **)(*param_1 + 0xc))();
+    return 0;
+  }
+  return lVar1;
+}
+
+
+// 828D1B90  XAUDIO::CFrameBuffer::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.h:127)
+
+void XAUDIO__CFrameBuffer__QueryInterface(int param_1,int *param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = param_1 + 8;
+  if (param_1 == 0) {
+    iVar1 = 0;
+  }
+  *param_2 = iVar1;
+  return;
+}
+
+
+// 828D1A18  XAUDIO::CFrameBuffer::CFrameBuffer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:149)
+
+void XAUDIO__CFrameBuffer__CFrameBuffer(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
   char cVar1;
@@ -187,139 +166,128 @@ XAUDIO::CFrameBuffer::CFrameBuffer
   uint uVar3;
   undefined4 *puVar4;
   int iVar5;
-  CFrameBuffer *pCVar6;
-  longlong lVar7;
-  char *pcVar8;
-  longlong lVar9;
-  ulonglong uVar10;
+  char *pcVar6;
+  ulonglong uVar7;
   
-  lVar9 = (longlong)(int)param_2;
-  lVar7 = (longlong)(int)param_1;
-  puVar4 = (undefined4 *)__savegprlr_29(this);
+  puVar4 = (undefined4 *)__savegprlr_29();
   puVar4[1] = 1;
-  *puVar4 = &_vftable_;
-  pcVar8 = (char *)lVar7;
-  cVar1 = *pcVar8;
+  *puVar4 = &PTR_XAUDIO__CFrameBuffer___scalar_deleting_destructor__82207344;
+  pcVar6 = (char *)param_2;
+  cVar1 = *pcVar6;
   *(char *)(puVar4 + 2) = cVar1;
-  puVar4[8] = *(undefined4 *)(pcVar8 + 0x10);
+  puVar4[8] = *(undefined4 *)(pcVar6 + 0x10);
   *(undefined1 *)(puVar4 + 5) = 0;
   puVar4[6] = 48000;
   if (cVar1 != '\0') {
-    uVar2 = *(undefined4 *)(pcVar8 + 0xc);
+    uVar2 = *(undefined4 *)(pcVar6 + 0xc);
     puVar4[3] = 0;
     puVar4[4] = 0;
     *(undefined1 *)((int)puVar4 + 0x15) = 0;
     puVar4[7] = uVar2;
-    pCVar6 = (CFrameBuffer *)__restgprlr_29(puVar4);
-    return pCVar6;
+    __restgprlr_29(puVar4);
+    return;
   }
-  uVar10 = 48000 / (ulonglong)*(uint *)(pcVar8 + 8);
-  trapWord(6,(ulonglong)*(uint *)(pcVar8 + 8),0);
-  trapWord(6,uVar10,0);
-  iVar5 = (**(code **)(*(int *)lVar9 + 0x14))
-                    (lVar9,((longlong)(int)(0x100 / uVar10) * (longlong)(int)(uint)(byte)pcVar8[5] +
-                           0x20) * 4);
+  uVar7 = 48000 / (ulonglong)*(uint *)(pcVar6 + 8);
+  trapWord(6,(ulonglong)*(uint *)(pcVar6 + 8),0);
+  trapWord(6,uVar7,0);
+  iVar5 = (**(code **)(*(int *)param_3 + 0x14))
+                    (param_3,((longlong)(int)(0x100 / uVar7) * (longlong)(int)(uint)(byte)pcVar6[5]
+                             + 0x20) * 4);
   uVar3 = iVar5 + 0x7fU & 0xffffff80;
-  if ((lVar7 + 4U & 0xffffffff) != 0) {
-    puVar4[3] = *(undefined4 *)(lVar7 + 4U);
-    puVar4[4] = *(undefined4 *)(pcVar8 + 8);
+  if ((param_2 + 4U & 0xffffffff) != 0) {
+    puVar4[3] = *(undefined4 *)(param_2 + 4U);
+    puVar4[4] = *(undefined4 *)(pcVar6 + 8);
     puVar4[7] = uVar3;
     *(undefined1 *)((int)puVar4 + 0x15) = 0;
-    pCVar6 = (CFrameBuffer *)__restgprlr_29(puVar4);
-    return pCVar6;
+    __restgprlr_29(puVar4);
+    return;
   }
   puVar4[3] = 0;
   puVar4[4] = 0;
   puVar4[7] = uVar3;
   *(undefined1 *)((int)puVar4 + 0x15) = 0;
-  pCVar6 = (CFrameBuffer *)__restgprlr_29(puVar4);
-  return pCVar6;
+  __restgprlr_29(puVar4);
+  return;
 }
 
 
-// 828D1BA8  Prepare  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:228)
+// 828D1BA8  XAUDIO::CFrameBuffer::Prepare  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:228)
 
-undefined4 __thiscall
-XAUDIO::CFrameBuffer::Prepare(CFrameBuffer *this,XAUDIOFORMAT *param_1,uchar param_2)
+undefined8 XAUDIO__CFrameBuffer__Prepare(int param_1,int param_2,ulonglong param_3)
 
 {
-  undefined4 uVar1;
+  undefined8 uVar1;
   ulonglong uVar2;
   ulonglong uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
   
-  if (param_1 == (XAUDIOFORMAT *)0x0) {
-    param_1 = &this->m_MaxFormat;
+  if (param_2 == 0) {
+    param_2 = param_1 + 0xc;
   }
-  uVar4 = (ulonglong)(this->m_MaxFormat)._s_0.SampleRate;
-  uVar3 = (ulonglong)(this->m_Format)._s_0.SampleRate;
-  trapWord(6,(ulonglong)(param_1->_s_0).SampleRate,0);
-  uVar2 = 48000 / (ulonglong)(param_1->_s_0).SampleRate;
-  uVar5 = 48000 / uVar4;
-  trapWord(6,uVar3,0);
+  trapWord(6,(ulonglong)*(uint *)(param_2 + 4),0);
+  uVar2 = 48000 / (ulonglong)*(uint *)(param_2 + 4);
+  uVar4 = 48000 / (ulonglong)*(uint *)(param_1 + 0x10);
+  trapWord(6,(ulonglong)*(uint *)(param_1 + 0x18),0);
   trapWord(6,uVar2,0);
-  uVar3 = 48000 / uVar3;
-  trapWord(6,uVar5,0);
-  trapWord(6,uVar3,0);
-  uVar2 = (longlong)(int)(0x100 / uVar2) * (longlong)(int)(uint)(param_1->_s_0).ChannelCount;
+  uVar3 = 48000 / (ulonglong)*(uint *)(param_1 + 0x18);
   trapWord(6,uVar4,0);
-  if ((ulonglong)
-      ((longlong)(int)(0x100 / uVar5) * (longlong)(int)(uint)(this->m_MaxFormat)._s_0.ChannelCount)
-      < uVar2) {
-    uVar1 = 0x8007000e;
+  trapWord(6,uVar3,0);
+  uVar5 = (longlong)(int)(0x100 / uVar2) * (longlong)(int)(uint)*(byte *)(param_2 + 1);
+  trapWord(6,(ulonglong)*(uint *)(param_1 + 0x10),0);
+  uVar2 = (longlong)(int)(0x100 / uVar3) * (longlong)(int)(uint)*(byte *)(param_1 + 0x15);
+  if ((ulonglong)((longlong)(int)(0x100 / uVar4) * (longlong)(int)(uint)*(byte *)(param_1 + 0xd)) <
+      uVar5) {
+    uVar1 = 0xffffffff8007000e;
   }
-  else if (((param_2 & 1) == 0) &&
-          (uVar2 < (ulonglong)
-                   ((longlong)(int)(0x100 / uVar3) *
-                   (longlong)(int)(uint)(this->m_Format)._s_0.ChannelCount))) {
-    uVar1 = 0x8000ffff;
+  else if (((param_3 & 1) == 0) && (uVar5 < uVar2)) {
+    uVar1 = 0xffffffff8000ffff;
   }
   else {
-    if ((param_2 & 2) != 0) {
-      memset();
+    if ((param_3 & 2) != 0) {
+      uVar2 = -(ulonglong)((param_3 & 1) == 0) & uVar2;
+      memset((void *)((int)(uVar2 << 2) + *(int *)(param_1 + 0x1c)),0,
+             (size_t)((uVar5 - uVar2 & 0xffffffff) << 2));
     }
     uVar1 = 0;
-    (this->m_Format)._s_0.ChannelCount = (param_1->_s_0).ChannelCount;
+    *(undefined1 *)(param_1 + 0x15) = *(undefined1 *)(param_2 + 1);
   }
   return uVar1;
 }
 
 
-// 828D19C0  GetProcessingData  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:362)
+// 828D19C0  XAUDIO::CFrameBuffer::GetProcessingData  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:362)
 
-undefined4 __thiscall
-XAUDIO::CFrameBuffer::GetProcessingData(CFrameBuffer *this,XAUDIOFRAMEBUFDATA *param_1)
+undefined8 XAUDIO__CFrameBuffer__GetProcessingData(int param_1,undefined4 *param_2)
 
 {
-  *(undefined4 *)&param_1->Format = *(undefined4 *)&this->m_Format;
-  (param_1->Format)._s_0.SampleRate = (this->m_Format)._s_0.SampleRate;
-  param_1->pSampleBuffer = this->m_pSampleBuffer;
+  *param_2 = *(undefined4 *)(param_1 + 0x14);
+  param_2[1] = *(undefined4 *)(param_1 + 0x18);
+  param_2[2] = *(undefined4 *)(param_1 + 0x1c);
   return 0;
 }
 
 
-// 828D1CD0  `scalar_deleting_destructor'  (line unknown)
+// 828D1CD0  XAUDIO::CObjectRefCount::`scalar_deleting_destructor'  (line unknown)
 
-void * __thiscall
-XAUDIO::CObjectRefCount::_scalar_deleting_destructor_(CObjectRefCount *this,uint param_1)
+undefined4 *
+XAUDIO__CObjectRefCount___scalar_deleting_destructor_(undefined4 *param_1,ulonglong param_2)
 
 {
-  this->_padding_ = (int)&_vftable_;
-  if ((param_1 & 1) != 0) {
-    CXMemMemoryManager::XMemFree(&g_MemoryManager,this,0x61820000);
+  *param_1 = &PTR_XAUDIO__CObjectRefCount___scalar_deleting_destructor__82207330;
+  if ((param_2 & 1) != 0) {
+    XAUDIO__CXMemMemoryManager__XMemFree(0xffffffff8489594c,param_1,0x61820000);
   }
-  return this;
+  return param_1;
 }
 
 
-// 828D1E18  `scalar_deleting_destructor'  (line unknown)
+// 828D1E18  XAUDIO::CFrameBuffer::`scalar_deleting_destructor'  (line unknown)
 
-void * __thiscall
-XAUDIO::CFrameBuffer::_scalar_deleting_destructor_(CFrameBuffer *this,uint param_1)
+void XAUDIO__CFrameBuffer___scalar_deleting_destructor_(undefined4 *param_1)
 
 {
-  *(undefined ***)this = &CObjectRefCount::_vftable_;
-  return this;
+  *param_1 = &PTR_XAUDIO__CObjectRefCount___scalar_deleting_destructor__82207330;
+  return;
 }
 

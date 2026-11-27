@@ -2,14 +2,14 @@
 
 // 828B59A0  LocalFree  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/localfree.c:37)
 
-void * LocalFree(void *param_1)
+HLOCAL LocalFree(HLOCAL hMem)
 
 {
-  void *pvVar1;
-  ulong uVar2;
+  HANDLE pvVar2;
+  longlong lVar1;
   
-  pvVar1 = GetProcessHeap();
-  uVar2 = RtlFreeHeap(pvVar1,0,param_1);
-  return (void *)(-(uint)(uVar2 == 0) & (uint)param_1);
+  pvVar2 = GetProcessHeap();
+  lVar1 = RtlFreeHeap(pvVar2,0,hMem);
+  return (HLOCAL)(-(uint)(lVar1 == 0) & (uint)hMem);
 }
 

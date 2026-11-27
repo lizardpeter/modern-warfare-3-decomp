@@ -2,8 +2,6 @@
 
 // 827AA100  TRACK_rb_shade  (gfx_d3d/rb_shade.cpp:28)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_rb_shade(void)
 
 {
@@ -12,102 +10,505 @@ void TRACK_rb_shade(void)
 
 
 // 827AA108  RB_ClearPixelShader  (gfx_d3d/rb_shade.cpp:36)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
+
+void RB_ClearPixelShader(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = DAT_84616688;
+  iVar1 = DAT_84616688;
+  while (iVar1 != 0) {
+    D3DDevice_SetPixelShader(iVar2,0);
+    iVar1 = DAT_84013128;
+  }
+  DAT_8484ea6c = 0;
+  return;
+}
+
 
 // 827AA178  RB_ClearVertexShader  (gfx_d3d/rb_shade.cpp:44)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
+
+void RB_ClearVertexShader(void)
+
+{
+  if (DAT_84616688 != 0) {
+    R_HW_SetVertexShader(DAT_84616688,0);
+  }
+  DAT_8484ea70 = 0;
+  return;
+}
+
 
 // 827AA1C0  RB_ClearVertexDecl  (gfx_d3d/rb_shade.cpp:52)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
+
+void RB_ClearVertexDecl(void)
+
+{
+  int iVar1;
+  
+  iVar1 = DAT_84616688;
+  while (iVar1 != 0) {
+    D3DDevice_SetVertexDeclaration(DAT_84616688,0);
+    iVar1 = DAT_84013128;
+  }
+  DAT_8484e028 = 0;
+  return;
+}
+
 
 // 827AA230  R_EndPixOrGpadEvent  (gfx_d3d/rb_shade.cpp:64)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
+
+void R_EndPixOrGpadEvent(int param_1)
+
+{
+  if (param_1 != DAT_84616688) {
+    D3DDevice_PixEndNamedEvent();
+  }
+  PIXEndNamedEvent();
+  return;
+}
+
 
 // 827AA268  R_BeginPixOrGpadEvent  (gfx_d3d/rb_shade.cpp:81)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
+
+void R_BeginPixOrGpadEvent(ulonglong param_1,undefined8 param_2)
+
+{
+  if ((param_1 & 0xffffffff) != (ulonglong)DAT_84616688) {
+    D3DDevice__PixBeginNamedEvent(param_1,0xffffffffffffffff,param_2);
+  }
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,param_2);
+  return;
+}
+
 
 // 827AA2C8  R_BeginPixOrGpadMaterial  (gfx_d3d/rb_shade.cpp:98)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+void R_BeginPixOrGpadMaterial(void)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar4 = __savegprlr_26();
+  if (*(int *)(DAT_845aa744 + 0xc) == 0) {
+    *(undefined4 *)(iVar4 + 0xb4c) = 0;
+    *(undefined4 *)(iVar4 + 0xb50) = 0;
+    __restgprlr_26();
+    return;
+  }
+  puVar1 = *(undefined4 **)(iVar4 + 0xec);
+  puVar2 = *(undefined4 **)(iVar4 + 0xf4);
+  iVar3 = *(int *)(iVar4 + 0xc0);
+  if (*(undefined4 **)(iVar4 + 0xb4c) != puVar1) {
+    if (*(int *)(iVar4 + 0xb50) != 0) {
+      if (iVar3 != DAT_84616688) {
+        D3DDevice_PixEndNamedEvent(iVar3);
+      }
+      PIXEndNamedEvent();
+      *(undefined4 *)(iVar4 + 0xb50) = 0;
+    }
+    if (*(int *)(iVar4 + 0xb4c) != 0) {
+      if (iVar3 != DAT_84616688) {
+        D3DDevice_PixEndNamedEvent(iVar3);
+      }
+      PIXEndNamedEvent();
+      *(undefined4 *)(iVar4 + 0xb4c) = 0;
+    }
+    R_BeginPixOrGpadEvent(iVar3,*puVar1);
+  }
+  if (*(undefined4 **)(iVar4 + 0xb50) != puVar2) {
+    if (*(undefined4 **)(iVar4 + 0xb50) != (undefined4 *)0x0) {
+      if (iVar3 != DAT_84616688) {
+        D3DDevice_PixEndNamedEvent(iVar3);
+      }
+      PIXEndNamedEvent();
+    }
+    R_BeginPixOrGpadEvent(iVar3,*puVar2);
+  }
+  *(undefined4 **)(iVar4 + 0xb4c) = puVar1;
+  *(undefined4 **)(iVar4 + 0xb50) = puVar2;
+  __restgprlr_26();
+  return;
+}
+
 
 // 827AA3C8  R_EndPixOrGpadMaterialInternal  (gfx_d3d/rb_shade.cpp:162)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+void R_EndPixOrGpadMaterialInternal(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = *(int *)(iVar2 + 0xc0);
+  if (*(int *)(iVar2 + 0xb50) != 0) {
+    if (iVar1 != DAT_84616688) {
+      D3DDevice_PixEndNamedEvent(iVar1);
+    }
+    PIXEndNamedEvent();
+  }
+  if (*(int *)(iVar2 + 0xb4c) != 0) {
+    if (iVar1 != DAT_84616688) {
+      D3DDevice_PixEndNamedEvent(iVar1);
+    }
+    PIXEndNamedEvent();
+  }
+  *(undefined4 *)(iVar2 + 0xb50) = 0;
+  *(undefined4 *)(iVar2 + 0xb4c) = 0;
+  __restgprlr_29();
+  return;
+}
+
 
 // 827AA440  R_EndPixOrGpadMaterial  (gfx_d3d/rb_shade.cpp:181)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+void R_EndPixOrGpadMaterial(int param_1)
+
+{
+  if (*(int *)(param_1 + 0xb54) != 0) {
+    return;
+  }
+  R_EndPixOrGpadMaterialInternal();
+  return;
+}
+
 
 // 827AA458  R_SetPixOrGpadPrimarySortKey  (gfx_d3d/rb_shade.cpp:190)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+void R_SetPixOrGpadPrimarySortKey(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_27();
+  if ((ulonglong)*(uint *)(iVar2 + 0xb44) != (param_2 & 0xffffffff)) {
+    R_EndPixOrGpadMaterialInternal();
+    *(int *)(iVar2 + 0xb44) = (int)param_2;
+    iVar1 = *(int *)(iVar2 + 0xc0);
+    if (iVar1 != DAT_84616688) {
+      D3DDevice__PixBeginNamedEvent(iVar1,0xffffffffffffffff,0xffffffff821d7b0c,param_2);
+      D3DDevice_PixEndNamedEvent(iVar1);
+    }
+    PIXBeginNamedEvent_Copy_Int
+              (0xffffffffffffffff,0xffffffff821d7b0c,*(undefined4 *)(iVar2 + 0xb44));
+    PIXEndNamedEvent();
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 827AA4E0  R_SetPixOrGpadSceneLightIndex  (gfx_d3d/rb_shade.cpp:221)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_SetPixOrGpadSceneLightIndex(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  int iVar4;
+  undefined8 uVar5;
+  
+  lVar3 = __savegprlr_27();
+  iVar2 = (int)param_2;
+  if ((ulonglong)*(uint *)(iVar2 + 0xb48) != (param_3 & 0xffffffff)) {
+    R_EndPixOrGpadMaterialInternal(param_2);
+    *(int *)(iVar2 + 0xb48) = (int)param_3;
+    iVar1 = *(int *)(iVar2 + 0xc0);
+    iVar4 = Com_BitCheckAssert(lVar3 + 0x1524,param_3,0x20);
+    if (iVar4 == 0) {
+      uVar5 = 0xffffffff820068af;
+    }
+    else {
+      uVar5 = 0xffffffff821d7b20;
+    }
+    if (iVar1 != DAT_84616688) {
+      D3DDevice__PixBeginNamedEvent
+                (iVar1,0xffffffffffffffff,0xffffffff821d7b14,*(undefined4 *)(iVar2 + 0xb48),uVar5);
+      D3DDevice_PixEndNamedEvent(iVar1);
+    }
+    PIXBeginNamedEvent_Copy_VarArgs
+              (0xffffffffffffffff,0xffffffff821d7b14,*(undefined4 *)(iVar2 + 0xb48),uVar5);
+    PIXEndNamedEvent();
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 827AA5A0  R_BeginPixOrGpadMaterials  (gfx_d3d/rb_shade.cpp:258)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+void R_BeginPixOrGpadMaterials(void)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (*(int *)(iVar1 + 0xb54) != 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x103,0,0xffffffff82000f98,0xffffffff821d7b54);
+  }
+  if (*(int *)(iVar1 + 0xb4c) != 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x104,0,0xffffffff82000f98,0xffffffff821d7b40);
+  }
+  if (*(int *)(iVar1 + 0xb50) != 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x105,0,0xffffffff82000f98,0xffffffff821d7b28);
+  }
+  *(undefined4 *)(iVar1 + 0xb44) = 0xffffffff;
+  *(undefined4 *)(iVar1 + 0xb54) = 1;
+  *(undefined4 *)(iVar1 + 0xb48) = 0xffffffff;
+  __restgprlr_29();
+  return;
+}
+
 
 // 827AA658  R_EndPixOrGpadMaterials  (gfx_d3d/rb_shade.cpp:270)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+void R_EndPixOrGpadMaterials(int param_1)
+
+{
+  if (*(int *)(param_1 + 0xb54) == 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x10f,0,0xffffffff82000f98,0xffffffff821d7ba8);
+  }
+  if (*(int *)(param_1 + 0xb50) != 0) {
+    if (*(int *)(param_1 + 0xc0) != DAT_84616688) {
+      D3DDevice_PixEndNamedEvent();
+    }
+    PIXEndNamedEvent();
+  }
+  if (*(int *)(param_1 + 0xb4c) != 0) {
+    if (*(int *)(param_1 + 0xc0) != DAT_84616688) {
+      D3DDevice_PixEndNamedEvent();
+    }
+    PIXEndNamedEvent();
+  }
+  *(undefined4 *)(param_1 + 0xb50) = 0;
+  *(undefined4 *)(param_1 + 0xb4c) = 0;
+  *(undefined4 *)(param_1 + 0xb54) = 0;
+  return;
+}
+
 
 // 827AA718  R_DrawTessTechnique  (gfx_d3d/rb_shade.cpp:288)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_DrawTessTechnique(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  iVar2 = __savegprlr_24();
+  Profile_Begin(0x56);
+  if ((DAT_84616684 == 0) || (DAT_84616688 == 0)) {
+    MyAssertHandler(0xffffffff821d7b68,0x12d,0,0xffffffff82000f98,0xffffffff821c6050);
+  }
+  if (*(int *)(iVar2 + 0xec) == 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x12e,0,0xffffffff82000f98,0xffffffff821d7bf8);
+  }
+  iVar1 = *(int *)(iVar2 + 0xf4);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x131,0,0xffffffff821d7bbc,0xffffffff821d7bec,
+                    **(undefined4 **)(iVar2 + 0xec));
+  }
+  R_BeginPixOrGpadMaterial(iVar2);
+  uVar3 = 0;
+  if (*(short *)(iVar1 + 6) != 0) {
+    do {
+      R_SetupPass(iVar2,uVar3);
+      R_UpdateVertexDecl(iVar2);
+      R_SetupPassCriticalPixelShaderArgs(iVar2);
+      R_ClearAllStreamSources(iVar2 + 0xc0);
+      R_SetupPassPerObjectArgs(iVar2);
+      R_SetupPassPerPrimArgs(iVar2);
+      R_DrawIndexedPrimitiveUP(iVar2,param_2);
+      uVar3 = uVar3 + 1;
+    } while ((uVar3 & 0xffffffff) < (ulonglong)*(ushort *)(iVar1 + 6));
+  }
+  if (*(int *)(iVar2 + 0xb54) == 0) {
+    iVar1 = *(int *)(iVar2 + 0xc0);
+    if (*(int *)(iVar2 + 0xb50) != 0) {
+      if (iVar1 != DAT_84616688) {
+        D3DDevice_PixEndNamedEvent(iVar1);
+      }
+      PIXEndNamedEvent();
+    }
+    if (*(int *)(iVar2 + 0xb4c) != 0) {
+      if (iVar1 != DAT_84616688) {
+        D3DDevice_PixEndNamedEvent(iVar1);
+      }
+      PIXEndNamedEvent();
+    }
+    *(undefined4 *)(iVar2 + 0xb50) = 0;
+    *(undefined4 *)(iVar2 + 0xb4c) = 0;
+  }
+  Profile_EndInternal(0);
+  __restgprlr_24();
+  return;
+}
+
 
 // 827AADD8  RB_SetTessTechnique  (gfx_d3d/rb_shade.cpp:369)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+void RB_SetTessTechnique(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x172,0,0xffffffff82000f98,0xffffffff82020dcc);
+  }
+  if (((ulonglong)DAT_8484e02c != (uVar1 & 0xffffffff)) || (DAT_8484e030 != (int)param_2)) {
+    RB_EndSurfaceIfNeeded();
+    RB_BeginSurface(uVar1,param_2,param_3);
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 827AAE58  RB_SetTessPrimType  (gfx_d3d/rb_shade.cpp:393)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+void RB_SetTessPrimType(int param_1)
+
+{
+  if (DAT_8484e00c != param_1) {
+    RB_EndSurfaceIfNeeded();
+    DAT_8484e00c = param_1;
+  }
+  return;
+}
+
 
 // 827AA8C8  RB_BeginSurface  (gfx_d3d/rb_shade.cpp:404)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+void RB_BeginSurface(undefined8 param_1,longlong param_2)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  
+  puVar1 = (undefined4 *)__savegprlr_27();
+  iVar2 = R_HasDeviceOwnership();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x196,0,0xffffffff82000f98,0xffffffff8217d420);
+  }
+  if (DAT_84834008 != 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x19a,0,0xffffffff821d54ec,0xffffffff821d7cb8);
+  }
+  if (DAT_8483400c != 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x19b,0,0xffffffff821d7c84,0xffffffff821d7ca0);
+  }
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821d7b68,0x19d,0,0xffffffff82000f98,0xffffffff82020dcc);
+  }
+  DAT_84834010 = 0;
+  DAT_84834014 = 0;
+  iVar2 = DB_MaterialStreamingFail(puVar1);
+  if (iVar2 != 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x1a9,0,0xffffffff821bb488,0xffffffff821d7c5c,*puVar1);
+  }
+  DAT_8484e030 = (undefined4)param_2;
+  DAT_8484e008 = 0;
+  DAT_8484e02c = puVar1;
+  iVar2 = Material_GetTechniqueSet(puVar1);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821b93c0,0x76,0,0xffffffff82000f98,0xffffffff821bb4c4);
+  }
+  DAT_8484e034 = *(int *)((int)((param_2 + 3U & 0xffffffff) << 2) + iVar2);
+  if (DAT_8484e034 == 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x1bc,0,0xffffffff821d7c10,0xffffffff821d7c40,*DAT_8484e02c);
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 827AAA90  RB_EndSurfacePrologue  (gfx_d3d/rb_shade.cpp:449)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+void RB_EndSurfacePrologue(void)
+
+{
+  if (DAT_8484e02c == 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x1c2,0,0xffffffff82000f98,0xffffffff821d7cd0);
+    DAT_84834018 = 1;
+    return;
+  }
+  DAT_84834018 = 1;
+  return;
+}
+
 
 // 827AAB28  RB_EndSurfaceEpilogue  (gfx_d3d/rb_shade.cpp:464)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void RB_EndSurfaceEpilogue(void)
 
 {
   __savegprlr_29();
-  if (tess.vertexCount != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x1d1,0,
-                    "%s");
+  if (DAT_8483400c != 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x1d1,0,0xffffffff82000f98,0xffffffff821d7710);
   }
-  if (tess.indexCount != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x1d2,0,
-                    "%s");
+  if (DAT_84834008 != 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x1d2,0,0xffffffff82000f98,0xffffffff821d76f8);
   }
-  tess.finishedFilling = false;
+  DAT_84834018 = 0;
   __restgprlr_29();
   return;
 }
 
 
 // 827AABC8  RB_DrawTessSurface  (gfx_d3d/rb_shade.cpp:541)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void RB_DrawTessSurface(void)
+
+{
+  int iVar1;
+  int local_50;
+  uint local_4c;
+  undefined1 auStack_40 [64];
+  
+  __savegprlr_28();
+  iVar1 = R_HasDeviceOwnership();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x221,0,0xffffffff82000f98,0xffffffff8217d420);
+  }
+  if (DAT_8483400c == 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x223,0,0xffffffff82000f98,0xffffffff821d7d98);
+  }
+  if ((DAT_84834008 == 0) && (DAT_8484e00c == 4)) {
+    MyAssertHandler(0xffffffff821d7b68,0x225,0,0xffffffff82000f98,0xffffffff821d7d50);
+  }
+  if (DAT_8484df30 != '\0') {
+    R_GetViewport(0xffffffff8484c7e0,auStack_40);
+    R_SetViewport(0xffffffff8484df40,auStack_40);
+    R_UpdateViewport(0xffffffff8484c7e0,auStack_40);
+  }
+  local_4c = DAT_84834008 / 3;
+  local_50 = DAT_8483400c;
+  if (DAT_8484e008 != 0) {
+    MyAssertHandler(0xffffffff821d7b68,0x238,1,0xffffffff821d7ce8,0xffffffff821d7d14);
+  }
+  DAT_8484ea58 = &DAT_84822800;
+  DAT_8484ea54 = &DAT_84832800;
+  if (DAT_8484e004 != 0) {
+    R_ChangeIndices(0xffffffff8484e000,0);
+  }
+  R_DrawTessTechnique(0x8484c7e08484df40,&local_50);
+  DAT_84834008 = 0;
+  DAT_8483400c = 0;
+  __restgprlr_28();
+  return;
+}
+
 
 // 827AAD70  RB_EndTessSurface  (gfx_d3d/rb_shade.cpp:592)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void RB_EndTessSurface(void)
 
@@ -120,9 +521,39 @@ void RB_EndTessSurface(void)
 
 
 // 827AAD98  RB_TessOverflow  (gfx_d3d/rb_shade.cpp:602)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
-// 827AA0B8  PixBeginNamedEvent  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:4054)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
+void RB_TessOverflow(void)
+
+{
+  RB_EndSurfacePrologue();
+  RB_DrawTessSurface();
+  RB_EndSurfaceEpilogue();
+  RB_BeginSurface(DAT_8484e02c,DAT_8484e030,10);
+  return;
+}
+
+
+// 827AA0B8  D3DDevice::PixBeginNamedEvent  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:4054)
+
+void D3DDevice__PixBeginNamedEvent
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  undefined4 uStack00000024;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
+  
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
+  uStack00000024 = param_3;
+  D3DDevice_PixBeginNamedEvent();
+  return;
+}
+

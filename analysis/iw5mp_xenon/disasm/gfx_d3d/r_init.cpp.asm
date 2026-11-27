@@ -1306,6 +1306,9 @@ LAB_82749378:
   82749384  3880086F             li r4,0x86f
   82749388  7FA3EB78             or r3,r29,r29
   8274938C  4BF05045             bl 0x8264e3d0
+  82749390  817E3128             lwz r11,0x3128(r30)
+  82749394  2F0B0000             cmpwi cr6,r11,0x0
+  82749398  409AFFE0             bne cr6,0x82749378
 LAB_8274939c:
   8274939C  3B9C0004             addi r28,r28,0x4
   827493A0  397B00B0             addi r11,r27,0xb0
@@ -1378,7 +1381,7 @@ LAB_82749478:
 ; 82749498  R_CreateGameWindow  (gfx_d3d/r_init.cpp:2327)
   82749498  4BFFFF20             b 0x827493b8
 
-; 8274AAD0  _Push_heap<float_*,int,float,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 8274AAD0  std::_Push_heap<float_*,int,float,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   8274AAD0  7D8802A6             mfspr r12,LR
   8274AAD4  481CBBD9             bl 0x829166ac
   8274AAD8  9421FF70             stwu r1,-0x90(r1)
@@ -1526,7 +1529,7 @@ LAB_8274960c:
   82749624  382100A0             addi r1,r1,0xa0
   82749628  481CD0E0             b 0x82916708
 
-; 8274ABE0  _Adjust_heap<float_*,int,float,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 8274ABE0  std::_Adjust_heap<float_*,int,float,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   8274ABE0  7D8802A6             mfspr r12,LR
   8274ABE4  481CBAC9             bl 0x829166ac
   8274ABE8  9421FF70             stwu r1,-0x90(r1)
@@ -1602,7 +1605,7 @@ LAB_8274acdc:
   8274ACE8  38210090             addi r1,r1,0x90
   8274ACEC  481CBA10             b 0x829166fc
 
-; 8274ACF0  _Make_heap<float_*,int,float,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 8274ACF0  std::_Make_heap<float_*,int,float,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   8274ACF0  7D8802A6             mfspr r12,LR
   8274ACF4  481CB9B5             bl 0x829166a8
   8274ACF8  9421FF60             stwu r1,-0xa0(r1)
@@ -1716,7 +1719,7 @@ LAB_8274a664:
   8274A69C  EBE1FFF0             ld r31,-0x10(r1)
   8274A6A0  4E800020             blr
 
-; 8274B288  _Sort_heap<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 8274B288  std::_Sort_heap<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   8274B288  7D8802A6             mfspr r12,LR
   8274B28C  481CB42D             bl 0x829166b8
   8274B290  9421FF80             stwu r1,-0x80(r1)
@@ -2776,7 +2779,7 @@ LAB_8274a344:
   8274A344  382100A0             addi r1,r1,0xa0
   8274A348  481CC3AC             b 0x829166f4
 
-; 8274ADE0  _Insertion_sort1<float_*,bool_(__cdecl*)(float,float),float>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 8274ADE0  std::_Insertion_sort1<float_*,bool_(__cdecl*)(float,float),float>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   8274ADE0  7D8802A6             mfspr r12,LR
   8274ADE4  481CB8C9             bl 0x829166ac
   8274ADE8  DBE1FFB8             stfd f31,-0x48(r1)
@@ -2901,7 +2904,7 @@ LAB_8274aeb8:
   8274A428  7D8803A6             mtspr LR,r12
   8274A42C  4E800020             blr
 
-; 8274AEC8  _Med3<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 8274AEC8  std::_Med3<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   8274AEC8  7D8802A6             mfspr r12,LR
   8274AECC  481CB7ED             bl 0x829166b8
   8274AED0  9421FF80             stwu r1,-0x80(r1)
@@ -2948,7 +2951,7 @@ LAB_8274af68:
   8274AF68  38210080             addi r1,r1,0x80
   8274AF6C  481CB79C             b 0x82916708
 
-; 8274AF70  _Median<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 8274AF70  std::_Median<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   8274AF70  7D8802A6             mfspr r12,LR
   8274AF74  481CB73D             bl 0x829166b0
   8274AF78  9421FF70             stwu r1,-0x90(r1)
@@ -2993,7 +2996,7 @@ LAB_8274b004:
   8274B010  38210090             addi r1,r1,0x90
   8274B014  481CB6EC             b 0x82916700
 
-; 8274B018  _Unguarded_partition<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 8274B018  std::_Unguarded_partition<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   8274B018  7D8802A6             mfspr r12,LR
   8274B01C  481CB689             bl 0x829166a4
   8274B020  9421FF60             stwu r1,-0xa0(r1)
@@ -3167,7 +3170,7 @@ LAB_8274b270:
   8274B27C  382100A0             addi r1,r1,0xa0
   8274B280  481CB474             b 0x829166f4
 
-; 8274B2F8  _Sort<float_*,int,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 8274B2F8  std::_Sort<float_*,int,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   8274B2F8  7D8802A6             mfspr r12,LR
   8274B2FC  481CB3B5             bl 0x829166b0
   8274B300  9421FF70             stwu r1,-0x90(r1)

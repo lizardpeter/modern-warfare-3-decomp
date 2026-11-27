@@ -2,7 +2,7 @@
 
 // 827BDB58  start_pass  (jpeg-6/jddctmgr.c:90)
 
-void start_pass(jpeg_decompress_struct *param_1)
+void start_pass(void)
 
 {
   int iVar1;
@@ -23,7 +23,7 @@ void start_pass(jpeg_decompress_struct *param_1)
   code *pcVar17;
   longlong lVar16;
   
-  piVar3 = (int *)__savegprlr_23(param_1);
+  piVar3 = (int *)__savegprlr_23();
   uVar14 = 0;
   pcVar13 = (code *)0x0;
   iVar11 = 0;
@@ -104,10 +104,10 @@ LAB_827bdc8c:
             piVar8[1] = (int)((uint)puVar10[-2] * (int)psVar6[3] + 0x800) >> 0xc;
             psVar6 = psVar6 + 4;
             piVar8[2] = (int)((uint)puVar10[-1] * (int)*psVar6 + 0x800) >> 0xc;
-            piVar8[3] = (int)((int)*(short *)((int)aanscales + -iVar1 + (int)puVar10) *
+            piVar8[3] = (int)((int)*(short *)((int)&DAT_821d97f0 + -iVar1 + (int)puVar10) *
                               (uint)*puVar10 + 0x800) >> 0xc;
-            piVar4 = (int *)((int)*(short *)(-iVar1 + -0x7de2680e + (int)puVar10) * (uint)puVar10[1]
-                            + 0x800);
+            piVar4 = (int *)((int)*(short *)((int)&DAT_821d97f2 + -iVar1 + (int)puVar10) *
+                             (uint)puVar10[1] + 0x800);
             puVar10 = puVar10 + 4;
             piVar8 = piVar8 + 4;
             *piVar8 = (int)piVar4 >> 0xc;
@@ -116,7 +116,7 @@ LAB_827bdc8c:
         }
         else if (uVar14 < 3) {
           pfVar5 = (float *)(piVar15[0xb] + -4);
-          pdVar7 = (double *)(aanscales + 0x3c);
+          pdVar7 = (double *)&UNK_821d9868;
           puVar10 = (ushort *)(iVar1 + -2);
           lVar16 = 8;
           do {
@@ -152,34 +152,35 @@ LAB_827bdc8c:
 
 // 827BDF38  jinit_inverse_dct  (jpeg-6/jddctmgr.c:248)
 
-void jinit_inverse_dct(jpeg_decompress_struct *param_1)
+void jinit_inverse_dct(void)
 
 {
   int iVar1;
   undefined4 *puVar2;
-  undefined4 uVar3;
+  void *_Dst;
+  undefined4 *puVar3;
   undefined4 *puVar4;
   int iVar5;
   
-  iVar1 = __savegprlr_27(param_1);
+  iVar1 = __savegprlr_27();
   puVar2 = (undefined4 *)(*(code *)**(undefined4 **)(iVar1 + 4))(iVar1,1,0x54);
   *(undefined4 **)(iVar1 + 0x1a4) = puVar2;
   iVar5 = 0;
   *puVar2 = start_pass;
   if (0 < *(int *)(iVar1 + 0x2c)) {
     puVar4 = (undefined4 *)(*(int *)(iVar1 + 0xcc) + -4);
-    puVar2 = puVar2 + 10;
+    puVar3 = puVar2 + 10;
     do {
-      uVar3 = (*(code *)**(undefined4 **)(iVar1 + 4))(iVar1,1,0x100);
+      _Dst = (void *)(*(code *)**(undefined4 **)(iVar1 + 4))(iVar1,1,0x100);
       puVar4 = puVar4 + 0x15;
-      *puVar4 = uVar3;
-      memset();
-      puVar2 = puVar2 + 1;
-      *puVar2 = 0xffffffff;
+      *puVar4 = _Dst;
+      puVar2 = memset(_Dst,0,0x100);
+      puVar3 = puVar3 + 1;
+      *puVar3 = 0xffffffff;
       iVar5 = iVar5 + 1;
     } while (iVar5 < *(int *)(iVar1 + 0x2c));
   }
-  __restgprlr_27();
+  __restgprlr_27(puVar2);
   return;
 }
 

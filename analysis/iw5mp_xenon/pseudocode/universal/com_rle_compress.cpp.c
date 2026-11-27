@@ -2,134 +2,121 @@
 
 // 825E61F8  Com_RleCompress  (universal/com_rle_compress.cpp:7)
 
-RleCompressResult
-Com_RleCompress(uchar *param_1,uint param_2,uchar *param_3,uint param_4,uint *param_5)
+void Com_RleCompress(undefined8 param_1,int param_2,int param_3,int param_4,int *param_5)
 
 {
-  uchar uVar1;
+  int iVar1;
   int iVar2;
-  RleCompressResult RVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  ulonglong uVar12;
-  uint uVar8;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  uint uVar6;
+  int iVar7;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_25(param_1);
-  uVar11 = 8;
-  uVar10 = 0;
-  uVar6 = 0;
-  uVar8 = 0;
-  uVar12 = 0;
-  if ((uVar4 & 0xffffffff) != 0) {
+  iVar1 = __savegprlr_25();
+  uVar6 = 8;
+  iVar5 = 0;
+  iVar2 = 0;
+  iVar7 = 0;
+  if (param_2 != 0) {
     do {
-      uVar8 = (uint)uVar6;
-      uVar7 = uVar6;
-      if (uVar11 == 8) {
-        uVar11 = 0;
-        if ((uVar6 & 0xffffffff) == (uVar5 & 0xffffffff)) goto LAB_825e62d4;
-        uVar7 = uVar6 + 1;
-        param_3[uVar8] = '\0';
-        uVar10 = uVar6;
+      iVar3 = iVar2;
+      if (uVar6 == 8) {
+        uVar6 = 0;
+        if (iVar2 == param_4) goto LAB_825e62d4;
+        iVar3 = iVar2 + 1;
+        *(undefined1 *)(iVar2 + param_3) = 0;
+        iVar5 = iVar2;
       }
-      uVar8 = (uint)uVar7;
-      uVar1 = *(uchar *)((int)uVar12 + iVar2);
-      uVar9 = 1;
+      uVar4 = 1;
       do {
-        if (((uVar9 + uVar12 & 0xffffffff) == (uVar4 & 0xffffffff)) ||
-           (*(uchar *)((int)uVar12 + iVar2 + (int)uVar9) != uVar1)) break;
-        uVar9 = uVar9 + 1;
-      } while ((uVar9 & 0xffffffff) != 0x100);
-      if ((uVar7 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+        if ((uVar4 + iVar7 == param_2) ||
+           (*(char *)(iVar7 + iVar1 + uVar4) != *(char *)(iVar7 + iVar1))) break;
+        uVar4 = uVar4 + 1;
+      } while (uVar4 != 0x100);
+      iVar2 = iVar3;
+      if (iVar3 == param_4) {
 LAB_825e62d4:
-        *param_5 = uVar8;
-        RVar3 = __restgprlr_25(1);
-        return RVar3;
+        *param_5 = iVar2;
+        __restgprlr_25(1);
+        return;
       }
-      param_3[uVar8] = uVar1;
-      uVar6 = uVar7 + 1;
-      uVar8 = (uint)uVar6;
-      if ((uVar9 & 0xffffffff) < 2) {
-        param_3[(int)uVar10] = (byte)(1 << (uVar11 & 0x3f)) | param_3[(int)uVar10];
+      *(char *)(iVar3 + param_3) = *(char *)(iVar7 + iVar1);
+      iVar2 = iVar3 + 1;
+      if (uVar4 < 2) {
+        *(byte *)(iVar5 + param_3) = (byte)(1 << (uVar6 & 0x3f)) | *(byte *)(iVar5 + param_3);
       }
       else {
-        if ((uVar6 & 0xffffffff) == (uVar5 & 0xffffffff)) goto LAB_825e62d4;
-        param_3[uVar8] = (char)uVar9 + 0xff;
-        uVar6 = uVar7 + 2;
+        if (iVar2 == param_4) goto LAB_825e62d4;
+        *(char *)(iVar2 + param_3) = (char)uVar4 + -1;
+        iVar2 = iVar3 + 2;
       }
-      uVar8 = (uint)uVar6;
-      uVar12 = uVar9 + uVar12;
-      uVar11 = uVar11 + 1;
-    } while ((uVar12 & 0xffffffff) != (uVar4 & 0xffffffff));
+      iVar7 = uVar4 + iVar7;
+      uVar6 = uVar6 + 1;
+    } while (iVar7 != param_2);
   }
-  *param_5 = uVar8;
-  RVar3 = __restgprlr_25(0);
-  return RVar3;
+  *param_5 = iVar2;
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 825E62E0  Com_RleUncompress  (universal/com_rle_compress.cpp:86)
 
-RleUncompressResult Com_RleUncompress(uchar *param_1,uint param_2,uchar *param_3,uint param_4)
+byte Com_RleUncompress(int param_1,int param_2,int param_3,int param_4)
 
 {
-  uchar uVar1;
+  undefined1 uVar1;
   uint uVar2;
-  uint uVar3;
-  uint uVar4;
-  uint uVar5;
+  int iVar3;
+  int iVar4;
+  int iVar5;
   longlong lVar6;
-  uint uVar7;
+  int iVar7;
   
-  uVar7 = 0;
+  iVar7 = 0;
   uVar2 = 8;
-  uVar4 = 0;
-  uVar3 = 0;
+  iVar4 = 0;
+  iVar3 = 0;
   if (param_4 != 0) {
     do {
-      uVar5 = uVar4;
+      iVar5 = iVar4;
       if (uVar2 == 8) {
         uVar2 = 0;
-        if (uVar4 == param_2) {
-          return RLE_UNCOMPRESS_OUT_OF_INPUT_DATA;
+        if (iVar4 == param_2) {
+          return 2;
         }
-        uVar5 = uVar4 + 1;
-        uVar7 = uVar4;
+        iVar5 = iVar4 + 1;
+        iVar7 = iVar4;
       }
-      if (uVar5 == param_2) {
-        return RLE_UNCOMPRESS_OUT_OF_INPUT_DATA;
+      if (iVar5 == param_2) {
+        return 2;
       }
-      uVar1 = param_1[uVar5];
-      uVar4 = uVar5 + 1;
-      if (((uint)param_1[uVar7] & 1 << (uVar2 & 0x3f)) == 0) {
-        if (uVar4 == param_2) {
-          return RLE_UNCOMPRESS_OUT_OF_INPUT_DATA;
+      uVar1 = *(undefined1 *)(iVar5 + param_1);
+      iVar4 = iVar5 + 1;
+      if (((uint)*(byte *)(iVar7 + param_1) & 1 << (uVar2 & 0x3f)) == 0) {
+        if (iVar4 == param_2) {
+          return 2;
         }
-        lVar6 = (ulonglong)param_1[uVar4] + 1;
+        lVar6 = (ulonglong)*(byte *)(iVar4 + param_1) + 1;
         if (lVar6 == 1) {
-          return RLE_UNCOMPRESS_INVALID_STREAM;
+          return 1;
         }
-        uVar4 = uVar5 + 2;
+        iVar4 = iVar5 + 2;
       }
       else {
         lVar6 = 1;
       }
       uVar2 = uVar2 + 1;
       for (; lVar6 != 0; lVar6 = lVar6 + -1) {
-        if (uVar3 == param_4) {
-          return RLE_UNCOMPRESS_OUT_OF_OUTPUT_BUFFER;
+        if (iVar3 == param_4) {
+          return 3;
         }
-        param_3[uVar3] = uVar1;
-        uVar3 = uVar3 + 1;
+        *(undefined1 *)(iVar3 + param_3) = uVar1;
+        iVar3 = iVar3 + 1;
       }
-    } while (uVar3 != param_4);
+    } while (iVar3 != param_4);
   }
-  return -(uint)(param_2 != uVar4) & RLE_UNCOMPRESS_OUT_OF_OUTPUT_BUFFER;
+  return -(param_2 != iVar4) & 3;
 }
 

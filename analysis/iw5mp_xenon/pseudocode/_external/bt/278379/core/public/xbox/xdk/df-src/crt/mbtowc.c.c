@@ -2,18 +2,18 @@
 
 // 82928638  _mbtowc_l  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/mbtowc.c:55)
 
-int _mbtowc_l(wchar_t *param_1,char *param_2,uint param_3,localeinfo_struct *param_4)
+int _mbtowc_l(wchar_t *_DstCh,char *_SrcCh,size_t _SrcSizeInBytes,_locale_t _Locale)
 
 {
-  if ((param_2 != (char *)0x0) && (param_3 != 0)) {
-    if (*param_2 != 0) {
-      if (param_1 != (wchar_t *)0x0) {
-        *param_1 = (ushort)(byte)*param_2;
+  if ((_SrcCh != (char *)0x0) && (_SrcSizeInBytes != 0)) {
+    if (*_SrcCh != 0) {
+      if (_DstCh != (wchar_t *)0x0) {
+        *_DstCh = (ushort)(byte)*_SrcCh;
       }
       return 1;
     }
-    if (param_1 != (wchar_t *)0x0) {
-      *param_1 = L'\0';
+    if (_DstCh != (wchar_t *)0x0) {
+      *_DstCh = L'\0';
     }
   }
   return 0;

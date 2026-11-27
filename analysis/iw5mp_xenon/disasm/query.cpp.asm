@@ -31,7 +31,7 @@ LAB_8286df74:
   8286DF84  EBE1FFF0             ld r31,-0x10(r1)
   8286DF88  4E800020             blr
 
-; 8286DE90  ConvertD24FS8ToD32FS8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:742)
+; 8286DE90  D3D::ConvertD24FS8ToD32FS8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:742)
   8286DE90  7D8802A6             mfspr r12,LR
   8286DE94  480A8829             bl 0x829166bc
   8286DE98  9421FF80             stwu r1,-0x80(r1)
@@ -889,7 +889,7 @@ LAB_8286e11c:
   8286E154  EBE1FFF0             ld r31,-0x10(r1)
   8286E158  4E800020             blr
 
-; 8286E160  P_EPC  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:2194)
+; 8286E160  D3D::P_EPC  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:2194)
   8286E160  7D8802A6             mfspr r12,LR
   8286E164  9181FFF8             stw r12,-0x8(r1)
   8286E168  FBC1FFE8             std r30,-0x18(r1)
@@ -953,7 +953,7 @@ LAB_8286e220:
   8286E248  EBE1FFF0             ld r31,-0x10(r1)
   8286E24C  4E800020             blr
 
-; 8286E250  P_CPC  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:2259)
+; 8286E250  D3D::P_CPC  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:2259)
   8286E250  7D8802A6             mfspr r12,LR
   8286E254  480A8469             bl 0x829166bc
   8286E258  9421FF90             stwu r1,-0x70(r1)
@@ -1007,7 +1007,7 @@ LAB_8286e2d4:
   8286E304  4BD99175             bl 0x82607478
   8286E308  4BFFFF80             b 0x8286e288
 
-; 8286E310  P_SPCE  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:2348)
+; 8286E310  D3D::P_SPCE  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:2348)
   8286E310  7D8802A6             mfspr r12,LR
   8286E314  480A838D             bl 0x829166a0
   8286E318  9421FF50             stwu r1,-0xb0(r1)
@@ -1399,7 +1399,7 @@ LAB_8286e8e4:
   8286E91C  382100B0             addi r1,r1,0xb0
   8286E920  480A7DD0             b 0x829166f0
 
-; 8286F2F0  P_QPC  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:2968)
+; 8286F2F0  D3D::P_QPC  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:2968)
   8286F2F0  7D8802A6             mfspr r12,LR
   8286F2F4  480A73A9             bl 0x8291669c
   8286F2F8  9421FF50             stwu r1,-0xb0(r1)
@@ -2828,7 +2828,7 @@ LAB_828708a4:
   828708AC  38210070             addi r1,r1,0x70
   828708B0  480A5E5C             b 0x8291670c
 
-; 8286E980  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:3204)
+; 8286E980  D3D::CPerfCounterBatch::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:3204)
   8286E980  7D8802A6             mfspr r12,LR
   8286E984  9181FFF8             stw r12,-0x8(r1)
   8286E988  FBE1FFF0             std r31,-0x10(r1)
@@ -2850,7 +2850,7 @@ LAB_8286e9b4:
   8286E9C4  EBE1FFF0             ld r31,-0x10(r1)
   8286E9C8  4E800020             blr
 
-; 8286E9D0  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:3746)
+; 8286E9D0  D3D::COcclusionQueryBatch::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/query.cpp:3746)
   8286E9D0  7D8802A6             mfspr r12,LR
   8286E9D4  9181FFF8             stw r12,-0x8(r1)
   8286E9D8  FBE1FFF0             std r31,-0x10(r1)

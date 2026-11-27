@@ -2,8 +2,6 @@
 
 // 822920E8  TRACK_bg_weapons  (bgame/bg_weapons_setup.cpp:57)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_bg_weapons(void)
 
 {
@@ -13,76 +11,59 @@ void TRACK_bg_weapons(void)
 
 // 822920F0  BG_GetPointerToWeaponDef  (bgame/bg_weapons_setup.cpp:69)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-WeaponDef * BG_GetPointerToWeaponDef(uint param_1)
+void BG_GetPointerToWeaponDef(void)
 
 {
   uint uVar1;
-  WeaponDef *pWVar2;
   
-  uVar1 = __savegprlr_27(param_1);
-  if (bg_lastParsedWeaponIndex < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x46,0,"weaponIndex not in [0, bg_lastParsedWeaponIndex]\n\t%i not in [0, %i]");
+  uVar1 = __savegprlr_27();
+  if (DAT_829d8a50 < uVar1) {
+    MyAssertHandler(0xffffffff8200e3c8,0x46,0,0xffffffff8200e380,uVar1);
   }
-  if (bg_weaponDefs[uVar1] == (WeaponDef *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x47,0,"%s");
+  if ((&DAT_829d84a0)[uVar1] == 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x47,0,0xffffffff82000f98,0xffffffff8200e360);
   }
-  if (bg_weaponCompleteDefs[uVar1] == (WeaponCompleteDef *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x48,0,"%s");
+  if ((&DAT_829d80d8)[uVar1] == 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x48,0,0xffffffff82000f98,0xffffffff8200e33c);
   }
-  if (bg_weaponDefs[uVar1] != bg_weaponCompleteDefs[uVar1]->weapDef) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x49,0,"%s");
+  if ((&DAT_829d84a0)[uVar1] != *(int *)((&DAT_829d80d8)[uVar1] + 4)) {
+    MyAssertHandler(0xffffffff8200e3c8,0x49,0,0xffffffff82000f98,0xffffffff8200e2f0);
   }
-  pWVar2 = (WeaponDef *)__restgprlr_27(bg_weaponDefs[uVar1]);
-  return pWVar2;
+  __restgprlr_27((&DAT_829d84a0)[uVar1]);
+  return;
 }
 
 
 // 822921E0  BG_GetPointerToWeaponCompleteDef  (bgame/bg_weapons_setup.cpp:80)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-WeaponCompleteDef * BG_GetPointerToWeaponCompleteDef(uint param_1)
+void BG_GetPointerToWeaponCompleteDef(void)
 
 {
   uint uVar1;
-  WeaponCompleteDef *pWVar2;
   
-  uVar1 = __savegprlr_29(param_1);
-  if (bg_lastParsedWeaponIndex < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x51,0,"weaponIndex not in [0, bg_lastParsedWeaponIndex]\n\t%i not in [0, %i]");
+  uVar1 = __savegprlr_29();
+  if (DAT_829d8a50 < uVar1) {
+    MyAssertHandler(0xffffffff8200e3c8,0x51,0,0xffffffff8200e380,uVar1);
   }
-  if (bg_weaponCompleteDefs[uVar1] == (WeaponCompleteDef *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x52,0,"%s");
+  if ((&DAT_829d80d8)[uVar1] == 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x52,0,0xffffffff82000f98,0xffffffff8200e33c);
   }
-  pWVar2 = (WeaponCompleteDef *)__restgprlr_29(bg_weaponCompleteDefs[uVar1]);
-  return pWVar2;
+  __restgprlr_29((&DAT_829d80d8)[uVar1]);
+  return;
 }
 
 
 // 82292268  BG_StringCopy  (bgame/bg_weapons_setup.cpp:91)
 
-void BG_StringCopy(uchar *param_1,char *param_2)
+void BG_StringCopy(int param_1,char *param_2)
 
 {
   char cVar1;
-  int iVar2;
   
-  iVar2 = (int)param_1 - (int)param_2;
+  param_1 = param_1 - (int)param_2;
   do {
     cVar1 = *param_2;
-    param_2[iVar2] = cVar1;
+    param_2[param_1] = cVar1;
     param_2 = param_2 + 1;
   } while (cVar1 != '\0');
   return;
@@ -91,58 +72,52 @@ void BG_StringCopy(uchar *param_1,char *param_2)
 
 // 82292288  BG_ParsePenetrationDepthTable  (bgame/bg_weapons_setup.cpp:97)
 
-void BG_ParsePenetrationDepthTable(char *param_1,float *param_2,char *param_3)
+void BG_ParsePenetrationDepthTable(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  char *pcVar5;
+  ulonglong uVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  int iVar4;
+  undefined1 *puVar5;
   undefined4 *puVar6;
+  ulonglong uVar7;
   undefined4 uStack_2154;
-  cspField_t local_2150 [31];
-  char acStack_1f60 [8032];
+  undefined1 local_2150 [496];
+  undefined1 auStack_1f60 [8032];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_22(param_1);
-  if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x66,0,"%s");
+  uVar2 = __savegprlr_22();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x66,0,0xffffffff82000f98,0xffffffff8200e498);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x67,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x67,0,0xffffffff82000f98,0xffffffff8200e48c);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x68,0,"%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x68,0,0xffffffff82000f98,0xffffffff8200e484);
   }
   puVar6 = &uStack_2154;
-  iVar1 = 0;
-  pcVar5 = acStack_1f60;
+  uVar7 = 0;
+  puVar5 = auStack_1f60;
   do {
-    Com_SurfaceTypeToName(iVar1);
-    iVar2 = Com_sprintf(pcVar5,0x100,"%s_%s");
-    if (iVar2 < 0) {
-      Com_SurfaceTypeToName(iVar1);
-      Com_Error(ERR_DROP,"\x15Bullet penetration table param name [%s_%s] is to long.\n");
+    uVar3 = Com_SurfaceTypeToName(uVar7);
+    iVar4 = Com_sprintf(puVar5,0x100,0xffffffff8200e440,uVar2,uVar3);
+    if (iVar4 < 0) {
+      uVar3 = Com_SurfaceTypeToName(uVar7);
+      Com_Error(1,0xffffffff8200e448,uVar2,uVar3);
     }
-    iVar2 = iVar1 << 2;
-    puVar6[1] = pcVar5;
-    iVar1 = iVar1 + 1;
+    uVar1 = uVar7 & 0xffffffff;
+    puVar6[1] = puVar5;
+    uVar7 = uVar7 + 1;
     puVar6[3] = 7;
-    puVar6[2] = iVar2;
-    pcVar5 = pcVar5 + 0x100;
+    puVar6[2] = (int)(uVar1 << 2);
+    puVar5 = puVar5 + 0x100;
     puVar6 = puVar6 + 4;
     *puVar6 = 0;
-  } while (iVar1 < 0x1f);
-  iVar1 = ParseConfigStringToStruct
-                    ((uchar *)uVar3,local_2150,0x1f,(char *)uVar4,0,
-                     (_func_int_uchar_ptr_char_ptr_int_int *)0x0,BG_StringCopy);
-  if (iVar1 == 0) {
-    Com_Error(ERR_DROP,"\x15Error parsing bullet penetration table [%s].\n");
+  } while ((int)uVar7 < 0x1f);
+  iVar4 = ParseConfigStringToStruct(param_2,local_2150,0x1f,param_3,0,0,0xffffffff82292268);
+  if (iVar4 == 0) {
+    Com_Error(1,0xffffffff8200e410,uVar2);
   }
   __restgprlr_22();
   return;
@@ -151,23 +126,21 @@ void BG_ParsePenetrationDepthTable(char *param_1,float *param_2,char *param_3)
 
 // 82292400  BG_LoadPenetrationDepthTable  (bgame/bg_weapons_setup.cpp:123)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void BG_LoadPenetrationDepthTable(void)
 
 {
-  char *pcVar1;
-  char acStack_2020 [8224];
+  undefined8 uVar1;
+  undefined1 auStack_2020 [8224];
   
   __savegprlr_29();
-  if (penetrationDepthTableLoaded == false) {
-    pcVar1 = Com_LoadInfoString("info/bullet_penetration_mp","bullet penetration table",
-                                "BULLET_PEN_TABLE",acStack_2020);
-    Com_Memset(penetrationDepthTable,0,0x1f0);
-    BG_ParsePenetrationDepthTable("small",penetrationDepthTable[1],pcVar1);
-    BG_ParsePenetrationDepthTable("medium",penetrationDepthTable[2],pcVar1);
-    BG_ParsePenetrationDepthTable("large",penetrationDepthTable[3],pcVar1);
-    penetrationDepthTableLoaded = true;
+  if (DAT_829d8498 == '\0') {
+    uVar1 = Com_LoadInfoString(0xffffffff8200e4a8,0xffffffff8200e4c4,0xffffffff8200e4e0,auStack_2020
+                              );
+    Com_Memset(0xffffffff829d8860,0,0x1f0);
+    BG_ParsePenetrationDepthTable(0xffffffff8200dfc0,0xffffffff829d88dc,uVar1);
+    BG_ParsePenetrationDepthTable(0xffffffff8200dfb8,0xffffffff829d8958,uVar1);
+    BG_ParsePenetrationDepthTable(0xffffffff8200dfb0,0xffffffff829d89d4,uVar1);
+    DAT_829d8498 = '\x01';
   }
   __restgprlr_29();
   return;
@@ -176,159 +149,153 @@ void BG_LoadPenetrationDepthTable(void)
 
 // 822924B0  BG_GetSurfacePenetrationDepth  (bgame/bg_weapons_setup.cpp:143)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-float BG_GetSurfacePenetrationDepth(Weapon param_1,bool param_2,int param_3)
+void BG_GetSurfacePenetrationDepth(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
   int iVar1;
-  Weapon WVar2;
-  Weapon WVar3;
+  ulonglong uVar2;
+  uint uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
-  double dVar6;
-  WeaponAttachment *local_50;
-  WeaponAttachment *local_4c;
-  WeaponAttachment *local_48 [18];
+  double dVar5;
+  int local_50;
+  int local_4c;
+  int local_48 [18];
   
-  uVar4 = (ulonglong)param_3;
-  WVar2 = (Weapon)__savegprlr_26();
-  if (0x1e < (uVar4 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x98,0,"surfaceType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
+  uVar2 = __savegprlr_26();
+  if (0x1e < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8200e3c8,0x98,0,0xffffffff8200e564,param_3,0x1f);
+  }
+  if ((int)param_3 == 0) {
+    __restgprlr_26(0);
+    return;
+  }
+  if ((uVar2 & 0xff) == 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x9c,0,0xffffffff82000f98,0xffffffff8200da70);
+  }
+  uVar3 = BG_GetAlternateWeapon(uVar2,param_2);
+  iVar1 = (&DAT_829d84a0)[uVar3 & 0xff];
+  uVar3 = BG_GetAlternateWeapon(uVar2,param_2);
+  uVar4 = (ulonglong)*(uint *)(iVar1 + 0x34);
+  dVar5 = (double)*(float *)((&DAT_829d80d8)[uVar3 & 0xff] + 0x68);
+  BG_GetWeaponAttachments(uVar2,param_2,&local_50,&local_4c,local_48);
+  if ((((local_50 != 0) && (*(int *)(local_50 + 0x20) != 0)) ||
+      ((local_4c != 0 && (local_50 = local_4c, *(int *)(local_4c + 0x20) != 0)))) ||
+     ((local_48[0] != 0 && (local_50 = local_48[0], *(int *)(local_48[0] + 0x20) != 0)))) {
+    uVar4 = (ulonglong)**(uint **)(local_50 + 0x20);
+    dVar5 = (double)(float)(*(uint **)(local_50 + 0x20))[1];
   }
   if ((int)uVar4 == 0) {
-    dVar6 = (double)__restgprlr_26(0);
-    return (float)dVar6;
+    MyAssertHandler(0xffffffff8200e3c8,0xb4,0,0xffffffff82000f98,0xffffffff8200e53c);
   }
-  if (((ulonglong)WVar2 & 0xff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x9c,0,"%s");
+  else if (3 < uVar4) {
+    MyAssertHandler(0xffffffff8200e3c8,0xb5,0,0xffffffff8200e4f8,uVar4,4);
   }
-  WVar3 = BG_GetAlternateWeapon(WVar2,param_2);
-  iVar1 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar3 & 0xffffffff) << 2) & 0x3fc));
-  WVar3 = BG_GetAlternateWeapon(WVar2,param_2);
-  uVar5 = (ulonglong)*(uint *)(iVar1 + 0x34);
-  dVar6 = (double)*(float *)(*(int *)((int)bg_weaponCompleteDefs +
-                                     ((uint)(((ulonglong)WVar3 & 0xffffffff) << 2) & 0x3fc)) + 0x68)
-  ;
-  BG_GetWeaponAttachments(WVar2,param_2,&local_50,&local_4c,local_48);
-  if ((((local_50 != (WeaponAttachment *)0x0) && (local_50->ammogeneral != (AttAmmoGeneral *)0x0))
-      || ((local_4c != (WeaponAttachment *)0x0 &&
-          (local_50 = local_4c, local_4c->ammogeneral != (AttAmmoGeneral *)0x0)))) ||
-     ((local_48[0] != (WeaponAttachment *)0x0 &&
-      (local_50 = local_48[0], local_48[0]->ammogeneral != (AttAmmoGeneral *)0x0)))) {
-    uVar5 = (ulonglong)local_50->ammogeneral->penetrateType;
-    dVar6 = (double)local_50->ammogeneral->penetrateMultiplier;
-  }
-  if ((int)uVar5 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0xb4,0,"%s");
-  }
-  else if (3 < uVar5) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0xb5,0,"penetrateType doesn\'t index PENETRATE_TYPE_COUNT\n\t%i not in [0, %i)")
-    ;
-  }
-  dVar6 = (double)__restgprlr_26((double)(float)((double)*(float *)((int)penetrationDepthTable[0] +
-                                                                   (int)((((uVar5 & 0x7ffffff) *
-                                                                           0x20 - uVar5) + uVar4 &
-                                                                         0xffffffff) << 2)) * dVar6)
-                                );
-  return (float)dVar6;
+  __restgprlr_26((double)(float)((double)*(float *)(&DAT_829d8860 +
+                                                   (int)((((uVar4 & 0x7ffffff) * 0x20 - uVar4) +
+                                                          param_3 & 0xffffffff) << 2)) * dVar5));
+  return;
 }
 
 
 // 82292670  BG_ShutdownWeaponDefFiles  (bgame/bg_weapons_setup.cpp:232)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void BG_ShutdownWeaponDefFiles(void)
 
 {
-  Com_Printf(0xe,"Shutting down weaponDef files\n");
-  bg_lastParsedWeaponIndex = 0;
-  bg_defaultWeaponIndex = 0;
+  Com_Printf(0xe,0xffffffff8200e5a0);
+  DAT_829d8a50 = 0;
+  DAT_829d849c = 0;
   return;
 }
 
 
 // 822926B8  BG_LoadWeaponCompleteDef_FastFile  (bgame/bg_weapons_setup.cpp:301)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+undefined8 BG_LoadWeaponCompleteDef_FastFile(char *param_1)
+
+{
+  undefined8 uVar1;
+  
+  if (*param_1 == '\0') {
+    return 0;
+  }
+  uVar1 = DB_FindXAssetHeader(0x1b,param_1,1);
+  return uVar1;
+}
+
 
 // 822926E0  BG_LoadWeaponCompleteDef  (bgame/bg_weapons_setup.cpp:310)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+undefined8 BG_LoadWeaponCompleteDef(char *param_1)
+
+{
+  undefined8 uVar1;
+  
+  if (*param_1 == '\0') {
+    return 0;
+  }
+  uVar1 = DB_FindXAssetHeader(0x1b,param_1,1);
+  return uVar1;
+}
+
 
 // 82292E98  BG_SetupAmmoIndexes  (bgame/bg_weapons_setup.cpp:317)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-void BG_SetupAmmoIndexes(Weapon param_1)
+void BG_SetupAmmoIndexes(void)
 
 {
   char cVar1;
   char cVar2;
-  ulonglong uVar3;
+  uint uVar3;
   bool bVar4;
-  Weapon WVar5;
-  WeaponDef *pWVar6;
-  WeaponDef *pWVar7;
-  char *pcVar8;
-  char *pcVar9;
-  uint uVar10;
-  char acStack_830 [1024];
-  char acStack_430 [1072];
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  char *pcVar10;
+  char *pcVar11;
+  uint uVar12;
+  undefined1 auStack_830 [1024];
+  undefined1 auStack_430 [1072];
   
-  WVar5 = (Weapon)__savegprlr_28();
-  uVar3 = (ulonglong)WVar5 & 0xff;
-  pWVar6 = BG_GetPointerToWeaponDef((uint)uVar3);
-  if (pWVar6->sharedAmmo != false) {
-    uVar10 = 1;
-    if (1 < uVar3) {
-      do {
-        pWVar7 = BG_GetPointerToWeaponDef(uVar10);
-        if (pWVar7->sharedAmmo != false) {
-          pcVar9 = pWVar7->szAmmoName;
-          pcVar8 = pWVar6->szAmmoName;
-          do {
-            cVar1 = *pcVar9;
-            cVar2 = *pcVar8;
-            if (cVar1 == '\0') break;
-            pcVar9 = pcVar9 + 1;
-            pcVar8 = pcVar8 + 1;
-          } while (cVar1 == cVar2);
-          if (cVar1 == cVar2) {
-            if ((weap_printSharedAmmo != (dvar_t *)0x0) &&
-               ((weap_printSharedAmmo->current).enabled != false)) {
-              BG_GetWeaponNameComplete((Weapon)((ulonglong)uVar10 & 0xff),false,acStack_830,0x400);
-              BG_GetWeaponNameComplete(WVar5,false,acStack_430,0x400);
-              Com_Printf(0x10,
-                         "Weapon %s shares ammo with weapon %s - both are using ammo type \'%s\'\n")
-              ;
-            }
-            pWVar6->iAmmoIndex = uVar10;
-            __restgprlr_28();
-            return;
+  uVar7 = __savegprlr_28();
+  uVar3 = uVar7 & 0xff;
+  iVar8 = BG_GetPointerToWeaponDef(uVar3);
+  if ((*(char *)(iVar8 + 0x768) != '\0') && (uVar12 = 1, 1 < uVar3)) {
+    do {
+      iVar9 = BG_GetPointerToWeaponDef(uVar12);
+      if (*(char *)(iVar9 + 0x768) != '\0') {
+        pcVar11 = *(char **)(iVar9 + 0x214);
+        pcVar10 = *(char **)(iVar8 + 0x214);
+        do {
+          cVar1 = *pcVar11;
+          cVar2 = *pcVar10;
+          if (cVar1 == '\0') break;
+          pcVar11 = pcVar11 + 1;
+          pcVar10 = pcVar10 + 1;
+        } while (cVar1 == cVar2);
+        if (cVar1 == cVar2) {
+          if ((DAT_82aa1a84 != 0) && (*(char *)(DAT_82aa1a84 + 0xc) != '\0')) {
+            uVar5 = BG_GetWeaponNameComplete(uVar12 & 0xff,0,auStack_830,0x400);
+            uVar6 = BG_GetWeaponNameComplete(uVar7,0,auStack_430,0x400);
+            Com_Printf(0x10,0xffffffff8200e700,uVar6,uVar5,*(undefined4 *)(iVar8 + 0x214));
           }
+          *(uint *)(iVar8 + 0x218) = uVar12;
+          __restgprlr_28();
+          return;
         }
-        uVar10 = uVar10 + 1;
-      } while (uVar10 < uVar3);
-    }
+      }
+      uVar12 = uVar12 + 1;
+    } while (uVar12 < uVar3);
   }
-  pcVar9 = (char *)**(undefined4 **)
-                     ((int)bg_weaponCompleteDefs + (int)(((ulonglong)WVar5 & 0xff) << 2));
-  if ((((*pcVar9 != 'i') || (pcVar9[1] != 'w')) || (pcVar9[2] != '5')) ||
-     (bVar4 = true, pcVar9[3] != '_')) {
+  pcVar11 = *(char **)(&DAT_829d80d8)[uVar7 & 0xff];
+  if ((((*pcVar11 != 'i') || (pcVar11[1] != 'w')) || (pcVar11[2] != '5')) ||
+     (bVar4 = true, pcVar11[3] != '_')) {
     bVar4 = false;
   }
   if (!bVar4) {
-    pWVar6->iAmmoIndex = (uint)uVar3;
+    *(uint *)(iVar8 + 0x218) = uVar3;
   }
   __restgprlr_28();
   return;
@@ -337,49 +304,46 @@ void BG_SetupAmmoIndexes(Weapon param_1)
 
 // 82292FF8  BG_SetupSharedAmmoIndexes  (bgame/bg_weapons_setup.cpp:410)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-void BG_SetupSharedAmmoIndexes(Weapon param_1)
+void BG_SetupSharedAmmoIndexes(void)
 
 {
   ulonglong uVar1;
-  Weapon WVar2;
-  WeaponDef *pWVar3;
-  WeaponDef *pWVar4;
+  ulonglong uVar2;
   int iVar5;
-  ulonglong uVar6;
-  char acStack_840 [1024];
-  char acStack_440 [1088];
+  int iVar6;
+  int iVar7;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  ulonglong uVar8;
+  undefined1 auStack_840 [1024];
+  undefined1 auStack_440 [1088];
   
-  WVar2 = (Weapon)__savegprlr_26();
-  uVar1 = (ulonglong)WVar2 & 0xff;
-  pWVar3 = BG_GetPointerToWeaponDef((uint)uVar1);
-  pWVar3->iSharedAmmoCapIndex = -1;
-  if (*pWVar3->szSharedAmmoCapName != '\0') {
-    uVar6 = 1;
+  uVar2 = __savegprlr_26();
+  uVar1 = uVar2 & 0xff;
+  iVar5 = BG_GetPointerToWeaponDef(uVar1);
+  *(undefined4 *)(iVar5 + 0x230) = 0xffffffff;
+  if (**(char **)(iVar5 + 0x22c) != '\0') {
+    uVar8 = 1;
     if (1 < uVar1) {
       do {
-        pWVar4 = BG_GetPointerToWeaponDef((uint)uVar6);
-        iVar5 = I_stricmp(pWVar4->szSharedAmmoCapName,pWVar3->szSharedAmmoCapName);
-        if (iVar5 == 0) {
-          pWVar3->iSharedAmmoCapIndex = (uint)uVar6;
-          if (pWVar4->iSharedAmmoCap != pWVar3->iSharedAmmoCap) {
-            BG_GetWeaponNameComplete((Weapon)(uVar6 & 0xffffffff000000ff),false,acStack_840,0x400);
-            BG_GetWeaponNameComplete(WVar2,false,acStack_440,0x400);
-            Com_Error(ERR_DROP,
-                      "\x15Shared ammo cap mismatch for \"%s\" shared ammo cap: \'%s\" set it to %i, but \"%s\" already set it to %i.\n"
-                     );
+        iVar6 = BG_GetPointerToWeaponDef(uVar8);
+        iVar7 = I_stricmp(*(undefined4 *)(iVar6 + 0x22c),*(undefined4 *)(iVar5 + 0x22c));
+        if (iVar7 == 0) {
+          *(int *)(iVar5 + 0x230) = (int)uVar8;
+          if (*(int *)(iVar6 + 0x234) != *(int *)(iVar5 + 0x234)) {
+            uVar3 = BG_GetWeaponNameComplete(uVar8 & 0xffffffff000000ff,0,auStack_840,0x400);
+            uVar4 = BG_GetWeaponNameComplete(uVar2,0,auStack_440,0x400);
+            Com_Error(1,0xffffffff8200e748,*(undefined4 *)(iVar5 + 0x22c),uVar4,
+                      *(undefined4 *)(iVar5 + 0x234),uVar3,*(undefined4 *)(iVar6 + 0x234));
             __restgprlr_26();
             return;
           }
           goto LAB_8229307c;
         }
-        uVar6 = uVar6 + 1;
-      } while ((uVar6 & 0xffffffff) < uVar1);
+        uVar8 = uVar8 + 1;
+      } while ((uVar8 & 0xffffffff) < uVar1);
     }
-    pWVar3->iSharedAmmoCapIndex = (uint)uVar1;
+    *(int *)(iVar5 + 0x230) = (int)uVar1;
   }
 LAB_8229307c:
   __restgprlr_26();
@@ -389,79 +353,68 @@ LAB_8229307c:
 
 // 822930F0  BG_SetupClipIndexes  (bgame/bg_weapons_setup.cpp:451)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-void BG_SetupClipIndexes(Weapon *param_1)
+void BG_SetupClipIndexes(void)
 
 {
   char cVar1;
   char cVar2;
   bool bVar3;
-  uint *puVar4;
-  WeaponDef *pWVar5;
-  WeaponDef *pWVar6;
-  char *pcVar7;
+  uint *puVar6;
+  int iVar7;
+  int iVar8;
+  undefined8 uVar4;
+  undefined8 uVar5;
   char *pcVar9;
-  Weapon WVar8;
-  uint uVar10;
-  char acStack_840 [1024];
-  char acStack_440 [1088];
+  char *pcVar10;
+  ulonglong uVar11;
+  undefined1 auStack_840 [1024];
+  undefined1 auStack_440 [1088];
   
-  puVar4 = (uint *)__savegprlr_25(param_1);
-  pWVar5 = BG_GetPointerToWeaponDef((uint)(byte)*puVar4);
-  if (pWVar5 == (WeaponDef *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x1c9,0,"%s");
+  puVar6 = (uint *)__savegprlr_25();
+  iVar7 = BG_GetPointerToWeaponDef((char)*puVar6);
+  if (iVar7 == 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x1c9,0,0xffffffff82000f98,0xffffffff8200a88c);
   }
-  if (pWVar5->szClipName == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x1ca,0,"%s");
+  if (*(int *)(iVar7 + 0x21c) == 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x1ca,0,0xffffffff82000f98,0xffffffff8200e818);
   }
-  if ((pWVar5->sharedAmmo != false) && (uVar10 = 1, 1 < (byte)*puVar4)) {
+  if ((*(char *)(iVar7 + 0x768) != '\0') && (uVar11 = 1, 1 < (byte)*puVar6)) {
     do {
-      pWVar6 = BG_GetPointerToWeaponDef(uVar10);
-      if (pWVar6->sharedAmmo != false) {
-        if (pWVar6->szClipName == (char *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
-                          ,0x1d5,0,"%s");
+      iVar8 = BG_GetPointerToWeaponDef(uVar11);
+      if (*(char *)(iVar8 + 0x768) != '\0') {
+        if (*(int *)(iVar8 + 0x21c) == 0) {
+          MyAssertHandler(0xffffffff8200e3c8,0x1d5,0,0xffffffff82000f98,0xffffffff8200e800);
         }
-        pcVar7 = pWVar5->szClipName;
-        pcVar9 = pWVar6->szClipName;
+        pcVar9 = *(char **)(iVar7 + 0x21c);
+        pcVar10 = *(char **)(iVar8 + 0x21c);
         do {
-          cVar1 = *pcVar9;
-          cVar2 = *pcVar7;
+          cVar1 = *pcVar10;
+          cVar2 = *pcVar9;
           if (cVar1 == '\0') break;
+          pcVar10 = pcVar10 + 1;
           pcVar9 = pcVar9 + 1;
-          pcVar7 = pcVar7 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 == cVar2) {
-          if ((weap_printSharedClips != (dvar_t *)0x0) &&
-             ((weap_printSharedClips->current).enabled != false)) {
-            BG_GetWeaponNameComplete((Weapon)((ulonglong)uVar10 & 0xff),false,acStack_840,0x400);
-            WVar8.data = 0;
-            WVar8._4_4_ = *puVar4;
-            BG_GetWeaponNameComplete(WVar8,false,acStack_440,0x400);
-            Com_Printf(0x10,
-                       "Weapon %s shares clip ammo with weapon %s - both are using clip ammo type \'%s\'\n"
-                      );
+          if ((DAT_82aa1ac8 != 0) && (*(char *)(DAT_82aa1ac8 + 0xc) != '\0')) {
+            uVar4 = BG_GetWeaponNameComplete(uVar11 & 0xff,0,auStack_840,0x400);
+            uVar5 = BG_GetWeaponNameComplete(*puVar6,0,auStack_440,0x400);
+            Com_Printf(0x10,0xffffffff8200e7b0,uVar5,uVar4,*(undefined4 *)(iVar7 + 0x21c));
           }
-          pWVar5->iClipIndex = uVar10;
+          *(int *)(iVar7 + 0x220) = (int)uVar11;
           __restgprlr_25();
           return;
         }
       }
-      uVar10 = uVar10 + 1;
-    } while (uVar10 < (byte)*puVar4);
+      uVar11 = uVar11 + 1;
+    } while ((uVar11 & 0xffffffff) < (ulonglong)(byte)*puVar6);
   }
-  pcVar7 = bg_weaponCompleteDefs[*puVar4 & 0xff]->szInternalName;
-  if ((((*pcVar7 != 'i') || (pcVar7[1] != 'w')) || (pcVar7[2] != '5')) ||
-     (bVar3 = true, pcVar7[3] != '_')) {
+  pcVar9 = *(char **)(&DAT_829d80d8)[*puVar6 & 0xff];
+  if ((((*pcVar9 != 'i') || (pcVar9[1] != 'w')) || (pcVar9[2] != '5')) ||
+     (bVar3 = true, pcVar9[3] != '_')) {
     bVar3 = false;
   }
   if (!bVar3) {
-    pWVar5->iClipIndex = *puVar4 & 0xff;
+    *(uint *)(iVar7 + 0x220) = *puVar6 & 0xff;
   }
   __restgprlr_25();
   return;
@@ -470,28 +423,25 @@ void BG_SetupClipIndexes(Weapon *param_1)
 
 // 822932F0  BG_SetupWeaponAlts  (bgame/bg_weapons_setup.cpp:496)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-void BG_SetupWeaponAlts(Weapon param_1,_func___cdecl_void_uint *param_2)
+void BG_SetupWeaponAlts(undefined8 param_1,undefined8 param_2)
 
 {
-  Weapon WVar1;
-  WeaponCompleteDef *pWVar3;
-  Weapon WVar2;
-  char acStack_420 [1056];
+  ulonglong uVar1;
+  int iVar3;
+  uint uVar4;
+  undefined8 uVar2;
+  undefined1 auStack_420 [1056];
   
-  WVar1 = (Weapon)__savegprlr_29();
-  pWVar3 = BG_GetPointerToWeaponCompleteDef(WVar1._4_4_ & 0xff);
-  pWVar3->altWeapon = 0;
-  if (*pWVar3->szAltWeaponName != '\0') {
-    WVar2 = BG_GetWeaponForName(pWVar3->szAltWeaponName,param_2);
-    if (((ulonglong)WVar2 & 0xff) == 0) {
-      BG_GetWeaponNameComplete(WVar1,false,acStack_420,0x400);
-      Com_Error(ERR_DROP,"\x15could not find altWeapon \'%s\' for weapon \'%s\'");
+  uVar1 = __savegprlr_29();
+  iVar3 = BG_GetPointerToWeaponCompleteDef(uVar1 & 0xff);
+  *(undefined4 *)(iVar3 + 0x78) = 0;
+  if (**(char **)(iVar3 + 0x74) != '\0') {
+    uVar4 = BG_GetWeaponForName(*(char **)(iVar3 + 0x74),param_2);
+    if ((uVar4 & 0xff) == 0) {
+      uVar2 = BG_GetWeaponNameComplete(uVar1,0,auStack_420,0x400);
+      Com_Error(1,0xffffffff8200e82c,*(undefined4 *)(iVar3 + 0x74),uVar2);
     }
-    pWVar3->altWeapon = WVar2._4_4_;
+    *(uint *)(iVar3 + 0x78) = uVar4;
   }
   __restgprlr_29();
   return;
@@ -500,27 +450,22 @@ void BG_SetupWeaponAlts(Weapon param_1,_func___cdecl_void_uint *param_2)
 
 // 82292708  BG_ClearWeaponDef  (bgame/bg_weapons_setup.cpp:518)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
 void BG_ClearWeaponDef(void)
 
 {
+  void *pvVar1;
+  
   __savegprlr_28();
-  if (bg_lastParsedWeaponIndex != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x207,0,"%s");
+  if (DAT_829d8a50 != 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x207,0,0xffffffff82000f98,0xffffffff8200e5dc);
   }
-  memset();
-  memset();
-  bg_weaponCompleteDefs[0] = BG_LoadDefaultWeaponCompleteDef();
-  if (bg_weaponCompleteDefs[0] == (WeaponCompleteDef *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x20e,0,"%s");
+  memset(&DAT_829d80d8,0,0x3c0);
+  pvVar1 = memset(&DAT_829d84a0,0,0x3c0);
+  DAT_829d80d8 = BG_LoadDefaultWeaponCompleteDef(pvVar1);
+  if (DAT_829d80d8 == 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x20e,0,0xffffffff82000f98,0xffffffff8200e5c0);
   }
-  bg_weaponDefs[0] = bg_weaponCompleteDefs[0]->weapDef;
+  DAT_829d84a0 = *(undefined4 *)(DAT_829d80d8 + 4);
   BG_LoadPlayerAnimTypes();
   BG_InitWeaponStrings();
   __restgprlr_28();
@@ -530,37 +475,29 @@ void BG_ClearWeaponDef(void)
 
 // 82293378  BG_SetupWeaponIndex  (bgame/bg_weapons_setup.cpp:538)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-void BG_SetupWeaponIndex(Weapon param_1,bool param_2)
+void BG_SetupWeaponIndex(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  int iVar2;
-  Weapon WVar3;
-  ulonglong uVar4;
-  undefined4 uStack00000014;
+  uint uVar2;
+  uint uVar3;
+  uint in_stack_00000014;
   
-  uVar4 = (ulonglong)param_2;
-  WVar3 = (Weapon)__savegprlr_26();
-  uStack00000014 = WVar3._4_4_;
-  iVar2 = (int)(((ulonglong)WVar3 & 0xff) << 2);
-  if (*(int *)((int)bg_weaponCompleteDefs + iVar2) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x21b,0,"%s");
+  uVar3 = __savegprlr_26();
+  uVar2 = uVar3 & 0xff;
+  in_stack_00000014 = uVar3;
+  if ((&DAT_829d80d8)[uVar2] == 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x21b,0,0xffffffff82000f98,0xffffffff8200e87c);
   }
-  iVar1 = *(int *)(*(int *)((int)bg_weaponCompleteDefs + iVar2) + 4);
-  *(int *)((int)bg_weaponDefs + iVar2) = iVar1;
+  iVar1 = *(int *)((&DAT_829d80d8)[uVar2] + 4);
+  (&DAT_829d84a0)[uVar2] = iVar1;
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x21d,0,"%s");
+    MyAssertHandler(0xffffffff8200e3c8,0x21d,0,0xffffffff82000f98,0xffffffff8200e85c);
   }
-  BG_SetupSharedAmmoIndexes(WVar3);
-  if ((uVar4 & 0xff) == 0) {
-    BG_SetupClipIndexes((Weapon *)&stack0x00000014);
-    BG_SetupAmmoIndexes(WVar3);
+  BG_SetupSharedAmmoIndexes(uVar3);
+  if ((param_2 & 0xff) == 0) {
+    BG_SetupClipIndexes(&stack0x00000014);
+    BG_SetupAmmoIndexes(uVar3);
   }
   __restgprlr_26();
   return;
@@ -569,105 +506,78 @@ void BG_SetupWeaponIndex(Weapon param_1,bool param_2)
 
 // 82293438  BG_SetupWeaponDef  (bgame/bg_weapons_setup.cpp:551)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-Weapon BG_SetupWeaponDef(WeaponCompleteDef *param_1,_func___cdecl_void_uint *param_2,bool param_3)
+void BG_SetupWeaponDef(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  uint uVar1;
-  WeaponCompleteDef *pWVar2;
+  undefined1 uVar1;
+  undefined4 uVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
-  Weapon WVar5;
   
-  uVar4 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pWVar2 = (WeaponCompleteDef *)__savegprlr_28(param_1);
-  bg_lastParsedWeaponIndex = bg_lastParsedWeaponIndex + 1;
-  if (0xef < bg_lastParsedWeaponIndex) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x22d,0,
-                    "bg_lastParsedWeaponIndex doesn\'t index ARRAY_COUNT( bg_weaponCompleteDefs )\n\t%i not in [0, %i)"
-                   );
+  uVar2 = __savegprlr_28();
+  uVar3 = (ulonglong)DAT_829d8a50 + 1;
+  DAT_829d8a50 = (uint)uVar3;
+  if (0xef < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8200e3c8,0x22d,0,0xffffffff8200e8a8,uVar3,0xf0);
   }
-  uVar1 = bg_lastParsedWeaponIndex;
-  WVar5._0_7_ = 0;
-  WVar5._7_1_ = (byte)bg_lastParsedWeaponIndex;
-  bg_weaponCompleteDefs[bg_lastParsedWeaponIndex & 0xff] = pWVar2;
-  BG_SetupWeaponIndex(WVar5,SUB81(uVar4,0));
-  if ((uVar4 & 0xff) == 0) {
-    BG_SetupWeaponAlts(WVar5,(_func___cdecl_void_uint *)uVar3);
+  uVar1 = (undefined1)DAT_829d8a50;
+  (&DAT_829d80d8)[DAT_829d8a50 & 0xff] = uVar2;
+  BG_SetupWeaponIndex(uVar1,param_3);
+  if ((param_3 & 0xff) == 0) {
+    BG_SetupWeaponAlts(uVar1,param_2);
   }
-  if ((uVar3 & 0xffffffff) != 0) {
-    (*(_func___cdecl_void_uint *)uVar3)(uVar1 & 0xff);
+  if ((param_2 & 0xffffffff) != 0) {
+    (*(code *)param_2)(uVar1);
   }
-  WVar5 = (Weapon)__restgprlr_28(WVar5);
-  return WVar5;
+  __restgprlr_28(uVar1);
+  return;
 }
 
 
 // 822934E8  BG_FillInAllWeaponItems  (bgame/bg_weapons_setup.cpp:583)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
 void BG_FillInAllWeaponItems(void)
 
 {
-  Weapon WVar1;
-  Weapon WVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar1;
+  uint uVar3;
+  undefined8 uVar2;
+  uint uVar4;
   uint uVar5;
-  Weapon WVar6;
-  Weapon WVar7;
-  char acStack_470 [1136];
+  undefined1 auStack_470 [1136];
   
   __savegprlr_20();
-  if (bg_weaponCompleteDefs[0] == (WeaponCompleteDef *)0x0) {
-    bg_weaponDefs[0] = (WeaponDef *)0x0;
+  if (DAT_829d80d8 == 0) {
+    DAT_829d84a0 = 0;
   }
   else {
-    bg_weaponDefs[0] = bg_weaponCompleteDefs[0]->weapDef;
+    DAT_829d84a0 = *(undefined4 *)(DAT_829d80d8 + 4);
   }
-  WVar6 = (Weapon)0x1;
-  uVar5 = bg_lastParsedWeaponIndex + 1;
-  if (1 < uVar5) {
-    WVar7 = (Weapon)0x1;
+  uVar5 = 1;
+  uVar4 = DAT_829d8a50 + 1;
+  if (1 < uVar4) {
+    uVar3 = 1;
     do {
-      BG_SetupWeaponIndex(WVar6,(bool)('\x01' - (WVar6 == WVar7)));
-      WVar1.data = 0;
-      WVar1._4_4_ = bg_lastParsedWeaponIndex;
-      if ((ulonglong)WVar1 < (ulonglong)WVar7) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
-                        ,0x51,0,
-                        "weaponIndex not in [0, bg_lastParsedWeaponIndex]\n\t%i not in [0, %i]");
+      BG_SetupWeaponIndex(uVar5,uVar5 != uVar3);
+      if (DAT_829d8a50 < uVar3) {
+        MyAssertHandler(0xffffffff8200e3c8,0x51,0,0xffffffff8200e380,uVar3);
       }
-      iVar3 = (int)((longlong)WVar7 << 2);
-      if (*(int *)((int)bg_weaponCompleteDefs + iVar3) == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
-                        ,0x52,0,"%s");
+      if ((&DAT_829d80d8)[uVar3] == 0) {
+        MyAssertHandler(0xffffffff8200e3c8,0x52,0,0xffffffff82000f98,0xffffffff8200e33c);
       }
-      iVar3 = *(int *)((int)bg_weaponCompleteDefs + iVar3);
-      *(undefined4 *)(iVar3 + 0x78) = 0;
-      if (**(char **)(iVar3 + 0x74) != '\0') {
-        WVar7 = BG_GetWeaponForName(*(char **)(iVar3 + 0x74),(_func___cdecl_void_uint *)0x0);
-        if (((ulonglong)WVar7 & 0xff) == 0) {
-          BG_GetWeaponNameComplete(WVar6,false,acStack_470,0x400);
-          Com_Error(ERR_DROP,"\x15could not find altWeapon \'%s\' for weapon \'%s\'");
+      iVar1 = (&DAT_829d80d8)[uVar3];
+      *(undefined4 *)(iVar1 + 0x78) = 0;
+      if (**(char **)(iVar1 + 0x74) != '\0') {
+        uVar3 = BG_GetWeaponForName(*(char **)(iVar1 + 0x74),0);
+        if ((uVar3 & 0xff) == 0) {
+          uVar2 = BG_GetWeaponNameComplete(uVar5,0,auStack_470,0x400);
+          Com_Error(1,0xffffffff8200e82c,*(undefined4 *)(iVar1 + 0x74),uVar2);
         }
-        *(int *)(iVar3 + 0x78) = WVar7._4_4_;
+        *(uint *)(iVar1 + 0x78) = uVar3;
       }
-      uVar4 = (longlong)WVar6 + 1;
-      WVar6 = (Weapon)(uVar4 & 0xffffffff000000ff);
-      WVar7 = (Weapon)(uVar4 & 0xff);
-      WVar2.data = 0;
-      WVar2._4_4_ = uVar5;
-    } while ((ulonglong)WVar7 < (ulonglong)WVar2);
+      uVar3 = uVar5 + 1;
+      uVar5 = uVar3 & 0xff;
+      uVar3 = uVar3 & 0xff;
+    } while (uVar3 < uVar4);
   }
   __restgprlr_20();
   return;
@@ -676,11 +586,8 @@ void BG_FillInAllWeaponItems(void)
 
 // 822927C8  BG_GetWeaponNameComplete  (bgame/bg_weapons_setup.cpp:602)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-char * BG_GetWeaponNameComplete(Weapon param_1,bool param_2,char *param_3,uint param_4)
+void BG_GetWeaponNameComplete
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,longlong param_4)
 
 {
   byte bVar1;
@@ -688,254 +595,242 @@ char * BG_GetWeaponNameComplete(Weapon param_1,bool param_2,char *param_3,uint p
   undefined4 *puVar3;
   undefined4 *puVar4;
   char *pcVar5;
-  bool bVar6;
-  Weapon WVar7;
-  Weapon WVar8;
-  char *pcVar9;
+  undefined *puVar6;
+  ulonglong uVar7;
+  uint uVar8;
+  bool bVar9;
   ulonglong uVar10;
-  longlong lVar11;
-  ulonglong uVar12;
+  byte *pbVar11;
+  char *pcVar12;
   byte *pbVar13;
-  byte *pbVar14;
-  ulonglong uVar15;
-  byte *pbVar16;
-  ulonglong uVar17;
+  ulonglong uVar14;
+  byte *pbVar15;
+  ulonglong uVar16;
+  byte *pbVar17;
   byte *pbVar18;
   byte *pbVar19;
   byte *pbVar20;
-  byte *pbVar21;
-  uint uVar22;
-  ulonglong uVar23;
-  ulonglong uVar24;
-  int iVar25;
-  int iVar26;
+  ulonglong uVar21;
+  ulonglong uVar22;
+  int iVar23;
+  int iVar24;
   
-  lVar11 = (longlong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  WVar7 = (Weapon)__savegprlr_15();
-  if ((uVar10 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
-                    0x263,0,"%s");
+  uVar7 = __savegprlr_15();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200e3c8,0x263,0,0xffffffff82000f98,0xffffffff82002378);
   }
-  WVar8 = BG_GetAlternateWeapon(WVar7,param_2);
-  uVar17 = lVar11 - 1;
-  pbVar18 = (byte *)0x0;
-  pbVar21 = (byte *)0x0;
-  pbVar16 = (byte *)0x0;
-  puVar4 = *(undefined4 **)
-            ((int)bg_weaponCompleteDefs + ((uint)(((ulonglong)WVar8 & 0xffffffff) << 2) & 0x3fc));
-  uVar23 = 0;
-  pcVar9 = (char *)*puVar4;
-  pcVar5 = (char *)uVar10;
-  iVar26 = 0;
-  if (uVar17 != 0) {
+  uVar8 = BG_GetAlternateWeapon(uVar7,param_2);
+  uVar16 = param_4 - 1;
+  pbVar17 = (byte *)0x0;
+  pbVar20 = (byte *)0x0;
+  pbVar15 = (byte *)0x0;
+  puVar4 = (undefined4 *)(&DAT_829d80d8)[uVar8 & 0xff];
+  uVar21 = 0;
+  pcVar12 = (char *)*puVar4;
+  pcVar5 = (char *)param_3;
+  iVar24 = 0;
+  if (uVar16 != 0) {
     do {
-      if (*pcVar9 == '\0') break;
-      pcVar5[(int)uVar23] = *pcVar9;
-      uVar23 = uVar23 + 1;
-      pcVar9 = pcVar9 + 1;
-    } while ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff));
-    iVar26 = (int)uVar23;
-    if ((((4 < (uVar23 & 0xffffffff)) && (*pcVar5 == 'i')) && (pcVar5[1] == 'w')) &&
+      if (*pcVar12 == '\0') break;
+      pcVar5[(int)uVar21] = *pcVar12;
+      uVar21 = uVar21 + 1;
+      pcVar12 = pcVar12 + 1;
+    } while ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff));
+    iVar24 = (int)uVar21;
+    if ((((4 < (uVar21 & 0xffffffff)) && (*pcVar5 == 'i')) && (pcVar5[1] == 'w')) &&
        ((pcVar5[2] == '5' && (pcVar5[3] == '_')))) {
-      uVar15 = ((ulonglong)WVar7 & 0xffffffff) >> 0xc & 7;
-      if (uVar15 != 0) {
-        puVar3 = *(undefined4 **)((int)(uVar15 << 2) + puVar4[4] + -4);
+      uVar14 = (uVar7 & 0xffffffff) >> 0xc & 7;
+      if (uVar14 != 0) {
+        puVar3 = *(undefined4 **)((int)(uVar14 << 2) + puVar4[4] + -4);
         if (puVar3 == (undefined4 *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
-                          ,0x275,0,"%s");
+          MyAssertHandler(0xffffffff8200e3c8,0x275,0,0xffffffff82000f98,0xffffffff8200e66c);
         }
-        pbVar18 = (byte *)*puVar3;
+        pbVar17 = (byte *)*puVar3;
       }
-      uVar12 = ((ulonglong)WVar7 & 0xffffffff) >> 0xf & 3;
-      if (uVar12 != 0) {
-        puVar3 = *(undefined4 **)((int)(uVar12 << 2) + puVar4[5] + -4);
+      uVar10 = (uVar7 & 0xffffffff) >> 0xf & 3;
+      if (uVar10 != 0) {
+        puVar3 = *(undefined4 **)((int)(uVar10 << 2) + puVar4[5] + -4);
         if (puVar3 == (undefined4 *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
-                          ,0x27c,0,"%s");
+          MyAssertHandler(0xffffffff8200e3c8,0x27c,0,0xffffffff82000f98,0xffffffff8200e66c);
         }
-        if (pbVar18 == (byte *)0x0) {
-          pbVar18 = (byte *)*puVar3;
+        if (pbVar17 == (byte *)0x0) {
+          pbVar17 = (byte *)*puVar3;
         }
         else {
-          pbVar21 = (byte *)*puVar3;
+          pbVar20 = (byte *)*puVar3;
         }
       }
-      if ((((ulonglong)WVar7 & 0xffffffff) >> 0x11 & 0xf) != 0) {
-        uVar12 = 1;
-        uVar22 = 0;
+      if (((uVar7 & 0xffffffff) >> 0x11 & 0xf) != 0) {
+        uVar10 = 1;
+        uVar8 = 0;
         do {
-          if ((((ulonglong)WVar7 & 0xffffffff) >> 0x11 & uVar12 & 0xf) != 0) {
-            if (pbVar16 != (byte *)0x0) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
-                              ,0x28c,0,"%s");
+          if (((uVar7 & 0xffffffff) >> 0x11 & uVar10 & 0xf) != 0) {
+            if (pbVar15 != (byte *)0x0) {
+              MyAssertHandler(0xffffffff8200e3c8,0x28c,0,0xffffffff82000f98,0xffffffff8200e658);
             }
-            puVar3 = *(undefined4 **)(puVar4[6] + uVar22);
+            puVar3 = *(undefined4 **)(puVar4[6] + uVar8);
             if (puVar3 == (undefined4 *)0x0) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
-                              ,0x28e,0,"%s");
+              MyAssertHandler(0xffffffff8200e3c8,0x28e,0,0xffffffff82000f98,0xffffffff8200e66c);
             }
-            if (pbVar18 == (byte *)0x0) {
-              pbVar18 = (byte *)*puVar3;
+            if (pbVar17 == (byte *)0x0) {
+              pbVar17 = (byte *)*puVar3;
             }
-            else if (pbVar21 == (byte *)0x0) {
-              pbVar21 = (byte *)*puVar3;
+            else if (pbVar20 == (byte *)0x0) {
+              pbVar20 = (byte *)*puVar3;
             }
             else {
-              pbVar16 = (byte *)*puVar3;
+              pbVar15 = (byte *)*puVar3;
             }
           }
-          uVar22 = uVar22 + 4;
-          uVar12 = (uVar12 & 0x7fffffff) << 1;
-        } while (uVar22 < 0x10);
+          uVar8 = uVar8 + 4;
+          uVar10 = (uVar10 & 0x7fffffff) << 1;
+        } while (uVar8 < 0x10);
       }
       do {
-        bVar6 = false;
-        pbVar19 = pbVar18;
-        pbVar20 = pbVar21;
-        if (pbVar18 == (byte *)0x0) {
+        bVar9 = false;
+        pbVar18 = pbVar17;
+        pbVar19 = pbVar20;
+        if (pbVar17 == (byte *)0x0) {
 LAB_82292a44:
-          pbVar21 = pbVar20;
-          pbVar18 = pbVar19;
-          if ((pbVar20 != (byte *)0x0) &&
-             (pbVar19 = pbVar20, pbVar14 = pbVar16, pbVar16 != (byte *)0x0)) {
+          pbVar20 = pbVar19;
+          pbVar17 = pbVar18;
+          if ((pbVar19 != (byte *)0x0) &&
+             (pbVar18 = pbVar19, pbVar13 = pbVar15, pbVar15 != (byte *)0x0)) {
             do {
-              bVar1 = *pbVar19;
-              bVar2 = *pbVar14;
-              if (bVar1 == 0) break;
-              pbVar19 = pbVar19 + 1;
-              pbVar14 = pbVar14 + 1;
-            } while ((uint)bVar1 == (uint)bVar2);
-            if (0 < (int)((uint)bVar1 - (uint)bVar2)) {
-              bVar6 = true;
-              pbVar21 = pbVar16;
-              pbVar16 = pbVar20;
-            }
-          }
-        }
-        else {
-          pbVar14 = pbVar18;
-          pbVar13 = pbVar21;
-          if (pbVar21 != (byte *)0x0) {
-            do {
-              bVar1 = *pbVar14;
+              bVar1 = *pbVar18;
               bVar2 = *pbVar13;
               if (bVar1 == 0) break;
-              pbVar14 = pbVar14 + 1;
+              pbVar18 = pbVar18 + 1;
               pbVar13 = pbVar13 + 1;
             } while ((uint)bVar1 == (uint)bVar2);
             if (0 < (int)((uint)bVar1 - (uint)bVar2)) {
-              bVar6 = true;
-              pbVar19 = pbVar21;
-              pbVar20 = pbVar18;
+              bVar9 = true;
+              pbVar20 = pbVar15;
+              pbVar15 = pbVar19;
+            }
+          }
+        }
+        else {
+          pbVar13 = pbVar17;
+          pbVar11 = pbVar20;
+          if (pbVar20 != (byte *)0x0) {
+            do {
+              bVar1 = *pbVar13;
+              bVar2 = *pbVar11;
+              if (bVar1 == 0) break;
+              pbVar13 = pbVar13 + 1;
+              pbVar11 = pbVar11 + 1;
+            } while ((uint)bVar1 == (uint)bVar2);
+            if (0 < (int)((uint)bVar1 - (uint)bVar2)) {
+              bVar9 = true;
+              pbVar18 = pbVar20;
+              pbVar19 = pbVar17;
             }
             goto LAB_82292a44;
           }
         }
-      } while (bVar6);
-      if ((pbVar18 != (byte *)0x0) && ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff))) {
-        pcVar5[iVar26] = '_';
-        uVar23 = uVar23 + 1;
-        if ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          iVar26 = (int)uVar23;
+      } while (bVar9);
+      if ((pbVar17 != (byte *)0x0) && ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff))) {
+        pcVar5[iVar24] = '_';
+        uVar21 = uVar21 + 1;
+        if ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+          iVar24 = (int)uVar21;
           do {
-            if (pbVar18[(int)uVar23 - iVar26] == 0) break;
-            pcVar5[(int)uVar23] = pbVar18[(int)uVar23 - iVar26];
-            uVar23 = uVar23 + 1;
-          } while ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff));
+            if (pbVar17[(int)uVar21 - iVar24] == 0) break;
+            pcVar5[(int)uVar21] = pbVar17[(int)uVar21 - iVar24];
+            uVar21 = uVar21 + 1;
+          } while ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff));
         }
       }
-      if ((pbVar21 != (byte *)0x0) && ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff))) {
-        pcVar5[(int)uVar23] = '_';
-        uVar23 = uVar23 + 1;
-        if ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          iVar26 = (int)uVar23;
+      if ((pbVar20 != (byte *)0x0) && ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff))) {
+        pcVar5[(int)uVar21] = '_';
+        uVar21 = uVar21 + 1;
+        if ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+          iVar24 = (int)uVar21;
           do {
-            if (pbVar21[(int)uVar23 - iVar26] == 0) break;
-            pcVar5[(int)uVar23] = pbVar21[(int)uVar23 - iVar26];
-            uVar23 = uVar23 + 1;
-          } while ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff));
+            if (pbVar20[(int)uVar21 - iVar24] == 0) break;
+            pcVar5[(int)uVar21] = pbVar20[(int)uVar21 - iVar24];
+            uVar21 = uVar21 + 1;
+          } while ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff));
         }
       }
-      if ((pbVar16 != (byte *)0x0) && ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff))) {
-        pcVar5[(int)uVar23] = '_';
-        uVar23 = uVar23 + 1;
-        if ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          iVar26 = (int)uVar23;
+      if ((pbVar15 != (byte *)0x0) && ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff))) {
+        pcVar5[(int)uVar21] = '_';
+        uVar21 = uVar21 + 1;
+        if ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+          iVar24 = (int)uVar21;
           do {
-            if (pbVar16[(int)uVar23 - iVar26] == 0) break;
-            pcVar5[(int)uVar23] = pbVar16[(int)uVar23 - iVar26];
-            uVar23 = uVar23 + 1;
-          } while ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff));
+            if (pbVar15[(int)uVar21 - iVar24] == 0) break;
+            pcVar5[(int)uVar21] = pbVar15[(int)uVar21 - iVar24];
+            uVar21 = uVar21 + 1;
+          } while ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff));
         }
       }
-      uVar12 = ((ulonglong)WVar7 & 0xffffffff) >> 8 & 0xf;
-      if (uVar12 != 0) {
-        if (0xf < uVar12) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
-                          ,0x2dc,0,"%s");
+      uVar10 = (uVar7 & 0xffffffff) >> 8 & 0xf;
+      if (uVar10 != 0) {
+        if (0xf < uVar10) {
+          MyAssertHandler(0xffffffff8200e3c8,0x2dc,0,0xffffffff82000f98,0xffffffff8200e62c);
         }
-        pcVar9 = camoString;
-        uVar24 = uVar23;
-        if ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          pcVar5[(int)uVar23] = *camoString;
-          uVar24 = uVar23 + 1;
-          if ((uVar24 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-            pcVar5[(int)uVar24] = pcVar9[1];
-            uVar24 = uVar23 + 2;
-            if ((uVar24 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-              pcVar5[(int)uVar24] = pcVar9[2];
-              uVar24 = uVar23 + 3;
-              if ((uVar24 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-                pcVar5[(int)uVar24] = pcVar9[3];
-                uVar24 = uVar23 + 4;
-                if ((uVar24 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-                  pcVar5[(int)uVar24] = pcVar9[4];
-                  uVar24 = uVar23 + 5;
+        puVar6 = PTR_DAT_82961a3c;
+        uVar22 = uVar21;
+        if ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+          pcVar5[(int)uVar21] = *PTR_DAT_82961a3c;
+          uVar22 = uVar21 + 1;
+          if ((uVar22 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+            pcVar5[(int)uVar22] = puVar6[1];
+            uVar22 = uVar21 + 2;
+            if ((uVar22 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+              pcVar5[(int)uVar22] = puVar6[2];
+              uVar22 = uVar21 + 3;
+              if ((uVar22 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+                pcVar5[(int)uVar22] = puVar6[3];
+                uVar22 = uVar21 + 4;
+                if ((uVar22 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+                  pcVar5[(int)uVar22] = puVar6[4];
+                  uVar22 = uVar21 + 5;
                 }
               }
             }
           }
         }
-        uVar23 = uVar24;
-        if ((uVar24 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          pcVar5[(int)uVar24] = (char)(uVar12 / 10) + '0';
-          uVar23 = uVar24 + 1;
-          if ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-            pcVar5[(int)uVar23] = (char)uVar12 + (char)(uVar12 / 10) * -10 + '0';
-            uVar23 = uVar24 + 2;
+        uVar21 = uVar22;
+        if ((uVar22 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+          pcVar5[(int)uVar22] = (char)(uVar10 / 10) + '0';
+          uVar21 = uVar22 + 1;
+          if ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+            pcVar5[(int)uVar21] = (char)uVar10 + (char)(uVar10 / 10) * -10 + '0';
+            uVar21 = uVar22 + 2;
           }
         }
       }
-      iVar25 = (int)uVar23;
-      iVar26 = iVar25;
-      if ((uVar15 != 0) && (uVar15 = ((ulonglong)WVar7 & 0xffffffff) >> 0x15 & 7, uVar15 != 0)) {
-        if (7 < uVar15) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
-                          ,0x2f1,0,"%s");
+      iVar23 = (int)uVar21;
+      iVar24 = iVar23;
+      if ((uVar14 != 0) && (uVar7 = (uVar7 & 0xffffffff) >> 0x15 & 7, uVar7 != 0)) {
+        if (7 < uVar7) {
+          MyAssertHandler(0xffffffff8200e3c8,0x2f1,0,0xffffffff82000f98,0xffffffff8200e5fc);
         }
-        pcVar9 = scopeString;
-        if ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          pcVar5[iVar25] = *scopeString;
-          iVar26 = (int)(uVar23 + 1);
-          if ((uVar23 + 1 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-            pcVar5[iVar26] = pcVar9[1];
-            iVar26 = (int)(uVar23 + 2);
-            if ((uVar23 + 2 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-              pcVar5[iVar26] = pcVar9[2];
-              iVar26 = (int)(uVar23 + 3);
-              if ((uVar23 + 3 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-                pcVar5[iVar26] = pcVar9[3];
-                iVar26 = (int)(uVar23 + 4);
-                if ((uVar23 + 4 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-                  pcVar5[iVar26] = pcVar9[4];
-                  iVar26 = (int)(uVar23 + 5);
-                  if ((uVar23 + 5 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-                    pcVar5[iVar26] = pcVar9[5];
-                    iVar26 = (int)(uVar23 + 6);
-                    if ((uVar23 + 6 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-                      pcVar5[iVar26] = (char)uVar15 + '0';
-                      iVar26 = iVar25 + 7;
+        puVar6 = PTR_s__scope_82961a38;
+        if ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+          pcVar5[iVar23] = *PTR_s__scope_82961a38;
+          iVar24 = (int)(uVar21 + 1);
+          if ((uVar21 + 1 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+            pcVar5[iVar24] = puVar6[1];
+            iVar24 = (int)(uVar21 + 2);
+            if ((uVar21 + 2 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+              pcVar5[iVar24] = puVar6[2];
+              iVar24 = (int)(uVar21 + 3);
+              if ((uVar21 + 3 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+                pcVar5[iVar24] = puVar6[3];
+                iVar24 = (int)(uVar21 + 4);
+                if ((uVar21 + 4 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+                  pcVar5[iVar24] = puVar6[4];
+                  iVar24 = (int)(uVar21 + 5);
+                  if ((uVar21 + 5 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+                    pcVar5[iVar24] = puVar6[5];
+                    iVar24 = (int)(uVar21 + 6);
+                    if ((uVar21 + 6 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+                      pcVar5[iVar24] = (char)uVar7 + '0';
+                      iVar24 = iVar23 + 7;
                     }
                   }
                 }
@@ -946,166 +841,181 @@ LAB_82292a44:
       }
     }
   }
-  pcVar5[iVar26] = '\0';
-  pcVar9 = (char *)__restgprlr_15(uVar10);
-  return pcVar9;
+  pcVar5[iVar24] = '\0';
+  __restgprlr_15(param_3);
+  return;
 }
 
 
 // 82292D38  BG_GetWeaponName  (bgame/bg_weapons_setup.cpp:772)
 
-char * BG_GetWeaponName(Weapon param_1,char *param_2,uint param_3)
+void BG_GetWeaponName(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  char *pcVar1;
-  
-  pcVar1 = BG_GetWeaponNameComplete(param_1,false,param_2,param_3);
-  return pcVar1;
+  BG_GetWeaponNameComplete(param_1,0,param_2,param_3);
+  return;
 }
 
 
 // 82293640  BG_FindWeaponForName  (bgame/bg_weapons_setup.cpp:778)
 
-Weapon BG_FindWeaponForName(char *param_1)
+void BG_FindWeaponForName(void)
 
 {
-  Weapon WVar1;
-  char *pcVar2;
-  char *pcVar3;
-  int iVar4;
-  ulonglong uVar5;
-  Weapon WVar6;
-  char acStack_430 [1072];
+  ulonglong uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  byte bVar4;
+  uint uVar5;
+  undefined1 auStack_430 [1072];
   
-  pcVar2 = (char *)__savegprlr_27(param_1);
-  if (pcVar2 != (char *)0x0) {
-    WVar6._0_7_ = 0;
-    WVar6._7_1_ = (byte)bg_lastFoundWeaponIndex;
-    if ((WVar6 != (Weapon)0x0) &&
-       (WVar1.data = 0, WVar1._4_4_ = bg_lastParsedWeaponIndex + 1,
-       (ulonglong)WVar6 < (ulonglong)WVar1)) {
-      pcVar3 = BG_GetWeaponNameComplete(WVar6,false,acStack_430,0x400);
-      iVar4 = I_stricmp(pcVar2,pcVar3);
-      if (iVar4 == 0) {
-        WVar6 = (Weapon)__restgprlr_27(WVar6);
-        return WVar6;
+  uVar1 = __savegprlr_27();
+  if ((uVar1 & 0xffffffff) != 0) {
+    uVar5 = DAT_829d8a54 & 0xff;
+    if ((uVar5 != 0) && (uVar5 < DAT_829d8a50 + 1U)) {
+      uVar2 = BG_GetWeaponNameComplete(uVar5,0,auStack_430,0x400);
+      iVar3 = I_stricmp(uVar1,uVar2);
+      if (iVar3 == 0) {
+        __restgprlr_27(uVar5);
+        return;
       }
     }
-    WVar6 = (Weapon)0x1;
+    bVar4 = 1;
     uVar5 = 1;
-    if (1 < bg_lastParsedWeaponIndex + 1) {
+    if (1 < DAT_829d8a50 + 1U) {
       do {
-        pcVar3 = BG_GetWeaponNameComplete(WVar6,false,acStack_430,0x400);
-        iVar4 = I_stricmp(pcVar2,pcVar3);
-        if (iVar4 == 0) {
-          bg_lastFoundWeaponIndex = (uint)uVar5;
-          WVar6 = (Weapon)__restgprlr_27(WVar6);
-          return WVar6;
+        uVar2 = BG_GetWeaponNameComplete(bVar4,0,auStack_430,0x400);
+        iVar3 = I_stricmp(uVar1,uVar2);
+        if (iVar3 == 0) {
+          DAT_829d8a54 = uVar5;
+          __restgprlr_27(bVar4);
+          return;
         }
-        uVar5 = (longlong)WVar6 + 1;
-        WVar6 = (Weapon)(uVar5 & 0xffffffff000000ff);
-        uVar5 = uVar5 & 0xff;
-      } while (uVar5 < bg_lastParsedWeaponIndex + 1);
+        bVar4 = bVar4 + 1;
+        uVar5 = (uint)bVar4;
+      } while (uVar5 < DAT_829d8a50 + 1U);
     }
   }
-  WVar6 = (Weapon)__restgprlr_27(0);
-  return WVar6;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 82293738  BG_GetWeaponForName  (bgame/bg_weapons_setup.cpp:812)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void BG_GetWeaponForName(undefined8 param_1,undefined8 param_2)
+
+{
+  char *pcVar2;
+  int iVar3;
+  ulonglong uVar1;
+  undefined8 uVar4;
+  
+  pcVar2 = (char *)__savegprlr_29();
+  if ((*pcVar2 == '\0') || (iVar3 = I_stricmp(pcVar2,0xffffffff82003484), iVar3 == 0)) {
+    uVar1 = 0;
+  }
+  else {
+    uVar1 = BG_FindWeaponForName(pcVar2);
+    if ((uVar1 & 0xff) == 0) {
+      if ((*pcVar2 != '\0') &&
+         (uVar1 = DB_FindXAssetHeader(0x1b,pcVar2,1), (uVar1 & 0xffffffff) != 0)) {
+        DB_FindXAssetHeader(0x1b,pcVar2,1);
+        iVar3 = DB_IsXAssetDefault(0x1b,pcVar2);
+        if (iVar3 != 0) {
+          __restgprlr_29(0);
+          return;
+        }
+        if ((((*pcVar2 != 'i') || (pcVar2[1] != 'w')) || (pcVar2[2] != '5')) ||
+           (uVar4 = 1, pcVar2[3] != '_')) {
+          uVar4 = 0;
+        }
+        BG_SetupWeaponDef(uVar1,param_2,uVar4);
+        __restgprlr_29();
+        return;
+      }
+      Com_DPrintf(0x11,0xffffffff8200e908,pcVar2);
+      __restgprlr_29(0);
+      return;
+    }
+  }
+  __restgprlr_29(uVar1);
+  return;
+}
+
 
 // 82293860  CG_GetWeaponForName  (bgame/bg_weapons_setup.cpp:852)
 
-Weapon CG_GetWeaponForName(char *param_1)
+void CG_GetWeaponForName(undefined8 param_1)
 
 {
-  Weapon WVar1;
-  
-  WVar1 = BG_GetWeaponForName(param_1,(_func___cdecl_void_uint *)0x0);
-  return WVar1;
+  BG_GetWeaponForName(param_1,0);
+  return;
 }
 
 
 // 82292D48  BG_GetViewmodelWeapon  (bgame/bg_weapons_setup.cpp:858)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-Weapon BG_GetViewmodelWeapon(playerState_s *param_1)
+undefined4 BG_GetViewmodelWeapon(int param_1)
 
 {
-  Weapon WVar1;
-  Weapon WVar2;
-  
-  if ((*(uint *)&param_1->field_0x374 & 2) != 0) {
-    WVar1.data = 0;
-    WVar1._4_4_ = *(uint *)&(param_1->field0_0x0).weapCommon;
-    return WVar1;
+  if ((*(uint *)(param_1 + 0x374) & 2) != 0) {
+    return *(undefined4 *)(param_1 + 0x364);
   }
-  WVar2.data = 0;
-  WVar2._4_4_ = *(uint *)&param_1->field_0x370;
-  return WVar2;
+  return *(undefined4 *)(param_1 + 0x370);
 }
 
 
 // 82292D68  BG_GetNumWeapons  (bgame/bg_weapons_setup.cpp:867)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint BG_GetNumWeapons(void)
+longlong BG_GetNumWeapons(void)
 
 {
-  return bg_lastParsedWeaponIndex + 1;
+  return (ulonglong)DAT_829d8a50 + 1;
 }
 
 
 // 82292D78  BG_GetVariableZoomLevelForEquippedWeapon  (bgame/bg_weapons_setup.cpp:874)
 
-/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
-
-float BG_GetVariableZoomLevelForEquippedWeapon(playerState_s *param_1,Weapon param_2)
+void BG_GetVariableZoomLevelForEquippedWeapon(undefined8 param_1,ulonglong param_2)
 
 {
   uint uVar1;
-  playerState_s *ppVar2;
-  bool bVar5;
+  int iVar2;
+  char cVar4;
   int iVar3;
-  PlayerEquippedWeaponState *pPVar4;
-  double dVar6;
-  float local_30;
-  int local_2c;
-  int local_28;
+  undefined8 uVar5;
+  float local_30 [12];
   
-  ppVar2 = (playerState_s *)__savegprlr_29(param_1);
-  local_30 = (float)(bg_weapon_vzscope_fov1->current).integer;
-  local_2c = (bg_weapon_vzscope_fov2->current).integer;
-  local_28 = (bg_weapon_vzscope_fov3->current).integer;
-  if (((ulonglong)param_2 & 0xff) != 0) {
-    if ((ppVar2 == (playerState_s *)0x0) ||
-       (bVar5 = true, (*(uint *)&ppVar2->field_0x374 & 0x8000) == 0)) {
-      bVar5 = false;
-    }
-    bVar5 = BG_CanVariableZoom(param_2,bVar5);
-    if (bVar5) {
-      iVar3 = BG_GetEquippedWeaponIndex(ppVar2,param_2);
-      if (iVar3 == -1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
-                        ,0x378,0,"%s");
-      }
-      pPVar4 = BG_GetEquippedWeaponState(ppVar2,param_2);
-      uVar1 = pPVar4->zoomLevelIndex;
-      if (2 < uVar1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
-                        ,0x37a,0,
-                        "zoomLvl doesn\'t index WEAPON_VZSCOPE_MAXFOVS\n\t%i not in [0, %i)");
-      }
-      dVar6 = (double)__restgprlr_29((double)(&local_30)[uVar1]);
-      return (float)dVar6;
-    }
+  iVar2 = __savegprlr_29();
+  local_30[0] = *(float *)(DAT_829c7d80 + 0xc);
+  local_30[1] = *(float *)(DAT_829c5628 + 0xc);
+  local_30[2] = *(float *)(DAT_829c4064 + 0xc);
+  if ((param_2 & 0xff) == 0) goto LAB_82292dc8;
+  if (iVar2 == 0) {
+LAB_82292df4:
+    uVar5 = 0;
   }
-  dVar6 = (double)__restgprlr_29(0);
-  return (float)dVar6;
+  else {
+    uVar5 = 1;
+    if ((*(uint *)(iVar2 + 0x374) & 0x8000) == 0) goto LAB_82292df4;
+  }
+  cVar4 = BG_CanVariableZoom(param_2,uVar5);
+  if (cVar4 != '\0') {
+    iVar3 = BG_GetEquippedWeaponIndex(iVar2,param_2);
+    if (iVar3 == -1) {
+      MyAssertHandler(0xffffffff8200e3c8,0x378,0,0xffffffff82000f98,0xffffffff8200e6d0);
+    }
+    iVar2 = BG_GetEquippedWeaponState(iVar2,param_2);
+    uVar1 = *(uint *)(iVar2 + 8);
+    if (2 < uVar1) {
+      MyAssertHandler(0xffffffff8200e3c8,0x37a,0,0xffffffff8200e690,uVar1,3);
+    }
+    __restgprlr_29((double)local_30[uVar1]);
+    return;
+  }
+LAB_82292dc8:
+  __restgprlr_29(0);
+  return;
 }
 

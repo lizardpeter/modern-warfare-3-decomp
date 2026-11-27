@@ -2,10 +2,10 @@
 
 // 825F9008  Sys_GetProtocolVersion_Internal  (universal/combofile.cpp:1165)
 
-uint Sys_GetProtocolVersion_Internal(int param_1)
+longlong Sys_GetProtocolVersion_Internal(int param_1)
 
 {
-  ushort uVar1;
+  ulonglong uVar1;
   
   if (param_1 == 0) {
     uVar1 = LiveStorage_GetFFotDVersion();
@@ -13,34 +13,30 @@ uint Sys_GetProtocolVersion_Internal(int param_1)
   else {
     uVar1 = LiveStorage_GetFFotDSaveVersion();
   }
-  return (short)uVar1 * 0x10000 + 0x51;
+  return (uVar1 & 0xffff) * 0x10000 + 0x51;
 }
 
 
 // 825F9040  GetProtocolVersion  (universal/combofile.cpp:1193)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint GetProtocolVersion(void)
+longlong GetProtocolVersion(void)
 
 {
-  ushort uVar1;
+  ulonglong uVar1;
   
   uVar1 = LiveStorage_GetFFotDVersion();
-  return (short)uVar1 * 0x10000 + 0x51;
+  return (uVar1 & 0xffff) * 0x10000 + 0x51;
 }
 
 
 // 825F9068  Sys_GetSaveProtocolVersion  (universal/combofile.cpp:1199)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint Sys_GetSaveProtocolVersion(void)
+longlong Sys_GetSaveProtocolVersion(void)
 
 {
-  ushort uVar1;
+  ulonglong uVar1;
   
   uVar1 = LiveStorage_GetFFotDSaveVersion();
-  return (short)uVar1 * 0x10000 + 0x51;
+  return (uVar1 & 0xffff) * 0x10000 + 0x51;
 }
 

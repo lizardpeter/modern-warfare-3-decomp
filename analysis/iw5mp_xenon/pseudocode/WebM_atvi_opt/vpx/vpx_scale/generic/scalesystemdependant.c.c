@@ -2,36 +2,34 @@
 
 // 82840318  vp8_scale_machine_specific_config  (WebM_atvi_opt/vpx/vpx_scale/generic/scalesystemdependant.c:50)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void vp8_scale_machine_specific_config(void)
 
 {
-  vp8_last_vertical_band_1_2_scale = vp8cx_last_vertical_band_1_2_scale_c;
-  vp8_last_vertical_band_3_5_scale = vp8cx_last_vertical_band_3_5_scale_c;
-  vp8_horizontal_line_1_2_scale = vp8cx_horizontal_line_1_2_scale_c;
-  vp8_vertical_band_1_2_scale = vp8cx_vertical_band_1_2_scale_c;
-  vp8_vertical_band_3_5_scale = vp8cx_vertical_band_3_5_scale_c;
-  vp8_horizontal_line_3_5_scale = vp8cx_horizontal_line_3_5_scale_c;
-  vp8_horizontal_line_3_4_scale = vp8cx_horizontal_line_3_4_scale_c;
-  vp8_last_vertical_band_3_4_scale = vp8cx_last_vertical_band_3_4_scale_c;
-  vp8_vertical_band_3_4_scale = vp8cx_vertical_band_3_4_scale_c;
-  vp8_horizontal_line_2_3_scale = vp8cx_horizontal_line_2_3_scale_c;
-  vp8_vertical_band_2_3_scale = vp8cx_vertical_band_2_3_scale_c;
-  vp8_last_vertical_band_2_3_scale = vp8cx_last_vertical_band_2_3_scale_c;
-  vp8_horizontal_line_4_5_scale = vp8cx_horizontal_line_4_5_scale_c;
-  vp8_vertical_band_4_5_scale = vp8cx_vertical_band_4_5_scale_c;
-  vp8_last_vertical_band_4_5_scale = vp8cx_last_vertical_band_4_5_scale_c;
-  vp8_vertical_band_5_4_scale = vp8cx_vertical_band_5_4_scale_c;
-  vp8_vertical_band_5_3_scale = vp8cx_vertical_band_5_3_scale_c;
-  vp8_vertical_band_2_1_scale = vp8cx_vertical_band_2_1_scale_c;
-  vp8_vertical_band_2_1_scale_i = vp8cx_vertical_band_2_1_scale_i_c;
-  vp8_horizontal_line_2_1_scale = vp8cx_horizontal_line_2_1_scale_c;
-  vp8_horizontal_line_5_3_scale = vp8cx_horizontal_line_5_3_scale_c;
-  vp8_horizontal_line_5_4_scale = vp8cx_horizontal_line_5_4_scale_c;
-  vp8_yv12_extend_frame_borders_ptr = vp8_yv12_extend_frame_borders;
-  vp8_yv12_copy_frame_yonly_ptr = vp8_yv12_copy_frame_yonly;
-  vp8_yv12_copy_frame_ptr = vp8_yv12_copy_frame;
+  DAT_8487cda4 = vp8cx_last_vertical_band_1_2_scale_c;
+  DAT_8487cd80 = vp8cx_last_vertical_band_3_5_scale_c;
+  DAT_8487cd8c = vp8cx_horizontal_line_1_2_scale_c;
+  DAT_8487cda0 = vp8cx_vertical_band_1_2_scale_c;
+  DAT_8487cd7c = vp8cx_vertical_band_3_5_scale_c;
+  DAT_8487cd90 = vp8cx_horizontal_line_3_5_scale_c;
+  DAT_8487cd94 = vp8cx_horizontal_line_3_4_scale_c;
+  DAT_8487cd88 = vp8cx_last_vertical_band_3_4_scale_c;
+  DAT_8487cd84 = vp8cx_vertical_band_3_4_scale_c;
+  DAT_8487cd98 = vp8cx_horizontal_line_2_3_scale_c;
+  DAT_8487cd74 = vp8cx_vertical_band_2_3_scale_c;
+  DAT_8487cd78 = vp8cx_last_vertical_band_2_3_scale_c;
+  DAT_8487cd9c = vp8cx_horizontal_line_4_5_scale_c;
+  DAT_8487cd6c = vp8cx_vertical_band_4_5_scale_c;
+  DAT_8487cd70 = vp8cx_last_vertical_band_4_5_scale_c;
+  DAT_8487cda8 = vp8cx_vertical_band_5_4_scale_c;
+  DAT_8487cdac = vp8cx_vertical_band_5_3_scale_c;
+  DAT_8487cdb0 = vp8cx_vertical_band_2_1_scale_c;
+  DAT_8487cdb4 = vp8cx_vertical_band_2_1_scale_i_c;
+  DAT_8487cdb8 = vp8cx_horizontal_line_2_1_scale_c;
+  DAT_8487cdbc = vp8cx_horizontal_line_5_3_scale_c;
+  DAT_8487cdc0 = vp8cx_horizontal_line_5_4_scale_c;
+  DAT_84897348 = vp8_yv12_extend_frame_borders;
+  DAT_84897350 = vp8_yv12_copy_frame_yonly;
+  DAT_8489734c = vp8_yv12_copy_frame;
   return;
 }
 

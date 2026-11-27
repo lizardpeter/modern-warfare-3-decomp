@@ -2,48 +2,51 @@
 
 // 82399048  ProfanityFilter_IsBadWord  (client_mp/profanityfilter.cpp:40)
 
-bool ProfanityFilter_IsBadWord(int param_1,char *param_2)
+undefined8 ProfanityFilter_IsBadWord(undefined8 param_1,LPCSTR param_2)
 
 {
   char cVar1;
-  ulong uVar2;
-  char *pcVar3;
-  _STRING_DATA local_430;
-  _STRING_VERIFY_RESPONSE a_Stack_428 [4];
-  wchar_t awStack_410 [511];
+  int iVar3;
+  undefined8 uVar2;
+  LPCSTR pCVar4;
+  short local_430;
+  WCHAR *local_42e;
+  undefined1 auStack_428 [2];
+  int *local_426;
+  WCHAR aWStack_410 [511];
   undefined2 local_12;
   
-  pcVar3 = param_2;
+  pCVar4 = param_2;
   do {
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
+    cVar1 = *pCVar4;
+    pCVar4 = pCVar4 + 1;
   } while (cVar1 != '\0');
-  if (pcVar3 + (-1 - (int)param_2) < (char *)0x201) {
-    memset();
-    MultiByteToWideChar(0xfde9,0,param_2,-1,(ushort *)awStack_410,0x200);
-    local_430.pszString = awStack_410;
+  if (pCVar4 + (-1 - (int)param_2) < (char *)0x201) {
+    memset(aWStack_410,0,0x400);
+    iVar3 = MultiByteToWideChar(0xfde9,0,param_2,-1,aWStack_410,0x200);
+    local_42e = aWStack_410;
     local_12 = 0;
-    pcVar3 = param_2;
+    pCVar4 = param_2;
     do {
-      cVar1 = *pcVar3;
-      pcVar3 = pcVar3 + 1;
+      cVar1 = *pCVar4;
+      pCVar4 = pCVar4 + 1;
     } while (cVar1 != '\0');
-    local_430.wStringSize = (short)pcVar3 - (short)param_2;
-    uVar2 = XGetLocale();
-    pcVar3 = GetLocaleString(uVar2);
-    uVar2 = XStringVerify(0,pcVar3,1,&local_430,10,a_Stack_428,(_XOVERLAPPED *)0x0);
-    if (uVar2 == 0) {
-      if (*a_Stack_428[0].pStringResult != 0) {
-        pcVar3 = va("Profanity Detected %s.\n");
-        Com_Printf(0x10,pcVar3);
-        return true;
+    local_430 = (short)pCVar4 - (short)param_2;
+    XGetLocale(iVar3);
+    uVar2 = GetLocaleString();
+    iVar3 = XStringVerify(0,uVar2,1,&local_430,10,auStack_428,0);
+    if (iVar3 == 0) {
+      if (*local_426 != 0) {
+        uVar2 = va(0xffffffff82056c38,param_2);
+        Com_Printf(0x10,uVar2);
+        return 1;
       }
     }
     else {
-      pcVar3 = va("Error Occurred whilst checking string %s.\n");
-      Com_Printf(0x10,pcVar3);
+      uVar2 = va(0xffffffff82056c50,param_2);
+      Com_Printf(0x10,uVar2);
     }
   }
-  return false;
+  return 0;
 }
 

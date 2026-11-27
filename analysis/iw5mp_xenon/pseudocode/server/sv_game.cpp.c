@@ -2,210 +2,841 @@
 
 // 82570860  TRACK_sv_game  (server/sv_game.cpp:108)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_sv_game(void)
 
 {
-  track_static_alloc_internal(g_sv_skel_memory,0x40000,"g_sv_skel_memory",0xb);
-  track_static_alloc_internal(g_gameModeStrs,0x14,"g_gameModeStrs",10);
+  track_static_alloc_internal(0xffffffff83cad660,0x40000,0xffffffff8215d748,0xb);
+  track_static_alloc_internal(0xffffffff82990720,0x14,0xffffffff8215d738,10);
   return;
 }
 
 
 // 825708B8  SV_GetPlayerstateForClientNum  (server/sv_game.cpp:119)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+longlong SV_GetPlayerstateForClientNum(int param_1)
+
+{
+  return (longlong)DAT_83cfc50c * (longlong)param_1 + (ulonglong)DAT_83cfc508;
+}
+
 
 // 825708E8  SV_GameSendServerCommand  (server/sv_game.cpp:137)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void SV_GameSendServerCommand(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_27();
+  if ((int)uVar1 == -1) {
+    SV_SendServerCommand(0);
+    __restgprlr_27();
+    return;
+  }
+  if ((*(int *)(DAT_83d0b55c + 0xc) < 1) || (0x12 < *(int *)(DAT_83d0b55c + 0xc))) {
+    MyAssertHandler(0xffffffff8215d800,0x90,0,0xffffffff82031eb4,0xffffffff8215d7b0);
+  }
+  if ((ulonglong)*(uint *)(DAT_83d0b55c + 0xc) <= (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8215d800,0x91,0,0xffffffff8215d760,uVar1);
+  }
+  SV_SendServerCommand
+            ((longlong)(int)uVar1 * 0x68b00 + (ulonglong)DAT_83f11414,param_2,0xffffffff82000f98,
+             param_3);
+  __restgprlr_27();
+  return;
+}
+
 
 // 825709D8  SV_GameDropClient  (server/sv_game.cpp:169)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void SV_GameDropClient(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if ((*(int *)(DAT_83d0b55c + 0xc) < 1) || (0x12 < *(int *)(DAT_83d0b55c + 0xc))) {
+    MyAssertHandler(0xffffffff8215d800,0xaa,0,0xffffffff82031eb4,0xffffffff8215d7b0);
+  }
+  if ((-1 < iVar1) && (iVar1 < *(int *)(DAT_83d0b55c + 0xc))) {
+    SV_DropClient((longlong)iVar1 * 0x68b00 + (ulonglong)DAT_83f11414,param_2,1);
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 82570A80  SV_SetMapCenter  (server/sv_game.cpp:180)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_SetMapCenter(float *param_1)
+
+{
+  undefined8 uVar1;
+  
+  DAT_83f1da28 = *param_1;
+  DAT_83f1da2c = param_1[1];
+  DAT_83f1da30 = param_1[2];
+  uVar1 = va(0xffffffff820294b4,(double)*param_1,(double)param_1[1],(double)param_1[2]);
+  SV_SetConfigstring(0x10,uVar1);
+  DAT_83f1da34 = (*param_1 - 32768.0) + 100.0;
+  DAT_83f1da38 = (param_1[1] - 32768.0) + 100.0;
+  DAT_83f1da3c = (param_1[2] - 32768.0) + 100.0;
+  DAT_83f1da40 = ((*param_1 + 32768.0) - 1.0) - 100.0;
+  DAT_83f1da44 = ((param_1[1] + 32768.0) - 1.0) - 100.0;
+  DAT_83f1da48 = ((param_1[2] + 32768.0) - 1.0) - 100.0;
+  return;
+}
+
 
 // 82570BD8  SV_GetMapCenter  (server/sv_game.cpp:196)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined8 SV_GetMapCenter(void)
+
+{
+  return 0xffffffff83f1da28;
+}
+
 
 // 82570BF0  SV_SetGameEndTime  (server/sv_game.cpp:202)
 
-/* WARNING: Enum "ConfigString": Some values do not have unique names */
-
-void SV_SetGameEndTime(int param_1)
+void SV_SetGameEndTime(undefined8 param_1)
 
 {
   uint uVar1;
-  int iVar2;
-  char *pcVar3;
+  int iVar3;
+  undefined8 uVar2;
+  uint uVar4;
   char acStack_20 [16];
   
-  SV_GetConfigstring(CS_GAMEENDTIME,acStack_20,0xc);
-  iVar2 = atoi(acStack_20);
-  uVar1 = iVar2 - param_1 >> 0x1f;
-  if (500 < (int)((iVar2 - param_1 ^ uVar1) - uVar1)) {
-    pcVar3 = va("%i");
-    SV_SetConfigstring(CS_GAMEENDTIME,pcVar3);
+  SV_GetConfigstring(0xf,acStack_20,0xc);
+  iVar3 = atoi(acStack_20);
+  uVar4 = iVar3 - (int)param_1;
+  uVar1 = (int)uVar4 >> 0x1f;
+  if (500 < (int)((uVar4 ^ uVar1) - uVar1)) {
+    uVar2 = va(0xffffffff8200c28c,param_1);
+    SV_SetConfigstring(0xf,uVar2);
   }
   return;
 }
 
 
 // 82570C68  SV_SetBrushModel  (server/sv_game.cpp:222)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined8 SV_SetBrushModel(int param_1)
+
+{
+  char cVar3;
+  undefined8 uVar1;
+  undefined4 uVar2;
+  undefined4 *puVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  undefined4 uStack_34;
+  undefined1 local_30 [24];
+  
+  if (*(char *)(param_1 + 0x103) == '\0') {
+    MyAssertHandler(0xffffffff8215d800,0xe1,0,0xffffffff82000f98,0xffffffff8206caf8);
+  }
+  if (*(char *)(param_1 + 0x101) != '\x04') {
+    MyAssertHandler(0xffffffff8215d800,0xe2,0,0xffffffff8215d8a4,*(char *)(param_1 + 0x101),4);
+  }
+  cVar3 = CM_BrushModelIsValid(*(undefined4 *)(param_1 + 0x8c));
+  if (cVar3 == '\0') {
+    G_ModelName(*(undefined2 *)(param_1 + 0x168));
+    uVar1 = SL_ConvertToString();
+    Com_PrintWarning(0xf,0xffffffff8215d848,uVar1);
+    SV_UnlinkEntity(param_1);
+    uVar1 = 0;
+    *(undefined1 *)(param_1 + 0x101) = 0;
+  }
+  else {
+    CM_BrushModelBounds(*(undefined4 *)(param_1 + 0x8c),local_30);
+    puVar5 = &uStack_34;
+    puVar4 = (undefined4 *)(param_1 + 0x100);
+    lVar6 = 6;
+    do {
+      puVar5 = puVar5 + 1;
+      puVar4 = puVar4 + 1;
+      *puVar4 = *puVar5;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    uVar2 = CM_ContentsOfBrushModel(*(undefined4 *)(param_1 + 0x8c));
+    *(undefined4 *)(param_1 + 0x11c) = uVar2;
+    SV_LinkEntity(param_1);
+    uVar1 = 1;
+  }
+  return uVar1;
+}
+
 
 // 82570D80  SV_SetTriggerModel  (server/sv_game.cpp:256)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined8 SV_SetTriggerModel(int param_1)
+
+{
+  char cVar3;
+  undefined8 uVar1;
+  undefined4 uVar2;
+  undefined4 *puVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  undefined4 uStack_34;
+  undefined1 local_30 [24];
+  
+  if (*(char *)(param_1 + 0x103) == '\0') {
+    MyAssertHandler(0xffffffff8215d800,0x103,0,0xffffffff82000f98,0xffffffff8206caf8);
+  }
+  if (*(char *)(param_1 + 0x101) != '\x03') {
+    MyAssertHandler(0xffffffff8215d800,0x104,0,0xffffffff8215d8d0,*(char *)(param_1 + 0x101),3);
+  }
+  cVar3 = CM_TriggerModelIsValid(*(undefined4 *)(param_1 + 0x8c));
+  if (cVar3 == '\0') {
+    SV_UnlinkEntity(param_1);
+    uVar1 = 0;
+    *(undefined1 *)(param_1 + 0x101) = 0;
+  }
+  else {
+    CM_TriggerModelBounds(*(undefined4 *)(param_1 + 0x8c),local_30);
+    puVar5 = &uStack_34;
+    puVar4 = (undefined4 *)(param_1 + 0x100);
+    lVar6 = 6;
+    do {
+      puVar5 = puVar5 + 1;
+      puVar4 = puVar4 + 1;
+      *puVar4 = *puVar5;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    uVar2 = CM_ContentsOfTriggerModel(*(undefined4 *)(param_1 + 0x8c));
+    *(undefined4 *)(param_1 + 0x11c) = uVar2;
+    SV_LinkEntity(param_1);
+    uVar1 = 1;
+  }
+  return uVar1;
+}
+
 
 // 82570E78  SV_inSnapshot  (server/sv_game.cpp:284)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+byte SV_inSnapshot(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = param_2 * 0x280 + DAT_83cfc500;
+  if (*(char *)(iVar1 + 0x100) == '\0') {
+    return 0;
+  }
+  return ~*(byte *)(iVar1 + 0x102) & 1;
+}
+
 
 // 82570EC0  SV_EntityContactBounds  (server/sv_game.cpp:301)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+ulonglong SV_EntityContactBounds(int param_1,int param_2)
+
+{
+  byte bVar1;
+  ulonglong uVar2;
+  double dVar3;
+  double dVar4;
+  undefined1 auStack_60 [47];
+  byte local_31;
+  
+  bVar1 = *(byte *)(param_2 + 0x101);
+  if (bVar1 < 5) {
+    if (bVar1 == 1) {
+      if (*(float *)(param_2 + 0x118) + *(float *)(param_1 + 0x14) <=
+          ABS((*(float *)(param_2 + 0x140) + *(float *)(param_2 + 0x10c)) - *(float *)(param_1 + 8))
+         ) {
+        return 0;
+      }
+      dVar4 = (double)(*(float *)(param_2 + 0x110) + *(float *)(param_1 + 0xc));
+      dVar3 = (double)Vec2DistanceSq(param_2 + 0x138,param_1);
+      if ((double)(float)(dVar4 * dVar4) <= dVar3) {
+        return 0;
+      }
+      return 1;
+    }
+    if (bVar1 != 2) {
+      if (bVar1 == 3) {
+        uVar2 = CM_TestTriggerTouch(param_1,*(undefined4 *)(param_2 + 0x8c),param_2 + 0x138,
+                                    param_2 + 0x144);
+        return uVar2;
+      }
+      if (bVar1 != 0) {
+        CM_TransformedBrushModelTraceExternal
+                  (auStack_60,0xffffffff82179fd8,0xffffffff82179fd8,param_1,
+                   *(undefined4 *)(param_2 + 0x8c),0xffffffffffffffff,param_2 + 0x138,
+                   param_2 + 0x144);
+        return (ulonglong)local_31;
+      }
+      CM_TransformedCapsuleTraceExternal
+                (auStack_60,0xffffffff82179fd8,0xffffffff82179fd8,param_1,param_2 + 0x104,
+                 *(undefined4 *)(param_2 + 0x11c),param_2 + 0x138,param_2 + 0x144);
+      return (ulonglong)local_31;
+    }
+  }
+  if (bVar1 != 2) {
+    MyAssertHandler(0xffffffff8215d800,0x147,0,0xffffffff82000f98,0xffffffff8215d900);
+  }
+  dVar4 = (double)((*(float *)(param_2 + 0x110) + *(float *)(param_1 + 0xc)) - 64.0);
+  dVar3 = (double)Vec2DistanceSq(param_2 + 0x138,param_1);
+  if (dVar3 < (double)(float)(dVar4 * dVar4)) {
+    return 0;
+  }
+  return 1;
+}
+
 
 // 82571058  SV_EntityContactPoint  (server/sv_game.cpp:336)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_EntityContactPoint(undefined4 *param_1)
+
+{
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined4 local_10;
+  undefined4 local_c;
+  
+  local_20 = *param_1;
+  local_1c = param_1[1];
+  local_18 = param_1[2];
+  local_14 = 0;
+  local_10 = 0;
+  local_c = 0;
+  SV_EntityContactBounds(&local_20);
+  return;
+}
+
 
 // 825710A8  SV_Hunk_Alloc  (server/sv_game.cpp:352)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_Hunk_Alloc(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if (DAT_83ced708 != 1) {
+    Com_Error(1,0xffffffff8215d928);
+  }
+  Hunk_Alloc(uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
+}
+
 
 // 825710F8  SV_Hunk_AllocAlign  (server/sv_game.cpp:368)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_Hunk_AllocAlign(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_28();
+  if (DAT_83ced708 != 1) {
+    Com_Error(1,0xffffffff8215d980);
+  }
+  Hunk_AllocAlign(uVar1,param_2,param_3,param_4);
+  __restgprlr_28();
+  return;
+}
+
 
 // 82571150  SV_LocateGameData  (server/sv_game.cpp:443)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_LocateGameData(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  DAT_83cfc500 = param_1;
+  DAT_83cfc504 = param_2;
+  DAT_83cfc508 = param_3;
+  DAT_83cfc50c = param_4;
+  return;
+}
+
 
 // 82571190  SV_GetUsercmd  (server/sv_game.cpp:459)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void SV_GetUsercmd(undefined8 param_1,void *param_2)
+
+{
+  int iVar1;
+  void *pvVar2;
+  
+  iVar1 = __savegprlr_27();
+  if (iVar1 < 0) {
+    MyAssertHandler(0xffffffff8215d800,0x1cc,0,0xffffffff82000f98,0xffffffff82058560);
+  }
+  if ((*(int *)(DAT_83d0b55c + 0xc) < 1) || (0x12 < *(int *)(DAT_83d0b55c + 0xc))) {
+    MyAssertHandler(0xffffffff8215d800,0x1ce,0,0xffffffff82031eb4,0xffffffff8215d7b0);
+  }
+  if (*(int *)(DAT_83d0b55c + 0xc) <= iVar1) {
+    MyAssertHandler(0xffffffff8215d800,0x1cf,0,0xffffffff82000f98,0xffffffff8215d9dc);
+  }
+  pvVar2 = memcpy(param_2,(void *)(iVar1 * 0x68b00 + DAT_83f11414 + 0x20e88),0x2c);
+  __restgprlr_27(pvVar2);
+  return;
+}
+
 
 // 82571280  SV_AllocXModelPrecache  (server/sv_game.cpp:481)
 
-void * SV_AllocXModelPrecache(int param_1)
+void SV_AllocXModelPrecache(undefined8 param_1)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = Hunk_Alloc(param_1,"SV_AllocXModelPrecache",0x15);
-  return pvVar1;
+  Hunk_Alloc(param_1,0xffffffff8215da08,0x15);
+  return;
 }
 
 
 // 82571290  SV_AllocXModelPrecacheColl  (server/sv_game.cpp:487)
 
-void * SV_AllocXModelPrecacheColl(int param_1)
+void SV_AllocXModelPrecacheColl(undefined8 param_1)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = Hunk_Alloc(param_1,"SV_AllocXModelPrecacheColl",0x1b);
-  return pvVar1;
+  Hunk_Alloc(param_1,0xffffffff8215da20,0x1b);
+  return;
 }
 
 
 // 825712A0  SV_XModelGet  (server/sv_game.cpp:499)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-XModel * SV_XModelGet(char *param_1)
+void SV_XModelGet(undefined8 param_1)
 
 {
-  XModel *pXVar1;
-  
-  pXVar1 = XModelPrecache(param_1,SV_AllocXModelPrecache,SV_AllocXModelPrecacheColl);
-  return pXVar1;
+  XModelPrecache(param_1,0xffffffff82571280,0xffffffff82571290);
+  return;
 }
 
 
 // 825712B8  SV_DObjDumpInfo  (server/sv_game.cpp:512)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_DObjDumpInfo(void)
+
+{
+  int iVar1;
+  
+  if (*(int *)(DAT_8365e118 + 0xc) != 0) {
+    iVar1 = Com_GetServerDObjForEnt();
+    if (iVar1 == 0) {
+      Com_Printf(0xf,0xffffffff8215da3c);
+      return;
+    }
+    DObjDumpInfo();
+  }
+  return;
+}
+
 
 // 82571318  SV_ResetSkeletonCache  (server/sv_game.cpp:537)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_ResetSkeletonCache(void)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = (ulonglong)DAT_83cfc510;
+  DAT_83cfc510 = (uint)(uVar1 + 1);
+  if (uVar1 + 1 == 0) {
+    DAT_83cfc510 = 1;
+  }
+  DAT_83cfc514 = 0;
+  DAT_83ced668 = &DAT_83cad660;
+  return;
+}
+
 
 // 82571380  SV_AllocSkelMemory  (server/sv_game.cpp:554)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_AllocSkelMemory(void)
+
+{
+  uint uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  undefined *puVar4;
+  
+  iVar2 = __savegprlr_23();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8215d800,0x22e,0,0xffffffff82000f98,0xffffffff82036204);
+  }
+  uVar1 = iVar2 + 0xfU & 0xfffffff0;
+  if (0x3fff0 < uVar1) {
+    MyAssertHandler(0xffffffff8215d800,0x231,0,0xffffffff82000f98,0xffffffff8215da88);
+  }
+  if (DAT_83ced668 == (undefined *)0x0) {
+    MyAssertHandler(0xffffffff8215d800,0x233,0,0xffffffff82000f98,0xffffffff8215da70);
+  }
+  puVar4 = DAT_83ced668 + DAT_83cfc514;
+  DAT_83cfc514 = DAT_83cfc514 + uVar1;
+  if (0x3fff0 < (int)DAT_83cfc514) {
+    puVar4 = &DAT_83cad660;
+    uVar3 = (ulonglong)DAT_83cfc510;
+    do {
+      if (DAT_83ced670 != (int)uVar3) {
+        DAT_83ced670 = (int)uVar3;
+        Com_PrintWarning(0xf,0xffffffff8215da48);
+        uVar3 = (ulonglong)DAT_83cfc510;
+      }
+      uVar3 = uVar3 + 1;
+      DAT_83cfc510 = (uint)uVar3;
+      if (uVar3 == 0) {
+        uVar3 = 1;
+        DAT_83cfc510 = 1;
+      }
+      DAT_83ced668 = &DAT_83cad660;
+      DAT_83cfc514 = uVar1;
+    } while (0x3fff0 < (int)uVar1);
+  }
+  if (puVar4 == (undefined *)0x0) {
+    MyAssertHandler(0xffffffff8215d800,0x23b,0,0xffffffff82000f98,0xffffffff82012420);
+  }
+  __restgprlr_23(puVar4);
+  return;
+}
+
 
 // 82571518  SV_DObjCreateSkelForBone  (server/sv_game.cpp:594)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_DObjCreateSkelForBone(undefined8 param_1,undefined8 param_2)
+
+{
+  ulonglong uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8215d800,0x256,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  iVar3 = DObjNumBones(uVar1);
+  if (iVar3 < 1) {
+    MyAssertHandler(0xffffffff8215d800,599,0,0xffffffff82000f98,0xffffffff8202c4cc);
+  }
+  iVar3 = DObjSkelExists(uVar1,DAT_83cfc510);
+  if (iVar3 != 0) {
+    DObjSkelIsBoneUpToDate(uVar1,param_2);
+    __restgprlr_28();
+    return;
+  }
+  DObjGetAllocSkelSize(uVar1);
+  uVar2 = SV_AllocSkelMemory();
+  DObjCreateSkel(uVar1,uVar2,DAT_83cfc510);
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 825715F0  SV_DObjCreateSkelForBones  (server/sv_game.cpp:623)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_DObjCreateSkelForBones(undefined8 param_1,undefined8 param_2)
+
+{
+  ulonglong uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8215d800,0x273,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  iVar3 = DObjNumBones(uVar1);
+  if (iVar3 < 1) {
+    MyAssertHandler(0xffffffff8215d800,0x274,0,0xffffffff82000f98,0xffffffff8202c4cc);
+  }
+  iVar3 = DObjSkelExists(uVar1,DAT_83cfc510);
+  if (iVar3 != 0) {
+    DObjSkelAreBonesUpToDate(uVar1,param_2);
+    __restgprlr_28();
+    return;
+  }
+  DObjGetAllocSkelSize(uVar1);
+  uVar2 = SV_AllocSkelMemory();
+  DObjCreateSkel(uVar1,uVar2,DAT_83cfc510);
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 825716C8  SV_DObjUpdateServerTime  (server/sv_game.cpp:650)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_DObjUpdateServerTime
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  
+  iVar1 = Com_GetServerDObjForEnt();
+  if (iVar1 != 0) {
+    DObjUpdateServerInfo(param_1,iVar1,param_3,param_4);
+  }
+  return;
+}
+
 
 // 82571718  SV_DObjInitServerTime  (server/sv_game.cpp:668)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_DObjInitServerTime(undefined8 param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = Com_GetServerDObjForEnt();
+  if (iVar1 != 0) {
+    DObjInitServerTime(param_1);
+  }
+  return;
+}
+
 
 // 82571758  SV_DObjNumBones  (server/sv_game.cpp:686)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_DObjNumBones(void)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = Com_GetServerDObjForEnt();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8215d800,0x2b2,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  DObjNumBones(uVar1);
+  return;
+}
+
 
 // 825717B8  SV_DObjGetBoneIndex  (server/sv_game.cpp:703)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+ulonglong SV_DObjGetBoneIndex(undefined8 param_1,undefined8 param_2)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  byte local_20 [16];
+  
+  uVar1 = Com_GetServerDObjForEnt();
+  if ((uVar1 & 0xffffffff) == 0) {
+    return 0xffffffffffffffff;
+  }
+  local_20[0] = 0xfe;
+  iVar2 = DObjGetBoneIndex(uVar1,param_2,local_20);
+  uVar1 = 0xffffffffffffffff;
+  if (iVar2 != 0) {
+    uVar1 = (ulonglong)local_20[0];
+  }
+  return uVar1;
+}
+
 
 // 82571828  SV_DObjGetMatrixArray  (server/sv_game.cpp:719)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_DObjGetMatrixArray(void)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = Com_GetServerDObjForEnt();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8215d800,0x2d3,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  DObjGetRotTransArray(uVar1);
+  return;
+}
+
 
 // 82571888  SV_DObjDisplayAnim  (server/sv_game.cpp:731)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_DObjDisplayAnim(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = Com_GetServerDObjForEnt();
+  if (iVar1 != 0) {
+    DObjDisplayAnim(iVar1,param_2);
+  }
+  return;
+}
+
 
 // 825718C8  SV_DObjGetRotTransArray  (server/sv_game.cpp:744)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_DObjGetRotTransArray(void)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = Com_GetServerDObjForEnt();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8215d800,0x2ec,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  DObjGetRotTransArray(uVar1);
+  return;
+}
+
 
 // 82571928  SV_DObjSetRotTransIndex  (server/sv_game.cpp:755)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_DObjSetRotTransIndex(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  ulonglong uVar1;
+  
+  __savegprlr_29();
+  uVar1 = Com_GetServerDObjForEnt();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8215d800,0x2f7,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  DObjSetRotTransIndex(uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
+}
+
 
 // 82571988  SV_DObjSetControlRotTransIndex  (server/sv_game.cpp:766)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_DObjSetControlRotTransIndex(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  ulonglong uVar1;
+  
+  __savegprlr_29();
+  uVar1 = Com_GetServerDObjForEnt();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8215d800,0x302,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  DObjSetControlRotTransIndex(uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
+}
+
 
 // 825719E8  SV_DObjGetBounds  (server/sv_game.cpp:778)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_DObjGetBounds(undefined8 param_1,undefined8 param_2)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = Com_GetServerDObjForEnt();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8215d800,0x30e,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  DObjGetBounds(uVar1,param_2);
+  return;
+}
+
 
 // 82571A58  SV_DObjGetTree  (server/sv_game.cpp:795)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined8 SV_DObjGetTree(void)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = Com_GetServerDObjForEnt();
+  if (iVar2 != 0) {
+    uVar1 = DObjGetTree();
+    return uVar1;
+  }
+  return 0;
+}
+
 
 // 82571A98  SV_XModelDebugBoxes  (server/sv_game.cpp:810)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_XModelDebugBoxes(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  longlong lVar1;
+  ulonglong uVar2;
+  int iVar3;
+  uint *puVar4;
+  int iVar5;
+  char cVar6;
+  int local_470;
+  undefined1 local_468 [16];
+  undefined1 local_458 [16];
+  undefined1 local_448 [40];
+  undefined1 auStack_420 [16];
+  undefined1 local_410 [48];
+  undefined1 auStack_3e0 [48];
+  undefined1 local_3b0 [944];
+  
+  lVar1 = __savegprlr();
+  uVar2 = Com_GetServerDObjForEnt();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8215d800,0x342,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  iVar3 = DObjNumBones(uVar2);
+  if (0xc0 < iVar3) {
+    MyAssertHandler(0xffffffff8215d800,0x346,0,0xffffffff82000f98,0xffffffff8215dac0);
+  }
+  DObjGetBoneInfo(uVar2,local_3b0);
+  puVar4 = (uint *)DObjGetRotTransArray(uVar2);
+  AnglesToAxis(lVar1 + 0x144,auStack_3e0);
+  iVar3 = DObjGetNumModels(uVar2);
+  local_470 = 0;
+  if (0 < iVar3) {
+    do {
+      DObjGetModel(uVar2,local_470);
+      iVar5 = XModelNumBones();
+      cVar6 = DObjIgnoreCollision(uVar2,local_470);
+      if (cVar6 == '\0') {
+        if (0 < iVar5) {
+          do {
+            if (((((*puVar4 & 0x7f800000) == 0x7f800000) || ((puVar4[1] & 0x7f800000) == 0x7f800000)
+                 ) || ((puVar4[2] & 0x7f800000) == 0x7f800000)) ||
+               ((puVar4[3] & 0x7f800000) == 0x7f800000)) {
+              MyAssertHandler(0xffffffff82015a60,0x205,0,0xffffffff82000f98,
+                              "!IS_NAN((mat->quat)[0]) && !IS_NAN((mat->quat)[1]) && !IS_NAN((mat->quat)[2]) && !IS_NAN((mat->quat)[3])"
+                             );
+            }
+            if ((puVar4[7] & 0x7f800000) == 0x7f800000) {
+              MyAssertHandler(0xffffffff82015a60,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
+            }
+            lVar1 = 0xc;
+            do {
+              MatrixTransformVector43(local_468,local_410,auStack_420);
+              MatrixTransformVector(auStack_420,auStack_3e0,local_448);
+              MatrixTransformVector43(local_468,local_410,auStack_420);
+              MatrixTransformVector(auStack_420,auStack_3e0,local_458);
+              CL_AddDebugLine(local_448,local_458,param_2,0,param_3,1);
+              lVar1 = lVar1 + -1;
+            } while (lVar1 != 0);
+            iVar5 = iVar5 + -1;
+            puVar4 = puVar4 + 8;
+          } while (iVar5 != 0);
+        }
+      }
+      else {
+        puVar4 = puVar4 + iVar5 * 8;
+      }
+      local_470 = local_470 + 1;
+    } while (local_470 < iVar3);
+  }
+  __restgprlr();
+  return;
+}
+
 
 // 82571F68  SV_DObjExists  (server/sv_game.cpp:897)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+bool SV_DObjExists(void)
+
+{
+  longlong lVar1;
+  
+  lVar1 = Com_GetServerDObjForEnt();
+  return lVar1 != 0;
+}
+
 
 // 82571F90  SV_track_shutdown  (server/sv_game.cpp:911)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SV_track_shutdown(void)
 
@@ -216,62 +847,261 @@ void SV_track_shutdown(void)
 
 
 // 82571F98  SV_GetGuid  (server/sv_game.cpp:930)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+longlong SV_GetGuid(int param_1)
+
+{
+  longlong lVar1;
+  
+  if (DAT_83d0b55c == 0) {
+    MyAssertHandler(0xffffffff8215d800,0x3a3,0,0xffffffff82000f98,0xffffffff82022f7c);
+  }
+  if ((param_1 < 0) || (*(int *)(DAT_83d0b55c + 0xc) <= param_1)) {
+    lVar1 = -0x7dff9751;
+  }
+  else {
+    lVar1 = (longlong)param_1 * 0x68b00 + (ulonglong)DAT_83f11414 + 0x31cac;
+  }
+  return lVar1;
+}
+
 
 // 82572050  SV_GetClientPing  (server/sv_game.cpp:939)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined4 SV_GetClientPing(int param_1)
+
+{
+  return *(undefined4 *)(param_1 * 0x68b00 + DAT_83f11414 + 0x2149c);
+}
+
 
 // 82572088  SV_IsLocalClient  (server/sv_game.cpp:957)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
-// 82572720  SV_ShutdownGameProgs  (server/sv_game.cpp:972)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 825720B8  SV_SetGametype  (server/sv_game.cpp:1020)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 82572240  SV_InitGameVM  (server/sv_game.cpp:1075)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
-
-// 825724D0  SV_ShutdownGameVM  (server/sv_game.cpp:1151)
-
-void SV_ShutdownGameVM(int param_1)
+void SV_IsLocalClient(int param_1)
 
 {
   int iVar1;
-  bool bVar2;
+  
+  iVar1 = param_1 * 0x68b00 + DAT_83f11414;
+  NET_IsLocalAddress(*(undefined8 *)(iVar1 + 0x28),*(undefined8 *)(iVar1 + 0x30));
+  return;
+}
+
+
+// 82572720  SV_ShutdownGameProgs  (server/sv_game.cpp:972)
+
+void SV_ShutdownGameProgs(void)
+
+{
+  uint uVar1;
+  char cVar2;
+  undefined8 in_MSR;
   char in_RESERVE;
   byte in_cr0;
   
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x480,0,
-                    "%s");
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff8215d800,0x3cd,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   do {
-    iVar1 = g_serverThreadOwnership;
-    if (g_serverThreadOwnership != 0) {
+    uVar1 = DAT_83f1e19c;
+    if (DAT_83f1e19c != 0) {
       if (in_RESERVE != '\0') {
-        g_serverThreadOwnership =
-             storeWordConditionalIndexed
-                       ((ulonglong)(uint)g_serverThreadOwnership,0,0xffffffff83f1e19c);
+        DAT_83f1e19c = storeWordConditionalIndexed((ulonglong)DAT_83f1e19c,0,0xffffffff83f1e19c);
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      g_serverThreadOwnership = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
+      DAT_83f1e19c = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (iVar1 != 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x481,0,
-                    "%s\n\t(g_serverThreadOwnership) = %i");
+  if (uVar1 != 1) {
+    MyAssertHandler(0xffffffff8215d800,0x3ce,0,0xffffffff820837d8,0xffffffff8215db50,DAT_83f1e19c,
+                    in_MSR);
+  }
+  Com_SyncThreads();
+  DAT_83ced708 = 0;
+  sync(1);
+  if (DAT_83ced66c != 0) {
+    SV_ShutdownGameVM(1);
+    DAT_83ced66c = 0;
+  }
+  return;
+}
+
+
+// 825720B8  SV_SetGametype  (server/sv_game.cpp:1020)
+
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void SV_SetGametype(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar3;
+  ulonglong uVar6;
+  int *in_r13;
+  char *pcVar7;
+  undefined1 auStack_90 [4];
+  undefined4 local_8c;
+  char local_80 [128];
+  
+  __savegprlr_26();
+  iVar1 = *in_r13;
+  uVar2 = *(undefined4 *)(iVar1 + 0xf4);
+  *(undefined4 *)(iVar1 + 0xf4) = 0xffffedff;
+  Dvar_RegisterString(0xffffffff82022f8c,0xffffffff82072a84,0x482,0xffffffff8215db1c);
+  iVar4 = Dvar_RegisterBool(0xffffffff82022f98,0,0x480,0xffffffff82072a78);
+  if ((*(char *)(DAT_83666174 + 0xc) == '\0') || (iVar5 = G_GetSavePersist(), iVar5 == 0)) {
+    uVar6 = (ulonglong)*(uint *)(DAT_83f1e094 + 0xc);
+  }
+  else {
+    uVar6 = 0xffffffff83cfc5e8;
+  }
+  I_strncpyz(local_80,uVar6,0x40);
+  pcVar7 = local_80;
+  while (local_80[0] != '\0') {
+    iVar5 = tolower((int)*pcVar7);
+    *pcVar7 = (char)iVar5;
+    pcVar7 = pcVar7 + 1;
+    local_80[0] = *pcVar7;
+  }
+  iVar5 = Scr_IsValidGameType(local_80);
+  if (iVar5 == 0) {
+    Com_Printf(0xf,0xffffffff8215dae0,local_80);
+    local_80[1] = 0x6d;
+    local_80[2] = 0;
+  }
+  Dvar_SetString(DAT_83f1e094,local_80);
+  if (DAT_844c7870 != 0) {
+    Live_SetGametype(DAT_844c7d58,local_80,*(undefined1 *)(iVar4 + 0xc));
+  }
+  uVar3 = Lobby_GetPartyData();
+  iVar5 = Party_GetSecondaryActiveClient(uVar3,auStack_90);
+  if (iVar5 != 0) {
+    Live_SetGametype(local_8c,local_80,*(undefined1 *)(iVar4 + 0xc));
+  }
+  *(undefined4 *)(iVar1 + 0xf4) = uVar2;
+  __restgprlr_26();
+  return;
+}
+
+
+// 82572240  SV_InitGameVM  (server/sv_game.cpp:1075)
+
+void SV_InitGameVM(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  DWORD DVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  int iVar7;
+  longlong lVar8;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  uVar2 = __savegprlr_24();
+  do {
+    uVar1 = DAT_83f1e19c;
+    if (DAT_83f1e19c != 0) {
+      if (in_RESERVE != '\0') {
+        DAT_83f1e19c = storeWordConditionalIndexed((ulonglong)DAT_83f1e19c,0,0xffffffff83f1e19c);
+      }
+      break;
+    }
+    if (in_RESERVE != '\0') {
+      DAT_83f1e19c = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  if (uVar1 != 1) {
+    MyAssertHandler(0xffffffff8215d800,0x436,0,0xffffffff820837d8,0xffffffff8215db50,DAT_83f1e19c);
+  }
+  G_ResetEntityParsePoint();
+  uVar6 = (ulonglong)DAT_83cfc510;
+  DAT_83cfc510 = (uint)(uVar6 + 1);
+  if (uVar6 + 1 == 0) {
+    DAT_83cfc510 = 1;
+  }
+  DAT_83cfc514 = 0;
+  DAT_83ced668 = &DAT_83cad660;
+  if ((*(int *)(DAT_83d0b55c + 0xc) < 1) || (0x12 < *(int *)(DAT_83d0b55c + 0xc))) {
+    MyAssertHandler(0xffffffff8215d800,0x442,0,0xffffffff82031eb4,0xffffffff8215d7b0);
+  }
+  iVar5 = 0;
+  if (0 < *(int *)(DAT_83d0b55c + 0xc)) {
+    iVar7 = 0;
+    iVar4 = DAT_83f11414;
+    do {
+      *(undefined4 *)(iVar4 + 0x21418) = 0;
+      iVar5 = iVar5 + 1;
+      iVar7 = iVar7 + 0x68b00;
+      iVar4 = iVar7 + DAT_83f11414;
+    } while (iVar5 < *(int *)(DAT_83d0b55c + 0xc));
+  }
+  ProfLoad_Begin(0xffffffff8215db44);
+  DVar3 = Sys_MillisecondsRaw();
+  G_InitGame(DAT_83f11404,DVar3,uVar2,param_2,param_3);
+  ProfLoad_End();
+  DAT_83ced714 = DAT_83f11404;
+  I_strncpyz(0xffffffff83cfc5e8,*(undefined4 *)(DAT_83f1e094 + 0xc),0x40);
+  uVar2 = va(0xffffffff8200c28c,DAT_83ced688);
+  SV_SetConfigstring(3,uVar2);
+  Migration_Shutdown();
+  if ((int)param_3 == 0) {
+    lVar8 = 3;
+    do {
+      DAT_83ced714 = DAT_83ced714 + 0x32;
+      SV_RunFrame();
+      if (DAT_83f11404 != DAT_83ced714) {
+        MyAssertHandler(0xffffffff8215d800,0x473,0,0xffffffff82000f98,0xffffffff8215db28);
+      }
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+  }
+  __restgprlr_24();
+  return;
+}
+
+
+// 825724D0  SV_ShutdownGameVM  (server/sv_game.cpp:1151)
+
+void SV_ShutdownGameVM(undefined8 param_1)
+
+{
+  uint uVar1;
+  char cVar2;
+  undefined8 in_MSR;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff8215d800,0x480,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  do {
+    uVar1 = DAT_83f1e19c;
+    if (DAT_83f1e19c != 0) {
+      if (in_RESERVE != '\0') {
+        DAT_83f1e19c = storeWordConditionalIndexed((ulonglong)DAT_83f1e19c,0,0xffffffff83f1e19c);
+      }
+      break;
+    }
+    if (in_RESERVE != '\0') {
+      DAT_83f1e19c = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  if (uVar1 != 1) {
+    MyAssertHandler(0xffffffff8215d800,0x481,0,0xffffffff820837d8,0xffffffff8215db50,DAT_83f1e19c,
+                    in_MSR);
   }
   G_ShutdownGame(param_1);
   return;
@@ -280,43 +1110,41 @@ void SV_ShutdownGameVM(int param_1)
 
 // 825725B0  SV_RestartGameProgs  (server/sv_game.cpp:1325)
 
-void SV_RestartGameProgs(int param_1,int param_2)
+void SV_RestartGameProgs(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  bool bVar3;
+  uint uVar1;
+  undefined8 uVar2;
+  char cVar3;
+  undefined8 in_MSR;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar2 = __savegprlr_29(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x52e,0,
-                    "%s");
+  uVar2 = __savegprlr_29();
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff8215d800,0x52e,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   do {
-    iVar1 = g_serverThreadOwnership;
-    if (g_serverThreadOwnership != 0) {
+    uVar1 = DAT_83f1e19c;
+    if (DAT_83f1e19c != 0) {
       if (in_RESERVE != '\0') {
-        g_serverThreadOwnership =
-             storeWordConditionalIndexed
-                       ((ulonglong)(uint)g_serverThreadOwnership,0,0xffffffff83f1e19c);
+        DAT_83f1e19c = storeWordConditionalIndexed((ulonglong)DAT_83f1e19c,0,0xffffffff83f1e19c);
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      g_serverThreadOwnership = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
+      DAT_83f1e19c = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (iVar1 != 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x52f,0,
-                    "%s\n\t(g_serverThreadOwnership) = %i");
+  if (uVar1 != 1) {
+    MyAssertHandler(0xffffffff8215d800,0x52f,0,0xffffffff820837d8,0xffffffff8215db50,DAT_83f1e19c,
+                    in_MSR);
   }
   SV_ShutdownGameVM(0);
-  com_fixedConsolePosition = 0;
-  SV_InitGameVM(1,iVar2,param_2);
+  DAT_83667304 = 0;
+  SV_InitGameVM(1,uVar2,param_2);
   __restgprlr_29();
   return;
 }
@@ -324,10 +1152,10 @@ void SV_RestartGameProgs(int param_1,int param_2)
 
 // 82572698  SV_InitGameProgs  (server/sv_game.cpp:1372)
 
-void SV_InitGameProgs(int param_1)
+void SV_InitGameProgs(undefined8 param_1)
 
 {
-  gameInitialized = 1;
+  DAT_83ced66c = 1;
   SV_InitGameVM(0,1,param_1);
   return;
 }
@@ -335,16 +1163,26 @@ void SV_InitGameProgs(int param_1)
 
 // 825726B8  SV_InitGameMode  (server/sv_game.cpp:1392)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SV_InitGameMode(void)
 
 {
-  g_gameMode = Dvar_RegisterEnum("gameMode",g_gameModeStrs,3,0x2080,"Current gameMode");
+  DAT_83ced660 = Dvar_RegisterEnum(0xffffffff8215dbac,0xffffffff82990720,3,0x2080,0xffffffff8215dbb8
+                                  );
   return;
 }
 
 
 // 82572700  SV_GameCommand  (server/sv_game.cpp:1408)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined8 SV_GameCommand(void)
+
+{
+  undefined8 uVar1;
+  
+  if (DAT_83ced708 != 2) {
+    return 0;
+  }
+  uVar1 = ConsoleCommand();
+  return uVar1;
+}
+

@@ -2,15 +2,14 @@
 
 // 828CCBE8  nemVadBlockDec  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/nemvad.c:55)
 
-void nemVadBlockDec(float param_1,void *param_2)
+void nemVadBlockDec(double param_1,undefined8 param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float *in_r4;
   
-  fVar1 = *in_r4;
+  fVar1 = *param_3;
   if (fVar1 <= 160000.0) {
     fVar3 = fVar1 * 5.544613e-06 - 4.047152;
     fVar2 = 362.0;
@@ -20,157 +19,158 @@ void nemVadBlockDec(float param_1,void *param_2)
     fVar2 = 62071.0;
   }
   fVar2 = -fVar3 * fVar1 + fVar2;
-  in_r4[1] = fVar2;
-  *(bool *)((int)in_r4 + 0x13) = fVar2 < param_1;
+  param_3[1] = fVar2;
+  *(bool *)((int)param_3 + 0x13) = (double)fVar2 < param_1;
   return;
 }
 
 
 // 828CCC58  nemVadSpkrDec  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/nemvad.c:74)
 
-void nemVadSpkrDec(float param_1,float param_2,short param_3,void *param_4)
+void nemVadSpkrDec(double param_1,double param_2,undefined8 param_3,undefined8 param_4,short param_5
+                  ,int param_6)
 
 {
-  float fVar1;
-  short in_r5;
-  int in_r6;
-  short sVar2;
-  undefined2 uVar3;
+  short sVar1;
+  undefined2 uVar2;
+  double dVar3;
   
-  if (*(char *)(in_r6 + 0x13) == '\0') {
+  if (*(char *)(param_6 + 0x13) == '\0') {
 LAB_828ccccc:
-    uVar3 = 0;
+    uVar2 = 0;
   }
   else {
-    fVar1 = param_2 - 56.666668;
-    if (param_2 - 56.666668 < (float)(longlong)in_r5 - 42.5) {
-      fVar1 = (float)(longlong)in_r5 - 42.5;
+    dVar3 = (double)(float)(param_2 - 56.66666793823242);
+    if ((double)(float)(param_2 - 56.66666793823242) < (double)((float)(longlong)param_5 - 42.5)) {
+      dVar3 = (double)((float)(longlong)param_5 - 42.5);
     }
-    if (param_1 < fVar1) goto LAB_828ccccc;
-    sVar2 = *(short *)(in_r6 + 0xe) + 1;
-    *(short *)(in_r6 + 0xe) = sVar2;
-    if (sVar2 < 2) {
-      uVar3 = 0;
+    if (param_1 < dVar3) goto LAB_828ccccc;
+    sVar1 = *(short *)(param_6 + 0xe) + 1;
+    *(short *)(param_6 + 0xe) = sVar1;
+    if (sVar1 < 2) {
+      uVar2 = 0;
       goto LAB_828cccd4;
     }
-    uVar3 = 1;
+    uVar2 = 1;
   }
-  *(undefined2 *)(in_r6 + 0xe) = uVar3;
+  *(undefined2 *)(param_6 + 0xe) = uVar2;
 LAB_828cccd4:
-  *(char *)(in_r6 + 0x14) = (char)uVar3;
+  *(char *)(param_6 + 0x14) = (char)uVar2;
   return;
 }
 
 
 // 828CCCE0  nemVadUpdateNoiseFlr  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/nemvad.c:108)
 
-void nemVadUpdateNoiseFlr(float param_1,void *param_2)
+void nemVadUpdateNoiseFlr(double param_1,undefined8 param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
-  float *in_r4;
+  double dVar4;
   
-  fVar1 = *in_r4;
-  if (160000.0 <= fVar1) {
-    if (500000.0 <= fVar1) {
-      fVar2 = 1.000684;
+  dVar4 = (double)*param_3;
+  if (160000.0 <= dVar4) {
+    if (500000.0 <= dVar4) {
+      fVar1 = 1.000684;
     }
     else {
-      fVar2 = 1.001367;
+      fVar1 = 1.001367;
     }
-    fVar2 = fVar1 * fVar2;
+    fVar1 = (float)(dVar4 * (double)fVar1);
   }
   else {
-    fVar2 = fVar1 * 1.00547;
-    if (fVar1 * 1.00547 < fVar1 + 1.125) {
-      fVar2 = fVar1 + 1.125;
+    fVar1 = (float)(dVar4 * 1.0054700374603271);
+    if ((float)(dVar4 * 1.0054700374603271) < (float)(dVar4 + 1.125)) {
+      fVar1 = (float)(dVar4 + 1.125);
     }
   }
-  if (fVar1 <= param_1) {
-    if ((*(char *)((int)in_r4 + 0x13) != '\0') ||
-       (fVar1 = fVar1 * 0.75 + param_1 * 0.25, fVar1 < fVar2)) goto LAB_828cce6c;
+  if (dVar4 <= param_1) {
+    if ((*(char *)((int)param_3 + 0x13) != '\0') ||
+       (fVar2 = (float)(dVar4 * 0.75 + (double)(float)(param_1 * 0.25)), fVar2 < fVar1))
+    goto LAB_828cce6c;
   }
   else {
-    if (*(char *)((int)in_r4 + 0x12) < '\x01') {
-      if ((param_1 + 1.0) * 0.9 + fVar1 * 0.1 <= fVar2) {
-        fVar2 = (param_1 + 1.0) * 0.9 + fVar1 * 0.1;
+    if (*(char *)((int)param_3 + 0x12) < '\x01') {
+      if ((float)(param_1 + 1.0) * (float)0x3f666666 + (float)(dVar4 * 0.10000000149011612) <= fVar1
+         ) {
+        fVar1 = (float)(param_1 + 1.0) * (float)0x3f666666 + (float)(dVar4 * 0.10000000149011612);
       }
     }
-    if (fVar1 * 0.001 < param_1) {
-      if (param_1 <= fVar1 * 0.01) {
-        fVar3 = 0.3;
-        fVar4 = (float)0x3f333333;
+    if ((double)(float)(dVar4 * 0.0010000000474974513) < param_1) {
+      if (param_1 <= (double)(float)(dVar4 * 0.009999999776482582)) {
+        fVar2 = 0.3;
+        fVar3 = (float)0x3f333333;
         goto LAB_828ccde4;
       }
-      fVar1 = fVar1 * 0.2 + param_1 * 0.8;
+      dVar4 = dVar4 * 0.20000000298023224 + (double)(float)(param_1 * 0.800000011920929);
     }
     else {
       if (param_1 < 1.0) {
-        if ((param_1 + 1.0) * 0.35 + fVar1 * 0.65 <= fVar2) {
-          fVar2 = (param_1 + 1.0) * 0.35 + fVar1 * 0.65;
+        if ((float)(param_1 + 1.0) * 0.35 + (float)(dVar4 * 0.6499999761581421) <= fVar1) {
+          fVar1 = (float)(param_1 + 1.0) * 0.35 + (float)(dVar4 * 0.6499999761581421);
         }
         goto LAB_828cce6c;
       }
-      fVar3 = 0.4;
-      fVar4 = 0.6;
+      fVar2 = 0.4;
+      fVar3 = 0.6;
 LAB_828ccde4:
-      fVar1 = param_1 * fVar4 + fVar1 * fVar3;
+      dVar4 = param_1 * (double)fVar3 + (double)(float)(dVar4 * (double)fVar2);
     }
-    if (fVar2 < fVar1) goto LAB_828cce6c;
+    fVar2 = (float)dVar4;
+    if (fVar1 < (float)dVar4) goto LAB_828cce6c;
   }
-  fVar2 = fVar1;
+  fVar1 = fVar2;
 LAB_828cce6c:
-  if (5059644.0 < fVar2) {
-    fVar2 = 5059644.0;
+  if (5059644.0 < fVar1) {
+    fVar1 = 5059644.0;
   }
-  if (*(char *)((int)in_r4 + 0x12) < '\x01') {
-    *(char *)((int)in_r4 + 0x12) = *(char *)((int)in_r4 + 0x12) + '\x01';
+  if (*(char *)((int)param_3 + 0x12) < '\x01') {
+    *(char *)((int)param_3 + 0x12) = *(char *)((int)param_3 + 0x12) + '\x01';
   }
-  *in_r4 = fVar2;
+  *param_3 = fVar1;
   return;
 }
 
 
 // 828CCEA0  nemVadTransmit  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/nemvad.c:151)
 
-short nemVadTransmit(float param_1,short param_2,ushort param_3,void *param_4)
+undefined1
+nemVadTransmit(double param_1,undefined8 param_2,short param_3,ushort param_4,int param_5)
 
 {
-  int in_r6;
   short sVar1;
   undefined2 uStack_a;
   
-  if (0xfe < (short)param_3) {
+  if (0xfe < param_3) {
     param_3 = 0xff;
   }
-  if (*(char *)(in_r6 + 0x14) == '\x01') {
-    *(undefined2 *)(in_r6 + 0x10) = 0;
-    if ((*(char *)(in_r6 + 0x15) == '\0') && ((float)(longlong)(short)param_3 <= param_1)) {
-      *(undefined1 *)(in_r6 + 0x15) = 1;
+  if (*(char *)(param_5 + 0x14) == '\x01') {
+    *(undefined2 *)(param_5 + 0x10) = 0;
+    if ((*(char *)(param_5 + 0x15) == '\0') && ((double)(longlong)param_3 <= param_1)) {
+      *(undefined1 *)(param_5 + 0x15) = 1;
     }
   }
   else {
-    sVar1 = *(short *)(in_r6 + 0x10) + 1;
-    *(short *)(in_r6 + 0x10) = sVar1;
-    uStack_a = (short)(longlong)(*(float *)(in_r6 + 8) * (float)((uint)param_4 & 0xffff) + 0.5);
-    if ((uStack_a < sVar1) && (*(undefined1 *)(in_r6 + 0x15) = 0, 0x7fbc < sVar1)) {
-      *(undefined2 *)(in_r6 + 0x10) = 0x7fbc;
+    sVar1 = *(short *)(param_5 + 0x10) + 1;
+    *(short *)(param_5 + 0x10) = sVar1;
+    uStack_a = (short)(longlong)(*(float *)(param_5 + 8) * (float)param_4 + 0.5);
+    if ((uStack_a < sVar1) && (*(undefined1 *)(param_5 + 0x15) = 0, 0x7fbc < sVar1)) {
+      *(undefined2 *)(param_5 + 0x10) = 0x7fbc;
     }
   }
-  return (short)*(char *)(in_r6 + 0x15);
+  return *(undefined1 *)(param_5 + 0x15);
 }
 
 
 // 828CCF70  nemVadVoicingDec  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/nemvad.c:184)
 
-int nemVadVoicingDec(void *param_1,short param_2,float param_3)
+undefined8 nemVadVoicingDec(double param_1,int param_2,short param_3)
 
 {
-  if ((((*(char *)((int)param_1 + 0x14) == '\x01') && (param_2 == 1)) &&
-      (*(char *)((int)param_1 + 0x15) == '\x01')) && (0.45 <= param_3)) {
+  if ((((*(char *)(param_2 + 0x14) == '\x01') && (param_3 == 1)) &&
+      (*(char *)(param_2 + 0x15) == '\x01')) && (0.44999998807907104 <= param_1)) {
     return 1;
   }
   return 0;

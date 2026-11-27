@@ -5,9 +5,9 @@
 void __unwind_82055(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdRandom::~bdRandom((bdRandom *)(in_r12 + -0x5c));
+  bdRandom___bdRandom(in_r12 + -0x5c);
   return;
 }
 
@@ -17,9 +17,9 @@ void __unwind_82055(void)
 void __unwind_82056(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdInetAddr::~bdInetAddr((bdInetAddr *)(in_r12 + -0x5c));
+  bdInetAddr___bdInetAddr(in_r12 + -0x5c);
   return;
 }
 
@@ -29,9 +29,9 @@ void __unwind_82056(void)
 void __unwind_82762(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdAddr::~bdAddr((bdAddr *)(in_r12 + -0x60));
+  bdAddr___bdAddr(in_r12 + -0x60);
   return;
 }
 
@@ -41,9 +41,9 @@ void __unwind_82762(void)
 void __unwind_82763(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdStreamSocket::~bdStreamSocket((bdStreamSocket *)(in_r12 + -0x70));
+  bdStreamSocket___bdStreamSocket(in_r12 + -0x70);
   return;
 }
 

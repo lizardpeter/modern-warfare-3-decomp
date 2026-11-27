@@ -2,8 +2,7 @@
 
 // 828C4030  nciDecodeVoicePropSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/ncisasedec3200.c:179)
 
-ushort nciDecodeVoicePropSase3200
-                 (void *param_1,NCI_CODEC_IO_BLOCK *param_2,NCI_VOICE_PROPERTIES_BLOCK *param_3)
+void nciDecodeVoicePropSase3200(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   undefined4 uVar1;
@@ -11,30 +10,23 @@ ushort nciDecodeVoicePropSase3200
   undefined4 *puVar3;
   int *piVar5;
   undefined8 uVar4;
-  ushort uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  int iVar10;
-  longlong lVar11;
-  float *in_stack_ffffff08;
-  float *in_stack_ffffff0c;
+  longlong lVar6;
+  int iVar7;
+  longlong lVar8;
   undefined4 local_a0;
-  float local_90 [12];
+  undefined4 local_90 [12];
   undefined4 local_60 [24];
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  piVar5 = (int *)__savegprlr_29(param_1);
+  piVar5 = (int *)__savegprlr_29();
   if ((piVar5 == (int *)0x0) || (*piVar5 != 0xface)) {
     uVar4 = 0x17d4;
   }
   else if (*(char *)(piVar5 + 3) == '\v') {
-    if ((uVar7 & 0xffffffff) == 0) {
+    if ((param_2 & 0xffffffff) == 0) {
       uVar4 = 0x181a;
     }
     else {
-      piVar2 = (int *)uVar7;
+      piVar2 = (int *)param_2;
       if (piVar2[2] == 0) {
         uVar4 = 0x17f2;
       }
@@ -46,24 +38,23 @@ ushort nciDecodeVoicePropSase3200
           if (*(byte *)(piVar2 + 4) < 8) {
             if (*(byte *)(piVar2 + 5) < 8) {
               piVar5[7] = (int)piVar2;
-              NellyDecodeSase3200((void *)piVar5[4],(short *)*piVar2,(ushort *)(piVar2 + 1),
-                                  (uchar *)piVar2[2],*(ushort *)(piVar2 + 3),
-                                  (ushort *)((int)piVar2 + 0xe),(uchar *)(piVar2 + 4),local_90,
-                                  in_stack_ffffff08,in_stack_ffffff0c);
-              if ((uVar8 & 0xffffffff) != 0) {
-                *(undefined4 *)uVar8 = local_a0;
-                lVar9 = uVar8 + 0x30;
-                iVar10 = 0;
-                lVar11 = 0xc;
+              NellyDecodeSase3200(piVar5[4],*piVar2,param_2 + 4,piVar2[2],
+                                  *(undefined2 *)(piVar2 + 3),param_2 + 0xe,param_2 + 0x10,local_90)
+              ;
+              if ((param_3 & 0xffffffff) != 0) {
+                *(undefined4 *)param_3 = local_a0;
+                lVar6 = param_3 + 0x30;
+                iVar7 = 0;
+                lVar8 = 0xc;
                 do {
-                  puVar3 = (undefined4 *)((int)local_60 + iVar10);
-                  uVar1 = *(undefined4 *)((int)local_90 + iVar10);
-                  iVar10 = iVar10 + 4;
-                  *(undefined4 *)((int)lVar9 + -0x2c) = *puVar3;
-                  lVar9 = lVar9 + 4;
-                  *(undefined4 *)lVar9 = uVar1;
-                  lVar11 = lVar11 + -1;
-                } while (lVar11 != 0);
+                  puVar3 = (undefined4 *)((int)local_60 + iVar7);
+                  uVar1 = *(undefined4 *)((int)local_90 + iVar7);
+                  iVar7 = iVar7 + 4;
+                  *(undefined4 *)((int)lVar6 + -0x2c) = *puVar3;
+                  lVar6 = lVar6 + 4;
+                  *(undefined4 *)lVar6 = uVar1;
+                  lVar8 = lVar8 + -1;
+                } while (lVar8 != 0);
               }
               uVar4 = 0;
             }
@@ -87,111 +78,107 @@ ushort nciDecodeVoicePropSase3200
   else {
     uVar4 = 0x17e3;
   }
-  uVar6 = __restgprlr_29(uVar4);
-  return uVar6;
+  __restgprlr_29(uVar4);
+  return;
 }
 
 
 // 828C4188  nciDecode1by1  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/ncisasedec3200.c:240)
 
-ushort nciDecode1by1(void **param_1,NCI_CODEC_IO_BLOCK **param_2,
-                    NCI_VOICE_PROPERTIES_BLOCK **param_3)
+void nciDecode1by1(undefined8 param_1,undefined4 *param_2,undefined4 *param_3)
 
 {
-  undefined4 *puVar1;
-  ushort uVar2;
+  undefined4 *puVar2;
+  undefined8 uVar1;
   longlong lVar3;
-  _LARGE_INTEGER local_30;
-  _LARGE_INTEGER local_28 [5];
+  LARGE_INTEGER local_30;
+  LARGE_INTEGER local_28 [5];
   
-  puVar1 = (undefined4 *)__savegprlr_29(param_1);
+  puVar2 = (undefined4 *)__savegprlr_29();
   QueryPerformanceCounter(&local_30);
-  uVar2 = nciDecodeVoicePropSase3200((void *)*puVar1,*param_2,*param_3);
+  uVar1 = nciDecodeVoicePropSase3200(*puVar2,*param_2,*param_3);
   QueryPerformanceCounter(local_28);
-  lVar3 = local_28[0].QuadPart - (longlong)local_30;
-  if (lVar3 < DecoderPerfStats.minTicks) {
-    DecoderPerfStats.minTicks = lVar3;
+  lVar3 = (longlong)local_28[0] - (longlong)local_30;
+  if (lVar3 < DAT_84895898) {
+    DAT_84895898 = lVar3;
   }
-  if (DecoderPerfStats.maxTicks < lVar3) {
-    DecoderPerfStats.maxTicks = lVar3;
+  if (DAT_848958a8 < lVar3) {
+    DAT_848958a8 = lVar3;
   }
-  DecoderPerfStats.cpuTicks = DecoderPerfStats.cpuTicks + lVar3;
-  DecoderPerfStats.count = DecoderPerfStats.count + 1;
-  uVar2 = __restgprlr_29(uVar2);
-  return uVar2;
+  DAT_848958b0 = DAT_848958b0 + lVar3;
+  DAT_848958bc = DAT_848958bc + 1;
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 828C4220  nciDecodeNeedsInput  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/ncisasedec3200.c:268)
 
-ushort nciDecodeNeedsInput(void *param_1,uchar *param_2)
+undefined8 nciDecodeNeedsInput(int param_1,undefined1 *param_2)
 
 {
-  *param_2 = (uchar)*(undefined2 *)(*(int *)((int)param_1 + 0x10) + 0x5c);
+  *param_2 = (char)*(undefined2 *)(*(int *)(param_1 + 0x10) + 0x5c);
   return 0;
 }
 
 
 // 828C42F8  nciInitDecodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/ncisasedec3200.c:836)
 
-ushort nciInitDecodeSase3200(void **param_1)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined8 nciInitDecodeSase3200(undefined4 *param_1)
 
 {
-  undefined4 *puVar1;
-  ushort uVar2;
-  _LARGE_INTEGER local_20;
+  undefined8 uVar1;
+  undefined4 *puVar2;
+  short sVar3;
+  LARGE_INTEGER local_20;
   
-  if (param_1 == (void **)0x0) {
-    uVar2 = 0x181a;
+  if (param_1 == (undefined4 *)0x0) {
+    uVar1 = 0x181a;
   }
   else {
-    *param_1 = (void *)0x0;
-    if ((((callocfunc == (_func___cdecl_void_ptr_uint_uint *)0x0) ||
-         (freefunc == (_func___cdecl_void_void_ptr *)0x0)) ||
-        (memsetfunc == (_func___cdecl_void_ptr_void_ptr_int_uint *)0x0)) ||
-       (((memcpyfunc == (_func___cdecl_void_ptr_void_ptr_void_ptr_uint *)0x0 ||
-         (cosfunc == (_func___cdecl_double_double *)0x0)) ||
-        (sinfunc == (_func___cdecl_double_double *)0x0)))) {
-      uVar2 = 0x1771;
+    *param_1 = 0;
+    if ((((DAT_848958c0 == (code *)0x0) || (DAT_848958c4 == 0)) || (DAT_848958c8 == 0)) ||
+       (((DAT_848958cc == 0 || (DAT_848958d0 == 0)) || (DAT_848958d4 == 0)))) {
+      uVar1 = 0x1771;
     }
     else {
-      puVar1 = (*callocfunc)(1,0x2c);
-      if (puVar1 != (undefined4 *)0x0) {
-        *param_1 = puVar1;
-        *(undefined1 *)(puVar1 + 3) = 0xb;
-        *puVar1 = 0xface;
-        uVar2 = NellyInitDecodeSase3200((void **)(puVar1 + 4));
-        if (uVar2 == 0) {
-          DecoderPerfStats.avgTicks = 0;
-          DecoderPerfStats.maxTicks = 0;
-          DecoderPerfStats.cpuTicks = 0;
-          DecoderPerfStats.ticksPerSecond = 0;
-          DecoderPerfStats.count = 0;
-          DecoderPerfStats.minTicks = 1000000000;
+      puVar2 = (undefined4 *)(*DAT_848958c0)(1,0x2c);
+      if (puVar2 != (undefined4 *)0x0) {
+        *param_1 = puVar2;
+        *(undefined1 *)(puVar2 + 3) = 0xb;
+        *puVar2 = 0xface;
+        sVar3 = NellyInitDecodeSase3200(puVar2 + 4);
+        if (sVar3 == 0) {
+          DAT_848958a0 = 0;
+          DAT_848958a8 = 0;
+          DAT_848958b0 = 0;
+          _DAT_848958b8 = 0;
+          DAT_84895898 = 1000000000;
           QueryPerformanceFrequency(&local_20);
-          DecoderPerfStats.ticksPerSecond = local_20._s_0.LowPart;
+          _DAT_848958b8 = CONCAT44(local_20.s.HighPart,DAT_848958bc);
           return 0;
         }
         nciFreeDecodeSase3200(param_1);
       }
-      uVar2 = 6000;
+      uVar1 = 6000;
     }
   }
-  return uVar2;
+  return uVar1;
 }
 
 
 // 828C4238  nciFreeDecodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/ncisasedec3200.c:896)
 
-ushort nciFreeDecodeSase3200(void **param_1)
+void nciFreeDecodeSase3200(void)
 
 {
   int *piVar1;
   undefined4 *puVar3;
   undefined8 uVar2;
-  ushort uVar4;
   
-  puVar3 = (undefined4 *)__savegprlr_29(param_1);
+  puVar3 = (undefined4 *)__savegprlr_29();
   if (puVar3 == (undefined4 *)0x0) {
     uVar2 = 0x181a;
   }
@@ -202,23 +189,23 @@ ushort nciFreeDecodeSase3200(void **param_1)
     }
     else if (*(char *)(piVar1 + 3) == '\v') {
       *piVar1 = 0;
-      NellyFreeDecodeSase3200((void **)(piVar1 + 4));
-      if ((void *)piVar1[9] != (void *)0x0) {
-        (*freefunc)((void *)piVar1[9]);
+      NellyFreeDecodeSase3200(piVar1 + 4);
+      if (piVar1[9] != 0) {
+        (*DAT_848958c4)();
         piVar1[9] = 0;
       }
-      if ((void *)piVar1[10] != (void *)0x0) {
-        (*freefunc)((void *)piVar1[10]);
+      if (piVar1[10] != 0) {
+        (*DAT_848958c4)();
         piVar1[10] = 0;
       }
-      (*freefunc)(piVar1);
+      (*DAT_848958c4)(piVar1);
       uVar2 = 0;
     }
     else {
       uVar2 = 0x17e3;
     }
   }
-  uVar4 = __restgprlr_29(uVar2);
-  return uVar4;
+  __restgprlr_29(uVar2);
+  return;
 }
 

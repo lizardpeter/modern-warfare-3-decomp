@@ -2,21 +2,37 @@
 
 // 829178F8  sprintf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/sprintf.c:99)
 
-int sprintf(char *param_1,char *param_2)
+int sprintf(char *_Dest,char *_Format,...)
 
 {
   char *pcVar1;
   int *piVar2;
   int iVar3;
+  undefined8 in_r5;
+  undefined8 in_r6;
+  undefined8 in_r7;
+  undefined8 in_r8;
+  undefined8 in_r9;
+  undefined8 in_r10;
   ulonglong uVar4;
-  char *pcStack0000001c;
-  _iobuf local_40 [2];
+  undefined8 in_stack_00000020;
+  undefined8 in_stack_00000028;
+  undefined8 in_stack_00000030;
+  undefined8 in_stack_00000038;
+  undefined8 in_stack_00000040;
+  undefined8 in_stack_00000048;
+  FILE local_40 [2];
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_29(param_1);
+  uVar4 = (ulonglong)(int)_Format;
+  pcVar1 = (char *)__savegprlr_29(_Dest);
   local_40[0]._ptr = (char *)0x0;
-  pcStack0000001c = (char *)uVar4;
-  memset();
+  in_stack_00000020 = in_r5;
+  in_stack_00000028 = in_r6;
+  in_stack_00000030 = in_r7;
+  in_stack_00000038 = in_r8;
+  in_stack_00000040 = in_r9;
+  in_stack_00000048 = in_r10;
+  memset(&local_40[0]._cnt,0,0x1c);
   if (((uVar4 & 0xffffffff) == 0) || (pcVar1 == (char *)0x0)) {
     piVar2 = _errno();
     *piVar2 = 0x16;
@@ -28,7 +44,7 @@ int sprintf(char *param_1,char *param_2)
     local_40[0]._cnt = 0x7fffffff;
     local_40[0]._ptr = pcVar1;
     local_40[0]._base = pcVar1;
-    iVar3 = _output_l(local_40,(char *)uVar4,(localeinfo_struct *)0x0,&stack0x00000020);
+    iVar3 = _output_l(local_40,(char *)uVar4,(_locale_t)0x0,(va_list)&stack0x00000020);
     uVar4 = (ulonglong)(uint)local_40[0]._cnt;
     local_40[0]._cnt = (int)(uVar4 - 1);
     if ((longlong)(uVar4 - 1) < 0) {

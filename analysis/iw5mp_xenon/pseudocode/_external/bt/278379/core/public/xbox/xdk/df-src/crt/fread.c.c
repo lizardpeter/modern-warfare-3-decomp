@@ -2,203 +2,206 @@
 
 // 8291BB10  fread_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fread.c:84)
 
-uint fread_s(void *param_1,uint param_2,uint param_3,uint param_4,_iobuf *param_5)
+size_t fread_s(void *_DstBuf,size_t _DstSize,size_t _ElementSize,size_t _Count,FILE *_File)
 
 {
-  void *pvVar1;
-  int *piVar2;
-  uint uVar3;
+  void *_DstBuf_00;
+  int *piVar1;
+  size_t sVar2;
+  ulonglong uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  _iobuf *p_Var7;
-  _iobuf *p_Stack00000034;
+  FILE *_File_00;
+  FILE *pFStack00000034;
   
-  uVar6 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  pvVar1 = (void *)__savegprlr_26(param_1);
-  p_Var7 = (_iobuf *)uVar6;
-  p_Stack00000034 = p_Var7;
-  if (((uVar4 & 0xffffffff) != 0) && ((uVar5 & 0xffffffff) != 0)) {
-    if ((uVar6 & 0xffffffff) != 0) {
-      _lock_file(p_Var7);
-      uVar3 = _fread_nolock_s(pvVar1,param_2,(uint)uVar4,(uint)uVar5,p_Var7);
+  uVar5 = (ulonglong)(int)_File;
+  uVar4 = (ulonglong)(int)_Count;
+  uVar3 = (ulonglong)(int)_ElementSize;
+  _DstBuf_00 = (void *)__savegprlr_26(_DstBuf);
+  _File_00 = (FILE *)uVar5;
+  pFStack00000034 = _File_00;
+  if (((uVar3 & 0xffffffff) != 0) && ((uVar4 & 0xffffffff) != 0)) {
+    if ((uVar5 & 0xffffffff) != 0) {
+      _lock_file(_File_00);
+      sVar2 = _fread_nolock_s(_DstBuf_00,_DstSize,(size_t)uVar3,(size_t)uVar4,_File_00);
       FUN_8291bbe4();
       goto LAB_8291bb80;
     }
-    if (param_2 != 0xffffffff) {
-      memset();
+    if (_DstSize != 0xffffffff) {
+      memset(_DstBuf_00,0,_DstSize);
     }
-    piVar2 = _errno();
-    *piVar2 = 0x16;
+    piVar1 = _errno();
+    *piVar1 = 0x16;
     _invalid_parameter_noinfo();
   }
-  uVar3 = 0;
+  sVar2 = 0;
 LAB_8291bb80:
-  uVar3 = __restgprlr_26(uVar3);
-  return uVar3;
+  sVar2 = __restgprlr_26(sVar2);
+  return sVar2;
 }
 
 
 // 8291B878  _fread_nolock_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fread.c:127)
 
-uint _fread_nolock_s(void *param_1,uint param_2,uint param_3,uint param_4,_iobuf *param_5)
+size_t _fread_nolock_s(void *_DstBuf,size_t _DstSize,size_t _ElementSize,size_t _Count,FILE *_File)
 
 {
-  _iobuf *p_Var1;
+  FILE *_File_00;
+  ulonglong uVar1;
+  int *piVar4;
   ulonglong uVar2;
-  int *piVar5;
-  ulonglong uVar3;
-  uint uVar6;
-  undefined1 *puVar7;
-  int iVar8;
-  longlong lVar4;
+  size_t sVar5;
+  void *_Dst;
+  undefined1 *_DstBuf_00;
+  int iVar6;
+  longlong lVar3;
+  ulonglong uVar7;
+  rsize_t _MaxCount;
+  uint uVar8;
   ulonglong uVar9;
-  int iVar10;
+  ulonglong uVar10;
   ulonglong uVar11;
   ulonglong uVar12;
   ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
   
-  uVar11 = (ulonglong)(int)param_5;
-  uVar3 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)(int)param_3;
-  uVar13 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_20(param_1);
-  if (((uVar9 & 0xffffffff) != 0) && ((uVar3 & 0xffffffff) != 0)) {
-    if ((uVar2 & 0xffffffff) != 0) {
-      iVar10 = (int)uVar13;
-      if (((uVar11 & 0xffffffff) == 0) ||
-         (trapWord(6,uVar9,0), 0xffffffff / (uVar9 & 0xffffffff) < (uVar3 & 0xffffffff))) {
-        if (iVar10 != -1) {
-          memset();
+  uVar9 = (ulonglong)(int)_File;
+  uVar2 = (ulonglong)(int)_Count;
+  uVar7 = (ulonglong)(int)_ElementSize;
+  uVar11 = (ulonglong)(int)_DstSize;
+  uVar1 = __savegprlr_20(_DstBuf);
+  if (((uVar7 & 0xffffffff) != 0) && ((uVar2 & 0xffffffff) != 0)) {
+    if ((uVar1 & 0xffffffff) != 0) {
+      sVar5 = (size_t)uVar11;
+      _Dst = (void *)uVar1;
+      if (((uVar9 & 0xffffffff) == 0) ||
+         (trapWord(6,uVar7,0), 0xffffffff / (uVar7 & 0xffffffff) < (uVar2 & 0xffffffff))) {
+        if (sVar5 != 0xffffffff) {
+          memset(_Dst,0,sVar5);
         }
-        if (((uVar11 & 0xffffffff) == 0) ||
-           (trapWord(6,uVar9,0), 0xffffffff / (uVar9 & 0xffffffff) < (uVar3 & 0xffffffff)))
+        if (((uVar9 & 0xffffffff) == 0) ||
+           (trapWord(6,uVar7,0), 0xffffffff / (uVar7 & 0xffffffff) < (uVar2 & 0xffffffff)))
         goto LAB_8291b8b8;
       }
-      p_Var1 = (_iobuf *)uVar11;
-      uVar11 = (longlong)(int)uVar9 * (longlong)(int)uVar3;
-      if ((p_Var1->_flag & 0x10cU) == 0) {
-        uVar12 = 0x1000;
+      _File_00 = (FILE *)uVar9;
+      uVar9 = (longlong)(int)uVar7 * (longlong)(int)uVar2;
+      if ((_File_00->_flag & 0x10cU) == 0) {
+        uVar10 = 0x1000;
       }
       else {
-        uVar12 = (ulonglong)(uint)p_Var1->_bufsiz;
+        uVar10 = (ulonglong)(uint)_File_00->_bufsiz;
       }
-      if ((uVar11 & 0xffffffff) != 0) {
-        uVar15 = uVar11;
+      if ((uVar9 & 0xffffffff) != 0) {
+        uVar13 = uVar9;
         do {
-          puVar7 = (undefined1 *)uVar2;
-          if ((p_Var1->_flag & 0x10cU) != 0) {
-            uVar6 = p_Var1->_cnt;
-            if (uVar6 == 0) goto LAB_8291b9c4;
-            if ((int)uVar6 < 0) {
-              p_Var1->_flag = p_Var1->_flag | 0x20;
-              uVar3 = (uVar11 - uVar15 & 0xffffffff) / (uVar9 & 0xffffffff);
+          _DstBuf_00 = (undefined1 *)uVar1;
+          if ((_File_00->_flag & 0x10cU) != 0) {
+            uVar8 = _File_00->_cnt;
+            if (uVar8 == 0) goto LAB_8291b9c4;
+            if ((int)uVar8 < 0) {
+              _File_00->_flag = _File_00->_flag | 0x20;
+              uVar2 = (uVar9 - uVar13 & 0xffffffff) / (uVar7 & 0xffffffff);
               goto LAB_8291bac8;
             }
-            uVar14 = (ulonglong)uVar6;
-            if ((uVar15 & 0xffffffff) < (ulonglong)uVar6) {
-              uVar14 = uVar15;
+            uVar12 = (ulonglong)uVar8;
+            if ((uVar13 & 0xffffffff) < (ulonglong)uVar8) {
+              uVar12 = uVar13;
             }
-            if ((uVar14 & 0xffffffff) <= (uVar13 & 0xffffffff)) {
-              uVar6 = (uint)uVar14;
-              memcpy_s(puVar7,(uint)uVar13,p_Var1->_ptr,uVar6);
-              uVar15 = uVar15 - uVar14;
-              uVar2 = uVar14 + uVar2;
-              p_Var1->_ptr = p_Var1->_ptr + uVar6;
-              uVar13 = uVar13 - uVar14;
-              p_Var1->_cnt = p_Var1->_cnt - uVar6;
+            if ((uVar12 & 0xffffffff) <= (uVar11 & 0xffffffff)) {
+              _MaxCount = (rsize_t)uVar12;
+              memcpy_s(_DstBuf_00,(rsize_t)uVar11,_File_00->_ptr,_MaxCount);
+              uVar13 = uVar13 - uVar12;
+              uVar1 = uVar12 + uVar1;
+              _File_00->_ptr = _File_00->_ptr + _MaxCount;
+              uVar11 = uVar11 - uVar12;
+              _File_00->_cnt = _File_00->_cnt - _MaxCount;
               goto LAB_8291ba84;
             }
 LAB_8291ba94:
-            if (iVar10 != -1) {
-              memset();
+            if (sVar5 != 0xffffffff) {
+              memset(_Dst,0,sVar5);
             }
-            piVar5 = _errno();
-            iVar10 = 0x22;
+            piVar4 = _errno();
+            iVar6 = 0x22;
             goto LAB_8291b8c0;
           }
 LAB_8291b9c4:
-          if (uVar12 <= (uVar15 & 0xffffffff)) {
-            if (uVar12 == 0) {
-              uVar14 = 0x7fffffff;
-              if ((uVar15 & 0xffffffff) < 0x80000000) {
-                uVar14 = uVar15;
+          if (uVar10 <= (uVar13 & 0xffffffff)) {
+            if (uVar10 == 0) {
+              uVar12 = 0x7fffffff;
+              if ((uVar13 & 0xffffffff) < 0x80000000) {
+                uVar12 = uVar13;
               }
             }
             else {
-              trapWord(6,uVar12,0);
-              if ((uVar15 & 0xffffffff) < 0x80000000) {
-                uVar14 = (longlong)(int)((uVar15 & 0xffffffff) / uVar12) * (longlong)(int)uVar12;
+              trapWord(6,uVar10,0);
+              if ((uVar13 & 0xffffffff) < 0x80000000) {
+                uVar12 = (longlong)(int)((uVar13 & 0xffffffff) / uVar10) * (longlong)(int)uVar10;
               }
               else {
-                uVar14 = (longlong)(int)(0x7fffffff / uVar12) * (longlong)(int)uVar12;
+                uVar12 = (longlong)(int)(0x7fffffff / uVar10) * (longlong)(int)uVar10;
               }
             }
-            if ((uVar13 & 0xffffffff) < (uVar14 & 0xffffffff)) goto LAB_8291ba94;
-            iVar8 = _fileno(p_Var1);
-            iVar8 = _read(iVar8,puVar7,(uint)uVar14);
-            lVar4 = (longlong)iVar8;
-            if (iVar8 == 0) {
-              uVar6 = p_Var1->_flag | 0x10;
+            if ((uVar11 & 0xffffffff) < (uVar12 & 0xffffffff)) goto LAB_8291ba94;
+            iVar6 = _fileno(_File_00);
+            iVar6 = _read(iVar6,_DstBuf_00,(uint)uVar12);
+            lVar3 = (longlong)iVar6;
+            if (iVar6 == 0) {
+              uVar8 = _File_00->_flag | 0x10;
             }
             else {
-              if (iVar8 != -1) {
-                uVar15 = uVar15 - lVar4;
-                uVar2 = lVar4 + uVar2;
-                uVar13 = uVar13 - lVar4;
+              if (iVar6 != -1) {
+                uVar13 = uVar13 - lVar3;
+                uVar1 = lVar3 + uVar1;
+                uVar11 = uVar11 - lVar3;
                 goto LAB_8291ba84;
               }
-              uVar6 = p_Var1->_flag | 0x20;
+              uVar8 = _File_00->_flag | 0x20;
             }
-            p_Var1->_flag = uVar6;
-            trapWord(6,uVar9,0);
-            uVar3 = (uVar11 - uVar15 & 0xffffffff) / (uVar9 & 0xffffffff);
+            _File_00->_flag = uVar8;
+            trapWord(6,uVar7,0);
+            uVar2 = (uVar9 - uVar13 & 0xffffffff) / (uVar7 & 0xffffffff);
             break;
           }
-          iVar8 = _filbuf(p_Var1);
-          if (iVar8 == -1) {
-            uVar3 = (uVar11 - uVar15 & 0xffffffff) / (uVar9 & 0xffffffff);
+          iVar6 = _filbuf(_File_00);
+          if (iVar6 == -1) {
+            uVar2 = (uVar9 - uVar13 & 0xffffffff) / (uVar7 & 0xffffffff);
 LAB_8291bac8:
-            trapWord(6,uVar9,0);
+            trapWord(6,uVar7,0);
             break;
           }
-          if ((uVar13 & 0xffffffff) == 0) goto LAB_8291ba94;
-          *puVar7 = (char)iVar8;
-          uVar15 = uVar15 - 1;
-          uVar12 = (ulonglong)(uint)p_Var1->_bufsiz;
-          uVar2 = uVar2 + 1;
+          if ((uVar11 & 0xffffffff) == 0) goto LAB_8291ba94;
+          *_DstBuf_00 = (char)iVar6;
           uVar13 = uVar13 - 1;
+          uVar10 = (ulonglong)(uint)_File_00->_bufsiz;
+          uVar1 = uVar1 + 1;
+          uVar11 = uVar11 - 1;
 LAB_8291ba84:
-        } while ((uVar15 & 0xffffffff) != 0);
+        } while ((uVar13 & 0xffffffff) != 0);
       }
       goto LAB_8291b8cc;
     }
 LAB_8291b8b8:
-    piVar5 = _errno();
-    iVar10 = 0x16;
+    piVar4 = _errno();
+    iVar6 = 0x16;
 LAB_8291b8c0:
-    *piVar5 = iVar10;
+    *piVar4 = iVar6;
     _invalid_parameter_noinfo();
   }
-  uVar3 = 0;
+  uVar2 = 0;
 LAB_8291b8cc:
-  uVar6 = __restgprlr_20(uVar3);
-  return uVar6;
+  sVar5 = __restgprlr_20(uVar2);
+  return sVar5;
 }
 
 
 // 8291BC20  fread  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fread.c:301)
 
-uint fread(void *param_1,uint param_2,uint param_3,_iobuf *param_4)
+size_t fread(void *_DstBuf,size_t _ElementSize,size_t _Count,FILE *_File)
 
 {
-  uint uVar1;
+  size_t sVar1;
   
-  uVar1 = fread_s(param_1,0xffffffff,param_2,param_3,param_4);
-  return uVar1;
+  sVar1 = fread_s(_DstBuf,0xffffffff,_ElementSize,_Count,_File);
+  return sVar1;
 }
 

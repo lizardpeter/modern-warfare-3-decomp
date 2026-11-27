@@ -7,31 +7,31 @@
 void ltc_init_multi(void)
 
 {
-  void **ppvVar1;
+  undefined4 *puVar1;
   undefined1 *puVar2;
-  void **ppvVar3;
+  undefined4 *puVar3;
   int iVar4;
   int iVar5;
   
-  ppvVar3 = (void **)__savegprlr_29();
+  puVar3 = (undefined4 *)__savegprlr_29();
   iVar5 = 0;
   puVar2 = &stack0x00000018;
-  ppvVar1 = ppvVar3;
+  puVar1 = puVar3;
   while( true ) {
-    if (ppvVar1 == (void **)0x0) {
+    if (puVar1 == (undefined4 *)0x0) {
       __restgprlr_29(0);
       return;
     }
-    iVar4 = (*ltc_mp.init)(ppvVar1);
+    iVar4 = (*DAT_84897ee8)();
     if (iVar4 != 0) break;
     iVar5 = iVar5 + 1;
-    ppvVar1 = *(void ***)(puVar2 + 4);
+    puVar1 = *(undefined4 **)(puVar2 + 4);
     puVar2 = puVar2 + 8;
   }
   puVar2 = &stack0x00000018;
   for (; iVar5 != 0; iVar5 = iVar5 + -1) {
-    (*ltc_mp.deinit)(*ppvVar3);
-    ppvVar3 = *(void ***)(puVar2 + 4);
+    (*DAT_84897ef0)(*puVar3);
+    puVar3 = *(undefined4 **)(puVar2 + 4);
     puVar2 = puVar2 + 8;
   }
   __restgprlr_29(0xd);
@@ -43,12 +43,12 @@ void ltc_init_multi(void)
 
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
-void ltc_deinit_multi(void *param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+void ltc_deinit_multi(int param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
                      undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
   undefined1 *puVar1;
-  void *pvStack00000014;
+  int iStack00000014;
   undefined8 uStack00000018;
   undefined8 uStack00000020;
   undefined8 uStack00000028;
@@ -57,7 +57,6 @@ void ltc_deinit_multi(void *param_1,undefined8 param_2,undefined8 param_3,undefi
   undefined8 uStack00000040;
   undefined8 uStack00000048;
   
-  puVar1 = (undefined1 *)&stack0x00000018;
   uStack00000018 = param_2;
   uStack00000020 = param_3;
   uStack00000028 = param_4;
@@ -65,10 +64,11 @@ void ltc_deinit_multi(void *param_1,undefined8 param_2,undefined8 param_3,undefi
   uStack00000038 = param_6;
   uStack00000040 = param_7;
   uStack00000048 = param_8;
-  pvStack00000014 = param_1;
-  while (param_1 != (void *)0x0) {
-    (*ltc_mp.deinit)(param_1);
-    param_1 = *(void **)(puVar1 + 4);
+  puVar1 = (undefined1 *)&stack0x00000018;
+  iStack00000014 = param_1;
+  while (param_1 != 0) {
+    (*DAT_84897ef0)();
+    param_1 = *(int *)(puVar1 + 4);
     puVar1 = puVar1 + 8;
   }
   return;

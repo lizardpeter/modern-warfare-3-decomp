@@ -2,16 +2,16 @@
 
 // 82737DC0  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
+void __lvx(void)
 
 {
-  return __return_storage_ptr__;
+  return;
 }
 
 
 // 82737DC8  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
 
-void __stvx(__vector4 param_1,void *param_2,int param_3)
+void __stvx(int param_1,int param_2)
 
 {
   undefined4 *puVar1;
@@ -20,7 +20,7 @@ void __stvx(__vector4 param_1,void *param_2,int param_3)
   undefined4 in_vr1_32_2;
   undefined4 in_vr1_32_3;
   
-  puVar1 = (undefined4 *)((int)param_2 + param_3 & 0xfffffff0);
+  puVar1 = (undefined4 *)(param_1 + param_2 & 0xfffffff0);
   *puVar1 = in_vr1_32_0;
   puVar1[1] = in_vr1_32_1;
   puVar1[2] = in_vr1_32_2;
@@ -30,125 +30,1601 @@ void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 
 // 82737F18  R_SetupXModelRigidModelSurfWithUpdate  (gfx_d3d/r_draw_xmodel.cpp:192)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+void R_SetupXModelRigidModelSurfWithUpdate(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar2;
+  undefined4 uVar3;
+  undefined8 uVar1;
+  ulonglong uVar4;
+  
+  iVar2 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821bf0a0,0xce,0,0xffffffff82000f98,0xffffffff821beabc);
+  }
+  uVar4 = param_2 + 0x48;
+  if (uVar4 == 0) {
+    MyAssertHandler(0xffffffff821bf0a0,0xd2,0,0xffffffff82000f98,0xffffffff821ba260);
+  }
+  if ((ulonglong)*(uint *)(iVar2 + 0xc4) != (uVar4 & 0xffffffff)) {
+    R_ChangeIndices(iVar2 + 0xc0,uVar4);
+  }
+  uVar3 = XSurfaceGetModelVertDecl(param_2);
+  *(undefined4 *)(iVar2 + 200) = uVar3;
+  R_UpdateVertexDecl(iVar2);
+  uVar1 = XSurfaceGetVert0Size(param_2);
+  R_SetStreamSource(iVar2 + 0xc0,param_2 + 0x20,0,uVar1);
+  __restgprlr_27();
+  return;
+}
+
 
 // 82737FD8  R_DrawXModelRigidModelChildSurf  (gfx_d3d/r_draw_xmodel.cpp:235)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_DrawXModelRigidModelChildSurf(undefined8 param_1,int param_2,int param_3)
+
+{
+  ulonglong uVar1;
+  longlong lVar2;
+  undefined4 uStack00000010;
+  uint local_30;
+  uint local_2c;
+  int local_28;
+  
+  uVar1 = __savegprlr_29();
+  R_SetupPassPerPrimArgs();
+  local_28 = (uint)*(ushort *)(param_2 + 0x1c) * 3;
+  local_30 = (uint)*(ushort *)(param_3 + 2);
+  local_2c = (uint)*(ushort *)(param_2 + 0x1e);
+  R_DrawIndexedPrimitive((uVar1 & 0xffffffff) + 0xc0,&local_30);
+  if (*(int *)(DAT_845aa6d8 + 0xc) != 0) {
+    uStack00000010 = (undefined4)(uVar1 >> 0x20);
+    lVar2 = R_GetActiveWorldMatrix(uStack00000010);
+    RB_ShowTess(uVar1,lVar2 + 0x30,0xffffffff821bf0e4,0xffffffff821818b8);
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 82738070  R_DrawXModelRigidSurfLitInternal  (gfx_d3d/r_draw_xmodel.cpp:272)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void R_DrawXModelRigidSurfLitInternal(undefined8 param_1,int *param_2)
+
+{
+  ushort uVar1;
+  ushort uVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  ulonglong uVar6;
+  ulonglong *puVar8;
+  uint uVar9;
+  longlong lVar7;
+  uint *puVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  longlong lVar14;
+  double dVar15;
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
+  uint local_148;
+  uint local_130;
+  uint local_12c;
+  int local_128;
+  
+  __savegprlr();
+  puVar8 = (ulonglong *)__savevmx_120();
+  uVar11 = *puVar8;
+  uVar13 = *(ulonglong *)*param_2;
+  local_148 = (uint)(uVar11 >> 0x20);
+  uVar12 = (ulonglong)local_148;
+  uVar3 = *(uint *)(local_148 + 0x13ec);
+  uVar4 = *(uint *)(local_148 + 0x16d4);
+  auVar23 = loadVectorRightIndexed(uVar12 + 0x1550);
+  auVar22 = loadVectorLeftIndexed(uVar12 + 0x1540);
+  uVar6 = uVar13 & 0xffffffffff800000;
+  lVar14 = ((uVar13 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar3;
+  dVar15 = (double)*(float *)(local_148 + 0x1738);
+  uVar1 = *(ushort *)((int)lVar14 + 10);
+  auVar22 = vectorSubtractFloatingPoint128((auVar22 | auVar23) & _DAT_8404f950,_DAT_8217a040);
+  while( true ) {
+    puVar10 = (uint *)lVar14;
+    R_SetModelLightingCoordsForSource(*(undefined2 *)(puVar10 + 3),uVar12);
+    R_SetModelAmbientColorForSource(lVar14 + 0x10,uVar12);
+    R_SetReflectionProbe(uVar11,uVar13 >> 0xf & 0xff);
+    uVar9 = puVar10[5];
+    R_SetupXModelRigidModelSurfWithUpdate(uVar11 & 0xffffffff,(ulonglong)uVar9);
+    auVar23 = loadVectorLeftIndexed((ulonglong)uVar9 + 8);
+    auVar23 = vectorSplatWord(auVar23,0);
+    uVar13 = -(ulonglong)*puVar10 - 3;
+    auVar21 = loadVectorLeftIndexed(lVar14 + 0x18);
+    auVar21 = vectorSplatWord(auVar21,0);
+    auVar23 = vectorMultiplyFloatingPoint(auVar23,auVar21);
+    if ((uVar13 & 0xffffffff) != 0) {
+      auVar21 = vectorSplatImmediateSignedWord(0);
+      uVar2 = *(ushort *)(uVar9 + 2);
+      lVar14 = lVar14 + 0x2c;
+      auVar25 = vectorUnpackD3Dtype(auVar21,4);
+      auVar21 = vectorPermuteWordImmediate(auVar25,0xfe);
+      do {
+        auVar20 = loadVectorLeftIndexed(lVar14);
+        auVar19 = loadVectorRightIndexed(lVar14 + 0x10);
+        auVar18 = loadVectorRightIndexed(lVar14);
+        auVar17 = loadVectorLeftIndexed(lVar14 + -0x10);
+        auVar17 = auVar17 | auVar18;
+        auVar24 = vectorSubtractFloatingPoint128((auVar20 | auVar19) & _DAT_8404f950,auVar22);
+        auVar18 = vectorAddFloatingPoint128(auVar17,auVar17);
+        auVar16 = vectorPermuteWordImmediate(auVar17,7);
+        auVar20 = vectorSplatWord(auVar17,3);
+        auVar19 = vectorMultiplyFloatingPoint(auVar17,auVar18);
+        auVar17 = vectorPermuteWordImmediate(auVar18,0x9b);
+        auVar18 = vectorPermuteWordImmediate(auVar18,99);
+        auVar16 = vectorMultiplyFloatingPoint(auVar16,auVar17);
+        auVar17 = vectorMultiplyFloatingPoint(auVar20,auVar18);
+        auVar18 = vectorPermuteWordImmediate(auVar19,0x40);
+        auVar20 = vectorPermuteWordImmediate(auVar19,0xa4);
+        auVar18 = vectorSubtractFloatingPoint128(auVar21,auVar18);
+        auVar19 = vectorAddFloatingPoint128(auVar16,auVar17);
+        auVar17 = vectorSubtractFloatingPoint128(auVar16,auVar17);
+        auVar18 = vectorSubtractFloatingPoint128(auVar18,auVar20);
+        auVar20 = vectorPermuteWordImmediate(auVar19,0x42);
+        auVar19 = vectorShiftLeftDoubleByOctetImmediate(auVar17,auVar19,8);
+        auVar16 = vectorRotateLeftImmediateAndMaskInsert(auVar20,auVar17,6,3);
+        auVar19 = vectorPermuteWordImmediate(auVar19,0x88);
+        auVar18 = vectorRotateLeftImmediateAndMaskInsert(auVar18,auVar25,1,3);
+        auVar17 = vectorPermuteWordImmediate(auVar18,7);
+        auVar20 = vectorRotateLeftImmediateAndMaskInsert(auVar19,auVar18,3,0);
+        auVar19 = vectorRotateLeftImmediateAndMaskInsert(auVar18,auVar16,6,3);
+        auVar18 = vectorMergeLowWord128(auVar16,auVar17);
+        auVar17 = vectorMultiplyFloatingPoint(auVar20,auVar23);
+        auVar20 = vectorMultiplyFloatingPoint(auVar18,auVar23);
+        auVar18 = vectorMultiplyFloatingPoint(auVar19,auVar23);
+        uVar9 = R_GetActiveWorldMatrix(uVar12);
+        *(undefined1 (*) [16])(uVar9 & 0xfffffff0) = auVar18;
+        *(undefined1 (*) [16])(uVar9 + 0x10 & 0xfffffff0) = auVar20;
+        *(undefined1 (*) [16])(uVar9 + 0x20 & 0xfffffff0) = auVar17;
+        *(undefined1 (*) [16])(uVar9 + 0x30 & 0xfffffff0) = auVar24;
+        R_SetupPassPerPrimArgs(uVar11);
+        local_130 = (uint)uVar2;
+        local_128 = (uint)*(ushort *)((int)lVar14 + 0xc) * 3;
+        local_12c = (uint)*(ushort *)((int)lVar14 + 0xe);
+        R_DrawIndexedPrimitive((uVar11 & 0xffffffff) + 0xc0,&local_130);
+        if (*(int *)(DAT_845aa6d8 + 0xc) != 0) {
+          lVar7 = R_GetActiveWorldMatrix(uVar12);
+          RB_ShowTess(uVar11,lVar7 + 0x30,0xffffffff821bf0e4,0xffffffff821818b8);
+        }
+        uVar13 = uVar13 - 1;
+        lVar14 = lVar14 + 0x20;
+      } while (uVar13 != 0);
+    }
+    iVar5 = *param_2;
+    puVar8 = (ulonglong *)(iVar5 + 8);
+    *param_2 = (int)puVar8;
+    if (iVar5 + 8 == param_2[1]) break;
+    uVar13 = *puVar8;
+    if ((uVar13 & 0xffffffffff800000) != uVar6) break;
+    lVar14 = ((uVar13 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar3;
+    if ((uVar13 & 0x800000) != 0) {
+      uVar9 = (uint)*(ushort *)((int)lVar14 + 10);
+      if (uVar9 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp"
+                        ,0x17d,0,&DAT_82000f98,"gfxEntIndex");
+      }
+      if (uVar9 != uVar1) {
+        puVar10 = (uint *)((uVar9 + 0xc880) * 8 + uVar3);
+        if (((*puVar10 & 2) != uVar4) || ((double)(float)puVar10[1] != dVar15)) break;
+      }
+    }
+  }
+  __restvmx_120();
+  __restgprlr();
+  return;
+}
+
 
 // 827383A8  R_DrawXModelRigidSurfCameraInternal  (gfx_d3d/r_draw_xmodel.cpp:398)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void R_DrawXModelRigidSurfCameraInternal(undefined8 param_1,int *param_2)
+
+{
+  ushort uVar1;
+  ushort uVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  ulonglong *puVar7;
+  uint uVar8;
+  longlong lVar6;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  uint *puVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  longlong lVar14;
+  double dVar15;
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
+  uint local_148;
+  uint local_130;
+  uint local_12c;
+  int local_128;
+  
+  __savegprlr();
+  puVar7 = (ulonglong *)__savevmx_120();
+  uVar12 = *puVar7;
+  uVar9 = *(ulonglong *)*param_2;
+  local_148 = (uint)(uVar12 >> 0x20);
+  uVar13 = (ulonglong)local_148;
+  uVar3 = *(uint *)(local_148 + 0x13ec);
+  uVar4 = *(uint *)(local_148 + 0x16d4);
+  auVar23 = loadVectorRightIndexed(uVar13 + 0x1550);
+  auVar22 = loadVectorLeftIndexed(uVar13 + 0x1540);
+  lVar14 = ((uVar9 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar3;
+  dVar15 = (double)*(float *)(local_148 + 0x1738);
+  uVar1 = *(ushort *)((int)lVar14 + 10);
+  auVar22 = vectorSubtractFloatingPoint128((auVar22 | auVar23) & _DAT_8404f950,_DAT_8217a040);
+  while( true ) {
+    uVar8 = ((uint *)lVar14)[5];
+    R_SetupXModelRigidModelSurfWithUpdate(uVar12 & 0xffffffff,(ulonglong)uVar8);
+    uVar10 = -(ulonglong)*(uint *)lVar14 - 3;
+    auVar21 = loadVectorLeftIndexed(lVar14 + 0x18);
+    auVar23 = loadVectorLeftIndexed((ulonglong)uVar8 + 8);
+    auVar21 = vectorSplatWord(auVar21,0);
+    auVar23 = vectorSplatWord(auVar23,0);
+    auVar23 = vectorMultiplyFloatingPoint(auVar23,auVar21);
+    if ((uVar10 & 0xffffffff) != 0) {
+      auVar21 = vectorSplatImmediateSignedWord(0);
+      uVar2 = *(ushort *)(uVar8 + 2);
+      lVar14 = lVar14 + 0x2c;
+      auVar25 = vectorUnpackD3Dtype(auVar21,4);
+      auVar21 = vectorPermuteWordImmediate(auVar25,0xfe);
+      do {
+        auVar20 = loadVectorLeftIndexed(lVar14);
+        auVar19 = loadVectorRightIndexed(lVar14 + 0x10);
+        auVar18 = loadVectorRightIndexed(lVar14);
+        auVar17 = loadVectorLeftIndexed(lVar14 + -0x10);
+        auVar17 = auVar17 | auVar18;
+        auVar24 = vectorSubtractFloatingPoint128((auVar20 | auVar19) & _DAT_8404f950,auVar22);
+        auVar18 = vectorAddFloatingPoint128(auVar17,auVar17);
+        auVar16 = vectorPermuteWordImmediate(auVar17,7);
+        auVar20 = vectorSplatWord(auVar17,3);
+        auVar19 = vectorMultiplyFloatingPoint(auVar17,auVar18);
+        auVar17 = vectorPermuteWordImmediate(auVar18,0x9b);
+        auVar18 = vectorPermuteWordImmediate(auVar18,99);
+        auVar16 = vectorMultiplyFloatingPoint(auVar16,auVar17);
+        auVar17 = vectorMultiplyFloatingPoint(auVar20,auVar18);
+        auVar18 = vectorPermuteWordImmediate(auVar19,0x40);
+        auVar20 = vectorPermuteWordImmediate(auVar19,0xa4);
+        auVar18 = vectorSubtractFloatingPoint128(auVar21,auVar18);
+        auVar19 = vectorAddFloatingPoint128(auVar16,auVar17);
+        auVar17 = vectorSubtractFloatingPoint128(auVar16,auVar17);
+        auVar18 = vectorSubtractFloatingPoint128(auVar18,auVar20);
+        auVar20 = vectorPermuteWordImmediate(auVar19,0x42);
+        auVar19 = vectorShiftLeftDoubleByOctetImmediate(auVar17,auVar19,8);
+        auVar16 = vectorRotateLeftImmediateAndMaskInsert(auVar20,auVar17,6,3);
+        auVar19 = vectorPermuteWordImmediate(auVar19,0x88);
+        auVar18 = vectorRotateLeftImmediateAndMaskInsert(auVar18,auVar25,1,3);
+        auVar17 = vectorPermuteWordImmediate(auVar18,7);
+        auVar20 = vectorRotateLeftImmediateAndMaskInsert(auVar19,auVar18,3,0);
+        auVar19 = vectorRotateLeftImmediateAndMaskInsert(auVar18,auVar16,6,3);
+        auVar18 = vectorMergeLowWord128(auVar16,auVar17);
+        auVar17 = vectorMultiplyFloatingPoint(auVar20,auVar23);
+        auVar20 = vectorMultiplyFloatingPoint(auVar18,auVar23);
+        auVar18 = vectorMultiplyFloatingPoint(auVar19,auVar23);
+        uVar8 = R_GetActiveWorldMatrix(uVar13);
+        *(undefined1 (*) [16])(uVar8 & 0xfffffff0) = auVar18;
+        *(undefined1 (*) [16])(uVar8 + 0x10 & 0xfffffff0) = auVar20;
+        *(undefined1 (*) [16])(uVar8 + 0x20 & 0xfffffff0) = auVar17;
+        *(undefined1 (*) [16])(uVar8 + 0x30 & 0xfffffff0) = auVar24;
+        R_SetupPassPerPrimArgs(uVar12);
+        local_130 = (uint)uVar2;
+        local_128 = (uint)*(ushort *)((int)lVar14 + 0xc) * 3;
+        local_12c = (uint)*(ushort *)((int)lVar14 + 0xe);
+        R_DrawIndexedPrimitive((uVar12 & 0xffffffff) + 0xc0,&local_130);
+        if (*(int *)(DAT_845aa6d8 + 0xc) != 0) {
+          lVar6 = R_GetActiveWorldMatrix(uVar13);
+          RB_ShowTess(uVar12,lVar6 + 0x30,0xffffffff821bf0e4,0xffffffff821818b8);
+        }
+        uVar10 = uVar10 - 1;
+        lVar14 = lVar14 + 0x20;
+      } while (uVar10 != 0);
+    }
+    iVar5 = *param_2;
+    puVar7 = (ulonglong *)(iVar5 + 8);
+    *param_2 = (int)puVar7;
+    if (iVar5 + 8 == param_2[1]) break;
+    uVar10 = *puVar7;
+    if ((uVar10 & 0xffffffffe0800000) != (uVar9 & 0xffffffffe0800000)) break;
+    lVar14 = ((uVar10 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar3;
+    if ((uVar10 & 0x800000) != 0) {
+      uVar8 = (uint)*(ushort *)((int)lVar14 + 10);
+      if (uVar8 == 0) {
+        MyAssertHandler(0xffffffff821bf0a0,0x1ea,0,&DAT_82000f98,"gfxEntIndex");
+      }
+      if (uVar8 != uVar1) {
+        puVar11 = (uint *)((uVar8 + 0xc880) * 8 + uVar3);
+        if (((*puVar11 & 2) != uVar4) || ((double)(float)puVar11[1] != dVar15)) break;
+      }
+    }
+  }
+  __restvmx_120();
+  __restgprlr();
+  return;
+}
+
 
 // 827386C0  R_DrawXModelRigidSurfInternal  (gfx_d3d/r_draw_xmodel.cpp:507)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void R_DrawXModelRigidSurfInternal(undefined8 param_1,int *param_2)
+
+{
+  undefined2 uVar1;
+  uint uVar2;
+  int iVar3;
+  ulonglong *puVar5;
+  uint uVar6;
+  longlong lVar4;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  undefined1 auVar15 [16];
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  undefined1 auVar20 [16];
+  ulonglong local_140;
+  int local_138;
+  ulonglong local_130;
+  
+  __savegprlr();
+  puVar5 = (ulonglong *)__savevmx_120();
+  uVar8 = *puVar5;
+  local_140._0_4_ = (uint)(uVar8 >> 0x20);
+  uVar9 = (ulonglong)local_140._0_4_;
+  auVar18 = loadVectorRightIndexed(uVar9 + 0x1550);
+  uVar7 = *(ulonglong *)*param_2;
+  auVar17 = loadVectorLeftIndexed(uVar9 + 0x1540);
+  local_130 = uVar7 & 0xffffffffe0800000;
+  uVar2 = *(uint *)(local_140._0_4_ + 0x13ec);
+  auVar17 = vectorSubtractFloatingPoint128((auVar17 | auVar18) & _DAT_8404f950,_DAT_8217a040);
+  local_140 = uVar8;
+  do {
+    lVar10 = ((uVar7 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar2;
+    uVar6 = ((uint *)lVar10)[5];
+    R_SetupXModelRigidModelSurfWithUpdate(uVar8 & 0xffffffff,(ulonglong)uVar6);
+    auVar16 = loadVectorLeftIndexed(lVar10 + 0x18);
+    auVar18 = loadVectorLeftIndexed((ulonglong)uVar6 + 8);
+    auVar16 = vectorSplatWord(auVar16,0);
+    auVar18 = vectorSplatWord(auVar18,0);
+    uVar7 = -(ulonglong)*(uint *)lVar10 - 3;
+    auVar18 = vectorMultiplyFloatingPoint(auVar18,auVar16);
+    if ((uVar7 & 0xffffffff) != 0) {
+      auVar16 = vectorSplatImmediateSignedWord(0);
+      uVar1 = *(undefined2 *)(uVar6 + 2);
+      lVar10 = lVar10 + 0x2c;
+      auVar20 = vectorUnpackD3Dtype(auVar16,4);
+      auVar16 = vectorPermuteWordImmediate(auVar20,0xfe);
+      do {
+        auVar15 = loadVectorLeftIndexed(lVar10);
+        auVar14 = loadVectorRightIndexed(lVar10 + 0x10);
+        auVar13 = loadVectorRightIndexed(lVar10);
+        auVar12 = loadVectorLeftIndexed(lVar10 + -0x10);
+        auVar12 = auVar12 | auVar13;
+        auVar19 = vectorSubtractFloatingPoint128((auVar15 | auVar14) & _DAT_8404f950,auVar17);
+        auVar13 = vectorAddFloatingPoint128(auVar12,auVar12);
+        auVar11 = vectorPermuteWordImmediate(auVar12,7);
+        auVar15 = vectorSplatWord(auVar12,3);
+        auVar14 = vectorMultiplyFloatingPoint(auVar12,auVar13);
+        auVar12 = vectorPermuteWordImmediate(auVar13,0x9b);
+        auVar13 = vectorPermuteWordImmediate(auVar13,99);
+        auVar11 = vectorMultiplyFloatingPoint(auVar11,auVar12);
+        auVar15 = vectorMultiplyFloatingPoint(auVar15,auVar13);
+        auVar13 = vectorPermuteWordImmediate(auVar14,0x40);
+        auVar14 = vectorPermuteWordImmediate(auVar14,0xa4);
+        auVar12 = vectorSubtractFloatingPoint128(auVar16,auVar13);
+        auVar13 = vectorAddFloatingPoint128(auVar11,auVar15);
+        auVar15 = vectorSubtractFloatingPoint128(auVar11,auVar15);
+        auVar14 = vectorSubtractFloatingPoint128(auVar12,auVar14);
+        auVar12 = vectorPermuteWordImmediate(auVar13,0x42);
+        auVar13 = vectorShiftLeftDoubleByOctetImmediate(auVar15,auVar13,8);
+        auVar12 = vectorRotateLeftImmediateAndMaskInsert(auVar12,auVar15,6,3);
+        auVar15 = vectorPermuteWordImmediate(auVar13,0x88);
+        auVar13 = vectorRotateLeftImmediateAndMaskInsert(auVar14,auVar20,1,3);
+        auVar14 = vectorPermuteWordImmediate(auVar13,7);
+        auVar11 = vectorRotateLeftImmediateAndMaskInsert(auVar15,auVar13,3,0);
+        auVar15 = vectorRotateLeftImmediateAndMaskInsert(auVar13,auVar12,6,3);
+        auVar13 = vectorMergeLowWord128(auVar12,auVar14);
+        auVar12 = vectorMultiplyFloatingPoint(auVar11,auVar18);
+        auVar14 = vectorMultiplyFloatingPoint(auVar13,auVar18);
+        auVar13 = vectorMultiplyFloatingPoint(auVar15,auVar18);
+        uVar6 = R_GetActiveWorldMatrix(uVar9);
+        *(undefined1 (*) [16])(uVar6 & 0xfffffff0) = auVar13;
+        *(undefined1 (*) [16])(uVar6 + 0x10 & 0xfffffff0) = auVar14;
+        *(undefined1 (*) [16])(uVar6 + 0x20 & 0xfffffff0) = auVar12;
+        *(undefined1 (*) [16])(uVar6 + 0x30 & 0xfffffff0) = auVar19;
+        R_SetupPassPerPrimArgs(uVar8);
+        local_138 = (uint)*(ushort *)((int)lVar10 + 0xc) * 3;
+        local_140 = (ulonglong)CONCAT24(uVar1,(uint)*(ushort *)((int)lVar10 + 0xe));
+        R_DrawIndexedPrimitive((uVar8 & 0xffffffff) + 0xc0,&local_140);
+        if (*(int *)(DAT_845aa6d8 + 0xc) != 0) {
+          lVar4 = R_GetActiveWorldMatrix(uVar9);
+          RB_ShowTess(uVar8,lVar4 + 0x30,0xffffffff821bf0e4,0xffffffff821818b8);
+        }
+        uVar7 = uVar7 - 1;
+        lVar10 = lVar10 + 0x20;
+      } while (uVar7 != 0);
+    }
+    iVar3 = *param_2;
+    puVar5 = (ulonglong *)(iVar3 + 8);
+    *param_2 = (int)puVar5;
+    if (iVar3 + 8 == param_2[1]) break;
+    uVar7 = *puVar5;
+  } while ((uVar7 & 0xffffffffe0800000) == local_130);
+  __restvmx_120();
+  __restgprlr();
+  return;
+}
+
 
 // 82737DD0  D3DTag_Index  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:615)
 
-/* WARNING: Enum "_D3DTAG": Some values do not have unique names */
-
-ulong D3DTag_Index(_D3DTAG param_1)
+int D3DTag_Index(int param_1)
 
 {
-  return (int)(char)param_1 >> 0x10;
+  return param_1 >> 0x10;
 }
 
 
 // 82737DD8  D3DTag_SubsetMask  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:623)
 
-/* WARNING: Enum "_D3DTAG": Some values do not have unique names */
-
-ulong64 D3DTag_SubsetMask(_D3DTAG param_1,ulong param_2,ulong param_3)
+ulonglong D3DTag_SubsetMask(ulonglong param_1,longlong param_2,longlong param_3)
 
 {
-  return (ulonglong)
-         (-0x8000000000000000 >> ((longlong)(int)param_3 - (longlong)(int)param_2 & 0x7fU)) >>
-         ((ulonglong)param_1 + (longlong)(int)param_2 & 0x7f);
+  return (ulonglong)(-0x8000000000000000 >> (param_3 - param_2 & 0x7fU)) >>
+         ((param_1 & 0xff) + param_2 & 0x7f);
 }
 
 
 // 82737E00  D3DTag_ShaderConstantMask  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:631)
 
-ulong64 D3DTag_ShaderConstantMask(ulong param_1,ulong param_2)
+ulonglong D3DTag_ShaderConstantMask(ulonglong param_1,longlong param_2)
 
 {
+  ulonglong uVar1;
+  
+  uVar1 = (param_1 & 0xffffffff) >> 2;
   return (ulonglong)
-         (-0x8000000000000000 >>
-         (((((longlong)(int)param_1 + (longlong)(int)param_2) - 1U & 0xffffffff) >> 2) -
-          (ulonglong)(param_1 >> 2) & 0x7f)) >> ((ulonglong)(param_1 >> 2) & 0x7f);
+         (-0x8000000000000000 >> ((((param_1 + param_2) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f)) >>
+         (uVar1 & 0x7f);
 }
 
 
 // 82737E30  D3DTagCollection_Set  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:648)
 
-void D3DTagCollection_Set(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param_3)
+void D3DTagCollection_Set(int param_1,int param_2,ulonglong param_3)
 
 {
-  param_1->m_Mask[param_2] = param_1->m_Mask[param_2] | param_3;
+  *(ulonglong *)(param_2 * 8 + param_1) = *(ulonglong *)(param_2 * 8 + param_1) | param_3;
   return;
 }
 
 
 // 82737E48  D3DTagCollection_Clear  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:660)
 
-void D3DTagCollection_Clear(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param_3)
+void D3DTagCollection_Clear(int param_1,int param_2,ulonglong param_3)
 
 {
-  param_1->m_Mask[param_2] = param_1->m_Mask[param_2] & ~param_3;
+  *(ulonglong *)(param_2 * 8 + param_1) = *(ulonglong *)(param_2 * 8 + param_1) & ~param_3;
   return;
 }
 
 
 // 82738918  R_DrawXModelUnlitNoPrepass  (gfx_d3d/r_draw_xmodel.cpp:1864)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void R_DrawXModelUnlitNoPrepass(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  ushort uVar2;
+  int *piVar3;
+  uint uVar4;
+  ulonglong *puVar5;
+  int iVar6;
+  int *piVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  undefined8 uVar10;
+  DWORD DVar11;
+  ulonglong uVar12;
+  uint *puVar13;
+  ulonglong *puVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  longlong lVar17;
+  uint uVar18;
+  double dVar19;
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
+  undefined1 auVar26 [16];
+  undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
+  undefined1 auVar30 [16];
+  undefined1 auVar31 [16];
+  uint local_15c;
+  
+  __savegprlr();
+  uVar8 = __savevmx_120();
+  piVar7 = (int *)uVar8;
+  if (piVar7[1] != 2) {
+    MyAssertHandler(0xffffffff821bf0a0,0x76a,0,0xffffffff821beb60,0xffffffff821beb88);
+  }
+  auVar29 = _DAT_8217a040;
+  piVar3 = (int *)*piVar7;
+  uVar4 = piVar7[7];
+  uVar12 = *(ulonglong *)*piVar3;
+  lVar17 = ((uVar12 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar4;
+  uVar2 = *(ushort *)((int)lVar17 + 10);
+  if (uVar2 == 0) {
+    local_15c = 0;
+    fVar1 = 0.0;
+  }
+  else {
+    puVar13 = (uint *)((uVar2 + 0xc880) * 8 + uVar4);
+    fVar1 = (float)puVar13[1];
+    local_15c = *puVar13 & 2;
+  }
+  dVar19 = (double)fVar1;
+  puVar5 = (ulonglong *)*(undefined4 *)(param_2 + 0xc0);
+  auVar28 = loadVectorLeftIndexed(uVar8 + 0x10);
+  auVar26 = loadVectorRightIndexed(uVar8 + 0x20);
+  auVar26 = (auVar28 | auVar26) & _DAT_8404f950;
+  *puVar5 = *puVar5 & 0xbfffffffffffffff;
+  auVar29 = vectorSubtractFloatingPoint128(auVar26,auVar29);
+  uVar15 = param_2;
+  uVar16 = uVar8;
+LAB_82738a90:
+  uVar18 = ((uint *)lVar17)[5];
+  if (uVar18 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
+                    0x79c,0,0xffffffff82000f98,"xsurf");
+  }
+  R_SetupXModelRigidModelSurfWithUpdate(uVar15,uVar18);
+  uVar15 = -(ulonglong)*(uint *)lVar17 - 3;
+  auVar26 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x154);
+  auVar26 = vectorSplatWord(auVar26,0);
+  if ((uVar15 & 0xffffffff) != 0) {
+    auVar28 = vectorSplatImmediateSignedWord(0);
+    lVar17 = lVar17 + 0x1c;
+    auVar30 = vectorUnpackD3Dtype(auVar28,4);
+    auVar28 = vectorPermuteWordImmediate(auVar30,0xfe);
+LAB_82738b08:
+    auVar25 = loadVectorRightIndexed(lVar17 + 0x10);
+    auVar24 = loadVectorLeftIndexed(lVar17);
+    auVar24 = auVar24 | auVar25;
+    auVar23 = loadVectorLeftIndexed(lVar17 + 0x10);
+    auVar22 = vectorAddFloatingPoint128(auVar24,auVar24);
+    auVar21 = vectorPermuteWordImmediate(auVar24,7);
+    auVar20 = vectorSplatWord(auVar24,3);
+    auVar25 = loadVectorRightIndexed(lVar17 + 0x20);
+    auVar31 = vectorSubtractFloatingPoint128((auVar23 | auVar25) & _DAT_8404f950,auVar29);
+    auVar24 = vectorMultiplyFloatingPoint(auVar24,auVar22);
+    auVar23 = vectorPermuteWordImmediate(auVar22,0x9b);
+    auVar25 = vectorPermuteWordImmediate(auVar22,99);
+    auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar23);
+    auVar20 = vectorMultiplyFloatingPoint(auVar20,auVar25);
+    auVar25 = vectorPermuteWordImmediate(auVar24,0x40);
+    auVar24 = vectorPermuteWordImmediate(auVar24,0xa4);
+    auVar23 = vectorSubtractFloatingPoint128(auVar28,auVar25);
+    auVar25 = vectorAddFloatingPoint128(auVar21,auVar20);
+    auVar20 = vectorSubtractFloatingPoint128(auVar21,auVar20);
+    auVar24 = vectorSubtractFloatingPoint128(auVar23,auVar24);
+    auVar23 = vectorPermuteWordImmediate(auVar25,0x42);
+    auVar25 = vectorShiftLeftDoubleByOctetImmediate(auVar20,auVar25,8);
+    auVar20 = vectorRotateLeftImmediateAndMaskInsert(auVar23,auVar20,6,3);
+    auVar23 = vectorPermuteWordImmediate(auVar25,0x88);
+    auVar21 = vectorRotateLeftImmediateAndMaskInsert(auVar24,auVar30,1,3);
+    auVar25 = vectorPermuteWordImmediate(auVar21,7);
+    auVar24 = vectorRotateLeftImmediateAndMaskInsert(auVar23,auVar21,3,0);
+    auVar23 = vectorRotateLeftImmediateAndMaskInsert(auVar21,auVar20,6,3);
+    auVar25 = vectorMergeLowWord128(auVar20,auVar25);
+    auVar24 = vectorMultiplyFloatingPoint(auVar24,auVar26);
+    auVar25 = vectorMultiplyFloatingPoint(auVar25,auVar26);
+    auVar23 = vectorMultiplyFloatingPoint(auVar23,auVar26);
+    do {
+      lVar9 = D3DDevice_GpuBeginShaderConstantF4(puVar5,0,4,4);
+      uVar16 = -(ulonglong)(lVar9 == 0) & 0xffffffff8007000e;
+      if ((int)uVar16 < 0) goto LAB_82738bd8;
+    } while (DAT_84013128 != 0);
+    goto LAB_82738bfc;
+  }
+  goto LAB_82738c64;
+LAB_82738bd8:
+  do {
+    uVar10 = R_ErrorDescription(uVar16);
+    Sys_Error(0xffffffff821bf110,0x7be,uVar10);
+  } while (DAT_84013128 != 0);
+LAB_82738bfc:
+  auVar27 = vectorMergeHighWord128(auVar23,auVar24);
+  auVar22 = vectorMergeHighWord128(auVar25,auVar31);
+  auVar21 = vectorMergeLowWord128(auVar23,auVar24);
+  auVar25 = vectorMergeLowWord128(auVar25,auVar31);
+  auVar20 = vectorMergeHighWord128(auVar27,auVar22);
+  auVar24 = vectorMergeLowWord128(auVar27,auVar22);
+  auVar23 = vectorMergeHighWord128(auVar21,auVar25);
+  auVar25 = vectorMergeLowWord128(auVar21,auVar25);
+  uVar18 = (uint)lVar9;
+  *(undefined1 (*) [16])(uVar18 & 0xfffffff0) = auVar20;
+  *(undefined1 (*) [16])(uVar18 + 0x10 & 0xfffffff0) = auVar24;
+  *(undefined1 (*) [16])(uVar18 + 0x20 & 0xfffffff0) = auVar23;
+  *(undefined1 (*) [16])(uVar18 + 0x30 & 0xfffffff0) = auVar25;
+  R_DrawIndexedPrimitive(param_2 + 0xc0,ZEXT48(&stack0x00000000) - 0x138);
+  uVar15 = uVar15 - 1;
+  lVar17 = lVar17 + 0x20;
+  if (uVar15 == 0) goto code_r0x82738c60;
+  goto LAB_82738b08;
+code_r0x82738c60:
+  uVar16 = uVar8 & 0xffffffff;
+LAB_82738c64:
+  iVar6 = *piVar3;
+  puVar14 = (ulonglong *)(iVar6 + 8);
+  *piVar3 = (int)puVar14;
+  if ((iVar6 + 8 == piVar3[1]) ||
+     (uVar15 = *puVar14, (uVar15 & 0xffffffffff800000) != (uVar12 & 0xffffffffff800000))) {
+LAB_82738d60:
+    *puVar5 = *puVar5 | 0x4000000000000000;
+    __restvmx_120();
+    __restgprlr();
+    return;
+  }
+  iVar6 = *(int *)((int)uVar16 + 0x24);
+  DVar11 = GetCurrentProcessorNumber();
+  if (iVar6 != *(int *)(&DAT_846177e4 + DVar11 * 4)) {
+    MyAssertHandler(0xffffffff821bdad0,0x496,0,0xffffffff82000f98,"cmdBuf == R_GetCmdRingBuf()");
+  }
+  if ((iVar6 != 0) &&
+     ((longlong)((ulonglong)*(uint *)(iVar6 + 0x20) - (ulonglong)*(uint *)(iVar6 + 4)) < 0)) {
+    R_CmdBufReserveMemory(iVar6);
+  }
+  lVar17 = ((uVar15 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar4;
+  if ((uVar15 & 0x800000) != 0) {
+    uVar18 = (uint)*(ushort *)((int)lVar17 + 10);
+    if (uVar18 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
+                      0x7ea,0,0xffffffff82000f98,"gfxEntIndex");
+    }
+    if ((uVar18 != uVar2) &&
+       ((puVar13 = (uint *)((uVar18 + 0xc880) * 8 + uVar4), (*puVar13 & 2) != local_15c ||
+        ((double)(float)puVar13[1] != dVar19)))) goto LAB_82738d60;
+  }
+  uVar15 = param_2 & 0xffffffff;
+  goto LAB_82738a90;
+}
+
 
 // 82738D88  R_DrawXModelUnlitNoPrepassNoGfxEnt  (gfx_d3d/r_draw_xmodel.cpp:2213)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void R_DrawXModelUnlitNoPrepassNoGfxEnt(undefined8 param_1,ulonglong param_2)
+
+{
+  int *piVar1;
+  ulonglong *puVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  int *piVar6;
+  uint *puVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  undefined8 uVar11;
+  DWORD DVar12;
+  ulonglong *puVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
+  undefined1 auVar26 [16];
+  undefined1 auVar27 [16];
+  
+  __savegprlr();
+  lVar8 = __savevmx_120();
+  piVar6 = (int *)lVar8;
+  if (piVar6[1] != 2) {
+    MyAssertHandler(0xffffffff821bf0a0,0x8c2,0,0xffffffff821beb60,0xffffffff821beb88);
+  }
+  auVar25 = _DAT_8217a040;
+  piVar1 = (int *)*piVar6;
+  puVar2 = *(ulonglong **)((int)param_2 + 0xc0);
+  uVar3 = piVar6[7];
+  auVar24 = loadVectorLeftIndexed(lVar8 + 0x10);
+  auVar22 = loadVectorRightIndexed(lVar8 + 0x20);
+  uVar15 = *(ulonglong *)*piVar1;
+  uVar9 = uVar15 & 0xffffffffe0800000;
+  auVar22 = (auVar24 | auVar22) & _DAT_8404f950;
+  *puVar2 = *puVar2 & 0xbfffffffffffffff;
+  auVar25 = vectorSubtractFloatingPoint128(auVar22,auVar25);
+  uVar14 = param_2;
+LAB_82738e98:
+  lVar8 = ((uVar15 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar3;
+  puVar7 = (uint *)lVar8;
+  uVar4 = puVar7[5];
+  if (uVar4 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
+                    0x8e9,0,0xffffffff82000f98,"xsurf");
+  }
+  R_SetupXModelRigidModelSurfWithUpdate(uVar14,uVar4);
+  uVar15 = -(ulonglong)*puVar7 - 3;
+  auVar22 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x144);
+  auVar22 = vectorSplatWord(auVar22,0);
+  if ((uVar15 & 0xffffffff) != 0) {
+    auVar24 = vectorSplatImmediateSignedWord(0);
+    lVar8 = lVar8 + 0x1c;
+    auVar26 = vectorUnpackD3Dtype(auVar24,4);
+    auVar24 = vectorPermuteWordImmediate(auVar26,0xfe);
+LAB_82738f24:
+    auVar21 = loadVectorRightIndexed(lVar8 + 0x10);
+    auVar20 = loadVectorLeftIndexed(lVar8);
+    auVar20 = auVar20 | auVar21;
+    auVar19 = loadVectorLeftIndexed(lVar8 + 0x10);
+    auVar18 = vectorAddFloatingPoint128(auVar20,auVar20);
+    auVar17 = vectorPermuteWordImmediate(auVar20,7);
+    auVar16 = vectorSplatWord(auVar20,3);
+    auVar21 = loadVectorRightIndexed(lVar8 + 0x20);
+    auVar27 = vectorSubtractFloatingPoint128((auVar19 | auVar21) & _DAT_8404f950,auVar25);
+    auVar20 = vectorMultiplyFloatingPoint(auVar20,auVar18);
+    auVar19 = vectorPermuteWordImmediate(auVar18,0x9b);
+    auVar21 = vectorPermuteWordImmediate(auVar18,99);
+    auVar17 = vectorMultiplyFloatingPoint(auVar17,auVar19);
+    auVar16 = vectorMultiplyFloatingPoint(auVar16,auVar21);
+    auVar21 = vectorPermuteWordImmediate(auVar20,0x40);
+    auVar20 = vectorPermuteWordImmediate(auVar20,0xa4);
+    auVar19 = vectorSubtractFloatingPoint128(auVar24,auVar21);
+    auVar21 = vectorAddFloatingPoint128(auVar17,auVar16);
+    auVar16 = vectorSubtractFloatingPoint128(auVar17,auVar16);
+    auVar20 = vectorSubtractFloatingPoint128(auVar19,auVar20);
+    auVar19 = vectorPermuteWordImmediate(auVar21,0x42);
+    auVar21 = vectorShiftLeftDoubleByOctetImmediate(auVar16,auVar21,8);
+    auVar16 = vectorRotateLeftImmediateAndMaskInsert(auVar19,auVar16,6,3);
+    auVar19 = vectorPermuteWordImmediate(auVar21,0x88);
+    auVar17 = vectorRotateLeftImmediateAndMaskInsert(auVar20,auVar26,1,3);
+    auVar21 = vectorPermuteWordImmediate(auVar17,7);
+    auVar20 = vectorRotateLeftImmediateAndMaskInsert(auVar19,auVar17,3,0);
+    auVar19 = vectorRotateLeftImmediateAndMaskInsert(auVar17,auVar16,6,3);
+    auVar21 = vectorMergeLowWord128(auVar16,auVar21);
+    auVar20 = vectorMultiplyFloatingPoint(auVar20,auVar22);
+    auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar22);
+    auVar19 = vectorMultiplyFloatingPoint(auVar19,auVar22);
+    do {
+      lVar10 = D3DDevice_GpuBeginShaderConstantF4(puVar2,0,4,4);
+      uVar14 = -(ulonglong)(lVar10 == 0) & 0xffffffff8007000e;
+      if ((int)uVar14 < 0) goto LAB_82738ff4;
+    } while (DAT_84013128 != 0);
+    goto LAB_82739018;
+  }
+  goto LAB_82739080;
+LAB_82738ff4:
+  do {
+    uVar11 = R_ErrorDescription(uVar14);
+    Sys_Error(0xffffffff821bf110,0x90b,uVar11);
+  } while (DAT_84013128 != 0);
+LAB_82739018:
+  auVar23 = vectorMergeHighWord128(auVar19,auVar20);
+  auVar18 = vectorMergeHighWord128(auVar21,auVar27);
+  auVar17 = vectorMergeLowWord128(auVar19,auVar20);
+  auVar21 = vectorMergeLowWord128(auVar21,auVar27);
+  auVar16 = vectorMergeHighWord128(auVar23,auVar18);
+  auVar20 = vectorMergeLowWord128(auVar23,auVar18);
+  auVar19 = vectorMergeHighWord128(auVar17,auVar21);
+  auVar21 = vectorMergeLowWord128(auVar17,auVar21);
+  uVar4 = (uint)lVar10;
+  *(undefined1 (*) [16])(uVar4 & 0xfffffff0) = auVar16;
+  *(undefined1 (*) [16])(uVar4 + 0x10 & 0xfffffff0) = auVar20;
+  *(undefined1 (*) [16])(uVar4 + 0x20 & 0xfffffff0) = auVar19;
+  *(undefined1 (*) [16])(uVar4 + 0x30 & 0xfffffff0) = auVar21;
+  R_DrawIndexedPrimitive(param_2 + 0xc0,ZEXT48(&stack0x00000000) - 0x130);
+  uVar15 = uVar15 - 1;
+  lVar8 = lVar8 + 0x20;
+  if (uVar15 == 0) goto code_r0x8273907c;
+  goto LAB_82738f24;
+code_r0x8273907c:
+  uVar14 = param_2 & 0xffffffff;
+LAB_82739080:
+  iVar5 = *piVar1;
+  puVar13 = (ulonglong *)(iVar5 + 8);
+  *piVar1 = (int)puVar13;
+  if ((iVar5 + 8 == piVar1[1]) || (uVar15 = *puVar13, (uVar15 & 0xffffffffe0800000) != uVar9)) {
+    *puVar2 = *puVar2 | 0x4000000000000000;
+    __restvmx_120();
+    __restgprlr();
+    return;
+  }
+  iVar5 = piVar6[9];
+  DVar12 = GetCurrentProcessorNumber();
+  if (iVar5 != *(int *)(&DAT_846177e4 + DVar12 * 4)) {
+    MyAssertHandler(0xffffffff821bdad0,0x496,0,0xffffffff82000f98,"cmdBuf == R_GetCmdRingBuf()");
+  }
+  if ((iVar5 != 0) &&
+     ((longlong)((ulonglong)*(uint *)(iVar5 + 0x20) - (ulonglong)*(uint *)(iVar5 + 4)) < 0)) {
+    R_CmdBufReserveMemory(iVar5);
+  }
+  goto LAB_82738e98;
+}
+
 
 // 82739130  R_DrawXModelLitNoPrepass  (gfx_d3d/r_draw_xmodel.cpp:2488)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void R_DrawXModelLitNoPrepass(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  ushort uVar2;
+  undefined2 uVar3;
+  int *piVar4;
+  uint uVar5;
+  int iVar6;
+  ulonglong *puVar7;
+  uint uVar8;
+  uint uVar9;
+  int iVar10;
+  int *piVar11;
+  undefined4 *puVar12;
+  ulonglong uVar13;
+  longlong lVar14;
+  undefined8 uVar15;
+  DWORD DVar16;
+  ulonglong uVar17;
+  uint *puVar18;
+  ulonglong *puVar19;
+  uint *puVar20;
+  longlong lVar21;
+  ulonglong uVar22;
+  uint uVar23;
+  double dVar24;
+  undefined1 auVar25 [16];
+  undefined1 auVar26 [16];
+  undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
+  undefined1 auVar30 [16];
+  undefined1 auVar31 [16];
+  undefined1 auVar32 [16];
+  undefined1 auVar33 [16];
+  undefined1 auVar34 [16];
+  undefined1 auVar35 [16];
+  undefined1 auVar36 [16];
+  uint local_180;
+  uint local_174;
+  
+  __savegprlr();
+  lVar14 = __savevmx_120();
+  piVar11 = (int *)lVar14;
+  if (piVar11[1] != 1) {
+    MyAssertHandler(0xffffffff821bf0a0,0x9e0,0,0xffffffff821beb60,0xffffffff821bedb8);
+  }
+  puVar20 = DAT_84613714;
+  piVar4 = (int *)*piVar11;
+  uVar5 = piVar11[7];
+  uVar22 = *(ulonglong *)*piVar4;
+  lVar21 = ((uVar22 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar5;
+  uVar2 = *(ushort *)((int)lVar21 + 10);
+  if (uVar2 == 0) {
+    local_174 = 0;
+    fVar1 = 0.0;
+  }
+  else {
+    puVar18 = (uint *)((uVar2 + 0xc880) * 8 + uVar5);
+    fVar1 = (float)puVar18[1];
+    local_174 = *puVar18 & 2;
+  }
+  dVar24 = (double)fVar1;
+  iVar6 = piVar4[1];
+  puVar7 = (ulonglong *)*(undefined4 *)(param_2 + 0xc0);
+  local_180 = piVar11[2];
+  uVar8 = piVar11[3];
+  auVar33 = loadVectorLeftIndexed(lVar14 + 0x10);
+  auVar31 = loadVectorRightIndexed(lVar14 + 0x20);
+  uVar17 = *puVar7;
+  *puVar7 = uVar17 & 0xbfffffffffffffff;
+  auVar34 = _DAT_8217a040;
+  uVar9 = puVar20[3];
+  auVar31 = (auVar33 | auVar31) & _DAT_8404f950;
+  uVar13 = uVar22 & 0xffffffffff800000;
+  *puVar7 = uVar17 & 0x9fffffffffffffff;
+  auVar34 = vectorSubtractFloatingPoint128(auVar31,auVar34);
+  uVar17 = param_2;
+LAB_82739310:
+  puVar20 = (uint *)lVar21;
+  uVar23 = puVar20[5];
+  if (uVar23 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
+                    0xa24,0,0xffffffff82000f98,"xsurf");
+  }
+  R_SetupXModelRigidModelSurfWithUpdate(uVar17,uVar23);
+  if ((uVar8 & 1) == 0) {
+    local_180 = 0;
+  }
+  else {
+    uVar22 = uVar22 >> 0xf & 0xff;
+    if (*DAT_84613714 <= uVar22) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
+                      0xa30,0,
+                      "reflectionProbeIndex doesn\'t index g_worldDraw->reflectionProbeCount\n\t%i not in [0, %i)"
+                      ,uVar22);
+    }
+    uVar22 = uVar22 * 0x34 + (ulonglong)uVar9;
+    if ((ulonglong)local_180 != (uVar22 & 0xffffffff)) {
+      local_180 = (uint)uVar22;
+      R_HW_SetPixelSamplerTexture(puVar7,1);
+    }
+  }
+  uVar3 = *(undefined2 *)(puVar20 + 3);
+  do {
+    lVar14 = D3DDevice_GpuBeginShaderConstantF4(puVar7,0,8,4);
+    uVar22 = -(ulonglong)(lVar14 == 0) & 0xffffffff8007000e;
+    if ((int)uVar22 < 0) goto LAB_827393f4;
+  } while (DAT_84013128 != 0);
+  goto LAB_82739418;
+LAB_827393f4:
+  do {
+    uVar15 = R_ErrorDescription(uVar22);
+    Sys_Error(0xffffffff821bf1a8,0xa40,uVar15);
+  } while (DAT_84013128 != 0);
+LAB_82739418:
+  R_SetModelLightingCoords(uVar3,lVar14);
+  uVar22 = -(ulonglong)*puVar20 - 3;
+  iVar10 = (int)lVar14;
+  puVar12 = (undefined4 *)(iVar10 + 0x10U & 0xfffffff0);
+  *puVar12 = 0;
+  puVar12[1] = 0;
+  puVar12[2] = 0;
+  puVar12[3] = 0;
+  auVar31 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x160);
+  auVar31 = vectorSplatWord(auVar31,0);
+  puVar12 = (undefined4 *)(iVar10 + 0x20U & 0xfffffff0);
+  *puVar12 = 0;
+  puVar12[1] = 0;
+  puVar12[2] = 0;
+  puVar12[3] = 0;
+  puVar12 = (undefined4 *)(iVar10 + 0x30U & 0xfffffff0);
+  *puVar12 = 0;
+  puVar12[1] = 0;
+  puVar12[2] = 0;
+  puVar12[3] = 0;
+  if ((uVar22 & 0xffffffff) != 0) {
+    auVar33 = vectorSplatImmediateSignedWord(0);
+    lVar21 = lVar21 + 0x1c;
+    auVar35 = vectorUnpackD3Dtype(auVar33,4);
+    auVar33 = vectorPermuteWordImmediate(auVar35,0xfe);
+LAB_82739480:
+    auVar30 = loadVectorRightIndexed(lVar21 + 0x10);
+    auVar29 = loadVectorLeftIndexed(lVar21);
+    auVar29 = auVar29 | auVar30;
+    auVar28 = loadVectorLeftIndexed(lVar21 + 0x10);
+    auVar27 = vectorAddFloatingPoint128(auVar29,auVar29);
+    auVar26 = vectorPermuteWordImmediate(auVar29,7);
+    auVar25 = vectorSplatWord(auVar29,3);
+    auVar30 = loadVectorRightIndexed(lVar21 + 0x20);
+    auVar36 = vectorSubtractFloatingPoint128((auVar28 | auVar30) & _DAT_8404f950,auVar34);
+    auVar29 = vectorMultiplyFloatingPoint(auVar29,auVar27);
+    auVar28 = vectorPermuteWordImmediate(auVar27,0x9b);
+    auVar30 = vectorPermuteWordImmediate(auVar27,99);
+    auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar28);
+    auVar25 = vectorMultiplyFloatingPoint(auVar25,auVar30);
+    auVar30 = vectorPermuteWordImmediate(auVar29,0x40);
+    auVar29 = vectorPermuteWordImmediate(auVar29,0xa4);
+    auVar28 = vectorSubtractFloatingPoint128(auVar33,auVar30);
+    auVar30 = vectorAddFloatingPoint128(auVar26,auVar25);
+    auVar25 = vectorSubtractFloatingPoint128(auVar26,auVar25);
+    auVar29 = vectorSubtractFloatingPoint128(auVar28,auVar29);
+    auVar28 = vectorPermuteWordImmediate(auVar30,0x42);
+    auVar30 = vectorShiftLeftDoubleByOctetImmediate(auVar25,auVar30,8);
+    auVar25 = vectorRotateLeftImmediateAndMaskInsert(auVar28,auVar25,6,3);
+    auVar28 = vectorPermuteWordImmediate(auVar30,0x88);
+    auVar26 = vectorRotateLeftImmediateAndMaskInsert(auVar29,auVar35,1,3);
+    auVar30 = vectorPermuteWordImmediate(auVar26,7);
+    auVar29 = vectorRotateLeftImmediateAndMaskInsert(auVar28,auVar26,3,0);
+    auVar28 = vectorRotateLeftImmediateAndMaskInsert(auVar26,auVar25,6,3);
+    auVar30 = vectorMergeLowWord128(auVar25,auVar30);
+    auVar29 = vectorMultiplyFloatingPoint(auVar29,auVar31);
+    auVar30 = vectorMultiplyFloatingPoint(auVar30,auVar31);
+    auVar28 = vectorMultiplyFloatingPoint(auVar28,auVar31);
+    do {
+      lVar14 = D3DDevice_GpuBeginShaderConstantF4(puVar7,0,4,4);
+      uVar17 = -(ulonglong)(lVar14 == 0) & 0xffffffff8007000e;
+      if ((int)uVar17 < 0) goto LAB_82739550;
+    } while (DAT_84013128 != 0);
+    goto LAB_82739574;
+  }
+LAB_827395d8:
+  iVar10 = *piVar4;
+  puVar19 = (ulonglong *)(iVar10 + 8);
+  *piVar4 = (int)puVar19;
+  if ((iVar10 + 8 == iVar6) || (uVar22 = *puVar19, (uVar22 & 0xffffffffff800000) != uVar13)) {
+LAB_827396e4:
+    uVar22 = *puVar7;
+    *puVar7 = uVar22 | 0x4000000000000000;
+    piVar11[2] = local_180;
+    *puVar7 = uVar22 | 0x6000000000000000;
+    __restvmx_120();
+    __restgprlr();
+    return;
+  }
+  iVar10 = piVar11[9];
+  DVar16 = GetCurrentProcessorNumber();
+  if (iVar10 != *(int *)(&DAT_846177e4 + DVar16 * 4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x496,
+                    0,0xffffffff82000f98,"cmdBuf == R_GetCmdRingBuf()");
+  }
+  if ((iVar10 != 0) &&
+     ((longlong)((ulonglong)*(uint *)(iVar10 + 0x20) - (ulonglong)*(uint *)(iVar10 + 4)) < 0)) {
+    R_CmdBufReserveMemory(iVar10);
+  }
+  lVar21 = ((uVar22 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar5;
+  if ((uVar22 & 0x800000) != 0) {
+    uVar23 = (uint)*(ushort *)((int)lVar21 + 10);
+    if (uVar23 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
+                      0xa92,0,0xffffffff82000f98,"gfxEntIndex");
+    }
+    if ((uVar23 != uVar2) &&
+       ((puVar20 = (uint *)((uVar23 + 0xc880) * 8 + uVar5), (*puVar20 & 2) != local_174 ||
+        ((double)(float)puVar20[1] != dVar24)))) goto LAB_827396e4;
+  }
+  uVar17 = param_2 & 0xffffffff;
+  goto LAB_82739310;
+LAB_82739550:
+  do {
+    uVar15 = R_ErrorDescription(uVar17);
+    Sys_Error(0xffffffff821bf110,0xa66,uVar15);
+  } while (DAT_84013128 != 0);
+LAB_82739574:
+  auVar32 = vectorMergeHighWord128(auVar28,auVar29);
+  auVar27 = vectorMergeHighWord128(auVar30,auVar36);
+  auVar26 = vectorMergeLowWord128(auVar28,auVar29);
+  auVar30 = vectorMergeLowWord128(auVar30,auVar36);
+  auVar25 = vectorMergeHighWord128(auVar32,auVar27);
+  auVar29 = vectorMergeLowWord128(auVar32,auVar27);
+  auVar28 = vectorMergeHighWord128(auVar26,auVar30);
+  auVar30 = vectorMergeLowWord128(auVar26,auVar30);
+  uVar23 = (uint)lVar14;
+  *(undefined1 (*) [16])(uVar23 & 0xfffffff0) = auVar25;
+  *(undefined1 (*) [16])(uVar23 + 0x10 & 0xfffffff0) = auVar29;
+  *(undefined1 (*) [16])(uVar23 + 0x20 & 0xfffffff0) = auVar28;
+  *(undefined1 (*) [16])(uVar23 + 0x30 & 0xfffffff0) = auVar30;
+  R_DrawIndexedPrimitive(param_2 + 0xc0,ZEXT48(&stack0x00000000) - 0x138);
+  uVar22 = uVar22 - 1;
+  lVar21 = lVar21 + 0x20;
+  if (uVar22 == 0) goto LAB_827395d8;
+  goto LAB_82739480;
+}
+
 
 // 82737E60  D3DDevice_SetStreamSource_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2778)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
+
+void D3DDevice_SetStreamSource_Inline(void)
+
+{
+  D3DDevice_SetStreamSource();
+  return;
+}
+
 
 // 82737E88  D3DDevice_SetTexture_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2799)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+void D3DDevice_SetTexture_Inline(void)
+
+{
+  D3DDevice_SetTexture();
+  return;
+}
+
 
 // 82739728  R_DrawXModelAmbientNoPrepass  (gfx_d3d/r_draw_xmodel.cpp:2958)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void R_DrawXModelAmbientNoPrepass(undefined8 param_1,longlong param_2)
+
+{
+  float fVar1;
+  ushort uVar2;
+  int *piVar3;
+  uint uVar4;
+  ulonglong *puVar5;
+  int iVar6;
+  int iVar7;
+  int *piVar8;
+  undefined4 *puVar9;
+  undefined8 in_r0;
+  longlong lVar10;
+  undefined8 uVar11;
+  DWORD DVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  uint *puVar15;
+  ulonglong *puVar16;
+  longlong lVar17;
+  ulonglong uVar18;
+  uint uVar19;
+  double dVar20;
+  undefined1 auVar21 [16];
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
+  undefined1 auVar26 [16];
+  undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
+  undefined1 auVar30 [16];
+  undefined1 auVar31 [16];
+  undefined1 auVar32 [16];
+  uint local_168;
+  
+  __savegprlr();
+  lVar10 = __savevmx_120();
+  piVar8 = (int *)lVar10;
+  if (piVar8[1] != 3) {
+    MyAssertHandler(0xffffffff821bf0a0,0xbb3,0,0xffffffff821beb60,0xffffffff821bedf4);
+  }
+  piVar3 = (int *)*piVar8;
+  uVar4 = piVar8[7];
+  uVar14 = *(ulonglong *)*piVar3;
+  lVar17 = ((uVar14 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar4;
+  uVar2 = *(ushort *)((int)lVar17 + 10);
+  if (uVar2 == 0) {
+    local_168 = 0;
+    fVar1 = 0.0;
+  }
+  else {
+    puVar15 = (uint *)((uVar2 + 0xc880) * 8 + uVar4);
+    fVar1 = (float)puVar15[1];
+    local_168 = *puVar15 & 2;
+  }
+  dVar20 = (double)fVar1;
+  puVar5 = (ulonglong *)*(undefined4 *)(param_2 + 0xc0);
+  iVar6 = piVar3[1];
+  uVar13 = *puVar5;
+  auVar29 = loadVectorLeftIndexed(lVar10 + 0x10);
+  auVar28 = loadVectorRightIndexed(lVar10 + 0x20);
+  *puVar5 = uVar13 & 0xbfffffffffffffff;
+  auVar30 = _DAT_8404f950;
+  *puVar5 = uVar13 & 0x9fffffffffffffff;
+  auVar30 = vectorSubtractFloatingPoint128((auVar29 | auVar28) & auVar30,_DAT_8217a040);
+LAB_827398e4:
+  uVar19 = ((uint *)lVar17)[5];
+  if (uVar19 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
+                    0xbe6,0,0xffffffff82000f98,"xsurf");
+  }
+  R_SetupXModelRigidModelSurfWithUpdate((int)param_2,uVar19);
+  auVar28 = ZEXT416(0);
+  auVar28 = auVar28 | auVar28 << 0x20 | auVar28 << 0x40 | auVar28 << 0x60;
+  uVar19 = (uint)(lVar17 + 0x10);
+  auVar29 = loadVectorForShiftLeft(in_r0,lVar17 + 0x10);
+  auVar29 = vectorPermute128(*(undefined1 (*) [16])(uVar19 & 0xfffffff0),
+                             *(undefined1 (*) [16])(uVar19 + 7 & 0xfffffff0),auVar29);
+  auVar29 = vectorMergeHighByte(auVar28,auVar29);
+  auVar28 = vectorMergeHighHalfWord(auVar28,auVar29);
+  auVar28 = vectorConvertFromUnsignedFixedPointWord128(auVar28,0);
+  auVar29 = vectorMultiplyFloatingPoint(auVar28,_DAT_8217a600);
+  auVar28 = vectorMultiplyFloatingPoint(auVar29,auVar29);
+  auVar28 = vectorPermute128(auVar28,auVar29,_DAT_8404f590);
+  do {
+    lVar10 = D3DDevice_GpuBeginShaderConstantF4(puVar5,0,8,4);
+    uVar13 = -(ulonglong)(lVar10 == 0) & 0xffffffff8007000e;
+    if ((int)uVar13 < 0) goto LAB_8273998c;
+  } while (DAT_84013128 != 0);
+  goto LAB_827399b0;
+LAB_8273998c:
+  do {
+    uVar11 = R_ErrorDescription(uVar13);
+    Sys_Error(0xffffffff821bf1a8,0xbf6,uVar11);
+  } while (DAT_84013128 != 0);
+LAB_827399b0:
+  uVar13 = -(ulonglong)*(uint *)lVar17 - 3;
+  uVar19 = (uint)lVar10;
+  *(undefined1 (*) [16])(uVar19 & 0xfffffff0) = auVar28;
+  puVar9 = (undefined4 *)(uVar19 + 0x10 & 0xfffffff0);
+  *puVar9 = 0;
+  puVar9[1] = 0;
+  puVar9[2] = 0;
+  puVar9[3] = 0;
+  auVar28 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x160);
+  auVar28 = vectorSplatWord(auVar28,0);
+  puVar9 = (undefined4 *)(uVar19 + 0x20 & 0xfffffff0);
+  *puVar9 = 0;
+  puVar9[1] = 0;
+  puVar9[2] = 0;
+  puVar9[3] = 0;
+  puVar9 = (undefined4 *)(uVar19 + 0x30 & 0xfffffff0);
+  *puVar9 = 0;
+  puVar9[1] = 0;
+  puVar9[2] = 0;
+  puVar9[3] = 0;
+  if ((uVar13 & 0xffffffff) != 0) {
+    auVar29 = vectorSplatImmediateSignedWord(0);
+    lVar17 = lVar17 + 0x1c;
+    auVar31 = vectorUnpackD3Dtype(auVar29,4);
+    auVar29 = vectorPermuteWordImmediate(auVar31,0xfe);
+LAB_82739a10:
+    auVar26 = loadVectorRightIndexed(lVar17 + 0x10);
+    auVar25 = loadVectorLeftIndexed(lVar17);
+    auVar25 = auVar25 | auVar26;
+    auVar24 = loadVectorLeftIndexed(lVar17 + 0x10);
+    auVar23 = vectorAddFloatingPoint128(auVar25,auVar25);
+    auVar22 = vectorPermuteWordImmediate(auVar25,7);
+    auVar21 = vectorSplatWord(auVar25,3);
+    auVar26 = loadVectorRightIndexed(lVar17 + 0x20);
+    auVar32 = vectorSubtractFloatingPoint128((auVar24 | auVar26) & _DAT_8404f950,auVar30);
+    auVar25 = vectorMultiplyFloatingPoint(auVar25,auVar23);
+    auVar24 = vectorPermuteWordImmediate(auVar23,0x9b);
+    auVar26 = vectorPermuteWordImmediate(auVar23,99);
+    auVar22 = vectorMultiplyFloatingPoint(auVar22,auVar24);
+    auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar26);
+    auVar26 = vectorPermuteWordImmediate(auVar25,0x40);
+    auVar25 = vectorPermuteWordImmediate(auVar25,0xa4);
+    auVar24 = vectorSubtractFloatingPoint128(auVar29,auVar26);
+    auVar26 = vectorAddFloatingPoint128(auVar22,auVar21);
+    auVar21 = vectorSubtractFloatingPoint128(auVar22,auVar21);
+    auVar25 = vectorSubtractFloatingPoint128(auVar24,auVar25);
+    auVar24 = vectorPermuteWordImmediate(auVar26,0x42);
+    auVar26 = vectorShiftLeftDoubleByOctetImmediate(auVar21,auVar26,8);
+    auVar24 = vectorRotateLeftImmediateAndMaskInsert(auVar24,auVar21,6,3);
+    auVar21 = vectorPermuteWordImmediate(auVar26,0x88);
+    auVar26 = vectorRotateLeftImmediateAndMaskInsert(auVar25,auVar31,1,3);
+    auVar25 = vectorPermuteWordImmediate(auVar26,7);
+    auVar22 = vectorRotateLeftImmediateAndMaskInsert(auVar21,auVar26,3,0);
+    auVar21 = vectorRotateLeftImmediateAndMaskInsert(auVar26,auVar24,6,3);
+    auVar26 = vectorMergeLowWord128(auVar24,auVar25);
+    auVar25 = vectorMultiplyFloatingPoint(auVar22,auVar28);
+    auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar28);
+    auVar24 = vectorMultiplyFloatingPoint(auVar21,auVar28);
+    do {
+      lVar10 = D3DDevice_GpuBeginShaderConstantF4(puVar5,0,4,4);
+      uVar18 = -(ulonglong)(lVar10 == 0) & 0xffffffff8007000e;
+      if ((int)uVar18 < 0) goto LAB_82739ae4;
+    } while (DAT_84013128 != 0);
+    goto LAB_82739b08;
+  }
+LAB_82739b6c:
+  iVar7 = *piVar3;
+  puVar16 = (ulonglong *)(iVar7 + 8);
+  *piVar3 = (int)puVar16;
+  if ((iVar7 + 8 == iVar6) ||
+     (uVar13 = *puVar16, (uVar13 & 0xffffffffff800000) != (uVar14 & 0xffffffffff800000))) {
+LAB_82739c78:
+    uVar14 = *puVar5;
+    *puVar5 = uVar14 | 0x4000000000000000;
+    *puVar5 = uVar14 | 0x6000000000000000;
+    __restvmx_120();
+    __restgprlr();
+    return;
+  }
+  iVar7 = piVar8[9];
+  DVar12 = GetCurrentProcessorNumber();
+  if (iVar7 != *(int *)(&DAT_846177e4 + DVar12 * 4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x496,
+                    0,0xffffffff82000f98,"cmdBuf == R_GetCmdRingBuf()");
+  }
+  if ((iVar7 != 0) &&
+     ((longlong)((ulonglong)*(uint *)(iVar7 + 0x20) - (ulonglong)*(uint *)(iVar7 + 4)) < 0)) {
+    R_CmdBufReserveMemory(iVar7);
+  }
+  lVar17 = ((uVar13 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar4;
+  if ((uVar13 & 0x800000) != 0) {
+    uVar19 = (uint)*(ushort *)((int)lVar17 + 10);
+    if (uVar19 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
+                      0xc48,0,0xffffffff82000f98,"gfxEntIndex");
+    }
+    if ((uVar19 != uVar2) &&
+       ((puVar15 = (uint *)((uVar19 + 0xc880) * 8 + uVar4), (*puVar15 & 2) != local_168 ||
+        ((double)(float)puVar15[1] != dVar20)))) goto LAB_82739c78;
+  }
+  goto LAB_827398e4;
+LAB_82739ae4:
+  do {
+    uVar11 = R_ErrorDescription(uVar18);
+    Sys_Error(0xffffffff821bf110,0xc1c,uVar11);
+  } while (DAT_84013128 != 0);
+LAB_82739b08:
+  auVar27 = vectorMergeHighWord128(auVar24,auVar25);
+  auVar23 = vectorMergeHighWord128(auVar26,auVar32);
+  auVar22 = vectorMergeLowWord128(auVar24,auVar25);
+  auVar26 = vectorMergeLowWord128(auVar26,auVar32);
+  auVar21 = vectorMergeHighWord128(auVar27,auVar23);
+  auVar25 = vectorMergeLowWord128(auVar27,auVar23);
+  auVar24 = vectorMergeHighWord128(auVar22,auVar26);
+  auVar26 = vectorMergeLowWord128(auVar22,auVar26);
+  uVar19 = (uint)lVar10;
+  *(undefined1 (*) [16])(uVar19 & 0xfffffff0) = auVar21;
+  *(undefined1 (*) [16])(uVar19 + 0x10 & 0xfffffff0) = auVar25;
+  *(undefined1 (*) [16])(uVar19 + 0x20 & 0xfffffff0) = auVar24;
+  *(undefined1 (*) [16])(uVar19 + 0x30 & 0xfffffff0) = auVar26;
+  R_DrawIndexedPrimitive(param_2 + 0xc0,ZEXT48(&stack0x00000000) - 0x138);
+  uVar13 = uVar13 - 1;
+  lVar17 = lVar17 + 0x20;
+  if (uVar13 == 0) goto LAB_82739b6c;
+  goto LAB_82739a10;
+}
+
 
 // 82737EA0  D3DDevice_GpuOwnVertexShaderConstantF  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3408)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
+
+void D3DDevice_GpuOwnVertexShaderConstantF(ulonglong *param_1,ulonglong param_2,longlong param_3)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = (param_2 & 0xffffffff) >> 2;
+  *param_1 = *param_1 &
+             ~((ulonglong)
+               (-0x8000000000000000 >>
+               ((((param_2 + param_3) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f)) >> (uVar1 & 0x7f));
+  return;
+}
+
 
 // 82737ED8  D3DDevice_GpuDisownVertexShaderConstantF  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3464)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
+
+void D3DDevice_GpuDisownVertexShaderConstantF(ulonglong *param_1,ulonglong param_2,longlong param_3)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = (param_2 & 0xffffffff) >> 2;
+  *param_1 = (ulonglong)
+             (-0x8000000000000000 >> ((((param_2 + param_3) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f))
+             >> (uVar1 & 0x7f) | *param_1;
+  return;
+}
+
 
 // 82737F10  D3DDevice_GpuEndShaderConstantF4  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3497)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
+
+void D3DDevice_GpuEndShaderConstantF4(void)
+
+{
+  return;
+}
+
 
 // 82739CB8  R_DrawXModelRigidSurfLit  (gfx_d3d/r_draw_xmodel.cpp:3713)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_DrawXModelRigidSurfLit(undefined8 param_1,undefined4 param_2)
+
+{
+  byte bVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int *piVar5;
+  DWORD DVar6;
+  undefined4 local_60;
+  uint local_5c;
+  int local_58;
+  uint local_54;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_3c;
+  
+  piVar5 = (int *)__savegprlr_27();
+  iVar2 = piVar5[1];
+  if (*(char *)(*(int *)(iVar2 + 0xf8) + 100) == '\0') {
+    R_DrawXModelRigidSurfLitInternal();
+    __restgprlr_27();
+    return;
+  }
+  R_DirtyCodeConstantBlock(iVar2,8);
+  *(undefined8 *)(iVar2 + 0x130) = 0;
+  *(undefined8 *)(iVar2 + 0x138) = 0;
+  *(undefined8 *)(iVar2 + 0x140) = 0;
+  *(undefined8 *)(iVar2 + 0x148) = 0;
+  if (piVar5[2] == 0) {
+    MyAssertHandler(0xffffffff821bf0a0,0x251,0,0xffffffff82000f98,0xffffffff821bf0f8);
+  }
+  iVar3 = piVar5[2];
+  iVar4 = *(int *)(piVar5[1] + 0xf8);
+  local_58 = *(int *)(piVar5[1] + 0x74);
+  local_44 = *(undefined4 *)(*piVar5 + 0x13ec);
+  local_50 = *(undefined4 *)(iVar3 + 8);
+  local_4c = *(undefined4 *)(iVar3 + 0xc);
+  local_48 = *(undefined4 *)(iVar3 + 0x10);
+  bVar1 = *(byte *)(iVar4 + 100);
+  local_54 = (uint)*(byte *)(iVar4 + 99);
+  local_60 = param_2;
+  local_5c = (uint)bVar1;
+  DVar6 = GetCurrentProcessorNumber();
+  local_3c = *(undefined4 *)(&DAT_846177e4 + DVar6 * 4);
+  if (bVar1 == 2) {
+    R_DrawXModelUnlitNoPrepass(&local_60,iVar2);
+    if (*(int *)(iVar2 + 0x74) != local_58) {
+      MyAssertHandler(0xffffffff821bf0a0,0xea5,0,0xffffffff82000f98,0xffffffff821bf2d8);
+      __restgprlr_27();
+      return;
+    }
+  }
+  else {
+    if (bVar1 == 1) {
+      if ((*(byte *)(*(int *)(iVar2 + 0xf8) + 99) & 1) != 0) {
+        R_SetSamplerState(iVar2,1,0x72);
+      }
+      R_DrawXModelLitNoPrepass(&local_60,iVar2);
+      *(int *)(iVar2 + 0x74) = local_58;
+      __restgprlr_27();
+      return;
+    }
+    if (bVar1 != 3) {
+      MyAssertHandler(0xffffffff821bf0a0,0xebb,0,0xffffffff82000f98,0xffffffff821bf298);
+    }
+    R_DrawXModelAmbientNoPrepass(&local_60,iVar2);
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 82739E78  R_DrawXModelRigidSurfCamera  (gfx_d3d/r_draw_xmodel.cpp:3788)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_DrawXModelRigidSurfCamera(undefined8 param_1,undefined4 param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  DWORD DVar4;
+  uint uVar5;
+  int iStack_6c;
+  undefined4 local_60;
+  uint local_5c;
+  int local_58;
+  uint local_54;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_3c;
+  
+  piVar3 = (int *)__savegprlr_27();
+  iStack_6c = (int)*(undefined8 *)piVar3;
+  if (*(char *)(*(int *)(iStack_6c + 0xf8) + 100) == '\0') {
+    R_DrawXModelRigidSurfCameraInternal();
+    __restgprlr_27();
+    return;
+  }
+  if (piVar3[2] == 0) {
+    MyAssertHandler(0xffffffff821bf0a0,0x251,0,0xffffffff82000f98,0xffffffff821bf0f8);
+  }
+  iVar1 = piVar3[2];
+  iVar2 = *(int *)(piVar3[1] + 0xf8);
+  local_58 = *(int *)(piVar3[1] + 0x74);
+  local_44 = *(undefined4 *)(*piVar3 + 0x13ec);
+  local_50 = *(undefined4 *)(iVar1 + 8);
+  local_4c = *(undefined4 *)(iVar1 + 0xc);
+  local_48 = *(undefined4 *)(iVar1 + 0x10);
+  local_54 = (uint)*(byte *)(iVar2 + 99);
+  uVar5 = (uint)*(byte *)(iVar2 + 100);
+  local_60 = param_2;
+  local_5c = uVar5;
+  DVar4 = GetCurrentProcessorNumber();
+  local_3c = *(undefined4 *)(&DAT_846177e4 + DVar4 * 4);
+  if (uVar5 != 2) {
+    MyAssertHandler(0xffffffff821bf0a0,0xed9,0,0xffffffff82000f98,0xffffffff821bf338);
+  }
+  R_DrawXModelUnlitNoPrepass(&local_60,iStack_6c);
+  if (*(int *)(iStack_6c + 0x74) != local_58) {
+    MyAssertHandler(0xffffffff821bf0a0,0xedc,0,0xffffffff82000f98,0xffffffff821bee70);
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 82739FB8  R_DrawXModelRigidSurf  (gfx_d3d/r_draw_xmodel.cpp:3809)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void R_DrawXModelRigidSurf(undefined8 param_1,undefined4 param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  DWORD DVar5;
+  uint uVar6;
+  undefined4 local_60;
+  uint local_5c;
+  int local_58;
+  uint local_54;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_3c;
+  
+  piVar4 = (int *)__savegprlr_27();
+  iVar1 = piVar4[1];
+  if (*(char *)(*(int *)(iVar1 + 0xf8) + 100) == '\0') {
+    R_DrawXModelRigidSurfInternal();
+    __restgprlr_27();
+    return;
+  }
+  if (piVar4[2] == 0) {
+    MyAssertHandler(0xffffffff821bf0a0,0x251,0,0xffffffff82000f98,0xffffffff821bf0f8);
+  }
+  iVar2 = piVar4[2];
+  iVar3 = *(int *)(piVar4[1] + 0xf8);
+  local_58 = *(int *)(piVar4[1] + 0x74);
+  local_44 = *(undefined4 *)(*piVar4 + 0x13ec);
+  local_50 = *(undefined4 *)(iVar2 + 8);
+  local_4c = *(undefined4 *)(iVar2 + 0xc);
+  local_48 = *(undefined4 *)(iVar2 + 0x10);
+  local_54 = (uint)*(byte *)(iVar3 + 99);
+  uVar6 = (uint)*(byte *)(iVar3 + 100);
+  local_60 = param_2;
+  local_5c = uVar6;
+  DVar5 = GetCurrentProcessorNumber();
+  local_3c = *(undefined4 *)(&DAT_846177e4 + DVar5 * 4);
+  if (uVar6 != 2) {
+    MyAssertHandler(0xffffffff821bf0a0,0xeee,0,0xffffffff82000f98,0xffffffff821bf338);
+  }
+  R_DrawXModelUnlitNoPrepassNoGfxEnt(&local_60,iVar1);
+  if (*(int *)(iVar1 + 0x74) != local_58) {
+    MyAssertHandler(0xffffffff821bf0a0,0xef1,0,0xffffffff82000f98,0xffffffff821bf2d8);
+  }
+  __restgprlr_27();
+  return;
+}
+

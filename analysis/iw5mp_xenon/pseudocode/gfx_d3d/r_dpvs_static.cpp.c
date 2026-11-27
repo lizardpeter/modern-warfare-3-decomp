@@ -2,73 +2,288 @@
 
 // 827325F0  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
+void __lvx(void)
 
 {
-  return __return_storage_ptr__;
+  return;
 }
 
 
 // 827325F8  R_AddAabbTreeSurfacesInFrustum_r  (gfx_d3d/r_dpvs_static.cpp:288)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void R_AddAabbTreeSurfacesInFrustum_r(undefined8 param_1,longlong param_2)
+
+{
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  longlong lVar4;
+  int iVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  ushort *puVar9;
+  int *in_r13;
+  int iVar10;
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  undefined1 auVar15 [16];
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  undefined1 auVar20 [16];
+  float local_d0;
+  uint local_c0 [16];
+  int local_80;
+  
+  uVar8 = ZEXT48(&stack0x00000000);
+  lVar4 = __savegprlr_18();
+  auVar18 = _DAT_8404f950;
+  auVar13 = _DAT_8404f760;
+  auVar20 = loadVectorLeftIndexed(lVar4);
+  auVar19 = vectorSplatImmediateSignedWord(0xff);
+  uVar6 = (ulonglong)*(uint *)((int)param_2 + 0x40);
+  auVar17 = loadVectorLeftIndexed(lVar4 + 0xc);
+  auVar16 = loadVectorRightIndexed(lVar4 + 0x1c);
+  auVar15 = loadVectorRightIndexed(lVar4 + 0x10);
+  auVar19 = vectorShiftLeftWord128(auVar19,auVar19);
+  auVar16 = (auVar17 | auVar16) & _DAT_8404f950;
+  local_80 = 0;
+  auVar17 = vectorAddFloatingPoint128((auVar20 | auVar15) & _DAT_8404f950,_DAT_8217a040);
+  auVar15 = _DAT_8217a050;
+  if (uVar6 != 0) {
+    param_2 = param_2 + -4;
+    do {
+      auVar20 = _DAT_8217a030;
+      param_2 = param_2 + 4;
+      uVar2 = *(uint *)param_2;
+      auVar11 = *(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0);
+      auVar12 = vectorMultiplyAddFloatingPoint(auVar16 ^ auVar19,auVar11,auVar17);
+      auVar14 = *(undefined1 (*) [16])(uVar2 & 0xfffffff0);
+      auVar11 = vectorMultiplyAddFloatingPoint(auVar16,auVar11,auVar17);
+      local_c0[local_80] = uVar2;
+      auVar12 = vectorMultiplySum4FloatingPoint(auVar14,auVar12);
+      auVar11 = vectorMultiplySum4FloatingPoint(auVar14,auVar11);
+      auVar20 = vectorCompareGreaterThanFloatingPoint128(auVar20,auVar12);
+      auVar15 = vectorMinimumFloatingPoint128(auVar15,auVar11);
+      auVar20 = vectorSplatWord(auVar20 & auVar13,0);
+      storeVectorElementWordIndexed(auVar20,uVar8 - 0xd0);
+      local_80 = (int)local_d0 + local_80;
+      uVar6 = uVar6 - 1;
+    } while (uVar6 != 0);
+  }
+  auVar13 = vectorSplatWord(auVar15,0);
+  storeVectorElementWordIndexed(auVar13,uVar8 - 0xd0);
+  if (0.0 < local_d0) {
+    iVar3 = (int)lVar4;
+    if (local_80 == 0) {
+      if ((*(uint *)(DAT_845aa5f8 + 0xc) & 1) != 0) {
+        R_AddDebugBox((ulonglong)DAT_84628b00 + 0x18f0,lVar4,0xffffffff82181838);
+      }
+      if ((DAT_846180c1 != '\0') && (uVar8 = (ulonglong)*(ushort *)(iVar3 + 0x1e), uVar8 != 0)) {
+        puVar9 = (ushort *)(*(int *)(iVar3 + 0x20) + -2);
+        iVar5 = *(int *)(*in_r13 + 0x108);
+        do {
+          puVar9 = puVar9 + 1;
+          *(undefined1 *)((uint)*puVar9 + iVar5) = 1;
+          uVar8 = uVar8 - 1;
+        } while (uVar8 != 0);
+      }
+      if ((DAT_846180c0 != '\0') && (uVar8 = (ulonglong)*(ushort *)(iVar3 + 0x1a), uVar8 != 0)) {
+        if (uVar8 != 0) {
+          puVar9 = (ushort *)
+                   ((uint)*(ushort *)(iVar3 + 0x1c) * 2 + *(int *)(DAT_846178cc + 0x48) + -2);
+          iVar3 = *(int *)(*in_r13 + 0x10c);
+          do {
+            puVar9 = puVar9 + 1;
+            *(undefined1 *)((uint)*puVar9 + iVar3) = 1;
+            uVar8 = uVar8 - 1;
+          } while (uVar8 != 0);
+          __restgprlr_18();
+          return;
+        }
+      }
+    }
+    else {
+      uVar6 = (ulonglong)*(ushort *)(iVar3 + 0x18);
+      if (uVar6 == 0) {
+        if ((*(uint *)(DAT_845aa5f8 + 0xc) & 2) != 0) {
+          R_AddDebugBox((ulonglong)DAT_84628b00 + 0x18f0,lVar4,0xffffffff821818f8);
+          auVar18 = _DAT_8404f950;
+        }
+        if ((DAT_846180c1 != '\0') && (uVar6 = (ulonglong)*(ushort *)(iVar3 + 0x1e), uVar6 != 0)) {
+          puVar9 = *(ushort **)(iVar3 + 0x20);
+          iVar5 = *(int *)(*in_r13 + 0x108);
+          do {
+            uVar1 = *puVar9;
+            if (*(char *)(iVar5 + (uint)uVar1) == '\0') {
+              lVar4 = (ulonglong)uVar1 * 0x24 + (ulonglong)*(uint *)(DAT_846178cc + 0x4c);
+              auVar15 = loadVectorRightIndexed(lVar4 + 0x10);
+              auVar13 = loadVectorLeftIndexed(lVar4);
+              auVar17 = loadVectorRightIndexed(lVar4 + 0x1c);
+              auVar16 = loadVectorLeftIndexed(lVar4 + 0xc);
+              auVar15 = vectorAddFloatingPoint128((auVar13 | auVar15) & auVar18,_DAT_8217a040);
+              auVar13 = _DAT_8217a050;
+              if (local_80 != 0) {
+                lVar4 = uVar8 - 0xc4;
+                iVar10 = local_80;
+                do {
+                  lVar4 = lVar4 + 4;
+                  auVar19 = vectorMultiplyAddFloatingPoint
+                                      ((auVar16 | auVar17) & auVar18,
+                                       *(undefined1 (*) [16])(*(uint *)lVar4 + 0x10 & 0xfffffff0),
+                                       auVar15);
+                  auVar19 = vectorMultiplySum4FloatingPoint
+                                      (*(undefined1 (*) [16])(*(uint *)lVar4 & 0xfffffff0),auVar19);
+                  auVar13 = vectorMinimumFloatingPoint128(auVar13,auVar19);
+                  iVar10 = iVar10 + -1;
+                } while (iVar10 != 0);
+              }
+              auVar13 = vectorCompareGreaterThanFloatingPoint128(auVar13,_DAT_8217a030);
+              auVar13 = vectorSplatWord(auVar13,0);
+              storeVectorElementWordIndexed(auVar13,uVar8 - 0xd0);
+              if (local_d0 != 0.0) {
+                *(undefined1 *)(iVar5 + (uint)uVar1) = 1;
+                auVar18 = _DAT_8404f950;
+              }
+            }
+            uVar6 = uVar6 - 1;
+            puVar9 = puVar9 + 1;
+          } while (uVar6 != 0);
+        }
+        if ((DAT_846180c0 != '\0') && (uVar6 = (ulonglong)*(ushort *)(iVar3 + 0x1a), uVar6 != 0)) {
+          puVar9 = (ushort *)((uint)*(ushort *)(iVar3 + 0x1c) * 2 + *(int *)(DAT_846178cc + 0x48));
+          if (uVar6 != 0) {
+            iVar3 = *in_r13;
+            iVar5 = local_80;
+            do {
+              uVar1 = *puVar9;
+              if (*(char *)(*(int *)(iVar3 + 0x10c) + (uint)uVar1) == '\0') {
+                lVar4 = (ulonglong)uVar1 * 0x20 + (ulonglong)*(uint *)(DAT_846178cc + 0x54);
+                auVar15 = loadVectorRightIndexed(lVar4 + 0x10);
+                auVar13 = loadVectorLeftIndexed(lVar4);
+                auVar17 = loadVectorRightIndexed(lVar4 + 0x1c);
+                auVar16 = loadVectorLeftIndexed(lVar4 + 0xc);
+                auVar15 = vectorAddFloatingPoint128((auVar13 | auVar15) & auVar18,_DAT_8217a040);
+                auVar13 = _DAT_8217a050;
+                if (iVar5 != 0) {
+                  lVar7 = uVar8 - 0xc4;
+                  iVar10 = iVar5;
+                  do {
+                    lVar7 = lVar7 + 4;
+                    auVar19 = vectorMultiplyAddFloatingPoint
+                                        ((auVar16 | auVar17) & auVar18,
+                                         *(undefined1 (*) [16])(*(uint *)lVar7 + 0x10 & 0xfffffff0),
+                                         auVar15);
+                    auVar19 = vectorMultiplySum4FloatingPoint
+                                        (*(undefined1 (*) [16])(*(uint *)lVar7 & 0xfffffff0),auVar19
+                                        );
+                    auVar13 = vectorMinimumFloatingPoint128(auVar13,auVar19);
+                    iVar10 = iVar10 + -1;
+                  } while (iVar10 != 0);
+                }
+                auVar13 = vectorCompareGreaterThanFloatingPoint128(auVar13,_DAT_8217a030);
+                auVar13 = vectorSplatWord(auVar13,0);
+                storeVectorElementWordIndexed(auVar13,uVar8 - 0xd0);
+                if (local_d0 != 0.0) {
+                  if ((*(uint *)(DAT_845aa5f8 + 0xc) & 2) != 0) {
+                    R_AddDebugBox((ulonglong)DAT_84628b00 + 0x18f0,lVar4,0xffffffff821817f8);
+                  }
+                  *(undefined1 *)(*(int *)(iVar3 + 0x10c) + (uint)uVar1) = 1;
+                  auVar18 = _DAT_8404f950;
+                  iVar5 = local_80;
+                }
+              }
+              uVar6 = uVar6 - 1;
+              puVar9 = puVar9 + 1;
+            } while (uVar6 != 0);
+          }
+        }
+      }
+      else {
+        lVar4 = (ulonglong)*(uint *)(iVar3 + 0x24) + lVar4;
+        if (uVar6 != 0) {
+          do {
+            R_AddAabbTreeSurfacesInFrustum_r(lVar4,uVar8 - 0xc0);
+            uVar6 = uVar6 - 1;
+            lVar4 = lVar4 + 0x28;
+          } while (uVar6 != 0);
+          __restgprlr_18();
+          return;
+        }
+      }
+    }
+  }
+  __restgprlr_18();
+  return;
+}
+
 
 // 82732AC0  R_CopyClipPlane  (gfx_d3d/r_dpvs_static.cpp:492)
 
-void R_CopyClipPlane(DpvsPlane *param_1,DpvsClipPlane *param_2)
+void R_CopyClipPlane(longlong param_1,uint param_2)
 
 {
   undefined4 uVar1;
   undefined4 uVar2;
   undefined4 uVar3;
   undefined4 uVar4;
-  undefined4 *puVar5;
-  undefined1 auVar6 [16];
+  float *pfVar5;
+  undefined4 *puVar6;
   undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
   
-  auVar7 = loadVectorLeftIndexed((longlong)(int)param_1);
-  auVar6 = loadVectorRightIndexed((longlong)(int)param_1 + 0x10);
+  auVar8 = loadVectorLeftIndexed(param_1);
+  auVar7 = loadVectorRightIndexed(param_1 + 0x10);
   uVar1 = 0x3f800000;
   uVar2 = 0xbf800000;
-  *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0) = auVar7 | auVar6;
+  *(undefined1 (*) [16])(param_2 & 0xfffffff0) = auVar8 | auVar7;
+  pfVar5 = (float *)param_1;
   uVar4 = uVar1;
-  if (param_1->coeffs[0] < 0.0) {
+  if (*pfVar5 < 0.0) {
     uVar4 = uVar2;
   }
   uVar3 = uVar1;
-  if (param_1->coeffs[2] < 0.0) {
+  if (pfVar5[2] < 0.0) {
     uVar3 = uVar2;
   }
-  if (param_1->coeffs[1] < 0.0) {
+  if (pfVar5[1] < 0.0) {
     uVar1 = uVar2;
   }
-  puVar5 = (undefined4 *)((uint)&param_2->signs & 0xfffffff0);
-  *puVar5 = uVar4;
-  puVar5[1] = uVar1;
-  puVar5[2] = uVar3;
-  puVar5[3] = 0;
+  puVar6 = (undefined4 *)(param_2 + 0x10 & 0xfffffff0);
+  *puVar6 = uVar4;
+  puVar6[1] = uVar1;
+  puVar6[2] = uVar3;
+  puVar6[3] = 0;
   return;
 }
 
 
 // 82732B28  R_AddCellStaticSurfacesInFrustum  (gfx_d3d/r_dpvs_static.cpp:620)
 
-void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void R_AddCellStaticSurfacesInFrustum(void)
 
 {
   byte bVar1;
-  undefined4 uVar2;
-  undefined4 uVar3;
-  float fVar4;
-  float fVar5;
-  GfxAabbTree *pGVar6;
-  uint uVar7;
-  int iVar8;
-  undefined4 uVar9;
+  float fVar2;
+  float fVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  float *pfVar8;
+  undefined4 *puVar9;
   undefined4 uVar10;
-  int iVar11;
-  float *pfVar12;
-  undefined4 *puVar13;
+  undefined4 uVar11;
+  undefined4 uVar12;
+  undefined4 uVar13;
   ulonglong uVar14;
   uint *puVar15;
   ulonglong uVar16;
@@ -77,177 +292,177 @@ void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
   undefined1 (*pauVar19) [16];
   longlong lVar20;
   longlong lVar21;
-  uint uVar22;
-  undefined1 auVar23 [16];
+  ulonglong uVar22;
+  uint uVar23;
   undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
   undefined4 local_2d0;
   undefined4 uStack_2cc;
   undefined4 uStack_2c8;
   undefined4 uStack_2c4;
   
   uVar14 = ZEXT48(&stack0x00000000);
-  puVar15 = (uint *)__savegprlr_19(param_1);
-  iVar8 = (int)(uVar14 - 800);
-  *(BADSPACEBASE **)iVar8 = register0x0000000c;
-  pGVar6 = (GfxAabbTree *)puVar15[1];
-  if (pGVar6 != (GfxAabbTree *)0x0) {
+  puVar15 = (uint *)__savegprlr_19();
+  iVar6 = (int)(uVar14 - 800);
+  *(BADSPACEBASE **)iVar6 = register0x0000000c;
+  uVar4 = puVar15[1];
+  if (uVar4 != 0) {
     bVar1 = *(byte *)(puVar15 + 2);
+    uVar22 = (ulonglong)bVar1;
     if (0x10 < bVar1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_static.cpp",
-                      0x286,0,"%s\n\t(planes.count) = %i");
+      MyAssertHandler(0xffffffff821bd860,0x286,0,0xffffffff821bd824,0xffffffff821bd83c,uVar22);
     }
     if (bVar1 == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_static.cpp",
-                      0x287,0,"%s");
+      MyAssertHandler(0xffffffff821bd860,0x287,0,0xffffffff82000f98,0xffffffff821bd814);
     }
-    uVar7 = *puVar15;
+    uVar5 = *puVar15;
     uVar16 = 0;
-    uVar2 = 0xbf800000;
-    uVar22 = (uint)bVar1;
-    uVar3 = 0x3f800000;
-    if (3 < uVar22) {
-      *(undefined4 *)(iVar8 + 0x5c) = 0;
+    uVar10 = 0xbf800000;
+    uVar23 = (uint)bVar1;
+    uVar13 = 0x3f800000;
+    if (3 < uVar23) {
+      *(undefined4 *)(iVar6 + 0x5c) = 0;
       lVar17 = uVar14 - 0x2c4;
       lVar18 = uVar14 - 0x240;
-      lVar20 = (ulonglong)uVar7 + 0x18;
+      lVar20 = (ulonglong)uVar5 + 0x18;
       do {
-        puVar13 = (undefined4 *)lVar18;
-        iVar11 = (int)lVar17;
-        *(undefined1 (**) [16])(iVar11 + 4) = (undefined1 (*) [16])(puVar13 + -0xc);
-        auVar24 = loadVectorRightIndexed(lVar20 + -8);
-        auVar23 = loadVectorLeftIndexed(lVar20 + -0x18);
-        *(undefined1 (**) [16])(iVar11 + 8) = (undefined1 (*) [16])(puVar13 + -4);
-        *(undefined1 (*) [16])(puVar13 + -0xc) = auVar23 | auVar24;
-        pfVar12 = (float *)lVar20;
-        fVar4 = pfVar12[-5];
+        puVar9 = (undefined4 *)lVar18;
+        iVar7 = (int)lVar17;
+        *(undefined1 (**) [16])(iVar7 + 4) = (undefined1 (*) [16])(puVar9 + -0xc);
+        auVar25 = loadVectorRightIndexed(lVar20 + -8);
+        auVar24 = loadVectorLeftIndexed(lVar20 + -0x18);
+        *(undefined1 (**) [16])(iVar7 + 8) = (undefined1 (*) [16])(puVar9 + -4);
+        *(undefined1 (*) [16])(puVar9 + -0xc) = auVar24 | auVar25;
+        pfVar8 = (float *)lVar20;
+        fVar2 = pfVar8[-5];
         uVar16 = uVar16 + 4;
-        fVar5 = pfVar12[-4];
-        *(undefined1 (**) [16])(iVar11 + 0xc) = (undefined1 (*) [16])(puVar13 + 4);
-        uVar10 = uVar3;
-        if (pfVar12[-6] < 0.0) {
-          uVar10 = uVar2;
+        fVar3 = pfVar8[-4];
+        *(undefined1 (**) [16])(iVar7 + 0xc) = (undefined1 (*) [16])(puVar9 + 4);
+        uVar11 = uVar13;
+        if (pfVar8[-6] < 0.0) {
+          uVar11 = uVar10;
         }
-        uVar9 = uVar3;
-        if (fVar4 < 0.0) {
-          uVar9 = uVar2;
+        uVar12 = uVar13;
+        if (fVar2 < 0.0) {
+          uVar12 = uVar10;
         }
-        *(undefined4 *)(iVar8 + 0x54) = uVar9;
-        uVar9 = uVar3;
-        if (fVar5 < 0.0) {
-          uVar9 = uVar2;
+        *(undefined4 *)(iVar6 + 0x54) = uVar12;
+        uVar12 = uVar13;
+        if (fVar3 < 0.0) {
+          uVar12 = uVar10;
         }
-        *(undefined4 *)(iVar8 + 0x50) = uVar10;
-        *(undefined4 *)(iVar8 + 0x58) = uVar9;
+        *(undefined4 *)(iVar6 + 0x50) = uVar11;
+        *(undefined4 *)(iVar6 + 0x58) = uVar12;
         lVar17 = lVar17 + 0x10;
-        *(int *)lVar17 = (int)(puVar13 + 0xc);
-        puVar13[-8] = local_2d0;
-        puVar13[-7] = uStack_2cc;
-        puVar13[-6] = uStack_2c8;
-        puVar13[-5] = uStack_2c4;
-        auVar24 = loadVectorRightIndexed(lVar20 + 8);
-        auVar23 = loadVectorLeftIndexed(lVar20 + -8);
-        *(undefined1 (*) [16])(puVar13 + -4) = auVar23 | auVar24;
-        fVar4 = pfVar12[-1];
-        uVar10 = uVar3;
-        if (pfVar12[-2] < 0.0) {
-          uVar10 = uVar2;
+        *(int *)lVar17 = (int)(puVar9 + 0xc);
+        puVar9[-8] = local_2d0;
+        puVar9[-7] = uStack_2cc;
+        puVar9[-6] = uStack_2c8;
+        puVar9[-5] = uStack_2c4;
+        auVar25 = loadVectorRightIndexed(lVar20 + 8);
+        auVar24 = loadVectorLeftIndexed(lVar20 + -8);
+        *(undefined1 (*) [16])(puVar9 + -4) = auVar24 | auVar25;
+        fVar2 = pfVar8[-1];
+        uVar11 = uVar13;
+        if (pfVar8[-2] < 0.0) {
+          uVar11 = uVar10;
         }
-        uVar9 = uVar3;
-        if (*pfVar12 < 0.0) {
-          uVar9 = uVar2;
+        uVar12 = uVar13;
+        if (*pfVar8 < 0.0) {
+          uVar12 = uVar10;
         }
-        *(undefined4 *)(iVar8 + 0x50) = uVar10;
-        uVar10 = uVar3;
-        if (fVar4 < 0.0) {
-          uVar10 = uVar2;
+        *(undefined4 *)(iVar6 + 0x50) = uVar11;
+        uVar11 = uVar13;
+        if (fVar2 < 0.0) {
+          uVar11 = uVar10;
         }
-        *(undefined4 *)(iVar8 + 0x54) = uVar10;
-        *(undefined4 *)(iVar8 + 0x58) = uVar9;
-        *puVar13 = local_2d0;
-        puVar13[1] = uStack_2cc;
-        puVar13[2] = uStack_2c8;
-        puVar13[3] = uStack_2c4;
-        auVar24 = loadVectorRightIndexed(lVar20 + 0x18);
-        auVar23 = loadVectorLeftIndexed(lVar20 + 8);
-        *(undefined1 (*) [16])(puVar13 + 4) = auVar23 | auVar24;
-        fVar4 = pfVar12[3];
-        uVar10 = uVar3;
-        if (pfVar12[2] < 0.0) {
-          uVar10 = uVar2;
+        *(undefined4 *)(iVar6 + 0x54) = uVar11;
+        *(undefined4 *)(iVar6 + 0x58) = uVar12;
+        *puVar9 = local_2d0;
+        puVar9[1] = uStack_2cc;
+        puVar9[2] = uStack_2c8;
+        puVar9[3] = uStack_2c4;
+        auVar25 = loadVectorRightIndexed(lVar20 + 0x18);
+        auVar24 = loadVectorLeftIndexed(lVar20 + 8);
+        *(undefined1 (*) [16])(puVar9 + 4) = auVar24 | auVar25;
+        fVar2 = pfVar8[3];
+        uVar11 = uVar13;
+        if (pfVar8[2] < 0.0) {
+          uVar11 = uVar10;
         }
-        uVar9 = uVar3;
-        if (pfVar12[4] < 0.0) {
-          uVar9 = uVar2;
+        uVar12 = uVar13;
+        if (pfVar8[4] < 0.0) {
+          uVar12 = uVar10;
         }
-        *(undefined4 *)(iVar8 + 0x50) = uVar10;
-        uVar10 = uVar3;
-        if (fVar4 < 0.0) {
-          uVar10 = uVar2;
+        *(undefined4 *)(iVar6 + 0x50) = uVar11;
+        uVar11 = uVar13;
+        if (fVar2 < 0.0) {
+          uVar11 = uVar10;
         }
-        *(undefined4 *)(iVar8 + 0x54) = uVar10;
-        *(undefined4 *)(iVar8 + 0x58) = uVar9;
-        puVar13[8] = local_2d0;
-        puVar13[9] = uStack_2cc;
-        puVar13[10] = uStack_2c8;
-        puVar13[0xb] = uStack_2c4;
-        auVar24 = loadVectorRightIndexed(lVar20 + 0x28);
-        auVar23 = loadVectorLeftIndexed(lVar20 + 0x18);
-        *(undefined1 (*) [16])(puVar13 + 0xc) = auVar23 | auVar24;
-        fVar4 = pfVar12[7];
-        uVar10 = uVar3;
-        if (pfVar12[8] < 0.0) {
-          uVar10 = uVar2;
+        *(undefined4 *)(iVar6 + 0x54) = uVar11;
+        *(undefined4 *)(iVar6 + 0x58) = uVar12;
+        puVar9[8] = local_2d0;
+        puVar9[9] = uStack_2cc;
+        puVar9[10] = uStack_2c8;
+        puVar9[0xb] = uStack_2c4;
+        auVar25 = loadVectorRightIndexed(lVar20 + 0x28);
+        auVar24 = loadVectorLeftIndexed(lVar20 + 0x18);
+        *(undefined1 (*) [16])(puVar9 + 0xc) = auVar24 | auVar25;
+        fVar2 = pfVar8[7];
+        uVar11 = uVar13;
+        if (pfVar8[8] < 0.0) {
+          uVar11 = uVar10;
         }
-        uVar9 = uVar3;
-        if (pfVar12[6] < 0.0) {
-          uVar9 = uVar2;
+        uVar12 = uVar13;
+        if (pfVar8[6] < 0.0) {
+          uVar12 = uVar10;
         }
-        *(undefined4 *)(iVar8 + 0x50) = uVar9;
-        uVar9 = uVar3;
-        if (fVar4 < 0.0) {
-          uVar9 = uVar2;
+        *(undefined4 *)(iVar6 + 0x50) = uVar12;
+        uVar12 = uVar13;
+        if (fVar2 < 0.0) {
+          uVar12 = uVar10;
         }
-        *(undefined4 *)(iVar8 + 0x54) = uVar9;
-        *(undefined4 *)(iVar8 + 0x58) = uVar10;
+        *(undefined4 *)(iVar6 + 0x54) = uVar12;
+        *(undefined4 *)(iVar6 + 0x58) = uVar11;
         lVar20 = lVar20 + 0x40;
-        puVar13[0x10] = local_2d0;
-        puVar13[0x11] = uStack_2cc;
-        puVar13[0x12] = uStack_2c8;
-        puVar13[0x13] = uStack_2c4;
+        puVar9[0x10] = local_2d0;
+        puVar9[0x11] = uStack_2cc;
+        puVar9[0x12] = uStack_2c8;
+        puVar9[0x13] = uStack_2c4;
         lVar18 = lVar18 + 0x80;
-      } while ((uVar16 & 0xffffffff) < ((ulonglong)bVar1 - 3 & 0xffffffff));
+      } while ((uVar16 & 0xffffffff) < (uVar22 - 3 & 0xffffffff));
     }
-    if ((uVar16 & 0xffffffff) < (ulonglong)uVar22) {
-      *(undefined4 *)(iVar8 + 0x5c) = 0;
-      lVar18 = bVar1 - uVar16;
-      lVar21 = (uVar16 & 0xfffffff) * 0x10 + (ulonglong)uVar7;
+    if ((uVar16 & 0xffffffff) < (ulonglong)uVar23) {
+      *(undefined4 *)(iVar6 + 0x5c) = 0;
+      lVar18 = uVar22 - uVar16;
+      lVar21 = (uVar16 & 0xfffffff) * 0x10 + (ulonglong)uVar5;
       lVar20 = (uVar16 & 0x7ffffff) * 0x20 + (uVar14 - 0x270);
       lVar17 = (uVar16 & 0x3fffffff) * 4 + (uVar14 - 800) + 0x5c;
       do {
-        auVar24 = loadVectorLeftIndexed(lVar21);
-        auVar23 = loadVectorRightIndexed(lVar21 + 0x10);
+        auVar25 = loadVectorLeftIndexed(lVar21);
+        auVar24 = loadVectorRightIndexed(lVar21 + 0x10);
         lVar17 = lVar17 + 4;
         pauVar19 = (undefined1 (*) [16])lVar20;
         *(int *)lVar17 = (int)pauVar19;
-        *pauVar19 = auVar24 | auVar23;
-        pfVar12 = (float *)lVar21;
-        fVar4 = pfVar12[1];
-        fVar5 = *pfVar12;
-        uVar10 = uVar3;
-        if (pfVar12[2] < 0.0) {
-          uVar10 = uVar2;
+        *pauVar19 = auVar25 | auVar24;
+        pfVar8 = (float *)lVar21;
+        fVar2 = pfVar8[1];
+        fVar3 = *pfVar8;
+        uVar11 = uVar13;
+        if (pfVar8[2] < 0.0) {
+          uVar11 = uVar10;
         }
-        *(undefined4 *)(iVar8 + 0x58) = uVar10;
-        uVar10 = uVar3;
-        if (fVar5 < 0.0) {
-          uVar10 = uVar2;
+        *(undefined4 *)(iVar6 + 0x58) = uVar11;
+        uVar11 = uVar13;
+        if (fVar3 < 0.0) {
+          uVar11 = uVar10;
         }
-        uVar9 = uVar3;
-        if (fVar4 < 0.0) {
-          uVar9 = uVar2;
+        uVar12 = uVar13;
+        if (fVar2 < 0.0) {
+          uVar12 = uVar10;
         }
-        *(undefined4 *)(iVar8 + 0x50) = uVar10;
-        *(undefined4 *)(iVar8 + 0x54) = uVar9;
+        *(undefined4 *)(iVar6 + 0x50) = uVar11;
+        *(undefined4 *)(iVar6 + 0x54) = uVar12;
         lVar21 = lVar21 + 0x10;
         *(undefined4 *)pauVar19[1] = local_2d0;
         *(undefined4 *)(pauVar19[1] + 4) = uStack_2cc;
@@ -257,8 +472,8 @@ void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
         lVar18 = lVar18 + -1;
       } while (lVar18 != 0);
     }
-    *(uint *)(iVar8 + 0xa0) = uVar22;
-    R_AddAabbTreeSurfacesInFrustum_r(pGVar6,(DpvsClipPlaneSet *)(iVar8 + 0x60));
+    *(uint *)(iVar6 + 0xa0) = uVar23;
+    R_AddAabbTreeSurfacesInFrustum_r(uVar4,uVar14 - 0x2c0);
   }
   __restgprlr_19();
   return;
@@ -267,25 +482,303 @@ void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
 
 // 82732DD8  R_AddCellStaticSurfacesInFrustumCmd  (gfx_d3d/r_dpvs_static.cpp:830)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void R_AddCellStaticSurfacesInFrustumCmd(void *param_1)
+void R_AddCellStaticSurfacesInFrustumCmd(int param_1)
 
 {
   int iVar1;
-  uchar *puVar2;
+  undefined4 uVar2;
   int *in_r13;
   
   iVar1 = *in_r13;
-  puVar2 = g_worldDpvs->surfaceVisData[*(ushort *)((int)param_1 + 10)];
-  *(uchar **)(iVar1 + 0x108) = g_worldDpvs->smodelVisData[*(ushort *)((int)param_1 + 10)];
-  *(uchar **)(iVar1 + 0x10c) = puVar2;
-  R_AddCellStaticSurfacesInFrustum(param_1);
+  uVar2 = *(undefined4 *)((*(ushort *)(param_1 + 10) + 0xf) * 4 + DAT_846178cc);
+  *(undefined4 *)(iVar1 + 0x108) =
+       *(undefined4 *)((*(ushort *)(param_1 + 10) + 0xc) * 4 + DAT_846178cc);
+  *(undefined4 *)(iVar1 + 0x10c) = uVar2;
+  R_AddCellStaticSurfacesInFrustum();
   return;
 }
 
 
 // 82732E18  R_AddSkySurfacesDpvs  (gfx_d3d/r_dpvs_static.cpp:898)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void R_AddSkySurfacesDpvs(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  ushort uVar2;
+  int iVar3;
+  undefined4 uVar4;
+  int iVar5;
+  int iVar6;
+  undefined4 *puVar7;
+  undefined4 uVar8;
+  undefined4 uVar9;
+  undefined4 uVar10;
+  undefined4 uVar11;
+  undefined4 uVar12;
+  undefined4 uVar13;
+  undefined4 uVar14;
+  undefined4 uVar15;
+  undefined4 uVar16;
+  undefined4 uVar17;
+  ulonglong uVar18;
+  longlong lVar19;
+  char cVar20;
+  ulonglong uVar21;
+  longlong lVar22;
+  longlong lVar23;
+  longlong lVar24;
+  undefined1 (*pauVar25) [16];
+  float *pfVar26;
+  int *in_r13;
+  int iVar27;
+  int iVar28;
+  int iVar29;
+  int iVar30;
+  int iVar31;
+  undefined1 auVar32 [16];
+  undefined1 auVar33 [16];
+  undefined1 auVar34 [16];
+  undefined1 auVar35 [16];
+  undefined1 auVar36 [16];
+  undefined1 auVar37 [16];
+  undefined1 auVar38 [16];
+  undefined1 auVar39 [16];
+  undefined4 local_310;
+  undefined4 uStack_30c;
+  undefined4 uStack_308;
+  undefined4 uStack_304;
+  
+  uVar18 = ZEXT48(&stack0x00000000);
+  lVar19 = __savegprlr();
+  iVar6 = (int)(uVar18 - 0x360);
+  *(BADSPACEBASE **)iVar6 = register0x0000000c;
+  cVar20 = Sys_IsMainThread();
+  if (cVar20 == '\0') {
+    MyAssertHandler(0xffffffff821bd860,0x389,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  *(undefined2 **)(iVar6 + 100) = &DAT_84613780;
+  iVar29 = DAT_8461658c;
+  if (*(int *)(DAT_8461658c + 0x14) != 0) {
+    iVar3 = *in_r13;
+    uVar4 = *(undefined4 *)(DAT_8461658c + 0x268);
+    *(undefined4 *)(iVar3 + 0x108) = *(undefined4 *)(DAT_8461658c + 0x25c);
+    uVar8 = 0xbf800000;
+    uVar21 = 0;
+    uVar17 = 0x3f800000;
+    iVar28 = (int)param_2;
+    *(undefined4 *)(iVar3 + 0x10c) = uVar4;
+    if (3 < iVar28) {
+      *(undefined4 *)(iVar6 + 0x5c) = 0;
+      lVar23 = uVar18 - 0x2f4;
+      lVar24 = uVar18 - 0x270;
+      lVar22 = lVar19 + 0x18;
+      do {
+        pfVar26 = (float *)lVar22;
+        fVar1 = pfVar26[-5];
+        uVar4 = uVar17;
+        if (pfVar26[-6] < 0.0) {
+          uVar4 = uVar8;
+        }
+        uVar9 = uVar17;
+        if (pfVar26[-4] < 0.0) {
+          uVar9 = uVar8;
+        }
+        *(undefined4 *)(iVar6 + 0x50) = uVar4;
+        uVar4 = uVar17;
+        if (fVar1 < 0.0) {
+          uVar4 = uVar8;
+        }
+        *(undefined4 *)(iVar6 + 0x54) = uVar4;
+        *(undefined4 *)(iVar6 + 0x58) = uVar9;
+        uVar4 = uVar17;
+        if (pfVar26[-2] < 0.0) {
+          uVar4 = uVar8;
+        }
+        uVar9 = uVar17;
+        if (pfVar26[-1] < 0.0) {
+          uVar9 = uVar8;
+        }
+        uVar10 = uVar17;
+        if (*pfVar26 < 0.0) {
+          uVar10 = uVar8;
+        }
+        uVar11 = uVar17;
+        if (pfVar26[3] < 0.0) {
+          uVar11 = uVar8;
+        }
+        uVar12 = uVar17;
+        if (pfVar26[2] < 0.0) {
+          uVar12 = uVar8;
+        }
+        uVar13 = uVar17;
+        if (pfVar26[4] < 0.0) {
+          uVar13 = uVar8;
+        }
+        uVar14 = uVar17;
+        if (pfVar26[6] < 0.0) {
+          uVar14 = uVar8;
+        }
+        uVar15 = uVar17;
+        if (pfVar26[7] < 0.0) {
+          uVar15 = uVar8;
+        }
+        uVar16 = uVar17;
+        if (pfVar26[8] < 0.0) {
+          uVar16 = uVar8;
+        }
+        uVar21 = uVar21 + 4;
+        auVar39 = loadVectorRightIndexed(lVar22 + -8);
+        auVar38 = loadVectorLeftIndexed(lVar22 + -0x18);
+        puVar7 = (undefined4 *)lVar24;
+        auVar37 = loadVectorLeftIndexed(lVar22 + -8);
+        auVar36 = loadVectorRightIndexed(lVar22 + 8);
+        auVar35 = loadVectorLeftIndexed(lVar22 + 8);
+        iVar5 = (int)lVar23;
+        *(undefined1 (**) [16])(iVar5 + 4) = (undefined1 (*) [16])(puVar7 + -0xc);
+        *(undefined4 *)(iVar6 + 0x50) = uVar4;
+        *(undefined1 (**) [16])(iVar5 + 8) = (undefined1 (*) [16])(puVar7 + -4);
+        *(undefined4 *)(iVar6 + 0x54) = uVar9;
+        *(undefined4 *)(iVar6 + 0x58) = uVar10;
+        *(undefined4 *)(iVar6 + 0x50) = uVar12;
+        *(undefined4 *)(iVar6 + 0x54) = uVar11;
+        *(undefined4 *)(iVar6 + 0x58) = uVar13;
+        *(undefined4 *)(iVar6 + 0x50) = uVar14;
+        *(undefined4 *)(iVar6 + 0x54) = uVar15;
+        *(undefined4 *)(iVar6 + 0x58) = uVar16;
+        auVar34 = loadVectorRightIndexed(lVar22 + 0x18);
+        auVar33 = loadVectorRightIndexed(lVar22 + 0x28);
+        auVar32 = loadVectorLeftIndexed(lVar22 + 0x18);
+        *(undefined1 (*) [16])(puVar7 + -0xc) = auVar38 | auVar39;
+        puVar7[-8] = local_310;
+        puVar7[-7] = uStack_30c;
+        puVar7[-6] = uStack_308;
+        puVar7[-5] = uStack_304;
+        *(undefined1 (**) [16])(iVar5 + 0xc) = (undefined1 (*) [16])(puVar7 + 4);
+        *(undefined1 (*) [16])(puVar7 + -4) = auVar37 | auVar36;
+        lVar23 = lVar23 + 0x10;
+        *(int *)lVar23 = (int)(puVar7 + 0xc);
+        *puVar7 = local_310;
+        puVar7[1] = uStack_30c;
+        puVar7[2] = uStack_308;
+        puVar7[3] = uStack_304;
+        *(undefined1 (*) [16])(puVar7 + 4) = auVar35 | auVar34;
+        puVar7[8] = local_310;
+        puVar7[9] = uStack_30c;
+        puVar7[10] = uStack_308;
+        puVar7[0xb] = uStack_304;
+        *(undefined1 (*) [16])(puVar7 + 0xc) = auVar32 | auVar33;
+        puVar7[0x10] = local_310;
+        puVar7[0x11] = uStack_30c;
+        puVar7[0x12] = uStack_308;
+        puVar7[0x13] = uStack_304;
+        lVar24 = lVar24 + 0x80;
+        lVar22 = lVar22 + 0x40;
+      } while ((int)uVar21 < iVar28 + -3);
+    }
+    if ((int)uVar21 < iVar28) {
+      *(undefined4 *)(iVar6 + 0x5c) = 0;
+      lVar22 = param_2 - uVar21;
+      lVar19 = (uVar21 & 0xfffffff) * 0x10 + lVar19;
+      lVar24 = (uVar21 & 0x7ffffff) * 0x20 + (uVar18 - 0x2a0);
+      lVar23 = (uVar21 & 0x3fffffff) * 4 + (uVar18 - 0x360) + 0x6c;
+      do {
+        auVar33 = loadVectorLeftIndexed(lVar19);
+        auVar32 = loadVectorRightIndexed(lVar19 + 0x10);
+        lVar23 = lVar23 + 4;
+        pauVar25 = (undefined1 (*) [16])lVar24;
+        *(int *)lVar23 = (int)pauVar25;
+        pfVar26 = (float *)lVar19;
+        uVar4 = uVar17;
+        if (*pfVar26 < 0.0) {
+          uVar4 = uVar8;
+        }
+        uVar9 = uVar17;
+        if (pfVar26[1] < 0.0) {
+          uVar9 = uVar8;
+        }
+        uVar10 = uVar17;
+        if (pfVar26[2] < 0.0) {
+          uVar10 = uVar8;
+        }
+        *(undefined4 *)(iVar6 + 0x50) = uVar4;
+        *(undefined4 *)(iVar6 + 0x54) = uVar9;
+        lVar19 = lVar19 + 0x10;
+        *(undefined4 *)(iVar6 + 0x58) = uVar10;
+        *(undefined4 *)pauVar25[1] = local_310;
+        *(undefined4 *)(pauVar25[1] + 4) = uStack_30c;
+        *(undefined4 *)(pauVar25[1] + 8) = uStack_308;
+        *(undefined4 *)(pauVar25[1] + 0xc) = uStack_304;
+        *pauVar25 = auVar33 | auVar32;
+        lVar24 = lVar24 + 0x20;
+        lVar22 = lVar22 + -1;
+      } while (lVar22 != 0);
+    }
+    iVar5 = *(int *)(iVar29 + 0x14);
+    iVar27 = 0;
+    *(int *)(iVar6 + 0xb0) = iVar28;
+    if (0 < iVar5) {
+      iVar28 = 0;
+      auVar32 = _DAT_8404f950;
+      do {
+        iVar5 = *(int *)(iVar29 + 0x18);
+        iVar30 = 0;
+        if (0 < *(int *)(iVar28 + iVar5)) {
+          iVar31 = 0;
+          do {
+            uVar2 = *(ushort *)
+                     (*(int *)(*(int *)(iVar28 + iVar5 + 4) + iVar31) * 2 + *(int *)(iVar29 + 0x274)
+                     );
+            if (*(char *)(*(int *)(iVar3 + 0x10c) + (uint)uVar2) == '\0') {
+              lVar19 = (ulonglong)*(uint *)(DAT_846178cc + 0x54) + (ulonglong)uVar2 * 0x20;
+              auVar34 = loadVectorRightIndexed(lVar19 + 0x10);
+              auVar33 = loadVectorLeftIndexed(lVar19);
+              auVar36 = loadVectorRightIndexed(lVar19 + 0x1c);
+              auVar35 = loadVectorLeftIndexed(lVar19 + 0xc);
+              auVar34 = vectorAddFloatingPoint128((auVar33 | auVar34) & auVar32,_DAT_8217a040);
+              auVar33 = _DAT_8217a050;
+              if ((param_2 & 0xffffffff) != 0) {
+                lVar23 = uVar18 - 0x2f4;
+                uVar21 = param_2;
+                do {
+                  lVar23 = lVar23 + 4;
+                  auVar37 = vectorMultiplyAddFloatingPoint
+                                      ((auVar35 | auVar36) & auVar32,
+                                       *(undefined1 (*) [16])(*(uint *)lVar23 + 0x10 & 0xfffffff0),
+                                       auVar34);
+                  auVar37 = vectorMultiplySum4FloatingPoint
+                                      (*(undefined1 (*) [16])(*(uint *)lVar23 & 0xfffffff0),auVar37)
+                  ;
+                  auVar33 = vectorMinimumFloatingPoint128(auVar33,auVar37);
+                  uVar21 = uVar21 - 1;
+                } while (uVar21 != 0);
+              }
+              auVar33 = vectorCompareGreaterThanFloatingPoint128(auVar33,_DAT_8217a030);
+              auVar33 = vectorSplatWord(auVar33,0);
+              storeVectorElementWordIndexed(auVar33,uVar18 - 0x300);
+              if (*(int *)(iVar6 + 0x60) != 0) {
+                if ((*(uint *)(DAT_845aa5f8 + 0xc) & 2) != 0) {
+                  R_AddDebugBox((ulonglong)DAT_84628b00 + 0x18f0,lVar19,0xffffffff821817f8);
+                }
+                iVar29 = *(int *)(iVar6 + 100);
+                *(undefined1 *)(*(int *)(iVar3 + 0x10c) + (uint)uVar2) = 1;
+                iVar29 = *(int *)(iVar29 + 0x2e0c);
+                auVar32 = _DAT_8404f950;
+              }
+            }
+            iVar5 = *(int *)(iVar29 + 0x18);
+            iVar30 = iVar30 + 1;
+            iVar31 = iVar31 + 4;
+          } while (iVar30 < *(int *)(iVar28 + iVar5));
+        }
+        iVar27 = iVar27 + 1;
+        iVar28 = iVar28 + 0x10;
+      } while (iVar27 < *(int *)(iVar29 + 0x14));
+    }
+  }
+  __restgprlr();
+  return;
+}
+

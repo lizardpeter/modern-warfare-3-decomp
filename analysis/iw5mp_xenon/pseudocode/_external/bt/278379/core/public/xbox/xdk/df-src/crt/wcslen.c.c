@@ -2,17 +2,17 @@
 
 // 8291B2D8  wcslen  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/wcslen.c:37)
 
-uint wcslen(wchar_t *param_1)
+size_t wcslen(wchar_t *_Str)
 
 {
   wchar_t wVar1;
   wchar_t *pwVar2;
   
-  pwVar2 = param_1;
+  pwVar2 = _Str;
   do {
     wVar1 = *pwVar2;
     pwVar2 = pwVar2 + 1;
   } while (wVar1 != L'\0');
-  return ((int)pwVar2 - (int)param_1 >> 1) - 1;
+  return ((int)pwVar2 - (int)_Str >> 1) - 1;
 }
 

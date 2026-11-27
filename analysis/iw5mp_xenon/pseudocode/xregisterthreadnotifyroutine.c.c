@@ -2,25 +2,25 @@
 
 // 828B52C8  XRegisterThreadNotifyRoutine  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xregisterthreadnotifyroutine.c:57)
 
-void XRegisterThreadNotifyRoutine(_XTHREAD_NOTIFICATION *param_1,int param_2)
+void XRegisterThreadNotifyRoutine(undefined8 param_1,int param_2)
 
 {
-  _LIST_ENTRY *p_Var1;
-  _LIST_ENTRY *p_Var2;
+  int iVar1;
+  int *piVar2;
   
-  p_Var2 = (_LIST_ENTRY *)__savegprlr_29(param_1);
+  piVar2 = (int *)__savegprlr_29();
   RtlEnterCriticalSection(0xffffffff829a85f0);
   if (param_2 == 0) {
-    p_Var1 = p_Var2->Flink;
-    p_Var2 = p_Var2->Blink;
-    p_Var2->Flink = p_Var1;
-    p_Var1->Blink = p_Var2;
+    iVar1 = *piVar2;
+    piVar2 = (int *)piVar2[1];
+    *piVar2 = iVar1;
+    *(int **)(iVar1 + 4) = piVar2;
   }
   else {
-    p_Var2->Flink = &XapiThreadNotifyRoutineList;
-    p_Var2->Blink = XapiThreadNotifyRoutineList.Blink;
-    (XapiThreadNotifyRoutineList.Blink)->Flink = p_Var2;
-    XapiThreadNotifyRoutineList.Blink = p_Var2;
+    *piVar2 = (int)&PTR_LOOP_829a860c;
+    piVar2[1] = (int)PTR_LOOP_829a8610;
+    *(int **)PTR_LOOP_829a8610 = piVar2;
+    PTR_LOOP_829a8610 = (undefined *)piVar2;
   }
   RtlLeaveCriticalSection(0xffffffff829a85f0);
   __restgprlr_29();
@@ -30,20 +30,20 @@ void XRegisterThreadNotifyRoutine(_XTHREAD_NOTIFICATION *param_1,int param_2)
 
 // 828B5258  XapiCallThreadNotifyRoutines  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xregisterthreadnotifyroutine.c:91)
 
-void XapiCallThreadNotifyRoutines(int param_1)
+void XapiCallThreadNotifyRoutines(void)
 
 {
-  _LIST_ENTRY *p_Var1;
-  _LIST_ENTRY *p_Var2;
+  undefined **ppuVar1;
+  undefined **ppuVar2;
   undefined8 uVar3;
   
-  uVar3 = __savegprlr_28(param_1);
+  uVar3 = __savegprlr_28();
   RtlEnterCriticalSection(0xffffffff829a85f0);
-  p_Var2 = XapiThreadNotifyRoutineList.Flink;
-  while (p_Var2 != &XapiThreadNotifyRoutineList) {
-    p_Var1 = p_Var2->Flink;
-    (*(code *)p_Var2[1].Flink)(uVar3);
-    p_Var2 = p_Var1;
+  ppuVar2 = (undefined **)PTR_LOOP_829a860c;
+  while (ppuVar2 != &PTR_LOOP_829a860c) {
+    ppuVar1 = (undefined **)*ppuVar2;
+    (*(code *)ppuVar2[2])(uVar3);
+    ppuVar2 = ppuVar1;
   }
   RtlLeaveCriticalSection(0xffffffff829a85f0);
   __restgprlr_28();

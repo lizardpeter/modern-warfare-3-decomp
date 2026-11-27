@@ -2,13 +2,13 @@
 
 // 828AB0C0  QueryPerformanceFrequency  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/queryperformancefrequency.c:43)
 
-int QueryPerformanceFrequency(_LARGE_INTEGER *param_1)
+BOOL QueryPerformanceFrequency(LARGE_INTEGER *lpFrequency)
 
 {
-  long64 lVar1;
+  LONGLONG LVar1;
   
-  lVar1 = KeQueryPerformanceFrequency();
-  param_1->QuadPart = lVar1;
+  LVar1 = (LONGLONG)KeQueryPerformanceFrequency();
+  lpFrequency->QuadPart = LVar1;
   return 1;
 }
 

@@ -2,22 +2,18 @@
 
 // 828BB178  XOnlinepGetSgaddrForMarshalling  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/xonutils.cpp:22)
 
-void XOnlinepGetSgaddrForMarshalling(_SGADDR *param_1)
+void XOnlinepGetSgaddrForMarshalling(int param_1)
 
 {
-  XnpLogonGetStatus(param_1,(ulong *)0x0);
-  param_1->dwSpiSg =
-       (uint)(byte)param_1->dwSpiSg << 0x18 | (uint)*(byte *)((int)&param_1->dwSpiSg + 2) << 0x10 |
-       (uint)*(byte *)((int)&param_1->dwSpiSg + 1) << 8 | (uint)*(byte *)&param_1->dwSpiSg;
-  param_1->qwXboxID =
-       ((ulonglong)(byte)param_1->qwXboxID << 0x18 |
-        (ulonglong)*(byte *)((int)&param_1->qwXboxID + 6) << 0x10 |
-        (ulonglong)*(byte *)((int)&param_1->qwXboxID + 5) << 8 |
-       (ulonglong)*(byte *)((int)&param_1->qwXboxID + 4)) << 0x20 |
-       (ulonglong)*(byte *)((int)&param_1->qwXboxID + 3) << 0x18 |
-       (ulonglong)*(byte *)((int)&param_1->qwXboxID + 2) << 0x10 |
-       (ulonglong)*(byte *)((int)&param_1->qwXboxID + 1) << 8 |
-       (ulonglong)*(byte *)&param_1->qwXboxID;
+  XnpLogonGetStatus(param_1,0);
+  *(uint *)(param_1 + 4) =
+       (uint)*(byte *)(param_1 + 7) << 0x18 | (uint)*(byte *)(param_1 + 6) << 0x10 |
+       (uint)*(byte *)(param_1 + 5) << 8 | (uint)*(byte *)(param_1 + 4);
+  *(ulonglong *)(param_1 + 8) =
+       ((ulonglong)*(byte *)(param_1 + 0xf) << 0x18 | (ulonglong)*(byte *)(param_1 + 0xe) << 0x10 |
+        (ulonglong)*(byte *)(param_1 + 0xd) << 8 | (ulonglong)*(byte *)(param_1 + 0xc)) << 0x20 |
+       (ulonglong)*(byte *)(param_1 + 0xb) << 0x18 | (ulonglong)*(byte *)(param_1 + 10) << 0x10 |
+       (ulonglong)*(byte *)(param_1 + 9) << 8 | (ulonglong)*(byte *)(param_1 + 8);
   return;
 }
 

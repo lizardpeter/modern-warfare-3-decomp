@@ -2,379 +2,661 @@
 
 // 822F5378  CG_ScoreboardScaleMultiplier  (cgame_mp/cg_scoreboard_mp.cpp:179)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float CG_ScoreboardScaleMultiplier(void)
+double CG_ScoreboardScaleMultiplier(void)
 
 {
-  bool bVar1;
+  byte bVar1;
   
   bVar1 = CL_IsRenderingSplitScreen();
-  return (float)(longlong)bVar1 * ((cg_hudSplitscreenScoreboardScale->current).value - 1.0) + 1.0;
+  return (double)((float)bVar1 * (*(float *)(DAT_82a38380 + 0xc) - 1.0) + 1.0);
 }
 
 
 // 822F53C8  CG_BannerScoreboardScaleMultiplier  (cgame_mp/cg_scoreboard_mp.cpp:189)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float CG_BannerScoreboardScaleMultiplier(void)
+double CG_BannerScoreboardScaleMultiplier(void)
 
 {
-  bool bVar1;
+  byte bVar1;
   
   bVar1 = CL_IsRenderingSplitScreen();
-  return (float)(longlong)bVar1 * ((cg_hudSplitscreenBannerScoreboardScale->current).value - 1.0) +
-         1.0;
+  return (double)((float)bVar1 * (*(float *)(DAT_82a3ce34 + 0xc) - 1.0) + 1.0);
 }
 
 
 // 822F5418  CG_BackdropWidth  (cgame_mp/cg_scoreboard_mp.cpp:199)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float CG_BackdropWidth(void)
+double CG_BackdropWidth(void)
 
 {
-  if (((splitscreen->current).enabled != false) && ((onlinegame->current).enabled != false)) {
-    return (cg_onlineSplitscreenScoreboardWidth->current).value;
+  if ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
+    return (double)*(float *)(DAT_82a5f5b8 + 0xc);
   }
-  return (cg_scoreboardWidth->current).value;
+  return (double)*(float *)(DAT_82a5f5e4 + 0xc);
 }
 
 
 // 822F5460  CG_BackdropHeight  (cgame_mp/cg_scoreboard_mp.cpp:209)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float CG_BackdropHeight(void)
+double CG_BackdropHeight(void)
 
 {
-  return (cg_scoreboardHeight->current).value;
+  return (double)*(float *)(DAT_82a5f594 + 0xc);
 }
 
 
 // 822F5470  CG_BackdropLeft  (cgame_mp/cg_scoreboard_mp.cpp:215)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-float CG_BackdropLeft(LocalClientNum_t param_1)
+double CG_BackdropLeft(void)
 
 {
-  dvar_t *pdVar1;
-  float fVar2;
-  float fVar3;
-  ScreenPlacement *pSVar4;
+  int iVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
   
-  pSVar4 = ScrPlace_GetActivePlacement(param_1);
-  pdVar1 = cg_scoreboardWidth;
-  if (((splitscreen->current).enabled != false) && ((onlinegame->current).enabled != false)) {
-    pdVar1 = cg_onlineSplitscreenScoreboardWidth;
+  iVar2 = ScrPlace_GetActivePlacement();
+  iVar1 = DAT_82a5f5e4;
+  if ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
+    iVar1 = DAT_82a5f5b8;
   }
-  fVar3 = ((pSVar4->virtualViewableMax[0] - pSVar4->virtualViewableMin[0]) - (pdVar1->current).value
-          ) * 0.5;
-  fVar2 = 0.0;
-  if (-fVar3 < 0.0) {
-    fVar2 = fVar3;
+  dVar4 = (double)(((*(float *)(iVar2 + 0x30) - *(float *)(iVar2 + 0x28)) - *(float *)(iVar1 + 0xc))
+                  * 0.5);
+  dVar3 = 0.0;
+  if (-dVar4 < 0.0) {
+    dVar3 = dVar4;
   }
-  return fVar2;
+  return dVar3;
 }
 
 
 // 822F5500  CG_BackdropTop  (cgame_mp/cg_scoreboard_mp.cpp:221)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-float CG_BackdropTop(LocalClientNum_t param_1)
+double CG_BackdropTop(void)
 
 {
-  float fVar1;
-  float fVar2;
+  double dVar1;
+  double dVar2;
   
-  fVar1 = (480.0 - (cg_scoreboardHeight->current).value) * 0.5;
-  fVar2 = 0.0;
-  if (-fVar1 < 0.0) {
-    fVar2 = fVar1;
+  dVar2 = (double)((480.0 - *(float *)(DAT_82a5f594 + 0xc)) * 0.5);
+  dVar1 = 0.0;
+  if (-dVar2 < 0.0) {
+    dVar1 = dVar2;
   }
-  return fVar2;
+  return dVar1;
 }
 
 
 // 822F5538  UpdateScores  (cgame_mp/cg_scoreboard_mp.cpp:341)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void UpdateScores(undefined8 param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  if (*(int *)(iVar1 + 0x76ab0) + 2000 < *(int *)(iVar1 + 0x6b98c)) {
+    *(int *)(iVar1 + 0x76ab0) = *(int *)(iVar1 + 0x6b98c);
+    CL_AddReliableCommand(param_1,0xffffffff82012c64);
+  }
+  return;
+}
+
 
 // 822F55A0  GetClientScore  (cgame_mp/cg_scoreboard_mp.cpp:356)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+int * GetClientScore(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  iVar2 = 0;
+  if (0 < *(int *)(iVar1 + 0x76ab4)) {
+    piVar3 = (int *)(iVar1 + 0x76ae8);
+    do {
+      if ((*(int *)(*piVar3 * 0x590 + iVar1 + 0x100b88) != 0) && (*piVar3 == param_2)) {
+        return piVar3;
+      }
+      iVar2 = iVar2 + 1;
+      piVar3 = piVar3 + 0xc;
+    } while (iVar2 < *(int *)(iVar1 + 0x76ab4));
+  }
+  return (int *)0x0;
+}
+
 
 // 822F5640  UI_GetOurClientScore  (cgame_mp/cg_scoreboard_mp.cpp:378)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void UI_GetOurClientScore(undefined8 param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  GetClientScore(param_1,*(undefined4 *)(iVar1 + 0x3334));
+  return;
+}
+
 
 // 822F5680  UI_GetScoreAtRank  (cgame_mp/cg_scoreboard_mp.cpp:391)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+uint UI_GetScoreAtRank(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  int *piVar2;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  if ((0 < param_2) && (param_2 <= *(int *)(iVar1 + 0x76ab4))) {
+    piVar2 = (int *)(param_2 * 0x30 + iVar1 + 0x76ab8);
+    return 0x100000 - ((*(int *)(*piVar2 * 0x590 + iVar1 + 0x100b88) != 0) + 0x100000) &
+           (uint)piVar2;
+  }
+  return 0;
+}
+
 
 // 822F5720  CG_DrawScoreboard_Controls  (cgame_mp/cg_scoreboard_mp.cpp:409)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_DrawScoreboard_Controls(undefined8 param_1,double param_2,double param_3)
+
+{
+  undefined8 uVar1;
+  int iVar4;
+  char cVar5;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  
+  __savegprlr_24();
+  uVar1 = __savefpr_24();
+  dVar6 = extraout_f1;
+  CL_ControllerIndexFromClientNum();
+  iVar4 = CL_GetLocalClientSignInState();
+  if (0 < iVar4) {
+    iVar4 = CG_GetLocalClientGlobals(uVar1);
+    if ((*(longlong *)(iVar4 + 0x76e70) != 0) && (cVar5 = Live_XUIDIsLocalPlayer(), cVar5 == '\0'))
+    {
+      dVar11 = 0.30000001192092896;
+      cVar5 = CL_IsRenderingSplitScreen();
+      dVar9 = 0.5;
+      if (cVar5 != '\0') {
+        dVar11 = dVar9;
+      }
+      uVar1 = ScrPlace_GetActivePlacement(uVar1);
+      uVar2 = UI_GetFontHandle(dVar11,uVar1,*(undefined4 *)(DAT_82a5f598 + 0xc));
+      dVar7 = 8.0;
+      dVar8 = 0.0;
+      if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
+        uVar3 = UI_SafeTranslateString(0xffffffff820221d0);
+        iVar4 = UI_TextWidth(dVar11,uVar3,0x7fffffff,uVar2);
+        dVar10 = (double)(float)((double)(float)(param_3 - (double)(longlong)iVar4) * dVar9);
+        if (dVar10 <= dVar8) {
+          MyAssertHandler(dVar10,0xffffffff82022200,0x1bf,0,0xffffffff820221f0,0xffffffff820221e4,
+                          dVar10);
+        }
+        UI_DrawText((double)(float)(dVar10 + dVar6),(double)(float)(param_2 - dVar7),dVar11,uVar1,
+                    uVar3,0x7fffffff,uVar2);
+      }
+      uVar3 = UI_SafeTranslateString(0xffffffff820221b0);
+      iVar4 = UI_TextWidth(dVar11,uVar3,0x7fffffff,uVar2);
+      dVar9 = (double)(float)((double)(float)(param_3 - (double)(longlong)iVar4) * dVar9);
+      if (dVar9 <= dVar8) {
+        MyAssertHandler(dVar9,0xffffffff82022200,0x1c8,0,0xffffffff820221f0,0xffffffff820221e4,dVar9
+                       );
+      }
+      UI_DrawText((double)(float)((double)(float)(dVar9 + dVar6) + param_3),
+                  (double)(float)(param_2 - dVar7),dVar11,uVar1,uVar3,0x7fffffff,uVar2);
+    }
+  }
+  __restfpr_24();
+  __restgprlr_24();
+  return;
+}
+
 
 // 822F5988  CG_GetGametypeDescription  (cgame_mp/cg_scoreboard_mp.cpp:515)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_GetGametypeDescription(void)
+
+{
+  longlong lVar1;
+  
+  lVar1 = CG_GetLocalClientGlobals();
+  SEH_LocalizeTextMessage(lVar1 + 0x765b0,0xffffffff82022248,0);
+  return;
+}
+
 
 // 822F59C0  CG_DrawScoreboard_Backdrop  (cgame_mp/cg_scoreboard_mp.cpp:523)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CG_DrawScoreboard_Backdrop(LocalClientNum_t param_1,float param_2)
+void CG_DrawScoreboard_Backdrop(undefined8 param_1,undefined8 param_2)
 
 {
-  dvar_t *pdVar1;
+  int iVar1;
   float fVar2;
   float fVar3;
-  double dVar4;
-  float fVar5;
+  undefined8 uVar4;
   
-  dVar4 = (double)param_2;
-  fVar5 = CG_BackdropLeft(param_1);
-  fVar3 = (480.0 - (cg_scoreboardHeight->current).value) * 0.5;
+  uVar4 = CG_BackdropLeft();
+  fVar3 = (480.0 - *(float *)(DAT_82a5f594 + 0xc)) * 0.5;
   fVar2 = 0.0;
   if (-fVar3 < 0.0) {
     fVar2 = fVar3;
   }
-  pdVar1 = cg_scoreboardWidth;
-  if (((splitscreen->current).enabled != false) && ((onlinegame->current).enabled != false)) {
-    pdVar1 = cg_onlineSplitscreenScoreboardWidth;
+  iVar1 = DAT_82a5f5e4;
+  if ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
+    iVar1 = DAT_82a5f5b8;
   }
   CG_DrawScoreboard_Controls
-            (param_1,fVar5,(cg_scoreboardHeight->current).value + fVar2,
-             (pdVar1->current).value * 0.5,(float)dVar4);
+            (uVar4,(double)(*(float *)(DAT_82a5f594 + 0xc) + fVar2),
+             (double)(*(float *)(iVar1 + 0xc) * 0.5),param_1,param_2);
   return;
 }
 
 
 // 822F5A80  CG_GetScoreboardInfo  (cgame_mp/cg_scoreboard_mp.cpp:545)
 
-void CG_GetScoreboardInfo(listColumnInfo_t **param_1,int *param_2)
+void CG_GetScoreboardInfo(undefined4 *param_1,undefined4 *param_2)
 
 {
-  bool bVar1;
-  listColumnInfo_t *plVar2;
-  int iVar3;
+  char cVar1;
+  undefined *puVar2;
+  undefined4 uVar3;
   
-  bVar1 = CL_IsRenderingSplitScreen();
-  if ((bVar1) && ((onlinegame->current).enabled == false)) {
-    iVar3 = 6;
-    plVar2 = splitscreenColumnInfo;
-  }
-  else if ((cg_scoreboardPingText->current).enabled == false) {
-    iVar3 = 9;
-    plVar2 = columnInfo;
+  cVar1 = CL_IsRenderingSplitScreen();
+  if ((cVar1 == '\0') || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
+    if (*(char *)(DAT_82a5f5d8 + 0xc) == '\0') {
+      uVar3 = 9;
+      puVar2 = &DAT_82022020;
+    }
+    else {
+      uVar3 = 10;
+      puVar2 = &DAT_820220b0;
+    }
   }
   else {
-    iVar3 = 10;
-    plVar2 = columnInfoWithPing;
+    uVar3 = 6;
+    puVar2 = &DAT_82022150;
   }
-  *param_1 = plVar2;
-  *param_2 = iVar3;
+  *param_1 = puVar2;
+  *param_2 = uVar3;
   return;
 }
 
 
 // 822F5B28  CG_DrawScoreboard_ListColumnHeaders  (cgame_mp/cg_scoreboard_mp.cpp:568)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float CG_DrawScoreboard_ListColumnHeaders
-                (LocalClientNum_t param_1,float *param_2,float param_3,float param_4,float param_5)
+void CG_DrawScoreboard_ListColumnHeaders(undefined8 param_1,double param_2,double param_3)
 
 {
-  LocalClientNum_t LVar1;
-  ScreenPlacement *pSVar2;
-  bool bVar6;
-  Font_s *pFVar3;
-  char *pcVar4;
-  int iVar5;
-  undefined8 uVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  float *pfVar10;
-  double extraout_f1;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  float fVar19;
-  longlong local_b0;
-  longlong local_a8;
-  longlong local_a0;
-  
-  dVar12 = (double)param_4;
-  dVar13 = (double)param_5;
-  __savegprlr_23((double)param_3,param_1);
-  LVar1 = __savefpr_24();
-  dVar11 = extraout_f1;
-  pSVar2 = ScrPlace_GetActivePlacement(LVar1);
-  bVar6 = CL_IsRenderingSplitScreen();
-  local_a8 = (longlong)bVar6;
-  dVar18 = 1.0;
-  uVar7 = 0xffffffff82010000;
-  dVar17 = 0.8500000238418579;
-  pFVar3 = UI_GetFontHandle(pSVar2,(cg_scoreboardFont->current).integer,
-                            (cg_scoreboardHeaderFontScale->current).value *
-                            ((float)local_a8 *
-                             ((cg_hudSplitscreenBannerScoreboardScale->current).value - 1.0) + 1.0)
-                            * 0.85);
-  fVar19 = CG_BackdropLeft(LVar1);
-  dVar16 = (double)(fVar19 + 9.0);
-  CG_GetScoreboardInfo((listColumnInfo_t **)&local_a8,(int *)&local_b0);
-  uVar9 = (ulonglong)local_b0._0_4_;
-  if (0 < (int)local_b0._0_4_) {
-    pfVar10 = &local_a8._0_4_[-1].fWidth;
-    dVar15 = 0.5;
-    do {
-      if (*(char *)pfVar10[5] != '\0') {
-        pcVar4 = UI_SafeTranslateString((char *)pfVar10[5]);
-        bVar6 = CL_IsRenderingSplitScreen();
-        local_a8 = (longlong)bVar6;
-        dVar14 = (double)(float)((double)pfVar10[4] * dVar13);
-        iVar5 = UI_TextWidth(pcVar4,0,pFVar3,
-                             (float)((double)((cg_scoreboardHeaderFontScale->current).value *
-                                             (float)((double)local_a8 *
-                                                     (double)(float)((double)(
-                                                  cg_hudSplitscreenBannerScoreboardScale->current).
-                                                  value - dVar18) + dVar18)) * dVar17));
-        lVar8 = (longlong)iVar5;
-        dVar14 = (double)(float)((double)(float)(dVar14 - (double)lVar8) * dVar15);
-        local_b0 = lVar8;
-        bVar6 = CL_IsRenderingSplitScreen();
-        local_a0 = (longlong)bVar6;
-        UI_DrawText(pSVar2,pcVar4,0x7fffffff,pFVar3,(float)(dVar14 + dVar16),
-                    (float)(dVar11 + dVar12),(int)uVar7,(int)lVar8,
-                    (float)((double)((cg_scoreboardHeaderFontScale->current).value *
-                                    (float)((double)local_a0 *
-                                            (double)(float)((double)(
-                                                  cg_hudSplitscreenBannerScoreboardScale->current).
-                                                  value - dVar18) + dVar18)) * dVar17),(float *)0x1,
-                    0);
-      }
-      pfVar10 = pfVar10 + 4;
-      uVar9 = uVar9 - 1;
-      dVar16 = (double)(float)((double)*pfVar10 * dVar13 + dVar16);
-    } while (uVar9 != 0);
-  }
-  __restfpr_24((double)((float)(dVar11 + dVar12) + 4.0));
-  dVar11 = (double)__restgprlr_23();
-  return (float)dVar11;
-}
-
-
-// 822F5D20  CG_CheckDrawScoreboardLine  (cgame_mp/cg_scoreboard_mp.cpp:606)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
-
-// 822F5E30  CG_DrawScoreboard_GetTeamColorIndex  (cgame_mp/cg_scoreboard_mp.cpp:634)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
-
-// 822F5EF0  TeamIconName  (cgame_mp/cg_scoreboard_mp.cpp:656)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
-
-// 822F6070  CG_DrawScoreboard_ListBanner  (cgame_mp/cg_scoreboard_mp.cpp:699)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
-
-// 822F63C0  CalcXAdj  (cgame_mp/cg_scoreboard_mp.cpp:758)
-
-float CalcXAdj(int param_1,float param_2,float param_3)
-
-{
-  if (param_1 == 1) {
-    return (param_2 - param_3) * 0.5;
-  }
-  if (param_1 != 2) {
-    if (param_1 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
-                      ,0x2fe,0,"%s");
-    }
-    return 0.0;
-  }
-  return param_2 - param_3;
-}
-
-
-// 822F6458  DrawListString  (cgame_mp/cg_scoreboard_mp.cpp:773)
-
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void DrawListString(LocalClientNum_t param_1,char *param_2,float param_3,float param_4,float param_5
-                   ,int param_6,Font_s *param_7,float param_8,int param_9,float *param_10)
-
-{
-  double dVar1;
-  LocalClientNum_t LVar2;
-  ScreenPlacement *pSVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
   int iVar4;
-  bool bVar6;
-  ulonglong uVar7;
-  Font_s *in_r9;
+  ulonglong uVar5;
+  float *pfVar6;
   double extraout_f1;
+  double dVar7;
+  undefined8 extraout_f1_00;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  float fVar13;
-  char *pcVar5;
+  double dVar13;
+  longlong local_b0;
+  ulonglong local_a8;
+  ulonglong local_a0;
   
-  dVar12 = (double)param_8;
-  dVar8 = (double)param_4;
-  dVar11 = (double)param_5;
-  uVar7 = (ulonglong)(int)param_2;
-  __savegprlr_26((double)param_3,param_1,uVar7,param_6,param_7,param_9);
-  LVar2 = __savefpr_27();
-  if ((uVar7 & 0xffffffff) != 0) {
-    dVar9 = extraout_f1;
-    pSVar3 = ScrPlace_GetActivePlacement(LVar2);
-    pcVar5 = (char *)uVar7;
-    iVar4 = UI_TextWidth(pcVar5,0x7fffffff,in_r9,(float)dVar12);
-    if (dVar11 < (double)(longlong)iVar4) {
-      dVar10 = 0.02500000037252903;
+  __savegprlr_23();
+  uVar1 = __savefpr_24();
+  dVar11 = extraout_f1;
+  uVar2 = ScrPlace_GetActivePlacement();
+  local_a8 = CL_IsRenderingSplitScreen();
+  local_a8 = local_a8 & 0xff;
+  dVar13 = 1.0;
+  dVar12 = 0.8500000238418579;
+  uVar3 = UI_GetFontHandle((double)(*(float *)(DAT_82a5f5d4 + 0xc) *
+                                    ((float)local_a8 * (*(float *)(DAT_82a3ce34 + 0xc) - 1.0) + 1.0)
+                                   * 0.85),uVar2,*(undefined4 *)(DAT_82a5f598 + 0xc));
+  dVar7 = (double)CG_BackdropLeft(uVar1);
+  dVar7 = (double)(float)(dVar7 + 9.0);
+  CG_GetScoreboardInfo(&local_a8,&local_b0);
+  uVar5 = (ulonglong)local_b0._0_4_;
+  if (0 < (int)local_b0._0_4_) {
+    pfVar6 = (float *)(local_a8._0_4_ + -0xc);
+    dVar10 = 0.5;
+    do {
+      if (*(char *)pfVar6[5] != '\0') {
+        uVar1 = UI_SafeTranslateString();
+        local_a8 = CL_IsRenderingSplitScreen();
+        local_a8 = local_a8 & 0xff;
+        dVar8 = (double)(float)((double)pfVar6[4] * param_3);
+        iVar4 = UI_TextWidth((double)(float)((double)(*(float *)(DAT_82a5f5d4 + 0xc) *
+                                                     (float)((double)local_a8 *
+                                                             (double)(float)((double)*(float *)(
+                                                  DAT_82a3ce34 + 0xc) - dVar13) + dVar13)) * dVar12)
+                             ,uVar1,0,uVar3);
+        local_b0 = (longlong)iVar4;
+        dVar9 = (double)(float)((double)(float)(dVar8 - (double)local_b0) * dVar10);
+        local_a0 = CL_IsRenderingSplitScreen
+                             (extraout_f1_00,(double)(float)(dVar8 - (double)local_b0));
+        local_a0 = local_a0 & 0xff;
+        UI_DrawText((double)(float)(dVar9 + dVar7),(double)(float)(dVar11 + param_2),
+                    (double)(float)((double)(*(float *)(DAT_82a5f5d4 + 0xc) *
+                                            (float)((double)local_a0 *
+                                                    (double)(float)((double)*(float *)(DAT_82a3ce34
+                                                                                      + 0xc) -
+                                                                   dVar13) + dVar13)) * dVar12),
+                    uVar2,uVar1,0x7fffffff,uVar3);
+      }
+      pfVar6 = pfVar6 + 4;
+      uVar5 = uVar5 - 1;
+      dVar7 = (double)(float)((double)*pfVar6 * param_3 + dVar7);
+    } while (uVar5 != 0);
+  }
+  __restfpr_24((double)((float)(dVar11 + param_2) + 4.0));
+  __restgprlr_23();
+  return;
+}
+
+
+// 822F5D20  CG_CheckDrawScoreboardLine  (cgame_mp/cg_scoreboard_mp.cpp:606)
+
+undefined8 CG_CheckDrawScoreboardLine(double param_1,double param_2,undefined8 param_3,int *param_4)
+
+{
+  float fVar1;
+  float fVar2;
+  int iVar4;
+  undefined8 uVar3;
+  
+  iVar4 = CG_GetLocalClientGlobals();
+  if (*(int *)(iVar4 + 0x76e54) == 0) {
+    if (*param_4 < *(int *)(iVar4 + 0x76e50)) {
+      uVar3 = 0;
+    }
+    else {
+      fVar2 = (480.0 - *(float *)(DAT_82a5f594 + 0xc)) * 0.5;
+      fVar1 = 0.0;
+      if (-fVar2 < 0.0) {
+        fVar1 = fVar2;
+      }
+      if (((((fVar1 + *(float *)(DAT_82a5f594 + 0xc)) - 3.0) - 2.0) - 24.0) - 1.0 <
+          (float)(param_1 + param_2)) {
+        *(int *)(iVar4 + 0x76e54) = 1;
+        return 0;
+      }
+      uVar3 = 1;
+    }
+    *param_4 = *param_4 + 1;
+  }
+  else {
+    uVar3 = 0;
+  }
+  return uVar3;
+}
+
+
+// 822F5E30  CG_DrawScoreboard_GetTeamColorIndex  (cgame_mp/cg_scoreboard_mp.cpp:634)
+
+char CG_DrawScoreboard_GetTeamColorIndex(int param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = CG_GetLocalClientGlobals(param_2);
+  if (0x11 < *(uint *)(iVar1 + 0x3334)) {
+    MyAssertHandler(0xffffffff82022200,0x27f,0,0xffffffff82012648,*(uint *)(iVar1 + 0x3334),0x12);
+  }
+  if (((param_1 == 2) || (param_1 == 1)) &&
+     ((iVar1 = *(int *)(*(int *)(iVar1 + 0x3334) * 0x590 + iVar1 + 0x100bb4), iVar1 == 2 ||
+      (iVar1 == 1)))) {
+    cVar2 = (param_1 != iVar1) + '8';
+  }
+  else {
+    cVar2 = '7';
+  }
+  return cVar2;
+}
+
+
+// 822F5EF0  TeamIconName  (cgame_mp/cg_scoreboard_mp.cpp:656)
+
+void TeamIconName(undefined8 param_1,ulonglong param_2)
+
+{
+  bool bVar1;
+  int iVar3;
+  undefined8 uVar2;
+  int iVar4;
+  
+  iVar4 = (int)param_2;
+  if (*(char *)(DAT_82a383b4 + 0xc) == '\0') {
+    if ((param_2 & 0xffffffff) != 0) {
+      if ((param_2 & 0xffffffff) == 1) {
+        uVar2 = 0xffffffff82022270;
+      }
+      else if ((param_2 & 0xffffffff) < 3) {
+        uVar2 = 0xffffffff82022280;
+      }
+      else {
+        if (iVar4 != 3) {
+          MyAssertHandler(0xffffffff82022200,0x2b3,0,0xffffffff82022304,0xffffffff82022314,param_2);
+        }
+        uVar2 = 0xffffffff820222ec;
+      }
+      goto LAB_822f6058;
+    }
+  }
+  else {
+    iVar3 = CG_GetLocalClientGlobals();
+    if ((iVar4 == 0) ||
+       (bVar1 = true, iVar4 != *(int *)(*(int *)(iVar3 + 0x3334) * 0x590 + iVar3 + 0x100bb4))) {
+      bVar1 = false;
+    }
+    if ((param_2 & 0xffffffff) != 0) {
+      if ((param_2 & 0xffffffff) == 1) {
+        if (bVar1) {
+          uVar2 = 0xffffffff820222ac;
+        }
+        else {
+          uVar2 = 0xffffffff82022294;
+        }
+      }
+      else if ((param_2 & 0xffffffff) < 3) {
+        if (bVar1) {
+          uVar2 = 0xffffffff820222d8;
+        }
+        else {
+          uVar2 = 0xffffffff820222c0;
+        }
+      }
+      else {
+        if (iVar4 != 3) {
+          MyAssertHandler(0xffffffff82022200,0x2a4,0,0xffffffff82022304,0xffffffff82022314,param_2);
+        }
+        uVar2 = 0xffffffff820222ec;
+      }
+      goto LAB_822f6058;
+    }
+  }
+  uVar2 = 0xffffffff82022260;
+LAB_822f6058:
+  Dvar_GetString(uVar2);
+  return;
+}
+
+
+// 822F6070  CG_DrawScoreboard_ListBanner  (cgame_mp/cg_scoreboard_mp.cpp:699)
+
+void CG_DrawScoreboard_ListBanner(undefined8 param_1,double param_2)
+
+{
+  undefined8 uVar1;
+  int iVar6;
+  undefined8 uVar2;
+  byte bVar8;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  char cVar9;
+  int iVar7;
+  ulonglong in_r7;
+  undefined8 in_r8;
+  double extraout_f1;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  undefined1 auStack_a0 [160];
+  
+  __savegprlr_23();
+  uVar1 = __savefpr_26();
+  dVar14 = extraout_f1;
+  iVar6 = CG_CheckDrawScoreboardLine(uVar1,in_r8);
+  if (iVar6 == 0) {
+    __restfpr_26(dVar14);
+    __restgprlr_23();
+    return;
+  }
+  iVar6 = CG_GetLocalClientGlobals(uVar1);
+  uVar2 = ScrPlace_GetActivePlacement(uVar1);
+  bVar8 = CL_IsRenderingSplitScreen();
+  dVar15 = 1.0;
+  dVar13 = 0.3499999940395355;
+  uVar3 = UI_GetFontHandle((double)(((float)bVar8 * (*(float *)(DAT_82a3ce34 + 0xc) - 1.0) + 1.0) *
+                                   0.35),uVar2,*(undefined4 *)(DAT_82a5f598 + 0xc));
+  uVar4 = TeamIconName(uVar1,in_r7);
+  if ((in_r7 & 0xffffffff) == 0) {
+    uVar5 = 0xffffffff820068af;
+  }
+  else if ((in_r7 & 0xffffffff) == 1) {
+    uVar5 = Dvar_GetString(0xffffffff82022338);
+    uVar5 = SEH_LocalizeTextMessage(uVar5,0xffffffff82022370,0);
+  }
+  else if ((in_r7 & 0xffffffff) < 3) {
+    uVar5 = Dvar_GetString(0xffffffff82022348);
+    uVar5 = SEH_LocalizeTextMessage(uVar5,0xffffffff82022370,0);
+  }
+  else {
+    if ((int)in_r7 != 3) {
+      MyAssertHandler(0xffffffff82022200,0x2dd,0,0xffffffff82022304,0xffffffff82022314,in_r7);
+    }
+    uVar5 = SEH_LocalizeTextMessage(0xffffffff8202235c,0xffffffff82022370,0);
+  }
+  dVar10 = (double)CG_BackdropLeft(uVar1);
+  dVar12 = 9.0;
+  dVar10 = (double)(float)(dVar10 + 9.0);
+  Material_RegisterHandle(uVar4,7);
+  cVar9 = Material_IsDefault();
+  if (cVar9 == '\0') {
+    dVar11 = (double)CG_BackdropLeft(uVar1);
+    UI_DrawHandlePic((double)(float)(dVar11 + dVar12),dVar14,param_2,param_2,uVar2);
+    dVar10 = (double)((float)(dVar10 + param_2) + 8.0);
+  }
+  dVar14 = (double)(float)(dVar14 + param_2);
+  bVar8 = CL_IsRenderingSplitScreen();
+  UI_DrawText(dVar10,dVar14,
+              (double)(float)((double)(float)((double)bVar8 *
+                                              (double)(float)((double)*(float *)(DAT_82a3ce34 + 0xc)
+                                                             - dVar15) + dVar15) * dVar13),uVar2,
+              uVar5,0x7fffffff,uVar3);
+  bVar8 = CL_IsRenderingSplitScreen();
+  iVar7 = UI_TextWidth((double)(float)((double)(float)((double)bVar8 *
+                                                       (double)(float)((double)*(float *)(
+                                                  DAT_82a3ce34 + 0xc) - dVar15) + dVar15) * dVar13),
+                       uVar5,0x7fffffff,uVar3);
+  dVar10 = (double)(float)((double)(longlong)(iVar7 + 8) + dVar10);
+  Com_sprintf((double)(longlong)(iVar7 + 8),auStack_a0,0x20,0xffffffff82022330,
+              *(undefined4 *)((int)((in_r7 + 0x1dab6 & 0xffffffff) << 2) + iVar6));
+  bVar8 = CL_IsRenderingSplitScreen();
+  UI_DrawText(dVar10,dVar14,
+              (double)(float)((double)(float)((double)bVar8 *
+                                              (double)(float)((double)*(float *)(DAT_82a3ce34 + 0xc)
+                                                             - dVar15) + dVar15) * dVar13),uVar2,
+              auStack_a0,0x7fffffff,uVar3);
+  __restfpr_26((double)(float)(dVar14 + 4.0));
+  __restgprlr_23();
+  return;
+}
+
+
+// 822F63C0  CalcXAdj  (cgame_mp/cg_scoreboard_mp.cpp:758)
+
+double CalcXAdj(double param_1,double param_2,int param_3)
+
+{
+  if (param_3 == 1) {
+    return (double)((float)(param_1 - param_2) * 0.5);
+  }
+  if (param_3 != 2) {
+    if (param_3 != 0) {
+      MyAssertHandler(0xffffffff82022200,0x2fe,0,0xffffffff82000f98,0xffffffff82022388);
+    }
+    return 0.0;
+  }
+  return (double)(float)(param_1 - param_2);
+}
+
+
+// 822F6458  DrawListString  (cgame_mp/cg_scoreboard_mp.cpp:773)
+
+void DrawListString(undefined8 param_1,double param_2,double param_3,double param_4,
+                   undefined8 param_5,ulonglong param_6)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  byte bVar3;
+  undefined8 in_r8;
+  undefined8 in_r9;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
+  __savegprlr_26();
+  dVar4 = (double)__savefpr_27();
+  if ((param_6 & 0xffffffff) != 0) {
+    uVar1 = ScrPlace_GetActivePlacement();
+    iVar2 = UI_TextWidth(param_4,param_6,0x7fffffff,in_r9);
+    if (param_3 < (double)(longlong)iVar2) {
+      dVar5 = 0.02500000037252903;
       do {
-        dVar1 = dVar12 - dVar10;
-        dVar12 = (double)(float)dVar1;
-        iVar4 = UI_TextWidth(pcVar5,0x7fffffff,in_r9,(float)dVar1);
-      } while (dVar11 < (double)(longlong)iVar4);
+        param_4 = (double)(float)(param_4 - dVar5);
+        iVar2 = UI_TextWidth(param_4,param_6,0x7fffffff,in_r9);
+      } while (param_3 < (double)(longlong)iVar2);
     }
-    if (dVar12 <= 0.0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
-                      ,0x311,0,"%s\n\t(scale) = %i");
+    if (param_4 <= 0.0) {
+      MyAssertHandler(param_4,0xffffffff82022200,0x311,0,0xffffffff8202239c,0xffffffff820223b0,
+                      param_4);
     }
-    iVar4 = UI_TextWidth(pcVar5,0x7fffffff,in_r9,(float)dVar12);
-    fVar13 = CalcXAdj((int)param_10,(float)dVar11,(float)(longlong)iVar4);
-    dVar11 = (double)fVar13;
-    if (param_10 == (float *)0x2) {
-      dVar11 = (double)(float)(dVar11 - 4.0);
+    iVar2 = UI_TextWidth(param_4,param_6,0x7fffffff,in_r9);
+    dVar5 = (double)CalcXAdj(param_3,(double)(longlong)iVar2,in_r8);
+    if ((int)in_r8 == 2) {
+      dVar5 = (double)(float)(dVar5 - 4.0);
     }
-    bVar6 = CL_IsRenderingSplitScreen();
-    dVar10 = (double)((float)(longlong)bVar6 *
-                      ((cg_hudSplitscreenScoreboardScale->current).value - 1.0) + 1.0);
-    iVar4 = UI_TextHeight(in_r9,(float)dVar12);
-    UI_DrawText(pSVar3,pcVar5,0x7fffffff,in_r9,(float)(dVar11 + dVar9),
-                (float)((double)(float)((double)(longlong)(cg_scoreboardItemHeight->current).integer
-                                        * dVar10 + (double)(longlong)iVar4) *
-                        (double)(cg_scoreboardTextOffset->current).value + dVar8),
-                (cg_scoreboardItemHeight->current).integer,(int)cg_scoreboardTextOffset,
-                (float)dVar12,(float *)0x1,0);
+    bVar3 = CL_IsRenderingSplitScreen();
+    dVar6 = (double)((float)bVar3 * (*(float *)(DAT_82a38380 + 0xc) - 1.0) + 1.0);
+    iVar2 = UI_TextHeight(param_4,in_r9);
+    UI_DrawText((double)(float)(dVar5 + dVar4),
+                (double)(float)((double)(float)((double)(longlong)*(int *)(DAT_82a5f59c + 0xc) *
+                                                dVar6 + (double)(longlong)iVar2) *
+                                (double)*(float *)(DAT_82a5f5a4 + 0xc) + param_2),param_4,uVar1,
+                param_6,0x7fffffff,in_r9,*(int *)(DAT_82a5f59c + 0xc),DAT_82a5f5a4,1,0);
   }
   __restfpr_27();
   __restgprlr_26();
@@ -384,34 +666,23 @@ void DrawListString(LocalClientNum_t param_1,char *param_2,float param_3,float p
 
 // 822F6678  CG_DrawClientPing  (cgame_mp/cg_scoreboard_mp.cpp:798)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CG_DrawClientPing(LocalClientNum_t param_1,int param_2,float param_3,float param_4,
-                      float param_5,float param_6)
+void CG_DrawClientPing(undefined8 param_1,double param_2,double param_3,double param_4,
+                      undefined8 param_5,ulonglong param_6)
 
 {
-  float fVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  LocalClientNum_t LVar4;
-  ScreenPlacement *pSVar5;
+  float fVar3;
+  undefined8 uVar4;
+  int iVar5;
   ulonglong uVar6;
-  float *pfVar8;
-  longlong lVar7;
-  int in_r5;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  longlong lVar11;
-  int iVar12;
-  int iVar13;
-  double extraout_f1;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
+  int iVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
   float local_90;
   float local_8c;
   float local_88;
@@ -425,78 +696,62 @@ void CG_DrawClientPing(LocalClientNum_t param_1,int param_2,float param_3,float 
   float local_68;
   float local_64;
   
-  dVar18 = (double)param_5;
-  dVar14 = (double)param_6;
-  dVar15 = (double)param_4;
-  uVar6 = (ulonglong)param_2;
-  __savegprlr_27((double)param_3,param_1);
-  LVar4 = __savefpr_26();
-  if (((onlinegame->current).enabled != false) || ((systemlink->current).enabled != false)) {
-    dVar17 = extraout_f1;
-    pSVar5 = ScrPlace_GetActivePlacement(LVar4);
-    Material_RegisterHandle("white",7);
-    pfVar8 = &local_90;
-    Dvar_GetUnpackedColor(cg_ScoresPing_BgColor,pfVar8);
-    lVar11 = -0x7e000000;
-    uVar10 = 0xffffffff82000000;
-    dVar17 = (double)(float)(dVar17 + 8.0);
-    dVar19 = 1.0;
-    UI_DrawHandlePic(pSVar5,(float)(dVar17 - 1.0),(float)dVar15,(float)(dVar18 + 2.0),(float)dVar14,
-                     (int)pfVar8,in_r5,(float *)&IMAGE_DOS_HEADER_82000000,
-                     (Material *)&IMAGE_DOS_HEADER_82000000);
-    uVar9 = 0xffffffff82a60000;
-    uVar2 = (cg_ScoresPing_Interval->current).integer;
-    uVar3 = (cg_ScoresPing_MaxBars->current).integer;
-    if ((int)uVar2 < 1) {
-      lVar11 = -0x7dfddc30;
-      uVar10 = 0xffffffff820223bc;
-      uVar9 = 0;
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
-                      ,0x339,0,"%s\n\t(interval) = %i");
+  __savegprlr_27();
+  dVar8 = (double)__savefpr_26();
+  if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') || (*(char *)(DAT_82aa1ae4 + 0xc) != '\0')) {
+    uVar4 = ScrPlace_GetActivePlacement();
+    Material_RegisterHandle(0xffffffff8201e1d4,7);
+    Dvar_GetUnpackedColor(DAT_82a5f5bc,&local_90);
+    dVar8 = (double)(float)(dVar8 + 8.0);
+    dVar13 = 1.0;
+    UI_DrawHandlePic((double)(float)(dVar8 - 1.0),param_2,(double)(float)(param_3 + 2.0),param_4,
+                     uVar4);
+    uVar1 = *(uint *)(DAT_82a5f5a0 + 0xc);
+    uVar6 = (ulonglong)uVar1;
+    uVar2 = *(uint *)(DAT_82a5f5d0 + 0xc);
+    if ((int)uVar1 < 1) {
+      MyAssertHandler(0xffffffff82022200,0x339,0,0xffffffff820223bc,0xffffffff820223d0,uVar6);
     }
-    Material_RegisterHandle("white",7);
-    iVar12 = uVar3 - (int)uVar6 / (int)uVar2;
-    trapWord(6,(ulonglong)uVar2,0);
-    trapWord(5,(ulonglong)uVar2 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),
-             0xffff);
-    if (iVar12 < 1) {
-      iVar12 = 1;
+    Material_RegisterHandle(0xffffffff8201e1d4,7);
+    iVar5 = uVar2 - (int)param_6 / (int)uVar1;
+    trapWord(6,uVar6,0);
+    trapWord(5,uVar6 & ~(((param_6 & 0x7fffffff) << 1 | (param_6 & 0xffffffff) >> 0x1f) - 1),0xffff)
+    ;
+    if (iVar5 < 1) {
+      iVar5 = 1;
     }
-    iVar13 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0);
-    if (iVar12 < iVar13) {
-      Dvar_GetUnpackedColor(cg_ScoresPing_HighColor,&local_80);
-      lVar7 = ZEXT48(&stack0x00000000) - 0x70;
-      Dvar_GetUnpackedColor(cg_ScoresPing_MedColor,(float *)lVar7);
-      fVar1 = (float)(longlong)iVar12 / (float)(longlong)iVar13;
+    iVar7 = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0);
+    if (iVar5 < iVar7) {
+      Dvar_GetUnpackedColor(DAT_82a5f5b0,&local_80);
+      Dvar_GetUnpackedColor(DAT_82a5f5ac,&local_70);
+      fVar3 = (float)(longlong)iVar5 / (float)(longlong)iVar7;
     }
     else {
-      Dvar_GetUnpackedColor(cg_ScoresPing_MedColor,&local_80);
-      lVar7 = ZEXT48(&stack0x00000000) - 0x70;
-      Dvar_GetUnpackedColor(cg_ScoresPing_LowColor,(float *)lVar7);
-      lVar11 = (longlong)(iVar12 - iVar13);
-      fVar1 = (float)lVar11 / (float)(longlong)iVar13;
+      Dvar_GetUnpackedColor(DAT_82a5f5ac,&local_80);
+      Dvar_GetUnpackedColor(DAT_82a5f590,&local_70);
+      fVar3 = (float)(longlong)(iVar5 - iVar7) / (float)(longlong)iVar7;
     }
-    dVar16 = (double)(longlong)(int)uVar3;
-    local_90 = (local_70 - local_80) * fVar1 + local_80;
-    local_8c = (local_6c - local_7c) * fVar1 + local_7c;
-    local_88 = (local_68 - local_78) * fVar1 + local_78;
-    local_84 = (local_64 - local_74) * fVar1 + local_74;
-    dVar18 = (double)(float)((double)(float)(dVar18 / dVar16) - dVar19);
-    if (dVar18 < dVar19) {
-      dVar18 = dVar19;
+    dVar11 = (double)(longlong)(int)uVar2;
+    local_90 = (local_70 - local_80) * fVar3 + local_80;
+    local_8c = (local_6c - local_7c) * fVar3 + local_7c;
+    local_88 = (local_68 - local_78) * fVar3 + local_78;
+    local_84 = (local_64 - local_74) * fVar3 + local_74;
+    dVar12 = (double)(float)((double)(float)(param_3 / dVar11) - dVar13);
+    if (dVar12 < dVar13) {
+      dVar12 = dVar13;
     }
-    iVar13 = 1;
-    if (0 < iVar12) {
-      dVar15 = (double)(float)(dVar15 + dVar14);
-      dVar19 = (double)(float)(dVar18 + dVar19);
+    iVar7 = 1;
+    if (0 < iVar5) {
+      dVar10 = (double)(float)(param_2 + param_4);
+      dVar13 = (double)(float)(dVar12 + dVar13);
       do {
-        fVar1 = (float)((double)(float)((double)((cg_scoreboardPingHeight->current).value *
-                                                (float)(longlong)iVar13) * dVar14) / dVar16);
-        UI_DrawHandlePic(pSVar5,(float)dVar17,(float)(dVar15 - (double)fVar1),(float)dVar18,fVar1,
-                         (int)lVar7,(int)uVar9,(float *)uVar10,(Material *)lVar11);
-        iVar13 = iVar13 + 1;
-        dVar17 = (double)(float)(dVar19 + dVar17);
-      } while (iVar13 <= iVar12);
+        dVar9 = (double)(float)((double)(float)((double)(*(float *)(DAT_82a5f5c4 + 0xc) *
+                                                        (float)(longlong)iVar7) * param_4) / dVar11)
+        ;
+        UI_DrawHandlePic(dVar8,(double)(float)(dVar10 - dVar9),dVar12,dVar9,uVar4);
+        iVar7 = iVar7 + 1;
+        dVar8 = (double)(float)(dVar13 + dVar8);
+      } while (iVar7 <= iVar5);
     }
   }
   __restfpr_26();
@@ -506,49 +761,747 @@ void CG_DrawClientPing(LocalClientNum_t param_1,int param_2,float param_3,float 
 
 
 // 822F6968  CG_DrawClientScore  (cgame_mp/cg_scoreboard_mp.cpp:858)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_DrawClientScore(undefined8 param_1,double param_2)
+
+{
+  undefined4 uVar1;
+  ulonglong uVar2;
+  int iVar6;
+  undefined8 uVar3;
+  byte bVar8;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  char cVar9;
+  char *pcVar7;
+  uint *in_r6;
+  int in_r8;
+  int iVar10;
+  ulonglong uVar11;
+  undefined1 *puVar12;
+  undefined4 *puVar13;
+  double extraout_f1;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  uint local_188;
+  char *local_184 [5];
+  undefined1 local_170 [16];
+  undefined1 auStack_160 [352];
+  
+  __savegprlr();
+  uVar2 = __savefpr_23();
+  dVar21 = extraout_f1;
+  iVar6 = CG_GetLocalClientGlobals();
+  if (0x11 < *in_r6) {
+    MyAssertHandler(0xffffffff82022200,0x36d,0,0xffffffff82022400,*in_r6,0x12);
+  }
+  iVar10 = *in_r6 * 0x590 + iVar6;
+  if (*(int *)(iVar10 + 0x100b88) == 0) {
+    __restfpr_23(dVar21);
+    __restgprlr();
+    return;
+  }
+  uVar3 = ScrPlace_GetActivePlacement(uVar2);
+  CG_GetScoreboardInfo(&stack0x00000000 + -0x184,&stack0x00000000 + -0x188);
+  dVar14 = (double)CG_BackdropLeft(uVar2);
+  dVar22 = 9.0;
+  dVar18 = (double)(float)(dVar14 + 9.0);
+  bVar8 = CL_IsRenderingSplitScreen();
+  dVar20 = 1.0;
+  dVar14 = (double)((float)(longlong)*(int *)(DAT_82a5f59c + 0xc) *
+                   ((float)bVar8 * (*(float *)(DAT_82a38380 + 0xc) - 1.0) + 1.0));
+  Material_RegisterHandle(0xffffffff8201e1d4,7);
+  UI_DrawHandlePic(dVar18,dVar21,param_2,dVar14,uVar3);
+  bVar8 = CL_IsRenderingSplitScreen();
+  dVar18 = 0.3499999940395355;
+  uVar4 = UI_GetFontHandle((double)((float)((double)bVar8 *
+                                            (double)(float)((double)*(float *)(DAT_82a38380 + 0xc) -
+                                                           dVar20) + dVar20) * 0.35),uVar3,
+                           *(undefined4 *)(DAT_82a5f598 + 0xc));
+  dVar14 = (double)CG_BackdropLeft(uVar2);
+  dVar14 = (double)(float)(dVar14 + dVar22);
+  if (*in_r6 == *(uint *)(iVar6 + 0x3334)) {
+    Dvar_GetUnpackedColor(DAT_82a5f588,&stack0x00000000 + -0x170);
+  }
+  else {
+    iVar6 = CL_ClientIsInMyParty(uVar2);
+    if (iVar6 != 0) {
+      Dvar_GetUnpackedColor(DAT_82a5f5a8,&stack0x00000000 + -0x170);
+    }
+  }
+  if (0 < (int)local_188) {
+    puVar13 = (undefined4 *)((int)local_184[0] + 0xc);
+    dVar22 = 0.25;
+    local_184[0] = "voice_off";
+    do {
+      dVar19 = (double)(float)((double)(float)puVar13[-2] * param_2);
+      switch(puVar13[-3]) {
+      case 0:
+        if ((*(char *)(iVar10 + 0x100bd4) == '\0') || (*(char *)(iVar10 + 0x1010d0) != '\0')) {
+          if ((*(char *)(iVar10 + 0x1010f0) == '\0') || (*(char *)(iVar10 + 0x1010d0) != '\x01')) {
+            puVar12 = (undefined1 *)(iVar10 + 0x100b94);
+          }
+          else {
+            Com_sprintf(&stack0x00000000 + -0x160,0x20,0xffffffff820223e8,iVar10 + 0x1010f0,
+                        iVar10 + 0x100b94);
+            puVar12 = &stack0x00000000 + -0x160;
+          }
+        }
+        else {
+          Com_sprintf(&stack0x00000000 + -0x160,0x20,0xffffffff820223e0,iVar10 + 0x100bd4,
+                      iVar10 + 0x100b94);
+          puVar12 = &stack0x00000000 + -0x160;
+        }
+        if (in_r6[9] == 0) {
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          DrawListString(dVar14,dVar21,dVar19,(double)(float)(dVar16 * dVar18),uVar2,puVar12);
+        }
+        else {
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          dVar15 = (double)(float)(dVar16 * (double)(longlong)*(int *)(DAT_82a5f59c + 0xc));
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          UI_DrawHandlePic(dVar14,dVar21,
+                           (double)(float)(dVar16 * (double)(longlong)*(int *)(DAT_82a5f59c + 0xc)),
+                           dVar15,uVar3);
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          dVar17 = (double)(float)(dVar16 * dVar18);
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          dVar15 = -(double)(float)(dVar16 * (double)(longlong)*(int *)(DAT_82a5f59c + 0xc) - dVar19
+                                   );
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          DrawListString((double)(float)(dVar16 * (double)(longlong)*(int *)(DAT_82a5f59c + 0xc) +
+                                        dVar14),dVar21,dVar15,dVar17,uVar2,puVar12);
+        }
+        break;
+      case 2:
+        if (in_r6[4] != 3) {
+          Com_sprintf(&stack0x00000000 + -0x160,0x20,0xffffffff8200c28c,in_r6[1]);
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          DrawListString(dVar14,dVar21,dVar19,(double)(float)(dVar16 * dVar18),uVar2,
+                         &stack0x00000000 + -0x160);
+        }
+        break;
+      case 3:
+        if (in_r6[4] != 3) {
+          Com_sprintf(&stack0x00000000 + -0x160,0x20,0xffffffff8200c28c,in_r6[3]);
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          DrawListString(dVar14,dVar21,dVar19,(double)(float)(dVar16 * dVar18),uVar2,
+                         &stack0x00000000 + -0x160);
+        }
+        break;
+      case 4:
+        Com_sprintf(&stack0x00000000 + -0x160,0x20,0xffffffff8200c28c,in_r6[2]);
+        dVar16 = (double)CG_ScoreboardScaleMultiplier();
+        DrawListString(dVar14,dVar21,dVar19,(double)(float)(dVar16 * dVar18),uVar2,
+                       &stack0x00000000 + -0x160);
+        break;
+      case 5:
+        if (in_r6[10] != 0) {
+          uVar1 = *puVar13;
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          dVar16 = (double)CalcXAdj(dVar19,(double)(float)(dVar16 * (double)(longlong)
+                                                                            *(int *)(DAT_82a5f59c +
+                                                                                    0xc)),uVar1);
+          dVar15 = (double)CG_ScoreboardScaleMultiplier();
+          dVar17 = (double)(float)(dVar15 * (double)(longlong)*(int *)(DAT_82a5f59c + 0xc));
+          dVar15 = (double)CG_ScoreboardScaleMultiplier();
+          UI_DrawHandlePic((double)(float)(dVar16 + dVar14),dVar21,
+                           (double)(float)(dVar15 * (double)(longlong)*(int *)(DAT_82a5f59c + 0xc)),
+                           dVar17,uVar3);
+        }
+        break;
+      case 6:
+        cVar9 = CL_IsPlayerMuted(0xffffffff844c7860,*in_r6);
+        pcVar7 = local_184[0];
+        if (((cVar9 != '\0') ||
+            (cVar9 = CL_IsPlayerTalking(0xffffffff844c7860,*in_r6), pcVar7 = "voice_on",
+            cVar9 != '\0')) && (iVar6 = Material_RegisterHandle(pcVar7,7), iVar6 != 0)) {
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          dVar15 = (double)(float)(dVar16 * (double)(longlong)*(int *)(DAT_82a5f59c + 0xc));
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          UI_DrawHandlePic(dVar14,dVar21,
+                           (double)(float)(dVar16 * (double)(longlong)*(int *)(DAT_82a5f59c + 0xc)),
+                           dVar15,uVar3);
+        }
+        break;
+      case 7:
+        if (in_r6[4] != 3) {
+          Com_sprintf(&stack0x00000000 + -0x160,0x20,0xffffffff8200c28c,in_r6[5]);
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          DrawListString(dVar14,dVar21,dVar19,(double)(float)(dVar16 * dVar18),uVar2,
+                         &stack0x00000000 + -0x160);
+        }
+        break;
+      case 8:
+        if (in_r6[0xb] != 0) {
+          uVar1 = *puVar13;
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          dVar16 = (double)CalcXAdj(dVar19,(double)(float)(dVar16 * (double)(longlong)
+                                                                            *(int *)(DAT_82a5f59c +
+                                                                                    0xc)),uVar1);
+          dVar15 = (double)CG_ScoreboardScaleMultiplier();
+          dVar17 = (double)(float)(dVar15 * (double)(longlong)*(int *)(DAT_82a5f59c + 0xc));
+          dVar15 = (double)CG_ScoreboardScaleMultiplier();
+          UI_DrawHandlePic((double)(float)(dVar16 + dVar14),dVar21,
+                           (double)(float)(dVar15 * (double)(longlong)*(int *)(DAT_82a5f59c + 0xc)),
+                           dVar17,uVar3);
+          uVar5 = CL_GetRankDataMP(in_r6[6],0xe);
+          dVar17 = (double)*(float *)(DAT_82a5f5dc + 0xc);
+          iVar6 = UI_TextHeight(dVar17,uVar4);
+          dVar15 = (double)CG_ScoreboardScaleMultiplier();
+          DrawListString((double)(float)((double)(float)(dVar15 * (double)(longlong)
+                                                                          *(int *)(DAT_82a5f59c +
+                                                                                  0xc) + dVar16) +
+                                        dVar14),
+                         (double)(float)((double)(longlong)iVar6 * dVar22 + dVar21),dVar19,dVar17,
+                         uVar2,uVar5);
+        }
+        break;
+      case 9:
+        if (in_r6[4] != 3) {
+          Com_sprintf(&stack0x00000000 + -0x160,0x20,0xffffffff8200c28c,in_r6[7]);
+          dVar16 = (double)CG_ScoreboardScaleMultiplier();
+          DrawListString(dVar14,dVar21,dVar19,(double)(float)(dVar16 * dVar18),uVar2,
+                         &stack0x00000000 + -0x160);
+        }
+        break;
+      case 10:
+        Com_sprintf(&stack0x00000000 + -0x160,0x20,0xffffffff8200c28c,in_r6[8]);
+        dVar16 = (double)CG_ScoreboardScaleMultiplier();
+        DrawListString(dVar14,dVar21,dVar19,(double)(float)(dVar16 * dVar18),uVar2,
+                       &stack0x00000000 + -0x160);
+      }
+      uVar11 = (ulonglong)local_188;
+      dVar14 = (double)(float)(dVar19 + dVar14);
+      puVar13 = puVar13 + 4;
+      local_188 = (uint)(uVar11 - 1);
+    } while (uVar11 - 1 != 0);
+  }
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82001158,0x4c5,0,0xffffffff820011a8,uVar2,4);
+  }
+  if ((*(int *)(&DAT_82b3e4f4 + (int)uVar2 * 0x1e4) == 0) && (*(char *)(DAT_82a5f5b4 + 0xc) != '\0')
+     ) {
+    bVar8 = CL_IsRenderingSplitScreen();
+    CG_DrawClientPing(dVar14,dVar21,
+                      (double)(float)((double)*(float *)(DAT_82a5f5c8 + 0xc) * param_2),
+                      (double)((float)(longlong)*(int *)(DAT_82a5f59c + 0xc) *
+                              (float)((double)bVar8 *
+                                      (double)(float)((double)*(float *)(DAT_82a38380 + 0xc) -
+                                                     dVar20) + dVar20)),uVar2,in_r6[2]);
+  }
+  if (in_r8 != 0) {
+    dVar14 = (double)CG_BackdropLeft(uVar2);
+    dVar14 = (double)(float)(dVar14 + 5.0);
+    iVar6 = DAT_82a5f5e4;
+    if ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
+      iVar6 = DAT_82a5f5b8;
+    }
+    dVar18 = (double)*(float *)(iVar6 + 0xc);
+    bVar8 = CL_IsRenderingSplitScreen();
+    UI_DrawRect(dVar14,dVar21,(double)((float)(dVar18 - 6.0) - 4.0),
+                (double)((float)(longlong)*(int *)(DAT_82a5f59c + 0xc) *
+                        (float)((double)bVar8 *
+                                (double)(float)((double)*(float *)(DAT_82a38380 + 0xc) - dVar20) +
+                               dVar20)),0x4000000000000000,uVar3);
+  }
+  bVar8 = CL_IsRenderingSplitScreen();
+  __restfpr_23((double)(float)((double)(longlong)*(int *)(DAT_82a5f59c + 0xc) *
+                               (double)(float)((double)bVar8 *
+                                               (double)(float)((double)*(float *)(DAT_82a38380 + 0xc
+                                                                                 ) - dVar20) +
+                                              dVar20) + dVar21));
+  __restgprlr();
+  return;
+}
+
 
 // 822F7560  CG_ScoreboardTotalLines  (cgame_mp/cg_scoreboard_mp.cpp:1067)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+ulonglong CG_ScoreboardTotalLines(void)
+
+{
+  int iVar2;
+  ulonglong uVar1;
+  
+  iVar2 = CG_GetLocalClientGlobals();
+  uVar1 = (ulonglong)*(uint *)(iVar2 + 0x76ab4);
+  if (*(int *)(iVar2 + 0x76ad8) != 0) {
+    uVar1 = uVar1 + 1;
+  }
+  if ((*(int *)(iVar2 + 0x76adc) != 0) || (*(int *)(iVar2 + 0x76ae0) != 0)) {
+    uVar1 = uVar1 + 2;
+  }
+  if (*(int *)(iVar2 + 0x76ae4) != 0) {
+    uVar1 = uVar1 + 1;
+  }
+  return uVar1;
+}
+
 
 // 822F75F0  CG_DrawTeamOfClientScore  (cgame_mp/cg_scoreboard_mp.cpp:1092)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_DrawTeamOfClientScore
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,longlong param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  byte bVar5;
+  undefined8 uVar2;
+  int iVar4;
+  int *piVar6;
+  int *piVar7;
+  int iVar8;
+  uint *puVar9;
+  undefined8 extraout_f1;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  undefined1 auStack_d0 [12];
+  undefined4 local_c4;
+  
+  __savegprlr();
+  uVar1 = __savefpr_28();
+  uVar2 = extraout_f1;
+  iVar3 = CG_GetLocalClientGlobals();
+  piVar6 = (int *)param_8;
+  puVar9 = (uint *)(iVar3 + 0x76ae8);
+  *(int *)((int)((param_6 + 0x1db98U & 0xffffffff) << 2) + iVar3) = *piVar6;
+  bVar5 = CL_IsRenderingSplitScreen();
+  dVar12 = 1.0;
+  dVar10 = (double)CG_DrawScoreboard_ListBanner
+                             (uVar2,(double)((float)(longlong)*(int *)(DAT_82a5f5e8 + 0xc) *
+                                            ((float)bVar5 * (*(float *)(DAT_82a38380 + 0xc) - 1.0) +
+                                            1.0)),uVar1,param_4,0xffffffff82000000,bVar5,param_6,
+                              param_8);
+  iVar8 = 0;
+  if (0 < *(int *)(iVar3 + 0x76ab4)) {
+    dVar11 = 4.0;
+    do {
+      if (0x11 < *puVar9) {
+        MyAssertHandler(0xffffffff82022200,0x457,0,0xffffffff82022400,*puVar9,0x12);
+      }
+      if ((*(int *)(*puVar9 * 0x590 + iVar3 + 0x100b88) != 0) && (puVar9[4] == (uint)param_6)) {
+        piVar7 = (int *)(iVar3 + 0x76e5c);
+        if ((*piVar7 == 0) && (*puVar9 == *(uint *)(iVar3 + 0x3334))) {
+          *piVar7 = *piVar6;
+        }
+        if (*piVar6 == *piVar7) {
+          uVar2 = Session_GetXuidEvenIfInactive(0xffffffff844c7860,*puVar9);
+          *(undefined8 *)(iVar3 + 0x76e70) = uVar2;
+        }
+        bVar5 = CL_IsRenderingSplitScreen();
+        iVar4 = CG_CheckDrawScoreboardLine
+                          (dVar10,(double)((float)(longlong)*(int *)(DAT_82a5f59c + 0xc) *
+                                          (float)((double)bVar5 *
+                                                  (double)(float)((double)*(float *)(DAT_82a38380 +
+                                                                                    0xc) - dVar12) +
+                                                 dVar12)),uVar1,param_8);
+        if (iVar4 != 0) {
+          if (*(char *)(DAT_82a383b4 + 0xc) == '\0') {
+            CG_TeamColor(param_6,0xffffffff8202243c,auStack_d0);
+          }
+          else {
+            CG_RelativeTeamColor(uVar1,*puVar9,0xffffffff8202243c,0xffffffff8202243c,auStack_d0);
+          }
+          local_c4 = *(undefined4 *)((int)param_4 + 0xc);
+          dVar10 = (double)CG_DrawClientScore(dVar10,param_2,uVar1,auStack_d0);
+          dVar10 = (double)(float)(dVar10 + dVar11);
+        }
+      }
+      iVar8 = iVar8 + 1;
+      puVar9 = puVar9 + 0xc;
+    } while (iVar8 < *(int *)(iVar3 + 0x76ab4));
+  }
+  __restfpr_28(dVar10);
+  __restgprlr();
+  return;
+}
+
 
 // 822F7898  CG_DrawScrollbar  (cgame_mp/cg_scoreboard_mp.cpp:1149)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_DrawScrollbar(void)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar3;
+  int *piVar6;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  
+  __savegprlr_19();
+  uVar2 = __savefpr_16();
+  dVar8 = extraout_f1;
+  iVar4 = CG_GetLocalClientGlobals();
+  piVar6 = (int *)(iVar4 + 0x76e50);
+  if ((1 < *piVar6) || (*(int *)(iVar4 + 0x76e54) != 0)) {
+    iVar5 = CG_ScoreboardTotalLines(uVar2);
+    uVar3 = ScrPlace_GetActivePlacement(uVar2);
+    Material_RegisterHandle(0xffffffff82022488,7);
+    dVar11 = 0.5;
+    iVar1 = DAT_82a5f5e4;
+    if ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
+      iVar1 = DAT_82a5f5b8;
+    }
+    dVar21 = (double)*(float *)(iVar1 + 0xc);
+    dVar7 = (double)CG_BackdropLeft(uVar2);
+    dVar15 = 480.0;
+    dVar19 = 6.0;
+    dVar17 = 4.0;
+    dVar14 = 0.0;
+    dVar18 = 9.0;
+    dVar20 = 8.0;
+    dVar22 = 1.0;
+    dVar13 = 3.0;
+    dVar16 = 2.0;
+    dVar12 = 24.0;
+    dVar9 = (double)(float)((double)(float)(480.0 - (double)*(float *)(DAT_82a5f594 + 0xc)) * dVar11
+                           );
+    dVar10 = dVar14;
+    if (-dVar9 < 0.0) {
+      dVar10 = dVar9;
+    }
+    dVar7 = (double)((((float)(dVar21 - 6.0) - 4.0) - 8.0) * (*(float *)(DAT_82a5f5c8 + 0xc) + 1.0)
+                     + (float)(dVar7 + 9.0) + 12.0);
+    dVar10 = (double)((float)((double)(((((float)(dVar10 + (double)*(float *)(DAT_82a5f594 + 0xc)) -
+                                         3.0) - 2.0) - 24.0) - 1.0) - dVar8) - 1.0);
+    UI_DrawHandlePic(dVar7,dVar8,0x4020000000000000,dVar10,uVar3);
+    dVar7 = (double)(float)(dVar7 + dVar22);
+    dVar9 = (double)(float)(dVar8 + dVar22);
+    dVar10 = (double)(float)(dVar10 - dVar16);
+    if (iVar5 != 0) {
+      dVar9 = (double)(float)((double)((float)(longlong)(*piVar6 + -1) / (float)(longlong)iVar5) *
+                              dVar10 + dVar9);
+      dVar10 = (double)(float)((double)((float)(longlong)((*(int *)(iVar4 + 0x76e58) - *piVar6) + 1)
+                                       / (float)(longlong)iVar5) * dVar10);
+    }
+    Material_RegisterHandle(0xffffffff8201e1d4,7);
+    UI_DrawHandlePic(dVar7,dVar9,dVar19,dVar10,uVar3);
+    dVar7 = 16.0;
+    dVar10 = 26.0;
+    if (1 < *piVar6) {
+      Material_RegisterHandle(0xffffffff8202246c,7);
+      iVar1 = DAT_82a5f5e4;
+      if ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
+        iVar1 = DAT_82a5f5b8;
+      }
+      dVar21 = (double)*(float *)(iVar1 + 0xc);
+      dVar9 = (double)CG_BackdropLeft(uVar2);
+      UI_DrawHandlePic((double)(float)((double)((float)((double)(float)((double)(float)(dVar21 - 
+                                                  dVar19) - dVar17) - dVar20) *
+                                                (float)((double)*(float *)(DAT_82a5f5c8 + 0xc) +
+                                                       dVar22) + (float)(dVar9 + dVar18)) + dVar10),
+                       dVar8,dVar7,dVar7,uVar3);
+    }
+    if (*(int *)(iVar4 + 0x76e54) != 0) {
+      Material_RegisterHandle(0xffffffff8202244c,7);
+      iVar4 = DAT_82a5f5e4;
+      if ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
+        iVar4 = DAT_82a5f5b8;
+      }
+      dVar9 = (double)*(float *)(iVar4 + 0xc);
+      dVar8 = (double)CG_BackdropLeft(uVar2);
+      dVar11 = (double)(float)((double)(float)(dVar15 - (double)*(float *)(DAT_82a5f594 + 0xc)) *
+                              dVar11);
+      if (-dVar11 < 0.0) {
+        dVar14 = dVar11;
+      }
+      UI_DrawHandlePic((double)(float)((double)((float)((double)(float)((double)(float)(dVar9 - 
+                                                  dVar19) - dVar17) - dVar20) *
+                                                (float)((double)*(float *)(DAT_82a5f5c8 + 0xc) +
+                                                       dVar22) + (float)(dVar8 + dVar18)) + dVar10),
+                       (double)(float)((double)(float)((double)(float)((double)(float)((double)(
+                                                  float)((double)(float)((double)(float)(dVar14 + (
+                                                  double)*(float *)(DAT_82a5f594 + 0xc)) - dVar13) -
+                                                  dVar16) - dVar12) - dVar22) - dVar22) - dVar7),
+                       dVar7,dVar7,uVar3);
+    }
+  }
+  __restfpr_16();
+  __restgprlr_19();
+  return;
+}
+
 
 // 822F8F00  CG_DrawScoreboard_ScoresList  (cgame_mp/cg_scoreboard_mp.cpp:1234)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_DrawScoreboard_ScoresList(void)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  byte bVar4;
+  int iVar5;
+  int *piVar6;
+  double extraout_f1;
+  undefined8 extraout_f1_00;
+  undefined8 extraout_f1_01;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  undefined4 local_60;
+  undefined4 local_5c;
+  undefined4 local_58;
+  float local_54;
+  
+  __savegprlr_27();
+  uVar1 = __savefpr_28();
+  dVar7 = extraout_f1;
+  iVar2 = CG_GetLocalClientGlobals();
+  if (*(int *)(iVar2 + 0x76ab4) != 0) {
+    piVar6 = (int *)(iVar2 + 0x76e50);
+    iVar5 = *piVar6;
+    iVar3 = CG_ScoreboardTotalLines(uVar1);
+    if (iVar3 < iVar5) {
+      MyAssertHandler(0xffffffff82022200,0x4e0,0,0xffffffff82022c28,0xffffffff82022c48,iVar5);
+    }
+    *(undefined4 *)(iVar2 + 0x76e54) = 0;
+    dVar8 = (double)((480.0 - *(float *)(DAT_82a5f594 + 0xc)) * 0.5);
+    bVar4 = CL_IsRenderingSplitScreen();
+    dVar11 = 1.0;
+    dVar10 = 0.0;
+    if (-dVar8 < 0.0) {
+      dVar10 = dVar8;
+    }
+    local_54 = (float)dVar7;
+    local_60 = 0x3f800000;
+    local_5c = 0x3f800000;
+    local_58 = 0x3f800000;
+    dVar7 = (double)(float)((double)((float)bVar4 * (*(float *)(DAT_82a3ce34 + 0xc) - 1.0) + 1.0) *
+                            24.0 + dVar10);
+    dVar10 = (double)(float)(dVar7 + 6.0);
+    iVar5 = DAT_82a5f5e4;
+    if ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
+      iVar5 = DAT_82a5f5b8;
+    }
+    dVar9 = 4.0;
+    dVar8 = (double)(((*(float *)(iVar5 + 0xc) - 6.0) - 4.0) - 8.0);
+    bVar4 = CL_IsRenderingSplitScreen(extraout_f1_00,dVar7);
+    dVar10 = (double)(float)((double)(longlong)*(int *)(DAT_82a5f59c + 0xc) *
+                             (double)(float)((double)bVar4 *
+                                             (double)(float)((double)*(float *)(DAT_82a3ce34 + 0xc)
+                                                            - dVar11) + dVar11) + dVar10);
+    dVar7 = (double)(float)(dVar10 + dVar9);
+    bVar4 = CL_IsRenderingSplitScreen(extraout_f1_01,dVar10);
+    dVar10 = (double)(float)((double)(longlong)*(int *)(DAT_82a5f5e8 + 0xc) *
+                             (double)(float)((double)bVar4 *
+                                             (double)(float)((double)*(float *)(DAT_82a38380 + 0xc)
+                                                            - dVar11) + dVar11) + dVar7);
+    if (*piVar6 < 2) {
+      dVar11 = (double)CG_ScoreboardScaleMultiplier();
+      CG_DrawScoreboard_ListColumnHeaders
+                (dVar7,(double)(float)(dVar11 * (double)(longlong)*(int *)(DAT_82a5f5e8 + 0xc)),
+                 dVar8,uVar1,&local_60);
+    }
+    else {
+      dVar11 = (double)CG_ScoreboardScaleMultiplier();
+      dVar7 = (double)CG_DrawScoreboard_ListColumnHeaders
+                                (dVar7,(double)(float)(dVar11 * (double)(longlong)
+                                                                        *(int *)(DAT_82a5f5e8 + 0xc)
+                                                      ),dVar8,uVar1,&local_60);
+    }
+    if ((*(int *)(iVar2 + 0x76adc) != 0) || (*(int *)(iVar2 + 0x76ae0) != 0)) {
+      dVar7 = (double)CG_DrawTeamOfClientScore(dVar7,dVar8,uVar1,&local_60);
+      dVar7 = (double)CG_DrawTeamOfClientScore((double)(float)(dVar7 + dVar9),dVar8,uVar1,&local_60)
+      ;
+      dVar7 = (double)(float)(dVar7 + dVar9);
+    }
+    if (*(int *)(iVar2 + 0x76ad8) != 0) {
+      dVar7 = (double)CG_DrawTeamOfClientScore(dVar7,dVar8,uVar1,&local_60);
+      dVar7 = (double)(float)(dVar7 + dVar9);
+    }
+    if (*(int *)(iVar2 + 0x76ae4) != 0) {
+      CG_DrawTeamOfClientScore(dVar7,dVar8,uVar1,&local_60);
+    }
+    *(undefined4 *)(iVar2 + 0x76e58) = 0;
+    if (0 < *(int *)(iVar2 + 0x76e5c)) {
+      CG_ScrollScoreboardDown(iVar2);
+    }
+    iVar5 = *piVar6;
+    if (((*(int *)(iVar2 + 0x76e5c) < iVar5) && (1 < iVar5)) &&
+       (iVar5 = iVar5 - *(int *)(DAT_82a5f58c + 0xc), *piVar6 = iVar5, iVar5 < 2)) {
+      *piVar6 = 1;
+    }
+    CG_DrawScrollbar(dVar10,uVar1,&local_60);
+  }
+  __restfpr_28();
+  __restgprlr_27();
+  return;
+}
+
 
 // 822F7CC8  CenterViewOnClient  (cgame_mp/cg_scoreboard_mp.cpp:1318)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CenterViewOnClient(void)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  byte bVar4;
+  int iVar5;
+  int iVar6;
+  int *piVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  
+  __savegprlr_29();
+  __savefpr_25();
+  iVar3 = CG_GetLocalClientGlobals();
+  dVar14 = (double)*(float *)(DAT_82a5f594 + 0xc);
+  dVar13 = (double)((float)(480.0 - dVar14) * 0.5);
+  dVar12 = (double)((float)(480.0 - dVar14) * 0.5);
+  bVar4 = CL_IsRenderingSplitScreen();
+  dVar15 = 1.0;
+  dVar11 = (double)((float)bVar4 * (*(float *)(DAT_82a3ce34 + 0xc) - 1.0) + 1.0);
+  bVar4 = CL_IsRenderingSplitScreen();
+  dVar10 = (double)(float)((double)bVar4 *
+                           (double)(float)((double)*(float *)(DAT_82a38380 + 0xc) - dVar15) + dVar15
+                          );
+  bVar4 = CL_IsRenderingSplitScreen();
+  dVar9 = (double)(float)((double)bVar4 *
+                          (double)(float)((double)*(float *)(DAT_82a3ce34 + 0xc) - dVar15) + dVar15)
+  ;
+  bVar4 = CL_IsRenderingSplitScreen();
+  dVar8 = 0.0;
+  if (-dVar13 < 0.0) {
+    dVar8 = dVar13;
+  }
+  dVar13 = 0.0;
+  if (-dVar12 < 0.0) {
+    dVar13 = dVar12;
+  }
+  iVar5 = 1;
+  iVar2 = *(int *)(*(int *)(iVar3 + 0x3334) * 0x590 + iVar3 + 0x100bb4);
+  uVar1 = (uint)((-(float)((double)(longlong)*(int *)(DAT_82a5f59c + 0xc) * dVar9 -
+                          -(double)(float)((double)(longlong)*(int *)(DAT_82a5f5e8 + 0xc) * dVar10 -
+                                          (double)(float)((double)(((((float)(dVar8 + dVar14) - 3.0)
+                                                                    - 2.0) - 24.0) -
+                                                                  ((float)(dVar11 * 24.0 + dVar13) +
+                                                                  6.0)) - dVar15))) - 4.0) /
+                (float)((double)(longlong)*(int *)(DAT_82a5f59c + 0xc) *
+                        (double)(float)((double)bVar4 *
+                                        (double)(float)((double)*(float *)(DAT_82a38380 + 0xc) -
+                                                       dVar15) + dVar15) + 4.0));
+  if (iVar2 != 3) {
+    iVar6 = 0;
+    if (0 < *(int *)(iVar3 + 0x76ab4)) {
+      piVar7 = (int *)(iVar3 + 0x76ae8);
+      do {
+        if (piVar7[4] == iVar2) {
+          if (*piVar7 == *(int *)(iVar3 + 0x3334)) break;
+          iVar5 = iVar5 + 1;
+        }
+        iVar6 = iVar6 + 1;
+        piVar7 = piVar7 + 0xc;
+      } while (iVar6 < *(int *)(iVar3 + 0x76ab4));
+    }
+    if ((int)uVar1 < iVar5) {
+      *(uint *)(iVar3 + 0x76e50) =
+           (iVar5 - (((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0))) + 1;
+      __restfpr_25();
+      __restgprlr_29();
+      return;
+    }
+  }
+  *(undefined4 *)(iVar3 + 0x76e50) = 1;
+  __restfpr_25();
+  __restgprlr_29();
+  return;
+}
+
 
 // 822F7F48  CG_DrawScoreboard_Hidden  (cgame_mp/cg_scoreboard_mp.cpp:1359)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_DrawScoreboard_Hidden(void)
+
+{
+  int iVar1;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  *(undefined4 *)(iVar1 + 0x76e78) = 0;
+  return;
+}
+
 
 // 822F9330  CG_DrawScoreboard  (cgame_mp/cg_scoreboard_mp.cpp:1372)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+undefined8 CG_DrawScoreboard(undefined8 param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
+  
+  if (*(int *)(DAT_82a3d69c + 0xc) == 0) {
+    iVar1 = CG_GetLocalClientGlobals();
+    iVar2 = UI_GetActiveMenu(param_1);
+    if ((iVar2 == 6) || (iVar2 = UI_GetActiveMenu(param_1), iVar2 == 0xd)) {
+      UpdateScores(param_1);
+      if (*(int *)(iVar1 + 0x76e50) < 1) {
+        CenterViewOnClient(param_1);
+      }
+      if (*(int *)(iVar1 + 0x76e50) < 1) {
+        MyAssertHandler(0xffffffff82022200,0x57f,0,0xffffffff82000f98,0xffffffff82022c8c);
+      }
+      uVar3 = 0x3ff0000000000000;
+      CG_DrawScoreboard_Backdrop(0x3ff0000000000000,param_1);
+      CG_DrawScoreboard_ScoresList(uVar3,param_1);
+      return 1;
+    }
+    iVar1 = CG_GetLocalClientGlobals(param_1);
+    *(undefined4 *)(iVar1 + 0x76e78) = 0;
+  }
+  return 0;
+}
+
 
 // 822F7F78  CG_IsScoreboardDisplayed  (cgame_mp/cg_scoreboard_mp.cpp:1416)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int CG_IsScoreboardDisplayed(LocalClientNum_t param_1)
+undefined8 CG_IsScoreboardDisplayed(undefined8 param_1)
 
 {
-  uiMenuCommand_t uVar1;
+  int iVar1;
   
-  uVar1 = UI_GetActiveMenu(param_1);
-  if ((uVar1 != UIMENU_SCOREBOARD) && (uVar1 = UI_GetActiveMenu(param_1), uVar1 != UIMENU_MIGRATION)
-     ) {
+  iVar1 = UI_GetActiveMenu();
+  if ((iVar1 != 6) && (iVar1 = UI_GetActiveMenu(param_1), iVar1 != 0xd)) {
     return 0;
   }
   return 1;
@@ -556,120 +1509,107 @@ int CG_IsScoreboardDisplayed(LocalClientNum_t param_1)
 
 
 // 822F7FC8  CG_IsIntermission  (cgame_mp/cg_scoreboard_mp.cpp:1432)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+bool CG_IsIntermission(void)
+
+{
+  int iVar1;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  return *(int *)(*(int *)(iVar1 + 0x335c) + 4) == 6;
+}
+
 
 // 822F8000  CG_ScrollScoreboardUp  (cgame_mp/cg_scoreboard_mp.cpp:1437)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ScrollScoreboardUp(int param_1)
+
+{
+  int iVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)(param_1 + 0x76e50);
+  if (*piVar2 < 2) {
+    return;
+  }
+  iVar1 = *piVar2 - *(int *)(DAT_82a5f58c + 0xc);
+  *piVar2 = iVar1;
+  if (1 < iVar1) {
+    return;
+  }
+  *piVar2 = 1;
+  return;
+}
+
 
 // 822F8040  CG_ScrollScoreboardDown  (cgame_mp/cg_scoreboard_mp.cpp:1448)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ScrollScoreboardDown(int param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  
+  if (*(int *)(param_1 + 0x76e54) != 0) {
+    iVar1 = CG_ScoreboardTotalLines(*(undefined4 *)(param_1 + 0x3338));
+    piVar3 = (int *)(param_1 + 0x76e50);
+    iVar2 = *(int *)(DAT_82a5f58c + 0xc) + *piVar3;
+    *piVar3 = iVar2;
+    if (iVar1 < iVar2) {
+      *piVar3 = iVar1;
+    }
+  }
+  return;
+}
+
 
 // 822F80B0  CG_RegisterScoreboardDvars  (cgame_mp/cg_scoreboard_mp.cpp:1464)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_RegisterScoreboardDvars(void)
 
 {
-  ushort uVar1;
-  char *pcVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
   
   __savefpr_26();
-  cg_ScoresPing_MaxBars =
-       Dvar_RegisterInt("cg_ScoresPing_MaxBars",4,1,10,0,"Number of bars to show in ping graph");
-  cg_ScoresPing_Interval =
-       Dvar_RegisterInt("cg_ScoresPing_Interval",100,1,500,0,
-                        "Number of milliseconds each bar represents");
-  uVar1 = 0;
-  dVar8 = 0.0;
-  dVar7 = 1.0;
-  dVar5 = 0.800000011920929;
-  cg_ScoresPing_HighColor =
-       Dvar_RegisterColor("cg_ScoresPing_HighColor",0.8,0.0,0.0,1.0,0,
-                          IMAGE_DOS_HEADER_82000000.e_magic);
-  pcVar2 = "the motion tracker after being detected";
-  cg_ScoresPing_MedColor =
-       Dvar_RegisterColor("cg_ScoresPing_MedColor",(float)dVar5,(float)dVar5,(float)dVar8,
-                          (float)dVar7,uVar1,"the motion tracker after being detected");
-  cg_ScoresPing_LowColor =
-       Dvar_RegisterColor("cg_ScoresPing_LowColor",(float)dVar8,0.75,(float)dVar8,(float)dVar7,0,
-                          pcVar2);
-  dVar4 = 0.5;
-  cg_ScoresPing_BgColor =
-       Dvar_RegisterColor("cg_ScoresPing_BgColor",0.25,0.25,0.25,0.5,0,
-                          (char *)(g_statsBackup + 0xa10));
-  cg_scoreboardScrollStep =
-       Dvar_RegisterInt("cg_scoreboardScrollStep",3,1,8,0,"Scroll step amount for the scoreboard");
-  cg_scoreboardBannerHeight =
-       Dvar_RegisterInt("cg_scoreboardBannerHeight",0x23,1,100,0,"Banner height of the scoreboard");
-  cg_scoreboardItemHeight =
-       Dvar_RegisterInt("cg_scoreboardItemHeight",0x12,1,1000,0,"Item height of each item");
-  pcVar2 = "the motion tracker after being detected";
-  uVar1 = 0;
-  cg_scoreboardPingWidth =
-       Dvar_RegisterFloat("cg_scoreboardPingWidth",0.036,(float)dVar8,(float)dVar7,0,
-                          "the motion tracker after being detected");
-  cg_scoreboardPingHeight =
-       Dvar_RegisterFloat("cg_scoreboardPingHeight",(float)0x3f333333,(float)dVar8,(float)dVar7,
-                          uVar1,pcVar2);
-  uVar1 = 0;
-  dVar6 = 3.4028234663852886e+38;
-  cg_scoreboardWidth =
-       Dvar_RegisterFloat("cg_scoreboardWidth",500.0,(float)dVar8,3.4028235e+38,0,
-                          (char *)(g_statsBackup + 0xa10));
-  pcVar2 = "the motion tracker after being detected";
-  cg_scoreboardHeight =
-       Dvar_RegisterFloat("cg_scoreboardHeight",435.0,(float)dVar8,(float)dVar6,uVar1,
-                          "the motion tracker after being detected");
-  uVar1 = 0;
-  dVar3 = 0.4000000059604645;
-  cg_scoreboardMyColor =
-       Dvar_RegisterColor("cg_scoreboardMyColor",(float)dVar7,(float)dVar5,0.4,(float)dVar7,0,pcVar2
-                         );
-  pcVar2 = "the motion tracker after being detected";
-  cg_scoreboardMyPartyColor =
-       Dvar_RegisterColor("cg_scoreboardMyPartyColor",(float)dVar7,(float)dVar5,(float)dVar3,
-                          (float)dVar7,uVar1,"the motion tracker after being detected");
-  uVar1 = 0;
-  cg_scoreboardTextOffset =
-       Dvar_RegisterFloat("cg_scoreboardTextOffset",(float)dVar4,(float)dVar8,(float)dVar6,0,pcVar2)
-  ;
-  pcVar2 = "the motion tracker after being detected";
-  cg_onlineSplitscreenScoreboardWidth =
-       Dvar_RegisterFloat("cg_onlineSplitscreenScoreboardWidth",1000.0,(float)dVar8,(float)dVar6,
-                          uVar1,"the motion tracker after being detected");
-  dVar3 = 0.30000001192092896;
-  cg_scoreboardRankFontScale =
-       Dvar_RegisterFloat("cg_scoreboardRankFontScale",0.3,(float)dVar8,(float)dVar6,0,pcVar2);
-  pcVar2 = (char *)0x0;
-  cg_scoreboardFont =
-       Dvar_RegisterInt("cg_scoreboardFont",3,0,10,0,"Scoreboard font enum ( see menudefinition.h )"
-                       );
-  cg_scoreboardHeaderFontScale =
-       Dvar_RegisterFloat("cg_scoreboardHeaderFontScale",(float)dVar3,(float)dVar8,(float)dVar6,0,
-                          pcVar2);
-  cg_scoreboardPingText =
-       Dvar_RegisterBool("cg_scoreboardPingText",false,0,"Whether to show numeric ping value");
-  cg_scoreboardPingGraph =
-       Dvar_RegisterBool("cg_scoreboardPingGraph",true,0,"Whether to show graphical ping");
-  cg_scoreboard_externalmute_notice_fadein =
-       Dvar_RegisterInt("cg_scoreboard_externalmute_notice_fadein",100,0,10000,4,
-                        "Fade in time for the score board external mute notice");
-  cg_scoreboard_externalmute_notice_fadeout =
-       Dvar_RegisterInt("cg_scoreboard_externalmute_notice_fadeout",500,0,10000,4,
-                        "Fade out time for the score board external mute notice");
-  cg_scoreboard_externalmute_notice_duration =
-       Dvar_RegisterInt("cg_scoreboard_externalmute_notice_duration",4000,0,10000,4,
-                        "Total duration of the score board mute notice, including fade time");
+  DAT_82a5f5d0 = Dvar_RegisterInt(0xffffffff82022adc,4,1,10,0,0xffffffff82022af4);
+  DAT_82a5f5a0 = Dvar_RegisterInt(0xffffffff82022ac4,100,1,500,0,0xffffffff82022a98);
+  uVar6 = 0;
+  uVar5 = 0x3ff0000000000000;
+  uVar3 = 0x3fe99999a0000000;
+  DAT_82a5f5b0 = Dvar_RegisterColor(0x3fe99999a0000000,0,0,0x3ff0000000000000,0xffffffff82022a80);
+  DAT_82a5f5ac = Dvar_RegisterColor(uVar3,uVar3,uVar6,uVar5,0xffffffff82022a3c);
+  DAT_82a5f590 = Dvar_RegisterColor(uVar6,0x3fe8000000000000,uVar6,uVar5,0xffffffff82022a24);
+  uVar2 = 0x3fe0000000000000;
+  DAT_82a5f5bc = Dvar_RegisterColor(0x3fd0000000000000,0x3fd0000000000000,0x3fd0000000000000,
+                                    0x3fe0000000000000,0xffffffff820229dc);
+  DAT_82a5f58c = Dvar_RegisterInt(0xffffffff8202299c,3,1,8,0,0xffffffff820229b4);
+  DAT_82a5f5e8 = Dvar_RegisterInt(0xffffffff82022960,0x23,1,100,0,0xffffffff8202297c);
+  DAT_82a5f59c = Dvar_RegisterInt(0xffffffff82022948,0x12,1,1000,0,0xffffffff8202292c);
+  DAT_82a5f5c8 = Dvar_RegisterFloat(0x3fa26e9780000000,uVar6,uVar5,0xffffffff820228dc);
+  DAT_82a5f5c4 = Dvar_RegisterFloat(0x3fe6666660000000,uVar6,uVar5,0xffffffff820228c4);
+  uVar4 = 0x47efffffe0000000;
+  DAT_82a5f5e4 = Dvar_RegisterFloat(0x407f400000000000,uVar6,0x47efffffe0000000,0xffffffff82022858);
+  DAT_82a5f594 = Dvar_RegisterFloat(0x407b300000000000,uVar6,uVar4,0xffffffff82022824);
+  uVar1 = 0x3fd99999a0000000;
+  DAT_82a5f588 = Dvar_RegisterColor(uVar5,uVar3,0x3fd99999a0000000,uVar5,0xffffffff8202280c);
+  DAT_82a5f5a8 = Dvar_RegisterColor(uVar5,uVar3,uVar1,uVar5,0xffffffff82022778);
+  DAT_82a5f5a4 = Dvar_RegisterFloat(uVar2,uVar6,uVar4,0xffffffff82022748);
+  DAT_82a5f5b8 = Dvar_RegisterFloat(0x408f400000000000,uVar6,uVar4,0xffffffff820226f4);
+  uVar1 = 0x3fd3333340000000;
+  DAT_82a5f5dc = Dvar_RegisterFloat(0x3fd3333340000000,uVar6,uVar4,0xffffffff820226c4);
+  DAT_82a5f598 = Dvar_RegisterInt(0xffffffff82022680,3,0,10,0,0xffffffff82022694);
+  DAT_82a5f5d4 = Dvar_RegisterFloat(uVar1,uVar6,uVar4,0xffffffff82022640);
+  DAT_82a5f5d8 = Dvar_RegisterBool(0xffffffff82022604,0,0,0xffffffff8202261c);
+  DAT_82a5f5b4 = Dvar_RegisterBool(0xffffffff820225cc,1,0,0xffffffff820225e4);
+  DAT_82a5f5c0 = Dvar_RegisterInt(0xffffffff820225a0,100,0,10000,4,0xffffffff82022568);
+  DAT_82a5f5e0 = Dvar_RegisterInt(0xffffffff82022504,500,0,10000,4,0xffffffff82022530);
+  DAT_82a5f5cc = Dvar_RegisterInt(0xffffffff82022490,4000,0,10000,4,0xffffffff820224c0);
   __restfpr_26();
   return;
 }
@@ -677,62 +1617,379 @@ void CG_RegisterScoreboardDvars(void)
 
 // 822F8588  CG_RegisterScoreboardGraphics  (cgame_mp/cg_scoreboard_mp.cpp:1509)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void CG_RegisterScoreboardGraphics(void)
 
 {
-  Material_RegisterHandle("white",7);
-  Material_RegisterHandle("white",7);
-  Material_RegisterHandle("black",7);
-  Material_RegisterHandle("white",7);
-  Material_RegisterHandle("white",7);
-  Material_RegisterHandle("black",7);
-  Material_RegisterHandle("hudscoreboardscroll_uparrow",7);
-  Material_RegisterHandle("hudscoreboardscroll_upkey",7);
-  Material_RegisterHandle("hudscoreboardscroll_downarrow",7);
-  Material_RegisterHandle("hudscoreboardscroll_downkey",7);
+  Material_RegisterHandle(0xffffffff8201e1d4,7);
+  Material_RegisterHandle(0xffffffff8201e1d4,7);
+  Material_RegisterHandle(0xffffffff82022488,7);
+  Material_RegisterHandle(0xffffffff8201e1d4,7);
+  Material_RegisterHandle(0xffffffff8201e1d4,7);
+  Material_RegisterHandle(0xffffffff82022488,7);
+  Material_RegisterHandle(0xffffffff8202246c,7);
+  Material_RegisterHandle(0xffffffff82022b38,7);
+  Material_RegisterHandle(0xffffffff8202244c,7);
+  Material_RegisterHandle(0xffffffff82022b1c,7);
   return;
 }
 
 
 // 822F8650  Scoreboard_IsValidInput  (cgame_mp/cg_scoreboard_mp.cpp:1531)
 
-bool Scoreboard_IsValidInput(int param_1)
+undefined8 Scoreboard_IsValidInput(int param_1)
 
 {
   if ((((param_1 != 4) && (param_1 != 0x14)) && (param_1 != 0x15)) && (param_1 != 1)) {
-    return false;
+    return 0;
   }
-  return true;
+  return 1;
 }
 
 
 // 822F8680  CG_ScoreboardNextGamerIndex  (cgame_mp/cg_scoreboard_mp.cpp:1545)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ScoreboardNextGamerIndex(undefined8 param_1)
+
+{
+  bool bVar1;
+  bool bVar2;
+  bool bVar3;
+  bool bVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int *piVar8;
+  
+  iVar6 = CG_ScoreboardTotalLines();
+  iVar7 = CG_GetLocalClientGlobals(param_1);
+  piVar8 = (int *)(iVar7 + 0x76e5c);
+  *piVar8 = *piVar8 + 1;
+  do {
+    iVar5 = *piVar8;
+    bVar1 = iVar5 == *(int *)(iVar7 + 0x76e60);
+    if (bVar1) {
+      *piVar8 = iVar5 + 1;
+    }
+    iVar5 = *piVar8;
+    bVar2 = iVar5 == *(int *)(iVar7 + 0x76e64);
+    if (bVar2) {
+      *piVar8 = iVar5 + 1;
+    }
+    iVar5 = *piVar8;
+    bVar3 = iVar5 == *(int *)(iVar7 + 0x76e68);
+    if (bVar3) {
+      *piVar8 = iVar5 + 1;
+    }
+    iVar5 = *piVar8;
+    bVar4 = iVar5 == *(int *)(iVar7 + 0x76e6c);
+    if (bVar4) {
+      *piVar8 = iVar5 + 1;
+    }
+  } while (bVar4 || (bVar3 || (bVar2 || bVar1)));
+  if (iVar6 < *piVar8) {
+    *piVar8 = iVar6;
+  }
+  return;
+}
+
 
 // 822F8788  CG_ScoreboardPrevGamerIndex  (cgame_mp/cg_scoreboard_mp.cpp:1577)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void CG_ScoreboardPrevGamerIndex(void)
+
+{
+  bool bVar1;
+  bool bVar2;
+  bool bVar3;
+  bool bVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int *piVar8;
+  
+  iVar6 = CG_GetLocalClientGlobals();
+  iVar7 = 2;
+  do {
+    bVar1 = iVar7 == *(int *)(iVar6 + 0x76e60);
+    if (bVar1) {
+      iVar7 = iVar7 + 1;
+    }
+    bVar2 = iVar7 == *(int *)(iVar6 + 0x76e64);
+    if (bVar2) {
+      iVar7 = iVar7 + 1;
+    }
+    bVar3 = iVar7 == *(int *)(iVar6 + 0x76e68);
+    if (bVar3) {
+      iVar7 = iVar7 + 1;
+    }
+    bVar4 = iVar7 == *(int *)(iVar6 + 0x76e6c);
+    if (bVar4) {
+      iVar7 = iVar7 + 1;
+    }
+  } while (bVar4 || (bVar3 || (bVar2 || bVar1)));
+  piVar8 = (int *)(iVar6 + 0x76e5c);
+  *piVar8 = *piVar8 + -1;
+  do {
+    iVar5 = *piVar8;
+    bVar1 = iVar5 == *(int *)(iVar6 + 0x76e60);
+    if (bVar1) {
+      *piVar8 = iVar5 + -1;
+    }
+    iVar5 = *piVar8;
+    bVar2 = iVar5 == *(int *)(iVar6 + 0x76e64);
+    if (bVar2) {
+      *piVar8 = iVar5 + -1;
+    }
+    iVar5 = *piVar8;
+    bVar3 = iVar5 == *(int *)(iVar6 + 0x76e68);
+    if (bVar3) {
+      *piVar8 = iVar5 + -1;
+    }
+    iVar5 = *piVar8;
+    bVar4 = iVar5 == *(int *)(iVar6 + 0x76e6c);
+    if (bVar4) {
+      *piVar8 = iVar5 + -1;
+    }
+  } while (bVar4 || (bVar3 || (bVar2 || bVar1)));
+  if (*piVar8 < iVar7) {
+    *piVar8 = iVar7;
+  }
+  return;
+}
+
 
 // 822F88E0  Scoreboard_UpdateUnmutableNotice  (cgame_mp/cg_scoreboard_mp.cpp:1625)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void Scoreboard_UpdateUnmutableNotice(void)
+
+{
+  int iVar1;
+  int *piVar2;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  piVar2 = (int *)(iVar1 + 0x76e78);
+  iVar1 = *(int *)(iVar1 + 0x6b98c);
+  if (iVar1 - *piVar2 < *(int *)(DAT_82a5f5cc + 0xc)) {
+    if (*(int *)(DAT_82a5f5c0 + 0xc) < iVar1 - *piVar2) {
+      *piVar2 = iVar1 - *(int *)(DAT_82a5f5c0 + 0xc);
+      return;
+    }
+  }
+  else {
+    *piVar2 = iVar1;
+  }
+  return;
+}
+
 
 // 822F8960  Scoreboard_HandleInputNonXboxLive  (cgame_mp/cg_scoreboard_mp.cpp:1646)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void Scoreboard_HandleInputNonXboxLive(undefined8 param_1,int param_2)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  char cVar4;
+  
+  uVar1 = __savegprlr_28();
+  iVar3 = CG_GetLocalClientGlobals();
+  if (param_2 == 1) {
+    if ((*(longlong *)(iVar3 + 0x76e70) != 0) && (DAT_844c7870 != 0)) {
+      uVar2 = Session_FindRegisteredUser(0xffffffff844c7860);
+      if ((-1 < (int)uVar2) && ((int)uVar2 != *(int *)(iVar3 + 0x3334))) {
+        cVar4 = CL_IsPlayerMuted(0xffffffff844c7860,uVar2);
+        if ((cVar4 != '\0') &&
+           (cVar4 = CL_IsPlayerUnmutable(0xffffffff844c7860,uVar2), cVar4 == '\0')) {
+          Scoreboard_UpdateUnmutableNotice(uVar1);
+          __restgprlr_28(1);
+          return;
+        }
+        CL_TogglePlayerMute(0xffffffff844c7860,uVar2);
+        __restgprlr_28(1);
+        return;
+      }
+    }
+  }
+  else {
+    if (param_2 == 0x14) {
+      CG_ScoreboardPrevGamerIndex(uVar1);
+      __restgprlr_28(1);
+      return;
+    }
+    if (param_2 == 0x15) {
+      CG_ScoreboardNextGamerIndex(uVar1);
+      __restgprlr_28(1);
+      return;
+    }
+  }
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 822F8A70  Scoreboard_HandleInputXboxLive  (cgame_mp/cg_scoreboard_mp.cpp:1690)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void Scoreboard_HandleInputXboxLive(undefined8 param_1,int param_2)
+
+{
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar4;
+  int iVar5;
+  char cVar6;
+  undefined8 uVar3;
+  int *piVar7;
+  
+  uVar2 = __savegprlr_28();
+  if ((((param_2 == 4) || (param_2 == 0x14)) || (param_2 == 0x15)) || (bVar1 = false, param_2 == 1))
+  {
+    bVar1 = true;
+  }
+  if (!bVar1) goto LAB_822f8cec;
+  iVar4 = CG_GetLocalClientGlobals(uVar2);
+  iVar5 = CG_ScoreboardTotalLines(uVar2);
+  if (param_2 < 0x15) {
+    if (param_2 == 0x14) {
+      CG_ScoreboardPrevGamerIndex(uVar2);
+      __restgprlr_28(1);
+      return;
+    }
+    if (param_2 == 1) {
+      if (*(longlong *)(iVar4 + 0x76e70) != 0) {
+        if (DAT_844c7870 == 0) {
+          MyAssertHandler(0xffffffff82022200,0x6b8,0,0xffffffff82000f98,0xffffffff82022b74);
+        }
+        uVar3 = Session_FindRegisteredUser(0xffffffff844c7860,*(longlong *)(iVar4 + 0x76e70));
+        if ((-1 < (int)uVar3) && ((int)uVar3 != *(int *)(iVar4 + 0x3334))) {
+          cVar6 = CL_IsPlayerMuted(0xffffffff844c7860,uVar3);
+          if ((cVar6 != '\0') &&
+             (cVar6 = CL_IsPlayerUnmutable(0xffffffff844c7860,uVar3), cVar6 == '\0')) {
+            Scoreboard_UpdateUnmutableNotice(uVar2);
+            __restgprlr_28(1);
+            return;
+          }
+          cVar6 = Session_PlayerHasLoopbackAddr(0xffffffff844c7860,uVar3);
+          if (cVar6 == '\0') {
+            CL_TogglePlayerMute(0xffffffff844c7860,uVar3);
+            __restgprlr_28(1);
+            return;
+          }
+          goto LAB_822f8d00;
+        }
+      }
+      goto LAB_822f8cec;
+    }
+    if (param_2 == 4) {
+      piVar7 = (int *)(iVar4 + 0x76e5c);
+      if (1 < *piVar7) {
+        if ((*(longlong *)(iVar4 + 0x76e70) != 0) &&
+           (cVar6 = Live_XUIDIsLocalPlayer(), cVar6 == '\0')) {
+          if ((iVar5 != 0) && (iVar5 < *piVar7)) {
+            *piVar7 = iVar5;
+          }
+          if (*piVar7 < 0) {
+            MyAssertHandler(0xffffffff82022200,0x6d1,0,0xffffffff82022bb0,0xffffffff82022bdc);
+          }
+          uVar3 = CL_ControllerIndexFromClientNum(uVar2);
+          iVar4 = XShowGamerCardUI(uVar3,*(longlong *)(iVar4 + 0x76e70));
+          if (iVar4 != 0) {
+            MyAssertHandler(0xffffffff82022200,0x6d5,0,0xffffffff82000f98,0xffffffff82022b98);
+          }
+          UI_SetActiveMenu(uVar2,0);
+          __restgprlr_28(1);
+          return;
+        }
+      }
+      goto LAB_822f8cec;
+    }
+  }
+  else if (param_2 == 0x15) {
+    CG_ScoreboardNextGamerIndex(uVar2);
+LAB_822f8d00:
+    __restgprlr_28(1);
+    return;
+  }
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff82022200,0x6db,0,0xffffffff82022b54);
+  }
+LAB_822f8cec:
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 822F8D10  Scoreboard_HandleInputDemo  (cgame_mp/cg_scoreboard_mp.cpp:1762)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+undefined8 Scoreboard_HandleInputDemo(undefined8 param_1,int param_2)
+
+{
+  char cVar3;
+  int iVar1;
+  int iVar2;
+  undefined8 uVar4;
+  
+  cVar3 = CL_Demo_IsPlaying();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82022200,0x6e6,0,0xffffffff82000f98,0xffffffff82022c04);
+  }
+  cVar3 = CL_Demo_IsSaveDialogOpen(param_1);
+  if ((cVar3 == '\0') && (cVar3 = CL_Demo_IsErrorDialogOpen(param_1), cVar3 == '\0')) {
+    if (param_2 == 0xe) {
+      iVar1 = CL_GetLocalClientUIGlobals(param_1);
+      if ((*(uint *)(iVar1 + 0x54) & 0x10) == 0) {
+        iVar2 = 0;
+      }
+      else {
+        iVar2 = UI_GetActiveMenu(param_1);
+      }
+      if (((*(uint *)(iVar1 + 0x54) & 0x10) == 0) || (uVar4 = 0, iVar2 != 2)) {
+        uVar4 = 2;
+      }
+      UI_SetActiveMenu(param_1,uVar4);
+      return 1;
+    }
+    if (param_2 == 0x14) {
+      CG_ScoreboardPrevGamerIndex(param_1);
+      return 1;
+    }
+    if (param_2 == 0x15) {
+      CG_ScoreboardNextGamerIndex(param_1);
+      return 1;
+    }
+  }
+  return 0;
+}
+
 
 // 822F8E38  Scoreboard_HandleInput  (cgame_mp/cg_scoreboard_mp.cpp:1803)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+undefined8 Scoreboard_HandleInput(ulonglong param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  char cVar2;
+  
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,param_1,4);
+  }
+  if ((int)(&DAT_82b3e54c)[(int)param_1 * 0x79] < 10) {
+    uVar1 = 0;
+  }
+  else {
+    cVar2 = CL_Demo_IsPlaying(param_1);
+    if (cVar2 == '\0') {
+      if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
+        uVar1 = Scoreboard_HandleInputNonXboxLive(param_1,param_2);
+      }
+      else {
+        uVar1 = Scoreboard_HandleInputXboxLive();
+      }
+    }
+    else {
+      uVar1 = Scoreboard_HandleInputDemo();
+    }
+  }
+  return uVar1;
+}
+

@@ -2,90 +2,76 @@
 
 // 8271CFD8  R_SetSunLightOverride  (gfx_d3d/r_bsp.cpp:128)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void R_SetSunLightOverride(float *param_1)
+void R_SetSunLightOverride(undefined4 *param_1)
 
 {
-  if (param_1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0x81,0,"%s"
-                   );
+  if (param_1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821b9aec,0x81,0,0xffffffff82000f98,0xffffffff821b9b28);
   }
-  rg.useSunLightOverride = true;
-  rg.sunLightOverride[0] = *param_1;
-  rg.sunLightOverride[1] = param_1[1];
-  rg.sunLightOverride[2] = param_1[2];
+  DAT_8461805a = 1;
+  DAT_84618060 = *param_1;
+  DAT_84618064 = param_1[1];
+  DAT_84618068 = param_1[2];
   return;
 }
 
 
 // 8271D058  R_ResetSunLightOverride  (gfx_d3d/r_bsp.cpp:137)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void R_ResetSunLightOverride(void)
 
 {
-  rg.useSunLightOverride = false;
+  DAT_8461805a = 0;
   return;
 }
 
 
 // 8271D070  R_SetSunDirectionOverride  (gfx_d3d/r_bsp.cpp:143)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void R_SetSunDirectionOverride(float *param_1)
+void R_SetSunDirectionOverride(undefined4 *param_1)
 
 {
-  if (param_1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0x90,0,"%s"
-                   );
+  if (param_1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821b9aec,0x90,0,0xffffffff82000f98,0xffffffff821b9b34);
   }
-  rg.useSunDirOverride = true;
-  rg.useSunDirLerp = false;
-  rg.sunDirOverride[0] = *param_1;
-  rg.sunDirOverride[1] = param_1[1];
-  rg.sunDirOverride[2] = param_1[2];
+  DAT_8461805b = 1;
+  DAT_8461805c = 0;
+  DAT_8461806c = *param_1;
+  DAT_84618070 = param_1[1];
+  DAT_84618074 = param_1[2];
   return;
 }
 
 
 // 8271D0F8  R_LerpSunDirectionOverride  (gfx_d3d/r_bsp.cpp:153)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void R_LerpSunDirectionOverride
-               (float *param_1,float *param_2,int param_3,int param_4,int param_5,int param_6)
+               (undefined8 param_1,ulonglong param_2,undefined4 param_3,undefined4 param_4,
+               undefined4 param_5,undefined4 param_6)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
+  undefined4 *puVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pfVar1 = (float *)__savegprlr_24(param_1);
-  if (pfVar1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0x9a,0,"%s"
-                   );
+  puVar1 = (undefined4 *)__savegprlr_24();
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821b9aec,0x9a,0,0xffffffff82000f98,0xffffffff821b9b48);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0x9b,0,"%s"
-                   );
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821b9aec,0x9b,0,0xffffffff82000f98,0xffffffff821b9b3c);
   }
-  rg.useSunDirOverride = true;
-  rg.useSunDirLerp = true;
-  rg.sunDirOverride[0] = *pfVar1;
-  rg.sunDirOverride[1] = pfVar1[1];
-  rg.sunDirOverride[2] = pfVar1[2];
-  pfVar1 = (float *)uVar2;
-  rg.sunDirOverrideTarget[0] = *pfVar1;
-  rg.sunDirOverrideTarget[1] = pfVar1[1];
-  rg.sunDirOverrideTarget[2] = pfVar1[2];
-  rg.sunDirLerpBeginTime = param_3;
-  rg.sunDirLerpEndTime = param_4;
-  rg.sunDirLerpAccelTime = param_5;
-  rg.sunDirLerpDecelTime = param_6;
+  DAT_8461805b = 1;
+  DAT_8461805c = 1;
+  DAT_8461806c = *puVar1;
+  DAT_84618070 = puVar1[1];
+  DAT_84618074 = puVar1[2];
+  puVar1 = (undefined4 *)param_2;
+  DAT_84618078 = *puVar1;
+  DAT_8461807c = puVar1[1];
+  DAT_84618080 = puVar1[2];
+  DAT_84618084 = param_3;
+  DAT_84618088 = param_4;
+  DAT_8461808c = param_5;
+  DAT_84618090 = param_6;
   __restgprlr_24();
   return;
 }
@@ -93,68 +79,209 @@ void R_LerpSunDirectionOverride
 
 // 8271D1D8  R_ResetSunDirectionOverride  (gfx_d3d/r_bsp.cpp:169)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void R_ResetSunDirectionOverride(void)
 
 {
-  rg.useSunDirOverride = false;
+  DAT_8461805b = 0;
   return;
 }
 
 
 // 8271D1F0  R_GetActivePrimarySunLight  (gfx_d3d/r_bsp.cpp:175)
 
-uint R_GetActivePrimarySunLight(GfxStageInfo *param_1)
+void R_GetActivePrimarySunLight(void)
 
 {
   int iVar1;
-  ComPrimaryLight *pCVar2;
-  uint uVar3;
+  char *pcVar2;
   
-  iVar1 = __savegprlr_29(param_1);
+  iVar1 = __savegprlr_29();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0xb0,0,"%s"
-                   );
+    MyAssertHandler(0xffffffff821b9aec,0xb0,0,0xffffffff82000f98,0xffffffff821b9c18);
   }
   if (*(char *)(iVar1 + 0x14) == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0xb1,0,"%s"
-                   );
+    MyAssertHandler(0xffffffff821b9aec,0xb1,0,0xffffffff82000f98,0xffffffff821b9bfc);
   }
-  if ((*(byte *)(iVar1 + 0x12) != 0) &&
-     (pCVar2 = Com_GetPrimaryLight((uint)*(byte *)(iVar1 + 0x12)), pCVar2->type != '\x01')) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0xb2,0,"%s"
-                   );
+  if ((*(char *)(iVar1 + 0x12) != '\0') &&
+     (pcVar2 = (char *)Com_GetPrimaryLight(), *pcVar2 != '\x01')) {
+    MyAssertHandler(0xffffffff821b9aec,0xb2,0,0xffffffff82000f98,0xffffffff821b9b58);
   }
-  uVar3 = __restgprlr_29(*(undefined1 *)(iVar1 + 0x12));
-  return uVar3;
+  __restgprlr_29(*(undefined1 *)(iVar1 + 0x12));
+  return;
 }
 
 
 // 8271D2A0  R_InitDynamicData  (gfx_d3d/r_bsp.cpp:185)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_InitDynamicData(void)
+
+{
+  R_InitStaticModelLighting(*(undefined4 *)(DAT_8461658c + 0x22c));
+  return;
+}
+
 
 // 8271D2B8  R_SetWorldPtr_Internal  (gfx_d3d/r_bsp.cpp:306)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_SetWorldPtr_Internal(void)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (DAT_8461658c != 0) {
+    MyAssertHandler(0xffffffff821b9aec,0x133,0,0xffffffff82000f98,0xffffffff821b9c34);
+  }
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821b9aec,0x134,0,0xffffffff82000f98,0xffffffff821b9c24);
+  }
+  DAT_8461658c = iVar1;
+  __restgprlr_28();
+  return;
+}
+
 
 // 8271D338  R_SetWorldPtr_FastFile  (gfx_d3d/r_bsp.cpp:332)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_SetWorldPtr_FastFile(void)
+
+{
+  undefined8 uVar1;
+  void *pvVar2;
+  
+  uVar1 = __savegprlr_28();
+  DB_FindXAssetHeader(0x13,uVar1,1);
+  R_SetWorldPtr_Internal();
+  if ((DAT_835a2980 != 0) && (*(int *)(DAT_835a2980 + 0x28) != 0)) {
+    if (DAT_8461658c == 0) {
+      MyAssertHandler(0xffffffff821b9aec,0x155,0,0xffffffff82000f98,0xffffffff821b9c84);
+    }
+    if (*(uint *)(DAT_835a2980 + 0x28) < *(uint *)(DAT_8461658c + 0x134)) {
+      MyAssertHandler(0xffffffff821b9aec,0x156,0,0xffffffff82000f98,0xffffffff821b9c48);
+    }
+    pvVar2 = memcpy(*(void **)(DAT_835a2980 + 0x30),*(void **)(DAT_8461658c + 0x138),
+                    *(int *)(DAT_8461658c + 0x134) * 0x38);
+    *(undefined4 *)(DAT_8461658c + 0x138) = *(undefined4 *)(DAT_835a2980 + 0x30);
+    *(undefined4 *)(DAT_8461658c + 0x134) = *(undefined4 *)(DAT_835a2980 + 0x28);
+    sync(1);
+    DAT_84616500 = 1;
+    __restgprlr_28(pvVar2);
+    return;
+  }
+  sync(1);
+  DAT_84616500 = 1;
+  __restgprlr_28();
+  return;
+}
+
 
 // 8271D460  R_LoadWorld  (gfx_d3d/r_bsp.cpp:365)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_LoadWorld(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined8 uVar1;
+  void *pvVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  
+  uVar1 = __savegprlr_25();
+  if (DAT_8461658c != 0) {
+    MyAssertHandler(0xffffffff821b9aec,0x171,0,0xffffffff82000f98,0xffffffff821b9c90);
+  }
+  R_InitLightVisHistory(uVar1);
+  R_SetWorldPtr_FastFile(uVar1);
+  iVar6 = DAT_8461658c;
+  DAT_8461818c = DAT_8461658c + 0x34;
+  DAT_846178cc = DAT_8461658c + 0x22c;
+  DAT_84613714 = (uint *)(DAT_8461658c + 0x50);
+  DAT_84613754 = *(undefined4 *)(DAT_8461658c + 0x48);
+  DAT_84617878 = *(int *)(DAT_8461658c + 0x34) + 1;
+  DAT_84618180 = *(undefined4 *)(DAT_8461658c + 0x38);
+  pvVar2 = memcpy(&DAT_84821080,(void *)(DAT_8461658c + 0x1c0),0x40);
+  if ((param_2 & 0xffffffff) != 0) {
+    *(undefined4 *)param_2 = *(undefined4 *)(iVar6 + 0x154);
+  }
+  R_InitLightTweaks(pvVar2);
+  R_FlushSun();
+  R_InitStaticModelLighting(*(undefined4 *)(DAT_8461658c + 0x22c));
+  CL_GetLocalClientActiveCount();
+  R_SetupModelLightingGlobals();
+  R_SkyOverride_InitForWorld();
+  R_ResetModelLighting();
+  RB_SetBspImages();
+  DynEntCl_InitFilter();
+  pvVar2 = (void *)R_GenerateShadowMapCasterCells();
+  iVar6 = 0;
+  uVar4 = 0;
+  if (*DAT_84613714 != 0) {
+    iVar3 = 0;
+    iVar5 = 0;
+    do {
+      pvVar2 = memcpy((void *)(DAT_84613714[3] + iVar3),*(void **)(DAT_84613714[1] + iVar5),0x34);
+      uVar4 = uVar4 + 1;
+      iVar5 = iVar5 + 4;
+      iVar3 = iVar3 + 0x34;
+    } while (uVar4 < *DAT_84613714);
+  }
+  DAT_84613714[0xb] = 0;
+  iVar3 = 0;
+  DAT_84613714[0xc] = 0;
+  if (0 < (int)DAT_84613714[7]) {
+    iVar5 = 0;
+    do {
+      memcpy((void *)(DAT_84613714[9] + iVar5),*(void **)(DAT_84613714[8] + iVar6),0x34);
+      pvVar2 = memcpy((void *)(DAT_84613714[10] + iVar5),*(void **)(DAT_84613714[8] + iVar6 + 4),
+                      0x34);
+      iVar3 = iVar3 + 1;
+      iVar6 = iVar6 + 8;
+      iVar5 = iVar5 + 0x34;
+    } while (iVar3 < (int)DAT_84613714[7]);
+  }
+  __restgprlr_25(pvVar2);
+  return;
+}
+
 
 // 8271D638  R_GetDebugReflectionProbeLocs  (gfx_d3d/r_bsp.cpp:499)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_GetDebugReflectionProbeLocs(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  
+  iVar2 = __savegprlr_29();
+  if (DAT_84613714 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff821b9aec,0x1f7,0,0xffffffff82000f98,0xffffffff821a7440);
+  }
+  if (((ulonglong)*DAT_84613714 - 1 & 0xffffffff) < (param_2 & 0xffffffff)) {
+    param_2 = (ulonglong)*DAT_84613714 - 1;
+  }
+  if ((param_2 & 0xffffffff) != 0) {
+    iVar4 = 0;
+    do {
+      puVar3 = (undefined4 *)(iVar4 + iVar2);
+      param_2 = param_2 - 1;
+      iVar1 = DAT_84613714[2] + iVar4;
+      iVar4 = iVar4 + 0xc;
+      *puVar3 = *(undefined4 *)(iVar1 + 0xc);
+      puVar3[1] = *(undefined4 *)(iVar1 + 0x10);
+      puVar3[2] = *(undefined4 *)(iVar1 + 0x14);
+    } while (param_2 != 0);
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 8271D6F0  R_GetDebugReflectionProbeReferenceLocs  (gfx_d3d/r_bsp.cpp:519)
 
-uint R_GetDebugReflectionProbeReferenceLocs(float (*param_1) [3],uint param_2)
+undefined8 R_GetDebugReflectionProbeReferenceLocs(void)
 
 {
   return 0;

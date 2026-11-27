@@ -7,7 +7,7 @@ void __unwind_71861(void)
 {
   int in_r12;
   
-  bdReference<bdMessage>::~bdReference<bdMessage>(*(bdReference<bdMessage> **)(in_r12 + 0x1c));
+  bdReference<bdMessage>___bdReference<bdMessage>(*(undefined4 *)(in_r12 + 0x1c));
   return;
 }
 
@@ -19,7 +19,7 @@ void __unwind_71862(void)
 {
   int in_r12;
   
-  bdChunk::~bdChunk(*(bdChunk **)(in_r12 + 0x14));
+  bdChunk___bdChunk(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 
@@ -31,8 +31,7 @@ void __unwind_71863(void)
 {
   int in_r12;
   
-  bdReference<bdMessage>::~bdReference<bdMessage>
-            ((bdReference<bdMessage> *)(*(int *)(in_r12 + 0x14) + 0x10));
+  bdReference<bdMessage>___bdReference<bdMessage>((ulonglong)*(uint *)(in_r12 + 0x14) + 0x10);
   return;
 }
 
@@ -44,7 +43,7 @@ void __unwind_71955(void)
 {
   int in_r12;
   
-  bdChunk::~bdChunk(*(bdChunk **)(in_r12 + 0x14));
+  bdChunk___bdChunk(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 
@@ -54,10 +53,9 @@ void __unwind_71955(void)
 void __unwind_71989(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
-            ((bdReference<bdByteBuffer> *)(in_r12 + -0x3c));
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(in_r12 + -0x3c);
   return;
 }
 
@@ -67,9 +65,9 @@ void __unwind_71989(void)
 void __unwind_72094(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdReference<bdBitBuffer>::~bdReference<bdBitBuffer>((bdReference<bdBitBuffer> *)(in_r12 + -0x60));
+  bdReference<bdBitBuffer>___bdReference<bdBitBuffer>(in_r12 + -0x60);
   return;
 }
 
@@ -79,10 +77,9 @@ void __unwind_72094(void)
 void __unwind_72095(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
-            ((bdReference<bdByteBuffer> *)(in_r12 + -0x5c));
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(in_r12 + -0x5c);
   return;
 }
 
@@ -94,7 +91,7 @@ void __unwind_72289(void)
 {
   int in_r12;
   
-  bdMemory::__3bdMessage__SAXPAX_Z(*(void **)(in_r12 + -0x68));
+  bdMessage__operator_delete(*(undefined4 *)(in_r12 + -0x68));
   return;
 }
 

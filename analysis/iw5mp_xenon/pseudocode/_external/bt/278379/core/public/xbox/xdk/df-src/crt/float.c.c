@@ -2,15 +2,15 @@
 
 // 8292A478  FPSCRToAbstract  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/float.c:118)
 
-uint FPSCRToAbstract(uint param_1)
+ulonglong FPSCRToAbstract(ulonglong param_1)
 
 {
-  uint uVar1;
-  uint uVar2;
+  ulonglong uVar1;
+  ulonglong uVar2;
   
   uVar1 = param_1 & 3;
   uVar2 = 0;
-  if ((param_1 & 3) != 0) {
+  if (uVar1 != 0) {
     if (uVar1 == 1) {
       uVar2 = 0x300;
     }
@@ -40,18 +40,16 @@ uint FPSCRToAbstract(uint param_1)
 }
 
 
-// 8292A4F8  _clrfp  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/float.c:202)
+// 8292A4F8  clrfp  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/float.c:202)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Unknown calling convention: __cdecl */
+/* clrfp */
 
-uint _clrfp(void)
+void __cdecl clrfp(void)
 
 {
-  uint uVar1;
-  
-  uVar1 = 0;
-  _ctrlfp();
-  uVar1 = FPSCRToAbstract(uVar1);
-  return uVar1;
+  ctrlfp(0,0xfffffffffff80700);
+  FPSCRToAbstract();
+  return;
 }
 

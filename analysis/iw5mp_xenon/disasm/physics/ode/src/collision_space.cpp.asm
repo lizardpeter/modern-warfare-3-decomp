@@ -191,7 +191,7 @@ LAB_82683b0c:
   82683B0C  38210090             addi r1,r1,0x90
   82683B10  48292BF0             b 0x82916700
 
-; 82683B18  dxSpace  (physics/ode/src/collision_space.cpp:79)
+; 82683B18  dxSpace::dxSpace  (physics/ode/src/collision_space.cpp:79)
   82683B18  7D8802A6             mfspr r12,LR
   82683B1C  9181FFF8             stw r12,-0x8(r1)
   82683B20  FBE1FFF0             std r31,-0x10(r1)
@@ -218,7 +218,7 @@ LAB_82683b0c:
   82683B74  EBE1FFF0             ld r31,-0x10(r1)
   82683B78  4E800020             blr
 
-; 82685310  ~dxSpace  (physics/ode/src/collision_space.cpp:90)
+; 82685310  dxSpace::~dxSpace  (physics/ode/src/collision_space.cpp:90)
   82685310  7D8802A6             mfspr r12,LR
   82685314  9181FFF8             stw r12,-0x8(r1)
   82685318  FBE1FFF0             std r31,-0x10(r1)
@@ -237,7 +237,7 @@ LAB_82683b0c:
   8268534C  EBE1FFF0             ld r31,-0x10(r1)
   82685350  4E800020             blr
 
-; 82683B80  clear  (physics/ode/src/collision_space.cpp:96)
+; 82683B80  dxSpace::clear  (physics/ode/src/collision_space.cpp:96)
   82683B80  7D8802A6             mfspr r12,LR
   82683B84  9181FFF8             stw r12,-0x8(r1)
   82683B88  FBC1FFE8             std r30,-0x18(r1)
@@ -296,7 +296,7 @@ LAB_82683c38:
   82683C48  EBE1FFF0             ld r31,-0x10(r1)
   82683C4C  4E800020             blr
 
-; 82683C50  computeAABB  (physics/ode/src/collision_space.cpp:121)
+; 82683C50  dxSpace::computeAABB  (physics/ode/src/collision_space.cpp:121)
   82683C50  7D8802A6             mfspr r12,LR
   82683C54  9181FFF8             stw r12,-0x8(r1)
   82683C58  FBC1FFE8             std r30,-0x18(r1)
@@ -385,17 +385,17 @@ LAB_82683d70:
   82683D80  EBE1FFF0             ld r31,-0x10(r1)
   82683D84  4E800020             blr
 
-; 82683D88  setCleanup  (physics/ode/src/collision_space.cpp:145)
+; 82683D88  dxSpace::setCleanup  (physics/ode/src/collision_space.cpp:145)
   82683D88  3164FFFF             subic r11,r4,0x1
   82683D8C  7D4B2110             subfe r10,r11,r4
   82683D90  91430054             stw r10,0x54(r3)
   82683D94  4E800020             blr
 
-; 82683D98  getCleanup  (physics/ode/src/collision_space.cpp:151)
+; 82683D98  dxSpace::getCleanup  (physics/ode/src/collision_space.cpp:151)
   82683D98  80630054             lwz r3,0x54(r3)
   82683D9C  4E800020             blr
 
-; 82683DA0  query  (physics/ode/src/collision_space.cpp:157)
+; 82683DA0  dxSpace::query  (physics/ode/src/collision_space.cpp:157)
   82683DA0  7D8802A6             mfspr r12,LR
   82683DA4  9181FFF8             stw r12,-0x8(r1)
   82683DA8  FBC1FFE8             std r30,-0x18(r1)
@@ -426,11 +426,11 @@ LAB_82683de8:
   82683E08  EBE1FFF0             ld r31,-0x10(r1)
   82683E0C  4E800020             blr
 
-; 82683E10  getNumGeoms  (physics/ode/src/collision_space.cpp:164)
+; 82683E10  dxSpace::getNumGeoms  (physics/ode/src/collision_space.cpp:164)
   82683E10  8063004C             lwz r3,0x4c(r3)
   82683E14  4E800020             blr
 
-; 82683E18  getGeom  (physics/ode/src/collision_space.cpp:172)
+; 82683E18  dxSpace::getGeom  (physics/ode/src/collision_space.cpp:172)
   82683E18  7D8802A6             mfspr r12,LR
   82683E1C  9181FFF8             stw r12,-0x8(r1)
   82683E20  FBC1FFE8             std r30,-0x18(r1)
@@ -494,7 +494,7 @@ LAB_82683ee8:
   82683EE8  38600000             li r3,0x0
   82683EEC  4BFFFFE4             b 0x82683ed0
 
-; 82683EF0  add  (physics/ode/src/collision_space.cpp:192)
+; 82683EF0  dxSpace::add  (physics/ode/src/collision_space.cpp:192)
   82683EF0  7D8802A6             mfspr r12,LR
   82683EF4  482927C5             bl 0x829166b8
   82683EF8  9421FF80             stwu r1,-0x80(r1)
@@ -572,7 +572,7 @@ LAB_82683fd8:
   82684004  38210080             addi r1,r1,0x80
   82684008  48292700             b 0x82916708
 
-; 82684010  remove  (physics/ode/src/collision_space.cpp:215)
+; 82684010  dxSpace::remove  (physics/ode/src/collision_space.cpp:215)
   82684010  7D8802A6             mfspr r12,LR
   82684014  482926A5             bl 0x829166b8
   82684018  9421FF80             stwu r1,-0x80(r1)
@@ -643,7 +643,7 @@ LAB_826840d8:
   8268410C  38210080             addi r1,r1,0x80
   82684110  482925F8             b 0x82916708
 
-; 82684118  dirty  (physics/ode/src/collision_space.cpp:239)
+; 82684118  dxSpace::dirty  (physics/ode/src/collision_space.cpp:239)
   82684118  81640020             lwz r11,0x20(r4)
   8268411C  39440020             addi r10,r4,0x20
   82684120  2B0B0000             cmplwi cr6,r11,0x0
@@ -695,7 +695,7 @@ LAB_826841a8:
   826841C8  EBE1FFF0             ld r31,-0x10(r1)
   826841CC  4E800020             blr
 
-; 82685358  dxSimpleSpace  (physics/ode/src/collision_space.cpp:259)
+; 82685358  dxSimpleSpace::dxSimpleSpace  (physics/ode/src/collision_space.cpp:259)
   82685358  7D8802A6             mfspr r12,LR
   8268535C  9181FFF8             stw r12,-0x8(r1)
   82685360  FBE1FFF0             std r31,-0x10(r1)
@@ -725,7 +725,7 @@ LAB_826841a8:
   826853C0  EBE1FFF0             ld r31,-0x10(r1)
   826853C4  4E800020             blr
 
-; 826853C8  dxSimpleSpace  (physics/ode/src/collision_space.cpp:265)
+; 826853C8  dxSimpleSpace::dxSimpleSpace  (physics/ode/src/collision_space.cpp:265)
   826853C8  7D8802A6             mfspr r12,LR
   826853CC  9181FFF8             stw r12,-0x8(r1)
   826853D0  FBE1FFF0             std r31,-0x10(r1)
@@ -754,7 +754,7 @@ LAB_826841a8:
   8268542C  EBE1FFF0             ld r31,-0x10(r1)
   82685430  4E800020             blr
 
-; 826841D0  cleanGeoms  (physics/ode/src/collision_space.cpp:271)
+; 826841D0  dxSimpleSpace::cleanGeoms  (physics/ode/src/collision_space.cpp:271)
   826841D0  7D8802A6             mfspr r12,LR
   826841D4  482924E9             bl 0x829166bc
   826841D8  9421FF90             stwu r1,-0x70(r1)
@@ -807,7 +807,7 @@ LAB_82684278:
   82684284  38210070             addi r1,r1,0x70
   82684288  48292484             b 0x8291670c
 
-; 82684290  collide  (physics/ode/src/collision_space.cpp:286)
+; 82684290  dxSimpleSpace::collide  (physics/ode/src/collision_space.cpp:286)
   82684290  7D8802A6             mfspr r12,LR
   82684294  48292409             bl 0x8291669c
   82684298  9421FF50             stwu r1,-0xb0(r1)
@@ -1227,7 +1227,7 @@ LAB_82684884:
   82684884  382100C0             addi r1,r1,0xc0
   82684888  48291E5C             b 0x829166e4
 
-; 82684890  collide2  (physics/ode/src/collision_space.cpp:388)
+; 82684890  dxSimpleSpace::collide2  (physics/ode/src/collision_space.cpp:388)
   82684890  7D8802A6             mfspr r12,LR
   82684894  48291E1D             bl 0x829166b0
   82684898  9421FF70             stwu r1,-0x90(r1)
@@ -1975,7 +1975,7 @@ LAB_82685308:
   82685308  38210090             addi r1,r1,0x90
   8268530C  482913F4             b 0x82916700
 
-; 82685450  `scalar_deleting_destructor'  (line unknown)
+; 82685450  dxSpace::`scalar_deleting_destructor'  (line unknown)
   82685450  7D8802A6             mfspr r12,LR
   82685454  9181FFF8             stw r12,-0x8(r1)
   82685458  FBC1FFE8             std r30,-0x18(r1)
@@ -2013,7 +2013,7 @@ LAB_826854c0:
   826854D4  EBE1FFF0             ld r31,-0x10(r1)
   826854D8  4E800020             blr
 
-; 826854E0  `scalar_deleting_destructor'  (line unknown)
+; 826854E0  dxSimpleSpace::`scalar_deleting_destructor'  (line unknown)
   826854E0  7D8802A6             mfspr r12,LR
   826854E4  9181FFF8             stw r12,-0x8(r1)
   826854E8  FBC1FFE8             std r30,-0x18(r1)

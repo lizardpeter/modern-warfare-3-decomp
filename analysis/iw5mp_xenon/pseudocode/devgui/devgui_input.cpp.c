@@ -2,9 +2,7 @@
 
 // 8240AC68  DevGui_UpdateScrollInputs  (devgui/devgui_input.cpp:131)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void DevGui_UpdateScrollInputs(LocalClientNum_t param_1)
+void DevGui_UpdateScrollInputs(void)
 
 {
   double dVar1;
@@ -16,54 +14,53 @@ void DevGui_UpdateScrollInputs(LocalClientNum_t param_1)
   double dVar7;
   double dVar8;
   double dVar9;
-  float fVar10;
+  double dVar10;
   
-  __savefpr_23(param_1);
-  dVar8 = 1.0;
-  dVar9 = 0.0;
-  dVar6 = dVar9;
-  if (s_input.buttonDown[3] != false) {
-    dVar6 = dVar8;
+  __savefpr_23();
+  dVar9 = 1.0;
+  dVar10 = 0.0;
+  dVar7 = dVar10;
+  if (DAT_8331aa43 != '\0') {
+    dVar7 = dVar9;
   }
-  dVar2 = dVar9;
-  if (s_input.buttonDown[2] != false) {
-    dVar2 = dVar8;
-  }
-  dVar3 = dVar9;
-  if (s_input.buttonDown[0] != false) {
-    dVar3 = dVar8;
-  }
-  dVar5 = dVar9;
-  if (s_input.buttonDown[1] != false) {
-    dVar5 = dVar8;
-  }
-  fVar10 = GPad_GetStick(s_input.gamePadIndex,GPAD_LX);
-  dVar7 = -1.0;
-  dVar1 = dVar8;
-  if (fVar10 < 0.0) {
-    dVar1 = dVar7;
-  }
-  dVar4 = (double)(float)((double)(fVar10 * fVar10) * dVar1);
-  fVar10 = GPad_GetStick(s_input.gamePadIndex,GPAD_LY);
-  dVar1 = dVar8;
-  if (fVar10 < 0.0) {
-    dVar1 = dVar7;
-  }
-  dVar7 = (double)(float)((double)(fVar10 * fVar10) * dVar1);
-  fVar10 = GPad_GetButton(s_input.gamePadIndex,GPAD_R_TRIG);
-  dVar1 = (double)fVar10;
-  fVar10 = GPad_GetButton(s_input.gamePadIndex,GPAD_L_TRIG);
-  if (((dVar6 != dVar9) || (dVar2 != dVar9)) && ((dVar3 != dVar9 || (dVar5 != dVar9)))) {
-    dVar2 = dVar9;
+  dVar3 = dVar10;
+  if (DAT_8331aa42 != '\0') {
     dVar3 = dVar9;
-    dVar5 = dVar9;
+  }
+  dVar4 = dVar10;
+  if (DAT_8331aa40 != '\0') {
+    dVar4 = dVar9;
+  }
+  dVar6 = dVar10;
+  if (DAT_8331aa41 != '\0') {
     dVar6 = dVar9;
   }
-  s_input.digitalAxis[0] = (float)(dVar6 - dVar2);
-  s_input.digitalAxis[1] = (float)(dVar3 - dVar5);
-  s_input.analogAxis[0] = (float)dVar4;
-  s_input.analogAxis[1] = (float)dVar7;
-  s_input.scrollScale = (float)(dVar1 * 4.0 + dVar8) * (float)((double)fVar10 + dVar8);
+  dVar1 = (double)GPad_GetStick(DAT_8331aa3c,0x40000000);
+  dVar8 = -1.0;
+  dVar2 = dVar9;
+  if (dVar1 < 0.0) {
+    dVar2 = dVar8;
+  }
+  dVar5 = (double)(float)((double)(float)(dVar1 * dVar1) * dVar2);
+  dVar1 = (double)GPad_GetStick(DAT_8331aa3c,0x40000001);
+  dVar2 = dVar9;
+  if (dVar1 < 0.0) {
+    dVar2 = dVar8;
+  }
+  dVar8 = (double)(float)((double)(float)(dVar1 * dVar1) * dVar2);
+  dVar2 = (double)GPad_GetButton(DAT_8331aa3c,0x20000001);
+  dVar1 = (double)GPad_GetButton(DAT_8331aa3c,0x20000000);
+  if (((dVar7 != dVar10) || (dVar3 != dVar10)) && ((dVar4 != dVar10 || (dVar6 != dVar10)))) {
+    dVar3 = dVar10;
+    dVar4 = dVar10;
+    dVar6 = dVar10;
+    dVar7 = dVar10;
+  }
+  DAT_8331aa64 = (float)(dVar7 - dVar3);
+  DAT_8331aa68 = (float)(dVar4 - dVar6);
+  DAT_8331aa7c = (float)dVar5;
+  DAT_8331aa80 = (float)dVar8;
+  DAT_8331aa58 = (float)(dVar2 * 4.0 + dVar9) * (float)(dVar1 + dVar9);
   __restfpr_23();
   return;
 }
@@ -72,227 +69,212 @@ void DevGui_UpdateScrollInputs(LocalClientNum_t param_1)
 // 8240A458  DevGui_UpdateScrollStates  (devgui/devgui_input.cpp:207)
 
 void DevGui_UpdateScrollStates
-               (float param_1,DevGuiInputState *param_2,float *param_3,float *param_4)
+               (double param_1,undefined8 param_2,int param_3,int param_4,float *param_5)
 
 {
   float fVar1;
   uint uVar2;
-  int iVar3;
-  float *in_r6;
-  longlong lVar4;
-  int iVar5;
+  longlong lVar3;
   
-  iVar5 = (int)param_3 - (int)in_r6;
-  iVar3 = (int)param_4 - (int)in_r6;
-  lVar4 = 2;
+  param_3 = param_3 - (int)param_5;
+  param_4 = param_4 - (int)param_5;
+  lVar3 = 2;
   do {
-    fVar1 = *(float *)(iVar3 + (int)in_r6);
+    fVar1 = *(float *)(param_4 + (int)param_5);
     if (fVar1 == 0.0) {
-      *(undefined4 *)(iVar5 + (int)in_r6) = 0;
-      *in_r6 = 0.0;
+      *(undefined4 *)(param_3 + (int)param_5) = 0;
+      *param_5 = 0.0;
     }
     else {
-      uVar2 = *(uint *)(iVar5 + (int)in_r6);
+      uVar2 = *(uint *)(param_3 + (int)param_5);
       if (uVar2 == 0) {
         if (0.4 < ABS(fVar1)) {
-          *(undefined4 *)(iVar5 + (int)in_r6) = 1;
+          *(undefined4 *)(param_3 + (int)param_5) = 1;
         }
       }
       else if (uVar2 == 1) {
-        *(undefined4 *)(iVar5 + (int)in_r6) = 2;
-        *in_r6 = 0.0;
+        *(undefined4 *)(param_3 + (int)param_5) = 2;
+        *param_5 = 0.0;
       }
       else {
-        fVar1 = *in_r6;
-        *in_r6 = param_1 + fVar1;
-        if ((uVar2 < 3) && (0.25 < param_1 + fVar1)) {
-          *(undefined4 *)(iVar5 + (int)in_r6) = 3;
-          *in_r6 = 0.0;
+        fVar1 = *param_5;
+        *param_5 = (float)(param_1 + (double)fVar1);
+        if ((uVar2 < 3) && (0.25 < (float)(param_1 + (double)fVar1))) {
+          *(undefined4 *)(param_3 + (int)param_5) = 3;
+          *param_5 = 0.0;
         }
       }
     }
-    lVar4 = lVar4 + -1;
-    in_r6 = in_r6 + 1;
-  } while (lVar4 != 0);
+    lVar3 = lVar3 + -1;
+    param_5 = param_5 + 1;
+  } while (lVar3 != 0);
   return;
 }
 
 
 // 8240A520  DevGui_UpdateMenuScroll  (devgui/devgui_input.cpp:252)
 
-void DevGui_UpdateMenuScroll(float param_1)
+void DevGui_UpdateMenuScroll(double param_1)
 
 {
-  int iVar1;
+  float fVar1;
   float fVar2;
-  float fVar3;
+  bool bVar3;
   bool bVar4;
-  bool bVar5;
-  short *psVar6;
-  int *piVar7;
-  int iVar8;
+  short *psVar5;
+  int iVar6;
+  double dVar7;
   float local_10 [2];
   longlong local_8;
   
-  if (ABS(s_input.analogAxis[0]) <= ABS(s_input.analogAxis[1])) {
-    local_10[1] = s_input.analogAxis[1];
+  if (ABS(DAT_8331aa7c) <= ABS(DAT_8331aa80)) {
+    local_10[1] = DAT_8331aa80;
     local_10[0] = 0.0;
   }
   else {
-    local_10[0] = s_input.analogAxis[0];
+    local_10[0] = DAT_8331aa7c;
     local_10[1] = 0.0;
   }
-  psVar6 = s_input.menuScroll;
-  iVar8 = 0;
+  psVar5 = &DAT_8331aa8c;
+  iVar6 = 0;
   do {
-    *psVar6 = 0;
-    piVar7 = (int *)((int)s_input.analogStates + iVar8);
-    iVar1 = *(int *)((int)s_input.digitalStates + iVar8);
-    if ((iVar1 == 3) || (bVar4 = false, *piVar7 == 3)) {
+    *psVar5 = 0;
+    if ((*(int *)((int)&DAT_8331aa5c + iVar6) == 3) ||
+       (bVar3 = false, *(int *)((int)&DAT_8331aa74 + iVar6) == 3)) {
+      bVar3 = true;
+    }
+    if ((*(int *)((int)&DAT_8331aa5c + iVar6) == 1) ||
+       (bVar4 = false, *(int *)((int)&DAT_8331aa74 + iVar6) == 1)) {
       bVar4 = true;
     }
-    if ((iVar1 == 1) || (bVar5 = false, *piVar7 == 1)) {
-      bVar5 = true;
-    }
-    fVar3 = (*(float *)((int)local_10 + iVar8) + *(float *)((int)s_input.digitalAxis + iVar8)) *
-            s_input.scrollScale;
-    if (bVar4) {
-      fVar2 = ABS(fVar3) * param_1 + *(float *)((int)s_input.menuScrollTime + iVar8);
-      *(float *)((int)s_input.menuScrollTime + iVar8) = fVar2;
-      if (0.1 < fVar2) {
-        fVar2 = 1.0;
-        if (fVar3 < 0.0) {
-          fVar2 = -1.0;
+    dVar7 = (double)((*(float *)((int)local_10 + iVar6) + *(float *)((int)&DAT_8331aa64 + iVar6)) *
+                    DAT_8331aa58);
+    if (bVar3) {
+      fVar1 = (float)(ABS(dVar7) * param_1 + (double)*(float *)((int)&DAT_8331aa90 + iVar6));
+      *(float *)((int)&DAT_8331aa90 + iVar6) = fVar1;
+      if (0.1 < fVar1) {
+        fVar1 = 1.0;
+        if (dVar7 < 0.0) {
+          fVar1 = -1.0;
         }
-        local_8 = (longlong)(int)fVar2;
+        local_8 = (longlong)(int)fVar1;
         do {
-          *psVar6 = *psVar6 + (short)(int)fVar2;
-          fVar3 = *(float *)((int)s_input.menuScrollTime + iVar8) - 0.1;
-          *(float *)((int)s_input.menuScrollTime + iVar8) = fVar3;
-        } while (0.1 < fVar3);
+          *psVar5 = *psVar5 + (short)(int)fVar1;
+          fVar2 = *(float *)((int)&DAT_8331aa90 + iVar6) - 0.1;
+          *(float *)((int)&DAT_8331aa90 + iVar6) = fVar2;
+        } while (0.1 < fVar2);
       }
     }
-    else if (bVar5) {
-      fVar2 = 1.0;
-      if (fVar3 < 0.0) {
-        fVar2 = -1.0;
+    else if (bVar4) {
+      fVar1 = 1.0;
+      if (dVar7 < 0.0) {
+        fVar1 = -1.0;
       }
-      local_8 = (longlong)(int)fVar2;
-      *psVar6 = (short)(int)fVar2;
-      *(undefined4 *)((int)s_input.menuScrollTime + iVar8) = 0;
+      local_8 = (longlong)(int)fVar1;
+      *psVar5 = (short)(int)fVar1;
+      *(undefined4 *)((int)&DAT_8331aa90 + iVar6) = 0;
     }
-    psVar6 = psVar6 + 1;
-    iVar8 = iVar8 + 4;
-  } while ((int)psVar6 < -0x7cce5570);
+    psVar5 = psVar5 + 1;
+    iVar6 = iVar6 + 4;
+  } while ((int)psVar5 < -0x7cce5570);
   return;
 }
 
 
 // 8240A698  DevGui_InputInit  (devgui/devgui_input.cpp:301)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DevGui_InputInit(void)
 
 {
-  Cmd_AddCommandInternal("devgui",DevGui_Toggle,&DevGui_Toggle_VAR);
+  Cmd_AddCommandInternal(0xffffffff8202ecb0,0xffffffff8240a2b0,0xffffffff8331aaa8);
   return;
 }
 
 
 // 8240A6B8  DevGui_InputShutdown  (devgui/devgui_input.cpp:310)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DevGui_InputShutdown(void)
 
 {
-  Cmd_RemoveCommand("devgui");
+  Cmd_RemoveCommand(0xffffffff8202ecb0);
   return;
 }
 
 
 // 8240A6C8  DevGui_SelectGamepad  (devgui/devgui_input.cpp:317)
 
-void DevGui_SelectGamepad(int param_1)
+void DevGui_SelectGamepad(undefined4 param_1)
 
 {
-  s_input.selectedGamePadIndex = param_1;
+  DAT_8331aa38 = param_1;
   return;
 }
 
 
 // 8240A6D8  DevGui_InputUpdateGamepad  (devgui/devgui_input.cpp:328)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool DevGui_InputUpdateGamepad(void)
+undefined8 DevGui_InputUpdateGamepad(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  s_input.gamePadIndex = s_input.selectedGamePadIndex;
-  if ((-1 < s_input.selectedGamePadIndex) &&
-     (bVar1 = GPad_IsActive(s_input.selectedGamePadIndex), bVar1)) {
-    s_input.sliderScrollTime = 10.0;
-    s_input.sliderScrollMaxTimeStep = 0.1;
-    return true;
+  DAT_8331aa3c = DAT_8331aa38;
+  if ((-1 < DAT_8331aa38) && (cVar1 = GPad_IsActive(), cVar1 != '\0')) {
+    DAT_8331aaa0 = 0x41200000;
+    DAT_8331aaa4 = 0x3dcccccd;
+    return 1;
   }
-  s_input.gamePadIndex = -1;
-  return false;
+  DAT_8331aa3c = 0xffffffff;
+  return 0;
 }
 
 
 // 8240ADD0  DevGui_InputUpdate  (devgui/devgui_input.cpp:359)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool DevGui_InputUpdate(LocalClientNum_t param_1,float param_2)
+void DevGui_InputUpdate(void)
 
 {
-  bool bVar2;
-  undefined1 uVar3;
-  DevGuiInputState *pDVar1;
-  GamePadButton *pGVar4;
-  int iVar5;
+  char cVar2;
+  undefined8 uVar1;
+  undefined4 *puVar3;
+  int iVar4;
+  undefined8 uVar5;
   double dVar6;
   double dVar7;
-  float fVar8;
   
-  dVar6 = (double)__savegprlr_27((double)param_2,param_1);
-  bVar2 = DevGui_InputUpdateGamepad();
-  if (!bVar2) {
-    uVar3 = __restgprlr_27(0);
-    return (bool)uVar3;
+  uVar5 = __savegprlr_27();
+  cVar2 = DevGui_InputUpdateGamepad();
+  if (cVar2 == '\0') {
+    __restgprlr_27(0);
+    return;
   }
-  pGVar4 = s_butMapsGamepad;
-  iVar5 = 0;
+  puVar3 = &DAT_82967f50;
+  iVar4 = 0;
   dVar7 = 0.0;
   do {
-    s_input.prevButtonDown[iVar5] = s_input.buttonDown[iVar5];
-    pDVar1 = (DevGuiInputState *)s_input.gamePadIndex;
-    if (-1 < s_input.gamePadIndex) {
-      fVar8 = GPad_GetButton(s_input.gamePadIndex,*pGVar4);
-      *(bool *)(iVar5 + -0x7cce55c0) = dVar7 < (double)fVar8;
+    (&DAT_8331aa4b)[iVar4] = (&DAT_8331aa40)[iVar4];
+    if (-1 < DAT_8331aa3c) {
+      dVar6 = (double)GPad_GetButton(DAT_8331aa3c,*puVar3);
+      (&DAT_8331aa40)[iVar4] = dVar7 < dVar6;
     }
-    pGVar4 = pGVar4 + 1;
-    iVar5 = iVar5 + 1;
-  } while ((int)pGVar4 < -0x7d698084);
-  DevGui_UpdateScrollInputs((LocalClientNum_t)pDVar1);
-  dVar7 = (double)(float)dVar6;
-  DevGui_UpdateScrollStates((float)dVar6,pDVar1,(float *)s_input.digitalStates,s_input.digitalAxis);
-  if (-1 < s_input.gamePadIndex) {
-    DevGui_UpdateScrollStates((float)dVar7,pDVar1,(float *)s_input.analogStates,s_input.analogAxis);
+    puVar3 = puVar3 + 1;
+    iVar4 = iVar4 + 1;
+  } while ((int)puVar3 < -0x7d698084);
+  uVar1 = DevGui_UpdateScrollInputs();
+  uVar1 = DevGui_UpdateScrollStates
+                    (uVar5,uVar1,0xffffffff8331aa5c,0xffffffff8331aa64,0xffffffff8331aa6c);
+  if (-1 < DAT_8331aa3c) {
+    DevGui_UpdateScrollStates(uVar1,0xffffffff8331aa74,0xffffffff8331aa7c,0xffffffff8331aa84);
   }
-  DevGui_UpdateMenuScroll((float)dVar6);
-  uVar3 = __restgprlr_27(1);
-  return (bool)uVar3;
+  DevGui_UpdateMenuScroll(uVar5);
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 8240A760  DevGui_MouseEvent  (devgui/devgui_input.cpp:427)
 
-void DevGui_MouseEvent(int param_1,int param_2)
+void DevGui_MouseEvent(void)
 
 {
   return;
@@ -301,245 +283,215 @@ void DevGui_MouseEvent(int param_1,int param_2)
 
 // 8240A768  DevGui_GetMenuScroll  (devgui/devgui_input.cpp:439)
 
-short DevGui_GetMenuScroll(DevGuiInputAxis param_1)
+undefined2 DevGui_GetMenuScroll(int param_1)
 
 {
-  return s_input.menuScroll[param_1];
+  return (&DAT_8331aa8c)[param_1];
 }
 
 
 // 8240A780  DevGui_UpdateIntScroll  (devgui/devgui_input.cpp:448)
 
-int DevGui_UpdateIntScroll
-              (float param_1,int param_2,int param_3,int param_4,DevGuiInputAxis param_5)
+void DevGui_UpdateIntScroll
+               (undefined8 param_1,longlong param_2,longlong param_3,longlong param_4,
+               ulonglong param_5)
 
 {
   int iVar1;
-  int iVar2;
-  float fVar3;
+  float fVar2;
   int iVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  ulonglong in_r7;
-  ulonglong uVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  
-  lVar7 = (longlong)(int)param_5;
-  lVar6 = (longlong)param_4;
-  lVar5 = (longlong)param_3;
-  __savegprlr_24((double)param_1,param_2);
-  dVar10 = (double)__savefpr_28();
-  if (lVar7 - lVar6 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_input.cpp",0x1c6
-                    ,0,"%s");
-  }
-  if (((int)in_r7 < 0) || (1 < (int)in_r7)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_input.cpp",0x1c7
-                    ,0,"%s");
-  }
-  iVar4 = (int)(lVar7 - lVar6);
-  if (iVar4 == 0) {
-    __restfpr_28(0);
-    iVar4 = __restgprlr_24();
-    return iVar4;
-  }
-  uVar8 = 0;
-  dVar13 = 0.0;
-  iVar2 = (int)((in_r7 & 0x3fffffff) << 2);
-  iVar1 = *(int *)((int)s_input.digitalStates + iVar2);
-  if (iVar1 == 3) {
-    dVar9 = (double)s_input.sliderScrollMaxTimeStep;
-    dVar12 = (double)(0.1 / s_input.scrollScale);
-    if (dVar9 < (double)(0.1 / s_input.scrollScale)) {
-      dVar12 = dVar9;
-    }
-    s_input.digitalSliderTime = (float)((double)s_input.digitalSliderTime + dVar10);
-    if ((double)s_input.digitalSliderTime <= dVar12) goto LAB_8240a900;
-    dVar9 = 0.5;
-    do {
-      dVar11 = floor((double)(float)((double)*(float *)((int)s_input.digitalAxis + iVar2) + dVar9));
-      s_input.digitalSliderTime = (float)((double)s_input.digitalSliderTime - dVar12);
-      uVar8 = (uint)(int)dVar11 + uVar8;
-    } while (dVar12 < (double)s_input.digitalSliderTime);
-  }
-  else if (iVar1 == 1) {
-    dVar12 = floor((double)(*(float *)((int)s_input.digitalAxis + iVar2) + 0.5));
-    uVar8 = (ulonglong)(uint)(int)dVar12;
-  }
-  else {
-    s_input.digitalSliderTime = 0.0;
-  }
-  dVar9 = (double)s_input.sliderScrollMaxTimeStep;
-LAB_8240a900:
-  iVar1 = *(int *)((int)s_input.analogStates + iVar2);
-  if (iVar1 == 3) {
-    dVar13 = (double)((s_input.sliderScrollTime / (float)(longlong)iVar4) /
-                     ABS(*(float *)((int)s_input.analogAxis + iVar2) * s_input.scrollScale));
-    if (dVar9 < dVar13) {
-      dVar13 = dVar9;
-    }
-    s_input.analogSliderTime = (float)((double)s_input.analogSliderTime + dVar10);
-    dVar10 = (double)s_input.analogSliderTime;
-    if (dVar13 <= dVar10) {
-      do {
-        s_input.analogSliderTime = (float)(dVar10 - dVar13);
-        dVar10 = (double)s_input.analogSliderTime;
-        fVar3 = 1.0;
-        if (*(float *)((int)s_input.analogAxis + iVar2) < 0.0) {
-          fVar3 = -1.0;
-        }
-        uVar8 = (uint)(int)fVar3 + uVar8;
-      } while (dVar13 <= dVar10);
-    }
-  }
-  else if (iVar1 == 1) {
-    fVar3 = 1.0;
-    if (*(float *)((int)s_input.analogAxis + iVar2) < 0.0) {
-      fVar3 = -1.0;
-    }
-    uVar8 = (uint)(int)fVar3 + uVar8;
-  }
-  else {
-    s_input.analogSliderTime = (float)dVar13;
-  }
-  iVar4 = (int)(uVar8 + lVar5);
-  if ((int)lVar6 < iVar4) {
-    lVar5 = uVar8 + lVar5;
-    if ((int)lVar7 <= iVar4) {
-      lVar5 = lVar7;
-    }
-    __restfpr_28(lVar5);
-    iVar4 = __restgprlr_24();
-    return iVar4;
-  }
-  __restfpr_28(lVar6);
-  iVar4 = __restgprlr_24();
-  return iVar4;
-}
-
-
-// 8240AA18  DevGui_UpdateFloatScroll  (devgui/devgui_input.cpp:537)
-
-float DevGui_UpdateFloatScroll
-                (float param_1,float param_2,float param_3,float param_4,float param_5,
-                DevGuiInputAxis param_6,float param_7)
-
-{
-  int iVar1;
-  int iVar2;
-  float fVar3;
-  ulonglong in_r8;
-  double dVar4;
-  double dVar5;
+  longlong lVar3;
+  ulonglong uVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
   
-  dVar8 = (double)param_5;
-  dVar9 = (double)param_7;
-  dVar7 = (double)param_4;
-  dVar5 = (double)param_2;
-  dVar6 = (double)param_3;
-  __savegprlr_29((double)param_1,param_6);
-  dVar4 = (double)__savefpr_24();
-  dVar11 = (double)(float)(dVar7 - dVar6);
-  dVar10 = 0.0;
-  if (dVar11 < 0.0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_input.cpp",0x220
-                    ,0,"%s");
+  __savegprlr_24();
+  dVar7 = (double)__savefpr_28();
+  if (param_4 - param_3 < 0) {
+    MyAssertHandler(0xffffffff8205f7c0,0x1c6,0,0xffffffff82000f98,0xffffffff8205f7b4);
   }
-  if (dVar8 == dVar10) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_input.cpp",0x221
-                    ,0,"%s");
+  if (((int)param_5 < 0) || (1 < (int)param_5)) {
+    MyAssertHandler(0xffffffff8205f7c0,0x1c7,0,0xffffffff82000f98,0xffffffff8205f780);
+  }
+  iVar4 = (int)(param_4 - param_3);
+  if (iVar4 == 0) {
+    __restfpr_28(0);
+    __restgprlr_24();
+    return;
+  }
+  uVar5 = 0;
+  dVar10 = 0.0;
+  iVar1 = (int)((param_5 & 0x3fffffff) << 2);
+  if (*(int *)((int)&DAT_8331aa5c + iVar1) == 3) {
+    dVar6 = (double)DAT_8331aaa4;
+    dVar9 = (double)(0.1 / DAT_8331aa58);
+    if (dVar6 < (double)(0.1 / DAT_8331aa58)) {
+      dVar9 = dVar6;
+    }
+    DAT_8331aa98 = (float)((double)DAT_8331aa98 + dVar7);
+    if ((double)DAT_8331aa98 <= dVar9) goto LAB_8240a900;
+    dVar6 = 0.5;
+    do {
+      dVar8 = floor((double)(float)((double)*(float *)((int)&DAT_8331aa64 + iVar1) + dVar6));
+      DAT_8331aa98 = (float)((double)DAT_8331aa98 - dVar9);
+      uVar5 = (uint)(int)dVar8 + uVar5;
+    } while (dVar9 < (double)DAT_8331aa98);
+  }
+  else if (*(int *)((int)&DAT_8331aa5c + iVar1) == 1) {
+    dVar9 = floor((double)(*(float *)((int)&DAT_8331aa64 + iVar1) + 0.5));
+    uVar5 = (ulonglong)(uint)(int)dVar9;
+  }
+  else {
+    DAT_8331aa98 = 0.0;
+  }
+  dVar6 = (double)DAT_8331aaa4;
+LAB_8240a900:
+  if (*(int *)((int)&DAT_8331aa74 + iVar1) == 3) {
+    dVar10 = (double)((DAT_8331aaa0 / (float)(longlong)iVar4) /
+                     ABS(*(float *)((int)&DAT_8331aa7c + iVar1) * DAT_8331aa58));
+    if (dVar6 < dVar10) {
+      dVar10 = dVar6;
+    }
+    DAT_8331aa9c = (float)((double)DAT_8331aa9c + dVar7);
+    dVar7 = (double)DAT_8331aa9c;
+    if (dVar10 <= dVar7) {
+      do {
+        DAT_8331aa9c = (float)(dVar7 - dVar10);
+        dVar7 = (double)DAT_8331aa9c;
+        fVar2 = 1.0;
+        if (*(float *)((int)&DAT_8331aa7c + iVar1) < 0.0) {
+          fVar2 = -1.0;
+        }
+        uVar5 = (uint)(int)fVar2 + uVar5;
+      } while (dVar10 <= dVar7);
+    }
+  }
+  else if (*(int *)((int)&DAT_8331aa74 + iVar1) == 1) {
+    fVar2 = 1.0;
+    if (*(float *)((int)&DAT_8331aa7c + iVar1) < 0.0) {
+      fVar2 = -1.0;
+    }
+    uVar5 = (uint)(int)fVar2 + uVar5;
+  }
+  else {
+    DAT_8331aa9c = (float)dVar10;
+  }
+  iVar4 = (int)(uVar5 + param_2);
+  if ((int)param_3 < iVar4) {
+    lVar3 = uVar5 + param_2;
+    if ((int)param_4 <= iVar4) {
+      lVar3 = param_4;
+    }
+    __restfpr_28(lVar3);
+    __restgprlr_24();
+    return;
+  }
+  __restfpr_28(param_3);
+  __restgprlr_24();
+  return;
+}
+
+
+// 8240AA18  DevGui_UpdateFloatScroll  (devgui/devgui_input.cpp:537)
+
+void DevGui_UpdateFloatScroll
+               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
+               double param_6)
+
+{
+  int iVar1;
+  float fVar2;
+  ulonglong in_r8;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  
+  __savegprlr_29();
+  dVar3 = (double)__savefpr_24();
+  dVar5 = (double)(float)(param_4 - param_3);
+  dVar4 = 0.0;
+  if (dVar5 < 0.0) {
+    MyAssertHandler(0xffffffff8205f7c0,0x220,0,0xffffffff82000f98,0xffffffff8205f7b4);
+  }
+  if (param_5 == dVar4) {
+    MyAssertHandler(0xffffffff8205f7c0,0x221,0,0xffffffff82000f98,0xffffffff8205f804);
   }
   if (((int)in_r8 < 0) || (1 < (int)in_r8)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_input.cpp",0x222
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff8205f7c0,0x222,0,0xffffffff82000f98,0xffffffff8205f780);
   }
-  iVar2 = (int)((in_r8 & 0x3fffffff) << 2);
-  iVar1 = *(int *)((int)s_input.digitalStates + iVar2);
-  dVar11 = (double)(float)((double)(float)((double)((*(float *)((int)s_input.analogAxis + iVar2) *
-                                                    s_input.scrollScale) / s_input.sliderScrollTime)
-                                          * dVar11) * dVar4);
-  if (iVar1 == 3) {
-    fVar3 = 0.1 / s_input.scrollScale;
-    if (s_input.sliderScrollMaxTimeStep < 0.1 / s_input.scrollScale) {
-      fVar3 = s_input.sliderScrollMaxTimeStep;
+  iVar1 = (int)((in_r8 & 0x3fffffff) << 2);
+  dVar5 = (double)(float)((double)(float)((double)((*(float *)((int)&DAT_8331aa7c + iVar1) *
+                                                   DAT_8331aa58) / DAT_8331aaa0) * dVar5) * dVar3);
+  if (*(int *)((int)&DAT_8331aa5c + iVar1) == 3) {
+    fVar2 = 0.1 / DAT_8331aa58;
+    if (DAT_8331aaa4 < 0.1 / DAT_8331aa58) {
+      fVar2 = DAT_8331aaa4;
     }
-    for (s_input.digitalSliderTime = (float)((double)s_input.digitalSliderTime + dVar4);
-        fVar3 < s_input.digitalSliderTime;
-        s_input.digitalSliderTime = s_input.digitalSliderTime - fVar3) {
-      dVar11 = (double)(float)((double)*(float *)((int)s_input.digitalAxis + iVar2) * dVar8 + dVar11
-                              );
+    for (DAT_8331aa98 = (float)((double)DAT_8331aa98 + dVar3); fVar2 < DAT_8331aa98;
+        DAT_8331aa98 = DAT_8331aa98 - fVar2) {
+      dVar5 = (double)(float)((double)*(float *)((int)&DAT_8331aa64 + iVar1) * param_5 + dVar5);
     }
   }
-  else if (iVar1 == 1) {
-    dVar11 = (double)(float)((double)*(float *)((int)s_input.digitalAxis + iVar2) * dVar8 + dVar11);
+  else if (*(int *)((int)&DAT_8331aa5c + iVar1) == 1) {
+    dVar5 = (double)(float)((double)*(float *)((int)&DAT_8331aa64 + iVar1) * param_5 + dVar5);
   }
-  if ((dVar11 < dVar10) && (-dVar9 < dVar11)) {
-    dVar11 = -dVar9;
+  if ((dVar5 < dVar4) && (-param_6 < dVar5)) {
+    dVar5 = -param_6;
   }
-  if ((dVar10 < dVar11) && (dVar11 < dVar9)) {
-    dVar11 = dVar9;
+  if ((dVar4 < dVar5) && (dVar5 < param_6)) {
+    dVar5 = param_6;
   }
-  dVar4 = (double)(float)(dVar11 + dVar5);
-  if (dVar4 <= dVar6) {
-    __restfpr_24(dVar6);
-    dVar4 = (double)__restgprlr_29();
-    return (float)dVar4;
+  dVar3 = (double)(float)(dVar5 + param_2);
+  if (dVar3 <= param_3) {
+    __restfpr_24(param_3);
+    __restgprlr_29();
+    return;
   }
-  if (dVar7 <= dVar4) {
-    dVar4 = dVar7;
+  if (param_4 <= dVar3) {
+    dVar3 = param_4;
   }
-  __restfpr_24(dVar4);
-  dVar4 = (double)__restgprlr_29();
-  return (float)dVar4;
+  __restfpr_24(dVar3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 8240ABE0  DevGui_IsButtonDown  (devgui/devgui_input.cpp:589)
 
-bool DevGui_IsButtonDown(DevGuiInputButton param_1)
+undefined1 DevGui_IsButtonDown(int param_1)
 
 {
-  return s_input.buttonDown[param_1];
+  return (&DAT_8331aa40)[param_1];
 }
 
 
 // 8240ABF8  DevGui_IsButtonPressed  (devgui/devgui_input.cpp:598)
 
-bool DevGui_IsButtonPressed(DevGuiInputButton param_1)
+undefined8 DevGui_IsButtonPressed(int param_1)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   
-  if ((s_input.buttonDown[param_1] == false) ||
-     (bVar1 = true, s_input.prevButtonDown[param_1] != false)) {
-    bVar1 = false;
+  if (((&DAT_8331aa40)[param_1] == '\0') || (uVar1 = 1, (&DAT_8331aa4b)[param_1] != '\0')) {
+    uVar1 = 0;
   }
-  return bVar1;
+  return uVar1;
 }
 
 
 // 8240AC30  DevGui_IsButtonReleased  (devgui/devgui_input.cpp:607)
 
-bool DevGui_IsButtonReleased(DevGuiInputButton param_1)
+undefined8 DevGui_IsButtonReleased(int param_1)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   
-  if ((s_input.buttonDown[param_1] != false) ||
-     (bVar1 = true, s_input.prevButtonDown[param_1] == false)) {
-    bVar1 = false;
+  if (((&DAT_8331aa40)[param_1] != '\0') || (uVar1 = 1, (&DAT_8331aa4b)[param_1] == '\0')) {
+    uVar1 = 0;
   }
-  return bVar1;
+  return uVar1;
 }
 

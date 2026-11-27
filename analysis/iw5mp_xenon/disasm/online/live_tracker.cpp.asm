@@ -883,7 +883,7 @@ LAB_8271508c:
   827150E0  7D8803A6             mtspr LR,r12
   827150E4  4E800020             blr
 
-; 827150E8  trackerTask_s  (line unknown)
+; 827150E8  trackerTask_s::trackerTask_s  (line unknown)
   827150E8  7D8802A6             mfspr r12,LR
   827150EC  482015CD             bl 0x829166b8
   827150F0  9421FF80             stwu r1,-0x80(r1)

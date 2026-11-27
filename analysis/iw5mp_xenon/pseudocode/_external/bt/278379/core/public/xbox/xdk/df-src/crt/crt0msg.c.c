@@ -26,17 +26,17 @@ void _FF_MSGBANNER(void)
 wchar_t * _GET_RTERRMSG(int param_1)
 
 {
-  rterrmsgs *prVar1;
+  int *piVar1;
   uint uVar2;
   
   uVar2 = 0;
-  prVar1 = rterrs;
+  piVar1 = &DAT_82215628;
   do {
-    if (param_1 == prVar1->rterrno) {
-      return rterrs[uVar2].rterrtxt;
+    if (param_1 == *piVar1) {
+      return *(wchar_t **)(&UNK_8221562c + uVar2 * 8);
     }
     uVar2 = uVar2 + 1;
-    prVar1 = prVar1 + 1;
+    piVar1 = piVar1 + 2;
   } while (uVar2 < 0x16);
   return (wchar_t *)0x0;
 }
@@ -47,11 +47,11 @@ wchar_t * _GET_RTERRMSG(int param_1)
 void _NMSG_WRITE(int param_1)
 
 {
-  wchar_t *pwVar1;
+  wchar_t *lpOutputString;
   
-  pwVar1 = _GET_RTERRMSG(param_1);
-  if (pwVar1 != (wchar_t *)0x0) {
-    OutputDebugStringW(pwVar1);
+  lpOutputString = _GET_RTERRMSG(param_1);
+  if (lpOutputString != (wchar_t *)0x0) {
+    OutputDebugStringW(lpOutputString);
   }
   return;
 }

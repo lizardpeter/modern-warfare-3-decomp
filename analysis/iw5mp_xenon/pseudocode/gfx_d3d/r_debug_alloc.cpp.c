@@ -2,35 +2,29 @@
 
 // 82725AF0  R_DebugAlloc  (gfx_d3d/r_debug_alloc.cpp:7)
 
-void R_DebugAlloc(void **param_1,int param_2,char *param_3)
+void R_DebugAlloc(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
   int *piVar1;
-  void *pvVar2;
-  ulonglong uVar3;
+  int iVar2;
   
-  uVar3 = (ulonglong)param_2;
-  piVar1 = (int *)__savegprlr_27(param_1);
+  piVar1 = (int *)__savegprlr_27();
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_debug_alloc.cpp",8,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff821bbee0,8,0,0xffffffff82000f98,0xffffffff821bbed4);
   }
   if (*piVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_debug_alloc.cpp",9,0
-                    ,"%s");
+    MyAssertHandler(0xffffffff821bbee0,9,0,0xffffffff82000f98,0xffffffff821bbec8);
   }
-  if ((int)uVar3 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_debug_alloc.cpp",10,
-                    0,"%s");
+  if ((int)param_2 < 1) {
+    MyAssertHandler(0xffffffff821bbee0,10,0,0xffffffff82000f98,0xffffffff820589cc);
   }
-  if ((uVar3 & 3) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_debug_alloc.cpp",0xb
-                    ,0,"%s");
+  if ((param_2 & 3) != 0) {
+    MyAssertHandler(0xffffffff821bbee0,0xb,0,0xffffffff82000f98,0xffffffff821bbeb4);
   }
-  pvVar2 = Z_TryVirtualAlloc((int)uVar3,param_3,0);
-  *piVar1 = (int)pvVar2;
-  if (pvVar2 == (void *)0x0) {
-    R_WarnOncePerFrame(R_WARN_DEBUG_ALLOC);
+  iVar2 = Z_TryVirtualAlloc(param_2,param_3,0);
+  *piVar1 = iVar2;
+  if (iVar2 == 0) {
+    R_WarnOncePerFrame(0x32,param_3);
   }
   __restgprlr_27();
   return;
@@ -39,20 +33,18 @@ void R_DebugAlloc(void **param_1,int param_2,char *param_3)
 
 // 82725BE0  R_DebugFree  (gfx_d3d/r_debug_alloc.cpp:21)
 
-void R_DebugFree(void **param_1)
+void R_DebugFree(int *param_1)
 
 {
-  if (*param_1 != (void *)0x0) {
+  if (*param_1 != 0) {
     Z_VirtualFree(*param_1,0);
-    *param_1 = (void *)0x0;
+    *param_1 = 0;
   }
   return;
 }
 
 
 // 82725C28  R_DebugFreeAll  (gfx_d3d/r_debug_alloc.cpp:30)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_DebugFreeAll(void)
 

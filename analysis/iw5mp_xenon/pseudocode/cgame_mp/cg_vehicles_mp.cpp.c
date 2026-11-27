@@ -2,166 +2,267 @@
 
 // 82309598  CG_VehRegisterDvars  (cgame_mp/cg_vehicles_mp.cpp:47)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CG_VehRegisterDvars(void)
 
 {
-  ushort in_r4;
-  ushort uVar1;
-  char *in_r5;
-  IMAGE_DOS_HEADER *pIVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
   
-  dVar4 = 360.0;
-  dVar5 = -360.0;
-  heli_barrelRotation = Dvar_RegisterFloat("heli_barrelRotation",70.0,-360.0,360.0,in_r4,in_r5);
-  pIVar2 = &IMAGE_DOS_HEADER_82000000;
-  uVar1 = 0;
-  dVar3 = 3.4028234663852886e+38;
-  heli_barrelMaxVelocity =
-       Dvar_RegisterFloat("heli_barrelMaxVelocity",1250.0,(float)dVar5,3.4028235e+38,0,
-                          IMAGE_DOS_HEADER_82000000.e_magic);
-  heli_barrelSlowdown =
-       Dvar_RegisterFloat("heli_barrelSlowdown",(float)dVar4,(float)dVar5,(float)dVar3,uVar1,
-                          pIVar2->e_magic);
+  uVar2 = 0x4076800000000000;
+  uVar3 = 0xc076800000000000;
+  DAT_82a76f00 = Dvar_RegisterFloat(0x4051800000000000,0xc076800000000000,0x4076800000000000,
+                                    0xffffffff82026ccc);
+  uVar1 = 0x47efffffe0000000;
+  DAT_82a769fc = Dvar_RegisterFloat(0x4093880000000000,uVar3,0x47efffffe0000000,0xffffffff82026c70);
+  DAT_82a769f8 = Dvar_RegisterFloat(uVar2,uVar3,uVar1,0xffffffff82026c5c);
   return;
 }
 
 
 // 82309680  VehicleGetFxInfo  (cgame_mp/cg_vehicles_mp.cpp:55)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-vehicleEffects * VehicleGetFxInfo(LocalClientNum_t param_1,int param_2)
+void VehicleGetFxInfo(undefined8 param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  int iVar3;
-  vehicleEffects *pvVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  int iVar1;
+  ulonglong uVar2;
+  undefined4 uVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   longlong lVar7;
-  longlong lVar8;
   
-  uVar1 = __savegprlr_28(param_1);
-  lVar5 = 0;
-  uVar1 = (uVar1 & 0x1fffffff) * 8;
+  uVar2 = __savegprlr_28();
+  lVar4 = 0;
+  uVar2 = (uVar2 & 0x1fffffff) * 8;
   do {
-    lVar7 = (uVar1 + lVar5 + (uVar1 + lVar5 & 0x3fffffff) * 4 & 0x1fffffff) * 8;
-    iVar3 = (int)lVar7;
-    if ((&vehEffects[0][0].active)[iVar3] == false) break;
-    if (*(int *)((int)&vehEffects[0][0].entityNum + iVar3) == param_2) {
-      iVar2 = Sys_Milliseconds();
-      *(int *)((int)&vehEffects[0][0].lastAccessed + iVar3) = iVar2;
-      pvVar4 = (vehicleEffects *)__restgprlr_28(lVar7 + -0x7d589600);
-      return pvVar4;
+    lVar6 = (uVar2 + lVar4 + (uVar2 + lVar4 & 0x3fffffff) * 4 & 0x1fffffff) * 8;
+    iVar1 = (int)lVar6;
+    if ((&DAT_82a76a00)[iVar1] == '\0') break;
+    if (*(int *)(&DAT_82a76a08 + iVar1) == param_2) {
+      uVar3 = Sys_Milliseconds();
+      *(undefined4 *)(&DAT_82a76a04 + iVar1) = uVar3;
+      __restgprlr_28(lVar6 + -0x7d589600);
+      return;
     }
-    lVar5 = lVar5 + 1;
-  } while ((int)lVar5 < 8);
-  uVar6 = 0;
+    lVar4 = lVar4 + 1;
+  } while ((int)lVar4 < 8);
+  uVar5 = 0;
   do {
-    if ((&vehEffects[0][0].active)
-        [(int)((uVar1 + uVar6 + (uVar1 + uVar6 & 0x3fffffff) * 4 & 0xffffffff) << 3)] == false) {
-      if ((int)uVar6 < 8) goto LAB_82309870;
+    if ((&DAT_82a76a00)[(int)((uVar2 + uVar5 + (uVar2 + uVar5 & 0x3fffffff) * 4 & 0xffffffff) << 3)]
+        == '\0') {
+      if ((int)uVar5 < 8) goto LAB_82309870;
       break;
     }
-    uVar6 = uVar6 + 1;
-  } while ((int)uVar6 < 8);
-  iVar3 = (int)((uVar1 + 1 + ((uVar1 + 1) * 4 & 0xfffffffc) & 0x1fffffff) << 3);
-  uVar6 = (ulonglong)
-          (*(int *)((int)&vehEffects[0][0].lastAccessed + iVar3) <
-          *(int *)((int)&vehEffects[0][0].lastAccessed +
-                  (int)((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xffffffff) << 3)));
-  if (*(int *)((int)&vehEffects[0][1].lastAccessed + iVar3) <
-      *(int *)((int)&vehEffects[0][0].lastAccessed +
-              (int)((uVar1 + uVar6 + ((uVar1 + uVar6) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
-    uVar6 = 2;
+    uVar5 = uVar5 + 1;
+  } while ((int)uVar5 < 8);
+  iVar1 = (int)((uVar2 + 1 + ((uVar2 + 1) * 4 & 0xfffffffc) & 0x1fffffff) << 3);
+  uVar5 = (ulonglong)
+          (*(int *)(&DAT_82a76a04 + iVar1) <
+          *(int *)(&DAT_82a76a04 + (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 3)));
+  if (*(int *)(&DAT_82a76a2c + iVar1) <
+      *(int *)(&DAT_82a76a04 +
+              (int)((uVar2 + uVar5 + ((uVar2 + uVar5) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar5 = 2;
   }
-  if (*(int *)((int)&vehEffects[0][2].lastAccessed + iVar3) <
-      *(int *)((int)&vehEffects[0][0].lastAccessed +
-              (int)((uVar1 + uVar6 + ((uVar1 + uVar6) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
-    uVar6 = 3;
+  if (*(int *)(&DAT_82a76a54 + iVar1) <
+      *(int *)(&DAT_82a76a04 +
+              (int)((uVar2 + uVar5 + ((uVar2 + uVar5) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar5 = 3;
   }
-  if (*(int *)((int)&vehEffects[0][3].lastAccessed + iVar3) <
-      *(int *)((int)&vehEffects[0][0].lastAccessed +
-              (int)((uVar1 + uVar6 + ((uVar1 + uVar6) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
-    uVar6 = 4;
+  if (*(int *)(&DAT_82a76a7c + iVar1) <
+      *(int *)(&DAT_82a76a04 +
+              (int)((uVar2 + uVar5 + ((uVar2 + uVar5) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar5 = 4;
   }
-  if (*(int *)((int)&vehEffects[0][4].lastAccessed + iVar3) <
-      *(int *)((int)&vehEffects[0][0].lastAccessed +
-              (int)((uVar1 + uVar6 + ((uVar1 + uVar6) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
-    uVar6 = 5;
+  if (*(int *)(&DAT_82a76aa4 + iVar1) <
+      *(int *)(&DAT_82a76a04 +
+              (int)((uVar2 + uVar5 + ((uVar2 + uVar5) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar5 = 5;
   }
-  if (*(int *)((int)&vehEffects[0][5].lastAccessed + iVar3) <
-      *(int *)((int)&vehEffects[0][0].lastAccessed +
-              (int)((uVar1 + uVar6 + ((uVar1 + uVar6) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
-    uVar6 = 6;
+  if (*(int *)(&DAT_82a76acc + iVar1) <
+      *(int *)(&DAT_82a76a04 +
+              (int)((uVar2 + uVar5 + ((uVar2 + uVar5) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar5 = 6;
   }
-  if (*(int *)((int)&vehEffects[0][6].lastAccessed + iVar3) <
-      *(int *)((int)&vehEffects[0][0].lastAccessed +
-              (int)((uVar1 + uVar6 + ((uVar1 + uVar6) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
-    uVar6 = 7;
+  if (*(int *)(&DAT_82a76af4 + iVar1) <
+      *(int *)(&DAT_82a76a04 +
+              (int)((uVar2 + uVar5 + ((uVar2 + uVar5) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar5 = 7;
   }
 LAB_82309870:
-  lVar7 = (uVar1 + uVar6 + (uVar1 + uVar6 & 0x3fffffff) * 4 & 0x1fffffff) * 8;
-  lVar8 = 10;
-  lVar5 = lVar7 + -0x7d589604;
+  lVar6 = (uVar2 + uVar5 + (uVar2 + uVar5 & 0x3fffffff) * 4 & 0x1fffffff) * 8;
+  lVar7 = 10;
+  lVar4 = lVar6 + -0x7d589604;
   do {
-    lVar5 = lVar5 + 4;
-    *(undefined4 *)lVar5 = 0;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  *(undefined1 *)(lVar7 + -0x7d589600) = 1;
-  iVar3 = Sys_Milliseconds();
-  *(int *)((int)&vehEffects[0][0].lastAccessed + (int)lVar7) = iVar3;
-  *(int *)((int)&vehEffects[0][0].entityNum + (int)lVar7) = param_2;
-  pvVar4 = (vehicleEffects *)__restgprlr_28(lVar7 + -0x7d589600);
-  return pvVar4;
+    lVar4 = lVar4 + 4;
+    *(undefined4 *)lVar4 = 0;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  *(undefined1 *)(lVar6 + -0x7d589600) = 1;
+  uVar3 = Sys_Milliseconds();
+  *(undefined4 *)(&DAT_82a76a04 + (int)lVar6) = uVar3;
+  *(int *)(&DAT_82a76a08 + (int)lVar6) = param_2;
+  __restgprlr_28(lVar6 + -0x7d589600);
+  return;
 }
 
 
 // 823098C8  Veh_GetTurretBarrelRoll  (cgame_mp/cg_vehicles_mp.cpp:98)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
+
+double Veh_GetTurretBarrelRoll(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  int iVar5;
+  
+  iVar4 = VehicleGetFxInfo(param_1,*(undefined4 *)(param_2 + 0xc4));
+  iVar5 = CG_GetLocalClientGlobals(param_1);
+  iVar1 = *(int *)(iVar4 + 0x20);
+  iVar5 = *(int *)(iVar5 + 0x6b98c);
+  *(int *)(iVar4 + 0x20) = iVar5;
+  fVar3 = (float)(longlong)(iVar5 - iVar1);
+  fVar2 = *(float *)(iVar4 + 0x18) * fVar3 * 0.001 + *(float *)(iVar4 + 0x1c);
+  *(float *)(iVar4 + 0x1c) = fVar2;
+  if (360.0 < fVar2) {
+    *(float *)(iVar4 + 0x1c) = fVar2 - 360.0;
+  }
+  fVar2 = -(*(float *)(DAT_82a769f8 + 0xc) * fVar3 * 0.001 - *(float *)(iVar4 + 0x18));
+  *(float *)(iVar4 + 0x18) = fVar2;
+  if (fVar2 < 0.0) {
+    *(undefined4 *)(iVar4 + 0x18) = 0;
+  }
+  return (double)*(float *)(iVar4 + 0x1c);
+}
+
 
 // 823099A0  Veh_IncTurretBarrelRoll  (cgame_mp/cg_vehicles_mp.cpp:124)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Veh_IncTurretBarrelRoll(LocalClientNum_t param_1,int param_2,float param_3)
+void Veh_IncTurretBarrelRoll(double param_1)
 
 {
   float fVar1;
-  vehicleEffects *pvVar2;
-  double dVar3;
+  int iVar2;
   
-  dVar3 = (double)param_3;
-  pvVar2 = VehicleGetFxInfo(param_1,param_2);
-  fVar1 = (float)((double)pvVar2->barrelVelocity + dVar3);
-  if ((heli_barrelMaxVelocity->current).value - fVar1 < 0.0) {
-    fVar1 = (heli_barrelMaxVelocity->current).value;
+  iVar2 = VehicleGetFxInfo();
+  fVar1 = (float)((double)*(float *)(iVar2 + 0x18) + param_1);
+  if (*(float *)(DAT_82a769fc + 0xc) - fVar1 < 0.0) {
+    fVar1 = *(float *)(DAT_82a769fc + 0xc);
   }
-  pvVar2->barrelVelocity = fVar1;
+  *(float *)(iVar2 + 0x18) = fVar1;
   return;
 }
 
 
 // 823099F0  VehicleFXTest  (cgame_mp/cg_vehicles_mp.cpp:134)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
+
+void VehicleFXTest(undefined8 param_1,undefined8 param_2,longlong param_3)
+
+{
+  undefined4 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float local_f0;
+  float local_ec;
+  float local_e8;
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  undefined4 local_d0;
+  undefined4 local_cc;
+  undefined4 local_c8;
+  undefined4 local_c4;
+  undefined4 local_c0;
+  undefined4 local_bc;
+  longlong local_b8;
+  float local_b0;
+  float local_ac;
+  undefined4 local_a8;
+  undefined1 auStack_a4 [12];
+  undefined1 auStack_98 [24];
+  float local_80 [4];
+  uint local_70;
+  
+  uVar2 = __savegprlr_27();
+  iVar3 = VehicleCl_GetClient(uVar2,param_3);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82026ce8,0x98,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  iVar5 = (int)param_3;
+  if ((*(int *)(iVar5 + 200) == 0xc) && ((*(uint *)(iVar3 + 0x18) & 0x40) == 0)) {
+    uVar1 = *(undefined4 *)(iVar5 + 0xc4);
+    iVar3 = VehicleGetFxInfo(uVar2,uVar1);
+    iVar4 = Sys_Milliseconds();
+    if (*(int *)(iVar3 + 0xc) <= iVar4) {
+      local_ec = *(float *)(iVar5 + 0x70);
+      local_f0 = *(float *)(iVar5 + 0x6c);
+      dVar10 = 1200.0;
+      local_e8 = *(float *)(iVar5 + 0x74) - 1200.0;
+      dVar11 = 0.0;
+      local_d0 = 0;
+      local_cc = 0;
+      local_c8 = 0;
+      local_c4 = 0x3f000000;
+      local_c0 = 0x3f000000;
+      local_bc = 0x3f000000;
+      CG_TraceCapsule(local_80,param_3 + 0x6c,&local_f0,&local_d0,uVar1,0x831);
+      dVar6 = (double)local_80[0];
+      iVar4 = 1000;
+      if (dVar6 < 1.0) {
+        dVar9 = (double)*(float *)(iVar5 + 0x70);
+        dVar8 = (double)*(float *)(iVar5 + 0x74);
+        dVar7 = (double)*(float *)(param_3 + 0x6c);
+        local_dc = (float)((double)(float)((double)local_ec - dVar9) * dVar6 + dVar9);
+        local_d8 = (float)((double)(float)((double)local_e8 - dVar8) * dVar6 + dVar8);
+        local_e0 = (float)((double)(float)((double)local_f0 - dVar7) * dVar6 + dVar7);
+        dVar9 = (double)(float)((double)local_dc - dVar9);
+        dVar6 = (double)SQRT((float)((double)local_e0 - dVar7) * (float)((double)local_e0 - dVar7) +
+                             (float)((double)local_d8 - dVar8) * (float)((double)local_d8 - dVar8) +
+                             (float)(dVar9 * dVar9));
+        if (dVar6 < dVar10) {
+          local_a8 = 0x3f800000;
+          local_b0 = (float)dVar11;
+          local_ac = (float)dVar11;
+          iVar4 = (int)(((float)(dVar6 - 350.0) * 0.0011764705 * 0.10000001 + 0.05) * 1000.0);
+          local_b8 = (longlong)iVar4;
+          Vec3Basis_RightHanded(dVar9,dVar8,&local_b0,auStack_a4,auStack_98);
+          uVar1 = DAT_82a3c9d0;
+          if ((local_70 & 0x1f00000) == 0x1400000) {
+            uVar1 = DAT_82a3c9d4;
+          }
+          iVar5 = CG_GetLocalClientGlobals(uVar2);
+          FX_PlayOrientedEffect(uVar2,uVar1,*(undefined4 *)(iVar5 + 0x6b98c),&local_e0,&local_b0);
+        }
+      }
+      iVar5 = Sys_Milliseconds();
+      *(int *)(iVar3 + 0xc) = iVar5 + iVar4;
+    }
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 82309C40  CG_Veh_Init  (cgame_mp/cg_vehicles_mp.cpp:235)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void CG_Veh_Init(void)
+void * CG_Veh_Init(void)
 
 {
-  memset();
-  return;
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_82a76a00,0,0x500);
+  return pvVar1;
 }
 

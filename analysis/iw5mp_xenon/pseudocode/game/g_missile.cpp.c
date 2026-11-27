@@ -2,177 +2,67 @@
 
 // 8247D5E0  G_RegisterMissileDvars  (game/g_missile.cpp:120)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void G_RegisterMissileDvars(void)
 
 {
-  ushort in_r4;
-  ushort uVar1;
-  char *in_r5;
-  _func___cdecl_void_game_hudelem_s_ptr_int **pp_Var2;
-  IMAGE_DOS_HEADER *pIVar3;
-  char *pcVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
   
   __savefpr_25();
-  dVar10 = 3.4028234663852886e+38;
-  dVar11 = 0.0;
-  missileGlassShatterVel =
-       Dvar_RegisterFloat("missileGlassShatterVel",600.0,0.0,3.4028235e+38,in_r4,in_r5);
-  uVar1 = 0;
-  missileHellfireMaxSlope =
-       Dvar_RegisterFloat("missileHellfireMaxSlope",0.5,(float)dVar11,(float)dVar10,0,
-                          IMAGE_DOS_HEADER_82000000.e_magic);
-  pp_Var2 = &fields[0].setter;
-  dVar7 = 1000.0;
-  missileHellfireUpAccel =
-       Dvar_RegisterFloat("missileHellfireUpAccel",1000.0,0.1,(float)dVar10,uVar1,
-                          (char *)&fields[0].setter);
-  uVar1 = 0;
-  missileJavClimbHeightDirect =
-       Dvar_RegisterFloat("missileJavClimbHeightDirect",10000.0,(float)dVar11,(float)dVar10,0,
-                          (char *)pp_Var2);
-  pp_Var2 = &fields[0].setter;
-  missileJavClimbAngleDirect =
-       Dvar_RegisterFloat("missileJavClimbAngleDirect",85.0,(float)dVar11,(float)dVar10,uVar1,
-                          (char *)&fields[0].setter);
-  uVar1 = 0;
-  missileJavClimbAngleTop =
-       Dvar_RegisterFloat("missileJavClimbAngleTop",50.0,(float)dVar11,(float)dVar10,0,
-                          (char *)pp_Var2);
-  pp_Var2 = &fields[0].setter;
-  missileJavClimbCeilingDirect =
-       Dvar_RegisterFloat("missileJavClimbCeilingDirect",(float)dVar11,(float)dVar11,(float)dVar10,
-                          uVar1,(char *)&fields[0].setter);
-  uVar1 = 0;
-  dVar6 = 3000.0;
-  missileJavClimbCeilingTop =
-       Dvar_RegisterFloat("missileJavClimbCeilingTop",3000.0,(float)dVar11,(float)dVar10,0,
-                          (char *)pp_Var2);
-  pp_Var2 = &fields[0].setter;
-  dVar5 = 60.0;
-  missileJavTurnRateDirect =
-       Dvar_RegisterFloat("missileJavTurnRateDirect",60.0,(float)dVar11,(float)dVar10,uVar1,
-                          (char *)&fields[0].setter);
-  uVar1 = 0;
-  dVar8 = 100.0;
-  missileJavTurnRateTop =
-       Dvar_RegisterFloat("missileJavTurnRateTop",100.0,(float)dVar11,(float)dVar10,0,
-                          (char *)pp_Var2);
-  pp_Var2 = &fields[0].setter;
-  missileJavAccelDescend =
-       Dvar_RegisterFloat("missileJavAccelDescend",4500.0,(float)dVar11,(float)dVar10,uVar1,
-                          (char *)&fields[0].setter);
-  missileJavSpeedLimitDescend =
-       Dvar_RegisterFloat("missileJavSpeedLimitDescend",2500.0,(float)dVar11,(float)dVar10,0,
-                          (char *)pp_Var2);
-  pIVar3 = &IMAGE_DOS_HEADER_82000000;
-  uVar1 = 0;
-  dVar9 = 1.0;
-  missileJavTurnDecel =
-       Dvar_RegisterFloat("missileJavTurnDecel",0.05,(float)dVar11,1.0,0,
-                          IMAGE_DOS_HEADER_82000000.e_magic);
-  missileJavClimbToOwner =
-       Dvar_RegisterFloat("missileJavClimbToOwner",700.0,(float)dVar11,(float)dVar10,uVar1,
-                          pIVar3->e_magic);
-  pcVar4 = (char *)0x84;
-  missileJavDuds =
-       Dvar_RegisterBool("missileJavDuds",false,0x84,
-                         "If true, javelins that impact before their booster ignites will not explode, they will play their dud effects instead."
-                        );
-  missileJavClimbHeightTop =
-       Dvar_RegisterFloat("missileJavClimbHeightTop",15000.0,(float)dVar11,(float)dVar10,0,pcVar4);
-  pp_Var2 = &fields[0].setter;
-  uVar1 = 0;
-  missileJavAccelClimb =
-       Dvar_RegisterFloat("missileJavAccelClimb",300.0,(float)dVar11,(float)dVar10,0,
-                          (char *)&fields[0].setter);
-  missileJavSpeedLimitClimb =
-       Dvar_RegisterFloat("missileJavSpeedLimitClimb",(float)dVar7,(float)dVar11,(float)dVar10,uVar1
-                          ,(char *)pp_Var2);
-  pp_Var2 = &fields[0].setter;
-  missileWaterMaxDepth =
-       Dvar_RegisterFloat("missileWaterMaxDepth",(float)dVar5,(float)dVar11,(float)dVar10,uVar1,
-                          (char *)&fields[0].setter);
-  missileRemoteSpeedTargetRange =
-       Dvar_RegisterVec2("missileRemoteSpeedTargetRange",(float)dVar6,6000.0,(float)dVar11,
-                         (float)dVar10,0,(char *)pp_Var2);
-  pp_Var2 = &fields[0].setter;
-  uVar1 = 0;
-  missileRemoteSpeedUp =
-       Dvar_RegisterFloat("missileRemoteSpeedUp",2000.0,(float)dVar11,(float)dVar10,0,
-                          (char *)&fields[0].setter);
-  missileRemoteSpeedDown =
-       Dvar_RegisterFloat("missileRemoteSpeedDown",500.0,(float)dVar11,(float)dVar10,uVar1,
-                          (char *)pp_Var2);
-  missileExplosionLiftDistance =
-       Dvar_RegisterFloat("missileExplosionLiftDistance",32.0,(float)dVar11,(float)dVar10,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  missileMacross = Dvar_RegisterBool("missileMacross",false,0x84,"Swarmy goodness.");
-  grenadeRestThreshold =
-       Dvar_RegisterFloat("grenadeRestThreshold",20.0,(float)dVar11,(float)dVar10,0,
-                          (char *)&fields[0].setter);
-  uVar1 = 1;
-  grenadeRollingEnabled =
-       Dvar_RegisterBool("grenadeRollingEnabled",true,0xc4,
-                         "Enables the new \"rolling\" grenade behavior");
-  pp_Var2 = &fields[0].setter;
-  dVar7 = 0.009999999776482582;
-  grenadeFrictionLow =
-       Dvar_RegisterFloat("grenadeFrictionLow",0.01,(float)dVar11,(float)dVar9,uVar1,
-                          (char *)&fields[0].setter);
-  uVar1 = 0;
-  dVar6 = 0.4000000059604645;
-  grenadeFrictionHigh =
-       Dvar_RegisterFloat("grenadeFrictionHigh",0.4,(float)dVar11,(float)dVar9,0,(char *)pp_Var2);
-  pp_Var2 = &fields[0].setter;
-  grenadeFrictionThresh =
-       Dvar_RegisterFloat("grenadeFrictionMaxThresh",(float)dVar8,(float)dVar11,(float)dVar10,uVar1,
-                          (char *)&fields[0].setter);
-  uVar1 = 0;
-  dVar5 = 0.30000001192092896;
-  grenadeBumpFreq =
-       Dvar_RegisterFloat("grenadeBumpFreq",0.3,(float)dVar11,(float)dVar10,0,(char *)pp_Var2);
-  pp_Var2 = &fields[0].setter;
-  grenadeBumpMag =
-       Dvar_RegisterFloat("grenadeBumpMag",(float)dVar6,(float)dVar11,(float)dVar10,uVar1,
-                          (char *)&fields[0].setter);
-  uVar1 = 0;
-  grenadeBumpMax =
-       Dvar_RegisterFloat("grenadeBumpMax",(float)dVar8,(float)dVar11,(float)dVar10,0,
-                          (char *)pp_Var2);
-  pp_Var2 = &fields[0].setter;
-  grenadeWobbleFreq =
-       Dvar_RegisterFloat("grenadeWobbleFreq",0.08,(float)dVar11,(float)dVar10,uVar1,
-                          (char *)&fields[0].setter);
-  uVar1 = 0;
-  grenadeWobbleFwdMag =
-       Dvar_RegisterFloat("grenadeWobbleFwdMag",10.0,(float)dVar11,(float)dVar10,0,(char *)pp_Var2);
-  pp_Var2 = &fields[0].setter;
-  grenadeWobbleSideMag =
-       Dvar_RegisterFloat("grenadeWobbleSideMag",(float)dVar9,(float)dVar11,(float)dVar10,uVar1,
-                          (char *)&fields[0].setter);
-  uVar1 = 0;
-  grenadeWobbleSideDamp =
-       Dvar_RegisterFloat("grenadeWobbleSideDamp",(float)dVar7,(float)dVar11,(float)dVar10,0,
-                          (char *)pp_Var2);
-  pp_Var2 = &fields[0].setter;
-  grenadeCurveMax =
-       Dvar_RegisterFloat("grenadeCurveMax",4.0,(float)dVar11,(float)dVar10,uVar1,
-                          (char *)&fields[0].setter);
-  grenadeBounceRestitutionMax =
-       Dvar_RegisterFloat("grenadeBounceRestitutionMax",(float)dVar5,(float)dVar11,(float)dVar10,0,
-                          (char *)pp_Var2);
-  airburstAdjustDistance =
-       Dvar_RegisterFloat("airburstAdjustDistance",64.0,(float)dVar11,120.0,0,
-                          (char *)&fields[0].setter);
+  uVar6 = 0x47efffffe0000000;
+  uVar7 = 0;
+  DAT_835833a8 = Dvar_RegisterFloat(0x4082c00000000000,0,0x47efffffe0000000,0xffffffff82074bd4);
+  DAT_835837b0 = Dvar_RegisterFloat(0x3fe0000000000000,uVar7,uVar6,0xffffffff82074b18);
+  uVar3 = 0x408f400000000000;
+  DAT_83583814 = Dvar_RegisterFloat(0x408f400000000000,0x3fb99999a0000000,uVar6,0xffffffff82074ac8);
+  DAT_835837f0 = Dvar_RegisterFloat(0x40c3880000000000,uVar7,uVar6,0xffffffff82074a50);
+  DAT_835837ec = Dvar_RegisterFloat(0x4055400000000000,uVar7,uVar6,0xffffffff820749a4);
+  DAT_83583804 = Dvar_RegisterFloat(0x4049000000000000,uVar7,uVar6,0xffffffff82074900);
+  DAT_835837fc = Dvar_RegisterFloat(uVar7,uVar7,uVar6,0xffffffff8207488c);
+  uVar2 = 0x40a7700000000000;
+  DAT_8358339c = Dvar_RegisterFloat(0x40a7700000000000,uVar7,uVar6,0xffffffff82074824);
+  uVar1 = 0x404e000000000000;
+  DAT_83583388 = Dvar_RegisterFloat(0x404e000000000000,uVar7,uVar6,0xffffffff820747c0);
+  uVar4 = 0x4059000000000000;
+  DAT_835837b8 = Dvar_RegisterFloat(0x4059000000000000,uVar7,uVar6,0xffffffff82074764);
+  DAT_835833ac = Dvar_RegisterFloat(0x40b1940000000000,uVar7,uVar6,0xffffffff82074714);
+  DAT_83583380 = Dvar_RegisterFloat(0x40a3880000000000,uVar7,uVar6,0xffffffff820746c0);
+  uVar5 = 0x3ff0000000000000;
+  DAT_835833a4 = Dvar_RegisterFloat(0x3fa99999a0000000,uVar7,0x3ff0000000000000,0xffffffff820746ac);
+  DAT_835837dc = Dvar_RegisterFloat(0x4085e00000000000,uVar7,uVar6,0xffffffff82074690);
+  DAT_835833a0 = Dvar_RegisterBool(0xffffffff82074680,0,0x84,0xffffffff82074608);
+  DAT_83583384 = Dvar_RegisterFloat(0x40cd4c0000000000,uVar7,uVar6,0xffffffff82074594);
+  DAT_835837c0 = Dvar_RegisterFloat(0x4072c00000000000,uVar7,uVar6,0xffffffff82074558);
+  DAT_83583810 = Dvar_RegisterFloat(uVar3,uVar7,uVar6,0xffffffff82074518);
+  DAT_835837e4 = Dvar_RegisterFloat(uVar1,uVar7,uVar6,0xffffffff8207449c);
+  DAT_8358381c = Dvar_RegisterVec2(uVar2,0x40b7700000000000,uVar7,uVar6,0xffffffff82074478);
+  DAT_8358338c = Dvar_RegisterFloat(0x409f400000000000,uVar7,uVar6,0xffffffff82074410);
+  DAT_83583378 = Dvar_RegisterFloat(0x407f400000000000,uVar7,uVar6,0xffffffff820743f8);
+  DAT_83583398 = Dvar_RegisterFloat(0x4040000000000000,uVar7,uVar6,0xffffffff82074360);
+  DAT_835837f4 = Dvar_RegisterBool(0xffffffff8207433c,0,0x84,0xffffffff8207434c);
+  DAT_835837c4 = Dvar_RegisterFloat(0x4034000000000000,uVar7,uVar6,0xffffffff820742e8);
+  DAT_8358380c = Dvar_RegisterBool(0xffffffff820742a4,1,0xc4,0xffffffff820742bc);
+  uVar3 = 0x3f847ae140000000;
+  DAT_835837cc = Dvar_RegisterFloat(0x3f847ae140000000,uVar7,uVar5,0xffffffff82074254);
+  uVar2 = 0x3fd99999a0000000;
+  DAT_835837e8 = Dvar_RegisterFloat(0x3fd99999a0000000,uVar7,uVar5,0xffffffff82074204);
+  DAT_83583390 = Dvar_RegisterFloat(uVar4,uVar7,uVar6,0xffffffff8207419c);
+  uVar1 = 0x3fd3333340000000;
+  DAT_835837f8 = Dvar_RegisterFloat(0x3fd3333340000000,uVar7,uVar6,0xffffffff8207415c);
+  DAT_835837bc = Dvar_RegisterFloat(uVar2,uVar7,uVar6,0xffffffff8207410c);
+  DAT_83583394 = Dvar_RegisterFloat(uVar4,uVar7,uVar6,0xffffffff820740d0);
+  DAT_835837d8 = Dvar_RegisterFloat(0x3fb47ae140000000,uVar7,uVar6,0xffffffff82074084);
+  DAT_83583808 = Dvar_RegisterFloat(0x4024000000000000,uVar7,uVar6,0xffffffff82074034);
+  DAT_83583800 = Dvar_RegisterFloat(uVar5,uVar7,uVar6,0xffffffff82073ff4);
+  DAT_835837e0 = Dvar_RegisterFloat(uVar3,uVar7,uVar6,0xffffffff82073f74);
+  DAT_835837d0 = Dvar_RegisterFloat(0x4010000000000000,uVar7,uVar6,0xffffffff82073f64);
+  DAT_83583820 = Dvar_RegisterFloat(uVar1,uVar7,uVar6,0xffffffff82073ec0);
+  DAT_8358337c = Dvar_RegisterFloat(0x4050000000000000,uVar7,0x405e000000000000,0xffffffff82073e74);
   __restfpr_25();
   return;
 }
@@ -180,35 +70,44 @@ void G_RegisterMissileDvars(void)
 
 // 8247DD60  G_RegisterMissileDebugDvars  (game/g_missile.cpp:188)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void G_RegisterMissileDebugDvars(void)
 
 {
-  missileDebugDraw =
-       Dvar_RegisterBool("missileDebugDraw",false,0,"Draw guided missile trajectories.");
-  missileDebugText =
-       Dvar_RegisterBool("missileDebugText",false,0,"Print debug missile info to console.");
-  missileDebugAttractors =
-       Dvar_RegisterBool("missileDebugAttractors",false,0,
-                         "Draw the attractors and repulsors.  Attractors are green, and repulsors are yellow."
-                        );
+  DAT_83583818 = Dvar_RegisterBool(0xffffffff82074c98,0,0,0xffffffff82074cac);
+  DAT_835837d4 = Dvar_RegisterBool(0xffffffff82074c5c,0,0,0xffffffff82074c70);
+  DAT_835837c8 = Dvar_RegisterBool(0xffffffff82074bec,0,0,0xffffffff82074c08);
   return;
 }
 
 
 // 8247DDE8  Missile_IsGrenade  (game/g_missile.cpp:197)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
-// 8247DE80  CalcMissileNoDrawTime  (game/g_missile.cpp:207)
-
-int CalcMissileNoDrawTime(float param_1)
+void Missile_IsGrenade(void)
 
 {
   int iVar1;
   
-  iVar1 = (int)(param_1 * -35.0 * 0.0016666667 + 85.0);
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xc6,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar1 + 4) != 4) {
+    MyAssertHandler(0xffffffff82074cec,199,0,0xffffffff82000f98,0xffffffff82074cd0);
+  }
+  iVar1 = BG_GetWeaponClass(*(undefined4 *)(iVar1 + 200),*(int *)(iVar1 + 0xcc) != 0);
+  __restgprlr_29(iVar1 == 6);
+  return;
+}
+
+
+// 8247DE80  CalcMissileNoDrawTime  (game/g_missile.cpp:207)
+
+int CalcMissileNoDrawTime(double param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = (int)((float)(param_1 * -35.0) * 0.0016666667 + 85.0);
   if (0x31 < iVar1) {
     return 0x32;
   }
@@ -221,47 +120,380 @@ int CalcMissileNoDrawTime(float param_1)
 
 // 8247DED0  TraceHitCharacter  (game/g_missile.cpp:216)
 
-bool TraceHitCharacter(trace_t *param_1)
+byte TraceHitCharacter(void)
 
 {
   ushort uVar1;
   
-  uVar1 = Trace_GetEntityHitId(param_1);
-  return (bool)(-(uVar1 < 0x12) & 1);
+  uVar1 = Trace_GetEntityHitId();
+  return -(uVar1 < 0x12) & 1;
 }
 
 
 // 8247DF08  TraceHitType  (game/g_missile.cpp:228)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+bool TraceHitType(undefined8 param_1,int param_2)
+
+{
+  uint uVar1;
+  
+  uVar1 = Trace_GetEntityHitId();
+  return param_2 == (&DAT_83373684)[((uVar1 & 0xffff) + (uVar1 & 0xffff) * 4) * 0x20];
+}
+
 
 // 8247DF60  MissileLandAngles  (game/g_missile.cpp:234)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void MissileLandAngles(undefined8 param_1,longlong param_2,float *param_3,int param_4)
+
+{
+  float fVar1;
+  int iVar3;
+  undefined8 uVar2;
+  uint uVar4;
+  longlong lVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  
+  __savegprlr_27();
+  iVar3 = __savefpr_25();
+  lVar5 = (ulonglong)
+          (uint)(int)((float)(longlong)(int)(DAT_83580fac - DAT_83580fb0) * *(float *)param_2) +
+          (ulonglong)DAT_83580fb0;
+  uVar2 = BG_EvaluateTrajectory(iVar3 + 0x30,lVar5);
+  if (((float *)param_2)[3] <= 0.1) {
+    if (param_4 == 0) {
+      uVar4 = G_rand();
+      dVar6 = (double)AngleNormalize360((double)((float)(longlong)(int)((uVar4 & 0x7f) - 0x3f) +
+                                                *(float *)(iVar3 + 0x48)));
+      *(float *)(iVar3 + 0x48) = (float)dVar6;
+    }
+    __restfpr_25();
+    __restgprlr_27();
+    return;
+  }
+  dVar6 = (double)PitchForYawOnNormal((double)param_3[1],uVar2,param_2 + 4);
+  dVar13 = 0.0027777778450399637;
+  dVar12 = 0.5;
+  dVar10 = (double)((float)(dVar6 - (double)*param_3) * 0.0027777778);
+  dVar7 = floor((double)(float)(dVar10 + 0.5));
+  dVar11 = 360.0;
+  dVar9 = 80.0;
+  dVar7 = (double)((float)(dVar10 - (double)(float)dVar7) * 360.0);
+  dVar10 = ABS(dVar7);
+  if (param_4 == 0) {
+    *(float *)(iVar3 + 0x3c) = *param_3;
+    *(float *)(iVar3 + 0x40) = param_3[1];
+    *(float *)(iVar3 + 0x44) = param_3[2];
+    *(int *)(iVar3 + 0x34) = (int)lVar5;
+    if (80.0 <= dVar10) {
+      dVar8 = (double)G_random();
+      *(float *)(iVar3 + 0x48) =
+           (float)(dVar8 * 0.30000001192092896 + 0.8500000238418579) * *(float *)(iVar3 + 0x48);
+    }
+    else {
+      dVar8 = (double)G_random();
+      *(float *)(iVar3 + 0x48) =
+           (float)(dVar8 * 0.30000001192092896 + 0.8500000238418579) * *(float *)(iVar3 + 0x48) *
+           -1.0;
+    }
+  }
+  dVar13 = (double)(float)((double)*param_3 * dVar13);
+  dVar12 = floor((double)(float)(dVar13 + dVar12));
+  fVar1 = (float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar11);
+  dVar11 = (double)fVar1;
+  *param_3 = fVar1;
+  if ((param_4 != 0) || (dVar10 < 45.0)) {
+    if (90.0 < ABS(dVar11)) {
+      dVar6 = (double)AngleNormalize360((double)(float)(dVar6 + 180.0));
+      *param_3 = (float)dVar6;
+      __restfpr_25();
+      __restgprlr_27();
+      return;
+    }
+  }
+  else {
+    dVar6 = dVar11;
+    if (dVar10 < dVar9) {
+      dVar6 = (double)AngleNormalize360((double)(float)(dVar7 * 0.25 + dVar11));
+      *param_3 = (float)dVar6;
+      __restfpr_25();
+      __restgprlr_27();
+      return;
+    }
+  }
+  dVar6 = (double)AngleNormalize360(dVar6);
+  *param_3 = (float)dVar6;
+  __restfpr_25();
+  __restgprlr_27();
+  return;
+}
+
 
 // 8247E1C0  MissileLandAnglesFlat  (game/g_missile.cpp:295)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void MissileLandAnglesFlat(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  float fVar1;
+  ulonglong uVar2;
+  float *pfVar3;
+  double dVar4;
+  float local_58;
+  float local_54;
+  float local_50;
+  float local_48;
+  float local_44;
+  float local_40;
+  
+  uVar2 = __savegprlr_27();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x12e,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x12f,0,0xffffffff82000f98,0xffffffff8202b910);
+  }
+  pfVar3 = (float *)param_2;
+  BG_EvaluateTrajectory
+            (uVar2 + 0x30,
+             (ulonglong)(uint)(int)((float)(longlong)(int)(DAT_83580fac - DAT_83580fb0) * *pfVar3) +
+             (ulonglong)DAT_83580fb0,param_3);
+  NearestPitchAndYawOnPlane(param_3,param_2 + 4,param_3);
+  if (*(float *)((int)param_3 + 8) != 0.0) {
+    MyAssertHandler(0xffffffff82074cec,0x138,0,0xffffffff82000f98,0xffffffff82074d30);
+  }
+  AngleVectors(param_3,0,&local_58,&local_48);
+  fVar1 = *(float *)(param_2 + 4);
+  dVar4 = atan2((double)(pfVar3[3] * local_50 + fVar1 * local_58 + pfVar3[2] * local_54),
+                (double)(pfVar3[3] * local_40 + fVar1 * local_48 + pfVar3[2] * local_44));
+  *(float *)((int)param_3 + 8) = (float)dVar4 * 57.295776;
+  __restgprlr_27();
+  return;
+}
+
 
 // 8247E330  MissileLandAnglesKnife  (game/g_missile.cpp:320)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void MissileLandAnglesKnife
+               (undefined8 param_1,int param_2,ulonglong param_3,undefined8 param_4,float *param_5)
+
+{
+  float fVar1;
+  float *pfVar2;
+  int iVar3;
+  ushort uVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  float local_58;
+  float local_54;
+  float local_50;
+  
+  iVar3 = __savegprlr_25();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x146,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x147,0,0xffffffff82000f98,0xffffffff8202b910);
+  }
+  pfVar5 = (float *)param_3;
+  BG_EvaluateTrajectory
+            (iVar3 + 0x30,
+             (ulonglong)(uint)(int)((float)(longlong)(int)(DAT_83580fac - DAT_83580fb0) * *pfVar5) +
+             (ulonglong)DAT_83580fb0,param_4);
+  uVar4 = Trace_GetEntityHitId(param_3);
+  pfVar2 = (float *)param_4;
+  if ((0x11 < uVar4) || (*(char *)(param_2 + 0x78b) == '\0')) {
+    local_54 = *(float *)(iVar3 + 0x28);
+    local_58 = *(float *)(iVar3 + 0x24);
+    local_50 = *(float *)(iVar3 + 0x2c);
+    dVar8 = 1.0;
+    dVar6 = (double)SQRT(local_50 * local_50 + local_58 * local_58 + local_54 * local_54);
+    dVar7 = dVar8;
+    if (-dVar6 < 0.0) {
+      dVar7 = dVar6;
+    }
+    fVar1 = (float)(1.0 / dVar7);
+    local_58 = local_58 * fVar1;
+    local_54 = local_54 * fVar1;
+    local_50 = local_50 * fVar1;
+    if ((float)0x3f333333 < pfVar5[3]) {
+      if ((double)*(float *)(DAT_835837c4 + 0xc) <= dVar6) {
+        if ((float)0x3f333333 <= pfVar5[3] * local_50 + pfVar5[2] * local_54 + local_58 * pfVar5[1])
+        goto LAB_8247e4f4;
+      }
+      MissileLandAnglesFlat(iVar3,param_3,param_4);
+      param_5[2] = (float)((double)param_5[2] - dVar8);
+      pfVar2[2] = pfVar2[2] + 90.0;
+      __restgprlr_25(2);
+      return;
+    }
+  }
+LAB_8247e4f4:
+  dVar7 = atan2((double)pfVar5[3],(double)SQRT(pfVar5[2] * pfVar5[2] + pfVar5[1] * pfVar5[1]));
+  dVar6 = (double)(float)dVar7;
+  dVar7 = (double)G_random();
+  *pfVar2 = (float)(dVar7 * 30.0 + (double)(float)(dVar6 * 57.2957763671875)) - 15.0;
+  AngleVectors(param_4,&local_58,0,0);
+  dVar6 = -(double)(pfVar5[1] * 1.5 - *param_5);
+  *param_5 = (float)dVar6;
+  fVar1 = -(pfVar5[2] * 1.5 - param_5[1]);
+  param_5[1] = fVar1;
+  dVar8 = -(double)(pfVar5[3] * 1.5 - param_5[2]);
+  param_5[2] = (float)dVar8;
+  dVar7 = -(double)(float)((double)local_50 * 4.5 - dVar8);
+  *param_5 = -(float)((double)local_58 * 4.5 - dVar6);
+  param_5[1] = -(local_54 * 4.5 - fVar1);
+  param_5[2] = (float)dVar7;
+  __restgprlr_25(dVar6,dVar7,dVar8,3);
+  return;
+}
+
 
 // 8247E5D8  MissileLandAnglesFlatMaintainingDirection  (game/g_missile.cpp:357)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void MissileLandAnglesFlatMaintainingDirection
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  float *pfVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  float *pfVar4;
+  double dVar5;
+  float local_58;
+  float local_54;
+  float local_50;
+  float local_48;
+  float local_44;
+  float local_40;
+  
+  uVar2 = __savegprlr_27();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x16c,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x16d,0,0xffffffff82000f98,0xffffffff8202b910);
+  }
+  pfVar4 = (float *)param_2;
+  uVar3 = BG_EvaluateTrajectory
+                    (uVar2 + 0x30,
+                     (ulonglong)
+                     (uint)(int)((float)(longlong)(int)(DAT_83580fac - DAT_83580fb0) * *pfVar4) +
+                     (ulonglong)DAT_83580fb0,param_3);
+  pfVar1 = (float *)param_3;
+  dVar5 = (double)PitchForYawOnNormal((double)pfVar1[1],uVar3,param_2 + 4);
+  *pfVar1 = (float)dVar5;
+  pfVar1[2] = 0.0;
+  AngleVectors(param_3,0,&local_58,&local_48);
+  dVar5 = atan2((double)(pfVar4[3] * local_50 + pfVar4[1] * local_58 + pfVar4[2] * local_54),
+                (double)(pfVar4[3] * local_40 + pfVar4[1] * local_48 + pfVar4[2] * local_44));
+  pfVar1[2] = (float)dVar5 * 57.295776;
+  __restgprlr_27();
+  return;
+}
+
 
 // 8247E720  CheckCrumpleMissile  (game/g_missile.cpp:384)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined8 CheckCrumpleMissile(int param_1,float *param_2)
+
+{
+  float fVar1;
+  int iVar2;
+  float local_28;
+  float local_24;
+  float local_20;
+  
+  if (*(char *)(param_1 + 0xcb) == '\0') {
+    MyAssertHandler(0xffffffff82074cec,0x185,0,0xffffffff82000f98,0xffffffff82074d44);
+  }
+  iVar2 = BG_GetWeaponType(*(undefined4 *)(param_1 + 200),*(int *)(param_1 + 0xcc) != 0);
+  if (iVar2 == 3) {
+    if (param_2[4] == 1.0285576e-38) {
+      return 1;
+    }
+    BG_EvaluateTrajectoryDelta
+              (param_1 + 0xc,
+               (ulonglong)
+               (uint)(int)((float)(longlong)(int)(DAT_83580fac - DAT_83580fb0) * *param_2) +
+               (ulonglong)DAT_83580fb0,&local_28);
+    fVar1 = SQRT(local_28 * local_28 + local_24 * local_24 + local_20 * local_20);
+    if ((500.0 <= fVar1) &&
+       (fVar1 = -1.0 / fVar1,
+       0.707 < param_2[3] * local_20 * fVar1 +
+               param_2[2] * local_24 * fVar1 + fVar1 * local_28 * param_2[1])) {
+      return 1;
+    }
+  }
+  return 0;
+}
+
 
 // 8247E878  CheckGrenadeDanger  (game/g_missile.cpp:415)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CheckGrenadeDanger(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  double dVar5;
+  undefined1 auStack_460 [1120];
+  
+  iVar1 = __savegprlr_23();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x1a6,0,0xffffffff82000f98,0xffffffff820147fc);
+  }
+  if (*(char *)(iVar1 + 0xcb) == '\0') {
+    MyAssertHandler(0xffffffff82074cec,0x1a7,0,0xffffffff82000f98,0xffffffff82074d68);
+  }
+  iVar2 = BG_ExplosionRadius(*(undefined4 *)(iVar1 + 200),*(int *)(iVar1 + 0xcc) != 0);
+  dVar5 = (double)(float)((double)(longlong)iVar2 * (double)(longlong)iVar2);
+  BG_GetWeaponName(*(undefined4 *)(iVar1 + 200),auStack_460,0x400);
+  puVar4 = &DAT_83373680;
+  iVar2 = 0;
+  if (0 < DAT_83580fa4) {
+    do {
+      if (*(char *)((int)puVar4 + 0x103) != '\0') {
+        if (puVar4[0x56] == 0) {
+          MyAssertHandler(0xffffffff82074cec,0x1b2,0,0xffffffff82000f98,0xffffffff8206b9fc);
+        }
+        iVar3 = G_WithinDamageRadius(dVar5,iVar1 + 0x138);
+        if (iVar3 != 0) {
+          Scr_AddString(auStack_460);
+          iVar3 = EntHandle__isDefined(iVar1 + 0x194);
+          if (iVar3 == 0) {
+            Scr_AddUndefined();
+          }
+          else {
+            EntHandle__ent(iVar1 + 0x194);
+            Scr_AddEntity();
+          }
+          Scr_AddEntity(iVar1);
+          Scr_Notify(puVar4,DAT_835a0bda,3);
+        }
+      }
+      iVar2 = iVar2 + 1;
+      puVar4 = puVar4 + 0xa0;
+    } while (iVar2 < DAT_83580fa4);
+  }
+  __restgprlr_23();
+  return;
+}
+
 
 // 8247EA08  G_MissileTrace  (game/g_missile.cpp:452)
 
-void G_MissileTrace(trace_t *param_1,float *param_2,float *param_3,int param_4,int param_5)
+void G_MissileTrace(undefined8 param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
@@ -269,24 +501,24 @@ void G_MissileTrace(trace_t *param_1,float *param_2,float *param_3,int param_4,i
   float fVar3;
   float fVar4;
   float fVar5;
-  trace_t *ptVar6;
+  undefined4 *puVar6;
   
-  ptVar6 = (trace_t *)__savegprlr_29(param_1);
-  G_LocationalTrace(ptVar6,param_2,param_3,param_4,param_5,&bulletPriorityMap);
-  if (ptVar6->startsolid != false) {
-    ptVar6->fraction = 0.0;
+  puVar6 = (undefined4 *)__savegprlr_29();
+  G_LocationalTrace();
+  if (*(char *)((int)puVar6 + 0x2f) != '\0') {
+    *puVar6 = 0;
     fVar3 = *param_2 - *param_3;
     fVar1 = param_2[2] - param_3[2];
     fVar2 = param_2[1] - param_3[1];
-    fVar5 = SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3);
-    fVar4 = 1.0;
-    if (-fVar5 < 0.0) {
-      fVar4 = fVar5;
+    fVar4 = SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3);
+    fVar5 = 1.0;
+    if (-fVar4 < 0.0) {
+      fVar5 = fVar4;
     }
-    fVar4 = 1.0 / fVar4;
-    ptVar6->normal[0] = fVar4 * fVar3;
-    ptVar6->normal[1] = fVar4 * fVar2;
-    ptVar6->normal[2] = fVar1 * fVar4;
+    fVar5 = 1.0 / fVar5;
+    puVar6[1] = fVar5 * fVar3;
+    puVar6[2] = fVar5 * fVar2;
+    puVar6[3] = fVar1 * fVar5;
   }
   __restgprlr_29();
   return;
@@ -295,11 +527,7 @@ void G_MissileTrace(trace_t *param_1,float *param_2,float *param_3,int param_4,i
 
 // 8247EAB0  GrenadeBounceMirrorVelocity  (game/g_missile.cpp:468)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-float GrenadeBounceMirrorVelocity(float *param_1,float *param_2,WeaponDef *param_3,float *param_4)
+double GrenadeBounceMirrorVelocity(float *param_1,float *param_2,int param_3,float *param_4)
 
 {
   bool bVar1;
@@ -312,8 +540,8 @@ float GrenadeBounceMirrorVelocity(float *param_1,float *param_2,WeaponDef *param
   dVar4 = (double)*param_2;
   dVar5 = (double)(param_2[2] * param_1[2] +
                   (float)(dVar4 * dVar2 + (double)(param_2[1] * param_1[1])));
-  if (((grenadeRollingEnabled->current).enabled == false) ||
-     (bVar1 = true, param_3->isRollingGrenade == false)) {
+  if ((*(char *)(DAT_8358380c + 0xc) == '\0') || (bVar1 = true, *(char *)(param_3 + 0x788) == '\0'))
+  {
     bVar1 = false;
   }
   if (bVar1) {
@@ -332,119 +560,112 @@ float GrenadeBounceMirrorVelocity(float *param_1,float *param_2,WeaponDef *param
   if (((((uint)*param_4 & 0x7f800000) == 0x7f800000) ||
       (((uint)param_4[1] & 0x7f800000) == 0x7f800000)) ||
      (((uint)(float)dVar2 & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_missile.cpp",0x1e1,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82074cec,0x1e1,0,0xffffffff82000f98,0xffffffff82074d98);
   }
-  return (float)dVar5;
+  return dVar5;
 }
 
 
 // 8247EC00  GrenadeBounceVelocity  (game/g_missile.cpp:488)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
-
-bool GrenadeBounceVelocity
-               (float *param_1,float param_2,float *param_3,int param_4,WeaponDef *param_5,
-               trajectory_t *param_6,float *param_7,float *param_8)
+undefined8
+GrenadeBounceVelocity
+          (double param_1,float *param_2,undefined8 param_3,float *param_4,int param_5,int param_6,
+          int param_7,float *param_8,float *param_9)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  dvar_t *pdVar4;
-  float fVar5;
+  float fVar4;
+  int iVar5;
   float fVar6;
-  float fVar7;
-  bool bVar8;
-  float *in_r10;
+  bool bVar7;
+  float fVar8;
   float *pfVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   
-  fVar1 = SQRT(param_1[2] * param_1[2] + *param_1 * *param_1 + param_1[1] * param_1[1]);
-  if ((0.0 < fVar1) && (param_2 <= 0.0)) {
-    if (((grenadeRollingEnabled->current).enabled == false) ||
-       (bVar8 = true, *(char *)(param_6[0x35].trBase + 2) == '\0')) {
-      bVar8 = false;
+  fVar2 = SQRT(param_2[2] * param_2[2] + *param_2 * *param_2 + param_2[1] * param_2[1]);
+  if ((0.0 < fVar2) && (param_1 <= 0.0)) {
+    if ((*(char *)(DAT_8358380c + 0xc) == '\0') ||
+       (bVar7 = true, *(char *)(param_6 + 0x788) == '\0')) {
+      bVar7 = false;
     }
-    pfVar9 = param_7 + 6;
-    if (bVar8) {
-      fVar1 = param_7[7];
-      fVar3 = param_7[6];
-      fVar2 = param_7[8];
-      fVar7 = SQRT(fVar3 * fVar3 + fVar1 * fVar1 + param_7[8] * param_7[8]);
-      fVar5 = 1.0;
-      if (-fVar7 < 0.0) {
-        fVar5 = fVar7;
+    pfVar9 = (float *)(param_7 + 0x18);
+    if (bVar7) {
+      fVar2 = *(float *)(param_7 + 0x1c);
+      fVar4 = *(float *)(param_7 + 0x18);
+      fVar3 = *(float *)(param_7 + 0x20);
+      fVar6 = SQRT(fVar4 * fVar4 +
+                   fVar2 * fVar2 + *(float *)(param_7 + 0x20) * *(float *)(param_7 + 0x20));
+      dVar12 = (double)fVar6;
+      dVar10 = 1.0;
+      if (-dVar12 < 0.0) {
+        dVar10 = dVar12;
       }
-      fVar5 = 1.0 / fVar5;
-      pdVar4 = grenadeFrictionLow;
-      if ((grenadeFrictionThresh->current).value < fVar7) {
-        pdVar4 = grenadeFrictionHigh;
+      fVar1 = (float)(1.0 / dVar10);
+      iVar5 = DAT_835837cc;
+      if ((double)*(float *)(DAT_83583390 + 0xc) < dVar12) {
+        iVar5 = DAT_835837e8;
       }
-      fVar6 = 1.0 - (pdVar4->current).value;
-      *pfVar9 = fVar3 * fVar6;
-      param_7[7] = param_7[7] * fVar6;
-      param_7[8] = param_7[8] * fVar6;
-      if (ABS(param_2) < 25.0) {
+      fVar8 = 1.0 - *(float *)(iVar5 + 0xc);
+      *pfVar9 = fVar4 * fVar8;
+      *(float *)(param_7 + 0x1c) = *(float *)(param_7 + 0x1c) * fVar8;
+      *(float *)(param_7 + 0x20) = *(float *)(param_7 + 0x20) * fVar8;
+      if (ABS(param_1) < 25.0) {
         if (param_8 != (float *)0x0) {
-          *param_8 = fVar7;
+          *param_8 = fVar6;
         }
-        if (in_r10 != (float *)0x0) {
-          *in_r10 = fVar3 * fVar5;
-          in_r10[1] = fVar1 * fVar5;
-          in_r10[2] = fVar2 * fVar5;
+        if (param_9 != (float *)0x0) {
+          *param_9 = fVar4 * fVar1;
+          param_9[1] = fVar2 * fVar1;
+          param_9[2] = fVar3 * fVar1;
         }
-        return true;
+        return 1;
       }
-      fVar1 = *(float *)((int)param_6[0x25].trDelta[0] + (int)param_5 * 4);
-      fVar3 = -((1.0 - fVar1) * *(float *)(param_4 + 8) - 1.0);
-      fVar2 = (grenadeBounceRestitutionMax->current).value;
-      if ((grenadeBounceRestitutionMax->current).value - fVar1 < 0.0) {
-        fVar2 = fVar1;
+      dVar11 = (double)*(float *)(*(int *)(param_6 + 0x54c) + param_5 * 4);
+      dVar10 = -(double)((float)(1.0 - dVar11) * param_4[2] - 1.0);
+      dVar12 = (double)*(float *)(DAT_83583820 + 0xc);
+      if ((float)((double)*(float *)(DAT_83583820 + 0xc) - dVar11) < 0.0) {
+        dVar12 = dVar11;
       }
-      if (fVar2 - fVar3 < 0.0) {
-        fVar3 = fVar2;
+      if ((float)(dVar12 - dVar10) < 0.0) {
+        dVar10 = dVar12;
       }
-      fVar1 = -(fVar3 * param_2);
-      *pfVar9 = *(float *)param_4 * fVar1 + *pfVar9;
-      param_7[7] = *(float *)(param_4 + 4) * fVar1 + param_7[7];
-      param_7[8] = *(float *)(param_4 + 8) * fVar1 + param_7[8];
+      fVar2 = -(float)(dVar10 * param_1);
+      *pfVar9 = *param_4 * fVar2 + *pfVar9;
+      *(float *)(param_7 + 0x1c) = param_4[1] * fVar2 + *(float *)(param_7 + 0x1c);
+      *(float *)(param_7 + 0x20) = param_4[2] * fVar2 + *(float *)(param_7 + 0x20);
     }
     else {
-      fVar3 = *(float *)((int)param_6[0x25].trBase[2] + (int)param_5 * 4);
-      fVar3 = (*(float *)((int)param_6[0x25].trDelta[0] + (int)param_5 * 4) - fVar3) *
-              (-1.0 / fVar1) * param_2 + fVar3;
-      param_7[6] = param_7[6] * fVar3;
-      param_7[7] = param_7[7] * fVar3;
-      param_7[8] = param_7[8] * fVar3;
+      fVar4 = *(float *)(*(int *)(param_6 + 0x548) + param_5 * 4);
+      fVar4 = (*(float *)(*(int *)(param_6 + 0x54c) + param_5 * 4) - fVar4) *
+              (float)((double)(-1.0 / fVar2) * param_1) + fVar4;
+      *(float *)(param_7 + 0x18) = *(float *)(param_7 + 0x18) * fVar4;
+      *(float *)(param_7 + 0x1c) = *(float *)(param_7 + 0x1c) * fVar4;
+      *(float *)(param_7 + 0x20) = *(float *)(param_7 + 0x20) * fVar4;
     }
   }
-  if (((((uint)param_7[6] & 0x7f800000) == 0x7f800000) ||
-      (((uint)param_7[7] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)param_7[8] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_missile.cpp",0x217,0,
-                    "%s");
+  if ((((*(uint *)(param_7 + 0x18) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(param_7 + 0x1c) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(param_7 + 0x20) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82074cec,0x217,0,0xffffffff82000f98,0xffffffff82074de0);
   }
-  return false;
+  return 0;
 }
 
 
 // 8247D5A8  BG_WeaponSticksToWalls  (bgame/bg_weapons_util.h:524)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-int BG_WeaponSticksToWalls(WeaponDef *param_1)
+undefined8 BG_WeaponSticksToWalls(int param_1)
 
 {
-  WeapStickinessType WVar1;
+  int iVar1;
   
-  WVar1 = param_1->stickiness;
-  if (((WVar1 != WEAPSTICKINESS_ALL) && (WVar1 != WEAPSTICKINESS_ALL_ORIENT)) &&
-     (WVar1 != WEAPSTICKINESS_KNIFE)) {
+  iVar1 = *(int *)(param_1 + 0x530);
+  if (((iVar1 != 1) && (iVar1 != 2)) && (iVar1 != 5)) {
     return 0;
   }
   return 1;
@@ -453,152 +674,1464 @@ int BG_WeaponSticksToWalls(WeaponDef *param_1)
 
 // 8247D5D0  BG_WeaponSticksToFloors  (bgame/bg_weapons_util.h:530)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-
-int BG_WeaponSticksToFloors(WeaponDef *param_1)
+bool BG_WeaponSticksToFloors(int param_1)
 
 {
-  return (uint)(param_1->stickiness != WEAPSTICKINESS_NONE);
+  return *(int *)(param_1 + 0x530) != 0;
 }
 
 
 // 8247EE98  MissileShouldStopAtImpact  (game/g_missile.cpp:541)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void MissileShouldStopAtImpact(undefined8 param_1,undefined8 param_2,float *param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  float fVar5;
+  float fVar6;
+  int iVar7;
+  ushort uVar9;
+  uint uVar8;
+  char cVar10;
+  
+  iVar7 = __savegprlr_28();
+  uVar9 = Trace_GetEntityHitId(param_2);
+  if (uVar9 < 0x12) {
+    __restgprlr_28(*(char *)(iVar7 + 0x78b) == '\x01');
+    return;
+  }
+  uVar8 = Trace_GetEntityHitId(param_2);
+  if (((&DAT_83373684)[((uVar8 & 0xffff) + (uVar8 & 0xffff) * 4) * 0x20] != 0xe) ||
+     (*(char *)(iVar7 + 0x78c) != '\0')) {
+    uVar8 = Trace_GetEntityHitId(param_2);
+    if ((((&DAT_83373684)[((uVar8 & 0xffff) + (uVar8 & 0xffff) * 4) * 0x20] != 0xb) ||
+        (*(char *)(iVar7 + 0x78d) != '\0')) &&
+       ((cVar10 = TraceHitType(param_2,0xc), cVar10 == '\0' || (*(char *)(iVar7 + 0x78c) != '\0'))))
+    {
+      iVar7 = *(int *)(iVar7 + 0x530);
+      if ((iVar7 == 1) || (iVar7 == 2)) {
+LAB_8247f06c:
+        __restgprlr_28(1);
+        return;
+      }
+      iVar4 = (int)param_2;
+      if (iVar7 == 5) {
+        fVar1 = param_3[1];
+        fVar2 = *param_3;
+        fVar3 = param_3[2];
+        fVar6 = SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+        fVar5 = 1.0;
+        if (-fVar6 < 0.0) {
+          fVar5 = fVar6;
+        }
+        fVar5 = 1.0 / fVar5;
+        if ((((float)0x3f333333 < *(float *)(iVar4 + 0xc)) &&
+            (fVar6 < *(float *)(DAT_835837c4 + 0xc))) ||
+           ((float)0x3f333333 <
+            *(float *)(iVar4 + 0xc) * fVar3 * fVar5 +
+            *(float *)(iVar4 + 8) * fVar1 * fVar5 + *(float *)(iVar4 + 4) * fVar2 * fVar5))
+        goto LAB_8247f06c;
+      }
+      else if (((float)0x3f333333 < *(float *)(iVar4 + 0xc)) &&
+              ((iVar7 != 0 ||
+               (SQRT(param_3[2] * param_3[2] + *param_3 * *param_3 + param_3[1] * param_3[1]) <
+                *(float *)(DAT_835837c4 + 0xc))))) goto LAB_8247f06c;
+    }
+  }
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 8247F078  BounceMissile  (game/g_missile.cpp:587)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void BounceMissile(undefined8 param_1,longlong param_2)
+
+{
+  float fVar1;
+  int iVar2;
+  float fVar3;
+  ulonglong uVar4;
+  bool bVar5;
+  int iVar7;
+  uint uVar8;
+  int iVar9;
+  char cVar13;
+  char cVar14;
+  int iVar10;
+  ulonglong uVar6;
+  ushort uVar12;
+  int iVar11;
+  float *pfVar15;
+  longlong lVar16;
+  float *pfVar17;
+  float *pfVar18;
+  longlong lVar19;
+  float *pfVar20;
+  undefined8 uVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  undefined8 local_1a0;
+  float local_198;
+  undefined4 local_190;
+  undefined4 local_18c;
+  undefined4 local_188;
+  float local_180;
+  float local_17c;
+  float local_178;
+  float local_170;
+  float local_16c;
+  float local_168;
+  float local_160;
+  float local_15c;
+  float local_158;
+  undefined1 auStack_150 [8];
+  float local_148;
+  float local_140 [16];
+  float local_100 [64];
+  
+  __savegprlr_16();
+  iVar7 = __savefpr_24();
+  if (*(char *)(iVar7 + 0xcb) == '\0') {
+    MyAssertHandler(0xffffffff82074cec,0x260,0,0xffffffff82000f98,0xffffffff82074d44);
+  }
+  uVar8 = BG_GetAlternateWeapon(*(undefined4 *)(iVar7 + 200),*(int *)(iVar7 + 0xcc) != 0);
+  iVar11 = (&DAT_829d84a0)[uVar8 & 0xff];
+  if (iVar11 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x262,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  pfVar20 = (float *)(iVar7 + 0x138);
+  iVar9 = SV_PointContents(pfVar20,0xffffffffffffffff,0x20);
+  pfVar15 = (float *)param_2;
+  uVar8 = (uint)((float)(longlong)(int)(DAT_83580fac - DAT_83580fb0) * *pfVar15);
+  local_1a0 = (longlong)(int)uVar8;
+  BG_EvaluateTrajectoryDelta(iVar7 + 0xc,(ulonglong)uVar8 + (ulonglong)DAT_83580fb0,&local_160);
+  pfVar18 = (float *)(iVar7 + 0x24);
+  lVar16 = param_2 + 4;
+  uVar21 = GrenadeBounceMirrorVelocity(&local_160,lVar16,iVar11,pfVar18);
+  uVar8 = Trace_GetEntityHitId(param_2);
+  iVar2 = (&DAT_83373684)[((uVar8 & 0xffff) + (uVar8 & 0xffff) * 4) * 0x20];
+  dVar28 = 0.699999988079071;
+  if ((iVar2 != 4) &&
+     ((((iVar10 = *(int *)(iVar11 + 0x530), iVar10 == 1 || (iVar10 == 2)) || (iVar10 == 5)) ||
+      (0.7 < pfVar15[3])))) {
+    uVar8 = Trace_GetEntityHitId(param_2);
+    *(uint *)(iVar7 + 0x80) = uVar8 & 0xffff;
+    iVar10 = ((uVar8 & 0xffff) + (uVar8 & 0xffff) * 4) * 0x80;
+    *(uint *)(&DAT_83373804 + iVar10) = *(uint *)(&DAT_83373804 + iVar10) | 0x100000;
+  }
+  cVar13 = '\0';
+  dVar23 = 25.0;
+  dVar24 = 0.0;
+  pfVar17 = (float *)lVar16;
+  if ((*(uint *)(iVar7 + 0x184) & 0x4000000) != 0) {
+    cVar13 = GrenadeBounceVelocity(uVar21,&local_160);
+    if ((cVar13 != '\0') && (cVar14 = Missile_IsGrenade(iVar7), cVar14 != '\0')) {
+      dVar22 = (double)G_random();
+      dVar30 = (double)local_1a0._0_4_;
+      if (dVar22 < (double)*(float *)(DAT_835837f8 + 0xc)) {
+        fVar1 = (float)((double)*(float *)(DAT_835837bc + 0xc) * dVar30);
+        fVar3 = *(float *)(DAT_83583394 + 0xc);
+        if (fVar1 - *(float *)(DAT_83583394 + 0xc) < 0.0) {
+          fVar3 = fVar1;
+        }
+        if (40.0 < fVar3) {
+          *pfVar18 = fVar3 * *pfVar17 + *pfVar18;
+          *(float *)(iVar7 + 0x28) = pfVar15[2] * fVar3 + *(float *)(iVar7 + 0x28);
+          *(float *)(iVar7 + 0x2c) = pfVar15[3] * fVar3 + *(float *)(iVar7 + 0x2c);
+        }
+      }
+      if (((double)local_148 < dVar23) && (dVar28 < (double)pfVar15[3])) {
+        dVar28 = (double)*(float *)(iVar7 + 0x1d0);
+        fVar1 = (float)((double)(float)((double)*(float *)(DAT_835837d8 + 0xc) * dVar30) *
+                        0.31415900588035583 + dVar28);
+        *(float *)(iVar7 + 0x1d0) = fVar1;
+        while (6.28318 < fVar1) {
+          fVar1 = *(float *)(iVar7 + 0x1d0) - 6.28318;
+          *(float *)(iVar7 + 0x1d0) = fVar1;
+        }
+        dVar22 = sin((double)*(float *)(iVar7 + 0x1d0));
+        dVar22 = (double)(float)dVar22;
+        dVar28 = sin(dVar28);
+        dVar28 = (double)(float)(dVar22 - (double)(float)dVar28);
+        if (0.009999999776482582 < dVar30) {
+          fVar1 = (float)((double)(float)((double)*(float *)(DAT_83583808 + 0xc) * dVar28 + dVar30)
+                         / dVar30);
+          *pfVar18 = *pfVar18 * fVar1;
+          *(float *)(iVar7 + 0x28) = fVar1 * *(float *)(iVar7 + 0x28);
+          *(float *)(iVar7 + 0x2c) = fVar1 * *(float *)(iVar7 + 0x2c);
+        }
+        Vec3Cross(auStack_150,lVar16,&local_1a0);
+        dVar29 = 1.0;
+        dVar27 = (double)local_198;
+        dVar26 = (double)local_1a0._4_4_;
+        dVar25 = (double)local_1a0._0_4_;
+        dVar30 = -(double)(float)((double)*(float *)(DAT_835837e0 + 0xc) * dVar30 - 1.0);
+        dVar22 = dVar24;
+        if (-dVar30 < 0.0) {
+          dVar22 = dVar30;
+        }
+        if (dVar24 < dVar22) {
+          dVar28 = (double)(float)((double)(float)((double)*(float *)(DAT_83583800 + 0xc) * dVar22)
+                                  * dVar28);
+          local_170 = (float)(dVar25 * dVar28 + (double)*pfVar20);
+          local_16c = (float)(dVar26 * dVar28 + (double)*(float *)(iVar7 + 0x13c));
+          local_168 = (float)(dVar27 * dVar28 + (double)*(float *)(iVar7 + 0x140));
+          iVar10 = EntHandle__isDefined(iVar7 + 0x150);
+          if (iVar10 == 0) {
+            uVar21 = 0x7ff;
+          }
+          else {
+            uVar21 = EntHandle__entnum(iVar7 + 0x150);
+          }
+          G_MissileTrace(local_140,pfVar20,&local_170,uVar21,*(undefined4 *)(iVar7 + 0x18c));
+          *pfVar20 = (local_170 - *pfVar20) * local_140[0] + *pfVar20;
+          *(float *)(iVar7 + 0x13c) =
+               (local_16c - *(float *)(iVar7 + 0x13c)) * local_140[0] + *(float *)(iVar7 + 0x13c);
+          *(float *)(iVar7 + 0x140) =
+               (local_168 - *(float *)(iVar7 + 0x140)) * local_140[0] + *(float *)(iVar7 + 0x140);
+        }
+        if ((double)*(float *)(iVar7 + 0x1d4) == dVar24) {
+          dVar28 = (double)G_random();
+          *(float *)(iVar7 + 0x1d4) = (float)(dVar28 * 2.0 - dVar29);
+        }
+        dVar28 = (double)(*(float *)(DAT_835837d0 + 0xc) * *(float *)(iVar7 + 0x1d4));
+        *pfVar18 = (float)(dVar28 * dVar25 + (double)*pfVar18);
+        *(float *)(iVar7 + 0x28) = (float)(dVar26 * dVar28 + (double)*(float *)(iVar7 + 0x28));
+        *(float *)(iVar7 + 0x2c) = (float)(dVar27 * dVar28 + (double)*(float *)(iVar7 + 0x2c));
+      }
+      local_1a0 = CONCAT44(*pfVar20,local_1a0._4_4_);
+      if (((((uint)*pfVar20 & 0x7f800000) == 0x7f800000) ||
+          (local_1a0 = CONCAT44(*(uint *)(iVar7 + 0x13c),local_1a0._4_4_),
+          (*(uint *)(iVar7 + 0x13c) & 0x7f800000) == 0x7f800000)) ||
+         (local_1a0 = CONCAT44(*(uint *)(iVar7 + 0x140),local_1a0._4_4_),
+         (*(uint *)(iVar7 + 0x140) & 0x7f800000) == 0x7f800000)) {
+        MyAssertHandler(0xffffffff82074cec,0x2b4,0,0xffffffff82000f98,0xffffffff82074f30);
+      }
+    }
+    if ((iVar2 != 4) && (cVar14 = MissileShouldStopAtImpact(iVar11,param_2,pfVar18), cVar14 != '\0')
+       ) {
+      iVar2 = *(int *)(iVar11 + 0x530);
+      lVar16 = ((ulonglong)(iVar2 == 0) ^ 1) + 2;
+      if (iVar2 == 4) {
+        MissileLandAnglesFlatMaintainingDirection(iVar7,param_2,&local_190);
+      }
+      else if (iVar2 == 5) {
+        lVar16 = MissileLandAnglesKnife(iVar7,iVar11,param_2,&local_190,pfVar20);
+      }
+      else if (iVar2 == 2) {
+        MissileLandAnglesFlat(iVar7,param_2,&local_190);
+      }
+      else if (iVar2 == 1) {
+        local_190 = *(undefined4 *)(iVar7 + 0x144);
+        local_18c = *(undefined4 *)(iVar7 + 0x148);
+        local_188 = *(undefined4 *)(iVar7 + 0x14c);
+      }
+      else {
+        MissileLandAngles(iVar7,param_2,&local_190,1);
+      }
+      G_SetOrigin(iVar7,pfVar20);
+      G_SetAngle(iVar7,&local_190);
+      *(float *)(iVar7 + 0x1b8) = *pfVar17;
+      *(float *)(iVar7 + 0x1bc) = pfVar15[2];
+      *(float *)(iVar7 + 0x1c0) = pfVar15[3];
+      uVar6 = Trace_GetEntityHitId(param_2);
+      uVar4 = uVar6 & 0xffff;
+      if (0x7ff < uVar4) {
+        MyAssertHandler(0xffffffff82074cec,0x2cf,0,0xffffffff82074ee8,uVar4,0x800);
+      }
+      lVar19 = (uVar4 + (uVar6 & 0xffff) * 4) * 0x80 + -0x7cc8c980;
+      if (((((*(char *)(iVar11 + 0x78b) == '\0') ||
+            (uVar12 = Trace_GetEntityHitId(param_2), 0x11 < uVar12)) &&
+           ((*(char *)(iVar11 + 0x78c) == '\0' ||
+            (cVar13 = TraceHitType(param_2,0xe), cVar13 == '\0')))) &&
+          ((*(char *)(iVar11 + 0x78c) == '\0' ||
+           (cVar13 = TraceHitType(param_2,0xc), cVar13 == '\0')))) &&
+         ((*(char *)(iVar11 + 0x78d) == '\0' || (cVar13 = TraceHitType(param_2,0xb), cVar13 == '\0')
+          ))) {
+        bVar5 = false;
+      }
+      else {
+        bVar5 = true;
+      }
+      if (bVar5) {
+        if (0x7fd < uVar4) {
+          MyAssertHandler(0xffffffff82074cec,0x2db,0,0xffffffff82074ea0,uVar4,0x7fe);
+        }
+        G_EntLinkTo(iVar7,lVar19,*(undefined2 *)((int)pfVar15 + 0x2a));
+        if (*(char *)(DAT_835837d4 + 0xc) != '\0') {
+          uVar21 = SL_ConvertToString(*(undefined2 *)((int)pfVar15 + 0x2a));
+          Com_Printf(0xf,0xffffffff82074e74,uVar21,uVar4);
+        }
+      }
+      if (*(char *)(iVar11 + 0x790) == '\0') {
+        *(undefined4 *)(iVar7 + 0x198) = 0;
+      }
+      else {
+        iVar11 = EntHandle__isDefined(iVar7 + 0x194);
+        if (iVar11 == 0) {
+          uVar21 = 0x7ff;
+        }
+        else {
+          uVar21 = EntHandle__entnum(iVar7 + 0x194);
+        }
+        local_1a0 = (longlong)(*(int *)(iVar7 + 0x198) - DAT_83580fac);
+        Com_DPrintf(0xf,0xffffffff82074e38,uVar21,(double)((float)local_1a0 * 0.001));
+      }
+      CheckGrenadeDanger(iVar7);
+      if ((uVar4 == 0x7ff) || (uVar4 == 0x7fe)) {
+        Scr_AddUndefined();
+      }
+      else {
+        Scr_AddEntity(lVar19);
+      }
+      Scr_Notify(iVar7,DAT_835a0be4,1);
+      __restfpr_24(lVar16);
+      __restgprlr_16();
+      return;
+    }
+  }
+  dVar28 = (double)(pfVar15[3] * 0.1);
+  if (dVar24 < (double)(pfVar15[3] * 0.1)) {
+    dVar28 = dVar24;
+  }
+  local_180 = *pfVar20 + *pfVar17 * 0.1;
+  local_17c = pfVar15[2] * 0.1 + *(float *)(iVar7 + 0x13c);
+  local_178 = (float)(dVar28 + (double)*(float *)(iVar7 + 0x140));
+  iVar11 = EntHandle__isDefined(iVar7 + 0x150);
+  if (iVar11 == 0) {
+    uVar21 = 0x7ff;
+  }
+  else {
+    uVar21 = EntHandle__entnum(iVar7 + 0x150);
+  }
+  G_MissileTrace(local_100,pfVar20,&local_180,uVar21,*(undefined4 *)(iVar7 + 0x18c));
+  fVar1 = (local_180 - *pfVar20) * local_100[0] + *pfVar20;
+  *pfVar20 = fVar1;
+  *(float *)(iVar7 + 0x13c) =
+       (local_17c - *(float *)(iVar7 + 0x13c)) * local_100[0] + *(float *)(iVar7 + 0x13c);
+  *(float *)(iVar7 + 0x140) =
+       (local_178 - *(float *)(iVar7 + 0x140)) * local_100[0] + *(float *)(iVar7 + 0x140);
+  *(float *)(iVar7 + 0x18) = fVar1;
+  *(undefined4 *)(iVar7 + 0x1c) = *(undefined4 *)(iVar7 + 0x13c);
+  *(undefined4 *)(iVar7 + 0x20) = *(undefined4 *)(iVar7 + 0x140);
+  *(int *)(iVar7 + 0x10) = DAT_83580fac;
+  if ((cVar13 == '\0') &&
+     (dVar23 < (double)(*(float *)(iVar7 + 0x2c) * pfVar15[3] +
+                       *(float *)(iVar7 + 0x28) * pfVar15[2] + *pfVar18 * *pfVar17))) {
+    MissileLandAngles((double)fVar1,iVar7,param_2,&local_190,0);
+    *(undefined4 *)(iVar7 + 0x44) = local_188;
+    *(undefined4 *)(iVar7 + 0x3c) = local_190;
+    *(undefined4 *)(iVar7 + 0x40) = local_18c;
+    *(int *)(iVar7 + 0x34) = DAT_83580fac;
+  }
+  if (iVar9 == 0) {
+    local_15c = *(float *)(iVar7 + 0x28) - local_15c;
+    local_158 = *(float *)(iVar7 + 0x2c) - local_158;
+    if (SQRT((*pfVar18 - local_160) * (*pfVar18 - local_160) +
+             local_158 * local_158 + local_15c * local_15c) <= 100.0) {
+      __restfpr_24(-(cVar13 != '\0') & 4);
+      __restgprlr_16();
+      return;
+    }
+    __restfpr_24(1);
+    __restgprlr_16();
+    return;
+  }
+  __restfpr_24(0);
+  __restgprlr_16();
+  return;
+}
+
 
 // 8247FAD0  GrenadeDud  (game/g_missile.cpp:799)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void GrenadeDud(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x322,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  iVar2 = BG_ProjectileActivateDist(param_2,param_3);
+  if (iVar2 < 1) {
+    __restgprlr_29(0);
+    return;
+  }
+  __restgprlr_29(*(float *)(iVar1 + 0x1b4) < (float)(longlong)iVar2);
+  return;
+}
+
 
 // 8247FB68  JavelinProjectile  (game/g_missile.cpp:817)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void JavelinProjectile(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x332,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x333,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  if (*(int *)(iVar1 + 4) != 4) {
+    __restgprlr_28(0);
+    return;
+  }
+  __restgprlr_28(*(int *)((int)param_2 + 0x564) == 3);
+  return;
+}
+
 
 // 8247FC08  JavelinDud  (game/g_missile.cpp:831)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void JavelinDud(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x340,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x341,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  if ((*(char *)(DAT_835833a0 + 0xc) != '\0') &&
+     (cVar2 = JavelinProjectile(iVar1,param_2), cVar2 != '\0')) {
+    cVar2 = Missile_IsGrenade(iVar1);
+    if (cVar2 != '\0') {
+      MyAssertHandler(0xffffffff82074cec,0x348,0,0xffffffff82000f98,0xffffffff82074fa8);
+    }
+    __restgprlr_28(*(int *)(iVar1 + 0x200) == 0);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 8247FCF0  GetSplashMethodOfDeath  (game/g_missile.cpp:849)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void GetSplashMethodOfDeath(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x354,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(char *)(iVar2 + 0xcb) == '\0') {
+    MyAssertHandler(0xffffffff82074cec,0x355,0,0xffffffff82000f98,0xffffffff82074d44);
+  }
+  iVar1 = *(int *)(&DAT_82969864 + (uint)*(byte *)(iVar2 + 0x16d) * 0x28);
+  if (iVar1 == 5) {
+    iVar3 = BG_ProjExplosionType(*(undefined4 *)(iVar2 + 200),*(int *)(iVar2 + 0xcc) != 0);
+    iVar2 = 0xe;
+    if (iVar3 == 6) goto LAB_8247fda8;
+  }
+  iVar2 = iVar1;
+LAB_8247fda8:
+  __restgprlr_29(iVar2);
+  return;
+}
+
 
 // 8247FDB0  MissileImpact  (game/g_missile.cpp:868)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void MissileImpact(undefined8 param_1,longlong param_2,undefined4 param_3,longlong param_4)
+
+{
+  bool bVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  int iVar6;
+  int iVar7;
+  float *pfVar8;
+  undefined2 uVar9;
+  ulonglong uVar10;
+  undefined4 *puVar14;
+  uint uVar15;
+  char cVar20;
+  int iVar16;
+  longlong lVar11;
+  char cVar21;
+  int iVar17;
+  undefined1 uVar22;
+  int iVar18;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  undefined4 *puVar19;
+  char cVar23;
+  undefined4 uVar24;
+  undefined4 *puVar25;
+  int iVar26;
+  ushort uVar27;
+  longlong lVar28;
+  bool bVar29;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  float local_5e0;
+  float local_5dc;
+  float local_5d8;
+  float local_5c8;
+  float local_5c4;
+  float local_5c0;
+  int local_5bc;
+  int local_5ac;
+  uint local_5a0;
+  float local_560;
+  char local_531;
+  float local_520;
+  float local_51c;
+  float local_518;
+  float local_4f0;
+  
+  uVar10 = ZEXT48(&stack0x00000000);
+  puVar14 = (undefined4 *)__savegprlr();
+  bVar1 = false;
+  if (puVar14 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82074cec,0x382,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (puVar14[1] != 4) {
+    MyAssertHandler(0xffffffff82074cec,899,0,0xffffffff82000f98,0xffffffff82074cd0);
+  }
+  if (*(char *)((int)puVar14 + 0xcb) == '\0') {
+    MyAssertHandler(0xffffffff82074cec,900,0,0xffffffff82000f98,0xffffffff82074d44);
+  }
+  uVar15 = Trace_GetEntityHitId(param_2);
+  iVar18 = (uVar15 & 0xffff) + (uVar15 & 0xffff) * 4;
+  puVar25 = &DAT_83373680 + iVar18 * 0x20;
+  uVar15 = BG_GetAlternateWeapon(puVar14[0x32],puVar14[0x33] != 0);
+  iVar6 = (&DAT_829d84a0)[uVar15 & 0xff];
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x38c,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  cVar20 = BG_ProjImpactExplode(puVar14[0x32],puVar14[0x33] != 0);
+  iVar16 = BG_ProjExplosionType(puVar14[0x32],puVar14[0x33] != 0);
+  lVar11 = BG_GetDamage(puVar14[0x32],puVar14[0x33] != 0);
+  iVar7 = (int)param_2;
+  puVar14[0x22] = *(int *)(iVar7 + 0x10) >> 0x14 & 0x1f;
+  cVar21 = GrenadeDud(puVar14,puVar14[0x32],puVar14[0x33] != 0);
+  if ((cVar21 == '\0') && (cVar21 = JavelinDud(puVar14,iVar6), cVar21 == '\0')) {
+    if (cVar20 == '\0') goto LAB_8247ffa8;
+    iVar26 = *(int *)(&DAT_82969860 + (uint)*(byte *)((int)puVar14 + 0x16d) * 0x28);
+  }
+  else {
+    iVar16 = 4;
+    cVar20 = '\0';
+    puVar14[0x6d] = 0xd01502f9;
+LAB_8247ffa8:
+    iVar26 = 0xf;
+  }
+  uVar27 = *(ushort *)(iVar7 + 0x2c);
+  if (iVar26 == 0xf) {
+    uVar27 = -(ushort)(uVar27 == 0x13) & uVar27;
+  }
+  bVar29 = true;
+  dVar32 = 1.0;
+  if (puVar14[3] == 1) {
+    fVar3 = (float)puVar14[10];
+    fVar4 = (float)puVar14[9];
+    fVar5 = (float)puVar14[0xb];
+    dVar30 = (double)SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3);
+    dVar33 = dVar32;
+    if (-dVar30 < 0.0) {
+      dVar33 = dVar30;
+    }
+    fVar2 = (float)(1.0 / dVar33);
+    local_5dc = fVar3 * fVar2;
+    local_5e0 = fVar4 * fVar2;
+    local_5d8 = fVar5 * fVar2;
+  }
+  else {
+    BG_EvaluateTrajectoryDelta(puVar14 + 3,DAT_83580fac,uVar10 - 0x5e0);
+  }
+  if ((((puVar14[0x61] & 0x4000000) != 0) && (cVar20 == '\0')) &&
+     (iVar17 = CheckCrumpleMissile(puVar14,param_2), iVar17 == 0)) {
+    if (((&DAT_833737d8)[iVar18 * 0x20] != 0) && (*(int *)(iVar7 + 0x10) == 0)) {
+      uVar24 = 0x1d00000;
+      if (uVar27 != 0x13) {
+        uVar24 = 0x700000;
+      }
+      *(undefined4 *)(iVar7 + 0x10) = uVar24;
+    }
+    iVar17 = BounceMissile(puVar14,param_2);
+    if ((iVar17 != 0) && (*(char *)(iVar7 + 0x2f) == '\0')) {
+      if (iVar17 == 1) {
+        cVar21 = 'E';
+      }
+      else if (iVar17 == 3) {
+        cVar21 = 'F';
+      }
+      else {
+        cVar21 = (iVar17 == 4) + 'G';
+      }
+      uVar22 = DirToByte(param_2 + 4);
+      G_AddEvent(puVar14,cVar21,uVar22);
+    }
+    iVar17 = BG_ProjectileActivateDist(puVar14[0x32],puVar14[0x33] != 0);
+    if ((0 < iVar17) && (puVar14[3] == 0)) {
+      uVar22 = DirToByte(param_2 + 4);
+      G_AddEvent(puVar14,0x51,uVar22);
+      G_FreeEntityAfterEvent(puVar14);
+    }
+    bVar29 = false;
+  }
+  if ((&DAT_833737eb)[iVar18 * 0x80] != '\0') {
+    if ((uVar27 == 0x13) && (iVar26 == 0xf)) {
+      if ((&DAT_833737d8)[iVar18 * 0x20] != 0) {
+        iVar18 = EntHandle__isDefined(puVar14 + 0x54);
+        if (iVar18 == 0) {
+          uVar12 = 0;
+        }
+        else {
+          uVar12 = EntHandle__ent(puVar14 + 0x54);
+        }
+        G_ShieldNotifyAndDamage(puVar25,puVar14,uVar12,uVar10 - 0x5e0,puVar14 + 0x4e,lVar11,0,0xf);
+      }
+    }
+    else if ((int)lVar11 != 0) {
+      uVar12 = 0;
+      if (uVar27 == 0x13) {
+        cVar21 = G_GetShieldTagMatrix(puVar25,uVar10 - 0x520);
+        iVar17 = 0x13;
+        if (cVar21 != '\0') {
+          dVar30 = (double)SQRT(local_5d8 * local_5d8 +
+                                local_5e0 * local_5e0 + local_5dc * local_5dc);
+          dVar33 = dVar32;
+          if (-dVar30 < 0.0) {
+            dVar33 = dVar30;
+          }
+          fVar3 = (float)(dVar32 / dVar33);
+          dVar33 = (double)(local_518 * fVar3 * local_5d8 +
+                           local_51c * local_5dc * fVar3 + local_520 * fVar3 * local_5e0);
+          if (*(char *)(DAT_8353fed0 + 0xc) != '\0') {
+            Com_Printf(dVar33,0,0xffffffff82074fd0,dVar33);
+          }
+          if ((double)DAT_83583824 <= dVar33) {
+            iVar17 = 0;
+          }
+          else {
+            uVar12 = 0x20;
+            if (*(char *)(iVar6 + 0x76c) != '\0') {
+              uVar12 = 0x60;
+            }
+            G_AddEvent(puVar25,0x43,0);
+          }
+        }
+        if (((&DAT_833737d8)[iVar18 * 0x20] != 0) && (iVar17 == 0x13)) {
+          iVar17 = EntHandle__isDefined(puVar14 + 0x54);
+          if (iVar17 == 0) {
+            uVar13 = 0;
+          }
+          else {
+            uVar13 = EntHandle__ent(puVar14 + 0x54);
+          }
+          G_ShieldNotifyAndDamage
+                    (puVar25,puVar14,uVar13,uVar10 - 0x5e0,puVar14 + 0x4e,lVar11,uVar12,iVar26);
+        }
+      }
+      puVar19 = puVar14 + 0x54;
+      iVar17 = EntHandle__isDefined(puVar19);
+      if (iVar17 == 0) {
+        uVar13 = 0xffffffff834b3400;
+      }
+      else {
+        uVar13 = EntHandle__ent(puVar19);
+      }
+      iVar17 = LogAccuracyHit(puVar25,uVar13);
+      bVar1 = iVar17 != 0;
+      dVar33 = (double)SQRT(local_5d8 * local_5d8 + local_5e0 * local_5e0 + local_5dc * local_5dc);
+      iVar17 = BG_GetWeaponType(puVar14[0x32],puVar14[0x33] != 0);
+      if ((iVar17 != 2) || ((double)*(float *)(DAT_8353ff08 + 0xc) < dVar33)) {
+        BG_GetExplosionInnerAndOuterDamage
+                  (puVar14[0x32],puVar14[0x33] != 0,uVar10 - 0x5a0,uVar10 - 0x5d0);
+        lVar28 = lVar11;
+        if ((bVar29) && (cVar20 != '\0')) {
+          lVar28 = (ulonglong)local_5a0 + lVar11;
+        }
+        iVar17 = EntHandle__isDefined(puVar19);
+        if (iVar17 == 0) {
+          uVar13 = 0;
+        }
+        else {
+          uVar13 = EntHandle__ent(puVar19);
+        }
+        G_Damage(puVar25,puVar14,uVar13,uVar10 - 0x5e0,puVar14 + 0x4e,lVar28,uVar12,iVar26);
+        if (*(int *)(&DAT_833737e0 + iVar18 * 0x80) != 0) {
+          Vehicle_Knockback(dVar32,*(int *)(&DAT_833737e0 + iVar18 * 0x80),param_3,iVar26);
+        }
+      }
+    }
+  }
+  if (!bVar29) goto LAB_82480b5c;
+  if ((int)lVar11 != 0) {
+    iVar18 = EntHandle__isDefined(puVar14 + 0x54);
+    if (iVar18 == 0) {
+      uVar12 = 0xffffffff834b3180;
+    }
+    else {
+      uVar12 = EntHandle__ent(puVar14 + 0x54);
+    }
+    G_CheckHitTriggerDamage(uVar12,puVar14 + 0x4e,puVar14 + 0x4e,param_4,lVar11,iVar26);
+  }
+  if ((bVar1) || (cVar21 = '\0', *(short *)(iVar7 + 0x2a) != 0)) {
+    cVar21 = '\x01';
+  }
+  bVar1 = true;
+  lVar11 = SV_PointContents(puVar14 + 0x4e,0xffffffffffffffff,0x20);
+  bVar29 = lVar11 == 0;
+  pfVar8 = (float *)param_4;
+  if (bVar29) {
+LAB_82480640:
+    if ((((puVar14[1] == 4) && (*(int *)(iVar6 + 0x564) == 3)) && (puVar14[0x16] == 0)) &&
+       ((puVar14[0x72] & 2) != 0)) {
+      iVar18 = EntHandle__isDefined(puVar14 + 0x83);
+      if ((iVar18 != 0) &&
+         (puVar19 = (undefined4 *)EntHandle__ent(puVar14 + 0x83), puVar19 == puVar25)) {
+        param_2 = -0x7df8b03c;
+        goto LAB_824806d4;
+      }
+    }
+    cVar23 = BG_ProjExplosionEffectForceNormalUp(puVar14[0x32],puVar14[0x33] != 0);
+    if (cVar23 == '\0') {
+      param_2 = param_2 + 4;
+    }
+    else {
+      param_2 = -0x7df8b03c;
+    }
+  }
+  else {
+    G_TraceCapsule(uVar10 - 0x560,uVar10 - 0x5b8,param_4,0xffffffff82174a3c,*puVar14,0x20);
+    if ((local_531 != '\0') || (dVar32 <= (double)local_560)) {
+      bVar1 = false;
+    }
+    if (!bVar1) goto LAB_82480640;
+    param_2 = uVar10 - 0x578;
+  }
+LAB_824806d4:
+  if ((bVar29) || (bVar1)) {
+    if ((iVar16 == 0) || (iVar16 == 6)) {
+      uVar22 = DirToByte(param_2);
+      cVar21 = 'I';
+      goto LAB_824807fc;
+    }
+    if (iVar16 == 1) {
+      uVar22 = DirToByte(param_2);
+      cVar21 = cVar21 + 'L';
+      goto LAB_824807fc;
+    }
+    if (iVar16 == 3) {
+      uVar22 = DirToByte(param_2);
+      cVar21 = cVar21 + 'O';
+      goto LAB_824807fc;
+    }
+    if (iVar16 == 2) {
+      uVar22 = DirToByte(param_2);
+      cVar21 = 'N';
+      goto LAB_824807fc;
+    }
+    if (iVar16 == 4) {
+      cVar21 = JavelinProjectile(puVar14,iVar6);
+      if (cVar21 == '\0') goto LAB_824806e8;
+      uVar22 = DirToByte(uVar10 - 0x598);
+      cVar21 = 'S';
+      goto LAB_824807fc;
+    }
+  }
+  else {
+LAB_824806e8:
+    uVar22 = DirToByte(param_2);
+    cVar21 = 'R';
+LAB_824807fc:
+    G_AddEvent(puVar14,cVar21,uVar22);
+  }
+  if (bVar29) {
+    uVar15 = *(int *)(iVar7 + 0x10) >> 0x14 & 0x1f;
+  }
+  else {
+    uVar15 = 0x14;
+  }
+  puVar14[0x22] = uVar15;
+  Scr_Notify(puVar14,DAT_835a0bae,0);
+  G_FreeEntityAfterEvent(puVar14);
+  puVar14[2] = (puVar14[2] | 0x20) ^ 2;
+  if ((bVar29) || (lVar11 = uVar10 - 0x588, !bVar1)) {
+    lVar11 = param_4;
+  }
+  G_SetOrigin(puVar14,lVar11);
+  if (cVar20 != '\0') {
+    if (*(char *)(iVar6 + 0x76c) != '\0') {
+      dVar32 = (double)*(float *)(DAT_83583398 + 0xc);
+    }
+    dVar33 = 0.5;
+    if (*(float *)(iVar7 + 8) <= 0.5) {
+      fVar3 = (float)(dVar32 * 2.0);
+      local_5c8 = fVar3 * *(float *)(iVar7 + 4) + *pfVar8;
+      local_5c4 = *(float *)(iVar7 + 8) * fVar3 + pfVar8[1];
+      local_5c0 = *(float *)(iVar7 + 0xc) * fVar3 + pfVar8[2];
+    }
+    else {
+      local_5c8 = *pfVar8;
+      local_5c4 = pfVar8[1];
+      local_5c0 = pfVar8[2] + (float)(dVar32 * 2.0);
+    }
+    G_TraceCapsule(uVar10 - 0x4f0,param_4,uVar10 - 0x5c8,0xffffffff82174a3c,*puVar14,puVar14[99]);
+    fVar3 = (float)((double)local_4f0 * dVar33);
+    *pfVar8 = (local_5c8 - *pfVar8) * fVar3 + *pfVar8;
+    pfVar8[1] = (local_5c4 - pfVar8[1]) * fVar3 + pfVar8[1];
+    pfVar8[2] = (local_5c0 - pfVar8[2]) * fVar3 + pfVar8[2];
+    Scr_AddVector(param_4);
+    Scr_Notify(puVar14,DAT_835a0bc6,1);
+  }
+  iVar18 = BG_ExplosionRadius(puVar14[0x32],puVar14[0x33] != 0);
+  dVar32 = (double)(longlong)iVar18;
+  BG_GetExplosionInnerAndOuterDamage(puVar14[0x32],puVar14[0x33] != 0,uVar10 - 0x5bc,uVar10 - 0x5ac)
+  ;
+  if ((cVar20 != '\0') && (local_5bc != 0)) {
+    puVar25 = puVar14 + 0x65;
+    iVar18 = EntHandle__isDefined(puVar25);
+    if (iVar18 != 0) {
+      dVar30 = (double)BG_DamageConeAngle(puVar14[0x32],puVar14[0x33] != 0);
+      GetSplashMethodOfDeath(puVar14);
+      dVar33 = cos((double)(float)(dVar30 * 0.01745329238474369));
+      dVar31 = (double)(float)dVar33;
+      uVar12 = EntHandle__ent(puVar25);
+      dVar33 = -1.0;
+      if ((float)(dVar30 - 180.0) < 0.0) {
+        dVar33 = dVar31;
+      }
+      G_RadiusDamage((double)(longlong)local_5bc,(double)(longlong)local_5ac,dVar32,dVar33,param_4,
+                     puVar14,uVar12);
+      Scr_AddInt((int)dVar32);
+      Scr_AddVector(param_4);
+      BG_GetWeaponName(puVar14[0x32],uVar10 - 0x4b0,0x400);
+      Scr_AddString();
+      uVar9 = DAT_835a0c08;
+      uVar12 = EntHandle__ent(puVar25);
+      Scr_Notify(uVar12,uVar9,3);
+    }
+  }
+  if (iVar16 == 2) {
+    iVar18 = EntHandle__isDefined(puVar14 + 0x65);
+    if (iVar18 != 0) {
+      EntHandle__ent(puVar14 + 0x65);
+    }
+    G_FlashbangBlast(dVar32,(double)(longlong)*(int *)(iVar6 + 0x4e4),param_4);
+  }
+  SV_KeepPointInPlayableBounds(puVar14 + 0x4e);
+  SV_KeepPointInPlayableBounds(puVar14 + 6);
+  SV_LinkEntity(puVar14);
+LAB_82480b5c:
+  __restgprlr();
+  return;
+}
+
 
 // 82480B70  G_TimedObjectThink  (game/g_missile.cpp:1241)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_TimedObjectThink(int param_1)
+
+{
+  *(uint *)(param_1 + 8) = *(uint *)(param_1 + 8) & 0xffefffff;
+  return;
+}
+
 
 // 82480B80  G_ExplodeMissileInternal  (game/g_missile.cpp:1249)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_ExplodeMissileInternal(undefined8 param_1,int param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  bool bVar2;
+  undefined4 *puVar5;
+  uint uVar6;
+  int iVar7;
+  longlong lVar3;
+  int iVar8;
+  char cVar11;
+  undefined4 *puVar9;
+  undefined1 uVar12;
+  undefined8 uVar4;
+  int iVar10;
+  float *pfVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  float local_130;
+  float local_12c;
+  float local_128;
+  float local_120;
+  float local_11c;
+  float local_118;
+  int local_114;
+  longlong local_110;
+  int local_108 [2];
+  float local_100;
+  float local_fc;
+  float local_f8;
+  undefined4 local_f0;
+  undefined4 local_ec;
+  undefined4 local_e8;
+  float local_e0;
+  undefined4 local_dc;
+  undefined4 local_d8;
+  undefined4 local_d4;
+  int local_d0;
+  char local_b1;
+  undefined1 auStack_a8 [168];
+  
+  puVar5 = (undefined4 *)__savegprlr_17();
+  if (puVar5 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82074cec,0x4f4,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(char *)((int)puVar5 + 0xcb) == '\0') {
+    MyAssertHandler(0xffffffff82074cec,0x4f5,0,0xffffffff82000f98,0xffffffff82074d44);
+  }
+  uVar6 = BG_GetAlternateWeapon(puVar5[0x32],puVar5[0x33] != 0);
+  iVar1 = (&DAT_829d84a0)[uVar6 & 0xff];
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x4f7,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  iVar7 = BG_ProjExplosionType(puVar5[0x32],puVar5[0x33] != 0);
+  if ((*(int *)(iVar1 + 0x40) == 2) && (puVar5[0x20] == 0x7ff)) {
+    if (DAT_83580fac - puVar5[0x6c] < 0xea61) {
+      puVar5[0x66] = 0x32;
+      __restgprlr_17();
+      return;
+    }
+    goto LAB_82481408;
+  }
+  BG_EvaluateTrajectory(puVar5 + 3,DAT_83580fac,&local_120);
+  SV_KeepPointInPlayableBounds(&local_120);
+  local_110 = (longlong)(int)local_11c;
+  local_118 = (float)(longlong)(int)local_118;
+  local_11c = (float)(longlong)(int)local_11c;
+  local_120 = (float)(longlong)(int)local_120;
+  G_SetOrigin(puVar5,&local_120);
+  pfVar13 = (float *)(puVar5 + 0x4e);
+  bVar2 = true;
+  lVar3 = SV_PointContents(pfVar13,0xffffffffffffffff,0x20);
+  if (lVar3 != 0) {
+    local_130 = *pfVar13;
+    local_12c = (float)puVar5[0x4f];
+    local_128 = *(float *)(DAT_835837e4 + 0xc) + (float)puVar5[0x50];
+    G_TraceCapsule(&local_e0,&local_130,pfVar13,0xffffffff82174a3c,*puVar5,0x20);
+    if ((local_b1 != '\0') || (1.0 <= local_e0)) {
+      bVar2 = false;
+    }
+    else {
+      local_f0 = local_dc;
+      local_ec = local_d8;
+      local_e8 = local_d4;
+      local_100 = (*pfVar13 - local_130) * local_e0 + local_130;
+      local_fc = ((float)puVar5[0x4f] - local_12c) * local_e0 + local_12c;
+      local_f8 = ((float)puVar5[0x50] - local_128) * local_e0 + local_128;
+    }
+  }
+  puVar5[2] = puVar5[2] | 0x20;
+  Scr_AddVector(pfVar13);
+  Scr_Notify(puVar5,DAT_835a0bc6,1);
+  iVar8 = 0;
+  if (bVar2) {
+    iVar8 = G_Spawn();
+    *(undefined4 *)(iVar8 + 4) = 0;
+    *(undefined4 *)(iVar8 + 8) = 0x20;
+    *(undefined4 *)(iVar8 + 200) = puVar5[0x32];
+    *(undefined4 *)(iVar8 + 0xcc) = puVar5[0x33];
+    *(undefined4 *)(iVar8 + 0x11c) = 0;
+    if (lVar3 == 0) {
+      G_SetOrigin(iVar8,pfVar13);
+      cVar11 = SV_CheckOriginIsInPlayableBounds(iVar8 + 0x138);
+      if (cVar11 == '\0') {
+        MyAssertHandler(0xffffffff82074cec,0x555,0,0xffffffff82000f98,0xffffffff820750d0);
+      }
+      cVar11 = SV_CheckOriginIsInPlayableBounds(iVar8 + 0x18);
+      if (cVar11 == '\0') {
+        MyAssertHandler(0xffffffff82074cec,0x556,0,0xffffffff82000f98,0xffffffff82075090);
+      }
+      iVar10 = *(int *)(iVar1 + 0x530);
+      if ((((iVar10 == 1) || (iVar10 == 2)) || (iVar10 == 5)) && (puVar5[0x20] != 0x7ff)) {
+        local_130 = -((float)puVar5[0x6e] * 16.0 - *pfVar13);
+        local_12c = -((float)puVar5[0x6f] * 16.0 - (float)puVar5[0x4f]);
+        local_128 = -((float)puVar5[0x70] * 16.0 - (float)puVar5[0x50]);
+      }
+      else {
+        local_130 = *pfVar13;
+        local_12c = (float)puVar5[0x4f];
+        local_128 = (float)puVar5[0x50] - 16.0;
+      }
+      G_MissileTrace(&local_e0,pfVar13,&local_130,*puVar5,puVar5[99]);
+      cVar11 = BG_ProjExplosionEffectForceNormalUp(puVar5[0x32],puVar5[0x33] != 0);
+      if (cVar11 == '\0') {
+        puVar9 = &local_dc;
+      }
+      else {
+        puVar9 = (undefined4 *)&UNK_82075080;
+      }
+      *(uint *)(iVar8 + 0x88) = local_d0 >> 0x14 & 0x1f;
+    }
+    else {
+      G_SetOrigin(iVar8,&local_100);
+      puVar9 = &local_f0;
+      *(undefined4 *)(iVar8 + 0x88) = 0x14;
+    }
+    if (param_2 == 1) {
+      if ((param_3 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff82074cec,0x56f,0,0xffffffff82000f98,0xffffffff82075070);
+      }
+      if ((param_4 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff82074cec,0x570,0,0xffffffff82000f98,0xffffffff82075064);
+      }
+      uVar12 = DirToByte(param_3);
+      G_AddEvent(iVar8,0x54,uVar12);
+      *(undefined4 *)(iVar8 + 0x78) = *(undefined4 *)param_4;
+LAB_824811f8:
+      if ((iVar7 == 5) &&
+         (iVar10 = BG_ProjExplosionEffect(puVar5[0x32],puVar5[0x33] != 0), iVar10 != 0)) {
+        local_110 = (longlong)(int)*(float *)(iVar8 + 0x20);
+        *(float *)(iVar8 + 0x18) = (float)(longlong)(int)*(float *)(iVar8 + 0x18);
+        *(float *)(iVar8 + 0x1c) = (float)(longlong)(int)*(float *)(iVar8 + 0x1c);
+        *(float *)(iVar8 + 0x20) = (float)(longlong)(int)*(float *)(iVar8 + 0x20);
+        G_SetOrigin(iVar8,iVar8 + 0x18);
+        uVar6 = *(uint *)(iVar8 + 8);
+        *(uint *)(iVar8 + 8) = uVar6 | 0x40;
+        *(int *)(iVar8 + 0x54) = DAT_83580fac;
+        iVar10 = DAT_83580fac + 61000;
+        *(uint *)(iVar8 + 8) = uVar6 | 0x100040;
+        *(undefined1 *)(iVar8 + 0x16d) = 8;
+        *(int *)(iVar8 + 0x74) = iVar10;
+        *(int *)(iVar8 + 0x198) = DAT_83580fac + 1;
+        Com_Printf(0xf,0xffffffff82075020,DAT_83580fac,(double)*(float *)(iVar8 + 0x18),
+                   (double)*(float *)(iVar8 + 0x1c),(double)*(float *)(iVar8 + 0x20));
+        goto LAB_824810d4;
+      }
+    }
+    else {
+      if ((iVar7 == 0) || (iVar7 == 6)) {
+        uVar12 = DirToByte(puVar9);
+        G_AddEvent(iVar8,0x49,uVar12);
+        goto LAB_824811f8;
+      }
+      if (iVar7 == 1) {
+        uVar12 = DirToByte(puVar9);
+        uVar4 = 0x4c;
+      }
+      else {
+        if (iVar7 != 2) {
+          uVar12 = DirToByte(puVar9);
+          G_AddEvent(iVar8,0x4f,uVar12);
+          *(int *)(iVar8 + 0x54) = DAT_83580fac;
+          goto LAB_824811f8;
+        }
+        uVar12 = DirToByte(puVar9);
+        uVar4 = 0x4e;
+      }
+      G_AddEvent(iVar8,uVar4,uVar12);
+    }
+    G_FreeEntityAfterEvent(iVar8);
+  }
+LAB_824810d4:
+  iVar10 = BG_ExplosionRadius(puVar5[0x32],puVar5[0x33] != 0);
+  dVar16 = (double)(longlong)iVar10;
+  BG_GetExplosionInnerAndOuterDamage(puVar5[0x32],puVar5[0x33] != 0,&local_114,local_108);
+  if (local_114 != 0) {
+    dVar14 = (double)BG_DamageConeAngle(puVar5[0x32],puVar5[0x33] != 0);
+    dVar15 = cos((double)(float)(dVar14 * 0.01745329238474369));
+    dVar17 = -1.0;
+    if ((float)(dVar14 - 180.0) < 0.0) {
+      dVar17 = (double)(float)dVar15;
+    }
+    AngleVectors(puVar5 + 0x51,auStack_a8,0,0);
+    GetSplashMethodOfDeath(puVar5);
+    iVar10 = EntHandle__isDefined(puVar5 + 0x65);
+    if (iVar10 == 0) {
+      uVar4 = 0;
+    }
+    else {
+      uVar4 = EntHandle__ent(puVar5 + 0x65);
+    }
+    G_RadiusDamage((double)(longlong)local_114,(double)(longlong)local_108[0],dVar16,dVar17,pfVar13,
+                   puVar5,uVar4);
+  }
+  if (iVar7 == 2) {
+    iVar7 = EntHandle__isDefined(puVar5 + 0x65);
+    if (iVar7 != 0) {
+      EntHandle__ent(puVar5 + 0x65);
+    }
+    G_FlashbangBlast(dVar16,(double)(longlong)*(int *)(iVar1 + 0x4e4),pfVar13);
+  }
+  if (bVar2) {
+    if (iVar8 == 0) {
+      MyAssertHandler(0xffffffff82074cec,0x5b7,1,0xffffffff82000f98,0xffffffff82075010);
+    }
+    SV_LinkEntity(iVar8);
+  }
+LAB_82481408:
+  Scr_Notify(puVar5,DAT_835a0bae,0);
+  G_FreeEntity(puVar5);
+  __restgprlr_17();
+  return;
+}
+
 
 // 82481430  G_ExplodeMissile  (game/g_missile.cpp:1474)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_ExplodeMissile(undefined8 param_1)
+
+{
+  G_ExplodeMissileInternal(param_1,0,0,0);
+  return;
+}
+
 
 // 82481440  Missile_PenetrateGlass  (game/g_missile.cpp:1480)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Missile_PenetrateGlass
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
+               undefined8 param_5,ulonglong param_6)
+
+{
+  float fVar1;
+  undefined4 uVar2;
+  int iVar3;
+  float *pfVar4;
+  float *pfVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float *pfVar12;
+  uint uVar13;
+  ulonglong uVar9;
+  undefined8 uVar10;
+  int iVar14;
+  undefined8 uVar11;
+  int iVar15;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_60;
+  float local_5c;
+  float local_58;
+  
+  pfVar12 = (float *)__savegprlr_23();
+  if (pfVar12 == (float *)0x0) {
+    MyAssertHandler(0xffffffff82074cec,0x5d4,0,0xffffffff82000f98,0xffffffff8202ba08);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x5d5,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x5d6,0,0xffffffff82000f98,0xffffffff8202bebc);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x5d7,0,0xffffffff82000f98,0xffffffff8202a874);
+  }
+  uVar13 = Trace_GetEntityHitId(pfVar12);
+  iVar3 = (int)param_2;
+  if ((uVar13 & 0xffff) < 0x7fe) {
+    iVar14 = (uVar13 & 0xffff) + (uVar13 & 0xffff) * 4;
+    if ((((&DAT_833737eb)[iVar14 * 0x80] != '\0') && ((int)param_5 != 0)) &&
+       (BG_EvaluateTrajectoryDelta(param_2 + 0xc,DAT_83580fac,&local_80),
+       1.0 <= local_7c * local_7c + local_78 * local_78 + local_80 * local_80)) {
+      if ((param_6 & 0xff) == 0) {
+        iVar15 = EntHandle__isDefined(param_2 + 0x150);
+        if (iVar15 == 0) {
+          uVar10 = 0;
+        }
+        else {
+          uVar10 = EntHandle__ent(param_2 + 0x150);
+        }
+        G_Damage(&DAT_83373680 + iVar14 * 0x20,param_2,uVar10,&local_80,param_2 + 0x138,param_5,0,
+                 0xf);
+      }
+      uVar2 = (&DAT_8337379c)[iVar14 * 0x20];
+      (&DAT_8337379c)[iVar14 * 0x20] = 0;
+      iVar15 = EntHandle__isDefined(param_2 + 0x150);
+      if (iVar15 == 0) {
+        uVar10 = 0x7ff;
+      }
+      else {
+        uVar10 = EntHandle__entnum(param_2 + 0x150);
+      }
+      G_MissileTrace(pfVar12,param_3,param_4,uVar10,*(undefined4 *)(iVar3 + 0x18c));
+      (&DAT_8337379c)[iVar14 * 0x20] = uVar2;
+    }
+  }
+  else {
+    uVar9 = Trace_GetGlassHitId(pfVar12);
+    uVar9 = uVar9 & 0xffff;
+    if (uVar9 != 0) {
+      pfVar5 = (float *)param_3;
+      pfVar4 = (float *)param_4;
+      if (*(int *)(iVar3 + 0xc) == 1) {
+        local_80 = *pfVar4 - *pfVar5;
+        local_7c = pfVar4[1] - pfVar5[1];
+        local_78 = pfVar4[2] - pfVar5[2];
+        fVar6 = local_80 * local_80;
+        fVar7 = local_7c * local_7c;
+        fVar8 = local_78 * local_78;
+        fVar1 = (fVar7 + fVar6 + fVar8) * 400.0;
+      }
+      else {
+        BG_EvaluateTrajectoryDelta(param_2 + 0xc,DAT_83580fac,&local_80);
+        fVar6 = local_80 * local_80;
+        fVar7 = local_7c * local_7c;
+        fVar8 = local_78 * local_78;
+        fVar1 = fVar7 + fVar6 + fVar8;
+      }
+      if (*(float *)(DAT_835833a8 + 0xc) * *(float *)(DAT_835833a8 + 0xc) <= fVar1) {
+        if ((param_6 & 0xff) == 0) {
+          fVar1 = *pfVar12;
+          local_70 = (*pfVar4 - *pfVar5) * fVar1 + *pfVar5;
+          local_6c = (pfVar4[1] - pfVar5[1]) * fVar1 + pfVar5[1];
+          local_68 = (pfVar4[2] - pfVar5[2]) * fVar1 + pfVar5[2];
+          fVar1 = SQRT(fVar7 + fVar6 + fVar8);
+          local_58 = 1.0;
+          if (-fVar1 < 0.0) {
+            local_58 = fVar1;
+          }
+          local_58 = 1.0 / local_58;
+          local_60 = local_58 * local_80;
+          local_5c = local_58 * local_7c;
+          local_58 = local_78 * local_58;
+          G_Glass_DestroyPiece(uVar9 - 1,&local_70,&local_60);
+          uVar10 = 0;
+        }
+        else {
+          uVar10 = G_Glass_TempDestroyPiece(uVar9 - 1);
+        }
+        iVar14 = EntHandle__isDefined(param_2 + 0x150);
+        if (iVar14 == 0) {
+          uVar11 = 0x7ff;
+        }
+        else {
+          uVar11 = EntHandle__entnum(param_2 + 0x150);
+        }
+        G_MissileTrace(pfVar12,param_3,param_4,uVar11,*(undefined4 *)(iVar3 + 0x18c));
+        if ((param_6 & 0xff) != 0) {
+          G_Glass_RestorePiece(uVar9 - 1,uVar10);
+          __restgprlr_23();
+          return;
+        }
+      }
+    }
+  }
+  __restgprlr_23();
+  return;
+}
+
 
 // 82481830  DrawMissileDebug  (game/g_missile.cpp:1576)
 
-void DrawMissileDebug(float *param_1,float *param_2,float *param_3)
+void DrawMissileDebug(void)
 
 {
-  if (((g_debugBullets->current).integer < 5) && ((missileDebugDraw->current).enabled == false)) {
+  if ((*(int *)(DAT_83373654 + 0xc) < 5) && (*(char *)(DAT_83583818 + 0xc) == '\0')) {
     return;
   }
-  G_DebugLineWithDuration(param_1,param_2,param_3,1,1000);
+  G_DebugLineWithDuration();
   return;
 }
 
 
 // 82481868  DrawAttractorDebug  (game/g_missile.cpp:1582)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void DrawAttractorDebug(void)
+
+{
+  int iVar1;
+  longlong lVar2;
+  undefined4 *puVar3;
+  undefined8 uVar4;
+  double dVar5;
+  double dVar6;
+  undefined4 local_b0;
+  undefined4 local_ac;
+  undefined4 local_a8;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_80;
+  float local_7c;
+  float local_78;
+  
+  __savegprlr_23();
+  if (*(char *)(DAT_835837c8 + 0xc) != '\0') {
+    uVar4 = 0x4024000000000000;
+    dVar6 = 0.0;
+    dVar5 = 1.0;
+    puVar3 = &DAT_835833c4;
+    lVar2 = 0x20;
+    do {
+      local_a0 = (float)dVar5;
+      local_9c = (float)dVar6;
+      local_98 = (float)dVar6;
+      local_90 = (float)dVar6;
+      local_8c = (float)dVar5;
+      local_88 = (float)dVar6;
+      local_80 = (float)dVar6;
+      local_7c = (float)dVar6;
+      local_78 = (float)dVar5;
+      if (*(char *)(puVar3 + -5) != '\0') {
+        if (puVar3[-4] == 0x7ff) {
+          local_b0 = puVar3[-2];
+          local_ac = puVar3[-1];
+          local_a8 = *puVar3;
+        }
+        else {
+          if (0x7ff < (int)puVar3[-4]) {
+            MyAssertHandler(0xffffffff82074cec,0x644,0,0xffffffff82000f98,0xffffffff82075110);
+          }
+          iVar1 = puVar3[-4];
+          local_b0 = (&DAT_833737b8)[iVar1 * 0xa0];
+          local_ac = (&DAT_833737bc)[iVar1 * 0xa0];
+          local_a8 = (&DAT_833737c0)[iVar1 * 0xa0];
+        }
+        G_DebugCircleEx(uVar4,&local_b0);
+        G_DebugCircleEx(uVar4,&local_b0);
+        G_DebugCircleEx(uVar4,&local_b0);
+      }
+      lVar2 = lVar2 + -1;
+      puVar3 = puVar3 + 8;
+    } while (lVar2 != 0);
+  }
+  __restgprlr_23();
+  return;
+}
+
 
 // 82481A10  RunMissile_GetPerturbation  (game/g_missile.cpp:1620)
 
-float RunMissile_GetPerturbation(float param_1)
+double RunMissile_GetPerturbation(double param_1)
 
 {
-  double dVar1;
-  
-  dVar1 = (double)param_1;
-  if ((1000000000.0 <= dVar1) || (dVar1 < 0.0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_missile.cpp",0x655,0,
-                    "%s\n\t(destabilizationCurvatureMax) = %g");
+  if ((1000000000.0 <= param_1) || (param_1 < 0.0)) {
+    MyAssertHandler(param_1,0xffffffff82074cec,0x655,0,0xffffffff8207514c,0xffffffff82075178,param_1
+                   );
   }
-  return (float)dVar1;
+  return param_1;
 }
 
 
 // 82481A90  TRACK_missile_attractors  (game/g_missile.cpp:1628)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_missile_attractors(void)
 
 {
-  track_static_alloc_internal(&attrGlob,0x400,"attrGlob",9);
+  track_static_alloc_internal(0xffffffff835833b0,0x400,0xffffffff820751d4,9);
   return;
 }
 
 
 // 82481AB0  Missile_InitAttractors  (game/g_missile.cpp:1635)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Missile_InitAttractors(void)
+void * Missile_InitAttractors(void)
 
 {
-  memset();
-  return;
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_835833b0,0,0x400);
+  return pvVar1;
 }
 
 
 // 82481AC8  Missile_FreeAttractorRefs  (game/g_missile.cpp:1642)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Missile_FreeAttractorRefs(int *param_1)
+
+{
+  longlong lVar1;
+  char *pcVar2;
+  char *pcVar3;
+  longlong lVar4;
+  
+  lVar1 = 0x20;
+  pcVar2 = &DAT_835833b0;
+  do {
+    if ((*pcVar2 != '\0') &&
+       ((*(int *)(pcVar2 + 4) == *param_1 || (*(int *)(pcVar2 + 8) == *param_1)))) {
+      pcVar3 = pcVar2 + -4;
+      lVar4 = 8;
+      do {
+        pcVar3 = pcVar3 + 4;
+        pcVar3[0] = '\0';
+        pcVar3[1] = '\0';
+        pcVar3[2] = '\0';
+        pcVar3[3] = '\0';
+        lVar4 = lVar4 + -1;
+      } while (lVar4 != 0);
+    }
+    lVar1 = lVar1 + -1;
+    pcVar2 = pcVar2 + 0x20;
+  } while (lVar1 != 0);
+  return;
+}
+
 
 // 82481B28  Missile_SaveAttractors  (game/g_missile.cpp:1657)
 
-void Missile_SaveAttractors(MemoryFile *param_1)
+void Missile_SaveAttractors(void)
 
 {
-  MemoryFile *pMVar1;
-  int iVar2;
-  AttractorRepulsor_t *pAVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char *pcVar3;
   longlong lVar4;
-  <unnamed_type_attrGlob> *p<Var5;
-  AttractorRepulsor_t local_40 [2];
+  char *pcVar5;
+  char local_40 [64];
   
-  pMVar1 = (MemoryFile *)__savegprlr_27(param_1);
+  uVar1 = __savegprlr_27();
   lVar4 = 0x20;
-  p<Var5 = &attrGlob;
+  pcVar5 = &DAT_835833b0;
   do {
-    iVar2 = 1;
-    if (p<Var5->attractors[0].inUse == false) {
-      local_40[0].inUse = false;
-      pAVar3 = local_40;
+    uVar2 = 1;
+    if (*pcVar5 == '\0') {
+      local_40[0] = '\0';
+      pcVar3 = local_40;
     }
     else {
-      local_40[0].inUse = true;
-      MemFile_WriteData(pMVar1,1,local_40);
-      iVar2 = 0x20;
-      pAVar3 = p<Var5->attractors;
+      local_40[0] = '\x01';
+      MemFile_WriteData(uVar1,1,local_40);
+      uVar2 = 0x20;
+      pcVar3 = pcVar5;
     }
-    MemFile_WriteData(pMVar1,iVar2,pAVar3);
+    MemFile_WriteData(uVar1,uVar2,pcVar3);
     lVar4 = lVar4 + -1;
-    p<Var5 = (<unnamed_type_attrGlob> *)((int)p<Var5 + 0x20);
+    pcVar5 = pcVar5 + 0x20;
   } while (lVar4 != 0);
   __restgprlr_27();
   return;
@@ -607,25 +2140,25 @@ void Missile_SaveAttractors(MemoryFile *param_1)
 
 // 82481B98  Missile_LoadAttractors  (game/g_missile.cpp:1675)
 
-void Missile_LoadAttractors(MemoryFile *param_1)
+void Missile_LoadAttractors(void)
 
 {
-  MemoryFile *pMVar1;
+  undefined8 uVar1;
   longlong lVar2;
-  <unnamed_type_attrGlob> *p<Var3;
+  longlong lVar3;
   char local_30 [48];
   
-  pMVar1 = (MemoryFile *)__savegprlr_29(param_1);
-  p<Var3 = &attrGlob;
-  memset();
+  uVar1 = __savegprlr_29();
+  lVar3 = -0x7ca7cc50;
+  memset(&DAT_835833b0,0,0x400);
   lVar2 = 0x20;
   do {
-    MemFile_ReadData(pMVar1,1,local_30);
+    MemFile_ReadData(uVar1,1,local_30);
     if (local_30[0] != '\0') {
-      MemFile_ReadData(pMVar1,0x20,p<Var3);
+      MemFile_ReadData(uVar1,0x20,lVar3);
     }
     lVar2 = lVar2 + -1;
-    p<Var3 = (<unnamed_type_attrGlob> *)((int)p<Var3 + 0x20);
+    lVar3 = lVar3 + 0x20;
   } while (lVar2 != 0);
   __restgprlr_29();
   return;
@@ -634,78 +2167,218 @@ void Missile_LoadAttractors(MemoryFile *param_1)
 
 // 82481C08  Missile_GetFreeAttractor  (game/g_missile.cpp:1689)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint Missile_GetFreeAttractor(void)
+ulonglong Missile_GetFreeAttractor(void)
 
 {
   char *pcVar1;
-  AttractorRepulsor_t *pAVar2;
-  uint uVar3;
+  ulonglong uVar2;
   
-  uVar3 = 0;
-  pAVar2 = attrGlob.attractors + 1;
+  uVar2 = 0;
+  pcVar1 = &DAT_835833d0;
   do {
-    if (((<unnamed_type_attrGlob> *)(pAVar2 + -1))->attractors[0].inUse == false) break;
-    if (pAVar2->inUse == false) {
-      uVar3 = uVar3 + 1;
+    if (pcVar1[-0x20] == '\0') break;
+    if (*pcVar1 == '\0') {
+      uVar2 = uVar2 + 1;
       break;
     }
-    if (pAVar2[1].inUse == false) {
-      uVar3 = uVar3 + 2;
+    if (pcVar1[0x20] == '\0') {
+      uVar2 = uVar2 + 2;
       break;
     }
-    if (pAVar2[2].inUse == false) {
-      uVar3 = uVar3 + 3;
+    if (pcVar1[0x40] == '\0') {
+      uVar2 = uVar2 + 3;
       break;
     }
-    uVar3 = uVar3 + 4;
-    pAVar2 = pAVar2 + 4;
-  } while (uVar3 < 0x20);
-  if (uVar3 == 0x20) {
-    pcVar1 = va("Ran out of attractor/repulsors.  Max allowed: %i");
-    Scr_Error(pcVar1);
+    uVar2 = uVar2 + 4;
+    pcVar1 = pcVar1 + 0x80;
+  } while ((uVar2 & 0xffffffff) < 0x20);
+  if ((uVar2 & 0xffffffff) == 0x20) {
+    va(0xffffffff820751e0,0x20);
+    Scr_Error();
   }
-  return uVar3;
+  return uVar2;
 }
 
 
 // 82481CB8  Scr_MissileCreateAttractorEnt  (game/g_missile.cpp:1719)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Scr_MissileCreateAttractorEnt(void)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  uint uVar4;
+  int iVar5;
+  double dVar6;
+  
+  __savegprlr_27();
+  iVar2 = Missile_GetFreeAttractor();
+  iVar5 = iVar2 * 0x20;
+  (&DAT_835833b1)[iVar5] = 1;
+  puVar3 = (undefined4 *)Scr_GetEntity(0);
+  dVar6 = (double)Scr_GetFloat(1);
+  (&DAT_835833c8)[iVar2 * 8] = (float)dVar6;
+  dVar6 = (double)Scr_GetFloat(2);
+  (&DAT_835833cc)[iVar2 * 8] = (float)dVar6;
+  if (dVar6 <= 0.0) {
+    Scr_ParamError(2,0xffffffff82075214);
+  }
+  (&DAT_835833b4)[iVar2 * 8] = *puVar3;
+  puVar3[0x61] = puVar3[0x61] | 0x800000;
+  uVar4 = Scr_GetNumParam();
+  if (3 < uVar4) {
+    puVar3 = (undefined4 *)Scr_GetEntity(3);
+    uVar1 = *puVar3;
+    (&DAT_835833b0)[iVar5] = 1;
+    (&DAT_835833b8)[iVar2 * 8] = uVar1;
+    Scr_AddInt(iVar2);
+    __restgprlr_27();
+    return;
+  }
+  (&DAT_835833b0)[iVar5] = 1;
+  (&DAT_835833b8)[iVar2 * 8] = 0x7ff;
+  Scr_AddInt(iVar2);
+  __restgprlr_27();
+  return;
+}
+
 
 // 82481DA0  Scr_MissileCreateAttractorOrigin  (game/g_missile.cpp:1764)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Scr_MissileCreateAttractorOrigin(void)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  uint uVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  double dVar6;
+  
+  __savegprlr_27();
+  iVar2 = Missile_GetFreeAttractor();
+  iVar5 = iVar2 * 0x20;
+  (&DAT_835833b1)[iVar5] = 1;
+  (&DAT_835833b4)[iVar2 * 8] = 0x7ff;
+  Scr_GetVector(0,&DAT_835833bc + iVar2 * 8);
+  dVar6 = (double)Scr_GetFloat(1);
+  (&DAT_835833c8)[iVar2 * 8] = (float)dVar6;
+  dVar6 = (double)Scr_GetFloat(2);
+  (&DAT_835833cc)[iVar2 * 8] = (float)dVar6;
+  if (dVar6 <= 0.0) {
+    Scr_ParamError(2,0xffffffff82075214);
+  }
+  uVar3 = Scr_GetNumParam();
+  if (3 < uVar3) {
+    puVar4 = (undefined4 *)Scr_GetEntity(3);
+    uVar1 = *puVar4;
+    (&DAT_835833b0)[iVar5] = 1;
+    (&DAT_835833b8)[iVar2 * 8] = uVar1;
+    Scr_AddInt(iVar2);
+    __restgprlr_27();
+    return;
+  }
+  (&DAT_835833b0)[iVar5] = 1;
+  (&DAT_835833b8)[iVar2 * 8] = 0x7ff;
+  Scr_AddInt(iVar2);
+  __restgprlr_27();
+  return;
+}
+
 
 // 82481E78  Scr_MissileCreateRepulsorEnt  (game/g_missile.cpp:1807)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Scr_MissileCreateRepulsorEnt(void)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  double dVar4;
+  
+  __savegprlr_29();
+  iVar1 = Missile_GetFreeAttractor();
+  (&DAT_835833b1)[iVar1 * 0x20] = 0;
+  puVar2 = (undefined4 *)Scr_GetEntity(0);
+  (&DAT_835833b4)[iVar1 * 8] = *puVar2;
+  dVar4 = (double)Scr_GetFloat(1);
+  (&DAT_835833c8)[iVar1 * 8] = (float)dVar4;
+  dVar4 = (double)Scr_GetFloat(2);
+  (&DAT_835833cc)[iVar1 * 8] = (float)dVar4;
+  if (dVar4 <= 0.0) {
+    Scr_ParamError(2,0xffffffff82075214);
+  }
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 < 4) {
+    (&DAT_835833b8)[iVar1 * 8] = 0x7ff;
+  }
+  else {
+    puVar2 = (undefined4 *)Scr_GetEntity(3);
+    (&DAT_835833b8)[iVar1 * 8] = *puVar2;
+  }
+  (&DAT_835833b0)[iVar1 * 0x20] = 1;
+  Scr_AddInt(iVar1);
+  __restgprlr_29();
+  return;
+}
+
 
 // 82481F48  Scr_MissileCreateRepulsorOrigin  (game/g_missile.cpp:1849)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Scr_MissileCreateRepulsorOrigin(void)
+
+{
+  int iVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  double dVar4;
+  
+  __savegprlr_28();
+  iVar1 = Missile_GetFreeAttractor();
+  (&DAT_835833b1)[iVar1 * 0x20] = 0;
+  (&DAT_835833b4)[iVar1 * 8] = 0x7ff;
+  Scr_GetVector(0,&DAT_835833bc + iVar1 * 8);
+  dVar4 = (double)Scr_GetFloat(1);
+  (&DAT_835833c8)[iVar1 * 8] = (float)dVar4;
+  dVar4 = (double)Scr_GetFloat(2);
+  (&DAT_835833cc)[iVar1 * 8] = (float)dVar4;
+  if (dVar4 <= 0.0) {
+    Scr_ParamError(2,0xffffffff82075214);
+  }
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 < 4) {
+    (&DAT_835833b8)[iVar1 * 8] = 0x7ff;
+  }
+  else {
+    puVar3 = (undefined4 *)Scr_GetEntity(3);
+    (&DAT_835833b8)[iVar1 * 8] = *puVar3;
+  }
+  (&DAT_835833b0)[iVar1 * 0x20] = 1;
+  Scr_AddInt(iVar1);
+  __restgprlr_28();
+  return;
+}
+
 
 // 82482018  Scr_MissileDeleteAttractor  (game/g_missile.cpp:1889)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_MissileDeleteAttractor(void)
 
 {
   uint uVar1;
-  dvar_t **ppdVar2;
+  undefined4 *puVar2;
   longlong lVar3;
   
   uVar1 = Scr_GetInt(0);
   if (0x1f < uVar1) {
-    Scr_ParamError(0,"Invalid attractor or repulsor");
+    Scr_ParamError(0,0xffffffff82075238);
   }
-  ppdVar2 = &missileJavAccelDescend + uVar1 * 8;
+  puVar2 = &DAT_835833ac + uVar1 * 8;
   lVar3 = 8;
   do {
-    ppdVar2 = ppdVar2 + 1;
-    *ppdVar2 = (dvar_t *)0x0;
+    puVar2 = puVar2 + 1;
+    *puVar2 = 0;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
   return;
@@ -713,148 +2386,2490 @@ void Scr_MissileDeleteAttractor(void)
 
 
 // 82482088  Missile_ApplyAttractorsRepulsors  (game/g_missile.cpp:1902)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Missile_ApplyAttractorsRepulsors(void)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  int iVar5;
+  float fVar6;
+  longlong lVar7;
+  float *pfVar8;
+  float *pfVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  int local_110;
+  undefined1 auStack_10c [4];
+  longlong local_108;
+  float local_100;
+  float local_fc;
+  float local_f8;
+  
+  __savegprlr_20();
+  iVar4 = __savefpr_16();
+  BG_GetProjectileSpeed
+            (*(undefined4 *)(iVar4 + 200),*(int *)(iVar4 + 0xcc) != 0,&local_110,auStack_10c);
+  local_fc = *(float *)(iVar4 + 0x28);
+  local_100 = *(float *)(iVar4 + 0x24);
+  fVar2 = *(float *)(iVar4 + 0x2c);
+  pfVar8 = (float *)(iVar4 + 0x24);
+  dVar23 = 1.0;
+  dVar20 = 9.999999747378752e-06;
+  dVar18 = (double)SQRT(fVar2 * fVar2 + local_100 * local_100 + local_fc * local_fc);
+  dVar21 = dVar23;
+  if (-dVar18 < 0.0) {
+    dVar21 = dVar18;
+  }
+  local_f8 = (float)(1.0 / dVar21);
+  local_100 = local_100 * local_f8;
+  local_fc = local_fc * local_f8;
+  local_f8 = local_f8 * fVar2;
+  if (9.999999747378752e-06 <= dVar18) {
+    dVar24 = 0.0;
+    dVar16 = 20.0;
+    pfVar9 = (float *)&DAT_835833c4;
+    dVar17 = 0.636620283126831;
+    dVar19 = -1.0;
+    lVar7 = 0x20;
+    dVar21 = dVar24;
+    dVar22 = dVar24;
+    dVar14 = dVar24;
+    do {
+      if (*(char *)(pfVar9 + -5) != '\0') {
+        if (pfVar9[-3] != 2.86846e-42) {
+          iVar5 = EntHandle__isDefined(iVar4 + 0x194);
+          if ((iVar5 == 0) ||
+             (fVar2 = pfVar9[-3], fVar6 = (float)EntHandle__entnum(iVar4 + 0x194), fVar2 != fVar6))
+          goto LAB_824823e4;
+        }
+        if (pfVar9[-4] == 2.86846e-42) {
+          fVar2 = pfVar9[-2];
+          fVar6 = pfVar9[-1];
+          fVar3 = *pfVar9;
+        }
+        else {
+          if (0x7ff < (int)pfVar9[-4]) {
+            MyAssertHandler(0xffffffff82074cec,0x79c,0,0xffffffff82000f98,0xffffffff82075110);
+          }
+          fVar3 = pfVar9[-4];
+          fVar2 = (float)(&DAT_833737b8)[(int)fVar3 * 0xa0];
+          fVar6 = (float)(&DAT_833737bc)[(int)fVar3 * 0xa0];
+          fVar3 = (float)(&DAT_833737c0)[(int)fVar3 * 0xa0];
+        }
+        dVar15 = (double)(fVar2 - *(float *)(iVar4 + 0x18));
+        dVar13 = (double)(fVar6 - *(float *)(iVar4 + 0x1c));
+        dVar12 = (double)(fVar3 - *(float *)(iVar4 + 0x20));
+        dVar27 = (double)(float)(dVar12 * (double)local_f8 +
+                                (double)(float)(dVar13 * (double)local_fc +
+                                               (double)(float)(dVar15 * (double)local_100)));
+        if (dVar14 < dVar27) {
+          dVar11 = -dVar27;
+          fVar2 = (float)((double)local_fc * dVar11 + dVar13);
+          fVar6 = (float)((double)local_f8 * dVar11 + dVar12);
+          fVar3 = (float)(dVar11 * (double)local_100 + dVar15);
+          dVar10 = (double)SQRT(fVar3 * fVar3 + fVar6 * fVar6 + fVar2 * fVar2);
+          dVar11 = dVar23;
+          if (-dVar10 < 0.0) {
+            dVar11 = dVar10;
+          }
+          fVar1 = (float)(dVar23 / dVar11);
+          dVar11 = (double)(fVar2 * fVar1);
+          dVar25 = (double)(fVar1 * fVar3);
+          dVar26 = (double)(fVar6 * fVar1);
+          if ((dVar20 <= dVar10) ||
+             (dVar11 = dVar14, dVar25 = dVar14, dVar26 = dVar19,
+             *(char *)((int)pfVar9 + -0x13) == '\0')) {
+            if ((*(char *)((int)pfVar9 + -0x13) == '\0') && (dVar14 < dVar26)) {
+              dVar11 = dVar14;
+              dVar25 = dVar14;
+              dVar10 = dVar14;
+              dVar26 = dVar19;
+            }
+            dVar12 = (double)SQRT((float)(dVar15 * dVar15 +
+                                         (double)(float)(dVar12 * dVar12 +
+                                                        (double)(float)(dVar13 * dVar13))));
+            if (dVar12 <= (double)pfVar9[2]) {
+              if ((double)pfVar9[2] <= dVar14) {
+                MyAssertHandler(0xffffffff82074cec,0x7bc,0,0xffffffff82000f98,0xffffffff82075258);
+              }
+              dVar12 = (double)((float)(dVar23 - (double)(float)(dVar12 / (double)pfVar9[2])) *
+                               pfVar9[1]);
+              if (dVar27 <= dVar14) {
+                MyAssertHandler(0xffffffff82074cec,0x7bf,0,0xffffffff82000f98,0xffffffff82075298);
+              }
+              if (dVar10 < dVar14) {
+                MyAssertHandler(0xffffffff82074cec,0x7c0,0,0xffffffff82000f98,0xffffffff82075288);
+              }
+              dVar15 = (double)(float)(dVar23 / dVar27);
+              dVar13 = atan((double)(float)(dVar15 * dVar10));
+              dVar13 = (double)(float)((double)(float)dVar13 * dVar17);
+              if (*(char *)((int)pfVar9 + -0x13) == '\0') {
+                dVar13 = (double)(float)(dVar13 - dVar23);
+              }
+              dVar13 = (double)(float)(dVar13 * dVar12);
+              dVar12 = dVar13;
+              if (*(char *)((int)pfVar9 + -0x13) != '\0') {
+                local_108 = (longlong)local_110;
+                dVar12 = (double)(float)((double)(float)((double)(float)((double)local_108 * dVar15)
+                                                        * dVar10) * dVar16);
+                if ((float)(dVar13 - dVar12) < 0.0) {
+                  dVar12 = dVar13;
+                }
+              }
+              dVar22 = (double)(float)(dVar25 * dVar12 + dVar22);
+              dVar21 = (double)(float)(dVar11 * dVar12 + dVar21);
+              dVar24 = (double)(float)(dVar12 * dVar26 + dVar24);
+            }
+          }
+        }
+      }
+LAB_824823e4:
+      lVar7 = lVar7 + -1;
+      pfVar9 = pfVar9 + 8;
+    } while (lVar7 != 0);
+    if (((dVar22 != 0.0) || (dVar21 != 0.0)) || (dVar24 != 0.0)) {
+      fVar2 = (float)(dVar22 * 0.05000000074505806 + (double)*pfVar8);
+      dVar14 = (double)fVar2;
+      *pfVar8 = fVar2;
+      fVar2 = (float)(dVar21 * 0.05000000074505806 + (double)*(float *)(iVar4 + 0x28));
+      dVar22 = (double)fVar2;
+      *(float *)(iVar4 + 0x28) = fVar2;
+      fVar2 = (float)(dVar24 * 0.05000000074505806 + (double)*(float *)(iVar4 + 0x2c));
+      dVar20 = (double)fVar2;
+      *(float *)(iVar4 + 0x2c) = fVar2;
+      dVar16 = (double)SQRT((float)(dVar20 * dVar20 +
+                                   (double)(float)(dVar14 * dVar14 +
+                                                  (double)(float)(dVar22 * dVar22))));
+      dVar21 = dVar23;
+      if (-dVar16 < 0.0) {
+        dVar21 = dVar16;
+      }
+      dVar21 = (double)(float)(dVar23 / dVar21);
+      local_100 = (float)(dVar14 * dVar21);
+      local_f8 = (float)(dVar21 * dVar20);
+      local_fc = (float)(dVar22 * dVar21);
+      *pfVar8 = (float)((double)local_100 * dVar18);
+      *(float *)(iVar4 + 0x2c) = (float)((double)local_f8 * dVar18);
+      *(float *)(iVar4 + 0x28) = (float)((double)local_fc * dVar18);
+      vectoangles(dVar20,&local_100,iVar4 + 0x3c);
+      if (*(int *)(iVar4 + 0xc) == 2) {
+        *(undefined4 *)(iVar4 + 0x18) = *(undefined4 *)(iVar4 + 0x138);
+        *(undefined4 *)(iVar4 + 0x1c) = *(undefined4 *)(iVar4 + 0x13c);
+        *(undefined4 *)(iVar4 + 0x20) = *(undefined4 *)(iVar4 + 0x140);
+      }
+      *(undefined4 *)(iVar4 + 0xc) = 1;
+      *(undefined4 *)(iVar4 + 0x30) = 1;
+    }
+  }
+  __restfpr_16();
+  __restgprlr_20();
+  return;
+}
+
 
 // 824824F8  RunMissile_Destabilize  (game/g_missile.cpp:2019)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void RunMissile_Destabilize(void)
+
+{
+  float fVar1;
+  int iVar2;
+  char cVar3;
+  float *pfVar4;
+  longlong lVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  int local_90;
+  float fStack_8c;
+  undefined8 local_88;
+  undefined4 local_80;
+  undefined1 auStack_7c [4];
+  float local_78;
+  float local_74;
+  float local_70;
+  float local_68;
+  float local_64;
+  float local_60;
+  
+  iVar2 = __savegprlr_26();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x7ec,0,0xffffffff82000f98,0xffffffff8207539c);
+  }
+  cVar3 = Missile_IsGrenade(iVar2);
+  if (cVar3 != '\0') {
+    MyAssertHandler(0xffffffff82074cec,0x7ed,0,0xffffffff82000f98,0xffffffff8207537c);
+  }
+  if (*(int *)(iVar2 + 4) != 4) {
+    MyAssertHandler(0xffffffff82074cec,0x7ee,0,0xffffffff82000f98,0xffffffff8207535c);
+  }
+  if ((*(uint *)(iVar2 + 0x184) & 0x20000) != 0) {
+    MyAssertHandler(0xffffffff82074cec,0x7ef,0,0xffffffff82000f98,0xffffffff82075334);
+  }
+  BG_GetProjectileSpeed
+            (*(undefined4 *)(iVar2 + 200),*(int *)(iVar2 + 0xcc) != 0,&local_90,auStack_7c);
+  local_88 = (longlong)(int)*(float *)(iVar2 + 0x1ac);
+  if ((int)*(float *)(iVar2 + 0x1ac) + *(int *)(iVar2 + 0x10) < DAT_83580fac) {
+    BG_DestabilizationCurvatureMax(*(undefined4 *)(iVar2 + 200),*(int *)(iVar2 + 0xcc) != 0);
+    dVar6 = (double)RunMissile_GetPerturbation();
+    lVar5 = 3;
+    pfVar4 = &fStack_8c;
+    if ((*(uint *)(iVar2 + 0x1c8) & 1) == 0) {
+      uVar9 = 0xbff0000000000000;
+      uVar10 = 0x3ff0000000000000;
+      do {
+        dVar8 = (double)G_flrand(uVar9,uVar10);
+        pfVar4 = pfVar4 + 1;
+        *pfVar4 = (float)(dVar8 * dVar6);
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+    }
+    else {
+      uVar9 = 0x3ff0000000000000;
+      dVar8 = 0.0;
+      do {
+        dVar7 = (double)G_flrand(dVar8,uVar9);
+        pfVar4 = pfVar4 + 1;
+        *pfVar4 = (float)(dVar7 * dVar6);
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+      if ((double)*(float *)(iVar2 + 0x1d4) < dVar8) {
+        local_88 = CONCAT44(-local_88._0_4_,local_88._4_4_);
+      }
+      if (dVar8 < (double)*(float *)(iVar2 + 0x1d0)) {
+        local_88 = CONCAT44(local_88._0_4_,-local_88._4_4_);
+      }
+    }
+    *(float *)(iVar2 + 0x1d0) = local_88._0_4_;
+    *(float *)(iVar2 + 0x1d4) = local_88._4_4_;
+    *(undefined4 *)(iVar2 + 0x1d8) = local_80;
+    *(int *)(iVar2 + 0x10) = DAT_83580fac;
+    dVar6 = (double)BG_DestabilizationRateTime
+                              (*(undefined4 *)(iVar2 + 200),*(int *)(iVar2 + 0xcc) != 0);
+    *(uint *)(iVar2 + 0x1c8) = *(uint *)(iVar2 + 0x1c8) | 1;
+    *(float *)(iVar2 + 0x1ac) = (float)(dVar6 * 1000.0);
+  }
+  else if ((*(uint *)(iVar2 + 0x1c8) & 1) == 0) goto LAB_8248285c;
+  local_78 = *(float *)(iVar2 + 0x1d0) * 0.05 + *(float *)(iVar2 + 0x3c);
+  local_74 = *(float *)(iVar2 + 0x1d4) * 0.05 + *(float *)(iVar2 + 0x40);
+  local_70 = *(float *)(iVar2 + 0x1d8) * 0.05 + *(float *)(iVar2 + 0x44);
+  G_SetAngle(iVar2,&local_78);
+  AngleVectors(&local_78,&local_68,0,0);
+  fVar1 = (float)(longlong)local_90;
+  local_68 = local_68 * fVar1;
+  local_88 = CONCAT44(local_68,local_90);
+  local_64 = local_64 * fVar1;
+  *(float *)(iVar2 + 0x24) = local_68;
+  local_60 = local_60 * fVar1;
+  *(float *)(iVar2 + 0x28) = local_64;
+  *(float *)(iVar2 + 0x2c) = local_60;
+  if (((uint)local_68 & 0x7f800000) == 0x7f800000) {
+LAB_8248281c:
+    MyAssertHandler(0xffffffff82074cec,0x819,0,0xffffffff82000f98,0xffffffff820752b0);
+  }
+  else {
+    local_88 = CONCAT44(local_64,local_90);
+    if (((uint)local_64 & 0x7f800000) == 0x7f800000) goto LAB_8248281c;
+    local_88 = CONCAT44(local_60,local_90);
+    if (((uint)local_60 & 0x7f800000) == 0x7f800000) goto LAB_8248281c;
+  }
+  *(undefined4 *)(iVar2 + 0x18) = *(undefined4 *)(iVar2 + 0x138);
+  *(undefined4 *)(iVar2 + 0x1c) = *(undefined4 *)(iVar2 + 0x13c);
+  *(undefined4 *)(iVar2 + 0x20) = *(undefined4 *)(iVar2 + 0x140);
+  *(undefined4 *)(iVar2 + 0xc) = 1;
+  *(undefined4 *)(iVar2 + 0x30) = 1;
+LAB_8248285c:
+  __restgprlr_26();
+  return;
+}
+
 
 // 82482870  RunMissile_CreateWaterSplash  (game/g_missile.cpp:2081)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void RunMissile_CreateWaterSplash(undefined8 param_1,ulonglong param_2,float *param_3)
+
+{
+  float fVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  uint uVar4;
+  float local_40;
+  float local_3c;
+  float local_38;
+  
+  puVar2 = (undefined4 *)__savegprlr_27();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82074cec,0x825,0,0xffffffff82000f98,0xffffffff8207539c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x826,0,0xffffffff82000f98,0xffffffff8202b910);
+  }
+  fVar1 = *(float *)param_2;
+  local_40 = (*param_3 - (float)puVar2[0x4e]) * fVar1 + (float)puVar2[0x4e];
+  local_3c = (param_3[1] - (float)puVar2[0x4f]) * fVar1 + (float)puVar2[0x4f];
+  local_38 = (param_3[2] - (float)puVar2[0x50]) * fVar1 + (float)puVar2[0x50];
+  iVar3 = G_TempEntity(&local_40,0x45);
+  uVar4 = DirToByte(param_2 + 4);
+  *(uint *)(iVar3 + 0xa0) = uVar4 & 0xff;
+  *(undefined4 *)(iVar3 + 0xd8) = 0;
+  *(uint *)(iVar3 + 0x88) = (int)((float *)param_2)[4] >> 0x14 & 0x1f;
+  *(undefined4 *)(iVar3 + 0x78) = *puVar2;
+  *(undefined4 *)(iVar3 + 200) = puVar2[0x32];
+  *(undefined4 *)(iVar3 + 0xcc) = puVar2[0x33];
+  __restgprlr_27();
+  return;
+}
+
 
 // 82482978  IsMissileLockedOn  (game/g_missile.cpp:2134)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+uint IsMissileLockedOn(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x1c8) >> 1 & 1;
+}
+
 
 // 82482988  MissileHorzSteerToTarget  (game/g_missile.cpp:2143)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void MissileHorzSteerToTarget
+               (undefined8 param_1,float *param_2,float *param_3,undefined8 param_4,float *param_5)
+
+{
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  float fVar4;
+  float fVar5;
+  int iVar6;
+  uint uVar7;
+  double dVar8;
+  double extraout_f1;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  int local_70;
+  undefined1 auStack_6c [4];
+  longlong local_68;
+  
+  __savegprlr_26();
+  iVar6 = __savefpr_28();
+  dVar9 = extraout_f1;
+  uVar7 = BG_GetAlternateWeapon(*(undefined4 *)(iVar6 + 200),*(int *)(iVar6 + 0xcc) != 0);
+  iVar3 = (&DAT_829d84a0)[uVar7 & 0xff];
+  BG_GetProjectileSpeed
+            (*(undefined4 *)(iVar6 + 200),*(int *)(iVar6 + 0xcc) != 0,&local_70,auStack_6c);
+  dVar11 = 0.0;
+  dVar10 = 2.0;
+  if (param_3[1] == 0.0) {
+    fVar1 = 3.4028235e+38;
+  }
+  else {
+    fVar1 = param_3[1];
+    fVar1 = (*param_3 * *param_3 + fVar1 * fVar1) / (fVar1 * 2.0);
+  }
+  dVar12 = (double)fVar1;
+  if (*(float *)(iVar3 + 0x568) <= 0.0) {
+    MyAssertHandler(0xffffffff82074cec,0x872,0,0xffffffff82000f98,0xffffffff820753b0);
+  }
+  fVar1 = *(float *)(iVar3 + 0x568);
+  local_68 = (longlong)local_70;
+  dVar8 = (double)(((float)local_68 / fVar1) * (float)local_68);
+  if ((double)*param_3 <= dVar11) {
+    if ((double)(float)(dVar8 + 60.0) <= ABS(dVar12)) {
+      if (dVar11 < (double)param_3[1]) {
+        *param_5 = *param_2 * fVar1;
+        param_5[1] = param_2[1] * fVar1;
+        __restfpr_28();
+        __restgprlr_26();
+        return;
+      }
+      *param_5 = *param_2 * -fVar1;
+      param_5[1] = param_2[1] * -fVar1;
+    }
+  }
+  else if (((double)param_3[1] != dVar11) && (dVar8 <= ABS(dVar12))) {
+    if (dVar12 == dVar11) {
+      MyAssertHandler(0xffffffff82074cec,0x87d,0,0xffffffff82000f98,0xffffffff820753a4);
+    }
+    fVar2 = *(float *)(iVar3 + 0x568);
+    fVar1 = (float)((double)(float)((double)(float)(dVar9 / dVar12) * dVar9) * dVar10);
+    fVar4 = fVar2;
+    if (fVar1 - fVar2 < 0.0) {
+      fVar4 = fVar1;
+    }
+    fVar5 = -fVar2;
+    if (-fVar2 - fVar1 < 0.0) {
+      fVar5 = fVar4;
+    }
+    *param_5 = *param_2 * fVar5;
+    param_5[1] = param_2[1] * fVar5;
+    __restfpr_28();
+    __restgprlr_26();
+    return;
+  }
+  __restfpr_28();
+  __restgprlr_26();
+  return;
+}
+
 
 // 82482B98  MissileVerticalSteerToTarget  (game/g_missile.cpp:2194)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void MissileVerticalSteerToTarget
+               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,float *param_5)
+
+{
+  float fVar1;
+  int iVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  int iVar6;
+  uint uVar7;
+  int in_r8;
+  double extraout_f1;
+  double dVar8;
+  double dVar9;
+  
+  __savegprlr_29();
+  iVar6 = __savefpr_28();
+  dVar8 = 0.0;
+  dVar9 = extraout_f1;
+  if (extraout_f1 <= 0.0) {
+    MyAssertHandler(0xffffffff82074cec,0x897,0,0xffffffff82000f98,0xffffffff820753d0);
+  }
+  if (dVar8 <= (double)*param_5) {
+    uVar7 = BG_GetAlternateWeapon(*(undefined4 *)(iVar6 + 200),*(int *)(iVar6 + 0xcc) != 0);
+    iVar2 = (&DAT_829d84a0)[uVar7 & 0xff];
+    fVar3 = (float)((double)(float)(ABS((double)(float)((double)*param_5 * param_3)) / dVar9) *
+                    param_2 - (double)*(float *)(iVar6 + 0x2c)) * 20.0;
+    *(float *)(in_r8 + 8) = fVar3;
+    fVar1 = *(float *)(iVar2 + 0x568);
+    fVar4 = fVar1;
+    if (fVar3 - fVar1 < 0.0) {
+      fVar4 = fVar3;
+    }
+    fVar5 = -fVar1;
+    if (-fVar1 - fVar3 < 0.0) {
+      fVar5 = fVar4;
+    }
+    *(float *)(in_r8 + 8) = fVar5;
+  }
+  __restfpr_28();
+  __restgprlr_29();
+  return;
+}
+
 
 // 82482C80  MissileVerticalSteering  (game/g_missile.cpp:2214)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void MissileVerticalSteering(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
+
+{
+  float fVar1;
+  int iVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  int iVar6;
+  uint uVar7;
+  float *pfVar8;
+  double extraout_f1;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  int local_70;
+  undefined1 auStack_6c [4];
+  undefined1 auStack_68 [8];
+  longlong local_60;
+  
+  iVar6 = __savegprlr_26();
+  dVar10 = extraout_f1;
+  uVar7 = BG_GetAlternateWeapon(*(undefined4 *)(iVar6 + 200),*(int *)(iVar6 + 0xcc) != 0);
+  iVar2 = (&DAT_829d84a0)[uVar7 & 0xff];
+  BG_GetProjectileSpeed
+            (*(undefined4 *)(iVar6 + 200),*(int *)(iVar6 + 0xcc) != 0,&local_70,auStack_6c);
+  dVar9 = (double)Vec2NormalizeTo(param_2,auStack_68);
+  dVar11 = 0.0;
+  *(undefined4 *)(param_4 + 8) = 0;
+  if (dVar9 != 0.0) {
+    pfVar8 = (float *)param_2;
+    if (*(int *)(iVar2 + 0x564) != 1) {
+      if (*(int *)(iVar2 + 0x564) != 2) goto LAB_82482eb0;
+      if (*(int *)(iVar6 + 0x14) == 0) {
+        if (((double)*pfVar8 <= 0.0) || (dVar10 == 0.0)) {
+          if (local_70 == 0) {
+            MyAssertHandler(0xffffffff82074cec,0x8c8,0,0xffffffff82000f98,0xffffffff820753f8);
+          }
+          local_60 = (longlong)local_70;
+          dVar9 = dVar9 / (double)local_60;
+        }
+        else {
+          local_60 = (longlong)local_70;
+          dVar9 = (double)*pfVar8 / (double)local_60;
+        }
+        dVar9 = (double)(float)dVar9;
+        if (dVar9 <= dVar11) {
+          MyAssertHandler(0xffffffff82074cec,0x8cc,0,0xffffffff82000f98,0xffffffff820753e4);
+        }
+        iVar5 = DAT_83583814;
+        fVar1 = (float)((double)*(float *)(DAT_835837b0 + 0xc) * dVar10);
+        fVar3 = ((float)(dVar9 * (double)*(float *)(iVar2 + 0x568)) * 0.5 +
+                (float)((double)pfVar8[2] / dVar9)) * 0.9;
+        if (fVar1 < fVar3) {
+          fVar3 = fVar1;
+        }
+        if (*(float *)(iVar6 + 0x2c) < fVar3) {
+          fVar1 = (fVar3 - *(float *)(iVar6 + 0x2c)) * 20.0;
+          *(float *)(param_4 + 8) = fVar1;
+          fVar3 = *(float *)(iVar5 + 0xc);
+          if (fVar1 - *(float *)(iVar5 + 0xc) < 0.0) {
+            fVar3 = fVar1;
+          }
+          fVar4 = -*(float *)(iVar2 + 0x568);
+          if (-*(float *)(iVar2 + 0x568) - fVar1 < 0.0) {
+            fVar4 = fVar3;
+          }
+          *(float *)(param_4 + 8) = fVar4;
+          __restgprlr_26();
+          return;
+        }
+        *(undefined4 *)(iVar6 + 0x14) = 1;
+        __restgprlr_26();
+        return;
+      }
+    }
+    MissileVerticalSteerToTarget(dVar9,(double)pfVar8[2],dVar10,iVar6,auStack_68);
+  }
+LAB_82482eb0:
+  __restgprlr_26();
+  return;
+}
+
 
 // 82482EC8  MissileIsReadyForSteering  (game/g_missile.cpp:2278)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+bool MissileIsReadyForSteering(int param_1)
+
+{
+  uint uVar1;
+  
+  uVar1 = BG_GetAlternateWeapon(*(undefined4 *)(param_1 + 200),*(int *)(param_1 + 0xcc) != 0);
+  return -((float)(longlong)(DAT_83580fac - *(int *)(param_1 + 0x10)) * 0.001 -
+          *(float *)((&DAT_829d84a0)[uVar1 & 0xff] + 0x510)) <= 0.0;
+}
+
 
 // 82482F68  CalcTargetPosition  (game/g_missile.cpp:2291)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CalcTargetPosition(void)
+
+{
+  int iVar1;
+  int iVar2;
+  char cVar3;
+  undefined1 auStack_50 [80];
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x8f7,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar1 + 4) != 4) {
+    MyAssertHandler(0xffffffff82074cec,0x8f8,0,0xffffffff82000f98,0xffffffff82074cd0);
+  }
+  if ((*(uint *)(iVar1 + 0x1c8) & 2) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x8f9,0,0xffffffff82000f98,0xffffffff82075410);
+  }
+  if ((*(uint *)(iVar1 + 0x1c8) & 4) != 0) {
+    iVar2 = EntHandle__isDefined(iVar1 + 0x20c);
+    if (iVar2 == 0) {
+      *(uint *)(iVar1 + 0x1c8) = *(uint *)(iVar1 + 0x1c8) & 0xfffffffb;
+      __restgprlr_28();
+      return;
+    }
+    iVar2 = EntHandle__ent(iVar1 + 0x20c);
+    AnglesToAxis(iVar2 + 0x144,auStack_50);
+    cVar3 = Missile_IsGrenade(iVar1);
+    if (cVar3 != '\0') {
+      MyAssertHandler(0xffffffff82074cec,0x906,0,0xffffffff82000f98,0xffffffff82074fa8);
+    }
+    MatrixTransformVector(iVar1 + 0x1dc,auStack_50,iVar1 + 0x1e8);
+    *(float *)(iVar1 + 0x1e8) = *(float *)(iVar2 + 0x138) + *(float *)(iVar1 + 0x1e8);
+    *(float *)(iVar1 + 0x1ec) = *(float *)(iVar2 + 0x13c) + *(float *)(iVar1 + 0x1ec);
+    *(float *)(iVar1 + 0x1f0) = *(float *)(iVar2 + 0x140) + *(float *)(iVar1 + 0x1f0);
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 824830C8  JavelinClimbExceededAngle  (game/g_missile.cpp:2317)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void JavelinClimbExceededAngle(undefined8 param_1,float *param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  float local_40;
+  float local_3c;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x914,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar2 + 4) != 4) {
+    MyAssertHandler(0xffffffff82074cec,0x915,0,0xffffffff82000f98,0xffffffff82074cd0);
+  }
+  iVar1 = DAT_83583804;
+  if ((*(int *)(iVar2 + 0x58) != 0) && (iVar1 = DAT_835837ec, *(int *)(iVar2 + 0x58) != 1)) {
+    MyAssertHandler(0xffffffff82074cec,0x91d,0,0xffffffff82000f98,0xffffffff82075460);
+    iVar1 = DAT_835837ec;
+  }
+  dVar4 = (double)*(float *)(iVar1 + 0xc);
+  Vec2NormalizeTo(iVar2 + 0x24,&local_40);
+  dVar3 = atan((double)((local_40 * (*param_2 - *(float *)(iVar2 + 0x18)) +
+                        local_3c * (param_2[1] - *(float *)(iVar2 + 0x1c))) /
+                       (param_2[2] - *(float *)(iVar2 + 0x20))));
+  if (dVar4 <= ABS((double)((float)dVar3 * 57.295776))) {
+    __restgprlr_28(0);
+    return;
+  }
+  if (*(char *)(DAT_835837d4 + 0xc) != '\0') {
+    Com_Printf(0xf,0xffffffff82075438);
+  }
+  __restgprlr_28(1);
+  return;
+}
+
 
 // 82483230  JavelinClimbWithin2DDistance  (game/g_missile.cpp:2358)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void JavelinClimbWithin2DDistance(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  double dVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x93a,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar1 + 4) != 4) {
+    MyAssertHandler(0xffffffff82074cec,0x93b,0,0xffffffff82000f98,0xffffffff82074cd0);
+  }
+  dVar2 = (double)Vec2Distance(iVar1 + 0x18,param_2);
+  if (dVar2 < 400.0) {
+    if (*(char *)(DAT_835837d4 + 0xc) != '\0') {
+      Com_Printf(0xf,0xffffffff820754a0);
+    }
+    __restgprlr_28(1);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
+}
+
 
 // 824832F8  JavelinClimbOffset  (game/g_missile.cpp:2381)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void JavelinClimbOffset(undefined8 param_1,float *param_2)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  undefined *puVar4;
+  float local_30;
+  float local_2c;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x951,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar2 + 4) != 4) {
+    MyAssertHandler(0xffffffff82074cec,0x952,0,0xffffffff82000f98,0xffffffff82074cd0);
+  }
+  if (*(int *)(iVar2 + 0x58) == 0) {
+    param_2[2] = *(float *)(DAT_83583384 + 0xc) + param_2[2];
+    __restgprlr_28();
+    return;
+  }
+  if (*(int *)(iVar2 + 0x58) != 1) {
+    MyAssertHandler(0xffffffff82074cec,0x95a,0,0xffffffff82000f98,0xffffffff82075460);
+  }
+  param_2[2] = *(float *)(DAT_835837f0 + 0xc) + param_2[2];
+  iVar3 = EntHandle__isDefined(iVar2 + 0x150);
+  if (iVar3 == 0) {
+    puVar4 = &DAT_834b3400;
+  }
+  else {
+    puVar4 = (undefined *)EntHandle__ent(iVar2 + 0x150);
+  }
+  local_30 = *(float *)(puVar4 + 0x18) - *param_2;
+  local_2c = *(float *)(puVar4 + 0x1c) - param_2[1];
+  Vec2Normalize(&local_30);
+  fVar1 = *(float *)(DAT_835837dc + 0xc);
+  *param_2 = *param_2 + fVar1 * local_30;
+  param_2[1] = param_2[1] + fVar1 * local_2c;
+  __restgprlr_28();
+  return;
+}
+
 
 // 82483468  JavelinMaxDPS  (game/g_missile.cpp:2407)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void JavelinMaxDPS(void)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x968,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar1 + 4) != 4) {
+    MyAssertHandler(0xffffffff82074cec,0x969,0,0xffffffff82000f98,0xffffffff82074cd0);
+  }
+  if (*(int *)(iVar1 + 0x58) == 0) {
+    __restgprlr_29((double)*(float *)(DAT_835837b8 + 0xc));
+    return;
+  }
+  if (*(int *)(iVar1 + 0x58) != 1) {
+    MyAssertHandler(0xffffffff82074cec,0x96d,0,0xffffffff82000f98,0xffffffff82075460);
+  }
+  __restgprlr_29((double)*(float *)(DAT_83583388 + 0xc));
+  return;
+}
+
 
 // 82483530  VecToQuat  (game/g_missile.cpp:2419)
 
-void VecToQuat(float *param_1,float *param_2)
+void VecToQuat(undefined8 param_1,undefined8 param_2)
 
 {
-  float afStack_50 [4];
-  float afStack_40 [12];
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [48];
   
-  vectoangles(param_1,afStack_50);
-  AnglesToAxis(afStack_50,(float (*) [3])afStack_40);
-  AxisToQuat((float (*) [3])afStack_40,param_2);
+  vectoangles(param_1,auStack_50);
+  AnglesToAxis(auStack_50,auStack_40);
+  AxisToQuat(auStack_40,param_2);
   return;
 }
 
 
 // 82483578  JavelinRotateDir  (game/g_missile.cpp:2430)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void JavelinRotateDir(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  float fVar1;
+  float *pfVar2;
+  int iVar3;
+  float *pfVar4;
+  float *pfVar5;
+  int iVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  undefined1 auStack_b0 [16];
+  undefined1 auStack_a0 [16];
+  undefined1 auStack_90 [16];
+  undefined1 auStack_80 [16];
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_27();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x988,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  dVar7 = (double)JavelinMaxDPS(iVar3);
+  iVar6 = DAT_835837d4;
+  pfVar4 = (float *)param_2;
+  pfVar5 = (float *)param_3;
+  fVar1 = *pfVar5;
+  dVar10 = (double)(-((pfVar4[2] * pfVar5[2] + pfVar4[1] * pfVar5[1] + *pfVar4 * fVar1 + 1.0) * 0.5
+                     - 1.0) * 180.0);
+  pfVar2 = (float *)param_4;
+  if (dVar10 <= 0.10000000149011612) {
+    *pfVar2 = fVar1;
+    pfVar2[1] = pfVar5[1];
+    iVar3 = DAT_835837d4;
+    pfVar2[2] = pfVar5[2];
+    if (*(char *)(iVar3 + 0xc) != '\0') {
+      Com_Printf(dVar10,0xf,0xffffffff82075504,dVar10);
+    }
+    __restgprlr_27(0);
+    return;
+  }
+  dVar8 = (double)(float)(dVar10 * 20.0);
+  if (dVar8 < dVar7) {
+    *pfVar2 = fVar1;
+    pfVar2[1] = pfVar5[1];
+    pfVar2[2] = pfVar5[2];
+    if (*(char *)(iVar6 + 0xc) != '\0') {
+      Com_Printf(dVar10,dVar7,dVar8,0xf,0xffffffff820754ec,dVar10,dVar7,dVar8);
+    }
+    __restgprlr_27(0);
+    return;
+  }
+  dVar9 = (double)(float)(dVar7 / dVar8);
+  if (*(char *)(DAT_835837d4 + 0xc) != '\0') {
+    Com_Printf(dVar10,dVar9,dVar7,0xf,0xffffffff820754cc,dVar10,dVar9,dVar7,dVar8);
+  }
+  vectoangles(param_2,auStack_b0);
+  AnglesToAxis(auStack_b0,auStack_70);
+  AxisToQuat(auStack_70,auStack_90);
+  vectoangles(param_3,auStack_b0);
+  AnglesToAxis(auStack_b0,auStack_70);
+  AxisToQuat(auStack_70,auStack_a0);
+  QuatSlerp(dVar9,auStack_90,auStack_a0);
+  UnitQuatToForward(auStack_80,param_4);
+  if (*(char *)(DAT_83583818 + 0xc) != '\0') {
+    iVar6 = iVar3 + 0x18;
+    dVar7 = 100.0;
+    local_c0 = *pfVar4 * 100.0 + *(float *)(iVar3 + 0x18);
+    local_bc = pfVar4[1] * 100.0 + *(float *)(iVar3 + 0x1c);
+    local_b8 = pfVar4[2] * 100.0 + *(float *)(iVar3 + 0x20);
+    G_DebugLineWithDuration(iVar6,&local_c0,0xffffffff82181818,0,200);
+    local_c0 = (float)((double)*pfVar5 * dVar7 + (double)*(float *)(iVar3 + 0x18));
+    local_bc = (float)((double)pfVar5[1] * dVar7 + (double)*(float *)(iVar3 + 0x1c));
+    local_b8 = (float)((double)pfVar5[2] * dVar7 + (double)*(float *)(iVar3 + 0x20));
+    G_DebugLineWithDuration(iVar6,&local_c0,0xffffffff821818c8,0,200);
+    local_c0 = (float)((double)*pfVar2 * dVar7 + (double)*(float *)(iVar3 + 0x18));
+    local_bc = (float)((double)pfVar2[1] * dVar7 + (double)*(float *)(iVar3 + 0x1c));
+    local_b8 = (float)((double)pfVar2[2] * dVar7 + (double)*(float *)(iVar3 + 0x20));
+    G_DebugLineWithDuration(iVar6,&local_c0,0xffffffff821817f8,0,200);
+  }
+  __restgprlr_27(dVar10);
+  return;
+}
+
 
 // 824838D8  JavelinRotateVelocity  (game/g_missile.cpp:2504)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void JavelinRotateVelocity(undefined8 param_1,float *param_2,undefined8 param_3,float *param_4)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar4;
+  char cVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_60;
+  float local_5c;
+  float local_58;
+  int iVar3;
+  
+  iVar4 = __savegprlr_26();
+  cVar5 = Missile_IsGrenade();
+  if (cVar5 != '\0') {
+    MyAssertHandler(0xffffffff82074cec,0x9ce,0,0xffffffff82000f98,0xffffffff82074fa8);
+  }
+  local_6c = param_2[1];
+  local_70 = *param_2;
+  local_68 = param_2[2];
+  dVar7 = 1.0;
+  dVar8 = (double)SQRT(local_68 * local_68 + local_70 * local_70 + local_6c * local_6c);
+  dVar6 = dVar7;
+  if (-dVar8 < 0.0) {
+    dVar6 = dVar8;
+  }
+  fVar1 = (float)(1.0 / dVar6);
+  local_70 = local_70 * fVar1;
+  local_6c = local_6c * fVar1;
+  local_68 = local_68 * fVar1;
+  dVar6 = (double)JavelinRotateDir(iVar4,&local_70,param_3,&local_60);
+  if (dVar6 < 30.0) {
+    iVar2 = DAT_83583810;
+    iVar3 = DAT_835837c0;
+    if (((*(int *)(iVar4 + 0x200) != 1) && (param_2[2] <= 0.0)) &&
+       (iVar2 = DAT_83583380, iVar3 = DAT_835833ac, *(int *)(iVar4 + 0x200) != 2)) {
+      MyAssertHandler(0xffffffff82074cec,0x9dd,0,0xffffffff82000f98,0xffffffff82075514);
+      iVar2 = DAT_83583380;
+      iVar3 = DAT_835833ac;
+    }
+    dVar8 = (double)(float)((double)*(float *)(iVar3 + 0xc) * 0.05000000074505806 + dVar8);
+    if ((double)*(float *)(iVar2 + 0xc) < dVar8) {
+      dVar8 = (double)*(float *)(iVar2 + 0xc);
+    }
+  }
+  fVar1 = (float)(-(double)(float)((double)(float)(dVar6 * 0.0055555556900799274) *
+                                   (double)*(float *)(DAT_835833a4 + 0xc) - dVar7) * dVar8);
+  *param_4 = local_60 * fVar1;
+  param_4[1] = local_5c * fVar1;
+  param_4[2] = local_58 * fVar1;
+  __restgprlr_26();
+  return;
+}
+
 
 // 82483AA0  JavelinClimbCeiling  (game/g_missile.cpp:2539)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void JavelinClimbCeiling(void)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0x9ec,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar1 + 4) != 4) {
+    MyAssertHandler(0xffffffff82074cec,0x9ed,0,0xffffffff82000f98,0xffffffff82074cd0);
+  }
+  if (*(int *)(iVar1 + 0x58) == 1) {
+    __restgprlr_29((double)*(float *)(DAT_835837fc + 0xc));
+    return;
+  }
+  if (*(int *)(iVar1 + 0x58) != 0) {
+    MyAssertHandler(0xffffffff82074cec,0x9f5,0,0xffffffff82000f98,0xffffffff8207554c);
+  }
+  __restgprlr_29((double)*(float *)(DAT_8358339c + 0xc));
+  return;
+}
+
 
 // 82483B68  JavelinClimbIsAboveCeiling  (game/g_missile.cpp:2556)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void JavelinClimbIsAboveCeiling(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  double dVar2;
+  double dVar3;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xa00,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar1 + 4) != 4) {
+    MyAssertHandler(0xffffffff82074cec,0xa01,0,0xffffffff82000f98,0xffffffff82074cd0);
+  }
+  dVar3 = (double)(*(float *)(iVar1 + 0x20) - *(float *)(param_2 + 8));
+  dVar2 = (double)JavelinClimbCeiling(iVar1);
+  __restgprlr_28(dVar2 < dVar3);
+  return;
+}
+
 
 // 82483C10  JavelinClimbEnd  (game/g_missile.cpp:2574)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void JavelinClimbEnd(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xa0f,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xa10,0,0xffffffff82000f98,0xffffffff8200f84c);
+  }
+  if ((*(uint *)(iVar1 + 0x1c8) & 8) == 0) {
+    cVar2 = JavelinClimbIsAboveCeiling(iVar1,param_2);
+    if (cVar2 == '\0') {
+      __restgprlr_28(0);
+      return;
+    }
+    cVar2 = JavelinClimbExceededAngle(iVar1,param_2);
+    if (cVar2 == '\0') {
+      cVar2 = JavelinClimbWithin2DDistance(iVar1,param_2);
+      __restgprlr_28(cVar2 != '\0');
+      return;
+    }
+  }
+  __restgprlr_28(1);
+  return;
+}
+
 
 // 82483CF8  JavelinSteering  (game/g_missile.cpp:2594)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void JavelinSteering(undefined8 param_1,undefined8 param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  char cVar6;
+  int iVar5;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  double dVar10;
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_50;
+  float local_4c;
+  float local_48;
+  
+  iVar4 = __savegprlr_28();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xa26,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  cVar6 = Missile_IsGrenade(iVar4);
+  if (cVar6 != '\0') {
+    MyAssertHandler(0xffffffff82074cec,0xa27,0,0xffffffff82000f98,0xffffffff82074fa8);
+  }
+  if (*(int *)(iVar4 + 0x200) == 0) {
+    iVar5 = BG_ProjIgnitionDelay(param_2,0);
+    if (DAT_83580fac - *(int *)(iVar4 + 0x54) < iVar5) {
+      if (*(char *)(DAT_835837d4 + 0xc) != '\0') {
+        Com_Printf(0xf,0xffffffff820755bc);
+        __restgprlr_28();
+        return;
+      }
+      goto LAB_82483f98;
+    }
+    *(undefined4 *)(iVar4 + 0x200) = 1;
+    *(undefined4 *)(iVar4 + 0xc) = 1;
+    *(undefined4 *)(iVar4 + 0x18) = *(undefined4 *)(iVar4 + 0x138);
+    *(undefined4 *)(iVar4 + 0x1c) = *(undefined4 *)(iVar4 + 0x13c);
+    *(undefined4 *)(iVar4 + 0x20) = *(undefined4 *)(iVar4 + 0x140);
+  }
+  local_60 = *(float *)(iVar4 + 0x1e8);
+  local_5c = *(float *)(iVar4 + 0x1ec);
+  local_58 = *(float *)(iVar4 + 0x1f0);
+  if (*(int *)(iVar4 + 0x200) == 1) {
+    cVar6 = JavelinClimbEnd(iVar4,&local_60);
+    if (cVar6 == '\0') {
+      JavelinClimbOffset(iVar4,&local_60);
+    }
+    else {
+      *(undefined4 *)(iVar4 + 0x200) = 2;
+    }
+  }
+  local_4c = local_5c - *(float *)(iVar4 + 0x1c);
+  local_48 = local_58 - *(float *)(iVar4 + 0x20);
+  local_50 = local_60 - *(float *)(iVar4 + 0x18);
+  fVar2 = SQRT(local_50 * local_50 + local_48 * local_48 + local_4c * local_4c);
+  fVar1 = 1.0;
+  if (-fVar2 < 0.0) {
+    fVar1 = fVar2;
+  }
+  fVar1 = 1.0 / fVar1;
+  local_50 = fVar1 * local_50;
+  local_4c = local_4c * fVar1;
+  local_48 = local_48 * fVar1;
+  JavelinRotateVelocity(iVar4,iVar4 + 0x24,&local_50);
+  if (*(char *)(DAT_835837d4 + 0xc) != '\0') {
+    dVar10 = (double)(*(float *)(iVar4 + 0x20) - local_58);
+    uVar8 = JavelinClimbCeiling(iVar4);
+    uVar9 = Vec2Distance((float *)(iVar4 + 0x18),&local_60);
+    fVar1 = local_5c - *(float *)(iVar4 + 0x1c);
+    fVar2 = local_58 - *(float *)(iVar4 + 0x20);
+    fVar3 = local_60 - *(float *)(iVar4 + 0x18);
+    if (*(int *)(iVar4 + 0x200) == 1) {
+      uVar7 = 0xffffffff820755b8;
+    }
+    else {
+      uVar7 = 0xffffffff820755b4;
+    }
+    Com_Printf(dVar10,uVar8,0xf,0xffffffff82075588,uVar7,dVar10,uVar8,uVar9,
+               (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1));
+  }
+LAB_82483f98:
+  __restgprlr_28();
+  return;
+}
+
 
 // 82483FA8  MissilePassedTarget  (game/g_missile.cpp:2651)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void MissilePassedTarget(void)
+
+{
+  float fVar1;
+  int iVar3;
+  char cVar5;
+  uint uVar4;
+  undefined8 uVar2;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  float local_50;
+  float local_4c;
+  float local_48;
+  
+  __savegprlr_29();
+  iVar3 = __savefpr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xa66,0,0xffffffff82000f98,0xffffffff82075620);
+  }
+  if (*(int *)(iVar3 + 4) != 4) {
+    MyAssertHandler(0xffffffff82074cec,0xa67,0,0xffffffff82000f98,0xffffffff82075600);
+  }
+  cVar5 = Missile_IsGrenade(iVar3);
+  if (cVar5 != '\0') {
+    MyAssertHandler(0xffffffff82074cec,0xa68,0,0xffffffff82000f98,0xffffffff820755e0);
+  }
+  uVar4 = BG_GetAlternateWeapon(*(undefined4 *)(iVar3 + 200),*(int *)(iVar3 + 0xcc) != 0);
+  if (*(int *)((&DAT_829d84a0)[uVar4 & 0xff] + 0x564) == 3) {
+    fVar1 = 90000.0;
+  }
+  else {
+    fVar1 = 40000.0;
+  }
+  dVar9 = (double)(*(float *)(iVar3 + 0x1e8) - *(float *)(iVar3 + 0x18));
+  dVar8 = (double)(*(float *)(iVar3 + 0x1f0) - *(float *)(iVar3 + 0x20));
+  dVar7 = (double)(*(float *)(iVar3 + 0x1ec) - *(float *)(iVar3 + 0x1c));
+  dVar6 = (double)(float)(dVar7 * dVar7 +
+                         (double)(float)(dVar8 * dVar8 + (double)(float)(dVar9 * dVar9)));
+  if (dVar6 <= (double)fVar1) {
+    AngleVectors(iVar3 + 0x144,&local_50,0,0);
+    uVar2 = 1;
+    fVar1 = 1.0;
+    if (-(float)SQRT(dVar6) < 0.0) {
+      fVar1 = (float)SQRT(dVar6);
+    }
+    dVar6 = (double)(1.0 / fVar1);
+    if (local_48 * (float)(dVar8 * dVar6) +
+        local_50 * (float)(dVar6 * dVar9) + local_4c * (float)(dVar6 * dVar7) < -0.2)
+    goto LAB_82484130;
+  }
+  uVar2 = 0;
+LAB_82484130:
+  __restfpr_28(uVar2);
+  __restgprlr_29();
+  return;
+}
+
 
 // 82484140  GuidedMissileSteering  (game/g_missile.cpp:2688)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void GuidedMissileSteering(int param_1)
+
+{
+  int iVar1;
+  uint uVar2;
+  char cVar3;
+  float *pfVar4;
+  undefined8 uVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_54;
+  float local_50;
+  float local_4c;
+  float local_48;
+  float local_40;
+  float local_3c;
+  float local_38;
+  
+  uVar2 = BG_GetAlternateWeapon(*(undefined4 *)(param_1 + 200),*(int *)(param_1 + 0xcc) != 0);
+  iVar1 = (&DAT_829d84a0)[uVar2 & 0xff];
+  if (*(int *)(iVar1 + 0x564) != 0) {
+    if ((((*(uint *)(param_1 + 0x1c8) >> 1 & 1) != 0) &&
+        (cVar3 = MissileIsReadyForSteering(param_1), cVar3 != '\0')) &&
+       ((*(uint *)(param_1 + 0x1c8) & 0x10) == 0)) {
+      CalcTargetPosition(param_1);
+      cVar3 = MissilePassedTarget(param_1);
+      if (cVar3 == '\0') {
+        if (*(int *)(iVar1 + 0x564) == 3) {
+          JavelinSteering(param_1,*(undefined4 *)(param_1 + 200));
+        }
+        else {
+          cVar3 = Missile_IsGrenade(param_1);
+          if (cVar3 != '\0') {
+            MyAssertHandler(0xffffffff82074cec,0xaa2,0,0xffffffff82000f98,0xffffffff82074fa8);
+          }
+          pfVar4 = (float *)(param_1 + 0x24);
+          uVar5 = Vec2NormalizeTo(pfVar4,&local_60);
+          dVar9 = (double)local_5c;
+          dVar8 = -(double)local_60;
+          local_58 = local_5c;
+          local_54 = (float)dVar8;
+          if (*(char *)(DAT_83583818 + 0xc) != '\0') {
+            G_DebugLineWithDuration(param_1 + 0x18,param_1 + 0x1e8,0xffffffff821817f8,0,200);
+          }
+          dVar7 = (double)(*(float *)(param_1 + 0x1e8) - *(float *)(param_1 + 0x18));
+          dVar6 = (double)(*(float *)(param_1 + 0x1ec) - *(float *)(param_1 + 0x1c));
+          local_38 = *(float *)(param_1 + 0x1f0) - *(float *)(param_1 + 0x20);
+          local_50 = 0.0;
+          local_4c = 0.0;
+          local_48 = 0.0;
+          local_40 = (float)(dVar6 * (double)local_5c + (double)(float)(dVar7 * (double)local_60));
+          local_3c = (float)(dVar6 * dVar8 + (double)(float)(dVar7 * dVar9));
+          MissileHorzSteerToTarget(uVar5,param_1,&local_58,&local_40);
+          MissileVerticalSteering(uVar5,param_1,&local_40);
+          *pfVar4 = local_50 * 0.05 + *pfVar4;
+          *(float *)(param_1 + 0x28) = local_4c * 0.05 + *(float *)(param_1 + 0x28);
+          *(float *)(param_1 + 0x2c) = local_48 * 0.05 + *(float *)(param_1 + 0x2c);
+        }
+      }
+      else {
+        *(uint *)(param_1 + 0x1c8) = *(uint *)(param_1 + 0x1c8) | 0x10;
+      }
+    }
+  }
+  return;
+}
+
 
 // 82484380  MissileTrajectoryClientControlled  (game/g_missile.cpp:2746)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void MissileTrajectoryClientControlled(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  float *pfVar5;
+  uint uVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  float local_50;
+  float local_4c;
+  float local_48;
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xabf,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xac0,0,0xffffffff82000f98,0xffffffff82012420);
+  }
+  if ((*(uint *)(iVar3 + 0x1c8) & 0x80) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xac1,0,0xffffffff82000f98,0xffffffff82075660);
+  }
+  *(uint *)(iVar3 + 0x18c) = *(uint *)(iVar3 + 0x18c) & 0xfffff7ff;
+  iVar4 = EntHandle__isDefined(iVar3 + 0x210);
+  if (iVar4 == 0) {
+LAB_82484478:
+    uVar6 = 0;
+  }
+  else {
+    iVar4 = EntHandle__ent(iVar3 + 0x210);
+    if (*(int *)(iVar4 + 0x158) == 0) {
+      Com_PrintError(0x11,0xffffffff82075628);
+      goto LAB_82484478;
+    }
+    uVar6 = *(uint *)(*(int *)(iVar4 + 0x158) + 0x3334);
+    if ((uVar6 & 0x100000) == 0) goto LAB_82484478;
+  }
+  AngleVectors(iVar3 + 0x3c,&local_50,0,0);
+  uVar2 = *(uint *)(iVar3 + 0x1c8);
+  dVar10 = 0.05000000074505806;
+  dVar7 = (double)(local_48 * *(float *)(iVar3 + 0x2c) +
+                  *(float *)(iVar3 + 0x24) * local_50 + *(float *)(iVar3 + 0x28) * local_4c);
+  if ((((uVar2 & 0x20) == 0) || ((uVar2 & 0x40) != 0)) || ((uVar6 & 1) == 0)) {
+    if (((uVar6 & 0x100000) != 0) && ((uVar6 & 1) == 0)) {
+      *(uint *)(iVar3 + 0x1c8) = uVar2 | 0x20;
+    }
+    dVar8 = (double)*(float *)(DAT_8358381c + 0xc);
+    if ((float)(dVar8 - dVar7) <= 0.001) {
+      dVar9 = dVar7;
+      if ((0.001 <= (float)(dVar8 - dVar7)) ||
+         (dVar9 = -(double)(float)((double)*(float *)(DAT_83583378 + 0xc) * 0.05000000074505806 -
+                                  dVar7), dVar8 <= dVar9)) goto LAB_824845a8;
+    }
+    else {
+      dVar9 = (double)(float)((double)*(float *)(DAT_8358338c + 0xc) * 0.05000000074505806 + dVar7);
+      if (dVar9 <= dVar8) goto LAB_824845a8;
+    }
+    dVar9 = dVar8;
+  }
+  else {
+    dVar9 = (double)*(float *)(DAT_8358381c + 0x10);
+    if (500.0 < (float)(dVar9 - dVar7)) {
+      *(uint *)(iVar3 + 0x1c8) = uVar2 | 0x40;
+      G_AddEvent(iVar3,100,0);
+    }
+  }
+LAB_824845a8:
+  *(float *)(iVar3 + 0x24) = local_50;
+  *(float *)(iVar3 + 0x28) = local_4c;
+  *(float *)(iVar3 + 0x2c) = local_48;
+  *(float *)(iVar3 + 0x24) = (float)((double)local_50 * dVar9);
+  *(float *)(iVar3 + 0x28) = (float)((double)*(float *)(iVar3 + 0x28) * dVar9);
+  *(float *)(iVar3 + 0x2c) = (float)(dVar9 * (double)*(float *)(iVar3 + 0x2c));
+  fVar1 = (float)((double)(float)((double)local_50 * dVar9) * dVar10 +
+                 (double)*(float *)(iVar3 + 0x18));
+  *(float *)(iVar3 + 0x18) = fVar1;
+  *(float *)(iVar3 + 0x1c) =
+       (float)((double)*(float *)(iVar3 + 0x28) * dVar10 + (double)*(float *)(iVar3 + 0x1c));
+  *(float *)(iVar3 + 0x20) =
+       (float)((double)*(float *)(iVar3 + 0x2c) * dVar10 + (double)*(float *)(iVar3 + 0x20));
+  pfVar5 = (float *)param_2;
+  *pfVar5 = fVar1;
+  pfVar5[1] = *(float *)(iVar3 + 0x1c);
+  pfVar5[2] = *(float *)(iVar3 + 0x20);
+  __restgprlr_28();
+  return;
+}
+
 
 // 82484640  MissileTrajectory  (game/g_missile.cpp:2837)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void MissileTrajectory(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  float fVar4;
+  int iVar5;
+  uint uVar6;
+  char cVar7;
+  float *pfVar8;
+  double dVar9;
+  double dVar10;
+  int local_80;
+  undefined1 auStack_7c [4];
+  longlong local_78;
+  undefined4 local_70;
+  undefined4 local_6c;
+  undefined4 local_68;
+  float local_60;
+  float local_5c;
+  float local_58;
+  
+  iVar5 = __savegprlr_25();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xb20,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xb21,0,0xffffffff82000f98,0xffffffff82012420);
+  }
+  uVar6 = BG_GetAlternateWeapon(*(undefined4 *)(iVar5 + 200),*(int *)(iVar5 + 0xcc) != 0);
+  iVar3 = (&DAT_829d84a0)[uVar6 & 0xff];
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xb24,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  BG_GetProjectileSpeed
+            (*(undefined4 *)(iVar5 + 200),*(int *)(iVar5 + 0xcc) != 0,&local_80,auStack_7c);
+  if (((*(int *)(iVar5 + 0x54) < DAT_83580fac) && (*(int *)(iVar5 + 0xc) != 2)) &&
+     (*(char *)(iVar5 + 0x16d) == '\t')) {
+    if ((*(uint *)(iVar5 + 0x1c8) & 0x80) != 0) {
+      MissileTrajectoryClientControlled(iVar5,param_2);
+      __restgprlr_25();
+      return;
+    }
+    dVar9 = 0.0;
+    dVar10 = 0.05000000074505806;
+    if (0.0 < *(float *)(iVar3 + 0x510)) {
+      AngleVectors(iVar5 + 0x144,&local_60,0,0);
+      fVar2 = *(float *)(iVar5 + 0x24);
+      local_78 = (longlong)local_80;
+      fVar4 = (float)local_78;
+      fVar1 = *(float *)(iVar5 + 0x2c) * local_58 +
+              *(float *)(iVar5 + 0x28) * local_5c + fVar2 * local_60;
+      if (fVar1 < fVar4) {
+        fVar1 = (float)((double)(fVar4 / *(float *)(iVar3 + 0x510)) * dVar10);
+        *(float *)(iVar5 + 0x24) = fVar1 * local_60 + fVar2;
+        *(float *)(iVar5 + 0x28) = local_5c * fVar1 + *(float *)(iVar5 + 0x28);
+        *(float *)(iVar5 + 0x2c) = local_58 * fVar1 + *(float *)(iVar5 + 0x2c);
+      }
+      else {
+        fVar4 = fVar4 - fVar1;
+        *(float *)(iVar5 + 0x24) = fVar4 * local_60 + fVar2;
+        *(float *)(iVar5 + 0x28) = local_5c * fVar4 + *(float *)(iVar5 + 0x28);
+        *(float *)(iVar5 + 0x2c) = local_58 * fVar4 + *(float *)(iVar5 + 0x2c);
+      }
+    }
+    cVar7 = Missile_IsGrenade(iVar5);
+    if (cVar7 != '\0') {
+      MyAssertHandler(0xffffffff82074cec,0xb42,0,0xffffffff82000f98,0xffffffff82074fa8);
+    }
+    if (dVar9 < (double)*(float *)(iVar3 + 0x514)) {
+      *(float *)(iVar5 + 0x24) =
+           (float)((double)*(float *)(iVar5 + 0x1d0) * dVar10 + (double)*(float *)(iVar5 + 0x24));
+      *(float *)(iVar5 + 0x28) =
+           (float)((double)*(float *)(iVar5 + 0x1d4) * dVar10 + (double)*(float *)(iVar5 + 0x28));
+      *(float *)(iVar5 + 0x2c) =
+           (float)((double)*(float *)(iVar5 + 0x1d8) * dVar10 + (double)*(float *)(iVar5 + 0x2c));
+    }
+    if (*(char *)(DAT_83583818 + 0xc) != '\0') {
+      local_70 = *(undefined4 *)(iVar5 + 0x138);
+      local_6c = *(undefined4 *)(iVar5 + 0x13c);
+      local_68 = *(undefined4 *)(iVar5 + 0x140);
+    }
+    GuidedMissileSteering(iVar5);
+    if ((*(int *)(iVar3 + 0x564) == 3) && (*(int *)(iVar5 + 0x200) == 0)) {
+      BG_EvaluateTrajectory(iVar5 + 0xc,DAT_83580fac,param_2);
+    }
+    else {
+      fVar2 = (float)((double)*(float *)(iVar5 + 0x24) * dVar10 + (double)*(float *)(iVar5 + 0x18));
+      *(float *)(iVar5 + 0x18) = fVar2;
+      *(float *)(iVar5 + 0x1c) =
+           (float)((double)*(float *)(iVar5 + 0x28) * dVar10 + (double)*(float *)(iVar5 + 0x1c));
+      *(float *)(iVar5 + 0x20) =
+           (float)((double)*(float *)(iVar5 + 0x2c) * dVar10 + (double)*(float *)(iVar5 + 0x20));
+      pfVar8 = (float *)param_2;
+      *pfVar8 = fVar2;
+      pfVar8[1] = *(float *)(iVar5 + 0x1c);
+      pfVar8[2] = *(float *)(iVar5 + 0x20);
+    }
+    if ((*(int *)(iVar5 + 0x30) == 1) && (cVar7 = MissileIsReadyForSteering(iVar5), cVar7 != '\0'))
+    {
+      vectoangles(iVar5 + 0x24,iVar5 + 0x144);
+      G_SetAngle(iVar5,iVar5 + 0x144);
+      *(undefined4 *)(iVar5 + 0x30) = 1;
+    }
+    if (*(char *)(DAT_83583818 + 0xc) != '\0') {
+      if ((*(int *)(iVar3 + 0x564) == 3) && (*(int *)(iVar5 + 0x200) == 1)) {
+        G_DebugLineWithDuration(&local_70,param_2,0xffffffff821818f8,0,200);
+        __restgprlr_25();
+        return;
+      }
+      G_DebugLineWithDuration(&local_70,param_2,0xffffffff821817e8,0,200);
+      __restgprlr_25();
+      return;
+    }
+  }
+  else {
+    BG_EvaluateTrajectory(iVar5 + 0xc,DAT_83580fac,param_2);
+  }
+  __restgprlr_25();
+  return;
+}
+
 
 // 82484A40  G_MakeMissilePickupItem  (game/g_missile.cpp:2927)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_MakeMissilePickupItem(int param_1)
+
+{
+  *(undefined4 *)(param_1 + 0x104) = 0;
+  *(undefined4 *)(param_1 + 0x108) = 0;
+  *(undefined4 *)(param_1 + 0x10c) = 0;
+  *(undefined4 *)(param_1 + 0x110) = 0x3f800000;
+  *(undefined4 *)(param_1 + 0x114) = 0x3f800000;
+  *(undefined4 *)(param_1 + 0x118) = 0x3f800000;
+  *(uint *)(param_1 + 0x11c) = *(uint *)(param_1 + 0x11c) | 0x200000;
+  if (*(char *)(param_1 + 0xcb) == '\0') {
+    MyAssertHandler(0xffffffff82074cec,0xb74,0,0xffffffff82000f98,0xffffffff82074d44);
+  }
+  if (*(byte *)(param_1 + 0xcb) < 0xf0) {
+    *(undefined4 *)(param_1 + 0x90) = 0x12;
+  }
+  else {
+    MyAssertHandler(0xffffffff82074cec,0xb75,0,0xffffffff82075698,*(byte *)(param_1 + 0xcb),0xf0);
+    *(undefined4 *)(param_1 + 0x90) = 0x12;
+  }
+  return;
+}
+
 
 // 82484B18  G_GetGrenadeTrType  (game/g_missile.cpp:2942)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined8 G_GetGrenadeTrType(void)
+
+{
+  return 5;
+}
+
 
 // 82484B20  G_RunMissileInternal  (game/g_missile.cpp:2953)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_RunMissileInternal(void)
+
+{
+  float fVar1;
+  undefined4 uVar2;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  undefined8 uVar3;
+  int iVar7;
+  int iVar8;
+  float *pfVar9;
+  float *pfVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  float local_130;
+  float local_12c;
+  float local_128;
+  float local_120;
+  float local_11c;
+  float local_118;
+  float local_110;
+  float local_10c;
+  float local_108;
+  float local_100;
+  float local_fc;
+  float local_f8;
+  undefined4 local_f4;
+  float local_f0;
+  float local_ec;
+  float local_e8;
+  float local_e4;
+  uint local_e0;
+  float local_b8;
+  float local_b4;
+  float local_b0;
+  undefined1 auStack_ac [12];
+  float local_a0 [40];
+  
+  iVar4 = __savegprlr_23();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xb96,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar4 + 4) != 4) {
+    MyAssertHandler(0xffffffff82074cec,0xb97,0,0xffffffff82000f98,0xffffffff82074cd0);
+  }
+  uVar5 = BG_GetAlternateWeapon(*(undefined4 *)(iVar4 + 200),*(int *)(iVar4 + 0xcc) != 0);
+  iVar8 = (&DAT_829d84a0)[uVar5 & 0xff];
+  if (iVar8 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xb9e,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  BG_GetExplosionInnerAndOuterDamage
+            (*(undefined4 *)(iVar4 + 200),*(int *)(iVar4 + 0xcc) != 0,&local_f4,auStack_ac);
+  dVar14 = 0.0;
+  dVar15 = 1.0;
+  if ((*(int *)(iVar4 + 0xc) == 0) && (*(int *)(iVar4 + 0x80) != 0x7fe)) {
+    local_130 = -(*(float *)(iVar4 + 0x1b8) * 4.635 - *(float *)(iVar4 + 0x138));
+    local_12c = -(*(float *)(iVar4 + 0x1bc) * 4.635 - *(float *)(iVar4 + 0x13c));
+    local_128 = -(*(float *)(iVar4 + 0x1c0) * 4.635 - *(float *)(iVar4 + 0x140));
+    iVar6 = EntHandle__isDefined(iVar4 + 0x150);
+    if (iVar6 == 0) {
+      uVar3 = 0x7ff;
+    }
+    else {
+      uVar3 = EntHandle__entnum(iVar4 + 0x150);
+    }
+    G_MissileTrace(&local_f0,(undefined4 *)(iVar4 + 0x138),&local_130,uVar3,
+                   *(undefined4 *)(iVar4 + 0x18c));
+    if ((double)local_f0 == dVar15) {
+      *(undefined4 *)(iVar4 + 0xc) = 5;
+      uVar2 = DAT_83580fac;
+      *(undefined4 *)(iVar4 + 0x14) = 0;
+      *(undefined4 *)(iVar4 + 0x10) = uVar2;
+      *(undefined4 *)(iVar4 + 0x18) = *(undefined4 *)(iVar4 + 0x138);
+      *(undefined4 *)(iVar4 + 0x1c) = *(undefined4 *)(iVar4 + 0x13c);
+      *(undefined4 *)(iVar4 + 0x20) = *(undefined4 *)(iVar4 + 0x140);
+      *(float *)(iVar4 + 0x24) = (float)dVar14;
+      *(float *)(iVar4 + 0x28) = (float)dVar14;
+      *(float *)(iVar4 + 0x2c) = (float)dVar14;
+    }
+  }
+  else if ((*(char *)(iVar8 + 0x788) != '\0') && (*(int *)(iVar4 + 0xc) == 1)) {
+    *(undefined4 *)(iVar4 + 0xc) = 5;
+    *(undefined4 *)(iVar4 + 0x18) = *(undefined4 *)(iVar4 + 0x138);
+    *(undefined4 *)(iVar4 + 0x1c) = *(undefined4 *)(iVar4 + 0x13c);
+    *(undefined4 *)(iVar4 + 0x20) = *(undefined4 *)(iVar4 + 0x140);
+  }
+  local_100 = *(float *)(iVar4 + 0x138);
+  local_fc = *(float *)(iVar4 + 0x13c);
+  local_f8 = *(float *)(iVar4 + 0x140);
+  pfVar10 = (float *)(iVar4 + 0x138);
+  MissileTrajectory(iVar4,&local_130);
+  SV_KeepPointInPlayableBounds(&local_130);
+  pfVar9 = (float *)(iVar4 + 0x18);
+  SV_KeepPointInPlayableBounds(pfVar9);
+  local_b0 = local_128 - *(float *)(iVar4 + 0x140);
+  local_b8 = local_130 - *(float *)(iVar4 + 0x138);
+  local_b4 = local_12c - *(float *)(iVar4 + 0x13c);
+  dVar13 = (double)SQRT(local_b4 * local_b4 + local_b8 * local_b8 + local_b0 * local_b0);
+  dVar12 = dVar15;
+  if (-dVar13 < 0.0) {
+    dVar12 = dVar13;
+  }
+  fVar1 = (float)(dVar15 / dVar12);
+  local_b8 = fVar1 * local_b8;
+  local_b4 = local_b4 * fVar1;
+  local_b0 = local_b0 * fVar1;
+  if (0.0010000000474974513 <= dVar13) {
+    if ((ABS(*(float *)(iVar4 + 0x2c)) <= 30.0) ||
+       (iVar6 = SV_PointContents(pfVar10,0xffffffffffffffff,0x20), iVar6 != 0)) {
+      iVar6 = EntHandle__isDefined(iVar4 + 0x150);
+      if (iVar6 == 0) {
+        uVar3 = 0x7ff;
+      }
+      else {
+        uVar3 = EntHandle__entnum(iVar4 + 0x150);
+      }
+      uVar5 = *(uint *)(iVar4 + 0x18c);
+    }
+    else {
+      iVar6 = EntHandle__isDefined(iVar4 + 0x150);
+      if (iVar6 == 0) {
+        uVar3 = 0x7ff;
+        uVar5 = *(uint *)(iVar4 + 0x18c) | 0x20;
+      }
+      else {
+        uVar3 = EntHandle__entnum(iVar4 + 0x150);
+        uVar5 = *(uint *)(iVar4 + 0x18c) | 0x20;
+      }
+    }
+    iVar6 = iVar4 + 0x150;
+    G_MissileTrace(&local_f0,pfVar10,&local_130,uVar3,uVar5);
+    if ((local_e0 & 0x1f00000) == 0x1400000) {
+      RunMissile_CreateWaterSplash(iVar4,&local_f0,&local_130);
+      iVar7 = EntHandle__isDefined(iVar6);
+      if (iVar7 == 0) {
+        uVar3 = 0x7ff;
+      }
+      else {
+        uVar3 = EntHandle__entnum(iVar6);
+      }
+      G_MissileTrace(&local_f0,pfVar10,&local_130,uVar3,*(undefined4 *)(iVar4 + 0x18c));
+    }
+    if ((local_e0 & 0x1f00000) == 0x900000) {
+      uVar3 = BG_GetDamage(*(undefined4 *)(iVar4 + 200),*(int *)(iVar4 + 0xcc) != 0);
+      Missile_PenetrateGlass(&local_f0,iVar4,pfVar10,&local_130,uVar3,0);
+    }
+    dVar12 = (double)local_f0;
+    local_120 = (float)((double)(float)((double)local_130 - (double)*pfVar10) * dVar12 +
+                       (double)*pfVar10);
+    local_11c = (float)((double)(float)((double)local_12c - (double)*(float *)(iVar4 + 0x13c)) *
+                        dVar12 + (double)*(float *)(iVar4 + 0x13c));
+    local_118 = (float)((double)(float)((double)local_128 - (double)*(float *)(iVar4 + 0x140)) *
+                        dVar12 + (double)*(float *)(iVar4 + 0x140));
+    if ((4 < *(int *)(DAT_83373654 + 0xc)) || (*(char *)(DAT_83583818 + 0xc) != '\0')) {
+      G_DebugLineWithDuration(pfVar10,&local_120,0xffffffff821817e8,1,1000);
+      dVar12 = (double)local_f0;
+    }
+    *(float *)(iVar4 + 0x140) = local_118;
+    *pfVar10 = local_120;
+    *(float *)(iVar4 + 0x13c) = local_11c;
+    if ((*(uint *)(iVar4 + 0x184) & 0x4000000) != 0) {
+      if (dVar12 == dVar15) {
+        local_130 = *pfVar10;
+        local_108 = *(float *)(iVar4 + 0x140) + 0.135;
+        local_12c = *(float *)(iVar4 + 0x13c);
+        local_128 = *(float *)(iVar4 + 0x140) - 1.5;
+        iVar7 = *(int *)(iVar8 + 0x530);
+        local_110 = local_130;
+        local_10c = local_12c;
+        if ((((iVar7 == 1) || (iVar7 == 2)) || (iVar7 == 5)) || (iVar7 != 0)) goto LAB_82485158;
+      }
+      else {
+        local_110 = local_ec * 0.135 + *pfVar10;
+        local_130 = -(local_ec * 1.5 - *pfVar10);
+        local_10c = local_e8 * 0.135 + *(float *)(iVar4 + 0x13c);
+        local_12c = -(local_e8 * 1.5 - *(float *)(iVar4 + 0x13c));
+        local_108 = local_e4 * 0.135 + *(float *)(iVar4 + 0x140);
+        local_128 = -(local_e4 * 1.5 - *(float *)(iVar4 + 0x140));
+      }
+      iVar7 = EntHandle__isDefined(iVar6);
+      if (iVar7 == 0) {
+        uVar3 = 0x7ff;
+      }
+      else {
+        uVar3 = EntHandle__entnum(iVar6);
+      }
+      G_MissileTrace(local_a0,&local_110,&local_130,uVar3,*(undefined4 *)(iVar4 + 0x18c));
+      dVar12 = (double)local_a0[0];
+      if (dVar12 != dVar15) {
+        memcpy(&local_f0,local_a0,0x34);
+        local_120 = (float)((double)(float)((double)local_130 - (double)local_110) * dVar12 +
+                           (double)local_110);
+        local_11c = (float)((double)(float)((double)local_12c - (double)local_10c) * dVar12 +
+                           (double)local_10c);
+        local_118 = (float)((double)(float)((double)local_128 - (double)local_108) * dVar12 +
+                           (double)local_108);
+        dVar11 = (double)(float)((double)local_120 - (double)local_130);
+        dVar13 = (double)(float)((double)local_11c - (double)local_12c);
+        dVar12 = (double)(float)((double)local_118 - (double)local_128);
+        *pfVar9 = (float)(dVar11 + (double)*pfVar9);
+        *(float *)(iVar4 + 0x1c) = (float)((double)*(float *)(iVar4 + 0x1c) + dVar13);
+        *(float *)(iVar4 + 0x20) = (float)(dVar12 + (double)*(float *)(iVar4 + 0x20));
+        *pfVar10 = (float)(dVar11 + (double)local_120);
+        *(float *)(iVar4 + 0x13c) = (float)(dVar13 + (double)local_11c);
+        *(float *)(iVar4 + 0x140) = (float)(dVar12 + (double)local_118);
+      }
+    }
+LAB_82485158:
+    SV_LinkEntity(iVar4);
+    iVar6 = BG_ProjectileActivateDist(*(undefined4 *)(iVar4 + 200),*(int *)(iVar4 + 0xcc) != 0);
+    if (0 < iVar6) {
+      *(float *)(iVar4 + 0x1b4) =
+           SQRT((local_11c - local_fc) * (local_11c - local_fc) +
+                (local_120 - local_100) * (local_120 - local_100) +
+                (local_118 - local_f8) * (local_118 - local_f8)) + *(float *)(iVar4 + 0x1b4);
+    }
+    if (*(int *)(&DAT_82969860 + (uint)*(byte *)(iVar4 + 0x16d) * 0x28) == 4) {
+      G_GrenadeTouchTriggerDamage(iVar4,&local_100,pfVar10,local_f4,4);
+    }
+    iVar6 = BG_GetWeaponClass(*(undefined4 *)(iVar4 + 200),*(int *)(iVar4 + 0xcc) != 0);
+    if ((iVar6 == 7) &&
+       (Vehicle_TrophyTestMissile(iVar4,&local_100,pfVar10), *(int *)(iVar4 + 4) != 4))
+    goto LAB_82485414;
+    if ((double)local_f0 == dVar15) {
+      if ((double)SQRT(*(float *)(iVar4 + 0x2c) * *(float *)(iVar4 + 0x2c) +
+                       *(float *)(iVar4 + 0x24) * *(float *)(iVar4 + 0x24) +
+                       *(float *)(iVar4 + 0x28) * *(float *)(iVar4 + 0x28)) != dVar14) {
+        *(undefined4 *)(iVar4 + 0x80) = 0x7ff;
+        iVar6 = BG_GetWeaponClass(*(undefined4 *)(iVar4 + 200),*(int *)(iVar4 + 0xcc) != 0);
+        if ((iVar6 == 7) && (*(int *)(iVar8 + 0x564) == 0)) {
+          iVar8 = BG_GetWeaponType(*(undefined4 *)(iVar4 + 200),*(int *)(iVar4 + 0xcc) != 0);
+          if (iVar8 != 3) {
+            MyAssertHandler(0xffffffff82074cec,0xc4b,0,0xffffffff82000f98,0xffffffff820756e0);
+          }
+          if ((*(uint *)(iVar4 + 0x184) & 0x20000) == 0) {
+            RunMissile_Destabilize(iVar4);
+          }
+          Missile_ApplyAttractorsRepulsors(iVar4);
+        }
+      }
+    }
+    else {
+      if ((local_e0 & 4) != 0) {
+        Scr_Notify(iVar4,DAT_835a0bae,0);
+        G_FreeEntity(iVar4);
+        __restgprlr_23();
+        return;
+      }
+      MissileImpact(iVar4,&local_f0,&local_b8,&local_120);
+      if (*(int *)(iVar4 + 4) != 4) goto LAB_82485414;
+      if (((*(char *)(iVar8 + 0x788) != '\0') && ((float)0x3f333333 < local_e4)) &&
+         (iVar8 = *(int *)(iVar4 + 0xc), iVar8 != 0)) {
+        if ((iVar8 != 5) && (iVar8 != 6)) {
+          MyAssertHandler(0xffffffff82074cec,0xc40,0,0xffffffff82075738,0xffffffff82075760);
+        }
+        *(undefined4 *)(iVar4 + 0xc) = 1;
+        *pfVar9 = *pfVar10;
+        *(undefined4 *)(iVar4 + 0x1c) = *(undefined4 *)(iVar4 + 0x13c);
+        *(undefined4 *)(iVar4 + 0x20) = *(undefined4 *)(iVar4 + 0x140);
+      }
+    }
+    if ((4 < *(int *)(DAT_83373654 + 0xc)) || (*(char *)(DAT_83583818 + 0xc) != '\0')) {
+      G_DebugLineWithDuration(&local_100,pfVar10,0xffffffff82181818,1,1000);
+    }
+    DrawAttractorDebug();
+  }
+  G_RunThink(iVar4);
+LAB_82485414:
+  __restgprlr_23();
+  return;
+}
+
 
 // 82485428  G_RunMissile  (game/g_missile.cpp:3167)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_RunMissile(int param_1)
+
+{
+  int iVar1;
+  undefined4 local_1f0;
+  undefined4 local_1ec;
+  undefined4 local_1e8;
+  undefined1 auStack_1e0 [456];
+  
+  if (*(int *)(param_1 + 0x214) == 0) {
+    iVar1 = BG_GetWeaponClass(*(undefined4 *)(param_1 + 200),*(int *)(param_1 + 0xcc) != 0);
+    if (iVar1 == 9) {
+      G_AntiLagRewindClientPos
+                ((ulonglong)*(uint *)(param_1 + 0x1cc) + (ulonglong)DAT_83580fac,auStack_1e0);
+    }
+    G_RunMissileInternal(param_1);
+    if (iVar1 == 9) {
+      G_AntiLag_RestoreClientPos(auStack_1e0);
+    }
+  }
+  else {
+    local_1f0 = *(undefined4 *)(param_1 + 0x138);
+    local_1ec = *(undefined4 *)(param_1 + 0x13c);
+    local_1e8 = *(undefined4 *)(param_1 + 0x140);
+    G_GeneralLink();
+    G_RunThink(param_1);
+    if (*(char *)(DAT_83583818 + 0xc) != '\0') {
+      G_DebugLineWithDuration(&local_1f0,param_1 + 0x138,0xffffffff821818b8,1,1000);
+    }
+  }
+  return;
+}
+
 
 // 82485520  G_InitGrenadeEntity  (game/g_missile.cpp:3385)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_InitGrenadeEntity(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  float fVar4;
+  int iVar5;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
+  longlong lVar9;
+  undefined4 *puVar10;
+  longlong lVar11;
+  double dVar12;
+  double dVar13;
+  undefined8 uVar14;
+  
+  iVar5 = __savegprlr_24();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xd3d,0,0xffffffff82000f98,0xffffffff8200e0cc);
+  }
+  iVar3 = (int)param_2;
+  if (*(char *)(iVar3 + 0xcb) == '\0') {
+    MyAssertHandler(0xffffffff82074cec,0xd3f,0,0xffffffff82000f98,0xffffffff820757b8);
+  }
+  uVar6 = BG_GetAlternateWeapon(*(undefined4 *)(iVar3 + 200),*(int *)(iVar3 + 0xcc) != 0);
+  iVar2 = (&DAT_829d84a0)[uVar6 & 0xff];
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xd41,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  iVar7 = BG_ProjectileModel(*(undefined4 *)(iVar3 + 200),*(int *)(iVar3 + 0xcc) != 0);
+  *(undefined4 *)(iVar3 + 4) = 4;
+  *(undefined4 *)(iVar3 + 8) = 0;
+  iVar8 = DAT_83580fac;
+  *(undefined4 *)(iVar3 + 0x11c) = 0x2100;
+  *(uint *)(iVar3 + 0x184) = *(uint *)(iVar3 + 0x184) | 0x4001000;
+  *(int *)(iVar3 + 0x54) = iVar8;
+  if ((*(int *)(iVar2 + 0x40) == 0) && (iVar7 != 0)) {
+    puVar10 = (undefined4 *)(iVar7 + 0xf4);
+    lVar9 = param_2 + 0x100;
+    lVar11 = 6;
+    do {
+      puVar10 = puVar10 + 1;
+      lVar9 = lVar9 + 4;
+      *(undefined4 *)lVar9 = *puVar10;
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
+    fVar1 = *(float *)(iVar3 + 0x10c) - *(float *)(iVar3 + 0x118);
+    dVar13 = 0.0;
+    if (fVar1 < 0.0) {
+      fVar1 = -fVar1 * 0.5;
+      *(float *)(iVar3 + 0x10c) = *(float *)(iVar3 + 0x10c) + fVar1;
+      *(float *)(iVar3 + 0x118) = *(float *)(iVar3 + 0x118) - fVar1;
+    }
+    dVar12 = (double)*(float *)(iVar3 + 0x110);
+    uVar14 = 0;
+    if (dVar12 < 0.0) {
+      MyAssertHandler(dVar12,0,0xffffffff82073e28,0x372,0,0xffffffff82073e04,dVar12,0);
+    }
+    dVar12 = (double)*(float *)(iVar3 + 0x114);
+    if (dVar12 < dVar13) {
+      MyAssertHandler(dVar12,uVar14,0xffffffff82073e28,0x373,0,0xffffffff82073de0,dVar12,uVar14);
+    }
+    dVar12 = (double)*(float *)(iVar3 + 0x118);
+    if (dVar12 < dVar13) {
+      MyAssertHandler(dVar12,uVar14,0xffffffff82073e28,0x374,0,0xffffffff82073dbc,dVar12,uVar14);
+    }
+    fVar1 = *(float *)(iVar3 + 0x118);
+    fVar4 = *(float *)(iVar3 + 0x110);
+    if (fVar1 - *(float *)(iVar3 + 0x110) < 0.0) {
+      fVar4 = fVar1;
+    }
+    *(float *)(iVar3 + 0x110) = fVar4;
+    fVar4 = *(float *)(iVar3 + 0x114);
+    if (fVar1 - *(float *)(iVar3 + 0x114) < 0.0) {
+      fVar4 = fVar1;
+    }
+    *(float *)(iVar3 + 0x114) = fVar4;
+  }
+  else {
+    *(undefined4 *)(iVar3 + 0x104) = 0;
+    *(undefined4 *)(iVar3 + 0x108) = 0;
+    *(undefined4 *)(iVar3 + 0x10c) = 0;
+    *(undefined4 *)(iVar3 + 0x110) = 0x40900000;
+    *(undefined4 *)(iVar3 + 0x114) = 0x40900000;
+    *(undefined4 *)(iVar3 + 0x118) = 0x40900000;
+  }
+  if ((iVar5 == 0) || (*(int *)(iVar5 + 0x158) == 0)) {
+    *(undefined4 *)(iVar3 + 0x1cc) = 0;
+  }
+  else {
+    *(int *)(iVar3 + 0x1cc) = *(int *)(*(int *)(iVar5 + 0x158) + 0x3750) - DAT_83580fac;
+  }
+  if (((iVar5 != 0) && (iVar8 = *(int *)(iVar5 + 0x158), iVar8 != 0)) &&
+     (*(int *)(iVar8 + 0x34) < 0)) {
+    uVar6 = *(uint *)(iVar8 + 0x38);
+    if (uVar6 != 0x7ff) {
+      lVar9 = param_2 + 0x150;
+      EntHandle__setEnt(lVar9,((ulonglong)uVar6 + ((ulonglong)uVar6 & 0x3fffffff) * 4 & 0x1ffffff) *
+                              0x80 + -0x7cc8c980);
+      iVar8 = EntHandle__isDefined(lVar9);
+      if (iVar8 == 0) {
+        iVar8 = 0;
+      }
+      else {
+        iVar8 = EntHandle__ent(lVar9);
+      }
+      goto LAB_82485864;
+    }
+  }
+  EntHandle__setEnt(param_2 + 0x150,iVar5);
+  iVar8 = iVar5;
+LAB_82485864:
+  EntHandle__setEnt(param_2 + 0x194,iVar8);
+  *(undefined1 *)(iVar3 + 0x16d) = 7;
+  *(undefined4 *)(iVar3 + 0x18c) = 0x2806091;
+  EntHandle__setEnt(param_2 + 0x20c,0);
+  *(undefined1 *)(iVar3 + 0x102) = 4;
+  if ((*(int *)(iVar2 + 0x40) == 1) || (*(int *)(iVar2 + 0x40) == 4)) {
+    G_MakeMissilePickupItem(param_2);
+  }
+  if ((iVar5 != 0) && (*(int *)(iVar5 + 0x158) != 0)) {
+    *(undefined4 *)(iVar3 + 0x1c4) = *(undefined4 *)(*(int *)(iVar5 + 0x158) + 0x33d4);
+    __restgprlr_24();
+    return;
+  }
+  *(undefined4 *)(iVar3 + 0x1c4) = 0;
+  __restgprlr_24();
+  return;
+}
+
 
 // 824858F0  G_InitGrenadeMovement  (game/g_missile.cpp:3465)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_InitGrenadeMovement
+               (undefined8 param_1,undefined4 *param_2,undefined8 param_3,undefined8 param_4,
+               int param_5)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  uint *puVar6;
+  float *pfVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  
+  iVar4 = __savegprlr_24();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xd8a,0,0xffffffff82000f98,0xffffffff8200e0cc);
+  }
+  *(undefined4 *)(iVar4 + 0xc) = 5;
+  dVar10 = 0.0;
+  *(undefined4 *)(iVar4 + 0x1b4) = 0;
+  *(undefined4 *)(iVar4 + 0x10) = DAT_83580fac;
+  *(undefined4 *)(iVar4 + 0x138) = *param_2;
+  *(undefined4 *)(iVar4 + 0x13c) = param_2[1];
+  *(undefined4 *)(iVar4 + 0x140) = param_2[2];
+  *(undefined4 *)(iVar4 + 0x18) = *param_2;
+  *(undefined4 *)(iVar4 + 0x1c) = param_2[1];
+  *(undefined4 *)(iVar4 + 0x20) = param_2[2];
+  puVar6 = (uint *)param_3;
+  uVar1 = *puVar6;
+  *(uint *)(iVar4 + 0x24) = uVar1;
+  uVar2 = puVar6[1];
+  *(uint *)(iVar4 + 0x28) = uVar2;
+  uVar3 = puVar6[2];
+  *(uint *)(iVar4 + 0x2c) = uVar3;
+  if ((uVar1 & 0x7f800000) != 0x7f800000) {
+    if ((uVar2 & 0x7f800000) != 0x7f800000) {
+      if ((uVar3 & 0x7f800000) != 0x7f800000) goto LAB_82485a20;
+    }
+  }
+  MyAssertHandler(0xffffffff82074cec,0xd94,0,0xffffffff82000f98,0xffffffff820757e8);
+LAB_82485a20:
+  pfVar7 = (float *)(iVar4 + 0x144);
+  vectoangles(param_3,pfVar7);
+  *(float *)(iVar4 + 0x24) = (float)(longlong)(int)*(float *)(iVar4 + 0x24);
+  *(float *)(iVar4 + 0x28) = (float)(longlong)(int)*(float *)(iVar4 + 0x28);
+  *(float *)(iVar4 + 0x2c) = (float)(longlong)(int)*(float *)(iVar4 + 0x2c);
+  if (param_5 != 0) {
+    *(undefined4 *)(iVar4 + 0x30) = 2;
+    *(undefined4 *)(iVar4 + 0x34) = DAT_83580fac;
+    *(float *)(iVar4 + 0x3c) = *pfVar7;
+    *(undefined4 *)(iVar4 + 0x40) = *(undefined4 *)(iVar4 + 0x148);
+    *(undefined4 *)(iVar4 + 0x44) = *(undefined4 *)(iVar4 + 0x14c);
+    dVar8 = (double)AngleNormalize360((double)(*pfVar7 - 120.0));
+    *(float *)(iVar4 + 0x3c) = (float)dVar8;
+    iVar5 = BG_GetWeaponClass(param_4,0);
+    if (iVar5 == 9) {
+      *(float *)(iVar4 + 0x4c) = (float)dVar10;
+      *(float *)(iVar4 + 0x50) = (float)dVar10;
+      *(undefined4 *)(iVar4 + 0x48) = 0x44fa0000;
+    }
+    else {
+      iVar5 = G_irand(0,2);
+      dVar9 = (double)(longlong)(iVar5 * 2 + -1);
+      dVar8 = (double)G_flrand(0x4074000000000000,0x4089000000000000);
+      *(float *)(iVar4 + 0x48) = (float)(dVar8 * dVar9);
+      *(float *)(iVar4 + 0x4c) = (float)dVar10;
+      iVar5 = G_irand(0,2);
+      dVar8 = (double)(longlong)(iVar5 * 2 + -1);
+      dVar10 = (double)G_flrand(0x4066800000000000,0x4080e00000000000);
+      *(float *)(iVar4 + 0x4c) = (float)(longlong)(int)*(float *)(iVar4 + 0x4c);
+      *(float *)(iVar4 + 0x48) = (float)(longlong)(int)*(float *)(iVar4 + 0x48);
+      *(float *)(iVar4 + 0x50) = (float)(longlong)(int)(dVar10 * dVar8);
+    }
+    *pfVar7 = *(float *)(iVar4 + 0x3c);
+    *(undefined4 *)(iVar4 + 0x148) = *(undefined4 *)(iVar4 + 0x40);
+    *(undefined4 *)(iVar4 + 0x14c) = *(undefined4 *)(iVar4 + 0x44);
+    __restgprlr_24();
+    return;
+  }
+  G_SetAngle(iVar4,pfVar7);
+  __restgprlr_24();
+  return;
+}
+
 
 // 82485C60  InitGrenadeTimer  (game/g_missile.cpp:3516)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void InitGrenadeTimer(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+                     int param_5)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  
+  iVar3 = __savegprlr_25();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xdc2,0,0xffffffff82000f98,0xffffffff8200e0cc);
+  }
+  uVar4 = BG_GetAlternateWeapon(param_3,param_4);
+  iVar1 = (&DAT_829d84a0)[uVar4 & 0xff];
+  iVar5 = BG_ProjectileActivateDist(param_3,param_4);
+  iVar2 = (int)param_2;
+  if ((iVar5 != 0) && (param_5 < 1)) goto LAB_82485d60;
+  if ((iVar3 != 0) && (iVar5 = *(int *)(iVar3 + 0x158), iVar5 != 0)) {
+    if (*(char *)(iVar1 + 0x790) == '\0') {
+      *(undefined4 *)(iVar5 + 0x34) = 0;
+      goto LAB_82485d60;
+    }
+    if ((iVar5 != 0) && (*(int *)(iVar5 + 0x34) != 0)) {
+      *(int *)(iVar2 + 0x198) = *(int *)(*(int *)(iVar3 + 0x158) + 0x34) + DAT_83580fac;
+      *(undefined4 *)(*(int *)(iVar3 + 0x158) + 0x34) = 0;
+      goto LAB_82485d60;
+    }
+  }
+  *(int *)(iVar2 + 0x198) = DAT_83580fac + param_5;
+LAB_82485d60:
+  if (*(char *)(iVar2 + 0x16d) != '\a') {
+    MyAssertHandler(0xffffffff82074cec,0xddb,0,0xffffffff82000f98,0xffffffff8207586c);
+  }
+  *(int *)(iVar2 + 0x1b0) = DAT_83580fac;
+  if (*(int *)(iVar2 + 0x198) == 0) {
+    *(int *)(iVar2 + 0x198) = DAT_83580fac + 30000;
+  }
+  if (DAT_83580fac + 60000 < *(int *)(iVar2 + 0x198)) {
+    *(int *)(iVar2 + 0x198) = DAT_83580fac + 60000;
+  }
+  __restgprlr_25();
+  return;
+}
+
 
 // 82485DD0  G_FireGrenade  (game/g_missile.cpp:3566)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_FireGrenade(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                  int param_5,undefined8 param_6)
+
+{
+  float *pfVar1;
+  ulonglong uVar2;
+  int iVar6;
+  ulonglong uVar3;
+  uint uVar7;
+  ulonglong uVar4;
+  int iVar8;
+  int iVar9;
+  longlong lVar5;
+  undefined8 uVar10;
+  
+  uVar2 = ZEXT48(&stack0x00000000);
+  iVar6 = __savegprlr_18();
+  uVar3 = BG_HasUnderbarrelAmmo(param_4);
+  uVar7 = BG_GetAlternateWeapon(param_4,uVar3);
+  iVar9 = (&DAT_829d84a0)[uVar7 & 0xff];
+  if (iVar9 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xdf7,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  uVar4 = BG_ProjectileModel(param_4,uVar3);
+  iVar8 = G_Spawn();
+  Scr_SetString(iVar8 + 0x172,DAT_835a0bd8);
+  Scr_SetString(iVar8 + 0x174,DAT_835a0bd8);
+  *(int *)(iVar8 + 200) = (int)param_4;
+  *(uint *)(iVar8 + 0xcc) = (uint)uVar3 & 0xff;
+  G_InitGrenadeEntity(iVar6,iVar8);
+  if ((param_5 == 0) || (uVar10 = 1, *(char *)(iVar9 + 0x791) == '\0')) {
+    uVar10 = 0;
+  }
+  G_InitGrenadeMovement(iVar8,param_2,param_3,param_4,uVar10);
+  if ((iVar6 != 0) && (*(int *)(iVar6 + 0x158) != 0)) {
+    pfVar1 = (float *)param_3;
+    iVar9 = CalcMissileNoDrawTime
+                      ((double)SQRT(pfVar1[2] * pfVar1[2] +
+                                    *pfVar1 * *pfVar1 + pfVar1[1] * pfVar1[1]));
+    *(int *)(iVar8 + 0x54) = iVar9 + *(int *)(iVar8 + 0x54);
+  }
+  InitGrenadeTimer(iVar6,iVar8,param_4,uVar3,param_6);
+  if (*(short *)(iVar8 + 0x168) != 0) {
+    MyAssertHandler(0xffffffff82074cec,0xe09,0,0xffffffff82000f98,0xffffffff82075894);
+  }
+  if ((uVar4 & 0xffffffff) != 0) {
+    uVar10 = XModelGetName(uVar4);
+    G_SetModel(iVar8,uVar10);
+  }
+  G_DObjUpdate(iVar8,1);
+  if (iVar6 != 0) {
+    if ((uVar3 & 0xff) == 0) {
+      lVar5 = BG_GetWeaponNameComplete(param_4,0,uVar2 - 0x480,0x400);
+    }
+    else {
+      BG_GetWeaponNameComplete(param_4,0,uVar2 - 0x47c,0x3fc);
+      lVar5 = uVar2 - 0x480;
+    }
+    Scr_AddString(lVar5);
+    Scr_AddEntity(iVar8);
+    iVar9 = BG_ProjectileActivateDist(param_4,uVar3);
+    if (iVar9 != 0) {
+      Scr_Notify(iVar6,DAT_835a0be0,2);
+      __restgprlr_18(iVar8);
+      return;
+    }
+    Scr_Notify(iVar6,DAT_835a0bdc,2);
+  }
+  __restgprlr_18(iVar8);
+  return;
+}
+
 
 // 82486020  InitRocketTimer  (game/g_missile.cpp:3628)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void InitRocketTimer(undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  double dVar4;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xe30,0,0xffffffff82000f98,0xffffffff82066834);
+  }
+  if (((param_3 & 0xffffffff) == 0) || (fVar1 = *(float *)((int)param_3 + 0x10), fVar1 <= 0.0)) {
+    dVar4 = (double)BG_ProjectileLifeTime(param_2,param_4);
+    iVar3 = (int)(dVar4 * -1000.0);
+  }
+  else {
+    iVar3 = (int)(fVar1 * -1000.0);
+  }
+  iVar3 = DAT_83580fac - iVar3;
+  *(int *)(iVar2 + 0x198) = iVar3;
+  if (DAT_83580fac + 60000 < iVar3) {
+    *(int *)(iVar2 + 0x198) = DAT_83580fac + 60000;
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 82486100  G_FireRocket  (game/g_missile.cpp:3652)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_FireRocket(undefined8 param_1,undefined8 param_2,float *param_3,undefined8 param_4,
+                 float *param_5,ulonglong param_6,ulonglong param_7)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float *pfVar5;
+  int *piVar6;
+  undefined4 uVar7;
+  undefined4 *puVar8;
+  uint uVar9;
+  int iVar10;
+  int iVar11;
+  char cVar13;
+  int iVar12;
+  float *pfVar14;
+  undefined8 uVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double _X;
+  double dVar19;
+  int local_508 [2];
+  longlong local_500;
+  longlong local_4f8;
+  float local_4f0;
+  float local_4ec;
+  float local_4e8;
+  float local_4e0;
+  float local_4dc;
+  float local_4d8;
+  float local_4d0;
+  float local_4cc;
+  float local_4c8;
+  undefined1 auStack_4c4 [4];
+  undefined1 auStack_4c0 [1216];
+  
+  __savegprlr();
+  puVar8 = (undefined4 *)__savefpr_28();
+  if (puVar8 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82074cec,0xe4e,0,0xffffffff82000f98,0xffffffff8200114c);
+  }
+  uVar9 = BG_GetAlternateWeapon(param_2,0);
+  iVar12 = (&DAT_829d84a0)[uVar9 & 0xff];
+  if (iVar12 == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xe51,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  BG_GetProjectileSpeed(param_2,0,local_508,auStack_4c4);
+  pfVar5 = (float *)param_4;
+  fVar2 = pfVar5[1];
+  fVar3 = *pfVar5;
+  fVar4 = pfVar5[2];
+  dVar18 = 1.0;
+  dVar17 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar19 = dVar18;
+  if (-dVar17 < 0.0) {
+    dVar19 = dVar17;
+  }
+  fVar1 = (float)(1.0 / dVar19);
+  *pfVar5 = fVar3 * fVar1;
+  pfVar5[1] = fVar2 * fVar1;
+  pfVar5[2] = fVar4 * fVar1;
+  iVar10 = G_Spawn();
+  Scr_SetString(iVar10 + 0x172,DAT_835a0c18);
+  Scr_SetString(iVar10 + 0x174,DAT_835a0c18);
+  *(int *)(iVar10 + 200) = (int)param_2;
+  *(undefined4 *)(iVar10 + 0xcc) = 0;
+  *(undefined4 *)(iVar10 + 4) = 4;
+  *(undefined4 *)(iVar10 + 0x54) = DAT_83580fac;
+  if ((puVar8[0x56] != 0) && ((param_7 & 0xff) == 0)) {
+    iVar11 = CalcMissileNoDrawTime((double)(longlong)local_508[0]);
+    *(int *)(iVar10 + 0x54) = iVar11 + *(int *)(iVar10 + 0x54);
+  }
+  EntHandle__setEnt(iVar10 + 0x150,puVar8);
+  EntHandle__setEnt(iVar10 + 0x194,puVar8);
+  *(undefined1 *)(iVar10 + 0x16d) = 9;
+  *(undefined4 *)(iVar10 + 0x18c) = 0x2806091;
+  InitRocketTimer(iVar10,param_2,param_6,0);
+  dVar19 = 0.0;
+  *(undefined4 *)(iVar10 + 0x1b4) = 0;
+  cVar13 = Missile_IsGrenade(iVar10);
+  if (cVar13 != '\0') {
+    MyAssertHandler(0xffffffff82074cec,0xe6d,0,0xffffffff82000f98,0xffffffff820759c4);
+  }
+  piVar6 = (int *)param_6;
+  if (((param_6 & 0xffffffff) == 0) || (*(char *)(piVar6 + 5) == '\0')) {
+    if (*(int *)(iVar12 + 0x564) == 3) {
+      *(uint *)(iVar10 + 0x1c8) = *(uint *)(iVar10 + 0x1c8) & 0xfffffff1 | 10;
+      uVar15 = EntHandle__setEnt(iVar10 + 0x20c,0);
+      *(float *)(iVar10 + 0x1dc) = (float)dVar19;
+      *(float *)(iVar10 + 0x1e4) = (float)dVar19;
+      *(float *)(iVar10 + 0x1e0) = (float)dVar19;
+      *(float *)(iVar10 + 0x1e8) = *pfVar5 * 10000.0 + *param_3;
+      *(float *)(iVar10 + 0x1ec) = pfVar5[1] * 10000.0 + param_3[1];
+      *(float *)(iVar10 + 0x1f0) = pfVar5[2] * 10000.0 + param_3[2];
+    }
+    else {
+      *(uint *)(iVar10 + 0x1c8) = *(uint *)(iVar10 + 0x1c8) & 0xfffffff9;
+      uVar15 = EntHandle__setEnt(iVar10 + 0x20c,0);
+    }
+  }
+  else {
+    uVar9 = *(uint *)(iVar10 + 0x1c8);
+    *(uint *)(iVar10 + 0x1c8) = uVar9 | 2;
+    if (*piVar6 == 0) {
+      *(uint *)(iVar10 + 0x1c8) = uVar9 & 0xfffffffb | 2;
+      uVar15 = EntHandle__setEnt(iVar10 + 0x20c,0);
+      *(float *)(iVar10 + 0x1dc) = (float)dVar19;
+      *(float *)(iVar10 + 0x1e0) = (float)dVar19;
+      *(float *)(iVar10 + 0x1e4) = (float)dVar19;
+      *(int *)(iVar10 + 0x1e8) = piVar6[1];
+      *(int *)(iVar10 + 0x1ec) = piVar6[2];
+      *(int *)(iVar10 + 0x1f0) = piVar6[3];
+    }
+    else {
+      *(uint *)(iVar10 + 0x1c8) = uVar9 | 6;
+      uVar15 = EntHandle__setEnt(iVar10 + 0x20c,*piVar6);
+      *(int *)(iVar10 + 0x1dc) = piVar6[1];
+      *(int *)(iVar10 + 0x1e0) = piVar6[2];
+      *(int *)(iVar10 + 0x1e4) = piVar6[3];
+      iVar11 = *piVar6;
+      *(undefined4 *)(iVar10 + 0x1e8) = *(undefined4 *)(iVar11 + 0x138);
+      *(undefined4 *)(iVar10 + 0x1ec) = *(undefined4 *)(iVar11 + 0x13c);
+      *(undefined4 *)(iVar10 + 0x1f0) = *(undefined4 *)(iVar11 + 0x140);
+    }
+  }
+  if (*(int *)(iVar12 + 0x564) == 3) {
+    fVar2 = *pfVar5;
+    fVar3 = pfVar5[1];
+    fVar4 = pfVar5[2] + DAT_82969cbc;
+    dVar16 = (double)SQRT(fVar3 * fVar3 + fVar4 * fVar4 + fVar2 * fVar2);
+    dVar17 = dVar18;
+    if (-dVar16 < 0.0) {
+      dVar17 = dVar16;
+    }
+    fVar1 = (float)(dVar18 / dVar17);
+    *pfVar5 = fVar2 * fVar1;
+    pfVar5[1] = fVar3 * fVar1;
+    pfVar5[2] = fVar4 * fVar1;
+    uVar15 = AngleVectors(puVar8 + 0xf,0,&local_4d0,0);
+    local_4cc = local_4cc * DAT_82969cb8;
+    local_4c8 = local_4c8 * DAT_82969cb8;
+    *param_3 = local_4d0 * DAT_82969cb8 + *param_3;
+    param_3[1] = local_4cc + param_3[1];
+    param_3[2] = local_4c8 + param_3[2];
+  }
+  if (*(int *)(iVar12 + 0x564) == 2) {
+    *(undefined4 *)(iVar10 + 0x78) = *puVar8;
+  }
+  if (puVar8[0x56] == 0) {
+    *(undefined4 *)(iVar10 + 0x1c4) = 0;
+  }
+  else {
+    *(undefined4 *)(iVar10 + 0x1c4) = *(undefined4 *)(puVar8[0x56] + 0x33d4);
+  }
+  *(undefined4 *)(iVar10 + 0xc) = 2;
+  pfVar14 = (float *)(iVar10 + 0x24);
+  if ((double)*(float *)(iVar12 + 0x510) <= dVar19) {
+    fVar2 = (float)(longlong)local_508[0];
+    *(float *)(iVar10 + 0x24) = *pfVar5 * fVar2;
+    *(float *)(iVar10 + 0x28) = pfVar5[1] * fVar2;
+    *(float *)(iVar10 + 0x2c) = pfVar5[2] * fVar2;
+  }
+  else {
+    *(undefined4 *)(iVar10 + 0xc) = 1;
+    *(float *)(iVar10 + 0x24) = (float)dVar19;
+    *(float *)(iVar10 + 0x28) = (float)dVar19;
+    *(float *)(iVar10 + 0x2c) = (float)dVar19;
+  }
+  *(undefined4 *)(iVar10 + 0x10) = DAT_83580fac;
+  *(float *)(iVar10 + 0x18) = *param_3;
+  *(float *)(iVar10 + 0x1c) = param_3[1];
+  *(float *)(iVar10 + 0x20) = param_3[2];
+  fVar2 = *param_5 + *pfVar14;
+  *pfVar14 = fVar2;
+  *(float *)(iVar10 + 0x28) = param_5[1] + *(float *)(iVar10 + 0x28);
+  *(float *)(iVar10 + 0x2c) = param_5[2] + *(float *)(iVar10 + 0x2c);
+  if (((uint)fVar2 & 0x7f800000) != 0x7f800000) {
+    if ((*(uint *)(iVar10 + 0x28) & 0x7f800000) != 0x7f800000) {
+      if ((*(uint *)(iVar10 + 0x2c) & 0x7f800000) != 0x7f800000) goto LAB_8248662c;
+    }
+  }
+  MyAssertHandler(uVar15,(double)fVar2,0xffffffff82074cec,0xebf,0,0xffffffff82000f98,
+                  0xffffffff82075948);
+LAB_8248662c:
+  iVar11 = iVar10 + 0x144;
+  local_4f8 = (longlong)(int)*pfVar14;
+  local_500 = (longlong)(int)*(float *)(iVar10 + 0x2c);
+  *(float *)(iVar10 + 0x28) = (float)(longlong)(int)*(float *)(iVar10 + 0x28);
+  *pfVar14 = (float)local_4f8;
+  *(float *)(iVar10 + 0x2c) = (float)local_500;
+  *(float *)(iVar10 + 0x138) = *param_3;
+  *(float *)(iVar10 + 0x13c) = param_3[1];
+  *(float *)(iVar10 + 0x140) = param_3[2];
+  vectoangles(param_4,iVar11);
+  G_SetAngle(iVar10,iVar11);
+  if (dVar19 < (double)*(float *)(iVar12 + 0x514)) {
+    *(undefined4 *)(iVar10 + 0xc) = 1;
+    AngleVectors(iVar11,0,&local_4f0,&local_4e0);
+    dVar17 = (double)G_random();
+    dVar18 = (double)(float)(dVar17 * 360.0);
+    dVar17 = (double)G_random();
+    dVar16 = (double)(float)(dVar17 * (double)*(float *)(iVar12 + 0x514));
+    _X = (double)(float)(dVar18 * 0.01745329238474369);
+    dVar17 = sin(_X);
+    dVar18 = (double)(float)dVar17;
+    dVar17 = cos(_X);
+    dVar18 = (double)(float)(dVar18 * dVar16);
+    fVar2 = (float)((double)(float)dVar17 * dVar16);
+    dVar17 = (double)(local_4f0 * fVar2);
+    *(float *)(iVar10 + 0x1d0) = local_4f0 * fVar2;
+    *(float *)(iVar10 + 0x1d4) = local_4ec * fVar2;
+    *(float *)(iVar10 + 0x1d8) = local_4e8 * fVar2;
+    fVar2 = (float)((double)local_4e0 * dVar18 + dVar17);
+    *(float *)(iVar10 + 0x1d0) = fVar2;
+    fVar3 = (float)((double)local_4dc * dVar18 + (double)*(float *)(iVar10 + 0x1d4));
+    *(float *)(iVar10 + 0x1d4) = fVar3;
+    fVar4 = (float)((double)local_4d8 * dVar18 + (double)*(float *)(iVar10 + 0x1d8));
+    *(float *)(iVar10 + 0x1d8) = fVar4;
+    if (((((uint)fVar2 & 0x7f800000) == 0x7f800000) || (((uint)fVar3 & 0x7f800000) == 0x7f800000))
+       || (((uint)fVar4 & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler((double)local_4dc,(double)fVar2,dVar17,0xffffffff82074cec,0xeda,0,
+                      0xffffffff82000f98,0xffffffff820758a8);
+    }
+  }
+  if (*(int *)(iVar12 + 0x564) != 0) {
+    *(undefined4 *)(iVar10 + 0x14) = 0;
+    *(undefined4 *)(iVar10 + 0x30) = 1;
+    *(undefined4 *)(iVar10 + 0xc) = 1;
+    if (*(int *)(iVar12 + 0x564) == 3) {
+      *(undefined4 *)(iVar10 + 0xc) = 5;
+      uVar7 = DAT_83580fac;
+      *(undefined4 *)(iVar10 + 0x200) = 0;
+      *(undefined4 *)(iVar10 + 0x10) = uVar7;
+      if (((param_6 & 0xffffffff) == 0) || (*(char *)((int)piVar6 + 0x15) == '\0')) {
+        *(undefined4 *)(iVar10 + 0x58) = 1;
+      }
+      else {
+        *(undefined4 *)(iVar10 + 0x58) = 0;
+      }
+    }
+  }
+  if (local_508[0] == 0) {
+    MyAssertHandler(0xffffffff82074cec,0xef6,0,0xffffffff82000f98,0xffffffff8200f48c);
+  }
+  iVar12 = BG_DestabilizeDistance(param_2,0);
+  local_4f8 = (longlong)iVar12;
+  local_500 = (longlong)local_508[0];
+  *(float *)(iVar10 + 0x1ac) = (float)((double)local_4f8 / (double)local_500) * 1000.0;
+  dVar17 = (double)BG_DestabilizationRateTime(param_2,0);
+  if (dVar17 == dVar19) {
+    *(uint *)(iVar10 + 0x184) = *(uint *)(iVar10 + 0x184) | 0x20000;
+  }
+  else {
+    *(uint *)(iVar10 + 0x184) = puVar8[0x61] & 0x20000 | *(uint *)(iVar10 + 0x184);
+  }
+  SV_LinkEntity(iVar10);
+  BG_GetWeaponName(param_2,auStack_4c0,0x400);
+  Scr_AddString();
+  Scr_AddEntity(iVar10);
+  Scr_Notify(puVar8,DAT_835a0be0,2);
+  *(undefined4 *)(iVar10 + 500) = *(undefined4 *)(iVar10 + 0x138);
+  *(undefined4 *)(iVar10 + 0x1f8) = *(undefined4 *)(iVar10 + 0x13c);
+  *(undefined4 *)(iVar10 + 0x1fc) = *(undefined4 *)(iVar10 + 0x140);
+  __restfpr_28(iVar10);
+  __restgprlr();
+  return;
+}
+

@@ -2,162 +2,116 @@
 
 // 82362480  Lobby_GetPartyData  (client_mp/lobbycommon.cpp:28)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-PartyData * Lobby_GetPartyData(void)
+undefined8 Lobby_GetPartyData(void)
 
 {
-  return &g_lobbyData.party;
+  return 0xffffffff82b4c2d0;
 }
 
 
 // 82362490  Lobby_Init  (client_mp/lobbycommon.cpp:34)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void Lobby_Init(void)
 
 {
-  memset();
-  g_lobbyData.party.session = &g_serverSession;
-  g_lobbyData.party.searchSession = &g_searchSession;
-  g_lobbyData.party.partyId = GAME_LOBBY_ID;
-  g_lobbyData.party.partyList = g_lobbyList;
-  g_lobbyData.party.partyListSize = 0x32;
-  PartyHost_InitSearchPass(&g_lobbyData.party);
-  track_static_alloc_internal(&g_lobbyData,0x3e40,"g_lobbyData",9);
+  memset(&DAT_82b4c2d0,0,0x3e40);
+  DAT_82b4c2d0 = &DAT_844c7860;
+  DAT_82b4c2d4 = &DAT_844c7e88;
+  DAT_82b4e184 = 0;
+  DAT_82b4c320 = &DAT_82b4a6b0;
+  DAT_82b4c324 = 0x32;
+  PartyHost_InitSearchPass(0xffffffff82b4c2d0);
+  track_static_alloc_internal(0xffffffff82b4c2d0,0x3e40,0xffffffff8203b15c,9);
   return;
 }
 
 
 // 82362528  Lobby_IsInLobby  (client_mp/lobbycommon.cpp:54)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 bool Lobby_IsInLobby(void)
 
 {
-  return (bool)('\x01' - (g_lobbyData.party.inParty == 0));
+  return DAT_82b4e1c4 != 0;
 }
 
 
 // 82362540  Lobby_IsInRunningLobby  (client_mp/lobbycommon.cpp:60)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool Lobby_IsInRunningLobby(void)
+undefined8 Lobby_IsInRunningLobby(void)
 
 {
   int iVar1;
   
-  if ((g_lobbyData.party.inParty != 0) && (iVar1 = Party_IsRunning(&g_lobbyData.party), iVar1 != 0))
-  {
-    return true;
+  if ((DAT_82b4e1c4 != 0) && (iVar1 = Party_IsRunning(), iVar1 != 0)) {
+    return 1;
   }
-  return false;
+  return 0;
 }
 
 
 // 82362588  Lobby_AreWeHost  (client_mp/lobbycommon.cpp:66)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 bool Lobby_AreWeHost(void)
 
 {
-  return (bool)('\x01' - (g_lobbyData.party.areWeHost == 0));
+  return DAT_82b4e1bc != 0;
 }
 
 
 // 823625A0  Lobby_GetMember  (client_mp/lobbycommon.cpp:72)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-PartyMember * Lobby_GetMember(uint param_1)
+longlong Lobby_GetMember(ulonglong param_1)
 
 {
-  if (0x11 < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\lobbycommon.cpp",
-                    0x49,0,"memberIndex doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
+  if (0x11 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8203b168,0x49,0,0xffffffff8203b1ac,param_1,0x12);
   }
-  return g_lobbyData.party.partyMembers + param_1;
+  return param_1 * 0x150 + -0x7d4b3cd8;
 }
 
 
 // 82362608  Lobby_GetSession  (client_mp/lobbycommon.cpp:79)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-SessionData * Lobby_GetSession(void)
+undefined4 Lobby_GetSession(void)
 
 {
-  return g_lobbyData.party.session;
+  return DAT_82b4c2d0;
 }
 
 
 // 82362618  Lobby_GetSearchSession  (client_mp/lobbycommon.cpp:85)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-SessionData * Lobby_GetSearchSession(void)
+undefined4 Lobby_GetSearchSession(void)
 
 {
-  return g_lobbyData.party.searchSession;
+  return DAT_82b4c2d4;
 }
 
 
 // 82362628  Lobby_GetHostData  (client_mp/lobbycommon.cpp:91)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-PartyHostData * Lobby_GetHostData(void)
+void Lobby_GetHostData(void)
 
 {
-  PartyHostData *pPVar1;
-  
   __savegprlr_29();
-  if (g_lobbyData.party.inParty == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\lobbycommon.cpp",
-                    0x5c,0,"%s");
+  if (DAT_82b4e1c4 == 0) {
+    MyAssertHandler(0xffffffff8203b168,0x5c,0,0xffffffff82000f98,0xffffffff82032564);
   }
-  if (g_lobbyData.party.areWeHost == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\lobbycommon.cpp",
-                    0x5d,0,"%s");
+  if (DAT_82b4e1bc == 0) {
+    MyAssertHandler(0xffffffff8203b168,0x5d,0,0xffffffff82000f98,0xffffffff8203b1ec);
   }
-  pPVar1 = (PartyHostData *)__restgprlr_29(0xffffffff82b4e160);
-  return pPVar1;
+  __restgprlr_29(0xffffffff82b4e160);
+  return;
 }
 
 
 // 823626A8  Lobby_IsLoadingServer  (client_mp/lobbycommon.cpp:99)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Lobby_IsLoadingServer(void)
+ulonglong Lobby_IsLoadingServer(void)
 
 {
-  if ((g_lobbyData.party.inParty != 0) && (g_lobbyData.party.areWeHost != 0)) {
-    return (-g_lobbyData.party.specificData.hostData.preloadingMapStage &
-           ~g_lobbyData.party.specificData.hostData.preloadingMapStage) >> 0x1f;
+  if ((DAT_82b4e1c4 != 0) && (DAT_82b4e1bc != 0)) {
+    return (-(ulonglong)DAT_82b4e170 & ~(ulonglong)DAT_82b4e170 & 0xffffffff) >> 0x1f;
   }
   return 0;
 }

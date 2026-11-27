@@ -525,7 +525,46 @@ LAB_82513964:
   82513998  398C39A8             addi r12,r12,0x39a8
   8251399C  7C0C002E             lwzx r0,r12,r0
   825139A0  7C0903A6             mtspr CTR,r0
+switchD:
   825139A4  4E800420             bctr
+caseD_1:
+  825139DC  80E30000             lwz r7,0x0(r3)
+  825139E0  81030090             lwz r8,0x90(r3)
+  825139E4  7F074000             cmpw cr6,r7,r8
+  825139E8  4D9A0020             beqlr cr6
+  825139EC  3D60820A             lis r11,-0x7df6
+  825139F0  3D40820A             lis r10,-0x7df6
+  825139F4  38CB96B0             subi r6,r11,0x6950
+  825139F8  386A9550             subi r3,r10,0x6ab0
+  825139FC  38A00000             li r5,0x0
+  82513A00  38800137             li r4,0x137
+  82513A04  480C0AFC             b 0x825d4500
+caseD_3:
+  82513A08  88E300CB             lbz r7,0xcb(r3)
+  82513A0C  2B070001             cmplwi cr6,r7,0x1
+  82513A10  4198000C             blt cr6,0x82513a1c
+  82513A14  2B0700EF             cmplwi cr6,r7,0xef
+  82513A18  4C990020             blelr cr6
+LAB_82513a1c:
+  82513A1C  3D60820A             lis r11,-0x7df6
+  82513A20  3D40820A             lis r10,-0x7df6
+  82513A24  38CB9670             subi r6,r11,0x6990
+  82513A28  386A9550             subi r3,r10,0x6ab0
+  82513A2C  392000EF             li r9,0xef
+  82513A30  39000001             li r8,0x1
+  82513A34  38A00000             li r5,0x0
+  82513A38  3880013F             li r4,0x13f
+  82513A3C  480C0AC4             b 0x825d4500
+caseD_6:
+  82513A40  3D6000FF             lis r11,0xff
+  82513A44  8143009C             lwz r10,0x9c(r3)
+  82513A48  6169FFFF             ori r9,r11,0xffff
+  82513A4C  7F0A4800             cmpw cr6,r10,r9
+  82513A50  4C9A0020             bnelr cr6
+  82513A54  8063008C             lwz r3,0x8c(r3)
+  82513A58  48258F50             b 0x8276c9a8
+caseD_2:
+  82513A5C  4E800020             blr
 
 ; 82513A60  SV_CheckOriginIsInPlayableBounds  (qcommon/sv_msg_write_mp.cpp:343)
   82513A60  7D8802A6             mfspr r12,LR
@@ -4037,8 +4076,53 @@ LAB_82516c48:
   82516C74  398C6C84             addi r12,r12,0x6c84
   82516C78  7C0C002E             lwzx r0,r12,r0
   82516C7C  7C0903A6             mtspr CTR,r0
+switchD:
   82516C80  4E800420             bctr
-LAB_82516d4c:
+caseD_ffffffb9:
+  82516CB8  A16300E2             lhz r11,0xe2(r3)
+  82516CBC  2B0B0000             cmplwi cr6,r11,0x0
+  82516CC0  409A001C             bne cr6,0x82516cdc
+  82516CC4  8063000C             lwz r3,0xc(r3)
+  82516CC8  4BFFFED1             bl 0x82516b98
+  82516CCC  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82516CD0  2B0B0000             cmplwi cr6,r11,0x0
+  82516CD4  39600001             li r11,0x1
+  82516CD8  419A0008             beq cr6,0x82516ce0
+LAB_82516cdc:
+  82516CDC  39600000             li r11,0x0
+LAB_82516ce0:
+  82516CE0  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  82516CE4  38210060             addi r1,r1,0x60
+  82516CE8  8181FFF8             lwz r12,-0x8(r1)
+  82516CEC  7D8803A6             mtspr LR,r12
+  82516CF0  4E800020             blr
+caseD_ffffffb7:
+  82516CF4  A16300E2             lhz r11,0xe2(r3)
+  82516CF8  2B0B0000             cmplwi cr6,r11,0x0
+  82516CFC  409A001C             bne cr6,0x82516d18
+  82516D00  80630030             lwz r3,0x30(r3)
+  82516D04  4BFFFE95             bl 0x82516b98
+  82516D08  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82516D0C  2B0B0000             cmplwi cr6,r11,0x0
+  82516D10  39600001             li r11,0x1
+  82516D14  419A0008             beq cr6,0x82516d1c
+LAB_82516d18:
+  82516D18  39600000             li r11,0x0
+LAB_82516d1c:
+  82516D1C  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  82516D20  38210060             addi r1,r1,0x60
+  82516D24  8181FFF8             lwz r12,-0x8(r1)
+  82516D28  7D8803A6             mtspr LR,r12
+  82516D2C  4E800020             blr
+caseD_ffffffad:
+  82516D30  A16300E2             lhz r11,0xe2(r3)
+  82516D34  314BFFFF             subic r10,r11,0x1
+  82516D38  7C6A5910             subfe r3,r10,r11
+  82516D3C  38210060             addi r1,r1,0x60
+  82516D40  8181FFF8             lwz r12,-0x8(r1)
+  82516D44  7D8803A6             mtspr LR,r12
+  82516D48  4E800020             blr
+caseD_ffffffb0:
   82516D4C  38600000             li r3,0x0
   82516D50  38210060             addi r1,r1,0x60
   82516D54  8181FFF8             lwz r12,-0x8(r1)

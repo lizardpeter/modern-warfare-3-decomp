@@ -2,35 +2,29 @@
 
 // 8261CAD0  DObjGetRotTransArray  (xanim/dobj_utils.cpp:30)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-DObjAnimMat * DObjGetRotTransArray(DObj *param_1)
+undefined4 DObjGetRotTransArray(int param_1)
 
 {
-  if (param_1 == (DObj *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x1f,0,
-                    "%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82185964,0x1f,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  return (param_1->skel).mat;
+  return *(undefined4 *)(param_1 + 0x78);
 }
 
 
 // 8261CA60  Sys_WaitInterlockedCompareExchange  (qcommon/threads_interlock.h:35)
 
-void Sys_WaitInterlockedCompareExchange(long *param_1,int param_2,int param_3)
+void Sys_WaitInterlockedCompareExchange(undefined8 param_1,undefined8 param_2,uint param_3)
 
 {
   uint uVar1;
   uint uVar2;
   undefined8 uVar3;
   uint *puVar4;
-  longlong lVar5;
   char in_RESERVE;
   byte in_cr0;
   
-  lVar5 = (longlong)param_2;
-  uVar3 = __savegprlr_29(param_1);
+  uVar3 = __savegprlr_29();
   do {
     puVar4 = (uint *)uVar3;
     if (*puVar4 == param_3) {
@@ -45,7 +39,7 @@ void Sys_WaitInterlockedCompareExchange(long *param_1,int param_2,int param_3)
           break;
         }
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed(lVar5,0,uVar3);
+          uVar2 = storeWordConditionalIndexed(param_2,0,uVar3);
           *puVar4 = uVar2;
           in_cr0 = 2;
         }
@@ -62,76 +56,61 @@ void Sys_WaitInterlockedCompareExchange(long *param_1,int param_2,int param_3)
 
 // 8261CB28  DObjGetNumModels  (xanim/dobj_utils.cpp:43)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjGetNumModels(DObj *param_1)
+undefined1 DObjGetNumModels(int param_1)
 
 {
-  if (param_1 == (DObj *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x2c,0,
-                    "%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82185964,0x2c,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  return (int)param_1->numModels;
+  return *(undefined1 *)(param_1 + 9);
 }
 
 
 // 8261CB80  DObjGetNumBones  (xanim/dobj_utils.cpp:55)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjGetNumBones(DObj *param_1)
+undefined1 DObjGetNumBones(int param_1)
 
 {
-  if (param_1 == (DObj *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x38,0,
-                    "%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82185964,0x38,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  return (int)param_1->numBones;
+  return *(undefined1 *)(param_1 + 10);
 }
 
 
 // 8261CBD8  DObjGetSurfaces  (xanim/dobj_utils.cpp:67)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjGetSurfaces(DObj *param_1,int *param_2,char *param_3)
+void DObjGetSurfaces(undefined8 param_1,uint *param_2,char *param_3)
 
 {
   byte bVar1;
-  char cVar2;
-  XModel *pXVar3;
+  uint uVar2;
+  uint uVar3;
   uint uVar4;
   uint uVar5;
   uint uVar6;
   uint uVar7;
-  uint uVar8;
+  int iVar8;
   uint uVar9;
-  uint uVar10;
-  int iVar11;
-  uint uVar12;
-  int iVar13;
-  uint uVar14;
-  XModel **ppXVar15;
-  uint uVar16;
-  int iVar17;
+  int iVar10;
+  uint uVar11;
+  int iVar12;
+  uint uVar13;
+  int *piVar14;
+  ulonglong uVar15;
   uint local_bc [47];
   
-  __savegprlr();
-  bVar1 = param_1->numModels;
+  iVar8 = __savegprlr();
+  bVar1 = *(byte *)(iVar8 + 9);
   if (bVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x55,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x55,0,0xffffffff82000f98,0xffffffff82184cd0);
   }
-  ppXVar15 = param_1->models;
-  pXVar3 = *ppXVar15;
-  uVar12 = XModelNumBones(pXVar3);
-  cVar2 = *param_3;
-  if (cVar2 < '\0') {
+  piVar14 = *(int **)(iVar8 + 0x98);
+  iVar8 = *piVar14;
+  uVar9 = XModelNumBones(iVar8);
+  if (*param_3 < '\0') {
     *param_2 = 0;
-    uVar16 = 0;
+    uVar15 = 0;
     param_2[1] = 0;
     param_2[2] = 0;
     param_2[3] = 0;
@@ -139,103 +118,100 @@ int DObjGetSurfaces(DObj *param_1,int *param_2,char *param_3)
     param_2[5] = 0;
   }
   else {
-    uVar16 = (uint)pXVar3->lodInfo[cVar2].numsurfs;
-    *param_2 = pXVar3->lodInfo[cVar2].partBits[0];
-    param_2[1] = pXVar3->lodInfo[cVar2].partBits[1];
-    param_2[2] = pXVar3->lodInfo[cVar2].partBits[2];
-    param_2[3] = pXVar3->lodInfo[cVar2].partBits[3];
-    param_2[4] = pXVar3->lodInfo[cVar2].partBits[4];
-    param_2[5] = pXVar3->lodInfo[cVar2].partBits[5];
+    iVar8 = *param_3 * 0x28 + iVar8;
+    uVar15 = (ulonglong)*(ushort *)(iVar8 + 0x44);
+    *param_2 = *(uint *)(iVar8 + 0x4c);
+    param_2[1] = *(uint *)(iVar8 + 0x50);
+    param_2[2] = *(uint *)(iVar8 + 0x54);
+    param_2[3] = *(uint *)(iVar8 + 0x58);
+    param_2[4] = *(uint *)(iVar8 + 0x5c);
+    param_2[5] = *(uint *)(iVar8 + 0x60);
   }
-  iVar17 = 1;
+  iVar8 = 1;
   if (1 < bVar1) {
     do {
-      ppXVar15 = ppXVar15 + 1;
-      pXVar3 = *ppXVar15;
-      iVar13 = XModelNumBones(pXVar3);
-      cVar2 = param_3[iVar17];
-      if (-1 < cVar2) {
-        uVar10 = uVar12 & 0x1f;
-        local_bc[0] = pXVar3->lodInfo[cVar2].partBits[0];
-        uVar16 = pXVar3->lodInfo[cVar2].numsurfs + uVar16;
-        local_bc[1] = pXVar3->lodInfo[cVar2].partBits[1];
-        local_bc[2] = pXVar3->lodInfo[cVar2].partBits[2];
-        local_bc[3] = pXVar3->lodInfo[cVar2].partBits[3];
-        local_bc[4] = pXVar3->lodInfo[cVar2].partBits[4];
-        local_bc[5] = pXVar3->lodInfo[cVar2].partBits[5];
-        if (uVar10 == 0) {
-          iVar11 = (int)((-(longlong)((int)uVar12 >> 5) & 0x3fffffffU) << 2);
-          uVar10 = *(uint *)((int)local_bc + iVar11 + 4);
-          uVar4 = *(uint *)((int)local_bc + iVar11 + 8);
-          uVar5 = *(uint *)((int)local_bc + iVar11 + 0xc);
-          uVar6 = *(uint *)((int)local_bc + iVar11 + 0x10);
-          uVar7 = *(uint *)((int)local_bc + iVar11 + 0x14);
-          *param_2 = *(uint *)((int)local_bc + iVar11) | *param_2;
-          param_2[1] = uVar10 | param_2[1];
-          param_2[2] = uVar4 | param_2[2];
-          param_2[3] = uVar5 | param_2[3];
-          param_2[4] = uVar6 | param_2[4];
-          param_2[5] = uVar7 | param_2[5];
+      piVar14 = piVar14 + 1;
+      iVar12 = *piVar14;
+      iVar10 = XModelNumBones(iVar12);
+      if (-1 < param_3[iVar8]) {
+        uVar11 = uVar9 & 0x1f;
+        iVar12 = param_3[iVar8] * 0x28 + iVar12;
+        local_bc[0] = *(uint *)(iVar12 + 0x4c);
+        uVar15 = *(ushort *)(iVar12 + 0x44) + uVar15;
+        local_bc[1] = *(undefined4 *)(iVar12 + 0x50);
+        local_bc[2] = *(undefined4 *)(iVar12 + 0x54);
+        local_bc[3] = *(undefined4 *)(iVar12 + 0x58);
+        local_bc[4] = *(undefined4 *)(iVar12 + 0x5c);
+        local_bc[5] = *(undefined4 *)(iVar12 + 0x60);
+        if ((uVar9 & 0x1f) == 0) {
+          iVar12 = (int)((-(longlong)((int)uVar9 >> 5) & 0x3fffffffU) << 2);
+          uVar11 = *(uint *)((int)local_bc + iVar12 + 4);
+          uVar2 = *(uint *)((int)local_bc + iVar12 + 8);
+          uVar3 = *(uint *)((int)local_bc + iVar12 + 0xc);
+          uVar4 = *(uint *)((int)local_bc + iVar12 + 0x10);
+          uVar5 = *(uint *)((int)local_bc + iVar12 + 0x14);
+          *param_2 = *(uint *)((int)local_bc + iVar12) | *param_2;
+          param_2[1] = uVar11 | param_2[1];
+          param_2[2] = uVar2 | param_2[2];
+          param_2[3] = uVar3 | param_2[3];
+          param_2[4] = uVar4 | param_2[4];
+          param_2[5] = uVar5 | param_2[5];
         }
         else {
-          iVar11 = (int)((-(longlong)((int)uVar12 >> 5) & 0x3fffffffU) << 2);
-          uVar4 = *(uint *)((int)local_bc + iVar11);
-          uVar5 = *(uint *)((int)local_bc + iVar11 + 4);
-          uVar14 = 0x20 - uVar10;
-          uVar6 = *(uint *)((int)local_bc + iVar11 + 8);
-          uVar7 = *(uint *)((int)local_bc + iVar11 + 0xc);
-          uVar8 = *(uint *)((int)local_bc + iVar11 + 0x10);
-          uVar9 = *(uint *)((int)local_bc + iVar11 + 0x14);
-          param_2[2] = uVar6 >> uVar10 | uVar5 << (uVar14 & 0x3f) | param_2[2];
-          param_2[1] = uVar5 >> uVar10 | uVar4 << (uVar14 & 0x3f) | param_2[1];
-          param_2[3] = uVar7 >> uVar10 | uVar6 << (uVar14 & 0x3f) | param_2[3];
-          *param_2 = uVar4 >> uVar10 | *param_2;
-          param_2[4] = uVar8 >> uVar10 | uVar7 << (uVar14 & 0x3f) | param_2[4];
-          param_2[5] = uVar9 >> uVar10 | uVar8 << (uVar14 & 0x3f) | param_2[5];
+          iVar12 = (int)((-(longlong)((int)uVar9 >> 5) & 0x3fffffffU) << 2);
+          uVar2 = *(uint *)((int)local_bc + iVar12);
+          uVar3 = *(uint *)((int)local_bc + iVar12 + 4);
+          uVar13 = 0x20 - uVar11;
+          uVar4 = *(uint *)((int)local_bc + iVar12 + 8);
+          uVar5 = *(uint *)((int)local_bc + iVar12 + 0xc);
+          uVar6 = *(uint *)((int)local_bc + iVar12 + 0x10);
+          uVar7 = *(uint *)((int)local_bc + iVar12 + 0x14);
+          param_2[2] = uVar4 >> uVar11 | uVar3 << (uVar13 & 0x3f) | param_2[2];
+          param_2[1] = uVar3 >> uVar11 | uVar2 << (uVar13 & 0x3f) | param_2[1];
+          param_2[3] = uVar5 >> uVar11 | uVar4 << (uVar13 & 0x3f) | param_2[3];
+          *param_2 = uVar2 >> uVar11 | *param_2;
+          param_2[4] = uVar6 >> uVar11 | uVar5 << (uVar13 & 0x3f) | param_2[4];
+          param_2[5] = uVar7 >> uVar11 | uVar6 << (uVar13 & 0x3f) | param_2[5];
         }
       }
-      iVar17 = iVar17 + 1;
-      uVar12 = uVar12 + iVar13;
-    } while (iVar17 < (int)(uint)bVar1);
+      iVar8 = iVar8 + 1;
+      uVar9 = uVar9 + iVar10;
+    } while (iVar8 < (int)(uint)bVar1);
   }
-  __restgprlr();
-  return uVar16;
+  __restgprlr(uVar15);
+  return;
 }
 
 
 // 8261CEA8  DObjGetSurfacesWithCollision  (xanim/dobj_utils.cpp:179)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjGetSurfacesWithCollision(DObj *param_1,int *param_2,char *param_3)
+void DObjGetSurfacesWithCollision(undefined8 param_1,uint *param_2)
 
 {
   byte bVar1;
-  char cVar2;
-  XModel *pXVar3;
+  uint uVar2;
+  uint uVar3;
   uint uVar4;
   uint uVar5;
   uint uVar6;
   uint uVar7;
-  uint uVar8;
-  uint uVar9;
+  int iVar9;
+  undefined8 uVar8;
   uint uVar10;
   int iVar11;
-  DObj *pDVar12;
-  int iVar13;
-  uint uVar14;
-  int iVar15;
-  int iVar16;
-  XModel **ppXVar17;
-  uint uVar18;
+  undefined8 uVar12;
+  uint uVar13;
+  int iVar14;
+  uint uVar15;
+  int *piVar16;
+  uint uVar17;
+  undefined8 uVar18;
   uint uVar19;
   uint uVar20;
   uint uVar21;
   uint uVar22;
-  uint uVar23;
-  ulonglong uVar24;
-  uint uVar25;
+  ulonglong uVar23;
+  uint uVar24;
   char local_e0 [32];
   undefined4 local_c0;
   undefined4 local_bc;
@@ -244,247 +220,227 @@ int DObjGetSurfacesWithCollision(DObj *param_1,int *param_2,char *param_3)
   undefined4 local_b0;
   uint local_ac [43];
   
-  pDVar12 = (DObj *)__savegprlr_15(param_1);
-  iVar13 = DObjGetSurfaces(pDVar12,param_2,param_3);
-  bVar1 = pDVar12->numModels;
-  uVar24 = (ulonglong)bVar1;
+  iVar9 = __savegprlr_15();
+  uVar8 = DObjGetSurfaces();
+  bVar1 = *(byte *)(iVar9 + 9);
+  uVar23 = (ulonglong)bVar1;
+  uVar18 = 0xffffffff82184cd0;
   if (bVar1 == 0) {
-    iVar16 = 0xbe;
+    uVar12 = 0xbe;
   }
   else {
     if (bVar1 < 0x21) goto LAB_8261cf18;
-    iVar16 = 0xbf;
+    uVar12 = 0xbf;
+    uVar18 = 0xffffffff821859a4;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",iVar16,0,
-                  "%s");
+  MyAssertHandler(0xffffffff82185964,uVar12,0,0xffffffff82000f98,uVar18);
 LAB_8261cf18:
-  iVar16 = 0;
+  iVar14 = 0;
   if (bVar1 != 0) {
-    ppXVar17 = pDVar12->models + -1;
+    piVar16 = (int *)(*(int *)(iVar9 + 0x98) + -4);
     do {
-      ppXVar17 = ppXVar17 + 1;
-      local_e0[iVar16] = (*ppXVar17)->collLod;
-      iVar16 = iVar16 + 1;
-      uVar24 = uVar24 - 1;
-    } while (uVar24 != 0);
+      piVar16 = piVar16 + 1;
+      local_e0[iVar14] = *(char *)(*piVar16 + 0xe2);
+      iVar14 = iVar14 + 1;
+      uVar23 = uVar23 - 1;
+    } while (uVar23 != 0);
   }
-  bVar1 = pDVar12->numModels;
+  bVar1 = *(byte *)(iVar9 + 9);
   if (bVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x55,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x55,0,0xffffffff82000f98,0xffffffff82184cd0);
   }
-  ppXVar17 = pDVar12->models;
-  pXVar3 = *ppXVar17;
-  uVar14 = XModelNumBones(pXVar3);
+  piVar16 = *(int **)(iVar9 + 0x98);
+  iVar9 = *piVar16;
+  uVar10 = XModelNumBones(iVar9);
   if (local_e0[0] < '\0') {
-    uVar25 = 0;
-    uVar23 = 0;
+    uVar24 = 0;
     uVar22 = 0;
     uVar21 = 0;
     uVar20 = 0;
     uVar19 = 0;
+    uVar17 = 0;
   }
   else {
-    uVar25 = pXVar3->lodInfo[local_e0[0]].partBits[0];
-    uVar23 = pXVar3->lodInfo[local_e0[0]].partBits[1];
-    uVar22 = pXVar3->lodInfo[local_e0[0]].partBits[2];
-    uVar21 = pXVar3->lodInfo[local_e0[0]].partBits[3];
-    uVar20 = pXVar3->lodInfo[local_e0[0]].partBits[4];
-    uVar19 = pXVar3->lodInfo[local_e0[0]].partBits[5];
+    iVar9 = local_e0[0] * 0x28 + iVar9;
+    uVar24 = *(uint *)(iVar9 + 0x4c);
+    uVar22 = *(uint *)(iVar9 + 0x50);
+    uVar21 = *(uint *)(iVar9 + 0x54);
+    uVar20 = *(uint *)(iVar9 + 0x58);
+    uVar19 = *(uint *)(iVar9 + 0x5c);
+    uVar17 = *(uint *)(iVar9 + 0x60);
   }
   local_c0 = 0;
   local_bc = 0;
-  iVar16 = 1;
+  iVar9 = 1;
   local_b8 = 0;
   local_b4 = 0;
   local_b0 = 0;
   if (1 < bVar1) {
     do {
-      ppXVar17 = ppXVar17 + 1;
-      pXVar3 = *ppXVar17;
-      iVar15 = XModelNumBones(pXVar3);
-      cVar2 = local_e0[iVar16];
-      if (-1 < cVar2) {
-        uVar9 = uVar14 & 0x1f;
-        local_ac[0] = pXVar3->lodInfo[cVar2].partBits[0];
-        local_ac[1] = pXVar3->lodInfo[cVar2].partBits[1];
-        local_ac[2] = pXVar3->lodInfo[cVar2].partBits[2];
-        local_ac[3] = pXVar3->lodInfo[cVar2].partBits[3];
-        local_ac[4] = pXVar3->lodInfo[cVar2].partBits[4];
-        local_ac[5] = pXVar3->lodInfo[cVar2].partBits[5];
-        if (uVar9 == 0) {
-          iVar11 = (int)((-(longlong)((int)uVar14 >> 5) & 0x3fffffffU) << 2);
-          uVar10 = *(uint *)((int)local_ac + iVar11);
-          uVar8 = *(uint *)((int)local_ac + iVar11 + 4);
-          uVar4 = *(uint *)((int)local_ac + iVar11 + 8);
-          uVar5 = *(uint *)((int)local_ac + iVar11 + 0xc);
-          uVar6 = *(uint *)((int)local_ac + iVar11 + 0x10);
-          uVar9 = *(uint *)((int)local_ac + iVar11 + 0x14);
+      piVar16 = piVar16 + 1;
+      iVar14 = *piVar16;
+      iVar11 = XModelNumBones(iVar14);
+      if (-1 < local_e0[iVar9]) {
+        uVar15 = uVar10 & 0x1f;
+        iVar14 = local_e0[iVar9] * 0x28 + iVar14;
+        local_ac[0] = *(uint *)(iVar14 + 0x4c);
+        local_ac[1] = *(undefined4 *)(iVar14 + 0x50);
+        local_ac[2] = *(undefined4 *)(iVar14 + 0x54);
+        local_ac[3] = *(undefined4 *)(iVar14 + 0x58);
+        local_ac[4] = *(undefined4 *)(iVar14 + 0x5c);
+        local_ac[5] = *(undefined4 *)(iVar14 + 0x60);
+        if ((uVar10 & 0x1f) == 0) {
+          iVar14 = (int)((-(longlong)((int)uVar10 >> 5) & 0x3fffffffU) << 2);
+          uVar7 = *(uint *)((int)local_ac + iVar14);
+          uVar6 = *(uint *)((int)local_ac + iVar14 + 4);
+          uVar2 = *(uint *)((int)local_ac + iVar14 + 8);
+          uVar3 = *(uint *)((int)local_ac + iVar14 + 0xc);
+          uVar4 = *(uint *)((int)local_ac + iVar14 + 0x10);
+          uVar15 = *(uint *)((int)local_ac + iVar14 + 0x14);
         }
         else {
-          iVar11 = (int)((-(longlong)((int)uVar14 >> 5) & 0x3fffffffU) << 2);
-          uVar4 = *(uint *)((int)local_ac + iVar11 + 4);
-          uVar18 = 0x20 - uVar9;
-          uVar5 = *(uint *)((int)local_ac + iVar11 + 8);
-          uVar10 = *(uint *)((int)local_ac + iVar11) >> uVar9;
-          uVar6 = *(uint *)((int)local_ac + iVar11 + 0xc);
-          uVar7 = *(uint *)((int)local_ac + iVar11 + 0x10);
-          uVar8 = uVar4 >> uVar9 | *(uint *)((int)local_ac + iVar11) << (uVar18 & 0x3f);
-          uVar4 = uVar5 >> uVar9 | uVar4 << (uVar18 & 0x3f);
-          uVar5 = uVar6 >> uVar9 | uVar5 << (uVar18 & 0x3f);
-          uVar6 = uVar7 >> uVar9 | uVar6 << (uVar18 & 0x3f);
-          uVar9 = *(uint *)((int)local_ac + iVar11 + 0x14) >> uVar9 | uVar7 << (uVar18 & 0x3f);
+          iVar14 = (int)((-(longlong)((int)uVar10 >> 5) & 0x3fffffffU) << 2);
+          uVar2 = *(uint *)((int)local_ac + iVar14 + 4);
+          uVar13 = 0x20 - uVar15;
+          uVar3 = *(uint *)((int)local_ac + iVar14 + 8);
+          uVar7 = *(uint *)((int)local_ac + iVar14) >> uVar15;
+          uVar4 = *(uint *)((int)local_ac + iVar14 + 0xc);
+          uVar5 = *(uint *)((int)local_ac + iVar14 + 0x10);
+          uVar6 = uVar2 >> uVar15 | *(uint *)((int)local_ac + iVar14) << (uVar13 & 0x3f);
+          uVar2 = uVar3 >> uVar15 | uVar2 << (uVar13 & 0x3f);
+          uVar3 = uVar4 >> uVar15 | uVar3 << (uVar13 & 0x3f);
+          uVar4 = uVar5 >> uVar15 | uVar4 << (uVar13 & 0x3f);
+          uVar15 = *(uint *)((int)local_ac + iVar14 + 0x14) >> uVar15 | uVar5 << (uVar13 & 0x3f);
         }
-        uVar25 = uVar10 | uVar25;
-        uVar23 = uVar8 | uVar23;
-        uVar19 = uVar9 | uVar19;
-        uVar20 = uVar6 | uVar20;
-        uVar21 = uVar5 | uVar21;
-        uVar22 = uVar4 | uVar22;
+        uVar24 = uVar7 | uVar24;
+        uVar22 = uVar6 | uVar22;
+        uVar17 = uVar15 | uVar17;
+        uVar19 = uVar4 | uVar19;
+        uVar20 = uVar3 | uVar20;
+        uVar21 = uVar2 | uVar21;
       }
-      iVar16 = iVar16 + 1;
-      uVar14 = uVar14 + iVar15;
-    } while (iVar16 < (int)(uint)bVar1);
+      iVar9 = iVar9 + 1;
+      uVar10 = uVar10 + iVar11;
+    } while (iVar9 < (int)(uint)bVar1);
   }
-  *param_2 = *param_2 | uVar25;
-  param_2[1] = param_2[1] | uVar23;
-  param_2[2] = param_2[2] | uVar22;
-  param_2[3] = param_2[3] | uVar21;
-  param_2[4] = param_2[4] | uVar20;
-  param_2[5] = param_2[5] | uVar19;
-  iVar13 = __restgprlr_15(iVar13);
-  return iVar13;
+  *param_2 = *param_2 | uVar24;
+  param_2[1] = param_2[1] | uVar22;
+  param_2[2] = param_2[2] | uVar21;
+  param_2[3] = param_2[3] | uVar20;
+  param_2[4] = param_2[4] | uVar19;
+  param_2[5] = param_2[5] | uVar17;
+  __restgprlr_15(uVar8);
+  return;
 }
 
 
 // 8261D1B0  DObjGetBoneInfo  (xanim/dobj_utils.cpp:218)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjGetBoneInfo(DObj *param_1,XBoneInfo **param_2)
+void DObjGetBoneInfo(int param_1,int param_2)
 
 {
   byte bVar1;
-  XModel *pXVar2;
+  int iVar2;
   int iVar3;
-  XModel **ppXVar4;
-  XBoneInfo **ppXVar5;
-  XBoneInfo *pXVar6;
+  int *piVar4;
+  int *piVar5;
+  int iVar6;
   ulonglong uVar7;
   int iVar8;
   
   iVar3 = 0;
-  ppXVar4 = param_1->models;
-  if (param_1->numModels == '\0') {
+  piVar4 = *(int **)(param_1 + 0x98);
+  if (*(char *)(param_1 + 9) == '\0') {
     return;
   }
-  ppXVar5 = param_2 + -1;
+  piVar5 = (int *)(param_2 + -4);
   do {
-    pXVar2 = *ppXVar4;
-    bVar1 = pXVar2->numBones;
+    iVar2 = *piVar4;
+    bVar1 = *(byte *)(iVar2 + 4);
     uVar7 = (ulonglong)bVar1;
     if (bVar1 != 0) {
       iVar8 = 0;
       do {
-        pXVar6 = (XBoneInfo *)((int)(pXVar2->boneInfo->bounds).midPoint + iVar8);
+        iVar6 = *(int *)(iVar2 + 0xf0) + iVar8;
         iVar8 = iVar8 + 0x1c;
-        ppXVar5 = ppXVar5 + 1;
-        *ppXVar5 = pXVar6;
+        piVar5 = piVar5 + 1;
+        *piVar5 = iVar6;
         uVar7 = uVar7 - 1;
       } while (uVar7 != 0);
     }
     iVar3 = iVar3 + 1;
-    ppXVar4 = ppXVar4 + 1;
-  } while (iVar3 < (int)(uint)param_1->numModels);
+    piVar4 = piVar4 + 1;
+  } while (iVar3 < (int)(uint)*(byte *)(param_1 + 9));
   return;
 }
 
 
 // 8261D210  DObjNumBones  (xanim/dobj_utils.cpp:238)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjNumBones(DObj *param_1)
+undefined1 DObjNumBones(int param_1)
 
 {
-  return (int)param_1->numBones;
+  return *(undefined1 *)(param_1 + 10);
 }
 
 
 // 8261D218  DObjGetSetBones  (xanim/dobj_utils.cpp:268)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjGetSetBones(DObj *param_1,int *param_2)
+void DObjGetSetBones(int param_1,undefined4 *param_2)
 
 {
-  if (param_1->locked == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x10e,0,
-                    "%s");
+  if (*(int *)(param_1 + 0x10) == 0) {
+    MyAssertHandler(0xffffffff82185964,0x10e,0,0xffffffff82000f98,0xffffffff82184d24);
   }
-  *param_2 = (param_1->skel).partBits.anim[0];
-  param_2[1] = (param_1->skel).partBits.anim[1];
-  param_2[2] = (param_1->skel).partBits.anim[2];
-  param_2[3] = (param_1->skel).partBits.anim[3];
-  param_2[4] = (param_1->skel).partBits.anim[4];
-  param_2[5] = (param_1->skel).partBits.anim[5];
+  *param_2 = *(undefined4 *)(param_1 + 0x14);
+  param_2[1] = *(undefined4 *)(param_1 + 0x18);
+  param_2[2] = *(undefined4 *)(param_1 + 0x1c);
+  param_2[3] = *(undefined4 *)(param_1 + 0x20);
+  param_2[4] = *(undefined4 *)(param_1 + 0x24);
+  param_2[5] = *(undefined4 *)(param_1 + 0x28);
   return;
 }
 
 
 // 8261D2B0  DObjIsBoneSet  (xanim/dobj_utils.cpp:289)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjIsBoneSet(DObj *param_1,int param_2)
+bool DObjIsBoneSet(int param_1,ulonglong param_2)
 
 {
-  if (0xbf < (uint)param_2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x125,0,
-                    "boneIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)");
+  if (0xbf < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185964,0x125,0,0xffffffff821859d0,param_2,0xc0);
   }
-  return (uint)(((param_1->skel).partBits.anim[param_2 >> 5] &
-                *(uint *)(&g_bitShift + (param_2 & 0x1fU) * 4)) != 0);
+  return (*(uint *)((((int)param_2 >> 5) + 5) * 4 + param_1) &
+         *(uint *)((int)&DAT_82992400 + ((uint)((param_2 & 0xffffffff) << 2) & 0x7c))) != 0;
 }
 
 
 // 8261D340  DObjClearBoneSetBit  (xanim/dobj_utils.cpp:308)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjClearBoneSetBit(DObj *param_1,int param_2)
+void DObjClearBoneSetBit(undefined8 param_1,ulonglong param_2)
 
 {
   uint uVar1;
-  uint uVar2;
+  int iVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  uint uVar5;
+  longlong lVar6;
   
-  uVar6 = (ulonglong)param_2;
-  iVar5 = __savegprlr_29(param_1);
-  if (0xbf < (uVar6 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x138,0,
-                    "boneIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)");
+  iVar4 = __savegprlr_29();
+  if (0xbf < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185964,0x138,0,0xffffffff821859d0,param_2,0xc0);
   }
-  if (*(int *)(iVar5 + 0x10) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x13b,0,
-                    "%s");
+  if (*(int *)(iVar4 + 0x10) == 0) {
+    MyAssertHandler(0xffffffff82185964,0x13b,0,0xffffffff82000f98,0xffffffff82184d24);
   }
-  lVar7 = (longlong)((int)uVar6 >> 5);
-  iVar3 = (int)((lVar7 + 5U & 0xffffffff) << 2);
-  iVar4 = (int)((lVar7 + 0x17U & 0xffffffff) << 2);
-  uVar1 = *(uint *)(&g_bitShift + ((uint)((uVar6 & 0xffffffff) << 2) & 0x7c));
-  uVar2 = *(uint *)(iVar4 + iVar5);
-  *(uint *)(iVar3 + iVar5) = ~uVar1 & *(uint *)(iVar3 + iVar5);
-  *(uint *)(iVar4 + iVar5) = uVar2 & ~uVar1;
+  lVar6 = (longlong)((int)param_2 >> 5);
+  iVar2 = (int)((lVar6 + 5U & 0xffffffff) << 2);
+  iVar3 = (int)((lVar6 + 0x17U & 0xffffffff) << 2);
+  uVar1 = *(uint *)(iVar3 + iVar4);
+  uVar5 = ~*(uint *)((int)&DAT_82992400 + ((uint)((param_2 & 0xffffffff) << 2) & 0x7c));
+  *(uint *)(iVar2 + iVar4) = uVar5 & *(uint *)(iVar2 + iVar4);
+  *(uint *)(iVar3 + iVar4) = uVar1 & uVar5;
   __restgprlr_29();
   return;
 }
@@ -492,165 +448,131 @@ void DObjClearBoneSetBit(DObj *param_1,int param_2)
 
 // 8261E458  DObjGetRootBoneCount  (xanim/dobj_utils.cpp:332)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-uint DObjGetRootBoneCount(DObj *param_1)
+undefined1 DObjGetRootBoneCount(undefined8 param_1)
 
 {
-  XModel *pXVar1;
+  int iVar1;
   
-  pXVar1 = DObjGetModel(param_1,0);
-  if (pXVar1->numRootBones == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x150,0,
-                    "%s");
+  iVar1 = DObjGetModel(param_1,0);
+  if (*(char *)(iVar1 + 5) == '\0') {
+    MyAssertHandler(0xffffffff82185964,0x150,0,0xffffffff82000f98,0xffffffff82185ba4);
   }
-  return (uint)pXVar1->numRootBones;
+  return *(undefined1 *)(iVar1 + 5);
 }
 
 
 // 8261D3F8  DObjSetRotTransIndex  (xanim/dobj_utils.cpp:347)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjSetRotTransIndex(DObj *param_1,int *param_2,int param_3)
+void DObjSetRotTransIndex(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
   uint uVar1;
   int iVar2;
   int iVar3;
-  ulonglong uVar4;
-  int iVar5;
+  int iVar4;
   
-  uVar4 = (ulonglong)param_3;
-  iVar3 = __savegprlr_25(param_1);
+  iVar3 = __savegprlr_25();
   if (iVar3 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x160,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x160,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   if (*(int *)(iVar3 + 0x10) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x162,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x162,0,0xffffffff82000f98,0xffffffff82184d24);
   }
   if (*(int *)(iVar3 + 0x78) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x164,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x164,0,0xffffffff82000f98,0xffffffff82185a74);
   }
-  iVar5 = (int)uVar4;
-  if (iVar5 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x165,0,
-                    "%s\n\t(boneIndex) = %i");
+  iVar4 = (int)param_3;
+  if (iVar4 < 0) {
+    MyAssertHandler(0xffffffff82185964,0x165,0,0xffffffff820215d8,0xffffffff82185a60,param_3);
   }
-  if ((int)(uint)*(byte *)(iVar3 + 10) <= iVar5) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x166,0,
-                    "%s\n\t(boneIndex) = %i");
+  if ((int)(uint)*(byte *)(iVar3 + 10) <= iVar4) {
+    MyAssertHandler(0xffffffff82185964,0x166,0,0xffffffff820215d8,0xffffffff82185a44,param_3);
   }
-  iVar5 = iVar5 >> 5;
-  iVar2 = iVar5 * 4;
-  uVar1 = *(uint *)(&g_bitShift + ((uint)((uVar4 & 0xffffffff) << 2) & 0x7c));
-  if ((param_2[iVar5] & uVar1) != 0) {
+  iVar2 = (iVar4 >> 5) * 4;
+  uVar1 = *(uint *)((int)&DAT_82992400 + ((uint)((param_3 & 0xffffffff) << 2) & 0x7c));
+  if ((*(uint *)(iVar2 + param_2) & uVar1) != 0) {
     iVar3 = iVar3 + 0x14;
     if ((*(uint *)(iVar2 + iVar3) & uVar1) == 0) {
-      if ((*(uint *)((iVar5 + 0x12) * 4 + iVar3) & uVar1) != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",
-                        0x172,0,"%s");
+      if ((*(uint *)(((iVar4 >> 5) + 0x12) * 4 + iVar3) & uVar1) != 0) {
+        MyAssertHandler(0xffffffff82185964,0x172,0,0xffffffff82000f98,0xffffffff82185a0c);
       }
       *(uint *)(iVar2 + iVar3) = *(uint *)(iVar2 + iVar3) | uVar1;
-      iVar3 = __restgprlr_25(1);
-      return iVar3;
+      __restgprlr_25(1);
+      return;
     }
   }
-  iVar3 = __restgprlr_25(0);
-  return iVar3;
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 8261D588  DObjSetSkelRotTransIndex  (xanim/dobj_utils.cpp:382)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-bool DObjSetSkelRotTransIndex(DObj *param_1,int *param_2,int param_3)
+void DObjSetSkelRotTransIndex(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
   uint uVar1;
   uint uVar2;
   int iVar3;
   int iVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  int iVar7;
+  int iVar5;
   
-  uVar6 = (ulonglong)param_3;
-  iVar4 = __savegprlr_25(param_1);
+  iVar4 = __savegprlr_25();
   if (iVar4 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x183,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x183,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   if (*(int *)(iVar4 + 0x10) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x185,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x185,0,0xffffffff82000f98,0xffffffff82184d24);
   }
   if (*(int *)(iVar4 + 0x78) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x187,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x187,0,0xffffffff82000f98,0xffffffff82185a74);
   }
-  iVar7 = (int)uVar6;
-  if (iVar7 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x188,0,
-                    "%s\n\t(boneIndex) = %i");
+  iVar5 = (int)param_3;
+  if (iVar5 < 0) {
+    MyAssertHandler(0xffffffff82185964,0x188,0,0xffffffff820215d8,0xffffffff82185a60,param_3);
   }
-  if ((int)(uint)*(byte *)(iVar4 + 10) <= iVar7) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x189,0,
-                    "%s\n\t(boneIndex) = %i");
+  if ((int)(uint)*(byte *)(iVar4 + 10) <= iVar5) {
+    MyAssertHandler(0xffffffff82185964,0x189,0,0xffffffff820215d8,0xffffffff82185a44,param_3);
   }
-  iVar7 = iVar7 >> 5;
-  iVar3 = iVar7 * 4;
-  uVar1 = *(uint *)(&g_bitShift + ((uint)((uVar6 & 0xffffffff) << 2) & 0x7c));
-  if ((param_2[iVar7] & uVar1) != 0) {
+  iVar3 = (iVar5 >> 5) * 4;
+  uVar1 = *(uint *)((int)&DAT_82992400 + ((uint)((param_3 & 0xffffffff) << 2) & 0x7c));
+  if ((*(uint *)(iVar3 + param_2) & uVar1) != 0) {
     iVar4 = iVar4 + 0x14;
     if ((*(uint *)(iVar3 + iVar4) & uVar1) != 0) {
-      uVar5 = __restgprlr_25(0);
-      return (bool)uVar5;
+      __restgprlr_25(0);
+      return;
     }
-    iVar7 = (iVar7 + 0x12) * 4;
-    if ((*(uint *)(iVar7 + iVar4) & uVar1) != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x195,
-                      0,"%s");
+    iVar5 = ((iVar5 >> 5) + 0x12) * 4;
+    if ((*(uint *)(iVar5 + iVar4) & uVar1) != 0) {
+      MyAssertHandler(0xffffffff82185964,0x195,0,0xffffffff82000f98,0xffffffff82185a0c);
     }
-    uVar2 = *(uint *)(iVar7 + iVar4);
+    uVar2 = *(uint *)(iVar5 + iVar4);
     *(uint *)(iVar3 + iVar4) = *(uint *)(iVar3 + iVar4) | uVar1;
-    *(uint *)(iVar7 + iVar4) = uVar2 | uVar1;
+    *(uint *)(iVar5 + iVar4) = uVar2 | uVar1;
   }
-  uVar5 = __restgprlr_25(1);
-  return (bool)uVar5;
+  __restgprlr_25(1);
+  return;
 }
 
 
 // 8261E680  DObjSetControlTagAngles  (xanim/dobj_utils.cpp:420)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjSetControlTagAngles(DObj *param_1,int *param_2,uint param_3,float *param_4)
+void DObjSetControlTagAngles
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
 
 {
-  DObj *pDVar1;
+  undefined8 uVar1;
   int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_3;
-  pDVar1 = (DObj *)__savegprlr_29(param_1);
-  if ((uVar3 & 0xffffffff) < 0xfe) {
-    iVar2 = DObjSetControlRotTransIndex(pDVar1,param_2,(int)uVar3);
+  uVar1 = __savegprlr_29();
+  if ((param_3 & 0xffffffff) < 0xfe) {
+    iVar2 = DObjSetControlRotTransIndex(uVar1);
     if (iVar2 != 0) {
-      DObjSetLocalTagInternal(pDVar1,vec3_origin,param_4,(int)uVar3);
+      DObjSetLocalTagInternal(uVar1,0xffffffff82179fd8,param_4,param_3);
     }
   }
-  else if (((uVar3 & 0xffffffff) != 0xfe) && ((uVar3 & 0xffffffff) != 0xff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x1a7,0,
-                    "%s\n\t(boneIndex) = %i");
+  else if (((param_3 & 0xffffffff) != 0xfe) && ((param_3 & 0xffffffff) != 0xff)) {
+    MyAssertHandler(0xffffffff82185964,0x1a7,0,0xffffffff820215d8,0xffffffff820215ac,param_3);
     __restgprlr_29();
     return;
   }
@@ -661,51 +583,42 @@ void DObjSetControlTagAngles(DObj *param_1,int *param_2,uint param_3,float *para
 
 // 8261E4C0  DObjSetWorldControlTag  (xanim/dobj_utils.cpp:439)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjSetWorldControlTag(DObj *param_1,int *param_2,uint param_3,float *param_4,float *param_5)
+void DObjSetWorldControlTag
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined4 *param_4,
+               ulonglong param_5)
 
 {
-  DObj *pDVar1;
+  undefined8 uVar1;
   int iVar2;
-  DObjAnimMat *pDVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  float *pfVar6;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
   
-  uVar5 = (ulonglong)(int)param_5;
-  uVar4 = (ulonglong)(int)param_3;
-  pDVar1 = (DObj *)__savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) < 0xfe) {
-    iVar2 = DObjSetWorldControlRotTransIndex(pDVar1,param_2,(int)uVar4);
-    if (iVar2 != 0) {
-      pDVar3 = DObjGetRotTransArray(pDVar1);
-      if (pDVar3 != (DObjAnimMat *)0x0) {
-        pDVar3 = pDVar3 + (int)uVar4;
-        if ((uVar5 & 0xffffffff) == 0) {
-          pDVar3->quat[0] = 0.0;
-          pDVar3->quat[1] = 0.0;
-          pDVar3->quat[2] = 0.0;
-          pDVar3->quat[3] = 1.0;
-        }
-        else {
-          pfVar6 = (float *)uVar5;
-          pDVar3->quat[0] = *pfVar6;
-          pDVar3->quat[1] = pfVar6[1];
-          pDVar3->quat[2] = pfVar6[2];
-          pDVar3->quat[3] = pfVar6[3];
-        }
-        pDVar3->transWeight = 0.0;
-        pDVar3->trans[0] = *param_4;
-        pDVar3->trans[1] = param_4[1];
-        pDVar3->trans[2] = param_4[2];
+  uVar1 = __savegprlr_28();
+  if ((param_3 & 0xffffffff) < 0xfe) {
+    iVar2 = DObjSetWorldControlRotTransIndex(uVar1);
+    if ((iVar2 != 0) && (iVar2 = DObjGetRotTransArray(uVar1), iVar2 != 0)) {
+      puVar4 = (undefined4 *)((int)param_3 * 0x20 + iVar2);
+      if ((param_5 & 0xffffffff) == 0) {
+        *puVar4 = 0;
+        puVar4[1] = 0;
+        puVar4[2] = 0;
+        puVar4[3] = 0x3f800000;
       }
+      else {
+        puVar3 = (undefined4 *)param_5;
+        *puVar4 = *puVar3;
+        puVar4[1] = puVar3[1];
+        puVar4[2] = puVar3[2];
+        puVar4[3] = puVar3[3];
+      }
+      puVar4[7] = 0;
+      puVar4[4] = *param_4;
+      puVar4[5] = param_4[1];
+      puVar4[6] = param_4[2];
     }
   }
-  else if (((uVar4 & 0xffffffff) != 0xfe) && ((uVar4 & 0xffffffff) != 0xff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x1bc,0,
-                    "%s\n\t(boneIndex) = %i");
+  else if (((param_3 & 0xffffffff) != 0xfe) && ((param_3 & 0xffffffff) != 0xff)) {
+    MyAssertHandler(0xffffffff82185964,0x1bc,0,0xffffffff820215d8,0xffffffff820215ac,param_3);
     __restgprlr_28();
     return;
   }
@@ -716,60 +629,44 @@ void DObjSetWorldControlTag(DObj *param_1,int *param_2,uint param_3,float *param
 
 // 8261D720  DObjGetModel  (xanim/dobj_utils.cpp:470)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-XModel * DObjGetModel(DObj *param_1,int param_2)
+void DObjGetModel(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  XModel *pXVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)param_2;
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x1d7,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x1d7,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   if (*(int *)(iVar1 + 0x98) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x1d8,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x1d8,0,0xffffffff82000f98,0xffffffff82184d18);
   }
-  if ((int)(uint)*(byte *)(iVar1 + 9) <= (int)uVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x1d9,0,
-                    "%s\n\t(modelIndex) = %i");
+  if ((int)(uint)*(byte *)(iVar1 + 9) <= (int)param_2) {
+    MyAssertHandler(0xffffffff82185964,0x1d9,0,0xffffffff82184d80,0xffffffff82184d98,param_2);
   }
-  pXVar2 = (XModel *)
-           __restgprlr_28(*(undefined4 *)((int)((uVar3 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x98))
-                         );
-  return pXVar2;
+  __restgprlr_28(*(undefined4 *)((int)((param_2 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x98)));
+  return;
 }
 
 
 // 8261E710  DObjSetLocalTag  (xanim/dobj_utils.cpp:486)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjSetLocalTag(DObj *param_1,int *param_2,uint param_3,float *param_4,float *param_5)
+void DObjSetLocalTag(undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
+                    undefined8 param_5)
 
 {
-  DObj *pDVar1;
+  undefined8 uVar1;
   int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_3;
-  pDVar1 = (DObj *)__savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) < 0xfe) {
-    iVar2 = DObjSetRotTransIndex(pDVar1,param_2,(int)uVar3);
+  uVar1 = __savegprlr_28();
+  if ((param_3 & 0xffffffff) < 0xfe) {
+    iVar2 = DObjSetRotTransIndex(uVar1);
     if (iVar2 != 0) {
-      DObjSetLocalTagInternal(pDVar1,param_4,param_5,(int)uVar3);
+      DObjSetLocalTagInternal(uVar1,param_4,param_5,param_3);
     }
   }
-  else if (((uVar3 & 0xffffffff) != 0xfe) && ((uVar3 & 0xffffffff) != 0xff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x1e9,0,
-                    "%s\n\t(boneIndex) = %i");
+  else if (((param_3 & 0xffffffff) != 0xfe) && ((param_3 & 0xffffffff) != 0xff)) {
+    MyAssertHandler(0xffffffff82185964,0x1e9,0,0xffffffff820215d8,0xffffffff820215ac,param_3);
     __restgprlr_28();
     return;
   }
@@ -780,39 +677,36 @@ void DObjSetLocalTag(DObj *param_1,int *param_2,uint param_3,float *param_4,floa
 
 // 8261E5C0  DObjSetLocalTagInternal  (xanim/dobj_utils.cpp:505)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjSetLocalTagInternal(DObj *param_1,float *param_2,float *param_3,int param_4)
+void DObjSetLocalTagInternal
+               (undefined8 param_1,undefined4 *param_2,ulonglong param_3,ulonglong param_4)
 
 {
   int iVar1;
-  DObjAnimMat *pDVar2;
-  ulonglong uVar3;
+  longlong lVar2;
+  undefined4 *puVar3;
   double dVar4;
   
-  uVar3 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x1f,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x1f,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  if (*(int *)(iVar1 + 0x78) != 0) {
-    pDVar2 = (DObjAnimMat *)(param_4 * 0x20 + *(int *)(iVar1 + 0x78));
+  if ((ulonglong)*(uint *)(iVar1 + 0x78) != 0) {
+    lVar2 = (param_4 & 0x7ffffff) * 0x20 + (ulonglong)*(uint *)(iVar1 + 0x78);
     dVar4 = 0.0;
-    if ((uVar3 & 0xffffffff) == 0) {
-      pDVar2->quat[0] = 0.0;
-      pDVar2->quat[1] = 0.0;
-      pDVar2->quat[2] = 0.0;
-      pDVar2->quat[3] = 1.0;
+    puVar3 = (undefined4 *)lVar2;
+    if ((param_3 & 0xffffffff) == 0) {
+      *puVar3 = 0;
+      puVar3[1] = 0;
+      puVar3[2] = 0;
+      puVar3[3] = 0x3f800000;
     }
     else {
-      DObjSetAngles(pDVar2,(float *)uVar3);
+      DObjSetAngles(lVar2,param_3);
     }
-    pDVar2->transWeight = (float)dVar4;
-    pDVar2->trans[0] = *param_2;
-    pDVar2->trans[1] = param_2[1];
-    pDVar2->trans[2] = param_2[2];
+    puVar3[7] = (float)dVar4;
+    puVar3[4] = *param_2;
+    puVar3[5] = param_2[1];
+    puVar3[6] = param_2[2];
   }
   __restgprlr_28();
   return;
@@ -821,7 +715,7 @@ void DObjSetLocalTagInternal(DObj *param_1,float *param_2,float *param_3,int par
 
 // 8261D7D8  DObjSetAngles  (xanim/dobj_utils.cpp:530)
 
-void DObjSetAngles(DObjAnimMat *param_1,float *param_2)
+void DObjSetAngles(undefined8 param_1,float *param_2)
 
 {
   float *pfVar1;
@@ -833,7 +727,7 @@ void DObjSetAngles(DObjAnimMat *param_1,float *param_2)
   double dVar7;
   double dVar8;
   
-  pfVar1 = (float *)__savefpr_26(param_1);
+  pfVar1 = (float *)__savefpr_26();
   dVar8 = 0.008726646192371845;
   dVar6 = (double)(param_2[1] * 0.008726646);
   dVar2 = sin(dVar6);
@@ -865,36 +759,33 @@ void DObjSetAngles(DObjAnimMat *param_1,float *param_2)
 
 // 8261D8C8  DObjClearAngles  (xanim/dobj_utils.cpp:559)
 
-void DObjClearAngles(DObjAnimMat *param_1)
+void DObjClearAngles(undefined4 *param_1)
 
 {
-  param_1->quat[0] = 0.0;
-  param_1->quat[1] = 0.0;
-  param_1->quat[2] = 0.0;
-  param_1->quat[3] = 1.0;
+  *param_1 = 0;
+  param_1[1] = 0;
+  param_1[2] = 0;
+  param_1[3] = 0x3f800000;
   return;
 }
 
 
 // 8261D8F0  DObjSetTrans  (xanim/dobj_utils.cpp:571)
 
-void DObjSetTrans(DObjAnimMat *param_1,float *param_2)
+void DObjSetTrans(int param_1,undefined4 *param_2)
 
 {
-  param_1->transWeight = 0.0;
-  param_1->trans[0] = *param_2;
-  param_1->trans[1] = param_2[1];
-  param_1->trans[2] = param_2[2];
+  *(undefined4 *)(param_1 + 0x1c) = 0;
+  *(undefined4 *)(param_1 + 0x10) = *param_2;
+  *(undefined4 *)(param_1 + 0x14) = param_2[1];
+  *(undefined4 *)(param_1 + 0x18) = param_2[2];
   return;
 }
 
 
 // 8261D918  DObjCompleteHierarchyBits  (xanim/dobj_utils.cpp:583)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjCompleteHierarchyBits(DObj *param_1,int *param_2)
+void DObjCompleteHierarchyBits(undefined8 param_1,uint *param_2)
 
 {
   byte bVar1;
@@ -903,7 +794,7 @@ void DObjCompleteHierarchyBits(DObj *param_1,int *param_2)
   int iVar4;
   int iVar5;
   int iVar6;
-  char *pcVar7;
+  int iVar7;
   longlong lVar8;
   uint *puVar9;
   uint uVar10;
@@ -915,30 +806,25 @@ void DObjCompleteHierarchyBits(DObj *param_1,int *param_2)
   byte *pbVar16;
   uint local_110 [68];
   
-  iVar6 = __savegprlr_15(param_1);
+  iVar6 = __savegprlr_15();
   Profile_Begin(0x145);
   if (iVar6 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",600,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,600,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   if (*(char *)(iVar6 + 10) == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x259,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x259,0,0xffffffff82000f98,0xffffffff82185ae8);
   }
   bVar1 = *(byte *)(iVar6 + 9);
   uVar14 = (ulonglong)*(byte *)(iVar6 + 10) - 1;
   if (bVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x25e,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x25e,0,0xffffffff82000f98,0xffffffff82184c14);
   }
   if (*(short *)(iVar6 + 4) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x260,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x260,0,0xffffffff82000f98,0xffffffff82184c00);
   }
-  pcVar7 = SL_ConvertToString((uint)*(ushort *)(iVar6 + 4));
-  if ((*(short *)(iVar6 + 4) != 0) && (pcVar7 == (char *)0x0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x262,0,
-                    "%s");
+  iVar7 = SL_ConvertToString(*(undefined2 *)(iVar6 + 4));
+  if ((*(short *)(iVar6 + 4) != 0) && (iVar7 == 0)) {
+    MyAssertHandler(0xffffffff82185964,0x262,0,0xffffffff82000f98,0xffffffff82185abc);
   }
   uVar3 = *(uint *)(iVar6 + 0x98);
   uVar10 = 0;
@@ -956,8 +842,7 @@ void DObjCompleteHierarchyBits(DObj *param_1,int *param_2)
     } while ((int)uVar12 < (int)(uint)bVar1);
   }
   if ((uint)uVar12 == (uint)bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x277,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x277,0,0xffffffff82000f98,0xffffffff82185aac);
   }
   lVar11 = (uVar12 & 0x3fffffff) * 4 + (ulonglong)uVar3;
   *param_2 = *param_2 | 0x80000000;
@@ -968,14 +853,13 @@ LAB_8261dad8:
     lVar8 = uVar14 - *(uint *)((int)local_110 + ((int)lVar11 - uVar3));
     if (lVar8 < 0) break;
     iVar5 = (int)uVar14 >> 5;
-    if ((param_2[iVar5] & *(uint *)(&g_bitShift + ((uint)((uVar14 & 0xffffffff) << 2) & 0x7c))) == 0
-       ) {
+    uVar10 = *(uint *)((int)&DAT_82992400 + ((uint)((uVar14 & 0xffffffff) << 2) & 0x7c));
+    if ((param_2[iVar5] & uVar10) == 0) {
       uVar14 = uVar14 - 1;
       goto LAB_8261dad8;
     }
-    pbVar16 = (byte *)(pcVar7 + 0x18);
-    if ((*(uint *)(pcVar7 + iVar5 * 4) &
-        *(uint *)(&g_bitShift + ((uint)((uVar14 & 0xffffffff) << 2) & 0x7c))) == 0) {
+    pbVar16 = (byte *)(iVar7 + 0x18);
+    if ((*(uint *)(iVar5 * 4 + iVar7) & uVar10) == 0) {
       lVar8 = lVar8 - (ulonglong)*(byte *)(iVar13 + 5);
       if (lVar8 < 0) {
         bVar2 = *(byte *)((int)uVar12 + (uint)bVar1 * 4 + uVar3);
@@ -992,8 +876,7 @@ LAB_8261dad8:
     else {
       while( true ) {
         if (*pbVar16 == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",
-                          0x2aa,0,"%s");
+          MyAssertHandler(0xffffffff82185964,0x2aa,0,0xffffffff82000f98,0xffffffff82184bf0);
         }
         if ((int)uVar14 == *pbVar16 - 1) break;
         pbVar16 = pbVar16 + 2;
@@ -1001,19 +884,19 @@ LAB_8261dad8:
       uVar15 = (ulonglong)pbVar16[1] - 1;
     }
     if ((ulonglong)*(byte *)(iVar6 + 10) <= (uVar15 & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x2b4,
-                      0,"%s");
+      MyAssertHandler(0xffffffff82185964,0x2b4,0,0xffffffff82000f98,0xffffffff82185a84);
     }
     iVar5 = (int)uVar15 >> 5;
     uVar14 = uVar14 - 1;
     param_2[iVar5] =
-         *(uint *)(&g_bitShift + ((uint)((uVar15 & 0xffffffff) << 2) & 0x7c)) | param_2[iVar5];
+         *(uint *)((int)&DAT_82992400 + ((uint)((uVar15 & 0xffffffff) << 2) & 0x7c)) |
+         param_2[iVar5];
   } while( true );
   uVar12 = uVar12 - 1;
   lVar11 = lVar11 + -4;
   if ((longlong)uVar12 < 0) {
-    iVar6 = Profile_EndInternal((double *)0x0);
-    __restgprlr_15(iVar6);
+    Profile_EndInternal(0);
+    __restgprlr_15();
     return;
   }
   iVar13 = *(int *)lVar11;
@@ -1023,339 +906,276 @@ LAB_8261dad8:
 
 // 8261DC00  DObjSetControlRotTransIndex  (xanim/dobj_utils.cpp:705)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjSetControlRotTransIndex(DObj *param_1,int *param_2,int param_3)
+void DObjSetControlRotTransIndex(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
   uint uVar1;
   int iVar2;
   int iVar3;
-  ulonglong uVar4;
-  int iVar5;
+  int iVar4;
   
-  uVar4 = (ulonglong)param_3;
-  iVar3 = __savegprlr_24(param_1);
+  iVar3 = __savegprlr_24();
   if (iVar3 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x2c6,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x2c6,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   if (*(int *)(iVar3 + 0x10) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x2c8,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x2c8,0,0xffffffff82000f98,0xffffffff82184d24);
   }
   if (*(int *)(iVar3 + 0x78) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x2ca,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x2ca,0,0xffffffff82000f98,0xffffffff82185a74);
   }
-  iVar5 = (int)uVar4;
-  if (iVar5 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x2cb,0,
-                    "%s");
+  iVar4 = (int)param_3;
+  if (iVar4 < 0) {
+    MyAssertHandler(0xffffffff82185964,0x2cb,0,0xffffffff82000f98,0xffffffff82185b18);
   }
-  if ((int)(uint)*(byte *)(iVar3 + 10) <= iVar5) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x2cc,0,
-                    "%s");
+  if ((int)(uint)*(byte *)(iVar3 + 10) <= iVar4) {
+    MyAssertHandler(0xffffffff82185964,0x2cc,0,0xffffffff82000f98,0xffffffff82185afc);
   }
-  iVar5 = iVar5 >> 5;
-  iVar2 = iVar5 * 4;
-  uVar1 = *(uint *)(&g_bitShift + ((uint)((uVar4 & 0xffffffff) << 2) & 0x7c));
-  if ((param_2[iVar5] & uVar1) != 0) {
+  iVar4 = iVar4 >> 5;
+  iVar2 = iVar4 * 4;
+  uVar1 = *(uint *)((int)&DAT_82992400 + ((uint)((param_3 & 0xffffffff) << 2) & 0x7c));
+  if ((*(uint *)(iVar2 + param_2) & uVar1) != 0) {
     iVar3 = iVar3 + 0x14;
     if ((*(uint *)(iVar2 + iVar3) & uVar1) == 0) {
-      if ((*(uint *)((iVar5 + 0x12) * 4 + iVar3) & uVar1) != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",
-                        0x2d8,0,"%s");
+      if ((*(uint *)((int)(((longlong)iVar4 + 0x12U & 0xffffffff) << 2) + iVar3) & uVar1) != 0) {
+        MyAssertHandler(0xffffffff82185964,0x2d8,0,0xffffffff82000f98,0xffffffff82185a0c);
       }
-      iVar5 = (iVar5 + 6) * 4;
+      iVar4 = (int)(((longlong)iVar4 + 6U & 0xffffffff) << 2);
       *(uint *)(iVar2 + iVar3) = *(uint *)(iVar2 + iVar3) | uVar1;
-      *(uint *)(iVar5 + iVar3) = *(uint *)(iVar5 + iVar3) | uVar1;
-      iVar3 = __restgprlr_24(1);
-      return iVar3;
+      *(uint *)(iVar4 + iVar3) = *(uint *)(iVar4 + iVar3) | uVar1;
+      __restgprlr_24(1);
+      return;
     }
   }
-  iVar3 = __restgprlr_24(0);
-  return iVar3;
+  __restgprlr_24(0);
+  return;
 }
 
 
 // 8261DD90  DObjSetWorldControlRotTransIndex  (xanim/dobj_utils.cpp:736)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjSetWorldControlRotTransIndex(DObj *param_1,int *param_2,int param_3)
+void DObjSetWorldControlRotTransIndex(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
   uint uVar1;
   int iVar2;
   int iVar3;
-  ulonglong uVar4;
-  int iVar5;
+  int iVar4;
   
-  uVar4 = (ulonglong)param_3;
-  iVar3 = __savegprlr_24(param_1);
+  iVar3 = __savegprlr_24();
   if (iVar3 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x2e5,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x2e5,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   if (*(int *)(iVar3 + 0x10) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x2e7,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x2e7,0,0xffffffff82000f98,0xffffffff82184d24);
   }
   if (*(int *)(iVar3 + 0x78) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x2e9,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x2e9,0,0xffffffff82000f98,0xffffffff82185a74);
   }
-  iVar5 = (int)uVar4;
-  if (iVar5 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x2ea,0,
-                    "%s");
+  iVar4 = (int)param_3;
+  if (iVar4 < 0) {
+    MyAssertHandler(0xffffffff82185964,0x2ea,0,0xffffffff82000f98,0xffffffff82185b18);
   }
-  if ((int)(uint)*(byte *)(iVar3 + 10) <= iVar5) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x2eb,0,
-                    "%s");
+  if ((int)(uint)*(byte *)(iVar3 + 10) <= iVar4) {
+    MyAssertHandler(0xffffffff82185964,0x2eb,0,0xffffffff82000f98,0xffffffff82185afc);
   }
-  iVar5 = iVar5 >> 5;
-  iVar2 = iVar5 * 4;
-  uVar1 = *(uint *)(&g_bitShift + ((uint)((uVar4 & 0xffffffff) << 2) & 0x7c));
-  if ((param_2[iVar5] & uVar1) != 0) {
+  iVar4 = iVar4 >> 5;
+  iVar2 = iVar4 * 4;
+  uVar1 = *(uint *)((int)&DAT_82992400 + ((uint)((param_3 & 0xffffffff) << 2) & 0x7c));
+  if ((*(uint *)(iVar2 + param_2) & uVar1) != 0) {
     iVar3 = iVar3 + 0x14;
     if ((*(uint *)(iVar2 + iVar3) & uVar1) == 0) {
-      if ((*(uint *)((iVar5 + 0x12) * 4 + iVar3) & uVar1) != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",
-                        0x2f7,0,"%s");
+      if ((*(uint *)((int)(((longlong)iVar4 + 0x12U & 0xffffffff) << 2) + iVar3) & uVar1) != 0) {
+        MyAssertHandler(0xffffffff82185964,0x2f7,0,0xffffffff82000f98,0xffffffff82185a0c);
       }
-      iVar5 = (iVar5 + 0xc) * 4;
+      iVar4 = (int)(((longlong)iVar4 + 0xcU & 0xffffffff) << 2);
       *(uint *)(iVar2 + iVar3) = *(uint *)(iVar2 + iVar3) | uVar1;
-      *(uint *)(iVar5 + iVar3) = *(uint *)(iVar5 + iVar3) | uVar1;
-      iVar3 = __restgprlr_24(1);
-      return iVar3;
+      *(uint *)(iVar4 + iVar3) = *(uint *)(iVar4 + iVar3) | uVar1;
+      __restgprlr_24(1);
+      return;
     }
   }
-  iVar3 = __restgprlr_24(0);
-  return iVar3;
+  __restgprlr_24(0);
+  return;
 }
 
 
 // 8261DF20  DObjSkelExists  (xanim/dobj_utils.cpp:767)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjSkelExists(DObj *param_1,int param_2)
+bool DObjSkelExists(int param_1,int param_2)
 
 {
-  if ((param_1->skel).timeStamp == param_2) {
-    return (uint)((param_1->skel).mat != (DObjAnimMat *)0x0);
+  if (*(int *)(param_1 + 0x74) == param_2) {
+    return *(int *)(param_1 + 0x78) != 0;
   }
-  memset();
-  return 0;
+  memset((void *)(param_1 + 0x14),0,0x68);
+  return false;
 }
 
 
 // 8261DF78  DObjClearSkel  (xanim/dobj_utils.cpp:776)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjClearSkel(DObj *param_1)
+void * DObjClearSkel(int param_1)
 
 {
-  memset();
-  return;
+  void *pvVar1;
+  
+  pvVar1 = memset((void *)(param_1 + 0x14),0,0x60);
+  return pvVar1;
 }
 
 
 // 8261DF88  DObjSkelIsBoneUpToDate  (xanim/dobj_utils.cpp:782)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjSkelIsBoneUpToDate(DObj *param_1,int param_2)
+void DObjSkelIsBoneUpToDate(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  ulonglong uVar2;
   
-  uVar2 = (ulonglong)param_2;
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x311,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x311,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   if (iVar1 + 0x14 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x314,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x314,0,0xffffffff82000f98,0xffffffff82185264);
   }
-  iVar1 = __restgprlr_28((*(uint *)((((int)uVar2 >> 5) + 0x12) * 4 + iVar1 + 0x14) &
-                         *(uint *)(&g_bitShift + ((uint)((uVar2 & 0xffffffff) << 2) & 0x7c))) != 0);
-  return iVar1;
+  __restgprlr_28((*(uint *)((((int)param_2 >> 5) + 0x12) * 4 + iVar1 + 0x14) &
+                 *(uint *)((int)&DAT_82992400 + ((uint)((param_2 & 0xffffffff) << 2) & 0x7c))) != 0)
+  ;
+  return;
 }
 
 
 // 8261E028  DObjSkelAreBonesUpToDate  (xanim/dobj_utils.cpp:795)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjSkelAreBonesUpToDate(DObj *param_1,int *param_2)
+void DObjSkelAreBonesUpToDate(undefined8 param_1,longlong param_2)
 
 {
   ulonglong uVar1;
   int iVar2;
   longlong lVar3;
-  longlong lVar4;
   
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
+  uVar1 = __savegprlr_28();
   if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",799,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,799,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   if (uVar1 == 0xffffffffffffffec) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x322,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x322,0,0xffffffff82000f98,0xffffffff82185264);
   }
   iVar2 = 0;
-  lVar4 = uVar1 + 0x5c;
+  lVar3 = uVar1 + 0x5c;
   do {
-    if ((*(uint *)lVar3 & ~*(uint *)lVar4) != 0) {
-      iVar2 = __restgprlr_28(0);
-      return iVar2;
+    if ((*(uint *)param_2 & ~*(uint *)lVar3) != 0) {
+      __restgprlr_28(0);
+      return;
     }
     iVar2 = iVar2 + 1;
-    lVar4 = lVar4 + 4;
     lVar3 = lVar3 + 4;
+    param_2 = param_2 + 4;
   } while (iVar2 < 6);
-  iVar2 = __restgprlr_28(1);
-  return iVar2;
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 8261E0E0  DObjGetAllocSkelSize  (xanim/dobj_utils.cpp:816)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DObjGetAllocSkelSize(DObj *param_1)
+void DObjGetAllocSkelSize(void)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_29(param_1);
+  iVar1 = __savegprlr_29();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x331,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82185964,0x331,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   if (*(char *)(iVar1 + 10) == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x332,0,
-                    "%s");
-    iVar1 = __restgprlr_29((ulonglong)*(byte *)(iVar1 + 10) << 5);
-    return iVar1;
+    MyAssertHandler(0xffffffff82185964,0x332,0,0xffffffff82000f98,0xffffffff82185ae8);
+    __restgprlr_29((ulonglong)*(byte *)(iVar1 + 10) << 5);
+    return;
   }
-  iVar1 = __restgprlr_29((ulonglong)*(byte *)(iVar1 + 10) << 5);
-  return iVar1;
+  __restgprlr_29((ulonglong)*(byte *)(iVar1 + 10) << 5);
+  return;
 }
 
 
 // 8261E170  DObjCreateSkel  (xanim/dobj_utils.cpp:824)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjCreateSkel(DObj *param_1,char *param_2,int param_3)
+void DObjCreateSkel(undefined8 param_1,ulonglong param_2,undefined4 param_3)
 
 {
-  DObj *pDVar1;
-  int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  int *piVar5;
+  int iVar1;
+  size_t _Size;
+  longlong lVar2;
+  int *piVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pDVar1 = (DObj *)__savegprlr_24(param_1);
+  iVar1 = __savegprlr_24();
   Profile_Begin(0x131);
-  if (pDVar1->locked == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x33c,0,
-                    "%s");
+  if (*(int *)(iVar1 + 0x10) == 0) {
+    MyAssertHandler(0xffffffff82185964,0x33c,0,0xffffffff82000f98,0xffffffff82184d24);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x340,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185964,0x340,0,0xffffffff82000f98,0xffffffff8205af0c);
   }
-  DObjGetAllocSkelSize(pDVar1);
-  memset();
-  (pDVar1->skel).mat = (DObjAnimMat *)uVar3;
-  (pDVar1->skel).timeStamp = param_3;
-  piVar5 = (pDVar1->skel).partBits.control;
-  lVar4 = 6;
+  _Size = DObjGetAllocSkelSize(iVar1);
+  memset((void *)param_2,0xff,_Size);
+  *(void **)(iVar1 + 0x78) = (void *)param_2;
+  *(undefined4 *)(iVar1 + 0x74) = param_3;
+  piVar3 = (int *)(iVar1 + 0x2c);
+  lVar2 = 6;
   do {
-    if (((DSkelPartBits *)(piVar5 + -6))->anim[0] != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x34a,
-                      0,"%s");
+    if (piVar3[-6] != 0) {
+      MyAssertHandler(0xffffffff82185964,0x34a,0,0xffffffff82000f98,0xffffffff82185b28);
     }
-    if (*piVar5 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x34b,
-                      0,"%s");
+    if (*piVar3 != 0) {
+      MyAssertHandler(0xffffffff82185964,0x34b,0,0xffffffff82000f98,0xffffffff82185b44);
     }
-    if (piVar5[6] != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x34c,
-                      0,"%s");
+    if (piVar3[6] != 0) {
+      MyAssertHandler(0xffffffff82185964,0x34c,0,0xffffffff82000f98,0xffffffff82185b64);
     }
-    if (piVar5[0xc] != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x34d,
-                      0,"%s");
+    if (piVar3[0xc] != 0) {
+      MyAssertHandler(0xffffffff82185964,0x34d,0,0xffffffff82000f98,0xffffffff82185b88);
     }
-    lVar4 = lVar4 + -1;
-    piVar5 = piVar5 + 1;
-  } while (lVar4 != 0);
-  iVar2 = Profile_EndInternal((double *)0x0);
-  __restgprlr_24(iVar2);
+    lVar2 = lVar2 + -1;
+    piVar3 = piVar3 + 1;
+  } while (lVar2 != 0);
+  Profile_EndInternal(0);
+  __restgprlr_24();
   return;
 }
 
 
 // 8261E2E0  I_dmaGetDObjSkel  (xanim/dobj_utils.cpp:860)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-DObjAnimMat * I_dmaGetDObjSkel(DObj *param_1)
+undefined4 I_dmaGetDObjSkel(int param_1)
 
 {
-  if ((param_1->skel).mat == (DObjAnimMat *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x35d,0,
-                    "%s");
+  if (*(int *)(param_1 + 0x78) == 0) {
+    MyAssertHandler(0xffffffff82185964,0x35d,0,0xffffffff82000f98,0xffffffff82185a74);
   }
-  return (param_1->skel).mat;
+  return *(undefined4 *)(param_1 + 0x78);
 }
 
 
 // 8261E340  DObjGetHidePartBits  (xanim/dobj_utils.cpp:873)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjGetHidePartBits(DObj *param_1,uint *param_2)
+void DObjGetHidePartBits(int param_1,int param_2)
 
 {
-  float *pfVar1;
-  float *pfVar2;
+  undefined4 *puVar1;
+  undefined4 *puVar2;
   longlong lVar3;
   
-  if (param_1 == (DObj *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x36a,0,
-                    "%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82185964,0x36a,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  pfVar2 = &param_1->radius;
-  pfVar1 = (float *)(param_2 + -1);
+  puVar2 = (undefined4 *)(param_1 + 0x7c);
+  puVar1 = (undefined4 *)(param_2 + -4);
   lVar3 = 6;
   do {
-    pfVar2 = pfVar2 + 1;
-    pfVar1 = pfVar1 + 1;
-    *pfVar1 = *pfVar2;
+    puVar2 = puVar2 + 1;
+    puVar1 = puVar1 + 1;
+    *puVar1 = *puVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
   return;
@@ -1364,13 +1184,10 @@ void DObjGetHidePartBits(DObj *param_1,uint *param_2)
 
 // 8261E3C0  DObjLock  (xanim/dobj_utils.cpp:889)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjLock(DObj *param_1)
+void DObjLock(longlong param_1)
 
 {
-  Sys_WaitInterlockedCompareExchange(&param_1->locked,1,0);
+  Sys_WaitInterlockedCompareExchange(param_1 + 0x10,1,0);
   sync(1);
   return;
 }
@@ -1378,18 +1195,14 @@ void DObjLock(DObj *param_1)
 
 // 8261E3F0  DObjUnlock  (xanim/dobj_utils.cpp:902)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DObjUnlock(DObj *param_1)
+void DObjUnlock(int param_1)
 
 {
-  if (param_1->locked == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj_utils.cpp",0x387,0,
-                    "%s");
+  if (*(int *)(param_1 + 0x10) == 0) {
+    MyAssertHandler(0xffffffff82185964,0x387,0,0xffffffff82000f98,0xffffffff82184d24);
   }
   sync(1);
-  param_1->locked = 0;
+  *(undefined4 *)(param_1 + 0x10) = 0;
   return;
 }
 

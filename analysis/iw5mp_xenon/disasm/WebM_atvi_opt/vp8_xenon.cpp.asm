@@ -4,7 +4,7 @@
   828045B8  102320C3             lvx128 v1,r3,r4
   828045BC  4E800020             blr
 
-; 828045C0  h  (WebM_atvi_opt/vp8_xenon.cpp:157)
+; 828045C0  vec16b::h  (WebM_atvi_opt/vp8_xenon.cpp:157)
   828045C0  13E020C7             lvx128 v63,0,r4
   828045C4  39600010             li r11,0x10
   828045C8  1BC0FBC5             vupklsb128 v62,v63
@@ -13,7 +13,7 @@
   828045D4  13A359C7             stvx128 v61,r3,r11
   828045D8  4E800020             blr
 
-; 828045E0  uh  (WebM_atvi_opt/vp8_xenon.cpp:165)
+; 828045E0  vec16b::uh  (WebM_atvi_opt/vp8_xenon.cpp:165)
   828045E0  1000038C             vspltisw v0,0x0
   828045E4  11A020C3             lvx128 v13,0,r4
   828045E8  39600010             li r11,0x10

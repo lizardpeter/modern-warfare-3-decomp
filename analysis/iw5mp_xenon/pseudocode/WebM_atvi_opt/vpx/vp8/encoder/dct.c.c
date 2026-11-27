@@ -2,7 +2,7 @@
 
 // 8281E7D0  vp8_short_fdct4x4_c  (WebM_atvi_opt/vpx/vp8/encoder/dct.c:20)
 
-void vp8_short_fdct4x4_c(short *param_1,short *param_2,int param_3)
+void vp8_short_fdct4x4_c(short *param_1,short *param_2,uint param_3)
 
 {
   short sVar1;
@@ -14,7 +14,6 @@ void vp8_short_fdct4x4_c(short *param_1,short *param_2,int param_3)
   int iVar7;
   longlong lVar8;
   int iVar9;
-  short *psVar10;
   
   sVar1 = param_1[3];
   sVar2 = *param_1;
@@ -24,7 +23,7 @@ void vp8_short_fdct4x4_c(short *param_1,short *param_2,int param_3)
   iVar6 = (int)(((longlong)sVar4 - (longlong)sVar3 & 0xffffffffU) << 3);
   param_2[1] = (short)(iVar5 * 0x14e8 + iVar6 * 0x8a9 + 0x38a4 >> 0xc);
   param_2[3] = (short)(iVar5 * 0x8a9 + iVar6 * -0x14e8 + 0x1d4c >> 0xc);
-  iVar9 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+  iVar9 = ((int)param_3 >> 1) + (uint)((int)param_3 < 0 && (param_3 & 1) != 0);
   sVar2 = (short)(((longlong)sVar2 + (longlong)sVar1 & 0xffffffffU) << 3);
   sVar1 = (short)(((longlong)sVar4 + (longlong)sVar3 & 0xffffffffU) << 3);
   *param_2 = sVar1 + sVar2;
@@ -45,15 +44,15 @@ void vp8_short_fdct4x4_c(short *param_1,short *param_2,int param_3)
                  3);
   sVar1 = (short)(((longlong)param_1[iVar9 * 2 + 1] + (longlong)param_1[iVar9 * 2 + 2] & 0xffffffffU
                   ) << 3);
-  psVar10 = param_1 + iVar9 * 3;
+  param_1 = param_1 + iVar9 * 3;
   param_2[9] = (short)(iVar5 * 0x14e8 + iVar6 * 0x8a9 + 0x38a4 >> 0xc);
   param_2[8] = sVar1 + sVar2;
   param_2[10] = sVar2 - sVar1;
   param_2[0xb] = (short)(iVar5 * 0x8a9 + iVar6 * -0x14e8 + 0x1d4c >> 0xc);
-  iVar5 = (int)(((longlong)*psVar10 - (longlong)psVar10[3] & 0xffffffffU) << 3);
-  iVar6 = (int)(((longlong)psVar10[1] - (longlong)psVar10[2] & 0xffffffffU) << 3);
-  sVar1 = (short)(((longlong)psVar10[1] + (longlong)psVar10[2] & 0xffffffffU) << 3);
-  sVar2 = (short)(((longlong)psVar10[3] + (longlong)*psVar10 & 0xffffffffU) << 3);
+  iVar5 = (int)(((longlong)*param_1 - (longlong)param_1[3] & 0xffffffffU) << 3);
+  iVar6 = (int)(((longlong)param_1[1] - (longlong)param_1[2] & 0xffffffffU) << 3);
+  sVar1 = (short)(((longlong)param_1[1] + (longlong)param_1[2] & 0xffffffffU) << 3);
+  sVar2 = (short)(((longlong)param_1[3] + (longlong)*param_1 & 0xffffffffU) << 3);
   param_2[0xd] = (short)(iVar5 * 0x14e8 + iVar6 * 0x8a9 + 0x38a4 >> 0xc);
   param_2[0xc] = sVar1 + sVar2;
   param_2[0xe] = sVar2 - sVar1;
@@ -104,14 +103,14 @@ void vp8_short_fdct4x4_c(short *param_1,short *param_2,int param_3)
 
 // 8281EC60  vp8_short_fdct8x4_c  (WebM_atvi_opt/vpx/vp8/encoder/dct.c:64)
 
-void vp8_short_fdct8x4_c(short *param_1,short *param_2,int param_3)
+void vp8_short_fdct8x4_c(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-  short *psVar1;
+  longlong lVar1;
   
-  psVar1 = (short *)__savegprlr_29(param_1);
-  vp8_short_fdct4x4_c(psVar1,param_2,param_3);
-  vp8_short_fdct4x4_c(psVar1 + 4,param_2 + 0x10,param_3);
+  lVar1 = __savegprlr_29();
+  vp8_short_fdct4x4_c();
+  vp8_short_fdct4x4_c(lVar1 + 8,param_2 + 0x20,param_3);
   __restgprlr_29();
   return;
 }
@@ -119,7 +118,7 @@ void vp8_short_fdct8x4_c(short *param_1,short *param_2,int param_3)
 
 // 8281EC98  vp8_short_walsh4x4_c  (WebM_atvi_opt/vpx/vp8/encoder/dct.c:70)
 
-void vp8_short_walsh4x4_c(short *param_1,short *param_2,int param_3)
+void vp8_short_walsh4x4_c(short *param_1,short *param_2,uint param_3)
 
 {
   short sVar1;
@@ -132,15 +131,14 @@ void vp8_short_walsh4x4_c(short *param_1,short *param_2,int param_3)
   short sVar9;
   int iVar8;
   int iVar10;
-  short *psVar11;
-  int iVar12;
+  int iVar11;
   
   uVar3 = (longlong)*param_1 + (longlong)param_1[2] & 0x3fffffff;
   sVar1 = (short)(uVar3 << 2);
   sVar9 = (short)(((longlong)param_1[1] + (longlong)param_1[3] & 0xffffffffU) << 2);
   sVar4 = (short)(((longlong)param_1[1] - (longlong)param_1[3] & 0xffffffffU) << 2);
   sVar2 = (short)(((longlong)*param_1 - (longlong)param_1[2] & 0xffffffffU) << 2);
-  iVar7 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+  iVar7 = ((int)param_3 >> 1) + (uint)((int)param_3 < 0 && (param_3 & 1) != 0);
   param_2[1] = sVar2 + sVar4;
   param_2[2] = sVar2 - sVar4;
   *param_2 = ((sVar1 + 1) - (ushort)(uVar3 == 0)) + sVar9;
@@ -150,43 +148,43 @@ void vp8_short_walsh4x4_c(short *param_1,short *param_2,int param_3)
   sVar1 = (short)(uVar3 << 2);
   sVar4 = (short)(((longlong)param_1[iVar7 + 1] - (longlong)param_1[iVar7 + 3] & 0xffffffffU) << 2);
   sVar2 = (short)(((longlong)param_1[iVar7] - (longlong)param_1[iVar7 + 2] & 0xffffffffU) << 2);
-  psVar11 = param_1 + iVar7 * 2;
+  param_1 = param_1 + iVar7 * 2;
   param_2[5] = sVar2 + sVar4;
   param_2[6] = sVar2 - sVar4;
   param_2[7] = sVar1 - sVar9;
   param_2[4] = ((sVar1 + 1) - (ushort)(uVar3 == 0)) + sVar9;
-  uVar3 = (longlong)psVar11[2] + (longlong)*psVar11 & 0x3fffffff;
-  sVar9 = (short)(((longlong)psVar11[1] + (longlong)psVar11[3] & 0xffffffffU) << 2);
+  uVar3 = (longlong)param_1[2] + (longlong)*param_1 & 0x3fffffff;
+  sVar9 = (short)(((longlong)param_1[1] + (longlong)param_1[3] & 0xffffffffU) << 2);
   sVar1 = (short)(uVar3 << 2);
-  sVar4 = (short)(((longlong)psVar11[1] - (longlong)psVar11[3] & 0xffffffffU) << 2);
-  sVar2 = (short)(((longlong)*psVar11 - (longlong)psVar11[2] & 0xffffffffU) << 2);
+  sVar4 = (short)(((longlong)param_1[1] - (longlong)param_1[3] & 0xffffffffU) << 2);
+  sVar2 = (short)(((longlong)*param_1 - (longlong)param_1[2] & 0xffffffffU) << 2);
   param_2[9] = sVar2 + sVar4;
   param_2[10] = sVar2 - sVar4;
-  psVar11 = psVar11 + iVar7;
+  param_1 = param_1 + iVar7;
   param_2[8] = ((sVar1 + 1) - (ushort)(uVar3 == 0)) + sVar9;
   param_2[0xb] = sVar1 - sVar9;
-  uVar3 = (longlong)psVar11[2] + (longlong)*psVar11 & 0x3fffffff;
-  sVar1 = (short)(((longlong)psVar11[1] + (longlong)psVar11[3] & 0xffffffffU) << 2);
-  sVar2 = (short)(((longlong)psVar11[1] - (longlong)psVar11[3] & 0xffffffffU) << 2);
-  sVar9 = (short)(((longlong)*psVar11 - (longlong)psVar11[2] & 0xffffffffU) << 2);
+  uVar3 = (longlong)param_1[2] + (longlong)*param_1 & 0x3fffffff;
+  sVar1 = (short)(((longlong)param_1[1] + (longlong)param_1[3] & 0xffffffffU) << 2);
+  sVar2 = (short)(((longlong)param_1[1] - (longlong)param_1[3] & 0xffffffffU) << 2);
+  sVar9 = (short)(((longlong)*param_1 - (longlong)param_1[2] & 0xffffffffU) << 2);
   param_2[0xd] = sVar9 + sVar2;
   sVar4 = (short)(uVar3 << 2);
   param_2[0xe] = sVar9 - sVar2;
   sVar9 = (ushort)(uVar3 != 0) + sVar1 + sVar4;
   param_2[0xf] = sVar4 - sVar1;
   param_2[0xc] = sVar9;
-  iVar12 = (int)*param_2 + (int)param_2[8];
+  iVar11 = (int)*param_2 + (int)param_2[8];
   iVar10 = (int)param_2[4] + (int)sVar9;
   iVar6 = (int)param_2[4] - (int)sVar9;
   iVar5 = (int)*param_2 - (int)param_2[8];
-  iVar7 = iVar10 + iVar12;
+  iVar7 = iVar10 + iVar11;
   iVar8 = iVar5 + iVar6;
-  iVar12 = iVar12 - iVar10;
+  iVar11 = iVar11 - iVar10;
   iVar5 = iVar5 - iVar6;
   *param_2 = (short)((iVar7 - (iVar7 >> 0x1f)) + 3 >> 3);
   param_2[4] = (short)((iVar8 - (iVar8 >> 0x1f)) + 3 >> 3);
   param_2[8] = (short)((iVar5 - (iVar5 >> 0x1f)) + 3 >> 3);
-  param_2[0xc] = (short)((iVar12 - (iVar12 >> 0x1f)) + 3 >> 3);
+  param_2[0xc] = (short)((iVar11 - (iVar11 >> 0x1f)) + 3 >> 3);
   iVar10 = (int)param_2[1] + (int)param_2[9];
   iVar8 = (int)param_2[5] + (int)param_2[0xd];
   iVar6 = (int)param_2[5] - (int)param_2[0xd];
@@ -200,29 +198,29 @@ void vp8_short_walsh4x4_c(short *param_1,short *param_2,int param_3)
   param_2[9] = (short)((iVar5 - (iVar5 >> 0x1f)) + 3 >> 3);
   param_2[0xd] = (short)((iVar10 - (iVar10 >> 0x1f)) + 3 >> 3);
   iVar10 = (int)param_2[6] + (int)param_2[0xe];
-  iVar12 = (int)param_2[2] + (int)param_2[10];
+  iVar11 = (int)param_2[2] + (int)param_2[10];
   iVar5 = (int)param_2[6] - (int)param_2[0xe];
   iVar6 = (int)param_2[2] - (int)param_2[10];
-  iVar7 = iVar10 + iVar12;
+  iVar7 = iVar10 + iVar11;
   iVar8 = iVar6 + iVar5;
   iVar6 = iVar6 - iVar5;
-  iVar12 = iVar12 - iVar10;
+  iVar11 = iVar11 - iVar10;
   param_2[2] = (short)((iVar7 - (iVar7 >> 0x1f)) + 3 >> 3);
   param_2[6] = (short)((iVar8 - (iVar8 >> 0x1f)) + 3 >> 3);
   param_2[10] = (short)((iVar6 - (iVar6 >> 0x1f)) + 3 >> 3);
-  param_2[0xe] = (short)((iVar12 - (iVar12 >> 0x1f)) + 3 >> 3);
-  iVar12 = (int)param_2[3] + (int)param_2[0xb];
+  param_2[0xe] = (short)((iVar11 - (iVar11 >> 0x1f)) + 3 >> 3);
+  iVar11 = (int)param_2[3] + (int)param_2[0xb];
   iVar10 = (int)param_2[7] + (int)param_2[0xf];
   iVar5 = (int)param_2[7] - (int)param_2[0xf];
   iVar6 = (int)param_2[3] - (int)param_2[0xb];
-  iVar7 = iVar10 + iVar12;
+  iVar7 = iVar10 + iVar11;
   iVar8 = iVar6 + iVar5;
   iVar6 = iVar6 - iVar5;
-  iVar12 = iVar12 - iVar10;
+  iVar11 = iVar11 - iVar10;
   param_2[3] = (short)((iVar7 - (iVar7 >> 0x1f)) + 3 >> 3);
   param_2[7] = (short)((iVar8 - (iVar8 >> 0x1f)) + 3 >> 3);
   param_2[0xb] = (short)((iVar6 - (iVar6 >> 0x1f)) + 3 >> 3);
-  param_2[0xf] = (short)((iVar12 - (iVar12 >> 0x1f)) + 3 >> 3);
+  param_2[0xf] = (short)((iVar11 - (iVar11 >> 0x1f)) + 3 >> 3);
   return;
 }
 

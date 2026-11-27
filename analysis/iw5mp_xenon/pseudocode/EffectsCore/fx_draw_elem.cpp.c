@@ -2,52 +2,40 @@
 
 // 82419878  FXIR_DrawElem_BillboardSprite  (EffectsCore/fx_draw_elem.cpp:73)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FXIR_DrawElem_BillboardSprite(FxDrawState *param_1)
+void FXIR_DrawElem_BillboardSprite(void)
 
 {
-  uint uVar1;
-  FxDrawState *pFVar2;
-  FxDrawState *pFVar3;
-  bool bVar4;
-  FxElemVisualState *pFVar5;
-  FxElemVisualState *pFVar6;
-  FxElemPreVisualState *pFVar7;
-  __vector4_u_0 in_stack_ffffff78;
-  __vector4_u_0 in_stack_ffffff88;
-  __vector4_u_0 in_stack_ffffff98;
+  byte bVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  char cVar5;
   
-  pFVar2 = (FxDrawState *)__savegprlr_27(param_1);
-  pFVar3 = pFVar2;
-  FX_DrawElement_Setup_Time(pFVar2,pFVar2->elem->msecBegin,(float *)0x0);
-  pFVar7 = (FxElemPreVisualState *)pFVar3->randomSeed;
-  FX_GetOrientation(pFVar3->elemDef,&pFVar3->effect->frameAtSpawn,&pFVar3->effect->frameNow,
-                    (int)pFVar7,&pFVar3->orient);
-  FX_OrientationPosToWorldPos(&pFVar3->orient,(pFVar2->elem->field6_0x14).origin,pFVar2->posWorld);
-  FX_SetupVisualState(pFVar2->elemDef,pFVar2->effect,pFVar2->randomSeed,pFVar2->normTimeUpdateEnd,
-                      pFVar7);
-  pFVar5 = &pFVar2->visState;
-  pFVar6 = pFVar5;
-  FX_EvaluateSize(&pFVar2->preVisState,pFVar5);
-  bVar4 = FX_CullElementForDraw_Sprite(pFVar2);
-  if (!bVar4) {
-    uVar1 = (fx_alphaThreshold->current).unsignedInt;
-    FX_EvaluateDistanceFade(pFVar2);
-    if ((uVar1 <= (pFVar2->preVisState).distanceFade) &&
-       (((pFVar2->elemDef->flags & 0x10000U) == 0 ||
-        (FX_EvaluateVisStateOcclusionFadeAndScale(pFVar2),
-        uVar1 <= (pFVar2->preVisState).occlusionFade)))) {
-      FX_EvaluateVisualState(&pFVar2->preVisState,pFVar2->msecLifeSpan,pFVar6);
-      if (uVar1 <= pFVar5->color[0]) {
-        if ((pFVar2->elemDef->flags & 0x1000U) != 0) {
-          FX_AddVisBlocker(pFVar2->system,pFVar2->posWorld,(pFVar2->visState).size[0],
-                           (float)pFVar5->color[0] * 0.003921569);
+  puVar3 = (undefined4 *)__savegprlr_27();
+  iVar4 = FX_DrawElement_Setup_Time(puVar3,*(undefined4 *)(puVar3[2] + 4),0);
+  FX_GetOrientation(*(undefined4 *)(iVar4 + 0xc),(ulonglong)*(uint *)(iVar4 + 4) + 0x34,
+                    (ulonglong)*(uint *)(iVar4 + 4) + 0x50,*(undefined4 *)(iVar4 + 0x48),
+                    iVar4 + 0x14);
+  FX_OrientationPosToWorldPos(iVar4 + 0x14,(ulonglong)(uint)puVar3[2] + 0x14,puVar3 + 0x16);
+  FX_SetupVisualState((double)(float)puVar3[0x15],puVar3[3],puVar3[1],puVar3[0x12]);
+  FX_EvaluateSize(puVar3 + 0x22,puVar3 + 0x1c);
+  cVar5 = FX_CullElementForDraw_Sprite(puVar3);
+  if (cVar5 == '\0') {
+    uVar2 = *(uint *)(DAT_8332cbb8 + 0xc);
+    FX_EvaluateDistanceFade(puVar3);
+    if (uVar2 <= *(ushort *)(puVar3 + 0x28)) {
+      if (((*(uint *)puVar3[3] & 0x10000) == 0) ||
+         (FX_EvaluateVisStateOcclusionFadeAndScale(puVar3), uVar2 <= *(ushort *)((int)puVar3 + 0xa2)
+         )) {
+        FX_EvaluateVisualState((double)(float)puVar3[0x13],puVar3 + 0x22);
+        bVar1 = *(byte *)(puVar3 + 0x1c);
+        if (uVar2 <= bVar1) {
+          if ((*(uint *)puVar3[3] & 0x1000) != 0) {
+            FX_AddVisBlocker((double)(float)puVar3[0x1f],(double)((float)bVar1 * 0.003921569),
+                             *puVar3,puVar3 + 0x16);
+          }
+          FXV_GenSpriteVerts(puVar3);
         }
-        FXV_GenSpriteVerts(pFVar2,(__vector4)in_stack_ffffff78,(__vector4)in_stack_ffffff88,
-                           (__vector4)in_stack_ffffff98);
       }
     }
   }
@@ -58,64 +46,50 @@ void FXIR_DrawElem_BillboardSprite(FxDrawState *param_1)
 
 // 824199E0  FXIR_DrawElem_OrientedSprite  (EffectsCore/fx_draw_elem.cpp:129)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void FXIR_DrawElem_OrientedSprite(FxDrawState *param_1)
+void FXIR_DrawElem_OrientedSprite(void)
 
 {
-  uint uVar1;
-  FxDrawState *pFVar2;
-  int iVar3;
+  byte bVar1;
+  uint uVar2;
+  undefined4 *puVar3;
   longlong lVar4;
-  longlong lVar5;
-  bool bVar6;
-  FxElemVisualState *pFVar7;
-  FxElemVisualState *pFVar8;
-  FxElemPreVisualState *pFVar9;
-  __vector4_u_0 in_stack_ffffff78;
-  __vector4_u_0 in_stack_ffffff88;
-  __vector4_u_0 in_stack_ffffff98;
+  int iVar5;
+  char cVar6;
   
-  lVar4 = __savegprlr_27(param_1);
-  pFVar2 = (FxDrawState *)lVar4;
-  lVar5 = lVar4;
-  FX_DrawElement_Setup_Time(pFVar2,pFVar2->elem->msecBegin,(float *)0x0);
-  iVar3 = (int)lVar5;
-  pFVar9 = *(FxElemPreVisualState **)(iVar3 + 0x48);
-  FX_GetOrientation(*(FxElemDef **)(iVar3 + 0xc),(FxSpatialFrame *)(*(int *)(iVar3 + 4) + 0x34),
-                    (FxSpatialFrame *)(*(int *)(iVar3 + 4) + 0x50),(int)pFVar9,
-                    (orientation_t *)(iVar3 + 0x14));
-  FX_OrientationPosToWorldPos
-            ((orientation_t *)(iVar3 + 0x14),(pFVar2->elem->field6_0x14).origin,pFVar2->posWorld);
-  FX_SetupVisualState(pFVar2->elemDef,pFVar2->effect,pFVar2->randomSeed,pFVar2->normTimeUpdateEnd,
-                      pFVar9);
-  pFVar7 = &pFVar2->visState;
-  pFVar8 = pFVar7;
-  FX_EvaluateSize(&pFVar2->preVisState,pFVar7);
-  bVar6 = FX_CullElementForDraw_Sprite(pFVar2);
-  if (!bVar6) {
-    uVar1 = (fx_alphaThreshold->current).unsignedInt;
-    FX_EvaluateDistanceFade(pFVar2);
-    if ((uVar1 <= (pFVar2->preVisState).distanceFade) &&
-       (((pFVar2->elemDef->flags & 0x10000U) == 0 ||
-        (FX_EvaluateVisStateOcclusionFadeAndScale(pFVar2),
-        uVar1 <= (pFVar2->preVisState).occlusionFade)))) {
-      FX_EvaluateVisualState(&pFVar2->preVisState,pFVar2->msecLifeSpan,pFVar8);
-      if (uVar1 <= pFVar7->color[0]) {
-        if ((pFVar2->elemDef->flags & 0x1000U) != 0) {
-          FX_AddVisBlocker(pFVar2->system,pFVar2->posWorld,(pFVar2->visState).size[0],
-                           (float)pFVar7->color[0] * 0.003921569);
+  lVar4 = __savegprlr_27();
+  puVar3 = (undefined4 *)lVar4;
+  iVar5 = FX_DrawElement_Setup_Time(lVar4,*(undefined4 *)(puVar3[2] + 4),0);
+  FX_GetOrientation(*(undefined4 *)(iVar5 + 0xc),(ulonglong)*(uint *)(iVar5 + 4) + 0x34,
+                    (ulonglong)*(uint *)(iVar5 + 4) + 0x50,*(undefined4 *)(iVar5 + 0x48),
+                    iVar5 + 0x14);
+  FX_OrientationPosToWorldPos(iVar5 + 0x14,(ulonglong)(uint)puVar3[2] + 0x14,lVar4 + 0x58);
+  FX_SetupVisualState((double)(float)puVar3[0x15],puVar3[3],puVar3[1],puVar3[0x12]);
+  FX_EvaluateSize(lVar4 + 0x88,lVar4 + 0x70);
+  cVar6 = FX_CullElementForDraw_Sprite(lVar4);
+  if (cVar6 == '\0') {
+    uVar2 = *(uint *)(DAT_8332cbb8 + 0xc);
+    FX_EvaluateDistanceFade(lVar4);
+    if (uVar2 <= *(ushort *)(puVar3 + 0x28)) {
+      if (((*(uint *)puVar3[3] & 0x10000) == 0) ||
+         (FX_EvaluateVisStateOcclusionFadeAndScale(lVar4), uVar2 <= *(ushort *)((int)puVar3 + 0xa2))
+         ) {
+        FX_EvaluateVisualState((double)(float)puVar3[0x13],lVar4 + 0x88);
+        bVar1 = *(byte *)(lVar4 + 0x70);
+        if (uVar2 <= bVar1) {
+          if ((*(uint *)puVar3[3] & 0x1000) != 0) {
+            FX_AddVisBlocker((double)(float)puVar3[0x1f],(double)((float)bVar1 * 0.003921569),
+                             *puVar3,lVar4 + 0x58);
+          }
+          loadVectorLeftIndexed(lVar4 + 0x20);
+          loadVectorLeftIndexed(lVar4 + 0x2c);
+          loadVectorLeftIndexed(lVar4 + 0x38);
+          loadVectorRightIndexed(lVar4 + 0x30);
+          loadVectorRightIndexed(lVar4 + 0x48);
+          loadVectorRightIndexed(lVar4 + 0x3c);
+          FXV_GenSpriteVerts(lVar4);
         }
-        loadVectorLeftIndexed(lVar4 + 0x20);
-        loadVectorLeftIndexed(lVar4 + 0x2c);
-        loadVectorLeftIndexed(lVar4 + 0x38);
-        loadVectorRightIndexed(lVar4 + 0x30);
-        loadVectorRightIndexed(lVar4 + 0x48);
-        loadVectorRightIndexed(lVar4 + 0x3c);
-        FXV_GenSpriteVerts(pFVar2,(__vector4)in_stack_ffffff78,(__vector4)in_stack_ffffff88,
-                           (__vector4)in_stack_ffffff98);
       }
     }
   }
@@ -126,96 +100,87 @@ void FXIR_DrawElem_OrientedSprite(FxDrawState *param_1)
 
 // 82419B80  FXIR_DrawElem_Tail  (EffectsCore/fx_draw_elem.cpp:185)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FXIR_DrawElem_Tail(FxDrawState *param_1)
+void FXIR_DrawElem_Tail(void)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  FxElem *pFVar5;
-  FxCamera *pFVar6;
-  FxDrawState *pFVar7;
-  FxDrawState *pFVar8;
-  bool bVar9;
-  FxElemVisualState *pFVar10;
-  float *pfVar11;
-  orientation_t *poVar12;
-  float *pfVar13;
-  orientation_t *poVar14;
-  float *pfVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  char cVar8;
+  float *pfVar9;
+  float *pfVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
   float local_60;
   float local_5c;
   float local_58;
   float local_50;
   float local_4c;
   float local_48;
-  float afStack_40 [16];
+  undefined1 auStack_40 [64];
   
-  pFVar7 = (FxDrawState *)__savegprlr_28(param_1);
-  pFVar8 = pFVar7;
-  FX_DrawElement_Setup_Time(pFVar7,pFVar7->elem->msecBegin,(float *)0x0);
-  poVar14 = &pFVar8->orient;
-  pFVar5 = pFVar8->elem;
-  pfVar13 = (float *)pFVar8->randomSeed;
-  FX_GetOrientation(pFVar8->elemDef,&pFVar8->effect->frameAtSpawn,&pFVar8->effect->frameNow,
-                    (int)pfVar13,poVar14);
-  pfVar11 = pFVar7->posWorld;
-  poVar12 = (orientation_t *)pfVar11;
-  FX_OrientationPosToWorldPos(poVar14,(pFVar5->field6_0x14).origin,pfVar11);
-  FX_DrawElement_Setup_VisualState(pFVar7);
-  pfVar15 = pFVar7->velDirWorld;
+  iVar6 = __savegprlr_28();
+  iVar7 = FX_DrawElement_Setup_Time(iVar6,*(undefined4 *)(*(int *)(iVar6 + 8) + 4),0);
+  uVar5 = *(uint *)(iVar7 + 8);
+  FX_GetOrientation(*(undefined4 *)(iVar7 + 0xc),(ulonglong)*(uint *)(iVar7 + 4) + 0x34,
+                    (ulonglong)*(uint *)(iVar7 + 4) + 0x50,*(undefined4 *)(iVar7 + 0x48),
+                    iVar7 + 0x14);
+  pfVar9 = (float *)(iVar6 + 0x58);
+  FX_OrientationPosToWorldPos(iVar7 + 0x14,(ulonglong)uVar5 + 0x14,pfVar9);
+  FX_DrawElement_Setup_VisualState(iVar6);
+  pfVar10 = (float *)(iVar6 + 100);
   FX_GetVelocityAtTime
-            (pFVar7->elemDef,pFVar7->randomSeed,pFVar7->msecLifeSpan,pFVar7->msecElapsed,poVar12,
-             pfVar13,poVar14->origin);
-  fVar2 = pFVar7->velDirWorld[1];
-  fVar3 = pFVar7->velDirWorld[0];
-  fVar4 = pFVar7->velDirWorld[2];
-  dVar18 = 1.0;
-  dVar17 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-  dVar16 = dVar18;
-  if (-dVar17 < 0.0) {
-    dVar16 = dVar17;
+            ((double)*(float *)(iVar6 + 0x4c),(double)*(float *)(iVar6 + 0x50),
+             *(undefined4 *)(iVar6 + 0xc),*(undefined4 *)(iVar6 + 0x48));
+  fVar2 = *(float *)(iVar6 + 0x68);
+  fVar3 = *(float *)(iVar6 + 100);
+  fVar4 = *(float *)(iVar6 + 0x6c);
+  dVar13 = 1.0;
+  dVar12 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar11 = dVar13;
+  if (-dVar12 < 0.0) {
+    dVar11 = dVar12;
   }
-  fVar1 = (float)(1.0 / dVar16);
-  pFVar7->velDirWorld[0] = fVar3 * fVar1;
-  pFVar7->velDirWorld[1] = fVar2 * fVar1;
-  pFVar7->velDirWorld[2] = fVar4 * fVar1;
-  bVar9 = FX_CullElementForDraw_Tail(pFVar7);
-  if (!bVar9) {
-    fVar2 = -(pFVar7->visState).size[1];
-    local_50 = fVar2 * *pfVar15 + *pfVar11;
-    *pfVar11 = local_50;
-    local_4c = fVar2 * pFVar7->velDirWorld[1] + pFVar7->posWorld[1];
-    pFVar7->posWorld[1] = local_4c;
-    local_48 = pFVar7->velDirWorld[2] * fVar2 + pFVar7->posWorld[2];
-    pFVar7->posWorld[2] = local_48;
-    pFVar6 = pFVar7->camera;
-    local_50 = pFVar6->origin[0] - local_50;
-    local_48 = pFVar6->origin[2] - local_48;
-    local_4c = pFVar6->origin[1] - local_4c;
-    Vec3Cross(pfVar15,&local_50,&local_60);
-    dVar17 = (double)SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
-    dVar16 = dVar18;
-    if (-dVar17 < 0.0) {
-      dVar16 = dVar17;
+  fVar1 = (float)(1.0 / dVar11);
+  *(float *)(iVar6 + 100) = fVar3 * fVar1;
+  *(float *)(iVar6 + 0x68) = fVar2 * fVar1;
+  *(float *)(iVar6 + 0x6c) = fVar4 * fVar1;
+  cVar8 = FX_CullElementForDraw_Tail(iVar6);
+  if (cVar8 == '\0') {
+    fVar2 = -*(float *)(iVar6 + 0x80);
+    local_50 = fVar2 * *pfVar10 + *pfVar9;
+    *pfVar9 = local_50;
+    fVar3 = fVar2 * *(float *)(iVar6 + 0x68) + *(float *)(iVar6 + 0x5c);
+    dVar12 = (double)fVar3;
+    *(float *)(iVar6 + 0x5c) = fVar3;
+    fVar2 = *(float *)(iVar6 + 0x6c) * fVar2 + *(float *)(iVar6 + 0x60);
+    dVar11 = (double)fVar2;
+    *(float *)(iVar6 + 0x60) = fVar2;
+    pfVar9 = *(float **)(iVar6 + 0x44);
+    local_50 = *pfVar9 - local_50;
+    local_48 = (float)((double)pfVar9[2] - dVar11);
+    local_4c = (float)((double)pfVar9[1] - dVar12);
+    Vec3Cross(dVar11,dVar12,pfVar10,&local_50,&local_60);
+    dVar12 = (double)SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
+    dVar11 = dVar13;
+    if (-dVar12 < 0.0) {
+      dVar11 = dVar12;
     }
-    fVar2 = (float)(dVar18 / dVar16);
+    fVar2 = (float)(dVar13 / dVar11);
     local_60 = local_60 * fVar2;
     local_5c = local_5c * fVar2;
     local_58 = local_58 * fVar2;
-    pFVar10 = (FxElemVisualState *)pfVar15;
-    Vec3Cross(&local_60,pfVar15,afStack_40);
-    FX_EvaluateVisualState(&pFVar7->preVisState,pFVar7->msecLifeSpan,pFVar10);
-    if ((fx_alphaThreshold->current).unsignedInt <= (uint)(pFVar7->visState).color[0]) {
-      FX_GenSpriteVerts(pFVar7,&local_60,pfVar15,afStack_40);
+    Vec3Cross(&local_60,pfVar10,auStack_40);
+    FX_EvaluateVisualState((double)*(float *)(iVar6 + 0x4c),iVar6 + 0x88);
+    if ((ulonglong)*(uint *)(DAT_8332cbb8 + 0xc) <= (ulonglong)*(byte *)(iVar6 + 0x70)) {
+      FX_GenSpriteVerts(iVar6,&local_60,pfVar10,auStack_40,
+                        (ulonglong)*(byte *)(iVar6 + 0x70) -
+                        (ulonglong)*(uint *)(DAT_8332cbb8 + 0xc));
     }
   }
   __restgprlr_28();
@@ -225,75 +190,63 @@ void FXIR_DrawElem_Tail(FxDrawState *param_1)
 
 // 82419D90  FXIR_DrawElem_Model  (EffectsCore/fx_draw_elem.cpp:219)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
-void FXIR_DrawElem_Model(FxDrawState *param_1)
+void FXIR_DrawElem_Model(void)
 
 {
-  FxElemDef *pFVar1;
-  bool bVar2;
-  FxDrawState *pFVar3;
-  FxDrawState *pFVar4;
-  FxElemVisuals FVar5;
-  FxElem *pFVar6;
-  uint uVar7;
-  GfxScaledPlacement aGStack_50 [2];
+  uint uVar1;
+  uint *puVar2;
+  bool bVar3;
+  int *piVar5;
+  int iVar6;
+  ulonglong uVar4;
+  undefined8 uVar7;
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [64];
   
-  pFVar3 = (FxDrawState *)__savegprlr_27(param_1);
-  pFVar4 = pFVar3;
-  FX_DrawElement_Setup_Time(pFVar3,pFVar3->elem->msecBegin,(float *)0x0);
-  pFVar6 = pFVar4->elem;
-  FX_GetOrientation(pFVar4->elemDef,&pFVar4->effect->frameAtSpawn,&pFVar4->effect->frameNow,
-                    pFVar4->randomSeed,&pFVar4->orient);
-  FX_OrientationPosToWorldPos(&pFVar4->orient,(pFVar6->field6_0x14).origin,pFVar3->posWorld);
-  FX_DrawElement_Setup_VisualState(pFVar3);
-  FX_EvaluateScale(&pFVar3->preVisState,&pFVar3->visState);
-  if ((pFVar3->visState).scale != 0.0) {
-    FX_SetPlacement(pFVar3,aGStack_50);
-    if (pFVar3->elemDef->elemType != '\a') {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
-                      ,0xeb,0,"%s\n\t(draw->elemDef->elemType) = %i");
+  piVar5 = (int *)__savegprlr_27();
+  iVar6 = FX_DrawElement_Setup_Time(piVar5,*(undefined4 *)(piVar5[2] + 4),0);
+  uVar1 = *(uint *)(iVar6 + 8);
+  FX_GetOrientation(*(undefined4 *)(iVar6 + 0xc),(ulonglong)*(uint *)(iVar6 + 4) + 0x34,
+                    (ulonglong)*(uint *)(iVar6 + 4) + 0x50,*(undefined4 *)(iVar6 + 0x48),
+                    iVar6 + 0x14);
+  FX_OrientationPosToWorldPos(iVar6 + 0x14,(ulonglong)uVar1 + 0x14,piVar5 + 0x16);
+  FX_DrawElement_Setup_VisualState(piVar5);
+  FX_EvaluateScale(piVar5 + 0x22,piVar5 + 0x1c);
+  if ((float)piVar5[0x21] != 0.0) {
+    FX_SetPlacement(piVar5,auStack_50);
+    if (*(char *)(piVar5[3] + 0xb0) != '\a') {
+      MyAssertHandler(0xffffffff82061940,0xeb,0,0xffffffff82061a64,0xffffffff82061a88);
     }
-    if ((pFVar3->elemDef->flags & 0x8000000U) != 0) {
-      Phys_ObjGetInterpolatedState
-                (PHYS_WORLD_FX,(pFVar3->elem->field6_0x14).physObjId,aGStack_50[0].base.origin,
-                 (float *)aGStack_50);
+    if ((*(uint *)piVar5[3] & 0x8000000) != 0) {
+      Phys_ObjGetInterpolatedState(1,*(undefined4 *)(piVar5[2] + 0x14),auStack_40,auStack_50);
     }
-    FVar5 = FX_GetElemVisuals(pFVar3->elemDef,pFVar3->randomSeed);
-    if (FVar5.anonymous == (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
-                      ,0xf2,0,"%s");
+    uVar4 = FX_GetElemVisuals(piVar5[3],piVar5[0x12]);
+    if ((uVar4 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82061940,0xf2,0,0xffffffff82000f98,0xffffffff82061a54);
     }
-    pFVar1 = pFVar3->elemDef;
+    puVar2 = (uint *)piVar5[3];
     uVar7 = 0xe00;
-    if ((pFVar1->flags & 0x800U) != 0) {
+    if ((*puVar2 & 0x800) != 0) {
       uVar7 = 0xe02;
     }
-    if (((pFVar1->flags & 0x80000000U) == 0) ||
-       (bVar2 = true, (pFVar1->effectEmitted).handle == (FxEffectDef *)0x0)) {
-      bVar2 = false;
+    if (((*puVar2 & 0x80000000) == 0) || (bVar3 = true, puVar2[0x38] == 0)) {
+      bVar3 = false;
     }
-    if (bVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
-                      ,0xf6,0,"%s");
+    if (bVar3) {
+      MyAssertHandler(0xffffffff82061940,0xf6,0,0xffffffff82000f98,0xffffffff820613d4);
     }
-    pFVar6 = FX_ElemFromHandle(pFVar3->system,pFVar3->elemHandle);
-    if (pFVar6 != pFVar3->elem) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
-                      ,0xf7,0,"%s");
+    iVar6 = FX_ElemFromHandle(*piVar5,*(undefined2 *)(piVar5 + 0x2b));
+    if (iVar6 != piVar5[2]) {
+      MyAssertHandler(0xffffffff82061940,0xf7,0,0xffffffff82000f98,0xffffffff820619f8);
     }
-    if (0x7ff < pFVar3->elemHandle >> 3) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
-                      ,0xf8,0,
-                      "draw->elemHandle * FxElem::HANDLE_SCALE / sizeof( FxElem ) doesn\'t index FX_ELEM_LIMIT\n\t%i not in [0, %i)"
-                     );
+    if (0x7ff < *(ushort *)(piVar5 + 0x2b) >> 3) {
+      MyAssertHandler(0xffffffff82061940,0xf8,0,0xffffffff82061988,*(ushort *)(piVar5 + 0x2b) >> 3,
+                      0x800);
     }
     R_FilterXModelIntoScene
-              (FVar5.model,aGStack_50,uVar7,
-               (ushort *)((pFVar3->elemHandle >> 2 & 0x3ffffffe) + (int)pFVar3->system->elemChild));
+              (uVar4,auStack_50,uVar7,
+               ((ulonglong)(*(ushort *)(piVar5 + 0x2b) >> 2) & 0x3ffffffe) +
+               (ulonglong)*(uint *)(*piVar5 + 0x40));
   }
   __restgprlr_27();
   return;
@@ -302,38 +255,33 @@ void FXIR_DrawElem_Model(FxDrawState *param_1)
 
 // 82419FB0  FXIR_DrawElem_Light  (EffectsCore/fx_draw_elem.cpp:255)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FXIR_DrawElem_Light(FxDrawState *param_1)
+void FXIR_DrawElem_Light(void)
 
 {
-  float fVar1;
-  FxDrawState *pFVar2;
-  FxDrawState *pFVar3;
-  bool bVar4;
-  FxElemVisualState *pFVar5;
+  uint uVar1;
+  float fVar2;
+  int *piVar3;
+  int iVar4;
+  char cVar5;
   
-  pFVar2 = (FxDrawState *)__savegprlr_28(param_1);
-  if ((pFVar2->system->systemFlags & 0x82) == 0) {
-    pFVar3 = pFVar2;
-    FX_DrawElement_Setup_Time(pFVar2,pFVar2->elem->msecBegin,(float *)0x0);
-    pFVar5 = (FxElemVisualState *)&pFVar3->elem->field6_0x14;
-    FX_GetOrientation(pFVar3->elemDef,&pFVar3->effect->frameAtSpawn,&pFVar3->effect->frameNow,
-                      pFVar3->randomSeed,&pFVar3->orient);
-    FX_OrientationPosToWorldPos(&pFVar3->orient,(float *)pFVar5,pFVar2->posWorld);
-    FX_DrawElement_Setup_VisualState(pFVar2);
-    bVar4 = FX_CullElementForDraw_Light(pFVar2);
-    if (!bVar4) {
-      FX_EvaluateVisualState(&pFVar2->preVisState,pFVar2->msecLifeSpan,pFVar5);
-      FX_EvaluateScale(&pFVar2->preVisState,&pFVar2->visState);
-      fVar1 = (pFVar2->visState).scale * 0.003921569;
+  piVar3 = (int *)__savegprlr_28();
+  if ((*(uint *)(*piVar3 + 0xb4) & 0x82) == 0) {
+    iVar4 = FX_DrawElement_Setup_Time(piVar3,*(undefined4 *)(piVar3[2] + 4),0);
+    uVar1 = *(uint *)(iVar4 + 8);
+    FX_GetOrientation(*(undefined4 *)(iVar4 + 0xc),(ulonglong)*(uint *)(iVar4 + 4) + 0x34,
+                      (ulonglong)*(uint *)(iVar4 + 4) + 0x50,*(undefined4 *)(iVar4 + 0x48),
+                      iVar4 + 0x14);
+    FX_OrientationPosToWorldPos(iVar4 + 0x14,(ulonglong)uVar1 + 0x14,piVar3 + 0x16);
+    FX_DrawElement_Setup_VisualState(piVar3);
+    cVar5 = FX_CullElementForDraw_Light(piVar3);
+    if (cVar5 == '\0') {
+      FX_EvaluateVisualState((double)(float)piVar3[0x13],piVar3 + 0x22);
+      FX_EvaluateScale(piVar3 + 0x22,piVar3 + 0x1c);
+      fVar2 = (float)piVar3[0x21] * 0.003921569;
       R_AddOmniLightToScene
-                (pFVar2->posWorld,(pFVar2->visState).size[0],
-                 (float)(pFVar2->visState).color[1] * fVar1,
-                 (float)(pFVar2->visState).color[2] * fVar1,
-                 (float)(pFVar2->visState).color[3] * fVar1);
+                ((double)(float)piVar3[0x1f],(double)((float)*(byte *)((int)piVar3 + 0x71) * fVar2),
+                 (double)((float)*(byte *)((int)piVar3 + 0x72) * fVar2),
+                 (double)((float)*(byte *)((int)piVar3 + 0x73) * fVar2),piVar3 + 0x16);
     }
   }
   __restgprlr_28();
@@ -343,56 +291,41 @@ void FXIR_DrawElem_Light(FxDrawState *param_1)
 
 // 8241A0D0  FXIR_DrawElem_SpotLight  (EffectsCore/fx_draw_elem.cpp:283)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FXIR_DrawElem_SpotLight(FxDrawState *param_1)
+void FXIR_DrawElem_SpotLight(void)
 
 {
-  byte bVar1;
+  uint uVar1;
   float fVar2;
-  FxDrawState *pFVar3;
-  FxDrawState *pFVar4;
-  bool bVar5;
-  FxElemVisualState *pFVar6;
-  GfxLightDef *pGVar7;
-  orientation_t *poVar8;
-  char *pcVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   
-  pFVar3 = (FxDrawState *)__savegprlr_28(param_1);
-  pFVar4 = pFVar3;
-  FX_DrawElement_Setup_Time(pFVar3,pFVar3->elem->msecBegin,(float *)0x0);
-  poVar8 = &pFVar4->orient;
-  pFVar6 = (FxElemVisualState *)&pFVar4->elem->field6_0x14;
-  pcVar9 = (char *)poVar8;
-  FX_GetOrientation(pFVar4->elemDef,&pFVar4->effect->frameAtSpawn,&pFVar4->effect->frameNow,
-                    pFVar4->randomSeed,poVar8);
-  FX_OrientationPosToWorldPos(poVar8,(float *)pFVar6,pFVar3->posWorld);
-  FX_DrawElement_Setup_VisualState(pFVar3);
-  bVar5 = FX_CullElementForDraw_Light(pFVar3);
-  if (!bVar5) {
-    FX_EvaluateVisualState(&pFVar3->preVisState,pFVar3->msecLifeSpan,pFVar6);
-    FX_EvaluateScale(&pFVar3->preVisState,&pFVar3->visState);
-    if ((pFVar3->elemDef->extended).trailDef == (FxTrailDef *)0x0) {
-      pcVar9 = "draw->elemDef->extended.spotLightDef";
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
-                      ,0x12d,0,"%s");
+  iVar3 = __savegprlr_28();
+  iVar4 = FX_DrawElement_Setup_Time(iVar3,*(undefined4 *)(*(int *)(iVar3 + 8) + 4),0);
+  uVar1 = *(uint *)(iVar4 + 8);
+  FX_GetOrientation(*(undefined4 *)(iVar4 + 0xc),(ulonglong)*(uint *)(iVar4 + 4) + 0x34,
+                    (ulonglong)*(uint *)(iVar4 + 4) + 0x50,*(undefined4 *)(iVar4 + 0x48),
+                    iVar4 + 0x14);
+  FX_OrientationPosToWorldPos(iVar4 + 0x14,(ulonglong)uVar1 + 0x14,iVar3 + 0x58);
+  FX_DrawElement_Setup_VisualState(iVar3);
+  cVar5 = FX_CullElementForDraw_Light(iVar3);
+  if (cVar5 == '\0') {
+    FX_EvaluateVisualState((double)*(float *)(iVar3 + 0x4c),iVar3 + 0x88);
+    FX_EvaluateScale(iVar3 + 0x88,iVar3 + 0x70);
+    if (*(int *)(*(int *)(iVar3 + 0xc) + 0xf4) == 0) {
+      MyAssertHandler(0xffffffff82061940,0x12d,0,0xffffffff82000f98,0xffffffff82061ab8);
     }
-    bVar1 = (pFVar3->visState).color[2];
-    pGVar7 = (GfxLightDef *)(uint)bVar1;
-    fVar2 = (pFVar3->visState).scale * 0.003921569;
-    dVar12 = (double)((float)(pFVar3->visState).color[3] * fVar2);
-    dVar11 = (double)((float)bVar1 * fVar2);
-    dVar10 = (double)((float)(pFVar3->visState).color[1] * fVar2);
-    FX_GetElemVisuals(pFVar3->elemDef,pFVar3->randomSeed);
+    fVar2 = *(float *)(iVar3 + 0x84) * 0.003921569;
+    dVar8 = (double)((float)*(byte *)(iVar3 + 0x73) * fVar2);
+    dVar7 = (double)((float)*(byte *)(iVar3 + 0x72) * fVar2);
+    dVar6 = (double)((float)*(byte *)(iVar3 + 0x71) * fVar2);
+    FX_GetElemVisuals(*(undefined4 *)(iVar3 + 0xc),*(undefined4 *)(iVar3 + 0x48));
     R_AddSpotLightToScene
-              (pFVar3->posWorld,(pFVar3->orient).axis[0],(pFVar3->orient).axis[2],
-               (pFVar3->visState).size[0],(float)dVar10,(float)dVar11,(float)dVar12,pGVar7,
-               (FxSpotLightDef *)pcVar9);
+              ((double)*(float *)(iVar3 + 0x7c),dVar6,dVar7,dVar8,iVar3 + 0x58,iVar3 + 0x20,
+               iVar3 + 0x38);
   }
   __restgprlr_28();
   return;
@@ -401,23 +334,19 @@ void FXIR_DrawElem_SpotLight(FxDrawState *param_1)
 
 // 824194C0  FX_DrawElement_Setup_Time  (EffectsCore/fx_draw_elem.cpp:319)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_DrawElement_Setup_Time(FxDrawState *param_1,int param_2,float *param_3)
+void FX_DrawElement_Setup_Time(int param_1,int param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   
-  fVar1 = (float)(longlong)(param_1->msecDraw - param_2);
+  fVar1 = (float)(longlong)(*(int *)(param_1 + 0xa8) - param_2);
   fVar3 = (float)(longlong)
-                 (((int)((uint)*(ushort *)(&DAT_82066b0e + param_1->randomSeed * 4) *
-                        ((param_1->elemDef->lifeSpanMsec).amplitude + 1)) >> 0x10) +
-                 (param_1->elemDef->lifeSpanMsec).base);
-  param_1->msecLifeSpan = fVar3;
+                 (((int)((uint)*(ushort *)(&DAT_82066b0e + *(int *)(param_1 + 0x48) * 4) *
+                        (*(int *)(*(int *)(param_1 + 0xc) + 0x34) + 1)) >> 0x10) +
+                 *(int *)(*(int *)(param_1 + 0xc) + 0x30));
+  *(float *)(param_1 + 0x4c) = fVar3;
   if (param_3 != (float *)0x0) {
     *param_3 = fVar1 / fVar3;
   }
@@ -425,32 +354,28 @@ void FX_DrawElement_Setup_Time(FxDrawState *param_1,int param_2,float *param_3)
   if (fVar1 - fVar3 < 0.0) {
     fVar2 = fVar1 / fVar3;
   }
-  param_1->normTimeUpdateEnd = fVar2;
-  fVar2 = param_1->msecLifeSpan * 0.99;
+  *(float *)(param_1 + 0x54) = fVar2;
+  fVar2 = *(float *)(param_1 + 0x4c) * 0.99;
   if (fVar1 - fVar3 < 0.0) {
     fVar2 = fVar1;
   }
-  param_1->msecElapsed = fVar2;
+  *(float *)(param_1 + 0x50) = fVar2;
   return;
 }
 
 
 // 82419568  FX_DrawElement_Setup_Position  (EffectsCore/fx_draw_elem.cpp:341)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_DrawElement_Setup_Position(FxDrawState *param_1,float *param_2)
+void FX_DrawElement_Setup_Position(undefined8 param_1,undefined8 param_2)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  FX_GetOrientation(*(FxElemDef **)(iVar1 + 0xc),(FxSpatialFrame *)(*(int *)(iVar1 + 4) + 0x34),
-                    (FxSpatialFrame *)(*(int *)(iVar1 + 4) + 0x50),*(int *)(iVar1 + 0x48),
-                    (orientation_t *)(iVar1 + 0x14));
-  FX_OrientationPosToWorldPos((orientation_t *)(iVar1 + 0x14),param_2,(float *)(iVar1 + 0x58));
+  iVar1 = __savegprlr_29();
+  FX_GetOrientation(*(undefined4 *)(iVar1 + 0xc),(ulonglong)*(uint *)(iVar1 + 4) + 0x34,
+                    (ulonglong)*(uint *)(iVar1 + 4) + 0x50,*(undefined4 *)(iVar1 + 0x48),
+                    iVar1 + 0x14);
+  FX_OrientationPosToWorldPos(iVar1 + 0x14,param_2,iVar1 + 0x58);
   __restgprlr_29();
   return;
 }
@@ -458,33 +383,27 @@ void FX_DrawElement_Setup_Position(FxDrawState *param_1,float *param_2)
 
 // 824195B8  FX_DrawElement_Setup_VisualState  (EffectsCore/fx_draw_elem.cpp:348)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_DrawElement_Setup_VisualState(FxDrawState *param_1)
+void FX_DrawElement_Setup_VisualState(void)
 
 {
-  FxDrawState *pFVar1;
-  FxElemVisualState *pFVar2;
-  FxElemPreVisualState *in_r6;
+  undefined4 *puVar1;
+  byte *pbVar2;
   
-  pFVar1 = (FxDrawState *)__savegprlr_29(param_1);
-  FX_SetupVisualState(pFVar1->elemDef,pFVar1->effect,pFVar1->randomSeed,pFVar1->normTimeUpdateEnd,
-                      in_r6);
-  pFVar2 = &pFVar1->visState;
-  FX_EvaluateSize(&pFVar1->preVisState,pFVar2);
-  if ((pFVar1->elemDef->flags & 0x1000U) != 0) {
-    FX_EvaluateVisAlpha(&pFVar1->preVisState,pFVar2);
+  puVar1 = (undefined4 *)__savegprlr_29();
+  FX_SetupVisualState((double)(float)puVar1[0x15],puVar1[3],puVar1[1],puVar1[0x12]);
+  pbVar2 = (byte *)(puVar1 + 0x1c);
+  FX_EvaluateSize(puVar1 + 0x22,pbVar2);
+  if ((*(uint *)puVar1[3] & 0x1000) != 0) {
+    FX_EvaluateVisAlpha(puVar1 + 0x22,pbVar2);
   }
-  FX_EvaluateDistanceFade(pFVar1);
-  if ((pFVar1->elemDef->flags & 0x10000U) != 0) {
-    FX_EvaluateVisStateOcclusionFadeAndScale(pFVar1);
+  FX_EvaluateDistanceFade(puVar1);
+  if ((*(uint *)puVar1[3] & 0x10000) != 0) {
+    FX_EvaluateVisStateOcclusionFadeAndScale(puVar1);
   }
-  if ((pFVar1->elemDef->flags & 0x1000U) != 0) {
-    FX_AddVisBlocker(pFVar1->system,pFVar1->posWorld,(pFVar1->visState).size[0],
-                     (float)(uint)((int)((uint)(pFVar1->preVisState).distanceFade *
-                                        (uint)pFVar2->color[0]) >> 8) * 0.003921569);
+  if ((*(uint *)puVar1[3] & 0x1000) != 0) {
+    FX_AddVisBlocker((double)(float)puVar1[0x1f],
+                     (double)((float)(uint)((int)((uint)*(ushort *)(puVar1 + 0x28) * (uint)*pbVar2)
+                                           >> 8) * 0.003921569),*puVar1,puVar1 + 0x16);
   }
   __restgprlr_29();
   return;
@@ -493,80 +412,75 @@ void FX_DrawElement_Setup_VisualState(FxDrawState *param_1)
 
 // 82419698  FX_DrawElement_Setup_Camera  (EffectsCore/fx_draw_elem.cpp:378)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_DrawElement_Setup_Camera(FxDrawState *param_1,FxCamera *param_2)
+void FX_DrawElement_Setup_Camera(int *param_1,int param_2)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  float *pfVar5;
+  undefined4 *puVar6;
   
-  if (param_2 == (FxCamera *)0x0) {
-    param_2 = &param_1->system->camera;
+  if (param_2 == 0) {
+    param_2 = *param_1 + 0xd4;
   }
-  param_1->camera = param_2;
-  fVar1 = param_2->axis[0][1];
-  fVar2 = param_2->axis[0][2];
-  pfVar3 = (float *)((uint)&param_1->negCameraNormal & 0xfffffff0);
-  *pfVar3 = -param_2->axis[0][0];
-  pfVar3[1] = -fVar1;
-  pfVar3[2] = -fVar2;
-  pfVar3[3] = 0.0;
-  fVar1 = param_2->axis[1][1];
-  fVar2 = param_2->axis[1][2];
-  pfVar3 = (float *)((uint)&param_1->negCameraTangent & 0xfffffff0);
-  *pfVar3 = -param_2->axis[1][0];
-  pfVar3[1] = -fVar1;
-  pfVar3[2] = -fVar2;
-  pfVar3[3] = 0.0;
-  fVar1 = param_2->axis[2][1];
-  fVar2 = param_2->axis[2][2];
-  pfVar3 = (float *)((uint)&param_1->cameraBitangent & 0xfffffff0);
-  *pfVar3 = param_2->axis[2][0];
-  pfVar3[1] = fVar1;
-  pfVar3[2] = fVar2;
-  pfVar3[3] = 0.0;
+  param_1[0x11] = param_2;
+  fVar1 = *(float *)(param_2 + 0x74);
+  fVar2 = *(float *)(param_2 + 0x78);
+  pfVar5 = (float *)((uint)(param_1 + 0x30) & 0xfffffff0);
+  *pfVar5 = -*(float *)(param_2 + 0x70);
+  pfVar5[1] = -fVar1;
+  pfVar5[2] = -fVar2;
+  pfVar5[3] = 0.0;
+  fVar1 = *(float *)(param_2 + 0x80);
+  fVar2 = *(float *)(param_2 + 0x84);
+  pfVar5 = (float *)((uint)(param_1 + 0x34) & 0xfffffff0);
+  *pfVar5 = -*(float *)(param_2 + 0x7c);
+  pfVar5[1] = -fVar1;
+  pfVar5[2] = -fVar2;
+  pfVar5[3] = 0.0;
+  uVar3 = *(undefined4 *)(param_2 + 0x8c);
+  uVar4 = *(undefined4 *)(param_2 + 0x90);
+  puVar6 = (undefined4 *)((uint)(param_1 + 0x38) & 0xfffffff0);
+  *puVar6 = *(undefined4 *)(param_2 + 0x88);
+  puVar6[1] = uVar3;
+  puVar6[2] = uVar4;
+  puVar6[3] = 0;
   return;
 }
 
 
 // 82419758  FXIR_DrawElement  (EffectsCore/fx_draw_elem.cpp:388)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FXIR_DrawElement(FxCamera *param_1,FxElemDef *param_2,FxElem *param_3,ushort param_4,
-                     FxDrawState *param_5)
+void FXIR_DrawElement(undefined8 param_1,int param_2,int param_3,undefined2 param_4,
+                     undefined8 param_5)
 
 {
-  ulonglong uVar1;
+  int iVar1;
   ulonglong uVar2;
+  ulonglong uVar3;
   
-  __savegprlr_27(param_1);
-  if (9 < param_2->elemType) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp",
-                    0x189,0,
-                    "elemDef->elemType doesn\'t index FX_ELEM_TYPE_LAST_DRAWN + 1\n\t%i not in [0, %i)"
-                   );
+  __savegprlr_27();
+  if (9 < *(byte *)(param_2 + 0xb0)) {
+    MyAssertHandler(0xffffffff82061940,0x189,0,0xffffffff820618f0,*(byte *)(param_2 + 0xb0),10);
   }
-  if ((param_2->visualCount != '\0') && (param_3->msecBegin <= param_5->msecDraw)) {
-    param_5->elemHandle = param_4;
-    param_5->elem = param_3;
-    param_5->elemDef = param_2;
-    uVar2 = (ulonglong)param_3->sequence * 0x128 + (ulonglong)param_5->effect->randomSeed +
-            (ulonglong)(uint)param_2->randomSeed + (ulonglong)(uint)param_3->msecBegin;
-    uVar1 = (uVar2 & 0xffffffff) * 0x11a3019b >> 0x20;
-    param_5->randomSeed =
-         (int)uVar2 + (int)(((uVar2 - uVar1 & 0xffffffff) >> 1) + uVar1 >> 8) * -0x1df & 0xffff;
-    if (s_drawElemHandler[param_2->elemType] == (_func___cdecl_void_FxDrawState_ptr *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
-                      ,0x19c,0,"%s");
+  if ((*(char *)(param_2 + 0xb1) != '\0') &&
+     (iVar1 = (int)param_5, *(int *)(param_3 + 4) <= *(int *)(iVar1 + 0xa8))) {
+    *(undefined2 *)(iVar1 + 0xac) = param_4;
+    *(int *)(iVar1 + 8) = param_3;
+    *(int *)(iVar1 + 0xc) = param_2;
+    uVar3 = (ulonglong)*(byte *)(param_3 + 1) * 0x128 +
+            (ulonglong)*(ushort *)(*(int *)(iVar1 + 4) + 0x16) +
+            (ulonglong)*(uint *)(param_2 + 0xfc) + (ulonglong)*(uint *)(param_3 + 4);
+    uVar2 = (uVar3 & 0xffffffff) * 0x11a3019b >> 0x20;
+    *(uint *)(iVar1 + 0x48) =
+         (int)uVar3 + (int)(((uVar3 - uVar2 & 0xffffffff) >> 1) + uVar2 >> 8) * -0x1df & 0xffff;
+    if ((&PTR_FXIR_DrawElem_BillboardSprite_8206189c)[*(byte *)(param_2 + 0xb0)] == (undefined *)0x0
+       ) {
+      MyAssertHandler(0xffffffff82061940,0x19c,0,0xffffffff82000f98,0xffffffff820618c4);
     }
-    (*s_drawElemHandler[param_2->elemType])(param_5);
+    (*(code *)(&PTR_FXIR_DrawElem_BillboardSprite_8206189c)[*(byte *)(param_2 + 0xb0)])(param_5);
   }
   __restgprlr_27();
   return;

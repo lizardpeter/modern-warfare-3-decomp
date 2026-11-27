@@ -2,29 +2,29 @@
 
 // 829283F8  _recalloc  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/recalloc.c:54)
 
-void * _recalloc(void *param_1,uint param_2,uint param_3)
+void * _recalloc(void *_Memory,size_t _Count,size_t _Size)
 
 {
   void *pvVar1;
   int *piVar2;
-  uint uVar3;
+  size_t sVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  uint uVar6;
+  size_t _NewSize;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pvVar1 = (void *)__savegprlr_29(param_1);
-  uVar3 = 0;
+  uVar5 = (ulonglong)(int)_Size;
+  uVar4 = (ulonglong)(int)_Count;
+  pvVar1 = (void *)__savegprlr_29(_Memory);
+  sVar3 = 0;
   if (((uVar4 & 0xffffffff) == 0) ||
      (trapWord(6,uVar4,0), (uVar5 & 0xffffffff) <= 0xfffff000 / (uVar4 & 0xffffffff))) {
-    uVar6 = (int)uVar4 * (int)uVar5;
+    _NewSize = (int)uVar4 * (int)uVar5;
     if (pvVar1 != (void *)0x0) {
-      uVar3 = _msize(pvVar1);
+      sVar3 = _msize(pvVar1);
     }
-    pvVar1 = realloc(pvVar1,uVar6);
-    if ((pvVar1 != (void *)0x0) && (uVar3 < uVar6)) {
-      memset();
+    pvVar1 = realloc(pvVar1,_NewSize);
+    if ((pvVar1 != (void *)0x0) && (sVar3 < _NewSize)) {
+      memset((void *)(sVar3 + (int)pvVar1),0,_NewSize - sVar3);
     }
   }
   else {

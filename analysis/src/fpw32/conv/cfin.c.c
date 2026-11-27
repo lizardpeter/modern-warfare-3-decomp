@@ -2,21 +2,21 @@
 
 // 82921450  _fltin2  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cfin.c:46)
 
-_flt * _fltin2(_flt *param_1,char *param_2,localeinfo_struct *param_3)
+FLT _fltin2(FLT _Flt,char *_Str,_locale_t _Locale)
 
 {
   uint *puVar1;
   uint uVar2;
   INTRNCVT_STATUS IVar3;
-  _flt *p_Var4;
+  FLT p_Var4;
   uint uVar5;
   char *local_50 [2];
   _CRT_DOUBLE local_48;
   _LDBL12 a_Stack_40 [5];
   
-  puVar1 = (uint *)__savegprlr_27(param_1);
+  puVar1 = (uint *)__savegprlr_27(_Flt);
   uVar5 = 0;
-  uVar2 = __strgtold12_l(a_Stack_40,local_50,param_2,0,0,0,0,param_3);
+  uVar2 = __strgtold12_l(a_Stack_40,local_50,_Str,0,0,0,0,_Locale);
   if ((uVar2 & 4) == 0) {
     IVar3 = _ld12tod(a_Stack_40,&local_48);
     if (((uVar2 & 2) != 0) || (IVar3 == INTRNCVT_OVERFLOW)) {
@@ -32,9 +32,9 @@ _flt * _fltin2(_flt *param_1,char *param_2,localeinfo_struct *param_3)
     local_48.x._4_4_ = 0;
   }
   *puVar1 = uVar5;
-  puVar1[1] = (int)local_50[0] - (int)param_2;
+  puVar1[1] = (int)local_50[0] - (int)_Str;
   *(ulonglong *)(puVar1 + 4) = CONCAT44(local_48.x._0_4_,local_48.x._4_4_);
-  p_Var4 = (_flt *)__restgprlr_27(puVar1);
+  p_Var4 = (FLT)__restgprlr_27(puVar1);
   return p_Var4;
 }
 

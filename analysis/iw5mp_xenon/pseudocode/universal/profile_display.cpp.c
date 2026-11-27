@@ -2,32 +2,30 @@
 
 // 82608E10  TRACK_profile_display  (universal/profile_display.cpp:759)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_profile_display(void)
 
 {
-  track_static_alloc_internal(s_profileMain,0x70,"s_profileMain",0);
-  track_static_alloc_internal(s_profileGenericCGame,0x58,"s_profileGenericCGame",0);
-  track_static_alloc_internal(s_profileGenericGame,0x80,"s_profileGenericGame",0);
-  track_static_alloc_internal(s_profileProbes,0x60,"s_profileProbes",0);
-  track_static_alloc_internal(s_profileFrontEnd,0x48,"s_profileFrontEnd",0);
-  track_static_alloc_internal(s_profileRenderer,0x70,"s_profileRenderer",0);
-  track_static_alloc_internal(s_profileRenderer2,0x50,"s_profileRenderer2",0);
-  track_static_alloc_internal(s_profileRenderer3,0x98,"s_profileRenderer3",0);
-  track_static_alloc_internal(s_profileCinematics,0x28,"s_profileCinematics",0);
-  track_static_alloc_internal(s_profileWater,0x38,"s_profileWater",0);
-  track_static_alloc_internal(s_profileSnd,0x30,"s_profileSnd",0);
-  track_static_alloc_internal(s_profileXanim,0x60,"s_profileXanim",0);
-  track_static_alloc_internal(s_profileXanim2,0x40,"s_profileXanim2",0);
-  track_static_alloc_internal(s_profileScript,0x20,"s_profileScript",0);
-  track_static_alloc_internal(s_profileFx,0x108,"s_profileFx",0);
-  track_static_alloc_internal(s_profilePrediction,8,"s_profilePrediction",0);
-  track_static_alloc_internal(s_profileTrace,0x90,"s_profileTrace",0);
-  track_static_alloc_internal(s_profileServer,0x128,"s_profileServer",0);
-  track_static_alloc_internal(s_profileTrigger,8,"s_profileTrigger",0);
-  track_static_alloc_internal(&s_profileArrays,0x400,"s_profileArrays",0);
-  track_static_alloc_internal(&s_profile2Arrays,0x60,"s_profile2Arrays",0);
+  track_static_alloc_internal(0xffffffff82180238,0x70,0xffffffff82181284,0);
+  track_static_alloc_internal(0xffffffff82180338,0x58,0xffffffff8218126c,0);
+  track_static_alloc_internal(0xffffffff82180390,0x80,0xffffffff82181254,0);
+  track_static_alloc_internal(0xffffffff82180410,0x60,0xffffffff82181244,0);
+  track_static_alloc_internal(0xffffffff82180470,0x48,0xffffffff82181230,0);
+  track_static_alloc_internal(0xffffffff821804b8,0x70,0xffffffff8218121c,0);
+  track_static_alloc_internal(0xffffffff82180528,0x50,0xffffffff82181208,0);
+  track_static_alloc_internal(0xffffffff82180578,0x98,0xffffffff821811f4,0);
+  track_static_alloc_internal(0xffffffff82180610,0x28,0xffffffff821811e0,0);
+  track_static_alloc_internal(0xffffffff82180740,0x38,0xffffffff821811d0,0);
+  track_static_alloc_internal(0xffffffff82180778,0x30,0xffffffff821811c0,0);
+  track_static_alloc_internal(0xffffffff821807a8,0x60,0xffffffff821811b0,0);
+  track_static_alloc_internal(0xffffffff82180808,0x40,0xffffffff821811a0,0);
+  track_static_alloc_internal(0xffffffff82180848,0x20,0xffffffff82181190,0);
+  track_static_alloc_internal(0xffffffff82180868,0x108,0xffffffff82181184,0);
+  track_static_alloc_internal(0xffffffff82180970,8,0xffffffff82181170,0);
+  track_static_alloc_internal(0xffffffff82180978,0x90,0xffffffff82181160,0);
+  track_static_alloc_internal(0xffffffff82180a58,0x128,0xffffffff82181150,0);
+  track_static_alloc_internal(0xffffffff82180b90,8,0xffffffff8218113c,0);
+  track_static_alloc_internal(0xffffffff82180c40,0x400,0xffffffff8218112c,0);
+  track_static_alloc_internal(0xffffffff821810b8,0x60,0xffffffff82181118,0);
   return;
 }
 

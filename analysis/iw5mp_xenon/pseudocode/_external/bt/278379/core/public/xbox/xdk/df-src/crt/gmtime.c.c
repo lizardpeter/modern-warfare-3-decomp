@@ -7,13 +7,13 @@
 tm * __getgmtimebuf(void)
 
 {
-  _tiddata *p_Var1;
+  _ptiddata p_Var1;
   int *piVar2;
   void *pvVar3;
   tm *ptVar4;
   
   p_Var1 = _getptd_noexit();
-  if (p_Var1 == (_tiddata *)0x0) {
+  if (p_Var1 == (_ptiddata)0x0) {
 LAB_829237c4:
     piVar2 = _errno();
     ptVar4 = (tm *)0x0;

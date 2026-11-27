@@ -33,7 +33,7 @@ LAB_8292333c:
   8292334C  EBE1FFF0             ld r31,-0x10(r1)
   82923350  4E800020             blr
 
-; 82922BB8  _tzset_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tzset.c:124)
+; 82922BB8  tzset_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tzset.c:124)
   82922BB8  7D8802A6             mfspr r12,LR
   82922BBC  4BFF3B01             bl 0x829166bc
   82922BC0  3BE1FF80             subi r31,r1,0x80
@@ -350,7 +350,7 @@ LAB_82922fdc:
   829233D4  EBE1FFF0             ld r31,-0x10(r1)
   829233D8  4E800020             blr
 
-; 82922FF8  _isindst_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tzset.c:428)
+; 82922FF8  isindst_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tzset.c:428)
   82922FF8  7D8802A6             mfspr r12,LR
   82922FFC  4BFF36B9             bl 0x829166b4
   82923000  9421FF50             stwu r1,-0xb0(r1)

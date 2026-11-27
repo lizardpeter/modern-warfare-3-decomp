@@ -2,7 +2,8 @@
 
 // 828CAB38  NellyMSVQDecPred  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/msvqpredinline.c:164)
 
-void NellyMSVQDecPred(int *param_1,float *param_2,int param_3,float param_4,float *param_5)
+void NellyMSVQDecPred(undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4,
+                     longlong param_5)
 
 {
   float fVar1;
@@ -15,121 +16,121 @@ void NellyMSVQDecPred(int *param_1,float *param_2,int param_3,float param_4,floa
   int *piVar9;
   int iVar10;
   longlong lVar8;
-  longlong lVar11;
-  int *piVar12;
-  longlong in_r7;
-  int *piVar14;
-  longlong lVar13;
-  float **ppfVar16;
-  float *pfVar17;
-  longlong lVar15;
-  float *pfVar19;
-  longlong lVar18;
-  float *pfVar21;
-  float *pfVar22;
-  longlong lVar20;
-  int iVar23;
-  longlong lVar24;
+  undefined4 uVar11;
+  int iVar12;
+  int *piVar13;
+  int *piVar15;
+  longlong lVar14;
+  int iVar17;
+  float *pfVar18;
+  longlong lVar16;
+  float *pfVar20;
+  longlong lVar19;
+  undefined *puVar22;
+  float *pfVar23;
+  longlong lVar21;
+  int iVar24;
   longlong lVar25;
   longlong lVar26;
-  float **ppfVar27;
-  longlong lVar28;
+  longlong lVar27;
+  int *piVar28;
   longlong lVar29;
   double extraout_f1;
   int local_70 [28];
   
-  lVar29 = (longlong)param_3;
-  lVar11 = (longlong)(int)param_2;
-  piVar9 = (int *)__savegprlr_21((double)param_4,param_1,lVar11,lVar29,param_5);
-  lVar24 = in_r7 + 0x140;
-  ppfVar16 = ptab_ASK12_V_Pred;
-  pfVar21 = tab_ASK12_V_Means;
+  iVar12 = (int)param_3;
+  uVar11 = (undefined4)((ulonglong)param_3 >> 0x20);
+  piVar9 = (int *)__savegprlr_21();
+  lVar25 = param_5 + 0x140;
+  iVar17 = -0x7d6501b8;
+  puVar22 = &UNK_82204488;
   if (extraout_f1 <= 0.800000011920929) {
-    pfVar21 = tab_ASK12_UV_Means;
-    ppfVar16 = ptab_ASK12_UV_Pred;
+    puVar22 = &UNK_822044b8;
+    iVar17 = -0x7d6501a0;
   }
-  ppfVar27 = ptab_ASK12_UV_Pred + 2;
-  lVar25 = 0;
-  iVar23 = 0;
+  piVar28 = (int *)0x829afe68;
   lVar26 = 0;
-  piVar12 = local_70;
-  lVar20 = lVar24;
+  iVar24 = 0;
+  lVar27 = 0;
+  piVar13 = local_70;
+  lVar21 = lVar25;
   do {
-    pfVar22 = (float *)lVar20;
-    if (iVar23 < 4) {
-      iVar5 = *piVar12;
+    pfVar23 = (float *)lVar21;
+    if (iVar24 < 4) {
+      iVar5 = *piVar13;
       iVar10 = 0;
-      pfVar17 = (float *)(*(int *)(iVar5 + 4) + *piVar9 * 8);
-      *pfVar22 = *pfVar17;
-      pfVar22[1] = pfVar17[1];
+      pfVar18 = (float *)(*(int *)(iVar5 + 4) + *piVar9 * 8);
+      *pfVar23 = *pfVar18;
+      pfVar23[1] = pfVar18[1];
       if (0 < *(int *)(iVar5 + 0x18)) {
-        piVar14 = *(int **)(iVar5 + 0x1c);
+        piVar15 = *(int **)(iVar5 + 0x1c);
         do {
-          if (*piVar14 == *piVar9) {
+          if (*piVar15 == *piVar9) {
             iVar10 = *(int *)(iVar5 + 0x14);
             goto LAB_828cac3c;
           }
           iVar10 = iVar10 + 1;
-          piVar14 = piVar14 + 1;
+          piVar15 = piVar15 + 1;
         } while (iVar10 < *(int *)(iVar5 + 0x18));
       }
       iVar10 = *(int *)(iVar5 + 0x10);
 LAB_828cac3c:
-      pfVar19 = (float *)(*(int *)(iVar5 + 8) + *piVar9 * 8);
-      pfVar17 = (float *)(piVar9[1] * 8 + iVar10);
-      fVar1 = pfVar19[1];
-      fVar2 = *pfVar19;
-      fVar3 = pfVar17[1];
-      fVar4 = *pfVar17;
+      pfVar20 = (float *)(*(int *)(iVar5 + 8) + *piVar9 * 8);
+      pfVar18 = (float *)(piVar9[1] * 8 + iVar10);
+      fVar1 = pfVar20[1];
+      fVar2 = *pfVar20;
+      fVar3 = pfVar18[1];
+      fVar4 = *pfVar18;
       fVar7 = 1.0 / (fVar2 * fVar2 + fVar1 * fVar1);
-      *pfVar22 = (fVar2 * fVar4 - fVar1 * fVar3) * fVar7 + *pfVar22;
-      fVar1 = (*pfVar19 * fVar3 + pfVar19[1] * fVar4) * fVar7 + pfVar22[1];
+      *pfVar23 = (fVar2 * fVar4 - fVar1 * fVar3) * fVar7 + *pfVar23;
+      fVar1 = (*pfVar20 * fVar3 + pfVar20[1] * fVar4) * fVar7 + pfVar23[1];
     }
     else {
-      pfVar17 = (float *)((int)(*ppfVar27)[1] + *piVar9 * 8);
-      *pfVar22 = *pfVar17;
-      fVar1 = pfVar17[1];
+      pfVar18 = (float *)(*(int *)(*piVar28 + 4) + *piVar9 * 8);
+      *pfVar23 = *pfVar18;
+      fVar1 = pfVar18[1];
     }
-    uVar6 = *(uint *)(((int)ppfVar16 - (int)local_70) + (int)piVar12);
-    pfVar22[1] = fVar1;
-    lVar8 = in_r7 + 0x16c;
-    lVar18 = 2;
-    lVar15 = (ulonglong)uVar6 - lVar24;
+    uVar6 = *(uint *)((iVar17 - (int)local_70) + (int)piVar13);
+    pfVar23[1] = fVar1;
+    lVar8 = param_5 + 0x16c;
+    lVar19 = 2;
+    lVar16 = (ulonglong)uVar6 - lVar25;
     do {
-      lVar13 = lVar24;
-      lVar28 = lVar25;
+      lVar14 = lVar25;
+      lVar29 = lVar26;
       fVar1 = 0.0;
-      if (0 < (int)lVar26) {
+      if (0 < (int)lVar27) {
         do {
-          fVar1 = *(float *)((int)lVar15 + (int)(float *)lVar13) * *(float *)lVar13 + fVar1;
-          lVar28 = lVar28 + -1;
-          lVar13 = lVar13 + 4;
-        } while (lVar28 != 0);
+          fVar1 = *(float *)((int)lVar16 + (int)(float *)lVar14) * *(float *)lVar14 + fVar1;
+          lVar29 = lVar29 + -1;
+          lVar14 = lVar14 + 4;
+        } while (lVar29 != 0);
       }
       lVar8 = lVar8 + 4;
       *(float *)lVar8 = fVar1;
-      lVar18 = lVar18 + -1;
-      lVar15 = lVar26 + lVar15;
-    } while (lVar18 != 0);
-    ppfVar27 = ppfVar27 + 1;
-    *pfVar22 = *(float *)((int)in_r7 + 0x170) + *pfVar22;
-    lVar25 = lVar25 + 2;
-    lVar26 = lVar26 + 8;
+      lVar19 = lVar19 + -1;
+      lVar16 = lVar27 + lVar16;
+    } while (lVar19 != 0);
+    piVar28 = piVar28 + 1;
+    *pfVar23 = *(float *)((int)param_5 + 0x170) + *pfVar23;
+    lVar26 = lVar26 + 2;
+    lVar27 = lVar27 + 8;
     piVar9 = piVar9 + 2;
-    iVar23 = iVar23 + 1;
-    piVar12 = piVar12 + 1;
-    pfVar22[1] = *(float *)((int)in_r7 + 0x174) + pfVar22[1];
-    lVar20 = lVar20 + 8;
-    if (-0x7d650181 < (int)ppfVar27) {
-      if (0 < (int)lVar29) {
-        iVar23 = (int)lVar24;
+    iVar24 = iVar24 + 1;
+    piVar13 = piVar13 + 1;
+    pfVar23[1] = *(float *)((int)param_5 + 0x174) + pfVar23[1];
+    lVar21 = lVar21 + 8;
+    if (-0x7d650181 < (int)piVar28) {
+      if (0 < iVar12) {
+        lVar21 = CONCAT44(uVar11,iVar12);
+        iVar12 = (int)lVar25;
         do {
-          pfVar22 = (float *)lVar24;
-          *(float *)((int)pfVar22 + ((int)lVar11 - iVar23)) =
-               *(float *)((int)pfVar22 + ((int)pfVar21 - iVar23)) + *pfVar22;
-          lVar24 = lVar24 + 4;
-          lVar29 = lVar29 + -1;
-        } while (lVar29 != 0);
+          pfVar23 = (float *)lVar25;
+          *(float *)((int)pfVar23 + (param_2 - iVar12)) =
+               *(float *)((int)pfVar23 + ((int)puVar22 - iVar12)) + *pfVar23;
+          lVar25 = lVar25 + 4;
+          lVar21 = lVar21 + -1;
+        } while (lVar21 != 0);
       }
       __restgprlr_21();
       return;

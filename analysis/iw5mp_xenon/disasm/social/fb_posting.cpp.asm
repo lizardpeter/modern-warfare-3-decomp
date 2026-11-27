@@ -702,7 +702,7 @@ LAB_826ff8b0:
   826FF8B0  38800000             li r4,0x0
   826FF8B4  4BFFFBEC             b 0x826ff4a0
 
-; 826FF8C0  ~FacebookPostingInfo  (line unknown)
+; 826FF8C0  FacebookPostingInfo::~FacebookPostingInfo  (line unknown)
   826FF8C0  7D8802A6             mfspr r12,LR
   826FF8C4  9181FFF8             stw r12,-0x8(r1)
   826FF8C8  FBC1FFE8             std r30,-0x18(r1)

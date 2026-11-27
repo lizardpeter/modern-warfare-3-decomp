@@ -3,11 +3,12 @@
 // 82254B60  pkcs_1_v1_5_decode  (line unknown)
 
 undefined8
-pkcs_1_v1_5_decode(char *param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-                  uint *param_5,undefined4 *param_6)
+pkcs_1_v1_5_decode(char *param_1,ulonglong param_2,ulonglong param_3,void *param_4,uint *param_5,
+                  undefined4 *param_6)
 
 {
   uint uVar1;
+  size_t _Size;
   ulonglong uVar2;
   ulonglong uVar3;
   
@@ -27,11 +28,12 @@ pkcs_1_v1_5_decode(char *param_1,ulonglong param_2,ulonglong param_3,undefined8 
     if (param_1[(int)uVar3] == '\0') {
       uVar1 = *param_5;
       uVar2 = (param_2 - (uVar3 - 2)) - 3;
-      *param_5 = (uint)uVar2;
+      _Size = (size_t)uVar2;
+      *param_5 = _Size;
       if ((ulonglong)uVar1 < (uVar2 & 0xffffffff)) {
         return 6;
       }
-      memcpy();
+      memcpy(param_4,param_1 + (int)(uVar3 - 2) + 3,_Size);
       *param_6 = 1;
       return 0;
     }

@@ -2,25 +2,24 @@
 
 // 826A1F90  TRACK_ragdoll  (ragdoll/ragdoll.cpp:68)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_ragdoll(void)
 
 {
-  track_static_alloc_internal(&ragdollDefs,0x1eb0,"ragdollDefs",10);
-  track_static_alloc_internal(&ragdollBodies,0x12a80,"ragdollBodies",10);
+  track_static_alloc_internal(0xffffffff84448cb8,0x1eb0,0xffffffff8219b230,10);
+  track_static_alloc_internal(0xffffffff84436228,0x12a80,0xffffffff8219b220,10);
   return;
 }
 
 
 // 826A1FE8  Ragdoll_DrawAxisOrigin  (ragdoll/ragdoll.cpp:77)
 
-void Ragdoll_DrawAxisOrigin(float (*param_1) [3],float *param_2,float param_3)
+void Ragdoll_DrawAxisOrigin(undefined8 param_1,undefined8 param_2)
 
 {
   float *pfVar1;
+  float *pfVar2;
   double extraout_f1;
-  double dVar2;
+  double dVar3;
   float local_90;
   float local_8c;
   float local_88;
@@ -37,7 +36,8 @@ void Ragdoll_DrawAxisOrigin(float (*param_1) [3],float *param_2,float param_3)
   float local_58;
   float local_54;
   
-  pfVar1 = (float *)__savefpr_26((double)param_3,param_1);
+  pfVar1 = (float *)__savefpr_26();
+  pfVar2 = (float *)param_2;
   local_80 = (float)(extraout_f1 * 1.0);
   local_70 = (float)(extraout_f1 * 0.0);
   local_7c = (float)(extraout_f1 * 0.0);
@@ -46,22 +46,22 @@ void Ragdoll_DrawAxisOrigin(float (*param_1) [3],float *param_2,float param_3)
   local_6c = (float)(extraout_f1 * 1.0);
   local_68 = (float)(extraout_f1 * 0.0);
   local_64 = (float)(extraout_f1 * 1.0);
-  dVar2 = 5.0;
+  dVar3 = 5.0;
   local_60 = (float)(extraout_f1 * 0.0);
   local_5c = (float)(extraout_f1 * 0.0);
-  local_90 = *pfVar1 * 5.0 + *param_2;
+  local_90 = *pfVar1 * 5.0 + *pfVar2;
   local_58 = (float)(extraout_f1 * 1.0);
   local_54 = (float)(extraout_f1 * 1.0);
-  local_8c = pfVar1[1] * 5.0 + param_2[1];
-  local_88 = pfVar1[2] * 5.0 + param_2[2];
+  local_8c = pfVar1[1] * 5.0 + pfVar2[1];
+  local_88 = pfVar1[2] * 5.0 + pfVar2[2];
   CG_DebugLine(param_2,&local_90,&local_80,0,300);
-  local_90 = (float)((double)pfVar1[3] * dVar2 + (double)*param_2);
-  local_8c = (float)((double)pfVar1[4] * dVar2 + (double)param_2[1]);
-  local_88 = (float)((double)pfVar1[5] * dVar2 + (double)param_2[2]);
+  local_90 = (float)((double)pfVar1[3] * dVar3 + (double)*pfVar2);
+  local_8c = (float)((double)pfVar1[4] * dVar3 + (double)pfVar2[1]);
+  local_88 = (float)((double)pfVar1[5] * dVar3 + (double)pfVar2[2]);
   CG_DebugLine(param_2,&local_90,&local_70,0,300);
-  local_90 = (float)((double)pfVar1[6] * dVar2 + (double)*param_2);
-  local_8c = (float)((double)pfVar1[7] * dVar2 + (double)param_2[1]);
-  local_88 = (float)((double)pfVar1[8] * dVar2 + (double)param_2[2]);
+  local_90 = (float)((double)pfVar1[6] * dVar3 + (double)*pfVar2);
+  local_8c = (float)((double)pfVar1[7] * dVar3 + (double)pfVar2[1]);
+  local_88 = (float)((double)pfVar1[8] * dVar3 + (double)pfVar2[2]);
   CG_DebugLine(param_2,&local_90,&local_60,0,300);
   __restfpr_26();
   return;
@@ -70,63 +70,52 @@ void Ragdoll_DrawAxisOrigin(float (*param_1) [3],float *param_2,float param_3)
 
 // 826A21B8  Ragdoll_DebugDraw  (ragdoll/ragdoll.cpp:97)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Ragdoll_DebugDraw(LocalClientNum_t param_1)
+void Ragdoll_DebugDraw(void)
 
 {
-  LocalClientNum_t LVar1;
-  ScreenPlacement *pSVar2;
-  char *pcVar3;
-  char *pcVar4;
-  float *pfVar5;
-  uint *puVar6;
+  undefined8 uVar1;
+  longlong lVar2;
+  uint *puVar3;
   undefined8 in_f30;
-  double dVar7;
+  undefined8 uVar4;
   undefined8 in_f31;
-  double dVar8;
-  undefined8 local_80;
-  undefined8 local_78;
-  undefined8 local_70;
+  undefined8 uVar5;
+  ulonglong local_80;
+  ulonglong local_78;
+  ulonglong local_70;
   undefined8 local_68;
   undefined8 local_60;
   
-  LVar1 = __savegprlr_22(param_1);
+  uVar1 = __savegprlr_22();
   local_68 = in_f30;
   local_60 = in_f31;
-  if ((ragdoll_debug->current).integer != 0) {
+  if (*(int *)(DAT_84448ca8 + 0xc) != 0) {
     local_80 = 0;
     local_78 = 0;
     local_70 = 0;
-    pcVar4 = (char *)0x0;
-    puVar6 = &DAT_8443632c;
+    lVar2 = 0;
+    puVar3 = &DAT_8443632c;
     do {
-      if (puVar6 == (uint *)0x104) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0
-                        ,"%s");
+      if (puVar3 == (uint *)0x104) {
+        MyAssertHandler(0xffffffff8219b1e4,0x134,0,0xffffffff82000f98,0xffffffff82003cbc);
       }
-      if (0 < (int)puVar6[-0x41]) {
-        if (5 < *puVar6) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",
-                          0x76,0,
-                          "(int)body->state.state doesn\'t index RAGDOLL_NUM_STATES\n\t%i not in [0, %i)"
-                         );
+      if (0 < (int)puVar3[-0x41]) {
+        if (5 < *puVar3) {
+          MyAssertHandler(0xffffffff8219b2bc,0x76,0,0xffffffff8219b270,*puVar3,6);
         }
-        pcVar4 = pcVar4 + 1;
-        *(int *)((int)&local_80 + *puVar6 * 4) = *(int *)((int)&local_80 + *puVar6 * 4) + 1;
+        lVar2 = lVar2 + 1;
+        *(int *)((int)&local_80 + *puVar3 * 4) = *(int *)((int)&local_80 + *puVar3 * 4) + 1;
       }
-      puVar6 = puVar6 + 0x255;
-    } while ((int)puVar6 < -0x7bbb7254);
-    pSVar2 = ScrPlace_GetActivePlacement(LVar1);
-    pcVar3 = va("RB Total: %d");
-    dVar8 = 0.0;
-    dVar7 = 12.0;
-    CG_DrawStringExt(pSVar2,0.0,72.0,pcVar4,(float *)&IMAGE_DOS_HEADER_82000000,(int)pcVar3,
-                     -0x7de7e808,12.0,0);
-    pcVar4 = local_80._0_4_;
-    pfVar5 = local_80._4_4_;
-    pcVar3 = va("RB State: %d %d %d %d %d %d");
-    CG_DrawStringExt(pSVar2,(float)dVar8,84.0,pcVar4,pfVar5,(int)pcVar3,-0x7de7e808,(float)dVar7,0);
+      puVar3 = puVar3 + 0x255;
+    } while ((int)puVar3 < -0x7bbb7254);
+    uVar1 = ScrPlace_GetActivePlacement(uVar1);
+    va(0xffffffff8219b25c,lVar2);
+    uVar5 = 0;
+    uVar4 = 0x4028000000000000;
+    CG_DrawStringExt(0,0x4052000000000000,0x4028000000000000,uVar1);
+    va(0xffffffff8219b240,local_80._0_4_,local_80 & 0xffffffff,local_78._0_4_,local_78 & 0xffffffff,
+       local_70._0_4_,local_70 & 0xffffffff);
+    CG_DrawStringExt(uVar5,0x4055000000000000,uVar4,uVar1);
   }
   __restgprlr_22();
   return;
@@ -135,217 +124,170 @@ void Ragdoll_DebugDraw(LocalClientNum_t param_1)
 
 // 826A2370  Ragdoll_InitBody  (ragdoll/ragdoll.cpp:132)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Ragdoll_InitBody(RagdollBody *param_1)
+void * Ragdoll_InitBody(void *param_1)
 
 {
-  if (param_1 == (RagdollBody *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x85,0,
-                    "%s");
+  void *pvVar1;
+  
+  if (param_1 == (void *)0x0) {
+    MyAssertHandler(0xffffffff8219b2bc,0x85,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
-  memset();
-  return;
+  pvVar1 = memset(param_1,0,0x954);
+  return pvVar1;
 }
 
 
 // 826A23D8  Ragdoll_GetUnusedBody  (ragdoll/ragdoll.cpp:140)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Ragdoll_GetUnusedBody(void)
+void Ragdoll_GetUnusedBody(void)
 
 {
-  int iVar1;
-  longlong lVar2;
-  RagdollBody *pRVar3;
+  longlong lVar1;
+  int *_Dst;
   
   __savegprlr_26();
-  pRVar3 = (RagdollBody *)&ragdollBodies;
-  lVar2 = 0;
+  _Dst = &DAT_84436228;
+  lVar1 = 0;
   while( true ) {
-    if (pRVar3 == (RagdollBody *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0,
-                      "%s");
+    if (_Dst == (int *)0x0) {
+      MyAssertHandler(0xffffffff8219b1e4,0x134,0,0xffffffff82000f98,0xffffffff82003cbc);
     }
-    if (pRVar3->references < 1) break;
-    lVar2 = lVar2 + 1;
-    pRVar3 = pRVar3 + 1;
-    if (0x1f < (int)lVar2) {
-      iVar1 = __restgprlr_26(0);
-      return iVar1;
+    if (*_Dst < 1) break;
+    lVar1 = lVar1 + 1;
+    _Dst = _Dst + 0x255;
+    if (0x1f < (int)lVar1) {
+      __restgprlr_26(0);
+      return;
     }
   }
-  memset();
-  Ragdoll_BodyNewState(pRVar3,BS_DEAD);
-  iVar1 = (int)lVar2 * 0x954;
-  *(int *)(&ragdollBodies + iVar1) = *(int *)(&ragdollBodies + iVar1) + 1;
-  iVar1 = __restgprlr_26(lVar2 + 1);
-  return iVar1;
+  memset(_Dst,0,0x954);
+  Ragdoll_BodyNewState(_Dst,0);
+  (&DAT_84436228)[(int)lVar1 * 0x255] = (&DAT_84436228)[(int)lVar1 * 0x255] + 1;
+  __restgprlr_26(lVar1 + 1);
+  return;
 }
 
 
 // 826A2490  Ragdoll_ReferenceDObjBody  (ragdoll/ragdoll.cpp:162)
 
-int Ragdoll_ReferenceDObjBody(int param_1)
+void Ragdoll_ReferenceDObjBody(void)
 
 {
   int iVar1;
   longlong lVar2;
   int *piVar3;
   
-  iVar1 = __savegprlr_26(param_1);
-  piVar3 = (int *)&ragdollBodies;
+  iVar1 = __savegprlr_26();
+  piVar3 = &DAT_84436228;
   lVar2 = 0;
   while( true ) {
     if (piVar3 == (int *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0,
-                      "%s");
+      MyAssertHandler(0xffffffff8219b1e4,0x134,0,0xffffffff82000f98,0xffffffff82003cbc);
     }
     if ((0 < *piVar3) && (piVar3[2] == iVar1)) break;
     lVar2 = lVar2 + 1;
     piVar3 = piVar3 + 0x255;
     if (0x1f < (int)lVar2) {
-      iVar1 = __restgprlr_26(0);
-      return iVar1;
+      __restgprlr_26(0);
+      return;
     }
   }
   *piVar3 = *piVar3 + 1;
-  iVar1 = __restgprlr_26(lVar2 + 1);
-  return iVar1;
+  __restgprlr_26(lVar2 + 1);
+  return;
 }
 
 
 // 826A2530  Ragdoll_FreeBody  (ragdoll/ragdoll.cpp:182)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Ragdoll_FreeBody(int param_1)
+void Ragdoll_FreeBody(void)
 
 {
-  RagdollBody *pRVar1;
+  undefined4 *puVar1;
   
-  pRVar1 = Ragdoll_HandleBody(param_1);
-  if (pRVar1 == (RagdollBody *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0xba,0,
-                    "%s");
+  puVar1 = (undefined4 *)Ragdoll_HandleBody();
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8219b2bc,0xba,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
-  Ragdoll_BodyNewState(pRVar1,BS_DEAD);
-  pRVar1->references = 0;
+  Ragdoll_BodyNewState(puVar1,0);
+  *puVar1 = 0;
   return;
 }
 
 
 // 826A25A0  Ragdoll_BodyDef  (ragdoll/ragdoll.cpp:194)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-RagdollDef * Ragdoll_BodyDef(RagdollBody *param_1)
+longlong Ragdoll_BodyDef(int param_1)
 
 {
-  if (param_1 == (RagdollBody *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0xc3,0,
-                    "%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8219b2bc,0xc3,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
-  if (1 < (uint)param_1->ragdollDef) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0xc4,0,
-                    "body->ragdollDef doesn\'t index RAGDOLL_MAX_DEFS\n\t%i not in [0, %i)");
+  if (1 < *(uint *)(param_1 + 4)) {
+    MyAssertHandler(0xffffffff8219b2bc,0xc4,0,0xffffffff8219b300,*(uint *)(param_1 + 4),2);
   }
-  return (RagdollDef *)(&ragdollDefs + param_1->ragdollDef * 0xf58);
+  return (ulonglong)*(uint *)(param_1 + 4) * 0xf58 + -0x7bbb7348;
 }
 
 
 // 826A2640  Ragdoll_BodyDObj  (ragdoll/ragdoll.cpp:203)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-DObj * Ragdoll_BodyDObj(RagdollBody *param_1)
+void Ragdoll_BodyDObj(void)
 
 {
-  int iVar2;
-  ulonglong uVar1;
-  DObj *pDVar3;
+  int iVar1;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0xcc,0,
-                    "%s");
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219b2bc,0xcc,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
-  uVar1 = (ulonglong)*(uint *)(iVar2 + 0xc);
-  if (uVar1 == 0) {
-    if (*(int *)(iVar2 + 8) == -1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0xd6,0,
-                      "%s");
+  if (*(int *)(iVar1 + 0xc) == 0) {
+    if (*(int *)(iVar1 + 8) == -1) {
+      MyAssertHandler(0xffffffff8219b2bc,0xd6,0,0xffffffff82000f98,0xffffffff8219b344);
     }
-    pDVar3 = Com_GetClientDObj(*(int *)(iVar2 + 8),*(LocalClientNum_t *)(iVar2 + 0x14));
-    uVar1 = (ulonglong)(int)pDVar3;
+    Com_GetClientDObj(*(undefined4 *)(iVar1 + 8),*(undefined4 *)(iVar1 + 0x14));
   }
-  pDVar3 = (DObj *)__restgprlr_29(uVar1);
-  return pDVar3;
+  __restgprlr_29();
+  return;
 }
 
 
 // 826A26D0  Ragdoll_BodyPose  (ragdoll/ragdoll.cpp:221)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-cpose_t * Ragdoll_BodyPose(RagdollBody *param_1)
+void Ragdoll_BodyPose(void)
 
 {
-  int iVar2;
-  ulonglong uVar1;
-  cpose_t *pcVar3;
+  int iVar1;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0xde,0,
-                    "%s");
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219b2bc,0xde,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
-  uVar1 = (ulonglong)*(uint *)(iVar2 + 0x10);
-  if (uVar1 == 0) {
-    if (*(int *)(iVar2 + 8) == -1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0xe8,0,
-                      "%s");
+  if (*(int *)(iVar1 + 0x10) == 0) {
+    if (*(int *)(iVar1 + 8) == -1) {
+      MyAssertHandler(0xffffffff8219b2bc,0xe8,0,0xffffffff82000f98,0xffffffff8219b344);
     }
-    pcVar3 = CG_GetPose(*(LocalClientNum_t *)(iVar2 + 0x14),*(int *)(iVar2 + 8));
-    uVar1 = (ulonglong)(int)pcVar3;
+    CG_GetPose(*(undefined4 *)(iVar1 + 0x14),*(undefined4 *)(iVar1 + 8));
   }
-  pcVar3 = (cpose_t *)__restgprlr_29(uVar1);
-  return pcVar3;
+  __restgprlr_29();
+  return;
 }
 
 
 // 826A2760  Ragdoll_BodyRootOrigin  (ragdoll/ragdoll.cpp:239)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Ragdoll_BodyRootOrigin(RagdollBody *param_1,float *param_2)
+void Ragdoll_BodyRootOrigin(undefined8 param_1,undefined4 *param_2)
 
 {
-  bool bVar2;
-  BoneOrientation *pBVar1;
+  char cVar2;
+  undefined4 *puVar1;
   
-  bVar2 = Ragdoll_BodyPoseValid(param_1);
-  if (bVar2) {
-    pBVar1 = Ragdoll_BodyBoneOrientations(param_1);
-    *param_2 = pBVar1->origin[0];
-    param_2[1] = pBVar1->origin[1];
-    param_2[2] = pBVar1->origin[2];
+  cVar2 = Ragdoll_BodyPoseValid();
+  if (cVar2 != '\0') {
+    puVar1 = (undefined4 *)Ragdoll_BodyBoneOrientations(param_1);
+    *param_2 = *puVar1;
+    param_2[1] = puVar1[1];
+    param_2[2] = puVar1[2];
   }
   return;
 }
@@ -353,24 +295,19 @@ void Ragdoll_BodyRootOrigin(RagdollBody *param_1,float *param_2)
 
 // 826A27C8  Ragdoll_GetRootOrigin  (ragdoll/ragdoll.cpp:256)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Ragdoll_GetRootOrigin(int param_1,float *param_2)
+void Ragdoll_GetRootOrigin(undefined8 param_1,undefined8 param_2)
 
 {
-  RagdollBody *pRVar1;
-  bool bVar2;
+  ulonglong uVar1;
+  char cVar2;
   
-  pRVar1 = Ragdoll_HandleBody(param_1);
-  if ((pRVar1 == (RagdollBody *)0x0) || (bVar2 = Ragdoll_BodyInUse(pRVar1), !bVar2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x104,0,
-                    "%s");
+  uVar1 = Ragdoll_HandleBody();
+  if (((uVar1 & 0xffffffff) == 0) || (cVar2 = Ragdoll_BodyInUse(), cVar2 == '\0')) {
+    MyAssertHandler(0xffffffff8219b2bc,0x104,0,0xffffffff82000f98,0xffffffff8219b364);
   }
-  bVar2 = Ragdoll_BodyPoseValid(pRVar1);
-  if (bVar2) {
-    Ragdoll_BodyRootOrigin(pRVar1,param_2);
+  cVar2 = Ragdoll_BodyPoseValid(uVar1);
+  if (cVar2 != '\0') {
+    Ragdoll_BodyRootOrigin(uVar1,param_2);
   }
   return;
 }
@@ -378,350 +315,290 @@ void Ragdoll_GetRootOrigin(int param_1,float *param_2)
 
 // 826A2860  Ragdoll_ValidateDef  (ragdoll/ragdoll.cpp:270)
 
-bool Ragdoll_ValidateDef(int param_1)
+bool Ragdoll_ValidateDef(ulonglong param_1)
 
 {
-  if (1 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x111,0,
-                    "ragdollDef doesn\'t index RAGDOLL_MAX_DEFS\n\t%i not in [0, %i)");
+  if (1 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8219b2bc,0x111,0,0xffffffff8219b388,param_1,2);
   }
-  return (bool)('\x01' - (*(int *)(&DAT_84448cbc + param_1 * 0xf58) == 0));
+  return *(int *)(&DAT_84448cbc + (int)param_1 * 0xf58) != 0;
 }
 
 
 // 826A28D0  Ragdoll_BindDef  (ragdoll/ragdoll.cpp:285)
 
-bool Ragdoll_BindDef(int param_1)
+void Ragdoll_BindDef(void)
 
 {
   int iVar1;
-  bool bVar4;
-  undefined1 uVar5;
+  char cVar4;
   int iVar2;
-  uint uVar3;
-  uint *puVar6;
-  char *pcVar7;
+  int iVar3;
+  int *piVar5;
+  int iVar6;
+  int iVar7;
   int iVar8;
-  int iVar9;
-  char *pcVar10;
   
-  iVar1 = __savegprlr_23(param_1);
-  bVar4 = Ragdoll_ValidateDef(iVar1);
-  if (bVar4) {
+  iVar1 = __savegprlr_23();
+  cVar4 = Ragdoll_ValidateDef();
+  if (cVar4 != '\0') {
     iVar1 = iVar1 * 0xf58;
     if ((&DAT_84448cb9)[iVar1] == '\0') {
-      pcVar7 = (char *)(iVar1 + -0x7bbb7340);
-      iVar8 = 0;
+      iVar8 = iVar1 + -0x7bbb7340;
+      iVar6 = 0;
       if (0 < *(int *)(&DAT_84448cbc + iVar1)) {
         do {
-          iVar9 = 0;
-          puVar6 = (uint *)(pcVar7 + 0x28);
-          pcVar10 = pcVar7;
+          iVar7 = 0;
+          piVar5 = (int *)(iVar8 + 0x28);
+          iVar3 = iVar8;
           do {
-            iVar2 = I_stricmp(pcVar10,"none");
+            iVar2 = I_stricmp(iVar3,0xffffffff82003484);
             if (iVar2 == 0) {
-              *puVar6 = 0;
+              *piVar5 = 0;
             }
             else {
-              uVar3 = SL_FindString(pcVar10);
-              *puVar6 = uVar3;
-              if (uVar3 == 0) goto LAB_826a28f0;
+              iVar2 = SL_FindString(iVar3);
+              *piVar5 = iVar2;
+              if (iVar2 == 0) goto LAB_826a28f0;
             }
-            iVar9 = iVar9 + 1;
-            puVar6 = puVar6 + 1;
-            pcVar10 = pcVar10 + 0x14;
-          } while (iVar9 < 2);
-          iVar8 = iVar8 + 1;
-          pcVar7 = pcVar7 + 0x50;
-        } while (iVar8 < *(int *)(&DAT_84448cbc + iVar1));
+            iVar7 = iVar7 + 1;
+            piVar5 = piVar5 + 1;
+            iVar3 = iVar3 + 0x14;
+          } while (iVar7 < 2);
+          iVar6 = iVar6 + 1;
+          iVar8 = iVar8 + 0x50;
+        } while (iVar6 < *(int *)(&DAT_84448cbc + iVar1));
       }
-      pcVar7 = (char *)(iVar1 + -0x7bbb6edc);
+      iVar6 = iVar1 + -0x7bbb6edc;
       iVar8 = 0;
       if (0 < *(int *)(&DAT_84449120 + iVar1)) {
         do {
-          uVar3 = SL_FindString(pcVar7);
-          *(uint *)(pcVar7 + 0x14) = uVar3;
-          if (uVar3 == 0) goto LAB_826a28f0;
-          if (*(int *)(pcVar7 + 0x18) == 0) {
-            iVar9 = 0;
+          iVar3 = SL_FindString(iVar6);
+          *(int *)(iVar6 + 0x14) = iVar3;
+          if (iVar3 == 0) goto LAB_826a28f0;
+          if (*(int *)(iVar6 + 0x18) == 0) {
+            iVar7 = 0;
             if (0 < *(int *)(&DAT_84448cbc + iVar1)) {
-              puVar6 = (uint *)(&DAT_84448cec + iVar1);
+              piVar5 = (int *)(&DAT_84448cec + iVar1);
               do {
-                if (*puVar6 == uVar3) {
-                  *(int *)(pcVar7 + 0x18) = iVar9;
+                if (*piVar5 == iVar3) {
+                  *(int *)(iVar6 + 0x18) = iVar7;
                   break;
                 }
-                iVar9 = iVar9 + 1;
-                puVar6 = puVar6 + 0x14;
-              } while (iVar9 < *(int *)(&DAT_84448cbc + iVar1));
+                iVar7 = iVar7 + 1;
+                piVar5 = piVar5 + 0x14;
+              } while (iVar7 < *(int *)(&DAT_84448cbc + iVar1));
             }
-            if (iVar9 == *(int *)(&DAT_84448cbc + iVar1)) goto LAB_826a28f0;
+            if (iVar7 == *(int *)(&DAT_84448cbc + iVar1)) goto LAB_826a28f0;
           }
           iVar8 = iVar8 + 1;
-          pcVar7 = pcVar7 + 0x20;
+          iVar6 = iVar6 + 0x20;
         } while (iVar8 < *(int *)(&DAT_84449120 + iVar1));
       }
       (&DAT_84448cb9)[iVar1] = 1;
     }
-    uVar5 = __restgprlr_23(1);
-    return (bool)uVar5;
+    __restgprlr_23(1);
+    return;
   }
 LAB_826a28f0:
-  uVar5 = __restgprlr_23(0);
-  return (bool)uVar5;
+  __restgprlr_23(0);
+  return;
 }
 
 
 // 826A1E40  Ragdoll_BodyPoseValid  (ragdoll/ragdoll.h:293)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool Ragdoll_BodyPoseValid(RagdollBody *param_1)
+ulonglong Ragdoll_BodyPoseValid(int param_1)
 
 {
-  BodyState BVar1;
-  
-  if (param_1 == (RagdollBody *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x126,0,
-                    "%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8219b1e4,0x126,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
-  BVar1 = (param_1->state).state;
-  return (bool)((char)((int)BVar1 >> 0x1f) + (BS_VELOCITY_CAPTURE < BVar1));
+  return (longlong)((int)*(uint *)(param_1 + 0x104) >> 0x1f) +
+         (ulonglong)(2 < *(uint *)(param_1 + 0x104)) & 0xff;
 }
 
 
 // 826A1EB0  Ragdoll_BodyInUse  (ragdoll/ragdoll.h:307)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool Ragdoll_BodyInUse(RagdollBody *param_1)
+ulonglong Ragdoll_BodyInUse(uint *param_1)
 
 {
-  if (param_1 == (RagdollBody *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0,
-                    "%s");
+  if (param_1 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff8219b1e4,0x134,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
-  return (bool)((byte)((byte)(-(ulonglong)(uint)param_1->references >> 0x18) &
-                      ~(byte)((uint)param_1->references >> 0x18)) >> 7);
+  return (-(ulonglong)*param_1 & ~(ulonglong)*param_1 & 0xffffffff) >> 0x1f;
 }
 
 
 // 826A1F18  Ragdoll_BodyHasPhysics  (ragdoll/ragdoll.h:314)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool Ragdoll_BodyHasPhysics(RagdollBody *param_1)
+undefined8 Ragdoll_BodyHasPhysics(int param_1)
 
 {
-  BodyState BVar1;
-  bool bVar2;
+  undefined8 uVar1;
   
-  if (param_1 == (RagdollBody *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x13b,0,
-                    "%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8219b1e4,0x13b,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
-  BVar1 = (param_1->state).state;
-  if (((int)BVar1 < 3) || (bVar2 = true, 4 < (int)BVar1)) {
-    bVar2 = false;
+  if ((*(int *)(param_1 + 0x104) < 3) || (uVar1 = 1, 4 < *(int *)(param_1 + 0x104))) {
+    uVar1 = 0;
   }
-  return bVar2;
+  return uVar1;
 }
 
 
 // 826A2A48  Ragdoll_CountPhysicsBodies  (ragdoll/ragdoll.cpp:353)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Ragdoll_CountPhysicsBodies(void)
+void Ragdoll_CountPhysicsBodies(void)
 
 {
   bool bVar1;
-  int iVar2;
-  longlong lVar3;
-  int *piVar4;
+  longlong lVar2;
+  int *piVar3;
   
   __savegprlr_26();
-  piVar4 = (int *)&ragdollBodies;
-  lVar3 = 0;
+  piVar3 = &DAT_84436228;
+  lVar2 = 0;
   do {
-    if (piVar4 == (int *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0,
-                      "%s");
+    if (piVar3 == (int *)0x0) {
+      MyAssertHandler(0xffffffff8219b1e4,0x134,0,0xffffffff82000f98,0xffffffff82003cbc);
     }
-    if (0 < *piVar4) {
-      if ((piVar4[0x41] < 3) || (bVar1 = true, 4 < piVar4[0x41])) {
+    if (0 < *piVar3) {
+      if ((piVar3[0x41] < 3) || (bVar1 = true, 4 < piVar3[0x41])) {
         bVar1 = false;
       }
       if (bVar1) {
-        lVar3 = lVar3 + 1;
+        lVar2 = lVar2 + 1;
       }
     }
-    piVar4 = piVar4 + 0x255;
-  } while ((int)piVar4 < -0x7bbb7358);
-  iVar2 = __restgprlr_26(lVar3);
-  return iVar2;
+    piVar3 = piVar3 + 0x255;
+  } while ((int)piVar3 < -0x7bbb7358);
+  __restgprlr_26(lVar2);
+  return;
 }
 
 
 // 826A2AF8  Ragdoll_CreateRagdollForDObj  (ragdoll/ragdoll.cpp:372)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int Ragdoll_CreateRagdollForDObj
-              (LocalClientNum_t param_1,int param_2,bool param_3,bool param_4,int param_5,
-              float *param_6)
+void Ragdoll_CreateRagdollForDObj
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               longlong param_5,undefined4 *param_6)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar5;
-  int iVar2;
-  RagdollBody *pRVar3;
-  RagdollDef *pRVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  undefined4 uVar2;
+  char cVar5;
+  int iVar3;
+  undefined8 uVar1;
+  int iVar4;
   
-  lVar8 = (longlong)param_5;
-  uVar7 = (ulonglong)param_4;
-  uVar6 = (ulonglong)param_3;
-  LVar1 = __savegprlr_23(param_1);
-  if (param_2 == -1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x17a,0,
-                    "%s");
+  uVar2 = __savegprlr_23();
+  if ((int)param_2 == -1) {
+    MyAssertHandler(0xffffffff8219b2bc,0x17a,0,0xffffffff82000f98,0xffffffff8219b3c8);
   }
-  bVar5 = Ragdoll_BindDef(1);
-  if (((bVar5) &&
-      (iVar2 = Ragdoll_CountPhysicsBodies(), iVar2 < (ragdoll_max_simulating->current).integer)) &&
-     ((((uVar7 & 0xff) != 0 && (iVar2 = Ragdoll_ReferenceDObjBody(param_2), iVar2 != 0)) ||
-      (iVar2 = Ragdoll_GetUnusedBody(), iVar2 != 0)))) {
-    pRVar3 = Ragdoll_HandleBody(iVar2);
-    if (pRVar3 == (RagdollBody *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1a4,0
-                      ,"%s");
-    }
-    if ((uVar6 & 0xff) != 0) {
-      Ragdoll_BodyNewState(pRVar3,BS_DEAD);
-    }
-    if ((pRVar3->state).state == BS_DEAD) {
-      pRVar3->dobj = param_2;
-      pRVar3->localClientNum = LVar1;
-      pRVar3->ragdollDef = 1;
-      pRVar4 = Ragdoll_BodyDef(pRVar3);
-      if (pRVar4 == (RagdollDef *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1b0
-                        ,0,"%s");
+  cVar5 = Ragdoll_BindDef(1);
+  if (cVar5 != '\0') {
+    iVar3 = Ragdoll_CountPhysicsBodies();
+    if ((iVar3 < *(int *)(DAT_84436204 + 0xc)) &&
+       ((((param_4 & 0xff) != 0 && (uVar1 = Ragdoll_ReferenceDObjBody(param_2), (int)uVar1 != 0)) ||
+        (uVar1 = Ragdoll_GetUnusedBody(), (int)uVar1 != 0)))) {
+      iVar3 = Ragdoll_HandleBody(uVar1);
+      if (iVar3 == 0) {
+        MyAssertHandler(0xffffffff8219b2bc,0x1a4,0,0xffffffff82000f98,0xffffffff82003cbc);
       }
-      if (*(int *)((int)(pRVar4->boneDefs[0].animBoneTextNames + -1) + 0xc +
-                  (int)((lVar8 + 0x3c2U & 0xffffffff) << 2)) < 0) {
-        (pRVar3->state).hitLocation = 0;
+      if ((param_3 & 0xff) != 0) {
+        Ragdoll_BodyNewState(iVar3,0);
       }
-      else {
-        (pRVar3->state).hitLocation = (int)lVar8;
-        (pRVar3->state).impactVector[0] = *param_6;
-        (pRVar3->state).impactVector[1] = param_6[1];
-        (pRVar3->state).impactVector[2] = param_6[2];
+      if (*(int *)(iVar3 + 0x104) == 0) {
+        *(int *)(iVar3 + 8) = (int)param_2;
+        *(undefined4 *)(iVar3 + 0x14) = uVar2;
+        *(undefined4 *)(iVar3 + 4) = 1;
+        iVar4 = Ragdoll_BodyDef(iVar3);
+        if (iVar4 == 0) {
+          MyAssertHandler(0xffffffff8219b2bc,0x1b0,0,0xffffffff82000f98,0xffffffff8206070c);
+        }
+        if (*(int *)((int)((param_5 + 0x3c2U & 0xffffffff) << 2) + iVar4) < 0) {
+          *(undefined4 *)(iVar3 + 0x944) = 0;
+        }
+        else {
+          *(int *)(iVar3 + 0x944) = (int)param_5;
+          *(undefined4 *)(iVar3 + 0x948) = *param_6;
+          *(undefined4 *)(iVar3 + 0x94c) = param_6[1];
+          *(undefined4 *)(iVar3 + 0x950) = param_6[2];
+        }
+        Ragdoll_BodyNewState(iVar3,1);
       }
-      Ragdoll_BodyNewState(pRVar3,BS_DOBJ_WAIT);
+      __restgprlr_23(uVar1);
+      return;
     }
-    iVar2 = __restgprlr_23(iVar2);
-    return iVar2;
   }
-  iVar2 = __restgprlr_23(0);
-  return iVar2;
+  __restgprlr_23(0);
+  return;
 }
 
 
 // 826A2CA0  Ragdoll_CreateRagdollForDObjRaw  (ragdoll/ragdoll.cpp:453)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Ragdoll_CreateRagdollForDObjRaw
-              (LocalClientNum_t param_1,int param_2,cpose_t *param_3,DObj *param_4)
+void Ragdoll_CreateRagdollForDObjRaw
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar4;
-  int iVar2;
-  RagdollBody *pRVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  undefined4 uVar2;
+  char cVar4;
+  undefined8 uVar1;
+  int iVar3;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  LVar1 = __savegprlr_24(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1c9,0,
-                    "%s");
+  uVar2 = __savegprlr_24();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219b2bc,0x1c9,0,0xffffffff82000f98,0xffffffff8200260c);
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1ca,0,
-                    "%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219b2bc,0x1ca,0,0xffffffff82000f98,0xffffffff82013bec);
   }
-  bVar4 = Ragdoll_BindDef(param_2);
-  if (bVar4) {
-    iVar2 = Ragdoll_GetUnusedBody();
-    if (iVar2 != 0) {
-      pRVar3 = Ragdoll_HandleBody(iVar2);
-      if (pRVar3 == (RagdollBody *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1d5
-                        ,0,"%s");
-      }
-      pRVar3->obj = (DObj *)uVar6;
-      pRVar3->pose = (cpose_t *)uVar5;
-      pRVar3->dobj = -1;
-      pRVar3->localClientNum = LVar1;
-      pRVar3->ragdollDef = param_2;
-      Ragdoll_BodyNewState(pRVar3,BS_DOBJ_WAIT);
-      iVar2 = __restgprlr_24(iVar2);
-      return iVar2;
+  cVar4 = Ragdoll_BindDef(param_2);
+  if ((cVar4 != '\0') && (uVar1 = Ragdoll_GetUnusedBody(), (int)uVar1 != 0)) {
+    iVar3 = Ragdoll_HandleBody();
+    if (iVar3 == 0) {
+      MyAssertHandler(0xffffffff8219b2bc,0x1d5,0,0xffffffff82000f98,0xffffffff82003cbc);
     }
+    *(int *)(iVar3 + 0xc) = (int)param_4;
+    *(int *)(iVar3 + 0x10) = (int)param_3;
+    *(undefined4 *)(iVar3 + 8) = 0xffffffff;
+    *(undefined4 *)(iVar3 + 0x14) = uVar2;
+    *(int *)(iVar3 + 4) = (int)param_2;
+    Ragdoll_BodyNewState(iVar3,1);
+    __restgprlr_24(uVar1);
+    return;
   }
-  iVar2 = __restgprlr_24(0);
-  return iVar2;
+  __restgprlr_24(0);
+  return;
 }
 
 
 // 826A2DA0  Ragdoll_Remove  (ragdoll/ragdoll.cpp:484)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Ragdoll_Remove(int param_1)
+void Ragdoll_Remove(void)
 
 {
-  int iVar1;
-  RagdollBody *pRVar2;
+  undefined8 uVar1;
+  int *piVar2;
   
-  iVar1 = __savegprlr_27(param_1);
-  pRVar2 = Ragdoll_HandleBody(iVar1);
-  if (pRVar2 == (RagdollBody *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1e8,0,
-                    "%s");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0,
-                    "%s");
+  uVar1 = __savegprlr_27();
+  piVar2 = (int *)Ragdoll_HandleBody();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8219b2bc,0x1e8,0,0xffffffff82000f98,0xffffffff82003cbc);
+    MyAssertHandler(0xffffffff8219b1e4,0x134,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
-  if (pRVar2->references < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1ea,0,
-                    "%s");
+  if (*piVar2 < 1) {
+    MyAssertHandler(0xffffffff8219b2bc,0x1ea,0,0xffffffff82000f98,0xffffffff8219b3e4);
   }
-  if (pRVar2->references == 1) {
-    Ragdoll_BodyNewState(pRVar2,BS_DEAD);
-    Ragdoll_FreeBody(iVar1);
+  if (*piVar2 == 1) {
+    Ragdoll_BodyNewState(piVar2,0);
+    Ragdoll_FreeBody(uVar1);
     __restgprlr_27();
     return;
   }
-  pRVar2->references = pRVar2->references + -1;
+  *piVar2 = *piVar2 + -1;
   __restgprlr_27();
   return;
 }
@@ -729,109 +606,65 @@ void Ragdoll_Remove(int param_1)
 
 // 826A2E70  Ragdoll_IsActive  (ragdoll/ragdoll.cpp:507)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool Ragdoll_IsActive(int param_1)
+void Ragdoll_IsActive(void)
 
 {
-  BodyState BVar1;
-  int iVar2;
-  RagdollBody *pRVar3;
-  undefined1 uVar4;
-  undefined8 uVar5;
+  int *piVar1;
+  undefined8 uVar2;
   
-  iVar2 = __savegprlr_29(param_1);
-  pRVar3 = Ragdoll_HandleBody(iVar2);
-  if (pRVar3 == (RagdollBody *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1ff,0,
-                    "%s");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0,
-                    "%s");
+  __savegprlr_29();
+  piVar1 = (int *)Ragdoll_HandleBody();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8219b2bc,0x1ff,0,0xffffffff82000f98,0xffffffff82003cbc);
+    MyAssertHandler(0xffffffff8219b1e4,0x134,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
-  if (((pRVar3->references < 1) || (BVar1 = (pRVar3->state).state, (int)BVar1 < 1)) ||
-     (uVar5 = 1, BVar1 == BS_IDLE)) {
-    uVar5 = 0;
+  if (((*piVar1 < 1) || (piVar1[0x41] < 1)) || (uVar2 = 1, piVar1[0x41] == 5)) {
+    uVar2 = 0;
   }
-  uVar4 = __restgprlr_29(uVar5);
-  return (bool)uVar4;
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 826A2F08  Ragdoll_InitDvars  (ragdoll/ragdoll.cpp:518)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Ragdoll_InitDvars(void)
 
 {
-  ushort uVar1;
-  char *pcVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
   
   __savefpr_28();
-  ragdoll_enable = Dvar_RegisterBool("ragdoll_enable",true,0,"Turn on ragdoll death animations");
-  ragdoll_debug =
-       Dvar_RegisterInt("ragdoll_debug",0,0,0x7fffffff,4,"Draw ragdoll debug info (bitflags)");
-  ragdoll_fps = Dvar_RegisterInt("ragdoll_fps",0x14,0,100,4,"Ragdoll update frames per second");
-  ragdoll_max_life =
-       Dvar_RegisterInt("ragdoll_max_life",0x1194,0,0x7fffffff,4,
-                        "Max lifetime of a ragdoll system in msec");
-  pcVar2 = (char *)0x0;
-  ragdoll_max_simulating =
-       Dvar_RegisterInt("ragdoll_max_simulating",0x10,0,0x20,0,
-                        "Max number of simultaneous active ragdolls");
-  dVar4 = 60000.0;
-  dVar6 = 0.0;
-  ragdoll_explode_force = Dvar_RegisterFloat("ragdoll_explode_force",18000.0,0.0,60000.0,0,pcVar2);
-  uVar1 = 0;
-  dVar5 = 2.0;
-  dVar3 = 0.800000011920929;
-  ragdoll_explode_upbias = Dvar_RegisterFloat("ragdoll_explode_upbias",0.8,(float)dVar6,2.0,0,"");
-  pcVar2 = "";
-  ragdoll_exploding_bullet_force =
-       Dvar_RegisterFloat("ragdoll_exploding_bullet_force",5000.0,(float)dVar6,(float)dVar4,uVar1,""
-                         );
-  ragdoll_exploding_bullet_upbias =
-       Dvar_RegisterFloat("ragdoll_exploding_bullet_upbias",(float)dVar3,(float)dVar6,(float)dVar5,0
-                          ,pcVar2);
-  pcVar2 = "";
-  uVar1 = 0;
-  dVar3 = 10000.0;
-  ragdoll_bullet_force = Dvar_RegisterFloat("ragdoll_bullet_force",500.0,(float)dVar6,10000.0,0,"");
-  ragdoll_bullet_upbias =
-       Dvar_RegisterFloat("ragdoll_bullet_upbias",0.5,(float)dVar6,(float)dVar3,uVar1,pcVar2);
-  ragdoll_baselerp_time =
-       Dvar_RegisterInt("ragdoll_baselerp_time",1000,100,6000,4,
-                        "Default time ragdoll baselerp bones take to reach the base pose");
-  ragdoll_jointlerp_time =
-       Dvar_RegisterInt("ragdoll_jointlerp_time",3000,100,6000,4,
-                        "Default time taken to lerp down ragdoll joint friction");
-  pcVar2 = "";
-  uVar1 = 0;
-  dVar3 = 1.0;
-  ragdoll_rotvel_scale = Dvar_RegisterFloat("ragdoll_rotvel_scale",1.0,(float)dVar6,2000.0,0,"");
-  dVar4 = 10.0;
-  ragdoll_jitter_scale =
-       Dvar_RegisterFloat("ragdoll_jitter_scale",(float)dVar3,(float)dVar6,10.0,uVar1,pcVar2);
-  ragdoll_self_collision_scale =
-       Dvar_RegisterFloat("ragdoll_self_collision_scale",1.2,0.1,(float)dVar4,0,
-                          IMAGE_DOS_HEADER_82000000.e_magic);
-  ragdoll_dump_anims =
-       Dvar_RegisterBool("ragdoll_dump_anims",false,0,"Dump animation data when ragdoll fails");
-  dVar3 = 200.0;
-  ragdoll_max_stretch_pct =
-       Dvar_RegisterFloat("ragdoll_max_stretch_pct",(float)dVar4,(float)dVar6,200.0,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  ragdoll_stretch_iters =
-       Dvar_RegisterInt("ragdoll_stretch_iters",10,1,100,0,
-                        "Iterations to run the alternate limb solver");
-  ragdoll_idle_min_velsq =
-       Dvar_RegisterFloat("ragdoll_idle_min_velsq",(float)dVar5,(float)dVar6,(float)dVar3,0,"");
+  DAT_84436220 = Dvar_RegisterBool(0xffffffff82019064,1,0,0xffffffff8219b9d0);
+  DAT_84448ca8 = Dvar_RegisterInt(0xffffffff8219b9c0,0,0,0x7fffffff,4,0xffffffff8219b99c);
+  DAT_84436210 = Dvar_RegisterInt(0xffffffff8219b96c,0x14,0,100,4,0xffffffff8219b978);
+  DAT_84448cac = Dvar_RegisterInt(0xffffffff8219b92c,0x1194,0,0x7fffffff,4,0xffffffff8219b940);
+  DAT_84436204 = Dvar_RegisterInt(0xffffffff8219b8e8,0x10,0,0x20,0,0xffffffff8219b900);
+  uVar2 = 0x40ed4c0000000000;
+  uVar4 = 0;
+  DAT_84448cb0 = Dvar_RegisterFloat(0x40d1940000000000,0,0x40ed4c0000000000,0xffffffff8219b8c8);
+  uVar3 = 0x4000000000000000;
+  uVar1 = 0x3fe99999a0000000;
+  DAT_84448cb4 = Dvar_RegisterFloat(0x3fe99999a0000000,uVar4,0x4000000000000000,0xffffffff8219b858);
+  DAT_8443620c = Dvar_RegisterFloat(0x40b3880000000000,uVar4,uVar2,0xffffffff8219b804);
+  DAT_8444ab68 = Dvar_RegisterFloat(uVar1,uVar4,uVar3,0xffffffff8219b7ac);
+  uVar1 = 0x40c3880000000000;
+  DAT_844361ec = Dvar_RegisterFloat(0x407f400000000000,uVar4,0x40c3880000000000,0xffffffff8219b770);
+  DAT_8443621c = Dvar_RegisterFloat(0x3fe0000000000000,uVar4,uVar1,0xffffffff8219b758);
+  DAT_84436208 = Dvar_RegisterInt(0xffffffff8219b6cc,1000,100,6000,4,0xffffffff8219b6e8);
+  DAT_844361f0 = Dvar_RegisterInt(0xffffffff8219b67c,3000,100,6000,4,0xffffffff8219b694);
+  uVar1 = 0x3ff0000000000000;
+  DAT_84436218 = Dvar_RegisterFloat(0x3ff0000000000000,uVar4,0x409f400000000000,0xffffffff8219b638);
+  uVar2 = 0x4024000000000000;
+  DAT_844361f4 = Dvar_RegisterFloat(uVar1,uVar4,0x4024000000000000,0xffffffff8219b620);
+  DAT_844361e8 = Dvar_RegisterFloat(0x3ff3333340000000,0x3fb99999a0000000,uVar2,0xffffffff8219b560);
+  DAT_84436200 = Dvar_RegisterBool(0xffffffff8219b524,0,0,0xffffffff8219b538);
+  uVar1 = 0x4069000000000000;
+  DAT_84436224 = Dvar_RegisterFloat(uVar2,uVar4,0x4069000000000000,0xffffffff8219b4bc);
+  DAT_844361f8 = Dvar_RegisterInt(0xffffffff8219b4a4,10,1,100,0,0xffffffff8219b478);
+  DAT_844361fc = Dvar_RegisterFloat(uVar3,uVar4,uVar1,0xffffffff8219b400);
   __restfpr_28();
   return;
 }
@@ -839,30 +672,25 @@ void Ragdoll_InitDvars(void)
 
 // 826A32F8  Ragdoll_Register  (ragdoll/ragdoll.cpp:547)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void Ragdoll_Register(void)
 
 {
-  bool bVar2;
-  int iVar1;
+  char cVar2;
+  undefined8 uVar1;
   
   __savegprlr_29();
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x224,0,
-                    "%s");
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff8219b2bc,0x224,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (ragdollFirstInit != false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x225,0,
-                    "%s");
+  if (DAT_8444ab6c != '\0') {
+    MyAssertHandler(0xffffffff8219b2bc,0x225,0,0xffffffff82000f98,0xffffffff8219ba08);
   }
   Ragdoll_InitDvars();
   Ragdoll_InitCommands();
-  iVar1 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
-  Cmd_ExecuteSingleCommand(LOCAL_CLIENT_0,iVar1,"exec ragdoll.cfg");
-  ragdollFirstInit = true;
+  uVar1 = CL_ControllerIndexFromClientNum(0);
+  Cmd_ExecuteSingleCommand(0,uVar1,0xffffffff8219b9f4);
+  DAT_8444ab6c = 1;
   __restgprlr_29();
   return;
 }
@@ -870,55 +698,51 @@ void Ragdoll_Register(void)
 
 // 826A33A0  Ragdoll_Init  (ragdoll/ragdoll.cpp:562)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Ragdoll_Init(void)
+void * Ragdoll_Init(void)
 
 {
-  bool bVar1;
+  void *pvVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x235,0,
-                    "%s");
+  pvVar1 = (void *)Sys_IsMainThread();
+  if (((uint)pvVar1 & 0xff) == 0) {
+    pvVar1 = (void *)MyAssertHandler(0xffffffff8219b2bc,0x235,0,0xffffffff82000f98,
+                                     0xffffffff82010b48);
   }
-  if (ragdollFirstInit == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x236,0,
-                    "%s");
+  if (DAT_8444ab6c == '\0') {
+    pvVar1 = (void *)MyAssertHandler(0xffffffff8219b2bc,0x236,0,0xffffffff82000f98,
+                                     0xffffffff8219ba1c);
   }
-  if (ragdollInited == false) {
-    if (((ragdoll_enable->current).enabled != false) &&
-       ((ragdoll_max_simulating->current).integer < 8)) {
-      Dvar_SetInt(ragdoll_max_simulating,8);
+  if (DAT_84436214 == '\0') {
+    if (*(char *)(DAT_84436220 + 0xc) != '\0') {
+      if (*(int *)(DAT_84436204 + 0xc) < 8) {
+        Dvar_SetInt(DAT_84436204,8);
+      }
     }
-    memset();
-    ragdollDefs = 0;
+    pvVar1 = memset(&DAT_84436228,0,0x12a80);
+    DAT_84448cb8 = 0;
     DAT_84448cb9 = 0;
     DAT_84449c11 = 0;
     DAT_84449c10 = 0;
-    ragdollInited = true;
+    DAT_84436214 = '\x01';
   }
-  return;
+  return pvVar1;
 }
 
 
 // 826A34C0  Ragdoll_Shutdown  (ragdoll/ragdoll.cpp:591)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Ragdoll_Shutdown(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x250,0,
-                    "%s");
-    ragdollInited = false;
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff8219b2bc,0x250,0,0xffffffff82000f98,0xffffffff82010b48);
+    DAT_84436214 = 0;
     return;
   }
-  ragdollInited = false;
+  DAT_84436214 = 0;
   return;
 }
 

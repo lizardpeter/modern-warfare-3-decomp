@@ -2,54 +2,50 @@
 
 // 824FE328  TRACK_dvar_cmds  (qcommon/dvar_cmds.cpp:80)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_dvar_cmds(void)
 
 {
-  track_static_alloc_internal(info1,0x400,"info1",10);
-  track_static_alloc_internal(info2,0x2000,"info2",10);
+  track_static_alloc_internal(0xffffffff8366e538,0x400,0xffffffff8208da4c,10);
+  track_static_alloc_internal(0xffffffff8366e938,0x2000,0xffffffff8208da44,10);
   return;
 }
 
 
 // 824FE388  Dvar_GetCombinedString  (qcommon/dvar_cmds.cpp:88)
 
-void Dvar_GetCombinedString(char *param_1,int param_2)
+void Dvar_GetCombinedString(undefined8 param_1,longlong param_2)
 
 {
   char cVar1;
-  char *pcVar2;
-  int iVar3;
-  char *pcVar4;
+  undefined1 *puVar3;
+  int iVar4;
+  char *pcVar5;
   char *pcVar6;
-  longlong lVar7;
+  undefined8 uVar2;
+  int iVar7;
   char *pcVar8;
-  int iVar5;
   
-  lVar7 = (longlong)param_2;
-  pcVar2 = (char *)__savegprlr_27(param_1);
-  iVar3 = Cmd_Argc();
+  puVar3 = (undefined1 *)__savegprlr_27();
+  iVar4 = Cmd_Argc();
   pcVar8 = (char *)0x0;
-  *pcVar2 = '\0';
-  iVar5 = (int)lVar7;
-  while (iVar5 < iVar3) {
-    iVar5 = (int)lVar7;
-    pcVar4 = Cmd_Argv(iVar5);
-    pcVar6 = pcVar4;
+  *puVar3 = 0;
+  iVar7 = (int)param_2;
+  while (iVar7 < iVar4) {
+    pcVar5 = (char *)Cmd_Argv(param_2);
+    pcVar6 = pcVar5;
     do {
       cVar1 = *pcVar6;
       pcVar6 = pcVar6 + 1;
     } while (cVar1 != '\0');
-    pcVar8 = pcVar6 + ((int)pcVar8 - (int)pcVar4);
+    pcVar8 = pcVar6 + ((int)pcVar8 - (int)pcVar5);
     if (0xffd < (int)pcVar8) break;
-    pcVar6 = Cmd_Argv(iVar5);
-    I_strncat(pcVar2,0x1000,pcVar6);
-    if (iVar5 != iVar3 + -1) {
-      I_strncat(pcVar2,0x1000," ");
+    uVar2 = Cmd_Argv(param_2);
+    I_strncat(puVar3,0x1000,uVar2);
+    if ((int)param_2 != iVar4 + -1) {
+      I_strncat(puVar3,0x1000,0xffffffff820034a0);
     }
-    lVar7 = lVar7 + 1;
-    iVar5 = (int)lVar7;
+    param_2 = param_2 + 1;
+    iVar7 = (int)param_2;
   }
   __restgprlr_27();
   return;
@@ -58,326 +54,223 @@ void Dvar_GetCombinedString(char *param_1,int param_2)
 
 // 824FE440  Dvar_Command  (qcommon/dvar_cmds.cpp:117)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Dvar_Command(void)
+undefined4 Dvar_Command(void)
 
 {
-  char *pcVar1;
-  dvar_t *pdVar2;
-  int iVar3;
-  bool bVar4;
-  char acStack_1020 [4104];
+  undefined4 *puVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char cVar6;
+  undefined4 uVar5;
+  undefined1 auStack_1020 [4104];
   
-  pcVar1 = Cmd_Argv(0);
-  pdVar2 = Dvar_FindVar(pcVar1);
-  iVar3 = 0;
-  if (pdVar2 != (dvar_t *)0x0) {
-    iVar3 = Cmd_Argc();
-    if (iVar3 == 1) {
-      Dvar_DisplayableResetValue(pdVar2);
-      Dvar_DisplayableValue(pdVar2);
-      Com_Printf(0,"\"%s\" is: \"%s^7\" default: \"%s^7\"\n");
-      bVar4 = Dvar_HasLatchedValue(pdVar2);
-      if (bVar4) {
-        Dvar_DisplayableLatchedValue(pdVar2);
-        Com_Printf(0,"latched: \"%s\"\n");
+  Cmd_Argv(0);
+  puVar3 = (undefined4 *)Dvar_FindVar();
+  uVar5 = 0;
+  if (puVar3 != (undefined4 *)0x0) {
+    iVar4 = Cmd_Argc();
+    if (iVar4 == 1) {
+      uVar1 = Dvar_DisplayableResetValue(puVar3);
+      uVar2 = Dvar_DisplayableValue(puVar3);
+      Com_Printf(0,0xffffffff8208da64,*puVar3,uVar2,uVar1);
+      cVar6 = Dvar_HasLatchedValue(puVar3);
+      if (cVar6 != '\0') {
+        uVar1 = Dvar_DisplayableLatchedValue(puVar3);
+        Com_Printf(0,0xffffffff8208da54,uVar1);
       }
-      Dvar_PrintDomain(pdVar2->type,pdVar2->domain);
+      Dvar_PrintDomain(*(undefined1 *)((int)puVar3 + 10),*(undefined8 *)(puVar3 + 0xf));
     }
     else {
-      pcVar1 = Cmd_Argv(0);
-      Dvar_GetCombinedString(acStack_1020,1);
-      Dvar_SetCommand(pcVar1,acStack_1020);
+      uVar1 = Cmd_Argv(0);
+      Dvar_GetCombinedString(auStack_1020,1);
+      Dvar_SetCommand(uVar1,auStack_1020);
     }
-    iVar3 = 1;
+    uVar5 = 1;
   }
-  return iVar3;
+  return uVar5;
 }
 
 
 // 824FE530  Dvar_ToggleSimple  (qcommon/dvar_cmds.cpp:148)
 
-bool Dvar_ToggleSimple(dvar_t *param_1)
+undefined8 Dvar_ToggleSimple(undefined4 *param_1)
 
 {
-  float fVar1;
-  uint uVar2;
-  char *pcVar3;
-  bool bVar4;
-  int iVar5;
-  DvarSetSource DVar6;
-  uint uVar7;
+  undefined1 uVar1;
+  int iVar2;
+  uint uVar3;
+  undefined8 uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  double dVar8;
   
-  if (param_1 == (dvar_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0x95,0,
-                    "%s");
+  if (param_1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8208dad8,0x95,0,0xffffffff82000f98,0xffffffff8201ec3c);
   }
-  switch(param_1->type) {
-  case '\0':
-    Dvar_SetBoolFromSource(param_1,(param_1->current).enabled == false,DVAR_SOURCE_EXTERNAL);
-    bVar4 = true;
+  uVar1 = *(undefined1 *)((int)param_1 + 10);
+  switch(uVar1) {
+  case 0:
+    Dvar_SetBoolFromSource(param_1,*(char *)(param_1 + 3) == '\0',1);
+    uVar4 = 1;
     break;
-  case '\x01':
-    fVar1 = (param_1->domain).value.min;
-    DVar6 = (DvarSetSource)param_1->type;
-    if ((0.0 < fVar1) || ((param_1->domain).value.max < 1.0)) {
-      if ((param_1->current).value == fVar1) {
-        Dvar_SetFloatFromSource(param_1,(param_1->domain).value.max,DVar6);
-        return true;
+  case 1:
+    dVar8 = (double)(float)param_1[0xf];
+    if ((0.0 < dVar8) || ((float)param_1[0x10] < 1.0)) {
+      if ((double)(float)param_1[3] == dVar8) {
+        Dvar_SetFloatFromSource((double)(float)param_1[0x10],param_1,uVar1,1);
+        return 1;
       }
     }
     else {
-      fVar1 = 1.0;
-      if ((param_1->current).value != 0.0) {
-        Dvar_SetFloatFromSource(param_1,0.0,DVar6);
-        return true;
+      dVar8 = 1.0;
+      if ((float)param_1[3] != 0.0) {
+        Dvar_SetFloatFromSource(0,param_1,uVar1,1);
+        return 1;
       }
     }
-    Dvar_SetFloatFromSource(param_1,fVar1,DVar6);
-    bVar4 = true;
+    Dvar_SetFloatFromSource(dVar8,param_1,uVar1,1);
+    uVar4 = 1;
     break;
-  case '\x02':
-  case '\x03':
-  case '\x04':
-  case '\a':
-  case '\b':
-  case '\t':
-    Com_Printf(0,"\'toggle\' with no arguments makes no sense for dvar \'%s\'\n");
+  case 2:
+  case 3:
+  case 4:
+  case 7:
+  case 8:
+  case 9:
+    Com_Printf(0,0xffffffff8208da9c,*param_1);
     goto LAB_824fe768;
-  case '\x05':
-    iVar5 = (param_1->domain).enumeration.stringCount;
-    if ((iVar5 < 1) && (0 < (param_1->domain).integer.max)) {
-      if ((param_1->current).integer == 0) {
-        Dvar_SetIntFromSource(param_1,1,DVAR_SOURCE_EXTERNAL);
-        bVar4 = true;
+  case 5:
+    iVar2 = param_1[0xf];
+    if ((iVar2 < 1) && (0 < (int)param_1[0x10])) {
+      if (param_1[3] == 0) {
+        Dvar_SetIntFromSource(param_1,1,1);
+        uVar4 = 1;
       }
       else {
-        Dvar_SetIntFromSource(param_1,0,DVAR_SOURCE_EXTERNAL);
-        bVar4 = true;
+        Dvar_SetIntFromSource(param_1,0,1);
+        uVar4 = 1;
       }
     }
     else {
-      if ((param_1->current).integer == iVar5) {
-        iVar5 = (param_1->domain).integer.max;
+      if (param_1[3] == iVar2) {
+        iVar2 = param_1[0x10];
       }
-      Dvar_SetIntFromSource(param_1,iVar5,DVAR_SOURCE_EXTERNAL);
-      bVar4 = true;
+      Dvar_SetIntFromSource(param_1,iVar2,1);
+      uVar4 = 1;
     }
     break;
-  case '\x06':
-    uVar2 = (param_1->domain).enumeration.stringCount;
-    if (uVar2 != 0) {
-      trapWord(6,(ulonglong)uVar2,0);
-      uVar7 = (param_1->current).integer + 1;
-      trapWord(5,(ulonglong)uVar2 &
-                 ~((((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) - 1),0xffff);
-      Dvar_SetIntFromSource(param_1,uVar7 - ((int)uVar7 / (int)uVar2) * uVar2,DVAR_SOURCE_EXTERNAL);
+  case 6:
+    uVar3 = param_1[0xf];
+    if (uVar3 != 0) {
+      trapWord(6,(ulonglong)uVar3,0);
+      uVar7 = (ulonglong)(uint)param_1[3] + 1;
+      uVar6 = ((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1;
+      lVar5 = (longlong)((int)uVar7 / (int)uVar3) * (longlong)(int)uVar3;
+      trapWord(5,(ulonglong)uVar3 & ~uVar6,0xffff);
+      Dvar_SetIntFromSource(param_1,uVar7 - lVar5,1,lVar5,uVar6);
     }
-    bVar4 = true;
+    uVar4 = 1;
     break;
   default:
-    if (alwaysfails == 0) {
-      pcVar3 = va("unhandled case %i");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0xcf,
-                      1,pcVar3);
+    if (DAT_84013128 == 0) {
+      uVar4 = va(0xffffffff8208da88);
+      MyAssertHandler(0xffffffff8208dad8,0xcf,1,uVar4);
     }
 LAB_824fe768:
-    bVar4 = false;
+    uVar4 = 0;
   }
-  return bVar4;
+  return uVar4;
 }
 
 
 // 824FE788  Dvar_ToggleInternal  (qcommon/dvar_cmds.cpp:214)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool Dvar_ToggleInternal(void)
+void Dvar_ToggleInternal(void)
 
 {
   char cVar1;
-  int iVar2;
-  char *pcVar3;
-  undefined1 uVar10;
-  dvar_t *pdVar4;
-  bool bVar11;
-  char *pcVar5;
-  int iVar6;
+  int iVar4;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  int iVar5;
+  char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
+  int iVar8;
   char *pcVar9;
-  int iVar12;
+  longlong lVar10;
   
   __savegprlr_27();
-  iVar2 = Cmd_Argc();
-  if (iVar2 < 2) {
-    pcVar3 = Cmd_Argv(0);
-    if (pcVar3 == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0xe0,
-                      0,"%s");
+  iVar4 = Cmd_Argc();
+  if (iVar4 < 2) {
+    iVar4 = Cmd_Argv(0);
+    if (iVar4 == 0) {
+      MyAssertHandler(0xffffffff8208dad8,0xe0,0,0xffffffff82000f98,0xffffffff8208db7c);
     }
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s <variable> <optional value sequence>\n");
-    uVar10 = __restgprlr_27(0);
-    return (bool)uVar10;
+    uVar2 = Cmd_Argv(0);
+    Com_Printf(0,0xffffffff8208db4c,uVar2);
+    __restgprlr_27(0);
+    return;
   }
-  pcVar3 = Cmd_Argv(1);
-  if (pcVar3 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0xe6,0,
-                    "%s");
+  uVar3 = Cmd_Argv(1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208dad8,0xe6,0,0xffffffff82000f98,0xffffffff8208db40);
   }
-  pdVar4 = Dvar_FindVar(pcVar3);
-  if (pdVar4 == (dvar_t *)0x0) {
-    Com_Printf(0,"toggle failed: dvar \'%s\' not found.\n");
-    uVar10 = __restgprlr_27(0);
-    return (bool)uVar10;
+  iVar4 = Dvar_FindVar(uVar3);
+  if (iVar4 == 0) {
+    Com_Printf(0,0xffffffff8208db18,uVar3);
+    __restgprlr_27(0);
+    return;
   }
-  iVar2 = Cmd_Argc();
-  if (iVar2 == 2) {
-    bVar11 = Dvar_ToggleSimple(pdVar4);
-    uVar10 = __restgprlr_27(bVar11);
-    return (bool)uVar10;
+  iVar5 = Cmd_Argc();
+  if (iVar5 == 2) {
+    Dvar_ToggleSimple();
+    __restgprlr_27();
+    return;
   }
-  pcVar5 = Dvar_DisplayableValue(pdVar4);
-  iVar6 = Cmd_Argc();
-  iVar2 = 2;
-  if (3 < iVar6) {
+  uVar2 = Dvar_DisplayableValue(iVar4);
+  iVar5 = Cmd_Argc();
+  lVar10 = 2;
+  if (3 < iVar5) {
     do {
-      pcVar7 = Cmd_Argv(iVar2);
-      if (pdVar4->type == '\x06') {
-        pcVar8 = Dvar_IndexStringToEnumString(pdVar4,pcVar7);
-        pcVar9 = pcVar8;
+      pcVar6 = (char *)Cmd_Argv(lVar10);
+      if (*(char *)(iVar4 + 10) == '\x06') {
+        pcVar7 = (char *)Dvar_IndexStringToEnumString(iVar4,pcVar6);
+        pcVar9 = pcVar7;
         do {
           cVar1 = *pcVar9;
           pcVar9 = pcVar9 + 1;
         } while (cVar1 != '\0');
-        if ((int)pcVar9 - (int)pcVar8 != 1) {
-          pcVar7 = pcVar8;
+        if ((int)pcVar9 - (int)pcVar7 != 1) {
+          pcVar6 = pcVar7;
         }
       }
-      iVar6 = I_stricmp(pcVar5,pcVar7);
-      if (iVar6 == 0) {
-        pcVar5 = Cmd_Argv(iVar2 + 1);
-        Dvar_SetCommand(pcVar3,pcVar5);
-        uVar10 = __restgprlr_27(1);
-        return (bool)uVar10;
-      }
-      iVar6 = Cmd_Argc();
-      iVar12 = iVar2 + 2;
-      iVar2 = iVar2 + 1;
-    } while (iVar12 < iVar6);
-  }
-  pcVar5 = Cmd_Argv(2);
-  if (pdVar4->type == '\x06') {
-    pcVar9 = Dvar_IndexStringToEnumString(pdVar4,pcVar5);
-    pcVar7 = pcVar9;
-    do {
-      cVar1 = *pcVar7;
-      pcVar7 = pcVar7 + 1;
-    } while (cVar1 != '\0');
-    if ((int)pcVar7 - (int)pcVar9 != 1) {
-      pcVar5 = pcVar9;
-    }
-  }
-  Dvar_SetCommand(pcVar3,pcVar5);
-  uVar10 = __restgprlr_27(1);
-  return (bool)uVar10;
-}
-
-
-// 824FE998  Dvar_Toggle_f  (qcommon/dvar_cmds.cpp:282)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* void __cdecl Dvar_Toggle_f(void) */
-
-void Dvar_Toggle_f(void)
-
-{
-  char cVar1;
-  int iVar2;
-  char *pcVar3;
-  dvar_t *pdVar4;
-  bool bVar10;
-  char *pcVar5;
-  int iVar6;
-  char *pcVar7;
-  char *pcVar8;
-  char *pcVar9;
-  int iVar11;
-  
-  __savegprlr_27();
-  iVar2 = Cmd_Argc();
-  if (iVar2 < 2) {
-    pcVar3 = Cmd_Argv(0);
-    if (pcVar3 == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0xe0,
-                      0,"%s");
-    }
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s <variable> <optional value sequence>\n");
-    __restgprlr_27(0);
-    return;
-  }
-  pcVar3 = Cmd_Argv(1);
-  if (pcVar3 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0xe6,0,
-                    "%s");
-  }
-  pdVar4 = Dvar_FindVar(pcVar3);
-  if (pdVar4 == (dvar_t *)0x0) {
-    Com_Printf(0,"toggle failed: dvar \'%s\' not found.\n");
-    __restgprlr_27(0);
-    return;
-  }
-  iVar2 = Cmd_Argc();
-  if (iVar2 == 2) {
-    bVar10 = Dvar_ToggleSimple(pdVar4);
-    __restgprlr_27(bVar10);
-    return;
-  }
-  pcVar5 = Dvar_DisplayableValue(pdVar4);
-  iVar6 = Cmd_Argc();
-  iVar2 = 2;
-  if (3 < iVar6) {
-    do {
-      pcVar7 = Cmd_Argv(iVar2);
-      if (pdVar4->type == '\x06') {
-        pcVar8 = Dvar_IndexStringToEnumString(pdVar4,pcVar7);
-        pcVar9 = pcVar8;
-        do {
-          cVar1 = *pcVar9;
-          pcVar9 = pcVar9 + 1;
-        } while (cVar1 != '\0');
-        if ((int)pcVar9 - (int)pcVar8 != 1) {
-          pcVar7 = pcVar8;
-        }
-      }
-      iVar6 = I_stricmp(pcVar5,pcVar7);
-      if (iVar6 == 0) {
-        pcVar5 = Cmd_Argv(iVar2 + 1);
-        Dvar_SetCommand(pcVar3,pcVar5);
+      iVar5 = I_stricmp(uVar2,pcVar6);
+      if (iVar5 == 0) {
+        uVar2 = Cmd_Argv(lVar10 + 1);
+        Dvar_SetCommand(uVar3,uVar2);
         __restgprlr_27(1);
         return;
       }
-      iVar6 = Cmd_Argc();
-      iVar11 = iVar2 + 2;
-      iVar2 = iVar2 + 1;
-    } while (iVar11 < iVar6);
+      iVar8 = Cmd_Argc();
+      iVar5 = (int)lVar10;
+      lVar10 = lVar10 + 1;
+    } while (iVar5 + 2 < iVar8);
   }
-  pcVar5 = Cmd_Argv(2);
-  if (pdVar4->type == '\x06') {
-    pcVar9 = Dvar_IndexStringToEnumString(pdVar4,pcVar5);
-    pcVar7 = pcVar9;
+  pcVar6 = (char *)Cmd_Argv(2);
+  if (*(char *)(iVar4 + 10) == '\x06') {
+    pcVar7 = (char *)Dvar_IndexStringToEnumString(iVar4,pcVar6);
+    pcVar9 = pcVar7;
     do {
-      cVar1 = *pcVar7;
-      pcVar7 = pcVar7 + 1;
+      cVar1 = *pcVar9;
+      pcVar9 = pcVar9 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar7 - (int)pcVar9 != 1) {
-      pcVar5 = pcVar9;
+    if ((int)pcVar9 - (int)pcVar7 != 1) {
+      pcVar6 = pcVar7;
     }
   }
-  Dvar_SetCommand(pcVar3,pcVar5);
+  Dvar_SetCommand(uVar3,pcVar6);
   __restgprlr_27(1);
   return;
 }
@@ -385,41 +278,36 @@ void Dvar_Toggle_f(void)
 
 // 824FE9A0  Dvar_TogglePrint_f  (qcommon/dvar_cmds.cpp:296)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_TogglePrint_f(void)
 
 {
-  bool bVar4;
-  int iVar1;
-  char *pcVar2;
-  dvar_t *pdVar3;
+  char cVar5;
+  int iVar4;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
   
   __savegprlr_28();
-  bVar4 = Dvar_ToggleInternal();
-  if (bVar4) {
-    iVar1 = Cmd_Argc();
-    if (iVar1 < 2) {
-      Cmd_Argc();
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0x133
-                      ,0,"%s\n\t(Cmd_Argc()) = %i");
+  cVar5 = Dvar_ToggleInternal();
+  if (cVar5 != '\0') {
+    iVar4 = Cmd_Argc();
+    if (iVar4 < 2) {
+      uVar1 = Cmd_Argc();
+      MyAssertHandler(0xffffffff8208dad8,0x133,0,0xffffffff8208dba0,0xffffffff8208dbb8,uVar1);
     }
-    pcVar2 = Cmd_Argv(1);
-    if (pcVar2 == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0x135
-                      ,1,"%s");
+    uVar2 = Cmd_Argv(1);
+    if ((uVar2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff8208dad8,0x135,1,0xffffffff82000f98,0xffffffff8208db40);
     }
-    pdVar3 = Dvar_FindVar(pcVar2);
-    if (pdVar3 == (dvar_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0x137
-                      ,1,"%s");
+    uVar3 = Dvar_FindVar(uVar2);
+    if ((uVar3 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff8208dad8,0x137,1,0xffffffff82000f98,0xffffffff8201ec3c);
     }
-    pcVar2 = Dvar_DisplayableValue(pdVar3);
-    if (pcVar2 == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0x139
-                      ,1,"%s");
+    uVar3 = Dvar_DisplayableValue(uVar3);
+    if ((uVar3 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff8208dad8,0x139,1,0xffffffff82000f98,0xffffffff820181d4);
     }
-    Com_Printf(0,"%s toggled to %s\n");
+    Com_Printf(0,0xffffffff8208db8c,uVar2,uVar3);
   }
   __restgprlr_28();
   return;
@@ -428,63 +316,60 @@ void Dvar_TogglePrint_f(void)
 
 // 824FEAB0  Dvar_Set_f  (qcommon/dvar_cmds.cpp:329)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_Set_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  bool bVar3;
-  char acStack_1010 [4112];
+  int iVar2;
+  char cVar3;
+  undefined8 uVar1;
+  undefined1 auStack_1010 [4112];
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 < 3) {
-    Com_Printf(0,"USAGE: set <variable> <value>\n");
+  iVar2 = Cmd_Argc();
+  if (iVar2 < 3) {
+    Com_Printf(0,0xffffffff8208dbe8);
     return;
   }
-  pcVar2 = Cmd_Argv(1);
-  bVar3 = Dvar_IsValidName(pcVar2);
-  if (!bVar3) {
-    Cmd_Argv(1);
-    Com_Printf(0,"invalid variable name: %s\n");
+  Cmd_Argv(1);
+  cVar3 = Dvar_IsValidName();
+  if (cVar3 == '\0') {
+    uVar1 = Cmd_Argv(1);
+    Com_Printf(0,0xffffffff8208dbcc,uVar1);
     return;
   }
-  Dvar_GetCombinedString(acStack_1010,2);
-  pcVar2 = Cmd_Argv(1);
-  Dvar_SetCommand(pcVar2,acStack_1010);
+  Dvar_GetCombinedString(auStack_1010,2);
+  uVar1 = Cmd_Argv(1);
+  Dvar_SetCommand(uVar1,auStack_1010);
   return;
 }
 
 
 // 824FEB60  Dvar_RegisterBool_f  (qcommon/dvar_cmds.cpp:355)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_RegisterBool_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  char *pcVar3;
-  dvar_t *pdVar4;
+  int iVar2;
+  undefined8 uVar1;
+  char *_Str;
+  undefined4 *puVar3;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 == 3) {
-    pcVar2 = Cmd_Argv(1);
-    pcVar3 = Cmd_Argv(2);
-    iVar1 = atoi(pcVar3);
-    pdVar4 = Dvar_FindVar(pcVar2);
-    if ((pdVar4 == (dvar_t *)0x0) || ((pdVar4->type == '\a' && ((pdVar4->flags & 0x100) != 0)))) {
-      Dvar_RegisterBool(pcVar2,(bool)('\x01' - (iVar1 == 0)),0x100,"External Dvar");
+  iVar2 = Cmd_Argc();
+  if (iVar2 == 3) {
+    uVar1 = Cmd_Argv(1);
+    _Str = (char *)Cmd_Argv(2);
+    iVar2 = atoi(_Str);
+    puVar3 = (undefined4 *)Dvar_FindVar(uVar1);
+    if ((puVar3 == (undefined4 *)0x0) ||
+       ((*(char *)((int)puVar3 + 10) == '\a' && ((*(ushort *)(puVar3 + 2) & 0x100) != 0)))) {
+      Dvar_RegisterBool(uVar1,iVar2 != 0,0x100,0xffffffff8208dc08);
     }
-    else if (pdVar4->type != '\0') {
-      Com_Printf(0,"dvar \'%s\' is not a boolean dvar\n");
+    else if (*(char *)((int)puVar3 + 10) != '\0') {
+      Com_Printf(0,0xffffffff8208dc18,*puVar3);
     }
   }
   else {
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s <name> <default>\n");
+    uVar1 = Cmd_Argv(0);
+    Com_Printf(0,0xffffffff8208dc3c,uVar1);
   }
   return;
 }
@@ -492,99 +377,95 @@ void Dvar_RegisterBool_f(void)
 
 // 824FEC40  Dvar_RegisterInt_f  (qcommon/dvar_cmds.cpp:383)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_RegisterInt_f(void)
 
 {
-  uchar uVar1;
-  int iVar2;
-  char *pcVar3;
+  char cVar1;
+  int iVar3;
+  undefined8 uVar2;
   char *pcVar4;
   int iVar5;
   int iVar6;
-  dvar_t *pdVar7;
+  undefined4 *puVar7;
   
   __savegprlr_28();
-  iVar2 = Cmd_Argc();
-  if (iVar2 != 5) {
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s <name> <default> <min> <max>\n");
+  iVar3 = Cmd_Argc();
+  if (iVar3 != 5) {
+    uVar2 = Cmd_Argv(0);
+    Com_Printf(0,0xffffffff8208dcb0,uVar2);
     __restgprlr_28();
     return;
   }
-  pcVar3 = Cmd_Argv(1);
-  pcVar4 = Cmd_Argv(2);
-  iVar2 = atoi(pcVar4);
-  pcVar4 = Cmd_Argv(3);
+  uVar2 = Cmd_Argv(1);
+  pcVar4 = (char *)Cmd_Argv(2);
+  iVar3 = atoi(pcVar4);
+  pcVar4 = (char *)Cmd_Argv(3);
   iVar5 = atoi(pcVar4);
-  pcVar4 = Cmd_Argv(4);
+  pcVar4 = (char *)Cmd_Argv(4);
   iVar6 = atoi(pcVar4);
   if (iVar6 < iVar5) {
-    Com_Printf(0,"dvar %s: min %i should not be greater than max %i\n");
+    Com_Printf(0,0xffffffff8208dc7c,uVar2,iVar5,iVar6);
     __restgprlr_28();
     return;
   }
-  pdVar7 = Dvar_FindVar(pcVar3);
-  if ((pdVar7 == (dvar_t *)0x0) ||
-     ((uVar1 = pdVar7->type, uVar1 == '\a' && ((pdVar7->flags & 0x100) != 0)))) {
-    pdVar7 = Dvar_RegisterInt(pcVar3,iVar2,iVar5,iVar6,0x100,"External Dvar");
+  puVar7 = (undefined4 *)Dvar_FindVar(uVar2);
+  if ((puVar7 == (undefined4 *)0x0) ||
+     ((cVar1 = *(char *)((int)puVar7 + 10), cVar1 == '\a' &&
+      ((*(ushort *)(puVar7 + 2) & 0x100) != 0)))) {
+    Dvar_RegisterInt(uVar2,iVar3,iVar5,iVar6,0x100,0xffffffff8208dc08);
   }
-  else if ((uVar1 != '\x05') && (uVar1 != '\x06')) {
-    Com_Printf(0,"dvar \'%s\' is not an integer dvar\n");
+  else if ((cVar1 != '\x05') && (cVar1 != '\x06')) {
+    Com_Printf(0,0xffffffff8208dc58,*puVar7);
     __restgprlr_28();
     return;
   }
-  __restgprlr_28(pdVar7);
+  __restgprlr_28();
   return;
 }
 
 
 // 824FED68  Dvar_RegisterFloat_f  (qcommon/dvar_cmds.cpp:421)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_RegisterFloat_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
+  int iVar2;
+  undefined8 uVar1;
   char *pcVar3;
-  dvar_t *pdVar4;
-  ushort in_r4;
-  char *in_r5;
+  undefined4 *puVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 == 5) {
-    pcVar2 = Cmd_Argv(1);
-    pcVar3 = Cmd_Argv(2);
+  iVar2 = Cmd_Argc();
+  if (iVar2 == 5) {
+    uVar1 = Cmd_Argv(1);
+    pcVar3 = (char *)Cmd_Argv(2);
     dVar5 = atof(pcVar3);
     dVar6 = (double)(float)dVar5;
-    pcVar3 = Cmd_Argv(3);
+    pcVar3 = (char *)Cmd_Argv(3);
     dVar5 = atof(pcVar3);
     dVar7 = (double)(float)dVar5;
-    pcVar3 = Cmd_Argv(4);
+    pcVar3 = (char *)Cmd_Argv(4);
     dVar5 = atof(pcVar3);
     dVar5 = (double)(float)dVar5;
     if (dVar7 <= dVar5) {
-      pdVar4 = Dvar_FindVar(pcVar2);
-      if ((pdVar4 == (dvar_t *)0x0) || ((pdVar4->type == '\a' && ((pdVar4->flags & 0x100) != 0)))) {
-        Dvar_RegisterFloat(pcVar2,(float)dVar6,(float)dVar7,(float)dVar5,in_r4,in_r5);
+      puVar4 = (undefined4 *)Dvar_FindVar(uVar1);
+      if ((puVar4 == (undefined4 *)0x0) ||
+         ((*(char *)((int)puVar4 + 10) == '\a' && ((*(ushort *)(puVar4 + 2) & 0x100) != 0)))) {
+        Dvar_RegisterFloat(dVar6,dVar7,dVar5,uVar1);
       }
-      else if (pdVar4->type != '\x01') {
-        Com_Printf(0,"dvar \'%s\' is not an float dvar\n");
+      else if (*(char *)((int)puVar4 + 10) != '\x01') {
+        Com_Printf(0,0xffffffff8208dcd8,*puVar4);
       }
     }
     else {
-      Com_Printf(0,"dvar %s: min %g should not be greater than max %g\n");
+      Com_Printf(dVar7,dVar5,0,0xffffffff8208dcf8,uVar1,dVar7,dVar5);
     }
   }
   else {
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s <name> <default> <min> <max>\n");
+    uVar1 = Cmd_Argv(0);
+    Com_Printf(0,0xffffffff8208dcb0,uVar1);
   }
   return;
 }
@@ -592,17 +473,13 @@ void Dvar_RegisterFloat_f(void)
 
 // 824FEEB0  Dvar_RegisterVec3_f  (qcommon/dvar_cmds.cpp:459)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_RegisterVec3_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
+  int iVar2;
+  undefined8 uVar1;
   char *pcVar3;
-  dvar_t *pdVar4;
-  ushort in_r4;
-  char *in_r5;
+  undefined4 *puVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -610,41 +487,41 @@ void Dvar_RegisterVec3_f(void)
   double dVar9;
   
   __savefpr_27();
-  iVar1 = Cmd_Argc();
-  if (iVar1 == 7) {
-    pcVar2 = Cmd_Argv(1);
-    pcVar3 = Cmd_Argv(2);
+  iVar2 = Cmd_Argc();
+  if (iVar2 == 7) {
+    uVar1 = Cmd_Argv(1);
+    pcVar3 = (char *)Cmd_Argv(2);
     dVar5 = atof(pcVar3);
     dVar8 = (double)(float)dVar5;
-    pcVar3 = Cmd_Argv(3);
+    pcVar3 = (char *)Cmd_Argv(3);
     dVar5 = atof(pcVar3);
     dVar7 = (double)(float)dVar5;
-    pcVar3 = Cmd_Argv(4);
+    pcVar3 = (char *)Cmd_Argv(4);
     dVar5 = atof(pcVar3);
     dVar6 = (double)(float)dVar5;
-    pcVar3 = Cmd_Argv(5);
+    pcVar3 = (char *)Cmd_Argv(5);
     dVar5 = atof(pcVar3);
     dVar9 = (double)(float)dVar5;
-    pcVar3 = Cmd_Argv(6);
+    pcVar3 = (char *)Cmd_Argv(6);
     dVar5 = atof(pcVar3);
     dVar5 = (double)(float)dVar5;
     if (dVar9 <= dVar5) {
-      pdVar4 = Dvar_FindVar(pcVar2);
-      if ((pdVar4 == (dvar_t *)0x0) || ((pdVar4->type == '\a' && ((pdVar4->flags & 0x100) != 0)))) {
-        Dvar_RegisterVec3(pcVar2,(float)dVar8,(float)dVar7,(float)dVar6,(float)dVar9,(float)dVar5,
-                          in_r4,in_r5);
+      puVar4 = (undefined4 *)Dvar_FindVar(uVar1);
+      if ((puVar4 == (undefined4 *)0x0) ||
+         ((*(char *)((int)puVar4 + 10) == '\a' && ((*(ushort *)(puVar4 + 2) & 0x100) != 0)))) {
+        Dvar_RegisterVec3(dVar8,dVar7,dVar6,dVar9,dVar5,uVar1);
       }
-      else if (pdVar4->type != '\x03') {
-        Com_Printf(0,"dvar \'%s\' is not an float 3 dvar\n");
+      else if (*(char *)((int)puVar4 + 10) != '\x03') {
+        Com_Printf(0,0xffffffff8208dd2c,*puVar4);
       }
     }
     else {
-      Com_Printf(0,"dvar %s: min %g should not be greater than max %g\n");
+      Com_Printf(dVar9,dVar5,0,0xffffffff8208dcf8,uVar1,dVar9,dVar5);
     }
   }
   else {
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s <name> <defaultx> <defaulty> <defaultz>  <min> <max>\n");
+    uVar1 = Cmd_Argv(0);
+    Com_Printf(0,0xffffffff8208dd50,uVar1);
   }
   __restfpr_27();
   return;
@@ -653,44 +530,41 @@ void Dvar_RegisterVec3_f(void)
 
 // 824FF018  Dvar_RegisterVec3Color_f  (qcommon/dvar_cmds.cpp:508)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_RegisterVec3Color_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
+  int iVar2;
+  undefined8 uVar1;
   char *pcVar3;
-  dvar_t *pdVar4;
-  ushort in_r4;
-  char *in_r5;
+  undefined4 *puVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 == 5) {
-    pcVar2 = Cmd_Argv(1);
-    pcVar3 = Cmd_Argv(2);
+  iVar2 = Cmd_Argc();
+  if (iVar2 == 5) {
+    uVar1 = Cmd_Argv(1);
+    pcVar3 = (char *)Cmd_Argv(2);
     dVar5 = atof(pcVar3);
     dVar7 = (double)(float)dVar5;
-    pcVar3 = Cmd_Argv(3);
+    pcVar3 = (char *)Cmd_Argv(3);
     dVar5 = atof(pcVar3);
     dVar6 = (double)(float)dVar5;
-    pcVar3 = Cmd_Argv(4);
+    pcVar3 = (char *)Cmd_Argv(4);
     dVar5 = atof(pcVar3);
     dVar5 = (double)(float)dVar5;
-    pdVar4 = Dvar_FindVar(pcVar2);
-    if ((pdVar4 == (dvar_t *)0x0) || ((pdVar4->type == '\a' && ((pdVar4->flags & 0x100) != 0)))) {
-      Dvar_RegisterVec3Color(pcVar2,(float)dVar7,(float)dVar6,(float)dVar5,1.0,in_r4,in_r5);
+    puVar4 = (undefined4 *)Dvar_FindVar(uVar1);
+    if ((puVar4 == (undefined4 *)0x0) ||
+       ((*(char *)((int)puVar4 + 10) == '\a' && ((*(ushort *)(puVar4 + 2) & 0x100) != 0)))) {
+      Dvar_RegisterVec3Color(dVar7,dVar6,dVar5,0x3ff0000000000000,uVar1);
     }
-    else if (pdVar4->type != '\t') {
-      Com_Printf(0,"dvar \'%s\' is not an float 3 color dvar\n");
+    else if (*(char *)((int)puVar4 + 10) != '\t') {
+      Com_Printf(0,0xffffffff8208dd90,*puVar4);
     }
   }
   else {
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s <name> <defaultx> <defaulty> <defaultz>\n");
+    uVar1 = Cmd_Argv(0);
+    Com_Printf(0,0xffffffff8208ddb8,uVar1);
   }
   return;
 }
@@ -698,59 +572,54 @@ void Dvar_RegisterVec3Color_f(void)
 
 // 824FF130  Dvar_EnableSetA  (qcommon/dvar_cmds.cpp:541)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_EnableSetA(void)
 
 {
-  g_setaEnabled = true;
+  DAT_83670938 = 1;
   return;
 }
 
 
 // 824FF140  Dvar_DisableSetA  (qcommon/dvar_cmds.cpp:547)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_DisableSetA(void)
 
 {
-  g_setaEnabled = false;
+  DAT_83670938 = 0;
   return;
 }
 
 
 // 824FF150  Dvar_SetA_f  (qcommon/dvar_cmds.cpp:584)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_SetA_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  dvar_t *pdVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
   
-  if (!g_setaEnabled) {
-    iVar1 = Cmd_Argc();
-    if (1 < iVar1) {
-      Cmd_Argv(1);
-      Cmd_Argv(0);
-      Com_Printf(0,"Forcing \"%s\" command to normal \"Set\" for dvar \"%s\".\n");
+  if (DAT_83670938 == '\0') {
+    iVar4 = Cmd_Argc();
+    if (1 < iVar4) {
+      uVar1 = Cmd_Argv(1);
+      uVar2 = Cmd_Argv(0);
+      Com_Printf(0,0xffffffff8208de0c,uVar2,uVar1);
     }
     Dvar_Set_f();
     return;
   }
-  iVar1 = Cmd_Argc();
-  if (iVar1 < 3) {
-    Com_Printf(0,"USAGE: seta <variable> <value>\n");
+  iVar4 = Cmd_Argc();
+  if (iVar4 < 3) {
+    Com_Printf(0,0xffffffff8208ddec);
     return;
   }
   Dvar_Set_f();
-  pcVar2 = Cmd_Argv(1);
-  pdVar3 = Dvar_FindVar(pcVar2);
-  if (pdVar3 != (dvar_t *)0x0) {
-    Dvar_AddFlags(pdVar3,0);
+  Cmd_Argv(1);
+  uVar3 = Dvar_FindVar();
+  if ((uVar3 & 0xffffffff) != 0) {
+    Dvar_AddFlags(uVar3,0);
   }
   return;
 }
@@ -758,55 +627,49 @@ void Dvar_SetA_f(void)
 
 // 824FF228  Dvar_SetFromDvar_f  (qcommon/dvar_cmds.cpp:637)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_SetFromDvar_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  dvar_t *pdVar3;
-  char *pcVar4;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 != 3) {
-    Com_Printf(0,"USAGE: setfromdvar <dest_dvar> <source_dvar>\n");
+  iVar3 = Cmd_Argc();
+  if (iVar3 != 3) {
+    Com_Printf(0,0xffffffff8208de44);
     return;
   }
-  pcVar2 = Cmd_Argv(2);
-  pdVar3 = Dvar_FindVar(pcVar2);
-  if (pdVar3 == (dvar_t *)0x0) {
-    Cmd_Argv(2);
-    Com_Printf(0,"dvar \'%s\' doesn\'t exist\n");
+  Cmd_Argv(2);
+  iVar3 = Dvar_FindVar();
+  if (iVar3 == 0) {
+    uVar1 = Cmd_Argv(2);
+    Com_Printf(0,0xffffffff820312ec,uVar1);
     return;
   }
-  pcVar2 = Dvar_DisplayableValue(pdVar3);
-  pcVar4 = Cmd_Argv(1);
-  Dvar_SetCommand(pcVar4,pcVar2);
+  uVar1 = Dvar_DisplayableValue();
+  uVar2 = Cmd_Argv(1);
+  Dvar_SetCommand(uVar2,uVar1);
   return;
 }
 
 
 // 824FF2D8  Dvar_Reset_f  (qcommon/dvar_cmds.cpp:663)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_Reset_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  dvar_t *pdVar3;
+  int iVar2;
+  ulonglong uVar1;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 != 2) {
-    Com_Printf(0,"USAGE: reset <variable>\n");
+  iVar2 = Cmd_Argc();
+  if (iVar2 != 2) {
+    Com_Printf(0,0xffffffff8208de74);
     return;
   }
-  pcVar2 = Cmd_Argv(1);
-  pdVar3 = Dvar_FindVar(pcVar2);
-  if (pdVar3 != (dvar_t *)0x0) {
-    Dvar_Reset(pdVar3,DVAR_SOURCE_EXTERNAL);
+  Cmd_Argv(1);
+  uVar1 = Dvar_FindVar();
+  if ((uVar1 & 0xffffffff) != 0) {
+    Dvar_Reset(uVar1,1);
   }
   return;
 }
@@ -814,7 +677,7 @@ void Dvar_Reset_f(void)
 
 // 824FF340  Dvar_WriteSingleVariable  (qcommon/dvar_cmds.cpp:681)
 
-void Dvar_WriteSingleVariable(dvar_t *param_1,void *param_2)
+void Dvar_WriteSingleVariable(void)
 
 {
   return;
@@ -823,28 +686,29 @@ void Dvar_WriteSingleVariable(dvar_t *param_1,void *param_2)
 
 // 824FF348  Dvar_WriteVariables  (qcommon/dvar_cmds.cpp:695)
 
-void Dvar_WriteVariables(void *param_1)
+void Dvar_WriteVariables(undefined4 param_1)
 
 {
-  void *pvStack00000014;
+  undefined4 uStack00000014;
   
-  pvStack00000014 = param_1;
-  Dvar_ForEach(Dvar_WriteSingleVariable,&stack0x00000014);
+  uStack00000014 = param_1;
+  Dvar_ForEach(0xffffffff824ff340,&stack0x00000014);
   return;
 }
 
 
 // 824FF378  Dvar_WriteSingleDefault  (qcommon/dvar_cmds.cpp:701)
 
-void Dvar_WriteSingleDefault(dvar_t *param_1,void *param_2)
+void Dvar_WriteSingleDefault(undefined4 *param_1,undefined4 *param_2)
 
 {
-  void *pvVar1;
+  undefined4 uVar1;
+  undefined8 uVar2;
   
-  if ((param_1->flags & 0x2104) == 0) {
-    pvVar1 = *(void **)param_2;
-    Dvar_DisplayableResetValue(param_1);
-    FS_Printf(pvVar1,"set %s \"%s\"\n");
+  if ((*(ushort *)(param_1 + 2) & 0x2104) == 0) {
+    uVar1 = *param_2;
+    uVar2 = Dvar_DisplayableResetValue();
+    FS_Printf(uVar1,0xffffffff8208de90,*param_1,uVar2);
   }
   return;
 }
@@ -852,60 +716,60 @@ void Dvar_WriteSingleDefault(dvar_t *param_1,void *param_2)
 
 // 824FF3E0  Dvar_WriteDefaults  (qcommon/dvar_cmds.cpp:712)
 
-void Dvar_WriteDefaults(void *param_1)
+void Dvar_WriteDefaults(undefined4 param_1)
 
 {
-  void *pvStack00000014;
+  undefined4 uStack00000014;
   
-  pvStack00000014 = param_1;
-  Dvar_ForEach(Dvar_WriteSingleDefault,&stack0x00000014);
+  uStack00000014 = param_1;
+  Dvar_ForEach(0xffffffff824ff378,&stack0x00000014);
   return;
 }
 
 
 // 824FF410  Dvar_ListSingle  (qcommon/dvar_cmds.cpp:720)
 
-void Dvar_ListSingle(dvar_t *param_1,void *param_2)
+void Dvar_ListSingle(undefined4 *param_1,ulonglong param_2)
 
 {
-  bool bVar1;
-  char *pcVar2;
-  char *pcVar3;
+  char cVar2;
+  undefined8 uVar1;
+  undefined8 uVar3;
   
-  if ((param_2 == (void *)0x0) || (bVar1 = Com_Filter(param_2,param_1->name,0), bVar1)) {
-    pcVar3 = " ";
-    pcVar2 = pcVar3;
-    if ((param_1->flags & 0x400) != 0) {
-      pcVar2 = "S";
+  if (((param_2 & 0xffffffff) == 0) || (cVar2 = Com_Filter(param_2,*param_1,0), cVar2 != '\0')) {
+    uVar3 = 0xffffffff820034a0;
+    uVar1 = uVar3;
+    if ((*(ushort *)(param_1 + 2) & 0x400) != 0) {
+      uVar1 = 0xffffffff8205f3f8;
     }
-    Com_Printf(0,pcVar2);
-    pcVar2 = pcVar3;
-    if ((param_1->flags & 0x200) != 0) {
-      pcVar2 = "U";
+    Com_Printf(0,uVar1);
+    uVar1 = uVar3;
+    if ((*(ushort *)(param_1 + 2) & 0x200) != 0) {
+      uVar1 = 0xffffffff8208deb8;
     }
-    Com_Printf(0,pcVar2);
-    pcVar2 = pcVar3;
-    if ((param_1->flags & 0x2000) != 0) {
-      pcVar2 = "R";
+    Com_Printf(0,uVar1);
+    uVar1 = uVar3;
+    if ((*(ushort *)(param_1 + 2) & 0x2000) != 0) {
+      uVar1 = 0xffffffff8205f3e8;
     }
-    Com_Printf(0,pcVar2);
-    pcVar2 = pcVar3;
-    if ((param_1->flags & 0x800) != 0) {
-      pcVar2 = "I";
+    Com_Printf(0,uVar1);
+    uVar1 = uVar3;
+    if ((*(ushort *)(param_1 + 2) & 0x800) != 0) {
+      uVar1 = 0xffffffff8208deb4;
     }
-    Com_Printf(0,pcVar2);
-    Com_Printf(0," ");
-    pcVar2 = pcVar3;
-    if ((param_1->flags & 2) != 0) {
-      pcVar2 = "L";
+    Com_Printf(0,uVar1);
+    Com_Printf(0,0xffffffff820034a0);
+    uVar1 = uVar3;
+    if ((*(ushort *)(param_1 + 2) & 2) != 0) {
+      uVar1 = 0xffffffff8208deb0;
     }
-    Com_Printf(0,pcVar2);
-    if ((param_1->flags & 4) != 0) {
-      pcVar3 = "C";
+    Com_Printf(0,uVar1);
+    if ((*(ushort *)(param_1 + 2) & 4) != 0) {
+      uVar3 = 0xffffffff8208deac;
     }
-    Com_Printf(0,pcVar3);
-    Dvar_DisplayableValue(param_1);
-    Com_Printf(0," %s \"%s\"\n");
+    Com_Printf(0,uVar3);
+    uVar1 = Dvar_DisplayableValue(param_1);
+    Com_Printf(0,0xffffffff8208dea0,*param_1,uVar1);
   }
   return;
 }
@@ -913,51 +777,50 @@ void Dvar_ListSingle(dvar_t *param_1,void *param_2)
 
 // 824FF588  Dvar_List_f  (qcommon/dvar_cmds.cpp:765)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_List_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
+  int iVar2;
+  undefined8 uVar1;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 < 2) {
-    pcVar2 = (char *)0x0;
+  iVar2 = Cmd_Argc();
+  if (iVar2 < 2) {
+    uVar1 = 0;
   }
   else {
-    pcVar2 = Cmd_Argv(1);
+    uVar1 = Cmd_Argv(1);
   }
-  Dvar_ForEach(Dvar_ListSingle,pcVar2);
-  Com_Printf(0,"\n%i total dvars\n");
+  Dvar_ForEach(0xffffffff824ff410,uVar1);
+  Com_Printf(0,0xffffffff8208debc,DAT_84054120);
   return;
 }
 
 
 // 824FF5E8  Com_DvarDumpSingle  (qcommon/dvar_cmds.cpp:809)
 
-void Com_DvarDumpSingle(dvar_t *param_1,void *param_2)
+void Com_DvarDumpSingle(undefined8 param_1,int *param_2)
 
 {
-  dvar_t *pdVar1;
-  bool bVar2;
-  char acStack_820 [2080];
+  undefined4 *puVar3;
+  char cVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_820 [2080];
   
-  pdVar1 = (dvar_t *)__savegprlr_29(param_1);
-  *(int *)param_2 = *(int *)param_2 + 1;
-  if ((*(char **)((int)param_2 + 8) == (char *)0x0) ||
-     (bVar2 = Com_Filter(*(char **)((int)param_2 + 8),pdVar1->name,0), bVar2)) {
-    bVar2 = Dvar_HasLatchedValue(pdVar1);
-    if (bVar2) {
-      Dvar_DisplayableLatchedValue(pdVar1);
-      Dvar_DisplayableValue(pdVar1);
-      Com_sprintf(acStack_820,0x800,"      %s \"%s\" -- latched \"%s\"\n");
+  puVar3 = (undefined4 *)__savegprlr_29();
+  *param_2 = *param_2 + 1;
+  if ((param_2[2] == 0) || (cVar4 = Com_Filter(param_2[2],*puVar3,0), cVar4 != '\0')) {
+    cVar4 = Dvar_HasLatchedValue(puVar3);
+    if (cVar4 == '\0') {
+      uVar1 = Dvar_DisplayableValue(puVar3);
+      Com_sprintf(auStack_820,0x800,0xffffffff8208ded0,*puVar3,uVar1);
     }
     else {
-      Dvar_DisplayableValue(pdVar1);
-      Com_sprintf(acStack_820,0x800,"      %s \"%s\"\n");
+      uVar1 = Dvar_DisplayableLatchedValue();
+      uVar2 = Dvar_DisplayableValue(puVar3);
+      Com_sprintf(auStack_820,0x800,0xffffffff8208dee0,*puVar3,uVar2,uVar1);
     }
-    Com_PrintMessage(*(int *)((int)param_2 + 4),acStack_820,0);
+    Com_PrintMessage(param_2[1],auStack_820,0);
   }
   __restgprlr_29();
   return;
@@ -966,27 +829,23 @@ void Com_DvarDumpSingle(dvar_t *param_1,void *param_2)
 
 // 824FF6B0  Com_DvarDump  (qcommon/dvar_cmds.cpp:827)
 
-void Com_DvarDump(int param_1,char *param_2)
+void Com_DvarDump(undefined8 param_1,undefined4 param_2)
 
 {
   undefined4 local_b0;
   int local_ac;
-  char *local_a8;
-  char acStack_a0 [136];
+  undefined4 local_a8;
+  undefined1 auStack_a0 [136];
   
-  if ((param_1 != 6) || ((com_logfile != (dvar_t *)0x0 && ((com_logfile->current).integer != 0)))) {
-    Com_PrintMessage(param_1,
-                     "=============================== DVAR DUMP ========================================\n"
-                     ,0);
+  if (((int)param_1 != 6) || ((DAT_8365e154 != 0 && (*(int *)(DAT_8365e154 + 0xc) != 0)))) {
+    Com_PrintMessage(param_1,0xffffffff8208df80,0);
     local_b0 = 0;
-    local_ac = param_1;
+    local_ac = (int)param_1;
     local_a8 = param_2;
-    Dvar_ForEach(Com_DvarDumpSingle,&local_b0);
-    Com_sprintf(acStack_a0,0x80,"\n%i total dvars\n%i dvar indexes\n");
-    Com_PrintMessage(param_1,acStack_a0,0);
-    Com_PrintMessage(param_1,
-                     "=============================== END DVAR DUMP =====================================\n"
-                     ,0);
+    Dvar_ForEach(0xffffffff824ff5e8,&local_b0);
+    Com_sprintf(auStack_a0,0x80,0xffffffff8208df58,local_b0,DAT_84054120);
+    Com_PrintMessage(param_1,auStack_a0,0);
+    Com_PrintMessage(param_1,0xffffffff8208df00,0);
   }
   return;
 }
@@ -994,46 +853,42 @@ void Com_DvarDump(int param_1,char *param_2)
 
 // 824FF780  Dvar_Dump_f  (qcommon/dvar_cmds.cpp:857)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_Dump_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
+  int iVar2;
+  undefined8 uVar1;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 < 2) {
-    pcVar2 = (char *)0x0;
+  iVar2 = Cmd_Argc();
+  if (iVar2 < 2) {
+    uVar1 = 0;
   }
   else {
-    pcVar2 = Cmd_Argv(1);
+    uVar1 = Cmd_Argv(1);
   }
-  Com_DvarDump(0,pcVar2);
+  Com_DvarDump(0,uVar1);
   return;
 }
 
 
 // 824FF7C8  SV_SetConfigDvar  (qcommon/dvar_cmds.cpp:873)
 
-/* WARNING: Enum "ConfigString": Some values do not have unique names */
-
-void SV_SetConfigDvar(dvar_t *param_1,void *param_2)
+void SV_SetConfigDvar(undefined8 param_1,undefined4 *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  dvar_t *pdVar3;
-  char *pcVar4;
-  ConfigString CVar5;
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 *puVar5;
+  undefined8 uVar3;
+  undefined8 uVar4;
   
-  pdVar3 = (dvar_t *)__savegprlr_28(param_1);
-  if (((uint)pdVar3->flags & *(uint *)((int)param_2 + 8)) != 0) {
-    pcVar4 = Dvar_DisplayableValue(pdVar3);
-    pcVar1 = pdVar3->name;
-    iVar2 = *(int *)((int)param_2 + 4);
-    CVar5 = ConfigStringFromIndex(*(int *)param_2);
-    SV_SetConfigValueForKey(CVar5,iVar2,pcVar1,pcVar4);
+  puVar5 = (undefined4 *)__savegprlr_28();
+  if (((uint)*(ushort *)(puVar5 + 2) & param_2[2]) != 0) {
+    uVar3 = Dvar_DisplayableValue();
+    uVar1 = *puVar5;
+    uVar2 = param_2[1];
+    uVar4 = ConfigStringFromIndex(*param_2);
+    SV_SetConfigValueForKey(uVar4,uVar2,uVar1,uVar3);
   }
   __restgprlr_28();
   return;
@@ -1042,31 +897,31 @@ void SV_SetConfigDvar(dvar_t *param_1,void *param_2)
 
 // 824FF820  SV_SetConfig  (qcommon/dvar_cmds.cpp:885)
 
-void SV_SetConfig(int param_1,int param_2,int param_3)
+void SV_SetConfig(undefined4 param_1,undefined4 param_2,undefined4 param_3)
 
 {
-  int local_20;
-  int local_1c;
-  int local_18;
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
   
   local_20 = param_1;
   local_1c = param_2;
   local_18 = param_3;
-  Dvar_ForEach(SV_SetConfigDvar,&local_20);
+  Dvar_ForEach(0xffffffff824ff7c8,&local_20);
   return;
 }
 
 
 // 824FF858  Dvar_InfoStringSingle  (qcommon/dvar_cmds.cpp:898)
 
-void Dvar_InfoStringSingle(dvar_t *param_1,void *param_2)
+void Dvar_InfoStringSingle(undefined4 *param_1,uint *param_2)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   
-  if (((uint)param_1->flags & *(uint *)param_2) != 0) {
-    pcVar1 = Dvar_DisplayableValue(param_1);
-    Info_SetValueForKey(info1,param_1->name,pcVar1);
+  if (((uint)*(ushort *)(param_1 + 2) & *param_2) != 0) {
+    uVar1 = Dvar_DisplayableValue();
+    Info_SetValueForKey(0xffffffff8366e538,*param_1,uVar1);
   }
   return;
 }
@@ -1074,14 +929,14 @@ void Dvar_InfoStringSingle(dvar_t *param_1,void *param_2)
 
 // 824FF8B0  Dvar_InfoStringSingle_Big  (qcommon/dvar_cmds.cpp:908)
 
-void Dvar_InfoStringSingle_Big(dvar_t *param_1,void *param_2)
+void Dvar_InfoStringSingle_Big(undefined4 *param_1,uint *param_2)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   
-  if (((uint)param_1->flags & *(uint *)param_2) != 0) {
-    pcVar1 = Dvar_DisplayableValue(param_1);
-    Info_SetValueForKey_Big(info2,param_1->name,pcVar1);
+  if (((uint)*(ushort *)(param_1 + 2) & *param_2) != 0) {
+    uVar1 = Dvar_DisplayableValue();
+    Info_SetValueForKey_Big(0xffffffff8366e938,*param_1,uVar1);
   }
   return;
 }
@@ -1089,144 +944,137 @@ void Dvar_InfoStringSingle_Big(dvar_t *param_1,void *param_2)
 
 // 824FF908  Dvar_InfoString  (qcommon/dvar_cmds.cpp:918)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-char * Dvar_InfoString(LocalClientNum_t param_1,int param_2)
+void Dvar_InfoString(undefined8 param_1,uint param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  undefined8 uVar1;
+  undefined8 uVar2;
   char *pcVar3;
-  bool bVar4;
-  char *pcVar5;
-  uint uStack0000001c;
-  char acStack_40 [4];
-  char acStack_3c [4];
-  char acStack_38 [4];
-  char acStack_34 [52];
+  char cVar4;
+  undefined8 uVar5;
+  uint in_stack_0000001c;
+  undefined1 auStack_40 [4];
+  undefined1 auStack_3c [4];
+  undefined1 auStack_38 [4];
+  undefined1 auStack_34 [52];
   
-  uStack0000001c = param_2;
-  LVar1 = __savegprlr_27(param_1);
-  info1[0] = '\0';
-  Dvar_ForEach(Dvar_InfoStringSingle,&stack0x0000001c);
-  if ((uStack0000001c & 0x200) != 0) {
-    iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-    pcVar3 = CL_GetUsernameForLocalClient(iVar2);
-    Info_SetValueForKey(info1,"name",pcVar3);
-    pcVar3 = GamerProfile_GetClanName(iVar2);
-    Info_SetValueForKey(info1,"clanAbbrev",pcVar3);
-    pcVar3 = CL_GetXuidForLocalClient(iVar2);
-    if (((onlinegame->current).enabled != false) && (bVar4 = Live_UserIsGuest(iVar2), !bVar4)) {
+  uVar1 = __savegprlr_27();
+  DAT_8366e538 = 0;
+  in_stack_0000001c = param_2;
+  Dvar_ForEach(0xffffffff824ff858,&stack0x0000001c);
+  if ((in_stack_0000001c & 0x200) != 0) {
+    uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+    uVar2 = CL_GetUsernameForLocalClient();
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff82021a74,uVar2);
+    uVar2 = GamerProfile_GetClanName(uVar1);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c9b8,uVar2);
+    pcVar3 = (char *)CL_GetXuidForLocalClient(uVar1);
+    if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (cVar4 = Live_UserIsGuest(uVar1), cVar4 == '\0'))
+    {
       if (*pcVar3 != '0') {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",
-                        0x3c5,0,"%s");
+        MyAssertHandler(0xffffffff8208dad8,0x3c5,0,0xffffffff82000f98,0xffffffff820324e4);
       }
       if (pcVar3[1] != '0') {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",
-                        0x3c6,0,"%s");
+        MyAssertHandler(0xffffffff8208dad8,0x3c6,0,0xffffffff82000f98,0xffffffff820324cc);
       }
       if (pcVar3[2] != '0') {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",
-                        0x3c7,0,"%s");
+        MyAssertHandler(0xffffffff8208dad8,0x3c7,0,0xffffffff82000f98,0xffffffff820324b4);
       }
       if (pcVar3[3] != '9') {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",
-                        0x3c8,0,"%s");
+        MyAssertHandler(0xffffffff8208dad8,0x3c8,0,0xffffffff82000f98,0xffffffff8203249c);
       }
     }
-    Info_SetValueForKey(info1,"xuid",pcVar3);
-    Live_GetLocalNatType();
-    Com_sprintf(acStack_40,2,"%i");
-    Info_SetValueForKey(info1,"natType",acStack_40);
-    Live_GetRankMP(iVar2);
-    Com_sprintf(acStack_38,4,"%i");
-    Live_GetPrestigeMP(iVar2);
-    Com_sprintf(acStack_3c,4,"%i");
-    Info_SetValueForKey(info1,"rank",acStack_38);
-    Info_SetValueForKey(info1,"prestige",acStack_3c);
-    bVar4 = GamerProfile_GetUsingEliteClanTag(iVar2);
-    pcVar5 = "1";
-    pcVar3 = pcVar5;
-    if (!bVar4) {
-      pcVar3 = "0";
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff82032494,pcVar3);
+    uVar2 = Live_GetLocalNatType();
+    Com_sprintf(auStack_40,2,0xffffffff8200c28c,uVar2);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff82023188,auStack_40);
+    uVar2 = Live_GetRankMP(uVar1);
+    Com_sprintf(auStack_38,4,0xffffffff8200c28c,uVar2);
+    uVar2 = Live_GetPrestigeMP(uVar1);
+    Com_sprintf(auStack_3c,4,0xffffffff8200c28c,uVar2);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8208dfd4,auStack_38);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8203ab18,auStack_3c);
+    cVar4 = GamerProfile_GetUsingEliteClanTag(uVar1);
+    uVar5 = 0xffffffff82032490;
+    uVar2 = uVar5;
+    if (cVar4 == '\0') {
+      uVar2 = 0xffffffff8203248c;
     }
-    Info_SetValueForKey(info1,"ec_usingTag",pcVar3);
-    bVar4 = GamerProfile_GetUsingEliteClanTitle(iVar2);
-    if (!bVar4) {
-      pcVar5 = "0";
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c990,uVar2);
+    cVar4 = GamerProfile_GetUsingEliteClanTitle(uVar1);
+    if (cVar4 == '\0') {
+      uVar5 = 0xffffffff8203248c;
     }
-    Info_SetValueForKey(info1,"ec_usingTitle",pcVar5);
-    GamerProfile_GetEliteClanTitleBgIndex(iVar2);
-    Com_sprintf(acStack_34,4,"%i");
-    Info_SetValueForKey(info1,"ec_TitleBg",acStack_34);
-    pcVar3 = GamerProfile_GetEliteClanTitleText(iVar2);
-    Info_SetValueForKey(info1,"ec_TitleText",pcVar3);
-    pcVar3 = GamerProfile_GetEliteClanClanTagText(iVar2);
-    Info_SetValueForKey(info1,"ec_TagText",pcVar3);
-    GamerProfile_GetPrestigeBlackOps(iVar2);
-    Com_sprintf(acStack_3c,4,"%i");
-    Info_SetValueForKey(info1,"ptd_prestige_black_ops",acStack_3c);
-    GamerProfile_GetRankBlackOps(iVar2);
-    Com_sprintf(acStack_38,4,"%i");
-    Info_SetValueForKey(info1,"ptd_rank_black_ops",acStack_38);
-    GamerProfile_GetPrestigeMW2(iVar2);
-    Com_sprintf(acStack_3c,4,"%i");
-    Info_SetValueForKey(info1,"ptd_prestige_mw2",acStack_3c);
-    GamerProfile_GetRankMW2(iVar2);
-    Com_sprintf(acStack_38,4,"%i");
-    Info_SetValueForKey(info1,"ptd_rank_mw2",acStack_38);
-    GamerProfile_GetPrestigeWorldAtWar(iVar2);
-    Com_sprintf(acStack_3c,4,"%i");
-    Info_SetValueForKey(info1,"ptd_prestige_world_at_war",acStack_3c);
-    GamerProfile_GetRankWorldAtWar(iVar2);
-    Com_sprintf(acStack_38,4,"%i");
-    Info_SetValueForKey(info1,"ptd_rank_world_at_war",acStack_38);
-    GamerProfile_GetPrestigeMW(iVar2);
-    Com_sprintf(acStack_3c,4,"%i");
-    Info_SetValueForKey(info1,"ptd_prestige_mw",acStack_3c);
-    GamerProfile_GetRankMW(iVar2);
-    Com_sprintf(acStack_38,4,"%i");
-    Info_SetValueForKey(info1,"ptd_rank_mw",acStack_38);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c980,uVar5);
+    uVar2 = GamerProfile_GetEliteClanTitleBgIndex(uVar1);
+    Com_sprintf(auStack_34,4,0xffffffff8200c28c,uVar2);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c974,auStack_34);
+    uVar2 = GamerProfile_GetEliteClanTitleText(uVar1);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c99c,uVar2);
+    uVar2 = GamerProfile_GetEliteClanClanTagText(uVar1);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c9ac,uVar2);
+    uVar2 = GamerProfile_GetPrestigeBlackOps(uVar1);
+    Com_sprintf(auStack_3c,4,0xffffffff8200c28c,uVar2);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c95c,auStack_3c);
+    uVar2 = GamerProfile_GetRankBlackOps(uVar1);
+    Com_sprintf(auStack_38,4,0xffffffff8200c28c,uVar2);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c948,auStack_38);
+    uVar2 = GamerProfile_GetPrestigeMW2(uVar1);
+    Com_sprintf(auStack_3c,4,0xffffffff8200c28c,uVar2);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c934,auStack_3c);
+    uVar2 = GamerProfile_GetRankMW2(uVar1);
+    Com_sprintf(auStack_38,4,0xffffffff8200c28c,uVar2);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c924,auStack_38);
+    uVar2 = GamerProfile_GetPrestigeWorldAtWar(uVar1);
+    Com_sprintf(auStack_3c,4,0xffffffff8200c28c,uVar2);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c908,auStack_3c);
+    uVar2 = GamerProfile_GetRankWorldAtWar(uVar1);
+    Com_sprintf(auStack_38,4,0xffffffff8200c28c,uVar2);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c8f0,auStack_38);
+    uVar2 = GamerProfile_GetPrestigeMW(uVar1);
+    Com_sprintf(auStack_3c,4,0xffffffff8200c28c,uVar2);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c8e0,auStack_3c);
+    uVar1 = GamerProfile_GetRankMW(uVar1);
+    Com_sprintf(auStack_38,4,0xffffffff8200c28c,uVar1);
+    Info_SetValueForKey(0xffffffff8366e538,0xffffffff8206c8d4,auStack_38);
   }
-  pcVar3 = (char *)__restgprlr_27(0xffffffff8366e538);
-  return pcVar3;
+  __restgprlr_27(0xffffffff8366e538);
+  return;
 }
 
 
 // 824FFD78  Dvar_InfoString_Big  (qcommon/dvar_cmds.cpp:1028)
 
-char * Dvar_InfoString_Big(int param_1)
+undefined8 Dvar_InfoString_Big(undefined4 param_1)
 
 {
-  int iStack00000014;
+  undefined4 uStack00000014;
   
-  info2[0] = '\0';
-  iStack00000014 = param_1;
-  Dvar_ForEach(Dvar_InfoStringSingle_Big,&stack0x00000014);
-  return info2;
+  DAT_8366e938 = 0;
+  uStack00000014 = param_1;
+  Dvar_ForEach(0xffffffff824ff8b0,&stack0x00000014);
+  return 0xffffffff8366e938;
 }
 
 
 // 824FFDC8  Dvar_AddCommands  (qcommon/dvar_cmds.cpp:1163)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Dvar_AddCommands(void)
 
 {
-  Cmd_AddCommandInternal("toggle",Dvar_Toggle_f,&Dvar_Toggle_f_VAR);
-  Cmd_AddCommandInternal("togglep",Dvar_TogglePrint_f,&Dvar_TogglePrint_f_VAR);
-  Cmd_AddCommandInternal("set",Dvar_Set_f,&Dvar_Set_f_VAR);
-  Cmd_AddCommandInternal("seta",Dvar_SetA_f,&Dvar_SetA_f_VAR);
-  Cmd_AddCommandInternal("reset",Dvar_Reset_f,&Dvar_Reset_f_VAR);
-  Cmd_AddCommandInternal("dvarlist",Dvar_List_f,&Dvar_List_f_VAR);
-  Cmd_AddCommandInternal("dvardump",Dvar_Dump_f,&Dvar_Dump_f_VAR);
-  Cmd_AddCommandInternal("dvar_bool",Dvar_RegisterBool_f,&Dvar_RegisterBool_f_VAR);
-  Cmd_AddCommandInternal("dvar_int",Dvar_RegisterInt_f,&Dvar_RegisterInt_f_VAR);
-  Cmd_AddCommandInternal("dvar_float",Dvar_RegisterFloat_f,&Dvar_RegisterFloat_f_VAR);
-  Cmd_AddCommandInternal("dvar_vec3",Dvar_RegisterVec3_f,&Dvar_RegisterVec3_f_VAR);
-  Cmd_AddCommandInternal("dvar_vec3_color",Dvar_RegisterVec3Color_f,&Dvar_RegisterVec3Color_f_VAR);
-  Cmd_AddCommandInternal("setfromdvar",Dvar_SetFromDvar_f,&Dvar_SetFromDvar_f_VAR);
+  Cmd_AddCommandInternal(0xffffffff8202e11c,0xffffffff824fe998,0xffffffff83670a2c);
+  Cmd_AddCommandInternal(0xffffffff8202e114,0xffffffff824fe9a0,0xffffffff83670a18);
+  Cmd_AddCommandInternal(0xffffffff82003740,0xffffffff824feab0,0xffffffff83670a04);
+  Cmd_AddCommandInternal(0xffffffff8202e134,0xffffffff824ff150,0xffffffff836709f0);
+  Cmd_AddCommandInternal(0xffffffff8202e124,0xffffffff824ff2d8,0xffffffff836709dc);
+  Cmd_AddCommandInternal(0xffffffff8208e034,0xffffffff824ff588,0xffffffff836709c8);
+  Cmd_AddCommandInternal(0xffffffff8208e028,0xffffffff824ff780,0xffffffff836709b4);
+  Cmd_AddCommandInternal(0xffffffff8208e01c,0xffffffff824feb60,0xffffffff836709a0);
+  Cmd_AddCommandInternal(0xffffffff8208e010,0xffffffff824fec40,0xffffffff8367098c);
+  Cmd_AddCommandInternal(0xffffffff8208e004,0xffffffff824fed68,0xffffffff83670978);
+  Cmd_AddCommandInternal(0xffffffff8208dff8,0xffffffff824feeb0,0xffffffff83670964);
+  Cmd_AddCommandInternal(0xffffffff8208dfe8,0xffffffff824ff018,0xffffffff83670950);
+  Cmd_AddCommandInternal(0xffffffff8208dfdc,0xffffffff824ff228,0xffffffff8367093c);
   return;
 }
 

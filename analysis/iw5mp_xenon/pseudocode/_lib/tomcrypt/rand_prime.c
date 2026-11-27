@@ -7,48 +7,48 @@ void rand_prime(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglon
 {
   bool bVar1;
   int iVar2;
-  void *pvVar4;
-  byte *pbVar5;
-  ulonglong uVar3;
-  int iVar6;
-  uint uVar7;
+  undefined8 uVar3;
+  byte *pbVar6;
+  ulonglong uVar4;
+  undefined8 uVar5;
+  int iVar7;
   int local_60 [24];
   
-  pvVar4 = (void *)__savegprlr_22();
+  uVar3 = __savegprlr_22();
   bVar1 = (int)param_2 < 0;
   if (bVar1) {
     param_2 = -param_2;
   }
-  uVar7 = (uint)param_2;
-  if ((1 < (int)uVar7) && ((int)uVar7 < 0x201)) {
+  iVar7 = (int)param_2;
+  if ((1 < iVar7) && (iVar7 < 0x201)) {
     if ((-1 < (int)param_4) &&
        (((int)param_4 < 0x20 &&
         (iVar2 = (int)((param_4 + (param_4 & 0x3fffffff) * 4 & 0xffffffff) << 3),
-        *(int *)(&prng_descriptor + iVar2) != 0)))) {
-      pbVar5 = tom_game_calloc(1,uVar7);
-      if (pbVar5 == (byte *)0x0) {
+        *(int *)(&DAT_84896e48 + iVar2) != 0)))) {
+      pbVar6 = (byte *)tom_game_calloc(1,param_2);
+      if (pbVar6 == (byte *)0x0) {
         __restgprlr_22(0xd);
         return;
       }
       while( true ) {
-        uVar3 = (**(code **)(&DAT_84896e5c + iVar2))(pbVar5,param_2,param_3);
-        if ((uVar3 & 0xffffffff) != (param_2 & 0xffffffff)) {
-          tom_game_free(pbVar5);
+        uVar4 = (**(code **)(&DAT_84896e5c + iVar2))(pbVar6,param_2,param_3);
+        if ((uVar4 & 0xffffffff) != (param_2 & 0xffffffff)) {
+          tom_game_free(pbVar6);
           __restgprlr_22(9);
           return;
         }
-        *pbVar5 = *pbVar5 | 0xc0;
-        pbVar5[uVar7 - 1] = bVar1 << 1 | pbVar5[uVar7 - 1] & 0xfe | 1;
-        iVar6 = (*ltc_mp.unsigned_read)(pvVar4,pbVar5,uVar7);
-        if ((iVar6 != 0) || (iVar6 = (*ltc_mp.isprime)(pvVar4,local_60), iVar6 != 0)) break;
+        *pbVar6 = *pbVar6 | 0xc0;
+        (pbVar6 + iVar7)[-1] = bVar1 << 1 | (pbVar6 + iVar7)[-1] & 0xfe | 1;
+        uVar5 = (*DAT_84897f30)(uVar3,pbVar6,param_2);
+        if (((int)uVar5 != 0) || (uVar5 = (*DAT_84897f84)(uVar3,local_60), (int)uVar5 != 0)) break;
         if (local_60[0] != 0) {
-          tom_game_free(pbVar5);
+          tom_game_free(pbVar6);
           __restgprlr_22(0);
           return;
         }
       }
-      tom_game_free(pbVar5);
-      __restgprlr_22(iVar6);
+      tom_game_free(pbVar6);
+      __restgprlr_22(uVar5);
       return;
     }
     __restgprlr_22(0xc);

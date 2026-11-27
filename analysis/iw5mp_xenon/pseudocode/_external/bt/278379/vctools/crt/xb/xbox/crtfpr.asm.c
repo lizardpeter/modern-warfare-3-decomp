@@ -2,8 +2,6 @@
 
 // 82916760  __savefpr  (<external>/bt/278379/vctools/crt/xb/xbox/crtfpr.asm:3)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void __savefpr(void)
 
 {
@@ -50,8 +48,6 @@ void __savefpr(void)
 
 
 // 829167AC  __restfpr  (<external>/bt/278379/vctools/crt/xb/xbox/crtfpr.asm:65)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void __restfpr(void)
 

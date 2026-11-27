@@ -993,6 +993,9 @@ LAB_8232aa48:
   8232AA48  3D608203             lis r11,-0x7dfd
   8232AA4C  386BC480             subi r3,r11,0x3b80
   8232AA50  48323981             bl 0x8264e3d0
+  8232AA54  38600001             li r3,0x1
+  8232AA58  38210080             addi r1,r1,0x80
+  8232AA5C  485EBCAC             b 0x82916708
 
 ; 8232AA60  CL_SurfaceTypeFromName  (client_mp/cl_cgame_mp.cpp:634)
   8232AA60  7D8802A6             mfspr r12,LR

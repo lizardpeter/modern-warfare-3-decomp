@@ -4,11 +4,11 @@
 
 /* WARNING: Control flow encountered bad instruction data */
 
-void ExitThread(ulong param_1)
+void ExitThread(DWORD dwExitCode)
 
 {
   XapiCallThreadNotifyRoutines(0);
-  ExTerminateThread(param_1);
+  ExTerminateThread(dwExitCode);
                     /* WARNING: Bad instruction - Truncating control flow here */
   halt_baddata();
 }

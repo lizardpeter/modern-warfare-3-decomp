@@ -2,190 +2,191 @@
 
 // 8241C030  FX_InterpolateColor  (EffectsCore/fx_draw_util.h:28)
 
-uchar FX_InterpolateColor(FxElemVisStateSample *param_1,float param_2,float param_3,float param_4,
-                         float param_5,int param_6)
+uint FX_InterpolateColor(double param_1,double param_2,double param_3,double param_4,int param_5)
 
 {
   int in_r8;
-  double dVar1;
+  int iVar1;
+  double dVar2;
   
-  dVar1 = floor((double)(((float)param_1[1].amplitude.color[in_r8] * param_2 +
-                         (float)param_1[1].base.color[in_r8] * param_3) * param_4 +
-                         ((float)(param_1->amplitude).color[in_r8] * param_2 +
-                         (float)(param_1->base).color[in_r8] * param_3) * param_5 + 0.5));
-  return (uchar)(int)dVar1;
+  iVar1 = param_5 + in_r8;
+  dVar2 = floor((double)((float)((double)(float)((double)*(byte *)(iVar1 + 0x48) * param_1 +
+                                                (double)(float)((double)*(byte *)(iVar1 + 0x30) *
+                                                               param_2)) * param_3 +
+                                (double)(float)((double)(float)((double)*(byte *)(iVar1 + 0x18) *
+                                                                param_1 +
+                                                               (double)(float)((double)*(byte *)(
+                                                  param_5 + in_r8) * param_2)) * param_4)) + 0.5));
+  return (int)dVar2 & 0xff;
 }
 
 
 // 8241A258  FX_ClampRangeLerp  (EffectsCore/fx_draw_util.cpp:68)
 
-float FX_ClampRangeLerp(float param_1,FxFloatRange *param_2)
+double FX_ClampRangeLerp(double param_1,undefined8 param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
-  float *in_r4;
+  double dVar3;
   
-  fVar1 = param_1 - *in_r4;
+  fVar1 = (float)(param_1 - (double)*param_3);
   fVar2 = 0.0;
-  if (fVar1 - in_r4[1] < 0.0) {
-    fVar2 = 1.0 - fVar1 / in_r4[1];
+  if (fVar1 - param_3[1] < 0.0) {
+    fVar2 = 1.0 - fVar1 / param_3[1];
   }
+  dVar3 = (double)fVar2;
   if (fVar1 < 0.0) {
-    fVar2 = 1.0;
+    dVar3 = 1.0;
   }
-  return fVar2;
+  return dVar3;
 }
 
 
 // 8241A290  FX_CullCylinder  (EffectsCore/fx_draw_util.cpp:77)
 
-bool FX_CullCylinder(FxCamera *param_1,uint param_2,float *param_3,float *param_4,float param_5,
-                    float param_6)
+void FX_CullCylinder(undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4,
+                    float *param_5,float *param_6)
 
 {
   float fVar1;
-  int iVar2;
-  undefined1 uVar3;
+  int iVar3;
+  undefined8 uVar2;
   ulonglong uVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  double dVar7;
+  float *pfVar5;
   double extraout_f1;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
+  double dVar12;
   
-  dVar9 = (double)param_6;
-  uVar4 = (ulonglong)(int)param_2;
-  __savegprlr_23((double)param_5,param_1);
-  iVar2 = __savefpr_28();
-  dVar8 = extraout_f1;
-  if (*(int *)(iVar2 + 0xc) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x54,0,"%s");
+  __savegprlr_23();
+  iVar3 = __savefpr_28();
+  dVar9 = extraout_f1;
+  if (*(int *)(iVar3 + 0xc) == 0) {
+    MyAssertHandler(0xffffffff82061b68,0x54,0,0xffffffff82000f98,0xffffffff82061590);
   }
-  if (((uVar4 & 0xffffffff) != (ulonglong)*(uint *)(iVar2 + 0x94)) && ((uVar4 & 0xffffffff) != 5)) {
-    va("%i, %i");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x55,0,"%s\n\t%s");
+  if (((param_4 & 0xffffffff) != (ulonglong)*(uint *)(iVar3 + 0x94)) &&
+     ((param_4 & 0xffffffff) != 5)) {
+    uVar2 = va(0xffffffff82061b5c,param_4);
+    MyAssertHandler(0xffffffff82061b68,0x55,0,0xffffffff820011f4,0xffffffff82061b10,uVar2);
   }
-  dVar9 = (double)(float)(dVar9 * dVar9);
-  uVar5 = 0;
-  if ((uVar4 & 0xffffffff) != 0) {
-    pfVar6 = (float *)(iVar2 + 0x18);
-    dVar10 = 0.0020000000949949026;
-    dVar11 = 1.0;
+  dVar10 = (double)(float)(param_2 * param_2);
+  uVar4 = 0;
+  if ((param_4 & 0xffffffff) != 0) {
+    pfVar5 = (float *)(iVar3 + 0x18);
+    dVar11 = 0.0020000000949949026;
+    dVar12 = 1.0;
     do {
-      if (dVar10 <= ABS((double)(float)((double)(pfVar6[-1] * pfVar6[-1] + *pfVar6 * *pfVar6 +
-                                                pfVar6[-2] * pfVar6[-2]) - dVar11))) {
-        va("(%g %g %g) len %g");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                        ,0x6d,0,"%s\n\t%s");
+      dVar6 = (double)pfVar5[-2];
+      if (dVar11 <= ABS((double)(float)((double)(pfVar5[-1] * pfVar5[-1] + *pfVar5 * *pfVar5 +
+                                                (float)(dVar6 * dVar6)) - dVar12))) {
+        dVar8 = (double)*pfVar5;
+        dVar7 = (double)pfVar5[-1];
+        uVar2 = va(dVar6,dVar7,dVar8,0xffffffff82015f2c,dVar6,dVar7,dVar8,
+                   (double)SQRT((float)(dVar7 * dVar7 + (double)(float)(dVar8 * dVar8)) +
+                                (float)(dVar6 * dVar6)));
+        MyAssertHandler(0xffffffff82061b68,0x6d,0,0xffffffff820011f4,0xffffffff82061ae0,uVar2);
       }
-      dVar7 = (double)(*pfVar6 * param_4[2] + pfVar6[-2] * *param_4 + pfVar6[-1] * param_4[1]);
-      fVar1 = (float)(ABS(dVar7) * dVar8 +
-                     (double)((*pfVar6 * param_3[2] +
-                              pfVar6[-2] * *param_3 + pfVar6[-1] * param_3[1]) - pfVar6[1]));
-      if (ABS(fVar1) * fVar1 < (float)((double)(float)(dVar7 * dVar7) * dVar9 - dVar9)) {
+      dVar6 = (double)(*pfVar5 * param_6[2] + pfVar5[-2] * *param_6 + pfVar5[-1] * param_6[1]);
+      fVar1 = (float)(ABS(dVar6) * dVar9 +
+                     (double)((*pfVar5 * param_5[2] +
+                              pfVar5[-2] * *param_5 + pfVar5[-1] * param_5[1]) - pfVar5[1]));
+      if (ABS(fVar1) * fVar1 < (float)((double)(float)(dVar6 * dVar6) * dVar10 - dVar10)) {
         __restfpr_28(1);
-        uVar3 = __restgprlr_23();
-        return (bool)uVar3;
+        __restgprlr_23();
+        return;
       }
-      uVar5 = uVar5 + 1;
-      pfVar6 = pfVar6 + 4;
-    } while ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff));
+      uVar4 = uVar4 + 1;
+      pfVar5 = pfVar5 + 4;
+    } while ((uVar4 & 0xffffffff) < (param_4 & 0xffffffff));
   }
   __restfpr_28(0);
-  uVar3 = __restgprlr_23();
-  return (bool)uVar3;
+  __restgprlr_23();
+  return;
 }
 
 
 // 8241A250  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
+void __lvx(void)
 
 {
-  return __return_storage_ptr__;
+  return;
 }
 
 
 // 8241A4A0  FX_GetSpriteTexCoords  (EffectsCore/fx_draw_util.cpp:123)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void FX_GetSpriteTexCoords
-               (FxDrawState *param_1,float *param_2,float *param_3,float *param_4,float *param_5)
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
   short sVar1;
   int iVar2;
   byte bVar3;
   int iVar4;
-  uint uVar5;
-  int iVar6;
-  int iVar7;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  int iVar8;
   
-  iVar4 = __savegprlr_24(param_1);
+  iVar4 = __savegprlr_24();
   if (iVar4 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x81,0,"%s");
+    MyAssertHandler(0xffffffff82061b68,0x81,0,0xffffffff82000f98,0xffffffff82061c74);
   }
   iVar2 = *(int *)(iVar4 + 0xc);
   if (iVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x85,0,"%s");
+    MyAssertHandler(0xffffffff82061b68,0x85,0,0xffffffff82000f98,0xffffffff82061c6c);
   }
   sVar1 = *(short *)(iVar2 + 0xae);
-  iVar6 = (int)sVar1;
+  lVar7 = (longlong)sVar1;
   if (sVar1 == 1) {
-    *param_2 = 0.0;
-    *param_3 = 1.0;
-    *param_4 = 0.0;
-    *param_5 = 1.0;
+    *(undefined4 *)param_2 = 0;
+    *(undefined4 *)param_3 = 0x3f800000;
+    *(undefined4 *)param_4 = 0;
+    *(undefined4 *)param_5 = 0x3f800000;
     __restgprlr_24();
     return;
   }
   if (((sVar1 < 2) || (0x100 < sVar1)) || (((int)sVar1 - 1U & (int)sVar1) != 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x92,0,"%s\n\t(atlasCount) = %i");
+    MyAssertHandler(0xffffffff82061b68,0x92,0,0xffffffff82061c00,0xffffffff82061c18,lVar7);
   }
   bVar3 = *(byte *)(iVar2 + 0xa8) & 3;
-  iVar7 = (int)sVar1;
+  iVar8 = (int)sVar1;
   if ((*(byte *)(iVar2 + 0xa8) & 3) == 0) {
-    uVar5 = (uint)*(byte *)(iVar2 + 0xa9);
+    uVar6 = (ulonglong)*(byte *)(iVar2 + 0xa9);
   }
   else if (bVar3 == 1) {
-    uVar5 = (int)((uint)*(ushort *)(&DAT_82066b22 + *(int *)(iVar4 + 0x48) * 4) * iVar7) >> 0x10;
+    uVar6 = (ulonglong)
+            ((int)((uint)*(ushort *)(&DAT_82066b22 + *(int *)(iVar4 + 0x48) * 4) * iVar8) >> 0x10);
   }
   else {
     if (bVar3 != 2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                      ,0xa0,1,
-                      "elemDef->atlas.behavior & FX_ATLAS_START_MASK == FX_ATLAS_START_INDEXED\n\t%i, %i"
-                     );
+      MyAssertHandler(0xffffffff82061b68,0xa0,1,0xffffffff82061bb0,bVar3,2);
     }
-    uVar5 = (uint)*(byte *)(*(int *)(iVar4 + 8) + 1) & iVar6 - 1U;
+    uVar6 = (ulonglong)*(byte *)(*(int *)(iVar4 + 8) + 1) & lVar7 - 1U;
   }
   if ((*(byte *)(iVar2 + 0xa8) & 4) == 0) {
     if (*(byte *)(iVar2 + 0xaa) == 0) goto LAB_8241a674;
-    iVar4 = (int)((int)*(float *)(iVar4 + 0x50) * (uint)*(byte *)(iVar2 + 0xaa)) / 1000;
+    uVar5 = (ulonglong)((int)((int)*(float *)(iVar4 + 0x50) * (uint)*(byte *)(iVar2 + 0xaa)) / 1000)
+    ;
   }
   else {
-    iVar4 = (int)(*(float *)(iVar4 + 0x54) * (float)(longlong)iVar7);
+    uVar5 = (ulonglong)(uint)(int)(*(float *)(iVar4 + 0x54) * (float)(longlong)iVar8);
   }
-  uVar5 = iVar4 + uVar5;
+  uVar6 = uVar5 + uVar6;
 LAB_8241a674:
   if (((*(byte *)(iVar2 + 0xa8) & 8) != 0) &&
-     ((int)((uint)*(byte *)(iVar2 + 0xab) * iVar7) <= (int)uVar5)) {
-    uVar5 = iVar6 - 1;
+     ((int)((uint)*(byte *)(iVar2 + 0xab) * iVar8) <= (int)uVar6)) {
+    uVar6 = lVar7 - 1;
   }
   TextureAtlas_GetCoords_ByIndex_Pow2Bits
-            (iVar6 - 1U & uVar5,(uint)*(byte *)(iVar2 + 0xac),(uint)*(byte *)(iVar2 + 0xad),param_2,
+            (lVar7 - 1U & uVar6,*(undefined1 *)(iVar2 + 0xac),*(undefined1 *)(iVar2 + 0xad),param_2,
              param_3,param_4,param_5);
   __restgprlr_24();
   return;
@@ -194,148 +195,118 @@ LAB_8241a674:
 
 // 8241A6C0  FX_EvaluateVisAlpha  (EffectsCore/fx_draw_util.cpp:266)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void FX_EvaluateVisAlpha(FxElemPreVisualState *param_1,FxElemVisualState *param_2)
+void FX_EvaluateVisAlpha(float *param_1,undefined1 *param_2)
 
 {
-  uchar uVar1;
+  undefined1 uVar1;
   
-  uVar1 = FX_InterpolateColor(param_1->refState,*(float *)(&DAT_82066b24 + param_1->randomSeed * 4),
-                              1.0 - *(float *)(&DAT_82066b24 + param_1->randomSeed * 4),
-                              param_1->sampleLerp,param_1->sampleLerpInv,(int)param_2);
-  param_2->color[0] = uVar1;
+  uVar1 = FX_InterpolateColor((double)*(float *)(&DAT_82066b24 + (int)param_1[5] * 4),
+                              (double)(float)(1.0 - (double)*(float *)(&DAT_82066b24 +
+                                                                      (int)param_1[5] * 4)),
+                              (double)*param_1,(double)param_1[1],param_1[4]);
+  *param_2 = uVar1;
   return;
 }
 
 
 // 8241A728  FX_EvaluateDistanceFade  (EffectsCore/fx_draw_util.cpp:278)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_EvaluateDistanceFade(FxDrawState *param_1)
+void FX_EvaluateDistanceFade(int param_1)
 
 {
   float fVar1;
-  float fVar2;
-  FxElemDef *pFVar3;
-  FxCamera *pFVar4;
+  int iVar2;
+  float *pfVar3;
+  float fVar4;
   float fVar5;
   float fVar6;
-  float fVar7;
-  ushort uStack_a;
+  undefined2 uStack_a;
   
-  pFVar3 = param_1->elemDef;
-  fVar1 = (pFVar3->fadeInRange).amplitude;
-  if ((fVar1 == 0.0) && ((pFVar3->fadeOutRange).amplitude == 0.0)) {
+  iVar2 = *(int *)(param_1 + 0xc);
+  if ((*(float *)(iVar2 + 0x18) == 0.0) && (*(float *)(iVar2 + 0x20) == 0.0)) {
     return;
   }
-  pFVar4 = param_1->camera;
-  fVar6 = param_1->posWorld[1] - pFVar4->origin[1];
-  fVar7 = param_1->posWorld[2] - pFVar4->origin[2];
-  fVar5 = param_1->posWorld[0] - pFVar4->origin[0];
-  fVar2 = 1.0;
-  fVar7 = SQRT(fVar5 * fVar5 + fVar7 * fVar7 + fVar6 * fVar6);
-  fVar6 = fVar2;
-  if (fVar1 != 0.0) {
-    fVar5 = fVar7 - (pFVar3->fadeInRange).base;
-    fVar1 = (pFVar3->fadeInRange).amplitude;
-    fVar6 = 0.0;
-    if (fVar5 - fVar1 < 0.0) {
-      fVar6 = 1.0 - fVar5 / fVar1;
-    }
-    if (fVar5 < 0.0) {
-      fVar6 = fVar2;
-    }
-  }
-  if ((pFVar3->fadeOutRange).amplitude != 0.0) {
-    fVar7 = fVar7 - (pFVar3->fadeOutRange).base;
-    fVar1 = (pFVar3->fadeOutRange).amplitude;
+  pfVar3 = *(float **)(param_1 + 0x44);
+  fVar5 = *(float *)(param_1 + 0x5c) - pfVar3[1];
+  fVar6 = *(float *)(param_1 + 0x60) - pfVar3[2];
+  fVar4 = *(float *)(param_1 + 0x58) - *pfVar3;
+  fVar1 = 1.0;
+  fVar6 = SQRT(fVar4 * fVar4 + fVar6 * fVar6 + fVar5 * fVar5);
+  fVar5 = fVar1;
+  if (*(float *)(iVar2 + 0x18) != 0.0) {
+    fVar4 = fVar6 - *(float *)(iVar2 + 0x14);
     fVar5 = 0.0;
-    if (fVar7 - fVar1 < 0.0) {
-      fVar5 = 1.0 - fVar7 / fVar1;
+    if (fVar4 - *(float *)(iVar2 + 0x18) < 0.0) {
+      fVar5 = 1.0 - fVar4 / *(float *)(iVar2 + 0x18);
     }
-    if (fVar7 < 0.0) {
-      fVar5 = fVar2;
+    if (fVar4 < 0.0) {
+      fVar5 = fVar1;
     }
-    fVar2 = 1.0 - fVar5;
   }
-  if (fVar2 - fVar6 < 0.0) {
-    fVar6 = fVar2;
+  if (*(float *)(iVar2 + 0x20) != 0.0) {
+    fVar6 = fVar6 - *(float *)(iVar2 + 0x1c);
+    fVar4 = 0.0;
+    if (fVar6 - *(float *)(iVar2 + 0x20) < 0.0) {
+      fVar4 = 1.0 - fVar6 / *(float *)(iVar2 + 0x20);
+    }
+    if (fVar6 < 0.0) {
+      fVar4 = fVar1;
+    }
+    fVar1 = 1.0 - fVar4;
   }
-  uStack_a = (ushort)(longlong)(fVar6 * 255.0 + 0.5);
-  (param_1->preVisState).distanceFade = uStack_a;
+  if (fVar1 - fVar5 < 0.0) {
+    fVar5 = fVar1;
+  }
+  uStack_a = (undefined2)(longlong)(fVar5 * 255.0 + 0.5);
+  *(undefined2 *)(param_1 + 0xa0) = uStack_a;
   return;
 }
 
 
 // 8241A818  FX_EvaluateVisStateOcclusionFadeAndScale  (EffectsCore/fx_draw_util.cpp:306)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_EvaluateVisStateOcclusionFadeAndScale(FxDrawState *param_1)
+void FX_EvaluateVisStateOcclusionFadeAndScale(int param_1)
 
 {
-  float fVar1;
-  float fVar2;
-  FxEffect *pFVar3;
-  FxEffectDef *pFVar4;
-  float fVar5;
-  ushort uStack_1a;
+  int *piVar1;
+  int iVar2;
+  float fVar3;
+  undefined2 uStack_1a;
   
-  if ((param_1->elemDef->flags & 0x10000U) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x137,0,"%s");
+  if ((**(uint **)(param_1 + 0xc) & 0x10000) == 0) {
+    MyAssertHandler(0xffffffff82061b68,0x137,0,0xffffffff82000f98,0xffffffff82061c7c);
   }
-  pFVar3 = param_1->effect;
-  fVar1 = (param_1->visState).size[0];
-  fVar2 = (param_1->visState).size[1];
-  pFVar4 = pFVar3->def;
-  uStack_1a = (ushort)(longlong)(pFVar3->occlusionFade * 255.0 + 0.5);
-  (param_1->preVisState).occlusionFade = uStack_1a;
-  fVar5 = (pFVar4->occlusionQueryScaleRange).amplitude * pFVar3->occlusionFade +
-          (pFVar4->occlusionQueryScaleRange).base;
-  (param_1->visState).size[0] = fVar5 * fVar1;
-  (param_1->visState).size[1] = fVar5 * fVar2;
+  piVar1 = *(int **)(param_1 + 4);
+  iVar2 = *piVar1;
+  uStack_1a = (undefined2)(longlong)((float)piVar1[0x23] * 255.0 + 0.5);
+  *(undefined2 *)(param_1 + 0xa2) = uStack_1a;
+  fVar3 = *(float *)(iVar2 + 0x2c) * (float)piVar1[0x23] + *(float *)(iVar2 + 0x28);
+  *(float *)(param_1 + 0x7c) = fVar3 * *(float *)(param_1 + 0x7c);
+  *(float *)(param_1 + 0x80) = fVar3 * *(float *)(param_1 + 0x80);
   return;
 }
 
 
 // 8241A8D0  FX_EvaluateOcclusionFade  (EffectsCore/fx_draw_util.cpp:325)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_EvaluateOcclusionFade(FxDrawState *param_1)
+void FX_EvaluateOcclusionFade(void)
 
 {
-  ushort uVar1;
-  int *piVar2;
-  int iVar3;
-  uint uVar4;
-  float *in_r4;
-  float fVar5;
+  int iVar1;
+  undefined8 extraout_f1;
+  double dVar2;
+  undefined8 uVar3;
   
-  iVar3 = __savegprlr_29(param_1);
-  piVar2 = *(int **)(iVar3 + 4);
-  uVar1 = *(ushort *)(piVar2 + 5);
-  uVar4 = (uint)uVar1;
-  fVar5 = 1.0;
-  iVar3 = *piVar2;
-  if (uVar1 != 0xffff) {
-    in_r4 = (float *)(piVar2 + 0x18);
-    RB_SetOcclusionQueryPosition(uVar1,in_r4);
-    uVar4 = (uint)*(ushort *)(piVar2 + 5);
-    fVar5 = RB_GetOcclusionQueryVisibility(*(ushort *)(piVar2 + 5));
+  iVar1 = __savegprlr_29();
+  iVar1 = *(int *)(iVar1 + 4);
+  uVar3 = 0x3ff0000000000000;
+  if (*(short *)(iVar1 + 0x14) != -1) {
+    RB_SetOcclusionQueryPosition
+              (extraout_f1,0x3ff0000000000000,*(short *)(iVar1 + 0x14),iVar1 + 0x60);
+    uVar3 = RB_GetOcclusionQueryVisibility(*(undefined2 *)(iVar1 + 0x14));
   }
-  fVar5 = R_UpdateOverTime((float)piVar2[0x23],fVar5,uVar4,(int)in_r4,*(int *)(iVar3 + 0x20));
-  piVar2[0x23] = (int)fVar5;
+  dVar2 = (double)R_UpdateOverTime((double)*(float *)(iVar1 + 0x8c),uVar3);
+  *(float *)(iVar1 + 0x8c) = (float)dVar2;
   __restgprlr_29();
   return;
 }
@@ -343,116 +314,103 @@ void FX_EvaluateOcclusionFade(FxDrawState *param_1)
 
 // 8241A948  FX_CullElementForDraw_Sprite  (EffectsCore/fx_draw_util.cpp:350)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool FX_CullElementForDraw_Sprite(FxDrawState *param_1)
+undefined8 FX_CullElementForDraw_Sprite(int param_1)
 
 {
-  float fVar1;
-  float fVar2;
-  uint uVar3;
-  bool bVar4;
+  undefined8 uVar1;
+  char cVar2;
+  double dVar3;
   
-  if ((fx_cull_elem_draw->current).enabled != false) {
-    uVar3 = FX_CullElementForDraw_FrustumPlaneCount(param_1);
-    fVar1 = (param_1->visState).size[1];
-    fVar2 = (param_1->visState).size[0];
-    if (fVar2 - fVar1 < 0.0) {
-      fVar2 = fVar1;
+  if (*(char *)(DAT_8332cbe4 + 0xc) != '\0') {
+    uVar1 = FX_CullElementForDraw_FrustumPlaneCount();
+    dVar3 = (double)*(float *)(param_1 + 0x7c);
+    if ((float)((double)*(float *)(param_1 + 0x7c) - (double)*(float *)(param_1 + 0x80)) < 0.0) {
+      dVar3 = (double)*(float *)(param_1 + 0x80);
     }
-    bVar4 = FX_CullSphere(param_1->camera,uVar3,param_1->posWorld,fVar2);
-    if (bVar4) {
-      return true;
+    cVar2 = FX_CullSphere(dVar3,*(undefined4 *)(param_1 + 0x44),uVar1,param_1 + 0x58);
+    if (cVar2 != '\0') {
+      return 1;
     }
-    if (((param_1->elemDef->flags & 0x2000U) != 0) && (param_1->camera->thermal == false)) {
-      return true;
+    if (((**(uint **)(param_1 + 0xc) & 0x2000) != 0) &&
+       (*(char *)(*(int *)(param_1 + 0x44) + 0xa4) == '\0')) {
+      return 1;
     }
   }
-  return false;
+  return 0;
 }
 
 
 // 8241A9F8  FX_CullElementForDraw_Tail  (EffectsCore/fx_draw_util.cpp:374)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool FX_CullElementForDraw_Tail(FxDrawState *param_1)
+undefined8 FX_CullElementForDraw_Tail(int param_1)
 
 {
-  float fVar1;
-  float fVar2;
-  uint uVar3;
-  bool bVar4;
+  undefined8 uVar1;
+  char cVar2;
+  double dVar3;
   float local_20;
   float local_1c;
   float local_18;
   
-  if ((fx_cull_elem_draw->current).enabled != false) {
-    uVar3 = FX_CullElementForDraw_FrustumPlaneCount(param_1);
-    fVar1 = (param_1->visState).size[1];
-    fVar2 = -fVar1;
-    local_20 = param_1->velDirWorld[0] * fVar2 + param_1->posWorld[0];
-    local_1c = param_1->velDirWorld[1] * fVar2 + param_1->posWorld[1];
-    local_18 = param_1->velDirWorld[2] * fVar2 + param_1->posWorld[2];
-    bVar4 = FX_CullCylinder(param_1->camera,uVar3,&local_20,param_1->velDirWorld,fVar1,
-                            (param_1->visState).size[0]);
-    if (bVar4) {
-      return true;
+  if (*(char *)(DAT_8332cbe4 + 0xc) != '\0') {
+    uVar1 = FX_CullElementForDraw_FrustumPlaneCount();
+    dVar3 = -(double)*(float *)(param_1 + 0x80);
+    local_20 = (float)((double)*(float *)(param_1 + 100) * dVar3 +
+                      (double)*(float *)(param_1 + 0x58));
+    local_1c = (float)((double)*(float *)(param_1 + 0x68) * dVar3 +
+                      (double)*(float *)(param_1 + 0x5c));
+    local_18 = (float)((double)*(float *)(param_1 + 0x6c) * dVar3 +
+                      (double)*(float *)(param_1 + 0x60));
+    cVar2 = FX_CullCylinder((double)*(float *)(param_1 + 0x80),(double)*(float *)(param_1 + 0x7c),
+                            *(undefined4 *)(param_1 + 0x44),uVar1,&local_20,param_1 + 100);
+    if (cVar2 != '\0') {
+      return 1;
     }
   }
-  return false;
+  return 0;
 }
 
 
 // 8241AAA0  FX_CullElementForDraw_Light  (EffectsCore/fx_draw_util.cpp:399)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool FX_CullElementForDraw_Light(FxDrawState *param_1)
+undefined8 FX_CullElementForDraw_Light(int param_1)
 
 {
-  uint uVar1;
-  bool bVar2;
+  undefined8 uVar1;
+  char cVar2;
   
-  if ((fx_cull_elem_draw->current).enabled != false) {
-    uVar1 = FX_CullElementForDraw_FrustumPlaneCount(param_1);
-    bVar2 = FX_CullSphere(param_1->camera,uVar1,param_1->posWorld,(param_1->visState).size[0]);
-    if (bVar2) {
-      return true;
+  if (*(char *)(DAT_8332cbe4 + 0xc) != '\0') {
+    uVar1 = FX_CullElementForDraw_FrustumPlaneCount();
+    cVar2 = FX_CullSphere((double)*(float *)(param_1 + 0x7c),*(undefined4 *)(param_1 + 0x44),uVar1,
+                          param_1 + 0x58);
+    if (cVar2 != '\0') {
+      return 1;
     }
   }
-  return false;
+  return 0;
 }
 
 
 // 8241B538  FX_GenSpriteVerts  (EffectsCore/fx_draw_util.cpp:419)
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
-void FX_GenSpriteVerts(FxDrawState *param_1,float *param_2,float *param_3,float *param_4)
+void FX_GenSpriteVerts(undefined8 param_1,float *param_2,float *param_3,longlong param_4)
 
 {
   float fVar1;
-  FxSystem *pFVar2;
-  Material *pMVar3;
-  uint uVar4;
-  char *pcVar5;
+  int *piVar2;
+  int iVar3;
+  float fVar4;
+  float fVar5;
   ulonglong uVar6;
-  FxDrawState *pFVar7;
-  FxElemVisuals FVar8;
-  bool bVar10;
-  GfxPackedVertex *pGVar9;
-  longlong lVar11;
-  GfxCodeSurfGlob **ppGVar12;
+  int *piVar7;
+  int iVar8;
+  char cVar10;
+  float *pfVar9;
+  int *piVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
@@ -464,162 +422,144 @@ void FX_GenSpriteVerts(FxDrawState *param_1,float *param_2,float *param_3,float 
   double dVar21;
   double dVar22;
   double dVar23;
-  double dVar24;
+  undefined1 auVar24 [16];
   undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  ushort local_100 [2];
+  short local_100;
   undefined4 local_fc;
-  float local_f8;
-  float local_f4;
-  r_double_index_t *local_f0;
-  PackedUnitVec local_ec;
-  PackedUnitVec local_e8;
-  float local_e4;
-  float local_e0 [2];
-  float local_d8;
-  float local_d4;
-  float local_d0;
+  undefined4 *local_f0;
+  float local_ec;
+  float local_e8;
   undefined1 local_c0 [8];
   float fStack_b8;
   
-  lVar11 = (longlong)(int)param_4;
   uVar6 = ZEXT48(&stack0x00000000);
-  __savegprlr_23(param_1);
-  pFVar7 = (FxDrawState *)__savefpr_20();
-  pFVar2 = pFVar7->system;
-  ppGVar12 = &pFVar7->codeSurfGlob;
-  if (pFVar7->codeSurfGlob == (GfxCodeSurfGlob *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x1c1,0,"%s");
+  __savegprlr_23();
+  piVar7 = (int *)__savefpr_20();
+  piVar2 = (int *)*piVar7;
+  piVar11 = piVar7 + 4;
+  if (piVar7[4] == 0) {
+    MyAssertHandler(0xffffffff82061b68,0x1c1,0,0xffffffff82000f98,0xffffffff82061fa4);
   }
-  FVar8 = FX_GetElemVisuals(pFVar7->elemDef,pFVar7->randomSeed);
-  if (FVar8.anonymous == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x1c4,0,"%s");
+  iVar8 = FX_GetElemVisuals(piVar7[3],piVar7[0x12]);
+  if (iVar8 == 0) {
+    MyAssertHandler(0xffffffff82061b68,0x1c4,0,0xffffffff82000f98,0xffffffff820612f4);
   }
-  bVar10 = R_ReserveCodeSurfBuffers(*ppGVar12,4,6,0,local_100,&local_f0,(uint *)0x0);
-  if (bVar10) {
-    pMVar3 = (pFVar2->sprite).material;
-    if (pMVar3 != FVar8.anonymous) {
-      uVar4 = (pFVar2->sprite).indexCount;
-      if (uVar4 != 0) {
-        FX_AddCodeSurf(*ppGVar12,pMVar3,(pFVar2->sprite).indices,uVar4,(pFVar2->sprite).name);
-        (pFVar2->sprite).indexCount = 0;
+  cVar10 = R_ReserveCodeSurfBuffers(*piVar11,4,6,0,uVar6 - 0x100,uVar6 - 0xf0,0);
+  if (cVar10 != '\0') {
+    if (piVar2[2] != iVar8) {
+      if (piVar2[1] != 0) {
+        FX_AddCodeSurf(*piVar11,piVar2[2],*piVar2,piVar2[1],piVar2[3]);
+        piVar2[1] = 0;
       }
-      pcVar5 = pFVar7->effect->def->name;
-      (pFVar2->sprite).material = (Material *)FVar8;
-      (pFVar2->sprite).name = pcVar5;
-      (pFVar2->sprite).indices = local_f0;
+      iVar3 = **(int **)piVar7[1];
+      piVar2[2] = iVar8;
+      piVar2[3] = iVar3;
+      *piVar2 = (int)local_f0;
     }
-    if (local_f0 !=
-        (r_double_index_t *)(((pFVar2->sprite).indices)->value + (pFVar2->sprite).indexCount)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                      ,0x1d5,0,"%s");
+    if (local_f0 != (undefined4 *)(piVar2[1] * 2 + *piVar2)) {
+      MyAssertHandler(0xffffffff82061b68,0x1d5,0,0xffffffff82000f98,0xffffffff82061f28);
     }
-    (pFVar2->sprite).indexCount = (pFVar2->sprite).indexCount + 6;
-    dVar23 = (double)(pFVar7->visState).rotationTotal;
-    dVar13 = sin(dVar23);
-    dVar21 = (double)(float)dVar13;
-    dVar13 = cos(dVar23);
-    dVar13 = (double)(float)dVar13;
-    fVar1 = (pFVar7->visState).size[0];
-    dVar14 = (double)(pFVar7->visState).size[1];
-    dVar23 = -dVar13;
-    local_d8 = (float)((double)*param_3 * dVar21 + (double)(float)((double)*param_2 * dVar13));
-    local_d4 = (float)((double)param_3[1] * dVar21 + (double)(float)((double)param_2[1] * dVar13));
-    local_d0 = (float)((double)param_3[2] * dVar21 + (double)(float)((double)param_2[2] * dVar13));
-    dVar16 = (double)(float)((double)*param_2 * dVar21 + (double)(float)((double)*param_3 * dVar23))
+    piVar2[1] = piVar2[1] + 6;
+    dVar22 = (double)(float)piVar7[0x1e];
+    dVar12 = sin(dVar22);
+    dVar20 = (double)(float)dVar12;
+    dVar12 = cos(dVar22);
+    dVar12 = (double)(float)dVar12;
+    fVar1 = (float)piVar7[0x1f];
+    dVar13 = (double)(float)piVar7[0x20];
+    dVar22 = -dVar12;
+    fVar4 = (float)((double)*param_3 * dVar20 + (double)(float)((double)*param_2 * dVar12)) * fVar1;
+    dVar15 = (double)(float)((double)*param_2 * dVar20 + (double)(float)((double)*param_3 * dVar22))
     ;
-    dVar15 = (double)(float)((double)param_2[1] * dVar21 +
-                            (double)(float)((double)param_3[1] * dVar23));
-    dVar13 = (double)(float)((double)param_2[2] * dVar21 +
-                            (double)(float)((double)param_3[2] * dVar23));
-    dVar19 = (double)(pFVar7->posWorld[0] - local_d8 * fVar1);
-    dVar24 = (double)(float)(dVar16 * dVar14);
-    dVar18 = (double)(pFVar7->posWorld[1] - local_d4 * fVar1);
-    dVar17 = (double)(pFVar7->posWorld[2] - local_d0 * fVar1);
-    dVar22 = (double)(float)(dVar15 * dVar14);
-    dVar20 = (double)(float)(dVar13 * dVar14);
-    dVar21 = (double)(local_d8 * fVar1 + pFVar7->posWorld[0]);
-    dVar14 = (double)(local_d4 * fVar1 + pFVar7->posWorld[1]);
-    dVar23 = (double)(local_d0 * fVar1 + pFVar7->posWorld[2]);
-    FX_GetSpriteTexCoords(pFVar7,&local_f8,&local_e4,&local_f4,local_e0);
-    auVar25 = loadVectorLeftIndexed(lVar11);
-    auVar26 = loadVectorRightIndexed(lVar11 + 0x10);
-    auVar25 = (auVar25 | auVar26) & (undefined1  [16])g_keepXYZ.field0_0x0;
-    auVar26 = vectorMultiplyAddFloatingPoint
-                        (auVar25,(undefined1  [16])g_packMul101010.field0_0x0,
-                         (undefined1  [16])g_packAdd.field0_0x0);
-    auVar25 = vectorPackD3Dtype(auVar25,auVar26,9,3);
-    auVar25 = vectorSplatWord(auVar25,0);
-    storeVectorElementWordIndexed(auVar25,uVar6 - 0xec);
-    auVar26 = loadVectorRightIndexed(uVar6 - 200);
-    auVar25 = loadVectorLeftIndexed(uVar6 - 0xd8);
-    auVar25 = (auVar25 | auVar26) & (undefined1  [16])g_keepXYZ.field0_0x0;
-    auVar26 = vectorMultiplyAddFloatingPoint
-                        (auVar25,(undefined1  [16])g_packMul101010.field0_0x0,
-                         (undefined1  [16])g_packAdd.field0_0x0);
-    auVar25 = vectorPackD3Dtype(auVar25,auVar26,9,3);
-    auVar25 = vectorSplatWord(auVar25,0);
-    storeVectorElementWordIndexed(auVar25,uVar6 - 0xe8);
-    local_fc = CONCAT22(local_100[0],local_100[0] + 1);
-    *(undefined4 *)local_f0->value = local_fc;
-    local_fc = CONCAT22(local_100[0] + 2,local_100[0] + 2);
-    *(undefined4 *)local_f0[1].value = local_fc;
-    local_fc = CONCAT22(local_100[0] + 3,local_100[0]);
-    *(undefined4 *)local_f0[2].value = local_fc;
-    Vec3Cross((float *)lVar11,&local_d8,(float *)local_c0);
-    if (0.0 < (float)((double)fStack_b8 * dVar13 +
-                     (double)(float)((double)(float)local_c0._4_4_ * dVar15 +
-                                    (double)(float)((double)(float)local_c0._0_4_ * dVar16)))) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                      ,0x1f8,0,"%s");
+    fVar5 = (float)((double)param_3[1] * dVar20 + (double)(float)((double)param_2[1] * dVar12)) *
+            fVar1;
+    fVar1 = (float)((double)param_3[2] * dVar20 + (double)(float)((double)param_2[2] * dVar12)) *
+            fVar1;
+    dVar14 = (double)(float)((double)param_2[1] * dVar20 +
+                            (double)(float)((double)param_3[1] * dVar22));
+    dVar12 = (double)(float)((double)param_2[2] * dVar20 +
+                            (double)(float)((double)param_3[2] * dVar22));
+    dVar18 = (double)((float)piVar7[0x16] - fVar4);
+    dVar23 = (double)(float)(dVar15 * dVar13);
+    dVar17 = (double)((float)piVar7[0x17] - fVar5);
+    dVar16 = (double)((float)piVar7[0x18] - fVar1);
+    dVar21 = (double)(float)(dVar14 * dVar13);
+    dVar19 = (double)(float)(dVar12 * dVar13);
+    dVar20 = (double)(fVar4 + (float)piVar7[0x16]);
+    dVar13 = (double)(fVar5 + (float)piVar7[0x17]);
+    dVar22 = (double)(fVar1 + (float)piVar7[0x18]);
+    FX_GetSpriteTexCoords(piVar7,uVar6 - 0xf8,uVar6 - 0xe4,uVar6 - 0xf4,uVar6 - 0xe0);
+    auVar24 = loadVectorLeftIndexed(param_4);
+    auVar25 = loadVectorRightIndexed(param_4 + 0x10);
+    auVar24 = (auVar24 | auVar25) & _DAT_8404f950;
+    auVar25 = vectorMultiplyAddFloatingPoint(auVar24,_DAT_8217a0f0,_DAT_8217a0e0);
+    auVar24 = vectorPackD3Dtype(auVar24,auVar25,9,3);
+    auVar24 = vectorSplatWord(auVar24,0);
+    storeVectorElementWordIndexed(auVar24,uVar6 - 0xec);
+    auVar25 = loadVectorRightIndexed(uVar6 - 200);
+    auVar24 = loadVectorLeftIndexed(uVar6 - 0xd8);
+    auVar24 = (auVar24 | auVar25) & _DAT_8404f950;
+    auVar25 = vectorMultiplyAddFloatingPoint(auVar24,_DAT_8217a0f0,_DAT_8217a0e0);
+    auVar24 = vectorPackD3Dtype(auVar24,auVar25,9,3);
+    auVar24 = vectorSplatWord(auVar24,0);
+    storeVectorElementWordIndexed(auVar24,uVar6 - 0xe8);
+    local_fc = CONCAT22(local_100,local_100 + 1);
+    *local_f0 = local_fc;
+    local_fc = CONCAT22(local_100 + 2,local_100 + 2);
+    local_f0[1] = local_fc;
+    local_fc = CONCAT22(local_100 + 3,local_100);
+    local_f0[2] = local_fc;
+    Vec3Cross(param_4,uVar6 - 0xd8,uVar6 - 0xc0);
+    if (0.0 < (float)((double)fStack_b8 * dVar12 +
+                     (double)(float)((double)(float)local_c0._4_4_ * dVar14 +
+                                    (double)(float)((double)(float)local_c0._0_4_ * dVar15)))) {
+      MyAssertHandler(0xffffffff82061b68,0x1f8,0,0xffffffff82000f98,0xffffffff82061ef4);
     }
-    pGVar9 = R_CodeSurfVertIter_Begin(*ppGVar12,local_100[0]);
-    pGVar9->xyz[2] = (float)(dVar17 + dVar20);
-    pGVar9->xyz[0] = (float)(dVar19 + dVar24);
-    pGVar9->xyz[1] = (float)(dVar18 + dVar22);
-    pGVar9->binormalSign = -1.0;
-    pGVar9->normal = local_ec;
-    pGVar9->color = *(GfxColor *)(pFVar7->visState).color;
-    auVar25 = vectorPackD3Dtype(_local_c0,_local_c0,0xd,3);
-    auVar25 = vectorSplatWord(auVar25,0);
-    storeVectorElementWordIndexed(auVar25,uVar6 - 0xec);
-    pGVar9->texCoord = (PackedTexCoords)local_ec;
-    pGVar9->tangent = local_e8;
-    pGVar9[1].xyz[0] = (float)(dVar19 - dVar24);
-    pGVar9[1].xyz[1] = (float)(dVar18 - dVar22);
-    pGVar9[1].xyz[2] = (float)(dVar17 - dVar20);
-    pGVar9[1].normal = local_ec;
-    pGVar9[1].binormalSign = -1.0;
-    pGVar9[1].color = *(GfxColor *)(pFVar7->visState).color;
-    auVar25 = vectorPackD3Dtype(_local_c0,_local_c0,0xd,3);
-    auVar25 = vectorSplatWord(auVar25,0);
-    storeVectorElementWordIndexed(auVar25,uVar6 - 0xec);
-    pGVar9[1].texCoord = (PackedTexCoords)local_ec;
-    pGVar9[1].tangent = local_e8;
-    pGVar9[2].xyz[0] = (float)(dVar21 - dVar24);
-    pGVar9[2].xyz[1] = (float)(dVar14 - dVar22);
-    pGVar9[2].xyz[2] = (float)(dVar23 - dVar20);
-    pGVar9[2].normal = local_ec;
-    pGVar9[2].binormalSign = -1.0;
-    pGVar9[2].color = *(GfxColor *)(pFVar7->visState).color;
-    auVar25 = vectorPackD3Dtype(_local_c0,_local_c0,0xd,3);
-    auVar25 = vectorSplatWord(auVar25,0);
-    storeVectorElementWordIndexed(auVar25,uVar6 - 0xec);
-    pGVar9[2].tangent = local_e8;
-    pGVar9[2].texCoord = (PackedTexCoords)local_ec;
-    pGVar9[3].xyz[0] = (float)(dVar21 + dVar24);
-    pGVar9[3].binormalSign = -1.0;
-    pGVar9[3].normal = local_ec;
-    pGVar9[3].xyz[1] = (float)(dVar14 + dVar22);
-    pGVar9[3].xyz[2] = (float)(dVar23 + dVar20);
-    pGVar9[3].color = *(GfxColor *)(pFVar7->visState).color;
-    auVar25 = vectorPackD3Dtype(_local_c0,_local_c0,0xd,3);
-    auVar25 = vectorSplatWord(auVar25,0);
-    storeVectorElementWordIndexed(auVar25,uVar6 - 0xec);
-    pGVar9[3].tangent = local_e8;
-    pGVar9[3].texCoord = (PackedTexCoords)local_ec;
+    pfVar9 = (float *)R_CodeSurfVertIter_Begin(*piVar11,local_100);
+    pfVar9[2] = (float)(dVar16 + dVar19);
+    *pfVar9 = (float)(dVar18 + dVar23);
+    pfVar9[1] = (float)(dVar17 + dVar21);
+    pfVar9[3] = -1.0;
+    pfVar9[6] = local_ec;
+    pfVar9[4] = (float)piVar7[0x1c];
+    auVar24 = vectorPackD3Dtype(_local_c0,_local_c0,0xd,3);
+    auVar24 = vectorSplatWord(auVar24,0);
+    storeVectorElementWordIndexed(auVar24,uVar6 - 0xec);
+    pfVar9[5] = local_ec;
+    pfVar9[7] = local_e8;
+    pfVar9[8] = (float)(dVar18 - dVar23);
+    pfVar9[9] = (float)(dVar17 - dVar21);
+    pfVar9[10] = (float)(dVar16 - dVar19);
+    pfVar9[0xe] = local_ec;
+    pfVar9[0xb] = -1.0;
+    pfVar9[0xc] = (float)piVar7[0x1c];
+    auVar24 = vectorPackD3Dtype(_local_c0,_local_c0,0xd,3);
+    auVar24 = vectorSplatWord(auVar24,0);
+    storeVectorElementWordIndexed(auVar24,uVar6 - 0xec);
+    pfVar9[0xd] = local_ec;
+    pfVar9[0xf] = local_e8;
+    pfVar9[0x10] = (float)(dVar20 - dVar23);
+    pfVar9[0x11] = (float)(dVar13 - dVar21);
+    pfVar9[0x12] = (float)(dVar22 - dVar19);
+    pfVar9[0x16] = local_ec;
+    pfVar9[0x13] = -1.0;
+    pfVar9[0x14] = (float)piVar7[0x1c];
+    auVar24 = vectorPackD3Dtype(_local_c0,_local_c0,0xd,3);
+    auVar24 = vectorSplatWord(auVar24,0);
+    storeVectorElementWordIndexed(auVar24,uVar6 - 0xec);
+    pfVar9[0x17] = local_e8;
+    pfVar9[0x15] = local_ec;
+    pfVar9[0x18] = (float)(dVar20 + dVar23);
+    pfVar9[0x1b] = -1.0;
+    pfVar9[0x1e] = local_ec;
+    pfVar9[0x19] = (float)(dVar13 + dVar21);
+    pfVar9[0x1a] = (float)(dVar22 + dVar19);
+    pfVar9[0x1c] = (float)piVar7[0x1c];
+    auVar24 = vectorPackD3Dtype(_local_c0,_local_c0,0xd,3);
+    auVar24 = vectorSplatWord(auVar24,0);
+    storeVectorElementWordIndexed(auVar24,uVar6 - 0xec);
+    pfVar9[0x1f] = local_e8;
+    pfVar9[0x1d] = local_ec;
   }
   __restfpr_20();
   __restgprlr_23();
@@ -629,21 +569,19 @@ void FX_GenSpriteVerts(FxDrawState *param_1,float *param_2,float *param_3,float 
 
 // 8241BA48  FXV_GenSpriteVerts  (EffectsCore/fx_draw_util.cpp:549)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void FXV_GenSpriteVerts(FxDrawState *param_1,__vector4 param_2,__vector4 param_3,__vector4 param_4)
+void FXV_GenSpriteVerts(void)
 
 {
-  FxSystem *pFVar1;
-  char *pcVar2;
-  FxDrawState *pFVar3;
-  __vector4 _Var4;
+  int *piVar1;
+  int iVar2;
+  int *piVar3;
+  ulonglong uVar4;
   longlong lVar5;
-  FxElemVisuals FVar6;
-  bool bVar8;
-  GfxPackedVertex *pGVar7;
+  int iVar6;
+  char cVar8;
+  uint uVar7;
   undefined1 in_vs33 [16];
   undefined1 in_vs34 [16];
   undefined1 in_vs35 [16];
@@ -657,132 +595,113 @@ void FXV_GenSpriteVerts(FxDrawState *param_1,__vector4 param_2,__vector4 param_3
   undefined1 auVar16 [16];
   undefined1 auVar17 [16];
   undefined1 auVar18 [16];
-  __vector4_u_0 in_stack_fffffea8;
-  ushort local_110 [2];
+  undefined1 auVar19 [16];
+  short local_110;
   undefined4 local_10c;
-  r_double_index_t *local_108;
-  float local_104;
-  float local_100;
-  float local_fc;
-  float local_f8 [2];
+  undefined4 *local_108;
   undefined1 local_f0 [16];
   undefined1 local_e0 [16];
-  __vector4 local_d0;
-  __vector4 local_c0 [12];
+  undefined1 local_d0 [16];
+  undefined1 local_c0 [16];
   
-  __savegprlr_27(param_1);
+  uVar4 = ZEXT48(&stack0x00000000);
+  __savegprlr_27();
   lVar5 = __savevmx_120();
-  pFVar3 = (FxDrawState *)lVar5;
-  pFVar1 = pFVar3->system;
-  if (pFVar3->codeSurfGlob == (GfxCodeSurfGlob *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    600,0,"%s");
+  piVar3 = (int *)lVar5;
+  piVar1 = (int *)*piVar3;
+  if (piVar3[4] == 0) {
+    MyAssertHandler(0xffffffff82061b68,600,0,0xffffffff82000f98,0xffffffff82061fa4);
   }
-  FVar6 = FX_GetElemVisuals(pFVar3->elemDef,pFVar3->randomSeed);
-  if (FVar6.anonymous == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x25b,0,"%s");
+  iVar6 = FX_GetElemVisuals(piVar3[3],piVar3[0x12]);
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff82061b68,0x25b,0,0xffffffff82000f98,0xffffffff820612f4);
   }
-  bVar8 = R_ReserveCodeSurfBuffers(pFVar3->codeSurfGlob,4,6,0,local_110,&local_108,(uint *)0x0);
-  if (bVar8) {
-    if ((pFVar1->sprite).material != FVar6.anonymous) {
-      if ((pFVar1->sprite).indexCount != 0) {
-        if ((pFVar1->sprite).name == (char *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                          ,0x264,0,"%s");
+  cVar8 = R_ReserveCodeSurfBuffers(piVar3[4],4,6,0,uVar4 - 0x110,uVar4 - 0x108,0);
+  if (cVar8 != '\0') {
+    if (piVar1[2] != iVar6) {
+      if (piVar1[1] != 0) {
+        if (piVar1[3] == 0) {
+          MyAssertHandler(0xffffffff82061b68,0x264,0,0xffffffff82000f98,0xffffffff8206163c);
         }
-        if ((pFVar1->sprite).material == (Material *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                          ,0x265,0,"%s");
+        if (piVar1[2] == 0) {
+          MyAssertHandler(0xffffffff82061b68,0x265,0,0xffffffff82000f98,0xffffffff82061628);
         }
-        if ((pFVar1->sprite).indices == (r_double_index_t *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                          ,0x266,0,"%s");
+        if (*piVar1 == 0) {
+          MyAssertHandler(0xffffffff82061b68,0x266,0,0xffffffff82000f98,0xffffffff82061618);
         }
-        FX_AddCodeSurf(pFVar3->codeSurfGlob,(pFVar1->sprite).material,(pFVar1->sprite).indices,
-                       (pFVar1->sprite).indexCount,(pFVar1->sprite).name);
-        (pFVar1->sprite).indexCount = 0;
+        FX_AddCodeSurf(piVar3[4],piVar1[2],*piVar1,piVar1[1],piVar1[3]);
+        piVar1[1] = 0;
       }
-      pcVar2 = pFVar3->effect->def->name;
-      (pFVar1->sprite).material = (Material *)FVar6;
-      (pFVar1->sprite).name = pcVar2;
-      (pFVar1->sprite).indices = local_108;
+      iVar2 = **(int **)piVar3[1];
+      piVar1[2] = iVar6;
+      piVar1[3] = iVar2;
+      *piVar1 = (int)local_108;
     }
-    if (local_108 !=
-        (r_double_index_t *)(((pFVar1->sprite).indices)->value + (pFVar1->sprite).indexCount)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                      ,0x26f,0,"%s");
+    if (local_108 != (undefined4 *)(piVar1[1] * 2 + *piVar1)) {
+      MyAssertHandler(0xffffffff82061b68,0x26f,0,0xffffffff82000f98,0xffffffff82061f28);
     }
-    (pFVar1->sprite).indexCount = (pFVar1->sprite).indexCount + 6;
-    auVar15 = loadVectorLeftIndexed(lVar5 + 0x78);
-    local_10c = *(undefined4 *)(pFVar3->visState).color;
-    vectorSplatWord(auVar15,0);
-    XMVectorSinCos(local_c0,&local_d0,(__vector4)in_stack_fffffea8);
-    FX_GetSpriteTexCoords(pFVar3,&local_104,&local_fc,&local_100,local_f8);
-    _Var4 = g_XyZW;
-    auVar9 = vectorMultiplyFloatingPoint((undefined1  [16])local_d0.field0_0x0,in_vs33);
-    auVar15 = vectorMultiplyFloatingPoint((undefined1  [16])local_c0[0].field0_0x0,in_vs33);
-    auVar12 = loadVectorLeftIndexed(lVar5 + 0x7c);
-    auVar11 = vectorSplatWord(auVar12,0);
-    auVar13 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x10c);
-    auVar12 = loadVectorLeftIndexed(lVar5 + 0x80);
-    auVar14 = vectorSplatWord(auVar13,0);
-    auVar10 = vectorSplatWord(auVar12,0);
-    auVar12 = vectorMultiplyAddFloatingPoint128
-                        (in_vs34,(undefined1  [16])local_c0[0].field0_0x0,auVar9);
-    auVar9 = vectorNegativeMultiplySubtractFloatingPoint
-                       ((undefined1  [16])local_d0.field0_0x0,in_vs34,auVar15);
-    auVar15 = vectorMultiplyAddFloatingPoint128
-                        (in_vs35,(undefined1  [16])g_packMul101010.field0_0x0,
-                         (undefined1  [16])g_packAdd.field0_0x0);
-    auVar13 = vectorMultiplyAddFloatingPoint
-                        (auVar12,(undefined1  [16])g_packMul101010.field0_0x0,
-                         (undefined1  [16])g_packAdd.field0_0x0);
-    auVar11 = vectorMultiplyFloatingPoint(auVar12,auVar11);
-    auVar10 = vectorMultiplyFloatingPoint(auVar9,auVar10);
-    auVar15 = vectorPackD3Dtype(auVar14,auVar15,9,1);
-    auVar14 = vectorPackD3Dtype(auVar15,auVar13,9,0);
-    auVar12 = vectorSubtractFloatingPoint128(local_f0,auVar11);
-    auVar15 = vectorAddFloatingPoint128(local_f0,auVar11);
-    local_10c = CONCAT22(local_110[0],local_110[0] + 1);
-    auVar13 = vectorPermute128(local_e0,local_e0,(undefined1  [16])g_XWxw.field0_0x0);
-    auVar9 = vectorPermute128(local_e0,local_e0,(undefined1  [16])g_XZxz.field0_0x0);
-    auVar18 = vectorAddFloatingPoint128(auVar12,auVar10);
-    auVar17 = vectorSubtractFloatingPoint128(auVar12,auVar10);
-    auVar16 = vectorSubtractFloatingPoint128(auVar15,auVar10);
-    auVar11 = vectorAddFloatingPoint128(auVar15,auVar10);
-    auVar12 = vectorPermute128(local_e0,local_e0,(undefined1  [16])g_YZyz.field0_0x0);
-    auVar15 = vectorPermute128(local_e0,local_e0,(undefined1  [16])g_YWyw.field0_0x0);
+    piVar1[1] = piVar1[1] + 6;
+    auVar16 = loadVectorLeftIndexed(lVar5 + 0x78);
+    vectorSplatWord(auVar16,0);
+    XMVectorSinCos(uVar4 - 0xc0,uVar4 - 0xd0);
+    FX_GetSpriteTexCoords(lVar5,uVar4 - 0x104,uVar4 - 0xfc,uVar4 - 0x100,uVar4 - 0xf8);
+    auVar16 = _DAT_8404f7e0;
+    auVar10 = vectorMultiplyFloatingPoint(local_d0,in_vs33);
+    auVar9 = vectorMultiplyFloatingPoint(local_c0,in_vs33);
+    auVar13 = loadVectorLeftIndexed(lVar5 + 0x7c);
+    auVar12 = vectorSplatWord(auVar13,0);
+    auVar14 = loadVectorLeftIndexed(uVar4 - 0x10c);
+    auVar13 = loadVectorLeftIndexed(lVar5 + 0x80);
+    auVar15 = vectorSplatWord(auVar14,0);
+    auVar11 = vectorSplatWord(auVar13,0);
+    auVar13 = vectorMultiplyAddFloatingPoint128(in_vs34,local_c0,auVar10);
+    auVar10 = vectorNegativeMultiplySubtractFloatingPoint(local_d0,in_vs34,auVar9);
+    auVar9 = vectorMultiplyAddFloatingPoint128(in_vs35,_DAT_8217a0f0,_DAT_8217a0e0);
+    auVar14 = vectorMultiplyAddFloatingPoint(auVar13,_DAT_8217a0f0,_DAT_8217a0e0);
+    auVar12 = vectorMultiplyFloatingPoint(auVar13,auVar12);
+    auVar11 = vectorMultiplyFloatingPoint(auVar10,auVar11);
+    auVar9 = vectorPackD3Dtype(auVar15,auVar9,9,1);
+    auVar15 = vectorPackD3Dtype(auVar9,auVar14,9,0);
+    auVar13 = vectorSubtractFloatingPoint128(local_f0,auVar12);
+    auVar9 = vectorAddFloatingPoint128(local_f0,auVar12);
+    local_10c = CONCAT22(local_110,local_110 + 1);
+    auVar14 = vectorPermute128(local_e0,local_e0,_DAT_8404f8e0);
+    auVar10 = vectorPermute128(local_e0,local_e0,_DAT_8404f700);
+    auVar19 = vectorAddFloatingPoint128(auVar13,auVar11);
+    auVar18 = vectorSubtractFloatingPoint128(auVar13,auVar11);
+    auVar17 = vectorSubtractFloatingPoint128(auVar9,auVar11);
+    auVar12 = vectorAddFloatingPoint128(auVar9,auVar11);
+    auVar13 = vectorPermute128(local_e0,local_e0,_DAT_8404f660);
+    auVar9 = vectorPermute128(local_e0,local_e0,_DAT_8404f7d0);
+    auVar14 = vectorPackD3Dtype(auVar14,auVar14,0xd,3);
+    auVar10 = vectorPackD3Dtype(auVar10,auVar10,0xd,3);
+    auVar14 = vectorSplatWord(auVar14,0);
+    auVar10 = vectorSplatWord(auVar10,0);
     auVar13 = vectorPackD3Dtype(auVar13,auVar13,0xd,3);
     auVar9 = vectorPackD3Dtype(auVar9,auVar9,0xd,3);
-    auVar13 = vectorSplatWord(auVar13,0);
+    auVar11 = vectorPermute128(auVar15,auVar14,_DAT_8404f7e0);
+    auVar14 = vectorPermute128(auVar15,auVar10,_DAT_8404f7e0);
+    auVar10 = vectorSplatWord(auVar13,0);
     auVar9 = vectorSplatWord(auVar9,0);
-    auVar12 = vectorPackD3Dtype(auVar12,auVar12,0xd,3);
-    auVar15 = vectorPackD3Dtype(auVar15,auVar15,0xd,3);
-    auVar10 = vectorPermute128(auVar14,auVar13,(undefined1  [16])g_XyZW.field0_0x0);
-    auVar13 = vectorPermute128(auVar14,auVar9,(undefined1  [16])g_XyZW.field0_0x0);
-    auVar9 = vectorSplatWord(auVar12,0);
-    auVar15 = vectorSplatWord(auVar15,0);
-    *(undefined4 *)local_108->value = local_10c;
-    auVar9 = vectorPermute128(auVar14,auVar9,(undefined1  [16])_Var4.field0_0x0);
-    auVar15 = vectorPermute128(auVar14,auVar15,(undefined1  [16])_Var4.field0_0x0);
-    local_10c = CONCAT22(local_110[0] + 2,local_110[0] + 2);
-    *(undefined4 *)local_108[1].value = local_10c;
-    local_10c = CONCAT22(local_110[0] + 3,local_110[0]);
-    *(undefined4 *)local_108[2].value = local_10c;
-    pGVar7 = R_CodeSurfVertIter_Begin(pFVar3->codeSurfGlob,local_110[0]);
-    if (((uint)pGVar7 & 0x1f) != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                      ,0x2ab,0,"%s");
+    *local_108 = local_10c;
+    auVar10 = vectorPermute128(auVar15,auVar10,auVar16);
+    auVar16 = vectorPermute128(auVar15,auVar9,auVar16);
+    local_10c = CONCAT22(local_110 + 2,local_110 + 2);
+    local_108[1] = local_10c;
+    local_10c = CONCAT22(local_110 + 3,local_110);
+    local_108[2] = local_10c;
+    uVar7 = R_CodeSurfVertIter_Begin(piVar3[4],local_110);
+    if ((uVar7 & 0x1f) != 0) {
+      MyAssertHandler(0xffffffff82061b68,0x2ab,0,0xffffffff82000f98,0xffffffff82061fb8);
     }
-    *(undefined1 (*) [16])((uint)pGVar7 & 0xfffffff0) = auVar18;
-    *(undefined1 (*) [16])((uint)&pGVar7->color & 0xfffffff0) = auVar10;
-    *(undefined1 (*) [16])((uint)(pGVar7 + 1) & 0xfffffff0) = auVar17;
-    *(undefined1 (*) [16])((uint)&pGVar7[1].color & 0xfffffff0) = auVar13;
-    *(undefined1 (*) [16])((uint)(pGVar7 + 2) & 0xfffffff0) = auVar16;
-    *(undefined1 (*) [16])((uint)&pGVar7[2].color & 0xfffffff0) = auVar9;
-    *(undefined1 (*) [16])((uint)(pGVar7 + 3) & 0xfffffff0) = auVar11;
-    *(undefined1 (*) [16])((uint)&pGVar7[3].color & 0xfffffff0) = auVar15;
+    *(undefined1 (*) [16])(uVar7 & 0xfffffff0) = auVar19;
+    *(undefined1 (*) [16])(uVar7 + 0x10 & 0xfffffff0) = auVar11;
+    *(undefined1 (*) [16])(uVar7 + 0x20 & 0xfffffff0) = auVar18;
+    *(undefined1 (*) [16])(uVar7 + 0x30 & 0xfffffff0) = auVar14;
+    *(undefined1 (*) [16])(uVar7 + 0x40 & 0xfffffff0) = auVar17;
+    *(undefined1 (*) [16])(uVar7 + 0x50 & 0xfffffff0) = auVar10;
+    *(undefined1 (*) [16])(uVar7 + 0x60 & 0xfffffff0) = auVar12;
+    *(undefined1 (*) [16])(uVar7 + 0x70 & 0xfffffff0) = auVar16;
   }
   __restvmx_120();
   __restgprlr_27();
@@ -792,8 +711,9 @@ void FXV_GenSpriteVerts(FxDrawState *param_1,__vector4 param_2,__vector4 param_3
 
 // 8241AB08  FX_GenTrail_VertsForSegment  (EffectsCore/fx_draw_util.cpp:709)
 
-GfxPackedVertex *
-FX_GenTrail_VertsForSegment(FxTrailSegmentDrawState *param_1,GfxPackedVertex *param_2)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FX_GenTrail_VertsForSegment(undefined8 param_1,longlong param_2)
 
 {
   float fVar1;
@@ -808,130 +728,116 @@ FX_GenTrail_VertsForSegment(FxTrailSegmentDrawState *param_1,GfxPackedVertex *pa
   ulonglong uVar10;
   longlong lVar11;
   int *piVar12;
-  GfxPackedVertex *pGVar13;
+  longlong lVar13;
   longlong lVar14;
   longlong lVar15;
   longlong lVar16;
   longlong lVar17;
   longlong lVar18;
-  longlong lVar19;
-  float *pfVar20;
-  uint *puVar21;
-  ulonglong uVar22;
-  longlong lVar23;
+  float *pfVar19;
+  uint *puVar20;
+  ulonglong uVar21;
+  double dVar22;
+  double dVar23;
   double dVar24;
-  double dVar25;
-  double dVar26;
+  undefined1 auVar25 [16];
+  undefined1 auVar26 [16];
   undefined1 auVar27 [16];
   undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
-  undefined1 auVar30 [16];
   float local_80;
   undefined1 local_70 [16];
   
-  lVar23 = (longlong)(int)param_2;
   uVar10 = ZEXT48(&stack0x00000000);
-  lVar11 = __savegprlr_23(param_1);
+  lVar11 = __savegprlr_23();
   piVar12 = (int *)lVar11;
   iVar7 = *piVar12;
   if (iVar7 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x2d3,0,"%s");
+    MyAssertHandler(0xffffffff82061b68,0x2d3,0,0xffffffff82000f98,0xffffffff82061ce0);
   }
   if (*(int *)(iVar7 + 0x14) < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x2d4,0,"%s");
+    MyAssertHandler(0xffffffff82061b68,0x2d4,0,0xffffffff82000f98,0xffffffff82061cc8);
   }
   if (*(int *)(iVar7 + 0x1c) < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x2d5,0,"%s");
+    MyAssertHandler(0xffffffff82061b68,0x2d5,0,0xffffffff82000f98,0xffffffff82061cb0);
   }
-  dVar26 = (double)(float)piVar12[10];
-  dVar24 = sin(dVar26);
-  dVar25 = (double)(float)dVar24;
-  dVar24 = cos(dVar26);
-  dVar26 = (double)(float)dVar24;
+  dVar24 = (double)(float)piVar12[10];
+  dVar22 = sin(dVar24);
+  dVar23 = (double)(float)dVar22;
+  dVar22 = cos(dVar24);
+  dVar24 = (double)(float)dVar22;
   fVar1 = (float)piVar12[5];
   fVar2 = (float)piVar12[4];
   fVar3 = (float)piVar12[6];
-  puVar21 = (uint *)&DAT_00000010;
-  lVar19 = uVar10 - 0x70;
-  fVar4 = (float)piVar12[8];
+  puVar20 = (uint *)&DAT_00000010;
   lVar18 = uVar10 - 0x70;
+  fVar4 = (float)piVar12[8];
+  lVar17 = uVar10 - 0x70;
   fVar5 = (float)piVar12[7];
   fVar6 = (float)piVar12[9];
-  lVar17 = uVar10 - 0x70;
   lVar16 = uVar10 - 0x70;
-  uVar22 = (ulonglong)*(uint *)(iVar7 + 0x14);
-  lVar15 = -0x7bfb0000;
-  dVar24 = -dVar26;
-  lVar14 = -0x7bfb06b0;
-  auVar30 = loadVectorRightIndexed(uVar10 - 0x60);
-  auVar29 = loadVectorLeftIndexed(lVar18);
-  auVar29 = (auVar29 | auVar30) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  lVar15 = uVar10 - 0x70;
+  uVar21 = (ulonglong)*(uint *)(iVar7 + 0x14);
+  lVar14 = -0x7bfb0000;
+  dVar22 = -dVar24;
+  lVar13 = -0x7bfb06b0;
   auVar28 = loadVectorRightIndexed(uVar10 - 0x60);
-  auVar30 = loadVectorLeftIndexed(lVar16);
-  auVar30 = (auVar30 | auVar28) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar27 = loadVectorLeftIndexed(lVar17);
+  auVar27 = (auVar27 | auVar28) & _DAT_8404f950;
+  auVar26 = loadVectorRightIndexed(uVar10 - 0x60);
+  auVar28 = loadVectorLeftIndexed(lVar15);
+  auVar28 = (auVar28 | auVar26) & _DAT_8404f950;
   if (*(uint *)(iVar7 + 0x14) != 0) {
-    lVar18 = lVar11 + 4;
-    lVar15 = lVar11 + 0x30;
-    lVar14 = lVar11 + 0x2c;
-    puVar21 = (uint *)(iVar7 + 0x18);
+    lVar17 = lVar11 + 4;
+    lVar14 = lVar11 + 0x30;
+    lVar13 = lVar11 + 0x2c;
+    puVar20 = (uint *)(iVar7 + 0x18);
     lVar11 = 0;
-    lVar17 = -0x7de85f10;
-    lVar16 = -0x7de85f20;
+    lVar16 = -0x7de85f10;
+    lVar15 = -0x7de85f20;
     do {
-      pfVar20 = (float *)((int)lVar11 + *puVar21);
-      fVar8 = *(float *)lVar14 * *pfVar20;
-      fVar9 = pfVar20[1] * *(float *)lVar15;
-      pfVar20 = (float *)lVar23;
-      *pfVar20 = fVar9 * (float)((double)fVar5 * dVar24 + (double)(float)((double)fVar2 * dVar25)) +
-                 fVar8 * (float)((double)fVar5 * dVar25 + (double)(float)((double)fVar2 * dVar26)) +
-                 *(float *)lVar18;
-      pfVar20[1] = (float)((double)fVar4 * dVar24 + (double)(float)((double)fVar1 * dVar25)) * fVar9
-                   + fVar8 * (float)((double)fVar4 * dVar25 +
-                                    (double)(float)((double)fVar1 * dVar26)) + (float)piVar12[2];
-      pfVar20[2] = (float)((double)fVar6 * dVar25 + (double)(float)((double)fVar3 * dVar26)) * fVar8
-                   + (float)((double)fVar6 * dVar24 + (double)(float)((double)fVar3 * dVar25)) *
+      pfVar19 = (float *)((int)lVar11 + *puVar20);
+      fVar8 = *(float *)lVar13 * *pfVar19;
+      fVar9 = pfVar19[1] * *(float *)lVar14;
+      pfVar19 = (float *)param_2;
+      *pfVar19 = fVar9 * (float)((double)fVar5 * dVar22 + (double)(float)((double)fVar2 * dVar23)) +
+                 fVar8 * (float)((double)fVar5 * dVar23 + (double)(float)((double)fVar2 * dVar24)) +
+                 *(float *)lVar17;
+      pfVar19[1] = (float)((double)fVar4 * dVar22 + (double)(float)((double)fVar1 * dVar23)) * fVar9
+                   + fVar8 * (float)((double)fVar4 * dVar23 +
+                                    (double)(float)((double)fVar1 * dVar24)) + (float)piVar12[2];
+      pfVar19[2] = (float)((double)fVar6 * dVar23 + (double)(float)((double)fVar3 * dVar24)) * fVar8
+                   + (float)((double)fVar6 * dVar22 + (double)(float)((double)fVar3 * dVar23)) *
                      fVar9 + (float)piVar12[3];
-      pfVar20[4] = (float)piVar12[0xe];
-      auVar28 = vectorPackD3Dtype(local_70,local_70,0xd,3);
-      auVar28 = vectorSplatWord(auVar28,0);
-      storeVectorElementWordIndexed(auVar28,uVar10 - 0x80);
-      pfVar20[5] = local_80;
-      lVar19 = lVar11 + (ulonglong)*puVar21;
-      auVar27 = loadVectorLeftIndexed(lVar19 + 0xc);
+      pfVar19[4] = (float)piVar12[0xe];
+      auVar26 = vectorPackD3Dtype(local_70,local_70,0xd,3);
+      auVar26 = vectorSplatWord(auVar26,0);
+      storeVectorElementWordIndexed(auVar26,uVar10 - 0x80);
+      pfVar19[5] = local_80;
+      lVar18 = lVar11 + (ulonglong)*puVar20;
+      auVar25 = loadVectorLeftIndexed(lVar18 + 0xc);
       lVar11 = lVar11 + 0x14;
-      auVar28 = loadVectorLeftIndexed(lVar19 + 8);
-      auVar28 = vectorSplatWord(auVar28,0);
-      auVar28 = vectorMultiplyFloatingPoint(auVar28,auVar30);
-      auVar27 = vectorSplatWord(auVar27,0);
-      auVar27 = vectorMultiplyAddFloatingPoint(auVar27,auVar29,auVar28);
-      auVar27 = vectorMultiplyAddFloatingPoint
-                          (auVar27,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar28 = vectorPackD3Dtype(auVar28,auVar27,9,3);
-      auVar28 = vectorSplatWord(auVar28,0);
-      storeVectorElementWordIndexed(auVar28,lVar23 + 0x18);
-      pfVar20[7] = 7.16064e-43;
-      lVar23 = lVar23 + 0x20;
-      uVar22 = uVar22 - 1;
-    } while (uVar22 != 0);
+      auVar26 = loadVectorLeftIndexed(lVar18 + 8);
+      auVar26 = vectorSplatWord(auVar26,0);
+      auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar28);
+      auVar25 = vectorSplatWord(auVar25,0);
+      auVar25 = vectorMultiplyAddFloatingPoint(auVar25,auVar27,auVar26);
+      auVar25 = vectorMultiplyAddFloatingPoint(auVar25,_DAT_8217a0f0,_DAT_8217a0e0);
+      auVar26 = vectorPackD3Dtype(auVar26,auVar25,9,3);
+      auVar26 = vectorSplatWord(auVar26,0);
+      storeVectorElementWordIndexed(auVar26,param_2 + 0x18);
+      pfVar19[7] = 7.16064e-43;
+      param_2 = param_2 + 0x20;
+      uVar21 = uVar21 - 1;
+    } while (uVar21 != 0);
   }
-  pGVar13 = (GfxPackedVertex *)
-            __restgprlr_23(lVar23,lVar14,lVar15,lVar16,lVar17,lVar18,lVar19,puVar21);
-  return pGVar13;
+  __restgprlr_23(param_2,lVar13,lVar14,lVar15,lVar16,lVar17,lVar18,puVar20);
+  return;
 }
 
 
 // 8241ADB8  FX_GenTrail_IndsForSegment  (EffectsCore/fx_draw_util.cpp:759)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-r_double_index_t *
-FX_GenTrail_IndsForSegment(FxDrawState *param_1,ushort param_2,r_double_index_t *param_3)
+void FX_GenTrail_IndsForSegment(undefined8 param_1,short param_2,longlong param_3)
 
 {
   uint uVar1;
@@ -943,166 +849,139 @@ FX_GenTrail_IndsForSegment(FxDrawState *param_1,ushort param_2,r_double_index_t 
   undefined4 uVar7;
   undefined4 uVar8;
   int iVar9;
-  r_double_index_t *prVar10;
-  short *psVar11;
-  ulonglong uVar12;
-  undefined4 *puVar14;
-  longlong lVar13;
+  short *psVar10;
+  ulonglong uVar11;
+  undefined4 *puVar12;
   undefined4 local_40;
   
-  lVar13 = (longlong)(int)param_3;
-  iVar9 = __savegprlr_26(param_1);
+  iVar9 = __savegprlr_26();
   iVar9 = *(int *)(*(int *)(iVar9 + 0xc) + 0xf4);
   if (iVar9 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x302,0,"%s");
+    MyAssertHandler(0xffffffff82061b68,0x302,0,0xffffffff82000f98,0xffffffff82061ce0);
   }
   uVar1 = *(uint *)(iVar9 + 0x1c);
   iVar2 = *(int *)(iVar9 + 0x20);
-  uVar12 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if ((uint)((uVar12 & 0xffffffff) << 1) != uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x307,0,"%s\n\t(trailDef->indCount) = %i");
+  uVar11 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if ((uint)((uVar11 & 0xffffffff) << 1) != uVar1) {
+    MyAssertHandler(0xffffffff82061b68,0x307,0,0xffffffff82061cec,0xffffffff82061d0c);
   }
   sVar6 = (short)*(undefined4 *)(iVar9 + 0x14) + param_2;
-  if ((int)uVar12 != 0) {
-    psVar11 = (short *)(iVar2 + -2);
+  if ((int)uVar11 != 0) {
+    psVar10 = (short *)(iVar2 + -2);
     do {
-      psVar3 = psVar11 + 1;
-      psVar11 = psVar11 + 2;
-      sVar4 = *psVar11 + param_2;
+      psVar3 = psVar10 + 1;
+      psVar10 = psVar10 + 2;
+      sVar4 = *psVar10 + param_2;
       sVar5 = *psVar3 + sVar6;
       local_40 = CONCAT22(*psVar3 + param_2,sVar4);
       uVar7 = local_40;
-      local_40 = CONCAT22(sVar5,*psVar11 + sVar6);
+      local_40 = CONCAT22(sVar5,*psVar10 + sVar6);
       uVar8 = local_40;
       local_40 = CONCAT22(sVar5,sVar4);
-      puVar14 = (undefined4 *)lVar13;
-      *puVar14 = uVar7;
-      puVar14[1] = uVar8;
-      puVar14[2] = local_40;
-      lVar13 = lVar13 + 0xc;
-      uVar12 = uVar12 - 1;
-    } while (uVar12 != 0);
+      puVar12 = (undefined4 *)param_3;
+      *puVar12 = uVar7;
+      puVar12[1] = uVar8;
+      puVar12[2] = local_40;
+      param_3 = param_3 + 0xc;
+      uVar11 = uVar11 - 1;
+    } while (uVar11 != 0);
   }
-  prVar10 = (r_double_index_t *)__restgprlr_26(lVar13);
-  return prVar10;
+  __restgprlr_26(param_3);
+  return;
 }
 
 
 // 8241AED0  FX_DrawTrail_GetTextureOffset  (EffectsCore/fx_draw_util.cpp:809)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-float FX_DrawTrail_GetTextureOffset(FxDrawState *param_1,float param_2)
+double FX_DrawTrail_GetTextureOffset(double param_1,int param_2)
 
 {
-  FxElemDef *pFVar1;
-  int iVar2;
+  int iVar1;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
-  float fVar5;
-  double dVar6;
+  double dVar4;
   
-  dVar6 = floor((double)(param_2 /
-                        (float)(longlong)((param_1->elemDef->extended).trailDef)->repeatDist));
-  pFVar1 = param_1->elemDef;
-  iVar2 = ((pFVar1->extended).trailDef)->scrollTimeMsec;
-  fVar5 = -(float)dVar6;
-  if (iVar2 != 0) {
-    if (0 < iVar2) {
-      uVar3 = param_1->msecDraw;
-      uVar4 = ((pFVar1->extended).trailDef)->scrollTimeMsec;
-      trapWord(6,(ulonglong)uVar4,0);
-      trapWord(5,(ulonglong)uVar4 &
-                 ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),0xffff);
-      return fVar5 - (float)(longlong)(int)(uVar3 - ((int)uVar3 / (int)uVar4) * uVar4) /
-                     (float)(longlong)(int)uVar4;
+  dVar4 = floor((double)(float)(param_1 /
+                               (double)(longlong)
+                                       *(int *)(*(int *)(*(int *)(param_2 + 0xc) + 0xf4) + 4)));
+  iVar1 = *(int *)(param_2 + 0xc);
+  dVar4 = -(double)(float)dVar4;
+  if (**(int **)(iVar1 + 0xf4) != 0) {
+    if (0 < **(int **)(iVar1 + 0xf4)) {
+      uVar2 = *(uint *)(param_2 + 0xa8);
+      uVar3 = **(uint **)(iVar1 + 0xf4);
+      trapWord(6,(ulonglong)uVar3,0);
+      trapWord(5,(ulonglong)uVar3 &
+                 ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
+      return (double)(float)(dVar4 - (double)((float)(longlong)
+                                                     (int)(uVar2 - ((int)uVar2 / (int)uVar3) * uVar3
+                                                          ) / (float)(longlong)(int)uVar3));
     }
-    uVar3 = param_1->msecDraw;
-    uVar4 = ((pFVar1->extended).trailDef)->scrollTimeMsec;
-    trapWord(6,(ulonglong)uVar4,0);
-    trapWord(5,(ulonglong)uVar4 &
-               ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),0xffff);
-    fVar5 = (1.0 - (float)(longlong)(int)(uVar3 - ((int)uVar3 / (int)uVar4) * uVar4) /
-                   (float)(longlong)(int)uVar4) + fVar5;
+    uVar2 = *(uint *)(param_2 + 0xa8);
+    uVar3 = **(uint **)(iVar1 + 0xf4);
+    trapWord(6,(ulonglong)uVar3,0);
+    trapWord(5,(ulonglong)uVar3 &
+               ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
+    dVar4 = (double)(float)((double)(1.0 - (float)(longlong)
+                                                  (int)(uVar2 - ((int)uVar2 / (int)uVar3) * uVar3) /
+                                           (float)(longlong)(int)uVar3) + dVar4);
   }
-  return fVar5;
+  return dVar4;
 }
 
 
 // 8241B020  FX_InitCodeSurf  (EffectsCore/fx_draw_util.cpp:827)
 
-void FX_InitCodeSurf(GfxCodeSurfGlob *param_1)
+void FX_InitCodeSurf(undefined4 param_1)
 
 {
-  g_fxCodeSurfStart = 0;
-  g_fxCodeSurfCount = 0;
-  g_fxCodeSurfGlob = param_1;
-  g_fxCodeSurfIndexStart = R_CodeSurfIndexStart(param_1);
+  DAT_83326588 = 0;
+  DAT_8332658c = 0;
+  DAT_8332cb90 = param_1;
+  DAT_8332cb94 = R_CodeSurfIndexStart();
   return;
 }
 
 
 // 8241B068  FX_AddCodeSurf  (EffectsCore/fx_draw_util.cpp:836)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void FX_AddCodeSurf(GfxCodeSurfGlob *param_1,Material *param_2,r_double_index_t *param_3,
-                   uint param_4,char *param_5)
+void FX_AddCodeSurf(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
+                   ulonglong param_5)
 
 {
   uint uVar1;
-  FXCodeSurf *pFVar2;
-  GfxCodeSurfGlob *pGVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  int iVar2;
   
-  uVar7 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pGVar3 = (GfxCodeSurfGlob *)__savegprlr_24(param_1);
-  if (0x880 < g_fxCodeSurfCount) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x347,0,"%s");
+  iVar2 = __savegprlr_24();
+  if (0x880 < DAT_8332658c) {
+    MyAssertHandler(0xffffffff82061b68,0x347,0,0xffffffff82000f98,0xffffffff82061dd0);
   }
-  if (pGVar3 != g_fxCodeSurfGlob) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x348,0,"%s");
+  if (iVar2 != DAT_8332cb90) {
+    MyAssertHandler(0xffffffff82061b68,0x348,0,0xffffffff82000f98,0xffffffff82061dac);
   }
-  if (g_fxCodeSurfCount < 0x880) {
-    if ((uVar4 & 0xffffffff) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                      ,0x34c,0,"%s");
+  if (DAT_8332658c < 0x880) {
+    if ((param_2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82061b68,0x34c,0,0xffffffff82000f98,0xffffffff82020dcc);
     }
-    if ((uVar5 & 0xffffffff) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                      ,0x34d,0,"%s");
+    if ((param_3 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82061b68,0x34d,0,0xffffffff82000f98,0xffffffff82061da4);
     }
-    if ((uVar7 & 0xffffffff) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                      ,0x34e,0,"%s");
+    if ((param_5 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82061b68,0x34e,0,0xffffffff82000f98,0xffffffff82061d9c);
     }
-    uVar1 = (int)uVar5 - (int)g_fxCodeSurfIndexStart >> 2;
+    uVar1 = (int)param_3 - DAT_8332cb94 >> 2;
     if (0xfffe < uVar1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                      ,0x351,0,"indexOffset doesn\'t index USHRT_MAX\n\t%i not in [0, %i)");
+      MyAssertHandler(0xffffffff82061b68,0x351,0,0xffffffff82061d64,uVar1,0xffff);
     }
-    if (0xfffe < (uVar6 & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                      ,0x352,0,"indexCount doesn\'t index USHRT_MAX\n\t%i not in [0, %i)");
+    if (0xfffe < (param_4 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82061b68,0x352,0,0xffffffff82061d2c,param_4,0xffff);
     }
-    g_fxCodeSurfList[g_fxCodeSurfCount].material = (Material *)uVar4;
-    g_fxCodeSurfList[g_fxCodeSurfCount].indexOffset = (ushort)uVar1;
-    g_fxCodeSurfList[g_fxCodeSurfCount].indexCount = (ushort)uVar6;
-    pFVar2 = g_fxCodeSurfList + g_fxCodeSurfCount;
-    g_fxCodeSurfCount = g_fxCodeSurfCount + 1;
-    pFVar2->name = (char *)uVar7;
+    iVar2 = DAT_8332658c * 0xc;
+    DAT_8332658c = DAT_8332658c + 1;
+    *(int *)(&DAT_83326590 + iVar2) = (int)param_2;
+    *(short *)(&DAT_83326594 + iVar2) = (short)uVar1;
+    *(short *)(&DAT_83326596 + iVar2) = (short)param_4;
+    *(int *)(&DAT_83326598 + iVar2) = (int)param_5;
   }
   __restgprlr_24();
   return;
@@ -1111,87 +990,71 @@ void FX_AddCodeSurf(GfxCodeSurfGlob *param_1,Material *param_2,r_double_index_t 
 
 // 8241B220  FX_ReserveCodeSurf  (EffectsCore/fx_draw_util.cpp:863)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int FX_ReserveCodeSurf(GfxCodeSurfGlob *param_1)
+void FX_ReserveCodeSurf(void)
 
 {
-  GfxCodeSurfGlob *pGVar1;
-  int iVar2;
+  int iVar1;
   
-  pGVar1 = (GfxCodeSurfGlob *)__savegprlr_28(param_1);
-  if (0x880 < g_fxCodeSurfCount) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x362,0,"%s");
+  iVar1 = __savegprlr_28();
+  if (0x880 < DAT_8332658c) {
+    MyAssertHandler(0xffffffff82061b68,0x362,0,0xffffffff82000f98,0xffffffff82061dd0);
   }
-  if (pGVar1 != g_fxCodeSurfGlob) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x363,0,"%s");
+  if (iVar1 != DAT_8332cb90) {
+    MyAssertHandler(0xffffffff82061b68,0x363,0,0xffffffff82000f98,0xffffffff82061dac);
   }
-  if (0x87f < g_fxCodeSurfCount) {
-    iVar2 = __restgprlr_28(0xffffffffffffffff);
-    return iVar2;
+  if (0x87f < DAT_8332658c) {
+    __restgprlr_28(0xffffffffffffffff);
+    return;
   }
-  g_fxCodeSurfList[g_fxCodeSurfCount].material = (Material *)0x0;
-  g_fxCodeSurfList[g_fxCodeSurfCount].indexOffset = 0xffff;
-  g_fxCodeSurfList[g_fxCodeSurfCount].indexCount = 0xffff;
-  g_fxCodeSurfList[g_fxCodeSurfCount].name = (char *)0x0;
-  g_fxCodeSurfCount = g_fxCodeSurfCount + 1;
-  iVar2 = __restgprlr_28();
-  return iVar2;
+  iVar1 = DAT_8332658c * 0xc;
+  *(undefined4 *)(&DAT_83326590 + iVar1) = 0;
+  DAT_8332658c = DAT_8332658c + 1;
+  *(undefined2 *)(&DAT_83326594 + iVar1) = 0xffff;
+  *(undefined2 *)(&DAT_83326596 + iVar1) = 0xffff;
+  *(undefined4 *)(&DAT_83326598 + iVar1) = 0;
+  __restgprlr_28();
+  return;
 }
 
 
 // 8241B300  FX_FlushCodeSurf  (EffectsCore/fx_draw_util.cpp:885)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void FX_FlushCodeSurf(GfxCodeSurfGlob *param_1,int param_2)
+void FX_FlushCodeSurf(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  GfxCodeSurfGlob *pGVar2;
+  ulonglong uVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
   
-  uVar3 = (ulonglong)param_2;
-  pGVar2 = (GfxCodeSurfGlob *)__savegprlr_25(param_1);
-  if (*(int *)((int)&g_fxCodeSurfList[0].material +
-              (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 2)) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x376,0,"%s");
+  uVar2 = __savegprlr_25();
+  if (*(int *)(&DAT_83326590 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2)) != 0
+     ) {
+    MyAssertHandler(0xffffffff82061b68,0x376,0,0xffffffff82000f98,0xffffffff82061ec0);
   }
-  if (g_fxCodeSurfCount < (int)uVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x377,0,"%s");
+  if (DAT_8332658c < (int)param_2) {
+    MyAssertHandler(0xffffffff82061b68,0x377,0,0xffffffff82000f98,0xffffffff82061e98);
   }
-  if (0x87f < (uVar3 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x378,0,
-                    "reservationIndex doesn\'t index FX_CODE_SURF_LIMIT\n\t%i not in [0, %i)");
+  if (0x87f < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82061b68,0x378,0,0xffffffff82061e50,param_2,0x880);
   }
-  if (g_fxCodeSurfGlob != pGVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
-                    0x379,0,"%s");
+  if ((ulonglong)DAT_8332cb90 != (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82061b68,0x379,0,0xffffffff82000f98,0xffffffff82061e2c);
   }
-  uVar4 = (ulonglong)(uint)g_fxCodeSurfStart;
-  while (g_fxCodeSurfStart < (int)uVar3) {
-    if (*(int *)((int)&g_fxCodeSurfList[0].material +
-                (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2)) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp"
-                      ,0x37d,0,"%s");
-      uVar4 = (ulonglong)(uint)g_fxCodeSurfStart;
+  uVar3 = (ulonglong)DAT_83326588;
+  while ((int)DAT_83326588 < (int)param_2) {
+    if (*(int *)(&DAT_83326590 + (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 2)) == 0)
+    {
+      MyAssertHandler(0xffffffff82061b68,0x37d,0,0xffffffff82000f98,0xffffffff82061df8);
+      uVar3 = (ulonglong)DAT_83326588;
     }
-    iVar1 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+    iVar1 = (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
     R_AddCodeSurfWithOffset
-              (pGVar2,*(Material **)((int)&g_fxCodeSurfList[0].material + iVar1),
-               (uint)*(ushort *)((int)&g_fxCodeSurfList[0].indexOffset + iVar1),
-               (uint)*(ushort *)((int)&g_fxCodeSurfList[0].indexCount + iVar1),0,0,
-               *(char **)((int)&g_fxCodeSurfList[0].name + iVar1));
-    uVar4 = (ulonglong)(uint)g_fxCodeSurfStart + 1;
-    g_fxCodeSurfStart = (int)uVar4;
+              (uVar2,*(undefined4 *)(&DAT_83326590 + iVar1),*(undefined2 *)(&DAT_83326594 + iVar1),
+               *(undefined2 *)(&DAT_83326596 + iVar1),0,0,*(undefined4 *)(&DAT_83326598 + iVar1));
+    uVar3 = (ulonglong)DAT_83326588 + 1;
+    DAT_83326588 = (uint)uVar3;
   }
-  g_fxCodeSurfStart = g_fxCodeSurfStart + 1;
+  DAT_83326588 = DAT_83326588 + 1;
   __restgprlr_25();
   return;
 }
@@ -1199,32 +1062,31 @@ void FX_FlushCodeSurf(GfxCodeSurfGlob *param_1,int param_2)
 
 // 8241B488  FX_FinishCodeSurf  (EffectsCore/fx_draw_util.cpp:905)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void FX_FinishCodeSurf(GfxCodeSurfGlob *param_1)
+void FX_FinishCodeSurf(void)
 
 {
-  GfxCodeSurfGlob *pGVar1;
+  undefined8 uVar1;
   int iVar2;
+  int iVar3;
   
-  pGVar1 = (GfxCodeSurfGlob *)__savegprlr_28(param_1);
-  iVar2 = g_fxCodeSurfCount;
-  if (g_fxCodeSurfStart < g_fxCodeSurfCount) {
+  uVar1 = __savegprlr_28();
+  iVar2 = DAT_8332658c;
+  if (DAT_83326588 < DAT_8332658c) {
     do {
-      if (g_fxCodeSurfList[g_fxCodeSurfStart].material != (Material *)0x0) {
+      iVar3 = DAT_83326588 * 0xc;
+      if (*(int *)(&DAT_83326590 + iVar3) != 0) {
         R_AddCodeSurfWithOffset
-                  (pGVar1,g_fxCodeSurfList[g_fxCodeSurfStart].material,
-                   (uint)g_fxCodeSurfList[g_fxCodeSurfStart].indexOffset,
-                   (uint)g_fxCodeSurfList[g_fxCodeSurfStart].indexCount,0,0,
-                   g_fxCodeSurfList[g_fxCodeSurfStart].name);
-        iVar2 = g_fxCodeSurfCount;
+                  (uVar1,*(int *)(&DAT_83326590 + iVar3),*(undefined2 *)(&DAT_83326594 + iVar3),
+                   *(undefined2 *)(&DAT_83326596 + iVar3),0,0,*(undefined4 *)(&DAT_83326598 + iVar3)
+                  );
+        iVar2 = DAT_8332658c;
       }
-      g_fxCodeSurfStart = g_fxCodeSurfStart + 1;
-    } while (g_fxCodeSurfStart < iVar2);
+      DAT_83326588 = DAT_83326588 + 1;
+    } while (DAT_83326588 < iVar2);
   }
-  g_fxCodeSurfStart = 0;
-  g_fxCodeSurfGlob = (GfxCodeSurfGlob *)0x0;
-  g_fxCodeSurfCount = 0;
+  DAT_83326588 = 0;
+  DAT_8332cb90 = 0;
+  DAT_8332658c = 0;
   __restgprlr_28();
   return;
 }
@@ -1232,7 +1094,9 @@ void FX_FinishCodeSurf(GfxCodeSurfGlob *param_1)
 
 // 8241BEA0  XMVectorSinCos  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/xnamathvector.inl:3699)
 
-void XMVectorSinCos(__vector4 *param_1,__vector4 *param_2,__vector4 param_3)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void XMVectorSinCos(uint param_1,uint param_2)
 
 {
   undefined1 in_vs33 [16];
@@ -1273,32 +1137,32 @@ void XMVectorSinCos(__vector4 *param_1,__vector4 *param_2,__vector4 param_3)
   auVar32 = vectorSplatImmediateSignedWord(0);
   auVar32 = vectorUnpackD3Dtype(auVar32,4);
   auVar6 = vectorSplatWord(auVar32,3);
-  auVar31 = vectorSplatWord((undefined1  [16])g_XMPiConstants0.field0_0x0,3);
-  auVar32 = vectorSplatWord((undefined1  [16])g_XMPiConstants0.field0_0x0,1);
-  auVar7 = vectorSplatWord((undefined1  [16])g_XMCosCoefficients0.field0_0x0,1);
-  auVar24 = vectorSplatWord((undefined1  [16])g_XMCosCoefficients0.field0_0x0,2);
+  auVar31 = vectorSplatWord(_DAT_82000f00,3);
+  auVar32 = vectorSplatWord(_DAT_82000f00,1);
+  auVar7 = vectorSplatWord(_DAT_82000ed0,1);
+  auVar24 = vectorSplatWord(_DAT_82000ed0,2);
   auVar30 = vectorMultiplyFloatingPoint(in_vs33,auVar31);
-  auVar31 = vectorSplatWord((undefined1  [16])g_XMSinCoefficients0.field0_0x0,1);
-  auVar27 = vectorSplatWord((undefined1  [16])g_XMSinCoefficients0.field0_0x0,2);
-  auVar12 = vectorSplatWord((undefined1  [16])g_XMSinCoefficients0.field0_0x0,3);
-  auVar1 = vectorSplatWord((undefined1  [16])g_XMCosCoefficients0.field0_0x0,3);
-  auVar14 = vectorSplatWord((undefined1  [16])g_XMSinCoefficients1.field0_0x0,0);
-  auVar16 = vectorSplatWord((undefined1  [16])g_XMSinCoefficients1.field0_0x0,1);
-  auVar18 = vectorSplatWord((undefined1  [16])g_XMSinCoefficients1.field0_0x0,2);
-  auVar21 = vectorSplatWord((undefined1  [16])g_XMSinCoefficients1.field0_0x0,3);
-  auVar13 = vectorSplatWord((undefined1  [16])g_XMCosCoefficients1.field0_0x0,0);
-  auVar15 = vectorSplatWord((undefined1  [16])g_XMCosCoefficients1.field0_0x0,1);
-  auVar17 = vectorSplatWord((undefined1  [16])g_XMCosCoefficients1.field0_0x0,2);
-  auVar19 = vectorSplatWord((undefined1  [16])g_XMCosCoefficients1.field0_0x0,3);
+  auVar31 = vectorSplatWord(_DAT_82000ea0,1);
+  auVar27 = vectorSplatWord(_DAT_82000ea0,2);
+  auVar12 = vectorSplatWord(_DAT_82000ea0,3);
+  auVar1 = vectorSplatWord(_DAT_82000ed0,3);
+  auVar14 = vectorSplatWord(_DAT_82000eb0,0);
+  auVar16 = vectorSplatWord(_DAT_82000eb0,1);
+  auVar18 = vectorSplatWord(_DAT_82000eb0,2);
+  auVar21 = vectorSplatWord(_DAT_82000eb0,3);
+  auVar13 = vectorSplatWord(_DAT_82000ee0,0);
+  auVar15 = vectorSplatWord(_DAT_82000ee0,1);
+  auVar17 = vectorSplatWord(_DAT_82000ee0,2);
+  auVar19 = vectorSplatWord(_DAT_82000ee0,3);
   auVar10 = vectorRoundToFloatingPointIntegerNearest(auVar30);
-  auVar26 = vectorSplatWord((undefined1  [16])g_XMSinCoefficients2.field0_0x0,0);
-  auVar23 = vectorSplatWord((undefined1  [16])g_XMCosCoefficients2.field0_0x0,0);
-  auVar30 = vectorSplatWord((undefined1  [16])g_XMSinCoefficients2.field0_0x0,1);
-  auVar29 = vectorSplatWord((undefined1  [16])g_XMCosCoefficients2.field0_0x0,1);
-  auVar3 = vectorSplatWord((undefined1  [16])g_XMSinCoefficients2.field0_0x0,2);
-  auVar2 = vectorSplatWord((undefined1  [16])g_XMCosCoefficients2.field0_0x0,2);
-  auVar5 = vectorSplatWord((undefined1  [16])g_XMSinCoefficients2.field0_0x0,3);
-  auVar4 = vectorSplatWord((undefined1  [16])g_XMCosCoefficients2.field0_0x0,3);
+  auVar26 = vectorSplatWord(_DAT_82000ec0,0);
+  auVar23 = vectorSplatWord(_DAT_82000ef0,0);
+  auVar30 = vectorSplatWord(_DAT_82000ec0,1);
+  auVar29 = vectorSplatWord(_DAT_82000ef0,1);
+  auVar3 = vectorSplatWord(_DAT_82000ec0,2);
+  auVar2 = vectorSplatWord(_DAT_82000ef0,2);
+  auVar5 = vectorSplatWord(_DAT_82000ec0,3);
+  auVar4 = vectorSplatWord(_DAT_82000ef0,3);
   auVar10 = vectorNegativeMultiplySubtractFloatingPoint(auVar32,auVar10,in_vs33);
   auVar32 = vectorMultiplyFloatingPoint(auVar10,auVar10);
   auVar11 = vectorMultiplyFloatingPoint(auVar32,auVar10);
@@ -1344,8 +1208,8 @@ void XMVectorSinCos(__vector4 *param_1,__vector4 *param_2,__vector4 param_3)
   auVar32 = vectorMultiplyAddFloatingPoint(auVar3,auVar8,auVar32);
   auVar31 = vectorMultiplyAddFloatingPoint(auVar4,auVar9,auVar31);
   auVar32 = vectorMultiplyAddFloatingPoint(auVar5,auVar11,auVar32);
-  *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0) = auVar31;
-  *(undefined1 (*) [16])((uint)param_1 & 0xfffffff0) = auVar32;
+  *(undefined1 (*) [16])(param_2 & 0xfffffff0) = auVar31;
+  *(undefined1 (*) [16])(param_1 & 0xfffffff0) = auVar32;
   return;
 }
 

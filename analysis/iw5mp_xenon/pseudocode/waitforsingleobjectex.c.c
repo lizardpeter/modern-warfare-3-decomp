@@ -2,28 +2,27 @@
 
 // 828B4F50  WaitForSingleObjectEx  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/waitforsingleobjectex.c:82)
 
-ulong WaitForSingleObjectEx(void *param_1,ulong param_2,int param_3)
+DWORD WaitForSingleObjectEx(HANDLE hHandle,DWORD dwMilliseconds,BOOL bAlertable)
 
 {
   undefined8 uVar1;
-  _LARGE_INTEGER *p_Var3;
-  longlong lVar2;
-  ulong uVar4;
+  undefined8 uVar2;
+  longlong lVar3;
+  DWORD DVar4;
   ulonglong uVar5;
-  _LARGE_INTEGER a_Stack_40 [8];
+  undefined1 auStack_40 [64];
   
-  uVar5 = (ulonglong)param_3;
-  uVar1 = __savegprlr_27(param_1);
-  p_Var3 = XapiFormatTimeOut(a_Stack_40,param_2);
-  while( true ) {
-    lVar2 = NtWaitForSingleObjectEx(uVar1,1,uVar5 & 0xff,p_Var3);
-    if (lVar2 < 0) break;
-    if (((int)uVar5 == 0) || ((int)lVar2 != 0x101)) goto LAB_828b4fbc;
+  uVar5 = (ulonglong)bAlertable;
+  lVar3 = (longlong)(int)dwMilliseconds;
+  uVar1 = __savegprlr_27(hHandle,lVar3);
+  uVar2 = XapiFormatTimeOut(auStack_40,lVar3);
+  while (lVar3 = NtWaitForSingleObjectEx(uVar1,1,uVar5 & 0xff,uVar2), -1 < lVar3) {
+    if (((int)uVar5 == 0) || ((int)lVar3 != 0x101)) goto LAB_828b4fbc;
   }
-  RtlSetLastNTError((int)lVar2);
-  lVar2 = -1;
+  RtlSetLastNTError(lVar3);
+  lVar3 = -1;
 LAB_828b4fbc:
-  uVar4 = __restgprlr_27(lVar2);
-  return uVar4;
+  DVar4 = __restgprlr_27(lVar3);
+  return DVar4;
 }
 

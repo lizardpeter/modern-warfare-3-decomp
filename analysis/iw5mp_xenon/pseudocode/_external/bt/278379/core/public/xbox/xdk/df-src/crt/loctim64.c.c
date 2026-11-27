@@ -2,13 +2,14 @@
 
 // 82919D10  _localtime64_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/loctim64.c:62)
 
-int _localtime64_s(tm *param_1,long64 *param_2)
+errno_t _localtime64_s(tm *_Tm,__time64_t *_Time)
 
 {
   int *piVar1;
-  int iVar2;
+  errno_t eVar2;
   int iVar3;
-  longlong lVar4;
+  int iVar4;
+  longlong lVar5;
   long local_30;
   int local_2c;
   long local_28 [2];
@@ -17,97 +18,97 @@ int _localtime64_s(tm *param_1,long64 *param_2)
   local_2c = 0;
   local_28[0] = 0;
   local_30 = 0;
-  if ((param_1 == (tm *)0x0) || (memset(), param_2 == (long64 *)0x0)) {
+  if ((_Tm == (tm *)0x0) || (memset(_Tm,0xff,0x24), _Time == (__time64_t *)0x0)) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
     return 0x16;
   }
-  if ((-1 < *param_2) && (*param_2 < 0x793407000)) {
+  if ((-1 < *_Time) && (*_Time < 0x793407000)) {
     __tzset();
-    iVar2 = _get_daylight(&local_2c);
-    if (iVar2 != 0) {
+    eVar2 = _get_daylight(&local_2c);
+    if (eVar2 != 0) {
                     /* WARNING: Subroutine does not return */
       _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);
     }
-    iVar2 = _get_dstbias(local_28);
-    if (iVar2 == 0) {
-      iVar2 = _get_timezone(&local_30);
-      if (iVar2 != 0) {
+    eVar2 = _get_dstbias(local_28);
+    if (eVar2 == 0) {
+      eVar2 = _get_timezone(&local_30);
+      if (eVar2 != 0) {
                     /* WARNING: Subroutine does not return */
         _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);
       }
-      if (*param_2 < 0x3f481) {
-        iVar2 = _gmtime64_s(param_1,param_2);
-        if (iVar2 != 0) {
-          return iVar2;
+      if (*_Time < 0x3f481) {
+        eVar2 = _gmtime64_s(_Tm,_Time);
+        if (eVar2 != 0) {
+          return eVar2;
         }
-        if ((local_2c == 0) || (iVar2 = _isindst(param_1), iVar2 == 0)) {
-          lVar4 = (longlong)param_1->tm_sec - (longlong)local_30;
+        if ((local_2c == 0) || (iVar3 = _isindst(_Tm), iVar3 == 0)) {
+          lVar5 = (longlong)_Tm->tm_sec - (longlong)local_30;
         }
         else {
-          param_1->tm_isdst = 1;
-          lVar4 = (longlong)param_1->tm_sec - (longlong)(local_30 + local_28[0]);
+          _Tm->tm_isdst = 1;
+          lVar5 = (longlong)_Tm->tm_sec - (longlong)(local_30 + local_28[0]);
         }
-        iVar2 = (int)lVar4 + (int)(lVar4 / 0x3c) * -0x3c;
-        param_1->tm_sec = iVar2;
-        if (iVar2 < 0) {
-          lVar4 = lVar4 + -0x3c;
-          param_1->tm_sec = iVar2 + 0x3c;
+        iVar3 = (int)lVar5 + (int)(lVar5 / 0x3c) * -0x3c;
+        _Tm->tm_sec = iVar3;
+        if (iVar3 < 0) {
+          lVar5 = lVar5 + -0x3c;
+          _Tm->tm_sec = iVar3 + 0x3c;
         }
-        lVar4 = lVar4 / 0x3c + (longlong)param_1->tm_min;
-        iVar2 = (int)lVar4 + (int)(lVar4 / 0x3c) * -0x3c;
-        param_1->tm_min = iVar2;
-        if (iVar2 < 0) {
-          lVar4 = lVar4 + -0x3c;
-          param_1->tm_min = iVar2 + 0x3c;
+        lVar5 = lVar5 / 0x3c + (longlong)_Tm->tm_min;
+        iVar3 = (int)lVar5 + (int)(lVar5 / 0x3c) * -0x3c;
+        _Tm->tm_min = iVar3;
+        if (iVar3 < 0) {
+          lVar5 = lVar5 + -0x3c;
+          _Tm->tm_min = iVar3 + 0x3c;
         }
-        lVar4 = lVar4 / 0x3c + (longlong)param_1->tm_hour;
-        iVar2 = (int)lVar4 + (int)(lVar4 / 0x18) * -0x18;
-        param_1->tm_hour = iVar2;
-        if (iVar2 < 0) {
-          lVar4 = lVar4 + -0x18;
-          param_1->tm_hour = iVar2 + 0x18;
+        lVar5 = lVar5 / 0x3c + (longlong)_Tm->tm_hour;
+        iVar3 = (int)lVar5 + (int)(lVar5 / 0x18) * -0x18;
+        _Tm->tm_hour = iVar3;
+        if (iVar3 < 0) {
+          lVar5 = lVar5 + -0x18;
+          _Tm->tm_hour = iVar3 + 0x18;
         }
-        lVar4 = lVar4 / 0x18;
-        iVar2 = (int)lVar4;
-        if (lVar4 < 1) {
-          if (lVar4 < 0) {
-            lVar4 = (ulonglong)(uint)param_1->tm_mday + (longlong)iVar2;
-            iVar3 = (int)lVar4;
-            param_1->tm_mday = iVar3;
-            param_1->tm_wday = (iVar2 + param_1->tm_wday + 7) % 7;
-            if (lVar4 < 1) {
-              param_1->tm_mday = iVar3 + 0x1f;
-              param_1->tm_mon = 0xb;
-              iVar2 = param_1->tm_yday + iVar2 + 0x16d;
-              param_1->tm_year = param_1->tm_year + -1;
+        lVar5 = lVar5 / 0x18;
+        iVar3 = (int)lVar5;
+        if (lVar5 < 1) {
+          if (lVar5 < 0) {
+            lVar5 = (ulonglong)(uint)_Tm->tm_mday + (longlong)iVar3;
+            iVar4 = (int)lVar5;
+            _Tm->tm_mday = iVar4;
+            _Tm->tm_wday = (iVar3 + _Tm->tm_wday + 7) % 7;
+            if (lVar5 < 1) {
+              _Tm->tm_mday = iVar4 + 0x1f;
+              _Tm->tm_mon = 0xb;
+              iVar3 = _Tm->tm_yday + iVar3 + 0x16d;
+              _Tm->tm_year = _Tm->tm_year + -1;
             }
             else {
-              iVar2 = param_1->tm_yday + iVar2;
+              iVar3 = _Tm->tm_yday + iVar3;
             }
-            param_1->tm_yday = iVar2;
+            _Tm->tm_yday = iVar3;
           }
         }
         else {
-          param_1->tm_mday = param_1->tm_mday + iVar2;
-          param_1->tm_yday = param_1->tm_yday + iVar2;
-          param_1->tm_wday = (iVar2 + param_1->tm_wday) % 7;
+          _Tm->tm_mday = _Tm->tm_mday + iVar3;
+          _Tm->tm_yday = _Tm->tm_yday + iVar3;
+          _Tm->tm_wday = (iVar3 + _Tm->tm_wday) % 7;
         }
       }
       else {
-        local_20 = *param_2 - (longlong)local_30;
-        iVar2 = _gmtime64_s(param_1,&local_20);
-        if (iVar2 != 0) {
-          return iVar2;
+        local_20 = *_Time - (longlong)local_30;
+        eVar2 = _gmtime64_s(_Tm,&local_20);
+        if (eVar2 != 0) {
+          return eVar2;
         }
-        if ((local_2c != 0) && (iVar2 = _isindst(param_1), iVar2 != 0)) {
+        if ((local_2c != 0) && (iVar3 = _isindst(_Tm), iVar3 != 0)) {
           local_20 = local_20 - local_28[0];
-          iVar2 = _gmtime64_s(param_1,&local_20);
-          if (iVar2 != 0) {
-            return iVar2;
+          eVar2 = _gmtime64_s(_Tm,&local_20);
+          if (eVar2 != 0) {
+            return eVar2;
           }
-          param_1->tm_isdst = 1;
+          _Tm->tm_isdst = 1;
         }
       }
       return 0;
@@ -123,19 +124,19 @@ int _localtime64_s(tm *param_1,long64 *param_2)
 
 // 8291A068  _localtime64  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/loctim64.c:234)
 
-tm * _localtime64(long64 *param_1)
+tm * _localtime64(__time64_t *_Time)
 
 {
   tm *ptVar1;
-  int iVar2;
+  errno_t eVar2;
   
   ptVar1 = __getgmtimebuf();
   if (ptVar1 == (tm *)0x0) {
     ptVar1 = (tm *)0x0;
   }
   else {
-    iVar2 = _localtime64_s(ptVar1,param_1);
-    ptVar1 = (tm *)(-(uint)(iVar2 == 0) & (uint)ptVar1);
+    eVar2 = _localtime64_s(ptVar1,_Time);
+    ptVar1 = (tm *)(-(uint)(eVar2 == 0) & (uint)ptVar1);
   }
   return ptVar1;
 }

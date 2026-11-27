@@ -2,164 +2,392 @@
 
 // 824AE5B0  TRACK_g_utils  (game_mp/g_utils_mp.cpp:58)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_g_utils(void)
 
 {
-  track_static_alloc_internal(entityTypeNames,0x48,"entityTypeNames",9);
+  track_static_alloc_internal(0xffffffff8296b398,0x48,0xffffffff8207e24c,9);
   return;
 }
 
 
 // 824AE5D0  G_ClearCachedModels  (game_mp/g_utils_mp.cpp:74)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void G_ClearCachedModels(void)
+void * G_ClearCachedModels(void)
 
 {
-  memset();
-  return;
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_8359f630,0,0x1000);
+  return pvVar1;
 }
 
 
 // 824AE5E8  G_FindConfigstringIndex  (game_mp/g_utils_mp.cpp:80)
 
-/* WARNING: Enum "ConfigString": Some values do not have unique names */
+void G_FindConfigstringIndex
+               (undefined8 param_1,longlong param_2,undefined8 param_3,int param_4,ulonglong param_5
+               )
 
-int G_FindConfigstringIndex
-              (char *param_1,ConfigString param_2,int param_3,int param_4,char *param_5)
+{
+  char *pcVar2;
+  uint uVar3;
+  uint uVar4;
+  undefined8 uVar1;
+  int iVar5;
+  int iVar6;
+  longlong lVar7;
+  longlong lVar8;
+  
+  pcVar2 = (char *)__savegprlr_20();
+  if ((pcVar2 != (char *)0x0) && (*pcVar2 != '\0')) {
+    iVar5 = (int)param_2;
+    if (iVar5 < 0x3d6) {
+      uVar3 = SL_FindString();
+    }
+    else {
+      uVar3 = SL_FindLowercaseString();
+    }
+    lVar8 = 1;
+    iVar6 = (int)param_3;
+    lVar7 = param_2;
+    if (1 < iVar6) {
+      do {
+        lVar7 = lVar7 + 1;
+        if ((0xeea < (int)lVar7) || (iVar5 < 0)) {
+          MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+        }
+        uVar4 = SV_GetConfigstringConst(lVar7);
+        if (uVar4 == DAT_835a0b80) break;
+        if (uVar4 == uVar3) goto LAB_824ae7d8;
+        lVar8 = lVar8 + 1;
+      } while ((int)lVar8 < iVar6);
+    }
+    if (param_4 != 0) {
+      if ((int)lVar8 == iVar6) {
+        Com_Printf(0xf,0xffffffff8207e2b8);
+        Com_Printf(0xf,0xffffffff8207e294,param_3);
+        lVar8 = 1;
+        if (1 < iVar6) {
+          do {
+            if ((0xeea < (int)(lVar8 + param_2)) || (iVar5 < 0)) {
+              MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+            }
+            SV_GetConfigstringConst(lVar8 + param_2);
+            uVar1 = SL_ConvertToString();
+            Com_Printf(0xf,0xffffffff8207e28c,lVar8,uVar1);
+            lVar8 = lVar8 + 1;
+          } while ((int)lVar8 < iVar6);
+        }
+        uVar1 = va(0xffffffff8207e25c,param_2,pcVar2);
+        Com_Error(1,uVar1);
+      }
+      if ((0xeea < (int)(lVar8 + param_2)) || (iVar5 < 0)) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      }
+      SV_SetConfigstring(lVar8 + param_2,pcVar2);
+LAB_824ae7d8:
+      __restgprlr_20(lVar8);
+      return;
+    }
+    if ((param_5 & 0xffffffff) != 0) {
+      va(0xffffffff8207e2e0,param_5,pcVar2);
+      Scr_Error();
+    }
+  }
+  __restgprlr_20(0);
+  return;
+}
+
+
+// 824AE7E8  G_LocalizedStringIndex  (game_mp/g_utils_mp.cpp:127)
+
+void G_LocalizedStringIndex(void)
+
+{
+  char *pcVar2;
+  uint uVar3;
+  uint uVar4;
+  undefined8 uVar1;
+  int iVar5;
+  undefined *puVar6;
+  longlong lVar7;
+  
+  pcVar2 = (char *)__savegprlr_16();
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff8207e318,0x85,0,0xffffffff82000f98,0xffffffff820181d4);
+  }
+  if (*pcVar2 == '\0') {
+    __restgprlr_16(0);
+    return;
+  }
+  iVar5 = DAT_83580b1c;
+  puVar6 = PTR_s_localized_string_8296b3e4;
+  if (DAT_83580b1c == 0) {
+    if (*(char *)(DAT_83f5de0c + 0xc) == '\0') {
+      iVar5 = 1;
+    }
+    else {
+      puVar6 = (undefined *)
+               (-(uint)(*(char *)(DAT_83f5de04 + 0xc) != '\0') &
+               (uint)PTR_s_localized_string_8296b3e4);
+    }
+  }
+  uVar3 = SL_FindString(pcVar2);
+  lVar7 = 1;
+  do {
+    if (0xd14 < (int)lVar7) {
+      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+    }
+    uVar4 = SV_GetConfigstringConst(lVar7 + 0x1d6);
+    if (uVar4 == DAT_835a0b80) break;
+    if (uVar4 == uVar3) goto LAB_824aea14;
+    lVar7 = lVar7 + 1;
+  } while ((int)lVar7 < 0x1ff);
+  if (iVar5 == 0) {
+    if (puVar6 != (undefined *)0x0) {
+      va(0xffffffff8207e2e0,puVar6,pcVar2);
+      Scr_Error();
+    }
+    lVar7 = 0;
+  }
+  else {
+    if ((int)lVar7 == 0x1ff) {
+      Com_Printf(0xf,0xffffffff8207e2b8);
+      Com_Printf(0xf,0xffffffff8207e294,0x1ff);
+      lVar7 = 1;
+      do {
+        if (0xeea < (int)(lVar7 + 0x1d6)) {
+          MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+        }
+        SV_GetConfigstringConst(lVar7 + 0x1d6);
+        uVar1 = SL_ConvertToString();
+        Com_Printf(0xf,0xffffffff8207e28c,lVar7,uVar1);
+        lVar7 = lVar7 + 1;
+      } while ((int)lVar7 < 0x1ff);
+      uVar1 = va(0xffffffff8207e25c,0x1d6,pcVar2);
+      Com_Error(1,uVar1);
+    }
+    if (0xeea < (int)(lVar7 + 0x1d6)) {
+      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+    }
+    SV_SetConfigstring(lVar7 + 0x1d6,pcVar2);
+LAB_824aea14:
+    if (((int)lVar7 != 0) || (iVar5 != 0)) goto LAB_824aeb8c;
+  }
+  if ((*(char *)(DAT_83f5de0c + 0xc) != '\0') && (*(char *)(DAT_83f5de04 + 0xc) == '\0')) {
+    if (*pcVar2 == '\0') {
+      __restgprlr_16(0);
+      return;
+    }
+    uVar3 = SL_FindString(pcVar2);
+    lVar7 = 1;
+    do {
+      if (0xd14 < (int)lVar7) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      }
+      uVar4 = SV_GetConfigstringConst(lVar7 + 0x1d6);
+      if (uVar4 == DAT_835a0b80) break;
+      if (uVar4 == uVar3) goto LAB_824aeb6c;
+      lVar7 = lVar7 + 1;
+    } while ((int)lVar7 < 0x1ff);
+    if ((int)lVar7 == 0x1ff) {
+      Com_Printf(0xf,0xffffffff8207e2b8);
+      Com_Printf(0xf,0xffffffff8207e294,0x1ff);
+      lVar7 = 1;
+      do {
+        if (0xeea < (int)(lVar7 + 0x1d6)) {
+          MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+        }
+        SV_GetConfigstringConst(lVar7 + 0x1d6);
+        uVar1 = SL_ConvertToString();
+        Com_Printf(0xf,0xffffffff8207e28c,lVar7,uVar1);
+        lVar7 = lVar7 + 1;
+      } while ((int)lVar7 < 0x1ff);
+      uVar1 = va(0xffffffff8207e25c,0x1d6,pcVar2);
+      Com_Error(1,uVar1);
+    }
+    if (0xeea < (int)(lVar7 + 0x1d6)) {
+      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+    }
+    SV_SetConfigstring(lVar7 + 0x1d6,pcVar2);
+LAB_824aeb6c:
+    if ((int)lVar7 != 0) {
+      Com_PrintError(1,0xffffffff8207e2f8,PTR_s_localized_string_8296b3e4,pcVar2);
+    }
+  }
+LAB_824aeb8c:
+  __restgprlr_16(lVar7);
+  return;
+}
+
+
+// 824AEBA8  G_MaterialIndex  (game_mp/g_utils_mp.cpp:174)
+
+void G_MaterialIndex(void)
+
+{
+  char cVar1;
+  int iVar2;
+  char *pcVar4;
+  uint uVar5;
+  uint uVar6;
+  undefined8 uVar3;
+  longlong lVar7;
+  char local_80 [128];
+  
+  pcVar4 = (char *)__savegprlr_25();
+  if (pcVar4 == (char *)0x0) {
+    MyAssertHandler(0xffffffff8207e318,0xb1,0,0xffffffff82000f98,0xffffffff82021a74);
+  }
+  if (*pcVar4 == '\0') {
+    MyAssertHandler(0xffffffff8207e318,0xb2,0,0xffffffff82000f98,0xffffffff8207e370);
+  }
+  iVar2 = -(int)pcVar4;
+  do {
+    cVar1 = *pcVar4;
+    local_80[(int)(pcVar4 + iVar2)] = cVar1;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
+  I_strlwr(local_80);
+  iVar2 = DAT_83580b1c;
+  if (local_80[0] != '\0') {
+    uVar5 = SL_FindLowercaseString(local_80);
+    lVar7 = 1;
+    do {
+      if (0x316 < (int)lVar7) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      }
+      uVar6 = SV_GetConfigstringConst(lVar7 + 0xbd4);
+      if (uVar6 == DAT_835a0b80) break;
+      if (uVar6 == uVar5) goto LAB_824aedcc;
+      lVar7 = lVar7 + 1;
+    } while ((int)lVar7 < 0x100);
+    if (iVar2 != 0) {
+      if ((int)lVar7 == 0x100) {
+        Com_Printf(0xf,0xffffffff8207e2b8);
+        Com_Printf(0xf,0xffffffff8207e294,0x100);
+        lVar7 = 1;
+        do {
+          if (0xeea < (int)(lVar7 + 0xbd4)) {
+            MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+          }
+          SV_GetConfigstringConst(lVar7 + 0xbd4);
+          uVar3 = SL_ConvertToString();
+          Com_Printf(0xf,0xffffffff8207e28c,lVar7,uVar3);
+          lVar7 = lVar7 + 1;
+        } while ((int)lVar7 < 0x100);
+        uVar3 = va(0xffffffff8207e25c,0xbd4,local_80);
+        Com_Error(1,uVar3);
+      }
+      if (0xeea < (int)(lVar7 + 0xbd4)) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      }
+      SV_SetConfigstring(lVar7 + 0xbd4,local_80);
+LAB_824aedcc:
+      __restgprlr_25(lVar7);
+      return;
+    }
+    va(0xffffffff8207e2e0,0xffffffff82020dcc,local_80);
+    Scr_Error();
+  }
+  __restgprlr_25(0);
+  return;
+}
+
+
+// 824AEDD8  G_ModelIndex  (game_mp/g_utils_mp.cpp:187)
+
+void G_ModelIndex(void)
 
 {
   char *pcVar1;
   uint uVar2;
   uint uVar3;
-  int iVar4;
-  char *pcVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ConfigString CVar8;
-  longlong lVar9;
+  undefined4 uVar4;
+  ulonglong uVar5;
   
-  uVar6 = (ulonglong)(int)param_5;
-  lVar7 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_20(param_1);
-  if ((pcVar1 != (char *)0x0) && (*pcVar1 != '\0')) {
-    iVar4 = (int)lVar7;
-    if (iVar4 < 0x3d6) {
-      uVar2 = SL_FindString(pcVar1);
-    }
-    else {
-      uVar2 = SL_FindLowercaseString(pcVar1);
-    }
-    lVar9 = 1;
-    if (1 < param_3) {
-      do {
-        lVar7 = lVar7 + 1;
-        if ((0xeea < (int)(ConfigString)lVar7) || (iVar4 < 0)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                          ,0x285,0,"%s");
-        }
-        uVar3 = SV_GetConfigstringConst((ConfigString)lVar7);
-        if (uVar3 == scr_const._) break;
-        if (uVar3 == uVar2) goto LAB_824ae7d8;
-        lVar9 = lVar9 + 1;
-      } while ((int)lVar9 < param_3);
-    }
-    if (param_4 != 0) {
-      if ((int)lVar9 == param_3) {
-        Com_Printf(0xf,"G_FindConfigstringIndex: overflow...\n");
-        Com_Printf(0xf,"Dumping these %i Config Strings:\n");
-        lVar9 = 1;
-        if (1 < param_3) {
-          do {
-            CVar8 = (int)lVar9 + iVar4;
-            if ((0xeea < (int)CVar8) || (iVar4 < 0)) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                              ,0x285,0,"%s");
-            }
-            uVar2 = SV_GetConfigstringConst(CVar8);
-            SL_ConvertToString(uVar2);
-            Com_Printf(0xf,"%i: %s\n");
-            lVar9 = lVar9 + 1;
-          } while ((int)lVar9 < param_3);
-        }
-        pcVar5 = va("\x15G_FindConfigstringIndex: overflow (%d): \'%s\'");
-        Com_Error(ERR_DROP,pcVar5);
-      }
-      CVar8 = (int)lVar9 + iVar4;
-      if ((0xeea < (int)CVar8) || (iVar4 < 0)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                        ,0x285,0,"%s");
-      }
-      SV_SetConfigstring(CVar8,pcVar1);
-LAB_824ae7d8:
-      iVar4 = __restgprlr_20(lVar9);
-      return iVar4;
-    }
-    if ((uVar6 & 0xffffffff) != 0) {
-      pcVar1 = va("%s \"%s\" not precached");
-      Scr_Error(pcVar1);
-    }
+  pcVar1 = (char *)__savegprlr_24();
+  Profile_Begin(0xf0);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff8207e318,0xc2,0,0xffffffff82000f98,0xffffffff82021a74);
   }
-  iVar4 = __restgprlr_20(0);
-  return iVar4;
+  if (*pcVar1 == '\0') {
+    Profile_EndInternal(0);
+    __restgprlr_24(0);
+    return;
+  }
+  uVar2 = SL_FindLowercaseString(pcVar1);
+  uVar5 = 1;
+  do {
+    if (0xae6 < (int)uVar5) {
+      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+    }
+    uVar3 = SV_GetConfigstringConst(uVar5 + 0x404);
+    if (uVar3 == DAT_835a0b80) break;
+    if (uVar3 == uVar2) {
+      if (*(int *)(&DAT_8359f630 + (int)((uVar5 & 0xffffffff) << 2)) == 0) {
+        MyAssertHandler(0xffffffff8207e318,0xd4,0,0xffffffff82000f98,0xffffffff8207e378);
+        Profile_EndInternal(0);
+        __restgprlr_24(uVar5);
+        return;
+      }
+      goto LAB_824aef40;
+    }
+    uVar5 = uVar5 + 1;
+  } while ((int)uVar5 < 0x400);
+  if (DAT_83580b1c == 0) {
+    Profile_EndInternal(0);
+    va(0xffffffff8207e3a4,pcVar1);
+    Scr_Error();
+  }
+  if ((int)uVar5 == 0x400) {
+    Com_Error(1,0xffffffff8207e38c);
+  }
+  uVar4 = SV_XModelGet(pcVar1);
+  *(undefined4 *)(&DAT_8359f630 + (int)((uVar5 & 0xffffffff) << 2)) = uVar4;
+  if (0xeea < (int)(uVar5 + 0x404)) {
+    MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+  }
+  SV_SetConfigstring(uVar5 + 0x404,pcVar1);
+LAB_824aef40:
+  Profile_EndInternal(0);
+  __restgprlr_24(uVar5);
+  return;
 }
 
 
-// 824AE7E8  G_LocalizedStringIndex  (game_mp/g_utils_mp.cpp:127)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
-
-// 824AEBA8  G_MaterialIndex  (game_mp/g_utils_mp.cpp:174)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
-
-// 824AEDD8  G_ModelIndex  (game_mp/g_utils_mp.cpp:187)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
-
 // 824B1990  G_ReloadCachedModels  (game_mp/g_utils_mp.cpp:238)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "ConfigString": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
 
 void G_ReloadCachedModels(void)
 
 {
   uint uVar1;
-  char *pcVar2;
-  XModel *pXVar3;
-  uint uVar4;
-  XModel **ppXVar5;
+  undefined4 uVar2;
+  ulonglong uVar3;
+  undefined4 *puVar4;
   
   __savegprlr_22();
-  uVar4 = 1;
-  ppXVar5 = cached_models + 1;
+  uVar3 = 1;
+  puVar4 = &DAT_8359f634;
   do {
-    if (0x3ff < uVar4) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",
-                      0x165,0,"%s");
+    if (0x3ff < (uVar3 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8207e318,0x165,0,0xffffffff82000f98,0xffffffff8207e3f4);
     }
-    if (0xeea < (int)(uVar4 + CS_MODELS)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                      ,0x285,0,"%s");
+    if (0xeea < (int)(uVar3 + 0x404)) {
+      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
     }
-    uVar1 = SV_GetConfigstringConst(uVar4 + CS_MODELS);
-    if (uVar1 == scr_const._) {
-      pXVar3 = (XModel *)0x0;
+    uVar1 = SV_GetConfigstringConst(uVar3 + 0x404);
+    if (uVar1 == DAT_835a0b80) {
+      uVar2 = 0;
     }
     else {
-      pcVar2 = SL_ConvertToString(uVar1);
-      pXVar3 = SV_XModelGet(pcVar2);
+      SL_ConvertToString();
+      uVar2 = SV_XModelGet();
     }
-    *ppXVar5 = pXVar3;
-    ppXVar5 = ppXVar5 + 1;
-    uVar4 = uVar4 + 1;
-  } while ((int)ppXVar5 < -0x7ca5f9d0);
+    *puVar4 = uVar2;
+    puVar4 = puVar4 + 1;
+    uVar3 = uVar3 + 1;
+  } while ((int)puVar4 < -0x7ca5f9d0);
   __restgprlr_22();
   return;
 }
@@ -167,609 +395,2064 @@ void G_ReloadCachedModels(void)
 
 // 824AEFA0  G_GetModel  (game_mp/g_utils_mp.cpp:312)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-XModel * G_GetModel(int param_1)
+void G_GetModel(void)
 
 {
   int iVar1;
-  XModel *pXVar2;
   
-  iVar1 = __savegprlr_29(param_1);
+  iVar1 = __savegprlr_29();
   if (iVar1 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x139,
-                    0,"%s");
+    MyAssertHandler(0xffffffff8207e318,0x139,0,0xffffffff82000f98,0xffffffff8207e3d4);
   }
   if (0x3ff < iVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x13a,
-                    0,"%s");
+    MyAssertHandler(0xffffffff8207e318,0x13a,0,0xffffffff82000f98,0xffffffff8207e3c0);
   }
-  pXVar2 = (XModel *)__restgprlr_29(cached_models[iVar1]);
-  return pXVar2;
+  __restgprlr_29(*(undefined4 *)(&DAT_8359f630 + iVar1 * 4));
+  return;
 }
 
 
 // 824AF020  G_GetModelBounds  (game_mp/g_utils_mp.cpp:320)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-bool G_GetModelBounds(int param_1,Bounds *param_2)
+void G_GetModelBounds(undefined8 param_1,ulonglong param_2)
 
 {
-  int iVar1;
-  XModel *pXVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  float afStack_50 [20];
+  undefined8 uVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  undefined1 auStack_50 [80];
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x144,
-                    0,"%s");
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x144,0,0xffffffff82000f98,0xffffffff8207e3e0);
   }
-  pXVar2 = G_GetModel(iVar1);
-  if (pXVar2 == (XModel *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x146,
-                    0,"%s");
+  uVar2 = G_GetModel(uVar1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x146,0,0xffffffff82000f98,0xffffffff82058d74);
   }
-  AxisClear((float (*) [3])afStack_50);
-  iVar1 = XModelGetStaticBounds(pXVar2,(float (*) [3])afStack_50,(Bounds *)uVar4);
-  uVar3 = __restgprlr_28(iVar1 != 0);
-  return (bool)uVar3;
+  AxisClear(auStack_50);
+  lVar3 = XModelGetStaticBounds(uVar2,auStack_50,param_2);
+  __restgprlr_28(lVar3 != 0);
+  return;
 }
 
 
 // 824AF0C0  G_GetModelCollmap  (game_mp/g_utils_mp.cpp:338)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-PhysCollmap * G_GetModelCollmap(int param_1)
+undefined4 G_GetModelCollmap(void)
 
 {
-  XModel *pXVar1;
+  int iVar1;
   
-  pXVar1 = G_GetModel(param_1);
-  if (pXVar1 == (XModel *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x156,
-                    0,"%s");
+  iVar1 = G_GetModel();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x156,0,0xffffffff82000f98,0xffffffff82058d74);
   }
-  return pXVar1->physCollmap;
+  return *(undefined4 *)(iVar1 + 0x11c);
 }
 
 
 // 824AF120  G_XModelBad  (game_mp/g_utils_mp.cpp:349)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int G_XModelBad(int param_1)
+void G_XModelBad(undefined8 param_1)
 
 {
-  XModel *pXVar1;
-  int iVar2;
-  
-  if (param_1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x15e,
-                    0,"%s");
+  if ((int)param_1 == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x15e,0,0xffffffff82000f98,0xffffffff8207e3ec);
   }
-  pXVar1 = G_GetModel(param_1);
-  iVar2 = XModelBad(pXVar1);
-  return iVar2;
+  G_GetModel(param_1);
+  XModelBad();
+  return;
 }
 
 
 // 824AF180  G_ModelName  (game_mp/g_utils_mp.cpp:356)
 
-/* WARNING: Enum "ConfigString": Some values do not have unique names */
-
-uint G_ModelName(int param_1)
+void G_ModelName(ulonglong param_1)
 
 {
-  uint uVar1;
-  
-  if (0x3ff < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x165,
-                    0,"%s");
+  if (0x3ff < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8207e318,0x165,0,0xffffffff82000f98,0xffffffff8207e3f4);
   }
-  if (0xeea < (int)(param_1 + CS_MODELS)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h",
-                    0x285,0,"%s");
+  if (0xeea < (int)(param_1 + 0x404)) {
+    MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
   }
-  uVar1 = SV_GetConfigstringConst(param_1 + CS_MODELS);
-  return uVar1;
+  SV_GetConfigstringConst(param_1 + 0x404);
+  return;
 }
 
 
 // 824AF218  G_EntityCentroidWithBounds  (game_mp/g_utils_mp.cpp:363)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_EntityCentroidWithBounds(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  float *pfVar2;
+  undefined1 auStack_60 [96];
+  
+  iVar1 = __savegprlr_27();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x16e,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x16f,0,0xffffffff82000f98,0xffffffff8207e414);
+  }
+  AnglesToAxis(iVar1 + 0x144,auStack_60);
+  MatrixTransformVector(param_2,auStack_60,param_3);
+  pfVar2 = (float *)param_3;
+  *pfVar2 = *(float *)(iVar1 + 0x138) + *pfVar2;
+  pfVar2[1] = *(float *)(iVar1 + 0x13c) + pfVar2[1];
+  pfVar2[2] = *(float *)(iVar1 + 0x140) + pfVar2[2];
+  __restgprlr_27();
+  return;
+}
+
 
 // 824AF2E0  G_EntityCentroid  (game_mp/g_utils_mp.cpp:377)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_EntityCentroid(longlong param_1,undefined8 param_2)
+
+{
+  G_EntityCentroidWithBounds(param_1,param_1 + 0x104,param_2);
+  return;
+}
+
 
 // 824AF2F0  G_GetEntityBoundsPoint  (game_mp/g_utils_mp.cpp:383)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_GetEntityBoundsPoint(undefined8 param_1,double param_2,double param_3)
+
+{
+  int iVar1;
+  ulonglong in_r7;
+  float *pfVar2;
+  double extraout_f1;
+  double dVar3;
+  float local_80;
+  float local_7c;
+  float local_78;
+  undefined1 auStack_70 [112];
+  
+  iVar1 = __savegprlr_28();
+  dVar3 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x183,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((in_r7 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x184,0,0xffffffff82000f98,0xffffffff82012420);
+  }
+  AnglesToAxis(iVar1 + 0x144,auStack_70);
+  local_80 = (float)((double)*(float *)(iVar1 + 0x110) * dVar3 + (double)*(float *)(iVar1 + 0x104));
+  local_7c = (float)((double)*(float *)(iVar1 + 0x114) * param_2 + (double)*(float *)(iVar1 + 0x108)
+                    );
+  local_78 = (float)((double)*(float *)(iVar1 + 0x118) * param_3 + (double)*(float *)(iVar1 + 0x10c)
+                    );
+  MatrixTransformVector(&local_80,auStack_70,in_r7);
+  pfVar2 = (float *)in_r7;
+  *pfVar2 = *(float *)(iVar1 + 0x138) + *pfVar2;
+  pfVar2[1] = *(float *)(iVar1 + 0x13c) + pfVar2[1];
+  pfVar2[2] = *(float *)(iVar1 + 0x140) + pfVar2[2];
+  __restgprlr_28();
+  return;
+}
+
 
 // 824AF408  G_TagIndex  (game_mp/g_utils_mp.cpp:402)
 
-/* WARNING: Enum "ConfigString": Some values do not have unique names */
-
-int G_TagIndex(char *param_1)
+void G_TagIndex(void)
 
 {
-  char *pcVar1;
-  int iVar2;
+  char *pcVar2;
   uint uVar3;
   uint uVar4;
-  char *pcVar5;
-  ConfigString CVar6;
-  longlong lVar7;
+  undefined8 uVar1;
+  longlong lVar5;
   
-  pcVar1 = (char *)__savegprlr_25(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x193,
-                    0,"%s");
+  pcVar2 = (char *)__savegprlr_25();
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff8207e318,0x193,0,0xffffffff82000f98,0xffffffff82021a74);
   }
-  else if (*pcVar1 != '\0') {
-    uVar3 = SL_FindLowercaseString(pcVar1);
-    lVar7 = 1;
+  else if (*pcVar2 != '\0') {
+    uVar3 = SL_FindLowercaseString(pcVar2);
+    lVar5 = 1;
     do {
-      if (0x216 < (int)lVar7) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                        ,0x285,0,"%s");
+      if (0x216 < (int)lVar5) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
       }
-      uVar4 = SV_GetConfigstringConst((int)lVar7 + CS_TAGS);
-      if (uVar4 == scr_const._) break;
+      uVar4 = SV_GetConfigstringConst(lVar5 + 0xcd4);
+      if (uVar4 == DAT_835a0b80) break;
       if (uVar4 == uVar3) goto LAB_824af5a8;
-      lVar7 = lVar7 + 1;
-    } while ((int)lVar7 < 0x40);
-    if ((int)lVar7 == 0x40) {
-      Com_Printf(0xf,"G_FindConfigstringIndex: overflow...\n");
-      Com_Printf(0xf,"Dumping these %i Config Strings:\n");
-      lVar7 = 1;
+      lVar5 = lVar5 + 1;
+    } while ((int)lVar5 < 0x40);
+    if ((int)lVar5 == 0x40) {
+      Com_Printf(0xf,0xffffffff8207e2b8);
+      Com_Printf(0xf,0xffffffff8207e294,0x40);
+      lVar5 = 1;
       do {
-        CVar6 = (int)lVar7 + CS_TAGS;
-        if (0xeea < (int)CVar6) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                          ,0x285,0,"%s");
+        if (0xeea < (int)(lVar5 + 0xcd4)) {
+          MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
         }
-        uVar3 = SV_GetConfigstringConst(CVar6);
-        SL_ConvertToString(uVar3);
-        Com_Printf(0xf,"%i: %s\n");
-        lVar7 = lVar7 + 1;
-      } while ((int)lVar7 < 0x40);
-      pcVar5 = va("\x15G_FindConfigstringIndex: overflow (%d): \'%s\'");
-      Com_Error(ERR_DROP,pcVar5);
+        SV_GetConfigstringConst(lVar5 + 0xcd4);
+        uVar1 = SL_ConvertToString();
+        Com_Printf(0xf,0xffffffff8207e28c,lVar5,uVar1);
+        lVar5 = lVar5 + 1;
+      } while ((int)lVar5 < 0x40);
+      uVar1 = va(0xffffffff8207e25c,0xcd4,pcVar2);
+      Com_Error(1,uVar1);
     }
-    CVar6 = (int)lVar7 + CS_TAGS;
-    if (0xeea < (int)CVar6) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                      ,0x285,0,"%s");
+    if (0xeea < (int)(lVar5 + 0xcd4)) {
+      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
     }
-    SV_SetConfigstring(CVar6,pcVar1);
+    SV_SetConfigstring(lVar5 + 0xcd4,pcVar2);
 LAB_824af5a8:
-    iVar2 = __restgprlr_25(lVar7);
-    return iVar2;
+    __restgprlr_25(lVar5);
+    return;
   }
-  iVar2 = __restgprlr_25(0);
-  return iVar2;
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 824AF5B8  G_EffectIndex  (game_mp/g_utils_mp.cpp:409)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
+
+void G_EffectIndex(void)
+
+{
+  int iVar1;
+  char *pcVar3;
+  uint uVar4;
+  uint uVar5;
+  undefined8 uVar2;
+  longlong lVar6;
+  
+  pcVar3 = (char *)__savegprlr_24();
+  iVar1 = DAT_83580b1c;
+  if (pcVar3 == (char *)0x0) {
+    MyAssertHandler(0xffffffff8207e318,0x19a,0,0xffffffff82000f98,0xffffffff82021a74);
+  }
+  else if (*pcVar3 != '\0') {
+    uVar4 = SL_FindLowercaseString(pcVar3);
+    lVar6 = 1;
+    do {
+      if (0x546 < (int)lVar6) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      }
+      uVar5 = SV_GetConfigstringConst(lVar6 + 0x9a4);
+      if (uVar5 == DAT_835a0b80) break;
+      if (uVar5 == uVar4) goto LAB_824af78c;
+      lVar6 = lVar6 + 1;
+    } while ((int)lVar6 < 0x100);
+    if (iVar1 != 0) {
+      if ((int)lVar6 == 0x100) {
+        Com_Printf(0xf,0xffffffff8207e2b8);
+        Com_Printf(0xf,0xffffffff8207e294,0x100);
+        lVar6 = 1;
+        do {
+          if (0xeea < (int)(lVar6 + 0x9a4)) {
+            MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+          }
+          SV_GetConfigstringConst(lVar6 + 0x9a4);
+          uVar2 = SL_ConvertToString();
+          Com_Printf(0xf,0xffffffff8207e28c,lVar6,uVar2);
+          lVar6 = lVar6 + 1;
+        } while ((int)lVar6 < 0x100);
+        uVar2 = va(0xffffffff8207e25c,0x9a4,pcVar3);
+        Com_Error(1,uVar2);
+      }
+      if (0xeea < (int)(lVar6 + 0x9a4)) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      }
+      SV_SetConfigstring(lVar6 + 0x9a4,pcVar3);
+LAB_824af78c:
+      __restgprlr_24(lVar6);
+      return;
+    }
+    va(0xffffffff8207e2e0,0xffffffff82067364,pcVar3);
+    Scr_Error();
+  }
+  __restgprlr_24(0);
+  return;
+}
+
 
 // 824AF798  G_ShellShockIndex  (game_mp/g_utils_mp.cpp:416)
 
-/* WARNING: Enum "ConfigString": Some values do not have unique names */
-
-int G_ShellShockIndex(char *param_1)
+void G_ShellShockIndex(void)
 
 {
-  char *pcVar1;
-  int iVar2;
+  char *pcVar2;
   uint uVar3;
   uint uVar4;
-  char *pcVar5;
-  ConfigString CVar6;
-  longlong lVar7;
+  undefined8 uVar1;
+  longlong lVar5;
   
-  pcVar1 = (char *)__savegprlr_25(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x1a1,
-                    0,"%s");
+  pcVar2 = (char *)__savegprlr_25();
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff8207e318,0x1a1,0,0xffffffff82000f98,0xffffffff82021a74);
   }
-  else if (*pcVar1 != '\0') {
-    uVar3 = SL_FindLowercaseString(pcVar1);
-    lVar7 = 1;
+  else if (*pcVar2 != '\0') {
+    uVar3 = SL_FindLowercaseString(pcVar2);
+    lVar5 = 1;
     do {
-      if (0x346 < (int)lVar7) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                        ,0x285,0,"%s");
+      if (0x346 < (int)lVar5) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
       }
-      uVar4 = SV_GetConfigstringConst((int)lVar7 + CS_SHELLSHOCKS);
-      if (uVar4 == scr_const._) break;
+      uVar4 = SV_GetConfigstringConst(lVar5 + 0xba4);
+      if (uVar4 == DAT_835a0b80) break;
       if (uVar4 == uVar3) goto LAB_824af938;
-      lVar7 = lVar7 + 1;
-    } while ((int)lVar7 < 0x10);
-    if ((int)lVar7 == 0x10) {
-      Com_Printf(0xf,"G_FindConfigstringIndex: overflow...\n");
-      Com_Printf(0xf,"Dumping these %i Config Strings:\n");
-      lVar7 = 1;
+      lVar5 = lVar5 + 1;
+    } while ((int)lVar5 < 0x10);
+    if ((int)lVar5 == 0x10) {
+      Com_Printf(0xf,0xffffffff8207e2b8);
+      Com_Printf(0xf,0xffffffff8207e294,0x10);
+      lVar5 = 1;
       do {
-        CVar6 = (int)lVar7 + CS_SHELLSHOCKS;
-        if (0xeea < (int)CVar6) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                          ,0x285,0,"%s");
+        if (0xeea < (int)(lVar5 + 0xba4)) {
+          MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
         }
-        uVar3 = SV_GetConfigstringConst(CVar6);
-        SL_ConvertToString(uVar3);
-        Com_Printf(0xf,"%i: %s\n");
-        lVar7 = lVar7 + 1;
-      } while ((int)lVar7 < 0x10);
-      pcVar5 = va("\x15G_FindConfigstringIndex: overflow (%d): \'%s\'");
-      Com_Error(ERR_DROP,pcVar5);
+        SV_GetConfigstringConst(lVar5 + 0xba4);
+        uVar1 = SL_ConvertToString();
+        Com_Printf(0xf,0xffffffff8207e28c,lVar5,uVar1);
+        lVar5 = lVar5 + 1;
+      } while ((int)lVar5 < 0x10);
+      uVar1 = va(0xffffffff8207e25c,0xba4,pcVar2);
+      Com_Error(1,uVar1);
     }
-    CVar6 = (int)lVar7 + CS_SHELLSHOCKS;
-    if (0xeea < (int)CVar6) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                      ,0x285,0,"%s");
+    if (0xeea < (int)(lVar5 + 0xba4)) {
+      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
     }
-    SV_SetConfigstring(CVar6,pcVar1);
+    SV_SetConfigstring(lVar5 + 0xba4,pcVar2);
 LAB_824af938:
-    iVar2 = __restgprlr_25(lVar7);
-    return iVar2;
+    __restgprlr_25(lVar5);
+    return;
   }
-  iVar2 = __restgprlr_25(0);
-  return iVar2;
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 824AF948  G_SoundAliasIndex  (game_mp/g_utils_mp.cpp:423)
 
-/* WARNING: Enum "ConfigString": Some values do not have unique names */
-
-ushort G_SoundAliasIndex(char *param_1)
+void G_SoundAliasIndex(void)
 
 {
-  char *pcVar1;
-  ushort uVar5;
-  uint uVar2;
+  char *pcVar2;
   uint uVar3;
-  char *pcVar4;
-  uint uVar6;
+  uint uVar4;
+  undefined8 uVar1;
+  ulonglong uVar5;
   
-  pcVar1 = (char *)__savegprlr_25(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x1a9,
-                    0,"%s");
+  pcVar2 = (char *)__savegprlr_25();
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff8207e318,0x1a9,0,0xffffffff82000f98,0xffffffff82021a74);
   }
-  else if (*pcVar1 != '\0') {
-    uVar2 = SL_FindLowercaseString(pcVar1);
-    uVar6 = 1;
+  else if (*pcVar2 != '\0') {
+    uVar3 = SL_FindLowercaseString(pcVar2);
+    uVar5 = 1;
     do {
-      if (0x6c6 < (int)uVar6) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                        ,0x285,0,"%s");
+      if (0x6c6 < (int)uVar5) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
       }
-      uVar3 = SV_GetConfigstringConst(uVar6 + CS_SOUNDALIASES);
-      if (uVar3 == scr_const._) break;
-      if (uVar3 == uVar2) goto LAB_824afaec;
-      uVar6 = uVar6 + 1;
-    } while ((int)uVar6 < 0x180);
-    if (uVar6 == 0x180) {
-      Com_Printf(0xf,"G_FindConfigstringIndex: overflow...\n");
-      Com_Printf(0xf,"Dumping these %i Config Strings:\n");
-      uVar6 = 1;
+      uVar4 = SV_GetConfigstringConst(uVar5 + 0x824);
+      if (uVar4 == DAT_835a0b80) break;
+      if (uVar4 == uVar3) goto LAB_824afaec;
+      uVar5 = uVar5 + 1;
+    } while ((int)uVar5 < 0x180);
+    if ((int)uVar5 == 0x180) {
+      Com_Printf(0xf,0xffffffff8207e2b8);
+      Com_Printf(0xf,0xffffffff8207e294,0x180);
+      uVar5 = 1;
       do {
-        if (0xeea < (int)(uVar6 + CS_SOUNDALIASES)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                          ,0x285,0,"%s");
+        if (0xeea < (int)(uVar5 + 0x824)) {
+          MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
         }
-        uVar2 = SV_GetConfigstringConst(uVar6 + CS_SOUNDALIASES);
-        SL_ConvertToString(uVar2);
-        Com_Printf(0xf,"%i: %s\n");
-        uVar6 = uVar6 + 1;
-      } while ((int)uVar6 < 0x180);
-      pcVar4 = va("\x15G_FindConfigstringIndex: overflow (%d): \'%s\'");
-      Com_Error(ERR_DROP,pcVar4);
+        SV_GetConfigstringConst(uVar5 + 0x824);
+        uVar1 = SL_ConvertToString();
+        Com_Printf(0xf,0xffffffff8207e28c,uVar5,uVar1);
+        uVar5 = uVar5 + 1;
+      } while ((int)uVar5 < 0x180);
+      uVar1 = va(0xffffffff8207e25c,0x824,pcVar2);
+      Com_Error(1,uVar1);
     }
-    if (0xeea < (int)(uVar6 + CS_SOUNDALIASES)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                      ,0x285,0,"%s");
+    if (0xeea < (int)(uVar5 + 0x824)) {
+      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
     }
-    SV_SetConfigstring(uVar6 + CS_SOUNDALIASES,pcVar1);
+    SV_SetConfigstring(uVar5 + 0x824,pcVar2);
 LAB_824afaec:
-    uVar5 = __restgprlr_25(uVar6 & 0xffff);
-    return uVar5;
+    __restgprlr_25(uVar5 & 0xffff);
+    return;
   }
-  uVar5 = __restgprlr_25(0);
-  return uVar5;
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 824AFAF8  G_RumbleIndex  (game_mp/g_utils_mp.cpp:431)
 
-/* WARNING: Enum "ConfigString": Some values do not have unique names */
-
-int G_RumbleIndex(char *param_1)
+void G_RumbleIndex(void)
 
 {
-  char *pcVar1;
-  int iVar2;
+  char *pcVar2;
   uint uVar3;
   uint uVar4;
-  char *pcVar5;
-  ConfigString CVar6;
-  longlong lVar7;
+  undefined8 uVar1;
+  longlong lVar5;
   
-  pcVar1 = (char *)__savegprlr_25(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x1b0,
-                    0,"%s");
+  pcVar2 = (char *)__savegprlr_25();
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff8207e318,0x1b0,0,0xffffffff82000f98,0xffffffff82021a74);
   }
-  else if (*pcVar1 != '\0') {
-    uVar3 = SL_FindLowercaseString(pcVar1);
-    lVar7 = 1;
+  else if (*pcVar2 != '\0') {
+    uVar3 = SL_FindLowercaseString(pcVar2);
+    lVar5 = 1;
     do {
-      if (0xb11 < (int)lVar7) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                        ,0x285,0,"%s");
+      if (0xb11 < (int)lVar5) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
       }
-      uVar4 = SV_GetConfigstringConst((int)lVar7 + CS_RUMBLES);
-      if (uVar4 == scr_const._) break;
+      uVar4 = SV_GetConfigstringConst(lVar5 + 0x3d9);
+      if (uVar4 == DAT_835a0b80) break;
       if (uVar4 == uVar3) goto LAB_824afc98;
-      lVar7 = lVar7 + 1;
-    } while ((int)lVar7 < 0x20);
-    if ((int)lVar7 == 0x20) {
-      Com_Printf(0xf,"G_FindConfigstringIndex: overflow...\n");
-      Com_Printf(0xf,"Dumping these %i Config Strings:\n");
-      lVar7 = 1;
+      lVar5 = lVar5 + 1;
+    } while ((int)lVar5 < 0x20);
+    if ((int)lVar5 == 0x20) {
+      Com_Printf(0xf,0xffffffff8207e2b8);
+      Com_Printf(0xf,0xffffffff8207e294,0x20);
+      lVar5 = 1;
       do {
-        CVar6 = (int)lVar7 + CS_RUMBLES;
-        if (0xeea < (int)CVar6) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                          ,0x285,0,"%s");
+        if (0xeea < (int)(lVar5 + 0x3d9)) {
+          MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
         }
-        uVar3 = SV_GetConfigstringConst(CVar6);
-        SL_ConvertToString(uVar3);
-        Com_Printf(0xf,"%i: %s\n");
-        lVar7 = lVar7 + 1;
-      } while ((int)lVar7 < 0x20);
-      pcVar5 = va("\x15G_FindConfigstringIndex: overflow (%d): \'%s\'");
-      Com_Error(ERR_DROP,pcVar5);
+        SV_GetConfigstringConst(lVar5 + 0x3d9);
+        uVar1 = SL_ConvertToString();
+        Com_Printf(0xf,0xffffffff8207e28c,lVar5,uVar1);
+        lVar5 = lVar5 + 1;
+      } while ((int)lVar5 < 0x20);
+      uVar1 = va(0xffffffff8207e25c,0x3d9,pcVar2);
+      Com_Error(1,uVar1);
     }
-    CVar6 = (int)lVar7 + CS_RUMBLES;
-    if (0xeea < (int)CVar6) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
-                      ,0x285,0,"%s");
+    if (0xeea < (int)(lVar5 + 0x3d9)) {
+      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
     }
-    SV_SetConfigstring(CVar6,pcVar1);
+    SV_SetConfigstring(lVar5 + 0x3d9,pcVar2);
 LAB_824afc98:
-    iVar2 = __restgprlr_25(lVar7);
-    return iVar2;
+    __restgprlr_25(lVar5);
+    return;
   }
-  iVar2 = __restgprlr_25(0);
-  return iVar2;
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 824AFCA8  G_UpdateTags  (game_mp/g_utils_mp.cpp:441)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_UpdateTags(int param_1,undefined8 param_2)
+
+{
+  if (*(int *)(param_1 + 0x160) != 0) {
+    Vehicle_InitBoneTags();
+  }
+  G_UpdateTagInfoOfChildren(param_1,param_2);
+  return;
+}
+
 
 // 824AFCF8  G_ClientDObjUpdate  (game_mp/g_utils_mp.cpp:450)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_ClientDObjUpdate(void)
+
+{
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  ulonglong uVar4;
+  
+  iVar2 = __savegprlr_29();
+  iVar3 = Com_GetServerDObjForEnt();
+  if (iVar3 != 0) {
+    MyAssertHandler(0xffffffff8207e318,0x1c6,0,0xffffffff82000f98,0xffffffff8207e420);
+  }
+  Profile_Begin(0x108);
+  G_UpdateClientInfo(iVar2);
+  Profile_EndInternal(0);
+  uVar4 = (ulonglong)*(uint *)(iVar2 + 0x90);
+  if (0x11 < uVar4) {
+    MyAssertHandler(0xffffffff8207e318,0x1cd,0,0xffffffff82014c1c,uVar4,0x12);
+  }
+  Profile_Begin(0x113);
+  BG_UpdatePlayerDObj(0xffffffffffffffff,0,iVar2,uVar4 * 0x590 + -0x7cac6570,
+                      *(undefined4 *)(iVar2 + 0x17c));
+  Profile_EndInternal(0);
+  uVar1 = SV_DObjExists(iVar2);
+  if (*(int *)(iVar2 + 0x160) != 0) {
+    Vehicle_InitBoneTags(*(int *)(iVar2 + 0x160));
+  }
+  G_UpdateTagInfoOfChildren(iVar2,uVar1);
+  __restgprlr_29();
+  return;
+}
+
 
 // 824AFDF0  G_PlayerCorpseDObjUpdate  (game_mp/g_utils_mp.cpp:474)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_PlayerCorpseDObjUpdate(void)
+
+{
+  int iVar3;
+  int iVar4;
+  longlong lVar1;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_29();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x1de,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  iVar4 = Com_GetServerDObjForEnt(iVar3);
+  if (iVar4 != 0) {
+    MyAssertHandler(0xffffffff8207e318,0x1df,0,0xffffffff82000f98,0xffffffff8207e420);
+  }
+  lVar1 = G_GetPlayerCorpseIndex(iVar3);
+  Profile_Begin(0x113);
+  BG_UpdatePlayerDObj(0xffffffffffffffff,0,iVar3,lVar1 * 0x5a0 + -0x7ca656ec,
+                      *(undefined4 *)(iVar3 + 0x17c));
+  Profile_EndInternal(0);
+  uVar2 = SV_DObjExists(iVar3);
+  if (*(int *)(iVar3 + 0x160) != 0) {
+    Vehicle_InitBoneTags(*(int *)(iVar3 + 0x160));
+  }
+  G_UpdateTagInfoOfChildren(iVar3,uVar2);
+  __restgprlr_29();
+  return;
+}
+
 
 // 824B1A60  G_DObjUpdate_Internal  (game_mp/g_utils_mp.cpp:494)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+/* WARNING: Removing unreachable block (ram,0x824b1b9c) */
+/* WARNING: Removing unreachable block (ram,0x824b1bbc) */
+/* WARNING: Removing unreachable block (ram,0x824b1bc8) */
+
+void G_DObjUpdate_Internal(void)
+
+{
+  bool bVar1;
+  ushort uVar2;
+  short sVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  uint uVar8;
+  undefined4 *puVar9;
+  ulonglong uVar10;
+  undefined1 *puVar11;
+  uint local_160;
+  undefined2 local_15c;
+  undefined1 local_15a [346];
+  
+  puVar4 = (undefined4 *)__savegprlr_21();
+  Com_SafeServerDObjFree(*puVar4);
+  iVar5 = Com_GetServerDObjForEnt(puVar4);
+  if (iVar5 != 0) {
+    MyAssertHandler(0xffffffff8207e318,0x1f8,0,0xffffffff82000f98,0xffffffff8207e420);
+  }
+  if (puVar4[0x56] != 0) {
+    G_ClientDObjUpdate(puVar4);
+    __restgprlr_21();
+    return;
+  }
+  if (puVar4[1] == 2) {
+    G_PlayerCorpseDObjUpdate(puVar4);
+    __restgprlr_21();
+    return;
+  }
+  uVar2 = *(ushort *)(puVar4 + 0x5a);
+  if (uVar2 == 0) {
+    G_UpdateTags(puVar4,0);
+    __restgprlr_21();
+    return;
+  }
+  local_160 = G_GetModel(uVar2);
+  if (local_160 == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x212,0,0xffffffff82000f98,0xffffffff8205ce78);
+  }
+  iVar5 = puVar4[1];
+  local_15c = 0;
+  local_15a[0] = 0;
+  if (((iVar5 == 0) || (iVar5 == 0xd)) || (iVar5 == 0xb)) {
+    puVar4[0x23] = (uint)uVar2;
+  }
+  else if (iVar5 == 6) {
+    puVar4[0x16] = (uint)uVar2;
+  }
+  else if ((iVar5 == 0xe) || (iVar5 == 0xc)) {
+    *(ushort *)(puVar4 + 0x37) = uVar2;
+  }
+  uVar10 = 1;
+  puVar11 = local_15a;
+  puVar9 = puVar4 + 0x90;
+  uVar7 = 1;
+  do {
+    sVar3 = *(short *)(puVar9 + -9);
+    uVar8 = uVar7;
+    if (sVar3 == 0) break;
+    if (0x1f < (int)uVar7) {
+      MyAssertHandler(0xffffffff8207e318,0x233,0,0xffffffff82000f98,0xffffffff8201dd5c);
+    }
+    iVar5 = G_GetModel(sVar3);
+    *(int *)(puVar11 + 2) = iVar5;
+    if (iVar5 == 0) {
+      MyAssertHandler(0xffffffff8207e318,0x235,0,0xffffffff82000f98,0xffffffff8207e654);
+    }
+    if (*(short *)((int)puVar9 + 2) == 0) {
+      MyAssertHandler(0xffffffff8207e318,0x236,0,0xffffffff82000f98,0xffffffff8206bd88);
+    }
+    uVar8 = uVar7 + 1;
+    puVar9 = (undefined4 *)((int)puVar9 + 2);
+    uVar6 = (uint)puVar4[0x5f] & uVar10;
+    uVar10 = (uVar10 & 0x7fffffff) << 1 | uVar10 >> 0x1f;
+    *(undefined2 *)(puVar11 + 6) = *(undefined2 *)puVar9;
+    bVar1 = (int)uVar7 < 0x13;
+    puVar11 = puVar11 + 8;
+    *puVar11 = uVar6 != 0;
+    uVar7 = uVar8;
+  } while (bVar1);
+  Com_ServerDObjCreate(&local_160,uVar8 & 0xffff,0,*puVar4);
+  if (puVar4[0x58] != 0) {
+    Vehicle_InitBoneTags();
+  }
+  G_UpdateTagInfoOfChildren(puVar4,1);
+  __restgprlr_21();
+  return;
+}
+
 
 // 824B1CE0  G_DObjUpdate  (game_mp/g_utils_mp.cpp:579)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
-// 824B1D50  G_DObjLoad  (game_mp/g_utils_mp.cpp:591)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+void G_DObjUpdate(int param_1,int param_2)
+
+{
+  undefined4 *puVar1;
+  longlong lVar2;
+  
+  puVar1 = (undefined4 *)(param_1 + 0xe0);
+  lVar2 = 6;
+  do {
+    puVar1 = puVar1 + 1;
+    *puVar1 = 0;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  G_DObjUpdate_Internal(param_1);
+  if ((param_2 != 0) && (*(int *)(param_1 + 0x158) == 0)) {
+    SV_LinkEntity(param_1);
+  }
+  return;
+}
+
 
 // 824AFED8  G_SetModel  (game_mp/g_utils_mp.cpp:605)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
-// 824AFF58  G_ReplaceModel_FastFile  (game_mp/g_utils_mp.cpp:633)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+void G_SetModel(int param_1,char *param_2)
+
+{
+  uint uVar1;
+  
+  if (*param_2 == '\0') {
+    *(undefined2 *)(param_1 + 0x168) = 0;
+  }
+  else {
+    uVar1 = G_ModelIndex(param_2);
+    if (uVar1 != (uVar1 & 0xffff)) {
+      MyAssertHandler(0xffffffff8207e318,0x266,0,0xffffffff82000f98,0xffffffff8206d60c);
+    }
+    *(short *)(param_1 + 0x168) = (short)uVar1;
+  }
+  return;
+}
+
 
 // 824AFF60  G_OverrideModel  (game_mp/g_utils_mp.cpp:645)
 
-void G_OverrideModel(int param_1,char *param_2)
+void G_OverrideModel(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  char *pcVar3;
+  undefined8 uVar1;
+  char *pcVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x288,
-                    0,"%s");
+  uVar1 = __savegprlr_28();
+  if ((int)uVar1 == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x288,0,0xffffffff82000f98,0xffffffff8207e458);
   }
-  uVar2 = G_ModelName(iVar1);
-  pcVar3 = SL_ConvertToString(uVar2);
-  if (*pcVar3 == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x28a,
-                    0,"%s");
+  G_ModelName(uVar1);
+  pcVar2 = (char *)SL_ConvertToString();
+  if (*pcVar2 == '\0') {
+    MyAssertHandler(0xffffffff8207e318,0x28a,0,0xffffffff82000f98,0xffffffff8207e448);
   }
-  DB_ReplaceModel(pcVar3,param_2);
+  DB_ReplaceModel(pcVar2,param_2);
   __restgprlr_28();
   return;
 }
 
 
 // 824AFFF8  G_EntityStateSetPartBits  (game_mp/g_utils_mp.cpp:667)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_EntityStateSetPartBits(int param_1,int param_2)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x29c,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  puVar2 = (undefined4 *)(param_2 + -4);
+  puVar1 = (undefined4 *)(param_1 + 0xe0);
+  lVar3 = 6;
+  do {
+    puVar2 = puVar2 + 1;
+    puVar1 = puVar1 + 1;
+    *puVar1 = *puVar2;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  if (*(int *)(param_1 + 0x158) != 0) {
+    puVar2 = (undefined4 *)(param_1 + 0xe0);
+    puVar1 = (undefined4 *)(*(int *)(param_1 + 0x158) + 0x32c0);
+    lVar3 = 6;
+    do {
+      puVar2 = puVar2 + 1;
+      puVar1 = puVar1 + 1;
+      *puVar1 = *puVar2;
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
+  }
+  return;
+}
+
 
 // 824B2608  G_EntAttach  (game_mp/g_utils_mp.cpp:687)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_EntAttach(undefined8 param_1,undefined8 param_2,ulonglong param_3,int param_4)
+
+{
+  char cVar1;
+  short sVar2;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  ulonglong uVar3;
+  short *psVar7;
+  undefined4 *puVar8;
+  uint uVar9;
+  longlong lVar10;
+  undefined1 auStack_60 [96];
+  
+  iVar4 = __savegprlr_24();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x2b5,0,0xffffffff82000f98,0xffffffff8207e764);
+  }
+  iVar5 = G_EntDetach(iVar4,param_2,param_3);
+  if (iVar5 != 0) {
+    MyAssertHandler(0xffffffff8207e318,0x2b8,0,0xffffffff82000f98,0xffffffff8207e888);
+  }
+  uVar9 = 0;
+  psVar7 = (short *)(iVar4 + 0x21c);
+  do {
+    if (*psVar7 == 0) {
+      uVar6 = G_ModelIndex(param_2);
+      if (uVar6 != 0) {
+        if (uVar6 != (uVar6 & 0xffff)) {
+          MyAssertHandler(0xffffffff8207e318,0x2c3,0,0xffffffff82000f98,0xffffffff8206d60c);
+        }
+        iVar5 = (uVar9 + 0x121) * 2;
+        sVar2 = *(short *)(iVar5 + iVar4);
+        *(short *)((uVar9 + 0x10e) * 2 + iVar4) = (short)uVar6;
+        if (sVar2 != 0) {
+          MyAssertHandler(0xffffffff8207e318,0x2c5,0,0xffffffff82000f98,0xffffffff8207e870);
+        }
+        Scr_SetString(iVar5 + iVar4,param_3);
+        uVar9 = 1 << (uVar9 & 0x3f);
+        if ((*(uint *)(iVar4 + 0x17c) & uVar9) != 0) {
+          MyAssertHandler(0xffffffff8207e318,0x2c7,0,0xffffffff82000f98,0xffffffff8207e844);
+        }
+        if (param_4 != 0) {
+          *(uint *)(iVar4 + 0x17c) = *(uint *)(iVar4 + 0x17c) | uVar9;
+        }
+        uVar3 = Com_GetServerDObjForEnt(iVar4);
+        if ((uVar3 & 0xffffffff) != 0) {
+          DObjGetHidePartBits(uVar3,auStack_60);
+        }
+        cVar1 = *(char *)(iVar4 + 0x100);
+        puVar8 = (undefined4 *)(iVar4 + 0xe0);
+        lVar10 = 6;
+        do {
+          puVar8 = puVar8 + 1;
+          *puVar8 = 0;
+          lVar10 = lVar10 + -1;
+        } while (lVar10 != 0);
+        G_DObjUpdate_Internal(iVar4);
+        if ((cVar1 != '\0') && (*(int *)(iVar4 + 0x158) == 0)) {
+          SV_LinkEntity(iVar4);
+        }
+        if (((uVar3 & 0xffffffff) != 0) &&
+           (uVar3 = Com_GetServerDObjForEnt(iVar4), (uVar3 & 0xffffffff) != 0)) {
+          DObjSetHidePartBits(uVar3,auStack_60);
+        }
+        __restgprlr_24(1);
+        return;
+      }
+      break;
+    }
+    uVar9 = uVar9 + 1;
+    psVar7 = psVar7 + 1;
+  } while ((int)uVar9 < 0x13);
+  __restgprlr_24(0);
+  return;
+}
+
 
 // 824B1D58  G_EntDetach  (game_mp/g_utils_mp.cpp:741)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_EntDetach(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+
+{
+  char cVar1;
+  undefined2 uVar2;
+  int iVar3;
+  undefined2 *puVar4;
+  longlong lVar5;
+  uint uVar9;
+  uint uVar10;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  int iVar11;
+  ulonglong uVar8;
+  ulonglong uVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  longlong lVar16;
+  ulonglong uVar17;
+  uint auStack_60 [24];
+  
+  lVar5 = __savegprlr_24();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x2f3,0,0xffffffff82000f98,0xffffffff8207e764);
+  }
+  uVar9 = SL_FindLowercaseString(param_2);
+  if ((uVar9 != 0) && (uVar9 != DAT_835a0b80)) {
+    lVar15 = lVar5 + 0x21c;
+    uVar17 = 0;
+    do {
+      if ((ulonglong)(ushort)((undefined2 *)lVar15)[0x13] == (param_3 & 0xffffffff)) {
+        uVar10 = G_ModelName(*(undefined2 *)lVar15);
+        if (uVar10 == uVar9) {
+          lVar15 = (uVar17 + 0x10e & 0x7fffffff) * 2;
+          lVar16 = lVar15 + lVar5;
+          iVar3 = (int)lVar5;
+          if (*(short *)((int)lVar15 + iVar3) == 0) {
+            MyAssertHandler(0xffffffff8207e318,0x301,0,0xffffffff82000f98,0xffffffff8207e748);
+          }
+          uVar2 = *(undefined2 *)lVar16;
+          *(undefined2 *)lVar16 = 0;
+          lVar15 = uVar17 + 1;
+          Scr_SetString((uVar17 + 0x121 & 0x7fffffff) * 2 + lVar5,0);
+          uVar8 = uVar17 & 0x1f;
+          if ((int)uVar17 < 0x12) {
+            lVar13 = 0x12 - uVar17;
+            uVar17 = lVar13 + uVar17;
+            uVar8 = (0x100000001 << uVar8 | 0x100000001U >> 0x40 - uVar8) & 0xffffffff;
+            do {
+              puVar4 = (undefined2 *)lVar16;
+              uVar12 = (uVar8 & 0x7fffffff) << 1 | uVar8 >> 0x1f;
+              puVar4[0x13] = puVar4[0x14];
+              *puVar4 = puVar4[1];
+              uVar9 = *(uint *)(iVar3 + 0x17c);
+              if ((uVar9 & uVar12) == 0) {
+                uVar9 = uVar9 & ~(uint)uVar8;
+              }
+              else {
+                uVar9 = uVar9 | (uint)uVar8;
+              }
+              *(uint *)(iVar3 + 0x17c) = uVar9;
+              lVar16 = lVar16 + 2;
+              lVar13 = lVar13 + -1;
+              uVar8 = uVar12;
+            } while (lVar13 != 0);
+          }
+          *(undefined2 *)((int)((uVar17 + 0x10e & 0xffffffff) << 1) + iVar3) = 0;
+          *(undefined2 *)((int)((uVar17 + 0x121 & 0xffffffff) << 1) + iVar3) = 0;
+          *(uint *)(iVar3 + 0x17c) = *(uint *)(iVar3 + 0x17c) & ~(1 << ((uint)uVar17 & 0x3f));
+          uVar17 = Com_GetServerDObjForEnt(lVar5);
+          if ((uVar17 & 0xffffffff) != 0) {
+            G_GetModel(uVar2);
+            lVar16 = XModelNumBones();
+            G_ModelName(uVar2);
+            uVar6 = SL_ConvertToString();
+            DObjGetModel(uVar17,lVar15);
+            uVar7 = XModelGetName();
+            iVar11 = I_stricmp(uVar7,uVar6);
+            if (iVar11 != 0) {
+              MyAssertHandler(0xffffffff8207e318,0x31c,0,0xffffffff82000f98,0xffffffff8207e6c0);
+            }
+            uVar8 = DObjGetModelRootBoneIndex(uVar17,lVar15);
+            DObjGetHidePartBits(uVar17,auStack_60);
+            uVar12 = DObjNumBones(uVar17);
+            uVar8 = uVar8 & 0xff;
+            uVar14 = uVar8 + lVar16;
+            if ((uVar14 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+              lVar15 = uVar12 - uVar14;
+              do {
+                uVar9 = *(uint *)((int)&DAT_82992400 + ((uint)((uVar8 & 0xffffffff) << 2) & 0x7c));
+                iVar11 = (int)uVar8 >> 5;
+                uVar10 = uVar9 | auStack_60[iVar11];
+                if ((*(uint *)((int)&DAT_82992400 + ((uint)((uVar14 & 0xffffffff) << 2) & 0x7c)) &
+                    auStack_60[(int)uVar14 >> 5]) == 0) {
+                  uVar10 = auStack_60[iVar11] & ~uVar9;
+                }
+                uVar14 = uVar14 + 1;
+                auStack_60[iVar11] = uVar10;
+                uVar8 = uVar8 + 1;
+                lVar15 = lVar15 + -1;
+              } while (lVar15 != 0);
+            }
+            if ((uVar8 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+              lVar15 = uVar12 - uVar8;
+              do {
+                uVar12 = uVar8 & 0xffffffff;
+                iVar11 = (int)uVar8 >> 5;
+                uVar8 = uVar8 + 1;
+                auStack_60[iVar11] =
+                     auStack_60[iVar11] &
+                     ~*(uint *)((int)&DAT_82992400 + ((uint)(uVar12 << 2) & 0x7c));
+                lVar15 = lVar15 + -1;
+              } while (lVar15 != 0);
+            }
+          }
+          cVar1 = *(char *)(iVar3 + 0x100);
+          lVar15 = lVar5 + 0xe0;
+          lVar16 = 6;
+          do {
+            lVar15 = lVar15 + 4;
+            *(undefined4 *)lVar15 = 0;
+            lVar16 = lVar16 + -1;
+          } while (lVar16 != 0);
+          G_DObjUpdate_Internal(lVar5);
+          if ((cVar1 != '\0') && (*(int *)(iVar3 + 0x158) == 0)) {
+            SV_LinkEntity(lVar5);
+          }
+          if (((uVar17 & 0xffffffff) != 0) &&
+             (uVar17 = Com_GetServerDObjForEnt(lVar5), (uVar17 & 0xffffffff) != 0)) {
+            DObjSetHidePartBits(uVar17,auStack_60);
+            G_EntityStateSetPartBits(lVar5,auStack_60);
+          }
+          __restgprlr_24(1);
+          return;
+        }
+      }
+      uVar17 = uVar17 + 1;
+      lVar15 = lVar15 + 2;
+    } while ((int)uVar17 < 0x13);
+  }
+  __restgprlr_24(0);
+  return;
+}
+
 
 // 824B20B8  G_EntChangeAttachTag  (game_mp/g_utils_mp.cpp:832)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_EntChangeAttachTag(undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  undefined2 *puVar5;
+  
+  iVar1 = __savegprlr_24();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x344,0,0xffffffff82000f98,0xffffffff8207e778);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x345,0,0xffffffff82000f98,0xffffffff8207e76c);
+  }
+  uVar2 = SL_FindLowercaseString(param_2);
+  if ((uVar2 != 0) && (uVar2 != DAT_835a0b80)) {
+    iVar4 = 0;
+    puVar5 = (undefined2 *)(iVar1 + 0x21c);
+    do {
+      if (((ulonglong)(ushort)puVar5[0x13] == (param_3 & 0xffffffff)) &&
+         (uVar3 = G_ModelName(*puVar5), uVar3 == uVar2)) {
+        if (*(short *)((iVar4 + 0x10e) * 2 + iVar1) == 0) {
+          MyAssertHandler(0xffffffff8207e318,0x353,0,0xffffffff82000f98,0xffffffff8207e748);
+        }
+        Scr_SetString((iVar4 + 0x121) * 2 + iVar1,param_4);
+        G_DObjUpdate(iVar1,*(undefined1 *)(iVar1 + 0x100));
+        __restgprlr_24(1);
+        return;
+      }
+      iVar4 = iVar4 + 1;
+      puVar5 = puVar5 + 1;
+    } while (iVar4 < 0x13);
+  }
+  __restgprlr_24(0);
+  return;
+}
+
 
 // 824B21F0  G_EntDetachAll  (game_mp/g_utils_mp.cpp:869)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_EntDetachAll(void)
+
+{
+  char cVar1;
+  int iVar5;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  undefined4 *puVar6;
+  longlong lVar7;
+  int iVar8;
+  uint auStack_40 [16];
+  
+  iVar5 = __savegprlr_28();
+  iVar8 = iVar5 + 0x242;
+  lVar7 = 0x13;
+  do {
+    *(undefined2 *)(iVar8 + -0x26) = 0;
+    Scr_SetString(iVar8,0);
+    lVar7 = lVar7 + -1;
+    iVar8 = iVar8 + 2;
+  } while (lVar7 != 0);
+  *(undefined4 *)(iVar5 + 0x17c) = 0;
+  uVar2 = Com_GetServerDObjForEnt(iVar5);
+  if ((uVar2 & 0xffffffff) != 0) {
+    DObjGetHidePartBits(uVar2,auStack_40);
+    uVar3 = DObjNumBones(uVar2);
+    DObjGetModel(uVar2,0);
+    uVar4 = XModelNumBones();
+    if ((uVar4 & 0xffffffff) < (uVar3 & 0xffffffff)) {
+      lVar7 = uVar3 - uVar4;
+      do {
+        uVar3 = uVar4 & 0xffffffff;
+        iVar8 = (int)uVar4 >> 5;
+        uVar4 = uVar4 + 1;
+        auStack_40[iVar8] =
+             auStack_40[iVar8] & ~*(uint *)((int)&DAT_82992400 + ((uint)(uVar3 << 2) & 0x7c));
+        lVar7 = lVar7 + -1;
+      } while (lVar7 != 0);
+    }
+  }
+  cVar1 = *(char *)(iVar5 + 0x100);
+  puVar6 = (undefined4 *)(iVar5 + 0xe0);
+  lVar7 = 6;
+  do {
+    puVar6 = puVar6 + 1;
+    *puVar6 = 0;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  G_DObjUpdate_Internal(iVar5);
+  if ((cVar1 != '\0') && (*(int *)(iVar5 + 0x158) == 0)) {
+    SV_LinkEntity(iVar5);
+  }
+  if (((uVar2 & 0xffffffff) != 0) &&
+     (uVar2 = Com_GetServerDObjForEnt(iVar5), (uVar2 & 0xffffffff) != 0)) {
+    DObjSetHidePartBits(uVar2,auStack_40);
+    G_EntityStateSetPartBits(iVar5,auStack_40);
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 824B00A8  G_SafeDObjFree  (game_mp/g_utils_mp.cpp:912)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_SafeDObjFree(undefined4 *param_1)
+
+{
+  Com_SafeServerDObjFree(*param_1);
+  return;
+}
+
 
 // 824B00B0  G_DObjUpdateServerTime  (game_mp/g_utils_mp.cpp:918)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_DObjUpdateServerTime(undefined8 param_1,undefined8 param_2)
+
+{
+  SV_DObjUpdateServerTime((double)((float)(longlong)DAT_83580fb4 * 0.001),param_1,param_2,param_2);
+  return;
+}
+
 
 // 824B0100  G_DObjCalcPose  (game_mp/g_utils_mp.cpp:924)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_DObjCalcPose(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar2;
+  ulonglong uVar1;
+  int iVar3;
+  
+  iVar2 = __savegprlr_27();
+  uVar1 = Com_GetServerDObjForEnt();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x3a1,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  iVar3 = DObjNumBones(uVar1);
+  if (iVar3 < 1) {
+    MyAssertHandler(0xffffffff8207e318,0x3a2,0,0xffffffff82000f98,0xffffffff8202c4cc);
+  }
+  iVar3 = SV_DObjCreateSkelForBones(uVar1,param_2);
+  if (iVar3 == 0) {
+    if (*(code **)(&DAT_8296985c + (uint)*(byte *)(iVar2 + 0x16d) * 0x28) != (code *)0x0) {
+      (**(code **)(&DAT_8296985c + (uint)*(byte *)(iVar2 + 0x16d) * 0x28))(iVar2,param_2);
+    }
+    DObjCalcSkel(uVar1,param_2);
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 824B01E0  G_DObjCalcBone  (game_mp/g_utils_mp.cpp:943)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_DObjCalcBone(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar2;
+  ulonglong uVar1;
+  int iVar3;
+  undefined1 auStack_50 [80];
+  
+  iVar2 = __savegprlr_27();
+  uVar1 = Com_GetServerDObjForEnt();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x3b5,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  iVar3 = DObjNumBones(uVar1);
+  if (iVar3 < 1) {
+    MyAssertHandler(0xffffffff8207e318,0x3b6,0,0xffffffff82000f98,0xffffffff8202c4cc);
+  }
+  iVar3 = SV_DObjCreateSkelForBone(uVar1,param_2);
+  if (iVar3 == 0) {
+    DObjGetHierarchyBits(uVar1,param_2,auStack_50);
+    if (*(code **)(&DAT_8296985c + (uint)*(byte *)(iVar2 + 0x16d) * 0x28) != (code *)0x0) {
+      (**(code **)(&DAT_8296985c + (uint)*(byte *)(iVar2 + 0x16d) * 0x28))(iVar2,auStack_50);
+    }
+    DObjCalcSkel(uVar1,auStack_50);
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 824B02D0  G_DObjGetLocalTagMatrix  (game_mp/g_utils_mp.cpp:963)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+longlong G_DObjGetLocalTagMatrix(undefined8 param_1)
+
+{
+  ulonglong uVar1;
+  longlong lVar2;
+  
+  uVar1 = SV_DObjGetBoneIndex();
+  if ((int)uVar1 < 0) {
+    lVar2 = 0;
+  }
+  else {
+    Profile_Begin(0x135);
+    G_DObjCalcBone(param_1,uVar1);
+    Profile_EndInternal(0);
+    lVar2 = SV_DObjGetMatrixArray(param_1);
+    lVar2 = lVar2 + (uVar1 & 0x7ffffff) * 0x20;
+  }
+  return lVar2;
+}
+
 
 // 824B0348  G_DObjGetWorldTagMatrix  (game_mp/g_utils_mp.cpp:981)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_DObjGetWorldTagMatrix(undefined8 param_1,undefined8 param_2,longlong param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  int iVar9;
+  float *pfVar10;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_94;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_84;
+  float local_80;
+  undefined1 auStack_70 [36];
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  
+  iVar9 = __savegprlr_26();
+  pfVar10 = (float *)G_DObjGetLocalTagMatrix();
+  if (pfVar10 == (float *)0x0) {
+    __restgprlr_26();
+    return;
+  }
+  AnglesToAxis(iVar9 + 0x144,auStack_70);
+  local_4c = *(undefined4 *)(iVar9 + 0x138);
+  local_48 = *(undefined4 *)(iVar9 + 0x13c);
+  local_44 = *(undefined4 *)(iVar9 + 0x140);
+  if (((uint)*pfVar10 & 0x7f800000) != 0x7f800000) {
+    if (((uint)pfVar10[1] & 0x7f800000) != 0x7f800000) {
+      if (((uint)pfVar10[2] & 0x7f800000) != 0x7f800000) {
+        if (((uint)pfVar10[3] & 0x7f800000) != 0x7f800000) goto LAB_824b0428;
+      }
+    }
+  }
+  MyAssertHandler(0xffffffff82015a60,0x205,0,0xffffffff82000f98,0xffffffff820159f0);
+LAB_824b0428:
+  if (((uint)pfVar10[7] & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82015a60,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
+  }
+  fVar1 = pfVar10[2];
+  fVar2 = pfVar10[7];
+  fVar3 = pfVar10[1];
+  fVar7 = fVar3 * fVar2;
+  fVar8 = *pfVar10 * fVar2;
+  fVar4 = pfVar10[3];
+  fVar5 = fVar1 * fVar1 * fVar2;
+  fVar6 = *pfVar10 * fVar8;
+  local_94 = fVar4 * fVar1 * fVar2;
+  local_8c = fVar1 * fVar7 + fVar4 * fVar8;
+  local_98 = fVar1 * fVar8 - fVar4 * fVar7;
+  local_9c = local_94 + fVar3 * fVar8;
+  local_94 = fVar3 * fVar8 - local_94;
+  local_88 = fVar4 * fVar7 + fVar1 * fVar8;
+  local_a0 = 1.0 - (fVar5 + fVar3 * fVar7);
+  local_90 = 1.0 - (fVar5 + fVar6);
+  local_80 = 1.0 - (fVar3 * fVar7 + fVar6);
+  local_84 = fVar1 * fVar7 - fVar4 * fVar8;
+  MatrixMultiply(&local_a0,auStack_70,param_3);
+  MatrixTransformVector43(pfVar10 + 4,auStack_70,param_3 + 0x24);
+  __restgprlr_26(1);
+  return;
+}
+
 
 // 824B0528  G_DObjGetWorldTagPos  (game_mp/g_utils_mp.cpp:1001)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_DObjGetWorldTagPos(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  int iVar2;
+  ulonglong uVar1;
+  undefined1 auStack_50 [36];
+  undefined4 local_2c;
+  undefined4 local_28;
+  undefined4 local_24;
+  
+  iVar2 = __savegprlr_29();
+  uVar1 = G_DObjGetLocalTagMatrix();
+  if ((uVar1 & 0xffffffff) == 0) {
+    __restgprlr_29();
+    return;
+  }
+  AnglesToAxis(iVar2 + 0x144,auStack_50);
+  local_2c = *(undefined4 *)(iVar2 + 0x138);
+  local_28 = *(undefined4 *)(iVar2 + 0x13c);
+  local_24 = *(undefined4 *)(iVar2 + 0x140);
+  MatrixTransformVector43(uVar1 + 0x10,auStack_50,param_3);
+  __restgprlr_29(1);
+  return;
+}
+
 
 // 824B0598  G_DObjGetWorldTagPos_CheckTagExists  (game_mp/g_utils_mp.cpp:1018)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_DObjGetWorldTagPos_CheckTagExists(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar5;
+  ulonglong uVar2;
+  int iVar6;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined1 auStack_60 [36];
+  undefined4 local_3c;
+  undefined4 local_38;
+  undefined4 local_34;
+  
+  puVar5 = (undefined4 *)__savegprlr_28();
+  uVar2 = G_DObjGetLocalTagMatrix();
+  if ((uVar2 & 0xffffffff) != 0) {
+    AnglesToAxis(puVar5 + 0x51,auStack_60);
+    local_3c = puVar5[0x4e];
+    local_38 = puVar5[0x4f];
+    local_34 = puVar5[0x50];
+    MatrixTransformVector43(uVar2 + 0x10,auStack_60,param_3);
+    __restgprlr_28();
+    return;
+  }
+  uVar2 = Com_GetServerDObjForEnt(puVar5);
+  if ((((uVar2 & 0xffffffff) != 0) && (iVar6 = DObjGetNumModels(), iVar6 != 0)) &&
+     (iVar6 = DObjGetName(uVar2), iVar6 != 0)) {
+    uVar3 = DObjGetName(uVar2);
+    uVar1 = *puVar5;
+    uVar4 = SL_ConvertToString(param_2);
+    Com_Error(1,0xffffffff8207e488,uVar4,uVar1,uVar3);
+    __restgprlr_28();
+    return;
+  }
+  uVar1 = *puVar5;
+  uVar3 = SL_ConvertToString(param_2);
+  Com_Error(1,0xffffffff8207e464,uVar3,uVar1);
+  __restgprlr_28();
+  return;
+}
+
 
 // 824B0698  G_DObjGetLocalBoneIndexMatrix  (game_mp/g_utils_mp.cpp:1035)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+longlong G_DObjGetLocalBoneIndexMatrix(undefined8 param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  
+  Profile_Begin(0x135);
+  G_DObjCalcBone(param_1,param_2);
+  Profile_EndInternal(0);
+  lVar1 = SV_DObjGetMatrixArray(param_1);
+  return lVar1 + (param_2 & 0x7ffffff) * 0x20;
+}
+
 
 // 824B06F8  G_DObjGetWorldBoneIndexPos  (game_mp/g_utils_mp.cpp:1049)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_DObjGetWorldBoneIndexPos(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  int iVar2;
+  longlong lVar1;
+  undefined1 auStack_60 [36];
+  undefined4 local_3c;
+  undefined4 local_38;
+  undefined4 local_34;
+  
+  iVar2 = __savegprlr_28();
+  Profile_Begin(0x135);
+  G_DObjCalcBone(iVar2,param_2);
+  Profile_EndInternal(0);
+  lVar1 = SV_DObjGetMatrixArray(iVar2);
+  AnglesToAxis(iVar2 + 0x144,auStack_60);
+  local_3c = *(undefined4 *)(iVar2 + 0x138);
+  local_38 = *(undefined4 *)(iVar2 + 0x13c);
+  local_34 = *(undefined4 *)(iVar2 + 0x140);
+  MatrixTransformVector43((param_2 & 0x7ffffff) * 0x20 + lVar1 + 0x10,auStack_60,param_3);
+  __restgprlr_28();
+  return;
+}
+
 
 // 824B0780  G_DObjGetWorldBoneIndexMatrix  (game_mp/g_utils_mp.cpp:1063)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_DObjGetWorldBoneIndexMatrix(undefined8 param_1,ulonglong param_2,longlong param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  int iVar10;
+  longlong lVar9;
+  float *pfVar11;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_94;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_84;
+  float local_80;
+  undefined1 auStack_70 [36];
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  
+  iVar10 = __savegprlr_26();
+  Profile_Begin(0x135);
+  G_DObjCalcBone(iVar10,param_2);
+  Profile_EndInternal(0);
+  lVar9 = SV_DObjGetMatrixArray(iVar10);
+  lVar9 = lVar9 + (param_2 & 0x7ffffff) * 0x20;
+  AnglesToAxis(iVar10 + 0x144,auStack_70);
+  local_4c = *(undefined4 *)(iVar10 + 0x138);
+  local_48 = *(undefined4 *)(iVar10 + 0x13c);
+  local_44 = *(undefined4 *)(iVar10 + 0x140);
+  pfVar11 = (float *)lVar9;
+  if (((uint)*pfVar11 & 0x7f800000) != 0x7f800000) {
+    if (((uint)pfVar11[1] & 0x7f800000) != 0x7f800000) {
+      if (((uint)pfVar11[2] & 0x7f800000) != 0x7f800000) {
+        if (((uint)pfVar11[3] & 0x7f800000) != 0x7f800000) goto LAB_824b0878;
+      }
+    }
+  }
+  MyAssertHandler(0xffffffff82015a60,0x205,0,0xffffffff82000f98,0xffffffff820159f0);
+LAB_824b0878:
+  if (((uint)pfVar11[7] & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82015a60,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
+  }
+  fVar1 = pfVar11[2];
+  fVar2 = pfVar11[7];
+  fVar3 = pfVar11[1];
+  fVar7 = fVar3 * fVar2;
+  fVar8 = *pfVar11 * fVar2;
+  fVar4 = pfVar11[3];
+  fVar5 = fVar1 * fVar1 * fVar2;
+  fVar6 = *pfVar11 * fVar8;
+  local_94 = fVar4 * fVar1 * fVar2;
+  local_8c = fVar1 * fVar7 + fVar4 * fVar8;
+  local_98 = fVar1 * fVar8 - fVar4 * fVar7;
+  local_9c = local_94 + fVar3 * fVar8;
+  local_94 = fVar3 * fVar8 - local_94;
+  local_88 = fVar4 * fVar7 + fVar1 * fVar8;
+  local_a0 = 1.0 - (fVar5 + fVar3 * fVar7);
+  local_90 = 1.0 - (fVar5 + fVar6);
+  local_80 = 1.0 - (fVar3 * fVar7 + fVar6);
+  local_84 = fVar1 * fVar7 - fVar4 * fVar8;
+  MatrixMultiply(&local_a0,auStack_70,param_3);
+  MatrixTransformVector43(lVar9 + 0x10,auStack_70,param_3 + 0x24);
+  __restgprlr_26();
+  return;
+}
+
 
 // 824B0978  G_Find  (game_mp/g_utils_mp.cpp:1096)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined4 * G_Find(int param_1,int param_2,short param_3)
+
+{
+  undefined4 *puVar1;
+  short *psVar2;
+  
+  puVar1 = &DAT_83373680;
+  if (param_1 != 0) {
+    puVar1 = (undefined4 *)(param_1 + 0x280);
+  }
+  if (puVar1 < &DAT_83373680 + DAT_83580b08 * 0xa0) {
+    psVar2 = (short *)((int)puVar1 + param_2);
+    do {
+      if (((*(char *)((0x103 - param_2) + (int)psVar2) != '\0') && (*psVar2 != 0)) &&
+         (*psVar2 == param_3)) {
+        return puVar1;
+      }
+      puVar1 = puVar1 + 0xa0;
+      psVar2 = psVar2 + 0x140;
+    } while (puVar1 < &DAT_83373680 + DAT_83580b08 * 0xa0);
+  }
+  return (undefined4 *)0x0;
+}
+
 
 // 824B0A00  G_FindStr  (game_mp/g_utils_mp.cpp:1134)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_FindStr(undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  
+  uVar1 = __savegprlr_26();
+  uVar3 = 0xffffffff83373680;
+  if ((uVar1 & 0xffffffff) != 0) {
+    uVar3 = uVar1 + 0x280;
+  }
+  uVar1 = (ulonglong)DAT_83580b08;
+  if ((uVar3 & 0xffffffff) <
+      ((uVar1 + ((ulonglong)DAT_83580b08 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 - 0x7cc8c980 &
+      0xffffffff)) {
+    lVar4 = uVar3 + param_2;
+    do {
+      if ((*(char *)((0x103 - (int)param_2) + (int)(int *)lVar4) != '\0') &&
+         (iVar2 = *(int *)lVar4, iVar2 != 0)) {
+        iVar2 = I_stricmp(iVar2,param_3);
+        if (iVar2 == 0) {
+          __restgprlr_26(uVar3);
+          return;
+        }
+        uVar1 = (ulonglong)DAT_83580b08;
+      }
+      uVar3 = uVar3 + 0x280;
+      lVar4 = lVar4 + 0x280;
+    } while ((uVar3 & 0xffffffff) <
+             ((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 - 0x7cc8c980 & 0xffffffff));
+  }
+  __restgprlr_26(0);
+  return;
+}
+
 
 // 824B0AB8  G_InitGentity  (game_mp/g_utils_mp.cpp:1159)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_InitGentity(int *param_1)
+
+{
+  int iVar1;
+  
+  *(undefined1 *)((int)param_1 + 0x103) = 1;
+  *param_1 = (int)(param_1 + 0x1f323260) / 0x280;
+  param_1[0x9b] = 0;
+  iVar1 = EntHandle__isDefined(param_1 + 0x54);
+  if (iVar1 != 0) {
+    MyAssertHandler(0xffffffff8207e318,0x48b,0,0xffffffff82000f98,0xffffffff8207e4b0);
+  }
+  param_1[0x62] = 0;
+  *(undefined1 *)((int)param_1 + 0x16f) = 0;
+  param_1[0x9c] = DAT_83580fac;
+  return;
+}
+
 
 // 824B0B60  G_PrintEntities  (game_mp/g_utils_mp.cpp:1171)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
+
+void G_PrintEntities(void)
+
+{
+  float *pfVar1;
+  float *pfVar2;
+  undefined8 uVar3;
+  longlong lVar4;
+  float *pfVar5;
+  
+  __savegprlr_27();
+  lVar4 = 0;
+  if (0 < DAT_83580b08) {
+    pfVar5 = (float *)0x83373540;
+    do {
+      if (*(short *)((int)pfVar5 + 0x2b2) == 0) {
+        uVar3 = 0xffffffff820068af;
+      }
+      else {
+        uVar3 = SL_ConvertToString();
+      }
+      pfVar1 = pfVar5 + 0x9e;
+      pfVar2 = pfVar5 + 0x9f;
+      pfVar5 = pfVar5 + 0xa0;
+      Com_Printf(0xf,0xffffffff8207e4cc,lVar4,uVar3,(double)*pfVar1,(double)*pfVar2,(double)*pfVar5)
+      ;
+      lVar4 = lVar4 + 1;
+    } while ((int)lVar4 < DAT_83580b08);
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 824B0C08  G_MaySpawnEntity  (game_mp/g_utils_mp.cpp:1180)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined4 G_MaySpawnEntity(int param_1)
+
+{
+  if (param_1 == 0) {
+    return 0;
+  }
+  if ((DAT_83580fac - *(int *)(param_1 + 0x188) < 500) && (DAT_83580b08 < 0x7fe)) {
+    return 0;
+  }
+  return 1;
+}
+
 
 // 824B0C48  G_Spawn  (game_mp/g_utils_mp.cpp:1207)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+int G_Spawn(void)
+
+{
+  int iVar1;
+  bool bVar3;
+  undefined4 *puVar2;
+  int iVar4;
+  
+  iVar4 = DAT_83580b0c;
+  if (DAT_83580b0c == 0) {
+    bVar3 = false;
+  }
+  else if ((499 < DAT_83580fac - *(int *)(DAT_83580b0c + 0x188)) ||
+          (bVar3 = false, 0x7fd < DAT_83580b08)) {
+    bVar3 = true;
+  }
+  if (bVar3) {
+    puVar2 = (undefined4 *)(DAT_83580b0c + 0x26c);
+    if (*(int *)(DAT_83580b0c + 0x26c) == 0) {
+      DAT_83580b10 = 0;
+    }
+    DAT_83580b0c = *(int *)(DAT_83580b0c + 0x26c);
+    *puVar2 = 0;
+  }
+  else {
+    if (DAT_83580b08 == 0x7fe) {
+      G_PrintEntities();
+      Com_Error(1,0xffffffff8207e4ec);
+    }
+    iVar1 = DAT_83580b08 + 1;
+    iVar4 = DAT_83580b08 * 0x280 + DAT_83580b04;
+    DAT_83580b08 = iVar1;
+    SV_LocateGameData(DAT_83580b04,iVar1,DAT_83580b00,0x3980);
+  }
+  G_InitGentity(iVar4);
+  return iVar4;
+}
+
 
 // 824B2320  G_SpawnPlayerClone  (game_mp/g_utils_mp.cpp:1247)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+int G_SpawnPlayerClone(void)
+
+{
+  uint uVar1;
+  int iVar2;
+  
+  uVar1 = DAT_83581ad0 + 1;
+  iVar2 = (DAT_83581ad0 + 0x12) * 0x280 + DAT_83580b04;
+  DAT_83581ad0 = uVar1 + (((int)uVar1 >> 3) + (uint)((int)uVar1 < 0 && (uVar1 & 7) != 0)) * -8;
+  uVar1 = *(uint *)(iVar2 + 8);
+  if (*(char *)(iVar2 + 0x103) != '\0') {
+    G_FreeEntity(iVar2);
+  }
+  G_InitGentity(iVar2);
+  *(uint *)(iVar2 + 8) = ~uVar1 & 2;
+  return iVar2;
+}
+
 
 // 824B0D48  G_FreeEntityRefs  (game_mp/g_utils_mp.cpp:1268)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_FreeEntityRefs(void)
+
+{
+  uint uVar1;
+  int iVar2;
+  uint *puVar3;
+  ulonglong uVar4;
+  uint *puVar5;
+  int *piVar6;
+  
+  puVar3 = (uint *)__savegprlr_23();
+  uVar1 = *puVar3;
+  if (((puVar3[0x61] & 0x100000) != 0) && (uVar4 = (ulonglong)DAT_83580b08, 0 < (int)DAT_83580b08))
+  {
+    puVar5 = &DAT_83373700;
+    do {
+      if ((*(char *)((int)puVar5 + 0x83) != '\0') && (*puVar5 == uVar1)) {
+        *puVar5 = 0x7ff;
+      }
+      puVar5 = puVar5 + 0xa0;
+      uVar4 = uVar4 - 1;
+    } while (uVar4 != 0);
+  }
+  if ((puVar3[0x61] & 0x200000) != 0) {
+    piVar6 = &DAT_833737d8;
+    do {
+      if (*(char *)((int)piVar6 + -0x55) != '\0') {
+        iVar2 = *piVar6;
+        if (iVar2 == 0) {
+          MyAssertHandler(0xffffffff8207e318,0x512,0,0xffffffff82000f98,0xffffffff8207e508);
+        }
+        if (*(uint *)(iVar2 + 0x1e8) == uVar1) {
+          *(undefined4 *)(iVar2 + 0x1e8) = 0x7ff;
+        }
+      }
+      piVar6 = piVar6 + 0xa0;
+    } while ((int)piVar6 < -0x7cc89b28);
+  }
+  piVar6 = &DAT_833737d8;
+  do {
+    if (*(char *)((int)piVar6 + -0x55) != '\0') {
+      iVar2 = *piVar6;
+      if (iVar2 == 0) {
+        MyAssertHandler(0xffffffff8207e318,0x520,0,0xffffffff82000f98,0xffffffff8207e508);
+      }
+      if (*(uint *)(iVar2 + 0x1bc) == uVar1) {
+        *(undefined4 *)(iVar2 + 0x1bc) = 0x7ff;
+        *(uint *)(iVar2 + 0xf8) = *(uint *)(iVar2 + 0xf8) & 0xffdfffff;
+      }
+      ClientSetEntUsable(iVar2,uVar1 & 0xffff);
+    }
+    piVar6 = piVar6 + 0xa0;
+  } while ((int)piVar6 < -0x7cc89b28);
+  Vehicle_FreeReferences(puVar3);
+  if ((puVar3[0x61] & 0x800000) != 0) {
+    Missile_FreeAttractorRefs(puVar3);
+  }
+  __restgprlr_23();
+  return;
+}
+
 
 // 824B0EC8  G_FreeEntity  (game_mp/g_utils_mp.cpp:1338)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_FreeEntity(void)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  undefined8 *puVar4;
+  char in_RESERVE;
+  byte in_cr0;
+  longlong lVar5;
+  
+  puVar2 = (undefined4 *)__savegprlr_28();
+  G_EntUnlink();
+  iVar3 = puVar2[0x86];
+  while (iVar3 != 0) {
+    G_EntUnlink(puVar2[0x86]);
+    iVar3 = puVar2[0x86];
+  }
+  SV_UnlinkEntity(puVar2);
+  iVar3 = SV_DObjGetTree(puVar2);
+  if (iVar3 != 0) {
+    XAnimClearTree();
+  }
+  Com_SafeServerDObjFree(*puVar2);
+  G_FreeEntityRefs(puVar2);
+  if ((char *)puVar2[0x57] != (char *)0x0) {
+    if (*(char *)puVar2[0x57] == '\0') {
+      MyAssertHandler(0xffffffff8207e318,0x54e,0,0xffffffff82000f98,0xffffffff8207e56c);
+    }
+    G_FreeTurret(puVar2);
+    if (puVar2[0x57] != 0) {
+      MyAssertHandler(0xffffffff8207e318,0x550,0,0xffffffff82000f98,0xffffffff8207e558);
+    }
+  }
+  if (puVar2[0x58] == 0) {
+    if (((puVar2[1] == 3) || (puVar2[1] == 6)) && (puVar2[0x59] != 0)) {
+      Phys_ObjDestroy(4);
+      puVar2[0x59] = 0;
+      do {
+        if (in_RESERVE != '\0') {
+          DAT_8427b910 = storeWordConditionalIndexed
+                                   ((ulonglong)DAT_8427b910 - 1,0,0xffffffff8427b910);
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+    }
+  }
+  else {
+    Vehicle_FreeEntity(puVar2);
+    if (puVar2[0x58] != 0) {
+      MyAssertHandler(0xffffffff8207e318,0x556,0,0xffffffff82000f98,0xffffffff8207e544);
+    }
+  }
+  if (puVar2[1] == 2) {
+    PlayerCorpse_Free(puVar2);
+  }
+  EntHandleDissociate(puVar2);
+  EntHandle__setEnt(puVar2 + 0x54,0);
+  EntHandle__setEnt(puVar2 + 0x65,0);
+  EntHandle__setEnt(puVar2 + 0x83,0);
+  if (*(char *)((int)puVar2 + 0x103) == '\0') {
+    MyAssertHandler(0xffffffff8207e318,0x56f,0,0xffffffff82000f98,0xffffffff8207e534);
+  }
+  Scr_FreeEntity(puVar2);
+  if (*(short *)((int)puVar2 + 0x172) != 0) {
+    MyAssertHandler(0xffffffff8207e318,0x572,0,0xffffffff82000f98,0xffffffff8207e520);
+  }
+  iVar3 = puVar2[0x9a];
+  puVar4 = (undefined8 *)(puVar2 + -2);
+  lVar5 = 0x50;
+  do {
+    puVar4 = puVar4 + 1;
+    *puVar4 = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  puVar2[0x62] = DAT_83580fac;
+  if (0x19 < ((int)puVar2 - DAT_83580b04) / 0x280) {
+    puVar1 = puVar2;
+    if (DAT_83580b10 != (undefined4 *)0x0) {
+      DAT_83580b10[0x9b] = puVar2;
+      puVar1 = DAT_83580b0c;
+    }
+    DAT_83580b0c = puVar1;
+    DAT_83580b10 = puVar2;
+    puVar2[0x9b] = 0;
+  }
+  puVar2[0x9a] = iVar3 + 1;
+  if (*(char *)((int)puVar2 + 0x103) != '\0') {
+    MyAssertHandler(0xffffffff8207e318,0x582,0,0xffffffff82000f98,0xffffffff8207e510);
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 824B1168  G_FreeEntityDelay  (game_mp/g_utils_mp.cpp:1421)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_FreeEntityDelay(undefined8 param_1)
+
+{
+  if (DAT_8359a8fc == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x590,0,0xffffffff82000f98,0xffffffff8207e580);
+  }
+  Scr_ExecEntThread(param_1,DAT_8359a8fc,0);
+  Scr_FreeThread();
+  return;
+}
+
 
 // 824B11E8  G_FreeEntityAfterEvent  (game_mp/g_utils_mp.cpp:1451)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_FreeEntityAfterEvent(int param_1)
+
+{
+  *(undefined1 *)(param_1 + 0x16f) = 1;
+  return;
+}
+
 
 // 824B23B8  G_TempEntity  (game_mp/g_utils_mp.cpp:1468)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+int G_TempEntity(float *param_1,int param_2)
+
+{
+  undefined4 uVar1;
+  char cVar3;
+  int iVar2;
+  float local_30;
+  float local_2c;
+  float local_28;
+  
+  local_30 = *param_1;
+  local_2c = param_1[1];
+  local_28 = param_1[2];
+  cVar3 = SV_CheckOriginIsInPlayableBounds(&local_30);
+  if (cVar3 == '\0') {
+    Com_PrintWarning(0xf,0xffffffff8207e788,(&PTR_s_EV_NONE_82960e90)[param_2],(double)*param_1,
+                     (double)param_1[1],(double)param_1[2]);
+    SV_KeepPointInPlayableBounds(&local_30);
+  }
+  iVar2 = G_Spawn();
+  *(int *)(iVar2 + 4) = param_2 + 0x12;
+  *(undefined4 *)(iVar2 + 0x188) = DAT_83580fac;
+  uVar1 = DAT_83580fac;
+  *(undefined1 *)(iVar2 + 0x16f) = 1;
+  *(undefined4 *)(iVar2 + 0x154) = uVar1;
+  *(float *)(iVar2 + 0x18) = (float)(longlong)(int)local_30;
+  *(float *)(iVar2 + 0x1c) = (float)(longlong)(int)local_2c;
+  *(float *)(iVar2 + 0x20) = (float)(longlong)(int)local_28;
+  *(undefined4 *)(iVar2 + 0xc) = 0;
+  *(undefined4 *)(iVar2 + 0x10) = 0;
+  *(undefined4 *)(iVar2 + 0x14) = 0;
+  *(undefined4 *)(iVar2 + 0x24) = 0;
+  *(undefined4 *)(iVar2 + 0x28) = 0;
+  *(undefined4 *)(iVar2 + 0x2c) = 0;
+  *(float *)(iVar2 + 0x138) = (float)(longlong)(int)local_30;
+  *(float *)(iVar2 + 0x13c) = (float)(longlong)(int)local_2c;
+  *(float *)(iVar2 + 0x140) = (float)(longlong)(int)local_28;
+  SV_LinkEntity();
+  return iVar2;
+}
+
 
 // 824B11F8  G_AddEvent  (game_mp/g_utils_mp.cpp:1509)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_AddEvent(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x5e6,0,0xffffffff82000f98,0xffffffff8207e5f8);
+  }
+  else if (0xff < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8207e318,0x5e7,0,0xffffffff8207e5cc,param_2,0x100);
+  }
+  if (0xffffff < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8207e318,0x5e8,0,0xffffffff82000f98,0xffffffff8207e5b0);
+  }
+  if (0x11 < *(int *)(iVar1 + 4)) {
+    MyAssertHandler(0xffffffff8207e318,0x5e9,0,0xffffffff82000f98,0xffffffff8207e594);
+  }
+  if (*(int *)(iVar1 + 0x158) != 0) {
+    BG_AddUnPredictableEventToPlayerstate();
+    *(undefined4 *)(iVar1 + 0x188) = DAT_83580fac;
+    *(undefined4 *)(iVar1 + 0x154) = DAT_83580fac;
+    __restgprlr_27();
+    return;
+  }
+  BG_AddEventToEntityState(param_2,param_3,iVar1,DAT_83580fac);
+  *(undefined4 *)(iVar1 + 0x188) = DAT_83580fac;
+  *(undefined4 *)(iVar1 + 0x154) = DAT_83580fac;
+  __restgprlr_27();
+  return;
+}
+
 
 // 824B2548  G_PlaySoundAliasAtPoint  (game_mp/g_utils_mp.cpp:1526)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_PlaySoundAliasAtPoint(ulonglong param_1,uint param_2)
+
+{
+  int iVar1;
+  
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x5f7,0,0xffffffff82000f98,0xffffffff82004854);
+  }
+  if ((param_2 & 0xffff) != 0) {
+    iVar1 = G_TempEntity(param_1,3);
+    *(uint *)(iVar1 + 0xa0) = param_2 & 0xffff;
+  }
+  return;
+}
+
 
 // 824B1328  G_PlaySoundAlias  (game_mp/g_utils_mp.cpp:1538)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_PlaySoundAlias(ulonglong param_1,short param_2)
+
+{
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207e318,0x603,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (param_2 != 0) {
+    G_AddEvent(param_1,3);
+  }
+  return;
+}
+
 
 // 824B13A0  G_SetOrigin  (game_mp/g_utils_mp.cpp:1550)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_SetOrigin(int param_1,undefined4 *param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x18) = *param_2;
+  *(undefined4 *)(param_1 + 0x1c) = param_2[1];
+  *(undefined4 *)(param_1 + 0x20) = param_2[2];
+  *(undefined4 *)(param_1 + 0xc) = 0;
+  *(undefined4 *)(param_1 + 0x10) = 0;
+  *(undefined4 *)(param_1 + 0x14) = 0;
+  *(undefined4 *)(param_1 + 0x24) = 0;
+  *(undefined4 *)(param_1 + 0x28) = 0;
+  *(undefined4 *)(param_1 + 0x2c) = 0;
+  *(undefined4 *)(param_1 + 0x138) = *param_2;
+  *(undefined4 *)(param_1 + 0x13c) = param_2[1];
+  *(undefined4 *)(param_1 + 0x140) = param_2[2];
+  return;
+}
+
 
 // 824B13F8  G_SetAngle  (game_mp/g_utils_mp.cpp:1562)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void G_SetAngle(int param_1,undefined4 *param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x3c) = *param_2;
+  *(undefined4 *)(param_1 + 0x40) = param_2[1];
+  *(undefined4 *)(param_1 + 0x44) = param_2[2];
+  *(undefined4 *)(param_1 + 0x30) = 0;
+  *(undefined4 *)(param_1 + 0x34) = 0;
+  *(undefined4 *)(param_1 + 0x38) = 0;
+  *(undefined4 *)(param_1 + 0x48) = 0;
+  *(undefined4 *)(param_1 + 0x4c) = 0;
+  *(undefined4 *)(param_1 + 0x50) = 0;
+  *(undefined4 *)(param_1 + 0x144) = *param_2;
+  *(undefined4 *)(param_1 + 0x148) = param_2[1];
+  *(undefined4 *)(param_1 + 0x14c) = param_2[2];
+  return;
+}
+
 
 // 824B1450  G_GetOrigin  (game_mp/g_utils_mp.cpp:1575)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined8 G_GetOrigin(undefined8 param_1,int param_2,undefined4 *param_3)
+
+{
+  if (0x7ff < param_2) {
+    MyAssertHandler(0xffffffff8207e318,0x62a,0,0xffffffff82000f98,0xffffffff8207e600);
+  }
+  *param_3 = (&DAT_833737b8)[param_2 * 0xa0];
+  param_3[1] = (&DAT_833737bc)[param_2 * 0xa0];
+  param_3[2] = (&DAT_833737c0)[param_2 * 0xa0];
+  return 1;
+}
+
 
 // 824B14E8  G_GetVelocity  (game_mp/g_utils_mp.cpp:1587)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined8 G_GetVelocity(undefined8 param_1,int param_2,undefined4 *param_3)
+
+{
+  if (0x7ff < param_2) {
+    MyAssertHandler(0xffffffff8207e318,0x636,0,0xffffffff82000f98,0xffffffff8207e600);
+  }
+  param_2 = param_2 * 0x280;
+  *param_3 = *(undefined4 *)(&DAT_833736a4 + param_2);
+  param_3[1] = *(undefined4 *)(&DAT_833736a8 + param_2);
+  param_3[2] = *(undefined4 *)(&DAT_833736ac + param_2);
+  return 1;
+}
+
 
 // 824B1580  G_GetEntityState  (game_mp/g_utils_mp.cpp:1599)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+longlong G_GetEntityState(undefined8 param_1,ulonglong param_2)
+
+{
+  if (0x7ff < (int)param_2) {
+    MyAssertHandler(0xffffffff8207e318,0x640,0,0xffffffff82000f98,0xffffffff8207e600);
+  }
+  return (param_2 + (param_2 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 + -0x7cc8c980;
+}
+
 
 // 824B15F0  infront  (game_mp/g_utils_mp.cpp:1606)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+bool infront(int param_1,int param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float local_30;
+  float local_2c;
+  float local_28;
+  
+  AngleVectors(param_1 + 0x144,&local_30,0,0);
+  fVar1 = *(float *)(param_2 + 0x138) - *(float *)(param_1 + 0x138);
+  fVar2 = *(float *)(param_2 + 0x140) - *(float *)(param_1 + 0x140);
+  fVar3 = *(float *)(param_2 + 0x13c) - *(float *)(param_1 + 0x13c);
+  fVar5 = SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+  fVar4 = 1.0;
+  if (-fVar5 < 0.0) {
+    fVar4 = fVar5;
+  }
+  fVar4 = 1.0 / fVar4;
+  return 0.0 < local_28 * fVar2 * fVar4 + local_30 * fVar4 * fVar1 + local_2c * fVar4 * fVar3;
+}
+
 
 // 824B16C0  DebugLine  (game_mp/g_utils_mp.cpp:1629)
 
-int DebugLine(float *param_1,float *param_2,int param_3)
+undefined8 DebugLine(void)
 
 {
   return 0;
@@ -778,127 +2461,131 @@ int DebugLine(float *param_1,float *param_2,int param_3)
 
 // 824B16C8  G_SetConstString  (game_mp/g_utils_mp.cpp:1635)
 
-void G_SetConstString(ushort *param_1,char *param_2)
+void G_SetConstString(undefined2 *param_1,undefined8 param_2)
 
 {
-  uint uVar1;
+  undefined2 uVar1;
   
   Scr_SetString(param_1,0);
   uVar1 = SL_GetString(param_2,0);
-  *param_1 = (ushort)uVar1;
+  *param_1 = uVar1;
   return;
 }
 
 
 // 824B1718  G_GetEntityTypeName  (game_mp/g_utils_mp.cpp:1642)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined * G_GetEntityTypeName(int param_1)
+
+{
+  if (0x11 < *(uint *)(param_1 + 4)) {
+    MyAssertHandler(0xffffffff8207e318,0x66b,0,0xffffffff82000f98,0xffffffff8207e61c);
+  }
+  return (&PTR_s_ET_GENERAL_8296b398)[*(int *)(param_1 + 4)];
+}
+
 
 // 824B1788  Com_TeamFromString  (game_mp/g_utils_mp.cpp:1649)
 
-team_t Com_TeamFromString(uint param_1)
+ulonglong Com_TeamFromString(uint param_1)
 
 {
-  char *pcVar1;
-  team_t tVar2;
-  undefined4 *puVar3;
-  undefined4 local_20 [8];
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined2 **ppuVar3;
+  undefined2 *local_20;
+  undefined2 *local_1c;
+  undefined2 *local_18;
+  undefined2 *local_14;
   
-  tVar2 = TEAM_FREE;
-  puVar3 = local_20;
-  local_20[0] = 0x835a0bd0;
-  local_20[1] = 0x835a0b94;
-  local_20[2] = 0x835a0b8c;
-  local_20[3] = 0x835a0d72;
+  uVar2 = 0;
+  ppuVar3 = &local_20;
+  local_20 = &DAT_835a0bd0;
+  local_1c = &DAT_835a0b94;
+  local_18 = &DAT_835a0b8c;
+  local_14 = &DAT_835a0d72;
   do {
-    if (param_1 == *(ushort *)*puVar3) {
-      return tVar2;
+    if (param_1 == (ushort)**ppuVar3) {
+      return uVar2;
     }
-    tVar2 = tVar2 + TEAM_AXIS;
-    puVar3 = puVar3 + 1;
-  } while (tVar2 < TEAM_NUM_TEAMS);
-  SL_ConvertToString(param_1);
-  pcVar1 = va("unknown team \'%s\'\n");
-  Scr_Error(pcVar1);
-  return TEAM_FREE;
+    uVar2 = uVar2 + 1;
+    ppuVar3 = ppuVar3 + 1;
+  } while ((uVar2 & 0xffffffff) < 4);
+  uVar1 = SL_ConvertToString();
+  va(0xffffffff8207e640,uVar1);
+  Scr_Error();
+  return 0;
 }
 
 
 // 824B25C8  G_srand  (game_mp/g_utils_mp.cpp:1681)
 
-void G_srand(uint param_1)
+void G_srand(int param_1)
 
 {
-  holdrand = (((param_1 * 0x343fd + 0x269ec3) * 0x343fd + 0x269ec3) * 0x343fd + 0x269ec3) * 0x343fd
-             + 0x269ec3;
+  DAT_8296b3e0 = (((param_1 * 0x343fd + 0x269ec3) * 0x343fd + 0x269ec3) * 0x343fd + 0x269ec3) *
+                 0x343fd + 0x269ec3;
   return;
 }
 
 
 // 824B1828  G_GetRandomSeed  (game_mp/g_utils_mp.cpp:1692)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint * G_GetRandomSeed(void)
+undefined8 G_GetRandomSeed(void)
 
 {
-  return &holdrand;
+  return 0xffffffff8296b3e0;
 }
 
 
 // 824B1838  G_rand  (game_mp/g_utils_mp.cpp:1701)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int G_rand(void)
+uint G_rand(void)
 
 {
-  holdrand = holdrand * 0x343fd + 0x269ec3;
-  return holdrand >> 0x11;
+  DAT_8296b3e0 = DAT_8296b3e0 * 0x343fd + 0x269ec3;
+  return DAT_8296b3e0 >> 0x11;
 }
 
 
 // 824B1860  G_flrand  (game_mp/g_utils_mp.cpp:1715)
 
-float G_flrand(float param_1,float param_2)
+double G_flrand(double param_1,double param_2)
 
 {
-  holdrand = holdrand * 0x343fd + 0x269ec3;
-  return (float)(holdrand >> 0x11) * (param_2 - param_1) * 3.0517578e-05 + param_1;
+  DAT_8296b3e0 = DAT_8296b3e0 * 0x343fd + 0x269ec3;
+  return (double)(float)((double)((float)(DAT_8296b3e0 >> 0x11) * (float)(param_2 - param_1)) *
+                         3.0517578125e-05 + param_1);
 }
 
 
 // 824B18B0  G_irand  (game_mp/g_utils_mp.cpp:1722)
 
-int G_irand(int param_1,int param_2)
+longlong G_irand(longlong param_1,int param_2)
 
 {
-  holdrand = holdrand * 0x343fd + 0x269ec3;
-  return (int)((longlong)((ulonglong)(holdrand >> 0x11) * (longlong)(param_2 - param_1)) >> 0xf) +
-         param_1;
+  DAT_8296b3e0 = DAT_8296b3e0 * 0x343fd + 0x269ec3;
+  return (int)((longlong)((ulonglong)(DAT_8296b3e0 >> 0x11) * (longlong)(param_2 - (int)param_1)) >>
+              0xf) + param_1;
 }
 
 
 // 824B18F8  G_random  (game_mp/g_utils_mp.cpp:1733)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float G_random(void)
+double G_random(void)
 
 {
-  holdrand = holdrand * 0x343fd + 0x269ec3;
-  return (float)(holdrand >> 0x11) * 3.0517578e-05;
+  DAT_8296b3e0 = DAT_8296b3e0 * 0x343fd + 0x269ec3;
+  return (double)((float)(DAT_8296b3e0 >> 0x11) * 3.0517578e-05);
 }
 
 
 // 824B1940  G_crandom  (game_mp/g_utils_mp.cpp:1739)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-float G_crandom(void)
+double G_crandom(void)
 
 {
-  holdrand = holdrand * 0x343fd + 0x269ec3;
-  return (float)(holdrand >> 0x11) * 6.1035156e-05 - 1.0;
+  DAT_8296b3e0 = DAT_8296b3e0 * 0x343fd + 0x269ec3;
+  return (double)((float)(DAT_8296b3e0 >> 0x11) * 6.1035156e-05 - 1.0);
 }
 

@@ -2,36 +2,36 @@
 
 // 829171D8  atol  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/atox.c:55)
 
-long atol(char *param_1)
+long atol(char *_Str)
 
 {
   long lVar1;
   
-  lVar1 = strtol(param_1,(char **)0x0,10);
+  lVar1 = strtol(_Str,(char **)0x0,10);
   return lVar1;
 }
 
 
 // 829171E8  atoi  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/atox.c:99)
 
-int atoi(char *param_1)
+int atoi(char *_Str)
 
 {
   long lVar1;
   
-  lVar1 = strtol(param_1,(char **)0x0,10);
+  lVar1 = strtol(_Str,(char **)0x0,10);
   return lVar1;
 }
 
 
 // 829171F8  _atoi64  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/atox.c:143)
 
-long64 _atoi64(char *param_1)
+longlong _atoi64(char *_String)
 
 {
-  long64 lVar1;
+  longlong lVar1;
   
-  lVar1 = _strtoi64(param_1,(char **)0x0,10);
+  lVar1 = _strtoi64(_String,(char **)0x0,10);
   return lVar1;
 }
 

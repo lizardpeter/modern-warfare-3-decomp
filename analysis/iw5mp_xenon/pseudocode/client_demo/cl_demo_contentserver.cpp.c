@@ -2,196 +2,174 @@
 
 // 827CE5E8  Com_BlockChecksum32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/checksum.h:9)
 
-uint Com_BlockChecksum32(void *param_1,uint param_2)
+void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
 
 {
-  uint uVar1;
-  
-  uVar1 = Com_BlockChecksumKey32(param_1,param_2,0);
-  return uVar1;
+  Com_BlockChecksumKey32(param_1,param_2,0);
+  return;
 }
 
 
 // 8293F610  `dynamic_initializer_for_'s_renderedMovieInformation''  (client_demo/cl_demo_contentserver.cpp:73)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _dynamic_initializer_for__s_renderedMovieInformation__(void)
+int _dynamic_initializer_for__s_renderedMovieInformation__(void)
 
 {
-  bdTag *this;
-  longlong lVar1;
+  int iVar1;
+  longlong lVar2;
+  longlong lVar3;
   
-  lVar1 = 0x20;
-  this = s_renderedMovieInformation.tags;
+  lVar3 = 0x20;
+  lVar2 = -0x7b7b0d80;
   do {
-    bdTag::bdTag(this);
-    lVar1 = lVar1 + -1;
-    this = this + 1;
-  } while (-1 < lVar1);
-  atexit(_dynamic_atexit_destructor_for__s_renderedMovieInformation__);
-  return;
+    bdTag__bdTag(lVar2);
+    lVar3 = lVar3 + -1;
+    lVar2 = lVar2 + 0x18;
+  } while (-1 < lVar3);
+  iVar1 = atexit(_dynamic_atexit_destructor_for__s_renderedMovieInformation__);
+  return iVar1;
 }
 
 
 // 827CE5F0  CL_Demo_GetIndexForMapName  (client_demo/cl_demo_contentserver.cpp:86)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int CL_Demo_GetIndexForMapName(char *param_1)
+void CL_Demo_GetIndexForMapName(void)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
-  char *pcVar3;
+  longlong lVar3;
   longlong lVar4;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
+  uVar1 = __savegprlr_28();
   lVar4 = 0;
-  if (0 < sharedUiInfo.mapCount) {
-    pcVar3 = sharedUiInfo.mapList[0].mapLoadName;
+  if (0 < DAT_83f7df64) {
+    lVar3 = -0x7c082078;
     do {
-      iVar2 = I_stricmp(pcVar3,pcVar1);
+      iVar2 = I_stricmp(lVar3,uVar1);
       if (iVar2 == 0) {
-        iVar2 = __restgprlr_28(lVar4);
-        return iVar2;
+        __restgprlr_28(lVar4);
+        return;
       }
       lVar4 = lVar4 + 1;
-      pcVar3 = pcVar3 + 0xa78;
-    } while ((int)lVar4 < sharedUiInfo.mapCount);
+      lVar3 = lVar3 + 0xa78;
+    } while ((int)lVar4 < DAT_83f7df64);
   }
-  iVar2 = __restgprlr_28(0xffffffffffffffff);
-  return iVar2;
+  __restgprlr_28(0xffffffffffffffff);
+  return;
 }
 
 
 // 827CE660  CL_Demo_GetIndexForGameType  (client_demo/cl_demo_contentserver.cpp:108)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int CL_Demo_GetIndexForGameType(char *param_1)
+void CL_Demo_GetIndexForGameType(void)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
-  gameTypeInfo *pgVar3;
+  longlong lVar3;
   longlong lVar4;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
+  uVar1 = __savegprlr_28();
   lVar4 = 0;
-  if (0 < sharedUiInfo.numGameTypes) {
-    pgVar3 = sharedUiInfo.gameTypes;
+  if (0 < DAT_83f7aed4) {
+    lVar3 = -0x7c085128;
     do {
-      iVar2 = I_stricmp(pgVar3->gameType,pcVar1);
+      iVar2 = I_stricmp(lVar3,uVar1);
       if (iVar2 == 0) {
-        iVar2 = __restgprlr_28(lVar4);
-        return iVar2;
+        __restgprlr_28(lVar4);
+        return;
       }
       lVar4 = lVar4 + 1;
-      pgVar3 = pgVar3 + 1;
-    } while ((int)lVar4 < sharedUiInfo.numGameTypes);
+      lVar3 = lVar3 + 0x6c;
+    } while ((int)lVar4 < DAT_83f7aed4);
   }
-  iVar2 = __restgprlr_28(0xffffffffffffffff);
-  return iVar2;
+  __restgprlr_28(0xffffffffffffffff);
+  return;
 }
 
 
 // 827CFAC8  CL_Demo_SetMetaData  (client_demo/cl_demo_contentserver.cpp:130)
 
-int CL_Demo_SetMetaData(int param_1,clientDemoMetaInfo_t *param_2,char *param_3,int param_4)
+void CL_Demo_SetMetaData(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
-  StructuredDataDef *pSVar2;
-  longlong lVar3;
-  longlong lVar4;
-  StructuredDataBuffer local_40 [8];
+  int iVar2;
+  undefined *local_40;
+  undefined4 local_3c;
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1,lVar3,lVar4,param_4);
-  pSVar2 = StructuredDataDef_GetAsset("mp/onlinevault_metadata.def",0xff);
-  memset();
-  local_40[0].data = g_onlineVaultWriteBuffer.thumb;
-  local_40[0].size = 0xff;
-  StructuredData_SetDataVersion(pSVar2,local_40);
-  StructuredData_SetData<char_const_*>(pSVar2,local_40,(char *)lVar3);
-  StructuredData_SetData<char_const_*>(pSVar2,local_40,(char *)(iVar1 + 0x200));
-  StructuredData_SetData<bool>(pSVar2,local_40,*(bool *)(iVar1 + 0x22c));
-  StructuredData_SetData<char_const_*>(pSVar2,local_40,(char *)(iVar1 + 0x216));
-  StructuredData_SetData<bool>(pSVar2,local_40,*(bool *)(iVar1 + 0x22d));
-  StructuredData_SetData<int>(pSVar2,local_40,*(int *)(iVar1 + 0x230));
-  StructuredData_SetData<int>(pSVar2,local_40,(int)lVar4);
-  iVar1 = __restgprlr_27(pSVar2->size);
-  return iVar1;
+  iVar1 = __savegprlr_27();
+  iVar2 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+  memset(&DAT_8487ce50,0,0xff);
+  local_40 = &DAT_8487ce50;
+  local_3c = 0xff;
+  StructuredData_SetDataVersion(iVar2,&local_40);
+  StructuredData_SetData<char_const_*>(iVar2,&local_40,param_2,0xffffffff821dc418);
+  StructuredData_SetData<char_const_*>(iVar2,&local_40,iVar1 + 0x200,0xffffffff82021a74);
+  StructuredData_SetData<bool>(iVar2,&local_40,*(undefined1 *)(iVar1 + 0x22c),0xffffffff821dc408);
+  StructuredData_SetData<char_const_*>(iVar2,&local_40,iVar1 + 0x216,0xffffffff82132868);
+  StructuredData_SetData<bool>(iVar2,&local_40,*(undefined1 *)(iVar1 + 0x22d),0xffffffff821dc3f8);
+  StructuredData_SetData<int>(iVar2,&local_40,*(undefined4 *)(iVar1 + 0x230),0xffffffff821dc3ec);
+  StructuredData_SetData<int>(iVar2,&local_40,param_3,0xffffffff82003578);
+  __restgprlr_27(*(undefined4 *)(iVar2 + 0x30));
+  return;
 }
 
 
 // 827CE6D0  CL_Demo_SetTags  (client_demo/cl_demo_contentserver.cpp:156)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void CL_Demo_SetTags(int param_1,int *param_2,bdTag *param_3,clientDemoMetaInfo_t *param_4,
-                    ushort param_5)
+void CL_Demo_SetTags(undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4,
+                    ulonglong param_5)
 
 {
-  char *pcVar1;
-  ulonglong uVar2;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
   int iVar4;
-  ulong64 uVar3;
-  int iVar5;
-  LocalClientNum_t LVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  uint uVar5;
+  longlong lVar6;
   
-  uVar7 = (ulonglong)(short)param_5;
-  lVar8 = (longlong)(int)param_4;
-  iVar4 = __savegprlr_18(param_1);
-  uVar2 = uVar7 & 0xffff;
-  if ((((uVar2 != 3) && (uVar2 != 2)) && (uVar2 != 4)) && (uVar2 != 7)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_contentserver.cpp"
-                    ,0xa1,0,"%s");
+  uVar2 = __savegprlr_18();
+  uVar1 = param_5 & 0xffff;
+  if ((((uVar1 != 3) && (uVar1 != 2)) && (uVar1 != 4)) && (uVar1 != 7)) {
+    MyAssertHandler(0xffffffff821dbcc8,0xa1,0,0xffffffff82000f98,0xffffffff821dbd18);
   }
-  *param_2 = 0;
-  LiveStorage_CS_AddTag(2,uVar7 & 0xffff,param_2,param_3,0x21);
-  uVar3 = Live_GetXuid(iVar4);
+  *(undefined4 *)param_2 = 0;
+  LiveStorage_CS_AddTag(2,param_5 & 0xffff,param_2,param_3,0x21);
+  uVar3 = Live_GetXuid(uVar2);
   LiveStorage_CS_AddTag(3,uVar3,param_2,param_3,0x21);
-  pcVar1 = (char *)lVar8;
-  iVar5 = CL_Demo_GetIndexForMapName(pcVar1 + 0x100);
-  if (iVar5 < 0) {
-    Com_PrintError(0xe,"Invalid map index found while writing tags.");
+  iVar4 = CL_Demo_GetIndexForMapName(param_4 + 0x100);
+  if (iVar4 < 0) {
+    Com_PrintError(0xe,0xffffffff821dbc9c);
   }
   else {
-    LiveStorage_CS_AddTag(1,(longlong)iVar5,param_2,param_3,0x21);
+    LiveStorage_CS_AddTag(1,iVar4,param_2,param_3,0x21);
   }
-  iVar5 = CL_Demo_GetIndexForGameType(pcVar1);
-  if (iVar5 < 0) {
-    Com_PrintError(0xe,"Invalid gametype index found while writing tags.");
+  iVar4 = CL_Demo_GetIndexForGameType(param_4);
+  if (iVar4 < 0) {
+    Com_PrintError(0xe,0xffffffff821dbc68);
   }
   else {
-    LiveStorage_CS_AddTag(0,(longlong)iVar5,param_2,param_3,0x21);
+    LiveStorage_CS_AddTag(0,iVar4,param_2,param_3,0x21);
   }
-  iVar5 = 0;
-  if (0 < *(int *)(pcVar1 + 0x234)) {
-    lVar8 = lVar8 + 0x234;
+  iVar4 = 0;
+  if (0 < *(int *)((int)param_4 + 0x234)) {
+    lVar6 = param_4 + 0x234;
     do {
-      LVar6 = CL_LocalClientNumFromControllerIndex(iVar4);
-      if (clientConnections == (clientConnection_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\../client_mp/client_mp.h"
-                        ,0x49a,0,"%s");
+      uVar5 = CL_LocalClientNumFromControllerIndex(uVar2);
+      if (DAT_82aa1a9c == 0) {
+        MyAssertHandler(0xffffffff821dbc18,0x49a,0,0xffffffff82000f98,0xffffffff82022ca8);
       }
-      if ((uint)cl_maxLocalClients <= LVar6) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\../client_mp/client_mp.h"
-                        ,0x49c,0,
-                        "localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+      if (DAT_82aa1ae8 <= uVar5) {
+        MyAssertHandler(0xffffffff821dbc18,0x49c,0,0xffffffff8200d150,uVar5);
       }
-      lVar8 = lVar8 + 4;
+      lVar6 = lVar6 + 4;
       LiveStorage_CS_AddTag
-                (4,clientConnections[LVar6].clientDemo.footer.connectedPlayers[*(int *)lVar8].xuid,
-                 param_2,param_3,0x21);
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < *(int *)(pcVar1 + 0x234));
+                (4,*(undefined8 *)((uVar5 * 0x439a + *(int *)lVar6) * 0x18 + DAT_82aa1a9c + 0x434d8)
+                 ,param_2,param_3,0x21);
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < *(int *)((int)param_4 + 0x234));
   }
   __restgprlr_18();
   return;
@@ -200,54 +178,45 @@ void CL_Demo_SetTags(int param_1,int *param_2,bdTag *param_3,clientDemoMetaInfo_
 
 // 827CE8D8  CL_Demo_SetTags  (client_demo/cl_demo_contentserver.cpp:203)
 
-void CL_Demo_SetTags(int param_1,int *param_2,bdTag *param_3,clientDemoFooter_t *param_4,
-                    ulong64 param_5,char *param_6,char *param_7,ushort param_8)
+void CL_Demo_SetTags(undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4,
+                    undefined8 param_5,undefined8 param_6,ulonglong param_7)
 
 {
-  int *piVar1;
+  undefined4 *puVar1;
   int iVar2;
-  ulong64 uVar3;
-  char *pcVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  int iVar7;
+  int iVar3;
   
-  pcVar4 = (char *)param_5;
-  uVar5 = (ulonglong)(int)param_7;
-  uVar3 = (ulong64)(int)param_4;
-  lVar6 = (longlong)(int)param_3;
-  piVar1 = (int *)__savegprlr_25(param_1);
-  if ((uVar5 & 0xffff) != 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_contentserver.cpp"
-                    ,0xcf,0,"%s");
+  puVar1 = (undefined4 *)__savegprlr_25();
+  if ((param_7 & 0xffff) != 1) {
+    MyAssertHandler(0xffffffff821dbcc8,0xcf,0,0xffffffff82000f98,0xffffffff821dbda4);
   }
-  *piVar1 = 0;
-  LiveStorage_CS_AddTag(2,uVar5 & 0xffff,piVar1,(bdTag *)param_2,0x21);
-  LiveStorage_CS_AddTag(3,uVar3,piVar1,(bdTag *)param_2,0x21);
-  iVar2 = CL_Demo_GetIndexForMapName(pcVar4);
+  *puVar1 = 0;
+  LiveStorage_CS_AddTag(2,param_7 & 0xffff,puVar1,param_2,0x21);
+  LiveStorage_CS_AddTag(3,param_4,puVar1,param_2,0x21);
+  iVar2 = CL_Demo_GetIndexForMapName(param_5);
   if (iVar2 < 0) {
-    Com_PrintError(0xe,"Invalid map index found while writing tags.");
+    Com_PrintError(0xe,0xffffffff821dbc9c);
   }
   else {
-    LiveStorage_CS_AddTag(1,(longlong)iVar2,piVar1,(bdTag *)param_2,0x21);
+    LiveStorage_CS_AddTag(1,iVar2,puVar1,param_2,0x21);
   }
   iVar2 = CL_Demo_GetIndexForGameType(param_6);
   if (iVar2 < 0) {
-    Com_PrintError(0xe,"Invalid gametype index found while writing tags.");
+    Com_PrintError(0xe,0xffffffff821dbc68);
   }
   else {
-    LiveStorage_CS_AddTag(0,(longlong)iVar2,piVar1,(bdTag *)param_2,0x21);
+    LiveStorage_CS_AddTag(0,iVar2,puVar1,param_2,0x21);
   }
-  iVar2 = (int)lVar6;
-  LiveStorage_CS_AddTag(7,(ulonglong)*(uint *)(iVar2 + 0x61c),piVar1,(bdTag *)param_2,0x21);
-  iVar7 = 0;
+  iVar2 = (int)param_3;
+  LiveStorage_CS_AddTag(7,*(undefined4 *)(iVar2 + 0x61c),puVar1,param_2,0x21);
+  iVar3 = 0;
   if (0 < *(int *)(iVar2 + 0x618)) {
-    lVar6 = lVar6 + 0x248;
+    param_3 = param_3 + 0x248;
     do {
-      lVar6 = lVar6 + 0x18;
-      LiveStorage_CS_AddTag(4,*(ulong64 *)lVar6,piVar1,(bdTag *)param_2,0x21);
-      iVar7 = iVar7 + 1;
-    } while (iVar7 < *(int *)(iVar2 + 0x618));
+      param_3 = param_3 + 0x18;
+      LiveStorage_CS_AddTag(4,*(undefined8 *)param_3,puVar1,param_2,0x21);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < *(int *)(iVar2 + 0x618));
   }
   __restgprlr_25();
   return;
@@ -256,132 +225,154 @@ void CL_Demo_SetTags(int param_1,int *param_2,bdTag *param_3,clientDemoFooter_t 
 
 // 827D0600  StructuredData_SetData<char_const_*>  (universal/com_structureddatadef.h:226)
 
-int StructuredData_SetData<char_const_*>
-              (StructuredDataDef *param_1,StructuredDataBuffer *param_2,char *param_3)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void StructuredData_SetData<char_const_*>
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-  int iVar1;
-  char *pcStack00000024;
+  undefined4 uStack00000024;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
   
-  pcStack00000024 = param_3;
-  iVar1 = StructuredData_VardicSetLookupByVaList(param_1,param_2,&stack0x00000024,&stack0x00000028);
-  return iVar1;
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
+  uStack00000024 = param_3;
+  StructuredData_VardicSetLookupByVaList(param_1,param_2,&stack0x00000024,&stack0x00000028);
+  return;
 }
 
 
 // 827D0650  StructuredData_SetData<bool>  (universal/com_structureddatadef.h:226)
 
-int StructuredData_SetData<bool>
-              (StructuredDataDef *param_1,StructuredDataBuffer *param_2,bool param_3)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void StructuredData_SetData<bool>
+               (undefined8 param_1,undefined8 param_2,undefined1 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-  int iVar1;
   undefined1 uStack00000027;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
   
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
   uStack00000027 = param_3;
-  iVar1 = StructuredData_VardicSetLookupByVaList(param_1,param_2,&stack0x00000027,&stack0x00000028);
-  return iVar1;
+  StructuredData_VardicSetLookupByVaList(param_1,param_2,&stack0x00000027,&stack0x00000028);
+  return;
 }
 
 
 // 827D06A0  StructuredData_SetData<int>  (universal/com_structureddatadef.h:226)
 
-int StructuredData_SetData<int>
-              (StructuredDataDef *param_1,StructuredDataBuffer *param_2,int param_3)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void StructuredData_SetData<int>
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-  int iVar1;
-  int iStack00000024;
+  undefined4 uStack00000024;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
   
-  iStack00000024 = param_3;
-  iVar1 = StructuredData_VardicSetLookupByVaList(param_1,param_2,&stack0x00000024,&stack0x00000028);
-  return iVar1;
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
+  uStack00000024 = param_3;
+  StructuredData_VardicSetLookupByVaList(param_1,param_2,&stack0x00000024,&stack0x00000028);
+  return;
 }
 
 
 // 827CEA40  CL_Demo_SaveScreenshotSummaryUploadSuccessful  (client_demo/cl_demo_contentserver.cpp:251)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_SaveScreenshotSummaryUploadSuccessful(int param_1)
+void CL_Demo_SaveScreenshotSummaryUploadSuccessful(undefined8 param_1)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
-  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-  CL_Demo_Error(LVar1,"MENU_NOTICE","MENU_DEMO_SCREENSHOT_UPLOAD_SUCCESS");
-  OnlineVault_CloseFeederMenu(LVar1,0);
+  uVar1 = CL_LocalClientNumFromControllerIndex();
+  CL_Demo_Error(uVar1,0xffffffff8208bd7c,0xffffffff821dbe18);
+  OnlineVault_CloseFeederMenu(uVar1,0);
   OnlineVault_Refresh(param_1);
-  Com_Printf(0x10,"[CL_Demo_SaveScreenshotSummaryUploadSuccessful] Finished writing summary file \n"
-            );
+  Com_Printf(0x10,0xffffffff821dbdc8);
   return;
 }
 
 
 // 827CEAB0  CL_Demo_SaveScreenshotSummaryUploadFailure  (client_demo/cl_demo_contentserver.cpp:269)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_SaveScreenshotSummaryUploadFailure(int param_1,bdLobbyErrorCode param_2)
+void CL_Demo_SaveScreenshotSummaryUploadFailure(undefined8 param_1)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
-  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-  CL_Demo_Error(LVar1,"MENU_ERROR","MENU_DEMO_SCREENSHOT_UPLOAD_FAILURE");
-  OnlineVault_CloseProgressIndicatorMenu(LVar1);
+  uVar1 = CL_LocalClientNumFromControllerIndex();
+  CL_Demo_Error(uVar1,0xffffffff8208bd88,0xffffffff821dbe7c);
+  OnlineVault_CloseProgressIndicatorMenu(uVar1);
   OnlineVault_Refresh(param_1);
-  Com_PrintError(0x10,"[CL_Demo_SaveScreenshotSummaryUploadFailure] Failed to write\n");
+  Com_PrintError(0x10,0xffffffff821dbe3c);
   return;
 }
 
 
 // 827CEB20  CL_Demo_SaveScreenshotSuccessful  (client_demo/cl_demo_contentserver.cpp:289)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_Demo_SaveScreenshotSuccessful(int param_1,ulong64 param_2)
+void CL_Demo_SaveScreenshotSuccessful(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  clientDemoPlayback_t *pcVar2;
-  uint uVar3;
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
   int *piVar4;
-  contentServerUploadSummaryInfo local_70 [2];
+  undefined1 local_70 [8];
+  undefined8 local_68;
+  undefined8 local_60;
+  undefined8 local_58;
+  undefined8 local_50;
   
-  iVar1 = __savegprlr_25(param_1);
-  pcVar2 = CL_Demo_GetPlaybackData();
-  piVar4 = &pcVar2->thumbnailImageSize;
-  local_70[0].m_fileID = 0;
-  local_70[0].m_summaryData = (void *)0x0;
-  local_70[0].m_summaryDataSize = 0;
-  local_70[0].m_metaData = (void *)0x0;
-  local_70[0].m_metaDataSize = 0;
-  local_70[0].m_numTags = 0;
-  local_70[0].m_tags = (bdTag *)0x0;
-  local_70[0].m_successCallback = (_func___cdecl_void_int *)0x0;
-  local_70[0].m_failureCallback = (_func___cdecl_void_int_bdLobbyErrorCode *)0x0;
+  uVar1 = __savegprlr_25();
+  iVar2 = CL_Demo_GetPlaybackData();
+  piVar4 = (int *)(iVar2 + 0x30df38);
+  local_68 = 0;
+  local_60 = 0;
+  local_58 = 0;
+  local_50 = 0;
   if (*piVar4 + 4U < 0x10000) {
-    uVar3 = Com_BlockChecksumKey32(pcVar2->thumbnailImageBuf,*piVar4,0);
-    *(uint *)(pcVar2->thumbnailImageBuf + *piVar4) = uVar3;
+    uVar3 = Com_BlockChecksumKey32(iVar2 + 0x30df3c,*piVar4,0);
+    *(undefined4 *)(iVar2 + *piVar4 + 0x30df3c) = uVar3;
     *piVar4 = *piVar4 + 4;
-    local_70[0].m_summaryData = pcVar2->thumbnailImageBuf;
-    local_70[0].m_summaryDataSize = *piVar4;
-    local_70[0].m_metaData = (void *)0x0;
-    local_70[0].m_metaDataSize = 0;
-    local_70[0].m_numTags = 0;
-    local_70[0].m_tags = (bdTag *)0x0;
-    local_70[0].m_successCallback = CL_Demo_SaveScreenshotSummaryUploadSuccessful;
-    local_70[0].m_failureCallback = CL_Demo_SaveScreenshotSummaryUploadFailure;
-    local_70[0].m_fileID = param_2;
-    LiveStorage_CS_UploadSummaryMetadata(iVar1,local_70);
-    Com_Printf(0x10,"[CL_Demo_SaveScreenshot] Finished writing file %lld\n");
+    local_68 = CONCAT44(iVar2 + 0x30df3c,*piVar4);
+    local_60 = 0;
+    local_58 = 0;
+    local_50 = 0x827cea40827ceab0;
+    LiveStorage_CS_UploadSummaryMetadata(uVar1,local_70);
+    Com_Printf(0x10,0xffffffff821dbee8,param_2);
     __restgprlr_25();
     return;
   }
-  Com_Printf(0x10,"[CL_Demo_SaveScreenshot] Uploading of summary file failed for id %lld\n");
-  CL_Demo_SaveScreenshotSummaryUploadFailure(iVar1,BD_NO_ERROR);
+  Com_Printf(0x10,0xffffffff821dbea0,param_2);
+  CL_Demo_SaveScreenshotSummaryUploadFailure(uVar1,0);
   __restgprlr_25();
   return;
 }
@@ -389,136 +380,131 @@ void CL_Demo_SaveScreenshotSuccessful(int param_1,ulong64 param_2)
 
 // 827CEC30  CL_Demo_SaveScreenshotFailure  (client_demo/cl_demo_contentserver.cpp:333)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_SaveScreenshotFailure(int param_1,bdLobbyErrorCode param_2)
+void CL_Demo_SaveScreenshotFailure(void)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
-  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-  CL_Demo_Error(LVar1,"MENU_ERROR","MENU_DEMO_SCREENSHOT_UPLOAD_FAILURE");
-  OnlineVault_CloseProgressIndicatorMenu(LVar1);
-  Com_PrintError(0x10,"[CL_Demo_SaveScreenshot] Failed to write\n");
+  uVar1 = CL_LocalClientNumFromControllerIndex();
+  CL_Demo_Error(uVar1,0xffffffff8208bd88,0xffffffff821dbe7c);
+  OnlineVault_CloseProgressIndicatorMenu(uVar1);
+  Com_PrintError(0x10,0xffffffff821dbf20);
   return;
 }
 
 
 // 827CFBD8  CL_Demo_SaveScreenshot  (client_demo/cl_demo_contentserver.cpp:350)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_Demo_SaveScreenshot(int param_1,int param_2)
+void CL_Demo_SaveScreenshot(undefined8 param_1,undefined2 param_2)
 
 {
   undefined8 *puVar1;
-  int iVar2;
-  bool bVar7;
-  LocalClientNum_t LVar3;
-  clientDemoPlayback_t *pcVar4;
-  clientDemoMetaInfo_t *pcVar5;
-  int iVar6;
-  ushort uVar8;
-  undefined8 *puVar9;
+  undefined8 uVar2;
+  char cVar6;
+  undefined8 uVar3;
+  int iVar5;
+  undefined8 uVar4;
+  undefined8 *puVar7;
+  longlong lVar8;
+  undefined1 *puVar9;
   longlong lVar10;
-  bdTag *pbVar11;
-  uint local_4a0 [2];
+  undefined4 local_4a0 [2];
   undefined8 uStack_498;
-  contentServerWriteFileInfo local_490;
-  char acStack_450 [256];
-  bdTag abStack_350 [33];
-  bdTag abStack_38 [2];
+  undefined2 local_490 [2];
+  int iStack_48c;
+  undefined4 local_488;
+  undefined1 *local_484;
+  undefined2 local_480;
+  undefined *local_47c;
+  undefined4 local_478;
+  undefined4 local_474;
+  undefined1 *local_470;
+  code *local_464;
+  code *local_460;
+  undefined1 auStack_450 [256];
+  undefined1 auStack_350 [792];
+  undefined1 auStack_38 [56];
   
-  uVar8 = (ushort)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  pbVar11 = abStack_350;
-  lVar10 = 0x20;
+  uVar2 = __savegprlr_27();
+  puVar9 = auStack_350;
+  lVar8 = 0x20;
   do {
-    bdTag::bdTag(pbVar11);
-    lVar10 = lVar10 + -1;
-    pbVar11 = pbVar11 + 1;
-  } while (-1 < lVar10);
-  bVar7 = LiveStorage_CS_IsInited(iVar2);
-  if (!bVar7) {
-    LiveStorage_CS_Init(iVar2);
+    bdTag__bdTag(puVar9);
+    lVar8 = lVar8 + -1;
+    puVar9 = puVar9 + 0x18;
+  } while (-1 < lVar8);
+  cVar6 = LiveStorage_CS_IsInited(uVar2);
+  if (cVar6 == '\0') {
+    LiveStorage_CS_Init(uVar2);
   }
-  bVar7 = LiveStorage_CS_IsAvailable(iVar2);
-  if (!bVar7) {
-    Com_PrintError(0x10,
-                   "[CL_Demo_SaveScreenshot] Failed to write, LiveStorage_CS_IsAvailable = false\n")
-    ;
-    pbVar11 = abStack_38;
-    lVar10 = 0x20;
+  cVar6 = LiveStorage_CS_IsAvailable(uVar2);
+  if (cVar6 == '\0') {
+    Com_PrintError(0x10,0xffffffff821dc498);
+    puVar9 = auStack_38;
+    lVar8 = 0x20;
     do {
-      pbVar11 = pbVar11 + -1;
-      bdTag::~bdTag(pbVar11);
-      lVar10 = lVar10 + -1;
-    } while (-1 < lVar10);
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
     __restgprlr_27();
     return;
   }
-  LVar3 = CL_LocalClientNumFromControllerIndex(iVar2);
-  bVar7 = CL_Demo_IsPlaying(LVar3);
-  if ((bVar7) && (bVar7 = CL_Demo_IsPlaybackMemoryAllocated(), bVar7)) {
-    CL_GetLocalClientConnection(LVar3);
-    pcVar4 = CL_Demo_GetPlaybackData();
+  uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+  cVar6 = CL_Demo_IsPlaying();
+  if ((cVar6 != '\0') && (cVar6 = CL_Demo_IsPlaybackMemoryAllocated(), cVar6 != '\0')) {
+    lVar8 = CL_GetLocalClientConnection(uVar3);
+    iVar5 = CL_Demo_GetPlaybackData();
     lVar10 = 6;
     puVar1 = &uStack_498;
     do {
-      puVar9 = puVar1;
-      puVar1 = puVar9 + 1;
+      puVar7 = puVar1;
+      puVar1 = puVar7 + 1;
       *puVar1 = 0;
       lVar10 = lVar10 + -1;
     } while (lVar10 != 0);
-    *(undefined4 *)(puVar9 + 2) = 0;
-    Com_sprintf(acStack_450,0x100,"%s.jpg");
-    local_490.m_fileName = acStack_450;
-    iVar6 = 3;
-    local_490.m_fileData = pcVar4->screenshotBuf;
-    local_490.m_category = 3;
-    local_490.m_fileSize = pcVar4->screenshotSize;
-    local_490.m_fileSlot = uVar8;
-    pcVar5 = (clientDemoMetaInfo_t *)CL_GetUsernameForLocalClient(iVar2);
-    local_490.m_thumbDataSize =
-         CL_Demo_SetMetaData((int)&pcVar4->screenshotInfo,pcVar5,(char *)0x0,iVar6);
+    *(undefined4 *)(puVar7 + 2) = 0;
+    Com_sprintf(auStack_450,0x100,0xffffffff821dc490,lVar8 + 0x40148);
+    local_484 = auStack_450;
+    iStack_48c = iVar5 + 0x205f38;
+    local_480 = 3;
+    local_488 = *(undefined4 *)(iVar5 + 0x205f34);
+    local_490[0] = param_2;
+    uVar4 = CL_GetUsernameForLocalClient(uVar2);
+    local_478 = CL_Demo_SetMetaData(iVar5 + 0x31df3c,uVar4,0);
     local_4a0[0] = 0;
-    local_490.m_thumbData = &g_onlineVaultWriteBuffer;
-    CL_Demo_SetTags(iVar2,(int *)local_4a0,abStack_350,&pcVar4->screenshotInfo,local_490.m_category)
-    ;
-    local_490.m_tags = abStack_350;
-    local_490.m_failureCallback = CL_Demo_SaveScreenshotFailure;
-    local_490.m_successCallback = CL_Demo_SaveScreenshotSuccessful;
-    local_490.m_numTags = local_4a0[0];
-    iVar6 = LiveStorage_CS_WriteFile(iVar2,&local_490);
-    if (iVar6 == 0) {
-      CL_Demo_Error(LVar3,"MENU_ERROR","MENU_DEMO_SCREENSHOT_UPLOAD_FAILURE");
+    local_47c = &DAT_8487ce50;
+    CL_Demo_SetTags(uVar2,local_4a0,auStack_350,iVar5 + 0x31df3c,local_480);
+    local_470 = auStack_350;
+    local_460 = CL_Demo_SaveScreenshotFailure;
+    local_464 = CL_Demo_SaveScreenshotSuccessful;
+    local_474 = local_4a0[0];
+    iVar5 = LiveStorage_CS_WriteFile(uVar2,local_490);
+    if (iVar5 == 0) {
+      CL_Demo_Error(uVar3,0xffffffff8208bd88,0xffffffff821dbe7c);
     }
     else {
-      LVar3 = CL_LocalClientNumFromControllerIndex(iVar2);
-      OnlineVault_OpenProgressIndicatorMenu(LVar3);
+      CL_LocalClientNumFromControllerIndex(uVar2);
+      OnlineVault_OpenProgressIndicatorMenu();
     }
-    pbVar11 = abStack_38;
-    lVar10 = 0x20;
+    puVar9 = auStack_38;
+    lVar8 = 0x20;
     do {
-      pbVar11 = pbVar11 + -1;
-      bdTag::~bdTag(pbVar11);
-      lVar10 = lVar10 + -1;
-    } while (-1 < lVar10);
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
     __restgprlr_27();
     return;
   }
-  Com_PrintError(0x10,
-                 "[CL_Demo_SaveScreenshot] Cannot save screenshot if you are not playing a demo.\n")
-  ;
-  pbVar11 = abStack_38;
-  lVar10 = 0x20;
+  Com_PrintError(0x10,0xffffffff821dc440);
+  puVar9 = auStack_38;
+  lVar8 = 0x20;
   do {
-    pbVar11 = pbVar11 + -1;
-    bdTag::~bdTag(pbVar11);
-    lVar10 = lVar10 + -1;
-  } while (-1 < lVar10);
+    puVar9 = puVar9 + -0x18;
+    bdTag___bdTag(puVar9);
+    lVar8 = lVar8 + -1;
+  } while (-1 < lVar8);
   __restgprlr_27();
   return;
 }
@@ -526,93 +512,77 @@ void CL_Demo_SaveScreenshot(int param_1,int param_2)
 
 // 827CEC88  CL_Demo_SaveClipSummaryUploadSuccessful  (client_demo/cl_demo_contentserver.cpp:418)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_SaveClipSummaryUploadSuccessful(int param_1)
+void CL_Demo_SaveClipSummaryUploadSuccessful(undefined8 param_1)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
-  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-  CL_Demo_Error(LVar1,"MENU_NOTICE","MENU_DEMO_CLIP_UPLOAD_SUCCESS");
-  CL_Demo_SetClipModified(false);
-  OnlineVault_CloseFeederMenu(LVar1,0);
+  uVar1 = CL_LocalClientNumFromControllerIndex();
+  CL_Demo_Error(uVar1,0xffffffff8208bd7c,0xffffffff821dbf94);
+  CL_Demo_SetClipModified(0);
+  OnlineVault_CloseFeederMenu(uVar1,0);
   OnlineVault_Refresh(param_1);
-  Com_Printf(0x10,"[CL_Demo_SaveClipSummaryUploadSuccessful] Finished writing file\n");
+  Com_Printf(0x10,0xffffffff821dbf50);
   return;
 }
 
 
 // 827CED00  CL_Demo_SaveClipSummaryUploadFailure  (client_demo/cl_demo_contentserver.cpp:437)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_SaveClipSummaryUploadFailure(int param_1,bdLobbyErrorCode param_2)
+void CL_Demo_SaveClipSummaryUploadFailure(undefined8 param_1)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
-  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-  CL_Demo_Error(LVar1,"MENU_ERROR","MENU_DEMO_CLIP_UPLOAD_FAILURE");
-  OnlineVault_CloseProgressIndicatorMenu(LVar1);
+  uVar1 = CL_LocalClientNumFromControllerIndex();
+  CL_Demo_Error(uVar1,0xffffffff8208bd88,0xffffffff821dbfec);
+  OnlineVault_CloseProgressIndicatorMenu(uVar1);
   OnlineVault_Refresh(param_1);
-  Com_PrintError(0x10,"[CL_Demo_SaveClipSummaryUploadFailure] Failed to write\n");
+  Com_PrintError(0x10,0xffffffff821dbfb4);
   return;
 }
 
 
 // 827CED70  CL_Demo_SaveClipSuccessful  (client_demo/cl_demo_contentserver.cpp:457)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_Demo_SaveClipSuccessful(int param_1,ulong64 param_2)
+void CL_Demo_SaveClipSuccessful(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  clientDemoPlayback_t *pcVar2;
-  uint uVar3;
-  uchar *puVar4;
-  int *piVar5;
-  contentServerUploadSummaryInfo local_70 [2];
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int *piVar4;
+  undefined1 local_70 [8];
+  undefined8 local_68;
+  undefined8 local_60;
+  undefined8 local_58;
+  undefined8 local_50;
   
-  iVar1 = __savegprlr_25(param_1);
-  pcVar2 = CL_Demo_GetPlaybackData();
-  piVar5 = &pcVar2->segments[0].thumbnailImageSize;
-  local_70[0].m_fileID = 0;
-  local_70[0].m_summaryData = (void *)0x0;
-  local_70[0].m_summaryDataSize = 0;
-  local_70[0].m_metaData = (void *)0x0;
-  local_70[0].m_metaDataSize = 0;
-  local_70[0].m_numTags = 0;
-  local_70[0].m_tags = (bdTag *)0x0;
-  local_70[0].m_successCallback = (_func___cdecl_void_int *)0x0;
-  local_70[0].m_failureCallback = (_func___cdecl_void_int_bdLobbyErrorCode *)0x0;
-  if (*piVar5 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_contentserver.cpp"
-                    ,0x1d1,0,"%s");
+  uVar1 = __savegprlr_25();
+  iVar2 = CL_Demo_GetPlaybackData();
+  piVar4 = (int *)(iVar2 + 0x51e8e0);
+  local_68 = 0;
+  local_60 = 0;
+  local_58 = 0;
+  local_50 = 0;
+  if (*piVar4 < 1) {
+    MyAssertHandler(0xffffffff821dbcc8,0x1d1,0,0xffffffff82000f98,0xffffffff821dc084);
   }
-  if (*piVar5 + 4U < 0x10000) {
-    puVar4 = pcVar2->segments[0].thumbnailImageBuf;
-    uVar3 = Com_BlockChecksumKey32(puVar4,*piVar5,0);
-    *(uint *)(pcVar2->segments[0].thumbnailImageBuf + *piVar5) = uVar3;
-    *piVar5 = *piVar5 + 4;
-    local_70[0].m_summaryData = puVar4;
-    local_70[0].m_summaryDataSize = *piVar5;
-    local_70[0].m_metaData = (void *)0x0;
-    local_70[0].m_metaDataSize = 0;
-    local_70[0].m_numTags = 0;
-    local_70[0].m_tags = (bdTag *)0x0;
-    local_70[0].m_successCallback = CL_Demo_SaveClipSummaryUploadSuccessful;
-    local_70[0].m_failureCallback = CL_Demo_SaveClipSummaryUploadFailure;
-    local_70[0].m_fileID = param_2;
-    LiveStorage_CS_UploadSummaryMetadata(iVar1,local_70);
-    Com_Printf(0x10,"[CL_Demo_SaveClip] Finished writing file %lld\n");
+  if (*piVar4 + 4U < 0x10000) {
+    uVar3 = Com_BlockChecksumKey32(iVar2 + 0x51e8e4,*piVar4,0);
+    *(undefined4 *)(iVar2 + *piVar4 + 0x51e8e4) = uVar3;
+    *piVar4 = *piVar4 + 4;
+    local_68 = CONCAT44(iVar2 + 0x51e8e4,*piVar4);
+    local_60 = 0;
+    local_58 = 0;
+    local_50 = 0x827cec88827ced00;
+    LiveStorage_CS_UploadSummaryMetadata(uVar1,local_70);
+    Com_Printf(0x10,0xffffffff821dc054,param_2);
     __restgprlr_25();
     return;
   }
-  Com_Printf(0x10,"[CL_Demo_SaveClip] Uploading of summary file failed for id %lld\n");
-  CL_Demo_SaveClipSummaryUploadFailure(iVar1,BD_NO_ERROR);
+  Com_Printf(0x10,0xffffffff821dc010,param_2);
+  CL_Demo_SaveClipSummaryUploadFailure(uVar1,0);
   __restgprlr_25();
   return;
 }
@@ -620,143 +590,129 @@ void CL_Demo_SaveClipSuccessful(int param_1,ulong64 param_2)
 
 // 827CEEB0  CL_Demo_SaveClipFailure  (client_demo/cl_demo_contentserver.cpp:503)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_SaveClipFailure(int param_1,bdLobbyErrorCode param_2)
+void CL_Demo_SaveClipFailure(void)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
-  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-  CL_Demo_Error(LVar1,"MENU_ERROR","MENU_DEMO_CLIP_UPLOAD_FAILURE");
-  OnlineVault_CloseProgressIndicatorMenu(LVar1);
-  Com_PrintError(0x10,"[CL_Demo_SaveClip] Failed to write\n");
+  uVar1 = CL_LocalClientNumFromControllerIndex();
+  CL_Demo_Error(uVar1,0xffffffff8208bd88,0xffffffff821dbfec);
+  OnlineVault_CloseProgressIndicatorMenu(uVar1);
+  Com_PrintError(0x10,0xffffffff821dc0b4);
   return;
 }
 
 
 // 827CEF08  CL_Demo_PopulateClipFooterFromFilmFooter  (client_demo/cl_demo_contentserver.cpp:521)
 
-void CL_Demo_PopulateClipFooterFromFilmFooter
-               (clientDemoFooter_t *param_1,clientDemoFooter_t *param_2)
+void CL_Demo_PopulateClipFooterFromFilmFooter(void *param_1,void *param_2)
 
 {
-  uint uVar1;
+  void *pvVar1;
+  undefined4 uVar2;
   
-  memset();
-  memcpy();
-  param_2->numConnectedPlayers = 0;
-  memset();
-  param_2->numBookmarks = 0;
-  memset();
-  (param_2->info).startTime = 0;
-  (param_2->info).endTime = streamingState.totalDuration;
-  uVar1 = LiveStorage_GetUTC();
-  (param_2->info).createTime = uVar1;
+  memset(param_2,0,0xf88);
+  memcpy(param_2,param_1,0xf88);
+  *(undefined4 *)((int)param_2 + 0x618) = 0;
+  memset((void *)((int)param_2 + 600),0,0x3c0);
+  *(undefined4 *)((int)param_2 + 0xf80) = 0;
+  pvVar1 = memset((void *)((int)param_2 + 0x620),0,0x960);
+  *(undefined4 *)((int)param_2 + 4) = 0;
+  *(undefined4 *)((int)param_2 + 8) = DAT_8484f268;
+  uVar2 = LiveStorage_GetUTC(pvVar1);
+  *(undefined4 *)((int)param_2 + 0x250) = uVar2;
   return;
 }
 
 
 // 827CEFA8  CL_Demo_MoveToNextPhaseForClip  (client_demo/cl_demo_contentserver.cpp:545)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Demo_MoveToNextPhaseForClip(void)
 
 {
   int iVar1;
   
-  if ((uint)streamingState.phase < 5) {
-    if (streamingState.phase == 1) {
+  if (DAT_8484f260 < 5) {
+    if (DAT_8484f260 == 1) {
       iVar1 = CL_Demo_GetSegmentCount();
-      streamingState.phase = ((uint)LZCOUNT((iVar1 + -1) - streamingState.segmentNo) >> 5) + 2;
+      DAT_8484f260 = ((uint)LZCOUNT((iVar1 + -1) - DAT_8484f264) >> 5) + 2;
     }
-    else if (streamingState.phase == 2) {
-      streamingState.segmentNo = streamingState.segmentNo + 1;
-      streamingState.phase = 1;
+    else if (DAT_8484f260 == 2) {
+      DAT_8484f264 = DAT_8484f264 + 1;
+      DAT_8484f260 = 1;
     }
-    else if (streamingState.phase == 3) {
-      streamingState.phase = 4;
+    else if (DAT_8484f260 == 3) {
+      DAT_8484f260 = 4;
     }
-    else if (streamingState.phase == 0) {
-      streamingState.phase = 1;
+    else if (DAT_8484f260 == 0) {
+      DAT_8484f260 = 1;
     }
     else {
-      streamingState.phase = 5;
+      DAT_8484f260 = 5;
     }
   }
-  streamingState.isEnteringState = true;
+  DAT_8484f26c = 1;
   return;
 }
 
 
 // 827CF050  CL_Demo_SetupClipStreamingState  (client_demo/cl_demo_contentserver.cpp:588)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
 void CL_Demo_SetupClipStreamingState(void)
 
 {
   int iVar1;
-  bool bVar5;
-  LocalClientNum_t LVar2;
-  clientDemoPlayback_t *pcVar3;
-  clientConnection_t *pcVar4;
-  _func___cdecl_void_void_ptr_int_int **pp_Var6;
+  char cVar5;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
   undefined1 local_fe0 [16];
-  clientDemoFooter_t cStack_fd0;
+  undefined1 auStack_fd0 [4048];
   
   __savegprlr_25();
-  bVar5 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (!bVar5) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_contentserver.cpp"
-                    ,0x254,0,"%s");
+  cVar5 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (cVar5 == '\0') {
+    MyAssertHandler(0xffffffff821dbcc8,0x254,0,0xffffffff82000f98,0xffffffff821dc0d8);
   }
-  LVar2 = CL_LocalClientNumFromControllerIndex(streamingState.controllerIndex);
-  pcVar3 = CL_Demo_GetPlaybackData();
-  pcVar4 = CL_GetLocalClientConnection(LVar2);
-  if ((uint)streamingState.phase < 5) {
-    if (streamingState.phase == 1) {
-      streamingState.bufferSize = pcVar3->segments[streamingState.segmentNo].size;
-      streamingState.totalDuration =
-           pcVar3->segments[streamingState.segmentNo].duration + streamingState.totalDuration;
-      streamingState.buffer =
-           pcVar3->clipRecordBuf + pcVar3->segments[streamingState.segmentNo].clipBufferIndex;
+  uVar2 = CL_LocalClientNumFromControllerIndex(DAT_8484f250);
+  iVar3 = CL_Demo_GetPlaybackData();
+  iVar4 = CL_GetLocalClientConnection(uVar2);
+  if (DAT_8484f260 < 5) {
+    if (DAT_8484f260 == 1) {
+      iVar4 = DAT_8484f264 * 0x100a8 + iVar3;
+      DAT_8484f258 = *(int *)(iVar4 + 0x51e8d4);
+      DAT_8484f268 = *(int *)(iVar4 + 0x51e8dc) + DAT_8484f268;
+      DAT_8484f254 = *(int *)(iVar4 + 0x51e8d0) + iVar3 + 0x31e1f8;
     }
-    else if (streamingState.phase == 2) {
-      streamingState.bufferSize =
-           CL_Demo_WriteTransitionClipCommandBlockToBuffer
-                     (pcVar3->segments[streamingState.segmentNo].transition,
-                      pcVar3->clipTransitionBuffer,0x10);
-      streamingState.buffer = pcVar3->clipTransitionBuffer;
+    else if (DAT_8484f260 == 2) {
+      DAT_8484f258 = CL_Demo_WriteTransitionClipCommandBlockToBuffer
+                               (*(undefined4 *)(DAT_8484f264 * 0x100a8 + iVar3 + 0x51e8d8),
+                                iVar3 + 0x51e4ac,0x10);
+      DAT_8484f254 = iVar3 + 0x51e4ac;
     }
-    else if (streamingState.phase == 3) {
-      iVar1 = pcVar3->clipRecordBufIndex;
+    else if (DAT_8484f260 == 3) {
+      iVar4 = *(int *)(iVar3 + 0x51e1f8);
       local_fe0[0] = 0;
-      CL_Demo_WriteToClipRecordMemory(local_fe0,1,LVar2);
-      streamingState.buffer = pcVar3->clipRecordBuf + iVar1;
-      streamingState.bufferSize = pcVar3->clipRecordBufIndex - iVar1;
+      CL_Demo_WriteToClipRecordMemory(local_fe0,1,uVar2);
+      DAT_8484f254 = iVar4 + iVar3 + 0x31e1f8;
+      DAT_8484f258 = *(int *)(iVar3 + 0x51e1f8) - iVar4;
     }
-    else if (streamingState.phase == 0) {
-      streamingState.bufferSize = pcVar3->clipGamestateSize;
-      streamingState.buffer = pcVar3->clipRecordBuf;
+    else if (DAT_8484f260 == 0) {
+      DAT_8484f258 = *(int *)(iVar3 + 0x51e4bc);
+      DAT_8484f254 = iVar3 + 0x31e1f8;
     }
     else {
-      iVar1 = pcVar3->clipRecordBufIndex;
-      CL_Demo_PopulateClipFooterFromFilmFooter(&(pcVar4->clientDemo).footer,&cStack_fd0);
-      pp_Var6 = &(pcVar4->clientDemo).demoWrite;
-      *pp_Var6 = CL_Demo_WriteToClipRecordMemory;
-      CL_Demo_WriteFooter(LVar2,&cStack_fd0);
-      *pp_Var6 = (_func___cdecl_void_void_ptr_int_int *)0x0;
-      streamingState.buffer = pcVar3->clipRecordBuf + iVar1;
-      streamingState.bufferSize = pcVar3->clipRecordBufIndex - iVar1;
+      iVar1 = *(int *)(iVar3 + 0x51e1f8);
+      CL_Demo_PopulateClipFooterFromFilmFooter(iVar4 + 0x43278,auStack_fd0);
+      *(undefined4 *)(iVar4 + 0x54228) = CL_Demo_WriteToClipRecordMemory;
+      CL_Demo_WriteFooter(uVar2,auStack_fd0);
+      *(undefined4 *)(iVar4 + 0x54228) = 0;
+      DAT_8484f254 = iVar1 + iVar3 + 0x31e1f8;
+      DAT_8484f258 = *(int *)(iVar3 + 0x51e1f8) - iVar1;
     }
   }
-  streamingState.byteOffset = 0;
-  streamingState.isEnteringState = false;
+  DAT_8484f25c = 0;
+  DAT_8484f26c = 0;
   __restgprlr_25();
   return;
 }
@@ -764,242 +720,238 @@ void CL_Demo_SetupClipStreamingState(void)
 
 // 827CF250  CL_Demo_SendClipToStreamingBuffer  (client_demo/cl_demo_contentserver.cpp:650)
 
-uint CL_Demo_SendClipToStreamingBuffer(void *param_1,uint param_2,uint param_3)
+void CL_Demo_SendClipToStreamingBuffer(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  longlong lVar3;
+  uint uVar1;
+  void *pvVar2;
+  ulonglong uVar3;
+  size_t _Size;
+  size_t _Size_00;
   ulonglong uVar4;
-  int iVar5;
-  ulonglong uVar6;
   
-  lVar3 = (longlong)(int)param_2;
-  __savegprlr_27(param_1,lVar3,param_3);
-  if ((streamingState.phase == 5) && (streamingState.byteOffset == streamingState.bufferSize)) {
-    uVar2 = __restgprlr_27(0);
-    return uVar2;
+  pvVar2 = (void *)__savegprlr_27();
+  if ((DAT_8484f260 == 5) && (DAT_8484f25c == DAT_8484f258)) {
+    __restgprlr_27(0);
+    return;
   }
-  if (streamingState.isEnteringState != false) {
+  if (DAT_8484f26c != '\0') {
     CL_Demo_SetupClipStreamingState();
   }
-  iVar1 = streamingState.byteOffset;
-  uVar6 = (ulonglong)(uint)streamingState.byteOffset;
-  uVar4 = (ulonglong)(uint)streamingState.bufferSize;
-  iVar5 = (int)(uVar4 - uVar6);
-  if ((int)lVar3 < iVar5) {
-    memcpy();
-    streamingState.byteOffset = iVar1 + (int)lVar3;
-    uVar2 = __restgprlr_27(lVar3);
-    return uVar2;
+  uVar1 = DAT_8484f25c;
+  uVar4 = (ulonglong)DAT_8484f25c;
+  uVar3 = (ulonglong)DAT_8484f258;
+  _Size = (size_t)param_2;
+  _Size_00 = (size_t)(uVar3 - uVar4);
+  if ((int)_Size < (int)_Size_00) {
+    memcpy(pvVar2,(void *)(DAT_8484f254 + DAT_8484f25c),_Size);
+    DAT_8484f25c = uVar1 + _Size;
+    __restgprlr_27(param_2);
+    return;
   }
-  memcpy();
-  streamingState.byteOffset = iVar1 + iVar5;
-  CL_Demo_MoveToNextPhaseForClip();
-  uVar2 = __restgprlr_27(uVar4 - uVar6);
-  return uVar2;
+  pvVar2 = memcpy(pvVar2,(void *)(DAT_8484f254 + DAT_8484f25c),_Size_00);
+  DAT_8484f25c = uVar1 + _Size_00;
+  CL_Demo_MoveToNextPhaseForClip(pvVar2);
+  __restgprlr_27(uVar3 - uVar4);
+  return;
 }
 
 
 // 827CF300  CL_Demo_PopulateClipPlayerTags  (client_demo/cl_demo_contentserver.cpp:687)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_Demo_PopulateClipPlayerTags(LocalClientNum_t param_1)
+void CL_Demo_PopulateClipPlayerTags(void)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  clientDemoPlayback_t *pcVar3;
-  bool bVar4;
+  undefined4 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  void *pvVar4;
   int iVar5;
-  clientDemoTaggedPlayers_t *pcVar6;
-  clientDemoTaggedPlayers_t *pcVar7;
+  int *piVar6;
+  void *_Dst;
+  int iVar7;
   int iVar8;
-  int iVar9;
   
-  LVar2 = __savegprlr_22(param_1);
-  pcVar3 = CL_Demo_GetPlaybackData();
-  pcVar7 = &(pcVar3->clipRecordInfo).taggedPlayers;
-  memset();
+  uVar2 = __savegprlr_22();
+  iVar3 = CL_Demo_GetPlaybackData();
+  _Dst = (void *)(iVar3 + 0x51e430);
+  pvVar4 = memset(_Dst,0,0x7c);
   iVar5 = 0;
-  if (0 < pcVar3->segmentCount) {
-    pcVar6 = &pcVar3->segments[0].taggedPlayers;
-    iVar8 = 0x14ba3a;
+  if (0 < *(int *)(iVar3 + 0x5bef4c)) {
+    piVar6 = (int *)(iVar3 + 0x52e8e4);
+    iVar7 = 0x14ba3a;
     do {
-      iVar9 = 0;
-      if (0 < pcVar6->count) {
+      iVar8 = 0;
+      if (0 < *piVar6) {
         do {
-          iVar1 = pcVar3->buttonPressTime[iVar8 + iVar9 + -9];
-          bVar4 = CL_Demo_IsPlayerTagged(LVar2,pcVar7,iVar1);
-          if (!bVar4) {
-            CL_Demo_TagPlayer(pcVar7,iVar1);
+          uVar1 = *(undefined4 *)((iVar7 + iVar8) * 4 + iVar3);
+          pvVar4 = (void *)CL_Demo_IsPlayerTagged(uVar2,_Dst,uVar1);
+          if (((uint)pvVar4 & 0xff) == 0) {
+            pvVar4 = (void *)CL_Demo_TagPlayer(_Dst,uVar1);
           }
-          iVar9 = iVar9 + 1;
-        } while (iVar9 < pcVar6->count);
+          iVar8 = iVar8 + 1;
+        } while (iVar8 < *piVar6);
       }
       iVar5 = iVar5 + 1;
-      iVar8 = iVar8 + 0x402a;
-      pcVar6 = (clientDemoTaggedPlayers_t *)((int)(pcVar6 + 0x211) + 0x6c);
-    } while (iVar5 < pcVar3->segmentCount);
+      iVar7 = iVar7 + 0x402a;
+      piVar6 = piVar6 + 0x402a;
+    } while (iVar5 < *(int *)(iVar3 + 0x5bef4c));
   }
-  __restgprlr_22();
+  __restgprlr_22(pvVar4);
   return;
 }
 
 
 // 827CFE20  CL_Demo_SaveClip  (client_demo/cl_demo_contentserver.cpp:721)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_Demo_SaveClip(int param_1,int param_2)
+void CL_Demo_SaveClip(undefined8 param_1,undefined2 param_2)
 
 {
   undefined8 *puVar1;
-  int iVar2;
-  bool bVar7;
-  LocalClientNum_t LVar3;
-  clientDemoPlayback_t *pcVar4;
+  undefined8 uVar2;
+  char cVar7;
+  undefined8 uVar3;
   int iVar5;
-  clientDemoMetaInfo_t *pcVar6;
-  ushort uVar8;
-  undefined8 uVar9;
+  int iVar6;
+  undefined8 uVar4;
+  undefined8 *puVar8;
+  uint *puVar9;
   int iVar10;
-  undefined8 *puVar11;
-  int *piVar12;
-  int iVar13;
-  longlong lVar14;
-  char *pcVar15;
-  bdTag *pbVar16;
-  uint local_4c0 [2];
+  longlong lVar11;
+  undefined1 *puVar12;
+  longlong lVar13;
+  undefined4 local_4c0 [2];
   undefined8 uStack_4b8;
-  contentServerWriteFileInfo local_4b0;
-  bdTag abStack_470 [33];
-  bdTag abStack_158 [14];
+  undefined2 local_4b0 [2];
+  undefined4 uStack_4ac;
+  undefined4 local_4a8;
+  undefined1 *local_4a4;
+  undefined2 local_4a0;
+  undefined *local_49c;
+  undefined4 local_498;
+  undefined4 local_494;
+  undefined1 *local_490;
+  code *local_488;
+  code *local_484;
+  code *local_480;
+  undefined1 auStack_470 [792];
+  undefined1 auStack_158 [8];
+  undefined1 auStack_150 [336];
   
-  uVar8 = (ushort)param_2;
-  iVar2 = __savegprlr_24(param_1);
-  pbVar16 = abStack_470;
-  lVar14 = 0x20;
+  uVar2 = __savegprlr_24();
+  puVar12 = auStack_470;
+  lVar11 = 0x20;
   do {
-    bdTag::bdTag(pbVar16);
-    lVar14 = lVar14 + -1;
-    pbVar16 = pbVar16 + 1;
-  } while (-1 < lVar14);
-  bVar7 = LiveStorage_CS_IsInited(iVar2);
-  if (!bVar7) {
-    LiveStorage_CS_Init(iVar2);
+    bdTag__bdTag(puVar12);
+    lVar11 = lVar11 + -1;
+    puVar12 = puVar12 + 0x18;
+  } while (-1 < lVar11);
+  cVar7 = LiveStorage_CS_IsInited(uVar2);
+  if (cVar7 == '\0') {
+    LiveStorage_CS_Init(uVar2);
   }
-  bVar7 = LiveStorage_CS_IsAvailable(iVar2);
-  if (!bVar7) {
-    Com_PrintError(0x10,"[CL_Demo_SaveClip] Failed to write, LiveStorage_CS_IsAvailable = false\n");
-    pbVar16 = abStack_158;
-    lVar14 = 0x20;
+  cVar7 = LiveStorage_CS_IsAvailable(uVar2);
+  if (cVar7 == '\0') {
+    Com_PrintError(0x10,0xffffffff821dc568);
+    puVar12 = auStack_158;
+    lVar11 = 0x20;
     do {
-      pbVar16 = pbVar16 + -1;
-      bdTag::~bdTag(pbVar16);
-      lVar14 = lVar14 + -1;
-    } while (-1 < lVar14);
+      puVar12 = puVar12 + -0x18;
+      bdTag___bdTag(puVar12);
+      lVar11 = lVar11 + -1;
+    } while (-1 < lVar11);
     __restgprlr_24();
     return;
   }
-  LVar3 = CL_LocalClientNumFromControllerIndex(iVar2);
-  bVar7 = CL_Demo_IsPlaying(LVar3);
-  if ((!bVar7) || (bVar7 = CL_Demo_IsPlaybackMemoryAllocated(), !bVar7)) {
-    Com_PrintError(0x10,"[CL_Demo_SaveClip] Cannot save screenshot if you are not playing a demo.\n"
-                  );
-    pbVar16 = abStack_158;
-    lVar14 = 0x20;
+  uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+  cVar7 = CL_Demo_IsPlaying();
+  if ((cVar7 == '\0') || (cVar7 = CL_Demo_IsPlaybackMemoryAllocated(), cVar7 == '\0')) {
+    Com_PrintError(0x10,0xffffffff821dc4e8);
+    puVar12 = auStack_158;
+    lVar11 = 0x20;
     do {
-      pbVar16 = pbVar16 + -1;
-      bdTag::~bdTag(pbVar16);
-      lVar14 = lVar14 + -1;
-    } while (-1 < lVar14);
+      puVar12 = puVar12 + -0x18;
+      bdTag___bdTag(puVar12);
+      lVar11 = lVar11 + -1;
+    } while (-1 < lVar11);
     __restgprlr_24();
     return;
   }
-  CL_GetLocalClientConnection(LVar3);
-  pcVar4 = CL_Demo_GetPlaybackData();
-  lVar14 = 6;
+  lVar11 = CL_GetLocalClientConnection(uVar3);
+  iVar5 = CL_Demo_GetPlaybackData();
+  lVar13 = 6;
   puVar1 = &uStack_4b8;
   do {
-    puVar11 = puVar1;
-    puVar1 = puVar11 + 1;
+    puVar8 = puVar1;
+    puVar1 = puVar8 + 1;
     *puVar1 = 0;
-    lVar14 = lVar14 + -1;
-  } while (lVar14 != 0);
-  *(undefined4 *)(puVar11 + 2) = 0;
-  Com_sprintf((char *)&abStack_158[0].m_priTag,0x100,"%s_c.demo");
-  local_4b0.m_fileName = (char *)&abStack_158[0].m_priTag;
-  local_4b0.m_fileData = (void *)0x0;
-  uVar9 = 2;
-  pcVar15 = (char *)0x0;
-  local_4b0.m_category = 2;
-  iVar13 = 0;
-  local_4b0.m_fileSize = pcVar4->clipRecordBufIndex;
-  local_4b0.m_fileSlot = uVar8;
-  iVar5 = CL_Demo_GetSegmentCount();
-  if (0 < iVar5) {
-    piVar12 = (int *)(pcVar4->clipRecordBuf + 0x1f063c);
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  *(undefined4 *)(puVar8 + 2) = 0;
+  Com_sprintf(auStack_150,0x100,0xffffffff821dc55c,lVar11 + 0x40148);
+  local_4a4 = auStack_150;
+  uStack_4ac = 0;
+  lVar11 = 0;
+  local_4a0 = 2;
+  iVar10 = 0;
+  local_4a8 = *(undefined4 *)(iVar5 + 0x51e1f8);
+  local_4b0[0] = param_2;
+  iVar6 = CL_Demo_GetSegmentCount();
+  if (0 < iVar6) {
+    puVar9 = (uint *)(iVar5 + 0x50e834);
     do {
-      piVar12 = piVar12 + 0x402a;
-      iVar13 = iVar13 + 1;
-      pcVar15 = pcVar15 + *piVar12;
-      iVar5 = CL_Demo_GetSegmentCount();
-      iVar10 = (int)uVar9;
-    } while (iVar13 < iVar5);
-    if (999 < (int)pcVar15) {
-      pcVar6 = (clientDemoMetaInfo_t *)CL_GetUsernameForLocalClient(iVar2);
-      local_4b0.m_thumbDataSize =
-           CL_Demo_SetMetaData((int)&pcVar4->clipRecordInfo,pcVar6,pcVar15,iVar10);
-      local_4b0.m_thumbData = &g_onlineVaultWriteBuffer;
-      CL_Demo_PopulateClipPlayerTags(LVar3);
+      puVar9 = puVar9 + 0x402a;
+      iVar10 = iVar10 + 1;
+      lVar11 = (ulonglong)*puVar9 + lVar11;
+      iVar6 = CL_Demo_GetSegmentCount();
+    } while (iVar10 < iVar6);
+    if (999 < (int)lVar11) {
+      uVar4 = CL_GetUsernameForLocalClient(uVar2);
+      local_498 = CL_Demo_SetMetaData(iVar5 + 0x51e1fc,uVar4,lVar11);
+      local_49c = &DAT_8487ce50;
+      CL_Demo_PopulateClipPlayerTags(uVar3);
       local_4c0[0] = 0;
-      CL_Demo_SetTags(iVar2,(int *)local_4c0,abStack_470,&pcVar4->clipRecordInfo,
-                      local_4b0.m_category);
-      streamingState.isEnteringState = true;
-      streamingState.buffer = (uchar *)0x0;
-      streamingState.bufferSize = 0;
-      local_4b0.m_tags = abStack_470;
-      streamingState.phase = 0;
-      streamingState.segmentNo = 0;
-      streamingState.byteOffset = 0;
-      streamingState.totalDuration = 0;
-      local_4b0.m_dataCallback = CL_Demo_SendClipToStreamingBuffer;
-      local_4b0.m_successCallback = CL_Demo_SaveClipSuccessful;
-      local_4b0.m_failureCallback = CL_Demo_SaveClipFailure;
-      local_4b0.m_numTags = local_4c0[0];
-      streamingState.controllerIndex = iVar2;
-      iVar5 = LiveStorage_CS_WriteFile(iVar2,&local_4b0);
+      CL_Demo_SetTags(uVar2,local_4c0,auStack_470,iVar5 + 0x51e1fc,local_4a0);
+      DAT_8484f250 = (undefined4)uVar2;
+      DAT_8484f26c = 1;
+      DAT_8484f254 = 0;
+      DAT_8484f258 = 0;
+      local_490 = auStack_470;
+      DAT_8484f260 = 0;
+      DAT_8484f264 = 0;
+      DAT_8484f25c = 0;
+      DAT_8484f268 = 0;
+      local_488 = CL_Demo_SendClipToStreamingBuffer;
+      local_484 = CL_Demo_SaveClipSuccessful;
+      local_480 = CL_Demo_SaveClipFailure;
+      local_494 = local_4c0[0];
+      iVar5 = LiveStorage_CS_WriteFile(uVar2,local_4b0);
       if (iVar5 == 0) {
-        CL_Demo_Error(LVar3,"MENU_ERROR","MENU_DEMO_CLIP_UPLOAD_FAILURE");
+        CL_Demo_Error(uVar3,0xffffffff8208bd88,0xffffffff821dbfec);
       }
       else {
-        LVar3 = CL_LocalClientNumFromControllerIndex(iVar2);
-        OnlineVault_OpenProgressIndicatorMenu(LVar3);
+        CL_LocalClientNumFromControllerIndex(uVar2);
+        OnlineVault_OpenProgressIndicatorMenu();
       }
-      pbVar16 = abStack_158;
-      lVar14 = 0x20;
+      puVar12 = auStack_158;
+      lVar11 = 0x20;
       do {
-        pbVar16 = pbVar16 + -1;
-        bdTag::~bdTag(pbVar16);
-        lVar14 = lVar14 + -1;
-      } while (-1 < lVar14);
+        puVar12 = puVar12 + -0x18;
+        bdTag___bdTag(puVar12);
+        lVar11 = lVar11 + -1;
+      } while (-1 < lVar11);
       __restgprlr_24();
       return;
     }
   }
-  CL_Demo_Error(LVar3,"MENU_ERROR","MENU_DEMO_TOTAL_DURATION_LESS_THAN_ONE");
-  pbVar16 = abStack_158;
-  lVar14 = 0x20;
+  CL_Demo_Error(uVar3,0xffffffff8208bd88,0xffffffff821dc534);
+  puVar12 = auStack_158;
+  lVar11 = 0x20;
   do {
-    pbVar16 = pbVar16 + -1;
-    bdTag::~bdTag(pbVar16);
-    lVar14 = lVar14 + -1;
-  } while (-1 < lVar14);
+    puVar12 = puVar12 + -0x18;
+    bdTag___bdTag(puVar12);
+    lVar11 = lVar11 + -1;
+  } while (-1 < lVar11);
   __restgprlr_24();
   return;
 }
@@ -1007,21 +959,19 @@ void CL_Demo_SaveClip(int param_1,int param_2)
 
 // 827CF3D8  CL_Demo_SaveFilmSuccessful  (client_demo/cl_demo_contentserver.cpp:814)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_SaveFilmSuccessful(int param_1,ulong64 param_2)
+void CL_Demo_SaveFilmSuccessful(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-  CL_Demo_Error(LVar2,"MENU_NOTICE","MENU_DEMO_FILM_UPLOAD_SUCCESS");
-  CL_Demo_CloseFileInternal(streamingState.handle);
-  OnlineVault_CloseFeederMenu(LVar2,0);
-  OnlineVault_Refresh(iVar1);
-  Com_Printf(0x10,"[CL_Demo_SaveFilmSuccessful] Finished writing file %lld\n");
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  CL_Demo_Error(uVar2,0xffffffff8208bd7c,0xffffffff821dc138);
+  CL_Demo_CloseFileInternal(DAT_8484f270);
+  OnlineVault_CloseFeederMenu(uVar2,0);
+  OnlineVault_Refresh(uVar1);
+  Com_Printf(0x10,0xffffffff821dc0fc,param_2);
   __restgprlr_29();
   return;
 }
@@ -1029,237 +979,233 @@ void CL_Demo_SaveFilmSuccessful(int param_1,ulong64 param_2)
 
 // 827CF448  CL_Demo_SaveFilmFailure  (client_demo/cl_demo_contentserver.cpp:833)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_SaveFilmFailure(int param_1,bdLobbyErrorCode param_2)
+void CL_Demo_SaveFilmFailure(undefined8 param_1)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
-  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-  CL_Demo_Error(LVar1,"MENU_ERROR","MENU_DEMO_FILM_UPLOAD_FAILURE");
-  CL_Demo_CloseFileInternal(streamingState.handle);
-  OnlineVault_CloseProgressIndicatorMenu(LVar1);
+  uVar1 = CL_LocalClientNumFromControllerIndex();
+  CL_Demo_Error(uVar1,0xffffffff8208bd88,0xffffffff821dc184);
+  CL_Demo_CloseFileInternal(DAT_8484f270);
+  OnlineVault_CloseProgressIndicatorMenu(uVar1);
   OnlineVault_Refresh(param_1);
-  Com_PrintError(0x10,"[CL_Demo_SaveFilmFailure] Failed to write\n");
+  Com_PrintError(0x10,0xffffffff821dc158);
   return;
 }
 
 
 // 827CF4C8  CL_Demo_SendFilmToStreamingBuffer  (client_demo/cl_demo_contentserver.cpp:854)
 
-uint CL_Demo_SendFilmToStreamingBuffer(void *param_1,uint param_2,uint param_3)
+void CL_Demo_SendFilmToStreamingBuffer(undefined8 param_1,longlong param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  longlong lVar3;
-  int iVar4;
-  longlong lVar5;
+  void *_Dst;
+  size_t sVar1;
+  longlong lVar2;
+  int iVar3;
+  size_t _Size;
   undefined1 auStack_1020 [4128];
   
-  lVar3 = (longlong)(int)param_2;
-  __savegprlr_29(param_1,lVar3,param_3);
-  if (streamingState.byteOffset != streamingState.bufferSize) {
-    lVar5 = (ulonglong)(uint)streamingState.bufferSize - (ulonglong)(uint)streamingState.byteOffset;
-    iVar1 = (int)lVar5;
-    if ((int)lVar3 < iVar1) {
-      lVar5 = lVar3;
-      iVar1 = (int)lVar3;
+  _Dst = (void *)__savegprlr_29();
+  if (DAT_8484f25c != DAT_8484f258) {
+    lVar2 = (ulonglong)DAT_8484f258 - (ulonglong)DAT_8484f25c;
+    iVar3 = (int)lVar2;
+    if ((int)param_2 < iVar3) {
+      lVar2 = param_2;
+      iVar3 = (int)param_2;
     }
-    if (0x1000 < iVar1) {
-      lVar5 = 0x1000;
+    if (0x1000 < iVar3) {
+      lVar2 = 0x1000;
     }
-    iVar4 = (int)lVar5;
-    iVar1 = CL_Demo_ReadInternal(streamingState.handle,auStack_1020,iVar4);
-    if (iVar1 == iVar4) {
-      memcpy();
-      streamingState.byteOffset = streamingState.byteOffset + iVar4;
-      uVar2 = __restgprlr_29(lVar5);
-      return uVar2;
+    sVar1 = CL_Demo_ReadInternal(DAT_8484f270,auStack_1020,lVar2);
+    _Size = (size_t)lVar2;
+    if (sVar1 == _Size) {
+      memcpy(_Dst,auStack_1020,_Size);
+      DAT_8484f25c = DAT_8484f25c + _Size;
+      __restgprlr_29(lVar2);
+      return;
     }
-    dwCSAbortOperation(streamingState.controllerIndex);
+    dwCSAbortOperation(DAT_8484f250);
   }
-  uVar2 = __restgprlr_29(0);
-  return uVar2;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 827D0130  CL_Demo_SaveFilm  (client_demo/cl_demo_contentserver.cpp:892)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_SaveFilm(int param_1,int param_2)
+void CL_Demo_SaveFilm(undefined8 param_1,undefined2 param_2)
 
 {
-  int iVar1;
-  bool bVar7;
-  LocalClientNum_t LVar2;
-  connstate_t cVar3;
-  clientDemoDeviceEnumInfo_t *pcVar4;
-  void *pvVar5;
-  int iVar6;
-  ushort uVar8;
-  int *piVar9;
-  int *piVar10;
-  longlong lVar11;
-  bdTag *pbVar12;
-  uint local_17e0;
-  int local_17dc;
-  int local_17d8 [2];
-  contentServerWriteFileInfo local_17d0;
-  bdTag abStack_1790 [33];
-  bdTag abStack_1478 [11];
-  char acStack_1370 [256];
-  clientDemoMetaInfo_t cStack_1270;
-  clientDemoFooter_t cStack_fc0;
+  uint *puVar1;
+  undefined8 uVar2;
+  char cVar6;
+  int iVar4;
+  ulonglong uVar3;
+  int iVar5;
+  uint *puVar7;
+  longlong lVar8;
+  undefined1 *puVar9;
+  undefined4 local_17e0;
+  undefined4 local_17dc;
+  uint local_17d8 [2];
+  undefined2 local_17d0 [2];
+  undefined4 uStack_17cc;
+  undefined4 local_17c8;
+  undefined1 *local_17c4;
+  undefined2 local_17c0;
+  undefined *local_17bc;
+  undefined4 local_17b8;
+  undefined4 local_17b4;
+  undefined1 *local_17b0;
+  code *local_17a8;
+  code *local_17a4;
+  code *local_17a0;
+  undefined1 auStack_1790 [792];
+  undefined1 auStack_1478 [8];
+  undefined1 auStack_1470 [256];
+  undefined1 auStack_1370 [256];
+  undefined1 auStack_1270 [688];
+  undefined1 auStack_fc0 [4032];
   
-  uVar8 = (ushort)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  pbVar12 = abStack_1790;
-  lVar11 = 0x20;
+  uVar2 = __savegprlr_26();
+  puVar9 = auStack_1790;
+  lVar8 = 0x20;
   do {
-    bdTag::bdTag(pbVar12);
-    lVar11 = lVar11 + -1;
-    pbVar12 = pbVar12 + 1;
-  } while (-1 < lVar11);
-  bVar7 = LiveStorage_CS_IsInited(iVar1);
-  if (!bVar7) {
-    LiveStorage_CS_Init(iVar1);
+    bdTag__bdTag(puVar9);
+    lVar8 = lVar8 + -1;
+    puVar9 = puVar9 + 0x18;
+  } while (-1 < lVar8);
+  cVar6 = LiveStorage_CS_IsInited(uVar2);
+  if (cVar6 == '\0') {
+    LiveStorage_CS_Init(uVar2);
   }
-  bVar7 = LiveStorage_CS_IsAvailable(iVar1);
-  if (!bVar7) {
-    Com_PrintError(0x10,"[CL_Demo_SaveFilm] Failed to write, LiveStorage_CS_IsAvailable = false\n");
-    pbVar12 = abStack_1478;
-    lVar11 = 0x20;
+  cVar6 = LiveStorage_CS_IsAvailable(uVar2);
+  if (cVar6 == '\0') {
+    Com_PrintError(0x10,0xffffffff821dc290);
+    puVar9 = auStack_1478;
+    lVar8 = 0x20;
     do {
-      pbVar12 = pbVar12 + -1;
-      bdTag::~bdTag(pbVar12);
-      lVar11 = lVar11 + -1;
-    } while (-1 < lVar11);
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
     __restgprlr_26();
     return;
   }
-  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-  cVar3 = CL_GetLocalClientConnectionState(LVar2);
-  if (cVar3 != CA_DISCONNECTED) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_contentserver.cpp"
-                    ,0x395,0,"%s");
+  CL_LocalClientNumFromControllerIndex(uVar2);
+  iVar4 = CL_GetLocalClientConnectionState();
+  if (iVar4 != 0) {
+    MyAssertHandler(0xffffffff821dbcc8,0x395,0,0xffffffff82000f98,0xffffffff821dc5b0);
   }
-  pcVar4 = CL_Demo_GetDeviceEnumInfo(iVar1);
-  Com_sprintf((char *)&abStack_1478[0].m_priTag,0x100,"%s.demo");
-  pvVar5 = CL_Demo_OpenFileForRead(iVar1,(char *)&abStack_1478[0].m_priTag,"GAME_REPLAY_FILE");
-  if (pvVar5 == (void *)0x0) {
-    CL_Demo_SaveFilmFailure(iVar1,BD_NO_ERROR);
-    pbVar12 = abStack_1478;
-    lVar11 = 0x20;
+  iVar4 = CL_Demo_GetDeviceEnumInfo(uVar2);
+  Com_sprintf(auStack_1470,0x100,0xffffffff821db7f8,*(int *)(iVar4 + 0x14) * 0x2d0 + iVar4 + 0x228);
+  uVar3 = CL_Demo_OpenFileForRead(uVar2,auStack_1470,0xffffffff821db7e4);
+  if ((uVar3 & 0xffffffff) == 0) {
+    CL_Demo_SaveFilmFailure(uVar2,0);
+    puVar9 = auStack_1478;
+    lVar8 = 0x20;
     do {
-      pbVar12 = pbVar12 + -1;
-      bdTag::~bdTag(pbVar12);
-      lVar11 = lVar11 + -1;
-    } while (-1 < lVar11);
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
     __restgprlr_26();
     return;
   }
-  streamingState.handle = pvVar5;
-  iVar6 = CL_Demo_SeekFile(pvVar5,-8,1);
-  if (iVar6 != 0) {
-    CL_Demo_SaveFilmFailure(iVar1,BD_NO_ERROR);
-    pbVar12 = abStack_1478;
-    lVar11 = 0x20;
+  DAT_8484f270 = (undefined4)uVar3;
+  iVar5 = CL_Demo_SeekFile(uVar3,0xfffffffffffffff8,1);
+  if (iVar5 != 0) {
+    CL_Demo_SaveFilmFailure(uVar2,0);
+    puVar9 = auStack_1478;
+    lVar8 = 0x20;
     do {
-      pbVar12 = pbVar12 + -1;
-      bdTag::~bdTag(pbVar12);
-      lVar11 = lVar11 + -1;
-    } while (-1 < lVar11);
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
     __restgprlr_26();
     return;
   }
-  CL_Demo_ReadInternal(pvVar5,local_17d8,4);
-  CL_Demo_ReadInternal(pvVar5,&local_17dc,4);
-  iVar6 = CL_Demo_SeekFile(pvVar5,-8 - local_17d8[0],1);
-  if (iVar6 != 0) {
-    CL_Demo_SaveFilmFailure(iVar1,BD_NO_ERROR);
-    pbVar12 = abStack_1478;
-    lVar11 = 0x20;
+  CL_Demo_ReadInternal(uVar3,local_17d8,4);
+  CL_Demo_ReadInternal(uVar3,&local_17dc,4);
+  iVar5 = CL_Demo_SeekFile(uVar3,-8 - (ulonglong)local_17d8[0],1);
+  if (iVar5 != 0) {
+    CL_Demo_SaveFilmFailure(uVar2,0);
+    puVar9 = auStack_1478;
+    lVar8 = 0x20;
     do {
-      pbVar12 = pbVar12 + -1;
-      bdTag::~bdTag(pbVar12);
-      lVar11 = lVar11 + -1;
-    } while (-1 < lVar11);
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
     __restgprlr_26();
     return;
   }
-  iVar6 = CL_Demo_ReadFooterInternalUI(pvVar5,&cStack_fc0,local_17dc);
-  if (iVar6 == 0) {
-    CL_Demo_SaveFilmFailure(iVar1,BD_NO_ERROR);
-    pbVar12 = abStack_1478;
-    lVar11 = 0x20;
+  iVar5 = CL_Demo_ReadFooterInternalUI(uVar3,auStack_fc0,local_17dc);
+  if (iVar5 == 0) {
+    CL_Demo_SaveFilmFailure(uVar2);
+    puVar9 = auStack_1478;
+    lVar8 = 0x20;
     do {
-      pbVar12 = pbVar12 + -1;
-      bdTag::~bdTag(pbVar12);
-      lVar11 = lVar11 + -1;
-    } while (-1 < lVar11);
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
     __restgprlr_26();
     return;
   }
-  CL_Demo_SeekFile(pvVar5,0,2);
-  lVar11 = 6;
-  piVar9 = local_17d8;
+  CL_Demo_SeekFile(uVar3,0,2);
+  lVar8 = 6;
+  puVar1 = local_17d8;
   do {
-    piVar10 = piVar9;
-    piVar9 = piVar10 + 2;
-    piVar9[0] = 0;
-    piVar9[1] = 0;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
-  piVar10[4] = 0;
-  Com_sprintf(acStack_1370,0x100,"%s.demo");
-  local_17d0.m_fileName = acStack_1370;
-  local_17d0.m_fileData = (void *)0x0;
-  local_17d0.m_category = 1;
-  piVar9 = &pcVar4->metaInfo[pcVar4->index + -1].kills;
-  local_17d0.m_fileSize = piVar9[0xb9];
-  local_17d0.m_fileSlot = uVar8;
-  CL_Demo_PopulateDefaultMetaInformation
-            (&cStack_1270,pcVar4->metaInfo[pcVar4->index].mapName,
-             pcVar4->metaInfo[pcVar4->index].gameType);
-  local_17d0.m_thumbDataSize =
-       CL_Demo_SetMetaData((int)&cStack_1270,
-                           (clientDemoMetaInfo_t *)pcVar4->metaInfo[pcVar4->index].authorName,
-                           (char *)pcVar4->metaInfo[pcVar4->index].duration,(int)piVar9);
+    puVar7 = puVar1;
+    puVar1 = puVar7 + 2;
+    puVar1[0] = 0;
+    puVar1[1] = 0;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  puVar7[4] = 0;
+  Com_sprintf(auStack_1370,0x100,0xffffffff821db7f8,*(int *)(iVar4 + 0x14) * 0x2d0 + iVar4 + 0x228);
+  local_17c4 = auStack_1370;
+  uStack_17cc = 0;
+  local_17c0 = 1;
+  local_17c8 = *(undefined4 *)(*(int *)(iVar4 + 0x14) * 0x2d0 + iVar4 + 0x2e4);
+  iVar5 = *(int *)(iVar4 + 0x14) * 0x2d0 + iVar4;
+  local_17d0[0] = param_2;
+  CL_Demo_PopulateDefaultMetaInformation(auStack_1270,iVar5 + 0x128,iVar5 + 0x28);
+  iVar5 = *(int *)(iVar4 + 0x14) * 0x2d0 + iVar4;
+  local_17b8 = CL_Demo_SetMetaData(auStack_1270,iVar5 + 0x2a8,*(undefined4 *)(iVar5 + 0x24));
   local_17e0 = 0;
-  local_17d0.m_thumbData = &g_onlineVaultWriteBuffer;
-  lVar11 = (ulonglong)(uint)pcVar4->index * 0x2d0 + (longlong)(int)pcVar4;
-  iVar6 = (int)lVar11;
-  CL_Demo_SetTags((int)&local_17e0,&abStack_1790[0]._padding_,(bdTag *)&cStack_fc0,
-                  (clientDemoFooter_t *)*(undefined8 *)(iVar6 + 0x2c8),lVar11 + 0x128,
-                  (char *)(iVar6 + 0x28),(char *)(uint)local_17d0.m_category,0);
-  local_17d0.m_tags = abStack_1790;
-  streamingState.buffer = (uchar *)0x0;
-  streamingState.byteOffset = 0;
-  local_17d0.m_numTags = local_17e0;
-  streamingState.bufferSize = pcVar4->metaInfo[pcVar4->index].size;
-  local_17d0.m_dataCallback = CL_Demo_SendFilmToStreamingBuffer;
-  local_17d0.m_successCallback = CL_Demo_SaveFilmSuccessful;
-  local_17d0.m_failureCallback = CL_Demo_SaveFilmFailure;
-  streamingState.controllerIndex = iVar1;
-  iVar6 = LiveStorage_CS_WriteFile(iVar1,&local_17d0);
-  if (iVar6 == 0) {
-    LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-    CL_Demo_Error(LVar2,"MENU_ERROR","MENU_DEMO_FILM_UPLOAD_FAILURE");
+  local_17bc = &DAT_8487ce50;
+  iVar5 = *(int *)(iVar4 + 0x14) * 0x2d0 + iVar4;
+  CL_Demo_SetTags(&local_17e0,auStack_1790,auStack_fc0,*(undefined8 *)(iVar5 + 0x2c8),iVar5 + 0x128,
+                  iVar5 + 0x28,local_17c0);
+  local_17b0 = auStack_1790;
+  DAT_8484f250 = (undefined4)uVar2;
+  DAT_8484f254 = 0;
+  DAT_8484f25c = 0;
+  local_17b4 = local_17e0;
+  DAT_8484f258 = *(undefined4 *)(*(int *)(iVar4 + 0x14) * 0x2d0 + iVar4 + 0x2e4);
+  local_17a8 = CL_Demo_SendFilmToStreamingBuffer;
+  local_17a4 = CL_Demo_SaveFilmSuccessful;
+  local_17a0 = CL_Demo_SaveFilmFailure;
+  iVar4 = LiveStorage_CS_WriteFile(uVar2,local_17d0);
+  if (iVar4 == 0) {
+    uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+    CL_Demo_Error(uVar2,0xffffffff8208bd88,0xffffffff821dc184);
   }
   else {
-    LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-    OnlineVault_OpenProgressIndicatorMenu(LVar2);
+    CL_LocalClientNumFromControllerIndex(uVar2);
+    OnlineVault_OpenProgressIndicatorMenu();
   }
-  pbVar12 = abStack_1478;
-  lVar11 = 0x20;
+  puVar9 = auStack_1478;
+  lVar8 = 0x20;
   do {
-    pbVar12 = pbVar12 + -1;
-    bdTag::~bdTag(pbVar12);
-    lVar11 = lVar11 + -1;
-  } while (-1 < lVar11);
+    puVar9 = puVar9 + -0x18;
+    bdTag___bdTag(puVar9);
+    lVar8 = lVar8 + -1;
+  } while (-1 < lVar8);
   __restgprlr_26();
   return;
 }
@@ -1267,39 +1213,30 @@ void CL_Demo_SaveFilm(int param_1,int param_2)
 
 // 827D0538  CL_Demo_PopulateRenderedMovieInformationForUpload  (client_demo/cl_demo_contentserver.cpp:1016)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void CL_Demo_PopulateRenderedMovieInformationForUpload(LocalClientNum_t param_1)
+void CL_Demo_PopulateRenderedMovieInformationForUpload(void)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  clientConnection_t *pcVar3;
-  clientDemoMetaInfo_t *pcVar4;
-  char *pcVar5;
-  int iVar6;
-  ushort uVar7;
-  clientDemoMetaInfo_t cStack_2d0;
+  uint uVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  int iVar5;
+  undefined1 auStack_2d0 [720];
   
-  LVar1 = __savegprlr_29(param_1);
-  memset();
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pcVar3 = CL_GetLocalClientConnection(LVar1);
-  CL_Demo_PopulateDefaultMetaInformation
-            (&cStack_2d0,(pcVar3->clientDemo).footer.info.mapName,
-             (pcVar3->clientDemo).footer.info.gameType);
-  iVar6 = (pcVar3->clientDemo).footer.info.startTime;
-  pcVar5 = (char *)((pcVar3->clientDemo).footer.info.endTime - iVar6);
-  pcVar4 = (clientDemoMetaInfo_t *)CL_GetUsernameForLocalClient(iVar2);
-  s_renderedMovieInformation.metaDataSize =
-       CL_Demo_SetMetaData((int)&cStack_2d0,pcVar4,pcVar5,iVar6);
-  uVar7 = 7;
-  if ((cl_demo_uploadfb->current).enabled == false) {
-    uVar7 = 4;
+  uVar3 = __savegprlr_29();
+  memset(&DAT_8484f278,0,0x328);
+  uVar4 = CL_ControllerIndexFromClientNum(uVar3);
+  iVar5 = CL_GetLocalClientConnection(uVar3);
+  CL_Demo_PopulateDefaultMetaInformation(auStack_2d0,iVar5 + 0x43384,iVar5 + 0x43284);
+  uVar1 = *(uint *)(iVar5 + 0x43280);
+  uVar2 = *(uint *)(iVar5 + 0x4327c);
+  uVar3 = CL_GetUsernameForLocalClient(uVar4);
+  DAT_8484f278 = CL_Demo_SetMetaData(auStack_2d0,uVar3,(ulonglong)uVar1 - (ulonglong)uVar2);
+  uVar3 = 7;
+  if (*(char *)(DAT_8484f0cc + 0xc) == '\0') {
+    uVar3 = 4;
   }
-  CL_Demo_SetTags(iVar2,&s_renderedMovieInformation.numTags,s_renderedMovieInformation.tags,
-                  &cStack_2d0,uVar7);
+  CL_Demo_SetTags(uVar4,0xffffffff8484f598,0xffffffff8484f280,auStack_2d0,uVar3);
   __restgprlr_29();
   return;
 }
@@ -1307,35 +1244,27 @@ void CL_Demo_PopulateRenderedMovieInformationForUpload(LocalClientNum_t param_1)
 
 // 827CF570  CL_Demo_SaveRenderedMovieSuccessful  (client_demo/cl_demo_contentserver.cpp:1051)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_Demo_SaveRenderedMovieSuccessful(int param_1,ulong64 param_2)
+void CL_Demo_SaveRenderedMovieSuccessful(undefined8 param_1,undefined8 param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  LocalClientNum_t LVar3;
-  UiContext *pUVar4;
+  undefined *puVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
   
-  iVar2 = __savegprlr_29(param_1);
-  LVar3 = CL_LocalClientNumFromControllerIndex(iVar2);
-  Com_Printf(0x10,
-             "dcache: File uploaded to the content server successfully. Content server fileID: %llu\n"
-            );
+  uVar2 = __savegprlr_29();
+  uVar3 = CL_LocalClientNumFromControllerIndex();
+  Com_Printf(0x10,0xffffffff821dc1c8,param_2);
   DCache_ClearStreaming();
-  pcVar1 = s_theaterAVIUploadMenuName;
-  if ((cl_demo_uploadfb->current).enabled != false) {
-    Facebook_PostVideo(iVar2,param_2);
+  puVar1 = PTR_s_theater_avi_upload_829a34d0;
+  if (*(char *)(DAT_8484f0cc + 0xc) != '\0') {
+    Facebook_PostVideo(uVar2,param_2);
     __restgprlr_29();
     return;
   }
-  pUVar4 = UI_GetClientDC(LVar3);
-  Menus_CloseByName(pUVar4,pcVar1);
-  LVar3 = CL_LocalClientNumFromControllerIndex(iVar2);
-  CL_Demo_Error(LVar3,"MENU_NOTICE","MENU_DEMO_RENDER_UPLOAD_SUCCESS");
+  uVar3 = UI_GetClientDC(uVar3);
+  Menus_CloseByName(uVar3,puVar1);
+  uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+  CL_Demo_Error(uVar2,0xffffffff8208bd7c,0xffffffff821dc1a4);
   __restgprlr_29();
   return;
 }
@@ -1343,97 +1272,96 @@ void CL_Demo_SaveRenderedMovieSuccessful(int param_1,ulong64 param_2)
 
 // 827CF608  CL_Demo_SaveRenderedMovieFailure  (client_demo/cl_demo_contentserver.cpp:1086)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_Demo_SaveRenderedMovieFailure(int param_1,bdLobbyErrorCode param_2)
+void CL_Demo_SaveRenderedMovieFailure(undefined8 param_1)
 
 {
-  char *pcVar1;
-  LocalClientNum_t LVar2;
-  UiContext *pUVar3;
+  undefined *puVar1;
+  undefined8 uVar2;
   
-  LVar2 = CL_LocalClientNumFromControllerIndex(param_1);
-  Com_PrintError(0x10,"dcache: Could not upload file to the content server.\n");
-  pcVar1 = s_theaterAVIUploadMenuName;
-  pUVar3 = UI_GetClientDC(LVar2);
-  Menus_CloseByName(pUVar3,pcVar1);
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  Com_PrintError(0x10,0xffffffff821dc240);
+  puVar1 = PTR_s_theater_avi_upload_829a34d0;
+  uVar2 = UI_GetClientDC(uVar2);
+  Menus_CloseByName(uVar2,puVar1);
   DCache_ClearStreaming();
-  LVar2 = CL_LocalClientNumFromControllerIndex(param_1);
-  CL_Demo_Error(LVar2,"MENU_NOTICE","MENU_DEMO_RENDER_UPLOAD_FAILED");
+  uVar2 = CL_LocalClientNumFromControllerIndex(param_1);
+  CL_Demo_Error(uVar2,0xffffffff8208bd7c,0xffffffff821dc220);
   return;
 }
 
 
 // 827CF688  CL_Demo_SaveRenderedMovie  (client_demo/cl_demo_contentserver.cpp:1115)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_Demo_SaveRenderedMovie(int param_1)
+void CL_Demo_SaveRenderedMovie(undefined8 param_1)
 
 {
-  char *pcVar1;
+  undefined *puVar1;
   undefined8 *puVar2;
-  bool bVar5;
-  LocalClientNum_t LVar3;
-  UiContext *pUVar4;
-  undefined8 *puVar6;
-  longlong lVar7;
+  char cVar4;
+  undefined8 uVar3;
+  undefined8 *puVar5;
+  longlong lVar6;
   undefined8 uStack_58;
-  contentServerWriteFileInfo local_50;
+  undefined2 local_50 [2];
+  undefined4 uStack_4c;
+  undefined4 local_48;
+  char *local_44;
+  undefined2 local_40;
+  undefined *local_3c;
+  undefined4 local_38;
+  undefined4 local_34;
+  undefined *local_30;
+  undefined4 local_28;
+  code *local_24;
+  code *local_20;
   
-  bVar5 = LiveStorage_CS_IsInited(param_1);
-  if (!bVar5) {
+  cVar4 = LiveStorage_CS_IsInited();
+  if (cVar4 == '\0') {
     LiveStorage_CS_Init(param_1);
   }
-  bVar5 = LiveStorage_CS_IsAvailable(param_1);
-  if (bVar5) {
-    LVar3 = CL_LocalClientNumFromControllerIndex(param_1);
-    lVar7 = 6;
-    puVar2 = &uStack_58;
-    do {
-      puVar6 = puVar2;
-      puVar2 = puVar6 + 1;
-      *puVar2 = 0;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    *(undefined4 *)(puVar6 + 2) = 0;
-    local_50.m_fileName = "IW5GameClipWebM.avi";
-    if ((cl_demo_uploadfb->current).enabled == false) {
-      local_50.m_fileSlot = 0x1e;
-      local_50.m_category = 4;
-    }
-    else {
-      local_50.m_fileSlot = 0x1f;
-      local_50.m_category = 7;
-    }
-    local_50.m_fileData = (void *)0x0;
-    local_50.m_fileSize = 0;
-    local_50.m_dataCallback = (_func___cdecl_uint_void_ptr_uint_uint *)0x0;
-    local_50.m_thumbData = &g_onlineVaultWriteBuffer;
-    local_50.m_tags = s_renderedMovieInformation.tags;
-    local_50.m_successCallback = CL_Demo_SaveRenderedMovieSuccessful;
-    local_50.m_thumbDataSize = s_renderedMovieInformation.metaDataSize;
-    local_50.m_failureCallback = CL_Demo_SaveRenderedMovieFailure;
-    local_50.m_numTags = s_renderedMovieInformation.numTags;
-    bVar5 = DCache_UploadFromCache(param_1,1,DCACHE_LOCATION_AVI_RENDER,&local_50);
-    pcVar1 = s_theaterAVIUploadMenuName;
-    if (bVar5) {
-      pUVar4 = UI_GetClientDC(LVar3);
-      Menus_OpenByName(pUVar4,pcVar1);
-    }
-    else {
-      DCache_ClearStreaming();
-      CL_Demo_SaveRenderedMovieFailure(param_1,BD_NO_ERROR);
-    }
+  cVar4 = LiveStorage_CS_IsAvailable(param_1);
+  if (cVar4 == '\0') {
+    Com_PrintError(0x10,0xffffffff821dc290);
   }
   else {
-    Com_PrintError(0x10,"[CL_Demo_SaveFilm] Failed to write, LiveStorage_CS_IsAvailable = false\n");
+    uVar3 = CL_LocalClientNumFromControllerIndex(param_1);
+    lVar6 = 6;
+    puVar2 = &uStack_58;
+    do {
+      puVar5 = puVar2;
+      puVar2 = puVar5 + 1;
+      *puVar2 = 0;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    *(undefined4 *)(puVar5 + 2) = 0;
+    local_44 = "IW5GameClipWebM.avi";
+    if (*(char *)(DAT_8484f0cc + 0xc) == '\0') {
+      local_50[0] = 0x1e;
+      local_40 = 4;
+    }
+    else {
+      local_50[0] = 0x1f;
+      local_40 = 7;
+    }
+    uStack_4c = 0;
+    local_48 = 0;
+    local_28 = 0;
+    local_3c = &DAT_8487ce50;
+    local_30 = &DAT_8484f280;
+    local_24 = CL_Demo_SaveRenderedMovieSuccessful;
+    local_38 = DAT_8484f278;
+    local_20 = CL_Demo_SaveRenderedMovieFailure;
+    local_34 = DAT_8484f598;
+    cVar4 = DCache_UploadFromCache(param_1,1,2,local_50);
+    puVar1 = PTR_s_theater_avi_upload_829a34d0;
+    if (cVar4 == '\0') {
+      DCache_ClearStreaming();
+      CL_Demo_SaveRenderedMovieFailure(param_1,0);
+    }
+    else {
+      uVar3 = UI_GetClientDC(uVar3);
+      Menus_OpenByName(uVar3,puVar1);
+    }
   }
   return;
 }
@@ -1441,152 +1369,146 @@ void CL_Demo_SaveRenderedMovie(int param_1)
 
 // 827CF7F8  CL_Demo_DownloadFileSuccessfulPlayIt  (client_demo/cl_demo_contentserver.cpp:1201)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_DownloadFileSuccessfulPlayIt(int param_1,dwCSReadFileTask *param_2)
+void CL_Demo_DownloadFileSuccessfulPlayIt(undefined8 param_1,undefined8 *param_2)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
-  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-  Com_Printf(0x10,"[CL_Demo_DownloadFileSuccessful] Finished writing file %lld\n");
-  OnlineVault_CloseFeederMenu(LVar1,0);
-  Cbuf_AddText(LVar1,"cl_demo_play replay 1\n");
+  uVar1 = CL_LocalClientNumFromControllerIndex();
+  Com_Printf(0x10,0xffffffff821dc2f0,*param_2);
+  OnlineVault_CloseFeederMenu(uVar1,0);
+  Cbuf_AddText(uVar1,0xffffffff821dc2d8);
   return;
 }
 
 
 // 827CF860  CL_Demo_DownloadFileSuccessfulRenderIt  (client_demo/cl_demo_contentserver.cpp:1218)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_DownloadFileSuccessfulRenderIt(int param_1,dwCSReadFileTask *param_2)
+void CL_Demo_DownloadFileSuccessfulRenderIt(undefined8 param_1,undefined8 *param_2)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
-  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-  Com_Printf(0x10,"[CL_Demo_DownloadFileSuccessful] Finished writing file %lld\n");
-  OnlineVault_CloseFeederMenu(LVar1,0);
-  Cbuf_AddText(LVar1,"cl_demo_play replay 1 1\n");
+  uVar1 = CL_LocalClientNumFromControllerIndex();
+  Com_Printf(0x10,0xffffffff821dc2f0,*param_2);
+  OnlineVault_CloseFeederMenu(uVar1,0);
+  Cbuf_AddText(uVar1,0xffffffff821dc330);
   return;
 }
 
 
 // 827CF8C8  CL_Demo_DownloadFileFailure  (client_demo/cl_demo_contentserver.cpp:1235)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_DownloadFileFailure(int param_1,bdLobbyErrorCode param_2)
+void CL_Demo_DownloadFileFailure(void)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
-  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-  if (g_onlineVaultIgnoreDownloadErrorMessage == false) {
-    CL_Demo_Error(LVar1,"MENU_ERROR","MENU_ONLINEVAULT_FILENOTFOUND");
+  uVar1 = CL_LocalClientNumFromControllerIndex();
+  if (DAT_8487cf4f == '\0') {
+    CL_Demo_Error(uVar1,0xffffffff8208bd88,0xffffffff821dc37c);
   }
-  g_onlineVaultIgnoreDownloadErrorMessage = false;
-  OnlineVault_CloseProgressIndicatorMenu(LVar1);
-  Com_PrintError(0x10,"[CL_Demo_DownloadFileFailure] Failed to write\n");
+  DAT_8487cf4f = 0;
+  OnlineVault_CloseProgressIndicatorMenu(uVar1);
+  Com_PrintError(0x10,0xffffffff821dc34c);
   return;
 }
 
 
 // 827CF940  CL_Demo_DownloadFile  (client_demo/cl_demo_contentserver.cpp:1254)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Demo_DownloadFile(int param_1,char *param_2,ulong64 param_3,int param_4,bool param_5)
+void CL_Demo_DownloadFile
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-  int iVar1;
-  bool bVar4;
+  undefined8 uVar1;
+  char cVar3;
   int iVar2;
-  LocalClientNum_t LVar3;
-  ulonglong uVar5;
-  undefined8 *puVar6;
-  longlong lVar7;
+  undefined8 *puVar4;
+  longlong lVar5;
   undefined8 uStack_68;
-  contentServerReadFileInfo local_60 [2];
+  undefined8 local_60;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined1 local_48;
+  code *local_3c;
+  code *local_38;
   
-  uVar5 = (ulonglong)param_5;
-  iVar1 = __savegprlr_28(param_1,param_2);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_contentserver.cpp"
-                    ,0x4e9,0,"%s");
+  uVar1 = __savegprlr_28();
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff821dbcc8,0x4e9,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  bVar4 = LiveStorage_CS_IsInited(iVar1);
-  if (!bVar4) {
-    LiveStorage_CS_Init(iVar1);
+  cVar3 = LiveStorage_CS_IsInited(uVar1);
+  if (cVar3 == '\0') {
+    LiveStorage_CS_Init(uVar1);
   }
-  bVar4 = LiveStorage_CS_IsAvailable(iVar1);
-  if (!bVar4) {
-    Com_PrintError(0x10,
-                   "[CL_Demo_DownloadFile] Failed to write, LiveStorage_CS_IsAvailable = false\n");
+  cVar3 = LiveStorage_CS_IsAvailable(uVar1);
+  if (cVar3 == '\0') {
+    Com_PrintError(0x10,0xffffffff821dc3a0);
     __restgprlr_28();
     return;
   }
   iVar2 = Sys_IsDatabaseReady();
   if (iVar2 == 0) {
-    CL_Demo_DownloadFileFailure(iVar1,BD_NO_ERROR);
+    CL_Demo_DownloadFileFailure(uVar1,0);
     __restgprlr_28();
     return;
   }
-  bVar4 = CL_Demo_IsDemoDownloadMemoryAllocated();
-  if (bVar4) {
+  cVar3 = CL_Demo_IsDemoDownloadMemoryAllocated();
+  if (cVar3 != '\0') {
     CL_Demo_DeallocateDemoDownloadMemory();
   }
   CL_Demo_AllocateDemoDownloadMemory(param_4);
-  puVar6 = &uStack_68;
-  lVar7 = 6;
+  puVar4 = &uStack_68;
+  lVar5 = 6;
   do {
-    puVar6 = puVar6 + 1;
-    *puVar6 = 0;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  local_60[0].m_fileID = param_3;
-  local_60[0].m_fileSize = param_4;
-  local_60[0].m_buffer = (char *)CL_Demo_GetAllocatedDemoDownloadBuffer();
-  if ((uVar5 & 0xff) == 0) {
-    local_60[0].m_successCallback = CL_Demo_DownloadFileSuccessfulPlayIt;
+    puVar4 = puVar4 + 1;
+    *puVar4 = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  local_60 = param_3;
+  local_58 = (int)param_4;
+  local_54 = CL_Demo_GetAllocatedDemoDownloadBuffer();
+  if ((param_5 & 0xff) == 0) {
+    local_3c = CL_Demo_DownloadFileSuccessfulPlayIt;
   }
   else {
-    local_60[0].m_successCallback = CL_Demo_DownloadFileSuccessfulRenderIt;
+    local_3c = CL_Demo_DownloadFileSuccessfulRenderIt;
   }
-  local_60[0].m_isStreamed = false;
-  local_60[0].m_failureCallback = CL_Demo_DownloadFileFailure;
-  local_60[0].m_bufferSize = param_4;
-  local_60[0].m_cacheBuffer = CL_Demo_GetAllocatedDemoDownloadBuffer();
-  iVar2 = LiveStorage_CS_ReadFile(iVar1,local_60);
+  local_48 = 0;
+  local_38 = CL_Demo_DownloadFileFailure;
+  local_50 = (int)param_4;
+  local_4c = CL_Demo_GetAllocatedDemoDownloadBuffer();
+  iVar2 = LiveStorage_CS_ReadFile(uVar1,&local_60);
   if (iVar2 != 0) {
-    LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
-    OnlineVault_OpenProgressIndicatorMenu(LVar3);
+    CL_LocalClientNumFromControllerIndex(uVar1);
+    OnlineVault_OpenProgressIndicatorMenu();
     __restgprlr_28();
     return;
   }
-  LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
-  CL_Demo_Error(LVar3,"MENU_ERROR","MENU_ONLINEVAULT_FILENOTFOUND");
+  uVar1 = CL_LocalClientNumFromControllerIndex(uVar1);
+  CL_Demo_Error(uVar1,0xffffffff8208bd88,0xffffffff821dc37c);
   __restgprlr_28();
   return;
 }
 
 
-// 827D06F0  ~renderedMovieInformation_s  (line unknown)
+// 827D06F0  renderedMovieInformation_s::~renderedMovieInformation_s  (line unknown)
 
-void __thiscall
-renderedMovieInformation_s::~renderedMovieInformation_s(renderedMovieInformation_s *this)
+void renderedMovieInformation_s___renderedMovieInformation_s(longlong param_1)
 
 {
   longlong lVar1;
-  bdTag *this_00;
   
-  this_00 = (bdTag *)&this->numTags;
+  param_1 = param_1 + 800;
   lVar1 = 0x20;
   do {
-    this_00 = this_00 + -1;
-    bdTag::~bdTag(this_00);
+    param_1 = param_1 + -0x18;
+    bdTag___bdTag(param_1);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
   return;
@@ -1595,12 +1517,10 @@ renderedMovieInformation_s::~renderedMovieInformation_s(renderedMovieInformation
 
 // 82941158  `dynamic_atexit_destructor_for_'s_renderedMovieInformation''  (line unknown)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void _dynamic_atexit_destructor_for__s_renderedMovieInformation__(void)
 
 {
-  renderedMovieInformation_s::~renderedMovieInformation_s(&s_renderedMovieInformation);
+  renderedMovieInformation_s___renderedMovieInformation_s(0xffffffff8484f278);
   return;
 }
 

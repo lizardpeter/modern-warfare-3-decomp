@@ -2,11 +2,11 @@
 
 // 82920128  _isctype_l  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/isctype.c:102)
 
-int _isctype_l(int param_1,int param_2,localeinfo_struct *param_3)
+int _isctype_l(int _C,int _Type,_locale_t _Locale)
 
 {
-  if ((-2 < param_1) && (param_1 < 0x100)) {
-    return (uint)(__initiallocalestructinfo.locinfo)->pctype[param_1] & param_2;
+  if ((-2 < _C) && (_C < 0x100)) {
+    return (uint)*(ushort *)(*(int *)(PTR_DAT_829b07f8 + 200) + _C * 2) & _Type;
   }
   return 0;
 }

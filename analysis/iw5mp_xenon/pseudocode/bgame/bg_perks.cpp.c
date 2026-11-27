@@ -2,215 +2,109 @@
 
 // 82277238  BG_GetPerkCodeIndexForName  (bgame/bg_perks.cpp:110)
 
-uint BG_GetPerkCodeIndexForName(char *param_1)
+void BG_GetPerkCodeIndexForName(void)
 
 {
-  char *pcVar1;
-  uint uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  char **ppcVar5;
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  undefined **ppuVar4;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (pcVar1 == (char *)0x0) {
-    uVar2 = __restgprlr_29(0x32);
-    return uVar2;
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    __restgprlr_29(0x32);
+    return;
   }
-  uVar4 = 0;
-  ppcVar5 = bg_perkNames;
+  uVar3 = 0;
+  ppuVar4 = &PTR_s_specialty_bulletaccuracy_829612f0;
   do {
-    iVar3 = I_stricmp(pcVar1,*ppcVar5);
-    if (iVar3 == 0) break;
-    uVar4 = uVar4 + 1;
-    ppcVar5 = ppcVar5 + 1;
-  } while ((uVar4 & 0xffffffff) < 0x32);
-  uVar2 = __restgprlr_29(uVar4);
-  return uVar2;
+    iVar2 = I_stricmp(uVar1,*ppuVar4);
+    if (iVar2 == 0) break;
+    uVar3 = uVar3 + 1;
+    ppuVar4 = ppuVar4 + 1;
+  } while ((uVar3 & 0xffffffff) < 0x32);
+  __restgprlr_29(uVar3);
+  return;
 }
 
 
 // 82277298  BG_GetPerkNameForCodeIndex  (bgame/bg_perks.cpp:125)
 
-char * BG_GetPerkNameForCodeIndex(uint param_1)
+undefined * BG_GetPerkNameForCodeIndex(uint param_1)
 
 {
   if (0x31 < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_perks.cpp",0x7e,0,
-                    "perkIndex doesn\'t index PERK_COUNT\n\t%i not in [0, %i)");
+    MyAssertHandler(0xffffffff8200b734,0x7e,0,0xffffffff82000f60,param_1,0x32);
   }
-  return bg_perkNames[param_1];
+  return (&PTR_s_specialty_bulletaccuracy_829612f0)[param_1];
 }
 
 
 // 82277300  Perks_RegisterDvars  (bgame/bg_perks.cpp:132)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Perks_RegisterDvars(void)
 
 {
-  ushort in_r4;
-  ushort uVar1;
-  char *in_r5;
-  IMAGE_DOS_HEADER *pIVar2;
-  char *pcVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
   
   __savefpr_24();
-  dVar9 = 1.0;
-  dVar11 = 0.0;
-  dVar4 = 0.6499999761581421;
-  perk_weapSpreadMultiplier =
-       Dvar_RegisterFloat("perk_weapSpreadMultiplier",0.65,0.0,1.0,in_r4,in_r5);
-  pIVar2 = &IMAGE_DOS_HEADER_82000000;
-  uVar1 = 0;
-  dVar8 = 0.5;
-  perk_weapReloadMultiplier =
-       Dvar_RegisterFloat("perk_weapReloadMultiplier",0.5,(float)dVar11,(float)dVar9,0,
-                          IMAGE_DOS_HEADER_82000000.e_magic);
-  dVar7 = 0.75;
-  perk_weapRateMultiplier =
-       Dvar_RegisterFloat("perk_weapRateMultiplier",0.75,(float)dVar11,(float)dVar9,uVar1,
-                          pIVar2->e_magic);
-  pcVar3 = "c\\cgame_mp\\cg_local_mp.h";
-  uVar1 = 0;
-  perk_weapSwapMultiplier =
-       Dvar_RegisterFloat("perk_weapSwapMultiplier",(float)dVar8,(float)dVar11,(float)dVar9,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  perk_fastOffhandMultiplier =
-       Dvar_RegisterFloat("perk_fastOffhandMultiplier",(float)dVar8,(float)dVar11,10.0,uVar1,pcVar3)
-  ;
-  perk_extendedMeleeRange =
-       Dvar_RegisterFloat("perk_extendedMeleeRange",192.0,(float)dVar11,255.0,0,filebuf + 0x8158);
-  pcVar3 = "c\\cgame_mp\\cg_local_mp.h";
-  uVar1 = 0;
-  dVar10 = 3.4028234663852886e+38;
-  dVar5 = 5.0;
-  perk_extraBreath =
-       Dvar_RegisterFloat("perk_extraBreath",5.0,(float)dVar11,3.4028235e+38,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  perk_improvedExtraBreath =
-       Dvar_RegisterFloat("perk_improvedExtraBreath",(float)dVar5,(float)dVar11,(float)dVar10,uVar1,
-                          pcVar3);
-  dVar5 = 2.0;
-  perk_bulletPenetrationMultiplier =
-       Dvar_RegisterFloat("perk_bulletPenetrationMultiplier",2.0,(float)dVar11,30.0,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  perk_grenadeDeath =
-       Dvar_RegisterString("perk_grenadeDeath","frag_grenade_short_mp",4,
-                           "Name of the grenade weapon to drop");
-  pcVar3 = "c\\cgame_mp\\cg_local_mp.h";
-  uVar1 = 0;
-  perk_parabolicRadius =
-       Dvar_RegisterFloat("perk_parabolicRadius",400.0,(float)dVar11,(float)dVar10,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  perk_parabolicAngle =
-       Dvar_RegisterFloat("perk_parabolicAngle",180.0,(float)dVar11,180.0,uVar1,pcVar3);
-  uVar1 = 0xb448;
-  pcVar3 = &DAT_00000004;
-  perk_parabolicIcon =
-       Dvar_RegisterString("perk_parabolicIcon","specialty_parabolic",4,
-                           "Eavesdrop icon to use when displaying eavesdropped voice chats");
-  perk_sprintMultiplier =
-       Dvar_RegisterFloat("perk_sprintMultiplier",(float)dVar5,(float)dVar11,(float)dVar10,uVar1,
-                          pcVar3);
-  uVar1 = 0;
-  dVar6 = 1.1754943508222875e-38;
-  perk_diveVelocity =
-       Dvar_RegisterFloat("perk_diveVelocity",250.0,1.1754944e-38,(float)dVar10,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  pcVar3 = "c\\cgame_mp\\cg_local_mp.h";
-  perk_diveDistanceCheck =
-       Dvar_RegisterFloat("perk_diveDistanceCheck",64.0,(float)dVar11,(float)dVar10,uVar1,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  perk_diveViewRollTarget =
-       Dvar_RegisterFloat("perk_diveViewRollTarget",45.0,(float)dVar11,360.0,0,pcVar3);
-  pcVar3 = filebuf + 0x8158;
-  uVar1 = 0;
-  perk_diveViewRollSpeed =
-       Dvar_RegisterFloat("perk_diveViewRollSpeed",(float)dVar8,(float)dVar6,(float)dVar10,0,
-                          filebuf + 0x8158);
-  dVar8 = 4.0;
-  perk_diveViewRollResetSpeed =
-       Dvar_RegisterFloat("perk_diveViewRollResetSpeed",4.0,(float)dVar6,(float)dVar10,uVar1,pcVar3)
-  ;
-  perk_diveGravityScale =
-       Dvar_RegisterFloat("perk_diveGravityScale",(float)dVar7,(float)dVar6,(float)dVar10,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  perk_extendedMagsRifleAmmo =
-       Dvar_RegisterInt("perk_extendedMagsRifleAmmo",10,0,0x7fffffff,4,
-                        "Number of extra bullets per clip for rifle weapons with the extended mags perk."
-                       );
-  perk_extendedMagsSniperAmmo =
-       Dvar_RegisterInt("perk_extendedMagsRifleAmmo",10,0,0x7fffffff,4,
-                        "Number of extra bullets per clip for sniper rifle weapons with the extended mags perk."
-                       );
-  perk_extendedMagsMGAmmo =
-       Dvar_RegisterInt("perk_extendedMagsMGAmmo",10,0,0x7fffffff,4,
-                        "Number of extra bullets per clip for machine gun weapons with the extended mags perk."
-                       );
-  perk_extendedMagsSMGAmmo =
-       Dvar_RegisterInt("perk_extendedMagsSMGAmmo",10,0,0x7fffffff,4,
-                        "Number of extra bullets per clip for sub machine gun weapons with the extended mags perk."
-                       );
-  perk_extendedMagsSpreadAmmo =
-       Dvar_RegisterInt("perk_extendedMagsSpreadAmmo",5,0,0x7fffffff,4,
-                        "Number of extra bullets per clip for spread weapons with the extended mags perk."
-                       );
-  perk_extendedMagsPistolAmmo =
-       Dvar_RegisterInt("perk_extendedMagsPistolAmmo",5,0,0x7fffffff,4,
-                        "Number of extra bullets per clip for pistol weapons with the extended mags perk."
-                       );
-  pcVar3 = "c\\cgame_mp\\cg_local_mp.h";
-  uVar1 = 0;
-  perk_lightWeightViewBobScale =
-       Dvar_RegisterFloat("perk_lightWeightViewBobScale",(float)dVar7,(float)dVar11,(float)dVar10,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  dVar6 = 0.10000000149011612;
-  perk_quickDrawSpeedScale =
-       Dvar_RegisterFloat("perk_quickDrawSpeedScale",1.5,0.1,(float)dVar10,uVar1,pcVar3);
-  pcVar3 = "c\\cgame_mp\\cg_local_mp.h";
-  uVar1 = 0;
-  perk_fastSnipeScale =
-       Dvar_RegisterFloat("perk_fastSnipeScale",(float)dVar5,(float)dVar6,(float)dVar10,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  dVar5 = 0.6000000238418579;
-  perk_sprintRecoveryMultiplierActual =
-       Dvar_RegisterFloat("perk_sprintRecoveryMultiplierActual",0.6,(float)dVar11,(float)dVar9,uVar1
-                          ,pcVar3);
-  pcVar3 = "c\\cgame_mp\\cg_local_mp.h";
-  perk_sprintRecoveryMultiplierVisual =
-       Dvar_RegisterFloat("perk_sprintRecoveryMultiplierVisual",(float)dVar5,(float)dVar11,
-                          (float)dVar9,uVar1,"c\\cgame_mp\\cg_local_mp.h");
-  uVar1 = 0;
-  dVar5 = 0.25;
-  perk_footstepVolumePlayer =
-       Dvar_RegisterFloat("perk_footstepVolumePlayer",0.25,(float)dVar11,(float)dVar10,0,pcVar3);
-  pcVar3 = "c\\cgame_mp\\cg_local_mp.h";
-  perk_footstepVolumeAlly =
-       Dvar_RegisterFloat("perk_footstepVolumeAlly",(float)dVar5,(float)dVar11,(float)dVar10,uVar1,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  uVar1 = 0;
-  perk_footstepVolumeEnemy =
-       Dvar_RegisterFloat("perk_footstepVolumeEnemy",(float)dVar8,(float)dVar11,(float)dVar10,0,
-                          pcVar3);
-  perk_longerRangeScale =
-       Dvar_RegisterFloat("perk_longerRangeScale",1.25,(float)dVar11,(float)dVar10,uVar1,pcVar3);
-  pcVar3 = "c\\cgame_mp\\cg_local_mp.h";
-  uVar1 = 0;
-  perk_fasterMeleeScale =
-       Dvar_RegisterFloat("perk_fasterMeleeScale",(float)dVar4,(float)dVar11,(float)dVar10,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  perk_reducedSwayScale =
-       Dvar_RegisterFloat("perk_reducedSwayScale",(float)dVar7,(float)dVar11,(float)dVar10,uVar1,
-                          pcVar3);
+  uVar6 = 0x3ff0000000000000;
+  uVar8 = 0;
+  uVar1 = 0x3fe4ccccc0000000;
+  DAT_829d7ed0 = Dvar_RegisterFloat(0x3fe4ccccc0000000,0,0x3ff0000000000000,0xffffffff8200c208);
+  uVar5 = 0x3fe0000000000000;
+  DAT_829d7f18 = Dvar_RegisterFloat(0x3fe0000000000000,uVar8,uVar6,0xffffffff8200c1a0);
+  uVar4 = 0x3fe8000000000000;
+  DAT_829d7f28 = Dvar_RegisterFloat(0x3fe8000000000000,uVar8,uVar6,0xffffffff8200c188);
+  DAT_829d7ee4 = Dvar_RegisterFloat(uVar5,uVar8,uVar6,0xffffffff8200c120);
+  DAT_829d7f30 = Dvar_RegisterFloat(uVar5,uVar8,0x4024000000000000,0xffffffff8200c104);
+  DAT_829d7ec0 = Dvar_RegisterFloat(0x4068000000000000,uVar8,0x406fe00000000000,0xffffffff8200c074);
+  uVar7 = 0x47efffffe0000000;
+  uVar2 = 0x4014000000000000;
+  DAT_829d7ef8 = Dvar_RegisterFloat(0x4014000000000000,uVar8,0x47efffffe0000000,0xffffffff8200c028);
+  DAT_829d7f0c = Dvar_RegisterFloat(uVar2,uVar8,uVar7,0xffffffff8200bfb8);
+  uVar2 = 0x4000000000000000;
+  DAT_829d7ec8 = Dvar_RegisterFloat(0x4000000000000000,uVar8,0x403e000000000000,0xffffffff8200bf6c);
+  DAT_829d7efc = Dvar_RegisterString(0xffffffff8200bf1c,0xffffffff8200bf30,4,0xffffffff8200bf48);
+  DAT_829d7eb0 = Dvar_RegisterFloat(0x4079000000000000,uVar8,uVar7,0xffffffff8200bee0);
+  DAT_829d7eb8 = Dvar_RegisterFloat(0x4066800000000000,uVar8,0xffffffff8200bea4);
+  DAT_829d7ea8 = Dvar_RegisterString(0xffffffff8200be50,0xffffffff8200b448,4,0xffffffff8200be64);
+  DAT_829d7f2c = Dvar_RegisterFloat(uVar2,uVar8,uVar7,0xffffffff8200be38);
+  uVar3 = 0x3810000000000000;
+  DAT_829d7eec = Dvar_RegisterFloat(0x406f400000000000,0x3810000000000000,uVar7,0xffffffff8200bddc);
+  DAT_829d7edc = Dvar_RegisterFloat(0x4050000000000000,uVar8,uVar7,0xffffffff8200bd94);
+  DAT_829d7ef4 = Dvar_RegisterFloat(0x4046800000000000,uVar8,0x4076800000000000,0xffffffff8200bd54);
+  DAT_829d7f20 = Dvar_RegisterFloat(uVar5,uVar3,uVar7,0xffffffff8200bd20);
+  uVar5 = 0x4010000000000000;
+  DAT_829d7f1c = Dvar_RegisterFloat(0x4010000000000000,uVar3,uVar7,0xffffffff8200bd04);
+  DAT_829d7f34 = Dvar_RegisterFloat(uVar4,uVar3,uVar7,0xffffffff8200bc94);
+  DAT_829d7ec4 = Dvar_RegisterInt(0xffffffff8200bc78,10,0,0x7fffffff,4,0xffffffff8200bc28);
+  DAT_829d7ee8 = Dvar_RegisterInt(0xffffffff8200bc78,10,0,0x7fffffff,4,0xffffffff8200bbd0);
+  DAT_829d7f08 = Dvar_RegisterInt(0xffffffff8200bb60,10,0,0x7fffffff,4,0xffffffff8200bb78);
+  DAT_829d7f38 = Dvar_RegisterInt(0xffffffff8200bb44,10,0,0x7fffffff,4,0xffffffff8200bae8);
+  DAT_829d7eb4 = Dvar_RegisterInt(0xffffffff8200ba70,5,0,0x7fffffff,4,0xffffffff8200ba90);
+  DAT_829d7f00 = Dvar_RegisterInt(0xffffffff8200ba54,5,0,0x7fffffff,4,0xffffffff8200ba00);
+  DAT_829d7eac = Dvar_RegisterFloat(uVar4,uVar8,uVar7,0xffffffff8200b9a8);
+  uVar3 = 0x3fb99999a0000000;
+  DAT_829d7ed4 = Dvar_RegisterFloat(0x3ff8000000000000,0x3fb99999a0000000,uVar7,0xffffffff8200b98c);
+  DAT_829d7ef0 = Dvar_RegisterFloat(uVar2,uVar3,uVar7,0xffffffff8200b908);
+  uVar2 = 0x3fe3333340000000;
+  DAT_829d7f14 = Dvar_RegisterFloat(0x3fe3333340000000,uVar8,uVar6,0xffffffff8200b8bc);
+  DAT_829d7ecc = Dvar_RegisterFloat(uVar2,uVar8,uVar6,0xffffffff8200b898);
+  uVar2 = 0x3fd0000000000000;
+  DAT_829d7f04 = Dvar_RegisterFloat(0x3fd0000000000000,uVar8,uVar7,0xffffffff8200b87c);
+  DAT_829d7ebc = Dvar_RegisterFloat(uVar2,uVar8,uVar7,0xffffffff8200b864);
+  DAT_829d7ee0 = Dvar_RegisterFloat(uVar5,uVar8,uVar7,0xffffffff8200b848);
+  DAT_829d7f24 = Dvar_RegisterFloat(0x3ff4000000000000,uVar8,uVar7,0xffffffff8200b82c);
+  DAT_829d7ed8 = Dvar_RegisterFloat(uVar1,uVar8,uVar7,0xffffffff8200b7b4);
+  DAT_829d7f10 = Dvar_RegisterFloat(uVar4,uVar8,uVar7,0xffffffff8200b774);
   __restfpr_24();
   return;
 }
@@ -218,66 +112,63 @@ void Perks_RegisterDvars(void)
 
 // 82277A30  Perk_GetSlotIndexName  (bgame/bg_perks.cpp:179)
 
-char * Perk_GetSlotIndexName(char *param_1)
+void Perk_GetSlotIndexName(undefined8 param_1)
 
 {
-  char *pcVar1;
-  StringTable *local_20 [4];
+  undefined4 local_20 [4];
   
-  StringTable_GetAsset("mp/perktable.csv",local_20);
-  pcVar1 = StringTable_Lookup(local_20[0],1,param_1,5);
-  return pcVar1;
+  StringTable_GetAsset(0xffffffff8200afb4,local_20);
+  StringTable_Lookup(local_20[0],1,param_1,5);
+  return;
 }
 
 
 // 82277A80  Perk_GetSlotIndex  (bgame/bg_perks.cpp:189)
 
-uint Perk_GetSlotIndex(char *param_1)
+void Perk_GetSlotIndex(void)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
-  uint uVar3;
-  longlong lVar4;
-  char **ppcVar5;
+  longlong lVar3;
+  undefined **ppuVar4;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  ppcVar5 = perkSlotNames;
-  lVar4 = 0;
+  uVar1 = __savegprlr_28();
+  ppuVar4 = &PTR_s_perk1_829613b8;
+  lVar3 = 0;
   do {
-    iVar2 = I_stricmp(pcVar1,*ppcVar5);
+    iVar2 = I_stricmp(uVar1,*ppuVar4);
     if (iVar2 == 0) {
-      uVar3 = __restgprlr_28(lVar4);
-      return uVar3;
+      __restgprlr_28(lVar3);
+      return;
     }
-    ppcVar5 = ppcVar5 + 1;
-    lVar4 = lVar4 + 1;
-  } while ((int)ppcVar5 < -0x7d69ec24);
-  uVar3 = __restgprlr_28(9);
-  return uVar3;
+    ppuVar4 = ppuVar4 + 1;
+    lVar3 = lVar3 + 1;
+  } while ((int)ppuVar4 < -0x7d69ec24);
+  __restgprlr_28(9);
+  return;
 }
 
 
 // 82277AE0  Perk_GetIndex  (bgame/bg_perks.cpp:215)
 
-bool Perk_GetIndex(char *param_1,uint *param_2)
+bool Perk_GetIndex(undefined8 param_1,int *param_2)
 
 {
   char cVar1;
-  char *pcVar2;
-  uint uVar3;
-  StringTable *local_20 [2];
+  char *_Str;
+  int iVar2;
+  undefined4 local_20 [2];
   
-  if (param_2 == (uint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_perks.cpp",0xdb,0,
-                    "%s");
+  if (param_2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8200b734,0xdb,0,0xffffffff82000f98,0xffffffff8200c280);
   }
-  StringTable_GetAsset("mp/perktable.csv",local_20);
-  pcVar2 = StringTable_Lookup(local_20[0],1,param_1,0);
-  cVar1 = *pcVar2;
+  StringTable_GetAsset(0xffffffff8200afb4,local_20);
+  _Str = (char *)StringTable_Lookup(local_20[0],1,param_1,0);
+  cVar1 = *_Str;
   if (cVar1 != '\0') {
-    uVar3 = atoi(pcVar2);
-    *param_2 = uVar3;
+    iVar2 = atoi(_Str);
+    *param_2 = iVar2;
   }
   else {
     *param_2 = 0;
@@ -288,37 +179,36 @@ bool Perk_GetIndex(char *param_1,uint *param_2)
 
 // 82277B90  Perk_GetName  (bgame/bg_perks.cpp:238)
 
-bool Perk_GetName(uint param_1,char **param_2)
+bool Perk_GetName(ulonglong param_1,undefined4 *param_2)
 
 {
   char *pcVar1;
-  StringTable *local_130 [4];
-  char acStack_120 [264];
+  undefined4 local_130 [4];
+  undefined1 auStack_120 [264];
   
-  if (param_1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_perks.cpp",0xf2,0,
-                    "%s");
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200b734,0xf2,0,0xffffffff82000f98,0xffffffff8200c280);
   }
-  Com_sprintf(acStack_120,0x100,"%i");
-  StringTable_GetAsset("mp/perktable.csv",local_130);
-  pcVar1 = StringTable_Lookup(local_130[0],0,acStack_120,1);
+  Com_sprintf(auStack_120,0x100,0xffffffff8200c28c,param_1);
+  StringTable_GetAsset(0xffffffff8200afb4,local_130);
+  pcVar1 = (char *)StringTable_Lookup(local_130[0],0,auStack_120,1);
   *param_2 = pcVar1;
-  return (bool)('\x01' - (*pcVar1 == '\0'));
+  return *pcVar1 != '\0';
 }
 
 
 // 82277C40  Perk_GetName_Lazy  (bgame/bg_perks.cpp:257)
 
-char * Perk_GetName_Lazy(uint param_1)
+ulonglong Perk_GetName_Lazy(undefined8 param_1)
 
 {
-  bool bVar1;
-  char *local_10 [4];
+  char cVar1;
+  uint local_10 [4];
   
-  bVar1 = Perk_GetName(param_1,local_10);
-  if (bVar1) {
-    return local_10[0];
+  cVar1 = Perk_GetName(param_1,local_10);
+  if (cVar1 != '\0') {
+    return (ulonglong)local_10[0];
   }
-  return "[unknown perk]";
+  return 0xffffffff8200c290;
 }
 

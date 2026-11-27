@@ -2,53 +2,45 @@
 
 // 826A00C8  dRSetIdentity  (physics/ode/src/rotation.cpp:53)
 
-void dRSetIdentity(float *param_1)
+void dRSetIdentity(undefined4 *param_1)
 
 {
-  if (param_1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0x36,0,"%s");
+  if (param_1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8219aaa8,0x36,0,0xffffffff82000f98,0xffffffff8205f3e8);
   }
-  *param_1 = 1.0;
-  param_1[1] = 0.0;
-  param_1[2] = 0.0;
-  param_1[3] = 0.0;
-  param_1[4] = 0.0;
-  param_1[5] = 1.0;
-  param_1[6] = 0.0;
-  param_1[7] = 0.0;
-  param_1[8] = 0.0;
-  param_1[9] = 0.0;
-  param_1[10] = 1.0;
-  param_1[0xb] = 0.0;
+  *param_1 = 0x3f800000;
+  param_1[1] = 0;
+  param_1[2] = 0;
+  param_1[3] = 0;
+  param_1[4] = 0;
+  param_1[5] = 0x3f800000;
+  param_1[6] = 0;
+  param_1[7] = 0;
+  param_1[8] = 0;
+  param_1[9] = 0;
+  param_1[10] = 0x3f800000;
+  param_1[0xb] = 0;
   return;
 }
 
 
 // 826A1068  dRFromAxisAndAngle  (physics/ode/src/rotation.cpp:61)
 
-void dRFromAxisAndAngle(float *param_1,float param_2,float param_3,float param_4,float param_5)
+void dRFromAxisAndAngle(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  float *pfVar1;
-  double extraout_f1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  float afStack_40 [12];
+  ulonglong uVar1;
+  undefined8 extraout_f1;
+  undefined8 uVar2;
+  undefined1 auStack_40 [48];
   
-  dVar3 = (double)param_4;
-  dVar4 = (double)param_5;
-  dVar2 = (double)param_3;
-  pfVar1 = (float *)__savefpr_28((double)param_2,param_1);
-  dVar5 = extraout_f1;
-  if (pfVar1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0x3e,0,"%s");
+  uVar1 = __savefpr_28();
+  uVar2 = extraout_f1;
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219aaa8,0x3e,0,0xffffffff82000f98,0xffffffff8205f3e8);
   }
-  dQFromAxisAndAngle(afStack_40,(float)dVar5,(float)dVar2,(float)dVar3,(float)dVar4);
-  dRfromQ(pfVar1,afStack_40);
+  dQFromAxisAndAngle(uVar2,param_2,param_3,param_4,auStack_40);
+  dRfromQ(uVar1,auStack_40);
   __restfpr_28();
   return;
 }
@@ -56,7 +48,7 @@ void dRFromAxisAndAngle(float *param_1,float param_2,float param_3,float param_4
 
 // 826A0160  dRFromEulerAngles  (physics/ode/src/rotation.cpp:70)
 
-void dRFromEulerAngles(float *param_1,float param_2,float param_3,float param_4)
+void dRFromEulerAngles(undefined8 param_1,double param_2,double param_3)
 
 {
   float *pfVar1;
@@ -67,37 +59,33 @@ void dRFromEulerAngles(float *param_1,float param_2,float param_3,float param_4)
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
   
-  dVar4 = (double)param_4;
-  dVar5 = (double)param_3;
-  pfVar1 = (float *)__savefpr_26((double)param_2,param_1);
+  pfVar1 = (float *)__savefpr_26();
   dVar3 = extraout_f1;
   if (pfVar1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0x48,0,"%s");
+    MyAssertHandler(0xffffffff8219aaa8,0x48,0,0xffffffff82000f98,0xffffffff8205f3e8);
   }
   dVar2 = sin(dVar3);
-  dVar6 = (double)(float)dVar2;
+  dVar5 = (double)(float)dVar2;
   dVar3 = cos(dVar3);
-  dVar8 = (double)(float)dVar3;
-  dVar3 = sin(dVar5);
-  dVar2 = (double)(float)dVar3;
-  dVar3 = cos(dVar5);
   dVar7 = (double)(float)dVar3;
-  dVar3 = sin(dVar4);
-  dVar5 = (double)(float)dVar3;
-  dVar3 = cos(dVar4);
+  dVar3 = sin(param_2);
+  dVar4 = (double)(float)dVar3;
+  dVar3 = cos(param_2);
+  dVar6 = (double)(float)dVar3;
+  dVar3 = sin(param_3);
+  dVar2 = (double)(float)dVar3;
+  dVar3 = cos(param_3);
   dVar3 = (double)(float)dVar3;
-  pfVar1[1] = (float)(dVar5 * dVar7);
-  pfVar1[2] = (float)-dVar2;
-  pfVar1[6] = (float)(dVar7 * dVar6);
-  pfVar1[10] = (float)(dVar7 * dVar8);
-  *pfVar1 = (float)(dVar3 * dVar7);
-  pfVar1[5] = (float)((double)(float)(dVar5 * dVar2) * dVar6 + (double)(float)(dVar3 * dVar8));
-  pfVar1[4] = (float)((double)(float)(dVar3 * dVar2) * dVar6 - (double)(float)(dVar5 * dVar8));
-  pfVar1[8] = (float)((double)(float)(dVar3 * dVar2) * dVar8 + (double)(float)(dVar5 * dVar6));
-  pfVar1[9] = (float)((double)(float)(dVar5 * dVar2) * dVar8 - (double)(float)(dVar3 * dVar6));
+  pfVar1[1] = (float)(dVar2 * dVar6);
+  pfVar1[2] = (float)-dVar4;
+  pfVar1[6] = (float)(dVar6 * dVar5);
+  pfVar1[10] = (float)(dVar6 * dVar7);
+  *pfVar1 = (float)(dVar3 * dVar6);
+  pfVar1[5] = (float)((double)(float)(dVar2 * dVar4) * dVar5 + (double)(float)(dVar3 * dVar7));
+  pfVar1[4] = (float)((double)(float)(dVar3 * dVar4) * dVar5 - (double)(float)(dVar2 * dVar7));
+  pfVar1[8] = (float)((double)(float)(dVar3 * dVar4) * dVar7 + (double)(float)(dVar2 * dVar5));
+  pfVar1[9] = (float)((double)(float)(dVar2 * dVar4) * dVar7 - (double)(float)(dVar3 * dVar5));
   __restfpr_26();
   return;
 }
@@ -105,8 +93,8 @@ void dRFromEulerAngles(float *param_1,float param_2,float param_3,float param_4)
 
 // 826A0278  dRFrom2Axes  (physics/ode/src/rotation.cpp:93)
 
-void dRFrom2Axes(float *param_1,float param_2,float param_3,float param_4,float param_5,
-                float param_6,float param_7)
+void dRFrom2Axes(undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
+                double param_6)
 
 {
   float fVar1;
@@ -121,54 +109,43 @@ void dRFrom2Axes(float *param_1,float param_2,float param_3,float param_4,float 
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
   
-  dVar8 = (double)param_6;
-  dVar10 = (double)param_7;
-  dVar7 = (double)param_5;
-  dVar12 = (double)param_4;
-  dVar11 = (double)param_3;
-  pfVar5 = (float *)__savefpr_26((double)param_2,param_1);
-  dVar9 = extraout_f1;
+  pfVar5 = (float *)__savefpr_26();
+  dVar7 = extraout_f1;
   if (pfVar5 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0x5f,0,"%s");
+    MyAssertHandler(0xffffffff8219aaa8,0x5f,0,0xffffffff82000f98,0xffffffff8205f3e8);
   }
-  fVar1 = SQRT((float)(dVar12 * dVar12 +
-                      (double)(float)(dVar9 * dVar9 + (double)(float)(dVar11 * dVar11))));
+  fVar1 = SQRT((float)(param_3 * param_3 +
+                      (double)(float)(dVar7 * dVar7 + (double)(float)(param_2 * param_2))));
   if (0.0 < fVar1) {
-    dVar14 = (double)(1.0 / fVar1);
-    dVar6 = (double)(float)(dVar14 * dVar11);
-    dVar16 = (double)(float)(dVar14 * dVar9);
-    dVar15 = (double)(float)(dVar14 * dVar12);
-    dVar13 = (double)(float)(dVar15 * dVar10 +
-                            (double)(float)(dVar16 * dVar7 + (double)(float)(dVar6 * dVar8)));
-    fVar2 = -(float)(dVar13 * dVar6 - dVar8);
-    fVar4 = -(float)(dVar13 * dVar16 - dVar7);
-    fVar3 = -(float)(dVar13 * dVar15 - dVar10);
-    fVar1 = SQRT(fVar3 * fVar3 + fVar4 * fVar4 + fVar2 * fVar2);
-    if (0.0 < fVar1) {
-      fVar1 = 1.0 / fVar1;
-      *pfVar5 = (float)(dVar14 * dVar9);
-      pfVar5[4] = (float)(dVar14 * dVar11);
-      pfVar5[8] = (float)(dVar14 * dVar12);
-      dVar12 = (double)(fVar1 * fVar4);
-      pfVar5[1] = fVar1 * fVar4;
-      dVar11 = (double)(fVar1 * fVar2);
-      pfVar5[5] = fVar1 * fVar2;
-      dVar9 = (double)(fVar1 * fVar3);
-      pfVar5[9] = fVar1 * fVar3;
-      pfVar5[10] = (float)(dVar16 * dVar11 - (double)(float)(dVar6 * dVar12));
-      pfVar5[2] = (float)(dVar6 * dVar9 - (double)(float)(dVar15 * dVar11));
-      pfVar5[6] = (float)(dVar15 * dVar12 - (double)(float)(dVar16 * dVar9));
+    dVar9 = (double)(1.0 / fVar1);
+    dVar6 = (double)(float)(dVar9 * param_2);
+    dVar11 = (double)(float)(dVar9 * dVar7);
+    dVar10 = (double)(float)(dVar9 * param_3);
+    dVar8 = (double)(float)(dVar10 * param_6 +
+                           (double)(float)(dVar11 * param_4 + (double)(float)(dVar6 * param_5)));
+    fVar1 = -(float)(dVar8 * dVar6 - param_5);
+    fVar3 = -(float)(dVar8 * dVar11 - param_4);
+    fVar2 = -(float)(dVar8 * dVar10 - param_6);
+    fVar4 = SQRT(fVar2 * fVar2 + fVar3 * fVar3 + fVar1 * fVar1);
+    if (0.0 < fVar4) {
+      fVar4 = 1.0 / fVar4;
+      *pfVar5 = (float)(dVar9 * dVar7);
+      pfVar5[4] = (float)(dVar9 * param_2);
+      pfVar5[8] = (float)(dVar9 * param_3);
+      dVar9 = (double)(fVar4 * fVar3);
+      pfVar5[1] = fVar4 * fVar3;
+      dVar8 = (double)(fVar4 * fVar1);
+      pfVar5[5] = fVar4 * fVar1;
+      dVar7 = (double)(fVar4 * fVar2);
+      pfVar5[9] = fVar4 * fVar2;
+      pfVar5[10] = (float)(dVar11 * dVar8 - (double)(float)(dVar6 * dVar9));
+      pfVar5[2] = (float)(dVar6 * dVar7 - (double)(float)(dVar10 * dVar8));
+      pfVar5[6] = (float)(dVar10 * dVar9 - (double)(float)(dVar11 * dVar7));
       goto LAB_826a03a0;
     }
   }
-  Com_PrintWarning(0x14,"ODE: zero length vector");
+  Com_PrintWarning(0x14,0xffffffff8219aaf0);
 LAB_826a03a0:
   __restfpr_26();
   return;
@@ -177,94 +154,87 @@ LAB_826a03a0:
 
 // 826A03C0  dRFromZAxis  (physics/ode/src/rotation.cpp:137)
 
-void dRFromZAxis(float *param_1,float param_2,float param_3,float param_4)
+void dRFromZAxis(double param_1,double param_2,double param_3,undefined4 *param_4)
 
 {
   float local_40;
   float local_3c;
   float local_38;
-  float local_30;
-  float local_2c;
-  float local_28;
-  float local_20;
-  float local_1c;
-  float local_18;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
   
-  local_40 = param_2;
-  local_3c = param_3;
-  local_38 = param_4;
+  local_40 = (float)param_1;
+  local_3c = (float)param_2;
+  local_38 = (float)param_3;
   dNormalize3(&local_40);
   dPlaneSpace(&local_40,&local_30,&local_20);
-  *param_1 = local_30;
-  param_1[4] = local_2c;
-  param_1[8] = local_28;
-  param_1[1] = local_20;
-  param_1[5] = local_1c;
-  param_1[9] = local_18;
-  param_1[2] = local_40;
-  param_1[6] = local_3c;
-  param_1[10] = local_38;
+  *param_4 = local_30;
+  param_4[4] = local_2c;
+  param_4[8] = local_28;
+  param_4[1] = local_20;
+  param_4[5] = local_1c;
+  param_4[9] = local_18;
+  param_4[2] = local_40;
+  param_4[6] = local_3c;
+  param_4[10] = local_38;
   return;
 }
 
 
 // 826A0458  dQSetIdentity  (physics/ode/src/rotation.cpp:157)
 
-void dQSetIdentity(float *param_1)
+void dQSetIdentity(undefined4 *param_1)
 
 {
-  if (param_1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0x9e,0,"%s");
+  if (param_1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8219aaa8,0x9e,0,0xffffffff82000f98,0xffffffff8213494c);
   }
-  *param_1 = 1.0;
-  param_1[1] = 0.0;
-  param_1[2] = 0.0;
-  param_1[3] = 0.0;
+  *param_1 = 0x3f800000;
+  param_1[1] = 0;
+  param_1[2] = 0;
+  param_1[3] = 0;
   return;
 }
 
 
 // 826A04D0  dQFromAxisAndAngle  (physics/ode/src/rotation.cpp:168)
 
-void dQFromAxisAndAngle(float *param_1,float param_2,float param_3,float param_4,float param_5)
+void dQFromAxisAndAngle(undefined8 param_1,double param_2,double param_3,double param_4)
 
 {
   float *pfVar1;
   double extraout_f1;
   double dVar2;
+  double _X;
   double dVar3;
   double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
   
-  dVar2 = (double)param_5;
-  dVar4 = (double)param_4;
-  dVar3 = (double)param_3;
-  pfVar1 = (float *)__savefpr_27((double)param_2,param_1);
-  dVar7 = extraout_f1;
+  pfVar1 = (float *)__savefpr_27();
+  dVar4 = extraout_f1;
   if (pfVar1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0xa9,0,"%s");
+    MyAssertHandler(0xffffffff8219aaa8,0xa9,0,0xffffffff82000f98,0xffffffff8213494c);
   }
-  dVar6 = (double)(float)(dVar4 * dVar4 +
-                         (double)(float)(dVar7 * dVar7 + (double)(float)(dVar3 * dVar3)));
-  if (dVar6 <= 0.0) {
+  dVar3 = (double)(float)(param_3 * param_3 +
+                         (double)(float)(dVar4 * dVar4 + (double)(float)(param_2 * param_2)));
+  if (dVar3 <= 0.0) {
     pfVar1[1] = 0.0;
     pfVar1[2] = 0.0;
     pfVar1[3] = 0.0;
     *pfVar1 = 1.0;
   }
   else {
-    dVar5 = (double)(float)(dVar2 * 0.5);
-    dVar2 = cos(dVar5);
+    _X = (double)(float)(param_4 * 0.5);
+    dVar2 = cos(_X);
     *pfVar1 = (float)dVar2;
-    dVar2 = sin(dVar5);
-    dVar2 = (double)((float)dVar2 * (1.0 / (float)SQRT(dVar6)));
-    pfVar1[1] = (float)(dVar2 * dVar7);
-    pfVar1[2] = (float)(dVar2 * dVar3);
-    pfVar1[3] = (float)(dVar2 * dVar4);
+    dVar2 = sin(_X);
+    dVar3 = (double)((float)dVar2 * (1.0 / (float)SQRT(dVar3)));
+    pfVar1[1] = (float)(dVar3 * dVar4);
+    pfVar1[2] = (float)(dVar3 * param_2);
+    pfVar1[3] = (float)(dVar3 * param_3);
   }
   __restfpr_27();
   return;
@@ -273,24 +243,20 @@ void dQFromAxisAndAngle(float *param_1,float param_2,float param_3,float param_4
 
 // 826A05D0  dQMultiply0  (physics/ode/src/rotation.cpp:189)
 
-void dQMultiply0(float *param_1,float *param_2,float *param_3)
+void dQMultiply0(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   float *pfVar1;
   float *pfVar2;
   float *pfVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_29(param_1);
-  if (((pfVar3 == (float *)0x0) || ((uVar4 & 0xffffffff) == 0)) || ((uVar5 & 0xffffffff) == 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0xbe,0,"%s");
+  pfVar3 = (float *)__savegprlr_29();
+  if (((pfVar3 == (float *)0x0) || ((param_2 & 0xffffffff) == 0)) || ((param_3 & 0xffffffff) == 0))
+  {
+    MyAssertHandler(0xffffffff8219aaa8,0xbe,0,0xffffffff82000f98,0xffffffff8219ab08);
   }
-  pfVar1 = (float *)uVar5;
-  pfVar2 = (float *)uVar4;
+  pfVar1 = (float *)param_3;
+  pfVar2 = (float *)param_2;
   *pfVar3 = -(pfVar1[3] * pfVar2[3] -
              -(pfVar1[2] * pfVar2[2] - (*pfVar2 * *pfVar1 - pfVar1[1] * pfVar2[1])));
   pfVar3[1] = -(pfVar1[2] * pfVar2[3] -
@@ -306,24 +272,20 @@ void dQMultiply0(float *param_1,float *param_2,float *param_3)
 
 // 826A0700  dQMultiply1  (physics/ode/src/rotation.cpp:199)
 
-void dQMultiply1(float *param_1,float *param_2,float *param_3)
+void dQMultiply1(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   float *pfVar1;
   float *pfVar2;
   float *pfVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_29(param_1);
-  if (((pfVar3 == (float *)0x0) || ((uVar4 & 0xffffffff) == 0)) || ((uVar5 & 0xffffffff) == 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,200,0,"%s");
+  pfVar3 = (float *)__savegprlr_29();
+  if (((pfVar3 == (float *)0x0) || ((param_2 & 0xffffffff) == 0)) || ((param_3 & 0xffffffff) == 0))
+  {
+    MyAssertHandler(0xffffffff8219aaa8,200,0,0xffffffff82000f98,0xffffffff8219ab08);
   }
-  pfVar1 = (float *)uVar5;
-  pfVar2 = (float *)uVar4;
+  pfVar1 = (float *)param_3;
+  pfVar2 = (float *)param_2;
   *pfVar3 = *pfVar2 * *pfVar1 +
             pfVar1[1] * pfVar2[1] + pfVar2[3] * pfVar1[3] + pfVar1[2] * pfVar2[2];
   pfVar3[1] = pfVar2[3] * pfVar1[2] +
@@ -339,24 +301,20 @@ void dQMultiply1(float *param_1,float *param_2,float *param_3)
 
 // 826A0830  dQMultiply2  (physics/ode/src/rotation.cpp:209)
 
-void dQMultiply2(float *param_1,float *param_2,float *param_3)
+void dQMultiply2(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   float *pfVar1;
   float *pfVar2;
   float *pfVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_29(param_1);
-  if (((pfVar3 == (float *)0x0) || ((uVar4 & 0xffffffff) == 0)) || ((uVar5 & 0xffffffff) == 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0xd2,0,"%s");
+  pfVar3 = (float *)__savegprlr_29();
+  if (((pfVar3 == (float *)0x0) || ((param_2 & 0xffffffff) == 0)) || ((param_3 & 0xffffffff) == 0))
+  {
+    MyAssertHandler(0xffffffff8219aaa8,0xd2,0,0xffffffff82000f98,0xffffffff8219ab08);
   }
-  pfVar1 = (float *)uVar5;
-  pfVar2 = (float *)uVar4;
+  pfVar1 = (float *)param_3;
+  pfVar2 = (float *)param_2;
   *pfVar3 = *pfVar2 * *pfVar1 +
             pfVar1[1] * pfVar2[1] + pfVar2[3] * pfVar1[3] + pfVar1[2] * pfVar2[2];
   pfVar3[1] = pfVar2[3] * pfVar1[2] +
@@ -372,24 +330,20 @@ void dQMultiply2(float *param_1,float *param_2,float *param_3)
 
 // 826A0960  dQMultiply3  (physics/ode/src/rotation.cpp:219)
 
-void dQMultiply3(float *param_1,float *param_2,float *param_3)
+void dQMultiply3(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   float *pfVar1;
   float *pfVar2;
   float *pfVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_29(param_1);
-  if (((pfVar3 == (float *)0x0) || ((uVar4 & 0xffffffff) == 0)) || ((uVar5 & 0xffffffff) == 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0xdc,0,"%s");
+  pfVar3 = (float *)__savegprlr_29();
+  if (((pfVar3 == (float *)0x0) || ((param_2 & 0xffffffff) == 0)) || ((param_3 & 0xffffffff) == 0))
+  {
+    MyAssertHandler(0xffffffff8219aaa8,0xdc,0,0xffffffff82000f98,0xffffffff8219ab08);
   }
-  pfVar1 = (float *)uVar5;
-  pfVar2 = (float *)uVar4;
+  pfVar1 = (float *)param_3;
+  pfVar2 = (float *)param_2;
   *pfVar3 = -(pfVar1[3] * pfVar2[3] -
              -(pfVar1[2] * pfVar2[2] - (*pfVar2 * *pfVar1 - pfVar1[1] * pfVar2[1])));
   pfVar3[1] = -(pfVar1[2] * pfVar2[3] -
@@ -417,8 +371,7 @@ void dRfromQ(float *param_1,float *param_2)
   float fVar7;
   
   if ((param_2 == (float *)0x0) || (param_1 == (float *)0x0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0xeb,0,"%s");
+    MyAssertHandler(0xffffffff8219aaa8,0xeb,0,0xffffffff82000f98,0xffffffff8219ab18);
   }
   fVar5 = param_2[2] * param_2[2] * 2.0;
   fVar6 = param_2[3] * param_2[3] * 2.0;
@@ -446,84 +399,81 @@ void dRfromQ(float *param_1,float *param_2)
 
 // 826A0C10  dQfromR  (physics/ode/src/rotation.cpp:253)
 
-void dQfromR(float *param_1,float *param_2)
+void dQfromR(undefined8 param_1,ulonglong param_2)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
-  float *pfVar5;
+  float *pfVar4;
+  float fVar5;
   float *pfVar6;
-  ulonglong uVar7;
+  double dVar7;
   double dVar8;
-  double dVar9;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pfVar6 = (float *)__savegprlr_29(param_1);
-  if ((pfVar6 == (float *)0x0) || ((uVar7 & 0xffffffff) == 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0x100,0,"%s");
+  pfVar6 = (float *)__savegprlr_29();
+  if ((pfVar6 == (float *)0x0) || ((param_2 & 0xffffffff) == 0)) {
+    MyAssertHandler(0xffffffff8219aaa8,0x100,0,0xffffffff82000f98,0xffffffff8219ab18);
   }
-  pfVar5 = (float *)uVar7;
-  fVar1 = pfVar5[10];
-  fVar2 = pfVar5[5];
-  fVar3 = *pfVar5;
-  fVar4 = fVar3 + fVar2 + fVar1;
-  if (0.0 <= fVar4) {
-    fVar1 = SQRT(fVar4 + 1.0);
+  pfVar4 = (float *)param_2;
+  fVar1 = pfVar4[10];
+  fVar2 = pfVar4[5];
+  fVar5 = fVar2 + fVar1;
+  fVar3 = *pfVar4;
+  if (0.0 <= fVar3 + fVar5) {
+    fVar1 = SQRT(fVar3 + fVar5 + 1.0);
     *pfVar6 = fVar1 * 0.5;
     fVar1 = (1.0 / fVar1) * 0.5;
-    pfVar6[1] = (pfVar5[9] - pfVar5[6]) * fVar1;
-    pfVar6[2] = (pfVar5[2] - pfVar5[8]) * fVar1;
-    pfVar6[3] = (pfVar5[4] - pfVar5[1]) * fVar1;
+    pfVar6[1] = (pfVar4[9] - pfVar4[6]) * fVar1;
+    pfVar6[2] = (pfVar4[2] - pfVar4[8]) * fVar1;
+    pfVar6[3] = (pfVar4[4] - pfVar4[1]) * fVar1;
     __restgprlr_29();
     return;
   }
   if (fVar2 <= fVar3) {
     if (fVar1 <= fVar3) {
-      dVar9 = 1.0;
-      if ((fVar3 - (fVar2 + fVar1)) + 1.0 < 0.0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                        ,0x11a,0,"(_R(0,0) - (_R(1,1) + _R(2,2))) + 1 >= 0\n\t%g, %g");
+      dVar8 = 1.0;
+      if ((fVar3 - fVar5) + 1.0 < 0.0) {
+        MyAssertHandler(0xffffffff8219aaa8,0x11a,0,0xffffffff8219ab20,
+                        (double)((fVar3 - fVar5) + 1.0),0);
       }
-      dVar8 = (double)SQRT((float)((double)(*pfVar5 - (pfVar5[5] + pfVar5[10])) + dVar9));
-      pfVar6[1] = (float)(dVar8 * 0.5);
-      fVar3 = (float)(dVar9 / dVar8) * 0.5;
-      pfVar6[2] = (pfVar5[4] + pfVar5[1]) * fVar3;
-      pfVar6[3] = (pfVar5[8] + pfVar5[2]) * fVar3;
-      fVar1 = pfVar5[9];
-      fVar2 = pfVar5[6];
+      dVar7 = (double)SQRT((float)((double)(*pfVar4 - (pfVar4[5] + pfVar4[10])) + dVar8));
+      pfVar6[1] = (float)(dVar7 * 0.5);
+      fVar3 = (float)(dVar8 / dVar7) * 0.5;
+      pfVar6[2] = (pfVar4[4] + pfVar4[1]) * fVar3;
+      pfVar6[3] = (pfVar4[8] + pfVar4[2]) * fVar3;
+      fVar1 = pfVar4[9];
+      fVar2 = pfVar4[6];
       goto LAB_826a0f38;
     }
   }
   else if (fVar1 <= fVar2) {
-    dVar9 = 1.0;
+    dVar8 = 1.0;
     if ((fVar2 - (fVar3 + fVar1)) + 1.0 < 0.0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                      ,0x124,0,"(_R(1,1) - (_R(2,2) + _R(0,0))) + 1 >= 0\n\t%g, %g");
+      MyAssertHandler(0xffffffff8219aaa8,0x124,0,0xffffffff8219ab88,
+                      (double)((fVar2 - (fVar3 + fVar1)) + 1.0),0);
     }
-    dVar8 = (double)SQRT((float)((double)(pfVar5[5] - (pfVar5[10] + *pfVar5)) + dVar9));
-    pfVar6[2] = (float)(dVar8 * 0.5);
-    fVar3 = (float)(dVar9 / dVar8) * 0.5;
-    pfVar6[3] = (pfVar5[9] + pfVar5[6]) * fVar3;
-    pfVar6[1] = (pfVar5[4] + pfVar5[1]) * fVar3;
-    fVar1 = pfVar5[2];
-    fVar2 = pfVar5[8];
+    dVar7 = (double)SQRT((float)((double)(pfVar4[5] - (pfVar4[10] + *pfVar4)) + dVar8));
+    pfVar6[2] = (float)(dVar7 * 0.5);
+    fVar3 = (float)(dVar8 / dVar7) * 0.5;
+    pfVar6[3] = (pfVar4[9] + pfVar4[6]) * fVar3;
+    pfVar6[1] = (pfVar4[4] + pfVar4[1]) * fVar3;
+    fVar1 = pfVar4[2];
+    fVar2 = pfVar4[8];
     goto LAB_826a0f38;
   }
-  dVar9 = 1.0;
+  dVar8 = 1.0;
   if ((fVar1 - (fVar3 + fVar2)) + 1.0 < 0.0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0x12e,0,"(_R(2,2) - (_R(0,0) + _R(1,1))) + 1 >= 0\n\t%g, %g");
+    MyAssertHandler(0xffffffff8219aaa8,0x12e,0,0xffffffff8219ab54,
+                    (double)((fVar1 - (fVar3 + fVar2)) + 1.0),0);
   }
-  dVar8 = (double)SQRT((float)((double)(pfVar5[10] - (pfVar5[5] + *pfVar5)) + dVar9));
-  pfVar6[3] = (float)(dVar8 * 0.5);
-  fVar3 = (float)(dVar9 / dVar8) * 0.5;
-  pfVar6[1] = (pfVar5[8] + pfVar5[2]) * fVar3;
-  pfVar6[2] = (pfVar5[9] + pfVar5[6]) * fVar3;
-  fVar1 = pfVar5[4];
-  fVar2 = pfVar5[1];
+  dVar7 = (double)SQRT((float)((double)(pfVar4[10] - (pfVar4[5] + *pfVar4)) + dVar8));
+  pfVar6[3] = (float)(dVar7 * 0.5);
+  fVar3 = (float)(dVar8 / dVar7) * 0.5;
+  pfVar6[1] = (pfVar4[8] + pfVar4[2]) * fVar3;
+  pfVar6[2] = (pfVar4[9] + pfVar4[6]) * fVar3;
+  fVar1 = pfVar4[4];
+  fVar2 = pfVar4[1];
 LAB_826a0f38:
   *pfVar6 = (fVar1 - fVar2) * fVar3;
   __restgprlr_29();
@@ -533,28 +483,24 @@ LAB_826a0f38:
 
 // 826A0F50  dDQfromW  (physics/ode/src/rotation.cpp:315)
 
-void dDQfromW(float *param_1,float *param_2,float *param_3)
+void dDQfromW(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   float *pfVar1;
   float *pfVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  ulonglong uVar5;
+  float *pfVar3;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pfVar2 = (float *)__savegprlr_29(param_1);
-  if ((((uVar3 & 0xffffffff) == 0) || ((uVar5 & 0xffffffff) == 0)) || (pfVar2 == (float *)0x0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
-                    ,0x13c,0,"%s");
+  pfVar2 = (float *)__savegprlr_29();
+  if ((((param_2 & 0xffffffff) == 0) || ((param_3 & 0xffffffff) == 0)) || (pfVar2 == (float *)0x0))
+  {
+    MyAssertHandler(0xffffffff8219aaa8,0x13c,0,0xffffffff82000f98,0xffffffff8219abbc);
   }
-  pfVar1 = (float *)uVar5;
-  pfVar4 = (float *)uVar3;
-  *pfVar2 = -(pfVar1[3] * pfVar4[2] - -(pfVar1[2] * pfVar4[1] - -(pfVar1[1] * *pfVar4))) * 0.5;
-  pfVar2[1] = -(pfVar1[2] * pfVar4[2] - (pfVar1[3] * pfVar4[1] + *pfVar4 * *pfVar1)) * 0.5;
-  pfVar2[2] = (pfVar4[1] * *pfVar1 + (pfVar1[1] * pfVar4[2] - pfVar1[3] * *pfVar4)) * 0.5;
-  pfVar2[3] = (pfVar4[2] * *pfVar1 + (pfVar1[2] * *pfVar4 - pfVar1[1] * pfVar4[1])) * 0.5;
+  pfVar1 = (float *)param_3;
+  pfVar3 = (float *)param_2;
+  *pfVar2 = -(pfVar1[3] * pfVar3[2] - -(pfVar1[2] * pfVar3[1] - -(pfVar1[1] * *pfVar3))) * 0.5;
+  pfVar2[1] = -(pfVar1[2] * pfVar3[2] - (pfVar1[3] * pfVar3[1] + *pfVar3 * *pfVar1)) * 0.5;
+  pfVar2[2] = (pfVar3[1] * *pfVar1 + (pfVar1[1] * pfVar3[2] - pfVar1[3] * *pfVar3)) * 0.5;
+  pfVar2[3] = (pfVar3[2] * *pfVar1 + (pfVar1[2] * *pfVar3 - pfVar1[1] * pfVar3[1])) * 0.5;
   __restgprlr_29();
   return;
 }

@@ -2,38 +2,37 @@
 
 // 828A4A68  XGetOverlappedResult  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xgetoverlappedresult.c:50)
 
-ulong XGetOverlappedResult(_XOVERLAPPED *param_1,ulong *param_2,int param_3)
+void XGetOverlappedResult(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
   uint *puVar2;
-  ulong uVar3;
+  DWORD DVar3;
   ulonglong uVar1;
   
-  uVar1 = (ulonglong)(int)param_2;
-  puVar2 = (uint *)__savegprlr_29(param_1);
+  puVar2 = (uint *)__savegprlr_29();
   if (*puVar2 == 0x3e5) {
-    if ((param_3 == 0) || ((void *)puVar2[3] == (void *)0x0)) {
-      uVar3 = 0x102;
+    if ((param_3 == 0) || ((HANDLE)puVar2[3] == (HANDLE)0x0)) {
+      DVar3 = 0x102;
     }
     else {
-      uVar3 = WaitForSingleObject((void *)puVar2[3],0xffffffff);
+      DVar3 = WaitForSingleObject((HANDLE)puVar2[3],0xffffffff);
     }
-    if (uVar3 == 0x102) {
+    if (DVar3 == 0x102) {
       uVar1 = 0x3e4;
       goto LAB_828a4afc;
     }
-    if (uVar3 != 0) {
-      uVar3 = GetLastError();
-      uVar1 = (ulonglong)(int)uVar3;
+    if (DVar3 != 0) {
+      DVar3 = GetLastError();
+      uVar1 = (ulonglong)(int)DVar3;
       goto LAB_828a4afc;
     }
   }
-  if ((uVar1 & 0xffffffff) != 0) {
-    *(uint *)uVar1 = puVar2[1];
+  if ((param_2 & 0xffffffff) != 0) {
+    *(uint *)param_2 = puVar2[1];
   }
   uVar1 = (ulonglong)*puVar2;
 LAB_828a4afc:
-  uVar3 = __restgprlr_29(uVar1);
-  return uVar3;
+  __restgprlr_29(uVar1);
+  return;
 }
 

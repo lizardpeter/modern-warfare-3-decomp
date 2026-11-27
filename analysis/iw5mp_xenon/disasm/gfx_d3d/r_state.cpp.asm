@@ -1551,7 +1551,66 @@ LAB_827814b4:
   8277D958  398CD968             subi r12,r12,0x2698
   8277D95C  7C0C002E             lwzx r0,r12,r0
   8277D960  7C0903A6             mtspr CTR,r0
+switchD:
   8277D964  4E800420             bctr
+caseD_0:
+  8277D9AC  39200008             li r9,0x8
+  8277D9B0  396313F0             addi r11,r3,0x13f0
+  8277D9B4  3943FFF8             subi r10,r3,0x8
+  8277D9B8  396BFFF8             subi r11,r11,0x8
+  8277D9BC  7D2903A6             mtspr CTR,r9
+LAB_8277d9c0:
+  8277D9C0  E92B0009             ldu r9,0x8(r11)
+  8277D9C4  F92A0009             stdu r9,0x8(r10)
+  8277D9C8  4200FFF8             bdnz 0x8277d9c0
+  8277D9CC  A16316A4             lhz r11,0x16a4(r3)
+  8277D9D0  B1631634             sth r11,0x1634(r3)
+  8277D9D4  38210060             addi r1,r1,0x60
+  8277D9D8  8181FFF8             lwz r12,-0x8(r1)
+  8277D9DC  7D8803A6             mtspr LR,r12
+  8277D9E0  4E800020             blr
+caseD_4:
+  8277D9E4  39200008             li r9,0x8
+  8277D9E8  390313F0             addi r8,r3,0x13f0
+  8277D9EC  38E30100             addi r7,r3,0x100
+  8277D9F0  39680038             addi r11,r8,0x38
+  8277D9F4  3947FFF8             subi r10,r7,0x8
+  8277D9F8  7D2903A6             mtspr CTR,r9
+LAB_8277d9fc:
+  8277D9FC  E92B0009             ldu r9,0x8(r11)
+  8277DA00  F92A0009             stdu r9,0x8(r10)
+  8277DA04  4200FFF8             bdnz 0x8277d9fc
+  8277DA08  816316D4             lwz r11,0x16d4(r3)
+  8277DA0C  2B0B0002             cmplwi cr6,r11,0x2
+  8277DA10  409A000C             bne cr6,0x8277da1c
+  8277DA14  C008014C             lfs f0,0x14c(r8)
+  8277DA18  D0070038             stfs f0,0x38(r7)
+LAB_8277da1c:
+  8277DA1C  A16316A6             lhz r11,0x16a6(r3)
+  8277DA20  B163163C             sth r11,0x163c(r3)
+  8277DA24  38210060             addi r1,r1,0x60
+  8277DA28  8181FFF8             lwz r12,-0x8(r1)
+  8277DA2C  7D8803A6             mtspr LR,r12
+  8277DA30  4E800020             blr
+caseD_8:
+  8277DA34  4BFFFB05             bl 0x8277d538
+  8277DA38  38210060             addi r1,r1,0x60
+  8277DA3C  8181FFF8             lwz r12,-0x8(r1)
+  8277DA40  7D8803A6             mtspr LR,r12
+  8277DA44  4E800020             blr
+caseD_c:
+  8277DA48  4BFFFC99             bl 0x8277d6e0
+  8277DA4C  38210060             addi r1,r1,0x60
+  8277DA50  8181FFF8             lwz r12,-0x8(r1)
+  8277DA54  7D8803A6             mtspr LR,r12
+  8277DA58  4E800020             blr
+caseD_10:
+  8277DA5C  38840400             addi r4,r4,0x400
+  8277DA60  4BFFFD81             bl 0x8277d7e0
+  8277DA64  38210060             addi r1,r1,0x60
+  8277DA68  8181FFF8             lwz r12,-0x8(r1)
+  8277DA6C  7D8803A6             mtspr LR,r12
+  8277DA70  4E800020             blr
 LAB_8277da74:
   8277DA74  38800000             li r4,0x0
   8277DA78  4BFFF9B9             bl 0x8277d430
@@ -1592,7 +1651,7 @@ LAB_8277daf0:
   8277DAF4  419A006C             beq cr6,0x8277db60
   8277DAF8  2B050034             cmplwi cr6,r5,0x34
   8277DAFC  419A004C             beq cr6,0x8277db48
-LAB_8277db00:
+caseD_1:
   8277DB00  3D608401             lis r11,-0x7bff
   8277DB04  816B3128             lwz r11,0x3128(r11)
   8277DB08  2F0B0000             cmpwi cr6,r11,0x0

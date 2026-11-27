@@ -2,34 +2,29 @@
 
 // 829179E0  strncmp  (<external>/bt/278379/vctools/crt/xb/xbox/mdsstrncmp.asm:33)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void strncmp(void)
+int strncmp(char *_Str1,char *_Str2,size_t _MaxCount)
 
 {
-  bool bVar1;
-  char *in_r3;
-  char *in_r4;
-  longlong in_r5;
+  longlong lVar1;
   longlong lVar2;
   
-  if (in_r5 < 1) {
-    return;
+  if ((longlong)(int)_MaxCount < 1) {
+    return 0;
   }
-  bVar1 = *in_r3 == *in_r4;
-  lVar2 = in_r5 + -1;
-  if (lVar2 == 0 || *in_r3 == '\0') {
-    return;
+  lVar1 = (ulonglong)(byte)*_Str1 - (ulonglong)(byte)*_Str2;
+  lVar2 = (longlong)(int)_MaxCount + -1;
+  if (lVar2 == 0 || *_Str1 == 0) {
+    return (int)lVar1;
   }
   do {
-    if (!bVar1) {
-      return;
+    if (lVar1 != 0) {
+      return (int)lVar1;
     }
-    in_r3 = in_r3 + 1;
-    in_r4 = in_r4 + 1;
-    bVar1 = *in_r3 == *in_r4;
+    _Str1 = _Str1 + 1;
+    _Str2 = _Str2 + 1;
+    lVar1 = (ulonglong)(byte)*_Str1 - (ulonglong)(byte)*_Str2;
     lVar2 = lVar2 + -1;
-  } while (lVar2 != 0 && *in_r3 != '\0');
-  return;
+  } while (lVar2 != 0 && *_Str1 != 0);
+  return (int)lVar1;
 }
 

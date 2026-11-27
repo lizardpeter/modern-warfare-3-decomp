@@ -2,25 +2,25 @@
 
 // 826F24E0  dwGetServerTime  (DW/dwTitleUtilities.cpp:23)
 
-void dwGetServerTime(int param_1,overlappedTask *param_2,bdTimeStamp *param_3)
+void dwGetServerTime(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-  bdRemoteTask *pbVar1;
-  bdTimeStamp *pbVar2;
-  bdReference<bdRemoteTask> bVar3;
-  bdTitleUtilities bStack_20;
+  int iVar1;
+  ulonglong uVar2;
+  int *piVar3;
+  undefined1 auStack_20 [8];
   
-  pbVar2 = (bdTimeStamp *)dwGetTitleUtilities(param_1);
-  if ((pbVar2 != (bdTimeStamp *)0x0) && (param_2 != (overlappedTask *)0x0)) {
-    bVar3 = bdTitleUtilities::getServerTime(&bStack_20,pbVar2);
-    pbVar1 = (bdRemoteTask *)(bVar3.m_ptr)->_padding_;
-    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>((bdReference<bdRemoteTask> *)&bStack_20);
-    if (pbVar1 == (bdRemoteTask *)0x0) {
+  uVar2 = dwGetTitleUtilities();
+  if (((uVar2 & 0xffffffff) != 0) && ((param_2 & 0xffffffff) != 0)) {
+    piVar3 = (int *)bdTitleUtilities__getServerTime(auStack_20,uVar2,param_3);
+    iVar1 = *piVar3;
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_20);
+    if (iVar1 == 0) {
       TaskManager_ClearTask(param_2);
       dwConnectionErrorHandler(6);
     }
     else {
-      bdReference<bdRemoteTask>::operator=(&(param_2->u).remoteTask,pbVar1);
+      bdReference<bdRemoteTask>__operator_(param_2 + 8,iVar1);
     }
   }
   return;
@@ -29,77 +29,72 @@ void dwGetServerTime(int param_1,overlappedTask *param_2,bdTimeStamp *param_3)
 
 // 826F2570  dwGetServerTimeComplete  (DW/dwTitleUtilities.cpp:46)
 
-taskCompleteResults dwGetServerTimeComplete(int param_1,overlappedTask *param_2)
+void dwGetServerTimeComplete(undefined8 param_1,ulonglong param_2)
 
 {
-  overlappedTask *poVar1;
-  int iVar2;
-  bdTitleUtilities *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  taskCompleteResults tVar6;
-  ulonglong uVar7;
-  char acStack_60 [96];
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  undefined1 auStack_60 [96];
   
-  uVar7 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  pbVar3 = dwGetTitleUtilities(iVar2);
-  if (((pbVar3 != (bdTitleUtilities *)0x0) && ((uVar7 & 0xffffffff) != 0)) &&
-     (poVar1 = (overlappedTask *)uVar7, (poVar1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0)) {
-    dwLobbyPump(iVar2);
-    bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-    bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-    if (bVar5 != BD_NO_ERROR) {
-      TaskManager_ClearTask(poVar1);
-      if (bVar5 == BD_TOO_MANY_TASKS) {
-        Live_ThrowError(ERR_DROP,"XBOXLIVE_TOOMANYTASKS");
+  uVar1 = __savegprlr_29();
+  iVar3 = dwGetTitleUtilities();
+  if (((iVar3 != 0) && ((param_2 & 0xffffffff) != 0)) &&
+     (iVar3 = (int)param_2, *(int *)(iVar3 + 8) != 0)) {
+    dwLobbyPump(uVar1);
+    uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+    uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+    if ((int)uVar2 != 0) {
+      TaskManager_ClearTask(param_2);
+      if ((int)uVar2 == 1) {
+        Live_ThrowError(1,0xffffffff821ac97c);
       }
-      dwLobbyErrorCodeToString(bVar5,acStack_60,0x40);
-      Com_PrintError(0x10,"DW get server time error %i - \'%s\'\n");
+      dwLobbyErrorCodeToString(uVar2,auStack_60,0x40);
+      Com_PrintError(0x10,0xffffffff821ad230,uVar2,auStack_60);
     }
-    tVar6 = dwTaskStatusConvert(bVar4,bVar5);
-    tVar6 = __restgprlr_29(tVar6);
-    return tVar6;
+    dwTaskStatusConvert(uVar1,uVar2);
+    __restgprlr_29();
+    return;
   }
-  Com_Printf(0x10,"Failed to retrieve server time task status\n");
-  tVar6 = __restgprlr_29(2);
-  return tVar6;
+  Com_Printf(0x10,0xffffffff821ad204);
+  __restgprlr_29(2);
+  return;
 }
 
 
 // 826F2658  dwGetTitleUtilitiesComplete  (DW/dwTitleUtilities.cpp:82)
 
-taskCompleteResults dwGetTitleUtilitiesComplete(overlappedTask *param_1)
+void dwGetTitleUtilitiesComplete(void)
 
 {
-  overlappedTask *poVar1;
-  bdTitleUtilities *pbVar2;
-  bdStatus bVar3;
-  bdLobbyErrorCode bVar4;
-  taskCompleteResults tVar5;
-  char acStack_60 [96];
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_60 [96];
   
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (((poVar1 != (overlappedTask *)0x0) && ((poVar1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
-     && (pbVar2 = dwGetTitleUtilities((uint)poVar1->controllerIndex),
-        pbVar2 != (bdTitleUtilities *)0x0)) {
-    dwLobbyPump((uint)poVar1->controllerIndex);
-    bVar3 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-    bVar4 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-    if (bVar4 != BD_NO_ERROR) {
-      TaskManager_ClearTask(poVar1);
-      if (bVar4 == BD_TOO_MANY_TASKS) {
-        Live_ThrowError(ERR_DROP,"XBOXLIVE_TOOMANYTASKS");
+  iVar3 = __savegprlr_29();
+  if ((iVar3 != 0) && (*(int *)(iVar3 + 8) != 0)) {
+    iVar4 = dwGetTitleUtilities(*(undefined1 *)(iVar3 + 0x95));
+    if (iVar4 != 0) {
+      dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+      uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+      uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+      if ((int)uVar2 != 0) {
+        TaskManager_ClearTask(iVar3);
+        if ((int)uVar2 == 1) {
+          Live_ThrowError(1,0xffffffff821ac97c);
+        }
+        dwLobbyErrorCodeToString(uVar2,auStack_60,0x40);
+        Com_PrintError(0x10,0xffffffff821ad280,uVar2,auStack_60);
       }
-      dwLobbyErrorCodeToString(bVar4,acStack_60,0x40);
-      Com_PrintError(0x10,"DW title utilities error %i - \'%s\'\n");
+      dwTaskStatusConvert(uVar1,uVar2);
+      __restgprlr_29();
+      return;
     }
-    tVar5 = dwTaskStatusConvert(bVar3,bVar4);
-    tVar5 = __restgprlr_29(tVar5);
-    return tVar5;
   }
-  Com_Printf(0x10,"Failed to retrieve title utilities status\n");
-  tVar5 = __restgprlr_29(2);
-  return tVar5;
+  Com_Printf(0x10,0xffffffff821ad254);
+  __restgprlr_29(2);
+  return;
 }
 

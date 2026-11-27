@@ -2,627 +2,304 @@
 
 // 8273C400  R_RegisterWorkerThreadDvar  (gfx_d3d/r_dvars.cpp:928)
 
-dvar_t * R_RegisterWorkerThreadDvar(char *param_1,uint param_2)
+void R_RegisterWorkerThreadDvar(undefined8 param_1)
 
 {
-  dvar_t *pdVar1;
-  
-  pdVar1 = Dvar_RegisterBool(param_1,true,0,"Enable worker thread");
-  return pdVar1;
+  Dvar_RegisterBool(param_1,1,0,0xffffffff821bfc20);
+  return;
 }
 
 
 // 8273C418  R_RegisterDvars  (gfx_d3d/r_dvars.cpp:955)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_RegisterDvars(void)
 
 {
-  ushort uVar1;
-  char *pcVar2;
-  GPUTimer *pGVar3;
-  IMAGE_DOS_HEADER *pIVar4;
-  ushort uVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  undefined8 uVar14;
+  undefined8 uVar15;
+  undefined8 uVar16;
+  undefined8 uVar17;
+  undefined8 uVar18;
+  undefined8 uVar19;
   
   __savegprlr_26();
   __savefpr();
   R_RegisterSunDvars();
-  pcVar2 = (char *)0x80000000;
-  uVar1 = 0;
-  r_ignore = Dvar_RegisterInt("r_ignore",0,-0x80000000,0x7fffffff,0,"used for debugging anything");
-  if (gfxCfg.inited != false) {
-    pcVar2 = (char *)(uint)gfxCfg.defaultFullscreenFlags;
-    uVar1 = (ushort)gfxCfg.defaultFullscreen;
-    r_fullscreen = Dvar_RegisterBool("r_fullscreen",gfxCfg.defaultFullscreen,
-                                     gfxCfg.defaultFullscreenFlags,"Display game full screen");
+  DAT_845aa668 = Dvar_RegisterInt(0xffffffff821c3130,0,0xffffffff80000000,0x7fffffff,0,
+                                  0xffffffff821c313c);
+  if (DAT_84613758 != '\0') {
+    DAT_845aa5b8 = Dvar_RegisterBool(0xffffffff821c3104,DAT_84613778,DAT_8461377a,0xffffffff821c3114
+                                    );
   }
-  dVar6 = 3.0;
-  dVar17 = 0.5;
-  r_gamma = Dvar_RegisterFloat("r_gamma",1.0,0.5,3.0,uVar1,pcVar2);
-  uVar1 = 0;
-  r_ignoreHwGamma = Dvar_RegisterBool("r_ignorehwgamma",false,2,"Ignore hardware gamma");
-  r_blacklevel = Dvar_RegisterFloat("r_blacklevel",0.0,-0.99,0.99,uVar1,
-                                    "lues from dvars rather than the level");
-  r_texFilterAnisoMax =
-       Dvar_RegisterInt("r_texFilterAnisoMax",0x10,1,0x10,0,
-                        "Maximum anisotropy to use for texture filtering");
-  r_texFilterDisable =
-       Dvar_RegisterBool("r_texFilterDisable",false,4,
-                         "Disables all texture filtering (uses nearest only.)");
-  r_texFilterAnisoMin =
-       Dvar_RegisterInt("r_texFilterAnisoMin",1,1,0x10,0,
-                        "Minimum anisotropy to use for texture filtering (overridden by max)");
-  uVar5 = 0x9e50;
-  r_texFilterMipMode =
-       Dvar_RegisterEnum("r_texFilterMipMode",mipFilterNames,0,0,
-                         "Forces all mipmaps to use a particular blend between levels (or disables mipping.)"
-                        );
-  dVar21 = -16.0;
-  r_texFilterMipBias =
-       Dvar_RegisterFloat("r_texFilterMipBias",0.0,-16.0,15.99,0,IMAGE_DOS_HEADER_82000000.e_magic);
-  r_drawStreaming =
-       Dvar_RegisterBool("r_drawStreaming",false,4,
-                         "Makes materials with textures that are not yet loaded draw in pink");
-  r_fullbright = Dvar_RegisterBool("r_fullbright",false,4,"Toggles rendering without lighting");
-  uVar1 = 0x9d34;
-  r_debugShader =
-       Dvar_RegisterEnum("r_debugShader",debugShaderNames,0,4,"Enable shader debugging information")
-  ;
-  dVar12 = 16.0;
-  pcVar2 = "subwindow to draw: left, right, top, bottom";
-  r_subwindow = Dvar_RegisterVec4("r_subwindow",0.0,1.0,0.0,1.0,(float)dVar21,16.0,uVar1,
-                                  "subwindow to draw: left, right, top, bottom");
-  dVar9 = 10000.0;
-  dVar23 = 0.0010000000474974513;
-  dVar20 = 4.0;
-  r_znear = Dvar_RegisterFloat("r_znear",4.0,0.001,10000.0,0,pcVar2);
-  pcVar2 = &DAT_00000004;
-  uVar1 = 0;
-  r_draw_frustum = Dvar_RegisterBool("r_draw_frustum",false,4,"Draw the frustum using debug lines");
-  dVar15 = 0.10000000149011612;
-  r_znear_depthhack =
-       Dvar_RegisterFloat("r_znear_depthhack",0.1,(float)dVar23,(float)dVar12,uVar1,pcVar2);
-  dVar19 = 3.4028234663852886e+38;
-  r_zfar = Dvar_RegisterFloat("r_zfar",0.0,0.0,3.4028235e+38,0,IMAGE_DOS_HEADER_82000000.e_magic);
-  r_fog = Dvar_RegisterBool("r_fog",true,4,"Set to 0 to disable fog");
-  pcVar2 = "lues from dvars rather than the level";
-  uVar1 = 0;
-  dVar24 = -1.0;
-  r_fog_depthhack_scale =
-       Dvar_RegisterFloat("r_fog_depthhack_scale",-1.0,-1.0,-1.0,0,
-                          "lues from dvars rather than the level");
-  dVar16 = -4.0;
-  r_polygonOffsetScale =
-       Dvar_RegisterFloat("r_polygonOffsetScale",(float)dVar24,-4.0,0.0,uVar1,pcVar2);
-  pcVar2 = "lues from dvars rather than the level";
-  uVar1 = 0;
-  r_polygonOffsetBias =
-       Dvar_RegisterFloat("r_polygonOffsetBias",(float)dVar24,(float)dVar21,0.0,0,
-                          "lues from dvars rather than the level");
-  r_polygonOffsetBiasMult = Dvar_RegisterFloat("r_polygonOffsetBiasMult",1.0,0.0,1.0,uVar1,pcVar2);
-  r_overrideDrawList =
-       Dvar_RegisterEnum("r_overrideDrawList",r_drawListNames,0x28,4,
-                         "Replace textures for this draw list");
-  r_lightMap = Dvar_RegisterEnum("r_lightMap",colorMapNames,1,4,
-                                 "Replace all lightmaps with pure black or pure white");
-  r_colorMap = Dvar_RegisterEnum("r_colorMap",colorMapNames,1,4,
-                                 "Replace all color maps with pure black or pure white");
-  r_detailMap = Dvar_RegisterEnum("r_detailMap",detailMapNames,1,4,
-                                  "Replace all detail maps with an image that effectively disables them"
-                                 );
-  r_normalMap = Dvar_RegisterEnum("r_normalMap",normalMapNames,1,4,
-                                  "Replace all normal maps with a flat normal map");
-  uVar1 = 0x9c90;
-  r_specularMap =
-       Dvar_RegisterEnum("r_specularMap",colorMapNames,1,4,
-                         "Replace all specular maps with pure black (off) or pure white (super shiny)"
-                        );
-  pcVar2 = "lues from dvars rather than the level";
-  r_specularColorScale =
-       Dvar_RegisterFloat("r_specularColorScale",2.5,0.0,25.0,uVar1,
-                          "lues from dvars rather than the level");
-  dVar18 = 10.0;
-  r_diffuseColorScale = Dvar_RegisterFloat("r_diffuseColorScale",1.0,0.0,10.0,0,pcVar2);
-  r_primaryLightUseTweaks =
-       Dvar_RegisterBool("r_primaryLightUseTweaks",false,4,"Use primary light intensity tweaks");
-  pGVar3 = s_timerFrames[0x26].timers + 0x12;
-  uVar1 = 0;
-  r_primaryLightTweakDiffuseStrength =
-       Dvar_RegisterFloat("r_primaryLightTweakDiffuseStrength",1.0,0.0,(float)dVar18,0,
-                          (char *)(s_timerFrames[0x26].timers + 0x12));
-  r_primaryLightTweakSpecularStrength =
-       Dvar_RegisterFloat("r_primaryLightTweakSpecularStrength",1.0,0.0,(float)dVar18,uVar1,
-                          (char *)pGVar3);
-  r_charLightAmbient =
-       Dvar_RegisterVec3Color
-                 ("r_charLightAmbient",0.0,0.0,0.0,1.0,0,"lues from dvars rather than the level");
-  pcVar2 = &DAT_00000004;
-  uVar1 = 0;
-  r_viewModelPrimaryLightUseTweaks =
-       Dvar_RegisterBool("r_viewModelPrimaryLightUseTweaks",false,4,
-                         "Use primary light intensity tweaks");
-  r_viewModelPrimaryLightTweakDiffuseStrength =
-       Dvar_RegisterFloat("r_viewModelPrimaryLightTweakDiffuseStrength",1.0,0.0,(float)dVar18,uVar1,
-                          pcVar2);
-  pcVar2 = "lues from dvars rather than the level";
-  uVar1 = 0;
-  r_viewModelPrimaryLightTweakSpecularStrength =
-       Dvar_RegisterFloat("r_viewModelPrimaryLightTweakSpecularStrength",1.0,0.0,(float)dVar18,0,
-                          "lues from dvars rather than the level");
-  r_viewModelLightAmbient =
-       Dvar_RegisterVec3Color("r_viewModelLightAmbient",0.0,0.0,0.0,1.0,uVar1,pcVar2);
-  r_showTris = Dvar_RegisterInt("r_showTris",0,0,2,4,"Show triangle outlines");
-  r_hideOpaque = Dvar_RegisterBool("r_hideOpaque",false,4,
-                                   "Hide opaque to make it easier to find floating decals.");
-  r_showTriCounts =
-       Dvar_RegisterBool("r_showTriCounts",false,4,"Triangle count for each rendered entity");
-  r_showSurfCounts =
-       Dvar_RegisterBool("r_showSurfCounts",false,4,"Surface count for each rendered entity");
-  r_showVertCounts = Dvar_RegisterBool("r_showVertCounts",false,4,"Vertex count for each entity");
-  r_resampleScene =
-       Dvar_RegisterBool("r_resampleScene",true,4,
-                         "Upscale the frame buffer with sharpen filter and color correction.");
-  uVar1 = 0x9c6c;
-  r_xdebug = Dvar_RegisterEnum("r_xdebug",xdebugNames,0,4,"xmodel/xanim debug rendering");
-  r_debugLineWidth =
-       Dvar_RegisterFloat("r_debugLineWidth",1.0,0.0,(float)dVar12,uVar1,
-                          "lues from dvars rather than the level");
-  r_vc_makelog = Dvar_RegisterInt("r_vc_makelog",0,0,2,2,
-                                  "Enable logging of light grid points for the vis cache.  1 starts from scratch, 2 appends."
-                                 );
-  r_vc_showlog = Dvar_RegisterInt("r_vc_showlog",0,0,0x400,0,
-                                  "Show this many rows of light grid points for the vis cache");
-  r_showLightGrid =
-       Dvar_RegisterInt("r_showLightGrid",0,0,3,4,
-                        "Show light grid debugging information (2: detailed, 3: detailed for this box only)"
-                       );
-  r_showMissingLightGrid =
-       Dvar_RegisterBool("r_showMissingLightGrid",true,0,
-                         "Use rainbow colors for entities that are outside the light grid");
-  r_cacheSModelLighting =
-       Dvar_RegisterBool("r_cacheSModelLighting",true,0,
-                         "Speed up static model lighting by caching previous results");
-  r_cacheModelLighting =
-       Dvar_RegisterBool("r_cacheModelLighting",true,0,
-                         "Speed up model lighting by caching previous results");
-  r_lightGridEnableTweaks =
-       Dvar_RegisterBool("r_lightGridEnableTweaks",false,0x48,
-                         "Enable tweaks of the light color from the light grid");
-  uVar1 = 1;
-  pcVar2 = (char *)0x0;
-  r_lightGridUseTweakedValues =
-       Dvar_RegisterBool("r_lightGridUseTweakedValues",true,0,
-                         "Use tweaked values instead of default");
-  dVar22 = 2.0;
-  r_lightGridIntensity = Dvar_RegisterFloat("r_lightGridIntensity",1.0,0.0,2.0,uVar1,pcVar2);
-  r_lightGridContrast =
-       Dvar_RegisterFloat("r_lightGridContrast",0.0,(float)dVar24,1.0,0,
-                          "lues from dvars rather than the level");
-  r_heroLighting = Dvar_RegisterBool("r_heroLighting",true,0,"Enable hero-only lighting");
-  pcVar2 = (char *)0x1;
-  r_lightCacheLessFrequentPeriod =
-       Dvar_RegisterInt("r_lightCacheLessFrequentPeriod",10,1,100,0,
-                        "Adjust how frequently fx models (and models tagged as less-frequently-lit by script) get relit on average (1 is every frame, 8 is every 8th frame)"
-                       );
-  dVar13 = 64.0;
-  r_lightCacheLessFrequentMaxDistance =
-       Dvar_RegisterFloat("r_lightCacheLessFrequentMaxDistance",64.0,0.0,(float)dVar9,0,pcVar2);
-  r_showModelLightingLowWaterMark =
-       Dvar_RegisterBool("r_showModelLightingLowWaterMark",false,4,"Vertex count for each entity");
+  uVar1 = 0x4008000000000000;
+  uVar12 = 0x3fe0000000000000;
+  DAT_845aa5e0 = Dvar_RegisterFloat(0x3ff0000000000000,0x3fe0000000000000,0x4008000000000000,
+                                    0xffffffff821c30fc);
+  DAT_845aa750 = Dvar_RegisterBool(0xffffffff821c30c4,0,2,0xffffffff821c30d4);
+  DAT_845aa6fc = Dvar_RegisterFloat(0,0xbfefae1480000000,0x3fefae1480000000,0xffffffff821c3088);
+  DAT_845aa6f8 = Dvar_RegisterInt(0xffffffff821c3044,0x10,1,0x10,0,0xffffffff821c3058);
+  DAT_845aa89c = Dvar_RegisterBool(0xffffffff821c2ffc,0,4,0xffffffff821c3010);
+  DAT_845aa734 = Dvar_RegisterInt(0xffffffff821c2fa4,1,1,0x10,0,0xffffffff821c2fb8);
+  DAT_845aa7a4 = Dvar_RegisterEnum(0xffffffff821c2f3c,0xffffffff82999ccc,0,0,0xffffffff821c2f50);
+  uVar16 = 0xc030000000000000;
+  DAT_845aa7b4 = Dvar_RegisterFloat(0,0xc030000000000000,0x402ffae140000000,0xffffffff821c2f0c);
+  DAT_845aa65c = Dvar_RegisterBool(0xffffffff821c2eb4,0,4,0xffffffff821c2ec8);
+  DAT_845aa714 = Dvar_RegisterBool(0xffffffff821bb758,0,4,0xffffffff821c2e90);
+  DAT_845aa6dc = Dvar_RegisterEnum(0xffffffff821c2e5c,0xffffffff82999d34,0,4,0xffffffff821c2e6c);
+  uVar7 = 0x4030000000000000;
+  DAT_845aa680 = Dvar_RegisterVec4(0,0x3ff0000000000000,0,0x3ff0000000000000,uVar16,
+                                   0x4030000000000000,0xffffffff821c2e24);
+  uVar4 = 0x40c3880000000000;
+  uVar18 = 0x3f50624de0000000;
+  uVar15 = 0x4010000000000000;
+  DAT_845aa8b4 = Dvar_RegisterFloat(0x4010000000000000,0x3f50624de0000000,0x40c3880000000000,
+                                    0xffffffff8201f494);
+  DAT_845aa6ac = Dvar_RegisterBool(0xffffffff821c2d90,0,4,0xffffffff821c2da0);
+  uVar10 = 0x3fb99999a0000000;
+  DAT_845aa67c = Dvar_RegisterFloat(0x3fb99999a0000000,uVar18,uVar7,0xffffffff821c2d7c);
+  uVar14 = 0x47efffffe0000000;
+  DAT_845aa5d4 = Dvar_RegisterFloat(0,0,0x47efffffe0000000,0xffffffff821c2d10);
+  DAT_845aa8d0 = Dvar_RegisterBool(0xffffffff821c2cf0,1,4,0xffffffff821c2cf8);
+  uVar19 = 0xbff0000000000000;
+  DAT_845aa70c = Dvar_RegisterFloat(0xbff0000000000000,0xbff0000000000000,0xbff0000000000000,
+                                    0xffffffff821c2ca0);
+  uVar11 = 0xc010000000000000;
+  DAT_845aa678 = Dvar_RegisterFloat(uVar19,0xc010000000000000,0,0xffffffff821c2c88);
+  DAT_845aa6a4 = Dvar_RegisterFloat(uVar19,uVar16,0,0xffffffff821c2bc4);
+  DAT_845aa720 = Dvar_RegisterFloat(0x3ff0000000000000,0,0xffffffff821c2b10);
+  DAT_845aa5d0 = Dvar_RegisterEnum(0xffffffff821c2afc,0xffffffff82999da8,0x28,4,0xffffffff821c2ad8);
+  DAT_845aa778 = Dvar_RegisterEnum(0xffffffff821c2a98,0xffffffff82999c90,1,4,0xffffffff821c2aa4);
+  DAT_845aa82c = Dvar_RegisterEnum(0xffffffff8201f840,0xffffffff82999c90,1,4,0xffffffff821c2a60);
+  DAT_845aa5b0 = Dvar_RegisterEnum(0xffffffff821c2a0c,0xffffffff82999ca4,1,4,0xffffffff821c2a18);
+  DAT_845aa88c = Dvar_RegisterEnum(0xffffffff8201f800,0xffffffff82999cb0,1,4,0xffffffff821c29dc);
+  DAT_845aa758 = Dvar_RegisterEnum(0xffffffff8201f820,0xffffffff82999c90,1,4,0xffffffff821c2990);
+  DAT_845aa5e8 = Dvar_RegisterFloat(0x4004000000000000,0,0x4039000000000000,0xffffffff821c2944);
+  uVar13 = 0x4024000000000000;
+  DAT_845aa6f4 = Dvar_RegisterFloat(0x3ff0000000000000,0,0x4024000000000000,0xffffffff821c28f8);
+  DAT_845aa834 = Dvar_RegisterBool(0xffffffff820290d8,0,4,0xffffffff821c28d4);
+  DAT_845aa704 = Dvar_RegisterFloat(0x3ff0000000000000,0,uVar13,0xffffffff820290b4);
+  DAT_845aa718 = Dvar_RegisterFloat(0x3ff0000000000000,0,uVar13,0xffffffff82029090);
+  DAT_845aa6b4 = Dvar_RegisterVec3Color(0,0,0,0x3ff0000000000000,0xffffffff8202907c);
+  DAT_845aa7f4 = Dvar_RegisterBool(0xffffffff82029058,0,4,0xffffffff821c28d4);
+  DAT_845aa5b4 = Dvar_RegisterFloat(0x3ff0000000000000,0,uVar13,0xffffffff8202902c);
+  DAT_845aa7d8 = Dvar_RegisterFloat(0x3ff0000000000000,0,uVar13,0xffffffff82028ffc);
+  DAT_845aa5c0 = Dvar_RegisterVec3Color(0,0,0,0x3ff0000000000000,0xffffffff82028fe4);
+  DAT_845aa728 = Dvar_RegisterInt(0xffffffff821c2774,0,0,2,4,0xffffffff821c2780);
+  DAT_845aa898 = Dvar_RegisterBool(0xffffffff821c272c,0,4,0xffffffff821c273c);
+  DAT_845aa600 = Dvar_RegisterBool(0xffffffff821c26f4,0,4,0xffffffff821c2704);
+  DAT_845aa7e8 = Dvar_RegisterBool(0xffffffff821c26b8,0,4,0xffffffff821c26cc);
+  DAT_845aa8a4 = Dvar_RegisterBool(0xffffffff821c2684,0,4,0xffffffff821c2698);
+  DAT_845aa83c = Dvar_RegisterBool(0xffffffff821c2674,1,4,0xffffffff821c2630);
+  DAT_845aa864 = Dvar_RegisterEnum(0xffffffff821c2604,0xffffffff82999c6c,0,4,0xffffffff821c2610);
+  DAT_845aa6cc = Dvar_RegisterFloat(0x3ff0000000000000,0,uVar7,0xffffffff821c25cc);
+  DAT_845aa71c = Dvar_RegisterInt(0xffffffff821c2560,0,0,2,2,0xffffffff821c2570);
+  DAT_845aa86c = Dvar_RegisterInt(0xffffffff821c2550,0,0,0x400,0,0xffffffff821c2514);
+  DAT_845aa8b8 = Dvar_RegisterInt(0xffffffff821c24b0,0,0,3,4,0xffffffff821c24c0);
+  DAT_845aa7d4 = Dvar_RegisterBool(0xffffffff821c2458,1,0,0xffffffff821c2470);
+  DAT_845aa604 = Dvar_RegisterBool(0xffffffff821c2440,1,0,0xffffffff821c2404);
+  DAT_845aa738 = Dvar_RegisterBool(0xffffffff821c23b8,1,0,0xffffffff821c23d0);
+  DAT_845aa844 = Dvar_RegisterBool(0xffffffff821c2368,0,0x48,0xffffffff821c2380);
+  DAT_845aa644 = Dvar_RegisterBool(0xffffffff821c2324,1,0,0xffffffff821c2340);
+  uVar17 = 0x4000000000000000;
+  DAT_845aa6c8 = Dvar_RegisterFloat(0x3ff0000000000000,0,0x4000000000000000,0xffffffff821c230c);
+  DAT_845aa768 = Dvar_RegisterFloat(0,uVar19,0x3ff0000000000000,0xffffffff821c2288);
+  DAT_845aa788 = Dvar_RegisterBool(0xffffffff821c225c,1,0,0xffffffff821c226c);
+  DAT_845aa614 = Dvar_RegisterInt(0xffffffff821c21a8,10,1,100,0,0xffffffff821c21c8);
+  uVar8 = 0x4050000000000000;
+  DAT_845aa694 = Dvar_RegisterFloat(0x4050000000000000,0,uVar4,0xffffffff821c2108);
+  DAT_845aa6d4 = Dvar_RegisterBool(0xffffffff821c20e8,0,4,0xffffffff821c2698);
   R_LightTweakInitDvars();
-  pcVar2 = (char *)0x0;
-  uVar1 = 0;
-  r_envMapOverride =
-       Dvar_RegisterBool("r_envMapOverride",false,0,
-                         "Min reflection intensity based on glancing angle.");
-  dVar8 = 0.20000000298023224;
-  r_envMapMinIntensity =
-       Dvar_RegisterFloat("r_envMapMinIntensity",0.2,0.0,(float)dVar22,uVar1,pcVar2);
-  pcVar2 = "lues from dvars rather than the level";
-  dVar10 = 0.009999999776482582;
-  r_envMapMaxIntensity =
-       Dvar_RegisterFloat("r_envMapMaxIntensity",(float)dVar17,0.01,(float)dVar22,uVar1,
-                          "lues from dvars rather than the level");
-  dVar23 = 20.0;
-  dVar7 = 5.0;
-  r_envMapExponent = Dvar_RegisterFloat("r_envMapExponent",5.0,0.05,20.0,0,pcVar2);
-  r_envMapSunIntensity =
-       Dvar_RegisterFloat("r_envMapSunIntensity",(float)dVar22,0.0,(float)dVar20,0,
-                          "lues from dvars rather than the level");
-  uVar1 = 0;
-  r_debugImageMoveSize =
-       Dvar_RegisterBool("r_debugImageMoveSize",false,0,"Debug image cache move size");
-  r_scaleViewport =
-       Dvar_RegisterFloat("r_scaleViewport",1.0,0.0,1.0,uVar1,
-                          "lues from dvars rather than the level");
-  r_smp_backend =
-       Dvar_RegisterBool("r_smp_backend",true,0,"Process renderer back end in a separate thread");
-  r_smp_worker = Dvar_RegisterBool("r_smp_worker",true,0,
-                                   "Process renderer front end in a separate thread");
-  r_smp_worker_thread[0] = Dvar_RegisterBool("r_smp_worker_thread0",true,0,"Enable worker thread");
-  r_smp_worker_thread[1] = Dvar_RegisterBool("r_smp_worker_thread1",true,0,"Enable worker thread");
-  r_smp_worker_thread[2] = Dvar_RegisterBool("r_smp_worker_thread2",true,0,"Enable worker thread");
-  r_cmdbuf_worker =
-       Dvar_RegisterBool("r_cmdbuf_worker",true,0,"Process command buffer in a separate thread");
-  r_vsync = Dvar_RegisterBool("r_vsync",true,0,
-                              "Enable v-sync before drawing the next frame to avoid \'tearing\' artifacts."
-                             );
-  r_clear = Dvar_RegisterEnum("r_clear",r_clearNames,1,0,"Controls how the color buffer is cleared")
+  DAT_845aa850 = Dvar_RegisterBool(0xffffffff821c20a0,0,0,0xffffffff821c20b4);
+  uVar3 = 0x3fc99999a0000000;
+  DAT_845aa8d4 = Dvar_RegisterFloat(0x3fc99999a0000000,0,uVar17,0xffffffff821c2088);
+  uVar5 = 0x3f847ae140000000;
+  DAT_845aa580 = Dvar_RegisterFloat(uVar12,0x3f847ae140000000,uVar17,0xffffffff821c203c);
+  uVar18 = 0x4034000000000000;
+  uVar2 = 0x4014000000000000;
+  DAT_845aa810 = Dvar_RegisterFloat(0x4014000000000000,0x3fa99999a0000000,0x4034000000000000,
+                                    0xffffffff821c2028);
+  DAT_845aa880 = Dvar_RegisterFloat(uVar17,0,uVar15,0xffffffff821c1fb8);
+  DAT_845aa860 = Dvar_RegisterBool(0xffffffff821c1f84,0,0,0xffffffff821c1f9c);
+  DAT_845aa804 = Dvar_RegisterFloat(0x3ff0000000000000,0,0xffffffff821c1f18);
+  DAT_845aa6a0 = Dvar_RegisterBool(0xffffffff821c1ed8,1,0,0xffffffff821c1ee8);
+  DAT_845aa6d0 = Dvar_RegisterBool(0xffffffff821c1e98,1,0,0xffffffff821c1ea8);
+  DAT_845aa648 = Dvar_RegisterBool(0xffffffff821c1e80,1,0,0xffffffff821bfc20);
+  DAT_845aa64c = Dvar_RegisterBool(0xffffffff821c1e68,1,0,0xffffffff821bfc20);
+  DAT_845aa650 = Dvar_RegisterBool(0xffffffff821c1e50,1,0,0xffffffff821bfc20);
+  DAT_845aa7cc = Dvar_RegisterBool(0xffffffff821c1e40,1,0,0xffffffff821c1e14);
+  DAT_845aa638 = Dvar_RegisterBool(0xffffffff821c1e0c,1,0,0xffffffff821c1dc0);
+  DAT_845aa73c = Dvar_RegisterEnum(0xffffffff821c1d88,0xffffffff82999d90,1,0,0xffffffff821c1d90);
+  uVar4 = 0x3fe8000000000000;
+  DAT_845aa828 = Dvar_RegisterColor(uVar12,0x3fe8000000000000,0x3ff0000000000000,0xffffffff821c1d3c)
   ;
-  pcVar2 = "lues from dvars rather than the level";
-  uVar1 = 0;
-  dVar9 = 0.75;
-  r_clearColor = Dvar_RegisterColor("r_clearColor",(float)dVar17,0.75,1.0,1.0,0,
-                                    "lues from dvars rather than the level");
-  r_clearColor2 = Dvar_RegisterColor("r_clearColor2",1.0,(float)dVar17,0.0,1.0,uVar1,pcVar2);
-  r_drawSun = Dvar_RegisterBool("r_drawSun",true,0,"Enable sun effects");
-  r_drawWorld = Dvar_RegisterBool("r_drawWorld",true,4,"Enable world rendering");
-  r_drawEntities = Dvar_RegisterBool("r_drawEntities",true,4,"Enable entity rendering");
-  r_drawPoly = Dvar_RegisterBool("r_drawPoly",true,4,"Enable poly rendering");
-  r_drawDynEnts = Dvar_RegisterBool("r_drawDynEnts",true,4,"Enable dynamic entity rendering");
-  r_drawBModels = Dvar_RegisterBool("r_drawBModels",true,4,"Enable brush model rendering");
-  r_drawSModels = Dvar_RegisterBool("r_drawSModels",true,4,"Enable static model rendering");
-  r_drawXModels = Dvar_RegisterBool("r_drawXModels",true,4,"Enable xmodel rendering");
-  r_drawSkinnedModels =
-       Dvar_RegisterBool("r_drawSkinnedModels",true,4,"Enable skinned model rendering");
-  r_drawRigidModels = Dvar_RegisterBool("r_drawRigidModels",true,4,"Enable rigid model rendering");
-  r_dpvsFilterDebug =
-       Dvar_RegisterBool("r_dpvsFilterDebug",false,4,"Filter all entities to all cells (debug)");
-  r_dlightLimit =
-       Dvar_RegisterInt("r_dlightLimit",4,0,4,0x40,
-                        "Maximum number of dynamic lights drawn simultaneously");
-  r_spotLightShadows =
-       Dvar_RegisterBool("r_spotLightShadows",true,4,"Enable shadows for spot lights.");
-  r_spotLightEntityShadows =
-       Dvar_RegisterBool("r_spotLightEntityShadows",true,4,"Enable entity shadows for spot lights.")
+  DAT_845aa7f8 = Dvar_RegisterColor(0x3ff0000000000000,uVar12,0,0xffffffff821c1d2c);
+  DAT_845aa684 = Dvar_RegisterBool(0xffffffff821c1cd8,1,0,0xffffffff821c1cc4);
+  DAT_845aa6c4 = Dvar_RegisterBool(0xffffffff821c1ca0,1,4,0xffffffff821c1cac);
+  DAT_845aa60c = Dvar_RegisterBool(0xffffffff821c1c78,1,4,0xffffffff821c1c88);
+  DAT_845aa76c = Dvar_RegisterBool(0xffffffff821c1c54,1,4,0xffffffff821c1c60);
+  DAT_845aa5dc = Dvar_RegisterBool(0xffffffff821c1c24,1,4,0xffffffff821c1c34);
+  DAT_845aa630 = Dvar_RegisterBool(0xffffffff821c1c14,1,4,0xffffffff821c1bf4);
+  DAT_845aa7dc = Dvar_RegisterBool(0xffffffff821c1bc4,1,4,0xffffffff821c1bd4);
+  DAT_845aa634 = Dvar_RegisterBool(0xffffffff821c1b9c,1,4,0xffffffff821c1bac);
+  DAT_845aa890 = Dvar_RegisterBool(0xffffffff821c1b68,1,4,0xffffffff821c1b7c);
+  DAT_845aa664 = Dvar_RegisterBool(0xffffffff821c1b34,1,4,0xffffffff821c1b48);
+  DAT_845aa7f0 = Dvar_RegisterBool(0xffffffff821c1b20,0,4,0xffffffff821c1af4);
+  DAT_845aa754 = Dvar_RegisterInt(0xffffffff821c1ae4,4,0,4,0x40,0xffffffff821c1aac);
+  DAT_845aa710 = Dvar_RegisterBool(0xffffffff821c1a78,1,4,0xffffffff821c1a8c);
+  DAT_845aa7ec = Dvar_RegisterBool(0xffffffff821c1a5c,1,4,0xffffffff821c1a34);
+  DAT_845aa824 = Dvar_RegisterBool(0xffffffff821c1a10,1,0,0xffffffff821c1a1c);
+  DAT_845aa774 = Dvar_RegisterBool(0xffffffff821c19a4,0,4,0xffffffff821c19b0);
+  DAT_845aa81c = Dvar_RegisterBool(0xffffffff821c193c,0,4,0xffffffff821c1948);
+  uVar16 = 0x3fe6666660000000;
+  DAT_845aa6bc = Dvar_RegisterFloat(0x3fe6666660000000,0,0x3ff0000000000000,0xffffffff821c192c);
+  DAT_845aa8a8 = Dvar_RegisterBool(0xffffffff821c1828,0,0,0xffffffff821c1840);
+  DAT_845aa640 = Dvar_RegisterBool(0xffffffff821c17b0,0,4,0xffffffff821c17c0);
+  DAT_845aa688 = Dvar_RegisterInt(0xffffffff821c1744,0,0,100,4,0xffffffff821c1758);
+  DAT_845aa818 = Dvar_RegisterFloat(0x3f947ae140000000,0,0x3ff0000000000000,0xffffffff821c16d4);
+  DAT_845aa584 = Dvar_RegisterInt(0xffffffff821c1668,2,0,100,4,0xffffffff821c1680);
+  DAT_845aa724 = Dvar_RegisterInt(0xffffffff821c163c,0,0,3,4,0xffffffff821c164c);
+  DAT_845aa690 = Dvar_RegisterFloat(0,0,0x4110000000000000,0xffffffff821c15c0);
+  DAT_845aa5f8 = Dvar_RegisterInt(0xffffffff821c1520,0,0,3,4,0xffffffff821c1530);
+  DAT_845aa7b8 = Dvar_RegisterBool(0xffffffff821c14f4,0,4,0xffffffff821c1508);
+  DAT_845aa6d8 = Dvar_RegisterEnum(0xffffffff821c14c8,0xffffffff82999d64,0,4,0xffffffff821c14d4);
+  DAT_845aa7c4 = Dvar_RegisterBool(0xffffffff821c1498,0,4,0xffffffff821c14ac);
+  DAT_845aa8ac = Dvar_RegisterBool(0xffffffff821c1484,0,4,0xffffffff821c1468);
+  DAT_845aa700 = Dvar_RegisterBool(0xffffffff821c1440,0,4,0xffffffff821c1454);
+  DAT_845aa7d0 = Dvar_RegisterEnum(0xffffffff821c142c,0xffffffff82999cbc,0,4,0xffffffff821c13fc);
+  DAT_845aa854 = Dvar_RegisterInt(0xffffffff821c139c,0,0,2,4,0xffffffff821c13b0);
+  DAT_845aa798 = Dvar_RegisterEnum(0xffffffff821c1354,0xffffffff82999ce0,0,4,0xffffffff821c1364);
+  DAT_845aa5c4 = Dvar_RegisterEnum(0xffffffff821c12f0,0xffffffff82999d14,0,4,0xffffffff821c1308);
+  DAT_845aa674 = Dvar_RegisterEnum(0xffffffff821c127c,0xffffffff82999d24,0,4,0xffffffff821c1298);
+  DAT_845aa5a8 = Dvar_RegisterBool(0xffffffff821c1260,1,4,0xffffffff821c1220);
+  uVar7 = 0x407f400000000000;
+  DAT_845aa874 = Dvar_RegisterFloat(0x407f400000000000,0x3ff0000000000000,uVar14,0xffffffff821c11e0)
   ;
-  r_drawWater = Dvar_RegisterBool("r_drawWater",true,0,"Enable water animation");
-  r_lockPvs = Dvar_RegisterBool("r_lockPvs",false,4,
-                                "Lock the viewpoint used for determining what is visible to the current position and direction"
-                               );
-  pcVar2 = &DAT_00000004;
-  uVar1 = 0;
-  r_skipPvs = Dvar_RegisterBool("r_skipPvs",false,4,
-                                "Skipt the determination of what is in the potentially visible set (disables most drawing)"
-                               );
-  dVar21 = 0.699999988079071;
-  r_portalBevels = Dvar_RegisterFloat("r_portalBevels",(float)0x3f333333,0.0,1.0,uVar1,pcVar2);
-  r_portalBevelsOnly =
-       Dvar_RegisterBool("r_portalBevelsOnly",false,0,
-                         "Use screen-space bounding box of portals rather than the actual shape of the portal projected onto the screen"
-                        );
-  r_singleCell = Dvar_RegisterBool("r_singleCell",false,4,
-                                   "Only draw things in the same cell as the camera.  Most useful for seeing how big the current cell is."
-                                  );
-  pcVar2 = (char *)0x0;
-  r_portalWalkLimit =
-       Dvar_RegisterInt("r_portalWalkLimit",0,0,100,4,
-                        "Stop portal recursion after this many iterations.  Useful for debugging portal errors."
-                       );
-  r_portalMinClipArea = Dvar_RegisterFloat("r_portalMinClipArea",0.02,0.0,1.0,0,pcVar2);
-  r_portalMinRecurseDepth =
-       Dvar_RegisterInt("r_portalMinRecurseDepth",2,0,100,4,
-                        "Ignore r_portalMinClipArea for portals with fewer than this many parent portals."
-                       );
-  uVar1 = 0;
-  r_showPortals = Dvar_RegisterInt("r_showPortals",0,0,3,4,"Show portals for debugging");
-  r_showPortalsOverview =
-       Dvar_RegisterFloat("r_showPortalsOverview",0.0,0.0,262144.0,uVar1,
-                          "lues from dvars rather than the level");
-  r_showAabbTrees =
-       Dvar_RegisterInt("r_showAabbTrees",0,0,3,4,
-                        "Show axis-aligned bounding box trees used in potentially visibile set determination. 1 shows hierarchy, 2 shows world surfacesm, 3 shows both."
-                       );
-  r_showSModelNames = Dvar_RegisterBool("r_showSModelNames",false,4,"Show static model names");
-  r_showTess = Dvar_RegisterEnum("r_showTess",r_showTessNames,0,4,"Show details for each surface");
-  r_showCullBModels = Dvar_RegisterBool("r_showCullBModels",false,4,"Show culled brush models");
-  r_showCullSModels = Dvar_RegisterBool("r_showCullSModels",false,4,"Show culled static models");
-  r_showCullXModels = Dvar_RegisterBool("r_showCullXModels",false,4,"Show culled xmodels");
-  r_showFbColorDebug =
-       Dvar_RegisterEnum("r_showFbColorDebug",fbColorDebugNames,0,4,
-                         "Show front buffer color debugging information");
-  r_showFloatZDebug =
-       Dvar_RegisterInt("r_showFloatZDebug",0,0,2,4,
-                        "Show float z buffer used to eliminate hard edges on particles near geometry"
-                       );
-  r_showCollision =
-       Dvar_RegisterEnum("r_showCollision",showCollisionNames,0,4,
-                         "Show the collision surfaces for the selected mask types");
-  r_showCollisionGroups =
-       Dvar_RegisterEnum("r_showCollisionGroups",showCollisionGroupsNames,0,4,
-                         "Select whether to show the terrain, brush or all collision surface groups"
-                        );
-  r_showCollisionPolyType =
-       Dvar_RegisterEnum("r_showCollisionPolyType",showCollisionPolyTypeNames,0,4,
-                         "Select whether to display the collision surfaces as wireframe, poly interiors, or both"
-                        );
-  pcVar2 = &DAT_00000004;
-  r_showCollisionDepthTest =
-       Dvar_RegisterBool("r_showCollisionDepthTest",true,4,
-                         "Select whether to use depth test in collision surfaces display");
-  dVar12 = 500.0;
-  r_showCollisionDist = Dvar_RegisterFloat("r_showCollisionDist",500.0,1.0,(float)dVar19,0,pcVar2);
-  pcVar2 = (char *)0x0;
-  r_depthPrepassFar =
-       Dvar_RegisterBool("r_depthPrepassFar",false,0,"Enable depth prepass on far geo");
-  uVar1 = 0;
-  r_highLodDist =
-       Dvar_RegisterFloat("r_highLodDist",(float)dVar24,(float)dVar24,(float)dVar19,0,pcVar2);
-  r_mediumLodDist =
-       Dvar_RegisterFloat("r_mediumLodDist",(float)dVar24,(float)dVar24,(float)dVar19,uVar1,pcVar2);
-  pcVar2 = "lues from dvars rather than the level";
-  uVar1 = 0;
-  r_lowLodDist = Dvar_RegisterFloat("r_lowLodDist",(float)dVar24,(float)dVar24,(float)dVar19,0,
-                                    "lues from dvars rather than the level");
-  r_lowestLodDist =
-       Dvar_RegisterFloat("r_lowestLodDist",(float)dVar24,(float)dVar24,(float)dVar19,uVar1,pcVar2);
-  r_forceLod = Dvar_RegisterEnum("r_forceLod",r_forceLodNames,4,4,
-                                 "Force all level of detail to this level");
-  sm_enable = Dvar_RegisterBool("sm_enable",true,0,"Enable shadow mapping");
-  sm_sunEnable = Dvar_RegisterBool("sm_sunEnable",true,0x44,"Enable sun shadow mapping from script")
+  DAT_845aa608 = Dvar_RegisterBool(0xffffffff821c11cc,0,0,0xffffffff821c11ac);
+  DAT_845aa884 = Dvar_RegisterFloat(uVar19,uVar19,uVar14,0xffffffff821c1178);
+  DAT_845aa790 = Dvar_RegisterFloat(uVar19,uVar19,uVar14,0xffffffff821c1168);
+  DAT_845aa6b0 = Dvar_RegisterFloat(uVar19,uVar19,uVar14,0xffffffff821c1110);
+  DAT_845aa5e4 = Dvar_RegisterFloat(uVar19,uVar19,uVar14,0xffffffff821c10dc);
+  DAT_845aa888 = Dvar_RegisterEnum(0xffffffff8201f4a4,0xffffffff82999d4c,4,4,0xffffffff821c10b4);
+  DAT_845aa7bc = Dvar_RegisterBool(0xffffffff821c1090,1,0,0xffffffff821c109c);
+  DAT_845aa598 = Dvar_RegisterBool(0xffffffff821c1058,1,0x44,0xffffffff821c1068);
+  DAT_845aa5a0 = Dvar_RegisterBool(0xffffffff821c1048,1,0x44,0xffffffff821c1020);
+  DAT_845aa5a4 = Dvar_RegisterInt(0xffffffff821c0fe4,4,0,4,0x44,0xffffffff821c0ff4);
+  DAT_845aa5fc = Dvar_RegisterInt(0xffffffff821c0fd4,4,0,4,0,0xffffffff821c0fa0);
+  DAT_845aa6e8 = Dvar_RegisterFloat(uVar12,0,0x4059000000000000,0xffffffff821c0f0c);
+  DAT_845aa8cc = Dvar_RegisterFloat(0,0,0x3ff0000000000000,0xffffffff821c0ef0);
+  DAT_845aa5bc = Dvar_RegisterFloat(0x3ff0000000000000,uVar5,uVar2,0xffffffff821c0e10);
+  DAT_845aa7a0 = Dvar_RegisterBool(0xffffffff821c0d98,0,0x44,0xffffffff821c0db0);
+  DAT_845aa7b0 = Dvar_RegisterFloat(uVar8,0,0x40f7700000000000,0xffffffff821c0d08);
+  uVar8 = 0x3fc0000000000000;
+  DAT_845aa7ac = Dvar_RegisterFloat(0x3fc0000000000000,0,0x3ff0000000000000,0xffffffff821c0c60);
+  DAT_845aa5cc = Dvar_RegisterFloat(0,0,0x412e848000000000,0xffffffff821c0c1c);
+  DAT_845aa590 = Dvar_RegisterEnum(0xffffffff821c0bf4,0xffffffff82999d80,0,4,0xffffffff821c0c04);
+  uVar9 = 0x3fd0000000000000;
+  DAT_845aa7e4 = Dvar_RegisterVec2(0x3fd0000000000000,uVar4,0,0x3ff0000000000000,0xffffffff821c0ba0)
   ;
-  sm_spotEnable =
-       Dvar_RegisterBool("sm_spotEnable",true,0x44,"Enable spot shadow mapping from script");
-  sm_spotLimit = Dvar_RegisterInt("sm_spotLimit",4,0,4,0x44,
-                                  "Limit number of spot shadows from script");
-  sm_maxLights = Dvar_RegisterInt("sm_maxLights",4,0,4,0,
-                                  "Limits how many primary lights can have shadow maps");
-  pIVar4 = &IMAGE_DOS_HEADER_82000000;
-  uVar1 = 0;
-  sm_minSpotLightScore =
-       Dvar_RegisterFloat("sm_minSpotLightScore",(float)dVar17,0.0,100.0,0,
-                          IMAGE_DOS_HEADER_82000000.e_magic);
-  sm_spotLightScoreModelScale =
-       Dvar_RegisterFloat("sm_spotLightScoreModelScale",0.0,0.0,1.0,uVar1,pIVar4->e_magic);
-  sm_spotShadowFadeTime =
-       Dvar_RegisterFloat("sm_spotShadowFadeTime",1.0,(float)dVar10,(float)dVar7,0,
-                          "lues from dvars rather than the level");
-  uVar1 = 0;
-  sm_dynlightAllSModels =
-       Dvar_RegisterBool("sm_dynlightAllSModels",false,0x44,
-                         "Enable, from script, rendering all static models in dynamic light volume when shadow mapping"
-                        );
-  pcVar2 = "lues from dvars rather than the level";
-  sm_lightScore_eyeProjectDist =
-       Dvar_RegisterFloat("sm_lightScore_eyeProjectDist",(float)dVar13,0.0,96000.0,uVar1,
-                          "lues from dvars rather than the level");
-  uVar1 = 0;
-  dVar13 = 0.125;
-  sm_lightScore_spotProjectFrac =
-       Dvar_RegisterFloat("sm_lightScore_spotProjectFrac",0.125,0.0,1.0,0,pcVar2);
-  sm_cameraOffset =
-       Dvar_RegisterFloat("sm_cameraOffset",0.0,0.0,1e+06,uVar1,
-                          "lues from dvars rather than the level");
-  uVar1 = 0x9d80;
-  pcVar2 = (char *)0x0;
-  sm_showOverlay =
-       Dvar_RegisterEnum("sm_showOverlay",sm_showOverlayNames,0,4,"Show shadow map overlay");
-  dVar14 = 0.25;
-  sm_showOverlayDepthBounds =
-       Dvar_RegisterVec2("sm_showOverlayDepthBounds",0.25,(float)dVar9,0.0,1.0,uVar1,pcVar2);
-  uVar1 = 0;
-  dVar10 = 8.0;
-  sm_polygonOffsetScale =
-       Dvar_RegisterFloat("sm_polygonOffsetScale",(float)dVar22,0.0,8.0,0,
-                          "c\\cgame_mp\\cg_local_mp.h");
-  pcVar2 = "lues from dvars rather than the level";
-  dVar11 = 32.0;
-  sm_polygonOffsetBias =
-       Dvar_RegisterFloat("sm_polygonOffsetBias",(float)dVar13,0.0,32.0,uVar1,
-                          "lues from dvars rather than the level");
-  uVar1 = 0;
-  sm_sunSampleSizeNear =
-       Dvar_RegisterFloat("sm_sunSampleSizeNear",(float)dVar14,0.015625,(float)dVar11,0,pcVar2);
-  dVar9 = -3.4028234663852886e+38;
-  sm_sunShadowCenter =
-       Dvar_RegisterVec3("sm_sunShadowCenter",0.0,0.0,0.0,-3.4028235e+38,(float)dVar19,uVar1,
-                         "lues from dvars rather than the level");
-  pcVar2 = (char *)0x44;
-  uVar1 = 0;
-  sm_sunShadowCenterMode =
-       Dvar_RegisterBool("sm_sunShadowCenterMode",false,0x44,
-                         "When false center value only used for far map, when true sets both maps");
-  sm_sunShadowScale = Dvar_RegisterFloat("sm_sunShadowScale",1.0,(float)dVar14,1.0,uVar1,pcVar2);
-  sm_strictCull = Dvar_RegisterBool("sm_strictCull",true,4,"Strict shadow map cull");
-  sm_spotDistCull = Dvar_RegisterBool("sm_spotDistCull",true,4,"Distance cull spot shadows");
-  sm_fastSunShadow = Dvar_RegisterBool("sm_fastSunShadow",true,4,"Fast sun shadow");
-  sm_qualitySpotShadow = Dvar_RegisterBool("sm_qualitySpotShadow",true,0x44,"Fast spot shadow");
-  sm_debugFastSunShadow = Dvar_RegisterBool("sm_debugFastSunShadow",false,4,"Debug fast sun shadow")
-  ;
-  uVar1 = 0;
-  pcVar2 = &DAT_00000004;
-  r_warnBounds = Dvar_RegisterBool("r_warnBounds",false,4,
-                                   "Warn when model bounds are estimated far off from their actual animated values."
-                                  );
-  r_scaleBounds = Dvar_RegisterFloat("r_scaleBounds",1.0,0.0,(float)dVar12,uVar1,pcVar2);
-  r_screenFilterQuads =
-       Dvar_RegisterInt("r_screenFilterQuads",0,0,0x80,0,
-                        "If non-zero, uses this many quads instead of two triangles for full screen effects"
-                       );
-  uVar1 = 0;
-  sm_forceLinear = Dvar_RegisterBool("sm_forceLinear",false,4,"Force shadow sampling to be linear");
-  pcVar2 = "lues from dvars rather than the level";
-  sm_projStepSize =
-       Dvar_RegisterFloat("sm_projStepSize",(float)dVar14,0.0,1.0,uVar1,
-                          "lues from dvars rather than the level");
-  r_blur = Dvar_RegisterFloat("r_blur",0.0,0.0,(float)dVar11,0,pcVar2);
-  r_distortion = Dvar_RegisterBool("r_distortion",true,0,"Enable distortion");
-  r_glow_allowed = Dvar_RegisterBool("r_glow_allowed",false,0,"Allow glow.");
-  r_glow_allowed_script_forced =
-       Dvar_RegisterBool("r_glow_allowed_script_forced",false,0x40,
-                         "Force \'allow glow\' to be treated as true, by script.");
-  r_glow = Dvar_RegisterBool("r_glow",true,4,"Enable glow.");
-  r_glowUseTweaks =
-       Dvar_RegisterBool("r_glowUseTweaks",false,4,"Overide glow with tweak dvar values.");
-  r_glowTweakEnable = Dvar_RegisterBool("r_glowTweakEnable",false,4,"Tweak dev var; Enable glow");
-  pcVar2 = "the motion tracker after being detected";
-  uVar1 = 0;
-  r_glowTweakRadius =
-       Dvar_RegisterFloat("r_glowTweakRadius0",(float)dVar7,0.0,(float)dVar11,0,
-                          "the motion tracker after being detected");
-  r_glowTweakBloomIntensity =
-       Dvar_RegisterFloat("r_glowTweakBloomIntensity0",1.0,0.0,(float)dVar23,uVar1,pcVar2);
-  pcVar2 = "bind <key> [command] : attach a command to a key\n";
-  r_glowTweakBloomCutoff =
-       Dvar_RegisterFloat("r_glowTweakBloomCutoff",(float)dVar17,0.0,1.0,uVar1,
-                          "bind <key> [command] : attach a command to a key\n");
-  r_glowTweakBloomDesaturation =
-       Dvar_RegisterFloat("r_glowTweakBloomDesaturation",0.0,0.0,1.0,0,pcVar2);
-  r_filmUseTweaks =
-       Dvar_RegisterBool("r_filmUseTweaks",false,4,"Overide film effects with tweak dvar values.");
-  r_filmAltShader =
-       Dvar_RegisterBool("r_filmAltShader",true,4,
-                         "Use alternate shader (with middle tint and dark desat) for film color.");
-  uVar1 = 0;
-  r_filmTweakEnable =
-       Dvar_RegisterBool("r_filmTweakEnable",false,0x40,"Tweak dev var; enable film color effects");
-  pcVar2 = "bind <key> [command] : attach a command to a key\n";
-  r_filmTweakContrast =
-       Dvar_RegisterFloat("r_filmTweakContrast",1.4,0.0,(float)dVar20,uVar1,
-                          "bind <key> [command] : attach a command to a key\n");
-  uVar1 = 0;
-  r_contrast = Dvar_RegisterFloat("r_contrast",1.0,0.0,(float)dVar20,0,pcVar2);
-  r_brightness = Dvar_RegisterFloat("r_brightness",0.0,(float)dVar24,1.0,uVar1,pcVar2);
-  pcVar2 = "lues from dvars rather than the level";
-  uVar1 = 0;
-  r_desaturation =
-       Dvar_RegisterFloat("r_desaturation",1.0,0.0,(float)dVar20,0,
-                          "lues from dvars rather than the level");
-  r_filmTweakBrightness =
-       Dvar_RegisterFloat("r_filmTweakBrightness",0.0,(float)dVar24,1.0,uVar1,pcVar2);
-  pcVar2 = "bind <key> [command] : attach a command to a key\n";
-  dVar12 = -2.0;
-  r_filmTweakDesaturation =
-       Dvar_RegisterFloat("r_filmTweakDesaturation",(float)dVar8,-2.0,(float)dVar22,uVar1,
-                          "bind <key> [command] : attach a command to a key\n");
-  uVar1 = 0;
-  r_filmTweakDesaturationDark =
-       Dvar_RegisterFloat("r_filmTweakDesaturationDark",(float)dVar8,(float)dVar12,(float)dVar22,0,
-                          pcVar2);
-  r_filmTweakHeroSaturation =
-       Dvar_RegisterFloat("r_filmTweakHeroSaturation",1.0,(float)dVar16,(float)dVar20,uVar1,pcVar2);
-  uVar1 = 0;
-  pcVar2 = (char *)0x40;
-  r_filmTweakInvert =
-       Dvar_RegisterBool("r_filmTweakInvert",false,0x40,"Tweak dev var; enable inverted video");
-  dVar12 = 0.8500000238418579;
-  r_filmTweakDarkTint =
-       Dvar_RegisterVec3Color
-                 ("r_filmTweakDarkTint",(float)dVar21,0.85,1.0,(float)dVar22,uVar1,pcVar2);
-  uVar1 = 0;
-  r_filmTweakMediumTint =
-       Dvar_RegisterVec3Color
-                 ("r_filmTweakMediumTint",0.9,1.0,0.9,(float)dVar22,0,
-                  (char *)(s_timerFrames[0x26].timers + 0x12));
-  r_filmTweakLightTint =
-       Dvar_RegisterVec3Color
-                 ("r_filmTweakLightTint",1.1,1.05,(float)dVar12,(float)dVar22,uVar1,
-                  "bind <key> [command] : attach a command to a key\n");
-  r_dof_enable = Dvar_RegisterBool("r_dof_enable",true,0,"Enable the depth of field effect");
-  r_dof_tweak = Dvar_RegisterBool("r_dof_tweak",false,4,
-                                  "Use dvars to set the depth of field effect; overrides r_dof_enable"
-                                 );
-  pcVar2 = "bind <key> [command] : attach a command to a key\n";
-  uVar1 = 0;
-  r_dof_nearBlur =
-       Dvar_RegisterFloat("r_dof_nearBlur",6.0,(float)dVar20,(float)dVar18,0,
-                          "bind <key> [command] : attach a command to a key\n");
-  r_dof_farBlur = Dvar_RegisterFloat("r_dof_farBlur",1.8,0.0,(float)dVar18,uVar1,pcVar2);
-  pcVar2 = "lues from dvars rather than the level";
-  dVar12 = 128.0;
-  r_dof_viewModelStart =
-       Dvar_RegisterFloat("r_dof_viewModelStart",(float)dVar22,0.0,128.0,uVar1,
-                          "lues from dvars rather than the level");
-  uVar1 = 0;
-  r_dof_viewModelEnd =
-       Dvar_RegisterFloat("r_dof_viewModelEnd",(float)dVar10,0.0,(float)dVar12,0,pcVar2);
-  pcVar2 = "lues from dvars rather than the level";
-  dVar21 = 1000.0;
-  r_dof_nearStart =
-       Dvar_RegisterFloat("r_dof_nearStart",(float)dVar18,0.0,1000.0,uVar1,
-                          "lues from dvars rather than the level");
-  uVar1 = 0;
-  r_dof_nearEnd = Dvar_RegisterFloat("r_dof_nearEnd",60.0,0.0,(float)dVar21,0,pcVar2);
-  pcVar2 = "lues from dvars rather than the level";
-  dVar12 = 80000.0;
-  r_dof_farStart =
-       Dvar_RegisterFloat("r_dof_farStart",(float)dVar21,0.0,80000.0,uVar1,
-                          "lues from dvars rather than the level");
-  uVar1 = 0;
-  r_dof_farEnd = Dvar_RegisterFloat("r_dof_farEnd",7000.0,0.0,(float)dVar12,0,pcVar2);
-  r_dof_bias = Dvar_RegisterFloat("r_dof_bias",(float)dVar17,(float)dVar15,(float)dVar6,uVar1,
-                                  "lues from dvars rather than the level");
-  r_pixelShaderGPRReallocation =
-       Dvar_RegisterInt("r_pixelShaderGPRReallocation",0x60,0,0x80,0,
-                        "Number of general purpose registers to the pixel shader");
-  r_pix_material = Dvar_RegisterInt("r_pix_material",0,0,2,0,"Enable pix material names");
-  r_outdoorFeather =
-       Dvar_RegisterFloat("r_outdoorFeather",(float)dVar10,(float)dVar9,(float)dVar19,0,
-                          "lues from dvars rather than the level");
-  Dvar_SetModified(r_outdoorFeather);
-  r_sun_from_dvars =
-       Dvar_RegisterBool("r_sun_from_dvars",false,4,
-                         "Set sun flare values from dvars rather than the level");
-  r_atlasAnimFPS =
-       Dvar_RegisterInt("r_atlasAnimFPS",0xf,1,0x78,4,"Speed to animate atlased 2d materials");
-  developer = Dvar_RegisterInt("developer",0,0,2,0,"Enable development options");
-  com_statmon = Dvar_RegisterBool("com_statmon",false,0,"Draw stats monitor");
+  uVar5 = 0x4020000000000000;
+  DAT_845aa660 = Dvar_RegisterFloat(uVar17,0,0x4020000000000000,0xffffffff821c0b70);
+  uVar6 = 0x4040000000000000;
+  DAT_845aa8d8 = Dvar_RegisterFloat(uVar8,0,0x4040000000000000,0xffffffff821c0b40);
+  DAT_845aa7e0 = Dvar_RegisterFloat(uVar9,0x3f90000000000000,uVar6,0xffffffff821c0b14);
+  uVar4 = 0xc7efffffe0000000;
+  DAT_845aa808 = Dvar_RegisterVec3(0,0,0,0xc7efffffe0000000,uVar14,0xffffffff821c0ad0);
+  DAT_845aa748 = Dvar_RegisterBool(0xffffffff821c0a70,0,0x44,0xffffffff821c0a88);
+  DAT_845aa8c4 = Dvar_RegisterFloat(0x3ff0000000000000,uVar9,0xffffffff821c0a5c);
+  DAT_845aa69c = Dvar_RegisterBool(0xffffffff821c0a14,1,4,0xffffffff821c0a24);
+  DAT_845aa588 = Dvar_RegisterBool(0xffffffff821c09e8,1,4,0xffffffff821c09f8);
+  DAT_845aa77c = Dvar_RegisterBool(0xffffffff821c09d4,1,4,0xffffffff821c09c4);
+  DAT_845aa8a0 = Dvar_RegisterBool(0xffffffff821c0998,1,0x44,0xffffffff821c09b0);
+  DAT_845aa840 = Dvar_RegisterBool(0xffffffff821c0968,0,4,0xffffffff821c0980);
+  DAT_845aa8c8 = Dvar_RegisterBool(0xffffffff821c0908,0,4,0xffffffff821c0918);
+  DAT_845aa87c = Dvar_RegisterFloat(0x3ff0000000000000,0,uVar7,0xffffffff821c08f8);
+  DAT_845aa868 = Dvar_RegisterInt(0xffffffff821c0858,0,0,0x80,0,0xffffffff821c0870);
+  DAT_845aa770 = Dvar_RegisterBool(0xffffffff821c0824,0,4,0xffffffff821c0834);
+  DAT_845aa894 = Dvar_RegisterFloat(uVar9,0,0x3ff0000000000000,0xffffffff821c0814);
+  DAT_845aa830 = Dvar_RegisterFloat(0,0,uVar6,0xffffffff821c07ec);
+  DAT_845aa610 = Dvar_RegisterBool(0xffffffff821c07c8,1,0,0xffffffff821c07d8);
+  DAT_845aa5ac = Dvar_RegisterBool(0xffffffff821c07ac,0,0,0xffffffff821c07bc);
+  DAT_845aa84c = Dvar_RegisterBool(0xffffffff821c0754,0,0x40,0xffffffff821c0774);
+  DAT_845aa784 = Dvar_RegisterBool(0xffffffff82029260,1,4,0xffffffff821c0744);
+  DAT_845aa670 = Dvar_RegisterBool(0xffffffff821c070c,0,4,0xffffffff821c071c);
+  DAT_845aa80c = Dvar_RegisterBool(0xffffffff820298e4,0,4,0xffffffff821c06f0);
+  DAT_845aa8c0 = Dvar_RegisterFloat(uVar2,0,uVar6,0xffffffff820298d0);
+  DAT_845aa7a8 = Dvar_RegisterFloat(0x3ff0000000000000,0,uVar18,0xffffffff82029860);
+  DAT_845aa78c = Dvar_RegisterFloat(uVar12,0,0x3ff0000000000000,0xffffffff8202982c);
+  DAT_845aa654 = Dvar_RegisterFloat(0,0,0x3ff0000000000000,0xffffffff8202980c);
+  DAT_845aa618 = Dvar_RegisterBool(0xffffffff821c0638,0,4,0xffffffff821c0648);
+  DAT_845aa7c0 = Dvar_RegisterBool(0xffffffff821c05e0,1,4,0xffffffff821c05f0);
+  DAT_845aa79c = Dvar_RegisterBool(0xffffffff82029a24,0,0x40,0xffffffff821c05b4);
+  DAT_845aa72c = Dvar_RegisterFloat(0x3ff6666660000000,0,uVar15,0xffffffff82029a10);
+  DAT_845aa698 = Dvar_RegisterFloat(0x3ff0000000000000,0,uVar15,0xffffffff821c0570);
+  DAT_845aa6c0 = Dvar_RegisterFloat(0,uVar19,0x3ff0000000000000,0xffffffff821c0560);
+  DAT_845aa594 = Dvar_RegisterFloat(0x3ff0000000000000,0,uVar15,0xffffffff821c0520);
+  DAT_845aa870 = Dvar_RegisterFloat(0,uVar19,0x3ff0000000000000,0xffffffff820299f8);
+  uVar7 = 0xc000000000000000;
+  DAT_845aa730 = Dvar_RegisterFloat(uVar3,0xc000000000000000,uVar17,0xffffffff820299e0);
+  DAT_845aa66c = Dvar_RegisterFloat(uVar3,uVar7,uVar17,0xffffffff820299c4);
+  DAT_845aa68c = Dvar_RegisterFloat(0x3ff0000000000000,uVar11,uVar15,0xffffffff820299a8);
+  DAT_845aa760 = Dvar_RegisterBool(0xffffffff82029994,0,0x40,0xffffffff821c03f4);
+  uVar7 = 0x3feb333340000000;
+  DAT_845aa7fc = Dvar_RegisterVec3Color
+                           (uVar16,0x3feb333340000000,0x3ff0000000000000,uVar17,0xffffffff82029950);
+  DAT_845aa6b8 = Dvar_RegisterVec3Color
+                           (0x3fecccccc0000000,0x3ff0000000000000,0x3fecccccc0000000,uVar17,
+                            0xffffffff82029964);
+  DAT_845aa794 = Dvar_RegisterVec3Color
+                           (0x3ff19999a0000000,0x3ff0ccccc0000000,uVar7,uVar17,0xffffffff8202997c);
+  DAT_845aa7c8 = Dvar_RegisterBool(0xffffffff821c033c,1,0,0xffffffff821c034c);
+  DAT_845aa838 = Dvar_RegisterBool(0xffffffff821c02ec,0,4,0xffffffff821c02f8);
+  DAT_845aa814 = Dvar_RegisterFloat(0x4018000000000000,uVar15,uVar13,0xffffffff821c02dc);
+  DAT_845aa8bc = Dvar_RegisterFloat(0x3ffcccccc0000000,0,uVar13,0xffffffff821c02cc);
+  uVar7 = 0x4060000000000000;
+  DAT_845aa6e0 = Dvar_RegisterFloat(uVar17,0,0x4060000000000000,0xffffffff821c0280);
+  DAT_845aa6e4 = Dvar_RegisterFloat(uVar5,0,uVar7,0xffffffff821c0238);
+  uVar16 = 0x408f400000000000;
+  DAT_845aa848 = Dvar_RegisterFloat(uVar13,0,0x408f400000000000,0xffffffff821c01f8);
+  DAT_845aa58c = Dvar_RegisterFloat(0x404e000000000000,0,uVar16,0xffffffff821c01bc);
+  uVar7 = 0x40f3880000000000;
+  DAT_845aa5c8 = Dvar_RegisterFloat(uVar16,0,0x40f3880000000000,0xffffffff821c0178);
+  DAT_845aa8b0 = Dvar_RegisterFloat(0x40bb580000000000,0,uVar7,0xffffffff821c0138);
+  DAT_845aa820 = Dvar_RegisterFloat(uVar12,uVar10,uVar1,0xffffffff821c00dc);
+  DAT_845aa75c = Dvar_RegisterInt(0xffffffff821c0084,0x60,0,0x80,0,0xffffffff821c00a4);
+  DAT_845aa744 = Dvar_RegisterInt(0xffffffff821c0074,0,0,2,0,0xffffffff821c0058);
+  DAT_845aa6f0 = Dvar_RegisterFloat(uVar5,uVar4,uVar14,0xffffffff821c0028);
+  Dvar_SetModified();
+  DAT_845aa858 = Dvar_RegisterBool(0xffffffff821bffdc,0,4,0xffffffff821bfff0);
+  DAT_845aa658 = Dvar_RegisterInt(0xffffffff821bffa4,0xf,1,0x78,4,0xffffffff821bffb4);
+  DAT_845aa878 = Dvar_RegisterInt(0xffffffff8201a624,0,0,2,0,0xffffffff8201a608);
+  DAT_8365e12c = Dvar_RegisterBool(0xffffffff8208c660,0,0,0xffffffff8208c66c);
   R_WarnInitDvars();
-  _prof_probe = Dvar_RegisterEnum("prof_probe0",(char **)&prof_enumNames,0,0,"Profile probe");
-  DAT_845aa620 = Dvar_RegisterEnum("prof_probe1",(char **)&prof_enumNames,0,0,"Profile probe");
-  DAT_845aa624 = Dvar_RegisterEnum("prof_probe2",(char **)&prof_enumNames,0,0,"Profile probe");
-  DAT_845aa628 = Dvar_RegisterEnum("prof_probe3",(char **)&prof_enumNames,0,0,"Profile probe");
-  DAT_845aa62c = Dvar_RegisterEnum("prof_probe4",(char **)&prof_enumNames,0,0,"Profile probe");
-  pcVar2 = (char *)0x1;
-  uVar1 = 0x1e;
-  prof_probeMaxMsec =
-       Dvar_RegisterInt("prof_probeMaxMsec",0x1e,1,1000,0,
-                        "Height of each profile probe graph, in milliseconds");
-  prof_sortTime =
-       Dvar_RegisterFloat("prof_sortTime",(float)dVar15,(float)dVar15,(float)dVar21,uVar1,pcVar2);
-  profile_script = Dvar_RegisterBool("profile_script",false,0,"Enable profile scripts");
-  profile_script_by_file =
-       Dvar_RegisterBool("profile_script_by_file",false,0,"Enable profile scripts by source file");
-  r_staticModelDumpLodInfo =
-       Dvar_RegisterBool("r_staticModelDumpLodInfo",false,0,
-                         "Dump static model info for the next frame.");
-  r_hideAmbientSModels =
-       Dvar_RegisterBool("r_hideAmbientSModels",false,0,"Hide ambient static models.");
-  r_splitTrans = Dvar_RegisterBool("r_splitTrans",false,0,
-                                   "When using GPU Timers, split Trans into Trans (glass, etc) and Trans FX (dynamic lights)"
-                                  );
-  pcVar2 = (char *)0x2;
-  r_thermal = Dvar_RegisterEnum("r_thermal",r_thermalNames,2,0,"Select thermal effect mode");
-  r_thermalColorScale =
-       Dvar_RegisterFloat("r_thermalColorScale",1.0,(float)dVar16,(float)dVar20,uVar5,pcVar2);
-  pcVar2 = "lues from dvars rather than the level";
-  uVar1 = 0;
-  r_thermalColorOffset =
-       Dvar_RegisterFloat("r_thermalColorOffset",0.0,(float)dVar16,(float)dVar20,0,
-                          "lues from dvars rather than the level");
-  r_thermalDetailScale =
-       Dvar_RegisterFloat("r_thermalDetailScale",1.0,(float)dVar16,(float)dVar20,uVar1,pcVar2);
+  DAT_845aa61c = Dvar_RegisterEnum(0xffffffff821bff88,0xffffffff82993038,0,0,0xffffffff821bff94);
+  DAT_845aa620 = Dvar_RegisterEnum(0xffffffff821bff7c,0xffffffff82993038,0,0,0xffffffff821bff94);
+  DAT_845aa624 = Dvar_RegisterEnum(0xffffffff821bff70,0xffffffff82993038,0,0,0xffffffff821bff94);
+  DAT_845aa628 = Dvar_RegisterEnum(0xffffffff821bff64,0xffffffff82993038,0,0,0xffffffff821bff94);
+  DAT_845aa62c = Dvar_RegisterEnum(0xffffffff821bff58,0xffffffff82993038,0,0,0xffffffff821bff94);
+  DAT_845aa59c = Dvar_RegisterInt(0xffffffff821bff10,0x1e,1,1000,0,0xffffffff821bff24);
+  DAT_845aa6a8 = Dvar_RegisterFloat(uVar10,uVar10,uVar16,0xffffffff821bfed8);
+  DAT_845aa5f0 = Dvar_RegisterBool(0xffffffff821bfec8,0,0,0xffffffff821bfeb0);
+  DAT_845aa5f4 = Dvar_RegisterBool(0xffffffff821bfe70,0,0,0xffffffff821bfe88);
+  DAT_845aa5ec = Dvar_RegisterBool(0xffffffff821bfe28,0,0,0xffffffff821bfe44);
+  DAT_845aa740 = Dvar_RegisterBool(0xffffffff821bfdf4,0,0,0xffffffff821bfe0c);
+  DAT_845aa63c = Dvar_RegisterBool(0xffffffff821bfd88,0,0,0xffffffff821bfd98);
+  DAT_845aa85c = Dvar_RegisterEnum(0xffffffff821bfd60,0xffffffff82999e50,2,0,0xffffffff821bfd6c);
+  DAT_845aa5d8 = Dvar_RegisterFloat(0x3ff0000000000000,uVar11,uVar15,0xffffffff821bfd18);
+  DAT_845aa764 = Dvar_RegisterFloat(0,uVar11,uVar15,0xffffffff821bfccc);
+  DAT_845aa800 = Dvar_RegisterFloat(0x3ff0000000000000,uVar11,uVar15,0xffffffff821bfc38);
   FX_RegisterDvars();
   __restfpr();
   __restgprlr_26();
@@ -632,13 +309,13 @@ void R_RegisterDvars(void)
 
 // 8273E758  R_CheckDvarModified  (gfx_d3d/r_dvars.cpp:1627)
 
-bool R_CheckDvarModified(dvar_t *param_1)
+undefined8 R_CheckDvarModified(int param_1)
 
 {
-  if (param_1->modified == false) {
-    return false;
+  if (*(char *)(param_1 + 0xb) == '\0') {
+    return 0;
   }
-  Dvar_ClearModified(param_1);
-  return true;
+  Dvar_ClearModified();
+  return 1;
 }
 

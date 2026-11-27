@@ -4,13 +4,31 @@
 
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
-int wsprintfW(ushort *param_1,wchar_t *param_2)
+int wsprintfW(LPWSTR param_1,LPCWSTR param_2,...)
 
 {
   int iVar1;
-  wchar_t *pwStack0000001c;
+  undefined8 in_r5;
+  undefined8 in_r6;
+  undefined8 in_r7;
+  undefined8 in_r8;
+  undefined8 in_r9;
+  undefined8 in_r10;
+  LPCWSTR pWStack0000001c;
+  undefined8 uStack00000020;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
   
-  pwStack0000001c = param_2;
+  uStack00000020 = in_r5;
+  uStack00000028 = in_r6;
+  uStack00000030 = in_r7;
+  uStack00000038 = in_r8;
+  uStack00000040 = in_r9;
+  uStack00000048 = in_r10;
+  pWStack0000001c = param_2;
   iVar1 = RtlVswprintf(param_1,param_2,&stack0x00000020);
   return iVar1;
 }

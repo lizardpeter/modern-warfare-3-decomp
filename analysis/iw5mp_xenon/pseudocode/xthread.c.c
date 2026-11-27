@@ -2,44 +2,44 @@
 
 // 828A9408  SetThreadPriority  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xthread.c:206)
 
-int SetThreadPriority(void *param_1,int param_2)
+BOOL SetThreadPriority(HANDLE hThread,int nPriority)
 
 {
-  long lVar1;
-  int iVar2;
+  int iVar1;
+  BOOL BVar2;
   undefined4 local_20 [2];
   
-  lVar1 = ObReferenceObjectByHandle(param_1,0x1b,local_20);
-  if (lVar1 < 0) {
-    XapiSetLastNTError(lVar1);
-    iVar2 = 0;
+  iVar1 = ObReferenceObjectByHandle(hThread,0x1b,local_20);
+  if (iVar1 < 0) {
+    XapiSetLastNTError();
+    BVar2 = 0;
   }
   else {
-    if (param_2 == 0xf) {
-      param_2 = 0x10;
+    if (nPriority == 0xf) {
+      nPriority = 0x10;
     }
-    else if (param_2 == -0xf) {
-      param_2 = -0x10;
+    else if (nPriority == -0xf) {
+      nPriority = -0x10;
     }
-    KeSetBasePriorityThread(local_20[0],param_2);
+    KeSetBasePriorityThread(local_20[0],nPriority);
     ObDereferenceObject(local_20[0]);
-    iVar2 = 1;
+    BVar2 = 1;
   }
-  return iVar2;
+  return BVar2;
 }
 
 
 // 828A94A8  SuspendThread  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xthread.c:359)
 
-ulong SuspendThread(void *param_1)
+DWORD SuspendThread(HANDLE hThread)
 
 {
-  long lVar1;
-  ulong local_20 [4];
+  int iVar1;
+  DWORD local_20 [4];
   
-  lVar1 = NtSuspendThread(param_1,local_20);
-  if (lVar1 < 0) {
-    XapiSetLastNTError(lVar1);
+  iVar1 = NtSuspendThread(hThread,local_20);
+  if (iVar1 < 0) {
+    XapiSetLastNTError();
     local_20[0] = 0xffffffff;
   }
   return local_20[0];
@@ -48,15 +48,15 @@ ulong SuspendThread(void *param_1)
 
 // 828A9500  SetUnhandledExceptionFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xthread.c:538)
 
-_func___cdecl_long__EXCEPTION_POINTERS_ptr *
-SetUnhandledExceptionFilter(_func___cdecl_long__EXCEPTION_POINTERS_ptr *param_1)
+LPTOP_LEVEL_EXCEPTION_FILTER
+SetUnhandledExceptionFilter(LPTOP_LEVEL_EXCEPTION_FILTER lpTopLevelExceptionFilter)
 
 {
-  _func___cdecl_long__EXCEPTION_POINTERS_ptr *p_Var1;
+  LPTOP_LEVEL_EXCEPTION_FILTER pPVar1;
   
-  p_Var1 = XapiCurrentTopLevelFilter;
-  XapiCurrentTopLevelFilter = param_1;
-  return p_Var1;
+  pPVar1 = DAT_84897d48;
+  DAT_84897d48 = lpTopLevelExceptionFilter;
+  return pPVar1;
 }
 
 
@@ -64,11 +64,10 @@ SetUnhandledExceptionFilter(_func___cdecl_long__EXCEPTION_POINTERS_ptr *param_1)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-long UnhandledExceptionFilter(_EXCEPTION_POINTERS *param_1)
+LONG UnhandledExceptionFilter(_EXCEPTION_POINTERS *ExceptionInfo)
 
 {
   int iVar1;
-  long lVar2;
   
   if (_DAT_00000059 == 0) {
     iVar1 = 0;
@@ -76,9 +75,8 @@ long UnhandledExceptionFilter(_EXCEPTION_POINTERS *param_1)
   else {
     iVar1 = (**(code **)(_DAT_00000059 + 0x18))(10,0);
   }
-  if (((iVar1 == 0) &&
-      (XapiCurrentTopLevelFilter != (_func___cdecl_long__EXCEPTION_POINTERS_ptr *)0x0)) &&
-     (lVar2 = (*XapiCurrentTopLevelFilter)(param_1), lVar2 == -1)) {
+  if (((iVar1 == 0) && (DAT_84897d48 != (code *)0x0)) &&
+     (iVar1 = (*DAT_84897d48)(ExceptionInfo), iVar1 == -1)) {
     return -1;
   }
   return 0;
@@ -87,7 +85,7 @@ long UnhandledExceptionFilter(_EXCEPTION_POINTERS *param_1)
 
 // 828A9548  XSetThreadProcessor  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xthread.c:829)
 
-ulong XSetThreadProcessor(void *param_1,ulong param_2)
+longlong XSetThreadProcessor(undefined8 param_1,uint param_2)
 
 {
   longlong lVar1;
@@ -105,25 +103,23 @@ ulong XSetThreadProcessor(void *param_1,ulong param_2)
   }
   if (-1 < (int)lVar1) {
     if (local_1c != 0) {
-      return 0x1f - (int)LZCOUNT(local_1c);
+      return 0x1f - LZCOUNT(local_1c);
     }
     return 0;
   }
 LAB_828a95e8:
-  XapiSetLastNTError((long)lVar1);
-  return 0xffffffff;
+  XapiSetLastNTError(lVar1);
+  return -1;
 }
 
 
 // 828A9610  GetCurrentProcessorNumber  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xthread.c:879)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ulong GetCurrentProcessorNumber(void)
+DWORD GetCurrentProcessorNumber(void)
 
 {
   int in_r13;
   
-  return (ulong)*(byte *)(in_r13 + 0x10c);
+  return (DWORD)*(byte *)(in_r13 + 0x10c);
 }
 

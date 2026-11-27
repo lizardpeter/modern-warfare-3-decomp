@@ -2,151 +2,129 @@
 
 // 8244B9F8  FXW_SystemUpdateEffect  (EffectsCore/fx_update_effect_system.cpp:133)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int FXW_SystemUpdateEffect(FxSystem *param_1,int param_2,ushort *param_3,int param_4,int param_5)
+void FXW_SystemUpdateEffect
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               int param_5)
 
 {
-  ushort uVar1;
-  FxSystem *pFVar2;
+  int iVar2;
+  undefined8 uVar1;
   int iVar3;
-  FxEffect *pFVar4;
+  uint uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  longlong lVar6;
   
-  uVar5 = (ulonglong)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  pFVar2 = (FxSystem *)__savegprlr_20(param_1);
-  if (pFVar2 == (FxSystem *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect_system.cpp"
-                    ,0x89,0,"%s");
+  iVar2 = __savegprlr_20();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8206a040,0x89,0,0xffffffff82000f98,0xffffffff82061890);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect_system.cpp"
-                    ,0x8a,0,"%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206a040,0x8a,0,0xffffffff82000f98,0xffffffff8206a028);
   }
-  if (pFVar2->numUpdateElement != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect_system.cpp"
-                    ,0x8b,0,"%s");
+  if (*(int *)(iVar2 + 0xd0) != 0) {
+    MyAssertHandler(0xffffffff8206a040,0x8b,0,0xffffffff82000f98,0xffffffff820695c4);
   }
-  if ((int)uVar5 < 0x400) {
-    lVar8 = (uVar5 & 0x7fffffff) * 2 + uVar7;
-    uVar7 = uVar5;
+  if ((int)param_4 < 0x400) {
+    lVar6 = (param_4 & 0x7fffffff) * 2 + param_3;
+    uVar5 = param_4;
     do {
-      uVar1 = *(ushort *)lVar8;
-      uVar6 = (ulonglong)uVar1;
-      if (uVar6 == 0xffff) break;
-      if (uVar6 < 0x9000) {
-        if (uVar6 != (uVar6 / 0x24) * 0x24) goto LAB_8244bb08;
+      uVar4 = (uint)*(ushort *)lVar6;
+      if (uVar4 == 0xffff) break;
+      if (uVar4 < 0x9000) {
+        if (uVar4 != (uVar4 / 0x24) * 0x24) goto LAB_8244bb08;
       }
       else {
 LAB_8244bb08:
-        va("%p %i");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                        ,0x24,0,"%s\n\t%s");
+        uVar1 = va(0xffffffff82060820,*(undefined4 *)(iVar2 + 0x10),uVar4);
+        MyAssertHandler(0xffffffff82060828,0x24,0,0xffffffff820011f4,0xffffffff82060798,uVar1);
       }
-      pFVar4 = (FxEffect *)(pFVar2->effects->firstElemHandle + (uint)uVar1 * 2 + -4);
-      if ((param_5 == 0) || (pFVar4->bolt == 0xff)) {
-        FXW_UpdateEffect(pFVar2,param_2,pFVar4,*(ushort *)lVar8);
+      iVar3 = uVar4 * 4 + *(int *)(iVar2 + 0x10);
+      if ((param_5 == 0) || (*(char *)(iVar3 + 0x26) == -1)) {
+        FXW_UpdateEffect(iVar2,param_2,iVar3,*(ushort *)lVar6);
       }
-      uVar7 = uVar7 + 1;
-      lVar8 = lVar8 + 2;
-    } while ((int)uVar7 < 0x400);
+      uVar5 = uVar5 + 1;
+      lVar6 = lVar6 + 2;
+    } while ((int)uVar5 < 0x400);
   }
-  iVar3 = __restgprlr_20(uVar5);
-  return iVar3;
+  __restgprlr_20(param_4);
+  return;
 }
 
 
 // 8244BB80  FXW_SystemUpdateEffectFinalize  (EffectsCore/fx_update_effect_system.cpp:171)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int FXW_SystemUpdateEffectFinalize(FxSystem *param_1,ushort *param_2,int param_3,int param_4)
+void FXW_SystemUpdateEffectFinalize
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,int param_4)
 
 {
-  FxSystem *pFVar1;
   int iVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  float *pfVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  ushort *puVar10;
-  uint uVar11;
-  FxEffect *pFVar12;
-  longlong lVar13;
+  undefined8 uVar1;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  ushort *puVar8;
+  uint uVar9;
+  int iVar10;
+  longlong lVar11;
   
-  uVar7 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pFVar1 = (FxSystem *)__savegprlr_16(param_1);
-  if (pFVar1 == (FxSystem *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect_system.cpp"
-                    ,0xaf,0,"%s");
+  iVar2 = __savegprlr_16();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8206a040,0xaf,0,0xffffffff82000f98,0xffffffff82061890);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect_system.cpp"
-                    ,0xb0,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206a040,0xb0,0,0xffffffff82000f98,0xffffffff8206a028);
   }
-  if ((int)uVar7 < 0x400) {
-    lVar9 = (uVar7 & 0x7fffffff) * 2 + uVar3;
-    lVar6 = lVar9 + -2;
-    uVar8 = uVar7;
+  if ((int)param_3 < 0x400) {
+    lVar7 = (param_3 & 0x7fffffff) * 2 + param_2;
+    lVar5 = lVar7 + -2;
+    uVar6 = param_3;
     do {
-      puVar10 = (ushort *)lVar9;
-      uVar11 = (uint)*puVar10;
-      if (uVar11 == 0xffff) break;
-      if (pFVar1 == (FxSystem *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                        ,0x23,0,"%s");
+      puVar8 = (ushort *)lVar7;
+      uVar9 = (uint)*puVar8;
+      if (uVar9 == 0xffff) break;
+      if (iVar2 == 0) {
+        MyAssertHandler(0xffffffff82060828,0x23,0,0xffffffff82000f98,0xffffffff82038694);
       }
-      if (uVar11 < 0x9000) {
-        if (uVar11 != (uVar11 / 0x24) * 0x24) goto LAB_8244bc98;
+      if (uVar9 < 0x9000) {
+        if (uVar9 != (uVar9 / 0x24) * 0x24) goto LAB_8244bc98;
       }
       else {
 LAB_8244bc98:
-        va("%p %i");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                        ,0x24,0,"%s\n\t%s");
+        uVar1 = va(0xffffffff82060820,*(undefined4 *)(iVar2 + 0x10),uVar9);
+        MyAssertHandler(0xffffffff82060828,0x24,0,0xffffffff820011f4,0xffffffff82060798,uVar1);
       }
-      pFVar12 = (FxEffect *)(pFVar1->effects->firstElemHandle + uVar11 * 2 + -4);
-      if ((param_4 == 0) || (pFVar12->bolt == 0xff)) {
-        pFVar12->msecLastUpdate = pFVar1->msecNow;
-        FXW_SortNewElemsInEffect(pFVar1,pFVar12);
-        pfVar5 = (pFVar12->frameAtSpawn).origin + 2;
-        pfVar4 = (pFVar12->frameNow).origin + 2;
-        lVar13 = 7;
+      iVar10 = uVar9 * 4 + *(int *)(iVar2 + 0x10);
+      if ((param_4 == 0) || (*(char *)(iVar10 + 0x26) == -1)) {
+        *(undefined4 *)(iVar10 + 0x30) = *(undefined4 *)(iVar2 + 0x88);
+        FXW_SortNewElemsInEffect(iVar2,iVar10);
+        puVar4 = (undefined4 *)(iVar10 + 0x4c);
+        puVar3 = (undefined4 *)(iVar10 + 0x68);
+        lVar11 = 7;
         do {
-          pfVar5 = pfVar5 + 1;
-          pfVar4 = pfVar4 + 1;
-          *pfVar4 = *pfVar5;
-          lVar13 = lVar13 + -1;
-        } while (lVar13 != 0);
+          puVar4 = puVar4 + 1;
+          puVar3 = puVar3 + 1;
+          *puVar3 = *puVar4;
+          lVar11 = lVar11 + -1;
+        } while (lVar11 != 0);
       }
       else {
-        uVar7 = uVar7 + 1;
-        lVar6 = lVar6 + 2;
-        *(ushort *)lVar6 = *puVar10;
+        param_3 = param_3 + 1;
+        lVar5 = lVar5 + 2;
+        *(ushort *)lVar5 = *puVar8;
       }
-      if ((int)uVar8 < 0x400) {
-        *puVar10 = 0xffff;
+      if ((int)uVar6 < 0x400) {
+        *puVar8 = 0xffff;
       }
-      uVar8 = uVar8 + 1;
-      lVar9 = lVar9 + 2;
-    } while ((int)uVar8 < 0x400);
-    if ((int)uVar7 < 0x400) {
-      *(undefined2 *)((int)((uVar7 & 0xffffffff) << 1) + (int)uVar3) = 0xffff;
+      uVar6 = uVar6 + 1;
+      lVar7 = lVar7 + 2;
+    } while ((int)uVar6 < 0x400);
+    if ((int)param_3 < 0x400) {
+      *(undefined2 *)((int)((param_3 & 0xffffffff) << 1) + (int)param_2) = 0xffff;
     }
   }
-  iVar2 = __restgprlr_16(uVar7);
-  return iVar2;
+  __restgprlr_16(param_3);
+  return;
 }
 

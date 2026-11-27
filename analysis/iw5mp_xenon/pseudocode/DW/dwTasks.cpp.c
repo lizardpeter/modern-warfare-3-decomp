@@ -2,14 +2,14 @@
 
 // 826F23F0  dwClearTask  (DW/dwTasks.cpp:12)
 
-void dwClearTask(overlappedTask *param_1)
+void dwClearTask(int param_1)
 
 {
-  if (param_1 == (overlappedTask *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwTasks.cpp",0xd,0,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff821ad1c8,0xd,0,0xffffffff82000f98,0xffffffff8208b598);
   }
-  if ((param_1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0) {
-    bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,(bdRemoteTask *)0x0);
+  if (*(int *)(param_1 + 8) != 0) {
+    bdReference<bdRemoteTask>__operator_(param_1 + 8,0);
   }
   return;
 }
@@ -17,54 +17,50 @@ void dwClearTask(overlappedTask *param_1)
 
 // 826F2460  dwGetTaskStatus  (DW/dwTasks.cpp:21)
 
-taskCompleteResults dwGetTaskStatus(overlappedTask *param_1)
+undefined8 dwGetTaskStatus(int param_1)
 
 {
-  bdRemoteTask *pbVar1;
-  bdStatus bVar2;
-  taskCompleteResults tVar3;
+  int *piVar1;
+  undefined8 uVar2;
   
-  if (param_1 == (overlappedTask *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwTasks.cpp",0x18,0,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff821ad1c8,0x18,0,0xffffffff82000f98,0xffffffff8208b598);
   }
-  pbVar1 = (param_1->u).remoteTask.m_ptr;
-  tVar3 = TASK_ERROR;
-  if (pbVar1 != (bdRemoteTask *)0x0) {
-    bVar2 = (**(code **)(pbVar1->_padding_ + 4))(pbVar1);
-    tVar3 = dwTaskStatusConvert(bVar2,BD_NO_ERROR);
+  piVar1 = *(int **)(param_1 + 8);
+  uVar2 = 2;
+  if (piVar1 != (int *)0x0) {
+    uVar2 = (**(code **)(*piVar1 + 4))(piVar1);
+    uVar2 = dwTaskStatusConvert(uVar2,0);
   }
-  return tVar3;
+  return uVar2;
 }
 
 
 // 826F2310  dwHandleTaskError  (DW/dwTasks.cpp:35)
 
-taskCompleteResults dwHandleTaskError(overlappedTask *param_1,bdLobbyErrorCode param_2)
+void dwHandleTaskError(undefined8 param_1,undefined8 param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  char acStack_70 [112];
+  int iVar1;
+  undefined1 auStack_70 [112];
   
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwTasks.cpp",0x24,0,"%s");
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821ad1c8,0x24,0,0xffffffff82000f98,0xffffffff8208b598);
   }
-  Com_Printf(0x10,"%s()\n");
-  dwLobbyErrorCodeToString(param_2,acStack_70,0x40);
-  if (param_2 == BD_NOT_CONNECTED) {
-    Com_Printf(0x10,
-               "\t Task start requested while not connected! DW task type %d errorCode %i - \'%s\'\n"
-              );
+  Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ad1b4);
+  dwLobbyErrorCodeToString(param_2,auStack_70,0x40);
+  if ((int)param_2 == 2) {
+    Com_Printf(0x10,0xffffffff821ad138,*(undefined4 *)(iVar1 + 0x90),2,auStack_70);
   }
   else {
-    Com_PrintError(0x10,"\t DW task type %d errorCode %i - \'%s\'\n");
+    Com_PrintError(0x10,0xffffffff821ad18c,*(undefined4 *)(iVar1 + 0x90),param_2);
   }
-  TaskManager_ClearTask(poVar1);
-  if (param_2 == BD_TOO_MANY_TASKS) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwTasks.cpp",0x39,0,"%s");
+  TaskManager_ClearTask(iVar1);
+  if ((int)param_2 == 1) {
+    MyAssertHandler(0xffffffff821ad1c8,0x39,0,0xffffffff82000f98,0xffffffff821ac060);
   }
-  tVar2 = __restgprlr_28(2);
-  return tVar2;
+  __restgprlr_28(2);
+  return;
 }
 

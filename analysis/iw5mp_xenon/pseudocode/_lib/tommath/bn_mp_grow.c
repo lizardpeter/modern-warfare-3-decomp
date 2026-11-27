@@ -5,26 +5,28 @@
 undefined8 mp_grow(int param_1,uint param_2)
 
 {
-  void *pvVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
+  ulonglong uVar3;
   
   if (*(int *)(param_1 + 4) < (int)param_2) {
-    iVar2 = (((int)param_2 >> 6) + (uint)((int)param_2 < 0 && (param_2 & 0x3f) != 0)) * 0x40 + 0x80;
-    pvVar1 = tom_game_realloc(*(void **)(param_1 + 0xc),iVar2 * 4);
-    if (pvVar1 == (void *)0x0) {
+    uVar3 = ((longlong)((int)param_2 >> 6) + (ulonglong)((int)param_2 < 0 && (param_2 & 0x3f) != 0)
+            & 0x3ffffff) * 0x40 + 0x80;
+    iVar1 = tom_game_realloc(*(undefined4 *)(param_1 + 0xc),(uVar3 & 0x3fffffff) << 2);
+    if (iVar1 == 0) {
       return 0xfffffffffffffffe;
     }
-    iVar3 = *(int *)(param_1 + 4);
-    *(void **)(param_1 + 0xc) = pvVar1;
-    *(int *)(param_1 + 4) = iVar2;
-    if (iVar3 < iVar2) {
-      iVar2 = iVar3 << 2;
+    iVar2 = *(int *)(param_1 + 4);
+    *(int *)(param_1 + 0xc) = iVar1;
+    iVar1 = (int)uVar3;
+    *(int *)(param_1 + 4) = iVar1;
+    if (iVar2 < iVar1) {
+      iVar1 = iVar2 << 2;
       do {
-        iVar3 = iVar3 + 1;
-        *(undefined4 *)(iVar2 + *(int *)(param_1 + 0xc)) = 0;
-        iVar2 = iVar2 + 4;
-      } while (iVar3 < *(int *)(param_1 + 4));
+        iVar2 = iVar2 + 1;
+        *(undefined4 *)(iVar1 + *(int *)(param_1 + 0xc)) = 0;
+        iVar1 = iVar1 + 4;
+      } while (iVar2 < *(int *)(param_1 + 4));
     }
   }
   return 0;

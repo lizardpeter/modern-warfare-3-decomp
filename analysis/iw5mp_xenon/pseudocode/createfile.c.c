@@ -2,94 +2,93 @@
 
 // 828A2F18  CreateFileA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/createfile.c:198)
 
-void * CreateFileA(char *param_1,ulong param_2,ulong param_3,void *param_4,ulong param_5,
-                  ulong param_6,void *param_7)
+HANDLE CreateFileA(LPCSTR lpFileName,DWORD dwDesiredAccess,DWORD dwShareMode,
+                  LPSECURITY_ATTRIBUTES lpSecurityAttributes,DWORD dwCreationDisposition,
+                  DWORD dwFlagsAndAttributes,HANDLE hTemplateFile)
 
 {
   bool bVar1;
-  int iVar3;
+  int iVar4;
   ulonglong uVar2;
-  long lVar4;
-  void *pvVar5;
-  longlong lVar6;
+  longlong lVar3;
+  DWORD DVar5;
+  HANDLE pvVar6;
   ulonglong uVar7;
   ulonglong uVar8;
-  uint uVar9;
-  ulong uVar10;
-  ulong in_stack_ffffff48;
-  void *local_60 [2];
-  _STRING local_58;
-  _IO_STATUS_BLOCK _Stack_50;
-  _OBJECT_ATTRIBUTES local_48 [6];
+  undefined8 uVar9;
+  uint local_60 [2];
+  ushort local_58 [4];
+  undefined1 auStack_50 [4];
+  int local_4c;
+  undefined4 local_48;
+  ushort *local_44;
+  undefined4 local_40;
   
-  uVar8 = (ulonglong)(int)param_6;
-  uVar7 = (ulonglong)(int)param_5;
-  lVar6 = (longlong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_26(param_1,uVar2,lVar6,param_4,uVar7,uVar8,param_7);
-  uVar9 = (uint)uVar2;
+  uVar8 = (ulonglong)(int)dwFlagsAndAttributes;
+  uVar7 = (ulonglong)(int)dwCreationDisposition;
+  lVar3 = (longlong)(int)dwShareMode;
+  uVar2 = (ulonglong)(int)dwDesiredAccess;
+  iVar4 = __savegprlr_26(lpFileName,uVar2,lVar3,lpSecurityAttributes,uVar7,uVar8,hTemplateFile);
   if ((uVar7 & 0xffffffff) == 1) {
-    uVar10 = 2;
+    uVar9 = 2;
 LAB_828a2fa4:
-    RtlInitAnsiString(&local_58,iVar3);
-    if ((local_58.Length < 2) ||
-       (bVar1 = true, *(char *)((uint)local_58.Length + iVar3 + -1) != '\\')) {
+    RtlInitAnsiString(local_58,iVar4);
+    if ((local_58[0] < 2) || (bVar1 = true, *(char *)((uint)local_58[0] + iVar4 + -1) != '\\')) {
       bVar1 = false;
     }
-    local_48[0].RootDirectory = (void *)0xfffffffd;
-    local_48[0].ObjectName = &local_58;
-    local_48[0].Attributes = 0x40;
+    local_48 = 0xfffffffd;
+    local_44 = local_58;
+    local_40 = 0x40;
     if ((uVar8 & 0x4000000) != 0) {
-      uVar9 = uVar9 | 0x10000;
+      uVar2 = uVar2 | 0x10000;
     }
-    lVar4 = (*_fileIoHooks->NtCreateFile)
-                      (local_60,uVar9 | 0x100080,local_48,&_Stack_50,(_LARGE_INTEGER *)0x0,
-                       (uint)uVar8 & 0x7fa7,(ulong)lVar6,uVar10,in_stack_ffffff48);
-    if (-1 < lVar4) {
-      if ((((uVar7 & 0xffffffff) == 2) && (_Stack_50.Information == 3)) ||
-         (((uVar7 & 0xffffffff) == 4 && (_Stack_50.Information == 1)))) {
-        uVar10 = 0xb7;
+    lVar3 = (**(code **)(PTR_DAT_829a8580 + 0xc))
+                      (local_60,uVar2 | 0x100080,&local_48,auStack_50,0,uVar8 & 0x7fa7,lVar3,uVar9);
+    if (-1 < lVar3) {
+      if ((((uVar7 & 0xffffffff) == 2) && (local_4c == 3)) ||
+         (((uVar7 & 0xffffffff) == 4 && (local_4c == 1)))) {
+        DVar5 = 0xb7;
       }
       else {
-        uVar10 = 0;
+        DVar5 = 0;
       }
-      SetLastError(uVar10);
-      uVar2 = ZEXT48(local_60[0]);
+      SetLastError(DVar5);
+      uVar2 = (ulonglong)local_60[0];
       goto LAB_828a3110;
     }
-    RtlSetLastNTError(lVar4);
-    if (lVar4 == -0x3fffffcb) {
-      uVar10 = 0x50;
+    RtlSetLastNTError(lVar3);
+    if ((int)lVar3 == -0x3fffffcb) {
+      DVar5 = 0x50;
     }
     else {
-      if (lVar4 != -0x3fffff46) goto LAB_828a2f7c;
-      uVar10 = 3;
+      if ((int)lVar3 != -0x3fffff46) goto LAB_828a2f7c;
+      DVar5 = 3;
       if (!bVar1) {
-        uVar10 = 5;
+        DVar5 = 5;
       }
     }
-    SetLastError(uVar10);
+    SetLastError(DVar5);
   }
   else {
     if ((uVar7 & 0xffffffff) == 2) {
-      uVar10 = 5;
+      uVar9 = 5;
       goto LAB_828a2fa4;
     }
     if ((uVar7 & 0xffffffff) == 3) {
-      uVar10 = 1;
+      uVar9 = 1;
       goto LAB_828a2fa4;
     }
     if ((uVar7 & 0xffffffff) == 4) {
-      uVar10 = 3;
+      uVar9 = 3;
       goto LAB_828a2fa4;
     }
-    if (((uVar7 & 0xffffffff) == 5) && (uVar10 = 4, (uVar2 & 0x40000000) != 0)) goto LAB_828a2fa4;
-    RtlSetLastNTError(-0x3ffffff3);
+    if (((uVar7 & 0xffffffff) == 5) && (uVar9 = 4, (uVar2 & 0x40000000) != 0)) goto LAB_828a2fa4;
+    RtlSetLastNTError(0xffffffffc000000d);
   }
 LAB_828a2f7c:
   uVar2 = 0xffffffffffffffff;
 LAB_828a3110:
-  pvVar5 = (void *)__restgprlr_26(uVar2);
-  return pvVar5;
+  pvVar6 = (HANDLE)__restgprlr_26(uVar2);
+  return pvVar6;
 }
 

@@ -2,38 +2,38 @@
 
 // 8291B280  strrchr  (<external>/bt/278379/vctools/crt/xb/xbox/strrchrp.asm:50)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void strrchr(void)
+char * strrchr(char *_Str,int _Ch)
 
 {
   bool bVar1;
-  byte *in_r3;
-  uint in_r4;
   uint uVar2;
+  byte *pbVar3;
   
-  uVar2 = (uint)*in_r3;
-  bVar1 = *in_r3 == in_r4;
-  if (in_r4 == 0) {
+  uVar2 = (uint)(byte)*_Str;
+  bVar1 = (uint)(byte)*_Str == _Ch;
+  if (_Ch == 0) {
     while (!bVar1) {
-      in_r3 = in_r3 + 1;
-      bVar1 = *in_r3 == 0;
+      _Str = _Str + 1;
+      bVar1 = *_Str == 0;
     }
   }
   else {
+    pbVar3 = (byte *)_Str;
+    _Str = (char *)(byte *)0x0;
     while( true ) {
       if (bVar1) {
         do {
-          in_r3 = in_r3 + 1;
-          uVar2 = (uint)*in_r3;
-        } while (in_r4 == uVar2);
+          _Str = (char *)pbVar3;
+          pbVar3 = (byte *)(_Str + 1);
+          uVar2 = (uint)*pbVar3;
+        } while (_Ch == uVar2);
       }
       if (uVar2 == 0) break;
-      in_r3 = in_r3 + 1;
-      uVar2 = (uint)*in_r3;
-      bVar1 = in_r4 == uVar2;
+      pbVar3 = pbVar3 + 1;
+      uVar2 = (uint)*pbVar3;
+      bVar1 = _Ch == uVar2;
     }
   }
-  return;
+  return _Str;
 }
 

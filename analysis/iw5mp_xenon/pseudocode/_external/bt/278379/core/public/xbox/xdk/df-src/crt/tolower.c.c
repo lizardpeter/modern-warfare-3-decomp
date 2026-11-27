@@ -2,15 +2,15 @@
 
 // 829170C8  tolower  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tolower.c:98)
 
-int tolower(int param_1)
+int tolower(int _C)
 
 {
-  if (param_1 < 0x41) {
-    return param_1;
+  if (_C < 0x41) {
+    return _C;
   }
-  if (0x5a < param_1) {
-    return param_1;
+  if (0x5a < _C) {
+    return _C;
   }
-  return param_1 + 0x20;
+  return _C + 0x20;
 }
 

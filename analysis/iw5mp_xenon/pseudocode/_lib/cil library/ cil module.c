@@ -22,23 +22,24 @@ void sha256_compress(undefined8 param_1,longlong param_2)
   uint uVar15;
   int iVar16;
   undefined1 *puVar17;
-  int iVar18;
-  undefined2 uVar19;
+  undefined2 uVar18;
+  int iVar19;
   undefined4 uVar20;
   undefined4 uVar21;
-  ulonglong uVar22;
+  undefined8 uVar22;
   ulonglong uVar23;
-  uint uVar25;
   ulonglong uVar24;
-  ulonglong uVar26;
+  uint uVar26;
+  ulonglong uVar25;
   ulonglong uVar27;
   ulonglong uVar28;
   ulonglong uVar29;
   ulonglong uVar30;
-  uint *puVar32;
   ulonglong uVar31;
-  longlong lVar33;
+  uint *puVar33;
+  ulonglong uVar32;
   longlong lVar34;
+  longlong lVar35;
   uint local_1b0 [4];
   undefined1 local_1a0 [4];
   undefined1 local_19c [4];
@@ -89,713 +90,712 @@ void sha256_compress(undefined8 param_1,longlong param_2)
   int local_a4;
   undefined8 local_a0;
   
-  __savegprlr();
-  iVar16 = (int)param_1;
+  uVar22 = __savegprlr();
+  iVar16 = (int)uVar22;
   uVar3 = *(uint *)(iVar16 + 8);
-  uVar28 = (ulonglong)uVar3;
+  uVar29 = (ulonglong)uVar3;
   uVar4 = *(uint *)(iVar16 + 0xc);
   uVar5 = *(uint *)(iVar16 + 0x10);
   uVar6 = *(uint *)(iVar16 + 0x14);
-  puVar32 = local_1b0;
+  puVar33 = local_1b0;
   uVar7 = *(uint *)(iVar16 + 0x18);
-  uVar22 = (ulonglong)uVar7;
-  lVar34 = 4;
-  iVar18 = (int)param_2;
+  uVar23 = (ulonglong)uVar7;
+  lVar35 = 4;
+  iVar19 = (int)param_2;
   uVar8 = *(uint *)(iVar16 + 0x1c);
   param_2 = param_2 + 2;
   uVar9 = *(uint *)(iVar16 + 0x20);
   uVar10 = *(uint *)(iVar16 + 0x24);
   do {
     puVar17 = (undefined1 *)param_2;
-    uVar19 = *(undefined2 *)(puVar17 + -2);
+    uVar18 = *(undefined2 *)(puVar17 + -2);
     uVar1 = *puVar17;
     uVar20 = *(undefined4 *)(puVar17 + 6);
     uVar21 = *(undefined4 *)(puVar17 + 10);
     uVar2 = puVar17[1];
-    *(undefined4 *)(puVar17 + (int)(local_1a0 + (2 - iVar18))) = *(undefined4 *)(puVar17 + 2);
-    *(undefined4 *)(puVar17 + (int)(local_19c + (2 - iVar18))) = uVar20;
-    *(undefined4 *)(puVar17 + (int)local_194 + (-2 - iVar18)) = uVar21;
+    *(undefined4 *)(puVar17 + (int)(local_1a0 + (2 - iVar19))) = *(undefined4 *)(puVar17 + 2);
+    *(undefined4 *)(puVar17 + (int)(local_19c + (2 - iVar19))) = uVar20;
+    *(undefined4 *)(puVar17 + (int)local_194 + (-2 - iVar19)) = uVar21;
     param_2 = param_2 + 0x10;
-    puVar32 = puVar32 + 4;
-    *puVar32 = CONCAT31(CONCAT21(uVar19,uVar1),uVar2);
-    lVar34 = lVar34 + -1;
-  } while (lVar34 != 0);
-  puVar32 = local_17c + 5;
-  lVar34 = 0xc;
+    puVar33 = puVar33 + 4;
+    *puVar33 = CONCAT31(CONCAT21(uVar18,uVar1),uVar2);
+    lVar35 = lVar35 + -1;
+  } while (lVar35 != 0);
+  puVar33 = local_17c + 5;
+  lVar35 = 0xc;
   do {
-    uVar11 = puVar32[-0xd];
-    uVar25 = *puVar32;
-    uVar12 = puVar32[1];
-    uVar13 = puVar32[-0xc];
-    local_a0 = param_1;
-    param_1 = local_a0;
+    uVar11 = puVar33[-0xd];
+    uVar26 = *puVar33;
+    uVar12 = puVar33[1];
+    uVar13 = puVar33[-0xc];
+    local_a0 = uVar22;
+    uVar22 = local_a0;
     local_1b0[0] = uVar12 << 0xf | uVar12 >> 0x11;
-    uVar14 = puVar32[-0xb];
-    uVar15 = puVar32[-10];
-    uVar26 = ((((ulonglong)uVar25 & 0x7ffff) << 0xd | (ulonglong)(uVar25 >> 0x13)) ^
-              (((ulonglong)uVar25 & 0x1ffff) << 0xf | (ulonglong)(uVar25 >> 0x11)) ^
-             (ulonglong)(uVar25 >> 10)) +
+    uVar14 = puVar33[-0xb];
+    uVar15 = puVar33[-10];
+    uVar27 = ((((ulonglong)uVar26 & 0x7ffff) << 0xd | (ulonglong)(uVar26 >> 0x13)) ^
+              (((ulonglong)uVar26 & 0x1ffff) << 0xf | (ulonglong)(uVar26 >> 0x11)) ^
+             (ulonglong)(uVar26 >> 10)) +
              ((((ulonglong)uVar11 & 0x3ffff) << 0xe | (ulonglong)(uVar11 >> 0x12)) ^
               (((ulonglong)uVar11 & 0x7f) << 0x19 | (ulonglong)(uVar11 >> 7)) ^
-             (ulonglong)(uVar11 >> 3)) + (ulonglong)puVar32[-0xe] + (ulonglong)puVar32[-5];
-    uVar23 = ((((ulonglong)uVar13 & 0x3ffff) << 0xe | (ulonglong)(uVar13 >> 0x12)) ^
+             (ulonglong)(uVar11 >> 3)) + (ulonglong)puVar33[-0xe] + (ulonglong)puVar33[-5];
+    uVar24 = ((((ulonglong)uVar13 & 0x3ffff) << 0xe | (ulonglong)(uVar13 >> 0x12)) ^
               (((ulonglong)uVar13 & 0x7f) << 0x19 | (ulonglong)(uVar13 >> 7)) ^
              (ulonglong)(uVar13 >> 3)) +
              ((((ulonglong)uVar12 & 0x7ffff) << 0xd | (ulonglong)(uVar12 >> 0x13)) ^
-              (ulonglong)local_1b0[0] ^ (ulonglong)(uVar12 >> 10)) + (ulonglong)puVar32[-4] +
+              (ulonglong)local_1b0[0] ^ (ulonglong)(uVar12 >> 10)) + (ulonglong)puVar33[-4] +
              (ulonglong)uVar11;
-    uVar11 = (uint)uVar26;
-    puVar32[2] = uVar11;
-    uVar25 = (uint)uVar23;
-    puVar32[3] = uVar25;
-    puVar32[4] = (((uint)((uVar26 & 0xffffffff) << 0xd) | uVar11 >> 0x13) ^
-                  ((uint)((uVar26 & 0xffffffff) << 0xf) | uVar11 >> 0x11) ^ uVar11 >> 10) +
+    uVar11 = (uint)uVar27;
+    puVar33[2] = uVar11;
+    uVar26 = (uint)uVar24;
+    puVar33[3] = uVar26;
+    puVar33[4] = (((uint)((uVar27 & 0xffffffff) << 0xd) | uVar11 >> 0x13) ^
+                  ((uint)((uVar27 & 0xffffffff) << 0xf) | uVar11 >> 0x11) ^ uVar11 >> 10) +
                  ((uVar14 << 0xe | uVar14 >> 0x12) ^ (uVar14 << 0x19 | uVar14 >> 7) ^ uVar14 >> 3) +
-                 puVar32[-3] + uVar13;
-    puVar32[5] = ((uVar15 << 0xe | uVar15 >> 0x12) ^ (uVar15 << 0x19 | uVar15 >> 7) ^ uVar15 >> 3) +
-                 (((uint)((uVar23 & 0xffffffff) << 0xd) | uVar25 >> 0x13) ^
-                  ((uint)((uVar23 & 0xffffffff) << 0xf) | uVar25 >> 0x11) ^ uVar25 >> 10) +
-                 puVar32[-2] + uVar14;
-    puVar32 = puVar32 + 4;
-    lVar34 = lVar34 + -1;
-  } while (lVar34 != 0);
-  lVar34 = ((((ulonglong)uVar7 & 0x1ffffff) << 7 | (ulonglong)(uVar7 >> 0x19)) ^
+                 puVar33[-3] + uVar13;
+    puVar33[5] = ((uVar15 << 0xe | uVar15 >> 0x12) ^ (uVar15 << 0x19 | uVar15 >> 7) ^ uVar15 >> 3) +
+                 (((uint)((uVar24 & 0xffffffff) << 0xd) | uVar26 >> 0x13) ^
+                  ((uint)((uVar24 & 0xffffffff) << 0xf) | uVar26 >> 0x11) ^ uVar26 >> 10) +
+                 puVar33[-2] + uVar14;
+    puVar33 = puVar33 + 4;
+    lVar35 = lVar35 + -1;
+  } while (lVar35 != 0);
+  lVar35 = ((((ulonglong)uVar7 & 0x1ffffff) << 7 | (ulonglong)(uVar7 >> 0x19)) ^
             (((ulonglong)uVar7 & 0x7ff) << 0x15 | (ulonglong)(uVar7 >> 0xb)) ^
            (((ulonglong)uVar7 & 0x3f) << 0x1a | (ulonglong)(uVar7 >> 6))) +
            (ulonglong)((uVar8 ^ uVar9) & uVar7 ^ uVar9) + (ulonglong)(uint)local_1a0 +
            (ulonglong)uVar10 + 0x428a2f98;
-  uVar27 = (ulonglong)uVar6 + lVar34;
-  uVar31 = ((((ulonglong)uVar3 & 0x3fffff) << 10 | (ulonglong)(uVar3 >> 0x16)) ^
+  uVar28 = (ulonglong)uVar6 + lVar35;
+  uVar32 = ((((ulonglong)uVar3 & 0x3fffff) << 10 | (ulonglong)(uVar3 >> 0x16)) ^
             (((ulonglong)uVar3 & 0x1fff) << 0x13 | (ulonglong)(uVar3 >> 0xd)) ^
            (((ulonglong)uVar3 & 3) << 0x1e | (ulonglong)(uVar3 >> 2))) +
-           (ulonglong)((uVar4 | uVar3) & uVar5 | uVar4 & uVar3) + lVar34;
-  lVar34 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
-            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
-           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
-           ((uVar8 ^ uVar7) & uVar27 ^ (ulonglong)uVar8) + (ulonglong)(uint)local_19c +
+           (ulonglong)((uVar4 | uVar3) & uVar5 | uVar4 & uVar3) + lVar35;
+  lVar35 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
+            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
+           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
+           ((uVar8 ^ uVar7) & uVar28 ^ (ulonglong)uVar8) + (ulonglong)(uint)local_19c +
            (ulonglong)uVar9 + 0x71374491;
-  uVar24 = (ulonglong)uVar5 + lVar34;
-  uVar30 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
-            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
-           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
-           ((uVar28 | uVar31) & (ulonglong)uVar4 | uVar28 & uVar31) + lVar34;
-  lVar34 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
-            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
-           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar22) & uVar24 ^ uVar22) + (ulonglong)(uint)local_198 + (ulonglong)uVar8 +
+  uVar25 = (ulonglong)uVar5 + lVar35;
+  uVar31 = (((uVar32 & 0x3fffff) << 10 | (uVar32 & 0xffffffff) >> 0x16) ^
+            ((uVar32 & 0x1fff) << 0x13 | (uVar32 & 0xffffffff) >> 0xd) ^
+           ((uVar32 & 3) << 0x1e | (uVar32 & 0xffffffff) >> 2)) +
+           ((uVar29 | uVar32) & (ulonglong)uVar4 | uVar29 & uVar32) + lVar35;
+  lVar35 = (((uVar25 & 0x1ffffff) << 7 | (uVar25 & 0xffffffff) >> 0x19) ^
+            ((uVar25 & 0x7ff) << 0x15 | (uVar25 & 0xffffffff) >> 0xb) ^
+           ((uVar25 & 0x3f) << 0x1a | (uVar25 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar23) & uVar25 ^ uVar23) + (ulonglong)(uint)local_198 + (ulonglong)uVar8 +
            -0x4a3f0431;
-  uVar23 = (ulonglong)uVar4 + lVar34;
-  uVar26 = (((uVar30 & 0x3fffff) << 10 | (uVar30 & 0xffffffff) >> 0x16) ^
-            ((uVar30 & 0x1fff) << 0x13 | (uVar30 & 0xffffffff) >> 0xd) ^
-           ((uVar30 & 3) << 0x1e | (uVar30 & 0xffffffff) >> 2)) +
-           ((uVar30 | uVar31) & uVar28 | uVar30 & uVar31) + lVar34;
-  lVar34 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
-            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
-           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar24) & uVar23 ^ uVar27) + (ulonglong)local_194[0] + uVar22 + -0x164a245b;
-  uVar28 = uVar28 + lVar34;
-  uVar22 = (((uVar26 & 0x3fffff) << 10 | (uVar26 & 0xffffffff) >> 0x16) ^
-            ((uVar26 & 0x1fff) << 0x13 | (uVar26 & 0xffffffff) >> 0xd) ^
-           ((uVar26 & 3) << 0x1e | (uVar26 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar30) & uVar31 | uVar26 & uVar30) + lVar34;
-  lVar34 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
-            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
-           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
-           ((uVar24 ^ uVar23) & uVar28 ^ uVar24) + (ulonglong)local_194[1] + uVar27 + 0x3956c25b;
-  uVar31 = uVar31 + lVar34;
-  uVar27 = (((uVar22 & 0x3fffff) << 10 | (uVar22 & 0xffffffff) >> 0x16) ^
-            ((uVar22 & 0x1fff) << 0x13 | (uVar22 & 0xffffffff) >> 0xd) ^
-           ((uVar22 & 3) << 0x1e | (uVar22 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar22) & uVar30 | uVar26 & uVar22) + lVar34;
-  lVar34 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
-            ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
-           ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
-           ((uVar23 ^ uVar28) & uVar31 ^ uVar23) + (ulonglong)local_194[2] + uVar24 + 0x59f111f1;
-  uVar30 = uVar30 + lVar34;
-  uVar24 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
+  uVar24 = (ulonglong)uVar4 + lVar35;
+  uVar27 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
+            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
+           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
+           ((uVar31 | uVar32) & uVar29 | uVar31 & uVar32) + lVar35;
+  lVar35 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
+            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
+           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar25) & uVar24 ^ uVar28) + (ulonglong)local_194[0] + uVar23 + -0x164a245b;
+  uVar29 = uVar29 + lVar35;
+  uVar23 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
             ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
            ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar22) & uVar26 | uVar27 & uVar22) + lVar34;
-  lVar34 = (((uVar30 & 0x1ffffff) << 7 | (uVar30 & 0xffffffff) >> 0x19) ^
-            ((uVar30 & 0x7ff) << 0x15 | (uVar30 & 0xffffffff) >> 0xb) ^
-           ((uVar30 & 0x3f) << 0x1a | (uVar30 & 0xffffffff) >> 6)) +
-           ((uVar28 ^ uVar31) & uVar30 ^ uVar28) + (ulonglong)local_194[3] + uVar23 + -0x6dc07d5c;
-  uVar26 = uVar26 + lVar34;
-  uVar23 = (((uVar24 & 0x3fffff) << 10 | (uVar24 & 0xffffffff) >> 0x16) ^
-            ((uVar24 & 0x1fff) << 0x13 | (uVar24 & 0xffffffff) >> 0xd) ^
-           ((uVar24 & 3) << 0x1e | (uVar24 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar24) & uVar22 | uVar27 & uVar24) + lVar34;
-  lVar34 = (((uVar26 & 0x1ffffff) << 7 | (uVar26 & 0xffffffff) >> 0x19) ^
-            ((uVar26 & 0x7ff) << 0x15 | (uVar26 & 0xffffffff) >> 0xb) ^
-           ((uVar26 & 0x3f) << 0x1a | (uVar26 & 0xffffffff) >> 6)) +
-           ((uVar30 ^ uVar31) & uVar26 ^ uVar31) + (ulonglong)local_194[4] + uVar28 + -0x54e3a12b;
-  uVar22 = uVar22 + lVar34;
+           ((uVar27 | uVar31) & uVar32 | uVar27 & uVar31) + lVar35;
+  lVar35 = (((uVar29 & 0x1ffffff) << 7 | (uVar29 & 0xffffffff) >> 0x19) ^
+            ((uVar29 & 0x7ff) << 0x15 | (uVar29 & 0xffffffff) >> 0xb) ^
+           ((uVar29 & 0x3f) << 0x1a | (uVar29 & 0xffffffff) >> 6)) +
+           ((uVar25 ^ uVar24) & uVar29 ^ uVar25) + (ulonglong)local_194[1] + uVar28 + 0x3956c25b;
+  uVar32 = uVar32 + lVar35;
   uVar28 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
             ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
            ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
-           ((uVar24 | uVar23) & uVar27 | uVar24 & uVar23) + lVar34;
-  lVar34 = (((uVar22 & 0x1ffffff) << 7 | (uVar22 & 0xffffffff) >> 0x19) ^
-            ((uVar22 & 0x7ff) << 0x15 | (uVar22 & 0xffffffff) >> 0xb) ^
-           ((uVar22 & 0x3f) << 0x1a | (uVar22 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar30) & uVar22 ^ uVar30) + (ulonglong)local_180 + uVar31 + -0x27f85568;
-  uVar27 = uVar27 + lVar34;
-  uVar31 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
+           ((uVar27 | uVar23) & uVar31 | uVar27 & uVar23) + lVar35;
+  lVar35 = (((uVar32 & 0x1ffffff) << 7 | (uVar32 & 0xffffffff) >> 0x19) ^
+            ((uVar32 & 0x7ff) << 0x15 | (uVar32 & 0xffffffff) >> 0xb) ^
+           ((uVar32 & 0x3f) << 0x1a | (uVar32 & 0xffffffff) >> 6)) +
+           ((uVar24 ^ uVar29) & uVar32 ^ uVar24) + (ulonglong)local_194[2] + uVar25 + 0x59f111f1;
+  uVar31 = uVar31 + lVar35;
+  uVar25 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
             ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
            ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
-           ((uVar23 | uVar28) & uVar24 | uVar23 & uVar28) + lVar34;
-  lVar34 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
-            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
-           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar22) & uVar27 ^ uVar26) + (ulonglong)local_17c[0] + uVar30 + 0x12835b01;
-  uVar24 = uVar24 + lVar34;
-  uVar30 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
-            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
-           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
-           ((uVar28 | uVar31) & uVar23 | uVar28 & uVar31) + lVar34;
-  lVar34 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
-            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
-           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar22) & uVar24 ^ uVar22) + (ulonglong)local_17c[1] + uVar26 + 0x243185be;
-  uVar23 = uVar23 + lVar34;
-  uVar26 = (((uVar30 & 0x3fffff) << 10 | (uVar30 & 0xffffffff) >> 0x16) ^
-            ((uVar30 & 0x1fff) << 0x13 | (uVar30 & 0xffffffff) >> 0xd) ^
-           ((uVar30 & 3) << 0x1e | (uVar30 & 0xffffffff) >> 2)) +
-           ((uVar30 | uVar31) & uVar28 | uVar30 & uVar31) + lVar34;
-  lVar34 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
-            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
-           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar24) & uVar23 ^ uVar27) + (ulonglong)local_17c[2] + uVar22 + 0x550c7dc3;
-  uVar28 = uVar28 + lVar34;
-  uVar22 = (((uVar26 & 0x3fffff) << 10 | (uVar26 & 0xffffffff) >> 0x16) ^
-            ((uVar26 & 0x1fff) << 0x13 | (uVar26 & 0xffffffff) >> 0xd) ^
-           ((uVar26 & 3) << 0x1e | (uVar26 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar30) & uVar31 | uVar26 & uVar30) + lVar34;
-  lVar34 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
-            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
-           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
-           ((uVar24 ^ uVar23) & uVar28 ^ uVar24) + (ulonglong)local_17c[3] + uVar27 + 0x72be5d74;
-  uVar31 = uVar31 + lVar34;
-  uVar27 = (((uVar22 & 0x3fffff) << 10 | (uVar22 & 0xffffffff) >> 0x16) ^
-            ((uVar22 & 0x1fff) << 0x13 | (uVar22 & 0xffffffff) >> 0xd) ^
-           ((uVar22 & 3) << 0x1e | (uVar22 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar22) & uVar30 | uVar26 & uVar22) + lVar34;
-  lVar34 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
+           ((uVar28 | uVar23) & uVar27 | uVar28 & uVar23) + lVar35;
+  lVar35 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
             ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
            ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
-           ((uVar23 ^ uVar28) & uVar31 ^ uVar23) + (ulonglong)local_17c[4] + uVar24 + -0x7f214e02;
-  uVar30 = uVar30 + lVar34;
-  uVar24 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
-            ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
-           ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar22) & uVar26 | uVar27 & uVar22) + lVar34;
-  lVar34 = (((uVar30 & 0x1ffffff) << 7 | (uVar30 & 0xffffffff) >> 0x19) ^
-            ((uVar30 & 0x7ff) << 0x15 | (uVar30 & 0xffffffff) >> 0xb) ^
-           ((uVar30 & 0x3f) << 0x1a | (uVar30 & 0xffffffff) >> 6)) +
-           ((uVar28 ^ uVar31) & uVar30 ^ uVar28) + (ulonglong)local_17c[5] + uVar23 + -0x6423f959;
-  uVar26 = uVar26 + lVar34;
-  uVar23 = (((uVar24 & 0x3fffff) << 10 | (uVar24 & 0xffffffff) >> 0x16) ^
-            ((uVar24 & 0x1fff) << 0x13 | (uVar24 & 0xffffffff) >> 0xd) ^
-           ((uVar24 & 3) << 0x1e | (uVar24 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar24) & uVar22 | uVar27 & uVar24) + lVar34;
-  lVar34 = (((uVar26 & 0x1ffffff) << 7 | (uVar26 & 0xffffffff) >> 0x19) ^
-            ((uVar26 & 0x7ff) << 0x15 | (uVar26 & 0xffffffff) >> 0xb) ^
-           ((uVar26 & 0x3f) << 0x1a | (uVar26 & 0xffffffff) >> 6)) +
-           ((uVar30 ^ uVar31) & uVar26 ^ uVar31) + (ulonglong)local_17c[6] + uVar28 + -0x3e640e8c;
-  uVar22 = uVar22 + lVar34;
-  uVar28 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
-            ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
-           ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
-           ((uVar24 | uVar23) & uVar27 | uVar24 & uVar23) + lVar34;
-  lVar34 = (((uVar22 & 0x1ffffff) << 7 | (uVar22 & 0xffffffff) >> 0x19) ^
-            ((uVar22 & 0x7ff) << 0x15 | (uVar22 & 0xffffffff) >> 0xb) ^
-           ((uVar22 & 0x3f) << 0x1a | (uVar22 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar30) & uVar22 ^ uVar30) + (ulonglong)local_17c[7] + uVar31 + -0x1b64963f;
-  uVar27 = uVar27 + lVar34;
-  uVar31 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
-            ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
-           ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
-           ((uVar23 | uVar28) & uVar24 | uVar23 & uVar28) + lVar34;
-  lVar34 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
+           ((uVar29 ^ uVar32) & uVar31 ^ uVar29) + (ulonglong)local_194[3] + uVar24 + -0x6dc07d5c;
+  uVar27 = uVar27 + lVar35;
+  uVar24 = (((uVar25 & 0x3fffff) << 10 | (uVar25 & 0xffffffff) >> 0x16) ^
+            ((uVar25 & 0x1fff) << 0x13 | (uVar25 & 0xffffffff) >> 0xd) ^
+           ((uVar25 & 3) << 0x1e | (uVar25 & 0xffffffff) >> 2)) +
+           ((uVar28 | uVar25) & uVar23 | uVar28 & uVar25) + lVar35;
+  lVar35 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
             ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
            ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar22) & uVar27 ^ uVar26) + (ulonglong)local_17c[8] + uVar30 + -0x1041b87a;
-  uVar24 = uVar24 + lVar34;
-  uVar30 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
-            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
-           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
-           ((uVar28 | uVar31) & uVar23 | uVar28 & uVar31) + lVar34;
-  lVar34 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
-            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
-           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar22) & uVar24 ^ uVar22) + (ulonglong)local_17c[9] + uVar26 + 0xfc19dc6;
-  uVar23 = uVar23 + lVar34;
-  uVar26 = (((uVar30 & 0x3fffff) << 10 | (uVar30 & 0xffffffff) >> 0x16) ^
-            ((uVar30 & 0x1fff) << 0x13 | (uVar30 & 0xffffffff) >> 0xd) ^
-           ((uVar30 & 3) << 0x1e | (uVar30 & 0xffffffff) >> 2)) +
-           ((uVar30 | uVar31) & uVar28 | uVar30 & uVar31) + lVar34;
-  lVar34 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
-            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
-           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar24) & uVar23 ^ uVar27) + (ulonglong)local_17c[10] + uVar22 + 0x240ca1cc;
-  uVar28 = uVar28 + lVar34;
-  uVar22 = (((uVar26 & 0x3fffff) << 10 | (uVar26 & 0xffffffff) >> 0x16) ^
-            ((uVar26 & 0x1fff) << 0x13 | (uVar26 & 0xffffffff) >> 0xd) ^
-           ((uVar26 & 3) << 0x1e | (uVar26 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar30) & uVar31 | uVar26 & uVar30) + lVar34;
-  lVar34 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
-            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
-           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
-           ((uVar24 ^ uVar23) & uVar28 ^ uVar24) + (ulonglong)local_17c[0xb] + uVar27 + 0x2de92c6f;
-  uVar31 = uVar31 + lVar34;
-  uVar27 = (((uVar22 & 0x3fffff) << 10 | (uVar22 & 0xffffffff) >> 0x16) ^
-            ((uVar22 & 0x1fff) << 0x13 | (uVar22 & 0xffffffff) >> 0xd) ^
-           ((uVar22 & 3) << 0x1e | (uVar22 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar22) & uVar30 | uVar26 & uVar22) + lVar34;
-  lVar34 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
-            ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
-           ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
-           ((uVar23 ^ uVar28) & uVar31 ^ uVar23) + (ulonglong)local_17c[0xc] + uVar24 + 0x4a7484aa;
-  uVar30 = uVar30 + lVar34;
-  uVar24 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
-            ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
-           ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar22) & uVar26 | uVar27 & uVar22) + lVar34;
-  lVar34 = (((uVar30 & 0x1ffffff) << 7 | (uVar30 & 0xffffffff) >> 0x19) ^
-            ((uVar30 & 0x7ff) << 0x15 | (uVar30 & 0xffffffff) >> 0xb) ^
-           ((uVar30 & 0x3f) << 0x1a | (uVar30 & 0xffffffff) >> 6)) +
-           ((uVar28 ^ uVar31) & uVar30 ^ uVar28) + (ulonglong)local_17c[0xd] + uVar23 + 0x5cb0a9dc;
-  uVar26 = uVar26 + lVar34;
+           ((uVar31 ^ uVar32) & uVar27 ^ uVar32) + (ulonglong)local_194[4] + uVar29 + -0x54e3a12b;
+  uVar23 = uVar23 + lVar35;
   uVar29 = (((uVar24 & 0x3fffff) << 10 | (uVar24 & 0xffffffff) >> 0x16) ^
             ((uVar24 & 0x1fff) << 0x13 | (uVar24 & 0xffffffff) >> 0xd) ^
            ((uVar24 & 3) << 0x1e | (uVar24 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar24) & uVar22 | uVar27 & uVar24) + lVar34;
-  lVar34 = (((uVar26 & 0x1ffffff) << 7 | (uVar26 & 0xffffffff) >> 0x19) ^
-            ((uVar26 & 0x7ff) << 0x15 | (uVar26 & 0xffffffff) >> 0xb) ^
-           ((uVar26 & 0x3f) << 0x1a | (uVar26 & 0xffffffff) >> 6)) +
-           ((uVar30 ^ uVar31) & uVar26 ^ uVar31) + (ulonglong)local_144 + uVar28 + 0x76f988da;
-  uVar22 = uVar22 + lVar34;
-  uVar28 = (((uVar29 & 0x3fffff) << 10 | (uVar29 & 0xffffffff) >> 0x16) ^
+           ((uVar25 | uVar24) & uVar28 | uVar25 & uVar24) + lVar35;
+  lVar35 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
+            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
+           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar31) & uVar23 ^ uVar31) + (ulonglong)local_180 + uVar32 + -0x27f85568;
+  uVar28 = uVar28 + lVar35;
+  uVar32 = (((uVar29 & 0x3fffff) << 10 | (uVar29 & 0xffffffff) >> 0x16) ^
             ((uVar29 & 0x1fff) << 0x13 | (uVar29 & 0xffffffff) >> 0xd) ^
            ((uVar29 & 3) << 0x1e | (uVar29 & 0xffffffff) >> 2)) +
-           ((uVar24 | uVar29) & uVar27 | uVar24 & uVar29) + lVar34;
-  lVar33 = (((uVar22 & 0x1ffffff) << 7 | (uVar22 & 0xffffffff) >> 0x19) ^
-            ((uVar22 & 0x7ff) << 0x15 | (uVar22 & 0xffffffff) >> 0xb) ^
-           ((uVar22 & 0x3f) << 0x1a | (uVar22 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar30) & uVar22 ^ uVar30) + (ulonglong)local_140 + uVar31 + -0x67c1aeae;
-  uVar27 = uVar27 + lVar33;
-  lVar34 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
-            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
-           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar22) & uVar27 ^ uVar26) + (ulonglong)local_13c + uVar30 + -0x57ce3993;
-  uVar31 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
-            ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
-           ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
-           ((uVar29 | uVar28) & uVar24 | uVar29 & uVar28) + lVar33;
-  uVar24 = uVar24 + lVar34;
-  lVar33 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
-            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
-           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar22) & uVar24 ^ uVar22) + (ulonglong)local_138 + uVar26 + -0x4ffcd838;
-  uVar23 = uVar29 + lVar33;
-  uVar30 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
-            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
-           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
-           ((uVar28 | uVar31) & uVar29 | uVar28 & uVar31) + lVar34;
-  uVar26 = (((uVar30 & 0x3fffff) << 10 | (uVar30 & 0xffffffff) >> 0x16) ^
-            ((uVar30 & 0x1fff) << 0x13 | (uVar30 & 0xffffffff) >> 0xd) ^
-           ((uVar30 & 3) << 0x1e | (uVar30 & 0xffffffff) >> 2)) +
-           ((uVar30 | uVar31) & uVar28 | uVar30 & uVar31) + lVar33;
-  lVar34 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
-            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
-           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar24) & uVar23 ^ uVar27) + (ulonglong)local_134 + uVar22 + -0x40a68039;
-  uVar28 = uVar28 + lVar34;
-  uVar22 = (((uVar26 & 0x3fffff) << 10 | (uVar26 & 0xffffffff) >> 0x16) ^
-            ((uVar26 & 0x1fff) << 0x13 | (uVar26 & 0xffffffff) >> 0xd) ^
-           ((uVar26 & 3) << 0x1e | (uVar26 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar30) & uVar31 | uVar26 & uVar30) + lVar34;
-  lVar34 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
+           ((uVar24 | uVar29) & uVar25 | uVar24 & uVar29) + lVar35;
+  lVar35 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
             ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
            ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
-           ((uVar24 ^ uVar23) & uVar28 ^ uVar24) + (ulonglong)local_130 + uVar27 + -0x391ff40d;
-  uVar31 = uVar31 + lVar34;
-  uVar27 = (((uVar22 & 0x3fffff) << 10 | (uVar22 & 0xffffffff) >> 0x16) ^
-            ((uVar22 & 0x1fff) << 0x13 | (uVar22 & 0xffffffff) >> 0xd) ^
-           ((uVar22 & 3) << 0x1e | (uVar22 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar22) & uVar30 | uVar26 & uVar22) + lVar34;
-  lVar34 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
-            ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
-           ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
-           ((uVar23 ^ uVar28) & uVar31 ^ uVar23) + (ulonglong)local_12c + uVar24 + -0x2a586eb9;
-  uVar30 = uVar30 + lVar34;
-  uVar24 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
-            ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
-           ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar22) & uVar26 | uVar27 & uVar22) + lVar34;
-  lVar34 = (((uVar30 & 0x1ffffff) << 7 | (uVar30 & 0xffffffff) >> 0x19) ^
-            ((uVar30 & 0x7ff) << 0x15 | (uVar30 & 0xffffffff) >> 0xb) ^
-           ((uVar30 & 0x3f) << 0x1a | (uVar30 & 0xffffffff) >> 6)) +
-           ((uVar28 ^ uVar31) & uVar30 ^ uVar28) + (ulonglong)local_128 + uVar23 + 0x6ca6351;
-  uVar26 = uVar26 + lVar34;
-  uVar23 = (((uVar24 & 0x3fffff) << 10 | (uVar24 & 0xffffffff) >> 0x16) ^
-            ((uVar24 & 0x1fff) << 0x13 | (uVar24 & 0xffffffff) >> 0xd) ^
-           ((uVar24 & 3) << 0x1e | (uVar24 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar24) & uVar22 | uVar27 & uVar24) + lVar34;
-  lVar34 = (((uVar26 & 0x1ffffff) << 7 | (uVar26 & 0xffffffff) >> 0x19) ^
-            ((uVar26 & 0x7ff) << 0x15 | (uVar26 & 0xffffffff) >> 0xb) ^
-           ((uVar26 & 0x3f) << 0x1a | (uVar26 & 0xffffffff) >> 6)) +
-           ((uVar30 ^ uVar31) & uVar26 ^ uVar31) + (ulonglong)local_124 + uVar28 + 0x14292967;
-  uVar22 = uVar22 + lVar34;
-  uVar28 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
-            ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
-           ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
-           ((uVar24 | uVar23) & uVar27 | uVar24 & uVar23) + lVar34;
-  lVar34 = (((uVar22 & 0x1ffffff) << 7 | (uVar22 & 0xffffffff) >> 0x19) ^
-            ((uVar22 & 0x7ff) << 0x15 | (uVar22 & 0xffffffff) >> 0xb) ^
-           ((uVar22 & 0x3f) << 0x1a | (uVar22 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar30) & uVar22 ^ uVar30) + (ulonglong)local_120 + uVar31 + 0x27b70a85;
-  uVar27 = uVar27 + lVar34;
-  uVar31 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
-            ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
-           ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
-           ((uVar23 | uVar28) & uVar24 | uVar23 & uVar28) + lVar34;
-  lVar34 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
-            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
-           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar22) & uVar27 ^ uVar26) + (ulonglong)local_11c + uVar30 + 0x2e1b2138;
-  uVar24 = uVar24 + lVar34;
-  uVar30 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
+           ((uVar27 ^ uVar23) & uVar28 ^ uVar27) + (ulonglong)local_17c[0] + uVar31 + 0x12835b01;
+  uVar25 = uVar25 + lVar35;
+  uVar31 = (((uVar32 & 0x3fffff) << 10 | (uVar32 & 0xffffffff) >> 0x16) ^
+            ((uVar32 & 0x1fff) << 0x13 | (uVar32 & 0xffffffff) >> 0xd) ^
+           ((uVar32 & 3) << 0x1e | (uVar32 & 0xffffffff) >> 2)) +
+           ((uVar29 | uVar32) & uVar24 | uVar29 & uVar32) + lVar35;
+  lVar35 = (((uVar25 & 0x1ffffff) << 7 | (uVar25 & 0xffffffff) >> 0x19) ^
+            ((uVar25 & 0x7ff) << 0x15 | (uVar25 & 0xffffffff) >> 0xb) ^
+           ((uVar25 & 0x3f) << 0x1a | (uVar25 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar23) & uVar25 ^ uVar23) + (ulonglong)local_17c[1] + uVar27 + 0x243185be;
+  uVar24 = uVar24 + lVar35;
+  uVar27 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
             ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
            ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
-           ((uVar28 | uVar31) & uVar23 | uVar28 & uVar31) + lVar34;
-  lVar34 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
+           ((uVar31 | uVar32) & uVar29 | uVar31 & uVar32) + lVar35;
+  lVar35 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
             ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
            ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar22) & uVar24 ^ uVar22) + (ulonglong)local_118 + uVar26 + 0x4d2c6dfc;
-  uVar23 = uVar23 + lVar34;
-  uVar26 = (((uVar30 & 0x3fffff) << 10 | (uVar30 & 0xffffffff) >> 0x16) ^
-            ((uVar30 & 0x1fff) << 0x13 | (uVar30 & 0xffffffff) >> 0xd) ^
-           ((uVar30 & 3) << 0x1e | (uVar30 & 0xffffffff) >> 2)) +
-           ((uVar30 | uVar31) & uVar28 | uVar30 & uVar31) + lVar34;
-  lVar34 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
-            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
-           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar24) & uVar23 ^ uVar27) + (ulonglong)local_114 + uVar22 + 0x53380d13;
-  uVar28 = uVar28 + lVar34;
-  uVar22 = (((uVar26 & 0x3fffff) << 10 | (uVar26 & 0xffffffff) >> 0x16) ^
-            ((uVar26 & 0x1fff) << 0x13 | (uVar26 & 0xffffffff) >> 0xd) ^
-           ((uVar26 & 3) << 0x1e | (uVar26 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar30) & uVar31 | uVar26 & uVar30) + lVar34;
-  lVar34 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
-            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
-           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
-           ((uVar24 ^ uVar23) & uVar28 ^ uVar24) + (ulonglong)local_110 + uVar27 + 0x650a7354;
-  uVar31 = uVar31 + lVar34;
-  uVar27 = (((uVar22 & 0x3fffff) << 10 | (uVar22 & 0xffffffff) >> 0x16) ^
-            ((uVar22 & 0x1fff) << 0x13 | (uVar22 & 0xffffffff) >> 0xd) ^
-           ((uVar22 & 3) << 0x1e | (uVar22 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar22) & uVar30 | uVar26 & uVar22) + lVar34;
-  lVar34 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
-            ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
-           ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
-           ((uVar23 ^ uVar28) & uVar31 ^ uVar23) + (ulonglong)local_10c + uVar24 + 0x766a0abb;
-  uVar30 = uVar30 + lVar34;
-  uVar29 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
+           ((uVar28 ^ uVar25) & uVar24 ^ uVar28) + (ulonglong)local_17c[2] + uVar23 + 0x550c7dc3;
+  uVar29 = uVar29 + lVar35;
+  uVar23 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
             ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
            ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar22) & uVar26 | uVar27 & uVar22) + lVar34;
-  lVar34 = (((uVar30 & 0x1ffffff) << 7 | (uVar30 & 0xffffffff) >> 0x19) ^
-            ((uVar30 & 0x7ff) << 0x15 | (uVar30 & 0xffffffff) >> 0xb) ^
-           ((uVar30 & 0x3f) << 0x1a | (uVar30 & 0xffffffff) >> 6)) +
-           ((uVar28 ^ uVar31) & uVar30 ^ uVar28) + (ulonglong)local_108 + uVar23 + -0x7e3d36d2;
-  uVar26 = uVar26 + lVar34;
-  uVar23 = (((uVar29 & 0x3fffff) << 10 | (uVar29 & 0xffffffff) >> 0x16) ^
-            ((uVar29 & 0x1fff) << 0x13 | (uVar29 & 0xffffffff) >> 0xd) ^
-           ((uVar29 & 3) << 0x1e | (uVar29 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar29) & uVar22 | uVar27 & uVar29) + lVar34;
-  lVar34 = (((uVar26 & 0x1ffffff) << 7 | (uVar26 & 0xffffffff) >> 0x19) ^
-            ((uVar26 & 0x7ff) << 0x15 | (uVar26 & 0xffffffff) >> 0xb) ^
-           ((uVar26 & 0x3f) << 0x1a | (uVar26 & 0xffffffff) >> 6)) +
-           ((uVar30 ^ uVar31) & uVar26 ^ uVar31) + (ulonglong)local_104 + uVar28 + -0x6d8dd37b;
-  uVar22 = uVar22 + lVar34;
-  uVar28 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
-            ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
-           ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
-           ((uVar29 | uVar23) & uVar27 | uVar29 & uVar23) + lVar34;
-  lVar33 = (((uVar22 & 0x1ffffff) << 7 | (uVar22 & 0xffffffff) >> 0x19) ^
-            ((uVar22 & 0x7ff) << 0x15 | (uVar22 & 0xffffffff) >> 0xb) ^
-           ((uVar22 & 0x3f) << 0x1a | (uVar22 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar30) & uVar22 ^ uVar30) + (ulonglong)local_100 + uVar31 + -0x5d40175f;
-  uVar27 = uVar27 + lVar33;
-  lVar34 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
-            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
-           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar22) & uVar27 ^ uVar26) + (ulonglong)local_fc + uVar30 + -0x57e599b5;
-  uVar24 = uVar29 + lVar34;
-  uVar31 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
-            ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
-           ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
-           ((uVar23 | uVar28) & uVar29 | uVar23 & uVar28) + lVar33;
-  lVar33 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
-            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
-           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar22) & uVar24 ^ uVar22) + (ulonglong)local_f8 + uVar26 + -0x3db47490;
-  uVar30 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
-            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
-           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
-           ((uVar28 | uVar31) & uVar23 | uVar28 & uVar31) + lVar34;
-  uVar23 = uVar23 + lVar33;
-  uVar26 = (((uVar30 & 0x3fffff) << 10 | (uVar30 & 0xffffffff) >> 0x16) ^
-            ((uVar30 & 0x1fff) << 0x13 | (uVar30 & 0xffffffff) >> 0xd) ^
-           ((uVar30 & 3) << 0x1e | (uVar30 & 0xffffffff) >> 2)) +
-           ((uVar30 | uVar31) & uVar28 | uVar30 & uVar31) + lVar33;
-  lVar34 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
-            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
-           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar24) & uVar23 ^ uVar27) + (ulonglong)local_f4 + uVar22 + -0x3893ae5d;
-  uVar28 = uVar28 + lVar34;
-  uVar22 = (((uVar26 & 0x3fffff) << 10 | (uVar26 & 0xffffffff) >> 0x16) ^
-            ((uVar26 & 0x1fff) << 0x13 | (uVar26 & 0xffffffff) >> 0xd) ^
-           ((uVar26 & 3) << 0x1e | (uVar26 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar30) & uVar31 | uVar26 & uVar30) + lVar34;
-  lVar34 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
-            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
-           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
-           ((uVar24 ^ uVar23) & uVar28 ^ uVar24) + (ulonglong)local_f0 + uVar27 + -0x2e6d17e7;
-  uVar31 = uVar31 + lVar34;
-  uVar27 = (((uVar22 & 0x3fffff) << 10 | (uVar22 & 0xffffffff) >> 0x16) ^
-            ((uVar22 & 0x1fff) << 0x13 | (uVar22 & 0xffffffff) >> 0xd) ^
-           ((uVar22 & 3) << 0x1e | (uVar22 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar22) & uVar30 | uVar26 & uVar22) + lVar34;
-  lVar34 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
-            ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
-           ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
-           ((uVar23 ^ uVar28) & uVar31 ^ uVar23) + (ulonglong)local_ec + uVar24 + -0x2966f9dc;
-  uVar30 = uVar30 + lVar34;
-  uVar24 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
-            ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
-           ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar22) & uVar26 | uVar27 & uVar22) + lVar34;
-  lVar34 = (((uVar30 & 0x1ffffff) << 7 | (uVar30 & 0xffffffff) >> 0x19) ^
-            ((uVar30 & 0x7ff) << 0x15 | (uVar30 & 0xffffffff) >> 0xb) ^
-           ((uVar30 & 0x3f) << 0x1a | (uVar30 & 0xffffffff) >> 6)) +
-           ((uVar28 ^ uVar31) & uVar30 ^ uVar28) + (ulonglong)local_e8 + uVar23 + -0xbf1ca7b;
-  uVar26 = uVar26 + lVar34;
-  uVar23 = (((uVar24 & 0x3fffff) << 10 | (uVar24 & 0xffffffff) >> 0x16) ^
-            ((uVar24 & 0x1fff) << 0x13 | (uVar24 & 0xffffffff) >> 0xd) ^
-           ((uVar24 & 3) << 0x1e | (uVar24 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar24) & uVar22 | uVar27 & uVar24) + lVar34;
-  lVar34 = (((uVar26 & 0x1ffffff) << 7 | (uVar26 & 0xffffffff) >> 0x19) ^
-            ((uVar26 & 0x7ff) << 0x15 | (uVar26 & 0xffffffff) >> 0xb) ^
-           ((uVar26 & 0x3f) << 0x1a | (uVar26 & 0xffffffff) >> 6)) +
-           ((uVar30 ^ uVar31) & uVar26 ^ uVar31) + (ulonglong)local_e4 + uVar28 + 0x106aa070;
-  uVar22 = uVar22 + lVar34;
-  uVar28 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
-            ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
-           ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
-           ((uVar24 | uVar23) & uVar27 | uVar24 & uVar23) + lVar34;
-  lVar34 = (((uVar22 & 0x1ffffff) << 7 | (uVar22 & 0xffffffff) >> 0x19) ^
-            ((uVar22 & 0x7ff) << 0x15 | (uVar22 & 0xffffffff) >> 0xb) ^
-           ((uVar22 & 0x3f) << 0x1a | (uVar22 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar30) & uVar22 ^ uVar30) + (ulonglong)local_e0 + uVar31 + 0x19a4c116;
-  uVar27 = uVar27 + lVar34;
-  uVar31 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
-            ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
-           ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
-           ((uVar23 | uVar28) & uVar24 | uVar23 & uVar28) + lVar34;
-  lVar34 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
-            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
-           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar22) & uVar27 ^ uVar26) + (ulonglong)local_dc + uVar30 + 0x1e376c08;
-  uVar24 = uVar24 + lVar34;
-  uVar30 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
-            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
-           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
-           ((uVar28 | uVar31) & uVar23 | uVar28 & uVar31) + lVar34;
-  lVar34 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
-            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
-           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar22) & uVar24 ^ uVar22) + (ulonglong)local_d8 + uVar26 + 0x2748774c;
-  uVar23 = uVar23 + lVar34;
-  uVar26 = (((uVar30 & 0x3fffff) << 10 | (uVar30 & 0xffffffff) >> 0x16) ^
-            ((uVar30 & 0x1fff) << 0x13 | (uVar30 & 0xffffffff) >> 0xd) ^
-           ((uVar30 & 3) << 0x1e | (uVar30 & 0xffffffff) >> 2)) +
-           ((uVar30 | uVar31) & uVar28 | uVar30 & uVar31) + lVar34;
-  lVar34 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
-            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
-           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar24) & uVar23 ^ uVar27) + (ulonglong)local_d4 + uVar22 + 0x34b0bcb5;
-  uVar28 = uVar28 + lVar34;
-  uVar22 = (((uVar26 & 0x3fffff) << 10 | (uVar26 & 0xffffffff) >> 0x16) ^
-            ((uVar26 & 0x1fff) << 0x13 | (uVar26 & 0xffffffff) >> 0xd) ^
-           ((uVar26 & 3) << 0x1e | (uVar26 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar30) & uVar31 | uVar26 & uVar30) + lVar34;
-  lVar34 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
-            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
-           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
-           ((uVar24 ^ uVar23) & uVar28 ^ uVar24) + (ulonglong)local_d0 + uVar27 + 0x391c0cb3;
-  uVar31 = uVar31 + lVar34;
-  uVar27 = (((uVar22 & 0x3fffff) << 10 | (uVar22 & 0xffffffff) >> 0x16) ^
-            ((uVar22 & 0x1fff) << 0x13 | (uVar22 & 0xffffffff) >> 0xd) ^
-           ((uVar22 & 3) << 0x1e | (uVar22 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar22) & uVar30 | uVar26 & uVar22) + lVar34;
-  lVar34 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
-            ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
-           ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
-           ((uVar23 ^ uVar28) & uVar31 ^ uVar23) + (ulonglong)local_cc + uVar24 + 0x4ed8aa4a;
-  uVar30 = uVar30 + lVar34;
-  uVar24 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
-            ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
-           ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar22) & uVar26 | uVar27 & uVar22) + lVar34;
-  lVar34 = (((uVar30 & 0x1ffffff) << 7 | (uVar30 & 0xffffffff) >> 0x19) ^
-            ((uVar30 & 0x7ff) << 0x15 | (uVar30 & 0xffffffff) >> 0xb) ^
-           ((uVar30 & 0x3f) << 0x1a | (uVar30 & 0xffffffff) >> 6)) +
-           ((uVar28 ^ uVar31) & uVar30 ^ uVar28) + (ulonglong)local_c8 + uVar23 + 0x5b9cca4f;
-  uVar26 = uVar26 + lVar34;
-  uVar23 = (((uVar24 & 0x3fffff) << 10 | (uVar24 & 0xffffffff) >> 0x16) ^
-            ((uVar24 & 0x1fff) << 0x13 | (uVar24 & 0xffffffff) >> 0xd) ^
-           ((uVar24 & 3) << 0x1e | (uVar24 & 0xffffffff) >> 2)) +
-           ((uVar27 | uVar24) & uVar22 | uVar27 & uVar24) + lVar34;
-  lVar34 = (((uVar26 & 0x1ffffff) << 7 | (uVar26 & 0xffffffff) >> 0x19) ^
-            ((uVar26 & 0x7ff) << 0x15 | (uVar26 & 0xffffffff) >> 0xb) ^
-           ((uVar26 & 0x3f) << 0x1a | (uVar26 & 0xffffffff) >> 6)) +
-           ((uVar30 ^ uVar31) & uVar26 ^ uVar31) + (ulonglong)local_c4 + uVar28 + 0x682e6ff3;
-  uVar22 = uVar22 + lVar34;
-  iVar16 = (int)param_1;
-  uVar29 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
-            ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
-           ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
-           ((uVar24 | uVar23) & uVar27 | uVar24 & uVar23) + lVar34;
-  lVar34 = (((uVar22 & 0x1ffffff) << 7 | (uVar22 & 0xffffffff) >> 0x19) ^
-            ((uVar22 & 0x7ff) << 0x15 | (uVar22 & 0xffffffff) >> 0xb) ^
-           ((uVar22 & 0x3f) << 0x1a | (uVar22 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar30) & uVar22 ^ uVar30) + (ulonglong)local_c0 + uVar31 + 0x748f82ee;
-  uVar27 = uVar27 + lVar34;
-  uVar31 = (((uVar29 & 0x3fffff) << 10 | (uVar29 & 0xffffffff) >> 0x16) ^
-            ((uVar29 & 0x1fff) << 0x13 | (uVar29 & 0xffffffff) >> 0xd) ^
-           ((uVar29 & 3) << 0x1e | (uVar29 & 0xffffffff) >> 2)) +
-           ((uVar23 | uVar29) & uVar24 | uVar23 & uVar29) + lVar34;
-  lVar34 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
-            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
-           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
-           ((uVar26 ^ uVar22) & uVar27 ^ uVar26) + (ulonglong)local_bc + uVar30 + 0x78a5636f;
-  uVar24 = uVar24 + lVar34;
-  uVar28 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
-            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
-           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
-           ((uVar29 | uVar31) & uVar23 | uVar29 & uVar31) + lVar34;
-  lVar34 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
-            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
-           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar22) & uVar24 ^ uVar22) + (ulonglong)local_b8 + uVar26 + -0x7b3787ec;
-  uVar23 = uVar23 + lVar34;
-  uVar26 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
-            ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
-           ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
-           ((uVar28 | uVar31) & uVar29 | uVar28 & uVar31) + lVar34;
-  lVar34 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
-            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
-           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
-           ((uVar27 ^ uVar24) & uVar23 ^ uVar27) + (ulonglong)local_b4 + uVar22 + -0x7338fdf8;
-  uVar29 = uVar29 + lVar34;
-  uVar22 = (((uVar26 & 0x3fffff) << 10 | (uVar26 & 0xffffffff) >> 0x16) ^
-            ((uVar26 & 0x1fff) << 0x13 | (uVar26 & 0xffffffff) >> 0xd) ^
-           ((uVar26 & 3) << 0x1e | (uVar26 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar28) & uVar31 | uVar26 & uVar28) + lVar34;
-  lVar34 = (((uVar29 & 0x1ffffff) << 7 | (uVar29 & 0xffffffff) >> 0x19) ^
+           ((uVar27 | uVar31) & uVar32 | uVar27 & uVar31) + lVar35;
+  lVar35 = (((uVar29 & 0x1ffffff) << 7 | (uVar29 & 0xffffffff) >> 0x19) ^
             ((uVar29 & 0x7ff) << 0x15 | (uVar29 & 0xffffffff) >> 0xb) ^
            ((uVar29 & 0x3f) << 0x1a | (uVar29 & 0xffffffff) >> 6)) +
-           ((uVar24 ^ uVar23) & uVar29 ^ uVar24) + (ulonglong)local_b0 + uVar27 + -0x6f410006;
-  uVar31 = uVar31 + lVar34;
-  uVar30 = (((uVar22 & 0x3fffff) << 10 | (uVar22 & 0xffffffff) >> 0x16) ^
-            ((uVar22 & 0x1fff) << 0x13 | (uVar22 & 0xffffffff) >> 0xd) ^
-           ((uVar22 & 3) << 0x1e | (uVar22 & 0xffffffff) >> 2)) +
-           ((uVar26 | uVar22) & uVar28 | uVar26 & uVar22) + lVar34;
-  lVar34 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
+           ((uVar25 ^ uVar24) & uVar29 ^ uVar25) + (ulonglong)local_17c[3] + uVar28 + 0x72be5d74;
+  uVar32 = uVar32 + lVar35;
+  uVar28 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
+            ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
+           ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar23) & uVar31 | uVar27 & uVar23) + lVar35;
+  lVar35 = (((uVar32 & 0x1ffffff) << 7 | (uVar32 & 0xffffffff) >> 0x19) ^
+            ((uVar32 & 0x7ff) << 0x15 | (uVar32 & 0xffffffff) >> 0xb) ^
+           ((uVar32 & 0x3f) << 0x1a | (uVar32 & 0xffffffff) >> 6)) +
+           ((uVar24 ^ uVar29) & uVar32 ^ uVar24) + (ulonglong)local_17c[4] + uVar25 + -0x7f214e02;
+  uVar31 = uVar31 + lVar35;
+  uVar25 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
+            ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
+           ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
+           ((uVar28 | uVar23) & uVar27 | uVar28 & uVar23) + lVar35;
+  lVar35 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
             ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
            ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
-           ((uVar23 ^ uVar29) & uVar31 ^ uVar23) + (ulonglong)local_ac + uVar24 + -0x5baf9315;
+           ((uVar29 ^ uVar32) & uVar31 ^ uVar29) + (ulonglong)local_17c[5] + uVar24 + -0x6423f959;
+  uVar27 = uVar27 + lVar35;
+  uVar24 = (((uVar25 & 0x3fffff) << 10 | (uVar25 & 0xffffffff) >> 0x16) ^
+            ((uVar25 & 0x1fff) << 0x13 | (uVar25 & 0xffffffff) >> 0xd) ^
+           ((uVar25 & 3) << 0x1e | (uVar25 & 0xffffffff) >> 2)) +
+           ((uVar28 | uVar25) & uVar23 | uVar28 & uVar25) + lVar35;
+  lVar35 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
+            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
+           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
+           ((uVar31 ^ uVar32) & uVar27 ^ uVar32) + (ulonglong)local_17c[6] + uVar29 + -0x3e640e8c;
+  uVar23 = uVar23 + lVar35;
+  uVar29 = (((uVar24 & 0x3fffff) << 10 | (uVar24 & 0xffffffff) >> 0x16) ^
+            ((uVar24 & 0x1fff) << 0x13 | (uVar24 & 0xffffffff) >> 0xd) ^
+           ((uVar24 & 3) << 0x1e | (uVar24 & 0xffffffff) >> 2)) +
+           ((uVar25 | uVar24) & uVar28 | uVar25 & uVar24) + lVar35;
+  lVar35 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
+            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
+           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar31) & uVar23 ^ uVar31) + (ulonglong)local_17c[7] + uVar32 + -0x1b64963f;
+  uVar28 = uVar28 + lVar35;
+  uVar32 = (((uVar29 & 0x3fffff) << 10 | (uVar29 & 0xffffffff) >> 0x16) ^
+            ((uVar29 & 0x1fff) << 0x13 | (uVar29 & 0xffffffff) >> 0xd) ^
+           ((uVar29 & 3) << 0x1e | (uVar29 & 0xffffffff) >> 2)) +
+           ((uVar24 | uVar29) & uVar25 | uVar24 & uVar29) + lVar35;
+  lVar35 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
+            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
+           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar23) & uVar28 ^ uVar27) + (ulonglong)local_17c[8] + uVar31 + -0x1041b87a;
+  uVar25 = uVar25 + lVar35;
+  uVar31 = (((uVar32 & 0x3fffff) << 10 | (uVar32 & 0xffffffff) >> 0x16) ^
+            ((uVar32 & 0x1fff) << 0x13 | (uVar32 & 0xffffffff) >> 0xd) ^
+           ((uVar32 & 3) << 0x1e | (uVar32 & 0xffffffff) >> 2)) +
+           ((uVar29 | uVar32) & uVar24 | uVar29 & uVar32) + lVar35;
+  lVar35 = (((uVar25 & 0x1ffffff) << 7 | (uVar25 & 0xffffffff) >> 0x19) ^
+            ((uVar25 & 0x7ff) << 0x15 | (uVar25 & 0xffffffff) >> 0xb) ^
+           ((uVar25 & 0x3f) << 0x1a | (uVar25 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar23) & uVar25 ^ uVar23) + (ulonglong)local_17c[9] + uVar27 + 0xfc19dc6;
+  uVar24 = uVar24 + lVar35;
+  uVar27 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
+            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
+           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
+           ((uVar31 | uVar32) & uVar29 | uVar31 & uVar32) + lVar35;
+  lVar35 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
+            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
+           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar25) & uVar24 ^ uVar28) + (ulonglong)local_17c[10] + uVar23 + 0x240ca1cc;
+  uVar29 = uVar29 + lVar35;
+  uVar23 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
+            ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
+           ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar31) & uVar32 | uVar27 & uVar31) + lVar35;
+  lVar35 = (((uVar29 & 0x1ffffff) << 7 | (uVar29 & 0xffffffff) >> 0x19) ^
+            ((uVar29 & 0x7ff) << 0x15 | (uVar29 & 0xffffffff) >> 0xb) ^
+           ((uVar29 & 0x3f) << 0x1a | (uVar29 & 0xffffffff) >> 6)) +
+           ((uVar25 ^ uVar24) & uVar29 ^ uVar25) + (ulonglong)local_17c[0xb] + uVar28 + 0x2de92c6f;
+  uVar32 = uVar32 + lVar35;
+  uVar28 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
+            ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
+           ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar23) & uVar31 | uVar27 & uVar23) + lVar35;
+  lVar35 = (((uVar32 & 0x1ffffff) << 7 | (uVar32 & 0xffffffff) >> 0x19) ^
+            ((uVar32 & 0x7ff) << 0x15 | (uVar32 & 0xffffffff) >> 0xb) ^
+           ((uVar32 & 0x3f) << 0x1a | (uVar32 & 0xffffffff) >> 6)) +
+           ((uVar24 ^ uVar29) & uVar32 ^ uVar24) + (ulonglong)local_17c[0xc] + uVar25 + 0x4a7484aa;
+  uVar31 = uVar31 + lVar35;
+  uVar25 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
+            ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
+           ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
+           ((uVar28 | uVar23) & uVar27 | uVar28 & uVar23) + lVar35;
+  lVar35 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
+            ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
+           ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
+           ((uVar29 ^ uVar32) & uVar31 ^ uVar29) + (ulonglong)local_17c[0xd] + uVar24 + 0x5cb0a9dc;
+  uVar27 = uVar27 + lVar35;
+  uVar30 = (((uVar25 & 0x3fffff) << 10 | (uVar25 & 0xffffffff) >> 0x16) ^
+            ((uVar25 & 0x1fff) << 0x13 | (uVar25 & 0xffffffff) >> 0xd) ^
+           ((uVar25 & 3) << 0x1e | (uVar25 & 0xffffffff) >> 2)) +
+           ((uVar28 | uVar25) & uVar23 | uVar28 & uVar25) + lVar35;
+  lVar35 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
+            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
+           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
+           ((uVar31 ^ uVar32) & uVar27 ^ uVar32) + (ulonglong)local_144 + uVar29 + 0x76f988da;
+  uVar23 = uVar23 + lVar35;
+  uVar29 = (((uVar30 & 0x3fffff) << 10 | (uVar30 & 0xffffffff) >> 0x16) ^
+            ((uVar30 & 0x1fff) << 0x13 | (uVar30 & 0xffffffff) >> 0xd) ^
+           ((uVar30 & 3) << 0x1e | (uVar30 & 0xffffffff) >> 2)) +
+           ((uVar25 | uVar30) & uVar28 | uVar25 & uVar30) + lVar35;
+  lVar34 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
+            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
+           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar31) & uVar23 ^ uVar31) + (ulonglong)local_140 + uVar32 + -0x67c1aeae;
   uVar28 = uVar28 + lVar34;
+  lVar35 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
+            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
+           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar23) & uVar28 ^ uVar27) + (ulonglong)local_13c + uVar31 + -0x57ce3993;
+  uVar32 = (((uVar29 & 0x3fffff) << 10 | (uVar29 & 0xffffffff) >> 0x16) ^
+            ((uVar29 & 0x1fff) << 0x13 | (uVar29 & 0xffffffff) >> 0xd) ^
+           ((uVar29 & 3) << 0x1e | (uVar29 & 0xffffffff) >> 2)) +
+           ((uVar30 | uVar29) & uVar25 | uVar30 & uVar29) + lVar34;
+  uVar25 = uVar25 + lVar35;
+  lVar34 = (((uVar25 & 0x1ffffff) << 7 | (uVar25 & 0xffffffff) >> 0x19) ^
+            ((uVar25 & 0x7ff) << 0x15 | (uVar25 & 0xffffffff) >> 0xb) ^
+           ((uVar25 & 0x3f) << 0x1a | (uVar25 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar23) & uVar25 ^ uVar23) + (ulonglong)local_138 + uVar27 + -0x4ffcd838;
+  uVar24 = uVar30 + lVar34;
+  uVar31 = (((uVar32 & 0x3fffff) << 10 | (uVar32 & 0xffffffff) >> 0x16) ^
+            ((uVar32 & 0x1fff) << 0x13 | (uVar32 & 0xffffffff) >> 0xd) ^
+           ((uVar32 & 3) << 0x1e | (uVar32 & 0xffffffff) >> 2)) +
+           ((uVar29 | uVar32) & uVar30 | uVar29 & uVar32) + lVar35;
+  uVar27 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
+            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
+           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
+           ((uVar31 | uVar32) & uVar29 | uVar31 & uVar32) + lVar34;
+  lVar35 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
+            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
+           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar25) & uVar24 ^ uVar28) + (ulonglong)local_134 + uVar23 + -0x40a68039;
+  uVar29 = uVar29 + lVar35;
+  uVar23 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
+            ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
+           ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar31) & uVar32 | uVar27 & uVar31) + lVar35;
+  lVar35 = (((uVar29 & 0x1ffffff) << 7 | (uVar29 & 0xffffffff) >> 0x19) ^
+            ((uVar29 & 0x7ff) << 0x15 | (uVar29 & 0xffffffff) >> 0xb) ^
+           ((uVar29 & 0x3f) << 0x1a | (uVar29 & 0xffffffff) >> 6)) +
+           ((uVar25 ^ uVar24) & uVar29 ^ uVar25) + (ulonglong)local_130 + uVar28 + -0x391ff40d;
+  uVar32 = uVar32 + lVar35;
+  uVar28 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
+            ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
+           ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar23) & uVar31 | uVar27 & uVar23) + lVar35;
+  lVar35 = (((uVar32 & 0x1ffffff) << 7 | (uVar32 & 0xffffffff) >> 0x19) ^
+            ((uVar32 & 0x7ff) << 0x15 | (uVar32 & 0xffffffff) >> 0xb) ^
+           ((uVar32 & 0x3f) << 0x1a | (uVar32 & 0xffffffff) >> 6)) +
+           ((uVar24 ^ uVar29) & uVar32 ^ uVar24) + (ulonglong)local_12c + uVar25 + -0x2a586eb9;
+  uVar31 = uVar31 + lVar35;
+  uVar25 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
+            ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
+           ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
+           ((uVar28 | uVar23) & uVar27 | uVar28 & uVar23) + lVar35;
+  lVar35 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
+            ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
+           ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
+           ((uVar29 ^ uVar32) & uVar31 ^ uVar29) + (ulonglong)local_128 + uVar24 + 0x6ca6351;
+  uVar27 = uVar27 + lVar35;
+  uVar24 = (((uVar25 & 0x3fffff) << 10 | (uVar25 & 0xffffffff) >> 0x16) ^
+            ((uVar25 & 0x1fff) << 0x13 | (uVar25 & 0xffffffff) >> 0xd) ^
+           ((uVar25 & 3) << 0x1e | (uVar25 & 0xffffffff) >> 2)) +
+           ((uVar28 | uVar25) & uVar23 | uVar28 & uVar25) + lVar35;
+  lVar35 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
+            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
+           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
+           ((uVar31 ^ uVar32) & uVar27 ^ uVar32) + (ulonglong)local_124 + uVar29 + 0x14292967;
+  uVar23 = uVar23 + lVar35;
+  uVar29 = (((uVar24 & 0x3fffff) << 10 | (uVar24 & 0xffffffff) >> 0x16) ^
+            ((uVar24 & 0x1fff) << 0x13 | (uVar24 & 0xffffffff) >> 0xd) ^
+           ((uVar24 & 3) << 0x1e | (uVar24 & 0xffffffff) >> 2)) +
+           ((uVar25 | uVar24) & uVar28 | uVar25 & uVar24) + lVar35;
+  lVar35 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
+            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
+           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar31) & uVar23 ^ uVar31) + (ulonglong)local_120 + uVar32 + 0x27b70a85;
+  uVar28 = uVar28 + lVar35;
+  uVar32 = (((uVar29 & 0x3fffff) << 10 | (uVar29 & 0xffffffff) >> 0x16) ^
+            ((uVar29 & 0x1fff) << 0x13 | (uVar29 & 0xffffffff) >> 0xd) ^
+           ((uVar29 & 3) << 0x1e | (uVar29 & 0xffffffff) >> 2)) +
+           ((uVar24 | uVar29) & uVar25 | uVar24 & uVar29) + lVar35;
+  lVar35 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
+            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
+           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar23) & uVar28 ^ uVar27) + (ulonglong)local_11c + uVar31 + 0x2e1b2138;
+  uVar25 = uVar25 + lVar35;
+  uVar31 = (((uVar32 & 0x3fffff) << 10 | (uVar32 & 0xffffffff) >> 0x16) ^
+            ((uVar32 & 0x1fff) << 0x13 | (uVar32 & 0xffffffff) >> 0xd) ^
+           ((uVar32 & 3) << 0x1e | (uVar32 & 0xffffffff) >> 2)) +
+           ((uVar29 | uVar32) & uVar24 | uVar29 & uVar32) + lVar35;
+  lVar35 = (((uVar25 & 0x1ffffff) << 7 | (uVar25 & 0xffffffff) >> 0x19) ^
+            ((uVar25 & 0x7ff) << 0x15 | (uVar25 & 0xffffffff) >> 0xb) ^
+           ((uVar25 & 0x3f) << 0x1a | (uVar25 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar23) & uVar25 ^ uVar23) + (ulonglong)local_118 + uVar27 + 0x4d2c6dfc;
+  uVar24 = uVar24 + lVar35;
+  uVar27 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
+            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
+           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
+           ((uVar31 | uVar32) & uVar29 | uVar31 & uVar32) + lVar35;
+  lVar35 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
+            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
+           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar25) & uVar24 ^ uVar28) + (ulonglong)local_114 + uVar23 + 0x53380d13;
+  uVar29 = uVar29 + lVar35;
+  uVar23 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
+            ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
+           ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar31) & uVar32 | uVar27 & uVar31) + lVar35;
+  lVar35 = (((uVar29 & 0x1ffffff) << 7 | (uVar29 & 0xffffffff) >> 0x19) ^
+            ((uVar29 & 0x7ff) << 0x15 | (uVar29 & 0xffffffff) >> 0xb) ^
+           ((uVar29 & 0x3f) << 0x1a | (uVar29 & 0xffffffff) >> 6)) +
+           ((uVar25 ^ uVar24) & uVar29 ^ uVar25) + (ulonglong)local_110 + uVar28 + 0x650a7354;
+  uVar32 = uVar32 + lVar35;
+  uVar28 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
+            ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
+           ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar23) & uVar31 | uVar27 & uVar23) + lVar35;
+  lVar35 = (((uVar32 & 0x1ffffff) << 7 | (uVar32 & 0xffffffff) >> 0x19) ^
+            ((uVar32 & 0x7ff) << 0x15 | (uVar32 & 0xffffffff) >> 0xb) ^
+           ((uVar32 & 0x3f) << 0x1a | (uVar32 & 0xffffffff) >> 6)) +
+           ((uVar24 ^ uVar29) & uVar32 ^ uVar24) + (ulonglong)local_10c + uVar25 + 0x766a0abb;
+  uVar31 = uVar31 + lVar35;
+  uVar30 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
+            ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
+           ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
+           ((uVar28 | uVar23) & uVar27 | uVar28 & uVar23) + lVar35;
+  lVar35 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
+            ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
+           ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
+           ((uVar29 ^ uVar32) & uVar31 ^ uVar29) + (ulonglong)local_108 + uVar24 + -0x7e3d36d2;
+  uVar27 = uVar27 + lVar35;
   uVar24 = (((uVar30 & 0x3fffff) << 10 | (uVar30 & 0xffffffff) >> 0x16) ^
             ((uVar30 & 0x1fff) << 0x13 | (uVar30 & 0xffffffff) >> 0xd) ^
            ((uVar30 & 3) << 0x1e | (uVar30 & 0xffffffff) >> 2)) +
-           ((uVar30 | uVar22) & uVar26 | uVar30 & uVar22) + lVar34;
-  uVar5 = (uint)uVar31;
-  *(uint *)(iVar16 + 0x20) = *(int *)(iVar16 + 0x20) + (uint)uVar28;
-  lVar34 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
-            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
-           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
-           ((uVar29 ^ uVar31) & uVar28 ^ uVar29) + (ulonglong)local_a8 + uVar23 + -0x41065c09;
-  uVar26 = uVar26 + lVar34;
-  uVar23 = (((uVar24 & 0x3fffff) << 10 | (uVar24 & 0xffffffff) >> 0x16) ^
+           ((uVar28 | uVar30) & uVar23 | uVar28 & uVar30) + lVar35;
+  lVar35 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
+            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
+           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
+           ((uVar31 ^ uVar32) & uVar27 ^ uVar32) + (ulonglong)local_104 + uVar29 + -0x6d8dd37b;
+  uVar23 = uVar23 + lVar35;
+  uVar29 = (((uVar24 & 0x3fffff) << 10 | (uVar24 & 0xffffffff) >> 0x16) ^
             ((uVar24 & 0x1fff) << 0x13 | (uVar24 & 0xffffffff) >> 0xd) ^
            ((uVar24 & 3) << 0x1e | (uVar24 & 0xffffffff) >> 2)) +
-           ((uVar30 | uVar24) & uVar22 | uVar30 & uVar24) + lVar34;
+           ((uVar30 | uVar24) & uVar28 | uVar30 & uVar24) + lVar35;
+  lVar34 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
+            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
+           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar31) & uVar23 ^ uVar31) + (ulonglong)local_100 + uVar32 + -0x5d40175f;
+  uVar28 = uVar28 + lVar34;
+  lVar35 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
+            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
+           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar23) & uVar28 ^ uVar27) + (ulonglong)local_fc + uVar31 + -0x57e599b5;
+  uVar25 = uVar30 + lVar35;
+  uVar32 = (((uVar29 & 0x3fffff) << 10 | (uVar29 & 0xffffffff) >> 0x16) ^
+            ((uVar29 & 0x1fff) << 0x13 | (uVar29 & 0xffffffff) >> 0xd) ^
+           ((uVar29 & 3) << 0x1e | (uVar29 & 0xffffffff) >> 2)) +
+           ((uVar24 | uVar29) & uVar30 | uVar24 & uVar29) + lVar34;
+  lVar34 = (((uVar25 & 0x1ffffff) << 7 | (uVar25 & 0xffffffff) >> 0x19) ^
+            ((uVar25 & 0x7ff) << 0x15 | (uVar25 & 0xffffffff) >> 0xb) ^
+           ((uVar25 & 0x3f) << 0x1a | (uVar25 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar23) & uVar25 ^ uVar23) + (ulonglong)local_f8 + uVar27 + -0x3db47490;
+  uVar31 = (((uVar32 & 0x3fffff) << 10 | (uVar32 & 0xffffffff) >> 0x16) ^
+            ((uVar32 & 0x1fff) << 0x13 | (uVar32 & 0xffffffff) >> 0xd) ^
+           ((uVar32 & 3) << 0x1e | (uVar32 & 0xffffffff) >> 2)) +
+           ((uVar29 | uVar32) & uVar24 | uVar29 & uVar32) + lVar35;
+  uVar24 = uVar24 + lVar34;
+  uVar27 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
+            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
+           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
+           ((uVar31 | uVar32) & uVar29 | uVar31 & uVar32) + lVar34;
+  lVar35 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
+            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
+           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar25) & uVar24 ^ uVar28) + (ulonglong)local_f4 + uVar23 + -0x3893ae5d;
+  uVar29 = uVar29 + lVar35;
+  uVar23 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
+            ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
+           ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar31) & uVar32 | uVar27 & uVar31) + lVar35;
+  lVar35 = (((uVar29 & 0x1ffffff) << 7 | (uVar29 & 0xffffffff) >> 0x19) ^
+            ((uVar29 & 0x7ff) << 0x15 | (uVar29 & 0xffffffff) >> 0xb) ^
+           ((uVar29 & 0x3f) << 0x1a | (uVar29 & 0xffffffff) >> 6)) +
+           ((uVar25 ^ uVar24) & uVar29 ^ uVar25) + (ulonglong)local_f0 + uVar28 + -0x2e6d17e7;
+  uVar32 = uVar32 + lVar35;
+  uVar28 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
+            ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
+           ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar23) & uVar31 | uVar27 & uVar23) + lVar35;
+  lVar35 = (((uVar32 & 0x1ffffff) << 7 | (uVar32 & 0xffffffff) >> 0x19) ^
+            ((uVar32 & 0x7ff) << 0x15 | (uVar32 & 0xffffffff) >> 0xb) ^
+           ((uVar32 & 0x3f) << 0x1a | (uVar32 & 0xffffffff) >> 6)) +
+           ((uVar24 ^ uVar29) & uVar32 ^ uVar24) + (ulonglong)local_ec + uVar25 + -0x2966f9dc;
+  uVar31 = uVar31 + lVar35;
+  uVar25 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
+            ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
+           ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
+           ((uVar28 | uVar23) & uVar27 | uVar28 & uVar23) + lVar35;
+  lVar35 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
+            ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
+           ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
+           ((uVar29 ^ uVar32) & uVar31 ^ uVar29) + (ulonglong)local_e8 + uVar24 + -0xbf1ca7b;
+  uVar27 = uVar27 + lVar35;
+  uVar24 = (((uVar25 & 0x3fffff) << 10 | (uVar25 & 0xffffffff) >> 0x16) ^
+            ((uVar25 & 0x1fff) << 0x13 | (uVar25 & 0xffffffff) >> 0xd) ^
+           ((uVar25 & 3) << 0x1e | (uVar25 & 0xffffffff) >> 2)) +
+           ((uVar28 | uVar25) & uVar23 | uVar28 & uVar25) + lVar35;
+  lVar35 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
+            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
+           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
+           ((uVar31 ^ uVar32) & uVar27 ^ uVar32) + (ulonglong)local_e4 + uVar29 + 0x106aa070;
+  uVar23 = uVar23 + lVar35;
+  uVar29 = (((uVar24 & 0x3fffff) << 10 | (uVar24 & 0xffffffff) >> 0x16) ^
+            ((uVar24 & 0x1fff) << 0x13 | (uVar24 & 0xffffffff) >> 0xd) ^
+           ((uVar24 & 3) << 0x1e | (uVar24 & 0xffffffff) >> 2)) +
+           ((uVar25 | uVar24) & uVar28 | uVar25 & uVar24) + lVar35;
+  lVar35 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
+            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
+           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar31) & uVar23 ^ uVar31) + (ulonglong)local_e0 + uVar32 + 0x19a4c116;
+  uVar28 = uVar28 + lVar35;
+  uVar32 = (((uVar29 & 0x3fffff) << 10 | (uVar29 & 0xffffffff) >> 0x16) ^
+            ((uVar29 & 0x1fff) << 0x13 | (uVar29 & 0xffffffff) >> 0xd) ^
+           ((uVar29 & 3) << 0x1e | (uVar29 & 0xffffffff) >> 2)) +
+           ((uVar24 | uVar29) & uVar25 | uVar24 & uVar29) + lVar35;
+  lVar35 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
+            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
+           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar23) & uVar28 ^ uVar27) + (ulonglong)local_dc + uVar31 + 0x1e376c08;
+  uVar25 = uVar25 + lVar35;
+  uVar31 = (((uVar32 & 0x3fffff) << 10 | (uVar32 & 0xffffffff) >> 0x16) ^
+            ((uVar32 & 0x1fff) << 0x13 | (uVar32 & 0xffffffff) >> 0xd) ^
+           ((uVar32 & 3) << 0x1e | (uVar32 & 0xffffffff) >> 2)) +
+           ((uVar29 | uVar32) & uVar24 | uVar29 & uVar32) + lVar35;
+  lVar35 = (((uVar25 & 0x1ffffff) << 7 | (uVar25 & 0xffffffff) >> 0x19) ^
+            ((uVar25 & 0x7ff) << 0x15 | (uVar25 & 0xffffffff) >> 0xb) ^
+           ((uVar25 & 0x3f) << 0x1a | (uVar25 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar23) & uVar25 ^ uVar23) + (ulonglong)local_d8 + uVar27 + 0x2748774c;
+  uVar24 = uVar24 + lVar35;
+  uVar27 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
+            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
+           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
+           ((uVar31 | uVar32) & uVar29 | uVar31 & uVar32) + lVar35;
+  lVar35 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
+            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
+           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar25) & uVar24 ^ uVar28) + (ulonglong)local_d4 + uVar23 + 0x34b0bcb5;
+  uVar29 = uVar29 + lVar35;
+  uVar23 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
+            ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
+           ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar31) & uVar32 | uVar27 & uVar31) + lVar35;
+  lVar35 = (((uVar29 & 0x1ffffff) << 7 | (uVar29 & 0xffffffff) >> 0x19) ^
+            ((uVar29 & 0x7ff) << 0x15 | (uVar29 & 0xffffffff) >> 0xb) ^
+           ((uVar29 & 0x3f) << 0x1a | (uVar29 & 0xffffffff) >> 6)) +
+           ((uVar25 ^ uVar24) & uVar29 ^ uVar25) + (ulonglong)local_d0 + uVar28 + 0x391c0cb3;
+  uVar32 = uVar32 + lVar35;
+  uVar28 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
+            ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
+           ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar23) & uVar31 | uVar27 & uVar23) + lVar35;
+  lVar35 = (((uVar32 & 0x1ffffff) << 7 | (uVar32 & 0xffffffff) >> 0x19) ^
+            ((uVar32 & 0x7ff) << 0x15 | (uVar32 & 0xffffffff) >> 0xb) ^
+           ((uVar32 & 0x3f) << 0x1a | (uVar32 & 0xffffffff) >> 6)) +
+           ((uVar24 ^ uVar29) & uVar32 ^ uVar24) + (ulonglong)local_cc + uVar25 + 0x4ed8aa4a;
+  uVar31 = uVar31 + lVar35;
+  uVar25 = (((uVar28 & 0x3fffff) << 10 | (uVar28 & 0xffffffff) >> 0x16) ^
+            ((uVar28 & 0x1fff) << 0x13 | (uVar28 & 0xffffffff) >> 0xd) ^
+           ((uVar28 & 3) << 0x1e | (uVar28 & 0xffffffff) >> 2)) +
+           ((uVar28 | uVar23) & uVar27 | uVar28 & uVar23) + lVar35;
+  lVar35 = (((uVar31 & 0x1ffffff) << 7 | (uVar31 & 0xffffffff) >> 0x19) ^
+            ((uVar31 & 0x7ff) << 0x15 | (uVar31 & 0xffffffff) >> 0xb) ^
+           ((uVar31 & 0x3f) << 0x1a | (uVar31 & 0xffffffff) >> 6)) +
+           ((uVar29 ^ uVar32) & uVar31 ^ uVar29) + (ulonglong)local_c8 + uVar24 + 0x5b9cca4f;
+  uVar27 = uVar27 + lVar35;
+  uVar24 = (((uVar25 & 0x3fffff) << 10 | (uVar25 & 0xffffffff) >> 0x16) ^
+            ((uVar25 & 0x1fff) << 0x13 | (uVar25 & 0xffffffff) >> 0xd) ^
+           ((uVar25 & 3) << 0x1e | (uVar25 & 0xffffffff) >> 2)) +
+           ((uVar28 | uVar25) & uVar23 | uVar28 & uVar25) + lVar35;
+  lVar35 = (((uVar27 & 0x1ffffff) << 7 | (uVar27 & 0xffffffff) >> 0x19) ^
+            ((uVar27 & 0x7ff) << 0x15 | (uVar27 & 0xffffffff) >> 0xb) ^
+           ((uVar27 & 0x3f) << 0x1a | (uVar27 & 0xffffffff) >> 6)) +
+           ((uVar31 ^ uVar32) & uVar27 ^ uVar32) + (ulonglong)local_c4 + uVar29 + 0x682e6ff3;
+  uVar23 = uVar23 + lVar35;
+  iVar16 = (int)uVar22;
+  uVar30 = (((uVar24 & 0x3fffff) << 10 | (uVar24 & 0xffffffff) >> 0x16) ^
+            ((uVar24 & 0x1fff) << 0x13 | (uVar24 & 0xffffffff) >> 0xd) ^
+           ((uVar24 & 3) << 0x1e | (uVar24 & 0xffffffff) >> 2)) +
+           ((uVar25 | uVar24) & uVar28 | uVar25 & uVar24) + lVar35;
+  lVar35 = (((uVar23 & 0x1ffffff) << 7 | (uVar23 & 0xffffffff) >> 0x19) ^
+            ((uVar23 & 0x7ff) << 0x15 | (uVar23 & 0xffffffff) >> 0xb) ^
+           ((uVar23 & 0x3f) << 0x1a | (uVar23 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar31) & uVar23 ^ uVar31) + (ulonglong)local_c0 + uVar32 + 0x748f82ee;
+  uVar28 = uVar28 + lVar35;
+  uVar32 = (((uVar30 & 0x3fffff) << 10 | (uVar30 & 0xffffffff) >> 0x16) ^
+            ((uVar30 & 0x1fff) << 0x13 | (uVar30 & 0xffffffff) >> 0xd) ^
+           ((uVar30 & 3) << 0x1e | (uVar30 & 0xffffffff) >> 2)) +
+           ((uVar24 | uVar30) & uVar25 | uVar24 & uVar30) + lVar35;
+  lVar35 = (((uVar28 & 0x1ffffff) << 7 | (uVar28 & 0xffffffff) >> 0x19) ^
+            ((uVar28 & 0x7ff) << 0x15 | (uVar28 & 0xffffffff) >> 0xb) ^
+           ((uVar28 & 0x3f) << 0x1a | (uVar28 & 0xffffffff) >> 6)) +
+           ((uVar27 ^ uVar23) & uVar28 ^ uVar27) + (ulonglong)local_bc + uVar31 + 0x78a5636f;
+  uVar25 = uVar25 + lVar35;
+  uVar29 = (((uVar32 & 0x3fffff) << 10 | (uVar32 & 0xffffffff) >> 0x16) ^
+            ((uVar32 & 0x1fff) << 0x13 | (uVar32 & 0xffffffff) >> 0xd) ^
+           ((uVar32 & 3) << 0x1e | (uVar32 & 0xffffffff) >> 2)) +
+           ((uVar30 | uVar32) & uVar24 | uVar30 & uVar32) + lVar35;
+  lVar35 = (((uVar25 & 0x1ffffff) << 7 | (uVar25 & 0xffffffff) >> 0x19) ^
+            ((uVar25 & 0x7ff) << 0x15 | (uVar25 & 0xffffffff) >> 0xb) ^
+           ((uVar25 & 0x3f) << 0x1a | (uVar25 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar23) & uVar25 ^ uVar23) + (ulonglong)local_b8 + uVar27 + -0x7b3787ec;
+  uVar24 = uVar24 + lVar35;
+  uVar27 = (((uVar29 & 0x3fffff) << 10 | (uVar29 & 0xffffffff) >> 0x16) ^
+            ((uVar29 & 0x1fff) << 0x13 | (uVar29 & 0xffffffff) >> 0xd) ^
+           ((uVar29 & 3) << 0x1e | (uVar29 & 0xffffffff) >> 2)) +
+           ((uVar29 | uVar32) & uVar30 | uVar29 & uVar32) + lVar35;
+  lVar35 = (((uVar24 & 0x1ffffff) << 7 | (uVar24 & 0xffffffff) >> 0x19) ^
+            ((uVar24 & 0x7ff) << 0x15 | (uVar24 & 0xffffffff) >> 0xb) ^
+           ((uVar24 & 0x3f) << 0x1a | (uVar24 & 0xffffffff) >> 6)) +
+           ((uVar28 ^ uVar25) & uVar24 ^ uVar28) + (ulonglong)local_b4 + uVar23 + -0x7338fdf8;
+  uVar30 = uVar30 + lVar35;
+  uVar23 = (((uVar27 & 0x3fffff) << 10 | (uVar27 & 0xffffffff) >> 0x16) ^
+            ((uVar27 & 0x1fff) << 0x13 | (uVar27 & 0xffffffff) >> 0xd) ^
+           ((uVar27 & 3) << 0x1e | (uVar27 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar29) & uVar32 | uVar27 & uVar29) + lVar35;
+  lVar35 = (((uVar30 & 0x1ffffff) << 7 | (uVar30 & 0xffffffff) >> 0x19) ^
+            ((uVar30 & 0x7ff) << 0x15 | (uVar30 & 0xffffffff) >> 0xb) ^
+           ((uVar30 & 0x3f) << 0x1a | (uVar30 & 0xffffffff) >> 6)) +
+           ((uVar25 ^ uVar24) & uVar30 ^ uVar25) + (ulonglong)local_b0 + uVar28 + -0x6f410006;
+  uVar32 = uVar32 + lVar35;
+  uVar31 = (((uVar23 & 0x3fffff) << 10 | (uVar23 & 0xffffffff) >> 0x16) ^
+            ((uVar23 & 0x1fff) << 0x13 | (uVar23 & 0xffffffff) >> 0xd) ^
+           ((uVar23 & 3) << 0x1e | (uVar23 & 0xffffffff) >> 2)) +
+           ((uVar27 | uVar23) & uVar29 | uVar27 & uVar23) + lVar35;
+  lVar35 = (((uVar32 & 0x1ffffff) << 7 | (uVar32 & 0xffffffff) >> 0x19) ^
+            ((uVar32 & 0x7ff) << 0x15 | (uVar32 & 0xffffffff) >> 0xb) ^
+           ((uVar32 & 0x3f) << 0x1a | (uVar32 & 0xffffffff) >> 6)) +
+           ((uVar24 ^ uVar30) & uVar32 ^ uVar24) + (ulonglong)local_ac + uVar25 + -0x5baf9315;
+  uVar29 = uVar29 + lVar35;
+  uVar25 = (((uVar31 & 0x3fffff) << 10 | (uVar31 & 0xffffffff) >> 0x16) ^
+            ((uVar31 & 0x1fff) << 0x13 | (uVar31 & 0xffffffff) >> 0xd) ^
+           ((uVar31 & 3) << 0x1e | (uVar31 & 0xffffffff) >> 2)) +
+           ((uVar31 | uVar23) & uVar27 | uVar31 & uVar23) + lVar35;
+  uVar5 = (uint)uVar32;
+  *(uint *)(iVar16 + 0x20) = *(int *)(iVar16 + 0x20) + (uint)uVar29;
+  lVar35 = (((uVar29 & 0x1ffffff) << 7 | (uVar29 & 0xffffffff) >> 0x19) ^
+            ((uVar29 & 0x7ff) << 0x15 | (uVar29 & 0xffffffff) >> 0xb) ^
+           ((uVar29 & 0x3f) << 0x1a | (uVar29 & 0xffffffff) >> 6)) +
+           ((uVar30 ^ uVar32) & uVar29 ^ uVar30) + (ulonglong)local_a8 + uVar24 + -0x41065c09;
+  uVar27 = uVar27 + lVar35;
+  uVar24 = (((uVar25 & 0x3fffff) << 10 | (uVar25 & 0xffffffff) >> 0x16) ^
+            ((uVar25 & 0x1fff) << 0x13 | (uVar25 & 0xffffffff) >> 0xd) ^
+           ((uVar25 & 3) << 0x1e | (uVar25 & 0xffffffff) >> 2)) +
+           ((uVar31 | uVar25) & uVar23 | uVar31 & uVar25) + lVar35;
   *(uint *)(iVar16 + 0x24) = *(int *)(iVar16 + 0x24) + uVar5;
-  uVar3 = (uint)uVar24;
-  uVar4 = (uint)uVar23;
+  uVar3 = (uint)uVar25;
+  uVar4 = (uint)uVar24;
   *(uint *)(iVar16 + 0x10) = *(int *)(iVar16 + 0x10) + uVar3;
-  *(uint *)(iVar16 + 0x1c) = *(int *)(iVar16 + 0x1c) + (uint)uVar26;
-  iVar18 = (((uint)((uVar26 & 0xffffffff) << 7) | (uint)((uVar26 & 0xffffffff) >> 0x19)) ^
-            ((uint)((uVar26 & 0xffffffff) << 0x15) | (uint)((uVar26 & 0xffffffff) >> 0xb)) ^
-           ((uint)((uVar26 & 0xffffffff) << 0x1a) | (uint)((uVar26 & 0xffffffff) >> 6))) +
-           (((uint)uVar28 ^ uVar5) & (uint)uVar26 ^ uVar5) + local_a4 + (int)uVar29 + -0x398e870e;
-  *(uint *)(iVar16 + 0x14) = *(int *)(iVar16 + 0x14) + (uint)uVar30;
+  *(uint *)(iVar16 + 0x1c) = *(int *)(iVar16 + 0x1c) + (uint)uVar27;
+  iVar19 = (((uint)((uVar27 & 0x1ffffff) << 7) | (uint)((uVar27 & 0xffffffff) >> 0x19)) ^
+            ((uint)((uVar27 & 0x7ff) << 0x15) | (uint)((uVar27 & 0xffffffff) >> 0xb)) ^
+           ((uint)((uVar27 & 0x3f) << 0x1a) | (uint)((uVar27 & 0xffffffff) >> 6))) +
+           (((uint)uVar29 ^ uVar5) & (uint)uVar27 ^ uVar5) + local_a4 + (int)uVar30 + -0x398e870e;
+  *(uint *)(iVar16 + 0x14) = *(int *)(iVar16 + 0x14) + (uint)uVar31;
   *(uint *)(iVar16 + 0xc) = *(int *)(iVar16 + 0xc) + uVar4;
-  *(int *)(iVar16 + 0x18) = (int)uVar22 + iVar18 + *(int *)(iVar16 + 0x18);
+  *(int *)(iVar16 + 0x18) = (int)uVar23 + iVar19 + *(int *)(iVar16 + 0x18);
   *(uint *)(iVar16 + 8) =
        *(int *)(iVar16 + 8) +
-       (((uint)((uVar23 & 0xffffffff) << 10) | uVar4 >> 0x16) ^
-        ((uint)((uVar23 & 0xffffffff) << 0x13) | uVar4 >> 0xd) ^
-       ((uint)((uVar23 & 0xffffffff) << 0x1e) | uVar4 >> 2)) +
-       ((uVar3 | uVar4) & (uint)uVar30 | uVar3 & uVar4) + iVar18;
-  __restgprlr();
+       (((uint)((uVar24 & 0xffffffff) << 10) | (uint)((uVar24 & 0xffffffff) >> 0x16)) ^
+        ((uint)((uVar24 & 0xffffffff) << 0x13) | (uint)((uVar24 & 0xffffffff) >> 0xd)) ^
+       ((uint)((uVar24 & 0xffffffff) << 0x1e) | (uint)((uVar24 & 0xffffffff) >> 2))) +
+       ((uVar3 | uVar4) & (uint)uVar31 | uVar3 & uVar4) + iVar19;
+  __restgprlr(0);
   return;
 }
 
 
 // 822528F0  init  (line unknown)
 
-int init(undefined4 *param_1)
+int init(int *param_1)
 
 {
-  void *pvVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  int *piVar4;
+  int *piVar3;
   
-  pvVar1 = tom_game_calloc(1,0x10);
-  *param_1 = pvVar1;
-  if (pvVar1 == (void *)0x0) {
-    iVar2 = 0xd;
+  iVar1 = tom_game_calloc(1,0x10);
+  *param_1 = iVar1;
+  if (iVar1 == 0) {
+    iVar1 = 0xd;
   }
   else {
-    iVar2 = mp_init();
-    iVar3 = 0;
-    piVar4 = &DAT_8221d828;
+    iVar1 = mp_init();
+    iVar2 = 0;
+    piVar3 = &DAT_8221d828;
     do {
-      if (iVar2 == *piVar4) {
-        iVar2 = *(int *)(&DAT_8221d82c + iVar3 * 8);
-        if (iVar2 == 0) {
+      if (iVar1 == *piVar3) {
+        iVar1 = *(int *)(&DAT_8221d82c + iVar2 * 8);
+        if (iVar1 == 0) {
           return 0;
         }
         goto LAB_82252978;
       }
-      piVar4 = piVar4 + 2;
-      iVar3 = iVar3 + 1;
-    } while ((int)piVar4 < -0x7dde27c0);
-    iVar2 = 1;
+      piVar3 = piVar3 + 2;
+      iVar2 = iVar2 + 1;
+    } while ((int)piVar3 < -0x7dde27c0);
+    iVar1 = 1;
 LAB_82252978:
-    tom_game_free((void *)*param_1);
+    tom_game_free(*param_1);
   }
-  return iVar2;
+  return iVar1;
 }
 
 
 // 822529A0  deinit  (line unknown)
 
-void deinit(void *param_1)
+void deinit(undefined8 param_1)
 
 {
   mp_clear();
@@ -1629,7 +1629,7 @@ int montgomery_setup(int param_1,undefined4 *param_2)
   int iVar4;
   int *piVar5;
   
-  puVar2 = tom_game_calloc(1,4);
+  puVar2 = (uint *)tom_game_calloc(1,4);
   *param_2 = puVar2;
   if (puVar2 == (uint *)0x0) {
     iVar4 = 0xd;
@@ -1661,7 +1661,7 @@ int montgomery_setup(int param_1,undefined4 *param_2)
     } while ((int)piVar5 < -0x7dde27c0);
     iVar4 = 1;
 LAB_82253974:
-    tom_game_free((void *)*param_2);
+    tom_game_free(*param_2);
   }
   return iVar4;
 }

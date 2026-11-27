@@ -2,47 +2,54 @@
 
 // 82657BB8  compress2  (zlib/compress.c:29)
 
-int compress2(uchar *param_1,ulong *param_2,uchar *param_3,ulong param_4,int param_5)
+undefined8
+compress2(undefined4 param_1,undefined4 *param_2,undefined4 param_3,undefined4 param_4,
+         undefined8 param_5)
 
 {
-  int iVar1;
-  int iVar2;
-  z_stream_s local_50;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
   
-  local_50.avail_out = *param_2;
-  local_50.zalloc = (_func___cdecl_uchar_ptr_uchar_ptr_uint_uint *)0x0;
-  local_50.zfree = (_func___cdecl_void_uchar_ptr_uchar_ptr *)0x0;
-  local_50.opaque = (uchar *)0x0;
-  local_50.next_in = param_3;
-  local_50.avail_in = param_4;
-  local_50.next_out = param_1;
-  iVar1 = deflateInit_(&local_50,param_5,"1.1.4",0x34);
-  if (iVar1 == 0) {
-    iVar2 = deflate(&local_50,4);
-    if (iVar2 == 1) {
-      *param_2 = local_50.total_out;
-      iVar1 = deflateEnd(&local_50);
+  local_40 = *param_2;
+  local_30 = 0;
+  local_2c = 0;
+  local_28 = 0;
+  local_50 = param_3;
+  local_4c = param_4;
+  local_44 = param_1;
+  uVar1 = deflateInit_(&local_50,param_5,0xffffffff820593e8,0x34);
+  if ((int)uVar1 == 0) {
+    uVar2 = deflate(&local_50,4);
+    if ((int)uVar2 == 1) {
+      *param_2 = local_3c;
+      uVar1 = deflateEnd(&local_50);
     }
     else {
       deflateEnd(&local_50);
-      iVar1 = -5;
-      if (iVar2 != 0) {
-        iVar1 = iVar2;
+      uVar1 = 0xfffffffffffffffb;
+      if ((int)uVar2 != 0) {
+        uVar1 = uVar2;
       }
     }
   }
-  return iVar1;
+  return uVar1;
 }
 
 
 // 82657C70  compress  (zlib/compress.c:68)
 
-int compress(uchar *param_1,ulong *param_2,uchar *param_3,ulong param_4)
+void compress(void)
 
 {
-  int iVar1;
-  
-  iVar1 = compress2(param_1,param_2,param_3,param_4,-1);
-  return iVar1;
+  compress2();
+  return;
 }
 

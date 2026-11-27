@@ -2,75 +2,68 @@
 
 // 826E2920  IWNet_GetMaxResendTime  (iwnet/iwnet_dispatcher.cpp:44)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int IWNet_GetMaxResendTime(void)
+undefined4 IWNet_GetMaxResendTime(void)
 
 {
-  return (iwnet_maxResendTime->current).integer;
+  return *(undefined4 *)(DAT_844cf518 + 0xc);
 }
 
 
 // 826E2930  IWNet_GetMinResendTime  (iwnet/iwnet_dispatcher.cpp:49)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int IWNet_GetMinResendTime(void)
+undefined4 IWNet_GetMinResendTime(void)
 
 {
-  return (iwnet_minResendTime->current).integer;
+  return *(undefined4 *)(DAT_844cf270 + 0xc);
 }
 
 
 // 826E2940  IWNet_GetSendInterval  (iwnet/iwnet_dispatcher.cpp:54)
 
-int IWNet_GetSendInterval(uchar param_1)
+longlong IWNet_GetSendInterval(byte param_1)
 
 {
-  char *pcVar1;
-  char *pcVar2;
-  double dVar3;
+  uint uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  double dVar4;
   
-  if (param_1 != '\0') {
-    pcVar1 = (iwnet_minResendTime->current).string;
-    dVar3 = pow(2.0,(double)param_1);
-    pcVar2 = (char *)(iwnet_maxResendTime->current).integer;
-    if ((int)(pcVar1 + (int)dVar3) < (iwnet_maxResendTime->current).integer) {
-      pcVar2 = pcVar1 + (int)dVar3;
+  if (param_1 != 0) {
+    uVar1 = *(uint *)(DAT_844cf270 + 0xc);
+    dVar4 = pow(2.0,(double)param_1);
+    uVar2 = (ulonglong)(uint)(int)dVar4 + (ulonglong)uVar1;
+    uVar3 = (ulonglong)*(uint *)(DAT_844cf518 + 0xc);
+    if ((int)uVar2 < (int)*(uint *)(DAT_844cf518 + 0xc)) {
+      uVar3 = uVar2;
     }
-    return (int)pcVar2 * 1000;
+    return uVar3 * 1000;
   }
-  return (iwnet_minResendTime->current).integer * 1000;
+  return (ulonglong)*(uint *)(DAT_844cf270 + 0xc) * 1000;
 }
 
 
 // 826E29F0  IWNet_WriteCommandHeader  (iwnet/iwnet_dispatcher.cpp:63)
 
-/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
-/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void IWNet_WriteCommandHeader
-               (IWNetClientNetworkMessage param_1,IWNetCommandData *param_2,msg_t *param_3)
+void IWNet_WriteCommandHeader(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  IWNetClientNetworkMessage IVar1;
   uint uVar2;
+  undefined8 uVar1;
+  short sVar3;
   
-  IVar1 = __savegprlr_28(param_1);
-  param_2->networkCommand = IVar1;
-  uVar2 = IWNet_GetCommandIndex(param_2);
-  if ((uVar2 & 0xff) != uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_dispatcher.cpp",
-                    0x45,0,"%s\n\t(commandIndex) = %i");
+  uVar2 = __savegprlr_28();
+  *(uint *)((int)param_2 + 8) = uVar2;
+  uVar1 = IWNet_GetCommandIndex(param_2);
+  if (((uint)uVar1 & 0xff) != (uint)uVar1) {
+    MyAssertHandler(0xffffffff821a8568,0x45,0,0xffffffff821a85b0,0xffffffff821a85c8,uVar1);
   }
-  MSG_WriteByte(param_3,IVar1 & 0xff);
-  MSG_WriteByte(param_3,uVar2);
+  MSG_WriteByte(param_3,uVar2 & 0xff);
+  MSG_WriteByte(param_3,uVar1);
   MSG_WriteByte(param_3,0);
-  g_sequenceNum = g_sequenceNum + 1;
-  uVar2 = (uint)g_sequenceNum;
-  param_2->sequenceNumber = g_sequenceNum;
-  MSG_WriteShort(param_3,uVar2);
+  sVar3 = DAT_844cf51c + 1;
+  DAT_844cf51c = sVar3;
+  *(short *)((int)param_2 + 2) = sVar3;
+  MSG_WriteShort(param_3,sVar3);
   __restgprlr_28();
   return;
 }
@@ -78,138 +71,123 @@ void IWNet_WriteCommandHeader
 
 // 826E2AA0  IWNet_WriteAndSendCommand  (iwnet/iwnet_dispatcher.cpp:83)
 
-/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
-/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-bool IWNet_WriteAndSendCommand(int param_1,IWNetCommandData *param_2,msg_t *param_3)
+void IWNet_WriteAndSendCommand(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  bool bVar2;
-  undefined1 uVar3;
+  undefined8 uVar1;
+  char cVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  bVar2 = IWNet_Storage_IsStorageCommand(param_2);
-  if (bVar2) {
-    if ((iwnet_debug->current).enabled != false) {
-      Com_Printf(0x19,"Sending storage command\n");
+  uVar1 = __savegprlr_29();
+  cVar2 = IWNet_Storage_IsStorageCommand(param_2);
+  if (cVar2 != '\0') {
+    if (*(char *)(DAT_844cf274 + 0xc) != '\0') {
+      Com_Printf(0x19,0xffffffff821a8614);
     }
-    IWNet_Storage_WriteCommand(iVar1,param_2,param_3);
-    if ((iwnet_testnostorageserver->current).enabled == false) {
+    IWNet_Storage_WriteCommand(uVar1,param_2,param_3);
+    if (*(char *)(DAT_844cf544 + 0xc) == '\0') {
       LSP_SendStoragePacket(param_3);
     }
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+    __restgprlr_29(1);
+    return;
   }
-  Com_Error(ERR_DROP,"Invalid IWNet command %i");
-  uVar3 = __restgprlr_29(0);
-  return (bool)uVar3;
+  Com_Error(1,0xffffffff821a85f8,*(undefined4 *)((int)param_2 + 4));
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 826E2B48  IWNet_SendCommand  (iwnet/iwnet_dispatcher.cpp:173)
 
-/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
-/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-bool IWNet_SendCommand(int param_1,IWNetCommandData *param_2)
+void IWNet_SendCommand(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  bool bVar3;
-  undefined1 uVar4;
+  undefined4 uVar1;
   int iVar2;
-  msg_t mStack_540;
-  uchar auStack_510 [1296];
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
+  undefined1 auStack_540 [48];
+  undefined1 auStack_510 [1296];
   
-  iVar1 = __savegprlr_29(param_1);
-  if (param_2->active == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_dispatcher.cpp",
-                    0xb2,0,"%s");
+  iVar2 = __savegprlr_29();
+  pcVar5 = (char *)param_2;
+  if (*pcVar5 == '\0') {
+    MyAssertHandler(0xffffffff821a8568,0xb2,0,0xffffffff82000f98,0xffffffff821a8340);
   }
-  if ((param_2->internalData).nextSendTime <= iVar1) {
-    iVar2 = (param_2->internalData).localControllerIndex;
-    bVar3 = Live_IsSignedIn(iVar2);
-    if (bVar3) {
-      if ((param_2->internalData).nextSendTime != 0) {
-        (param_2->internalData).numSendFailures = (param_2->internalData).numSendFailures + '\x01';
-      }
-      MSG_Init(&mStack_540,auStack_510,0x4f0);
-      MSG_WriteByte(&mStack_540,5);
-      bVar3 = IWNet_WriteAndSendCommand(iVar2,param_2,&mStack_540);
-      if (bVar3) {
-        iVar2 = IWNet_GetSendInterval((param_2->internalData).numSendFailures);
-        (param_2->internalData).nextSendTime = iVar2 + iVar1;
-        uVar4 = __restgprlr_29(1);
-        return (bool)uVar4;
-      }
-    }
-    else {
-      Com_PrintError(0x19,"Cancelling iwnet command task because controller %i isn\'t signed in\n");
+  if (*(int *)(pcVar5 + 0x14) <= iVar2) {
+    uVar1 = *(undefined4 *)(pcVar5 + 0x10);
+    cVar4 = Live_IsSignedIn(uVar1);
+    if (cVar4 == '\0') {
+      Com_PrintError(0x19,0xffffffff821a8630,uVar1);
       IWNet_CancelTask(param_2);
     }
+    else {
+      if (*(int *)(pcVar5 + 0x14) != 0) {
+        pcVar5[0x18] = pcVar5[0x18] + '\x01';
+      }
+      MSG_Init(auStack_540,auStack_510,0x4f0);
+      MSG_WriteByte(auStack_540,5);
+      cVar4 = IWNet_WriteAndSendCommand(uVar1,param_2,auStack_540);
+      if (cVar4 != '\0') {
+        iVar3 = IWNet_GetSendInterval(pcVar5[0x18]);
+        *(int *)(pcVar5 + 0x14) = iVar3 + iVar2;
+        __restgprlr_29(1);
+        return;
+      }
+    }
   }
-  uVar4 = __restgprlr_29(0);
-  return (bool)uVar4;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 826E2C48  IWNet_SendCommands  (iwnet/iwnet_dispatcher.cpp:241)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
-/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
 void IWNet_SendCommands(void)
 
 {
-  bool bVar4;
-  int iVar1;
-  IWNetCommandData *pIVar2;
-  int iVar3;
-  int iVar5;
-  msg_t mStack_550;
-  uchar auStack_520 [1312];
+  undefined4 uVar1;
+  char cVar5;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
+  longlong lVar6;
+  undefined1 auStack_550 [48];
+  undefined1 auStack_520 [1312];
   
   __savegprlr_27();
-  bVar4 = LSP_Connected();
-  if (bVar4) {
-    iVar1 = Sys_Milliseconds();
-    pIVar2 = IWNet_GetCommandSlotByIndex(0);
-    iVar5 = 1;
-    while (pIVar2 != (IWNetCommandData *)0x0) {
-      if (pIVar2->active != false) {
-        if ((pIVar2->internalData).nextSendTime <= iVar1) {
-          iVar3 = (pIVar2->internalData).localControllerIndex;
-          bVar4 = Live_IsSignedIn(iVar3);
-          if (bVar4) {
-            if ((pIVar2->internalData).nextSendTime != 0) {
-              (pIVar2->internalData).numSendFailures =
-                   (pIVar2->internalData).numSendFailures + '\x01';
-            }
-            MSG_Init(&mStack_550,auStack_520,0x4f0);
-            MSG_WriteByte(&mStack_550,5);
-            bVar4 = IWNet_WriteAndSendCommand(iVar3,pIVar2,&mStack_550);
-            if (bVar4) {
-              iVar3 = IWNet_GetSendInterval((pIVar2->internalData).numSendFailures);
-              (pIVar2->internalData).nextSendTime = iVar3 + iVar1;
-            }
+  cVar5 = LSP_Connected();
+  if (cVar5 != '\0') {
+    iVar2 = Sys_Milliseconds();
+    pcVar3 = (char *)IWNet_GetCommandSlotByIndex(0);
+    lVar6 = 1;
+    while (pcVar3 != (char *)0x0) {
+      if (*pcVar3 != '\0') {
+        if (*(int *)(pcVar3 + 0x14) <= iVar2) {
+          uVar1 = *(undefined4 *)(pcVar3 + 0x10);
+          cVar5 = Live_IsSignedIn(uVar1);
+          if (cVar5 == '\0') {
+            Com_PrintError(0x19,0xffffffff821a8630,uVar1);
+            IWNet_CancelTask(pcVar3);
           }
           else {
-            Com_PrintError(0x19,
-                           "Cancelling iwnet command task because controller %i isn\'t signed in\n")
-            ;
-            IWNet_CancelTask(pIVar2);
+            if (*(int *)(pcVar3 + 0x14) != 0) {
+              pcVar3[0x18] = pcVar3[0x18] + '\x01';
+            }
+            MSG_Init(auStack_550,auStack_520,0x4f0);
+            MSG_WriteByte(auStack_550,5);
+            cVar5 = IWNet_WriteAndSendCommand(uVar1,pcVar3,auStack_550);
+            if (cVar5 != '\0') {
+              iVar4 = IWNet_GetSendInterval(pcVar3[0x18]);
+              *(int *)(pcVar3 + 0x14) = iVar4 + iVar2;
+            }
           }
         }
-        bVar4 = LSP_Connected();
-        if (!bVar4) break;
+        cVar5 = LSP_Connected();
+        if (cVar5 == '\0') break;
       }
-      pIVar2 = IWNet_GetCommandSlotByIndex(iVar5);
-      iVar5 = iVar5 + 1;
+      pcVar3 = (char *)IWNet_GetCommandSlotByIndex(lVar6);
+      lVar6 = lVar6 + 1;
     }
   }
   __restgprlr_27();

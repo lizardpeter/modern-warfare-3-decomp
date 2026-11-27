@@ -7,8 +7,7 @@ void __unwind_71637(void)
 {
   int in_r12;
   
-  bdReference<bdConnection>::~bdReference<bdConnection>
-            (*(bdReference<bdConnection> **)(in_r12 + 0x24));
+  bdReference<bdConnection>___bdReference<bdConnection>(*(undefined4 *)(in_r12 + 0x24));
   return;
 }
 
@@ -20,7 +19,7 @@ void __unwind_71688(void)
 {
   int in_r12;
   
-  bdReference<bdMessage>::~bdReference<bdMessage>(*(bdReference<bdMessage> **)(in_r12 + 0x14));
+  bdReference<bdMessage>___bdReference<bdMessage>(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 

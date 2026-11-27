@@ -2,36 +2,35 @@
 
 // 82918D18  exp  (<external>/bt/278379/vctools/crt/src/fpw32/tran/exp.c:139)
 
-double exp(double param_1)
+double exp(double _X)
 
 {
-  _dbl _Var1;
-  _dbl _Var2;
+  double dVar1;
+  double dVar2;
   double dVar3;
-  double dVar4;
-  double dVar5;
   undefined8 local_10;
   
-  dVar3 = (double)(longlong)(gConstExp.LN2INV * param_1);
-  dVar5 = -(gConstExp.C2 * dVar3 - -(gConstExp.C1 * dVar3 - param_1));
-  dVar4 = dVar5 * dVar5;
-  dVar5 = ((gConstExp.p2 * dVar4 + gConstExp.p1) * dVar4 + gConstExp.p0) * dVar5;
-  local_10 = dVar5 / (((gConstExp.q2 * dVar4 + gConstExp.q1) * dVar4 + gConstExp.q0) - dVar5) +
-             (double)gConstExp.one_half;
-  if ((ulonglong)(uint)(int)dVar3 + 1 != 0) {
-    local_10._0_2_ =
-         (ushort)(((longlong)(short)(((ushort)local_10._0_2_ >> 4 & 0x7ff) - 0x3fe) +
-                   (ulonglong)(uint)(int)dVar3 + 1 + 0x3fe & 0xffffffff) << 4) |
-         local_10._0_2_ & 0x800f;
+  dVar1 = (double)(longlong)(DAT_829b00f0 * _X);
+  dVar3 = -(DAT_829b0100 * dVar1 - -(DAT_829b00f8 * dVar1 - _X));
+  dVar2 = dVar3 * dVar3;
+  dVar3 = ((DAT_829b0118 * dVar2 + DAT_829b0110) * dVar2 + DAT_829b0108) * dVar3;
+  dVar2 = dVar3 / (((DAT_829b0130 * dVar2 + DAT_829b0128) * dVar2 + DAT_829b0120) - dVar3) +
+          (double)DAT_829b013c;
+  local_10 = dVar2;
+  if ((ulonglong)(uint)(int)dVar1 + 1 != 0) {
+    local_10._0_2_ = (ushort)((ulonglong)dVar2 >> 0x30);
+    local_10 = (double)CONCAT26((ushort)(((longlong)(short)((local_10._0_2_ >> 4 & 0x7ff) - 0x3fe) +
+                                          (ulonglong)(uint)(int)dVar1 + 1 + 0x3fe & 0xffffffff) << 4
+                                        ) | local_10._0_2_ & 0x800f,SUB86(dVar2,0));
   }
-  _Var1 = gConstExp.inf;
-  if (param_1 - gConstExp.OVFX.dbl < 0.0) {
-    _Var1 = local_10;
+  dVar2 = DAT_829b00e0;
+  if (_X - DAT_829b00d0 < 0.0) {
+    dVar2 = local_10;
   }
-  _Var2.dbl = (double)gConstExp.zero;
-  if (gConstExp.UFLX.dbl - param_1 < 0.0) {
-    _Var2 = _Var1;
+  dVar1 = (double)DAT_829b0138;
+  if (DAT_829b00d8 - _X < 0.0) {
+    dVar1 = dVar2;
   }
-  return _Var2.dbl;
+  return dVar1;
 }
 

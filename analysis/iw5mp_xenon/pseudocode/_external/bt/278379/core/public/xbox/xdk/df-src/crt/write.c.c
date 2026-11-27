@@ -2,72 +2,70 @@
 
 // 82922638  _write  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/write.c:61)
 
-int _write(int param_1,void *param_2,uint param_3)
+int _write(int _FileHandle,void *_Buf,uint _MaxCharCount)
 
 {
-  int iVar1;
-  uint uVar3;
-  ulong *puVar4;
-  int *piVar5;
-  ulonglong uVar2;
-  int iVar6;
+  uint _Filehandle;
+  ulong *puVar2;
+  int *piVar3;
+  ulonglong uVar1;
+  int iVar4;
   uint uStack00000014;
   uint local_50;
   
-  uVar3 = __savegprlr_25(param_1);
-  uStack00000014 = uVar3;
-  if (uVar3 == 0xfffffffe) {
-    puVar4 = __doserrno();
-    *puVar4 = 0;
-    piVar5 = _errno();
-    uVar2 = 0xffffffffffffffff;
-    *piVar5 = 9;
+  _Filehandle = __savegprlr_25(_FileHandle);
+  uStack00000014 = _Filehandle;
+  if (_Filehandle == 0xfffffffe) {
+    puVar2 = __doserrno();
+    *puVar2 = 0;
+    piVar3 = _errno();
+    uVar1 = 0xffffffffffffffff;
+    *piVar3 = 9;
   }
   else {
-    if ((-1 < (int)uVar3) && (uVar3 < (uint)_nhandle)) {
-      iVar6 = ((int)uVar3 >> 5) * 4;
-      iVar1 = (uVar3 & 0x1f) * 0x48;
-      if ((*(byte *)(*(int *)(&__pioinfo + iVar6) + iVar1 + 4) & 1) != 0) {
-        __lock_fhandle(uVar3);
-        if ((*(byte *)(*(int *)(&__pioinfo + iVar6) + iVar1 + 4) & 1) == 0) {
-          piVar5 = _errno();
-          *piVar5 = 9;
-          puVar4 = __doserrno();
-          *puVar4 = 0;
+    if ((-1 < (int)_Filehandle) && (_Filehandle < DAT_84897db0)) {
+      iVar4 = (_Filehandle & 0x1f) * 0x48;
+      if ((*(byte *)((&DAT_84897dc0)[(int)_Filehandle >> 5] + iVar4 + 4) & 1) != 0) {
+        __lock_fhandle(_Filehandle);
+        if ((*(byte *)((&DAT_84897dc0)[(int)_Filehandle >> 5] + iVar4 + 4) & 1) == 0) {
+          piVar3 = _errno();
+          *piVar3 = 9;
+          puVar2 = __doserrno();
+          *puVar2 = 0;
           local_50 = 0xffffffff;
         }
         else {
-          local_50 = _write_nolock(uVar3,param_2,param_3);
+          local_50 = _write_nolock(_Filehandle,_Buf,_MaxCharCount);
         }
         FUN_8292277c();
-        uVar2 = (ulonglong)local_50;
+        uVar1 = (ulonglong)local_50;
         goto LAB_82922754;
       }
     }
-    puVar4 = __doserrno();
-    *puVar4 = 0;
-    piVar5 = _errno();
-    *piVar5 = 9;
+    puVar2 = __doserrno();
+    *puVar2 = 0;
+    piVar3 = _errno();
+    *piVar3 = 9;
     _invalid_parameter_noinfo();
-    uVar2 = 0xffffffffffffffff;
+    uVar1 = 0xffffffffffffffff;
   }
 LAB_82922754:
-  iVar6 = __restgprlr_25(uVar2);
-  return iVar6;
+  iVar4 = __restgprlr_25(uVar1);
+  return iVar4;
 }
 
 
 // 829223F0  _write_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/write.c:95)
 
-int _write_nolock(int param_1,void *param_2,uint param_3)
+int _write_nolock(int _FileHandle,void *_Buf,uint _MaxCharCount)
 
 {
   int iVar1;
   uint uVar2;
   ulong *puVar3;
   int *piVar4;
-  int iVar5;
-  ulong uVar6;
+  BOOL BVar5;
+  DWORD DVar6;
   int iVar7;
   ulonglong uVar8;
   ulonglong uVar9;
@@ -80,9 +78,9 @@ int _write_nolock(int param_1,void *param_2,uint param_3)
   uint local_1470 [4];
   char local_1460 [5216];
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_21(param_1);
+  uVar9 = (ulonglong)(int)_MaxCharCount;
+  uVar8 = (ulonglong)(int)_Buf;
+  uVar2 = __savegprlr_21(_FileHandle);
   uVar14 = 0;
   lVar13 = 0;
   if ((uVar9 & 0xffffffff) == 0) {
@@ -99,15 +97,15 @@ LAB_8292242c:
     _invalid_parameter_noinfo();
   }
   else {
-    iVar7 = ((int)uVar2 >> 5) * 4;
+    iVar7 = (int)uVar2 >> 5;
     iVar1 = (uVar2 & 0x1f) * 0x48;
-    cVar12 = *(char *)(*(int *)(&__pioinfo + iVar7) + iVar1 + 0x28) >> 1;
+    cVar12 = *(char *)((&DAT_84897dc0)[iVar7] + iVar1 + 0x28) >> 1;
     if (((cVar12 == '\x02') || (cVar12 == '\x01')) && ((~uVar9 & 1) == 0)) goto LAB_8292242c;
-    if ((*(byte *)(*(int *)(&__pioinfo + iVar7) + iVar1 + 4) & 0x20) != 0) {
+    if ((*(byte *)((&DAT_84897dc0)[iVar7] + iVar1 + 4) & 0x20) != 0) {
       _lseeki64_nolock(uVar2,0,2);
     }
-    if ((*(byte *)((undefined4 *)(*(int *)(&__pioinfo + iVar7) + iVar1) + 1) & 0x80) != 0) {
-      uVar6 = 0;
+    if ((*(byte *)((undefined4 *)((&DAT_84897dc0)[iVar7] + iVar1) + 1) & 0x80) != 0) {
+      DVar6 = 0;
       uVar15 = uVar8;
       if ((uVar9 & 0xffffffff) != 0) {
         do {
@@ -129,16 +127,16 @@ LAB_8292242c:
             *pcVar11 = cVar12;
             pcVar11 = pcVar11 + 1;
           } while (uVar2 < 0x13ff);
-          iVar5 = WriteFile(*(void **)(*(int *)(&__pioinfo + iVar7) + iVar1),local_1460,
-                            (int)pcVar11 - (int)local_1460,local_1470,(_OVERLAPPED *)0x0);
-          if (iVar5 == 0) goto LAB_8292259c;
+          BVar5 = WriteFile(*(HANDLE *)((&DAT_84897dc0)[iVar7] + iVar1),local_1460,
+                            (int)pcVar11 - (int)local_1460,local_1470,(LPOVERLAPPED)0x0);
+          if (BVar5 == 0) goto LAB_8292259c;
           uVar14 = local_1470[0] + uVar14;
         } while (((int)pcVar11 - (int)local_1460 <= (int)local_1470[0]) &&
                 ((uVar15 - uVar8 & 0xffffffff) < (uVar9 & 0xffffffff)));
         goto LAB_829225a4;
       }
 LAB_829225e4:
-      if (((*(byte *)(*(int *)(&__pioinfo + iVar7) + iVar1 + 4) & 0x40) == 0) ||
+      if (((*(byte *)((&DAT_84897dc0)[iVar7] + iVar1 + 4) & 0x40) == 0) ||
          (*(char *)uVar8 != '\x1a')) {
         piVar4 = _errno();
         *piVar4 = 0x1c;
@@ -149,30 +147,30 @@ LAB_829225e4:
       }
       goto LAB_8292241c;
     }
-    iVar5 = WriteFile(*(void **)(*(int *)(&__pioinfo + iVar7) + iVar1),(char *)uVar8,(ulong)uVar9,
-                      local_1470,(_OVERLAPPED *)0x0);
-    if (iVar5 == 0) {
+    BVar5 = WriteFile(*(HANDLE *)((&DAT_84897dc0)[iVar7] + iVar1),(char *)uVar8,(DWORD)uVar9,
+                      local_1470,(LPOVERLAPPED)0x0);
+    if (BVar5 == 0) {
 LAB_8292259c:
-      uVar6 = GetLastError();
+      DVar6 = GetLastError();
     }
     else {
       uVar14 = (ulonglong)local_1470[0];
-      uVar6 = 0;
+      DVar6 = 0;
     }
 LAB_829225a4:
     if ((int)uVar14 != 0) {
       lVar13 = uVar14 - lVar13;
       goto LAB_82922628;
     }
-    if (uVar6 == 0) goto LAB_829225e4;
-    if (uVar6 == 5) {
+    if (DVar6 == 0) goto LAB_829225e4;
+    if (DVar6 == 5) {
       piVar4 = _errno();
       *piVar4 = 9;
       puVar3 = __doserrno();
       *puVar3 = 5;
     }
     else {
-      _dosmaperr(uVar6);
+      _dosmaperr(DVar6);
     }
   }
   lVar13 = -1;

@@ -2,73 +2,87 @@
 
 // 827CBF48  jdiv_round_up  (jpeg-6/jutils.c:75)
 
-long jdiv_round_up(long param_1,long param_2)
+int jdiv_round_up(int param_1,ulonglong param_2)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
+  uint uVar1;
   
-  uVar1 = (ulonglong)param_2;
-  trapWord(6,uVar1,0);
-  uVar2 = ((longlong)param_1 + uVar1) - 1;
-  trapWord(5,uVar1 & ~(((uVar2 & 0x7fffffff) << 1 | (uVar2 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  return (int)uVar2 / param_2;
+  trapWord(6,param_2,0);
+  uVar1 = (param_1 + (int)param_2) - 1;
+  trapWord(5,param_2 & ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),
+           0xffff);
+  return (int)uVar1 / (int)param_2;
 }
 
 
 // 827CBF70  jround_up  (jpeg-6/jutils.c:84)
 
-long jround_up(long param_1,long param_2)
+longlong jround_up(longlong param_1,ulonglong param_2)
 
 {
   ulonglong uVar1;
-  ulonglong uVar2;
   
-  uVar1 = (ulonglong)param_2;
-  trapWord(6,uVar1,0);
-  uVar2 = ((longlong)param_1 + uVar1) - 1;
-  trapWord(5,uVar1 & ~(((uVar2 & 0x7fffffff) << 1 | (uVar2 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  return ((int)uVar2 / param_2) * param_2;
+  trapWord(6,param_2,0);
+  uVar1 = (param_1 + param_2) - 1;
+  trapWord(5,param_2 & ~(((uVar1 & 0x7fffffff) << 1 | (uVar1 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  return (longlong)((int)uVar1 / (int)param_2) * (longlong)(int)param_2;
 }
 
 
 // 827CBFA0  jcopy_sample_rows  (jpeg-6/jutils.c:119)
 
-void jcopy_sample_rows(uchar **param_1,int param_2,uchar **param_3,int param_4,int param_5,
-                      uint param_6)
+void jcopy_sample_rows(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4,
+                      undefined8 param_5,size_t param_6)
 
 {
   longlong lVar1;
+  void *pvVar2;
+  undefined4 uVar3;
+  int iVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
   
-  lVar1 = (longlong)param_5;
-  __savegprlr_28(param_1);
-  if (0 < (int)lVar1) {
+  iVar4 = (int)param_5;
+  uVar3 = (undefined4)((ulonglong)param_5 >> 0x20);
+  lVar1 = __savegprlr_28();
+  lVar7 = CONCAT44(uVar3,iVar4);
+  if (0 < iVar4) {
+    lVar6 = (param_2 & 0x3fffffff) * 4 + lVar1 + -4;
+    lVar5 = (param_4 & 0x3fffffff) * 4 + param_3 + -4;
     do {
-      memcpy();
-      lVar1 = lVar1 + -1;
-    } while (0 < lVar1);
+      lVar6 = lVar6 + 4;
+      lVar5 = lVar5 + 4;
+      pvVar2 = memcpy((void *)*(undefined4 *)lVar5,(void *)*(undefined4 *)lVar6,param_6);
+      lVar1 = (longlong)(int)pvVar2;
+      lVar7 = lVar7 + -1;
+    } while (0 < lVar7);
   }
-  __restgprlr_28();
+  __restgprlr_28(lVar1);
   return;
 }
 
 
 // 827CBFF8  jcopy_block_row  (jpeg-6/jutils.c:148)
 
-void jcopy_block_row(short (*param_1) [64],short (*param_2) [64],uint param_3)
+void * jcopy_block_row(void *param_1,void *param_2,int param_3)
 
 {
-  memcpy();
-  return;
+  void *pvVar1;
+  
+  pvVar1 = memcpy(param_2,param_1,param_3 << 7);
+  return pvVar1;
 }
 
 
 // 827CC010  jzero_far  (jpeg-6/jutils.c:168)
 
-void jzero_far(void *param_1,uint param_2)
+void * jzero_far(void *param_1,size_t param_2)
 
 {
-  memset();
-  return;
+  void *pvVar1;
+  
+  pvVar1 = memset(param_1,0,param_2);
+  return pvVar1;
 }
 

@@ -2,18 +2,16 @@
 
 // 8271ECC8  R_Cinematic_CheckBinkError  (gfx_d3d/r_cinematic.cpp:226)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Cinematic_CheckBinkError(void)
 
 {
-  char *pcVar1;
+  char *pcVar2;
+  undefined8 uVar1;
   
-  pcVar1 = (char *)BinkGetError();
-  if ((pcVar1 != (char *)0x0) && (*pcVar1 != '\0')) {
-    va("BinkGetError(): \"%s\"");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0xe6,
-                    0,"%s\n\t%s");
+  pcVar2 = (char *)BinkGetError();
+  if ((pcVar2 != (char *)0x0) && (*pcVar2 != '\0')) {
+    uVar1 = va(0xffffffff821ba384,pcVar2);
+    MyAssertHandler(0xffffffff821ba340,0xe6,0,0xffffffff820011f4,0xffffffff821ba318,uVar1);
   }
   return;
 }
@@ -21,17 +19,16 @@ void R_Cinematic_CheckBinkError(void)
 
 // 8271ED38  CinematicHunk_Open  (gfx_d3d/r_cinematic.cpp:236)
 
-void CinematicHunk_Open(CinematicHunk *param_1,void *param_2,int param_3)
+void CinematicHunk_Open(undefined8 param_1,int param_2,int param_3)
 
 {
   int *piVar1;
   
-  piVar1 = (int *)__savegprlr_29(param_1);
+  piVar1 = (int *)__savegprlr_29();
   if (*piVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0xed,
-                    0,"%s");
+    MyAssertHandler(0xffffffff821ba340,0xed,0,0xffffffff82000f98,0xffffffff821ba39c);
   }
-  *piVar1 = (int)param_2;
+  *piVar1 = param_2;
   piVar1[2] = param_3;
   piVar1[1] = 0;
   __restgprlr_29();
@@ -41,23 +38,20 @@ void CinematicHunk_Open(CinematicHunk *param_1,void *param_2,int param_3)
 
 // 8271ED98  CinematicHunk_Close  (gfx_d3d/r_cinematic.cpp:245)
 
-void CinematicHunk_Close(CinematicHunk *param_1)
+void CinematicHunk_Close(int *param_1)
 
 {
-  if (param_1->base == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0xf6,
-                    0,"%s");
-    param_1->base = (void *)0x0;
+  if (*param_1 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0xf6,0,0xffffffff82000f98,0xffffffff821ba3a8);
+    *param_1 = 0;
     return;
   }
-  param_1->base = (void *)0x0;
+  *param_1 = 0;
   return;
 }
 
 
 // 8271EE18  R_Cinematic_LockRead  (gfx_d3d/r_cinematic.cpp:254)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_Cinematic_LockRead(void)
 
@@ -67,14 +61,12 @@ void R_Cinematic_LockRead(void)
   __savegprlr_29();
   iVar1 = R_HasDeviceOwnership();
   if (iVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x100
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff821ba340,0x100,0,0xffffffff82000f98,0xffffffff82059658);
   }
-  if (cinematicGlob.lockRead != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x102
-                    ,0,"%s");
+  if (DAT_845a14fc != 0) {
+    MyAssertHandler(0xffffffff821ba340,0x102,0,0xffffffff82000f98,0xffffffff821ba3b4);
   }
-  cinematicGlob.lockRead = 1;
+  DAT_845a14fc = 1;
   Sys_LockFileRead();
   __restgprlr_29();
   return;
@@ -83,16 +75,13 @@ void R_Cinematic_LockRead(void)
 
 // 8271EEA0  R_Cinematic_UnlockRead  (gfx_d3d/r_cinematic.cpp:265)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Cinematic_UnlockRead(void)
 
 {
-  if (cinematicGlob.lockRead == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x10a
-                    ,0,"%s");
+  if (DAT_845a14fc == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x10a,0,0xffffffff82000f98,0xffffffff821ba3cc);
   }
-  cinematicGlob.lockRead = 0;
+  DAT_845a14fc = 0;
   Sys_UnlockFileRead(0);
   return;
 }
@@ -100,107 +89,88 @@ void R_Cinematic_UnlockRead(void)
 
 // 8271EF10  CinematicHunk_Alloc  (gfx_d3d/r_cinematic.cpp:275)
 
-void * CinematicHunk_Alloc(CinematicHunk *param_1,int param_2,int param_3,char *param_4)
+void CinematicHunk_Alloc(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
   uint uVar1;
   uint *puVar2;
-  char *pcVar3;
-  int iVar4;
-  void *pvVar5;
-  longlong lVar6;
-  longlong lVar7;
-  uint uVar8;
-  ulonglong uVar9;
+  int iVar3;
+  uint uVar4;
+  ulonglong uVar5;
   
-  lVar7 = (longlong)param_3;
-  lVar6 = (longlong)param_2;
-  puVar2 = (uint *)__savegprlr_26(param_1,lVar6,lVar7,param_4);
+  puVar2 = (uint *)__savegprlr_26();
   if (*puVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x116
-                    ,0,"%s");
+    MyAssertHandler(0xffffffff821ba340,0x116,0,0xffffffff82000f98,0xffffffff821ba3a8);
   }
-  if ((int)lVar6 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x117
-                    ,0,"%s");
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff821ba340,0x117,0,0xffffffff82000f98,0xffffffff82058928);
   }
-  if ((uint)lVar7 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x118
-                    ,0,"%s");
+  if ((uint)param_3 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x118,0,0xffffffff82000f98,0xffffffff8217d2b4);
   }
-  uVar9 = lVar7 - 1;
-  if (((uint)uVar9 & (uint)lVar7) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x119
-                    ,0,"%s");
+  uVar5 = param_3 - 1;
+  if (((uint)uVar5 & (uint)param_3) != 0) {
+    MyAssertHandler(0xffffffff821ba340,0x119,0,0xffffffff82000f98,0xffffffff82151eb0);
   }
   uVar1 = *puVar2;
-  uVar9 = uVar9 + puVar2[1] & ~uVar9;
-  uVar8 = (int)uVar9 + (int)lVar6;
-  puVar2[1] = uVar8;
-  if ((int)puVar2[2] < (int)uVar8) {
-    if (db_MovieMemory != (uchar *)0x0) {
-      pcVar3 = va("CinematicHunk_Alloc failed for size %d bytes");
-                    /* WARNING: Subroutine does not return */
-      Sys_Error(pcVar3);
+  uVar5 = uVar5 + puVar2[1] & ~uVar5;
+  uVar4 = (int)uVar5 + (int)param_2;
+  puVar2[1] = uVar4;
+  if ((int)puVar2[2] < (int)uVar4) {
+    if (DAT_82ebbd28 != 0) {
+      va(0xffffffff821ba42c,param_2);
+      Sys_Error();
     }
-    iVar4 = R_HasDeviceOwnership();
-    if (iVar4 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x130,0,"%s");
+    iVar3 = R_HasDeviceOwnership();
+    if (iVar3 != 0) {
+      MyAssertHandler(0xffffffff821ba340,0x130,0,0xffffffff82000f98,0xffffffff82059658);
     }
-    uVar8 = (puVar2[1] - puVar2[2]) + 0xfff & 0xfffff000;
-    pvVar5 = PMem_AllocFromSource_NoDebug(uVar8,0x1000,4,PMEM_SOURCE_MOVIE);
-    if (pvVar5 != (void *)(*puVar2 + puVar2[2])) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x137,0,"%s");
+    uVar4 = (puVar2[1] - puVar2[2]) + 0xfff & 0xfffff000;
+    iVar3 = PMem_AllocFromSource_NoDebug(uVar4,0x1000,4,2);
+    if (iVar3 != *puVar2 + puVar2[2]) {
+      MyAssertHandler(0xffffffff821ba340,0x137,0,0xffffffff82000f98,0xffffffff821ba400);
     }
-    uVar8 = uVar8 + puVar2[2];
-    puVar2[2] = uVar8;
-    if ((int)uVar8 < (int)puVar2[1]) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x139,0,"%s");
+    uVar4 = uVar4 + puVar2[2];
+    puVar2[2] = uVar4;
+    if ((int)uVar4 < (int)puVar2[1]) {
+      MyAssertHandler(0xffffffff821ba340,0x139,0,0xffffffff82000f98,0xffffffff821ba3e4);
     }
   }
-  pvVar5 = (void *)__restgprlr_26(uVar1 + uVar9);
-  return pvVar5;
+  __restgprlr_26(uVar1 + uVar5);
+  return;
 }
 
 
 // 8271F0E0  CinematicHunk_Alloc_GpuAligned  (gfx_d3d/r_cinematic.cpp:324)
 
-void * CinematicHunk_Alloc_GpuAligned(CinematicHunk *param_1,int param_2,char *param_3)
+void CinematicHunk_Alloc_GpuAligned(undefined8 param_1,undefined8 param_2)
 
 {
-  void *pvVar1;
-  char *in_r6;
-  
-  pvVar1 = CinematicHunk_Alloc(param_1,param_2,0x1000,in_r6);
-  return pvVar1;
+  CinematicHunk_Alloc(param_1,param_2,0x1000);
+  return;
 }
 
 
 // 8271F0E8  R_StreamBeginUsingBufferForMoviePlayback  (gfx_d3d/r_cinematic.cpp:333)
 
-void R_StreamBeginUsingBufferForMoviePlayback(void **param_1)
+void R_StreamBeginUsingBufferForMoviePlayback(void)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   
-  puVar1 = (undefined4 *)__savegprlr_27(param_1);
-  if (db_MovieMemory == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x14f
-                    ,0,"%s");
+  piVar1 = (int *)__savegprlr_27();
+  if (DAT_82ebbd28 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x14f,0,0xffffffff82000f98,0xffffffff821ba45c);
   }
-  if (db_MovieMemoryInuse != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x150
-                    ,0,"%s");
-    db_MovieMemoryInuse = 1;
-    *puVar1 = db_MovieMemory;
+  if (DAT_82cc929c != 0) {
+    MyAssertHandler(0xffffffff821ba340,0x150,0,0xffffffff82000f98,0xffffffff8205c4f0);
+    DAT_82cc929c = 1;
+    *piVar1 = DAT_82ebbd28;
     __restgprlr_27();
     return;
   }
-  db_MovieMemoryInuse = 1;
-  *puVar1 = db_MovieMemory;
+  DAT_82cc929c = 1;
+  *piVar1 = DAT_82ebbd28;
   __restgprlr_27();
   return;
 }
@@ -208,21 +178,17 @@ void R_StreamBeginUsingBufferForMoviePlayback(void **param_1)
 
 // 8271F190  R_StreamEndUsingBufferForMoviePlayback  (gfx_d3d/r_cinematic.cpp:345)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_StreamEndUsingBufferForMoviePlayback(void)
 
 {
   __savegprlr_29();
-  if (db_MovieMemory == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x15b
-                    ,0,"%s");
+  if (DAT_82ebbd28 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x15b,0,0xffffffff82000f98,0xffffffff821ba45c);
   }
-  if (db_MovieMemoryInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x15c
-                    ,0,"%s");
+  if (DAT_82cc929c == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x15c,0,0xffffffff82000f98,0xffffffff821ba46c);
   }
-  db_MovieMemoryInuse = 0;
+  DAT_82cc929c = 0;
   __restgprlr_29();
   return;
 }
@@ -230,49 +196,42 @@ void R_StreamEndUsingBufferForMoviePlayback(void)
 
 // 8271F218  R_Cinematic_HunksOpen  (gfx_d3d/r_cinematic.cpp:357)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Cinematic_HunksOpen(void)
 
 {
   int iVar1;
-  uchar *puVar2;
   
   __savegprlr_28();
-  if (db_MovieMemoryInuse != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x170
-                    ,0,"%s");
+  if (DAT_82cc929c != 0) {
+    MyAssertHandler(0xffffffff821ba340,0x170,0,0xffffffff82000f98,0xffffffff8205c4f0);
   }
-  puVar2 = db_MovieMemory;
-  db_MovieMemoryInuse = 1;
-  if (db_MovieMemory == (uchar *)0x0) {
+  iVar1 = DAT_82ebbd28;
+  DAT_82cc929c = 1;
+  if (DAT_82ebbd28 == 0) {
     iVar1 = R_HasDeviceOwnership();
     if (iVar1 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x17e,0,"%s");
+      MyAssertHandler(0xffffffff821ba340,0x17e,0,0xffffffff82000f98,0xffffffff82059658);
     }
     iVar1 = DB_EnterStreaming();
     if (iVar1 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x182,0,"%s");
+      MyAssertHandler(0xffffffff821ba340,0x182,0,0xffffffff82000f98,0xffffffff8205c610);
     }
-    PMem_BeginAlloc(g_movieName,0);
-    puVar2 = PMem_AllocFromSource_NoDebug(0x10000,0x1000,4,PMEM_SOURCE_MOVIE);
-    if (cinematicGlob.masterHunk.base != (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0xed,0,"%s");
+    PMem_BeginAlloc(PTR_s__movie_82999c44,0);
+    iVar1 = PMem_AllocFromSource_NoDebug(0x10000,0x1000,4,2);
+    if (DAT_845a1164 != 0) {
+      MyAssertHandler(0xffffffff821ba340,0xed,0,0xffffffff82000f98,0xffffffff821ba39c);
     }
-    cinematicGlob.masterHunk.end = 0x10000;
+    DAT_845a116c = 0x10000;
+    DAT_845a1164 = iVar1;
   }
   else {
-    if (cinematicGlob.masterHunk.base != (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0xed,0,"%s");
+    if (DAT_845a1164 != 0) {
+      MyAssertHandler(0xffffffff821ba340,0xed,0,0xffffffff82000f98,0xffffffff821ba39c);
     }
-    cinematicGlob.masterHunk.end = 0xa00000;
+    DAT_845a116c = 0xa00000;
+    DAT_845a1164 = iVar1;
   }
-  cinematicGlob.masterHunk.atFront = 0;
-  cinematicGlob.masterHunk.base = puVar2;
+  DAT_845a1168 = 0;
   __restgprlr_28();
   return;
 }
@@ -280,39 +239,36 @@ void R_Cinematic_HunksOpen(void)
 
 // 8271F378  R_Cinematic_HunksClose  (gfx_d3d/r_cinematic.cpp:398)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Cinematic_HunksClose(void)
 
 {
   uint uVar1;
   longlong lVar2;
   longlong lVar3;
-  int *piVar4;
+  uint *puVar4;
   
   __savegprlr_28();
-  CinematicHunk_Close(&cinematicGlob.masterHunk);
-  if (db_MovieMemoryInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x19d
-                    ,0,"%s");
+  CinematicHunk_Close(0xffffffff845a1164);
+  if (DAT_82cc929c == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x19d,0,0xffffffff82000f98,0xffffffff821ba46c);
   }
-  db_MovieMemoryInuse = 0;
-  if (db_MovieMemory == (uchar *)0x0) {
-    PMem_Free(g_movieName,0);
+  DAT_82cc929c = 0;
+  if (DAT_82ebbd28 == 0) {
+    PMem_Free(PTR_s__movie_82999c44,0);
     __restgprlr_28();
     return;
   }
   lVar3 = 2;
-  piVar4 = cinematicGlob.codeImageSwapFrame;
+  puVar4 = &DAT_845a1500;
   do {
-    uVar1 = *piVar4;
-    lVar2 = (ulonglong)(uint)g_gpuSwapFrame - (ulonglong)uVar1;
+    uVar1 = *puVar4;
+    lVar2 = (ulonglong)DAT_84613704 - (ulonglong)uVar1;
     while (lVar2 < 0) {
       Sys_Sleep(1);
-      lVar2 = (ulonglong)(uint)g_gpuSwapFrame - (ulonglong)uVar1;
+      lVar2 = (ulonglong)DAT_84613704 - (ulonglong)uVar1;
     }
     lVar3 = lVar3 + -1;
-    piVar4 = piVar4 + 1;
+    puVar4 = puVar4 + 1;
   } while (lVar3 != 0);
   __restgprlr_28();
   return;
@@ -321,56 +277,39 @@ void R_Cinematic_HunksClose(void)
 
 // 8271F448  R_Cinematic_MakeBinkTexture  (gfx_d3d/r_cinematic.cpp:444)
 
-/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
-
 void R_Cinematic_MakeBinkTexture
-               (GfxImage *param_1,uint param_2,uint param_3,uint *param_4,uint *param_5)
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,uint *param_4,
+               undefined4 *param_5)
 
 {
-  uint uVar1;
-  D3DResource *pDVar2;
-  uint uVar3;
-  void *pvVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  char *pcVar7;
-  uint in_stack_ffffff48;
-  D3DTexture *in_stack_ffffff4c;
-  uint *in_stack_ffffff50;
-  uint *in_stack_ffffff54;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pDVar2 = (D3DResource *)__savegprlr_24(param_1);
-  if (pDVar2 == (D3DResource *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x1c1
-                    ,0,"%s");
+  iVar3 = __savegprlr_24();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x1c1,0,0xffffffff82000f98,0xffffffff82058d58);
   }
-  pcVar7 = &DAT_00000004;
-  uVar3 = XGSetTextureHeader((uint)uVar5,(uint)uVar6,1,4,D3DFMT_A8,0,0,0xffffffff,in_stack_ffffff48,
-                             in_stack_ffffff4c,in_stack_ffffff50,in_stack_ffffff54);
-  pvVar4 = CinematicHunk_Alloc(&cinematicGlob.masterHunk,uVar3,0x1000,pcVar7);
-  XGOffsetResourceAddress(pDVar2,pvVar4);
-  pDVar2[2].ReadFence = uVar3;
-  *(short *)&pDVar2[2].Identifier = (short)uVar5;
-  *(undefined1 *)((int)&pDVar2[2].Fence + 2) = 7;
-  *(undefined2 *)&pDVar2[2].BaseFlush = 1;
-  if ((uVar5 & 0xffffffff) != (uVar5 & 0xffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x1cc
-                    ,0,"%s\n\t(width) = %i");
+  uVar1 = XGSetTextureHeader(param_2,param_3,1,4,0x28000002,0,0,0xffffffffffffffff);
+  uVar2 = CinematicHunk_Alloc(0xffffffff845a1164,uVar1,0x1000);
+  XGOffsetResourceAddress(iVar3,uVar2);
+  *(int *)(iVar3 + 0x3c) = (int)uVar1;
+  *(short *)(iVar3 + 0x40) = (short)param_2;
+  *(undefined1 *)(iVar3 + 0x3a) = 7;
+  *(undefined2 *)(iVar3 + 0x44) = 1;
+  if ((param_2 & 0xffffffff) != (param_2 & 0xffff)) {
+    MyAssertHandler(0xffffffff821ba340,0x1cc,0,0xffffffff821ba4cc,0xffffffff821ba4e0,param_2);
   }
-  *(short *)((int)&pDVar2[2].Identifier + 2) = (short)uVar6;
-  if ((uVar6 & 0xffffffff) != (uVar6 & 0xffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x1ce
-                    ,0,"%s\n\t(height) = %i");
+  *(short *)(iVar3 + 0x42) = (short)param_3;
+  if ((param_3 & 0xffffffff) != (param_3 & 0xffff)) {
+    MyAssertHandler(0xffffffff821ba340,0x1ce,0,0xffffffff821ba49c,0xffffffff821ba4b0,param_3);
   }
-  uVar1 = pDVar2[1].ReferenceCount;
-  pDVar2[3].Common = (ulong)pvVar4;
-  *(undefined1 *)&pDVar2[2].Fence = 3;
-  pDVar2[4].ReadFence = (ulong)"R_Cinematic_MakeBinkTexture";
-  *(undefined1 *)((int)&pDVar2[2].Fence + 1) = 2;
-  *param_4 = uVar1 >> 0x11 & 0x3fe0;
-  *param_5 = uVar3;
+  *(int *)(iVar3 + 0x48) = (int)uVar2;
+  *(undefined1 *)(iVar3 + 0x38) = 3;
+  *(char **)(iVar3 + 0x6c) = "R_Cinematic_MakeBinkTexture";
+  *(undefined1 *)(iVar3 + 0x39) = 2;
+  *param_4 = *(uint *)(iVar3 + 0x1c) >> 0x11 & 0x3fe0;
+  *param_5 = (int)uVar1;
   __restgprlr_24();
   return;
 }
@@ -378,121 +317,110 @@ void R_Cinematic_MakeBinkTexture
 
 // 8271F5B8  R_Cinematic_InitBinkTextures  (gfx_d3d/r_cinematic.cpp:537)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Cinematic_InitBinkTextures(void)
 
 {
-  void *pvVar1;
-  uint uVar2;
-  uint uVar3;
-  uint uVar4;
-  uint uVar5;
-  uint uVar6;
-  uint uVar7;
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
   uint uVar8;
-  D3DTexture **ppDVar9;
-  GfxImage *pGVar10;
-  BINKPLANE *pBVar11;
-  uint local_b8;
-  uint local_b4;
-  uint local_b0;
-  uint local_ac;
-  uint local_a8;
-  uint local_a4;
-  uint local_a0;
+  int *piVar9;
+  undefined4 *puVar10;
+  longlong lVar11;
+  int *piVar12;
+  int local_b8;
+  int local_b4;
+  int local_b0;
+  int local_ac;
+  int local_a8;
+  int local_a4;
+  int local_a0;
   uint local_9c [39];
   
   __savegprlr();
-  if ((cinematicGlob.binkTextureSet.bink_buffers.TotalFrames != 2) &&
-     (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x21f,0,"%s"), cinematicGlob.binkTextureSet.bink_buffers.TotalFrames != 2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x223
-                    ,0,"%s");
+  if (DAT_845a10ec != 2) {
+    MyAssertHandler(0xffffffff821ba340,0x21f,0,0xffffffff82000f98,0xffffffff821ba5f8);
+    if (DAT_845a10ec != 2) {
+      MyAssertHandler(0xffffffff821ba340,0x223,0,0xffffffff82000f98,0xffffffff821ba5f8);
+    }
   }
-  pGVar10 = cinematicGlob.textureSet.imageCb;
-  local_b4 = 0xffffffff;
-  local_b0 = 0xffffffff;
-  local_ac = 0xffffffff;
-  local_a8 = 0xffffffff;
-  local_a4 = 0xffffffff;
-  local_a0 = 0xffffffff;
-  local_b8 = 0xffffffff;
+  lVar11 = -0x7ba5ecc4;
+  local_b4 = -1;
+  local_b0 = -1;
+  local_ac = -1;
+  local_a8 = -1;
+  local_a4 = -1;
+  local_a0 = -1;
+  local_b8 = -1;
   local_9c[0] = 0xffffffff;
   do {
-    R_Cinematic_MakeBinkTexture
-              (pGVar10 + -0x1c0,cinematicGlob.binkTextureSet.bink_buffers.YABufferWidth,
-               cinematicGlob.binkTextureSet.bink_buffers.YABufferHeight,&local_b4,&local_b0);
-    R_Cinematic_MakeBinkTexture
-              (pGVar10 + -0xe0,cinematicGlob.binkTextureSet.bink_buffers.cRcBBufferWidth,
-               cinematicGlob.binkTextureSet.bink_buffers.cRcBBufferHeight,&local_ac,&local_a8);
-    R_Cinematic_MakeBinkTexture
-              (pGVar10,cinematicGlob.binkTextureSet.bink_buffers.cRcBBufferWidth,
-               cinematicGlob.binkTextureSet.bink_buffers.cRcBBufferHeight,&local_a4,&local_a0);
-    R_Cinematic_MakeBinkTexture
-              (pGVar10 + 0xe0,cinematicGlob.binkTextureSet.bink_buffers.YABufferWidth,
-               cinematicGlob.binkTextureSet.bink_buffers.YABufferHeight,&local_b8,local_9c);
+    R_Cinematic_MakeBinkTexture(lVar11 + -0x1c0,DAT_845a10f0,DAT_845a10f4,&local_b4,&local_b0);
+    R_Cinematic_MakeBinkTexture(lVar11 + -0xe0,DAT_845a10f8,DAT_845a10fc,&local_ac,&local_a8);
+    R_Cinematic_MakeBinkTexture(lVar11,DAT_845a10f8,DAT_845a10fc,&local_a4,&local_a0);
+    R_Cinematic_MakeBinkTexture(lVar11 + 0xe0,DAT_845a10f0,DAT_845a10f4,&local_b8,local_9c);
     uVar8 = local_9c[0];
-    uVar7 = local_a0;
-    uVar6 = local_a4;
-    uVar5 = local_a8;
-    uVar4 = local_ac;
-    uVar3 = local_b0;
-    uVar2 = local_b4;
-    pGVar10 = pGVar10 + 0x70;
-  } while (pGVar10 != cinematicGlob.textureSet.imageA);
-  if (((((local_b4 == 0xffffffff) || (local_b0 == 0xffffffff)) || (local_ac == 0xffffffff)) ||
-      ((local_a8 == 0xffffffff || (local_a4 == 0xffffffff)))) ||
-     ((local_a0 == 0xffffffff || ((local_b8 == 0xffffffff || (local_9c[0] == 0xffffffff)))))) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x238
-                    ,0,"%s");
+    iVar7 = local_a0;
+    iVar6 = local_a4;
+    iVar5 = local_a8;
+    iVar4 = local_ac;
+    iVar3 = local_b0;
+    iVar2 = local_b4;
+    lVar11 = lVar11 + 0x70;
+  } while ((undefined *)lVar11 != &DAT_845a141c);
+  if (((((local_b4 == -1) || (local_b0 == -1)) || (local_ac == -1)) ||
+      ((local_a8 == -1 || (local_a4 == -1)))) ||
+     ((local_a0 == -1 || ((local_b8 == -1 || (local_9c[0] == 0xffffffff)))))) {
+    MyAssertHandler(0xffffffff821ba340,0x238,0,0xffffffff82000f98,0xffffffff821ba570);
   }
-  if (cinematicGlob.binkTextureSet.bink_buffers.TotalFrames != 2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x23a
-                    ,0,"%s");
+  if (DAT_845a10ec != 2) {
+    MyAssertHandler(0xffffffff821ba340,0x23a,0,0xffffffff82000f98,0xffffffff821ba5f8);
   }
-  pGVar10 = cinematicGlob.textureSet.imageCr + 0x48;
-  pBVar11 = &cinematicGlob.binkTextureSet.bink_buffers.Frames[0].cBPlane;
-  ppDVar9 = &cinematicGlob.binkTextureSet.textures[0].cBtexture;
+  piVar9 = &DAT_845a12a4;
+  piVar12 = &DAT_845a111c;
+  puVar10 = &DAT_845a10b4;
   do {
-    ((BINKFRAMETEXTURES *)(ppDVar9 + -2))->Ytexture = (D3DTexture *)0x0;
-    ppDVar9[-1] = (D3DTexture *)0x0;
-    *ppDVar9 = (D3DTexture *)0x0;
-    ppDVar9[1] = (D3DTexture *)0x0;
-    if ((((BINKFRAMEPLANESET *)(pBVar11 + -2))->YPlane).Allocate == 0) {
+    puVar10[-2] = 0;
+    puVar10[-1] = 0;
+    *puVar10 = 0;
+    puVar10[1] = 0;
+    if (piVar12[-6] == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x248,0,"%s");
+                      0x248,0,&DAT_82000f98,0xffffffff821ba4f8);
     }
-    if (pBVar11[-1].Allocate == 0) {
+    if (piVar12[-3] == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x249,0,"%s");
+                      0x249,0,&DAT_82000f98,0xffffffff821ba510);
     }
-    if (pBVar11->Allocate == 0) {
+    if (*piVar12 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x24a,0,"%s");
+                      0x24a,0,&DAT_82000f98,0xffffffff821ba528);
     }
-    (((BINKFRAMEPLANESET *)(pBVar11 + -2))->YPlane).Buffer = *(void **)(pGVar10 + -0xe0);
-    pBVar11[-1].Buffer = *(void **)pGVar10;
-    pBVar11->Buffer = *(void **)(pGVar10 + 0xe0);
-    pvVar1 = *(void **)(pGVar10 + 0x1c0);
-    (((BINKFRAMEPLANESET *)(pBVar11 + -2))->YPlane).BufferPitch = uVar2;
-    pBVar11[-1].BufferPitch = uVar4;
-    pBVar11->BufferPitch = uVar6;
-    pBVar11[1].BufferPitch = local_b8;
-    pBVar11[1].Buffer = pvVar1;
-    ppDVar9[2] = (D3DTexture *)uVar3;
-    ppDVar9[3] = (D3DTexture *)uVar5;
-    ppDVar9[4] = (D3DTexture *)uVar7;
-    ppDVar9[5] = (D3DTexture *)uVar8;
+    piVar12[-5] = piVar9[-0x38];
+    piVar12[-2] = *piVar9;
+    piVar12[1] = piVar9[0x38];
+    iVar1 = piVar9[0x70];
+    piVar12[-4] = iVar2;
+    piVar12[-1] = iVar4;
+    piVar12[2] = iVar6;
+    piVar12[5] = local_b8;
+    piVar12[4] = iVar1;
+    puVar10[2] = iVar3;
+    puVar10[3] = iVar5;
+    puVar10[4] = iVar7;
+    puVar10[5] = uVar8;
     if ((uVar8 & 0x7f) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x25f,0,"%s\n\t(sizeA) = %i");
+                      0x25f,0,0xffffffff821ba558,0xffffffff821ba540,uVar8);
     }
-    XMemSet128(pBVar11[1].Buffer,0xff,uVar8);
-    pBVar11 = pBVar11 + 4;
-    ppDVar9 = ppDVar9 + 8;
-    pGVar10 = pGVar10 + 0x70;
-  } while ((CinematicTextureSet *)pBVar11 != &cinematicGlob.textureSet);
+    XMemSet128(piVar12[4],0xff,uVar8);
+    piVar12 = piVar12 + 0xc;
+    puVar10 = puVar10 + 8;
+    piVar9 = piVar9 + 0x1c;
+  } while (piVar12 != (int *)&DAT_845a117c);
   __restgprlr();
   return;
 }
@@ -500,20 +428,20 @@ void R_Cinematic_InitBinkTextures(void)
 
 // 8271F8C0  commitToMemory  (gfx_d3d/r_cinematic.cpp:703)
 
-void commitToMemory(void *param_1,uint param_2)
+void commitToMemory(longlong param_1,int param_2)
 
 {
-  longlong lVar1;
+  uint uVar1;
   longlong lVar2;
   
-  lVar1 = (longlong)(int)param_1;
-  if ((lVar1 + (int)param_2 & 0xffffffffU) <= ZEXT48(param_1)) {
+  uVar1 = (uint)param_1;
+  if (uVar1 + param_2 <= uVar1) {
     return;
   }
-  lVar2 = ((((lVar1 + (int)param_2) - lVar1) - 1U & 0xffffffff) >> 7) + 1;
+  lVar2 = (ulonglong)(((uVar1 + param_2) - uVar1) - 1 >> 7) + 1;
   do {
-    dataCacheBlockStore(lVar1);
-    lVar1 = lVar1 + 0x80;
+    dataCacheBlockStore(param_1);
+    param_1 = param_1 + 0x80;
     lVar2 = lVar2 + -1;
   } while (lVar2 != 0);
   return;
@@ -522,41 +450,134 @@ void commitToMemory(void *param_1,uint param_2)
 
 // 8271F8F8  R_Cinematic_IsValidFrame  (gfx_d3d/r_cinematic.cpp:720)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int R_Cinematic_IsValidFrame(void)
+ulonglong R_Cinematic_IsValidFrame(void)
 
 {
-  return (int)((~(ulonglong)(uint)(cinematicGlob.status.frameNum ^ cinematicGlob.status.startFrame)
-               & 0xffffffff) >> 0x1f) +
-         (uint)((uint)cinematicGlob.status.frameNum <= (uint)cinematicGlob.status.startFrame) & 1;
+  return ((~(ulonglong)(DAT_845a0f8c ^ DAT_845a0f88) & 0xffffffff) >> 0x1f) +
+         (ulonglong)(DAT_845a0f8c <= DAT_845a0f88) & 1;
 }
 
 
 // 8271F920  RB_Cinematic_SetRendererImagesToFrame  (gfx_d3d/r_cinematic.cpp:728)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void RB_Cinematic_SetRendererImagesToFrame(void)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  
+  uVar2 = __savegprlr_29();
+  iVar3 = (int)uVar2;
+  if ((iVar3 != -1) && (DAT_845a0f88 < DAT_845a0f8c)) {
+    *(undefined4 *)((int)&DAT_845a1500 + (int)((uVar2 & 0xffffffff) << 2)) =
+         *(undefined4 *)(DAT_84821000 + 0x1bfc);
+    sync(1);
+    uVar6 = uVar2 * 0x70 - 0x7ba5ee84;
+    DAT_8484f028 = (int)uVar6;
+    uVar7 = (ulonglong)*(uint *)(DAT_8484f028 + 0x2e8);
+    iVar1 = (int)((uVar2 & 0x7ffffff) << 5);
+    uVar4 = *(uint *)((int)&DAT_845a10c8 + iVar1) + uVar7;
+    if (uVar7 < (uVar4 & 0xffffffff)) {
+      lVar5 = (((uVar4 - uVar7) - 1 & 0xffffffff) >> 7) + 1;
+      do {
+        dataCacheBlockStore(uVar7);
+        uVar7 = uVar7 + 0x80;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+    }
+    uVar7 = (ulonglong)*(uint *)(DAT_8484f028 + 0x48);
+    uVar4 = *(uint *)((int)&DAT_845a10bc + iVar1) + uVar7;
+    if (uVar7 < (uVar4 & 0xffffffff)) {
+      lVar5 = (((uVar4 - uVar7) - 1 & 0xffffffff) >> 7) + 1;
+      do {
+        dataCacheBlockStore(uVar7);
+        uVar7 = uVar7 + 0x80;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+    }
+    uVar7 = (ulonglong)*(uint *)(DAT_8484f028 + 0x128);
+    uVar4 = *(uint *)((int)&DAT_845a10c0 + iVar1) + uVar7;
+    if (uVar7 < (uVar4 & 0xffffffff)) {
+      lVar5 = (((uVar4 - uVar7) - 1 & 0xffffffff) >> 7) + 1;
+      do {
+        dataCacheBlockStore(uVar7);
+        uVar7 = uVar7 + 0x80;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+    }
+    uVar7 = (ulonglong)*(uint *)(DAT_8484f028 + 0x208);
+    uVar4 = *(uint *)((int)&DAT_845a10c4 + iVar1) + uVar7;
+    if (uVar7 < (uVar4 & 0xffffffff)) {
+      lVar5 = (((uVar4 - uVar7) - 1 & 0xffffffff) >> 7) + 1;
+      do {
+        dataCacheBlockStore(uVar7);
+        uVar7 = uVar7 + 0x80;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+    }
+    sync(1);
+    DAT_8484f034 = &DAT_845a141c + iVar3 * 0x70;
+    uVar2 = uVar2 * 0x70 - 0x7ba5eda4;
+    DAT_8484f030 = &DAT_845a133c + iVar3 * 0x70;
+    DAT_8484f02c = (uint)uVar2;
+    if ((uVar6 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff821ba340,0x303,0,0xffffffff82000f98,0xffffffff821ba6e4);
+      uVar2 = (ulonglong)DAT_8484f02c;
+    }
+    if ((uVar2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff821ba340,0x304,0,0xffffffff82000f98,0xffffffff821ba6a8);
+    }
+    if (DAT_8484f030 == (undefined *)0x0) {
+      MyAssertHandler(0xffffffff821ba340,0x305,0,0xffffffff82000f98,0xffffffff821ba66c);
+    }
+    if (DAT_8484f034 == (undefined *)0x0) {
+      MyAssertHandler(0xffffffff821ba340,0x306,0,0xffffffff82000f98,0xffffffff821ba634);
+    }
+    sync(1);
+    __restgprlr_29();
+    return;
+  }
+  sync(1);
+  if (DAT_836662e4 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x2df,0,0xffffffff82000f98,0xffffffff8208c2bc);
+  }
+  DAT_8484f028 = DAT_8461650c;
+  if (*(char *)(DAT_836662e4 + 0xc) != '\0') {
+    DAT_8484f028 = DAT_84616508;
+  }
+  DAT_8484f02c = DAT_84616510;
+  DAT_8484f030 = (undefined *)DAT_84616510;
+  DAT_8484f034 = (undefined *)DAT_8484f028;
+  __restgprlr_29();
+  return;
+}
+
 
 // 8271FBD0  R_Cinematic_GetPercentageFull_FromBinkRealtime  (gfx_d3d/r_cinematic.cpp:791)
 
-uint R_Cinematic_GetPercentageFull_FromBinkRealtime(BINKREALTIME *param_1)
+uint R_Cinematic_GetPercentageFull_FromBinkRealtime(int param_1)
 
 {
   uint uVar1;
   
-  if ((cinematicGlob.target[2].playbackFlags & 4) != 0) {
+  if ((DAT_845a0e78 & 4) != 0) {
     return 100;
   }
-  uVar1 = param_1->ReadBufferSize;
+  uVar1 = *(uint *)(param_1 + 0x2c);
   if (((uVar1 == 0) || (0x20000 < uVar1)) ||
-     ((cinematicGlob.bink)->FrameRate <
-      ((cinematicGlob.bink)->Frames - (cinematicGlob.bink)->FrameNum) *
-      (cinematicGlob.bink)->FrameRateDiv)) {
-    if (uVar1 <= param_1->ReadBufferUsed) {
+     (*(uint *)(DAT_845a10a8 + 0x14) <
+      (uint)((*(int *)(DAT_845a10a8 + 8) - *(int *)(DAT_845a10a8 + 0xc)) *
+            *(int *)(DAT_845a10a8 + 0x18)))) {
+    if (uVar1 <= *(uint *)(param_1 + 0x30)) {
       return 100;
     }
     if (0x3fffff < uVar1) {
-      return param_1->ReadBufferUsed * 100 >> 0x16;
+      return *(uint *)(param_1 + 0x30) * 100 >> 0x16;
     }
   }
   return 0;
@@ -565,25 +586,21 @@ uint R_Cinematic_GetPercentageFull_FromBinkRealtime(BINKREALTIME *param_1)
 
 // 8271FC58  R_Cinematic_SeizeIO  (gfx_d3d/r_cinematic.cpp:813)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Cinematic_SeizeIO(void)
 
 {
   __savegprlr_29();
-  if (cinematicGlob.hasFileIO != false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x32e
-                    ,0,"%s");
+  if (DAT_845a10a4 != '\0') {
+    MyAssertHandler(0xffffffff821ba340,0x32e,0,0xffffffff82000f98,0xffffffff821ba730);
   }
-  if (cinematicGlob.bink == (BINK *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x32f
-                    ,0,"%s");
+  if (DAT_845a10a8 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x32f,0,0xffffffff82000f98,0xffffffff821ba71c);
   }
   R_Cinematic_LockRead();
   DB_FlushOutstandingRead(0);
-  BinkControlBackgroundIO(cinematicGlob.bink,2);
+  BinkControlBackgroundIO(DAT_845a10a8,2);
   R_Cinematic_CheckBinkError();
-  cinematicGlob.hasFileIO = true;
+  DAT_845a10a4 = 1;
   __restgprlr_29();
   return;
 }
@@ -591,23 +608,19 @@ void R_Cinematic_SeizeIO(void)
 
 // 8271FCF8  R_Cinematic_RelinquishIO  (gfx_d3d/r_cinematic.cpp:832)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Cinematic_RelinquishIO(void)
 
 {
   __savegprlr_29();
-  if (cinematicGlob.hasFileIO == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x341
-                    ,0,"%s");
+  if (DAT_845a10a4 == '\0') {
+    MyAssertHandler(0xffffffff821ba340,0x341,0,0xffffffff82000f98,0xffffffff821ba74c);
   }
-  if (cinematicGlob.bink == (BINK *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x342
-                    ,0,"%s");
+  if (DAT_845a10a8 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x342,0,0xffffffff82000f98,0xffffffff821ba71c);
   }
-  BinkControlBackgroundIO(cinematicGlob.bink,1);
+  BinkControlBackgroundIO(DAT_845a10a8,1);
   R_Cinematic_CheckBinkError();
-  cinematicGlob.hasFileIO = false;
+  DAT_845a10a4 = 0;
   R_Cinematic_UnlockRead();
   __restgprlr_29();
   return;
@@ -616,26 +629,28 @@ void R_Cinematic_RelinquishIO(void)
 
 // 8271FD90  R_Cinematic_UpdateTimeInMsec  (gfx_d3d/r_cinematic.cpp:847)
 
-void R_Cinematic_UpdateTimeInMsec(BINKREALTIME *param_1)
+void R_Cinematic_UpdateTimeInMsec(uint *param_1)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  ulonglong uVar4;
   
-  if (((ulonglong)param_1->FrameNum < 0x80000000) &&
-     (cinematicGlob.status.startFrame < cinematicGlob.status.frameNum)) {
-    uVar1 = ((ulonglong)param_1->FrameRateDiv * (ulonglong)param_1->FrameNum * 1000) /
-            (ulonglong)param_1->FrameRate;
-    trapDoubleWordImmediate(6,(ulonglong)param_1->FrameRate,0);
-    cinematicGlob.status.timeInMsec = (uint)uVar1;
-    if ((uVar1 & 0xffffffff) != uVar1) {
-      va("%08x:%08x, %08x:%08x, %08x:%08x, %08x:%08x");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x363,0,"%s\n\t%s");
+  uVar1 = *param_1;
+  if (((ulonglong)uVar1 < 0x80000000) && (DAT_845a0f88 < DAT_845a0f8c)) {
+    uVar2 = param_1[1];
+    uVar4 = ((ulonglong)param_1[2] * (ulonglong)uVar1 * 1000) / (ulonglong)uVar2;
+    trapDoubleWordImmediate(6,(ulonglong)uVar2,0);
+    DAT_845a0f84 = (undefined4)uVar4;
+    if ((uVar4 & 0xffffffff) != uVar4) {
+      uVar3 = va(0xffffffff821ba794,uVar4 >> 0x20,uVar4 & 0xffffffff,0,uVar1,0,uVar2,0);
+      MyAssertHandler(0xffffffff821ba340,0x363,0,0xffffffff820011f4,0xffffffff821ba764,uVar3);
       return;
     }
   }
   else {
-    cinematicGlob.status.timeInMsec = 0;
+    DAT_845a0f84 = 0;
   }
   return;
 }
@@ -643,149 +658,130 @@ void R_Cinematic_UpdateTimeInMsec(BINKREALTIME *param_1)
 
 // 8271FE70  R_Cinematic_Advance  (gfx_d3d/r_cinematic.cpp:872)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool R_Cinematic_Advance(void)
+void R_Cinematic_Advance(void)
 
 {
   bool bVar1;
-  CinematicEnum CVar2;
+  int iVar2;
   int iVar3;
-  undefined1 uVar5;
   uint uVar4;
-  undefined8 uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  BINKREALTIME aBStack_70 [2];
+  undefined8 uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  undefined1 auStack_70 [112];
   
   __savegprlr_26();
   Profile_Begin(0x88);
-  CVar2 = cinematicGlob.targetPaused;
-  if (((cinematicGlob.targetPaused != CINEMATIC_INGAME_PAUSED) &&
-      (cinematicGlob.targetPaused != CINEMATIC_PAUSED)) &&
-     (cinematicGlob.targetPaused != CINEMATIC_NOT_PAUSED)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x378
-                    ,0,"%s\n\t(targetPaused) = %i");
+  iVar2 = DAT_845a1174;
+  if (((DAT_845a1174 != 2) && (DAT_845a1174 != 1)) && (DAT_845a1174 != 0)) {
+    MyAssertHandler(0xffffffff821ba340,0x378,0,0xffffffff821ba9c4,0xffffffff821ba9e0,DAT_845a1174);
   }
-  if (((cinematicGlob.currentPaused != CINEMATIC_INGAME_PAUSED) &&
-      (cinematicGlob.currentPaused != CINEMATIC_PAUSED)) &&
-     (cinematicGlob.currentPaused != CINEMATIC_NOT_PAUSED)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x379
-                    ,0,"%s\n\t(cinematicGlob.currentPaused) = %i");
+  if (((DAT_845a1178 != 2) && (DAT_845a1178 != 1)) && (DAT_845a1178 != 0)) {
+    MyAssertHandler(0xffffffff821ba340,0x379,0,0xffffffff821ba8f4,0xffffffff821ba920);
   }
-  if (cinematicGlob.bink == (BINK *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x37b
-                    ,0,"%s");
+  if (DAT_845a10a8 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x37b,0,0xffffffff82000f98,0xffffffff821ba71c);
   }
-  if (CVar2 != cinematicGlob.currentPaused) {
-    if ((int)CVar2 < 1) {
-      uVar6 = 0;
+  if (iVar2 != DAT_845a1178) {
+    if (iVar2 < 1) {
+      uVar5 = 0;
 LAB_8271ff74:
-      BinkPause(cinematicGlob.bink,uVar6);
+      BinkPause(DAT_845a10a8,uVar5);
       R_Cinematic_CheckBinkError();
     }
-    else if ((int)cinematicGlob.currentPaused < 1) {
-      uVar6 = 1;
+    else if (DAT_845a1178 < 1) {
+      uVar5 = 1;
       goto LAB_8271ff74;
     }
-    cinematicGlob.currentPaused = CVar2;
+    DAT_845a1178 = iVar2;
   }
   Profile_Begin(0x8b);
-  if (CVar2 == CINEMATIC_NOT_PAUSED) {
-    iVar3 = BinkWait(cinematicGlob.bink);
+  if (iVar2 == 0) {
+    iVar2 = BinkWait(DAT_845a10a8);
     bVar1 = true;
-    if (iVar3 != 0) goto LAB_8271ffa4;
+    if (iVar2 != 0) goto LAB_8271ffa4;
   }
   else {
 LAB_8271ffa4:
     bVar1 = false;
   }
-  Profile_EndInternal((double *)0x0);
+  Profile_EndInternal(0);
   if (!bVar1) goto LAB_82720158;
-  uVar8 = (ulonglong)
-          *(uint *)((int)cinematicGlob.codeImageSwapFrame +
-                   (cinematicGlob.binkTextureSet.bink_buffers.FrameNum << 2 ^ 4));
-  lVar7 = (uint)g_gpuSwapFrame - uVar8;
-  while (lVar7 < 0) {
+  uVar7 = (ulonglong)*(uint *)((int)&DAT_845a1500 + (DAT_845a1100 << 2 ^ 4U));
+  lVar6 = DAT_84613704 - uVar7;
+  while (lVar6 < 0) {
     Sys_Sleep(1);
-    lVar7 = (uint)g_gpuSwapFrame - uVar8;
+    lVar6 = DAT_84613704 - uVar7;
   }
   bVar1 = false;
-  if ((cinematicGlob.fullScreen == 0) &&
-     ((cinematicGlob.bink)->FrameRate <
-      ((cinematicGlob.bink)->Frames - (cinematicGlob.bink)->FrameNum) *
-      (cinematicGlob.bink)->FrameRateDiv)) {
+  if ((DAT_845a150c == 0) &&
+     (*(uint *)(DAT_845a10a8 + 0x14) <
+      (uint)((*(int *)(DAT_845a10a8 + 8) - *(int *)(DAT_845a10a8 + 0xc)) *
+            *(int *)(DAT_845a10a8 + 0x18)))) {
     R_AcquireDeviceOwnership();
     bVar1 = true;
   }
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"cinematic update");
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821ba8e0);
   Profile_Begin(0x89);
-  iVar3 = BinkDoFrame(cinematicGlob.bink);
-  Profile_EndInternal((double *)0x0);
+  iVar3 = BinkDoFrame(DAT_845a10a8);
+  Profile_EndInternal(0);
   PIXEndNamedEvent();
-  uVar4 = cinematicGlob.activeImageFrame;
-  if (((iVar3 == 0) &&
-      (uVar4 = cinematicGlob.binkTextureSet.bink_buffers.FrameNum,
-      cinematicGlob.binkTextureSet.bink_buffers.FrameNum != 0)) &&
-     (uVar4 = cinematicGlob.binkTextureSet.bink_buffers.FrameNum,
-     cinematicGlob.binkTextureSet.bink_buffers.FrameNum != 1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x3c4
-                    ,0,"%s\n\t(cinematicGlob.binkTextureSet.bink_buffers.FrameNum) = %i");
-    uVar4 = cinematicGlob.binkTextureSet.bink_buffers.FrameNum;
+  iVar2 = DAT_845a1170;
+  if (((iVar3 == 0) && (iVar2 = DAT_845a1100, DAT_845a1100 != 0)) &&
+     (iVar2 = DAT_845a1100, DAT_845a1100 != 1)) {
+    MyAssertHandler(0xffffffff821ba340,0x3c4,0,0xffffffff821ba824,0xffffffff821ba868);
+    iVar2 = DAT_845a1100;
   }
-  cinematicGlob.activeImageFrame = uVar4;
-  if ((cinematicGlob.target[2].playbackFlags & 2) == 0) {
-    if ((cinematicGlob.bink)->FrameNum == (cinematicGlob.bink)->Frames) goto LAB_82720158;
-    if ((cinematicGlob.target[2].playbackFlags & 2) != 0) goto LAB_827200cc;
+  DAT_845a1170 = iVar2;
+  if ((DAT_845a0e78 & 2) == 0) {
+    if (*(int *)(DAT_845a10a8 + 0xc) == *(int *)(DAT_845a10a8 + 8)) goto LAB_82720158;
+    if ((DAT_845a0e78 & 2) != 0) goto LAB_827200cc;
 LAB_82720134:
     Profile_Begin(0x8a);
-    BinkNextFrame(cinematicGlob.bink);
-    Profile_EndInternal((double *)0x0);
+    BinkNextFrame(DAT_845a10a8);
+    Profile_EndInternal(0);
   }
   else {
 LAB_827200cc:
-    if (((cinematicGlob.target[2].playbackFlags & 4) != 0) ||
-       ((cinematicGlob.bink)->FrameNum != (cinematicGlob.bink)->Frames)) goto LAB_82720134;
-    if (cinematicGlob.hasFileIO == false) {
+    if (((DAT_845a0e78 & 4) != 0) || (*(int *)(DAT_845a10a8 + 0xc) != *(int *)(DAT_845a10a8 + 8)))
+    goto LAB_82720134;
+    if (DAT_845a10a4 == '\0') {
       R_Cinematic_SeizeIO();
     }
-    iVar3 = BinkWait(cinematicGlob.bink);
-    while (iVar3 != 0) {
+    iVar2 = BinkWait(DAT_845a10a8);
+    while (iVar2 != 0) {
       Sys_Sleep(1);
-      iVar3 = BinkWait(cinematicGlob.bink);
+      iVar2 = BinkWait(DAT_845a10a8);
     }
-    BinkGoto(cinematicGlob.bink,1,1);
+    BinkGoto(DAT_845a10a8,1,1);
   }
-  cinematicGlob.status.frameNum = (cinematicGlob.bink)->FrameNum;
+  DAT_845a0f8c = *(undefined4 *)(DAT_845a10a8 + 0xc);
 LAB_82720158:
   R_Cinematic_CheckBinkError();
-  if (((cinematicGlob.target[2].playbackFlags & 2) == 0) &&
-     ((cinematicGlob.bink)->FrameNum == (cinematicGlob.bink)->Frames)) {
-    if (cinematicGlob.hasFileIO != false) {
+  if (((DAT_845a0e78 & 2) == 0) && (*(int *)(DAT_845a10a8 + 0xc) == *(int *)(DAT_845a10a8 + 8))) {
+    if (DAT_845a10a4 != '\0') {
       R_Cinematic_RelinquishIO();
     }
     if (bVar1) {
       R_ReleaseDeviceOwnership();
     }
-    Profile_EndInternal((double *)0x0);
-    uVar5 = __restgprlr_26(0);
-    return (bool)uVar5;
+    Profile_EndInternal(0);
+    __restgprlr_26(0);
+    return;
   }
-  if (cinematicGlob.bink == (BINK *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x3f4
-                    ,0,"%s");
+  if (DAT_845a10a8 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x3f4,0,0xffffffff82000f98,0xffffffff821ba71c);
   }
-  BinkGetRealtime(cinematicGlob.bink,aBStack_70,0);
-  R_Cinematic_UpdateTimeInMsec(aBStack_70);
-  uVar4 = R_Cinematic_GetPercentageFull_FromBinkRealtime(aBStack_70);
-  if (cinematicGlob.hasFileIO == false) {
+  BinkGetRealtime(DAT_845a10a8,auStack_70,0);
+  R_Cinematic_UpdateTimeInMsec(auStack_70);
+  uVar4 = R_Cinematic_GetPercentageFull_FromBinkRealtime(auStack_70);
+  if (DAT_845a10a4 == '\0') {
     if (bVar1) {
       R_ReleaseDeviceOwnership();
     }
     if (uVar4 < 0x1e) {
-      if ((cinematicGlob.target[2].playbackFlags & 4) != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                        0x40c,0,"%s");
+      if ((DAT_845a0e78 & 4) != 0) {
+        MyAssertHandler(0xffffffff821ba340,0x40c,0,0xffffffff82000f98,0xffffffff821ba7c0);
       }
       R_Cinematic_SeizeIO();
     }
@@ -796,33 +792,30 @@ LAB_82720158:
     }
     if (bVar1) {
       R_ReleaseDeviceOwnership();
-      Profile_EndInternal((double *)0x0);
-      uVar5 = __restgprlr_26(1);
-      return (bool)uVar5;
+      Profile_EndInternal(0);
+      __restgprlr_26(1);
+      return;
     }
   }
-  Profile_EndInternal((double *)0x0);
-  uVar5 = __restgprlr_26(1);
-  return (bool)uVar5;
+  Profile_EndInternal(0);
+  __restgprlr_26(1);
+  return;
 }
 
 
 // 82720288  R_Cinematic_Bink_Alloc  (gfx_d3d/r_cinematic.cpp:1146)
 
-void * R_Cinematic_Bink_Alloc(uint param_1)
+void R_Cinematic_Bink_Alloc(undefined8 param_1)
 
 {
-  void *pvVar1;
-  char *in_r6;
-  
-  pvVar1 = CinematicHunk_Alloc(&cinematicGlob.masterHunk,param_1,0x20,in_r6);
-  return pvVar1;
+  CinematicHunk_Alloc(0xffffffff845a1164,param_1,0x20);
+  return;
 }
 
 
 // 827202A0  R_Cinematic_Bink_Free  (gfx_d3d/r_cinematic.cpp:1152)
 
-void R_Cinematic_Bink_Free(void *param_1)
+void R_Cinematic_Bink_Free(void)
 
 {
   return;
@@ -831,25 +824,22 @@ void R_Cinematic_Bink_Free(void *param_1)
 
 // 827202A8  R_Cinematic_StopPlayback_Now  (gfx_d3d/r_cinematic.cpp:1157)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int R_Cinematic_StopPlayback_Now(void)
+undefined8 R_Cinematic_StopPlayback_Now(void)
 
 {
-  if (cinematicGlob.status.name[0] == '\0') {
+  if (DAT_845a0e84 == '\0') {
     return 0;
   }
-  if (cinematicGlob.bink == (BINK *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x489
-                    ,0,"%s");
+  if (DAT_845a10a8 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x489,0,0xffffffff82000f98,0xffffffff821ba71c);
   }
-  if (cinematicGlob.hasFileIO != false) {
+  if (DAT_845a10a4 != '\0') {
     R_Cinematic_RelinquishIO();
   }
   PMem_EnableSoundAlloc();
-  BinkClose(cinematicGlob.bink);
+  BinkClose(DAT_845a10a8);
   PMem_DisableSoundAlloc();
-  cinematicGlob.bink = (BINK *)0x0;
+  DAT_845a10a8 = 0;
   Sys_SetCinematicsThreadProcId(0);
   return 1;
 }
@@ -857,215 +847,203 @@ int R_Cinematic_StopPlayback_Now(void)
 
 // 82720360  R_Cinematic_BinkOpenPath_MemoryResident  (gfx_d3d/r_cinematic.cpp:1185)
 
-bool R_Cinematic_BinkOpenPath_MemoryResident(char *param_1,void **param_2,char *param_3,int param_4)
+void R_Cinematic_BinkOpenPath_MemoryResident
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
   uint uVar1;
-  char *pcVar2;
-  void *pvVar3;
-  undefined1 uVar6;
-  ulong uVar4;
-  void *pvVar5;
-  ulonglong uVar7;
-  undefined4 *puVar8;
-  ulonglong uVar9;
-  char *pcVar10;
-  longlong lVar11;
-  uint *puVar12;
-  ulong local_50 [20];
+  ulonglong uVar2;
+  undefined8 uVar3;
+  HANDLE hFile;
+  DWORD DVar4;
+  LPVOID lpBuffer;
+  BOOL BVar5;
+  undefined4 *puVar6;
+  longlong lVar7;
+  uint *puVar8;
+  DWORD local_50 [20];
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_25(param_1);
-  pcVar10 = (char *)param_4;
-  if ((uVar7 & 0xffffffff) == 0) {
-    pcVar10 = "%s";
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x4ae
-                    ,0,"%s");
+  uVar3 = __savegprlr_25();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x4ae,0,0xffffffff82000f98,0xffffffff821baab0);
   }
   R_Cinematic_LockRead();
-  DB_FlushOutstandingRead((uint)LZCOUNT(db_MovieMemory) >> 5);
-  pvVar3 = FileWrapper_OpenReadBinary_Core(pcVar2,0x20000000);
-  puVar8 = (undefined4 *)uVar7;
-  pcVar2 = (char *)uVar9;
-  if (pvVar3 == (void *)0x0) {
+  DB_FlushOutstandingRead(DAT_82ebbd28 == 0);
+  hFile = (HANDLE)FileWrapper_OpenReadBinary_Core(uVar3,0x20000000);
+  puVar6 = (undefined4 *)param_2;
+  if (hFile == (HANDLE)0x0) {
     R_Cinematic_UnlockRead();
-    if ((uVar9 & 0xffffffff) != 0) {
-      Com_sprintf(pcVar2,param_4,"Open failed");
+    if ((param_3 & 0xffffffff) != 0) {
+      Com_sprintf(param_3,param_4,0xffffffff821baaa4);
     }
-    *puVar8 = 0;
-    uVar6 = __restgprlr_25(0);
-    return (bool)uVar6;
+    *puVar6 = 0;
+    __restgprlr_25(0);
+    return;
   }
-  uVar4 = GetFileSize(pvVar3,(ulong *)0x0);
-  if ((int)uVar4 < 1) {
+  DVar4 = GetFileSize(hFile,(LPDWORD)0x0);
+  lVar7 = (longlong)(int)DVar4;
+  if ((int)DVar4 < 1) {
     R_Cinematic_UnlockRead();
-    if ((uVar9 & 0xffffffff) != 0) {
-      if (uVar4 == 0) {
-        Com_sprintf(pcVar2,param_4,"Zero file size");
+    if ((param_3 & 0xffffffff) != 0) {
+      if (DVar4 == 0) {
+        Com_sprintf(param_3,param_4,0xffffffff821baa94);
       }
       else {
-        Com_sprintf(pcVar2,param_4,"GetFileSize failed (%i)");
+        Com_sprintf(param_3,param_4,0xffffffff821baa7c,lVar7);
       }
     }
-    CloseHandle(pvVar3);
-    *puVar8 = 0;
-    uVar6 = __restgprlr_25(0);
-    return (bool)uVar6;
+    CloseHandle(hFile);
+    *puVar6 = 0;
+    __restgprlr_25(0);
+    return;
   }
-  uVar1 = uVar4 + 0x7ff & 0xfffff800;
-  pvVar5 = CinematicHunk_Alloc(&cinematicGlob.masterHunk,uVar1,0x20,pcVar10);
-  *puVar8 = pvVar5;
-  ReadFile(pvVar3,pvVar5,uVar1,local_50,(_OVERLAPPED *)0x0);
-  R_Cinematic_UnlockRead();
-  CloseHandle(pvVar3);
-  if (local_50[0] != uVar4) {
-    if ((uVar9 & 0xffffffff) != 0) {
-      Com_sprintf(pcVar2,param_4,"Read was short (wanted %i got %i)");
+  uVar2 = lVar7 + 0x7ffU & 0xfffff800;
+  lpBuffer = (LPVOID)CinematicHunk_Alloc(0xffffffff845a1164,uVar2,0x20);
+  *puVar6 = lpBuffer;
+  BVar5 = ReadFile(hFile,lpBuffer,(DWORD)uVar2,local_50,(LPOVERLAPPED)0x0);
+  R_Cinematic_UnlockRead(BVar5);
+  CloseHandle(hFile);
+  if (local_50[0] != DVar4) {
+    if ((param_3 & 0xffffffff) != 0) {
+      Com_sprintf(param_3,param_4,0xffffffff821baa58,lVar7);
     }
-    uVar6 = __restgprlr_25(0);
-    return (bool)uVar6;
+    __restgprlr_25(0);
+    return;
   }
-  lVar11 = (longlong)((int)(local_50[0] + 3) >> 2);
-  if (lVar11 != 0) {
-    puVar12 = (uint *)((int)pvVar5 + -4);
+  lVar7 = (longlong)((int)(local_50[0] + 3) >> 2);
+  if (lVar7 != 0) {
+    puVar8 = (uint *)((int)lpBuffer + -4);
     do {
-      uVar1 = puVar12[1];
-      puVar12 = puVar12 + 1;
-      *puVar12 = uVar1 >> 0x18 | uVar1 >> 8 & 0xff00 |
-                 ((uVar1 << 0x10 | uVar1 & 0xffff) & 0xffff00) << 8;
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
+      uVar1 = puVar8[1];
+      puVar8 = puVar8 + 1;
+      *puVar8 = uVar1 >> 0x18 | uVar1 >> 8 & 0xff00 |
+                ((uVar1 << 0x10 | uVar1 & 0xffff) & 0xffff00) << 8;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
-  uVar6 = __restgprlr_25(1);
-  return (bool)uVar6;
+  __restgprlr_25(1);
+  return;
 }
 
 
 // 82720548  R_Cinematic_BinkOpenPath  (gfx_d3d/r_cinematic.cpp:1277)
 
-bool R_Cinematic_BinkOpenPath(char *param_1,uint param_2,char *param_3,int param_4)
+void R_Cinematic_BinkOpenPath
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
   undefined8 uVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  char *pcVar6;
-  void *local_30 [12];
+  char cVar2;
+  undefined4 local_30 [12];
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  pcVar6 = (char *)uVar5;
-  if ((uVar4 & 4) == 0) {
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 4) == 0) {
     R_Cinematic_LockRead();
-    cinematicGlob.hasFileIO = true;
-    DB_FlushOutstandingRead((uint)LZCOUNT(db_MovieMemory) >> 5);
+    DAT_845a10a4 = 1;
+    DB_FlushOutstandingRead(DAT_82ebbd28 == 0);
     BinkSetIOSize(0x400000);
     PMem_EnableSoundAlloc();
-    Com_Printf(8,"BinkOpen: \'%s\'\n");
-    cinematicGlob.bink = (BINK *)BinkOpen(uVar1,0x1104400);
+    Com_Printf(8,0xffffffff821baab8,uVar1);
+    DAT_845a10a8 = BinkOpen(uVar1,0x1104400);
     PMem_DisableSoundAlloc();
-    if (cinematicGlob.bink == (BINK *)0x0) {
-      if ((uVar5 & 0xffffffff) != 0) {
-        BinkGetError();
-        Com_sprintf(pcVar6,param_4,"BinkOpen: %s");
+    if (DAT_845a10a8 == 0) {
+      if ((param_3 & 0xffffffff) != 0) {
+        uVar1 = BinkGetError();
+        Com_sprintf(param_3,param_4,0xffffffff821baac8,uVar1);
       }
       R_Cinematic_UnlockRead();
-      cinematicGlob.hasFileIO = false;
+      DAT_845a10a4 = 0;
     }
   }
   else {
-    bVar2 = R_Cinematic_BinkOpenPath_MemoryResident((char *)uVar1,local_30,pcVar6,param_4);
-    if (!bVar2) {
-      uVar3 = __restgprlr_28(0);
-      return (bool)uVar3;
+    cVar2 = R_Cinematic_BinkOpenPath_MemoryResident(uVar1,local_30);
+    if (cVar2 == '\0') {
+      __restgprlr_28(0);
+      return;
     }
     PMem_EnableSoundAlloc();
-    cinematicGlob.bink = (BINK *)BinkOpen(local_30[0],0x4104400);
+    DAT_845a10a8 = BinkOpen(local_30[0],0x4104400);
     PMem_DisableSoundAlloc();
-    if ((cinematicGlob.bink == (BINK *)0x0) && ((uVar5 & 0xffffffff) != 0)) {
-      BinkGetError();
-      Com_sprintf(pcVar6,param_4,"BinkOpen: %s");
+    if ((DAT_845a10a8 == 0) && ((param_3 & 0xffffffff) != 0)) {
+      uVar1 = BinkGetError();
+      Com_sprintf(param_3,param_4,0xffffffff821baac8,uVar1);
     }
   }
   BinkSetError(0xffffffff820068af);
-  uVar3 = __restgprlr_28(cinematicGlob.bink != (BINK *)0x0);
-  return (bool)uVar3;
+  __restgprlr_28(DAT_845a10a8 != 0);
+  return;
 }
 
 
 // 827206A0  R_Cinematic_BinkOpen  (gfx_d3d/r_cinematic.cpp:1350)
 
-bool R_Cinematic_BinkOpen(char *param_1,uint param_2,char *param_3,int param_4)
+void R_Cinematic_BinkOpen
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  int iVar1;
-  char *pcVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  char acStack_130 [304];
+  undefined4 uVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  char cVar4;
+  undefined1 auStack_130 [304];
   
-  __savegprlr_27(param_1);
-  pcVar2 = Sys_Cwd();
-  if (pcVar2 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x54c
-                    ,0,"%s");
+  uVar2 = __savegprlr_27();
+  uVar3 = Sys_Cwd();
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x54c,0,0xffffffff82000f98,0xffffffff821baae4);
   }
-  Com_sprintf(acStack_130,0x100,"%s\\%s.bik");
-  iVar1 = cinematicGlob.masterHunk.atFront;
-  bVar3 = R_Cinematic_BinkOpenPath(acStack_130,param_2,param_3,param_4);
-  if (bVar3) {
-    uVar4 = __restgprlr_27(1);
-    return (bool)uVar4;
+  Com_sprintf(auStack_130,0x100,0xffffffff821baad8,uVar3,uVar2);
+  uVar1 = DAT_845a1168;
+  cVar4 = R_Cinematic_BinkOpenPath(auStack_130,param_2,param_3,param_4);
+  if (cVar4 != '\0') {
+    __restgprlr_27(1);
+    return;
   }
-  cinematicGlob.masterHunk.atFront = iVar1;
-  uVar4 = __restgprlr_27(0);
-  return (bool)uVar4;
+  DAT_845a1168 = uVar1;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 82720758  R_Cinematic_InitBinkVolumes  (gfx_d3d/r_cinematic.cpp:1394)
 
-void R_Cinematic_InitBinkVolumes(BINK *param_1)
+void R_Cinematic_InitBinkVolumes(void)
 
 {
   int iVar1;
   int iVar2;
-  float fVar3;
+  double dVar3;
   undefined4 local_30;
   undefined4 local_2c;
   undefined8 local_28;
   
-  fVar3 = SND_GetVolumeNormalized();
-  local_28 = (longlong)(fVar3 * (snd_cinematicVolumeScale->current).value * 32768.0);
+  dVar3 = (double)SND_GetVolumeNormalized();
+  local_28 = (longlong)((float)(dVar3 * (double)*(float *)(DAT_8487cf98 + 0xc)) * 32768.0);
   iVar1 = 0x8000;
   if ((0x7fff < local_28._4_4_) || (iVar1 = local_28._4_4_, iVar2 = 0, 0 < local_28._4_4_)) {
     iVar2 = iVar1;
   }
   local_2c = 1;
   local_30 = 0;
-  BinkSetMixBins(cinematicGlob.bink,0,&local_30,2);
+  BinkSetMixBins(DAT_845a10a8,0,&local_30,2);
   R_Cinematic_CheckBinkError();
   local_30 = 2;
-  BinkSetMixBins(cinematicGlob.bink,1,&local_30,1);
+  BinkSetMixBins(DAT_845a10a8,1,&local_30,1);
   R_Cinematic_CheckBinkError();
   local_30 = 3;
-  BinkSetMixBins(cinematicGlob.bink,2,&local_30,1);
+  BinkSetMixBins(DAT_845a10a8,2,&local_30,1);
   R_Cinematic_CheckBinkError();
   local_30 = 4;
   local_2c = 5;
-  BinkSetMixBins(cinematicGlob.bink,3,&local_30,2);
+  BinkSetMixBins(DAT_845a10a8,3,&local_30,2);
   R_Cinematic_CheckBinkError();
-  BinkSetVolume(cinematicGlob.bink,0,iVar2);
+  BinkSetVolume(DAT_845a10a8,0,iVar2);
   R_Cinematic_CheckBinkError();
-  BinkSetVolume(cinematicGlob.bink,1,iVar2);
+  BinkSetVolume(DAT_845a10a8,1,iVar2);
   R_Cinematic_CheckBinkError();
-  BinkSetVolume(cinematicGlob.bink,2,iVar2);
+  BinkSetVolume(DAT_845a10a8,2,iVar2);
   R_Cinematic_CheckBinkError();
-  BinkSetVolume(cinematicGlob.bink,3,iVar2);
+  BinkSetVolume(DAT_845a10a8,3,iVar2);
   R_Cinematic_CheckBinkError();
   return;
 }
@@ -1073,7 +1051,7 @@ void R_Cinematic_InitBinkVolumes(BINK *param_1)
 
 // 827208C0  R_Cinematic_GotoFrame  (gfx_d3d/r_cinematic.cpp:1490)
 
-int R_Cinematic_GotoFrame(int param_1)
+void R_Cinematic_GotoFrame(void)
 
 {
   undefined8 uVar1;
@@ -1082,79 +1060,71 @@ int R_Cinematic_GotoFrame(int param_1)
   ulonglong uVar4;
   longlong lVar5;
   
-  uVar1 = __savegprlr_27(param_1);
-  if (cinematicGlob.bink == (BINK *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x5d7
-                    ,0,"%s");
+  uVar1 = __savegprlr_27();
+  if (DAT_845a10a8 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x5d7,0,0xffffffff82000f98,0xffffffff821ba71c);
   }
-  uVar2 = BinkGetKeyFrame(cinematicGlob.bink,uVar1,1);
-  if ((ulonglong)(cinematicGlob.bink)->FrameNum <= (uVar2 & 0xffffffff)) {
-    if (cinematicGlob.hasFileIO == false) {
+  uVar2 = BinkGetKeyFrame(DAT_845a10a8,uVar1,1);
+  if ((ulonglong)*(uint *)(DAT_845a10a8 + 0xc) <= (uVar2 & 0xffffffff)) {
+    if (DAT_845a10a4 == '\0') {
       R_Cinematic_SeizeIO();
     }
-    if ((cinematicGlob.bink)->FrameRateDiv == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x5e2,0,"%s");
+    if (*(int *)(DAT_845a10a8 + 0x18) == 0) {
+      MyAssertHandler(0xffffffff821ba340,0x5e2,0,0xffffffff82000f98,0xffffffff821baae8);
     }
-    uVar4 = (ulonglong)(cinematicGlob.bink)->FrameRateDiv * 1000;
+    uVar4 = (ulonglong)*(uint *)(DAT_845a10a8 + 0x18) * 1000;
     trapWord(6,uVar4,0);
-    lVar5 = uVar2 - ((ulonglong)(cinematicGlob.bink)->FrameRate * 600 & 0xffffffff) /
+    lVar5 = uVar2 - ((ulonglong)*(uint *)(DAT_845a10a8 + 0x14) * 600 & 0xffffffff) /
                     (uVar4 & 0xffffffff);
     if ((int)lVar5 < 1) {
       lVar5 = 1;
     }
-    iVar3 = BinkWait(cinematicGlob.bink);
+    iVar3 = BinkWait(DAT_845a10a8);
     while (iVar3 != 0) {
       Sys_Sleep(1);
-      iVar3 = BinkWait(cinematicGlob.bink);
+      iVar3 = BinkWait(DAT_845a10a8);
     }
-    BinkGoto(cinematicGlob.bink,lVar5,1);
+    BinkGoto(DAT_845a10a8,lVar5,1);
     R_Cinematic_CheckBinkError();
-    cinematicGlob.status.frameNum = (cinematicGlob.bink)->FrameNum;
-    iVar3 = __restgprlr_27(uVar2);
-    return iVar3;
+    DAT_845a0f8c = *(undefined4 *)(DAT_845a10a8 + 0xc);
+    __restgprlr_27(uVar2);
+    return;
   }
-  iVar3 = __restgprlr_27(0);
-  return iVar3;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 82720A00  R_Cinematic_StartPlayback_Now  (gfx_d3d/r_cinematic.cpp:1523)
 
-bool R_Cinematic_StartPlayback_Now(char *param_1,uint param_2,uint param_3,int *param_4)
+void R_Cinematic_StartPlayback_Now
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,int *param_4)
 
 {
   uint uVar1;
-  char *pcVar2;
-  bool bVar5;
-  undefined1 uVar6;
-  BINK *pBVar3;
-  int iVar4;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  ulonglong uVar5;
   undefined4 local_e0;
   undefined4 local_dc;
   undefined4 local_d8;
   undefined4 local_d4;
-  char local_d0 [208];
+  undefined1 local_d0 [208];
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_23(param_1);
+  uVar2 = __savegprlr_23();
   local_e0 = 0;
   local_d8 = 2;
   local_dc = 1;
   local_d4 = 3;
-  if (cinematicGlob.bink != (BINK *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x5fd
-                    ,0,"%s");
+  if (DAT_845a10a8 != 0) {
+    MyAssertHandler(0xffffffff821ba340,0x5fd,0,0xffffffff82000f98,0xffffffff821babdc);
   }
-  if (cinematicGlob.hasFileIO != false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x5fe
-                    ,0,"%s");
+  if (DAT_845a10a4 != '\0') {
+    MyAssertHandler(0xffffffff821ba340,0x5fe,0,0xffffffff82000f98,0xffffffff821ba730);
   }
-  cinematicGlob.codeImageSwapFrame[0] = g_gpuSwapFrame;
-  cinematicGlob.codeImageSwapFrame[1] = g_gpuSwapFrame;
+  DAT_845a1500 = DAT_84613704;
+  DAT_845a1504 = DAT_84613704;
   R_Cinematic_HunksOpen();
   R_Cinematic_CheckBinkError();
   BinkSetMemory(0xffffffff82720288,0xffffffff827202a0);
@@ -1163,88 +1133,81 @@ bool R_Cinematic_StartPlayback_Now(char *param_1,uint param_2,uint param_3,int *
   R_Cinematic_CheckBinkError();
   BinkSetSoundTrack(4,&local_e0);
   R_Cinematic_CheckBinkError();
-  local_d0[0] = '\0';
-  bVar5 = R_Cinematic_BinkOpen(pcVar2,(uint)uVar7,local_d0,0x80);
-  if (!bVar5) {
-    Com_PrintWarning(8,"R_Cinematic_BinkOpen \'%s\' failed: %s; trying default.\n");
-    local_d0[0] = '\0';
-    bVar5 = R_Cinematic_BinkOpen("default",(uint)uVar7,local_d0,0x80);
-    if (!bVar5) {
-      Com_PrintWarning(8,"R_Cinematic_BinkOpen \'%s\' failed: %s; not playing movie.\n");
-      if (db_MovieMemory == (uchar *)0x0) {
-        PMem_EndAlloc(g_movieName,0);
+  local_d0[0] = 0;
+  cVar4 = R_Cinematic_BinkOpen(uVar2,param_2,local_d0,0x80);
+  if (cVar4 == '\0') {
+    Com_PrintWarning(8,0xffffffff821baba4,uVar2,local_d0);
+    local_d0[0] = 0;
+    cVar4 = R_Cinematic_BinkOpen(0xffffffff821ba310,param_2,local_d0,0x80);
+    if (cVar4 == '\0') {
+      Com_PrintWarning(8,0xffffffff821bab68,0xffffffff821ba310,local_d0);
+      if (DAT_82ebbd28 == 0) {
+        PMem_EndAlloc(PTR_s__movie_82999c44,0);
         DB_LeaveStreaming();
       }
-      if (cinematicGlob.activeImageFrame != -1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                        0x629,0,"%s");
+      if (DAT_845a1170 != -1) {
+        MyAssertHandler(0xffffffff821ba340,0x629,0,0xffffffff82000f98,0xffffffff821bab28);
       }
       R_Cinematic_HunksClose();
-      cinematicGlob.finishedId = cinematicGlob.stopId;
+      DAT_845a109c = DAT_845a1098;
       sync(1);
-      cinematicGlob.cinematicFinished = true;
-      uVar6 = __restgprlr_23(0);
-      return (bool)uVar6;
+      DAT_845a1094 = 1;
+      __restgprlr_23(0);
+      return;
     }
   }
-  pBVar3 = (BINK *)(int)bVar5;
   R_Cinematic_CheckBinkError();
-  if (cinematicGlob.bink == (BINK *)0x0) {
-    pBVar3 = (BINK *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp";
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x635
-                    ,0,"%s");
+  if (DAT_845a10a8 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x635,0,0xffffffff82000f98,0xffffffff821ba71c);
   }
-  cinematicGlob.status.frameNum = (cinematicGlob.bink)->FrameNum;
-  R_Cinematic_InitBinkVolumes(pBVar3);
-  memset();
-  BinkGetFrameBuffersInfo(cinematicGlob.bink,0xffffffff845a10ec);
+  DAT_845a0f8c = *(undefined4 *)(DAT_845a10a8 + 0xc);
+  R_Cinematic_InitBinkVolumes();
+  memset(&DAT_845a10ac,0,0xb8);
+  BinkGetFrameBuffersInfo(DAT_845a10a8,0xffffffff845a10ec);
   R_Cinematic_CheckBinkError();
   R_Cinematic_InitBinkTextures();
-  BinkRegisterFrameBuffers(cinematicGlob.bink,0xffffffff845a10ec);
+  BinkRegisterFrameBuffers(DAT_845a10a8,0xffffffff845a10ec);
   R_Cinematic_CheckBinkError();
-  if (db_MovieMemory == (uchar *)0x0) {
-    PMem_EndAlloc(g_movieName,0);
+  if (DAT_82ebbd28 == 0) {
+    PMem_EndAlloc(PTR_s__movie_82999c44,0);
     DB_LeaveStreaming();
   }
-  cinematicGlob.currentPaused = CINEMATIC_NOT_PAUSED;
-  iVar4 = *param_4;
+  DAT_845a1178 = 0;
+  iVar3 = *param_4;
   *param_4 = 0;
-  if ((uVar8 & 0xffffffff) != 0) {
-    if ((cinematicGlob.bink)->FrameRateDiv == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x652,0,"%s");
+  if ((param_3 & 0xffffffff) != 0) {
+    if (*(int *)(DAT_845a10a8 + 0x18) == 0) {
+      MyAssertHandler(0xffffffff821ba340,0x652,0,0xffffffff82000f98,0xffffffff821baae8);
     }
-    uVar8 = ((longlong)
-             (((float)(cinematicGlob.bink)->FrameRate / (float)(cinematicGlob.bink)->FrameRateDiv) *
-              0.001 * (float)(uVar8 & 0xffffffff) + 0.5) & 0xffffffffU) + 1;
-    if ((uVar7 & 2) != 0) {
-      if ((cinematicGlob.bink)->Frames == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                        0x656,0,"%s");
+    uVar5 = ((longlong)
+             ((float)((double)*(uint *)(DAT_845a10a8 + 0x14) /
+                     (double)*(uint *)(DAT_845a10a8 + 0x18)) * 0.001 * (float)(param_3 & 0xffffffff)
+             + 0.5) & 0xffffffffU) + 1;
+    if ((param_2 & 2) != 0) {
+      if (*(int *)(DAT_845a10a8 + 8) == 0) {
+        MyAssertHandler(0xffffffff821ba340,0x656,0,0xffffffff82000f98,0xffffffff821bab0c);
       }
-      uVar1 = (cinematicGlob.bink)->Frames;
+      uVar1 = *(uint *)(DAT_845a10a8 + 8);
       trapWord(6,(ulonglong)uVar1,0);
-      uVar8 = uVar8 - (longlong)(int)((uVar8 & 0xffffffff) / (ulonglong)uVar1) *
+      uVar5 = uVar5 - (longlong)(int)((uVar5 & 0xffffffff) / (ulonglong)uVar1) *
                       (longlong)(int)uVar1;
     }
-    BinkGoto(cinematicGlob.bink,uVar8,0);
+    BinkGoto(DAT_845a10a8,uVar5,0);
     R_Cinematic_CheckBinkError();
-    cinematicGlob.status.frameNum = (cinematicGlob.bink)->FrameNum;
-    uVar6 = __restgprlr_23(1);
-    return (bool)uVar6;
+    DAT_845a0f8c = *(undefined4 *)(DAT_845a10a8 + 0xc);
+    __restgprlr_23(1);
+    return;
   }
-  if (iVar4 != 0) {
-    iVar4 = R_Cinematic_GotoFrame(iVar4);
-    *param_4 = iVar4;
+  if (iVar3 != 0) {
+    iVar3 = R_Cinematic_GotoFrame();
+    *param_4 = iVar3;
   }
-  uVar6 = __restgprlr_23(1);
-  return (bool)uVar6;
+  __restgprlr_23(1);
+  return;
 }
 
 
 // 82720DC0  R_Cinematic_ReserveMemory  (gfx_d3d/r_cinematic.cpp:1640)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_Cinematic_ReserveMemory(void)
 
@@ -1255,62 +1218,54 @@ void R_Cinematic_ReserveMemory(void)
 
 // 82720DC8  R_Cinematic_UpdateFrame_Core2  (gfx_d3d/r_cinematic.cpp:1648)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Cinematic_UpdateFrame_Core2(void)
 
 {
-  ulonglong uVar1;
+  char *pcVar1;
   int iVar2;
   int iVar3;
-  bool bVar4;
+  char cVar4;
   int local_140 [4];
   char local_130 [304];
   
   __savegprlr_27();
-  if (cinematicGlob.target[1].changed != 0) {
-    Sys_EnterCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_BACKEND);
-    memcpy();
-    cinematicGlob.target[1].changed = 0;
-    cinematicGlob.stopId = cinematicGlob.stopId + 1;
-    cinematicGlob.activeImageFrame = -1;
-    Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_BACKEND);
+  if (DAT_845a0d74 != 0) {
+    Sys_EnterCriticalSection(0x1b);
+    memcpy(&DAT_845a0d78,&DAT_845a0c6c,0x10c);
+    DAT_845a0d74 = 0;
+    DAT_845a1098 = DAT_845a1098 + 1;
+    DAT_845a1170 = -1;
+    Sys_LeaveCriticalSection(0x1b);
   }
-  if (cinematicGlob.target[2].changed != 0) {
-    cinematicGlob.target[2].changed = 0;
+  if (DAT_845a0e80 != 0) {
+    DAT_845a0e80 = 0;
     local_140[0] = 0;
     iVar2 = 0;
-    I_strncpyz(local_130,cinematicGlob.target[2].name,0x100);
-    if (local_130[0] != '\0') {
-      uVar1 = ZEXT48(&stack0x00000000) - 0x130;
-      strchr();
-      if ((uVar1 & 0xffffffff) != 0) {
-        *(undefined1 *)uVar1 = 0;
-        iVar2 = atoi((undefined1 *)uVar1 + 1);
-        local_140[0] = iVar2;
-      }
+    I_strncpyz(local_130,0xffffffff845a0d78,0x100);
+    if ((local_130[0] != '\0') && (pcVar1 = strchr(local_130,0x3a), pcVar1 != (char *)0x0)) {
+      *pcVar1 = '\0';
+      iVar2 = atoi(pcVar1 + 1);
+      local_140[0] = iVar2;
     }
-    if (((cinematicGlob.bink != (BINK *)0x0) && (iVar2 != 0)) &&
-       (iVar3 = I_stricmp(local_130,cinematicGlob.status.name), iVar3 == 0)) {
-      if ((cinematicGlob.target[2].playbackFlags & 1) != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                        0x697,0,"%s\n\t(cinematicGlob.target[CIN_TARGET_UPDATE].playbackFlags) = %i"
-                       );
+    if (((DAT_845a10a8 != (int *)0x0) && (iVar2 != 0)) &&
+       (iVar3 = I_stricmp(local_130,0xffffffff845a0e84), iVar3 == 0)) {
+      if ((DAT_845a0e78 & 1) != 0) {
+        MyAssertHandler(0xffffffff821ba340,0x697,0,0xffffffff821babf0,0xffffffff821bac38);
       }
       iVar2 = R_Cinematic_GotoFrame(iVar2);
       if (iVar2 != 0) {
         local_140[0] = iVar2;
-        Sys_EnterCriticalSection(CRITSECT_CINEMATIC_STATUS);
-        cinematicGlob.status.timeInMsec = 0;
-        cinematicGlob.status.startFrame = iVar2;
-        Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_STATUS);
+        Sys_EnterCriticalSection(0x1c);
+        DAT_845a0f84 = 0;
+        DAT_845a0f88 = iVar2;
+        Sys_LeaveCriticalSection(0x1c);
         __restgprlr_27();
         return;
       }
       local_130[0] = '\0';
-      cinematicGlob.finishedId = cinematicGlob.stopId;
+      DAT_845a109c = DAT_845a1098;
       sync(1);
-      cinematicGlob.cinematicFinished = true;
+      DAT_845a1094 = 1;
       local_140[0] = 0;
     }
     iVar2 = R_Cinematic_StopPlayback_Now();
@@ -1318,42 +1273,38 @@ void R_Cinematic_UpdateFrame_Core2(void)
       R_Cinematic_HunksClose();
     }
     if ((local_130[0] == '\0') ||
-       (bVar4 = R_Cinematic_StartPlayback_Now
-                          (local_130,cinematicGlob.target[2].playbackFlags,
-                           cinematicGlob.target[2].startOffsetMsec,local_140), !bVar4)) {
-      Sys_EnterCriticalSection(CRITSECT_CINEMATIC_STATUS);
-      cinematicGlob.status.name[0] = '\0';
-      cinematicGlob.status.startFrame = 0;
+       (cVar4 = R_Cinematic_StartPlayback_Now(local_130,DAT_845a0e78,DAT_845a0e7c,local_140),
+       cVar4 == '\0')) {
+      Sys_EnterCriticalSection(0x1c);
+      DAT_845a0e84 = '\0';
+      DAT_845a0f88 = 0;
     }
     else {
-      if (((cinematicGlob.bink)->Width != 0x500) ||
-         (cinematicGlob.fullScreen = 1, (cinematicGlob.bink)->Height != 0x2d0)) {
-        cinematicGlob.fullScreen = 0;
+      if ((*DAT_845a10a8 != 0x500) || (DAT_845a150c = 1, DAT_845a10a8[1] != 0x2d0)) {
+        DAT_845a150c = 0;
       }
-      Sys_SetCinematicsThreadProcId(cinematicGlob.fullScreen);
-      Sys_EnterCriticalSection(CRITSECT_CINEMATIC_STATUS);
-      I_strncpyz(cinematicGlob.status.name,local_130,0x100);
-      cinematicGlob.status.startFrame = local_140[0];
+      Sys_SetCinematicsThreadProcId();
+      Sys_EnterCriticalSection(0x1c);
+      I_strncpyz(0xffffffff845a0e84,local_130,0x100);
+      DAT_845a0f88 = local_140[0];
     }
-    cinematicGlob.status.timeInMsec = 0;
-    Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_STATUS);
+    DAT_845a0f84 = 0;
+    Sys_LeaveCriticalSection(0x1c);
   }
-  if (cinematicGlob.status.name[0] == '\0') {
-    if (cinematicGlob.activeImageFrame != -1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x6dc,0,"%s");
+  if (DAT_845a0e84 == '\0') {
+    if (DAT_845a1170 != -1) {
+      MyAssertHandler(0xffffffff821ba340,0x6dc,0,0xffffffff82000f98,0xffffffff821bab28);
     }
   }
   else {
-    if (cinematicGlob.bink == (BINK *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x6e2,0,"%s");
+    if (DAT_845a10a8 == (int *)0x0) {
+      MyAssertHandler(0xffffffff821ba340,0x6e2,0,0xffffffff82000f98,0xffffffff821ba71c);
     }
-    bVar4 = R_Cinematic_Advance();
-    if ((!bVar4) && (cinematicGlob.finishedId != cinematicGlob.stopId)) {
-      cinematicGlob.finishedId = cinematicGlob.stopId;
+    cVar4 = R_Cinematic_Advance();
+    if ((cVar4 == '\0') && (DAT_845a109c != DAT_845a1098)) {
+      DAT_845a109c = DAT_845a1098;
       sync(1);
-      cinematicGlob.cinematicFinished = true;
+      DAT_845a1094 = 1;
     }
   }
   __restgprlr_27();
@@ -1363,23 +1314,23 @@ void R_Cinematic_UpdateFrame_Core2(void)
 
 // 827210A8  R_Cinematic_StartPlayback_Internal  (gfx_d3d/r_cinematic.cpp:1777)
 
-void R_Cinematic_StartPlayback_Internal(char *param_1,uint param_2,uint param_3)
+void R_Cinematic_StartPlayback_Internal(undefined8 param_1,uint param_2,undefined4 param_3)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  cinematicGlob.cinematicFinished = false;
-  cinematicGlob.cinematicPending = true;
-  Sys_EnterCriticalSection(CRITSECT_CINEMATIC_PAUSE);
-  cinematicGlob.targetPaused = param_2 >> 3 & CINEMATIC_INGAME_PAUSED;
-  Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_PAUSE);
-  Sys_EnterCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_COMMAND);
-  I_strncpyz((char *)&cinematicGlob,pcVar1,0x100);
-  cinematicGlob.target[0].changed = 1;
-  cinematicGlob.target[0].playbackFlags = param_2;
-  cinematicGlob.target[0].startOffsetMsec = param_3;
-  Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_COMMAND);
+  uVar1 = __savegprlr_28();
+  DAT_845a1094 = 0;
+  DAT_845a1095 = 1;
+  Sys_EnterCriticalSection(0x1e);
+  DAT_845a1174 = param_2 >> 3 & 2;
+  Sys_LeaveCriticalSection(0x1e);
+  Sys_EnterCriticalSection(0x1a);
+  I_strncpyz(0xffffffff845a0b60,uVar1,0x100);
+  DAT_845a0c68 = 1;
+  DAT_845a0c60 = param_2;
+  DAT_845a0c64 = param_3;
+  Sys_LeaveCriticalSection(0x1a);
   __restgprlr_28();
   return;
 }
@@ -1387,156 +1338,140 @@ void R_Cinematic_StartPlayback_Internal(char *param_1,uint param_2,uint param_3)
 
 // 82721128  R_Cinematic_Thread  (gfx_d3d/r_cinematic.cpp:1807)
 
-void R_Cinematic_Thread(uint param_1)
+void R_Cinematic_Thread(void)
 
 {
-  int iVar2;
-  int iVar3;
   ulonglong uVar1;
+  longlong lVar2;
+  char *pcVar3;
   int iVar4;
-  bool bVar5;
+  int iVar5;
+  char cVar6;
+  longlong lVar7;
   int local_180 [4];
   char local_170 [368];
   
-  iVar2 = __savegprlr_20(param_1);
-  iVar3 = 0;
-  if (iVar2 != 6) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x71c
-                    ,0,"threadContext == THREAD_CONTEXT_CINEMATIC\n\t%i, %i");
+  uVar1 = __savegprlr_20();
+  lVar7 = 0;
+  if ((uVar1 & 0xffffffff) != 6) {
+    MyAssertHandler(0xffffffff821ba340,0x71c,0,0xffffffff821bac80,uVar1,6);
   }
   do {
     while( true ) {
-      iVar2 = Sys_Milliseconds();
-      if ((uint)(iVar2 - iVar3) < 4) {
-        Sys_Sleep(4 - (iVar2 - iVar3));
+      lVar2 = Sys_Milliseconds();
+      if ((lVar2 - lVar7 & 0xffffffffU) < 4) {
+        Sys_Sleep(4 - (lVar2 - lVar7));
       }
-      iVar3 = Sys_Milliseconds();
-      Sys_EnterCriticalSection(CRITSECT_CINEMATIC_UPDATE);
-      if (cinematicGlob.target[1].changed != 0) {
-        Sys_EnterCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_BACKEND);
-        memcpy();
-        cinematicGlob.target[1].changed = 0;
-        cinematicGlob.stopId = cinematicGlob.stopId + 1;
-        cinematicGlob.activeImageFrame = -1;
-        Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_BACKEND);
+      lVar7 = Sys_Milliseconds();
+      Sys_EnterCriticalSection(0x19);
+      if (DAT_845a0d74 != 0) {
+        Sys_EnterCriticalSection(0x1b);
+        memcpy(&DAT_845a0d78,&DAT_845a0c6c,0x10c);
+        DAT_845a0d74 = 0;
+        DAT_845a1098 = DAT_845a1098 + 1;
+        DAT_845a1170 = -1;
+        Sys_LeaveCriticalSection(0x1b);
       }
-      if (cinematicGlob.target[2].changed != 0) break;
+      if (DAT_845a0e80 != 0) break;
 LAB_827213cc:
-      if (cinematicGlob.status.name[0] == '\0') {
-        if (cinematicGlob.activeImageFrame != -1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp"
-                          ,0x6dc,0,"%s");
+      if (DAT_845a0e84 == '\0') {
+        if (DAT_845a1170 != -1) {
+          MyAssertHandler(0xffffffff821ba340,0x6dc,0,0xffffffff82000f98,0xffffffff821bab28);
         }
       }
       else {
-        if (cinematicGlob.bink == (BINK *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp"
-                          ,0x6e2,0,"%s");
+        if (DAT_845a10a8 == (int *)0x0) {
+          MyAssertHandler(0xffffffff821ba340,0x6e2,0,0xffffffff82000f98,0xffffffff821ba71c);
         }
-        bVar5 = R_Cinematic_Advance();
-        if ((!bVar5) && (cinematicGlob.finishedId != cinematicGlob.stopId)) {
-          cinematicGlob.finishedId = cinematicGlob.stopId;
+        cVar6 = R_Cinematic_Advance();
+        if ((cVar6 == '\0') && (DAT_845a109c != DAT_845a1098)) {
+          DAT_845a109c = DAT_845a1098;
           sync(1);
-          cinematicGlob.cinematicFinished = true;
+          DAT_845a1094 = 1;
         }
       }
-      Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_UPDATE);
+      Sys_LeaveCriticalSection(0x19);
     }
-    cinematicGlob.target[2].changed = 0;
+    DAT_845a0e80 = 0;
     local_180[0] = 0;
-    iVar2 = 0;
-    I_strncpyz(local_170,cinematicGlob.target[2].name,0x100);
-    if (local_170[0] != '\0') {
-      uVar1 = ZEXT48(&stack0x00000000) - 0x170;
-      strchr();
-      if ((uVar1 & 0xffffffff) != 0) {
-        *(undefined1 *)uVar1 = 0;
-        iVar2 = atoi((undefined1 *)uVar1 + 1);
-        local_180[0] = iVar2;
-      }
+    iVar4 = 0;
+    I_strncpyz(local_170,0xffffffff845a0d78,0x100);
+    if ((local_170[0] != '\0') && (pcVar3 = strchr(local_170,0x3a), pcVar3 != (char *)0x0)) {
+      *pcVar3 = '\0';
+      iVar4 = atoi(pcVar3 + 1);
+      local_180[0] = iVar4;
     }
-    if (((cinematicGlob.bink == (BINK *)0x0) || (iVar2 == 0)) ||
-       (iVar4 = I_stricmp(local_170,cinematicGlob.status.name), iVar4 != 0)) {
+    if (((DAT_845a10a8 == (int *)0x0) || (iVar4 == 0)) ||
+       (iVar5 = I_stricmp(local_170,0xffffffff845a0e84), iVar5 != 0)) {
 LAB_82721310:
-      iVar2 = R_Cinematic_StopPlayback_Now();
-      if (iVar2 != 0) {
+      iVar4 = R_Cinematic_StopPlayback_Now();
+      if (iVar4 != 0) {
         R_Cinematic_HunksClose();
       }
       if ((local_170[0] == '\0') ||
-         (bVar5 = R_Cinematic_StartPlayback_Now
-                            (local_170,cinematicGlob.target[2].playbackFlags,
-                             cinematicGlob.target[2].startOffsetMsec,local_180), !bVar5)) {
-        Sys_EnterCriticalSection(CRITSECT_CINEMATIC_STATUS);
-        cinematicGlob.status.name[0] = '\0';
-        cinematicGlob.status.startFrame = 0;
+         (cVar6 = R_Cinematic_StartPlayback_Now(local_170,DAT_845a0e78,DAT_845a0e7c,local_180),
+         cVar6 == '\0')) {
+        Sys_EnterCriticalSection(0x1c);
+        DAT_845a0e84 = '\0';
+        DAT_845a0f88 = 0;
       }
       else {
-        if (((cinematicGlob.bink)->Width != 0x500) ||
-           (cinematicGlob.fullScreen = 1, (cinematicGlob.bink)->Height != 0x2d0)) {
-          cinematicGlob.fullScreen = 0;
+        if ((*DAT_845a10a8 != 0x500) || (DAT_845a150c = 1, DAT_845a10a8[1] != 0x2d0)) {
+          DAT_845a150c = 0;
         }
-        Sys_SetCinematicsThreadProcId(cinematicGlob.fullScreen);
-        Sys_EnterCriticalSection(CRITSECT_CINEMATIC_STATUS);
-        I_strncpyz(cinematicGlob.status.name,local_170,0x100);
-        cinematicGlob.status.startFrame = local_180[0];
+        Sys_SetCinematicsThreadProcId();
+        Sys_EnterCriticalSection(0x1c);
+        I_strncpyz(0xffffffff845a0e84,local_170,0x100);
+        DAT_845a0f88 = local_180[0];
       }
-      cinematicGlob.status.timeInMsec = 0;
-      Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_STATUS);
+      DAT_845a0f84 = 0;
+      Sys_LeaveCriticalSection(0x1c);
       goto LAB_827213cc;
     }
-    if ((cinematicGlob.target[2].playbackFlags & 1) != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
-                      0x697,0,"%s\n\t(cinematicGlob.target[CIN_TARGET_UPDATE].playbackFlags) = %i");
+    if ((DAT_845a0e78 & 1) != 0) {
+      MyAssertHandler(0xffffffff821ba340,0x697,0,0xffffffff821babf0,0xffffffff821bac38);
     }
-    iVar2 = R_Cinematic_GotoFrame(iVar2);
-    local_180[0] = iVar2;
-    if (iVar2 == 0) {
+    iVar4 = R_Cinematic_GotoFrame(iVar4);
+    local_180[0] = iVar4;
+    if (iVar4 == 0) {
       local_170[0] = '\0';
-      cinematicGlob.finishedId = cinematicGlob.stopId;
+      DAT_845a109c = DAT_845a1098;
       sync(1);
-      cinematicGlob.cinematicFinished = true;
+      DAT_845a1094 = 1;
       goto LAB_82721310;
     }
-    Sys_EnterCriticalSection(CRITSECT_CINEMATIC_STATUS);
-    cinematicGlob.status.timeInMsec = 0;
-    cinematicGlob.status.startFrame = iVar2;
-    Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_STATUS);
-    Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_UPDATE);
+    Sys_EnterCriticalSection(0x1c);
+    DAT_845a0f84 = 0;
+    DAT_845a0f88 = iVar4;
+    Sys_LeaveCriticalSection(0x1c);
+    Sys_LeaveCriticalSection(0x19);
   } while( true );
 }
 
 
 // 82721470  R_Cinematic_Init  (gfx_d3d/r_cinematic.cpp:1855)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Cinematic_Init(void)
 
 {
-  bool bVar1;
-  
   __savegprlr_29();
-  cinematicGlob.activeImageFrame = -1;
-  cinematicGlob.lastFinishedId = 0;
-  cinematicGlob.finishedId = 1;
-  cinematicGlob.stopId = 1;
-  if (cinematicGlob.currentPaused != CINEMATIC_NOT_PAUSED) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x751
-                    ,0,"%s");
+  DAT_845a1170 = 0xffffffff;
+  DAT_845a10a0 = 0;
+  DAT_845a109c = 1;
+  DAT_845a1098 = 1;
+  if (DAT_845a1178 != 0) {
+    MyAssertHandler(0xffffffff821ba340,0x751,0,0xffffffff82000f98,0xffffffff821bace8);
   }
-  if (cinematicGlob.targetPaused != CINEMATIC_NOT_PAUSED) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x752
-                    ,0,"%s");
+  if (DAT_845a1174 != 0) {
+    MyAssertHandler(0xffffffff821ba340,0x752,0,0xffffffff82000f98,0xffffffff821bacb4);
   }
-  bVar1 = Sys_SpawnCinematicsThread(R_Cinematic_Thread);
-  __restgprlr_29(bVar1);
+  Sys_SpawnCinematicsThread(0xffffffff82721128);
+  __restgprlr_29();
   return;
 }
 
 
 // 82721518  R_Cinematic_Shutdown  (gfx_d3d/r_cinematic.cpp:1900)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_Cinematic_Shutdown(void)
 
@@ -1545,63 +1480,34 @@ void R_Cinematic_Shutdown(void)
 }
 
 
-// 82721520  R_Cinematic_StartPlayback  (gfx_d3d/r_cinematic.cpp:1913)
-
-/* void __cdecl R_Cinematic_StartPlayback(char const *,unsigned int,unsigned int) */
-
-void R_Cinematic_StartPlayback(char *param_1,uint param_2,uint param_3)
-
-{
-  char *pcVar1;
-  
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  cinematicGlob.cinematicFinished = false;
-  cinematicGlob.cinematicPending = true;
-  Sys_EnterCriticalSection(CRITSECT_CINEMATIC_PAUSE);
-  cinematicGlob.targetPaused = param_2 >> 3 & CINEMATIC_INGAME_PAUSED;
-  Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_PAUSE);
-  Sys_EnterCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_COMMAND);
-  I_strncpyz((char *)&cinematicGlob,pcVar1,0x100);
-  cinematicGlob.target[0].changed = 1;
-  cinematicGlob.target[0].playbackFlags = param_2;
-  cinematicGlob.target[0].startOffsetMsec = param_3;
-  Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_COMMAND);
-  __restgprlr_28();
-  return;
-}
-
-
 // 82721528  R_Cinematic_StartNextPlayback  (gfx_d3d/r_cinematic.cpp:1919)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool R_Cinematic_StartNextPlayback(void)
+undefined8 R_Cinematic_StartNextPlayback(void)
 
 {
-  if (cinematicGlob.server.name[0] == '\0') {
-    return false;
+  if (DAT_845a0f90 == '\0') {
+    return 0;
   }
-  Sys_EnterCriticalSection(CRITSECT_CINEMATIC_SERVER);
-  R_Cinematic_StartPlayback_Internal(cinematicGlob.server.name,cinematicGlob.server.playbackFlags,0)
-  ;
-  cinematicGlob.server.name[0] = '\0';
-  Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_SERVER);
-  return true;
+  Sys_EnterCriticalSection(0x1d);
+  R_Cinematic_StartPlayback_Internal(0xffffffff845a0f90,DAT_845a1090,0);
+  DAT_845a0f90 = 0;
+  Sys_LeaveCriticalSection(0x1d);
+  return 1;
 }
 
 
 // 827215A8  R_Cinematic_SetNextPlayback  (gfx_d3d/r_cinematic.cpp:1935)
 
-void R_Cinematic_SetNextPlayback(char *param_1,uint param_2)
+void R_Cinematic_SetNextPlayback(undefined8 param_1,undefined4 param_2)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  Sys_EnterCriticalSection(CRITSECT_CINEMATIC_SERVER);
-  I_strncpyz(cinematicGlob.server.name,pcVar1,0x100);
-  cinematicGlob.server.playbackFlags = param_2;
-  Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_SERVER);
+  uVar1 = __savegprlr_29();
+  Sys_EnterCriticalSection(0x1d);
+  I_strncpyz(0xffffffff845a0f90,uVar1,0x100);
+  DAT_845a1090 = param_2;
+  Sys_LeaveCriticalSection(0x1d);
   __restgprlr_29();
   return;
 }
@@ -1609,47 +1515,41 @@ void R_Cinematic_SetNextPlayback(char *param_1,uint param_2)
 
 // 827215F0  R_Cinematic_UnsetNextPlayback  (gfx_d3d/r_cinematic.cpp:1946)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Cinematic_UnsetNextPlayback(void)
 
 {
-  Sys_EnterCriticalSection(CRITSECT_CINEMATIC_SERVER);
-  I_strncpyz(cinematicGlob.server.name,"",0x100);
-  cinematicGlob.server.playbackFlags = 0;
-  Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_SERVER);
+  Sys_EnterCriticalSection(0x1d);
+  I_strncpyz(0xffffffff845a0f90,0xffffffff820068af,0x100);
+  DAT_845a1090 = 0;
+  Sys_LeaveCriticalSection(0x1d);
   return;
 }
 
 
 // 82721648  R_Cinematic_StopPlayback  (gfx_d3d/r_cinematic.cpp:1952)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Cinematic_StopPlayback(void)
 
 {
-  cinematicGlob.cinematicFinished = false;
-  cinematicGlob.cinematicPending = false;
-  cinematicGlob.lastFinishedId = cinematicGlob.finishedId;
-  Sys_EnterCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_COMMAND);
-  cinematicGlob.target[0].name[0] = '\0';
-  cinematicGlob.target[0].playbackFlags = 0;
-  cinematicGlob.target[0].startOffsetMsec = 0;
-  cinematicGlob.target[0].changed = 1;
-  Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_COMMAND);
+  DAT_845a1094 = 0;
+  DAT_845a1095 = 0;
+  DAT_845a10a0 = DAT_845a109c;
+  Sys_EnterCriticalSection(0x1a);
+  DAT_845a0b60 = 0;
+  DAT_845a0c60 = 0;
+  DAT_845a0c64 = 0;
+  DAT_845a0c68 = 1;
+  Sys_LeaveCriticalSection(0x1a);
   return;
 }
 
 
 // 827216C8  R_Cinematic_SuspendPlayback  (gfx_d3d/r_cinematic.cpp:1970)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Cinematic_SuspendPlayback(void)
 
 {
-  Sys_EnterCriticalSection(CRITSECT_CINEMATIC_UPDATE);
+  Sys_EnterCriticalSection(0x19);
   R_Cinematic_StopPlayback_Now();
   return;
 }
@@ -1657,61 +1557,58 @@ void R_Cinematic_SuspendPlayback(void)
 
 // 827216F0  R_Cinematic_SetPaused  (gfx_d3d/r_cinematic.cpp:1977)
 
-void R_Cinematic_SetPaused(CinematicEnum param_1,bool param_2)
+void R_Cinematic_SetPaused(undefined8 param_1,char param_2)
 
 {
-  if (((param_1 != CINEMATIC_INGAME_PAUSED) && (param_1 != CINEMATIC_PAUSED)) &&
-     (param_1 != CINEMATIC_NOT_PAUSED)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x7ba
-                    ,0,"%s\n\t(paused) = %i");
+  int iVar1;
+  
+  iVar1 = (int)param_1;
+  if (((iVar1 != 2) && (iVar1 != 1)) && (iVar1 != 0)) {
+    MyAssertHandler(0xffffffff821ba340,0x7ba,0,0xffffffff821bad1c,0xffffffff821bad30,param_1);
   }
-  Sys_EnterCriticalSection(CRITSECT_CINEMATIC_PAUSE);
-  if ((param_2) || (cinematicGlob.targetPaused != CINEMATIC_INGAME_PAUSED)) {
-    cinematicGlob.targetPaused = param_1;
+  Sys_EnterCriticalSection(0x1e);
+  if ((param_2 != '\0') || (DAT_845a1174 != 2)) {
+    DAT_845a1174 = iVar1;
   }
-  Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_PAUSE);
+  Sys_LeaveCriticalSection(0x1e);
   return;
 }
 
 
 // 82721798  R_Cinematic_SyncNow  (gfx_d3d/r_cinematic.cpp:1987)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int R_Cinematic_SyncNow(void)
+undefined4 R_Cinematic_SyncNow(void)
 
 {
-  int iVar1;
+  undefined4 uVar1;
+  int iVar2;
   
-  iVar1 = R_HasDeviceOwnership();
-  if (iVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x7c8
-                    ,0,"%s");
+  iVar2 = R_HasDeviceOwnership();
+  if (iVar2 != 0) {
+    MyAssertHandler(0xffffffff821ba340,0x7c8,0,0xffffffff82000f98,0xffffffff82059658);
   }
-  Sys_EnterCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_BACKEND);
-  iVar1 = cinematicGlob.target[1].changed;
-  Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_BACKEND);
-  while (iVar1 != 0) {
+  Sys_EnterCriticalSection(0x1b);
+  iVar2 = DAT_845a0d74;
+  Sys_LeaveCriticalSection(0x1b);
+  while (iVar2 != 0) {
     Sys_Sleep(1);
-    Sys_EnterCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_BACKEND);
-    iVar1 = cinematicGlob.target[1].changed;
-    Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_BACKEND);
+    Sys_EnterCriticalSection(0x1b);
+    iVar2 = DAT_845a0d74;
+    Sys_LeaveCriticalSection(0x1b);
   }
-  Sys_EnterCriticalSection(CRITSECT_CINEMATIC_UPDATE);
-  iVar1 = cinematicGlob.activeImageFrame;
-  Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_UPDATE);
-  return iVar1;
+  Sys_EnterCriticalSection(0x19);
+  uVar1 = DAT_845a1170;
+  Sys_LeaveCriticalSection(0x19);
+  return uVar1;
 }
 
 
 // 82721858  R_Cinematic_PendingSyncFrame  (gfx_d3d/r_cinematic.cpp:2016)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int R_Cinematic_PendingSyncFrame(void)
+undefined8 R_Cinematic_PendingSyncFrame(void)
 
 {
-  if ((cinematicGlob.target[0].changed == 0) && (cinematicGlob.syncFrame == 0)) {
+  if ((DAT_845a0c68 == 0) && (DAT_845a1508 == 0)) {
     return 0;
   }
   return 1;
@@ -1719,125 +1616,255 @@ int R_Cinematic_PendingSyncFrame(void)
 
 
 // 82721888  RB_Cinematic_UpdateFrame  (gfx_d3d/r_cinematic.cpp:2022)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void RB_Cinematic_UpdateFrame(void)
+
+{
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  undefined4 uVar5;
+  
+  iVar2 = __savegprlr_25();
+  if (DAT_84617885 != '\0') {
+    Profile_Begin(0x87);
+    Sys_EnterCriticalSection(0x1b);
+    iVar1 = DAT_845a0c68;
+    uVar5 = 0;
+    if (DAT_845a0c68 != 0) {
+      DAT_845a1508 = 1;
+      sync(1);
+      Sys_EnterCriticalSection(0x1a);
+      memcpy(&DAT_845a0c6c,&DAT_845a0b60,0x10c);
+      DAT_845a0c68 = 0;
+      Sys_LeaveCriticalSection(0x1a);
+    }
+    if (DAT_845a0d74 == 0) {
+      uVar4 = (ulonglong)DAT_845a1170;
+    }
+    else {
+      uVar4 = 0xffffffffffffffff;
+    }
+    Sys_LeaveCriticalSection(0x1b);
+    if (iVar1 != 0) {
+      uVar5 = 0;
+      if ((iVar2 == 0) && ((DAT_845a0d6c & 1) != 0)) {
+        uVar5 = 1;
+      }
+      RB_UnbindAllImages();
+    }
+    DAT_845a1508 = uVar5;
+    if (iVar2 != 0) {
+      if (DAT_84617885 == '\0') {
+        MyAssertHandler(0xffffffff821ba340,0x816,0,0xffffffff82000f98,0xffffffff821badb0);
+      }
+      if (DAT_84617894 != 0) {
+        MyAssertHandler(0xffffffff821ba340,0x81a,0,0xffffffff82000f98,0xffffffff821bad94);
+      }
+      if (DAT_8461788c < 0) {
+        MyAssertHandler(0xffffffff821ba340,0x81e,0,0xffffffff8208c9cc,0xffffffff8208c9f4,
+                        DAT_8461788c);
+      }
+      DAT_8461788c = DAT_8461788c + 1;
+      if ((int)DAT_84617888 < 0) {
+        MyAssertHandler(0xffffffff821ba340,0x822,0,0xffffffff8208ca18,0xffffffff8208ca4c);
+      }
+      DAT_84617888 = DAT_84617888 + 1;
+      R_ReleaseDeviceOwnership();
+      uVar4 = R_Cinematic_SyncNow();
+      R_AcquireDeviceOwnership();
+      uVar3 = (ulonglong)DAT_84617888;
+      DAT_84617888 = (uint)(uVar3 - 1);
+      if ((longlong)(uVar3 - 1) < 0) {
+        MyAssertHandler(0xffffffff821ba340,0x82e,0,0xffffffff8208ca18,0xffffffff8208ca4c);
+      }
+      sync(1);
+      DAT_8461788c = DAT_8461788c + -1;
+      if (DAT_8461788c < 0) {
+        MyAssertHandler(0xffffffff821ba340,0x833,0,0xffffffff8208c9cc,0xffffffff8208c9f4,
+                        DAT_8461788c);
+      }
+    }
+    RB_Cinematic_SetRendererImagesToFrame(uVar4);
+    Profile_EndInternal(0);
+  }
+  __restgprlr_25();
+  return;
+}
+
 
 // 82721AC8  RB_Cinematic_UpdateFrame2  (gfx_d3d/r_cinematic.cpp:2110)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+void RB_Cinematic_UpdateFrame2(void)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  ulonglong uVar3;
+  
+  __savegprlr_25();
+  iVar2 = R_HasDeviceOwnership();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x842,0,0xffffffff82000f98,0xffffffff8217d420);
+  }
+  if (DAT_845a1508 != 0) {
+    if (DAT_846178a8 == 0) {
+      MyAssertHandler(0xffffffff821ba340,0x849,0,0xffffffff82000f98,0xffffffff821badec);
+    }
+    if (DAT_8461788c != 0) {
+      MyAssertHandler(0xffffffff821ba340,0x84d,0,0xffffffff8208c9cc,0xffffffff821badcc,DAT_8461788c)
+      ;
+    }
+    if ((int)DAT_84617888 < 0) {
+      MyAssertHandler(0xffffffff821ba340,0x850,0,0xffffffff8208ca18,0xffffffff8208ca4c);
+    }
+    DAT_84617888 = DAT_84617888 + 1;
+    R_ReleaseDeviceOwnership();
+    uVar1 = R_Cinematic_SyncNow();
+    R_AcquireDeviceOwnership();
+    uVar3 = (ulonglong)DAT_84617888;
+    DAT_84617888 = (uint)(uVar3 - 1);
+    if ((longlong)(uVar3 - 1) < 0) {
+      MyAssertHandler(0xffffffff821ba340,0x85c,0,0xffffffff8208ca18,0xffffffff8208ca4c);
+    }
+    if (DAT_8461788c != 0) {
+      MyAssertHandler(0xffffffff821ba340,0x85f,0,0xffffffff8208c9cc,0xffffffff821badcc,DAT_8461788c)
+      ;
+    }
+    RB_Cinematic_SetRendererImagesToFrame(uVar1);
+  }
+  __restgprlr_25();
+  return;
+}
+
 
 // 82721C38  R_Cinematic_DrawLetterbox_OptionalCinematic  (gfx_d3d/r_cinematic.cpp:2151)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_Cinematic_DrawLetterbox_OptionalCinematic(void)
+
+{
+  char cVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  
+  cVar1 = __savefpr_26();
+  dVar4 = (double)DAT_84613728;
+  dVar3 = (double)DAT_8461372c;
+  dVar2 = (double)((float)((double)DAT_84613748 * dVar4) * 0.5625);
+  if (dVar3 < dVar2) {
+    dVar2 = dVar3;
+  }
+  uVar7 = 0;
+  uVar6 = 0x3ff0000000000000;
+  dVar5 = (double)((float)(dVar3 - dVar2) * 0.5);
+  R_AddCmdDrawStretchPic(0,0,dVar4,dVar5,0,0,0x3ff0000000000000,0x3ff0000000000000);
+  R_AddCmdDrawStretchPic(uVar7,(double)(float)(dVar3 - dVar5),dVar4,dVar5,uVar7,uVar7,uVar6,uVar6);
+  if (cVar1 != '\0') {
+    R_AddCmdDrawStretchPic(uVar7,dVar5,dVar4,dVar2,uVar7,uVar7,uVar6,uVar6);
+  }
+  __restfpr_26();
+  return;
+}
+
 
 // 82721DB0  R_Cinematic_DrawLetterboxFade  (gfx_d3d/r_cinematic.cpp:2198)
 
-void R_Cinematic_DrawLetterboxFade(float param_1)
+void R_Cinematic_DrawLetterboxFade(void)
 
 {
-  R_Cinematic_DrawLetterbox_OptionalCinematic(false,param_1);
+  R_Cinematic_DrawLetterbox_OptionalCinematic(0);
   return;
 }
 
 
 // 82721DB8  R_Cinematic_DrawStretchPic_Letterboxed  (gfx_d3d/r_cinematic.cpp:2204)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void R_Cinematic_DrawStretchPic_Letterboxed(LocalClientNum_t param_1)
+void R_Cinematic_DrawStretchPic_Letterboxed(void)
 
 {
-  R_Cinematic_DrawLetterbox_OptionalCinematic(true,1.0);
+  R_Cinematic_DrawLetterbox_OptionalCinematic(0x3ff0000000000000,1);
   return;
 }
 
 
 // 82721E68  R_Cinematic_GetFilenameAndTimeInMsec  (gfx_d3d/r_cinematic.cpp:2210)
 
-bool R_Cinematic_GetFilenameAndTimeInMsec(char *param_1,int param_2,uint *param_3)
+void R_Cinematic_GetFilenameAndTimeInMsec(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
   bool bVar1;
-  char *pcVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
+  ulonglong uVar2;
   
-  uVar4 = (ulonglong)(int)param_3;
-  pcVar2 = (char *)__savegprlr_27(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x8a3
-                    ,0,"%s");
+  uVar2 = __savegprlr_27();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x8a3,0,0xffffffff82000f98,0xffffffff821bae10);
   }
-  if (pcVar2 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x8a4
-                    ,0,"%s");
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ba340,0x8a4,0,0xffffffff82000f98,0xffffffff821bae08);
   }
-  if (cinematicGlob.cinematicFinished != false) {
+  if (DAT_845a1094 != '\0') {
     sync(1);
   }
-  if ((cinematicGlob.cinematicFinished != false &&
-       cinematicGlob.finishedId != cinematicGlob.lastFinishedId) ||
-     (bVar1 = true, cinematicGlob.status.name[0] == '\0')) {
+  if ((DAT_845a1094 != '\0' && DAT_845a109c != DAT_845a10a0) || (bVar1 = true, DAT_845a0e84 == '\0')
+     ) {
     bVar1 = false;
   }
   if (bVar1) {
-    Sys_EnterCriticalSection(CRITSECT_CINEMATIC_STATUS);
-    if (cinematicGlob.status.name[0] != '\0') {
-      *(uint *)uVar4 = cinematicGlob.status.timeInMsec;
-      I_strncpyz(pcVar2,cinematicGlob.status.name,param_2);
-      Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_STATUS);
-      uVar3 = __restgprlr_27(1);
-      return (bool)uVar3;
+    Sys_EnterCriticalSection(0x1c);
+    if (DAT_845a0e84 != '\0') {
+      *(undefined4 *)param_3 = DAT_845a0f84;
+      I_strncpyz(uVar2,0xffffffff845a0e84,param_2);
+      Sys_LeaveCriticalSection(0x1c);
+      __restgprlr_27(1);
+      return;
     }
-    Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_STATUS);
+    Sys_LeaveCriticalSection(0x1c);
   }
-  uVar3 = __restgprlr_27(0);
-  return (bool)uVar3;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 82721DC8  R_Cinematic_IsFinished  (gfx_d3d/r_cinematic.cpp:2234)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 bool R_Cinematic_IsFinished(void)
 
 {
-  if (!cinematicGlob.cinematicFinished) {
+  if (DAT_845a1094 == '\0') {
     return false;
   }
   sync(1);
-  return (bool)('\x01' - (cinematicGlob.finishedId == cinematicGlob.lastFinishedId));
+  return DAT_845a109c != DAT_845a10a0;
 }
 
 
 // 82721E00  R_Cinematic_IsStarted  (gfx_d3d/r_cinematic.cpp:2243)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool R_Cinematic_IsStarted(void)
+undefined8 R_Cinematic_IsStarted(void)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   
-  if (cinematicGlob.cinematicFinished) {
+  if (DAT_845a1094 != '\0') {
     sync(1);
   }
-  if ((cinematicGlob.cinematicFinished && cinematicGlob.finishedId != cinematicGlob.lastFinishedId)
-     || (bVar1 = true, cinematicGlob.status.name[0] == '\0')) {
-    bVar1 = false;
+  if ((DAT_845a1094 != '\0' && DAT_845a109c != DAT_845a10a0) || (uVar1 = 1, DAT_845a0e84 == '\0')) {
+    uVar1 = 0;
   }
-  return bVar1;
+  return uVar1;
 }
 
 
 // 82721E58  R_Cinematic_IsPending  (gfx_d3d/r_cinematic.cpp:2249)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool R_Cinematic_IsPending(void)
+undefined1 R_Cinematic_IsPending(void)
 
 {
-  return cinematicGlob.cinematicPending;
+  return DAT_845a1095;
 }
 

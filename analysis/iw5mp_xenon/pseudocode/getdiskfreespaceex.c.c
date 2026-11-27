@@ -2,15 +2,16 @@
 
 // 828ABA80  GetDiskFreeSpaceExA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/getdiskfreespaceex.c:24)
 
-int GetDiskFreeSpaceExA(char *param_1,_ULARGE_INTEGER *param_2,_ULARGE_INTEGER *param_3,
-                       _ULARGE_INTEGER *param_4)
+BOOL GetDiskFreeSpaceExA(LPCSTR lpDirectoryName,PULARGE_INTEGER lpFreeBytesAvailableToCaller,
+                        PULARGE_INTEGER lpTotalNumberOfBytes,
+                        PULARGE_INTEGER lpTotalNumberOfFreeBytes)
 
 {
   ulonglong uVar1;
   undefined8 uVar2;
-  long lVar3;
-  ulong uVar4;
-  int iVar5;
+  int iVar3;
+  DWORD DVar4;
+  BOOL BVar5;
   ulonglong uVar6;
   ulonglong uVar7;
   ulonglong uVar8;
@@ -25,26 +26,26 @@ int GetDiskFreeSpaceExA(char *param_1,_ULARGE_INTEGER *param_2,_ULARGE_INTEGER *
   int local_30;
   int local_2c;
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_28(param_1);
+  uVar8 = (ulonglong)(int)lpTotalNumberOfFreeBytes;
+  uVar7 = (ulonglong)(int)lpTotalNumberOfBytes;
+  uVar6 = (ulonglong)(int)lpFreeBytesAvailableToCaller;
+  uVar2 = __savegprlr_28(lpDirectoryName);
   RtlInitAnsiString(auStack_68,uVar2);
   local_54 = auStack_68;
   local_58 = 0xfffffffd;
   local_50 = 0x40;
-  lVar3 = NtOpenFile(local_70,0x100001,&local_58,auStack_60,3,0x800021);
-  if (lVar3 < 0) {
-    RtlSetLastNTError(lVar3);
-    uVar4 = GetLastError();
-    if (uVar4 == 2) {
+  iVar3 = NtOpenFile(local_70,0x100001,&local_58,auStack_60,3,0x800021);
+  if (iVar3 < 0) {
+    RtlSetLastNTError();
+    DVar4 = GetLastError();
+    if (DVar4 == 2) {
       SetLastError(3);
     }
   }
   else {
-    lVar3 = NtQueryVolumeInformationFile(local_70[0],auStack_60,&local_40,0x18,3);
+    uVar2 = NtQueryVolumeInformationFile(local_70[0],auStack_60,&local_40,0x18,3);
     NtClose(local_70[0]);
-    if (-1 < lVar3) {
+    if (-1 < (int)uVar2) {
       uVar1 = (longlong)local_30 * (longlong)local_2c & 0xffffffff;
       local_38 = local_38 * uVar1;
       if ((uVar6 & 0xffffffff) != 0) {
@@ -59,11 +60,11 @@ int GetDiskFreeSpaceExA(char *param_1,_ULARGE_INTEGER *param_2,_ULARGE_INTEGER *
       uVar2 = 1;
       goto LAB_828abb98;
     }
-    RtlSetLastNTError(lVar3);
+    RtlSetLastNTError(uVar2);
   }
   uVar2 = 0;
 LAB_828abb98:
-  iVar5 = __restgprlr_28(uVar2);
-  return iVar5;
+  BVar5 = __restgprlr_28(uVar2);
+  return BVar5;
 }
 

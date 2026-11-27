@@ -2,63 +2,57 @@
 
 // 828BB018  XTitleServerCreateEnumerator  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/lsp.cpp:26)
 
-ulong XTitleServerCreateEnumerator(char *param_1,ulong param_2,ulong *param_3,void **param_4)
+void XTitleServerCreateEnumerator
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
   char cVar1;
-  int iVar2;
-  void *pvVar3;
+  HANDLE pvVar2;
+  char *_Src;
+  int iVar3;
   char *pcVar4;
-  int iVar5;
-  ulong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  char *pcVar10;
-  longlong lVar11;
-  void *local_50;
+  longlong lVar5;
+  void *_Dst;
+  HANDLE local_50;
   int local_4c [19];
   
-  uVar9 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  pcVar4 = (char *)__savegprlr_25(param_1);
+  _Src = (char *)__savegprlr_25();
   local_4c[0] = 0;
-  local_50 = (void *)0x0;
-  pcVar10 = pcVar4;
-  if (pcVar4 == (char *)0x0) {
-    pcVar10 = (char *)0x0;
+  local_50 = (HANDLE)0x0;
+  pcVar4 = _Src;
+  if (_Src == (char *)0x0) {
+    pcVar4 = (char *)0x0;
 LAB_828bb07c:
-    if ((((uVar7 & 0xffffffff) != 0) && ((uVar7 & 0xffffffff) < 0x3e9)) &&
-       ((uVar9 & 0xffffffff) != 0)) {
-      lVar11 = XamCreateEnumeratorHandle
-                         (0xffffffffffffffff,0xfc,0x58039,0x5803a,0xd4,uVar7,0,&local_50);
-      if ((lVar11 == 0) &&
-         (lVar11 = XamGetPrivateEnumStructureFromHandle(local_50,local_4c), iVar5 = local_4c[0],
-         lVar11 == 0)) {
-        if ((uVar8 & 0xffffffff) != 0) {
-          *(int *)uVar8 = (int)uVar7 * 0xd0;
+    if ((((param_2 & 0xffffffff) != 0) && ((param_2 & 0xffffffff) < 0x3e9)) &&
+       ((param_4 & 0xffffffff) != 0)) {
+      lVar5 = XamCreateEnumeratorHandle
+                        (0xffffffffffffffff,0xfc,0x58039,0x5803a,0xd4,param_2,0,&local_50);
+      if ((lVar5 == 0) &&
+         (lVar5 = XamGetPrivateEnumStructureFromHandle(local_50,local_4c), iVar3 = local_4c[0],
+         lVar5 == 0)) {
+        if ((param_3 & 0xffffffff) != 0) {
+          *(int *)param_3 = (int)param_2 * 0xd0;
         }
-        iVar2 = local_4c[0] + 0x18;
-        if (pcVar10 != (char *)0x0) {
-          memcpy();
+        _Dst = (void *)(local_4c[0] + 0x18);
+        if (pcVar4 != (char *)0x0) {
+          memcpy(_Dst,_Src,(size_t)pcVar4);
         }
-        pcVar10[iVar2] = '\0';
-        *(undefined4 *)(iVar5 + 0xe0) = 0;
-        lVar11 = uVar7 * 0xd7 + 8;
-        *(int *)(iVar5 + 0xe4) = (int)lVar11;
-        iVar5 = XamAlloc(0x18000000,lVar11,iVar5 + 0xe8);
-        pvVar3 = local_50;
-        if (iVar5 < 0) {
-          lVar11 = 8;
+        pcVar4[(int)_Dst] = '\0';
+        *(undefined4 *)(iVar3 + 0xe0) = 0;
+        lVar5 = param_2 * 0xd7 + 8;
+        *(int *)(iVar3 + 0xe4) = (int)lVar5;
+        iVar3 = XamAlloc(0x18000000,lVar5,iVar3 + 0xe8);
+        pvVar2 = local_50;
+        if (iVar3 < 0) {
+          lVar5 = 8;
         }
         else {
-          lVar11 = 0;
-          local_50 = (void *)0x0;
-          *(undefined4 *)uVar9 = pvVar3;
+          lVar5 = 0;
+          local_50 = (HANDLE)0x0;
+          *(undefined4 *)param_4 = pvVar2;
         }
       }
-      if (local_50 != (void *)0x0) {
+      if (local_50 != (HANDLE)0x0) {
         CloseHandle(local_50);
       }
       if (local_4c[0] != 0) {
@@ -69,15 +63,15 @@ LAB_828bb07c:
   }
   else {
     do {
-      cVar1 = *pcVar10;
-      pcVar10 = pcVar10 + 1;
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 != '\0');
-    pcVar10 = pcVar10 + (-1 - (int)pcVar4);
-    if (pcVar10 < (char *)0xc8) goto LAB_828bb07c;
+    pcVar4 = pcVar4 + (-1 - (int)_Src);
+    if (pcVar4 < (char *)0xc8) goto LAB_828bb07c;
   }
-  lVar11 = 0x57;
+  lVar5 = 0x57;
 LAB_828bb16c:
-  uVar6 = __restgprlr_25(lVar11);
-  return uVar6;
+  __restgprlr_25(lVar5);
+  return;
 }
 

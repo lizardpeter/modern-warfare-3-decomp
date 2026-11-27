@@ -2,36 +2,34 @@
 
 // 82657900  Stream_Thread  (xenon/xenon_stream.cpp:20)
 
-void Stream_Thread(uint param_1)
+void Stream_Thread(void)
 
 {
-  int iVar1;
-  uint uVar2;
-  void *pvVar3;
+  ulonglong uVar1;
+  DWORD _Seed;
+  int iVar2;
   
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 != 9) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_stream.cpp",0x17,0
-                    ,"threadContext == THREAD_CONTEXT_STREAM\n\t%i, %i");
+  uVar1 = __savegprlr_27();
+  if ((uVar1 & 0xffffffff) != 9) {
+    MyAssertHandler(0xffffffff82191318,0x17,0,0xffffffff821912e8,uVar1,9);
   }
-  uVar2 = Sys_MillisecondsRaw();
-  srand(uVar2);
-  pvVar3 = Sys_GetValue(2);
-  setjmp();
-  while (pvVar3 != (void *)0x0) {
+  _Seed = Sys_MillisecondsRaw();
+  srand(_Seed);
+  Sys_GetValue(2);
+  iVar2 = setjmp();
+  while (iVar2 != 0) {
     Profile_Recover(1);
-    pvVar3 = Sys_GetValue(2);
-    setjmp();
+    Sys_GetValue(2);
+    iVar2 = setjmp();
   }
   Profile_Guard(1);
   do {
-    uVar2 = Sys_StreamSleep();
-    if (0xd < uVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_stream.cpp",0x28
-                      ,0,"streamIndex doesn\'t index SND_MAX_STREAM_CHANNELS\n\t%i not in [0, %i)");
+    uVar1 = Sys_StreamSleep();
+    if (0xd < (uVar1 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82191318,0x28,0,0xffffffff8209af00,uVar1,0xe);
     }
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"SND_ExecuteStreamRead");
-    SND_ExecuteStreamRead(uVar2);
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821912d0);
+    SND_ExecuteStreamRead(uVar1);
     PIXEndNamedEvent();
   } while( true );
 }
@@ -39,25 +37,20 @@ void Stream_Thread(uint param_1)
 
 // 826579D8  Stream_Init  (xenon/xenon_stream.cpp:50)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Stream_Init(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_SpawnStreamThread(Stream_Thread);
-  if (!bVar1) {
-                    /* WARNING: Subroutine does not return */
-    Sys_Error("Failed to create sound thread");
+  cVar1 = Sys_SpawnStreamThread(0xffffffff82657900);
+  if (cVar1 == '\0') {
+    Sys_Error(0xffffffff8219135c);
   }
   return;
 }
 
 
 // 82657A18  Stream_Shutdown  (xenon/xenon_stream.cpp:57)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Stream_Shutdown(void)
 

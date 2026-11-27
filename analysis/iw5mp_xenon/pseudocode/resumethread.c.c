@@ -2,15 +2,15 @@
 
 // 828A93B0  ResumeThread  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/resumethread.c:64)
 
-ulong ResumeThread(void *param_1)
+DWORD ResumeThread(HANDLE hThread)
 
 {
-  long lVar1;
-  ulong local_20 [4];
+  int iVar1;
+  DWORD local_20 [4];
   
-  lVar1 = NtResumeThread(param_1,local_20);
-  if (lVar1 < 0) {
-    RtlSetLastNTError(lVar1);
+  iVar1 = NtResumeThread(hThread,local_20);
+  if (iVar1 < 0) {
+    RtlSetLastNTError();
     local_20[0] = 0xffffffff;
   }
   return local_20[0];

@@ -2,54 +2,51 @@
 
 // 828A89D8  HeapCreate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapiheap.c:62)
 
-void * HeapCreate(ulong param_1,ulong param_2,ulong param_3)
+HANDLE HeapCreate(DWORD flOptions,SIZE_T dwInitialSize,SIZE_T dwMaximumSize)
 
 {
-  uint uVar1;
-  ulong uVar2;
-  void *pvVar3;
-  ulonglong uVar4;
+  ulonglong uVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  HANDLE pvVar4;
   ulonglong uVar5;
-  ulong uVar6;
+  ulonglong uVar6;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
+  uVar6 = (ulonglong)(int)dwMaximumSize;
+  uVar5 = (ulonglong)(int)dwInitialSize;
+  uVar1 = __savegprlr_29(flOptions);
   uVar2 = uVar1 & 5 | 0x1000;
-  if ((uVar5 & 0xffffffff) < 0x10000) {
-    if ((uVar5 & 0xffffffff) == 0) {
+  if ((uVar6 & 0xffffffff) < 0x10000) {
+    if ((uVar6 & 0xffffffff) == 0) {
       uVar2 = uVar1 & 5 | 0x1002;
-      uVar6 = (ulong)uVar5;
       goto LAB_828a8a28;
     }
-    uVar5 = 0x10000;
+    uVar6 = 0x10000;
   }
-  uVar6 = (ulong)uVar5;
-  if ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-    uVar6 = (ulong)uVar4;
+  if ((uVar6 & 0xffffffff) < (uVar5 & 0xffffffff)) {
+    uVar6 = uVar5;
   }
 LAB_828a8a28:
-  pvVar3 = RtlCreateHeap(uVar2,(void *)0x0,uVar6,(ulong)uVar4,(void *)0x0,
-                         (_RTL_HEAP_PARAMETERS *)0x0);
-  if (pvVar3 == (void *)0x0) {
+  lVar3 = RtlCreateHeap(uVar2,0,uVar6,uVar5,0,0);
+  if (lVar3 == 0) {
     SetLastError(8);
   }
-  pvVar3 = (void *)__restgprlr_29(pvVar3);
-  return pvVar3;
+  pvVar4 = (HANDLE)__restgprlr_29(lVar3);
+  return pvVar4;
 }
 
 
 // 828A8A60  HeapDestroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapiheap.c:110)
 
-int HeapDestroy(void *param_1)
+BOOL HeapDestroy(HANDLE hHeap)
 
 {
-  void *pvVar1;
+  int iVar1;
   
-  pvVar1 = RtlDestroyHeap(param_1);
-  if (pvVar1 != (void *)0x0) {
+  iVar1 = RtlDestroyHeap(hHeap);
+  if (iVar1 != 0) {
     SetLastError(6);
   }
-  return (int)(pvVar1 == (void *)0x0);
+  return (BOOL)(iVar1 == 0);
 }
 

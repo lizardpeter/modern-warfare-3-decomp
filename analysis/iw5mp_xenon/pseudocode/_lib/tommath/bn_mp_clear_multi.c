@@ -38,7 +38,7 @@ void mp_clear_multi(undefined8 param_1,undefined8 param_2,undefined8 param_3,und
           iVar4 = iVar4 + 4;
         } while (iVar3 < *piVar2);
       }
-      tom_game_free((void *)piVar2[3]);
+      tom_game_free(piVar2[3]);
       piVar2[3] = 0;
       *piVar2 = 0;
       piVar2[1] = 0;

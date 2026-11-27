@@ -2,7 +2,8 @@
 
 // 8268BD98  dCollideSpheres  (physics/ode/src/collision_util.cpp:39)
 
-int dCollideSpheres(float *param_1,float param_2,float *param_3,float param_4,dContactGeom *param_5)
+void dCollideSpheres(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
+                    float *param_5,undefined8 param_6,float *param_7)
 
 {
   float fVar1;
@@ -13,64 +14,63 @@ int dCollideSpheres(float *param_1,float param_2,float *param_3,float param_4,dC
   float fVar6;
   float fVar7;
   float *pfVar8;
-  int iVar9;
-  float *in_r7;
   double extraout_f1;
-  double dVar10;
   
-  dVar10 = (double)param_4;
-  pfVar8 = (float *)__savegprlr_28((double)param_2,param_1,param_3);
-  fVar1 = (float)(extraout_f1 + dVar10);
-  fVar2 = pfVar8[1] - param_5->pos[1];
-  fVar5 = *pfVar8 - param_5->pos[0];
-  fVar3 = pfVar8[2] - param_5->pos[2];
-  fVar2 = SQRT(fVar3 * fVar3 + fVar5 * fVar5 + fVar2 * fVar2);
-  if (fVar1 < fVar2) {
-    iVar9 = __restgprlr_28(0);
-    return iVar9;
+  pfVar8 = (float *)__savegprlr_28();
+  fVar1 = (float)(extraout_f1 + param_2);
+  fVar4 = *pfVar8 - *param_5;
+  fVar7 = SQRT((pfVar8[2] - param_5[2]) * (pfVar8[2] - param_5[2]) +
+               fVar4 * fVar4 + (pfVar8[1] - param_5[1]) * (pfVar8[1] - param_5[1]));
+  if (fVar1 < fVar7) {
+    __restgprlr_28(0);
+    return;
   }
-  if (0.0 < fVar2) {
-    fVar4 = 1.0 / fVar2;
-    in_r7[3] = fVar5 * fVar4;
-    fVar6 = (pfVar8[1] - param_5->pos[1]) * fVar4;
-    in_r7[4] = fVar6;
-    fVar3 = ((float)(dVar10 - extraout_f1) - fVar2) * 0.5;
-    fVar7 = (pfVar8[2] - param_5->pos[2]) * fVar4;
-    in_r7[5] = fVar7;
-    *in_r7 = fVar5 * fVar4 * fVar3 + *pfVar8;
-    in_r7[1] = fVar6 * fVar3 + pfVar8[1];
-    in_r7[2] = fVar7 * fVar3 + pfVar8[2];
-    in_r7[6] = fVar1 - fVar2;
+  if (0.0 < fVar7) {
+    fVar3 = 1.0 / fVar7;
+    param_7[3] = fVar4 * fVar3;
+    fVar5 = (pfVar8[1] - param_5[1]) * fVar3;
+    param_7[4] = fVar5;
+    fVar2 = ((float)(param_2 - extraout_f1) - fVar7) * 0.5;
+    fVar6 = (pfVar8[2] - param_5[2]) * fVar3;
+    param_7[5] = fVar6;
+    *param_7 = fVar4 * fVar3 * fVar2 + *pfVar8;
+    param_7[1] = fVar5 * fVar2 + pfVar8[1];
+    param_7[2] = fVar6 * fVar2 + pfVar8[2];
+    param_7[6] = fVar1 - fVar7;
   }
   else {
-    *in_r7 = *pfVar8;
-    in_r7[1] = pfVar8[1];
-    in_r7[2] = pfVar8[2];
-    in_r7[3] = 1.0;
-    in_r7[4] = 0.0;
-    in_r7[5] = 0.0;
-    in_r7[6] = fVar1;
+    *param_7 = *pfVar8;
+    param_7[1] = pfVar8[1];
+    param_7[2] = pfVar8[2];
+    param_7[3] = 1.0;
+    param_7[4] = 0.0;
+    param_7[5] = 0.0;
+    param_7[6] = fVar1;
   }
-  if (((((uint)in_r7[3] & 0x7f800000) == 0x7f800000) ||
-      (((uint)in_r7[4] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)in_r7[5] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
-                    ,0x43,0,"%s");
+  if (((uint)param_7[3] & 0x7f800000) == 0x7f800000) {
+LAB_8268bf10:
+    MyAssertHandler(0xffffffff82198898,0x43,0,0xffffffff82000f98,0xffffffff82198848);
   }
-  if (((((uint)*in_r7 & 0x7f800000) == 0x7f800000) || (((uint)in_r7[1] & 0x7f800000) == 0x7f800000))
-     || (((uint)in_r7[2] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
-                    ,0x44,0,"%s");
+  else {
+    if (((uint)param_7[4] & 0x7f800000) == 0x7f800000) goto LAB_8268bf10;
+    if (((uint)param_7[5] & 0x7f800000) == 0x7f800000) goto LAB_8268bf10;
   }
-  iVar9 = __restgprlr_28(1);
-  return iVar9;
+  if (((uint)*param_7 & 0x7f800000) != 0x7f800000) {
+    if (((uint)param_7[1] & 0x7f800000) != 0x7f800000) {
+      if (((uint)param_7[2] & 0x7f800000) != 0x7f800000) goto LAB_8268bf90;
+    }
+  }
+  MyAssertHandler(0xffffffff82198898,0x44,0,0xffffffff82000f98,0xffffffff82198800);
+LAB_8268bf90:
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 8268BFA0  dLineClosestApproach  (physics/ode/src/collision_util.cpp:76)
 
 void dLineClosestApproach
-               (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
+               (undefined8 param_1,float *param_2,float *param_3,float *param_4,float *param_5,
                float *param_6)
 
 {
@@ -82,32 +82,39 @@ void dLineClosestApproach
   double dVar6;
   double dVar7;
   
-  __savegprlr_23(param_1);
+  __savegprlr_23();
   pfVar1 = (float *)__savefpr_27();
-  if (((((uint)*pfVar1 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar1[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar1[2] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
-                    ,0x4f,0,"%s");
+  if (((uint)*pfVar1 & 0x7f800000) == 0x7f800000) {
+LAB_8268c028:
+    MyAssertHandler(0xffffffff82198898,0x4f,0,0xffffffff82000f98,0xffffffff821989d8);
   }
-  if (((((uint)*param_3 & 0x7f800000) == 0x7f800000) ||
-      (((uint)param_3[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)param_3[2] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
-                    ,0x50,0,"%s");
+  else {
+    if (((uint)pfVar1[1] & 0x7f800000) == 0x7f800000) goto LAB_8268c028;
+    if (((uint)pfVar1[2] & 0x7f800000) == 0x7f800000) goto LAB_8268c028;
   }
-  if (((((uint)*param_2 & 0x7f800000) == 0x7f800000) ||
-      (((uint)param_2[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)param_2[2] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
-                    ,0x51,0,"%s");
+  if (((uint)*param_3 & 0x7f800000) == 0x7f800000) {
+LAB_8268c08c:
+    MyAssertHandler(0xffffffff82198898,0x50,0,0xffffffff82000f98,0xffffffff8219899c);
   }
-  if (((((uint)*param_4 & 0x7f800000) == 0x7f800000) ||
-      (((uint)param_4[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)param_4[2] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
-                    ,0x52,0,"%s");
+  else {
+    if (((uint)param_3[1] & 0x7f800000) == 0x7f800000) goto LAB_8268c08c;
+    if (((uint)param_3[2] & 0x7f800000) == 0x7f800000) goto LAB_8268c08c;
   }
+  if (((uint)*param_2 & 0x7f800000) == 0x7f800000) {
+LAB_8268c0f0:
+    MyAssertHandler(0xffffffff82198898,0x51,0,0xffffffff82000f98,0xffffffff82198960);
+  }
+  else {
+    if (((uint)param_2[1] & 0x7f800000) == 0x7f800000) goto LAB_8268c0f0;
+    if (((uint)param_2[2] & 0x7f800000) == 0x7f800000) goto LAB_8268c0f0;
+  }
+  if (((uint)*param_4 & 0x7f800000) != 0x7f800000) {
+    if (((uint)param_4[1] & 0x7f800000) != 0x7f800000) {
+      if (((uint)param_4[2] & 0x7f800000) != 0x7f800000) goto LAB_8268c170;
+    }
+  }
+  MyAssertHandler(0xffffffff82198898,0x52,0,0xffffffff82000f98,0xffffffff82198924);
+LAB_8268c170:
   dVar4 = 1.0;
   dVar7 = (double)(*param_4 * *param_2 + param_4[1] * param_2[1] + param_4[2] * param_2[2]);
   dVar5 = -(double)(float)(dVar7 * dVar7 - 1.0);
@@ -117,13 +124,11 @@ void dLineClosestApproach
                    param_4[1] * (param_3[1] - pfVar1[1]) + param_4[2] * (param_3[2] - pfVar1[2]));
   if (9.999999747378752e-05 < dVar5) {
     if (dVar5 <= 0.0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
-                      ,99,0,"%s");
+      MyAssertHandler(0xffffffff82198898,99,0,0xffffffff82000f98,0xffffffff82198914);
     }
     dVar6 = (double)(float)(dVar4 / dVar5);
     if (((uint)(float)(dVar4 / dVar5) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
-                      ,0x65,0,"%s");
+      MyAssertHandler(0xffffffff82198898,0x65,0,0xffffffff82000f98,0xffffffff82198908);
     }
     *param_5 = (float)((double)(float)(dVar2 * dVar7 + dVar3) * dVar6);
     *param_6 = (float)((double)(float)(dVar3 * dVar7 + dVar2) * dVar6);
@@ -133,12 +138,10 @@ void dLineClosestApproach
     *param_6 = 0.0;
   }
   if (((uint)*param_5 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
-                    ,0x69,0,"%s");
+    MyAssertHandler(0xffffffff82198898,0x69,0,0xffffffff82000f98,0xffffffff821988f8);
   }
   if (((uint)*param_6 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
-                    ,0x6a,0,"%s");
+    MyAssertHandler(0xffffffff82198898,0x6a,0,0xffffffff82000f98,0xffffffff821988e8);
   }
   __restfpr_27();
   __restgprlr_23();
@@ -149,7 +152,7 @@ void dLineClosestApproach
 // 8268C318  dClosestLineBoxPoints  (physics/ode/src/collision_util.cpp:135)
 
 void dClosestLineBoxPoints
-               (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
+               (undefined8 param_1,float *param_2,float *param_3,float *param_4,float *param_5,
                float *param_6,float *param_7)
 
 {
@@ -183,7 +186,7 @@ void dClosestLineBoxPoints
   float local_a0 [4];
   float local_90 [30];
   
-  pfVar19 = (float *)__savefpr_19(param_1);
+  pfVar19 = (float *)__savefpr_19();
   fVar4 = pfVar19[2] - param_3[2];
   fVar5 = pfVar19[1] - param_3[1];
   fVar1 = *pfVar19;
@@ -348,8 +351,8 @@ void dClosestLineBoxPoints
 
 // 8268C808  dBoxTouchesBox  (physics/ode/src/collision_util.cpp:260)
 
-int dBoxTouchesBox(float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
-                  float *param_6)
+void dBoxTouchesBox(undefined8 param_1,float *param_2,float *param_3,float *param_4,float *param_5,
+                   float *param_6)
 
 {
   float fVar1;
@@ -390,107 +393,104 @@ int dBoxTouchesBox(float *param_1,float *param_2,float *param_3,float *param_4,f
   float fVar36;
   float fVar37;
   float fVar38;
-  int iVar39;
-  uint uVar40;
+  float *pfVar39;
   
-  __savefpr();
+  pfVar39 = (float *)__savefpr();
   fVar1 = param_2[4];
   fVar2 = param_5[5];
   fVar3 = *param_2;
   fVar4 = param_5[1];
   fVar5 = param_5[6];
-  fVar18 = param_4[1] - param_1[1];
+  fVar18 = param_4[1] - pfVar39[1];
   fVar6 = param_5[4];
   fVar7 = param_2[8];
   fVar8 = param_5[9];
   fVar9 = param_5[2];
-  fVar27 = param_6[1] * 0.5;
+  fVar19 = param_6[1] * 0.5;
   fVar10 = *param_5;
-  fVar37 = *param_4 - *param_1;
+  fVar25 = *param_4 - *pfVar39;
   fVar11 = param_5[10];
-  fVar38 = param_4[2] - param_1[2];
+  fVar26 = param_4[2] - pfVar39[2];
   fVar12 = param_2[6];
-  fVar28 = *param_6 * 0.5;
-  fVar26 = fVar7 * fVar8 + fVar3 * fVar4 + fVar1 * fVar2;
+  fVar20 = *param_6 * 0.5;
+  fVar34 = fVar7 * fVar8 + fVar3 * fVar4 + fVar1 * fVar2;
   fVar13 = param_2[5];
   fVar14 = param_2[2];
-  fVar29 = *param_3 * 0.5;
-  fVar25 = fVar7 * fVar11 + fVar3 * fVar9 + fVar1 * fVar5;
+  fVar21 = *param_3 * 0.5;
+  fVar33 = fVar7 * fVar11 + fVar3 * fVar9 + fVar1 * fVar5;
   fVar15 = param_2[1];
-  fVar30 = param_6[2] * 0.5;
-  fVar34 = ABS(fVar26);
+  fVar22 = param_6[2] * 0.5;
+  fVar36 = ABS(fVar34);
   fVar16 = param_5[8];
-  fVar31 = param_3[1] * 0.5;
+  fVar23 = param_3[1] * 0.5;
   fVar17 = param_2[9];
-  fVar32 = param_3[2] * 0.5;
-  fVar24 = fVar16 * fVar7 + fVar10 * fVar3 + fVar6 * fVar1;
-  fVar3 = fVar7 * fVar38 + fVar3 * fVar37 + fVar1 * fVar18;
-  fVar23 = fVar17 * fVar38 + fVar15 * fVar37 + fVar13 * fVar18;
-  fVar35 = ABS(fVar24);
+  fVar24 = param_3[2] * 0.5;
+  fVar32 = fVar16 * fVar7 + fVar10 * fVar3 + fVar6 * fVar1;
+  fVar3 = fVar7 * fVar26 + fVar3 * fVar25 + fVar1 * fVar18;
+  fVar31 = fVar17 * fVar26 + fVar15 * fVar25 + fVar13 * fVar18;
+  fVar37 = ABS(fVar32);
   fVar1 = param_2[10];
-  fVar7 = fVar1 * fVar38 + fVar14 * fVar37 + fVar12 * fVar18;
-  if (ABS(fVar3) <= fVar35 * fVar28 + ABS(fVar25) * fVar30 + fVar34 * fVar27 + fVar29) {
-    fVar20 = fVar8 * fVar17 + fVar4 * fVar15 + fVar2 * fVar13;
-    fVar22 = fVar11 * fVar17 + fVar9 * fVar15 + fVar5 * fVar13;
+  fVar7 = fVar1 * fVar26 + fVar14 * fVar25 + fVar12 * fVar18;
+  if (ABS(fVar3) <= fVar37 * fVar20 + ABS(fVar33) * fVar22 + fVar36 * fVar19 + fVar21) {
+    fVar28 = fVar8 * fVar17 + fVar4 * fVar15 + fVar2 * fVar13;
+    fVar30 = fVar11 * fVar17 + fVar9 * fVar15 + fVar5 * fVar13;
     fVar13 = fVar16 * fVar17 + fVar10 * fVar15 + fVar6 * fVar13;
-    fVar17 = ABS(fVar20);
-    fVar15 = ABS(fVar22);
-    fVar36 = ABS(fVar13);
-    if (ABS(fVar23) <= fVar36 * fVar28 + fVar15 * fVar30 + fVar17 * fVar27 + fVar31) {
-      fVar21 = fVar8 * fVar1 + fVar4 * fVar14 + fVar2 * fVar12;
-      fVar19 = fVar11 * fVar1 + fVar9 * fVar14 + fVar5 * fVar12;
+    fVar17 = ABS(fVar28);
+    fVar15 = ABS(fVar30);
+    fVar38 = ABS(fVar13);
+    if (ABS(fVar31) <= fVar38 * fVar20 + fVar15 * fVar22 + fVar17 * fVar19 + fVar23) {
+      fVar29 = fVar8 * fVar1 + fVar4 * fVar14 + fVar2 * fVar12;
+      fVar27 = fVar11 * fVar1 + fVar9 * fVar14 + fVar5 * fVar12;
       fVar1 = fVar16 * fVar1 + fVar10 * fVar14 + fVar6 * fVar12;
-      fVar14 = ABS(fVar21);
-      fVar33 = ABS(fVar19);
+      fVar14 = ABS(fVar29);
+      fVar35 = ABS(fVar27);
       fVar12 = ABS(fVar1);
-      if (((((ABS(fVar7) <= fVar12 * fVar28 + fVar33 * fVar30 + fVar14 * fVar27 + fVar32) &&
-            (ABS(fVar16 * fVar38 + fVar10 * fVar37 + fVar6 * fVar18) <=
-             fVar35 * fVar29 + fVar12 * fVar32 + fVar36 * fVar31 + fVar28)) &&
-           (ABS(fVar8 * fVar38 + fVar4 * fVar37 + fVar2 * fVar18) <=
-            fVar34 * fVar29 + fVar14 * fVar32 + fVar17 * fVar31 + fVar27)) &&
-          ((((fVar2 = ABS(fVar25),
-             ABS(fVar11 * fVar38 + fVar9 * fVar37 + fVar5 * fVar18) <=
-             fVar2 * fVar29 + fVar33 * fVar32 + fVar15 * fVar31 + fVar30 &&
-             (ABS(fVar7 * fVar13 - fVar1 * fVar23) <=
-              fVar2 * fVar27 + fVar34 * fVar30 + fVar12 * fVar31 + fVar36 * fVar32)) &&
-            ((ABS(fVar7 * fVar20 - fVar21 * fVar23) <=
-              fVar2 * fVar28 + fVar35 * fVar30 + fVar14 * fVar31 + fVar17 * fVar32 &&
-             ((ABS(fVar7 * fVar22 - fVar19 * fVar23) <=
-               fVar34 * fVar28 + fVar35 * fVar27 + fVar33 * fVar31 + fVar15 * fVar32 &&
-              (ABS(fVar1 * fVar3 - fVar7 * fVar24) <=
-               fVar35 * fVar32 + fVar15 * fVar27 + fVar12 * fVar29 + fVar17 * fVar30)))))) &&
-           (ABS(fVar21 * fVar3 - fVar7 * fVar26) <=
-            fVar34 * fVar32 + fVar15 * fVar28 + fVar14 * fVar29 + fVar36 * fVar30)))) &&
-         (((ABS(fVar19 * fVar3 - fVar7 * fVar25) <=
-            fVar2 * fVar32 + fVar17 * fVar28 + fVar33 * fVar29 + fVar36 * fVar27 &&
-           (ABS(fVar23 * fVar24 - fVar13 * fVar3) <=
-            fVar35 * fVar31 + fVar36 * fVar29 + fVar14 * fVar30 + fVar33 * fVar27)) &&
-          (ABS(fVar23 * fVar26 - fVar20 * fVar3) <=
-           fVar34 * fVar31 + fVar17 * fVar29 + fVar12 * fVar30 + fVar33 * fVar28)))) {
-        uVar40 = (uint)(ABS(fVar23 * fVar25 - fVar22 * fVar3) <=
-                       fVar2 * fVar31 + fVar15 * fVar29 + fVar12 * fVar27 + fVar14 * fVar28);
-        __restfpr();
-        return uVar40;
+      if (((((ABS(fVar7) <= fVar12 * fVar20 + fVar35 * fVar22 + fVar14 * fVar19 + fVar24) &&
+            (ABS(fVar16 * fVar26 + fVar10 * fVar25 + fVar6 * fVar18) <=
+             fVar37 * fVar21 + fVar12 * fVar24 + fVar38 * fVar23 + fVar20)) &&
+           (ABS(fVar8 * fVar26 + fVar4 * fVar25 + fVar2 * fVar18) <=
+            fVar36 * fVar21 + fVar14 * fVar24 + fVar17 * fVar23 + fVar19)) &&
+          ((((fVar2 = ABS(fVar33),
+             ABS(fVar11 * fVar26 + fVar9 * fVar25 + fVar5 * fVar18) <=
+             fVar2 * fVar21 + fVar35 * fVar24 + fVar15 * fVar23 + fVar22 &&
+             (ABS(fVar7 * fVar13 - fVar1 * fVar31) <=
+              fVar2 * fVar19 + fVar36 * fVar22 + fVar12 * fVar23 + fVar38 * fVar24)) &&
+            ((ABS(fVar7 * fVar28 - fVar29 * fVar31) <=
+              fVar2 * fVar20 + fVar37 * fVar22 + fVar14 * fVar23 + fVar17 * fVar24 &&
+             ((ABS(fVar7 * fVar30 - fVar27 * fVar31) <=
+               fVar36 * fVar20 + fVar37 * fVar19 + fVar35 * fVar23 + fVar15 * fVar24 &&
+              (ABS(fVar1 * fVar3 - fVar7 * fVar32) <=
+               fVar37 * fVar24 + fVar15 * fVar19 + fVar12 * fVar21 + fVar17 * fVar22)))))) &&
+           (ABS(fVar29 * fVar3 - fVar7 * fVar34) <=
+            fVar36 * fVar24 + fVar15 * fVar20 + fVar14 * fVar21 + fVar38 * fVar22)))) &&
+         (((ABS(fVar27 * fVar3 - fVar7 * fVar33) <=
+            fVar2 * fVar24 + fVar17 * fVar20 + fVar35 * fVar21 + fVar38 * fVar19 &&
+           (ABS(fVar31 * fVar32 - fVar13 * fVar3) <=
+            fVar37 * fVar23 + fVar38 * fVar21 + fVar14 * fVar22 + fVar35 * fVar19)) &&
+          (ABS(fVar31 * fVar34 - fVar28 * fVar3) <=
+           fVar36 * fVar23 + fVar17 * fVar21 + fVar12 * fVar22 + fVar35 * fVar20)))) {
+        __restfpr(ABS(fVar31 * fVar33 - fVar30 * fVar3) <=
+                  fVar2 * fVar23 + fVar15 * fVar21 + fVar12 * fVar19 + fVar14 * fVar20);
+        return;
       }
     }
   }
-  iVar39 = 0;
-  __restfpr();
-  return iVar39;
+  __restfpr(0);
+  return;
 }
 
 
 // 8268C2E8  dInfiniteAABB  (physics/ode/src/collision_util.cpp:325)
 
-void dInfiniteAABB(dxGeom *param_1,float *param_2)
+void dInfiniteAABB(undefined8 param_1,undefined4 *param_2)
 
 {
-  *param_2 = -3.4028235e+38;
-  param_2[1] = 3.4028235e+38;
-  param_2[2] = -3.4028235e+38;
-  param_2[3] = 3.4028235e+38;
-  param_2[4] = -3.4028235e+38;
-  param_2[5] = 3.4028235e+38;
+  *param_2 = 0xff7fffff;
+  param_2[1] = 0x7f7fffff;
+  param_2[2] = 0xff7fffff;
+  param_2[3] = 0x7f7fffff;
+  param_2[4] = 0xff7fffff;
+  param_2[5] = 0x7f7fffff;
   return;
 }
 

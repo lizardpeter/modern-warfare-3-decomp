@@ -18,7 +18,7 @@ void mp_clear(int *param_1)
         iVar2 = iVar2 + 4;
       } while (iVar1 < *param_1);
     }
-    tom_game_free((void *)param_1[3]);
+    tom_game_free(param_1[3]);
     param_1[3] = 0;
     *param_1 = 0;
     param_1[1] = 0;

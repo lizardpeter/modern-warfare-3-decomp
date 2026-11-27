@@ -2,18 +2,16 @@
 
 // 823A39F0  DB_FileReadCompletion  (database/db_file_load.cpp:167)
 
-void DB_FileReadCompletion(ulong param_1,ulong param_2,_OVERLAPPED *param_3)
+void DB_FileReadCompletion(longlong param_1,uint param_2)
 
 {
-  g_load.readError = param_1;
-  g_load.completedReadSize = -(uint)(param_1 == 0) & param_2;
+  DAT_82cc5cac = (int)param_1;
+  DAT_82cc5c8c = -(uint)(param_1 == 0) & param_2;
   return;
 }
 
 
 // 823A3A10  DB_FinishLoadXFile  (database/db_file_load.cpp:178)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_FinishLoadXFile(void)
 
@@ -21,20 +19,17 @@ void DB_FinishLoadXFile(void)
   int iVar1;
   
   __savegprlr_28();
-  if (g_load.file == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0xb3,0,"%s");
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0xb3,0,0xffffffff82000f98,0xffffffff82059670);
   }
   iVar1 = R_HasDeviceOwnership();
   if (iVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0xb5,0,"%s");
+    MyAssertHandler(0xffffffff82059680,0xb5,0,0xffffffff82000f98,0xffffffff82059658);
   }
-  if (g_load.file == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0xb8,0,"%s");
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0xb8,0,0xffffffff82000f98,0xffffffff82059670);
   }
-  g_load.file = (DBFile *)0x0;
+  DAT_82cc5c80 = 0;
   __restgprlr_28();
   return;
 }
@@ -42,102 +37,98 @@ void DB_FinishLoadXFile(void)
 
 // 823A3AB8  DB_ReadXFileStage  (database/db_file_load.cpp:192)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DB_ReadXFileStage(void)
 
 {
   uint uVar1;
   int iVar2;
-  ulong uVar3;
-  uint uVar4;
+  void *pvVar3;
+  BOOL BVar4;
+  DWORD DVar5;
+  size_t _Size;
+  ulonglong uVar6;
   
   __savegprlr_26();
-  if (g_loadOutstandingRead != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0xcb,0,"%s");
+  if (DAT_82c45b94 != 0) {
+    MyAssertHandler(0xffffffff82059680,0xcb,0,0xffffffff82000f98,0xffffffff82059764);
   }
-  if (g_load.file == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0xcc,0,"%s");
+  if (DAT_82cc5c80 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82059680,0xcc,0,0xffffffff82000f98,0xffffffff82059670);
   }
-  if (g_load.readSize == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0xcd,0,"%s");
+  if (DAT_82cc5c88 == 0) {
+    MyAssertHandler(0xffffffff82059680,0xcd,0,0xffffffff82000f98,0xffffffff82059754);
   }
   iVar2 = R_HasDeviceOwnership();
   if (iVar2 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0xcf,0,"%s");
+    MyAssertHandler(0xffffffff82059680,0xcf,0,0xffffffff82000f98,0xffffffff82059658);
   }
   Sys_WaitDatabaseThread();
-  uVar4 = g_load.readSize;
-  if ((int)g_load.readSize < 0x40001) {
-    if (g_load.readSize == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                      0xd9,0,"%s");
+  uVar6 = (ulonglong)DAT_82cc5c88;
+  if ((int)DAT_82cc5c88 < 0x40001) {
+    if (DAT_82cc5c88 == 0) {
+      MyAssertHandler(0xffffffff82059680,0xd9,0,0xffffffff82000f98,0xffffffff82059748);
     }
   }
   else {
-    uVar4 = 0x40000;
+    uVar6 = 0x40000;
   }
-  if (((g_load.file)->handle).handle == (void *)0x0) {
-    if ((g_load.file)->memoryBuffer == (uchar *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                      0xde,0,"%s");
+  DVar5 = (DWORD)uVar6;
+  if (*DAT_82cc5c80 == 0) {
+    if (DAT_82cc5c80[2] == 0) {
+      MyAssertHandler(0xffffffff82059680,0xde,0,0xffffffff82000f98,0xffffffff8205972c);
     }
-    g_load.readError = 0;
-    uVar1 = (g_load.file)->memoryBufferSize;
-    if (uVar1 == 0) {
-      g_load.completedReadSize = 0;
+    DAT_82cc5cac = 0;
+    uVar1 = DAT_82cc5c80[1];
+    if ((ulonglong)uVar1 == 0) {
+      DAT_82cc5c8c = 0;
       __restgprlr_26();
       return;
     }
-    if ((int)uVar1 < (int)uVar4) {
-      uVar4 = uVar1;
+    if ((int)uVar1 < (int)DVar5) {
+      uVar6 = (ulonglong)uVar1;
     }
-    memcpy();
-    g_loadOutstandingRead = 2;
-    (g_load.file)->memoryBuffer = (g_load.file)->memoryBuffer + uVar4;
-    (g_load.file)->memoryBufferSize = (g_load.file)->memoryBufferSize - uVar4;
-    g_load.completedReadSize = uVar4;
-    __restgprlr_26();
+    _Size = (size_t)uVar6;
+    pvVar3 = memcpy(DAT_82cc5c84,(void *)DAT_82cc5c80[2],_Size);
+    DAT_82c45b94 = 2;
+    DAT_82cc5c80[2] = DAT_82cc5c80[2] + _Size;
+    DAT_82cc5c80[1] = DAT_82cc5c80[1] - _Size;
+    DAT_82cc5c8c = _Size;
+    __restgprlr_26(pvVar3);
     return;
   }
-  g_load.overlapped.Internal = 0;
-  g_load.overlapped.InternalHigh = 0;
-  g_load.overlapped.OffsetHigh = 0;
-  g_load.overlapped.hEvent = (void *)0x0;
-  g_load.overlapped.Offset = g_load.offset;
+  DAT_82cc5c98 = 0;
+  DAT_82cc5c9c = 0;
+  DAT_82cc5ca4 = 0;
+  DAT_82cc5ca8 = 0;
+  DAT_82cc5ca0 = DAT_82cc5c90;
   iVar2 = R_HasDeviceOwnership();
   if (iVar2 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x123,0,"%s");
+    MyAssertHandler(0xffffffff82059680,0x123,0,0xffffffff82000f98,0xffffffff82059658);
   }
   Sys_WaitFileRead();
-  if (((g_load.file)->handle).handle == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x128,0,"%s");
+  if (*DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x128,0,0xffffffff82000f98,0xffffffff82059710);
   }
-  g_recentReadOffset = g_load.offset + uVar4;
-  g_recentReadFile = g_load.file;
-  PIXBeginNamedEvent_Copy_VarArgs(0xffffffff,"ReadFileEx: %x %x");
-  if (((uint)g_load.fileBuffer & 3) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x130,0,"%s");
+  DAT_82c45b98 = DAT_82cc5c90 + DVar5;
+  DAT_82c45b80 = DAT_82cc5c80;
+  PIXBeginNamedEvent_Copy_VarArgs
+            (0xffffffffffffffff,0xffffffff820596fc,(ulonglong)DAT_82cc5ca0,DAT_82cc5ca0 + uVar6);
+  if (((uint)DAT_82cc5c84 & 3) != 0) {
+    MyAssertHandler(0xffffffff82059680,0x130,0,0xffffffff82000f98,0xffffffff820596dc);
   }
-  iVar2 = ReadFileEx(((g_load.file)->handle).handle,g_load.fileBuffer,uVar4,&g_load.overlapped,
+  BVar4 = ReadFileEx((HANDLE)*DAT_82cc5c80,DAT_82cc5c84,DVar5,(LPOVERLAPPED)&DAT_82cc5c98,
                      DB_FileReadCompletion);
   PIXEndNamedEvent();
-  if (iVar2 == 0) {
-    uVar3 = GetLastError();
-    if (uVar3 != 0x26) {
-                    /* WARNING: Subroutine does not return */
-      Sys_Error("Read error of file \'%s\'");
+  if (BVar4 == 0) {
+    DVar5 = GetLastError();
+    if (DVar5 != 0x26) {
+      Sys_Error(0xffffffff820596c4,DAT_82cc5c80 + 3);
+      __restgprlr_26();
+      return;
     }
   }
   else {
-    g_loadOutstandingRead = 1;
+    DAT_82c45b94 = 1;
   }
   __restgprlr_26();
   return;
@@ -146,25 +137,23 @@ void DB_ReadXFileStage(void)
 
 // 823A3DB0  DB_WaitXFileStageInternal  (database/db_file_load.cpp:322)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DB_WaitXFileStageInternal(void)
 
 {
-  if (g_loadOutstandingRead == 1) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"SleepEx");
-    SleepEx(0xffffffff,1);
-    PIXEndNamedEvent();
+  DWORD DVar1;
+  
+  if (DAT_82c45b94 == 1) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205977c);
+    DVar1 = SleepEx(0xffffffff,1);
+    PIXEndNamedEvent(DVar1);
     sync(1);
   }
-  g_loadOutstandingRead = 0;
+  DAT_82c45b94 = 0;
   return;
 }
 
 
 // 823A4638  DB_WaitXFileStage  (database/db_file_load.cpp:360)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_WaitXFileStage(void)
 
@@ -173,59 +162,55 @@ void DB_WaitXFileStage(void)
   uint uVar2;
   
   __savegprlr_27();
-  if (g_load.file == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x170,0,"%s");
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x170,0,0xffffffff82000f98,0xffffffff82059670);
   }
-  if (g_load.stream.avail_in != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x171,0,"%s");
+  if (DAT_82cc5cb4 != 0) {
+    MyAssertHandler(0xffffffff82059680,0x171,0,0xffffffff82000f98,0xffffffff820599b8);
   }
-  if (g_loadOutstandingRead != 0) {
-    DB_WaitXFileStageInternal();
-    if (g_load.readError != 0) {
-      g_load.completedReadSize = -(uint)(g_load.readError == 0x26) & g_load.completedReadSize;
-    }
-    uVar1 = g_load.completedReadSize;
-    uVar2 = g_load.readSize;
-    if (0x40000 < (int)g_load.readSize) {
-      uVar2 = 0x40000;
-    }
-    if (uVar2 < g_load.completedReadSize) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                      0x1cd,0,"%s");
-    }
-    g_load.offset = g_load.offset + uVar1;
-    g_load.readSize = g_load.readSize - 0x40000;
-    if (uVar1 != 0x40000) {
-      g_load.readSize = 0;
-    }
-    g_load.start_in = g_load.fileBuffer;
-    g_load.stream.next_in = g_load.fileBuffer;
-    g_load.fileBuffer = g_load.fileBuffer + 0x40000;
-    if ((DB_LoadData *)g_load.fileBuffer == &g_load) {
-      g_load.fileBuffer = g_fileBuf + 0x80;
-    }
-    g_loadedSize = g_loadedSize + g_loadedSizeInc;
-    if (0x1fffffff < g_loadedSize) {
-      g_loadedSizeInc = 0;
-    }
-    g_load.stream.avail_in = uVar1;
-    __restgprlr_27();
-    return;
+  if (DAT_82c45b94 == 0) {
+    Com_Printf(8,0xffffffff820597f8,(ulonglong)DAT_82cc5c80 + 0xc);
+    Content_CheckIfMountedContentPacksAreGone();
+    Sys_Sleep(1000);
+    Content_CheckIfMountedContentPacksAreGone();
+    R_ShowDirtyDiscError();
   }
-  Com_Printf(8,"ERROR: Dirty disk: \'%s\'\n");
-  Content_CheckIfMountedContentPacksAreGone();
-  Sys_Sleep(1000);
-  Content_CheckIfMountedContentPacksAreGone();
-                    /* WARNING: Subroutine does not return */
-  R_ShowDirtyDiscError();
+  DB_WaitXFileStageInternal();
+  if (DAT_82cc5cac != 0) {
+    DAT_82cc5c8c = -(uint)(DAT_82cc5cac == 0x26) & DAT_82cc5c8c;
+  }
+  uVar1 = DAT_82cc5c8c;
+  uVar2 = DAT_82cc5c88;
+  if (0x40000 < (int)DAT_82cc5c88) {
+    uVar2 = 0x40000;
+  }
+  if (uVar2 < DAT_82cc5c8c) {
+    MyAssertHandler(0xffffffff82059680,0x1cd,0,0xffffffff82000f98,0xffffffff82059978);
+  }
+  DAT_82cc5c90 = DAT_82cc5c90 + uVar1;
+  DAT_82cc5c88 = DAT_82cc5c88 - 0x40000;
+  if (uVar1 != 0x40000) {
+    DAT_82cc5c88 = 0;
+  }
+  DAT_82cc5c94 = (int)DAT_82cc5c84;
+  DAT_82cc5cb0 = (int)DAT_82cc5c84;
+  DAT_82cc5c84 = (undefined4 *)((int)DAT_82cc5c84 + 0x40000);
+  if (DAT_82cc5c84 == &DAT_82cc5c80) {
+    DAT_82cc5c84 = (undefined4 *)&DAT_82c45c80;
+  }
+  DAT_82c45b90 = DAT_82c45b90 + DAT_82c45b8c;
+  if (0x1fffffff < DAT_82c45b90) {
+    DAT_82c45b8c = 0;
+  }
+  DAT_82cc5cb4 = uVar1;
+  __restgprlr_27();
+  return;
 }
 
 
 // 823A3E20  DB_FlushOutstandingRead  (database/db_file_load.cpp:491)
 
-void DB_FlushOutstandingRead(int param_1)
+void DB_FlushOutstandingRead(void)
 
 {
   bool bVar1;
@@ -233,47 +218,45 @@ void DB_FlushOutstandingRead(int param_1)
   char in_RESERVE;
   byte in_cr0;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (g_loadOutstandingRead == 1) {
+  iVar2 = __savegprlr_29();
+  if (DAT_82c45b94 == 1) {
     do {
       if (in_RESERVE != '\0') {
-        g_flushOutstandingRead =
-             storeWordConditionalIndexed
-                       ((ulonglong)(uint)g_flushOutstandingRead + 1,0,0xffffffff82c45b88);
+        DAT_82c45b88 = storeWordConditionalIndexed((ulonglong)DAT_82c45b88 + 1,0,0xffffffff82c45b88)
+        ;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
     do {
       if (in_RESERVE != '\0') {
-        g_streamAbort =
-             storeWordConditionalIndexed((ulonglong)(uint)g_streamAbort + 1,0,0xffffffff832ee080);
+        DAT_832ee080 = storeWordConditionalIndexed((ulonglong)DAT_832ee080 + 1,0,0xffffffff832ee080)
+        ;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
     bVar1 = true;
     while (bVar1) {
       if (iVar2 != 0) {
-        Sys_LeaveCriticalSection(CRITSECT_STREAMING);
+        Sys_LeaveCriticalSection(0x23);
       }
       Sys_NotifyDatabase();
       Sys_Sleep(1);
       if (iVar2 != 0) {
-        Sys_EnterCriticalSection(CRITSECT_STREAMING);
+        Sys_EnterCriticalSection(0x23);
       }
-      bVar1 = g_loadOutstandingRead == 1;
+      bVar1 = DAT_82c45b94 == 1;
     }
     do {
       if (in_RESERVE != '\0') {
-        g_streamAbort =
-             storeWordConditionalIndexed((ulonglong)(uint)g_streamAbort - 1,0,0xffffffff832ee080);
+        DAT_832ee080 = storeWordConditionalIndexed((ulonglong)DAT_832ee080 - 1,0,0xffffffff832ee080)
+        ;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
     do {
       if (in_RESERVE != '\0') {
-        g_flushOutstandingRead =
-             storeWordConditionalIndexed
-                       ((ulonglong)(uint)g_flushOutstandingRead - 1,0,0xffffffff82c45b88);
+        DAT_82c45b88 = storeWordConditionalIndexed((ulonglong)DAT_82c45b88 - 1,0,0xffffffff82c45b88)
+        ;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -285,52 +268,44 @@ void DB_FlushOutstandingRead(int param_1)
 
 // 823A3F18  DB_AbortOutstandingRead  (database/db_file_load.cpp:516)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DB_AbortOutstandingRead(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsDatabaseThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x205,0,"%s");
+  cVar1 = Sys_IsDatabaseThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82059680,0x205,0,0xffffffff82000f98,0xffffffff82059784);
   }
-  g_loadOutstandingRead = 0;
+  DAT_82c45b94 = 0;
   return;
 }
 
 
 // 823A3F78  DB_CheckOutstandingRead  (database/db_file_load.cpp:523)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DB_CheckOutstandingRead(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsDatabaseThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x20c,0,"%s");
+  cVar1 = Sys_IsDatabaseThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82059680,0x20c,0,0xffffffff82000f98,0xffffffff82059784);
   }
-  if ((g_flushOutstandingRead != 0) && (g_loadOutstandingRead == 1)) {
+  if ((DAT_82c45b88 != 0) && (DAT_82c45b94 == 1)) {
     DB_WaitXFileStageInternal();
-    if (g_loadOutstandingRead != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                      0x214,0,"%s\n\t(g_loadOutstandingRead) = %i");
+    if (DAT_82c45b94 != 0) {
+      MyAssertHandler(0xffffffff82059680,0x214,0,0xffffffff8205979c,0xffffffff820597c0,DAT_82c45b94)
+      ;
     }
-    g_loadOutstandingRead = 2;
+    DAT_82c45b94 = 2;
   }
   return;
 }
 
 
 // 823A47F0  DB_ReadNextData  (database/db_file_load.cpp:541)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_ReadNextData(void)
 
@@ -339,11 +314,10 @@ void DB_ReadNextData(void)
   
   iVar1 = R_HasDeviceOwnership();
   if (iVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x21f,0,"%s");
+    MyAssertHandler(0xffffffff82059680,0x21f,0,0xffffffff82000f98,0xffffffff82059658);
   }
   DB_WaitXFileStage();
-  if (g_load.readSize != 0) {
+  if (DAT_82cc5c88 != 0) {
     DB_ReadXFileStage();
   }
   Sys_YieldWorkerCmd();
@@ -353,66 +327,63 @@ void DB_ReadNextData(void)
 
 // 823A4038  DB_GetFile  (database/db_file_load.cpp:557)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-DBFile * DB_GetFile(void)
+undefined4 DB_GetFile(void)
 
 {
-  return g_load.file;
+  return DAT_82cc5c80;
 }
 
 
 // 823A4860  DB_InflateInit  (database/db_file_load.cpp:573)
 
-void DB_InflateInit(int param_1)
+void DB_InflateInit(undefined8 param_1)
 
 {
   char *pcVar1;
   int iVar2;
   
-  if (g_load.file == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x240,0,"%s");
+  if (DAT_82cc5c80 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82059680,0x240,0,0xffffffff82000f98,0xffffffff82059670);
   }
-  if ((((param_1 != 0) || (pcVar1 = strstr((g_load.file)->name,"mychanges"), pcVar1 != (char *)0x0))
-      || (iVar2 = I_strncmp((g_load.file)->name,"dev_",4), iVar2 == 0)) ||
-     (((g_load.file)->handle).handle == (void *)0x0)) {
-    g_compressor = DB_COMPRESSOR_LZX;
-    iVar2 = DB_AuthLoad_InflateInit(&g_load.stream,param_1,(g_load.file)->name);
+  if (((((int)param_1 != 0) ||
+       (pcVar1 = strstr((char *)(DAT_82cc5c80 + 3),"mychanges"), pcVar1 != (char *)0x0)) ||
+      (iVar2 = I_strncmp(DAT_82cc5c80 + 3,0xffffffff820599d0,4), iVar2 == 0)) ||
+     (*DAT_82cc5c80 == 0)) {
+    DAT_82967310 = 1;
+    iVar2 = DB_AuthLoad_InflateInit(0xffffffff82cc5cb0,param_1,DAT_82cc5c80 + 3);
     if (iVar2 == 0) {
       return;
     }
   }
-  Com_Printf(8,"ERROR: Dirty disk: \'%s\'\n");
+  Com_Printf(8,0xffffffff820597f8,DAT_82cc5c80 + 3);
   Content_CheckIfMountedContentPacksAreGone();
   Sys_Sleep(1000);
   Content_CheckIfMountedContentPacksAreGone();
-                    /* WARNING: Subroutine does not return */
   R_ShowDirtyDiscError();
+  return;
 }
 
 
 // 823A4978  DB_InflateInitForceNoSecure  (database/db_file_load.cpp:637)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DB_InflateInitForceNoSecure(void)
 
 {
   int iVar1;
+  ulonglong uVar2;
   
-  if (g_load.file == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x27e,0,"%s");
+  uVar2 = (ulonglong)DAT_82cc5c80;
+  if (uVar2 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x27e,0,0xffffffff82000f98,0xffffffff82059670);
+    uVar2 = (ulonglong)DAT_82cc5c80;
   }
-  g_compressor = DB_COMPRESSOR_LZX;
-  iVar1 = DB_AuthLoad_InflateInit(&g_load.stream,0,(g_load.file)->name);
+  DAT_82967310 = 1;
+  iVar1 = DB_AuthLoad_InflateInit(0xffffffff82cc5cb0,0,uVar2 + 0xc);
   if (iVar1 != 0) {
-    Com_Printf(8,"ERROR: Dirty disk: \'%s\'\n");
+    Com_Printf(8,0xffffffff820597f8,(ulonglong)DAT_82cc5c80 + 0xc);
     Content_CheckIfMountedContentPacksAreGone();
     Sys_Sleep(1000);
     Content_CheckIfMountedContentPacksAreGone();
-                    /* WARNING: Subroutine does not return */
     R_ShowDirtyDiscError();
   }
   return;
@@ -421,170 +392,152 @@ void DB_InflateInitForceNoSecure(void)
 
 // 823A4048  DB_InflateShutdown  (database/db_file_load.cpp:665)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DB_InflateShutdown(void)
 
 {
-  DB_AuthLoad_InflateEnd(&g_load.stream);
+  DB_AuthLoad_InflateEnd(0xffffffff82cc5cb0);
   return;
 }
 
 
 // 823A4A28  DB_ReadXFileUncompressed  (database/db_file_load.cpp:673)
 
-void DB_ReadXFileUncompressed(uchar *param_1,int param_2)
+void DB_ReadXFileUncompressed(undefined8 param_1,ulonglong param_2)
 
 {
-  uchar *puVar1;
-  int iVar2;
-  uint uVar3;
+  ulonglong uVar1;
+  void *pvVar2;
+  int iVar3;
+  size_t _Size;
   ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
   
-  uVar4 = (ulonglong)param_2;
-  puVar1 = (uchar *)__savegprlr_24(param_1);
-  uVar3 = (uint)uVar4;
-  if (uVar3 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x2a4,0,"%s");
+  uVar1 = __savegprlr_24();
+  if ((uint)param_2 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x2a4,0,0xffffffff82000f98,0xffffffff82036204);
   }
-  if (g_load.file == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x2a6,0,"%s");
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x2a6,0,0xffffffff82000f98,0xffffffff82059670);
   }
-  if (g_load.stream.avail_out != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x2a7,0,"%s");
+  if (DAT_82cc5cc0 != 0) {
+    MyAssertHandler(0xffffffff82059680,0x2a7,0,0xffffffff82000f98,0xffffffff82059a78);
   }
-  uVar5 = (ulonglong)g_load.stream.avail_in;
-  if ((g_load.readSize + uVar5 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x2a8,0,"%s");
-    uVar5 = (ulonglong)g_load.stream.avail_in;
+  uVar4 = (ulonglong)DAT_82cc5cb4;
+  if ((DAT_82cc5c88 + uVar4 & 0xffffffff) < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82059680,0x2a8,0,0xffffffff82000f98,0xffffffff82059a40);
+    uVar4 = (ulonglong)DAT_82cc5cb4;
   }
+  DAT_82cc5cbc = (uint)uVar1;
+  DAT_82cc5cc0 = (uint)param_2;
   do {
-    g_load.stream.avail_out = uVar3;
-    g_load.stream.next_out = puVar1;
-    if (uVar5 != 0) {
-      uVar6 = uVar5;
-      if ((int)uVar4 < (int)uVar5) {
-        uVar6 = uVar4;
+    if (uVar4 != 0) {
+      uVar5 = uVar4;
+      if ((int)param_2 < (int)uVar4) {
+        uVar5 = param_2;
       }
-      iVar2 = (int)uVar6;
-      if (g_load.stream.next_out != (uchar *)0x0) {
-        memcpy();
-        uVar4 = (ulonglong)g_load.stream.avail_out;
-        g_load.stream.next_out = g_load.stream.next_out + iVar2;
-        uVar5 = (ulonglong)g_load.stream.avail_in;
+      _Size = (size_t)uVar5;
+      if ((uVar1 & 0xffffffff) != 0) {
+        pvVar2 = memcpy((void *)uVar1,DAT_82cc5cb0,_Size);
+        uVar1 = (ulonglong)(int)pvVar2;
+        param_2 = (ulonglong)DAT_82cc5cc0;
+        DAT_82cc5cbc = DAT_82cc5cbc + _Size;
+        uVar4 = (ulonglong)DAT_82cc5cb4;
       }
-      g_load.stream.avail_in = (int)uVar5 - iVar2;
-      g_load.stream.avail_out = (int)uVar4 - iVar2;
-      uVar6 = ZEXT48(g_load.stream.next_in) + uVar6;
-      g_load.stream.next_in = (uchar *)uVar6;
-      if (g_load.file == (DBFile *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp"
-                        ,0x2bd,0,"%s");
-        uVar6 = ZEXT48(g_load.stream.next_in);
+      DAT_82cc5cb4 = (int)uVar4 - _Size;
+      DAT_82cc5cc0 = (int)param_2 - _Size;
+      uVar5 = ZEXT48(DAT_82cc5cb0) + uVar5;
+      DAT_82cc5cb0 = (void *)uVar5;
+      if (DAT_82cc5c80 == 0) {
+        uVar1 = MyAssertHandler(0xffffffff82059680,0x2bd,0,0xffffffff82000f98,0xffffffff82059670);
+        uVar5 = ZEXT48(DAT_82cc5cb0);
       }
-      if (0x40000 < (uVar6 - ZEXT48(g_load.start_in) & 0xffffffff)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp"
-                        ,0x2be,0,"%s");
-        uVar6 = ZEXT48(g_load.stream.next_in);
+      if (0x40000 < (uVar5 - DAT_82cc5c94 & 0xffffffff)) {
+        uVar1 = MyAssertHandler(0xffffffff82059680,0x2be,0,0xffffffff82000f98,0xffffffff820599e8);
+        uVar5 = ZEXT48(DAT_82cc5cb0);
       }
-      if (g_load.stream.avail_out == 0) {
-        dataCacheBlockTouch(uVar6 + 0x1ff);
-        __restgprlr_24();
+      if (DAT_82cc5cc0 == 0) {
+        dataCacheBlockTouch(uVar5 + 0x1ff);
+        __restgprlr_24(uVar1);
         return;
       }
     }
-    iVar2 = R_HasDeviceOwnership();
-    if (iVar2 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                      0x21f,0,"%s");
+    iVar3 = R_HasDeviceOwnership();
+    if (iVar3 != 0) {
+      MyAssertHandler(0xffffffff82059680,0x21f,0,0xffffffff82000f98,0xffffffff82059658);
     }
     DB_WaitXFileStage();
-    if (g_load.readSize != 0) {
+    if (DAT_82cc5c88 != 0) {
       DB_ReadXFileStage();
     }
     Sys_YieldWorkerCmd();
-    uVar4 = (ulonglong)g_load.stream.avail_out;
-    uVar5 = (ulonglong)g_load.stream.avail_in;
-    puVar1 = g_load.stream.next_out;
-    uVar3 = g_load.stream.avail_out;
+    param_2 = (ulonglong)DAT_82cc5cc0;
+    uVar1 = (ulonglong)DAT_82cc5cbc;
+    uVar4 = (ulonglong)DAT_82cc5cb4;
   } while( true );
 }
 
 
 // 823A4C40  DB_ReadXFile  (database/db_file_load.cpp:719)
 
-void DB_ReadXFile(uchar *param_1,int param_2,int param_3)
+void DB_ReadXFile(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-  uchar *puVar1;
-  int iVar2;
-  ulonglong uVar3;
+  undefined4 uVar2;
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar4;
   
-  puVar1 = (uchar *)__savegprlr_18(param_1);
+  uVar2 = __savegprlr_18();
   if (param_2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x2d2,0,"%s");
+    MyAssertHandler(0xffffffff82059680,0x2d2,0,0xffffffff82000f98,0xffffffff82036204);
   }
-  if (g_load.file == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x2d4,0,"%s");
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x2d4,0,0xffffffff82000f98,0xffffffff82059670);
   }
-  if (g_load.stream.avail_out != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x2d5,0,"%s");
+  if (DAT_82cc5cc0 != 0) {
+    MyAssertHandler(0xffffffff82059680,0x2d5,0,0xffffffff82000f98,0xffffffff82059a78);
   }
   while( true ) {
-    g_load.stream.avail_out = param_2;
-    g_load.stream.next_out = puVar1;
-    iVar2 = DB_AuthLoad_Inflate(&g_load.stream,2,param_3);
-    if ((iVar2 != 0) && (iVar2 != 1)) {
-      Com_Printf(8,"ERROR: Dirty disk: \'%s\'\n");
+    DAT_82cc5cc0 = param_2;
+    DAT_82cc5cbc = uVar2;
+    uVar1 = DB_AuthLoad_Inflate(0xffffffff82cc5cb0,2,param_3);
+    iVar3 = (int)uVar1;
+    if ((iVar3 != 0) && (iVar3 != 1)) {
+      Com_Printf(8,0xffffffff820597f8,(ulonglong)DAT_82cc5c80 + 0xc);
       Content_CheckIfMountedContentPacksAreGone();
       Sys_Sleep(1000);
       Content_CheckIfMountedContentPacksAreGone();
-                    /* WARNING: Subroutine does not return */
       R_ShowDirtyDiscError();
     }
-    if (g_load.file == (DBFile *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                      0x2e1,0,"%s");
+    if (DAT_82cc5c80 == 0) {
+      MyAssertHandler(0xffffffff82059680,0x2e1,0,0xffffffff82000f98,0xffffffff82059670);
     }
-    uVar3 = ZEXT48(g_load.stream.next_in);
-    if (0x40000 < (uVar3 - ZEXT48(g_load.start_in) & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                      0x2e2,0,"%s");
-      uVar3 = ZEXT48(g_load.stream.next_in);
+    uVar4 = (ulonglong)DAT_82cc5cb0;
+    if (0x40000 < (uVar4 - DAT_82cc5c94 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82059680,0x2e2,0,0xffffffff82000f98,0xffffffff820599e8);
+      uVar4 = (ulonglong)DAT_82cc5cb0;
     }
-    if (g_load.stream.avail_out == 0) break;
-    if (iVar2 != 0) {
-      va("Invalid fast file \'%s\' (%d != DB_Z_OK), offset %d, size %d");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                      0x2ea,0,"%s\n\t%s");
+    if (DAT_82cc5cc0 == 0) break;
+    if (iVar3 != 0) {
+      uVar1 = va(0xffffffff82059a94,(ulonglong)DAT_82cc5c80 + 0xc,uVar1,DAT_82cc5c90,DAT_82cc5c88);
+      MyAssertHandler(0xffffffff82059680,0x2ea,0,0xffffffff820011f4,0xffffffff82059ad0,uVar1);
     }
-    if (g_load.stream.avail_in != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                      0x2eb,0,"%s");
+    if (DAT_82cc5cb4 != 0) {
+      MyAssertHandler(0xffffffff82059680,0x2eb,0,0xffffffff82000f98,0xffffffff820599b8);
     }
-    iVar2 = R_HasDeviceOwnership();
-    if (iVar2 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                      0x21f,0,"%s");
+    iVar3 = R_HasDeviceOwnership();
+    if (iVar3 != 0) {
+      MyAssertHandler(0xffffffff82059680,0x21f,0,0xffffffff82000f98,0xffffffff82059658);
     }
     DB_WaitXFileStage();
-    if (g_load.readSize != 0) {
+    if (DAT_82cc5c88 != 0) {
       DB_ReadXFileStage();
     }
     Sys_YieldWorkerCmd();
-    puVar1 = g_load.stream.next_out;
-    param_2 = g_load.stream.avail_out;
+    uVar2 = DAT_82cc5cbc;
+    param_2 = DAT_82cc5cc0;
   }
-  dataCacheBlockTouch(uVar3 + 0x1ff);
+  dataCacheBlockTouch(uVar4 + 0x1ff);
   __restgprlr_18();
   return;
 }
@@ -592,45 +545,42 @@ void DB_ReadXFile(uchar *param_1,int param_2,int param_3)
 
 // 823A4058  DB_DirtyDiscError  (database/db_file_load.cpp:923)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DB_DirtyDiscError(void)
 
 {
-  Com_Printf(8,"ERROR: Dirty disk: \'%s\'\n");
+  Com_Printf(8,0xffffffff820597f8,(ulonglong)DAT_82cc5c80 + 0xc);
   Content_CheckIfMountedContentPacksAreGone();
   Sys_Sleep(1000);
   Content_CheckIfMountedContentPacksAreGone();
-                    /* WARNING: Subroutine does not return */
   R_ShowDirtyDiscError();
+  return;
 }
 
 
 // 823A40A8  DB_InitLoadXFile  (database/db_file_load.cpp:955)
 
-void DB_InitLoadXFile(DBFile *param_1,uint param_2)
+void DB_InitLoadXFile(undefined8 param_1,undefined4 param_2)
 
 {
-  DBFile *pDVar1;
+  int *piVar1;
+  void *pvVar2;
   
-  pDVar1 = (DBFile *)__savegprlr_28(param_1);
-  if (pDVar1 == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x3bc,0,"%s");
+  piVar1 = (int *)__savegprlr_28();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82059680,0x3bc,0,0xffffffff82000f98,0xffffffff82059864);
   }
-  if ((pDVar1->memoryBuffer == (uchar *)0x0) && ((pDVar1->handle).handle == (void *)0x0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x3be,0,"%s");
+  if ((piVar1[2] == 0) && (*piVar1 == 0)) {
+    MyAssertHandler(0xffffffff82059680,0x3be,0,0xffffffff82000f98,0xffffffff82059838);
   }
-  memset();
-  g_load.readSize = 0x7fffffff;
-  g_load.fileBuffer = g_fileBuf + 0x80;
-  g_load.file = pDVar1;
-  g_load.offset = param_2;
-  DB_WaitXFileStageInternal();
+  pvVar2 = memset(&DAT_82cc5c80,0,0x6c);
+  DAT_82cc5c88 = 0x7fffffff;
+  DAT_82cc5c84 = &DAT_82c45c80;
+  DAT_82cc5c80 = piVar1;
+  DAT_82cc5c90 = param_2;
+  DB_WaitXFileStageInternal(pvVar2);
   DB_ReadXFileStage();
-  if (g_loadOutstandingRead == 0) {
-    Com_Error(ERR_DROP,"Fastfile for zone \'%s\' is empty.");
+  if (DAT_82c45b94 == 0) {
+    Com_Error(1,0xffffffff82059814,piVar1 + 3);
   }
   __restgprlr_28();
   return;
@@ -639,8 +589,6 @@ void DB_InitLoadXFile(DBFile *param_1,uint param_2)
 
 // 823A4198  DB_ReadXFileStageStreaming  (database/db_file_load.cpp:995)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DB_ReadXFileStageStreaming(void)
 
 {
@@ -648,36 +596,32 @@ void DB_ReadXFileStageStreaming(void)
   
   iVar1 = R_HasDeviceOwnership();
   if (iVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x3e4,0,"%s");
+    MyAssertHandler(0xffffffff82059680,0x3e4,0,0xffffffff82000f98,0xffffffff82059658);
   }
-  g_load.readSize = g_load.lookaheadReadSize;
-  if (g_load.offset != g_load.lookaheadOffset) {
-    g_load.offset = g_load.lookaheadOffset;
-    g_load.lookaheadOffset = g_load.lookaheadOffset + g_load.lookaheadReadSize;
-    g_load.lookaheadClearAvailIn = 1;
-    g_load.lookaheadReadSize = 0;
+  DAT_82cc5c88 = DAT_82cc5ce0;
+  if (DAT_82cc5c90 != DAT_82cc5ce4) {
+    DAT_82cc5c90 = DAT_82cc5ce4;
+    DAT_82cc5ce4 = DAT_82cc5ce4 + DAT_82cc5ce0;
+    DAT_82cc5ce8 = 1;
+    DAT_82cc5ce0 = 0;
     return;
   }
-  g_load.lookaheadOffset = g_load.lookaheadOffset + g_load.lookaheadReadSize;
-  g_load.lookaheadReadSize = 0;
+  DAT_82cc5ce4 = DAT_82cc5ce4 + DAT_82cc5ce0;
+  DAT_82cc5ce0 = 0;
   return;
 }
 
 
 // 823A4240  DB_ReadXFileStageStreaming2  (database/db_file_load.cpp:1012)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DB_ReadXFileStageStreaming2(void)
 
 {
-  if (g_load.readSize != 0) {
+  if (DAT_82cc5c88 != 0) {
     DB_WaitXFileStageInternal();
     DB_ReadXFileStage();
-    if (g_loadOutstandingRead == 0) {
-                    /* WARNING: Subroutine does not return */
-      Sys_Error("Read error of file \'%s\'");
+    if (DAT_82c45b94 == 0) {
+      Sys_Error(0xffffffff820596c4,(ulonglong)DAT_82cc5c80 + 0xc);
     }
   }
   return;
@@ -686,114 +630,100 @@ void DB_ReadXFileStageStreaming2(void)
 
 // 823A42A8  DB_CheckAvailIn  (database/db_file_load.cpp:1025)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int DB_CheckAvailIn(void)
+undefined8 DB_CheckAvailIn(void)
 
 {
-  if (g_load.lookaheadClearAvailIn == 0) {
+  if (DAT_82cc5ce8 == 0) {
     return 0;
   }
-  g_load.lookaheadClearAvailIn = 0;
-  g_load.stream.avail_in = 0;
+  DAT_82cc5ce8 = 0;
+  DAT_82cc5cb4 = 0;
   return 1;
 }
 
 
 // 823A42E0  DB_PrefetchXFile  (database/db_file_load.cpp:1039)
 
-int DB_PrefetchXFile(uint param_1,uint param_2)
+void DB_PrefetchXFile(undefined8 param_1,ulonglong param_2)
 
 {
   ulonglong uVar1;
-  int iVar2;
+  ulonglong uVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  uint uVar6;
+  uint uVar4;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_25(param_1);
-  if ((g_load.lookaheadOffset & 0x7fff) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x410,0,"%s");
+  uVar1 = __savegprlr_25();
+  if ((DAT_82cc5ce4 & 0x7fff) != 0) {
+    MyAssertHandler(0xffffffff82059680,0x410,0,0xffffffff82000f98,0xffffffff82059944);
   }
-  if ((g_load.lookaheadReadSize & 0x7fff) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x411,0,"%s");
+  if ((DAT_82cc5ce0 & 0x7fff) != 0) {
+    MyAssertHandler(0xffffffff82059680,0x411,0,0xffffffff82000f98,0xffffffff82059910);
   }
-  uVar5 = (ulonglong)g_load.lookaheadOffset;
-  uVar4 = (ulonglong)g_load.lookaheadReadSize;
-  if (uVar4 == 0) {
-    if (((uVar1 & 0xffffffff) <= uVar5) && (uVar5 <= (uVar3 & 0xffffffff))) goto LAB_823a43c8;
-    uVar5 = uVar1 & 0xffff8000;
-    g_load.lookaheadOffset = (uint)uVar5;
+  uVar2 = (ulonglong)DAT_82cc5ce0;
+  uVar3 = (ulonglong)DAT_82cc5ce4;
+  if (uVar2 == 0) {
+    if (((uVar1 & 0xffffffff) <= uVar3) && (uVar3 <= (param_2 & 0xffffffff))) goto LAB_823a43c8;
+    uVar3 = uVar1 & 0xffff8000;
+    DAT_82cc5ce4 = (uint)uVar3;
   }
   else {
-    if ((uVar3 & 0xffffffff) < uVar5) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                      0x41a,0,"%s");
-      uVar5 = (ulonglong)g_load.lookaheadOffset;
-      uVar4 = (ulonglong)g_load.lookaheadReadSize;
+    if ((param_2 & 0xffffffff) < uVar3) {
+      MyAssertHandler(0xffffffff82059680,0x41a,0,0xffffffff82000f98,0xffffffff820598e8);
+      uVar3 = (ulonglong)DAT_82cc5ce4;
+      uVar2 = (ulonglong)DAT_82cc5ce0;
     }
-    if (((uVar3 - uVar5) + 0x7fff & 0xffff8000) < uVar4) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                      0x41b,0,"%s");
-      uVar5 = (ulonglong)g_load.lookaheadOffset;
-      uVar4 = (ulonglong)g_load.lookaheadReadSize;
+    if (((param_2 - uVar3) + 0x7fff & 0xffff8000) < uVar2) {
+      MyAssertHandler(0xffffffff82059680,0x41b,0,0xffffffff82000f98,0xffffffff82059870);
+      uVar3 = (ulonglong)DAT_82cc5ce4;
+      uVar2 = (ulonglong)DAT_82cc5ce0;
     }
-    if ((uVar4 + uVar5 + 0x80000 & 0xffffffff) < (uVar1 & 0xffff8000)) {
-      iVar2 = __restgprlr_25(1);
-      return iVar2;
+    if ((uVar2 + uVar3 + 0x80000 & 0xffffffff) < (uVar1 & 0xffff8000)) {
+      __restgprlr_25(1);
+      return;
     }
   }
-  if ((uVar3 & 0xffffffff) < uVar5) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x421,0,"%s");
-    uVar5 = (ulonglong)g_load.lookaheadOffset;
-    uVar4 = (ulonglong)g_load.lookaheadReadSize;
+  if ((param_2 & 0xffffffff) < uVar3) {
+    MyAssertHandler(0xffffffff82059680,0x421,0,0xffffffff82000f98,0xffffffff820598e8);
+    uVar3 = (ulonglong)DAT_82cc5ce4;
+    uVar2 = (ulonglong)DAT_82cc5ce0;
   }
 LAB_823a43c8:
-  uVar6 = (uint)uVar5;
-  if (((uVar3 - uVar5) + 0x7fff & 0xffff8000) < uVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x422,0,"%s");
-    uVar6 = g_load.lookaheadOffset;
+  uVar4 = (uint)uVar3;
+  if (((param_2 - uVar3) + 0x7fff & 0xffff8000) < uVar2) {
+    MyAssertHandler(0xffffffff82059680,0x422,0,0xffffffff82000f98,0xffffffff82059870);
+    uVar4 = DAT_82cc5ce4;
   }
-  g_load.lookaheadReadSize = ((int)uVar3 - uVar6) + 0x7fff & 0xffff8000;
-  iVar2 = __restgprlr_25(0);
-  return iVar2;
+  DAT_82cc5ce0 = ((int)param_2 - uVar4) + 0x7fff & 0xffff8000;
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 823A4490  DB_InitLoadXFileStreaming  (database/db_file_load.cpp:1066)
 
-void DB_InitLoadXFileStreaming(DBFile *param_1)
+void DB_InitLoadXFileStreaming(void)
 
 {
-  DBFile *pDVar1;
+  int *piVar1;
+  void *pvVar2;
   
-  pDVar1 = (DBFile *)__savegprlr_29(param_1);
-  if (pDVar1 == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x42b,0,"%s");
+  piVar1 = (int *)__savegprlr_29();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82059680,0x42b,0,0xffffffff82000f98,0xffffffff82059864);
   }
-  if ((pDVar1->memoryBuffer == (uchar *)0x0) && ((pDVar1->handle).handle == (void *)0x0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x42d,0,"%s");
+  if ((piVar1[2] == 0) && (*piVar1 == 0)) {
+    MyAssertHandler(0xffffffff82059680,0x42d,0,0xffffffff82000f98,0xffffffff82059838);
   }
-  memset();
-  g_load.offset = 0xffffffff;
-  g_load.fileBuffer = g_fileBuf + 0x80;
-  g_load.file = pDVar1;
-  __restgprlr_29();
+  pvVar2 = memset(&DAT_82cc5c80,0,0x6c);
+  DAT_82cc5c90 = 0xffffffff;
+  DAT_82cc5c84 = &DAT_82c45c80;
+  DAT_82cc5c80 = piVar1;
+  __restgprlr_29(pvVar2);
   return;
 }
 
 
 // 823A4548  DB_FinishLoadXFileStreaming  (database/db_file_load.cpp:1084)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_FinishLoadXFileStreaming(void)
 
@@ -801,20 +731,17 @@ void DB_FinishLoadXFileStreaming(void)
   int iVar1;
   
   __savegprlr_28();
-  if (g_load.file == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x43d,0,"%s");
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x43d,0,0xffffffff82000f98,0xffffffff82059670);
   }
   iVar1 = R_HasDeviceOwnership();
   if (iVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x43e,0,"%s");
+    MyAssertHandler(0xffffffff82059680,0x43e,0,0xffffffff82000f98,0xffffffff82059658);
   }
-  if (g_load.file == (DBFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
-                    0x440,0,"%s");
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x440,0,0xffffffff82000f98,0xffffffff82059670);
   }
-  g_load.file = (DBFile *)0x0;
+  DAT_82cc5c80 = 0;
   __restgprlr_28();
   return;
 }
@@ -822,44 +749,36 @@ void DB_FinishLoadXFileStreaming(void)
 
 // 823A45F0  DB_GetLoadOffset  (database/db_file_load.cpp:1094)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint DB_GetLoadOffset(void)
+undefined4 DB_GetLoadOffset(void)
 
 {
-  return g_load.offset;
+  return DAT_82cc5c90;
 }
 
 
 // 823A4600  DB_GetLoadAvailIn  (database/db_file_load.cpp:1100)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint DB_GetLoadAvailIn(void)
+undefined4 DB_GetLoadAvailIn(void)
 
 {
-  return g_load.stream.avail_in;
+  return DAT_82cc5cb4;
 }
 
 
 // 823A4610  DB_IsOutstandingRead  (database/db_file_load.cpp:1112)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int DB_IsOutstandingRead(void)
+bool DB_IsOutstandingRead(void)
 
 {
-  return (uint)(g_loadOutstandingRead != 0);
+  return DAT_82c45b94 != 0;
 }
 
 
 // 823A4628  DB_GetLoadTotalIn  (database/db_file_load.cpp:1118)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint DB_GetLoadTotalIn(void)
+undefined4 DB_GetLoadTotalIn(void)
 
 {
-  return g_load.stream.total_in;
+  return DAT_82cc5cb8;
 }
 

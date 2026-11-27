@@ -2,242 +2,191 @@
 
 // 825BB3B8  Item_GetTextRect  (ui/ui_utils.h:52)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-rectDef_s * Item_GetTextRect(LocalClientNum_t param_1,itemDef_t *param_2)
+void Item_GetTextRect(undefined8 param_1,ulonglong param_2)
 
 {
   ulonglong uVar1;
-  rectDef_s *prVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
+  uVar1 = __savegprlr_29();
   if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x35,0,
-                    "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
-    ;
+    MyAssertHandler(0xffffffff82170618,0x35,0,0xffffffff821649e0,uVar1,4);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x36,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170618,0x36,0,0xffffffff82000f98,0xffffffff8200e050);
   }
-  prVar2 = (rectDef_s *)
-           __restgprlr_29((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + uVar3 + 0xb0);
-  return prVar2;
+  __restgprlr_29((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + param_2 + 0xb0);
+  return;
 }
 
 
 // 825BB440  Window_IsHorizontal  (ui/ui_utils.h:62)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Window_IsHorizontal(windowDef_t *param_1)
+uint Window_IsHorizontal(int param_1)
 
 {
-  if (param_1 == (windowDef_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x3f,0,
-                    "%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82170618,0x3f,0,0xffffffff82000f98,0xffffffff8200fdb4);
     return uRam00000044 >> 0x15 & 1;
   }
-  return (uint)param_1->staticFlags >> 0x15 & 1;
+  return *(uint *)(param_1 + 0x44) >> 0x15 & 1;
 }
 
 
 // 825BB4B8  Window_IsClosing  (ui/ui_utils.h:90)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Window_IsClosing(LocalClientNum_t param_1,windowDef_t *param_2)
+void Window_IsClosing(undefined8 param_1,ulonglong param_2)
 
 {
   uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x5b,0,
-                    "%s");
+  uVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170618,0x5b,0,0xffffffff82000f98,0xffffffff8200fdb4);
   }
   if (3 < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,0,
-                    "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
-    ;
+    MyAssertHandler(0xffffffff82170618,0x21,0,0xffffffff821649e0,uVar1,4);
   }
-  iVar2 = __restgprlr_29(*(uint *)((uVar1 + 0x12) * 4 + (int)uVar3) >> 7 & 1);
-  return iVar2;
+  __restgprlr_29(*(uint *)((uVar1 + 0x12) * 4 + (int)param_2) >> 7 & 1);
+  return;
 }
 
 
 // 825BB540  SetLobbyState  (client_mp/party_local.h:212)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void SetLobbyState(PartyData *param_1,uchar param_2)
+void SetLobbyState(int param_1,uint param_2)
 
 {
-  param_1->lobbyFlags = param_1->lobbyFlags & 0xffffff83 | (uint)param_2;
+  *(uint *)(param_1 + 0x1f30) = *(uint *)(param_1 + 0x1f30) & 0xffffff83 | param_2 & 0xff;
   return;
 }
 
 
 // 825BB558  Item_GetRectPlacementX  (ui/ui_shared.cpp:306)
 
-float Item_GetRectPlacementX(int param_1,float param_2,float param_3,float param_4)
+double Item_GetRectPlacementX(double param_1,double param_2,double param_3,undefined8 param_4)
 
 {
-  double dVar1;
-  double dVar2;
-  double dVar3;
+  int iVar1;
   
-  dVar3 = (double)param_4;
-  dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
-  if (param_1 != 0) {
-    if (param_1 == 1) {
-      dVar1 = (double)(float)((double)(float)(dVar2 - dVar3) * 0.5 + dVar1);
+  iVar1 = (int)param_4;
+  if (iVar1 != 0) {
+    if (iVar1 == 1) {
+      param_1 = (double)(float)((double)(float)(param_2 - param_3) * 0.5 + param_1);
     }
     else {
-      if (param_1 != 2) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x137,0,
-                        "alignX == ITEM_ALIGN_RIGHT\n\t%i, %i");
+      if (iVar1 != 2) {
+        MyAssertHandler(0xffffffff82170658,0x137,0,0xffffffff82170694,param_4,2);
       }
-      dVar1 = (double)(float)((double)(float)(dVar2 - dVar3) + dVar1);
+      param_1 = (double)(float)((double)(float)(param_2 - param_3) + param_1);
     }
   }
-  return (float)dVar1;
+  return param_1;
 }
 
 
 // 825BB5F8  Item_GetTextPlacementX  (ui/ui_shared.cpp:317)
 
-float Item_GetTextPlacementX(int param_1,float param_2,float param_3,float param_4)
+double Item_GetTextPlacementX(double param_1,double param_2,double param_3,undefined8 param_4)
 
 {
-  double dVar1;
-  double dVar2;
-  double dVar3;
+  int iVar1;
   
-  dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
-  dVar1 = (double)param_2;
-  if (param_1 != 0) {
-    if (param_1 == 1) {
-      dVar1 = (double)(float)((double)(float)(dVar2 - dVar3) * 0.5 + dVar1);
+  iVar1 = (int)param_4;
+  if (iVar1 != 0) {
+    if (iVar1 == 1) {
+      param_1 = (double)(float)((double)(float)(param_2 - param_3) * 0.5 + param_1);
     }
     else {
-      if (param_1 != 2) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x142,0,
-                        "alignX == ITEM_ALIGN_RIGHT\n\t%i, %i");
+      if (iVar1 != 2) {
+        MyAssertHandler(0xffffffff82170658,0x142,0,0xffffffff82170694,param_4,2);
       }
-      dVar1 = (double)(float)((double)(float)(dVar2 - dVar3) + dVar1);
+      param_1 = (double)(float)((double)(float)(param_2 - param_3) + param_1);
     }
   }
-  return (float)dVar1;
+  return param_1;
 }
 
 
 // 825BB698  Item_GetRectPlacementY  (ui/ui_shared.cpp:328)
 
-float Item_GetRectPlacementY(int param_1,float param_2,float param_3,float param_4)
+double Item_GetRectPlacementY(double param_1,double param_2,double param_3,int param_4)
 
 {
-  double dVar1;
-  
-  dVar1 = (double)param_2;
-  if (param_1 == 0xc) {
-    return (float)((double)(param_3 - param_4) + dVar1);
+  if (param_4 == 0xc) {
+    return (double)(float)((double)(float)(param_2 - param_3) + param_1);
   }
-  if (param_1 == 8) {
-    return (float)((double)(param_3 - param_4) * 0.5 + dVar1);
+  if (param_4 == 8) {
+    return (double)(float)((double)(float)(param_2 - param_3) * 0.5 + param_1);
   }
-  if ((param_1 != 4) && (param_1 != 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x14d,0,
-                    "%s\n\t(alignY) = %i");
+  if ((param_4 != 4) && (param_4 != 0)) {
+    MyAssertHandler(0xffffffff82170658,0x14d,0,0xffffffff821706b8,0xffffffff821706cc);
   }
-  return (float)dVar1;
+  return param_1;
 }
 
 
 // 825BB750  Item_GetTextPlacementY  (ui/ui_shared.cpp:339)
 
-float Item_GetTextPlacementY(int param_1,float param_2,float param_3,float param_4)
+double Item_GetTextPlacementY(double param_1,double param_2,double param_3,int param_4)
 
 {
-  double dVar1;
-  double dVar2;
-  
-  dVar2 = (double)param_3;
-  dVar1 = (double)param_2;
-  if (param_1 != 0) {
-    if (param_1 == 4) {
-      dVar1 = (double)(float)(dVar1 + (double)param_4);
+  if (param_4 != 0) {
+    if (param_4 == 4) {
+      param_1 = (double)(float)(param_1 + param_3);
     }
-    else if (param_1 == 8) {
-      dVar1 = (double)(float)((double)(float)(dVar2 + (double)param_4) * 0.5 + dVar1);
+    else if (param_4 == 8) {
+      param_1 = (double)(float)((double)(float)(param_2 + param_3) * 0.5 + param_1);
     }
     else {
-      if (param_1 != 0xc) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x15a,0,
-                        "%s\n\t(alignY) = %i");
+      if (param_4 != 0xc) {
+        MyAssertHandler(0xffffffff82170658,0x15a,0,0xffffffff821706b8,0xffffffff821706ec);
       }
-      dVar1 = (double)(float)(dVar1 + dVar2);
+      param_1 = (double)(float)(param_1 + param_2);
     }
   }
-  return (float)dVar1;
+  return param_1;
 }
 
 
 // 825BB7F0  Menu_Setup  (ui/ui_shared.cpp:352)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menu_Setup(UiContext *param_1)
+void Menu_Setup(int param_1)
 
 {
-  param_1->menuCount = 0;
-  param_1->openMenuCount = 0;
-  param_1->paintFull = 0;
-  UILocalVar_Init(&param_1->localVars);
+  *(undefined4 *)(param_1 + 0xa34) = 0;
+  *(undefined4 *)(param_1 + 0xa78) = 0;
+  *(undefined4 *)(param_1 + 0x1c) = 0;
+  UILocalVar_Init(param_1 + 0xa7c);
   return;
 }
 
 
 // 825BB810  UI_LerpColor  (ui/ui_shared.cpp:366)
 
-void UI_LerpColor(float *param_1,float *param_2,float *param_3,float param_4)
+void UI_LerpColor(double param_1,int param_2,int param_3,float *param_4)
 
 {
   float fVar1;
   int iVar2;
   longlong lVar3;
+  double dVar4;
   
-  iVar2 = (int)param_1 - (int)param_3;
+  iVar2 = param_2 - (int)param_4;
   lVar3 = 4;
   do {
-    fVar1 = *(float *)(iVar2 + (int)param_3);
-    fVar1 = (*(float *)((int)param_2 + (int)param_3 + (iVar2 - (int)param_1)) - fVar1) * param_4 +
-            fVar1;
-    *param_3 = fVar1;
+    dVar4 = (double)*(float *)(iVar2 + (int)param_4);
+    fVar1 = (float)((double)(float)((double)*(float *)((int)param_4 + (param_3 - param_2) + iVar2) -
+                                   dVar4) * param_1 + dVar4);
+    *param_4 = fVar1;
     if (0.0 <= fVar1) {
       if (1.0 < fVar1) {
-        *param_3 = 1.0;
+        *param_4 = 1.0;
       }
     }
     else {
-      *param_3 = 0.0;
+      *param_4 = 0.0;
     }
-    param_3 = param_3 + 1;
+    param_4 = param_4 + 1;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
   return;
@@ -246,79 +195,75 @@ void UI_LerpColor(float *param_1,float *param_2,float *param_3,float param_4)
 
 // 825BB878  Color_Parse  (ui/ui_shared.cpp:381)
 
-int Color_Parse(char **param_1,float (*param_2) [4])
+void Color_Parse(undefined8 param_1,longlong param_2)
 
 {
-  char **ppcVar1;
+  undefined8 uVar1;
   int iVar2;
   int iVar3;
-  longlong lVar4;
-  float local_30 [12];
+  undefined4 local_30 [12];
   
-  lVar4 = (longlong)(int)param_2;
-  ppcVar1 = (char **)__savegprlr_29(param_1);
+  uVar1 = __savegprlr_29();
   iVar3 = 0;
-  lVar4 = lVar4 + -4;
+  param_2 = param_2 + -4;
   do {
-    iVar2 = Float_Parse(ppcVar1,local_30);
+    iVar2 = Float_Parse(uVar1,local_30);
     if (iVar2 == 0) {
-      iVar3 = __restgprlr_29(0);
-      return iVar3;
+      __restgprlr_29(0);
+      return;
     }
     iVar3 = iVar3 + 1;
-    lVar4 = lVar4 + 4;
-    *(float *)lVar4 = local_30[0];
+    param_2 = param_2 + 4;
+    *(undefined4 *)param_2 = local_30[0];
   } while (iVar3 < 4);
-  iVar3 = __restgprlr_29(1);
-  return iVar3;
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 825BB8D0  String_Parse  (ui/ui_shared.cpp:398)
 
-int String_Parse(char **param_1,char *param_2,int param_3)
+void String_Parse(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  char **ppcVar1;
-  char *pcVar2;
+  int *piVar2;
   char *pcVar3;
-  int iVar4;
+  ulonglong uVar1;
   
-  ppcVar1 = (char **)__savegprlr_28(param_1);
-  pcVar2 = Com_ParseOnLine(ppcVar1);
-  if (pcVar2 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x192,0,"%s"
-                   );
+  piVar2 = (int *)__savegprlr_28();
+  pcVar3 = (char *)Com_ParseOnLine();
+  if (pcVar3 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x192,0,0xffffffff82000f98,0xffffffff820294f0);
   }
-  if (*ppcVar1 != (char *)0x0) {
-    if (*pcVar2 == '@') {
-      pcVar3 = SEH_StringEd_GetString(pcVar2 + 1);
-      if (pcVar3 != (char *)0x0) {
-        I_strncpyz(param_2,pcVar3,param_3);
-        iVar4 = __restgprlr_28(1);
-        return iVar4;
+  if (*piVar2 != 0) {
+    if (*pcVar3 == '@') {
+      uVar1 = SEH_StringEd_GetString(pcVar3 + 1);
+      if ((uVar1 & 0xffffffff) != 0) {
+        I_strncpyz(param_2,uVar1,param_3);
+        __restgprlr_28(1);
+        return;
       }
-      if ((loc_warnings->current).enabled != false) {
-        if ((loc_warningsAsErrors->current).enabled == false) {
-          Com_PrintWarning(0xd,"WARNING: Could not translate menu string reference %s\n");
+      if (*(char *)(DAT_83f5de0c + 0xc) != '\0') {
+        if (*(char *)(DAT_83f5de04 + 0xc) == '\0') {
+          Com_PrintWarning(0xd,0xffffffff821706fc,pcVar3);
         }
         else {
-          Com_Error(ERR_LOCALIZATION,"Could not translate menu string reference %s");
+          Com_Error(6,0xffffffff82170734);
         }
       }
     }
-    I_strncpyz(param_2,pcVar2,param_3);
-    iVar4 = __restgprlr_28(1);
-    return iVar4;
+    I_strncpyz(param_2,pcVar3,param_3);
+    __restgprlr_28(1);
+    return;
   }
-  iVar4 = __restgprlr_28(0);
-  return iVar4;
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 825BB9D8  GradientBar_Paint  (ui/ui_shared.cpp:438)
 
-void GradientBar_Paint(rectDef_s *param_1,float *param_2)
+void GradientBar_Paint(void)
 
 {
   return;
@@ -327,236 +272,191 @@ void GradientBar_Paint(rectDef_s *param_1,float *param_2)
 
 // 825BB9E0  Fade  (ui/ui_shared.cpp:445)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Fade(int *param_1,float *param_2,float param_3,int *param_4,int param_5,int param_6,
-         float param_7,float param_8,UiContext *param_9)
+void Fade(double param_1,double param_2,double param_3,uint *param_4,float *param_5,
+         undefined8 param_6,int *param_7,int param_8,int param_9)
 
 {
   float fVar1;
   int in_stack_00000054;
   
-  if ((*param_1 & 0x30U) == 0) {
+  if ((*param_4 & 0x30) == 0) {
     return;
   }
-  if (*(int *)(in_stack_00000054 + 8) <= *(int *)param_5) {
+  if (*(int *)(in_stack_00000054 + 8) <= *param_7) {
     return;
   }
-  *(int *)param_5 = *(int *)(in_stack_00000054 + 8) + param_6;
-  if ((*param_1 & 0x10U) != 0) {
-    fVar1 = *param_2 - param_7;
-    *param_2 = fVar1;
-    if (param_9 == (UiContext *)0x0) {
+  *param_7 = *(int *)(in_stack_00000054 + 8) + param_8;
+  if ((*param_4 & 0x10) != 0) {
+    fVar1 = (float)((double)*param_5 - param_2);
+    *param_5 = fVar1;
+    if (param_9 == 0) {
       return;
     }
     if (0.0 < fVar1) {
       return;
     }
-    *param_1 = *param_1 & 0xffffffeb;
+    *param_4 = *param_4 & 0xffffffeb;
     return;
   }
-  fVar1 = param_8 + *param_2;
-  *param_2 = fVar1;
-  if (fVar1 < param_3) {
+  fVar1 = (float)(param_3 + (double)*param_5);
+  *param_5 = fVar1;
+  if ((double)fVar1 < param_1) {
     return;
   }
-  *param_2 = param_3;
-  if (param_9 == (UiContext *)0x0) {
+  *param_5 = (float)param_1;
+  if (param_9 == 0) {
     return;
   }
-  *param_1 = *param_1 & 0xffffffdf;
+  *param_4 = *param_4 & 0xffffffdf;
   return;
 }
 
 
 // 825BBA80  Window_Paint  (ui/ui_shared.cpp:477)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Window_Paint(UiContext *param_1,windowDef_t *param_2,ScreenPlacement *param_3,float param_4,
-                 float param_5,float param_6,float param_7,float param_8,float param_9)
+void Window_Paint(undefined8 param_1,undefined8 param_2,double param_3,double param_4,double param_5
+                 ,double param_6,undefined8 param_7,ulonglong param_8,undefined8 param_9)
 
 {
   float fVar1;
   int iVar2;
-  LocalClientNum_t *pLVar3;
-  ScreenPlacement *pSVar4;
-  ulonglong uVar5;
-  windowDef_t *pwVar6;
-  windowDef_t *pwVar7;
-  char *in_r6;
-  char *in_r7;
-  float *pfVar8;
-  ulonglong uVar9;
-  rectDef_s *prVar10;
-  longlong lVar11;
+  int iVar3;
+  undefined4 *puVar5;
+  ulonglong uVar4;
+  undefined4 *puVar6;
+  float *pfVar7;
+  longlong lVar8;
   double extraout_f1;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  float local_a0;
-  float local_9c;
-  float local_98;
-  float local_94;
-  float local_90 [36];
+  undefined4 local_94;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_84;
   
-  dVar14 = (double)param_8;
-  dVar15 = (double)param_9;
-  dVar13 = (double)param_7;
-  dVar12 = (double)param_6;
-  uVar5 = (ulonglong)(int)param_2;
-  __savegprlr_27((double)param_4,param_1);
-  pLVar3 = (LocalClientNum_t *)__savefpr_23();
-  pwVar6 = (windowDef_t *)uVar5;
-  dVar17 = extraout_f1;
-  pSVar4 = param_3;
-  pwVar7 = pwVar6;
-  if ((uVar5 & 0xffffffff) == 0) {
-    in_r7 = "w";
-    in_r6 = "%s";
-    pSVar4 = (ScreenPlacement *)0x0;
-    pwVar7 = (windowDef_t *)0x24;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
-                   );
+  __savegprlr_27();
+  puVar5 = (undefined4 *)__savefpr_23();
+  dVar10 = extraout_f1;
+  if ((param_8 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018fa0,0x24,0,0xffffffff82000f98,0xffffffff8200fdb4);
   }
-  prVar10 = &pwVar6->rect;
-  pfVar8 = &local_94;
-  lVar11 = 5;
-  uVar9 = uVar5;
+  iVar3 = (int)param_8;
+  pfVar7 = (float *)(iVar3 + 4);
+  puVar6 = &local_94;
+  lVar8 = 5;
+  uVar4 = param_8;
   do {
-    uVar9 = uVar9 + 4;
-    pfVar8 = pfVar8 + 1;
-    *pfVar8 = *(float *)uVar9;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
-  dVar18 = 1.0;
-  if ((ui_debugMode->current).enabled != false) {
-    UI_DrawRect(param_3,prVar10->x,(pwVar6->rect).y,(pwVar6->rect).w,(pwVar6->rect).h,(int)pwVar7,
-                (int)pSVar4,1.0,(float *)in_r6);
+    uVar4 = uVar4 + 4;
+    puVar6 = puVar6 + 1;
+    *puVar6 = *(undefined4 *)uVar4;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  dVar11 = 1.0;
+  if (*(char *)(DAT_83f71ea8 + 0xc) != '\0') {
+    UI_DrawRect((double)*pfVar7,(double)*(float *)(iVar3 + 8),(double)*(float *)(iVar3 + 0xc),
+                (double)*(float *)(iVar3 + 0x10),0x3ff0000000000000,param_9);
   }
-  if (((uVar5 & 0xffffffff) != 0) && ((pwVar6->style != 0 || (pwVar6->border != 0)))) {
-    dVar16 = (double)local_90[2];
-    if (pwVar6->border != 0) {
-      fVar1 = pwVar6->borderSize;
-      local_90[0] = fVar1 + local_90[0];
-      local_90[1] = fVar1 + local_90[1];
-      dVar16 = (double)(float)((double)(float)(dVar16 - (double)(fVar1 * 2.0)) * dVar17);
-      local_90[3] = (float)((double)(float)((double)local_90[3] - (double)(fVar1 * 2.0)) * dVar17);
+  if (((param_8 & 0xffffffff) != 0) &&
+     ((*(int *)(iVar3 + 0x30) != 0 || (*(int *)(iVar3 + 0x34) != 0)))) {
+    dVar9 = (double)local_88;
+    if (*(int *)(iVar3 + 0x34) != 0) {
+      fVar1 = *(float *)(iVar3 + 0x40);
+      local_90 = fVar1 + local_90;
+      local_8c = fVar1 + local_8c;
+      dVar9 = (double)(float)((double)(float)(dVar9 - (double)(fVar1 * 2.0)) * dVar10);
+      local_84 = (float)((double)(float)((double)local_84 - (double)(fVar1 * 2.0)) * dVar10);
     }
-    dVar19 = (double)(float)(dVar16 * dVar17);
-    dVar20 = (double)(float)((double)local_90[3] * dVar17);
-    dVar16 = -(double)((float)((double)(float)(dVar17 - dVar18) * dVar16) * 0.5 - local_90[0]);
-    dVar17 = -(double)((float)((double)(float)(dVar17 - dVar18) * (double)local_90[3]) * 0.5 -
-                      local_90[1]);
-    pwVar7 = pwVar6;
-    Window_GetDynamicFlags(*pLVar3,pwVar6);
-    iVar2 = pwVar6->style;
+    dVar12 = (double)(float)(dVar9 * dVar10);
+    dVar13 = (double)(float)((double)local_84 * dVar10);
+    dVar9 = -(double)((float)((double)(float)(dVar10 - dVar11) * dVar9) * 0.5 - local_90);
+    dVar10 = -(double)((float)((double)(float)(dVar10 - dVar11) * (double)local_84) * 0.5 - local_8c
+                      );
+    Window_GetDynamicFlags(*puVar5,param_8);
+    iVar2 = *(int *)(iVar3 + 0x30);
     if ((iVar2 - 1U < 6) && (iVar2 != 2)) {
       if (iVar2 == 3) {
-        UI_DrawHandlePic(param_3,(float)dVar16,(float)dVar17,(float)dVar19,(float)dVar20,(int)pwVar7
-                         ,(int)pSVar4,(float *)in_r6,(Material *)in_r7);
+        UI_DrawHandlePic(dVar9,dVar10,dVar12,dVar13,param_9);
       }
       else if (iVar2 != 4) {
         if (iVar2 == 5) {
-          if (pwVar6->background != (Material *)0x0) {
-            UI_DrawHandlePic(param_3,(float)dVar16,(float)dVar17,(float)dVar19,(float)dVar20,
-                             (int)pwVar7,(int)pSVar4,(float *)in_r6,(Material *)in_r7);
+          if (*(int *)(iVar3 + 0xac) != 0) {
+            UI_DrawHandlePic(dVar9,dVar10,dVar12,dVar13,param_9);
           }
         }
         else if (iVar2 == 1) {
-          if (pwVar6->background == (Material *)0x0) {
-            UI_FillRect(param_3,(float)dVar16,(float)dVar17,(float)dVar19,(float)dVar20,(int)pwVar7,
-                        (int)pSVar4,(float *)in_r6);
+          if (*(int *)(iVar3 + 0xac) == 0) {
+            UI_FillRect(dVar9,dVar10,dVar12,dVar13,param_9);
           }
           else {
-            pSVar4 = (ScreenPlacement *)Window_GetDynamicFlags(*pLVar3,pwVar6);
-            if ((((uint)pSVar4 & 0x30) != 0) && (pwVar6->nextTime < (int)pLVar3[2])) {
-              pwVar6->nextTime = (int)dVar15 + pLVar3[2];
-              if (((uint)pSVar4 & 0x10) == 0) {
-                fVar1 = (float)((double)pwVar6->backColor[3] + dVar13);
-                pwVar6->backColor[3] = fVar1;
-                if (dVar14 <= (double)fVar1) {
-                  pwVar6->backColor[3] = (float)dVar14;
-                  pSVar4 = (ScreenPlacement *)((uint)pSVar4 & 0xffffffdf);
+            uVar4 = Window_GetDynamicFlags(*puVar5,param_8);
+            if (((uVar4 & 0x30) != 0) && (*(int *)(iVar3 + 0x58) < (int)puVar5[2])) {
+              *(int *)(iVar3 + 0x58) = (int)param_6 + puVar5[2];
+              if ((uVar4 & 0x10) == 0) {
+                fVar1 = (float)((double)*(float *)(iVar3 + 0x78) + param_4);
+                *(float *)(iVar3 + 0x78) = fVar1;
+                if (param_5 <= (double)fVar1) {
+                  *(float *)(iVar3 + 0x78) = (float)param_5;
+                  uVar4 = uVar4 << 0x20 | uVar4 & 0xffffffdf;
                 }
               }
               else {
-                fVar1 = (float)((double)pwVar6->backColor[3] - dVar12);
-                pwVar6->backColor[3] = fVar1;
+                fVar1 = (float)((double)*(float *)(iVar3 + 0x78) - param_3);
+                *(float *)(iVar3 + 0x78) = fVar1;
                 if (fVar1 <= 0.0) {
-                  pSVar4 = (ScreenPlacement *)((uint)pSVar4 & 0xffffffeb);
+                  uVar4 = (uVar4 & 0xfffffffb) << 0x20 | uVar4 & 0xffffffeb;
                 }
               }
             }
-            pwVar7 = pwVar6;
-            Window_SetDynamicFlags(*pLVar3,pwVar6,(int)pSVar4);
-            UI_DrawHandlePic(param_3,(float)dVar16,(float)dVar17,(float)dVar19,(float)dVar20,
-                             (int)pwVar7,(int)pSVar4,(float *)in_r6,(Material *)in_r7);
+            Window_SetDynamicFlags(*puVar5,param_8,uVar4);
+            UI_DrawHandlePic(dVar9,dVar10,dVar12,dVar13,param_9);
           }
         }
         else {
-          UI_DrawLoadBar(param_3,(float)dVar16,(float)dVar17,(float)dVar19,(float)dVar20,(int)pwVar7
-                         ,(int)pSVar4,(float *)in_r6,(Material *)in_r7);
+          UI_DrawLoadBar(dVar9,dVar10,dVar12,dVar13,param_9);
         }
       }
     }
-    iVar2 = pwVar6->border;
+    iVar2 = *(int *)(iVar3 + 0x34);
     if (iVar2 == 1) {
-      UI_DrawRect(param_3,prVar10->x,(pwVar6->rect).y,(pwVar6->rect).w,(pwVar6->rect).h,(int)pwVar7,
-                  (int)pSVar4,pwVar6->borderSize,(float *)in_r6);
+      UI_DrawRect((double)*pfVar7,(double)*(float *)(iVar3 + 8),(double)*(float *)(iVar3 + 0xc),
+                  (double)*(float *)(iVar3 + 0x10),(double)*(float *)(iVar3 + 0x40),param_9);
       __restfpr_23();
       __restgprlr_27();
       return;
     }
     if (iVar2 == 2) {
-      UI_DrawTopBottom(param_3,prVar10->x,(pwVar6->rect).y,(pwVar6->rect).w,(pwVar6->rect).h,
-                       (int)pwVar7,(int)pSVar4,pwVar6->borderSize,(float *)in_r6);
+      UI_DrawTopBottom((double)*pfVar7,(double)*(float *)(iVar3 + 8),(double)*(float *)(iVar3 + 0xc)
+                       ,(double)*(float *)(iVar3 + 0x10),(double)*(float *)(iVar3 + 0x40),param_9);
       __restfpr_23();
       __restgprlr_27();
       return;
     }
     if (iVar2 == 3) {
-      UI_DrawSides(param_3,prVar10->x,(pwVar6->rect).y,(pwVar6->rect).w,(pwVar6->rect).h,(int)pwVar7
-                   ,(int)pSVar4,pwVar6->borderSize,(float *)in_r6);
+      UI_DrawSides((double)*pfVar7,(double)*(float *)(iVar3 + 8),(double)*(float *)(iVar3 + 0xc),
+                   (double)*(float *)(iVar3 + 0x10),(double)*(float *)(iVar3 + 0x40),param_9);
       __restfpr_23();
       __restgprlr_27();
       return;
     }
     if (iVar2 != 4) {
       if (iVar2 == 5) {
-        local_94 = pwVar6->borderColor[3];
-        local_98 = (ui_borderLowLightScale->current).value;
-        local_a0 = local_98 * pwVar6->borderColor[0];
-        local_9c = pwVar6->borderColor[1] * local_98;
-        local_98 = pwVar6->borderColor[2] * local_98;
+        local_94 = *(undefined4 *)(iVar3 + 0x88);
         UI_DrawHighlightRect
-                  (param_3,prVar10->x,(pwVar6->rect).y,(pwVar6->rect).w,(pwVar6->rect).h,(int)pwVar7
-                   ,(int)pSVar4,pwVar6->borderSize,(float *)in_r6,&local_a0);
+                  ((double)*pfVar7,(double)*(float *)(iVar3 + 8),(double)*(float *)(iVar3 + 0xc),
+                   (double)*(float *)(iVar3 + 0x10),(double)*(float *)(iVar3 + 0x40),param_9);
         __restfpr_23();
         __restgprlr_27();
         return;
       }
       if (iVar2 == 6) {
-        local_94 = pwVar6->borderColor[3];
-        local_9c = (ui_borderLowLightScale->current).value;
-        local_98 = pwVar6->borderColor[2] * local_9c;
-        local_a0 = local_9c * pwVar6->borderColor[0];
-        local_9c = pwVar6->borderColor[1] * local_9c;
+        local_94 = *(undefined4 *)(iVar3 + 0x88);
         UI_DrawHighlightRect
-                  (param_3,prVar10->x,(pwVar6->rect).y,(pwVar6->rect).w,(pwVar6->rect).h,(int)pwVar7
-                   ,(int)pSVar4,pwVar6->borderSize,(float *)in_r6,(float *)in_r7);
+                  ((double)*pfVar7,(double)*(float *)(iVar3 + 8),(double)*(float *)(iVar3 + 0xc),
+                   (double)*(float *)(iVar3 + 0x10),(double)*(float *)(iVar3 + 0x40),param_9);
       }
     }
   }
@@ -568,17 +468,14 @@ void Window_Paint(UiContext *param_1,windowDef_t *param_2,ScreenPlacement *param
 
 // 825BBFE0  Window_RemoveDynamicFlags_CritSect  (ui/ui_shared.cpp:595)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Window_RemoveDynamicFlags_CritSect(LocalClientNum_t param_1,windowDef_t *param_2,int param_3)
+void Window_RemoveDynamicFlags_CritSect(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
-  LVar1 = __savegprlr_29(param_1);
+  uVar1 = __savegprlr_29();
   Sys_EnterUIOwnership();
-  Window_RemoveDynamicFlags(LVar1,param_2,param_3);
+  Window_RemoveDynamicFlags(uVar1,param_2,param_3);
   Sys_LeaveUIOwnership();
   __restgprlr_29();
   return;
@@ -587,33 +484,41 @@ void Window_RemoveDynamicFlags_CritSect(LocalClientNum_t param_1,windowDef_t *pa
 
 // 825C8ED0  Item_ClearFocus  (ui/ui_shared.cpp:607)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Item_ClearFocus(UiContext *param_1,itemDef_t *param_2)
+void Item_ClearFocus(undefined8 param_1,undefined8 param_2)
 
 {
-  LocalClientNum_t LVar1;
-  UiContext *pUVar2;
-  bool bVar3;
+  undefined4 uVar1;
+  uint *puVar2;
+  undefined4 *puVar3;
+  char cVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
   
-  pUVar2 = (UiContext *)__savegprlr_29(param_1);
-  bVar3 = Window_HasFocus(pUVar2->localClientNum,&param_2->window);
-  if (!bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x260,0,"%s"
-                   );
+  puVar3 = (undefined4 *)__savegprlr_29();
+  cVar4 = Window_HasFocus(*puVar3);
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff82170658,0x260,0,0xffffffff82000f98,0xffffffff82172e70);
   }
-  LVar1 = pUVar2->localClientNum;
+  uVar1 = *puVar3;
   Sys_EnterUIOwnership();
-  Window_RemoveDynamicFlags(LVar1,&param_2->window,2);
+  Window_RemoveDynamicFlags(uVar1,param_2,2);
   Sys_LeaveUIOwnership();
-  if (param_2->leaveFocus != (MenuEventHandlerSet *)0x0) {
-    if ((uiscript_verbose->current).enabled != false) {
-      Com_Printf(0xd,"UISCRIPT - Calling leaveFocus() - Item is \'%s\', parent menu is \'%s\'\n");
+  puVar2 = (uint *)param_2;
+  if (puVar2[0x56] != 0) {
+    if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+      if (puVar2[0x4d] == 0) {
+        uVar6 = 0xffffffff82170938;
+      }
+      else {
+        uVar6 = (ulonglong)*(uint *)(puVar2[0x4d] + 4);
+      }
+      uVar5 = (ulonglong)*puVar2;
+      if (uVar5 == 0) {
+        uVar5 = 0xffffffff82170928;
+      }
+      Com_Printf(0xd,0xffffffff82172e28,uVar5,uVar6);
     }
-    Item_HandleEvent(pUVar2,param_2,param_2->leaveFocus);
+    Item_HandleEvent(puVar3,param_2,puVar2[0x56]);
   }
   __restgprlr_29();
   return;
@@ -622,94 +527,81 @@ void Item_ClearFocus(UiContext *param_1,itemDef_t *param_2)
 
 // 825C8FB0  Menu_ClearFocus  (ui/ui_shared.cpp:623)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-itemDef_t * Menu_ClearFocus(UiContext *param_1,menuDef_t *param_2)
+void Menu_ClearFocus(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  UiContext *pUVar2;
-  itemDef_t *piVar3;
-  bool bVar4;
-  ulonglong uVar5;
+  undefined4 *puVar2;
+  char cVar3;
+  int iVar4;
+  int iVar5;
   int iVar6;
-  int iVar7;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_24(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    piVar3 = (itemDef_t *)__restgprlr_24(0);
-    return piVar3;
+  puVar2 = (undefined4 *)__savegprlr_24();
+  if ((param_2 & 0xffffffff) == 0) {
+    __restgprlr_24(0);
+    return;
   }
-  iVar1 = (int)uVar5;
-  piVar3 = (itemDef_t *)0x0;
-  iVar6 = 0;
+  iVar1 = (int)param_2;
+  iVar5 = 0;
+  iVar4 = 0;
   if (0 < *(int *)(iVar1 + 0xb4)) {
-    iVar7 = 0;
+    iVar6 = 0;
     do {
-      bVar4 = Window_HasFocus(pUVar2->localClientNum,
-                              *(windowDef_t **)(*(int *)(iVar1 + 0xb8) + iVar7));
-      if (bVar4) {
-        if (piVar3 != (itemDef_t *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x27c,
-                          0,"%s");
+      cVar3 = Window_HasFocus(*puVar2,*(undefined4 *)(*(int *)(iVar1 + 0xb8) + iVar6));
+      if (cVar3 != '\0') {
+        if (iVar5 != 0) {
+          MyAssertHandler(0xffffffff82170658,0x27c,0,0xffffffff82000f98,0xffffffff82172ea8);
         }
-        piVar3 = *(itemDef_t **)(*(int *)(iVar1 + 0xb8) + iVar7);
-        Item_ClearFocus(pUVar2,piVar3);
+        iVar5 = *(int *)(*(int *)(iVar1 + 0xb8) + iVar6);
+        Item_ClearFocus(puVar2,iVar5);
       }
-      iVar6 = iVar6 + 1;
-      iVar7 = iVar7 + 4;
-    } while (iVar6 < *(int *)(iVar1 + 0xb4));
+      iVar4 = iVar4 + 1;
+      iVar6 = iVar6 + 4;
+    } while (iVar4 < *(int *)(iVar1 + 0xb4));
   }
-  piVar3 = (itemDef_t *)__restgprlr_24(piVar3);
-  return piVar3;
+  __restgprlr_24(iVar5);
+  return;
 }
 
 
 // 825BC018  Menu_ItemsMatchingGroup  (ui/ui_shared.cpp:677)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Menu_ItemsMatchingGroup(menuDef_t *param_1,char *param_2)
+void Menu_ItemsMatchingGroup(undefined8 param_1,longlong param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   int iVar2;
   int iVar3;
   char *pcVar4;
   int iVar5;
   longlong lVar6;
-  int iVar7;
+  longlong lVar7;
   int iVar8;
   
-  iVar2 = __savegprlr_26(param_1);
+  iVar2 = __savegprlr_26();
   lVar6 = 0;
-  iVar7 = -1;
-  iVar3 = I_stricmp(param_2,"self");
+  lVar7 = -1;
+  iVar3 = I_stricmp(param_2,0xffffffff8206c550);
   if (iVar3 == 0) {
-    iVar2 = __restgprlr_26(1);
-    return iVar2;
+    __restgprlr_26(1);
+    return;
   }
-  pcVar4 = strstr(param_2,"*");
+  pcVar4 = strstr((char *)param_2,"*");
   if (pcVar4 != (char *)0x0) {
-    iVar7 = (int)pcVar4 - (int)param_2;
+    lVar7 = (int)pcVar4 - param_2;
   }
   iVar3 = 0;
   if (0 < *(int *)(iVar2 + 0xb4)) {
     iVar8 = 0;
     do {
-      puVar1 = *(undefined4 **)(iVar8 + *(int *)(iVar2 + 0xb8));
-      pcVar4 = (char *)*puVar1;
-      if (iVar7 == -1) {
-        if ((pcVar4 == (char *)0x0) || (iVar5 = I_stricmp((char *)*puVar1,param_2), iVar5 != 0)) {
-          pcVar4 = *(char **)(*(int *)(iVar8 + *(int *)(iVar2 + 0xb8)) + 0x2c);
-          if (pcVar4 != (char *)0x0) {
-            iVar5 = I_stricmp(pcVar4,param_2);
+      piVar1 = *(int **)(iVar8 + *(int *)(iVar2 + 0xb8));
+      iVar5 = *piVar1;
+      if ((int)lVar7 == -1) {
+        if ((iVar5 == 0) || (iVar5 = I_stricmp(*piVar1,param_2), iVar5 != 0)) {
+          iVar5 = *(int *)(*(int *)(iVar8 + *(int *)(iVar2 + 0xb8)) + 0x2c);
+          if (iVar5 != 0) {
+            iVar5 = I_stricmp(iVar5,param_2);
             goto LAB_825bc118;
           }
           goto LAB_825bc124;
@@ -718,11 +610,10 @@ LAB_825bc120:
         lVar6 = lVar6 + 1;
       }
       else {
-        if ((pcVar4 != (char *)0x0) && (iVar5 = I_strncmp(pcVar4,param_2,iVar7), iVar5 == 0))
-        goto LAB_825bc120;
-        pcVar4 = *(char **)(*(int *)(iVar8 + *(int *)(iVar2 + 0xb8)) + 0x2c);
-        if (pcVar4 != (char *)0x0) {
-          iVar5 = I_strncmp(pcVar4,param_2,iVar7);
+        if ((iVar5 != 0) && (iVar5 = I_strncmp(iVar5,param_2,lVar7), iVar5 == 0)) goto LAB_825bc120;
+        iVar5 = *(int *)(*(int *)(iVar8 + *(int *)(iVar2 + 0xb8)) + 0x2c);
+        if (iVar5 != 0) {
+          iVar5 = I_strncmp(iVar5,param_2,lVar7);
 LAB_825bc118:
           if (iVar5 == 0) goto LAB_825bc120;
         }
@@ -732,121 +623,108 @@ LAB_825bc124:
       iVar8 = iVar8 + 4;
     } while (iVar3 < *(int *)(iVar2 + 0xb4));
   }
-  iVar2 = __restgprlr_26(lVar6);
-  return iVar2;
+  __restgprlr_26(lVar6);
+  return;
 }
 
 
 // 825BC148  Menu_GetMatchingItemByNumber  (ui/ui_shared.cpp:713)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-itemDef_t *
-Menu_GetMatchingItemByNumber(itemDef_t *param_1,menuDef_t *param_2,int param_3,char *param_4)
+void Menu_GetMatchingItemByNumber(undefined8 param_1,int param_2,int param_3,longlong param_4)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   ulonglong uVar2;
   int iVar3;
-  itemDef_t *piVar4;
-  char *pcVar5;
+  char *pcVar4;
+  int iVar5;
   int iVar6;
-  int iVar7;
+  longlong lVar7;
   int iVar8;
-  int iVar9;
   
-  uVar2 = __savegprlr_25(param_1);
-  iVar7 = 0;
-  iVar8 = -1;
-  if (((uVar2 & 0xffffffff) != 0) && (iVar3 = I_stricmp(param_4,"self"), iVar3 == 0)) {
-    piVar4 = (itemDef_t *)__restgprlr_25(uVar2);
-    return piVar4;
+  uVar2 = __savegprlr_25();
+  iVar6 = 0;
+  lVar7 = -1;
+  if (((uVar2 & 0xffffffff) != 0) && (iVar3 = I_stricmp(param_4,0xffffffff8206c550), iVar3 == 0)) {
+    __restgprlr_25(uVar2);
+    return;
   }
-  pcVar5 = strstr(param_4,"*");
-  if (pcVar5 != (char *)0x0) {
-    iVar8 = (int)pcVar5 - (int)param_4;
+  pcVar4 = strstr((char *)param_4,"*");
+  if (pcVar4 != (char *)0x0) {
+    lVar7 = (int)pcVar4 - param_4;
   }
   iVar3 = 0;
-  if (0 < param_2->itemCount) {
-    iVar9 = 0;
+  if (0 < *(int *)(param_2 + 0xb4)) {
+    iVar8 = 0;
     do {
-      puVar1 = *(undefined4 **)((int)param_2->items + iVar9);
-      pcVar5 = (char *)*puVar1;
-      if (iVar8 == -1) {
-        if ((pcVar5 == (char *)0x0) || (iVar6 = I_stricmp((char *)*puVar1,param_4), iVar6 != 0)) {
-          pcVar5 = *(char **)(*(int *)((int)param_2->items + iVar9) + 0x2c);
-          if (pcVar5 != (char *)0x0) {
-            iVar6 = I_stricmp(pcVar5,param_4);
+      piVar1 = *(int **)(*(int *)(param_2 + 0xb8) + iVar8);
+      iVar5 = *piVar1;
+      if ((int)lVar7 == -1) {
+        if ((iVar5 == 0) || (iVar5 = I_stricmp(*piVar1,param_4), iVar5 != 0)) {
+          iVar5 = *(int *)(*(int *)(*(int *)(param_2 + 0xb8) + iVar8) + 0x2c);
+          if (iVar5 != 0) {
+            iVar5 = I_stricmp(iVar5,param_4);
             goto LAB_825bc258;
           }
           goto LAB_825bc26c;
         }
 LAB_825bc260:
-        if (iVar7 == param_3) {
-          piVar4 = (itemDef_t *)__restgprlr_25(param_2->items[iVar3]);
-          return piVar4;
+        if (iVar6 == param_3) {
+          __restgprlr_25(*(undefined4 *)(iVar3 * 4 + *(int *)(param_2 + 0xb8)));
+          return;
         }
-        iVar7 = iVar7 + 1;
+        iVar6 = iVar6 + 1;
       }
       else {
-        if ((pcVar5 != (char *)0x0) && (iVar6 = I_strncmp(pcVar5,param_4,iVar8), iVar6 == 0))
-        goto LAB_825bc260;
-        pcVar5 = *(char **)(*(int *)((int)param_2->items + iVar9) + 0x2c);
-        if (pcVar5 != (char *)0x0) {
-          iVar6 = I_strncmp(pcVar5,param_4,iVar8);
+        if ((iVar5 != 0) && (iVar5 = I_strncmp(iVar5,param_4,lVar7), iVar5 == 0)) goto LAB_825bc260;
+        iVar5 = *(int *)(*(int *)(*(int *)(param_2 + 0xb8) + iVar8) + 0x2c);
+        if (iVar5 != 0) {
+          iVar5 = I_strncmp(iVar5,param_4,lVar7);
 LAB_825bc258:
-          if (iVar6 == 0) goto LAB_825bc260;
+          if (iVar5 == 0) goto LAB_825bc260;
         }
       }
 LAB_825bc26c:
       iVar3 = iVar3 + 1;
-      iVar9 = iVar9 + 4;
-    } while (iVar3 < param_2->itemCount);
+      iVar8 = iVar8 + 4;
+    } while (iVar3 < *(int *)(param_2 + 0xb4));
   }
-  piVar4 = (itemDef_t *)__restgprlr_25(0);
-  return piVar4;
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 825BC2A0  Script_SetColor  (ui/ui_shared.cpp:755)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetColor(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetColor(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-  LocalClientNum_t *pLVar1;
+  undefined4 *puVar1;
   int iVar2;
   int iVar3;
   ulonglong uVar4;
   longlong lVar5;
-  float local_430 [4];
-  char acStack_420 [1056];
+  undefined4 local_430 [4];
+  undefined1 auStack_420 [1056];
   
-  lVar5 = (longlong)(int)param_2;
-  pLVar1 = (LocalClientNum_t *)__savegprlr_29(param_1);
-  iVar2 = String_Parse(param_3,acStack_420,0x400);
+  puVar1 = (undefined4 *)__savegprlr_29();
+  iVar2 = String_Parse(param_3,auStack_420,0x400);
   if (iVar2 != 0) {
-    iVar2 = I_stricmp(acStack_420,"backcolor");
+    iVar2 = I_stricmp(auStack_420,0xffffffff8217077c);
     if (iVar2 == 0) {
-      uVar4 = lVar5 + 0x6c;
-      Window_AddDynamicFlags(*pLVar1,(windowDef_t *)lVar5,0x8000);
+      uVar4 = param_2 + 0x6c;
+      Window_AddDynamicFlags(*puVar1,param_2,0x8000);
     }
     else {
-      iVar2 = I_stricmp(acStack_420,"forecolor");
+      iVar2 = I_stricmp(auStack_420,0xffffffff82170770);
       if (iVar2 == 0) {
-        uVar4 = lVar5 + 0x5c;
-        Window_AddDynamicFlags(*pLVar1,(windowDef_t *)lVar5,0x10000);
+        uVar4 = param_2 + 0x5c;
+        Window_AddDynamicFlags(*puVar1,param_2,0x10000);
       }
       else {
-        iVar2 = I_stricmp(acStack_420,"bordercolor");
+        iVar2 = I_stricmp(auStack_420,0xffffffff82170764);
         if (iVar2 != 0) goto LAB_825bc388;
-        uVar4 = lVar5 + 0x7c;
+        uVar4 = param_2 + 0x7c;
       }
     }
     if ((uVar4 & 0xffffffff) != 0) {
@@ -857,7 +735,7 @@ void Script_SetColor(UiContext *param_1,itemDef_t *param_2,char **param_3)
         if (iVar3 == 0) break;
         iVar2 = iVar2 + 1;
         lVar5 = lVar5 + 4;
-        *(float *)lVar5 = local_430[0];
+        *(undefined4 *)lVar5 = local_430[0];
       } while (iVar2 < 4);
     }
   }
@@ -869,22 +747,17 @@ LAB_825bc388:
 
 // 825BC390  Script_SetBackground  (ui/ui_shared.cpp:796)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetBackground(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetBackground(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
   int iVar1;
-  Material *pMVar2;
-  char acStack_410 [1024];
+  undefined4 uVar2;
+  undefined1 auStack_410 [1024];
   
-  iVar1 = String_Parse(param_3,acStack_410,0x400);
+  iVar1 = String_Parse(param_3,auStack_410,0x400);
   if (iVar1 != 0) {
-    pMVar2 = Material_RegisterHandle(acStack_410,3);
-    (param_2->window).background = pMVar2;
+    uVar2 = Material_RegisterHandle(auStack_410,3);
+    *(undefined4 *)(param_2 + 0xac) = uVar2;
   }
   return;
 }
@@ -892,299 +765,260 @@ void Script_SetBackground(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BC3E0  Menu_FindItemByName  (ui/ui_shared.cpp:808)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-itemDef_t * Menu_FindItemByName(menuDef_t *param_1,char *param_2)
+void Menu_FindItemByName(undefined8 param_1,ulonglong param_2)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
-  itemDef_t *piVar4;
-  ulonglong uVar5;
-  int iVar6;
-  int iVar7;
+  int iVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if ((iVar2 != 0) && ((uVar5 & 0xffffffff) != 0)) {
-    iVar6 = 0;
-    if (0 < *(int *)(iVar2 + 0xb4)) {
-      iVar7 = 0;
+  iVar1 = __savegprlr_28();
+  if ((iVar1 != 0) && ((param_2 & 0xffffffff) != 0)) {
+    iVar3 = 0;
+    if (0 < *(int *)(iVar1 + 0xb4)) {
+      iVar4 = 0;
       do {
-        pcVar1 = (char *)**(undefined4 **)(*(int *)(iVar2 + 0xb8) + iVar7);
-        if ((pcVar1 != (char *)0x0) && (iVar3 = I_stricmp((char *)uVar5,pcVar1), iVar3 == 0)) {
-          piVar4 = (itemDef_t *)__restgprlr_28(*(undefined4 *)(iVar6 * 4 + *(int *)(iVar2 + 0xb8)));
-          return piVar4;
+        iVar2 = **(int **)(*(int *)(iVar1 + 0xb8) + iVar4);
+        if ((iVar2 != 0) && (iVar2 = I_stricmp(param_2,iVar2), iVar2 == 0)) {
+          __restgprlr_28(*(undefined4 *)(iVar3 * 4 + *(int *)(iVar1 + 0xb8)));
+          return;
         }
-        iVar6 = iVar6 + 1;
-        iVar7 = iVar7 + 4;
-      } while (iVar6 < *(int *)(iVar2 + 0xb4));
+        iVar3 = iVar3 + 1;
+        iVar4 = iVar4 + 4;
+      } while (iVar3 < *(int *)(iVar1 + 0xb4));
     }
   }
-  piVar4 = (itemDef_t *)__restgprlr_28(0);
-  return piVar4;
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 825BC478  UI_GetItemByName  (ui/ui_shared.cpp:825)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-itemDef_t * UI_GetItemByName(LocalClientNum_t param_1,char *param_2)
+void UI_GetItemByName(undefined8 param_1,ulonglong param_2)
 
 {
   bool bVar1;
-  menuDef_t *pmVar2;
-  char *pcVar3;
-  itemDef_t *piVar4;
-  menuDef_t *pmVar5;
-  LocalClientNum_t LVar6;
-  UiContext *pUVar7;
-  int iVar8;
-  itemDef_t *piVar9;
-  ulonglong uVar10;
-  menuDef_t **ppmVar11;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  int *piVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
   int iVar12;
-  menuDef_t *pmVar13;
-  int iVar14;
-  int iVar15;
+  int iVar13;
   
-  uVar10 = (ulonglong)(int)param_2;
-  LVar6 = __savegprlr_18(param_1);
-  pUVar7 = UI_GetClientDC(LVar6);
-  piVar9 = (itemDef_t *)0x0;
-  pmVar13 = (menuDef_t *)0x0;
-  iVar12 = 0;
-  if (0 < pUVar7->menuCount) {
-    ppmVar11 = pUVar7->Menus;
+  __savegprlr_18();
+  iVar4 = UI_GetClientDC();
+  iVar11 = 0;
+  iVar10 = 0;
+  iVar9 = 0;
+  if (0 < *(int *)(iVar4 + 0xa34)) {
+    piVar8 = (int *)(iVar4 + 0x34);
     do {
-      pmVar2 = *ppmVar11;
-      pmVar5 = pmVar13;
-      if (((pmVar2 != (menuDef_t *)0x0) && ((uVar10 & 0xffffffff) != 0)) &&
-         (iVar14 = 0, 0 < pmVar2->itemCount)) {
-        iVar15 = 0;
+      iVar2 = *piVar8;
+      iVar3 = iVar10;
+      if (((iVar2 != 0) && ((param_2 & 0xffffffff) != 0)) &&
+         (iVar12 = 0, 0 < *(int *)(iVar2 + 0xb4))) {
+        iVar13 = 0;
         do {
-          pcVar3 = (char *)**(undefined4 **)((int)pmVar2->items + iVar15);
-          if ((pcVar3 != (char *)0x0) && (iVar8 = I_stricmp((char *)uVar10,pcVar3), iVar8 == 0)) {
-            piVar4 = pmVar2->items[iVar14];
-            if ((piVar4 != (itemDef_t *)0x0) &&
-               (bVar1 = piVar9 != (itemDef_t *)0x0, pmVar5 = pmVar2, piVar9 = piVar4, bVar1)) {
-              if (pmVar13 == (menuDef_t *)0x0) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                                0x353,0,"%s");
+          iVar5 = **(int **)(*(int *)(iVar2 + 0xb8) + iVar13);
+          if ((iVar5 != 0) && (iVar5 = I_stricmp(param_2,iVar5), iVar5 == 0)) {
+            iVar12 = *(int *)(iVar12 * 4 + *(int *)(iVar2 + 0xb8));
+            if ((iVar12 != 0) && (bVar1 = iVar11 != 0, iVar3 = iVar2, iVar11 = iVar12, bVar1)) {
+              if (iVar10 == 0) {
+                MyAssertHandler(0xffffffff82170658,0x353,0,0xffffffff82000f98,0xffffffff82170788);
               }
-              Com_PrintWarning(0xd,
-                               "Found multiple itemDefs with the same name - %s, in UI_GetItemByName()\nOne was in the menu \'%s\', the other was in the menu \'%s\'\n"
-                              );
+              uVar7 = (ulonglong)*(uint *)(iVar2 + 4);
+              if ((ulonglong)*(uint *)(iVar2 + 4) == 0) {
+                uVar7 = 0xffffffff82170794;
+              }
+              uVar6 = (ulonglong)*(uint *)(iVar10 + 4);
+              if ((ulonglong)*(uint *)(iVar10 + 4) == 0) {
+                uVar6 = 0xffffffff82170794;
+              }
+              Com_PrintWarning(0xd,0xffffffff821707a8,param_2,uVar6,uVar7);
             }
             break;
           }
-          iVar14 = iVar14 + 1;
-          iVar15 = iVar15 + 4;
-        } while (iVar14 < pmVar2->itemCount);
+          iVar12 = iVar12 + 1;
+          iVar13 = iVar13 + 4;
+        } while (iVar12 < *(int *)(iVar2 + 0xb4));
       }
-      pmVar13 = pmVar5;
-      iVar12 = iVar12 + 1;
-      ppmVar11 = ppmVar11 + 1;
-    } while (iVar12 < pUVar7->menuCount);
+      iVar10 = iVar3;
+      iVar9 = iVar9 + 1;
+      piVar8 = piVar8 + 1;
+    } while (iVar9 < *(int *)(iVar4 + 0xa34));
   }
-  piVar9 = (itemDef_t *)__restgprlr_18(piVar9);
-  return piVar9;
+  __restgprlr_18(iVar11);
+  return;
 }
 
 
 // 825C9078  UI_GetResolveItemDefAction  (ui/ui_shared.cpp:869)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-itemDef_t * UI_GetResolveItemDefAction(LocalClientNum_t param_1)
+undefined8 UI_GetResolveItemDefAction(undefined8 param_1)
 
 {
-  int iVar1;
-  UiContext *pUVar2;
-  menuDef_t *pmVar3;
-  itemDef_t *piVar4;
-  char *local_330 [4];
-  char acStack_320 [256];
-  char acStack_220 [256];
-  char acStack_120 [264];
+  int iVar3;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  undefined4 local_330 [4];
+  undefined1 auStack_320 [256];
+  undefined1 auStack_220 [256];
+  undefined1 auStack_120 [264];
   
-  local_330[0] = (char *)(com_completionResolveCommand->current).integer;
-  iVar1 = String_Parse(local_330,acStack_320,0x100);
-  if ((iVar1 != 0) && (iVar1 = I_stricmp(acStack_320,"resolveItemDefAction"), iVar1 == 0)) {
-    iVar1 = String_Parse(local_330,acStack_220,0x100);
-    if (iVar1 != 0) {
-      iVar1 = String_Parse(local_330,acStack_120,0x100);
-      if (iVar1 == 0) {
-        Com_PrintWarning(0xd,"resolveItemDefAction missing token for itemDef name using resolve %s")
-        ;
-        Dvar_SetString(com_completionResolveCommand,"");
-        return (itemDef_t *)0x0;
+  local_330[0] = *(undefined4 *)(DAT_83667350 + 0xc);
+  iVar3 = String_Parse(local_330,auStack_320,0x100);
+  if ((iVar3 != 0) && (iVar3 = I_stricmp(auStack_320,0xffffffff8203272c), iVar3 == 0)) {
+    iVar3 = String_Parse(local_330,auStack_220,0x100);
+    if (iVar3 != 0) {
+      iVar3 = String_Parse(local_330,auStack_120,0x100);
+      if (iVar3 == 0) {
+        Com_PrintWarning(0xd,0xffffffff82172f00,*(undefined4 *)(DAT_83667350 + 0xc));
+        Dvar_SetString(DAT_83667350,0xffffffff820068af);
+        return 0;
       }
-      pUVar2 = UI_GetClientDC(param_1);
-      if (pUVar2 == (UiContext *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x385,0,
-                        "%s");
+      uVar1 = UI_GetClientDC(param_1);
+      if ((uVar1 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff82170658,0x385,0,0xffffffff82000f98,0xffffffff8216783c);
       }
-      pmVar3 = Menus_FindByName(pUVar2,acStack_220);
-      if (pmVar3 == (menuDef_t *)0x0) {
-        Com_PrintWarning(0xd,"UI_RunResolveItemDefAction failed finding menuDef using resolve %s");
-        Dvar_SetString(com_completionResolveCommand,"");
-        return (itemDef_t *)0x0;
+      uVar1 = Menus_FindByName(uVar1,auStack_220);
+      if ((uVar1 & 0xffffffff) == 0) {
+        Com_PrintWarning(0xd,0xffffffff82172eb8,*(undefined4 *)(DAT_83667350 + 0xc));
+        Dvar_SetString(DAT_83667350,0xffffffff820068af);
+        return 0;
       }
-      piVar4 = Menu_FindItemByName(pmVar3,acStack_120);
-      return piVar4;
+      uVar2 = Menu_FindItemByName(uVar1,auStack_120);
+      return uVar2;
     }
-    Com_PrintWarning(0xd,"resolveItemDefAction missing token for menuDef name using resolve %s");
-    Dvar_SetString(com_completionResolveCommand,"");
+    Com_PrintWarning(0xd,0xffffffff82172f48,*(undefined4 *)(DAT_83667350 + 0xc));
+    Dvar_SetString(DAT_83667350,0xffffffff820068af);
   }
-  return (itemDef_t *)0x0;
+  return 0;
 }
 
 
 // 825C9200  UI_RunResolveItemDefAction  (ui/ui_shared.cpp:920)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-void UI_RunResolveItemDefAction(LocalClientNum_t param_1)
+void UI_RunResolveItemDefAction(undefined8 param_1)
 
 {
-  itemDef_t *piVar1;
-  bool bVar3;
-  UiContext *pUVar2;
-  char *pcVar4;
+  ulonglong uVar1;
+  char cVar3;
+  ulonglong uVar2;
+  undefined8 uVar4;
   
-  piVar1 = UI_GetResolveItemDefAction(param_1);
-  if (piVar1 == (itemDef_t *)0x0) {
-    pcVar4 = "UI_RunResolveItemDefAction failed finding itemDef using resolve %s";
+  uVar1 = UI_GetResolveItemDefAction();
+  if ((uVar1 & 0xffffffff) == 0) {
+    uVar4 = 0xffffffff82172fe8;
   }
   else {
-    bVar3 = Item_IsDisabled(param_1,piVar1);
-    if (!bVar3) {
-      pUVar2 = UI_GetClientDC(param_1);
-      if (pUVar2 == (UiContext *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x3a9,0,
-                        "%s");
+    cVar3 = Item_IsDisabled(param_1,uVar1);
+    if (cVar3 == '\0') {
+      uVar2 = UI_GetClientDC(param_1);
+      if ((uVar2 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff82170658,0x3a9,0,0xffffffff82000f98,0xffffffff8216783c);
       }
-      Dvar_SetString(com_completionResolveCommand,"");
-      Item_Action(pUVar2,piVar1);
+      Dvar_SetString(DAT_83667350,0xffffffff820068af);
+      Item_Action(uVar2,uVar1);
       return;
     }
-    pcVar4 = "UI_RunResolveItemDefAction can\'t run action on disabled itemDef using resolve %s";
+    uVar4 = 0xffffffff82172f90;
   }
-  Com_PrintWarning(0xd,pcVar4);
-  Dvar_SetString(com_completionResolveCommand,"");
+  Com_PrintWarning(0xd,uVar4,*(undefined4 *)(DAT_83667350 + 0xc));
+  Dvar_SetString(DAT_83667350,0xffffffff820068af);
   return;
 }
 
 
 // 825C92F0  UI_HasResolveWithMenu  (ui/ui_shared.cpp:952)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-int UI_HasResolveWithMenu(LocalClientNum_t param_1,char *param_2)
+bool UI_HasResolveWithMenu(undefined8 param_1,ulonglong param_2)
 
 {
-  char *pcVar1;
-  itemDef_t *piVar2;
-  int iVar3;
+  int iVar1;
   
-  piVar2 = UI_GetResolveItemDefAction(param_1);
-  if ((((piVar2 != (itemDef_t *)0x0) && (piVar2->parent != (menuDef_t *)0x0)) &&
-      (pcVar1 = (piVar2->parent->window).name, pcVar1 != (char *)0x0)) && (param_2 != (char *)0x0))
+  iVar1 = UI_GetResolveItemDefAction();
+  if ((((iVar1 != 0) && (*(int *)(iVar1 + 0x134) != 0)) &&
+      (iVar1 = *(int *)(*(int *)(iVar1 + 0x134) + 4), iVar1 != 0)) && ((param_2 & 0xffffffff) != 0))
   {
-    iVar3 = I_stricmp(pcVar1,param_2);
-    return (uint)LZCOUNT(iVar3) >> 5;
+    iVar1 = I_stricmp(iVar1,param_2);
+    return iVar1 == 0;
   }
-  return 0;
+  return false;
 }
 
 
 // 825BC5D8  UI_ClearCompletionResolve  (ui/ui_shared.cpp:969)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void UI_ClearCompletionResolve(void)
 
 {
-  Dvar_SetString(com_completionResolveCommand,"");
+  Dvar_SetString(DAT_83667350,0xffffffff820068af);
   return;
 }
 
 
 // 825BC5F0  Script_SetItemColor  (ui/ui_shared.cpp:977)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetItemColor(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetItemColor(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  LocalClientNum_t *pLVar1;
+  undefined4 *puVar1;
   int iVar2;
   int iVar3;
-  itemDef_t *piVar4;
-  int iVar5;
-  float *pfVar6;
-  float local_860;
-  float local_85c;
-  float local_858;
-  float local_854;
-  char acStack_850 [1024];
-  char acStack_450 [1104];
+  int iVar4;
+  longlong lVar5;
+  undefined4 *puVar6;
+  undefined4 local_860;
+  undefined4 local_85c;
+  undefined4 local_858;
+  undefined4 local_854;
+  undefined1 auStack_850 [1024];
+  undefined1 auStack_450 [1104];
   
-  pLVar1 = (LocalClientNum_t *)__savegprlr_24(param_1);
-  iVar2 = String_Parse(param_3,acStack_450,0x400);
-  if ((iVar2 != 0) && (iVar2 = String_Parse(param_3,acStack_850,0x400), iVar2 != 0)) {
-    iVar2 = Menu_ItemsMatchingGroup(param_2->parent,acStack_450);
-    iVar3 = Color_Parse(param_3,(float (*) [4])&local_860);
-    if ((iVar3 != 0) && (iVar3 = 0, 0 < iVar2)) {
+  puVar1 = (undefined4 *)__savegprlr_24();
+  iVar2 = String_Parse(param_3,auStack_450,0x400);
+  if ((iVar2 != 0) && (iVar2 = String_Parse(param_3,auStack_850,0x400), iVar2 != 0)) {
+    iVar2 = Menu_ItemsMatchingGroup(*(undefined4 *)((int)param_2 + 0x134),auStack_450);
+    iVar3 = Color_Parse(param_3,&local_860);
+    if ((iVar3 != 0) && (lVar5 = 0, 0 < iVar2)) {
       do {
-        piVar4 = Menu_GetMatchingItemByNumber(param_2,param_2->parent,iVar3,acStack_450);
-        if (piVar4 != (itemDef_t *)0x0) {
-          iVar5 = I_stricmp(acStack_850,"backcolor");
-          if (iVar5 == 0) {
-            pfVar6 = (piVar4->window).backColor;
+        iVar3 = Menu_GetMatchingItemByNumber
+                          (param_2,*(undefined4 *)((int)param_2 + 0x134),lVar5,auStack_450);
+        if (iVar3 != 0) {
+          iVar4 = I_stricmp(auStack_850,0xffffffff8217077c);
+          if (iVar4 == 0) {
+            puVar6 = (undefined4 *)(iVar3 + 0x6c);
           }
           else {
-            iVar5 = I_stricmp(acStack_850,"forecolor");
-            if (iVar5 == 0) {
-              pfVar6 = (piVar4->window).foreColor;
-              Window_AddDynamicFlags(*pLVar1,&piVar4->window,0x10000);
+            iVar4 = I_stricmp(auStack_850,0xffffffff82170770);
+            if (iVar4 == 0) {
+              puVar6 = (undefined4 *)(iVar3 + 0x5c);
+              Window_AddDynamicFlags(*puVar1,iVar3,0x10000);
             }
             else {
-              iVar5 = I_stricmp(acStack_850,"bordercolor");
-              if (iVar5 != 0) goto LAB_825bc72c;
-              pfVar6 = (piVar4->window).borderColor;
+              iVar4 = I_stricmp(auStack_850,0xffffffff82170764);
+              if (iVar4 != 0) goto LAB_825bc72c;
+              puVar6 = (undefined4 *)(iVar3 + 0x7c);
             }
           }
-          if (pfVar6 != (float *)0x0) {
-            *pfVar6 = local_860;
-            pfVar6[1] = local_85c;
-            pfVar6[2] = local_858;
-            pfVar6[3] = local_854;
+          if (puVar6 != (undefined4 *)0x0) {
+            *puVar6 = local_860;
+            puVar6[1] = local_85c;
+            puVar6[2] = local_858;
+            puVar6[3] = local_854;
           }
         }
 LAB_825bc72c:
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < iVar2);
+        lVar5 = lVar5 + 1;
+      } while ((int)lVar5 < iVar2);
     }
   }
   __restgprlr_24();
@@ -1194,44 +1028,39 @@ LAB_825bc72c:
 
 // 825C9370  Menu_ShowItemByName  (ui/ui_shared.cpp:1030)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menu_ShowItemByName(LocalClientNum_t param_1,menuDef_t *param_2,char *param_3,int param_4)
+void Menu_ShowItemByName(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  itemDef_t *piVar3;
-  bool bVar5;
-  UiContext *pUVar4;
-  int iVar6;
+  undefined8 uVar1;
+  int iVar4;
+  ulonglong uVar2;
+  char cVar5;
+  undefined8 uVar3;
+  longlong lVar6;
   
-  LVar1 = __savegprlr_25(param_1);
-  iVar2 = Menu_ItemsMatchingGroup(param_2,param_3);
-  iVar6 = 0;
-  if (0 < iVar2) {
+  uVar1 = __savegprlr_25();
+  iVar4 = Menu_ItemsMatchingGroup(param_2,param_3);
+  lVar6 = 0;
+  if (0 < iVar4) {
     do {
-      piVar3 = Menu_GetMatchingItemByNumber((itemDef_t *)0x0,param_2,iVar6,param_3);
-      if (piVar3 != (itemDef_t *)0x0) {
+      uVar2 = Menu_GetMatchingItemByNumber(0,param_2,lVar6,param_3);
+      if ((uVar2 & 0xffffffff) != 0) {
         if (param_4 == 0) {
-          bVar5 = Window_HasFocus(LVar1,&piVar3->window);
-          if (bVar5) {
-            pUVar4 = UI_GetClientDC(LVar1);
-            Item_ClearFocus(pUVar4,piVar3);
+          cVar5 = Window_HasFocus(uVar1,uVar2);
+          if (cVar5 != '\0') {
+            uVar3 = UI_GetClientDC(uVar1);
+            Item_ClearFocus(uVar3,uVar2);
           }
           Sys_EnterUIOwnership();
-          Window_RemoveDynamicFlags(LVar1,&piVar3->window,4);
+          Window_RemoveDynamicFlags(uVar1,uVar2,4);
           Sys_LeaveUIOwnership();
         }
         else {
-          Window_AddDynamicFlags(LVar1,&piVar3->window,4);
+          Window_AddDynamicFlags(uVar1,uVar2,4);
         }
       }
-      iVar6 = iVar6 + 1;
-    } while (iVar6 < iVar2);
+      lVar6 = lVar6 + 1;
+    } while ((int)lVar6 < iVar4);
   }
   __restgprlr_25();
   return;
@@ -1240,42 +1069,37 @@ void Menu_ShowItemByName(LocalClientNum_t param_1,menuDef_t *param_2,char *param
 
 // 825BC740  Menu_FadeItemByName  (ui/ui_shared.cpp:1057)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menu_FadeItemByName(LocalClientNum_t param_1,menuDef_t *param_2,char *param_3,int param_4)
+void Menu_FadeItemByName(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  itemDef_t *piVar3;
-  int iVar4;
-  int iVar5;
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  undefined8 uVar4;
+  longlong lVar5;
   
-  LVar1 = __savegprlr_25(param_1);
-  iVar2 = Menu_ItemsMatchingGroup(param_2,param_3);
-  iVar5 = 0;
-  if (0 < iVar2) {
+  uVar1 = __savegprlr_25();
+  iVar3 = Menu_ItemsMatchingGroup(param_2,param_3);
+  lVar5 = 0;
+  if (0 < iVar3) {
     do {
-      piVar3 = Menu_GetMatchingItemByNumber((itemDef_t *)0x0,param_2,iVar5,param_3);
-      if (piVar3 != (itemDef_t *)0x0) {
+      uVar2 = Menu_GetMatchingItemByNumber(0,param_2,lVar5,param_3);
+      if ((uVar2 & 0xffffffff) != 0) {
         if (param_4 == 0) {
-          Window_AddDynamicFlags(LVar1,&piVar3->window,0x24);
+          Window_AddDynamicFlags(uVar1,uVar2,0x24);
           Sys_EnterUIOwnership();
-          iVar4 = 0x10;
+          uVar4 = 0x10;
         }
         else {
-          Window_AddDynamicFlags(LVar1,&piVar3->window,0x14);
+          Window_AddDynamicFlags(uVar1,uVar2,0x14);
           Sys_EnterUIOwnership();
-          iVar4 = 0x20;
+          uVar4 = 0x20;
         }
-        Window_RemoveDynamicFlags(LVar1,&piVar3->window,iVar4);
+        Window_RemoveDynamicFlags(uVar1,uVar2,uVar4);
         Sys_LeaveUIOwnership();
       }
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < iVar2);
+      lVar5 = lVar5 + 1;
+    } while ((int)lVar5 < iVar3);
   }
   __restgprlr_25();
   return;
@@ -1284,46 +1108,41 @@ void Menu_FadeItemByName(LocalClientNum_t param_1,menuDef_t *param_2,char *param
 
 // 825BC7F0  Menus_RemoveFromOpenStack  (ui/ui_shared.cpp:1084)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Menus_RemoveFromOpenStack(UiContext *param_1,menuDef_t *param_2)
+undefined8 Menus_RemoveFromOpenStack(longlong param_1,int param_2)
 
 {
-  longlong lVar1;
-  int iVar2;
-  longlong lVar3;
+  int iVar1;
+  longlong lVar2;
+  int iVar3;
+  longlong lVar4;
   
-  if (param_2 == (menuDef_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x43f,0,"%s"
-                   );
+  if (param_2 == 0) {
+    MyAssertHandler(0xffffffff82170658,0x43f,0,0xffffffff82000f98,0xffffffff8217082c);
   }
   Sys_EnterUIOwnership();
-  lVar1 = (ulonglong)(uint)param_1->openMenuCount - 1;
-  iVar2 = (int)lVar1;
-  if (-1 < iVar2) {
-    lVar3 = ((ulonglong)(uint)param_1->openMenuCount + 0x28d & 0x3fffffff) * 4 +
-            (longlong)(int)param_1;
+  iVar1 = (int)param_1;
+  lVar2 = (ulonglong)*(uint *)(iVar1 + 0xa78) - 1;
+  iVar3 = (int)lVar2;
+  if (-1 < iVar3) {
+    lVar4 = ((ulonglong)*(uint *)(iVar1 + 0xa78) + 0x28d & 0x3fffffff) * 4 + param_1;
     do {
-      if ((menuDef_t *)*(int *)lVar3 == param_2) {
-        param_1->openMenuCount = iVar2;
-        if ((int)lVar1 < iVar2) {
-          lVar3 = (lVar1 + 0x28dU & 0x3fffffff) * 4 + (longlong)(int)param_1;
+      if (*(int *)lVar4 == param_2) {
+        *(int *)(iVar1 + 0xa78) = iVar3;
+        if ((int)lVar2 < iVar3) {
+          param_1 = (lVar2 + 0x28dU & 0x3fffffff) * 4 + param_1;
           do {
-            iVar2 = (int)lVar3;
-            lVar1 = lVar1 + 1;
-            lVar3 = lVar3 + 4;
-            *(undefined4 *)lVar3 = *(undefined4 *)(iVar2 + 8);
-          } while ((int)lVar1 < param_1->openMenuCount);
+            iVar3 = (int)param_1;
+            lVar2 = lVar2 + 1;
+            param_1 = param_1 + 4;
+            *(undefined4 *)param_1 = *(undefined4 *)(iVar3 + 8);
+          } while ((int)lVar2 < *(int *)(iVar1 + 0xa78));
         }
         Sys_LeaveUIOwnership();
         return 1;
       }
-      lVar1 = lVar1 + -1;
-      lVar3 = lVar3 + -4;
-    } while (-1 < lVar1);
+      lVar2 = lVar2 + -1;
+      lVar4 = lVar4 + -4;
+    } while (-1 < lVar2);
   }
   Sys_LeaveUIOwnership();
   return 0;
@@ -1332,42 +1151,35 @@ int Menus_RemoveFromOpenStack(UiContext *param_1,menuDef_t *param_2)
 
 // 825BC8D0  Menus_AddToOpenStack  (ui/ui_shared.cpp:1115)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Menus_AddToOpenStack(UiContext *param_1,menuDef_t *param_2)
+void Menus_AddToOpenStack(longlong param_1,int *param_2)
 
 {
   int *piVar1;
-  longlong lVar2;
+  int iVar2;
   longlong lVar3;
   
-  if (param_2 == (menuDef_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x45e,0,"%s"
-                   );
+  if (param_2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x45e,0,0xffffffff82000f98,0xffffffff8217082c);
   }
   Menus_RemoveFromOpenStack(param_1,param_2);
-  if (param_1->openMenuCount == 0x10) {
-    Com_Error(ERR_DROP,"\x15Too many menus opened");
+  iVar2 = (int)param_1;
+  if (*(int *)(iVar2 + 0xa78) == 0x10) {
+    Com_Error(1,0xffffffff82170834);
   }
   Sys_EnterUIOwnership();
-  lVar3 = (ulonglong)(uint)param_1->openMenuCount - 1;
+  lVar3 = (ulonglong)*(uint *)(iVar2 + 0xa78) - 1;
   if (-1 < lVar3) {
-    lVar2 = ((ulonglong)(uint)param_1->openMenuCount + 0x28f & 0x3fffffff) * 4 +
-            (longlong)(int)param_1;
+    param_1 = ((ulonglong)*(uint *)(iVar2 + 0xa78) + 0x28f & 0x3fffffff) * 4 + param_1;
     do {
-      piVar1 = *(int **)((int)lVar2 + -8);
-      if (*(byte *)(*piVar1 + 0x1fc) <= param_2->data->priority) break;
+      piVar1 = *(int **)((int)param_1 + -8);
+      if (*(byte *)(*piVar1 + 0x1fc) <= *(byte *)(*param_2 + 0x1fc)) break;
       lVar3 = lVar3 + -1;
-      lVar2 = lVar2 + -4;
-      *(undefined4 *)lVar2 = piVar1;
+      param_1 = param_1 + -4;
+      *(undefined4 *)param_1 = piVar1;
     } while (-1 < lVar3);
   }
-  *(menuDef_t **)((int)param_1->Menus + (int)((lVar3 + 0x28fU & 0xffffffff) << 2) + -0x34) = param_2
-  ;
-  param_1->openMenuCount = param_1->openMenuCount + 1;
+  *(int **)((int)((lVar3 + 0x28fU & 0xffffffff) << 2) + iVar2) = param_2;
+  *(int *)(iVar2 + 0xa78) = *(int *)(iVar2 + 0xa78) + 1;
   Sys_LeaveUIOwnership();
   return;
 }
@@ -1375,114 +1187,89 @@ void Menus_AddToOpenStack(UiContext *param_1,menuDef_t *param_2)
 
 // 825BC9B8  Menus_MenuIsInStack  (ui/ui_shared.cpp:1145)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Menus_MenuIsInStack(UiContext *param_1,menuDef_t *param_2)
+void Menus_MenuIsInStack(undefined8 param_1,ulonglong param_2)
 
 {
   ulonglong uVar1;
-  int iVar2;
+  longlong lVar2;
   ulonglong uVar3;
   longlong lVar4;
-  ulonglong uVar5;
-  longlong lVar6;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
+  uVar1 = __savegprlr_28();
   if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x47c,0,"%s"
-                   );
+    MyAssertHandler(0xffffffff82170658,0x47c,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x47d,0,"%s"
-                   );
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x47d,0,0xffffffff82000f98,0xffffffff82058cb8);
   }
-  uVar5 = (ulonglong)*(uint *)((int)uVar1 + 0xa78);
-  lVar6 = uVar5 - 1;
-  if (-1 < lVar6) {
-    lVar4 = (uVar5 + 0x28d & 0x3fffffff) * 4 + uVar1;
+  uVar3 = (ulonglong)*(uint *)((int)uVar1 + 0xa78);
+  lVar4 = uVar3 - 1;
+  if (-1 < lVar4) {
+    lVar2 = (uVar3 + 0x28d & 0x3fffffff) * 4 + uVar1;
     do {
-      if ((ulonglong)*(uint *)lVar4 == (uVar3 & 0xffffffff)) {
-        iVar2 = __restgprlr_28(1);
-        return iVar2;
+      if ((ulonglong)*(uint *)lVar2 == (param_2 & 0xffffffff)) {
+        __restgprlr_28(1);
+        return;
       }
-      lVar6 = lVar6 + -1;
-      lVar4 = lVar4 + -4;
-    } while (-1 < lVar6);
+      lVar4 = lVar4 + -1;
+      lVar2 = lVar2 + -4;
+    } while (-1 < lVar4);
   }
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 825BCA70  Menus_FindByName  (ui/ui_shared.cpp:1162)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-menuDef_t * Menus_FindByName(UiContext *param_1,char *param_2)
+void Menus_FindByName(undefined8 param_1,undefined8 param_2)
 
 {
   int iVar1;
   int iVar2;
-  menuDef_t *pmVar3;
-  int iVar4;
-  int *piVar5;
+  int iVar3;
+  int *piVar4;
   
-  iVar1 = __savegprlr_28(param_1);
-  iVar4 = 0;
+  iVar1 = __savegprlr_28();
+  iVar3 = 0;
   if (0 < *(int *)(iVar1 + 0xa34)) {
-    piVar5 = (int *)(iVar1 + 0x34);
+    piVar4 = (int *)(iVar1 + 0x34);
     do {
-      iVar2 = I_stricmp(*(char **)(*piVar5 + 4),param_2);
+      iVar2 = I_stricmp(*(undefined4 *)(*piVar4 + 4),param_2);
       if (iVar2 == 0) {
-        pmVar3 = (menuDef_t *)__restgprlr_28(*(undefined4 *)((iVar4 + 0xd) * 4 + iVar1));
-        return pmVar3;
+        __restgprlr_28(*(undefined4 *)((iVar3 + 0xd) * 4 + iVar1));
+        return;
       }
-      iVar4 = iVar4 + 1;
-      piVar5 = piVar5 + 1;
-    } while (iVar4 < *(int *)(iVar1 + 0xa34));
+      iVar3 = iVar3 + 1;
+      piVar4 = piVar4 + 1;
+    } while (iVar3 < *(int *)(iVar1 + 0xa34));
   }
-  pmVar3 = (menuDef_t *)__restgprlr_28(0);
-  return pmVar3;
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 825BCAE8  Menus_HideByName  (ui/ui_shared.cpp:1175)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_HideByName(UiContext *param_1,char *param_2)
+void Menus_HideByName(undefined8 param_1,ulonglong param_2)
 
 {
-  LocalClientNum_t LVar1;
-  UiContext *pUVar2;
-  menuDef_t *pmVar3;
-  ulonglong uVar4;
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  ulonglong uVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_28(param_1);
-  if (pUVar2 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x49a,0,"%s"
-                   );
+  puVar3 = (undefined4 *)__savegprlr_28();
+  if (puVar3 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x49a,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x49b,0,"%s"
-                   );
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x49b,0,0xffffffff82000f98,0xffffffff8216bce0);
   }
-  pmVar3 = Menus_FindByName(pUVar2,(char *)uVar4);
-  if (pmVar3 != (menuDef_t *)0x0) {
-    LVar1 = pUVar2->localClientNum;
+  uVar2 = Menus_FindByName(puVar3,param_2);
+  if ((uVar2 & 0xffffffff) != 0) {
+    uVar1 = *puVar3;
     Sys_EnterUIOwnership();
-    Window_RemoveDynamicFlags(LVar1,&pmVar3->window,4);
+    Window_RemoveDynamicFlags(uVar1,uVar2 + 4,4);
     Sys_LeaveUIOwnership();
   }
   __restgprlr_28();
@@ -1492,31 +1279,22 @@ void Menus_HideByName(UiContext *param_1,char *param_2)
 
 // 825BCB90  Menus_ShowByName  (ui/ui_shared.cpp:1188)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_ShowByName(UiContext *param_1,char *param_2)
+void Menus_ShowByName(undefined8 param_1,ulonglong param_2)
 
 {
-  UiContext *pUVar1;
-  menuDef_t *pmVar2;
-  ulonglong uVar3;
+  undefined4 *puVar2;
+  ulonglong uVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pUVar1 = (UiContext *)__savegprlr_28(param_1);
-  if (pUVar1 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x4a7,0,"%s"
-                   );
+  puVar2 = (undefined4 *)__savegprlr_28();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x4a7,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x4a8,0,"%s"
-                   );
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x4a8,0,0xffffffff82000f98,0xffffffff8217084c);
   }
-  pmVar2 = Menus_FindByName(pUVar1,(char *)uVar3);
-  if (pmVar2 != (menuDef_t *)0x0) {
-    Window_AddDynamicFlags(pUVar1->localClientNum,&pmVar2->window,4);
+  uVar1 = Menus_FindByName(puVar2,param_2);
+  if ((uVar1 & 0xffffffff) != 0) {
+    Window_AddDynamicFlags(*puVar2,uVar1 + 4,4);
   }
   __restgprlr_28();
   return;
@@ -1525,48 +1303,36 @@ void Menus_ShowByName(UiContext *param_1,char *param_2)
 
 // 825BCC30  Item_NewsTicker_Init  (ui/ui_shared.cpp:1201)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Item_NewsTicker_Init(UiContext *param_1,itemDef_t *param_2)
+void Item_NewsTicker_Init(undefined8 param_1,ulonglong param_2)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  newsTickerDef_s *pnVar3;
+  uint *puVar1;
+  undefined4 *puVar2;
+  undefined4 uVar3;
+  int iVar4;
   int iVar5;
-  char *pcVar6;
-  ulonglong uVar7;
-  itemDef_t *piVar4;
   
-  uVar7 = (ulonglong)(int)param_2;
-  puVar2 = (uint *)__savegprlr_29(param_1);
-  if (3 < *puVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x4ba,0,
-                    "dc->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                   );
+  puVar1 = (uint *)__savegprlr_29();
+  if (3 < *puVar1) {
+    MyAssertHandler(0xffffffff82170658,0x4ba,0,0xffffffff82170858,*puVar1,4);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
-                   );
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018fa0,0x24,0,0xffffffff82000f98,0xffffffff8200fdb4);
   }
-  piVar4 = (itemDef_t *)uVar7;
-  pnVar3 = Item_GetNewsTickerDef(piVar4);
-  uVar1 = *puVar2;
-  iVar5 = Sys_Milliseconds();
-  g_tickerInfo[uVar1].lastTime = iVar5;
-  g_tickerInfo[uVar1].x = 0.0;
-  g_tickerInfo[uVar1].y = (piVar4->window).rect.h;
-  pcVar6 = NewsFeed_Get(pnVar3->feedId);
-  if (pcVar6 != (char *)0x0) {
-    g_tickerInfo[uVar1].state = TICKER_MOVE_IN;
+  puVar2 = (undefined4 *)Item_GetNewsTickerDef(param_2);
+  iVar5 = *puVar1 * 0x14;
+  uVar3 = Sys_Milliseconds();
+  *(undefined4 *)(&DAT_8400bcf8 + iVar5) = uVar3;
+  *(undefined4 *)(&DAT_8400bd00 + iVar5) = 0;
+  *(undefined4 *)(&DAT_8400bd04 + iVar5) = *(undefined4 *)((int)param_2 + 0x10);
+  iVar4 = NewsFeed_Get(*puVar2);
+  if (iVar4 != 0) {
+    *(undefined4 *)(&DAT_8400bd08 + iVar5) = 1;
     __restgprlr_29();
     return;
   }
-  if (piVar4->text == (char *)0x0) {
-    g_tickerInfo[uVar1].state = TICKER_STOPPED;
+  if (*(int *)((int)param_2 + 300) == 0) {
+    *(undefined4 *)(&DAT_8400bd08 + iVar5) = 0;
   }
   __restgprlr_29();
   return;
@@ -1575,80 +1341,67 @@ void Item_NewsTicker_Init(UiContext *param_1,itemDef_t *param_2)
 
 // 825BCD18  Item_TextVScroll_Init  (ui/ui_shared.cpp:1241)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_TextVScroll_Init(UiContext *param_1,itemDef_t *param_2)
+void Item_TextVScroll_Init(int param_1,undefined8 param_2)
 
 {
-  textScrollDef_s *ptVar1;
+  undefined4 *puVar1;
   
-  ptVar1 = Item_GetTextScrollDef(param_2);
-  ptVar1->startTime = param_1->realTime;
+  puVar1 = (undefined4 *)Item_GetTextScrollDef(param_2);
+  *puVar1 = *(undefined4 *)(param_1 + 8);
   return;
 }
 
 
 // 825BCD50  Menu_InitItems  (ui/ui_shared.cpp:1250)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Menu_InitItems(UiContext *param_1,menuDef_t *param_2)
+void Menu_InitItems(undefined8 param_1,int param_2)
 
 {
-  uint uVar1;
-  itemDef_t *piVar2;
+  int iVar1;
+  uint *puVar2;
   uint *puVar3;
-  textScrollDef_s *ptVar4;
-  newsTickerDef_s *pnVar5;
+  undefined4 *puVar4;
+  undefined4 uVar5;
   int iVar6;
-  char *pcVar7;
+  int iVar7;
   int iVar8;
   int iVar9;
   double dVar10;
   
-  puVar3 = (uint *)__savegprlr_20(param_1);
+  puVar2 = (uint *)__savegprlr_20();
   iVar8 = 0;
-  if (0 < param_2->itemCount) {
+  if (0 < *(int *)(param_2 + 0xb4)) {
     iVar9 = 0;
     dVar10 = 0.0;
     do {
-      piVar2 = *(itemDef_t **)(iVar9 + (int)param_2->items);
-      if (piVar2->type == 0x14) {
-        if (3 < *puVar3) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x4ba,
-                          0,
-                          "dc->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                         );
+      iVar1 = *(int *)(iVar9 + *(int *)(param_2 + 0xb8));
+      if (*(int *)(iVar1 + 0x100) == 0x14) {
+        if (3 < *puVar2) {
+          MyAssertHandler(0xffffffff82170658,0x4ba,0,0xffffffff82170858,*puVar2,4);
         }
-        pnVar5 = Item_GetNewsTickerDef(piVar2);
-        uVar1 = *puVar3;
-        iVar6 = Sys_Milliseconds();
-        g_tickerInfo[uVar1].x = (float)dVar10;
-        g_tickerInfo[uVar1].lastTime = iVar6;
-        g_tickerInfo[uVar1].y = (piVar2->window).rect.h;
-        pcVar7 = NewsFeed_Get(pnVar5->feedId);
-        if (pcVar7 == (char *)0x0) {
-          if (piVar2->text == (char *)0x0) {
-            g_tickerInfo[uVar1].state = TICKER_STOPPED;
+        puVar4 = (undefined4 *)Item_GetNewsTickerDef(iVar1);
+        iVar7 = *puVar2 * 0x14;
+        uVar5 = Sys_Milliseconds();
+        *(float *)(&DAT_8400bd00 + iVar7) = (float)dVar10;
+        *(undefined4 *)(&DAT_8400bcf8 + iVar7) = uVar5;
+        *(undefined4 *)(&DAT_8400bd04 + iVar7) = *(undefined4 *)(iVar1 + 0x10);
+        iVar6 = NewsFeed_Get(*puVar4);
+        if (iVar6 == 0) {
+          if (*(int *)(iVar1 + 300) == 0) {
+            *(undefined4 *)(&DAT_8400bd08 + iVar7) = 0;
           }
         }
         else {
-          g_tickerInfo[uVar1].state = TICKER_MOVE_IN;
+          *(undefined4 *)(&DAT_8400bd08 + iVar7) = 1;
         }
       }
-      else if (piVar2->type == 0x15) {
-        ptVar4 = Item_GetTextScrollDef(piVar2);
-        ptVar4->startTime = puVar3[2];
+      else if (*(int *)(iVar1 + 0x100) == 0x15) {
+        puVar3 = (uint *)Item_GetTextScrollDef(iVar1);
+        *puVar3 = puVar2[2];
       }
       iVar8 = iVar8 + 1;
       iVar9 = iVar9 + 4;
-    } while (iVar8 < param_2->itemCount);
+    } while (iVar8 < *(int *)(param_2 + 0xb4));
   }
   __restgprlr_20();
   return;
@@ -1657,67 +1410,70 @@ void Menu_InitItems(UiContext *param_1,menuDef_t *param_2)
 
 // 825C9430  Menu_LoseFocusDueToOpen  (ui/ui_shared.cpp:1272)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menu_LoseFocusDueToOpen(UiContext *param_1,menuDef_t *param_2)
+void Menu_LoseFocusDueToOpen(undefined8 param_1,ulonglong param_2)
 
 {
-  LocalClientNum_t LVar1;
-  itemDef_t *piVar2;
-  int iVar3;
-  UiContext *pUVar4;
-  bool bVar5;
+  undefined4 uVar1;
+  uint uVar2;
+  uint *puVar3;
+  int iVar4;
+  int iVar5;
   bool bVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int iVar9;
+  undefined4 *puVar7;
+  char cVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  int iVar12;
+  int iVar13;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pUVar4 = (UiContext *)__savegprlr_19(param_1);
-  if (pUVar4 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x4fe,0,"%s"
-                   );
+  puVar7 = (undefined4 *)__savegprlr_19();
+  if (puVar7 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x4fe,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x4ff,0,"%s"
-                   );
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x4ff,0,0xffffffff82000f98,0xffffffff82058cb8);
   }
-  iVar3 = (int)uVar7;
-  bVar5 = Window_HasFocus(pUVar4->localClientNum,(windowDef_t *)(iVar3 + 4));
-  if (bVar5) {
-    LVar1 = pUVar4->localClientNum;
+  lVar11 = param_2 + 4;
+  cVar8 = Window_HasFocus(*puVar7,lVar11);
+  if (cVar8 != '\0') {
+    uVar1 = *puVar7;
     Sys_EnterUIOwnership();
-    Window_RemoveDynamicFlags(LVar1,(windowDef_t *)(iVar3 + 4),2);
+    Window_RemoveDynamicFlags(uVar1,lVar11,2);
     Sys_LeaveUIOwnership();
-    bVar5 = false;
-    iVar8 = 0;
-    if (0 < *(int *)(iVar3 + 0xb4)) {
-      iVar9 = 0;
+    iVar5 = (int)param_2;
+    bVar6 = false;
+    iVar12 = 0;
+    if (0 < *(int *)(iVar5 + 0xb4)) {
+      iVar13 = 0;
       do {
-        bVar6 = Window_HasFocus(pUVar4->localClientNum,
-                                *(windowDef_t **)(*(int *)(iVar3 + 0xb8) + iVar9));
-        if (bVar6) {
-          if (*(int *)(*(int *)(*(int *)(iVar3 + 0xb8) + iVar9) + 0x158) != 0) {
-            if ((uiscript_verbose->current).enabled != false) {
-              Com_Printf(0xd,
-                         "UISCRIPT - LoseFocusDueToOpen - Calling leaveFocus() - Item is \'%s\', parent menu is \'%s\'\n"
-                        );
+        cVar8 = Window_HasFocus(*puVar7,*(undefined4 *)(*(int *)(iVar5 + 0xb8) + iVar13));
+        if (cVar8 != '\0') {
+          puVar3 = *(uint **)(*(int *)(iVar5 + 0xb8) + iVar13);
+          if (puVar3[0x56] != 0) {
+            if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+              uVar10 = (ulonglong)*(uint *)lVar11;
+              if ((ulonglong)*(uint *)lVar11 == 0) {
+                uVar10 = 0xffffffff82170938;
+              }
+              uVar9 = 0xffffffff82170928;
+              if ((*(int *)(*(int *)(iVar5 + 0xb8) + iVar13) != 0) && (uVar2 = *puVar3, uVar2 != 0))
+              {
+                uVar9 = (ulonglong)uVar2;
+              }
+              Com_Printf(0xd,0xffffffff82173030,uVar9,uVar10);
             }
-            piVar2 = *(itemDef_t **)(*(int *)(iVar3 + 0xb8) + iVar9);
-            Item_HandleEvent(pUVar4,piVar2,piVar2->leaveFocus);
+            iVar4 = *(int *)(*(int *)(iVar5 + 0xb8) + iVar13);
+            Item_HandleEvent(puVar7,iVar4,*(undefined4 *)(iVar4 + 0x158));
           }
-          if (bVar5) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                            0x517,0,"%s");
+          if (bVar6) {
+            MyAssertHandler(0xffffffff82170658,0x517,0,0xffffffff82000f98,0xffffffff8217308c);
           }
-          bVar5 = true;
+          bVar6 = true;
         }
-        iVar8 = iVar8 + 1;
-        iVar9 = iVar9 + 4;
-      } while (iVar8 < *(int *)(iVar3 + 0xb4));
+        iVar12 = iVar12 + 1;
+        iVar13 = iVar13 + 4;
+      } while (iVar12 < *(int *)(iVar5 + 0xb4));
     }
   }
   __restgprlr_19();
@@ -1727,48 +1483,53 @@ void Menu_LoseFocusDueToOpen(UiContext *param_1,menuDef_t *param_2)
 
 // 825C95F0  Menu_CallOnFocusDueToOpen  (ui/ui_shared.cpp:1313)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Menu_CallOnFocusDueToOpen(UiContext *param_1,menuDef_t *param_2)
+void Menu_CallOnFocusDueToOpen(undefined8 param_1,int param_2)
 
 {
-  itemDef_t *piVar1;
-  bool bVar2;
-  UiContext *pUVar3;
+  uint uVar1;
+  uint *puVar2;
+  int iVar3;
   bool bVar4;
-  int iVar5;
-  int iVar6;
+  undefined4 *puVar5;
+  char cVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  int iVar9;
+  int iVar10;
   
-  pUVar3 = (UiContext *)__savegprlr_20(param_1);
-  bVar2 = false;
-  iVar5 = 0;
-  if (0 < param_2->itemCount) {
-    iVar6 = 0;
+  puVar5 = (undefined4 *)__savegprlr_20();
+  bVar4 = false;
+  iVar9 = 0;
+  if (0 < *(int *)(param_2 + 0xb4)) {
+    iVar10 = 0;
     do {
-      bVar4 = Window_HasFocus(pUVar3->localClientNum,*(windowDef_t **)(iVar6 + (int)param_2->items))
-      ;
-      if (bVar4) {
-        if (*(int *)(*(int *)(iVar6 + (int)param_2->items) + 0x150) != 0) {
-          if ((uiscript_verbose->current).enabled != false) {
-            Com_Printf(0xd,
-                       "UISCRIPT - OnFocusDueToOpen - Calling onFocus() - Item is \'%s\', parent menu is \'%s\'\n"
-                      );
+      cVar6 = Window_HasFocus(*puVar5,*(undefined4 *)(iVar10 + *(int *)(param_2 + 0xb8)));
+      if (cVar6 != '\0') {
+        puVar2 = *(uint **)(iVar10 + *(int *)(param_2 + 0xb8));
+        if (puVar2[0x54] != 0) {
+          if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+            uVar8 = (ulonglong)*(uint *)(param_2 + 4);
+            if ((ulonglong)*(uint *)(param_2 + 4) == 0) {
+              uVar8 = 0xffffffff82170938;
+            }
+            uVar7 = 0xffffffff82170928;
+            if ((*(int *)(iVar10 + *(int *)(param_2 + 0xb8)) != 0) && (uVar1 = *puVar2, uVar1 != 0))
+            {
+              uVar7 = (ulonglong)uVar1;
+            }
+            Com_Printf(0xd,0xffffffff82173098,uVar7,uVar8);
           }
-          piVar1 = *(itemDef_t **)(iVar6 + (int)param_2->items);
-          Item_HandleEvent(pUVar3,piVar1,piVar1->onFocus);
+          iVar3 = *(int *)(iVar10 + *(int *)(param_2 + 0xb8));
+          Item_HandleEvent(puVar5,iVar3,*(undefined4 *)(iVar3 + 0x150));
         }
-        if (bVar2) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x536,
-                          0,"%s");
+        if (bVar4) {
+          MyAssertHandler(0xffffffff82170658,0x536,0,0xffffffff82000f98,0xffffffff8217308c);
         }
-        bVar2 = true;
+        bVar4 = true;
       }
-      iVar5 = iVar5 + 1;
-      iVar6 = iVar6 + 4;
-    } while (iVar5 < param_2->itemCount);
+      iVar9 = iVar9 + 1;
+      iVar10 = iVar10 + 4;
+    } while (iVar9 < *(int *)(param_2 + 0xb4));
   }
   __restgprlr_20();
   return;
@@ -1777,37 +1538,34 @@ void Menu_CallOnFocusDueToOpen(UiContext *param_1,menuDef_t *param_2)
 
 // 825C9730  Menu_CallOnFocusDueToClose  (ui/ui_shared.cpp:1344)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Menu_CallOnFocusDueToClose(UiContext *param_1,menuDef_t *param_2)
+void Menu_CallOnFocusDueToClose(undefined8 param_1,ulonglong param_2)
 
 {
-  UiContext *pUVar1;
-  ulonglong uVar2;
-  menuDef_t *pmVar3;
-  itemDef_t iStack_200;
+  ulonglong uVar1;
+  int *piVar2;
+  ulonglong uVar3;
+  undefined1 auStack_200 [308];
+  int *local_cc;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pUVar1 = (UiContext *)__savegprlr_28(param_1);
-  if (pUVar1 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x543,0,"%s"
-                   );
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x543,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x544,0,"%s"
-                   );
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x544,0,0xffffffff82000f98,0xffffffff82058cb8);
   }
-  pmVar3 = (menuDef_t *)uVar2;
-  if (pmVar3->data->onFocusDueToClose != (MenuEventHandlerSet *)0x0) {
-    memset();
-    iStack_200.parent = pmVar3;
-    if ((uiscript_verbose->current).enabled != false) {
-      Com_Printf(0xd,"UISCRIPT - Calling onFocusDueToClose() - Menu is \'%s\'\n");
+  piVar2 = (int *)param_2;
+  if (*(int *)(*piVar2 + 0x28) != 0) {
+    memset(auStack_200,0,0x1d4);
+    local_cc = piVar2;
+    if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+      uVar3 = (ulonglong)(uint)piVar2[1];
+      if (uVar3 == 0) {
+        uVar3 = 0xffffffff82170938;
+      }
+      Com_Printf(0xd,0xffffffff821730f0,uVar3);
     }
-    Item_HandleEvent(pUVar1,&iStack_200,pmVar3->data->onFocusDueToClose);
+    Item_HandleEvent(uVar1,auStack_200,*(undefined4 *)(*piVar2 + 0x28));
   }
   __restgprlr_28();
   return;
@@ -1816,47 +1574,34 @@ void Menu_CallOnFocusDueToClose(UiContext *param_1,menuDef_t *param_2)
 
 // 825C9818  Menu_GainFocusDueToClose  (ui/ui_shared.cpp:1365)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menu_GainFocusDueToClose(UiContext *param_1,menuDef_t *param_2,int param_3)
+void Menu_GainFocusDueToClose(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
-  UiContext *pUVar1;
+  undefined4 *puVar1;
   int iVar2;
-  bool bVar4;
-  ulonglong uVar5;
-  menuDef_t *pmVar3;
+  char cVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pUVar1 = (UiContext *)__savegprlr_26(param_1);
-  if (pUVar1 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x556,0,"%s"
-                   );
+  puVar1 = (undefined4 *)__savegprlr_26();
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x556,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x557,0,"%s"
-                   );
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x557,0,0xffffffff82000f98,0xffffffff82058cb8);
   }
-  pmVar3 = (menuDef_t *)uVar5;
-  iVar2 = Menu_CanHaveFocus(pmVar3);
+  iVar2 = Menu_CanHaveFocus(param_2);
   if (iVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x559,0,"%s"
-                   );
+    MyAssertHandler(0xffffffff82170658,0x559,0,0xffffffff82000f98,0xffffffff82173160);
   }
-  bVar4 = Window_HasFocus(pUVar1->localClientNum,&pmVar3->window);
-  if (bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x55a,0,"%s"
-                   );
+  cVar3 = Window_HasFocus(*puVar1,param_2 + 4);
+  if (cVar3 != '\0') {
+    MyAssertHandler(0xffffffff82170658,0x55a,0,0xffffffff82000f98,0xffffffff82173128);
   }
-  Window_AddDynamicFlags(pUVar1->localClientNum,&pmVar3->window,2);
+  Window_AddDynamicFlags(*puVar1,param_2 + 4,2);
   if (param_3 != 0) {
-    Menu_InitItems(pUVar1,pmVar3);
+    Menu_InitItems(puVar1,param_2);
   }
-  Menu_CallOnFocusDueToClose(pUVar1,pmVar3);
-  Menu_CallOnFocusDueToOpen(pUVar1,pmVar3);
+  Menu_CallOnFocusDueToClose(puVar1,param_2);
+  Menu_CallOnFocusDueToOpen(puVar1,param_2);
   __restgprlr_26();
   return;
 }
@@ -1864,35 +1609,32 @@ void Menu_GainFocusDueToClose(UiContext *param_1,menuDef_t *param_2,int param_3)
 
 // 825C9930  Menu_RunCloseScript  (ui/ui_shared.cpp:1382)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Menu_RunCloseScript(UiContext *param_1,menuDef_t *param_2)
+void Menu_RunCloseScript(undefined8 param_1,ulonglong param_2)
 
 {
-  menuDef_t *pmVar1;
-  UiContext *pUVar2;
-  int iVar3;
+  undefined4 *puVar1;
+  int iVar2;
+  int *piVar3;
   ulonglong uVar4;
-  itemDef_t iStack_200;
+  undefined1 auStack_200 [308];
+  int *local_cc;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_29(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x567,0,"%s"
-                   );
+  puVar1 = (undefined4 *)__savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x567,0,0xffffffff82000f98,0xffffffff82058cb8);
   }
-  pmVar1 = (menuDef_t *)uVar4;
-  iVar3 = Window_IsVisible(pUVar2->localClientNum,&pmVar1->window);
-  if ((iVar3 != 0) && (pmVar1->data->onClose != (MenuEventHandlerSet *)0x0)) {
-    memset();
-    iStack_200.parent = pmVar1;
-    if ((uiscript_verbose->current).enabled != false) {
-      Com_Printf(0xd,"UISCRIPT - Calling onClose() - Menu is \'%s\'\n");
+  iVar2 = Window_IsVisible(*puVar1,param_2 + 4);
+  if ((iVar2 != 0) && (piVar3 = (int *)param_2, *(int *)(*piVar3 + 0x20) != 0)) {
+    memset(auStack_200,0,0x1d4);
+    local_cc = piVar3;
+    if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+      uVar4 = (ulonglong)*(uint *)(param_2 + 4);
+      if (uVar4 == 0) {
+        uVar4 = 0xffffffff82170938;
+      }
+      Com_Printf(0xd,0xffffffff8217317c,uVar4);
     }
-    Item_HandleEvent(pUVar2,&iStack_200,pmVar1->data->onClose);
+    Item_HandleEvent(puVar1,auStack_200,*(undefined4 *)(*piVar3 + 0x20));
   }
   __restgprlr_29();
   return;
@@ -1901,52 +1643,42 @@ void Menu_RunCloseScript(UiContext *param_1,menuDef_t *param_2)
 
 // 825C9A08  Menu_FocusNext  (ui/ui_shared.cpp:1402)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menu_FocusNext(UiContext *param_1)
+void Menu_FocusNext(void)
 
 {
-  menuDef_t *pmVar1;
-  LocalClientNum_t LVar2;
-  UiContext *pUVar3;
-  ulonglong uVar4;
-  int iVar5;
+  undefined4 *puVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  ulonglong uVar5;
   longlong lVar6;
   longlong lVar7;
   
-  uVar4 = __savegprlr_22(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x57e,0,"%s"
-                   );
+  uVar3 = __savegprlr_22();
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x57e,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  pUVar3 = (UiContext *)uVar4;
-  lVar7 = (ulonglong)(uint)pUVar3->openMenuCount - 1;
+  uVar5 = (ulonglong)((uint *)uVar3)[0x29e];
+  lVar7 = uVar5 - 1;
   if (lVar7 < 0) {
 LAB_825c9b14:
     __restgprlr_22();
     return;
   }
-  lVar6 = ((ulonglong)(uint)pUVar3->openMenuCount + 0x28d & 0x3fffffff) * 4 + uVar4;
+  lVar6 = (uVar5 + 0x28d & 0x3fffffff) * 4 + uVar3;
   do {
-    pmVar1 = (menuDef_t *)*(undefined4 *)lVar6;
-    iVar5 = Menu_CanHaveFocus(pmVar1);
-    if (iVar5 != 0) {
-      LVar2 = pUVar3->localClientNum;
-      if (&pmVar1->window == (windowDef_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x54,
-                        0,"%s");
+    puVar1 = (undefined4 *)*(int *)lVar6;
+    iVar4 = Menu_CanHaveFocus(puVar1);
+    if (iVar4 != 0) {
+      uVar2 = *(uint *)uVar3;
+      if (puVar1 + 1 == (undefined4 *)0x0) {
+        MyAssertHandler(0xffffffff82170618,0x54,0,0xffffffff82000f98,0xffffffff8200fdb4);
       }
-      if (LOCAL_CLIENT_3 < LVar2) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,
-                        0,
-                        "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                       );
+      if (3 < uVar2) {
+        MyAssertHandler(0xffffffff82170618,0x21,0,0xffffffff821649e0,uVar2,4);
       }
-      if (((pmVar1->window).dynamicFlags[LVar2] & 4U) != 0) {
-        Menu_GainFocusDueToClose(pUVar3,pmVar1,pmVar1->data->fullScreen);
+      if (((puVar1 + 1)[uVar2 + 0x12] & 4) != 0) {
+        Menu_GainFocusDueToClose(uVar3,puVar1,*(undefined4 *)*puVar1);
         goto LAB_825c9b14;
       }
     }
@@ -1962,27 +1694,21 @@ LAB_825c9b14:
 
 // 825BCE78  Menus_EndEdit  (ui/ui_shared.cpp:1421)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_EndEdit(menuDef_t *param_1)
+void Menus_EndEdit(void)
 
 {
-  menuDef_t *pmVar1;
+  int iVar1;
   
-  pmVar1 = (menuDef_t *)__savegprlr_27(param_1);
-  if (pmVar1 == (menuDef_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x58e,0,"%s"
-                   );
+  iVar1 = __savegprlr_27();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82170658,0x58e,0,0xffffffff82000f98,0xffffffff82058cb8);
   }
-  if (g_editingField != 0) {
-    if (g_editItem == (itemDef_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x592,0,
-                      "%s");
+  if (DAT_8400c164 != 0) {
+    if (DAT_8400c16c == 0) {
+      MyAssertHandler(0xffffffff82170658,0x592,0,0xffffffff82000f98,0xffffffff821708a8);
     }
-    if (g_editItem->parent == pmVar1) {
-      g_editingField = 0;
+    if (*(int *)(DAT_8400c16c + 0x134) == iVar1) {
+      DAT_8400c164 = 0;
     }
   }
   __restgprlr_27();
@@ -1992,69 +1718,59 @@ void Menus_EndEdit(menuDef_t *param_1)
 
 // 825C9B20  Menus_ErrorCleanup  (ui/ui_shared.cpp:1434)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_ErrorCleanup(UiContext *param_1)
+void Menus_ErrorCleanup(void)
 
 {
-  menuDef_t *pmVar1;
-  LocalClientNum_t LVar2;
+  uint uVar1;
+  uint uVar2;
   bool bVar3;
-  UiContext *pUVar4;
-  bool bVar5;
+  uint *puVar4;
+  char cVar5;
   int iVar6;
-  menuDef_t **ppmVar7;
-  windowDef_t *pwVar8;
+  uint *puVar7;
+  int iVar8;
   
-  pUVar4 = (UiContext *)__savegprlr_21(param_1);
-  if (pUVar4 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x59f,0,"%s"
-                   );
+  puVar4 = (uint *)__savegprlr_21();
+  if (puVar4 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x59f,0,0xffffffff82000f98,0xffffffff8216783c);
   }
   bVar3 = false;
   iVar6 = 0;
-  if (0 < pUVar4->openMenuCount) {
-    ppmVar7 = pUVar4->menuStack;
+  if (0 < (int)puVar4[0x29e]) {
+    puVar7 = puVar4 + 0x28e;
     do {
-      pmVar1 = *ppmVar7;
-      LVar2 = pUVar4->localClientNum;
-      pwVar8 = &pmVar1->window;
-      if (pwVar8 == (windowDef_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x5b,
-                        0,"%s");
+      uVar1 = *puVar7;
+      uVar2 = *puVar4;
+      iVar8 = uVar1 + 4;
+      if (iVar8 == 0) {
+        MyAssertHandler(0xffffffff82170618,0x5b,0,0xffffffff82000f98,0xffffffff8200fdb4);
       }
-      if (LOCAL_CLIENT_3 < LVar2) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,
-                        0,
-                        "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                       );
+      if (3 < uVar2) {
+        MyAssertHandler(0xffffffff82170618,0x21,0,0xffffffff821649e0,uVar2,4);
       }
-      if ((pwVar8->dynamicFlags[LVar2] & 0x80U) != 0) {
+      if ((*(uint *)((uVar2 + 0x12) * 4 + iVar8) & 0x80) != 0) {
         if (bVar3) {
 LAB_825c9c1c:
           bVar3 = true;
         }
         else {
-          bVar5 = Window_HasFocus(pUVar4->localClientNum,pwVar8);
+          cVar5 = Window_HasFocus(*puVar4,iVar8);
           bVar3 = false;
-          if (bVar5) goto LAB_825c9c1c;
+          if (cVar5 != '\0') goto LAB_825c9c1c;
         }
-        LVar2 = pUVar4->localClientNum;
+        uVar2 = *puVar4;
         Sys_EnterUIOwnership();
-        Window_RemoveDynamicFlags(LVar2,pwVar8,0x86);
+        Window_RemoveDynamicFlags(uVar2,iVar8,0x86);
         Sys_LeaveUIOwnership();
-        Menus_RemoveFromOpenStack(pUVar4,pmVar1);
-        Menus_EndEdit(pmVar1);
+        Menus_RemoveFromOpenStack(puVar4,uVar1);
+        Menus_EndEdit(uVar1);
       }
       iVar6 = iVar6 + 1;
-      ppmVar7 = ppmVar7 + 1;
-    } while (iVar6 < pUVar4->openMenuCount);
+      puVar7 = puVar7 + 1;
+    } while (iVar6 < (int)puVar4[0x29e]);
   }
   if (bVar3) {
-    Menu_FocusNext(pUVar4);
+    Menu_FocusNext(puVar4);
   }
   __restgprlr_21();
   return;
@@ -2063,123 +1779,107 @@ LAB_825c9c1c:
 
 // 825C9C88  Menus_ForceClose  (ui/ui_shared.cpp:1463)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_ForceClose(UiContext *param_1,menuDef_t *param_2)
+void Menus_ForceClose(undefined8 param_1,ulonglong param_2)
 
 {
-  Statement_s *pSVar1;
-  LocalClientNum_t LVar2;
-  menuDef_t *pmVar3;
-  UiContext *pUVar4;
-  bool bVar9;
+  undefined4 uVar1;
+  uint uVar2;
+  undefined4 *puVar4;
+  char cVar7;
   int iVar5;
+  undefined8 uVar3;
   int iVar6;
-  char *pcVar7;
-  int iVar8;
-  ulonglong uVar10;
-  menuDef_t *pmVar11;
-  windowDef_t *pwVar12;
-  int iVar13;
-  menuDef_t **ppmVar14;
-  windowDef_t *pwVar15;
+  undefined8 uVar8;
+  longlong lVar9;
+  longlong lVar10;
+  uint *puVar11;
+  int *piVar12;
+  longlong lVar13;
   
-  uVar10 = (ulonglong)(int)param_2;
-  pUVar4 = (UiContext *)__savegprlr_19(param_1);
-  if (pUVar4 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x5c1,0,"%s"
-                   );
+  puVar4 = (undefined4 *)__savegprlr_19();
+  if (puVar4 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x5c1,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar10 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x5c2,0,"%s"
-                   );
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x5c2,0,0xffffffff82000f98,0xffffffff82058cb8);
   }
-  iVar5 = 0;
-  bVar9 = Sys_IsMainThread();
-  if (bVar9) {
-    iVar5 = R_PopRemoteScreenUpdate();
+  uVar8 = 0;
+  cVar7 = Sys_IsMainThread();
+  if (cVar7 != '\0') {
+    uVar8 = R_PopRemoteScreenUpdate();
   }
-  pmVar11 = (menuDef_t *)uVar10;
-  iVar6 = Menus_MenuIsInStack(pUVar4,pmVar11);
-  if (iVar6 != 0) {
-    pwVar12 = &pmVar11->window;
-    iVar6 = Window_IsClosing(pUVar4->localClientNum,pwVar12);
-    if (iVar6 == 0) {
-      Window_AddDynamicFlags(pUVar4->localClientNum,pwVar12,0x80);
-      Menu_RunCloseScript(pUVar4,pmVar11);
-      pSVar1 = pmVar11->data->closeSoundExp;
-      if (pSVar1 != (Statement_s *)0x0) {
-        pcVar7 = GetExpressionResultString(pUVar4->localClientNum,pSVar1);
-        SND_PlayLocalSoundAliasByName(pUVar4->localClientNum,pcVar7,SASYS_UI);
+  iVar5 = Menus_MenuIsInStack(puVar4,param_2);
+  if (iVar5 != 0) {
+    lVar9 = param_2 + 4;
+    iVar5 = Window_IsClosing(*puVar4,lVar9);
+    if (iVar5 == 0) {
+      Window_AddDynamicFlags(*puVar4,lVar9,0x80);
+      Menu_RunCloseScript(puVar4,param_2);
+      if (*(int *)(*(int *)param_2 + 0x60) != 0) {
+        uVar3 = GetExpressionResultString(*puVar4);
+        SND_PlayLocalSoundAliasByName(*puVar4,uVar3,0);
       }
-      bVar9 = Window_HasFocus(pUVar4->localClientNum,pwVar12);
-      LVar2 = pUVar4->localClientNum;
+      cVar7 = Window_HasFocus(*puVar4,lVar9);
+      uVar1 = *puVar4;
       Sys_EnterUIOwnership();
-      Window_RemoveDynamicFlags(LVar2,pwVar12,0x82);
+      Window_RemoveDynamicFlags(uVar1,lVar9,0x82);
       Sys_LeaveUIOwnership();
-      Menus_RemoveFromOpenStack(pUVar4,pmVar11);
-      if (bVar9) {
-        Menu_FocusNext(pUVar4);
+      Menus_RemoveFromOpenStack(puVar4,param_2);
+      if (cVar7 != '\0') {
+        Menu_FocusNext(puVar4);
       }
-      Menus_EndEdit(pmVar11);
-      if ((bVar9) && (0 < pUVar4->openMenuCount)) {
-        ppmVar14 = pUVar4->menuStack;
-        iVar6 = 0;
-        iVar13 = 0;
+      Menus_EndEdit(param_2);
+      if ((cVar7 != '\0') && (0 < (int)puVar4[0x29e])) {
+        puVar11 = puVar4 + 0x28e;
+        lVar10 = 0;
+        iVar5 = 0;
         do {
-          pmVar3 = *ppmVar14;
-          pwVar15 = &pmVar3->window;
-          iVar8 = Window_IsVisible(pUVar4->localClientNum,pwVar15);
-          if ((iVar8 != 0) && (bVar9 = Window_HasFocus(pUVar4->localClientNum,pwVar15), bVar9))
+          uVar2 = *puVar11;
+          lVar13 = (ulonglong)uVar2 + 4;
+          iVar6 = Window_IsVisible(*puVar4,lVar13);
+          if ((iVar6 != 0) && (cVar7 = Window_HasFocus(*puVar4,lVar13), cVar7 != '\0'))
           goto LAB_825c9ee4;
-          iVar8 = Menu_CanHaveFocus(pmVar3);
-          if (iVar8 != 0) {
-            iVar6 = iVar6 + 1;
+          iVar6 = Menu_CanHaveFocus((ulonglong)uVar2);
+          if (iVar6 != 0) {
+            lVar10 = lVar10 + 1;
           }
-          iVar13 = iVar13 + 1;
-          ppmVar14 = ppmVar14 + 1;
-        } while (iVar13 < pUVar4->openMenuCount);
-        if (0 < iVar6) {
-          if (pwVar12->name == (char *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                            0x5fc,0,"%s");
+          iVar5 = iVar5 + 1;
+          puVar11 = puVar11 + 1;
+        } while (iVar5 < (int)puVar4[0x29e]);
+        if (0 < (int)lVar10) {
+          if (*(int *)lVar9 == 0) {
+            MyAssertHandler(0xffffffff82170658,0x5fc,0,0xffffffff82000f98,0xffffffff821732a0);
           }
-          Com_PrintWarning(0xd,
-                           "WARNING: No menu has focus after closing %s. There are %d candidates.\n Active menus: \n"
-                          );
-          iVar6 = 0;
-          if (0 < pUVar4->openMenuCount) {
+          Com_PrintWarning(0xd,0xffffffff82173248,*(int *)lVar9,lVar10);
+          lVar9 = 0;
+          if (0 < (int)puVar4[0x29e]) {
+            piVar12 = puVar4 + 0x28d;
             do {
-              Com_PrintWarning(0xd,"  %d:  %s\n");
-              iVar6 = iVar6 + 1;
-            } while (iVar6 < pUVar4->openMenuCount);
+              piVar12 = piVar12 + 1;
+              Com_PrintWarning(0xd,0xffffffff8217323c,lVar9,*(undefined4 *)(*piVar12 + 4));
+              lVar9 = lVar9 + 1;
+            } while ((int)lVar9 < (int)puVar4[0x29e]);
           }
         }
       }
     }
   }
 LAB_825c9ee4:
-  pwVar12 = &pmVar11->window;
-  iVar6 = Window_IsClosing(pUVar4->localClientNum,pwVar12);
-  if (iVar6 != 0) {
-    if (pwVar12->name == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x609,0,
-                      "%s");
+  lVar9 = param_2 + 4;
+  iVar5 = Window_IsClosing(*puVar4,lVar9);
+  if (iVar5 != 0) {
+    if (*(int *)lVar9 == 0) {
+      MyAssertHandler(0xffffffff82170658,0x609,0,0xffffffff82000f98,0xffffffff821732a0);
     }
-    Com_PrintWarning(0xd,
-                     "WARNING: ForceClose/onClose infinite loop detected for menu %s. Please check menu script to make sure there is no loop in the close logic.\n"
-                    );
+    Com_PrintWarning(0xd,0xffffffff821731b0,*(int *)lVar9);
   }
-  LVar2 = pUVar4->localClientNum;
+  uVar1 = *puVar4;
   Sys_EnterUIOwnership();
-  Window_RemoveDynamicFlags(LVar2,pwVar12,6);
+  Window_RemoveDynamicFlags(uVar1,lVar9,6);
   Sys_LeaveUIOwnership();
-  bVar9 = Sys_IsMainThread();
-  if (bVar9) {
-    R_PushRemoteScreenUpdate(iVar5);
+  cVar7 = Sys_IsMainThread();
+  if (cVar7 != '\0') {
+    R_PushRemoteScreenUpdate(uVar8);
   }
   __restgprlr_19();
   return;
@@ -2188,50 +1888,58 @@ LAB_825c9ee4:
 
 // 825C9F70  Menus_CloseRequest  (ui/ui_shared.cpp:1562)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Menus_CloseRequest(UiContext *param_1,menuDef_t *param_2)
+void Menus_CloseRequest(undefined8 param_1,longlong param_2)
 
 {
-  LocalClientNum_t LVar1;
-  UiContext *pUVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
   int iVar3;
-  bool bVar4;
-  itemDef_t iStack_200;
+  char cVar4;
+  int *piVar5;
+  ulonglong uVar6;
+  undefined8 uVar7;
+  longlong lVar8;
+  undefined1 auStack_200 [308];
+  int *local_cc;
   
-  pUVar2 = (UiContext *)__savegprlr_28(param_1);
-  iVar3 = Window_IsVisible(pUVar2->localClientNum,&param_2->window);
-  if ((iVar3 == 0) || (param_2->data->onCloseRequest == (MenuEventHandlerSet *)0x0)) {
-    Menus_ForceClose(pUVar2,param_2);
+  puVar2 = (undefined4 *)__savegprlr_28();
+  lVar8 = param_2 + 4;
+  iVar3 = Window_IsVisible(*puVar2,lVar8);
+  if (iVar3 != 0) {
+    piVar5 = (int *)param_2;
+    if (*(int *)(*piVar5 + 0x1c) != 0) {
+      uVar7 = 0;
+      cVar4 = Sys_IsMainThread();
+      if (cVar4 != '\0') {
+        uVar7 = R_PopRemoteScreenUpdate();
+      }
+      memset(auStack_200,0,0x1d4);
+      local_cc = piVar5;
+      Transition_ClearTransitions(*puVar2,param_2);
+      if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+        uVar6 = (ulonglong)*(uint *)lVar8;
+        if (uVar6 == 0) {
+          uVar6 = 0xffffffff82170938;
+        }
+        Com_Printf(0xd,0xffffffff821732b4,uVar6);
+      }
+      Item_HandleEvent(puVar2,auStack_200,*(undefined4 *)(*piVar5 + 0x1c));
+      Transition_CloseWhenDone(*puVar2,param_2);
+      uVar1 = *puVar2;
+      Sys_EnterUIOwnership();
+      Window_RemoveDynamicFlags(uVar1,lVar8,2);
+      Sys_LeaveUIOwnership();
+      cVar4 = Sys_IsMainThread();
+      if (cVar4 != '\0') {
+        R_PushRemoteScreenUpdate(uVar7);
+        __restgprlr_28();
+        return;
+      }
+      goto LAB_825ca08c;
+    }
   }
-  else {
-    iVar3 = 0;
-    bVar4 = Sys_IsMainThread();
-    if (bVar4) {
-      iVar3 = R_PopRemoteScreenUpdate();
-    }
-    memset();
-    iStack_200.parent = param_2;
-    Transition_ClearTransitions(pUVar2->localClientNum,param_2);
-    if ((uiscript_verbose->current).enabled != false) {
-      Com_Printf(0xd,"UISCRIPT - Calling onCloseRequest() - Menu is \'%s\'\n");
-    }
-    Item_HandleEvent(pUVar2,&iStack_200,param_2->data->onCloseRequest);
-    Transition_CloseWhenDone(pUVar2->localClientNum,param_2);
-    LVar1 = pUVar2->localClientNum;
-    Sys_EnterUIOwnership();
-    Window_RemoveDynamicFlags(LVar1,&param_2->window,2);
-    Sys_LeaveUIOwnership();
-    bVar4 = Sys_IsMainThread();
-    if (bVar4) {
-      R_PushRemoteScreenUpdate(iVar3);
-      __restgprlr_28();
-      return;
-    }
-  }
+  Menus_ForceClose(puVar2,param_2);
+LAB_825ca08c:
   __restgprlr_28();
   return;
 }
@@ -2239,19 +1947,14 @@ void Menus_CloseRequest(UiContext *param_1,menuDef_t *param_2)
 
 // 825CA098  Menus_ForceCloseByName  (ui/ui_shared.cpp:1599)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_ForceCloseByName(UiContext *param_1,char *param_2)
+void Menus_ForceCloseByName(undefined8 param_1)
 
 {
-  menuDef_t *pmVar1;
+  ulonglong uVar1;
   
-  pmVar1 = Menus_FindByName(param_1,param_2);
-  if (pmVar1 != (menuDef_t *)0x0) {
-    Menus_ForceClose(param_1,pmVar1);
+  uVar1 = Menus_FindByName();
+  if ((uVar1 & 0xffffffff) != 0) {
+    Menus_ForceClose(param_1,uVar1);
   }
   return;
 }
@@ -2259,19 +1962,14 @@ void Menus_ForceCloseByName(UiContext *param_1,char *param_2)
 
 // 825CA0D8  Menus_CloseByName  (ui/ui_shared.cpp:1609)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_CloseByName(UiContext *param_1,char *param_2)
+void Menus_CloseByName(undefined8 param_1)
 
 {
-  menuDef_t *pmVar1;
+  ulonglong uVar1;
   
-  pmVar1 = Menus_FindByName(param_1,param_2);
-  if (pmVar1 != (menuDef_t *)0x0) {
-    Menus_CloseRequest(param_1,pmVar1);
+  uVar1 = Menus_FindByName();
+  if ((uVar1 & 0xffffffff) != 0) {
+    Menus_CloseRequest(param_1,uVar1);
   }
   return;
 }
@@ -2279,35 +1977,32 @@ void Menus_CloseByName(UiContext *param_1,char *param_2)
 
 // 825CA118  Menus_Escape  (ui/ui_shared.cpp:1618)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_Escape(UiContext *param_1,menuDef_t *param_2)
+void Menus_Escape(undefined8 param_1,ulonglong param_2)
 
 {
-  menuDef_t *pmVar1;
-  UiContext *pUVar2;
-  int iVar3;
+  undefined4 *puVar1;
+  int iVar2;
+  int *piVar3;
   ulonglong uVar4;
-  itemDef_t iStack_200;
+  undefined1 auStack_200 [308];
+  int *local_cc;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_29(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x653,0,"%s"
-                   );
+  puVar1 = (undefined4 *)__savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x653,0,0xffffffff82000f98,0xffffffff82058cb8);
   }
-  pmVar1 = (menuDef_t *)uVar4;
-  iVar3 = Window_IsVisible(pUVar2->localClientNum,&pmVar1->window);
-  if ((iVar3 != 0) && (pmVar1->data->onESC != (MenuEventHandlerSet *)0x0)) {
-    memset();
-    iStack_200.parent = pmVar1;
-    if ((uiscript_verbose->current).enabled != false) {
-      Com_Printf(0xd,"UISCRIPT - Calling onESC() - Menu is \'%s\'\n");
+  iVar2 = Window_IsVisible(*puVar1,param_2 + 4);
+  if ((iVar2 != 0) && (piVar3 = (int *)param_2, *(int *)(*piVar3 + 0x24) != 0)) {
+    memset(auStack_200,0,0x1d4);
+    local_cc = piVar3;
+    if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+      uVar4 = (ulonglong)*(uint *)(param_2 + 4);
+      if (uVar4 == 0) {
+        uVar4 = 0xffffffff82170938;
+      }
+      Com_Printf(0xd,0xffffffff821732e8,uVar4);
     }
-    Item_HandleEvent(pUVar2,&iStack_200,pmVar1->data->onESC);
+    Item_HandleEvent(puVar1,auStack_200,*(undefined4 *)(*piVar3 + 0x24));
   }
   __restgprlr_29();
   return;
@@ -2316,19 +2011,14 @@ void Menus_Escape(UiContext *param_1,menuDef_t *param_2)
 
 // 825CA1F0  Menus_EscByName  (ui/ui_shared.cpp:1637)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_EscByName(UiContext *param_1,char *param_2)
+void Menus_EscByName(undefined8 param_1)
 
 {
-  menuDef_t *pmVar1;
+  ulonglong uVar1;
   
-  pmVar1 = Menus_FindByName(param_1,param_2);
-  if (pmVar1 != (menuDef_t *)0x0) {
-    Menus_Escape(param_1,pmVar1);
+  uVar1 = Menus_FindByName();
+  if ((uVar1 & 0xffffffff) != 0) {
+    Menus_Escape(param_1,uVar1);
   }
   return;
 }
@@ -2336,44 +2026,30 @@ void Menus_EscByName(UiContext *param_1,char *param_2)
 
 // 825CEFF0  Menus_SetFocusToItem  (ui/ui_shared.cpp:1646)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_SetFocusToItem(UiContext *param_1,char *param_2,char *param_3)
+void Menus_SetFocusToItem(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  UiContext *pUVar1;
-  menuDef_t *pmVar2;
-  itemDef_t *piVar3;
-  int iVar4;
-  char *pcVar5;
-  double extraout_f1;
-  double dVar6;
-  double in_f2;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int iVar3;
   
-  pUVar1 = (UiContext *)__savegprlr_28(param_1);
-  dVar6 = extraout_f1;
-  pcVar5 = param_3;
-  pmVar2 = Menus_FindByName(pUVar1,param_2);
-  if (pmVar2 == (menuDef_t *)0x0) {
-    Com_Printf(0xd,"setFocusToItem: could not find menu named \'%s\'\n");
+  uVar1 = __savegprlr_28();
+  uVar2 = Menus_FindByName();
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0xd,0xffffffff82173b44,param_2);
     __restgprlr_28();
     return;
   }
-  piVar3 = Menu_FindItemByName(pmVar2,param_3);
-  if (piVar3 == (itemDef_t *)0x0) {
-    Com_Printf(0xd,"setFocusToItem: could not find widget named \'%s\' in menu \'%s\'\n");
+  uVar2 = Menu_FindItemByName(uVar2,param_3);
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0xd,0xffffffff82173b04,param_3,param_2);
     __restgprlr_28();
     return;
   }
-  Window_GetRect(&piVar3->window);
-  iVar4 = Item_SetFocus(pUVar1,piVar3,(float)dVar6,(float)in_f2,(ItemFocusReason)pcVar5);
-  if (iVar4 == 0) {
-    Com_PrintError(0xd,
-                   "setFocus: error focusing widget \'%s\' (widget was found but could not accept focus)\n"
-                  );
+  Window_GetRect(uVar2);
+  iVar3 = Item_SetFocus(uVar1,uVar2);
+  if (iVar3 == 0) {
+    Com_PrintError(0xd,0xffffffff82173ab0,param_3);
   }
   __restgprlr_28();
   return;
@@ -2382,82 +2058,78 @@ void Menus_SetFocusToItem(UiContext *param_1,char *param_2,char *param_3)
 
 // 825CA230  Menus_CloseAll  (ui/ui_shared.cpp:1677)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_CloseAll(UiContext *param_1)
+void Menus_CloseAll(void)
 
 {
-  menuDef_t *pmVar1;
-  LocalClientNum_t LVar2;
-  UiContext *pUVar3;
-  bool bVar6;
-  int iVar4;
-  int iVar5;
+  int *piVar1;
+  uint uVar2;
+  uint *puVar3;
+  char cVar4;
+  ulonglong uVar5;
+  undefined8 uVar6;
   int iVar7;
-  menuDef_t **ppmVar8;
-  windowDef_t *pwVar9;
-  itemDef_t iStack_250;
+  uint *puVar8;
+  uint *puVar9;
+  undefined8 uVar10;
+  undefined1 auStack_250 [308];
+  int *local_11c;
   
-  pUVar3 = (UiContext *)__savegprlr_18(param_1);
-  iVar4 = 0;
-  bVar6 = Sys_IsMainThread();
-  if (bVar6) {
-    iVar4 = R_PopRemoteScreenUpdate();
+  puVar3 = (uint *)__savegprlr_18();
+  uVar6 = 0;
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 != '\0') {
+    uVar6 = R_PopRemoteScreenUpdate();
   }
   iVar7 = 0;
-  if (0 < pUVar3->menuCount) {
-    ppmVar8 = pUVar3->Menus;
+  if (0 < (int)puVar3[0x28d]) {
+    puVar8 = puVar3 + 0xd;
     do {
-      pmVar1 = *ppmVar8;
-      LVar2 = pUVar3->localClientNum;
-      pwVar9 = &pmVar1->window;
-      if (pwVar9 == (windowDef_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x54,
-                        0,"%s");
+      piVar1 = (int *)*puVar8;
+      uVar2 = *puVar3;
+      puVar9 = (uint *)(piVar1 + 1);
+      if (puVar9 == (uint *)0x0) {
+        MyAssertHandler(0xffffffff82170618,0x54,0,0xffffffff82000f98,0xffffffff8200fdb4);
       }
-      if (LOCAL_CLIENT_3 < LVar2) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,
-                        0,
-                        "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                       );
+      if (3 < uVar2) {
+        MyAssertHandler(0xffffffff82170618,0x21,0,0xffffffff821649e0,uVar2,4);
       }
-      if (((pwVar9->dynamicFlags[LVar2] & 4U) == 0) ||
-         (pmVar1->data->onCloseRequest == (MenuEventHandlerSet *)0x0)) {
-        Menus_ForceClose(pUVar3,pmVar1);
+      if (((puVar9[uVar2 + 0x12] & 4) == 0) || (*(int *)(*piVar1 + 0x1c) == 0)) {
+        Menus_ForceClose(puVar3,piVar1);
       }
       else {
-        iVar5 = 0;
-        bVar6 = Sys_IsMainThread();
-        if (bVar6) {
-          iVar5 = R_PopRemoteScreenUpdate();
+        uVar10 = 0;
+        cVar4 = Sys_IsMainThread();
+        if (cVar4 != '\0') {
+          uVar10 = R_PopRemoteScreenUpdate();
         }
-        memset();
-        iStack_250.parent = pmVar1;
-        Transition_ClearTransitions(pUVar3->localClientNum,pmVar1);
-        if ((uiscript_verbose->current).enabled != false) {
-          Com_Printf(0xd,"UISCRIPT - Calling onCloseRequest() - Menu is \'%s\'\n");
+        memset(auStack_250,0,0x1d4);
+        local_11c = piVar1;
+        Transition_ClearTransitions(*puVar3,piVar1);
+        if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+          uVar5 = (ulonglong)*puVar9;
+          if ((ulonglong)*puVar9 == 0) {
+            uVar5 = 0xffffffff82170938;
+          }
+          Com_Printf(0xd,0xffffffff821732b4,uVar5);
         }
-        Item_HandleEvent(pUVar3,&iStack_250,pmVar1->data->onCloseRequest);
-        Transition_CloseWhenDone(pUVar3->localClientNum,pmVar1);
-        LVar2 = pUVar3->localClientNum;
+        Item_HandleEvent(puVar3,auStack_250,*(undefined4 *)(*piVar1 + 0x1c));
+        Transition_CloseWhenDone(*puVar3,piVar1);
+        uVar2 = *puVar3;
         Sys_EnterUIOwnership();
-        Window_RemoveDynamicFlags(LVar2,pwVar9,2);
+        Window_RemoveDynamicFlags(uVar2,puVar9,2);
         Sys_LeaveUIOwnership();
-        bVar6 = Sys_IsMainThread();
-        if (bVar6) {
-          R_PushRemoteScreenUpdate(iVar5);
+        cVar4 = Sys_IsMainThread();
+        if (cVar4 != '\0') {
+          R_PushRemoteScreenUpdate(uVar10);
         }
       }
       iVar7 = iVar7 + 1;
-      ppmVar8 = ppmVar8 + 1;
-    } while (iVar7 < pUVar3->menuCount);
+      puVar8 = puVar8 + 1;
+    } while (iVar7 < (int)puVar3[0x28d]);
   }
-  bVar6 = Sys_IsMainThread();
-  if (bVar6) {
-    R_PushRemoteScreenUpdate(iVar4);
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 != '\0') {
+    R_PushRemoteScreenUpdate(uVar6);
   }
   __restgprlr_18();
   return;
@@ -2466,23 +2138,18 @@ void Menus_CloseAll(UiContext *param_1)
 
 // 825CA418  Menus_CloseAllBehindMain  (ui/ui_shared.cpp:1702)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_CloseAllBehindMain(UiContext *param_1)
+void Menus_CloseAllBehindMain(int param_1)
 
 {
-  menuDef_t *pmVar1;
+  ulonglong uVar1;
   int iVar2;
   
-  pmVar1 = Menus_FindByName(param_1,"main");
-  if ((pmVar1 != (menuDef_t *)0x0) && (iVar2 = Menus_MenuIsInStack(param_1,pmVar1), iVar2 != 0)) {
-    iVar2 = param_1->openMenuCount;
-    while ((iVar2 != 0 && (param_1->menuStack[0] != pmVar1))) {
-      Menus_ForceClose(param_1,param_1->menuStack[0]);
-      iVar2 = param_1->openMenuCount;
+  uVar1 = Menus_FindByName(param_1,0xffffffff8207b5b4);
+  if (((uVar1 & 0xffffffff) != 0) && (iVar2 = Menus_MenuIsInStack(param_1,uVar1), iVar2 != 0)) {
+    iVar2 = *(int *)(param_1 + 0xa78);
+    while ((iVar2 != 0 && ((ulonglong)*(uint *)(param_1 + 0xa38) != (uVar1 & 0xffffffff)))) {
+      Menus_ForceClose(param_1);
+      iVar2 = *(int *)(param_1 + 0xa78);
     }
   }
   return;
@@ -2491,37 +2158,32 @@ void Menus_CloseAllBehindMain(UiContext *param_1)
 
 // 825CA4A0  Script_Show  (ui/ui_shared.cpp:1719)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_Show(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_Show(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-  menuDef_t *pmVar1;
-  LocalClientNum_t LVar2;
-  LocalClientNum_t *pLVar3;
-  int iVar4;
-  itemDef_t *piVar5;
-  int iVar6;
-  char acStack_430 [1072];
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 *puVar4;
+  int iVar5;
+  ulonglong uVar3;
+  longlong lVar6;
+  undefined1 auStack_430 [1072];
   
-  pLVar3 = (LocalClientNum_t *)__savegprlr_28(param_1);
-  iVar4 = String_Parse(param_3,acStack_430,0x400);
-  if (iVar4 != 0) {
-    pmVar1 = param_2->parent;
-    LVar2 = *pLVar3;
-    iVar4 = Menu_ItemsMatchingGroup(pmVar1,acStack_430);
-    iVar6 = 0;
-    if (0 < iVar4) {
+  puVar4 = (undefined4 *)__savegprlr_28();
+  iVar5 = String_Parse(param_3,auStack_430,0x400);
+  if (iVar5 != 0) {
+    uVar1 = *(undefined4 *)(param_2 + 0x134);
+    uVar2 = *puVar4;
+    iVar5 = Menu_ItemsMatchingGroup(uVar1,auStack_430);
+    lVar6 = 0;
+    if (0 < iVar5) {
       do {
-        piVar5 = Menu_GetMatchingItemByNumber((itemDef_t *)0x0,pmVar1,iVar6,acStack_430);
-        if (piVar5 != (itemDef_t *)0x0) {
-          Window_AddDynamicFlags(LVar2,&piVar5->window,4);
+        uVar3 = Menu_GetMatchingItemByNumber(0,uVar1,lVar6,auStack_430);
+        if ((uVar3 & 0xffffffff) != 0) {
+          Window_AddDynamicFlags(uVar2,uVar3,4);
         }
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < iVar4);
+        lVar6 = lVar6 + 1;
+      } while ((int)lVar6 < iVar5);
     }
   }
   __restgprlr_28();
@@ -2531,20 +2193,15 @@ void Script_Show(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CA530  Script_Hide  (ui/ui_shared.cpp:1730)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_Hide(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_Hide(undefined4 *param_1,int param_2,undefined8 param_3)
 
 {
   int iVar1;
-  char acStack_420 [1032];
+  undefined1 auStack_420 [1032];
   
-  iVar1 = String_Parse(param_3,acStack_420,0x400);
+  iVar1 = String_Parse(param_3,auStack_420,0x400);
   if (iVar1 != 0) {
-    Menu_ShowItemByName(param_1->localClientNum,param_2->parent,acStack_420,0);
+    Menu_ShowItemByName(*param_1,*(undefined4 *)(param_2 + 0x134),auStack_420,0);
   }
   return;
 }
@@ -2552,20 +2209,15 @@ void Script_Hide(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BCF18  Script_FadeIn  (ui/ui_shared.cpp:1741)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_FadeIn(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_FadeIn(undefined4 *param_1,int param_2,undefined8 param_3)
 
 {
   int iVar1;
-  char acStack_420 [1032];
+  undefined1 auStack_420 [1032];
   
-  iVar1 = String_Parse(param_3,acStack_420,0x400);
+  iVar1 = String_Parse(param_3,auStack_420,0x400);
   if (iVar1 != 0) {
-    Menu_FadeItemByName(param_1->localClientNum,param_2->parent,acStack_420,0);
+    Menu_FadeItemByName(*param_1,*(undefined4 *)(param_2 + 0x134),auStack_420,0);
   }
   return;
 }
@@ -2573,20 +2225,15 @@ void Script_FadeIn(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BCF78  Script_FadeOut  (ui/ui_shared.cpp:1752)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_FadeOut(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_FadeOut(undefined4 *param_1,int param_2,undefined8 param_3)
 
 {
   int iVar1;
-  char acStack_420 [1032];
+  undefined1 auStack_420 [1032];
   
-  iVar1 = String_Parse(param_3,acStack_420,0x400);
+  iVar1 = String_Parse(param_3,auStack_420,0x400);
   if (iVar1 != 0) {
-    Menu_FadeItemByName(param_1->localClientNum,param_2->parent,acStack_420,1);
+    Menu_FadeItemByName(*param_1,*(undefined4 *)(param_2 + 0x134),auStack_420,1);
   }
   return;
 }
@@ -2594,20 +2241,15 @@ void Script_FadeOut(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BCFD8  Script_ShowMenu  (ui/ui_shared.cpp:1763)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ShowMenu(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ShowMenu(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
-  char acStack_410 [1024];
+  undefined1 auStack_410 [1024];
   
-  iVar1 = String_Parse(param_3,acStack_410,0x400);
+  iVar1 = String_Parse(param_3,auStack_410,0x400);
   if (iVar1 != 0) {
-    Menus_ShowByName(param_1,acStack_410);
+    Menus_ShowByName(param_1,auStack_410);
   }
   return;
 }
@@ -2615,20 +2257,15 @@ void Script_ShowMenu(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BD028  Script_HideMenu  (ui/ui_shared.cpp:1772)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_HideMenu(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_HideMenu(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
-  char acStack_410 [1024];
+  undefined1 auStack_410 [1024];
   
-  iVar1 = String_Parse(param_3,acStack_410,0x400);
+  iVar1 = String_Parse(param_3,auStack_410,0x400);
   if (iVar1 != 0) {
-    Menus_HideByName(param_1,acStack_410);
+    Menus_HideByName(param_1,auStack_410);
   }
   return;
 }
@@ -2636,20 +2273,15 @@ void Script_HideMenu(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CF0A0  Script_Open  (ui/ui_shared.cpp:1781)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_Open(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_Open(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
-  char acStack_410 [1024];
+  undefined1 auStack_410 [1024];
   
-  iVar1 = String_Parse(param_3,acStack_410,0x400);
+  iVar1 = String_Parse(param_3,auStack_410,0x400);
   if (iVar1 != 0) {
-    Menus_OpenByName(param_1,acStack_410);
+    Menus_OpenByName(param_1,auStack_410);
   }
   return;
 }
@@ -2657,23 +2289,18 @@ void Script_Open(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CF0F0  Script_OpenForGameType  (ui/ui_shared.cpp:1811)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_OpenForGameType(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_OpenForGameType(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  char *pcVar2;
-  char acStack_420 [1032];
+  int iVar2;
+  undefined8 uVar1;
+  undefined1 auStack_420 [1032];
   
-  iVar1 = String_Parse(param_3,acStack_420,0x400);
-  if (iVar1 != 0) {
-    Dvar_GetString(param_2->dvar);
-    pcVar2 = va(acStack_420);
-    Menus_OpenByName(param_1,pcVar2);
+  iVar2 = String_Parse(param_3,auStack_420,0x400);
+  if (iVar2 != 0) {
+    uVar1 = Dvar_GetString(*(undefined4 *)(param_2 + 0x15c));
+    uVar1 = va(auStack_420,uVar1);
+    Menus_OpenByName(param_1,uVar1);
   }
   return;
 }
@@ -2681,26 +2308,21 @@ void Script_OpenForGameType(UiContext *param_1,itemDef_t *param_2,char **param_3
 
 // 825CA590  Script_CloseForGameType  (ui/ui_shared.cpp:1820)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_CloseForGameType(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_CloseForGameType(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  char *pcVar2;
-  menuDef_t *pmVar3;
-  char acStack_420 [1032];
+  int iVar3;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined1 auStack_420 [1032];
   
-  iVar1 = String_Parse(param_3,acStack_420,0x400);
-  if (iVar1 != 0) {
-    Dvar_GetString(param_2->dvar);
-    pcVar2 = va(acStack_420);
-    pmVar3 = Menus_FindByName(param_1,pcVar2);
-    if (pmVar3 != (menuDef_t *)0x0) {
-      Menus_CloseRequest(param_1,pmVar3);
+  iVar3 = String_Parse(param_3,auStack_420,0x400);
+  if (iVar3 != 0) {
+    uVar1 = Dvar_GetString(*(undefined4 *)(param_2 + 0x15c));
+    uVar1 = va(auStack_420,uVar1);
+    uVar2 = Menus_FindByName(param_1,uVar1);
+    if ((uVar2 & 0xffffffff) != 0) {
+      Menus_CloseRequest(param_1,uVar2);
     }
   }
   return;
@@ -2709,18 +2331,13 @@ void Script_CloseForGameType(UiContext *param_1,itemDef_t *param_2,char **param_
 
 // 825CA610  Script_Close  (ui/ui_shared.cpp:1830)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_Close(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_Close(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
   char cVar1;
   char cVar2;
   int iVar3;
-  menuDef_t *pmVar4;
+  ulonglong uVar4;
   char *pcVar5;
   char *pcVar6;
   char local_420 [1032];
@@ -2737,15 +2354,15 @@ void Script_Close(UiContext *param_1,itemDef_t *param_2,char **param_3)
       pcVar5 = pcVar5 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      pmVar4 = param_2->parent;
+      uVar4 = (ulonglong)*(uint *)(param_2 + 0x134);
     }
     else {
-      pmVar4 = Menus_FindByName(param_1,local_420);
-      if (pmVar4 == (menuDef_t *)0x0) {
+      uVar4 = Menus_FindByName(param_1,local_420);
+      if ((uVar4 & 0xffffffff) == 0) {
         return;
       }
     }
-    Menus_CloseRequest(param_1,pmVar4);
+    Menus_CloseRequest(param_1,uVar4);
   }
   return;
 }
@@ -2753,18 +2370,13 @@ void Script_Close(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CA6C0  Script_ForceClose  (ui/ui_shared.cpp:1844)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ForceClose(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ForceClose(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
   char cVar1;
   char cVar2;
   int iVar3;
-  menuDef_t *pmVar4;
+  ulonglong uVar4;
   char *pcVar5;
   char *pcVar6;
   char local_420 [1032];
@@ -2781,15 +2393,15 @@ void Script_ForceClose(UiContext *param_1,itemDef_t *param_2,char **param_3)
       pcVar5 = pcVar5 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      pmVar4 = param_2->parent;
+      uVar4 = (ulonglong)*(uint *)(param_2 + 0x134);
     }
     else {
-      pmVar4 = Menus_FindByName(param_1,local_420);
-      if (pmVar4 == (menuDef_t *)0x0) {
+      uVar4 = Menus_FindByName(param_1,local_420);
+      if ((uVar4 & 0xffffffff) == 0) {
         return;
       }
     }
-    Menus_ForceClose(param_1,pmVar4);
+    Menus_ForceClose(param_1,uVar4);
   }
   return;
 }
@@ -2797,18 +2409,13 @@ void Script_ForceClose(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CA770  Script_Escape  (ui/ui_shared.cpp:1858)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_Escape(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_Escape(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
   char cVar1;
   char cVar2;
   int iVar3;
-  menuDef_t *pmVar4;
+  ulonglong uVar4;
   char *pcVar5;
   char *pcVar6;
   char local_420 [1032];
@@ -2825,15 +2432,15 @@ void Script_Escape(UiContext *param_1,itemDef_t *param_2,char **param_3)
       pcVar5 = pcVar5 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      pmVar4 = param_2->parent;
+      uVar4 = (ulonglong)*(uint *)(param_2 + 0x134);
     }
     else {
-      pmVar4 = Menus_FindByName(param_1,local_420);
-      if (pmVar4 == (menuDef_t *)0x0) {
+      uVar4 = Menus_FindByName(param_1,local_420);
+      if ((uVar4 & 0xffffffff) == 0) {
         return;
       }
     }
-    Menus_Escape(param_1,pmVar4);
+    Menus_Escape(param_1,uVar4);
   }
   return;
 }
@@ -2841,31 +2448,26 @@ void Script_Escape(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CA820  Script_CloseForAllPlayers  (ui/ui_shared.cpp:1872)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_CloseForAllPlayers(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_CloseForAllPlayers(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  UiContext *pUVar2;
-  menuDef_t *pmVar3;
-  LocalClientNum_t LVar4;
-  char acStack_420 [1032];
+  int iVar3;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  longlong lVar4;
+  undefined1 auStack_420 [1032];
   
-  iVar1 = String_Parse(param_3,acStack_420,0x400);
-  if (iVar1 != 0) {
-    LVar4 = LOCAL_CLIENT_0;
+  iVar3 = String_Parse(param_3,auStack_420,0x400);
+  if (iVar3 != 0) {
+    lVar4 = 0;
     do {
-      pUVar2 = UI_GetClientDC(LVar4);
-      pmVar3 = Menus_FindByName(pUVar2,acStack_420);
-      if (pmVar3 != (menuDef_t *)0x0) {
-        Menus_CloseRequest(pUVar2,pmVar3);
+      uVar1 = UI_GetClientDC(lVar4);
+      uVar2 = Menus_FindByName(uVar1,auStack_420);
+      if ((uVar2 & 0xffffffff) != 0) {
+        Menus_CloseRequest(uVar1,uVar2);
       }
-      LVar4 = LVar4 + LOCAL_CLIENT_1;
-    } while ((int)LVar4 < 4);
+      lVar4 = lVar4 + 1;
+    } while ((int)lVar4 < 4);
   }
   return;
 }
@@ -2873,20 +2475,15 @@ void Script_CloseForAllPlayers(UiContext *param_1,itemDef_t *param_2,char **para
 
 // 825CF160  Script_InGameOpen  (ui/ui_shared.cpp:1885)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_InGameOpen(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_InGameOpen(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
-  char acStack_410 [1024];
+  undefined1 auStack_410 [1024];
   
-  iVar1 = String_Parse(param_3,acStack_410,0x400);
-  if ((iVar1 != 0) && (iVar1 = CL_LocalClientIsInGame(param_1->localClientNum), iVar1 != 0)) {
-    Menus_OpenByName(param_1,acStack_410);
+  iVar1 = String_Parse(param_3,auStack_410,0x400);
+  if ((iVar1 != 0) && (iVar1 = CL_LocalClientIsInGame(*param_1), iVar1 != 0)) {
+    Menus_OpenByName(param_1,auStack_410);
   }
   return;
 }
@@ -2894,22 +2491,17 @@ void Script_InGameOpen(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CA8A0  Script_InGameClose  (ui/ui_shared.cpp:1902)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_InGameClose(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_InGameClose(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  menuDef_t *pmVar2;
-  char acStack_410 [1024];
+  int iVar2;
+  ulonglong uVar1;
+  undefined1 auStack_410 [1024];
   
-  iVar1 = String_Parse(param_3,acStack_410,0x400);
-  if (((iVar1 != 0) && (iVar1 = CL_LocalClientIsInGame(param_1->localClientNum), iVar1 != 0)) &&
-     (pmVar2 = Menus_FindByName(param_1,acStack_410), pmVar2 != (menuDef_t *)0x0)) {
-    Menus_CloseRequest(param_1,pmVar2);
+  iVar2 = String_Parse(param_3,auStack_410,0x400);
+  if (((iVar2 != 0) && (iVar2 = CL_LocalClientIsInGame(*param_1), iVar2 != 0)) &&
+     (uVar1 = Menus_FindByName(param_1,auStack_410), (uVar1 & 0xffffffff) != 0)) {
+    Menus_CloseRequest(param_1,uVar1);
   }
   return;
 }
@@ -2917,80 +2509,59 @@ void Script_InGameClose(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CF1C0  Menu_FocusFirstSelectableItem  (ui/ui_shared.cpp:1918)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-itemDef_t * Menu_FocusFirstSelectableItem(UiContext *param_1,menuDef_t *param_2)
+void Menu_FocusFirstSelectableItem(undefined8 param_1,undefined8 param_2)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  itemDef_t *piVar3;
-  ulonglong uVar4;
+  int iVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  int iVar4;
   int iVar5;
-  ulonglong uVar6;
-  double extraout_f1;
-  double dVar7;
-  double in_f2;
-  float fVar8;
-  float fVar9;
   
-  pUVar1 = (UiContext *)__savegprlr_28(param_1);
-  dVar7 = extraout_f1;
-  Menu_ClearFocus(pUVar1,param_2);
-  uVar4 = 0;
-  uVar6 = 0;
-  Menu_SetCursorItem(pUVar1->localClientNum,param_2,0);
-  if (0 < param_2->itemCount) {
-    iVar5 = 0;
+  puVar2 = (undefined4 *)__savegprlr_28();
+  Menu_ClearFocus();
+  iVar5 = 0;
+  Menu_SetCursorItem(*puVar2,param_2,0);
+  iVar1 = (int)param_2;
+  if (0 < *(int *)(iVar1 + 0xb4)) {
+    iVar4 = 0;
     do {
-      fVar8 = (float)in_f2;
-      in_f2 = (double)fVar8;
-      fVar9 = (float)dVar7;
-      dVar7 = (double)fVar9;
-      iVar2 = Item_SetFocus(pUVar1,*(itemDef_t **)((int)param_2->items + iVar5),fVar9,fVar8,
-                            (ItemFocusReason)uVar4);
-      if (iVar2 != 0) {
-        piVar3 = (itemDef_t *)
-                 __restgprlr_28(*(undefined4 *)
-                                 ((int)((uVar6 & 0xffffffff) << 2) + (int)param_2->items));
-        return piVar3;
+      iVar3 = Item_SetFocus(puVar2,*(undefined4 *)(*(int *)(iVar1 + 0xb8) + iVar4));
+      if (iVar3 != 0) {
+        __restgprlr_28(*(undefined4 *)(iVar5 * 4 + *(int *)(iVar1 + 0xb8)));
+        return;
       }
-      uVar6 = uVar6 + 1;
-      iVar5 = iVar5 + 4;
-      uVar4 = uVar6;
-      Menu_SetCursorItem(pUVar1->localClientNum,param_2,(int)uVar6);
-    } while ((int)uVar6 < param_2->itemCount);
+      iVar5 = iVar5 + 1;
+      iVar4 = iVar4 + 4;
+      Menu_SetCursorItem(*puVar2,param_2,iVar5);
+    } while (iVar5 < *(int *)(iVar1 + 0xb4));
   }
-  Menu_SetCursorItem(pUVar1->localClientNum,param_2,0);
-  piVar3 = (itemDef_t *)__restgprlr_28(0);
-  return piVar3;
+  Menu_SetCursorItem(*puVar2,param_2,0);
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 825CF268  Script_FocusFirstInMenu  (ui/ui_shared.cpp:1951)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_FocusFirstInMenu(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_FocusFirstInMenu(undefined8 param_1,uint *param_2)
 
 {
-  itemDef_t *piVar1;
-  bool bVar2;
+  ulonglong uVar1;
+  char cVar2;
   
-  piVar1 = Menu_FocusFirstSelectableItem(param_1,param_2->parent);
-  if (piVar1 == (itemDef_t *)0x0) {
-    Com_Printf(0xd,"focusFirst: no itemDefs in %s were selectable\n");
+  uVar1 = Menu_FocusFirstSelectableItem(param_1,param_2[0x4d]);
+  if ((uVar1 & 0xffffffff) == 0) {
+    uVar1 = (ulonglong)*(uint *)(param_2[0x4d] + 4);
+    if ((uVar1 == 0) && (uVar1 = (ulonglong)*param_2, uVar1 == 0)) {
+      uVar1 = 0xffffffff82173ba4;
+    }
+    Com_Printf(0xd,0xffffffff82173b74,uVar1);
   }
   else {
-    bVar2 = Item_IsTextField(piVar1);
-    if (bVar2) {
-      Item_TextField_BeginEdit(param_1,piVar1);
+    cVar2 = Item_IsTextField(uVar1);
+    if (cVar2 != '\0') {
+      Item_TextField_BeginEdit(param_1);
     }
   }
   return;
@@ -2999,62 +2570,43 @@ void Script_FocusFirstInMenu(UiContext *param_1,itemDef_t *param_2,char **param_
 
 // 825CF308  Script_SetFocusByDvar  (ui/ui_shared.cpp:1967)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetFocusByDvar(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetFocusByDvar(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-  menuDef_t *pmVar1;
-  itemDef_t *piVar2;
-  UiContext *pUVar3;
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
   int iVar4;
   int iVar5;
-  undefined8 uVar6;
-  int iVar7;
-  double extraout_f1;
-  double dVar8;
-  double in_f2;
-  float fVar9;
-  float fVar10;
-  char acStack_440 [1088];
+  int iVar6;
+  undefined1 auStack_440 [1088];
   
-  pUVar3 = (UiContext *)__savegprlr_26(param_1);
-  uVar6 = 0x400;
-  dVar8 = extraout_f1;
-  iVar4 = String_Parse(param_3,acStack_440,0x400);
-  if (iVar4 != 0) {
-    pmVar1 = param_2->parent;
-    if (pmVar1 == (menuDef_t *)0x0) {
-      uVar6 = 0;
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x7b9,0,
-                      "%s");
+  uVar1 = __savegprlr_26();
+  iVar2 = String_Parse(param_3,auStack_440,0x400);
+  if (iVar2 != 0) {
+    iVar2 = *(int *)(param_2 + 0x134);
+    if (iVar2 == 0) {
+      MyAssertHandler(0xffffffff82170658,0x7b9,0,0xffffffff82000f98,0xffffffff8200114c);
     }
-    iVar4 = 0;
-    if (0 < pmVar1->itemCount) {
-      iVar7 = 0;
+    iVar5 = 0;
+    if (0 < *(int *)(iVar2 + 0xb4)) {
+      iVar6 = 0;
       do {
-        piVar2 = *(itemDef_t **)((int)pmVar1->items + iVar7);
-        if ((piVar2->dvarFlags & 0x10U) != 0) {
-          if (piVar2->dvarTest == (char *)0x0) {
-            Com_Error(ERR_DROP,"\x15Script_SetFocusByDvar: Item\'s dvarTest field is empty.");
+        iVar4 = *(int *)(*(int *)(iVar2 + 0xb8) + iVar6);
+        if ((*(uint *)(iVar4 + 0x170) & 0x10) != 0) {
+          if (*(int *)(iVar4 + 0x160) == 0) {
+            Com_Error(1,0xffffffff82173bbc);
           }
-          iVar5 = I_stricmp(piVar2->dvarTest,acStack_440);
-          if ((iVar5 == 0) && (iVar5 = Item_EnableShowViaDvar(piVar2,0x10), iVar5 != 0)) {
-            Window_GetRect(&piVar2->window);
-            fVar9 = (float)in_f2;
-            in_f2 = (double)fVar9;
-            fVar10 = (float)dVar8;
-            dVar8 = (double)fVar10;
-            iVar5 = Item_SetFocus(pUVar3,piVar2,fVar10,fVar9,(ItemFocusReason)uVar6);
-            if (iVar5 != 0) break;
+          iVar3 = I_stricmp(*(undefined4 *)(iVar4 + 0x160),auStack_440);
+          if ((iVar3 == 0) && (iVar3 = Item_EnableShowViaDvar(iVar4,0x10), iVar3 != 0)) {
+            Window_GetRect(iVar4);
+            iVar4 = Item_SetFocus(uVar1,iVar4);
+            if (iVar4 != 0) break;
           }
         }
-        iVar4 = iVar4 + 1;
-        iVar7 = iVar7 + 4;
-      } while (iVar4 < pmVar1->itemCount);
+        iVar5 = iVar5 + 1;
+        iVar6 = iVar6 + 4;
+      } while (iVar5 < *(int *)(iVar2 + 0xb4));
     }
   }
   __restgprlr_26();
@@ -3064,53 +2616,52 @@ void Script_SetFocusByDvar(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BD078  Script_SetGameMode  (ui/ui_shared.cpp:2001)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetGameMode(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetGameMode(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
-  char acStack_410 [1040];
+  undefined1 auStack_410 [1040];
   
-  iVar1 = String_Parse(param_3,acStack_410,0x400);
+  iVar1 = String_Parse(param_3,auStack_410,0x400);
   if (iVar1 == 0) {
-    Com_Error(ERR_DROP,"SetGameMode: Must specify game mode\n");
+    Com_Error(1,0xffffffff821708b4);
   }
   GamerProfile_UpdateProfilePlayTimes();
-  Dvar_SetFromString(g_gameMode,acStack_410);
+  Dvar_SetFromString(DAT_83ced660,auStack_410);
   return;
 }
 
 
 // 825BD0D0  Script_ExecHandler  (ui/ui_shared.cpp:2014)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_ExecHandler(LocalClientNum_t param_1,int param_2,itemDef_t *param_3,char **param_4,
-                       _func___cdecl_void_LocalClientNum_t_int_char_ptr *param_5)
+void Script_ExecHandler(undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
+                       code *param_5)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  longlong lVar3;
-  char acStack_430 [1072];
+  uint uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  undefined1 auStack_430 [1072];
   
-  lVar3 = (longlong)param_2;
-  LVar1 = __savegprlr_28(param_1,lVar3);
-  iVar2 = String_Parse(param_4,acStack_430,0x3ff);
-  if (iVar2 != 0) {
-    if ((uiscript_verbose->current).enabled != false) {
-      Com_Printf(0xd,"UISCRIPT - Executing command \'%s\' - Item is \'%s\', parent menu is \'%s\'\n"
-                );
+  uVar2 = __savegprlr_28();
+  iVar3 = String_Parse(param_4,auStack_430,0x3ff);
+  if (iVar3 != 0) {
+    if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+      if (((param_3 & 0xffffffff) == 0) || (uVar1 = ((uint *)param_3)[0x4d], uVar1 == 0)) {
+        uVar5 = 0xffffffff82170938;
+      }
+      else {
+        uVar5 = (ulonglong)*(uint *)(uVar1 + 4);
+      }
+      if (((param_3 & 0xffffffff) == 0) || (uVar4 = (ulonglong)*(uint *)param_3, uVar4 == 0)) {
+        uVar4 = 0xffffffff82170928;
+      }
+      Com_Printf(0xd,0xffffffff821708e0,auStack_430,uVar4,uVar5);
     }
-    I_strncat(acStack_430,0x400,"\n");
-    (*param_5)(LVar1,(int)lVar3,acStack_430);
+    I_strncat(auStack_430,0x400,0xffffffff820044d8);
+    (*param_5)(uVar2,param_2,auStack_430);
   }
   __restgprlr_28();
   return;
@@ -3119,9 +2670,7 @@ void Script_ExecHandler(LocalClientNum_t param_1,int param_2,itemDef_t *param_3,
 
 // 825BD1A0  Script_AddTextWrapper  (ui/ui_shared.cpp:2033)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_AddTextWrapper(LocalClientNum_t param_1,int param_2,char *param_3)
+void Script_AddTextWrapper(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   Cbuf_AddText(param_1,param_3);
@@ -3131,20 +2680,15 @@ void Script_AddTextWrapper(LocalClientNum_t param_1,int param_2,char *param_3)
 
 // 825BD1A8  Script_Exec  (ui/ui_shared.cpp:2039)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_Exec(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_Exec(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  LocalClientNum_t *pLVar1;
-  int iVar2;
+  undefined4 *puVar2;
+  undefined8 uVar1;
   
-  pLVar1 = (LocalClientNum_t *)__savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(*pLVar1);
-  Script_ExecHandler(*pLVar1,iVar2,param_2,param_3,Script_AddTextWrapper);
+  puVar2 = (undefined4 *)__savegprlr_29();
+  uVar1 = CL_ControllerIndexFromClientNum(*puVar2);
+  Script_ExecHandler(*puVar2,uVar1,param_2,param_3,0xffffffff825bd1a0);
   __restgprlr_29();
   return;
 }
@@ -3152,28 +2696,24 @@ void Script_Exec(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BD1F0  Script_ExecFirstActiveClient  (ui/ui_shared.cpp:2045)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ExecFirstActiveClient(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ExecFirstActiveClient(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  LocalClientNum_t *pLVar1;
-  int iVar2;
-  LocalClientNum_t LVar3;
+  uint *puVar3;
+  int iVar4;
+  ulonglong uVar1;
+  undefined8 uVar2;
   
-  pLVar1 = (LocalClientNum_t *)__savegprlr_29(param_1);
-  iVar2 = CL_GetLocalClientActiveCount();
-  if (iVar2 < 2) {
-    LVar3 = *pLVar1;
+  puVar3 = (uint *)__savegprlr_29();
+  iVar4 = CL_GetLocalClientActiveCount();
+  if (iVar4 < 2) {
+    uVar1 = (ulonglong)*puVar3;
   }
   else {
-    LVar3 = CL_GetFirstActiveLocalClient();
+    uVar1 = CL_GetFirstActiveLocalClient();
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LVar3);
-  Script_ExecHandler(LVar3,iVar2,param_2,param_3,Script_AddTextWrapper);
+  uVar2 = CL_ControllerIndexFromClientNum(uVar1);
+  Script_ExecHandler(uVar1,uVar2,param_2,param_3,0xffffffff825bd1a0);
   __restgprlr_29();
   return;
 }
@@ -3181,30 +2721,25 @@ void Script_ExecFirstActiveClient(UiContext *param_1,itemDef_t *param_2,char **p
 
 // 825BD250  Script_ExecNow  (ui/ui_shared.cpp:2058)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_ExecNow(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ExecNow(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  LocalClientNum_t *pLVar1;
-  bool bVar3;
-  int iVar2;
-  code *pcVar4;
+  undefined4 *puVar2;
+  char cVar3;
+  undefined8 uVar1;
+  undefined8 uVar4;
   
-  pLVar1 = (LocalClientNum_t *)__savegprlr_29(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (bVar3) {
-    iVar2 = CL_ControllerIndexFromClientNum(*pLVar1);
-    pcVar4 = Cbuf_ExecuteBuffer;
+  puVar2 = (undefined4 *)__savegprlr_29();
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
+    uVar1 = CL_ControllerIndexFromClientNum(*puVar2);
+    uVar4 = 0xffffffff825bd1a0;
   }
   else {
-    iVar2 = CL_ControllerIndexFromClientNum(*pLVar1);
-    pcVar4 = Script_AddTextWrapper;
+    uVar1 = CL_ControllerIndexFromClientNum(*puVar2);
+    uVar4 = 0xffffffff824d63a8;
   }
-  Script_ExecHandler(*pLVar1,iVar2,param_2,param_3,pcVar4);
+  Script_ExecHandler(*puVar2,uVar1,param_2,param_3,uVar4);
   __restgprlr_29();
   return;
 }
@@ -3212,12 +2747,7 @@ void Script_ExecNow(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825D0FC8  Script_ExecKeyPress  (ui/ui_shared.cpp:2067)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_ExecKeyPress(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ExecKeyPress(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
   int iVar1;
@@ -3226,9 +2756,9 @@ void Script_ExecKeyPress(UiContext *param_1,itemDef_t *param_2,char **param_3)
   iVar1 = String_Parse(param_3,acStack_420,0x400);
   if (iVar1 != 0) {
     iVar1 = atoi(acStack_420);
-    Menu_HandleKey(param_1,param_2->parent,iVar1,1);
+    Menu_HandleKey(param_1,*(undefined4 *)(param_2 + 0x134),iVar1,1);
     iVar1 = atoi(acStack_420);
-    Menu_HandleKey(param_1,param_2->parent,iVar1,0);
+    Menu_HandleKey(param_1,*(undefined4 *)(param_2 + 0x134),iVar1,0);
   }
   return;
 }
@@ -3236,40 +2766,28 @@ void Script_ExecKeyPress(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BD2B8  Script_ConditionalExecHandler  (ui/ui_shared.cpp:2079)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
 void Script_ConditionalExecHandler
-               (LocalClientNum_t param_1,itemDef_t *param_2,char **param_3,
-               _func___cdecl_bool_char_ptr_char_ptr *param_4,
-               _func___cdecl_void_LocalClientNum_t_int_char_ptr *param_5)
+               (undefined8 param_1,undefined8 param_2,code *param_3,code *param_4)
 
 {
-  char *pcVar1;
-  int iVar2;
-  char *pcVar3;
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
   char cVar4;
-  char acStack_c30 [1024];
-  char acStack_830 [1024];
-  char acStack_430 [1072];
+  undefined1 auStack_c30 [1024];
+  undefined1 auStack_830 [1024];
+  undefined1 auStack_430 [1072];
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  iVar2 = String_Parse((char **)param_2,acStack_830,0x400);
-  if (iVar2 != 0) {
-    iVar2 = String_Parse((char **)param_2,acStack_430,0x400);
-    if (iVar2 != 0) {
-      iVar2 = String_Parse((char **)param_2,acStack_c30,0x3ff);
-      if (iVar2 != 0) {
-        pcVar3 = Dvar_GetVariantString(acStack_830);
-        cVar4 = (*(code *)param_3)(pcVar3,acStack_430);
-        if (cVar4 != '\0') {
-          I_strncat(acStack_c30,0x400,"\n");
-          pcVar3 = (char *)CL_ControllerIndexFromClientNum((LocalClientNum_t)pcVar1);
-          (*param_4)(pcVar1,pcVar3);
-        }
-      }
+  uVar1 = __savegprlr_28();
+  iVar3 = String_Parse(param_2,auStack_830,0x400);
+  if (((iVar3 != 0) && (iVar3 = String_Parse(param_2,auStack_430,0x400), iVar3 != 0)) &&
+     (iVar3 = String_Parse(param_2,auStack_c30,0x3ff), iVar3 != 0)) {
+    uVar2 = Dvar_GetVariantString(auStack_830);
+    cVar4 = (*param_3)(uVar2,auStack_430);
+    if (cVar4 != '\0') {
+      I_strncat(auStack_c30,0x400,0xffffffff820044d8);
+      uVar2 = CL_ControllerIndexFromClientNum(uVar1);
+      (*param_4)(uVar1,uVar2,auStack_c30);
     }
   }
   __restgprlr_28();
@@ -3278,17 +2796,56 @@ void Script_ConditionalExecHandler
 
 
 // 825BD378  Script_ConditionalResponseHandler  (ui/ui_shared.cpp:2098)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Script_ConditionalResponseHandler
+               (undefined8 param_1,int param_2,undefined8 param_3,code *param_4)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  char cVar5;
+  char *pcVar4;
+  longlong lVar6;
+  undefined1 auStack_c30 [1024];
+  undefined1 auStack_830 [1024];
+  undefined1 auStack_430 [1072];
+  
+  uVar1 = __savegprlr_28();
+  iVar3 = String_Parse(param_3,auStack_830,0x400);
+  if (((iVar3 != 0) && (iVar3 = String_Parse(param_3,auStack_c30,0x400), iVar3 != 0)) &&
+     (iVar3 = String_Parse(param_3,auStack_430,0x400), iVar3 != 0)) {
+    uVar2 = Dvar_GetVariantString(auStack_830);
+    cVar5 = (*param_4)(uVar2,auStack_c30);
+    if (cVar5 != '\0') {
+      lVar6 = 0;
+      do {
+        pcVar4 = (char *)CL_GetConfigString(lVar6 + 0xbb4);
+        if ((*pcVar4 != '\0') &&
+           (iVar3 = I_stricmp(*(undefined4 *)(*(int *)(param_2 + 0x134) + 4),pcVar4), iVar3 == 0))
+        break;
+        lVar6 = lVar6 + 1;
+      } while ((int)lVar6 < 0x20);
+      if ((int)lVar6 == 0x20) {
+        lVar6 = -1;
+      }
+      uVar2 = va(0xffffffff82170948,DAT_82ae30f4,lVar6,auStack_430);
+      Cbuf_AddText(uVar1,uVar2);
+    }
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 825BD480  Script_ExecIfStringsEqual  (ui/ui_shared.cpp:2139)
 
-bool Script_ExecIfStringsEqual(char *param_1,char *param_2)
+bool Script_ExecIfStringsEqual(void)
 
 {
   int iVar1;
   
-  iVar1 = I_stricmp(param_1,param_2);
+  iVar1 = I_stricmp();
   return iVar1 == 0;
 }
 
@@ -3323,572 +2880,426 @@ bool Script_ExecIfFloatsEqual(char *param_1,char *param_2)
 
 // 825BD560  Script_ExecOnDvarStringValue  (ui/ui_shared.cpp:2157)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_ExecOnDvarStringValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ExecOnDvarStringValue(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  _func___cdecl_void_LocalClientNum_t_int_char_ptr *in_r7;
-  
-  Script_ConditionalExecHandler
-            (param_1->localClientNum,(itemDef_t *)param_3,(char **)Script_ExecIfStringsEqual,
-             Script_AddTextWrapper,in_r7);
+  Script_ConditionalExecHandler(*param_1,param_3,0xffffffff825bd480,0xffffffff825bd1a0);
   return;
 }
 
 
 // 825BD580  Script_ExecOnDvarIntValue  (ui/ui_shared.cpp:2163)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ExecOnDvarIntValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ExecOnDvarIntValue(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  _func___cdecl_void_LocalClientNum_t_int_char_ptr *in_r7;
-  
-  Script_ConditionalExecHandler
-            (param_1->localClientNum,(itemDef_t *)param_3,(char **)Script_ExecIfIntsEqual,
-             Script_AddTextWrapper,in_r7);
+  Script_ConditionalExecHandler(*param_1,param_3,0xffffffff825bd4a8,0xffffffff825bd1a0);
   return;
 }
 
 
 // 825BD5A0  Script_ExecOnDvarFloatValue  (ui/ui_shared.cpp:2169)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ExecOnDvarFloatValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ExecOnDvarFloatValue(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  _func___cdecl_void_LocalClientNum_t_int_char_ptr *in_r7;
-  
-  Script_ConditionalExecHandler
-            (param_1->localClientNum,(itemDef_t *)param_3,(char **)Script_ExecIfFloatsEqual,
-             Script_AddTextWrapper,in_r7);
+  Script_ConditionalExecHandler(*param_1,param_3,0xffffffff825bd4f8,0xffffffff825bd1a0);
   return;
 }
 
 
 // 825BD5C0  Script_ExecNowOnDvarStringValue  (ui/ui_shared.cpp:2175)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ExecNowOnDvarStringValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ExecNowOnDvarStringValue(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  _func___cdecl_void_LocalClientNum_t_int_char_ptr *in_r7;
-  
-  Script_ConditionalExecHandler
-            (param_1->localClientNum,(itemDef_t *)param_3,(char **)Script_ExecIfStringsEqual,
-             Cbuf_ExecuteBuffer,in_r7);
+  Script_ConditionalExecHandler(*param_1,param_3,0xffffffff825bd480,0xffffffff824d63a8);
   return;
 }
 
 
 // 825BD5E0  Script_ExecNowOnDvarIntValue  (ui/ui_shared.cpp:2181)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_ExecNowOnDvarIntValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ExecNowOnDvarIntValue(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  _func___cdecl_void_LocalClientNum_t_int_char_ptr *in_r7;
-  
-  Script_ConditionalExecHandler
-            (param_1->localClientNum,(itemDef_t *)param_3,(char **)Script_ExecIfIntsEqual,
-             Cbuf_ExecuteBuffer,in_r7);
+  Script_ConditionalExecHandler(*param_1,param_3,0xffffffff825bd4a8,0xffffffff824d63a8);
   return;
 }
 
 
 // 825BD600  Script_ExecNowOnDvarFloatValue  (ui/ui_shared.cpp:2187)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ExecNowOnDvarFloatValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ExecNowOnDvarFloatValue(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  _func___cdecl_void_LocalClientNum_t_int_char_ptr *in_r7;
-  
-  Script_ConditionalExecHandler
-            (param_1->localClientNum,(itemDef_t *)param_3,(char **)Script_ExecIfFloatsEqual,
-             Cbuf_ExecuteBuffer,in_r7);
+  Script_ConditionalExecHandler(*param_1,param_3,0xffffffff825bd4f8,0xffffffff824d63a8);
   return;
 }
 
 
 // 825BD620  Script_RespondOnDvarStringValue  (ui/ui_shared.cpp:2193)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_RespondOnDvarStringValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_RespondOnDvarStringValue(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  Script_ConditionalResponseHandler
-            (param_1->localClientNum,param_2,param_3,Script_ExecIfStringsEqual);
+  Script_ConditionalResponseHandler(*param_1,param_2,param_3,0xffffffff825bd480);
   return;
 }
 
 
 // 825BD630  Script_RespondOnDvarIntValue  (ui/ui_shared.cpp:2199)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_RespondOnDvarIntValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_RespondOnDvarIntValue(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  Script_ConditionalResponseHandler(param_1->localClientNum,param_2,param_3,Script_ExecIfIntsEqual);
+  Script_ConditionalResponseHandler(*param_1,param_2,param_3,0xffffffff825bd4a8);
   return;
 }
 
 
 // 825BD640  Script_RespondOnDvarFloatValue  (ui/ui_shared.cpp:2205)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_RespondOnDvarFloatValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_RespondOnDvarFloatValue(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  Script_ConditionalResponseHandler
-            (param_1->localClientNum,param_2,param_3,Script_ExecIfFloatsEqual);
+  Script_ConditionalResponseHandler(*param_1,param_2,param_3,0xffffffff825bd4f8);
   return;
 }
 
 
 // 825BD650  Script_ParseLocalVarInParens  (ui/ui_shared.cpp:2211)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-UILocalVar * Script_ParseLocalVarInParens(UiContext *param_1,char **param_2,int param_3)
+void Script_ParseLocalVarInParens(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
   char cVar1;
   char cVar2;
-  int iVar3;
-  char **ppcVar4;
-  UILocalVar *pUVar5;
-  longlong lVar6;
-  char *pcVar7;
-  char *pcVar8;
+  longlong lVar3;
+  ulonglong uVar4;
+  char *pcVar5;
+  char *pcVar6;
   char local_420 [1056];
   
-  lVar6 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_29(param_1,lVar6,param_3);
-  ppcVar4 = (char **)lVar6;
-  String_Parse(ppcVar4,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  lVar3 = __savegprlr_29();
+  String_Parse(param_2,local_420,0x400);
+  pcVar6 = local_420;
+  pcVar5 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar5;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,
-              "SetPlayerData: Error at argument %d: no opening parenthesis found after \"localvar\"\n"
-             );
+    Com_Error(1,0xffffffff82170a08,param_3 + 1);
   }
-  String_Parse(ppcVar4,local_420,0x400);
-  pUVar5 = UILocalVar_Find((UILocalVarContext *)(iVar3 + 0xa7c),local_420);
-  if (pUVar5 == (UILocalVar *)0x0) {
-    Com_Error(ERR_DROP,"SetPlayerData: Error at argument %d: \"%s\" is not the name of a localvar\n"
-             );
+  String_Parse(param_2,local_420,0x400);
+  uVar4 = UILocalVar_Find(lVar3 + 0xa7c,local_420);
+  if ((uVar4 & 0xffffffff) == 0) {
+    Com_Error(1,0xffffffff821709b8,param_3 + 1,local_420);
   }
-  String_Parse(ppcVar4,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ")";
+  String_Parse(param_2,local_420,0x400);
+  pcVar6 = local_420;
+  pcVar5 = ")";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar5;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,
-              "SetPlayerData: Error at argument %d: no closing parenthesis found after localvar\n");
+    Com_Error(1,0xffffffff82170960,param_3 + 1);
   }
-  pUVar5 = (UILocalVar *)__restgprlr_29(pUVar5);
-  return pUVar5;
+  __restgprlr_29(uVar4);
+  return;
 }
 
 
 // 825BD770  Script_ParseLocalVarInt  (ui/ui_shared.cpp:2234)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-bool Script_ParseLocalVarInt
-               (UiContext *param_1,char *param_2,char **param_3,int param_4,int *param_5)
+void Script_ParseLocalVarInt
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-  UiContext *pUVar1;
+  undefined8 uVar1;
   int iVar2;
-  undefined1 uVar4;
-  UILocalVar *pUVar3;
-  ulonglong uVar5;
+  undefined4 uVar3;
   
-  uVar5 = (ulonglong)(int)param_5;
-  pUVar1 = (UiContext *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x8bd,0,"%s"
-                   );
+  uVar1 = __savegprlr_27();
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x8bd,0,0xffffffff82000f98,0xffffffff8200e26c);
   }
-  iVar2 = I_stricmp(param_2,"localvarint");
+  iVar2 = I_stricmp(param_2,0xffffffff8216a2f0);
   if (iVar2 != 0) {
-    *(int *)uVar5 = 0;
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    *(undefined4 *)param_5 = 0;
+    __restgprlr_27(0);
+    return;
   }
-  pUVar3 = Script_ParseLocalVarInParens(pUVar1,param_3,param_4);
-  iVar2 = UILocalVar_GetInt(pUVar3);
-  *(int *)uVar5 = iVar2;
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  Script_ParseLocalVarInParens(uVar1,param_3,param_4);
+  uVar3 = UILocalVar_GetInt();
+  *(undefined4 *)param_5 = uVar3;
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 825BD810  Script_ParseLocalVarFloat  (ui/ui_shared.cpp:2254)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-bool Script_ParseLocalVarFloat
-               (UiContext *param_1,char *param_2,char **param_3,int param_4,float *param_5)
+void Script_ParseLocalVarFloat
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-  UiContext *pUVar1;
+  undefined8 uVar1;
   int iVar2;
-  undefined1 uVar4;
-  UILocalVar *pUVar3;
-  ulonglong uVar5;
-  float fVar6;
+  double dVar3;
   
-  uVar5 = (ulonglong)(int)param_5;
-  pUVar1 = (UiContext *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x8d1,0,"%s"
-                   );
+  uVar1 = __savegprlr_27();
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x8d1,0,0xffffffff82000f98,0xffffffff8200e26c);
   }
-  iVar2 = I_stricmp(param_2,"localvarfloat");
+  iVar2 = I_stricmp(param_2,0xffffffff8216a2d0);
   if (iVar2 != 0) {
-    *(float *)uVar5 = 0.0;
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    *(float *)param_5 = 0.0;
+    __restgprlr_27(0);
+    return;
   }
-  pUVar3 = Script_ParseLocalVarInParens(pUVar1,param_3,param_4);
-  fVar6 = UILocalVar_GetFloat(pUVar3);
-  *(float *)uVar5 = fVar6;
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  Script_ParseLocalVarInParens(uVar1,param_3,param_4);
+  dVar3 = (double)UILocalVar_GetFloat();
+  *(float *)param_5 = (float)dVar3;
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 825BD8B0  Script_ParseLocalVarString  (ui/ui_shared.cpp:2274)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-bool Script_ParseLocalVarString
-               (UiContext *param_1,char *param_2,char **param_3,int param_4,char **param_5,
-               char *param_6,int param_7)
+void Script_ParseLocalVarString
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5,ulonglong param_6,undefined8 param_7)
 
 {
-  UiContext *pUVar1;
+  undefined8 uVar1;
   int iVar2;
-  undefined1 uVar5;
-  UILocalVar *pUVar3;
-  char *pcVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  undefined4 uVar3;
   
-  uVar7 = (ulonglong)(int)param_6;
-  uVar6 = (ulonglong)(int)param_5;
-  pUVar1 = (UiContext *)__savegprlr_23(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x8e5,0,"%s"
-                   );
+  uVar1 = __savegprlr_23();
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x8e5,0,0xffffffff82000f98,0xffffffff8200e26c);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x8e6,0,"%s"
-                   );
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x8e6,0,0xffffffff82000f98,0xffffffff8205af0c);
   }
-  iVar2 = I_stricmp(param_2,"localvarstring");
+  iVar2 = I_stricmp(param_2,0xffffffff8216a2c0);
   if (iVar2 != 0) {
-    *(undefined4 *)uVar6 = 0;
-    uVar5 = __restgprlr_23(0);
-    return (bool)uVar5;
+    *(undefined4 *)param_5 = 0;
+    __restgprlr_23(0);
+    return;
   }
-  pUVar3 = Script_ParseLocalVarInParens(pUVar1,param_3,param_4);
-  pcVar4 = UILocalVar_GetString(pUVar3,(char *)uVar7,param_7);
-  *(undefined4 *)uVar6 = pcVar4;
-  uVar5 = __restgprlr_23(1);
-  return (bool)uVar5;
+  uVar1 = Script_ParseLocalVarInParens(uVar1,param_3,param_4);
+  uVar3 = UILocalVar_GetString(uVar1,param_6,param_7);
+  *(undefined4 *)param_5 = uVar3;
+  __restgprlr_23(1);
+  return;
 }
 
 
 // 825BD988  Script_ParseTableLookup  (ui/ui_shared.cpp:2296)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-bool Script_ParseTableLookup
-               (UiContext *param_1,char *param_2,char **param_3,int param_4,char **param_5,
-               char *param_6,int param_7)
+void Script_ParseTableLookup
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+               ulonglong param_5)
 
 {
   char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  int iVar4;
-  undefined1 uVar6;
-  bool bVar7;
-  char *pcVar5;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  char *pcVar10;
-  char *pcVar11;
-  int local_1050;
-  char *local_104c;
-  int local_1048 [2];
+  undefined8 uVar2;
+  int iVar3;
+  char cVar5;
+  undefined4 uVar4;
+  char *pcVar6;
+  char *pcVar7;
+  char *pcVar8;
+  undefined4 local_1050;
+  undefined4 local_104c;
+  undefined4 local_1048 [2];
   char local_1040 [1024];
-  char acStack_c40 [1024];
-  char acStack_840 [1024];
-  char acStack_440 [1088];
+  undefined1 auStack_c40 [1024];
+  undefined1 auStack_840 [1024];
+  undefined1 auStack_440 [1088];
   
-  uVar9 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)param_4;
-  pUVar3 = (UiContext *)__savegprlr_25(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x903,0,"%s"
-                   );
+  uVar2 = __savegprlr_25();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x903,0,0xffffffff82000f98,0xffffffff8200e26c);
   }
-  if ((uVar9 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x904,0,"%s"
-                   );
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x904,0,0xffffffff82000f98,0xffffffff8205af0c);
   }
-  iVar4 = I_stricmp(param_2,"tablelookup");
-  if (iVar4 != 0) {
-    *(undefined4 *)uVar8 = 0;
-    uVar6 = __restgprlr_25(0);
-    return (bool)uVar6;
+  iVar3 = I_stricmp(param_2,0xffffffff820a0134);
+  if (iVar3 != 0) {
+    *(undefined4 *)param_4 = 0;
+    __restgprlr_25(0);
+    return;
   }
   String_Parse(param_3,local_1040,0x400);
-  pcVar10 = local_1040;
-  pcVar5 = "(";
+  pcVar8 = local_1040;
+  pcVar7 = "(";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar5;
-    if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar5 = pcVar5 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"Script_ParseTableLookup: no closing parenthesi found\n");
+    cVar5 = *pcVar8;
+    cVar1 = *pcVar7;
+    if (cVar5 == '\0') break;
+    pcVar8 = pcVar8 + 1;
+    pcVar7 = pcVar7 + 1;
+  } while (cVar5 == cVar1);
+  if (cVar5 != cVar1) {
+    Com_Error(1,0xffffffff82170a90);
   }
-  iVar4 = String_Parse(param_3,acStack_840,0x400);
-  if (iVar4 != 0) {
+  iVar3 = String_Parse(param_3,auStack_840,0x400);
+  if (iVar3 != 0) {
     String_Parse(param_3,local_1040,0x400);
-    pcVar11 = local_1040;
-    pcVar10 = ",";
-    pcVar5 = pcVar10;
+    pcVar6 = local_1040;
+    pcVar8 = ",";
+    pcVar7 = pcVar8;
     do {
-      cVar1 = *pcVar11;
-      cVar2 = *pcVar5;
-      if (cVar1 == '\0') break;
-      pcVar11 = pcVar11 + 1;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar1 == cVar2);
-    if (cVar1 != cVar2) {
-      Com_Error(ERR_DROP,"Script_ParseTableLookup: no separating comma found\n");
+      cVar5 = *pcVar6;
+      cVar1 = *pcVar7;
+      if (cVar5 == '\0') break;
+      pcVar6 = pcVar6 + 1;
+      pcVar7 = pcVar7 + 1;
+    } while (cVar5 == cVar1);
+    if (cVar5 != cVar1) {
+      Com_Error(1,0xffffffff82170a5c);
     }
-    iVar4 = Int_Parse(param_3,local_1048);
-    if (iVar4 != 0) {
+    iVar3 = Int_Parse(param_3,local_1048);
+    if (iVar3 != 0) {
       String_Parse(param_3,local_1040,0x400);
-      pcVar11 = local_1040;
-      pcVar5 = pcVar10;
+      pcVar6 = local_1040;
+      pcVar7 = pcVar8;
       do {
-        cVar1 = *pcVar11;
-        cVar2 = *pcVar5;
-        if (cVar1 == '\0') break;
-        pcVar11 = pcVar11 + 1;
-        pcVar5 = pcVar5 + 1;
-      } while (cVar1 == cVar2);
-      if (cVar1 != cVar2) {
-        Com_Error(ERR_DROP,"Script_ParseTableLookup: no separating comma found\n");
+        cVar5 = *pcVar6;
+        cVar1 = *pcVar7;
+        if (cVar5 == '\0') break;
+        pcVar6 = pcVar6 + 1;
+        pcVar7 = pcVar7 + 1;
+      } while (cVar5 == cVar1);
+      if (cVar5 != cVar1) {
+        Com_Error(1,0xffffffff82170a5c);
       }
-      iVar4 = String_Parse(param_3,acStack_c40,0x400);
-      if (iVar4 != 0) {
-        bVar7 = Script_ParseLocalVarString
-                          (pUVar3,acStack_c40,param_3,0,&local_104c,acStack_440,0x400);
-        if (bVar7) {
-          I_strncpyz(acStack_c40,local_104c,0x400);
+      iVar3 = String_Parse(param_3,auStack_c40,0x400);
+      if (iVar3 != 0) {
+        cVar5 = Script_ParseLocalVarString
+                          (uVar2,auStack_c40,param_3,0,&local_104c,auStack_440,0x400);
+        if (cVar5 != '\0') {
+          I_strncpyz(auStack_c40,local_104c,0x400);
         }
         String_Parse(param_3,local_1040,0x400);
-        pcVar5 = local_1040;
+        pcVar7 = local_1040;
         do {
-          cVar1 = *pcVar5;
-          cVar2 = *pcVar10;
-          if (cVar1 == '\0') break;
-          pcVar5 = pcVar5 + 1;
-          pcVar10 = pcVar10 + 1;
-        } while (cVar1 == cVar2);
-        if (cVar1 != cVar2) {
-          Com_Error(ERR_DROP,"Script_ParseTableLookup: no separating comma found\n");
+          cVar5 = *pcVar7;
+          cVar1 = *pcVar8;
+          if (cVar5 == '\0') break;
+          pcVar7 = pcVar7 + 1;
+          pcVar8 = pcVar8 + 1;
+        } while (cVar5 == cVar1);
+        if (cVar5 != cVar1) {
+          Com_Error(1,0xffffffff82170a5c);
         }
-        iVar4 = Int_Parse(param_3,&local_1050);
-        if (iVar4 != 0) {
+        iVar3 = Int_Parse(param_3,&local_1050);
+        if (iVar3 != 0) {
           String_Parse(param_3,local_1040,0x400);
-          pcVar10 = local_1040;
-          pcVar5 = ")";
+          pcVar8 = local_1040;
+          pcVar7 = ")";
           do {
-            cVar1 = *pcVar10;
-            cVar2 = *pcVar5;
-            if (cVar1 == '\0') break;
-            pcVar10 = pcVar10 + 1;
-            pcVar5 = pcVar5 + 1;
-          } while (cVar1 == cVar2);
-          if (cVar1 != cVar2) {
-            Com_Error(ERR_DROP,"Script_ParseTableLookup: no closing parenthesi found\n");
+            cVar5 = *pcVar8;
+            cVar1 = *pcVar7;
+            if (cVar5 == '\0') break;
+            pcVar8 = pcVar8 + 1;
+            pcVar7 = pcVar7 + 1;
+          } while (cVar5 == cVar1);
+          if (cVar5 != cVar1) {
+            Com_Error(1,0xffffffff82170a90);
           }
-          pcVar5 = Scr_TableLookupInternal(acStack_840,local_1048[0],acStack_c40,local_1050);
-          *(undefined4 *)uVar8 = pcVar5;
-          uVar6 = __restgprlr_25(1);
-          return (bool)uVar6;
+          uVar4 = Scr_TableLookupInternal(auStack_840,local_1048[0],auStack_c40,local_1050);
+          *(undefined4 *)param_4 = uVar4;
+          __restgprlr_25(1);
+          return;
         }
       }
     }
   }
-  uVar6 = __restgprlr_25(0);
-  return (bool)uVar6;
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 825BDCA8  Script_ParseLocalVarBool  (ui/ui_shared.cpp:2364)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-bool Script_ParseLocalVarBool
-               (UiContext *param_1,char *param_2,char **param_3,int param_4,bool *param_5)
+void Script_ParseLocalVarBool
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-  UiContext *pUVar1;
+  undefined8 uVar1;
   int iVar2;
-  undefined1 uVar4;
-  UILocalVar *pUVar3;
-  bool bVar5;
-  ulonglong uVar6;
+  undefined1 uVar3;
   
-  uVar6 = (ulonglong)(int)param_5;
-  pUVar1 = (UiContext *)__savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x93f,0,"%s"
-                   );
+  uVar1 = __savegprlr_27();
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x93f,0,0xffffffff82000f98,0xffffffff8200e26c);
   }
-  iVar2 = I_stricmp(param_2,"localvarbool");
+  iVar2 = I_stricmp(param_2,0xffffffff8216a2e0);
   if (iVar2 != 0) {
-    *(undefined1 *)uVar6 = 0;
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    *(undefined1 *)param_5 = 0;
+    __restgprlr_27(0);
+    return;
   }
-  pUVar3 = Script_ParseLocalVarInParens(pUVar1,param_3,param_4);
-  bVar5 = UILocalVar_GetBool(pUVar3);
-  *(undefined1 *)uVar6 = bVar5;
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  Script_ParseLocalVarInParens(uVar1,param_3,param_4);
+  uVar3 = UILocalVar_GetBool();
+  *(undefined1 *)param_5 = uVar3;
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 825CF410  Script_SetFocus  (ui/ui_shared.cpp:2383)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetFocus(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetFocus(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  bool bVar4;
-  itemDef_t *piVar3;
-  double extraout_f1;
-  double dVar5;
-  double in_f2;
-  char *local_830 [4];
-  char acStack_820 [1024];
-  char acStack_420 [1056];
+  undefined8 uVar1;
+  int iVar3;
+  char cVar4;
+  ulonglong uVar2;
+  undefined1 *local_830 [4];
+  undefined1 auStack_820 [1024];
+  undefined1 auStack_420 [1056];
   
-  pUVar1 = (UiContext *)__savegprlr_29(param_1);
-  dVar5 = extraout_f1;
-  iVar2 = String_Parse(param_3,acStack_820,0x400);
-  if (iVar2 != 0) {
-    bVar4 = Script_ParseLocalVarString(pUVar1,acStack_820,param_3,0,local_830,acStack_420,0x400);
-    if (!bVar4) {
-      local_830[0] = acStack_820;
+  uVar1 = __savegprlr_29();
+  iVar3 = String_Parse(param_3,auStack_820,0x400);
+  if (iVar3 != 0) {
+    cVar4 = Script_ParseLocalVarString(uVar1,auStack_820,param_3,0,local_830,auStack_420,0x400);
+    if (cVar4 == '\0') {
+      local_830[0] = auStack_820;
     }
-    piVar3 = Menu_FindItemByName(param_2->parent,local_830[0]);
-    if (piVar3 == (itemDef_t *)0x0) {
-      Com_Printf(0xd,"setFocus: could not find widget named \'%s\'\n");
+    uVar2 = Menu_FindItemByName(*(undefined4 *)(param_2 + 0x134),local_830[0]);
+    if ((uVar2 & 0xffffffff) == 0) {
+      Com_Printf(0xd,0xffffffff82173bf4,auStack_820);
       __restgprlr_29();
       return;
     }
-    Window_GetRect(&piVar3->window);
-    iVar2 = Item_SetFocus(pUVar1,piVar3,(float)dVar5,(float)in_f2,(ItemFocusReason)param_3);
-    if (iVar2 == 0) {
-      Com_PrintError(0xd,
-                     "setFocus: error focusing widget \'%s\' (widget was found but could not accept focus)\n"
-                    );
+    Window_GetRect(uVar2);
+    iVar3 = Item_SetFocus(uVar1,uVar2);
+    if (iVar3 == 0) {
+      Com_PrintError(0xd,0xffffffff82173ab0,auStack_820);
       __restgprlr_29();
       return;
     }
-    bVar4 = Item_IsTextField(piVar3);
-    if (bVar4) {
-      Item_TextField_BeginEdit(pUVar1,piVar3);
+    cVar4 = Item_IsTextField(uVar2);
+    if (cVar4 != '\0') {
+      Item_TextField_BeginEdit(uVar1,uVar2);
     }
   }
   __restgprlr_29();
@@ -3898,126 +3309,106 @@ void Script_SetFocus(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BDD48  Script_ParseKeyboard  (ui/ui_shared.cpp:2419)
 
-bool Script_ParseKeyboard
-               (char *param_1,char **param_2,int param_3,char *param_4,int param_5,char *param_6)
+void Script_ParseKeyboard
+               (undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
   char cVar1;
   char cVar2;
-  char *pcVar3;
+  undefined8 uVar3;
   int iVar4;
-  undefined1 uVar6;
-  char **ppcVar5;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  char *pcVar10;
+  char *pcVar5;
+  char *pcVar6;
   char local_430 [1072];
   
-  lVar9 = (longlong)param_5;
-  lVar8 = (longlong)(int)param_4;
-  lVar7 = (longlong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_27(param_1,lVar7,param_3,lVar8,lVar9,param_6);
-  iVar4 = I_stricmp(pcVar3,"keyboard");
+  uVar3 = __savegprlr_27();
+  iVar4 = I_stricmp(uVar3,0xffffffff82170b58);
   if (iVar4 != 0) {
-    uVar6 = __restgprlr_27(0);
-    return (bool)uVar6;
+    __restgprlr_27(0);
+    return;
   }
-  ppcVar5 = (char **)lVar7;
-  String_Parse(ppcVar5,local_430,0x400);
-  pcVar10 = local_430;
-  pcVar3 = "(";
+  String_Parse(param_2,local_430,0x400);
+  pcVar6 = local_430;
+  pcVar5 = "(";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar3;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar5;
     if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar3 = pcVar3 + 1;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"%s: Error at argument %d: no opening parenthesi found after \"localvar\"\n")
-    ;
+    Com_Error(1,0xffffffff82170b10,param_6,param_3 + 1);
   }
-  String_Parse(ppcVar5,local_430,0x400);
-  I_strncpyz((char *)lVar8,local_430,(int)lVar9);
-  String_Parse(ppcVar5,local_430,0x400);
-  pcVar10 = local_430;
-  pcVar3 = ")";
+  String_Parse(param_2,local_430,0x400);
+  I_strncpyz(param_4,local_430,param_5);
+  String_Parse(param_2,local_430,0x400);
+  pcVar6 = local_430;
+  pcVar5 = ")";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar3;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar5;
     if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar3 = pcVar3 + 1;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"%s: Error at argument %d: no closing parenthesi found after \"localvar\"\n")
-    ;
+    Com_Error(1,0xffffffff82170ac8,param_6,param_3 + 1);
   }
-  uVar6 = __restgprlr_27(1);
-  return (bool)uVar6;
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 825BDE78  Script_SetMatchRulesDataKeyboardFinished  (ui/ui_shared.cpp:2444)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_SetMatchRulesDataKeyboardFinished(LocalClientNum_t param_1,bool param_2,char *param_3)
+void Script_SetMatchRulesDataKeyboardFinished
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  LocalClientNum_t LVar1;
-  GameStateInfoIndex GVar2;
-  GameStateInfo *pGVar3;
-  LookupResultDataType LVar4;
-  char *pcVar5;
-  int iVar6;
-  bool bVar8;
-  StructuredData_SetResult SVar7;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  char *pcVar11;
-  StructuredDataBuffer aSStack_30 [6];
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar4;
+  undefined8 uVar3;
+  int iVar5;
+  char cVar6;
+  undefined1 auStack_30 [48];
   
-  uVar10 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)param_2;
-  LVar1 = __savegprlr_28(param_1);
-  if ((((uVar9 & 0xff) != 0) && ((uVar10 & 0xffffffff) != 0)) &&
-     (pcVar11 = (char *)uVar10, *pcVar11 != '\0')) {
-    GVar2 = GameStateInfo_GetIndexForGamemode();
-    if (GVar2 != GAMESTATEINFO_HOST) {
-      Com_Error(ERR_DROP,"SetMatchRulesData called when not game host.");
+  uVar2 = __savegprlr_28();
+  if ((((param_2 & 0xff) != 0) && ((param_3 & 0xffffffff) != 0)) && (*(char *)param_3 != '\0')) {
+    iVar4 = GameStateInfo_GetIndexForGamemode();
+    if (iVar4 != 0) {
+      Com_Error(1,0xffffffff82170c10);
     }
-    pGVar3 = GameStateInfo_Get();
-    if (pGVar3->usingRecipe == 0) {
-      Com_Error(ERR_DROP,"SetMatchRulesData called when not using recipe!");
+    iVar4 = GameStateInfo_Get();
+    if (*(int *)(iVar4 + 4) == 0) {
+      Com_Error(1,0xffffffff82170be0);
     }
-    LVar4 = StructuredData_GetLookupResultType(&s_keyboardLookup);
-    if (LVar4 != LOOKUP_RESULT_STRING) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x99f,0,
-                      "valueType == LOOKUP_RESULT_STRING\n\t%i, %i");
+    uVar3 = StructuredData_GetLookupResultType(0xffffffff8400bd4c);
+    if ((int)uVar3 != 2) {
+      MyAssertHandler(0xffffffff82170658,0x99f,0,0xffffffff82170bb4,uVar3,2);
     }
-    StructuredData_MakeBuffer(aSStack_30,pGVar3->matchRules->data,0xc00);
-    pcVar5 = StructuredData_GetString(&s_keyboardLookup,aSStack_30);
-    iVar6 = I_stricmp(pcVar5,pcVar11);
-    if (iVar6 != 0) {
-      iVar6 = CL_ControllerIndexFromClientNum(LVar1);
-      bVar8 = ProfanityFilter_IsBadWord(iVar6,pcVar11);
-      if (bVar8) {
-        Party_OpenPartyUIErrorBox("MENU_OFFENSIVETEXT");
+    StructuredData_MakeBuffer(auStack_30,*(undefined4 *)(iVar4 + 8),0xc00);
+    uVar3 = StructuredData_GetString(0xffffffff8400bd4c,auStack_30);
+    iVar5 = I_stricmp(uVar3,param_3);
+    if (iVar5 != 0) {
+      uVar2 = CL_ControllerIndexFromClientNum(uVar2);
+      cVar6 = ProfanityFilter_IsBadWord(uVar2,param_3);
+      if (cVar6 != '\0') {
+        Party_OpenPartyUIErrorBox(0xffffffff82170ba0);
         __restgprlr_28();
         return;
       }
-      SVar7 = StructuredData_SetString(&s_keyboardLookup,aSStack_30,pcVar11);
-      if ((SVar7 == SETRESULT_SUCCESS_CHANGED) ||
-         (bVar8 = false, SVar7 == SETRESULT_SUCCESS_NOCHANGE)) {
-        bVar8 = true;
+      iVar5 = StructuredData_SetString(0xffffffff8400bd4c,auStack_30,param_3);
+      if ((iVar5 == 0) || (bVar1 = false, iVar5 == 1)) {
+        bVar1 = true;
       }
-      if (!bVar8) {
-        Com_Error(ERR_DROP,"SetMatchRulesData: Error setting string from keyboard: %s\n");
+      if (!bVar1) {
+        Com_Error(1,0xffffffff82170b64,(&PTR_s_Value_changed_82992d4c)[iVar5]);
       }
-      if (SVar7 == SETRESULT_SUCCESS_CHANGED) {
-        MatchRulesChanged(pGVar3->matchRules);
+      if (iVar5 == 0) {
+        MatchRulesChanged(*(undefined4 *)(iVar4 + 8));
       }
     }
   }
@@ -4028,44 +3419,38 @@ void Script_SetMatchRulesDataKeyboardFinished(LocalClientNum_t param_1,bool para
 
 // 825BDFF8  Script_SetPlayerDataKeyboardFinished  (ui/ui_shared.cpp:2493)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_SetPlayerDataKeyboardFinished(LocalClientNum_t param_1,bool param_2,char *param_3)
+void Script_SetPlayerDataKeyboardFinished(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar5;
-  LookupResultDataType LVar3;
-  StructuredData_SetResult SVar4;
-  ulonglong uVar6;
-  StructuredDataBuffer aSStack_30 [6];
+  bool bVar1;
+  undefined8 uVar2;
+  char cVar5;
+  undefined8 uVar3;
+  int iVar4;
+  undefined1 auStack_30 [48];
   
-  uVar6 = (ulonglong)param_2;
-  LVar1 = __savegprlr_29(param_1);
-  if ((uVar6 & 0xff) != 0) {
-    iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-    bVar5 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_30,iVar2);
-    if (!bVar5) {
-      Com_Printf(0xe,"Lost player stats before setPlayerData keyboard finished\n");
+  __savegprlr_29();
+  if ((param_2 & 0xff) != 0) {
+    uVar2 = CL_ControllerIndexFromClientNum();
+    cVar5 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_30,uVar2);
+    if (cVar5 == '\0') {
+      Com_Printf(0xe,0xffffffff82170c78);
       __restgprlr_29();
       return;
     }
-    LVar3 = StructuredData_GetLookupResultType(&s_keyboardLookup);
-    if (LVar3 != LOOKUP_RESULT_STRING) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x9d3,0,
-                      "valueType == LOOKUP_RESULT_STRING\n\t%i, %i");
+    uVar3 = StructuredData_GetLookupResultType(0xffffffff8400bd4c);
+    if ((int)uVar3 != 2) {
+      MyAssertHandler(0xffffffff82170658,0x9d3,0,0xffffffff82170bb4,uVar3,2);
     }
-    SVar4 = StructuredData_SetString(&s_keyboardLookup,aSStack_30,param_3);
-    if ((SVar4 == SETRESULT_SUCCESS_CHANGED) || (bVar5 = false, SVar4 == SETRESULT_SUCCESS_NOCHANGE)
-       ) {
-      bVar5 = true;
+    iVar4 = StructuredData_SetString(0xffffffff8400bd4c,auStack_30,param_3);
+    if ((iVar4 == 0) || (bVar1 = false, iVar4 == 1)) {
+      bVar1 = true;
     }
-    if (!bVar5) {
-      Com_Error(ERR_DROP,"SetPlayerData: Error setting string from keyboard: %s\n");
+    if (!bVar1) {
+      Com_Error(1,0xffffffff82170c40,(&PTR_s_Value_changed_82992d4c)[iVar4]);
     }
-    if (SVar4 == SETRESULT_SUCCESS_CHANGED) {
-      LiveStorage_StatsWriteNeeded(iVar2);
+    if (iVar4 == 0) {
+      LiveStorage_StatsWriteNeeded(uVar2);
     }
   }
   __restgprlr_29();
@@ -4075,28 +3460,23 @@ void Script_SetPlayerDataKeyboardFinished(LocalClientNum_t param_1,bool param_2,
 
 // 825CA910  Script_OpenKeyboardForSetStructuredDataDef  (ui/ui_shared.cpp:2528)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void Script_OpenKeyboardForSetStructuredDataDef
-               (UiContext *param_1,StructuredDataLookup *param_2,char *param_3,int param_4,
-               char *param_5,_func___cdecl_void_LocalClientNum_t_bool_char_ptr *param_6)
+               (undefined8 param_1,undefined4 *param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
-  LocalClientNum_t *pLVar1;
-  char *pcVar2;
-  int iVar3;
+  undefined4 *puVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  pLVar1 = (LocalClientNum_t *)__savegprlr_26(param_1);
-  pcVar2 = SEH_LocalizeTextMessage(param_5,"menu prompt",LOCMSG_SAFE);
-  s_keyboardLookup.def = param_2->def;
-  s_keyboardLookup.type = param_2->type;
-  s_keyboardLookup.offset = param_2->offset;
-  s_keyboardLookup.error = param_2->error;
-  iVar3 = CL_ControllerIndexFromClientNum(*pLVar1);
-  UI_ShowKeyboard(iVar3,pcVar2,param_3,param_4,true,param_6);
+  puVar3 = (undefined4 *)__savegprlr_26();
+  uVar1 = SEH_LocalizeTextMessage(param_5,0xffffffff82172d68,0);
+  DAT_8400bd4c = *param_2;
+  DAT_8400bd50 = param_2[1];
+  DAT_8400bd54 = param_2[2];
+  DAT_8400bd58 = param_2[3];
+  uVar2 = CL_ControllerIndexFromClientNum(*puVar3);
+  UI_ShowKeyboard(uVar2,uVar1,param_3,param_4,1,param_6);
   __restgprlr_26();
   return;
 }
@@ -4104,34 +3484,34 @@ void Script_OpenKeyboardForSetStructuredDataDef
 
 // 825BE0F8  Script_SetStructuredDataDef_FoundArg  (ui/ui_shared.cpp:2546)
 
-void Script_SetStructuredDataDef_FoundArg(char *param_1,char (*param_2) [32],int param_3)
+void Script_SetStructuredDataDef_FoundArg(undefined8 param_1,longlong param_2,uint param_3)
 
 {
-  if (7 < param_3) {
+  if (7 < (int)param_3) {
     return;
   }
-  I_strncpyz(param_2[param_3],param_1,0x20);
+  I_strncpyz(((ulonglong)param_3 & 0x7ffffff) * 0x20 + param_2,param_1,0x20);
   return;
 }
 
 
 // 825BE120  Script_SetStructuredDataDef_PrintArgs  (ui/ui_shared.cpp:2553)
 
-void Script_SetStructuredDataDef_PrintArgs(char (*param_1) [32],int param_2,char *param_3)
+void Script_SetStructuredDataDef_PrintArgs(undefined8 param_1,longlong param_2)
 
 {
   longlong lVar1;
   
-  lVar1 = (longlong)param_2;
-  __savegprlr_29(param_1,lVar1,param_3);
-  Com_Printf(0x17,"In call to %s( ");
-  if (0 < (int)lVar1) {
+  lVar1 = __savegprlr_29();
+  Com_Printf(0x17,0xffffffff82076f40);
+  if (0 < (int)param_2) {
     do {
-      Com_Printf(0x17,"\"%s\", ");
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      Com_Printf(0x17,0xffffffff82170cbc,lVar1);
+      param_2 = param_2 + -1;
+      lVar1 = lVar1 + 0x20;
+    } while (param_2 != 0);
   }
-  Com_Printf(0x17," ... )\n");
+  Com_Printf(0x17,0xffffffff82170cb4);
   __restgprlr_29();
   return;
 }
@@ -4139,440 +3519,399 @@ void Script_SetStructuredDataDef_PrintArgs(char (*param_1) [32],int param_2,char
 
 // 825CA998  Script_SetStructuredDataDef  (ui/ui_shared.cpp:2573)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-StructuredData_SetResult
-Script_SetStructuredDataDef
-          (StructuredDataDef *param_1,StructuredDataBuffer *param_2,UiContext *param_3,
-          char **param_4,char *param_5,bool param_6,bool param_7,
-          _func___cdecl_void_LocalClientNum_t_bool_char_ptr *param_8)
+void Script_SetStructuredDataDef
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,ulonglong param_6,ulonglong param_7,ulonglong param_8)
 
 {
   char cVar1;
-  char cVar2;
+  bool bVar2;
   float fVar3;
-  StructuredDataDef *pSVar4;
-  LookupState LVar5;
-  int iVar6;
-  bool bVar13;
-  char *pcVar7;
-  LookupResultDataType LVar8;
+  undefined8 uVar4;
+  int iVar8;
   int iVar9;
-  char *pcVar10;
-  int iVar11;
-  StructuredData_SetResult SVar12;
-  ulonglong uVar14;
-  char **ppcVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  bool *pbVar18;
-  double dVar19;
-  bool local_9b0 [4];
+  char cVar10;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  char *pcVar11;
+  char *pcVar12;
+  char *pcVar13;
+  int iVar14;
+  double dVar15;
+  char local_9b0 [4];
   char *local_9ac;
   float local_9a8 [2];
-  StructuredDataLookup local_9a0;
-  char acStack_990 [256];
+  undefined4 local_9a0;
+  undefined4 local_99c;
+  undefined4 local_998;
+  undefined4 local_994;
+  undefined1 auStack_990 [256];
   char local_890 [1024];
-  char *apcStack_490 [292];
+  undefined1 auStack_490 [1168];
   
-  uVar17 = (ulonglong)(int)param_8;
-  uVar16 = (ulonglong)param_7;
-  uVar14 = (ulonglong)param_6;
-  pSVar4 = (StructuredDataDef *)__savegprlr_17(param_1);
-  if ((uVar14 & 0xff) == 0) {
+  uVar4 = __savegprlr_17();
+  if ((param_6 & 0xff) == 0) {
     String_Parse(param_4,local_890,0x400);
-    pcVar10 = local_890;
-    pcVar7 = "(";
+    pcVar12 = local_890;
+    pcVar11 = "(";
     do {
-      cVar1 = *pcVar10;
-      cVar2 = *pcVar7;
-      if (cVar1 == '\0') break;
-      pcVar10 = pcVar10 + 1;
-      pcVar7 = pcVar7 + 1;
-    } while (cVar1 == cVar2);
-    if (cVar1 != cVar2) {
-      Com_Error(ERR_DROP,"%s: no opening parenthesi found\n");
+      cVar10 = *pcVar12;
+      cVar1 = *pcVar11;
+      if (cVar10 == '\0') break;
+      pcVar12 = pcVar12 + 1;
+      pcVar11 = pcVar11 + 1;
+    } while (cVar10 == cVar1);
+    if (cVar10 != cVar1) {
+      Com_Error(1,0xffffffff821734e0,param_5);
     }
   }
-  StructuredData_InitializeLookup(pSVar4,&local_9a0);
-  pbVar18 = local_9b0;
+  StructuredData_InitializeLookup(uVar4,&local_9a0);
+  pcVar11 = local_9b0;
   iVar9 = -1;
   while( true ) {
-    iVar11 = iVar9;
-    LVar5 = StructuredData_GetLookupState(&local_9a0);
-    if (LVar5 == LOOKUP_ERROR) {
-      Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 1,param_5);
-      StructuredData_GetLookupError(&local_9a0);
-      Com_Error(ERR_DROP,"SetPlayerData: Error at argument %d: %s\n");
+    iVar14 = iVar9;
+    iVar8 = StructuredData_GetLookupState(&local_9a0);
+    if (iVar8 == 2) {
+      Script_SetStructuredDataDef_PrintArgs(auStack_990,iVar14 + 1,param_5);
+      iVar9 = StructuredData_GetLookupError(&local_9a0);
+      Com_Error(1,0xffffffff8217348c,iVar14 + 1,(&PTR_DAT_82992d38)[iVar9]);
     }
-    iVar9 = iVar11 + 1;
-    pbVar18 = pbVar18 + 0x20;
+    iVar9 = iVar14 + 1;
+    pcVar11 = pcVar11 + 0x20;
     String_Parse(param_4,local_890,0x400);
     if (iVar9 < 8) {
-      I_strncpyz(pbVar18,local_890,0x20);
+      I_strncpyz(pcVar11,local_890,0x20);
     }
-    if (LVar5 != LOOKUP_IN_PROGRESS) break;
+    if (iVar8 != 0) break;
     if ((local_890[0] < '0') || ('9' < local_890[0])) {
-      bVar13 = Script_ParseLocalVarInt(param_3,local_890,param_4,iVar9,(int *)local_9a8);
+      cVar10 = Script_ParseLocalVarInt(param_3,local_890,param_4,iVar9,local_9a8);
       fVar3 = local_9a8[0];
-      if (bVar13) {
-        pcVar7 = va("%i");
-        if (iVar9 < 8) {
-          I_strncpyz(pbVar18,pcVar7,0x20);
+      if (cVar10 == '\0') {
+        cVar10 = Script_ParseLocalVarString
+                           (param_3,local_890,param_4,iVar9,&local_9ac,auStack_490,0x400);
+        pcVar12 = local_9ac;
+        if (cVar10 == '\0') {
+          cVar10 = Script_ParseTableLookup(param_3,local_890,param_4,&local_9ac,auStack_490);
+          pcVar12 = local_9ac;
+          if (cVar10 == '\0') {
+            pcVar12 = local_890;
+          }
+          else if (iVar9 < 8) {
+            I_strncpyz(pcVar11,local_9ac,0x20);
+          }
         }
-        StructuredData_LookupWithInt(&local_9a0,(int)fVar3);
+        else if (iVar9 < 8) {
+          I_strncpyz(pcVar11,local_9ac,0x20);
+        }
+        StructuredData_LookupWithString(&local_9a0,pcVar12);
       }
       else {
-        iVar6 = 0x400;
-        ppcVar15 = apcStack_490;
-        bVar13 = Script_ParseLocalVarString
-                           (param_3,local_890,param_4,iVar9,&local_9ac,(char *)ppcVar15,0x400);
-        pcVar7 = local_9ac;
-        if (bVar13) {
-          if (iVar9 < 8) {
-            I_strncpyz(pbVar18,local_9ac,0x20);
-          }
-        }
-        else {
-          bVar13 = Script_ParseTableLookup
-                             (param_3,local_890,param_4,(int)&local_9ac,apcStack_490,
-                              (char *)ppcVar15,iVar6);
-          pcVar7 = local_9ac;
-          if (bVar13) {
-            if (iVar9 < 8) {
-              I_strncpyz(pbVar18,local_9ac,0x20);
-            }
-          }
-          else {
-            pcVar7 = local_890;
-          }
-        }
-        StructuredData_LookupWithString(&local_9a0,pcVar7);
-      }
-    }
-    else {
-      iVar6 = atoi(local_890);
-      StructuredData_LookupWithInt(&local_9a0,iVar6);
-    }
-    String_Parse(param_4,local_890,0x400);
-    pcVar10 = local_890;
-    pcVar7 = ",";
-    do {
-      cVar1 = *pcVar10;
-      cVar2 = *pcVar7;
-      if (cVar1 == '\0') break;
-      pcVar10 = pcVar10 + 1;
-      pcVar7 = pcVar7 + 1;
-    } while (cVar1 == cVar2);
-    if (cVar1 != cVar2) {
-      Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
-      Com_Error(ERR_DROP,"%s: no comma found after argument %d\n");
-    }
-  }
-  if (LVar5 != LOOKUP_FINISHED) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xa5a,0,"%s"
-                   );
-  }
-  LVar8 = StructuredData_GetLookupResultType(&local_9a0);
-  if (((uVar17 & 0xffffffff) != 0) &&
-     (bVar13 = Script_ParseKeyboard(local_890,param_4,iVar9,(char *)apcStack_490,0x400,param_5),
-     bVar13)) {
-    String_Parse(param_4,local_890,0x400);
-    pcVar10 = local_890;
-    pcVar7 = ")";
-    do {
-      cVar1 = *pcVar10;
-      cVar2 = *pcVar7;
-      if (cVar1 == '\0') break;
-      pcVar10 = pcVar10 + 1;
-      pcVar7 = pcVar7 + 1;
-    } while (cVar1 == cVar2);
-    if (cVar1 != cVar2) {
-      Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
-      Com_Error(ERR_DROP,"SetPlayerData: no closing paren found\n");
-    }
-    if ((LVar8 != LOOKUP_RESULT_STRING) ||
-       (iVar9 = StructuredData_GetMaxStringSize(&local_9a0), iVar9 == 0)) {
-      Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
-      Com_Error(ERR_DROP,
-                "SetPlayerData: Error at argument %d: may only use keyboard() to set strings\n");
-    }
-    if ((uVar16 & 0xff) == 0) {
-      pcVar7 = StructuredData_GetString(&local_9a0,param_2);
-    }
-    else {
-      pcVar7 = "";
-    }
-    iVar9 = StructuredData_GetMaxStringSize(&local_9a0);
-    pcVar10 = SEH_LocalizeTextMessage((char *)apcStack_490,"menu prompt",LOCMSG_SAFE);
-    s_keyboardLookup.def = local_9a0.def;
-    s_keyboardLookup.type = local_9a0.type;
-    s_keyboardLookup.offset = local_9a0.offset;
-    s_keyboardLookup.error = local_9a0.error;
-    iVar11 = CL_ControllerIndexFromClientNum(param_3->localClientNum);
-    UI_ShowKeyboard(iVar11,pcVar10,pcVar7,iVar9,true,
-                    (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)uVar17);
-    SVar12 = __restgprlr_17(1);
-    return SVar12;
-  }
-  bVar13 = Script_ParseLocalVarInt(param_3,local_890,param_4,iVar9,(int *)local_9a8);
-  if (bVar13) {
-    pcVar7 = va("%i");
-    if (iVar9 < 8) {
-      I_strncpyz(acStack_990 + iVar9 * 0x20,pcVar7,0x20);
-    }
-    SVar12 = StructuredData_SetInt(&local_9a0,param_2,(int)local_9a8[0]);
-  }
-  else {
-    bVar13 = Script_ParseLocalVarFloat(param_3,local_890,param_4,iVar9,local_9a8);
-    if (bVar13) {
-      dVar19 = (double)local_9a8[0];
-      pcVar7 = va("%f");
-      if (iVar9 < 8) {
-        I_strncpyz(acStack_990 + iVar9 * 0x20,pcVar7,0x20);
-      }
-      SVar12 = StructuredData_SetFloat(&local_9a0,param_2,(float)dVar19);
-    }
-    else {
-      bVar13 = Script_ParseLocalVarString
-                         (param_3,local_890,param_4,iVar9,&local_9ac,(char *)apcStack_490,0x400);
-      if (bVar13) {
+        uVar4 = va(0xffffffff8200c28c,local_9a8[0]);
         if (iVar9 < 8) {
-          I_strncpyz(acStack_990 + iVar9 * 0x20,local_9ac,0x20);
+          I_strncpyz(pcVar11,uVar4,0x20);
         }
+        StructuredData_LookupWithInt(&local_9a0,fVar3);
       }
-      else {
-        bVar13 = Script_ParseLocalVarBool(param_3,local_890,param_4,iVar9,local_9b0);
-        if (bVar13) {
-          if (local_9b0[0] == false) {
-            pcVar7 = "false";
+    }
+    else {
+      iVar8 = atoi(local_890);
+      StructuredData_LookupWithInt(&local_9a0,iVar8);
+    }
+    String_Parse(param_4,local_890,0x400);
+    pcVar13 = local_890;
+    pcVar12 = ",";
+    do {
+      cVar10 = *pcVar13;
+      cVar1 = *pcVar12;
+      if (cVar10 == '\0') break;
+      pcVar13 = pcVar13 + 1;
+      pcVar12 = pcVar12 + 1;
+    } while (cVar10 == cVar1);
+    if (cVar10 != cVar1) {
+      Script_SetStructuredDataDef_PrintArgs(auStack_990,iVar14 + 2,param_5);
+      Com_Error(1,0xffffffff821734b8,param_5,iVar14 + 2);
+    }
+  }
+  if (iVar8 != 1) {
+    MyAssertHandler(0xffffffff82170658,0xa5a,0,0xffffffff82000f98,0xffffffff82173470);
+  }
+  uVar4 = StructuredData_GetLookupResultType(&local_9a0);
+  iVar8 = (int)uVar4;
+  if (((param_8 & 0xffffffff) != 0) &&
+     (cVar10 = Script_ParseKeyboard(local_890,param_4,iVar9,auStack_490,0x400,param_5),
+     cVar10 != '\0')) {
+    String_Parse(param_4,local_890,0x400);
+    pcVar12 = local_890;
+    pcVar11 = ")";
+    do {
+      cVar10 = *pcVar12;
+      cVar1 = *pcVar11;
+      if (cVar10 == '\0') break;
+      pcVar12 = pcVar12 + 1;
+      pcVar11 = pcVar11 + 1;
+    } while (cVar10 == cVar1);
+    if (cVar10 != cVar1) {
+      Script_SetStructuredDataDef_PrintArgs(auStack_990,iVar14 + 2,param_5);
+      Com_Error(1,0xffffffff82173448);
+    }
+    if ((iVar8 != 2) || (iVar9 = StructuredData_GetMaxStringSize(&local_9a0), iVar9 == 0)) {
+      Script_SetStructuredDataDef_PrintArgs(auStack_990,iVar14 + 2,param_5);
+      Com_Error(1,0xffffffff821733f8,iVar14 + 2);
+    }
+    if ((param_7 & 0xff) == 0) {
+      uVar4 = StructuredData_GetString(&local_9a0,param_2);
+    }
+    else {
+      uVar4 = 0xffffffff820068af;
+    }
+    uVar5 = StructuredData_GetMaxStringSize(&local_9a0);
+    uVar6 = SEH_LocalizeTextMessage(auStack_490,0xffffffff82172d68,0);
+    DAT_8400bd4c = local_9a0;
+    DAT_8400bd50 = local_99c;
+    DAT_8400bd54 = local_998;
+    DAT_8400bd58 = local_994;
+    uVar7 = CL_ControllerIndexFromClientNum(*(undefined4 *)param_3);
+    UI_ShowKeyboard(uVar7,uVar6,uVar4,uVar5,1,param_8);
+    __restgprlr_17(1);
+    return;
+  }
+  cVar10 = Script_ParseLocalVarInt(param_3,local_890,param_4,iVar9,local_9a8);
+  if (cVar10 == '\0') {
+    cVar10 = Script_ParseLocalVarFloat(param_3,local_890,param_4,iVar9,local_9a8);
+    if (cVar10 == '\0') {
+      cVar10 = Script_ParseLocalVarString
+                         (param_3,local_890,param_4,iVar9,&local_9ac,auStack_490,0x400);
+      if (cVar10 == '\0') {
+        cVar10 = Script_ParseLocalVarBool(param_3,local_890,param_4,iVar9,local_9b0);
+        if (cVar10 != '\0') {
+          if (local_9b0[0] == '\0') {
+            uVar4 = 0xffffffff82003cf0;
           }
           else {
-            pcVar7 = "true";
+            uVar4 = 0xffffffff82003cf8;
           }
           if (iVar9 < 8) {
-            I_strncpyz(acStack_990 + iVar9 * 0x20,pcVar7,0x20);
+            I_strncpyz(auStack_990 + iVar9 * 0x20,uVar4,0x20);
           }
-          SVar12 = StructuredData_SetBool(&local_9a0,param_2,local_9b0[0]);
+          iVar9 = StructuredData_SetBool(&local_9a0,param_2,local_9b0[0]);
           goto LAB_825cb31c;
         }
-        if (LVar8 == LOOKUP_RESULT_BOOL) {
-          pcVar7 = "true";
-          pcVar10 = local_890;
+        if (iVar8 == 1) {
+          pcVar11 = "true";
+          pcVar12 = local_890;
           do {
-            cVar1 = *pcVar10;
-            cVar2 = *pcVar7;
-            if (cVar1 == '\0') break;
-            pcVar10 = pcVar10 + 1;
-            pcVar7 = pcVar7 + 1;
-          } while (cVar1 == cVar2);
-          if (cVar1 == cVar2) {
-            SVar12 = StructuredData_SetBool(&local_9a0,param_2,true);
+            cVar10 = *pcVar12;
+            cVar1 = *pcVar11;
+            if (cVar10 == '\0') break;
+            pcVar12 = pcVar12 + 1;
+            pcVar11 = pcVar11 + 1;
+          } while (cVar10 == cVar1);
+          if (cVar10 == cVar1) {
+            iVar9 = StructuredData_SetBool(&local_9a0,param_2,1);
           }
           else {
-            pcVar10 = local_890;
-            pcVar7 = "false";
+            pcVar12 = local_890;
+            pcVar11 = "false";
             do {
-              cVar1 = *pcVar10;
-              cVar2 = *pcVar7;
-              if (cVar1 == '\0') break;
-              pcVar10 = pcVar10 + 1;
-              pcVar7 = pcVar7 + 1;
-            } while (cVar1 == cVar2);
-            if (cVar1 == cVar2) {
-              SVar12 = StructuredData_SetBool(&local_9a0,param_2,false);
+              cVar10 = *pcVar12;
+              cVar1 = *pcVar11;
+              if (cVar10 == '\0') break;
+              pcVar12 = pcVar12 + 1;
+              pcVar11 = pcVar11 + 1;
+            } while (cVar10 == cVar1);
+            if (cVar10 == cVar1) {
+              iVar9 = StructuredData_SetBool(&local_9a0,param_2,0);
             }
             else {
-              pcVar10 = local_890;
-              pcVar7 = "0";
+              pcVar12 = local_890;
+              pcVar11 = "0";
               do {
-                cVar1 = *pcVar10;
-                cVar2 = *pcVar7;
-                if (cVar1 == '\0') break;
-                pcVar10 = pcVar10 + 1;
-                pcVar7 = pcVar7 + 1;
-              } while (cVar1 == cVar2);
-              if (cVar1 == cVar2) {
-                SVar12 = StructuredData_SetBool(&local_9a0,param_2,false);
+                cVar10 = *pcVar12;
+                cVar1 = *pcVar11;
+                if (cVar10 == '\0') break;
+                pcVar12 = pcVar12 + 1;
+                pcVar11 = pcVar11 + 1;
+              } while (cVar10 == cVar1);
+              if (cVar10 == cVar1) {
+                iVar9 = StructuredData_SetBool(&local_9a0,param_2,0);
               }
               else {
-                pcVar10 = local_890;
-                pcVar7 = "1";
+                pcVar12 = local_890;
+                pcVar11 = "1";
                 do {
-                  cVar1 = *pcVar10;
-                  cVar2 = *pcVar7;
-                  if (cVar1 == '\0') break;
-                  pcVar10 = pcVar10 + 1;
-                  pcVar7 = pcVar7 + 1;
-                } while (cVar1 == cVar2);
-                if (cVar1 == cVar2) {
-                  SVar12 = StructuredData_SetBool(&local_9a0,param_2,true);
+                  cVar10 = *pcVar12;
+                  cVar1 = *pcVar11;
+                  if (cVar10 == '\0') break;
+                  pcVar12 = pcVar12 + 1;
+                  pcVar11 = pcVar11 + 1;
+                } while (cVar10 == cVar1);
+                if (cVar10 == cVar1) {
+                  iVar9 = StructuredData_SetBool(&local_9a0,param_2,1);
                 }
                 else {
-                  Script_SetStructuredDataDef_PrintArgs
-                            ((char (*) [32])acStack_990,iVar11 + 2,param_5);
-                  Com_Error(ERR_DROP,"%s: Error at argument %d: expected bool, found \"%s\"\n");
-                  SVar12 = StructuredData_SetBool(&local_9a0,param_2,false);
+                  Script_SetStructuredDataDef_PrintArgs(auStack_990,iVar14 + 2,param_5);
+                  Com_Error(1,0xffffffff821733bc,param_5,iVar14 + 2,local_890);
+                  iVar9 = StructuredData_SetBool(&local_9a0,param_2,0);
                 }
               }
             }
           }
           goto LAB_825cb31c;
         }
-        if (LVar8 == LOOKUP_RESULT_INT) {
+        if (iVar8 == 0) {
           if (((local_890[0] < '0') || ('9' < local_890[0])) && (local_890[0] != '-')) {
-            Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
-            Com_Error(ERR_DROP,"%s: Error at argument %d: expected int, found \"%s\"\n");
+            Script_SetStructuredDataDef_PrintArgs(auStack_990,iVar14 + 2,param_5);
+            Com_Error(1,0xffffffff82173388,param_5,iVar14 + 2,local_890);
           }
           iVar9 = atoi(local_890);
-          SVar12 = StructuredData_SetInt(&local_9a0,param_2,iVar9);
+          iVar9 = StructuredData_SetInt(&local_9a0,param_2,iVar9);
           goto LAB_825cb31c;
         }
-        if (LVar8 == LOOKUP_RESULT_FLOAT) {
+        if (iVar8 == 3) {
           if (((local_890[0] < '0') || ('9' < local_890[0])) &&
              ((local_890[0] != '-' && (local_890[0] != '.')))) {
-            Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
-            Com_Error(ERR_DROP,"%s: Error at argument %d: expected float, found \"%s\"\n");
+            Script_SetStructuredDataDef_PrintArgs(auStack_990,iVar14 + 2,param_5);
+            Com_Error(1,0xffffffff82173350,param_5,iVar14 + 2,local_890);
           }
-          dVar19 = atof(local_890);
-          SVar12 = StructuredData_SetFloat(&local_9a0,param_2,(float)dVar19);
+          dVar15 = atof(local_890);
+          iVar9 = StructuredData_SetFloat((double)(float)dVar15,&local_9a0,param_2);
           goto LAB_825cb31c;
         }
-        if (LVar8 == LOOKUP_RESULT_SHORT) {
+        if (iVar8 == 4) {
           if (((local_890[0] < '0') || ('9' < local_890[0])) && (local_890[0] != '-')) {
-            Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
-            Com_Error(ERR_DROP,"%s: Error at argument %d: expected int, found \"%s\"\n");
+            Script_SetStructuredDataDef_PrintArgs(auStack_990,iVar14 + 2,param_5);
+            Com_Error(1,0xffffffff82173388,param_5,iVar14 + 2,local_890);
           }
           iVar9 = atoi(local_890);
-          SVar12 = StructuredData_SetShort(&local_9a0,param_2,(short)iVar9);
+          iVar9 = StructuredData_SetShort(&local_9a0,param_2,(short)iVar9);
           goto LAB_825cb31c;
         }
-        if (LVar8 != LOOKUP_RESULT_STRING) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xabc,
-                          0,"valueType == LOOKUP_RESULT_STRING\n\t%i, %i");
+        if (iVar8 != 2) {
+          MyAssertHandler(0xffffffff82170658,0xabc,0,0xffffffff82170bb4,uVar4,2);
         }
         local_9ac = local_890;
       }
-      SVar12 = StructuredData_SetString(&local_9a0,param_2,local_9ac);
+      else if (iVar9 < 8) {
+        I_strncpyz(auStack_990 + iVar9 * 0x20,local_9ac,0x20);
+      }
+      iVar9 = StructuredData_SetString(&local_9a0,param_2,local_9ac);
+    }
+    else {
+      dVar15 = (double)local_9a8[0];
+      uVar4 = va(dVar15,0xffffffff820106dc,dVar15);
+      if (iVar9 < 8) {
+        I_strncpyz(auStack_990 + iVar9 * 0x20,uVar4,0x20);
+      }
+      iVar9 = StructuredData_SetFloat(dVar15,&local_9a0,param_2);
     }
   }
-LAB_825cb31c:
-  if ((SVar12 == SETRESULT_SUCCESS_CHANGED) ||
-     (bVar13 = false, SVar12 == SETRESULT_SUCCESS_NOCHANGE)) {
-    bVar13 = true;
+  else {
+    uVar4 = va(0xffffffff8200c28c,local_9a8[0]);
+    if (iVar9 < 8) {
+      I_strncpyz(auStack_990 + iVar9 * 0x20,uVar4,0x20);
+    }
+    iVar9 = StructuredData_SetInt(&local_9a0,param_2,local_9a8[0]);
   }
-  if (!bVar13) {
-    Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
-    Com_Error(ERR_DROP,"%s: Error at argument %d: %s\n");
+LAB_825cb31c:
+  if ((iVar9 == 0) || (bVar2 = false, iVar9 == 1)) {
+    bVar2 = true;
+  }
+  if (!bVar2) {
+    Script_SetStructuredDataDef_PrintArgs(auStack_990,iVar14 + 2,param_5);
+    Com_Error(1,0xffffffff82173330,param_5,iVar14 + 2,(&PTR_s_Value_changed_82992d4c)[iVar9]);
   }
   String_Parse(param_4,local_890,0x400);
-  pcVar10 = local_890;
-  pcVar7 = ")";
+  pcVar12 = local_890;
+  pcVar11 = ")";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
-    Com_Error(ERR_DROP,"%s: no closing paren found\n");
+    cVar10 = *pcVar12;
+    cVar1 = *pcVar11;
+    if (cVar10 == '\0') break;
+    pcVar12 = pcVar12 + 1;
+    pcVar11 = pcVar11 + 1;
+  } while (cVar10 == cVar1);
+  if (cVar10 != cVar1) {
+    Script_SetStructuredDataDef_PrintArgs(auStack_990,iVar14 + 2,param_5);
+    Com_Error(1,0xffffffff82173314,param_5);
   }
   UI_ExpressionState_PlayerDataModified();
-  SVar12 = __restgprlr_17(SVar12);
-  return SVar12;
+  __restgprlr_17(iVar9);
+  return;
 }
 
 
 // 825CB400  Script_SetPlayerData_Internal  (ui/ui_shared.cpp:2779)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetPlayerData_Internal
-               (LocalClientNum_t param_1,UiContext *param_2,itemDef_t *param_3,char **param_4)
+void Script_SetPlayerData_Internal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  byte bVar1;
-  byte bVar2;
-  LocalClientNum_t LVar3;
-  bool bVar8;
-  int iVar4;
-  StructuredDataDef *pSVar5;
-  int iVar6;
-  StructuredData_SetResult SVar7;
-  longlong lVar9;
-  longlong lVar10;
-  byte *pbVar11;
-  byte *pbVar12;
-  StructuredDataBuffer aSStack_440 [2];
-  byte local_430 [1072];
+  char cVar1;
+  undefined8 uVar2;
+  char cVar6;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  int iVar5;
+  char *pcVar7;
+  char *pcVar8;
+  undefined1 auStack_440 [16];
+  char local_430 [1072];
   
-  lVar10 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_28(param_1,lVar9,lVar10,param_4);
-  bVar8 = LiveStorage_MaySetPersistentData(LVar3);
-  if (!bVar8) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xae0,0,"%s"
-                   );
+  uVar2 = __savegprlr_28();
+  cVar6 = LiveStorage_MaySetPersistentData();
+  if (cVar6 == '\0') {
+    MyAssertHandler(0xffffffff82170658,0xae0,0,0xffffffff82000f98,0xffffffff82173544);
   }
-  bVar8 = LiveStorage_MaySetPersistentData(LVar3);
-  if (bVar8) {
-    pSVar5 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-    iVar6 = CL_ControllerIndexFromClientNum(LVar3);
-    bVar8 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_440,iVar6);
-    if (!bVar8) {
-      Com_Printf(0xe,"Tried to setPlayerData before we have downloaded player stats\n");
+  cVar6 = LiveStorage_MaySetPersistentData(uVar2);
+  if (cVar6 != '\0') {
+    uVar3 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
+    uVar4 = CL_ControllerIndexFromClientNum(uVar2);
+    cVar6 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_440,uVar4);
+    if (cVar6 == '\0') {
+      Com_Printf(0xe,0xffffffff82173504);
       __restgprlr_28();
       return;
     }
-    SVar7 = Script_SetStructuredDataDef
-                      (pSVar5,aSStack_440,(UiContext *)lVar9,(char **)lVar10,"SetPlayerData",true,
-                       false,Script_SetPlayerDataKeyboardFinished);
-    if (SVar7 == SETRESULT_SUCCESS_CHANGED) {
-      iVar6 = CL_ControllerIndexFromClientNum(LVar3);
-      LiveStorage_StatsWriteNeeded(iVar6);
+    iVar5 = Script_SetStructuredDataDef
+                      (uVar3,auStack_440,param_2,param_3,0xffffffff8207b030,1,0,0xffffffff825bdff8);
+    if (iVar5 == 0) {
+      CL_ControllerIndexFromClientNum(uVar2);
+      LiveStorage_StatsWriteNeeded();
     }
     __restgprlr_28();
     return;
   }
-  iVar6 = 1;
+  iVar5 = 1;
   do {
-    iVar4 = String_Parse((char **)lVar10,(char *)local_430,0x400);
-    pbVar12 = local_430;
-    pbVar11 = &s__;
+    String_Parse(param_3,local_430,0x400);
+    pcVar8 = local_430;
+    pcVar7 = "(";
     do {
-      bVar1 = *pbVar12;
-      bVar2 = *pbVar11;
-      if (bVar1 == 0) break;
-      pbVar12 = pbVar12 + 1;
-      pbVar11 = pbVar11 + 1;
-    } while (bVar1 == bVar2);
-    if (bVar1 == bVar2) {
-      iVar6 = iVar6 + 1;
+      cVar6 = *pcVar8;
+      cVar1 = *pcVar7;
+      if (cVar6 == '\0') break;
+      pcVar8 = pcVar8 + 1;
+      pcVar7 = pcVar7 + 1;
+    } while (cVar6 == cVar1);
+    if (cVar6 == cVar1) {
+      iVar5 = iVar5 + 1;
     }
     else {
-      pbVar12 = local_430;
-      pbVar11 = &s__;
+      pcVar8 = local_430;
+      pcVar7 = ")";
       do {
-        bVar1 = *pbVar12;
-        bVar2 = *pbVar11;
-        if (bVar1 == 0) break;
-        pbVar12 = pbVar12 + 1;
-        pbVar11 = pbVar11 + 1;
-      } while (bVar1 == bVar2);
-      if (bVar1 == bVar2) {
-        iVar6 = iVar6 + -1;
+        cVar6 = *pcVar8;
+        cVar1 = *pcVar7;
+        if (cVar6 == '\0') break;
+        pcVar8 = pcVar8 + 1;
+        pcVar7 = pcVar7 + 1;
+      } while (cVar6 == cVar1);
+      if (cVar6 == cVar1) {
+        iVar5 = iVar5 + -1;
       }
     }
-    if (iVar6 < 1) {
-      __restgprlr_28(iVar4);
+    if (iVar5 < 1) {
+      __restgprlr_28();
       return;
     }
   } while( true );
@@ -4581,17 +3920,11 @@ void Script_SetPlayerData_Internal
 
 // 825CB5A0  Script_SetPlayerData  (ui/ui_shared.cpp:2823)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetPlayerData(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetPlayerData(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
   char cVar2;
-  char **in_r6;
   char *pcVar3;
   char *pcVar4;
   char local_420 [1032];
@@ -4607,76 +3940,71 @@ void Script_SetPlayerData(UiContext *param_1,itemDef_t *param_2,char **param_3)
     pcVar3 = pcVar3 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetPlayerData: no opening parenthesi found\n");
+    Com_Error(1,0xffffffff82173578);
   }
-  Script_SetPlayerData_Internal(param_1->localClientNum,param_1,(itemDef_t *)param_3,in_r6);
+  Script_SetPlayerData_Internal(*param_1,param_1,param_3);
   return;
 }
 
 
 // 825CB640  Script_SetPlayerDataSplitScreen  (ui/ui_shared.cpp:2835)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_SetPlayerDataSplitScreen(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetPlayerDataSplitScreen(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  LocalClientNum_t LVar4;
-  char **ppcVar6;
-  char *pcVar7;
-  char *pcVar8;
-  LocalClientNum_t local_430;
-  LocalClientNum_t local_42c [3];
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
+  char *pcVar6;
+  ulonglong uVar7;
+  uint local_430;
+  undefined4 local_42c [3];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
+  uVar2 = __savegprlr_29();
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar6 = local_420;
+  pcVar5 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetPlayerDataSplitScreen: no opening parenthesi found\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff8217365c);
   }
   String_Parse(param_3,local_420,0x400);
-  ppcVar6 = (char **)0x0;
-  local_430 = LOCAL_CLIENT_0;
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)&local_430);
-  LVar4 = local_430;
-  if (!bVar5) {
-    LVar4 = atoi(local_420);
+  local_430 = 0;
+  cVar4 = Script_ParseLocalVarInt(uVar2,local_420,param_3,0,&local_430);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_420);
+    uVar7 = (ulonglong)iVar3;
+  }
+  else {
+    uVar7 = (ulonglong)local_430;
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ",";
+  pcVar6 = local_420;
+  pcVar5 = ",";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,
-              "\x15SetPlayerDataSplitScreen: no comma found after split screen player index\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82173610);
   }
-  bVar5 = GetSplitScreenLocalClientNumForMenuScript(LVar4,local_42c,"SetPlayerDataSplitScreen");
-  if (!bVar5) {
-    Com_Error(ERR_DROP,"\x15SetPlayerDataSplitScreen: %i is not a valid split screen player index");
+  cVar4 = GetSplitScreenLocalClientNumForMenuScript(uVar7,local_42c,0xffffffff821735f0);
+  if (cVar4 == '\0') {
+    Com_Error(1,0xffffffff821735a8,uVar7);
   }
-  Script_SetPlayerData_Internal(local_42c[0],pUVar3,(itemDef_t *)param_3,ppcVar6);
+  Script_SetPlayerData_Internal(local_42c[0],uVar2,param_3);
   __restgprlr_29();
   return;
 }
@@ -4684,46 +4012,37 @@ void Script_SetPlayerDataSplitScreen(UiContext *param_1,itemDef_t *param_2,char 
 
 // 825CB7A0  Script_SetMatchRulesData  (ui/ui_shared.cpp:2870)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetMatchRulesData(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetMatchRulesData(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  UiContext *pUVar1;
-  GameStateInfo *pGVar2;
-  GameStateInfoIndex GVar3;
-  StructuredDataDef *pSVar4;
-  StructuredData_SetResult SVar5;
-  StructuredDataBuffer local_40 [8];
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar2;
+  int local_40 [16];
   
-  pUVar1 = (UiContext *)__savegprlr_26(param_1,param_2);
-  pGVar2 = GameStateInfo_Get();
-  GVar3 = GameStateInfo_GetIndexForGamemode();
-  if (GVar3 != GAMESTATEINFO_HOST) {
-    Com_Error(ERR_DROP,"SetMatchRulesData called when not game host.");
+  uVar1 = __savegprlr_26();
+  iVar3 = GameStateInfo_Get();
+  iVar4 = GameStateInfo_GetIndexForGamemode();
+  if (iVar4 != 0) {
+    Com_Error(1,0xffffffff82170c10);
   }
-  if (pGVar2->usingRecipe == 0) {
-    Com_Error(ERR_DROP,"SetMatchRulesData called when not using recipe!");
+  if (*(int *)(iVar3 + 4) == 0) {
+    Com_Error(1,0xffffffff82170be0);
   }
-  if (pGVar2->matchRules == (MatchRules *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xb44,0,"%s"
-                   );
+  if (*(int *)(iVar3 + 8) == 0) {
+    MyAssertHandler(0xffffffff82170658,0xb44,0,0xffffffff82000f98,0xffffffff82042524);
   }
-  pSVar4 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
-  local_40[0].data = pGVar2->matchRules->data;
-  if ((MatchRules *)local_40[0].data == (MatchRules *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../universal/com_structureddatadef.h"
-                    ,0x54,0,"%s");
+  uVar2 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
+  local_40[0] = *(int *)(iVar3 + 8);
+  if (local_40[0] == 0) {
+    MyAssertHandler(0xffffffff82164a48,0x54,0,0xffffffff82000f98,0xffffffff82030240);
   }
-  local_40[0].size = 0xc00;
-  SVar5 = Script_SetStructuredDataDef
-                    (pSVar4,local_40,pUVar1,param_3,"SetMatchRulesData",false,true,
-                     Script_SetMatchRulesDataKeyboardFinished);
-  if (SVar5 == SETRESULT_SUCCESS_CHANGED) {
-    MatchRulesChanged(pGVar2->matchRules);
+  local_40[1] = 0xc00;
+  iVar4 = Script_SetStructuredDataDef
+                    (uVar2,local_40,uVar1,param_3,0xffffffff82173694,0,1,0xffffffff825bde78);
+  if (iVar4 == 0) {
+    MatchRulesChanged(*(undefined4 *)(iVar3 + 8));
   }
   __restgprlr_26();
   return;
@@ -4732,78 +4051,67 @@ void Script_SetMatchRulesData(UiContext *param_1,itemDef_t *param_2,char **param
 
 // 825BE188  Script_LoadOrSaveMatchRulesXX_GetRequired  (ui/ui_shared.cpp:2900)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void Script_LoadOrSaveMatchRulesXX_GetRequired
-               (UiContext *param_1,itemDef_t *param_2,char **param_3,int *param_4,int *param_5,
-               char *param_6)
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               undefined8 param_5)
 
 {
   char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  int iVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int *piVar8;
-  char *pcVar9;
-  char *pcVar10;
+  undefined4 *puVar2;
+  char cVar5;
+  int iVar3;
+  undefined4 uVar4;
+  char *pcVar6;
+  char *pcVar7;
   char local_430 [1072];
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  pUVar3 = (UiContext *)__savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xb57,
-                    (int)(int *)uVar6,"%s");
+  puVar2 = (undefined4 *)__savegprlr_27();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0xb57);
   }
-  String_Parse((char **)param_2,local_430,0x400);
-  pcVar10 = local_430;
-  pcVar9 = "(";
+  String_Parse(param_2,local_430,0x400);
+  pcVar7 = local_430;
+  pcVar6 = "(";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar9;
-    if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar9 = pcVar9 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"\x15%s: no opening parenthesis found\n");
+    cVar5 = *pcVar7;
+    cVar1 = *pcVar6;
+    if (cVar5 == '\0') break;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar5 == cVar1);
+  if (cVar5 != cVar1) {
+    Com_Error(1,0xffffffff82170d2c,param_5);
   }
-  if ((uVar7 & 0xffffffff) != 0) {
-    String_Parse((char **)param_2,local_430,0x400);
-    piVar8 = (int *)uVar7;
-    bVar5 = Script_ParseLocalVarInt(pUVar3,local_430,(char **)param_2,0,piVar8);
-    if (!bVar5) {
-      iVar4 = atoi(local_430);
-      *piVar8 = iVar4;
+  if ((param_4 & 0xffffffff) != 0) {
+    String_Parse(param_2,local_430,0x400);
+    cVar5 = Script_ParseLocalVarInt(puVar2,local_430,param_2,0,param_4);
+    if (cVar5 == '\0') {
+      iVar3 = atoi(local_430);
+      *(int *)param_4 = iVar3;
     }
-    if ((*piVar8 < 0) || (10 < *piVar8)) {
-      Com_Error(ERR_DROP,"\x15Slot index is not within bounds.");
+    iVar3 = *(int *)param_4;
+    if ((iVar3 < 0) || (10 < iVar3)) {
+      Com_Error(1,0xffffffff82170d08);
     }
   }
-  String_Parse((char **)param_2,local_430,0x400);
-  pcVar10 = local_430;
-  pcVar9 = ")";
+  String_Parse(param_2,local_430,0x400);
+  pcVar7 = local_430;
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar9;
-    if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar9 = pcVar9 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"\x15%s: no closing parenthesis found\n");
+    cVar5 = *pcVar7;
+    cVar1 = *pcVar6;
+    if (cVar5 == '\0') break;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar5 == cVar1);
+  if (cVar5 != cVar1) {
+    Com_Error(1,0xffffffff82170ce4,param_5);
   }
-  if (((onlinegame->current).enabled != false) && (bVar5 = Lobby_IsInLobby(), !bVar5)) {
-    Com_Error(ERR_DROP,"\x15%s called while not in lobby");
+  if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (cVar5 = Lobby_IsInLobby(), cVar5 == '\0')) {
+    Com_Error(1,0xffffffff82170cc4,param_5);
   }
-  iVar4 = CL_ControllerIndexFromClientNum(pUVar3->localClientNum);
-  *(int *)uVar6 = iVar4;
+  uVar4 = CL_ControllerIndexFromClientNum(*puVar2);
+  *(undefined4 *)param_3 = uVar4;
   __restgprlr_27();
   return;
 }
@@ -4811,29 +4119,19 @@ void Script_LoadOrSaveMatchRulesXX_GetRequired
 
 // 825BE340  Script_LoadMatchRulesDataFromPlayer  (ui/ui_shared.cpp:2934)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "MatchRulesReturnCode": Some values do not have unique names */
-
-void Script_LoadMatchRulesDataFromPlayer(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_LoadMatchRulesDataFromPlayer(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  GameStateInfo *pGVar1;
-  MatchRulesReturnCode MVar2;
-  char *in_r8;
-  int local_20;
-  char *local_1c [3];
+  int iVar1;
+  int iVar2;
+  undefined4 local_20;
+  undefined4 local_1c [3];
   
-  Script_LoadOrSaveMatchRulesXX_GetRequired
-            (param_1,(itemDef_t *)param_3,local_1c,&local_20,(int *)"LoadMatchRulesFromPlayer",in_r8
-            );
-  pGVar1 = GameStateInfo_Get();
-  MVar2 = LoadMatchRulesFromDisk
-                    (pGVar1->matchRules,(int)local_1c[0],MR_SAVELOC_PLAYERSAVED,local_20);
-  if (MVar2 == MR_RETCODE_COMPLETE) {
-    MatchRulesChanged(pGVar1->matchRules);
+  Script_LoadOrSaveMatchRulesXX_GetRequired(param_1,param_3,local_1c,&local_20,0xffffffff82170d64);
+  iVar1 = GameStateInfo_Get();
+  iVar2 = LoadMatchRulesFromDisk(*(undefined4 *)(iVar1 + 8),local_1c[0],0,local_20);
+  if (iVar2 == 1) {
+    MatchRulesChanged(*(undefined4 *)(iVar1 + 8));
   }
   return;
 }
@@ -4841,29 +4139,19 @@ void Script_LoadMatchRulesDataFromPlayer(UiContext *param_1,itemDef_t *param_2,c
 
 // 825BE3A8  Script_LoadMatchRulesDataFromHistory  (ui/ui_shared.cpp:2948)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "MatchRulesReturnCode": Some values do not have unique names */
-
-void Script_LoadMatchRulesDataFromHistory(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_LoadMatchRulesDataFromHistory(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  GameStateInfo *pGVar1;
-  MatchRulesReturnCode MVar2;
-  char *in_r8;
-  int local_20;
-  char *local_1c [3];
+  int iVar1;
+  int iVar2;
+  undefined4 local_20;
+  undefined4 local_1c [3];
   
-  Script_LoadOrSaveMatchRulesXX_GetRequired
-            (param_1,(itemDef_t *)param_3,local_1c,&local_20,(int *)"LoadMatchRulesFromHistory",
-             in_r8);
-  pGVar1 = GameStateInfo_Get();
-  MVar2 = LoadMatchRulesFromDisk
-                    (pGVar1->matchRules,(int)local_1c[0],MR_SAVELOC_PLAYERHISTORY,local_20);
-  if (MVar2 == MR_RETCODE_COMPLETE) {
-    MatchRulesChanged(pGVar1->matchRules);
+  Script_LoadOrSaveMatchRulesXX_GetRequired(param_1,param_3,local_1c,&local_20,0xffffffff82170d80);
+  iVar1 = GameStateInfo_Get();
+  iVar2 = LoadMatchRulesFromDisk(*(undefined4 *)(iVar1 + 8),local_1c[0],1,local_20);
+  if (iVar2 == 1) {
+    MatchRulesChanged(*(undefined4 *)(iVar1 + 8));
   }
   return;
 }
@@ -4871,177 +4159,149 @@ void Script_LoadMatchRulesDataFromHistory(UiContext *param_1,itemDef_t *param_2,
 
 // 825BE410  Script_SaveMatchDataRulesToPlayer  (ui/ui_shared.cpp:2962)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SaveMatchDataRulesToPlayer(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SaveMatchDataRulesToPlayer(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  GameStateInfo *pGVar1;
-  char *in_r8;
-  int local_10;
-  char *local_c [3];
+  int iVar1;
+  undefined4 local_10;
+  undefined4 local_c [3];
   
-  Script_LoadOrSaveMatchRulesXX_GetRequired
-            (param_1,(itemDef_t *)param_3,local_c,&local_10,(int *)"SaveMatchRulesToPlayer",in_r8);
-  pGVar1 = GameStateInfo_Get();
-  SaveMatchRulesToDisk(pGVar1->matchRules,(int)local_c[0],MR_SAVELOC_PLAYERSAVED,local_10);
+  Script_LoadOrSaveMatchRulesXX_GetRequired(param_1,param_3,local_c,&local_10,0xffffffff82170d9c);
+  iVar1 = GameStateInfo_Get();
+  SaveMatchRulesToDisk(*(undefined4 *)(iVar1 + 8),local_c[0],0,local_10);
   return;
 }
 
 
 // 825BE460  Script_SaveMatchRulesDataToHistory  (ui/ui_shared.cpp:2974)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_SaveMatchRulesDataToHistory(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SaveMatchRulesDataToHistory(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  GameStateInfo *pGVar1;
-  char *in_r8;
-  char *local_10 [4];
+  int iVar1;
+  undefined4 local_10 [4];
   
-  Script_LoadOrSaveMatchRulesXX_GetRequired
-            (param_1,(itemDef_t *)param_3,local_10,(int *)0x0,(int *)"SaveMatchRulesToHistory",in_r8
-            );
-  pGVar1 = GameStateInfo_Get();
-  SaveMatchRulesToDiskAppendToFront(pGVar1->matchRules,(int)local_10[0],MR_SAVELOC_PLAYERHISTORY,0);
+  Script_LoadOrSaveMatchRulesXX_GetRequired(param_1,param_3,local_10,0,0xffffffff82170db4);
+  iVar1 = GameStateInfo_Get();
+  SaveMatchRulesToDiskAppendToFront(*(undefined4 *)(iVar1 + 8),local_10[0],1,0);
   return;
 }
 
 
 // 825BE4B0  Script_SetUsingMatchRulesData  (ui/ui_shared.cpp:2986)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetUsingMatchRulesData(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetUsingMatchRulesData(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
   char cVar2;
-  bool bVar3;
+  char *pcVar3;
   char *pcVar4;
-  char *pcVar5;
-  uint uVar6;
-  bool local_430 [16];
+  undefined1 uVar5;
+  undefined1 local_430 [16];
   char local_420 [1032];
   
   String_Parse(param_3,local_420,0x400);
-  pcVar5 = local_420;
-  pcVar4 = "(";
+  pcVar4 = local_420;
+  pcVar3 = "(";
   do {
-    cVar1 = *pcVar5;
     cVar2 = *pcVar4;
-    if (cVar1 == '\0') break;
-    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar3;
+    if (cVar2 == '\0') break;
     pcVar4 = pcVar4 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"\x15SetUsingMatchRules: no opening parenthesis found\n");
+    pcVar3 = pcVar3 + 1;
+  } while (cVar2 == cVar1);
+  if (cVar2 != cVar1) {
+    Com_Error(1,0xffffffff82170e38);
   }
   String_Parse(param_3,local_420,0x400);
-  bVar3 = Script_ParseLocalVarBool(param_1,local_420,param_3,0,local_430);
-  if (bVar3) {
-LAB_825be650:
-    uVar6 = (uint)local_430[0];
-  }
-  else {
-    pcVar5 = local_420;
-    pcVar4 = "true";
+  cVar2 = Script_ParseLocalVarBool(param_1,local_420,param_3,0,local_430);
+  uVar5 = local_430[0];
+  if (cVar2 == '\0') {
+    pcVar4 = local_420;
+    pcVar3 = "true";
     do {
-      cVar1 = *pcVar5;
       cVar2 = *pcVar4;
-      if (cVar1 == '\0') break;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar3;
+      if (cVar2 == '\0') break;
       pcVar4 = pcVar4 + 1;
-    } while (cVar1 == cVar2);
-    if (cVar1 != cVar2) {
-      pcVar5 = local_420;
-      pcVar4 = "1";
+      pcVar3 = pcVar3 + 1;
+    } while (cVar2 == cVar1);
+    if (cVar2 != cVar1) {
+      pcVar4 = local_420;
+      pcVar3 = "1";
       do {
-        cVar1 = *pcVar5;
         cVar2 = *pcVar4;
-        if (cVar1 == '\0') break;
-        pcVar5 = pcVar5 + 1;
+        cVar1 = *pcVar3;
+        if (cVar2 == '\0') break;
         pcVar4 = pcVar4 + 1;
-      } while (cVar1 == cVar2);
-      if (cVar1 != cVar2) {
-        pcVar5 = local_420;
-        pcVar4 = "false";
+        pcVar3 = pcVar3 + 1;
+      } while (cVar2 == cVar1);
+      if (cVar2 != cVar1) {
+        pcVar4 = local_420;
+        pcVar3 = "false";
         do {
-          cVar1 = *pcVar5;
           cVar2 = *pcVar4;
-          if (cVar1 == '\0') break;
-          pcVar5 = pcVar5 + 1;
+          cVar1 = *pcVar3;
+          if (cVar2 == '\0') break;
           pcVar4 = pcVar4 + 1;
-        } while (cVar1 == cVar2);
-        if (cVar1 != cVar2) {
-          pcVar5 = local_420;
-          pcVar4 = "0";
+          pcVar3 = pcVar3 + 1;
+        } while (cVar2 == cVar1);
+        if (cVar2 != cVar1) {
+          pcVar4 = local_420;
+          pcVar3 = "0";
           do {
-            cVar1 = *pcVar5;
             cVar2 = *pcVar4;
-            if (cVar1 == '\0') break;
-            pcVar5 = pcVar5 + 1;
+            cVar1 = *pcVar3;
+            if (cVar2 == '\0') break;
             pcVar4 = pcVar4 + 1;
-          } while (cVar1 == cVar2);
-          if (cVar1 != cVar2) {
-            Com_Error(ERR_DROP,"\x15");
-            goto LAB_825be650;
+            pcVar3 = pcVar3 + 1;
+          } while (cVar2 == cVar1);
+          if (cVar2 != cVar1) {
+            Com_Error(1,0xffffffff8215fd88,0xffffffff82170e00);
+            uVar5 = local_430[0];
+            goto LAB_825be654;
           }
         }
-        uVar6 = 0;
+        uVar5 = 0;
         goto LAB_825be654;
       }
     }
-    uVar6 = 1;
+    uVar5 = 1;
   }
 LAB_825be654:
   String_Parse(param_3,local_420,0x400);
-  pcVar5 = local_420;
-  pcVar4 = ")";
+  pcVar4 = local_420;
+  pcVar3 = ")";
   do {
-    cVar1 = *pcVar5;
     cVar2 = *pcVar4;
-    if (cVar1 == '\0') break;
-    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar3;
+    if (cVar2 == '\0') break;
     pcVar4 = pcVar4 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"\x15SetUsingMatchRules: no closing parenthesis found\n");
+    pcVar3 = pcVar3 + 1;
+  } while (cVar2 == cVar1);
+  if (cVar2 != cVar1) {
+    Com_Error(1,0xffffffff82170dcc);
   }
-  GameStateInfo_SetUsingGameStateInfo(uVar6);
+  GameStateInfo_SetUsingGameStateInfo(uVar5);
   return;
 }
 
 
 // 825BE6E0  Script_LoadMatchRulesDataDefaults  (ui/ui_shared.cpp:3014)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_LoadMatchRulesDataDefaults(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_LoadMatchRulesDataDefaults(void)
 
 {
-  GameStateInfo *pGVar1;
-  char *pcVar2;
+  int iVar2;
+  undefined8 uVar1;
   int iVar3;
   
-  pGVar1 = GameStateInfo_Get();
-  pcVar2 = BG_MatchRulesData_GetGameType(pGVar1->matchRules);
-  iVar3 = LoadMatchRulesDefaultFromFF(pGVar1->matchRules,pcVar2);
+  iVar2 = GameStateInfo_Get();
+  uVar1 = BG_MatchRulesData_GetGameType(*(undefined4 *)(iVar2 + 8));
+  iVar3 = LoadMatchRulesDefaultFromFF(*(undefined4 *)(iVar2 + 8),uVar1);
   if (iVar3 != 0) {
-    MatchRulesChanged(pGVar1->matchRules);
+    MatchRulesChanged(*(undefined4 *)(iVar2 + 8));
   }
   return;
 }
@@ -5049,224 +4309,207 @@ void Script_LoadMatchRulesDataDefaults(UiContext *param_1,itemDef_t *param_2,cha
 
 // 825BE730  Script_SaveMatchRulesDataDefaults  (ui/ui_shared.cpp:3024)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SaveMatchRulesDataDefaults(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SaveMatchRulesDataDefaults(void)
 
 {
-  GameStateInfo *pGVar1;
-  char *pcVar2;
+  int iVar2;
+  undefined8 uVar1;
   
-  pGVar1 = GameStateInfo_Get();
-  pcVar2 = BG_MatchRulesData_GetGameType(pGVar1->matchRules);
-  SaveMatchRulesDataToFilesystem(pGVar1->matchRules,pcVar2);
+  iVar2 = GameStateInfo_Get();
+  uVar1 = BG_MatchRulesData_GetGameType(*(undefined4 *)(iVar2 + 8));
+  SaveMatchRulesDataToFilesystem(*(undefined4 *)(iVar2 + 8),uVar1);
   return;
 }
 
 
 // 825BE770  Script_OnlineVaultEditMetaData  (ui/ui_shared.cpp:3035)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_OnlineVaultEditMetaData(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_OnlineVaultEditMetaData(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  bool bVar2;
-  int iVar1;
-  char *local_4b0;
-  char *local_4ac [3];
-  char acStack_4a0 [64];
-  char acStack_460 [64];
+  char cVar2;
+  undefined8 uVar1;
+  undefined4 local_4b0;
+  undefined4 local_4ac [3];
+  undefined1 auStack_4a0 [64];
+  undefined1 auStack_460 [64];
   char local_420 [1032];
   
   String_Parse(param_3,local_420,0x400);
   if (local_420[0] != '(') {
-    Com_Error(ERR_DROP,"\x15OnlineVaultEditMetaData: no opening parenthesis found\n");
+    Com_Error(1,0xffffffff82170ecc);
   }
   String_Parse(param_3,local_420,0x400);
-  bVar2 = Script_ParseLocalVarString(param_1,local_420,param_3,0,&local_4b0,acStack_4a0,0x40);
-  if (!bVar2) {
-    I_strncpyz(acStack_4a0,local_420,0x40);
+  cVar2 = Script_ParseLocalVarString(param_1,local_420,param_3,0,&local_4b0,auStack_4a0,0x40);
+  if (cVar2 == '\0') {
+    I_strncpyz(auStack_4a0,local_420,0x40);
   }
   String_Parse(param_3,local_420,0x400);
   if (local_420[0] != ',') {
-    Com_Error(ERR_DROP,"\x15OnlineVaultEditMetaData: Expecting ,\n");
+    Com_Error(1,0xffffffff82170ea4);
   }
   String_Parse(param_3,local_420,0x400);
-  bVar2 = Script_ParseLocalVarString(param_1,local_420,param_3,0,local_4ac,acStack_460,0x40);
-  if (!bVar2) {
-    I_strncpyz(acStack_460,local_420,0x40);
+  cVar2 = Script_ParseLocalVarString(param_1,local_420,param_3,0,local_4ac,auStack_460,0x40);
+  if (cVar2 == '\0') {
+    I_strncpyz(auStack_460,local_420,0x40);
   }
   String_Parse(param_3,local_420,0x400);
   if (local_420[0] != ')') {
-    Com_Error(ERR_DROP,"\x15OnlineVaultEditMetaData: no closing parenthesis found\n");
+    Com_Error(1,0xffffffff82170e6c);
   }
-  iVar1 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
-  OnlineVault_EditMetaData(iVar1,local_4b0,local_4ac[0]);
+  uVar1 = CL_ControllerIndexFromClientNum(*param_1);
+  OnlineVault_EditMetaData(uVar1,local_4b0,local_4ac[0]);
   return;
 }
 
 
 // 825BE8D8  Script_IncludeInMapRotation  (ui/ui_shared.cpp:3069)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_IncludeInMapRotation(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_IncludeInMapRotation(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  LobbyMapRotation *pLVar3;
-  UiContext *pUVar4;
-  bool bVar7;
-  GameStateInfo *pGVar5;
-  uint uVar6;
+  undefined4 uVar2;
+  undefined8 uVar3;
+  char cVar6;
+  char cVar7;
+  int iVar5;
+  ulonglong uVar4;
   char *pcVar8;
   char *pcVar9;
-  char cVar10;
-  bool local_440 [4];
-  char *local_43c [3];
-  char acStack_430 [16];
+  char local_440 [4];
+  undefined1 *local_43c [3];
+  undefined1 auStack_430 [16];
   char local_420 [1056];
   
-  pUVar4 = (UiContext *)__savegprlr_29(param_1,param_2);
-  local_43c[0] = acStack_430;
+  uVar3 = __savegprlr_29();
+  local_43c[0] = auStack_430;
   String_Parse(param_3,local_420,0x400);
   pcVar9 = local_420;
   pcVar8 = "(";
   do {
-    cVar10 = *pcVar9;
-    cVar1 = *pcVar8;
-    if (cVar10 == '\0') break;
+    cVar6 = *pcVar9;
+    cVar7 = *pcVar8;
+    if (cVar6 == '\0') break;
     pcVar9 = pcVar9 + 1;
     pcVar8 = pcVar8 + 1;
-  } while (cVar10 == cVar1);
-  if (cVar10 != cVar1) {
-    Com_Error(ERR_DROP,"\x15IncludeInMapRotation: no opening parenthesis found\n");
+  } while (cVar6 == cVar7);
+  if (cVar6 != cVar7) {
+    Com_Error(1,0xffffffff82171050);
   }
   String_Parse(param_3,local_420,0x400);
-  bVar7 = Script_ParseLocalVarString(pUVar4,local_420,param_3,0,local_43c,acStack_430,0x10);
-  if (!bVar7) {
-    I_strncpyz(acStack_430,local_420,0x10);
+  cVar6 = Script_ParseLocalVarString(uVar3,local_420,param_3,0,local_43c,auStack_430,0x10);
+  if (cVar6 == '\0') {
+    I_strncpyz(auStack_430,local_420,0x10);
   }
   String_Parse(param_3,local_420,0x400);
   pcVar9 = local_420;
   pcVar8 = ",";
   do {
-    cVar10 = *pcVar9;
-    cVar1 = *pcVar8;
-    if (cVar10 == '\0') break;
+    cVar6 = *pcVar9;
+    cVar7 = *pcVar8;
+    if (cVar6 == '\0') break;
     pcVar9 = pcVar9 + 1;
     pcVar8 = pcVar8 + 1;
-  } while (cVar10 == cVar1);
-  if (cVar10 != cVar1) {
-    Com_Error(ERR_DROP,"\x15IncludeInMapRotation: no \',\' preceding second argument\n");
+  } while (cVar6 == cVar7);
+  if (cVar6 != cVar7) {
+    Com_Error(1,0xffffffff82171014);
   }
   String_Parse(param_3,local_420,0x400);
-  bVar7 = Script_ParseLocalVarBool(pUVar4,local_420,param_3,1,local_440);
-  cVar10 = local_440[0];
-  if (!bVar7) {
+  cVar7 = Script_ParseLocalVarBool(uVar3,local_420,param_3,1,local_440);
+  cVar6 = local_440[0];
+  if (cVar7 == '\0') {
     pcVar9 = local_420;
     pcVar8 = "true";
     do {
-      cVar10 = *pcVar9;
-      cVar1 = *pcVar8;
-      if (cVar10 == '\0') break;
+      cVar6 = *pcVar9;
+      cVar7 = *pcVar8;
+      if (cVar6 == '\0') break;
       pcVar9 = pcVar9 + 1;
       pcVar8 = pcVar8 + 1;
-    } while (cVar10 == cVar1);
-    if (cVar10 != cVar1) {
+    } while (cVar6 == cVar7);
+    if (cVar6 != cVar7) {
       pcVar9 = local_420;
       pcVar8 = "1";
       do {
-        cVar10 = *pcVar9;
-        cVar1 = *pcVar8;
-        if (cVar10 == '\0') break;
+        cVar6 = *pcVar9;
+        cVar7 = *pcVar8;
+        if (cVar6 == '\0') break;
         pcVar9 = pcVar9 + 1;
         pcVar8 = pcVar8 + 1;
-      } while (cVar10 == cVar1);
-      if (cVar10 != cVar1) {
+      } while (cVar6 == cVar7);
+      if (cVar6 != cVar7) {
         pcVar9 = local_420;
         pcVar8 = "false";
         do {
-          cVar10 = *pcVar9;
-          cVar1 = *pcVar8;
-          if (cVar10 == '\0') break;
+          cVar6 = *pcVar9;
+          cVar7 = *pcVar8;
+          if (cVar6 == '\0') break;
           pcVar9 = pcVar9 + 1;
           pcVar8 = pcVar8 + 1;
-        } while (cVar10 == cVar1);
-        if (cVar10 != cVar1) {
+        } while (cVar6 == cVar7);
+        if (cVar6 != cVar7) {
           pcVar9 = local_420;
           pcVar8 = "0";
           do {
-            cVar10 = *pcVar9;
-            cVar1 = *pcVar8;
-            if (cVar10 == '\0') break;
+            cVar6 = *pcVar9;
+            cVar7 = *pcVar8;
+            if (cVar6 == '\0') break;
             pcVar9 = pcVar9 + 1;
             pcVar8 = pcVar8 + 1;
-          } while (cVar10 == cVar1);
-          if (cVar10 != cVar1) {
-            Com_Error(ERR_DROP,"\x15");
-            cVar10 = local_440[0];
+          } while (cVar6 == cVar7);
+          if (cVar6 != cVar7) {
+            Com_Error(1,0xffffffff8215fd88,0xffffffff82170fd8);
+            cVar6 = local_440[0];
             goto LAB_825beb20;
           }
         }
-        cVar10 = '\0';
+        cVar6 = '\0';
         goto LAB_825beb20;
       }
     }
-    cVar10 = '\x01';
+    cVar6 = '\x01';
   }
 LAB_825beb20:
   String_Parse(param_3,local_420,0x400);
   pcVar9 = local_420;
   pcVar8 = ")";
   do {
-    cVar1 = *pcVar9;
-    cVar2 = *pcVar8;
-    if (cVar1 == '\0') break;
+    cVar7 = *pcVar9;
+    cVar1 = *pcVar8;
+    if (cVar7 == '\0') break;
     pcVar9 = pcVar9 + 1;
     pcVar8 = pcVar8 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"\x15IncludeInMapRotation: no closing parenthesis found\n");
+  } while (cVar7 == cVar1);
+  if (cVar7 != cVar1) {
+    Com_Error(1,0xffffffff82170fa0);
   }
-  bVar7 = Lobby_IsInLobby();
-  if (!bVar7) {
-    Com_Error(ERR_DROP,"IncludeInMapRotation called while not in lobby");
+  cVar7 = Lobby_IsInLobby();
+  if (cVar7 == '\0') {
+    Com_Error(1,0xffffffff82170f70);
   }
-  bVar7 = Lobby_AreWeHost();
-  if (!bVar7) {
-    Com_Error(ERR_DROP,"IncludeInMapRotation called while not lobby host");
+  cVar7 = Lobby_AreWeHost();
+  if (cVar7 == '\0') {
+    Com_Error(1,0xffffffff82170f3c);
   }
-  if ((xblive_privatematch->current).enabled == false) {
-    Com_Error(ERR_DROP,"IncludeInMapRotation called while not in private match");
+  if (*(char *)(DAT_84253bb8 + 0xc) == '\0') {
+    Com_Error(1,0xffffffff82170f04);
   }
-  pGVar5 = GameStateInfo_Get();
-  if (pGVar5->mapRotation == (LobbyMapRotation *)0x0) {
-    Com_Error(ERR_DROP,"IncludeInMapRotation called while not using map rotation\n");
+  iVar5 = GameStateInfo_Get();
+  if (*(int *)(iVar5 + 0x14) == 0) {
+    Com_Error(1,0xffffffff82165c0c);
   }
-  if (pGVar5->mapRotation == (LobbyMapRotation *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xc2e,0,"%s"
-                   );
+  if (*(int *)(iVar5 + 0x14) == 0) {
+    MyAssertHandler(0xffffffff82170658,0xc2e,0,0xffffffff82000f98,0xffffffff82045f50);
   }
-  pLVar3 = pGVar5->mapRotation;
-  if (cVar10 == '\0') {
-    PrivateMapRotation_RemoveEntry(pLVar3,local_43c[0]);
+  uVar2 = *(undefined4 *)(iVar5 + 0x14);
+  if (cVar6 == '\0') {
+    PrivateMapRotation_RemoveEntry(uVar2,local_43c[0]);
   }
   else {
-    uVar6 = PrivateMapRotation_AddNewEntry(pLVar3,local_43c[0]);
-    if (uVar6 != 0xffff) {
-      PrivateMapRotation_SetInitialMapSelection(pLVar3,uVar6);
+    uVar4 = PrivateMapRotation_AddNewEntry();
+    if ((uVar4 & 0xffffffff) != 0xffff) {
+      PrivateMapRotation_SetInitialMapSelection(uVar2,uVar4);
       __restgprlr_29();
       return;
     }
@@ -5278,655 +4521,341 @@ LAB_825beb20:
 
 // 825BEC88  Script_UseCustomMapRotation  (ui/ui_shared.cpp:3136)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_UseCustomMapRotation(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_UseCustomMapRotation(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  bool bVar4;
-  GameStateInfo *pGVar3;
+  char cVar3;
+  int iVar2;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
-  uint uVar7;
-  bool local_430 [16];
+  uint uVar6;
+  byte local_430 [16];
   char local_420 [1032];
   
   String_Parse(param_3,local_420,0x400);
-  pcVar6 = local_420;
-  pcVar5 = "(";
+  pcVar5 = local_420;
+  pcVar4 = "(";
   do {
-    cVar1 = *pcVar6;
-    cVar2 = *pcVar5;
-    if (cVar1 == '\0') break;
-    pcVar6 = pcVar6 + 1;
+    cVar3 = *pcVar5;
+    cVar1 = *pcVar4;
+    if (cVar3 == '\0') break;
     pcVar5 = pcVar5 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"\x15UseCustomMapRotation: no opening parenthesis found\n");
+    pcVar4 = pcVar4 + 1;
+  } while (cVar3 == cVar1);
+  if (cVar3 != cVar1) {
+    Com_Error(1,0xffffffff821710fc);
   }
   String_Parse(param_3,local_420,0x400);
-  bVar4 = Script_ParseLocalVarBool(param_1,local_420,param_3,1,local_430);
-  if (bVar4) {
-LAB_825bee28:
-    uVar7 = (uint)local_430[0];
-  }
-  else {
-    pcVar6 = local_420;
-    pcVar5 = "true";
+  cVar3 = Script_ParseLocalVarBool(param_1,local_420,param_3,1,local_430);
+  if (cVar3 == '\0') {
+    pcVar5 = local_420;
+    pcVar4 = "true";
     do {
-      cVar1 = *pcVar6;
-      cVar2 = *pcVar5;
-      if (cVar1 == '\0') break;
-      pcVar6 = pcVar6 + 1;
+      cVar3 = *pcVar5;
+      cVar1 = *pcVar4;
+      if (cVar3 == '\0') break;
       pcVar5 = pcVar5 + 1;
-    } while (cVar1 == cVar2);
-    if (cVar1 != cVar2) {
-      pcVar6 = local_420;
-      pcVar5 = "1";
+      pcVar4 = pcVar4 + 1;
+    } while (cVar3 == cVar1);
+    if (cVar3 != cVar1) {
+      pcVar5 = local_420;
+      pcVar4 = "1";
       do {
-        cVar1 = *pcVar6;
-        cVar2 = *pcVar5;
-        if (cVar1 == '\0') break;
-        pcVar6 = pcVar6 + 1;
+        cVar3 = *pcVar5;
+        cVar1 = *pcVar4;
+        if (cVar3 == '\0') break;
         pcVar5 = pcVar5 + 1;
-      } while (cVar1 == cVar2);
-      if (cVar1 != cVar2) {
-        pcVar6 = local_420;
-        pcVar5 = "false";
+        pcVar4 = pcVar4 + 1;
+      } while (cVar3 == cVar1);
+      if (cVar3 != cVar1) {
+        pcVar5 = local_420;
+        pcVar4 = "false";
         do {
-          cVar1 = *pcVar6;
-          cVar2 = *pcVar5;
-          if (cVar1 == '\0') break;
-          pcVar6 = pcVar6 + 1;
+          cVar3 = *pcVar5;
+          cVar1 = *pcVar4;
+          if (cVar3 == '\0') break;
           pcVar5 = pcVar5 + 1;
-        } while (cVar1 == cVar2);
-        if (cVar1 != cVar2) {
-          pcVar6 = local_420;
-          pcVar5 = "0";
+          pcVar4 = pcVar4 + 1;
+        } while (cVar3 == cVar1);
+        if (cVar3 != cVar1) {
+          pcVar5 = local_420;
+          pcVar4 = "0";
           do {
-            cVar1 = *pcVar6;
-            cVar2 = *pcVar5;
-            if (cVar1 == '\0') break;
-            pcVar6 = pcVar6 + 1;
+            cVar3 = *pcVar5;
+            cVar1 = *pcVar4;
+            if (cVar3 == '\0') break;
             pcVar5 = pcVar5 + 1;
-          } while (cVar1 == cVar2);
-          if (cVar1 != cVar2) {
-            Com_Error(ERR_DROP,"\x15");
+            pcVar4 = pcVar4 + 1;
+          } while (cVar3 == cVar1);
+          if (cVar3 != cVar1) {
+            Com_Error(1,0xffffffff8215fd88,0xffffffff821710c0);
             goto LAB_825bee28;
           }
         }
-        uVar7 = 0;
+        uVar6 = 0;
         goto LAB_825bee2c;
       }
     }
-    uVar7 = 1;
+    uVar6 = 1;
+  }
+  else {
+LAB_825bee28:
+    uVar6 = (uint)local_430[0];
   }
 LAB_825bee2c:
   String_Parse(param_3,local_420,0x400);
-  pcVar6 = local_420;
-  pcVar5 = ")";
+  pcVar5 = local_420;
+  pcVar4 = ")";
   do {
-    cVar1 = *pcVar6;
-    cVar2 = *pcVar5;
-    if (cVar1 == '\0') break;
-    pcVar6 = pcVar6 + 1;
+    cVar3 = *pcVar5;
+    cVar1 = *pcVar4;
+    if (cVar3 == '\0') break;
     pcVar5 = pcVar5 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"\x15UseCustomMapRotation: no closing parenthesis found\n");
+    pcVar4 = pcVar4 + 1;
+  } while (cVar3 == cVar1);
+  if (cVar3 != cVar1) {
+    Com_Error(1,0xffffffff82171088);
   }
-  pGVar3 = GameStateInfo_Get();
-  pGVar3->usingRotation = uVar7;
+  iVar2 = GameStateInfo_Get();
+  *(uint *)(iVar2 + 0xc) = uVar6;
   return;
 }
 
 
 // 825BEEB8  Script_UseIntermissionTimer  (ui/ui_shared.cpp:3164)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void Script_UseIntermissionTimer(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_UseIntermissionTimer(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  bool bVar5;
-  GameStateInfo *pGVar3;
-  PartyData *pPVar4;
-  char *pcVar6;
-  char *pcVar7;
-  uint uVar8;
-  bool local_430 [16];
+  char cVar3;
+  int iVar2;
+  char *pcVar4;
+  char *pcVar5;
+  uint uVar6;
+  byte local_430 [16];
   char local_420 [1032];
   
   String_Parse(param_3,local_420,0x400);
-  pcVar7 = local_420;
-  pcVar6 = "(";
+  pcVar5 = local_420;
+  pcVar4 = "(";
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar6;
-    if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
-    pcVar6 = pcVar6 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"\x15UseIntermissionTimer: no opening parenthesis found\n");
+    cVar3 = *pcVar5;
+    cVar1 = *pcVar4;
+    if (cVar3 == '\0') break;
+    pcVar5 = pcVar5 + 1;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar3 == cVar1);
+  if (cVar3 != cVar1) {
+    Com_Error(1,0xffffffff82171244);
   }
   String_Parse(param_3,local_420,0x400);
-  bVar5 = Script_ParseLocalVarBool(param_1,local_420,param_3,1,local_430);
-  if (bVar5) {
-LAB_825bf058:
-    uVar8 = (uint)local_430[0];
-  }
-  else {
-    pcVar7 = local_420;
-    pcVar6 = "true";
+  cVar3 = Script_ParseLocalVarBool(param_1,local_420,param_3,1,local_430);
+  if (cVar3 == '\0') {
+    pcVar5 = local_420;
+    pcVar4 = "true";
     do {
-      cVar1 = *pcVar7;
-      cVar2 = *pcVar6;
-      if (cVar1 == '\0') break;
-      pcVar7 = pcVar7 + 1;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar1 == cVar2);
-    if (cVar1 != cVar2) {
-      pcVar7 = local_420;
-      pcVar6 = "1";
+      cVar3 = *pcVar5;
+      cVar1 = *pcVar4;
+      if (cVar3 == '\0') break;
+      pcVar5 = pcVar5 + 1;
+      pcVar4 = pcVar4 + 1;
+    } while (cVar3 == cVar1);
+    if (cVar3 != cVar1) {
+      pcVar5 = local_420;
+      pcVar4 = "1";
       do {
-        cVar1 = *pcVar7;
-        cVar2 = *pcVar6;
-        if (cVar1 == '\0') break;
-        pcVar7 = pcVar7 + 1;
-        pcVar6 = pcVar6 + 1;
-      } while (cVar1 == cVar2);
-      if (cVar1 != cVar2) {
-        pcVar7 = local_420;
-        pcVar6 = "false";
+        cVar3 = *pcVar5;
+        cVar1 = *pcVar4;
+        if (cVar3 == '\0') break;
+        pcVar5 = pcVar5 + 1;
+        pcVar4 = pcVar4 + 1;
+      } while (cVar3 == cVar1);
+      if (cVar3 != cVar1) {
+        pcVar5 = local_420;
+        pcVar4 = "false";
         do {
-          cVar1 = *pcVar7;
-          cVar2 = *pcVar6;
-          if (cVar1 == '\0') break;
-          pcVar7 = pcVar7 + 1;
-          pcVar6 = pcVar6 + 1;
-        } while (cVar1 == cVar2);
-        if (cVar1 != cVar2) {
-          pcVar7 = local_420;
-          pcVar6 = "0";
+          cVar3 = *pcVar5;
+          cVar1 = *pcVar4;
+          if (cVar3 == '\0') break;
+          pcVar5 = pcVar5 + 1;
+          pcVar4 = pcVar4 + 1;
+        } while (cVar3 == cVar1);
+        if (cVar3 != cVar1) {
+          pcVar5 = local_420;
+          pcVar4 = "0";
           do {
-            cVar1 = *pcVar7;
-            cVar2 = *pcVar6;
-            if (cVar1 == '\0') break;
-            pcVar7 = pcVar7 + 1;
-            pcVar6 = pcVar6 + 1;
-          } while (cVar1 == cVar2);
-          if (cVar1 != cVar2) {
-            Com_Error(ERR_DROP,"\x15");
+            cVar3 = *pcVar5;
+            cVar1 = *pcVar4;
+            if (cVar3 == '\0') break;
+            pcVar5 = pcVar5 + 1;
+            pcVar4 = pcVar4 + 1;
+          } while (cVar3 == cVar1);
+          if (cVar3 != cVar1) {
+            Com_Error(1,0xffffffff8215fd88,0xffffffff82171208);
             goto LAB_825bf058;
           }
         }
-        uVar8 = 0;
+        uVar6 = 0;
         goto LAB_825bf05c;
       }
     }
-    uVar8 = 1;
+    uVar6 = 1;
+  }
+  else {
+LAB_825bf058:
+    uVar6 = (uint)local_430[0];
   }
 LAB_825bf05c:
   String_Parse(param_3,local_420,0x400);
-  pcVar7 = local_420;
-  pcVar6 = ")";
+  pcVar5 = local_420;
+  pcVar4 = ")";
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar6;
-    if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
-    pcVar6 = pcVar6 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"\x15UseIntermissionTimer: no closing parenthesis found\n");
+    cVar3 = *pcVar5;
+    cVar1 = *pcVar4;
+    if (cVar3 == '\0') break;
+    pcVar5 = pcVar5 + 1;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar3 == cVar1);
+  if (cVar3 != cVar1) {
+    Com_Error(1,0xffffffff821711d0);
   }
-  bVar5 = Lobby_IsInLobby();
-  if (!bVar5) {
-    Com_Error(ERR_DROP,"UseIntermissionTimer called while not in lobby");
+  cVar3 = Lobby_IsInLobby();
+  if (cVar3 == '\0') {
+    Com_Error(1,0xffffffff821711a0);
   }
-  bVar5 = Lobby_AreWeHost();
-  if (!bVar5) {
-    Com_Error(ERR_DROP,"UseIntermissionTimer called while not lobby host");
+  cVar3 = Lobby_AreWeHost();
+  if (cVar3 == '\0') {
+    Com_Error(1,0xffffffff8217116c);
   }
-  if ((xblive_privatematch->current).enabled == false) {
-    Com_Error(ERR_DROP,"UseIntermissionTimer called while not in private match");
+  if (*(char *)(DAT_84253bb8 + 0xc) == '\0') {
+    Com_Error(1,0xffffffff82171134);
   }
-  pGVar3 = GameStateInfo_Get();
-  pGVar3->usingIntermission = uVar8;
-  pPVar4 = Lobby_GetPartyData();
-  pPVar4->lobbyFlags = pPVar4->lobbyFlags & 0xffffff83 | 4;
+  iVar2 = GameStateInfo_Get();
+  *(uint *)(iVar2 + 0x10) = uVar6;
+  iVar2 = Lobby_GetPartyData();
+  *(uint *)(iVar2 + 0x1f30) = *(uint *)(iVar2 + 0x1f30) & 0xffffff83 | 4;
   return;
 }
 
 
 // 825BF160  Script_StopIntermissionTimer  (ui/ui_shared.cpp:3204)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void Script_StopIntermissionTimer(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_StopIntermissionTimer(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  bool bVar4;
-  PartyData *pPVar3;
+  char cVar3;
+  int iVar2;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
   char local_410 [1024];
   
   String_Parse(param_3,local_410,0x400);
-  pcVar6 = local_410;
-  pcVar5 = "(";
+  pcVar5 = local_410;
+  pcVar4 = "(";
   do {
-    cVar1 = *pcVar6;
-    cVar2 = *pcVar5;
-    if (cVar1 == '\0') break;
-    pcVar6 = pcVar6 + 1;
+    cVar3 = *pcVar5;
+    cVar1 = *pcVar4;
+    if (cVar3 == '\0') break;
     pcVar5 = pcVar5 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"\x15UseIntermissionTimer: no opening parenthesis found\n");
+    pcVar4 = pcVar4 + 1;
+  } while (cVar3 == cVar1);
+  if (cVar3 != cVar1) {
+    Com_Error(1,0xffffffff82171244);
   }
   String_Parse(param_3,local_410,0x400);
-  pcVar6 = local_410;
-  pcVar5 = ")";
+  pcVar5 = local_410;
+  pcVar4 = ")";
   do {
-    cVar1 = *pcVar6;
-    cVar2 = *pcVar5;
-    if (cVar1 == '\0') break;
-    pcVar6 = pcVar6 + 1;
+    cVar3 = *pcVar5;
+    cVar1 = *pcVar4;
+    if (cVar3 == '\0') break;
     pcVar5 = pcVar5 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"\x15UseIntermissionTimer: no closing parenthesis found\n");
+    pcVar4 = pcVar4 + 1;
+  } while (cVar3 == cVar1);
+  if (cVar3 != cVar1) {
+    Com_Error(1,0xffffffff821711d0);
   }
-  bVar4 = Lobby_IsInLobby();
-  if (!bVar4) {
-    Com_Error(ERR_DROP,"StopIntermissionTimer called while not in lobby");
+  cVar3 = Lobby_IsInLobby();
+  if (cVar3 == '\0') {
+    Com_Error(1,0xffffffff821712e8);
   }
-  bVar4 = Lobby_AreWeHost();
-  if (!bVar4) {
-    Com_Error(ERR_DROP,"StopIntermissionTimer called while not lobby host");
+  cVar3 = Lobby_AreWeHost();
+  if (cVar3 == '\0') {
+    Com_Error(1,0xffffffff821712b4);
   }
-  if ((xblive_privatematch->current).enabled == false) {
-    Com_Error(ERR_DROP,"StopIntermissionTimer called while not in private match");
+  if (*(char *)(DAT_84253bb8 + 0xc) == '\0') {
+    Com_Error(1,0xffffffff8217127c);
   }
-  pPVar3 = Lobby_GetPartyData();
-  pPVar3->lobbyFlags = pPVar3->lobbyFlags & 0xffffff83 | 4;
+  iVar2 = Lobby_GetPartyData();
+  *(uint *)(iVar2 + 0x1f30) = *(uint *)(iVar2 + 0x1f30) & 0xffffff83 | 4;
   return;
 }
 
 
 // 825BF2B0  Script_ResetStatsConfirm  (ui/ui_shared.cpp:3232)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ResetStatsConfirm(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ResetStatsConfirm(undefined4 *param_1)
 
 {
-  LiveStorage_ResetStatsConfirm(param_1->localClientNum);
+  LiveStorage_ResetStatsConfirm(*param_1);
   return;
 }
 
 
 // 825BF2B8  Script_ResetStatsCancel  (ui/ui_shared.cpp:3239)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ResetStatsCancel(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ResetStatsCancel(undefined4 *param_1)
 
 {
-  LiveStorage_ResetStatsCancel(param_1->localClientNum);
-  return;
-}
-
-
-// 825BF2C0  Script_SetCardItem_Internal  (ui/ui_shared.cpp:3248)
-
-void Script_SetCardItem_Internal(int param_1,char *param_2,int param_3)
-
-{
-  int iVar1;
-  StatsSource SVar2;
-  int iVar3;
-  bool bVar7;
-  uchar *puVar4;
-  StructuredDataDef *pSVar5;
-  LookupState LVar6;
-  char *pcStack0000001c;
-  StructuredDataBuffer SStack_60;
-  GamerProfileData GStack_58;
-  GamerProfileData GStack_50;
-  StructuredDataLookup aSStack_40 [4];
-  
-  pcStack0000001c = param_2;
-  iVar1 = __savegprlr_28(param_1);
-  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
-  if (SVar2 == STATS_ONLINE) {
-    GStack_58 = GamerProfile_GetDataByName(iVar1,pcStack0000001c);
-    GStack_50 = GStack_58;
-    if (GStack_58.type != TYPE_SHORT) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
-                      0x16fe,0,"%s");
-    }
-    if (SEXT24(GStack_58.u.intVal._0_2_) != param_3) {
-      GStack_50.u.shortVal = (short)param_3;
-      if ((short)param_3 != param_3) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
-                        0x1703,0,"%s");
-      }
-      iVar3 = GamerProfile_GetDataIndexByName(pcStack0000001c);
-      GamerProfile_SetData(iVar1,iVar3,GStack_50);
-    }
-  }
-  bVar7 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (bVar7) {
-    puVar4 = CL_Demo_GetPersistentDataBufferForDemo();
-  }
-  else {
-    SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
-    puVar4 = LiveStorage_GetPersistentDataBufferForSource(iVar1,SVar2);
-  }
-  if (puVar4 != (uchar *)0x0) {
-    pSVar5 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-    SStack_60.size = 0x2ffc;
-    SStack_60.data = puVar4;
-    StructuredData_InitializeLookup(pSVar5,aSStack_40);
-    StructuredData_LookupWithString(aSStack_40,pcStack0000001c);
-    LVar6 = StructuredData_GetLookupState(aSStack_40);
-    if ((LVar6 == LOOKUP_FINISHED) &&
-       (iVar3 = LiveStorage_DataGetInternalInt(&stack0x0000001c,1,&SStack_60), iVar3 != param_3)) {
-      LiveStorage_DataSetInternalIntByName(pcStack0000001c,param_3,&SStack_60,(uchar *)0x0);
-      LiveStorage_StatsWriteNeeded(iVar1);
-    }
-  }
-  __restgprlr_28();
-  return;
-}
-
-
-// 825BF2C8  Script_SetCardItemNew_Internal  (ui/ui_shared.cpp:3256)
-
-void Script_SetCardItemNew_Internal(int param_1,char *param_2,int param_3,bool param_4)
-
-{
-  int iVar1;
-  StatsSource SVar2;
-  bool bVar6;
-  uchar *puVar3;
-  StructuredDataDef *pSVar4;
-  LookupState LVar5;
-  ulonglong uVar7;
-  StructuredDataBuffer aSStack_50 [2];
-  StructuredDataLookup aSStack_40 [4];
-  
-  uVar7 = (ulonglong)param_4;
-  iVar1 = __savegprlr_27(param_1);
-  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
-  if (SVar2 == STATS_ONLINE) {
-    bVar6 = GamerProfile_GetBit(iVar1,param_3,param_2);
-    if ((uVar7 & 0xff) != (longlong)bVar6) {
-      if ((uVar7 & 0xff) == 0) {
-        GamerProfile_ClearBit(iVar1,param_3,param_2);
-      }
-      else {
-        GamerProfile_SetBit(iVar1,param_3,param_2);
-      }
-    }
-  }
-  bVar6 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (bVar6) {
-    puVar3 = CL_Demo_GetPersistentDataBufferForDemo();
-  }
-  else {
-    SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
-    puVar3 = LiveStorage_GetPersistentDataBufferForSource(iVar1,SVar2);
-  }
-  if (puVar3 != (uchar *)0x0) {
-    pSVar4 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-    aSStack_50[0].size = 0x2ffc;
-    aSStack_50[0].data = puVar3;
-    StructuredData_InitializeLookup(pSVar4,aSStack_40);
-    StructuredData_LookupWithString(aSStack_40,param_2);
-    LVar5 = StructuredData_GetLookupState(aSStack_40);
-    if (((LVar5 != LOOKUP_ERROR) && ((aSStack_40[0].type)->type == DATA_INDEXED_ARRAY)) &&
-       (bVar6 = LiveStorage_PlayerDataGetArrayBoolByIndex(aSStack_50,param_2,param_3),
-       (longlong)bVar6 != (uVar7 & 0xff))) {
-      LiveStorage_PlayerDataSetArrayBoolByIndex(aSStack_50,param_2,param_3,SUB81(uVar7,0));
-      LiveStorage_StatsWriteNeeded(iVar1);
-    }
-  }
-  __restgprlr_27();
-  return;
-}
-
-
-// 825BF2D0  Script_DeleteEliteCacFile  (ui/ui_shared.cpp:3262)
-
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_DeleteEliteCacFile(UiContext *param_1,itemDef_t *param_2,char **param_3)
-
-{
-  LocalClientNum_t LVar1;
-  bool bVar2;
-  int iVar3;
-  
-  LiveStorage_DeleteEliteClassFile_f(s_eliteCACData.activeControllerUI);
-  iVar3 = s_eliteCACData.activeControllerUI;
-  if (s_eliteCACData.disabledControllersForPopup != false) {
-    LVar1 = CL_LocalClientNumFromControllerIndex(s_eliteCACData.activeControllerUI);
-    Cmd_ExecuteSingleCommand
-              (LVar1,iVar3,"decnosplitscreencontrol LiveStorage_DeleteEliteClassFile\n");
-    if (cl_multi_gamepads_enabled == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
-                      0x1c7e,0,"%s");
-    }
-    iVar3 = 0;
-    do {
-      bVar2 = CL_IsSplitscreenControllerActive(iVar3);
-      if (bVar2) {
-        GamerProfile_ExecControllerBindings(iVar3);
-      }
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < 4);
-    s_eliteCACData.disabledControllersForPopup = false;
-  }
-  return;
-}
-
-
-// 825BF2D8  Script_IntegrateEliteCacFile  (ui/ui_shared.cpp:3269)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_IntegrateEliteCacFile(UiContext *param_1,itemDef_t *param_2,char **param_3)
-
-{
-  char *pcVar1;
-  StructuredDataDef *pSVar2;
-  StructuredDataDef *pSVar3;
-  bool bVar6;
-  StatsSource SVar4;
-  LocalClientNum_t LVar5;
-  longlong lVar7;
-  int iVar8;
-  int aiStack_d0 [2];
-  char *pcStack_c8;
-  char *pcStack_c4;
-  StructuredDataLookup SStack_c0;
-  StructuredDataLookup SStack_b0;
-  char acStack_a0 [32];
-  char acStack_80 [128];
-  
-  __savegprlr_22(param_1,param_2,param_3);
-  pcStack_c8 = acStack_a0;
-  pcStack_c4 = acStack_80;
-  I_strncpyz(acStack_a0,"customClasses",0x20);
-  pcVar1 = va("%d");
-  I_strncpyz(acStack_80,pcVar1,0x20);
-  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-  pSVar3 = StructuredDataDef_GetAsset("mp/eliteCreateAClass.def",0x3800);
-  StructuredData_InitializeLookup(pSVar2,&SStack_c0);
-  StructuredData_InitializeLookup(pSVar3,&SStack_b0);
-  bVar6 = StructuredData_NavigateByStrings(&SStack_c0,&pcStack_c8,2,aiStack_d0);
-  if (!bVar6) {
-    Com_Printf(0x10,"Tried to get data: ");
-    lVar7 = 2;
-    do {
-      Com_Printf(0x10,"%s ");
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    Com_Printf(0x10,"\n");
-  }
-  bVar6 = StructuredData_NavigateByStrings(&SStack_b0,&pcStack_c8,2,aiStack_d0);
-  if (!bVar6) {
-    Com_Printf(0x10,"Tried to get data: ");
-    lVar7 = 2;
-    do {
-      Com_Printf(0x10,"%s ");
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    Com_Printf(0x10,"\n");
-  }
-  iVar8 = s_eliteCACData.activeControllerUI;
-  bVar6 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (bVar6) {
-    CL_Demo_GetPersistentDataBufferForDemo();
-  }
-  else {
-    SVar4 = LiveStorage_GetActiveStatsSource(iVar8);
-    LiveStorage_GetPersistentDataBufferForSource(iVar8,SVar4);
-  }
-  memcpy();
-  StructuredData_InitializeLookup(pSVar2,&SStack_c0);
-  StructuredData_InitializeLookup(pSVar3,&SStack_b0);
-  I_strncpyz(acStack_a0,"privateMatchCustomClasses",0x20);
-  bVar6 = StructuredData_NavigateByStrings(&SStack_c0,&pcStack_c8,2,aiStack_d0);
-  if (!bVar6) {
-    Com_Printf(0x10,"Tried to get data: ");
-    lVar7 = 2;
-    do {
-      Com_Printf(0x10,"%s ");
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    Com_Printf(0x10,"\n");
-  }
-  bVar6 = StructuredData_NavigateByStrings(&SStack_b0,&pcStack_c8,2,aiStack_d0);
-  if (!bVar6) {
-    Com_Printf(0x10,"Tried to get data: ");
-    lVar7 = 2;
-    do {
-      Com_Printf(0x10,"%s ");
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    Com_Printf(0x10,"\n");
-  }
-  memcpy();
-  LiveStorage_DeleteEliteClassFile_f(s_eliteCACData.activeControllerUI);
-  iVar8 = s_eliteCACData.activeControllerUI;
-  if (s_eliteCACData.disabledControllersForPopup != false) {
-    LVar5 = CL_LocalClientNumFromControllerIndex(s_eliteCACData.activeControllerUI);
-    Cmd_ExecuteSingleCommand
-              (LVar5,iVar8,"decnosplitscreencontrol LiveStorage_IntegrateEliteClassFile\n");
-    if (cl_multi_gamepads_enabled == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
-                      0x1d53,0,"%s");
-    }
-    iVar8 = 0;
-    do {
-      bVar6 = CL_IsSplitscreenControllerActive(iVar8);
-      if (bVar6) {
-        GamerProfile_ExecControllerBindings(iVar8);
-      }
-      iVar8 = iVar8 + 1;
-    } while (iVar8 < 4);
-    s_eliteCACData.disabledControllersForPopup = false;
-  }
-  __restgprlr_22();
+  LiveStorage_ResetStatsCancel(*param_1);
   return;
 }
 
 
 // 825BF2E0  Script_SetCardIcon_Internal  (ui/ui_shared.cpp:3276)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetCardIcon_Internal
-               (LocalClientNum_t param_1,UiContext *param_2,itemDef_t *param_3,char **param_4)
+void Script_SetCardIcon_Internal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  LocalClientNum_t LVar3;
-  char **ppcVar4;
-  bool bVar7;
-  int iVar5;
-  int iVar6;
-  longlong lVar8;
-  longlong lVar9;
-  char *pcVar10;
-  char *pcVar11;
-  int local_430 [4];
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
+  char *pcVar6;
+  ulonglong uVar7;
+  uint local_430 [4];
   char local_420 [1056];
   
-  lVar9 = (longlong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_29(param_1,lVar8,lVar9,param_4);
+  uVar2 = __savegprlr_29();
   local_430[0] = 0;
-  ppcVar4 = (char **)lVar9;
-  String_Parse(ppcVar4,local_420,0x400);
-  bVar7 = Script_ParseLocalVarInt((UiContext *)lVar8,local_420,ppcVar4,0,local_430);
-  iVar5 = local_430[0];
-  if (!bVar7) {
-    iVar5 = atoi(local_420);
+  String_Parse(param_3,local_420,0x400);
+  cVar4 = Script_ParseLocalVarInt(param_2,local_420,param_3,0,local_430);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_420);
+    uVar7 = (ulonglong)iVar3;
   }
-  String_Parse(ppcVar4,local_420,0x400);
-  pcVar11 = local_420;
-  pcVar10 = ")";
+  else {
+    uVar7 = (ulonglong)local_430[0];
+  }
+  String_Parse(param_3,local_420,0x400);
+  pcVar6 = local_420;
+  pcVar5 = ")";
   do {
-    cVar1 = *pcVar11;
-    cVar2 = *pcVar10;
-    if (cVar1 == '\0') break;
-    pcVar11 = pcVar11 + 1;
-    pcVar10 = pcVar10 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardIcon: no closing parenthesis found\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82171318);
   }
-  iVar6 = CL_ControllerIndexFromClientNum(LVar3);
-  LiveStorage_SetPlayerCardItem(iVar6,"cardIcon",iVar5);
+  uVar2 = CL_ControllerIndexFromClientNum(uVar2);
+  LiveStorage_SetPlayerCardItem(uVar2,0xffffffff82038d6c,uVar7);
   __restgprlr_29();
   return;
 }
@@ -5934,53 +4863,46 @@ void Script_SetCardIcon_Internal
 
 // 825BF3C0  Script_SetCardTitle_Internal  (ui/ui_shared.cpp:3296)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetCardTitle_Internal
-               (LocalClientNum_t param_1,UiContext *param_2,itemDef_t *param_3,char **param_4)
+void Script_SetCardTitle_Internal(undefined8 param_1,undefined8 param_2)
 
 {
   char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  char **ppcVar4;
-  bool bVar7;
-  int iVar5;
-  int iVar6;
-  longlong lVar8;
-  char *pcVar9;
-  char *pcVar10;
-  int local_430 [4];
+  undefined4 *puVar3;
+  char cVar5;
+  int iVar4;
+  undefined8 uVar2;
+  char *pcVar6;
+  char *pcVar7;
+  ulonglong uVar8;
+  uint local_430 [4];
   char local_420 [1056];
   
-  lVar8 = (longlong)(int)param_2;
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,lVar8,param_3,param_4);
+  puVar3 = (undefined4 *)__savegprlr_29();
   local_430[0] = 0;
-  ppcVar4 = (char **)lVar8;
-  String_Parse(ppcVar4,local_420,0x400);
-  bVar7 = Script_ParseLocalVarInt(pUVar3,local_420,ppcVar4,0,local_430);
-  iVar5 = local_430[0];
-  if (!bVar7) {
-    iVar5 = atoi(local_420);
+  String_Parse(param_2,local_420,0x400);
+  cVar5 = Script_ParseLocalVarInt(puVar3,local_420,param_2,0,local_430);
+  if (cVar5 == '\0') {
+    iVar4 = atoi(local_420);
+    uVar8 = (ulonglong)iVar4;
   }
-  String_Parse(ppcVar4,local_420,0x400);
-  pcVar10 = local_420;
-  pcVar9 = ")";
+  else {
+    uVar8 = (ulonglong)local_430[0];
+  }
+  String_Parse(param_2,local_420,0x400);
+  pcVar7 = local_420;
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar9;
-    if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar9 = pcVar9 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardTitle: no closing parenthesis found\n");
+    cVar5 = *pcVar7;
+    cVar1 = *pcVar6;
+    if (cVar5 == '\0') break;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar5 == cVar1);
+  if (cVar5 != cVar1) {
+    Com_Error(1,0xffffffff82171344);
   }
-  iVar6 = CL_ControllerIndexFromClientNum(pUVar3->localClientNum);
-  LiveStorage_SetPlayerCardItem(iVar6,"cardTitle",iVar5);
+  uVar2 = CL_ControllerIndexFromClientNum(*puVar3);
+  LiveStorage_SetPlayerCardItem(uVar2,0xffffffff82038d60,uVar8);
   __restgprlr_29();
   return;
 }
@@ -5988,79 +4910,69 @@ void Script_SetCardTitle_Internal
 
 // 825BF4A0  Script_SetCardTitleNew_Internal  (ui/ui_shared.cpp:3316)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetCardTitleNew_Internal
-               (LocalClientNum_t param_1,UiContext *param_2,itemDef_t *param_3,char **param_4)
+void Script_SetCardTitleNew_Internal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  LocalClientNum_t LVar3;
-  char **ppcVar4;
-  bool bVar7;
-  uint uVar5;
-  int iVar6;
-  longlong lVar8;
-  longlong lVar9;
-  char *pcVar10;
-  char *pcVar11;
-  ulonglong uVar12;
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
+  char *pcVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
   uint local_440 [4];
   char local_430 [1072];
   
-  lVar9 = (longlong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_27(param_1,lVar8,lVar9,param_4);
+  uVar2 = __savegprlr_27();
   local_440[0] = 0;
-  ppcVar4 = (char **)lVar9;
-  String_Parse(ppcVar4,local_430,0x400);
-  bVar7 = Script_ParseLocalVarInt((UiContext *)lVar8,local_430,ppcVar4,0,(int *)local_440);
-  uVar5 = local_440[0];
-  if (!bVar7) {
-    uVar5 = atoi(local_430);
-  }
-  String_Parse(ppcVar4,local_430,0x400);
-  pcVar11 = local_430;
-  pcVar10 = ",";
-  do {
-    cVar1 = *pcVar11;
-    cVar2 = *pcVar10;
-    if (cVar1 == '\0') break;
-    pcVar11 = pcVar11 + 1;
-    pcVar10 = pcVar10 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardTitleNew: no comma found after title index\n");
-  }
-  local_440[0] = 0;
-  String_Parse(ppcVar4,local_430,0x400);
-  bVar7 = Script_ParseLocalVarInt((UiContext *)lVar8,local_430,ppcVar4,0,(int *)local_440);
-  if (bVar7) {
-    uVar12 = (ulonglong)local_440[0];
+  String_Parse(param_3,local_430,0x400);
+  cVar4 = Script_ParseLocalVarInt(param_2,local_430,param_3,0,local_440);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_430);
+    uVar7 = (ulonglong)iVar3;
   }
   else {
-    iVar6 = atoi(local_430);
-    uVar12 = (ulonglong)iVar6;
+    uVar7 = (ulonglong)local_440[0];
   }
-  String_Parse(ppcVar4,local_430,0x400);
-  pcVar11 = local_430;
-  pcVar10 = ")";
+  String_Parse(param_3,local_430,0x400);
+  pcVar6 = local_430;
+  pcVar5 = ",";
   do {
-    cVar1 = *pcVar11;
-    cVar2 = *pcVar10;
-    if (cVar1 == '\0') break;
-    pcVar11 = pcVar11 + 1;
-    pcVar10 = pcVar10 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardTitleNew: no closing parenthesis found\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff821713a0);
   }
-  iVar6 = CL_ControllerIndexFromClientNum(LVar3);
-  LiveStorage_SetPlayerCardItemField(iVar6,"titleNew",uVar5,(bool)('\x01' - (uVar12 == 0)));
+  local_440[0] = 0;
+  String_Parse(param_3,local_430,0x400);
+  cVar4 = Script_ParseLocalVarInt(param_2,local_430,param_3,0,local_440);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_430);
+    uVar8 = (ulonglong)iVar3;
+  }
+  else {
+    uVar8 = (ulonglong)local_440[0];
+  }
+  String_Parse(param_3,local_430,0x400);
+  pcVar6 = local_430;
+  pcVar5 = ")";
+  do {
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82171370);
+  }
+  uVar2 = CL_ControllerIndexFromClientNum(uVar2);
+  LiveStorage_SetPlayerCardItemField(uVar2,0xffffffff820269f0,uVar7,uVar8 != 0);
   __restgprlr_27();
   return;
 }
@@ -6068,79 +4980,69 @@ void Script_SetCardTitleNew_Internal
 
 // 825BF630  Script_SetCardIconNew_Internal  (ui/ui_shared.cpp:3346)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetCardIconNew_Internal
-               (LocalClientNum_t param_1,UiContext *param_2,itemDef_t *param_3,char **param_4)
+void Script_SetCardIconNew_Internal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  LocalClientNum_t LVar3;
-  char **ppcVar4;
-  bool bVar7;
-  uint uVar5;
-  int iVar6;
-  longlong lVar8;
-  longlong lVar9;
-  char *pcVar10;
-  char *pcVar11;
-  ulonglong uVar12;
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
+  char *pcVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
   uint local_440 [4];
   char local_430 [1072];
   
-  lVar9 = (longlong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_27(param_1,lVar8,lVar9,param_4);
+  uVar2 = __savegprlr_27();
   local_440[0] = 0;
-  ppcVar4 = (char **)lVar9;
-  String_Parse(ppcVar4,local_430,0x400);
-  bVar7 = Script_ParseLocalVarInt((UiContext *)lVar8,local_430,ppcVar4,0,(int *)local_440);
-  uVar5 = local_440[0];
-  if (!bVar7) {
-    uVar5 = atoi(local_430);
-  }
-  String_Parse(ppcVar4,local_430,0x400);
-  pcVar11 = local_430;
-  pcVar10 = ",";
-  do {
-    cVar1 = *pcVar11;
-    cVar2 = *pcVar10;
-    if (cVar1 == '\0') break;
-    pcVar11 = pcVar11 + 1;
-    pcVar10 = pcVar10 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardIconNew: no comma found after title index\n");
-  }
-  local_440[0] = 0;
-  String_Parse(ppcVar4,local_430,0x400);
-  bVar7 = Script_ParseLocalVarInt((UiContext *)lVar8,local_430,ppcVar4,0,(int *)local_440);
-  if (bVar7) {
-    uVar12 = (ulonglong)local_440[0];
+  String_Parse(param_3,local_430,0x400);
+  cVar4 = Script_ParseLocalVarInt(param_2,local_430,param_3,0,local_440);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_430);
+    uVar7 = (ulonglong)iVar3;
   }
   else {
-    iVar6 = atoi(local_430);
-    uVar12 = (ulonglong)iVar6;
+    uVar7 = (ulonglong)local_440[0];
   }
-  String_Parse(ppcVar4,local_430,0x400);
-  pcVar11 = local_430;
-  pcVar10 = ")";
+  String_Parse(param_3,local_430,0x400);
+  pcVar6 = local_430;
+  pcVar5 = ",";
   do {
-    cVar1 = *pcVar11;
-    cVar2 = *pcVar10;
-    if (cVar1 == '\0') break;
-    pcVar11 = pcVar11 + 1;
-    pcVar10 = pcVar10 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardIconNew: no closing parenthesis found\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82171404);
   }
-  iVar6 = CL_ControllerIndexFromClientNum(LVar3);
-  LiveStorage_SetPlayerCardItemField(iVar6,"iconNew",uVar5,(bool)('\x01' - (uVar12 == 0)));
+  local_440[0] = 0;
+  String_Parse(param_3,local_430,0x400);
+  cVar4 = Script_ParseLocalVarInt(param_2,local_430,param_3,0,local_440);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_430);
+    uVar8 = (ulonglong)iVar3;
+  }
+  else {
+    uVar8 = (ulonglong)local_440[0];
+  }
+  String_Parse(param_3,local_430,0x400);
+  pcVar6 = local_430;
+  pcVar5 = ")";
+  do {
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff821713d4);
+  }
+  uVar2 = CL_ControllerIndexFromClientNum(uVar2);
+  LiveStorage_SetPlayerCardItemField(uVar2,0xffffffff820269fc,uVar7,uVar8 != 0);
   __restgprlr_27();
   return;
 }
@@ -6148,102 +5050,84 @@ void Script_SetCardIconNew_Internal
 
 // 825BF7C0  Script_SetProfileItemNew_Internal  (ui/ui_shared.cpp:3376)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetProfileItemNew_Internal
-               (LocalClientNum_t param_1,UiContext *param_2,itemDef_t *param_3,char **param_4)
+void Script_SetProfileItemNew_Internal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  LocalClientNum_t LVar3;
+  undefined8 uVar2;
+  char cVar5;
   int iVar4;
-  char **ppcVar5;
-  bool bVar9;
-  int iVar6;
-  StatsSource SVar7;
-  uint uVar8;
-  longlong lVar10;
-  longlong lVar11;
-  char *pcVar12;
-  char *pcVar13;
-  ulonglong uVar14;
-  StringTable *local_460 [2];
-  StructuredDataBuffer local_458;
-  char acStack_450 [32];
+  ulonglong uVar3;
+  char *pcVar6;
+  char *pcVar7;
+  ulonglong uVar8;
+  int local_460 [2];
+  uint local_458 [2];
+  undefined1 auStack_450 [32];
   char local_430 [1072];
   
-  lVar11 = (longlong)(int)param_3;
-  lVar10 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_28(param_1,lVar10,lVar11,param_4);
-  iVar4 = CL_ControllerIndexFromClientNum(LVar3);
-  ppcVar5 = (char **)lVar11;
-  String_Parse(ppcVar5,acStack_450,0x20);
-  String_Parse(ppcVar5,local_430,0x400);
-  pcVar13 = local_430;
-  pcVar12 = ",";
+  __savegprlr_28();
+  uVar2 = CL_ControllerIndexFromClientNum();
+  String_Parse(param_3,auStack_450,0x20);
+  String_Parse(param_3,local_430,0x400);
+  pcVar7 = local_430;
+  pcVar6 = ",";
   do {
-    cVar1 = *pcVar13;
-    cVar2 = *pcVar12;
-    if (cVar1 == '\0') break;
-    pcVar13 = pcVar13 + 1;
-    pcVar12 = pcVar12 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardIconNew: no comma found after title index\n");
+    cVar5 = *pcVar7;
+    cVar1 = *pcVar6;
+    if (cVar5 == '\0') break;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar5 == cVar1);
+  if (cVar5 != cVar1) {
+    Com_Error(1,0xffffffff82171404);
   }
-  local_458.data = (uchar *)0x0;
-  String_Parse(ppcVar5,local_430,0x400);
-  bVar9 = Script_ParseLocalVarInt((UiContext *)lVar10,local_430,ppcVar5,0,(int *)&local_458);
-  if (bVar9) {
-    uVar14 = ZEXT48(local_458.data);
+  local_458[0] = 0;
+  String_Parse(param_3,local_430,0x400);
+  cVar5 = Script_ParseLocalVarInt(param_2,local_430,param_3,0,local_458);
+  if (cVar5 == '\0') {
+    iVar4 = atoi(local_430);
+    uVar8 = (ulonglong)iVar4;
   }
   else {
-    iVar6 = atoi(local_430);
-    uVar14 = (ulonglong)iVar6;
+    uVar8 = (ulonglong)local_458[0];
   }
-  String_Parse(ppcVar5,local_430,0x400);
-  pcVar13 = local_430;
-  pcVar12 = ")";
+  String_Parse(param_3,local_430,0x400);
+  pcVar7 = local_430;
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar13;
-    cVar2 = *pcVar12;
-    if (cVar1 == '\0') break;
-    pcVar13 = pcVar13 + 1;
-    pcVar12 = pcVar12 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardIconNew: no closing parenthesis found\n");
+    cVar5 = *pcVar7;
+    cVar1 = *pcVar6;
+    if (cVar5 == '\0') break;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar5 == cVar1);
+  if (cVar5 != cVar1) {
+    Com_Error(1,0xffffffff821713d4);
   }
-  SVar7 = LiveStorage_GetActiveStatsSource(iVar4);
-  if (SVar7 == STATS_ONLINE) {
-    StringTable_GetAsset("mp/profileUnlockTable.csv",local_460);
-    if (local_460[0] == (StringTable *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xd59,0,
-                      "%s");
+  iVar4 = LiveStorage_GetActiveStatsSource(uVar2);
+  if (iVar4 == 0) {
+    StringTable_GetAsset(0xffffffff82026958,local_460);
+    if (local_460[0] == 0) {
+      MyAssertHandler(0xffffffff82170658,0xd59,0,0xffffffff82000f98,0xffffffff82026698);
     }
-    uVar8 = StringTable_LookupRowNumForValue(local_460[0],0,acStack_450);
-    if (7 < uVar8) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xd5c,0,
-                      "itemIndex doesn\'t index PROFILE_UNLOCKS_MAX\n\t%i not in [0, %i)");
+    uVar3 = StringTable_LookupRowNumForValue(local_460[0],0,auStack_450);
+    if (7 < (uVar3 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82170658,0xd5c,0,0xffffffff82171438,uVar3,8);
     }
-    if (-1 < (int)uVar8) {
-      if ((int)uVar14 != 0) {
-        GamerProfile_SetBit(iVar4,uVar8,"unlockNew");
+    if (-1 < (int)uVar3) {
+      if ((int)uVar8 != 0) {
+        GamerProfile_SetBit();
         __restgprlr_28();
         return;
       }
-      GamerProfile_ClearBit(iVar4,uVar8,"unlockNew");
+      GamerProfile_ClearBit(uVar2,uVar3,0xffffffff820269e4);
     }
   }
   else {
-    bVar9 = LiveStorage_GetPlayerUnlockDataBuffer(&local_458,iVar4);
-    if (bVar9) {
-      LiveStorage_PlayerDataSetArrayBoolByName
-                (&local_458,"featureNew",acStack_450,(bool)('\x01' - (uVar14 == 0)));
+    cVar5 = LiveStorage_GetPlayerUnlockDataBuffer(local_458,uVar2);
+    if (cVar5 != '\0') {
+      LiveStorage_PlayerDataSetArrayBoolByName(local_458,0xffffffff820266ac,auStack_450,uVar8 != 0);
       __restgprlr_28();
       return;
     }
@@ -6255,17 +5139,11 @@ void Script_SetProfileItemNew_Internal
 
 // 825BF9F0  Script_SetCardIcon  (ui/ui_shared.cpp:3442)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_SetCardIcon(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetCardIcon(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
   char cVar2;
-  char **in_r6;
   char *pcVar3;
   char *pcVar4;
   char local_420 [1032];
@@ -6281,63 +5159,49 @@ void Script_SetCardIcon(UiContext *param_1,itemDef_t *param_2,char **param_3)
     pcVar3 = pcVar3 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardIcon: no opening parenthesis found\n");
+    Com_Error(1,0xffffffff82171478);
   }
-  Script_SetCardIcon_Internal(param_1->localClientNum,param_1,(itemDef_t *)param_3,in_r6);
+  Script_SetCardIcon_Internal(*param_1,param_1,param_3);
   return;
 }
 
 
 // 825BFA90  Script_SetCardTitle  (ui/ui_shared.cpp:3454)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetCardTitle(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetCardTitle(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
   char cVar2;
-  itemDef_t *piVar3;
-  char **in_r6;
+  char *pcVar3;
   char *pcVar4;
-  char *pcVar5;
   char local_420 [1032];
   
-  piVar3 = (itemDef_t *)0x400;
   String_Parse(param_3,local_420,0x400);
-  pcVar5 = local_420;
-  pcVar4 = "(";
+  pcVar4 = local_420;
+  pcVar3 = "(";
   do {
-    cVar1 = *pcVar5;
-    cVar2 = *pcVar4;
+    cVar1 = *pcVar4;
+    cVar2 = *pcVar3;
     if (cVar1 == '\0') break;
-    pcVar5 = pcVar5 + 1;
     pcVar4 = pcVar4 + 1;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardTitle: no opening parenthesis found\n");
+    Com_Error(1,0xffffffff821714a4);
   }
-  Script_SetCardTitle_Internal((LocalClientNum_t)param_1,(UiContext *)param_3,piVar3,in_r6);
+  Script_SetCardTitle_Internal(param_1,param_3);
   return;
 }
 
 
 // 825BFB28  Script_SetCardIconNew  (ui/ui_shared.cpp:3466)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_SetCardIconNew(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetCardIconNew(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
   char cVar2;
-  char **in_r6;
   char *pcVar3;
   char *pcVar4;
   char local_420 [1032];
@@ -6353,26 +5217,20 @@ void Script_SetCardIconNew(UiContext *param_1,itemDef_t *param_2,char **param_3)
     pcVar3 = pcVar3 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardIconNew: no opening parenthesis found\n");
+    Com_Error(1,0xffffffff821714d0);
   }
-  Script_SetCardIconNew_Internal(param_1->localClientNum,param_1,(itemDef_t *)param_3,in_r6);
+  Script_SetCardIconNew_Internal(*param_1,param_1,param_3);
   return;
 }
 
 
 // 825BFBC8  Script_SetCardTitleNew  (ui/ui_shared.cpp:3478)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetCardTitleNew(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetCardTitleNew(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
   char cVar2;
-  char **in_r6;
   char *pcVar3;
   char *pcVar4;
   char local_420 [1032];
@@ -6388,26 +5246,20 @@ void Script_SetCardTitleNew(UiContext *param_1,itemDef_t *param_2,char **param_3
     pcVar3 = pcVar3 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardTitleNew: no opening parenthesis found\n");
+    Com_Error(1,0xffffffff82171500);
   }
-  Script_SetCardTitleNew_Internal(param_1->localClientNum,param_1,(itemDef_t *)param_3,in_r6);
+  Script_SetCardTitleNew_Internal(*param_1,param_1,param_3);
   return;
 }
 
 
 // 825BFC68  Script_SetProfileItemNew  (ui/ui_shared.cpp:3490)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetProfileItemNew(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetProfileItemNew(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
   char cVar2;
-  char **in_r6;
   char *pcVar3;
   char *pcVar4;
   char local_420 [1032];
@@ -6423,76 +5275,71 @@ void Script_SetProfileItemNew(UiContext *param_1,itemDef_t *param_2,char **param
     pcVar3 = pcVar3 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetProfileItemNew: no opening parenthesis found\n");
+    Com_Error(1,0xffffffff82171530);
   }
-  Script_SetProfileItemNew_Internal(param_1->localClientNum,param_1,(itemDef_t *)param_3,in_r6);
+  Script_SetProfileItemNew_Internal(*param_1,param_1,param_3);
   return;
 }
 
 
 // 825BFD08  Script_SetCardIconSplitScreen  (ui/ui_shared.cpp:3502)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetCardIconSplitScreen(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetCardIconSplitScreen(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  LocalClientNum_t LVar4;
-  char **ppcVar6;
-  char *pcVar7;
-  char *pcVar8;
-  LocalClientNum_t local_430;
-  LocalClientNum_t local_42c [3];
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
+  char *pcVar6;
+  ulonglong uVar7;
+  uint local_430;
+  undefined4 local_42c [3];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
+  uVar2 = __savegprlr_29();
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar6 = local_420;
+  pcVar5 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardIconSplitScreen: no opening parenthesis found\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82171614);
   }
-  local_430 = LOCAL_CLIENT_0;
+  local_430 = 0;
   String_Parse(param_3,local_420,0x400);
-  ppcVar6 = (char **)0x0;
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)&local_430);
-  LVar4 = local_430;
-  if (!bVar5) {
-    LVar4 = atoi(local_420);
+  cVar4 = Script_ParseLocalVarInt(uVar2,local_420,param_3,0,&local_430);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_420);
+    uVar7 = (ulonglong)iVar3;
+  }
+  else {
+    uVar7 = (ulonglong)local_430;
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ",";
+  pcVar6 = local_420;
+  pcVar5 = ",";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,
-              "\x15SetCardIconSplitScreen: no comma found after split screen player index\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff821715c8);
   }
-  bVar5 = GetSplitScreenLocalClientNumForMenuScript(LVar4,local_42c,"SetCardIconSplitScreen");
-  if (!bVar5) {
-    Com_Error(ERR_DROP,"\x15SetCardIconSplitScreen: %i is not a valid split screen player index");
+  cVar4 = GetSplitScreenLocalClientNumForMenuScript(uVar7,local_42c,0xffffffff821715b0);
+  if (cVar4 == '\0') {
+    Com_Error(1,0xffffffff82171568,uVar7);
   }
-  Script_SetCardIcon_Internal(local_42c[0],pUVar3,(itemDef_t *)param_3,ppcVar6);
+  Script_SetCardIcon_Internal(local_42c[0],uVar2,param_3);
   __restgprlr_29();
   return;
 }
@@ -6500,71 +5347,62 @@ void Script_SetCardIconSplitScreen(UiContext *param_1,itemDef_t *param_2,char **
 
 // 825BFE68  Script_SetCardTitleSplitScreen  (ui/ui_shared.cpp:3530)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_SetCardTitleSplitScreen(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetCardTitleSplitScreen(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  itemDef_t *piVar4;
-  char **ppcVar6;
-  char *pcVar7;
-  char *pcVar8;
-  itemDef_t *local_430;
-  LocalClientNum_t aLStack_42c [3];
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
+  char *pcVar6;
+  ulonglong uVar7;
+  uint local_430;
+  undefined1 auStack_42c [12];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
+  uVar2 = __savegprlr_29();
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar6 = local_420;
+  pcVar5 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardTitleSplitScreen: no opening parenthesis found\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff821716fc);
   }
-  local_430 = (itemDef_t *)0x0;
+  local_430 = 0;
   String_Parse(param_3,local_420,0x400);
-  ppcVar6 = (char **)0x0;
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)&local_430);
-  piVar4 = local_430;
-  if (!bVar5) {
-    piVar4 = (itemDef_t *)atoi(local_420);
+  cVar4 = Script_ParseLocalVarInt(uVar2,local_420,param_3,0,&local_430);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_420);
+    uVar7 = (ulonglong)iVar3;
+  }
+  else {
+    uVar7 = (ulonglong)local_430;
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ",";
+  pcVar6 = local_420;
+  pcVar5 = ",";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,
-              "\x15SetCardTitleSplitScreen: no comma found after split screen player index\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff821716b0);
   }
-  pcVar7 = "SetCardTitleSplitScreen";
-  bVar5 = GetSplitScreenLocalClientNumForMenuScript
-                    ((LocalClientNum_t)piVar4,aLStack_42c,"SetCardTitleSplitScreen");
-  if (!bVar5) {
-    pcVar7 = (char *)piVar4;
-    Com_Error(ERR_DROP,"\x15SetCardTitleSplitScreen: %i is not a valid split screen player index");
+  cVar4 = GetSplitScreenLocalClientNumForMenuScript(uVar7,auStack_42c,0xffffffff82171698);
+  if (cVar4 == '\0') {
+    Com_Error(1,0xffffffff82171650,uVar7);
   }
-  Script_SetCardTitle_Internal
-            ((LocalClientNum_t)pUVar3,(UiContext *)param_3,(itemDef_t *)pcVar7,ppcVar6);
+  Script_SetCardTitle_Internal(uVar2,param_3);
   __restgprlr_29();
   return;
 }
@@ -6572,68 +5410,62 @@ void Script_SetCardTitleSplitScreen(UiContext *param_1,itemDef_t *param_2,char *
 
 // 825BFFC8  Script_SetCardIconNewSplitScreen  (ui/ui_shared.cpp:3558)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetCardIconNewSplitScreen(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetCardIconNewSplitScreen(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  LocalClientNum_t LVar4;
-  char **ppcVar6;
-  char *pcVar7;
-  char *pcVar8;
-  LocalClientNum_t local_430;
-  LocalClientNum_t local_42c [3];
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
+  char *pcVar6;
+  ulonglong uVar7;
+  uint local_430;
+  undefined4 local_42c [3];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
+  uVar2 = __savegprlr_29();
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar6 = local_420;
+  pcVar5 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardIconNewSplitScreen: no opening parenthesis found\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff821717ec);
   }
-  local_430 = LOCAL_CLIENT_0;
+  local_430 = 0;
   String_Parse(param_3,local_420,0x400);
-  ppcVar6 = (char **)0x0;
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)&local_430);
-  LVar4 = local_430;
-  if (!bVar5) {
-    LVar4 = atoi(local_420);
+  cVar4 = Script_ParseLocalVarInt(uVar2,local_420,param_3,0,&local_430);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_420);
+    uVar7 = (ulonglong)iVar3;
+  }
+  else {
+    uVar7 = (ulonglong)local_430;
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ",";
+  pcVar6 = local_420;
+  pcVar5 = ",";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,
-              "\x15SetCardIconNewSplitScreen: no comma found after split screen player index\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff821717a0);
   }
-  bVar5 = GetSplitScreenLocalClientNumForMenuScript(LVar4,local_42c,"SetCardIconNewSplitScreen");
-  if (!bVar5) {
-    Com_Error(ERR_DROP,"\x15SetCardIconNewSplitScreen: %i is not a valid split screen player index")
-    ;
+  cVar4 = GetSplitScreenLocalClientNumForMenuScript(uVar7,local_42c,0xffffffff82171780);
+  if (cVar4 == '\0') {
+    Com_Error(1,0xffffffff82171738,uVar7);
   }
-  Script_SetCardIconNew_Internal(local_42c[0],pUVar3,(itemDef_t *)param_3,ppcVar6);
+  Script_SetCardIconNew_Internal(local_42c[0],uVar2,param_3);
   __restgprlr_29();
   return;
 }
@@ -6641,68 +5473,62 @@ void Script_SetCardIconNewSplitScreen(UiContext *param_1,itemDef_t *param_2,char
 
 // 825C0128  Script_SetCardTitleNewSplitScreen  (ui/ui_shared.cpp:3587)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetCardTitleNewSplitScreen(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetCardTitleNewSplitScreen(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  LocalClientNum_t LVar4;
-  char **ppcVar6;
-  char *pcVar7;
-  char *pcVar8;
-  LocalClientNum_t local_430;
-  LocalClientNum_t local_42c [3];
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
+  char *pcVar6;
+  ulonglong uVar7;
+  uint local_430;
+  undefined4 local_42c [3];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
+  uVar2 = __savegprlr_29();
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar6 = local_420;
+  pcVar5 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetCardTitleNewSplitScreen: no opening parenthesis found\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff821718e0);
   }
-  local_430 = LOCAL_CLIENT_0;
+  local_430 = 0;
   String_Parse(param_3,local_420,0x400);
-  ppcVar6 = (char **)0x0;
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)&local_430);
-  LVar4 = local_430;
-  if (!bVar5) {
-    LVar4 = atoi(local_420);
+  cVar4 = Script_ParseLocalVarInt(uVar2,local_420,param_3,0,&local_430);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_420);
+    uVar7 = (ulonglong)iVar3;
+  }
+  else {
+    uVar7 = (ulonglong)local_430;
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ",";
+  pcVar6 = local_420;
+  pcVar5 = ",";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,
-              "\x15SetCardTitleNewSplitScreen: no comma found after split screen player index\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82171890);
   }
-  bVar5 = GetSplitScreenLocalClientNumForMenuScript(LVar4,local_42c,"SetCardTitleNewSplitScreen");
-  if (!bVar5) {
-    Com_Error(ERR_DROP,"\x15SetCardTitleNewSplitScreen: %i is not a valid split screen player index"
-             );
+  cVar4 = GetSplitScreenLocalClientNumForMenuScript(uVar7,local_42c,0xffffffff82171874);
+  if (cVar4 == '\0') {
+    Com_Error(1,0xffffffff82171828,uVar7);
   }
-  Script_SetCardTitleNew_Internal(local_42c[0],pUVar3,(itemDef_t *)param_3,ppcVar6);
+  Script_SetCardTitleNew_Internal(local_42c[0],uVar2,param_3);
   __restgprlr_29();
   return;
 }
@@ -6710,28 +5536,23 @@ void Script_SetCardTitleNewSplitScreen(UiContext *param_1,itemDef_t *param_2,cha
 
 // 825C0288  Script_PurchasePrestigeTitle  (ui/ui_shared.cpp:3615)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_PurchasePrestigeTitle(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_PurchasePrestigeTitle(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
   char cVar2;
-  LocalClientNum_t *pLVar3;
-  int iVar4;
-  StructuredDataDef *pSVar5;
-  StatsSource SVar6;
+  undefined4 *puVar6;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  undefined8 uVar5;
   char *pcVar7;
   char *pcVar8;
-  StructuredDataBuffer aSStack_840 [2];
-  StructuredDataLookup SStack_830;
+  undefined1 auStack_840 [16];
+  undefined1 auStack_830 [16];
   char local_820 [1024];
   char local_420 [1056];
   
-  pLVar3 = (LocalClientNum_t *)__savegprlr_29(param_1,param_2);
+  puVar6 = (undefined4 *)__savegprlr_29();
   String_Parse(param_3,local_820,0x400);
   pcVar8 = local_820;
   pcVar7 = "(";
@@ -6743,12 +5564,12 @@ void Script_PurchasePrestigeTitle(UiContext *param_1,itemDef_t *param_2,char **p
     pcVar7 = pcVar7 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"PurchasePrestigeTitle: no opening parenthesis found.\n");
+    Com_Error(1,0xffffffff821719ac);
   }
-  iVar4 = CL_ControllerIndexFromClientNum(*pLVar3);
+  uVar3 = CL_ControllerIndexFromClientNum(*puVar6);
   String_Parse(param_3,local_420,0x400);
   if (local_420[0] == '\0') {
-    Com_Error(ERR_DROP,"PurchasePrestigeTitle: unable to parse arg1 (string)\n");
+    Com_Error(1,0xffffffff82171974);
   }
   String_Parse(param_3,local_820,0x400);
   pcVar8 = local_820;
@@ -6761,23 +5582,23 @@ void Script_PurchasePrestigeTitle(UiContext *param_1,itemDef_t *param_2,char **p
     pcVar7 = pcVar7 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"PurchasePrestigeTitle: no closing parenthesis found\n");
+    Com_Error(1,0xffffffff8217193c);
   }
-  pSVar5 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-  if (pSVar5 == (StructuredDataDef *)0x0) {
-    Com_PrintError(0xd,"Unable to access player data.\n");
+  uVar4 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
+  if ((uVar4 & 0xffffffff) == 0) {
+    Com_PrintError(0xd,0xffffffff8217191c);
     __restgprlr_29();
     return;
   }
-  StructuredData_InitializeLookup(pSVar5,&SStack_830);
-  LiveStorage_GetPlayerUnlockDataBuffer(aSStack_840,iVar4);
-  CG_InitItemsUnlocked(*pLVar3);
-  LiveStorage_PlayerDataSetArrayIntByName(aSStack_840,"challengeState",local_420,2);
-  LiveStorage_PlayerDataSetArrayIntByName(aSStack_840,"challengeProgress",local_420,1);
-  SVar6 = LiveStorage_GetActiveStatsSource(iVar4);
-  GamerProfile_UpdateProfileFromStats(iVar4,SVar6);
-  GamerProfile_UpdateProfileAndSaveIfNeeded(iVar4);
-  CG_MarkUnlockedItemsNew(*pLVar3);
+  StructuredData_InitializeLookup(uVar4,auStack_830);
+  LiveStorage_GetPlayerUnlockDataBuffer(auStack_840,uVar3);
+  CG_InitItemsUnlocked(*puVar6);
+  LiveStorage_PlayerDataSetArrayIntByName(auStack_840,0xffffffff82086338,local_420,2);
+  LiveStorage_PlayerDataSetArrayIntByName(auStack_840,0xffffffff82086348,local_420,1);
+  uVar5 = LiveStorage_GetActiveStatsSource(uVar3);
+  GamerProfile_UpdateProfileFromStats(uVar3,uVar5);
+  GamerProfile_UpdateProfileAndSaveIfNeeded(uVar3);
+  CG_MarkUnlockedItemsNew(*puVar6);
   __restgprlr_29();
   return;
 }
@@ -6785,68 +5606,62 @@ void Script_PurchasePrestigeTitle(UiContext *param_1,itemDef_t *param_2,char **p
 
 // 825C0430  Script_SetProfileItemNewSplitScreen  (ui/ui_shared.cpp:3663)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_SetProfileItemNewSplitScreen(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetProfileItemNewSplitScreen(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  LocalClientNum_t LVar4;
-  char **ppcVar6;
-  char *pcVar7;
-  char *pcVar8;
-  LocalClientNum_t local_430;
-  LocalClientNum_t local_42c [3];
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
+  char *pcVar6;
+  ulonglong uVar7;
+  uint local_430;
+  undefined4 local_42c [3];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
+  uVar2 = __savegprlr_29();
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar6 = local_420;
+  pcVar5 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"SetProfileItemNewSplitScreen: no opening parenthesis found\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82171a88);
   }
-  local_430 = LOCAL_CLIENT_0;
+  local_430 = 0;
   String_Parse(param_3,local_420,0x400);
-  ppcVar6 = (char **)0x0;
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)&local_430);
-  LVar4 = local_430;
-  if (!bVar5) {
-    LVar4 = atoi(local_420);
+  cVar4 = Script_ParseLocalVarInt(uVar2,local_420,param_3,0,&local_430);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_420);
+    uVar7 = (ulonglong)iVar3;
+  }
+  else {
+    uVar7 = (ulonglong)local_430;
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ",";
+  pcVar6 = local_420;
+  pcVar5 = ",";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,
-              "\x15SetProfileItemNewSplitScreen: no comma found after split screen player index\n");
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82171a38);
   }
-  bVar5 = GetSplitScreenLocalClientNumForMenuScript(LVar4,local_42c,"SetCardTitleNewSplitScreen");
-  if (!bVar5) {
-    Com_Error(ERR_DROP,
-              "\x15SetProfileItemNewSplitScreen: %i is not a valid split screen player index");
+  cVar4 = GetSplitScreenLocalClientNumForMenuScript(uVar7,local_42c,0xffffffff82171874);
+  if (cVar4 == '\0') {
+    Com_Error(1,0xffffffff821719e8,uVar7);
   }
-  Script_SetProfileItemNew_Internal(local_42c[0],pUVar3,(itemDef_t *)param_3,ppcVar6);
+  Script_SetProfileItemNew_Internal(local_42c[0],uVar2,param_3);
   __restgprlr_29();
   return;
 }
@@ -6854,53 +5669,42 @@ void Script_SetProfileItemNewSplitScreen(UiContext *param_1,itemDef_t *param_2,c
 
 // 825C0590  Script_ParseLocalVar  (ui/ui_shared.cpp:3691)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-UILocalVar * Script_ParseLocalVar(UiContext *param_1,char **param_2)
+void Script_ParseLocalVar(longlong param_1,undefined8 param_2)
 
 {
   int iVar1;
-  UILocalVar *pUVar2;
-  char acStack_110 [256];
+  undefined1 auStack_110 [256];
   
-  iVar1 = String_Parse(param_2,acStack_110,0x100);
+  iVar1 = String_Parse(param_2,auStack_110,0x100);
   if (iVar1 == 0) {
-    return (UILocalVar *)0x0;
+    return;
   }
-  pUVar2 = UILocalVar_FindOrCreate(&param_1->localVars,acStack_110);
-  return pUVar2;
+  UILocalVar_FindOrCreate(param_1 + 0xa7c,auStack_110);
+  return;
 }
 
 
 // 825C05F0  Script_SetLocalVarBool  (ui/ui_shared.cpp:3701)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetLocalVarBool(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetLocalVarBool(longlong param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
-  UILocalVar *pUVar2;
-  char acStack_220 [256];
+  ulonglong uVar2;
+  undefined1 auStack_220 [256];
   char acStack_120 [264];
   
-  iVar1 = String_Parse(param_3,acStack_220,0x100);
+  iVar1 = String_Parse(param_3,auStack_220,0x100);
   if (iVar1 == 0) {
-    pUVar2 = (UILocalVar *)0x0;
+    uVar2 = 0;
   }
   else {
-    pUVar2 = UILocalVar_FindOrCreate(&param_1->localVars,acStack_220);
+    uVar2 = UILocalVar_FindOrCreate(param_1 + 0xa7c,auStack_220);
   }
   iVar1 = String_Parse(param_3,acStack_120,0x100);
-  if ((iVar1 != 0) && (pUVar2 != (UILocalVar *)0x0)) {
+  if ((iVar1 != 0) && ((uVar2 & 0xffffffff) != 0)) {
     iVar1 = atoi(acStack_120);
-    UILocalVar_SetBool(pUVar2,(bool)('\x01' - (iVar1 == 0)));
+    UILocalVar_SetBool(uVar2,iVar1 != 0);
   }
   return;
 }
@@ -6908,30 +5712,25 @@ void Script_SetLocalVarBool(UiContext *param_1,itemDef_t *param_2,char **param_3
 
 // 825C0690  Script_SetLocalVarInt  (ui/ui_shared.cpp:3714)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_SetLocalVarInt(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetLocalVarInt(longlong param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
-  UILocalVar *pUVar2;
-  char acStack_220 [256];
+  ulonglong uVar2;
+  undefined1 auStack_220 [256];
   char acStack_120 [264];
   
-  iVar1 = String_Parse(param_3,acStack_220,0x100);
+  iVar1 = String_Parse(param_3,auStack_220,0x100);
   if (iVar1 == 0) {
-    pUVar2 = (UILocalVar *)0x0;
+    uVar2 = 0;
   }
   else {
-    pUVar2 = UILocalVar_FindOrCreate(&param_1->localVars,acStack_220);
+    uVar2 = UILocalVar_FindOrCreate(param_1 + 0xa7c,auStack_220);
   }
   iVar1 = String_Parse(param_3,acStack_120,0x100);
-  if ((iVar1 != 0) && (pUVar2 != (UILocalVar *)0x0)) {
+  if ((iVar1 != 0) && ((uVar2 & 0xffffffff) != 0)) {
     iVar1 = atoi(acStack_120);
-    UILocalVar_SetInt(pUVar2,iVar1);
+    UILocalVar_SetInt(uVar2,iVar1);
   }
   return;
 }
@@ -6939,31 +5738,26 @@ void Script_SetLocalVarInt(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825C0728  Script_SetLocalVarFloat  (ui/ui_shared.cpp:3727)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetLocalVarFloat(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetLocalVarFloat(longlong param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
-  UILocalVar *pUVar2;
+  ulonglong uVar2;
   double dVar3;
-  char acStack_220 [256];
+  undefined1 auStack_220 [256];
   char acStack_120 [264];
   
-  iVar1 = String_Parse(param_3,acStack_220,0x100);
+  iVar1 = String_Parse(param_3,auStack_220,0x100);
   if (iVar1 == 0) {
-    pUVar2 = (UILocalVar *)0x0;
+    uVar2 = 0;
   }
   else {
-    pUVar2 = UILocalVar_FindOrCreate(&param_1->localVars,acStack_220);
+    uVar2 = UILocalVar_FindOrCreate(param_1 + 0xa7c,auStack_220);
   }
   iVar1 = String_Parse(param_3,acStack_120,0x100);
-  if ((iVar1 != 0) && (pUVar2 != (UILocalVar *)0x0)) {
+  if ((iVar1 != 0) && ((uVar2 & 0xffffffff) != 0)) {
     dVar3 = atof(acStack_120);
-    UILocalVar_SetFloat(pUVar2,(float)dVar3);
+    UILocalVar_SetFloat((double)(float)dVar3,uVar2);
   }
   return;
 }
@@ -6971,29 +5765,24 @@ void Script_SetLocalVarFloat(UiContext *param_1,itemDef_t *param_2,char **param_
 
 // 825C07C0  Script_SetLocalVarString  (ui/ui_shared.cpp:3740)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetLocalVarString(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetLocalVarString(longlong param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
-  UILocalVar *pUVar2;
-  char acStack_220 [256];
-  char acStack_120 [264];
+  ulonglong uVar2;
+  undefined1 auStack_220 [256];
+  undefined1 auStack_120 [264];
   
-  iVar1 = String_Parse(param_3,acStack_220,0x100);
+  iVar1 = String_Parse(param_3,auStack_220,0x100);
   if (iVar1 == 0) {
-    pUVar2 = (UILocalVar *)0x0;
+    uVar2 = 0;
   }
   else {
-    pUVar2 = UILocalVar_FindOrCreate(&param_1->localVars,acStack_220);
+    uVar2 = UILocalVar_FindOrCreate(param_1 + 0xa7c,auStack_220);
   }
-  iVar1 = String_Parse(param_3,acStack_120,0x100);
-  if ((iVar1 != 0) && (pUVar2 != (UILocalVar *)0x0)) {
-    UILocalVar_SetString(pUVar2,acStack_120);
+  iVar1 = String_Parse(param_3,auStack_120,0x100);
+  if ((iVar1 != 0) && ((uVar2 & 0xffffffff) != 0)) {
+    UILocalVar_SetString(uVar2,auStack_120);
   }
   return;
 }
@@ -7001,27 +5790,20 @@ void Script_SetLocalVarString(UiContext *param_1,itemDef_t *param_2,char **param
 
 // 825C0850  Script_FeederTop  (ui/ui_shared.cpp:3753)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_FeederTop(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_FeederTop(int *param_1,int param_2)
 
 {
-  listBoxDef_s *plVar1;
-  itemDef_t *piVar2;
+  int iVar1;
   
-  piVar2 = param_2;
-  plVar1 = Item_GetListBoxDef(param_2);
-  if (plVar1 != (listBoxDef_s *)0x0) {
-    if (plVar1->notselectable == 0) {
-      param_2->cursorPos[param_1->localClientNum] = 0;
-      plVar1->startPos[param_1->localClientNum] = 0;
-      UI_FeederSelection(param_1->localClientNum,param_2->special,(int)piVar2);
+  iVar1 = Item_GetListBoxDef(param_2);
+  if (iVar1 != 0) {
+    if (*(int *)(iVar1 + 0x1b8) == 0) {
+      *(undefined4 *)((*param_1 + 0x5f) * 4 + param_2) = 0;
+      *(undefined4 *)(*param_1 * 4 + iVar1) = 0;
+      UI_FeederSelection((double)*(float *)(param_2 + 0x178),*param_1);
     }
     else {
-      plVar1->startPos[param_1->localClientNum] = 0;
+      *(undefined4 *)(*param_1 * 4 + iVar1) = 0;
     }
   }
   return;
@@ -7030,45 +5812,36 @@ void Script_FeederTop(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CF508  Script_FeederBottom  (ui/ui_shared.cpp:3775)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_FeederBottom(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_FeederBottom(undefined8 param_1,undefined8 param_2)
 
 {
-  LocalClientNum_t LVar1;
-  uint uVar2;
-  LocalClientNum_t *pLVar3;
-  listBoxDef_s *plVar4;
+  int iVar1;
+  int *piVar5;
   int iVar6;
-  int iVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  itemDef_t *piVar5;
+  undefined8 uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  ulonglong uVar7;
   
-  lVar8 = (longlong)(int)param_2;
-  pLVar3 = (LocalClientNum_t *)__savegprlr_27(param_1,lVar8,param_3);
-  piVar5 = (itemDef_t *)lVar8;
-  plVar4 = Item_GetListBoxDef(piVar5);
-  if (plVar4 != (listBoxDef_s *)0x0) {
-    if (plVar4->notselectable == 0) {
-      iVar6 = Item_ListBox_Viewmax(*pLVar3,piVar5);
-      iVar7 = UI_FeederCount(*pLVar3,piVar5->special);
-      uVar2 = (uint)((longlong)iVar7 + -1);
+  piVar5 = (int *)__savegprlr_27();
+  iVar6 = Item_GetListBoxDef(param_2);
+  if (iVar6 != 0) {
+    if (*(int *)(iVar6 + 0x1b8) == 0) {
+      uVar2 = Item_ListBox_Viewmax(*piVar5,param_2);
+      lVar3 = UI_FeederCount((double)*(float *)((int)param_2 + 0x178),*piVar5);
+      uVar7 = lVar3 - 1;
       Item_ListBox_SetCursorPos
-                (*pLVar3,piVar5,iVar6,
-                 -((int)uVar2 >> 0x1f) - (uint)((longlong)iVar7 + -1 != 0) & uVar2);
+                (*piVar5,param_2,uVar2,
+                 ((uVar7 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar7 != 0) & uVar7,0,-uVar7);
       __restgprlr_27();
       return;
     }
-    LVar1 = *pLVar3;
-    iVar6 = UI_FeederCount(LVar1,piVar5->special);
-    iVar7 = Item_ListBox_Viewmax(LVar1,piVar5);
-    uVar9 = (longlong)iVar6 - (longlong)iVar7;
-    plVar4->startPos[*pLVar3] =
-         (int)((uVar9 & 0xffffffff) >> 0x1f) - (uint)(uVar9 != 0) & (uint)uVar9;
+    iVar1 = *piVar5;
+    lVar3 = UI_FeederCount((double)*(float *)((int)param_2 + 0x178),iVar1);
+    lVar4 = Item_ListBox_Viewmax(iVar1,param_2);
+    uVar7 = lVar3 - lVar4;
+    *(uint *)(*piVar5 * 4 + iVar6) =
+         (int)((uVar7 & 0xffffffff) >> 0x1f) - (uint)(uVar7 != 0) & (uint)uVar7;
   }
   __restgprlr_27();
   return;
@@ -7077,52 +5850,40 @@ void Script_FeederBottom(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825C08E0  UI_MuteMenusStart  (ui/ui_shared.cpp:3802)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void UI_MuteMenusStart(void)
 
 {
-  s_muteMenus = 1;
+  DAT_8400bd48 = 1;
   return;
 }
 
 
 // 825C08F0  UI_MuteMenusEnd  (ui/ui_shared.cpp:3808)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void UI_MuteMenusEnd(void)
 
 {
-  s_muteMenus = 0;
+  DAT_8400bd48 = 0;
   return;
 }
 
 
 // 825C0900  UI_SilentReturnToMainMenu  (ui/ui_shared.cpp:3814)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void UI_SilentReturnToMainMenu(void)
 
 {
-  s_muteMenus = 1;
-  UI_SetActiveMenu(LOCAL_CLIENT_0,0);
-  UI_SetActiveMenu(LOCAL_CLIENT_0,1);
-  s_muteMenus = 0;
+  DAT_8400bd48 = 1;
+  UI_SetActiveMenu(0,0);
+  UI_SetActiveMenu(0,1);
+  DAT_8400bd48 = 0;
   return;
 }
 
 
 // 825CB8B8  Script_Play  (ui/ui_shared.cpp:3825)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_Play(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_Play(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
@@ -7131,14 +5892,14 @@ void Script_Play(UiContext *param_1,itemDef_t *param_2,char **param_3)
   char local_410 [1024];
   
   iVar2 = String_Parse(param_3,local_410,0x400);
-  if ((iVar2 != 0) && (s_muteMenus == 0)) {
+  if ((iVar2 != 0) && (DAT_8400bd48 == 0)) {
     pcVar3 = local_410;
     do {
       cVar1 = *pcVar3;
       pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
     if ((int)pcVar3 - (int)local_410 != 1) {
-      SND_PlayLocalSoundAliasByName(param_1->localClientNum,local_410,SASYS_UI);
+      SND_PlayLocalSoundAliasByName(*param_1,local_410,0);
     }
   }
   return;
@@ -7147,42 +5908,36 @@ void Script_Play(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825C0950  Script_PartyMember_GetXUID  (ui/ui_shared.cpp:3847)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-ulong64 Script_PartyMember_GetXUID(LocalClientNum_t param_1)
+undefined8 Script_PartyMember_GetXUID(void)
 
 {
-  return sharedUiInfo.partyMemberXuid;
+  return DAT_83fd1d70;
 }
 
 
 // 825C0968  Script_ShowGamerCard  (ui/ui_shared.cpp:3861)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_ShowGamerCard(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ShowGamerCard(undefined4 *param_1)
 
 {
-  ulong64 uVar1;
-  ulong uVar2;
+  longlong lVar1;
+  ulonglong uVar2;
   
-  uVar1 = sharedUiInfo.partyMemberXuid;
-  if (sharedUiInfo.partyMemberXuid != 0) {
-    if (((splitscreen->current).enabled == false) ||
-       (uVar2 = cl_last_controller_input, (onlinegame->current).enabled == false)) {
-      uVar2 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
+  lVar1 = DAT_83fd1d70;
+  if (DAT_83fd1d70 != 0) {
+    if ((*(char *)(DAT_82b3ecb8 + 0xc) == '\0') || (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) {
+      uVar2 = CL_ControllerIndexFromClientNum(*param_1);
     }
-    uVar2 = XShowGamerCardUI(uVar2,uVar1);
-    if (uVar2 != 0) {
-      Com_PrintError(0x10,"Error %x when trying to show gamercard for XUID %x\n");
+    else {
+      uVar2 = (ulonglong)DAT_82b5c824;
     }
-    if (uVar2 == 0x57) {
-      Com_SetErrorMessage("MPUI_CANT_SHOW_GAMERCARD");
-      UI_OpenMenu(LOCAL_CLIENT_0,"error_popmenu_party");
+    uVar2 = XShowGamerCardUI(uVar2,lVar1);
+    if ((uVar2 & 0xffffffff) != 0) {
+      Com_PrintError(0x10,0xffffffff82171ae0,uVar2,lVar1);
+    }
+    if ((uVar2 & 0xffffffff) == 0x57) {
+      Com_SetErrorMessage(0xffffffff82171ac4);
+      UI_OpenMenu(0,0xffffffff82036918);
     }
   }
   return;
@@ -7191,12 +5946,7 @@ void Script_ShowGamerCard(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825C0A40  Script_ShowCoopGamerCard  (ui/ui_shared.cpp:3904)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ShowCoopGamerCard(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ShowCoopGamerCard(void)
 
 {
   return;
@@ -7205,12 +5955,7 @@ void Script_ShowCoopGamerCard(UiContext *param_1,itemDef_t *param_2,char **param
 
 // 825C0A48  Script_ShowSplitscreenGamerCard  (ui/ui_shared.cpp:3927)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ShowSplitscreenGamerCard(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ShowSplitscreenGamerCard(void)
 
 {
   return;
@@ -7219,23 +5964,18 @@ void Script_ShowSplitscreenGamerCard(UiContext *param_1,itemDef_t *param_2,char 
 
 // 825C0A50  Script_ReportPlayerOffensive  (ui/ui_shared.cpp:4016)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ReportPlayerOffensive(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ReportPlayerOffensive(undefined4 *param_1)
 
 {
-  ulong64 uVar1;
-  int iVar2;
+  longlong lVar1;
+  undefined8 uVar2;
   
-  uVar1 = sharedUiInfo.partyMemberXuid;
-  if (sharedUiInfo.partyMemberXuid != 0) {
-    iVar2 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
-    LiveAntiCheat_ReportPlayer(iVar2,REPORT_OFFENSIVE_LOBBY_PLAYER,uVar1);
-    Com_SetErrorMessage("MENU_REPORT_OFFENSIVE_SUBMIT");
-    UI_OpenMenu(param_1->localClientNum,"error_popmenu_party");
+  lVar1 = DAT_83fd1d70;
+  if (DAT_83fd1d70 != 0) {
+    uVar2 = CL_ControllerIndexFromClientNum(*param_1);
+    LiveAntiCheat_ReportPlayer(uVar2,4,lVar1);
+    Com_SetErrorMessage(0xffffffff8208bad8);
+    UI_OpenMenu(*param_1,0xffffffff82036918);
   }
   return;
 }
@@ -7243,23 +5983,18 @@ void Script_ReportPlayerOffensive(UiContext *param_1,itemDef_t *param_2,char **p
 
 // 825C0AD0  Script_ReportPlayerExploiting  (ui/ui_shared.cpp:4041)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_ReportPlayerExploiting(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ReportPlayerExploiting(undefined4 *param_1)
 
 {
-  ulong64 uVar1;
-  int iVar2;
+  longlong lVar1;
+  undefined8 uVar2;
   
-  uVar1 = sharedUiInfo.partyMemberXuid;
-  if (sharedUiInfo.partyMemberXuid != 0) {
-    iVar2 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
-    LiveAntiCheat_ReportPlayer(iVar2,REPORT_EXPLOITING_LOBBY_PLAYER,uVar1);
-    Com_SetErrorMessage("MENU_REPORT_EXPLOITING_SUBMIT");
-    UI_OpenMenu(param_1->localClientNum,"error_popmenu_party");
+  lVar1 = DAT_83fd1d70;
+  if (DAT_83fd1d70 != 0) {
+    uVar2 = CL_ControllerIndexFromClientNum(*param_1);
+    LiveAntiCheat_ReportPlayer(uVar2,5,lVar1);
+    Com_SetErrorMessage(0xffffffff8208bab8);
+    UI_OpenMenu(*param_1,0xffffffff82036918);
   }
   return;
 }
@@ -7267,23 +6002,18 @@ void Script_ReportPlayerExploiting(UiContext *param_1,itemDef_t *param_2,char **
 
 // 825C0B50  Script_ReportPlayerCheating  (ui/ui_shared.cpp:4066)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ReportPlayerCheating(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ReportPlayerCheating(undefined4 *param_1)
 
 {
-  ulong64 uVar1;
-  int iVar2;
+  longlong lVar1;
+  undefined8 uVar2;
   
-  uVar1 = sharedUiInfo.partyMemberXuid;
-  if (sharedUiInfo.partyMemberXuid != 0) {
-    iVar2 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
-    LiveAntiCheat_ReportPlayer(iVar2,REPORT_CHEATING_LOBBY_PLAYER,uVar1);
-    Com_SetErrorMessage("MENU_REPORT_CHEATING_SUBMIT");
-    UI_OpenMenu(param_1->localClientNum,"error_popmenu_party");
+  lVar1 = DAT_83fd1d70;
+  if (DAT_83fd1d70 != 0) {
+    uVar2 = CL_ControllerIndexFromClientNum(*param_1);
+    LiveAntiCheat_ReportPlayer(uVar2,6,lVar1);
+    Com_SetErrorMessage(0xffffffff8208ba9c);
+    UI_OpenMenu(*param_1,0xffffffff82036918);
   }
   return;
 }
@@ -7291,23 +6021,18 @@ void Script_ReportPlayerCheating(UiContext *param_1,itemDef_t *param_2,char **pa
 
 // 825C0BD0  Script_ReportPlayerBoosting  (ui/ui_shared.cpp:4091)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ReportPlayerBoosting(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ReportPlayerBoosting(undefined4 *param_1)
 
 {
-  ulong64 uVar1;
-  int iVar2;
+  longlong lVar1;
+  undefined8 uVar2;
   
-  uVar1 = sharedUiInfo.partyMemberXuid;
-  if (sharedUiInfo.partyMemberXuid != 0) {
-    iVar2 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
-    LiveAntiCheat_ReportPlayer(iVar2,REPORT_BOOSTING_LOBBY_PLAYER,uVar1);
-    Com_SetErrorMessage("MENU_REPORT_BOOSTING_SUBMIT");
-    UI_OpenMenu(param_1->localClientNum,"error_popmenu_party");
+  lVar1 = DAT_83fd1d70;
+  if (DAT_83fd1d70 != 0) {
+    uVar2 = CL_ControllerIndexFromClientNum(*param_1);
+    LiveAntiCheat_ReportPlayer(uVar2,7,lVar1);
+    Com_SetErrorMessage(0xffffffff8208ba80);
+    UI_OpenMenu(*param_1,0xffffffff82036918);
   }
   return;
 }
@@ -7315,65 +6040,54 @@ void Script_ReportPlayerBoosting(UiContext *param_1,itemDef_t *param_2,char **pa
 
 // 825C0C50  Script_StorePopupXuid  (ui/ui_shared.cpp:4118)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_StorePopupXuid(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_StorePopupXuid(void)
 
 {
-  sharedUiInfo.savedPartyMemberXuid = sharedUiInfo.partyMemberXuid;
-  Com_Printf(0xd,"savedPartyMemberXuid set to <0x%llx>.\n");
+  DAT_83fd1d78 = DAT_83fd1d70;
+  Com_Printf(0xd,0xffffffff82171b14);
   return;
 }
 
 
 // 825C0C80  Script_KickPlayer  (ui/ui_shared.cpp:4125)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void Script_KickPlayer(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_KickPlayer(void)
 
 {
-  int iVar1;
-  PartyData *pPVar2;
-  bool bVar3;
+  int iVar2;
+  char cVar3;
+  undefined8 uVar1;
+  undefined8 uVar4;
   
-  pPVar2 = &g_partyData;
-  iVar1 = Party_InParty(&g_partyData);
-  if (iVar1 == 0) {
-    bVar3 = Lobby_IsInRunningLobby();
-    if ((!bVar3) || ((xblive_privatematch->current).enabled == false)) {
-      Com_PrintError(0xf,
-                     "Attempt to kick a player from a public lobby or while the game is running\n");
+  uVar4 = 0xffffffff82b55118;
+  iVar2 = Party_InParty(0xffffffff82b55118);
+  if (iVar2 == 0) {
+    cVar3 = Lobby_IsInRunningLobby();
+    if ((cVar3 == '\0') || (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
+      Com_PrintError(0xf,0xffffffff82171b40);
       return;
     }
-    pPVar2 = Lobby_GetPartyData();
+    uVar4 = Lobby_GetPartyData();
   }
-  if ((sharedUiInfo.partyMemberXuid != 0) && (iVar1 = Party_AreWeHost(pPVar2), iVar1 != 0)) {
-    if (sharedUiInfo.savedPartyMemberXuid == sharedUiInfo.partyMemberXuid) {
-      bVar3 = Live_XUIDIsLocalPlayer(sharedUiInfo.partyMemberXuid);
-      if (bVar3) {
-        Com_Printf(0xe,"Attempted to kick a local player.\n");
-      }
-      else {
-        iVar1 = Party_FindMemberByXUID_AllowNotPresent(pPVar2,sharedUiInfo.partyMemberXuid);
-        if (iVar1 < 0) {
-          Com_Printf(0xe,"Attempted to kick an unknown player.\n");
+  if ((DAT_83fd1d70 != 0) && (iVar2 = Party_AreWeHost(uVar4), iVar2 != 0)) {
+    if (DAT_83fd1d78 == DAT_83fd1d70) {
+      cVar3 = Live_XUIDIsLocalPlayer();
+      if (cVar3 == '\0') {
+        uVar1 = Party_FindMemberByXUID_AllowNotPresent(uVar4,DAT_83fd1d70);
+        if ((int)uVar1 < 0) {
+          Com_Printf(0xe,0xffffffff82171bb8);
         }
         else {
-          Com_Printf(0xe,"Kicking client %i in Script_KickPlayer()\n");
-          PartyHost_KickPlayer(pPVar2,iVar1);
+          Com_Printf(0xe,0xffffffff82171b8c,uVar1);
+          PartyHost_KickPlayer(uVar4,uVar1);
         }
+      }
+      else {
+        Com_Printf(0xe,0xffffffff82171be0);
       }
     }
     else {
-      Com_Printf(0xe,"Attempted to kick a player but the selection changed.\n");
+      Com_Printf(0xe,0xffffffff82171c04);
     }
   }
   return;
@@ -7382,56 +6096,50 @@ void Script_KickPlayer(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CF5E0  Script_GetKickPlayerQuestionString  (ui/ui_shared.cpp:4171)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void Script_GetKickPlayerQuestionString(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_GetKickPlayerQuestionString(void)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  bool bVar6;
-  char *pcVar4;
-  char *pcVar5;
+  undefined8 uVar1;
+  int iVar4;
+  char cVar5;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar6;
   
-  pUVar1 = (UiContext *)__savegprlr_28(param_1,param_2,param_3);
-  pPVar3 = &g_partyData;
-  iVar2 = Party_InParty(&g_partyData);
-  if (iVar2 == 0) {
-    bVar6 = Lobby_IsInRunningLobby();
-    if ((!bVar6) || ((xblive_privatematch->current).enabled == false)) {
-      Com_PrintError(0xf,"Attempt to kick a player from a public lobby.\n");
+  uVar1 = __savegprlr_28();
+  uVar6 = 0xffffffff82b55118;
+  iVar4 = Party_InParty(0xffffffff82b55118);
+  if (iVar4 == 0) {
+    cVar5 = Lobby_IsInRunningLobby();
+    if ((cVar5 == '\0') || (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
+      Com_PrintError(0xf,0xffffffff82173c20);
       goto LAB_825cf75c;
     }
-    pPVar3 = Lobby_GetPartyData();
+    uVar6 = Lobby_GetPartyData();
   }
-  if ((sharedUiInfo.partyMemberXuid != 0) && (iVar2 = Party_AreWeHost(pPVar3), iVar2 != 0)) {
-    if (sharedUiInfo.savedPartyMemberXuid != sharedUiInfo.partyMemberXuid) {
-      Com_Printf(0xe,"Attempted to kick a player but the selection changed.\n");
+  if ((DAT_83fd1d70 != 0) && (iVar4 = Party_AreWeHost(uVar6), iVar4 != 0)) {
+    if (DAT_83fd1d78 != DAT_83fd1d70) {
+      Com_Printf(0xe,0xffffffff82171c04);
       __restgprlr_28();
       return;
     }
-    bVar6 = Live_XUIDIsLocalPlayer(sharedUiInfo.partyMemberXuid);
-    if (!bVar6) {
-      pcVar4 = UI_SafeTranslateString("XBOXLIVE_KICKPLAYER");
-      iVar2 = Party_FindMemberByXUID_AllowNotPresent(pPVar3,sharedUiInfo.partyMemberXuid);
-      if (-1 < iVar2) {
-        pcVar5 = Party_GetMemberName(pPVar3,iVar2);
-        pcVar4 = UI_ReplaceConversionString(pcVar4,pcVar5);
-        Dvar_SetStringByName("party_kickplayerquestion",pcVar4);
-        iVar2 = Menus_OpenByName(pUVar1,"kickwarning");
-        __restgprlr_28(iVar2);
+    cVar5 = Live_XUIDIsLocalPlayer();
+    if (cVar5 == '\0') {
+      uVar2 = UI_SafeTranslateString(0xffffffff82173c5c);
+      uVar3 = Party_FindMemberByXUID_AllowNotPresent(uVar6,DAT_83fd1d70);
+      if (-1 < (int)uVar3) {
+        uVar6 = Party_GetMemberName(uVar6,uVar3);
+        uVar6 = UI_ReplaceConversionString(uVar2,uVar6);
+        Dvar_SetStringByName(0xffffffff82045b70,uVar6);
+        Menus_OpenByName(uVar1,0xffffffff82173c50);
+        __restgprlr_28();
         return;
       }
-      Com_Printf(0xe,"Attempted to kick an unknown player.\n");
+      Com_Printf(0xe,0xffffffff82171bb8);
       __restgprlr_28();
       return;
     }
-    Com_Printf(0xe,"Attempted to kick a local player.\n");
+    Com_Printf(0xe,0xffffffff82171be0);
     __restgprlr_28();
     return;
   }
@@ -7443,60 +6151,53 @@ LAB_825cf75c:
 
 // 825C0DE0  Script_MakeHost  (ui/ui_shared.cpp:4219)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void Script_MakeHost(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_MakeHost(void)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  bool bVar4;
+  undefined8 uVar1;
   int iVar3;
+  char cVar4;
+  undefined8 uVar2;
   
-  __savegprlr_29(param_1,param_2,param_3);
-  pPVar1 = Party_GetActiveParty();
-  iVar2 = Party_AreWeHost(pPVar1);
-  if (iVar2 == 0) {
-    Com_PrintError(0xf,"Makehost - We aren\'t host of this party/lobby, so we can\'t change hosts\n"
-                  );
+  __savegprlr_29();
+  uVar1 = Party_GetActiveParty();
+  iVar3 = Party_AreWeHost();
+  if (iVar3 == 0) {
+    Com_PrintError(0xf,0xffffffff82171d78);
     __restgprlr_29();
     return;
   }
-  bVar4 = Party_IsGameLobby(pPVar1);
-  if (bVar4) {
-    Com_PrintError(0xf,"Makehost - Attempt to change hosts in a lobby.\n");
+  cVar4 = Party_IsGameLobby(uVar1);
+  if (cVar4 != '\0') {
+    Com_PrintError(0xf,0xffffffff82171d48);
     __restgprlr_29();
     return;
   }
-  if (sharedUiInfo.savedPartyMemberXuid == 0) {
-    Com_PrintError(0xf,"Makehost - No select party member xuid for change host.\n");
+  if (DAT_83fd1d78 == 0) {
+    Com_PrintError(0xf,0xffffffff82171d0c);
     __restgprlr_29();
     return;
   }
-  bVar4 = Live_XUIDIsLocalPlayer(sharedUiInfo.savedPartyMemberXuid);
-  if (bVar4) {
-    Com_PrintError(0xf,"Makehost - Can\'t make us the host.\n");
+  cVar4 = Live_XUIDIsLocalPlayer();
+  if (cVar4 != '\0') {
+    Com_PrintError(0xf,0xffffffff82171ce8);
     __restgprlr_29();
     return;
   }
-  iVar2 = Party_FindMemberByXUID(pPVar1,sharedUiInfo.savedPartyMemberXuid);
-  if (iVar2 < 0) {
-    Com_PrintError(0xf,"Makehost - Can\'t find the client num with xuid %llx.\n");
+  uVar2 = Party_FindMemberByXUID(uVar1,DAT_83fd1d78);
+  if ((int)uVar2 < 0) {
+    Com_PrintError(0xf,0xffffffff82171cb0,DAT_83fd1d78);
     __restgprlr_29();
     return;
   }
-  iVar3 = PartyMigrate_MigrateActive(pPVar1);
+  iVar3 = PartyMigrate_MigrateActive(uVar1);
   if (iVar3 != 0) {
-    Com_PrintError(0xf,"Makehost - Migration already active.\n");
+    Com_PrintError(0xf,0xffffffff82171c88);
     __restgprlr_29();
     return;
   }
-  Com_Printf(0xe,"Makehost - Requesting host change to client %i in Script_MakeHost()\n");
-  PartyMigrate_AskArbitratorToChangeHost(pPVar1,iVar2,sharedUiInfo.savedPartyMemberXuid);
+  Com_Printf(0xe,0xffffffff82171c40,uVar2);
+  PartyMigrate_AskArbitratorToChangeHost(uVar1,uVar2,DAT_83fd1d78);
   __restgprlr_29();
   return;
 }
@@ -7504,144 +6205,113 @@ void Script_MakeHost(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CF768  Script_GetHostMigrateQuestionString  (ui/ui_shared.cpp:4270)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void Script_GetHostMigrateQuestionString(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_GetHostMigrateQuestionString(void)
 
 {
-  UiContext *pUVar1;
-  PartyData *pPVar2;
-  int iVar3;
-  bool bVar6;
-  char *pcVar4;
-  char *pcVar5;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar5;
+  char cVar6;
+  undefined8 uVar3;
+  undefined8 uVar4;
   
-  pUVar1 = (UiContext *)__savegprlr_28(param_1,param_2,param_3);
-  pPVar2 = Party_GetActiveParty();
-  iVar3 = Party_AreWeHost(pPVar2);
-  if (iVar3 == 0) {
-    Com_PrintError(0xf,"We aren\'t host of this party, so we can\'t change hosts\n");
+  uVar1 = __savegprlr_28();
+  uVar2 = Party_GetActiveParty();
+  iVar5 = Party_AreWeHost();
+  if (iVar5 == 0) {
+    Com_PrintError(0xf,0xffffffff82173cdc);
     __restgprlr_28();
     return;
   }
-  bVar6 = Party_IsGameLobby(pPVar2);
-  if (bVar6) {
-    Com_PrintError(0xf,"Attempt to change hosts in a lobby.\n");
+  cVar6 = Party_IsGameLobby(uVar2);
+  if (cVar6 != '\0') {
+    Com_PrintError(0xf,0xffffffff82173cb4);
     __restgprlr_28();
     return;
   }
-  if (sharedUiInfo.savedPartyMemberXuid == 0) {
-    Com_PrintError(0xf,"Makehost - No select party member xuid for change host.\n");
+  if (DAT_83fd1d78 == 0) {
+    Com_PrintError(0xf,0xffffffff82171d0c);
     __restgprlr_28();
     return;
   }
-  bVar6 = Live_XUIDIsLocalPlayer(sharedUiInfo.savedPartyMemberXuid);
-  if (bVar6) {
-    Com_PrintError(0xf,"Makehost - Can\'t make us the host.\n");
+  cVar6 = Live_XUIDIsLocalPlayer();
+  if (cVar6 != '\0') {
+    Com_PrintError(0xf,0xffffffff82171ce8);
     __restgprlr_28();
     return;
   }
-  iVar3 = Party_FindMemberByXUID(pPVar2,sharedUiInfo.savedPartyMemberXuid);
-  if (iVar3 < 0) {
-    Com_PrintError(0xf,"Makehost - Can\'t find the client num with xuid %llx.\n");
+  uVar3 = Party_FindMemberByXUID(uVar2,DAT_83fd1d78);
+  if ((int)uVar3 < 0) {
+    Com_PrintError(0xf,0xffffffff82171cb0,DAT_83fd1d78);
     __restgprlr_28();
     return;
   }
-  pcVar4 = UI_SafeTranslateString("MPUI_MAKEHOSTQUESTION");
-  pcVar5 = Party_GetMemberName(pPVar2,iVar3);
-  pcVar4 = UI_ReplaceConversionString(pcVar4,pcVar5);
-  Dvar_SetStringByName("party_makehostquestion",pcVar4);
-  iVar3 = Menus_OpenByName(pUVar1,"hostchangewarning");
-  __restgprlr_28(iVar3);
-  return;
-}
-
-
-// 825C0F40  Script_PartyUpdateMissingMapPackDvar  (ui/ui_shared.cpp:4317)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void Script_PartyUpdateMissingMapPackDvar(UiContext *param_1,itemDef_t *param_2,char **param_3)
-
-{
-  bool bVar1;
-  int iStack_10;
-  int aiStack_c [3];
-  
-  bVar1 = Party_PartyMembersMissingMapPack(&g_partyData,aiStack_c,&iStack_10);
-  Dvar_SetBool(party_membersMissingMapPack,bVar1);
+  uVar4 = UI_SafeTranslateString(0xffffffff82173c9c);
+  uVar2 = Party_GetMemberName(uVar2,uVar3);
+  uVar2 = UI_ReplaceConversionString(uVar4,uVar2);
+  Dvar_SetStringByName(0xffffffff82173c84,uVar2);
+  Menus_OpenByName(uVar1,0xffffffff82173c70);
+  __restgprlr_28();
   return;
 }
 
 
 // 825CF8C0  Script_TogglePlayerMute  (ui/ui_shared.cpp:4324)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void Script_TogglePlayerMute(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_TogglePlayerMute(void)
 
 {
-  SessionData *pSVar1;
-  UiContext *pUVar2;
-  int iVar3;
-  bool bVar7;
-  PartyData *pPVar4;
-  uint uVar5;
-  uint uVar6;
+  undefined4 uVar1;
+  undefined4 *puVar4;
+  int iVar5;
+  char cVar8;
+  undefined4 *puVar6;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  int iVar7;
   
-  pUVar2 = (UiContext *)__savegprlr_28(param_1,param_2,param_3);
-  pPVar4 = &g_partyData;
-  iVar3 = Party_InParty(&g_partyData);
-  if (iVar3 == 0) {
-    bVar7 = Lobby_IsInRunningLobby();
-    if (!bVar7) {
-      Com_PrintError(0xf,"Attempt to mute a player while not in a party/lobby.\n");
+  puVar4 = (undefined4 *)__savegprlr_28();
+  puVar6 = &DAT_82b55118;
+  iVar5 = Party_InParty(0xffffffff82b55118);
+  if (iVar5 == 0) {
+    cVar8 = Lobby_IsInRunningLobby();
+    if (cVar8 == '\0') {
+      Com_PrintError(0xf,0xffffffff82173d14);
       goto LAB_825cfa28;
     }
-    pPVar4 = Lobby_GetPartyData();
+    puVar6 = (undefined4 *)Lobby_GetPartyData();
   }
-  if (sharedUiInfo.partyMemberXuid != 0) {
-    uVar5 = Party_FindMemberByXUID(pPVar4,sharedUiInfo.partyMemberXuid);
-    if (-1 < (int)uVar5) {
-      pSVar1 = pPVar4->session;
-      iVar3 = CL_ControllerIndexFromClientNum(pUVar2->localClientNum);
-      uVar6 = Live_GetOurClientNum(iVar3,pSVar1);
-      if (uVar5 != uVar6) {
-        iVar3 = Party_IsMemberLocalPlayer(pPVar4,uVar5);
-        if (iVar3 != 0) {
-          Com_Printf(0xe,"Attempted to toggle mute on a local player.\n");
+  if (DAT_83fd1d70 != 0) {
+    uVar2 = Party_FindMemberByXUID(puVar6);
+    iVar5 = (int)uVar2;
+    if (-1 < iVar5) {
+      uVar1 = *puVar6;
+      uVar3 = CL_ControllerIndexFromClientNum(*puVar4);
+      iVar7 = Live_GetOurClientNum(uVar3,uVar1);
+      if (iVar5 != iVar7) {
+        iVar7 = Party_IsMemberLocalPlayer(puVar6,uVar2);
+        if (iVar7 != 0) {
+          Com_Printf(0xe,0xffffffff82173dc4);
           __restgprlr_28();
           return;
         }
-        if (pPVar4->partyMembers[uVar5].status == '\x06') {
-          Com_Printf(0xe,"Attempted to toggle mute on a test client.\n");
+        if (*(char *)(puVar6 + iVar5 * 0x54 + 0x16) == '\x06') {
+          Com_Printf(0xe,0xffffffff82173d98);
           __restgprlr_28();
           return;
         }
-        bVar7 = CL_IsPlayerMuted(pPVar4->session,uVar5);
-        if ((bVar7) && (bVar7 = CL_IsPlayerUnmutable(pPVar4->session,uVar5), !bVar7)) {
-          iVar3 = Menus_OpenByName(pUVar2,"playerUnmutable");
-          __restgprlr_28(iVar3);
+        cVar8 = CL_IsPlayerMuted(*puVar6,uVar2);
+        if ((cVar8 != '\0') && (cVar8 = CL_IsPlayerUnmutable(*puVar6,uVar2), cVar8 == '\0')) {
+          Menus_OpenByName(puVar4,0xffffffff82173d88);
+          __restgprlr_28();
           return;
         }
-        CL_TogglePlayerMute(pPVar4->session,uVar5);
+        CL_TogglePlayerMute(*puVar6,uVar2);
         __restgprlr_28();
         return;
       }
     }
-    Com_Printf(0xe,"Attempted to toggle mute on ourself or an unknown client.\n");
+    Com_Printf(0xe,0xffffffff82173d4c);
     __restgprlr_28();
     return;
   }
@@ -7653,21 +6323,16 @@ LAB_825cfa28:
 
 // 825C0F48  Script_ResolveError  (ui/ui_shared.cpp:4432)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ResolveError(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ResolveError(undefined4 *param_1)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   
-  if (*(com_errorResolveCommand->current).string != '\0') {
-    Cbuf_AddText(param_1->localClientNum,(com_errorResolveCommand->current).string);
-    iVar1 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
-    Cbuf_Execute(param_1->localClientNum,iVar1);
-    Dvar_SetString(com_errorResolveCommand,"");
+  if (**(char **)(DAT_8366735c + 0xc) != '\0') {
+    Cbuf_AddText(*param_1);
+    uVar1 = CL_ControllerIndexFromClientNum(*param_1);
+    Cbuf_Execute(*param_1,uVar1);
+    Dvar_SetString(DAT_8366735c,0xffffffff820068af);
   }
   return;
 }
@@ -7675,21 +6340,16 @@ void Script_ResolveError(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825C0FC0  Script_RunCompletionResolve  (ui/ui_shared.cpp:4443)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_RunCompletionResolve(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_RunCompletionResolve(undefined4 *param_1)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   
-  if (*(com_completionResolveCommand->current).string != '\0') {
-    Cbuf_AddText(param_1->localClientNum,(com_completionResolveCommand->current).string);
-    iVar1 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
-    Cbuf_Execute(param_1->localClientNum,iVar1);
-    Dvar_SetString(com_completionResolveCommand,"");
+  if (**(char **)(DAT_83667350 + 0xc) != '\0') {
+    Cbuf_AddText(*param_1);
+    uVar1 = CL_ControllerIndexFromClientNum(*param_1);
+    Cbuf_Execute(*param_1,uVar1);
+    Dvar_SetString(DAT_83667350,0xffffffff820068af);
   }
   return;
 }
@@ -7697,146 +6357,133 @@ void Script_RunCompletionResolve(UiContext *param_1,itemDef_t *param_2,char **pa
 
 // 825C1038  Script_ClearCompletionResolve  (ui/ui_shared.cpp:4456)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ClearCompletionResolve(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ClearCompletionResolve(void)
 
 {
-  Dvar_SetString(com_completionResolveCommand,"");
+  Dvar_SetString(DAT_83667350,0xffffffff820068af);
   return;
 }
 
 
 // 825C1050  Script_HandleTransition  (ui/ui_shared.cpp:4464)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_HandleTransition(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_HandleTransition(undefined8 param_1,int param_2)
 
 {
-  MenuParse_ParseLerp(param_1,param_2->parent,param_3);
+  MenuParse_ParseLerp(param_1,*(undefined4 *)(param_2 + 0x134));
   return;
 }
 
 
 // 825C1058  Script_PlayMenuVideo  (ui/ui_shared.cpp:4470)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_PlayMenuVideo(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_PlayMenuVideo(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  bool bVar6;
-  int iVar4;
-  int iVar5;
+  undefined4 *puVar1;
+  char cVar3;
+  int iVar2;
+  char cVar4;
+  char *pcVar5;
+  char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
-  char *pcVar9;
-  int iVar10;
-  bool local_480 [4];
-  int local_47c [3];
+  undefined8 uVar8;
+  ulonglong uVar9;
+  char local_480 [4];
+  uint local_47c [3];
   char local_470 [64];
   char local_430 [1072];
   
-  pUVar3 = (UiContext *)__savegprlr_27(param_1,param_2);
-  iVar10 = 0;
+  puVar1 = (undefined4 *)__savegprlr_27();
+  uVar8 = 0;
   local_47c[0] = 0;
   String_Parse(param_3,local_430,0x400);
-  pcVar8 = local_430;
+  pcVar6 = local_430;
   pcVar7 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
+    cVar3 = *pcVar6;
+    cVar4 = *pcVar7;
+    if (cVar3 == '\0') break;
+    pcVar6 = pcVar6 + 1;
     pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"playVideoMenu: no opening parenthesis found\n");
+  } while (cVar3 == cVar4);
+  if (cVar3 != cVar4) {
+    Com_Error(1,0xffffffff82171e90);
   }
   String_Parse(param_3,local_470,0x40);
   String_Parse(param_3,local_430,0x400);
-  pcVar9 = local_430;
-  pcVar8 = ",";
-  pcVar7 = pcVar8;
+  pcVar5 = local_430;
+  pcVar6 = ",";
+  pcVar7 = pcVar6;
   do {
-    cVar1 = *pcVar9;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar9 = pcVar9 + 1;
+    cVar3 = *pcVar5;
+    cVar4 = *pcVar7;
+    if (cVar3 == '\0') break;
+    pcVar5 = pcVar5 + 1;
     pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"playVideoMenu: no comma found after video name\n");
+  } while (cVar3 == cVar4);
+  if (cVar3 != cVar4) {
+    Com_Error(1,0xffffffff82171e60);
   }
   String_Parse(param_3,local_430,0x400);
-  bVar6 = Script_ParseLocalVarInt(pUVar3,local_430,param_3,0,local_47c);
-  iVar4 = local_47c[0];
-  if (!bVar6) {
-    iVar4 = atoi(local_430);
+  cVar3 = Script_ParseLocalVarInt(puVar1,local_430,param_3,0,local_47c);
+  if (cVar3 == '\0') {
+    iVar2 = atoi(local_430);
+    uVar9 = (ulonglong)iVar2;
   }
-  if (iVar4 < 0) {
-    Com_Error(ERR_DROP,"playVideoMenu: negative start offset is not allowed\n");
+  else {
+    uVar9 = (ulonglong)local_47c[0];
+  }
+  if ((int)uVar9 < 0) {
+    Com_Error(1,0xffffffff82171e28);
   }
   String_Parse(param_3,local_430,0x400);
   pcVar7 = local_430;
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar8;
-    if (cVar1 == '\0') break;
+    cVar3 = *pcVar7;
+    cVar4 = *pcVar6;
+    if (cVar3 == '\0') break;
     pcVar7 = pcVar7 + 1;
-    pcVar8 = pcVar8 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"playVideoMenu: no comma found after start offset\n");
+    pcVar6 = pcVar6 + 1;
+  } while (cVar3 == cVar4);
+  if (cVar3 != cVar4) {
+    Com_Error(1,0xffffffff82171df4);
   }
-  local_480[0] = false;
+  local_480[0] = '\0';
   String_Parse(param_3,local_430,0x400);
-  bVar6 = Script_ParseLocalVarBool(pUVar3,local_430,param_3,0,local_480);
-  cVar1 = local_480[0];
-  if (!bVar6) {
-    iVar5 = atoi(local_430);
-    cVar1 = iVar5 != 0;
+  cVar4 = Script_ParseLocalVarBool(puVar1,local_430,param_3,0,local_480);
+  cVar3 = local_480[0];
+  if (cVar4 == '\0') {
+    iVar2 = atoi(local_430);
+    cVar3 = iVar2 != 0;
   }
-  if (cVar1 != '\0') {
-    iVar10 = 2;
+  if (cVar3 != '\0') {
+    uVar8 = 2;
   }
   String_Parse(param_3,local_430,0x400);
-  pcVar8 = local_430;
+  pcVar6 = local_430;
   pcVar7 = ")";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
+    cVar3 = *pcVar6;
+    cVar4 = *pcVar7;
+    if (cVar3 == '\0') break;
+    pcVar6 = pcVar6 + 1;
     pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"playVideoMenu: no closing parenthesis found\n");
+  } while (cVar3 == cVar4);
+  if (cVar3 != cVar4) {
+    Com_Error(1,0xffffffff82171dc4);
   }
   pcVar7 = local_470;
   do {
-    cVar1 = *pcVar7;
+    cVar3 = *pcVar7;
     pcVar7 = pcVar7 + 1;
-  } while (cVar1 != '\0');
+  } while (cVar3 != '\0');
   if ((int)pcVar7 - (int)local_470 == 1) {
     R_Cinematic_StopPlayback();
     __restgprlr_27();
     return;
   }
-  CIN_PlayMenuVideo(pUVar3->localClientNum,local_470,iVar4,iVar10);
+  CIN_PlayMenuVideo(*puVar1,local_470,uVar9,uVar8);
   __restgprlr_27();
   return;
 }
@@ -7844,64 +6491,58 @@ void Script_PlayMenuVideo(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825C12F8  Script_SetBackgroundVideo  (ui/ui_shared.cpp:4515)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetBackgroundVideo(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetBackgroundVideo(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  bool bVar4;
-  int iVar3;
+  char cVar3;
+  int iVar2;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
-  uint auStack_4b0 [4];
+  undefined1 auStack_4b0 [16];
   char local_4a0 [64];
-  char acStack_460 [64];
+  undefined1 auStack_460 [64];
   char local_420 [1032];
   
   String_Parse(param_3,local_420,0x400);
-  pcVar6 = local_420;
+  pcVar4 = local_420;
   pcVar5 = "(";
   do {
-    cVar1 = *pcVar6;
-    cVar2 = *pcVar5;
-    if (cVar1 == '\0') break;
-    pcVar6 = pcVar6 + 1;
+    cVar3 = *pcVar4;
+    cVar1 = *pcVar5;
+    if (cVar3 == '\0') break;
+    pcVar4 = pcVar4 + 1;
     pcVar5 = pcVar5 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setBackgroundVideo: no opening parenthesis found\n");
+  } while (cVar3 == cVar1);
+  if (cVar3 != cVar1) {
+    Com_Error(1,0xffffffff82171ef4);
   }
   String_Parse(param_3,local_4a0,0x40);
   String_Parse(param_3,local_420,0x400);
-  pcVar6 = local_420;
+  pcVar4 = local_420;
   pcVar5 = ")";
   do {
-    cVar1 = *pcVar6;
-    cVar2 = *pcVar5;
-    if (cVar1 == '\0') break;
-    pcVar6 = pcVar6 + 1;
+    cVar3 = *pcVar4;
+    cVar1 = *pcVar5;
+    if (cVar3 == '\0') break;
+    pcVar4 = pcVar4 + 1;
     pcVar5 = pcVar5 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setBackgroundVideo: no closing parenthesis found\n");
+  } while (cVar3 == cVar1);
+  if (cVar3 != cVar1) {
+    Com_Error(1,0xffffffff82171ec0);
   }
   pcVar5 = local_4a0;
   do {
-    cVar1 = *pcVar5;
+    cVar3 = *pcVar5;
     pcVar5 = pcVar5 + 1;
-  } while (cVar1 != '\0');
+  } while (cVar3 != '\0');
   if ((int)pcVar5 - (int)local_4a0 == 1) {
     R_Cinematic_StopPlayback();
   }
   else {
-    bVar4 = R_Cinematic_GetFilenameAndTimeInMsec(acStack_460,0x40,auStack_4b0);
-    if ((!bVar4) || (iVar3 = I_strcmp(local_4a0,acStack_460), iVar3 != 0)) {
-      CIN_PlayMenuVideo(param_1->localClientNum,local_4a0,0,2);
+    cVar3 = R_Cinematic_GetFilenameAndTimeInMsec(auStack_460,0x40,auStack_4b0);
+    if ((cVar3 == '\0') || (iVar2 = I_strcmp(local_4a0,auStack_460), iVar2 != 0)) {
+      CIN_PlayMenuVideo(*param_1,local_4a0,0,2);
     }
   }
   return;
@@ -7910,21 +6551,16 @@ void Script_SetBackgroundVideo(UiContext *param_1,itemDef_t *param_2,char **para
 
 // 825C1468  Script_PartyAbortWaiting  (ui/ui_shared.cpp:4545)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_PartyAbortWaiting(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_PartyAbortWaiting(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  uint uVar1;
+  int iVar1;
   char local_410 [1040];
   
   String_Parse(param_3,local_410,0x400);
   if (local_410[0] != '\0') {
-    uVar1 = atoi(local_410);
-    Party_CancelWaitingDialog(uVar1);
+    iVar1 = atoi(local_410);
+    Party_CancelWaitingDialog(iVar1);
   }
   return;
 }
@@ -7932,111 +6568,141 @@ void Script_PartyAbortWaiting(UiContext *param_1,itemDef_t *param_2,char **param
 
 // 825C14B0  Script_ParseLocalVar  (ui/ui_shared.cpp:4560)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Script_ParseLocalVar(UiContext *param_1,char **param_2,char *param_3,int param_4)
+void Script_ParseLocalVar(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-  UiContext *pUVar1;
+  ulonglong uVar1;
   int iVar2;
-  bool bVar5;
-  char *pcVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  bool local_450 [4];
-  char *local_44c [3];
-  char acStack_440 [1088];
-  char **ppcVar3;
+  char cVar3;
+  ulonglong uVar4;
+  undefined1 local_450;
+  float local_44c;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pUVar1 = (UiContext *)__savegprlr_26(param_1);
-  if (pUVar1 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x11d7,0,
-                    "%s");
+  uVar4 = ZEXT48(&stack0x00000000);
+  uVar1 = __savegprlr_26();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x11d7,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x11d8,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x11d8,0,0xffffffff82000f98,0xffffffff8201843c);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x11d9,0,
-                    "%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x11d9,0,0xffffffff82000f98,0xffffffff82171f34);
   }
-  if (param_4 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x11da,0,
-                    "%s");
+  if ((int)param_4 < 1) {
+    MyAssertHandler(0xffffffff82170658,0x11da,0,0xffffffff82000f98,0xffffffff82171f28);
   }
-  ppcVar3 = (char **)uVar6;
-  iVar2 = String_Parse(ppcVar3,acStack_440,0x400);
+  iVar2 = String_Parse(param_2,uVar4 - 0x440,0x400);
   if (iVar2 == 0) {
-    iVar2 = __restgprlr_26();
-    return iVar2;
+    __restgprlr_26();
+    return;
   }
-  bVar5 = Script_ParseLocalVarInt(pUVar1,acStack_440,ppcVar3,0,(int *)local_44c);
-  pcVar4 = (char *)uVar7;
-  if (bVar5) {
-    Com_sprintf(pcVar4,param_4,"%i");
-    iVar2 = __restgprlr_26(1);
-    return iVar2;
+  cVar3 = Script_ParseLocalVarInt(uVar1,uVar4 - 0x440,param_2,0,uVar4 - 0x44c);
+  if (cVar3 != '\0') {
+    Com_sprintf(param_3,param_4,0xffffffff8200c28c,local_44c);
+    __restgprlr_26(1);
+    return;
   }
-  bVar5 = Script_ParseLocalVarFloat(pUVar1,acStack_440,ppcVar3,0,(float *)local_44c);
-  if (bVar5) {
-    Com_sprintf(pcVar4,param_4,"%.4f");
-    iVar2 = __restgprlr_26(1);
-    return iVar2;
+  cVar3 = Script_ParseLocalVarFloat(uVar1,uVar4 - 0x440,param_2,0,uVar4 - 0x44c);
+  if (cVar3 != '\0') {
+    Com_sprintf(param_3,param_4,0xffffffff820122d8,(double)local_44c);
+    __restgprlr_26(1);
+    return;
   }
-  bVar5 = Script_ParseLocalVarBool(pUVar1,acStack_440,ppcVar3,0,local_450);
-  if (bVar5) {
-    Com_sprintf(pcVar4,param_4,"%i");
-    iVar2 = __restgprlr_26(1);
-    return iVar2;
+  cVar3 = Script_ParseLocalVarBool(uVar1,uVar4 - 0x440,param_2,0,uVar4 - 0x450);
+  if (cVar3 != '\0') {
+    Com_sprintf(param_3,param_4,0xffffffff8200c28c,local_450);
+    __restgprlr_26(1);
+    return;
   }
-  bVar5 = Script_ParseLocalVarString(pUVar1,acStack_440,ppcVar3,0,local_44c,pcVar4,param_4);
-  if (bVar5) {
-    if (ZEXT48(local_44c[0]) == (uVar7 & 0xffffffff)) goto LAB_825c16b8;
+  cVar3 = Script_ParseLocalVarString(uVar1,uVar4 - 0x440,param_2,0,uVar4 - 0x44c,param_3,param_4);
+  if (cVar3 == '\0') {
+    uVar4 = uVar4 - 0x440;
   }
   else {
-    local_44c[0] = acStack_440;
+    uVar4 = (ulonglong)(uint)local_44c;
+    if (uVar4 == (param_3 & 0xffffffff)) goto LAB_825c16b8;
   }
-  I_strncpyz(pcVar4,local_44c[0],param_4);
+  I_strncpyz(param_3,uVar4,param_4);
 LAB_825c16b8:
-  iVar2 = __restgprlr_26(1);
-  return iVar2;
+  __restgprlr_26(1);
+  return;
 }
 
 
 // 825C16C8  Script_ScriptMenuResponse  (ui/ui_shared.cpp:4605)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void Script_ScriptMenuResponse(undefined8 param_1,int param_2,undefined8 param_3)
+
+{
+  undefined4 *puVar3;
+  char cVar6;
+  int iVar4;
+  ulonglong uVar1;
+  char *pcVar5;
+  undefined8 uVar2;
+  ulonglong uVar7;
+  longlong lVar8;
+  undefined1 local_460;
+  undefined1 auStack_45f [63];
+  undefined1 auStack_420 [1056];
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  cVar6 = UI_AllowScriptMenuResponse(*puVar3);
+  if ((cVar6 == '\0') ||
+     (iVar4 = Script_ParseLocalVar(puVar3,param_3,auStack_420,0x400), iVar4 == 0))
+  goto LAB_825c181c;
+  local_460 = 0;
+  memset(auStack_45f,0,0x3f);
+  cVar6 = Dvar_GetBool(0xffffffff8203364c);
+  if ((cVar6 == '\0') || (cVar6 = Dvar_GetBool(0xffffffff820336e8), cVar6 == '\0')) {
+    uVar7 = (ulonglong)*(uint *)(*(int *)(param_2 + 0x134) + 4);
+LAB_825c1798:
+    uVar1 = 0x40;
+  }
+  else {
+    uVar1 = I_stristr(*(undefined4 *)(*(int *)(param_2 + 0x134) + 4),0xffffffff82171f3c);
+    uVar7 = (ulonglong)*(uint *)(*(int *)(param_2 + 0x134) + 4);
+    if (((uVar1 & 0xffffffff) == 0) || (uVar1 = (uVar1 - uVar7) + 1, 0x40 < (uVar1 & 0xffffffff)))
+    goto LAB_825c1798;
+  }
+  I_strncpyz(&local_460,uVar7,uVar1);
+  lVar8 = 0;
+  do {
+    pcVar5 = (char *)CL_GetConfigString(lVar8 + 0xbb4);
+    if ((*pcVar5 != '\0') && (iVar4 = I_stricmp(&local_460,pcVar5), iVar4 == 0)) break;
+    lVar8 = lVar8 + 1;
+  } while ((int)lVar8 < 0x20);
+  if ((int)lVar8 == 0x20) {
+    lVar8 = -1;
+  }
+  uVar2 = va(0xffffffff82170948,DAT_82ae30f4,lVar8,auStack_420);
+  Cbuf_AddText(*puVar3,uVar2);
+LAB_825c181c:
+  __restgprlr_29();
+  return;
+}
+
 
 // 825C1828  Script_ClearEntitlementNew  (ui/ui_shared.cpp:4783)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ClearEntitlementNew(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ClearEntitlementNew(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  StructuredDataDef *pSVar2;
-  StructuredDataBuffer aSStack_430 [2];
-  StructuredDataLookup SStack_420;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_430 [16];
+  undefined1 auStack_420 [16];
   char local_410 [1024];
   
   String_Parse(param_3,local_410,0x400);
   if (local_410[0] != '\0') {
-    iVar1 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
-    LiveStorage_GetPlayerUnlockDataBuffer(aSStack_430,iVar1);
-    pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-    StructuredData_InitializeLookup(pSVar2,&SStack_420);
-    LiveStorage_PlayerDataSetArrayBoolByName(aSStack_430,"newEntitlement",local_410,false);
-    LiveStorage_StatsWriteNeeded(iVar1);
+    uVar1 = CL_ControllerIndexFromClientNum(*param_1);
+    LiveStorage_GetPlayerUnlockDataBuffer(auStack_430,uVar1);
+    uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
+    StructuredData_InitializeLookup(uVar2,auStack_420);
+    LiveStorage_PlayerDataSetArrayBoolByName(auStack_430,0xffffffff82171f4c,local_410,0);
+    LiveStorage_StatsWriteNeeded(uVar1);
   }
   return;
 }
@@ -8044,73 +6710,71 @@ void Script_ClearEntitlementNew(UiContext *param_1,itemDef_t *param_2,char **par
 
 // 825C18C0  Script_SetPastTitleRank  (ui/ui_shared.cpp:4806)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetPastTitleRank(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetPastTitleRank(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  int iVar4;
+  undefined4 *puVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
   char *pcVar6;
-  char *pcVar7;
-  int local_440 [4];
-  char acStack_430 [16];
+  ulonglong uVar7;
+  uint local_440 [4];
+  undefined1 auStack_430 [16];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
+  puVar2 = (undefined4 *)__savegprlr_29();
   String_Parse(param_3,local_420,0x400);
-  pcVar7 = local_420;
-  pcVar6 = "(";
+  pcVar6 = local_420;
+  pcVar5 = "(";
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar6;
-    if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
     pcVar6 = pcVar6 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setPastTitleRank: no opening parenthesis found\n");
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82171fc0);
   }
-  String_Parse(param_3,acStack_430,0x10);
+  String_Parse(param_3,auStack_430,0x10);
   String_Parse(param_3,local_420,0x400);
-  pcVar7 = local_420;
-  pcVar6 = ",";
+  pcVar6 = local_420;
+  pcVar5 = ",";
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar6;
-    if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
     pcVar6 = pcVar6 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setPastTitleRank: no comma found after title name\n");
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82171f8c);
   }
   String_Parse(param_3,local_420,0x400);
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,local_440);
-  iVar4 = local_440[0];
-  if (!bVar5) {
-    iVar4 = atoi(local_420);
+  cVar4 = Script_ParseLocalVarInt(puVar2,local_420,param_3,0,local_440);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_420);
+    uVar7 = (ulonglong)iVar3;
+  }
+  else {
+    uVar7 = (ulonglong)local_440[0];
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar7 = local_420;
-  pcVar6 = ")";
+  pcVar6 = local_420;
+  pcVar5 = ")";
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar6;
-    if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
     pcVar6 = pcVar6 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setPastTitleRank: no closing parenthesis found\n");
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82171f5c);
   }
-  CL_SetPastTitleRank(pUVar3->localClientNum,acStack_430,iVar4);
+  CL_SetPastTitleRank(*puVar2,auStack_430,uVar7);
   __restgprlr_29();
   return;
 }
@@ -8118,73 +6782,71 @@ void Script_SetPastTitleRank(UiContext *param_1,itemDef_t *param_2,char **param_
 
 // 825C1A50  Script_SetPastTitlePrestige  (ui/ui_shared.cpp:4837)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_SetPastTitlePrestige(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetPastTitlePrestige(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  int iVar4;
+  undefined4 *puVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
   char *pcVar6;
-  char *pcVar7;
-  int local_440 [4];
-  char acStack_430 [16];
+  ulonglong uVar7;
+  uint local_440 [4];
+  undefined1 auStack_430 [16];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
+  puVar2 = (undefined4 *)__savegprlr_29();
   String_Parse(param_3,local_420,0x400);
-  pcVar7 = local_420;
-  pcVar6 = "(";
+  pcVar6 = local_420;
+  pcVar5 = "(";
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar6;
-    if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
     pcVar6 = pcVar6 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setPastTitlePrestige: no opening parenthesis found\n");
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff8217205c);
   }
-  String_Parse(param_3,acStack_430,0x10);
+  String_Parse(param_3,auStack_430,0x10);
   String_Parse(param_3,local_420,0x400);
-  pcVar7 = local_420;
-  pcVar6 = ",";
+  pcVar6 = local_420;
+  pcVar5 = ",";
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar6;
-    if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
     pcVar6 = pcVar6 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setPastTitlePrestige: no comma found after title name\n");
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82172024);
   }
   String_Parse(param_3,local_420,0x400);
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,local_440);
-  iVar4 = local_440[0];
-  if (!bVar5) {
-    iVar4 = atoi(local_420);
+  cVar4 = Script_ParseLocalVarInt(puVar2,local_420,param_3,0,local_440);
+  if (cVar4 == '\0') {
+    iVar3 = atoi(local_420);
+    uVar7 = (ulonglong)iVar3;
+  }
+  else {
+    uVar7 = (ulonglong)local_440[0];
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar7 = local_420;
-  pcVar6 = ")";
+  pcVar6 = local_420;
+  pcVar5 = ")";
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar6;
-    if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
+    cVar4 = *pcVar6;
+    cVar1 = *pcVar5;
+    if (cVar4 == '\0') break;
     pcVar6 = pcVar6 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setPastTitlePrestige: no closing parenthesis found\n");
+    pcVar5 = pcVar5 + 1;
+  } while (cVar4 == cVar1);
+  if (cVar4 != cVar1) {
+    Com_Error(1,0xffffffff82171ff0);
   }
-  CL_SetPastTitlePrestige(pUVar3->localClientNum,acStack_430,iVar4);
+  CL_SetPastTitlePrestige(*puVar2,auStack_430,uVar7);
   __restgprlr_29();
   return;
 }
@@ -8192,47 +6854,39 @@ void Script_SetPastTitlePrestige(UiContext *param_1,itemDef_t *param_2,char **pa
 
 // 825C1BE0  Script_ExecWithResolve  (ui/ui_shared.cpp:4868)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_ExecWithResolve(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_ExecWithResolve(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-  itemDef_t *piVar1;
-  LocalClientNum_t *pLVar2;
-  char *pcVar3;
-  int iVar4;
-  ulonglong uVar5;
-  char acStack_430 [1072];
+  char *pcVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar4;
+  undefined8 uVar3;
+  undefined1 auStack_430 [1072];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1307,0,
-                    "%s");
+  puVar4 = (undefined4 *)__savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x1307,0,0xffffffff82000f98,0xffffffff8200e050);
   }
-  piVar1 = (itemDef_t *)uVar5;
-  if (piVar1->parent == (menuDef_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1308,0,
-                    "%s");
+  puVar2 = (undefined4 *)param_2;
+  if (puVar2[0x4d] == 0) {
+    MyAssertHandler(0xffffffff82170658,0x1308,0,0xffffffff82000f98,0xffffffff821720f8);
   }
-  I_strncpyz(acStack_430,"resolveItemDefAction ",0x400);
-  pcVar3 = (piVar1->window).name;
-  if ((((pcVar3 == (char *)0x0) || (*pcVar3 == '\0')) ||
-      (pcVar3 = (piVar1->parent->window).name, pcVar3 == (char *)0x0)) || (*pcVar3 == '\0')) {
-    pcVar3 = va("execWithResolve called, but missing name for either itemDef: %s or menuDef: %s\n");
-    Com_Error(ERR_DROP,pcVar3);
+  I_strncpyz(auStack_430,0xffffffff821720e0,0x400);
+  pcVar1 = (char *)*puVar2;
+  if ((pcVar1 != (char *)0x0) && (*pcVar1 != '\0')) {
+    if ((*(char **)(puVar2[0x4d] + 4) != (char *)0x0) && (**(char **)(puVar2[0x4d] + 4) != '\0')) {
+      I_strncat(auStack_430,0x400);
+      I_strncat(auStack_430,0x400,0xffffffff820034a0);
+      I_strncat(auStack_430,0x400,*puVar2);
+      goto LAB_825c1cf0;
+    }
   }
-  else {
-    I_strncat(acStack_430,0x400,pcVar3);
-    I_strncat(acStack_430,0x400," ");
-    I_strncat(acStack_430,0x400,(piVar1->window).name);
-  }
-  Dvar_SetString(com_completionResolveCommand,acStack_430);
-  iVar4 = CL_ControllerIndexFromClientNum(*pLVar2);
-  Script_ExecHandler(*pLVar2,iVar4,piVar1,param_3,Script_AddTextWrapper);
+  uVar3 = va(0xffffffff82172090,pcVar1,*(undefined4 *)(puVar2[0x4d] + 4));
+  Com_Error(1,uVar3);
+LAB_825c1cf0:
+  Dvar_SetString(DAT_83667350,auStack_430);
+  uVar3 = CL_ControllerIndexFromClientNum(*puVar4);
+  Script_ExecHandler(*puVar4,uVar3,param_2,param_3,0xffffffff825bd1a0);
   __restgprlr_27();
   return;
 }
@@ -8240,64 +6894,61 @@ void Script_ExecWithResolve(UiContext *param_1,itemDef_t *param_2,char **param_3
 
 // 825C1D30  Script_SetInitialGameMode  (ui/ui_shared.cpp:4896)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetInitialGameMode(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetInitialGameMode(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  bool bVar6;
-  initialGameMode_t iVar4;
-  uint uVar5;
+  undefined4 *puVar3;
+  char cVar5;
+  int iVar4;
+  ulonglong uVar2;
+  char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
-  initialGameMode_t local_430 [4];
+  ulonglong uVar8;
+  uint local_430 [4];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
+  puVar3 = (undefined4 *)__savegprlr_29();
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar7 = local_420;
+  pcVar6 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
+    cVar5 = *pcVar7;
+    cVar1 = *pcVar6;
+    if (cVar5 == '\0') break;
     pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setInitialGameMode: no opening parenthesis found\n");
+    pcVar6 = pcVar6 + 1;
+  } while (cVar5 == cVar1);
+  if (cVar5 != cVar1) {
+    Com_Error(1,0xffffffff8217213c);
   }
   String_Parse(param_3,local_420,0x400);
-  bVar6 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)local_430);
-  iVar4 = local_430[0];
-  if (!bVar6) {
+  cVar5 = Script_ParseLocalVarInt(puVar3,local_420,param_3,0,local_430);
+  if (cVar5 == '\0') {
     iVar4 = atoi(local_420);
+    uVar8 = (ulonglong)iVar4;
+  }
+  else {
+    uVar8 = (ulonglong)local_430[0];
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ")";
+  pcVar7 = local_420;
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
+    cVar5 = *pcVar7;
+    cVar1 = *pcVar6;
+    if (cVar5 == '\0') break;
     pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setInitialGameMode: no closing parenthesis found\n");
+    pcVar6 = pcVar6 + 1;
+  } while (cVar5 == cVar1);
+  if (cVar5 != cVar1) {
+    Com_Error(1,0xffffffff82172108);
   }
-  uVar5 = CL_ControllerIndexFromClientNum(pUVar3->localClientNum);
-  if (3 < uVar5) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1332,0,
-                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar2 = CL_ControllerIndexFromClientNum(*puVar3);
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82170658,0x1332,0,0xffffffff82031880,uVar2,4);
   }
-  GamerProfile_SetInitialGameMode(uVar5,iVar4);
+  GamerProfile_SetInitialGameMode(uVar2,uVar8);
   __restgprlr_29();
   return;
 }
@@ -8305,28 +6956,23 @@ void Script_SetInitialGameMode(UiContext *param_1,itemDef_t *param_2,char **para
 
 // 825C1E88  Script_SetDvar  (ui/ui_shared.cpp:4922)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Script_SetDvar(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_SetDvar(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   int iVar1;
-  bool bVar2;
-  char *local_c30 [4];
-  char acStack_c20 [1024];
-  char acStack_820 [1024];
-  char acStack_420 [1032];
+  char cVar2;
+  undefined1 *local_c30 [4];
+  undefined1 auStack_c20 [1024];
+  undefined1 auStack_820 [1024];
+  undefined1 auStack_420 [1032];
   
-  iVar1 = String_Parse(param_3,acStack_820,0x400);
-  if ((iVar1 != 0) && (iVar1 = String_Parse(param_3,acStack_c20,0x400), iVar1 != 0)) {
-    bVar2 = Script_ParseLocalVarString(param_1,acStack_c20,param_3,0,local_c30,acStack_420,0x400);
-    if (!bVar2) {
-      local_c30[0] = acStack_c20;
+  iVar1 = String_Parse(param_3,auStack_820,0x400);
+  if ((iVar1 != 0) && (iVar1 = String_Parse(param_3,auStack_c20,0x400), iVar1 != 0)) {
+    cVar2 = Script_ParseLocalVarString(param_1,auStack_c20,param_3,0,local_c30,auStack_420,0x400);
+    if (cVar2 == '\0') {
+      local_c30[0] = auStack_c20;
     }
-    Dvar_SetFromStringByName(acStack_820,local_c30[0]);
+    Dvar_SetFromStringByName(auStack_820,local_c30[0]);
   }
   return;
 }
@@ -8334,27 +6980,23 @@ void Script_SetDvar(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825C1F28  Script_AntiCheatBanCheck  (ui/ui_shared.cpp:4939)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Script_AntiCheatBanCheck(UiContext *param_1,itemDef_t *param_2,char **param_3)
+void Script_AntiCheatBanCheck(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  bool bVar2;
-  int local_20 [4];
+  int iVar2;
+  undefined8 uVar1;
+  char cVar3;
+  undefined4 local_20 [4];
   
-  iVar1 = Int_Parse(param_3,local_20);
-  if (iVar1 == 0) {
-    Com_PrintError(0xd,"Invalid Parameters, expected: anticheat_bancheck <int featureban>.\n");
+  iVar2 = Int_Parse(param_3,local_20);
+  if (iVar2 == 0) {
+    Com_PrintError(0xd,0xffffffff82172170);
   }
   else {
-    iVar1 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
-    bVar2 = Live_UserIsGuest(iVar1);
-    if (!bVar2) {
-      LiveAntiCheat_BanCheck(iVar1,local_20[0]);
+    uVar1 = CL_ControllerIndexFromClientNum(*param_1);
+    cVar3 = Live_UserIsGuest();
+    if (cVar3 == '\0') {
+      LiveAntiCheat_BanCheck(uVar1,local_20[0]);
       return;
     }
   }
@@ -8364,68 +7006,59 @@ void Script_AntiCheatBanCheck(UiContext *param_1,itemDef_t *param_2,char **param
 
 // 825C1FB0  Item_RunScript  (ui/ui_shared.cpp:5136)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Item_RunScript(UiContext *param_1,itemDef_t *param_2,char *param_3)
+void Item_RunScript(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  bool bVar1;
-  UiContext *pUVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  char *pcVar6;
-  commandDef_t *pcVar7;
-  uint uVar8;
+  undefined4 *puVar1;
+  bool bVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  undefined **ppuVar5;
+  uint uVar6;
   char *local_480 [4];
   char local_470;
   char local_46f;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_20(param_1);
-  if (pUVar2 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1416,0,
-                    "%s");
+  puVar3 = (undefined4 *)__savegprlr_20();
+  if (puVar3 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x1416,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1417,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x1417,0,0xffffffff82000f98,0xffffffff8200e050);
   }
-  if ((((uVar5 & 0xffffffff) != 0) && (pcVar6 = (char *)uVar5, *pcVar6 != '\0')) &&
-     (local_480[0] = pcVar6, iVar3 = String_Parse(local_480,&local_470,0x400), iVar3 != 0)) {
+  if ((((param_3 & 0xffffffff) != 0) && (*(char *)param_3 != '\0')) &&
+     (local_480[0] = (char *)param_3, iVar4 = String_Parse(local_480,&local_470,0x400), iVar4 != 0))
+  {
     do {
       if ((local_470 != ';') || (local_46f != '\0')) {
-        bVar1 = false;
-        uVar8 = 0;
-        pcVar7 = commandList;
+        bVar2 = false;
+        uVar6 = 0;
+        ppuVar5 = &PTR_s_fadein_821702f0;
         do {
-          iVar3 = I_stricmp(&local_470,pcVar7->name);
-          if (iVar3 == 0) {
-            (*commandList[uVar8].handler)(pUVar2,(itemDef_t *)uVar4,local_480);
-            bVar1 = true;
+          iVar4 = I_stricmp(&local_470,*ppuVar5);
+          if (iVar4 == 0) {
+            (*(code *)(&PTR_Script_FadeIn_821702f4)[uVar6 * 2])(puVar3,param_2,local_480);
+            bVar2 = true;
             break;
           }
-          uVar8 = uVar8 + 1;
-          pcVar7 = pcVar7 + 1;
-        } while (uVar8 < 0x65);
-        iVar3 = I_stricmp(&local_470,"uiscript");
-        if (iVar3 == 0) {
-          UI_RunMenuScript(pUVar2->localClientNum,local_480,pcVar6);
+          uVar6 = uVar6 + 1;
+          ppuVar5 = ppuVar5 + 2;
+        } while (uVar6 < 0x65);
+        iVar4 = I_stricmp(&local_470,0xffffffff821721b4);
+        if (iVar4 == 0) {
+          UI_RunMenuScript(*puVar3,local_480,param_3);
         }
-        else if (!bVar1) {
-          if (((itemDef_t *)uVar4)->parent == (menuDef_t *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                            0x1439,0,"%s");
+        else if (!bVar2) {
+          puVar1 = (undefined4 *)param_2;
+          if (puVar1[0x4d] == 0) {
+            MyAssertHandler(0xffffffff82170658,0x1439,0,0xffffffff82000f98,0xffffffff821720f8);
           }
-          Com_PrintError(0xd,"Unknown menu command \'%s\' in %s::%s\n");
+          Com_PrintError(0xd,0xffffffff821721c0,&local_470,*(undefined4 *)(puVar1[0x4d] + 4),*puVar1
+                        );
         }
       }
-      iVar3 = String_Parse(local_480,&local_470,0x400);
-    } while (iVar3 != 0);
+      iVar4 = String_Parse(local_480,&local_470,0x400);
+    } while (iVar4 != 0);
   }
   __restgprlr_20();
   return;
@@ -8434,147 +7067,125 @@ void Item_RunScript(UiContext *param_1,itemDef_t *param_2,char *param_3)
 
 // 825C2170  Item_HandleEvent  (ui/ui_shared.cpp:5188)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Item_HandleEvent(UiContext *param_1,itemDef_t *param_2,MenuEventHandlerSet *param_3)
+void Item_HandleEvent(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   byte bVar1;
   int iVar2;
   int *piVar3;
-  UiContext *pUVar4;
-  bool bVar8;
-  bool bVar9;
-  int iVar5;
-  UILocalVar *pUVar6;
-  char *pcVar7;
-  ulonglong uVar10;
-  itemDef_t *piVar11;
-  ulonglong uVar12;
-  int iVar13;
-  int *piVar14;
-  float fVar15;
+  bool bVar4;
+  undefined4 *puVar7;
+  char cVar8;
+  ulonglong uVar5;
+  undefined8 uVar6;
+  int iVar9;
+  int *piVar10;
   
-  uVar12 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  pUVar4 = (UiContext *)__savegprlr_16(param_1);
-  if ((uVar10 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1449,0,
-                    "%s");
+  puVar7 = (undefined4 *)__savegprlr_16();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x1449,0,0xffffffff82000f98,0xffffffff8200e050);
   }
-  if ((uVar12 & 0xffffffff) != 0) {
-    iVar2 = *(int *)uVar12;
-    bVar8 = false;
-    piVar14 = (int *)((int *)uVar12)[1];
-    iVar13 = 0;
+  if ((param_3 & 0xffffffff) != 0) {
+    iVar2 = *(int *)param_3;
+    bVar4 = false;
+    piVar10 = (int *)((int *)param_3)[1];
+    iVar9 = 0;
     if (0 < iVar2) {
       do {
-        piVar3 = (int *)*piVar14;
+        piVar3 = (int *)*piVar10;
         bVar1 = *(byte *)(piVar3 + 1);
         if (bVar1 < 7) {
-          piVar11 = (itemDef_t *)uVar10;
           if (bVar1 == 1) {
             if (*(int *)(*piVar3 + 4) == 0) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                              0x145b,0,"%s");
+              MyAssertHandler(0xffffffff82170658,0x145b,0,0xffffffff82000f98,0xffffffff821721e8);
             }
-            bVar8 = IsExpressionTrue(pUVar4->localClientNum,*(Statement_s **)(*piVar3 + 4));
-            if (bVar8) {
-              Item_HandleEvent(pUVar4,piVar11,*(MenuEventHandlerSet **)*piVar3);
-              bVar8 = false;
+            cVar8 = IsExpressionTrue(*puVar7,*(undefined4 *)(*piVar3 + 4));
+            if (cVar8 == '\0') {
+              bVar4 = true;
             }
             else {
-              bVar8 = true;
+              Item_HandleEvent(puVar7,param_2,*(undefined4 *)*piVar3);
+              bVar4 = false;
             }
           }
           else if (bVar1 == 2) {
-            if (bVar8) {
-              if (iVar13 < 1) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                                0x1469,0,"%s");
+            if (bVar4) {
+              if (iVar9 < 1) {
+                MyAssertHandler(0xffffffff82170658,0x1469,0,0xffffffff82000f98,0xffffffff82172228);
               }
-              if (*(char *)(piVar14[-1] + 4) != '\x01') {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                                0x146a,0,"%s");
+              if (*(char *)(piVar10[-1] + 4) != '\x01') {
+                MyAssertHandler(0xffffffff82170658,0x146a,0,0xffffffff82000f98,0xffffffff82172240);
               }
-              Item_HandleEvent(pUVar4,piVar11,(MenuEventHandlerSet *)*piVar3);
-              bVar8 = false;
+              Item_HandleEvent(puVar7,param_2,*piVar3);
+              bVar4 = false;
             }
           }
           else if (bVar1 == 3) {
-            pUVar6 = UILocalVar_FindOrCreate(&pUVar4->localVars,*(char **)*piVar3);
-            if (pUVar6 == (UILocalVar *)0x0) {
-              pcVar7 = va("Couldn\'t create local var for %s.");
-              Com_Error(ERR_DROP,pcVar7);
+            uVar5 = UILocalVar_FindOrCreate(puVar7 + 0x29f,*(undefined4 *)*piVar3);
+            if ((uVar5 & 0xffffffff) == 0) {
+              uVar6 = va(0xffffffff8217227c,*(undefined4 *)*piVar3);
+              Com_Error(1,uVar6);
             }
             else {
-              if (*(int *)(*piVar3 + 4) == 0) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                                0x1476,0,"%s");
+              if (((undefined4 *)*piVar3)[1] == 0) {
+                MyAssertHandler(0xffffffff82170658,0x1476,0,0xffffffff82000f98,0xffffffff821722a0);
               }
-              bVar9 = IsExpressionTrue(pUVar4->localClientNum,*(Statement_s **)(*piVar3 + 4));
-              UILocalVar_SetBool(pUVar6,bVar9);
+              uVar6 = IsExpressionTrue(*puVar7,*(undefined4 *)(*piVar3 + 4));
+              UILocalVar_SetBool(uVar5,uVar6);
             }
           }
           else if (bVar1 == 4) {
-            pUVar6 = UILocalVar_FindOrCreate(&pUVar4->localVars,*(char **)*piVar3);
-            if (pUVar6 == (UILocalVar *)0x0) {
-              pcVar7 = va("Couldn\'t create local var for %s.");
-              Com_Error(ERR_DROP,pcVar7);
+            uVar5 = UILocalVar_FindOrCreate(puVar7 + 0x29f,*(undefined4 *)*piVar3);
+            if ((uVar5 & 0xffffffff) == 0) {
+              uVar6 = va(0xffffffff8217227c,*(undefined4 *)*piVar3);
+              Com_Error(1,uVar6);
             }
             else {
-              if (*(int *)(*piVar3 + 4) == 0) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                                0x1480,0,"%s");
+              if (((undefined4 *)*piVar3)[1] == 0) {
+                MyAssertHandler(0xffffffff82170658,0x1480,0,0xffffffff82000f98,0xffffffff821722a0);
               }
-              iVar5 = GetExpressionInt(pUVar4->localClientNum,*(Statement_s **)(*piVar3 + 4));
-              UILocalVar_SetInt(pUVar6,iVar5);
+              uVar6 = GetExpressionInt(*puVar7,*(undefined4 *)(*piVar3 + 4));
+              UILocalVar_SetInt(uVar5,uVar6);
             }
           }
           else if (bVar1 == 5) {
-            pUVar6 = UILocalVar_FindOrCreate(&pUVar4->localVars,*(char **)*piVar3);
-            if (pUVar6 == (UILocalVar *)0x0) {
-              pcVar7 = va("Couldn\'t create local var for %s.");
-              Com_Error(ERR_DROP,pcVar7);
+            uVar5 = UILocalVar_FindOrCreate(puVar7 + 0x29f,*(undefined4 *)*piVar3);
+            if ((uVar5 & 0xffffffff) == 0) {
+              uVar6 = va(0xffffffff8217227c,*(undefined4 *)*piVar3);
+              Com_Error(1,uVar6);
             }
             else {
-              if (*(int *)(*piVar3 + 4) == 0) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                                0x148a,0,"%s");
+              if (((undefined4 *)*piVar3)[1] == 0) {
+                MyAssertHandler(0xffffffff82170658,0x148a,0,0xffffffff82000f98,0xffffffff821722a0);
               }
-              fVar15 = GetExpressionFloat(pUVar4->localClientNum,*(Statement_s **)(*piVar3 + 4));
-              UILocalVar_SetFloat(pUVar6,fVar15);
+              GetExpressionFloat(*puVar7,*(undefined4 *)(*piVar3 + 4));
+              UILocalVar_SetFloat(uVar5);
             }
           }
           else if (bVar1 == 0) {
-            Item_RunScript(pUVar4,piVar11,(char *)*piVar3);
+            Item_RunScript(puVar7,param_2,*piVar3);
           }
           else {
-            pUVar6 = UILocalVar_FindOrCreate(&pUVar4->localVars,*(char **)*piVar3);
-            if (pUVar6 == (UILocalVar *)0x0) {
-              pcVar7 = va("Couldn\'t create local var for %s.");
-              Com_Error(ERR_DROP,pcVar7);
+            uVar5 = UILocalVar_FindOrCreate(puVar7 + 0x29f,*(undefined4 *)*piVar3);
+            if ((uVar5 & 0xffffffff) == 0) {
+              uVar6 = va(0xffffffff8217227c,*(undefined4 *)*piVar3);
+              Com_Error(1,uVar6);
             }
             else {
-              if (*(int *)(*piVar3 + 4) == 0) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                                0x1494,0,"%s");
+              if (((undefined4 *)*piVar3)[1] == 0) {
+                MyAssertHandler(0xffffffff82170658,0x1494,0,0xffffffff82000f98,0xffffffff821722a0);
               }
-              pcVar7 = GetExpressionResultString
-                                 (pUVar4->localClientNum,*(Statement_s **)(*piVar3 + 4));
-              UILocalVar_SetString(pUVar6,pcVar7);
+              uVar6 = GetExpressionResultString(*puVar7,*(undefined4 *)(*piVar3 + 4));
+              UILocalVar_SetString(uVar5,uVar6);
             }
           }
         }
         else {
-          Com_Error(ERR_DROP,"Unexpected event handler type %d");
+          Com_Error(1,0xffffffff821722d4);
         }
-        iVar13 = iVar13 + 1;
-        piVar14 = piVar14 + 1;
-      } while (iVar13 < iVar2);
+        iVar9 = iVar9 + 1;
+        piVar10 = piVar10 + 1;
+      } while (iVar9 < iVar2);
     }
   }
   __restgprlr_16();
@@ -8584,404 +7195,362 @@ void Item_HandleEvent(UiContext *param_1,itemDef_t *param_2,MenuEventHandlerSet 
 
 // 825C2548  Item_IsDisabled  (ui/ui_shared.cpp:5280)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-bool Item_IsDisabled(LocalClientNum_t param_1,itemDef_t *param_2)
+undefined8 Item_IsDisabled(undefined8 param_1,int param_2)
 
 {
-  bool bVar2;
+  char cVar2;
   int iVar1;
   
-  if ((param_2->disabledExp != (Statement_s *)0x0) &&
-     (bVar2 = IsExpressionTrue(param_1,param_2->disabledExp), bVar2)) {
-    return true;
+  if ((*(int *)(param_2 + 0x19c) != 0) && (cVar2 = IsExpressionTrue(), cVar2 != '\0')) {
+    return 1;
   }
-  if (((param_2->dvarFlags & 3U) != 0) && (iVar1 = Item_EnableShowViaDvar(param_2,1), iVar1 == 0)) {
-    return true;
+  if (((*(uint *)(param_2 + 0x170) & 3) != 0) &&
+     (iVar1 = Item_EnableShowViaDvar(param_2,1), iVar1 == 0)) {
+    return 1;
   }
-  return false;
+  return 0;
 }
 
 
 // 825CB948  Item_SetFocus  (ui/ui_shared.cpp:5289)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Item_SetFocus(UiContext *param_1,itemDef_t *param_2,float param_3,float param_4,
-                 ItemFocusReason param_5)
+void Item_SetFocus(undefined8 param_1,ulonglong param_2)
 
 {
-  menuDef_t *pmVar1;
-  UiContext *pUVar2;
-  int iVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  itemDef_t *piVar6;
+  uint uVar1;
+  uint *puVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  char cVar5;
+  ulonglong uVar6;
   longlong lVar7;
   ulonglong uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
+  longlong lVar9;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_28((double)param_3,(double)param_4,param_1,uVar5,param_5);
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x14b2,0,
-                    "%s");
+  puVar3 = (undefined4 *)__savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x14b2,0,0xffffffff82000f98,0xffffffff82173724);
   }
-  piVar6 = (itemDef_t *)uVar5;
-  iVar3 = Item_CanHaveFocus(pUVar2->localClientNum,piVar6);
-  if (iVar3 == 0) {
-    bVar4 = Window_HasFocus(pUVar2->localClientNum,&piVar6->window);
-    if (bVar4) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x14b5,0,
-                      "%s");
+  iVar4 = Item_CanHaveFocus(*puVar3,param_2);
+  if (iVar4 == 0) {
+    cVar5 = Window_HasFocus(*puVar3,param_2);
+    if (cVar5 != '\0') {
+      MyAssertHandler(0xffffffff82170658,0x14b5,0,0xffffffff82000f98,0xffffffff821736ec);
     }
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+    __restgprlr_28(0);
+    return;
   }
-  bVar4 = Window_HasFocus(pUVar2->localClientNum,&piVar6->window);
-  if ((bVar4) && (iVar3 = Item_IsVisible(pUVar2->localClientNum,piVar6), iVar3 != 0)) {
-    if (piVar6->onFocus != (MenuEventHandlerSet *)0x0) {
-      if ((uiscript_verbose->current).enabled != false) {
-        Com_Printf(0xd,"UISCRIPT - Calling onFocus() - Item is \'%s\', parent menu is \'%s\'\n");
-      }
-      Item_HandleEvent(pUVar2,piVar6,piVar6->onFocus);
-      iVar3 = __restgprlr_28(1);
-      return iVar3;
-    }
-  }
-  else {
-    pmVar1 = piVar6->parent;
-    Menu_ClearFocus(pUVar2,pmVar1);
-    if (piVar6->type == 0) {
-      Window_AddDynamicFlags(pUVar2->localClientNum,&piVar6->window,2);
+  cVar5 = Window_HasFocus(*puVar3,param_2);
+  puVar2 = (uint *)param_2;
+  if ((cVar5 == '\0') || (iVar4 = Item_IsVisible(*puVar3,param_2), iVar4 == 0)) {
+    uVar1 = puVar2[0x4d];
+    Menu_ClearFocus(puVar3,uVar1);
+    if (puVar2[0x40] == 0) {
+      Window_AddDynamicFlags(*puVar3,param_2,2);
     }
     else {
-      Window_AddDynamicFlags(pUVar2->localClientNum,&piVar6->window,2);
-      if (piVar6->onFocus != (MenuEventHandlerSet *)0x0) {
-        if ((uiscript_verbose->current).enabled != false) {
-          Com_Printf(0xd,"UISCRIPT - Calling onFocus() - Item is \'%s\', parent menu is \'%s\'\n");
+      Window_AddDynamicFlags(*puVar3,param_2,2);
+      if (puVar2[0x54] != 0) {
+        if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+          if (puVar2[0x4d] == 0) {
+            uVar8 = 0xffffffff82170938;
+          }
+          else {
+            uVar8 = (ulonglong)*(uint *)(puVar2[0x4d] + 4);
+          }
+          uVar6 = (ulonglong)*puVar2;
+          if (uVar6 == 0) {
+            uVar6 = 0xffffffff82170928;
+          }
+          Com_Printf(0xd,0xffffffff821736a8,uVar6,uVar8);
         }
-        Item_HandleEvent(pUVar2,piVar6,piVar6->onFocus);
+        Item_HandleEvent(puVar3,param_2,puVar2[0x54]);
       }
     }
-    uVar8 = (ulonglong)(uint)pmVar1->itemCount;
+    uVar8 = (ulonglong)*(uint *)(uVar1 + 0xb4);
     lVar7 = 0;
-    if (0 < pmVar1->itemCount) {
-      uVar9 = ZEXT48(pmVar1->items);
-      lVar10 = 0;
-      while (((ulonglong)*(uint *)((int)lVar10 + (int)uVar9) != (uVar5 & 0xffffffff) ||
-             (bVar4 = Item_IsTextField(piVar6), bVar4))) {
+    if (0 < (int)*(uint *)(uVar1 + 0xb4)) {
+      uVar6 = (ulonglong)*(uint *)(uVar1 + 0xb8);
+      lVar9 = 0;
+      while (((ulonglong)*(uint *)((int)lVar9 + (int)uVar6) != (param_2 & 0xffffffff) ||
+             (cVar5 = Item_IsTextField(param_2), cVar5 != '\0'))) {
         lVar7 = lVar7 + 1;
-        lVar10 = lVar10 + 4;
+        lVar9 = lVar9 + 4;
         if ((int)uVar8 <= (int)lVar7) {
-          iVar3 = __restgprlr_28(1);
-          return iVar3;
+          __restgprlr_28(1);
+          return;
         }
       }
-      Menu_SetCursorItem(pUVar2->localClientNum,pmVar1,(int)lVar7);
+      Menu_SetCursorItem(*puVar3,uVar1);
     }
   }
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
+  else if (puVar2[0x54] != 0) {
+    if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+      if (puVar2[0x4d] == 0) {
+        uVar8 = 0xffffffff82170938;
+      }
+      else {
+        uVar8 = (ulonglong)*(uint *)(puVar2[0x4d] + 4);
+      }
+      uVar6 = (ulonglong)*puVar2;
+      if (uVar6 == 0) {
+        uVar6 = 0xffffffff82170928;
+      }
+      Com_Printf(0xd,0xffffffff821736a8,uVar6,uVar8);
+    }
+    Item_HandleEvent(puVar3,param_2,puVar2[0x54]);
+    __restgprlr_28(1);
+    return;
+  }
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 825CBB98  Item_ListBox_MaxScroll  (ui/ui_shared.cpp:5418)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-int Item_ListBox_MaxScroll(LocalClientNum_t param_1,itemDef_t *param_2)
+void Item_ListBox_MaxScroll(undefined8 param_1,undefined8 param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  int iVar3;
+  undefined8 uVar1;
+  longlong lVar2;
+  longlong lVar3;
   ulonglong uVar4;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = UI_FeederCount(LVar1,param_2->special);
-  iVar3 = Item_ListBox_Viewmax(LVar1,param_2);
-  uVar4 = (longlong)iVar2 - (longlong)iVar3;
-  iVar2 = __restgprlr_29(((uVar4 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar4 != 0) & uVar4);
-  return iVar2;
+  uVar1 = __savegprlr_29();
+  lVar2 = UI_FeederCount((double)*(float *)((int)param_2 + 0x178));
+  lVar3 = Item_ListBox_Viewmax(uVar1,param_2);
+  uVar4 = lVar2 - lVar3;
+  __restgprlr_29(((uVar4 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar4 != 0) & uVar4);
+  return;
 }
 
 
 // 825C25D8  Item_ListBox_Viewmax  (ui/ui_shared.cpp:5433)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-int Item_ListBox_Viewmax(LocalClientNum_t param_1,itemDef_t *param_2)
+void Item_ListBox_Viewmax(undefined8 param_1,ulonglong param_2)
 
 {
-  LocalClientNum_t LVar1;
-  listBoxDef_s *plVar2;
+  float fVar1;
+  undefined8 uVar2;
+  int iVar3;
   int iVar4;
-  ulonglong uVar5;
+  double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  float fVar9;
-  itemDef_t *piVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1540,0,
-                    "%s");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
-                   );
+  uVar2 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x1540,0,0xffffffff82000f98,0xffffffff8200e050);
+    MyAssertHandler(0xffffffff82018fa0,0x24,0,0xffffffff82000f98,0xffffffff8200fdb4);
   }
-  piVar3 = (itemDef_t *)uVar5;
-  plVar2 = Item_GetListBoxDef(piVar3);
-  if (plVar2 == (listBoxDef_s *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1544,0,
-                    "%s");
+  iVar3 = Item_GetListBoxDef(param_2);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82170658,0x1544,0,0xffffffff82000f98,0xffffffff8216c128);
   }
-  fVar9 = plVar2->elementHeight;
-  if (plVar2->elementHeightExp != (Statement_s *)0x0) {
-    fVar9 = GetExpressionFloat(LVar1,plVar2->elementHeightExp);
+  dVar6 = (double)*(float *)(iVar3 + 0x28);
+  if (*(int *)(iVar3 + 0x1d8) != 0) {
+    dVar6 = (double)GetExpressionFloat(uVar2);
   }
-  dVar7 = (double)fVar9;
-  iVar4 = Window_IsHorizontal(&piVar3->window);
-  dVar8 = 0.0;
+  iVar4 = Window_IsHorizontal(param_2);
+  dVar7 = 0.0;
   if (iVar4 == 0) {
-    fVar9 = (piVar3->window).rect.h;
+    fVar1 = *(float *)((int)param_2 + 0x10);
   }
   else {
-    fVar9 = (piVar3->window).rect.w;
-    dVar7 = (double)plVar2->elementWidth;
+    fVar1 = *(float *)((int)param_2 + 0xc);
+    dVar6 = (double)*(float *)(iVar3 + 0x24);
   }
-  dVar6 = dVar8;
-  if (-(double)(fVar9 - 2.0) < 0.0) {
-    dVar6 = (double)(fVar9 - 2.0);
+  dVar5 = dVar7;
+  if (-(double)(fVar1 - 2.0) < 0.0) {
+    dVar5 = (double)(fVar1 - 2.0);
   }
-  if (dVar6 < 0.0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1558,0,
-                    "%s\n\t(totalSize) = %g");
+  if (dVar5 < 0.0) {
+    MyAssertHandler(dVar5,0xffffffff82170658,0x1558,0,0xffffffff8217231c,0xffffffff82172334,dVar5);
   }
-  if (dVar7 < dVar8) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1559,0,
-                    "%s\n\t(unitSize) = %g");
+  if (dVar6 < dVar7) {
+    MyAssertHandler(dVar6,0xffffffff82170658,0x1559,0,0xffffffff821722f8,0xffffffff8217230c,dVar6);
   }
-  iVar4 = __restgprlr_27((int)(dVar6 / dVar7));
-  return iVar4;
+  __restgprlr_27((int)(dVar5 / dVar6));
+  return;
 }
 
 
 // 825CBBE8  GetListBoxThumbPositionForIndex  (ui/ui_shared.cpp:5471)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-float GetListBoxThumbPositionForIndex(LocalClientNum_t param_1,itemDef_t *param_2,int param_3)
+void GetListBoxThumbPositionForIndex(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  LocalClientNum_t LVar4;
-  int iVar5;
-  int iVar6;
-  uint uVar7;
-  double dVar8;
+  int iVar4;
+  undefined8 uVar5;
+  longlong lVar6;
+  longlong lVar7;
+  int iVar8;
+  ulonglong uVar9;
+  uint uVar10;
   
-  LVar4 = __savegprlr_28(param_1);
-  iVar5 = UI_FeederCount(LVar4,param_2->special);
-  iVar6 = Item_ListBox_Viewmax(LVar4,param_2);
-  uVar7 = (uint)((longlong)iVar5 - (longlong)iVar6);
-  uVar7 = -((int)uVar7 >> 0x1f) - (uint)((longlong)iVar5 - (longlong)iVar6 != 0) & uVar7;
-  iVar5 = Window_IsHorizontal(&param_2->window);
-  if (iVar5 == 0) {
-    if ((int)uVar7 < 1) {
+  uVar5 = __savegprlr_28();
+  iVar4 = (int)param_2;
+  lVar6 = UI_FeederCount((double)*(float *)(iVar4 + 0x178));
+  lVar7 = Item_ListBox_Viewmax(uVar5,param_2);
+  uVar9 = lVar6 - lVar7;
+  uVar10 = (int)((uVar9 & 0xffffffff) >> 0x1f) - (uint)(uVar9 != 0) & (uint)uVar9;
+  iVar8 = Window_IsHorizontal(param_2);
+  if (iVar8 == 0) {
+    if ((int)uVar10 < 1) {
       fVar1 = 0.0;
     }
     else {
-      fVar1 = (((param_2->window).rect.h - 16.0) - 4.0) / (float)(longlong)(int)uVar7;
+      fVar1 = ((*(float *)(iVar4 + 0x10) - 16.0) - 4.0) / (float)(longlong)(int)uVar10;
     }
-    fVar2 = (param_2->window).rect.y;
+    fVar2 = *(float *)(iVar4 + 8);
     fVar3 = 2.0;
   }
   else {
-    if ((int)uVar7 < 1) {
+    if ((int)uVar10 < 1) {
       fVar1 = 0.0;
     }
     else {
-      fVar1 = ((((param_2->window).rect.w - 16.0) - 2.0) - 8.0) / (float)(longlong)(int)uVar7;
+      fVar1 = (((*(float *)(iVar4 + 0xc) - 16.0) - 2.0) - 8.0) / (float)(longlong)(int)uVar10;
     }
-    fVar2 = (param_2->window).rect.x;
+    fVar2 = *(float *)(iVar4 + 4);
     fVar3 = 9.0;
   }
-  dVar8 = (double)__restgprlr_28((double)((float)(longlong)param_3 * fVar1 + fVar2 + fVar3));
-  return (float)dVar8;
+  __restgprlr_28((double)((float)(longlong)param_3 * fVar1 + fVar2 + fVar3));
+  return;
 }
 
 
 // 825CBD30  Item_ListBox_ThumbPosition  (ui/ui_shared.cpp:5510)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-float Item_ListBox_ThumbPosition(LocalClientNum_t param_1,itemDef_t *param_2)
+undefined8 Item_ListBox_ThumbPosition(int param_1,undefined8 param_2)
 
 {
-  listBoxDef_s *plVar1;
-  float fVar2;
+  int iVar1;
+  undefined8 uVar2;
   
-  plVar1 = Item_GetListBoxDef(param_2);
-  if (plVar1 == (listBoxDef_s *)0x0) {
-    fVar2 = 0.0;
+  iVar1 = Item_GetListBoxDef(param_2);
+  if (iVar1 == 0) {
+    uVar2 = 0;
   }
   else {
-    fVar2 = GetListBoxThumbPositionForIndex(param_1,param_2,plVar1->startPos[param_1]);
+    uVar2 = GetListBoxThumbPositionForIndex(param_1,param_2,*(undefined4 *)(param_1 * 4 + iVar1));
   }
-  return fVar2;
+  return uVar2;
 }
 
 
 // 825CBD98  Item_ListBox_ThumbDrawPosition  (ui/ui_shared.cpp:5524)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float Item_ListBox_ThumbDrawPosition(UiContext *param_1,itemDef_t *param_2)
+undefined8 Item_ListBox_ThumbDrawPosition(int *param_1,undefined8 param_2)
 
 {
-  LocalClientNum_t LVar1;
-  listBoxDef_s *plVar2;
-  float fVar3;
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
   
-  LVar1 = param_1->localClientNum;
-  plVar2 = Item_GetListBoxDef(param_2);
-  if (plVar2 == (listBoxDef_s *)0x0) {
-    fVar3 = 0.0;
+  iVar1 = *param_1;
+  iVar2 = Item_GetListBoxDef(param_2);
+  if (iVar2 == 0) {
+    uVar3 = 0;
   }
   else {
-    fVar3 = GetListBoxThumbPositionForIndex(LVar1,param_2,plVar2->startPos[LVar1]);
+    uVar3 = GetListBoxThumbPositionForIndex(iVar1,param_2,*(undefined4 *)(iVar1 * 4 + iVar2));
   }
-  return fVar3;
+  return uVar3;
 }
 
 
 // 825C2768  Item_Slider_ThumbPosition  (ui/ui_shared.cpp:5576)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-float Item_Slider_ThumbPosition(LocalClientNum_t param_1,itemDef_t *param_2)
+double Item_Slider_ThumbPosition(int param_1)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  editFieldDef_s *peVar4;
-  char *pcVar5;
+  float fVar4;
+  float *pfVar5;
+  char *_String;
   double dVar6;
   double dVar7;
   double dVar8;
-  float fVar9;
   
-  peVar4 = Item_GetEditFieldDef((itemDef_t *)param_1);
-  if (peVar4 == (editFieldDef_s *)0x0) {
-    return 0.0;
+  pfVar5 = (float *)Item_GetEditFieldDef();
+  if (pfVar5 == (float *)0x0) {
+    fVar1 = 0.0;
+    goto LAB_825c284c;
   }
   if (*(int *)(param_1 + 0x16c) != 0) {
-    Com_PrintWarning(0xd,"WARNING: \'localVar\' not yet supported for type ITEM_TYPE_SLIDER\n");
+    Com_PrintWarning(0xd,0xffffffff82172348);
   }
   dVar8 = 96.0;
-  fVar9 = Item_GetRectPlacementX
-                    (*(uint *)(param_1 + 0x110) & 3,
-                     *(float *)(param_1 + 0x114) + *(float *)(param_1 + LOCAL_CLIENT_COUNT),
-                     *(float *)(param_1 + 0xc),96.0);
-  dVar6 = (double)fVar9;
-  pcVar5 = Dvar_GetVariantString(*(char **)(param_1 + 0x15c));
-  dVar7 = atof(pcVar5);
-  fVar1 = peVar4->minVal;
-  fVar2 = peVar4->maxVal;
-  fVar9 = (float)dVar7;
-  fVar3 = fVar1;
-  if (fVar2 <= fVar1) {
-    if ((fVar1 < fVar9) || (fVar3 = fVar9, fVar2 <= fVar9)) goto LAB_825c283c;
+  dVar6 = (double)Item_GetRectPlacementX
+                            ((double)(*(float *)(param_1 + 0x114) + *(float *)(param_1 + 4)),
+                             (double)*(float *)(param_1 + 0xc),0x4058000000000000,
+                             *(uint *)(param_1 + 0x110) & 3);
+  _String = (char *)Dvar_GetVariantString(*(undefined4 *)(param_1 + 0x15c));
+  dVar7 = atof(_String);
+  fVar2 = *pfVar5;
+  fVar3 = pfVar5[1];
+  fVar1 = (float)dVar7;
+  fVar4 = fVar2;
+  if (fVar3 <= fVar2) {
+    if ((fVar1 <= fVar2) && (fVar4 = fVar1, fVar1 < fVar3)) goto LAB_825c2838;
   }
-  else if ((fVar9 < fVar1) || (fVar3 = fVar9, fVar9 <= fVar2)) goto LAB_825c283c;
-  fVar3 = fVar2;
-LAB_825c283c:
-  return (float)((double)((fVar3 - fVar1) / (fVar2 - fVar1)) * dVar8 + dVar6);
+  else if ((fVar2 <= fVar1) && (fVar4 = fVar1, fVar3 < fVar1)) {
+LAB_825c2838:
+    fVar4 = fVar3;
+  }
+  fVar1 = (float)((double)((fVar4 - fVar2) / (fVar3 - fVar2)) * dVar8 + dVar6);
+LAB_825c284c:
+  return (double)fVar1;
 }
 
 
 // 825C2870  Item_OwnerDraw_HandleKey  (ui/ui_shared.cpp:6029)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-int Item_OwnerDraw_HandleKey(itemDef_t *param_1,int param_2)
+void Item_OwnerDraw_HandleKey(int param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = UI_OwnerDrawHandleKey
-                    ((param_1->window).ownerDraw,(param_1->window).ownerDrawFlags,&param_1->special,
-                     param_2);
-  return iVar1;
+  UI_OwnerDrawHandleKey
+            (*(undefined4 *)(param_1 + 0x38),*(undefined4 *)(param_1 + 0x3c),param_1 + 0x178,param_2
+            );
+  return;
 }
 
 
 // 825CBE08  Item_ListBox_SetCursorPos  (ui/ui_shared.cpp:6035)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_ListBox_SetCursorPos(LocalClientNum_t param_1,itemDef_t *param_2,int param_3,int param_4)
+void Item_ListBox_SetCursorPos(undefined8 param_1,undefined8 param_2,int param_3,int param_4)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
-  ulonglong uVar4;
-  listBoxDef_s *plVar5;
-  itemDef_t *piVar6;
+  int iVar4;
+  ulonglong uVar5;
+  int iVar6;
   
-  uVar4 = __savegprlr_26(param_1);
-  piVar6 = param_2;
-  plVar5 = Item_GetListBoxDef(param_2);
-  iVar2 = (int)((uVar4 + 0x5f & 0x3fffffff) << 2);
-  iVar1 = *(int *)((int)(param_2->window).dynamicFlags + iVar2 + -0x48);
-  *(int *)((int)(param_2->window).dynamicFlags + iVar2 + -0x48) = param_4;
-  iVar3 = (int)((uVar4 & 0x3fffffff) << 2);
-  if (param_4 < *(int *)((int)plVar5->startPos + iVar3)) {
-    *(int *)((int)plVar5->startPos + iVar3) = param_4;
+  uVar5 = __savegprlr_26();
+  iVar6 = Item_GetListBoxDef(param_2);
+  iVar2 = (int)((uVar5 + 0x5f & 0x3fffffff) << 2);
+  iVar3 = (int)param_2;
+  iVar1 = *(int *)(iVar2 + iVar3);
+  *(int *)(iVar2 + iVar3) = param_4;
+  iVar4 = (int)((uVar5 & 0x3fffffff) << 2);
+  if (param_4 < *(int *)(iVar4 + iVar6)) {
+    *(int *)(iVar4 + iVar6) = param_4;
   }
-  if (*(int *)((int)plVar5->startPos + iVar3) <= param_4 - param_3) {
-    *(int *)((int)plVar5->startPos + iVar3) = (param_4 - param_3) + 1;
+  if (*(int *)(iVar4 + iVar6) <= param_4 - param_3) {
+    *(int *)(iVar4 + iVar6) = (param_4 - param_3) + 1;
   }
-  UI_FeederSelection((LocalClientNum_t)uVar4,param_2->special,(int)piVar6);
-  if (iVar1 != *(int *)((int)(param_2->window).dynamicFlags + iVar2 + -0x48)) {
-    SND_PlayLocalSoundAliasByName((LocalClientNum_t)uVar4,"mouse_over",SASYS_UI);
+  UI_FeederSelection((double)*(float *)(iVar3 + 0x178),uVar5);
+  if (iVar1 != *(int *)(iVar2 + iVar3)) {
+    SND_PlayLocalSoundAliasByName(uVar5,0xffffffff82173734,0);
   }
   __restgprlr_26();
   return;
@@ -8990,49 +7559,35 @@ void Item_ListBox_SetCursorPos(LocalClientNum_t param_1,itemDef_t *param_2,int p
 
 // 825CBEA0  Item_ListBox_Page  (ui/ui_shared.cpp:6056)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_ListBox_Page(LocalClientNum_t param_1,itemDef_t *param_2,int param_3,int param_4,
-                      int param_5,int param_6)
+void Item_ListBox_Page(undefined8 param_1,undefined8 param_2,ulonglong param_3,longlong param_4,
+                      undefined8 param_5,longlong param_6)
 
 {
   int iVar1;
   ulonglong uVar2;
-  listBoxDef_s *plVar3;
+  int iVar3;
   longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
+  ulonglong uVar5;
   
-  lVar7 = (longlong)param_6;
-  lVar5 = (longlong)param_4;
-  lVar4 = (longlong)param_3;
-  uVar2 = __savegprlr_25(param_1);
-  plVar3 = Item_GetListBoxDef(param_2);
-  if (plVar3 == (listBoxDef_s *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x17ac,0,
-                    "%s");
+  uVar2 = __savegprlr_25();
+  iVar3 = Item_GetListBoxDef(param_2);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82170658,0x17ac,0,0xffffffff82000f98,0xffffffff8216c128);
   }
   iVar1 = (int)((uVar2 & 0xffffffff) << 2);
-  lVar6 = (ulonglong)*(uint *)((int)plVar3->startPos + iVar1) + lVar7;
-  if ((int)lVar5 <= (int)lVar6) {
-    lVar6 = lVar5;
+  lVar4 = (ulonglong)*(uint *)(iVar1 + iVar3) + param_6;
+  if ((int)param_4 <= (int)lVar4) {
+    lVar4 = param_4;
   }
-  *(uint *)((int)plVar3->startPos + iVar1) =
-       -((int)(uint)lVar6 >> 0x1f) - (uint)(lVar6 != 0) & (uint)lVar6;
-  if (plVar3->notselectable == 0) {
-    lVar7 = (ulonglong)
-            *(uint *)((int)(param_2->window).dynamicFlags +
-                     (int)((uVar2 + 0x5f & 0xffffffff) << 2) + -0x48) + lVar7;
-    if ((int)lVar4 <= (int)lVar7) {
-      lVar7 = lVar4;
+  *(uint *)(iVar1 + iVar3) = -((int)(uint)lVar4 >> 0x1f) - (uint)(lVar4 != 0) & (uint)lVar4;
+  if (*(int *)(iVar3 + 0x1b8) == 0) {
+    uVar5 = (ulonglong)*(uint *)((int)((uVar2 + 0x5f & 0xffffffff) << 2) + (int)param_2) + param_6;
+    if ((int)param_3 <= (int)uVar5) {
+      uVar5 = param_3;
     }
     Item_ListBox_SetCursorPos
-              ((LocalClientNum_t)uVar2,param_2,param_5,
-               -((int)(uint)lVar7 >> 0x1f) - (uint)(lVar7 != 0) & (uint)lVar7);
+              (uVar2,param_2,param_5,
+               ((uVar5 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar5 != 0) & uVar5,0,-uVar5);
   }
   __restgprlr_25();
   return;
@@ -9041,52 +7596,39 @@ void Item_ListBox_Page(LocalClientNum_t param_1,itemDef_t *param_2,int param_3,i
 
 // 825CBF88  Item_ListBox_Scroll  (ui/ui_shared.cpp:6069)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_ListBox_Scroll(LocalClientNum_t param_1,itemDef_t *param_2,int param_3,int param_4,
-                        int param_5,int param_6)
+void Item_ListBox_Scroll(undefined8 param_1,undefined8 param_2,longlong param_3,ulonglong param_4,
+                        undefined8 param_5,longlong param_6)
 
 {
   int iVar1;
   ulonglong uVar2;
-  listBoxDef_s *plVar3;
-  longlong lVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  int iVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  lVar5 = (longlong)param_6;
-  uVar6 = (ulonglong)param_4;
-  lVar4 = (longlong)param_3;
-  uVar2 = __savegprlr_25(param_1);
-  plVar3 = Item_GetListBoxDef(param_2);
-  if (plVar3 == (listBoxDef_s *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x17b9,0,
-                    "%s");
+  uVar2 = __savegprlr_25();
+  iVar3 = Item_GetListBoxDef(param_2);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82170658,0x17b9,0,0xffffffff82000f98,0xffffffff8216c128);
   }
-  if (plVar3->notselectable == 0) {
-    uVar7 = lVar4 + 1;
-    trapWord(6,uVar7,0);
-    uVar6 = (ulonglong)
-            *(uint *)((int)(param_2->window).dynamicFlags +
-                     (int)((uVar2 + 0x5f & 0xffffffff) << 2) + -0x48) + lVar4 + lVar5 + 1;
-    trapWord(5,uVar7 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  if (*(int *)(iVar3 + 0x1b8) == 0) {
+    uVar5 = param_3 + 1;
+    trapWord(6,uVar5,0);
+    uVar4 = (ulonglong)*(uint *)((int)((uVar2 + 0x5f & 0xffffffff) << 2) + (int)param_2) + param_3 +
+            param_6 + 1;
+    trapWord(5,uVar5 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1),0xffff);
     Item_ListBox_SetCursorPos
-              ((LocalClientNum_t)uVar2,param_2,param_5,
-               (int)uVar6 - ((int)uVar6 / (int)uVar7) * (int)uVar7);
+              (uVar2,param_2,param_5,
+               uVar4 - (longlong)((int)uVar4 / (int)uVar5) * (longlong)(int)uVar5);
     __restgprlr_25();
     return;
   }
   iVar1 = (int)((uVar2 & 0xffffffff) << 2);
-  uVar2 = lVar5 + (ulonglong)*(uint *)((int)plVar3->startPos + iVar1);
-  if ((int)uVar6 <= (int)uVar2) {
-    uVar2 = uVar6;
+  uVar2 = param_6 + (ulonglong)*(uint *)(iVar1 + iVar3);
+  if ((int)param_4 <= (int)uVar2) {
+    uVar2 = param_4;
   }
-  *(uint *)((int)plVar3->startPos + iVar1) =
-       (int)((uVar2 & 0xffffffff) >> 0x1f) - (uint)(uVar2 != 0) & (uint)uVar2;
+  *(uint *)(iVar1 + iVar3) = (int)((uVar2 & 0xffffffff) >> 0x1f) - (uint)(uVar2 != 0) & (uint)uVar2;
   __restgprlr_25();
   return;
 }
@@ -9103,275 +7645,274 @@ bool Item_ListBox_IsActionKey(int param_1)
 
 // 825CFA30  Item_ListBox_HandleKey  (ui/ui_shared.cpp:6097)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Item_ListBox_HandleKey
-              (UiContext *param_1,itemDef_t *param_2,int param_3,int param_4,int param_5)
+void Item_ListBox_HandleKey(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  UiContext *pUVar2;
-  listBoxDef_s *plVar3;
-  int iVar4;
-  uint uVar5;
+  uint *puVar1;
+  int *piVar5;
   int iVar6;
-  longlong lVar7;
-  itemDef_t *piVar8;
+  longlong lVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  int iVar7;
+  undefined8 uVar8;
   ulonglong uVar9;
   ulonglong uVar10;
-  uint uVar11;
-  uint uVar12;
-  ItemKeyHandler *pIVar13;
+  int iVar11;
+  int iVar12;
+  int *piVar13;
   
-  pUVar2 = (UiContext *)__savegprlr_24(param_1);
-  plVar3 = Item_GetListBoxDef(param_2);
-  if (plVar3 == (listBoxDef_s *)0x0) goto LAB_825cfa60;
-  iVar4 = UI_FeederCount(pUVar2->localClientNum,param_2->special);
-  uVar11 = (uint)((longlong)iVar4 + -1);
-  uVar11 = -((int)uVar11 >> 0x1f) - (uint)((longlong)iVar4 + -1 != 0) & uVar11;
-  uVar5 = Window_GetDynamicFlags(pUVar2->localClientNum,&param_2->window);
-  if ((param_4 == 0) && ((uVar5 & 2) == 0)) goto LAB_825cfa60;
-  UI_OverrideCursorPos(pUVar2->localClientNum,param_2);
-  LVar1 = pUVar2->localClientNum;
-  iVar4 = Item_ListBox_Viewmax(LVar1,param_2);
-  iVar6 = UI_FeederCount(LVar1,param_2->special);
-  uVar12 = (uint)((longlong)iVar6 - (longlong)iVar4);
-  uVar12 = -((int)uVar12 >> 0x1f) - (uint)((longlong)iVar6 - (longlong)iVar4 != 0) & uVar12;
-  piVar8 = param_2;
-  iVar4 = Item_ListBox_Viewmax(pUVar2->localClientNum,param_2);
-  lVar7 = (longlong)iVar4;
-  iVar6 = Window_IsHorizontal(&param_2->window);
-  if (iVar6 != 0) {
-    if ((((param_3 == 0x1e) || (param_3 == 0x16)) || (param_3 == 0x9c)) || (param_3 == 0xb9)) {
-      if ((plVar3->usePaging == 0) || (param_3 != 0x16)) {
-        lVar7 = 1;
+  piVar5 = (int *)__savegprlr_24();
+  iVar6 = Item_GetListBoxDef(param_2);
+  if (iVar6 == 0) goto LAB_825cfa60;
+  puVar1 = (uint *)param_2;
+  lVar2 = UI_FeederCount((double)(float)puVar1[0x5e],*piVar5);
+  uVar9 = lVar2 - 1;
+  uVar9 = ((uVar9 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar9 != 0) & uVar9;
+  uVar3 = Window_GetDynamicFlags(*piVar5,param_2);
+  if ((param_4 == 0) && ((uVar3 & 2) == 0)) goto LAB_825cfa60;
+  UI_OverrideCursorPos(*piVar5,param_2);
+  iVar7 = *piVar5;
+  lVar2 = Item_ListBox_Viewmax(iVar7,param_2);
+  lVar4 = UI_FeederCount((double)(float)puVar1[0x5e],iVar7);
+  uVar10 = lVar4 - lVar2;
+  uVar10 = ((uVar10 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar10 != 0) & uVar10;
+  lVar2 = Item_ListBox_Viewmax(*piVar5,param_2);
+  iVar7 = Window_IsHorizontal(param_2);
+  iVar11 = (int)param_3;
+  iVar12 = (int)uVar10;
+  if (iVar7 != 0) {
+    if ((((iVar11 == 0x1e) || (iVar11 == 0x16)) || (iVar11 == 0x9c)) || (iVar11 == 0xb9)) {
+      if ((*(int *)(iVar6 + 0x1c0) == 0) || (lVar4 = lVar2, iVar11 != 0x16)) {
+        lVar4 = 1;
       }
-      if (plVar3->notselectable == 0) {
-        lVar7 = (ulonglong)(uint)param_2->cursorPos[pUVar2->localClientNum] - lVar7;
-        uVar11 = (uint)lVar7;
-        Item_ListBox_SetCursorPos
-                  (pUVar2->localClientNum,param_2,iVar4,
-                   -((int)uVar11 >> 0x1f) - (uint)(lVar7 != 0) & uVar11);
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
+      if (*(int *)(iVar6 + 0x1b8) == 0) {
+        uVar9 = (ulonglong)puVar1[*piVar5 + 0x5f] - lVar4;
+        uVar3 = (uVar9 & 0xffffffff) >> 0x1f;
+        Item_ListBox_SetCursorPos(*piVar5,param_2,lVar2,uVar3 - (uVar9 != 0) & uVar9,uVar3,0,-uVar9)
+        ;
+        __restgprlr_24(1);
+        return;
       }
-      uVar9 = (ulonglong)(uint)plVar3->startPos[pUVar2->localClientNum] - lVar7;
-      uVar10 = (uVar9 & 0xffffffff) >> 0x1f;
-      plVar3->startPos[pUVar2->localClientNum] = (int)uVar10 - (uint)(uVar9 != 0) & (uint)uVar9;
-      iVar4 = __restgprlr_24(1,uVar10,-uVar9);
-      return iVar4;
+      uVar9 = (ulonglong)*(uint *)(*piVar5 * 4 + iVar6) - lVar4;
+      uVar3 = (uVar9 & 0xffffffff) >> 0x1f;
+      *(uint *)(*piVar5 * 4 + iVar6) = (int)uVar3 - (uint)(uVar9 != 0) & (uint)uVar9;
+      __restgprlr_24(1,uVar3,-uVar9);
+      return;
     }
-    if (((param_3 == 0x1f) || (param_3 == 0x17)) || ((param_3 == 0x9d || (param_3 == 0xbb)))) {
-      if ((plVar3->usePaging == 0) || (iVar6 = iVar4, param_3 != 0x17)) {
-        iVar6 = 1;
+    if (((iVar11 == 0x1f) || (iVar11 == 0x17)) || ((iVar11 == 0x9d || (iVar11 == 0xbb)))) {
+      if ((*(int *)(iVar6 + 0x1c0) == 0) || (lVar4 = lVar2, iVar11 != 0x17)) {
+        lVar4 = 1;
       }
-      if (plVar3->notselectable == 0) {
-        uVar5 = param_2->cursorPos[pUVar2->localClientNum] + iVar6;
-        if ((int)uVar11 <= (int)uVar5) {
-          uVar5 = uVar11;
+      if (*(int *)(iVar6 + 0x1b8) == 0) {
+        uVar3 = (ulonglong)puVar1[*piVar5 + 0x5f] + lVar4;
+        if ((int)uVar9 <= (int)((ulonglong)puVar1[*piVar5 + 0x5f] + lVar4)) {
+          uVar3 = uVar9;
         }
-        Item_ListBox_SetCursorPos(pUVar2->localClientNum,param_2,iVar4,uVar5);
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
+        Item_ListBox_SetCursorPos(*piVar5,param_2,lVar2,uVar3);
+        __restgprlr_24(1);
+        return;
       }
-      uVar11 = iVar6 + plVar3->startPos[pUVar2->localClientNum];
-      if ((int)uVar12 <= (int)uVar11) {
-        uVar11 = uVar12;
+      iVar7 = (int)lVar4 + *(int *)(*piVar5 * 4 + iVar6);
+      if (iVar12 <= iVar7) {
+        iVar7 = iVar12;
       }
-      plVar3->startPos[pUVar2->localClientNum] = uVar11;
-      iVar4 = __restgprlr_24(1);
-      return iVar4;
+      *(int *)(*piVar5 * 4 + iVar6) = iVar7;
+      __restgprlr_24(1);
+      return;
     }
 switchD_825cfcb8_caseD_2:
-    if (param_3 != 1) {
-      if ((param_3 == 0xa5) || (param_3 == 0xb6)) {
-        Script_FeederTop(pUVar2,param_2,(char **)0x0);
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
+    if (iVar11 != 1) {
+      if ((iVar11 == 0xa5) || (iVar11 == 0xb6)) {
+        Script_FeederTop(piVar5,param_2,0);
+        __restgprlr_24(1);
+        return;
       }
-      if ((param_3 == 0xa6) || (param_3 == 0xbc)) {
-        Script_FeederBottom(pUVar2,param_2,(char **)0x0);
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
+      if ((iVar11 == 0xa6) || (iVar11 == 0xbc)) {
+        Script_FeederBottom(piVar5,param_2,0);
+        __restgprlr_24(1);
+        return;
       }
-      if ((param_3 == 0xa4) || (param_3 == 0xb8)) {
+      if ((iVar11 == 0xa4) || (iVar11 == 0xb8)) {
 LAB_825cfcf0:
-        Item_ListBox_Page(pUVar2->localClientNum,param_2,uVar11,uVar12,iVar4,-iVar4);
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
+        Item_ListBox_Page(*piVar5,param_2,uVar9,uVar10,lVar2,-lVar2);
+        __restgprlr_24(1);
+        return;
       }
-      if ((param_3 == 0xa3) || (param_3 == 0xbe)) {
+      if ((iVar11 == 0xa3) || (iVar11 == 0xbe)) {
 LAB_825cfd24:
-        Item_ListBox_Page(pUVar2->localClientNum,param_2,uVar11,uVar12,iVar4,iVar4);
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
+        Item_ListBox_Page(*piVar5,param_2,uVar9,uVar10,lVar2,lVar2);
+        __restgprlr_24(1);
+        return;
       }
-      pIVar13 = param_2->onKey;
-      if (pIVar13 != (ItemKeyHandler *)0x0) {
+      piVar13 = (int *)puVar1[0x59];
+      if (piVar13 != (int *)0x0) {
         do {
-          if (pIVar13->key == param_3) {
-            if ((uiscript_verbose->current).enabled != false) {
-              Com_Printf(0xd,
-                         "UISCRIPT - Calling action() for key %i - Item is \'%s\', parent menu is \'%s\'\n"
-                        );
+          if (*piVar13 == iVar11) {
+            if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+              if (puVar1[0x4d] == 0) {
+                uVar3 = 0xffffffff82170938;
+              }
+              else {
+                uVar3 = (ulonglong)*(uint *)(puVar1[0x4d] + 4);
+              }
+              uVar9 = (ulonglong)*puVar1;
+              if (uVar9 == 0) {
+                uVar9 = 0xffffffff82170928;
+              }
+              Com_Printf(0xd,0xffffffff82173df8,param_3,uVar9,uVar3);
             }
-            Item_HandleEvent(pUVar2,param_2,pIVar13->action);
-            iVar4 = __restgprlr_24(1);
-            return iVar4;
+            Item_HandleEvent(piVar5,param_2,piVar13[1]);
+            __restgprlr_24(1);
+            return;
           }
-          pIVar13 = pIVar13->next;
-        } while (pIVar13 != (ItemKeyHandler *)0x0);
-        iVar4 = __restgprlr_24(0);
-        return iVar4;
+          piVar13 = (int *)piVar13[2];
+        } while (piVar13 != (int *)0x0);
+        __restgprlr_24(0);
+        return;
       }
 LAB_825cfa60:
-      iVar4 = __restgprlr_24(0);
-      return iVar4;
+      __restgprlr_24(0);
+      return;
     }
-    if ((uVar5 & 0x100) != 0) {
-      uVar10 = (ulonglong)(uint)plVar3->startPos[pUVar2->localClientNum] - 1;
-      plVar3->startPos[pUVar2->localClientNum] =
-           (int)((uVar10 & 0xffffffff) >> 0x1f) - (uint)(uVar10 != 0) & (uint)uVar10;
-      iVar4 = __restgprlr_24(1);
-      return iVar4;
+    if ((uVar3 & 0x100) != 0) {
+      uVar3 = (ulonglong)*(uint *)(*piVar5 * 4 + iVar6) - 1;
+      *(uint *)(*piVar5 * 4 + iVar6) =
+           (int)((uVar3 & 0xffffffff) >> 0x1f) - (uint)(uVar3 != 0) & (uint)uVar3;
+      __restgprlr_24(1);
+      return;
     }
-    if ((uVar5 & 0x200) != 0) {
-      LVar1 = pUVar2->localClientNum;
-      iVar6 = LVar1 * 4;
-      uVar11 = plVar3->startPos[LVar1] + 1;
-      if ((int)uVar12 <= (int)uVar11) {
-        plVar3->startPos[LVar1] = uVar12;
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
+    if ((uVar3 & 0x200) != 0) {
+      iVar7 = *piVar5 * 4;
+      iVar11 = *(int *)(iVar7 + iVar6) + 1;
+      if (iVar12 <= iVar11) {
+        *(int *)(iVar7 + iVar6) = iVar12;
+        __restgprlr_24(1);
+        return;
       }
 LAB_825cfe60:
-      *(uint *)((int)plVar3->startPos + iVar6) = uVar11;
-      iVar4 = __restgprlr_24(1);
-      return iVar4;
+      *(int *)(iVar7 + iVar6) = iVar11;
+      __restgprlr_24(1);
+      return;
     }
-    if ((uVar5 & 0x800) != 0) {
-      uVar9 = (ulonglong)(uint)plVar3->startPos[pUVar2->localClientNum] - lVar7;
-      uVar10 = (uVar9 & 0xffffffff) >> 0x1f;
-      lVar7 = uVar10 - (uVar9 != 0);
-      plVar3->startPos[pUVar2->localClientNum] = (uint)lVar7 & (uint)uVar9;
-      iVar4 = __restgprlr_24(1,lVar7,uVar10,-uVar9);
-      return iVar4;
+    if ((uVar3 & 0x800) != 0) {
+      uVar9 = (ulonglong)*(uint *)(*piVar5 * 4 + iVar6) - lVar2;
+      uVar3 = (uVar9 & 0xffffffff) >> 0x1f;
+      lVar2 = uVar3 - (uVar9 != 0);
+      *(uint *)(*piVar5 * 4 + iVar6) = (uint)lVar2 & (uint)uVar9;
+      __restgprlr_24(1,lVar2,uVar3,-uVar9);
+      return;
     }
-    if ((uVar5 & 0x1000) != 0) {
-      iVar6 = pUVar2->localClientNum * 4;
-      uVar11 = iVar4 + plVar3->startPos[pUVar2->localClientNum];
-      if ((int)uVar12 <= (int)uVar11) {
-        uVar11 = uVar12;
+    if ((uVar3 & 0x1000) != 0) {
+      iVar7 = *piVar5 * 4;
+      iVar11 = (int)lVar2 + *(int *)(iVar7 + iVar6);
+      if (iVar12 <= iVar11) {
+        iVar11 = iVar12;
       }
       goto LAB_825cfe60;
     }
-    if ((((uVar5 & 0x400) == 0) &&
-        (iVar4 = UI_FeederItemEnabled(pUVar2->localClientNum,param_2->special,(int)piVar8),
-        iVar4 != 0)) &&
-       (iVar4 = UI_FeederDoubleClick(pUVar2->localClientNum,param_2->special,(int)piVar8),
-       iVar4 == 0)) {
-      if ((uiscript_verbose->current).enabled != false) {
-        Com_Printf(0xd,
-                   "UISCRIPT - Calling onDoubleClick() - Item is \'%s\', parent menu is \'%s\'\n");
+    if ((((uVar3 & 0x400) == 0) &&
+        (iVar7 = UI_FeederItemEnabled((double)(float)puVar1[0x5e]), iVar7 != 0)) &&
+       (iVar7 = UI_FeederDoubleClick((double)(float)puVar1[0x5e]), iVar7 == 0)) {
+      if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+        if (puVar1[0x4d] == 0) {
+          uVar3 = 0xffffffff82170938;
+        }
+        else {
+          uVar3 = (ulonglong)*(uint *)(puVar1[0x4d] + 4);
+        }
+        uVar9 = (ulonglong)*puVar1;
+        if (uVar9 == 0) {
+          uVar9 = 0xffffffff82170928;
+        }
+        Com_Printf(0xd,0xffffffff82173e48,uVar9,uVar3);
       }
-      Item_HandleEvent(pUVar2,param_2,plVar3->onDoubleClick);
-      iVar4 = __restgprlr_24(1);
-      return iVar4;
+      Item_HandleEvent(piVar5,param_2,*(undefined4 *)(iVar6 + 0x1b4));
+      __restgprlr_24(1);
+      return;
     }
     goto LAB_825d006c;
   }
-  if (0x9a < param_3) {
-    if (param_3 != 0x9b) {
-      if (param_3 == 0xb7) goto switchD_825cfcb8_caseD_8;
-      if (param_3 != 0xbd) goto switchD_825cfcb8_caseD_2;
+  if (0x9a < iVar11) {
+    if (iVar11 != 0x9b) {
+      if (iVar11 == 0xb7) goto switchD_825cfcb8_caseD_8;
+      if (iVar11 != 0xbd) goto switchD_825cfcb8_caseD_2;
     }
     goto switchD_825cfcb8_caseD_9;
   }
-  if (param_3 == 0x9a) goto switchD_825cfcb8_caseD_8;
-  switch(param_3 + -0x14) {
+  if (iVar11 == 0x9a) goto switchD_825cfcb8_caseD_8;
+  switch(iVar11 + -0x14) {
   case 0:
-    if (plVar3->usePaging != 0) goto LAB_825cfcf0;
+    if (*(int *)(iVar6 + 0x1c0) != 0) goto LAB_825cfcf0;
   case 8:
 switchD_825cfcb8_caseD_8:
-    iVar6 = -1;
+    uVar8 = 0xffffffffffffffff;
     break;
   case 1:
-    if (plVar3->usePaging != 0) goto LAB_825cfd24;
+    if (*(int *)(iVar6 + 0x1c0) != 0) goto LAB_825cfd24;
   case 9:
 switchD_825cfcb8_caseD_9:
-    iVar6 = 1;
+    uVar8 = 1;
     break;
   default:
     goto switchD_825cfcb8_caseD_2;
   }
-  Item_ListBox_Scroll(pUVar2->localClientNum,param_2,uVar11,uVar12,iVar4,iVar6);
+  Item_ListBox_Scroll(*piVar5,param_2,uVar9,uVar10,lVar2,uVar8);
 LAB_825d006c:
-  iVar4 = __restgprlr_24(1);
-  return iVar4;
+  __restgprlr_24(1);
+  return;
 }
 
 
 // 825C2898  Item_ShouldHandleKey  (ui/ui_shared.cpp:6315)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-bool Item_ShouldHandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
+bool Item_ShouldHandleKey(undefined4 *param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Window_HasFocus(param_1->localClientNum,&param_2->window);
-  return (bool)('\x01' - !bVar1);
+  cVar1 = Window_HasFocus(*param_1);
+  return cVar1 != '\0';
 }
 
 
 // 825C28C8  Item_YesNo_IsActionKey  (ui/ui_shared.cpp:6332)
 
-bool Item_YesNo_IsActionKey(int param_1)
+undefined8 Item_YesNo_IsActionKey(int param_1)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   
   if ((((param_1 == 0xd) || (param_1 == 0x9c)) || (param_1 == 0x9d)) ||
-     ((param_1 == 0xa4 || (bVar1 = false, param_1 == 0xa3)))) {
-    bVar1 = true;
+     ((param_1 == 0xa4 || (uVar1 = 0, param_1 == 0xa3)))) {
+    uVar1 = 1;
   }
-  return bVar1;
+  return uVar1;
 }
 
 
 // 825C2900  Item_YesNo_HandleKey  (ui/ui_shared.cpp:6342)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Item_YesNo_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
+undefined8 Item_YesNo_HandleKey(undefined4 *param_1,int param_2,int param_3)
 
 {
-  bool bVar2;
-  char *pcVar1;
+  bool bVar1;
+  char cVar4;
+  undefined8 uVar2;
+  int iVar3;
   char acStack_40 [40];
   
-  if ((param_2->dvar != (char *)0x0) &&
-     (bVar2 = Window_HasFocus(param_1->localClientNum,&param_2->window), bVar2)) {
+  if ((*(int *)(param_2 + 0x15c) != 0) && (cVar4 = Window_HasFocus(*param_1), cVar4 != '\0')) {
     if (((param_3 == 0xd) || (((param_3 == 0x9c || (param_3 == 0x9d)) || (param_3 == 0xa4)))) ||
-       (bVar2 = false, param_3 == 0xa3)) {
-      bVar2 = true;
+       (bVar1 = false, param_3 == 0xa3)) {
+      bVar1 = true;
     }
-    if (bVar2) {
-      pcVar1 = Dvar_GetVariantString(param_2->dvar);
-      I_strncpyz(acStack_40,pcVar1,0x19);
-      atoi(acStack_40);
-      pcVar1 = va("%i");
-      Dvar_SetFromStringByName(param_2->dvar,pcVar1);
+    if (bVar1) {
+      uVar2 = Dvar_GetVariantString(*(undefined4 *)(param_2 + 0x15c));
+      I_strncpyz(acStack_40,uVar2,0x19);
+      iVar3 = atoi(acStack_40);
+      uVar2 = va(0xffffffff8200c28c,iVar3 == 0);
+      Dvar_SetFromStringByName(*(undefined4 *)(param_2 + 0x15c),uVar2);
       return 1;
     }
   }
@@ -9381,478 +7922,423 @@ int Item_YesNo_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 
 // 825C29E8  Item_Multi_CountSettings  (ui/ui_shared.cpp:6364)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-int Item_Multi_CountSettings(itemDef_t *param_1)
+undefined4 Item_Multi_CountSettings(void)
 
 {
-  multiDef_s *pmVar1;
+  int iVar1;
   
-  pmVar1 = Item_GetMultiDef(param_1);
-  if (pmVar1 == (multiDef_s *)0x0) {
+  iVar1 = Item_GetMultiDef();
+  if (iVar1 == 0) {
     return 0;
   }
-  return pmVar1->count;
+  return *(undefined4 *)(iVar1 + 0x180);
 }
 
 
 // 825C2A28  Item_DvarEnum_CountSettings  (ui/ui_shared.cpp:6375)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-int Item_DvarEnum_CountSettings(itemDef_t *param_1)
+void Item_DvarEnum_CountSettings(void)
 
 {
   int iVar1;
-  dvar_t *pdVar2;
   
-  iVar1 = __savegprlr_29(param_1);
+  iVar1 = __savegprlr_29();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x18ea,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82170658,0x18ea,0,0xffffffff82000f98,0xffffffff8200e050);
   }
   if (*(int *)(iVar1 + 0x100) != 0xd) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x18eb,0,
-                    "%s\n\t(item->type) = %i");
+    MyAssertHandler(0xffffffff82170658,0x18eb,0,0xffffffff821723a8,0xffffffff821723c0);
   }
   if (*(int *)(iVar1 + 0x18c) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x18ec,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82170658,0x18ec,0,0xffffffff82000f98,0xffffffff8217238c);
   }
-  pdVar2 = Dvar_FindVar(*(char **)(iVar1 + 0x18c));
-  if (pdVar2->type != '\x06') {
-    iVar1 = __restgprlr_29(0);
-    return iVar1;
+  iVar1 = Dvar_FindVar(*(undefined4 *)(iVar1 + 0x18c));
+  if (*(char *)(iVar1 + 10) != '\x06') {
+    __restgprlr_29(0);
+    return;
   }
-  iVar1 = __restgprlr_29((pdVar2->domain).enumeration.stringCount);
-  return iVar1;
+  __restgprlr_29(*(undefined4 *)(iVar1 + 0x3c));
+  return;
 }
 
 
 // 825C2AF0  Item_Multi_FindDvarByValue  (ui/ui_shared.cpp:6390)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-int Item_Multi_FindDvarByValue(itemDef_t *param_1)
+void Item_Multi_FindDvarByValue(void)
 
 {
-  itemDef_t *piVar1;
-  multiDef_s *pmVar2;
-  char *pcVar3;
-  int iVar4;
-  float *pfVar5;
-  longlong lVar6;
-  char **ppcVar7;
-  double dVar8;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  char *_String;
+  float *pfVar4;
+  longlong lVar5;
+  undefined4 *puVar6;
+  double dVar7;
   
-  piVar1 = (itemDef_t *)__savegprlr_28(param_1);
-  pmVar2 = Item_GetMultiDef(piVar1);
-  if (pmVar2 != (multiDef_s *)0x0) {
-    if (pmVar2->strDef == 0) {
-      pcVar3 = Dvar_GetVariantString(piVar1->dvar);
-      dVar8 = atof(pcVar3);
-      lVar6 = 0;
-      if (0 < pmVar2->count) {
-        pfVar5 = pmVar2->dvarValue;
+  iVar2 = __savegprlr_28();
+  iVar3 = Item_GetMultiDef();
+  if (iVar3 != 0) {
+    if (*(int *)(iVar3 + 0x184) == 0) {
+      _String = (char *)Dvar_GetVariantString(*(undefined4 *)(iVar2 + 0x15c));
+      dVar7 = atof(_String);
+      lVar5 = 0;
+      if (0 < *(int *)(iVar3 + 0x180)) {
+        pfVar4 = (float *)(iVar3 + 0x100);
         do {
-          if (*pfVar5 == (float)dVar8) goto LAB_825c2bbc;
-          lVar6 = lVar6 + 1;
-          pfVar5 = pfVar5 + 1;
-        } while ((int)lVar6 < pmVar2->count);
+          if (*pfVar4 == (float)dVar7) goto LAB_825c2bbc;
+          lVar5 = lVar5 + 1;
+          pfVar4 = pfVar4 + 1;
+        } while ((int)lVar5 < *(int *)(iVar3 + 0x180));
       }
     }
     else {
-      pcVar3 = Dvar_GetVariantString(piVar1->dvar);
-      lVar6 = 0;
-      if (0 < pmVar2->count) {
-        ppcVar7 = pmVar2->dvarStr;
+      uVar1 = Dvar_GetVariantString(*(undefined4 *)(iVar2 + 0x15c));
+      lVar5 = 0;
+      if (0 < *(int *)(iVar3 + 0x180)) {
+        puVar6 = (undefined4 *)(iVar3 + 0x80);
         do {
-          iVar4 = I_stricmp(pcVar3,*ppcVar7);
-          if (iVar4 == 0) {
-            iVar4 = __restgprlr_28(lVar6);
-            return iVar4;
+          iVar2 = I_stricmp(uVar1,*puVar6);
+          if (iVar2 == 0) {
+            __restgprlr_28(lVar5);
+            return;
           }
-          lVar6 = lVar6 + 1;
-          ppcVar7 = ppcVar7 + 1;
-        } while ((int)lVar6 < pmVar2->count);
-        iVar4 = __restgprlr_28(0);
-        return iVar4;
+          lVar5 = lVar5 + 1;
+          puVar6 = puVar6 + 1;
+        } while ((int)lVar5 < *(int *)(iVar3 + 0x180));
+        __restgprlr_28(0);
+        return;
       }
     }
   }
-  lVar6 = 0;
+  lVar5 = 0;
 LAB_825c2bbc:
-  iVar4 = __restgprlr_28(lVar6);
-  return iVar4;
+  __restgprlr_28(lVar5);
+  return;
 }
 
 
 // 825C2BC8  Item_Multi_Setting  (ui/ui_shared.cpp:6423)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-char * Item_Multi_Setting(itemDef_t *param_1)
+void Item_Multi_Setting(void)
 
 {
-  itemDef_t *piVar1;
-  multiDef_s *pmVar2;
-  char *pcVar3;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
   int iVar4;
+  char *_String;
   float *pfVar5;
-  char **ppcVar6;
-  int iVar7;
-  double dVar8;
+  undefined4 *puVar6;
+  double dVar7;
   
-  piVar1 = (itemDef_t *)__savegprlr_28(param_1);
-  pmVar2 = Item_GetMultiDef(piVar1);
-  if (pmVar2 == (multiDef_s *)0x0) {
-    pcVar3 = (char *)__restgprlr_28(0xffffffff821723d4);
-    return pcVar3;
+  iVar2 = __savegprlr_28();
+  iVar3 = Item_GetMultiDef();
+  if (iVar3 == 0) {
+    __restgprlr_28(0xffffffff821723d4);
+    return;
   }
-  if (pmVar2->strDef == 0) {
-    pcVar3 = Dvar_GetVariantString(piVar1->dvar);
-    dVar8 = atof(pcVar3);
-    iVar7 = 0;
-    if (0 < pmVar2->count) {
-      pfVar5 = pmVar2->dvarValue;
+  if (*(int *)(iVar3 + 0x184) == 0) {
+    _String = (char *)Dvar_GetVariantString(*(undefined4 *)(iVar2 + 0x15c));
+    dVar7 = atof(_String);
+    iVar2 = 0;
+    if (0 < *(int *)(iVar3 + 0x180)) {
+      pfVar5 = (float *)(iVar3 + 0x100);
       do {
-        if (*pfVar5 == (float)dVar8) {
-          pcVar3 = (char *)__restgprlr_28(pmVar2->dvarList[iVar7]);
-          return pcVar3;
+        if (*pfVar5 == (float)dVar7) {
+          __restgprlr_28(*(undefined4 *)(iVar2 * 4 + iVar3));
+          return;
         }
-        iVar7 = iVar7 + 1;
+        iVar2 = iVar2 + 1;
         pfVar5 = pfVar5 + 1;
-      } while (iVar7 < pmVar2->count);
-      pcVar3 = (char *)__restgprlr_28(0xffffffff820068af);
-      return pcVar3;
+      } while (iVar2 < *(int *)(iVar3 + 0x180));
+      __restgprlr_28(0xffffffff820068af);
+      return;
     }
   }
   else {
-    pcVar3 = Dvar_GetVariantString(piVar1->dvar);
-    iVar7 = 0;
-    if (0 < pmVar2->count) {
-      ppcVar6 = pmVar2->dvarStr;
+    uVar1 = Dvar_GetVariantString(*(undefined4 *)(iVar2 + 0x15c));
+    iVar2 = 0;
+    if (0 < *(int *)(iVar3 + 0x180)) {
+      puVar6 = (undefined4 *)(iVar3 + 0x80);
       do {
-        iVar4 = I_stricmp(pcVar3,*ppcVar6);
+        iVar4 = I_stricmp(uVar1,*puVar6);
         if (iVar4 == 0) {
-          pcVar3 = (char *)__restgprlr_28(pmVar2->dvarList[iVar7]);
-          return pcVar3;
+          __restgprlr_28(*(undefined4 *)(iVar2 * 4 + iVar3));
+          return;
         }
-        iVar7 = iVar7 + 1;
-        ppcVar6 = ppcVar6 + 1;
-      } while (iVar7 < pmVar2->count);
+        iVar2 = iVar2 + 1;
+        puVar6 = puVar6 + 1;
+      } while (iVar2 < *(int *)(iVar3 + 0x180));
     }
   }
-  pcVar3 = (char *)__restgprlr_28(0xffffffff820068af);
-  return pcVar3;
+  __restgprlr_28(0xffffffff820068af);
+  return;
 }
 
 
 // 825C2CC8  Item_DvarEnum_EnumIndex  (ui/ui_shared.cpp:6456)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-int Item_DvarEnum_EnumIndex(itemDef_t *param_1)
+void Item_DvarEnum_EnumIndex(void)
 
 {
-  int iVar1;
-  dvar_t *pdVar2;
-  char *pcVar3;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
   int iVar4;
   longlong lVar5;
   
-  iVar1 = __savegprlr_28(param_1);
-  pdVar2 = Dvar_FindVar(*(char **)(iVar1 + 0x18c));
-  if (pdVar2->type == '\x06') {
-    pcVar3 = Dvar_GetVariantString(*(char **)(iVar1 + 0x15c));
-    iVar1 = atoi(pcVar3);
-    if ((-1 < iVar1) && (iVar1 < (pdVar2->domain).enumeration.stringCount)) goto LAB_825c2d58;
+  iVar2 = __savegprlr_28();
+  iVar3 = Dvar_FindVar(*(undefined4 *)(iVar2 + 0x18c));
+  if (*(char *)(iVar3 + 10) == '\x06') {
+    uVar1 = Dvar_GetVariantString(*(undefined4 *)(iVar2 + 0x15c));
+    iVar2 = atoi((char *)uVar1);
+    if ((-1 < iVar2) && (iVar2 < *(int *)(iVar3 + 0x3c))) goto LAB_825c2d58;
     lVar5 = 0;
-    if (0 < (pdVar2->domain).enumeration.stringCount) {
-      iVar1 = 0;
+    if (0 < *(int *)(iVar3 + 0x3c)) {
+      iVar2 = 0;
       do {
-        iVar4 = I_stricmp(pcVar3,*(char **)(iVar1 + (int)(pdVar2->domain).enumeration.strings));
+        iVar4 = I_stricmp(uVar1,*(undefined4 *)(iVar2 + *(int *)(iVar3 + 0x40)));
         if (iVar4 == 0) {
-          iVar1 = __restgprlr_28(lVar5);
-          return iVar1;
+          __restgprlr_28(lVar5);
+          return;
         }
         lVar5 = lVar5 + 1;
-        iVar1 = iVar1 + 4;
-      } while ((int)lVar5 < (pdVar2->domain).enumeration.stringCount);
+        iVar2 = iVar2 + 4;
+      } while ((int)lVar5 < *(int *)(iVar3 + 0x3c));
     }
   }
-  iVar1 = 0;
+  iVar2 = 0;
 LAB_825c2d58:
-  iVar1 = __restgprlr_28(iVar1);
-  return iVar1;
+  __restgprlr_28(iVar2);
+  return;
 }
 
 
 // 825C2D70  Item_DvarEnum_Setting  (ui/ui_shared.cpp:6481)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-char * Item_DvarEnum_Setting(itemDef_t *param_1)
+void Item_DvarEnum_Setting(void)
 
 {
-  itemDef_t *piVar1;
-  char *pcVar2;
-  dvar_t *pdVar3;
+  int iVar2;
+  int iVar3;
   int iVar4;
+  undefined8 uVar1;
   
-  piVar1 = (itemDef_t *)__savegprlr_28(param_1);
-  if (piVar1 == (itemDef_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1955,0,
-                    "%s");
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82170658,0x1955,0,0xffffffff82000f98,0xffffffff8200e050);
   }
-  if (piVar1->type != 0xd) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1956,0,
-                    "%s\n\t(item->type) = %i");
+  if (*(int *)(iVar2 + 0x100) != 0xd) {
+    MyAssertHandler(0xffffffff82170658,0x1956,0,0xffffffff821723a8,0xffffffff821723c0);
   }
-  if ((piVar1->typeData).enumDvarName == (char *)0x0) {
-    pcVar2 = (char *)__restgprlr_28(0xffffffff82172468);
-    return pcVar2;
+  if (*(int *)(iVar2 + 0x18c) == 0) {
+    __restgprlr_28(0xffffffff82172468);
+    return;
   }
-  pdVar3 = Dvar_FindVar((piVar1->typeData).enumDvarName);
-  if (pdVar3->type != '\x06') {
-    pcVar2 = (char *)__restgprlr_28(0xffffffff82172454);
-    return pcVar2;
+  iVar3 = Dvar_FindVar();
+  if (*(char *)(iVar3 + 10) != '\x06') {
+    __restgprlr_28(0xffffffff82172454);
+    return;
   }
-  if ((pdVar3->domain).enumeration.stringCount == 0) {
-    pcVar2 = (char *)__restgprlr_28(0xffffffff820068af);
-    return pcVar2;
+  if (*(int *)(iVar3 + 0x3c) == 0) {
+    __restgprlr_28(0xffffffff820068af);
+    return;
   }
-  iVar4 = Item_DvarEnum_EnumIndex(piVar1);
-  if ((iVar4 < 0) || ((pdVar3->domain).enumeration.stringCount <= iVar4)) {
-    va("%s %i:%i");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1962,0,
-                    "%s\n\t%s");
+  iVar4 = Item_DvarEnum_EnumIndex(iVar2);
+  if ((iVar4 < 0) || (*(int *)(iVar3 + 0x3c) <= iVar4)) {
+    uVar1 = va(0xffffffff82172448,*(undefined4 *)(iVar2 + 0x18c),*(undefined4 *)(iVar3 + 0x3c),iVar4
+              );
+    MyAssertHandler(0xffffffff82170658,0x1962,0,0xffffffff820011f4,0xffffffff82172400,uVar1);
   }
-  pcVar2 = (char *)__restgprlr_28((pdVar3->domain).enumeration.strings[iVar4]);
-  return pcVar2;
+  __restgprlr_28(*(undefined4 *)(*(int *)(iVar3 + 0x40) + iVar4 * 4));
+  return;
 }
 
 
 // 825C2EA8  Item_List_IsCountUpKey  (ui/ui_shared.cpp:6504)
 
-bool Item_List_IsCountUpKey(int param_1)
+undefined8 Item_List_IsCountUpKey(int param_1)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   
-  if (((param_1 == 0xd) || (param_1 == 0xa3)) || (bVar1 = false, param_1 == 0x9d)) {
-    bVar1 = true;
+  if (((param_1 == 0xd) || (param_1 == 0xa3)) || (uVar1 = 0, param_1 == 0x9d)) {
+    uVar1 = 1;
   }
-  return bVar1;
+  return uVar1;
 }
 
 
 // 825C2ED0  Item_List_IsCountDownKey  (ui/ui_shared.cpp:6514)
 
-bool Item_List_IsCountDownKey(int param_1)
+undefined8 Item_List_IsCountDownKey(int param_1)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   
-  if ((param_1 == 0xa4) || (bVar1 = false, param_1 == 0x9c)) {
-    bVar1 = true;
+  if ((param_1 == 0xa4) || (uVar1 = 0, param_1 == 0x9c)) {
+    uVar1 = 1;
   }
-  return bVar1;
+  return uVar1;
 }
 
 
 // 825C2EF0  Item_List_NextEntryForKey  (ui/ui_shared.cpp:6524)
 
-int Item_List_NextEntryForKey(int param_1,int param_2,int param_3)
+void Item_List_NextEntryForKey(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
   bool bVar1;
   int iVar2;
-  longlong lVar3;
+  int iVar3;
   ulonglong uVar4;
-  int iVar5;
-  ulonglong uVar6;
   
-  uVar4 = (ulonglong)param_3;
-  lVar3 = (longlong)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  iVar5 = (int)uVar4;
-  if (iVar5 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x197d,0,
-                    "%s\n\t(count) = %i");
+  iVar2 = __savegprlr_28();
+  iVar3 = (int)param_3;
+  if (iVar3 < 0) {
+    MyAssertHandler(0xffffffff82170658,0x197d,0,0xffffffff8216c964,0xffffffff8216c978,param_3);
   }
-  if ((int)lVar3 < 0) {
+  if ((int)param_2 < 0) {
 LAB_825c2f54:
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x197e,0,
-                    "%s\n\t(current) = %i");
+    MyAssertHandler(0xffffffff82170658,0x197e,0,0xffffffff82172480,0xffffffff82172494,param_2);
   }
-  else if (iVar5 <= (int)lVar3) {
-    if (iVar5 == 0) goto LAB_825c2f80;
+  else if (iVar3 <= (int)param_2) {
+    if (iVar3 == 0) goto LAB_825c2f80;
     goto LAB_825c2f54;
   }
-  if (iVar5 != 0) {
+  if (iVar3 != 0) {
     if (((iVar2 == 0xd) || (iVar2 == 0xa3)) || (bVar1 = false, iVar2 == 0x9d)) {
       bVar1 = true;
     }
     if (bVar1) {
-      uVar6 = lVar3 + 1;
-      trapWord(6,uVar4,0);
-      trapWord(5,uVar4 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
-      iVar2 = __restgprlr_28(uVar6 - (longlong)((int)uVar6 / iVar5) * (longlong)iVar5);
-      return iVar2;
+      uVar4 = param_2 + 1;
+      trapWord(6,param_3,0);
+      trapWord(5,param_3 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1),0xffff)
+      ;
+      __restgprlr_28(uVar4 - (longlong)((int)uVar4 / iVar3) * (longlong)iVar3);
+      return;
     }
     if ((iVar2 == 0xa4) || (bVar1 = false, iVar2 == 0x9c)) {
       bVar1 = true;
     }
     if (bVar1) {
-      trapWord(6,uVar4,0);
-      uVar6 = (lVar3 + uVar4) - 1;
-      trapWord(5,uVar4 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
-      iVar2 = __restgprlr_28(uVar6 - (longlong)((int)uVar6 / iVar5) * (longlong)iVar5);
-      return iVar2;
+      trapWord(6,param_3,0);
+      uVar4 = (param_2 + param_3) - 1;
+      trapWord(5,param_3 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1),0xffff)
+      ;
+      __restgprlr_28(uVar4 - (longlong)((int)uVar4 / iVar3) * (longlong)iVar3);
+      return;
     }
-    iVar2 = __restgprlr_28(lVar3);
-    return iVar2;
+    __restgprlr_28(param_2);
+    return;
   }
 LAB_825c2f80:
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 825C3048  Item_Multi_HandleKey  (ui/ui_shared.cpp:6539)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Item_Multi_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
+void Item_Multi_HandleKey(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-  itemDef_t *piVar1;
-  LocalClientNum_t *pLVar2;
-  multiDef_s *pmVar3;
-  int iVar4;
-  bool bVar8;
+  int iVar1;
+  undefined4 *puVar4;
   int iVar5;
-  multiDef_s *pmVar6;
-  char *pcVar7;
-  ulonglong uVar9;
+  char cVar7;
+  undefined8 uVar2;
+  int iVar6;
+  longlong lVar3;
+  undefined4 uVar8;
   
-  uVar9 = (ulonglong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_27(param_1);
-  if (pLVar2 == (LocalClientNum_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1991,0,
-                    "%s");
+  puVar4 = (undefined4 *)__savegprlr_27();
+  if (puVar4 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x1991,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar9 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1992,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x1992,0,0xffffffff82000f98,0xffffffff8200e050);
   }
-  piVar1 = (itemDef_t *)uVar9;
-  if (piVar1->dvar == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1993,0,
-                    "%s");
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x1993,0,0xffffffff82000f98,0xffffffff821724c8);
   }
-  pmVar3 = Item_GetMultiDef(piVar1);
-  if ((pmVar3 != (multiDef_s *)0x0) && (bVar8 = Window_HasFocus(*pLVar2,&piVar1->window), bVar8)) {
-    iVar5 = Item_Multi_FindDvarByValue(piVar1);
-    pmVar6 = Item_GetMultiDef(piVar1);
-    iVar4 = 0;
-    if (pmVar6 != (multiDef_s *)0x0) {
-      iVar4 = pmVar6->count;
-    }
-    iVar4 = Item_List_NextEntryForKey(param_3,iVar5,iVar4);
-    if (iVar4 != iVar5) {
-      if (pmVar3->strDef != 0) {
-        Dvar_SetFromStringByName(piVar1->dvar,pmVar3->dvarStr[iVar4]);
-        iVar4 = __restgprlr_27(1);
-        return iVar4;
+  iVar5 = Item_GetMultiDef(param_2);
+  if (iVar5 != 0) {
+    cVar7 = Window_HasFocus(*puVar4,param_2);
+    if (cVar7 != '\0') {
+      uVar2 = Item_Multi_FindDvarByValue(param_2);
+      iVar6 = Item_GetMultiDef(param_2);
+      uVar8 = 0;
+      if (iVar6 != 0) {
+        uVar8 = *(undefined4 *)(iVar6 + 0x180);
       }
-      pcVar7 = va("%g");
-      Dvar_SetFromStringByName(piVar1->dvar,pcVar7);
-      iVar4 = __restgprlr_27(1);
-      return iVar4;
+      lVar3 = Item_List_NextEntryForKey(param_3,uVar2,uVar8);
+      if ((int)lVar3 != (int)uVar2) {
+        if (*(int *)(iVar5 + 0x184) != 0) {
+          Dvar_SetFromStringByName
+                    (*(undefined4 *)(iVar1 + 0x15c),
+                     *(undefined4 *)((int)((lVar3 + 0x20U & 0xffffffff) << 2) + iVar5));
+          __restgprlr_27(1);
+          return;
+        }
+        uVar2 = va(0xffffffff820181dc,
+                   (double)*(float *)((int)((lVar3 + 0x40U & 0xffffffff) << 2) + iVar5));
+        Dvar_SetFromStringByName(*(undefined4 *)(iVar1 + 0x15c),uVar2);
+        __restgprlr_27(1);
+        return;
+      }
     }
   }
-  iVar4 = __restgprlr_27(0);
-  return iVar4;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 825C31C0  Item_DvarEnum_HandleKey  (ui/ui_shared.cpp:6571)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Item_DvarEnum_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
+void Item_DvarEnum_HandleKey(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-  itemDef_t *piVar1;
-  LocalClientNum_t *pLVar2;
-  bool bVar6;
-  int iVar3;
-  int iVar4;
-  char *pcVar5;
-  ulonglong uVar7;
+  undefined4 *puVar3;
+  char cVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_27(param_1);
-  if (pLVar2 == (LocalClientNum_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x19b0,0,
-                    "%s");
+  puVar3 = (undefined4 *)__savegprlr_27();
+  if (puVar3 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x19b0,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x19b1,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x19b1,0,0xffffffff82000f98,0xffffffff8200e050);
   }
-  piVar1 = (itemDef_t *)uVar7;
-  if (piVar1->dvar == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x19b2,0,
-                    "%s");
+  if (*(int *)((int)param_2 + 0x15c) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x19b2,0,0xffffffff82000f98,0xffffffff821724c8);
   }
-  bVar6 = Window_HasFocus(*pLVar2,&piVar1->window);
-  if (bVar6) {
-    iVar3 = Item_DvarEnum_EnumIndex(piVar1);
-    iVar4 = Item_DvarEnum_CountSettings(piVar1);
-    iVar4 = Item_List_NextEntryForKey(param_3,iVar3,iVar4);
-    if (iVar4 != iVar3) {
-      pcVar5 = va("%i");
-      Dvar_SetFromStringByName(piVar1->dvar,pcVar5);
-      iVar3 = __restgprlr_27(1);
-      return iVar3;
+  cVar4 = Window_HasFocus(*puVar3,param_2);
+  if (cVar4 != '\0') {
+    uVar1 = Item_DvarEnum_EnumIndex(param_2);
+    uVar2 = Item_DvarEnum_CountSettings(param_2);
+    uVar2 = Item_List_NextEntryForKey(param_3,uVar1,uVar2);
+    if ((int)uVar2 != (int)uVar1) {
+      uVar1 = va(0xffffffff8200c28c,uVar2);
+      Dvar_SetFromStringByName(*(undefined4 *)((int)param_2 + 0x15c),uVar1);
+      __restgprlr_27(1);
+      return;
     }
   }
-  iVar3 = __restgprlr_27(0);
-  return iVar3;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 825C32E0  Item_IsTextField  (ui/ui_shared.cpp:6595)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-bool Item_IsTextField(itemDef_t *param_1)
+undefined8 Item_IsTextField(int param_1)
 
 {
-  switch(param_1->type) {
+  switch(*(undefined4 *)(param_1 + 0x100)) {
   case 4:
   case 9:
   case 0x10:
@@ -9860,93 +8346,80 @@ bool Item_IsTextField(itemDef_t *param_1)
   case 0x12:
   case 0x16:
   case 0x17:
-    return true;
+    return 1;
   default:
-    return false;
+    return 0;
   }
 }
 
 
 // 825C3368  Item_TextField_BeginEdit  (ui/ui_shared.cpp:6614)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_TextField_BeginEdit(UiContext *param_1,itemDef_t *param_2)
+void Item_TextField_BeginEdit(undefined8 param_1,ulonglong param_2)
 
 {
   char cVar1;
-  menuDef_t *pmVar2;
-  LocalClientNum_t *pLVar3;
-  editFieldDef_s *peVar4;
-  char *pcVar6;
-  ulonglong uVar7;
+  undefined4 *puVar2;
+  int *piVar3;
+  int iVar4;
+  char *pcVar5;
+  int iVar6;
+  char *pcVar7;
   int iVar8;
-  char *pcVar9;
-  int iVar10;
-  char acStack_430 [1072];
-  itemDef_t *piVar5;
+  undefined1 auStack_430 [1072];
   
-  uVar7 = (ulonglong)(int)param_2;
-  pLVar3 = (LocalClientNum_t *)__savegprlr_28(param_1);
-  if (pLVar3 == (LocalClientNum_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x19db,0,
-                    "%s");
+  piVar3 = (int *)__savegprlr_28();
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x19db,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x19dc,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x19dc,0,0xffffffff82000f98,0xffffffff8200e050);
   }
-  piVar5 = (itemDef_t *)uVar7;
-  peVar4 = Item_GetEditFieldDef(piVar5);
-  if (peVar4 != (editFieldDef_s *)0x0) {
-    peVar4->paintOffset = 0;
+  iVar4 = Item_GetEditFieldDef(param_2);
+  if (iVar4 != 0) {
+    *(undefined4 *)(iVar4 + 0x1c) = 0;
   }
-  if (piVar5->localVar == (char *)0x0) {
-    if (piVar5->dvar == (char *)0x0) {
-      piVar5->cursorPos[*pLVar3] = 0;
-      Com_PrintWarning(0xd,
-                       "WARNING: No variable is specified for TextField \'%s\', it will not function properly.\n"
-                      );
+  puVar2 = (undefined4 *)param_2;
+  if (puVar2[0x5b] == 0) {
+    if (puVar2[0x57] == 0) {
+      puVar2[*piVar3 + 0x5f] = 0;
+      Com_PrintWarning(0xd,0xffffffff821724d8,*puVar2);
     }
     else {
-      pcVar6 = Dvar_GetVariantString(piVar5->dvar);
-      pcVar9 = pcVar6;
+      pcVar5 = (char *)Dvar_GetVariantString();
+      pcVar7 = pcVar5;
       do {
-        cVar1 = *pcVar9;
-        pcVar9 = pcVar9 + 1;
+        cVar1 = *pcVar7;
+        pcVar7 = pcVar7 + 1;
       } while (cVar1 != '\0');
-      piVar5->cursorPos[*pLVar3] = (int)(pcVar9 + (-1 - (int)pcVar6));
+      puVar2[*piVar3 + 0x5f] = pcVar7 + (-1 - (int)pcVar5);
     }
   }
   else {
-    pcVar6 = UILocalVar_GetStringByName
-                       ((UILocalVarContext *)(pLVar3 + 0x29f),piVar5->localVar,acStack_430,0x400);
-    pcVar9 = pcVar6;
+    pcVar5 = (char *)UILocalVar_GetStringByName(piVar3 + 0x29f,puVar2[0x5b],auStack_430,0x400);
+    pcVar7 = pcVar5;
     do {
-      cVar1 = *pcVar9;
-      pcVar9 = pcVar9 + 1;
+      cVar1 = *pcVar7;
+      pcVar7 = pcVar7 + 1;
     } while (cVar1 != '\0');
-    piVar5->cursorPos[*pLVar3] = (int)(pcVar9 + (-1 - (int)pcVar6));
+    puVar2[*piVar3 + 0x5f] = pcVar7 + (-1 - (int)pcVar5);
   }
-  g_editingField = 1;
-  g_editItem = piVar5;
-  Key_SetOverstrikeMode(*pLVar3,1);
-  pmVar2 = piVar5->parent;
-  iVar8 = 0;
-  if (0 < pmVar2->itemCount) {
-    iVar10 = 0;
-    while ((ulonglong)*(uint *)(iVar10 + (int)pmVar2->items) != (uVar7 & 0xffffffff)) {
-      iVar8 = iVar8 + 1;
-      iVar10 = iVar10 + 4;
-      if (pmVar2->itemCount <= iVar8) {
+  DAT_8400c164 = 1;
+  DAT_8400c16c = puVar2;
+  Key_SetOverstrikeMode(*piVar3,1);
+  iVar4 = *(int *)(puVar2[0x4d] + 0xb4);
+  iVar6 = 0;
+  if (0 < iVar4) {
+    iVar8 = 0;
+    while ((ulonglong)*(uint *)(iVar8 + *(int *)(puVar2[0x4d] + 0xb8)) != (param_2 & 0xffffffff)) {
+      iVar6 = iVar6 + 1;
+      iVar8 = iVar8 + 4;
+      if (iVar4 <= iVar6) {
         __restgprlr_28();
         return;
       }
     }
-    Menu_SetCursorItem(*pLVar3,pmVar2,iVar8);
+    Menu_SetCursorItem(*piVar3);
   }
   __restgprlr_28();
   return;
@@ -9955,29 +8428,25 @@ void Item_TextField_BeginEdit(UiContext *param_1,itemDef_t *param_2)
 
 // 825C3510  Item_TextField_EnsureCursorVisible  (ui/ui_shared.cpp:6657)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-void Item_TextField_EnsureCursorVisible(LocalClientNum_t param_1,itemDef_t *param_2,char *param_3)
+void Item_TextField_EnsureCursorVisible(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  LocalClientNum_t LVar1;
-  editFieldDef_s *peVar2;
+  int iVar1;
+  int iVar2;
   int iVar3;
   
-  LVar1 = __savegprlr_28(param_1);
-  peVar2 = Item_GetEditFieldDef(param_2);
-  if (param_2->cursorPos[LVar1] < peVar2->paintOffset) {
-    peVar2->paintOffset = param_2->cursorPos[LVar1];
+  iVar1 = __savegprlr_28();
+  iVar2 = Item_GetEditFieldDef(param_2);
+  iVar3 = *(int *)((iVar1 + 0x5f) * 4 + (int)param_2);
+  if (iVar3 < *(int *)(iVar2 + 0x1c)) {
+    *(int *)(iVar2 + 0x1c) = iVar3;
     __restgprlr_28();
     return;
   }
-  if (peVar2->maxPaintChars != 0) {
-    iVar3 = Item_GetCursorPosOffset(LVar1,param_2,param_3,-peVar2->maxPaintChars);
-    if (peVar2->paintOffset < iVar3) {
-      peVar2->paintOffset = iVar3;
+  if (*(uint *)(iVar2 + 0x18) != 0) {
+    iVar3 = Item_GetCursorPosOffset(iVar1,param_2,param_3,-(ulonglong)*(uint *)(iVar2 + 0x18));
+    if (*(int *)(iVar2 + 0x1c) < iVar3) {
+      *(int *)(iVar2 + 0x1c) = iVar3;
     }
   }
   __restgprlr_28();
@@ -9987,408 +8456,420 @@ void Item_TextField_EnsureCursorVisible(LocalClientNum_t param_1,itemDef_t *para
 
 // 825D0078  Item_TextField_HandleKey  (ui/ui_shared.cpp:6684)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Item_TextField_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
+void Item_TextField_HandleKey(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  UiContext *pUVar3;
-  editFieldDef_s *peVar4;
-  UILocalVar *pUVar5;
-  int iVar6;
-  char *pcVar7;
-  bool bVar11;
-  char cVar12;
+  uint *puVar2;
+  bool bVar3;
+  int *piVar6;
+  int iVar7;
+  ulonglong uVar4;
+  undefined8 uVar5;
   uint uVar8;
+  char cVar11;
   int iVar9;
-  itemDef_t *piVar10;
+  int iVar10;
+  ulonglong uVar12;
   ulonglong uVar13;
-  char *pcVar14;
-  ulonglong uVar15;
-  longlong lVar16;
-  char local_870 [1024];
-  char acStack_470 [1136];
+  char *pcVar15;
+  longlong lVar14;
+  ulonglong uVar16;
+  undefined1 auStack_871 [2161];
   
-  uVar13 = (ulonglong)param_3;
-  pUVar3 = (UiContext *)__savegprlr_20(param_1);
-  uVar8 = (uint)uVar13;
-  peVar4 = Item_GetEditFieldDef(param_2);
-  if ((peVar4 == (editFieldDef_s *)0x0) ||
-     ((pcVar7 = param_2->dvar, pcVar7 == (char *)0x0 && (param_2->localVar == (char *)0x0))))
+  uVar12 = ZEXT48(&stack0x00000000);
+  piVar6 = (int *)__savegprlr_20();
+  iVar9 = (int)param_3;
+  iVar7 = Item_GetEditFieldDef(param_2);
+  if ((iVar7 == 0) ||
+     ((puVar2 = (uint *)param_2, uVar8 = puVar2[0x57], uVar8 == 0 && (puVar2[0x5b] == 0))))
   goto LAB_825d0114;
-  memset();
-  if (param_2->localVar == (char *)0x0) {
-    if (pcVar7 == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1a3b,0,
-                      "%s");
+  memset(auStack_871 + 1,0,0x400);
+  if (puVar2[0x5b] == 0) {
+    if (uVar8 == 0) {
+      MyAssertHandler(0xffffffff82170658,0x1a3b,0,0xffffffff82000f98,0xffffffff821724c8);
     }
-    pUVar5 = (UILocalVar *)0x0;
-    pcVar7 = Dvar_GetVariantString(param_2->dvar);
+    uVar4 = 0;
+    uVar5 = Dvar_GetVariantString(puVar2[0x57]);
   }
   else {
-    pUVar5 = UILocalVar_Find(&pUVar3->localVars,param_2->localVar);
-    if (pUVar5 == (UILocalVar *)0x0) {
-      Com_PrintWarning(0xd,
-                       "WARNING: Could not find LocalVar \'%s\' in Item_TextField_HandleKey().\n");
+    uVar4 = UILocalVar_Find(piVar6 + 0x29f);
+    if ((uVar4 & 0xffffffff) == 0) {
+      Com_PrintWarning(0xd,0xffffffff82173f58,puVar2[0x5b]);
       goto LAB_825d0114;
     }
-    pcVar7 = UILocalVar_GetString(pUVar5,acStack_470,0x400);
+    uVar5 = UILocalVar_GetString(uVar4,uVar12 - 0x470,0x400);
   }
-  pcVar14 = (char *)0x400;
-  I_strncpyz(local_870,pcVar7,0x400);
-  pcVar7 = local_870;
+  I_strncpyz(uVar12 - 0x870,uVar5,0x400);
+  lVar14 = uVar12 - 0x870;
   do {
-    cVar12 = *pcVar7;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar12 != '\0');
-  pcVar7 = pcVar7 + (-1 - (int)local_870);
-  uVar1 = peVar4->maxChars;
-  uVar15 = ZEXT48(pcVar7);
-  if ((uVar1 != 0) && ((int)uVar1 < (int)pcVar7)) {
-    LVar2 = pUVar3->localClientNum;
-    local_870[uVar1] = '\0';
-    uVar15 = (ulonglong)uVar1;
-    if (peVar4->maxChars < param_2->cursorPos[LVar2]) {
-      param_2->cursorPos[LVar2] = peVar4->maxChars;
+    pcVar15 = (char *)lVar14;
+    lVar14 = lVar14 + 1;
+  } while (*pcVar15 != '\0');
+  uVar13 = (lVar14 - (uVar12 - 0x870)) - 1;
+  uVar8 = *(uint *)(iVar7 + 0x10);
+  uVar16 = uVar13 & 0xffffffff;
+  if ((uVar8 != 0) && ((int)uVar8 < (int)uVar13)) {
+    iVar10 = *piVar6;
+    auStack_871[uVar8 + 1] = 0;
+    uVar16 = (ulonglong)uVar8;
+    if ((int)*(uint *)(iVar7 + 0x10) < (int)puVar2[iVar10 + 0x5f]) {
+      puVar2[iVar10 + 0x5f] = *(uint *)(iVar7 + 0x10);
     }
   }
-  iVar6 = (int)uVar15;
-  if ((uVar13 & 0x400) == 0) {
-    if ((uVar8 == 0xa2) || (uVar8 == 0xc1)) {
-      if (param_2->cursorPos[pUVar3->localClientNum] < iVar6) {
-        lVar16 = uVar15 - (uint)param_2->cursorPos[pUVar3->localClientNum];
-        if ((lVar16 < 1) || (iVar6 < (int)lVar16)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1ad7
-                          ,0,"%s\n\t(memMoveCount) = %i");
+  uVar8 = (uint)uVar16;
+  if ((param_3 & 0x400) == 0) {
+    if ((iVar9 == 0xa2) || (iVar9 == 0xc1)) {
+      uVar1 = puVar2[*piVar6 + 0x5f];
+      if ((int)uVar1 < (int)uVar8) {
+        lVar14 = uVar16 - uVar1;
+        if ((lVar14 < 1) || ((int)uVar8 < (int)(size_t)lVar14)) {
+          MyAssertHandler(0xffffffff82170658,0x1ad7,0,0xffffffff82173f10,0xffffffff82173f28,lVar14);
         }
-        memmove();
-        if (param_2->localVar != (char *)0x0) {
-          if (pUVar5 == (UILocalVar *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                            0x1adc,0,"%s");
+        memmove(auStack_871 + uVar1 + 1,auStack_871 + uVar1 + 2,(size_t)lVar14);
+        if (puVar2[0x5b] != 0) {
+          if ((uVar4 & 0xffffffff) == 0) {
+            MyAssertHandler(0xffffffff82170658,0x1adc,0,0xffffffff82000f98,0xffffffff82173f04);
           }
-          UILocalVar_SetString(pUVar5,local_870);
-          iVar6 = __restgprlr_20(1);
-          return iVar6;
+          UILocalVar_SetString(uVar4,uVar12 - 0x870);
+          __restgprlr_20(1);
+          return;
         }
-        Dvar_SetFromStringByName(param_2->dvar,local_870);
+        Dvar_SetFromStringByName(puVar2[0x57],uVar12 - 0x870);
       }
       goto LAB_825d08c8;
     }
-    if ((uVar8 == 0x9d) || (uVar8 == 0xbb)) {
-      iVar6 = Item_GetCursorPosOffset(pUVar3->localClientNum,param_2,local_870,1);
-      param_2->cursorPos[pUVar3->localClientNum] = iVar6;
-      Item_TextField_EnsureCursorVisible(pUVar3->localClientNum,param_2,local_870);
-      iVar6 = __restgprlr_20(1);
-      return iVar6;
+    if ((iVar9 == 0x9d) || (iVar9 == 0xbb)) {
+      uVar8 = Item_GetCursorPosOffset(*piVar6,param_2,uVar12 - 0x870,1);
+      puVar2[*piVar6 + 0x5f] = uVar8;
+      Item_TextField_EnsureCursorVisible(*piVar6,param_2,uVar12 - 0x870);
+      __restgprlr_20(1);
+      return;
     }
-    if ((uVar8 == 0x9c) || (uVar8 == 0xb9)) goto LAB_825d02bc;
-    if ((uVar8 == 0xa5) || (uVar8 == 0xb6)) {
-      param_2->cursorPos[pUVar3->localClientNum] = 0;
-      peVar4->paintOffset = 0;
-      iVar6 = __restgprlr_20(1);
-      return iVar6;
+    if ((iVar9 == 0x9c) || (iVar9 == 0xb9)) goto LAB_825d02bc;
+    if ((iVar9 == 0xa5) || (iVar9 == 0xb6)) {
+      puVar2[*piVar6 + 0x5f] = 0;
+      *(undefined4 *)(iVar7 + 0x1c) = 0;
+      __restgprlr_20(1);
+      return;
     }
-    if ((uVar8 == 0xa6) || (uVar8 == 0xbc)) {
-      param_2->cursorPos[pUVar3->localClientNum] = iVar6;
-      Item_TextField_EnsureCursorVisible(pUVar3->localClientNum,param_2,local_870);
-      iVar6 = __restgprlr_20(1);
-      return iVar6;
+    if ((iVar9 == 0xa6) || (iVar9 == 0xbc)) {
+      puVar2[*piVar6 + 0x5f] = uVar8;
+      Item_TextField_EnsureCursorVisible(*piVar6,param_2,uVar12 - 0x870);
+      __restgprlr_20(1);
+      return;
     }
-    if ((uVar8 == 0xa1) || (uVar8 == 0xc0)) {
-      iVar6 = Key_GetOverstrikeMode(pUVar3->localClientNum);
-      Key_SetOverstrikeMode(pUVar3->localClientNum,(uint)LZCOUNT(iVar6) >> 5);
-      iVar6 = __restgprlr_20(1);
-      return iVar6;
+    if ((iVar9 == 0xa1) || (iVar9 == 0xc0)) {
+      iVar7 = Key_GetOverstrikeMode(*piVar6);
+      Key_SetOverstrikeMode(*piVar6,iVar7 == 0);
+      __restgprlr_20(1);
+      return;
     }
   }
   else {
-    uVar8 = uVar8 & 0xfffffbff;
-    if (uVar8 == 8) {
-      if (0 < param_2->cursorPos[pUVar3->localClientNum]) {
-        lVar16 = (uVar15 - (uint)param_2->cursorPos[pUVar3->localClientNum]) + 1;
-        if ((lVar16 < 1) || (iVar6 < (int)lVar16)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1a52
-                          ,0,"%s\n\t(memMoveCount) = %i");
+    uVar13 = param_3 << 0x20 | param_3 & 0xfffffbff;
+    iVar9 = (int)(param_3 & 0xfffffbff);
+    if (iVar9 == 8) {
+      uVar1 = puVar2[*piVar6 + 0x5f];
+      if (0 < (int)uVar1) {
+        lVar14 = (uVar16 - uVar1) + 1;
+        if ((lVar14 < 1) || ((int)uVar8 < (int)(size_t)lVar14)) {
+          MyAssertHandler(0xffffffff82170658,0x1a52,0,0xffffffff82173f10,0xffffffff82173f28,lVar14);
         }
-        memmove();
+        memmove(auStack_871 + uVar1,auStack_871 + uVar1 + 1,(size_t)lVar14);
       }
-      if (param_2->localVar == (char *)0x0) {
-        Dvar_SetFromStringByName(param_2->dvar,local_870);
-        pcVar7 = Dvar_GetVariantString(param_2->dvar);
-        I_strncpyz(local_870,pcVar7,0x400);
+      if (puVar2[0x5b] == 0) {
+        Dvar_SetFromStringByName(puVar2[0x57],uVar12 - 0x870);
+        uVar5 = Dvar_GetVariantString(puVar2[0x57]);
+        I_strncpyz(uVar12 - 0x870,uVar5,0x400);
       }
       else {
-        if (pUVar5 == (UILocalVar *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1a58
-                          ,0,"%s");
+        if ((uVar4 & 0xffffffff) == 0) {
+          MyAssertHandler(0xffffffff82170658,0x1a58,0,0xffffffff82000f98,0xffffffff82173f04);
         }
-        UILocalVar_SetString(pUVar5,local_870);
+        UILocalVar_SetString(uVar4,uVar12 - 0x870);
       }
 LAB_825d02bc:
-      iVar6 = Item_GetCursorPosOffset(pUVar3->localClientNum,param_2,local_870,-1);
-      param_2->cursorPos[pUVar3->localClientNum] = iVar6;
-      Item_TextField_EnsureCursorVisible(pUVar3->localClientNum,param_2,local_870);
-      iVar6 = __restgprlr_20(1);
-      return iVar6;
+      uVar8 = Item_GetCursorPosOffset(*piVar6,param_2,uVar12 - 0x870,0xffffffffffffffff);
+      puVar2[*piVar6 + 0x5f] = uVar8;
+      Item_TextField_EnsureCursorVisible(*piVar6,param_2,uVar12 - 0x870);
+      __restgprlr_20(1);
+      return;
     }
-    if ((((param_2->type == 0x10) && (bVar11 = I_isforfilename(uVar8), !bVar11)) ||
-        ((int)uVar8 < 0x20)) || ((uVar8 == 0x40 && (param_2->type != 0x16)))) goto LAB_825d08c8;
-    if ((param_2->type == 9) && (bVar11 = I_isdigit(uVar8), !bVar11)) goto LAB_825d0114;
-    if (param_2->type == 0x11) {
-      bVar11 = I_isdigit(uVar8);
-      if (bVar11) {
-LAB_825d038c:
-        bVar11 = true;
+    if ((((puVar2[0x40] == 0x10) && (cVar11 = I_isforfilename(uVar13), cVar11 == '\0')) ||
+        (iVar9 < 0x20)) || ((iVar9 == 0x40 && (puVar2[0x40] != 0x16)))) goto LAB_825d08c8;
+    if ((puVar2[0x40] == 9) && (cVar11 = I_isdigit(uVar13), cVar11 == '\0')) goto LAB_825d0114;
+    if (puVar2[0x40] == 0x11) {
+      cVar11 = I_isdigit(uVar13);
+      if (cVar11 == '\0') {
+        cVar11 = Com_GetDecimalDelimiter();
+        bVar3 = false;
+        if (iVar9 == cVar11) goto LAB_825d038c;
       }
       else {
-        cVar12 = Com_GetDecimalDelimiter();
-        bVar11 = false;
-        if (uVar8 == (int)cVar12) goto LAB_825d038c;
+LAB_825d038c:
+        bVar3 = true;
       }
-      if (!bVar11) {
+      if (!bVar3) {
 LAB_825d0114:
-        iVar6 = __restgprlr_20(0);
-        return iVar6;
+        __restgprlr_20(0);
+        return;
       }
-      cVar12 = Com_GetDecimalDelimiter();
-      if (uVar8 == (int)cVar12) {
-        uVar8 = 0x2e;
+      cVar11 = Com_GetDecimalDelimiter();
+      if (iVar9 == cVar11) {
+        uVar13 = 0x2e;
       }
     }
-    if (param_2->type == 0x12) {
-      uVar8 = toupper(uVar8);
+    iVar9 = (int)uVar13;
+    if (puVar2[0x40] == 0x12) {
+      iVar9 = toupper(iVar9);
     }
-    iVar9 = Key_GetOverstrikeMode(pUVar3->localClientNum);
-    if (iVar9 == 0) {
-      if ((iVar6 == 0xff) || ((peVar4->maxChars != 0 && (peVar4->maxChars <= iVar6))))
+    iVar10 = Key_GetOverstrikeMode(*piVar6);
+    if (iVar10 == 0) {
+      if ((uVar8 == 0xff) ||
+         ((*(int *)(iVar7 + 0x10) != 0 && (*(int *)(iVar7 + 0x10) <= (int)uVar8))))
       goto LAB_825d08c8;
-      lVar16 = (uVar15 - (uint)param_2->cursorPos[pUVar3->localClientNum]) + 1;
-      if ((lVar16 < 1) || (iVar6 + 1 < (int)lVar16)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1a9b,0
-                        ,"%s\n\t(memMoveCount) = %i");
+      uVar1 = puVar2[*piVar6 + 0x5f];
+      lVar14 = (uVar16 - uVar1) + 1;
+      if ((lVar14 < 1) || ((int)(uVar8 + 1) < (int)(size_t)lVar14)) {
+        MyAssertHandler(0xffffffff82170658,0x1a9b,0,0xffffffff82173f10,0xffffffff82173ed4,lVar14);
       }
-      memmove();
+      memmove(auStack_871 + uVar1 + 2,auStack_871 + uVar1 + 1,(size_t)lVar14);
     }
-    else if ((peVar4->maxChars != 0) &&
-            (peVar4->maxChars <= param_2->cursorPos[pUVar3->localClientNum])) {
-      if ((peVar4->maxCharsGotoNext != 0) &&
-         ((piVar10 = Menu_SetNextCursorItem(pUVar3,param_2->parent,(ItemFocusReason)pcVar14),
-          piVar10 != (itemDef_t *)0x0 && (bVar11 = Item_IsTextField(piVar10), bVar11)))) {
-        g_editItem = piVar10;
-        iVar6 = __restgprlr_20(1);
-        return iVar6;
+    else if (*(int *)(iVar7 + 0x10) != 0) {
+      if (*(int *)(iVar7 + 0x10) <= (int)puVar2[*piVar6 + 0x5f]) {
+        if (((*(int *)(iVar7 + 0x14) != 0) &&
+            (iVar7 = Menu_SetNextCursorItem(piVar6,puVar2[0x4d]), iVar7 != 0)) &&
+           (cVar11 = Item_IsTextField(), cVar11 != '\0')) {
+          DAT_8400c16c = iVar7;
+          __restgprlr_20(1);
+          return;
+        }
+        goto LAB_825d08c8;
       }
-      goto LAB_825d08c8;
     }
-    pcVar7 = param_2->localVar;
-    local_870[param_2->cursorPos[pUVar3->localClientNum]] = (char)uVar8;
-    if (pcVar7 == (char *)0x0) {
-      Dvar_SetFromStringByName(param_2->dvar,local_870);
-      pcVar7 = Dvar_GetVariantString(param_2->dvar);
-      I_strncpyz(local_870,pcVar7,0x400);
+    uVar8 = puVar2[0x5b];
+    auStack_871[puVar2[*piVar6 + 0x5f] + 1] = (char)iVar9;
+    if (uVar8 == 0) {
+      Dvar_SetFromStringByName(puVar2[0x57],uVar12 - 0x870);
+      uVar5 = Dvar_GetVariantString(puVar2[0x57]);
+      I_strncpyz(uVar12 - 0x870,uVar5,0x400);
     }
     else {
-      if (pUVar5 == (UILocalVar *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1ab1,0
-                        ,"%s");
+      if ((uVar4 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff82170658,0x1ab1,0,0xffffffff82000f98,0xffffffff82173f04);
       }
-      UILocalVar_SetString(pUVar5,local_870);
+      UILocalVar_SetString(uVar4,uVar12 - 0x870);
     }
-    iVar6 = Item_GetCursorPosOffset(pUVar3->localClientNum,param_2,local_870,1);
-    pcVar14 = local_870;
-    param_2->cursorPos[pUVar3->localClientNum] = iVar6;
-    Item_TextField_EnsureCursorVisible(pUVar3->localClientNum,param_2,pcVar14);
-    if (((peVar4->maxChars != 0) && (peVar4->maxChars <= param_2->cursorPos[pUVar3->localClientNum])
-        ) && (peVar4->maxCharsGotoNext != 0)) {
-      piVar10 = Menu_SetNextCursorItem(pUVar3,param_2->parent,(ItemFocusReason)pcVar14);
-      piVar10->cursorPos[pUVar3->localClientNum] = 0;
-      if ((piVar10 != (itemDef_t *)0x0) && (bVar11 = Item_IsTextField(piVar10), bVar11)) {
-        g_editItem = piVar10;
+    uVar8 = Item_GetCursorPosOffset(*piVar6,param_2,uVar12 - 0x870,1);
+    puVar2[*piVar6 + 0x5f] = uVar8;
+    Item_TextField_EnsureCursorVisible(*piVar6,param_2,uVar12 - 0x870);
+    if (*(int *)(iVar7 + 0x10) != 0) {
+      if ((*(int *)(iVar7 + 0x10) <= (int)puVar2[*piVar6 + 0x5f]) && (*(int *)(iVar7 + 0x14) != 0))
+      {
+        iVar7 = Menu_SetNextCursorItem(piVar6,puVar2[0x4d]);
+        *(undefined4 *)((*piVar6 + 0x5f) * 4 + iVar7) = 0;
+        if ((iVar7 != 0) && (cVar11 = Item_IsTextField(), cVar11 != '\0')) {
+          DAT_8400c16c = iVar7;
+        }
       }
     }
   }
-  if (uVar8 == 9) {
-    iVar6 = Key_IsDown(LOCAL_CLIENT_0,0xa0);
-    if (iVar6 == 0) {
+  if (iVar9 == 9) {
+    iVar7 = Key_IsDown(0,0xa0);
+    if (iVar7 == 0) {
 LAB_825d06f0:
-      piVar10 = Menu_SetNextCursorItem(pUVar3,param_2->parent,(ItemFocusReason)pcVar14);
+      iVar7 = Menu_SetNextCursorItem(piVar6,puVar2[0x4d]);
     }
     else {
 LAB_825d0660:
-      piVar10 = Menu_SetPrevCursorItem(pUVar3,param_2->parent,(ItemFocusReason)pcVar14);
+      iVar7 = Menu_SetPrevCursorItem(piVar6,puVar2[0x4d]);
     }
-    if ((piVar10 != (itemDef_t *)0x0) && (bVar11 = Item_IsTextField(piVar10), bVar11)) {
-      g_editItem = piVar10;
+    if ((iVar7 != 0) && (cVar11 = Item_IsTextField(), cVar11 != '\0')) {
+      DAT_8400c16c = iVar7;
     }
   }
   else {
-    if ((uVar8 == 0x9a) || (uVar8 == 0xb7)) goto LAB_825d0660;
-    if ((uVar8 == 0x9b) || (uVar8 == 0xbd)) goto LAB_825d06f0;
+    if ((iVar9 == 0x9a) || (iVar9 == 0xb7)) goto LAB_825d0660;
+    if ((iVar9 == 0x9b) || (iVar9 == 0xbd)) goto LAB_825d06f0;
   }
-  if (((uVar8 == 0xd) || (uVar8 == 0xbf)) && (param_2->accept != (MenuEventHandlerSet *)0x0)) {
-    if ((uiscript_verbose->current).enabled != false) {
-      Com_Printf(0xd,"UISCRIPT - Calling accept() - Item is \'%s\', parent menu is \'%s\'\n");
+  if (((iVar9 == 0xd) || (iVar9 == 0xbf)) && (puVar2[0x53] != 0)) {
+    if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+      if (puVar2[0x4d] == 0) {
+        uVar12 = 0xffffffff82170938;
+      }
+      else {
+        uVar12 = (ulonglong)*(uint *)(puVar2[0x4d] + 4);
+      }
+      uVar4 = (ulonglong)*puVar2;
+      if (uVar4 == 0) {
+        uVar4 = 0xffffffff82170928;
+      }
+      Com_Printf(0xd,0xffffffff82173e90,uVar4,uVar12);
     }
-    Item_HandleEvent(pUVar3,param_2,param_2->accept);
+    Item_HandleEvent(piVar6,param_2,puVar2[0x53]);
   }
-  if (((uVar8 == 0xd) || (uVar8 == 0xbf)) || (uVar8 == 0x1b)) {
-    iVar6 = __restgprlr_20(0);
-    return iVar6;
+  if (((iVar9 == 0xd) || (iVar9 == 0xbf)) || (iVar9 == 0x1b)) {
+    __restgprlr_20(0);
+    return;
   }
 LAB_825d08c8:
-  iVar6 = __restgprlr_20(1);
-  return iVar6;
+  __restgprlr_20(1);
+  return;
 }
 
 
 // 825C3590  Item_Slider_IsLeftKey  (ui/ui_shared.cpp:7199)
 
-bool Item_Slider_IsLeftKey(int param_1)
+undefined8 Item_Slider_IsLeftKey(int param_1)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   
   if ((param_1 != 0x16) && (param_1 != 0x1e)) {
-    if ((param_1 == 0x9c) || (bVar1 = false, param_1 == 0xa4)) {
-      bVar1 = true;
+    if ((param_1 == 0x9c) || (uVar1 = 0, param_1 == 0xa4)) {
+      uVar1 = 1;
     }
-    return bVar1;
+    return uVar1;
   }
-  return true;
+  return 1;
 }
 
 
 // 825C35C8  Item_Slider_IsRightKey  (ui/ui_shared.cpp:7209)
 
-bool Item_Slider_IsRightKey(int param_1)
+undefined8 Item_Slider_IsRightKey(int param_1)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   
   if ((param_1 != 0x17) && (param_1 != 0x1f)) {
-    if ((param_1 == 0x9d) || (bVar1 = false, param_1 == 0xa3)) {
-      bVar1 = true;
+    if ((param_1 == 0x9d) || (uVar1 = 0, param_1 == 0xa3)) {
+      uVar1 = 1;
     }
-    return bVar1;
+    return uVar1;
   }
-  return true;
+  return 1;
 }
 
 
 // 825C3600  Item_Slider_HandleKey  (ui/ui_shared.cpp:7219)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Item_Slider_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3,int param_4)
+void Item_Slider_HandleKey(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
-  itemDef_t *piVar1;
-  LocalClientNum_t *pLVar2;
-  bool bVar6;
-  editFieldDef_s *peVar3;
-  char *pcVar4;
-  int iVar5;
-  longlong lVar7;
-  longlong lVar8;
+  int iVar1;
+  bool bVar2;
+  undefined4 *puVar4;
+  char cVar6;
+  float *pfVar5;
+  char *_String;
+  undefined8 uVar3;
+  double dVar7;
+  double dVar8;
   double dVar9;
   
-  lVar8 = (longlong)param_3;
-  lVar7 = (longlong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_26(param_1,lVar7,lVar8,param_4);
-  piVar1 = (itemDef_t *)lVar7;
-  if (((piVar1->dvar != (char *)0x0) && (bVar6 = Window_HasFocus(*pLVar2,&piVar1->window), bVar6))
-     && (peVar3 = Item_GetEditFieldDef(piVar1), peVar3 != (editFieldDef_s *)0x0)) {
-    dVar9 = 0.0;
-    if (peVar3->stepVal <= 0.0) {
-      if (ui_sliderSteps == (dvar_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1c50,0
-                        ,"%s");
+  puVar4 = (undefined4 *)__savegprlr_26();
+  iVar1 = (int)param_2;
+  if (((*(int *)(iVar1 + 0x15c) != 0) && (cVar6 = Window_HasFocus(*puVar4), cVar6 != '\0')) &&
+     (pfVar5 = (float *)Item_GetEditFieldDef(param_2), pfVar5 != (float *)0x0)) {
+    dVar9 = (double)pfVar5[2];
+    dVar8 = 0.0;
+    if (dVar9 <= 0.0) {
+      if (DAT_83f71ecc == 0) {
+        MyAssertHandler(0xffffffff82170658,0x1c50,0,0xffffffff82000f98,0xffffffff8216ac84);
       }
-      if ((double)(ui_sliderSteps->current).value <= dVar9) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1c51,0
-                        ,"%s");
+      if ((double)*(float *)(DAT_83f71ecc + 0xc) <= dVar8) {
+        MyAssertHandler(0xffffffff82170658,0x1c51,0,0xffffffff82000f98,0xffffffff82172530);
       }
+      dVar9 = (double)((1.0 / *(float *)(DAT_83f71ecc + 0xc)) * (pfVar5[1] - *pfVar5));
     }
-    pcVar4 = Dvar_GetVariantString(piVar1->dvar);
-    atof(pcVar4);
-    iVar5 = (int)lVar8;
-    if ((iVar5 == 0x16) || (iVar5 == 0x1e)) {
-      bVar6 = true;
+    _String = (char *)Dvar_GetVariantString(*(undefined4 *)(iVar1 + 0x15c));
+    dVar8 = atof(_String);
+    if ((param_3 == 0x16) || (param_3 == 0x1e)) {
+      bVar2 = true;
     }
-    else if ((iVar5 == 0x9c) || (bVar6 = false, iVar5 == 0xa4)) {
-      bVar6 = true;
+    else if ((param_3 == 0x9c) || (bVar2 = false, param_3 == 0xa4)) {
+      bVar2 = true;
     }
-    if (bVar6) {
-      pcVar4 = va("%g");
-      Dvar_SetFromStringByName(piVar1->dvar,pcVar4);
-      iVar5 = __restgprlr_26(1);
-      return iVar5;
+    if (bVar2) {
+      dVar7 = (double)*pfVar5;
+      dVar8 = (double)(float)((double)(float)dVar8 - dVar9);
+      if ((double)pfVar5[1] <= dVar7) {
+        dVar9 = dVar7 - dVar8;
+      }
+      else {
+        dVar9 = dVar8 - dVar7;
+      }
+      if ((float)dVar9 < 0.0) {
+        dVar8 = dVar7;
+      }
+      uVar3 = va(0xffffffff820181dc,dVar8);
+      Dvar_SetFromStringByName(*(undefined4 *)(iVar1 + 0x15c),uVar3);
+      __restgprlr_26(1);
+      return;
     }
-    if ((iVar5 == 0x17) || (iVar5 == 0x1f)) {
-      bVar6 = true;
+    if ((param_3 == 0x17) || (param_3 == 0x1f)) {
+      bVar2 = true;
     }
-    else if ((iVar5 == 0x9d) || (bVar6 = false, iVar5 == 0xa3)) {
-      bVar6 = true;
+    else if ((param_3 == 0x9d) || (bVar2 = false, param_3 == 0xa3)) {
+      bVar2 = true;
     }
-    if (bVar6) {
-      pcVar4 = va("%g");
-      Dvar_SetFromStringByName(piVar1->dvar,pcVar4);
-      iVar5 = __restgprlr_26(1);
-      return iVar5;
+    if (bVar2) {
+      dVar7 = (double)pfVar5[1];
+      dVar8 = (double)(float)((double)(float)dVar8 + dVar9);
+      if (dVar7 <= (double)*pfVar5) {
+        dVar9 = dVar8 - dVar7;
+      }
+      else {
+        dVar9 = dVar7 - dVar8;
+      }
+      if ((float)dVar9 < 0.0) {
+        dVar8 = dVar7;
+      }
+      uVar3 = va(0xffffffff820181dc,dVar8);
+      Dvar_SetFromStringByName(*(undefined4 *)(iVar1 + 0x15c),uVar3);
+      __restgprlr_26(1);
+      return;
     }
   }
-  iVar5 = __restgprlr_26(0);
-  return iVar5;
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 825D08D8  Item_HandleKey  (ui/ui_shared.cpp:7280)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Item_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3,int param_4)
+undefined8 Item_HandleKey(undefined8 param_1,int param_2,undefined8 param_3,int param_4)
 
 {
-  int iVar1;
-  int in_r7;
+  undefined8 uVar1;
   
   if (param_4 != 0) {
-    switch(param_2->type) {
+    switch(*(undefined4 *)(param_2 + 0x100)) {
     case 6:
-      iVar1 = Item_ListBox_HandleKey(param_1,param_2,param_3,0,in_r7);
-      return iVar1;
+      uVar1 = Item_ListBox_HandleKey(param_1,param_2,param_3,0);
+      return uVar1;
     case 8:
-      iVar1 = UI_OwnerDrawHandleKey
-                        ((param_2->window).ownerDraw,(param_2->window).ownerDrawFlags,
-                         &param_2->special,param_3);
-      return iVar1;
+      uVar1 = UI_OwnerDrawHandleKey
+                        (*(undefined4 *)(param_2 + 0x38),*(undefined4 *)(param_2 + 0x3c),
+                         param_2 + 0x178,param_3);
+      return uVar1;
     case 10:
-      iVar1 = Item_Slider_HandleKey(param_1,param_2,param_3,param_4);
-      return iVar1;
+      uVar1 = Item_Slider_HandleKey(param_1,param_2);
+      return uVar1;
     case 0xb:
-      iVar1 = Item_YesNo_HandleKey(param_1,param_2,param_3);
-      return iVar1;
+      uVar1 = Item_YesNo_HandleKey(param_1,param_2);
+      return uVar1;
     case 0xc:
-      iVar1 = Item_Multi_HandleKey(param_1,param_2,param_3);
-      return iVar1;
+      uVar1 = Item_Multi_HandleKey(param_1,param_2);
+      return uVar1;
     case 0xd:
-      iVar1 = Item_DvarEnum_HandleKey(param_1,param_2,param_3);
-      return iVar1;
+      uVar1 = Item_DvarEnum_HandleKey(param_1,param_2);
+      return uVar1;
     case 0xe:
-      iVar1 = Item_Bind_HandleKey(param_1,param_2,param_3,param_4);
-      return iVar1;
+      uVar1 = Item_Bind_HandleKey(param_1,param_2);
+      return uVar1;
     }
   }
   return 0;
@@ -10397,19 +8878,27 @@ int Item_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3,int param_4
 
 // 825C3850  Item_Action  (ui/ui_shared.cpp:7337)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Item_Action(UiContext *param_1,itemDef_t *param_2)
+void Item_Action(undefined8 param_1,uint *param_2)
 
 {
-  if (param_2 != (itemDef_t *)0x0) {
-    if ((uiscript_verbose->current).enabled != false) {
-      Com_Printf(0xd,"UISCRIPT - Calling action() - Item is \'%s\', parent menu is \'%s\'\n");
+  ulonglong uVar1;
+  ulonglong uVar2;
+  
+  if (param_2 != (uint *)0x0) {
+    if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+      if (param_2[0x4d] == 0) {
+        uVar2 = 0xffffffff82170938;
+      }
+      else {
+        uVar2 = (ulonglong)*(uint *)(param_2[0x4d] + 4);
+      }
+      uVar1 = (ulonglong)*param_2;
+      if (uVar1 == 0) {
+        uVar1 = 0xffffffff82170928;
+      }
+      Com_Printf(0xd,0xffffffff82172558,uVar1,uVar2);
     }
-    Item_HandleEvent(param_1,param_2,param_2->action);
+    Item_HandleEvent(param_1,param_2,param_2[0x52]);
   }
   return;
 }
@@ -10417,35 +8906,22 @@ void Item_Action(UiContext *param_1,itemDef_t *param_2)
 
 // 825C38F0  Item_RunHasFocus  (ui/ui_shared.cpp:7350)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Item_RunHasFocus(UiContext *param_1,itemDef_t *param_2)
+void Item_RunHasFocus(undefined8 param_1,ulonglong param_2)
 
 {
-  itemDef_t *piVar1;
-  UiContext *pUVar2;
-  bool bVar3;
-  ulonglong uVar4;
+  undefined4 *puVar1;
+  char cVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1cb7,0,
-                    "%s");
+  puVar1 = (undefined4 *)__savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x1cb7,0,0xffffffff82000f98,0xffffffff8200e050);
   }
-  if (pUVar2 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1cb8,0,
-                    "%s");
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x1cb8,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  piVar1 = (itemDef_t *)uVar4;
-  if (piVar1->hasFocus != (MenuEventHandlerSet *)0x0) {
-    bVar3 = Window_HasFocus(pUVar2->localClientNum,&piVar1->window);
-    if (bVar3) {
-      Item_HandleEvent(pUVar2,piVar1,piVar1->hasFocus);
-    }
+  if ((*(int *)((int)param_2 + 0x154) != 0) &&
+     (cVar2 = Window_HasFocus(*puVar1,param_2), cVar2 != '\0')) {
+    Item_HandleEvent(puVar1,param_2,*(undefined4 *)((int)param_2 + 0x154));
   }
   __restgprlr_28();
   return;
@@ -10454,202 +8930,148 @@ void Item_RunHasFocus(UiContext *param_1,itemDef_t *param_2)
 
 // 825CC080  Menu_SetPrevCursorItem  (ui/ui_shared.cpp:7362)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-itemDef_t * Menu_SetPrevCursorItem(UiContext *param_1,menuDef_t *param_2,ItemFocusReason param_3)
+void Menu_SetPrevCursorItem(undefined8 param_1,undefined8 param_2)
 
 {
-  LocalClientNum_t LVar1;
-  uint uVar2;
-  int iVar3;
-  UiContext *pUVar4;
-  int iVar5;
-  itemDef_t *piVar6;
-  longlong lVar7;
-  menuDef_t *pmVar8;
-  ulonglong uVar9;
-  ulonglong uVar11;
-  double extraout_f1;
-  double dVar12;
-  double in_f2;
-  float fVar13;
-  float fVar14;
-  uint uVar10;
+  uint uVar1;
+  int iVar2;
+  uint *puVar3;
+  int iVar4;
+  int *piVar5;
+  uint uVar7;
+  ulonglong uVar6;
   
-  lVar7 = (longlong)(int)param_2;
-  pUVar4 = (UiContext *)__savegprlr_25(param_1,lVar7,param_3);
-  LVar1 = pUVar4->localClientNum;
-  dVar12 = extraout_f1;
-  if (LOCAL_CLIENT_3 < LVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x2e,0,
-                    "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
-    ;
+  puVar3 = (uint *)__savegprlr_25();
+  uVar1 = *puVar3;
+  if (3 < uVar1) {
+    MyAssertHandler(0xffffffff82170618,0x2e,0,0xffffffff821649e0,uVar1,4);
   }
-  pmVar8 = (menuDef_t *)lVar7;
-  uVar2 = pmVar8->data->cursorItem[LVar1];
-  uVar10 = uVar2;
-  if (uVar2 == 0xffffffff) {
-    uVar10 = pmVar8->itemCount;
+  piVar5 = (int *)param_2;
+  uVar1 = *(uint *)((uVar1 + 0x1a) * 4 + *piVar5);
+  uVar6 = (ulonglong)uVar1;
+  if (uVar1 == 0xffffffff) {
+    uVar6 = (ulonglong)(uint)piVar5[0x2d];
   }
-  uVar11 = (ulonglong)uVar10;
-  while (-1 < (int)uVar10) {
-    uVar11 = uVar11 - 1;
-    if ((longlong)uVar11 < 0) {
-      if ((int)uVar2 < 0) break;
-      uVar11 = (ulonglong)(uint)pmVar8->itemCount - 1;
+  uVar7 = (uint)uVar6;
+  while (-1 < (int)uVar7) {
+    uVar6 = uVar6 - 1;
+    if ((longlong)uVar6 < 0) {
+      if ((int)uVar1 < 0) break;
+      uVar6 = (ulonglong)(uint)piVar5[0x2d] - 1;
     }
-    if ((ulonglong)(uint)pmVar8->itemCount <= (uVar11 & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1cda,0,
-                      "currentCursor doesn\'t index menu->itemCount\n\t%i not in [0, %i)");
+    if ((ulonglong)(uint)piVar5[0x2d] <= (uVar6 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82170658,0x1cda,0,0xffffffff82173760,uVar6);
     }
-    uVar10 = (uint)uVar11;
-    uVar9 = uVar11;
-    Menu_SetCursorItem(pUVar4->localClientNum,pmVar8,uVar10);
-    if (uVar10 == uVar2) {
-      if ((int)uVar2 < 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1ce0,0
-                        ,"%s");
+    Menu_SetCursorItem(*puVar3,param_2,uVar6);
+    uVar7 = (uint)uVar6;
+    if (uVar7 == uVar1) {
+      if ((int)uVar1 < 0) {
+        MyAssertHandler(0xffffffff82170658,0x1ce0,0,0xffffffff82000f98,0xffffffff82173740);
       }
-      piVar6 = (itemDef_t *)__restgprlr_25(pmVar8->items[uVar2]);
-      return piVar6;
+      __restgprlr_25(*(undefined4 *)(piVar5[0x2e] + uVar1 * 4));
+      return;
     }
-    iVar3 = (int)((uVar11 & 0xffffffff) << 2);
-    fVar13 = (float)in_f2;
-    in_f2 = (double)fVar13;
-    fVar14 = (float)dVar12;
-    dVar12 = (double)fVar14;
-    iVar5 = Item_SetFocus(pUVar4,*(itemDef_t **)((int)pmVar8->items + iVar3),fVar14,fVar13,
-                          (ItemFocusReason)uVar9);
-    if (iVar5 != 0) {
-      piVar6 = (itemDef_t *)__restgprlr_25(*(undefined4 *)((int)pmVar8->items + iVar3));
-      return piVar6;
+    iVar2 = (int)((uVar6 & 0xffffffff) << 2);
+    iVar4 = Item_SetFocus(puVar3,*(undefined4 *)(piVar5[0x2e] + iVar2));
+    if (iVar4 != 0) {
+      __restgprlr_25(*(undefined4 *)(piVar5[0x2e] + iVar2));
+      return;
     }
   }
-  if (uVar2 != 0xffffffff) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1ce8,0,
-                    "%s");
+  if (uVar1 != 0xffffffff) {
+    MyAssertHandler(0xffffffff82170658,0x1ce8,0,0xffffffff82000f98,0xffffffff82173750);
   }
-  Menu_SetCursorItem(pUVar4->localClientNum,pmVar8,uVar2);
-  piVar6 = (itemDef_t *)__restgprlr_25(0);
-  return piVar6;
+  Menu_SetCursorItem(*puVar3,param_2,(ulonglong)uVar1);
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 825CC208  Menu_SetNextCursorItem  (ui/ui_shared.cpp:7408)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-itemDef_t * Menu_SetNextCursorItem(UiContext *param_1,menuDef_t *param_2,ItemFocusReason param_3)
+void Menu_SetNextCursorItem(undefined8 param_1,undefined8 param_2)
 
 {
-  LocalClientNum_t LVar1;
-  ItemFocusReason IVar2;
-  UiContext *pUVar3;
+  uint uVar1;
+  uint uVar2;
+  uint *puVar3;
   int iVar4;
-  itemDef_t *piVar5;
-  longlong lVar6;
-  menuDef_t *pmVar7;
-  ItemFocusReason IVar8;
-  ItemFocusReason IVar9;
-  double extraout_f1;
-  double dVar10;
-  double in_f2;
-  float fVar11;
-  float fVar12;
+  int *piVar5;
+  uint uVar6;
   
-  lVar6 = (longlong)(int)param_2;
-  pUVar3 = (UiContext *)__savegprlr_25(param_1,lVar6,param_3);
-  LVar1 = pUVar3->localClientNum;
-  dVar10 = extraout_f1;
-  if (LOCAL_CLIENT_3 < LVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x2e,0,
-                    "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
-    ;
+  puVar3 = (uint *)__savegprlr_25();
+  uVar1 = *puVar3;
+  if (3 < uVar1) {
+    MyAssertHandler(0xffffffff82170618,0x2e,0,0xffffffff821649e0,uVar1,4);
   }
-  pmVar7 = (menuDef_t *)lVar6;
-  IVar8 = pmVar7->itemCount;
-  IVar2 = pmVar7->data->cursorItem[LVar1];
-  IVar9 = IVar2;
-  if ((int)IVar2 < (int)IVar8) {
+  piVar5 = (int *)param_2;
+  uVar2 = piVar5[0x2d];
+  uVar1 = *(uint *)((uVar1 + 0x1a) * 4 + *piVar5);
+  uVar6 = uVar1;
+  if ((int)uVar1 < (int)uVar2) {
     do {
-      IVar9 = IVar9 + FOCUS_KEYBOARD;
-      if ((int)IVar8 <= (int)IVar9) {
-        if ((int)IVar2 < 0) break;
-        IVar9 = FOCUS_OTHER;
+      uVar6 = uVar6 + 1;
+      if ((int)uVar2 <= (int)uVar6) {
+        if ((int)uVar1 < 0) break;
+        uVar6 = 0;
       }
-      if (IVar8 <= IVar9) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1d04,0
-                        ,"currentCursor doesn\'t index menu->itemCount\n\t%i not in [0, %i)");
+      if (uVar2 <= uVar6) {
+        MyAssertHandler(0xffffffff82170658,0x1d04,0,0xffffffff82173760,uVar6);
       }
-      IVar8 = IVar9;
-      Menu_SetCursorItem(pUVar3->localClientNum,pmVar7,IVar9);
-      if (IVar9 == IVar2) {
-        if ((int)IVar2 < 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1d0a
-                          ,0,"%s");
+      Menu_SetCursorItem(*puVar3,param_2,uVar6);
+      if (uVar6 == uVar1) {
+        if ((int)uVar1 < 0) {
+          MyAssertHandler(0xffffffff82170658,0x1d0a,0,0xffffffff82000f98,0xffffffff82173740);
         }
-        piVar5 = (itemDef_t *)__restgprlr_25(pmVar7->items[IVar2]);
-        return piVar5;
+        __restgprlr_25(*(undefined4 *)(piVar5[0x2e] + uVar1 * 4));
+        return;
       }
-      fVar11 = (float)dVar10;
-      dVar10 = (double)fVar11;
-      fVar12 = (float)in_f2;
-      in_f2 = (double)fVar12;
-      iVar4 = Item_SetFocus(pUVar3,pmVar7->items[IVar9],fVar11,fVar12,IVar8);
+      iVar4 = Item_SetFocus(puVar3,*(undefined4 *)(piVar5[0x2e] + uVar6 * 4));
       if (iVar4 != 0) {
-        piVar5 = (itemDef_t *)__restgprlr_25(pmVar7->items[IVar9]);
-        return piVar5;
+        __restgprlr_25(*(undefined4 *)(piVar5[0x2e] + uVar6 * 4));
+        return;
       }
-      IVar8 = pmVar7->itemCount;
-    } while ((int)IVar9 < (int)IVar8);
+      uVar2 = piVar5[0x2d];
+    } while ((int)uVar6 < (int)uVar2);
   }
-  if (IVar2 != ~FOCUS_OTHER) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1d12,0,
-                    "%s");
+  if (uVar1 != 0xffffffff) {
+    MyAssertHandler(0xffffffff82170658,0x1d12,0,0xffffffff82000f98,0xffffffff82173750);
   }
-  Menu_SetCursorItem(pUVar3->localClientNum,pmVar7,IVar2);
-  piVar5 = (itemDef_t *)__restgprlr_25(0);
-  return piVar5;
+  Menu_SetCursorItem(*puVar3,param_2,uVar1);
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 825CC388  Menus_RunOnOpenScript  (ui/ui_shared.cpp:7449)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_RunOnOpenScript(UiContext *param_1,menuDef_t *param_2)
+void Menus_RunOnOpenScript(undefined4 *param_1,int *param_2)
 
 {
-  Statement_s *pSVar1;
-  char *pcVar2;
-  itemDef_t iStack_1f0;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined1 auStack_1f0 [308];
+  int *local_bc;
   
-  if (param_1 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1d1c,0,
-                    "%s");
+  if (param_1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x1d1c,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  Transition_ClearTransitions(param_1->localClientNum,param_2);
-  if (param_2->data->onOpen != (MenuEventHandlerSet *)0x0) {
-    memset();
-    iStack_1f0.parent = param_2;
-    if ((uiscript_verbose->current).enabled != false) {
-      Com_Printf(0xd,"UISCRIPT - Calling onOpen() - Menu is \'%s\'\n");
+  Transition_ClearTransitions(*param_1,param_2);
+  if (*(int *)(*param_2 + 0x18) != 0) {
+    memset(auStack_1f0,0,0x1d4);
+    local_bc = param_2;
+    if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+      uVar2 = (ulonglong)(uint)param_2[1];
+      if (uVar2 == 0) {
+        uVar2 = 0xffffffff82170938;
+      }
+      Com_Printf(0xd,0xffffffff821737a0,uVar2);
     }
-    Item_HandleEvent(param_1,&iStack_1f0,param_2->data->onOpen);
+    Item_HandleEvent(param_1,auStack_1f0,*(undefined4 *)(*param_2 + 0x18));
   }
-  pSVar1 = param_2->data->openSoundExp;
-  if (pSVar1 != (Statement_s *)0x0) {
-    pcVar2 = GetExpressionResultString(param_1->localClientNum,pSVar1);
-    SND_PlayLocalSoundAliasByName(param_1->localClientNum,pcVar2,SASYS_UI);
+  if (*(int *)(*param_2 + 0x5c) != 0) {
+    uVar1 = GetExpressionResultString(*param_1);
+    SND_PlayLocalSoundAliasByName(*param_1,uVar1,0);
   }
   return;
 }
@@ -10657,12 +9079,7 @@ void Menus_RunOnOpenScript(UiContext *param_1,menuDef_t *param_2)
 
 // 825C3998  Menus_ResetFxBirthTimeOnItems  (ui/ui_shared.cpp:7473)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_ResetFxBirthTimeOnItems(UiContext *param_1,menuDef_t *param_2)
+void Menus_ResetFxBirthTimeOnItems(undefined8 param_1,int param_2)
 
 {
   int *piVar1;
@@ -10670,139 +9087,125 @@ void Menus_ResetFxBirthTimeOnItems(UiContext *param_1,menuDef_t *param_2)
   int iVar3;
   
   iVar2 = 0;
-  if (param_2->itemCount < 1) {
+  if (*(int *)(param_2 + 0xb4) < 1) {
     return;
   }
   iVar3 = 0;
   do {
     iVar2 = iVar2 + 1;
-    piVar1 = (int *)(iVar3 + (int)param_2->items);
+    piVar1 = (int *)(iVar3 + *(int *)(param_2 + 0xb8));
     iVar3 = iVar3 + 4;
     *(undefined4 *)(*piVar1 + 0x1bc) = 0;
-  } while (iVar2 < param_2->itemCount);
+  } while (iVar2 < *(int *)(param_2 + 0xb4));
   return;
 }
 
 
 // 825CC490  Menus_Open  (ui/ui_shared.cpp:7482)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_Open(UiContext *param_1,menuDef_t *param_2)
+void Menus_Open(undefined8 param_1,longlong param_2)
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
-  Statement_s *pSVar3;
-  UiContext *pUVar4;
-  int *piVar5;
-  longlong lVar6;
-  bool bVar10;
+  uint uVar2;
+  uint *puVar3;
+  int *piVar4;
+  longlong lVar5;
+  char cVar8;
   int iVar7;
-  int iVar8;
-  char *pcVar9;
-  ItemFocusReason IVar11;
-  int iVar12;
+  ulonglong uVar6;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  int iVar11;
+  int *piVar12;
   longlong lVar13;
   longlong lVar14;
   
-  lVar6 = __savegprlr_17(param_1);
-  iVar7 = 0;
-  bVar10 = Sys_IsMainThread();
-  if (bVar10) {
-    iVar7 = R_PopRemoteScreenUpdate();
+  lVar5 = __savegprlr_17();
+  uVar10 = 0;
+  cVar8 = Sys_IsMainThread();
+  if (cVar8 != '\0') {
+    uVar10 = R_PopRemoteScreenUpdate();
   }
-  iVar8 = Menu_CanHaveFocus(param_2);
-  pUVar4 = (UiContext *)lVar6;
-  if (iVar8 == 0) {
-    IVar11 = 4;
+  iVar7 = Menu_CanHaveFocus(param_2);
+  puVar3 = (uint *)lVar5;
+  if (iVar7 == 0) {
+    uVar9 = 4;
   }
   else {
-    lVar14 = (ulonglong)(uint)pUVar4->openMenuCount - 1;
+    lVar14 = (ulonglong)puVar3[0x29e] - 1;
     if (-1 < lVar14) {
-      lVar13 = ((ulonglong)(uint)pUVar4->openMenuCount + 0x28e & 0x3fffffff) * 4 + lVar6;
+      lVar13 = ((ulonglong)puVar3[0x29e] + 0x28e & 0x3fffffff) * 4 + lVar5;
       do {
         lVar13 = lVar13 + -4;
-        Menu_LoseFocusDueToOpen(pUVar4,(menuDef_t *)*(undefined4 *)lVar13);
+        Menu_LoseFocusDueToOpen(lVar5,*(undefined4 *)lVar13);
         lVar14 = lVar14 + -1;
       } while (-1 < lVar14);
     }
-    iVar12 = 0;
-    if (0 < pUVar4->menuCount) {
-      lVar6 = lVar6 + 0x34;
+    iVar11 = 0;
+    if (0 < (int)puVar3[0x28d]) {
+      lVar14 = lVar5 + 0x34;
       do {
-        iVar1 = *(int *)lVar6;
-        LVar2 = pUVar4->localClientNum;
-        if (LOCAL_CLIENT_3 < LVar2) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",
-                          0x21,0,
-                          "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                         );
+        piVar12 = (int *)lVar14;
+        iVar1 = *piVar12;
+        uVar2 = *puVar3;
+        if (3 < uVar2) {
+          MyAssertHandler(0xffffffff82170618,0x21,0,0xffffffff821649e0,uVar2,4);
         }
-        if ((*(uint *)((LVar2 + 0x12) * 4 + iVar1 + 4) & 2) != 0) {
-          Com_PrintError(0xd,"window \'%s\' has focus when it shouldn\'t\n");
+        if ((*(uint *)((uVar2 + 0x12) * 4 + iVar1 + 4) & 2) != 0) {
+          Com_PrintError(0xd,0xffffffff821737cc,*(undefined4 *)(*piVar12 + 4));
         }
-        iVar1 = *(int *)lVar6;
-        LVar2 = pUVar4->localClientNum;
-        if (LOCAL_CLIENT_3 < LVar2) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",
-                          0x21,0,
-                          "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                         );
+        iVar1 = *piVar12;
+        uVar2 = *puVar3;
+        if (3 < uVar2) {
+          MyAssertHandler(0xffffffff82170618,0x21,0,0xffffffff821649e0,uVar2,4);
         }
-        if ((*(uint *)((LVar2 + 0x12) * 4 + iVar1 + 4) & 2) != 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1d50
-                          ,0,"%s");
+        if ((*(uint *)((uVar2 + 0x12) * 4 + iVar1 + 4) & 2) != 0) {
+          MyAssertHandler(0xffffffff82170658,0x1d50,0,0xffffffff82000f98,0xffffffff821737f8);
         }
-        iVar12 = iVar12 + 1;
-        lVar6 = lVar6 + 4;
-      } while (iVar12 < pUVar4->menuCount);
+        iVar11 = iVar11 + 1;
+        lVar14 = lVar14 + 4;
+      } while (iVar11 < (int)puVar3[0x28d]);
     }
-    IVar11 = 6;
+    uVar9 = 6;
   }
-  Window_AddDynamicFlags(pUVar4->localClientNum,&param_2->window,IVar11);
-  Menus_AddToOpenStack(pUVar4,param_2);
-  if (iVar8 != 0) {
-    Menu_CallOnFocusDueToOpen(pUVar4,param_2);
+  Window_AddDynamicFlags(*puVar3,param_2 + 4,uVar9);
+  Menus_AddToOpenStack(lVar5,param_2);
+  if (iVar7 != 0) {
+    Menu_CallOnFocusDueToOpen(lVar5,param_2);
   }
-  iVar8 = 0;
-  if (0 < param_2->itemCount) {
-    iVar12 = 0;
+  piVar12 = (int *)param_2;
+  iVar7 = 0;
+  if (0 < piVar12[0x2d]) {
+    iVar11 = 0;
     do {
-      iVar8 = iVar8 + 1;
-      piVar5 = (int *)(iVar12 + (int)param_2->items);
-      iVar12 = iVar12 + 4;
-      *(undefined4 *)(*piVar5 + 0x1bc) = 0;
-    } while (iVar8 < param_2->itemCount);
+      iVar7 = iVar7 + 1;
+      piVar4 = (int *)(iVar11 + piVar12[0x2e]);
+      iVar11 = iVar11 + 4;
+      *(undefined4 *)(*piVar4 + 0x1bc) = 0;
+    } while (iVar7 < piVar12[0x2d]);
   }
-  LVar2 = pUVar4->localClientNum;
-  if (LOCAL_CLIENT_3 < LVar2) {
-    IVar11 = FOCUS_OTHER;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x2e,0,
-                    "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
-    ;
+  uVar2 = *puVar3;
+  if (3 < uVar2) {
+    MyAssertHandler(0xffffffff82170618,0x2e,0,0xffffffff821649e0,uVar2,4);
   }
-  if (param_2->data->cursorItem[LVar2] == -1) {
-    Menu_SetNextCursorItem(pUVar4,param_2,IVar11);
+  if (*(int *)((uVar2 + 0x1a) * 4 + *piVar12) == -1) {
+    Menu_SetNextCursorItem(lVar5,param_2);
   }
-  Menu_InitItems(pUVar4,param_2);
-  Menus_RunOnOpenScript(pUVar4,param_2);
-  pSVar3 = param_2->data->soundLoopExp;
-  if (pSVar3 == (Statement_s *)0x0) {
-    pcVar9 = param_2->data->soundName;
-    if (pcVar9 == (char *)0x0) goto LAB_825cc720;
+  Menu_InitItems(lVar5,param_2);
+  Menus_RunOnOpenScript(lVar5,param_2);
+  if (*(int *)(*piVar12 + 100) == 0) {
+    uVar6 = (ulonglong)*(uint *)(*piVar12 + 0x38);
+    if (uVar6 == 0) goto LAB_825cc720;
   }
   else {
-    pcVar9 = GetExpressionResultString(pUVar4->localClientNum,pSVar3);
+    uVar6 = GetExpressionResultString(*puVar3);
   }
-  SND_PlayLocalSoundAliasByName(pUVar4->localClientNum,pcVar9,SASYS_UI);
+  SND_PlayLocalSoundAliasByName(*puVar3,uVar6,0);
 LAB_825cc720:
-  bVar10 = Sys_IsMainThread();
-  if (bVar10) {
-    R_PushRemoteScreenUpdate(iVar7);
+  cVar8 = Sys_IsMainThread();
+  if (cVar8 != '\0') {
+    R_PushRemoteScreenUpdate(uVar10);
   }
   __restgprlr_17();
   return;
@@ -10811,50 +9214,45 @@ LAB_825cc720:
 
 // 825CC740  Menus_OpenByName  (ui/ui_shared.cpp:7548)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Menus_OpenByName(UiContext *param_1,char *param_2)
+bool Menus_OpenByName(undefined8 param_1,undefined8 param_2)
 
 {
-  menuDef_t *pmVar1;
+  bool bVar1;
+  ulonglong uVar2;
   
-  pmVar1 = Menus_FindByName(param_1,param_2);
-  if (pmVar1 == (menuDef_t *)0x0) {
-    Com_PrintWarning(0xd,"Could not find menu \'%s\'\n");
+  uVar2 = Menus_FindByName();
+  bVar1 = (uVar2 & 0xffffffff) == 0;
+  if (bVar1) {
+    Com_PrintWarning(0xd,0xffffffff82173858,param_2);
   }
   else {
-    Menus_Open(param_1,pmVar1);
+    Menus_Open(param_1,uVar2);
   }
-  return (int)(pmVar1 != (menuDef_t *)0x0);
+  return !bVar1;
 }
 
 
 // 825C39D8  Menus_PrintAllLoadedMenus  (ui/ui_shared.cpp:7565)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menus_PrintAllLoadedMenus(UiContext *param_1)
+void Menus_PrintAllLoadedMenus(void)
 
 {
   int iVar1;
-  int iVar2;
+  int *piVar2;
+  longlong lVar3;
   
-  iVar1 = __savegprlr_28(param_1);
-  Com_Printf(0x10,"Currently loaded UI menus (CG menus not included):\n");
-  iVar2 = 0;
+  iVar1 = __savegprlr_28();
+  Com_Printf(0x10,0xffffffff821725b8);
+  lVar3 = 0;
   if (0 < *(int *)(iVar1 + 0xa34)) {
+    piVar2 = (int *)(iVar1 + 0x30);
     do {
-      Com_Printf(0x10,"%i. %s\n");
-      iVar2 = iVar2 + 1;
-    } while (iVar2 < *(int *)(iVar1 + 0xa34));
+      piVar2 = piVar2 + 1;
+      Com_Printf(0x10,0xffffffff821725b0,lVar3,*(undefined4 *)(*piVar2 + 4));
+      lVar3 = lVar3 + 1;
+    } while ((int)lVar3 < *(int *)(iVar1 + 0xa34));
   }
-  Com_Printf(0x10,"\n%i menus total\n");
+  Com_Printf(0x10,0xffffffff8217259c);
   __restgprlr_28();
   return;
 }
@@ -10862,363 +9260,322 @@ void Menus_PrintAllLoadedMenus(UiContext *param_1)
 
 // 825C3A58  Item_CorrectedTextRect  (ui/ui_shared.cpp:7659)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-rectDef_s * Item_CorrectedTextRect(LocalClientNum_t param_1,itemDef_t *param_2)
+undefined8 Item_CorrectedTextRect(undefined8 param_1,int param_2)
 
 {
-  rectDef_s *prVar1;
-  uiErrorAction_t *puVar2;
-  uchar *puVar3;
+  int iVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
   longlong lVar4;
   
-  rect.x = 0.0;
-  rect.y = 0.0;
-  rect.w = 0.0;
-  rect.h = 0.0;
-  rect.horzAlign = '\0';
-  rect.vertAlign = '\0';
-  rect._18_2_ = 0;
-  if (param_2 != (itemDef_t *)0x0) {
-    prVar1 = Item_GetTextRect(param_1,param_2);
-    puVar2 = &g_errorAction;
-    puVar3 = &prVar1[-1].horzAlign;
+  DAT_8400c174 = 0;
+  DAT_8400c178 = 0.0;
+  DAT_8400c17c = 0.0;
+  DAT_8400c180 = 0.0;
+  DAT_8400c184 = 0;
+  if (param_2 != 0) {
+    iVar1 = Item_GetTextRect();
+    puVar2 = &DAT_8400c170;
+    puVar3 = (undefined4 *)(iVar1 + -4);
     lVar4 = 5;
     do {
-      puVar3 = puVar3 + 4;
+      puVar3 = puVar3 + 1;
       puVar2 = puVar2 + 1;
-      *puVar2 = *(uiErrorAction_t *)puVar3;
+      *puVar2 = *puVar3;
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
-    if (rect.w != 0.0) {
-      rect.y = rect.y - rect.h;
-      return &rect;
+    if (DAT_8400c17c != 0.0) {
+      DAT_8400c178 = DAT_8400c178 - DAT_8400c180;
+      return 0xffffffff8400c174;
     }
   }
-  return &rect;
+  return 0xffffffff8400c174;
 }
 
 
 // 825C3B08  Menu_CheckOnKey  (ui/ui_shared.cpp:7679)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Menu_CheckOnKey(UiContext *param_1,menuDef_t *param_2,int param_3)
+void Menu_CheckOnKey(undefined8 param_1,int *param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  itemDef_t *piVar2;
-  UiContext *pUVar3;
-  bool bVar6;
-  int iVar4;
+  uint uVar1;
+  int iVar2;
+  bool bVar3;
+  uint *puVar4;
+  char cVar6;
   int iVar5;
-  ItemKeyHandler *pIVar7;
+  int *piVar7;
   int iVar8;
-  itemDef_t iStack_240;
+  int iVar9;
+  undefined1 auStack_240 [308];
+  int *local_10c;
   
-  pUVar3 = (UiContext *)__savegprlr_21(param_1);
-  memset();
-  for (pIVar7 = param_2->data->onKey; pIVar7 != (ItemKeyHandler *)0x0; pIVar7 = pIVar7->next) {
-    if (pIVar7->key == param_3) {
+  puVar4 = (uint *)__savegprlr_21();
+  memset(auStack_240,0,0x1d4);
+  for (piVar7 = *(int **)(*param_2 + 0x2c); piVar7 != (int *)0x0; piVar7 = (int *)piVar7[2]) {
+    if (*piVar7 == param_3) {
 LAB_825c3c58:
-      iStack_240.parent = param_2;
-      Item_HandleEvent(pUVar3,&iStack_240,pIVar7->action);
-      iVar5 = __restgprlr_21(1);
-      return iVar5;
+      local_10c = param_2;
+      Item_HandleEvent(puVar4,auStack_240,piVar7[1]);
+      __restgprlr_21(1);
+      return;
     }
   }
-  iVar5 = 0;
-  if (0 < param_2->itemCount) {
-    iVar8 = 0;
+  iVar8 = 0;
+  if (0 < param_2[0x2d]) {
+    iVar9 = 0;
     do {
-      LVar1 = pUVar3->localClientNum;
-      piVar2 = *(itemDef_t **)(iVar8 + (int)param_2->items);
-      if (piVar2 == (itemDef_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x54,
-                        0,"%s");
+      uVar1 = *puVar4;
+      iVar2 = *(int *)(iVar9 + param_2[0x2e]);
+      if (iVar2 == 0) {
+        MyAssertHandler(0xffffffff82170618,0x54,0,0xffffffff82000f98,0xffffffff8200fdb4);
       }
-      if (LOCAL_CLIENT_3 < LVar1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,
-                        0,
-                        "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                       );
+      if (3 < uVar1) {
+        MyAssertHandler(0xffffffff82170618,0x21,0,0xffffffff821649e0,uVar1,4);
       }
-      if ((((piVar2->window).dynamicFlags[LVar1] & 4U) != 0) &&
-         (((bVar6 = Window_HasFocus(pUVar3->localClientNum,&piVar2->window), bVar6 ||
-           (((piVar2->window).staticFlags & 0x100000U) != 0)) &&
-          (iVar4 = Item_IsVisible(pUVar3->localClientNum,piVar2), iVar4 != 0)))) {
-        if ((piVar2->disabledExp == (Statement_s *)0x0) ||
-           (bVar6 = IsExpressionTrue(pUVar3->localClientNum,piVar2->disabledExp), !bVar6)) {
-          if ((piVar2->dvarFlags & 3U) != 0) {
-            iVar4 = Item_EnableShowViaDvar(piVar2,1);
-            bVar6 = true;
-            if (iVar4 == 0) goto LAB_825c3ca8;
+      if (((*(uint *)((uVar1 + 0x12) * 4 + iVar2) & 4) != 0) &&
+         (((cVar6 = Window_HasFocus(*puVar4,iVar2), cVar6 != '\0' ||
+           ((*(uint *)(iVar2 + 0x44) & 0x100000) != 0)) &&
+          (iVar5 = Item_IsVisible(*puVar4,iVar2), iVar5 != 0)))) {
+        if ((*(int *)(iVar2 + 0x19c) == 0) || (cVar6 = IsExpressionTrue(*puVar4), cVar6 == '\0')) {
+          if ((*(uint *)(iVar2 + 0x170) & 3) != 0) {
+            iVar5 = Item_EnableShowViaDvar(iVar2,1);
+            bVar3 = true;
+            if (iVar5 == 0) goto LAB_825c3ca8;
           }
-          bVar6 = false;
+          bVar3 = false;
         }
         else {
-          bVar6 = true;
+          bVar3 = true;
         }
 LAB_825c3ca8:
-        if (!bVar6) {
-          for (pIVar7 = piVar2->onKey; pIVar7 != (ItemKeyHandler *)0x0; pIVar7 = pIVar7->next) {
-            if (pIVar7->key == param_3) goto LAB_825c3c58;
+        if (!bVar3) {
+          for (piVar7 = *(int **)(iVar2 + 0x164); piVar7 != (int *)0x0; piVar7 = (int *)piVar7[2]) {
+            if (*piVar7 == param_3) goto LAB_825c3c58;
           }
         }
       }
-      iVar5 = iVar5 + 1;
-      iVar8 = iVar8 + 4;
-    } while (iVar5 < param_2->itemCount);
+      iVar8 = iVar8 + 1;
+      iVar9 = iVar9 + 4;
+    } while (iVar8 < param_2[0x2d]);
   }
-  iVar5 = __restgprlr_21(0);
-  return iVar5;
+  __restgprlr_21(0);
+  return;
 }
 
 
 // 825CC7B0  UI_FindFocusedItem  (ui/ui_shared.cpp:7725)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-itemDef_t * UI_FindFocusedItem(UiContext *param_1)
+void UI_FindFocusedItem(void)
 
 {
-  UiContext *pUVar1;
-  menuDef_t *pmVar2;
-  bool bVar5;
+  undefined4 *puVar1;
+  int iVar2;
+  char cVar4;
   int iVar3;
-  itemDef_t *piVar4;
+  int iVar5;
   int iVar6;
-  int iVar7;
   
-  pUVar1 = (UiContext *)__savegprlr_28(param_1);
-  pmVar2 = Menu_GetFocused(pUVar1);
-  if (pmVar2 != (menuDef_t *)0x0) {
-    iVar6 = 0;
-    if (0 < pmVar2->itemCount) {
-      iVar7 = 0;
+  puVar1 = (undefined4 *)__savegprlr_28();
+  iVar2 = Menu_GetFocused();
+  if (iVar2 != 0) {
+    iVar5 = 0;
+    if (0 < *(int *)(iVar2 + 0xb4)) {
+      iVar6 = 0;
       do {
-        bVar5 = Window_HasFocus(pUVar1->localClientNum,*(windowDef_t **)((int)pmVar2->items + iVar7)
-                               );
-        if ((bVar5) &&
-           (iVar3 = Item_IsVisible(pUVar1->localClientNum,
-                                   *(itemDef_t **)((int)pmVar2->items + iVar7)), iVar3 != 0)) {
-          piVar4 = (itemDef_t *)__restgprlr_28(pmVar2->items[iVar6]);
-          return piVar4;
+        cVar4 = Window_HasFocus(*puVar1,*(undefined4 *)(*(int *)(iVar2 + 0xb8) + iVar6));
+        if ((cVar4 != '\0') &&
+           (iVar3 = Item_IsVisible(*puVar1,*(undefined4 *)(*(int *)(iVar2 + 0xb8) + iVar6)),
+           iVar3 != 0)) {
+          __restgprlr_28(*(undefined4 *)(iVar5 * 4 + *(int *)(iVar2 + 0xb8)));
+          return;
         }
-        iVar6 = iVar6 + 1;
-        iVar7 = iVar7 + 4;
-      } while (iVar6 < pmVar2->itemCount);
+        iVar5 = iVar5 + 1;
+        iVar6 = iVar6 + 4;
+      } while (iVar5 < *(int *)(iVar2 + 0xb4));
     }
   }
-  piVar4 = (itemDef_t *)__restgprlr_28(0);
-  return piVar4;
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 825D09B8  Menu_HandleKey  (ui/ui_shared.cpp:7747)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menu_HandleKey(UiContext *param_1,menuDef_t *param_2,int param_3,int param_4)
+void Menu_HandleKey(undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
 
 {
-  LocalClientNum_t LVar1;
-  UiContext *pUVar3;
+  uint uVar1;
+  uint *puVar3;
   int iVar4;
+  undefined8 uVar2;
   int iVar5;
+  char cVar7;
   int iVar6;
-  bool bVar9;
-  longlong lVar2;
-  itemDef_t *piVar8;
-  ulonglong uVar10;
-  ItemFocusReason IVar12;
-  ulonglong uVar11;
-  ItemFocusReason IVar13;
-  itemDef_t iStack_230;
-  itemDef_t *piVar7;
+  int *piVar8;
+  ulonglong uVar9;
+  int iVar10;
+  int iVar11;
+  undefined1 auStack_230 [308];
+  int *local_fc;
   
-  uVar10 = (ulonglong)param_3;
-  pUVar3 = (UiContext *)__savegprlr_23(param_1);
-  IVar12 = (ItemFocusReason)uVar10;
-  LVar1 = pUVar3->localClientNum;
-  piVar8 = (itemDef_t *)0x0;
-  uVar11 = uVar10;
-  if (LOCAL_CLIENT_3 < LVar1) {
-    uVar11 = 0;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x2e,0,
-                    "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
-    ;
+  puVar3 = (uint *)__savegprlr_23();
+  uVar1 = *puVar3;
+  iVar4 = 0;
+  if (3 < uVar1) {
+    MyAssertHandler(0xffffffff82170618,0x2e,0,0xffffffff821649e0,uVar1,4);
   }
-  if (param_2->data->cursorItem[LVar1] == -1) {
-    Menu_SetNextCursorItem(pUVar3,param_2,(ItemFocusReason)uVar11);
+  piVar8 = (int *)param_2;
+  if (*(int *)((uVar1 + 0x1a) * 4 + *piVar8) == -1) {
+    Menu_SetNextCursorItem(puVar3,param_2);
   }
-  if ((g_waitingForKey != 0) && (param_4 != 0)) {
-    iVar4 = Item_Bind_HandleKey(pUVar3,g_bindItem,IVar12,param_4);
-    __restgprlr_23(iVar4);
+  iVar10 = (int)param_4;
+  if ((DAT_8400c160 != 0) && (iVar10 != 0)) {
+    Item_Bind_HandleKey(puVar3,DAT_8400c168,param_3,param_4);
+    __restgprlr_23();
     return;
   }
-  if (g_editingField == 0) {
-    if ((((param_4 != 0) && ((uVar10 & 0x400) == 0)) &&
-        (param_2->data->allowedBinding != (char *)0x0)) &&
-       ((iVar4 = Key_GetBinding(pUVar3->localClientNum,IVar12), iVar4 != 0 &&
-        (iVar5 = Key_GetBindingForCmd(param_2->data->allowedBinding), iVar4 == iVar5)))) {
-      CL_ExecBinding(pUVar3->localClientNum,iVar4,IVar12);
-      __restgprlr_23();
-      return;
-    }
-  }
-  else if (param_4 != 0) {
-    iVar4 = Item_TextField_HandleKey(pUVar3,g_editItem,IVar12);
-    if (iVar4 == 0) {
-      g_editingField = 0;
-      g_editItem = (itemDef_t *)0x0;
-      __restgprlr_23();
-      return;
-    }
-    goto switchD_825d0c94_caseD_2;
-  }
-  iVar4 = 0;
-  if (0 < param_2->itemCount) {
-    iVar5 = 0;
-    do {
-      iVar6 = Item_IsVisible(pUVar3->localClientNum,*(itemDef_t **)(iVar5 + (int)param_2->items));
-      if ((iVar6 != 0) &&
-         (bVar9 = Window_HasFocus(pUVar3->localClientNum,
-                                  *(windowDef_t **)(iVar5 + (int)param_2->items)), bVar9)) {
-        piVar8 = *(itemDef_t **)(iVar5 + (int)param_2->items);
-      }
-      iVar4 = iVar4 + 1;
-      iVar5 = iVar5 + 4;
-    } while (iVar4 < param_2->itemCount);
-    if (piVar8 == (itemDef_t *)0x0) goto LAB_825d0b84;
-LAB_825d0bfc:
-    IVar13 = IVar12;
-    iVar4 = Item_HandleKey(pUVar3,piVar8,IVar12,param_4);
-    lVar2 = (longlong)iVar4;
-    if (iVar4 == 0) goto LAB_825d0c18;
-LAB_825d0fb4:
-    Item_Action(pUVar3,piVar8);
-    goto switchD_825d0c94_caseD_2;
-  }
-LAB_825d0b84:
-  piVar7 = Menu_SetNextCursorItem(pUVar3,param_2,(ItemFocusReason)uVar11);
-  IVar13 = (ItemFocusReason)uVar11;
-  lVar2 = (longlong)(int)piVar7;
-  iVar4 = 0;
-  if (0 < param_2->itemCount) {
-    iVar5 = 0;
-    do {
-      iVar6 = Item_IsVisible(pUVar3->localClientNum,*(itemDef_t **)(iVar5 + (int)param_2->items));
-      lVar2 = (longlong)iVar6;
-      if (iVar6 != 0) {
-        bVar9 = Window_HasFocus(pUVar3->localClientNum,
-                                *(windowDef_t **)(iVar5 + (int)param_2->items));
-        lVar2 = (longlong)bVar9;
-        if (lVar2 != 0) {
-          piVar8 = *(itemDef_t **)(iVar5 + (int)param_2->items);
-        }
-      }
-      IVar13 = (ItemFocusReason)uVar11;
-      iVar4 = iVar4 + 1;
-      iVar5 = iVar5 + 4;
-    } while (iVar4 < param_2->itemCount);
-    if (piVar8 != (itemDef_t *)0x0) goto LAB_825d0bfc;
-  }
-LAB_825d0c18:
-  if (param_4 == 0) goto switchD_825d0c94_caseD_2;
-  if ((0 < (int)IVar12) && ((int)IVar12 < 0x100)) {
-    IVar13 = IVar12;
-    iVar4 = Menu_CheckOnKey(pUVar3,param_2,IVar12);
-    lVar2 = (longlong)iVar4;
-    if (iVar4 != 0) goto switchD_825d0c94_caseD_2;
-  }
-  if (IVar12 == 9) {
-    iVar4 = Key_IsDown(LOCAL_CLIENT_0,0xa0);
-    if (iVar4 != 0) goto switchD_825d0c94_caseD_2;
-LAB_825d0c74:
-    switch(IVar12 - FOCUS_KEYBOARD) {
-    case FOCUS_OTHER:
-    case 0xc:
-    case 0xd:
-switchD_825d0c94_caseD_0:
-      if (piVar8 == (itemDef_t *)0x0) break;
-      bVar9 = Item_IsTextField(piVar8);
-      if (bVar9) {
-        piVar8->cursorPos[pUVar3->localClientNum] = 0;
-        g_editingField = 1;
-        g_editItem = piVar8;
-        Key_SetOverstrikeMode(pUVar3->localClientNum,1);
+  if (DAT_8400c164 == 0) {
+    if (((iVar10 != 0) && ((param_3 & 0x400) == 0)) && (*(int *)(*piVar8 + 0x34) != 0)) {
+      uVar2 = Key_GetBinding(*puVar3,param_3);
+      if (((int)uVar2 != 0) &&
+         (iVar6 = Key_GetBindingForCmd(*(undefined4 *)(*piVar8 + 0x34)), (int)uVar2 == iVar6)) {
+        CL_ExecBinding(*puVar3,uVar2,param_3);
         __restgprlr_23();
         return;
       }
-      bVar9 = Item_IsDisabled(pUVar3->localClientNum,piVar8);
-      if (bVar9) break;
+    }
+  }
+  else if (iVar10 != 0) {
+    iVar4 = Item_TextField_HandleKey(puVar3,DAT_8400c16c,param_3);
+    if (iVar4 == 0) {
+      DAT_8400c164 = 0;
+      DAT_8400c16c = 0;
+      __restgprlr_23();
+      return;
+    }
+    goto switchD_825d0c94_caseD_2;
+  }
+  iVar6 = 0;
+  if (0 < piVar8[0x2d]) {
+    iVar11 = 0;
+    do {
+      iVar5 = Item_IsVisible(*puVar3,*(undefined4 *)(iVar11 + piVar8[0x2e]));
+      if ((iVar5 != 0) &&
+         (cVar7 = Window_HasFocus(*puVar3,*(undefined4 *)(iVar11 + piVar8[0x2e])), cVar7 != '\0')) {
+        iVar4 = *(int *)(iVar11 + piVar8[0x2e]);
+      }
+      iVar6 = iVar6 + 1;
+      iVar11 = iVar11 + 4;
+    } while (iVar6 < piVar8[0x2d]);
+    if (iVar4 == 0) goto LAB_825d0b84;
+LAB_825d0bfc:
+    iVar6 = Item_HandleKey(puVar3,iVar4,param_3,param_4);
+    if (iVar6 == 0) goto LAB_825d0c18;
+LAB_825d0fb4:
+    Item_Action(puVar3,iVar4);
+    goto switchD_825d0c94_caseD_2;
+  }
+LAB_825d0b84:
+  Menu_SetNextCursorItem(puVar3,param_2);
+  iVar6 = 0;
+  if (0 < piVar8[0x2d]) {
+    iVar11 = 0;
+    do {
+      iVar5 = Item_IsVisible(*puVar3,*(undefined4 *)(iVar11 + piVar8[0x2e]));
+      if ((iVar5 != 0) &&
+         (cVar7 = Window_HasFocus(*puVar3,*(undefined4 *)(iVar11 + piVar8[0x2e])), cVar7 != '\0')) {
+        iVar4 = *(int *)(iVar11 + piVar8[0x2e]);
+      }
+      iVar6 = iVar6 + 1;
+      iVar11 = iVar11 + 4;
+    } while (iVar6 < piVar8[0x2d]);
+    if (iVar4 != 0) goto LAB_825d0bfc;
+  }
+LAB_825d0c18:
+  if ((iVar10 == 0) ||
+     (((iVar10 = (int)param_3, 0 < iVar10 && (iVar10 < 0x100)) &&
+      (iVar6 = Menu_CheckOnKey(puVar3,param_2,param_3), iVar6 != 0))))
+  goto switchD_825d0c94_caseD_2;
+  if (iVar10 == 9) {
+    iVar6 = Key_IsDown(0,0xa0);
+    if (iVar6 != 0) goto switchD_825d0c94_caseD_2;
+LAB_825d0c74:
+    switch(iVar10 + -1) {
+    case 0:
+    case 0xc:
+    case 0xd:
+switchD_825d0c94_caseD_0:
+      if (iVar4 == 0) break;
+      cVar7 = Item_IsTextField(iVar4);
+      if (cVar7 != '\0') {
+        *(undefined4 *)((*puVar3 + 0x5f) * 4 + iVar4) = 0;
+        DAT_8400c164 = 1;
+        DAT_8400c16c = iVar4;
+        Key_SetOverstrikeMode(*puVar3,1);
+        __restgprlr_23();
+        return;
+      }
+      cVar7 = Item_IsDisabled(*puVar3,iVar4);
+      if (cVar7 != '\0') break;
       goto LAB_825d0fb4;
-    case FOCUS_KEYBOARD:
+    case 1:
     case 0x1a:
-      if ((g_waitingForKey == 0) && (param_2->data->onESC != (MenuEventHandlerSet *)0x0)) {
-        memset();
-        iStack_230.parent = param_2;
-        if ((uiscript_verbose->current).enabled != false) {
-          Com_Printf(0xd,"UISCRIPT - Calling onESC() - Menu is \'%s\'\n");
+      if ((DAT_8400c160 == 0) && (*(int *)(*piVar8 + 0x24) != 0)) {
+        memset(auStack_230,0,0x1d4);
+        local_fc = piVar8;
+        if (*(char *)(DAT_83fe747c + 0xc) != '\0') {
+          uVar9 = (ulonglong)(uint)piVar8[1];
+          if (uVar9 == 0) {
+            uVar9 = 0xffffffff82170938;
+          }
+          Com_Printf(0xd,0xffffffff821732e8,uVar9);
         }
-        Item_HandleEvent(pUVar3,&iStack_230,param_2->data->onESC);
+        Item_HandleEvent(puVar3,auStack_230,*(undefined4 *)(*piVar8 + 0x24));
         __restgprlr_23();
         return;
       }
       break;
     case 8:
 switchD_825d0c94_caseD_8:
-      piVar8 = Menu_SetNextCursorItem(pUVar3,param_2,IVar13);
-      __restgprlr_23(piVar8);
+      Menu_SetNextCursorItem(puVar3,param_2);
+      __restgprlr_23();
       return;
     case 0x13:
     case 0x1b:
-      bVar9 = Menu_IsPrevCursorItemLeft(pUVar3->localClientNum,param_2);
-      if (!bVar9) {
+      cVar7 = Menu_IsPrevCursorItemLeft(*puVar3,param_2);
+      if (cVar7 == '\0') {
 switchD_825d0ee0_caseD_5:
-        piVar8 = Menu_SetPrevCursorItem(pUVar3,param_2,IVar13);
-        __restgprlr_23(piVar8);
+        Menu_SetPrevCursorItem(puVar3,param_2);
+        __restgprlr_23();
         return;
       }
       break;
     case 0x14:
     case 0x1c:
-      bVar9 = Menu_IsNextCursorItemRight(pUVar3->localClientNum,param_2);
-      if (!bVar9) goto switchD_825d0c94_caseD_8;
+      cVar7 = Menu_IsNextCursorItemRight(*puVar3,param_2);
+      if (cVar7 == '\0') goto switchD_825d0c94_caseD_8;
       break;
     case 0x15:
       goto switchD_825d0c94_caseD_15;
     case 0x16:
 switchD_825d0c94_caseD_16:
-      bVar9 = Menu_IsNextCursorItemRight(pUVar3->localClientNum,param_2);
-      if (bVar9) {
-        piVar8 = Menu_SetNextCursorItem(pUVar3,param_2,IVar13);
-        __restgprlr_23(piVar8);
+      cVar7 = Menu_IsNextCursorItemRight(*puVar3,param_2);
+      if (cVar7 != '\0') {
+        Menu_SetNextCursorItem(puVar3,param_2);
+        __restgprlr_23();
         return;
       }
     }
   }
   else {
-    if (0x1e < (int)IVar12) {
-      if (0xb1 < (int)IVar12) {
-        switch(IVar12 - 0xb2) {
-        case FOCUS_OTHER:
-          iVar4 = Dvar_GetInt("developer");
+    if (0x1e < iVar10) {
+      if (0xb1 < iVar10) {
+        switch(iVar10 + -0xb2) {
+        case 0:
+          iVar4 = Dvar_GetInt(0xffffffff8201a624);
           if (iVar4 != 0) {
-            Cbuf_AddText(pUVar3->localClientNum,"screenshot\n");
+            Cbuf_AddText(*puVar3,0xffffffff82173fa0);
             __restgprlr_23();
             return;
           }
@@ -11232,41 +9589,41 @@ switchD_825d0c94_caseD_16:
         }
         goto switchD_825d0c94_caseD_2;
       }
-      if (IVar12 == 0xb1) {
-        iVar4 = Dvar_GetInt("developer");
+      if (iVar10 == 0xb1) {
+        iVar4 = Dvar_GetInt(0xffffffff8201a624);
         if (iVar4 != 0) {
-          Dvar_SetBool(ui_debugMode,(ui_debugMode->current).enabled == false);
+          Dvar_SetBool(DAT_83f71ea8,*(char *)(DAT_83f71ea8 + 0xc) == '\0');
           __restgprlr_23();
           return;
         }
         goto switchD_825d0c94_caseD_2;
       }
-      if (0x9b < (int)IVar12) {
-        if (IVar12 != 0x9c) {
-          if (IVar12 != 0x9d) {
-            __restgprlr_23(lVar2);
+      if (0x9b < iVar10) {
+        if (iVar10 != 0x9c) {
+          if (iVar10 != 0x9d) {
+            __restgprlr_23();
             return;
           }
           goto switchD_825d0c94_caseD_8;
         }
         goto switchD_825d0ee0_caseD_5;
       }
-      if (IVar12 == 0x9b) goto switchD_825d0c94_caseD_8;
-      if (IVar12 != 0x1f) {
-        if (IVar12 != 0x9a) {
-          __restgprlr_23(lVar2);
+      if (iVar10 == 0x9b) goto switchD_825d0c94_caseD_8;
+      if (iVar10 != 0x1f) {
+        if (iVar10 != 0x9a) {
+          __restgprlr_23();
           return;
         }
         goto switchD_825d0ee0_caseD_5;
       }
       goto switchD_825d0c94_caseD_16;
     }
-    if (IVar12 != 0x1e) goto LAB_825d0c74;
+    if (iVar10 != 0x1e) goto LAB_825d0c74;
 switchD_825d0c94_caseD_15:
-    bVar9 = Menu_IsPrevCursorItemLeft(pUVar3->localClientNum,param_2);
-    if (bVar9) {
-      piVar8 = Menu_SetPrevCursorItem(pUVar3,param_2,IVar13);
-      __restgprlr_23(piVar8);
+    cVar7 = Menu_IsPrevCursorItemLeft(*puVar3,param_2);
+    if (cVar7 != '\0') {
+      Menu_SetPrevCursorItem(puVar3,param_2);
+      __restgprlr_23();
       return;
     }
   }
@@ -11278,172 +9635,157 @@ switchD_825d0c94_caseD_2:
 
 // 825C3CF8  ToWindowCoords  (ui/ui_shared.cpp:8058)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void ToWindowCoords(float *param_1,float *param_2,windowDef_t *param_3)
+void ToWindowCoords(float *param_1,float *param_2,int param_3)
 
 {
-  if (param_3->border != 0) {
-    *param_1 = *param_1 + param_3->borderSize;
-    *param_2 = *param_2 + param_3->borderSize;
+  if (*(int *)(param_3 + 0x34) != 0) {
+    *param_1 = *param_1 + *(float *)(param_3 + 0x40);
+    *param_2 = *param_2 + *(float *)(param_3 + 0x40);
   }
-  *param_1 = (param_3->rect).x + *param_1;
-  *param_2 = (param_3->rect).y + *param_2;
+  *param_1 = *(float *)(param_3 + 4) + *param_1;
+  *param_2 = *(float *)(param_3 + 8) + *param_2;
   return;
 }
 
 
 // 825C3D48  Item_GetFont  (ui/ui_shared.cpp:8073)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-Font_s * Item_GetFont(LocalClientNum_t param_1,itemDef_t *param_2)
+void Item_GetFont(undefined8 param_1,int param_2)
 
 {
-  int iVar1;
-  ScreenPlacement *pSVar2;
-  Font_s *pFVar3;
-  double dVar4;
+  undefined4 uVar1;
+  undefined8 uVar2;
+  double dVar3;
   
-  dVar4 = (double)param_2->textscale;
-  iVar1 = param_2->fontEnum;
-  pSVar2 = ScrPlace_GetActivePlacement(param_1);
-  pFVar3 = UI_GetFontHandle(pSVar2,iVar1,(float)dVar4);
-  return pFVar3;
+  dVar3 = (double)*(float *)(param_2 + 0x11c);
+  uVar1 = *(undefined4 *)(param_2 + 0x10c);
+  uVar2 = ScrPlace_GetActivePlacement();
+  UI_GetFontHandle(dVar3,uVar2,uVar1);
+  return;
 }
 
 
 // 825C3D90  Item_SetTextExtents  (ui/ui_shared.cpp:8079)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Item_SetTextExtents(UiContext *param_1,itemDef_t *param_2,char *param_3)
+void Item_SetTextExtents(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  uint uVar1;
-  bool bVar2;
-  LocalClientNum_t *pLVar3;
-  rectDef_s *prVar4;
-  ScreenPlacement *pSVar5;
-  Font_s *pFVar6;
-  bool bVar9;
-  int iVar7;
-  bool bVar10;
-  char *pcVar8;
-  ulonglong uVar11;
-  char *in_r6;
+  undefined4 uVar1;
+  int iVar2;
+  uint uVar3;
+  bool bVar4;
+  bool bVar5;
+  bool bVar6;
+  uint *puVar9;
+  int iVar10;
+  undefined8 uVar7;
+  char cVar11;
+  undefined8 uVar8;
   ulonglong uVar12;
-  longlong lVar13;
-  double dVar14;
+  ulonglong uVar13;
+  longlong lVar14;
   double dVar15;
-  float fVar16;
-  rectDef_s local_490;
-  char acStack_470 [1136];
+  double dVar16;
+  float local_490;
+  float local_48c;
+  float local_488;
+  float local_484;
+  undefined1 local_480;
+  undefined1 local_47f;
+  undefined1 auStack_470 [1136];
   
-  uVar11 = (ulonglong)(int)param_3;
-  pLVar3 = (LocalClientNum_t *)__savegprlr_21(param_1);
-  if ((uVar11 & 0xffffffff) == 0) {
-    in_r6 = "%s";
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1fa6,0,
-                    "%s");
+  puVar9 = (uint *)__savegprlr_21();
+  iVar2 = (int)param_2;
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x1fa6,0,0xffffffff82000f98,0xffffffff82013b1c);
   }
-  uVar1 = param_2->textAlignMode & 3;
-  bVar10 = param_2->type == 8;
-  if ((bVar10) || (uVar12 = 1, param_2->dvar == (char *)0x0)) {
+  uVar3 = *(uint *)(iVar2 + 0x110) & 3;
+  bVar4 = *(int *)(iVar2 + 0x100) == 8;
+  if ((bVar4) || (uVar12 = 1, *(int *)(iVar2 + 0x15c) == 0)) {
     uVar12 = 0;
   }
-  if ((bVar10) || (bVar2 = true, param_2->localVar == (char *)0x0)) {
-    bVar2 = false;
+  if ((bVar4) || (bVar6 = true, *(int *)(iVar2 + 0x16c) == 0)) {
+    bVar6 = false;
   }
-  if ((uVar1 == 0) ||
-     ((((!bVar10 && (uVar12 == 0)) && (!bVar2)) && (param_2->textExp == (Statement_s *)0x0)))) {
-    bVar9 = false;
+  if ((uVar3 == 0) || ((((!bVar4 && (uVar12 == 0)) && (!bVar6)) && (*(int *)(iVar2 + 0x1a0) == 0))))
+  {
+    bVar5 = false;
   }
   else {
-    bVar9 = true;
+    bVar5 = true;
   }
-  if ((!bVar9) && (prVar4 = Item_GetTextRect(*pLVar3,param_2), prVar4->w != 0.0)) goto LAB_825c41b4;
-  dVar14 = (double)param_2->textscale;
-  iVar7 = param_2->fontEnum;
-  pSVar5 = ScrPlace_GetActivePlacement(*pLVar3);
-  pFVar6 = UI_GetFontHandle(pSVar5,iVar7,(float)dVar14);
-  dVar14 = 1.0;
-  bVar9 = Menu_HasScaleTransition(*pLVar3,param_2->parent);
-  if (bVar9) {
-    fVar16 = Menu_GetTransitionValue
-                       (*pLVar3,param_2->parent,param_2->parent->data->scaleTransition + *pLVar3);
-    dVar14 = (double)fVar16;
+  if ((!bVar5) && (iVar10 = Item_GetTextRect(*puVar9,param_2), *(float *)(iVar10 + 8) != 0.0))
+  goto LAB_825c41b4;
+  dVar16 = (double)*(float *)(iVar2 + 0x11c);
+  uVar1 = *(undefined4 *)(iVar2 + 0x10c);
+  uVar7 = ScrPlace_GetActivePlacement(*puVar9);
+  uVar7 = UI_GetFontHandle(dVar16,uVar7,uVar1);
+  dVar16 = 1.0;
+  cVar11 = Menu_HasScaleTransition(*puVar9,*(undefined4 *)(iVar2 + 0x134));
+  if (cVar11 != '\0') {
+    uVar13 = (ulonglong)*puVar9 + 5;
+    dVar16 = (double)Menu_GetTransitionValue
+                               ((ulonglong)*puVar9,*(uint **)(iVar2 + 0x134),
+                                (uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                                (ulonglong)**(uint **)(iVar2 + 0x134));
   }
-  local_490.x = param_2->textalignx;
-  local_490.y = param_2->textaligny;
-  fVar16 = (float)(dVar14 * (double)param_2->textscale);
-  dVar14 = (double)fVar16;
-  iVar7 = UI_TextWidthModCase((char *)uVar11,0,pFVar6,fVar16,(int)in_r6);
-  local_490.w = (float)(longlong)iVar7;
-  iVar7 = UI_TextHeight(pFVar6,(float)dVar14);
-  local_490.horzAlign = (param_2->window).rect.horzAlign;
-  local_490.h = (float)(longlong)iVar7;
-  local_490.vertAlign = (param_2->window).rect.vertAlign;
-  if (param_2->textAlignYExp != (Statement_s *)0x0) {
-    local_490.y = GetExpressionFloat(*pLVar3,param_2->textAlignYExp);
+  local_490 = *(float *)(iVar2 + 0x114);
+  local_48c = *(float *)(iVar2 + 0x118);
+  dVar16 = (double)(float)(dVar16 * (double)*(float *)(iVar2 + 0x11c));
+  iVar10 = UI_TextWidthModCase(dVar16,param_3,0,uVar7);
+  local_488 = (float)(longlong)iVar10;
+  iVar10 = UI_TextHeight(dVar16,uVar7);
+  local_480 = *(undefined1 *)(iVar2 + 0x14);
+  local_47f = *(undefined1 *)(iVar2 + 0x15);
+  local_484 = (float)(longlong)iVar10;
+  if (*(int *)(iVar2 + 0x1d0) != 0) {
+    dVar15 = (double)GetExpressionFloat(*puVar9);
+    local_48c = (float)dVar15;
   }
-  if (uVar1 != 0) {
-    if ((uVar1 != 2) && (uVar1 != 1)) {
-      in_r6 = "%s\n\t(xAlignMode) = %i";
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1fcb,0,
-                      "%s\n\t(xAlignMode) = %i");
+  if (uVar3 != 0) {
+    if ((uVar3 != 2) && (uVar3 != 1)) {
+      MyAssertHandler(0xffffffff82170658,0x1fcb,0,0xffffffff821725f8,0xffffffff82172610,uVar3);
     }
-    iVar7 = UI_TextWidthModCase((char *)uVar11,0,pFVar6,(float)dVar14,(int)in_r6);
-    dVar15 = (double)((param_2->window).rect.w - (float)(longlong)iVar7);
-    if (bVar10) {
-      iVar7 = UI_OwnerDrawWidth((param_2->window).ownerDraw,pFVar6,(float)dVar14);
-      lVar13 = (longlong)iVar7;
+    iVar10 = UI_TextWidthModCase(dVar16,param_3,0,uVar7);
+    dVar15 = (double)(*(float *)(iVar2 + 0xc) - (float)(longlong)iVar10);
+    if (bVar4) {
+      iVar10 = UI_OwnerDrawWidth(dVar16,*(undefined4 *)(iVar2 + 0x38),uVar7);
+      lVar14 = (longlong)iVar10;
 LAB_825c4124:
-      dVar15 = (double)(float)(dVar15 - (double)lVar13);
+      dVar15 = (double)(float)(dVar15 - (double)lVar14);
     }
-    else if (((uVar12 != 0) || (bVar2)) && (bVar10 = Item_IsTextField(param_2), bVar10)) {
-      if (bVar2) {
-        iVar7 = 0x400;
-        pcVar8 = UILocalVar_GetStringByName
-                           ((UILocalVarContext *)(pLVar3 + 0x29f),param_2->localVar,acStack_470,
-                            0x400);
-        iVar7 = UI_TextWidthModCase(pcVar8,0,pFVar6,(float)dVar14,iVar7);
-        lVar13 = (longlong)iVar7;
+    else if (((uVar12 != 0) || (bVar6)) && (cVar11 = Item_IsTextField(param_2), cVar11 != '\0')) {
+      if (bVar6) {
+        uVar8 = UILocalVar_GetStringByName
+                          (puVar9 + 0x29f,*(undefined4 *)(iVar2 + 0x16c),auStack_470,0x400);
+        iVar10 = UI_TextWidthModCase(dVar16,uVar8,0,uVar7);
+        lVar14 = (longlong)iVar10;
       }
       else {
         if ((uVar12 & 0xffffffff) == 0) {
-          in_r6 = "%s";
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1fda
-                          ,0,"%s");
+          MyAssertHandler(0xffffffff82170658,0x1fda,0,0xffffffff82000f98,0xffffffff821725ec);
         }
-        pcVar8 = Dvar_GetVariantString(param_2->dvar);
-        iVar7 = UI_TextWidthModCase(pcVar8,0,pFVar6,(float)dVar14,(int)in_r6);
-        lVar13 = (longlong)iVar7;
+        uVar8 = Dvar_GetVariantString(*(undefined4 *)(iVar2 + 0x15c));
+        iVar10 = UI_TextWidthModCase(dVar16,uVar8,0,uVar7);
+        lVar14 = (longlong)iVar10;
       }
       goto LAB_825c4124;
     }
-    if (uVar1 == 1) {
+    if (uVar3 == 1) {
       dVar15 = (double)(float)(dVar15 * 0.5);
     }
-    local_490.x = (float)(dVar15 + (double)local_490.x);
+    local_490 = (float)(dVar15 + (double)local_490);
   }
-  local_490.y = Item_GetTextPlacementY
-                          (param_2->textAlignMode & 0xc,local_490.y,(param_2->window).rect.h,
-                           local_490.h);
-  if ((param_2->window).border != 0) {
-    fVar16 = (param_2->window).borderSize;
-    local_490.y = fVar16 + local_490.y;
-    local_490.x = fVar16 + local_490.x;
+  dVar16 = (double)Item_GetTextPlacementY
+                             ((double)local_48c,(double)*(float *)(iVar2 + 0x10),(double)local_484,
+                              *(uint *)(iVar2 + 0x110) & 0xc);
+  if (*(int *)(iVar2 + 0x34) != 0) {
+    dVar16 = (double)(float)((double)*(float *)(iVar2 + 0x40) + dVar16);
+    local_490 = (float)((double)*(float *)(iVar2 + 0x40) + (double)local_490);
   }
-  local_490.x = (param_2->window).rect.x + local_490.x;
-  local_490.y = (param_2->window).rect.y + local_490.y;
-  Item_SetTextRect(*pLVar3,param_2,&local_490);
+  local_490 = *(float *)(iVar2 + 4) + local_490;
+  local_48c = (float)((double)*(float *)(iVar2 + 8) + dVar16);
+  Item_SetTextRect(*puVar9,param_2,&local_490);
 LAB_825c41b4:
   __restgprlr_21();
   return;
@@ -11452,12 +9794,7 @@ LAB_825c41b4:
 
 // 825C41C8  GetBlinkColor  (ui/ui_shared.cpp:8172)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void GetBlinkColor(UiContext *param_1,float *param_2,float *param_3)
+void GetBlinkColor(int param_1,float *param_2,undefined8 param_3)
 
 {
   double dVar1;
@@ -11469,92 +9806,99 @@ void GetBlinkColor(UiContext *param_1,float *param_2,float *param_3)
   _local_30 = CONCAT44(*param_2 * 0.8,param_2[1] * 0.8);
   local_28 = param_2[2] * 0.8;
   local_24 = param_2[3] * 0.8;
-  dVar1 = sin((double)(longlong)(param_1->realTime / 0x4b));
-  UI_LerpColor(param_2,&local_30,param_3,((float)dVar1 + 1.0) * 0.5);
+  dVar1 = sin((double)(longlong)(*(int *)(param_1 + 8) / 0x4b));
+  UI_LerpColor((double)(((float)dVar1 + 1.0) * 0.5),param_2,&local_30,param_3);
   return;
 }
 
 
 // 825C4288  Item_TextColor  (ui/ui_shared.cpp:8184)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_TextColor(UiContext *param_1,itemDef_t *param_2,float (*param_3) [4])
+void Item_TextColor(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
   float fVar1;
   float fVar2;
-  LocalClientNum_t LVar3;
-  menuDef_t *pmVar4;
-  menuData_t *pmVar5;
-  UiContext *pUVar6;
-  bool bVar7;
-  uint uVar8;
-  float fVar9;
+  float fVar3;
+  uint uVar4;
+  uint *puVar5;
+  uint uVar6;
+  int iVar7;
+  uint *puVar8;
+  char cVar9;
+  ulonglong uVar10;
+  undefined4 *puVar11;
+  double dVar12;
   
-  pUVar6 = (UiContext *)__savegprlr_27(param_1);
-  LVar3 = pUVar6->localClientNum;
-  pmVar4 = param_2->parent;
-  if (LOCAL_CLIENT_3 < LVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,0,
-                    "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
-    ;
+  puVar8 = (uint *)__savegprlr_27();
+  uVar4 = *puVar8;
+  iVar7 = (int)param_2;
+  puVar5 = *(uint **)(iVar7 + 0x134);
+  if (3 < uVar4) {
+    MyAssertHandler(0xffffffff82170618,0x21,0,0xffffffff821649e0,uVar4,4);
   }
-  pmVar5 = pmVar4->data;
-  fVar9 = pmVar5->fadeInAmount;
-  fVar1 = pmVar5->fadeAmount;
-  uVar8 = (param_2->window).dynamicFlags[LVar3];
-  fVar2 = pmVar5->fadeClamp;
-  if (((uVar8 & 0x30) != 0) && ((param_2->window).nextTime < pUVar6->realTime)) {
-    (param_2->window).nextTime = pmVar5->fadeCycle + pUVar6->realTime;
-    if ((uVar8 & 0x10) == 0) {
-      fVar9 = (param_2->window).foreColor[3] + fVar9;
-      (param_2->window).foreColor[3] = fVar9;
-      if (fVar2 <= fVar9) {
-        (param_2->window).foreColor[3] = fVar2;
-        uVar8 = uVar8 & 0xffffffdf;
+  uVar6 = *puVar5;
+  fVar1 = *(float *)(uVar6 + 0x10);
+  fVar2 = *(float *)(uVar6 + 0xc);
+  uVar4 = *(uint *)((uVar4 + 0x12) * 4 + iVar7);
+  uVar10 = (ulonglong)uVar4;
+  fVar3 = *(float *)(uVar6 + 8);
+  if ((uVar4 & 0x30) != 0) {
+    if (*(int *)(iVar7 + 0x58) < (int)puVar8[2]) {
+      *(uint *)(iVar7 + 0x58) = *(int *)(uVar6 + 4) + puVar8[2];
+      if ((uVar4 & 0x10) == 0) {
+        fVar1 = *(float *)(iVar7 + 0x68) + fVar1;
+        *(float *)(iVar7 + 0x68) = fVar1;
+        if (fVar3 <= fVar1) {
+          *(float *)(iVar7 + 0x68) = fVar3;
+          uVar10 = CONCAT44(uVar4,uVar4) & 0xffffffffffffffdf;
+        }
+      }
+      else {
+        fVar2 = *(float *)(iVar7 + 0x68) - fVar2;
+        *(float *)(iVar7 + 0x68) = fVar2;
+        if (fVar2 <= 0.0) {
+          uVar10 = (CONCAT44(uVar4,uVar4) & 0xfffffffffffffffb) << 0x20 |
+                   (ulonglong)uVar4 & 0xffffffeb;
+        }
       }
     }
-    else {
-      fVar1 = (param_2->window).foreColor[3] - fVar1;
-      (param_2->window).foreColor[3] = fVar1;
-      if (fVar1 <= 0.0) {
-        uVar8 = uVar8 & 0xffffffeb;
+  }
+  Window_SetDynamicFlags(*puVar8,param_2,uVar10);
+  cVar9 = Window_HasFocus(*puVar8,param_2);
+  puVar11 = (undefined4 *)param_3;
+  if (cVar9 == '\0') {
+    if (*(int *)(iVar7 + 0x120) == 1) {
+      uVar4 = puVar8[2];
+      if ((((int)uVar4 >> 8) + (uint)((int)uVar4 < 0 && (uVar4 & 0xff) != 0) & 1) == 0) {
+        GetBlinkColor(puVar8,param_2 + 0x5c,param_3);
+        goto LAB_825c4400;
       }
     }
-  }
-  Window_SetDynamicFlags(pUVar6->localClientNum,&param_2->window,uVar8);
-  bVar7 = Window_HasFocus(pUVar6->localClientNum,&param_2->window);
-  if (bVar7) {
-    GetBlinkColor(pUVar6,pmVar4->data->focusColor,*param_3);
-  }
-  else if ((param_2->textStyle == 1) &&
-          (uVar8 = pUVar6->realTime,
-          (((int)uVar8 >> 8) + (uint)((int)uVar8 < 0 && (uVar8 & 0xff) != 0) & 1) == 0)) {
-    GetBlinkColor(pUVar6,(param_2->window).foreColor,*param_3);
+    *puVar11 = *(undefined4 *)(iVar7 + 0x5c);
+    puVar11[1] = *(undefined4 *)(iVar7 + 0x60);
+    puVar11[2] = *(undefined4 *)(iVar7 + 100);
+    puVar11[3] = *(undefined4 *)(iVar7 + 0x68);
   }
   else {
-    (*param_3)[0] = (param_2->window).foreColor[0];
-    (*param_3)[1] = (param_2->window).foreColor[1];
-    (*param_3)[2] = (param_2->window).foreColor[2];
-    (*param_3)[3] = (param_2->window).foreColor[3];
+    GetBlinkColor(puVar8,(ulonglong)*puVar5 + 0x3c,param_3);
   }
-  bVar7 = Menu_HasAlphaTransition(pUVar6->localClientNum,param_2->parent);
-  if (bVar7) {
-    fVar9 = Menu_GetTransitionValue
-                      (pUVar6->localClientNum,param_2->parent,
-                       param_2->parent->data->alphaTransition + pUVar6->localClientNum);
-    (*param_3)[3] = fVar9 * (*param_3)[3];
+LAB_825c4400:
+  cVar9 = Menu_HasAlphaTransition(*puVar8,*(undefined4 *)(iVar7 + 0x134));
+  if (cVar9 != '\0') {
+    uVar10 = (ulonglong)*puVar8 + 9;
+    dVar12 = (double)Menu_GetTransitionValue
+                               ((ulonglong)*puVar8,*(uint **)(iVar7 + 0x134),
+                                (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                                (ulonglong)**(uint **)(iVar7 + 0x134));
+    puVar11[3] = (float)(dVar12 * (double)(float)puVar11[3]);
   }
-  bVar7 = Item_IsDisabled(pUVar6->localClientNum,param_2);
-  if (bVar7) {
-    (*param_3)[0] = (param_2->window).disableColor[0];
-    (*param_3)[1] = (param_2->window).disableColor[1];
-    (*param_3)[2] = (param_2->window).disableColor[2];
-    (*param_3)[3] = (param_2->window).disableColor[3];
+  cVar9 = Item_IsDisabled(*puVar8,param_2);
+  if (cVar9 != '\0') {
+    *puVar11 = *(undefined4 *)(iVar7 + 0x9c);
+    puVar11[1] = *(undefined4 *)(iVar7 + 0xa0);
+    puVar11[2] = *(undefined4 *)(iVar7 + 0xa4);
+    puVar11[3] = *(undefined4 *)(iVar7 + 0xa8);
   }
   __restgprlr_27();
   return;
@@ -11563,11 +9907,9 @@ void Item_TextColor(UiContext *param_1,itemDef_t *param_2,float (*param_3) [4])
 
 // 825C4490  UI_PickWordWrapLineWidth  (ui/ui_shared.cpp:8209)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int UI_PickWordWrapLineWidth
-              (char *param_1,int param_2,Font_s *param_3,float param_4,int param_5,int param_6,
-              int param_7,int param_8)
+void UI_PickWordWrapLineWidth
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               int param_5,longlong param_6,undefined8 param_7)
 
 {
   byte bVar1;
@@ -11575,36 +9917,26 @@ int UI_PickWordWrapLineWidth
   byte *pbVar3;
   int iVar4;
   int iVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  longlong lVar11;
-  double extraout_f1;
-  double dVar12;
+  undefined4 uVar6;
+  int iVar7;
+  undefined8 extraout_f1;
+  undefined8 uVar8;
   
-  lVar10 = (longlong)param_8;
-  lVar11 = (longlong)param_7;
-  lVar8 = (longlong)param_6;
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)param_2;
-  pbVar2 = (byte *)__savegprlr_23((double)param_4,param_1,lVar6,lVar7,param_5);
-  iVar5 = (int)lVar11;
-  lVar9 = lVar8;
-  dVar12 = extraout_f1;
+  iVar7 = (int)param_7;
+  uVar6 = (undefined4)((ulonglong)param_7 >> 0x20);
+  pbVar2 = (byte *)__savegprlr_23();
+  iVar5 = (int)param_6;
+  uVar8 = extraout_f1;
   while( true ) {
-    if ((int)lVar10 <= iVar5) {
-      iVar5 = __restgprlr_23(lVar10);
-      return iVar5;
+    if (iVar7 <= iVar5) {
+      __restgprlr_23(CONCAT44(uVar6,iVar7));
+      return;
     }
     iVar5 = 0;
     bVar1 = *pbVar2;
     pbVar3 = pbVar2;
     while (bVar1 != 0) {
-      pbVar3 = (byte *)R_TextLineWrapPositionModCase
-                                 ((char *)pbVar3,(int)lVar6,(int)lVar11,(Font_s *)lVar7,
-                                  (float)dVar12,(int)lVar9);
+      pbVar3 = (byte *)R_TextLineWrapPositionModCase(uVar8,pbVar3,param_2,param_6,param_3);
       iVar4 = isspace((uint)*pbVar3);
       while (iVar4 != 0) {
         pbVar3 = pbVar3 + 1;
@@ -11613,304 +9945,226 @@ int UI_PickWordWrapLineWidth
       iVar5 = iVar5 + 1;
       bVar1 = *pbVar3;
     }
-    if (iVar5 == (int)lVar8) break;
-    lVar11 = lVar11 + 8;
-    iVar5 = (int)lVar11;
+    if (iVar5 == param_5) break;
+    param_6 = param_6 + 8;
+    iVar5 = (int)param_6;
   }
-  iVar5 = __restgprlr_23(lVar11);
-  return iVar5;
+  __restgprlr_23(param_6);
+  return;
 }
 
 
 // 825C4560  ComputeTargetLineWidth  (ui/ui_shared.cpp:8233)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int ComputeTargetLineWidth
-              (char *param_1,rectDef_s *param_2,Font_s *param_3,float param_4,float param_5,
-              int param_6,int param_7,int param_8)
+void ComputeTargetLineWidth
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
+               uint param_9,undefined8 param_10)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
-  uint in_r9;
   double dVar3;
-  double extraout_f1;
   double dVar4;
-  double dVar5;
   
-  dVar4 = (double)param_5;
-  pcVar1 = (char *)__savegprlr_26((double)param_4,param_1);
-  iVar2 = UI_TextWidthModCase(pcVar1,0,param_3,(float)extraout_f1,param_6);
-  dVar3 = (double)param_2->w;
-  dVar5 = (double)(longlong)iVar2;
-  if (((dVar3 != 0.0) && (dVar3 < dVar5)) && ((in_r9 & 3) == 1)) {
-    dVar3 = ceil((double)(float)(dVar5 / dVar3));
-    dVar5 = ceil((double)(float)(dVar5 / (double)(longlong)(int)dVar3));
-    iVar2 = UI_PickWordWrapLineWidth
-                      (pcVar1,param_8,param_3,(float)dVar4,param_6,(int)dVar3,(int)dVar5,
-                       (int)param_2->w);
-    iVar2 = __restgprlr_26(iVar2);
-    return iVar2;
+  uVar1 = __savegprlr_26();
+  iVar2 = UI_TextWidthModCase(uVar1,0);
+  dVar3 = (double)*(float *)(param_4 + 8);
+  dVar4 = (double)(longlong)iVar2;
+  if (((dVar3 != 0.0) && (dVar3 < dVar4)) && ((param_9 & 3) == 1)) {
+    dVar3 = ceil((double)(float)(dVar4 / dVar3));
+    dVar4 = ceil((double)(float)(dVar4 / (double)(longlong)(int)dVar3));
+    UI_PickWordWrapLineWidth
+              (param_2,uVar1,param_8,param_5,param_6,(int)dVar3,(int)dVar4,
+               (int)*(float *)(param_4 + 8),param_10);
+    __restgprlr_26();
+    return;
   }
   if (dVar3 != 0.0) {
-    iVar2 = __restgprlr_26((int)param_2->w);
-    return iVar2;
+    __restgprlr_26((int)*(float *)(param_4 + 8));
+    return;
   }
-  iVar2 = __restgprlr_26((int)dVar5);
-  return iVar2;
+  __restgprlr_26((int)dVar4);
+  return;
 }
 
 
 // 825C4698  GetWrappedTextHeight  (ui/ui_shared.cpp:8263)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float GetWrappedTextHeight
-                (char *param_1,rectDef_s *param_2,Font_s *param_3,float param_4,int param_5,
-                int param_6)
+void GetWrappedTextHeight(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   byte bVar1;
-  byte *pbVar2;
-  int iVar3;
+  byte *pbVar3;
   int iVar4;
-  longlong lVar5;
-  double extraout_f1;
+  undefined8 uVar2;
+  undefined8 extraout_f1;
+  undefined8 uVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  float fVar9;
   
-  lVar5 = (longlong)param_6;
-  pbVar2 = (byte *)__savegprlr_27((double)param_4,param_1);
-  dVar8 = extraout_f1;
-  fVar9 = R_NormalizedTextScale(param_3,(float)extraout_f1);
-  dVar6 = (double)fVar9;
-  iVar3 = UI_TextHeight(param_3,(float)dVar8);
-  dVar7 = (double)(longlong)iVar3;
-  iVar3 = ComputeTargetLineWidth
-                    ((char *)pbVar2,param_2,param_3,(float)dVar8,(float)dVar6,param_5,(int)lVar5,
-                     0x400);
-  dVar8 = 0.0;
-  bVar1 = *pbVar2;
+  pbVar3 = (byte *)__savegprlr_27();
+  uVar2 = extraout_f1;
+  uVar5 = R_NormalizedTextScale(param_3);
+  iVar4 = UI_TextHeight(uVar2,param_3);
+  dVar6 = (double)(longlong)iVar4;
+  uVar2 = ComputeTargetLineWidth(uVar2,uVar5,pbVar3,param_2,param_3);
+  dVar7 = 0.0;
+  bVar1 = *pbVar3;
   while (bVar1 != 0) {
-    dVar8 = (double)(float)(dVar8 + dVar7);
-    pbVar2 = (byte *)R_TextLineWrapPositionModCase
-                               ((char *)pbVar2,0x400,iVar3,param_3,(float)dVar6,(int)lVar5);
-    iVar4 = isspace((uint)*pbVar2);
-    while ((iVar4 != 0 && (*pbVar2 != 10))) {
-      pbVar2 = pbVar2 + 1;
-      iVar4 = isspace((uint)*pbVar2);
+    dVar7 = (double)(float)(dVar7 + dVar6);
+    pbVar3 = (byte *)R_TextLineWrapPositionModCase(uVar5,pbVar3,0x400,uVar2,param_3);
+    iVar4 = isspace((uint)*pbVar3);
+    while ((iVar4 != 0 && (*pbVar3 != 10))) {
+      pbVar3 = pbVar3 + 1;
+      iVar4 = isspace((uint)*pbVar3);
     }
-    bVar1 = *pbVar2;
+    bVar1 = *pbVar3;
   }
-  dVar8 = (double)__restgprlr_27(dVar8);
-  return (float)dVar8;
+  __restgprlr_27(dVar7);
+  return;
 }
 
 
 // 825C47A8  _DrawWrappedText  (ui/ui_shared.cpp:8294)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void _DrawWrappedText(ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,Font_s *param_4,
-                     float param_5,float param_6,float param_7,float *param_8,int param_9,
-                     int param_10,rectDef_s *param_11,bool param_12,bool param_13,float *param_14,
-                     bool param_15,bool param_16,Material *param_17,Material *param_18,int param_19,
-                     int param_20,int param_21,int param_22)
+void _DrawWrappedText(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
+                     longlong param_5,ulonglong param_6,undefined8 param_7)
 
 {
   char cVar1;
-  uint uVar2;
-  ScreenPlacement *pSVar3;
-  int iVar4;
-  char *pcVar5;
-  byte *pbVar6;
-  int iVar7;
-  rectDef_s *prVar8;
-  rectDef_s *prVar9;
-  Font_s *pFVar10;
-  char *pcVar11;
-  char *pcVar13;
-  double dVar12;
-  uint uVar14;
-  longlong lVar15;
-  ulonglong uVar16;
-  longlong lVar17;
+  float *pfVar2;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  int iVar6;
+  undefined4 uVar7;
+  longlong lVar5;
+  longlong lVar8;
+  ulonglong uVar9;
+  longlong lVar10;
   double extraout_f1;
+  undefined8 uVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
   double dVar18;
   double dVar19;
-  double dVar20;
+  undefined8 uVar20;
   double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
-  float fVar29;
-  int in_stack_00000054;
   uint in_stack_0000005c;
   float *in_stack_00000064;
   char in_stack_00000077;
   int in_stack_0000007c;
   char in_stack_0000008f;
-  float *in_stack_fffffa38;
-  undefined1 in_stack_fffffa3f;
-  undefined1 in_stack_fffffa43;
-  Material *in_stack_fffffa44;
-  Material *in_stack_fffffa48;
-  int in_stack_fffffa4c;
-  int in_stack_fffffa50;
-  int in_stack_fffffa54;
-  int in_stack_fffffa58;
   char local_520;
-  uint local_51c;
   char local_4f0 [1264];
   
-  dVar21 = (double)param_7;
-  dVar25 = (double)param_6;
-  uVar16 = (ulonglong)(int)param_3;
-  lVar17 = (longlong)(int)param_2;
-  pcVar13 = (char *)param_8;
+  uVar3 = ZEXT48(&stack0x00000000);
   __savegprlr();
-  pSVar3 = (ScreenPlacement *)__savefpr_22();
-  prVar9 = (rectDef_s *)uVar16;
+  uVar4 = __savefpr_22();
   local_520 = '7';
-  if (in_stack_00000054 == 9) {
-    local_51c = 1;
+  dVar12 = extraout_f1;
+  if ((param_6 & 0xffffffff) == ZEXT48(in_stack_00000064)) {
+    MyAssertHandler(0xffffffff82170658,0x2080,0,0xffffffff82000f98,0xffffffff82172664);
   }
-  else {
-    pcVar13 = (char *)-(uint)(in_stack_00000054 == 10);
-    local_51c = (uint)pcVar13 & 2;
-  }
-  pcVar11 = "%s";
-  dVar19 = extraout_f1;
-  if ((uVar16 & 0xffffffff) == ZEXT48(in_stack_00000064)) {
-    pcVar13 = "rect != textRect";
-    pcVar11 = "%s";
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2080,0,
-                    "%s");
-  }
-  *in_stack_00000064 = (float)((double)prVar9->w + dVar19);
-  in_stack_00000064[1] = (float)dVar25;
-  dVar27 = 0.0;
+  pfVar2 = (float *)param_6;
+  *in_stack_00000064 = (float)((double)pfVar2[2] + dVar12);
+  in_stack_00000064[1] = (float)param_2;
+  uVar20 = 0;
   in_stack_00000064[2] = 0.0;
   in_stack_00000064[3] = 0.0;
-  fVar29 = R_NormalizedTextScale(param_4,(float)dVar21);
-  dVar18 = (double)fVar29;
-  iVar4 = UI_TextHeight(param_4,(float)dVar21);
-  uVar2 = in_stack_0000005c & 3;
-  dVar24 = (double)(longlong)iVar4;
-  fVar29 = Item_GetTextPlacementX(uVar2,(float)dVar19,prVar9->w,(float)dVar27);
-  dVar19 = (double)fVar29;
-  fVar29 = Item_GetTextPlacementY(in_stack_0000005c & 0xc,(float)dVar25,prVar9->h,(float)dVar24);
-  dVar25 = (double)fVar29;
-  pcVar5 = (char *)lVar17;
+  uVar11 = R_NormalizedTextScale(param_3,param_7);
+  iVar6 = UI_TextHeight(param_3,param_7);
+  dVar18 = (double)(longlong)iVar6;
+  dVar12 = (double)Item_GetTextPlacementX(dVar12,(double)pfVar2[2],uVar20);
+  dVar13 = (double)Item_GetTextPlacementY(param_2,(double)pfVar2[3],dVar18,in_stack_0000005c & 0xc);
   if ((in_stack_0000005c & 0xc) == 0xc) {
-    pcVar13 = &DAT_0000000c;
-    fVar29 = GetWrappedTextHeight(pcVar5,prVar9,param_4,(float)dVar21,(int)pcVar11,0xc);
-    dVar25 = (double)(float)(dVar25 - (double)(float)((double)fVar29 - dVar24));
+    dVar14 = (double)GetWrappedTextHeight(param_3,param_5,param_6,param_7);
+    dVar13 = (double)(float)(dVar13 - (double)(float)(dVar14 - dVar18));
   }
-  pFVar10 = param_4;
-  prVar8 = prVar9;
-  iVar4 = ComputeTargetLineWidth
-                    (pcVar5,prVar9,param_4,(float)dVar21,(float)dVar18,(int)pcVar11,(int)pcVar13,
-                     0x402);
-  dVar23 = (double)prVar9->y;
-  dVar27 = (double)(float)((double)(float)(dVar23 + (double)prVar9->h) + dVar24);
+  uVar7 = ComputeTargetLineWidth(param_3,uVar11,param_5,param_6,param_7);
+  dVar17 = (double)pfVar2[1];
+  dVar14 = (double)(float)((double)(float)(dVar17 + (double)pfVar2[3]) + dVar18);
   if (in_stack_0000008f != '\0') {
-    UI_SetScissorRect(pSVar3,prVar9->x,prVar9->y,prVar9->w,prVar9->h,(int)prVar8,(int)pFVar10);
+    UI_SetScissorRect((double)*pfVar2,dVar17,(double)pfVar2[2],uVar4);
   }
-  if (*pcVar5 != '\0') {
-    dVar12 = -NAN;
-    dVar22 = 0.5;
+  if (*(char *)param_5 != '\0') {
+    dVar16 = 0.5;
     do {
-      pFVar10 = param_4;
-      uVar14 = local_51c;
-      pbVar6 = (byte *)R_TextLineWrapPositionModCase
-                                 ((char *)lVar17,0x400,iVar4,param_4,(float)dVar18,SUB84(dVar12,0));
-      if ((in_stack_0000008f == '\0') || ((dVar23 <= dVar25 && (dVar25 <= dVar27)))) {
-        lVar17 = (int)pbVar6 - lVar17;
+      lVar5 = R_TextLineWrapPositionModCase(uVar11,param_5,0x400,uVar7,param_7);
+      if ((in_stack_0000008f == '\0') || ((dVar17 <= dVar13 && (dVar13 <= dVar14)))) {
+        lVar10 = lVar5 - param_5;
         if (local_520 == '7') {
-          memcpy();
+          memcpy(local_4f0,(void *)param_5,(size_t)lVar10);
         }
         else {
           local_4f0[1] = local_520;
           local_4f0[0] = '^';
-          memcpy();
-          lVar17 = lVar17 + 2;
+          memcpy(local_4f0 + 2,(void *)param_5,(size_t)lVar10);
+          lVar10 = lVar10 + 2;
         }
-        lVar15 = lVar17 + -1;
-        local_4f0[(int)lVar17] = '\0';
-        if (-1 < lVar15) {
-          uVar16 = lVar15 + (ZEXT48(&stack0x00000000) - 0x4ef);
+        lVar8 = lVar10 + -1;
+        local_4f0[(int)lVar10] = '\0';
+        if (-1 < lVar8) {
+          uVar9 = lVar8 + (uVar3 - 0x4ef);
           do {
-            if ((((((char *)uVar16)[-1] == '^') && ((uVar16 & 0xffffffff) != 0)) &&
-                (cVar1 = *(char *)uVar16, cVar1 != '^')) && (('/' < cVar1 && (cVar1 < '<')))) {
-              local_520 = local_4f0[(int)lVar15 + 1];
+            if ((((((char *)uVar9)[-1] == '^') && ((uVar9 & 0xffffffff) != 0)) &&
+                (cVar1 = *(char *)uVar9, cVar1 != '^')) && (('/' < cVar1 && (cVar1 < '<')))) {
+              local_520 = local_4f0[(int)lVar8 + 1];
               break;
             }
-            lVar15 = lVar15 + -1;
-            uVar16 = uVar16 - 1;
-          } while (-1 < lVar15);
+            lVar8 = lVar8 + -1;
+            uVar9 = uVar9 - 1;
+          } while (-1 < lVar8);
         }
-        dVar12 = (double)(ulonglong)local_51c;
-        iVar7 = UI_TextWidthModCase(local_4f0,0,param_4,(float)dVar21,(int)pFVar10);
-        dVar26 = (double)(longlong)iVar7;
-        if (uVar2 == 1) {
-          dVar28 = -(double)(float)(dVar26 * dVar22 - dVar19);
+        iVar6 = UI_TextWidthModCase(param_3,uVar3 - 0x4f0,0,param_7);
+        dVar19 = (double)(longlong)iVar6;
+        if ((in_stack_0000005c & 3) == 1) {
+          dVar21 = -(double)(float)(dVar19 * dVar16 - dVar12);
         }
         else {
-          dVar28 = dVar19;
-          if (uVar2 == 2) {
-            dVar28 = (double)(float)(dVar19 - dVar26);
+          dVar21 = dVar12;
+          if ((in_stack_0000005c & 3) == 2) {
+            dVar21 = (double)(float)(dVar12 - dVar19);
           }
         }
         if (in_stack_00000077 == '\0') {
-          UI_DrawText(pSVar3,local_4f0,0x7fffffff,param_4,(float)dVar28,(float)dVar25,
-                      SUB84(dVar12,0),uVar14,(float)dVar21,(float *)(uint)prVar9->horzAlign,
-                      (uint)prVar9->vertAlign);
+          UI_DrawText(dVar21,dVar13,param_3,uVar4,uVar3 - 0x4f0,0x7fffffff,param_7);
         }
         else {
           if (in_stack_0000007c == 0) {
-            dVar12 = (double)ZEXT48("glowColor");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                            0x20c3,0,"%s");
+                            0x20c3,0,&DAT_82000f98,"glowColor");
           }
-          UI_DrawTextWithGlow(pSVar3,local_4f0,0x7fffffff,param_4,(float)dVar28,(float)dVar25,
-                              SUB84(dVar12,0),uVar14,(float)dVar21,(float *)(uint)prVar9->horzAlign,
-                              (uint)prVar9->vertAlign,in_stack_fffffa38,(bool)in_stack_fffffa3f,
-                              (bool)in_stack_fffffa43,in_stack_fffffa44,in_stack_fffffa48,
-                              in_stack_fffffa4c,in_stack_fffffa50,in_stack_fffffa54,
-                              in_stack_fffffa58);
+          UI_DrawTextWithGlow(dVar21,dVar13,param_3,uVar4,uVar3 - 0x4f0,0x7fffffff,param_7);
         }
-        if ((double)in_stack_00000064[2] < dVar26) {
-          dVar20 = (double)*in_stack_00000064;
-          if (dVar20 < dVar28) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                            0x20cd,0,"textRect->x >= lineX\n\t%g, %g");
-            dVar12 = dVar20;
+        if ((double)in_stack_00000064[2] < dVar19) {
+          dVar15 = (double)*in_stack_00000064;
+          if (dVar15 < dVar21) {
+            MyAssertHandler(dVar15,dVar21,
+                            "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
+                            0x20cd,0,"textRect->x >= lineX\n\t%g, %g",dVar15,dVar21);
           }
-          *in_stack_00000064 = (float)dVar28;
-          in_stack_00000064[2] = (float)dVar26;
+          *in_stack_00000064 = (float)dVar21;
+          in_stack_00000064[2] = (float)dVar19;
         }
       }
-      dVar25 = (double)(float)(dVar24 + dVar25);
-      iVar7 = isspace((uint)*pbVar6);
-      lVar17 = (longlong)(int)pbVar6;
-      while ((iVar7 != 0 && (*(char *)lVar17 != '\n'))) {
-        lVar17 = lVar17 + 1;
-        iVar7 = isspace((uint)*(byte *)lVar17);
+      dVar13 = (double)(float)(dVar18 + dVar13);
+      iVar6 = isspace((uint)*(byte *)lVar5);
+      param_5 = lVar5;
+      while ((iVar6 != 0 && (*(char *)param_5 != '\n'))) {
+        param_5 = param_5 + 1;
+        iVar6 = isspace((uint)*(byte *)param_5);
       }
-    } while (*(char *)lVar17 != '\0');
+    } while (*(char *)param_5 != '\0');
   }
   if (in_stack_0000008f != '\0') {
     UI_ClearScissorRect();
   }
-  in_stack_00000064[3] = (float)(dVar25 - (double)in_stack_00000064[1]);
+  in_stack_00000064[3] = (float)(dVar13 - (double)in_stack_00000064[1]);
   __restfpr_22();
   __restgprlr();
   return;
@@ -11919,74 +10173,21 @@ void _DrawWrappedText(ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,
 
 // 825C4C70  UI_DrawWrappedText  (ui/ui_shared.cpp:8417)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void UI_DrawWrappedText(ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,Font_s *param_4,
-                       float param_5,float param_6,float param_7,float *param_8,int param_9,
-                       int param_10,rectDef_s *param_11,bool param_12)
+void UI_DrawWrappedText(void)
 
 {
-  float *in_stack_0000005c;
-  int in_stack_00000064;
-  byte in_stack_0000006f;
-  bool in_stack_ffffff3b;
-  bool in_stack_ffffff3f;
-  float *in_stack_ffffff40;
-  bool in_stack_ffffff47;
-  bool in_stack_ffffff4b;
-  Material *in_stack_ffffff4c;
-  Material *in_stack_ffffff50;
-  int in_stack_ffffff54;
-  int in_stack_ffffff58;
-  int in_stack_ffffff5c;
-  int in_stack_ffffff60;
-  
-  _DrawWrappedText(param_1,param_2,param_3,param_4,param_5,param_6,param_7,in_stack_0000005c,
-                   in_stack_00000064,(uint)in_stack_0000006f,param_11,in_stack_ffffff3b,
-                   in_stack_ffffff3f,in_stack_ffffff40,in_stack_ffffff47,in_stack_ffffff4b,
-                   in_stack_ffffff4c,in_stack_ffffff50,in_stack_ffffff54,in_stack_ffffff58,
-                   in_stack_ffffff5c,in_stack_ffffff60);
+  _DrawWrappedText();
   return;
 }
 
 
 // 825C4CE8  UI_DrawWrappedTextSubtitled  (ui/ui_shared.cpp:8423)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void UI_DrawWrappedTextSubtitled
-               (ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,Font_s *param_4,
-               float param_5,float param_6,float param_7,float *param_8,int param_9,int param_10,
-               rectDef_s *param_11,float *param_12,bool param_13,bool param_14)
+void UI_DrawWrappedTextSubtitled(void)
 
 {
-  ScreenPlacement *pSVar1;
-  double extraout_f1;
-  double dVar2;
-  double dVar3;
-  byte in_stack_00000077;
-  byte in_stack_0000007f;
-  undefined1 in_stack_ffffff1b;
-  undefined1 in_stack_ffffff1f;
-  float *in_stack_ffffff20;
-  undefined1 in_stack_ffffff27;
-  undefined1 in_stack_ffffff2b;
-  Material *in_stack_ffffff2c;
-  Material *in_stack_ffffff30;
-  int in_stack_ffffff34;
-  int in_stack_ffffff38;
-  int in_stack_ffffff3c;
-  int in_stack_ffffff40;
-  
-  dVar3 = (double)param_7;
-  dVar2 = (double)param_6;
-  pSVar1 = (ScreenPlacement *)__savegprlr_28((double)param_5,param_1);
-  _DrawWrappedText(pSVar1,param_2,param_3,param_4,(float)extraout_f1,(float)dVar2,(float)dVar3,
-                   (float *)(uint)in_stack_00000077,(uint)in_stack_0000007f,1,param_11,
-                   (bool)in_stack_ffffff1b,(bool)in_stack_ffffff1f,in_stack_ffffff20,
-                   (bool)in_stack_ffffff27,(bool)in_stack_ffffff2b,in_stack_ffffff2c,
-                   in_stack_ffffff30,in_stack_ffffff34,in_stack_ffffff38,in_stack_ffffff3c,
-                   in_stack_ffffff40);
+  __savegprlr_28();
+  _DrawWrappedText();
   __restgprlr_28();
   return;
 }
@@ -11994,40 +10195,11 @@ void UI_DrawWrappedTextSubtitled
 
 // 825C4D58  UI_DrawWrappedTextWithEffects  (ui/ui_shared.cpp:8429)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void UI_DrawWrappedTextWithEffects
-               (ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,Font_s *param_4,
-               float param_5,float param_6,float param_7,float *param_8,int param_9,int param_10,
-               rectDef_s *param_11,float *param_12,bool param_13,bool param_14,Material *param_15,
-               Material *param_16,int param_17,int param_18,int param_19,int param_20)
+void UI_DrawWrappedTextWithEffects(void)
 
 {
-  ScreenPlacement *pSVar1;
-  double extraout_f1;
-  double dVar2;
-  double dVar3;
-  int in_stack_000000a4;
-  undefined1 in_stack_fffffeeb;
-  undefined1 in_stack_fffffeef;
-  float *in_stack_fffffef0;
-  undefined1 in_stack_fffffef7;
-  undefined1 in_stack_fffffefb;
-  Material *in_stack_fffffefc;
-  Material *in_stack_ffffff00;
-  int in_stack_ffffff04;
-  int in_stack_ffffff08;
-  int in_stack_ffffff0c;
-  int in_stack_ffffff10;
-  
-  dVar3 = (double)param_7;
-  dVar2 = (double)param_6;
-  pSVar1 = (ScreenPlacement *)__savegprlr_22((double)param_5,param_1);
-  _DrawWrappedText(pSVar1,param_2,param_3,param_4,(float)extraout_f1,(float)dVar2,(float)dVar3,
-                   (float *)0x0,in_stack_000000a4,1,param_11,(bool)in_stack_fffffeeb,
-                   (bool)in_stack_fffffeef,in_stack_fffffef0,(bool)in_stack_fffffef7,
-                   (bool)in_stack_fffffefb,in_stack_fffffefc,in_stack_ffffff00,in_stack_ffffff04,
-                   in_stack_ffffff08,in_stack_ffffff0c,in_stack_ffffff10);
+  __savegprlr_22();
+  _DrawWrappedText();
   __restgprlr_22();
   return;
 }
@@ -12035,297 +10207,305 @@ void UI_DrawWrappedTextWithEffects
 
 // 825C4DE0  UI_WrappedTextHeight  (ui/ui_shared.cpp:8435)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float UI_WrappedTextHeight
-                (char *param_1,float param_2,Font_s *param_3,float param_4,int param_5,int param_6)
+void UI_WrappedTextHeight(double param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int in_r7;
-  float fVar1;
-  rectDef_s local_20;
+  undefined4 local_20;
+  undefined4 local_1c;
+  float local_18;
+  undefined4 local_14;
+  undefined1 local_10;
+  undefined1 local_f;
   
-  local_20.horzAlign = '\0';
-  local_20.vertAlign = '\0';
-  local_20.x = 0.0;
-  local_20.y = 0.0;
-  local_20.h = 0.0;
-  local_20.w = param_2;
-  fVar1 = GetWrappedTextHeight(param_1,&local_20,(Font_s *)param_5,param_4,param_6,in_r7);
-  return fVar1;
+  local_18 = (float)param_1;
+  local_10 = 0;
+  local_f = 0;
+  local_20 = 0;
+  local_1c = 0;
+  local_14 = 0;
+  GetWrappedTextHeight(param_2,param_3,&local_20);
+  return;
 }
 
 
 // 825C4E30  Item_VScrollTextAdjust  (ui/ui_shared.cpp:8449)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-float Item_VScrollTextAdjust
-                (UiContext *param_1,itemDef_t *param_2,float param_3,rectDef_s *param_4,
-                char *param_5,Font_s *param_6,float *param_7)
+void Item_VScrollTextAdjust
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,int param_7)
 
 {
-  itemDef_t *piVar1;
-  LocalClientNum_t *pLVar2;
-  bool bVar5;
+  int iVar1;
+  uint *puVar2;
+  char cVar6;
   int iVar3;
-  textScrollDef_s *ptVar4;
-  longlong lVar6;
-  rectDef_s *prVar7;
-  int in_r9;
-  double extraout_f1;
+  int *piVar4;
+  uint *puVar5;
+  ulonglong uVar7;
+  undefined8 extraout_f1;
   double dVar8;
   double dVar9;
-  double dVar10;
+  undefined8 uVar10;
   double dVar11;
-  float fVar12;
+  double dVar12;
   
-  lVar6 = (longlong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_25((double)param_3,param_1,lVar6,param_4);
-  piVar1 = (itemDef_t *)lVar6;
-  dVar11 = (double)piVar1->textscale;
-  dVar10 = extraout_f1;
-  prVar7 = (rectDef_s *)param_5;
-  bVar5 = Menu_HasScaleTransition(*pLVar2,piVar1->parent);
-  if (bVar5) {
-    fVar12 = Menu_GetTransitionValue
-                       (*pLVar2,piVar1->parent,piVar1->parent->data->scaleTransition + *pLVar2);
-    dVar11 = (double)(float)((double)fVar12 * dVar11);
+  puVar2 = (uint *)__savegprlr_25();
+  iVar1 = (int)param_2;
+  dVar11 = (double)*(float *)(iVar1 + 0x11c);
+  uVar10 = extraout_f1;
+  cVar6 = Menu_HasScaleTransition(*puVar2,*(undefined4 *)(iVar1 + 0x134));
+  if (cVar6 != '\0') {
+    uVar7 = (ulonglong)*puVar2 + 5;
+    dVar8 = (double)Menu_GetTransitionValue
+                              ((ulonglong)*puVar2,*(uint **)(iVar1 + 0x134),
+                               (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                               (ulonglong)**(uint **)(iVar1 + 0x134));
+    dVar11 = (double)(float)(dVar8 * dVar11);
   }
-  iVar3 = UI_TextHeight((Font_s *)param_7,(float)dVar11);
+  iVar3 = UI_TextHeight(dVar11,param_6);
   dVar9 = (double)(longlong)iVar3;
-  fVar12 = Item_GetTextPlacementY
-                     (piVar1->textAlignMode & 0xc,(float)dVar10,((rectDef_s *)param_5)->h,
-                      (float)(longlong)iVar3);
-  dVar10 = (double)fVar12;
-  fVar12 = GetWrappedTextHeight
-                     ((char *)param_6,(rectDef_s *)param_5,(Font_s *)param_7,(float)dVar11,
-                      (int)prVar7,piVar1->textAlignMode);
-  dVar11 = 0.0;
-  dVar10 = (double)(((float)(dVar10 - dVar9) + fVar12) - ((rectDef_s *)param_5)->h);
-  if (0.0 < dVar10) {
-    ptVar4 = Item_GetTextScrollDef(piVar1);
-    dVar9 = (double)((float)(longlong)(int)(pLVar2[2] - ptVar4->startTime) * 0.001 -
-                    (ui_textScrollPauseStart->current).value);
-    if (dVar11 < dVar9) {
-      dVar8 = (double)(float)(dVar10 / (double)(ui_textScrollSpeed->current).value);
-      if (dVar9 < dVar8) {
-        dVar10 = (double)__restgprlr_25((double)(float)((double)(ui_textScrollSpeed->current).value
-                                                       * dVar9));
-        return (float)dVar10;
+  dVar8 = (double)Item_GetTextPlacementY
+                            (uVar10,(double)*(float *)((int)param_4 + 0xc),dVar9,
+                             *(uint *)(iVar1 + 0x110) & 0xc);
+  dVar11 = (double)GetWrappedTextHeight(dVar11,param_5,param_4,param_6);
+  dVar12 = 0.0;
+  dVar11 = (double)((float)((double)(float)(dVar8 - dVar9) + dVar11) -
+                   *(float *)((int)param_4 + 0xc));
+  if (0.0 < dVar11) {
+    piVar4 = (int *)Item_GetTextScrollDef(param_2);
+    dVar8 = (double)((float)(longlong)(int)(puVar2[2] - *piVar4) * 0.001 -
+                    *(float *)(DAT_83f71ea0 + 0xc));
+    if (dVar12 < dVar8) {
+      dVar9 = (double)(float)(dVar11 / (double)*(float *)(DAT_83f71e08 + 0xc));
+      if (dVar8 < dVar9) {
+        __restgprlr_25((double)(float)((double)*(float *)(DAT_83f71e08 + 0xc) * dVar8));
+        return;
       }
-      dVar9 = (double)((float)(dVar9 - dVar8) - (ui_textScrollPauseEnd->current).value);
-      if (dVar9 <= dVar11) {
-        dVar10 = (double)__restgprlr_25(dVar10);
-        return (float)dVar10;
+      dVar8 = (double)((float)(dVar8 - dVar9) - *(float *)(DAT_83f71eb8 + 0xc));
+      if (dVar8 <= dVar12) {
+        __restgprlr_25(dVar11);
+        return;
       }
-      dVar8 = (double)(ui_textScrollFadeTime->current).value;
-      if (dVar9 < dVar8) {
-        *(float *)(in_r9 + 0xc) = (1.0 - (float)(dVar9 / dVar8)) * *(float *)(in_r9 + 0xc);
-        dVar10 = (double)__restgprlr_25(dVar10);
-        return (float)dVar10;
+      dVar9 = (double)*(float *)(DAT_83fe7428 + 0xc);
+      if (dVar8 < dVar9) {
+        *(float *)(param_7 + 0xc) = (1.0 - (float)(dVar8 / dVar9)) * *(float *)(param_7 + 0xc);
+        __restgprlr_25(dVar11);
+        return;
       }
-      dVar10 = (double)(float)(dVar9 - (double)(ui_textScrollFadeTime->current).value);
-      if ((double)(ui_textScrollFadeTime->current).value <= dVar10) {
-        ptVar4 = Item_GetTextScrollDef(piVar1);
-        ptVar4->startTime = pLVar2[2];
+      dVar11 = (double)(float)(dVar8 - (double)*(float *)(DAT_83fe7428 + 0xc));
+      if ((double)*(float *)(DAT_83fe7428 + 0xc) <= dVar11) {
+        puVar5 = (uint *)Item_GetTextScrollDef(param_2);
+        *puVar5 = puVar2[2];
       }
       else {
-        *(float *)(in_r9 + 0xc) =
-             (float)((double)(float)((double)*(float *)(in_r9 + 0xc) / dVar8) * dVar10);
+        *(float *)(param_7 + 0xc) =
+             (float)((double)(float)((double)*(float *)(param_7 + 0xc) / dVar9) * dVar11);
       }
     }
   }
-  dVar10 = (double)__restgprlr_25(dVar11);
-  return (float)dVar10;
+  __restgprlr_25(dVar12);
+  return;
 }
 
 
 // 825C5088  Item_Text_AutoWrapped_Paint  (ui/ui_shared.cpp:8517)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void Item_Text_AutoWrapped_Paint
-               (UiContext *param_1,itemDef_t *param_2,char *param_3,float *param_4,bool param_5,
-               float *param_6,bool param_7)
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,int param_4,
+               ulonglong param_5,ulonglong param_6)
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  itemDef_t *piVar3;
-  UiContext *pUVar4;
-  ScreenPlacement *pSVar5;
-  Font_s *pFVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  Font_s *pFVar9;
-  ulonglong uVar10;
-  char *pcVar11;
-  ulonglong uVar12;
-  int iVar13;
-  sharedUiInfo_t *psVar14;
-  int iVar15;
-  undefined4 *puVar16;
-  longlong lVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  float fVar22;
-  undefined1 in_stack_fffffe8b;
-  undefined1 in_stack_fffffe8f;
-  float *in_stack_fffffe90;
-  undefined1 in_stack_fffffe97;
-  undefined1 in_stack_fffffe9b;
-  Material *in_stack_fffffe9c;
-  Material *in_stack_fffffea0;
-  int in_stack_fffffea4;
-  int in_stack_fffffea8;
-  int in_stack_fffffeac;
-  int in_stack_fffffeb0;
-  undefined1 local_c0 [16];
-  rectDef_s local_b0 [8];
+  undefined4 uVar2;
+  int iVar3;
+  uint *puVar6;
+  undefined8 uVar4;
+  char cVar7;
+  undefined8 uVar5;
+  undefined4 *puVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  undefined4 local_b4;
+  float local_b0;
+  float local_ac;
+  float local_a8;
+  float local_a4;
   
-  uVar12 = (ulonglong)(int)param_6;
-  uVar10 = (ulonglong)param_5;
-  uVar8 = (ulonglong)(int)param_2;
-  pUVar4 = (UiContext *)__savegprlr_18(param_1);
-  pcVar11 = (char *)uVar10;
-  pFVar9 = (Font_s *)param_3;
-  if ((uVar8 & 0xffffffff) == 0) {
-    pcVar11 = "w";
-    pFVar9 = (Font_s *)0x0;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
-                   );
+  puVar6 = (uint *)__savegprlr_18();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018fa0,0x24,0,0xffffffff82000f98,0xffffffff8200fdb4);
   }
-  piVar3 = (itemDef_t *)uVar8;
-  dVar20 = (double)piVar3->textscale;
-  iVar13 = piVar3->fontEnum;
-  pSVar5 = ScrPlace_GetActivePlacement(pUVar4->localClientNum);
-  pFVar6 = UI_GetFontHandle(pSVar5,iVar13,(float)dVar20);
-  dVar20 = (double)piVar3->textscale;
-  bVar7 = Menu_HasScaleTransition(pUVar4->localClientNum,piVar3->parent);
-  if (bVar7) {
-    pFVar9 = (Font_s *)(piVar3->parent->data->scaleTransition + pUVar4->localClientNum);
-    fVar22 = Menu_GetTransitionValue(pUVar4->localClientNum,piVar3->parent,(menuTransition *)pFVar9)
-    ;
-    dVar20 = (double)(float)((double)fVar22 * dVar20);
+  iVar3 = (int)param_2;
+  dVar13 = (double)*(float *)(iVar3 + 0x11c);
+  uVar2 = *(undefined4 *)(iVar3 + 0x10c);
+  uVar4 = ScrPlace_GetActivePlacement(*puVar6);
+  uVar4 = UI_GetFontHandle(dVar13,uVar4,uVar2);
+  dVar13 = (double)*(float *)(iVar3 + 0x11c);
+  cVar7 = Menu_HasScaleTransition(*puVar6,*(undefined4 *)(iVar3 + 0x134));
+  if (cVar7 != '\0') {
+    uVar9 = (ulonglong)*puVar6 + 5;
+    dVar11 = (double)Menu_GetTransitionValue
+                               ((ulonglong)*puVar6,*(uint **)(iVar3 + 0x134),
+                                (uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                                (ulonglong)**(uint **)(iVar3 + 0x134));
+    dVar13 = (double)(float)(dVar11 * dVar13);
   }
-  dVar21 = (double)piVar3->textalignx;
-  fVar22 = piVar3->textaligny;
-  if (piVar3->textAlignYExp != (Statement_s *)0x0) {
-    fVar22 = GetExpressionFloat(pUVar4->localClientNum,piVar3->textAlignYExp);
+  dVar14 = (double)*(float *)(iVar3 + 0x114);
+  dVar11 = (double)*(float *)(iVar3 + 0x118);
+  if (*(int *)(iVar3 + 0x1d0) != 0) {
+    dVar11 = (double)GetExpressionFloat(*puVar6);
   }
-  dVar19 = (double)fVar22;
-  puVar16 = (undefined4 *)(local_c0 + 0xc);
-  lVar17 = 5;
+  puVar8 = &local_b4;
+  lVar10 = 5;
+  uVar9 = param_2;
   do {
-    uVar8 = uVar8 + 4;
-    puVar16 = puVar16 + 1;
-    *puVar16 = *(undefined4 *)uVar8;
-    lVar17 = lVar17 + -1;
-  } while (lVar17 != 0);
-  fVar1 = (piVar3->window).borderSize;
-  local_b0[0].x = fVar1 + local_b0[0].x;
-  local_b0[0].y = fVar1 + local_b0[0].y;
-  local_c0._0_4_ = *param_4;
-  local_c0._4_4_ = param_4[1];
-  local_c0._8_4_ = param_4[2];
-  local_c0._12_4_ = param_4[3];
-  local_b0[0].h = local_b0[0].h - fVar1 * 2.0;
-  local_b0[0].w = local_b0[0].w - fVar1 * 2.0;
-  if (piVar3->type == 0x15) {
-    pcVar11 = param_3;
-    fVar22 = Item_VScrollTextAdjust
-                       (pUVar4,piVar3,fVar22,(rectDef_s *)pFVar9,(char *)local_b0,(Font_s *)param_3,
-                        (float *)pFVar6);
-    dVar19 = (double)(float)(dVar19 - (double)fVar22);
+    uVar9 = uVar9 + 4;
+    puVar8 = puVar8 + 1;
+    *puVar8 = *(undefined4 *)uVar9;
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  fVar1 = *(float *)(iVar3 + 0x40);
+  local_b0 = fVar1 + local_b0;
+  local_ac = fVar1 + local_ac;
+  local_b4 = *(undefined4 *)(param_4 + 0xc);
+  local_a4 = local_a4 - fVar1 * 2.0;
+  local_a8 = local_a8 - fVar1 * 2.0;
+  if (*(int *)(iVar3 + 0x100) == 0x15) {
+    dVar12 = (double)Item_VScrollTextAdjust(dVar11,puVar6,param_2);
+    dVar11 = (double)(float)(dVar11 - dVar12);
   }
-  if ((piVar3->window).border != 0) {
-    dVar18 = (double)(piVar3->window).borderSize;
-    dVar21 = (double)(float)(dVar18 + dVar21);
-    dVar19 = (double)(float)(dVar18 + dVar19);
+  if (*(int *)(iVar3 + 0x34) != 0) {
+    dVar14 = (double)(float)((double)*(float *)(iVar3 + 0x40) + dVar14);
+    dVar11 = (double)(float)((double)*(float *)(iVar3 + 0x40) + dVar11);
   }
-  iVar15 = piVar3->type + -0x15;
-  dVar18 = (double)(float)((double)(piVar3->window).rect.x + dVar21);
-  iVar13 = (int)LZCOUNT(iVar15);
-  dVar21 = (double)(float)((double)(piVar3->window).rect.y + dVar19);
-  if ((uVar10 & 0xff) != 0) {
-    if ((uVar12 & 0xffffffff) == 0) {
-      pcVar11 = "subtitleGlowColor";
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x216d,0,
-                      "%s");
+  dVar14 = (double)(float)((double)*(float *)(iVar3 + 4) + dVar14);
+  dVar11 = (double)(float)((double)*(float *)(iVar3 + 8) + dVar11);
+  if ((param_5 & 0xff) != 0) {
+    if ((param_6 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82170658,0x216d,0,0xffffffff82000f98,0xffffffff82172678);
     }
-    pSVar5 = ScrPlace_GetActivePlacement(pUVar4->localClientNum);
-    _DrawWrappedText(pSVar5,param_3,local_b0,pFVar6,(float)dVar18,(float)dVar21,(float)dVar20,
-                     (float *)pcVar11,iVar13,1,(rectDef_s *)local_c0,(bool)in_stack_fffffe8b,
-                     (bool)in_stack_fffffe8f,in_stack_fffffe90,(bool)in_stack_fffffe97,
-                     (bool)in_stack_fffffe9b,in_stack_fffffe9c,in_stack_fffffea0,in_stack_fffffea4,
-                     in_stack_fffffea8,in_stack_fffffeac,in_stack_fffffeb0);
+    uVar5 = ScrPlace_GetActivePlacement();
+    _DrawWrappedText(dVar14,dVar11,dVar13,uVar5,param_3,&local_b0,uVar4);
     __restgprlr_18();
     return;
   }
-  LVar2 = pUVar4->localClientNum;
-  if (piVar3->glowColor[3] != 0.0) {
-    iVar13 = LVar2 * 5;
-    psVar14 = &sharedUiInfo;
-    pSVar5 = ScrPlace_GetActivePlacement(LVar2);
-    _DrawWrappedText(pSVar5,param_3,local_b0,pFVar6,(float)dVar18,(float)dVar21,(float)dVar20,
-                     (float *)0x1,iVar13,(int)psVar14,(rectDef_s *)local_c0,(bool)in_stack_fffffe8b,
-                     (bool)in_stack_fffffe8f,in_stack_fffffe90,(bool)in_stack_fffffe97,
-                     (bool)in_stack_fffffe9b,in_stack_fffffe9c,in_stack_fffffea0,in_stack_fffffea4,
-                     in_stack_fffffea8,in_stack_fffffeac,in_stack_fffffeb0);
+  if (*(float *)(iVar3 + 0x1b4) != 0.0) {
+    uVar5 = ScrPlace_GetActivePlacement();
+    _DrawWrappedText(dVar14,dVar11,dVar13,uVar5,param_3,&local_b0,uVar4);
     __restgprlr_18();
     return;
   }
-  pSVar5 = ScrPlace_GetActivePlacement(LVar2);
-  _DrawWrappedText(pSVar5,param_3,local_b0,pFVar6,(float)dVar18,(float)dVar21,(float)dVar20,
-                   (float *)pcVar11,iVar13,iVar15,(rectDef_s *)local_c0,(bool)in_stack_fffffe8b,
-                   (bool)in_stack_fffffe8f,in_stack_fffffe90,(bool)in_stack_fffffe97,
-                   (bool)in_stack_fffffe9b,in_stack_fffffe9c,in_stack_fffffea0,in_stack_fffffea4,
-                   in_stack_fffffea8,in_stack_fffffeac,in_stack_fffffeb0);
+  uVar5 = ScrPlace_GetActivePlacement();
+  _DrawWrappedText(dVar14,dVar11,dVar13,uVar5,param_3,&local_b0,uVar4);
   __restgprlr_18();
   return;
 }
 
 
 // 825C5480  DirectiveFakeIntroSeconds  (ui/ui_shared.cpp:8652)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void DirectiveFakeIntroSeconds
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int local_40 [16];
+  
+  uVar1 = __savegprlr_27();
+  local_40[0] = 0;
+  sscanf((char *)param_2,"%d",local_40);
+  if ((local_40[0] < 0) || (0x28 < local_40[0])) {
+    local_40[0] = 0;
+    Com_PrintWarning(1,0xffffffff82172690,param_2,0,0x28);
+  }
+  iVar2 = CL_IsCgameInitialized(uVar1);
+  if (iVar2 == 0) {
+    local_40[0] = 0;
+  }
+  else {
+    iVar2 = CG_GetLocalClientGlobals(uVar1);
+    local_40[0] = *(int *)(iVar2 + 0x6b98c) / 1000 + local_40[0];
+  }
+  Com_sprintf(param_3,param_4,0xffffffff82165e30);
+  __restgprlr_27();
+  return;
+}
+
 
 // 825C5548  DirectiveFakeIntroTime  (ui/ui_shared.cpp:8681)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+void DirectiveFakeIntroTime(undefined8 param_1,char *param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int local_40;
+  int local_3c;
+  int local_38 [14];
+  
+  uVar1 = __savegprlr_28();
+  local_40 = 0;
+  sscanf(param_2,"%d:%d:%d",&local_3c,local_38,&local_40);
+  if (local_3c < 0) {
+    local_3c = 0;
+    Com_PrintWarning(1,0xffffffff82172768,0);
+  }
+  if ((local_38[0] < 0) || (0x3b < local_38[0])) {
+    local_38[0] = 0;
+    Com_PrintWarning(1,0xffffffff82172730,0);
+  }
+  if ((local_40 < 0) || (0x3b < local_40)) {
+    local_40 = 0;
+    Com_PrintWarning(1,0xffffffff821726f8,0);
+  }
+  iVar2 = CL_IsCgameInitialized(uVar1);
+  if (iVar2 == 0) {
+    local_40 = 0;
+  }
+  else {
+    iVar2 = CG_GetLocalClientGlobals(uVar1);
+    local_40 = *(int *)(iVar2 + 0x6b98c) / 1000 + local_40;
+  }
+  local_38[0] = local_40 / 0x3c + local_38[0];
+  local_3c = local_38[0] / 0x3c + local_3c;
+  local_38[0] = local_38[0] % 0x3c;
+  local_40 = local_40 % 0x3c;
+  Com_sprintf(param_3,param_4,0xffffffff821726e8);
+  __restgprlr_28();
+  return;
+}
+
 
 // 825C56C8  ParseDirective  (ui/ui_shared.cpp:8727)
 
-void ParseDirective(char *param_1,char *param_2,int param_3,char *param_4,int param_5)
+void ParseDirective(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                   undefined8 param_5)
 
 {
-  char *pcVar1;
+  ulonglong uVar1;
   char *pcVar2;
+  char *_Str;
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x221a,0,
-                    "%s");
+  uVar1 = __savegprlr_26();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x221a,0,0xffffffff82000f98,0xffffffff821727ac);
   }
-  pcVar2 = strstr(pcVar1,":");
+  _Str = (char *)uVar1;
+  pcVar2 = strstr(_Str,":");
   if (pcVar2 == (char *)0x0) {
-    I_strncpyz(param_2,pcVar1,param_3);
-    *param_4 = '\0';
+    I_strncpyz(param_2,uVar1,param_3);
+    *(undefined1 *)param_4 = 0;
     __restgprlr_26();
     return;
   }
-  memcpy();
-  param_2[(int)pcVar2 - (int)pcVar1] = '\0';
-  I_strncpyz(param_4,pcVar2 + 1,param_5);
+  memcpy((void *)param_2,_Str,(int)pcVar2 - (int)_Str);
+  *(undefined1 *)(((int)pcVar2 - (int)_Str) + (int)(void *)param_2) = 0;
+  I_strncpyz(param_4,(longlong)(int)pcVar2 + 1,param_5);
   __restgprlr_26();
   return;
 }
@@ -12333,155 +10513,143 @@ void ParseDirective(char *param_1,char *param_2,int param_3,char *param_4,int pa
 
 // 825CC850  ProcessStringDirective  (ui/ui_shared.cpp:8752)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void ProcessStringDirective(LocalClientNum_t param_1,char *param_2,char *param_3,int param_4)
+void ProcessStringDirective
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   int iVar2;
-  char acStack_230 [256];
-  char acStack_130 [304];
+  undefined1 auStack_230 [256];
+  undefined1 auStack_130 [304];
   
-  LVar1 = __savegprlr_28(param_1);
-  iVar2 = GetKeyBindingLocalizedString(LVar1,param_2,param_3,param_4,false);
+  uVar1 = __savegprlr_28();
+  iVar2 = GetKeyBindingLocalizedString();
   if (iVar2 != 0) {
     UI_FilterStringForButtonAnimation(param_3,param_4);
     __restgprlr_28();
     return;
   }
-  ParseDirective(param_2,acStack_230,0x100,acStack_130,0x100);
-  iVar2 = I_stricmp(acStack_230,"FAKE_INTRO_SECONDS");
+  ParseDirective(param_2,auStack_230,0x100,auStack_130,0x100);
+  iVar2 = I_stricmp(auStack_230,0xffffffff8217388c);
   if (iVar2 == 0) {
-    DirectiveFakeIntroSeconds(LVar1,acStack_130,param_3,param_4);
+    DirectiveFakeIntroSeconds(uVar1,auStack_130,param_3,param_4);
     __restgprlr_28();
     return;
   }
-  iVar2 = I_stricmp(acStack_230,"FAKE_INTRO_TIME");
+  iVar2 = I_stricmp(auStack_230,0xffffffff8217387c);
   if (iVar2 == 0) {
-    DirectiveFakeIntroTime(LVar1,acStack_130,param_3,param_4);
+    DirectiveFakeIntroTime(uVar1,auStack_130,param_3,param_4);
     __restgprlr_28();
     return;
   }
-  UI_SafeTranslateString("KEY_UNBOUND");
-  iVar2 = Com_sprintf(param_3,param_4,"%s(%s)");
-  __restgprlr_28(iVar2);
+  uVar1 = UI_SafeTranslateString(0xffffffff82020a9c);
+  Com_sprintf(param_3,param_4,0xffffffff82173874,uVar1,param_2);
+  __restgprlr_28();
   return;
 }
 
 
 // 825CC940  UI_ReplaceDirective  (ui/ui_shared.cpp:8783)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void UI_ReplaceDirective(LocalClientNum_t param_1,char *param_2,char *param_3,int param_4)
+void UI_ReplaceDirective(undefined8 param_1,ulonglong param_2,ulonglong param_3,longlong param_4)
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  char cVar5;
-  ulonglong uVar6;
-  char *pcVar7;
-  char *pcVar9;
-  ulonglong uVar8;
-  ulonglong uVar10;
+  void *pvVar2;
+  void *pvVar3;
+  char cVar4;
+  ulonglong uVar5;
+  char *pcVar6;
+  ulonglong uVar7;
   char local_260 [256];
-  char acStack_160 [352];
+  undefined1 auStack_160 [352];
   
-  lVar4 = (longlong)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_21(param_1);
-  if ((uVar10 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2256,0,
-                    "%s");
+  pvVar2 = (void *)__savegprlr_21();
+  pvVar3 = pvVar2;
+  if ((param_2 & 0xffffffff) == 0) {
+    pvVar3 = (void *)MyAssertHandler(0xffffffff82170658,0x2256,0,0xffffffff82000f98,
+                                     0xffffffff8217392c);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2257,0,
-                    "%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    pvVar3 = (void *)MyAssertHandler(0xffffffff82170658,0x2257,0,0xffffffff82000f98,
+                                     0xffffffff82173920);
   }
-  if ((uVar10 & 0xffffffff) == (uVar3 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2258,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == (param_3 & 0xffffffff)) {
+    pvVar3 = (void *)MyAssertHandler(0xffffffff82170658,0x2258,0,0xffffffff82000f98,
+                                     0xffffffff82173908);
   }
-  if ((int)lVar4 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2259,0,
-                    "%s");
+  if ((int)param_4 < 1) {
+    pvVar3 = (void *)MyAssertHandler(0xffffffff82170658,0x2259,0,0xffffffff82000f98,
+                                     0xffffffff821738f4);
   }
-  uVar6 = uVar3 + lVar4;
-  pcVar7 = local_260;
+  uVar5 = param_3 + param_4;
+  pcVar6 = local_260;
   bVar1 = false;
-  *(undefined1 *)((int)uVar6 + -1) = 0;
-  cVar5 = *(char *)uVar10;
-  uVar8 = uVar3;
-  if (cVar5 != '\0') {
+  *(undefined1 *)((int)uVar5 + -1) = 0;
+  cVar4 = *(char *)param_2;
+  uVar7 = param_3;
+  if (cVar4 != '\0') {
     do {
-      if ((uVar6 - 1 & 0xffffffff) <= (uVar8 & 0xffffffff)) break;
-      if ((cVar5 == '[') && (*(char *)((int)uVar10 + 1) == '{')) {
-        uVar10 = uVar10 + 1;
+      if ((uVar5 - 1 & 0xffffffff) <= (uVar7 & 0xffffffff)) break;
+      if ((cVar4 == '[') && (*(char *)((int)param_2 + 1) == '{')) {
+        param_2 = param_2 + 1;
         bVar1 = true;
-        pcVar7 = local_260;
-        memset();
+        pcVar6 = local_260;
+        pvVar3 = memset(local_260,0,0x100);
       }
-      else {
-        pcVar9 = (char *)uVar8;
-        if ((cVar5 == '}') && (*(char *)((int)uVar10 + 1) == ']')) {
-          uVar10 = uVar10 + 1;
-          bVar1 = false;
-          if (pcVar7 == local_260) {
-            Com_PrintError(0xd,"Directive empty in string \'%s\'");
-          }
-          else {
-            ProcessStringDirective(LVar2,local_260,acStack_160,0x100);
-            I_strncpyz(pcVar9,acStack_160,((int)uVar3 - (int)pcVar9) + (int)lVar4);
-            cVar5 = *pcVar9;
-            while (cVar5 != '\0') {
-              uVar8 = uVar8 + 1;
-              cVar5 = *(char *)uVar8;
-            }
-          }
-        }
-        else if (bVar1) {
-          *pcVar7 = cVar5;
-          pcVar7 = pcVar7 + 1;
+      else if ((cVar4 == '}') && (*(char *)((int)param_2 + 1) == ']')) {
+        param_2 = param_2 + 1;
+        bVar1 = false;
+        if (pcVar6 == local_260) {
+          pvVar3 = (void *)Com_PrintError(0xd,0xffffffff821738d4,param_2);
         }
         else {
-          *pcVar9 = cVar5;
-          uVar8 = uVar8 + 1;
+          ProcessStringDirective(pvVar2,local_260,auStack_160,0x100);
+          pvVar3 = (void *)I_strncpyz(uVar7,auStack_160,(param_3 - uVar7) + param_4);
+          cVar4 = *(char *)uVar7;
+          while (cVar4 != '\0') {
+            uVar7 = uVar7 + 1;
+            cVar4 = *(char *)uVar7;
+          }
         }
       }
-      uVar10 = uVar10 + 1;
-      cVar5 = *(char *)uVar10;
-    } while (cVar5 != '\0');
+      else if (bVar1) {
+        *pcVar6 = cVar4;
+        pcVar6 = pcVar6 + 1;
+      }
+      else {
+        *(char *)uVar7 = cVar4;
+        uVar7 = uVar7 + 1;
+      }
+      param_2 = param_2 + 1;
+      cVar4 = *(char *)param_2;
+    } while (cVar4 != '\0');
   }
-  if ((uVar8 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-    *(undefined1 *)uVar8 = 0;
+  if ((uVar7 & 0xffffffff) < (uVar5 & 0xffffffff)) {
+    *(undefined1 *)uVar7 = 0;
   }
   if (bVar1) {
-    Com_PrintError(0xd,"No end token to match begin token in string \'%s\'");
+    pvVar3 = (void *)Com_PrintError(0xd,0xffffffff821738a0,param_2);
   }
-  __restgprlr_21();
+  __restgprlr_21(pvVar3);
   return;
 }
 
 
 // 825C5780  UI_LocalizationError  (ui/ui_shared.cpp:8849)
 
-void UI_LocalizationError(char *param_1)
+void UI_LocalizationError(ulonglong param_1)
 
 {
-  if ((loc_warningsUI->current).enabled != false) {
-    if (param_1 == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2294,0,
-                      "%s");
+  if (*(char *)(DAT_83f5de08 + 0xc) != '\0') {
+    if ((param_1 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82170658,0x2294,0,0xffffffff82000f98,0xffffffff82050564);
     }
-    if ((loc_warningsAsErrors->current).enabled != false) {
-      Com_Error(ERR_LOCALIZATION,"Error: %s");
+    if (*(char *)(DAT_83f5de04 + 0xc) != '\0') {
+      Com_Error(6,0xffffffff821727c8);
       return;
     }
-    Com_PrintWarning(0xd,"WARNING: %s\n");
+    Com_PrintWarning(0xd,0xffffffff821727b8,param_1);
   }
   return;
 }
@@ -12489,208 +10657,176 @@ void UI_LocalizationError(char *param_1)
 
 // 825C5838  UI_ValidateNonLocalizedString  (ui/ui_shared.cpp:8863)
 
-bool UI_ValidateNonLocalizedString(char *param_1,uint param_2)
+void UI_ValidateNonLocalizedString(undefined8 param_1,ulonglong param_2)
 
 {
   char cVar1;
   int iVar2;
   int iVar3;
-  undefined1 uVar5;
-  char *pcVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  ulonglong uVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  uVar7 = 0;
-  if ((uVar6 & 0xffffffff) != 0) {
+  iVar2 = __savegprlr_28();
+  uVar4 = 0;
+  if ((param_2 & 0xffffffff) != 0) {
     do {
-      cVar1 = *(char *)((int)uVar7 + iVar2);
+      cVar1 = *(char *)((int)uVar4 + iVar2);
       if (((cVar1 == '\x14') || (cVar1 == '\x15')) || (cVar1 == '\x16')) {
-        Com_PrintError(0xd,"Error: bad escape character (%i) present in string");
+        Com_PrintError(0xd,0xffffffff821727d4);
       }
-      iVar3 = isalpha((int)*(char *)((int)uVar7 + iVar2));
+      iVar3 = isalpha((int)*(char *)((int)uVar4 + iVar2));
       if (iVar3 != 0) {
-        pcVar4 = va("Non-localized UI strings are not allowed to have letters in them: \"%s\"");
-        if ((loc_warningsUI->current).enabled != false) {
-          if (pcVar4 == (char *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                            0x2294,0,"%s");
+        uVar4 = va(0xffffffff821679d0,iVar2);
+        if (*(char *)(DAT_83f5de08 + 0xc) != '\0') {
+          if ((uVar4 & 0xffffffff) == 0) {
+            MyAssertHandler(0xffffffff82170658,0x2294,0,0xffffffff82000f98,0xffffffff82050564);
           }
-          if ((loc_warningsAsErrors->current).enabled != false) {
-            Com_Error(ERR_LOCALIZATION,"Error: %s");
-            uVar5 = __restgprlr_28(0);
-            return (bool)uVar5;
+          if (*(char *)(DAT_83f5de04 + 0xc) != '\0') {
+            Com_Error(6,0xffffffff821727c8);
+            __restgprlr_28(0);
+            return;
           }
-          Com_PrintWarning(0xd,"WARNING: %s\n");
+          Com_PrintWarning(0xd,0xffffffff821727b8,uVar4);
         }
-        uVar5 = __restgprlr_28(0);
-        return (bool)uVar5;
+        __restgprlr_28(0);
+        return;
       }
-      uVar7 = uVar7 + 1;
-    } while ((uVar7 & 0xffffffff) < (uVar6 & 0xffffffff));
+      uVar4 = uVar4 + 1;
+    } while ((uVar4 & 0xffffffff) < (param_2 & 0xffffffff));
   }
-  uVar5 = __restgprlr_28(1);
-  return (bool)uVar5;
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 825C5960  UI_ValidateAndStripTranslatedString  (ui/ui_shared.cpp:8884)
 
-bool UI_ValidateAndStripTranslatedString(char *param_1,char *param_2,uint param_3)
+void UI_ValidateAndStripTranslatedString(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-  char cVar1;
-  bool bVar2;
-  char *pcVar3;
-  int iVar4;
+  char *pcVar1;
+  char cVar2;
+  bool bVar3;
   char *pcVar5;
-  undefined1 uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  ulonglong uVar9;
+  undefined8 uVar4;
+  int iVar6;
+  int iVar7;
+  ulonglong uVar8;
   
-  uVar7 = (ulonglong)(int)param_3;
-  pcVar3 = (char *)__savegprlr_17(param_1);
-  bVar2 = false;
-  iVar8 = 0;
-  uVar9 = 0;
-  cVar1 = *pcVar3;
-  while (cVar1 != '\0') {
-    cVar1 = *pcVar3;
-    if (cVar1 == '\x15') {
-      if (iVar8 != 0) {
-        va("multiple loc_off\'s: \"%s\"");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x22c1,0
-                        ,"%s\n\t%s");
+  pcVar5 = (char *)__savegprlr_17();
+  bVar3 = false;
+  iVar7 = 0;
+  uVar8 = 0;
+  cVar2 = *pcVar5;
+  pcVar1 = pcVar5;
+  while (cVar2 != '\0') {
+    cVar2 = *pcVar1;
+    if (cVar2 == '\x15') {
+      if (iVar7 != 0) {
+        uVar4 = va(0xffffffff82172854,pcVar5);
+        MyAssertHandler(0xffffffff82170658,0x22c1,0,0xffffffff820011f4,0xffffffff8217289c,uVar4);
       }
-      iVar8 = iVar8 + 1;
+      iVar7 = iVar7 + 1;
     }
-    else if (cVar1 == '\x14') {
-      if (iVar8 != 1) {
-        va("loc_on without loc_off: \"%s\"");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x22c7,0
-                        ,"%s\n\t%s");
+    else if (cVar2 == '\x14') {
+      if (iVar7 != 1) {
+        uVar4 = va(0xffffffff82172870,pcVar5);
+        MyAssertHandler(0xffffffff82170658,0x22c7,0,0xffffffff820011f4,0xffffffff82172890,uVar4);
       }
-      iVar8 = iVar8 + -1;
+      iVar7 = iVar7 + -1;
     }
     else {
-      if ((((loc_warningsUI->current).enabled != false) && (iVar8 == 0)) &&
-         (iVar4 = isalpha((int)cVar1), iVar4 != 0)) {
-        pcVar5 = va("Non-localized UI strings are not allowed to have letters in them: \"%s\"");
-        UI_LocalizationError(pcVar5);
-        bVar2 = true;
+      if (((*(char *)(DAT_83f5de08 + 0xc) != '\0') && (iVar7 == 0)) &&
+         (iVar6 = isalpha((int)cVar2), iVar6 != 0)) {
+        va(0xffffffff821679d0,pcVar5);
+        UI_LocalizationError();
+        bVar3 = true;
       }
-      if ((uVar7 & 0xffffffff) <= (uVar9 & 0xffffffff)) goto LAB_825c5b08;
-      param_2[(int)uVar9] = *pcVar3;
-      uVar9 = uVar9 + 1;
+      if ((param_3 & 0xffffffff) <= (uVar8 & 0xffffffff)) goto LAB_825c5b08;
+      *(char *)((int)uVar8 + param_2) = *pcVar1;
+      uVar8 = uVar8 + 1;
     }
-    pcVar3 = pcVar3 + 1;
-    cVar1 = *pcVar3;
+    pcVar1 = pcVar1 + 1;
+    cVar2 = *pcVar1;
   }
-  if ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-    param_2[(int)uVar9] = '\0';
-    if (iVar8 != 0) {
-      va("missing a matching loc_on: \"%s\"");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x22e7,0,
-                      "%s\n\t%s");
+  if ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    *(undefined1 *)((int)uVar8 + param_2) = 0;
+    if (iVar7 != 0) {
+      uVar4 = va(0xffffffff82172834,pcVar5);
+      MyAssertHandler(0xffffffff82170658,0x22e7,0,0xffffffff820011f4,0xffffffff8217289c,uVar4);
     }
-    uVar6 = __restgprlr_17(!bVar2);
-    return (bool)uVar6;
+    __restgprlr_17(!bVar3);
+    return;
   }
 LAB_825c5b08:
-  Com_Error(ERR_LOCALIZATION,"Error: %s is too long. Max length is %i\n");
-  uVar6 = __restgprlr_17(0);
-  return (bool)uVar6;
+  Com_Error(6,0xffffffff82172808,pcVar5,param_3);
+  __restgprlr_17(0);
+  return;
 }
 
 
 // 825CCB50  Item_Text_Paint  (ui/ui_shared.cpp:8942)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_Text_Paint(UiContext *param_1,itemDef_t *param_2)
+void Item_Text_Paint(undefined8 param_1,longlong param_2)
 
 {
-  char cVar1;
-  byte bVar2;
-  byte bVar3;
-  LocalClientNum_t LVar4;
-  uint uVar5;
-  UiContext *pUVar6;
-  bool bVar13;
-  char *pcVar7;
-  int iVar8;
-  rectDef_s *prVar9;
-  rectDef_s *prVar10;
-  ScreenPlacement *pSVar11;
-  Font_s *pFVar12;
-  int in_r7;
-  int in_r8;
-  char *pcVar14;
-  undefined8 in_f29;
-  undefined8 in_f30;
-  double dVar15;
+  undefined1 uVar1;
+  undefined1 uVar2;
+  undefined4 uVar3;
+  uint uVar4;
+  int iVar5;
+  uint uVar6;
+  uint *puVar9;
+  char cVar13;
+  char *pcVar10;
+  int iVar11;
+  undefined8 uVar7;
+  float *pfVar12;
+  undefined8 uVar8;
+  char *pcVar15;
+  ulonglong uVar14;
   double dVar16;
-  undefined8 in_f31;
   double dVar17;
-  float fVar18;
-  float *in_stack_fffff2b8;
-  undefined1 in_stack_fffff2bf;
-  undefined1 in_stack_fffff2c3;
-  Material *in_stack_fffff2c4;
-  Material *in_stack_fffff2c8;
-  int in_stack_fffff2cc;
-  int in_stack_fffff2d0;
-  int in_stack_fffff2d4;
-  int in_stack_fffff2d8;
-  float afStack_ca0 [4];
+  double dVar18;
+  undefined1 auStack_ca0 [16];
   char local_c90 [1024];
-  char acStack_890 [1024];
-  char acStack_490 [1032];
-  undefined8 local_88;
-  undefined8 local_80;
-  undefined8 local_78;
+  undefined1 auStack_890 [1024];
+  undefined1 auStack_490 [1168];
   
-  pUVar6 = (UiContext *)__savegprlr_19(param_1);
-  local_88 = in_f29;
-  local_80 = in_f30;
-  local_78 = in_f31;
-  uVar5 = (uint)param_2->itemFlags >> 1 & 1;
-  if (uVar5 != 0) {
-    param_2->text = "NOT USING CINEMATIC_SUBTITLES";
+  puVar9 = (uint *)__savegprlr_19();
+  iVar5 = (int)param_2;
+  uVar6 = *(uint *)(iVar5 + 0x130) >> 1 & 1;
+  if (uVar6 != 0) {
+    *(char **)(iVar5 + 300) = "NOT USING CINEMATIC_SUBTITLES";
   }
-  pcVar7 = param_2->text;
-  if (pcVar7 == (char *)0x0) {
-    if (param_2->textExp == (Statement_s *)0x0) {
-      if (param_2->localVar == (char *)0x0) {
-        if (param_2->dvar == (char *)0x0) goto LAB_825cd014;
-        Dvar_GetVariantStringToBuffer(param_2->dvar,local_c90,0x400);
+  pcVar10 = *(char **)(iVar5 + 300);
+  if (pcVar10 == (char *)0x0) {
+    if (*(int *)(iVar5 + 0x1a0) == 0) {
+      if (*(int *)(iVar5 + 0x16c) == 0) {
+        if (*(int *)(iVar5 + 0x15c) == 0) goto LAB_825cd014;
+        Dvar_GetVariantStringToBuffer(*(int *)(iVar5 + 0x15c),&stack0x00000000 + -0xc90,0x400);
       }
       else {
-        pcVar7 = UILocalVar_GetStringByName(&pUVar6->localVars,param_2->localVar,acStack_490,0x400);
-        I_strncpyz(local_c90,pcVar7,0x400);
+        uVar7 = UILocalVar_GetStringByName
+                          (puVar9 + 0x29f,*(int *)(iVar5 + 0x16c),&stack0x00000000 + -0x490,0x400);
+        I_strncpyz(&stack0x00000000 + -0xc90,uVar7,0x400);
       }
 LAB_825ccd00:
-      pcVar7 = local_c90;
+      pcVar10 = &stack0x00000000 + -0xc90;
     }
     else {
-      pcVar7 = GetExpressionResultString(pUVar6->localClientNum,param_2->textExp);
-      if ((loc_warningsUI->current).enabled != false) {
-        bVar13 = UI_ValidateAndStripTranslatedString(pcVar7,local_c90,0x400);
-        if (bVar13) goto LAB_825ccd00;
-        pcVar14 = pcVar7;
-        if (*pcVar7 != '@') {
+      pcVar10 = (char *)GetExpressionResultString(*puVar9);
+      if (*(char *)(DAT_83f5de08 + 0xc) != '\0') {
+        cVar13 = UI_ValidateAndStripTranslatedString(pcVar10,&stack0x00000000 + -0xc90,0x400);
+        if (cVar13 != '\0') goto LAB_825ccd00;
+        pcVar15 = pcVar10;
+        if (*pcVar10 != '@') {
           do {
-            cVar1 = *pcVar14;
-            pcVar14 = pcVar14 + 1;
-          } while (cVar1 != '\0');
-          bVar13 = UI_ValidateNonLocalizedString(pcVar7,(uint)(pcVar14 + (-1 - (int)pcVar7)));
-          if ((!bVar13) && ((loc_warningsUI->current).enabled != false)) {
-            Com_sprintf(local_c90,0x400,"^1UNLOCALIZED(^7%s^1)^7");
+            cVar13 = *pcVar15;
+            pcVar15 = pcVar15 + 1;
+          } while (cVar13 != '\0');
+          cVar13 = UI_ValidateNonLocalizedString(pcVar10,pcVar15 + (-1 - (int)pcVar10));
+          if ((cVar13 == '\0') && (*(char *)(DAT_83f5de08 + 0xc) != '\0')) {
+            Com_sprintf(&stack0x00000000 + -0xc90,0x400,0xffffffff8202c564,pcVar10);
             goto LAB_825ccd00;
           }
         }
@@ -12698,91 +10834,79 @@ LAB_825ccd00:
     }
   }
   else {
-    pcVar14 = pcVar7;
-    if (*pcVar7 != '@') {
+    pcVar15 = pcVar10;
+    if (*pcVar10 != '@') {
       do {
-        cVar1 = *pcVar14;
-        pcVar14 = pcVar14 + 1;
-      } while (cVar1 != '\0');
-      bVar13 = UI_ValidateNonLocalizedString(pcVar7,(uint)(pcVar14 + (-1 - (int)pcVar7)));
-      if ((!bVar13) && ((loc_warningsUI->current).enabled != false)) {
-        Com_sprintf(local_c90,0x400,"^1UNLOCALIZED(^7%s^1)^7");
+        cVar13 = *pcVar15;
+        pcVar15 = pcVar15 + 1;
+      } while (cVar13 != '\0');
+      cVar13 = UI_ValidateNonLocalizedString(pcVar10,pcVar15 + (-1 - (int)pcVar10));
+      if ((cVar13 == '\0') && (*(char *)(DAT_83f5de08 + 0xc) != '\0')) {
+        Com_sprintf(&stack0x00000000 + -0xc90,0x400,0xffffffff8202c564,pcVar10);
         goto LAB_825ccd00;
       }
     }
   }
-  if (*pcVar7 == '@') {
-    pcVar7 = UI_SafeTranslateString(pcVar7 + 1);
+  if (*pcVar10 == '@') {
+    pcVar10 = (char *)UI_SafeTranslateString(pcVar10 + 1);
   }
-  if (*pcVar7 != '\0') {
-    UI_ReplaceDirective(pUVar6->localClientNum,pcVar7,acStack_890,0x400);
-    Item_TextColor(pUVar6,param_2,&afStack_ca0);
-    dVar17 = (double)param_2->textscale;
-    bVar13 = Menu_HasScaleTransition(pUVar6->localClientNum,param_2->parent);
-    if (bVar13) {
-      fVar18 = Menu_GetTransitionValue
-                         (pUVar6->localClientNum,param_2->parent,
-                          param_2->parent->data->scaleTransition + pUVar6->localClientNum);
-      dVar17 = (double)(float)((double)fVar18 * dVar17);
+  if (*pcVar10 != '\0') {
+    UI_ReplaceDirective(*puVar9,pcVar10,&stack0x00000000 + -0x890,0x400);
+    Item_TextColor(puVar9,param_2,&stack0x00000000 + -0xca0);
+    dVar18 = (double)*(float *)(iVar5 + 0x11c);
+    cVar13 = Menu_HasScaleTransition(*puVar9,*(undefined4 *)(iVar5 + 0x134));
+    if (cVar13 != '\0') {
+      uVar14 = (ulonglong)*puVar9 + 5;
+      dVar16 = (double)Menu_GetTransitionValue
+                                 ((ulonglong)*puVar9,*(uint **)(iVar5 + 0x134),
+                                  (uVar14 + (uVar14 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                                  (ulonglong)**(uint **)(iVar5 + 0x134));
+      dVar18 = (double)(float)(dVar16 * dVar18);
     }
-    Item_SetTextExtents(pUVar6,param_2,acStack_890);
-    if (param_2->decayActive != false) {
-      iVar8 = CG_GetGameTime(pUVar6->localClientNum);
-      if ((param_2->fxBirthTime == 0) || (iVar8 < param_2->fxBirthTime)) {
-        param_2->fxBirthTime = iVar8;
+    Item_SetTextExtents(puVar9,param_2,&stack0x00000000 + -0x890);
+    if (*(char *)(iVar5 + 0x1b8) != '\0') {
+      iVar11 = CG_GetGameTime(*puVar9);
+      if ((*(int *)(iVar5 + 0x1bc) == 0) || (iVar11 < *(int *)(iVar5 + 0x1bc))) {
+        *(int *)(iVar5 + 0x1bc) = iVar11;
       }
-      iVar8 = SEH_PrintStrlen(acStack_890);
-      in_r8 = param_2->fxDecayStartTime;
-      in_r7 = param_2->fxLetterTime;
+      uVar7 = SEH_PrintStrlen(&stack0x00000000 + -0x890);
       CL_PlayTextFXPulseSounds
-                (pUVar6->localClientNum,pUVar6->realTime,iVar8,param_2->fxBirthTime,in_r7,in_r8,
-                 &param_2->lastSoundPlayedTime);
+                (*puVar9,puVar9[2],uVar7,*(undefined4 *)(iVar5 + 0x1bc),
+                 *(undefined4 *)(iVar5 + 0x1c0),*(undefined4 *)(iVar5 + 0x1c4),param_2 + 0x1cc);
     }
-    if (((param_2->window).staticFlags & 0x800000U) != 0) {
+    if ((*(uint *)(iVar5 + 0x44) & 0x800000) != 0) {
       Item_Text_AutoWrapped_Paint
-                (pUVar6,param_2,acStack_890,afStack_ca0,SUB41(uVar5,0),MY_SUBTITLE_GLOWCOLOR,
-                 SUB41(uVar5,0));
+                (puVar9,param_2,&stack0x00000000 + -0x890,&stack0x00000000 + -0xca0,uVar6,
+                 0xffffffff82992320,uVar6);
       __restgprlr_19();
       return;
     }
-    prVar9 = Item_GetTextRect(pUVar6->localClientNum,param_2);
-    prVar10 = Window_GetRect(&param_2->window);
-    dVar15 = (double)param_2->textscale;
-    iVar8 = param_2->fontEnum;
-    pSVar11 = ScrPlace_GetActivePlacement(pUVar6->localClientNum);
-    pFVar12 = UI_GetFontHandle(pSVar11,iVar8,(float)dVar15);
-    dVar16 = (double)prVar9->y;
-    LVar4 = pUVar6->localClientNum;
-    dVar15 = (double)prVar9->x;
-    if (uVar5 != 0) {
-      bVar2 = prVar10->vertAlign;
-      bVar3 = prVar10->horzAlign;
-      pSVar11 = ScrPlace_GetActivePlacement(LVar4);
-      UI_DrawTextWithGlow(pSVar11,acStack_890,0x7fffffff,pFVar12,(float)dVar15,(float)dVar16,1,
-                          -0x7d66dce0,(float)dVar17,(float *)(uint)bVar3,(uint)bVar2,
-                          in_stack_fffff2b8,(bool)in_stack_fffff2bf,(bool)in_stack_fffff2c3,
-                          in_stack_fffff2c4,in_stack_fffff2c8,in_stack_fffff2cc,in_stack_fffff2d0,
-                          in_stack_fffff2d4,in_stack_fffff2d8);
+    pfVar12 = (float *)Item_GetTextRect(*puVar9,param_2);
+    iVar11 = Window_GetRect(param_2);
+    dVar16 = (double)*(float *)(iVar5 + 0x11c);
+    uVar3 = *(undefined4 *)(iVar5 + 0x10c);
+    uVar7 = ScrPlace_GetActivePlacement(*puVar9);
+    uVar7 = UI_GetFontHandle(dVar16,uVar7,uVar3);
+    dVar17 = (double)pfVar12[1];
+    uVar4 = *puVar9;
+    dVar16 = (double)*pfVar12;
+    if (uVar6 != 0) {
+      uVar1 = *(undefined1 *)(iVar11 + 0x11);
+      uVar2 = *(undefined1 *)(iVar11 + 0x10);
+      uVar8 = ScrPlace_GetActivePlacement(uVar4);
+      UI_DrawTextWithGlow(dVar16,dVar17,dVar18,uVar8,&stack0x00000000 + -0x890,0x7fffffff,uVar7,1,
+                          0xffffffff82992320,uVar2,uVar1);
       __restgprlr_19();
       return;
     }
-    if (param_2->glowColor[3] != 0.0) {
-      bVar2 = prVar10->vertAlign;
-      bVar3 = prVar10->horzAlign;
-      pSVar11 = ScrPlace_GetActivePlacement(LVar4);
-      UI_DrawTextWithGlow(pSVar11,acStack_890,0x7fffffff,pFVar12,(float)dVar15,(float)dVar16,in_r7,0
-                          ,(float)dVar17,(float *)(uint)bVar3,(uint)bVar2,in_stack_fffff2b8,
-                          (bool)in_stack_fffff2bf,(bool)in_stack_fffff2c3,in_stack_fffff2c4,
-                          in_stack_fffff2c8,in_stack_fffff2cc,in_stack_fffff2d0,in_stack_fffff2d4,
-                          in_stack_fffff2d8);
+    if (*(float *)(iVar5 + 0x1b4) != 0.0) {
+      uVar8 = ScrPlace_GetActivePlacement(uVar4);
+      UI_DrawTextWithGlow(dVar16,dVar17,dVar18,uVar8,&stack0x00000000 + -0x890,0x7fffffff,uVar7);
       __restgprlr_19();
       return;
     }
-    bVar2 = prVar10->vertAlign;
-    bVar3 = prVar10->horzAlign;
-    pSVar11 = ScrPlace_GetActivePlacement(LVar4);
-    UI_DrawText(pSVar11,acStack_890,0x7fffffff,pFVar12,(float)dVar15,(float)dVar16,in_r7,in_r8,
-                (float)dVar17,(float *)(uint)bVar3,(uint)bVar2);
+    uVar8 = ScrPlace_GetActivePlacement(uVar4);
+    UI_DrawText(dVar16,dVar17,dVar18,uVar8,&stack0x00000000 + -0x890,0x7fffffff,uVar7);
   }
 LAB_825cd014:
   __restgprlr_19();
@@ -12792,181 +10916,149 @@ LAB_825cd014:
 
 // 825CD028  Item_TextField_Paint  (ui/ui_shared.cpp:9087)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_TextField_Paint(UiContext *param_1,itemDef_t *param_2)
+void Item_TextField_Paint(undefined8 param_1,ulonglong param_2)
 
 {
-  char cVar1;
-  byte bVar2;
-  byte bVar3;
-  menuDef_t *pmVar4;
-  int iVar5;
-  UiContext *pUVar6;
-  editFieldDef_s *peVar7;
-  UILocalVar *pUVar9;
-  char *pcVar10;
-  char *pcVar11;
-  dvar_t *pdVar12;
-  bool bVar17;
-  rectDef_s *prVar13;
-  ScreenPlacement *pSVar14;
-  Font_s *pFVar15;
-  rectDef_s *prVar16;
-  ulonglong uVar18;
-  char *in_r7;
-  int iVar19;
-  float *in_r8;
-  int iVar20;
-  int iVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  float fVar25;
-  int in_stack_fffff6f8;
-  char in_stack_fffff6ff;
-  float local_890;
-  float local_88c;
-  char *local_888;
-  float local_884;
+  uint *puVar1;
+  undefined4 uVar2;
+  int iVar3;
+  uint *puVar6;
+  int iVar7;
+  int *piVar8;
+  char *pcVar9;
+  int iVar10;
+  char cVar12;
+  float *pfVar11;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  ulonglong uVar13;
+  char *pcVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  undefined1 local_890 [4];
+  undefined4 local_88c;
+  undefined4 local_888;
+  undefined4 local_884;
   longlong local_880;
   char local_870 [1024];
-  char acStack_470 [1136];
-  itemDef_t *piVar8;
+  undefined1 auStack_470 [1136];
   
-  uVar18 = (ulonglong)(int)param_2;
-  pUVar6 = (UiContext *)__savegprlr_23(param_1);
-  piVar8 = (itemDef_t *)uVar18;
-  peVar7 = Item_GetEditFieldDef(piVar8);
-  if (peVar7 == (editFieldDef_s *)0x0) goto LAB_825cd46c;
-  Item_Text_Paint(pUVar6,piVar8);
+  puVar6 = (uint *)__savegprlr_23();
+  iVar7 = Item_GetEditFieldDef(param_2);
+  if (iVar7 == 0) goto LAB_825cd46c;
+  Item_Text_Paint(puVar6,param_2);
+  iVar3 = (int)param_2;
   local_870[0] = '\0';
-  if (piVar8->localVar == (char *)0x0) {
-    pcVar11 = piVar8->dvar;
-    if (pcVar11 != (char *)0x0) {
-      if (piVar8->type == 0x11) {
-        pdVar12 = Dvar_FindVar(pcVar11);
-        if ((pdVar12 != (dvar_t *)0x0) && (pdVar12->type == '\x01')) {
-          Com_LocalizedFloatToString((pdVar12->current).value,(char *)pdVar12,(uint)local_870,0x400)
-          ;
+  if (*(int *)(iVar3 + 0x16c) == 0) {
+    if (*(int *)(iVar3 + 0x15c) != 0) {
+      if (*(int *)(iVar3 + 0x100) == 0x11) {
+        iVar10 = Dvar_FindVar();
+        if ((iVar10 != 0) && (*(char *)(iVar10 + 10) == '\x01')) {
+          Com_LocalizedFloatToString((double)*(float *)(iVar10 + 0xc),iVar10,local_870,0x400,2);
         }
       }
       else {
-        if (piVar8->type != 0x17) {
-          pcVar11 = Dvar_GetVariantString(pcVar11);
+        if (*(int *)(iVar3 + 0x100) != 0x17) {
+          uVar4 = Dvar_GetVariantString();
           goto LAB_825cd208;
         }
-        pcVar10 = Dvar_GetVariantString(pcVar11);
-        pcVar11 = pcVar10;
+        pcVar9 = (char *)Dvar_GetVariantString();
+        pcVar14 = pcVar9;
         do {
-          cVar1 = *pcVar11;
-          pcVar11 = pcVar11 + 1;
-        } while (cVar1 != '\0');
-        pcVar11 = pcVar11 + (-1 - (int)pcVar10);
-        if ((char *)0x3fe < pcVar11) {
-          pcVar11 = (char *)0x3fe;
+          cVar12 = *pcVar14;
+          pcVar14 = pcVar14 + 1;
+        } while (cVar12 != '\0');
+        pcVar14 = pcVar14 + (-1 - (int)pcVar9);
+        if ((char *)0x3fe < pcVar14) {
+          pcVar14 = (char *)0x3fe;
         }
-        memset();
-        local_870[(int)pcVar11] = '\0';
+        memset(local_870,0x2a,(size_t)pcVar14);
+        local_870[(int)pcVar14] = '\0';
       }
     }
   }
   else {
-    pUVar9 = UILocalVar_Find(&pUVar6->localVars,piVar8->localVar);
-    if (pUVar9 == (UILocalVar *)0x0) {
+    piVar8 = (int *)UILocalVar_Find(puVar6 + 0x29f);
+    if (piVar8 == (int *)0x0) {
       if (local_870[0] != '\0') {
-        in_r7 = "buff[0] == \'\\0\'";
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x23b3,0
-                        ,"%s");
+        MyAssertHandler(0xffffffff82170658,0x23b3,0,0xffffffff82000f98,0xffffffff8217399c);
       }
-      Com_PrintWarning(0xd,"WARNING: Could not find LocalVar \'%s\' in Item_TextField_Paint().\n");
+      Com_PrintWarning(0xd,0xffffffff82173958,*(undefined4 *)(iVar3 + 0x16c));
     }
-    else if (piVar8->type == 0x11) {
-      if (pUVar9->type == UILOCALVAR_FLOAT) {
-        Com_LocalizedFloatToString((pUVar9->u).value,(char *)pUVar9,(uint)local_870,0x400);
+    else if (*(int *)(iVar3 + 0x100) == 0x11) {
+      if (*piVar8 == 1) {
+        Com_LocalizedFloatToString((double)(float)piVar8[2],piVar8,local_870,0x400,2);
       }
     }
-    else if (piVar8->type == 0x17) {
-      pcVar10 = UILocalVar_GetString(pUVar9,acStack_470,0x400);
-      pcVar11 = pcVar10;
+    else if (*(int *)(iVar3 + 0x100) == 0x17) {
+      pcVar9 = (char *)UILocalVar_GetString(piVar8,auStack_470,0x400);
+      pcVar14 = pcVar9;
       do {
-        cVar1 = *pcVar11;
-        pcVar11 = pcVar11 + 1;
-      } while (cVar1 != '\0');
-      pcVar11 = pcVar11 + (-1 - (int)pcVar10);
-      if ((char *)0x3fe < pcVar11) {
-        pcVar11 = (char *)0x3fe;
+        cVar12 = *pcVar14;
+        pcVar14 = pcVar14 + 1;
+      } while (cVar12 != '\0');
+      pcVar14 = pcVar14 + (-1 - (int)pcVar9);
+      if ((char *)0x3fe < pcVar14) {
+        pcVar14 = (char *)0x3fe;
       }
-      memset();
-      local_870[(int)pcVar11] = '\0';
+      memset(local_870,0x2a,(size_t)pcVar14);
+      local_870[(int)pcVar14] = '\0';
     }
     else {
-      pcVar11 = UILocalVar_GetString(pUVar9,acStack_470,0x400);
+      uVar4 = UILocalVar_GetString(piVar8,auStack_470,0x400);
 LAB_825cd208:
-      I_strncpyz(local_870,pcVar11,0x400);
+      I_strncpyz(local_870,uVar4,0x400);
     }
   }
-  Item_SetTextExtents(pUVar6,piVar8,local_870);
-  pmVar4 = piVar8->parent;
-  bVar17 = Window_HasFocus(pUVar6->localClientNum,&piVar8->window);
-  if (bVar17) {
-    GetBlinkColor(pUVar6,pmVar4->data->focusColor,&local_890);
+  Item_SetTextExtents(puVar6,param_2,local_870);
+  puVar1 = *(uint **)(iVar3 + 0x134);
+  cVar12 = Window_HasFocus(*puVar6,param_2);
+  if (cVar12 == '\0') {
+    local_88c = *(undefined4 *)(iVar3 + 0x60);
+    local_888 = *(undefined4 *)(iVar3 + 100);
+    local_884 = *(undefined4 *)(iVar3 + 0x68);
   }
   else {
-    local_890 = (piVar8->window).foreColor[0];
-    local_88c = (piVar8->window).foreColor[1];
-    in_r8 = (piVar8->window).foreColor;
-    in_r7 = (char *)(piVar8->window).foreColor[2];
-    local_884 = (piVar8->window).foreColor[3];
-    local_888 = in_r7;
+    GetBlinkColor(puVar6,(ulonglong)*puVar1 + 0x3c,local_890);
   }
-  dVar24 = (double)piVar8->textscale;
-  bVar17 = Menu_HasScaleTransition(pUVar6->localClientNum,piVar8->parent);
-  if (bVar17) {
-    fVar25 = Menu_GetTransitionValue
-                       (pUVar6->localClientNum,piVar8->parent,
-                        piVar8->parent->data->scaleTransition + pUVar6->localClientNum);
-    dVar24 = (double)(float)((double)fVar25 * dVar24);
+  dVar17 = (double)*(float *)(iVar3 + 0x11c);
+  cVar12 = Menu_HasScaleTransition(*puVar6,*(undefined4 *)(iVar3 + 0x134));
+  if (cVar12 != '\0') {
+    uVar13 = (ulonglong)*puVar6 + 5;
+    dVar15 = (double)Menu_GetTransitionValue
+                               ((ulonglong)*puVar6,*(uint **)(iVar3 + 0x134),
+                                (uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                                (ulonglong)**(uint **)(iVar3 + 0x134));
+    dVar17 = (double)(float)(dVar15 * dVar17);
   }
-  if ((piVar8->text == (char *)0x0) || (iVar21 = 8, *piVar8->text == '\0')) {
-    iVar21 = 0;
+  if ((*(char **)(iVar3 + 300) == (char *)0x0) || (iVar10 = 8, **(char **)(iVar3 + 300) == '\0')) {
+    iVar10 = 0;
   }
-  prVar13 = Item_GetTextRect(pUVar6->localClientNum,piVar8);
-  local_880 = (longlong)iVar21;
-  iVar21 = peVar7->maxPaintChars;
-  iVar5 = peVar7->paintOffset;
-  dVar23 = (double)(prVar13->w + (float)local_880 + prVar13->x);
-  if (iVar21 == 0) {
-    iVar21 = 0x7fffffff;
+  pfVar11 = (float *)Item_GetTextRect(*puVar6,param_2);
+  local_880 = (longlong)iVar10;
+  iVar10 = *(int *)(iVar7 + 0x18);
+  iVar7 = *(int *)(iVar7 + 0x1c);
+  dVar15 = (double)(pfVar11[2] + (float)local_880 + *pfVar11);
+  if (iVar10 == 0) {
+    iVar10 = 0x7fffffff;
   }
-  dVar22 = (double)piVar8->textscale;
-  iVar19 = piVar8->fontEnum;
-  pSVar14 = ScrPlace_GetActivePlacement(pUVar6->localClientNum);
-  pFVar15 = UI_GetFontHandle(pSVar14,iVar19,(float)dVar22);
-  if (((uVar18 & 0xffffffff) == ZEXT48(g_editItem)) && (g_editingField != 0)) {
-    Key_GetOverstrikeMode(pUVar6->localClientNum);
-    prVar16 = Window_GetRect(&piVar8->window);
-    dVar22 = (double)prVar13->y;
-    iVar20 = pUVar6->localClientNum + 0x5f;
-    iVar19 = iVar20 * 4;
-    bVar2 = prVar16->vertAlign;
-    bVar3 = prVar16->horzAlign;
-    pSVar14 = ScrPlace_GetActivePlacement(pUVar6->localClientNum);
-    UI_DrawTextWithCursor
-              (pSVar14,local_870 + iVar5,iVar21,pFVar15,(float)dVar23,(float)dVar22,iVar19,iVar20,
-               (float)dVar24,(float *)(uint)bVar3,(uint)bVar2,in_stack_fffff6f8,in_stack_fffff6ff);
+  dVar16 = (double)*(float *)(iVar3 + 0x11c);
+  uVar2 = *(undefined4 *)(iVar3 + 0x10c);
+  uVar4 = ScrPlace_GetActivePlacement(*puVar6);
+  uVar4 = UI_GetFontHandle(dVar16,uVar4,uVar2);
+  if (((param_2 & 0xffffffff) == (ulonglong)DAT_8400c16c) && (DAT_8400c164 != 0)) {
+    Key_GetOverstrikeMode(*puVar6);
+    Window_GetRect(param_2);
+    dVar16 = (double)pfVar11[1];
+    uVar5 = ScrPlace_GetActivePlacement(*puVar6);
+    UI_DrawTextWithCursor(dVar15,dVar16,dVar17,uVar5,local_870 + iVar7,iVar10,uVar4);
     __restgprlr_23();
     return;
   }
-  dVar22 = (double)prVar13->y;
-  bVar2 = prVar13->vertAlign;
-  bVar3 = prVar13->horzAlign;
-  pSVar14 = ScrPlace_GetActivePlacement(pUVar6->localClientNum);
-  UI_DrawText(pSVar14,local_870 + iVar5,iVar21,pFVar15,(float)dVar23,(float)dVar22,(int)in_r7,
-              (int)in_r8,(float)dVar24,(float *)(uint)bVar3,(uint)bVar2);
+  dVar16 = (double)pfVar11[1];
+  uVar5 = ScrPlace_GetActivePlacement(*puVar6);
+  UI_DrawText(dVar15,dVar16,dVar17,uVar5,local_870 + iVar7,iVar10,uVar4);
 LAB_825cd46c:
   __restgprlr_23();
   return;
@@ -12975,32 +11067,29 @@ LAB_825cd46c:
 
 // 825CD480  Item_YesNo_Paint  (ui/ui_shared.cpp:9201)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Item_YesNo_Paint(UiContext *param_1,itemDef_t *param_2)
+void Item_YesNo_Paint(undefined8 param_1,int param_2)
 
 {
-  char *pcVar1;
-  double dVar2;
+  char *_String;
+  undefined8 uVar1;
+  undefined4 uVar2;
+  double dVar3;
   
-  if (param_2->localVar != (char *)0x0) {
-    Com_PrintWarning(0xd,"WARNING: \'localVar\' not yet supported for type ITEM_TYPE_YESNO\n");
+  if (*(int *)(param_2 + 0x16c) != 0) {
+    Com_PrintWarning(0xd,0xffffffff821739c0);
   }
-  if (param_2->dvar != (char *)0x0) {
-    pcVar1 = Dvar_GetVariantString(param_2->dvar);
-    dVar2 = atof(pcVar1);
-    if ((float)dVar2 != 0.0) {
-      pcVar1 = "EXE_YES";
+  if (*(int *)(param_2 + 0x15c) != 0) {
+    _String = (char *)Dvar_GetVariantString();
+    dVar3 = atof(_String);
+    if ((float)dVar3 != 0.0) {
+      uVar1 = 0xffffffff821739b4;
       goto LAB_825cd4f4;
     }
   }
-  pcVar1 = "EXE_NO";
+  uVar1 = 0xffffffff821739ac;
 LAB_825cd4f4:
-  pcVar1 = UI_SafeTranslateString(pcVar1);
-  param_2->text = pcVar1;
+  uVar2 = UI_SafeTranslateString(uVar1);
+  *(undefined4 *)(param_2 + 300) = uVar2;
   Item_Text_Paint(param_1,param_2);
   return;
 }
@@ -13008,18 +11097,13 @@ LAB_825cd4f4:
 
 // 825CD520  Item_Multi_Paint  (ui/ui_shared.cpp:9219)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_Multi_Paint(UiContext *param_1,itemDef_t *param_2)
+void Item_Multi_Paint(undefined8 param_1,int param_2)
 
 {
-  char *pcVar1;
+  undefined4 uVar1;
   
-  pcVar1 = Item_Multi_Setting(param_2);
-  param_2->text = pcVar1;
+  uVar1 = Item_Multi_Setting(param_2);
+  *(undefined4 *)(param_2 + 300) = uVar1;
   Item_Text_Paint(param_1,param_2);
   return;
 }
@@ -13027,18 +11111,13 @@ void Item_Multi_Paint(UiContext *param_1,itemDef_t *param_2)
 
 // 825CD570  Item_DvarEnum_Paint  (ui/ui_shared.cpp:9226)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Item_DvarEnum_Paint(UiContext *param_1,itemDef_t *param_2)
+void Item_DvarEnum_Paint(undefined8 param_1,int param_2)
 
 {
-  char *pcVar1;
+  undefined4 uVar1;
   
-  pcVar1 = Item_DvarEnum_Setting(param_2);
-  param_2->text = pcVar1;
+  uVar1 = Item_DvarEnum_Setting(param_2);
+  *(undefined4 *)(param_2 + 300) = uVar1;
   Item_Text_Paint(param_1,param_2);
   return;
 }
@@ -13046,7 +11125,7 @@ void Item_DvarEnum_Paint(UiContext *param_1,itemDef_t *param_2)
 
 // 825C5B30  GetPlatformCommand  (ui/ui_shared.cpp:9235)
 
-void GetPlatformCommand(char *param_1,char **param_2)
+void GetPlatformCommand(char *param_1,undefined4 *param_2)
 
 {
   char cVar1;
@@ -13085,19 +11164,16 @@ void GetPlatformCommand(char *param_1,char **param_2)
 
 // 825C5BB8  GetAlternateBinding  (ui/ui_shared.cpp:9246)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int GetAlternateBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [128])
+void GetAlternateBinding(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
   char cVar1;
   char cVar2;
-  LocalClientNum_t LVar3;
-  int iVar4;
+  undefined8 uVar3;
+  undefined8 uVar4;
   char *pcVar5;
   longlong lVar6;
-  longlong lVar7;
-  char **ppcVar8;
+  char **ppcVar7;
   char *local_70;
   undefined4 local_6c;
   char *local_68;
@@ -13115,8 +11191,7 @@ int GetAlternateBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [
   char *local_2c;
   undefined4 local_28;
   
-  lVar7 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_29(param_1);
+  uVar3 = __savegprlr_29();
   local_58 = 0;
   local_60 = "+melee_breath";
   local_5c = "+melee_zoom";
@@ -13134,7 +11209,7 @@ int GetAlternateBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [
   local_6c = 0;
   local_68 = "+ads_akimbo_accessible";
   local_64 = 0;
-  lVar6 = lVar7;
+  lVar6 = param_2;
   do {
     cVar1 = *(char *)lVar6;
     cVar2 = *pcVar5;
@@ -13143,11 +11218,11 @@ int GetAlternateBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [
     pcVar5 = pcVar5 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 == cVar2) {
-    ppcVar8 = &local_60;
+    ppcVar7 = &local_60;
   }
   else {
     pcVar5 = "+sprint";
-    lVar6 = lVar7;
+    lVar6 = param_2;
     do {
       cVar1 = *(char *)lVar6;
       cVar2 = *pcVar5;
@@ -13156,11 +11231,11 @@ int GetAlternateBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [
       pcVar5 = pcVar5 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      ppcVar8 = &local_50;
+      ppcVar7 = &local_50;
     }
     else {
       pcVar5 = "+holdbreath";
-      lVar6 = lVar7;
+      lVar6 = param_2;
       do {
         cVar1 = *(char *)lVar6;
         cVar2 = *pcVar5;
@@ -13169,11 +11244,11 @@ int GetAlternateBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [
         pcVar5 = pcVar5 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 == cVar2) {
-        ppcVar8 = &local_40;
+        ppcVar7 = &local_40;
       }
       else {
         pcVar5 = "+changezoom";
-        lVar6 = lVar7;
+        lVar6 = param_2;
         do {
           cVar1 = *(char *)lVar6;
           cVar2 = *pcVar5;
@@ -13182,11 +11257,11 @@ int GetAlternateBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [
           pcVar5 = pcVar5 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 == cVar2) {
-          ppcVar8 = &local_30;
+          ppcVar7 = &local_30;
         }
         else {
           pcVar5 = "+attack";
-          lVar6 = lVar7;
+          lVar6 = param_2;
           do {
             cVar1 = *(char *)lVar6;
             cVar2 = *pcVar5;
@@ -13195,188 +11270,166 @@ int GetAlternateBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [
             pcVar5 = pcVar5 + 1;
           } while (cVar1 == cVar2);
           if (cVar1 == cVar2) {
-            ppcVar8 = &local_70;
+            ppcVar7 = &local_70;
           }
           else {
             pcVar5 = "+speed_throw";
             do {
-              cVar1 = *(char *)lVar7;
+              cVar1 = *(char *)param_2;
               cVar2 = *pcVar5;
               if (cVar1 == '\0') break;
-              lVar7 = lVar7 + 1;
+              param_2 = param_2 + 1;
               pcVar5 = pcVar5 + 1;
             } while (cVar1 == cVar2);
             if (cVar1 != cVar2) goto LAB_825c5de0;
-            ppcVar8 = &local_68;
+            ppcVar7 = &local_68;
           }
         }
       }
     }
   }
-  pcVar5 = *ppcVar8;
+  pcVar5 = *ppcVar7;
   do {
-    iVar4 = CL_GetGamePadBinding(LVar3,pcVar5,param_3);
-    if (iVar4 != 0) goto LAB_825c5de4;
-    ppcVar8 = ppcVar8 + 1;
-    pcVar5 = *ppcVar8;
+    uVar4 = CL_GetGamePadBinding(uVar3,pcVar5,param_3);
+    if ((int)uVar4 != 0) goto LAB_825c5de4;
+    ppcVar7 = ppcVar7 + 1;
+    pcVar5 = *ppcVar7;
   } while (pcVar5 != (char *)0x0);
 LAB_825c5de0:
-  iVar4 = 0;
+  uVar4 = 0;
 LAB_825c5de4:
-  iVar4 = __restgprlr_29(iVar4);
-  return iVar4;
+  __restgprlr_29(uVar4);
+  return;
 }
 
 
 // 825C5DF0  GetKeyBindingLocalizedString  (ui/ui_shared.cpp:9298)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int GetKeyBindingLocalizedString
-              (LocalClientNum_t param_1,char *param_2,char *param_3,int param_4,bool param_5)
+void GetKeyBindingLocalizedString
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  char *pcVar3;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  char *local_150 [4];
-  char acStack_140 [128];
-  char acStack_c0 [192];
+  undefined4 local_150;
   
-  uVar4 = (ulonglong)param_5;
-  LVar1 = __savegprlr_26(param_1);
-  GetPlatformCommand(param_2,local_150);
-  iVar2 = CL_GetGamePadBinding(LVar1,local_150[0],&acStack_140);
-  if (iVar2 == 0) {
-    iVar2 = GetAlternateBinding(LVar1,local_150[0],&acStack_140);
+  uVar1 = ZEXT48(&stack0x00000000);
+  uVar2 = __savegprlr_26();
+  GetPlatformCommand(param_2,uVar1 - 0x150);
+  uVar3 = CL_GetGamePadBinding(uVar2,local_150,uVar1 - 0x140);
+  if ((int)uVar3 == 0) {
+    uVar3 = GetAlternateBinding(uVar2,local_150,uVar1 - 0x140);
   }
-  uVar5 = (ulonglong)iVar2;
-  if (((uVar4 & 0xff) != 0) && (1 < iVar2)) {
-    uVar5 = 1;
+  if (((param_5 & 0xff) != 0) && (1 < (int)uVar3)) {
+    uVar3 = 1;
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    pcVar3 = UI_SafeTranslateString("KEY_UNBOUND");
+  if ((uVar3 & 0xffffffff) == 0) {
+    uVar4 = UI_SafeTranslateString(0xffffffff82020a9c);
   }
   else {
-    if ((uVar5 & 0xffffffff) != 1) {
-      if ((int)uVar5 != 2) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2473,0
-                        ,"%s\n\t(bindCount) = %i");
+    if ((uVar3 & 0xffffffff) != 1) {
+      if ((int)uVar3 != 2) {
+        MyAssertHandler(0xffffffff82170658,0x2473,0,0xffffffff821728cc,0xffffffff821728e4,uVar3);
       }
-      SEH_StringEd_GetString(acStack_140);
-      SEH_StringEd_GetString(acStack_c0);
-      UI_SafeTranslateString("KEY_OR");
-      Com_sprintf(param_3,param_4,"%s %s %s");
-      iVar2 = __restgprlr_26(uVar5);
-      return iVar2;
+      uVar4 = SEH_StringEd_GetString(uVar1 - 0x140);
+      uVar5 = SEH_StringEd_GetString(uVar1 - 0xc0);
+      uVar2 = UI_SafeTranslateString(0xffffffff821728c4);
+      if ((uVar5 & 0xffffffff) == 0) {
+        uVar5 = uVar1 - 0xc0;
+      }
+      if ((uVar4 & 0xffffffff) == 0) {
+        uVar4 = uVar1 - 0x140;
+      }
+      Com_sprintf(param_3,param_4,0xffffffff821728b8,uVar4,uVar2,uVar5);
+      __restgprlr_26(uVar3);
+      return;
     }
-    pcVar3 = SEH_StringEd_GetString(acStack_140);
-    if (pcVar3 == (char *)0x0) {
-      pcVar3 = acStack_140;
+    uVar4 = SEH_StringEd_GetString(uVar1 - 0x140);
+    if ((uVar4 & 0xffffffff) == 0) {
+      uVar4 = uVar1 - 0x140;
     }
   }
-  I_strncpyz(param_3,pcVar3,param_4);
-  iVar2 = __restgprlr_26(uVar5);
-  return iVar2;
+  I_strncpyz(param_3,uVar4,param_4);
+  __restgprlr_26(uVar3);
+  return;
 }
 
 
 // 825C5F50  UI_GetKeyBindingLocalizedString  (ui/ui_shared.cpp:9344)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int UI_GetKeyBindingLocalizedString
-              (LocalClientNum_t param_1,char *param_2,char *param_3,int param_4)
+void UI_GetKeyBindingLocalizedString(void)
 
 {
-  int iVar1;
-  
-  iVar1 = GetKeyBindingLocalizedString(param_1,param_2,param_3,param_4,false);
-  return iVar1;
+  GetKeyBindingLocalizedString();
+  return;
 }
 
 
 // 825C5F58  UI_GetKeyBindingLocalizedStringSingle  (ui/ui_shared.cpp:9350)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int UI_GetKeyBindingLocalizedStringSingle
-              (LocalClientNum_t param_1,char *param_2,char *param_3,int param_4)
+void UI_GetKeyBindingLocalizedStringSingle(void)
 
 {
-  int iVar1;
-  
-  iVar1 = GetKeyBindingLocalizedString(param_1,param_2,param_3,param_4,true);
-  return iVar1;
+  GetKeyBindingLocalizedString();
+  return;
 }
 
 
 // 825C5F60  Item_Slider_Paint  (ui/ui_shared.cpp:9356)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_Slider_Paint(UiContext *param_1,itemDef_t *param_2)
+void Item_Slider_Paint(undefined8 param_1,undefined8 param_2)
 
 {
-  menuDef_t *pmVar1;
-  UiContext *pUVar2;
-  bool bVar4;
-  ScreenPlacement *pSVar3;
-  itemDef_t *piVar5;
-  float *in_r5;
-  float *in_r6;
+  uint *puVar1;
+  int iVar2;
+  undefined4 *puVar4;
+  char cVar5;
+  undefined8 uVar3;
   double dVar6;
-  double dVar7;
-  double dVar8;
+  undefined8 uVar7;
+  undefined8 uVar8;
   double dVar9;
-  float fVar10;
-  float local_50;
-  float local_4c;
-  float local_48;
-  float *local_44;
+  undefined8 uVar10;
+  undefined1 local_50 [4];
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
   
-  __savegprlr_29(param_1);
-  pUVar2 = (UiContext *)__savefpr_28();
-  pmVar1 = param_2->parent;
-  bVar4 = Window_HasFocus(pUVar2->localClientNum,&param_2->window);
-  if (bVar4) {
-    in_r5 = &local_50;
-    GetBlinkColor(pUVar2,pmVar1->data->focusColor,in_r5);
+  __savegprlr_29();
+  puVar4 = (undefined4 *)__savefpr_28();
+  iVar2 = (int)param_2;
+  puVar1 = *(uint **)(iVar2 + 0x134);
+  cVar5 = Window_HasFocus(*puVar4);
+  if (cVar5 == '\0') {
+    local_4c = *(undefined4 *)(iVar2 + 0x60);
+    local_48 = *(undefined4 *)(iVar2 + 100);
+    local_44 = *(undefined4 *)(iVar2 + 0x68);
   }
   else {
-    local_50 = (param_2->window).foreColor[0];
-    local_4c = (param_2->window).foreColor[1];
-    local_48 = (param_2->window).foreColor[2];
-    in_r6 = (float *)(param_2->window).foreColor[3];
-    local_44 = in_r6;
+    GetBlinkColor(puVar4,(ulonglong)*puVar1 + 0x3c,local_50);
   }
-  piVar5 = (itemDef_t *)param_2->textAlignYExp;
-  fVar10 = param_2->textaligny;
-  if (piVar5 != (itemDef_t *)0x0) {
-    fVar10 = GetExpressionFloat(pUVar2->localClientNum,(Statement_s *)piVar5);
+  dVar9 = (double)*(float *)(iVar2 + 0x118);
+  if (*(int *)(iVar2 + 0x1d0) != 0) {
+    dVar9 = (double)GetExpressionFloat(*puVar4);
   }
-  dVar8 = (double)fVar10;
-  dVar7 = 96.0;
-  fVar10 = Item_GetRectPlacementX
-                     (param_2->textAlignMode & 3,param_2->textalignx + (param_2->window).rect.x,
-                      (param_2->window).rect.w,96.0);
-  dVar6 = (double)fVar10;
-  dVar9 = 4.0;
-  fVar10 = Item_GetRectPlacementY
-                     (param_2->textAlignMode & 0xc,(float)((double)(param_2->window).rect.y + dVar8)
-                      ,(param_2->window).rect.h,4.0);
-  dVar8 = (double)fVar10;
-  pSVar3 = ScrPlace_GetActivePlacement(pUVar2->localClientNum);
-  UI_FillRect(pSVar3,(float)dVar6,(float)dVar8,(float)dVar7,(float)dVar9,(int)piVar5,(int)in_r5,
-              in_r6);
-  fVar10 = Item_Slider_ThumbPosition((LocalClientNum_t)param_2,piVar5);
-  UI_FillRect(pSVar3,(float)dVar6,(float)dVar8,(float)((double)fVar10 - dVar6),(float)dVar9,
-              (int)piVar5,(int)in_r5,in_r6);
+  uVar8 = 0x4058000000000000;
+  dVar6 = (double)Item_GetRectPlacementX
+                            ((double)(*(float *)(iVar2 + 0x114) + *(float *)(iVar2 + 4)),
+                             (double)*(float *)(iVar2 + 0xc),0x4058000000000000,
+                             *(uint *)(iVar2 + 0x110) & 3);
+  uVar10 = 0x4010000000000000;
+  uVar7 = Item_GetRectPlacementY
+                    ((double)(float)((double)*(float *)(iVar2 + 8) + dVar9),
+                     (double)*(float *)(iVar2 + 0x10),0x4010000000000000,
+                     *(uint *)(iVar2 + 0x110) & 0xc);
+  uVar3 = ScrPlace_GetActivePlacement(*puVar4);
+  UI_FillRect(dVar6,uVar7,uVar8,uVar10);
+  dVar9 = (double)Item_Slider_ThumbPosition(param_2);
+  UI_FillRect(dVar6,uVar7,(double)(float)(dVar9 - dVar6),uVar10,uVar3);
   __restfpr_28();
   __restgprlr_29();
   return;
@@ -13385,288 +11438,223 @@ void Item_Slider_Paint(UiContext *param_1,itemDef_t *param_2)
 
 // 825CD5C0  Item_Bind_Paint  (ui/ui_shared.cpp:9386)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_Bind_Paint(UiContext *param_1,itemDef_t *param_2)
+void Item_Bind_Paint(undefined4 *param_1,int param_2)
 
 {
-  char acStack_120 [264];
+  undefined1 auStack_120 [264];
   
-  if ((g_waitingForKey == 0) || (g_bindItem != param_2)) {
-    GetKeyBindingLocalizedString(param_1->localClientNum,param_2->dvar,acStack_120,0x100,false);
-    param_2->text = acStack_120;
+  if ((DAT_8400c160 == 0) || (DAT_8400c168 != param_2)) {
+    GetKeyBindingLocalizedString(*param_1,*(undefined4 *)(param_2 + 0x15c),auStack_120,0x100,0);
+    *(undefined1 **)(param_2 + 300) = auStack_120;
   }
   else {
-    param_2->text = "@MENU_BIND_KEY_PENDING";
+    *(char **)(param_2 + 300) = "@MENU_BIND_KEY_PENDING";
   }
   Item_Text_Paint(param_1,param_2);
-  param_2->text = "";
+  *(undefined1 **)(param_2 + 300) = &DAT_820068af;
   return;
 }
 
 
 // 825C60C0  Display_KeyBindPending  (ui/ui_shared.cpp:9404)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Display_KeyBindPending(void)
+undefined4 Display_KeyBindPending(void)
 
 {
-  return g_waitingForKey;
+  return DAT_8400c160;
 }
 
 
 // 825C60D0  Item_Bind_IsActionKey  (ui/ui_shared.cpp:9410)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-bool Item_Bind_IsActionKey(UiContext *param_1,itemDef_t *param_2,int param_3)
+bool Item_Bind_IsActionKey(int param_1)
 
 {
-  return param_1 == (UiContext *)0xd;
+  return param_1 == 0xd;
 }
 
 
 // 825C60E0  Item_Bind_HandleKey  (ui/ui_shared.cpp:9420)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Item_Bind_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3,int param_4)
+void Item_Bind_HandleKey(undefined8 param_1,int param_2,ulonglong param_3,int param_4)
 
 {
-  LocalClientNum_t *pLVar1;
-  int iVar2;
+  undefined4 *puVar2;
   int iVar3;
-  ulonglong uVar4;
-  int local_30;
-  int local_2c;
+  undefined8 uVar1;
+  int iVar4;
+  undefined4 local_30;
+  undefined4 local_2c;
   
-  uVar4 = (ulonglong)param_3;
-  pLVar1 = (LocalClientNum_t *)__savegprlr_28(param_1);
-  iVar2 = (int)uVar4;
-  if (g_waitingForKey == 0) {
-    if ((param_4 != 0) && (iVar2 == 0xd)) {
-      g_waitingForKey = 1;
-      g_bindItem = param_2;
-      iVar2 = __restgprlr_28(1);
-      return iVar2;
+  puVar2 = (undefined4 *)__savegprlr_28();
+  iVar4 = (int)param_3;
+  if (DAT_8400c160 == 0) {
+    if ((param_4 != 0) && (iVar4 == 0xd)) {
+      DAT_8400c160 = 1;
+      DAT_8400c168 = param_2;
+      __restgprlr_28(1);
+      return;
     }
   }
-  else if (g_bindItem != (itemDef_t *)0x0) {
-    if ((uVar4 & 0x400) == 0) {
-      if (iVar2 != 0x1b) {
-        if (iVar2 == 0x60) goto LAB_825c61e4;
-        Sys_EnterCriticalSection(CRITSECT_KEY_BINDINGS);
-        iVar3 = Key_GetCommandAssignment(*pLVar1,param_2->dvar,&local_30);
-        if ((iVar2 == 0x7f) || (iVar3 == 2)) {
-          Key_SetBinding(*pLVar1,local_30,0);
-          Key_SetBinding(*pLVar1,local_2c,0);
+  else if (DAT_8400c168 != 0) {
+    if ((param_3 & 0x400) == 0) {
+      if (iVar4 != 0x1b) {
+        if (iVar4 == 0x60) goto LAB_825c61e4;
+        Sys_EnterCriticalSection(0xe);
+        iVar3 = Key_GetCommandAssignment(*puVar2,*(undefined4 *)(param_2 + 0x15c),&local_30);
+        if ((iVar4 == 0x7f) || (iVar3 == 2)) {
+          Key_SetBinding(*puVar2,local_30,0);
+          Key_SetBinding(*puVar2,local_2c,0);
         }
-        if (iVar2 != 0x7f) {
-          iVar3 = Key_GetBindingForCmd(param_2->dvar);
-          Key_SetBinding(*pLVar1,iVar2,iVar3);
+        if (iVar4 != 0x7f) {
+          uVar1 = Key_GetBindingForCmd(*(undefined4 *)(param_2 + 0x15c));
+          Key_SetBinding(*puVar2,param_3,uVar1);
         }
-        Sys_LeaveCriticalSection(CRITSECT_KEY_BINDINGS);
+        Sys_LeaveCriticalSection(0xe);
       }
-      g_waitingForKey = 0;
+      DAT_8400c160 = 0;
     }
 LAB_825c61e4:
-    iVar2 = __restgprlr_28(1);
-    return iVar2;
+    __restgprlr_28(1);
+    return;
   }
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 825C61F0  Item_GetTextAlignAdj  (ui/ui_shared.cpp:9475)
 
-float Item_GetTextAlignAdj(int param_1,float param_2,float param_3)
+double Item_GetTextAlignAdj(double param_1,double param_2,undefined8 param_3)
 
 {
-  float fVar1;
-  float fVar2;
+  int iVar1;
+  double dVar2;
+  double dVar3;
   
-  if (param_1 == 1) {
-    fVar1 = (param_2 - param_3) * 0.5;
-    fVar2 = 0.0;
-    if (-fVar1 < 0.0) {
-      fVar2 = fVar1;
+  iVar1 = (int)param_3;
+  if (iVar1 == 1) {
+    dVar3 = (double)((float)(param_1 - param_2) * 0.5);
+    dVar2 = 0.0;
+    if (-dVar3 < 0.0) {
+      dVar2 = dVar3;
     }
-    return fVar2;
+    return dVar2;
   }
-  if (param_1 != 2) {
-    if (param_1 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x250d,0,
-                      "%s\n\t(alignment) = %i");
+  if (iVar1 != 2) {
+    if (iVar1 != 0) {
+      MyAssertHandler(0xffffffff82170658,0x250d,0,0xffffffff82058934,0xffffffff821728f8,param_3);
     }
     return 0.0;
   }
-  fVar1 = 0.0;
-  if (-(param_2 - param_3) < 0.0) {
-    fVar1 = param_2 - param_3;
+  dVar2 = 0.0;
+  if (-(double)(float)(param_1 - param_2) < 0.0) {
+    dVar2 = (double)(float)(param_1 - param_2);
   }
-  return fVar1;
+  return dVar2;
 }
 
 
 // 825C62A8  Item_ListBox_PaintTextElem  (ui/ui_shared.cpp:9492)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void Item_ListBox_PaintTextElem
-               (UiContext *param_1,itemDef_t *param_2,int param_3,int param_4,int param_5,
-               int param_6,float param_7,float param_8,float param_9,float param_10,bool param_11)
+               (undefined8 param_1,double param_2,double param_3,double param_4,undefined8 param_5,
+               undefined8 param_6,undefined8 param_7,undefined8 param_8,undefined8 param_9,
+               undefined8 param_10)
 
 {
-  LocalClientNum_t LVar1;
-  LocalClientNum_t *pLVar2;
-  ScreenPlacement *pSVar3;
-  char *pcVar4;
-  bool bVar8;
-  ScreenPlacement *pSVar5;
-  Font_s *pFVar6;
+  undefined4 uVar1;
+  int iVar2;
+  uint *puVar6;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  char cVar8;
+  undefined8 uVar5;
   int iVar7;
-  menuDef_t *pmVar9;
-  menuTransition *pmVar10;
-  ulonglong uVar11;
-  uint uVar12;
+  ulonglong uVar9;
   double extraout_f1;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  float fVar19;
-  undefined1 *local_150 [2];
-  Material **in_stack_fffffeb8;
   float local_d0;
   float local_cc;
   float local_c8;
-  float local_c4;
   int local_c0;
-  longlong local_b8;
-  undefined1 local_b0 [8];
-  MaterialInfo_s_0_u_8 local_a8;
-  float local_94;
   
-  dVar15 = (double)param_10;
-  dVar13 = (double)param_8;
-  dVar16 = (double)param_9;
-  __savegprlr_22((double)param_7,param_1);
-  pLVar2 = (LocalClientNum_t *)__savefpr_26();
-  if (param_2->textStyle == 9) {
-    uVar12 = 1;
-  }
-  else {
-    uVar12 = -(uint)(param_2->textStyle == 10) & 2;
-  }
-  LVar1 = *pLVar2;
-  dVar18 = 0.0;
-  local_c4 = 0.0;
+  __savegprlr_22();
+  puVar6 = (uint *)__savefpr_26();
+  iVar2 = (int)param_6;
+  uVar9 = (ulonglong)*puVar6;
+  dVar13 = 0.0;
   local_cc = 0.0;
   local_c8 = 0.0;
   local_d0 = 0.0;
-  dVar14 = extraout_f1;
-  pmVar10 = (menuTransition *)param_3;
-  local_150[0] = (undefined1 *)register0x0000000c;
-  pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-  pcVar4 = UI_FeederItemText(LVar1,param_2,param_2->special,(int)pmVar10,param_3,(float *)param_4,
-                             &local_c4,&local_c8,&local_cc,in_stack_fffffeb8,(float)dVar16);
-  UI_FeederItemColor(LVar1,param_2,param_2->special,(int)pmVar10,param_3,(float *)param_4,
-                     (bool)((char)local_150 + -0x50));
-  dVar17 = (double)param_2->textscale;
-  bVar8 = Menu_HasScaleTransition(LVar1,param_2->parent);
-  if (bVar8) {
-    uVar11 = (ulonglong)LVar1 + 5;
-    pmVar10 = (menuTransition *)
-              ((int)param_2->parent->data->focusColor +
-              (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x3c);
-    fVar19 = Menu_GetTransitionValue(LVar1,param_2->parent,pmVar10);
-    dVar17 = (double)(float)((double)fVar19 * dVar17);
+  dVar11 = extraout_f1;
+  uVar3 = ScrPlace_GetActivePlacement(uVar9);
+  uVar4 = UI_FeederItemText((double)*(float *)(iVar2 + 0x178),param_3,uVar9,param_6);
+  UI_FeederItemColor((double)*(float *)(iVar2 + 0x178),uVar9,param_6);
+  dVar12 = (double)*(float *)(iVar2 + 0x11c);
+  cVar8 = Menu_HasScaleTransition(uVar9,*(undefined4 *)(iVar2 + 0x134));
+  if (cVar8 != '\0') {
+    dVar10 = (double)Menu_GetTransitionValue
+                               (uVar9,*(uint **)(iVar2 + 0x134),
+                                (uVar9 + 5 + (uVar9 + 5 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                                (ulonglong)**(uint **)(iVar2 + 0x134));
+    dVar12 = (double)(float)(dVar10 * dVar12);
   }
-  pmVar9 = param_2->parent;
-  bVar8 = Menu_HasAlphaTransition(LVar1,pmVar9);
-  if (bVar8) {
-    uVar11 = (ulonglong)LVar1 + 9;
-    pmVar9 = param_2->parent;
-    pmVar10 = (menuTransition *)
-              ((int)pmVar9->data->focusColor +
-              (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x3c);
-    fVar19 = Menu_GetTransitionValue(LVar1,pmVar9,pmVar10);
-    local_94 = fVar19 * local_94;
+  cVar8 = Menu_HasAlphaTransition(uVar9,*(undefined4 *)(iVar2 + 0x134));
+  if (cVar8 != '\0') {
+    Menu_GetTransitionValue
+              (uVar9,*(uint **)(iVar2 + 0x134),
+               (uVar9 + 9 + (uVar9 + 9 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+               (ulonglong)**(uint **)(iVar2 + 0x134));
   }
   if (local_c0 != 0) {
-    dVar17 = (double)local_c4;
-    if ((((dVar17 == dVar18) && ((double)local_c8 == dVar18)) && (dVar18 == 0.0)) &&
-       ((double)local_cc == dVar18)) {
-      if (dVar18 <= dVar16) {
+    dVar12 = 0.0;
+    if ((((dVar13 == 0.0) && (dVar13 == 0.0)) && (dVar13 == 0.0)) && (dVar13 == 0.0)) {
+      if (dVar13 <= param_3) {
         local_cc = 1.0;
-        dVar17 = dVar18;
+        dVar12 = dVar13;
       }
       else {
-        local_cc = (float)dVar18;
-        dVar16 = -dVar16;
-        dVar17 = 1.0;
+        local_cc = (float)dVar13;
+        param_3 = -param_3;
+        dVar12 = 1.0;
       }
-      local_c4 = (float)dVar17;
-      if (dVar18 <= dVar15) {
-        local_c8 = (float)dVar18;
+      if (dVar13 <= param_4) {
+        local_c8 = (float)dVar13;
         local_d0 = 1.0;
       }
       else {
         local_c8 = 1.0;
-        dVar15 = -dVar15;
-        local_d0 = (float)dVar18;
+        param_4 = -param_4;
+        local_d0 = (float)dVar13;
       }
     }
-    local_b0._0_4_ = 1.0;
-    local_a8.surfaceTypeBits = (uint)1.0;
-    local_a8._4_4_ = local_94;
-    local_b0._4_4_ = 1.0;
-    CL_DrawStretchPic(pSVar3,(float)dVar14,(float)dVar13,(float)dVar16,(float)dVar15,(int)pmVar9,
-                      (int)pmVar10,(float)dVar17,local_c8,local_cc,local_d0,colorWhite,
-                      (Material *)local_b0);
+    CL_DrawStretchPic(dVar11,param_2,param_3,param_4,dVar12,(double)local_c8,(double)local_cc,
+                      (double)local_d0,uVar3);
     __restfpr_26();
     __restgprlr_22();
     return;
   }
-  if (pcVar4 != (char *)0x0) {
-    dVar18 = (double)param_2->textscale;
-    iVar7 = param_2->fontEnum;
-    pSVar5 = ScrPlace_GetActivePlacement(LVar1);
-    pFVar6 = UI_GetFontHandle(pSVar5,iVar7,(float)dVar18);
-    if ((param_2->special == 26.0) || (param_2->special == 35.0)) {
-      param_3 = (int)dVar16;
-      local_b8 = (longlong)param_3;
-      pcVar4 = UI_TruncateEscapeCharacterTextWithEllipsis(pcVar4,pFVar6,(float)dVar17,(int)pmVar10);
+  if ((uVar4 & 0xffffffff) != 0) {
+    dVar13 = (double)*(float *)(iVar2 + 0x11c);
+    uVar1 = *(undefined4 *)(iVar2 + 0x10c);
+    uVar5 = ScrPlace_GetActivePlacement(uVar9);
+    uVar5 = UI_GetFontHandle(dVar13,uVar5,uVar1);
+    if ((*(float *)(iVar2 + 0x178) == 26.0) || (*(float *)(iVar2 + 0x178) == 35.0)) {
+      uVar4 = UI_TruncateEscapeCharacterTextWithEllipsis(dVar12,uVar4,uVar5);
     }
-    iVar7 = UI_TextWidthModCase(pcVar4,param_5,pFVar6,(float)dVar17,param_3);
-    local_b8 = (longlong)iVar7;
-    fVar19 = Item_GetTextAlignAdj(param_6,(float)dVar16,(float)local_b8);
-    dVar16 = (double)fVar19;
-    fVar19 = param_2->textaligny;
-    if (param_2->textAlignYExp != (Statement_s *)0x0) {
-      fVar19 = GetExpressionFloat(*pLVar2,param_2->textAlignYExp);
+    iVar7 = UI_TextWidthModCase(dVar12,uVar4,param_9,uVar5);
+    dVar10 = (double)Item_GetTextAlignAdj(param_3,(double)(longlong)iVar7,param_10);
+    dVar13 = (double)*(float *)(iVar2 + 0x118);
+    if (*(int *)(iVar2 + 0x1d0) != 0) {
+      dVar13 = (double)GetExpressionFloat(*puVar6);
     }
-    UI_DrawText(pSVar3,pcVar4,param_5,pFVar6,
-                (float)((double)(float)((double)param_2->textalignx + dVar16) + dVar14),
-                (float)((double)(float)((double)fVar19 + dVar13) + dVar15),uVar12,(int)&local_a8 + 8
-                ,(float)dVar17,(float *)(uint)(param_2->window).rect.horzAlign,
-                (uint)(param_2->window).rect.vertAlign);
+    UI_DrawText((double)(float)((double)(float)((double)*(float *)(iVar2 + 0x114) + dVar10) + dVar11
+                               ),(double)(float)((double)(float)(dVar13 + param_2) + param_4),dVar12
+                ,uVar3,uVar4,param_9,uVar5);
   }
   __restfpr_26();
   __restgprlr_22();
@@ -13676,47 +11664,34 @@ void Item_ListBox_PaintTextElem
 
 // 825C6630  Item_ListBox_PaintBackground  (ui/ui_shared.cpp:9604)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
 void Item_ListBox_PaintBackground
-               (LocalClientNum_t param_1,itemDef_t *param_2,float param_3,float param_4,int param_5)
+               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  LocalClientNum_t LVar1;
-  listBoxDef_s *plVar2;
-  ScreenPlacement *pSVar3;
-  itemDef_t *piVar4;
-  float *in_r7;
+  int iVar1;
+  undefined8 uVar2;
+  int iVar4;
+  undefined8 uVar3;
   double extraout_f1;
   double dVar5;
   double dVar6;
-  double dVar7;
-  float fVar8;
   
-  dVar5 = (double)param_4;
-  LVar1 = __savegprlr_28((double)param_3,param_1);
-  if ((param_2->window).style == 0) {
-    dVar6 = extraout_f1;
-    plVar2 = Item_GetListBoxDef(param_2);
-    if (plVar2 == (listBoxDef_s *)0x0) {
-      param_5 = 0;
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x258f,0,
-                      "%s");
+  uVar2 = __savegprlr_28();
+  iVar1 = (int)param_4;
+  if (*(int *)(iVar1 + 0x30) == 0) {
+    dVar5 = extraout_f1;
+    iVar4 = Item_GetListBoxDef(param_4);
+    if (iVar4 == 0) {
+      MyAssertHandler(0xffffffff82170658,0x258f,0,0xffffffff82000f98,0xffffffff8216c128);
     }
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    fVar8 = plVar2->elementHeight;
-    if (plVar2->elementHeightExp != (Statement_s *)0x0) {
-      fVar8 = GetExpressionFloat(LVar1,plVar2->elementHeightExp);
+    uVar3 = ScrPlace_GetActivePlacement(uVar2);
+    dVar6 = (double)*(float *)(iVar4 + 0x28);
+    if (*(int *)(iVar4 + 0x1d8) != 0) {
+      dVar6 = (double)GetExpressionFloat(uVar2);
     }
-    dVar7 = (double)fVar8;
-    piVar4 = param_2;
-    UI_FeederBackColor(LVar1,param_2,param_2->special,param_5,in_r7);
-    UI_FillRect(pSVar3,(float)(dVar6 + 2.0),(float)(dVar5 + 2.0),
-                ((param_2->window).rect.w - 8.0) - 4.0,(float)dVar7,(int)piVar4,param_5,
-                (float *)&IMAGE_DOS_HEADER_82000000);
+    UI_FeederBackColor((double)*(float *)(iVar1 + 0x178),uVar2,param_4);
+    UI_FillRect((double)(float)(dVar5 + 2.0),(double)(float)(param_2 + 2.0),
+                (double)((*(float *)(iVar1 + 0xc) - 8.0) - 4.0),dVar6,uVar3);
   }
   __restgprlr_28();
   return;
@@ -13725,84 +11700,55 @@ void Item_ListBox_PaintBackground
 
 // 825CD660  Item_ListBox_PaintHighlight  (ui/ui_shared.cpp:9633)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
 void Item_ListBox_PaintHighlight
-               (LocalClientNum_t param_1,itemDef_t *param_2,float param_3,float param_4)
+               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4)
 
 {
-  LocalClientNum_t LVar1;
-  listBoxDef_s *plVar2;
-  ScreenPlacement *pSVar4;
-  int iVar5;
+  int iVar1;
+  undefined8 uVar2;
   int iVar6;
-  ulonglong uVar7;
-  itemDef_t *piVar8;
-  int in_r5;
-  float *pfVar9;
-  float *in_r6;
-  IMAGE_DOS_HEADER *pIVar10;
-  IMAGE_DOS_HEADER *pIVar11;
-  int iVar12;
+  undefined8 uVar3;
+  longlong lVar4;
+  longlong lVar5;
+  int iVar7;
   double extraout_f1;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  float fVar18;
-  itemDef_t *piVar3;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   
-  dVar13 = (double)param_4;
-  uVar7 = (ulonglong)(int)param_2;
-  __savegprlr_25((double)param_3,param_1);
-  LVar1 = __savefpr_27();
-  piVar3 = (itemDef_t *)uVar7;
-  dVar15 = extraout_f1;
-  plVar2 = Item_GetListBoxDef(piVar3);
-  if (plVar2 == (listBoxDef_s *)0x0) {
-    in_r5 = 0;
-    in_r6 = (float *)"%s";
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x25a9,0,
-                    "%s");
+  __savegprlr_25();
+  uVar2 = __savefpr_27();
+  dVar9 = extraout_f1;
+  iVar6 = Item_GetListBoxDef(param_4);
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff82170658,0x25a9,0,0xffffffff82000f98,0xffffffff8216c128);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    in_r5 = 0;
-    in_r6 = (float *)"%s";
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
-                   );
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018fa0,0x24,0,0xffffffff82000f98,0xffffffff8200fdb4);
   }
-  pSVar4 = ScrPlace_GetActivePlacement(LVar1);
-  fVar18 = plVar2->elementHeight;
-  if (plVar2->elementHeightExp != (Statement_s *)0x0) {
-    fVar18 = GetExpressionFloat(LVar1,plVar2->elementHeightExp);
+  uVar3 = ScrPlace_GetActivePlacement(uVar2);
+  dVar10 = (double)*(float *)(iVar6 + 0x28);
+  if (*(int *)(iVar6 + 0x1d8) != 0) {
+    dVar10 = (double)GetExpressionFloat(uVar2);
   }
-  dVar16 = (double)fVar18;
-  iVar12 = 8;
-  iVar5 = UI_FeederCount(LVar1,piVar3->special);
-  piVar8 = piVar3;
-  iVar6 = Item_ListBox_Viewmax(LVar1,piVar3);
-  if (((longlong)iVar5 - (longlong)iVar6 < 1) || ((int)((longlong)iVar5 - (longlong)iVar6) == 0)) {
-    iVar12 = 0;
+  iVar1 = (int)param_4;
+  iVar7 = 8;
+  lVar4 = UI_FeederCount((double)*(float *)(iVar1 + 0x178),uVar2);
+  lVar5 = Item_ListBox_Viewmax(uVar2,param_4);
+  if ((lVar4 - lVar5 < 1) || ((int)(lVar4 - lVar5) == 0)) {
+    iVar7 = 0;
   }
-  dVar14 = (double)(longlong)iVar12;
-  dVar17 = 4.0;
-  UI_FillRect(pSVar4,(float)(dVar15 + 2.0),(float)(dVar13 + 2.0),
-              (float)((double)(piVar3->window).rect.w - dVar14) - 4.0,(float)dVar16,(int)piVar8,
-              in_r5,in_r6);
-  pIVar11 = &IMAGE_DOS_HEADER_82000000;
-  pIVar10 = &IMAGE_DOS_HEADER_82000000;
-  pfVar9 = plVar2->selectBorder;
-  UI_DrawRect(pSVar4,(float)(dVar15 + 1.0),(float)(dVar13 + 1.0),
-              (float)((double)(piVar3->window).rect.w - dVar14) - 3.0,(float)(dVar16 + 1.0),
-              (int)piVar8,(int)pfVar9,1.0,(float *)&IMAGE_DOS_HEADER_82000000);
-  if ((plVar2->selectIcon != (Material *)0x0) && (plVar2->notselectable == 0)) {
-    UI_DrawHandlePic(pSVar4,(float)(dVar15 + dVar17),(float)(dVar13 + dVar17),
-                     (float)(dVar16 - dVar17),(float)(dVar16 - dVar17),(int)piVar8,(int)pfVar9,
-                     (float *)pIVar10,(Material *)pIVar11);
+  dVar8 = (double)(longlong)iVar7;
+  dVar11 = 4.0;
+  UI_FillRect((double)(float)(dVar9 + 2.0),(double)(float)(param_2 + 2.0),
+              (double)((float)((double)*(float *)(iVar1 + 0xc) - dVar8) - 4.0),dVar10,uVar3);
+  UI_DrawRect((double)(float)(dVar9 + 1.0),(double)(float)(param_2 + 1.0),
+              (double)((float)((double)*(float *)(iVar1 + 0xc) - dVar8) - 3.0),
+              (double)(float)(dVar10 + 1.0),uVar3);
+  if ((*(int *)(iVar6 + 0x1d4) != 0) && (*(int *)(iVar6 + 0x1b8) == 0)) {
+    UI_DrawHandlePic((double)(float)(dVar9 + dVar11),(double)(float)(param_2 + dVar11),
+                     (double)(float)(dVar10 - dVar11),(double)(float)(dVar10 - dVar11),uVar3);
   }
   __restfpr_27();
   __restgprlr_25();
@@ -13812,174 +11758,132 @@ void Item_ListBox_PaintHighlight
 
 // 825C6738  Item_ListBox_GetVisibleElementCount  (ui/ui_shared.cpp:9667)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-int Item_ListBox_GetVisibleElementCount(LocalClientNum_t param_1,itemDef_t *param_2)
+void Item_ListBox_GetVisibleElementCount(undefined8 param_1,ulonglong param_2)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   int iVar2;
-  listBoxDef_s *plVar4;
-  ulonglong uVar5;
-  double dVar6;
-  float fVar7;
-  itemDef_t *piVar3;
+  double dVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_29(param_1);
-  piVar3 = (itemDef_t *)uVar5;
-  iVar2 = Window_IsHorizontal(&piVar3->window);
+  uVar1 = __savegprlr_29();
+  iVar2 = Window_IsHorizontal(param_2);
   if (iVar2 == 0) {
-    plVar4 = Item_GetListBoxDef(piVar3);
-    if ((uVar5 & 0xffffffff) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,
-                      "%s");
+    iVar2 = Item_GetListBoxDef(param_2);
+    if ((param_2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82018fa0,0x24,0,0xffffffff82000f98,0xffffffff8200fdb4);
     }
-    fVar7 = plVar4->elementHeight;
-    if (plVar4->elementHeightExp != (Statement_s *)0x0) {
-      fVar7 = GetExpressionFloat(LVar1,plVar4->elementHeightExp);
+    dVar3 = (double)*(float *)(iVar2 + 0x28);
+    if (*(int *)(iVar2 + 0x1d8) != 0) {
+      dVar3 = (double)GetExpressionFloat(uVar1);
     }
-    dVar6 = floor((double)(((piVar3->window).rect.h - 2.0) / fVar7));
-    iVar2 = (int)dVar6;
+    dVar3 = floor((double)(float)((double)(*(float *)((int)param_2 + 0x10) - 2.0) / dVar3));
+    iVar2 = (int)dVar3;
     if (0 < iVar2) goto LAB_825c67e0;
   }
   iVar2 = 1;
 LAB_825c67e0:
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  __restgprlr_29(iVar2);
+  return;
 }
 
 
 // 825CD828  Item_ListBox_Paint  (ui/ui_shared.cpp:9699)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_ListBox_Paint(UiContext *param_1,itemDef_t *param_2)
+void Item_ListBox_Paint(undefined8 param_1,ulonglong param_2)
 
 {
   double dVar1;
   float fVar2;
-  uint uVar3;
-  int *piVar4;
-  columnInfo_s *pcVar5;
+  float fVar3;
+  float fVar4;
+  uint uVar5;
   int *piVar6;
   int *piVar7;
-  UiContext *pUVar8;
-  listBoxDef_s *plVar9;
-  ScreenPlacement *pSVar11;
-  int iVar12;
+  int *piVar8;
+  int *piVar9;
+  int iVar10;
+  int *piVar12;
   int iVar13;
-  Material *pMVar14;
-  Statement_s *pSVar15;
-  itemDef_t *piVar16;
-  int in_r5;
-  IMAGE_DOS_HEADER *pIVar18;
-  int iVar19;
+  undefined8 uVar11;
+  int iVar14;
+  int iVar15;
+  int iVar16;
   ulonglong uVar17;
-  char *in_r6;
-  float *pfVar21;
-  ulonglong uVar20;
-  IMAGE_DOS_HEADER *pIVar24;
-  longlong lVar22;
-  longlong lVar23;
-  undefined1 uVar25;
-  rectDef_s *prVar26;
+  longlong lVar18;
+  float *pfVar19;
+  int *piVar20;
+  undefined8 uVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
   double dVar27;
   double dVar28;
-  double dVar29;
-  double dVar30;
-  double dVar31;
-  double dVar32;
-  double dVar33;
-  float fVar34;
-  float fVar35;
-  itemDef_t *piVar10;
+  undefined8 uVar29;
   
-  uVar17 = (ulonglong)(int)param_2;
-  __savegprlr_24(param_1);
-  pUVar8 = (UiContext *)__savefpr_26();
-  piVar10 = (itemDef_t *)uVar17;
-  plVar9 = Item_GetListBoxDef(piVar10);
-  if (plVar9 != (listBoxDef_s *)0x0) {
-    if ((uVar17 & 0xffffffff) == 0) {
-      in_r6 = "%s";
-      in_r5 = 0;
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,
-                      "%s");
+  __savegprlr_24();
+  piVar12 = (int *)__savefpr_26();
+  iVar13 = Item_GetListBoxDef(param_2);
+  if (iVar13 != 0) {
+    if ((param_2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82018fa0,0x24,0,0xffffffff82000f98,0xffffffff8200fdb4);
     }
-    prVar26 = &(piVar10->window).rect;
-    pSVar11 = ScrPlace_GetActivePlacement(pUVar8->localClientNum);
-    pSVar15 = plVar9->elementHeightExp;
-    fVar34 = plVar9->elementHeight;
-    if (pSVar15 != (Statement_s *)0x0) {
-      fVar34 = GetExpressionFloat(pUVar8->localClientNum,pSVar15);
+    iVar10 = (int)param_2;
+    pfVar19 = (float *)(iVar10 + 4);
+    uVar11 = ScrPlace_GetActivePlacement(*piVar12);
+    dVar24 = (double)*(float *)(iVar13 + 0x28);
+    if (*(int *)(iVar13 + 0x1d8) != 0) {
+      dVar24 = (double)GetExpressionFloat(*piVar12);
     }
-    dVar30 = (double)fVar34;
-    iVar12 = UI_FeederCount(pUVar8->localClientNum,piVar10->special);
-    iVar13 = Window_IsHorizontal(&piVar10->window);
-    if (iVar13 == 0) {
-      UI_OverrideCursorPos(pUVar8->localClientNum,piVar10);
-      dVar27 = 2.0;
-      if ((plVar9->noScrollBars == 0) &&
-         (iVar13 = Item_ListBox_MaxScroll(pUVar8->localClientNum,piVar10), 0 < iVar13)) {
-        fVar34 = (piVar10->window).rect.w;
-        fVar35 = prVar26->x;
-        fVar2 = (piVar10->window).rect.y;
-        pfVar21 = (float *)((pUVar8->localClientNum + LOCAL_CLIENT_COUNT) * 4);
-        dVar29 = 8.0;
-        iVar13 = plVar9->startPos[pUVar8->localClientNum];
-        *(int *)((int)pfVar21 + (int)plVar9) = iVar13;
-        fVar34 = (float)((double)((fVar34 + fVar35) - 8.0) - dVar27);
-        dVar28 = (double)fVar34;
-        UI_DrawHandlePic(pSVar11,fVar34,(float)((double)fVar2 + dVar27),8.0,
-                         (float)((double)(piVar10->window).rect.h - dVar27),-0x7de90000,iVar13,
-                         pfVar21,(Material *)(sharedUiInfo.mapList[3].mapCustomKey + 0xc));
-        piVar16 = piVar10;
-        fVar34 = Item_ListBox_ThumbDrawPosition(pUVar8,piVar10);
-        UI_DrawHandlePic(pSVar11,(float)dVar28,fVar34,(float)dVar29,18.0,(int)piVar16,iVar13,pfVar21
-                         ,(Material *)&IMAGE_DOS_HEADER_82000000);
+    iVar14 = UI_FeederCount((double)*(float *)(iVar10 + 0x178),*piVar12);
+    iVar15 = Window_IsHorizontal(param_2);
+    if (iVar15 == 0) {
+      UI_OverrideCursorPos(*piVar12,param_2);
+      dVar22 = 2.0;
+      if ((*(int *)(iVar13 + 0x1bc) == 0) &&
+         (iVar15 = Item_ListBox_MaxScroll(*piVar12,param_2), 0 < iVar15)) {
+        fVar2 = *(float *)(iVar10 + 0xc);
+        fVar3 = *pfVar19;
+        fVar4 = *(float *)(iVar10 + 8);
+        uVar29 = 0x4020000000000000;
+        *(undefined4 *)((*piVar12 + 4) * 4 + iVar13) = *(undefined4 *)(*piVar12 * 4 + iVar13);
+        dVar23 = (double)(float)((double)((fVar2 + fVar3) - 8.0) - dVar22);
+        UI_DrawHandlePic(dVar23,(double)(float)((double)fVar4 + dVar22),0x4020000000000000,
+                         (double)(float)((double)*(float *)(iVar10 + 0x10) - dVar22),uVar11);
+        uVar21 = Item_ListBox_ThumbDrawPosition(piVar12,param_2);
+        UI_DrawHandlePic(dVar23,uVar21,uVar29,0x4032000000000000,uVar11);
       }
-      iVar13 = plVar9->elementStyle;
-      dVar29 = (double)(float)((double)(piVar10->window).rect.h - dVar27);
-      fVar34 = prVar26->x;
-      dVar28 = (double)(piVar10->window).rect.y;
-      lVar23 = ((ulonglong)pUVar8->localClientNum + 4 & 0x3fffffff) << 2;
-      uVar20 = (ulonglong)(uint)plVar9->startPos[pUVar8->localClientNum];
-      *(int *)((int)plVar9->startPos + (int)lVar23) = plVar9->startPos[pUVar8->localClientNum];
-      uVar17 = (ulonglong)pUVar8->localClientNum;
-      lVar22 = ((ulonglong)pUVar8->localClientNum & 0x3fffffff) << 2;
-      if (iVar13 == 1) {
-        iVar13 = *(int *)((int)plVar9->startPos + (int)lVar22);
-        dVar32 = 1.0;
-        dVar31 = (double)(fVar34 + 1.0);
-        dVar28 = dVar28 + 1.0;
-        if (iVar12 <= iVar13) goto LAB_825cdef8;
+      iVar15 = *(int *)(iVar13 + 0x2c);
+      dVar23 = (double)(float)((double)*(float *)(iVar10 + 0x10) - dVar22);
+      fVar2 = *pfVar19;
+      fVar3 = *(float *)(iVar10 + 8);
+      *(undefined4 *)((*piVar12 + 4) * 4 + iVar13) = *(undefined4 *)(*piVar12 * 4 + iVar13);
+      if (iVar15 == 1) {
+        iVar15 = *(int *)(*piVar12 * 4 + iVar13);
+        dVar28 = 1.0;
+        dVar26 = (double)(fVar2 + 1.0);
+        dVar25 = (double)fVar3 + 1.0;
+        if (iVar14 <= iVar15) goto LAB_825cdef8;
         while( true ) {
-          dVar28 = (double)(float)dVar28;
-          iVar19 = iVar13;
-          pMVar14 = UI_FeederItemImage(pUVar8->localClientNum,piVar10->special,(int)lVar22);
-          if (pMVar14 != (Material *)0x0) {
-            UI_DrawHandlePic(pSVar11,(float)(dVar31 + dVar32),(float)(dVar28 + dVar32),
-                             (float)((double)plVar9->elementWidth - dVar27),(float)(dVar30 - dVar27)
-                             ,(int)lVar22,iVar19,(float *)uVar20,(Material *)lVar23);
+          dVar25 = (double)(float)dVar25;
+          iVar16 = UI_FeederItemImage((double)*(float *)(iVar10 + 0x178),*piVar12);
+          if (iVar16 != 0) {
+            UI_DrawHandlePic((double)(float)(dVar26 + dVar28),(double)(float)(dVar25 + dVar28),
+                             (double)(float)((double)*(float *)(iVar13 + 0x24) - dVar22),
+                             (double)(float)(dVar24 - dVar22),uVar11);
           }
-          if (iVar13 == piVar10->cursorPos[pUVar8->localClientNum]) {
-            UI_DrawRect(pSVar11,(float)dVar31,(float)dVar28,
-                        (float)((double)plVar9->elementWidth - dVar32),(float)(dVar30 - dVar32),
-                        (int)lVar22,iVar19,(piVar10->window).borderSize,(float *)uVar20);
+          if (iVar15 == *(int *)((*piVar12 + 0x5f) * 4 + iVar10)) {
+            UI_DrawRect(dVar26,dVar25,(double)(float)((double)*(float *)(iVar13 + 0x24) - dVar28),
+                        (double)(float)(dVar24 - dVar28),(double)*(float *)(iVar10 + 0x40),uVar11);
           }
-          dVar29 = (double)(float)(dVar29 - dVar30);
-          plVar9->endPos[pUVar8->localClientNum] = plVar9->endPos[pUVar8->localClientNum] + 1;
-          if (dVar29 < dVar30) break;
-          iVar13 = iVar13 + 1;
-          dVar28 = dVar28 + dVar30;
-          if (iVar12 <= iVar13) {
+          dVar23 = (double)(float)(dVar23 - dVar24);
+          iVar16 = (*piVar12 + 4) * 4;
+          *(int *)(iVar16 + iVar13) = *(int *)(iVar16 + iVar13) + 1;
+          if (dVar23 < dVar24) break;
+          iVar15 = iVar15 + 1;
+          dVar25 = dVar25 + dVar24;
+          if (iVar14 <= iVar15) {
             __restfpr_26();
             __restgprlr_24();
             return;
@@ -13987,132 +11891,114 @@ void Item_ListBox_Paint(UiContext *param_1,itemDef_t *param_2)
         }
       }
       else {
-        uVar3 = *(uint *)((int)plVar9->startPos + (int)lVar22);
-        uVar20 = (ulonglong)uVar3;
-        dVar27 = 1.0;
-        dVar31 = (double)(fVar34 + 1.0);
-        dVar28 = dVar28 + 1.0;
-        if (iVar12 <= (int)uVar3) goto LAB_825cdef8;
+        uVar5 = *(uint *)(*piVar12 * 4 + iVar13);
+        uVar17 = (ulonglong)uVar5;
+        dVar25 = 1.0;
+        dVar26 = (double)(fVar2 + 1.0);
+        dVar22 = (double)fVar3 + 1.0;
+        if (iVar14 <= (int)uVar5) goto LAB_825cdef8;
         while( true ) {
-          dVar32 = (double)(float)dVar28;
-          Item_ListBox_PaintBackground
-                    (pUVar8->localClientNum,piVar10,(float)dVar31,(float)dVar28,(int)uVar17);
-          uVar25 = (undefined1)piVar10->cursorPos[pUVar8->localClientNum];
-          iVar13 = (int)uVar20;
-          if (piVar10->cursorPos[pUVar8->localClientNum] == iVar13) {
+          dVar22 = (double)(float)dVar22;
+          Item_ListBox_PaintBackground(dVar26,dVar22,*piVar12,param_2);
+          if (*(int *)((*piVar12 + 0x5f) * 4 + iVar10) == (int)uVar17) {
             Item_ListBox_PaintHighlight
-                      (pUVar8->localClientNum,piVar10,(float)(dVar31 - dVar27),
-                       (float)(dVar32 - dVar27));
+                      ((double)(float)(dVar26 - dVar25),(double)(float)(dVar22 - dVar25),*piVar12,
+                       param_2);
           }
-          if (plVar9->numColumns < 1) {
-            uVar17 = uVar20;
+          if (*(int *)(iVar13 + 0x30) < 1) {
             Item_ListBox_PaintTextElem
-                      (pUVar8,piVar10,iVar13,0,0x7fffffff,0,(float)dVar31,(float)dVar32,
-                       plVar9->elementWidth,(float)dVar30,(bool)uVar25);
+                      (dVar26,dVar22,(double)*(float *)(iVar13 + 0x24),dVar24,piVar12,param_2,uVar17
+                       ,0,0x7fffffff,0);
           }
           else {
-            iVar19 = 0;
-            pfVar21 = &plVar9->elementWidth;
+            lVar18 = 0;
+            piVar20 = (int *)(iVar13 + 0x24);
             do {
-              dVar28 = dVar30;
-              if (0 < (int)pfVar21[7]) {
-                dVar28 = (double)(longlong)(int)pfVar21[7];
+              dVar28 = dVar24;
+              if (0 < piVar20[7]) {
+                dVar28 = (double)(longlong)piVar20[7];
               }
-              piVar4 = (int *)(pfVar21 + 5);
-              pcVar5 = (columnInfo_s *)(pfVar21 + 4);
-              piVar6 = (int *)(pfVar21 + 8);
-              piVar7 = (int *)(pfVar21 + 9);
-              pfVar21 = pfVar21 + 6;
-              uVar17 = uVar20;
+              piVar6 = piVar20 + 5;
+              piVar7 = piVar20 + 4;
+              piVar8 = piVar20 + 8;
+              piVar9 = piVar20 + 9;
+              piVar20 = piVar20 + 6;
               Item_ListBox_PaintTextElem
-                        (pUVar8,piVar10,iVar13,iVar19,*piVar6,*piVar7,
-                         (float)((double)(longlong)pcVar5->xpos + dVar31),
-                         (float)((double)(longlong)*piVar4 + dVar32),(float)(longlong)(int)*pfVar21,
-                         (float)dVar28,SUB41(*pfVar21,0));
-              iVar19 = iVar19 + 1;
-            } while (iVar19 < plVar9->numColumns);
+                        ((double)(float)((double)(longlong)*piVar7 + dVar26),
+                         (double)(float)((double)(longlong)*piVar6 + dVar22),
+                         (double)(longlong)*piVar20,dVar28,piVar12,param_2,uVar17,lVar18,*piVar8,
+                         *piVar9);
+              lVar18 = lVar18 + 1;
+            } while ((int)lVar18 < *(int *)(iVar13 + 0x30));
           }
-          dVar29 = (double)(float)(dVar29 - dVar30);
-          if (dVar29 < dVar30) break;
-          uVar20 = uVar20 + 1;
-          dVar28 = dVar32 + dVar30;
-          plVar9->endPos[pUVar8->localClientNum] = plVar9->endPos[pUVar8->localClientNum] + 1;
-          if (iVar12 <= (int)uVar20) {
+          dVar23 = (double)(float)(dVar23 - dVar24);
+          if (dVar23 < dVar24) break;
+          uVar17 = uVar17 + 1;
+          dVar22 = dVar22 + dVar24;
+          iVar15 = (*piVar12 + 4) * 4;
+          *(int *)(iVar15 + iVar13) = *(int *)(iVar15 + iVar13) + 1;
+          if (iVar14 <= (int)uVar17) {
             __restfpr_26();
             __restgprlr_24();
             return;
           }
         }
       }
-      plVar9->drawPadding = (int)(dVar30 - dVar29);
+      *(int *)(iVar13 + 0x20) = (int)(dVar24 - dVar23);
     }
     else {
-      pIVar24 = &IMAGE_DOS_HEADER_82000000;
-      dVar32 = 8.0;
-      dVar33 = 1.0;
-      fVar34 = prVar26->x + 1.0;
-      dVar28 = (double)fVar34;
-      fVar35 = (((piVar10->window).rect.h + (piVar10->window).rect.y) - 8.0) - 1.0;
-      dVar31 = (double)fVar35;
-      UI_DrawHandlePic(pSVar11,fVar34,fVar35,8.0,8.0,(int)pSVar15,in_r5,(float *)in_r6,
-                       (Material *)&IMAGE_DOS_HEADER_82000000);
-      pfVar21 = (float *)0x82010000;
-      pIVar18 = &IMAGE_DOS_HEADER_82000000;
-      dVar29 = (double)(float)(dVar28 + 7.0);
-      dVar27 = (double)((piVar10->window).rect.w - 16.0);
-      UI_DrawHandlePic(pSVar11,(float)(dVar28 + 7.0),(float)dVar31,(float)(dVar27 + dVar33),
-                       (float)dVar32,(int)pSVar15,-0x7e000000,(float *)0x82010000,
-                       (Material *)pIVar24);
-      fVar34 = (float)((double)(float)(dVar27 - dVar33) + dVar29);
-      dVar27 = (double)fVar34;
-      UI_DrawHandlePic(pSVar11,fVar34,(float)dVar31,(float)dVar32,(float)dVar32,(int)pSVar15,
-                       (int)pIVar18,pfVar21,(Material *)pIVar24);
-      fVar35 = Item_ListBox_ThumbDrawPosition(pUVar8,piVar10);
-      fVar34 = (float)((double)(float)(dVar27 - dVar32) - dVar33);
-      if (fVar34 < fVar35) {
-        fVar35 = fVar34;
+      dVar26 = 8.0;
+      dVar28 = 1.0;
+      dVar22 = (double)(*pfVar19 + 1.0);
+      dVar25 = (double)(((*(float *)(iVar10 + 0x10) + *(float *)(iVar10 + 8)) - 8.0) - 1.0);
+      UI_DrawHandlePic(dVar22,dVar25,0x4020000000000000,0x4020000000000000,uVar11);
+      dVar23 = (double)(float)(dVar22 + 7.0);
+      dVar22 = (double)(*(float *)(iVar10 + 0xc) - 16.0);
+      UI_DrawHandlePic(dVar23,dVar25,(double)(float)(dVar22 + dVar28),dVar26,uVar11);
+      dVar23 = (double)(float)((double)(float)(dVar22 - dVar28) + dVar23);
+      UI_DrawHandlePic(dVar23,dVar25,dVar26,dVar26,uVar11);
+      dVar22 = (double)Item_ListBox_ThumbDrawPosition(piVar12,param_2);
+      dVar23 = (double)(float)((double)(float)(dVar23 - dVar26) - dVar28);
+      if (dVar23 < dVar22) {
+        dVar22 = dVar23;
       }
-      UI_DrawHandlePic(pSVar11,fVar35,(float)dVar31,(float)dVar32,(float)dVar32,(int)uVar17,
-                       (int)pIVar18,pfVar21,(Material *)pIVar24);
-      uVar20 = (ulonglong)(uint)plVar9->startPos[pUVar8->localClientNum];
-      dVar28 = 2.0;
-      lVar22 = ((ulonglong)pUVar8->localClientNum + 4 & 0x3fffffff) << 2;
-      *(int *)((int)plVar9->startPos + (int)lVar22) = plVar9->startPos[pUVar8->localClientNum];
-      dVar27 = (double)((piVar10->window).rect.w - 2.0);
-      if (plVar9->elementStyle == 1) {
-        dVar29 = (double)prVar26->x + dVar33;
-        dVar31 = (double)(float)((double)(piVar10->window).rect.y + dVar33);
-        iVar13 = plVar9->startPos[pUVar8->localClientNum];
-        if (iVar13 < iVar12) {
+      UI_DrawHandlePic(dVar22,dVar25,dVar26,dVar26,uVar11);
+      dVar23 = 2.0;
+      *(undefined4 *)((*piVar12 + 4) * 4 + iVar13) = *(undefined4 *)(*piVar12 * 4 + iVar13);
+      dVar22 = (double)(*(float *)(iVar10 + 0xc) - 2.0);
+      if (*(int *)(iVar13 + 0x2c) == 1) {
+        dVar25 = (double)*pfVar19 + dVar28;
+        dVar26 = (double)(float)((double)*(float *)(iVar10 + 8) + dVar28);
+        iVar15 = *(int *)(*piVar12 * 4 + iVar13);
+        if (iVar15 < iVar14) {
           while( true ) {
-            dVar32 = (double)(float)dVar29;
-            iVar19 = iVar13;
-            pMVar14 = UI_FeederItemImage(pUVar8->localClientNum,piVar10->special,(int)uVar17);
-            if (pMVar14 != (Material *)0x0) {
-              UI_DrawHandlePic(pSVar11,(float)(dVar32 + dVar33),(float)(dVar31 + dVar33),
-                               (float)((double)plVar9->elementWidth - dVar28),
-                               (float)(dVar30 - dVar28),(int)uVar17,iVar19,(float *)uVar20,
-                               (Material *)lVar22);
+            dVar27 = (double)(float)dVar25;
+            iVar16 = UI_FeederItemImage((double)*(float *)(iVar10 + 0x178),*piVar12);
+            if (iVar16 != 0) {
+              UI_DrawHandlePic((double)(float)(dVar27 + dVar28),(double)(float)(dVar26 + dVar28),
+                               (double)(float)((double)*(float *)(iVar13 + 0x24) - dVar23),
+                               (double)(float)(dVar24 - dVar23),uVar11);
             }
-            if (iVar13 == piVar10->cursorPos[pUVar8->localClientNum]) {
-              UI_DrawRect(pSVar11,(float)dVar32,(float)dVar31,
-                          (float)((double)plVar9->elementWidth - dVar33),(float)(dVar30 - dVar33),
-                          (int)uVar17,iVar19,(piVar10->window).borderSize,(float *)uVar20);
+            if (iVar15 == *(int *)((*piVar12 + 0x5f) * 4 + iVar10)) {
+              UI_DrawRect(dVar27,dVar26,(double)(float)((double)*(float *)(iVar13 + 0x24) - dVar28),
+                          (double)(float)(dVar24 - dVar28),(double)*(float *)(iVar10 + 0x40),uVar11)
+              ;
             }
-            dVar29 = (double)plVar9->elementWidth;
-            dVar1 = dVar27 - dVar29;
-            dVar27 = (double)(float)dVar1;
-            if (dVar27 < dVar29) break;
-            iVar13 = iVar13 + 1;
-            dVar29 = dVar29 + dVar32;
-            plVar9->endPos[pUVar8->localClientNum] = plVar9->endPos[pUVar8->localClientNum] + 1;
-            if (iVar12 <= iVar13) {
+            dVar25 = (double)*(float *)(iVar13 + 0x24);
+            dVar1 = dVar22 - dVar25;
+            dVar22 = (double)(float)dVar1;
+            if (dVar22 < dVar25) break;
+            iVar15 = iVar15 + 1;
+            dVar25 = dVar25 + dVar27;
+            iVar16 = (*piVar12 + 4) * 4;
+            *(int *)(iVar16 + iVar13) = *(int *)(iVar16 + iVar13) + 1;
+            if (iVar14 <= iVar15) {
               __restfpr_26();
               __restgprlr_24();
               return;
             }
           }
-          plVar9->drawPadding = (int)dVar1;
+          *(int *)(iVar13 + 0x20) = (int)dVar1;
           __restfpr_26();
           __restgprlr_24();
           return;
@@ -14129,147 +12015,126 @@ LAB_825cdef8:
 
 // 825CDF08  Item_OwnerDraw_Paint  (ui/ui_shared.cpp:9913)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_OwnerDraw_Paint(UiContext *param_1,itemDef_t *param_2)
+void Item_OwnerDraw_Paint(undefined8 param_1,ulonglong param_2)
 
 {
   float fVar1;
   float fVar2;
-  LocalClientNum_t LVar3;
-  menuDef_t *pmVar4;
-  menuData_t *pmVar5;
-  int iVar6;
-  itemDef_t *piVar7;
-  UiContext *pUVar8;
-  bool bVar11;
-  ScreenPlacement *pSVar9;
-  rectDef_s *prVar10;
-  ulonglong uVar12;
-  float *pfVar13;
-  uint uVar14;
-  double dVar15;
+  float fVar3;
+  uint uVar4;
+  uint *puVar5;
+  uint uVar6;
+  undefined4 uVar7;
+  undefined4 *puVar8;
+  uint *puVar10;
+  char cVar12;
+  undefined8 uVar9;
+  float *pfVar11;
+  ulonglong uVar13;
+  longlong lVar14;
+  undefined8 uVar15;
   double dVar16;
-  float fVar17;
-  Material *in_stack_fffffee8;
-  int in_stack_fffffeec;
-  rectDef_s in_stack_fffffef0;
-  int in_stack_ffffff04;
-  char *in_stack_ffffff08;
-  float local_50;
-  float local_4c;
-  float local_48;
-  float local_44;
+  undefined1 auStack_80 [28];
+  undefined4 local_64;
+  undefined4 local_5c;
+  undefined1 local_50 [4];
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
   
-  uVar12 = (ulonglong)(int)param_2;
-  pUVar8 = (UiContext *)__savegprlr_28(param_1);
-  if ((uVar12 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x26c2,0,
-                    "%s");
+  puVar10 = (uint *)__savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x26c2,0,0xffffffff82000f98,0xffffffff8200e050);
   }
-  LVar3 = pUVar8->localClientNum;
-  piVar7 = (itemDef_t *)uVar12;
-  pmVar4 = piVar7->parent;
-  if (LOCAL_CLIENT_3 < LVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,0,
-                    "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
-    ;
+  uVar4 = *puVar10;
+  puVar8 = (undefined4 *)param_2;
+  puVar5 = (uint *)puVar8[0x4d];
+  if (3 < uVar4) {
+    MyAssertHandler(0xffffffff82170618,0x21,0,0xffffffff821649e0,uVar4,4);
   }
-  pmVar5 = pmVar4->data;
-  fVar17 = pmVar5->fadeInAmount;
-  fVar1 = pmVar5->fadeAmount;
-  uVar14 = (piVar7->window).dynamicFlags[LVar3];
-  fVar2 = pmVar5->fadeClamp;
-  dVar15 = 0.0;
-  if (((uVar14 & 0x30) != 0) && ((piVar7->window).nextTime < pUVar8->realTime)) {
-    (piVar7->window).nextTime = pmVar5->fadeCycle + pUVar8->realTime;
-    if ((uVar14 & 0x10) == 0) {
-      fVar17 = (piVar7->window).foreColor[3] + fVar17;
-      (piVar7->window).foreColor[3] = fVar17;
-      if (fVar2 <= fVar17) {
-        (piVar7->window).foreColor[3] = fVar2;
-        uVar14 = uVar14 & 0xffffffdf;
+  uVar6 = *puVar5;
+  fVar1 = *(float *)(uVar6 + 0x10);
+  fVar2 = *(float *)(uVar6 + 0xc);
+  uVar4 = puVar8[uVar4 + 0x12];
+  uVar13 = (ulonglong)uVar4;
+  fVar3 = *(float *)(uVar6 + 8);
+  uVar15 = 0;
+  if (((uVar4 & 0x30) != 0) && ((int)puVar8[0x16] < (int)puVar10[2])) {
+    puVar8[0x16] = *(int *)(uVar6 + 4) + puVar10[2];
+    if ((uVar4 & 0x10) == 0) {
+      fVar1 = (float)puVar8[0x1a] + fVar1;
+      puVar8[0x1a] = fVar1;
+      if (fVar3 <= fVar1) {
+        puVar8[0x1a] = fVar3;
+        uVar13 = CONCAT44(uVar4,uVar4) & 0xffffffffffffffdf;
       }
     }
     else {
-      fVar1 = (piVar7->window).foreColor[3] - fVar1;
-      (piVar7->window).foreColor[3] = fVar1;
-      if (fVar1 <= 0.0) {
-        uVar14 = uVar14 & 0xffffffeb;
+      fVar2 = (float)puVar8[0x1a] - fVar2;
+      puVar8[0x1a] = fVar2;
+      if (fVar2 <= 0.0) {
+        uVar13 = (CONCAT44(uVar4,uVar4) & 0xfffffffffffffffb) << 0x20 |
+                 (ulonglong)uVar4 & 0xffffffeb;
       }
     }
   }
-  Window_SetDynamicFlags(pUVar8->localClientNum,&piVar7->window,uVar14);
-  local_50 = (piVar7->window).foreColor[0];
-  local_4c = (piVar7->window).foreColor[1];
-  local_48 = (piVar7->window).foreColor[2];
-  local_44 = (piVar7->window).foreColor[3];
-  pfVar13 = (piVar7->window).foreColor;
-  bVar11 = Window_HasFocus(pUVar8->localClientNum,&piVar7->window);
-  if (bVar11) {
-    pfVar13 = pmVar4->data->focusColor;
+  Window_SetDynamicFlags(*puVar10,param_2,uVar13);
+  local_4c = puVar8[0x18];
+  local_48 = puVar8[0x19];
+  local_44 = puVar8[0x1a];
+  lVar14 = param_2 + 0x5c;
+  cVar12 = Window_HasFocus(*puVar10,param_2);
+  if (cVar12 == '\0') {
+    if ((puVar8[0x48] != 1) ||
+       (uVar4 = puVar10[2],
+       (((int)uVar4 >> 8) + (uint)((int)uVar4 < 0 && (uVar4 & 0xff) != 0) & 1) != 0))
+    goto LAB_825ce0a4;
   }
-  else if ((piVar7->textStyle != 1) ||
-          (uVar14 = pUVar8->realTime,
-          (((int)uVar14 >> 8) + (uint)((int)uVar14 < 0 && (uVar14 & 0xff) != 0) & 1) != 0))
-  goto LAB_825ce0a4;
-  GetBlinkColor(pUVar8,pfVar13,&local_50);
+  else {
+    lVar14 = (ulonglong)*puVar5 + 0x3c;
+  }
+  GetBlinkColor(puVar10,lVar14,local_50);
 LAB_825ce0a4:
-  bVar11 = Item_IsDisabled(pUVar8->localClientNum,piVar7);
-  if (bVar11) {
-    local_50 = (piVar7->window).disableColor[0];
-    local_4c = (piVar7->window).disableColor[1];
-    local_48 = (piVar7->window).disableColor[2];
-    local_44 = (piVar7->window).disableColor[3];
+  cVar12 = Item_IsDisabled(*puVar10,param_2);
+  if (cVar12 != '\0') {
+    local_4c = puVar8[0x28];
+    local_48 = puVar8[0x29];
+    local_44 = puVar8[0x2a];
   }
-  dVar16 = (double)piVar7->textscale;
-  iVar6 = piVar7->fontEnum;
-  pSVar9 = ScrPlace_GetActivePlacement(pUVar8->localClientNum);
-  UI_GetFontHandle(pSVar9,iVar6,(float)dVar16);
-  fVar17 = piVar7->textaligny;
-  if (piVar7->textAlignYExp != (Statement_s *)0x0) {
-    fVar17 = GetExpressionFloat(pUVar8->localClientNum,piVar7->textAlignYExp);
+  dVar16 = (double)(float)puVar8[0x47];
+  uVar7 = puVar8[0x43];
+  uVar9 = ScrPlace_GetActivePlacement(*puVar10);
+  UI_GetFontHandle(dVar16,uVar9,uVar7);
+  dVar16 = (double)(float)puVar8[0x46];
+  if (puVar8[0x74] != 0) {
+    dVar16 = (double)GetExpressionFloat(*puVar10);
   }
-  dVar16 = (double)fVar17;
-  if (piVar7->text == (char *)0x0) {
-    pfVar13 = (float *)(piVar7->window).name;
-    memcpy();
-    UI_OwnerDraw(pUVar8->localClientNum,(piVar7->window).rect.x,(piVar7->window).rect.y,
-                 (piVar7->window).rect.w,(piVar7->window).rect.h,(piVar7->window).ownerDraw,
-                 piVar7->alignment,piVar7->textalignx,(float)dVar16,(piVar7->window).ownerDrawFlags,
-                 (int)&local_50,(uint)(piVar7->window).rect.horzAlign,piVar7->special,
-                 (Font_s *)(uint)(piVar7->window).rect.vertAlign,piVar7->textscale,pfVar13,
-                 in_stack_fffffee8,in_stack_fffffeec,in_stack_fffffef0,in_stack_ffffff04,
-                 in_stack_ffffff08);
+  if (puVar8[0x4b] == 0) {
+    local_5c = *puVar8;
+    local_64 = puVar8[0x44];
+    memcpy(auStack_80,(void *)(puVar8[0x4d] + 8),0x14);
+    UI_OwnerDraw((double)(float)puVar8[1],(double)(float)puVar8[2],(double)(float)puVar8[3],
+                 (double)(float)puVar8[4],(double)(float)puVar8[0x45],dVar16,
+                 (double)(float)puVar8[0x5e],(double)(float)puVar8[0x47],*puVar10);
     __restgprlr_28();
     return;
   }
-  Item_Text_Paint(pUVar8,piVar7);
-  prVar10 = Item_GetTextRect(pUVar8->localClientNum,piVar7);
-  pfVar13 = (float *)(piVar7->window).name;
-  if (*piVar7->text == '\0') {
-    memcpy();
-    UI_OwnerDraw(pUVar8->localClientNum,prVar10->w + prVar10->x,(piVar7->window).rect.y,
-                 (piVar7->window).rect.w,(piVar7->window).rect.h,(piVar7->window).ownerDrawFlags,
-                 piVar7->alignment,(float)dVar15,(float)dVar16,piVar7->textStyle,(int)&local_50,
-                 (uint)(piVar7->window).rect.horzAlign,piVar7->special,
-                 (Font_s *)(uint)(piVar7->window).rect.vertAlign,piVar7->textscale,pfVar13,
-                 in_stack_fffffee8,in_stack_fffffeec,in_stack_fffffef0,in_stack_ffffff04,
-                 in_stack_ffffff08);
+  Item_Text_Paint(puVar10,param_2);
+  pfVar11 = (float *)Item_GetTextRect(*puVar10,param_2);
+  local_64 = puVar8[0x44];
+  local_5c = *puVar8;
+  if (*(char *)puVar8[0x4b] == '\0') {
+    memcpy(auStack_80,(void *)(puVar8[0x4d] + 8),0x14);
+    UI_OwnerDraw((double)(pfVar11[2] + *pfVar11),(double)(float)puVar8[2],(double)(float)puVar8[3],
+                 (double)(float)puVar8[4],uVar15,dVar16,(double)(float)puVar8[0x5e],
+                 (double)(float)puVar8[0x47],*puVar10);
     __restgprlr_28();
     return;
   }
-  memcpy();
-  UI_OwnerDraw(pUVar8->localClientNum,prVar10->w + prVar10->x + 8.0,(piVar7->window).rect.y,
-               (piVar7->window).rect.w,(piVar7->window).rect.h,(int)&local_50,piVar7->alignment,
-               (float)dVar15,(float)dVar16,(int)(piVar7->window).background,piVar7->textStyle,
-               (uint)(piVar7->window).rect.horzAlign,piVar7->special,
-               (Font_s *)(uint)(piVar7->window).rect.vertAlign,piVar7->textscale,
-               (float *)(piVar7->window).ownerDraw,in_stack_fffffee8,in_stack_fffffeec,
-               in_stack_fffffef0,in_stack_ffffff04,in_stack_ffffff08);
+  memcpy(auStack_80,(void *)(puVar8[0x4d] + 8),0x14);
+  UI_OwnerDraw((double)(pfVar11[2] + *pfVar11 + 8.0),(double)(float)puVar8[2],
+               (double)(float)puVar8[3],(double)(float)puVar8[4],uVar15,dVar16,
+               (double)(float)puVar8[0x5e],(double)(float)puVar8[0x47],*puVar10);
   __restgprlr_28();
   return;
 }
@@ -14277,57 +12142,44 @@ LAB_825ce0a4:
 
 // 825C67E8  Item_GameMsgWindow_Paint  (ui/ui_shared.cpp:9967)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void Item_GameMsgWindow_Paint(UiContext *param_1,itemDef_t *param_2)
+void Item_GameMsgWindow_Paint(undefined8 param_1,ulonglong param_2)
 
 {
-  int iVar1;
-  LocalClientNum_t *pLVar2;
-  int iVar3;
-  char *pcVar4;
-  ScreenPlacement *pSVar5;
-  Font_s *pFVar6;
-  ulonglong uVar7;
-  double dVar8;
-  int in_stack_ffffff48;
-  int in_stack_ffffff4c;
-  msgwnd_mode_t in_stack_ffffff50;
+  undefined4 uVar1;
+  int iVar2;
+  undefined4 *puVar4;
+  int iVar5;
+  undefined8 uVar3;
+  double dVar6;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_28(param_1);
-  if (pLVar2 == (LocalClientNum_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x26f4,0,
-                    "%s");
+  puVar4 = (undefined4 *)__savegprlr_28();
+  if (puVar4 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x26f4,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x26f5,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x26f5,0,0xffffffff82000f98,0xffffffff8200e050);
   }
-  iVar3 = CL_IsCgameInitialized(*pLVar2);
-  if (iVar3 != 0) {
-    iVar3 = (int)uVar7;
-    if ((*(int *)(iVar3 + 0x124) < 0) || (3 < *(int *)(iVar3 + 0x124))) {
-      pcVar4 = va("Game message window index %d is not valid. Must be in [0, %d).");
-      Com_Error(ERR_DROP,pcVar4);
+  iVar5 = CL_IsCgameInitialized(*puVar4);
+  if (iVar5 != 0) {
+    iVar2 = (int)param_2;
+    iVar5 = *(int *)(iVar2 + 0x124);
+    if ((iVar5 < 0) || (3 < iVar5)) {
+      uVar3 = va(0xffffffff82172938,iVar5,4);
+      Com_Error(1,uVar3);
     }
-    iVar1 = *(int *)(iVar3 + 0x128);
-    if ((((iVar1 != 1) && (iVar1 != 0)) && (iVar1 != 3)) && (iVar1 != 2)) {
-      pcVar4 = va("Game message window mode %d is not valid.");
-      Com_Error(ERR_DROP,pcVar4);
+    iVar5 = *(int *)(iVar2 + 0x128);
+    if ((((iVar5 != 1) && (iVar5 != 0)) && (iVar5 != 3)) && (iVar5 != 2)) {
+      uVar3 = va(0xffffffff8217290c);
+      Com_Error(1,uVar3);
     }
-    iVar1 = *(int *)(iVar3 + 0x10c);
-    dVar8 = (double)*(float *)(iVar3 + 0x11c);
-    pSVar5 = ScrPlace_GetActivePlacement(*pLVar2);
-    pFVar6 = UI_GetFontHandle(pSVar5,iVar1,(float)dVar8);
+    uVar1 = *(undefined4 *)(iVar2 + 0x10c);
+    dVar6 = (double)*(float *)(iVar2 + 0x11c);
+    uVar3 = ScrPlace_GetActivePlacement(*puVar4);
+    uVar3 = UI_GetFontHandle(dVar6,uVar3,uVar1);
     Con_DrawGameMessageWindow
-              (*pLVar2,*(int *)(iVar3 + 0x124),(int)*(float *)(iVar3 + 4),(int)*(float *)(iVar3 + 8)
-               ,(uint)*(byte *)(iVar3 + 0x14),(uint)*(byte *)(iVar3 + 0x15),pFVar6,
-               *(float *)(iVar3 + 0x11c),*(float **)(iVar3 + 0x128),in_stack_ffffff48,
-               in_stack_ffffff4c,in_stack_ffffff50);
+              ((double)*(float *)(iVar2 + 0x11c),*puVar4,*(undefined4 *)(iVar2 + 0x124),
+               (int)*(float *)(iVar2 + 4),(int)*(float *)(iVar2 + 8),*(undefined1 *)(iVar2 + 0x14),
+               *(undefined1 *)(iVar2 + 0x15),uVar3);
   }
   __restgprlr_28();
   return;
@@ -14336,44 +12188,39 @@ void Item_GameMsgWindow_Paint(UiContext *param_1,itemDef_t *param_2)
 
 // 825C6978  NewsTicker_GetBreakPosition  (ui/ui_shared.cpp:9999)
 
-char * NewsTicker_GetBreakPosition(char *param_1)
+void NewsTicker_GetBreakPosition(char *param_1)
 
 {
   char cVar1;
   
   cVar1 = *param_1;
   if (cVar1 == '\0') {
-    return param_1;
+    return;
   }
   while( true ) {
     if (cVar1 == '\n') {
-      return param_1;
+      return;
     }
     if (cVar1 == '\r') break;
     param_1 = param_1 + 1;
     cVar1 = *param_1;
     if (cVar1 == '\0') {
-      return param_1;
+      return;
     }
   }
-  return param_1;
+  return;
 }
 
 
 // 825C69B0  Item_NewsTicker_Reset  (ui/ui_shared.cpp:10014)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Item_NewsTicker_Reset(UiContext *param_1,itemDef_t *param_2)
+void Item_NewsTicker_Reset(undefined8 param_1,undefined8 param_2)
 
 {
-  newsTickerDef_s *pnVar1;
+  undefined4 *puVar1;
   
-  pnVar1 = Item_GetNewsTickerDef(param_2);
-  NewsFeed_Swap(pnVar1->feedId);
+  puVar1 = (undefined4 *)Item_GetNewsTickerDef(param_2);
+  NewsFeed_Swap(*puVar1);
   Item_NewsTicker_Init(param_1,param_2);
   return;
 }
@@ -14381,200 +12228,170 @@ void Item_NewsTicker_Reset(UiContext *param_1,itemDef_t *param_2)
 
 // 825C6A00  Item_NewsTicker_Paint  (ui/ui_shared.cpp:10027)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Item_NewsTicker_Paint(UiContext *param_1,itemDef_t *param_2)
+void Item_NewsTicker_Paint(undefined8 param_1,ulonglong param_2)
 
 {
-  ulonglong uVar1;
-  char cVar2;
-  LocalClientNum_t LVar3;
+  char cVar1;
+  uint uVar2;
+  int iVar3;
   float fVar4;
-  UiContext *pUVar5;
-  newsTickerDef_s *pnVar6;
-  ScreenPlacement *pSVar8;
-  Font_s *pFVar9;
+  char *pcVar5;
+  uint *puVar8;
+  undefined4 *puVar9;
+  undefined8 uVar6;
   char *pcVar10;
-  int iVar11;
+  ulonglong uVar7;
+  uint uVar11;
   int iVar12;
-  ulonglong uVar13;
-  float *pfVar14;
-  Font_s *pFVar15;
-  undefined4 *puVar16;
-  uint uVar17;
-  TickerState TVar18;
-  longlong lVar19;
-  ulonglong uVar20;
-  longlong lVar21;
-  float *pfVar22;
-  int iVar23;
-  newsTickerInfo_s *pnVar24;
-  longlong lVar25;
-  double dVar26;
-  float afStack_90 [3];
+  int iVar13;
+  undefined4 *puVar14;
+  uint uVar15;
+  int iVar17;
+  ulonglong uVar16;
+  undefined4 uVar18;
+  int iVar19;
+  float *pfVar20;
+  uint *puVar21;
+  longlong lVar22;
+  double dVar23;
+  undefined1 auStack_90 [12];
   undefined4 uStack_84;
-  float local_80;
-  Font_s aFStack_7c [5];
-  itemDef_t *piVar7;
+  undefined1 local_80 [4];
+  undefined1 auStack_7c [4];
+  float local_78;
+  undefined1 auStack_74 [4];
+  undefined1 local_70;
+  undefined1 local_6f;
   
-  uVar13 = (ulonglong)(int)param_2;
-  pUVar5 = (UiContext *)__savegprlr_21(param_1);
-  if (LOCAL_CLIENT_3 < pUVar5->localClientNum) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x273a,0,
-                    "dc->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                   );
+  puVar8 = (uint *)__savegprlr_21();
+  if (3 < *puVar8) {
+    MyAssertHandler(0xffffffff82170658,0x273a,0,0xffffffff82170858,*puVar8,4);
   }
-  piVar7 = (itemDef_t *)uVar13;
-  pnVar6 = Item_GetNewsTickerDef(piVar7);
-  if (pnVar6 == (newsTickerDef_s *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x273d,0,
-                    "%s");
+  puVar9 = (undefined4 *)Item_GetNewsTickerDef(param_2);
+  if (puVar9 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x273d,0,0xffffffff82000f98,0xffffffff82172984);
   }
-  LVar3 = pUVar5->localClientNum;
-  pnVar24 = g_tickerInfo + LVar3;
-  if (pnVar24 == (newsTickerInfo_s *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2740,0,
-                    "%s");
+  iVar17 = *puVar8 * 0x14;
+  puVar21 = (uint *)(&DAT_8400bcf8 + iVar17);
+  if (puVar21 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x2740,0,0xffffffff82000f98,0xffffffff82172978);
   }
-  if ((uVar13 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
-                   );
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018fa0,0x24,0,0xffffffff82000f98,0xffffffff8200fdb4);
   }
-  lVar21 = uVar13 + 4;
-  if (lVar21 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2743,0,
-                    "%s");
+  if (param_2 + 4 == 0) {
+    MyAssertHandler(0xffffffff82170658,0x2743,0,0xffffffff82000f98,0xffffffff8200fd5c);
   }
-  dVar26 = (double)piVar7->textscale;
-  iVar11 = piVar7->fontEnum;
-  pSVar8 = ScrPlace_GetActivePlacement(pUVar5->localClientNum);
-  pFVar9 = UI_GetFontHandle(pSVar8,iVar11,(float)dVar26);
-  Item_TextColor(pUVar5,piVar7,(float (*) [4])afStack_90);
-  pcVar10 = NewsFeed_Get(pnVar6->feedId);
-  uVar20 = (ulonglong)(int)pcVar10;
+  iVar3 = (int)param_2;
+  dVar23 = (double)*(float *)(iVar3 + 0x11c);
+  uVar18 = *(undefined4 *)(iVar3 + 0x10c);
+  uVar6 = ScrPlace_GetActivePlacement(*puVar8);
+  uVar6 = UI_GetFontHandle(dVar23,uVar6,uVar18);
+  Item_TextColor(puVar8,param_2,auStack_90);
+  pcVar10 = (char *)NewsFeed_Get(*puVar9);
   if (pcVar10 == (char *)0x0) {
-    pcVar10 = piVar7->text;
-    uVar20 = ZEXT48(pcVar10);
-    if (uVar20 == 0) goto LAB_825c6f20;
+    pcVar10 = *(char **)(iVar3 + 300);
+    if (pcVar10 == (char *)0x0) goto LAB_825c6f20;
     if (*pcVar10 == '@') {
-      pcVar10 = UI_SafeTranslateString(pcVar10 + 1);
-      uVar20 = (ulonglong)(int)pcVar10;
+      pcVar10 = (char *)UI_SafeTranslateString(pcVar10 + 1);
     }
   }
-  pcVar10 = (char *)uVar20;
-  cVar2 = *pcVar10;
-  uVar1 = uVar20;
-  while (((cVar2 != '\0' && (cVar2 != '\n')) && (cVar2 != '\r'))) {
-    uVar1 = uVar1 + 1;
-    cVar2 = *(char *)uVar1;
+  cVar1 = *pcVar10;
+  pcVar5 = pcVar10;
+  while (((cVar1 != '\0' && (cVar1 != '\n')) && (cVar1 != '\r'))) {
+    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar5;
   }
-  lVar19 = uVar1 - uVar20;
-  if (lVar19 == 0) {
-    pnVar6 = Item_GetNewsTickerDef(piVar7);
-    NewsFeed_Swap(pnVar6->feedId);
-    Item_NewsTicker_Init(pUVar5,piVar7);
+  iVar19 = (int)pcVar5 - (int)pcVar10;
+  if (iVar19 == 0) {
+    puVar9 = (undefined4 *)Item_GetNewsTickerDef(param_2);
+    NewsFeed_Swap(*puVar9);
+    Item_NewsTicker_Init(puVar8,param_2);
     __restgprlr_21();
     return;
   }
-  pSVar8 = ScrPlace_GetActivePlacement(pUVar5->localClientNum);
-  if (pSVar8 == (ScreenPlacement *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x275f,0,
-                    "%s");
+  uVar7 = ScrPlace_GetActivePlacement(*puVar8);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x275f,0,0xffffffff82000f98,0xffffffff8200144c);
   }
-  puVar16 = &uStack_84;
-  lVar25 = 5;
-  uVar20 = uVar13;
+  puVar14 = &uStack_84;
+  lVar22 = 5;
+  uVar16 = param_2;
   do {
-    uVar20 = uVar20 + 4;
-    puVar16 = puVar16 + 1;
-    *puVar16 = *(undefined4 *)uVar20;
-    lVar25 = lVar25 + -1;
-  } while (lVar25 != 0);
-  ScrPlace_ApplyRectClamped
-            (pSVar8,&local_80,(float *)aFStack_7c,(float *)&aFStack_7c[0].pixelHeight,
-             (float *)&aFStack_7c[0].glyphCount,(uint)aFStack_7c[0].material._0_1_,
-             (uint)aFStack_7c[0].material._1_1_);
-  pFVar15 = aFStack_7c;
-  pfVar14 = &local_80;
-  ScrPlace_ApplyRect(pSVar8,pfVar14,(float *)pFVar15,(float *)&aFStack_7c[0].pixelHeight,
-                     (float *)&aFStack_7c[0].glyphCount,6,6);
-  iVar11 = Sys_Milliseconds();
-  lVar25 = (longlong)iVar11 - (ulonglong)(uint)pnVar24->lastTime;
-  iVar11 = (int)lVar19;
-  if (0 < lVar25) {
-    iVar12 = Sys_Milliseconds();
-    TVar18 = g_tickerInfo[LVar3].state;
-    pnVar24->lastTime = iVar12;
-    if (TVar18 < (TICKER_PAUSE_AFTER_SCROLL|TICKER_SHOW)) {
-      if (TVar18 == TICKER_STOPPED) goto LAB_825c6f20;
-      iVar23 = (int)lVar25;
-      if (TVar18 == TICKER_MOVE_IN) {
-        fVar4 = -((float)(longlong)pnVar6->speed * (float)(longlong)iVar23 * 0.001 -
-                 g_tickerInfo[LVar3].y);
-        g_tickerInfo[LVar3].y = fVar4;
+    uVar16 = uVar16 + 4;
+    puVar14 = puVar14 + 1;
+    *puVar14 = *(undefined4 *)uVar16;
+    lVar22 = lVar22 + -1;
+  } while (lVar22 != 0);
+  ScrPlace_ApplyRectClamped(uVar7,local_80,auStack_7c,&local_78,auStack_74,local_70,local_6f);
+  ScrPlace_ApplyRect(uVar7,local_80,auStack_7c,&local_78,auStack_74,6,6);
+  lVar22 = Sys_Milliseconds();
+  uVar15 = *puVar21;
+  if (0 < (longlong)(lVar22 - (ulonglong)uVar15)) {
+    uVar11 = Sys_Milliseconds();
+    uVar2 = *(uint *)(&DAT_8400bd08 + iVar17);
+    *puVar21 = uVar11;
+    if (uVar2 < 6) {
+      if (uVar2 == 0) goto LAB_825c6f20;
+      iVar13 = (int)(lVar22 - (ulonglong)uVar15);
+      if (uVar2 == 1) {
+        fVar4 = -((float)(longlong)(int)puVar9[1] * (float)(longlong)iVar13 * 0.001 -
+                 *(float *)(&DAT_8400bd04 + iVar17));
+        *(float *)(&DAT_8400bd04 + iVar17) = fVar4;
         if (fVar4 <= 0.0) {
-          g_tickerInfo[LVar3].y = 0.0;
-          g_tickerInfo[LVar3].state = TICKER_SHOW;
-          g_tickerInfo[LVar3].nextStateTime = iVar12 + 5000;
+          *(undefined4 *)(&DAT_8400bd04 + iVar17) = 0;
+          *(undefined4 *)(&DAT_8400bd08 + iVar17) = 2;
+          *(uint *)(&DAT_8400bcfc + iVar17) = uVar11 + 5000;
         }
       }
-      else if (TVar18 == TICKER_SHOW) {
-        if (g_tickerInfo[LVar3].nextStateTime <= iVar12) {
-          pFVar15 = pFVar9;
-          iVar12 = UI_TextWidth(pcVar10,iVar11,pFVar9,piVar7->textscale);
-          pfVar14 = (float *)lVar19;
-          TVar18 = TICKER_LEFT_SCROLL;
-          if ((float)(longlong)iVar12 <= (float)aFStack_7c[0].pixelHeight) {
-            TVar18 = TICKER_MOVE_OUT;
+      else if (uVar2 == 2) {
+        if (*(int *)(&DAT_8400bcfc + iVar17) <= (int)uVar11) {
+          iVar13 = UI_TextWidth((double)*(float *)(iVar3 + 0x11c),pcVar10,iVar19,uVar6);
+          uVar18 = 3;
+          if ((float)(longlong)iVar13 <= local_78) {
+            uVar18 = 5;
           }
-          g_tickerInfo[LVar3].state = TVar18;
+          *(undefined4 *)(&DAT_8400bd08 + iVar17) = uVar18;
         }
       }
-      else if (TVar18 == TICKER_LEFT_SCROLL) {
-        pFVar15 = pFVar9;
-        iVar12 = UI_TextWidth(pcVar10,iVar11,pFVar9,piVar7->textscale);
-        pfVar14 = (float *)lVar19;
-        fVar4 = -((float)(longlong)pnVar6->speed * (float)(longlong)iVar23 * 0.001 -
-                 g_tickerInfo[LVar3].x);
-        g_tickerInfo[LVar3].x = fVar4;
-        if (fVar4 <= (float)aFStack_7c[0].pixelHeight - (float)(longlong)iVar12) {
-          iVar12 = pnVar24->lastTime;
-          g_tickerInfo[LVar3].state = TICKER_PAUSE_AFTER_SCROLL;
-          g_tickerInfo[LVar3].nextStateTime = iVar12 + 3000;
+      else if (uVar2 == 3) {
+        iVar12 = UI_TextWidth((double)*(float *)(iVar3 + 0x11c),pcVar10,iVar19,uVar6);
+        fVar4 = -((float)(longlong)(int)puVar9[1] * (float)(longlong)iVar13 * 0.001 -
+                 *(float *)(&DAT_8400bd00 + iVar17));
+        *(float *)(&DAT_8400bd00 + iVar17) = fVar4;
+        if (fVar4 <= local_78 - (float)(longlong)iVar12) {
+          *(undefined4 *)(&DAT_8400bd08 + iVar17) = 4;
+          *(uint *)(&DAT_8400bcfc + iVar17) = *puVar21 + 3000;
         }
       }
-      else if (TVar18 == TICKER_PAUSE_AFTER_SCROLL) {
-        if (g_tickerInfo[LVar3].nextStateTime <= iVar12) {
-          g_tickerInfo[LVar3].state = TICKER_MOVE_OUT;
+      else if (uVar2 == 4) {
+        if (*(int *)(&DAT_8400bcfc + iVar17) <= (int)uVar11) {
+          *(undefined4 *)(&DAT_8400bd08 + iVar17) = 5;
         }
       }
       else {
-        fVar4 = -((float)(longlong)pnVar6->speed * (float)(longlong)iVar23 * 0.001 -
-                 g_tickerInfo[LVar3].y);
-        g_tickerInfo[LVar3].y = fVar4;
-        if (fVar4 <= (piVar7->window).rect.h * -1.0) {
-          Item_NewsTicker_Reset(pUVar5,piVar7);
-          pfVar14 = (float *)uVar13;
+        fVar4 = -((float)((double)(longlong)(int)puVar9[1] * (double)(longlong)iVar13) * 0.001 -
+                 *(float *)(&DAT_8400bd04 + iVar17));
+        *(float *)(&DAT_8400bd04 + iVar17) = fVar4;
+        if (fVar4 <= *(float *)(iVar3 + 0x10) * -1.0) {
+          Item_NewsTicker_Reset(puVar8,param_2);
         }
       }
     }
   }
-  dVar26 = (double)(piVar7->window).rect.h;
-  iVar12 = UI_TextHeight(pFVar9,piVar7->textscale);
-  uVar17 = iVar12 + (int)dVar26;
-  iVar12 = (int)uVar17 >> 1;
-  pfVar22 = (float *)lVar21;
-  iVar23 = iVar12 + (uint)((int)uVar17 < 0 && (uVar17 & 1) != 0);
-  UI_SetScissorRect(pSVar8,*pfVar22,(piVar7->window).rect.y,(piVar7->window).rect.w,(float)dVar26,
-                    (int)pfVar14,(int)pFVar15);
-  UI_DrawTextNoSnap(pSVar8,pcVar10,iVar11,pFVar9,g_tickerInfo[LVar3].x + *pfVar22,
-                    g_tickerInfo[LVar3].y + (float)(longlong)iVar23 + (piVar7->window).rect.y,iVar12
-                    ,piVar7->textStyle,piVar7->textscale,
-                    (float *)(uint)(piVar7->window).rect.horzAlign,
-                    (uint)(piVar7->window).rect.vertAlign);
+  dVar23 = (double)*(float *)(iVar3 + 0x10);
+  iVar13 = UI_TextHeight((double)*(float *)(iVar3 + 0x11c),uVar6);
+  uVar15 = iVar13 + (int)dVar23;
+  pfVar20 = (float *)(param_2 + 4);
+  UI_SetScissorRect((double)*pfVar20,(double)*(float *)(iVar3 + 8),(double)*(float *)(iVar3 + 0xc),
+                    dVar23,uVar7);
+  UI_DrawTextNoSnap((double)(*(float *)(&DAT_8400bd00 + iVar17) + *pfVar20),
+                    (double)(*(float *)(&DAT_8400bd04 + iVar17) +
+                             (float)(longlong)
+                                    (int)(((int)uVar15 >> 1) +
+                                         (uint)((int)uVar15 < 0 && (uVar15 & 1) != 0)) +
+                            *(float *)(iVar3 + 8)),(double)*(float *)(iVar3 + 0x11c),uVar7,pcVar10,
+                    iVar19,uVar6);
   UI_ClearScissorRect();
 LAB_825c6f20:
   __restgprlr_21();
@@ -14584,197 +12401,183 @@ LAB_825c6f20:
 
 // 825CE328  Item_Paint  (ui/ui_shared.cpp:10161)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Item_Paint(UiContext *param_1,ScreenPlacement *param_2,itemDef_t *param_3)
+void Item_Paint(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  menuDef_t *pmVar1;
-  LocalClientNum_t LVar2;
-  undefined4 uVar3;
-  menuData_t *pmVar4;
-  UiContext *pUVar5;
+  int *piVar1;
+  uint uVar2;
+  int iVar3;
+  uint *puVar5;
   int iVar6;
-  bool bVar12;
-  itemDef_t *piVar7;
-  char *pcVar8;
-  Material *pMVar9;
-  rectDef_s *prVar10;
-  ScreenPlacement *pSVar11;
-  undefined8 in_r6;
-  float *pfVar13;
-  undefined4 *puVar14;
-  int iVar15;
+  char cVar9;
+  undefined8 uVar4;
+  undefined4 uVar7;
+  float *pfVar8;
+  undefined4 *puVar11;
+  ulonglong uVar10;
+  int iVar12;
+  double dVar13;
+  undefined8 uVar14;
+  double dVar15;
   double dVar16;
-  double dVar17;
-  double dVar18;
+  undefined8 uVar17;
+  undefined8 uVar18;
   double dVar19;
-  double dVar20;
-  float fVar21;
-  char acStack_c0 [192];
+  undefined1 auStack_c0 [192];
   
-  __savegprlr_22(param_1);
-  pUVar5 = (UiContext *)__savefpr_27();
-  iVar6 = (param_3->window).ownerDrawFlags;
-  pmVar1 = param_3->parent;
-  piVar7 = param_3;
-  if (iVar6 != 0) {
-    iVar6 = UI_OwnerDrawVisible(iVar6);
+  __savegprlr_22();
+  puVar5 = (uint *)__savefpr_27();
+  iVar3 = (int)param_3;
+  piVar1 = *(int **)(iVar3 + 0x134);
+  if (*(int *)(iVar3 + 0x3c) != 0) {
+    iVar6 = UI_OwnerDrawVisible();
     if (iVar6 == 0) {
-      LVar2 = pUVar5->localClientNum;
+      uVar2 = *puVar5;
       Sys_EnterUIOwnership();
-      piVar7 = (itemDef_t *)&DAT_00000004;
-      Window_RemoveDynamicFlags(LVar2,&param_3->window,4);
+      Window_RemoveDynamicFlags(uVar2,param_3,4);
       Sys_LeaveUIOwnership();
     }
     else {
-      piVar7 = (itemDef_t *)&DAT_00000004;
-      Window_AddDynamicFlags(pUVar5->localClientNum,&param_3->window,4);
+      Window_AddDynamicFlags(*puVar5,param_3,4);
     }
   }
-  iVar6 = Item_IsVisible(pUVar5->localClientNum,param_3);
+  iVar6 = Item_IsVisible(*puVar5,param_3);
   if (iVar6 == 0) {
-    bVar12 = Window_HasFocus(pUVar5->localClientNum,&param_3->window);
-    if (bVar12) {
-      Menu_ClearFocus(pUVar5,pmVar1);
-      piVar7 = Menu_SetNextCursorItem(pUVar5,pmVar1,(ItemFocusReason)piVar7);
-      __restfpr_27(piVar7);
+    cVar9 = Window_HasFocus(*puVar5);
+    if (cVar9 != '\0') {
+      Menu_ClearFocus(puVar5,piVar1);
+      Menu_SetNextCursorItem(puVar5,piVar1);
+      __restfpr_27();
       __restgprlr_22();
       return;
     }
     goto switchD_825ce740_caseD_2;
   }
-  Item_RunHasFocus(pUVar5,param_3);
-  pfVar13 = (float *)in_r6;
+  Item_RunHasFocus(puVar5,param_3);
   iVar6 = 0;
-  if (param_3->floatExpressionCount != 0) {
-    iVar15 = 0;
+  if (*(int *)(iVar3 + 400) != 0) {
+    iVar12 = 0;
     do {
-      puVar14 = (undefined4 *)((int)&param_3->floatExpressions->target + iVar15);
-      uVar3 = *puVar14;
-      fVar21 = GetExpressionFloat(pUVar5->localClientNum,(Statement_s *)puVar14[1]);
-      switch(uVar3) {
+      puVar11 = (undefined4 *)(iVar12 + *(int *)(iVar3 + 0x194));
+      uVar7 = *puVar11;
+      dVar13 = (double)GetExpressionFloat(*puVar5,puVar11[1]);
+      switch(uVar7) {
       case 0:
-        (param_3->window).rect.x = (param_3->parent->window).rect.x + fVar21;
+        *(float *)(iVar3 + 4) = (float)((double)*(float *)(*(int *)(iVar3 + 0x134) + 8) + dVar13);
         break;
       case 1:
-        (param_3->window).rect.y = (param_3->parent->window).rect.y + fVar21;
+        *(float *)(iVar3 + 8) = (float)((double)*(float *)(*(int *)(iVar3 + 0x134) + 0xc) + dVar13);
         break;
       case 2:
-        (param_3->window).rect.w = fVar21;
+        *(float *)(iVar3 + 0xc) = (float)dVar13;
         break;
       case 3:
-        (param_3->window).rect.h = fVar21;
+        *(float *)(iVar3 + 0x10) = (float)dVar13;
         break;
       case 4:
-        (param_3->window).foreColor[0] = fVar21;
+        *(float *)(iVar3 + 0x5c) = (float)dVar13;
         break;
       case 5:
-        (param_3->window).foreColor[1] = fVar21;
+        *(float *)(iVar3 + 0x60) = (float)dVar13;
         break;
       case 7:
-        (param_3->window).foreColor[0] = fVar21;
-        (param_3->window).foreColor[1] = fVar21;
+        *(float *)(iVar3 + 0x5c) = (float)dVar13;
+        *(float *)(iVar3 + 0x60) = (float)dVar13;
       case 6:
-        (param_3->window).foreColor[2] = fVar21;
+        *(float *)(iVar3 + 100) = (float)dVar13;
         break;
       case 8:
-        (param_3->window).foreColor[3] = fVar21;
+        *(float *)(iVar3 + 0x68) = (float)dVar13;
         break;
       case 9:
-        param_3->glowColor[0] = fVar21;
+        *(float *)(iVar3 + 0x1a8) = (float)dVar13;
         break;
       case 10:
-        param_3->glowColor[1] = fVar21;
+        *(float *)(iVar3 + 0x1ac) = (float)dVar13;
         break;
       case 0xc:
-        param_3->glowColor[0] = fVar21;
-        param_3->glowColor[1] = fVar21;
+        *(float *)(iVar3 + 0x1a8) = (float)dVar13;
+        *(float *)(iVar3 + 0x1ac) = (float)dVar13;
       case 0xb:
-        param_3->glowColor[2] = fVar21;
+        *(float *)(iVar3 + 0x1b0) = (float)dVar13;
         break;
       case 0xd:
-        param_3->glowColor[3] = fVar21;
+        *(float *)(iVar3 + 0x1b4) = (float)dVar13;
         break;
       case 0xe:
-        (param_3->window).backColor[0] = fVar21;
+        *(float *)(iVar3 + 0x6c) = (float)dVar13;
         break;
       case 0xf:
-        (param_3->window).backColor[1] = fVar21;
+        *(float *)(iVar3 + 0x70) = (float)dVar13;
         break;
       case 0x11:
-        (param_3->window).backColor[0] = fVar21;
-        (param_3->window).backColor[1] = fVar21;
+        *(float *)(iVar3 + 0x6c) = (float)dVar13;
+        *(float *)(iVar3 + 0x70) = (float)dVar13;
       case 0x10:
-        (param_3->window).backColor[2] = fVar21;
+        *(float *)(iVar3 + 0x74) = (float)dVar13;
         break;
       case 0x12:
-        (param_3->window).backColor[3] = fVar21;
+        *(float *)(iVar3 + 0x78) = (float)dVar13;
         break;
       default:
-        if (alwaysfails == 0) {
-          in_r6 = 0xffffffff82173a18;
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x281c
-                          ,0,"UNKNOWN FLOAT EXPR TARGET");
+        if (DAT_84013128 == 0) {
+          MyAssertHandler(0xffffffff82170658,0x281c,0,0xffffffff82173a18);
         }
       }
-      pfVar13 = (float *)in_r6;
       iVar6 = iVar6 + 1;
-      iVar15 = iVar15 + 8;
-    } while (iVar6 != param_3->floatExpressionCount);
+      iVar12 = iVar12 + 8;
+    } while (iVar6 != *(int *)(iVar3 + 400));
   }
-  dVar18 = 1.0;
-  dVar19 = dVar18;
-  bVar12 = Menu_HasScaleTransition(pUVar5->localClientNum,param_3->parent);
-  if (bVar12) {
-    fVar21 = Menu_GetTransitionValue
-                       (pUVar5->localClientNum,param_3->parent,
-                        param_3->parent->data->scaleTransition + pUVar5->localClientNum);
-    dVar18 = (double)fVar21;
+  uVar17 = 0x3ff0000000000000;
+  uVar18 = uVar17;
+  cVar9 = Menu_HasScaleTransition(*puVar5,*(undefined4 *)(iVar3 + 0x134));
+  if (cVar9 != '\0') {
+    uVar10 = (ulonglong)*puVar5 + 5;
+    uVar17 = Menu_GetTransitionValue
+                       ((ulonglong)*puVar5,*(uint **)(iVar3 + 0x134),
+                        (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                        (ulonglong)**(uint **)(iVar3 + 0x134));
   }
-  dVar16 = dVar19;
-  bVar12 = Menu_HasAlphaTransition(pUVar5->localClientNum,param_3->parent);
-  if (bVar12) {
-    fVar21 = Menu_GetTransitionValue
-                       (pUVar5->localClientNum,param_3->parent,
-                        param_3->parent->data->alphaTransition + pUVar5->localClientNum);
-    dVar16 = (double)fVar21;
+  uVar14 = uVar18;
+  cVar9 = Menu_HasAlphaTransition(*puVar5,*(undefined4 *)(iVar3 + 0x134));
+  if (cVar9 != '\0') {
+    uVar10 = (ulonglong)*puVar5 + 9;
+    uVar14 = Menu_GetTransitionValue
+                       ((ulonglong)*puVar5,*(uint **)(iVar3 + 0x134),
+                        (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                        (ulonglong)**(uint **)(iVar3 + 0x134));
   }
-  if ((param_3->window).style == 5) {
-    pcVar8 = Dvar_GetString(param_3->dvar);
+  if (*(int *)(iVar3 + 0x30) == 5) {
+    uVar4 = Dvar_GetString(*(undefined4 *)(iVar3 + 0x15c));
 LAB_825ce63c:
-    I_strncpyz(acStack_c0,pcVar8,0x40);
-    I_strlwr(acStack_c0);
-    pMVar9 = Material_RegisterHandle(acStack_c0,3);
-    (param_3->window).background = pMVar9;
+    I_strncpyz(auStack_c0,uVar4,0x40);
+    I_strlwr(auStack_c0);
+    uVar7 = Material_RegisterHandle(auStack_c0,3);
+    *(undefined4 *)(iVar3 + 0xac) = uVar7;
   }
-  else if (param_3->materialExp != (Statement_s *)0x0) {
-    pcVar8 = GetExpressionResultString(pUVar5->localClientNum,param_3->materialExp);
+  else if (*(int *)(iVar3 + 0x1a4) != 0) {
+    uVar4 = GetExpressionResultString(*puVar5);
     goto LAB_825ce63c;
   }
-  pmVar4 = pmVar1->data;
-  Window_Paint(pUVar5,&param_3->window,param_2,(float)dVar18,(float)dVar16,pmVar4->fadeAmount,
-               pmVar4->fadeInAmount,pmVar4->fadeClamp,(float)(longlong)pmVar4->fadeCycle);
-  if ((ui_debugMode->current).enabled != false) {
-    piVar7 = param_3;
-    prVar10 = Item_CorrectedTextRect(pUVar5->localClientNum,param_3);
-    dVar20 = (double)prVar10->h;
-    dVar17 = (double)prVar10->w;
-    dVar16 = (double)prVar10->y;
-    dVar18 = (double)prVar10->x;
-    pSVar11 = ScrPlace_GetActivePlacement(pUVar5->localClientNum);
-    UI_DrawRect(pSVar11,(float)dVar18,(float)dVar16,(float)dVar17,(float)dVar20,(int)piVar7,
-                (int)param_2,(float)dVar19,pfVar13);
+  iVar6 = *piVar1;
+  Window_Paint(uVar17,uVar14,(double)*(float *)(iVar6 + 0xc),(double)*(float *)(iVar6 + 0x10),
+               (double)*(float *)(iVar6 + 8),(double)(longlong)*(int *)(iVar6 + 4),puVar5,param_3,
+               param_2);
+  if (*(char *)(DAT_83f71ea8 + 0xc) != '\0') {
+    pfVar8 = (float *)Item_CorrectedTextRect(*puVar5,param_3);
+    dVar19 = (double)pfVar8[3];
+    dVar16 = (double)pfVar8[2];
+    dVar15 = (double)pfVar8[1];
+    dVar13 = (double)*pfVar8;
+    ScrPlace_GetActivePlacement(*puVar5);
+    UI_DrawRect(dVar13,dVar15,dVar16,dVar19,uVar18);
   }
-  if ((param_3->window).style != 5) {
-    switch(param_3->type) {
+  if (*(int *)(iVar3 + 0x30) != 5) {
+    switch(*(undefined4 *)(iVar3 + 0x100)) {
     case 0:
     case 1:
     case 0x15:
-      Item_Text_Paint(pUVar5,param_3);
+      Item_Text_Paint(puVar5,param_3);
       break;
     case 4:
     case 9:
@@ -14783,52 +12586,52 @@ LAB_825ce63c:
     case 0x12:
     case 0x16:
     case 0x17:
-      Item_TextField_Paint(pUVar5,param_3);
+      Item_TextField_Paint(puVar5,param_3);
       __restfpr_27();
       __restgprlr_22();
       return;
     case 6:
-      Item_ListBox_Paint(pUVar5,param_3);
+      Item_ListBox_Paint(puVar5,param_3);
       __restfpr_27();
       __restgprlr_22();
       return;
     case 8:
-      Item_OwnerDraw_Paint(pUVar5,param_3);
+      Item_OwnerDraw_Paint(puVar5,param_3);
       __restfpr_27();
       __restgprlr_22();
       return;
     case 10:
-      Item_Slider_Paint(pUVar5,param_3);
+      Item_Slider_Paint(puVar5,param_3);
       __restfpr_27();
       __restgprlr_22();
       return;
     case 0xb:
-      Item_YesNo_Paint(pUVar5,param_3);
+      Item_YesNo_Paint(puVar5,param_3);
       __restfpr_27();
       __restgprlr_22();
       return;
     case 0xc:
-      Item_Multi_Paint(pUVar5,param_3);
+      Item_Multi_Paint(puVar5,param_3);
       __restfpr_27();
       __restgprlr_22();
       return;
     case 0xd:
-      Item_DvarEnum_Paint(pUVar5,param_3);
+      Item_DvarEnum_Paint(puVar5,param_3);
       __restfpr_27();
       __restgprlr_22();
       return;
     case 0xe:
-      Item_Bind_Paint(pUVar5,param_3);
+      Item_Bind_Paint(puVar5,param_3);
       __restfpr_27();
       __restgprlr_22();
       return;
     case 0x13:
-      Item_GameMsgWindow_Paint(pUVar5,param_3);
+      Item_GameMsgWindow_Paint(puVar5,param_3);
       __restfpr_27();
       __restgprlr_22();
       return;
     case 0x14:
-      Item_NewsTicker_Paint(pUVar5,param_3);
+      Item_NewsTicker_Paint(puVar5,param_3);
       __restfpr_27();
       __restgprlr_22();
       return;
@@ -14843,154 +12646,122 @@ switchD_825ce740_caseD_2:
 
 // 825C6F30  Menu_GetFocused  (ui/ui_shared.cpp:10366)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-menuDef_t * Menu_GetFocused(UiContext *param_1)
+void Menu_GetFocused(void)
 
 {
-  LocalClientNum_t LVar1;
-  LocalClientNum_t *pLVar2;
+  uint uVar1;
+  uint *puVar2;
   longlong lVar3;
-  bool bVar5;
-  menuDef_t *pmVar4;
-  longlong lVar6;
-  int iVar7;
+  char cVar4;
+  longlong lVar5;
+  int iVar6;
   
-  lVar3 = __savegprlr_23(param_1);
-  pLVar2 = (LocalClientNum_t *)lVar3;
-  lVar6 = (ulonglong)pLVar2[0x29e] - 1;
-  if (-1 < lVar6) {
-    lVar3 = ((ulonglong)pLVar2[0x29e] + 0x28d & 0x3fffffff) * 4 + lVar3;
+  lVar3 = __savegprlr_23();
+  puVar2 = (uint *)lVar3;
+  lVar5 = (ulonglong)puVar2[0x29e] - 1;
+  if (-1 < lVar5) {
+    lVar3 = ((ulonglong)puVar2[0x29e] + 0x28d & 0x3fffffff) * 4 + lVar3;
     do {
-      bVar5 = Window_HasFocus(*pLVar2,(windowDef_t *)(*(int *)lVar3 + 4));
-      if (bVar5) {
-        LVar1 = *pLVar2;
-        iVar7 = *(int *)lVar3 + 4;
-        if (iVar7 == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",
-                          0x54,0,"%s");
+      cVar4 = Window_HasFocus(*puVar2,(ulonglong)*(uint *)lVar3 + 4);
+      if (cVar4 != '\0') {
+        uVar1 = *puVar2;
+        iVar6 = *(uint *)lVar3 + 4;
+        if (iVar6 == 0) {
+          MyAssertHandler(0xffffffff82170618,0x54,0,0xffffffff82000f98,0xffffffff8200fdb4);
         }
-        if (LOCAL_CLIENT_3 < LVar1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",
-                          0x21,0,
-                          "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                         );
+        if (3 < uVar1) {
+          MyAssertHandler(0xffffffff82170618,0x21,0,0xffffffff821649e0,uVar1,4);
         }
-        if ((*(uint *)((LVar1 + 0x12) * 4 + iVar7) & 4) != 0) {
-          pmVar4 = (menuDef_t *)
-                   __restgprlr_23(*(undefined4 *)
-                                   ((int)((lVar6 + 0x28eU & 0xffffffff) << 2) + (int)pLVar2));
-          return pmVar4;
+        if ((*(uint *)((uVar1 + 0x12) * 4 + iVar6) & 4) != 0) {
+          __restgprlr_23(*(undefined4 *)((int)((lVar5 + 0x28eU & 0xffffffff) << 2) + (int)puVar2));
+          return;
         }
       }
-      lVar6 = lVar6 + -1;
+      lVar5 = lVar5 + -1;
       lVar3 = lVar3 + -4;
-    } while (-1 < lVar6);
+    } while (-1 < lVar5);
   }
-  pmVar4 = (menuDef_t *)__restgprlr_23(0);
-  return pmVar4;
+  __restgprlr_23(0);
+  return;
 }
 
 
 // 825C7028  Menu_GetTopOfStack  (ui/ui_shared.cpp:10380)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-menuDef_t * Menu_GetTopOfStack(UiContext *param_1,int param_2)
+undefined4 Menu_GetTopOfStack(int param_1,longlong param_2)
 
 {
-  longlong lVar1;
-  
-  lVar1 = (ulonglong)(uint)param_1->openMenuCount - (longlong)param_2;
-  if (lVar1 + -1 < 0) {
-    return (menuDef_t *)0x0;
+  param_2 = (ulonglong)*(uint *)(param_1 + 0xa78) - param_2;
+  if (param_2 + -1 < 0) {
+    return 0;
   }
-  return *(menuDef_t **)((int)param_1->Menus + (int)((lVar1 + 0x28dU & 0xffffffff) << 2) + -0x34);
+  return *(undefined4 *)((int)((param_2 + 0x28dU & 0xffffffff) << 2) + param_1);
 }
 
 
 // 825C7050  Menu_SetFeederSelection  (ui/ui_shared.cpp:10392)
 
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void Menu_SetFeederSelection
-               (UiContext *param_1,menuDef_t *param_2,int param_3,int param_4,char *param_5)
+               (undefined8 param_1,ulonglong param_2,int param_3,int param_4,ulonglong param_5)
 
 {
-  itemDef_t *piVar1;
-  UiContext *pUVar2;
-  menuDef_t *pmVar3;
-  listBoxDef_s *plVar4;
+  int *piVar2;
+  int iVar3;
+  int iVar4;
+  longlong lVar1;
   int iVar5;
   int iVar6;
-  ulonglong uVar7;
-  uint uVar8;
+  int iVar7;
+  int iVar8;
   int iVar9;
-  int iVar10;
-  ulonglong uVar11;
-  double dVar12;
+  double dVar10;
   
-  uVar11 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_20(param_1);
-  pmVar3 = (menuDef_t *)uVar7;
-  if ((uVar7 & 0xffffffff) == 0) {
-    if ((uVar11 & 0xffffffff) == 0) {
-      pmVar3 = Menu_GetFocused(pUVar2);
-      uVar11 = uVar7;
+  piVar2 = (int *)__savegprlr_20();
+  iVar3 = (int)param_2;
+  if ((param_2 & 0xffffffff) == 0) {
+    if ((param_5 & 0xffffffff) == 0) {
+      iVar3 = Menu_GetFocused();
     }
     else {
-      pmVar3 = Menus_FindByName(pUVar2,(char *)uVar11);
+      iVar3 = Menus_FindByName(piVar2,param_5);
     }
-    uVar7 = uVar11;
-    if (pmVar3 == (menuDef_t *)0x0) goto LAB_825c71e8;
+    if (iVar3 == 0) goto LAB_825c71e8;
   }
-  iVar9 = 0;
-  if (0 < pmVar3->itemCount) {
-    dVar12 = (double)(longlong)param_3;
-    iVar10 = 0;
+  iVar8 = 0;
+  if (0 < *(int *)(iVar3 + 0xb4)) {
+    dVar10 = (double)(longlong)param_3;
+    iVar9 = 0;
     do {
-      piVar1 = *(itemDef_t **)((int)pmVar3->items + iVar10);
-      uVar11 = ZEXT48(piVar1);
-      if ((double)piVar1->special == dVar12) {
-        piVar1->cursorPos[pUVar2->localClientNum] = param_4;
-        UI_FeederSelection(pUVar2->localClientNum,piVar1->special,(int)uVar7);
-        plVar4 = Item_GetListBoxDef(piVar1);
-        if (plVar4 != (listBoxDef_s *)0x0) {
-          iVar5 = Item_ListBox_GetVisibleElementCount(pUVar2->localClientNum,piVar1);
-          uVar7 = uVar11;
+      iVar6 = *(int *)(*(int *)(iVar3 + 0xb8) + iVar9);
+      if ((double)*(float *)(iVar6 + 0x178) == dVar10) {
+        *(int *)((*piVar2 + 0x5f) * 4 + iVar6) = param_4;
+        UI_FeederSelection((double)*(float *)(iVar6 + 0x178),*piVar2);
+        iVar4 = Item_GetListBoxDef(iVar6);
+        if (iVar4 != 0) {
+          lVar1 = Item_ListBox_GetVisibleElementCount(*piVar2,iVar6);
+          iVar5 = (int)lVar1;
           if (iVar5 < 1) {
-            uVar7 = 0x28be;
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                            0x28be,0,"%s\n\t(visibleElementCount) = %i");
+            MyAssertHandler(0xffffffff82170658,0x28be,0,0xffffffff821729a8,0xffffffff8217298c,lVar1)
+            ;
           }
-          if ((param_4 < plVar4->startPos[pUVar2->localClientNum]) ||
-             (plVar4->startPos[pUVar2->localClientNum] + iVar5 <= param_4)) {
-            uVar8 = iVar5 - 1;
-            plVar4->startPos[pUVar2->localClientNum] =
-                 param_4 - (((int)uVar8 >> 1) + (uint)((int)uVar8 < 0 && (uVar8 & 1) != 0));
-            iVar6 = UI_FeederCount(pUVar2->localClientNum,piVar1->special);
-            if (iVar6 < iVar5 + plVar4->startPos[pUVar2->localClientNum]) {
-              plVar4->startPos[pUVar2->localClientNum] = iVar6 - iVar5;
+          iVar7 = *(int *)(*piVar2 * 4 + iVar4);
+          if ((param_4 < iVar7) || (iVar7 + iVar5 <= param_4)) {
+            iVar7 = (int)(lVar1 - 1U);
+            *(uint *)(*piVar2 * 4 + iVar4) =
+                 param_4 - ((iVar7 >> 1) + (uint)(iVar7 < 0 && (lVar1 - 1U & 1) != 0));
+            iVar6 = UI_FeederCount((double)*(float *)(iVar6 + 0x178),*piVar2);
+            if (iVar6 < iVar5 + *(int *)(*piVar2 * 4 + iVar4)) {
+              *(int *)(*piVar2 * 4 + iVar4) = iVar6 - iVar5;
             }
-            if (plVar4->startPos[pUVar2->localClientNum] < 0) {
-              plVar4->startPos[pUVar2->localClientNum] = 0;
+            if (*(int *)(*piVar2 * 4 + iVar4) < 0) {
+              *(undefined4 *)(*piVar2 * 4 + iVar4) = 0;
             }
           }
         }
       }
-      iVar9 = iVar9 + 1;
-      iVar10 = iVar10 + 4;
-    } while (iVar9 < pmVar3->itemCount);
+      iVar8 = iVar8 + 1;
+      iVar9 = iVar9 + 4;
+    } while (iVar8 < *(int *)(iVar3 + 0xb4));
   }
 LAB_825c71e8:
   __restgprlr_20();
@@ -15000,377 +12771,337 @@ LAB_825c71e8:
 
 // 825C71F8  Menus_AnyFullScreenVisible  (ui/ui_shared.cpp:10452)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Menus_AnyFullScreenVisible(UiContext *param_1)
+void Menus_AnyFullScreenVisible(void)
 
 {
   uint uVar1;
   longlong lVar2;
-  int iVar3;
-  ulonglong uVar4;
+  ulonglong uVar3;
+  longlong lVar4;
   longlong lVar5;
-  longlong lVar6;
+  int iVar6;
   
-  lVar2 = __savegprlr_23(param_1);
-  uVar4 = (ulonglong)((uint *)lVar2)[0x29e];
-  lVar5 = uVar4 - 1;
-  if (-1 < lVar5) {
-    lVar6 = (uVar4 + 0x28d & 0x3fffffff) * 4 + lVar2;
+  lVar2 = __savegprlr_23();
+  uVar3 = (ulonglong)((uint *)lVar2)[0x29e];
+  lVar4 = uVar3 - 1;
+  if (-1 < lVar4) {
+    lVar5 = (uVar3 + 0x28d & 0x3fffffff) * 4 + lVar2;
     do {
       uVar1 = *(uint *)lVar2;
-      iVar3 = *(int *)lVar6 + 4;
-      if (iVar3 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x54,
-                        0,"%s");
+      iVar6 = *(int *)lVar5 + 4;
+      if (iVar6 == 0) {
+        MyAssertHandler(0xffffffff82170618,0x54,0,0xffffffff82000f98,0xffffffff8200fdb4);
       }
       if (3 < uVar1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,
-                        0,
-                        "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                       );
+        MyAssertHandler(0xffffffff82170618,0x21,0,0xffffffff821649e0,uVar1,4);
       }
-      if ((*(uint *)((uVar1 + 0x12) * 4 + iVar3) & 4) != 0) {
-        if (**(int **)*(int *)lVar6 != 0) {
-          iVar3 = __restgprlr_23(1);
-          return iVar3;
+      if ((*(uint *)((uVar1 + 0x12) * 4 + iVar6) & 4) != 0) {
+        if (**(int **)*(int *)lVar5 != 0) {
+          __restgprlr_23(1);
+          return;
         }
       }
-      lVar5 = lVar5 + -1;
-      lVar6 = lVar6 + -4;
-    } while (-1 < lVar5);
+      lVar4 = lVar4 + -1;
+      lVar5 = lVar5 + -4;
+    } while (-1 < lVar4);
   }
-  iVar3 = __restgprlr_23(0);
-  return iVar3;
+  __restgprlr_23(0);
+  return;
 }
 
 
 // 825C72E0  Menu_IsVisible  (ui/ui_shared.cpp:10576)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void Menu_IsVisible(undefined8 param_1,longlong param_2)
+
+{
+  int *piVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  char cVar4;
+  ulonglong uVar5;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  piVar1 = (int *)param_2;
+  if (((**(char **)(DAT_83f71e70 + 0xc) == '\0') || (piVar1[1] == 0)) ||
+     (iVar3 = I_stricmp(), iVar3 == 0)) {
+    iVar3 = Window_IsVisible(*puVar2,param_2 + 4);
+    if ((((iVar3 != 0) && ((piVar1[0x10] == 0 || (iVar3 = UI_OwnerDrawVisible(), iVar3 != 0)))) &&
+        (((piVar1[0x12] & 0x20000000U) == 0 ||
+         ((iVar3 = CL_IsCgameInitialized(*puVar2), iVar3 == 0 ||
+          (cVar4 = CG_ScopeIsOverlayed(*puVar2), cVar4 == '\0')))))) &&
+       (((piVar1[0x12] & 0x10000000U) == 0 ||
+        ((iVar3 = CL_IsCgameInitialized(*puVar2), iVar3 == 0 ||
+         (iVar3 = CG_GetFlashbangedRemainingTime(*puVar2), iVar3 == 0)))))) {
+      if ((piVar1[0x12] & 0x40000000U) != 0) {
+        iVar3 = CL_GetLocalClientUIGlobals(*puVar2);
+        if ((*(uint *)(iVar3 + 0x54) & 0x10) != 0) goto LAB_825c7440;
+      }
+      if ((*(int *)(*piVar1 + 0x30) == 0) || (cVar4 = IsExpressionTrue(*puVar2), cVar4 != '\0')) {
+        __restgprlr_29(1);
+        return;
+      }
+      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
+        uVar5 = (ulonglong)*(uint *)(param_2 + 4);
+        if (uVar5 == 0) {
+          uVar5 = 0xffffffff82172a0c;
+        }
+        Com_Printf(0xd,0xffffffff821729c8,uVar5);
+      }
+    }
+  }
+LAB_825c7440:
+  __restgprlr_29(0);
+  return;
+}
+
 
 // 825C7458  Menus_ActiveMenuAllowSignin  (ui/ui_shared.cpp:10622)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-bool Menus_ActiveMenuAllowSignin(UiContext *param_1)
+void Menus_ActiveMenuAllowSignin(void)
 
 {
   uint uVar1;
   uint *puVar2;
   longlong lVar3;
-  undefined1 uVar4;
-  longlong lVar5;
-  int iVar6;
+  longlong lVar4;
+  int iVar5;
   
-  lVar3 = __savegprlr_23(param_1);
+  lVar3 = __savegprlr_23();
   puVar2 = (uint *)lVar3;
-  lVar5 = (ulonglong)puVar2[0x29e] - 1;
-  if (-1 < lVar5) {
+  lVar4 = (ulonglong)puVar2[0x29e] - 1;
+  if (-1 < lVar4) {
     lVar3 = ((ulonglong)puVar2[0x29e] + 0x28d & 0x3fffffff) * 4 + lVar3;
     do {
       uVar1 = *puVar2;
-      iVar6 = *(int *)lVar3 + 4;
-      if (iVar6 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x54,
-                        0,"%s");
+      iVar5 = *(int *)lVar3 + 4;
+      if (iVar5 == 0) {
+        MyAssertHandler(0xffffffff82170618,0x54,0,0xffffffff82000f98,0xffffffff8200fdb4);
       }
       if (3 < uVar1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,
-                        0,
-                        "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                       );
+        MyAssertHandler(0xffffffff82170618,0x21,0,0xffffffff821649e0,uVar1,4);
       }
-      if ((*(uint *)((uVar1 + 0x12) * 4 + iVar6) & 4) != 0) {
-        uVar4 = __restgprlr_23(*(uint *)(*(int *)((int)((lVar5 + 0x28eU & 0xffffffff) << 2) +
-                                                 (int)puVar2) + 0x48) >> 0x1b & 1);
-        return (bool)uVar4;
+      if ((*(uint *)((uVar1 + 0x12) * 4 + iVar5) & 4) != 0) {
+        __restgprlr_23(*(uint *)(*(int *)((int)((lVar4 + 0x28eU & 0xffffffff) << 2) + (int)puVar2) +
+                                0x48) >> 0x1b & 1);
+        return;
       }
-      lVar5 = lVar5 + -1;
+      lVar4 = lVar4 + -1;
       lVar3 = lVar3 + -4;
-    } while (-1 < lVar5);
+    } while (-1 < lVar4);
   }
-  uVar4 = __restgprlr_23(0);
-  return (bool)uVar4;
+  __restgprlr_23(0);
+  return;
 }
 
 
 // 825C7538  SetCurrentMenuDef  (ui/ui_shared.cpp:10640)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void SetCurrentMenuDef(UiContext *param_1,menuDef_t *param_2)
+void SetCurrentMenuDef(int param_1,undefined4 param_2)
 
 {
-  if (param_1 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2992,0,
-                    "%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82170658,0x2992,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  param_1->currentMenuDef = param_2;
+  *(undefined4 *)(param_1 + 0x227c) = param_2;
   return;
 }
 
 
 // 825C75A0  SetCurrentItemDef  (ui/ui_shared.cpp:10649)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void SetCurrentItemDef(UiContext *param_1,itemDef_t *param_2)
+void SetCurrentItemDef(int param_1,undefined4 param_2)
 
 {
-  if (param_1 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x299b,0,
-                    "%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82170658,0x299b,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  param_1->currentItemDef = param_2;
+  *(undefined4 *)(param_1 + 0x2280) = param_2;
   return;
 }
 
 
 // 825CE8D8  Menu_Paint  (ui/ui_shared.cpp:10658)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-bool Menu_Paint(UiContext *param_1,menuDef_t *param_2)
+void Menu_Paint(undefined8 param_1,ulonglong param_2)
 
 {
-  Statement_s *pSVar1;
-  menuData_t *pmVar2;
-  UiContext *pUVar3;
-  bool bVar7;
-  undefined1 uVar8;
-  char *pcVar4;
-  bool bVar9;
-  itemDef_t *piVar5;
-  rectDef_s *prVar6;
-  ulonglong uVar10;
-  menuDef_t *pmVar11;
-  menuDef_t *pmVar12;
-  itemDef_t *piVar13;
-  itemDef_t *piVar14;
-  undefined8 in_r6;
-  float *pfVar15;
-  undefined4 *puVar16;
-  undefined8 uVar17;
-  int iVar18;
-  int iVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  float fVar23;
+  bool bVar1;
+  uint uVar2;
+  uint *puVar5;
+  char cVar6;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  uint *puVar7;
+  int iVar8;
+  int iVar9;
+  double dVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
   
-  uVar10 = (ulonglong)(int)param_2;
-  pUVar3 = (UiContext *)__savegprlr_24(param_1);
-  pmVar11 = (menuDef_t *)uVar10;
-  uVar17 = 0xffffffff82000f98;
-  if ((uVar10 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x29af,0,
-                    "%s");
-    in_r6 = uVar17;
+  puVar5 = (uint *)__savegprlr_24();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x29af,0,0xffffffff82000f98,0xffffffff82058cb8);
   }
   Sys_EnterUIOwnership();
-  bVar7 = Menu_IsVisible(pUVar3,pmVar11);
-  if (!bVar7) {
+  cVar6 = Menu_IsVisible(puVar5,param_2);
+  if (cVar6 == '\0') {
     Sys_LeaveUIOwnership();
-    uVar8 = __restgprlr_24(0);
-    return (bool)uVar8;
+    __restgprlr_24(0);
+    return;
   }
-  pSVar1 = pmVar11->data->soundLoopExp;
-  if (pSVar1 == (Statement_s *)0x0) {
-    pcVar4 = pmVar11->data->soundName;
-    if (pcVar4 != (char *)0x0) goto LAB_825ce990;
+  puVar7 = (uint *)param_2;
+  if (*(int *)(*puVar7 + 100) == 0) {
+    uVar3 = (ulonglong)*(uint *)(*puVar7 + 0x38);
+    if (uVar3 != 0) goto LAB_825ce990;
   }
   else {
-    pcVar4 = GetExpressionResultString(pUVar3->localClientNum,pSVar1);
+    uVar3 = GetExpressionResultString(*puVar5);
 LAB_825ce990:
-    SND_PlayLocalSoundAliasByName(pUVar3->localClientNum,pcVar4,SASYS_UI);
+    SND_PlayLocalSoundAliasByName(*puVar5,uVar3,0);
   }
-  bVar7 = ((pmVar11->window).staticFlags & 0x4000000U) != 0;
-  if (bVar7) {
+  bVar1 = (puVar7[0x12] & 0x4000000) != 0;
+  if (bVar1) {
     ScrPlace_SetLegacySplitscreenScaling();
   }
-  pSVar1 = pmVar11->data->rectXExp;
-  if (pSVar1 == (Statement_s *)0x0) {
-    bVar9 = Menu_HasXTransition(pUVar3->localClientNum,pmVar11);
-    if (bVar9) {
-      fVar23 = Menu_GetTransitionValue
-                         (pUVar3->localClientNum,pmVar11,
-                          pmVar11->data->xTransition + pUVar3->localClientNum);
+  if (*(int *)(*puVar7 + 0x4c) == 0) {
+    cVar6 = Menu_HasXTransition(*puVar5,param_2);
+    if (cVar6 != '\0') {
+      uVar3 = (ulonglong)*puVar5 + 0xd;
+      dVar10 = (double)Menu_GetTransitionValue
+                                 ((ulonglong)*puVar5,param_2,
+                                  (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                                  (ulonglong)*puVar7);
       goto LAB_825cea08;
     }
   }
   else {
-    fVar23 = GetExpressionFloat(pUVar3->localClientNum,pSVar1);
+    dVar10 = (double)GetExpressionFloat();
 LAB_825cea08:
-    (pmVar11->window).rect.x = fVar23;
+    puVar7[2] = (uint)(float)dVar10;
   }
-  pSVar1 = pmVar11->data->rectYExp;
-  if (pSVar1 == (Statement_s *)0x0) {
-    bVar9 = Menu_HasYTransition(pUVar3->localClientNum,pmVar11);
-    if (!bVar9) goto LAB_825cea64;
-    fVar23 = Menu_GetTransitionValue
-                       (pUVar3->localClientNum,pmVar11,
-                        pmVar11->data->yTransition + pUVar3->localClientNum);
+  if (*(int *)(*puVar7 + 0x50) == 0) {
+    cVar6 = Menu_HasYTransition(*puVar5,param_2);
+    if (cVar6 == '\0') goto LAB_825cea64;
+    uVar3 = (ulonglong)*puVar5 + 0x11;
+    dVar10 = (double)Menu_GetTransitionValue
+                               ((ulonglong)*puVar5,param_2,
+                                (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                                (ulonglong)*puVar7);
   }
   else {
-    fVar23 = GetExpressionFloat(pUVar3->localClientNum,pSVar1);
+    dVar10 = (double)GetExpressionFloat();
   }
-  (pmVar11->window).rect.y = fVar23;
+  puVar7[3] = (uint)(float)dVar10;
 LAB_825cea64:
-  pSVar1 = pmVar11->data->rectWExp;
-  if (pSVar1 != (Statement_s *)0x0) {
-    fVar23 = GetExpressionFloat(pUVar3->localClientNum,pSVar1);
-    (pmVar11->window).rect.w = fVar23;
+  if (*(int *)(*puVar7 + 0x54) != 0) {
+    dVar10 = (double)GetExpressionFloat(*puVar5);
+    puVar7[4] = (uint)(float)dVar10;
   }
-  pSVar1 = pmVar11->data->rectHExp;
-  if (pSVar1 != (Statement_s *)0x0) {
-    fVar23 = GetExpressionFloat(pUVar3->localClientNum,pSVar1);
-    (pmVar11->window).rect.h = fVar23;
+  if (*(int *)(*puVar7 + 0x58) != 0) {
+    dVar10 = (double)GetExpressionFloat(*puVar5);
+    puVar7[5] = (uint)(float)dVar10;
   }
-  Menu_UpdatePosition(pUVar3->localClientNum,pmVar11);
-  dVar21 = 1.0;
-  dVar22 = dVar21;
-  bVar9 = Menu_HasScaleTransition(pUVar3->localClientNum,pmVar11);
-  if (bVar9) {
-    fVar23 = Menu_GetTransitionValue
-                       (pUVar3->localClientNum,pmVar11,
-                        pmVar11->data->scaleTransition + pUVar3->localClientNum);
-    dVar21 = (double)fVar23;
+  Menu_UpdatePosition(*puVar5,param_2);
+  uVar12 = 0x3ff0000000000000;
+  uVar13 = uVar12;
+  cVar6 = Menu_HasScaleTransition(*puVar5,param_2);
+  if (cVar6 != '\0') {
+    uVar3 = (ulonglong)*puVar5 + 5;
+    uVar12 = Menu_GetTransitionValue
+                       ((ulonglong)*puVar5,param_2,
+                        (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + (ulonglong)*puVar7);
   }
-  dVar20 = dVar22;
-  pmVar12 = pmVar11;
-  bVar9 = Menu_HasAlphaTransition(pUVar3->localClientNum,pmVar11);
-  if (bVar9) {
-    pmVar12 = pmVar11;
-    fVar23 = Menu_GetTransitionValue
-                       (pUVar3->localClientNum,pmVar11,
-                        pmVar11->data->alphaTransition + pUVar3->localClientNum);
-    dVar20 = (double)fVar23;
+  uVar11 = uVar13;
+  cVar6 = Menu_HasAlphaTransition(*puVar5,param_2);
+  if (cVar6 != '\0') {
+    uVar3 = (ulonglong)*puVar5 + 9;
+    uVar11 = Menu_GetTransitionValue
+                       ((ulonglong)*puVar5,param_2,
+                        (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + (ulonglong)*puVar7);
   }
-  piVar5 = (itemDef_t *)ScrPlace_GetActivePlacement(pUVar3->localClientNum);
-  if ((pmVar11->data->fullScreen != 0) && ((pmVar11->window).background != (Material *)0x0)) {
-    prVar6 = Window_GetRect(&pmVar11->window);
-    in_r6 = 0xffffffff82000000;
-    UI_DrawHandlePic((ScreenPlacement *)piVar5,0.0,0.0,640.0,480.0,(int)pmVar12,(int)prVar6,
-                     (float *)&IMAGE_DOS_HEADER_82000000,(pmVar11->window).background);
+  uVar4 = ScrPlace_GetActivePlacement(*puVar5);
+  if ((*(int *)*puVar7 != 0) && (puVar7[0x2c] != 0)) {
+    Window_GetRect(param_2 + 4);
+    UI_DrawHandlePic(0,0,0x4084000000000000,0x407e000000000000,uVar4);
   }
-  pmVar2 = pmVar11->data;
-  piVar13 = (itemDef_t *)(uVar10 + 4);
-  piVar14 = piVar5;
-  Window_Paint(pUVar3,&piVar13->window,(ScreenPlacement *)piVar5,(float)dVar21,(float)dVar20,
-               pmVar2->fadeAmount,pmVar2->fadeInAmount,pmVar2->fadeClamp,
-               (float)(longlong)pmVar2->fadeCycle);
-  pfVar15 = (float *)in_r6;
-  if (pmVar11->itemCount != 0) {
-    dataCacheBlockTouch(ZEXT48(*pmVar11->items));
-    iVar18 = 0;
-    if (0 < (longlong)((ulonglong)(uint)pmVar11->itemCount - 1)) {
-      iVar19 = 0;
+  uVar2 = *puVar7;
+  Window_Paint(uVar12,uVar11,(double)*(float *)(uVar2 + 0xc),(double)*(float *)(uVar2 + 0x10),
+               (double)*(float *)(uVar2 + 8),(double)(longlong)*(int *)(uVar2 + 4),puVar5,
+               param_2 + 4,uVar4);
+  if (puVar7[0x2d] != 0) {
+    dataCacheBlockTouch((ulonglong)*(uint *)puVar7[0x2e]);
+    iVar8 = 0;
+    if (0 < (longlong)((ulonglong)puVar7[0x2d] - 1)) {
+      iVar9 = 0;
       do {
-        puVar16 = (undefined4 *)(iVar19 + (int)pmVar11->items);
-        dataCacheBlockTouch((ulonglong)(uint)puVar16[1]);
-        pUVar3->currentItemDef = (itemDef_t *)*puVar16;
-        Item_Paint(pUVar3,(ScreenPlacement *)piVar5,*(itemDef_t **)(iVar19 + (int)pmVar11->items));
-        pfVar15 = (float *)in_r6;
-        iVar18 = iVar18 + 1;
-        iVar19 = iVar19 + 4;
-      } while (iVar18 < pmVar11->itemCount + -1);
+        dataCacheBlockTouch((ulonglong)((uint *)(iVar9 + puVar7[0x2e]))[1]);
+        puVar5[0x8a0] = *(uint *)(iVar9 + puVar7[0x2e]);
+        Item_Paint(puVar5,uVar4,*(undefined4 *)(iVar9 + puVar7[0x2e]));
+        iVar8 = iVar8 + 1;
+        iVar9 = iVar9 + 4;
+      } while (iVar8 < (int)(puVar7[0x2d] - 1));
     }
-    pUVar3->currentItemDef = pmVar11->items[iVar18];
-    piVar14 = pmVar11->items[iVar18];
-    piVar13 = piVar5;
-    Item_Paint(pUVar3,(ScreenPlacement *)piVar5,piVar14);
+    puVar5[0x8a0] = *(uint *)(iVar8 * 4 + puVar7[0x2e]);
+    Item_Paint(puVar5,uVar4,*(undefined4 *)(iVar8 * 4 + puVar7[0x2e]));
   }
-  pUVar3->currentItemDef = (itemDef_t *)0x0;
-  if ((ui_debugMode->current).enabled != false) {
-    if ((uVar10 + 4 & 0xffffffff) == 0) {
-      piVar14 = (itemDef_t *)0x0;
-      piVar13 = (itemDef_t *)0x24;
-      pfVar15 = (float *)"%s";
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,
-                      "%s");
+  puVar5[0x8a0] = 0;
+  if (*(char *)(DAT_83f71ea8 + 0xc) != '\0') {
+    if ((param_2 + 4 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82018fa0,0x24,0,0xffffffff82000f98,0xffffffff8200fdb4);
     }
-    UI_DrawRect((ScreenPlacement *)piVar5,(pmVar11->window).rect.x,(pmVar11->window).rect.y,
-                (pmVar11->window).rect.w,(pmVar11->window).rect.h,(int)piVar13,(int)piVar14,
-                (float)dVar22,pfVar15);
+    UI_DrawRect((double)(float)puVar7[2],(double)(float)puVar7[3],(double)(float)puVar7[4],
+                (double)(float)puVar7[5],uVar13,uVar4);
   }
-  if (bVar7) {
+  if (bVar1) {
     ScrPlace_SetNormalSplitscreenScaling();
   }
   Sys_LeaveUIOwnership();
-  uVar8 = __restgprlr_24(1);
-  return (bool)uVar8;
+  __restgprlr_24(1);
+  return;
 }
 
 
 // 825C7608  Menu_Count  (ui/ui_shared.cpp:10787)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int Menu_Count(UiContext *param_1)
+undefined4 Menu_Count(int param_1)
 
 {
-  if (param_1 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2a24,0,
-                    "%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82170658,0x2a24,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  return param_1->menuCount;
+  return *(undefined4 *)(param_1 + 0xa34);
 }
 
 
 // 825C7660  Menu_PaintViewport_ComputeBlur  (ui/ui_shared.cpp:10794)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menu_PaintViewport_ComputeBlur(UiContext *param_1)
+void Menu_PaintViewport_ComputeBlur(void)
 
 {
-  float fVar1;
-  menuDef_t *pmVar2;
-  UiContext *pUVar3;
-  bool bVar4;
-  menuDef_t **ppmVar5;
-  int iVar6;
+  int *piVar1;
+  int iVar2;
+  char cVar3;
+  int *piVar4;
+  int iVar5;
   
-  pUVar3 = (UiContext *)__savegprlr_25(param_1);
-  if (pUVar3 == (UiContext *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2a2e,0,
-                    "%s");
+  iVar2 = __savegprlr_25();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82170658,0x2a2e,0,0xffffffff82000f98,0xffffffff8216783c);
   }
-  ppmVar5 = pUVar3->Menus;
-  pUVar3->blurRadiusOut = 0.0;
-  for (iVar6 = 0; iVar6 < pUVar3->menuCount; iVar6 = iVar6 + 1) {
-    pmVar2 = *ppmVar5;
-    if (pmVar2 == (menuDef_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2a35,0,
-                      "%s");
+  piVar4 = (int *)(iVar2 + 0x34);
+  *(undefined4 *)(iVar2 + 0x30) = 0;
+  for (iVar5 = 0; iVar5 < *(int *)(iVar2 + 0xa34); iVar5 = iVar5 + 1) {
+    piVar1 = (int *)*piVar4;
+    if (piVar1 == (int *)0x0) {
+      MyAssertHandler(0xffffffff82170658,0x2a35,0,0xffffffff82000f98,0xffffffff82058cb8);
     }
-    bVar4 = Menu_IsVisible(pUVar3,pmVar2);
-    if ((bVar4) && (fVar1 = pmVar2->data->blurRadius, pUVar3->blurRadiusOut < fVar1)) {
-      pUVar3->blurRadiusOut = fVar1;
+    cVar3 = Menu_IsVisible(iVar2,piVar1);
+    if ((cVar3 != '\0') && (*(float *)(iVar2 + 0x30) < *(float *)(*piVar1 + 0x14))) {
+      *(float *)(iVar2 + 0x30) = *(float *)(*piVar1 + 0x14);
     }
-    ppmVar5 = ppmVar5 + 1;
+    piVar4 = piVar4 + 1;
   }
   __restgprlr_25();
   return;
@@ -15379,22 +13110,24 @@ void Menu_PaintViewport_ComputeBlur(UiContext *param_1)
 
 // 825C7738  Menu_PaintAll_BeginVisibleList  (ui/ui_shared.cpp:10820)
 
-void Menu_PaintAll_BeginVisibleList(char *param_1,uint param_2)
+void * Menu_PaintAll_BeginVisibleList(void *param_1,uint param_2)
 
 {
-  memcpy();
+  void *pvVar1;
+  undefined1 auStack_30 [24];
+  
+  memcpy(auStack_30,"ui_showlist: ",0xe);
   if (param_2 < 0xe) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2a47,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82170658,0x2a47,0,0xffffffff82000f98,0xffffffff82172a14);
   }
-  memcpy();
-  return;
+  pvVar1 = memcpy(param_1,auStack_30,0xe);
+  return pvVar1;
 }
 
 
 // 825D1050  Menu_PaintAll_AppendToVisibleList  (ui/ui_shared.cpp:10829)
 
-void Menu_PaintAll_AppendToVisibleList(char *param_1,uint param_2,char *param_3)
+void Menu_PaintAll_AppendToVisibleList(undefined8 param_1,undefined8 param_2)
 
 {
   char *pcVar1;
@@ -15402,13 +13135,13 @@ void Menu_PaintAll_AppendToVisibleList(char *param_1,uint param_2,char *param_3)
   char *pcVar3;
   char *pcVar4;
   
-  pcVar3 = (char *)__savegprlr_29(param_1);
+  pcVar3 = (char *)__savegprlr_29();
   pcVar2 = pcVar3;
   do {
     pcVar4 = pcVar2;
     pcVar2 = pcVar4 + 1;
   } while (*pcVar4 != '\0');
-  I_strncat(pcVar3,param_2,param_3);
+  I_strncat(pcVar3,param_2);
   pcVar2 = pcVar4;
   do {
     pcVar1 = pcVar2;
@@ -15416,11 +13149,11 @@ void Menu_PaintAll_AppendToVisibleList(char *param_1,uint param_2,char *param_3)
     pcVar2 = pcVar1 + -1;
   } while (pcVar1[-1] != '\n');
   if (0x50 < (int)(pcVar4 + (1 - (int)pcVar1))) {
-    I_strncat(pcVar3,param_2,",\n  ");
+    I_strncat(pcVar3,param_2,0xffffffff82173fac);
     __restgprlr_29();
     return;
   }
-  I_strncat(pcVar3,param_2,", ");
+  I_strncat(pcVar3,param_2,0xffffffff820044d4);
   __restgprlr_29();
   return;
 }
@@ -15428,165 +13161,149 @@ void Menu_PaintAll_AppendToVisibleList(char *param_1,uint param_2,char *param_3)
 
 // 825C77C0  Menu_PaintAll_DrawVisibleList  (ui/ui_shared.cpp:10848)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menu_PaintAll_DrawVisibleList(char *param_1,UiContext *param_2)
+void Menu_PaintAll_DrawVisibleList(undefined8 param_1,undefined4 *param_2)
 
 {
   float fVar1;
-  ScreenPlacement *pSVar2;
+  undefined8 uVar2;
   double dVar3;
-  double dVar4;
+  undefined8 uVar4;
   undefined4 local_30;
   undefined4 local_2c;
   undefined4 local_28;
   undefined4 local_24;
   
-  dVar4 = 0.0;
+  uVar4 = 0;
   local_30 = 0x3f400000;
   local_2c = 0x3f800000;
   local_28 = 0x3f000000;
   local_24 = 0x3f800000;
-  if (param_2->FPS == 0.0) {
+  if ((float)param_2[0xb] == 0.0) {
     fVar1 = 320.0;
   }
   else {
     fVar1 = 400.0;
   }
   dVar3 = (double)fVar1;
-  pSVar2 = ScrPlace_GetActivePlacement(param_2->localClientNum);
-  UI_DrawText(pSVar2,param_1,0x7fffffff,sharedUiInfo.assets.smallFont,(float)dVar4,(float)dVar3,
-              (int)&local_30,0,0.2,(float *)0x0,0);
+  uVar2 = ScrPlace_GetActivePlacement(*param_2);
+  UI_DrawText(uVar4,dVar3,0x3fc99999a0000000,uVar2,param_1,0x7fffffff,DAT_83f7a9e4,&local_30,0,0,0);
   return;
 }
 
 
 // 825D1108  Menu_PaintAll_Internal  (ui/ui_shared.cpp:10873)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menu_PaintAll_Internal(UiContext *param_1,int param_2)
+void Menu_PaintAll_Internal(undefined8 param_1,uint param_2)
 
 {
-  menuDef_t *pmVar1;
-  UiContext *pUVar2;
-  longlong lVar3;
-  int iVar4;
-  bool bVar6;
-  int iVar5;
-  bool bVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  bool bVar4;
+  longlong lVar5;
+  void *pvVar6;
+  int iVar7;
+  char cVar9;
+  int iVar8;
   ulonglong uVar10;
-  char acStack_490 [1168];
+  longlong lVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  undefined1 auStack_490 [1168];
   
-  lVar3 = __savegprlr_16(param_1);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"menu paint internal");
-  if ((ui_showList->current).enabled != false) {
-    memcpy();
+  lVar5 = __savegprlr_16();
+  pvVar6 = (void *)PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82174050);
+  if (*(char *)(DAT_83f71e00 + 0xc) != '\0') {
+    pvVar6 = memcpy(auStack_490,"ui_showlist: ",0xe);
   }
-  UI_IncExpressionExecuteTime();
-  bVar7 = false;
-  uVar8 = 0;
-  pUVar2 = (UiContext *)lVar3;
-  uVar10 = (ulonglong)(uint)pUVar2->openMenuCount - 1;
-  if (-1 < (longlong)uVar10) {
-    lVar9 = ((ulonglong)(uint)pUVar2->openMenuCount + 0x28d & 0x3fffffff) * 4 + lVar3;
+  UI_IncExpressionExecuteTime(pvVar6);
+  bVar4 = false;
+  uVar10 = 0;
+  iVar3 = (int)lVar5;
+  uVar13 = (ulonglong)*(uint *)(iVar3 + 0xa78) - 1;
+  if (-1 < (longlong)uVar13) {
+    lVar11 = ((ulonglong)*(uint *)(iVar3 + 0xa78) + 0x28d & 0x3fffffff) * 4 + lVar5;
     do {
-      pmVar1 = (menuDef_t *)*(undefined4 *)lVar9;
-      if (ZEXT48(pmVar1) == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2a95,0
-                        ,"%s");
+      puVar1 = (undefined4 *)*(uint *)lVar11;
+      uVar12 = ZEXT48(puVar1);
+      if (uVar12 == 0) {
+        MyAssertHandler(0xffffffff82170658,0x2a95,0,0xffffffff82000f98,0xffffffff82058cb8);
       }
-      if (ZEXT48(pmVar1) == 0xfffffffffffffffc) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x46,
-                        0,"%s");
+      if (uVar12 == 0xfffffffffffffffc) {
+        MyAssertHandler(0xffffffff82170618,0x46,0,0xffffffff82000f98,0xffffffff8200fdb4);
       }
-      if (((uint)(pmVar1->window).staticFlags >> 0x16 & 1) == param_2) {
-        iVar4 = Menu_RunTransitionTriggers(pUVar2,pmVar1);
-        if (iVar4 == 0) {
-          if (pmVar1->data->fullScreen != 0) {
-            bVar7 = true;
-            uVar8 = uVar10;
+      if (((uint)puVar1[0x12] >> 0x16 & 1) == param_2) {
+        iVar7 = Menu_RunTransitionTriggers(lVar5,uVar12);
+        if (iVar7 == 0) {
+          if (*(int *)*puVar1 != 0) {
+            bVar4 = true;
+            uVar10 = uVar13;
             break;
           }
         }
         else {
-          bVar6 = Menu_IsVisible(pUVar2,pmVar1);
-          if (bVar6) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                            0x2a9c,0,"%s");
+          cVar9 = Menu_IsVisible(lVar5,uVar12);
+          if (cVar9 != '\0') {
+            MyAssertHandler(0xffffffff82170658,0x2a9c,0,0xffffffff82000f98,0xffffffff82174034);
           }
         }
       }
-      uVar10 = uVar10 - 1;
-      lVar9 = lVar9 + -4;
-    } while (-1 < (longlong)uVar10);
+      uVar13 = uVar13 - 1;
+      lVar11 = lVar11 + -4;
+    } while (-1 < (longlong)uVar13);
   }
-  if (!bVar7) {
-    lVar9 = lVar3 + 0x34;
-    for (iVar4 = 0; iVar4 < pUVar2->menuCount; iVar4 = iVar4 + 1) {
-      pmVar1 = (menuDef_t *)*(undefined4 *)lVar9;
-      if (pmVar1 == (menuDef_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2aae,0
-                        ,"%s");
+  if (!bVar4) {
+    lVar11 = lVar5 + 0x34;
+    for (iVar7 = 0; iVar7 < *(int *)(iVar3 + 0xa34); iVar7 = iVar7 + 1) {
+      iVar2 = *(int *)lVar11;
+      if (iVar2 == 0) {
+        MyAssertHandler(0xffffffff82170658,0x2aae,0,0xffffffff82000f98,0xffffffff82058cb8);
       }
-      if (&pmVar1->window == (windowDef_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x46,
-                        0,"%s");
+      if ((undefined4 *)(iVar2 + 4) == (undefined4 *)0x0) {
+        MyAssertHandler(0xffffffff82170618,0x46,0,0xffffffff82000f98,0xffffffff8200fdb4);
       }
-      if ((((uint)(pmVar1->window).staticFlags >> 0x16 & 1) == param_2) &&
-         (iVar5 = Menus_MenuIsInStack(pUVar2,pmVar1), iVar5 == 0)) {
-        pUVar2->currentMenuDef = pmVar1;
-        bVar7 = Menu_Paint(pUVar2,pmVar1);
-        if ((bVar7) && ((ui_showList->current).enabled != false)) {
-          Menu_PaintAll_AppendToVisibleList(acStack_490,0x400,(pmVar1->window).name);
+      if (((*(uint *)(iVar2 + 0x48) >> 0x16 & 1) == param_2) &&
+         (iVar8 = Menus_MenuIsInStack(lVar5,iVar2), iVar8 == 0)) {
+        *(int *)(iVar3 + 0x227c) = iVar2;
+        cVar9 = Menu_Paint(lVar5,iVar2);
+        if ((cVar9 != '\0') && (*(char *)(DAT_83f71e00 + 0xc) != '\0')) {
+          Menu_PaintAll_AppendToVisibleList(auStack_490,0x400,*(undefined4 *)(iVar2 + 4));
         }
       }
-      lVar9 = lVar9 + 4;
+      lVar11 = lVar11 + 4;
     }
-    pUVar2->currentMenuDef = (menuDef_t *)0x0;
+    *(undefined4 *)(iVar3 + 0x227c) = 0;
   }
-  if (0xf < (uint)pUVar2->openMenuCount) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2ac0,0,
-                    "dc->openMenuCount doesn\'t index MAX_OPEN_MENUS\n\t%i not in [0, %i)");
+  if (0xf < *(uint *)(iVar3 + 0xa78)) {
+    MyAssertHandler(0xffffffff82170658,0x2ac0,0,0xffffffff82173ff0,*(uint *)(iVar3 + 0xa78),0x10);
   }
-  if ((int)uVar8 < pUVar2->openMenuCount) {
-    lVar3 = (uVar8 + 0x28e & 0x3fffffff) * 4 + lVar3;
+  if ((int)uVar10 < *(int *)(iVar3 + 0xa78)) {
+    lVar11 = (uVar10 + 0x28e & 0x3fffffff) * 4 + lVar5;
     do {
-      if (0xf < (uVar8 & 0xffffffff)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2ac5,0
-                        ,"menuIndex doesn\'t index MAX_OPEN_MENUS\n\t%i not in [0, %i)");
+      if (0xf < (uVar10 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff82170658,0x2ac5,0,0xffffffff82173fb4,uVar10,0x10);
       }
-      pmVar1 = (menuDef_t *)*(undefined4 *)lVar3;
-      if (pmVar1 == (menuDef_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2ac7,0
-                        ,"%s");
+      iVar7 = *(int *)lVar11;
+      if (iVar7 == 0) {
+        MyAssertHandler(0xffffffff82170658,0x2ac7,0,0xffffffff82000f98,0xffffffff82058cb8);
       }
-      if (&pmVar1->window == (windowDef_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x46,
-                        0,"%s");
+      if ((undefined4 *)(iVar7 + 4) == (undefined4 *)0x0) {
+        MyAssertHandler(0xffffffff82170618,0x46,0,0xffffffff82000f98,0xffffffff8200fdb4);
       }
-      if (((uint)(pmVar1->window).staticFlags >> 0x16 & 1) == param_2) {
-        pUVar2->currentMenuDef = pmVar1;
-        bVar7 = Menu_Paint(pUVar2,pmVar1);
-        if ((bVar7) && ((ui_showList->current).enabled != false)) {
-          Menu_PaintAll_AppendToVisibleList(acStack_490,0x400,(pmVar1->window).name);
+      if ((*(uint *)(iVar7 + 0x48) >> 0x16 & 1) == param_2) {
+        *(int *)(iVar3 + 0x227c) = iVar7;
+        cVar9 = Menu_Paint(lVar5,iVar7);
+        if ((cVar9 != '\0') && (*(char *)(DAT_83f71e00 + 0xc) != '\0')) {
+          Menu_PaintAll_AppendToVisibleList(auStack_490,0x400,*(undefined4 *)(iVar7 + 4));
         }
       }
-      uVar8 = uVar8 + 1;
-      lVar3 = lVar3 + 4;
-    } while ((int)uVar8 < pUVar2->openMenuCount);
+      uVar10 = uVar10 + 1;
+      lVar11 = lVar11 + 4;
+    } while ((int)uVar10 < *(int *)(iVar3 + 0xa78));
   }
-  pUVar2->currentMenuDef = (menuDef_t *)0x0;
-  if ((ui_showList->current).enabled != false) {
-    Menu_PaintAll_DrawVisibleList(acStack_490,pUVar2);
+  *(undefined4 *)(iVar3 + 0x227c) = 0;
+  if (*(char *)(DAT_83f71e00 + 0xc) != '\0') {
+    Menu_PaintAll_DrawVisibleList(auStack_490,lVar5);
   }
   PIXEndNamedEvent();
   __restgprlr_16();
@@ -15596,25 +13313,21 @@ void Menu_PaintAll_Internal(UiContext *param_1,int param_2)
 
 // 825C7898  DrawMenuDebugText  (ui/ui_shared.cpp:10973)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void DrawMenuDebugText(UiContext *param_1)
+void DrawMenuDebugText(undefined4 *param_1)
 
 {
-  ScreenPlacement *pSVar1;
-  Font_s *pFVar2;
-  char *pcVar3;
-  double dVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
   
-  if ((ui_debugMode->current).enabled != false) {
-    pSVar1 = ScrPlace_GetActivePlacement(param_1->localClientNum);
-    dVar4 = 0.5;
-    pFVar2 = UI_GetFontHandle(pSVar1,0,0.5);
-    pcVar3 = va("fps: %f\n");
-    UI_DrawText(pSVar1,pcVar3,0x7fffffff,pFVar2,5.0,25.0,0,-0x7de80000,(float)dVar4,(float *)0x0,0);
+  if (*(char *)(DAT_83f71ea8 + 0xc) != '\0') {
+    uVar1 = ScrPlace_GetActivePlacement(*param_1);
+    uVar4 = 0x3fe0000000000000;
+    uVar2 = UI_GetFontHandle(0x3fe0000000000000,uVar1,0);
+    uVar3 = va(0xffffffff82172a50,(double)(float)param_1[0xb]);
+    UI_DrawText(0x4014000000000000,0x4039000000000000,uVar4,uVar1,uVar3,0x7fffffff,uVar2,0,
+                0xffffffff82180000,0,0);
   }
   return;
 }
@@ -15622,23 +13335,17 @@ void DrawMenuDebugText(UiContext *param_1)
 
 // 825D1488  Menu_PaintViewport  (ui/ui_shared.cpp:10993)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menu_PaintViewport(UiContext *param_1)
+void Menu_PaintViewport(int param_1)
 
 {
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"menu paint screen");
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82174074);
   Menu_PaintViewport_ComputeBlur(param_1);
   Menu_PaintAll_Internal(param_1,0);
   DrawMenuDebugText(param_1);
-  if (param_1->paintFull != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2afa,0,
-                    "%s");
+  if (*(int *)(param_1 + 0x1c) != 0) {
+    MyAssertHandler(0xffffffff82170658,0x2afa,0,0xffffffff82000f98,0xffffffff82174064);
   }
-  param_1->paintFull = 1;
+  *(undefined4 *)(param_1 + 0x1c) = 1;
   PIXEndNamedEvent();
   return;
 }
@@ -15646,17 +13353,12 @@ void Menu_PaintViewport(UiContext *param_1)
 
 // 825D1518  Menu_PaintFullscreen  (ui/ui_shared.cpp:11010)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void Menu_PaintFullscreen(UiContext *param_1)
+void Menu_PaintFullscreen(int param_1)
 
 {
-  if (param_1->paintFull != 0) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"menu paint full");
-    param_1->paintFull = 0;
+  if (*(int *)(param_1 + 0x1c) != 0) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82174088);
+    *(undefined4 *)(param_1 + 0x1c) = 0;
     Menu_PaintAll_Internal(param_1,1);
     PIXEndNamedEvent();
   }
@@ -15666,92 +13368,158 @@ void Menu_PaintFullscreen(UiContext *param_1)
 
 // 825C7970  TRACK_ui_shared  (ui/ui_shared.cpp:11127)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void TRACK_ui_shared(void)
 
 {
-  track_static_alloc_internal(commandList,0x328,"commandList",0x23);
+  track_static_alloc_internal(0xffffffff821702f0,0x328,0xffffffff82172a5c,0x23);
   return;
 }
 
 
 // 825CED20  UI_AddMenu  (ui/ui_shared.cpp:11139)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
-// 825CEE30  UI_AddMenuList  (ui/ui_shared.cpp:11175)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
-
-// 825C7990  UI_PlayLocalSoundAlias  (ui/ui_shared.cpp:11198)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int UI_PlayLocalSoundAlias(LocalClientNum_t param_1,snd_alias_list_t *param_2)
+void UI_AddMenu(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
   int iVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int iVar4;
   
-  iVar1 = SND_PlayLocalSoundAliasFromList(param_1,param_2,SASYS_UI);
-  return iVar1;
+  iVar3 = __savegprlr_27();
+  if (0x27f < *(int *)(iVar3 + 0xa34)) {
+    Com_Error(1,0xffffffff82173a90);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82170658,0x2b8b,0,0xffffffff82000f98,0xffffffff82058cb8);
+  }
+  if (0x27f < *(uint *)(iVar3 + 0xa34)) {
+    MyAssertHandler(0xffffffff82170658,0x2b8c,0,0xffffffff82173a48,*(uint *)(iVar3 + 0xa34),0x280);
+  }
+  iVar1 = (int)param_2;
+  uVar2 = DB_FindXAssetHeader(0x18,*(undefined4 *)(iVar1 + 4),1);
+  if ((uVar2 & 0xffffffff) != (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82170658,0x2b95,0,0xffffffff82000f98,0xffffffff82173a34);
+  }
+  iVar4 = Menus_FindByName(iVar3,*(undefined4 *)(iVar1 + 4));
+  if (iVar4 == 0) {
+    *(int *)((*(int *)(iVar3 + 0xa34) + 0xd) * 4 + iVar3) = iVar1;
+    *(int *)(iVar3 + 0xa34) = *(int *)(iVar3 + 0xa34) + 1;
+    if (param_3 != 0) {
+      Menus_ForceClose(iVar3,param_2);
+    }
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 825CEE30  UI_AddMenuList  (ui/ui_shared.cpp:11175)
+
+void UI_AddMenuList(undefined8 param_1,ulonglong param_2,int param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar4;
+  undefined8 uVar3;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  
+  iVar4 = __savegprlr_19();
+  if ((param_2 & 0xffffffff) != 0) {
+    uVar3 = R_PopRemoteScreenUpdate();
+    iVar2 = (int)param_2;
+    iVar6 = 0;
+    if (0 < *(int *)(iVar2 + 4)) {
+      iVar7 = 0;
+      do {
+        iVar1 = *(int *)(*(int *)(iVar2 + 8) + iVar7);
+        if (0x27f < *(int *)(iVar4 + 0xa34)) {
+          Com_Error(1,0xffffffff82173a90);
+        }
+        if (iVar1 == 0) {
+          MyAssertHandler(0xffffffff82170658,0x2b8b,0,0xffffffff82000f98,0xffffffff82058cb8);
+        }
+        if (0x27f < *(uint *)(iVar4 + 0xa34)) {
+          MyAssertHandler(0xffffffff82170658,0x2b8c,0,0xffffffff82173a48,*(uint *)(iVar4 + 0xa34),
+                          0x280);
+        }
+        iVar5 = DB_FindXAssetHeader(0x18,*(undefined4 *)(iVar1 + 4),1);
+        if (iVar5 != iVar1) {
+          MyAssertHandler(0xffffffff82170658,0x2b95,0,0xffffffff82000f98,0xffffffff82173a34);
+        }
+        iVar5 = Menus_FindByName(iVar4,*(undefined4 *)(iVar1 + 4));
+        if (iVar5 == 0) {
+          *(int *)((*(int *)(iVar4 + 0xa34) + 0xd) * 4 + iVar4) = iVar1;
+          *(int *)(iVar4 + 0xa34) = *(int *)(iVar4 + 0xa34) + 1;
+          if (param_3 != 0) {
+            Menus_ForceClose(iVar4,iVar1);
+          }
+        }
+        iVar6 = iVar6 + 1;
+        iVar7 = iVar7 + 4;
+      } while (iVar6 < *(int *)(iVar2 + 4));
+    }
+    R_PushRemoteScreenUpdate(uVar3);
+  }
+  __restgprlr_19();
+  return;
+}
+
+
+// 825C7990  UI_PlayLocalSoundAlias  (ui/ui_shared.cpp:11198)
+
+void UI_PlayLocalSoundAlias(undefined8 param_1,undefined8 param_2)
+
+{
+  SND_PlayLocalSoundAliasFromList(param_1,param_2,0);
+  return;
 }
 
 
 // 825C7998  UI_PlayLocalSoundAliasByName  (ui/ui_shared.cpp:11204)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int UI_PlayLocalSoundAliasByName(LocalClientNum_t param_1,char *param_2)
+void UI_PlayLocalSoundAliasByName(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = SND_PlayLocalSoundAliasByName(param_1,param_2,SASYS_UI);
-  return iVar1;
+  SND_PlayLocalSoundAliasByName(param_1,param_2,0);
+  return;
 }
 
 
 // 825C79A0  UI_GetForcedMenuScreen  (ui/ui_shared.cpp:11210)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int UI_GetForcedMenuScreen(LocalClientNum_t param_1)
+longlong UI_GetForcedMenuScreen(undefined8 param_1)
 
 {
-  bool bVar4;
-  PartyData *pPVar1;
-  ClientDemoPlayingFlag CVar2;
-  int iVar3;
+  char cVar2;
+  int iVar1;
   
-  bVar4 = Lobby_IsInLobby();
-  if (bVar4) {
-    pPVar1 = Lobby_GetPartyData();
-    bVar4 = Party_IsStoppingAfterRound(pPVar1);
-    if (!bVar4) {
-      return ((uint)LZCOUNT((uint)(xblive_privatematch->current).color[0]) >> 5 ^ 1) + 10;
+  cVar2 = Lobby_IsInLobby();
+  if (cVar2 != '\0') {
+    Lobby_GetPartyData();
+    cVar2 = Party_IsStoppingAfterRound();
+    if (cVar2 == '\0') {
+      return ((ulonglong)(*(char *)(DAT_84253bb8 + 0xc) == '\0') ^ 1) + 10;
     }
   }
-  if (g_partyData.inParty != 0) {
+  if (DAT_82b5700c != 0) {
     return 9;
   }
-  if ((systemlink->current).enabled != false) {
+  if (*(char *)(DAT_82aa1ae4 + 0xc) != '\0') {
     return 8;
   }
-  if ((((splitscreen->current).enabled != false) && ((onlinegame->current).enabled == false)) &&
-     (bVar4 = CL_AnySplitscreenControllerActive(), bVar4)) {
+  if (((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) &&
+     (cVar2 = CL_AnySplitscreenControllerActive(), cVar2 != '\0')) {
     return 7;
   }
-  CVar2 = CL_Demo_GetPlayingFlag();
-  if (CVar2 != CLIENT_DEMO_PLAYING_FLAG_NONE) {
-    iVar3 = CL_ControllerIndexFromClientNum(param_1);
-    bVar4 = Live_IsUserSignedInToLive(iVar3);
-    if (bVar4) {
+  iVar1 = CL_Demo_GetPlayingFlag();
+  if (iVar1 != 0) {
+    CL_ControllerIndexFromClientNum(param_1);
+    cVar2 = Live_IsUserSignedInToLive();
+    if (cVar2 != '\0') {
       return 0xe;
     }
   }
@@ -15761,122 +13529,102 @@ int UI_GetForcedMenuScreen(LocalClientNum_t param_1)
 
 // 825C7AF0  UI_GetMenuScreen  (ui/ui_shared.cpp:11265)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int UI_GetMenuScreen(LocalClientNum_t param_1)
+undefined8 UI_GetMenuScreen(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   
-  iVar1 = UI_GetForcedMenuScreen(param_1);
-  if (iVar1 < 0) {
-    iVar1 = 1;
+  uVar1 = UI_GetForcedMenuScreen();
+  if ((int)uVar1 < 0) {
+    uVar1 = 1;
   }
-  return iVar1;
+  return uVar1;
 }
 
 
 // 825C7B20  UI_GetMenuScreenForError  (ui/ui_shared.cpp:11290)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int UI_GetMenuScreenForError(LocalClientNum_t param_1)
+ulonglong UI_GetMenuScreenForError(void)
 
 {
-  uint uVar1;
+  ulonglong uVar1;
   
-  uVar1 = UI_GetForcedMenuScreen(param_1);
-  return -((int)uVar1 >> 0x1f) - 1U & uVar1;
+  uVar1 = UI_GetForcedMenuScreen();
+  return ((uVar1 & 0xffffffff) >> 0x1f) - 1 & uVar1;
 }
 
 
 // 825C7B50  UI_SetErrorAction  (ui/ui_shared.cpp:11301)
 
-void UI_SetErrorAction(uiErrorAction_t param_1)
+void UI_SetErrorAction(undefined4 param_1)
 
 {
-  g_errorAction = param_1;
+  DAT_8400c170 = param_1;
   return;
 }
 
 
 // 825C7B60  UIScript_ClearError  (ui/ui_shared.cpp:11307)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void UIScript_ClearError(LocalClientNum_t param_1)
+void UIScript_ClearError(undefined8 param_1)
 
 {
-  connstate_t cVar1;
-  int iVar2;
+  int iVar1;
   
-  Sys_EnterCriticalSection(CRITSECT_COM_SET_ERROR_MSG);
-  Dvar_SetStringByName("com_errorMessage","");
-  Sys_LeaveCriticalSection(CRITSECT_COM_SET_ERROR_MSG);
-  Dvar_SetBoolByName("com_isNotice",false);
-  if (ui_errorRemoveKeyCatcher != (dvar_t *)0x0) {
-    if (((ui_errorRemoveKeyCatcher->current).enabled != false) &&
-       (cVar1 = CL_GetLocalClientConnectionState(param_1), 0 < (int)cVar1)) {
-      Key_RemoveCatcher(param_1,-0x11);
+  Sys_EnterCriticalSection(0x28);
+  Dvar_SetStringByName(0xffffffff8202c6c8,0xffffffff820068af);
+  Sys_LeaveCriticalSection(0x28);
+  Dvar_SetBoolByName(0xffffffff82172a68,0);
+  if (DAT_83667390 != 0) {
+    if ((*(char *)(DAT_83667390 + 0xc) != '\0') &&
+       (iVar1 = CL_GetLocalClientConnectionState(param_1), 0 < iVar1)) {
+      Key_RemoveCatcher(param_1,0xffffffffffffffef);
     }
-    Dvar_SetBool(ui_errorRemoveKeyCatcher,true);
+    Dvar_SetBool(DAT_83667390,1);
   }
-  if (g_errorAction == UI_ERROR_ACTION_SHOWMARKETPLACE) {
-    iVar2 = CL_ControllerIndexFromClientNum(param_1);
-    Live_ShowMarketplaceUI(iVar2);
+  if (DAT_8400c170 == 1) {
+    CL_ControllerIndexFromClientNum(param_1);
+    Live_ShowMarketplaceUI();
   }
-  g_errorAction = UI_ERROR_ACTION_NONE;
+  DAT_8400c170 = 0;
   return;
 }
 
 
 // 825C7C30  UI_MyChangesSaveDynamicFlagsForClient  (ui/ui_shared.cpp:11366)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void UI_MyChangesSaveDynamicFlagsForClient(UiContext *param_1,LocalClientNum_t param_2)
+void UI_MyChangesSaveDynamicFlagsForClient(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
   int iVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  int *piVar6;
+  longlong lVar4;
+  int *piVar5;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_21(param_1);
-  lVar5 = 0;
+  iVar2 = __savegprlr_21();
+  lVar4 = 0;
   if (0 < *(int *)(iVar2 + 0xa78)) {
-    piVar6 = (int *)(iVar2 + 0xa34);
+    piVar5 = (int *)(iVar2 + 0xa34);
     do {
-      if (piVar6[1] == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c6c,0
-                        ,"%s");
+      if (piVar5[1] == 0) {
+        MyAssertHandler(0xffffffff82170658,0x2c6c,0,0xffffffff82000f98,0xffffffff82172a78);
       }
-      if (3 < (int)uVar3) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c6d,0
-                        ,"%s");
+      if (3 < (int)param_2) {
+        MyAssertHandler(0xffffffff82170658,0x2c6d,0,0xffffffff82000f98,0xffffffff82036418);
       }
-      if (0xf < (int)lVar5) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c6e,0
-                        ,"%s");
+      if (0xf < (int)lVar4) {
+        MyAssertHandler(0xffffffff82170658,0x2c6e,0,0xffffffff82000f98,0xffffffff82172a94);
       }
-      uVar4 = (uVar3 & 0xfffffff) * 0x10 + lVar5;
-      lVar5 = lVar5 + 1;
-      iVar1 = (int)((uVar4 & 0xfffffff) << 4);
-      *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1) = *(undefined4 *)(piVar6[1] + 0x4c);
-      *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1 + 4) =
-           *(undefined4 *)(piVar6[1] + 0x50);
-      *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1 + 8) =
-           *(undefined4 *)(piVar6[1] + 0x54);
-      piVar6 = piVar6 + 1;
-      *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1 + 0xc) =
-           *(undefined4 *)(*piVar6 + 0x58);
-    } while ((int)lVar5 < *(int *)(iVar2 + 0xa78));
+      uVar3 = (param_2 & 0xfffffff) * 0x10 + lVar4;
+      lVar4 = lVar4 + 1;
+      iVar1 = (int)((uVar3 & 0xfffffff) << 4);
+      *(undefined4 *)(&DAT_8400bd60 + iVar1) = *(undefined4 *)(piVar5[1] + 0x4c);
+      *(undefined4 *)(&DAT_8400bd64 + iVar1) = *(undefined4 *)(piVar5[1] + 0x50);
+      *(undefined4 *)(&DAT_8400bd68 + iVar1) = *(undefined4 *)(piVar5[1] + 0x54);
+      piVar5 = piVar5 + 1;
+      *(undefined4 *)(&DAT_8400bd6c + iVar1) = *(undefined4 *)(*piVar5 + 0x58);
+    } while ((int)lVar4 < *(int *)(iVar2 + 0xa78));
   }
   __restgprlr_21();
   return;
@@ -15885,51 +13633,38 @@ void UI_MyChangesSaveDynamicFlagsForClient(UiContext *param_1,LocalClientNum_t p
 
 // 825C7D50  UI_MyChangesRestoreDynamicFlagsForClient  (ui/ui_shared.cpp:11383)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void UI_MyChangesRestoreDynamicFlagsForClient(UiContext *param_1,LocalClientNum_t param_2)
+void UI_MyChangesRestoreDynamicFlagsForClient(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
   int iVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  int *piVar6;
+  longlong lVar4;
+  int *piVar5;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_21(param_1);
-  lVar5 = 0;
+  iVar2 = __savegprlr_21();
+  lVar4 = 0;
   if (0 < *(int *)(iVar2 + 0xa78)) {
-    piVar6 = (int *)(iVar2 + 0xa34);
+    piVar5 = (int *)(iVar2 + 0xa34);
     do {
-      if (piVar6[1] == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c7d,0
-                        ,"%s");
+      if (piVar5[1] == 0) {
+        MyAssertHandler(0xffffffff82170658,0x2c7d,0,0xffffffff82000f98,0xffffffff82172a78);
       }
-      if (3 < (int)uVar3) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c7e,0
-                        ,"%s");
+      if (3 < (int)param_2) {
+        MyAssertHandler(0xffffffff82170658,0x2c7e,0,0xffffffff82000f98,0xffffffff82036418);
       }
-      if (0xf < (int)lVar5) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c7f,0
-                        ,"%s");
+      if (0xf < (int)lVar4) {
+        MyAssertHandler(0xffffffff82170658,0x2c7f,0,0xffffffff82000f98,0xffffffff82172a94);
       }
-      uVar4 = (uVar3 & 0xfffffff) * 0x10 + lVar5;
-      lVar5 = lVar5 + 1;
-      iVar1 = (int)((uVar4 & 0xfffffff) << 4);
-      *(undefined4 *)(piVar6[1] + 0x4c) = *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1);
-      *(undefined4 *)(piVar6[1] + 0x50) =
-           *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1 + 4);
-      *(undefined4 *)(piVar6[1] + 0x54) =
-           *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1 + 8);
-      piVar6 = piVar6 + 1;
-      *(undefined4 *)(*piVar6 + 0x58) =
-           *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1 + 0xc);
-    } while ((int)lVar5 < *(int *)(iVar2 + 0xa78));
+      uVar3 = (param_2 & 0xfffffff) * 0x10 + lVar4;
+      lVar4 = lVar4 + 1;
+      iVar1 = (int)((uVar3 & 0xfffffff) << 4);
+      *(undefined4 *)(piVar5[1] + 0x4c) = *(undefined4 *)(&DAT_8400bd60 + iVar1);
+      *(undefined4 *)(piVar5[1] + 0x50) = *(undefined4 *)(&DAT_8400bd64 + iVar1);
+      *(undefined4 *)(piVar5[1] + 0x54) = *(undefined4 *)(&DAT_8400bd68 + iVar1);
+      piVar5 = piVar5 + 1;
+      *(undefined4 *)(*piVar5 + 0x58) = *(undefined4 *)(&DAT_8400bd6c + iVar1);
+    } while ((int)lVar4 < *(int *)(iVar2 + 0xa78));
   }
   __restgprlr_21();
   return;
@@ -15938,103 +13673,92 @@ void UI_MyChangesRestoreDynamicFlagsForClient(UiContext *param_1,LocalClientNum_
 
 // 825C7E70  UI_VerifyString  (ui/ui_shared.cpp:11410)
 
-bool UI_VerifyString(char *param_1,wchar_t *param_2)
+void UI_VerifyString(undefined8 param_1,ulonglong param_2)
 
 {
   char cVar1;
   char *pcVar2;
-  uint uVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  char *pcVar7;
-  int iVar8;
-  uint uVar9;
-  longlong lVar10;
+  size_t sVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  char *pcVar6;
+  int iVar7;
+  uint uVar8;
+  longlong lVar9;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_26(param_1);
-  pcVar7 = pcVar2;
+  pcVar2 = (char *)__savegprlr_26();
+  pcVar6 = pcVar2;
   if (pcVar2 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c97,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82170658,0x2c97,0,0xffffffff82000f98,0xffffffff8202e030);
   }
   do {
-    cVar1 = *pcVar7;
-    pcVar7 = pcVar7 + 1;
+    cVar1 = *pcVar6;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 != '\0');
-  iVar8 = (int)pcVar7 - (int)pcVar2;
-  lVar10 = 0;
-  uVar9 = iVar8 - 1;
-  if (((uVar5 & 0xffffffff) != 0) && (uVar3 = wcslen((wchar_t *)uVar5), uVar9 != uVar3)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2ca0,0,
-                    "%s");
+  iVar7 = (int)pcVar6 - (int)pcVar2;
+  lVar9 = 0;
+  uVar8 = iVar7 - 1;
+  if (((param_2 & 0xffffffff) != 0) && (sVar3 = wcslen((wchar_t *)param_2), uVar8 != sVar3)) {
+    MyAssertHandler(0xffffffff82170658,0x2ca0,0,0xffffffff82000f98,0xffffffff82172ab0);
   }
-  uVar3 = 0;
-  uVar6 = uVar5;
-  if (iVar8 != 1) {
+  uVar5 = 0;
+  uVar4 = param_2;
+  if (iVar7 != 1) {
     do {
-      cVar1 = pcVar2[uVar3];
+      cVar1 = pcVar2[uVar5];
       if (((((cVar1 == '^') || (cVar1 == -0x5c)) || (cVar1 == '{')) ||
           ((cVar1 == '}' || (cVar1 == '@')))) ||
-         (((uVar5 & 0xffffffff) != 0 && ((cVar1 == '?' && (*(short *)uVar6 != 0x3f)))))) {
-        uVar4 = __restgprlr_26(0);
-        return (bool)uVar4;
+         (((param_2 & 0xffffffff) != 0 && ((cVar1 == '?' && (*(short *)uVar4 != 0x3f)))))) {
+        __restgprlr_26(0);
+        return;
       }
-      if ((lVar10 != 0) || (lVar10 = 0, cVar1 != ' ')) {
-        lVar10 = 1;
+      if ((lVar9 != 0) || (lVar9 = 0, cVar1 != ' ')) {
+        lVar9 = 1;
       }
-      uVar3 = uVar3 + 1;
-      uVar6 = uVar6 + 2;
-    } while (uVar3 < uVar9);
+      uVar5 = uVar5 + 1;
+      uVar4 = uVar4 + 2;
+    } while (uVar5 < uVar8);
   }
-  uVar4 = __restgprlr_26(lVar10);
-  return (bool)uVar4;
+  __restgprlr_26(lVar9);
+  return;
 }
 
 
 // 825C7FB8  UI_ShowKeyboard  (ui/ui_shared.cpp:11452)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void UI_ShowKeyboard(int param_1,char *param_2,char *param_3,int param_4,bool param_5,
-                    _func___cdecl_void_LocalClientNum_t_bool_char_ptr *param_6)
+void UI_ShowKeyboard(undefined8 param_1,LPCSTR param_2,undefined8 param_3,ulonglong param_4,
+                    undefined8 param_5,undefined4 param_6)
 
 {
-  ulong uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iVar4;
-  char acStack_c0 [192];
+  undefined8 uVar1;
+  int iVar3;
+  longlong lVar2;
+  CHAR aCStack_c0 [192];
   
-  uVar3 = (ulonglong)param_4;
-  uVar1 = __savegprlr_25(param_1);
-  iVar4 = (int)uVar3;
-  MultiByteToWideChar(0xfde9,0,param_2,-1,(ushort *)guideKeyboardTitle,0x40);
-  guideKeyboardTitle[0x3f] = L'\0';
-  I_strncpyz(guideKeyboardDefault,param_3,0x80);
-  I_strncpyz(acStack_c0,param_3,0x80);
-  MultiByteToWideChar(0xfde9,0,acStack_c0,-1,(ushort *)defaultStr,0x80);
-  defaultStr[0x7f] = L'\0';
-  iVar2 = Language_IsAsian();
-  if (keyboardCallback != (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2cd6,0,
-                    "%s");
+  uVar1 = __savegprlr_25();
+  MultiByteToWideChar(0xfde9,0,param_2,-1,&DAT_84253898,0x40);
+  DAT_84253916 = 0;
+  I_strncpyz(0xffffffff84253800,param_3,0x80);
+  I_strncpyz(aCStack_c0,param_3,0x80);
+  iVar3 = MultiByteToWideChar(0xfde9,0,aCStack_c0,-1,(LPWSTR)&DAT_8400c188,0x80);
+  DAT_8400c286 = 0;
+  lVar2 = Language_IsAsian(iVar3);
+  if (DAT_8400bcf0 != 0) {
+    MyAssertHandler(0xffffffff82170658,0x2cd6,0,0xffffffff82000f98,0xffffffff82172af8);
   }
-  if (0x7f < (uVar3 & 0xffffffff)) {
-    iVar4 = 0x7f;
+  if (0x7f < (param_4 & 0xffffffff)) {
+    param_4 = 0x7f;
   }
-  keyboardCallback = param_6;
-  uVar1 = XShowKeyboardUI(uVar1,(-(uint)(iVar2 != 0) & 0x3f) + 1,defaultStr,guideKeyboardTitle,
-                          (wchar_t *)0x0,(ushort *)guideKeyboard_Buffer,iVar4 + 1,
-                          &guideKeyboard_pOverlapped);
-  if (uVar1 != 0x3e5) {
-    Com_PrintError(0x10,"Error %i Bringing up Guide Keyboard\n");
-    keyboardCallback = (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)0x0;
+  DAT_8400bcf0 = param_6;
+  iVar3 = XShowKeyboardUI(uVar1,(-(lVar2 != 0) & 0x3fU) + 1,0xffffffff8400c188,0xffffffff84253898,0,
+                          0xffffffff842536f8,param_4 + 1,0xffffffff84253cac);
+  if (iVar3 != 0x3e5) {
+    Com_PrintError(0x10,0xffffffff82172ad0);
+    DAT_8400bcf0 = 0;
     __restgprlr_25();
     return;
   }
-  isGuideKeyboardActive = true;
+  DAT_842546d0 = 1;
   __restgprlr_25();
   return;
 }
@@ -16042,33 +13766,33 @@ void UI_ShowKeyboard(int param_1,char *param_2,char *param_3,int param_4,bool pa
 
 // 825C8120  GetLocaleString  (ui/ui_shared.cpp:11497)
 
-char * GetLocaleString(ulong param_1)
+undefined8 GetLocaleString(undefined4 param_1)
 
 {
   switch(param_1) {
   case 0xc:
-    return "fr-fr";
+    return 0xffffffff82172b3c;
   case 0xd:
-    return "de-de";
+    return 0xffffffff82172b2c;
   default:
-    return "en-us";
+    return 0xffffffff82172b14;
   case 0x13:
-    return "it-it";
+    return 0xffffffff82172b34;
   case 0x14:
-    return "ja-jp";
+    return 0xffffffff82172b4c;
   case 0x15:
-    return "ko-KR";
+    return 0xffffffff82172b44;
   case 0x16:
-    return "es-mx";
+    return 0xffffffff82172b1c;
   case 0x1f:
-    return "es-es";
+    return 0xffffffff82172b24;
   }
 }
 
 
 // 825C81F8  stripSpaces  (ui/ui_shared.cpp:11521)
 
-char * stripSpaces(char *param_1)
+undefined1 * stripSpaces(char *param_1)
 
 {
   char *pcVar1;
@@ -16080,13 +13804,12 @@ char * stripSpaces(char *param_1)
     pcVar1 = pcVar1 + 1;
   } while (cVar2 != '\0');
   if ((char *)0xff < pcVar1 + (-1 - (int)param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2d05,0,
-                    "%s\n\t%s");
+    MyAssertHandler(0xffffffff82170658,0x2d05,0,0xffffffff820011f4,0xffffffff82172b54,param_1);
   }
-  memset();
+  memset(&DAT_8400c288,0,0x100);
   cVar2 = *param_1;
   if (cVar2 != '\0') {
-    pcVar1 = (char *)((int)defaultStr + 0xff);
+    pcVar1 = (char *)((int)&DAT_8400c286 + 1);
     do {
       if ((cVar2 != ' ') && (cVar2 != '\t')) {
         pcVar1 = pcVar1 + 1;
@@ -16096,23 +13819,24 @@ char * stripSpaces(char *param_1)
       cVar2 = *param_1;
     } while (cVar2 != '\0');
   }
-  return finalString;
+  return &DAT_8400c288;
 }
 
 
 // 825C82D0  UI_IWClanTagAllowed  (ui/ui_shared.cpp:11548)
 
-bool UI_IWClanTagAllowed(int param_1)
+bool UI_IWClanTagAllowed(undefined8 param_1)
 
 {
   char *pcVar1;
-  StringTable *local_20 [4];
+  int local_20 [4];
   
-  StringTable_GetAsset("mp/iwgamertags.csv",local_20);
-  if ((((local_20[0] != (StringTable *)0x0) && (local_20[0]->rowCount != 0)) &&
-      (pcVar1 = Live_GetLocalClientName(param_1), pcVar1 != (char *)0x0)) && (*pcVar1 != '\0')) {
-    pcVar1 = StringTable_Lookup(local_20[0],0,pcVar1,0);
-    return (bool)('\x01' - (*pcVar1 == '\0'));
+  StringTable_GetAsset(0xffffffff82172b6c,local_20);
+  if ((((local_20[0] != 0) && (*(int *)(local_20[0] + 8) != 0)) &&
+      (pcVar1 = (char *)Live_GetLocalClientName(param_1), pcVar1 != (char *)0x0)) &&
+     (*pcVar1 != '\0')) {
+    pcVar1 = (char *)StringTable_Lookup(local_20[0],0,pcVar1,0);
+    return *pcVar1 != '\0';
   }
   return false;
 }
@@ -16120,121 +13844,102 @@ bool UI_IWClanTagAllowed(int param_1)
 
 // 825C8378  UI_ClanKeyboardComplete  (ui/ui_shared.cpp:11573)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void UI_ClanKeyboardComplete(int param_1)
+void UI_ClanKeyboardComplete(void)
 
 {
-  int iVar1;
-  bool bVar6;
-  ulong uVar2;
-  int iVar3;
-  LocalClientNum_t LVar4;
-  char *pcVar5;
-  _STRING_DATA *p_Var7;
-  _STRING_VERIFY_RESPONSE *p_Var8;
-  _STRING_DATA local_2d0;
-  undefined2 local_2ca;
-  ushort *local_2c8;
-  ulong uStack_2c4;
-  _STRING_VERIFY_RESPONSE local_2c0 [2];
-  char acStack_2b0 [256];
+  undefined4 uVar1;
+  undefined8 uVar2;
+  char cVar5;
+  int iVar4;
+  undefined8 uVar3;
+  undefined1 auStack_2c4 [4];
+  short local_2c0;
+  int *local_2be;
+  CHAR aCStack_2b0 [256];
   char acStack_1b0 [127];
   undefined1 local_131;
-  ushort auStack_130 [127];
+  WCHAR aWStack_130 [127];
   undefined2 local_32;
   
-  iVar1 = __savegprlr_27(param_1);
-  bVar6 = Live_IsUserSignedInToLive(iVar1);
-  if (!bVar6) {
-    Com_Error(ERR_FATAL,"Clan tags may not be changed when not online.");
+  uVar2 = __savegprlr_27();
+  cVar5 = Live_IsUserSignedInToLive();
+  if (cVar5 == '\0') {
+    Com_Error(0,0xffffffff82172d14);
   }
-  uVar2 = XGetOverlappedResult(&guideKeyboard_pOverlapped,&uStack_2c4,0);
-  if ((uVar2 != 0x3e4) &&
-     (uVar2 = XGetOverlappedResult(&guideKeyboard_pOverlapped,(ulong *)0x0,1), uVar2 != 0x3e4)) {
-    if (uVar2 == 0) {
-      iVar3 = WideCharToMultiByte(0,0,guideKeyboard_Buffer,-1,acStack_2b0,0x100,(char *)0x0,
-                                  (int *)0x0);
-      if ((longlong)iVar3 + -1 < 0) {
-        Com_PrintError(0xd,"UI_ClanKeyboardComplete: Unable to convert wide char to multi byte\n");
-        g_clanKeyboardActive = false;
+  iVar4 = XGetOverlappedResult(0xffffffff84253cac,auStack_2c4,0);
+  if ((iVar4 != 0x3e4) && (iVar4 = XGetOverlappedResult(0xffffffff84253cac,0,1), iVar4 != 0x3e4)) {
+    if (iVar4 == 0) {
+      iVar4 = WideCharToMultiByte(0,0,&DAT_842536f8,-1,aCStack_2b0,0x100,(LPCSTR)0x0,(LPBOOL)0x0);
+      if ((longlong)iVar4 + -1 < 0) {
+        Com_PrintError(0xd,0xffffffff82172cd0);
+        DAT_8400bcf4 = 0;
         __restgprlr_27();
         return;
       }
-      Com_Printf(0x10,"%s\n");
-      if (((int)((longlong)iVar3 + -1) != 0) &&
-         (bVar6 = UI_VerifyString(acStack_2b0,guideKeyboard_Buffer), !bVar6)) {
-        Com_SetErrorMessage("MENU_INVALIDCHARS");
-        LVar4 = CL_LocalClientNumFromControllerIndex(iVar1);
-        UI_OpenMenu(LVar4,"error_popmenu_party");
-        g_clanKeyboardActive = false;
+      Com_Printf(0x10,0xffffffff82004d30,aCStack_2b0);
+      if (((int)((longlong)iVar4 + -1) != 0) &&
+         (cVar5 = UI_VerifyString(aCStack_2b0,0xffffffff842536f8), cVar5 == '\0')) {
+        Com_SetErrorMessage(0xffffffff8203692c);
+        uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+        UI_OpenMenu(uVar2,0xffffffff82036918);
+        DAT_8400bcf4 = 0;
         __restgprlr_27();
         return;
       }
-      pcVar5 = stripSpaces(acStack_2b0);
-      iVar3 = I_stricmp(pcVar5,"IW");
-      if (((iVar3 == 0) ||
-          (((iVar3 = I_stricmp(pcVar5,"1W"), iVar3 == 0 ||
-            (iVar3 = I_strcmp(pcVar5,"lW"), iVar3 == 0)) ||
-           (iVar3 = I_strcmp(pcVar5,"lw"), iVar3 == 0)))) &&
-         (bVar6 = UI_IWClanTagAllowed(iVar1), !bVar6)) {
-        Com_SetErrorMessage("MP_IWNOTALLOWED");
-        LVar4 = CL_LocalClientNumFromControllerIndex(iVar1);
-        UI_OpenMenu(LVar4,"error_popmenu_party");
-        g_clanKeyboardActive = false;
+      uVar3 = stripSpaces(aCStack_2b0);
+      iVar4 = I_stricmp(uVar3,0xffffffff82172ccc);
+      if (((iVar4 == 0) ||
+          (((iVar4 = I_stricmp(uVar3,0xffffffff82172cc8), iVar4 == 0 ||
+            (iVar4 = I_strcmp(uVar3,0xffffffff82172cc4), iVar4 == 0)) ||
+           (iVar4 = I_strcmp(uVar3,0xffffffff82172cc0), iVar4 == 0)))) &&
+         (cVar5 = UI_IWClanTagAllowed(uVar2), cVar5 == '\0')) {
+        Com_SetErrorMessage(0xffffffff82172cb0);
+        uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+        UI_OpenMenu(uVar2,0xffffffff82036918);
+        DAT_8400bcf4 = 0;
         __restgprlr_27();
         return;
       }
-      Live_GetLocalClientName(iVar1);
-      _snprintf(acStack_1b0,0x80,"[%s]%s");
+      uVar3 = Live_GetLocalClientName(uVar2);
+      _snprintf(acStack_1b0,0x80,"[%s]%s",aCStack_2b0,uVar3);
       local_131 = 0;
-      MultiByteToWideChar(0xfde9,0,acStack_1b0,-1,auStack_130,0x80);
-      local_2c8 = auStack_130;
-      local_2d0.pszString = guideKeyboard_Buffer;
-      local_2d0.wStringSize = 0x100;
-      local_2ca = 0x100;
+      iVar4 = MultiByteToWideChar(0xfde9,0,acStack_1b0,-1,aWStack_130,0x80);
       local_32 = 0;
-      iVar3 = (playlist->current).integer;
-      uVar2 = XGetLocale();
-      p_Var8 = local_2c0;
-      p_Var7 = &local_2d0;
-      pcVar5 = GetLocaleString(uVar2);
-      uVar2 = XStringVerify(0,pcVar5,2,p_Var7,0xe,p_Var8,(_XOVERLAPPED *)0x0);
-      if (uVar2 != 0) {
-        Com_PrintError(0xe,
-                       "Unable to check for offensive text (curse words, etc) in user input - could not set clan name\n"
-                      );
-        g_clanKeyboardActive = false;
+      uVar1 = *(undefined4 *)(DAT_82aa1adc + 0xc);
+      XGetLocale(iVar4);
+      uVar3 = GetLocaleString();
+      iVar4 = XStringVerify(0,uVar3,2);
+      if (iVar4 != 0) {
+        Com_PrintError(0xe,0xffffffff82172c50);
+        DAT_8400bcf4 = 0;
         __restgprlr_27();
         return;
       }
-      if (local_2c0[0].wNumStrings != 2) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2d91,0
-                        ,"stringVerifyResponse->wNumStrings == 2\n\t%i, %i");
+      if (local_2c0 != 2) {
+        MyAssertHandler(0xffffffff82170658,0x2d91,0,0xffffffff82172c20,local_2c0,2);
       }
-      if ((*local_2c0[0].pStringResult == 0) && (local_2c0[0].pStringResult[1] == 0)) {
-        GamerProfile_SetUsingEliteClanTag(iVar1,false);
-        GamerProfile_UpdateSystemVarsFromProfile(iVar1);
-        GamerProfile_SetClanName(iVar1,acStack_2b0);
-        GamerProfile_UpdateProfileAndSaveIfNeeded(iVar1);
+      if ((*local_2be == 0) && (local_2be[1] == 0)) {
+        GamerProfile_SetUsingEliteClanTag(uVar2,0);
+        GamerProfile_UpdateSystemVarsFromProfile(uVar2);
+        GamerProfile_SetClanName(uVar2,aCStack_2b0);
+        GamerProfile_UpdateProfileAndSaveIfNeeded(uVar2);
       }
       else {
-        Com_PrintError(0xe,"Offensive text (curse words, etc) detected in user input.\n");
-        GamerProfile_UpdateSystemVarsFromProfile(iVar1);
-        GamerProfile_SetClanName(iVar1,"");
-        GamerProfile_UpdateProfileAndSaveIfNeeded(iVar1);
-        Com_SetErrorMessage("CLANS_OFFENSIVENAME");
-        LVar4 = CL_LocalClientNumFromControllerIndex(iVar1);
-        UI_OpenMenu(LVar4,"error_popmenu_party");
+        Com_PrintError(0xe,0xffffffff82172be4);
+        GamerProfile_UpdateSystemVarsFromProfile(uVar2);
+        GamerProfile_SetClanName(uVar2,0xffffffff820068af);
+        GamerProfile_UpdateProfileAndSaveIfNeeded(uVar2);
+        Com_SetErrorMessage(0xffffffff82172bd0);
+        uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+        UI_OpenMenu(uVar3,0xffffffff82036918);
       }
-      Dvar_SetInt(playlist,iVar3);
-      iVar1 = Playlist_CountEntries(iVar1,(playlist->current).integer);
-      if (iVar1 < 1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2da5,0
-                        ,"%s");
+      Dvar_SetInt(DAT_82aa1adc,uVar1);
+      iVar4 = Playlist_CountEntries(uVar2,*(undefined4 *)(DAT_82aa1adc + 0xc));
+      if (iVar4 < 1) {
+        MyAssertHandler(0xffffffff82170658,0x2da5,0,0xffffffff82000f98,0xffffffff82172b80);
       }
     }
-    g_clanKeyboardActive = false;
+    DAT_8400bcf4 = 0;
   }
   __restgprlr_27();
   return;
@@ -16243,40 +13948,37 @@ void UI_ClanKeyboardComplete(int param_1)
 
 // 825C8740  UI_ClanKeyboard_f  (ui/ui_shared.cpp:11697)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void UI_ClanKeyboard_f(void)
 
 {
-  LocalClientNum_t LVar1;
-  ulong uVar2;
-  char *pcVar3;
+  undefined8 uVar1;
+  LPCSTR lpMultiByteStr;
+  undefined8 uVar2;
   int iVar4;
-  char acStack_a0 [160];
+  longlong lVar3;
+  CHAR aCStack_a0 [160];
   
   __savegprlr_29();
-  LVar1 = Cmd_LocalClientNum();
-  uVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pcVar3 = SEH_LocalizeTextMessage("CLANS_CLANNAME","menu prompt",LOCMSG_SAFE);
-  MultiByteToWideChar(0xfde9,0,pcVar3,-1,(ushort *)guideKeyboardTitle,0x40);
-  guideKeyboardTitle[0x3f] = L'\0';
-  pcVar3 = GamerProfile_GetClanName(uVar2);
-  I_strncpyz(guideKeyboardDefault,pcVar3,0x80);
-  pcVar3 = GamerProfile_GetClanName(uVar2);
-  I_strncpyz(acStack_a0,pcVar3,0x80);
-  MultiByteToWideChar(0xfde9,0,acStack_a0,-1,(ushort *)defaultStr,0x80);
-  defaultStr[0x7f] = L'\0';
-  iVar4 = Language_IsAsian();
-  uVar2 = XShowKeyboardUI(uVar2,(-(uint)(iVar4 != 0) & 0x3f) + 1,defaultStr,guideKeyboardTitle,
-                          (wchar_t *)0x0,(ushort *)guideKeyboard_Buffer,5,&guideKeyboard_pOverlapped
-                         );
-  if (uVar2 != 0x3e5) {
-    Com_Printf(0x10,"Error Bringing up Guide Keyboard\n");
+  Cmd_LocalClientNum();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  lpMultiByteStr = (LPCSTR)SEH_LocalizeTextMessage(0xffffffff82172d74,0xffffffff82172d68,0);
+  MultiByteToWideChar(0xfde9,0,lpMultiByteStr,-1,&DAT_84253898,0x40);
+  DAT_84253916 = 0;
+  uVar2 = GamerProfile_GetClanName(uVar1);
+  I_strncpyz(0xffffffff84253800,uVar2,0x80);
+  uVar2 = GamerProfile_GetClanName(uVar1);
+  I_strncpyz(aCStack_a0,uVar2,0x80);
+  iVar4 = MultiByteToWideChar(0xfde9,0,aCStack_a0,-1,(LPWSTR)&DAT_8400c388,0x80);
+  DAT_8400c486 = 0;
+  lVar3 = Language_IsAsian(iVar4);
+  iVar4 = XShowKeyboardUI(uVar1,(-(lVar3 != 0) & 0x3fU) + 1,0xffffffff8400c388,0xffffffff84253898,0,
+                          0xffffffff842536f8,5,0xffffffff84253cac);
+  if (iVar4 != 0x3e5) {
+    Com_Printf(0x10,0xffffffff82172d44);
     __restgprlr_29();
     return;
   }
-  g_clanKeyboardActive = true;
+  DAT_8400bcf4 = 1;
   __restgprlr_29();
   return;
 }
@@ -16284,29 +13986,26 @@ void UI_ClanKeyboard_f(void)
 
 // 825C8878  UI_KeyboardUpdate  (ui/ui_shared.cpp:11869)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void UI_KeyboardUpdate(LocalClientNum_t param_1)
+void UI_KeyboardUpdate(undefined8 param_1)
 
 {
-  bool bVar2;
-  int iVar1;
+  char cVar1;
   
-  if ((g_clanKeyboardActive) && (bVar2 = Sys_IsMainThread(), bVar2)) {
-    iVar1 = CL_ControllerIndexFromClientNum(param_1);
-    UI_ClanKeyboardComplete(iVar1);
+  if ((DAT_8400bcf4 != '\0') && (cVar1 = Sys_IsMainThread(), cVar1 != '\0')) {
+    CL_ControllerIndexFromClientNum(param_1);
+    UI_ClanKeyboardComplete();
   }
-  if ((facebookUsernameKeyboardActiveGlobal != false) && (bVar2 = Sys_IsMainThread(), bVar2)) {
-    iVar1 = CL_ControllerIndexFromClientNum(param_1);
-    Facebook_UserKeyboardComplete(iVar1);
+  if ((DAT_8451dbd1 != '\0') && (cVar1 = Sys_IsMainThread(), cVar1 != '\0')) {
+    CL_ControllerIndexFromClientNum(param_1);
+    Facebook_UserKeyboardComplete();
   }
-  if ((facebookPasswordKeyboardActiveGlobal != false) && (bVar2 = Sys_IsMainThread(), bVar2)) {
-    iVar1 = CL_ControllerIndexFromClientNum(param_1);
-    Facebook_PasswordKeyboardComplete(iVar1);
+  if ((DAT_8451dbd0 != '\0') && (cVar1 = Sys_IsMainThread(), cVar1 != '\0')) {
+    CL_ControllerIndexFromClientNum(param_1);
+    Facebook_PasswordKeyboardComplete();
   }
-  if ((eliteClanMessageKeyboardActiveGlobal != false) && (bVar2 = Sys_IsMainThread(), bVar2)) {
-    iVar1 = CL_ControllerIndexFromClientNum(param_1);
-    EliteClan_MessageKeyboardComplete(iVar1);
+  if ((DAT_844f9f85 != '\0') && (cVar1 = Sys_IsMainThread(), cVar1 != '\0')) {
+    CL_ControllerIndexFromClientNum(param_1);
+    EliteClan_MessageKeyboardComplete();
   }
   CL_Demo_KeyboardComplete(param_1);
   return;
@@ -16315,22 +14014,17 @@ void UI_KeyboardUpdate(LocalClientNum_t param_1)
 
 // 825C8958  UI_CallKeyboardCallback  (ui/ui_shared.cpp:11902)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void UI_CallKeyboardCallback(LocalClientNum_t param_1,char *param_2)
+void UI_CallKeyboardCallback(undefined8 param_1,undefined8 param_2)
 
 {
-  LocalClientNum_t LVar1;
-  longlong lVar2;
+  undefined8 uVar1;
   
-  lVar2 = (longlong)(int)param_2;
-  LVar1 = __savegprlr_29(param_1,lVar2);
-  if (keyboardCallback == (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2e7f,0,
-                    "%s");
+  uVar1 = __savegprlr_29();
+  if (DAT_8400bcf0 == (code *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x2e7f,0,0xffffffff82000f98,0xffffffff82172d84);
   }
-  (*keyboardCallback)(LVar1,true,(char *)lVar2);
-  keyboardCallback = (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)0x0;
+  (*DAT_8400bcf0)(uVar1,1,param_2);
+  DAT_8400bcf0 = (code *)0x0;
   __restgprlr_29();
   return;
 }
@@ -16338,121 +14032,110 @@ void UI_CallKeyboardCallback(LocalClientNum_t param_1,char *param_2)
 
 // 825C89C8  UI_CallKeyboardCallbackCancelled  (ui/ui_shared.cpp:11910)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void UI_CallKeyboardCallbackCancelled(LocalClientNum_t param_1)
+void UI_CallKeyboardCallbackCancelled(undefined8 param_1)
 
 {
-  if (keyboardCallback == (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2e87,0,
-                    "%s");
+  if (DAT_8400bcf0 == (code *)0x0) {
+    MyAssertHandler(0xffffffff82170658,0x2e87,0,0xffffffff82000f98,0xffffffff82172d84);
   }
-  (*keyboardCallback)(param_1,false,(char *)0x0);
-  keyboardCallback = (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)0x0;
+  (*DAT_8400bcf0)(param_1,0,0);
+  DAT_8400bcf0 = (code *)0x0;
   return;
 }
 
 
 // 825C8A50  UI_FeederSetConfirmButtonMaterialHandle  (ui/ui_shared.cpp:11918)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void UI_FeederSetConfirmButtonMaterialHandle(Material **param_1)
+void UI_FeederSetConfirmButtonMaterialHandle(undefined4 *param_1)
 
 {
-  Material *pMVar1;
+  undefined4 uVar1;
   
-  pMVar1 = Material_RegisterHandle("ui_button_xenon_3d_a_32x32",7);
-  *param_1 = pMVar1;
+  uVar1 = Material_RegisterHandle(0xffffffff82172d98,7);
+  *param_1 = uVar1;
   return;
 }
 
 
 // 825CEF98  UI_GetMapCount  (ui/ui_shared.cpp:11935)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int UI_GetMapCount(void)
+longlong UI_GetMapCount(void)
 
 {
-  int iVar1;
+  longlong lVar1;
   ulonglong uVar2;
   int *piVar3;
   
-  iVar1 = 0;
-  if ((ui_showDLCMaps->current).enabled != false) {
-    iVar1 = UI_GetAvailableDlcMapCount();
-    return iVar1;
+  lVar1 = 0;
+  if (*(char *)(DAT_83f71e9c + 0xc) != '\0') {
+    lVar1 = UI_GetAvailableDlcMapCount(0);
+    return lVar1;
   }
-  uVar2 = (ulonglong)(uint)sharedUiInfo.mapCount;
-  if (sharedUiInfo.mapCount < 1) {
-    return 0;
+  uVar2 = (ulonglong)DAT_83f7df64;
+  if ((int)DAT_83f7df64 < 1) {
+    return lVar1;
   }
-  piVar3 = &sharedUiInfo.mapList[0].mapPack;
+  piVar3 = &DAT_83f7e9dc;
   do {
     if (*piVar3 == 0) {
-      iVar1 = iVar1 + 1;
+      lVar1 = lVar1 + 1;
     }
     piVar3 = piVar3 + 0x29e;
     uVar2 = uVar2 - 1;
   } while (uVar2 != 0);
-  return iVar1;
+  return lVar1;
 }
 
 
 // 825C8A90  UI_GetAvailableDlcMapCount  (ui/ui_shared.cpp:11956)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int UI_GetAvailableDlcMapCount(void)
+void UI_GetAvailableDlcMapCount(void)
 
 {
-  bool bVar2;
-  int iVar1;
-  longlong lVar3;
-  int *piVar4;
+  char cVar1;
+  longlong lVar2;
+  int iVar3;
+  uint *puVar4;
   
   __savegprlr_26();
-  lVar3 = 0;
-  iVar1 = 0;
-  if (0 < sharedUiInfo.mapCount) {
-    piVar4 = &sharedUiInfo.mapList[0].mapPack;
+  lVar2 = 0;
+  iVar3 = 0;
+  if (0 < DAT_83f7df64) {
+    puVar4 = &DAT_83f7e9dc;
     do {
-      if ((0 < *piVar4) &&
-         (((accessToSubscriberContent->current).enabled != false ||
-          (bVar2 = Content_DoWeHaveContentPack(2 << (*piVar4 & 0x3fU)), bVar2)))) {
-        lVar3 = lVar3 + 1;
+      if (0 < (int)*puVar4) {
+        if ((*(char *)(DAT_83f71e90 + 0xc) != '\0') ||
+           (cVar1 = Content_DoWeHaveContentPack(2 << (*puVar4 & 0x3f)), cVar1 != '\0')) {
+          lVar2 = lVar2 + 1;
+        }
       }
-      iVar1 = iVar1 + 1;
-      piVar4 = piVar4 + 0x29e;
-    } while (iVar1 < sharedUiInfo.mapCount);
+      iVar3 = iVar3 + 1;
+      puVar4 = puVar4 + 0x29e;
+    } while (iVar3 < DAT_83f7df64);
   }
-  iVar1 = __restgprlr_26(lVar3);
-  return iVar1;
+  __restgprlr_26(lVar2);
+  return;
 }
 
 
 // 825C8B18  UI_GetMapIdForNum  (ui/ui_shared.cpp:11971)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int UI_GetMapIdForNum(int param_1)
+void UI_GetMapIdForNum(void)
 
 {
   int iVar1;
-  bool bVar2;
+  char cVar2;
   int *piVar3;
   int iVar4;
   longlong lVar5;
+  uint *puVar6;
   
-  iVar1 = __savegprlr_25(param_1);
+  iVar1 = __savegprlr_25();
   iVar4 = 0;
-  if ((ui_showDLCMaps->current).enabled == false) {
+  if (*(char *)(DAT_83f71e9c + 0xc) == '\0') {
     lVar5 = 0;
-    if (0 < sharedUiInfo.mapCount) {
-      piVar3 = &sharedUiInfo.mapList[0].mapPack;
+    if (0 < DAT_83f7df64) {
+      piVar3 = &DAT_83f7e9dc;
       do {
         if (*piVar3 == 0) {
           if (iVar4 == iVar1) goto LAB_825c8c10;
@@ -16460,173 +14143,160 @@ int UI_GetMapIdForNum(int param_1)
         }
         lVar5 = lVar5 + 1;
         piVar3 = piVar3 + 0x29e;
-      } while ((int)lVar5 < sharedUiInfo.mapCount);
+      } while ((int)lVar5 < DAT_83f7df64);
     }
   }
   else {
     lVar5 = 0;
-    if (0 < sharedUiInfo.mapCount) {
-      piVar3 = &sharedUiInfo.mapList[0].mapPack;
+    if (0 < DAT_83f7df64) {
+      puVar6 = &DAT_83f7e9dc;
       do {
-        if ((0 < *piVar3) &&
-           (((accessToSubscriberContent->current).enabled != false ||
-            (bVar2 = Content_DoWeHaveContentPack(2 << (*piVar3 & 0x3fU)), bVar2)))) {
-          if (iVar4 == iVar1) {
-            iVar1 = __restgprlr_25(lVar5);
-            return iVar1;
+        if (0 < (int)*puVar6) {
+          if ((*(char *)(DAT_83f71e90 + 0xc) != '\0') ||
+             (cVar2 = Content_DoWeHaveContentPack(2 << (*puVar6 & 0x3f)), cVar2 != '\0')) {
+            if (iVar4 == iVar1) {
+              __restgprlr_25(lVar5);
+              return;
+            }
+            iVar4 = iVar4 + 1;
           }
-          iVar4 = iVar4 + 1;
         }
         lVar5 = lVar5 + 1;
-        piVar3 = piVar3 + 0x29e;
-      } while ((int)lVar5 < sharedUiInfo.mapCount);
-      iVar1 = __restgprlr_25(0);
-      return iVar1;
+        puVar6 = puVar6 + 0x29e;
+      } while ((int)lVar5 < DAT_83f7df64);
+      __restgprlr_25(0);
+      return;
     }
   }
   lVar5 = 0;
 LAB_825c8c10:
-  iVar1 = __restgprlr_25(lVar5);
-  return iVar1;
+  __restgprlr_25(lVar5);
+  return;
 }
 
 
 // 825C8C18  UI_GetMapLoadNameForCurrentIndex  (ui/ui_shared.cpp:12007)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-char * UI_GetMapLoadNameForCurrentIndex(int param_1)
+void UI_GetMapLoadNameForCurrentIndex(void)
 
 {
   int iVar1;
-  bool bVar3;
-  char *pcVar2;
+  char cVar2;
+  int *piVar3;
   int iVar4;
-  int *piVar5;
+  uint *puVar5;
   longlong lVar6;
   
-  iVar1 = __savegprlr_25(param_1);
+  iVar1 = __savegprlr_25();
   iVar4 = 0;
-  if ((ui_showDLCMaps->current).enabled == false) {
+  if (*(char *)(DAT_83f71e9c + 0xc) == '\0') {
     lVar6 = 0;
-    if (0 < sharedUiInfo.mapCount) {
-      piVar5 = &sharedUiInfo.mapList[0].mapPack;
+    if (0 < DAT_83f7df64) {
+      piVar3 = &DAT_83f7e9dc;
       do {
-        if (*piVar5 == 0) {
+        if (*piVar3 == 0) {
           if (iVar1 == iVar4) {
-            pcVar2 = (char *)__restgprlr_25(lVar6 * 0xa78 + -0x7c082078);
-            return pcVar2;
+            __restgprlr_25(lVar6 * 0xa78 + -0x7c082078);
+            return;
           }
           iVar4 = iVar4 + 1;
         }
         lVar6 = lVar6 + 1;
-        piVar5 = piVar5 + 0x29e;
-      } while ((int)lVar6 < sharedUiInfo.mapCount);
+        piVar3 = piVar3 + 0x29e;
+      } while ((int)lVar6 < DAT_83f7df64);
     }
   }
   else {
     lVar6 = 0;
-    if (0 < sharedUiInfo.mapCount) {
-      piVar5 = &sharedUiInfo.mapList[0].mapPack;
+    if (0 < DAT_83f7df64) {
+      puVar5 = &DAT_83f7e9dc;
       do {
-        if ((0 < *piVar5) &&
-           (((accessToSubscriberContent->current).enabled != false ||
-            (bVar3 = Content_DoWeHaveContentPack(2 << (*piVar5 & 0x3fU)), bVar3)))) {
+        if ((0 < (int)*puVar5) &&
+           ((*(char *)(DAT_83f71e90 + 0xc) != '\0' ||
+            (cVar2 = Content_DoWeHaveContentPack(2 << (*puVar5 & 0x3f)), cVar2 != '\0')))) {
           if (iVar1 == iVar4) {
-            pcVar2 = (char *)__restgprlr_25(lVar6 * 0xa78 + -0x7c082078);
-            return pcVar2;
+            __restgprlr_25(lVar6 * 0xa78 + -0x7c082078);
+            return;
           }
           iVar4 = iVar4 + 1;
         }
         lVar6 = lVar6 + 1;
-        piVar5 = piVar5 + 0x29e;
-      } while ((int)lVar6 < sharedUiInfo.mapCount);
+        puVar5 = puVar5 + 0x29e;
+      } while ((int)lVar6 < DAT_83f7df64);
     }
   }
-  Com_Printf(0x10,
-             "Warning: Invalid Map load name Index found. Setting it to the first map of the current selected map pack type\n"
-            );
-  pcVar2 = (char *)__restgprlr_25(0xffffffff83f7df88);
-  return pcVar2;
+  Com_Printf(0x10,0xffffffff82172db8);
+  __restgprlr_25(0xffffffff83f7df88);
+  return;
 }
 
 
 // 825C8D40  UI_GetIndexForMapLoadName  (ui/ui_shared.cpp:12046)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-int UI_GetIndexForMapLoadName(char *param_1)
+void UI_GetIndexForMapLoadName(void)
 
 {
-  char *pcVar1;
-  bool bVar4;
+  undefined8 uVar1;
+  char cVar3;
   int iVar2;
-  int iVar3;
+  int iVar4;
   longlong lVar5;
-  int *piVar6;
-  char *pcVar7;
+  uint *puVar6;
+  undefined1 *puVar7;
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
+  uVar1 = __savegprlr_26();
   lVar5 = 0;
-  if ((ui_showDLCMaps->current).enabled == false) {
-    if (0 < sharedUiInfo.mapCount) {
-      pcVar7 = sharedUiInfo.mapList[0].mapLoadName;
-      iVar3 = sharedUiInfo.mapCount;
+  if (*(char *)(DAT_83f71e9c + 0xc) == '\0') {
+    if (0 < DAT_83f7df64) {
+      puVar7 = &DAT_83f7df88;
+      iVar4 = DAT_83f7df64;
       do {
-        if ((*(int *)(pcVar7 + 0xa54) == 0) &&
-           (iVar2 = I_strcmp(pcVar1,pcVar7), iVar3 = sharedUiInfo.mapCount, iVar2 == 0))
-        goto LAB_825c8de4;
+        if ((*(int *)(puVar7 + 0xa54) == 0) &&
+           (iVar2 = I_strcmp(uVar1,puVar7), iVar4 = DAT_83f7df64, iVar2 == 0)) goto LAB_825c8de4;
         lVar5 = lVar5 + 1;
-        pcVar7 = pcVar7 + 0xa78;
-      } while ((int)lVar5 < iVar3);
+        puVar7 = puVar7 + 0xa78;
+      } while ((int)lVar5 < iVar4);
     }
   }
-  else if (0 < sharedUiInfo.mapCount) {
-    piVar6 = &sharedUiInfo.mapList[0].mapPack;
-    iVar3 = sharedUiInfo.mapCount;
+  else if (0 < DAT_83f7df64) {
+    puVar6 = &DAT_83f7e9dc;
+    iVar4 = DAT_83f7df64;
     do {
-      if ((0 < *piVar6) &&
-         ((((accessToSubscriberContent->current).enabled != false ||
-           (bVar4 = Content_DoWeHaveContentPack(2 << (*piVar6 & 0x3fU)),
-           iVar3 = sharedUiInfo.mapCount, bVar4)) &&
-          (iVar2 = I_strcmp(pcVar1,(char *)(piVar6 + -0x295)), iVar3 = sharedUiInfo.mapCount,
-          iVar2 == 0)))) {
+      if ((0 < (int)*puVar6) &&
+         (((*(char *)(DAT_83f71e90 + 0xc) != '\0' ||
+           (cVar3 = Content_DoWeHaveContentPack(2 << (*puVar6 & 0x3f)), iVar4 = DAT_83f7df64,
+           cVar3 != '\0')) &&
+          (iVar2 = I_strcmp(uVar1,puVar6 + -0x295), iVar4 = DAT_83f7df64, iVar2 == 0)))) {
 LAB_825c8de4:
-        iVar3 = __restgprlr_26(lVar5);
-        return iVar3;
+        __restgprlr_26(lVar5);
+        return;
       }
       lVar5 = lVar5 + 1;
-      piVar6 = piVar6 + 0x29e;
-    } while ((int)lVar5 < iVar3);
+      puVar6 = puVar6 + 0x29e;
+    } while ((int)lVar5 < iVar4);
   }
-  Com_Printf(0x10,
-             "Warning: Invalid Map load name Index found. Setting it to the first map of the current selected map pack type\n"
-            );
-  iVar3 = __restgprlr_26(0);
-  return iVar3;
+  Com_Printf(0x10,0xffffffff82172db8);
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 825C8E50  UI_FeederItemText_Maps  (ui/ui_shared.cpp:12079)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-char * UI_FeederItemText_Maps
-                 (LocalClientNum_t param_1,itemDef_t *param_2,int param_3,int param_4,
-                 Material **param_5)
+undefined8
+UI_FeederItemText_Maps(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
 
 {
-  int iVar1;
-  char *pcVar2;
+  longlong lVar1;
+  undefined8 uVar2;
   
-  if (((param_4 == 0) && (iVar1 = UI_GetMapIdForNum(param_3), -1 < param_3)) &&
-     (param_3 < sharedUiInfo.mapCount)) {
-    pcVar2 = UI_SafeTranslateString(sharedUiInfo.mapList[iVar1].mapName);
-    return pcVar2;
+  if (param_4 == 0) {
+    lVar1 = UI_GetMapIdForNum(param_3);
+    if ((-1 < (int)param_3) && ((int)param_3 < DAT_83f7df64)) {
+      uVar2 = UI_SafeTranslateString(lVar1 * 0xa78 + -0x7c082098);
+      return uVar2;
+    }
   }
-  return "";
+  return 0xffffffff820068af;
 }
 

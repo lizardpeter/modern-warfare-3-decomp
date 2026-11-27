@@ -2,37 +2,39 @@
 
 // 8291CE80  _stricmp  (<external>/bt/278379/vctools/crt/xb/xbox/stricmpp.asm:57)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _stricmp(void)
+int _stricmp(char *_Str1,char *_Str2)
 
 {
-  int in_r3;
-  int in_r4;
-  byte *pbVar1;
+  byte bVar1;
   byte bVar2;
-  byte bVar3;
+  longlong lVar3;
   byte *pbVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  byte *pbVar7;
   
-  pbVar4 = (byte *)(in_r3 + -1);
-  pbVar1 = (byte *)(in_r4 + -1);
+  pbVar7 = (byte *)(_Str1 + -1);
+  pbVar4 = (byte *)(_Str2 + -1);
   do {
     do {
-      pbVar1 = pbVar1 + 1;
-      bVar3 = *pbVar1;
       pbVar4 = pbVar4 + 1;
-      bVar2 = *pbVar4;
-      if (bVar3 == 0) {
-        return;
-      }
-    } while (bVar2 == bVar3);
-    if ((0x40 < bVar3) && (bVar3 < 0x5b)) {
-      bVar3 = bVar3 | 0x20;
+      bVar1 = *pbVar4;
+      uVar6 = (ulonglong)bVar1;
+      pbVar7 = pbVar7 + 1;
+      bVar2 = *pbVar7;
+      uVar5 = (ulonglong)bVar2;
+      lVar3 = uVar5 - uVar6;
+      if (bVar1 == 0) goto LAB_8291ced0;
+    } while (lVar3 == 0);
+    if ((0x40 < bVar1) && (bVar1 < 0x5b)) {
+      uVar6 = uVar6 | 0x20;
     }
     if ((0x40 < bVar2) && (bVar2 < 0x5b)) {
-      bVar2 = bVar2 | 0x20;
+      uVar5 = uVar5 | 0x20;
     }
-  } while (bVar2 == bVar3);
-  return;
+    lVar3 = uVar5 - uVar6;
+  } while (lVar3 == 0);
+LAB_8291ced0:
+  return (int)lVar3;
 }
 

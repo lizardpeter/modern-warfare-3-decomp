@@ -2,82 +2,80 @@
 
 // 828AAB30  SetFilePointer  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/setfilepointer.c:89)
 
-ulong SetFilePointer(void *param_1,long param_2,long *param_3,ulong param_4)
+DWORD SetFilePointer(HANDLE hFile,LONG lDistanceToMove,PLONG lpDistanceToMoveHigh,DWORD dwMoveMethod
+                    )
 
 {
-  void *pvVar2;
-  long lVar3;
-  ulonglong uVar1;
-  ulong uVar4;
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  DWORD DVar4;
   undefined4 *puVar5;
   ulonglong uVar6;
   ulonglong uVar7;
   undefined8 local_80;
-  _IO_STATUS_BLOCK _Stack_78;
+  undefined1 auStack_78 [8];
   undefined1 auStack_70 [40];
   ulonglong local_48;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar1 = (ulonglong)(int)param_3;
-  pvVar2 = (void *)__savegprlr_27(param_1);
-  puVar5 = (undefined4 *)uVar1;
-  if ((uVar1 & 0xffffffff) == 0) {
-    uVar7 = (ulonglong)param_2;
+  uVar6 = (ulonglong)(int)dwMoveMethod;
+  uVar2 = (ulonglong)(int)lpDistanceToMoveHigh;
+  uVar1 = __savegprlr_27(hFile);
+  puVar5 = (undefined4 *)uVar2;
+  if ((uVar2 & 0xffffffff) == 0) {
+    uVar7 = (ulonglong)lDistanceToMove;
   }
   else {
-    local_80 = CONCAT44(*puVar5,param_2);
+    local_80 = CONCAT44(*puVar5,lDistanceToMove);
     uVar7 = local_80;
   }
   if ((uVar6 & 0xffffffff) == 0) {
 LAB_828aac00:
     local_80 = uVar7;
     if ((longlong)uVar7 < 0) {
-      lVar3 = 0x83;
+      uVar1 = 0x83;
     }
     else {
-      if (((uVar1 & 0xffffffff) != 0) || ((uVar7 & 0x7fffffff00000000) == 0)) {
-        lVar3 = (*_fileIoHooks->NtSetInformationFile)
-                          (pvVar2,&_Stack_78,&local_80,8,FilePositionInformation);
-        if (-1 < lVar3) {
-          if ((uVar1 & 0xffffffff) != 0) {
+      if (((uVar2 & 0xffffffff) != 0) || ((uVar7 & 0x7fffffff00000000) == 0)) {
+        iVar3 = (**(code **)(PTR_DAT_829a8580 + 0x24))(uVar1,auStack_78,&local_80,8,0xe);
+        if (-1 < iVar3) {
+          if ((uVar2 & 0xffffffff) != 0) {
             *puVar5 = local_80._0_4_;
           }
           if (local_80._4_4_ == -1) {
             SetLastError(0);
           }
-          uVar1 = local_80 & 0xffffffff;
+          uVar2 = local_80 & 0xffffffff;
           goto LAB_828aacac;
         }
-        RtlSetLastNTError(lVar3);
-        if ((uVar1 & 0xffffffff) != 0) {
+        RtlSetLastNTError();
+        if ((uVar2 & 0xffffffff) != 0) {
           *puVar5 = 0xffffffff;
         }
         goto LAB_828aaca4;
       }
-      lVar3 = 0x57;
+      uVar1 = 0x57;
     }
-    RtlSetLastError(lVar3);
+    RtlSetLastError(uVar1);
   }
   else {
     if (((uVar6 & 0xffffffff) == 1) || (2 < (uVar6 & 0xffffffff))) {
-      lVar3 = (*_fileIoHooks->NtQueryInformationFile)
-                        (pvVar2,&_Stack_78,&local_80,8,FilePositionInformation);
+      iVar3 = (**(code **)(PTR_DAT_829a8580 + 0x20))(uVar1,auStack_78,&local_80,8,0xe);
       local_48 = local_80;
     }
     else {
-      lVar3 = (*_fileIoHooks->NtQueryInformationFile)
-                        (pvVar2,&_Stack_78,auStack_70,0x38,FileNetworkOpenInformation);
+      iVar3 = (**(code **)(PTR_DAT_829a8580 + 0x20))(uVar1,auStack_78,auStack_70,0x38,0x22);
     }
-    if (-1 < lVar3) {
+    if (-1 < iVar3) {
       uVar7 = local_48 + uVar7;
       goto LAB_828aac00;
     }
-    RtlSetLastNTError(lVar3);
+    RtlSetLastNTError();
   }
 LAB_828aaca4:
-  uVar1 = 0xffffffffffffffff;
+  uVar2 = 0xffffffffffffffff;
 LAB_828aacac:
-  uVar4 = __restgprlr_27(uVar1);
-  return uVar4;
+  DVar4 = __restgprlr_27(uVar2);
+  return DVar4;
 }
 

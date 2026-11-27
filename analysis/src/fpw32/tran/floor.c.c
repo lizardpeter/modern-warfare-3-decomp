@@ -2,21 +2,21 @@
 
 // 82916560  floor  (<external>/bt/278379/vctools/crt/src/fpw32/tran/floor.c:49)
 
-double floor(double param_1)
+double floor(double _X)
 
 {
   double dVar1;
   
-  dVar1 = (double)(longlong)param_1;
-  if (param_1 - dVar1 < 0.0) {
+  dVar1 = (double)(longlong)_X;
+  if (_X - dVar1 < 0.0) {
     dVar1 = dVar1 - 1.0;
   }
-  if (1e+18 - ABS(param_1) < 0.0) {
-    dVar1 = param_1;
+  if (1e+18 - ABS(_X) < 0.0) {
+    dVar1 = _X;
   }
-  if (-ABS(param_1) < 0.0) {
-    param_1 = dVar1;
+  if (-ABS(_X) < 0.0) {
+    _X = dVar1;
   }
-  return param_1;
+  return _X;
 }
 

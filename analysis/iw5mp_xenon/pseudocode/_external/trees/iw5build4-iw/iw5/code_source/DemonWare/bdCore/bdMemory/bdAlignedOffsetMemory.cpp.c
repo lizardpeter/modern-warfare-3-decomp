@@ -2,69 +2,68 @@
 
 // 828F8290  bdAlignedOffsetMalloc  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdalignedoffsetmemory.cpp:126)
 
-void * bdAlignedOffsetMalloc(uint param_1,uint param_2,uint param_3)
+void bdAlignedOffsetMalloc(undefined8 param_1,ulonglong param_2,longlong param_3)
 
 {
-  int iVar1;
-  void *pvVar2;
+  longlong lVar1;
+  ulonglong uVar2;
   ulonglong uVar3;
   ulonglong uVar4;
   longlong lVar5;
-  longlong lVar6;
   
-  lVar6 = (longlong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
-  uVar4 = uVar3 - 1;
+  lVar1 = __savegprlr_25();
+  uVar4 = param_2 - 1;
+  if ((uVar4 & param_2) != 0) {
+    MyAssertHandler(0xffffffff8220b288,0x7f,0,0xffffffff820011f4,0xffffffff8220b230,
+                    0xffffffff8220b250);
+  }
+  lVar5 = param_2 + param_3 + 4;
+  lVar1 = lVar5 + lVar1;
+  uVar2 = bdHeap__DW_Malloc(lVar1);
+  memset((void *)uVar2,0xbd,(size_t)lVar1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    Sys_OutOfMemErrorInternal(0xc,0xffffffff8220b288,0x8b);
+  }
+  uVar3 = uVar2 + lVar5 & ~uVar4;
+  param_3 = uVar3 - param_3;
+  *(void **)((int)param_3 + -4) = (void *)uVar2;
   if ((uVar4 & uVar3) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdMemory\\bdAlignedOffsetMemory.cpp"
-                    ,0x7f,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff8220b288,0x95,0,0xffffffff820011f4,0xffffffff8220b1e0,
+                    0xffffffff8220b204);
   }
-  lVar5 = uVar3 + lVar6 + 4;
-  pvVar2 = bdHeap::DW_Malloc((int)lVar5 + iVar1);
-  memset();
-  if (pvVar2 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
-    Sys_OutOfMemErrorInternal
-              (0xc,
-               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdMemory\\bdAlignedOffsetMemory.cpp"
-               ,0x8b);
-  }
-  uVar3 = (int)pvVar2 + lVar5 & ~uVar4;
-  lVar6 = uVar3 - lVar6;
-  *(void **)((int)lVar6 + -4) = pvVar2;
-  if ((uVar4 & uVar3) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdMemory\\bdAlignedOffsetMemory.cpp"
-                    ,0x95,0,"%s\n\t%s");
-  }
-  pvVar2 = (void *)__restgprlr_25(lVar6);
-  return pvVar2;
+  __restgprlr_25(param_3);
+  return;
 }
 
 
 // 828F8370  bdAlignedOffsetFree  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdalignedoffsetmemory.cpp:155)
 
-void bdAlignedOffsetFree(void *param_1)
+void bdAlignedOffsetFree(int param_1)
 
 {
-  bdHeap::DW_Free(*(void **)((int)param_1 + -4));
+  bdHeap__DW_Free(*(undefined4 *)(param_1 + -4));
   return;
 }
 
 
 // 828F8378  bdAlignedOffsetRealloc  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdalignedoffsetmemory.cpp:170)
 
-void * bdAlignedOffsetRealloc(void *param_1,uint param_2,uint param_3,uint param_4,uint param_5)
+void bdAlignedOffsetRealloc
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-  int iVar1;
-  void *pvVar2;
+  void *_Src;
+  undefined8 uVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  pvVar2 = bdAlignedOffsetMalloc(param_3,param_4,param_5);
-  memcpy();
-  bdHeap::DW_Free(*(void **)(iVar1 + -4));
-  pvVar2 = (void *)__restgprlr_28(pvVar2);
-  return pvVar2;
+  _Src = (void *)__savegprlr_28();
+  uVar1 = bdAlignedOffsetMalloc(param_3,param_4,param_5);
+  if ((param_2 & 0xffffffff) <= (param_3 & 0xffffffff)) {
+    param_3 = param_2;
+  }
+  memcpy((void *)uVar1,_Src,(size_t)param_3);
+  bdHeap__DW_Free(*(undefined4 *)((int)_Src + -4));
+  __restgprlr_28(uVar1);
+  return;
 }
 

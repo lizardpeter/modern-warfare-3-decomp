@@ -7,8 +7,7 @@ void __unwind_72425(void)
 {
   int in_r12;
   
-  bdReference<bdDataChunk>::~bdReference<bdDataChunk>(*(bdReference<bdDataChunk> **)(in_r12 + 0x14))
-  ;
+  bdReference<bdDataChunk>___bdReference<bdDataChunk>(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 
@@ -20,8 +19,7 @@ void __unwind_72447(void)
 {
   int in_r12;
   
-  bdReference<bdDataChunk>::~bdReference<bdDataChunk>(*(bdReference<bdDataChunk> **)(in_r12 + 0x1c))
-  ;
+  bdReference<bdDataChunk>___bdReference<bdDataChunk>(*(undefined4 *)(in_r12 + 0x1c));
   return;
 }
 
@@ -33,8 +31,7 @@ void __unwind_72448(void)
 {
   int in_r12;
   
-  bdReference<bdDataChunk>::~bdReference<bdDataChunk>(*(bdReference<bdDataChunk> **)(in_r12 + 0x14))
-  ;
+  bdReference<bdDataChunk>___bdReference<bdDataChunk>(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 
@@ -47,8 +44,7 @@ void __unwind_72492(void)
   int in_r12;
   
   _eh_vector_destructor_iterator_
-            ((void *)(*(int *)(in_r12 + 0x14) + 0x10),0x18,0x80,
-             bdReliableSendWindow::bdMessageFrame::~bdMessageFrame);
+            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x10,0x18,0x80,0xffffffff82935db8);
   return;
 }
 
@@ -58,9 +54,9 @@ void __unwind_72492(void)
 void __unwind_72537(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdReference<bdDataChunk>::~bdReference<bdDataChunk>((bdReference<bdDataChunk> *)(in_r12 + -0xa4));
+  bdReference<bdDataChunk>___bdReference<bdDataChunk>(in_r12 + -0xa4);
   return;
 }
 
@@ -72,8 +68,7 @@ void __unwind_72800(void)
 {
   int in_r12;
   
-  bdReference<bdDataChunk>::~bdReference<bdDataChunk>(*(bdReference<bdDataChunk> **)(in_r12 + 0x1c))
-  ;
+  bdReference<bdDataChunk>___bdReference<bdDataChunk>(*(undefined4 *)(in_r12 + 0x1c));
   return;
 }
 
@@ -83,9 +78,9 @@ void __unwind_72800(void)
 void __unwind_72802(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdReliableSendWindow::bdMessageFrame::~bdMessageFrame((bdMessageFrame *)(in_r12 + -0x50));
+  bdReliableSendWindow__bdMessageFrame___bdMessageFrame(in_r12 + -0x50);
   return;
 }
 
@@ -97,8 +92,7 @@ void __unwind_72878(void)
 {
   int in_r12;
   
-  bdReference<bdSAckChunk>::~bdReference<bdSAckChunk>(*(bdReference<bdSAckChunk> **)(in_r12 + 0x1c))
-  ;
+  bdReference<bdSAckChunk>___bdReference<bdSAckChunk>(*(undefined4 *)(in_r12 + 0x1c));
   return;
 }
 

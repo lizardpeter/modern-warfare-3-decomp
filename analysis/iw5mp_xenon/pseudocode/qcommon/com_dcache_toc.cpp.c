@@ -2,236 +2,217 @@
 
 // 824D8CD0  DCache_TOC_GetTOC  (qcommon/com_dcache_toc.cpp:43)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-dcacheTOC_t * DCache_TOC_GetTOC(void)
+int DCache_TOC_GetTOC(void)
 
 {
-  if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x2c,0,"%s");
+  if (DAT_835f1628 == 0) {
+    MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
   }
-  return s_dcacheTOC;
+  return DAT_835f1628;
 }
 
 
 // 824D8D30  DCache_TOC_IsCached  (qcommon/com_dcache_toc.cpp:50)
 
-bool DCache_TOC_IsCached(ulong64 param_1,dcacheLocation_t param_2)
+void DCache_TOC_IsCached(undefined8 param_1,int param_2)
 
 {
   longlong lVar1;
-  undefined1 uVar2;
-  dcacheTOC_t *pdVar3;
+  int iVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
   
   lVar1 = __savegprlr_23();
+  iVar3 = 0;
   iVar4 = 0;
-  iVar5 = 0;
-  pdVar3 = s_dcacheTOC;
+  iVar2 = DAT_835f1628;
   while( true ) {
-    if (pdVar3 == (dcacheTOC_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x2c,0,"%s");
-      pdVar3 = s_dcacheTOC;
+    if (iVar2 == 0) {
+      MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
+      iVar2 = DAT_835f1628;
     }
-    if (pdVar3->m_numFiles <= iVar4) break;
-    if ((*(longlong *)(pdVar3->m_fileInfo[0].m_bitfield + iVar5 + -0x10) == lVar1) &&
-       (*(dcacheLocation_t *)(pdVar3->m_fileInfo[0].m_bitfield + iVar5 + -8) == param_2)) {
-      uVar2 = __restgprlr_23(1);
-      return (bool)uVar2;
+    if (*(int *)(iVar2 + 0xad08) <= iVar3) break;
+    if ((*(longlong *)(iVar4 + iVar2 + 8) == lVar1) && (*(int *)(iVar4 + iVar2 + 0x10) == param_2))
+    {
+      __restgprlr_23(1);
+      return;
     }
-    iVar4 = iVar4 + 1;
-    iVar5 = iVar5 + 0x118;
+    iVar3 = iVar3 + 1;
+    iVar4 = iVar4 + 0x118;
   }
-  uVar2 = __restgprlr_23(0);
-  return (bool)uVar2;
+  __restgprlr_23(0);
+  return;
 }
 
 
 // 824D8DE8  DCache_TOC_GetIndex  (qcommon/com_dcache_toc.cpp:63)
 
-bool DCache_TOC_GetIndex(ulong64 param_1,dcacheLocation_t param_2,int *param_3)
+void DCache_TOC_GetIndex(undefined8 param_1,int param_2,int *param_3)
 
 {
   longlong lVar1;
-  undefined1 uVar2;
-  dcacheTOC_t *pdVar3;
+  int iVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
   
   lVar1 = __savegprlr_22();
+  iVar3 = 0;
   iVar4 = 0;
-  iVar5 = 0;
-  pdVar3 = s_dcacheTOC;
+  iVar2 = DAT_835f1628;
   while( true ) {
-    if (pdVar3 == (dcacheTOC_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x2c,0,"%s");
-      pdVar3 = s_dcacheTOC;
+    if (iVar2 == 0) {
+      MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
+      iVar2 = DAT_835f1628;
     }
-    if (pdVar3->m_numFiles <= iVar4) break;
-    if ((*(longlong *)(pdVar3->m_fileInfo[0].m_bitfield + iVar5 + -0x10) == lVar1) &&
-       (*(dcacheLocation_t *)(pdVar3->m_fileInfo[0].m_bitfield + iVar5 + -8) == param_2)) {
-      *param_3 = iVar4;
-      uVar2 = __restgprlr_22(1);
-      return (bool)uVar2;
+    if (*(int *)(iVar2 + 0xad08) <= iVar3) break;
+    if ((*(longlong *)(iVar4 + iVar2 + 8) == lVar1) && (*(int *)(iVar4 + iVar2 + 0x10) == param_2))
+    {
+      *param_3 = iVar3;
+      __restgprlr_22(1);
+      return;
     }
-    iVar4 = iVar4 + 1;
-    iVar5 = iVar5 + 0x118;
+    iVar3 = iVar3 + 1;
+    iVar4 = iVar4 + 0x118;
   }
-  uVar2 = __restgprlr_22(0);
-  return (bool)uVar2;
+  __restgprlr_22(0);
+  return;
 }
 
 
 // 824D8EA8  DCache_TOC_AssertFileIndex  (qcommon/com_dcache_toc.cpp:77)
 
-bool DCache_TOC_AssertFileIndex(int param_1)
+void DCache_TOC_AssertFileIndex(void)
 
 {
   int iVar1;
-  undefined1 uVar3;
-  dcacheTOC_t *pdVar2;
+  int iVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x2c,0,"%s");
+  iVar1 = __savegprlr_28();
+  if (DAT_835f1628 == 0) {
+    MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
   }
-  if (s_dcacheTOC->m_numFiles <= iVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x4e,0,"%s");
+  if (*(int *)(DAT_835f1628 + 0xad08) <= iVar1) {
+    MyAssertHandler(0xffffffff82084470,0x4e,0,0xffffffff82000f98,0xffffffff820844f0);
   }
   if (iVar1 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x4f,0,"%s");
+    MyAssertHandler(0xffffffff82084470,0x4f,0,0xffffffff82000f98,0xffffffff820844e0);
   }
   else {
-    pdVar2 = DCache_TOC_GetTOC();
-    if (iVar1 < pdVar2->m_numFiles) {
-      uVar3 = __restgprlr_28(1);
-      return (bool)uVar3;
+    iVar2 = DCache_TOC_GetTOC();
+    if (iVar1 < *(int *)(iVar2 + 0xad08)) {
+      __restgprlr_28(1);
+      return;
     }
   }
-  Com_PrintError(0x10,"dcache: file index error.\n");
-  uVar3 = __restgprlr_28(0);
-  return (bool)uVar3;
+  Com_PrintError(0x10,0xffffffff820844c4);
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 824D8F88  DCache_TOC_AssertBlockIndex  (qcommon/com_dcache_toc.cpp:91)
 
-bool DCache_TOC_AssertBlockIndex(int param_1)
+void DCache_TOC_AssertBlockIndex(void)
 
 {
   int iVar1;
-  undefined1 uVar2;
   
-  iVar1 = __savegprlr_29(param_1);
+  iVar1 = __savegprlr_29();
   if (0x7ff < iVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x5c,0,"%s");
+    MyAssertHandler(0xffffffff82084470,0x5c,0,0xffffffff82000f98,0xffffffff82084548);
   }
   if (iVar1 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x5d,0,"%s");
+    MyAssertHandler(0xffffffff82084470,0x5d,0,0xffffffff82000f98,0xffffffff82084538);
   }
   else if (iVar1 < 0x800) {
-    uVar2 = __restgprlr_29(1);
-    return (bool)uVar2;
+    __restgprlr_29(1);
+    return;
   }
-  Com_PrintError(0x10,"dcache: block index error.\n");
-  uVar2 = __restgprlr_29(0);
-  return (bool)uVar2;
+  Com_PrintError(0x10,0xffffffff8208451c);
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 824D9020  DCache_TOC_IsBitSet  (qcommon/com_dcache_toc.cpp:105)
 
-bool DCache_TOC_IsBitSet(int param_1,int param_2)
+void DCache_TOC_IsBitSet(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  int iVar4;
+  int iVar2;
   
-  uVar3 = (ulonglong)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x2c,0,"%s");
+  iVar1 = __savegprlr_29();
+  if (DAT_835f1628 == 0) {
+    MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
   }
-  iVar4 = (int)uVar3;
-  uVar2 = __restgprlr_29(s_dcacheTOC->m_fileInfo[iVar1].m_bitfield
-                         [(iVar4 >> 3) + (uint)(iVar4 < 0 && (uVar3 & 7) != 0)] >>
-                         (iVar4 + ((iVar4 >> 3) + (uint)(iVar4 < 0 && (uVar3 & 7) != 0)) * -8 & 0x3f
-                         ) & 1);
-  return (bool)uVar2;
+  iVar2 = (int)param_2;
+  __restgprlr_29(*(byte *)(iVar1 * 0x118 + (iVar2 >> 3) + (uint)(iVar2 < 0 && (param_2 & 7) != 0) +
+                           DAT_835f1628 + 0x18) >>
+                 (iVar2 + ((iVar2 >> 3) + (uint)(iVar2 < 0 && (param_2 & 7) != 0)) * -8 & 0x3f) & 1)
+  ;
+  return;
 }
 
 
 // 824D90A8  DCache_TOC_IsBitSet  (qcommon/com_dcache_toc.cpp:111)
 
-bool DCache_TOC_IsBitSet(uchar *param_1,int param_2)
+byte DCache_TOC_IsBitSet(int param_1,uint param_2)
 
 {
-  return (bool)(param_1[(param_2 >> 3) + (uint)(param_2 < 0 && (param_2 & 7U) != 0)] >>
-                (param_2 + ((param_2 >> 3) + (uint)(param_2 < 0 && (param_2 & 7U) != 0)) * -8 & 0x3f
-                ) & 1);
+  return *(byte *)(((int)param_2 >> 3) + (uint)((int)param_2 < 0 && (param_2 & 7) != 0) + param_1)
+         >> (param_2 + (((int)param_2 >> 3) + (uint)((int)param_2 < 0 && (param_2 & 7) != 0)) * -8 &
+            0x3f) & 1;
 }
 
 
 // 824D90D8  DCache_TOC_SetBit  (qcommon/com_dcache_toc.cpp:117)
 
-void DCache_TOC_SetBit(uchar *param_1,int param_2,bool param_3)
+void DCache_TOC_SetBit(int param_1,uint param_2,char param_3)
 
 {
   byte bVar1;
   byte bVar2;
   int iVar3;
   
-  iVar3 = (param_2 >> 3) + (uint)(param_2 < 0 && (param_2 & 7U) != 0);
-  bVar1 = (byte)(1 << (param_2 + ((param_2 >> 3) + (uint)(param_2 < 0 && (param_2 & 7U) != 0)) * -8
-                      & 0x3f));
-  bVar2 = param_1[iVar3] | bVar1;
-  param_1[iVar3] = bVar2;
-  if (param_3) {
+  iVar3 = ((int)param_2 >> 3) + (uint)((int)param_2 < 0 && (param_2 & 7) != 0);
+  bVar1 = (byte)(1 << (param_2 + (((int)param_2 >> 3) +
+                                 (uint)((int)param_2 < 0 && (param_2 & 7) != 0)) * -8 & 0x3f));
+  bVar2 = *(byte *)(iVar3 + param_1) | bVar1;
+  *(byte *)(iVar3 + param_1) = bVar2;
+  if (param_3 != '\0') {
     return;
   }
-  param_1[iVar3] = bVar2 & ~bVar1;
+  *(byte *)(iVar3 + param_1) = bVar2 & ~bVar1;
   return;
 }
 
 
 // 824D9120  DCache_TOC_IsBlockReserved  (qcommon/com_dcache_toc.cpp:128)
 
-bool DCache_TOC_IsBlockReserved(int param_1)
+byte DCache_TOC_IsBlockReserved(uint param_1)
 
 {
-  if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x2c,0,"%s");
+  if (DAT_835f1628 == 0) {
+    MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
   }
-  return (bool)(s_dcacheTOC->m_usedBlocks
-                [(param_1 >> 3) + (uint)(param_1 < 0 && (param_1 & 7U) != 0)] >>
-                (param_1 + ((param_1 >> 3) + (uint)(param_1 < 0 && (param_1 & 7U) != 0)) * -8 & 0x3f
-                ) & 1);
+  return *(byte *)(((int)param_1 >> 3) + (uint)((int)param_1 < 0 && (param_1 & 7) != 0) +
+                   DAT_835f1628 + 0xac08) >>
+         (param_1 + (((int)param_1 >> 3) + (uint)((int)param_1 < 0 && (param_1 & 7) != 0)) * -8 &
+         0x3f) & 1;
 }
 
 
 // 824D91C0  DCache_TOC_GetBlocksNeeded  (qcommon/com_dcache_toc.cpp:138)
 
-int DCache_TOC_GetBlocksNeeded(int param_1)
+void DCache_TOC_GetBlocksNeeded(void)
 
 {
   ulonglong uVar1;
   int iVar2;
   longlong lVar3;
   
-  uVar1 = __savegprlr_29(param_1);
+  uVar1 = __savegprlr_29();
   iVar2 = (int)uVar1;
   if ((0 < iVar2) && (iVar2 < 0x10000001)) {
     lVar3 = (longlong)(iVar2 >> 0x11) + (ulonglong)(iVar2 < 0 && (uVar1 & 0x1ffff) != 0);
@@ -241,135 +222,135 @@ int DCache_TOC_GetBlocksNeeded(int param_1)
     }
     iVar2 = (int)lVar3;
     if (0x800 < iVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x97,0,"%s");
+      MyAssertHandler(0xffffffff82084470,0x97,0,0xffffffff82000f98,0xffffffff820845c8);
     }
     if (iVar2 < 1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x98,0,"%s");
+      MyAssertHandler(0xffffffff82084470,0x98,0,0xffffffff82000f98,0xffffffff820845b4);
     }
     if ((0x800 < iVar2) || (iVar2 < 1)) {
       lVar3 = 0;
     }
-    iVar2 = __restgprlr_29(lVar3);
-    return iVar2;
+    __restgprlr_29(lVar3);
+    return;
   }
-  Com_PrintError(0x10,"dcache: Invalid file size of %d bytes. Should be between 0 and %d bytes.\n");
-  iVar2 = __restgprlr_29(0);
-  return iVar2;
+  Com_PrintError(0x10,0xffffffff82084568,uVar1,0x10000000);
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 824D92A0  DCache_TOC_GetBlocksUsed  (qcommon/com_dcache_toc.cpp:164)
 
-int DCache_TOC_GetBlocksUsed(int param_1)
+void DCache_TOC_GetBlocksUsed(void)
 
 {
   int iVar1;
-  bool bVar2;
-  dcacheTOC_t *pdVar3;
+  char cVar2;
+  int iVar3;
   longlong lVar4;
   uint uVar5;
   
-  iVar1 = __savegprlr_25(param_1);
-  bVar2 = DCache_TOC_AssertFileIndex(iVar1);
-  if (!bVar2) {
-    Com_PrintError(0x10,"dcache: Invalid file index passed to \'DCache_TOC_GetBlocksUsed\'\n");
-    iVar1 = __restgprlr_25(0);
-    return iVar1;
+  iVar1 = __savegprlr_25();
+  cVar2 = DCache_TOC_AssertFileIndex();
+  if (cVar2 == '\0') {
+    Com_PrintError(0x10,0xffffffff820845f0);
+    __restgprlr_25(0);
+    return;
   }
   lVar4 = 0;
   uVar5 = 0;
-  pdVar3 = s_dcacheTOC;
+  iVar3 = DAT_835f1628;
   do {
-    if (pdVar3 == (dcacheTOC_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x2c,0,"%s");
-      pdVar3 = s_dcacheTOC;
+    if (iVar3 == 0) {
+      MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
+      iVar3 = DAT_835f1628;
     }
-    if ((pdVar3->m_fileInfo[iVar1].m_bitfield[uVar5 >> 3] >> (uVar5 & 7) & 1) != 0) {
+    if ((*(byte *)((uVar5 >> 3) + iVar1 * 0x118 + iVar3 + 0x18) >> (uVar5 & 7) & 1) != 0) {
       lVar4 = lVar4 + 1;
     }
     uVar5 = uVar5 + 1;
   } while ((int)uVar5 < 0x800);
-  iVar1 = __restgprlr_25(lVar4);
-  return iVar1;
+  __restgprlr_25(lVar4);
+  return;
 }
 
 
 // 824D9370  DCache_TOC_GetBlocksRemaining  (qcommon/com_dcache_toc.cpp:184)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int DCache_TOC_GetBlocksRemaining(void)
+void DCache_TOC_GetBlocksRemaining(void)
 
 {
   int iVar1;
-  dcacheTOC_t *pdVar2;
-  ulonglong uVar3;
-  longlong lVar4;
+  ulonglong uVar2;
+  longlong lVar3;
+  int iVar4;
   
   __savegprlr_25();
-  lVar4 = 0x800;
-  iVar1 = 0;
-  pdVar2 = s_dcacheTOC;
+  lVar3 = 0x800;
+  iVar4 = 0;
+  iVar1 = DAT_835f1628;
   do {
-    if (pdVar2 == (dcacheTOC_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x2c,0,"%s");
-      pdVar2 = s_dcacheTOC;
+    if (iVar1 == 0) {
+      MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
+      iVar1 = DAT_835f1628;
     }
-    for (uVar3 = (ulonglong)pdVar2->m_usedBlocks[iVar1]; uVar3 != 0; uVar3 = uVar3 >> 1) {
-      if ((uVar3 & 1) != 0) {
-        lVar4 = lVar4 + -1;
+    for (uVar2 = (ulonglong)*(byte *)(iVar1 + iVar4 + 0xac08); uVar2 != 0; uVar2 = uVar2 >> 1) {
+      if ((uVar2 & 1) != 0) {
+        lVar3 = lVar3 + -1;
       }
     }
-    iVar1 = iVar1 + 1;
-  } while (iVar1 < 0x100);
-  if ((int)lVar4 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0xc9,0,"%s");
+    iVar4 = iVar4 + 1;
+  } while (iVar4 < 0x100);
+  if ((int)lVar3 < 0) {
+    MyAssertHandler(0xffffffff82084470,0xc9,0,0xffffffff82000f98,0xffffffff82084634);
   }
-  iVar1 = __restgprlr_25(lVar4);
-  return iVar1;
+  __restgprlr_25(lVar3);
+  return;
 }
 
 
 // 824D9440  DCache_TOC_TouchByIndex  (qcommon/com_dcache_toc.cpp:207)
 
-void DCache_TOC_TouchByIndex(int param_1)
+void DCache_TOC_TouchByIndex(void)
 
 {
   int iVar1;
-  bool bVar4;
-  int iVar2;
-  dcacheTOC_t *pdVar3;
-  LargeLocal aLStack_30 [6];
+  char cVar7;
+  undefined4 uVar2;
+  int iVar3;
+  void *_Dst;
+  void *pvVar4;
+  int iVar5;
+  int iVar6;
+  undefined1 auStack_30 [48];
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar4 = DCache_TOC_AssertFileIndex(iVar1);
-  if (!bVar4) {
-    Com_PrintError(0x10,"dcache: Invalid file index passed to \'DCache_TOC_TouchByIndex\'\n");
+  iVar1 = __savegprlr_28();
+  cVar7 = DCache_TOC_AssertFileIndex();
+  if (cVar7 == '\0') {
+    Com_PrintError(0x10,0xffffffff82084650);
     __restgprlr_28();
     return;
   }
-  iVar2 = Sys_Milliseconds();
-  pdVar3 = DCache_TOC_GetTOC();
-  pdVar3->m_fileInfo[iVar1].m_timestamp = iVar2;
-  pdVar3 = DCache_TOC_GetTOC();
-  if (iVar1 != pdVar3->m_numFiles + -1) {
-    LargeLocal::LargeLocal(aLStack_30,0x118);
-    LargeLocal::GetBuf(aLStack_30);
-    DCache_TOC_GetTOC();
-    memcpy();
-    DCache_TOC_GetTOC();
-    DCache_TOC_GetTOC();
-    DCache_TOC_GetTOC();
-    memcpy();
-    DCache_TOC_GetTOC();
-    DCache_TOC_GetTOC();
-    memcpy();
-    LargeLocal::~LargeLocal(aLStack_30);
+  iVar6 = iVar1 * 0x118;
+  uVar2 = Sys_Milliseconds();
+  iVar3 = DCache_TOC_GetTOC();
+  *(undefined4 *)(iVar3 + iVar6 + 0x118) = uVar2;
+  iVar3 = DCache_TOC_GetTOC();
+  if (iVar1 != *(int *)(iVar3 + 0xad08) + -1) {
+    LargeLocal__LargeLocal(auStack_30,0x118);
+    _Dst = (void *)LargeLocal__GetBuf(auStack_30);
+    iVar1 = DCache_TOC_GetTOC();
+    pvVar4 = memcpy(_Dst,(void *)(iVar1 + iVar6 + 8),0x118);
+    iVar3 = DCache_TOC_GetTOC(pvVar4);
+    iVar1 = DCache_TOC_GetTOC();
+    iVar1 = *(int *)(iVar1 + 0xad08);
+    iVar5 = DCache_TOC_GetTOC();
+    pvVar4 = memcpy((void *)(iVar3 + iVar6 + 8),(void *)(iVar5 + iVar1 * 0x118 + -0x110),0x118);
+    iVar1 = DCache_TOC_GetTOC(pvVar4);
+    iVar1 = *(int *)(iVar1 + 0xad08);
+    iVar6 = DCache_TOC_GetTOC();
+    memcpy((void *)(iVar6 + iVar1 * 0x118 + -0x110),_Dst,0x118);
+    LargeLocal___LargeLocal(auStack_30);
   }
   __restgprlr_28();
   return;
@@ -378,7 +359,7 @@ void DCache_TOC_TouchByIndex(int param_1)
 
 // 824D9D78  DCache_TOC_AssertFit  (qcommon/com_dcache_toc.cpp:227)
 
-bool DCache_TOC_AssertFit(int param_1)
+undefined8 DCache_TOC_AssertFit(int param_1)
 
 {
   int iVar1;
@@ -386,403 +367,378 @@ bool DCache_TOC_AssertFit(int param_1)
   iVar1 = DCache_TOC_GetBlocksRemaining();
   if (iVar1 < param_1) {
     DCache_TOC_DumpTOC();
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0xe9,0,
-                      "Disk cache error : too few blocks remaining even after attempting to free up blocks."
-                     );
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82084470,0xe9,0,0xffffffff82084860);
     }
-    return false;
+    return 0;
   }
-  return true;
+  return 1;
 }
 
 
 // 824DA0D0  AllocContentServerMemory<dcacheTOC_t>  (qcommon/com_storage_contentserver.h:233)
 
-bool AllocContentServerMemory<dcacheTOC_t>(dcacheTOC_t **param_1,char *param_2)
+void AllocContentServerMemory<dcacheTOC_t>(void)
 
 {
   int *piVar1;
-  undefined1 uVar3;
   undefined4 *puVar2;
   
-  piVar1 = (int *)__savegprlr_29(param_1,param_2);
+  piVar1 = (int *)__savegprlr_29();
   if (*piVar1 != 0) {
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+    __restgprlr_29(1);
+    return;
   }
-  puVar2 = PMem_AllocFromSource_NoDebug(0xad10,8,4,PMEM_SOURCE_DATABASE);
+  puVar2 = (undefined4 *)PMem_AllocFromSource_NoDebug(0xad10,8,4,1);
   if (puVar2 != (undefined4 *)0x0) {
     *puVar2 = 0;
     *(undefined1 *)(puVar2 + 1) = 0;
     puVar2[0x2b42] = 0;
-    memset();
-    memset();
+    memset(puVar2 + 2,0,0x8c00);
+    memset(puVar2 + 0x2302,0,0x200);
     *piVar1 = (int)puVar2;
-    s_AllocatedContentServerMemorySize = s_AllocatedContentServerMemorySize + 0xad10;
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+    DAT_835f1624 = DAT_835f1624 + 0xad10;
+    __restgprlr_29(1);
+    return;
   }
-  uVar3 = __restgprlr_29(0);
-  return (bool)uVar3;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 824D9540  DCache_TOC_FreeFileBlocks  (qcommon/com_dcache_toc.cpp:244)
 
-int DCache_TOC_FreeFileBlocks(int param_1)
+void DCache_TOC_FreeFileBlocks(void)
 
 {
-  uchar *puVar1;
-  byte bVar2;
-  uint uVar3;
-  byte bVar4;
-  int iVar5;
-  bool bVar6;
-  dcacheTOC_t *pdVar7;
-  longlong lVar8;
-  int iVar9;
-  uint uVar10;
+  byte bVar1;
+  uint uVar2;
+  byte bVar3;
+  int iVar4;
+  char cVar5;
+  int iVar6;
+  longlong lVar7;
+  int iVar8;
+  uint uVar9;
   
-  iVar5 = __savegprlr_19(param_1);
-  bVar6 = DCache_TOC_AssertFileIndex(iVar5);
-  if (!bVar6) {
-    Com_PrintError(0x10,"dcache: Invalid file index passed to \'DCache_TOC_FreeFileBlocks\'\n");
-    iVar5 = __restgprlr_19(0);
-    return iVar5;
+  iVar4 = __savegprlr_19();
+  cVar5 = DCache_TOC_AssertFileIndex();
+  if (cVar5 == '\0') {
+    Com_PrintError(0x10,0xffffffff82084690);
+    __restgprlr_19(0);
+    return;
   }
-  lVar8 = 0;
-  uVar10 = 0;
-  iVar9 = 0x8c08;
-  pdVar7 = s_dcacheTOC;
+  lVar7 = 0;
+  uVar9 = 0;
+  iVar8 = 0x8c08;
+  iVar6 = DAT_835f1628;
   do {
-    if (pdVar7 == (dcacheTOC_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x2c,0,"%s");
-      pdVar7 = s_dcacheTOC;
+    if (iVar6 == 0) {
+      MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
+      iVar6 = DAT_835f1628;
     }
-    uVar3 = uVar10 >> 3;
-    if ((pdVar7->m_fileInfo[iVar5].m_bitfield[uVar3] >> (uVar10 & 7) & 1) != 0) {
-      lVar8 = lVar8 + 1;
-      if (pdVar7 == (dcacheTOC_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp"
-                        ,0x2c,0,"%s");
-        pdVar7 = s_dcacheTOC;
+    uVar2 = uVar9 >> 3;
+    if ((*(byte *)(uVar2 + iVar4 * 0x118 + iVar6 + 0x18) >> (uVar9 & 7) & 1) != 0) {
+      lVar7 = lVar7 + 1;
+      if (iVar6 == 0) {
+        MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
+        iVar6 = DAT_835f1628;
       }
-      puVar1 = pdVar7->m_fileInfo[0].m_bitfield + iVar9 + -0x18;
-      puVar1[0] = '\0';
-      puVar1[1] = '\0';
-      puVar1[2] = '\0';
-      puVar1[3] = '\0';
-      if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp"
-                        ,0x2c,0,"%s");
+      *(undefined4 *)(iVar8 + iVar6) = 0;
+      if (DAT_835f1628 == 0) {
+        MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
       }
-      pdVar7 = s_dcacheTOC;
-      bVar4 = (byte)(1 << (uVar10 & 7));
-      bVar2 = s_dcacheTOC->m_usedBlocks[uVar3] | bVar4;
-      s_dcacheTOC->m_usedBlocks[uVar3] = bVar2;
-      pdVar7->m_usedBlocks[uVar3] = bVar2 & ~bVar4;
-      pdVar7 = s_dcacheTOC;
+      iVar6 = DAT_835f1628 + 0xac08;
+      bVar3 = (byte)(1 << (uVar9 & 7));
+      bVar1 = *(byte *)(uVar2 + iVar6) | bVar3;
+      *(byte *)(uVar2 + iVar6) = bVar1;
+      *(byte *)(uVar2 + iVar6) = bVar1 & ~bVar3;
+      iVar6 = DAT_835f1628;
     }
-    iVar9 = iVar9 + 4;
-    uVar10 = uVar10 + 1;
-  } while (iVar9 < 0xac08);
-  iVar5 = __restgprlr_19(lVar8);
-  return iVar5;
+    iVar8 = iVar8 + 4;
+    uVar9 = uVar9 + 1;
+  } while (iVar8 < 0xac08);
+  __restgprlr_19(lVar7);
+  return;
 }
 
 
 // 824D96A0  DCache_TOC_RemoveFile  (qcommon/com_dcache_toc.cpp:266)
 
-int DCache_TOC_RemoveFile(int param_1)
+void DCache_TOC_RemoveFile(void)
 
 {
-  int iVar1;
-  bool bVar4;
-  dcacheTOC_t *pdVar2;
+  undefined8 uVar1;
+  char cVar4;
   int iVar3;
+  undefined8 uVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x2c,0,"%s");
+  uVar1 = __savegprlr_28();
+  if (DAT_835f1628 == 0) {
+    MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
   }
-  if (s_dcacheTOC->m_numFiles < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x10b,0,"%s");
+  if (*(int *)(DAT_835f1628 + 0xad08) < 1) {
+    MyAssertHandler(0xffffffff82084470,0x10b,0,0xffffffff82000f98,0xffffffff82084714);
   }
-  bVar4 = DCache_TOC_AssertFileIndex(iVar1);
-  if ((bVar4) && (pdVar2 = DCache_TOC_GetTOC(), pdVar2->m_numFiles != 0)) {
-    iVar3 = DCache_TOC_FreeFileBlocks(iVar1);
-    pdVar2 = DCache_TOC_GetTOC();
-    memset();
-    pdVar2->m_fileInfo[iVar1].m_fileID = 0;
-    pdVar2->m_fileInfo[iVar1].m_location = DCACHE_LOCATION_INVALID;
-    pdVar2->m_fileInfo[iVar1].m_size = 0;
-    pdVar2->m_fileInfo[iVar1].m_timestamp = 0;
-    iVar1 = __restgprlr_28(iVar3);
-    return iVar1;
+  cVar4 = DCache_TOC_AssertFileIndex(uVar1);
+  if ((cVar4 != '\0') && (iVar3 = DCache_TOC_GetTOC(), *(int *)(iVar3 + 0xad08) != 0)) {
+    uVar2 = DCache_TOC_FreeFileBlocks(uVar1);
+    iVar3 = DCache_TOC_GetTOC();
+    iVar3 = iVar3 + (int)uVar1 * 0x118;
+    memset((void *)(iVar3 + 0x18),0,0x100);
+    *(undefined8 *)(iVar3 + 8) = 0;
+    *(undefined4 *)(iVar3 + 0x10) = 0;
+    *(undefined4 *)(iVar3 + 0x14) = 0;
+    *(undefined4 *)(iVar3 + 0x118) = 0;
+    __restgprlr_28(uVar2);
+    return;
   }
-  Com_PrintError(0x10,"dcache: Invalid file index passed to \'DCache_TOC_RemoveFile\'\n");
-  iVar1 = __restgprlr_28(0);
-  return iVar1;
+  Com_PrintError(0x10,0xffffffff820846d4);
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 824D97B0  DCache_TOC_FreeBlocks  (qcommon/com_dcache_toc.cpp:290)
 
-int DCache_TOC_FreeBlocks(int param_1)
+void DCache_TOC_FreeBlocks(void)
 
 {
-  int iVar1;
   int iVar2;
+  longlong lVar1;
   longlong lVar3;
   int iVar4;
-  int iVar5;
+  longlong lVar5;
+  int iVar6;
   
-  iVar1 = __savegprlr_23(param_1);
+  iVar2 = __savegprlr_23();
   lVar3 = 0;
   iVar4 = 0;
-  iVar5 = 0;
+  lVar5 = 0;
   while( true ) {
-    if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x2c,0,"%s");
+    if (DAT_835f1628 == 0) {
+      MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
     }
-    if (s_dcacheTOC->m_numFiles <= iVar5) break;
-    iVar2 = DCache_TOC_RemoveFile(iVar5);
-    lVar3 = iVar2 + lVar3;
+    if (*(int *)(DAT_835f1628 + 0xad08) <= (int)lVar5) break;
+    lVar1 = DCache_TOC_RemoveFile(lVar5);
+    lVar3 = lVar1 + lVar3;
     iVar4 = iVar4 + 1;
-    if (iVar1 <= (int)lVar3) break;
-    iVar5 = iVar5 + 1;
+    if (iVar2 <= (int)lVar3) break;
+    lVar5 = lVar5 + 1;
   }
   if (iVar4 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x13d,0,"%s");
+    MyAssertHandler(0xffffffff82084470,0x13d,0,0xffffffff82000f98,0xffffffff82084768);
   }
-  iVar1 = 0;
+  lVar5 = 0;
   while( true ) {
-    if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x2c,0,"%s");
+    if (DAT_835f1628 == 0) {
+      MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
     }
-    if (s_dcacheTOC->m_numFiles <= iVar1) break;
-    DCache_TOC_GetBlocksUsed(iVar1);
-    iVar1 = iVar1 + 1;
+    if (*(int *)(DAT_835f1628 + 0xad08) <= (int)lVar5) break;
+    DCache_TOC_GetBlocksUsed(lVar5);
+    lVar5 = lVar5 + 1;
   }
-  if (s_dcacheTOC->m_numFiles < iVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x14f,0,"%s");
+  if (*(int *)(DAT_835f1628 + 0xad08) < iVar4) {
+    MyAssertHandler(0xffffffff82084470,0x14f,0,0xffffffff82000f98,0xffffffff82084738);
   }
-  if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x2c,0,"%s");
+  if (DAT_835f1628 == 0) {
+    MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
   }
-  if (s_dcacheTOC->m_numFiles < iVar4) {
-    iVar1 = __restgprlr_23(0);
-    return iVar1;
+  if (*(int *)(DAT_835f1628 + 0xad08) < iVar4) {
+    __restgprlr_23(0);
+    return;
   }
-  memmove();
-  if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x2c,0,"%s");
+  memmove((void *)(DAT_835f1628 + 8),(void *)(iVar4 * 0x118 + DAT_835f1628 + 8),
+          (*(int *)(DAT_835f1628 + 0xad08) - iVar4) * 0x118);
+  if (DAT_835f1628 == 0) {
+    MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
   }
-  iVar1 = s_dcacheTOC->m_numFiles - iVar4;
+  iVar6 = *(int *)(DAT_835f1628 + 0xad08) - iVar4;
+  iVar2 = iVar6 * 0x118;
   while( true ) {
-    if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x2c,0,"%s");
+    if (DAT_835f1628 == 0) {
+      MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
     }
-    if (s_dcacheTOC->m_numFiles <= iVar1) break;
-    memset();
-    iVar1 = iVar1 + 1;
+    if (*(int *)(DAT_835f1628 + 0xad08) <= iVar6) break;
+    memset((void *)(iVar2 + DAT_835f1628 + 8),0,0x118);
+    iVar6 = iVar6 + 1;
+    iVar2 = iVar2 + 0x118;
   }
-  s_dcacheTOC->m_numFiles = s_dcacheTOC->m_numFiles - iVar4;
-  iVar1 = __restgprlr_23(lVar3);
-  return iVar1;
+  *(int *)(DAT_835f1628 + 0xad08) = *(int *)(DAT_835f1628 + 0xad08) - iVar4;
+  __restgprlr_23(lVar3);
+  return;
 }
 
 
 // 824D99E0  DCache_TOC_AllocateSingleBlock  (qcommon/com_dcache_toc.cpp:358)
 
-bool DCache_TOC_AllocateSingleBlock(int param_1,int param_2)
+void DCache_TOC_AllocateSingleBlock(undefined8 param_1,int param_2)
 
 {
   byte bVar1;
-  uint uVar2;
-  bool bVar4;
-  dcacheTOC_t *pdVar3;
-  undefined1 uVar5;
+  ulonglong uVar2;
+  char cVar4;
+  int iVar3;
+  int iVar5;
   int iVar6;
   
-  uVar2 = __savegprlr_28(param_1);
+  uVar2 = __savegprlr_28();
   if (0x7f < param_2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x168,0,"%s");
+    MyAssertHandler(0xffffffff82084470,0x168,0,0xffffffff82000f98,0xffffffff8208477c);
   }
   if (param_2 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x169,0,"%s");
+    MyAssertHandler(0xffffffff82084470,0x169,0,0xffffffff82000f98,0xffffffff820844e0);
   }
-  bVar4 = DCache_TOC_AssertBlockIndex(uVar2);
-  if (((bVar4) && (param_2 < 0x80)) && (-1 < param_2)) {
-    pdVar3 = DCache_TOC_GetTOC();
-    iVar6 = ((int)uVar2 >> 3) + (uint)((int)uVar2 < 0 && (uVar2 & 7) != 0);
-    bVar1 = (byte)(1 << (uVar2 + (((int)uVar2 >> 3) + (uint)((int)uVar2 < 0 && (uVar2 & 7) != 0)) *
-                                 -8 & 0x3f));
-    pdVar3->m_usedBlocks[iVar6] = pdVar3->m_usedBlocks[iVar6] | bVar1;
-    pdVar3 = DCache_TOC_GetTOC();
-    pdVar3->m_fileInfo[param_2].m_bitfield[iVar6] =
-         pdVar3->m_fileInfo[param_2].m_bitfield[iVar6] | bVar1;
-    uVar5 = __restgprlr_28(1);
-    return (bool)uVar5;
+  cVar4 = DCache_TOC_AssertBlockIndex(uVar2);
+  if (((cVar4 != '\0') && (param_2 < 0x80)) && (-1 < param_2)) {
+    iVar3 = DCache_TOC_GetTOC();
+    iVar5 = (int)uVar2;
+    iVar6 = (iVar5 >> 3) + (uint)(iVar5 < 0 && (uVar2 & 7) != 0);
+    bVar1 = (byte)(1 << (iVar5 + ((iVar5 >> 3) + (uint)(iVar5 < 0 && (uVar2 & 7) != 0)) * -8 & 0x3f)
+                  );
+    *(byte *)(iVar6 + iVar3 + 0xac08) = *(byte *)(iVar6 + iVar3 + 0xac08) | bVar1;
+    iVar3 = DCache_TOC_GetTOC();
+    iVar3 = iVar3 + param_2 * 0x118 + 0x18;
+    *(byte *)(iVar6 + iVar3) = *(byte *)(iVar6 + iVar3) | bVar1;
+    __restgprlr_28(1);
+    return;
   }
-  uVar5 = __restgprlr_28(0);
-  return (bool)uVar5;
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 824D9DF8  DCache_TOC_Allocate  (qcommon/com_dcache_toc.cpp:375)
 
-dcacheResult_t DCache_TOC_Allocate(ulong64 param_1,int param_2,dcacheLocation_t param_3)
+void DCache_TOC_Allocate(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  ulong64 uVar1;
-  int iVar2;
-  int iVar3;
-  dcacheTOC_t *pdVar4;
-  dcacheResult_t dVar5;
-  bool bVar7;
-  int iVar6;
+  undefined8 uVar1;
+  longlong lVar2;
+  int iVar4;
+  char cVar6;
+  longlong lVar3;
+  int iVar5;
   
   uVar1 = __savegprlr_23();
-  iVar2 = DCache_TOC_GetBlocksNeeded(param_2);
-  if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x2c,0,"%s");
+  lVar2 = DCache_TOC_GetBlocksNeeded(param_2);
+  if (DAT_835f1628 == 0) {
+    MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
   }
-  if ((s_dcacheTOC->m_numFiles == 0x80) &&
-     ((iVar3 = DCache_TOC_RemoveFile(0), iVar3 == 0 ||
-      (pdVar4 = DCache_TOC_GetTOC(), pdVar4->m_numFiles == 0x80)))) {
-    Com_PrintError(0x10,"Could not fit file into the TOC, stale file not deleted.\n. ");
+  if ((*(int *)(DAT_835f1628 + 0xad08) == 0x80) &&
+     ((iVar4 = DCache_TOC_RemoveFile(0), iVar4 == 0 ||
+      (iVar4 = DCache_TOC_GetTOC(), *(int *)(iVar4 + 0xad08) == 0x80)))) {
+    Com_PrintError(0x10,0xffffffff820849a4);
   }
   else {
-    if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x2c,0,"%s");
+    if (DAT_835f1628 == 0) {
+      MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
     }
-    if (0x7f < s_dcacheTOC->m_numFiles) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x184,0,"%s");
+    if (0x7f < *(int *)(DAT_835f1628 + 0xad08)) {
+      MyAssertHandler(0xffffffff82084470,0x184,0,0xffffffff82000f98,0xffffffff82084970);
     }
-    if (iVar2 != 0) {
-      bVar7 = DCache_TOC_IsCached(uVar1,param_3);
-      if (bVar7) {
-        dVar5 = __restgprlr_23(2);
-        return dVar5;
+    if ((int)lVar2 != 0) {
+      cVar6 = DCache_TOC_IsCached(uVar1,param_3);
+      if (cVar6 != '\0') {
+        __restgprlr_23(2);
+        return;
       }
-      iVar3 = DCache_TOC_GetBlocksRemaining();
-      if (iVar3 < iVar2) {
-        iVar6 = DCache_TOC_FreeBlocks(iVar2 - iVar3);
-        if ((iVar6 == 0) || (iVar6 < iVar2 - iVar3)) {
-          Com_PrintError(0x10,
-                         "dcache: Failed freeing enough blocks for file %llu, location %d, size %d in need of %d blocks.\n"
-                        );
-          dVar5 = __restgprlr_23(0);
-          return dVar5;
+      lVar3 = DCache_TOC_GetBlocksRemaining();
+      if ((int)lVar3 < (int)lVar2) {
+        iVar4 = DCache_TOC_FreeBlocks(lVar2 - lVar3);
+        if ((iVar4 == 0) || (iVar4 < (int)(lVar2 - lVar3))) {
+          Com_PrintError(0x10,0xffffffff82084910,uVar1,param_3,param_2,lVar2);
+          __restgprlr_23(0);
+          return;
         }
       }
-      DCache_TOC_AssertFit(iVar2);
-      iVar3 = 0;
+      DCache_TOC_AssertFit(lVar2);
+      lVar3 = 0;
       do {
-        if (iVar2 < 1) break;
-        bVar7 = DCache_TOC_IsBlockReserved(iVar3);
-        if (!bVar7) {
-          pdVar4 = DCache_TOC_GetTOC();
-          bVar7 = DCache_TOC_AllocateSingleBlock(iVar3,pdVar4->m_numFiles);
-          if (!bVar7) goto LAB_824d9ea4;
-          iVar2 = iVar2 + -1;
+        iVar4 = (int)lVar2;
+        if (iVar4 < 1) goto LAB_824d9fd8;
+        cVar6 = DCache_TOC_IsBlockReserved(lVar3);
+        if (cVar6 == '\0') {
+          iVar4 = DCache_TOC_GetTOC();
+          cVar6 = DCache_TOC_AllocateSingleBlock(lVar3,*(undefined4 *)(iVar4 + 0xad08));
+          if (cVar6 == '\0') goto LAB_824d9ea4;
+          lVar2 = lVar2 + -1;
         }
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < 0x800);
-      if (iVar2 == 0) {
-        pdVar4 = DCache_TOC_GetTOC();
-        iVar2 = pdVar4->m_numFiles;
-        pdVar4 = DCache_TOC_GetTOC();
-        pdVar4->m_fileInfo[iVar2].m_fileID = uVar1;
-        pdVar4 = DCache_TOC_GetTOC();
-        iVar2 = pdVar4->m_numFiles;
-        pdVar4 = DCache_TOC_GetTOC();
-        pdVar4->m_fileInfo[iVar2].m_location = param_3;
-        pdVar4 = DCache_TOC_GetTOC();
-        iVar2 = pdVar4->m_numFiles;
-        pdVar4 = DCache_TOC_GetTOC();
-        pdVar4->m_fileInfo[iVar2].m_size = param_2;
-        pdVar4 = DCache_TOC_GetTOC();
-        pdVar4->m_numFiles = pdVar4->m_numFiles + 1;
-        pdVar4 = DCache_TOC_GetTOC();
-        DCache_TOC_TouchByIndex(pdVar4->m_numFiles + -1);
-        dVar5 = __restgprlr_23(4);
-        return dVar5;
+        lVar3 = lVar3 + 1;
+      } while ((int)lVar3 < 0x800);
+      iVar4 = (int)lVar2;
+LAB_824d9fd8:
+      if (iVar4 == 0) {
+        iVar4 = DCache_TOC_GetTOC();
+        iVar4 = *(int *)(iVar4 + 0xad08);
+        iVar5 = DCache_TOC_GetTOC();
+        *(undefined8 *)(iVar5 + iVar4 * 0x118 + 8) = uVar1;
+        iVar4 = DCache_TOC_GetTOC();
+        iVar4 = *(int *)(iVar4 + 0xad08);
+        iVar5 = DCache_TOC_GetTOC();
+        *(int *)(iVar5 + iVar4 * 0x118 + 0x10) = (int)param_3;
+        iVar4 = DCache_TOC_GetTOC();
+        iVar4 = *(int *)(iVar4 + 0xad08);
+        iVar5 = DCache_TOC_GetTOC();
+        *(int *)(iVar5 + iVar4 * 0x118 + 0x14) = (int)param_2;
+        iVar4 = DCache_TOC_GetTOC();
+        *(int *)(iVar4 + 0xad08) = *(int *)(iVar4 + 0xad08) + 1;
+        iVar4 = DCache_TOC_GetTOC();
+        DCache_TOC_TouchByIndex((ulonglong)*(uint *)(iVar4 + 0xad08) - 1);
+        __restgprlr_23(4);
+        return;
       }
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x1b8,0,"%s");
-      Com_PrintError(0x10,"dcache: Couldn\'t allocate enough blocks. This is probably a bug.\n");
-      dVar5 = __restgprlr_23(0);
-      return dVar5;
+      MyAssertHandler(0xffffffff82084470,0x1b8,0,0xffffffff82000f98,0xffffffff820848fc);
+      Com_PrintError(0x10,0xffffffff820848b8);
+      __restgprlr_23(0);
+      return;
     }
   }
 LAB_824d9ea4:
-  dVar5 = __restgprlr_23(0);
-  return dVar5;
+  __restgprlr_23(0);
+  return;
 }
 
 
 // 824D9AE0  DCache_TOC_FlushTOC  (qcommon/com_dcache_toc.cpp:464)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DCache_TOC_FlushTOC(void)
 
 {
+  void *pvVar1;
+  
   __savegprlr_28();
-  if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x2c,0,"%s");
+  if (DAT_835f1628 == (void *)0x0) {
+    MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
   }
-  memset();
-  if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x2c,0,"%s");
+  pvVar1 = memset(DAT_835f1628,0,0xad10);
+  if (DAT_835f1628 == (void *)0x0) {
+    pvVar1 = (void *)MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8
+                                    );
   }
-  s_dcacheTOC->m_version = '\x02';
-  __restgprlr_28();
+  *(undefined1 *)((int)DAT_835f1628 + 4) = 2;
+  __restgprlr_28(pvVar1);
   return;
 }
 
 
 // 824D9B78  DCache_TOC_Shutdown  (qcommon/com_dcache_toc.cpp:471)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DCache_TOC_Shutdown(void)
 
 {
-  s_dcacheTOC = (dcacheTOC_t *)0x0;
+  DAT_835f1628 = 0;
   return;
 }
 
 
 // 824D9B88  DCache_TOC_ShowFileInfoHeader  (qcommon/com_dcache_toc.cpp:481)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DCache_TOC_ShowFileInfoHeader(void)
 
 {
-  Com_Printf(0x10,"dcache: %20s %20s %20s %20s %20s\n");
+  Com_Printf(0x10,0xffffffff8208479c,0xffffffff820847c0,0xffffffff820847c8,0xffffffff820847d4,
+             0xffffffff820847dc,0xffffffff820847e8);
   return;
 }
 
@@ -792,52 +748,53 @@ void DCache_TOC_ShowFileInfoHeader(void)
 void DCache_TOC_ShowFileInfo(int param_1)
 
 {
-  if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x2c,0,"%s");
+  undefined8 uVar1;
+  int iVar2;
+  
+  if (DAT_835f1628 == 0) {
+    MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
   }
-  DCache_TOC_GetBlocksUsed(param_1);
-  Com_Printf(0x10,"dcache: %20llu %20d %20d %20d %20d\n");
+  iVar2 = param_1 * 0x118 + DAT_835f1628;
+  uVar1 = DCache_TOC_GetBlocksUsed(param_1);
+  Com_Printf(0x10,0xffffffff820847f0,*(undefined8 *)(iVar2 + 8),*(undefined4 *)(iVar2 + 0x10),
+             *(undefined4 *)(iVar2 + 0x14),*(undefined4 *)(iVar2 + 0x118),uVar1);
   return;
 }
 
 
 // 824D9C60  DCache_TOC_DumpTOC  (qcommon/com_dcache_toc.cpp:496)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DCache_TOC_DumpTOC(void)
 
 {
-  int iVar1;
-  int iVar2;
+  longlong lVar1;
+  longlong lVar2;
   int iVar3;
-  int iVar4;
+  longlong lVar4;
   
   __savegprlr_24();
-  Com_Printf(0x10,"dcache: %20s %20s %20s %20s %20s\n");
-  iVar2 = 0;
-  iVar4 = 0;
+  Com_Printf(0x10,0xffffffff8208479c,0xffffffff820847c0,0xffffffff820847c8,0xffffffff820847d4,
+             0xffffffff820847dc,0xffffffff820847e8);
+  lVar2 = 0;
+  lVar4 = 0;
   iVar3 = 0;
   while( true ) {
-    if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                      0x2c,0,"%s");
+    if (DAT_835f1628 == 0) {
+      MyAssertHandler(0xffffffff82084470,0x2c,0,0xffffffff82000f98,0xffffffff820844b8);
     }
-    if (s_dcacheTOC->m_numFiles <= iVar4) break;
-    if (*(longlong *)(s_dcacheTOC->m_fileInfo[0].m_bitfield + iVar3 + -0x10) != 0) {
-      DCache_TOC_ShowFileInfo(iVar4);
+    if (*(int *)(DAT_835f1628 + 0xad08) <= (int)lVar4) break;
+    if (*(longlong *)(iVar3 + DAT_835f1628 + 8) != 0) {
+      DCache_TOC_ShowFileInfo(lVar4);
     }
-    iVar1 = DCache_TOC_GetBlocksUsed(iVar4);
-    iVar2 = iVar1 + iVar2;
-    iVar4 = iVar4 + 1;
+    lVar1 = DCache_TOC_GetBlocksUsed(lVar4);
+    lVar2 = lVar1 + lVar2;
+    lVar4 = lVar4 + 1;
     iVar3 = iVar3 + 0x118;
   }
-  if (0x800 < iVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_toc.cpp",
-                    0x1fd,0,"%s");
+  if (0x800 < (int)lVar2) {
+    MyAssertHandler(0xffffffff82084470,0x1fd,0,0xffffffff82000f98,0xffffffff82084834);
   }
-  Com_Printf(0x10,"dcache: Total blocks used: %d\n");
+  Com_Printf(0x10,0xffffffff82084814,lVar2);
   __restgprlr_24();
   return;
 }
@@ -845,14 +802,12 @@ void DCache_TOC_DumpTOC(void)
 
 // 824DA090  DCache_TOC_Init  (qcommon/com_dcache_toc.cpp:519)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool DCache_TOC_Init(void)
+undefined8 DCache_TOC_Init(void)
 
 {
-  if (s_dcacheTOC == (dcacheTOC_t *)0x0) {
-    AllocContentServerMemory<dcacheTOC_t>(&s_dcacheTOC,"DCache_TOC_Init:s_dcacheTOC");
+  if (DAT_835f1628 == 0) {
+    AllocContentServerMemory<dcacheTOC_t>(0xffffffff835f1628,0xffffffff820849e0);
   }
-  return true;
+  return 1;
 }
 

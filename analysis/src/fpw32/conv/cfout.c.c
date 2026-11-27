@@ -2,33 +2,34 @@
 
 // 82927EF0  _fltout2  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cfout.c:32)
 
-_strflt * _fltout2(_CRT_DOUBLE param_1,_strflt *param_2,char *param_3,uint param_4)
+STRFLT _fltout2(_CRT_DOUBLE _Dbl,STRFLT _Flt,char *_ResultStr,size_t _SizeInBytes)
 
 {
   int *piVar1;
   int iVar2;
-  _strflt *p_Var3;
-  longlong lVar4;
-  double dStack00000010;
-  _LDOUBLE in_stack_ffffff6a;
-  _LDOUBLE local_50;
+  errno_t eVar3;
+  STRFLT p_Var4;
+  longlong lVar5;
+  undefined8 uStack00000010;
+  undefined8 local_50;
+  ushort local_48;
   short local_40;
   char local_3e;
   char acStack_3c [60];
   
-  lVar4 = (longlong)(int)param_2;
-  dStack00000010 = (double)__savegprlr_29();
+  lVar5 = (longlong)(int)_Flt;
+  uStack00000010 = __savegprlr_29();
   __dtold(&local_50,&stack0x00000010);
-  iVar2 = I10_OUTPUT(in_stack_ffffff6a,local_50.ld._4_4_,0,(_FloatOutStruct *)0x11);
-  piVar1 = (int *)lVar4;
+  iVar2 = I10_OUTPUT(local_50,(ulonglong)local_48 << 0x30,0x11,0,&local_40);
+  piVar1 = (int *)lVar5;
   piVar1[2] = iVar2;
   piVar1[1] = (int)local_40;
   *piVar1 = (int)local_3e;
-  iVar2 = strcpy_s(param_3,param_4,acStack_3c);
-  if (iVar2 == 0) {
-    piVar1[3] = (int)param_3;
-    p_Var3 = (_strflt *)__restgprlr_29(lVar4);
-    return p_Var3;
+  eVar3 = strcpy_s(_ResultStr,_SizeInBytes,acStack_3c);
+  if (eVar3 == 0) {
+    piVar1[3] = (int)_ResultStr;
+    p_Var4 = (STRFLT)__restgprlr_29(lVar5);
+    return p_Var4;
   }
                     /* WARNING: Subroutine does not return */
   _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);
@@ -37,7 +38,7 @@ _strflt * _fltout2(_CRT_DOUBLE param_1,_strflt *param_2,char *param_3,uint param
 
 // 82927E10  __dtold  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cfout.c:62)
 
-void __dtold(_LDOUBLE *param_1,double *param_2)
+void __dtold(ushort *param_1,uint *param_2)
 
 {
   uint uVar1;
@@ -47,21 +48,17 @@ void __dtold(_LDOUBLE *param_1,double *param_2)
   ushort uVar5;
   
   uVar4 = 0x80000000;
-  uVar1 = *(uint *)param_2;
+  uVar1 = *param_2;
   uVar5 = *(ushort *)param_2 >> 4 & 0x7ff;
-  uVar2 = *(uint *)((int)param_2 + 4);
+  uVar2 = param_2[1];
   uVar3 = *(ushort *)param_2 & 0x8000;
   if (uVar5 == 0) {
     if (((uVar1 & 0xfffff) == 0) && (uVar2 == 0)) {
-      *(ushort *)param_1->ld = uVar3;
-      param_1->ld[2] = '\0';
-      param_1->ld[3] = '\0';
-      param_1->ld[4] = '\0';
-      param_1->ld[5] = '\0';
-      param_1->ld[6] = '\0';
-      param_1->ld[7] = '\0';
-      param_1->ld[8] = '\0';
-      param_1->ld[9] = '\0';
+      *param_1 = uVar3;
+      param_1[1] = 0;
+      param_1[2] = 0;
+      param_1[3] = 0;
+      param_1[4] = 0;
       return;
     }
     uVar5 = 0x3c01;
@@ -73,16 +70,16 @@ void __dtold(_LDOUBLE *param_1,double *param_2)
   else {
     uVar5 = uVar5 + 0x3c00;
   }
-  *(uint *)(param_1->ld + 6) = uVar2 << 0xb;
-  *(uint *)(param_1->ld + 2) = uVar2 >> 0x15 | (uVar1 & 0xfffff) << 0xb | uVar4;
+  *(uint *)(param_1 + 3) = uVar2 << 0xb;
+  *(uint *)(param_1 + 1) = uVar2 >> 0x15 | (uVar1 & 0xfffff) << 0xb | uVar4;
   for (; uVar4 == 0; uVar4 = uVar4 & 0x40000000) {
-    uVar1 = *(uint *)(param_1->ld + 6);
-    uVar4 = *(uint *)(param_1->ld + 2);
-    *(uint *)(param_1->ld + 6) = uVar1 << 1;
-    *(uint *)(param_1->ld + 2) = uVar1 >> 0x1f | uVar4 << 1;
+    uVar1 = *(uint *)(param_1 + 3);
+    uVar4 = *(uint *)(param_1 + 1);
+    *(uint *)(param_1 + 3) = uVar1 << 1;
+    *(uint *)(param_1 + 1) = uVar1 >> 0x1f | uVar4 << 1;
     uVar5 = uVar5 - 1;
   }
-  *(ushort *)param_1->ld = uVar3 | uVar5;
+  *param_1 = uVar3 | uVar5;
   return;
 }
 

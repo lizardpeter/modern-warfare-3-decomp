@@ -2,23 +2,22 @@
 
 // 82519430  Sys_IsEventInitialized  (qcommon/threads.cpp:236)
 
-bool Sys_IsEventInitialized(void *param_1)
+bool Sys_IsEventInitialized(longlong param_1)
 
 {
-  return (bool)('\x01' - (param_1 == (void *)0x0));
+  return param_1 != 0;
 }
 
 
 // 82519440  Sys_Sleep  (qcommon/threads.cpp:243)
 
-void Sys_Sleep(int param_1)
+void Sys_Sleep(DWORD param_1)
 
 {
   int *in_r13;
   
   if ((param_1 != 0) && (*(int *)(*in_r13 + 0xe0) != 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xf5,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8209a924,0xf5,0,0xffffffff82000f98,0xffffffff8209a964);
   }
   Sleep(param_1);
   return;
@@ -27,50 +26,51 @@ void Sys_Sleep(int param_1)
 
 // 825194B0  Sys_GetCurrentThreadId  (qcommon/threads.cpp:253)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ulong Sys_GetCurrentThreadId(void)
+DWORD Sys_GetCurrentThreadId(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  return uVar1;
+  return DVar1;
 }
 
 
 // 82519510  Sys_SetEvent  (qcommon/threads.cpp:265)
 
-void Sys_SetEvent(void **param_1)
+BOOL Sys_SetEvent(undefined4 *param_1)
 
 {
-  SetEvent(*param_1);
-  return;
+  BOOL BVar1;
+  
+  BVar1 = SetEvent((HANDLE)*param_1);
+  return BVar1;
 }
 
 
 // 82519518  Sys_ResetEvent  (qcommon/threads.cpp:271)
 
-void Sys_ResetEvent(void **param_1)
+BOOL Sys_ResetEvent(undefined4 *param_1)
 
 {
-  ResetEvent(*param_1);
-  return;
+  BOOL BVar1;
+  
+  BVar1 = ResetEvent((HANDLE)*param_1);
+  return BVar1;
 }
 
 
 // 82519520  Sys_CreateEvent  (qcommon/threads.cpp:277)
 
-void Sys_CreateEvent(int param_1,int param_2,void **param_3)
+void Sys_CreateEvent(BOOL param_1,BOOL param_2,undefined4 *param_3)
 
 {
-  void *pvVar1;
+  HANDLE pvVar1;
   
-  pvVar1 = CreateEventA((void *)0x0,param_1,param_2,(char *)0x0);
+  pvVar1 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,param_1,param_2,(LPCSTR)0x0);
   *param_3 = pvVar1;
   return;
 }
@@ -78,31 +78,29 @@ void Sys_CreateEvent(int param_1,int param_2,void **param_3)
 
 // 82519560  Sys_WaitForSingleObjectTimeout  (qcommon/threads.cpp:283)
 
-int Sys_WaitForSingleObjectTimeout(void **param_1,uint param_2)
+bool Sys_WaitForSingleObjectTimeout(undefined4 *param_1,DWORD param_2)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
   if (param_2 == 0xffffffff) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x11c,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8209a924,0x11c,0,0xffffffff82000f98,0xffffffff8209a988);
   }
-  uVar1 = WaitForSingleObject(*param_1,param_2);
-  return (uint)LZCOUNT(uVar1) >> 5;
+  DVar1 = WaitForSingleObject((HANDLE)*param_1,param_2);
+  return DVar1 == 0;
 }
 
 
 // 825195D8  Sys_WaitForSingleObject  (qcommon/threads.cpp:290)
 
-void Sys_WaitForSingleObject(void **param_1)
+void Sys_WaitForSingleObject(undefined4 *param_1)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = WaitForSingleObject(*param_1,0xffffffff);
-  if (uVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0,
-                    "%s\n\t(result) = %i");
+  DVar1 = WaitForSingleObject((HANDLE)*param_1,0xffffffff);
+  if (DVar1 != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x126,0,0xffffffff82058ff0,0xffffffff8209a99c,DVar1);
   }
   return;
 }
@@ -110,9 +108,7 @@ void Sys_WaitForSingleObject(void **param_1)
 
 // 82519630  Sys_GetCpuCount  (qcommon/threads.cpp:301)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-uint Sys_GetCpuCount(void)
+undefined8 Sys_GetCpuCount(void)
 
 {
   return 6;
@@ -121,131 +117,127 @@ uint Sys_GetCpuCount(void)
 
 // 82519638  Sys_FreezeCheckThread  (qcommon/threads.cpp:756)
 
-ulong Sys_FreezeCheckThread(void *param_1)
+void Sys_FreezeCheckThread(void)
 
 {
   int iVar1;
+  DWORD DVar2;
   int *in_r13;
-  longlong lVar2;
-  void **ppvVar3;
+  longlong lVar3;
+  undefined4 *puVar4;
   
-  __savegprlr_21(param_1);
+  __savegprlr_21();
   iVar1 = *in_r13;
   do {
     while( true ) {
-      lVar2 = 2000;
+      lVar3 = 2000;
       do {
         if (*(int *)(iVar1 + 0xe0) != 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",
-                          0xf5,0,"%s");
+          MyAssertHandler(0xffffffff8209a924,0xf5,0,0xffffffff82000f98,0xffffffff8209a964);
         }
         Sleep(10);
-        lVar2 = lVar2 + -1;
-      } while (lVar2 != 0);
-      if (g_freezeCheck == 0) break;
-      g_freezeCheck = 0;
+        lVar3 = lVar3 + -1;
+      } while (lVar3 != 0);
+      if (DAT_8370093c == 0) break;
+      DAT_8370093c = 0;
     }
-    g_startFreezeTime = Sys_Milliseconds();
-    ppvVar3 = threadHandle;
-    lVar2 = 0xe;
+    DAT_837008ac = Sys_Milliseconds();
+    puVar4 = &DAT_837008f4;
+    lVar3 = 0xe;
     do {
-      if (*ppvVar3 != (void *)0x0) {
-        SuspendThread(*ppvVar3);
+      DVar2 = 0;
+      if ((HANDLE)*puVar4 != (HANDLE)0x0) {
+        DVar2 = SuspendThread((HANDLE)*puVar4);
       }
-      lVar2 = lVar2 + -1;
-      ppvVar3 = ppvVar3 + 1;
-    } while (lVar2 != 0);
-    g_endFreezeTime = Sys_Milliseconds();
-    ppvVar3 = threadHandle;
+      lVar3 = lVar3 + -1;
+      puVar4 = puVar4 + 1;
+    } while (lVar3 != 0);
+    DAT_8370076c = Sys_Milliseconds(DVar2);
+    puVar4 = &DAT_837008f4;
     uRam00000000 = 0;
-    lVar2 = 0xe;
+    lVar3 = 0xe;
     do {
-      if (*ppvVar3 != (void *)0x0) {
-        ResumeThread(*ppvVar3);
+      if ((HANDLE)*puVar4 != (HANDLE)0x0) {
+        ResumeThread((HANDLE)*puVar4);
       }
-      lVar2 = lVar2 + -1;
-      ppvVar3 = ppvVar3 + 1;
-    } while (lVar2 != 0);
+      lVar3 = lVar3 + -1;
+      puVar4 = puVar4 + 1;
+    } while (lVar3 != 0);
   } while( true );
 }
 
 
 // 82519728  Sys_DidSwap  (qcommon/threads.cpp:796)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_DidSwap(void)
 
 {
-  g_freezeCheck = 1;
+  DAT_8370093c = 1;
   return;
 }
 
 
 // 82519738  Sys_InitFreezeThread  (qcommon/threads.cpp:802)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_InitFreezeThread(void)
+BOOL Sys_InitFreezeThread(void)
 
 {
-  void *pvVar1;
+  HANDLE hThread;
+  BOOL BVar1;
   
-  pvVar1 = CreateThread((void *)0x0,0x1000,Sys_FreezeCheckThread,(void *)0x0,0,(ulong *)0x0);
-  SetThreadPriority(pvVar1,2);
-  return;
+  hThread = CreateThread((LPSECURITY_ATTRIBUTES)0x0,0x1000,Sys_FreezeCheckThread,(LPVOID)0x0,0,
+                         (LPDWORD)0x0);
+  BVar1 = SetThreadPriority(hThread,2);
+  return BVar1;
 }
 
 
 // 82519780  Sys_InitMainThread  (qcommon/threads.cpp:818)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_InitMainThread(void)
+BOOL Sys_InitMainThread(void)
 
 {
-  ulong uVar1;
-  void *pvVar2;
+  DWORD DVar1;
+  HANDLE hThread;
+  BOOL BVar2;
   int *in_r13;
   
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  threadId[0] = uVar1;
-  DuplicateHandle((void *)0xffffffff,(void *)0xfffffffe,(void *)0xffffffff,threadHandle,0,0,2);
-  *(void *(**) [4])(*in_r13 + 0xdc) = g_threadValues;
+  DAT_837008b4 = DVar1;
+  DuplicateHandle((HANDLE)0xffffffff,(HANDLE)0xfffffffe,(HANDLE)0xffffffff,(LPHANDLE)&DAT_837008f4,0
+                  ,0,2);
+  *(undefined **)(*in_r13 + 0xdc) = &DAT_837007a8;
   Com_InitThreadData(0);
-  pvVar2 = CreateThread((void *)0x0,0x1000,Sys_FreezeCheckThread,(void *)0x0,0,(ulong *)0x0);
-  SetThreadPriority(pvVar2,2);
-  return;
+  hThread = CreateThread((LPSECURITY_ATTRIBUTES)0x0,0x1000,Sys_FreezeCheckThread,(LPVOID)0x0,0,
+                         (LPDWORD)0x0);
+  BVar2 = SetThreadPriority(hThread,2);
+  return BVar2;
 }
 
 
 // 8251BF70  Sys_CheckSuspendThread  (qcommon/threads.cpp:857)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_CheckSuspendThread(void)
 
 {
-  bool bVar1;
+  char cVar1;
   undefined8 in_r13;
   
   __savegprlr_29();
-  if (g_suspendThreads == 0) {
+  if (DAT_83700788 == 0) {
     __restgprlr_29();
     return;
   }
-  bVar1 = Sys_IsRenderThread();
-  if (bVar1) {
+  cVar1 = Sys_IsRenderThread();
+  if (cVar1 != '\0') {
     R_ForceReleaseDeviceOwnership();
   }
   do {
     if (*(int *)(*(int *)in_r13 + 0xe0) != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xf5,0,
-                      "%s");
+      MyAssertHandler(0xffffffff8209a924,0xf5,0,0xffffffff82000f98,0xffffffff8209a964);
     }
     Sleep(1);
   } while( true );
@@ -254,20 +246,19 @@ void Sys_CheckSuspendThread(void)
 
 // 82519848  Sys_InitThread  (qcommon/threads.cpp:943)
 
-void Sys_InitThread(int param_1)
+void Sys_InitThread(void)
 
 {
   int iVar1;
   int iVar2;
   int *in_r13;
   
-  iVar2 = __savegprlr_29(param_1);
+  iVar2 = __savegprlr_29();
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 0xdc) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x3b0,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8209a924,0x3b0,0,0xffffffff82000f98,0xffffffff8209a9c8);
   }
-  *(void *(**) [4])(iVar1 + 0xdc) = g_threadValues + iVar2;
+  *(undefined **)(iVar1 + 0xdc) = &DAT_837007a8 + iVar2 * 0x10;
   Com_InitThreadData(iVar2);
   Profile_InitContext(iVar2);
   __restgprlr_29();
@@ -277,12 +268,12 @@ void Sys_InitThread(int param_1)
 
 // 825198C8  SetThreadName  (qcommon/threads.cpp:966)
 
-void SetThreadName(ulong param_1,char *param_2)
+void SetThreadName(undefined4 param_1,undefined4 param_2)
 
 {
-  ulong local_20;
-  char *local_1c;
-  ulong local_18;
+  ULONG_PTR local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
   undefined4 local_14;
   
   local_20 = 0x1000;
@@ -296,55 +287,49 @@ void SetThreadName(ulong param_1,char *param_2)
 
 // 82519940  Sys_ThreadMain  (qcommon/threads.cpp:986)
 
-ulong Sys_ThreadMain(void *param_1)
+void Sys_ThreadMain(void)
 
 {
   uint uVar1;
-  ulong uVar2;
   
-  uVar1 = __savegprlr_28(param_1);
+  uVar1 = __savegprlr_28();
   if (0xd < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x3e3,0,
-                    "threadContext doesn\'t index THREAD_CONTEXT_COUNT\n\t%i not in [0, %i)");
+    MyAssertHandler(0xffffffff8209a924,0x3e3,0,0xffffffff8209a9f8,uVar1,0xe);
   }
-  if (threadFunc[uVar1] == (_func___cdecl_void_uint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x3e4,0,
-                    "%s");
+  if (*(int *)(&DAT_83700948 + uVar1 * 4) == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x3e4,0,0xffffffff82000f98,0xffffffff8209a9d8);
   }
-  SetThreadName(0xffffffff,s_threadNames[uVar1]);
+  SetThreadName(0xffffffffffffffff,(&PTR_DAT_8296d19c)[uVar1]);
   Sys_InitThread(uVar1);
-  (*threadFunc[uVar1])(uVar1);
-  uVar2 = __restgprlr_28(0);
-  return uVar2;
+  (**(code **)(&DAT_83700948 + uVar1 * 4))(uVar1);
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 825199F0  Sys_CreateThread  (qcommon/threads.cpp:1012)
 
-void Sys_CreateThread(_func___cdecl_void_uint *param_1,uint param_2)
+void Sys_CreateThread(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
   undefined4 uVar2;
-  void *pvVar3;
-  ulonglong uVar4;
+  HANDLE pvVar3;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1);
-  iVar1 = (int)((uVar4 & 0x3fffffff) << 2);
-  if (*(int *)((int)threadFunc + iVar1) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x3f5,0,
-                    "%s");
+  uVar2 = __savegprlr_25();
+  iVar1 = (int)((param_2 & 0x3fffffff) << 2);
+  if (*(int *)(&DAT_83700948 + iVar1) != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x3f5,0,0xffffffff82000f98,0xffffffff8209aa64);
   }
-  if (0xd < (uVar4 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x3f6,0,
-                    "%s");
+  if (0xd < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8209a924,0x3f6,0,0xffffffff82000f98,0xffffffff8209aa3c);
   }
-  *(undefined4 *)((int)threadFunc + iVar1) = uVar2;
-  pvVar3 = CreateThread((void *)0x0,0,Sys_ThreadMain,(void *)uVar4,4,
-                        (ulong *)((int)threadId + iVar1));
-  *(void **)((int)threadHandle + iVar1) = pvVar3;
-  SetThreadName(*(ulong *)((int)threadId + iVar1),*(char **)((int)s_threadNames + iVar1));
+  *(undefined4 *)(&DAT_83700948 + iVar1) = uVar2;
+  pvVar3 = CreateThread((LPSECURITY_ATTRIBUTES)0x0,0,Sys_ThreadMain,(LPVOID)param_2,4,
+                        (LPDWORD)((int)&DAT_837008b4 + iVar1));
+  *(HANDLE *)((int)&DAT_837008f4 + iVar1) = pvVar3;
+  SetThreadName(*(undefined4 *)((int)&DAT_837008b4 + iVar1),
+                *(undefined4 *)((int)&PTR_DAT_8296d19c + iVar1));
   __restgprlr_25();
   return;
 }
@@ -352,32 +337,27 @@ void Sys_CreateThread(_func___cdecl_void_uint *param_1,uint param_2)
 
 // 82519AB8  Sys_TitleServerThreadData  (qcommon/threads.cpp:1057)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_TitleServerThreadData(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   int *in_r13;
   
   __savegprlr_27();
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  if ((threadId[7] != uVar1) || (*(int *)(*in_r13 + 0xdc) == 0)) {
-    uVar1 = GetCurrentThreadId();
-    if (uVar1 == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0
-                      ,"%s");
+  if ((DAT_837008d0 != DVar1) || (*(int *)(*in_r13 + 0xdc) == 0)) {
+    DVar1 = GetCurrentThreadId();
+    if (DVar1 == 0) {
+      MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
     }
-    threadId[7] = uVar1;
+    DAT_837008d0 = DVar1;
     Sys_InitThread(7);
   }
-  if (*(int *)(*in_r13 + 0xdc) != -0x7c8ff7e8) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x427,0,
-                    "%s");
+  if (*(undefined **)(*in_r13 + 0xdc) != &DAT_83700818) {
+    MyAssertHandler(0xffffffff8209a924,0x427,0,0xffffffff82000f98,0xffffffff8209aa88);
   }
   __restgprlr_27();
   return;
@@ -386,19 +366,19 @@ void Sys_TitleServerThreadData(void)
 
 // 8251BFF8  Sys_SpawnRenderThread  (qcommon/threads.cpp:1076)
 
-bool Sys_SpawnRenderThread(_func___cdecl_void_uint *param_1)
+bool Sys_SpawnRenderThread(undefined8 param_1)
 
 {
   bool bVar1;
   
-  renderPausedEvent = CreateEventA((void *)0x0,0,0,(char *)0x0);
-  noThreadOwnershipEvent = CreateEventA((void *)0x0,1,0,(char *)0x0);
-  rendererRunningEvent = CreateEventA((void *)0x0,1,1,(char *)0x0);
-  backendEvent[1] = CreateEventA((void *)0x0,0,0,(char *)0x0);
+  DAT_83700934 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)0x0);
+  DAT_8370078c = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,0,(LPCSTR)0x0);
+  DAT_837008a0 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,1,(LPCSTR)0x0);
+  DAT_83700794 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)0x0);
   Sys_CreateThread(param_1,1);
-  bVar1 = threadHandle[1] != (void *)0x0;
+  bVar1 = DAT_837008f8 != 0;
   if (bVar1) {
-    XSetThreadProcessor(threadHandle[1],3);
+    XSetThreadProcessor(DAT_837008f8,3);
     Sys_ResumeThread(1);
   }
   return bVar1;
@@ -407,36 +387,35 @@ bool Sys_SpawnRenderThread(_func___cdecl_void_uint *param_1)
 
 // 82519BA0  Sys_InitServerEvents  (qcommon/threads.cpp:1107)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_InitServerEvents(void)
+BOOL Sys_InitServerEvents(void)
 
 {
-  g_mainThreadRequestServerOwnership = 1;
-  SetEvent(allowServerNetworkEvent);
-  SetEvent(serverNetworkCompletedEvent);
-  g_networkOverrideThread = 0;
-  return;
+  BOOL BVar1;
+  
+  DAT_83700940 = 1;
+  SetEvent(DAT_8370079c);
+  BVar1 = SetEvent(DAT_837008a8);
+  DAT_83700760 = 0;
+  return BVar1;
 }
 
 
 // 8251C0C0  Sys_SpawnServerThread  (qcommon/threads.cpp:1132)
 
-bool Sys_SpawnServerThread(_func___cdecl_void_uint *param_1)
+bool Sys_SpawnServerThread(undefined8 param_1)
 
 {
   bool bVar1;
   
-  if (g_serverContextOwnership != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x46d,0,
-                    "%s\n\t(g_serverContextOwnership) = %i");
+  if (DAT_83700768 != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x46d,0,0xffffffff8209b0f4,0xffffffff8209b118,DAT_83700768);
   }
-  allowServerNetworkEvent = CreateEventA((void *)0x0,1,1,(char *)0x0);
-  serverNetworkCompletedEvent = CreateEventA((void *)0x0,1,1,(char *)0x0);
+  DAT_8370079c = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,1,(LPCSTR)0x0);
+  DAT_837008a8 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,1,(LPCSTR)0x0);
   Sys_CreateThread(param_1,5);
-  bVar1 = threadHandle[5] != (void *)0x0;
+  bVar1 = DAT_83700908 != 0;
   if (bVar1) {
-    XSetThreadProcessor(threadHandle[5],5);
+    XSetThreadProcessor(DAT_83700908,5);
     Sys_ResumeThread(5);
   }
   return bVar1;
@@ -445,18 +424,18 @@ bool Sys_SpawnServerThread(_func___cdecl_void_uint *param_1)
 
 // 8251C188  Sys_SpawnDatabaseThread  (qcommon/threads.cpp:1174)
 
-bool Sys_SpawnDatabaseThread(_func___cdecl_void_uint *param_1)
+bool Sys_SpawnDatabaseThread(undefined8 param_1)
 
 {
   bool bVar1;
   
-  wakeDatabaseEvent = CreateEventA((void *)0x0,1,0,(char *)0x0);
-  databaseCompletedEvent = CreateEventA((void *)0x0,1,1,(char *)0x0);
-  resumedDatabaseEvent = CreateEventA((void *)0x0,1,1,(char *)0x0);
+  DAT_83700764 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,0,(LPCSTR)0x0);
+  DAT_837008b0 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,1,(LPCSTR)0x0);
+  DAT_83700774 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,1,(LPCSTR)0x0);
   Sys_CreateThread(param_1,8);
-  bVar1 = threadHandle[8] != (void *)0x0;
+  bVar1 = DAT_83700914 != 0;
   if (bVar1) {
-    XSetThreadProcessor(threadHandle[8],1);
+    XSetThreadProcessor(DAT_83700914,1);
     Sys_ResumeThread(8);
   }
   return bVar1;
@@ -465,17 +444,14 @@ bool Sys_SpawnDatabaseThread(_func___cdecl_void_uint *param_1)
 
 // 82519BF8  Sys_WaitDatabaseThread  (qcommon/threads.cpp:1219)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_WaitDatabaseThread(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = WaitForSingleObject(resumedDatabaseEvent,0xffffffff);
-  if (uVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0,
-                    "%s\n\t(result) = %i");
+  DVar1 = WaitForSingleObject(DAT_83700774,0xffffffff);
+  if (DVar1 != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x126,0,0xffffffff82058ff0,0xffffffff8209a99c,DVar1);
   }
   return;
 }
@@ -483,168 +459,153 @@ void Sys_WaitDatabaseThread(void)
 
 // 82519C58  Sys_InitCmdEvents  (qcommon/threads.cpp:1226)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_InitCmdEvents(void)
 
 {
-  backendEvent[0] = CreateEventA((void *)0x0,1,0,(char *)0x0);
-  blockDatabaseEvent = CreateEventA((void *)0x0,1,1,(char *)0x0);
+  DAT_83700790 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,0,(LPCSTR)0x0);
+  DAT_83700888 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,1,(LPCSTR)0x0);
   return;
 }
 
 
 // 82519CB8  Sys_SpawnWorkerThread  (qcommon/threads.cpp:1239)
 
-bool Sys_SpawnWorkerThread(_func___cdecl_void_uint *param_1,uint param_2)
+void Sys_SpawnWorkerThread(undefined8 param_1,ulonglong param_2)
 
 {
-  void *pvVar1;
-  int iVar2;
-  _func___cdecl_void_uint *p_Var3;
-  undefined1 uVar4;
-  ulonglong uVar5;
+  int iVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  p_Var3 = (_func___cdecl_void_uint *)__savegprlr_27(param_1);
-  iVar2 = (int)((uVar5 + 2 & 0xffffffff) << 2);
-  if (*(int *)((int)threadHandle + iVar2) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x4e2,0,
-                    "%s\n\t(threadContext) = %i");
+  uVar2 = __savegprlr_27();
+  uVar3 = param_2 + 2;
+  iVar1 = (int)((uVar3 & 0xffffffff) << 2);
+  if (*(int *)((int)&DAT_837008f4 + iVar1) != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x4e2,0,0xffffffff8209aad0,0xffffffff8209aaec,uVar3);
   }
-  Sys_CreateThread(p_Var3,(uint)(uVar5 + 2));
-  pvVar1 = *(void **)((int)threadHandle + iVar2);
-  if (pvVar1 == (void *)0x0) {
-    uVar4 = __restgprlr_27();
-    return (bool)uVar4;
+  Sys_CreateThread(uVar2,uVar3);
+  iVar1 = *(int *)((int)&DAT_837008f4 + iVar1);
+  if (iVar1 == 0) {
+    __restgprlr_27();
+    return;
   }
-  XSetThreadProcessor(pvVar1,*(ulong *)((int)hardwareThread + (int)((uVar5 & 0xffffffff) << 2)));
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  XSetThreadProcessor(iVar1,*(undefined4 *)(&DAT_8209aac4 + (int)((param_2 & 0xffffffff) << 2)));
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 82519D50  Sys_SuspendThread  (qcommon/threads.cpp:1272)
 
-void Sys_SuspendThread(uint param_1)
+DWORD Sys_SuspendThread(int param_1)
 
 {
-  if (threadHandle[param_1] == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x4f9,0,
-                    "%s");
+  DWORD DVar1;
+  
+  if ((&DAT_837008f4)[param_1] == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x4f9,0,0xffffffff82000f98,0xffffffff8209ab0c);
   }
-  SuspendThread(threadHandle[param_1]);
-  return;
+  DVar1 = SuspendThread((HANDLE)(&DAT_837008f4)[param_1]);
+  return DVar1;
 }
 
 
 // 82519DC0  Sys_ResumeThread  (qcommon/threads.cpp:1284)
 
-void Sys_ResumeThread(uint param_1)
+DWORD Sys_ResumeThread(int param_1)
 
 {
-  if (threadHandle[param_1] == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x505,0,
-                    "%s");
+  DWORD DVar1;
+  
+  if ((&DAT_837008f4)[param_1] == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x505,0,0xffffffff82000f98,0xffffffff8209ab0c);
   }
-  ResumeThread(threadHandle[param_1]);
-  return;
+  DVar1 = ResumeThread((HANDLE)(&DAT_837008f4)[param_1]);
+  return DVar1;
 }
 
 
 // 82519E30  Sys_RendererSleep  (qcommon/threads.cpp:1299)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void * Sys_RendererSleep(void)
+undefined4 Sys_RendererSleep(void)
 
 {
-  void *pvVar1;
+  undefined4 uVar1;
   char in_RESERVE;
   byte in_cr0;
   
   do {
-    pvVar1 = smpData;
+    uVar1 = DAT_83700798;
     if (in_RESERVE != '\0') {
-      smpData = (void *)storeWordConditionalIndexed(0,0,0xffffffff83700798);
+      DAT_83700798 = storeWordConditionalIndexed(0,0,0xffffffff83700798);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   sync(1);
-  return pvVar1;
+  return uVar1;
 }
 
 
 // 8251C238  Sys_RenderCompleted  (qcommon/threads.cpp:1314)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_RenderCompleted(void)
+BOOL Sys_RenderCompleted(void)
 
 {
+  BOOL BVar1;
   char in_RESERVE;
   byte in_cr0;
   
-  if ((g_renderWaitCount != 1) && (g_renderWaitCount != 2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x527,0,
-                    "%s\n\t(renderWaitCount) = %i");
+  if ((DAT_837007a4 != 1) && (DAT_837007a4 != 2)) {
+    MyAssertHandler(0xffffffff8209a924,0x527,0,0xffffffff8209abb4,0xffffffff8209b14c);
   }
   sync(1);
-  SetEvent(backendEvent[0]);
+  BVar1 = SetEvent(DAT_83700790);
   do {
     if (in_RESERVE != '\0') {
-      g_renderWaitCount =
-           storeWordConditionalIndexed((ulonglong)(uint)g_renderWaitCount - 1,0,0xffffffff837007a4);
+      DAT_837007a4 = storeWordConditionalIndexed((ulonglong)DAT_837007a4 - 1,0,0xffffffff837007a4);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  return;
+  return BVar1;
 }
 
 
 // 82519E60  Sys_FrontEndSleep  (qcommon/threads.cpp:1338)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_FrontEndSleep(void)
 
 {
-  ulong uVar1;
-  ulonglong uVar2;
-  int iVar3;
+  DWORD DVar1;
+  longlong lVar2;
+  undefined8 in_MSR;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_27();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"frontend sleep");
-  uVar1 = WaitForSingleObject(noThreadOwnershipEvent,0);
-  if (uVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x541,0,
-                    "%s");
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8209aba4);
+  DVar1 = WaitForSingleObject(DAT_8370078c,0);
+  if (DVar1 != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x541,0,0xffffffff82000f98,0xffffffff8209ab64);
   }
-  uVar1 = WaitForSingleObject(rendererRunningEvent,0xffffffff);
-  if (uVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0,
-                    "%s\n\t(result) = %i");
+  DVar1 = WaitForSingleObject(DAT_837008a0,0xffffffff);
+  if (DVar1 != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x126,0,0xffffffff82058ff0,0xffffffff8209a99c,DVar1);
   }
-  ResetEvent(noThreadOwnershipEvent);
-  SetEvent(backendEvent[1]);
+  ResetEvent(DAT_8370078c);
+  SetEvent(DAT_83700794);
   do {
-    uVar2 = (ulonglong)DAT_8370092c;
+    lVar2 = (ulonglong)DAT_8370092c - 1;
     if (in_RESERVE != '\0') {
-      DAT_8370092c = storeWordConditionalIndexed(uVar2 - 1,0,0xffffffff8370092c);
+      DAT_8370092c = storeWordConditionalIndexed(lVar2,0,0xffffffff8370092c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  iVar3 = (int)(uVar2 - 1);
-  if ((iVar3 != -1) && (iVar3 != 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x547,0,
-                    "%s\n\t(newCount) = %i");
+  if (((int)lVar2 != -1) && ((int)lVar2 != 0)) {
+    MyAssertHandler(0xffffffff8209a924,0x547,0,0xffffffff8209ab28,0xffffffff8209ab3c,lVar2,in_MSR);
   }
-  uVar1 = WaitForSingleObject(renderPausedEvent,0xffffffff);
-  if (uVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0,
-                    "%s\n\t(result) = %i");
+  DVar1 = WaitForSingleObject(DAT_83700934,0xffffffff);
+  if (DVar1 != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x126,0,0xffffffff82058ff0,0xffffffff8209a99c,DVar1);
   }
   PIXEndNamedEvent();
   __restgprlr_27();
@@ -654,126 +615,110 @@ void Sys_FrontEndSleep(void)
 
 // 82519FA8  Sys_IsRendererReady  (qcommon/threads.cpp:1360)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_IsRendererReady(void)
+bool Sys_IsRendererReady(void)
 
 {
-  return (uint)LZCOUNT(smpData) >> 5;
+  return DAT_83700798 == 0;
 }
 
 
 // 82519FC0  Sys_IsRendererReady2  (qcommon/threads.cpp:1366)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 int Sys_IsRendererReady2(void)
 
 {
-  if (((g_renderWaitCount != 0) && (g_renderWaitCount != 1)) && (g_renderWaitCount != 2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x55b,0,
-                    "%s\n\t(renderWaitCount) = %i");
+  if (((DAT_837007a4 != 0) && (DAT_837007a4 != 1)) && (DAT_837007a4 != 2)) {
+    MyAssertHandler(0xffffffff8209a924,0x55b,0,0xffffffff8209abb4,0xffffffff8209abd0);
   }
-  return (uint)((uint)g_renderWaitCount < 2) - (g_renderWaitCount >> 0x1f);
+  return (uint)(DAT_837007a4 < 2) - ((int)DAT_837007a4 >> 0x1f);
 }
 
 
 // 8251C2C8  Sys_WakeRenderer  (qcommon/threads.cpp:1384)
 
-void Sys_WakeRenderer(void *param_1)
+void Sys_WakeRenderer(void)
 
 {
-  void *pvVar1;
-  int iVar2;
+  undefined4 uVar1;
+  BOOL BVar2;
   char in_RESERVE;
   byte in_cr0;
   
-  pvVar1 = (void *)__savegprlr_29(param_1);
-  if ((g_renderWaitCount != 0) && (g_renderWaitCount != 1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x56d,0,
-                    "%s\n\t(renderWaitCount) = %i");
+  uVar1 = __savegprlr_29();
+  if ((DAT_837007a4 != 0) && (DAT_837007a4 != 1)) {
+    MyAssertHandler(0xffffffff8209a924,0x56d,0,0xffffffff8209abb4,0xffffffff8209b198);
   }
   do {
     if (in_RESERVE != '\0') {
-      g_renderWaitCount =
-           storeWordConditionalIndexed((ulonglong)(uint)g_renderWaitCount + 1,0,0xffffffff837007a4);
+      DAT_837007a4 = storeWordConditionalIndexed((ulonglong)DAT_837007a4 + 1,0,0xffffffff837007a4);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   sync(1);
-  if (smpData != (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x572,0,
-                    "%s");
+  if (DAT_83700798 != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x572,0,0xffffffff82000f98,0xffffffff8209b18c);
   }
-  smpData = pvVar1;
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"set smpData");
+  DAT_83700798 = uVar1;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8209b180);
   PIXEndNamedEvent();
-  SetEvent(backendEvent[1]);
-  iVar2 = SetEvent(backendEvent[0]);
-  __restgprlr_29(iVar2);
+  SetEvent(DAT_83700794);
+  BVar2 = SetEvent(DAT_83700790);
+  __restgprlr_29(BVar2);
   return;
 }
 
 
 // 8251A040  Sys_NotifyRenderer  (qcommon/threads.cpp:1415)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_NotifyRenderer(void)
+BOOL Sys_NotifyRenderer(void)
 
 {
-  if (backendEvent[1] == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x588,0,
-                    "%s");
+  BOOL BVar1;
+  
+  if (DAT_83700794 == (HANDLE)0x0) {
+    MyAssertHandler(0xffffffff8209a924,0x588,0,0xffffffff82000f98,0xffffffff8209ac20);
   }
-  SetEvent(backendEvent[1]);
-  return;
+  BVar1 = SetEvent(DAT_83700794);
+  return BVar1;
 }
 
 
 // 8251A0A8  Sys_SleepServer  (qcommon/threads.cpp:1431)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_SleepServer(void)
 
 {
-  g_mainThreadRequestServerOwnership = 1;
+  DAT_83700940 = 1;
   return;
 }
 
 
 // 8251A0B8  Sys_WaitServer  (qcommon/threads.cpp:1442)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_WaitServer(void)
+undefined8 Sys_WaitServer(void)
 
 {
-  long lVar1;
+  uint uVar1;
   int *in_r13;
   char in_RESERVE;
   byte in_cr0;
   
   do {
-    lVar1 = g_serverContextOwnership;
-    if (g_serverContextOwnership != 0) {
+    uVar1 = DAT_83700768;
+    if (DAT_83700768 != 0) {
       if (in_RESERVE != '\0') {
-        g_serverContextOwnership =
-             storeWordConditionalIndexed
-                       ((ulonglong)(uint)g_serverContextOwnership,0,0xffffffff83700768);
+        DAT_83700768 = storeWordConditionalIndexed((ulonglong)DAT_83700768,0,0xffffffff83700768);
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      g_serverContextOwnership = storeWordConditionalIndexed(2,0,0xffffffff83700768);
+      DAT_83700768 = storeWordConditionalIndexed(2,0,0xffffffff83700768);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (lVar1 == 1) {
+  if (uVar1 == 1) {
     if (*(int *)(*in_r13 + 0xe0) != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xf5,0,
-                      "%s");
+      MyAssertHandler(0xffffffff8209a924,0xf5,0,0xffffffff82000f98,0xffffffff8209a964);
     }
     Sleep(1);
     return 0;
@@ -785,8 +730,6 @@ int Sys_WaitServer(void)
 
 // 8251A178  Sys_WakeServer  (qcommon/threads.cpp:1460)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_WakeServer(void)
 
 {
@@ -794,18 +737,16 @@ void Sys_WakeServer(void)
   byte in_cr0;
   
   sync(1);
-  g_mainThreadRequestServerOwnership = 0;
+  DAT_83700940 = 0;
   do {
-    if (g_serverContextOwnership != 2) {
+    if (DAT_83700768 != 2) {
       if (in_RESERVE != '\0') {
-        g_serverContextOwnership =
-             storeWordConditionalIndexed
-                       ((ulonglong)(uint)g_serverContextOwnership,0,0xffffffff83700768);
+        DAT_83700768 = storeWordConditionalIndexed((ulonglong)DAT_83700768,0,0xffffffff83700768);
       }
       return;
     }
     if (in_RESERVE != '\0') {
-      g_serverContextOwnership = storeWordConditionalIndexed(0,0,0xffffffff83700768);
+      DAT_83700768 = storeWordConditionalIndexed(0,0,0xffffffff83700768);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -815,8 +756,6 @@ void Sys_WakeServer(void)
 
 // 8251A1C8  Sys_ServerCompleted  (qcommon/threads.cpp:1478)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_ServerCompleted(void)
 
 {
@@ -825,16 +764,14 @@ void Sys_ServerCompleted(void)
   
   sync(1);
   do {
-    if (g_serverContextOwnership != 1) {
+    if (DAT_83700768 != 1) {
       if (in_RESERVE != '\0') {
-        g_serverContextOwnership =
-             storeWordConditionalIndexed
-                       ((ulonglong)(uint)g_serverContextOwnership,0,0xffffffff83700768);
+        DAT_83700768 = storeWordConditionalIndexed((ulonglong)DAT_83700768,0,0xffffffff83700768);
       }
       return;
     }
     if (in_RESERVE != '\0') {
-      g_serverContextOwnership = storeWordConditionalIndexed(0,0,0xffffffff83700768);
+      DAT_83700768 = storeWordConditionalIndexed(0,0,0xffffffff83700768);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -844,10 +781,10 @@ void Sys_ServerCompleted(void)
 
 // 8251A210  Sys_WaitStartServer  (qcommon/threads.cpp:1495)
 
-int Sys_WaitStartServer(int param_1)
+void Sys_WaitStartServer(void)
 
 {
-  long lVar1;
+  uint uVar1;
   int iVar2;
   int iVar3;
   int iVar4;
@@ -855,7 +792,7 @@ int Sys_WaitStartServer(int param_1)
   char in_RESERVE;
   byte in_cr0;
   
-  iVar2 = __savegprlr_23(param_1);
+  iVar2 = __savegprlr_23();
   if (iVar2 == 0) {
     iVar3 = 0;
   }
@@ -863,130 +800,118 @@ int Sys_WaitStartServer(int param_1)
     iVar3 = Sys_Milliseconds();
   }
   do {
-    if ((g_mainThreadRequestServerOwnership == 0) && (g_databaseStopServer == 0)) {
+    if ((DAT_83700940 == 0) && (DAT_83700930 == 0)) {
       do {
-        lVar1 = g_serverContextOwnership;
-        if (g_serverContextOwnership != 0) {
+        uVar1 = DAT_83700768;
+        if (DAT_83700768 != 0) {
           if (in_RESERVE != '\0') {
-            g_serverContextOwnership =
-                 storeWordConditionalIndexed
-                           ((ulonglong)(uint)g_serverContextOwnership,0,0xffffffff83700768);
+            DAT_83700768 = storeWordConditionalIndexed((ulonglong)DAT_83700768,0,0xffffffff83700768)
+            ;
             in_cr0 = 2;
           }
           break;
         }
         if (in_RESERVE != '\0') {
-          g_serverContextOwnership = storeWordConditionalIndexed(1,0,0xffffffff83700768);
+          DAT_83700768 = storeWordConditionalIndexed(1,0,0xffffffff83700768);
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      if (lVar1 != 2) {
+      if (uVar1 != 2) {
         sync(1);
         sync(1);
-        iVar2 = __restgprlr_23(1);
-        return iVar2;
+        __restgprlr_23(1);
+        return;
       }
     }
     do {
-      if (g_serverContextOwnership != 1) {
+      if (DAT_83700768 != 1) {
         if (in_RESERVE != '\0') {
-          g_serverContextOwnership =
-               storeWordConditionalIndexed
-                         ((ulonglong)(uint)g_serverContextOwnership,0,0xffffffff83700768);
+          DAT_83700768 = storeWordConditionalIndexed((ulonglong)DAT_83700768,0,0xffffffff83700768);
           in_cr0 = 2;
         }
         break;
       }
       if (in_RESERVE != '\0') {
-        g_serverContextOwnership = storeWordConditionalIndexed(0,0,0xffffffff83700768);
+        DAT_83700768 = storeWordConditionalIndexed(0,0,0xffffffff83700768);
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
     if (iVar2 == 0) break;
     if (*(int *)(*(int *)in_r13 + 0xe0) != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xf5,0,
-                      "%s");
+      MyAssertHandler(0xffffffff8209a924,0xf5,0,0xffffffff82000f98,0xffffffff8209a964);
     }
     Sleep(1);
     iVar4 = Sys_Milliseconds();
   } while (iVar4 - iVar3 < iVar2);
-  iVar2 = __restgprlr_23(0);
-  return iVar2;
+  __restgprlr_23(0);
+  return;
 }
 
 
 // 8251A370  Sys_IsServerThread  (qcommon/threads.cpp:1536)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 bool Sys_IsServerThread(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  return threadId[5] == uVar1;
+  return DAT_837008c8 == DVar1;
 }
 
 
 // 8251A3E0  Sys_StartDatabase  (qcommon/threads.cpp:1744)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_StartDatabase(void)
+BOOL Sys_StartDatabase(void)
 
 {
-  ResetEvent(wakeDatabaseEvent);
-  return;
+  BOOL BVar1;
+  
+  BVar1 = ResetEvent(DAT_83700764);
+  return BVar1;
 }
 
 
 // 8251A3F0  Sys_DatabaseCompleted  (qcommon/threads.cpp:1755)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_DatabaseCompleted(void)
 
 {
   int iVar1;
+  BOOL BVar2;
   int *in_r13;
   
   __savegprlr_26();
-  g_databaseStopServer = 1;
-  if (g_serverContextOwnership == 1) {
+  DAT_83700930 = 1;
+  if (DAT_83700768 == 1) {
     iVar1 = *in_r13;
     do {
       if (*(int *)(iVar1 + 0xe0) != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xf5,
-                        0,"%s");
+        MyAssertHandler(0xffffffff8209a924,0xf5,0,0xffffffff82000f98,0xffffffff8209a964);
       }
       Sleep(1);
-    } while (g_serverContextOwnership == 1);
+    } while (DAT_83700768 == 1);
   }
   sync(1);
-  iVar1 = SetEvent(databaseCompletedEvent);
-  __restgprlr_26(iVar1);
+  BVar2 = SetEvent(DAT_837008b0);
+  __restgprlr_26(BVar2);
   return;
 }
 
 
 // 8251A488  Sys_WaitStartDatabase  (qcommon/threads.cpp:1780)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_WaitStartDatabase(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = WaitForSingleObject(wakeDatabaseEvent,0xffffffff);
-  if (uVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0,
-                    "%s\n\t(result) = %i");
+  DVar1 = WaitForSingleObject(DAT_83700764,0xffffffff);
+  if (DVar1 != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x126,0,0xffffffff82058ff0,0xffffffff8209a99c,DVar1);
   }
   return;
 }
@@ -994,96 +919,33 @@ void Sys_WaitStartDatabase(void)
 
 // 8251A4E8  Sys_IsDatabaseReady  (qcommon/threads.cpp:1794)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_IsDatabaseReady(void)
+bool Sys_IsDatabaseReady(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = WaitForSingleObject(databaseCompletedEvent,0);
-  return (uint)LZCOUNT(uVar1) >> 5;
+  DVar1 = WaitForSingleObject(DAT_837008b0,0);
+  return DVar1 == 0;
 }
 
 
 // 8251A520  Sys_SyncDatabaseInternal  (qcommon/threads.cpp:1807)
 
-void Sys_SyncDatabaseInternal(int param_1)
+void Sys_SyncDatabaseInternal(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   int iVar2;
   
-  uVar1 = WaitForSingleObject(databaseCompletedEvent,0);
-  if (uVar1 != 0) {
+  DVar1 = WaitForSingleObject(DAT_837008b0,0);
+  if (DVar1 != 0) {
     iVar2 = R_HasDeviceOwnership();
     if (iVar2 != 0) {
       R_ReleaseDeviceOwnership();
     }
-    uVar1 = WaitForSingleObject(databaseCompletedEvent,0xffffffff);
-    if (uVar1 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0
-                      ,"%s\n\t(result) = %i");
-    }
-    if (iVar2 != 0) {
-      R_AcquireDeviceOwnership();
-    }
-  }
-  return;
-}
-
-
-// 8251A5C0  Sys_SyncDatabase  (qcommon/threads.cpp:1849)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* void __cdecl Sys_SyncDatabase(void) */
-
-void Sys_SyncDatabase(void)
-
-{
-  ulong uVar1;
-  int iVar2;
-  
-  uVar1 = WaitForSingleObject(databaseCompletedEvent,0);
-  if (uVar1 != 0) {
-    iVar2 = R_HasDeviceOwnership();
-    if (iVar2 != 0) {
-      R_ReleaseDeviceOwnership();
-    }
-    uVar1 = WaitForSingleObject(databaseCompletedEvent,0xffffffff);
-    if (uVar1 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0
-                      ,"%s\n\t(result) = %i");
-    }
-    if (iVar2 != 0) {
-      R_AcquireDeviceOwnership();
-    }
-  }
-  return;
-}
-
-
-// 8251A5C8  Sys_SyncDatabaseWithQuit  (qcommon/threads.cpp:1860)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* void __cdecl Sys_SyncDatabaseWithQuit(void) */
-
-void Sys_SyncDatabaseWithQuit(void)
-
-{
-  ulong uVar1;
-  int iVar2;
-  
-  uVar1 = WaitForSingleObject(databaseCompletedEvent,0);
-  if (uVar1 != 0) {
-    iVar2 = R_HasDeviceOwnership();
-    if (iVar2 != 0) {
-      R_ReleaseDeviceOwnership();
-    }
-    uVar1 = WaitForSingleObject(databaseCompletedEvent,0xffffffff);
-    if (uVar1 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0
-                      ,"%s\n\t(result) = %i");
+    DVar1 = WaitForSingleObject(DAT_837008b0,0xffffffff);
+    if (DVar1 != 0) {
+      MyAssertHandler(0xffffffff8209a924,0x126,0,0xffffffff82058ff0,0xffffffff8209a99c,DVar1);
     }
     if (iVar2 != 0) {
       R_AcquireDeviceOwnership();
@@ -1095,242 +957,215 @@ void Sys_SyncDatabaseWithQuit(void)
 
 // 8251A5D0  Sys_CheckDatabase  (qcommon/threads.cpp:1871)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_CheckDatabase(void)
+bool Sys_CheckDatabase(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = WaitForSingleObject(databaseCompletedEvent,0);
-  return (uint)LZCOUNT(uVar1) >> 5;
+  DVar1 = WaitForSingleObject(DAT_837008b0,0);
+  return DVar1 == 0;
 }
 
 
 // 8251A608  Sys_WakeDatabase  (qcommon/threads.cpp:1884)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_WakeDatabase(void)
+BOOL Sys_WakeDatabase(void)
 
 {
-  ResetEvent(databaseCompletedEvent);
-  return;
+  BOOL BVar1;
+  
+  BVar1 = ResetEvent(DAT_837008b0);
+  return BVar1;
 }
 
 
 // 8251A618  Sys_NotifyDatabase  (qcommon/threads.cpp:1897)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_NotifyDatabase(void)
+BOOL Sys_NotifyDatabase(void)
 
 {
-  SetEvent(wakeDatabaseEvent);
-  return;
+  BOOL BVar1;
+  
+  BVar1 = SetEvent(DAT_83700764);
+  return BVar1;
 }
 
 
 // 8251A628  Sys_DatabaseCompleted2  (qcommon/threads.cpp:1910)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_DatabaseCompleted2(void)
 
 {
   sync(1);
-  g_databaseStopServer = 0;
+  DAT_83700930 = 0;
   sync(1);
-  databaseCompletedEvent2 = 1;
+  DAT_8296d1d4 = 1;
   return;
 }
 
 
 // 8251A650  Sys_IsDatabaseReady2  (qcommon/threads.cpp:1932)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_IsDatabaseReady2(void)
+undefined4 Sys_IsDatabaseReady2(void)
 
 {
   sync(1);
-  return databaseCompletedEvent2;
+  return DAT_8296d1d4;
 }
 
 
 // 8251A660  Sys_WakeDatabase2  (qcommon/threads.cpp:1949)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_WakeDatabase2(void)
 
 {
   sync(1);
-  databaseCompletedEvent2 = 0;
+  DAT_8296d1d4 = 0;
   return;
 }
 
 
 // 8251A678  Sys_FinishRenderer  (qcommon/threads.cpp:1964)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_FinishRenderer(void)
+bool Sys_FinishRenderer(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"finish renderer");
-  uVar1 = WaitForSingleObject(noThreadOwnershipEvent,0);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8209ac60);
+  DVar1 = WaitForSingleObject(DAT_8370078c,0);
   PIXEndNamedEvent();
-  return (uint)LZCOUNT((uint)LZCOUNT(uVar1) >> 5) >> 5;
+  return (uint)LZCOUNT(DVar1) >> 5 == 0;
 }
 
 
 // 8251A6D0  Sys_IsMainThreadReady  (qcommon/threads.cpp:1976)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_IsMainThreadReady(void)
+bool Sys_IsMainThreadReady(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = WaitForSingleObject(noThreadOwnershipEvent,0);
-  return (uint)LZCOUNT(uVar1) >> 5;
+  DVar1 = WaitForSingleObject(DAT_8370078c,0);
+  return DVar1 == 0;
 }
 
 
 // 8251A708  Sys_StopRenderer  (qcommon/threads.cpp:1996)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_StopRenderer(void)
+BOOL Sys_StopRenderer(void)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  BOOL BVar1;
+  longlong lVar2;
   char in_RESERVE;
   byte in_cr0;
   
   do {
-    uVar1 = (ulonglong)DAT_8370092c;
+    lVar2 = (ulonglong)DAT_8370092c + 1;
     if (in_RESERVE != '\0') {
-      DAT_8370092c = storeWordConditionalIndexed(uVar1 + 1,0,0xffffffff8370092c);
+      DAT_8370092c = storeWordConditionalIndexed(lVar2,0,0xffffffff8370092c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  iVar2 = (int)(uVar1 + 1);
-  if ((iVar2 != 0) && (iVar2 != 1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x7d1,0,
-                    "%s\n\t(newCount) = %i");
+  if (((int)lVar2 != 0) && ((int)lVar2 != 1)) {
+    MyAssertHandler(0xffffffff8209a924,0x7d1,0,0xffffffff8209ab28,0xffffffff8209ac70,lVar2);
   }
-  ResetEvent(rendererRunningEvent);
-  SetEvent(renderPausedEvent);
-  return;
+  ResetEvent(DAT_837008a0);
+  BVar1 = SetEvent(DAT_83700934);
+  return BVar1;
 }
 
 
 // 8251A7A0  Sys_StartRenderer  (qcommon/threads.cpp:2014)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_StartRenderer(void)
+BOOL Sys_StartRenderer(void)
 
 {
-  SetEvent(rendererRunningEvent);
-  return;
+  BOOL BVar1;
+  
+  BVar1 = SetEvent(DAT_837008a0);
+  return BVar1;
 }
 
 
 // 8251A7B0  Sys_IsRenderThread  (qcommon/threads.cpp:2025)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 bool Sys_IsRenderThread(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  return threadId[1] == uVar1;
+  return DAT_837008b8 == DVar1;
 }
 
 
 // 8251A820  Sys_IsDatabaseThread  (qcommon/threads.cpp:2039)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 bool Sys_IsDatabaseThread(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  return threadId[8] == uVar1;
+  return DAT_837008d4 == DVar1;
 }
 
 
 // 8251A890  Sys_IsMainThread  (qcommon/threads.cpp:2053)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 bool Sys_IsMainThread(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  return threadId[0] == uVar1;
+  return DAT_837008b4 == DVar1;
 }
 
 
 // 8251A900  Sys_IsMainThread2  (qcommon/threads.cpp:2062)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool Sys_IsMainThread2(void)
+undefined8 Sys_IsMainThread2(void)
 
 {
-  bool bVar1;
+  char cVar1;
+  undefined8 uVar2;
   int *in_r13;
   
-  bVar1 = Sys_IsMainThread();
-  if ((bVar1) || (bVar1 = false, *(char *)(*in_r13 + 0xe4) != '\0')) {
-    bVar1 = true;
+  cVar1 = Sys_IsMainThread();
+  if ((cVar1 != '\0') || (uVar2 = 0, *(char *)(*in_r13 + 0xe4) != '\0')) {
+    uVar2 = 1;
   }
-  return bVar1;
+  return uVar2;
 }
 
 
 // 8251A950  Sys_SetValue  (qcommon/threads.cpp:2074)
 
-void Sys_SetValue(int param_1,void *param_2)
+void Sys_SetValue(undefined8 param_1,undefined4 param_2)
 
 {
   int iVar1;
   int iVar2;
   int *in_r13;
   
-  iVar2 = __savegprlr_28(param_1);
+  iVar2 = __savegprlr_28();
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 0xdc) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x81d,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8209a924,0x81d,0,0xffffffff82000f98,0xffffffff8209ac98);
   }
-  *(void **)(iVar2 * 4 + *(int *)(iVar1 + 0xdc)) = param_2;
+  *(undefined4 *)(iVar2 * 4 + *(int *)(iVar1 + 0xdc)) = param_2;
   __restgprlr_28();
   return;
 }
@@ -1338,79 +1173,75 @@ void Sys_SetValue(int param_1,void *param_2)
 
 // 8251A9B0  Sys_GetValue  (qcommon/threads.cpp:2089)
 
-void * Sys_GetValue(int param_1)
+void Sys_GetValue(void)
 
 {
   int iVar1;
   int iVar2;
-  void *pvVar3;
   int *in_r13;
   
-  iVar2 = __savegprlr_29(param_1);
+  iVar2 = __savegprlr_29();
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 0xdc) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x82c,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8209a924,0x82c,0,0xffffffff82000f98,0xffffffff8209ac98);
   }
-  pvVar3 = (void *)__restgprlr_29(*(undefined4 *)(iVar2 * 4 + *(int *)(iVar1 + 0xdc)));
-  return pvVar3;
+  __restgprlr_29(*(undefined4 *)(iVar2 * 4 + *(int *)(iVar1 + 0xdc)));
+  return;
 }
 
 
 // 8251AA10  Sys_WaitForWorkerCmd  (qcommon/threads.cpp:2108)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_WaitForWorkerCmd(void)
+bool Sys_WaitForWorkerCmd(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = WaitForSingleObject(backendEvent[0],1);
-  return (uint)LZCOUNT(uVar1) >> 5;
+  DVar1 = WaitForSingleObject(DAT_83700790,1);
+  return DVar1 == 0;
 }
 
 
 // 8251AA48  Sys_SetWorkerCmdEvent  (qcommon/threads.cpp:2119)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_SetWorkerCmdEvent(void)
+BOOL Sys_SetWorkerCmdEvent(void)
 
 {
-  SetEvent(backendEvent[0]);
-  return;
+  BOOL BVar1;
+  
+  BVar1 = SetEvent(DAT_83700790);
+  return BVar1;
 }
 
 
 // 8251AA58  Sys_ResetWorkerCmdEvent  (qcommon/threads.cpp:2130)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_ResetWorkerCmdEvent(void)
+BOOL Sys_ResetWorkerCmdEvent(void)
 
 {
-  ResetEvent(backendEvent[0]);
-  return;
+  BOOL BVar1;
+  
+  BVar1 = ResetEvent(DAT_83700790);
+  return BVar1;
 }
 
 
 // 8251AA68  Sys_YieldWorkerCmd  (qcommon/threads.cpp:2145)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_YieldWorkerCmd(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"yield worker");
-  SetEvent(backendEvent[0]);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8209aca8);
+  SetEvent(DAT_83700790);
   Sleep(0);
-  uVar1 = GetCurrentProcessorNumber();
-  if ((uVar1 == 1) && (uVar1 = WaitForSingleObject(blockDatabaseEvent,0xffffffff), uVar1 != 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0,
-                    "%s\n\t(result) = %i");
+  DVar1 = GetCurrentProcessorNumber();
+  if (DVar1 == 1) {
+    DVar1 = WaitForSingleObject(DAT_83700888,0xffffffff);
+    if (DVar1 != 0) {
+      MyAssertHandler(0xffffffff8209a924,0x126,0,0xffffffff82058ff0,0xffffffff8209a99c,DVar1);
+    }
   }
   PIXEndNamedEvent();
   return;
@@ -1419,44 +1250,39 @@ void Sys_YieldWorkerCmd(void)
 
 // 8251AB10  Sys_SuspendWorkerCmd  (qcommon/threads.cpp:2158)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_SuspendWorkerCmd(void)
+DWORD Sys_SuspendWorkerCmd(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = GetCurrentProcessorNumber();
-  if (uVar1 == 1) {
-    if (g_suspendWorkerThreadContext != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x871,0
-                      ,"%s");
+  DVar1 = GetCurrentProcessorNumber();
+  if (DVar1 == 1) {
+    if (DAT_8370088c != 0) {
+      MyAssertHandler(0xffffffff8209a924,0x871,0,0xffffffff82000f98,0xffffffff8209acb8);
     }
-    g_suspendWorkerThreadContext = 1;
-    SetThreadPriority(threadHandle[8],1);
+    DAT_8370088c = 1;
+    DVar1 = SetThreadPriority(DAT_83700914,1);
   }
-  return;
+  return DVar1;
 }
 
 
 // 8251AB90  Sys_ResumeWorkerCmd  (qcommon/threads.cpp:2170)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_ResumeWorkerCmd(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
+  BOOL BVar2;
   
-  uVar1 = GetCurrentProcessorNumber();
-  if (uVar1 == 1) {
-    if (g_suspendWorkerThreadContext == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x87d,0
-                      ,"%s");
+  DVar1 = GetCurrentProcessorNumber();
+  if (DVar1 == 1) {
+    if (DAT_8370088c == 0) {
+      MyAssertHandler(0xffffffff8209a924,0x87d,0,0xffffffff82000f98,0xffffffff8209acd8);
     }
-    g_suspendWorkerThreadContext = 0;
-    SetThreadPriority(threadHandle[8],0);
-    Sys_YieldWorkerCmd();
+    DAT_8370088c = 0;
+    BVar2 = SetThreadPriority(DAT_83700914,0);
+    Sys_YieldWorkerCmd(BVar2);
   }
   return;
 }
@@ -1464,86 +1290,75 @@ void Sys_ResumeWorkerCmd(void)
 
 // 8251AC10  Sys_BlockDatabaseThread  (qcommon/threads.cpp:2183)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_BlockDatabaseThread(void)
 
 {
-  ulong uVar1;
-  int iVar2;
+  int iVar1;
+  DWORD DVar2;
+  BOOL BVar3;
   int *in_r13;
   
   __savegprlr_28();
-  uVar1 = GetCurrentProcessorNumber();
-  if (uVar1 != 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x888,0,
-                    "%s");
+  DVar2 = GetCurrentProcessorNumber();
+  if (DVar2 != 1) {
+    MyAssertHandler(0xffffffff8209a924,0x888,0,0xffffffff82000f98,0xffffffff8209ad10);
   }
-  iVar2 = *in_r13;
-  if (*(int *)(iVar2 + 0xe0) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x889,0,
-                    "%s");
+  iVar1 = *in_r13;
+  if (*(int *)(iVar1 + 0xe0) != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x889,0,0xffffffff82000f98,0xffffffff8209acf8);
   }
-  *(undefined4 *)(iVar2 + 0xe0) = 1;
-  iVar2 = ResetEvent(blockDatabaseEvent);
-  __restgprlr_28(iVar2);
+  *(undefined4 *)(iVar1 + 0xe0) = 1;
+  BVar3 = ResetEvent(DAT_83700888);
+  __restgprlr_28(BVar3);
   return;
 }
 
 
 // 8251ACA0  Sys_UnblockDatabaseThread  (qcommon/threads.cpp:2195)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_UnblockDatabaseThread(void)
 
 {
-  void *pvVar1;
-  ulong uVar2;
-  int iVar3;
+  HANDLE hEvent;
+  DWORD DVar1;
+  BOOL BVar2;
   int *in_r13;
   
   __savegprlr_29();
-  uVar2 = GetCurrentProcessorNumber();
-  if (uVar2 != 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x894,0,
-                    "%s");
+  DVar1 = GetCurrentProcessorNumber();
+  if (DVar1 != 1) {
+    MyAssertHandler(0xffffffff8209a924,0x894,0,0xffffffff82000f98,0xffffffff8209ad10);
   }
   if ((DAT_83700894 != 0) && (*(int *)(*in_r13 + 0xe0) == 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x895,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8209a924,0x895,0,0xffffffff82000f98,0xffffffff8209ad48);
   }
-  pvVar1 = blockDatabaseEvent;
+  hEvent = DAT_83700888;
   DAT_83700894 = 1;
   *(undefined4 *)(*in_r13 + 0xe0) = 0;
-  iVar3 = SetEvent(pvVar1);
-  __restgprlr_29(iVar3);
+  BVar2 = SetEvent(hEvent);
+  __restgprlr_29(BVar2);
   return;
 }
 
 
 // 8251C3A0  Sys_CheckPauseWorkerCmd  (qcommon/threads.cpp:2208)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_CheckPauseWorkerCmd(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   int iVar2;
   
-  uVar1 = GetCurrentProcessorNumber();
-  if (uVar1 != 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x8a1,0,
-                    "%s");
+  DVar1 = GetCurrentProcessorNumber();
+  if (DVar1 != 1) {
+    MyAssertHandler(0xffffffff8209a924,0x8a1,0,0xffffffff82000f98,0xffffffff8209ad10);
   }
   iVar2 = Sys_HasDeviceOwnership();
   if (iVar2 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x8a2,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8209a924,0x8a2,0,0xffffffff82000f98,0xffffffff8209b1dc);
   }
-  if ((g_suspendWorkerThreadContext != 0) && (g_deviceOwner == 0)) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"yield database");
+  if ((DAT_8370088c != 0) && (DAT_837008a4 == 0)) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8209b1cc);
     Sleep(0);
     PIXEndNamedEvent();
   }
@@ -1553,163 +1368,151 @@ void Sys_CheckPauseWorkerCmd(void)
 
 // 8251C468  Sys_CheckBackendEvent  (qcommon/threads.cpp:2228)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_CheckBackendEvent(void)
+bool Sys_CheckBackendEvent(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
   Sys_CheckSuspendThread();
-  uVar1 = WaitForSingleObject(backendEvent[1],0);
-  return (uint)LZCOUNT(uVar1) >> 5;
+  DVar1 = WaitForSingleObject(DAT_83700794,0);
+  return DVar1 == 0;
 }
 
 
 // 8251C4A8  Sys_WaitBackendEvent  (qcommon/threads.cpp:2237)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_WaitBackendEvent(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
   do {
     Sys_CheckSuspendThread();
-    uVar1 = WaitForSingleObject(backendEvent[1],10);
-  } while (uVar1 != 0);
+    DVar1 = WaitForSingleObject(DAT_83700794,10);
+  } while (DVar1 != 0);
   return;
 }
 
 
 // 8251AD50  Sys_SuspendOtherThreads  (qcommon/threads.cpp:2258)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_SuspendOtherThreads(void)
 
 {
-  ulong uVar1;
-  int iVar2;
-  uint uVar3;
+  DWORD DVar2;
+  ulonglong uVar1;
+  DWORD DVar3;
+  int iVar4;
+  uint uVar5;
   
   __savegprlr_28();
-  Sys_EnterCriticalSection(CRITSECT_STATS_WRITE);
+  Sys_EnterCriticalSection(0x24);
   Live_DCacheShutdown();
-  g_suspendThreads = 1;
+  DAT_83700788 = 1;
   R_Cinematic_SuspendPlayback();
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar2 = GetCurrentThreadId();
+  uVar1 = (ulonglong)(int)DVar2;
+  if (DVar2 == 0) {
+    uVar1 = MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  iVar2 = 0;
-  uVar3 = 0;
+  iVar4 = 0;
+  uVar5 = 0;
   do {
-    if ((((iVar2 != 10) && (*(void **)((int)threadHandle + uVar3) != (void *)0x0)) &&
-        (*(ulong *)((int)threadId + uVar3) != 0)) && (*(ulong *)((int)threadId + uVar3) != uVar1)) {
-      SuspendThread(*(void **)((int)threadHandle + uVar3));
+    if (iVar4 != 10) {
+      uVar1 = ZEXT48(*(HANDLE *)((int)&DAT_837008f4 + uVar5));
+      if (((uVar1 != 0) && (*(DWORD *)((int)&DAT_837008b4 + uVar5) != 0)) &&
+         (*(DWORD *)((int)&DAT_837008b4 + uVar5) != DVar2)) {
+        DVar3 = SuspendThread(*(HANDLE *)((int)&DAT_837008f4 + uVar5));
+        uVar1 = (ulonglong)(int)DVar3;
+      }
     }
-    uVar3 = uVar3 + 4;
-    iVar2 = iVar2 + 1;
-  } while (uVar3 < 0x38);
-  __restgprlr_28();
+    uVar5 = uVar5 + 4;
+    iVar4 = iVar4 + 1;
+  } while (uVar5 < 0x38);
+  __restgprlr_28(uVar1);
   return;
 }
 
 
 // 8251AE00  Sys_AreThreadsSuspended  (qcommon/threads.cpp:2322)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_AreThreadsSuspended(void)
+undefined4 Sys_AreThreadsSuspended(void)
 
 {
-  return g_suspendThreads;
+  return DAT_83700788;
 }
 
 
 // 8251AE10  Sys_ReleaseThreadOwnership  (qcommon/threads.cpp:2338)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_ReleaseThreadOwnership(void)
+BOOL Sys_ReleaseThreadOwnership(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
+  BOOL BVar2;
   
-  uVar1 = WaitForSingleObject(noThreadOwnershipEvent,0);
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x923,0,
-                    "%s");
+  DVar1 = WaitForSingleObject(DAT_8370078c,0);
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x923,0,0xffffffff82000f98,0xffffffff8209ad80);
   }
-  SetEvent(noThreadOwnershipEvent);
-  return;
+  BVar2 = SetEvent(DAT_8370078c);
+  return BVar2;
 }
 
 
 // 8251AE78  Sys_SpawnContentServerThread  (qcommon/threads.cpp:2349)
 
-bool Sys_SpawnContentServerThread(_func___cdecl_void_uint *param_1,int param_2)
+void Sys_SpawnContentServerThread(undefined8 param_1,ulonglong param_2)
 
 {
-  _func___cdecl_void_uint *p_Var1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  uint uVar4;
+  ulonglong uVar1;
   
-  uVar3 = (ulonglong)param_2;
-  p_Var1 = (_func___cdecl_void_uint *)__savegprlr_29(param_1);
-  if (p_Var1 == (_func___cdecl_void_uint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x92e,0,
-                    "%s");
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x92e,0,0xffffffff82000f98,0xffffffff8209adf0);
   }
-  uVar4 = (uint)uVar3;
-  if (uVar4 != 0xc) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x92f,0,
-                    "%s\n\t(threadContext) = %i");
+  if ((int)param_2 != 0xc) {
+    MyAssertHandler(0xffffffff8209a924,0x92f,0,0xffffffff8209aad0,0xffffffff8209adc0,param_2);
   }
-  g_performHTTPOperation = CreateEventA((void *)0x0,0,0,(char *)0x0);
-  Sys_CreateThread(p_Var1,uVar4);
-  if (*(int *)((int)threadHandle + (int)((uVar3 & 0xffffffff) << 2)) == 0) {
-    uVar2 = __restgprlr_29(0);
-    return (bool)uVar2;
+  DAT_83700938 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)0x0);
+  Sys_CreateThread(uVar1,param_2);
+  if (*(int *)((int)&DAT_837008f4 + (int)((param_2 & 0xffffffff) << 2)) == 0) {
+    __restgprlr_29(0);
+    return;
   }
-  Sys_ResumeThread(uVar4);
-  uVar2 = __restgprlr_29(1);
-  return (bool)uVar2;
+  Sys_ResumeThread(param_2);
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 8251AF48  Sys_WaitForHTTPOperation  (qcommon/threads.cpp:2365)
 
-int Sys_WaitForHTTPOperation(int param_1)
+void Sys_WaitForHTTPOperation(void)
 
 {
-  int iVar1;
-  ulong uVar2;
+  undefined8 uVar1;
+  int iVar2;
+  DWORD DVar3;
   
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 != 0xc) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x940,0,
-                    "%s\n\t(threadContext) = %i");
+  uVar1 = __savegprlr_27();
+  if ((int)uVar1 != 0xc) {
+    MyAssertHandler(0xffffffff8209a924,0x940,0,0xffffffff8209aad0,0xffffffff8209adc0,uVar1);
   }
   do {
-    iVar1 = 0;
+    iVar2 = 0;
     do {
-      if ((&DAT_83700944)[iVar1] != '\0') {
+      if ((&DAT_83700944)[iVar2] != '\0') {
         sync(1);
-        (&DAT_83700944)[iVar1] = 0;
-        iVar1 = __restgprlr_27();
-        return iVar1;
+        (&DAT_83700944)[iVar2] = 0;
+        __restgprlr_27();
+        return;
       }
-      iVar1 = iVar1 + 1;
-    } while (iVar1 < 4);
-    uVar2 = WaitForSingleObject(g_performHTTPOperation,0xffffffff);
-    if (uVar2 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0
-                      ,"%s\n\t(result) = %i");
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < 4);
+    DVar3 = WaitForSingleObject(DAT_83700938,0xffffffff);
+    if (DVar3 != 0) {
+      MyAssertHandler(0xffffffff8209a924,0x126,0,0xffffffff82058ff0,0xffffffff8209a99c,DVar3);
     }
   } while( true );
 }
@@ -1717,35 +1520,35 @@ int Sys_WaitForHTTPOperation(int param_1)
 
 // 8251B010  Sys_SignalPendingHTTPOperation  (qcommon/threads.cpp:2388)
 
-void Sys_SignalPendingHTTPOperation(int param_1)
+BOOL Sys_SignalPendingHTTPOperation(int param_1)
 
 {
-  void *pvVar1;
+  HANDLE hEvent;
+  BOOL BVar1;
   
   if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x955,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8209a924,0x955,0,0xffffffff82000f98,0xffffffff8209adfc);
   }
-  pvVar1 = g_performHTTPOperation;
+  hEvent = DAT_83700938;
   sync(1);
   (&DAT_83700944)[param_1] = 1;
-  SetEvent(pvVar1);
-  return;
+  BVar1 = SetEvent(hEvent);
+  return BVar1;
 }
 
 
 // 8251B090  Sys_SpawnStreamThread  (qcommon/threads.cpp:2406)
 
-bool Sys_SpawnStreamThread(_func___cdecl_void_uint *param_1)
+bool Sys_SpawnStreamThread(undefined8 param_1)
 
 {
   bool bVar1;
   
-  streamEvent = CreateEventA((void *)0x0,1,0,(char *)0x0);
+  DAT_83700770 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,0,(LPCSTR)0x0);
   Sys_CreateThread(param_1,9);
-  bVar1 = threadHandle[9] != (void *)0x0;
+  bVar1 = DAT_83700918 != 0;
   if (bVar1) {
-    XSetThreadProcessor(threadHandle[9],2);
+    XSetThreadProcessor(DAT_83700918,2);
     Sys_ResumeThread(9);
   }
   return bVar1;
@@ -1754,107 +1557,94 @@ bool Sys_SpawnStreamThread(_func___cdecl_void_uint *param_1)
 
 // 8251B110  Sys_InitStreamPacketCallbackThreadData  (qcommon/threads.cpp:2439)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool Sys_InitStreamPacketCallbackThreadData(void)
+void Sys_InitStreamPacketCallbackThreadData(void)
 
 {
-  bool bVar2;
-  ulong uVar1;
-  undefined1 uVar3;
+  char cVar2;
+  int iVar1;
   int *in_r13;
   
   __savegprlr_29();
-  bVar2 = Sys_IsMainThread();
-  if ((!bVar2) && (bVar2 = Sys_IsRenderThread(), !bVar2)) {
-    bVar2 = Sys_IsMainThread();
-    if ((bVar2) || (bVar2 = Sys_IsRenderThread(), bVar2)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x98d,0
-                      ,"%s");
+  cVar2 = Sys_IsMainThread();
+  if ((cVar2 == '\0') && (cVar2 = Sys_IsRenderThread(), cVar2 == '\0')) {
+    cVar2 = Sys_IsMainThread();
+    if ((cVar2 != '\0') || (cVar2 = Sys_IsRenderThread(), cVar2 != '\0')) {
+      MyAssertHandler(0xffffffff8209a924,0x98d,0,0xffffffff82000f98,0xffffffff8209aed0);
     }
-    uVar1 = Sys_GetCurrentThreadId();
-    if (threadId[10] == uVar1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x98e,0
-                      ,"%s");
+    iVar1 = Sys_GetCurrentThreadId();
+    if (DAT_837008dc == iVar1) {
+      MyAssertHandler(0xffffffff8209a924,0x98e,0,0xffffffff82000f98,0xffffffff8209ae80);
     }
-    threadId[10] = Sys_GetCurrentThreadId();
+    DAT_837008dc = Sys_GetCurrentThreadId();
     Sys_InitThread(10);
-    if (*(int *)(*in_r13 + 0xdc) != -0x7c8ff7b8) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x993,0
-                      ,"%s");
+    if (*(undefined **)(*in_r13 + 0xdc) != &DAT_83700848) {
+      MyAssertHandler(0xffffffff8209a924,0x993,0,0xffffffff82000f98,0xffffffff8209ae38);
     }
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+    __restgprlr_29(1);
+    return;
   }
-  uVar3 = __restgprlr_29(0);
-  return (bool)uVar3;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 8251B220  Sys_StreamSleep  (qcommon/threads.cpp:2464)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_StreamSleep(void)
+void Sys_StreamSleep(void)
 
 {
-  bool bVar1;
-  ulong uVar2;
-  int iVar3;
+  BOOL BVar1;
+  DWORD DVar2;
+  bool bVar3;
   uint uVar4;
   
-  __savegprlr_25();
-  bVar1 = false;
+  BVar1 = __savegprlr_25();
+  bVar3 = false;
   do {
     uVar4 = 0;
     do {
       if ((&DAT_83700778)[uVar4] != '\0') {
-        if (bVar1) {
-          Sys_YieldWorkerCmd();
+        if (bVar3) {
+          Sys_YieldWorkerCmd(BVar1);
         }
         if (0xd < uVar4) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",
-                          0x9b5,0,
-                          "streamIndex doesn\'t index SND_MAX_STREAM_CHANNELS\n\t%i not in [0, %i)")
-          ;
+          MyAssertHandler(0xffffffff8209a924,0x9b5,0,0xffffffff8209af00,uVar4,0xe);
         }
         (&DAT_83700778)[uVar4] = 0;
-        iVar3 = __restgprlr_25(uVar4);
-        return iVar3;
+        __restgprlr_25(uVar4);
+        return;
       }
       uVar4 = uVar4 + 1;
     } while ((int)uVar4 < 0xe);
-    uVar2 = WaitForSingleObject(streamEvent,0xffffffff);
-    if (uVar2 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0
-                      ,"%s\n\t(result) = %i");
+    DVar2 = WaitForSingleObject(DAT_83700770,0xffffffff);
+    if (DVar2 != 0) {
+      MyAssertHandler(0xffffffff8209a924,0x126,0,0xffffffff82058ff0,0xffffffff8209a99c,DVar2);
     }
-    ResetEvent(streamEvent);
-    bVar1 = true;
+    BVar1 = ResetEvent(DAT_83700770);
+    bVar3 = true;
   } while( true );
 }
 
 
 // 8251B300  Sys_WaitForStream  (qcommon/threads.cpp:2506)
 
-void Sys_WaitForStream(int param_1)
+void Sys_WaitForStream(void)
 
 {
   int iVar1;
-  ulong uVar2;
+  DWORD DVar2;
   undefined8 in_r13;
   
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28();
   if (iVar1 != 0) {
-    memset();
+    memset(&DAT_83700778,0,0xe);
   }
-  SetEvent(streamEvent);
+  SetEvent(DAT_83700770);
   while( true ) {
-    uVar2 = WaitForSingleObject(streamEvent,0);
-    if (uVar2 != 0) break;
+    DVar2 = WaitForSingleObject(DAT_83700770,0);
+    if (DVar2 != 0) break;
     if (*(int *)(*(int *)in_r13 + 0xe0) != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xf5,0,
-                      "%s");
+      MyAssertHandler(0xffffffff8209a924,0xf5,0,0xffffffff82000f98,0xffffffff8209a964);
     }
     Sleep(1);
   }
@@ -1865,128 +1655,121 @@ void Sys_WaitForStream(int param_1)
 
 // 8251B3A0  Sys_WakeStream  (qcommon/threads.cpp:2522)
 
-void Sys_WakeStream(int param_1)
+BOOL Sys_WakeStream(int param_1)
 
 {
-  void *pvVar1;
+  HANDLE hEvent;
+  BOOL BVar1;
   
   if ((param_1 < 0) || (0xd < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x9db,0,
-                    "%s\n\t(streamIndex) = %i");
+    MyAssertHandler(0xffffffff8209a924,0x9db,0,0xffffffff8209af48,0xffffffff8209af60,param_1);
   }
-  pvVar1 = streamEvent;
+  hEvent = DAT_83700770;
   (&DAT_83700778)[param_1] = 1;
-  SetEvent(pvVar1);
-  return;
+  BVar1 = SetEvent(hEvent);
+  return BVar1;
 }
 
 
 // 8251B420  Sys_IsSndStreamPacketCallbackThread  (qcommon/threads.cpp:2536)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 bool Sys_IsSndStreamPacketCallbackThread(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  return threadId[10] == uVar1;
+  return DAT_837008dc == DVar1;
 }
 
 
 // 8251B490  Sys_SpawnCinematicsThread  (qcommon/threads.cpp:2562)
 
-bool Sys_SpawnCinematicsThread(_func___cdecl_void_uint *param_1)
+undefined8 Sys_SpawnCinematicsThread(undefined8 param_1)
 
 {
   Sys_CreateThread(param_1,6);
-  if (threadHandle[6] == (void *)0x0) {
-    return false;
+  if (DAT_8370090c == 0) {
+    return 0;
   }
-  XSetThreadProcessor(threadHandle[6],3);
+  XSetThreadProcessor(DAT_8370090c,3);
   Sys_ResumeThread(6);
-  return true;
+  return 1;
 }
 
 
 // 8251B4F0  Sys_SetCinematicsThreadProcId  (qcommon/threads.cpp:2582)
 
-void Sys_SetCinematicsThreadProcId(int param_1)
+void Sys_SetCinematicsThreadProcId(longlong param_1)
 
 {
-  XSetThreadProcessor(threadHandle[6],(-(uint)(param_1 != 0) & 2) + 3);
+  XSetThreadProcessor(DAT_8370090c,(-(param_1 != 0) & 2U) + 3);
   return;
 }
 
 
 // 8251B510  Sys_SpawnMjpegThread  (qcommon/threads.cpp:2673)
 
-bool Sys_SpawnMjpegThread(_func___cdecl_void_uint *param_1)
+undefined8 Sys_SpawnMjpegThread(undefined8 param_1)
 
 {
   Sys_CreateThread(param_1,0xd);
-  if (threadHandle[0xd] == (void *)0x0) {
-    return false;
+  if (DAT_83700928 == (HANDLE)0x0) {
+    return 0;
   }
-  XSetThreadProcessor(threadHandle[0xd],5);
-  SetThreadPriority(threadHandle[0xd],2);
+  XSetThreadProcessor(DAT_83700928,5);
+  SetThreadPriority(DAT_83700928,2);
   Sys_ResumeThread(0xd);
-  return true;
+  return 1;
 }
 
 
 // 8251B588  Sys_SetServerAllowNetworkEvent  (qcommon/threads.cpp:2697)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_SetServerAllowNetworkEvent(void)
+BOOL Sys_SetServerAllowNetworkEvent(void)
 
 {
-  SetEvent(allowServerNetworkEvent);
-  return;
+  BOOL BVar1;
+  
+  BVar1 = SetEvent(DAT_8370079c);
+  return BVar1;
 }
 
 
 // 8251B598  Sys_ResetServerAllowNetworkEvent  (qcommon/threads.cpp:2703)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Sys_ResetServerAllowNetworkEvent(void)
+BOOL Sys_ResetServerAllowNetworkEvent(void)
 
 {
-  ResetEvent(allowServerNetworkEvent);
-  return;
+  BOOL BVar1;
+  
+  BVar1 = ResetEvent(DAT_8370079c);
+  return BVar1;
 }
 
 
 // 8251B5A8  Sys_SetServerNetworkCompletedEvent  (qcommon/threads.cpp:2709)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_SetServerNetworkCompletedEvent(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
   __savegprlr_28();
-  Sys_EnterCriticalSection(CRITSECT_NETTHREAD_OVERRIDE);
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  Sys_EnterCriticalSection(0x1f);
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  if ((g_networkOverrideThread != uVar1) && (g_networkOverrideThread != 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xa9a,0,
-                    "%s");
+  if ((DAT_83700760 != DVar1) && (DAT_83700760 != 0)) {
+    MyAssertHandler(0xffffffff8209a924,0xa9a,0,0xffffffff82000f98,0xffffffff8209afa0);
   }
-  g_networkOverrideThread = 0;
-  SetEvent(serverNetworkCompletedEvent);
-  Sys_LeaveCriticalSection(CRITSECT_NETTHREAD_OVERRIDE);
+  DAT_83700760 = 0;
+  SetEvent(DAT_837008a8);
+  Sys_LeaveCriticalSection(0x1f);
   __restgprlr_28();
   return;
 }
@@ -1994,27 +1777,23 @@ void Sys_SetServerNetworkCompletedEvent(void)
 
 // 8251B650  Sys_ResetServerNetworkCompletedEvent  (qcommon/threads.cpp:2726)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_ResetServerNetworkCompletedEvent(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
   __savegprlr_28();
-  Sys_EnterCriticalSection(CRITSECT_NETTHREAD_OVERRIDE);
-  if (g_networkOverrideThread != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xaab,0,
-                    "%s");
+  Sys_EnterCriticalSection(0x1f);
+  if (DAT_83700760 != 0) {
+    MyAssertHandler(0xffffffff8209a924,0xaab,0,0xffffffff82000f98,0xffffffff8209aff4);
   }
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  g_networkOverrideThread = uVar1;
-  ResetEvent(serverNetworkCompletedEvent);
-  Sys_LeaveCriticalSection(CRITSECT_NETTHREAD_OVERRIDE);
+  DAT_83700760 = DVar1;
+  ResetEvent(DAT_837008a8);
+  Sys_LeaveCriticalSection(0x1f);
   __restgprlr_28();
   return;
 }
@@ -2022,41 +1801,34 @@ void Sys_ResetServerNetworkCompletedEvent(void)
 
 // 8251B6F0  Sys_HaveSuspendedNetworkCompleteThread  (qcommon/threads.cpp:2742)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_HaveSuspendedNetworkCompleteThread(void)
+bool Sys_HaveSuspendedNetworkCompleteThread(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  return (uint)LZCOUNT(uVar1 - g_networkOverrideThread) >> 5;
+  return DVar1 == DAT_83700760;
 }
 
 
 // 8251B760  Sys_WaitAllowServerNetworkLoop  (qcommon/threads.cpp:2748)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_WaitAllowServerNetworkLoop(void)
 
 {
-  bool bVar2;
-  ulong uVar1;
+  char cVar2;
+  DWORD DVar1;
   
-  bVar2 = Sys_IsServerThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xabd,0,
-                    "%s");
+  cVar2 = Sys_IsServerThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff8209a924,0xabd,0,0xffffffff82000f98,0xffffffff8206beac);
   }
-  uVar1 = WaitForSingleObject(allowServerNetworkEvent,0xffffffff);
-  if (uVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0,
-                    "%s\n\t(result) = %i");
+  DVar1 = WaitForSingleObject(DAT_8370079c,0xffffffff);
+  if (DVar1 != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x126,0,0xffffffff82058ff0,0xffffffff8209a99c,DVar1);
   }
   return;
 }
@@ -2064,23 +1836,19 @@ void Sys_WaitAllowServerNetworkLoop(void)
 
 // 8251B7F8  Sys_WaitServerNetworkCompleted  (qcommon/threads.cpp:2755)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_WaitServerNetworkCompleted(void)
 
 {
-  bool bVar2;
-  ulong uVar1;
+  char cVar2;
+  DWORD DVar1;
   
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xac4,0,
-                    "%s");
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff8209a924,0xac4,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  uVar1 = WaitForSingleObject(serverNetworkCompletedEvent,0xffffffff);
-  if (uVar1 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0,
-                    "%s\n\t(result) = %i");
+  DVar1 = WaitForSingleObject(DAT_837008a8,0xffffffff);
+  if (DVar1 != 0) {
+    MyAssertHandler(0xffffffff8209a924,0x126,0,0xffffffff82058ff0,0xffffffff8209a99c,DVar1);
   }
   return;
 }
@@ -2088,29 +1856,25 @@ void Sys_WaitServerNetworkCompleted(void)
 
 // 8251B890  Sys_SetDeviceOwner  (qcommon/threads.cpp:2882)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_SetDeviceOwner(void)
 
 {
-  int iVar1;
-  ulong uVar2;
+  undefined4 uVar1;
+  DWORD DVar2;
   int *in_r13;
   
   __savegprlr_28();
-  iVar1 = Sys_Milliseconds();
-  *(int *)(*in_r13 + 0xe8) = iVar1;
-  Sys_EnterCriticalSection(CRITSECT_DEVICE_OWNER);
-  if (g_deviceOwner != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xb49,0,
-                    "%s");
+  uVar1 = Sys_Milliseconds();
+  *(undefined4 *)(*in_r13 + 0xe8) = uVar1;
+  Sys_EnterCriticalSection(0x2d);
+  if (DAT_837008a4 != 0) {
+    MyAssertHandler(0xffffffff8209a924,0xb49,0,0xffffffff82000f98,0xffffffff8209b010);
   }
-  uVar2 = GetCurrentThreadId();
-  if (uVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar2 = GetCurrentThreadId();
+  if (DVar2 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  g_deviceOwner = uVar2;
+  DAT_837008a4 = DVar2;
   __restgprlr_28();
   return;
 }
@@ -2118,25 +1882,21 @@ void Sys_SetDeviceOwner(void)
 
 // 8251B928  Sys_ResetDeviceOwner  (qcommon/threads.cpp:2895)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_ResetDeviceOwner(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
   __savegprlr_28();
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  if (g_deviceOwner != uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xb50,0,
-                    "%s");
+  if (DAT_837008a4 != DVar1) {
+    MyAssertHandler(0xffffffff8209a924,0xb50,0,0xffffffff82000f98,0xffffffff8209b020);
   }
-  g_deviceOwner = 0;
-  Sys_LeaveCriticalSection(CRITSECT_DEVICE_OWNER);
+  DAT_837008a4 = 0;
+  Sys_LeaveCriticalSection(0x2d);
   __restgprlr_28();
   return;
 }
@@ -2144,58 +1904,51 @@ void Sys_ResetDeviceOwner(void)
 
 // 8251B9B8  Sys_HasDeviceOwnership  (qcommon/threads.cpp:2904)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_HasDeviceOwnership(void)
+bool Sys_HasDeviceOwnership(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  return (uint)LZCOUNT(uVar1 - g_deviceOwner) >> 5;
+  return DVar1 == DAT_837008a4;
 }
 
 
 // 8251BA28  Sys_WaitFileRead  (qcommon/threads.cpp:3036)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_WaitFileRead(void)
 
 {
   int iVar1;
+  longlong lVar2;
   undefined8 in_r13;
-  ulong uVar2;
+  DWORD dwMilliseconds;
   
   __savegprlr_25();
-  if (g_lockFileRead != 0) {
+  if (DAT_83700898 != 0) {
     iVar1 = *(int *)in_r13;
     do {
       if (*(int *)(iVar1 + 0xe0) != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xf5,
-                        0,"%s");
+        MyAssertHandler(0xffffffff8209a924,0xf5,0,0xffffffff82000f98,0xffffffff8209a964);
       }
       Sleep(1);
-    } while (g_lockFileRead != 0);
+    } while (DAT_83700898 != 0);
   }
   sync(1);
-  iVar1 = Sys_Milliseconds();
-  uVar2 = g_timeoutFileRead - iVar1;
-  while (uVar2 - 1 < 100) {
-    if (((0 < (int)uVar2) ||
-        (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",
-                         0xbe8,0,"%s\n\t(timeout) = %i"), uVar2 != 0)) &&
-       (*(int *)(*(int *)in_r13 + 0xe0) != 0)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xf5,0,
-                      "%s");
+  lVar2 = Sys_Milliseconds();
+  for (lVar2 = (ulonglong)DAT_83700890 - lVar2; (lVar2 - 1U & 0xffffffff) < 100;
+      lVar2 = (ulonglong)DAT_83700890 - lVar2) {
+    dwMilliseconds = (DWORD)lVar2;
+    if (((0 < (int)dwMilliseconds) ||
+        (MyAssertHandler(0xffffffff8209a924,0xbe8,0,0xffffffff8209b05c,0xffffffff8209b04c,lVar2),
+        dwMilliseconds != 0)) && (*(int *)(*(int *)in_r13 + 0xe0) != 0)) {
+      MyAssertHandler(0xffffffff8209a924,0xf5,0,0xffffffff82000f98,0xffffffff8209a964);
     }
-    Sleep(uVar2);
-    iVar1 = Sys_Milliseconds();
-    uVar2 = g_timeoutFileRead - iVar1;
+    Sleep(dwMilliseconds);
+    lVar2 = Sys_Milliseconds();
   }
   __restgprlr_25();
   return;
@@ -2204,57 +1957,53 @@ void Sys_WaitFileRead(void)
 
 // 8251BB50  Sys_LockFileRead  (qcommon/threads.cpp:3055)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_LockFileRead(void)
 
 {
   int iVar1;
-  long lVar2;
+  uint uVar2;
   int *in_r13;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_24();
   do {
-    lVar2 = g_lockFileRead;
-    if (g_lockFileRead != 0) {
+    uVar2 = DAT_83700898;
+    if (DAT_83700898 != 0) {
       if (in_RESERVE != '\0') {
-        g_lockFileRead =
-             storeWordConditionalIndexed((ulonglong)(uint)g_lockFileRead,0,0xffffffff83700898);
+        DAT_83700898 = storeWordConditionalIndexed((ulonglong)DAT_83700898,0,0xffffffff83700898);
         in_cr0 = 2;
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      g_lockFileRead = storeWordConditionalIndexed(1,0,0xffffffff83700898);
+      DAT_83700898 = storeWordConditionalIndexed(1,0,0xffffffff83700898);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (lVar2 != 0) {
+  if (uVar2 != 0) {
     iVar1 = *in_r13;
     do {
       if (*(int *)(iVar1 + 0xe0) != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xf5,
-                        0,"%s");
+        MyAssertHandler(0xffffffff8209a924,0xf5,0,0xffffffff82000f98,0xffffffff8209a964);
       }
       Sleep(1);
       do {
-        lVar2 = g_lockFileRead;
-        if (g_lockFileRead != 0) {
+        uVar2 = DAT_83700898;
+        if (DAT_83700898 != 0) {
           if (in_RESERVE != '\0') {
-            g_lockFileRead =
-                 storeWordConditionalIndexed((ulonglong)(uint)g_lockFileRead,0,0xffffffff83700898);
+            DAT_83700898 = storeWordConditionalIndexed((ulonglong)DAT_83700898,0,0xffffffff83700898)
+            ;
             in_cr0 = 2;
           }
           break;
         }
         if (in_RESERVE != '\0') {
-          g_lockFileRead = storeWordConditionalIndexed(1,0,0xffffffff83700898);
+          DAT_83700898 = storeWordConditionalIndexed(1,0,0xffffffff83700898);
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-    } while (lVar2 != 0);
+    } while (uVar2 != 0);
   }
   __restgprlr_24();
   return;
@@ -2268,26 +2017,23 @@ void Sys_UnlockFileRead(int param_1)
 {
   int iVar1;
   
-  if (g_lockFileRead == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xbf7,0,
-                    "%s");
+  if (DAT_83700898 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0xbf7,0,0xffffffff82000f98,0xffffffff8209b070);
   }
   iVar1 = Sys_Milliseconds();
-  g_timeoutFileRead = iVar1 + param_1;
+  DAT_83700890 = iVar1 + param_1;
   sync(1);
-  g_lockFileRead = 0;
+  DAT_83700898 = 0;
   return;
 }
 
 
 // 8251BCB8  Sys_EnterUIOwnership  (qcommon/threads.cpp:3082)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_EnterUIOwnership(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   ulonglong uVar2;
   char in_RESERVE;
   byte in_cr0;
@@ -2301,20 +2047,18 @@ void Sys_EnterUIOwnership(void)
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   if ((int)(uVar2 + 1) == 1) {
-    if (g_uiOwnershipThreadId != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xc0e,0
-                      ,"%s\n\t(g_uiOwnershipThreadId) = %i");
+    if (DAT_8370089c != 0) {
+      MyAssertHandler(0xffffffff8209a924,0xc0e,0,0xffffffff8209b0d0,0xffffffff8209b0b4,DAT_8370089c)
+      ;
     }
-    g_uiOwnershipThreadId = Sys_GetCurrentThreadId();
+    DAT_8370089c = Sys_GetCurrentThreadId();
   }
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  if (g_uiOwnershipThreadId != uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xc11,0,
-                    "%s\n\t(g_uiOwnershipThreadId) = %i");
+  if (DAT_8370089c != DVar1) {
+    MyAssertHandler(0xffffffff8209a924,0xc11,0,0xffffffff8209b0d0,0xffffffff8209b080,DAT_8370089c);
   }
   __restgprlr_28();
   return;
@@ -2323,25 +2067,21 @@ void Sys_EnterUIOwnership(void)
 
 // 8251BDA0  Sys_LeaveUIOwnership  (qcommon/threads.cpp:3095)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_LeaveUIOwnership(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   ulonglong uVar2;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_29();
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  if (g_uiOwnershipThreadId != uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xc19,0,
-                    "%s\n\t(g_uiOwnershipThreadId) = %i");
+  if (DAT_8370089c != DVar1) {
+    MyAssertHandler(0xffffffff8209a924,0xc19,0,0xffffffff8209b0d0,0xffffffff8209b080,DAT_8370089c);
   }
   do {
     uVar2 = (ulonglong)DAT_837007a0;
@@ -2351,7 +2091,7 @@ void Sys_LeaveUIOwnership(void)
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   if ((int)(uVar2 - 1) == 0) {
-    g_uiOwnershipThreadId = 0;
+    DAT_8370089c = 0;
   }
   __restgprlr_29();
   return;
@@ -2360,64 +2100,54 @@ void Sys_LeaveUIOwnership(void)
 
 // 8251BE58  Sys_AbortUIOwnership  (qcommon/threads.cpp:3105)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_AbortUIOwnership(void)
 
 {
   DAT_837007a0 = 0;
-  g_uiOwnershipThreadId = 0;
+  DAT_8370089c = 0;
   return;
 }
 
 
 // 8251BE70  Sys_SetUpdateScreenThread  (qcommon/threads.cpp:3122)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_SetUpdateScreenThread(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
-    g_updateScreenThread = uVar1;
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
+    DAT_837008ec = DVar1;
     return;
   }
-  g_updateScreenThread = uVar1;
+  DAT_837008ec = DVar1;
   return;
 }
 
 
 // 8251BEF0  Sys_ClearUpdateScreenThread  (qcommon/threads.cpp:3130)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Sys_ClearUpdateScreenThread(void)
 
 {
-  g_updateScreenThread = 0;
+  DAT_837008ec = 0;
   return;
 }
 
 
 // 8251BF00  Sys_IsUpdateScreenThread  (qcommon/threads.cpp:3138)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Sys_IsUpdateScreenThread(void)
+bool Sys_IsUpdateScreenThread(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = GetCurrentThreadId();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
-                    "%s");
+  DVar1 = GetCurrentThreadId();
+  if (DVar1 == 0) {
+    MyAssertHandler(0xffffffff8209a924,0x102,0,0xffffffff82000f98,0xffffffff8209a984);
   }
-  return (uint)LZCOUNT(uVar1 - g_updateScreenThread) >> 5;
+  return DVar1 == DAT_837008ec;
 }
 

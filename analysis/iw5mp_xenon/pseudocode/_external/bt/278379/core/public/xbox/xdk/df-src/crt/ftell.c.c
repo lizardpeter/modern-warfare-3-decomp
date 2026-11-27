@@ -2,23 +2,23 @@
 
 // 8291C020  ftell  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/ftell.c:45)
 
-long ftell(_iobuf *param_1)
+long ftell(FILE *_File)
 
 {
   int *piVar1;
   long lVar2;
-  _iobuf *p_Stack00000014;
+  FILE *pFStack00000014;
   
-  p_Stack00000014 = param_1;
-  if (param_1 == (_iobuf *)0x0) {
+  pFStack00000014 = _File;
+  if (_File == (FILE *)0x0) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
     lVar2 = -1;
   }
   else {
-    _lock_file(param_1);
-    lVar2 = _ftell_nolock(param_1);
+    _lock_file(_File);
+    lVar2 = _ftell_nolock(_File);
     FUN_8291c0c4();
   }
   return lVar2;
@@ -27,114 +27,114 @@ long ftell(_iobuf *param_1)
 
 // 8291BDF8  _ftell_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/ftell.c:82)
 
-long _ftell_nolock(_iobuf *param_1)
+long _ftell_nolock(FILE *_File)
 
 {
   uint uVar1;
   int iVar2;
   bool bVar3;
-  _iobuf *p_Var5;
-  int *piVar6;
+  FILE *_File_00;
+  int *piVar5;
   longlong lVar4;
-  uint uVar7;
-  long lVar8;
-  long lVar9;
-  ulonglong uVar10;
+  uint _FileHandle;
+  long lVar6;
+  long lVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  longlong lVar10;
   ulonglong uVar11;
   longlong lVar12;
-  ulonglong uVar13;
-  longlong lVar14;
-  int iVar15;
+  int iVar13;
   
-  p_Var5 = (_iobuf *)__savegprlr_24(param_1);
-  if (p_Var5 == (_iobuf *)0x0) {
-    piVar6 = _errno();
-    *piVar6 = 0x16;
+  _File_00 = (FILE *)__savegprlr_24(_File);
+  if (_File_00 == (FILE *)0x0) {
+    piVar5 = _errno();
+    *piVar5 = 0x16;
     _invalid_parameter_noinfo();
   }
   else {
-    uVar7 = _fileno(p_Var5);
-    if (p_Var5->_cnt < 0) {
-      p_Var5->_cnt = 0;
+    _FileHandle = _fileno(_File_00);
+    if (_File_00->_cnt < 0) {
+      _File_00->_cnt = 0;
     }
-    lVar9 = _lseek(uVar7,0,1);
-    lVar14 = (longlong)lVar9;
-    if (-1 < lVar14) {
-      uVar1 = p_Var5->_flag;
+    lVar7 = _lseek(_FileHandle,0,1);
+    lVar12 = (longlong)lVar7;
+    if (-1 < lVar12) {
+      uVar1 = _File_00->_flag;
       if ((uVar1 & 0x108) == 0) {
-        lVar4 = lVar14 - (ulonglong)(uint)p_Var5->_cnt;
+        lVar4 = lVar12 - (ulonglong)(uint)_File_00->_cnt;
         goto LAB_8291c010;
       }
-      uVar10 = ZEXT48(p_Var5->_ptr);
-      uVar13 = ZEXT48(p_Var5->_base);
-      lVar4 = uVar10 - uVar13;
+      uVar8 = ZEXT48(_File_00->_ptr);
+      uVar11 = ZEXT48(_File_00->_base);
+      lVar4 = uVar8 - uVar11;
+      iVar2 = (int)_FileHandle >> 5;
       if ((uVar1 & 3) == 0) {
         if ((uVar1 & 0x80) == 0) {
-          piVar6 = _errno();
+          piVar5 = _errno();
           lVar4 = -1;
-          *piVar6 = 0x16;
+          *piVar5 = 0x16;
           goto LAB_8291c010;
         }
       }
-      else if (((*(byte *)(*(int *)(&__pioinfo + ((int)uVar7 >> 5) * 4) + (uVar7 & 0x1f) * 0x48 + 4)
-                & 0x80) != 0) && (uVar13 < uVar10)) {
-        uVar11 = uVar13;
+      else if (((*(byte *)((&DAT_84897dc0)[iVar2] + (_FileHandle & 0x1f) * 0x48 + 4) & 0x80) != 0)
+              && (uVar11 < uVar8)) {
+        uVar9 = uVar11;
         do {
-          if (*(char *)uVar11 == '\n') {
+          if (*(char *)uVar9 == '\n') {
             lVar4 = lVar4 + 1;
           }
-          uVar11 = uVar11 + 1;
-        } while ((uVar11 & 0xffffffff) < ZEXT48(p_Var5->_ptr));
+          uVar9 = uVar9 + 1;
+        } while ((uVar9 & 0xffffffff) < ZEXT48(_File_00->_ptr));
       }
-      if (lVar9 == 0) goto LAB_8291c010;
+      if (lVar7 == 0) goto LAB_8291c010;
       if ((uVar1 & 1) != 0) {
-        if (p_Var5->_cnt == 0) {
+        if (_File_00->_cnt == 0) {
           lVar4 = 0;
         }
         else {
-          iVar2 = ((int)uVar7 >> 5) * 4;
-          uVar10 = (uVar10 - uVar13) + (ulonglong)(uint)p_Var5->_cnt;
-          iVar15 = (uVar7 & 0x1f) * 0x48;
-          if ((*(byte *)(*(int *)(&__pioinfo + iVar2) + iVar15 + 4) & 0x80) != 0) {
-            lVar8 = _lseek(uVar7,0,2);
-            if (lVar8 == lVar9) {
-              uVar13 = ZEXT48(p_Var5->_base);
-              if (uVar13 < (uVar13 + uVar10 & 0xffffffff)) {
-                lVar12 = (uVar13 + uVar10) - uVar13;
+          uVar8 = (uVar8 - uVar11) + (ulonglong)(uint)_File_00->_cnt;
+          iVar13 = (_FileHandle & 0x1f) * 0x48;
+          if ((*(byte *)((&DAT_84897dc0)[iVar2] + iVar13 + 4) & 0x80) != 0) {
+            lVar6 = _lseek(_FileHandle,0,2);
+            if (lVar6 == lVar7) {
+              uVar11 = ZEXT48(_File_00->_base);
+              if (uVar11 < (uVar11 + uVar8 & 0xffffffff)) {
+                lVar10 = (uVar11 + uVar8) - uVar11;
                 do {
-                  if (*(char *)uVar13 == '\n') {
-                    uVar10 = uVar10 + 1;
+                  if (*(char *)uVar11 == '\n') {
+                    uVar8 = uVar8 + 1;
                   }
-                  uVar13 = uVar13 + 1;
-                  lVar12 = lVar12 + -1;
-                } while (lVar12 != 0);
+                  uVar11 = uVar11 + 1;
+                  lVar10 = lVar10 + -1;
+                } while (lVar10 != 0);
               }
-              bVar3 = (p_Var5->_flag & 0x2000U) == 0;
+              bVar3 = (_File_00->_flag & 0x2000U) == 0;
             }
             else {
-              lVar9 = _lseek(uVar7,lVar9,0);
-              if (lVar9 < 0) goto LAB_8291be20;
-              if (((0x200 < (uVar10 & 0xffffffff)) || ((p_Var5->_flag & 8U) == 0)) ||
-                 (uVar10 = 0x200, (p_Var5->_flag & 0x400U) != 0)) {
-                uVar10 = (ulonglong)(uint)p_Var5->_bufsiz;
+              lVar7 = _lseek(_FileHandle,lVar7,0);
+              if (lVar7 < 0) goto LAB_8291be20;
+              if (((0x200 < (uVar8 & 0xffffffff)) || ((_File_00->_flag & 8U) == 0)) ||
+                 (uVar8 = 0x200, (_File_00->_flag & 0x400U) != 0)) {
+                uVar8 = (ulonglong)(uint)_File_00->_bufsiz;
               }
-              bVar3 = (*(byte *)(*(int *)(&__pioinfo + iVar2) + iVar15 + 4) & 4) == 0;
+              bVar3 = (*(byte *)((&DAT_84897dc0)[iVar2] + iVar13 + 4) & 4) == 0;
             }
             if (!bVar3) {
-              uVar10 = uVar10 + 1;
+              uVar8 = uVar8 + 1;
             }
           }
-          lVar14 = lVar14 - uVar10;
+          lVar12 = lVar12 - uVar8;
         }
       }
-      lVar4 = lVar4 + lVar14;
+      lVar4 = lVar4 + lVar12;
       goto LAB_8291c010;
     }
   }
 LAB_8291be20:
   lVar4 = -1;
 LAB_8291c010:
-  lVar9 = __restgprlr_24(lVar4);
-  return lVar9;
+  lVar7 = __restgprlr_24(lVar4);
+  return lVar7;
 }
 

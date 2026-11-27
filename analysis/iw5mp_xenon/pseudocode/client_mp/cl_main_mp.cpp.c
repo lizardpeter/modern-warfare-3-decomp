@@ -2,38 +2,31 @@
 
 // 82340BD0  CL_GetLocalClientVoiceCommunication  (client_mp/cl_voice.h:75)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-voiceCommunication_t * CL_GetLocalClientVoiceCommunication(LocalClientNum_t param_1)
+longlong CL_GetLocalClientVoiceCommunication(ulonglong param_1)
 
 {
-  if (LOCAL_CLIENT_3 < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.h",0x4d,0,
-                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820301a4,0x4d,0,0xffffffff820011a8,param_1,4);
   }
-  return cl_voiceCommunication + param_1;
+  return param_1 * 0x74 + -0x7d4c07a0;
 }
 
 
 // 82340D58  StructuredData_MakeBuffer  (universal/com_structureddatadef.h:82)
 
-void StructuredData_MakeBuffer(StructuredDataBuffer *param_1,uchar *param_2,int param_3)
+void StructuredData_MakeBuffer(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
   undefined4 *puVar1;
-  ulonglong uVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  puVar1 = (undefined4 *)__savegprlr_27(param_1);
+  puVar1 = (undefined4 *)__savegprlr_27();
   if (puVar1 == (undefined4 *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\../universal/com_structureddatadef.h"
-                    ,0x53,0,"%s");
+    MyAssertHandler(0xffffffff82030258,0x53,0,0xffffffff82000f98,0xffffffff82012420);
   }
-  if (((uVar2 & 0xffffffff) == 0) && (param_3 != 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\../universal/com_structureddatadef.h"
-                    ,0x54,0,"%s");
+  if (((param_2 & 0xffffffff) == 0) && (param_3 != 0)) {
+    MyAssertHandler(0xffffffff82030258,0x54,0,0xffffffff82000f98,0xffffffff82030240);
   }
-  *puVar1 = (int)uVar2;
+  *puVar1 = (int)param_2;
   puVar1[1] = param_3;
   __restgprlr_27();
   return;
@@ -42,215 +35,206 @@ void StructuredData_MakeBuffer(StructuredDataBuffer *param_1,uchar *param_2,int 
 
 // 82340C38  Party_PacketIsFromHost  (client_mp/party_local.h:225)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int Party_PacketIsFromHost(PartyData *param_1,netadr_t param_2)
+bool Party_PacketIsFromHost(int param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  undefined8 in_r4;
-  longlong lVar2;
-  XNADDR *pXVar3;
-  XNADDR *pXVar4;
-  netadrtype_t nStack00000020;
-  netadr_t in_stack_ffffff68;
-  netadr_t in_stack_ffffff78;
-  XNKID aXStack_50 [2];
-  XNADDR local_40;
+  byte bVar1;
+  byte bVar2;
+  int iVar3;
+  byte *pbVar4;
+  byte *pbVar5;
+  int iStack00000020;
+  undefined8 uStack00000028;
+  undefined1 auStack_50 [16];
+  byte local_40 [48];
   
-  nStack00000020 = (netadrtype_t)((ulonglong)in_r4 >> 0x20);
-  if (param_1->inParty != 0) {
-    if (param_1->areWeHost != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\party_local.h",
-                      0xe4,0,"%s");
+  if (*(int *)(param_1 + 0x1ef4) != 0) {
+    _iStack00000020 = param_2;
+    uStack00000028 = param_3;
+    if (*(int *)(param_1 + 0x1eec) != 0) {
+      MyAssertHandler(0xffffffff820301e8,0xe4,0,0xffffffff82000f98,0xffffffff8203022c);
     }
-    iVar1 = NET_CompareAdr(in_stack_ffffff68,in_stack_ffffff78);
-    if ((iVar1 != 0) || ((nStack00000020 == NA_LOOPBACK && (param_1->areWeHost != 0)))) {
-      return 1;
+    iVar3 = NET_CompareAdr(*(undefined8 *)(param_1 + 0x1e2c),*(undefined8 *)(param_1 + 0x1e34),
+                           _iStack00000020,uStack00000028);
+    if ((iVar3 != 0) || ((iStack00000020 == 2 && (*(int *)(param_1 + 0x1eec) != 0)))) {
+      return true;
     }
-    iVar1 = NET_GetXnAddrForNetAddr((netadr_t *)&stack0x00000020,&local_40,aXStack_50);
-    if (iVar1 != 0) {
-      pXVar4 = &(param_1->currentHost).sessionInfo.hostAddress;
-      pXVar3 = &local_40;
+    iVar3 = NET_GetXnAddrForNetAddr(&stack0x00000020,local_40,auStack_50);
+    if (iVar3 != 0) {
+      pbVar5 = (byte *)(param_1 + 0x1e44);
+      pbVar4 = local_40;
       do {
-        lVar2 = (ulonglong)(pXVar4->ina).S_un.S_un_b.s_b1 -
-                (ulonglong)(pXVar3->ina).S_un.S_un_b.s_b1;
-        if (lVar2 != 0) break;
-        pXVar4 = (XNADDR *)((int)&(pXVar4->ina).S_un + 1);
-        pXVar3 = (XNADDR *)((int)&(pXVar3->ina).S_un + 1);
-      } while (pXVar4 != (XNADDR *)&(param_1->currentHost).sessionInfo.keyExchangeKey);
-      return (uint)LZCOUNT((int)lVar2) >> 5;
+        bVar1 = *pbVar5;
+        bVar2 = *pbVar4;
+        if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+        pbVar5 = pbVar5 + 1;
+        pbVar4 = pbVar4 + 1;
+      } while (pbVar5 != (byte *)(param_1 + 0x1e68));
+      return (int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0;
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 82340DE0  TRACK_cl_main  (client_mp/cl_main_mp.cpp:426)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void TRACK_cl_main(void)
+
+{
+  track_static_alloc_internal(0xffffffff82b3e4f0,0x790,0xffffffff820302b8,9);
+  track_static_alloc_internal(0xffffffff82aa1b00,0x98600,0xffffffff820302b4,9);
+  return;
+}
+
 
 // 82340E38  CL_GetXuidForLocalClient  (client_mp/cl_main_mp.cpp:439)
 
-char * CL_GetXuidForLocalClient(int param_1)
+void CL_GetXuidForLocalClient(undefined8 param_1)
 
 {
-  char *pcVar1;
-  
-  if (((systemlink->current).enabled == false) &&
-     (((splitscreen->current).enabled == false || ((onlinegame->current).enabled != false)))) {
-    pcVar1 = Live_GetLocalClientXuidString(param_1);
-    return pcVar1;
+  if ((*(char *)(DAT_82aa1ae4 + 0xc) == '\0') &&
+     ((*(char *)(DAT_82b3ecb8 + 0xc) == '\0' || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')))) {
+    Live_GetLocalClientXuidString(param_1);
+    return;
   }
-  if ((onlinegame->current).enabled != false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1bb,0,"%s");
+  if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x1bb,0,0xffffffff82000f98,0xffffffff8203030c);
   }
-  pcVar1 = Live_GetLocalClientOfflineXuidString(param_1);
-  return pcVar1;
+  Live_GetLocalClientOfflineXuidString(param_1);
+  return;
 }
 
 
 // 82340B08  CountBitsEnabled  (universal/com_math.h:442)
 
-int CountBitsEnabled(uint param_1)
+longlong CountBitsEnabled(ulonglong param_1)
 
 {
   ulonglong uVar1;
   
-  uVar1 = ((((ulonglong)(longlong)(int)param_1 >> 0x10 & 0xffff) * 0x8000400020001 >> 3 &
-           0x1111111111111111) +
-          (((longlong)(int)param_1 & 0xffffU) * 0x8000400020001 >> 3 & 0x1111111111111111)) % 0xfff;
-  return ((uint)((longlong)uVar1 >> 4) & 0xf) + ((uint)uVar1 & 0xf) + (int)(uVar1 >> 8);
+  uVar1 = (((param_1 >> 0x10 & 0xffff) * 0x8000400020001 >> 3 & 0x1111111111111111) +
+          ((param_1 & 0xffff) * 0x8000400020001 >> 3 & 0x1111111111111111)) % 0xfff;
+  return ((longlong)uVar1 >> 4 & 0xfU) + (uVar1 & 0xf) + (longlong)(int)(uVar1 >> 8);
 }
 
 
 // 82340EF0  CL_AddReliableCommand  (client_mp/cl_main_mp.cpp:468)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void CL_AddReliableCommand(LocalClientNum_t param_1,char *param_2)
+void CL_AddReliableCommand(undefined8 param_1,undefined8 param_2)
 
 {
-  clientConnection_t *pcVar1;
-  int iVar2;
+  int iVar1;
+  uint uVar2;
   
-  pcVar1 = CL_GetLocalClientConnection(param_1);
-  if (0x80 < pcVar1->reliableSequence - pcVar1->reliableAcknowledge) {
-    Com_Error(ERR_DROP,"EXE_ERR_CLIENT_CMD_OVERFLOW");
+  iVar1 = CL_GetLocalClientConnection();
+  if (0x80 < *(int *)(iVar1 + 0x130) - *(int *)(iVar1 + 0x134)) {
+    Com_Error(1,0xffffffff8203032c);
   }
-  iVar2 = pcVar1->reliableSequence + 1;
-  pcVar1->reliableSequence = iVar2;
-  MSG_WriteReliableCommandToBuffer
-            (param_2,pcVar1->reliableCommands[0] + (iVar2 * 0x400 & 0x1fc00),0x400);
+  uVar2 = *(int *)(iVar1 + 0x130) + 1;
+  *(uint *)(iVar1 + 0x130) = uVar2;
+  MSG_WriteReliableCommandToBuffer(param_2,(uVar2 & 0x7f) * 0x400 + iVar1 + 0x138,0x400);
   return;
 }
 
 
 // 82340F70  CL_Live_StartLobby  (client_mp/cl_main_mp.cpp:526)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_StartLobby(void)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  LocalClientNum_t LVar3;
-  int iVar4;
-  bool bVar5;
+  undefined4 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
   int iVar6;
-  int iVar7;
-  PartyActiveClient aPStack_40 [8];
+  undefined8 uVar4;
+  char cVar7;
+  undefined8 uVar5;
+  undefined8 uVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  undefined1 auStack_40 [4];
+  undefined4 local_3c;
   
   __savegprlr_26();
-  if ((onlinegame->current).enabled == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x217,0,"%s\n\t%s");
+  if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x217,0,0xffffffff820011f4,0xffffffff820304bc,
+                    0xffffffff820304d8);
   }
   R_BeginRemoteScreenUpdate();
   Session_ResetMinPing();
-  pPVar1 = Lobby_GetPartyData();
-  Party_SetDisplayMapName(pPVar1);
-  Party_SetDisplayGameType(pPVar1);
-  iVar2 = Cmd_LocalControllerIndex();
-  LVar3 = Cmd_LocalClientNum();
-  if (LVar3 != LOCAL_CLIENT_0) {
-    Com_Error(ERR_DROP,
-              "\x15DEVONLY - Must create game lobby with LOCAL_CLIENT_0. Bug to code with log file."
-             );
+  uVar2 = Lobby_GetPartyData();
+  Party_SetDisplayMapName();
+  Party_SetDisplayGameType(uVar2);
+  uVar2 = Cmd_LocalControllerIndex();
+  uVar3 = Cmd_LocalClientNum();
+  if ((int)uVar3 != 0) {
+    Com_Error(1,0xffffffff82030468);
   }
-  GamerProfile_UpdateProfileAndSaveIfNeeded(iVar2);
-  iVar4 = Party_GetSecondaryActiveClient(&g_partyData,aPStack_40);
-  if (iVar4 != 0) {
-    GamerProfile_UpdateProfileAndSaveIfNeeded(aPStack_40[0].localControllerIndex);
+  GamerProfile_UpdateProfileAndSaveIfNeeded(uVar2);
+  iVar6 = Party_GetSecondaryActiveClient(0xffffffff82b55118,auStack_40);
+  if (iVar6 != 0) {
+    GamerProfile_UpdateProfileAndSaveIfNeeded(local_3c);
   }
-  pPVar1 = Lobby_GetPartyData();
-  Party_Sleep(pPVar1);
-  pPVar1 = Lobby_GetPartyData();
-  Party_StopParty(pPVar1);
-  Session_EndCreateSessionTasks(&g_partySession);
-  Session_DeleteSession(&g_serverSession);
-  Session_DeleteSession(&g_searchSession);
-  Session_DeleteSession(&g_partyPresenceSession);
-  Live_CleanUpQoSProbes(iVar2);
+  Lobby_GetPartyData();
+  Party_Sleep();
+  Lobby_GetPartyData();
+  Party_StopParty();
+  Session_EndCreateSessionTasks(0xffffffff844c6c08);
+  Session_DeleteSession(0xffffffff844c7860);
+  Session_DeleteSession(0xffffffff844c7e88);
+  Session_DeleteSession(0xffffffff844ac9b0);
+  Live_CleanUpQoSProbes(uVar2);
   Session_CleanUpSearches();
-  pPVar1 = Lobby_GetPartyData();
-  Party_Awake(pPVar1,iVar2,1);
-  Com_Printf(0xe,"CL_Live_StartLobby() was called, calling Party_StopParty\n");
-  if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x242,0,"%s");
+  uVar4 = Lobby_GetPartyData();
+  Party_Awake(uVar4,uVar2,1);
+  Com_Printf(0xe,0xffffffff8203042c);
+  if (DAT_844c7870 != 0) {
+    MyAssertHandler(0xffffffff820302c8,0x242,0,0xffffffff82000f98,0xffffffff82030408);
   }
   Party_ResetTweakDvars();
   StructuredData_ValidateResetDvars();
-  Live_SetPlaylistVersion(iVar2);
-  Playlist_RunRules(iVar2,0);
+  Live_SetPlaylistVersion(uVar2);
+  Playlist_RunRules(uVar2,0);
   Live_SetCurrentGametype();
-  Live_SetPlaylistNum(iVar2,(playlist->current).integer);
-  Live_SetCountryCodeAndRegion(iVar2);
-  Session_EndNonSkillSessionTasks(g_partyData.session);
-  if (g_partyData.presenceSession != (SessionData *)0x0) {
-    Session_EndNonSkillSessionTasks(g_partyData.presenceSession);
+  Live_SetPlaylistNum(uVar2,*(undefined4 *)(DAT_82aa1adc + 0xc));
+  Live_SetCountryCodeAndRegion(uVar2);
+  Session_EndNonSkillSessionTasks(DAT_82b55118);
+  if (DAT_82b55120 != 0) {
+    Session_EndNonSkillSessionTasks();
   }
-  Voice_DisableLocalMics(g_partyData.session);
-  pPVar1 = Lobby_GetPartyData();
-  iVar4 = Party_GetLobbySessionFlags(pPVar1,iVar2);
-  bVar5 = Live_CanHostServer((party_maxplayers->current).integer);
-  if (bVar5) {
-    iVar7 = (sv_privateClients->current).integer;
-    iVar6 = (int)(party_maxplayers->current).string - iVar7;
-  }
-  else {
-    if (g_shouldWeHost == false) {
-      Com_Printf(0xe,"g_shouldWeHost is false, so we can\'t host\n");
+  Voice_DisableLocalMics(DAT_82b55118);
+  uVar4 = Lobby_GetPartyData();
+  uVar4 = Party_GetLobbySessionFlags(uVar4,uVar2);
+  cVar7 = Live_CanHostServer(*(undefined4 *)(DAT_82b59048 + 0xc));
+  if (cVar7 == '\0') {
+    if (DAT_842537fa == '\0') {
+      Com_Printf(0xe,0xffffffff820303dc);
     }
-    else if (_g_natType == 3) {
-      Com_Printf(0xe,"we have a strict NAT, so we can\'t host\n");
+    else if (DAT_8299519c == 3) {
+      Com_Printf(0xe,0xffffffff820303b4);
     }
     else {
-      Live_GetNecessaryBandwidth((party_maxplayers->current).integer);
-      Live_GetUploadSpeed();
-      Com_Printf(0xe,
-                 "Unable to host a game because our upload (%i) is not enough to host %i players, which requires %i upload\n"
-                );
+      uVar8 = Live_GetNecessaryBandwidth(*(undefined4 *)(DAT_82b59048 + 0xc));
+      uVar1 = *(undefined4 *)(DAT_82b59048 + 0xc);
+      uVar5 = Live_GetUploadSpeed();
+      Com_Printf(0xe,0xffffffff82030348,uVar5,uVar1,uVar8);
     }
-    iVar6 = 0;
-    iVar7 = (party_maxplayers->current).integer;
-  }
-  if (g_generateAllMaps == 0) {
-    bVar5 = Session_ShouldAdvertise(iVar2);
+    lVar9 = 0;
+    uVar10 = (ulonglong)*(uint *)(DAT_82b59048 + 0xc);
   }
   else {
-    bVar5 = true;
+    uVar10 = (ulonglong)*(uint *)(DAT_83d0b554 + 0xc);
+    lVar9 = *(uint *)(DAT_82b59048 + 0xc) - uVar10;
   }
-  pPVar1 = Lobby_GetPartyData();
-  PartyHost_StartParty(pPVar1,LVar3,iVar2,iVar4,iVar7,iVar6,bVar5);
+  if (DAT_82aa1a88 == 0) {
+    uVar8 = Session_ShouldAdvertise(uVar2);
+  }
+  else {
+    uVar8 = 1;
+  }
+  uVar5 = Lobby_GetPartyData();
+  PartyHost_StartParty(uVar5,uVar3,uVar2,uVar4,uVar10,lVar9,uVar8);
   R_EndRemoteScreenUpdate();
   __restgprlr_26();
   return;
@@ -259,49 +243,49 @@ void CL_Live_StartLobby(void)
 
 // 82341250  CL_Live_SessionUpdate  (client_mp/cl_main_mp.cpp:651)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_SessionUpdate(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  PartyData *pPVar3;
-  int iVar4;
-  bool bVar6;
-  LocalClientNum_t LVar5;
+  uint uVar1;
+  uint uVar2;
+  int iVar5;
+  undefined8 uVar3;
+  char cVar6;
+  undefined8 uVar4;
   
   __savegprlr_26();
-  pPVar3 = Lobby_GetPartyData();
-  if (((pPVar3->inParty != 0) && (pPVar3->areWeHost != 0)) &&
-     ((xblive_privatematch->current).enabled != false)) {
-    iVar1 = (sv_privateClients->current).integer;
-    iVar4 = Session_CurrentFlags(&g_serverSession);
-    bVar6 = Session_NeedToSyncParams
-                      (&g_serverSession,(int)(party_maxplayers->current).string - iVar1,iVar1,iVar4)
-    ;
-    if (bVar6) {
-      Session_CurrentFlags(&g_serverSession);
-      Com_Printf(0x10,
-                 "Updating session in CL_Live_SessionUpdate to have %i flags, %i public, and %i private slots\n"
-                );
+  iVar5 = Lobby_GetPartyData();
+  if (((*(int *)(iVar5 + 0x1ef4) != 0) && (*(int *)(iVar5 + 0x1eec) != 0)) &&
+     (*(char *)(DAT_84253bb8 + 0xc) != '\0')) {
+    uVar1 = *(uint *)(DAT_83d0b554 + 0xc);
+    uVar3 = Session_CurrentFlags(0xffffffff844c7860);
+    cVar6 = Session_NeedToSyncParams
+                      (0xffffffff844c7860,
+                       (ulonglong)*(uint *)(DAT_82b59048 + 0xc) - (ulonglong)uVar1,(ulonglong)uVar1,
+                       uVar3);
+    if (cVar6 != '\0') {
+      uVar1 = *(uint *)(DAT_83d0b554 + 0xc);
+      uVar2 = *(uint *)(DAT_82b59048 + 0xc);
+      uVar3 = Session_CurrentFlags(0xffffffff844c7860);
+      Com_Printf(0x10,0xffffffff82030558,uVar3,(ulonglong)uVar2 - (ulonglong)uVar1,(ulonglong)uVar1)
+      ;
       PartyHost_DropPlayersToMatchSlots
-                (pPVar3,(int)(party_maxplayers->current).string -
-                        (sv_privateClients->current).integer,(sv_privateClients->current).integer);
-      iVar1 = (sv_privateClients->current).integer;
-      iVar4 = Session_CurrentFlags(&g_serverSession);
-      pcVar2 = (party_maxplayers->current).string;
-      LVar5 = Cmd_LocalClientNum();
-      Session_SyncParams(LVar5,&g_serverSession,(int)pcVar2 - iVar1,iVar1,iVar4);
+                (iVar5,(ulonglong)*(uint *)(DAT_82b59048 + 0xc) -
+                       (ulonglong)*(uint *)(DAT_83d0b554 + 0xc),
+                 (ulonglong)*(uint *)(DAT_83d0b554 + 0xc));
+      uVar1 = *(uint *)(DAT_83d0b554 + 0xc);
+      uVar3 = Session_CurrentFlags(0xffffffff844c7860);
+      uVar2 = *(uint *)(DAT_82b59048 + 0xc);
+      uVar4 = Cmd_LocalClientNum();
+      Session_SyncParams(uVar4,0xffffffff844c7860,(ulonglong)uVar2 - (ulonglong)uVar1,
+                         (ulonglong)uVar1,uVar3);
     }
-    Party_SetDisplayMapName(pPVar3);
-    Party_SetDisplayGameType(pPVar3);
+    Party_SetDisplayMapName(iVar5);
+    Party_SetDisplayGameType(iVar5);
     __restgprlr_26();
     return;
   }
-  Com_PrintWarning(0xe,"xsessionupdate should only be called as a private match lobby host.\n");
+  Com_PrintWarning(0xe,0xffffffff82030510);
   __restgprlr_26();
   return;
 }
@@ -309,31 +293,24 @@ void CL_Live_SessionUpdate(void)
 
 // 82341390  CL_Live_TogglePrivateSlots  (client_mp/cl_main_mp.cpp:674)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_TogglePrivateSlots(void)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
+  int iVar1;
   
-  pPVar1 = Lobby_GetPartyData();
-  if (((pPVar1->inParty == 0) || (pPVar1->areWeHost == 0)) ||
-     ((xblive_privatematch->current).enabled == false)) {
-    Com_PrintWarning(0xe,"xtogprivateslots should only be called as a private match lobby host.\n");
+  iVar1 = Lobby_GetPartyData();
+  if (((*(int *)(iVar1 + 0x1ef4) == 0) || (*(int *)(iVar1 + 0x1eec) == 0)) ||
+     (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
+    Com_PrintWarning(0xe,0xffffffff820305b8);
   }
   else {
-    iVar2 = (party_maxplayers->current).integer;
-    if ((sv_privateClients->current).integer == iVar2) {
-      iVar2 = 1;
+    iVar1 = *(int *)(DAT_82b59048 + 0xc);
+    if (*(int *)(DAT_83d0b554 + 0xc) == iVar1) {
+      iVar1 = 1;
     }
-    Dvar_SetInt(sv_privateClients,iVar2);
-    if (((sv_privateClients->current).integer < 0) || (0x12 < (sv_privateClients->current).integer))
-    {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                      0x2b4,0,"%s\n\t(sv_privateClients->current.integer) = %i");
+    Dvar_SetInt(DAT_83d0b554,iVar1);
+    if ((*(int *)(DAT_83d0b554 + 0xc) < 0) || (0x12 < *(int *)(DAT_83d0b554 + 0xc))) {
+      MyAssertHandler(0xffffffff820302c8,0x2b4,0,0xffffffff82030600,0xffffffff82030630);
       return;
     }
   }
@@ -343,36 +320,30 @@ void CL_Live_TogglePrivateSlots(void)
 
 // 82341470  CL_Live_DecrementPrivateSlots  (client_mp/cl_main_mp.cpp:698)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_DecrementPrivateSlots(void)
 
 {
-  int iVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  uint uVar4;
-  int iVar5;
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  ulonglong uVar4;
   
   __savegprlr_29();
-  iVar1 = (sv_privateClients->current).integer;
-  iVar2 = (party_maxplayers->current).integer;
-  pPVar3 = Lobby_GetPartyData();
-  uVar4 = PartyHost_CountInvitedPlayers(pPVar3);
-  iVar5 = iVar2;
-  if ((int)uVar4 < iVar1) {
-    iVar5 = iVar1 + -1;
+  uVar1 = *(uint *)(DAT_83d0b554 + 0xc);
+  uVar2 = *(uint *)(DAT_82b59048 + 0xc);
+  Lobby_GetPartyData();
+  iVar3 = PartyHost_CountInvitedPlayers();
+  uVar4 = (ulonglong)uVar2;
+  if (iVar3 < (int)uVar1) {
+    uVar4 = (ulonglong)uVar1 - 1;
   }
-  if (((xblive_privatematch->current).enabled != false) && (iVar5 < 4)) {
-    iVar5 = iVar2;
+  if ((*(char *)(DAT_84253bb8 + 0xc) != '\0') && ((int)uVar4 < 4)) {
+    uVar4 = (ulonglong)uVar2;
   }
-  if (((sv_privateClients->current).integer < 1) || (0x12 < (sv_privateClients->current).integer)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x2c7,0,"%s\n\t(sv_privateClients->current.integer) = %i");
+  if ((*(int *)(DAT_83d0b554 + 0xc) < 1) || (0x12 < *(int *)(DAT_83d0b554 + 0xc))) {
+    MyAssertHandler(0xffffffff820302c8,0x2c7,0,0xffffffff82030600,0xffffffff82030688);
   }
-  Dvar_SetInt(sv_privateClients,iVar5);
+  Dvar_SetInt(DAT_83d0b554,uVar4);
   __restgprlr_29();
   return;
 }
@@ -380,99 +351,90 @@ void CL_Live_DecrementPrivateSlots(void)
 
 // 82341520  CL_Live_IncrementPrivateSlots  (client_mp/cl_main_mp.cpp:717)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_IncrementPrivateSlots(void)
 
 {
-  PartyData *pPVar1;
-  uint uVar2;
+  longlong lVar1;
   
-  if ((sv_privateClients->current).integer < (party_maxplayers->current).integer) {
-    uVar2 = (sv_privateClients->current).integer + 1;
+  if ((int)*(uint *)(DAT_83d0b554 + 0xc) < *(int *)(DAT_82b59048 + 0xc)) {
+    lVar1 = (ulonglong)*(uint *)(DAT_83d0b554 + 0xc) + 1;
   }
   else {
-    pPVar1 = Lobby_GetPartyData();
-    uVar2 = PartyHost_CountInvitedPlayers(pPVar1);
+    Lobby_GetPartyData();
+    lVar1 = PartyHost_CountInvitedPlayers();
   }
-  if (((xblive_privatematch->current).enabled != false) && ((int)uVar2 < 4)) {
-    uVar2 = 4;
+  if ((*(char *)(DAT_84253bb8 + 0xc) != '\0') && ((int)lVar1 < 4)) {
+    lVar1 = 4;
   }
-  if (((sv_privateClients->current).integer < 1) || (0x12 < (sv_privateClients->current).integer)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x2dc,0,"%s\n\t(sv_privateClients->current.integer) = %i");
+  if ((*(int *)(DAT_83d0b554 + 0xc) < 1) || (0x12 < *(int *)(DAT_83d0b554 + 0xc))) {
+    MyAssertHandler(0xffffffff820302c8,0x2dc,0,0xffffffff82030600,0xffffffff82030688);
   }
-  Dvar_SetInt(sv_privateClients,uVar2);
+  Dvar_SetInt(DAT_83d0b554,lVar1);
   return;
 }
 
 
 // 823415F0  CL_Live_StartPrivateMatchHost  (client_mp/cl_main_mp.cpp:739)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
 void CL_Live_StartPrivateMatchHost(void)
 
 {
-  char *pcVar1;
-  int iVar2;
-  LocalClientNum_t LVar3;
-  PartyData *pPVar4;
-  uint uVar5;
-  int iVar6;
-  PartyActiveClient aPStack_40 [8];
+  uint uVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  ulonglong uVar6;
+  int iVar7;
+  undefined1 auStack_40 [4];
+  undefined4 local_3c;
   
   __savegprlr_27();
-  if ((onlinegame->current).enabled == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x2e9,0,"%s\n\t%s");
+  if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x2e9,0,0xffffffff820011f4,0xffffffff820304bc,
+                    0xffffffff82030780);
   }
   R_BeginRemoteScreenUpdate();
-  iVar2 = Cmd_LocalControllerIndex();
-  LVar3 = Cmd_LocalClientNum();
-  if (LVar3 != LOCAL_CLIENT_0) {
-    Com_Error(ERR_DROP,
-              "\x15DEVONLY - Must create private match with LOCAL_CLIENT_0. Bug to code with log file."
-             );
+  uVar3 = Cmd_LocalControllerIndex();
+  uVar4 = Cmd_LocalClientNum();
+  if ((int)uVar4 != 0) {
+    Com_Error(1,0xffffffff82030728);
   }
-  pPVar4 = Lobby_GetPartyData();
-  Party_Sleep(pPVar4);
-  Live_CleanUpQoSProbes(iVar2);
+  Lobby_GetPartyData();
+  Party_Sleep();
+  Live_CleanUpQoSProbes(uVar3);
   Session_CleanUpSearches();
-  Com_Printf(0xe,"CL_Live_StartPrivateMatchHost() was called, calling Party_StopParty\n");
-  pPVar4 = Lobby_GetPartyData();
-  Party_StopParty(pPVar4);
-  pPVar4 = Lobby_GetPartyData();
-  Party_Awake(pPVar4,iVar2,1);
-  if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x2fd,0,"%s");
+  Com_Printf(0xe,0xffffffff820306e0);
+  Lobby_GetPartyData();
+  Party_StopParty();
+  uVar5 = Lobby_GetPartyData();
+  Party_Awake(uVar5,uVar3,1);
+  if (DAT_844c7870 != 0) {
+    MyAssertHandler(0xffffffff820302c8,0x2fd,0,0xffffffff82000f98,0xffffffff82030408);
   }
-  Session_EndCreateSessionTasks(g_partyData.session);
-  if (g_partyData.presenceSession != (SessionData *)0x0) {
-    Session_DeleteSession(g_partyData.presenceSession);
+  Session_EndCreateSessionTasks(DAT_82b55118);
+  if (DAT_82b55120 != 0) {
+    Session_DeleteSession();
   }
-  Voice_DisableLocalMics(g_partyData.session);
-  pPVar4 = Lobby_GetPartyData();
-  Party_ClearPartyList(pPVar4);
-  pPVar4 = Lobby_GetPartyData();
-  uVar5 = Party_GetLobbySessionFlags(pPVar4,iVar2);
+  Voice_DisableLocalMics(DAT_82b55118);
+  Lobby_GetPartyData();
+  Party_ClearPartyList();
+  uVar5 = Lobby_GetPartyData();
+  uVar6 = Party_GetLobbySessionFlags(uVar5,uVar3);
   Party_ResetTweakDvars();
   StructuredData_ValidateResetDvars();
-  Live_SetLobbyPresence(iVar2);
-  iVar6 = Party_GetSecondaryActiveClient(&g_partyData,aPStack_40);
-  if (iVar6 != 0) {
-    Live_SetLobbyPresence(aPStack_40[0].localControllerIndex);
+  Live_SetLobbyPresence(uVar3);
+  iVar7 = Party_GetSecondaryActiveClient(0xffffffff82b55118,auStack_40);
+  if (iVar7 != 0) {
+    Live_SetLobbyPresence(local_3c);
   }
-  Dvar_SetInt(sv_privateClients,0);
-  iVar6 = (sv_privateClients->current).integer;
-  pcVar1 = (party_maxplayers->current).string;
-  pPVar4 = Lobby_GetPartyData();
-  PartyHost_StartParty(pPVar4,LVar3,iVar2,uVar5 & 0xfffffff7,iVar6,(int)pcVar1 - iVar6,true);
+  Dvar_SetInt(DAT_83d0b554,0);
+  uVar1 = *(uint *)(DAT_83d0b554 + 0xc);
+  uVar2 = *(uint *)(DAT_82b59048 + 0xc);
+  uVar5 = Lobby_GetPartyData();
+  PartyHost_StartParty
+            (uVar5,uVar4,uVar3,uVar6 << 0x20 | uVar6 & 0xfffffff7,(ulonglong)uVar1,
+             (ulonglong)uVar2 - (ulonglong)uVar1,1);
   GameStateInfo_SetUsingGameStateInfo(1);
   R_EndRemoteScreenUpdate();
   __restgprlr_27();
@@ -482,78 +444,73 @@ void CL_Live_StartPrivateMatchHost(void)
 
 // 823417A8  Live_StartPrivateParty  (client_mp/cl_main_mp.cpp:815)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void Live_StartPrivateParty(LocalClientNum_t param_1,int param_2)
+void Live_StartPrivateParty(undefined8 param_1,undefined8 param_2)
 
 {
-  ulonglong uVar1;
-  LocalClientNum_t LVar2;
-  bool bVar5;
+  undefined8 uVar1;
+  char cVar4;
   int iVar3;
-  PartyData *pPVar4;
-  int local_50 [2];
-  PartyActiveClient aPStack_48 [9];
+  ulonglong uVar2;
+  undefined4 local_50 [2];
+  undefined1 auStack_48 [4];
+  undefined4 local_44;
   
-  LVar2 = __savegprlr_26(param_1);
-  bVar5 = Live_CanUserPlayOnline(param_2,local_50);
-  if (bVar5) {
-    bVar5 = LiveAntiCheat_IsPlayerBanned(param_2);
-    if (!bVar5) {
-      if ((onlinegame->current).enabled == false) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                        0x348,0,"%s\n\t%s");
-      }
-      iVar3 = Party_AreWeHost(&g_partyData);
-      uVar1 = (-(longlong)iVar3 & ~(longlong)iVar3 & 0xffffffffU) >> 0x1f;
-      pPVar4 = Lobby_GetPartyData();
-      Party_Sleep(pPVar4);
-      if (uVar1 == 0) {
-        Party_Sleep(&g_partyData);
-      }
-      Live_CleanUpQoSProbes(param_2);
-      Session_CleanUpSearches();
-      Com_Printf(0xe,"CL_Live_StartPrivateParty() was called, calling Party_StopParty\n");
-      pPVar4 = Lobby_GetPartyData();
-      Party_StopParty(pPVar4);
-      if (uVar1 == 0) {
-        Party_StopParty(&g_partyData);
-        if (g_partyData.presenceSession != (SessionData *)0x0) {
-          Session_DeleteSession(g_partyData.presenceSession);
-        }
-        if (g_partySession.dyn.sessionHandle != (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
-                          ,0x35c,0,"%s");
-        }
-      }
-      if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                        0x35f,0,"%s");
-      }
-      pPVar4 = Lobby_GetPartyData();
-      Party_ClearPartyList(pPVar4);
-      if (uVar1 == 0) {
-        Party_Awake(&g_partyData,param_2,1);
-      }
-      Live_SetCurrentGametype();
-      if (uVar1 == 0) {
-        PartyHost_StartPrivateParty(LVar2,param_2,true);
-      }
-      Live_SetPartyPresence(param_2);
-      iVar3 = Party_GetSecondaryActiveClient(&g_partyData,aPStack_48);
-      if (iVar3 != 0) {
-        Live_SetPartyPresence(aPStack_48[0].localControllerIndex);
-      }
-    }
-  }
-  else {
+  uVar1 = __savegprlr_26();
+  cVar4 = Live_CanUserPlayOnline(param_2,local_50);
+  if (cVar4 == '\0') {
     Live_HandleOnlineRequirementFailed(param_2,local_50[0],1,0);
     iVar3 = Live_RequiresSignInResolve(local_50[0]);
     if (iVar3 != 0) {
-      Dvar_SetString(com_errorResolveCommand,"xsigninlive;");
+      Dvar_SetString(DAT_8366735c,0xffffffff82030868);
       __restgprlr_26();
       return;
+    }
+  }
+  else {
+    cVar4 = LiveAntiCheat_IsPlayerBanned(param_2);
+    if (cVar4 == '\0') {
+      if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
+        MyAssertHandler(0xffffffff820302c8,0x348,0,0xffffffff820011f4,0xffffffff820304bc,
+                        0xffffffff8203082c);
+      }
+      uVar2 = Party_AreWeHost(0xffffffff82b55118);
+      uVar2 = (-uVar2 & ~uVar2 & 0xffffffff) >> 0x1f;
+      Lobby_GetPartyData();
+      Party_Sleep();
+      if (uVar2 == 0) {
+        Party_Sleep(0xffffffff82b55118);
+      }
+      Live_CleanUpQoSProbes(param_2);
+      Session_CleanUpSearches();
+      Com_Printf(0xe,0xffffffff820307e8);
+      Lobby_GetPartyData();
+      Party_StopParty();
+      if (uVar2 == 0) {
+        Party_StopParty(0xffffffff82b55118);
+        if (DAT_82b55120 != 0) {
+          Session_DeleteSession();
+        }
+        if (DAT_844c6c18 != 0) {
+          MyAssertHandler(0xffffffff820302c8,0x35c,0,0xffffffff82000f98,0xffffffff820307c4);
+        }
+      }
+      if (DAT_844c7870 != 0) {
+        MyAssertHandler(0xffffffff820302c8,0x35f,0,0xffffffff82000f98,0xffffffff82030408);
+      }
+      Lobby_GetPartyData();
+      Party_ClearPartyList();
+      if (uVar2 == 0) {
+        Party_Awake(0xffffffff82b55118,param_2,1);
+      }
+      Live_SetCurrentGametype();
+      if (uVar2 == 0) {
+        PartyHost_StartPrivateParty(uVar1,param_2,1);
+      }
+      Live_SetPartyPresence(param_2);
+      iVar3 = Party_GetSecondaryActiveClient(0xffffffff82b55118,auStack_48);
+      if (iVar3 != 0) {
+        Live_SetPartyPresence(local_44);
+      }
     }
   }
   __restgprlr_26();
@@ -563,42 +520,34 @@ void Live_StartPrivateParty(LocalClientNum_t param_1,int param_2)
 
 // 823419B0  CL_Live_StartPrivateParty  (client_mp/cl_main_mp.cpp:889)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_StartPrivateParty(void)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  LVar1 = Cmd_LocalClientNum();
-  iVar2 = Cmd_LocalControllerIndex();
-  if (LVar1 != LOCAL_CLIENT_0) {
-    Com_Error(ERR_DROP,
-              "\x15Must create private party with LOCAL_CLIENT_0. Bug to code with log file.");
+  uVar1 = Cmd_LocalClientNum();
+  uVar2 = Cmd_LocalControllerIndex();
+  if ((int)uVar1 != 0) {
+    Com_Error(1,0xffffffff82030878);
   }
-  CL_EnsureClientIsActive(iVar2);
-  Live_StartPrivateParty(LVar1,iVar2);
+  CL_EnsureClientIsActive(uVar2);
+  Live_StartPrivateParty(uVar1,uVar2);
   return;
 }
 
 
 // 82341A18  CL_Live_StopPrivateParty  (client_mp/cl_main_mp.cpp:915)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_StopPrivateParty(void)
 
 {
-  Com_Printf(0xe,"CL_Live_StopPrivateParty was called, calling Party_StopParty\n");
-  PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
-  Party_StopParty(&g_partyData);
-  Party_Sleep(&g_partyData);
-  if (g_partyData.presenceSession != (SessionData *)0x0) {
-    Session_DeleteSession(g_partyData.presenceSession);
+  Com_Printf(0xe,0xffffffff820308c4);
+  PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
+  Party_StopParty(0xffffffff82b55118);
+  Party_Sleep(0xffffffff82b55118);
+  if (DAT_82b55120 != 0) {
+    Session_DeleteSession();
   }
   return;
 }
@@ -606,29 +555,25 @@ void CL_Live_StopPrivateParty(void)
 
 // 82341A80  CL_Live_StopParty_Internal  (client_mp/cl_main_mp.cpp:934)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_StopParty_Internal(int param_1)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
+  undefined8 uVar1;
   
-  PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
+  PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
   if (param_1 == 0) {
-    pPVar1 = Lobby_GetPartyData();
-    Party_StopParty(pPVar1);
+    Lobby_GetPartyData();
+    Party_StopParty();
   }
   else {
-    pPVar1 = Lobby_GetPartyData();
-    Party_StopPartyOnBackout(pPVar1);
+    Lobby_GetPartyData();
+    Party_StopPartyOnBackout();
   }
-  iVar2 = Cmd_LocalControllerIndex();
-  Party_Awake(&g_partyData,iVar2,0);
-  pPVar1 = Lobby_GetPartyData();
-  Party_Sleep(pPVar1);
-  if (((onlinegame->current).enabled != false) && (g_partyData.inParty == 0)) {
+  uVar1 = Cmd_LocalControllerIndex();
+  Party_Awake(0xffffffff82b55118,uVar1,0);
+  Lobby_GetPartyData();
+  Party_Sleep();
+  if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (DAT_82b5700c == 0)) {
     CL_Live_StartPrivateParty();
   }
   return;
@@ -637,25 +582,20 @@ void CL_Live_StopParty_Internal(int param_1)
 
 // 82341B18  CL_Live_StopParty  (client_mp/cl_main_mp.cpp:954)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_StopParty(void)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
+  undefined8 uVar1;
   
-  Com_Printf(0xe,"CL_Live_StopParty was called, calling Party_StopParty.\n");
-  PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
-  pPVar1 = Lobby_GetPartyData();
-  Party_StopParty(pPVar1);
-  iVar2 = Cmd_LocalControllerIndex();
-  Party_Awake(&g_partyData,iVar2,0);
-  pPVar1 = Lobby_GetPartyData();
-  Party_Sleep(pPVar1);
-  if (((onlinegame->current).enabled != false) && (g_partyData.inParty == 0)) {
+  Com_Printf(0xe,0xffffffff82030904);
+  PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
+  Lobby_GetPartyData();
+  Party_StopParty();
+  uVar1 = Cmd_LocalControllerIndex();
+  Party_Awake(0xffffffff82b55118,uVar1,0);
+  Lobby_GetPartyData();
+  Party_Sleep();
+  if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (DAT_82b5700c == 0)) {
     CL_Live_StartPrivateParty();
   }
   return;
@@ -664,29 +604,23 @@ void CL_Live_StopParty(void)
 
 // 82341BA8  CL_Live_StopLobbyBackout  (client_mp/cl_main_mp.cpp:961)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_StopLobbyBackout(void)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
+  undefined8 uVar1;
   
-  Com_Printf(0xe,"CL_Live_StopLobbyBackout was called, calling Party_StopParty.\n");
-  if (g_partyData.inParty == 0) {
-    Com_PrintWarning(0xe,"CL_Live_StopLobbyBackout was called but we are not in a private party.\n")
-    ;
+  Com_Printf(0xe,0xffffffff82030988);
+  if (DAT_82b5700c == 0) {
+    Com_PrintWarning(0xe,0xffffffff82030940);
   }
-  PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
-  pPVar1 = Lobby_GetPartyData();
-  Party_StopPartyOnBackout(pPVar1);
-  iVar2 = Cmd_LocalControllerIndex();
-  Party_Awake(&g_partyData,iVar2,0);
-  pPVar1 = Lobby_GetPartyData();
-  Party_Sleep(pPVar1);
-  if (((onlinegame->current).enabled != false) && (g_partyData.inParty == 0)) {
+  PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
+  Lobby_GetPartyData();
+  Party_StopPartyOnBackout();
+  uVar1 = Cmd_LocalControllerIndex();
+  Party_Awake(0xffffffff82b55118,uVar1,0);
+  Lobby_GetPartyData();
+  Party_Sleep();
+  if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (DAT_82b5700c == 0)) {
     CL_Live_StartPrivateParty();
   }
   return;
@@ -695,36 +629,30 @@ void CL_Live_StopLobbyBackout(void)
 
 // 82341C58  CL_Live_DevAllMaps  (client_mp/cl_main_mp.cpp:972)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_DevAllMaps(void)
 
 {
-  Dvar_SetString(playlistFilename,"playlists_allmaps.info");
-  Dvar_SetString(playlistAggrFilename,"playlists_allmaps.aggr");
-  g_generateAllMaps = 1;
+  Dvar_SetString(DAT_836672fc,0xffffffff820309e0);
+  Dvar_SetString(DAT_83666164,0xffffffff820309c8);
+  DAT_82aa1a88 = 1;
   return;
 }
 
 
 // 82341CA8  CL_Live_DevEndLobby  (client_mp/cl_main_mp.cpp:982)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_DevEndLobby(void)
 
 {
-  bool bVar3;
-  int iVar1;
-  PartyData *pPVar2;
+  char cVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  bVar3 = Lobby_IsInLobby();
-  if ((bVar3) && (bVar3 = Lobby_AreWeHost(), !bVar3)) {
-    iVar1 = Cmd_LocalControllerIndex();
-    pPVar2 = Lobby_GetPartyData();
-    PartyClient_DevEndParty(pPVar2,iVar1);
+  cVar3 = Lobby_IsInLobby();
+  if ((cVar3 != '\0') && (cVar3 = Lobby_AreWeHost(), cVar3 == '\0')) {
+    uVar1 = Cmd_LocalControllerIndex();
+    uVar2 = Lobby_GetPartyData();
+    PartyClient_DevEndParty(uVar2,uVar1);
   }
   return;
 }
@@ -732,22 +660,18 @@ void CL_Live_DevEndLobby(void)
 
 // 82341D00  CL_Live_DevDisconnectLobby  (client_mp/cl_main_mp.cpp:992)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_DevDisconnectLobby(void)
 
 {
-  bool bVar3;
-  int iVar1;
-  PartyData *pPVar2;
+  char cVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  bVar3 = Lobby_IsInLobby();
-  if ((bVar3) && (bVar3 = Lobby_AreWeHost(), !bVar3)) {
-    iVar1 = Cmd_LocalControllerIndex();
-    pPVar2 = Lobby_GetPartyData();
-    PartyClient_DevDisconnect(pPVar2,iVar1);
+  cVar3 = Lobby_IsInLobby();
+  if ((cVar3 != '\0') && (cVar3 = Lobby_AreWeHost(), cVar3 == '\0')) {
+    uVar1 = Cmd_LocalControllerIndex();
+    uVar2 = Lobby_GetPartyData();
+    PartyClient_DevDisconnect(uVar2,uVar1);
   }
   return;
 }
@@ -755,22 +679,18 @@ void CL_Live_DevDisconnectLobby(void)
 
 // 82341D58  CL_Live_DevTimeoutHostLobby  (client_mp/cl_main_mp.cpp:1002)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_DevTimeoutHostLobby(void)
 
 {
-  bool bVar3;
-  int iVar1;
-  PartyData *pPVar2;
+  char cVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  bVar3 = Lobby_IsInLobby();
-  if ((bVar3) && (bVar3 = Lobby_AreWeHost(), !bVar3)) {
-    iVar1 = Cmd_LocalControllerIndex();
-    pPVar2 = Lobby_GetPartyData();
-    PartyClient_DevTimeoutFromHost(pPVar2,iVar1);
+  cVar3 = Lobby_IsInLobby();
+  if ((cVar3 != '\0') && (cVar3 = Lobby_AreWeHost(), cVar3 == '\0')) {
+    uVar1 = Cmd_LocalControllerIndex();
+    uVar2 = Lobby_GetPartyData();
+    PartyClient_DevTimeoutFromHost(uVar2,uVar1);
   }
   return;
 }
@@ -778,22 +698,18 @@ void CL_Live_DevTimeoutHostLobby(void)
 
 // 82341DB0  CL_Live_DevMigrateFailedLobby  (client_mp/cl_main_mp.cpp:1012)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_DevMigrateFailedLobby(void)
 
 {
-  bool bVar3;
-  int iVar1;
-  PartyData *pPVar2;
+  char cVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  bVar3 = Lobby_IsInLobby();
-  if ((bVar3) && (bVar3 = Lobby_AreWeHost(), !bVar3)) {
-    iVar1 = Cmd_LocalControllerIndex();
-    pPVar2 = Lobby_GetPartyData();
-    PartyClient_DevMigrationFailure(pPVar2,iVar1);
+  cVar3 = Lobby_IsInLobby();
+  if ((cVar3 != '\0') && (cVar3 = Lobby_AreWeHost(), cVar3 == '\0')) {
+    uVar1 = Cmd_LocalControllerIndex();
+    uVar2 = Lobby_GetPartyData();
+    PartyClient_DevMigrationFailure(uVar2,uVar1);
   }
   return;
 }
@@ -801,23 +717,19 @@ void CL_Live_DevMigrateFailedLobby(void)
 
 // 82341E08  CL_Live_DevBackout  (client_mp/cl_main_mp.cpp:1022)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_DevBackout(void)
 
 {
-  bool bVar3;
-  uint uVar1;
-  PartyData *pPVar2;
-  PartyActiveClient local_20 [2];
+  char cVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 local_20 [2];
   
-  bVar3 = Lobby_IsInLobby();
-  if (bVar3) {
+  cVar3 = Lobby_IsInLobby();
+  if (cVar3 != '\0') {
     uVar1 = Cmd_LocalControllerIndex();
-    pPVar2 = Lobby_GetPartyData();
-    local_20[0] = Party_GetMainActiveClient(pPVar2,uVar1);
+    uVar2 = Lobby_GetPartyData();
+    local_20[0] = Party_GetMainActiveClient(uVar2,uVar1);
     Party_Backout(local_20);
   }
   return;
@@ -826,42 +738,34 @@ void CL_Live_DevBackout(void)
 
 // 82341E60  CL_Live_DevAcceptInvite  (client_mp/cl_main_mp.cpp:1032)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_DevAcceptInvite(void)
 
 {
-  int iVar1;
-  
-  iVar1 = Cmd_LocalControllerIndex();
-  Live_DevAcceptInvitation(iVar1);
+  Cmd_LocalControllerIndex();
+  Live_DevAcceptInvitation();
   return;
 }
 
 
 // 82341E88  CL_Live_DevClientDisconnectMsg  (client_mp/cl_main_mp.cpp:1040)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_DevClientDisconnectMsg(void)
 
 {
-  bool bVar5;
-  char *pcVar1;
-  uint uVar2;
-  int iVar3;
-  PartyData *pPVar4;
+  char cVar4;
+  char *_Str;
+  uint uVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  bVar5 = Lobby_IsInLobby();
-  if ((bVar5) && (bVar5 = Lobby_AreWeHost(), bVar5)) {
-    pcVar1 = Cmd_Argv(1);
-    uVar2 = atoi(pcVar1);
-    if (uVar2 < 0x12) {
-      iVar3 = Cmd_LocalControllerIndex();
-      pPVar4 = Lobby_GetPartyData();
-      PartyAtomicHost_DevSimulateDisconnectMsg(pPVar4,iVar3,uVar2);
+  cVar4 = Lobby_IsInLobby();
+  if ((cVar4 != '\0') && (cVar4 = Lobby_AreWeHost(), cVar4 != '\0')) {
+    _Str = (char *)Cmd_Argv(1);
+    uVar3 = atoi(_Str);
+    if (uVar3 < 0x12) {
+      uVar1 = Cmd_LocalControllerIndex();
+      uVar2 = Lobby_GetPartyData();
+      PartyAtomicHost_DevSimulateDisconnectMsg(uVar2,uVar1,uVar3);
     }
   }
   return;
@@ -870,85 +774,477 @@ void CL_Live_DevClientDisconnectMsg(void)
 
 // 82341F08  CL_ShutdownDevGui  (client_mp/cl_main_mp.cpp:1148)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_ShutdownDevGui(void)
 
 {
   CL_DestroyDevGui();
   DevGui_Shutdown();
-  Cmd_RemoveCommand("devgui_dvar");
-  Cmd_RemoveCommand("devgui_cmd");
-  Cmd_RemoveCommand("devgui_open");
+  Cmd_RemoveCommand(0xffffffff82030a10);
+  Cmd_RemoveCommand(0xffffffff82030a04);
+  Cmd_RemoveCommand(0xffffffff820309f8);
   return;
 }
 
 
 // 82341F50  CL_ShutdownHunkUsers  (client_mp/cl_main_mp.cpp:1160)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_ShutdownHunkUsers(void)
+
+{
+  longlong lVar1;
+  
+  Com_SyncThreads();
+  if (DAT_82aa1b04 != 0) {
+    lVar1 = 0;
+    do {
+      CL_ShutdownCGame(lVar1);
+      lVar1 = lVar1 + 1;
+    } while ((int)lVar1 < 4);
+    CG_Glass_Shutdown();
+    Phys_ShutdownClient();
+    if (DAT_82aa1c18 != 0) {
+      CL_DestroyDevGui();
+      DevGui_Shutdown();
+      Cmd_RemoveCommand(0xffffffff82030a10);
+      Cmd_RemoveCommand(0xffffffff82030a04);
+      Cmd_RemoveCommand(0xffffffff820309f8);
+      DAT_82aa1c18 = 0;
+    }
+    CL_ShutdownUI();
+    if (DAT_82aa1c14 != 0) {
+      MyAssertHandler(0xffffffff820302c8,0x4a2,0,0xffffffff82000f98,0xffffffff82030a1c);
+    }
+    DAT_82aa1b04 = 0;
+  }
+  return;
+}
+
 
 // 823473D8  CL_ShutdownAll  (client_mp/cl_main_mp.cpp:1193)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_ShutdownAll(void)
+
+{
+  R_SyncRenderThread();
+  CL_ShutdownHunkUsers();
+  if ((DAT_82aa1c08 != 0) && (CL_ShutdownRenderer(0), DAT_82aa1c08 != 0)) {
+    MyAssertHandler(0xffffffff820302c8,0x4b2,0,0xffffffff82000f98,0xffffffff820312ac);
+  }
+  track_shutdown(3);
+  return;
+}
+
 
 // 82342030  CL_AnyLocalClientsRunning  (client_mp/cl_main_mp.cpp:1211)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+undefined8 CL_AnyLocalClientsRunning(void)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = &DAT_82b3e4f1;
+  do {
+    if (*pcVar1 != '\0') {
+      return 1;
+    }
+    pcVar1 = pcVar1 + 0x1e4;
+  } while ((int)pcVar1 < -0x7d4c137f);
+  return 0;
+}
+
 
 // 8234A280  CL_MapLoading  (client_mp/cl_main_mp.cpp:1234)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_MapLoading(void)
+
+{
+  byte bVar1;
+  byte bVar2;
+  bool bVar3;
+  int iVar4;
+  char *pcVar6;
+  char cVar8;
+  int iVar7;
+  ulonglong uVar5;
+  byte *pbVar9;
+  char *pcVar10;
+  byte *pbVar11;
+  uint uVar12;
+  undefined1 *puVar13;
+  longlong lVar14;
+  undefined4 *puVar15;
+  int *piVar16;
+  byte local_a8 [168];
+  
+  pcVar6 = (char *)__savegprlr();
+  pcVar10 = &DAT_82b3e4f1;
+  do {
+    if (*pcVar10 != '\0') {
+      bVar3 = true;
+      goto LAB_8234a2c4;
+    }
+    pcVar10 = pcVar10 + 0x1e4;
+  } while ((int)pcVar10 < -0x7d4c137f);
+  bVar3 = false;
+LAB_8234a2c4:
+  if (!bVar3) goto LAB_8234a72c;
+  lVar14 = 0;
+  puVar13 = &DAT_82b3e548;
+  DAT_82aa1aa0 = 0;
+  do {
+    Con_Close(lVar14);
+    *(undefined4 *)(puVar13 + -4) = 0;
+    *puVar13 = 0;
+    puVar13 = puVar13 + 0x1e4;
+    lVar14 = lVar14 + 1;
+  } while ((int)puVar13 < -0x7d4c1328);
+  if (DAT_82966e98 == 0) {
+    CL_ControllerIndexFromClientNum(0);
+    LiveStorage_EnsureWeHaveStats();
+  }
+  else {
+    lVar14 = 0;
+    do {
+      cVar8 = CL_IsLocalClientActive(lVar14);
+      if (cVar8 != '\0') {
+        CL_ControllerIndexFromClientNum(lVar14);
+        LiveStorage_EnsureWeHaveStats();
+      }
+      lVar14 = lVar14 + 1;
+    } while ((int)lVar14 < 4);
+  }
+  DAT_82b3eca4 = 1;
+  if (DAT_82b3e54c < 5) {
+LAB_8234a3b0:
+    bVar3 = false;
+  }
+  else {
+    iVar7 = I_stricmp(0xffffffff82aa1b08,0xffffffff8202c774);
+    bVar3 = true;
+    if (iVar7 != 0) goto LAB_8234a3b0;
+  }
+  if (bVar3) {
+    uVar12 = 0;
+    iVar7 = 0;
+    puVar15 = &DAT_82b3e54c;
+    do {
+      uVar5 = CL_IsLocalClientActive(uVar12);
+      if ((uVar5 & 0xff) != 0) {
+        if (DAT_82aa1a9c == 0) {
+          MyAssertHandler(0xffffffff8202c1d8,0x49a,0,0xffffffff82000f98,0xffffffff82022ca8);
+        }
+        if (DAT_82aa1ae8 <= uVar12) {
+          MyAssertHandler(0xffffffff8202c1d8,0x49c,0,0xffffffff8200d150,uVar12);
+        }
+        iVar4 = DAT_82aa1a9c;
+        *puVar15 = 5;
+        memset((void *)(iVar7 + iVar4 + 0x28),0,0x100);
+        memset(&DAT_82ae30f8,0,0x13bb0);
+        *(undefined4 *)(iVar7 + iVar4 + 8) = 0xffffd8f1;
+        if (*pcVar6 == '\0') {
+          MyAssertHandler(0xffffffff820302c8,0x51c,0,0xffffffff82000f98,0xffffffff8203391c);
+        }
+        (&DAT_82b3e4e8)[uVar12] = 0;
+        uVar5 = LiveStorage_BeginGame(uVar12);
+      }
+      puVar15 = puVar15 + 0x79;
+      uVar12 = uVar12 + 1;
+      iVar7 = iVar7 + 0x65670;
+    } while ((int)puVar15 < -0x7d4c1324);
+  }
+  else {
+    Dvar_SetString(DAT_83666160,0xffffffff820068af);
+    I_strncpyz(0xffffffff82aa1b08,0xffffffff8202c774,0x100);
+    iVar7 = CL_GetLocalClientActiveCount();
+    if ((int)DAT_82aa1ae8 < iVar7) {
+      Com_Error(1,0xffffffff820338d0);
+    }
+    uVar12 = 0;
+    iVar7 = 0;
+    puVar13 = &DAT_82b3e55c;
+    do {
+      uVar5 = CL_IsLocalClientActive(uVar12);
+      if ((uVar5 & 0xff) != 0) {
+        CL_Disconnect(uVar12);
+        CL_SetLocalClientActive(uVar12,1);
+        UI_CloseAll(uVar12);
+        iVar4 = DAT_82aa1a9c;
+        *(undefined4 *)(puVar13 + -0x10) = 4;
+        if (iVar4 == 0) {
+          MyAssertHandler(0xffffffff8202c1d8,0x49a,0,0xffffffff82000f98,0xffffffff82022ca8);
+        }
+        if (DAT_82aa1ae8 <= uVar12) {
+          MyAssertHandler(0xffffffff8202c1d8,0x49c,0,0xffffffff8200d150,uVar12);
+        }
+        piVar16 = (int *)(iVar7 + DAT_82aa1a9c);
+        *puVar13 = 1;
+        piVar16[8] = -3000;
+        *piVar16 = DAT_836b93b8 + uVar12;
+        NET_StringToAdr(&DAT_82aa1b08,piVar16 + 4);
+        piVar16[7] = 4;
+        if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
+          pbVar11 = &DAT_844c7874;
+          pbVar9 = local_a8;
+          do {
+            bVar1 = *pbVar11;
+            bVar2 = *pbVar9;
+            if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+            pbVar11 = pbVar11 + 1;
+            pbVar9 = pbVar9 + 1;
+          } while (pbVar11 != &DAT_844c787c);
+          if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
+            MyAssertHandler(0xffffffff820302c8,0x547,0,0xffffffff82000f98,0xffffffff82033848);
+          }
+        }
+        LiveStorage_BeginGame(uVar12);
+        uVar5 = CL_CheckForResend(uVar12);
+        if (*pcVar6 == '\0') {
+          uVar5 = MyAssertHandler(0xffffffff820302c8,0x552,0,0xffffffff82000f98,0xffffffff8203391c);
+        }
+        (&DAT_82b3e4e8)[uVar12] = 0;
+      }
+      puVar13 = puVar13 + 0x1e4;
+      uVar12 = uVar12 + 1;
+      iVar7 = iVar7 + 0x65670;
+    } while ((int)puVar13 < -0x7d4c1314);
+  }
+  SND_FadeAllSounds(0,uVar5,0);
+LAB_8234a72c:
+  __restgprlr();
+  return;
+}
+
 
 // 82342068  CL_InvalidateSkeletonCache  (client_mp/cl_main_mp.cpp:1373)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_InvalidateSkeletonCache(void)
+
+{
+  char cVar1;
+  
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x55e,0,0xffffffff82000f98,0xffffffff82010b48);
+    DAT_82aa30dc = 0;
+    return;
+  }
+  DAT_82aa30dc = 0;
+  return;
+}
+
 
 // 823420E8  CL_ResetSkeletonCache  (client_mp/cl_main_mp.cpp:1387)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_ResetSkeletonCache(void)
+
+{
+  char cVar1;
+  ulonglong uVar2;
+  
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x56c,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  uVar2 = (ulonglong)DAT_82aa30e4;
+  DAT_82aa30dc = 1;
+  DAT_82aa30e4 = (uint)(uVar2 + 1);
+  if (uVar2 + 1 == 0) {
+    DAT_82aa30e4 = 1;
+  }
+  DAT_82aa30e8 = 0;
+  DAT_82ae30ec = &DAT_82aa30f0;
+  return;
+}
+
 
 // 82342180  CL_CalcSnapshotMemory  (client_mp/cl_main_mp.cpp:1414)
 
-uint CL_CalcSnapshotMemory(int param_1,int param_2,int param_3)
+longlong CL_CalcSnapshotMemory(uint param_1,undefined8 param_2,int param_3)
 
 {
   int iVar1;
   
-  if ((param_1 & 2U) == 0) {
+  if ((param_1 & 2) == 0) {
     iVar1 = 8;
   }
   else {
-    if (param_2 != 1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                      0x58e,0,"%s\n\t(maxLocalClients) = %i");
+    if ((int)param_2 != 1) {
+      MyAssertHandler(0xffffffff820302c8,0x58e,0,0xffffffff82030a2c,0xffffffff82030a48,param_2);
     }
     iVar1 = 0x10;
   }
-  return (param_3 * 0xe0 + 0x28b80) * iVar1 * param_2;
+  return (longlong)((param_3 * 0xe0 + 0x28b80) * iVar1) * (longlong)(int)param_2;
 }
 
 
 // 82342210  CL_AllocSnapshotMemory  (client_mp/cl_main_mp.cpp:1443)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_AllocSnapshotMemory(void)
+
+{
+  int iVar1;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar2;
+  undefined4 uVar6;
+  uint uVar7;
+  
+  iVar3 = __savegprlr_24();
+  iVar1 = DAT_83ced674;
+  iVar3 = iVar3 * 0xd480 + DAT_82b3ecb0;
+  if (DAT_83ced674 == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x5ab,0,0xffffffff82000f98,0xffffffff82030ae0);
+  }
+  if (*(int *)(iVar3 + 0xd414) == 0) {
+    if (*(int *)(iVar3 + 0xd418) != 0) {
+      MyAssertHandler(0xffffffff820302c8,0x5b4,0,0xffffffff82000f98,0xffffffff82030aa4);
+    }
+    if (*(int *)(iVar3 + 0xd41c) != 0) {
+      MyAssertHandler(0xffffffff820302c8,0x5b5,0,0xffffffff82000f98,0xffffffff82030a90);
+    }
+    iVar4 = DAT_82aa1aa4;
+    if (((*(char *)(DAT_82aa1af8 + 0xc) == '\0') || (*(char *)(DAT_83666174 + 0xc) != '\0')) &&
+       ((DAT_82aa1ab8 & 2) == 0)) {
+      uVar7 = 8;
+      uVar6 = 7;
+    }
+    else {
+      uVar7 = 0x10;
+      uVar6 = 0xf;
+    }
+    *(undefined4 *)(iVar3 + 0xd404) = uVar6;
+    *(uint *)(iVar3 + 0xd400) = uVar7;
+    *(uint *)(iVar3 + 0xd40c) = uVar7 * iVar4;
+    *(int *)(iVar3 + 0xd408) = uVar7 * 600;
+    iVar4 = Hunk_Inuse();
+    if (iVar4 == 0) {
+      Hunk_Begin();
+    }
+    iVar5 = Hunk_UserAlloc(iVar1,(ulonglong)*(uint *)(iVar3 + 0xd400) * 0x3380,4);
+    *(int *)(iVar3 + 0xd414) = iVar5;
+    iVar5 = Hunk_UserAlloc(iVar1,*(int *)(iVar3 + 0xd408) << 8,4);
+    *(int *)(iVar3 + 0xd418) = iVar5;
+    iVar5 = Hunk_UserAlloc(iVar1,(ulonglong)*(uint *)(iVar3 + 0xd40c) * 0xe0,4);
+    *(int *)(iVar3 + 0xd41c) = iVar5;
+    uVar2 = Hunk_UserFreeMemoryAmount(iVar1);
+    Com_Printf(0,0xffffffff82030a60,uVar2);
+    if (iVar4 == 0) {
+      Hunk_End();
+    }
+  }
+  else {
+    if (*(int *)(iVar3 + 0xd418) == 0) {
+      MyAssertHandler(0xffffffff820302c8,0x5af,0,0xffffffff82000f98,0xffffffff82030acc);
+    }
+    if (*(int *)(iVar3 + 0xd41c) == 0) {
+      MyAssertHandler(0xffffffff820302c8,0x5b0,0,0xffffffff82000f98,0xffffffff82030ab8);
+      __restgprlr_24();
+      return;
+    }
+  }
+  __restgprlr_24();
+  return;
+}
+
 
 // 82342470  CL_FreeSnapshotMemory  (client_mp/cl_main_mp.cpp:1493)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_FreeSnapshotMemory(void)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  
+  __savegprlr_27();
+  uVar2 = (ulonglong)DAT_82aa1ae8;
+  if (0 < (int)DAT_82aa1ae8) {
+    iVar1 = 0;
+    do {
+      iVar3 = iVar1 + DAT_82b3ecb0;
+      iVar1 = iVar1 + 0xd480;
+      *(undefined4 *)(iVar3 + 0xd414) = 0;
+      *(undefined4 *)(iVar3 + 0xd418) = 0;
+      *(undefined4 *)(iVar3 + 0xd41c) = 0;
+      *(undefined4 *)(iVar3 + 0xd400) = 0;
+      *(undefined4 *)(iVar3 + 0xd404) = 0;
+      *(undefined4 *)(iVar3 + 0xd40c) = 0;
+      *(undefined4 *)(iVar3 + 0xd408) = 0;
+      uVar2 = uVar2 - 1;
+    } while (uVar2 != 0);
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 82342508  CL_ClearClientState  (client_mp/cl_main_mp.cpp:1518)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_ClearClientState(void)
+
+{
+  int iVar1;
+  void *_Dst;
+  void *_Dst_00;
+  void *_Dst_01;
+  void *_Dst_02;
+  int iVar2;
+  int iVar3;
+  undefined4 uVar4;
+  void *pvVar5;
+  void *_Dst_03;
+  int *piVar6;
+  int *piVar7;
+  int *piVar8;
+  
+  pvVar5 = (void *)__savegprlr_15();
+  if ((int)pvVar5 < DAT_82aa1ae8) {
+    _Dst_03 = (void *)CL_GetLocalClientGlobals();
+    piVar8 = (int *)((int)_Dst_03 + 0xd400);
+    iVar1 = *piVar8;
+    _Dst = *(void **)((int)_Dst_03 + 0xd410);
+    piVar7 = (int *)((int)_Dst_03 + 0xd40c);
+    piVar6 = (int *)((int)_Dst_03 + 0xd408);
+    _Dst_00 = *(void **)((int)_Dst_03 + 0xd414);
+    _Dst_01 = *(void **)((int)_Dst_03 + 0xd418);
+    _Dst_02 = *(void **)((int)_Dst_03 + 0xd41c);
+    iVar2 = *piVar7;
+    iVar3 = *piVar6;
+    uVar4 = *(undefined4 *)((int)_Dst_03 + 0xd404);
+    memset(_Dst,0,iVar1 * 0xc);
+    if (_Dst_00 != (void *)0x0) {
+      memset(_Dst_00,0,*piVar8 * 0x3380);
+    }
+    if (_Dst_01 != (void *)0x0) {
+      memset(_Dst_01,0,*piVar6 << 8);
+    }
+    if (_Dst_02 != (void *)0x0) {
+      memset(_Dst_02,0,*piVar7 * 0xe0);
+    }
+    memset(_Dst_03,0,0xd480);
+    DAT_82afa080 = 0;
+    pvVar5 = memset(&DAT_82afa084,0,0x40000);
+    *(void **)((int)_Dst_03 + 0xd410) = _Dst;
+    *(void **)((int)_Dst_03 + 0xd414) = _Dst_00;
+    *(void **)((int)_Dst_03 + 0xd418) = _Dst_01;
+    *(void **)((int)_Dst_03 + 0xd41c) = _Dst_02;
+    *piVar7 = iVar2;
+    *piVar6 = iVar3;
+    *piVar8 = iVar1;
+    *(undefined4 *)((int)_Dst_03 + 0xd404) = uVar4;
+  }
+  __restgprlr_15(pvVar5);
+  return;
+}
+
 
 // 82342660  CL_ClearState  (client_mp/cl_main_mp.cpp:1580)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_ClearState(LocalClientNum_t param_1)
+void CL_ClearState(undefined8 param_1)
 
 {
-  CL_ClearClientState(param_1);
+  CL_ClearClientState();
   Com_ClientDObjClearAllSkel(param_1);
   CL_ClearKeys(param_1);
   return;
@@ -957,46 +1253,167 @@ void CL_ClearState(LocalClientNum_t param_1)
 
 // 823426A0  WasConnected  (client_mp/cl_main_mp.cpp:1588)
 
-bool WasConnected(connstate_t param_1)
+ulonglong WasConnected(ulonglong param_1)
 
 {
-  return (bool)((char)((int)param_1 >> 0x1f) + (CA_LOGO < param_1));
+  return (longlong)((int)param_1 >> 0x1f) + (ulonglong)(2 < param_1) & 0xff;
 }
 
 
 // 823426C0  CL_Disconnect  (client_mp/cl_main_mp.cpp:1604)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_Disconnect(void)
+
+{
+  ulonglong uVar1;
+  bool bVar2;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar5;
+  char cVar9;
+  ulonglong uVar6;
+  void *_Dst;
+  undefined8 uVar7;
+  int iVar8;
+  undefined8 uVar10;
+  
+  uVar5 = __savegprlr_20();
+  cVar9 = Sys_IsMainThread();
+  if (cVar9 == '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x652,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if (3 < (uVar5 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x47f,0,0xffffffff820011a8,uVar5,4);
+  }
+  iVar4 = (int)uVar5;
+  iVar3 = iVar4 * 0x1e4;
+  if ((&DAT_82b3e4f1)[iVar3] != '\0') {
+    Com_Printf(0xe,0xffffffff82030b40,uVar5);
+    uVar6 = CL_GetLocalClientConnectionState(uVar5);
+    uVar1 = (longlong)((int)uVar6 >> 0x1f) + (ulonglong)(2 < uVar6) & 0xff;
+    if ((uVar1 == 0) || (DAT_82aa1a9c == 0)) {
+      _Dst = (void *)0x0;
+    }
+    else {
+      _Dst = (void *)CL_GetLocalClientConnection(uVar5);
+    }
+    bVar2 = false;
+    if ((_Dst != (void *)0x0) &&
+       ((cVar9 = CL_Demo_IsPlaying(uVar5), cVar9 != '\0' ||
+        (cVar9 = CL_Demo_IsShutdownInProgress(), cVar9 != '\0')))) {
+      bVar2 = true;
+    }
+    CL_Demo_End(uVar5);
+    SCR_StopCinematic(uVar5);
+    UI_SetActiveMenu(uVar5,0);
+    if (((DAT_844c7870 != 0) && (_Dst != (void *)0x0)) && (4 < (int)uVar6)) {
+      if (*(int *)((int)_Dst + 0x130) - *(int *)((int)_Dst + 0x134) < 0x81) {
+        CL_AddReliableCommand(uVar5,0xffffffff82030b34);
+        CL_WritePacket(uVar5);
+        CL_WritePacket(uVar5);
+        CL_WritePacket(uVar5);
+      }
+    }
+    CL_ClearClientState(uVar5);
+    Com_ClientDObjClearAllSkel(uVar5);
+    CL_ClearKeys(uVar5);
+    uVar7 = CL_ControllerIndexFromClientNum(uVar5);
+    uVar10 = 0;
+    GPad_SetLowRumble(0);
+    GPad_SetHighRumble(uVar10,uVar7);
+    if (uVar1 != 0) {
+      if (!bVar2) {
+        CL_ControllerIndexFromClientNum(uVar5);
+        cVar9 = LiveStorage_DoWeHaveStats();
+        if (cVar9 != '\0') {
+          CL_ControllerIndexFromClientNum(uVar5);
+          LiveStorage_ValidateStats();
+        }
+        CG_FindItemsUnlockedLastGame(uVar5);
+        CG_MarkUnlockedItemsNew(uVar5);
+        LiveStorage_EndGame(uVar5);
+      }
+      if ((uVar1 != 0) && (_Dst != (void *)0x0)) {
+        memset(_Dst,0,0x65670);
+        iVar8 = CL_GetLocalClientGlobals(uVar5);
+        *(undefined4 *)(iVar8 + 0x3414) = 0;
+      }
+    }
+    (&DAT_82b3e54c)[iVar4 * 0x79] = 0;
+    if (3 < (uVar5 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8202c1d8,0x4d0,0,0xffffffff82024a10,uVar5,4);
+    }
+    CL_UpdateMigrationProfile(*(undefined4 *)(&DAT_82b3e4f4 + iVar3),0);
+    *(undefined4 *)(&DAT_82b3e4f4 + iVar3) = 0;
+    CL_ResetLastGamePadEventTime();
+    Phys_EndFrame();
+    DynEntCl_Shutdown(uVar5);
+    SND_DisconnectListener(uVar5);
+    if (uVar1 != 0) {
+      (&DAT_82b3e544)[iVar4 * 0x79] = (&DAT_82b3e544)[iVar4 * 0x79] & 1;
+    }
+    if (*(char *)(DAT_82b3ecb8 + 0xc) == '\0') {
+      CL_SetLocalClientActive(uVar5,0);
+    }
+    if (uVar1 != 0) {
+      CL_SetupScreenPlacements();
+      Live_Disconnected(uVar7);
+      if (*(char *)(DAT_84253bb8 + 0xc) == '\0') {
+        LB_UploadPlayerData(uVar7);
+      }
+      LB_EndOngoingTasks();
+    }
+    cVar9 = CL_AllLocalClientsDisconnected();
+    if (cVar9 != '\0') {
+      DAT_82ae30f4 = 0;
+      Ragdoll_Shutdown();
+      if (uVar1 == 0) goto LAB_82342a98;
+      Session_CleanUpStatsWrites();
+      Session_EndGameSessionWithTimeout(0xffffffff844c7860,5000);
+      if ((*(char *)(DAT_82aa1af8 + 0xc) == '\0') && (*(char *)(DAT_83666174 + 0xc) == '\0')) {
+        Session_DeleteSession(0xffffffff844c7860);
+        Com_Printf(0xe,0xffffffff82030b00);
+        Lobby_GetPartyData();
+        Party_StopParty();
+        Party_StopParty(0xffffffff82b55118);
+      }
+    }
+    if (uVar1 != 0) {
+      Cbuf_AddText(uVar5,0xffffffff82030aec);
+    }
+  }
+LAB_82342a98:
+  __restgprlr_20();
+  return;
+}
+
 
 // 82342AA8  CL_ForwardCommandToServer  (client_mp/cl_main_mp.cpp:1835)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_ForwardCommandToServer(LocalClientNum_t param_1,char *param_2)
+void CL_ForwardCommandToServer(undefined8 param_1,undefined8 param_2)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   char *pcVar2;
-  connstate_t cVar3;
-  bool bVar5;
-  int iVar4;
+  int iVar3;
+  char cVar4;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = Cmd_Argv(0);
+  uVar1 = __savegprlr_29();
+  pcVar2 = (char *)Cmd_Argv(0);
   if (*pcVar2 != '-') {
-    cVar3 = CL_GetLocalClientConnectionState(LVar1);
-    if (((4 < (int)cVar3) && (*pcVar2 != '+')) && (bVar5 = CL_Demo_IsPlaying(LVar1), !bVar5)) {
-      iVar4 = Cmd_Argc();
-      if (1 < iVar4) {
-        CL_AddReliableCommand(LVar1,param_2);
+    iVar3 = CL_GetLocalClientConnectionState(uVar1);
+    if (((4 < iVar3) && (*pcVar2 != '+')) && (cVar4 = CL_Demo_IsPlaying(uVar1), cVar4 == '\0')) {
+      iVar3 = Cmd_Argc();
+      if (1 < iVar3) {
+        CL_AddReliableCommand(uVar1,param_2);
         __restgprlr_29();
         return;
       }
-      CL_AddReliableCommand(LVar1,pcVar2);
+      CL_AddReliableCommand(uVar1,pcVar2);
       __restgprlr_29();
       return;
     }
-    Com_Printf(0xe,"Unknown command \"%s\"\n");
+    Com_Printf(0xe,0xffffffff82030b6c,pcVar2);
   }
   __restgprlr_29();
   return;
@@ -1005,64 +1422,86 @@ void CL_ForwardCommandToServer(LocalClientNum_t param_1,char *param_2)
 
 // 82342B50  CL_BuildPlayerGuid  (client_mp/cl_main_mp.cpp:1874)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_BuildPlayerGuid(LocalClientNum_t param_1,char *param_2)
+void CL_BuildPlayerGuid(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  bool bVar2;
-  ulong64 local_20;
+  longlong lVar1;
+  char cVar2;
+  undefined8 local_20;
   
-  iVar1 = CL_ControllerIndexFromClientNum(param_1);
-  bVar2 = Live_IsSignedIn(iVar1);
-  if (bVar2) {
-    local_20 = Live_GetXuid(iVar1);
-    XUIDToString(&local_20,param_2);
+  lVar1 = CL_ControllerIndexFromClientNum();
+  cVar2 = Live_IsSignedIn();
+  if (cVar2 == '\0') {
+    Com_sprintf(param_2,0x11,0xffffffff82030b84,lVar1 + 1);
   }
   else {
-    Com_sprintf(param_2,0x11,"Player%i");
+    local_20 = Live_GetXuid(lVar1);
+    XUIDToString(&local_20,param_2);
   }
   return;
 }
 
 
 // 82342BD0  CL_ForwardToServer_f  (client_mp/cl_main_mp.cpp:1911)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_ForwardToServer_f(void)
+
+{
+  ulonglong uVar1;
+  char cVar3;
+  int iVar2;
+  undefined1 auStack_420 [1032];
+  
+  uVar1 = Cmd_LocalClientNum();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  }
+  iVar2 = (&DAT_82b3e54c)[(int)uVar1 * 0x79];
+  cVar3 = CL_Demo_IsPlaying(uVar1);
+  if ((cVar3 == '\0') && (iVar2 == 10)) {
+    iVar2 = Cmd_Argc();
+    if (1 < iVar2) {
+      Cmd_ArgsBuffer(1,auStack_420,0x400);
+      CL_AddReliableCommand(uVar1,auStack_420);
+    }
+  }
+  else {
+    Com_Printf(0,0xffffffff82030b90);
+  }
+  return;
+}
+
 
 // 82342CA0  CL_Setenv_f  (client_mp/cl_main_mp.cpp:1948)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_Setenv_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  int iVar3;
-  char acStack_420 [1056];
+  int iVar2;
+  undefined8 uVar1;
+  longlong lVar3;
+  undefined1 auStack_420 [1056];
   
   __savegprlr_29();
-  iVar1 = Cmd_Argc();
-  if (iVar1 < 3) {
-    if (iVar1 == 2) {
-      Cmd_Argv(1);
-      Com_Printf(0,"%s undefined\n");
+  iVar2 = Cmd_Argc();
+  if (iVar2 < 3) {
+    if (iVar2 == 2) {
+      uVar1 = Cmd_Argv(1);
+      Com_Printf(0,0xffffffff82030bac,uVar1);
     }
   }
   else {
-    pcVar2 = Cmd_Argv(1);
-    I_strncpyz(acStack_420,pcVar2,0x400);
-    I_strncat(acStack_420,0x400,"=");
-    iVar3 = 2;
-    if (2 < iVar1) {
+    uVar1 = Cmd_Argv(1);
+    I_strncpyz(auStack_420,uVar1,0x400);
+    I_strncat(auStack_420,0x400,0xffffffff8200386c);
+    lVar3 = 2;
+    if (2 < iVar2) {
       do {
-        pcVar2 = Cmd_Argv(iVar3);
-        I_strncat(acStack_420,0x400,pcVar2);
-        I_strncat(acStack_420,0x400," ");
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < iVar1);
+        uVar1 = Cmd_Argv(lVar3);
+        I_strncat(auStack_420,0x400,uVar1);
+        I_strncat(auStack_420,0x400,0xffffffff820034a0);
+        lVar3 = lVar3 + 1;
+      } while ((int)lVar3 < iVar2);
       __restgprlr_29();
       return;
     }
@@ -1073,14 +1512,54 @@ void CL_Setenv_f(void)
 
 
 // 82342D60  CL_DisconnectLocalClient_Helper  (client_mp/cl_main_mp.cpp:1995)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_DisconnectLocalClient_Helper(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  char cVar3;
+  char cVar4;
+  byte bVar5;
+  int *in_r13;
+  
+  uVar2 = __savegprlr_29();
+  SCR_StopCinematic();
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar2,4);
+  }
+  iVar1 = (&DAT_82b3e54c)[(int)uVar2 * 0x79];
+  if (((iVar1 == 0) || (iVar1 == 1)) || (bVar5 = 1, iVar1 == 2)) {
+    bVar5 = 0;
+  }
+  cVar3 = CL_Demo_IsShutdownInProgress();
+  CL_Disconnect(uVar2);
+  cVar4 = CL_AllLocalClientsDisconnected();
+  if (cVar4 != '\0') {
+    Lobby_GetPartyData();
+    Party_StopParty();
+  }
+  if (((bool)(cVar3 == '\0' & bVar5)) && (cVar3 = CL_AllLocalClientsDisconnected(), cVar3 != '\0'))
+  {
+    *(undefined4 *)(*in_r13 + 0xf4) = 0xffffedff;
+    if (DAT_82b5700c == 0) {
+      Dvar_SetBool(DAT_82aa1af8,0);
+    }
+    if (param_2 != 0) {
+      Live_ThrowError();
+      __restgprlr_29();
+      return;
+    }
+    Live_ThrowError_DontDeclineInvite(3,0xffffffff82030bbc);
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 82342E90  CL_DisconnectLocalClient_DontDeclineInvite  (client_mp/cl_main_mp.cpp:2045)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_DisconnectLocalClient_DontDeclineInvite(LocalClientNum_t param_1)
+void CL_DisconnectLocalClient_DontDeclineInvite(undefined8 param_1)
 
 {
   CL_DisconnectLocalClient_Helper(param_1,0);
@@ -1090,9 +1569,7 @@ void CL_DisconnectLocalClient_DontDeclineInvite(LocalClientNum_t param_1)
 
 // 82342E98  CL_DisconnectLocalClient  (client_mp/cl_main_mp.cpp:2051)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_DisconnectLocalClient(LocalClientNum_t param_1)
+void CL_DisconnectLocalClient(undefined8 param_1)
 
 {
   CL_DisconnectLocalClient_Helper(param_1,1);
@@ -1101,44 +1578,58 @@ void CL_DisconnectLocalClient(LocalClientNum_t param_1)
 
 
 // 82342EA0  CL_Disconnect_f  (client_mp/cl_main_mp.cpp:2057)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_Disconnect_f(void)
+
+{
+  int *piVar1;
+  ulonglong uVar2;
+  
+  __savegprlr_27();
+  uVar2 = 0;
+  piVar1 = &DAT_82b3e54c;
+  do {
+    if (3 < (uVar2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar2,4);
+    }
+    if (*piVar1 != 0) {
+      CL_DisconnectLocalClient_Helper(uVar2,1);
+    }
+    piVar1 = piVar1 + 0x79;
+    uVar2 = uVar2 + 1;
+  } while ((int)piVar1 < -0x7d4c1324);
+  __restgprlr_27();
+  return;
+}
+
 
 // 82342F28  CL_Live_PrivatePartyBackout  (client_mp/cl_main_mp.cpp:2075)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CL_Live_PrivatePartyBackout(void)
 
 {
-  bool bVar3;
-  LocalClientNum_t LVar1;
-  connstate_t cVar2;
+  char cVar3;
+  undefined8 uVar1;
+  int iVar2;
   
-  bVar3 = IsServerRunning();
-  if (bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x81c,0,"%s\n\t%s");
+  cVar3 = IsServerRunning();
+  if (cVar3 != '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x81c,0,0xffffffff820011f4,0xffffffff82022e08,
+                    0xffffffff82030ce8);
   }
-  if ((g_partyData.inParty == 0) || (g_partyData.areWeHost == 0)) {
-    Com_PrintError(0xe,"PrivatePartyBackout - not a private party host\n");
+  if ((DAT_82b5700c == 0) || (DAT_82b57004 == 0)) {
+    Com_PrintError(0xe,0xffffffff82030be0);
   }
   else {
-    LVar1 = Cmd_LocalClientNum();
-    cVar2 = CL_GetLocalClientConnectionState(LVar1);
-    if ((int)cVar2 < 10) {
-      Com_Printf(0xe,
-                 "PrivatePartyBackout - Telling the clients directly to backout, since we\'re not in a game\n"
-                );
-      PartyHost_AskPartyMembersToBackOut(&g_partyData);
+    uVar1 = Cmd_LocalClientNum();
+    iVar2 = CL_GetLocalClientConnectionState();
+    if (iVar2 < 10) {
+      Com_Printf(0xe,0xffffffff82030c10);
+      PartyHost_AskPartyMembersToBackOut(0xffffffff82b55118);
     }
     else {
-      Com_Printf(0xe,
-                 "PrivatePartyBackout - Letting the game host know we\'re backing out, so he can let our clients know\n"
-                );
-      CL_AddReliableCommand(LVar1,"partybackout");
+      Com_Printf(0xe,0xffffffff82030c80);
+      CL_AddReliableCommand(uVar1,0xffffffff82030c6c);
     }
   }
   return;
@@ -1146,25 +1637,62 @@ void CL_Live_PrivatePartyBackout(void)
 
 
 // 82343010  CL_Reconnect_f  (client_mp/cl_main_mp.cpp:2107)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_Reconnect_f(void)
+
+{
+  char cVar1;
+  char cVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  char *pcVar5;
+  char *pcVar6;
+  
+  pcVar5 = &DAT_82aa1b08;
+  do {
+    pcVar6 = pcVar5;
+    pcVar5 = pcVar6 + 1;
+  } while (*pcVar6 != '\0');
+  if (pcVar6 != &DAT_82aa1b08) {
+    pcVar6 = &DAT_82aa1b08;
+    pcVar5 = "localhost";
+    do {
+      cVar1 = *pcVar6;
+      cVar2 = *pcVar5;
+      if (cVar1 == '\0') break;
+      pcVar6 = pcVar6 + 1;
+      pcVar5 = pcVar5 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 != cVar2) {
+      uVar3 = va(0xffffffff82030d54,0xffffffff82aa1b08);
+      uVar4 = Cmd_LocalClientNum();
+      Cbuf_AddText(uVar4,uVar3);
+      return;
+    }
+  }
+  Com_Printf(0,0xffffffff82030d34);
+  return;
+}
+
 
 // 823430E8  LoadMapLoadscreen  (client_mp/cl_main_mp.cpp:2155)
 
-void LoadMapLoadscreen(char *param_1)
+void LoadMapLoadscreen(undefined8 param_1)
 
 {
-  XZoneInfo local_60;
-  char acStack_50 [64];
+  undefined1 *local_60;
+  undefined4 local_5c;
+  undefined4 local_58;
+  undefined1 auStack_50 [64];
   
-  CL_SelectStringTableEntryInDvar("mp/didyouknow.csv",0,"didyouknow");
+  CL_SelectStringTableEntryInDvar(0xffffffff82030d74,0,0xffffffff82030d88);
   DB_StopMovie();
   DB_ClearMovieMemory();
   DB_ResetZoneSize(0,1);
-  Com_sprintf(acStack_50,0x40,"%s_load");
-  local_60.name = acStack_50;
-  local_60.allocFlags = 8;
-  local_60.freeFlags = 0x18;
+  Com_sprintf(auStack_50,0x40,0xffffffff82030d6c,param_1);
+  local_60 = auStack_50;
+  local_5c = 8;
+  local_58 = 0x18;
   DB_LoadXAssets(&local_60,1,1);
   DB_UpdateDebugZone();
   return;
@@ -1172,370 +1700,1742 @@ void LoadMapLoadscreen(char *param_1)
 
 
 // 82343180  CL_Configstrings_f  (client_mp/cl_main_mp.cpp:2442)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_Configstrings_f(void)
+
+{
+  ulonglong uVar1;
+  uint *puVar2;
+  longlong lVar3;
+  
+  __savegprlr_28();
+  uVar1 = Cmd_LocalClientNum();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  }
+  if ((&DAT_82b3e54c)[(int)uVar1 * 0x79] != 10) {
+    Com_Printf(0,0xffffffff82030b90);
+    __restgprlr_28();
+    return;
+  }
+  lVar3 = 0;
+  puVar2 = &DAT_82ae30f8;
+  do {
+    if (*puVar2 != 0) {
+      Com_Printf(0,0xffffffff82030d94,lVar3,(ulonglong)*puVar2 - 0x7d51935c);
+    }
+    puVar2 = puVar2 + 1;
+    lVar3 = lVar3 + 1;
+  } while ((int)puVar2 < -0x7d51935c);
+  __restgprlr_28();
+  return;
+}
+
 
 // 82343258  CL_Clientinfo_f  (client_mp/cl_main_mp.cpp:2473)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_Clientinfo_f(void)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
+  ulonglong uVar1;
   
-  LVar1 = Cmd_LocalClientNum();
-  Com_Printf(0,"--------- Client Information ---------\n");
-  if (LOCAL_CLIENT_3 < LVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
-                    ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  uVar1 = Cmd_LocalClientNum();
+  Com_Printf(0,0xffffffff82030df8);
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
   }
-  Com_Printf(0,"state: %i\n");
-  Com_Printf(0,"Server: %s\n");
-  Com_Printf(0,"User info settings:\n");
-  pcVar2 = Dvar_InfoString(LVar1,0x200);
-  Info_Print(pcVar2);
-  Com_Printf(0,"--------------------------------------\n");
+  Com_Printf(0,0xffffffff82030dec,(&DAT_82b3e54c)[(int)uVar1 * 0x79]);
+  Com_Printf(0,0xffffffff82030de0,0xffffffff82aa1b08);
+  Com_Printf(0,0xffffffff82030dc8);
+  Dvar_InfoString(uVar1,0x200);
+  Info_Print();
+  Com_Printf(0,0xffffffff82030da0);
   return;
 }
 
 
 // 82343330  CL_WasMapAlreadyLoaded  (client_mp/cl_main_mp.cpp:2491)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+bool CL_WasMapAlreadyLoaded(void)
+
+{
+  char cVar1;
+  
+  if ((*(char *)(DAT_83666174 + 0xc) == '\0') && (cVar1 = CL_Demo_IsPlaying(), cVar1 == '\0')) {
+    return DAT_82aa30e0 != '\0';
+  }
+  return true;
+}
+
 
 // 82347458  CL_DownloadsComplete  (client_mp/cl_main_mp.cpp:2539)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_DownloadsComplete(void)
+
+{
+  undefined8 uVar1;
+  char cVar5;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  int iVar4;
+  ulonglong uVar6;
+  undefined1 auStack_a0 [64];
+  undefined1 auStack_60 [96];
+  
+  uVar1 = __savegprlr_29();
+  Com_SyncThreads();
+  Phys_EndFrame();
+  (&DAT_82b3e54c)[(int)uVar1 * 0x79] = 8;
+  Com_Printf(0xe,0xffffffff820321e8);
+  if ((*(char *)(DAT_83666174 + 0xc) == '\0') && (cVar5 = CL_Demo_IsPlaying(uVar1), cVar5 == '\0'))
+  {
+    uVar6 = (ulonglong)DAT_82aa30e0;
+    if (uVar6 != (uVar6 - 1) + (ulonglong)(uVar6 == 0)) goto LAB_823475f4;
+    uVar2 = CL_GetConfigString(0);
+    uVar3 = Info_ValueForKey(uVar2,0xffffffff82010974);
+    I_strncpyz(auStack_a0,uVar3,0x40);
+    uVar2 = Info_ValueForKey(uVar2,0xffffffff82022f8c);
+    I_strncpyz(auStack_60,uVar2,0x40);
+    Live_GetMapIndex(auStack_a0);
+    Live_GetMapSource();
+    cVar5 = Content_DoWeHaveContentPack();
+    if (cVar5 == '\0') {
+      UI_MissingMapError();
+    }
+    if (DAT_82aa1aa0 == '\0') {
+      LoadMapLoadscreen(auStack_a0);
+    }
+    UI_SetMap(auStack_a0,auStack_60);
+    iVar4 = Hunk_Inuse();
+    if (iVar4 == 0) {
+      Hunk_Begin();
+    }
+    SCR_UpdateScreen();
+    CL_ShutdownAll();
+    Com_Restart();
+    if (DAT_82aa1b04 != 0) {
+      MyAssertHandler(0xffffffff820302c8,0xa23,0,0xffffffff82000f98,0xffffffff820313a8);
+    }
+    CL_InitRenderer();
+    CL_StartHunkUsers();
+    SCR_UpdateScreen();
+  }
+  else {
+LAB_823475f4:
+    if (DAT_82aa1b04 == 0) {
+      MyAssertHandler(0xffffffff820302c8,0xa2c,0,0xffffffff82000f98,0xffffffff820321d0);
+    }
+    iVar4 = CL_IsCgameInitialized(uVar1);
+    if (iVar4 != 0) {
+      CL_RestartCGame(uVar1);
+      goto LAB_823475d4;
+    }
+  }
+  Dvar_SetInt(DAT_83666158,1);
+  CL_InitCGame(uVar1);
+LAB_823475d4:
+  CL_WritePacket(uVar1);
+  CL_WritePacket(uVar1);
+  CL_WritePacket(uVar1);
+  __restgprlr_29();
+  return;
+}
+
 
 // 82343398  CL_HighestPriorityStatPacket  (client_mp/cl_main_mp.cpp:2641)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+longlong CL_HighestPriorityStatPacket(int param_1)
+
+{
+  int iVar1;
+  longlong lVar2;
+  int *piVar3;
+  int iVar4;
+  longlong lVar5;
+  
+  lVar5 = -1;
+  lVar2 = 0;
+  piVar3 = (int *)(param_1 + 0x65640);
+  iVar4 = DAT_82aa1c24;
+  do {
+    if ((1 << ((uint)lVar2 & 0x3f) & (int)*(short *)(param_1 + 0x6563c)) != 0) {
+      iVar1 = *piVar3;
+      if (iVar1 == 0) {
+        return lVar2;
+      }
+      if (iVar1 < iVar4) {
+        lVar5 = lVar2;
+        iVar4 = iVar1;
+      }
+    }
+    lVar2 = lVar2 + 1;
+    piVar3 = piVar3 + 1;
+  } while ((int)lVar2 < 10);
+  if ((int)lVar5 < 0) {
+    MyAssertHandler(0xffffffff820302c8,0xa64,0,0xffffffff82000f98,0xffffffff82030e20);
+  }
+  return lVar5;
+}
+
 
 // 82347640  CL_CheckForResend  (client_mp/cl_main_mp.cpp:2674)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_CheckForResend(void)
+
+{
+  bool bVar1;
+  ulonglong uVar2;
+  int iVar7;
+  char cVar12;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  char *pcVar8;
+  char *pcVar9;
+  int iVar10;
+  int iVar11;
+  int *in_r13;
+  undefined1 *puVar13;
+  undefined1 auStack_1580 [8];
+  undefined4 local_1578;
+  undefined4 local_156c;
+  undefined1 auStack_1550 [32];
+  undefined1 auStack_1530 [1024];
+  undefined1 auStack_1130 [1248];
+  undefined1 auStack_c50 [1024];
+  undefined1 auStack_850 [2128];
+  
+  uVar2 = __savegprlr_23();
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar2,4);
+  }
+  iVar10 = (&DAT_82b3e54c)[(int)uVar2 * 0x79];
+  if (4 < iVar10 - 3U) goto LAB_82347ff8;
+  if (iVar10 == 4) {
+LAB_823476b8:
+    iVar7 = CL_GetLocalClientConnection(uVar2);
+    bVar1 = DAT_82aa1c24 - *(int *)(iVar7 + 0x20) < 3000;
+  }
+  else {
+    if (iVar10 == 5) goto LAB_82347ff8;
+    if (iVar10 == 6) {
+      iVar7 = CL_GetLocalClientConnection(uVar2);
+      bVar1 = DAT_82aa1c24 - *(int *)(iVar7 + 8) < 100;
+    }
+    else {
+      if (iVar10 == 3) goto LAB_823476b8;
+      iVar7 = CL_GetLocalClientConnection(uVar2);
+      bVar1 = DAT_82aa1c24 - *(int *)(iVar7 + 8) < 200;
+    }
+  }
+  if (!bVar1) {
+    cVar12 = CL_Demo_IsPlaying(uVar2);
+    iVar11 = DAT_82aa1c24;
+    if (cVar12 == '\0') {
+      *(int *)(iVar7 + 0x24) = *(int *)(iVar7 + 0x24) + 1;
+      *(int *)(iVar7 + 0x20) = iVar11;
+      if (iVar10 == 4) {
+        uVar5 = Dvar_InfoString(uVar2,0x200);
+        I_strncpyz(&stack0x00000000 + -0x1530,uVar5,0x400);
+        uVar5 = GetProtocolVersion();
+        uVar5 = va(0xffffffff8200c28c,uVar5);
+        Info_SetValueForKey(&stack0x00000000 + -0x1530,0xffffffff82032520,uVar5);
+        uVar5 = BG_NetDataChecksum();
+        uVar5 = va(0xffffffff8200c28c,uVar5);
+        Info_SetValueForKey(&stack0x00000000 + -0x1530,0xffffffff82032514,uVar5);
+        uVar5 = va(0xffffffff8200c28c,*(undefined4 *)(iVar7 + 0x128));
+        Info_SetValueForKey(&stack0x00000000 + -0x1530,0xffffffff82026780,uVar5);
+        uVar5 = LiveStorage_GetPersistentDataDefFormatChecksum();
+        uVar6 = LiveStorage_GetPersistentDataDefVersion();
+        uVar5 = va(0xffffffff8203250c,uVar6,uVar5);
+        Info_SetValueForKey(&stack0x00000000 + -0x1530,0xffffffff82032504,uVar5);
+        uVar5 = va(0xffffffff8200c28c,(&DAT_82b3e55c)[(int)uVar2 * 0x1e4]);
+        Info_SetValueForKey(&stack0x00000000 + -0x1530,0xffffffff820324fc,uVar5);
+        CL_ControllerIndexFromClientNum(uVar2);
+        pcVar8 = (char *)CL_GetXuidForLocalClient();
+        if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
+          CL_ControllerIndexFromClientNum(uVar2);
+          cVar12 = Live_UserIsGuest();
+          if (cVar12 == '\0') {
+            if (*pcVar8 != '0') {
+              MyAssertHandler(0xffffffff820302c8,0xadd,0,0xffffffff82000f98,0xffffffff820324e4);
+            }
+            if (pcVar8[1] != '0') {
+              MyAssertHandler(0xffffffff820302c8,0xade,0,0xffffffff82000f98,0xffffffff820324cc);
+            }
+            if (pcVar8[2] != '0') {
+              MyAssertHandler(0xffffffff820302c8,0xadf,0,0xffffffff82000f98,0xffffffff820324b4);
+            }
+            if (pcVar8[3] != '9') {
+              MyAssertHandler(0xffffffff820302c8,0xae0,0,0xffffffff82000f98,0xffffffff8203249c);
+            }
+          }
+        }
+        Info_SetValueForKey(&stack0x00000000 + -0x1530,0xffffffff82032494,pcVar8);
+        cVar12 = LiveStorage_ClientUsingOnlineStatsOffline(uVar2);
+        uVar6 = 0xffffffff82032490;
+        uVar5 = uVar6;
+        if (cVar12 == '\0') {
+          uVar5 = 0xffffffff8203248c;
+        }
+        Info_SetValueForKey(&stack0x00000000 + -0x1530,0xffffffff82032480,uVar5);
+        iVar10 = CL_GetLocalClientMigrationState(uVar2);
+        if (iVar10 == 0) {
+          uVar6 = 0xffffffff8203248c;
+        }
+        Info_SetValueForKey(&stack0x00000000 + -0x1530,0xffffffff82032474,uVar6);
+        Com_DPrintf(0xe,0xffffffff82032428,&stack0x00000000 + -0x1530,
+                    *(undefined1 *)(DAT_82aa1af8 + 0xc));
+        if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
+          CL_ControllerIndexFromClientNum(uVar2);
+          cVar12 = Live_UserIsGuest();
+          if (cVar12 == '\0') {
+            pcVar9 = (char *)Info_ValueForKey(&stack0x00000000 + -0x1530,0xffffffff82032494);
+            if (*pcVar9 != '0') {
+              uVar5 = va(0xffffffff82032400,pcVar9,pcVar8);
+              MyAssertHandler(0xffffffff820302c8,0xb16,0,0xffffffff820011f4,0xffffffff820323ec,uVar5
+                             );
+            }
+            if (pcVar9[1] != '0') {
+              uVar5 = va(0xffffffff82032400,pcVar9,pcVar8);
+              MyAssertHandler(0xffffffff820302c8,0xb17,0,0xffffffff820011f4,0xffffffff820323d8,uVar5
+                             );
+            }
+            if (pcVar9[2] != '0') {
+              uVar5 = va(0xffffffff82032400,pcVar9,pcVar8);
+              MyAssertHandler(0xffffffff820302c8,0xb18,0,0xffffffff820011f4,0xffffffff820323c4,uVar5
+                             );
+            }
+            if (pcVar9[3] != '9') {
+              uVar5 = va(0xffffffff82032400,pcVar9,pcVar8);
+              MyAssertHandler(0xffffffff820302c8,0xb19,0,0xffffffff820011f4,0xffffffff820323b0,uVar5
+                             );
+            }
+          }
+        }
+        CL_BuildPlayerGuid(uVar2,&stack0x00000000 + -0x1550);
+        uVar3 = Com_sprintf(&stack0x00000000 + -0xc50,0x400,0xffffffff820323a0,
+                            &stack0x00000000 + -0x1550,&stack0x00000000 + -0x1530);
+        uVar5 = *(undefined8 *)(iVar7 + 0x10);
+        uVar6 = *(undefined8 *)(iVar7 + 0x18);
+        uVar4 = NET_GetLocalNetIDFromLocalClientNum(uVar2);
+        cVar12 = NET_OutOfBandData(uVar4,uVar5,uVar6,&stack0x00000000 + -0xc50,uVar3);
+        if ((cVar12 == '\0') && (cVar12 = Com_ErrorEntered(), cVar12 == '\0')) {
+          CL_DisconnectError(uVar2,0xffffffff8202f014);
+          cVar12 = Com_ErrorEntered();
+          if (cVar12 == '\0') {
+            MyAssertHandler(0xffffffff820302c8,0xb26,0,0xffffffff82000f98,0xffffffff8202f000);
+          }
+        }
+        iVar10 = *in_r13;
+        if ((*(uint *)(iVar10 + 0xf4) & 0x200) == 0) {
+          MyAssertHandler(0xffffffff820302c8,0xb2c,0,0xffffffff82000f98,0xffffffff82031230);
+        }
+        *(uint *)(iVar10 + 0xf0) = *(uint *)(iVar10 + 0xf0) & 0xfffffdff;
+        __restgprlr_23();
+        return;
+      }
+      if (iVar10 == 5) {
+        Com_Error(0,0xffffffff82032220);
+      }
+      else {
+        if (iVar10 == 6) {
+          R_BeginRemoteScreenUpdate();
+          MSG_Init(&stack0x00000000 + -0x1580,&stack0x00000000 + -0x850,0x800);
+          MSG_WriteString(&stack0x00000000 + -0x1580,0xffffffff82012e44);
+          iVar10 = CL_HighestPriorityStatPacket(iVar7);
+          if ((iVar10 < 0) || (9 < iVar10)) {
+            MyAssertHandler(0xffffffff820302c8,0xb3c,0,0xffffffff8203235c,0xffffffff82032374,iVar10)
+            ;
+          }
+          if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
+            CL_ControllerIndexFromClientNum(uVar2);
+            cVar12 = LiveStorage_GettingStats();
+            if (cVar12 != '\0') {
+              MyAssertHandler(0xffffffff820302c8,0xb3e,0,0xffffffff820300d8,0xffffffff820322e8,uVar2
+                             );
+            }
+          }
+          CL_ControllerIndexFromClientNum(uVar2);
+          cVar12 = LiveStorage_DoWeHaveStats();
+          if (cVar12 == '\0') {
+            if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
+              MyAssertHandler(0xffffffff820302c8,0xb4a,0,0xffffffff82000f98,0xffffffff8203030c);
+            }
+            memset(auStack_1130,0,0x4d8);
+            puVar13 = &stack0x00000000 + -0x1130;
+          }
+          else {
+            CL_ControllerIndexFromClientNum(uVar2);
+            iVar11 = LiveStorage_GetStatBuffer();
+            puVar13 = (undefined1 *)(iVar11 + iVar10 * 0x4d8);
+          }
+          MSG_WriteByte(&stack0x00000000 + -0x1580,iVar10);
+          iVar11 = iVar10 * -0x4d8 + 0x3000;
+          if (0x4d8 < iVar11) {
+            iVar11 = 0x4d8;
+          }
+          MSG_WriteData(&stack0x00000000 + -0x1580,puVar13,iVar11);
+          *(int *)((iVar10 + 0x19590) * 4 + iVar7) = DAT_82aa1c24;
+          *(int *)(iVar7 + 8) = DAT_82aa1c24;
+          Com_Printf(0xe,0xffffffff820322a0,iVar10,puVar13);
+          uVar5 = *(undefined8 *)(iVar7 + 0x10);
+          uVar6 = *(undefined8 *)(iVar7 + 0x18);
+          uVar3 = NET_GetLocalNetIDFromLocalClientNum(uVar2);
+          cVar12 = NET_OutOfBandData(uVar3,uVar5,uVar6,local_1578,local_156c);
+          if ((cVar12 == '\0') && (cVar12 = Com_ErrorEntered(), cVar12 == '\0')) {
+            CL_DisconnectError(uVar2,0xffffffff8202f014);
+            cVar12 = Com_ErrorEntered();
+            if (cVar12 == '\0') {
+              MyAssertHandler(0xffffffff820302c8,0xb60,0,0xffffffff82000f98,0xffffffff8202f000);
+            }
+          }
+          R_EndRemoteScreenUpdate();
+          __restgprlr_23();
+          return;
+        }
+        if (iVar10 == 3) {
+          CL_BuildPlayerGuid(uVar2,&stack0x00000000 + -0x1550);
+          uVar3 = va(0xffffffff8203253c,&stack0x00000000 + -0x1550);
+          uVar5 = *(undefined8 *)(iVar7 + 0x10);
+          uVar6 = *(undefined8 *)(iVar7 + 0x18);
+          uVar4 = NET_GetLocalNetIDFromLocalClientNum(uVar2);
+          cVar12 = NET_OutOfBandPrint(uVar4,uVar5,uVar6,uVar3);
+          if (cVar12 == '\0') {
+            Com_Error(1,0xffffffff8203252c);
+            __restgprlr_23();
+            return;
+          }
+        }
+        else {
+          MSG_Init(&stack0x00000000 + -0x1580,&stack0x00000000 + -0x850,0x800);
+          MSG_WriteString(&stack0x00000000 + -0x1580,0xffffffff82032294);
+          MSG_WriteByte(&stack0x00000000 + -0x1580,*(undefined4 *)(iVar7 + 0x65668));
+          Com_Printf(0xe,0xffffffff82032248,*(undefined4 *)(iVar7 + 0x65668));
+          uVar5 = *(undefined8 *)(iVar7 + 0x10);
+          uVar6 = *(undefined8 *)(iVar7 + 0x18);
+          uVar3 = NET_GetLocalNetIDFromLocalClientNum(uVar2);
+          cVar12 = NET_OutOfBandData(uVar3,uVar5,uVar6,local_1578,local_156c);
+          if ((cVar12 == '\0') && (cVar12 = Com_ErrorEntered(), cVar12 == '\0')) {
+            CL_DisconnectError(uVar2,0xffffffff8202f014);
+            cVar12 = Com_ErrorEntered();
+            if (cVar12 == '\0') {
+              MyAssertHandler(0xffffffff820302c8,0xb77,0,0xffffffff82000f98,0xffffffff8202f000);
+              __restgprlr_23();
+              return;
+            }
+          }
+        }
+      }
+    }
+  }
+LAB_82347ff8:
+  __restgprlr_23();
+  return;
+}
+
 
 // 82343460  CL_DisconnectError_ShouldShowGenericMessage  (client_mp/cl_main_mp.cpp:2948)
 
-int CL_DisconnectError_ShouldShowGenericMessage(char *param_1)
+bool CL_DisconnectError_ShouldShowGenericMessage(ulonglong param_1)
 
 {
   int iVar1;
   
-  if (param_1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0xb85,0,"%s");
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820302c8,0xb85,0,0xffffffff82000f98,0xffffffff8201805c);
   }
-  iVar1 = I_stricmp("XBOXLIVE_SIGNINCHANGED",param_1);
-  if ((iVar1 != 0) && (iVar1 = I_stricmp("EXE_DEMONWARE_DISCONNECT",param_1), iVar1 != 0)) {
-    iVar1 = I_stricmp("XBOXLIVE_SIGNEDOUT",param_1);
-    return (uint)LZCOUNT(iVar1) >> 5;
+  iVar1 = I_stricmp(0xffffffff82030e64,param_1);
+  if ((iVar1 != 0) && (iVar1 = I_stricmp(0xffffffff82030e48,param_1), iVar1 != 0)) {
+    iVar1 = I_stricmp(0xffffffff82030e34,param_1);
+    return iVar1 == 0;
   }
-  return 1;
+  return true;
 }
 
 
 // 82343518  CL_DisconnectError  (client_mp/cl_main_mp.cpp:2970)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void CL_DisconnectError(LocalClientNum_t param_1,char *param_2)
+void CL_DisconnectError(undefined8 param_1,ulonglong param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  uint uVar3;
-  PartyData *pPVar4;
-  char *pcVar5;
-  char *pcVar6;
-  bool bVar8;
-  SessionData *pSVar7;
-  ulonglong uVar9;
-  PartyActiveClient local_30 [6];
+  undefined4 uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  undefined8 uVar3;
+  char cVar5;
+  undefined8 local_30 [6];
   
-  uVar9 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_29(param_1);
-  if ((uVar9 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0xb9b,0,"%s");
+  uVar2 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820302c8,0xb9b,0,0xffffffff82000f98,0xffffffff8201805c);
   }
-  pcVar5 = (char *)uVar9;
-  iVar2 = I_stricmp("EXE_MATCHENDED",pcVar5);
-  if ((iVar2 == 0) || (iVar2 = I_stricmp("EXE_SERVERQUIT",pcVar5), iVar2 == 0)) {
-    Com_Error(ERR_DISCONNECT,"EXE_DISCONNECTED");
-    __restgprlr_29();
-    return;
-  }
-  iVar2 = I_stricmp("EXE_MIGRATIONABORTED",pcVar5);
-  if ((iVar2 == 0) || (iVar2 = I_stricmp("EXE_MIGRATION_IN_PROGRESS",pcVar5), iVar2 == 0)) {
-    Com_Error(ERR_DROP,pcVar5);
-  }
-  else {
-    iVar2 = I_stricmp("EXE_MIGRATIONABORTED_BACKOUT",pcVar5);
-    if (iVar2 == 0) {
-      if ((g_partyData.inParty != 0) && (iVar2 = Party_IsGameHostInPrivateParty(), iVar2 != 0)) {
-        uVar3 = CL_ControllerIndexFromClientNum(LVar1);
-        local_30[0] = Party_GetMainActiveClient(&g_partyData,uVar3);
-        iVar2 = Party_Backout(local_30);
-        __restgprlr_29(iVar2);
-        return;
-      }
-      Com_Error(ERR_DROP,"EXE_MIGRATIONABORTED");
-      __restgprlr_29();
-      return;
-    }
-    iVar2 = I_stricmp("hostquit",pcVar5);
-    if (iVar2 != 0) {
-      iVar2 = I_strnicmp("EXE_PLAYERKICKED",pcVar5,0x10);
-      if (iVar2 == 0) {
-        pPVar4 = Lobby_GetPartyData();
-        Party_StopParty(pPVar4);
-        Com_Printf(0xe,
-                   "CL_DisconnectError - Stopping private party and lobby since we got kicked from the game.\n"
-                  );
-        Party_StopParty(&g_partyData);
-        if ((onlinegame->current).enabled != false) {
-          Cbuf_AddText(LOCAL_CLIENT_0,"xstartprivateparty\n");
-        }
+  iVar4 = I_stricmp(0xffffffff82030ff0,param_2);
+  if (iVar4 != 0) {
+    iVar4 = I_stricmp(0xffffffff82030fe0,param_2);
+    if (iVar4 != 0) {
+      iVar4 = I_stricmp(0xffffffff82030fc8,param_2);
+      if ((iVar4 == 0) || (iVar4 = I_stricmp(0xffffffff82030fac,param_2), iVar4 == 0)) {
+        Com_Error(1,param_2);
       }
       else {
-        iVar2 = I_stricmp("roundsdone",pcVar5);
-        if (iVar2 == 0) goto LAB_82343790;
-        bVar8 = Lobby_IsInLobby();
-        if (bVar8) {
-          pSVar7 = Lobby_GetSession();
-          uVar3 = (pSVar7->dyn).sessionCreateController;
-          pPVar4 = Lobby_GetPartyData();
-          local_30[0] = Party_GetMainActiveClient(pPVar4,uVar3);
-          pPVar4 = Lobby_GetPartyData();
-          PartyClient_LostConnectionToHost(pPVar4,local_30);
+        iVar4 = I_stricmp(0xffffffff82030f8c,param_2);
+        if (iVar4 == 0) {
+          if ((DAT_82b5700c != 0) && (iVar4 = Party_IsGameHostInPrivateParty(), iVar4 != 0)) {
+            uVar2 = CL_ControllerIndexFromClientNum(uVar2);
+            local_30[0] = Party_GetMainActiveClient(0xffffffff82b55118,uVar2);
+            Party_Backout(local_30);
+            __restgprlr_29();
+            return;
+          }
+          Com_Error(1,0xffffffff82030fc8);
+          __restgprlr_29();
+          return;
         }
-        iVar2 = CL_DisconnectError_ShouldShowGenericMessage(pcVar5);
-        if (iVar2 != 0) {
-          Com_PrintError(0x10,
-                         "Showing generic disconnect error. Server sent us \'%s\' as their disconnect reason.\n"
-                        );
-          Com_Error(ERR_SERVERDISCONNECT,"EXE_DISCONNECTED");
+        iVar4 = I_stricmp(0xffffffff82030f80,param_2);
+        if (iVar4 != 0) {
+          iVar4 = I_strnicmp(0xffffffff82030f6c,param_2,0x10);
+          if (iVar4 == 0) {
+            Lobby_GetPartyData();
+            Party_StopParty();
+            Com_Printf(0xe,0xffffffff82030f10);
+            Party_StopParty(0xffffffff82b55118);
+            if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
+              Cbuf_AddText(0,0xffffffff82030efc);
+            }
+          }
+          else {
+            iVar4 = I_stricmp(0xffffffff82030ed4,param_2);
+            if (iVar4 == 0) goto LAB_82343790;
+            cVar5 = Lobby_IsInLobby();
+            if (cVar5 != '\0') {
+              iVar4 = Lobby_GetSession();
+              uVar1 = *(undefined4 *)(iVar4 + 0x4f8);
+              uVar2 = Lobby_GetPartyData();
+              local_30[0] = Party_GetMainActiveClient(uVar2,uVar1);
+              uVar2 = Lobby_GetPartyData();
+              PartyClient_LostConnectionToHost(uVar2,local_30);
+            }
+            iVar4 = CL_DisconnectError_ShouldShowGenericMessage(param_2);
+            if (iVar4 != 0) {
+              Com_PrintError(0x10,0xffffffff82030e80,param_2);
+              Com_Error(2,0xffffffff8202f014);
+              __restgprlr_29();
+              return;
+            }
+          }
+          uVar2 = SEH_SafeTranslateString(param_2);
+          uVar3 = SEH_SafeTranslateString(0xffffffff82030ee0);
+          uVar2 = UI_ReplaceConversionString(uVar3,uVar2);
+          Com_Error(2,uVar2);
           __restgprlr_29();
           return;
         }
       }
-      pcVar5 = SEH_SafeTranslateString(pcVar5);
-      pcVar6 = SEH_SafeTranslateString("EXE_SERVERDISCONNECTREASON");
-      pcVar5 = UI_ReplaceConversionString(pcVar6,pcVar5);
-      Com_Error(ERR_SERVERDISCONNECT,pcVar5);
+LAB_82343790:
       __restgprlr_29();
       return;
     }
   }
-LAB_82343790:
+  Com_Error(3,0xffffffff8202f014);
   __restgprlr_29();
   return;
 }
 
 
 // 82343798  CL_DisconnectPacket  (client_mp/cl_main_mp.cpp:3051)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_DisconnectPacket(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  }
+  if (2 < (int)(&DAT_82b3e54c)[(int)uVar1 * 0x79]) {
+    if (DAT_82aa1a9c != 0) {
+      iVar2 = CL_GetLocalClientConnection(uVar1);
+      iVar2 = NET_CompareAdr(param_2,param_3,*(undefined8 *)(iVar2 + 0x54248),
+                             *(undefined8 *)(iVar2 + 0x54250));
+      if (iVar2 == 0) goto LAB_82343868;
+    }
+    if ((param_4 & 0xffffffff) != 0) {
+      CL_DisconnectError(uVar1,param_4);
+      __restgprlr_28();
+      return;
+    }
+    Com_Error(1,0xffffffff8202439c);
+  }
+LAB_82343868:
+  __restgprlr_28();
+  return;
+}
+
 
 // 82343870  CL_HandleRelayPacket  (client_mp/cl_main_mp.cpp:3092)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_HandleRelayPacket(LocalClientNum_t param_1,msg_t *param_2)
+void CL_HandleRelayPacket(undefined8 param_1,undefined8 param_2)
 
 {
-  LocalClientNum_t LVar1;
-  uchar *puVar2;
-  char *pcVar3;
-  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char *pcVar4;
   int iVar5;
-  SessionData *pSVar6;
-  bool bVar7;
-  int iVar8;
-  LargeLocal aLStack_40 [8];
+  int iVar6;
+  undefined8 uVar3;
+  char cVar7;
+  longlong lVar8;
+  undefined1 auStack_40 [64];
   
-  LVar1 = __savegprlr_26(param_1);
-  LargeLocal::LargeLocal(aLStack_40,0x10000);
-  puVar2 = LargeLocal::GetBuf(aLStack_40);
-  pcVar3 = Cmd_Argv(1);
-  iVar4 = atoi(pcVar3);
-  pcVar3 = Cmd_Argv(2);
-  iVar5 = atoi(pcVar3);
-  pSVar6 = Live_GetCurrentSession();
-  bVar7 = Session_IsUserRegistered(pSVar6,iVar5);
-  if (!bVar7) {
-    Com_PrintWarning(0xe,"We were asked to relay a packet to an unregistered client (%i)\n");
-    LargeLocal::~LargeLocal(aLStack_40);
+  uVar1 = __savegprlr_26();
+  LargeLocal__LargeLocal(auStack_40,0x10000);
+  uVar2 = LargeLocal__GetBuf(auStack_40);
+  pcVar4 = (char *)Cmd_Argv(1);
+  iVar5 = atoi(pcVar4);
+  pcVar4 = (char *)Cmd_Argv(2);
+  iVar6 = atoi(pcVar4);
+  uVar3 = Live_GetCurrentSession();
+  cVar7 = Session_IsUserRegistered(uVar3,iVar6);
+  if (cVar7 == '\0') {
+    Com_PrintWarning(0xe,0xffffffff82031038,iVar6);
+    LargeLocal___LargeLocal(auStack_40);
     __restgprlr_26();
     return;
   }
-  bVar7 = Session_PlayerHasLoopbackAddr(pSVar6,iVar5);
-  if (bVar7) {
-    Com_PrintWarning(0xe,"We were asked to relay a packet to a local client (%i)\n");
-    LargeLocal::~LargeLocal(aLStack_40);
+  cVar7 = Session_PlayerHasLoopbackAddr(uVar3,iVar6);
+  if (cVar7 != '\0') {
+    Com_PrintWarning(0xe,0xffffffff82031000,iVar6);
+    LargeLocal___LargeLocal(auStack_40);
     __restgprlr_26();
     return;
   }
-  iVar8 = param_2->cursize - param_2->readcount;
-  MSG_ReadData(param_2,puVar2,iVar8);
+  lVar8 = (ulonglong)*(uint *)((int)param_2 + 0x14) - (ulonglong)*(uint *)((int)param_2 + 0x1c);
+  MSG_ReadData(param_2,uVar2,lVar8);
   CL_WritePeerToPeerOOBData
-            (pSVar6,LVar1,iVar5,puVar2,iVar8,
-             SUB81((-(longlong)iVar4 & ~(longlong)iVar4 & 0xffffffffU) >> 0x1f,0),0);
-  LargeLocal::~LargeLocal(aLStack_40);
+            (uVar3,uVar1,iVar6,uVar2,lVar8,
+             (-(longlong)iVar5 & ~(longlong)iVar5 & 0xffffffffU) >> 0x1f,0);
+  LargeLocal___LargeLocal(auStack_40);
   __restgprlr_26();
   return;
 }
 
 
 // 8234A738  CL_DispatchConnectionlessPacket  (client_mp/cl_main_mp.cpp:3155)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void CL_DispatchConnectionlessPacket
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  int iVar8;
+  char *pcVar9;
+  char cVar12;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  int iVar10;
+  uint uVar11;
+  longlong lVar7;
+  undefined1 uVar13;
+  undefined4 in_stack_00000020;
+  undefined4 in_stack_00000024;
+  undefined4 uStack00000028;
+  int iStack0000002c;
+  undefined1 auStack_c70 [64];
+  undefined1 auStack_c30 [1024];
+  undefined1 auStack_830 [2096];
+  
+  uVar1 = in_stack_00000020;
+  uVar3 = __savegprlr_27();
+  _in_stack_00000020 = param_2;
+  _uStack00000028 = param_3;
+  uVar4 = Cmd_Argv(0);
+  iVar8 = I_stricmp(uVar4,0xffffffff8201d92c);
+  if (iVar8 == 0) {
+    CL_VoicePacket(uVar3,param_4);
+    goto LAB_8234a784;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82034034);
+  if (iVar8 == 0) {
+    CL_VoiceConnectionTestPacket(uVar3,param_4,_in_stack_00000020,_uStack00000028);
+    __restgprlr_27(1);
+    return;
+  }
+  iVar8 = I_strcmp(uVar4,0xffffffff820327a0);
+  if (iVar8 == 0) {
+    pcVar9 = (char *)Cmd_Argv(1);
+    iVar8 = atoi(pcVar9);
+    uVar4 = Live_GetCurrentSession();
+    CL_WeNowCantHearSomeone(uVar3,uVar4,iVar8);
+    __restgprlr_27(1);
+    return;
+  }
+  iVar8 = RMsg_HandleAckMessage(&stack0x00000020,uVar4,param_4);
+  if (iVar8 != 0) goto LAB_8234a784;
+  iVar8 = I_stricmp(uVar4,0xffffffff8203402c);
+  if (iVar8 == 0) {
+    CL_HandleRelayPacket(uVar3,param_4);
+    __restgprlr_27(1);
+    return;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82030f80);
+  if (iVar8 == 0) {
+    cVar12 = Lobby_AreWeHost();
+    uVar6 = _uStack00000028;
+    if (cVar12 == '\0') {
+      uVar2 = in_stack_00000024;
+      uVar5 = Lobby_GetPartyData();
+      iVar8 = Party_PacketIsFromHost(uVar5,CONCAT44(uVar1,uVar2),uVar6);
+      if (iVar8 != 0) {
+        if (*(char *)(DAT_84253bb8 + 0xc) == '\0') {
+          iVar8 = Lobby_GetSession();
+          LB_UploadPlayerData(*(undefined4 *)(iVar8 + 0x4f8));
+        }
+        cVar12 = CL_AllLocalClientsDisconnected();
+        if (cVar12 == '\0') {
+          Com_Error(3,0xffffffff8202f014);
+        }
+        goto LAB_8234a9a4;
+      }
+    }
+    uVar6 = 0xffffffff8203400c;
+LAB_8234a99c:
+    Com_PrintError(0xe,uVar6);
+  }
+  else {
+    iVar8 = I_stricmp(uVar4,0xffffffff82030ed4);
+    if (iVar8 == 0) {
+      cVar12 = Lobby_AreWeHost();
+      uVar6 = _uStack00000028;
+      if (cVar12 == '\0') {
+        uVar2 = in_stack_00000024;
+        uVar5 = Lobby_GetPartyData();
+        iVar8 = Party_PacketIsFromHost(uVar5,CONCAT44(uVar1,uVar2),uVar6);
+        if (iVar8 != 0) {
+          Lobby_GetPartyData();
+          Party_StopParty();
+          Com_Error(3,0xffffffff8202f014);
+          goto LAB_8234a9a4;
+        }
+      }
+      uVar6 = 0xffffffff82033fe4;
+      goto LAB_8234a99c;
+    }
+  }
+LAB_8234a9a4:
+  uVar6 = _uStack00000028;
+  uVar2 = in_stack_00000024;
+  uVar5 = Lobby_GetPartyData();
+  iVar8 = Party_HandlePacket(uVar5,uVar4,uVar3,CONCAT44(uVar1,uVar2),uVar6,param_4);
+  if ((((iVar8 != 0) ||
+       (iVar8 = Party_HandlePacket(0xffffffff82b55118,uVar4,uVar3,_in_stack_00000020,_uStack00000028
+                                   ,param_4), iVar8 != 0)) ||
+      (cVar12 = CL_MigrationPacket(uVar3,uVar4,_in_stack_00000020,_uStack00000028,param_4),
+      cVar12 != '\0')) ||
+     (cVar12 = UserGroups_HandlePacket(uVar4,uVar3,_in_stack_00000020,_uStack00000028,param_4),
+     cVar12 != '\0')) {
+LAB_8234a784:
+    __restgprlr_27(1);
+    return;
+  }
+  uVar6 = CL_GetLocalClientConnectionState(uVar3);
+  iVar8 = I_stricmp(uVar4,0xffffffff82033fd0);
+  iVar10 = (int)uVar6;
+  if (iVar8 == 0) {
+    if (iStack0000002c != 4) {
+      MyAssertHandler(0xffffffff820302c8,0xce3,0,0xffffffff82000f98,0xffffffff82033fb0);
+    }
+    if (iVar10 == 3) {
+      iVar8 = CL_GetLocalClientConnection(uVar3);
+      pcVar9 = (char *)Cmd_Argv(1);
+      iVar10 = atoi(pcVar9);
+      *(int *)(iVar8 + 0x128) = iVar10;
+      (&DAT_82b3e54c)[(int)uVar3 * 0x79] = 4;
+      *(undefined4 *)(iVar8 + 0x24) = 0;
+      *(undefined4 *)(iVar8 + 0x20) = 0xfffe7961;
+      *(undefined4 *)(iVar8 + 0x10) = uVar1;
+      *(undefined4 *)(iVar8 + 0x14) = in_stack_00000024;
+      *(undefined4 *)(iVar8 + 0x18) = uStack00000028;
+      *(int *)(iVar8 + 0x1c) = iStack0000002c;
+      Com_DPrintf(0xe,0xffffffff82033f6c,*(undefined4 *)(iVar8 + 0x128));
+      __restgprlr_27(1);
+      return;
+    }
+    Com_Printf(0xe,0xffffffff82033f7c);
+    goto LAB_8234aacc;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82033f5c);
+  if (iVar8 == 0) {
+    if (iStack0000002c != 4) {
+      MyAssertHandler(0xffffffff820302c8,0xd01,0,0xffffffff82000f98,0xffffffff82033fb0);
+    }
+    if (4 < iVar10) {
+      Com_Printf(0xe,0xffffffff82033f38);
+      __restgprlr_27(0);
+      return;
+    }
+    if (iVar10 != 4) {
+      Com_Printf(0xe,0xffffffff82033f00);
+      __restgprlr_27(0);
+      return;
+    }
+    iVar8 = CL_GetLocalClientConnection(uVar3);
+    Netchan_Setup(uVar3,iVar8 + 0x54238,_in_stack_00000020,_uStack00000028,0,iVar8 + 0x5485c,0x800,
+                  iVar8 + 0x5505c);
+    iVar10 = Cmd_Argc();
+    if (iVar10 < 2) {
+      uVar11 = 0x3ff;
+    }
+    else {
+      pcVar9 = (char *)Cmd_Argv(1);
+      uVar11 = atoi(pcVar9);
+      uVar11 = uVar11 & 0x3ff;
+    }
+    Com_Printf(0xe,0xffffffff82033ec8,uVar11);
+    if (uVar11 == 0) {
+      CL_SetLocalClientConnectionState(uVar3,5);
+      Com_Printf(0xe,0xffffffff82033e38);
+      *(undefined2 *)(iVar8 + 0x6563c) = 0;
+    }
+    else {
+      CL_SetLocalClientConnectionState(uVar3,6);
+      Com_Printf(0xe,0xffffffff82033e80);
+      *(ushort *)(iVar8 + 0x6563c) = (ushort)uVar11 & 0xff;
+      *(undefined8 *)(iVar8 + 0x65640) = 0;
+      *(undefined8 *)(iVar8 + 0x65648) = 0;
+      *(undefined8 *)(iVar8 + 0x65650) = 0;
+      *(undefined8 *)(iVar8 + 0x65658) = 0;
+      *(undefined8 *)(iVar8 + 0x65660) = 0;
+      LB_CopyAccoladesStats(uVar3);
+    }
+    LiveStorage_BeginGame(uVar3);
+    uVar1 = DAT_82aa1c24;
+    *(undefined4 *)(iVar8 + 8) = 0xffffd8f1;
+    *(undefined4 *)(iVar8 + 0xc) = uVar1;
+    __restgprlr_27(1);
+    return;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82033e24);
+  if (iVar8 == 0) {
+    if (iStack0000002c != 4) {
+      MyAssertHandler(0xffffffff820302c8,0xd64,0,0xffffffff82000f98,0xffffffff82033fb0);
+    }
+    if (6 < iVar10) {
+      Com_Printf(0xe,0xffffffff82033dec,uVar6);
+      __restgprlr_27(0);
+      return;
+    }
+    if (iVar10 != 6) {
+      Com_Printf(0xe,0xffffffff82033da0,uVar6);
+      __restgprlr_27(0);
+      return;
+    }
+    iVar8 = CL_GetLocalClientConnection(uVar3);
+    pcVar9 = (char *)Cmd_Argv(1);
+    iVar10 = atoi(pcVar9);
+    Com_Printf(0xe,0xffffffff82033d68,iVar10);
+    if (iVar10 == 0) {
+      if ((*(char *)(DAT_82aa1ae4 + 0xc) == '\0') ||
+         (iVar10 = NET_IsLocalAddress(*(undefined8 *)(iVar8 + 0x10),*(undefined8 *)(iVar8 + 0x18)),
+         iVar10 != 0)) {
+        BG_SaveMatchRulesToHistory(uVar3);
+        CL_SetLocalClientConnectionState(uVar3,5);
+        uVar3 = 0xffffffff82033e38;
+      }
+      else {
+        *(undefined4 *)(iVar8 + 0x65668) = 0;
+        CL_SetLocalClientConnectionState(uVar3,7);
+        uVar3 = 0xffffffff82033d18;
+      }
+      Com_Printf(0xe,uVar3);
+      *(undefined2 *)(iVar8 + 0x6563c) = 0;
+    }
+    else {
+      *(ushort *)(iVar8 + 0x6563c) = (ushort)iVar10 & 0x3ff;
+    }
+    uVar1 = DAT_82aa1c24;
+    *(undefined4 *)(iVar8 + 8) = 0xffffd8f1;
+    *(undefined4 *)(iVar8 + 0xc) = uVar1;
+    __restgprlr_27(1);
+    return;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82033d08);
+  if (iVar8 == 0) {
+    if (iStack0000002c != 4) {
+      MyAssertHandler(0xffffffff820302c8,0xd98,0,0xffffffff82000f98,0xffffffff82033fb0);
+    }
+    if (7 < iVar10) {
+      Com_Printf(0xe,0xffffffff82033cd0,uVar6);
+      __restgprlr_27(0);
+      return;
+    }
+    if (iVar10 != 7) {
+      Com_Printf(0xe,0xffffffff82033c80,uVar6);
+      __restgprlr_27(0);
+      return;
+    }
+    Com_Printf(0xe,0xffffffff82033c54);
+    iVar8 = CL_GetLocalClientConnection(uVar3);
+    iVar10 = CL_ReceiveGameStateInfoMessage(_in_stack_00000020,_uStack00000028,param_4,iVar8);
+    if (iVar10 == 1) {
+      BG_SaveMatchRulesToHistory(uVar3);
+      CL_SetLocalClientConnectionState(uVar3,5);
+      Com_Printf(0xe,0xffffffff82033e38);
+    }
+    uVar1 = DAT_82aa1c24;
+    *(undefined4 *)(iVar8 + 8) = 0xffffd8f1;
+    *(undefined4 *)(iVar8 + 0xc) = uVar1;
+    __restgprlr_27(1);
+    return;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82033c44);
+  if (iVar8 == 0) {
+    CL_ServerInfoPacket(_in_stack_00000020,_uStack00000028,param_4,param_5);
+    __restgprlr_27(1);
+    return;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82033c34);
+  if (iVar8 == 0) {
+    CL_ServerStatusResponse(_in_stack_00000020,_uStack00000028,param_4);
+    __restgprlr_27(1);
+    return;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82030b34);
+  if (iVar8 == 0) {
+    iVar8 = Cmd_Argc();
+    if (iVar8 < 2) {
+      uVar4 = 0;
+    }
+    else {
+      uVar4 = Cmd_Argv(1);
+    }
+    CL_DisconnectPacket(uVar3,_in_stack_00000020,_uStack00000028,uVar4);
+    __restgprlr_27(1);
+    return;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82033c2c);
+  if (iVar8 == 0) {
+    uVar4 = Cmd_Argv(1);
+    uVar5 = va(0xffffffff82000f98,uVar4);
+    uVar6 = _uStack00000028;
+    uVar4 = _in_stack_00000020;
+    uVar3 = NET_GetLocalNetIDFromLocalClientNum(uVar3);
+    NET_OutOfBandPrint(uVar3,uVar4,uVar6,uVar5);
+    __restgprlr_27(1);
+    return;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82033c1c);
+  if (iVar8 == 0) goto LAB_8234a784;
+  iVar8 = I_stricmp(uVar4,0xffffffff82033c14);
+  if (iVar8 == 0) {
+    lVar7 = CL_GetLocalClientConnection(uVar3);
+    uVar3 = MSG_ReadBigString(param_4);
+    I_strncpyz(lVar7 + 0x28,uVar3,0x100);
+    Com_sprintf(auStack_830,0x800,0xffffffff82000f98,uVar3);
+    Com_PrintMessage(0xe,auStack_830,0);
+    __restgprlr_27(1);
+    return;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82033c0c);
+  if (iVar8 == 0) {
+    if (iVar10 != 0) {
+      iVar8 = CL_GetLocalClientConnection(uVar3);
+      iVar8 = NET_CompareBaseAdr(_in_stack_00000020,_uStack00000028,*(undefined8 *)(iVar8 + 0x10),
+                                 *(undefined8 *)(iVar8 + 0x18));
+      if (iVar8 != 0) {
+        uVar3 = MSG_ReadBigString(param_4);
+        Com_Error(1,0xffffffff82000f98,uVar3);
+        __restgprlr_27(1);
+        return;
+      }
+    }
+LAB_8234aacc:
+    __restgprlr_27(0);
+    return;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82033bfc);
+  if (iVar8 == 0) {
+    if (0 < iVar10) {
+      iVar8 = CL_GetLocalClientConnection(uVar3);
+      iVar8 = NET_CompareBaseAdr(_in_stack_00000020,_uStack00000028,*(undefined8 *)(iVar8 + 0x10),
+                                 *(undefined8 *)(iVar8 + 0x18));
+      if (iVar8 != 0) {
+        uVar4 = MSG_ReadStringLine(param_4,auStack_c30,0x400);
+        I_strncpyz(auStack_c70,uVar4,0x40);
+        (&DAT_82b3e54c)[(int)uVar3 * 0x79] = 5;
+        uVar3 = MSG_ReadStringLine(param_4,auStack_c30,0x400);
+        CL_SetupForNewServerMap(auStack_c70,uVar3);
+      }
+    }
+    __restgprlr_27(1);
+    return;
+  }
+  iVar8 = I_stricmp(uVar4,0xffffffff82033bf0);
+  if (iVar8 != 0) {
+    iVar8 = I_strcmp(uVar4,0xffffffff82033bec);
+    if (iVar8 == 0) {
+      iVar8 = Live_GetCheckInviteExeState();
+      if (iVar8 != 1) {
+        Com_PrintWarning(0x19,0xffffffff82033b88);
+        __restgprlr_27(1);
+        return;
+      }
+      cVar12 = Live_CheckInviteHostInfo(&stack0x00000020);
+      if (cVar12 != '\0') {
+        Com_Printf(0x19,0xffffffff82033b30);
+        Live_SetInvitedStateToSP();
+        Cbuf_AddText(uVar3,0xffffffff82033b1c);
+        __restgprlr_27(1);
+        return;
+      }
+      Com_PrintWarning(0x19,0xffffffff82033ad0);
+      __restgprlr_27(1);
+      return;
+    }
+    iVar8 = I_strcmp(uVar4,0xffffffff82033ac0);
+    if (iVar8 == 0) {
+      RMsg_AddPrint(&stack0x00000020,0xffffffff82033abc,4);
+      __restgprlr_27(1);
+      return;
+    }
+    iVar8 = I_strcmp(uVar4,0xffffffff82033aac);
+    if (iVar8 == 0) {
+      Com_PrintWarning(0x19,0xffffffff82033a38);
+      __restgprlr_27(1);
+      return;
+    }
+    iVar8 = I_strcmp(uVar4,0xffffffff82033abc);
+    if (iVar8 == 0) {
+      iVar8 = Live_GetCheckInviteExeState();
+      if (iVar8 != 1) {
+        Com_PrintWarning(0x19,0xffffffff820339d8);
+        __restgprlr_27(1);
+        return;
+      }
+      cVar12 = Live_CheckInviteHostInfo(&stack0x00000020);
+      if (cVar12 != '\0') {
+        Com_Printf(0x19,0xffffffff82033990);
+        Live_SetCheckInviteExeStateToMP();
+        __restgprlr_27(1);
+        return;
+      }
+      Com_PrintWarning(0x19,0xffffffff82033938);
+      __restgprlr_27(1);
+      return;
+    }
+    iVar8 = I_strcmp(uVar4,0xffffffff82033928);
+    if (iVar8 == 0) {
+      RMsg_AddPrint(&stack0x00000020,0xffffffff82033aac,4);
+      __restgprlr_27(1);
+      return;
+    }
+    goto LAB_8234aacc;
+  }
+  iVar8 = CL_GetLocalClientConnectionState(uVar3);
+  if (iVar8 < 3) goto LAB_8234b308;
+  iVar8 = CL_GetLocalClientConnection(uVar3);
+  iVar10 = CL_GetLocalClientConnectionState(uVar3);
+  if (iVar10 == 10) {
+    iVar10 = NET_CompareBaseAdr(_in_stack_00000020,_uStack00000028,*(undefined8 *)(iVar8 + 0x10),
+                                *(undefined8 *)(iVar8 + 0x18));
+    uVar13 = 1;
+    if (iVar10 == 0) goto LAB_8234b2f8;
+  }
+  else {
+LAB_8234b2f8:
+    uVar13 = 0;
+  }
+  *(undefined1 *)(iVar8 + 0x40144) = uVar13;
+LAB_8234b308:
+  __restgprlr_27(1);
+  return;
+}
+
 
 // 8234B4E0  CL_ConnectionLessPacketCmd  (client_mp/cl_main_mp.cpp:3763)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool CL_ConnectionLessPacketCmd
-               (LocalClientNum_t param_1,netadr_t param_2,char *param_3,msg_t *param_4,int param_5)
+void CL_ConnectionLessPacketCmd
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  netadr_t in_stack_ffffff88;
+  undefined8 uVar1;
   
-  LVar1 = __savegprlr_27(param_1);
-  Cmd_TokenizeString((char *)param_5);
-  bVar2 = CL_DispatchConnectionlessPacket(LVar1,in_stack_ffffff88,(msg_t *)param_3,(int)param_4);
+  uVar1 = __savegprlr_27();
+  Cmd_TokenizeString(param_4);
+  uVar1 = CL_DispatchConnectionlessPacket(uVar1,param_2,param_3,param_5,param_6);
   Cmd_EndTokenizedString();
-  uVar3 = __restgprlr_27(bVar2);
-  return (bool)uVar3;
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
 // 8234B538  CL_ConnectionlessPacket  (client_mp/cl_main_mp.cpp:3775)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-bool CL_ConnectionlessPacket(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3,int param_4)
+void CL_ConnectionlessPacket
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  int iVar3;
-  undefined1 uVar4;
-  bool bVar5;
-  msg_t *in_r6;
-  bool *in_r7;
-  netadr_t in_stack_fffffb68;
-  undefined1 local_450;
-  char acStack_440 [1088];
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  undefined8 uVar3;
+  undefined1 local_450 [16];
+  undefined1 auStack_440 [1088];
   
-  LVar1 = __savegprlr_26(param_1);
-  MSG_BeginReading(in_r6);
-  MSG_ReadLong(in_r6);
-  CL_Netchan_AddOOBProfilePacket(LVar1,in_r6->cursize);
-  pcVar2 = MSG_ReadStringLine(in_r6,acStack_440,0x400);
-  iVar3 = RMsg_HandleReliablePacket
-                    (LVar1,pcVar2,in_stack_fffffb68,param_3,param_4,
-                     (_func___cdecl_bool_LocalClientNum_t_netadr_t_char_ptr_msg_t_ptr_int *)in_r6,
-                     in_r7);
-  if (iVar3 != 0) {
-    uVar4 = __restgprlr_26(local_450);
-    return (bool)uVar4;
+  uVar1 = __savegprlr_26();
+  MSG_BeginReading(param_4);
+  MSG_ReadLong(param_4);
+  CL_Netchan_AddOOBProfilePacket(uVar1,*(undefined4 *)((int)param_4 + 0x14));
+  uVar2 = MSG_ReadStringLine(param_4,auStack_440,0x400);
+  iVar4 = RMsg_HandleReliablePacket
+                    (uVar1,uVar2,param_2,param_3,param_4,param_5,0xffffffff8234b4e0,local_450);
+  if (iVar4 != 0) {
+    __restgprlr_26(local_450[0]);
+    return;
   }
-  if ((showpackets->current).integer != 0) {
-    NET_AdrToString(in_stack_fffffb68);
-    Com_Printf(0x10,"recv: %s->\'%s\'\n");
+  if (*(int *)(DAT_83691660 + 0xc) != 0) {
+    uVar3 = NET_AdrToString(param_2,param_3);
+    Com_Printf(0x10,0xffffffff82034038,uVar3,uVar2);
   }
-  Cmd_TokenizeString(pcVar2);
-  bVar5 = CL_DispatchConnectionlessPacket(LVar1,in_stack_fffffb68,param_3,param_4);
+  Cmd_TokenizeString(uVar2);
+  uVar1 = CL_DispatchConnectionlessPacket(uVar1,param_2,param_3,param_4,param_5);
   Cmd_EndTokenizedString();
-  uVar4 = __restgprlr_26(bVar5);
-  return (bool)uVar4;
+  __restgprlr_26(uVar1);
+  return;
 }
 
 
 // 82343990  CL_InitLoad  (client_mp/cl_main_mp.cpp:3817)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_InitLoad(undefined8 param_1,undefined8 param_2)
+
+{
+  uint uVar1;
+  bool bVar2;
+  int iVar3;
+  undefined8 uVar4;
+  char *pcVar5;
+  uint *puVar6;
+  ulonglong uVar7;
+  
+  uVar4 = __savegprlr_22();
+  pcVar5 = &DAT_82b3e4f1;
+  do {
+    if (*pcVar5 != '\0') {
+      bVar2 = true;
+      goto LAB_823439d0;
+    }
+    pcVar5 = pcVar5 + 0x1e4;
+  } while ((int)pcVar5 < -0x7d4c137f);
+  bVar2 = false;
+LAB_823439d0:
+  if (bVar2) {
+    MSG_SetupNetFieldListsForGame();
+    uVar7 = 0;
+    if (0 < DAT_82aa1ae8) {
+      puVar6 = (uint *)0x82b3e368;
+      do {
+        if (3 < (uVar7 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar7,4);
+        }
+        uVar1 = puVar6[0x79];
+        if (3 < (uVar7 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8202c1d8,0x4b5,0,0xffffffff82024a10,uVar7,4);
+        }
+        iVar3 = DAT_82aa1ae8;
+        uVar7 = uVar7 + 1;
+        puVar6 = puVar6 + 0x79;
+        *puVar6 = -(uint)((ulonglong)uVar1 - 5 < 0xffffffff7ffffffb) & 5;
+      } while ((int)uVar7 < iVar3);
+    }
+    UI_SetMap(uVar4,param_2);
+  }
+  __restgprlr_22();
+  return;
+}
+
 
 // 8234B630  CL_PacketEvent  (client_mp/cl_main_mp.cpp:3852)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_PacketEvent(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  uint uVar1;
+  undefined4 uVar2;
+  int *piVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  int iVar6;
+  int iVar7;
+  char cVar8;
+  int *piVar9;
+  
+  __savegprlr_24();
+  piVar3 = (int *)param_4;
+  if ((3 < piVar3[5]) && (*(int *)piVar3[2] == -1)) {
+    CL_ConnectionlessPacket();
+    __restgprlr_24();
+    return;
+  }
+  uVar1 = piVar3[10];
+  if (uVar1 == 4) {
+    uVar2 = *(undefined4 *)piVar3[2];
+    uVar4 = NET_AdrToString(param_2,param_3);
+    Com_PrintWarning(0xe,0xffffffff82034218,uVar4,uVar2);
+  }
+  else {
+    if (3 < uVar1) {
+      MyAssertHandler(0xffffffff820302c8,0xf1e,0,0xffffffff820341d0,uVar1,4);
+    }
+    uVar1 = piVar3[10];
+    if (3 < uVar1) {
+      MyAssertHandler(0xffffffff820302c8,0xf20,0,0xffffffff820011a8,uVar1,4);
+    }
+    uVar4 = CL_GetLocalClientConnectionState(uVar1);
+    if ((int)uVar4 < 5) {
+      uVar2 = *(undefined4 *)piVar3[2];
+      uVar5 = NET_AdrToString(param_2,param_3);
+      Com_DPrintf(0xe,0xffffffff8203418c,uVar5,uVar2,uVar4);
+      __restgprlr_24(0);
+      return;
+    }
+    iVar6 = CL_GetLocalClientConnection(uVar1);
+    if (piVar3[5] < 4) {
+      uVar4 = NET_AdrToString();
+      Com_Printf(0xe,0xffffffff82034178,uVar4);
+      __restgprlr_24(1);
+      return;
+    }
+    iVar7 = NET_CompareAdr(param_2,param_3,*(undefined8 *)(iVar6 + 0x54248),
+                           *(undefined8 *)(iVar6 + 0x54250));
+    if (iVar7 == 0) {
+      uVar4 = NET_AdrToString(param_2,param_3);
+      Com_DPrintf(0xe,0xffffffff82034150,uVar4);
+      __restgprlr_24(0);
+      return;
+    }
+    *(undefined4 *)(iVar6 + 0xc) = DAT_82aa1c24;
+    iVar7 = Netchan_Process(iVar6 + 0x54238,param_4);
+    if (iVar7 != 0) {
+      if (piVar3[7] != 4) {
+        MyAssertHandler(0xffffffff820302c8,0xf44,0,0xffffffff8203411c,0xffffffff82034138);
+      }
+      uVar2 = *(undefined4 *)(iVar6 + 0x134);
+      piVar9 = (int *)(iVar6 + 0x20138);
+      iVar7 = *piVar9;
+      piVar3[7] = 0;
+      uVar4 = MSG_ReadLong(param_4);
+      *piVar9 = (int)uVar4;
+      uVar5 = MSG_ReadLong(param_4);
+      *(int *)(iVar6 + 0x134) = (int)uVar5;
+      if ((int)uVar5 < *(int *)(iVar6 + 0x130) + -0x80) {
+        Com_PrintWarning(0xe,0xffffffff820340c0);
+        *(undefined4 *)(iVar6 + 0x134) = *(undefined4 *)(iVar6 + 0x130);
+        __restgprlr_24(0);
+        return;
+      }
+      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff820340b4,uVar5);
+      CL_ParseServerMessage(uVar1,param_4);
+      PIXEndNamedEvent();
+      if (*piVar3 != 0) {
+        Com_DPrintf(0xe,0xffffffff82034084);
+        *piVar9 = iVar7;
+        *(undefined4 *)(iVar6 + 0x134) = uVar2;
+        __restgprlr_24(0);
+        return;
+      }
+      cVar8 = CL_Demo_IsRecording(uVar1);
+      if ((cVar8 != '\0') &&
+         (cVar8 = CL_Demo_IsWaitingForUncompressedSnapshot(uVar1), cVar8 == '\0')) {
+        if (*piVar9 != (int)uVar4) {
+          MyAssertHandler(0xffffffff820302c8,0xf74,0,0xffffffff82034048,*piVar9,uVar4);
+        }
+        cVar8 = CL_Demo_ReachedFileSizeLimit(uVar1);
+        if (cVar8 != '\0') {
+          CL_Demo_FlushToHardDriveAndEndDemo(uVar1);
+          __restgprlr_24(1);
+          return;
+        }
+        CL_Demo_WriteAllClientArchives(*(undefined4 *)(iVar6 + 0x54228),uVar1);
+        CL_Demo_WriteRawMessage
+                  (*(undefined4 *)(iVar6 + 0x54228),uVar1,uVar4,(ulonglong)(uint)piVar3[2] + 4,
+                   (ulonglong)(uint)piVar3[5] - 4);
+        CL_Demo_UpdateRuntimeFooterInformation(uVar1);
+      }
+      __restgprlr_24(1);
+      return;
+    }
+  }
+  __restgprlr_24(0);
+  return;
+}
+
 
 // 82343AA8  CL_ServerTimedOut  (client_mp/cl_main_mp.cpp:3978)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_ServerTimedOut(void)
+
+{
+  undefined4 uVar1;
+  ulonglong uVar2;
+  char cVar5;
+  undefined8 uVar3;
+  int iVar4;
+  undefined8 local_40 [8];
+  
+  uVar2 = __savegprlr_27();
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar2,4);
+  }
+  iVar4 = (int)uVar2 * 0x1e4;
+  uVar1 = (&DAT_82b3e54c)[(int)uVar2 * 0x79];
+  cVar5 = IsServerRunning();
+  if (cVar5 == '\0') {
+    uVar3 = CL_GetLocalClientMigrationState(uVar2);
+    Com_Printf(0xe,0xffffffff82031090,uVar1,uVar3);
+    if (3 < (uVar2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8202c1d8,0x4d0,0,0xffffffff82024a10,uVar2,4);
+    }
+    CL_UpdateMigrationProfile(*(undefined4 *)(&DAT_82b3e4f4 + iVar4),0);
+    *(undefined4 *)(&DAT_82b3e4f4 + iVar4) = 0;
+    Migration_Shutdown();
+    cVar5 = Lobby_IsInLobby();
+    if (cVar5 != '\0') {
+      cVar5 = Lobby_AreWeHost();
+      if (cVar5 == '\0') {
+        iVar4 = Lobby_GetSession();
+        uVar1 = *(undefined4 *)(iVar4 + 0x4f8);
+        uVar3 = Lobby_GetPartyData();
+        local_40[0] = Party_GetMainActiveClient(uVar3,uVar1);
+        uVar3 = Lobby_GetPartyData();
+        PartyClient_LostConnectionToHost(uVar3,local_40);
+      }
+      else {
+        Lobby_GetPartyData();
+        Party_StopPartyOnBackout();
+      }
+    }
+    Com_Error(1,0xffffffff82031078);
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 82343BD8  CL_CheckTimeout  (client_mp/cl_main_mp.cpp:4020)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_CheckTimeout(void)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  int iVar6;
+  
+  uVar1 = __savegprlr_28();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  }
+  iVar2 = (&DAT_82b3e54c)[(int)uVar1 * 0x79];
+  if (iVar2 < 3) {
+    if ((int)uVar1 < DAT_82aa1ae8) {
+      iVar2 = CL_GetLocalClientGlobals(uVar1);
+      *(undefined4 *)(iVar2 + 4) = 0;
+      __restgprlr_28();
+      return;
+    }
+  }
+  else {
+    iVar3 = CL_GetLocalClientGlobals(uVar1);
+    iVar4 = CL_GetLocalClientConnection(uVar1);
+    cVar5 = CL_Demo_IsPlaying(uVar1);
+    if (cVar5 == '\0') {
+      if ((((*(int *)(DAT_83666158 + 0xc) != 0) && (*(int *)(DAT_83667300 + 0xc) != 0)) ||
+          (iVar2 < 10)) ||
+         ((*(int *)(iVar4 + 0xc) < 1 ||
+          ((float)(longlong)(DAT_82aa1c24 - *(int *)(iVar4 + 0xc)) <=
+           *(float *)(DAT_82aa1acc + 0xc) * 1000.0)))) {
+        if (((iVar2 < 4) || (9 < iVar2)) ||
+           ((*(int *)(iVar4 + 0xc) < 1 ||
+            ((float)(longlong)(DAT_82aa1c24 - *(int *)(iVar4 + 0xc)) <=
+             *(float *)(DAT_82aa1ac0 + 0xc) * 1000.0)))) {
+          if ((((iVar2 == 3) || (iVar2 == 4)) && (*(int *)(iVar4 + 0xc) == 0)) &&
+             (*(int *)(DAT_82aa1aec + 0xc) < *(int *)(iVar4 + 0x24))) {
+            iVar6 = *(int *)(iVar3 + 4) + 1;
+            *(int *)(iVar3 + 4) = iVar6;
+            if (5 < iVar6) {
+              Com_Printf(0xe,0xffffffff820310d8,iVar2,*(undefined4 *)(iVar4 + 0xc),DAT_82aa1c24,
+                         *(undefined4 *)(DAT_82aa1aec + 0xc));
+              CL_ServerTimedOut(uVar1);
+              __restgprlr_28();
+              return;
+            }
+          }
+          else {
+            *(undefined4 *)(iVar3 + 4) = 0;
+          }
+        }
+        else {
+          iVar6 = *(int *)(iVar3 + 4) + 1;
+          *(int *)(iVar3 + 4) = iVar6;
+          if (5 < iVar6) {
+            Com_Printf(0xe,0xffffffff82031140,iVar2,*(undefined4 *)(iVar4 + 0xc),DAT_82aa1c24,
+                       (double)(*(float *)(DAT_82aa1ac0 + 0xc) * 1000.0));
+            CL_ServerTimedOut(uVar1);
+            __restgprlr_28();
+            return;
+          }
+        }
+      }
+      else {
+        iVar6 = *(int *)(iVar3 + 4) + 1;
+        *(int *)(iVar3 + 4) = iVar6;
+        if (5 < iVar6) {
+          Com_Printf(0xe,0xffffffff820311a8,iVar2,*(undefined4 *)(iVar4 + 0xc),DAT_82aa1c24,
+                     (double)(*(float *)(DAT_82aa1acc + 0xc) * 1000.0));
+          CL_ServerTimedOut(uVar1);
+          __restgprlr_28();
+          return;
+        }
+      }
+    }
+  }
+  __restgprlr_28();
+  return;
+}
+
 
 // 82343E88  CL_CheckUserinfo  (client_mp/cl_main_mp.cpp:4106)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_CheckUserinfo(ulonglong param_1)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  int *in_r13;
+  
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,param_1,4);
+  }
+  if ((3 < (int)(&DAT_82b3e54c)[(int)param_1 * 0x79]) && (*(int *)(DAT_83666158 + 0xc) == 0)) {
+    iVar1 = *in_r13;
+    if ((*(uint *)(iVar1 + 0xf4) & 0x200) == 0) {
+      MyAssertHandler(0xffffffff820302c8,0x1016,0,0xffffffff82000f98,0xffffffff82031230);
+    }
+    if ((*(uint *)(iVar1 + 0xf0) & 0x200) != 0) {
+      uVar2 = Dvar_InfoString(param_1,0x200);
+      Com_Printf(0x19,0xffffffff82031218,uVar2);
+      uVar2 = va(0xffffffff82031208,uVar2);
+      CL_AddReliableCommand(param_1,uVar2);
+    }
+  }
+  return;
+}
+
 
 // 82343FA8  CL_UpdateInGameState  (client_mp/cl_main_mp.cpp:4133)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_UpdateInGameState(ulonglong param_1)
+
+{
+  undefined8 uVar1;
+  
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,param_1,4);
+  }
+  if ((&DAT_82b3e54c)[(int)param_1 * 0x79] == 10) {
+    if (*(char *)(DAT_82b3e4ec + 0xc) != '\0') {
+      return;
+    }
+    uVar1 = 1;
+  }
+  else {
+    if (*(char *)(DAT_82b3e4ec + 0xc) == '\0') {
+      return;
+    }
+    uVar1 = 0;
+  }
+  Dvar_SetBool(DAT_82b3e4ec,uVar1);
+  return;
+}
+
 
 // 82348000  CL_RunOncePerClientFrame  (client_mp/cl_main_mp.cpp:4151)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_RunOncePerClientFrame(double param_1,undefined8 param_2)
+
+{
+  ulonglong uVar1;
+  
+  FakeLag_Frame();
+  Profile_Begin(0x164);
+  if (DAT_82b3ecbc == 0) {
+    DAT_82b3ecbc = 1;
+  }
+  else {
+    Live_Frame(param_2);
+  }
+  Profile_EndInternal(0);
+  if (DAT_82aa1c28 == '\0') {
+    DAT_82aa1c28 = '\x01';
+    R_SyncGpu(0);
+  }
+  if (DAT_82aa1c29 == '\0') {
+    IN_Frame();
+  }
+  DAT_82aa1c20 = (float)param_1;
+  DAT_82aa1c1c = (int)param_2;
+  DAT_82aa1c28 = 0;
+  uVar1 = (ulonglong)DAT_8366737c - (ulonglong)DAT_82aa1af0;
+  DAT_82aa1c29 = 0;
+  DAT_82aa1c24 = DAT_82aa1c24 + (int)param_2;
+  DAT_82b3e4cc = (undefined4)uVar1;
+  if (uVar1 == 0) {
+    DAT_82b3e4cc = 1;
+  }
+  else if (200 < (uVar1 & 0xffffffff)) {
+    DAT_82b3e4cc = 200;
+  }
+  DAT_82aa1af0 = DAT_8366737c;
+  return;
+}
+
 
 // 82348108  CL_Frame  (client_mp/cl_main_mp.cpp:4206)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_Frame(void)
+
+{
+  ulonglong uVar1;
+  undefined8 uVar2;
+  char cVar7;
+  char *pcVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  char *pcVar8;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  uVar1 = __savegprlr_25();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x47f,0,0xffffffff820011a8,uVar1,4);
+  }
+  iVar5 = (int)uVar1;
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  }
+  iVar6 = (&DAT_82b3e54c)[iVar5 * 0x79];
+  uVar2 = CL_ControllerIndexFromClientNum(uVar1);
+  cVar7 = CL_AllLocalClientsInactive();
+  if ((cVar7 != '\0') || (cVar7 = CL_IsLocalClientActive(uVar1), cVar7 != '\0')) {
+    do {
+      iVar4 = DAT_82aa30cc;
+      if (in_RESERVE != '\0') {
+        DAT_82aa30cc = storeWordConditionalIndexed(0,0,0xffffffff82aa30cc);
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if (iVar4 != 0) {
+      pcVar3 = (char *)Dvar_GetString(0xffffffff8202c6c8);
+      pcVar8 = pcVar3;
+      do {
+        cVar7 = *pcVar8;
+        pcVar8 = pcVar8 + 1;
+      } while (cVar7 != '\0');
+      if (((int)pcVar8 - (int)pcVar3 != 1) &&
+         (iVar4 = I_stricmp(pcVar3,0xffffffff82031834), iVar4 != 0)) {
+        UI_OpenMenu(uVar1,0xffffffff82032618);
+        cVar7 = CL_IsLocalClientActive(uVar1);
+        if (cVar7 != '\0') {
+          cVar7 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff82032618);
+          if (cVar7 == '\0') {
+            MyAssertHandler(0xffffffff820302c8,0x108b,0,0xffffffff82000f98,0xffffffff820325d8);
+          }
+          iVar4 = CL_GetLocalClientConnectionState(uVar1);
+          if (iVar4 < 1) {
+            MyAssertHandler(0xffffffff820302c8,0x108c,0,0xffffffff82000f98,0xffffffff82032590);
+          }
+          Key_AddCatcher(uVar1,0x10);
+        }
+      }
+    }
+  }
+  cVar7 = CL_AllLocalClientsDisconnected();
+  if (((cVar7 != '\0') && (iVar5 == 0)) && ((DAT_82b3e544 & 0x10) == 0)) {
+    DAT_82b3e544 = DAT_82b3e544 | 0x10;
+  }
+  Hunk_CheckTempMemoryClear();
+  Hunk_CheckTempMemoryHighClear();
+  if ((&DAT_82b3e4f1)[iVar5 * 0x1e4] != '\0') {
+    CL_DevGuiFrame(uVar1);
+    UI_ScreenshotUpdate(uVar1);
+    if (((&DAT_82b3e4f0)[iVar5 * 0x1e4] != '\0') ||
+       (cVar7 = CL_AllLocalClientsDisconnected(), cVar7 != '\0')) {
+      if ((((DAT_82aa1a88 != 0) &&
+           ((cVar7 = Live_IsUserSignedInToLive(uVar2), cVar7 != '\0' &&
+            (cVar7 = Live_UserIsGuest(uVar2), cVar7 == '\0')))) &&
+          (cVar7 = LiveStorage_DoWeHavePlaylists(), cVar7 != '\0')) &&
+         ((cVar7 = LiveStorage_DoWeHaveStatsForSource(uVar2,0), cVar7 != '\0' &&
+          (iVar4 = Live_GetUploadSpeed(), 0 < iVar4)))) {
+        iVar4 = Playlist_GetPlaylistCount();
+        if ((iVar4 < 2) && (iVar4 = Playlist_GetPlaylistCount(), 0 < iVar4)) {
+          iVar4 = UI_GetActiveMenu(0);
+          if (iVar4 != 0) {
+            uVar2 = CL_ControllerIndexFromClientNum(0);
+            if (DAT_82966e98 != 0) {
+              CL_ForceNoSplitscreenControl(0xffffffff82032584,uVar2);
+            }
+            if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
+              Dvar_SetBool(DAT_82aa1af8,1);
+            }
+            if (*(int *)(DAT_82aa1adc + 0xc) != 0) {
+              Dvar_SetInt(DAT_82aa1adc,0);
+            }
+            if (*(int *)(DAT_844cb0ac + 0xc) != 0) {
+              Dvar_SetInt(DAT_844cb0ac,0);
+            }
+            cVar7 = Lobby_IsInLobby();
+            if (cVar7 == '\0') {
+              Cbuf_ExecuteBuffer(0,uVar2,0xffffffff82032578);
+            }
+            if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
+              MyAssertHandler(0xffffffff820302c8,0x10ce,0,0xffffffff82000f98,0xffffffff820304bc);
+            }
+            cVar7 = Lobby_IsInLobby();
+            if (cVar7 == '\0') {
+              MyAssertHandler(0xffffffff820302c8,0x10cf,0,0xffffffff82000f98,0xffffffff82032564);
+            }
+          }
+        }
+        else {
+          Cbuf_AddText(0,0xffffffff82032550);
+        }
+      }
+      Profile_Begin(0x160);
+      CL_VoiceFrame(uVar1);
+      Profile_EndInternal(0);
+      CL_MigrationFrame(uVar1);
+      iVar4 = CL_GetLocalClientMigrationState(uVar1);
+      if (iVar4 != 2) {
+        CL_UpdateColor(uVar1);
+        CL_CheckUserinfo(uVar1);
+        CL_CheckForResend(uVar1);
+        CL_CheckTimeout(uVar1);
+        CL_UpdateInGameState(uVar1);
+        if (((&DAT_82b3e544)[iVar5 * 0x79] & 0x10) != 0) {
+          uVar2 = CL_ControllerIndexFromClientNum(uVar1);
+          CL_GamepadRepeatScrollingButtons(uVar1,uVar2);
+        }
+        CL_SetCGameTime(uVar1);
+        CL_CreateCmdsDuringConnection(uVar1);
+        if ((iVar6 < 10) && (4 < iVar6)) {
+          CL_SendCmd(uVar1);
+        }
+        if ((*(char *)(DAT_83666174 + 0xc) == '\0') && (iVar6 == 10)) {
+          iVar5 = CL_GetLocalClientGlobals(uVar1);
+          iVar6 = CL_Demo_GetTimeDemoBaseTime(uVar1);
+          if ((1999 < *(int *)(iVar5 + 0x3404) - iVar6) &&
+             (cVar7 = Session_Started(0xffffffff844c7860), cVar7 == '\0')) {
+            uVar2 = CL_ControllerIndexFromClientNum(uVar1);
+            Session_StartGameSession(uVar2,0xffffffff844c7860);
+          }
+        }
+        CG_Frame(uVar1);
+      }
+    }
+  }
+  __restgprlr_25();
+  return;
+}
+
 
 // 82344048  CL_IsLocalClientInGame  (client_mp/cl_main_mp.cpp:4379)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+bool CL_IsLocalClientInGame(ulonglong param_1)
+
+{
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,param_1,4);
+  }
+  return (&DAT_82b3e54c)[(int)param_1 * 0x79] == 10;
+}
+
 
 // 823440C0  CL_IsClientLocal  (client_mp/cl_main_mp.cpp:4385)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_IsClientLocal(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  ulonglong uVar4;
+  
+  iVar1 = __savegprlr_26();
+  uVar4 = 0;
+  if (0 < DAT_82aa1ae8) {
+    piVar3 = &DAT_82b3e54c;
+    do {
+      if (3 < (uVar4 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar4,4);
+      }
+      if ((8 < *piVar3) && (iVar2 = CG_GetClientNum(uVar4), iVar2 == iVar1)) {
+        __restgprlr_26(1);
+        return;
+      }
+      uVar4 = uVar4 + 1;
+      piVar3 = piVar3 + 0x79;
+    } while ((int)uVar4 < DAT_82aa1ae8);
+  }
+  __restgprlr_26(0);
+  return;
+}
+
 
 // 82344170  CL_ParseBadPacket_f  (client_mp/cl_main_mp.cpp:4399)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_ParseBadPacket_f(void)
 
 {
-  LocalClientNum_t LVar1;
-  void *local_50 [4];
-  msg_t local_40;
+  uint uVar2;
+  undefined8 uVar1;
+  uint local_50 [4];
+  undefined8 local_40;
+  longlong local_38;
+  ulonglong local_30;
+  undefined8 local_28;
+  undefined8 local_20;
+  undefined4 local_18;
   
-  local_40.cursize = FS_ReadFile("badpacket.dat",local_50);
-  if (-1 < local_40.cursize) {
-    local_40.overflowed = 0;
-    local_40.readOnly = 0;
-    local_40.splitSize = 0;
-    local_40.readcount = 0;
-    local_40.bit = 0;
-    local_40.lastEntityRef = 0;
-    local_40.targetLocalNetID = NS_CLIENT1;
-    local_40.maxsize = 0;
-    local_40._8_8_ = ZEXT48(local_50[0]) << 0x20;
+  uVar2 = FS_ReadFile(0xffffffff82031280,local_50);
+  if (-1 < (int)uVar2) {
+    local_40 = 0;
+    local_28 = 0;
+    local_20 = 0;
+    local_18 = 0;
+    local_30 = (ulonglong)uVar2;
+    local_38 = (ulonglong)local_50[0] << 0x20;
     MSG_ReadLong(&local_40);
     MSG_ReadLong(&local_40);
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                      0x113f,1,"Time to debug this packet, baby!");
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff820302c8,0x113f,1,0xffffffff8203125c);
     }
-    LVar1 = Cmd_LocalClientNum();
-    CL_ParseServerMessage(LVar1,&local_40);
+    uVar1 = Cmd_LocalClientNum();
+    CL_ParseServerMessage(uVar1,&local_40);
     FS_FreeFile(local_50[0]);
   }
   return;
@@ -1543,8 +3443,6 @@ void CL_ParseBadPacket_f(void)
 
 
 // 82344228  IWN_RequestNonce_f  (client_mp/cl_main_mp.cpp:4423)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void IWN_RequestNonce_f(void)
 
@@ -1555,8 +3453,6 @@ void IWN_RequestNonce_f(void)
 
 // 82344230  IWN_SearchForGames_f  (client_mp/cl_main_mp.cpp:4437)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void IWN_SearchForGames_f(void)
 
 {
@@ -1566,8 +3462,6 @@ void IWN_SearchForGames_f(void)
 
 // 82344238  IWN_UpdateSession_f  (client_mp/cl_main_mp.cpp:4447)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void IWN_UpdateSession_f(void)
 
 {
@@ -1576,262 +3470,531 @@ void IWN_UpdateSession_f(void)
 
 
 // 82348610  CL_ShutdownRef  (client_mp/cl_main_mp.cpp:4457)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_ShutdownRef(void)
+
+{
+  R_SyncRenderThread();
+  DAT_82aa1c08 = 0;
+  DAT_82aa295c = 0;
+  DAT_82aa2960 = 0;
+  DAT_82aa2964 = 0;
+  R_Shutdown(1);
+  Con_ShutdownClientAssets();
+  track_shutdown(3);
+  StatMon_Reset();
+  return;
+}
+
 
 // 82344240  CL_ResetViewport  (client_mp/cl_main_mp.cpp:4472)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_ResetViewport(void)
+
+{
+  char cVar1;
+  
+  if (DAT_82aa1c08 != 0) {
+    ScrPlace_SetupFullscreenViewports();
+    ScrPlace_SetupClientViewports();
+    cVar1 = CL_AnyLocalClientStateActive();
+    if (cVar1 != '\0') {
+      CL_SetupScreenPlacements();
+    }
+  }
+  return;
+}
+
 
 // 82344290  CL_InitRenderer  (client_mp/cl_main_mp.cpp:4489)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_InitRenderer(void)
+
+{
+  char cVar1;
+  
+  if (DAT_82aa1c08 != 0) {
+    MyAssertHandler(0xffffffff820302c8,0x118a,0,0xffffffff82000f98,0xffffffff820312ac);
+  }
+  DAT_82aa1c08 = 1;
+  R_BeginRegistration(0xffffffff82aa2968);
+  if (DAT_82aa1c08 != 0) {
+    ScrPlace_SetupFullscreenViewports();
+    ScrPlace_SetupClientViewports();
+    cVar1 = CL_AnyLocalClientStateActive();
+    if (cVar1 != '\0') {
+      CL_SetupScreenPlacements();
+    }
+  }
+  DAT_82aa295c = Material_RegisterHandle(0xffffffff8201e1d4,3);
+  DAT_82aa2960 = Material_RegisterHandle(0xffffffff820312a4,3);
+  DAT_82aa2964 = R_RegisterFont(0xffffffff82031290,3);
+  DAT_82964554 = DAT_82aa2970 + -0x28;
+  DAT_82a9b120 = DAT_82964558;
+  DAT_82a9b124 = 1;
+  DAT_82a9b11c = DAT_82964554;
+  StatMon_Reset();
+  Con_InitClientAssets();
+  return;
+}
+
 
 // 82344398  CL_ShutdownRenderer  (client_mp/cl_main_mp.cpp:4518)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_ShutdownRenderer(undefined8 param_1)
+
+{
+  if ((DAT_82aa1c08 == 0) && ((int)param_1 == 0)) {
+    MyAssertHandler(0xffffffff820302c8,0x11a7,0,0xffffffff82000f98,0xffffffff820312c4);
+  }
+  DAT_82aa1c08 = 0;
+  DAT_82aa295c = 0;
+  DAT_82aa2960 = 0;
+  DAT_82aa2964 = 0;
+  R_Shutdown(param_1);
+  Con_ShutdownClientAssets();
+  return;
+}
+
 
 // 82344430  CL_DevGuiDvar_f  (client_mp/cl_main_mp.cpp:4538)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_DevGuiDvar_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  dvar_t *pdVar3;
+  int iVar3;
+  undefined8 uVar1;
+  ulonglong uVar2;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 != 3) {
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s \"devgui path\" dvarName\n");
+  iVar3 = Cmd_Argc();
+  if (iVar3 != 3) {
+    uVar1 = Cmd_Argv(0);
+    Com_Printf(0,0xffffffff82031308,uVar1);
     return;
   }
-  pcVar2 = Cmd_Argv(2);
-  pdVar3 = Dvar_FindVar(pcVar2);
-  if (pdVar3 == (dvar_t *)0x0) {
-    Cmd_Argv(2);
-    Com_Printf(0xb,"dvar \'%s\' doesn\'t exist\n");
+  Cmd_Argv(2);
+  uVar2 = Dvar_FindVar();
+  if ((uVar2 & 0xffffffff) == 0) {
+    uVar1 = Cmd_Argv(2);
+    Com_Printf(0xb,0xffffffff820312ec,uVar1);
     return;
   }
-  pcVar2 = Cmd_Argv(1);
-  DevGui_AddDvar(pcVar2,pdVar3);
+  uVar1 = Cmd_Argv(1);
+  DevGui_AddDvar(uVar1,uVar2);
   return;
 }
 
 
 // 823444E8  CL_DevGuiCmd_f  (client_mp/cl_main_mp.cpp:4559)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_DevGuiCmd_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  char *pcVar3;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 != 3) {
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s \"devgui path\" \"command text\"\n");
+  iVar3 = Cmd_Argc();
+  if (iVar3 != 3) {
+    uVar1 = Cmd_Argv(0);
+    Com_Printf(0,0xffffffff8203132c,uVar1);
     return;
   }
-  pcVar2 = Cmd_Argv(2);
-  pcVar3 = Cmd_Argv(1);
-  DevGui_AddCommand(pcVar3,pcVar2);
+  uVar1 = Cmd_Argv(2);
+  uVar2 = Cmd_Argv(1);
+  DevGui_AddCommand(uVar2,uVar1);
   return;
 }
 
 
 // 82344568  CL_DevGuiOpen_f  (client_mp/cl_main_mp.cpp:4571)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_DevGuiOpen_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
+  int iVar2;
+  undefined8 uVar1;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 != 2) {
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s \"devgui path\"\n");
+  iVar2 = Cmd_Argc();
+  if (iVar2 != 2) {
+    uVar1 = Cmd_Argv(0);
+    Com_Printf(0,0xffffffff82031354,uVar1);
     return;
   }
-  pcVar2 = Cmd_Argv(1);
-  DevGui_OpenMenu(pcVar2);
+  Cmd_Argv(1);
+  DevGui_OpenMenu();
   return;
 }
 
 
 // 823445C8  CL_InitDevGui  (client_mp/cl_main_mp.cpp:4583)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_InitDevGui(void)
 
 {
   DevGui_Init();
-  Cmd_AddCommandInternal("devgui_dvar",CL_DevGuiDvar_f,&CL_DevGuiDvar_f_VAR);
-  Cmd_AddCommandInternal("devgui_cmd",CL_DevGuiCmd_f,&CL_DevGuiCmd_f_VAR);
-  Cmd_AddCommandInternal("devgui_open",CL_DevGuiOpen_f,&CL_DevGuiOpen_f_VAR);
+  Cmd_AddCommandInternal(0xffffffff82030a10,0xffffffff82344430,0xffffffff82b3ecf4);
+  Cmd_AddCommandInternal(0xffffffff82030a04,0xffffffff823444e8,0xffffffff82b3ece0);
+  Cmd_AddCommandInternal(0xffffffff820309f8,0xffffffff82344568,0xffffffff82b3eccc);
   CL_CreateDevGui();
   return;
 }
 
 
 // 82344640  CL_StartHunkUsers  (client_mp/cl_main_mp.cpp:4602)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_StartHunkUsers(void)
+
+{
+  bool bVar1;
+  char *pcVar2;
+  
+  __savegprlr_29();
+  if (DAT_82aa1b04 != 0) {
+    MyAssertHandler(0xffffffff820302c8,0x11fb,0,0xffffffff82000f98,0xffffffff820313a8);
+  }
+  pcVar2 = &DAT_82b3e4f1;
+  do {
+    if (*pcVar2 != '\0') {
+      bVar1 = true;
+      goto LAB_823446b8;
+    }
+    pcVar2 = pcVar2 + 0x1e4;
+  } while ((int)pcVar2 < -0x7d4c137f);
+  bVar1 = false;
+LAB_823446b8:
+  if (bVar1) {
+    if (DAT_82aa1c0c == 0) {
+      MyAssertHandler(0xffffffff820302c8,0x1200,0,0xffffffff82000f98,0xffffffff82031394);
+    }
+    if (DAT_82aa1c08 == 0) {
+      MyAssertHandler(0xffffffff820302c8,0x1201,0,0xffffffff82000f98,0xffffffff82031380);
+    }
+    if ((DAT_82aa1c14 == 0) && (CL_InitUI(), DAT_82aa1c14 == 0)) {
+      MyAssertHandler(0xffffffff820302c8,0x1206,0,0xffffffff82000f98,0xffffffff82031370);
+    }
+    if (DAT_82aa1c18 == 0) {
+      DAT_82aa1c18 = 1;
+      CL_InitDevGui();
+    }
+    DAT_82aa1b04 = 1;
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 82344780  CL_ScaledMilliseconds  (client_mp/cl_main_mp.cpp:4630)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined4 CL_ScaledMilliseconds(void)
+
+{
+  return DAT_82aa1c24;
+}
+
 
 // 82344790  SetupGfxConfig  (client_mp/cl_main_mp.cpp:4660)
 
-void SetupGfxConfig(GfxConfiguration *param_1)
+void SetupGfxConfig(int param_1)
 
 {
-  if (param_1 == (GfxConfiguration *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1235,0,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1235,0,0xffffffff82000f98,0xffffffff820313c0);
   }
-  param_1->maxClientViews = 4;
-  param_1->maxClientRenderViews = 4;
-  param_1->entCount = 0x800;
-  param_1->entnumNone = 0x7ff;
-  param_1->entnumOrdinaryEnd = 0x7fe;
-  param_1->threadContextCount = 0xe;
-  param_1->defaultFullscreen = false;
-  param_1->defaultFullscreenFlags = 2;
-  param_1->defaultMode = -1;
-  param_1->critSectCount = 0x2e;
+  *(undefined4 *)(param_1 + 4) = 4;
+  *(undefined4 *)(param_1 + 8) = 4;
+  *(undefined4 *)(param_1 + 0xc) = 0x800;
+  *(undefined4 *)(param_1 + 0x10) = 0x7ff;
+  *(undefined4 *)(param_1 + 0x14) = 0x7fe;
+  *(undefined4 *)(param_1 + 0x18) = 0xe;
+  *(undefined1 *)(param_1 + 0x20) = 0;
+  *(undefined2 *)(param_1 + 0x22) = 2;
+  *(undefined4 *)(param_1 + 0x24) = 0xffffffff;
+  *(undefined4 *)(param_1 + 0x1c) = 0x2e;
   return;
 }
 
 
 // 82344830  CL_InitRef  (client_mp/cl_main_mp.cpp:4720)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_InitRef(void)
 
 {
-  GfxConfiguration GStack_30;
+  undefined1 auStack_30 [48];
   
-  Com_Printf(0xe,"----- Initializing Renderer ----\n");
-  SetupGfxConfig(&GStack_30);
-  R_ConfigureRenderer(&GStack_30);
-  Dvar_SetInt(cl_paused,0);
+  Com_Printf(0xe,0xffffffff820313c8);
+  SetupGfxConfig(auStack_30);
+  R_ConfigureRenderer(auStack_30);
+  Dvar_SetInt(DAT_83666158,0);
   return;
 }
 
 
 // 82344880  CL_startSingleplayer_f  (client_mp/cl_main_mp.cpp:4775)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Control flow encountered bad instruction data */
 
 void CL_startSingleplayer_f(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x12a8,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x12a8,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   LB_EndOngoingTasks();
   Session_EmptyGraveYard();
   Com_SyncThreads();
   Sys_SuspendOtherThreads();
   R_ShutdownDirect3D();
-  g_launchData.skipMovies = true;
-  g_launchData.activeController = (byte)cl_controller_in_use | 4;
+  DAT_8425a050 = 1;
+  DAT_8425a051 = (byte)DAT_82b5c820 | 4;
   XSetLaunchData(0xffffffff84259cc8,1000);
-                    /* WARNING: Subroutine does not return */
-  XLaunchNewImage("1-iw5sp.exe",0);
+  XLaunchNewImage(0xffffffff820313ec,0);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 82344918  CL_startMultiplayer  (client_mp/cl_main_mp.cpp:4830)
 
-void CL_startMultiplayer(char *param_1)
+void CL_startMultiplayer(undefined8 param_1)
 
 {
-  bool bVar1;
+  char cVar2;
+  int iVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x12e3,0,"%s");
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x12e3,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   LB_EndOngoingTasks();
   Session_EmptyGraveYard();
   Com_SyncThreads();
   Sys_SuspendOtherThreads();
   R_ShutdownDirect3D();
-  Com_sprintf(g_launchData.startupText,900,"n%s");
-  g_launchData.activeController = (byte)cl_controller_in_use | 4;
+  Com_sprintf(0xffffffff84259ccc,900,0xffffffff82031404,param_1);
+  DAT_8425a051 = (byte)DAT_82b5c820 | 4;
   XSetLaunchData(0xffffffff84259cc8,1000);
-                    /* WARNING: Subroutine does not return */
-  XLaunchNewImage("2-iw5mp.exe",0);
+  iVar1 = XLaunchNewImage(0xffffffff820313f8,0);
+  (&DAT_82b3e54c)[iVar1 * 0x79] = 0;
+  CL_ResetLastGamePadEventTime();
+  return;
 }
 
 
 // 82348670  CL_DrawLogo  (client_mp/cl_main_mp.cpp:4887)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_DrawLogo(void)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  
+  __savegprlr_28();
+  uVar1 = __savefpr_27();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  }
+  if ((&DAT_82b3e54c)[(int)uVar1 * 0x79] != 2) {
+    MyAssertHandler(0xffffffff820302c8,0x131f,0,0xffffffff82000f98,0xffffffff82032628);
+  }
+  uVar7 = 0;
+  uVar6 = 0x3ff0000000000000;
+  iVar2 = DAT_82aa1c24 - DAT_82aa1c2c;
+  dVar5 = (double)DAT_82aa2970;
+  dVar4 = (double)((float)((double)DAT_82aa2974 * 2.0) * 0.33333334);
+  dVar3 = (double)(float)((double)DAT_82aa2974 - dVar4);
+  R_AddCmdDrawStretchPic(0,0,dVar5,dVar4,0,0,0x3ff0000000000000,0x3ff0000000000000);
+  R_AddCmdDrawStretchPic(uVar7,dVar4,dVar5,dVar3,uVar7,uVar7,uVar6,uVar6);
+  if (DAT_82aa1c30 < iVar2) {
+    (&DAT_82b3e54c)[(int)uVar1 * 0x79] = 0;
+    CL_ResetLastGamePadEventTime();
+  }
+  __restfpr_27();
+  __restgprlr_28();
+  return;
+}
+
 
 // 823449C8  CL_StopLogo  (client_mp/cl_main_mp.cpp:4925)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_StopLogo(int param_1)
+
+{
+  (&DAT_82b3e54c)[param_1 * 0x79] = 0;
+  CL_ResetLastGamePadEventTime();
+  return;
+}
+
 
 // 823449E8  CL_PlayLogo_f  (client_mp/cl_main_mp.cpp:4941)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_PlayLogo_f(void)
+
+{
+  int iVar3;
+  undefined8 uVar1;
+  char *pcVar4;
+  undefined8 uVar2;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  
+  iVar3 = Cmd_Argc();
+  if (iVar3 == 5) {
+    Com_DPrintf(0,0xffffffff82031410);
+    uVar1 = Cmd_LocalClientNum();
+    iVar3 = CL_GetLocalClientConnectionState();
+    if (iVar3 == 1) {
+      SCR_StopCinematic(uVar1);
+    }
+    else if (iVar3 == 2) {
+      (&DAT_82b3e54c)[(int)uVar1 * 0x79] = 0;
+      CL_ResetLastGamePadEventTime();
+    }
+    else {
+      if (iVar3 != 0) {
+        return;
+      }
+      R_Cinematic_StopPlayback();
+    }
+    CL_SetLocalClientConnectionState(uVar1,2);
+    if (DAT_82aa1c14 != 0) {
+      UI_SetActiveMenu(uVar1,0);
+    }
+    uVar1 = SND_StopSounds(0);
+    SND_FadeAllSounds(0x3ff0000000000000,uVar1,0);
+    uVar1 = Cmd_Argv(1);
+    pcVar4 = (char *)Cmd_Argv(2);
+    dVar5 = atof(pcVar4);
+    dVar7 = 1000.0;
+    dVar6 = 0.5;
+    dVar5 = floor((double)((float)dVar5 * 1000.0 + 0.5));
+    DAT_82aa1c34 = (int)dVar5;
+    pcVar4 = (char *)Cmd_Argv(3);
+    dVar5 = atof(pcVar4);
+    dVar5 = floor((double)(float)((double)(float)((double)(float)dVar5 * dVar7) + dVar6));
+    DAT_82aa1c30 = (int)dVar5;
+    pcVar4 = (char *)Cmd_Argv(4);
+    dVar5 = atof(pcVar4);
+    dVar5 = floor((double)(float)((double)(float)((double)(float)dVar5 * dVar7) + dVar6));
+    DAT_82aa1c38 = (int)dVar5;
+    DAT_82aa1c30 = DAT_82aa1c38 + DAT_82aa1c30 + DAT_82aa1c34;
+    uVar2 = va(0xffffffff8203140c,uVar1);
+    DAT_82aa1c3c = Material_RegisterHandle(uVar2,3);
+    uVar1 = va(0xffffffff82031408,uVar1);
+    DAT_82aa1c40 = Material_RegisterHandle(uVar1,3);
+    DAT_82aa1c2c = DAT_82aa1c24 + 100;
+  }
+  else {
+    Com_Printf(0,0xffffffff82031420);
+  }
+  return;
+}
+
 
 // 82344BF0  CL_StopLogoOrCinematic_ByUserRequest  (client_mp/cl_main_mp.cpp:4987)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_StopLogoOrCinematic_ByUserRequest(void)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  
+  uVar2 = __savegprlr_28();
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar2,4);
+  }
+  iVar1 = (&DAT_82b3e54c)[(int)uVar2 * 0x79];
+  if (iVar1 == 1) {
+    SCR_StopCinematic_ByUserRequest(uVar2);
+  }
+  else {
+    if (iVar1 != 2) {
+      MyAssertHandler(0xffffffff820302c8,4999,0,0xffffffff82000f98,0xffffffff82031478);
+    }
+    (&DAT_82b3e54c)[(int)uVar2 * 0x79] = 0;
+    CL_ResetLastGamePadEventTime();
+  }
+  SND_StopSounds(0);
+  UI_SetActiveMenu(uVar2,iVar1 == 0);
+  __restgprlr_28();
+  return;
+}
+
 
 // 82344CB8  CL_ToggleMenu  (client_mp/cl_main_mp.cpp:5012)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_ToggleMenu(void)
+
+{
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar4;
+  
+  uVar3 = __savegprlr_26();
+  if (3 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x47f,0,0xffffffff820011a8,uVar3,4);
+  }
+  iVar2 = (int)uVar3;
+  if (3 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar3,4);
+  }
+  iVar1 = (&DAT_82b3e54c)[iVar2 * 0x79];
+  if (((&DAT_82b3e544)[iVar2 * 0x79] & 0x10) == 0) {
+    iVar4 = 0;
+  }
+  else {
+    iVar4 = UI_GetActiveMenu(uVar3);
+  }
+  if (iVar1 == 10) {
+    if ((((&DAT_82b3e544)[iVar2 * 0x79] & 0x10) != 0) && (iVar4 == 2)) {
+      UI_SetActiveMenu(uVar3,0);
+      __restgprlr_26();
+      return;
+    }
+    if (((&DAT_82b3e544)[iVar2 * 0x79] & 0xfffffff7) == 0) {
+      UI_SetActiveMenu(uVar3,2);
+    }
+  }
+  __restgprlr_26();
+  return;
+}
+
 
 // 82344DB0  CL_ResetStats_f  (client_mp/cl_main_mp.cpp:5097)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_ResetStats_f(void)
 
 {
-  int iVar1;
-  bool bVar3;
-  StatsSource SVar2;
+  char cVar4;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  Com_PrintWarning(0xc,
-                   "Resettings stats from command. This is dev-only and should not be used for ship functionality\n"
-                  );
-  iVar1 = Cmd_LocalControllerIndex();
-  LiveStorage_ResetActiveStats(iVar1);
-  iVar1 = Cmd_LocalControllerIndex();
-  bVar3 = LiveStorage_FirstTimeRunning(iVar1);
-  iVar1 = Cmd_LocalControllerIndex();
-  LiveStorage_StatsWriteNeeded(iVar1);
-  iVar1 = Cmd_LocalControllerIndex();
-  LiveStorage_SaveStats(iVar1);
-  if (((!bVar3) && (bVar3 = CL_AllLocalClientsDisconnected(), bVar3)) &&
-     ((cl_multi_gamepads_enabled != 0 ||
-      (iVar1 = Cmd_LocalControllerIndex(), cl_controller_in_use == iVar1)))) {
-    iVar1 = Cmd_LocalControllerIndex();
-    SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
-    iVar1 = Cmd_LocalControllerIndex();
-    LiveStorage_ShowResetStatsError(iVar1,SVar2);
+  Com_PrintWarning(0xc,0xffffffff82031490);
+  Cmd_LocalControllerIndex();
+  LiveStorage_ResetActiveStats();
+  Cmd_LocalControllerIndex();
+  cVar4 = LiveStorage_FirstTimeRunning();
+  Cmd_LocalControllerIndex();
+  LiveStorage_StatsWriteNeeded();
+  Cmd_LocalControllerIndex();
+  LiveStorage_SaveStats();
+  if (((cVar4 == '\0') && (cVar4 = CL_AllLocalClientsDisconnected(), cVar4 != '\0')) &&
+     ((DAT_82966e98 != 0 || (iVar3 = Cmd_LocalControllerIndex(), DAT_82b5c820 == iVar3)))) {
+    Cmd_LocalControllerIndex();
+    uVar1 = LiveStorage_GetActiveStatsSource();
+    uVar2 = Cmd_LocalControllerIndex();
+    LiveStorage_ShowResetStatsError(uVar2,uVar1);
   }
   return;
 }
@@ -1839,86 +4002,71 @@ void CL_ResetStats_f(void)
 
 // 82344E60  CL_GetStructuredDataDefSize_f  (client_mp/cl_main_mp.cpp:5124)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_GetStructuredDataDefSize_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
+  int iVar2;
+  undefined8 uVar1;
+  undefined8 uVar3;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 == 2) {
-    pcVar2 = Cmd_Argv(1);
-    StructuredDataDef_GetSize(pcVar2);
-    pcVar2 = va("%s requires %i bytes.\n");
+  iVar2 = Cmd_Argc();
+  if (iVar2 == 2) {
+    uVar3 = Cmd_Argv(1);
+    uVar1 = StructuredDataDef_GetSize();
+    uVar3 = va(0xffffffff820314f0,uVar3,uVar1);
   }
   else {
-    pcVar2 = "usage: getStructuredDataDefSize <def name>\n";
+    uVar3 = 0xffffffff82031508;
   }
-  Com_Printf(0x10,pcVar2);
+  Com_Printf(0x10,uVar3);
   return;
 }
 
 
 // 82344ED0  CL_VoiceFail_f  (client_mp/cl_main_mp.cpp:5142)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_VoiceFail_f(void)
 
 {
-  char *pcVar1;
-  int iVar2;
-  SessionData *pSVar3;
-  LocalClientNum_t LVar4;
+  char *_Str;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  pcVar1 = Cmd_Argv(1);
-  iVar2 = atoi(pcVar1);
-  pSVar3 = Live_GetCurrentSession();
-  LVar4 = Cmd_LocalClientNum();
-  CL_WeNowCantHearSomeone(LVar4,pSVar3,iVar2);
+  _Str = (char *)Cmd_Argv(1);
+  iVar3 = atoi(_Str);
+  uVar1 = Live_GetCurrentSession();
+  uVar2 = Cmd_LocalClientNum();
+  CL_WeNowCantHearSomeone(uVar2,uVar1,iVar3);
   return;
 }
 
 
 // 82344F28  CL_ForceVoiceFail_f  (client_mp/cl_main_mp.cpp:5149)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_ForceVoiceFail_f(void)
 
 {
-  char *pcVar1;
+  char *_Str;
   int iVar2;
-  PartyData *pPVar3;
-  bool bVar4;
-  undefined8 uVar5;
-  netadr_t in_stack_ffffff98;
+  int iVar3;
+  undefined4 *puVar4;
+  undefined8 uVar1;
+  char cVar5;
   
-  pcVar1 = Cmd_Argv(1);
-  atoi(pcVar1);
-  Com_Printf(0xe,"Telling the server that clientNum %i can\'t hear us\n");
-  pPVar3 = &g_partyData;
-  iVar2 = Party_InParty(&g_partyData);
-  if (iVar2 == 0) {
-    pPVar3 = Lobby_GetPartyData();
+  _Str = (char *)Cmd_Argv(1);
+  iVar2 = atoi(_Str);
+  Com_Printf(0xe,0xffffffff820315b0,iVar2);
+  puVar4 = &DAT_82b55118;
+  iVar3 = Party_InParty(0xffffffff82b55118);
+  if (iVar3 == 0) {
+    puVar4 = (undefined4 *)Lobby_GetPartyData();
   }
-  va("%icanthear %i");
-  uVar5._0_4_ = (pPVar3->currentHost).addr.type;
-  uVar5._4_1_ = (pPVar3->currentHost).addr.ip[0];
-  uVar5._5_1_ = (pPVar3->currentHost).addr.ip[1];
-  uVar5._6_1_ = (pPVar3->currentHost).addr.ip[2];
-  uVar5._7_1_ = (pPVar3->currentHost).addr.ip[3];
-  bVar4 = NET_OutOfBandPrint(NS_MAXCLIENTS,in_stack_ffffff98,(char *)uVar5);
-  if (!bVar4) {
-    Com_PrintError(0xe,
-                   "Tried to tell the server that client %i can\'t hear us but we couldn\'t send the packet to the server\n"
-                  );
+  uVar1 = va(0xffffffff820315a0,puVar4[0x7ad],iVar2);
+  cVar5 = NET_OutOfBandPrint(4,*(undefined8 *)(puVar4 + 0x78b),*(undefined8 *)(puVar4 + 0x78d),uVar1
+                            );
+  if (cVar5 == '\0') {
+    Com_PrintError(0xe,0xffffffff82031538,iVar2);
   }
   return;
 }
@@ -1926,22 +4074,16 @@ void CL_ForceVoiceFail_f(void)
 
 // 82344FE8  CL_Live_FindLSPServer  (client_mp/cl_main_mp.cpp:5204)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_FindLSPServer(void)
 
 {
-  int iVar1;
-  
-  iVar1 = Cmd_LocalControllerIndex();
-  LSP_FindTitleServers(iVar1);
+  Cmd_LocalControllerIndex();
+  LSP_FindTitleServers();
   return;
 }
 
 
 // 82345010  CL_Live_SendLSP  (client_mp/cl_main_mp.cpp:5210)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_Live_SendLSP(void)
 
@@ -1952,8 +4094,6 @@ void CL_Live_SendLSP(void)
 
 // 82345018  CL_Live_SendKeepalive  (client_mp/cl_main_mp.cpp:5220)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_SendKeepalive(void)
 
 {
@@ -1963,37 +4103,36 @@ void CL_Live_SendKeepalive(void)
 
 // 82345020  CL_MigrateHost_f  (client_mp/cl_main_mp.cpp:5232)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_MigrateHost_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
   int iVar3;
-  bool bVar5;
-  PartyData *pPVar4;
+  char *_Str;
+  int iVar4;
+  char cVar5;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  iVar3 = 2;
-  iVar1 = Cmd_Argc();
-  if (1 < iVar1) {
-    pcVar2 = Cmd_Argv(1);
-    iVar3 = atoi(pcVar2);
+  iVar4 = 2;
+  iVar3 = Cmd_Argc();
+  if (1 < iVar3) {
+    _Str = (char *)Cmd_Argv(1);
+    iVar4 = atoi(_Str);
   }
-  bVar5 = Lobby_AreWeHost();
-  if ((bVar5) && (iVar3 != 1)) {
-    iVar1 = Cmd_LocalControllerIndex();
-    pPVar4 = Lobby_GetPartyData();
-    PartyMigrate_RequestFindBestHost(pPVar4,iVar1);
-  }
-  else if ((g_partyData.areWeHost == 0) || (iVar3 == 0)) {
-    Com_Printf(0xe,"Found no party or lobby to migrate\n");
+  cVar5 = Lobby_AreWeHost();
+  if ((cVar5 == '\0') || (iVar4 == 1)) {
+    if ((DAT_82b57004 == 0) || (iVar4 == 0)) {
+      Com_Printf(0xe,0xffffffff820315e4);
+    }
+    else {
+      uVar1 = Cmd_LocalControllerIndex();
+      PartyMigrate_RequestFindBestHost(0xffffffff82b55118,uVar1);
+    }
   }
   else {
-    iVar1 = Cmd_LocalControllerIndex();
-    PartyMigrate_RequestFindBestHost(&g_partyData,iVar1);
+    uVar1 = Cmd_LocalControllerIndex();
+    uVar2 = Lobby_GetPartyData();
+    PartyMigrate_RequestFindBestHost(uVar2,uVar1);
   }
   return;
 }
@@ -2001,107 +4140,87 @@ void CL_MigrateHost_f(void)
 
 // 823450E0  CL_SetNatStrict_f  (client_mp/cl_main_mp.cpp:5261)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_SetNatStrict_f(void)
 
 {
-  _g_natType = 3;
+  DAT_8299519c = 3;
   return;
 }
 
 
 // 823450F0  CL_SetNatModerate_f  (client_mp/cl_main_mp.cpp:5266)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_SetNatModerate_f(void)
 
 {
-  _g_natType = 2;
+  DAT_8299519c = 2;
   return;
 }
 
 
 // 82345100  CL_SetNatOpen_f  (client_mp/cl_main_mp.cpp:5271)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_SetNatOpen_f(void)
 
 {
-  _g_natType = 1;
+  DAT_8299519c = 1;
   return;
 }
 
 
 // 82345110  CL_Live_PartyGo  (client_mp/cl_main_mp.cpp:5279)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_PartyGo(void)
 
 {
-  bool bVar6;
-  SessionData *pSVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  uint uVar4;
-  PartyMember *pPVar5;
+  char cVar6;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char *pcVar4;
+  byte *pbVar5;
+  longlong lVar7;
   
-  bVar6 = Live_CanHostServer((party_maxplayers->current).integer);
-  if ((bVar6) || ((xblive_privatematch->current).enabled != false)) {
-    if ((xblive_privatematch->current).enabled == false) {
-      pPVar3 = Lobby_GetPartyData();
-      uVar4 = PartyClient_CountMembers(pPVar3);
-      if (uVar4 == 1) {
-        if ((party_teambased->current).enabled != false) {
-          uVar4 = 0;
-          do {
-            pPVar5 = Lobby_GetMember(uVar4);
-            if ((pPVar5->status != '\x06') && (pPVar5 = Lobby_GetMember(uVar4), 4 < pPVar5->status))
-            {
-              pPVar5 = Lobby_GetMember(uVar4);
-              pPVar5->team = 2;
-            }
-            uVar4 = uVar4 + 1;
-          } while ((int)uVar4 < 0x12);
-        }
-        iVar2 = Cmd_LocalControllerIndex();
-        Live_SetGameJoinable(iVar2,1);
-        pSVar1 = Lobby_GetSession();
-        if ((pSVar1->dyn).allowJoining == false) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
-                          ,0x14c1,0,"%s");
-        }
-        iVar2 = Cmd_LocalControllerIndex();
-        pPVar3 = Lobby_GetPartyData();
-        PartyHost_RequestStartMatch(pPVar3,iVar2);
+  cVar6 = Live_CanHostServer(*(undefined4 *)(DAT_82b59048 + 0xc));
+  if ((cVar6 == '\0') && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
+    Com_PrintError(0x10,0xffffffff820316a8,*(undefined4 *)(DAT_82b59048 + 0xc));
+  }
+  else if (*(char *)(DAT_84253bb8 + 0xc) == '\0') {
+    Lobby_GetPartyData();
+    iVar3 = PartyClient_CountMembers();
+    if (iVar3 == 1) {
+      if (*(char *)(DAT_82b58f8c + 0xc) != '\0') {
+        lVar7 = 0;
+        do {
+          pcVar4 = (char *)Lobby_GetMember(lVar7);
+          if ((*pcVar4 != '\x06') && (pbVar5 = (byte *)Lobby_GetMember(lVar7), 4 < *pbVar5)) {
+            iVar3 = Lobby_GetMember(lVar7);
+            *(undefined4 *)(iVar3 + 0x110) = 2;
+          }
+          lVar7 = lVar7 + 1;
+        } while ((int)lVar7 < 0x12);
       }
-      else {
-        Com_PrintError(0x10,
-                       "Error, you\'re trying to use xpartygo when you shouldn\'t.  This is only for private match and single player lobbies.\n"
-                      );
+      uVar1 = Cmd_LocalControllerIndex();
+      Live_SetGameJoinable(uVar1,1);
+      iVar3 = Lobby_GetSession();
+      if (*(char *)(iVar3 + 0x500) == '\0') {
+        MyAssertHandler(0xffffffff820302c8,0x14c1,0,0xffffffff82000f98,0xffffffff82031680);
       }
+      uVar1 = Cmd_LocalControllerIndex();
+      uVar2 = Lobby_GetPartyData();
+      PartyHost_RequestStartMatch(uVar2,uVar1);
     }
     else {
-      pSVar1 = Lobby_GetSession();
-      if ((pSVar1->dyn).keysGenerated != false) {
-        iVar2 = Cmd_LocalControllerIndex();
-        pPVar3 = Lobby_GetPartyData();
-        PartyHost_RequestStartMatch(pPVar3,iVar2);
-      }
+      Com_PrintError(0x10,0xffffffff82031608);
     }
   }
   else {
-    Com_PrintError(0x10,
-                   "Error, we can\'t actually host a game with %i players, so xpartygo won\'t work\n"
-                  );
+    iVar3 = Lobby_GetSession();
+    if (*(char *)(iVar3 + 0x50) != '\0') {
+      uVar1 = Cmd_LocalControllerIndex();
+      uVar2 = Lobby_GetPartyData();
+      PartyHost_RequestStartMatch(uVar2,uVar1);
+    }
   }
   return;
 }
@@ -2109,21 +4228,16 @@ void CL_Live_PartyGo(void)
 
 // 82345290  CL_Live_UpdatePartyState  (client_mp/cl_main_mp.cpp:5326)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_UpdatePartyState(void)
 
 {
-  bool bVar2;
-  PartyData *pPVar1;
+  char cVar1;
   
-  bVar2 = Lobby_IsInLobby();
-  if ((bVar2) && (bVar2 = Lobby_AreWeHost(), bVar2)) {
-    Com_Printf(0xe,"Updating partystate due to console command\n");
-    pPVar1 = Lobby_GetPartyData();
-    PartyHost_GamestateChanged(pPVar1);
+  cVar1 = Lobby_IsInLobby();
+  if ((cVar1 != '\0') && (cVar1 = Lobby_AreWeHost(), cVar1 != '\0')) {
+    Com_Printf(0xe,0xffffffff820316f8);
+    Lobby_GetPartyData();
+    PartyHost_GamestateChanged();
   }
   return;
 }
@@ -2131,24 +4245,20 @@ void CL_Live_UpdatePartyState(void)
 
 // 823452E8  CL_Live_DisbandLobbyAfterRound  (client_mp/cl_main_mp.cpp:5336)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_DisbandLobbyAfterRound(void)
 
 {
   byte bVar1;
-  bool bVar3;
-  PartyData *pPVar2;
+  char cVar3;
+  int iVar2;
   
-  bVar3 = Lobby_IsInLobby();
-  if ((bVar3) && (bVar3 = Lobby_AreWeHost(), bVar3)) {
-    bVar1 = (xblive_privatematch->current).color[0];
-    pPVar2 = Lobby_GetPartyData();
-    pPVar2->stopAfterRound = (uint)LZCOUNT((uint)bVar1) >> 5;
-    Lobby_GetPartyData();
-    Com_Printf(0xe,"stopAfterRound due to console command (%i)\n");
+  cVar3 = Lobby_IsInLobby();
+  if ((cVar3 != '\0') && (cVar3 = Lobby_AreWeHost(), cVar3 != '\0')) {
+    bVar1 = *(byte *)(DAT_84253bb8 + 0xc);
+    iVar2 = Lobby_GetPartyData();
+    *(uint *)(iVar2 + 0x1efc) = (uint)LZCOUNT((uint)bVar1) >> 5;
+    iVar2 = Lobby_GetPartyData();
+    Com_Printf(0xe,0xffffffff82031724,*(undefined4 *)(iVar2 + 0x1efc));
   }
   return;
 }
@@ -2156,38 +4266,32 @@ void CL_Live_DisbandLobbyAfterRound(void)
 
 // 82345360  CL_Live_DevUpdatePartyMapPacks  (client_mp/cl_main_mp.cpp:5347)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_DevUpdatePartyMapPacks(void)
 
 {
-  int iVar1;
-  PartyData *pPVar2;
+  undefined8 uVar1;
+  undefined8 uVar2;
   
-  Com_Printf(0xe,"Updating party map packs string\n");
-  iVar1 = Live_CurrentLocalMapPackFlags();
-  pPVar2 = Lobby_GetPartyData();
-  Party_SetMapPackFlags(pPVar2,iVar1);
+  Com_Printf(0xe,0xffffffff82031750);
+  uVar1 = Live_CurrentLocalMapPackFlags();
+  uVar2 = Lobby_GetPartyData();
+  Party_SetMapPackFlags(uVar2,uVar1);
   return;
 }
 
 
 // 823453A8  CL_Live_DevMigratePartyAfterRound  (client_mp/cl_main_mp.cpp:5354)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_DevMigratePartyAfterRound(void)
 
 {
-  bool bVar2;
-  PartyHostData *pPVar1;
+  char cVar2;
+  int iVar1;
   
-  if ((((xblive_privatematch->current).enabled == false) && (bVar2 = Lobby_IsInLobby(), bVar2)) &&
-     (bVar2 = Lobby_AreWeHost(), bVar2)) {
-    pPVar1 = Lobby_GetHostData();
-    pPVar1->migrateAfterRound = true;
+  if (((*(char *)(DAT_84253bb8 + 0xc) == '\0') && (cVar2 = Lobby_IsInLobby(), cVar2 != '\0')) &&
+     (cVar2 = Lobby_AreWeHost(), cVar2 != '\0')) {
+    iVar1 = Lobby_GetHostData();
+    *(undefined1 *)(iVar1 + 0x1d) = 1;
   }
   return;
 }
@@ -2195,160 +4299,200 @@ void CL_Live_DevMigratePartyAfterRound(void)
 
 // 82345408  CL_Live_PartyMapVote  (client_mp/cl_main_mp.cpp:5362)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_PartyMapVote(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  VoteType VVar3;
-  PartyData *pPVar4;
+  int iVar2;
+  char *_Str;
+  undefined8 uVar1;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 < 2) {
-    Com_PrintError(0xe,"Error: xpartyvote <2|1|0>\n");
+  iVar2 = Cmd_Argc();
+  if (iVar2 < 2) {
+    Com_PrintError(0xe,0xffffffff82031774);
     return;
   }
-  pcVar2 = Cmd_Argv(1);
-  VVar3 = atoi(pcVar2);
-  pPVar4 = Lobby_GetPartyData();
-  Party_RecordVote(pPVar4,VVar3);
+  _Str = (char *)Cmd_Argv(1);
+  iVar2 = atoi(_Str);
+  uVar1 = Lobby_GetPartyData();
+  Party_RecordVote(uVar1,iVar2);
   return;
 }
 
 
 // 82345478  CL_AButtonPress  (client_mp/cl_main_mp.cpp:5404)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_AButtonPress(void)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
-  LVar1 = Cmd_LocalClientNum();
-  UI_KeyEvent(LVar1,1,1);
-  LVar1 = Cmd_LocalClientNum();
-  UI_KeyEvent(LVar1,1,0);
+  uVar1 = Cmd_LocalClientNum();
+  UI_KeyEvent(uVar1,1,1);
+  uVar1 = Cmd_LocalClientNum();
+  UI_KeyEvent(uVar1,1,0);
   return;
 }
 
 
 // 823454B8  CL_GetClientMatchData_f  (client_mp/cl_main_mp.cpp:5414)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_GetClientMatchData_f(void)
+
+{
+  undefined8 uVar1;
+  char cVar3;
+  int iVar2;
+  int local_30 [2];
+  undefined1 auStack_28 [8];
+  undefined1 auStack_20 [16];
+  
+  if (DAT_82aa2a04 == '\0') {
+    Com_Printf(0xf,0xffffffff820317a4);
+    return;
+  }
+  uVar1 = StructuredDataDef_GetAsset(0xffffffff82aa2a04,0x400);
+  cVar3 = StructuredData_NavigateFromCmd
+                    (uVar1,0xffffffff822b2778,0xffffffff822b2820,auStack_20,local_30);
+  if (cVar3 != '\0') {
+    iVar2 = Cmd_Argc();
+    if (local_30[0] < iVar2) {
+      Com_Printf(0x10,0xffffffff82031790);
+      return;
+    }
+    StructuredData_MakeBuffer(auStack_28,0xffffffff82aa2a44,0x400);
+    StructuredData_PrintLookup(auStack_20,auStack_28);
+  }
+  return;
+}
+
 
 // 82345598  CL_DumpClientMatchData_f  (client_mp/cl_main_mp.cpp:5442)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_DumpClientMatchData_f(void)
+
+{
+  undefined8 uVar1;
+  undefined *local_20;
+  undefined4 local_1c;
+  
+  if (DAT_82aa2a04 == '\0') {
+    Com_Printf(0xf,0xffffffff820317a4);
+    return;
+  }
+  uVar1 = StructuredDataDef_GetAsset(0xffffffff82aa2a04,0x400);
+  local_1c = 0x400;
+  local_20 = &DAT_82aa2a44;
+  StructuredData_PrintAllData(uVar1,&local_20);
+  return;
+}
+
 
 // 82345618  CL_DownloadPlaylist_f  (client_mp/cl_main_mp.cpp:5462)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_DownloadPlaylist_f(void)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   
   Playlist_MarkAsOutOfDate();
-  if ((onlinegame->current).enabled != false) {
-    LVar1 = Cmd_LocalClientNum();
-    UI_SetActiveMenu(LVar1,9);
+  if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
+    uVar1 = Cmd_LocalClientNum();
+    UI_SetActiveMenu(uVar1,9);
   }
   return;
 }
 
 
 // 82345658  CL_ResetViewport_f  (client_mp/cl_main_mp.cpp:5486)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_ResetViewport_f(void)
+
+{
+  char cVar1;
+  
+  if (DAT_82aa1c08 != 0) {
+    ScrPlace_SetupFullscreenViewports();
+    ScrPlace_SetupClientViewports();
+    cVar1 = CL_AnyLocalClientStateActive();
+    if (cVar1 != '\0') {
+      CL_SetupScreenPlacements();
+    }
+  }
+  return;
+}
+
 
 // 823456A8  CL_PrimaryMapVetoed  (client_mp/cl_main_mp.cpp:5492)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_PrimaryMapVetoed(void)
 
 {
-  int iVar1;
-  
-  iVar1 = Cmd_LocalControllerIndex();
-  Party_PrimaryMapVetoed(iVar1);
+  Cmd_LocalControllerIndex();
+  Party_PrimaryMapVetoed();
   return;
 }
 
 
 // 823456D0  CL_Live_ShowFriendsList  (client_mp/cl_main_mp.cpp:5498)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_ShowFriendsList(void)
 
 {
-  int iVar1;
-  
-  iVar1 = Cmd_LocalControllerIndex();
-  Live_ShowFriendsList(iVar1);
+  Cmd_LocalControllerIndex();
+  Live_ShowFriendsList();
   return;
 }
 
 
 // 823456F8  CL_Live_SignInLive  (client_mp/cl_main_mp.cpp:5504)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_SignInLive(void)
 
 {
-  int iVar1;
   int iVar2;
-  char *pcVar3;
-  bool bVar4;
-  uint uVar5;
-  int aiStack_20 [2];
+  int iVar3;
+  char *_Str;
+  undefined8 uVar1;
+  undefined4 uVar4;
+  char cVar5;
+  uint uVar6;
+  undefined1 auStack_20 [8];
   
-  uVar5 = 0;
-  iVar1 = Cmd_LocalControllerIndex();
-  iVar2 = Cmd_Argc();
-  if (1 < iVar2) {
-    pcVar3 = Cmd_Argv(1);
-    iVar1 = atoi(pcVar3);
-    if (3 < iVar1) {
-      Com_Error(ERR_DROP,"Requiring live signin on an invalid controller index %d");
+  uVar6 = 0;
+  iVar2 = Cmd_LocalControllerIndex();
+  iVar3 = Cmd_Argc();
+  if (1 < iVar3) {
+    _Str = (char *)Cmd_Argv(1);
+    iVar2 = atoi(_Str);
+    if (3 < iVar2) {
+      Com_Error(1,0xffffffff820317c8,iVar2);
     }
-    iVar2 = Cmd_Argc();
-    if (2 < iVar2) {
-      pcVar3 = Cmd_Argv(2);
-      iVar2 = I_stricmp(pcVar3,"vault");
-      uVar5 = (uint)LZCOUNT(iVar2) >> 5;
+    iVar3 = Cmd_Argc();
+    if (2 < iVar3) {
+      uVar1 = Cmd_Argv(2);
+      uVar4 = I_stricmp(uVar1,0xffffffff820317c0);
+      uVar6 = (uint)LZCOUNT(uVar4) >> 5;
     }
   }
-  bVar4 = Live_CanUserPlayOnline(iVar1,aiStack_20);
-  if (bVar4) {
-    UI_RunResolveItemDefAction(LOCAL_CLIENT_0);
-    Live_ClearForcedLiveSignInByUI(iVar1);
-  }
-  else {
-    if (uVar5 == 0) {
-      iVar2 = Live_StartSigninLive(iVar1);
+  cVar5 = Live_CanUserPlayOnline(iVar2,auStack_20);
+  if (cVar5 == '\0') {
+    if (uVar6 == 0) {
+      iVar3 = Live_StartSigninLive(iVar2);
     }
     else {
-      iVar2 = Live_StartSigninVault(iVar1);
+      iVar3 = Live_StartSigninVault();
     }
-    if (iVar2 == 0) {
-      Live_ClearForcedLiveSignInByUI(iVar1);
+    if (iVar3 == 0) {
+      Live_ClearForcedLiveSignInByUI(iVar2);
       UI_ClearCompletionResolve();
     }
     else {
-      Live_SetForcedLiveSignInByUI(iVar1);
+      Live_SetForcedLiveSignInByUI();
     }
+  }
+  else {
+    UI_RunResolveItemDefAction(0);
+    Live_ClearForcedLiveSignInByUI(iVar2);
   }
   return;
 }
@@ -2356,22 +4500,20 @@ void CL_Live_SignInLive(void)
 
 // 823457F0  CL_Live_SignInAny  (client_mp/cl_main_mp.cpp:5573)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_SignInAny(void)
 
 {
   int iVar1;
   int iVar2;
-  char *pcVar3;
+  char *_Str;
   
   iVar1 = Cmd_LocalControllerIndex();
   iVar2 = Cmd_Argc();
   if (1 < iVar2) {
-    pcVar3 = Cmd_Argv(1);
-    iVar1 = atoi(pcVar3);
+    _Str = (char *)Cmd_Argv(1);
+    iVar1 = atoi(_Str);
     if (3 < iVar1) {
-      Com_Error(ERR_DROP,"Requiring signin on an invalid controller index %d");
+      Com_Error(1,0xffffffff82031800,iVar1);
     }
   }
   Live_StartSigninAny(iVar1);
@@ -2381,48 +4523,46 @@ void CL_Live_SignInAny(void)
 
 // 82345860  CL_Live_SetErrorResolveWithControllerAndArgs  (client_mp/cl_main_mp.cpp:5595)
 
-void CL_Live_SetErrorResolveWithControllerAndArgs(char *param_1,int param_2,char *param_3)
+void CL_Live_SetErrorResolveWithControllerAndArgs
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  char *pcVar1;
-  ulonglong uVar2;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  char *pcVar5;
   longlong lVar3;
   ulonglong uVar4;
-  char acStack_80 [16];
-  char local_70 [112];
+  char acStack_80 [128];
   
-  uVar2 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  I_strncpyz(local_70,pcVar1,0x40);
-  I_strncat(local_70,0x40," ");
-  if (3 < (uVar4 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x15e3,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  uVar1 = ZEXT48(&stack0x00000000);
+  uVar2 = __savegprlr_28();
+  I_strncpyz(uVar1 - 0x70,uVar2,0x40);
+  I_strncat(uVar1 - 0x70,0x40,0xffffffff820034a0);
+  if (3 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820302c8,0x15e3,0,0xffffffff82031880,param_2,4);
   }
-  _itoa((int)uVar4,acStack_80,10);
-  I_strncat(local_70,0x40,acStack_80);
-  if (((uVar2 & 0xffffffff) != 0) && (*(char *)uVar2 != '\0')) {
-    lVar3 = ZEXT48(&stack0x00000000) - 0x70;
+  _itoa((int)param_2,acStack_80,10);
+  I_strncat(uVar1 - 0x70,0x40,uVar1 - 0x80);
+  if (((param_3 & 0xffffffff) != 0) && (*(char *)param_3 != '\0')) {
+    lVar3 = uVar1 - 0x70;
     do {
-      pcVar1 = (char *)lVar3;
+      pcVar5 = (char *)lVar3;
       lVar3 = lVar3 + 1;
-    } while (*pcVar1 != '\0');
-    uVar4 = uVar2;
+    } while (*pcVar5 != '\0');
+    uVar4 = param_3;
     do {
-      pcVar1 = (char *)uVar4;
+      pcVar5 = (char *)uVar4;
       uVar4 = uVar4 + 1;
-    } while (*pcVar1 != '\0');
-    if (0x3f < (((uVar4 - uVar2) - 1 & 0xffffffff) +
-                ((lVar3 - (ZEXT48(&stack0x00000000) - 0x70)) - 1 & 0xffffffff) + 2 & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                      0x15e9,0,"%s");
+    } while (*pcVar5 != '\0');
+    if (0x3f < (((uVar4 - param_3) - 1 & 0xffffffff) + ((lVar3 - (uVar1 - 0x70)) - 1 & 0xffffffff) +
+                2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff820302c8,0x15e9,0,0xffffffff82000f98,0xffffffff82031838);
     }
-    I_strncat(local_70,0x40," ");
-    I_strncat(local_70,0x40,(char *)uVar2);
+    I_strncat(uVar1 - 0x70,0x40,0xffffffff820034a0);
+    I_strncat(uVar1 - 0x70,0x40,param_3);
   }
-  I_strncat(local_70,0x40,";");
-  Dvar_SetString(com_errorResolveCommand,local_70);
+  I_strncat(uVar1 - 0x70,0x40,0xffffffff82031834);
+  Dvar_SetString(DAT_8366735c,uVar1 - 0x70);
   __restgprlr_28();
   return;
 }
@@ -2430,49 +4570,46 @@ void CL_Live_SetErrorResolveWithControllerAndArgs(char *param_1,int param_2,char
 
 // 823459C0  CL_Live_SetErrorResolveWithController  (client_mp/cl_main_mp.cpp:5621)
 
-void CL_Live_SetErrorResolveWithController(char *param_1,int param_2)
+void CL_Live_SetErrorResolveWithController(undefined8 param_1,undefined8 param_2)
 
 {
-  CL_Live_SetErrorResolveWithControllerAndArgs(param_1,param_2,(char *)0x0);
+  CL_Live_SetErrorResolveWithControllerAndArgs(param_1,param_2,0);
   return;
 }
 
 
 // 823459C8  CL_Live_RequireLiveSigninInternal  (client_mp/cl_main_mp.cpp:5627)
 
-void CL_Live_RequireLiveSigninInternal(int param_1,int param_2,int param_3,int param_4)
+void CL_Live_RequireLiveSigninInternal
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   int iVar2;
-  ulonglong uVar3;
-  int iVar4;
+  int iVar3;
   
-  uVar3 = (ulonglong)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  iVar4 = (int)uVar3;
-  if (iVar4 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x15fc,0,"%s");
+  uVar1 = __savegprlr_28();
+  iVar3 = (int)param_2;
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x15fc,0,0xffffffff82000f98,0xffffffff82031908);
   }
-  else if (0x10 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x15fd,0,"failureReason doesn\'t index OPFR_COUNT\n\t%i not in [0, %i)");
+  else if (0x10 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820302c8,0x15fd,0,0xffffffff820318cc,param_2,0x11);
   }
-  Live_HandleOnlineRequirementFailed(iVar1,iVar4,param_4,param_3);
-  iVar2 = Live_RequiresSignInResolve(iVar4);
+  Live_HandleOnlineRequirementFailed(uVar1,param_2,param_4,param_3);
+  iVar2 = Live_RequiresSignInResolve(param_2);
   if (iVar2 == 0) {
-    if ((iVar4 == 9) || (iVar4 == 0x10)) goto LAB_82345ad0;
+    if ((iVar3 == 9) || (iVar3 == 0x10)) goto LAB_82345ad0;
   }
-  else if (param_4 != 0) {
-    if (param_3 != 0) {
-      CL_Live_SetErrorResolveWithControllerAndArgs("xsigninlive",iVar1,"vault");
-      Live_SetForcedLiveSignInByUI(iVar1);
+  else if ((int)param_4 != 0) {
+    if ((int)param_3 != 0) {
+      CL_Live_SetErrorResolveWithControllerAndArgs(0xffffffff820318c0,uVar1,0xffffffff820317c0);
+      Live_SetForcedLiveSignInByUI(uVar1);
       __restgprlr_28();
       return;
     }
-    CL_Live_SetErrorResolveWithControllerAndArgs("xsigninlive",iVar1,(char *)0x0);
-    Live_SetForcedLiveSignInByUI(iVar1);
+    CL_Live_SetErrorResolveWithControllerAndArgs(0xffffffff820318c0,uVar1,0);
+    Live_SetForcedLiveSignInByUI(uVar1);
     __restgprlr_28();
     return;
   }
@@ -2485,19 +4622,17 @@ LAB_82345ad0:
 
 // 82345AD8  CL_Live_RequireLiveSignin  (client_mp/cl_main_mp.cpp:5670)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_RequireLiveSignin(void)
 
 {
-  int iVar1;
-  bool bVar2;
-  int local_20 [4];
+  undefined8 uVar1;
+  char cVar2;
+  undefined4 local_20 [4];
   
-  iVar1 = Cmd_LocalControllerIndex();
-  bVar2 = Live_CanUserPlayOnline(iVar1,local_20);
-  if (!bVar2) {
-    CL_Live_RequireLiveSigninInternal(iVar1,local_20[0],0,1);
+  uVar1 = Cmd_LocalControllerIndex();
+  cVar2 = Live_CanUserPlayOnline(uVar1,local_20);
+  if (cVar2 == '\0') {
+    CL_Live_RequireLiveSigninInternal(uVar1,local_20[0],0,1);
     return;
   }
   UI_ClearCompletionResolve();
@@ -2507,75 +4642,70 @@ void CL_Live_RequireLiveSignin(void)
 
 // 82345B48  CL_Live_RequireLiveSigninForVault  (client_mp/cl_main_mp.cpp:5693)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_RequireLiveSigninForVault(void)
 
 {
-  int iVar1;
-  bool bVar4;
-  int iVar2;
-  char *pcVar3;
-  int iVar5;
-  int local_20 [4];
+  undefined8 uVar1;
+  char cVar4;
+  int iVar3;
+  undefined8 uVar2;
+  undefined4 local_20 [4];
   
-  iVar1 = Cmd_LocalControllerIndex();
-  bVar4 = Live_CanUserAccessOnlineVault(iVar1,local_20);
-  if (bVar4) {
+  uVar1 = Cmd_LocalControllerIndex();
+  cVar4 = Live_CanUserAccessOnlineVault(uVar1,local_20);
+  if (cVar4 != '\0') {
     UI_ClearCompletionResolve();
     return;
   }
-  iVar2 = Cmd_Argc();
-  if (1 < iVar2) {
-    pcVar3 = Cmd_Argv(1);
-    iVar2 = I_stricmp("noresolve",pcVar3);
-    iVar5 = 0;
-    if (iVar2 == 0) goto LAB_82345ba8;
+  iVar3 = Cmd_Argc();
+  if (1 < iVar3) {
+    uVar2 = Cmd_Argv(1);
+    iVar3 = I_stricmp(0xffffffff82031924,uVar2);
+    uVar2 = 0;
+    if (iVar3 == 0) goto LAB_82345ba8;
   }
-  iVar5 = 1;
+  uVar2 = 1;
 LAB_82345ba8:
-  CL_Live_RequireLiveSigninInternal(iVar1,local_20[0],1,iVar5);
+  CL_Live_RequireLiveSigninInternal(uVar1,local_20[0],1,uVar2);
   return;
 }
 
 
 // 82345BE8  CL_Live_RequireLiveSigninForCommerce  (client_mp/cl_main_mp.cpp:5717)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_RequireLiveSigninForCommerce(void)
 
 {
-  int iVar1;
-  bool bVar2;
+  undefined8 uVar1;
+  char cVar2;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  bVar2 = Live_IsUserSignedInToLive(iVar1);
-  if ((bVar2) && (bVar2 = Live_UserIsGuest(iVar1), !bVar2)) {
+  uVar1 = Cmd_LocalControllerIndex();
+  cVar2 = Live_IsUserSignedInToLive();
+  if ((cVar2 != '\0') && (cVar2 = Live_UserIsGuest(uVar1), cVar2 == '\0')) {
     UI_ClearCompletionResolve();
     return;
   }
-  Live_CloseOnlineMenus("@PLATFORM_COMMERCE_NO_ONLINE_ERROR");
-  CL_Live_SetErrorResolveWithControllerAndArgs("xsigninlive",iVar1,(char *)0x0);
-  Live_SetForcedLiveSignInByUI(iVar1);
+  Live_CloseOnlineMenus(0xffffffff82031930);
+  CL_Live_SetErrorResolveWithControllerAndArgs(0xffffffff820318c0,uVar1,0);
+  Live_SetForcedLiveSignInByUI(uVar1);
   return;
 }
 
 
 // 82345C78  CL_Live_RequireAnySigninInternal  (client_mp/cl_main_mp.cpp:5764)
 
-void CL_Live_RequireAnySigninInternal(int param_1)
+void CL_Live_RequireAnySigninInternal(undefined8 param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   int local_20 [4];
   
-  bVar1 = Live_CanUserPlayAny(param_1,local_20);
-  if (!bVar1) {
+  cVar1 = Live_CanUserPlayAny(param_1,local_20);
+  if (cVar1 == '\0') {
     Live_HandleOnlineRequirementFailed(param_1,local_20[0],1,0);
     if ((local_20[0] == 0xc) || (local_20[0] == 0xf)) {
       Live_SetForcedAnySignInByUI(param_1);
-      CL_Live_SetErrorResolveWithControllerAndArgs("xsignin",param_1,(char *)0x0);
+      CL_Live_SetErrorResolveWithControllerAndArgs(0xffffffff82031954,param_1,0);
       return;
     }
   }
@@ -2586,22 +4716,16 @@ void CL_Live_RequireAnySigninInternal(int param_1)
 
 // 82345D10  CL_Live_RequireAnySignin  (client_mp/cl_main_mp.cpp:5784)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_RequireAnySignin(void)
 
 {
-  int iVar1;
-  
-  iVar1 = Cmd_LocalControllerIndex();
-  CL_Live_RequireAnySigninInternal(iVar1);
+  Cmd_LocalControllerIndex();
+  CL_Live_RequireAnySigninInternal();
   return;
 }
 
 
 // 82345D38  CL_Live_CheckEzPatch  (client_mp/cl_main_mp.cpp:5790)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_Live_CheckEzPatch(void)
 
@@ -2612,8 +4736,6 @@ void CL_Live_CheckEzPatch(void)
 
 // 82345D40  CL_Live_CheckEzPatchVersion  (client_mp/cl_main_mp.cpp:5798)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_CheckEzPatchVersion(void)
 
 {
@@ -2623,18 +4745,16 @@ void CL_Live_CheckEzPatchVersion(void)
 
 // 82345D48  CL_OpenOnlineServicesDialog  (client_mp/cl_main_mp.cpp:5806)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_OpenOnlineServicesDialog(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   int iVar2;
   
-  iVar1 = Cmd_LocalControllerIndex();
-  iVar2 = Live_IsWaitingForConnection(iVar1);
+  uVar1 = Cmd_LocalControllerIndex();
+  iVar2 = Live_IsWaitingForConnection();
   if (iVar2 != 0) {
-    Live_WaitForOnlineServicesDialog(iVar1);
+    Live_WaitForOnlineServicesDialog(uVar1);
     return;
   }
   UI_ClearCompletionResolve();
@@ -2644,103 +4764,330 @@ void CL_OpenOnlineServicesDialog(void)
 
 // 82345DA0  CL_Live_CancelConnectingDialog  (client_mp/cl_main_mp.cpp:5821)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_Live_CancelConnectingDialog(void)
 
 {
   Live_CancelConnectingDialog();
-  UI_SetActiveMenu(LOCAL_CLIENT_0,0);
-  UI_SetActiveMenu(LOCAL_CLIENT_0,1);
+  UI_SetActiveMenu(0,0);
+  UI_SetActiveMenu(0,1);
   return;
 }
 
 
 // 82345DE0  CL_Live_RegisterCommands  (client_mp/cl_main_mp.cpp:5847)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void CL_Live_RegisterCommands(void)
 
 {
-  Cmd_AddCommandInternal("xplaylistprimaryvetoed",CL_PrimaryMapVetoed,&CL_PrimaryMapVetoed_VAR);
-  Cmd_AddCommandInternal("xshowfriendslist",CL_Live_ShowFriendsList,&CL_Live_ShowFriendsList_VAR);
-  Cmd_AddCommandInternal("xsigninlive",CL_Live_SignInLive,&CL_Live_SignInLive_VAR);
-  Cmd_AddCommandInternal("xsignin",CL_Live_SignInAny,&CL_Live_SignInAny_VAR);
-  Cmd_AddCommandInternal
-            ("xrequirelivesignin",CL_Live_RequireLiveSignin,&CL_Live_RequireLiveSignin_VAR);
-  Cmd_AddCommandInternal
-            ("xrequirelivesigninforvault",CL_Live_RequireLiveSigninForVault,
-             &CL_Live_RequireLiveSigninForVault_VAR);
-  Cmd_AddCommandInternal("xrequiresignin",CL_Live_RequireAnySignin,&CL_Live_RequireAnySignin_VAR);
-  Cmd_AddCommandInternal
-            ("xrequirelivesigninforcommerce",CL_Live_RequireLiveSigninForCommerce,
-             &CL_Live_RequireLiveSigninForCommerce_VAR);
-  Cmd_AddCommandInternal("xcheckezpatch",CL_Live_CheckEzPatch,&CL_Live_CheckEzPatch_VAR);
-  Cmd_AddCommandInternal
-            ("xcheckezpatchversion",CL_Live_CheckEzPatchVersion,&CL_Live_CheckEzPatchVersion_VAR);
-  Cmd_AddCommandInternal
-            ("xopenonlineservicesdialog",CL_OpenOnlineServicesDialog,
-             &CL_OpenOnlineServicesDialog_VAR);
-  Cmd_AddCommandInternal
-            ("xcancelconnectingdialog",CL_Live_CancelConnectingDialog,
-             &CL_Live_CancelConnectingDialog_VAR);
-  Cmd_AddCommandInternal
-            ("cancelsocialconfigvaultdialog",CL_Live_CancelSocialConfigVaultDialog,
-             &CL_Live_CancelSocialConfigVaultDialog_VAR);
+  Cmd_AddCommandInternal(0xffffffff82031a4c,0xffffffff823456a8,0xffffffff82b3edf8);
+  Cmd_AddCommandInternal(0xffffffff82031a38,0xffffffff823456d0,0xffffffff82b3ede4);
+  Cmd_AddCommandInternal(0xffffffff820318c0,0xffffffff823456f8,0xffffffff82b3edd0);
+  Cmd_AddCommandInternal(0xffffffff82031954,0xffffffff823457f0,0xffffffff82b3edbc);
+  Cmd_AddCommandInternal(0xffffffff82031a24,0xffffffff82345ad8,0xffffffff82b3eda8);
+  Cmd_AddCommandInternal(0xffffffff82031a08,0xffffffff82345b48,0xffffffff82b3ed94);
+  Cmd_AddCommandInternal(0xffffffff820319f8,0xffffffff82345d10,0xffffffff82b3ed80);
+  Cmd_AddCommandInternal(0xffffffff820319d8,0xffffffff82345be8,0xffffffff82b3ed6c);
+  Cmd_AddCommandInternal(0xffffffff820319c8,0xffffffff82345d38,0xffffffff82b3ed58);
+  Cmd_AddCommandInternal(0xffffffff820319b0,0xffffffff82345d40,0xffffffff82b3ed44);
+  Cmd_AddCommandInternal(0xffffffff82031994,0xffffffff82345d48,0xffffffff82b3ed30);
+  Cmd_AddCommandInternal(0xffffffff8203197c,0xffffffff82345da0,0xffffffff82b3ed1c);
+  Cmd_AddCommandInternal(0xffffffff8203195c,0xffffffff82345dd8,0xffffffff82b3ed08);
   return;
 }
 
 
 // 82345F68  CL_RunResolveItemDefAction  (client_mp/cl_main_mp.cpp:5898)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_RunResolveItemDefAction(void)
 
 {
-  UI_RunResolveItemDefAction(LOCAL_CLIENT_0);
+  UI_RunResolveItemDefAction(0);
   return;
 }
 
 
 // 82348898  CL_InitOnceForAllClients  (client_mp/cl_main_mp.cpp:5904)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_InitOnceForAllClients(void)
+
+{
+  DWORD _Seed;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  
+  __savegprlr_25();
+  __savefpr_28();
+  _Seed = Sys_MillisecondsRaw();
+  srand(_Seed);
+  Con_Init();
+  CL_InitInput();
+  if (DAT_82b3a084 != 0) {
+    MyAssertHandler(0xffffffff820302c8,0x171b,0,0xffffffff82000f98,0xffffffff82033788);
+  }
+  DAT_82b3ec88 = Dvar_RegisterBool(0xffffffff8203375c,0,0,0xffffffff82033768);
+  DAT_82aa1adc = Dvar_RegisterInt(0xffffffff8203373c,0,0,0x7fffffff,0,0xffffffff82033748);
+  DAT_82aa1af8 = Dvar_RegisterBool(0xffffffff820336e8,0,0x80,0xffffffff820336f8);
+  DAT_82aa1ae4 = Dvar_RegisterBool(0xffffffff820336b8,0,0x80,0xffffffff820336c4);
+  DAT_82aa1aa8 = Dvar_RegisterBool(0xffffffff8203367c,0,0x80,0xffffffff8203368c);
+  DAT_82b3ecb8 = Dvar_RegisterBool(0xffffffff8203364c,0,0x80,0xffffffff82033658);
+  DAT_82b3ecac = Dvar_RegisterBool(0xffffffff82033638,0,0x80,0xffffffff8203360c);
+  DAT_82b3e4c4 = Dvar_RegisterInt(0xffffffff8203359c,0,0,0x7fffffff,0,0xffffffff820335c0);
+  DAT_82aa1a8c = Dvar_RegisterBool(0xffffffff82033510,0,0,0xffffffff82033530);
+  DAT_82b3e4c8 = Dvar_RegisterBool(0xffffffff820334cc,0,0x80,0xffffffff820334dc);
+  DAT_82aa1a94 = Dvar_RegisterBool(0xffffffff82033490,1,0,0xffffffff820334a4);
+  uVar2 = 0x40ac200000000000;
+  uVar4 = 0;
+  DAT_82aa1acc = Dvar_RegisterFloat(0x4024000000000000,0,0x40ac200000000000,0xffffffff82033480);
+  uVar1 = 0x4044000000000000;
+  DAT_82aa1ac0 = Dvar_RegisterFloat(0x4044000000000000,uVar4,uVar2,0xffffffff82033434);
+  DAT_82aa1aec = Dvar_RegisterInt(0xffffffff820333ac,10,0,0x7fffffff,0,0xffffffff820333c4);
+  DAT_82b3e4c0 = Dvar_RegisterFloat(uVar1,uVar4,uVar2,0xffffffff82033340);
+  DAT_82b3ecc8 = Dvar_RegisterInt(0xffffffff8203330c,0,0xfffffffffffffffe,4,0,0xffffffff82033318);
+  DAT_82b3ecb4 = Dvar_RegisterBool(0xffffffff820332e0,0,0,0xffffffff820332f0);
+  DAT_82aa1ab0 = Dvar_RegisterBool(0xffffffff82033294,0,0,0xffffffff820332ac);
+  DAT_82aa1a98 = Dvar_RegisterBool(0xffffffff82033258,0,0,0xffffffff82033264);
+  DAT_82b3e4e4 = Dvar_RegisterBool(0xffffffff82033218,0,0,0xffffffff8203322c);
+  DAT_82aa1ad8 = Dvar_RegisterString(0xffffffff820331e4,0xffffffff820068af,0,0xffffffff820331f4);
+  uVar3 = 0x47efffffe0000000;
+  uVar2 = 0xc7efffffe0000000;
+  uVar1 = 0x4061800000000000;
+  DAT_82a9a17c = Dvar_RegisterFloat(0x4061800000000000,0xc7efffffe0000000,0x47efffffe0000000,
+                                    0xffffffff820331d8);
+  DAT_82a9ac28 = Dvar_RegisterFloat(uVar1,uVar2,uVar3,0xffffffff8203316c);
+  DAT_82a9ac2c = Dvar_RegisterFloat(0x3ff8000000000000,uVar4,uVar3,0xffffffff8203311c);
+  uVar2 = 0x3f847ae140000000;
+  DAT_82a9a184 = Dvar_RegisterFloat(0x3fa99999a0000000,0x3f847ae140000000,uVar3,0xffffffff82033100);
+  DAT_82b3e4dc = Dvar_RegisterInt(0xffffffff82033074,0x1e,0xf,100,0,0xffffffff82033084);
+  DAT_82b3e4d4 = Dvar_RegisterInt(0xffffffff82033048,2,0,5,0,0xffffffff82033058);
+  uVar1 = 0x4059000000000000;
+  DAT_82aa1ac4 = Dvar_RegisterFloat(0x4014000000000000,uVar2,0x4059000000000000,0xffffffff82033028);
+  DAT_82b3e4d8 = Dvar_RegisterFloat(uVar4,uVar4,uVar1,0xffffffff82033004);
+  DAT_82b3ecc0 = Dvar_RegisterBool(0xffffffff82032ff8,1,0,0xffffffff82032fdc);
+  DAT_82aa1afc = Dvar_RegisterBool(0xffffffff82032f90,0,0,0xffffffff82032fa4);
+  DAT_82b3ec80 = Dvar_RegisterBool(0xffffffff82032f64,1,0,0xffffffff82032f74);
+  DAT_82b3ec98 = Dvar_RegisterInt(0xffffffff82032f10,0x2ee,0,0xe10,0,0xffffffff82032f2c);
+  DAT_82a9a180 = Dvar_RegisterBool(0xffffffff82032ec8,0,0,0xffffffff82032edc);
+  uVar3 = 0x3ff0000000000000;
+  uVar2 = 0xbff0000000000000;
+  uVar1 = 0x3f96872b00000000;
+  DAT_82aa1ad4 = Dvar_RegisterFloat(0x3f96872b00000000,0xbff0000000000000,0x3ff0000000000000,
+                                    0xffffffff82032eac);
+  DAT_82aa1ad0 = Dvar_RegisterFloat(uVar1,uVar2,uVar3,0xffffffff82032ea4);
+  uVar1 = 0x3fd0000000000000;
+  DAT_82b3e4d0 = Dvar_RegisterFloat(0x3fd0000000000000,uVar2,uVar3,0xffffffff82032e68);
+  DAT_82b3ec90 = Dvar_RegisterFloat(uVar1,uVar2,uVar3,0xffffffff82032e3c);
+  DAT_82b3ec9c = Dvar_RegisterBool(0xffffffff82032e10,0,0,0xffffffff82032e1c);
+  DAT_82b3e4e0 = Dvar_RegisterString(0xffffffff82032dec,0xffffffff820068af,0x2000,0xffffffff82032dfc
+                                    );
+  DAT_82b3e4ec = Dvar_RegisterBool(0xffffffff82032de0,0,0x2001,0xffffffff82032dc4);
+  Dvar_RegisterInt(0xffffffff82032db8,800,0x14,2000,0,0xffffffff82032d9c);
+  DAT_82b3eca0 = Dvar_RegisterInt(0xffffffff82032d58,0x13,1,100,0,0xffffffff82032d70);
+  DAT_82b3ec94 = Dvar_RegisterInt(0xffffffff82032d24,0x6e,0,800,0,0xffffffff82032d34);
+  DAT_82aa1a84 = Dvar_RegisterBool(0xffffffff82032cd8,0,0,0xffffffff82032cf0);
+  DAT_82aa1ac8 = Dvar_RegisterBool(0xffffffff82032c84,0,0,0xffffffff82032c9c);
+  DAT_82b3ec84 = Dvar_RegisterString(0xffffffff82021a74,0xffffffff82032c68,0x200,0xffffffff82032c78)
+  ;
+  Dvar_RegisterInt(0xffffffff82032c60,20000,1000,0x7fffffff,0x200,0xffffffff82032c40);
+  Dvar_RegisterString(0xffffffff82032c34,0xffffffff820068af,0x200,0xffffffff82032c34);
+  Dvar_RegisterBool(0xffffffff820198ac,1,0,0xffffffff82032c28);
+  DAT_82aa1ae0 = Dvar_RegisterBool(0xffffffff82032be8,0,0,0xffffffff82032bfc);
+  uVar1 = SEH_SafeTranslateString(0xffffffff82032bd8);
+  DAT_82aa1abc = Dvar_RegisterString(0xffffffff82032bd0,uVar1,0,0xffffffff82032dfc);
+  DAT_82b3ec8c = Dvar_RegisterInt(0xffffffff82032bac,1,0,0x7fffffff,0,0xffffffff82032bbc);
+  DAT_844cf544 = Dvar_RegisterBool(0xffffffff82032b60,0,0,0xffffffff82032b7c);
+  DAT_844cf53c = Dvar_RegisterBool(0xffffffff82032b2c,0,0,0xffffffff82032b48);
+  DAT_844cf540 = Dvar_RegisterBool(0xffffffff82032af8,0,0,0xffffffff82032b14);
+  DAT_82aa1ab4 = Dvar_RegisterInt(0xffffffff82032ae0,4000,0,10000,0,0xffffffff82032aa8);
+  CL_VoiceInitOnceForAll();
+  Cmd_AddCommandInternal(0xffffffff8200b0fc,0xffffffff82342bd0,0xffffffff82b3f42c);
+  Cmd_AddCommandInternal(0xffffffff82031c8c,0xffffffff82343180,0xffffffff82b3f418);
+  Cmd_AddCommandInternal(0xffffffff82031c80,0xffffffff82343258,0xffffffff82b3f404);
+  Cmd_AddCommandInternal(0xffffffff82030b34,0xffffffff824d4990,0xffffffff82b3f3f0);
+  Cmd_AddServerCommandInternal(0xffffffff82030b34,0xffffffff82342ea0,0xffffffff82b3f3dc);
+  Cmd_AddCommandInternal(0xffffffff82032578,0xffffffff82340f70,0xffffffff82b3f3c8);
+  Cmd_AddCommandInternal(0xffffffff82032a94,0xffffffff823419b0,0xffffffff82b3f3b4);
+  Cmd_AddCommandInternal(0xffffffff82032a80,0xffffffff82341a18,0xffffffff82b3f3a0);
+  Cmd_AddCommandInternal(0xffffffff82032a6c,0xffffffff823415f0,0xffffffff82b3f38c);
+  Cmd_AddCommandInternal(0xffffffff82032a60,0xffffffff82341b18,0xffffffff82b3f378);
+  Cmd_AddCommandInternal(0xffffffff82032a58,0xffffffff82341c58,0xffffffff82b3f364);
+  Cmd_AddCommandInternal(0xffffffff82032a4c,0xffffffff82341ca8,0xffffffff82b3f350);
+  Cmd_AddCommandInternal(0xffffffff82032a38,0xffffffff82341d00,0xffffffff82b3f33c);
+  Cmd_AddCommandInternal(0xffffffff82032a24,0xffffffff82341e88,0xffffffff82b3f328);
+  Cmd_AddCommandInternal(0xffffffff82032a14,0xffffffff82341d58,0xffffffff82b3f314);
+  Cmd_AddCommandInternal(0xffffffff82032a00,0xffffffff82341db0,0xffffffff82b3f300);
+  Cmd_AddCommandInternal(0xffffffff820329f4,0xffffffff82341e08,0xffffffff82b3f2ec);
+  Cmd_AddCommandInternal(0xffffffff820329e4,0xffffffff82341e60,0xffffffff82b3f2d8);
+  Cmd_AddCommandInternal(0xffffffff820329d4,0xffffffff82341250,0xffffffff82b3f2c4);
+  Cmd_AddCommandInternal(0xffffffff820329c0,0xffffffff82341390,0xffffffff82b3f2b0);
+  Cmd_AddCommandInternal(0xffffffff820329ac,0xffffffff82341470,0xffffffff82b3f29c);
+  Cmd_AddCommandInternal(0xffffffff82032998,0xffffffff82341520,0xffffffff82b3f288);
+  Cmd_AddCommandInternal(0xffffffff82032988,0xffffffff82345478,0xffffffff82b3f274);
+  CL_Demo_RegisterDvars();
+  CL_Demo_RegisterCommands();
+  Cmd_AddCommandInternal(0xffffffff82031c60,0xffffffff8232d5e8,0xffffffff82b3f260);
+  Cmd_AddCommandInternal(0xffffffff82031c54,0xffffffff8232d560,0xffffffff82b3f24c);
+  Cmd_AddCommandInternal(0xffffffff82031c3c,0xffffffff8232d660,0xffffffff82b3f238);
+  Cmd_AddCommandInternal(0xffffffff8203297c,0xffffffff8232d690,0xffffffff82b3f224);
+  Cmd_SetAutoComplete(0xffffffff82031c54,0xffffffff82032970,0xffffffff82032978);
+  Cmd_SetAutoComplete(0xffffffff8203297c,0xffffffff82032970,0xffffffff82032978);
+  Cmd_AddCommandInternal(0xffffffff82031c34,0xffffffff823449e8,0xffffffff82b3f210);
+  Cmd_AddCommandInternal(0xffffffff82031c20,0xffffffff824d4990,0xffffffff82b3f1fc);
+  Cmd_AddServerCommandInternal(0xffffffff82031c20,0xffffffff8234c498,0xffffffff82b3f1e8);
+  Cmd_AddCommandInternal(0xffffffff82031c14,0xffffffff824d4990,0xffffffff82b3f1d4);
+  Cmd_AddServerCommandInternal(0xffffffff82031c14,0xffffffff82343010,0xffffffff82b3f1c0);
+  Cmd_AddCommandInternal(0xffffffff82031c04,0xffffffff82346510,0xffffffff82b3f1ac);
+  Cmd_AddCommandInternal(0xffffffff82031bfc,0xffffffff82342ca0,0xffffffff82b3f198);
+  Cmd_AddCommandInternal(0xffffffff82031bdc,0xffffffff82346410,0xffffffff82b3f184);
+  Cmd_AddCommandInternal(0xffffffff82031bc8,0xffffffff82344880,0xffffffff82b3f170);
+  Cmd_AddCommandInternal(0xffffffff82032960,0xffffffff82345658,0xffffffff82b3f15c);
+  Cmd_AddCommandInternal(0xffffffff82032950,0xffffffff82344170,0xffffffff82b3f148);
+  Cmd_AddCommandInternal(0xffffffff8203293c,0xffffffff82344228,0xffffffff82b3f134);
+  Cmd_AddCommandInternal(0xffffffff82032928,0xffffffff82344230,0xffffffff82b3f120);
+  Cmd_AddCommandInternal(0xffffffff82032914,0xffffffff82344238,0xffffffff82b3f10c);
+  Cmd_AddCommandInternal(0xffffffff82031bb0,0xffffffff825aa2e0,0xffffffff82b3f0f8);
+  Cmd_AddCommandInternal(0xffffffff82032908,0xffffffff825aa360,0xffffffff82b3f0e4);
+  Cmd_AddCommandInternal(0xffffffff82031ba4,0xffffffff825aa500,0xffffffff82b3f0d0);
+  Cmd_AddCommandInternal(0xffffffff820328f8,0xffffffff825a49d0,0xffffffff82b3f0bc);
+  Cmd_AddCommandInternal(0xffffffff820328e8,0xffffffff825c8740,0xffffffff82b3f0a8);
+  Cmd_AddCommandInternal(0xffffffff820328dc,0xffffffff82344fe0,0xffffffff82b3f094);
+  Cmd_AddCommandInternal(0xffffffff820328d0,0xffffffff82344fe8,0xffffffff82b3f080);
+  Cmd_AddCommandInternal(0xffffffff820328c8,0xffffffff82345010,0xffffffff82b3f06c);
+  Cmd_AddCommandInternal(0xffffffff820328b8,0xffffffff82345018,0xffffffff82b3f058);
+  Cmd_AddCommandInternal(0xffffffff820328ac,0xffffffff823450e0,0xffffffff82b3f044);
+  Cmd_AddCommandInternal(0xffffffff820328a0,0xffffffff823450f0,0xffffffff82b3f030);
+  Cmd_AddCommandInternal(0xffffffff82032898,0xffffffff82345100,0xffffffff82b3f01c);
+  Cmd_AddCommandInternal(0xffffffff82032890,0xffffffff82345020,0xffffffff82b3f008);
+  Cmd_AddCommandInternal(0xffffffff82032878,0xffffffff82345360,0xffffffff82b3eff4);
+  Cmd_AddCommandInternal(0xffffffff8203285c,0xffffffff823453a8,0xffffffff82b3efe0);
+  Cmd_AddCommandInternal(0xffffffff82032850,0xffffffff82345110,0xffffffff82b3efcc);
+  Cmd_AddCommandInternal(0xffffffff82032844,0xffffffff82345408,0xffffffff82b3efb8);
+  Cmd_AddCommandInternal(0xffffffff82032830,0xffffffff82345290,0xffffffff82b3efa4);
+  Cmd_AddCommandInternal(0xffffffff82032818,0xffffffff823452e8,0xffffffff82b3ef90);
+  Cmd_AddCommandInternal(0xffffffff82032808,0xffffffff82342f28,0xffffffff82b3ef7c);
+  Cmd_AddCommandInternal(0xffffffff820327f4,0xffffffff82341ba8,0xffffffff82b3ef68);
+  Cmd_AddCommandInternal(0xffffffff820327d4,0xffffffff825aa480,0xffffffff82b3ef54);
+  Cmd_AddCommandInternal(0xffffffff820327b8,0xffffffff82344e60,0xffffffff82b3ef40);
+  Cmd_AddCommandInternal(0xffffffff820327ac,0xffffffff82344db0,0xffffffff82b3ef2c);
+  Cmd_AddCommandInternal(0xffffffff820327a0,0xffffffff82344ed0,0xffffffff82b3ef18);
+  Cmd_AddCommandInternal(0xffffffff82032790,0xffffffff82344f28,0xffffffff82b3ef04);
+  Cmd_AddCommandInternal(0xffffffff8203277c,0xffffffff82345618,0xffffffff82b3eef0);
+  Cmd_AddCommandInternal(0xffffffff8203276c,0xffffffff826d2020,0xffffffff82b3eedc);
+  Cmd_AddCommandInternal(0xffffffff82032758,0xffffffff823454b8,0xffffffff82b3eec8);
+  Cmd_AddCommandInternal(0xffffffff82032744,0xffffffff82345598,0xffffffff82b3eeb4);
+  Cmd_AddCommandInternal(0xffffffff8203272c,0xffffffff82345f68,0xffffffff82b3eea0);
+  Cmd_AddCommandInternal(0xffffffff82032718,0xffffffff828003a8,0xffffffff82b3ee8c);
+  Cmd_AddCommandInternal(0xffffffff82032708,0xffffffff828003c0,0xffffffff82b3ee78);
+  Cmd_AddCommandInternal(0xffffffff820326f8,0xffffffff82800520,0xffffffff82b3ee64);
+  Cmd_AddCommandInternal(0xffffffff820326e4,0xffffffff82353318,0xffffffff82b3ee50);
+  Cmd_AddCommandInternal(0xffffffff820326cc,0xffffffff823533a0,0xffffffff82b3ee3c);
+  Cmd_AddCommandInternal(0xffffffff820326b8,0xffffffff82512820,0xffffffff82b3ee28);
+  Facebook_RegisterCommands();
+  EliteClan_RegisterCommands();
+  Cmd_AddCommandInternal(0xffffffff820326a4,0xffffffff826f9250,0xffffffff82b3ee14);
+  PlayercardCache_RegisterCommands();
+  CL_Xenon_RegisterDvars();
+  CL_Xenon_RegisterCommands();
+  CL_Live_RegisterCommands();
+  GamerProfile_RegisterCommands();
+  GamerProfile_RegisterDvars();
+  CL_Splitscreen_Init();
+  SCR_Init();
+  CG_RegisterDvars();
+  Ragdoll_Register();
+  DAT_82b3f8c4 = 0;
+  CL_ClearMutedList(0xffffffff844c7860);
+  VoiceMute_Init();
+  CL_ResetLastGamePadEventTime();
+  CL_MigrationInit();
+  if (DAT_82aa1c24 != 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1913,0,0xffffffff82000f98,0xffffffff82032694);
+  }
+  if (DAT_82b3eca4 != '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x1915,0,0xffffffff82000f98,0xffffffff8203267c);
+  }
+  if (DAT_82aa1aa0 != '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x1916,0,0xffffffff82000f98,0xffffffff82032668);
+  }
+  __restfpr_28();
+  __restgprlr_25();
+  return;
+}
+
 
 // 82345F70  CL_Init  (client_mp/cl_main_mp.cpp:6427)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_Init(void)
+
+{
+  char cVar1;
+  uint uVar3;
+  int iVar4;
+  undefined8 uVar2;
+  
+  uVar3 = __savegprlr_27();
+  Com_Printf(0xe,0xffffffff82031b58);
+  CL_ClearClientState(uVar3);
+  Com_ClientDObjClearAllSkel(uVar3);
+  CL_ClearKeys(uVar3);
+  iVar4 = CountBitsEnabled(0xffffffffffffffff);
+  if (iVar4 != 0x20) {
+    MyAssertHandler(0xffffffff820302c8,0x1922,0,0xffffffff82000f98,0xffffffff82031b30);
+  }
+  iVar4 = CountBitsEnabled(0);
+  if (iVar4 != 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1923,0,0xffffffff82000f98,0xffffffff82031b0c);
+  }
+  iVar4 = CountBitsEnabled(0x11111111);
+  if (iVar4 != 8) {
+    MyAssertHandler(0xffffffff820302c8,0x1924,0,0xffffffff82000f98,0xffffffff82031ae8);
+  }
+  iVar4 = CountBitsEnabled(0x77777777);
+  if (iVar4 != 0x18) {
+    MyAssertHandler(0xffffffff820302c8,0x1925,0,0xffffffff82000f98,0xffffffff82031ac0);
+  }
+  if (3 < uVar3) {
+    MyAssertHandler(0xffffffff8202c1d8,0x47f,0,0xffffffff820011a8,uVar3,4);
+  }
+  (&DAT_82b3e4f0)[uVar3 * 0x1e4] = 1;
+  cVar1 = (&DAT_82b3e4e8)[uVar3];
+  (&DAT_82b3e54c)[uVar3 * 0x79] = 0;
+  if (cVar1 != '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x192b,0,0xffffffff82000f98,0xffffffff82031a90);
+  }
+  uVar2 = CL_ControllerIndexFromClientNum(uVar3);
+  Cbuf_Execute(uVar3,uVar2);
+  (&DAT_82b3e4f1)[uVar3 * 0x1e4] = 1;
+  Com_Printf(0xe,0xffffffff82031a64);
+  __restgprlr_27();
+  return;
+}
+
 
 // 82346120  CL_ShutdownOnceForAllClients  (client_mp/cl_main_mp.cpp:6456)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_ShutdownOnceForAllClients(void)
 
 {
-  bool bVar2;
+  char cVar2;
   int iVar1;
   
   __savegprlr_29();
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x193b,0,"%s");
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x193b,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  Com_Printf(0xe,"----- CL_ShutdownOnceForAllClients -----\n");
-  if (recursive != false) {
+  Com_Printf(0xe,0xffffffff82031ce8);
+  if (DAT_82b3ee0c != '\0') {
     iVar1 = printf("recursive CL_ShutdownOnceForAllClients\n");
     __restgprlr_29(iVar1);
     return;
   }
-  recursive = true;
-  bVar2 = CL_AllLocalClientsDisconnected();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1946,0,"%s");
+  DAT_82b3ee0c = 1;
+  cVar2 = CL_AllLocalClientsDisconnected();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x1946,0,0xffffffff82000f98,0xffffffff82031c9c);
   }
   CL_ShutdownDebugData();
   CL_ShutdownHunkUsers();
@@ -2748,81 +5095,153 @@ void CL_ShutdownOnceForAllClients(void)
   RB_Cinematic_UpdateFrame(1);
   SND_Shutdown();
   CL_ShutdownInput();
-  Cmd_RemoveCommand("cmd");
-  Cmd_RemoveCommand("configstrings");
-  Cmd_RemoveCommand("clientinfo");
-  Cmd_RemoveCommand("disconnect");
-  Cmd_RemoveCommand("record");
-  Cmd_RemoveCommand("demo");
-  Cmd_RemoveCommand("autocinematic");
-  Cmd_RemoveCommand("cinematic");
-  Cmd_RemoveCommand("unskippablecinematic");
-  Cmd_RemoveCommand("logo");
-  Cmd_RemoveCommand("stoprecord");
-  Cmd_RemoveCommand("connect");
-  Cmd_RemoveCommand("reconnect");
-  Cmd_RemoveCommand("localservers");
-  Cmd_RemoveCommand("setenv");
-  Cmd_RemoveCommand("ping");
-  Cmd_RemoveCommand("serverstatus");
-  Cmd_RemoveCommand("showip");
-  Cmd_RemoveCommand("startSingleplayer");
-  Cmd_RemoveCommand("cubemapShot");
-  Cmd_RemoveCommand("openmenu");
-  Cmd_RemoveCommand("closemenu");
-  Cmd_RemoveCommand("ui_keyboard");
-  memset();
-  recursive = false;
-  Com_Printf(0xe,"-----------------------\n");
+  Cmd_RemoveCommand(0xffffffff8200b0fc);
+  Cmd_RemoveCommand(0xffffffff82031c8c);
+  Cmd_RemoveCommand(0xffffffff82031c80);
+  Cmd_RemoveCommand(0xffffffff82030b34);
+  Cmd_RemoveCommand(0xffffffff82031c78);
+  Cmd_RemoveCommand(0xffffffff82031c70);
+  Cmd_RemoveCommand(0xffffffff82031c60);
+  Cmd_RemoveCommand(0xffffffff82031c54);
+  Cmd_RemoveCommand(0xffffffff82031c3c);
+  Cmd_RemoveCommand(0xffffffff82031c34);
+  Cmd_RemoveCommand(0xffffffff82031c28);
+  Cmd_RemoveCommand(0xffffffff82031c20);
+  Cmd_RemoveCommand(0xffffffff82031c14);
+  Cmd_RemoveCommand(0xffffffff82031c04);
+  Cmd_RemoveCommand(0xffffffff82031bfc);
+  Cmd_RemoveCommand(0xffffffff82031bf4);
+  Cmd_RemoveCommand(0xffffffff82031be4);
+  Cmd_RemoveCommand(0xffffffff82031bdc);
+  Cmd_RemoveCommand(0xffffffff82031bc8);
+  Cmd_RemoveCommand(0xffffffff82031bbc);
+  Cmd_RemoveCommand(0xffffffff82031bb0);
+  Cmd_RemoveCommand(0xffffffff82031ba4);
+  Cmd_RemoveCommand(0xffffffff82031b98);
+  memset(&DAT_82aa1b00,0,0x98600);
+  DAT_82b3ee0c = 0;
+  Com_Printf(0xe,0xffffffff82031b7c);
   __restgprlr_29();
   return;
 }
 
 
 // 82346338  CL_Shutdown  (client_mp/cl_main_mp.cpp:6555)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
 
-// 82346410  CL_ShowIP_f  (client_mp/cl_main_mp.cpp:6588)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* void __cdecl CL_ShowIP_f(void) */
-
-void CL_ShowIP_f(void)
+int CL_Shutdown(undefined8 param_1)
 
 {
-  Com_Printf(0x10,"IP: %i.%i.%i.%i\n");
-  return;
+  char cVar2;
+  int iVar1;
+  
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x199e,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  Com_SyncThreads();
+  Com_Printf(0xe,0xffffffff82031d28);
+  if (DAT_82b3ee10 == 0) {
+    DAT_82b3ee10 = 1;
+    CL_Disconnect(param_1);
+    DAT_82b3ee10 = 0;
+    (&DAT_82b3e4f1)[(int)param_1 * 0x1e4] = 0;
+    iVar1 = Com_Printf(0xe,0xffffffff82031b7c);
+  }
+  else {
+    iVar1 = printf("recursive shutdown\n");
+  }
+  return iVar1;
 }
 
 
 // 82346418  CL_LocalServers  (client_mp/cl_main_mp.cpp:6634)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_LocalServers(void)
+
+{
+  undefined1 uVar1;
+  undefined8 uVar2;
+  undefined2 uVar4;
+  undefined8 uVar3;
+  undefined1 *puVar5;
+  longlong lVar6;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_40;
+  undefined4 uStack_3c;
+  undefined4 local_38;
+  undefined4 uStack_34;
+  
+  uVar2 = __savegprlr_27();
+  Com_Printf(0,0xffffffff82031d50);
+  puVar5 = &DAT_82aa1cb3;
+  DAT_82aa1c50 = 0;
+  DAT_82aa2958 = 0;
+  do {
+    uVar1 = *puVar5;
+    Com_Memset(puVar5 + -0x5b,0,0xd0);
+    *puVar5 = uVar1;
+    puVar5 = puVar5 + 0xd0;
+  } while ((int)puVar5 < -0x7d55d64d);
+  Com_Memset(&local_50,0,0x10);
+  lVar6 = 2;
+  local_44 = 4;
+  do {
+    uVar4 = BigShort(1000);
+    local_48 = CONCAT22(uVar4,local_48._2_2_);
+    local_40 = local_50;
+    uStack_3c = local_4c;
+    local_38 = local_48;
+    uStack_34 = local_44;
+    uVar3 = NET_GetLocalNetIDFromLocalClientNum(uVar2);
+    NET_OutOfBandData(uVar3,CONCAT44(local_40,uStack_3c),CONCAT44(local_38,uStack_34),
+                      0xffffffff82031d44,0xb);
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  __restgprlr_27();
+  return;
+}
+
 
 // 82346510  CL_LocalServers_f  (client_mp/cl_main_mp.cpp:6687)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_LocalServers_f(void)
 
 {
-  LocalClientNum_t LVar1;
-  
-  LVar1 = Cmd_LocalClientNum();
-  CL_LocalServers(LVar1);
+  Cmd_LocalClientNum();
+  CL_LocalServers();
   return;
 }
 
 
 // 82346538  CL_GetServerList  (client_mp/cl_main_mp.cpp:6693)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_GetServerList(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1a26,0,0xffffffff82000f98,0xffffffff82031d88);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1a27,0,0xffffffff82000f98,0xffffffff82031d80);
+  }
+  if (iVar1 == 0) {
+    *(undefined4 *)param_2 = &DAT_82aa1c58;
+    *(undefined4 *)param_3 = DAT_82aa1c50;
+  }
+  __restgprlr_27();
+  return;
+}
+
 
 // 823465D0  InitMapLoad_FastFile  (client_mp/cl_main_mp.cpp:6819)
 
-void InitMapLoad_FastFile(char *param_1)
+void InitMapLoad_FastFile(undefined8 param_1)
 
 {
   DB_LoadLevelXAssets(param_1,0);
@@ -2831,112 +5250,157 @@ void InitMapLoad_FastFile(char *param_1)
 
 
 // 82349C20  PreloadMap  (client_mp/cl_main_mp.cpp:6827)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void PreloadMap(undefined8 param_1,ulonglong param_2)
+
+{
+  ulonglong uVar1;
+  char cVar3;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1aac,0,0xffffffff82000f98,0xffffffff82010974);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1aad,0,0xffffffff82000f98,0xffffffff820337c4);
+  }
+  if (*(char *)(DAT_83666174 + 0xc) != '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x1aae,0,0xffffffff82000f98,0xffffffff820337a0);
+  }
+  Live_GetMapIndex(uVar1);
+  Live_GetMapSource();
+  cVar3 = Content_DoWeHaveContentPack();
+  if (cVar3 == '\0') {
+    Lobby_GetPartyData();
+    Party_StopParty();
+    UI_MissingMapError();
+  }
+  LoadMapLoadscreen(uVar1);
+  UI_SetMap(uVar1,param_2);
+  R_BeginRemoteScreenUpdate();
+  iVar2 = Hunk_Inuse();
+  if (iVar2 == 0) {
+    Hunk_Begin();
+  }
+  R_EndRemoteScreenUpdate();
+  CL_ShutdownAll();
+  Com_Restart();
+  if (DAT_82aa1b04 != 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1ad3,0,0xffffffff82000f98,0xffffffff820313a8);
+  }
+  CL_InitRenderer();
+  CL_StartHunkUsers();
+  Com_InitDObj();
+  DB_LoadLevelXAssets(uVar1,0);
+  __restgprlr_28();
+  return;
+}
+
 
 // 82349D68  CL_SetupForNewServerMap  (client_mp/cl_main_mp.cpp:6884)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_SetupForNewServerMap(undefined8 param_1,undefined8 param_2)
+
+{
+  char *pcVar1;
+  int iVar2;
+  
+  pcVar1 = (char *)__savegprlr_29();
+  Com_Printf(0xe,0xffffffff820337f0,pcVar1,param_2);
+  if ((*pcVar1 == '\0') || (*(char *)param_2 == '\0')) {
+    MyAssertHandler(0xffffffff820302c8,0x1ae9,0,0xffffffff82000f98,0xffffffff820337d0);
+  }
+  DAT_82b3e4e8 = 0;
+  DAT_82b3e4e9 = 0;
+  DAT_82b3e4ea = 0;
+  DAT_82b3e4eb = 0;
+  DAT_82b3eca4 = 1;
+  DAT_82aa30e0 = *(undefined1 *)(DAT_83667368 + 0xc);
+  if (*(char *)(DAT_83666174 + 0xc) == '\0') {
+    DAT_82aa1aa0 = 1;
+    UI_SetMap(0xffffffff820068af,0xffffffff820068af);
+    if (*(char *)(DAT_83667368 + 0xc) != '\0') {
+      PreloadMap(pcVar1,param_2);
+      SCR_UpdateScreen();
+      __restgprlr_29();
+      return;
+    }
+    LoadMapLoadscreen(pcVar1);
+    UI_SetMap(pcVar1,param_2);
+    iVar2 = Hunk_Inuse();
+    if (iVar2 == 0) {
+      Hunk_Begin();
+    }
+  }
+  SCR_UpdateScreen();
+  __restgprlr_29();
+  return;
+}
+
 
 // 823465D8  CL_IsServerLoadingMap  (client_mp/cl_main_mp.cpp:6935)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool CL_IsServerLoadingMap(void)
+undefined1 CL_IsServerLoadingMap(void)
 
 {
-  return cl_serverLoadingMap;
+  return DAT_82b3eca4;
 }
 
 
 // 823465E8  CL_IsWaitingOnServerToLoadMap  (client_mp/cl_main_mp.cpp:6941)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool CL_IsWaitingOnServerToLoadMap(LocalClientNum_t param_1)
+undefined1 CL_IsWaitingOnServerToLoadMap(uint param_1)
 
 {
-  if (LOCAL_CLIENT_3 < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1b1e,0,
-                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff820302c8,0x1b1e,0,0xffffffff820011a8,param_1,4);
   }
-  return cl_waitingOnServerToLoadMap[param_1];
+  return (&DAT_82b3e4e8)[param_1];
 }
 
 
 // 82346648  CL_SetWaitingOnServerToLoadMap  (client_mp/cl_main_mp.cpp:6948)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_SetWaitingOnServerToLoadMap(LocalClientNum_t param_1,bool param_2)
+void CL_SetWaitingOnServerToLoadMap(uint param_1,undefined1 param_2)
 
 {
-  if (LOCAL_CLIENT_3 < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1b25,0,
-                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff820302c8,0x1b25,0,0xffffffff820011a8,param_1,4);
   }
-  cl_waitingOnServerToLoadMap[param_1] = param_2;
+  (&DAT_82b3e4e8)[param_1] = param_2;
   return;
 }
 
 
 // 823466B8  CL_SyncGpu  (client_mp/cl_main_mp.cpp:6958)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_SyncGpu(void)
+
+{
+  DAT_82aa1c28 = 1;
+  R_SyncGpu();
+  return;
+}
+
 
 // 823466D0  CL_DrawTextPhysical  (client_mp/cl_main_mp.cpp:6965)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_DrawTextPhysical(char *param_1,int param_2,Font_s *param_3,float param_4,float param_5,
-                        float param_6,float param_7,float *param_8,int param_9)
+void CL_DrawTextPhysical(void)
 
 {
-  R_AddCmdDrawText(param_1,param_2,param_3,param_4,param_5,param_6,param_7,0.0,param_8,param_9);
+  R_AddCmdDrawText();
   return;
 }
 
 
 // 82346708  CL_DrawTextPhysicalWithEffects  (client_mp/cl_main_mp.cpp:6971)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_DrawTextPhysicalWithEffects
-               (char *param_1,int param_2,Font_s *param_3,float param_4,float param_5,float param_6,
-               float param_7,float *param_8,int param_9,float *param_10,Material *param_11,
-               Material *param_12,int param_13,int param_14,int param_15,int param_16)
+void CL_DrawTextPhysicalWithEffects(void)
 
 {
-  char *pcVar1;
-  longlong lVar2;
-  longlong lVar3;
-  double extraout_f1;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  float *in_stack_00000074;
-  int in_stack_0000007c;
-  float *in_stack_00000084;
-  Material *in_stack_0000008c;
-  int in_stack_ffffff48;
-  int in_stack_ffffff4c;
-  int in_stack_ffffff50;
-  int in_stack_ffffff54;
-  
-  dVar5 = (double)param_6;
-  dVar6 = (double)param_7;
-  dVar4 = (double)param_5;
-  lVar3 = (longlong)(int)param_3;
-  lVar2 = (longlong)param_2;
-  pcVar1 = (char *)__savegprlr_29((double)param_4,param_1,lVar2,lVar3,param_8,param_9,param_10,
-                                  param_11);
-  R_AddCmdDrawTextWithEffects
-            (pcVar1,(int)lVar2,(Font_s *)lVar3,(float)extraout_f1,(float)dVar4,(float)dVar5,
-             (float)dVar6,0.0,in_stack_00000074,in_stack_0000007c,in_stack_00000084,
-             in_stack_0000008c,param_12,in_stack_ffffff48,in_stack_ffffff4c,in_stack_ffffff50,
-             in_stack_ffffff54);
+  __savegprlr_29();
+  R_AddCmdDrawTextWithEffects();
   __restgprlr_29();
   return;
 }
@@ -2944,38 +5408,29 @@ void CL_DrawTextPhysicalWithEffects
 
 // 82346770  CL_DrawText  (client_mp/cl_main_mp.cpp:6977)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_DrawText(ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,float param_5,
-                float param_6,int param_7,int param_8,float param_9,float param_10,float *param_11,
-                int param_12)
+void CL_DrawText(undefined8 param_1,double param_2,double param_3,double param_4,undefined8 param_5,
+                undefined8 param_6,undefined8 param_7,undefined8 param_8,undefined8 param_9,
+                undefined8 param_10,undefined8 param_11,undefined8 param_12)
 
 {
-  ScreenPlacement *pSVar1;
-  float *pfVar2;
-  float *pfVar3;
+  undefined8 uVar1;
   double extraout_f1;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  float fStack00000034;
-  float fStack0000003c;
-  float fStack00000054;
-  float fStack0000005c;
+  float in_stack_00000034;
+  float in_stack_0000003c;
+  float in_stack_00000054;
+  float in_stack_0000005c;
+  undefined4 in_stack_00000064;
+  undefined4 in_stack_0000006c;
   
-  dVar6 = (double)param_10;
-  dVar5 = (double)param_9;
-  dVar4 = (double)param_6;
-  pSVar1 = (ScreenPlacement *)__savegprlr_29((double)param_5,param_1);
-  fStack00000034 = (float)extraout_f1;
-  fStack0000003c = (float)dVar4;
-  fStack00000054 = (float)dVar5;
-  fStack0000005c = (float)dVar6;
-  pfVar3 = &stack0x0000005c;
-  pfVar2 = &stack0x00000054;
-  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,pfVar3,(int)param_11,param_12);
-  R_AddCmdDrawText(param_2,param_3,param_4,fStack00000034,fStack0000003c,fStack00000054,
-                   fStack0000005c,0.0,pfVar2,(int)pfVar3);
+  uVar1 = __savegprlr_29();
+  in_stack_00000034 = (float)extraout_f1;
+  in_stack_0000003c = (float)param_2;
+  in_stack_00000054 = (float)param_3;
+  in_stack_0000005c = (float)param_4;
+  ScrPlace_ApplyRect(uVar1,&stack0x00000034,&stack0x0000003c,&stack0x00000054,&stack0x0000005c,
+                     param_11,param_12);
+  R_AddCmdDrawText((double)in_stack_00000034,(double)in_stack_0000003c,(double)in_stack_00000054,
+                   (double)in_stack_0000005c,0,param_6,param_7,param_8);
   __restgprlr_29();
   return;
 }
@@ -2983,42 +5438,31 @@ void CL_DrawText(ScreenPlacement *param_1,char *param_2,int param_3,Font_s *para
 
 // 823467F8  CL_DrawTextRotate  (client_mp/cl_main_mp.cpp:6984)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_DrawTextRotate(ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,
-                      float param_5,float param_6,float param_7,int param_8,int param_9,
-                      float param_10,float param_11,float *param_12,int param_13)
+void CL_DrawTextRotate(undefined8 param_1,double param_2,undefined8 param_3,double param_4,
+                      double param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
+                      undefined8 param_9)
 
 {
-  ScreenPlacement *pSVar1;
-  float *pfVar2;
-  float *pfVar3;
+  undefined8 uVar1;
+  undefined8 in_r10;
   double extraout_f1;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  float fStack00000034;
-  float fStack0000003c;
-  int in_stack_00000054;
-  float fStack0000005c;
-  float fStack00000064;
+  float in_stack_00000034;
+  float in_stack_0000003c;
+  undefined4 in_stack_00000054;
+  float in_stack_0000005c;
+  float in_stack_00000064;
+  undefined4 in_stack_0000006c;
+  undefined4 in_stack_00000074;
   
-  dVar7 = (double)param_11;
-  dVar6 = (double)param_10;
-  dVar4 = (double)param_6;
-  dVar5 = (double)param_7;
-  pSVar1 = (ScreenPlacement *)__savegprlr_29((double)param_5,param_1);
-  fStack00000034 = (float)extraout_f1;
-  fStack0000003c = (float)dVar4;
-  fStack0000005c = (float)dVar6;
-  fStack00000064 = (float)dVar7;
-  pfVar3 = &stack0x00000064;
-  pfVar2 = &stack0x0000005c;
-  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,pfVar3,param_13,
-                     in_stack_00000054);
-  R_AddCmdDrawText(param_2,param_3,param_4,fStack00000034,fStack0000003c,fStack0000005c,
-                   fStack00000064,(float)dVar5,pfVar2,(int)pfVar3);
+  uVar1 = __savegprlr_29();
+  in_stack_00000034 = (float)extraout_f1;
+  in_stack_0000003c = (float)param_2;
+  in_stack_0000005c = (float)param_4;
+  in_stack_00000064 = (float)param_5;
+  ScrPlace_ApplyRect(uVar1,&stack0x00000034,&stack0x0000003c,&stack0x0000005c,&stack0x00000064,
+                     in_r10,in_stack_00000054);
+  R_AddCmdDrawText((double)in_stack_00000034,(double)in_stack_0000003c,(double)in_stack_0000005c,
+                   (double)in_stack_00000064,param_3,param_7,param_8,param_9);
   __restgprlr_29();
   return;
 }
@@ -3026,132 +5470,312 @@ void CL_DrawTextRotate(ScreenPlacement *param_1,char *param_2,int param_3,Font_s
 
 // 82346888  CL_DrawTextPhysicalWithCursor  (client_mp/cl_main_mp.cpp:6991)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_DrawTextPhysicalWithCursor
-               (char *param_1,int param_2,Font_s *param_3,float param_4,float param_5,float param_6,
-               float param_7,float *param_8,int param_9,int param_10,char param_11)
+void CL_DrawTextPhysicalWithCursor(void)
 
 {
-  int in_stack_00000054;
-  int in_stack_0000005c;
-  char in_stack_00000067;
-  
-  R_AddCmdDrawTextWithCursor
-            (param_1,param_2,param_3,param_4,param_5,param_6,param_7,0.0,param_8,in_stack_00000054,
-             in_stack_0000005c,in_stack_00000067);
+  R_AddCmdDrawTextWithCursor();
   return;
 }
 
 
 // 823468D0  CL_DrawTextWithCursor  (client_mp/cl_main_mp.cpp:6997)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void CL_DrawTextWithCursor
-               (ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,float param_5,
-               float param_6,int param_7,int param_8,float param_9,float param_10,float *param_11,
-               int param_12,int param_13,char param_14)
+               (undefined8 param_1,double param_2,double param_3,double param_4,undefined8 param_5,
+               undefined8 param_6,undefined8 param_7,undefined8 param_8,undefined8 param_9,
+               undefined8 param_10,undefined8 param_11,undefined8 param_12)
 
 {
-  ScreenPlacement *pSVar1;
-  float *pfVar2;
+  undefined8 uVar1;
   double extraout_f1;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  float fStack00000034;
-  float fStack0000003c;
-  float fStack00000054;
-  float fStack0000005c;
-  int in_stack_00000064;
-  int in_stack_0000006c;
-  char in_stack_00000077;
+  float in_stack_00000034;
+  float in_stack_0000003c;
+  float in_stack_00000054;
+  float in_stack_0000005c;
+  undefined4 in_stack_00000064;
+  undefined4 in_stack_0000006c;
+  undefined4 in_stack_00000074;
+  undefined1 in_stack_0000007f;
   
-  dVar5 = (double)param_10;
-  dVar4 = (double)param_9;
-  dVar3 = (double)param_6;
-  pSVar1 = (ScreenPlacement *)__savegprlr_29((double)param_5,param_1);
-  fStack00000034 = (float)extraout_f1;
-  fStack0000003c = (float)dVar3;
-  fStack00000054 = (float)dVar4;
-  fStack0000005c = (float)dVar5;
-  pfVar2 = &stack0x00000054;
-  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,&stack0x0000005c,(int)param_11,
-                     param_12);
+  uVar1 = __savegprlr_29();
+  in_stack_00000034 = (float)extraout_f1;
+  in_stack_0000003c = (float)param_2;
+  in_stack_00000054 = (float)param_3;
+  in_stack_0000005c = (float)param_4;
+  ScrPlace_ApplyRect(uVar1,&stack0x00000034,&stack0x0000003c,&stack0x00000054,&stack0x0000005c,
+                     param_11,param_12);
   R_AddCmdDrawTextWithCursor
-            (param_2,param_3,param_4,fStack00000034,fStack0000003c,fStack00000054,fStack0000005c,0.0
-             ,pfVar2,in_stack_00000064,in_stack_0000006c,in_stack_00000077);
+            ((double)in_stack_00000034,(double)in_stack_0000003c,(double)in_stack_00000054,
+             (double)in_stack_0000005c,0,param_6,param_7,param_8);
   __restgprlr_29();
   return;
 }
 
 
 // 82346968  CL_ShouldDisplayHud  (client_mp/cl_main_mp.cpp:7004)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+undefined8 CL_ShouldDisplayHud(void)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  if (((*(char *)(DAT_82aa1a94 + 0xc) != '\0') ||
+      (iVar2 = CL_GetLocalClientUIGlobals(), (*(uint *)(iVar2 + 0x54) & 0x10) == 0)) ||
+     (uVar1 = 0, *(char *)(iVar2 + 0x58) != '\0')) {
+    uVar1 = 1;
+  }
+  return uVar1;
+}
+
 
 // 823469C0  CL_IsUIActive  (client_mp/cl_main_mp.cpp:7019)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
 
-// 82346A38  CL_RegisterFont  (client_mp/cl_main_mp.cpp:7030)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+ulonglong CL_IsUIActive(ulonglong param_1)
+
+{
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x47f,0,0xffffffff820011a8,param_1,4);
+  }
+  return (-((ulonglong)(uint)(&DAT_82b3e544)[(int)param_1 * 0x79] & 0x10) &
+          ~((ulonglong)(uint)(&DAT_82b3e544)[(int)param_1 * 0x79] & 0x10) & 0xffffffff) >> 0x1f;
+}
+
 
 // 82346A40  CL_UpdateSound  (client_mp/cl_main_mp.cpp:7036)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void CL_UpdateSound(void)
+
+{
+  char cVar2;
+  int iVar1;
+  
+  cVar2 = Sys_IsRenderThread();
+  if ((cVar2 == '\0') &&
+     ((cVar2 = Sys_IsMainThread(), cVar2 == '\0' || (iVar1 = R_IsInRemoteScreenUpdate(), iVar1 != 0)
+      ))) {
+    MyAssertHandler(0xffffffff820302c8,0x1b7e,0,0xffffffff82000f98,0xffffffff82031da0);
+  }
+  if ((DAT_82aa1c0c != 0) && (DAT_82aa1c10 == 0)) {
+    Sys_EnterCriticalSection(0x2a);
+    DAT_82aa1c10 = 1;
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82031d90);
+    SND_UpdateLoopingSounds();
+    SND_Update();
+    PIXEndNamedEvent();
+    DAT_82aa1c10 = 0;
+    Sys_LeaveCriticalSection(0x2a);
+  }
+  return;
+}
+
 
 // 8234B9B8  CL_ConnectFromParty  (client_mp/cl_main_mp.cpp:7062)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void CL_ConnectFromParty(undefined8 param_1,ulonglong param_2,undefined4 param_3,undefined8 param_4,
+                        undefined8 param_5,undefined8 param_6,undefined4 param_7,undefined4 param_8)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  byte *pbVar4;
+  char cVar6;
+  int iVar5;
+  undefined8 uVar7;
+  byte *pbVar8;
+  longlong lVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  uint *puVar12;
+  undefined4 in_stack_00000020;
+  undefined4 uStack00000028;
+  int iStack0000002c;
+  byte local_a8 [8];
+  byte abStack_a0 [160];
+  
+  uVar2 = __savegprlr();
+  Com_Printf(0xe,0xffffffff820343a8,uVar2);
+  if (DAT_8424a64c == 0) {
+    MyAssertHandler(0xffffffff82018f38,0x1d3,0,0xffffffff82000f98,0xffffffff82018f84);
+  }
+  if (*(char *)(DAT_8424a64c + 0xc) == '\0') {
+    pbVar4 = local_a8;
+    uVar11 = param_2;
+    do {
+      lVar9 = (ulonglong)*pbVar4 - (ulonglong)*(byte *)uVar11;
+      if (lVar9 != 0) break;
+      pbVar4 = pbVar4 + 1;
+      uVar11 = uVar11 + 1;
+    } while (pbVar4 != abStack_a0);
+    if ((int)lVar9 == 0) {
+      MyAssertHandler(0xffffffff820302c8,0x1ba3,0,0xffffffff82000f98,0xffffffff82034340);
+    }
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1ba6,0,0xffffffff82000f98,0xffffffff82034334);
+  }
+  if ((int)uVar2 != 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1baa,0,0xffffffff82034308,uVar2,0);
+  }
+  UI_CloseAll(uVar2);
+  Live_CheckPlayerIsSignedIn(uVar2);
+  SND_StopSounds(0);
+  CL_AllocatePerLocalClientMemory(1);
+  iVar3 = CL_GetLocalClientConnection(uVar2);
+  *(undefined1 *)(iVar3 + 0x28) = 0;
+  if (*(char *)(DAT_83666174 + 0xc) != '\0') {
+    SV_KillLocalServer();
+  }
+  DAT_82b3eca4 = 0;
+  SV_Frame(0);
+  Con_Close(uVar2);
+  pbVar4 = (byte *)Xenon_GetXNAddr();
+  lVar9 = param_2 + 8;
+  pbVar8 = pbVar4 + 0x24;
+  do {
+    lVar10 = (ulonglong)*pbVar4 - (ulonglong)*(byte *)lVar9;
+    if (lVar10 != 0) break;
+    pbVar4 = pbVar4 + 1;
+    lVar9 = lVar9 + 1;
+  } while (pbVar4 != pbVar8);
+  if ((int)lVar10 == 0) {
+    uVar7 = 0xffffffff8202c774;
+  }
+  else {
+    uVar7 = 0xffffffff820342f8;
+  }
+  I_strncpyz(0xffffffff82aa1b08,uVar7,0x100);
+  pbVar4 = local_a8;
+  iVar3 = (int)param_2;
+  do {
+    lVar9 = (ulonglong)*(byte *)param_2 - (ulonglong)*pbVar4;
+    if (lVar9 != 0) break;
+    param_2 = param_2 + 1;
+    pbVar4 = pbVar4 + 1;
+  } while ((int)param_2 != iVar3 + 8);
+  if ((int)lVar9 == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1bdc,0,0xffffffff82000f98,0xffffffff820342a8);
+  }
+  iStack0000002c = (int)param_4;
+  uVar11 = 0;
+  puVar12 = &DAT_82b3e544;
+  do {
+    cVar6 = CL_IsLocalClientActive(uVar11);
+    if (cVar6 != '\0') {
+      CL_Disconnect(uVar11);
+      CL_SetLocalClientActive(uVar11,1);
+      iVar3 = CL_GetLocalClientConnection(uVar11);
+      iVar5 = CL_GetLocalClientGlobals(uVar11);
+      if (3 < (uVar11 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff8202c1d8,0x47f,0,0xffffffff820011a8,uVar11,4);
+        MyAssertHandler(0xffffffff8202c1d8,0x4b5,0,0xffffffff82024a10,uVar11,4);
+      }
+      iVar1 = DAT_844c7870;
+      puVar12[2] = 3;
+      if (iVar1 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
+                        0x1bf2,0,0xffffffff82000f98,0xffffffff82022b74);
+      }
+      if (iStack0000002c != 4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
+                        0x1bf5,0,0xffffffff82000f98,0xffffffff82034288);
+      }
+      uStack00000028 = (undefined4)((ulonglong)param_4 >> 0x20);
+      *(undefined4 *)(iVar3 + 0x10) = in_stack_00000020;
+      *(undefined4 *)(iVar3 + 0x14) = param_3;
+      *(undefined4 *)(iVar3 + 0x18) = uStack00000028;
+      *(int *)(iVar3 + 0x1c) = iStack0000002c;
+      UI_CloseAll(uVar11);
+      *puVar12 = *puVar12 & 1;
+      *(undefined4 *)(iVar3 + 0x20) = 0xfffe7961;
+      *(undefined4 *)(iVar3 + 0x24) = 0;
+      *(undefined4 *)(iVar5 + 4) = 0;
+    }
+    puVar12 = puVar12 + 0x79;
+    uVar11 = uVar11 + 1;
+  } while ((int)puVar12 < -0x7d4c132c);
+  DAT_82aa30e0 = *(undefined1 *)(DAT_83667368 + 0xc);
+  UI_CloseAll(uVar2);
+  if ((*(char *)(DAT_83666174 + 0xc) == '\0') && (*(char *)(DAT_83667368 + 0xc) != '\0')) {
+    PreloadMap(param_7,param_8);
+  }
+  __restgprlr();
+  return;
+}
+
 
 // 82346B10  CL_CheckNotify  (client_mp/cl_main_mp.cpp:7186)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
+
+void CL_CheckNotify(ulonglong param_1,undefined8 param_2)
+
+{
+  char cVar2;
+  int iVar1;
+  undefined1 auStack_420 [1032];
+  
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff820302c8,0x1c15,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,param_1,4);
+  }
+  if ((((9 < (int)(&DAT_82b3e54c)[(int)param_1 * 0x79]) &&
+       (iVar1 = CL_GetLocalClientMigrationState(param_1), iVar1 != 2)) &&
+      (cVar2 = CL_Demo_IsPlaying(param_1), cVar2 == '\0')) && (*(int *)(DAT_83666158 + 0xc) == 0)) {
+    Com_sprintf(auStack_420,0x400,0xffffffff82031dec,param_2);
+    CL_AddReliableCommand(param_1,auStack_420);
+  }
+  return;
+}
+
 
 // 82346C20  CL_GetMaxClients  (client_mp/cl_main_mp.cpp:7225)
 
-void CL_GetMaxClients(int param_1,int *param_2,int *param_3)
+void CL_GetMaxClients(undefined8 param_1,undefined4 *param_2,undefined4 *param_3)
 
 {
   ulonglong uVar1;
-  int iVar2;
-  char *pcVar3;
+  int iVar3;
+  undefined8 uVar2;
+  undefined4 uVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
   
-  uVar1 = __savegprlr_27(param_1);
-  if ((((splitscreen->current).enabled == false) || ((onlinegame->current).enabled != false)) ||
-     ((systemlink->current).enabled != false)) {
-    if (((onlinegame->current).enabled == false) ||
-       (iVar2 = CL_GetLocalClientActiveCount(), iVar2 < 3)) goto LAB_82346d1c;
-    CL_GetLocalClientActiveCount();
-    pcVar3 = "MAX_PARTY_CLIENT_COUNT >= CL_GetLocalClientActiveCount()\n\t%i, %i";
-    iVar2 = 0x1c44;
+  uVar1 = __savegprlr_27();
+  if (((*(char *)(DAT_82b3ecb8 + 0xc) == '\0') || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) ||
+     (*(char *)(DAT_82aa1ae4 + 0xc) != '\0')) {
+    if ((*(char *)(DAT_82aa1af8 + 0xc) == '\0') ||
+       (iVar3 = CL_GetLocalClientActiveCount(), iVar3 < 3)) goto LAB_82346d1c;
+    uVar2 = CL_GetLocalClientActiveCount();
+    uVar4 = 2;
+    uVar6 = 0xffffffff82031e20;
+    uVar5 = 0x1c44;
   }
   else {
-    if (4 < (sv_maxclients->current).integer) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                      0x1c3d,0,"%s\n\t(sv_maxclients->current.integer) = %i");
+    if (4 < *(int *)(DAT_83d0b55c + 0xc)) {
+      MyAssertHandler(0xffffffff820302c8,0x1c3d,0,0xffffffff82031eb4,0xffffffff82031ee0);
     }
-    iVar2 = CL_GetLocalClientActiveCount();
-    if ((sv_maxclients->current).integer == iVar2) goto LAB_82346d1c;
-    CL_GetLocalClientActiveCount();
-    iVar2 = 0x1c3e;
-    pcVar3 = "sv_maxclients->current.integer == CL_GetLocalClientActiveCount()\n\t%i, %i";
+    iVar3 = CL_GetLocalClientActiveCount();
+    if (*(int *)(DAT_83d0b55c + 0xc) == iVar3) goto LAB_82346d1c;
+    uVar2 = CL_GetLocalClientActiveCount();
+    uVar5 = 0x1c3e;
+    uVar6 = 0xffffffff82031e68;
+    uVar4 = *(undefined4 *)(DAT_83d0b55c + 0xc);
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",iVar2,
-                  0,pcVar3);
+  MyAssertHandler(0xffffffff820302c8,uVar5,0,uVar6,uVar4,uVar2);
 LAB_82346d1c:
-  if (((uVar1 & 2) != 0) && (iVar2 = CL_GetLocalClientActiveCount(), iVar2 != 1)) {
-    CL_GetLocalClientActiveCount();
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1c49,0,"CL_GetLocalClientActiveCount() == 1\n\t%i, %i");
+  if (((uVar1 & 2) != 0) && (iVar3 = CL_GetLocalClientActiveCount(), iVar3 != 1)) {
+    uVar2 = CL_GetLocalClientActiveCount();
+    MyAssertHandler(0xffffffff820302c8,0x1c49,0,0xffffffff82031df4,uVar2,1);
   }
-  iVar2 = CL_GetLocalClientActiveCount();
-  *param_2 = iVar2;
+  uVar4 = CL_GetLocalClientActiveCount();
+  *param_2 = uVar4;
   if ((uVar1 & 2) == 0) {
-    *param_3 = (sv_maxclients->current).integer;
+    *param_3 = *(undefined4 *)(DAT_83d0b55c + 0xc);
     __restgprlr_27();
     return;
   }
@@ -3162,12 +5786,101 @@ LAB_82346d1c:
 
 
 // 82349E98  CL_AllocatePerLocalClientMemory  (client_mp/cl_main_mp.cpp:7254)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_AllocatePerLocalClientMemory(void)
+
+{
+  ulonglong uVar1;
+  undefined8 uVar2;
+  char cVar5;
+  undefined4 uVar3;
+  void *pvVar4;
+  int iVar6;
+  ulonglong uVar7;
+  int iVar8;
+  uint local_80;
+  undefined4 local_7c [31];
+  
+  uVar1 = __savegprlr_19();
+  if (DAT_82b3ecb8 == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1c5c,0,0xffffffff82000f98,0xffffffff8203364c);
+  }
+  if (DAT_82aa1af8 == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1c5d,0,0xffffffff82000f98,0xffffffff820336e8);
+  }
+  if (DAT_83d0b55c == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1c5e,0,0xffffffff82000f98,0xffffffff82022f7c);
+  }
+  if (DAT_83666174 == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1c5f,0,0xffffffff82000f98,0xffffffff8201dfb4);
+  }
+  if (((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) &&
+     (*(char *)(DAT_82aa1ae4 + 0xc) == '\0')) {
+    uVar2 = CL_GetLocalClientActiveCount();
+    Dvar_SetInt(DAT_83d0b55c,uVar2);
+  }
+  if ((((DAT_82aa1ae8 == 0) || (DAT_82aa1aa3 != *(char *)(DAT_82b3ecb8 + 0xc))) ||
+      ((DAT_82aa1aa1 != *(char *)(DAT_82aa1af8 + 0xc) ||
+       ((DAT_82aa1aa2 != *(char *)(DAT_82aa1ae4 + 0xc) ||
+        (DAT_82aa1a90 != *(int *)(DAT_83d0b55c + 0xc))))))) || (DAT_82aa1ab8 != (int)uVar1)) {
+    if (*(char *)(DAT_83666174 + 0xc) != '\0') {
+      if (DAT_82aa1ae8 == 0) {
+        MyAssertHandler(0xffffffff820302c8,0x1c6c,0,0xffffffff82000f98,0xffffffff82033834);
+      }
+      Dvar_SetBool(DAT_82b3ecb8,DAT_82aa1aa3);
+      Dvar_SetBool(DAT_82aa1af8,DAT_82aa1aa1);
+      Dvar_SetBool(DAT_82aa1ae4,DAT_82aa1aa2);
+      Dvar_SetInt(DAT_83d0b55c,DAT_82aa1a90);
+      __restgprlr_19();
+      return;
+    }
+    if (((uVar1 & 2) == 0) && (cVar5 = CL_Demo_IsDemoDownloadMemoryAllocated(), cVar5 != '\0')) {
+      CL_Demo_DeallocateDemoDownloadMemory();
+    }
+    CL_FreePerLocalClientMemory();
+    DAT_82aa1aa3 = *(char *)(DAT_82b3ecb8 + 0xc);
+    DAT_82aa1aa1 = *(char *)(DAT_82aa1af8 + 0xc);
+    DAT_82aa1aa2 = *(char *)(DAT_82aa1ae4 + 0xc);
+    DAT_82aa1a90 = *(int *)(DAT_83d0b55c + 0xc);
+    DAT_82aa1ab8 = (int)uVar1;
+    CL_GetMaxClients(uVar1,&local_80,local_7c);
+    PMem_BeginAlloc(PTR_s__perLocalClient_8296532c,0);
+    DAT_82b3ecb0 = (void *)PMem_Alloc_NoDebug((longlong)(int)local_80 * 0xd480,0x80,4);
+    memset(DAT_82b3ecb0,0,(size_t)((longlong)(int)local_80 * 0xd480));
+    if (0 < (int)local_80) {
+      iVar8 = 0;
+      uVar7 = (ulonglong)local_80;
+      do {
+        if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') || (iVar6 = 8, (uVar1 & 2) != 0)) {
+          iVar6 = 0x10;
+        }
+        uVar3 = PMem_Alloc_NoDebug(iVar6 * 0xc,4,4);
+        *(undefined4 *)((int)DAT_82b3ecb0 + iVar8 + 0xd410) = uVar3;
+        memset(*(void **)((int)DAT_82b3ecb0 + iVar8 + 0xd410),0,iVar6 * 0xc);
+        uVar7 = uVar7 - 1;
+        iVar8 = iVar8 + 0xd480;
+      } while (uVar7 != 0);
+    }
+    DAT_82aa1a9c = (void *)PMem_Alloc_NoDebug((longlong)(int)local_80 * 0x65670,4,4);
+    SV_AllocateDObjMemory(uVar1,(ulonglong)local_80);
+    if ((uVar1 & 2) != 0) {
+      CL_Demo_AllocatePlaybackMemory((uVar1 & 0xffffffff) >> 2 & 1);
+    }
+    PMem_EndAlloc(PTR_s__perLocalClient_8296532c,0);
+    Com_Printf(10,0xffffffff82033818);
+    memset(DAT_82aa1a9c,0,(size_t)((longlong)(int)local_80 * 0x65670));
+    pvVar4 = memset(&DAT_82ae30f8,0,0x13bb0);
+    DAT_82aa1aa4 = local_7c[0];
+    DAT_82ae30f4 = 0;
+    DAT_82aa1ae8 = local_80;
+    DB_UpdateDebugZone(pvVar4);
+  }
+  __restgprlr_19();
+  return;
+}
+
 
 // 82346D90  CL_AllocatePerLocalClientMemory2  (client_mp/cl_main_mp.cpp:7348)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_AllocatePerLocalClientMemory2(void)
 
@@ -3176,30 +5889,24 @@ void CL_AllocatePerLocalClientMemory2(void)
   int local_2c [11];
   
   __savegprlr_28();
-  if ((bool)DAT_82aa1aa3 != (splitscreen->current).enabled) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1cb8,0,"%s");
+  if (DAT_82aa1aa3 != *(char *)(DAT_82b3ecb8 + 0xc)) {
+    MyAssertHandler(0xffffffff820302c8,0x1cb8,0,0xffffffff82000f98,0xffffffff82032008);
   }
-  if ((bool)DAT_82aa1aa1 != (onlinegame->current).enabled) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1cb9,0,"%s");
+  if (DAT_82aa1aa1 != *(char *)(DAT_82aa1af8 + 0xc)) {
+    MyAssertHandler(0xffffffff820302c8,0x1cb9,0,0xffffffff82000f98,0xffffffff82031fd0);
   }
-  if ((bool)DAT_82aa1aa2 != (systemlink->current).enabled) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1cba,0,"%s");
+  if (DAT_82aa1aa2 != *(char *)(DAT_82aa1ae4 + 0xc)) {
+    MyAssertHandler(0xffffffff820302c8,0x1cba,0,0xffffffff82000f98,0xffffffff82031f98);
   }
-  if (DAT_82aa1a90 != (sv_maxclients->current).integer) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1cbb,0,"%s");
+  if (DAT_82aa1a90 != *(int *)(DAT_83d0b55c + 0xc)) {
+    MyAssertHandler(0xffffffff820302c8,0x1cbb,0,0xffffffff82000f98,0xffffffff82031f5c);
   }
   CL_GetMaxClients(DAT_82aa1ab8,&local_30,local_2c);
-  if (local_30 != cl_maxLocalClients) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1cbf,0,"maxLocalClients == cl_maxLocalClients\n\t%i, %i");
+  if (local_30 != DAT_82aa1ae8) {
+    MyAssertHandler(0xffffffff820302c8,0x1cbf,0,0xffffffff82031f2c,local_30);
   }
-  if (local_2c[0] != cl_maxClients) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1cc0,0,"maxClients == cl_maxClients\n\t%i, %i");
+  if (local_2c[0] != DAT_82aa1aa4) {
+    MyAssertHandler(0xffffffff820302c8,0x1cc0,0,0xffffffff82031f08,local_2c[0]);
   }
   SV_AllocateClientMemory(DAT_82aa1ab8,local_30,local_2c[0]);
   CG_AllocateClientMemory(local_30);
@@ -3214,12 +5921,35 @@ void CL_AllocatePerLocalClientMemory2(void)
 
 
 // 82346F48  CL_FreePerLocalClientMemory  (client_mp/cl_main_mp.cpp:7380)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
+
+void CL_FreePerLocalClientMemory(void)
+
+{
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  
+  DB_StopMovie();
+  local_30 = 0;
+  local_2c = 0;
+  local_28 = 0x18;
+  DB_LoadXAssets(&local_30,1,0);
+  CL_Demo_DeallocatePlaybackMemory();
+  SV_FreeDObjMemory();
+  if (0 < DAT_82aa1ae8) {
+    SV_ResetClientMemory();
+    DAT_82aa1ae8 = 0;
+    DAT_82aa1aa4 = 0;
+    DAT_82b3ecb0 = 0;
+    DAT_82aa1a9c = 0;
+    PMem_Free(PTR_s__perLocalClient_8296532c,0);
+    Com_Printf(10,0xffffffff82032044);
+  }
+  return;
+}
+
 
 // 82347000  CL_FreePerLocalClientMemory2  (client_mp/cl_main_mp.cpp:7417)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_FreePerLocalClientMemory2(void)
 
@@ -3236,167 +5966,135 @@ void CL_FreePerLocalClientMemory2(void)
 
 // 82347038  CL_Live_SplitscreenGetCurrentLobby  (client_mp/cl_main_mp.cpp:7454)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-PartyData * CL_Live_SplitscreenGetCurrentLobby(void)
+undefined8 CL_Live_SplitscreenGetCurrentLobby(void)
 
 {
-  PartyData *pPVar1;
+  undefined8 uVar1;
   
-  if ((onlinegame->current).enabled == false) {
-    pPVar1 = Lobby_GetPartyData();
-    return pPVar1;
+  if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
+    uVar1 = Lobby_GetPartyData();
+    return uVar1;
   }
-  return &g_partyData;
+  return 0xffffffff82b55118;
 }
 
 
 // 82347060  CL_Live_LocalClientJoinParty  (client_mp/cl_main_mp.cpp:7472)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool CL_Live_LocalClientJoinParty(PartyData *param_1,int param_2)
+void CL_Live_LocalClientJoinParty(undefined8 param_1,undefined8 param_2)
 
 {
-  PartyData *pPVar1;
   int iVar2;
-  uint uVar3;
-  bool bVar6;
-  _XUSER_SIGNIN_STATE _Var7;
-  undefined1 uVar8;
-  ulong uVar4;
-  LocalClientNum_t LVar5;
+  int iVar3;
+  uint uVar4;
+  char cVar5;
+  undefined8 uVar1;
   int local_40 [16];
   
-  pPVar1 = (PartyData *)__savegprlr_27(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
-                    0x1d34,0,"%s");
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820302c8,0x1d34,0,0xffffffff82000f98,0xffffffff820321a4);
   }
-  if ((splitscreen_online_enabled->current).integer != 0) {
-    iVar2 = Party_InParty(pPVar1);
-    if ((((iVar2 != 0) && (iVar2 = Party_AreWeHost(pPVar1), iVar2 != 0)) &&
-        (uVar3 = PartyClient_CountMembers(pPVar1), uVar3 != 0)) &&
-       ((uVar3 < (party_maxplayers->current).unsignedInt &&
-        (uVar3 = PartyClient_CountLocalMembers(pPVar1), uVar3 < 2)))) {
-      bVar6 = CL_IsSplitscreenControllerActive(param_2);
-      if (bVar6) {
-        if (((systemlink->current).enabled == false) || ((onlinegame->current).enabled != false)) {
-          uVar4 = XUserCheckPrivilege(param_2,XPRIVILEGE_MULTIPLAYER_SESSIONS,local_40);
-          if (uVar4 != 0) {
-            local_40[0] = 0;
-            Com_PrintError(0x10,
-                           "XUserCheckPrivilege for XPRIVILEGE_MULTIPLAYER_SESSIONS failed - error %x.\n"
-                          );
+  if ((*(int *)(DAT_84546d98 + 0xc) != 0) && (iVar3 = Party_InParty(iVar2), iVar3 != 0)) {
+    iVar3 = Party_AreWeHost(iVar2);
+    if (((iVar3 != 0) &&
+        (((uVar4 = PartyClient_CountMembers(iVar2), uVar4 != 0 &&
+          (uVar4 < *(uint *)(DAT_82b59048 + 0xc))) &&
+         (uVar4 = PartyClient_CountLocalMembers(iVar2), uVar4 < 2)))) &&
+       (cVar5 = CL_IsSplitscreenControllerActive(param_2), cVar5 != '\0')) {
+      if ((*(char *)(DAT_82aa1ae4 + 0xc) == '\0') || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
+        uVar1 = XUserCheckPrivilege(param_2,0xfe,local_40);
+        if ((int)uVar1 != 0) {
+          local_40[0] = 0;
+          Com_PrintError(0x10,0xffffffff82032158,uVar1);
+        }
+        if (local_40[0] == 0) {
+          Com_Printf(0x10,0xffffffff820320f8);
+          CL_MakeLocalClientInactive(param_2);
+          CL_ForceNoSplitscreenControl(0xffffffff820320d4,*(undefined4 *)(iVar2 + 0x1ebc));
+          Dvar_SetBool(DAT_82b3ecb8,0);
+          *(undefined4 *)(iVar2 + 0x1ec4) = 0;
+          iVar2 = CL_GetLocalClientActiveCount();
+          if (iVar2 != 1) {
+            MyAssertHandler(0xffffffff820302c8,0x1d72,0,0xffffffff82000f98,0xffffffff820320b0);
           }
-          if (local_40[0] == 0) {
-            Com_Printf(0x10,
-                       "Since the active profile doesn\'t have permission to play MP, so we are going to sign them out\n"
-                      );
-            CL_MakeLocalClientInactive(param_2);
-            CL_ForceNoSplitscreenControl
-                      ("CL_Live_LocalClientJoinParty",(pPVar1->splitscreenData).mainControllerIndex)
-            ;
-            Dvar_SetBool(splitscreen,false);
-            (pPVar1->splitscreenData).waitingForStats = 0;
-            iVar2 = CL_GetLocalClientActiveCount();
-            if (iVar2 != 1) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
-                              ,0x1d72,0,"%s");
-            }
-            LVar5 = CL_GetFirstActiveLocalClient();
-            if (LVar5 != LOCAL_CLIENT_0) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
-                              ,0x1d73,0,"%s");
-            }
-            Com_Error(ERR_DROP,"XBOXLIVE_MPNOTALLOWED");
-            uVar8 = __restgprlr_27(0);
-            return (bool)uVar8;
+          iVar2 = CL_GetFirstActiveLocalClient();
+          if (iVar2 != 0) {
+            MyAssertHandler(0xffffffff820302c8,0x1d73,0,0xffffffff82000f98,0xffffffff8203207c);
           }
+          Com_Error(1,0xffffffff82032064);
+          __restgprlr_27(0);
+          return;
         }
-        else {
-          _Var7 = XUserGetSigninState(param_2);
-          if ((char)_Var7 < '\x01') goto LAB_8234715c;
-        }
-        if ((pPVar1->splitscreenData).otherClientActive == 0) {
-          Party_SetupSplitscreenData
-                    (&pPVar1->splitscreenData,(pPVar1->splitscreenData).mainControllerIndex,
-                     (pPVar1->splitscreenData).mainClientNum);
-        }
-        PartyHost_AddOtherSplitscreenLocalPlayer(pPVar1);
-        if ((pPVar1->splitscreenData).otherClientActive != 0) {
-          Live_SetPartyPresence((pPVar1->splitscreenData).otherControllerIndex);
-          PlayercardCache_Upload();
-          uVar8 = __restgprlr_27(1);
-          return (bool)uVar8;
-        }
+      }
+      else {
+        iVar3 = XUserGetSigninState(param_2);
+        if (iVar3 < 1) goto LAB_8234715c;
+      }
+      if (*(int *)(iVar2 + 0x1ec0) == 0) {
+        Party_SetupSplitscreenData
+                  (iVar2 + 0x1eb8,*(undefined4 *)(iVar2 + 0x1ebc),*(undefined4 *)(iVar2 + 0x1eb8));
+      }
+      PartyHost_AddOtherSplitscreenLocalPlayer(iVar2);
+      if (*(int *)(iVar2 + 0x1ec0) != 0) {
+        Live_SetPartyPresence(*(undefined4 *)(iVar2 + 0x1ecc));
+        PlayercardCache_Upload();
+        __restgprlr_27(1);
+        return;
       }
     }
   }
 LAB_8234715c:
-  uVar8 = __restgprlr_27(0);
-  return (bool)uVar8;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 82347298  CL_Live_LocalClientJoinPrivateParty  (client_mp/cl_main_mp.cpp:7569)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool CL_Live_LocalClientJoinPrivateParty(int param_1)
+void CL_Live_LocalClientJoinPrivateParty(undefined8 param_1)
 
 {
-  PartyData *pPVar1;
-  bool bVar2;
+  undefined8 uVar1;
   
   LiveAntiCheat_PlayerBanCheck(4);
   LiveAntiCheat_ConsoleBanCheck(4);
-  if ((onlinegame->current).enabled == false) {
-    pPVar1 = Lobby_GetPartyData();
+  if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
+    uVar1 = Lobby_GetPartyData();
   }
   else {
-    pPVar1 = &g_partyData;
+    uVar1 = 0xffffffff82b55118;
   }
-  bVar2 = CL_Live_LocalClientJoinParty(pPVar1,param_1);
-  return bVar2;
+  CL_Live_LocalClientJoinParty(uVar1,param_1);
+  return;
 }
 
 
 // 82347300  CL_Live_CheckSplitscreenOnlineStats  (client_mp/cl_main_mp.cpp:7585)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_Live_CheckSplitscreenOnlineStats(int param_1)
+void CL_Live_CheckSplitscreenOnlineStats(ulonglong param_1)
 
 {
-  PartyData *pPVar1;
-  bool bVar3;
+  undefined4 *puVar1;
+  char cVar3;
   int iVar2;
   
-  if ((onlinegame->current).enabled == false) {
-    pPVar1 = Lobby_GetPartyData();
+  if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
+    puVar1 = (undefined4 *)Lobby_GetPartyData();
   }
   else {
-    pPVar1 = &g_partyData;
+    puVar1 = &DAT_82b55118;
   }
-  bVar3 = LiveStorage_IsWaitingOnStats(param_1);
-  if ((((!bVar3) && (iVar2 = Live_IsWaitingForOnlineServices(param_1), iVar2 == 0)) &&
-      ((pPVar1->splitscreenData).waitingForStats != 0)) &&
-     ((pPVar1->splitscreenData).mainControllerIndex != param_1)) {
-    bVar3 = CL_Live_LocalClientJoinPrivateParty(param_1);
-    if (!bVar3) {
+  cVar3 = LiveStorage_IsWaitingOnStats(param_1);
+  if ((((cVar3 == '\0') && (iVar2 = Live_IsWaitingForOnlineServices(param_1), iVar2 == 0)) &&
+      (puVar1[0x7b1] != 0)) && ((ulonglong)(uint)puVar1[0x7af] != (param_1 & 0xffffffff))) {
+    cVar3 = CL_Live_LocalClientJoinPrivateParty(param_1);
+    if (cVar3 == '\0') {
       CL_MakeLocalClientInactive(param_1);
-      CL_ForceNoSplitscreenControl
-                ("CL_Live_CheckSplitscreenOnlineStats",(pPVar1->splitscreenData).mainControllerIndex
-                );
-      Dvar_SetBool(splitscreen,false);
+      CL_ForceNoSplitscreenControl(0xffffffff820321ac,puVar1[0x7af]);
+      Dvar_SetBool(DAT_82b3ecb8,0);
     }
-    (pPVar1->splitscreenData).waitingForStats = 0;
+    puVar1[0x7b1] = 0;
   }
   return;
 }

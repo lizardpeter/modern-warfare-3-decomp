@@ -2,1185 +2,1185 @@
 
 // 8293DA80  `dynamic_initializer_for_'g_fltMin''  (universal/com_vector4_const.cpp:16)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_fltMin__(void)
 
 {
-  g_fltMin.field0_0x0.vector4_f32[0] = (float)0x800000;
-  g_fltMin.field0_0x0.vector4_f32[1] = (float)0x800000;
-  g_fltMin.field0_0x0.vector4_f32[2] = (float)0x800000;
-  g_fltMin.field0_0x0.vector4_f32[3] = (float)0x800000;
+  _DAT_8404f600 = 0x800000;
+  uRam8404f604 = 0x800000;
+  uRam8404f608 = 0x800000;
+  uRam8404f60c = 0x800000;
   return;
 }
 
 
 // 8293DAA0  `dynamic_initializer_for_'g_negativeZero''  (universal/com_vector4_const.cpp:24)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_negativeZero__(void)
 
 {
-  g_negativeZero.field0_0x0.vector4_f32[0] = (float)0x80000000;
-  g_negativeZero.field0_0x0.vector4_f32[1] = (float)0x80000000;
-  g_negativeZero.field0_0x0.vector4_f32[2] = (float)0x80000000;
-  g_negativeZero.field0_0x0.vector4_f32[3] = (float)0x80000000;
+  _DAT_8404f820 = 0x80000000;
+  uRam8404f824 = 0x80000000;
+  uRam8404f828 = 0x80000000;
+  uRam8404f82c = 0x80000000;
   return;
 }
 
 
 // 8293DAC0  `dynamic_initializer_for_'g_maskOffSignBit''  (universal/com_vector4_const.cpp:25)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_maskOffSignBit__(void)
 
 {
-  g_maskOffSignBit.field0_0x0.vector4_f32[0] = (float)0x7fffffff;
-  g_maskOffSignBit.field0_0x0.vector4_f32[1] = (float)0x7fffffff;
-  g_maskOffSignBit.field0_0x0.vector4_f32[2] = (float)0x7fffffff;
-  g_maskOffSignBit.field0_0x0.vector4_f32[3] = (float)0x7fffffff;
+  _DAT_8404fa10 = 0x7fffffff;
+  uRam8404fa14 = 0x7fffffff;
+  uRam8404fa18 = 0x7fffffff;
+  uRam8404fa1c = 0x7fffffff;
   return;
 }
 
 
 // 8293DAE0  `dynamic_initializer_for_'g_negativeOne''  (universal/com_vector4_const.cpp:26)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_negativeOne__(void)
 
 {
-  g_negativeOne.field0_0x0.vector4_f32[0] = (float)0xffffffff;
-  g_negativeOne.field0_0x0.vector4_f32[1] = (float)0xffffffff;
-  g_negativeOne.field0_0x0.vector4_f32[2] = (float)0xffffffff;
-  g_negativeOne.field0_0x0.vector4_f32[3] = (float)0xffffffff;
+  _DAT_8404f730 = 0xffffffff;
+  uRam8404f734 = 0xffffffff;
+  uRam8404f738 = 0xffffffff;
+  uRam8404f73c = 0xffffffff;
   return;
 }
 
 
 // 8293DB00  `dynamic_initializer_for_'g_inc''  (universal/com_vector4_const.cpp:27)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_inc__(void)
 
 {
-  g_inc.field0_0x0.vector4_f32[0] = (float)1;
-  g_inc.field0_0x0.vector4_f32[1] = (float)1;
-  g_inc.field0_0x0.vector4_f32[2] = (float)1;
-  g_inc.field0_0x0.vector4_f32[3] = (float)1;
+  _DAT_8404f760 = 1;
+  uRam8404f764 = 1;
+  uRam8404f768 = 1;
+  uRam8404f76c = 1;
   return;
 }
 
 
 // 8293DB20  `dynamic_initializer_for_'g_XYZW''  (universal/com_vector4_const.cpp:36)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XYZW__(void)
 
 {
-  g_XYZW.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XYZW.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_XYZW.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_XYZW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f910 = 0x10203;
+  uRam8404f914 = 0x4050607;
+  uRam8404f918 = 0x8090a0b;
+  uRam8404f91c = 0xc0d0e0f;
   return;
 }
 
 
 // 8293DB40  `dynamic_initializer_for_'g_YXZW''  (universal/com_vector4_const.cpp:37)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_YXZW__(void)
 
 {
-  g_YXZW.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_YXZW.field0_0x0.vector4_f32[1] = (float)0x10203;
-  g_YXZW.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_YXZW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f5a0 = 0x4050607;
+  uRam8404f5a4 = 0x10203;
+  uRam8404f5a8 = 0x8090a0b;
+  uRam8404f5ac = 0xc0d0e0f;
   return;
 }
 
 
 // 8293DB60  `dynamic_initializer_for_'g_XZYW''  (universal/com_vector4_const.cpp:38)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XZYW__(void)
 
 {
-  g_XZYW.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XZYW.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
-  g_XZYW.field0_0x0.vector4_f32[2] = (float)0x4050607;
-  g_XZYW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f930 = 0x10203;
+  uRam8404f934 = 0x8090a0b;
+  uRam8404f938 = 0x4050607;
+  uRam8404f93c = 0xc0d0e0f;
   return;
 }
 
 
 // 8293DB80  `dynamic_initializer_for_'g_YXWZ''  (universal/com_vector4_const.cpp:39)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_YXWZ__(void)
 
 {
-  g_YXWZ.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_YXWZ.field0_0x0.vector4_f32[1] = (float)0x10203;
-  g_YXWZ.field0_0x0.vector4_f32[2] = (float)0xc0d0e0f;
-  g_YXWZ.field0_0x0.vector4_f32[3] = (float)0x8090a0b;
+  _DAT_8404f9f0 = 0x4050607;
+  uRam8404f9f4 = 0x10203;
+  uRam8404f9f8 = 0xc0d0e0f;
+  uRam8404f9fc = 0x8090a0b;
   return;
 }
 
 
 // 8293DBA0  `dynamic_initializer_for_'g_XxZz''  (universal/com_vector4_const.cpp:40)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XxZz__(void)
 
 {
-  g_XxZz.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XxZz.field0_0x0.vector4_f32[1] = (float)0x10111213;
-  g_XxZz.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_XxZz.field0_0x0.vector4_f32[3] = (float)0x18191a1b;
+  _DAT_8404f5d0 = 0x10203;
+  uRam8404f5d4 = 0x10111213;
+  uRam8404f5d8 = 0x8090a0b;
+  uRam8404f5dc = 0x18191a1b;
   return;
 }
 
 
 // 8293DBC0  `dynamic_initializer_for_'g_YyWw''  (universal/com_vector4_const.cpp:41)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_YyWw__(void)
 
 {
-  g_YyWw.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_YyWw.field0_0x0.vector4_f32[1] = (float)0x14151617;
-  g_YyWw.field0_0x0.vector4_f32[2] = (float)0xc0d0e0f;
-  g_YyWw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  _DAT_8404f5f0 = 0x4050607;
+  uRam8404f5f4 = 0x14151617;
+  uRam8404f5f8 = 0xc0d0e0f;
+  uRam8404f5fc = 0x1c1d1e1f;
   return;
 }
 
 
 // 8293DBE0  `dynamic_initializer_for_'g_XYxy''  (universal/com_vector4_const.cpp:42)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XYxy__(void)
 
 {
-  g_XYxy.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XYxy.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_XYxy.field0_0x0.vector4_f32[2] = (float)0x10111213;
-  g_XYxy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  _DAT_8404f790 = 0x10203;
+  uRam8404f794 = 0x4050607;
+  uRam8404f798 = 0x10111213;
+  uRam8404f79c = 0x14151617;
   return;
 }
 
 
 // 8293DC00  `dynamic_initializer_for_'g_ZWzw''  (universal/com_vector4_const.cpp:43)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_ZWzw__(void)
 
 {
-  g_ZWzw.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
-  g_ZWzw.field0_0x0.vector4_f32[1] = (float)0xc0d0e0f;
-  g_ZWzw.field0_0x0.vector4_f32[2] = (float)0x18191a1b;
-  g_ZWzw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  _DAT_8404f710 = 0x8090a0b;
+  uRam8404f714 = 0xc0d0e0f;
+  uRam8404f718 = 0x18191a1b;
+  uRam8404f71c = 0x1c1d1e1f;
   return;
 }
 
 
 // 8293DC20  `dynamic_initializer_for_'g_XYZx''  (universal/com_vector4_const.cpp:44)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XYZx__(void)
 
 {
-  g_XYZx.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XYZx.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_XYZx.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_XYZx.field0_0x0.vector4_f32[3] = (float)0x10111213;
+  _DAT_8404f6e0 = 0x10203;
+  uRam8404f6e4 = 0x4050607;
+  uRam8404f6e8 = 0x8090a0b;
+  uRam8404f6ec = 0x10111213;
   return;
 }
 
 
 // 8293DC40  `dynamic_initializer_for_'g_YZXW''  (universal/com_vector4_const.cpp:45)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_YZXW__(void)
 
 {
-  g_YZXW.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_YZXW.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
-  g_YZXW.field0_0x0.vector4_f32[2] = (float)0x10203;
-  g_YZXW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f690 = 0x4050607;
+  uRam8404f694 = 0x8090a0b;
+  uRam8404f698 = 0x10203;
+  uRam8404f69c = 0xc0d0e0f;
   return;
 }
 
 
 // 8293DC60  `dynamic_initializer_for_'g_ZXYW''  (universal/com_vector4_const.cpp:46)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_ZXYW__(void)
 
 {
-  g_ZXYW.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
-  g_ZXYW.field0_0x0.vector4_f32[1] = (float)0x10203;
-  g_ZXYW.field0_0x0.vector4_f32[2] = (float)0x4050607;
-  g_ZXYW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f9a0 = 0x8090a0b;
+  uRam8404f9a4 = 0x10203;
+  uRam8404f9a8 = 0x4050607;
+  uRam8404f9ac = 0xc0d0e0f;
   return;
 }
 
 
 // 8293DC80  `dynamic_initializer_for_'g_WxyW''  (universal/com_vector4_const.cpp:47)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_WxyW__(void)
 
 {
-  g_WxyW.field0_0x0.vector4_f32[0] = (float)0xc0d0e0f;
-  g_WxyW.field0_0x0.vector4_f32[1] = (float)0x10111213;
-  g_WxyW.field0_0x0.vector4_f32[2] = (float)0x14151617;
-  g_WxyW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f810 = 0xc0d0e0f;
+  uRam8404f814 = 0x10111213;
+  uRam8404f818 = 0x14151617;
+  uRam8404f81c = 0xc0d0e0f;
   return;
 }
 
 
 // 8293DCA0  `dynamic_initializer_for_'g_ZWxW''  (universal/com_vector4_const.cpp:48)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_ZWxW__(void)
 
 {
-  g_ZWxW.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
-  g_ZWxW.field0_0x0.vector4_f32[1] = (float)0xc0d0e0f;
-  g_ZWxW.field0_0x0.vector4_f32[2] = (float)0x10111213;
-  g_ZWxW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f870 = 0x8090a0b;
+  uRam8404f874 = 0xc0d0e0f;
+  uRam8404f878 = 0x10111213;
+  uRam8404f87c = 0xc0d0e0f;
   return;
 }
 
 
 // 8293DCC0  `dynamic_initializer_for_'g_YZWx''  (universal/com_vector4_const.cpp:49)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_YZWx__(void)
 
 {
-  g_YZWx.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_YZWx.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
-  g_YZWx.field0_0x0.vector4_f32[2] = (float)0xc0d0e0f;
-  g_YZWx.field0_0x0.vector4_f32[3] = (float)0x10111213;
+  _DAT_8404f9b0 = 0x4050607;
+  uRam8404f9b4 = 0x8090a0b;
+  uRam8404f9b8 = 0xc0d0e0f;
+  uRam8404f9bc = 0x10111213;
   return;
 }
 
 
 // 8293DCE0  `dynamic_initializer_for_'g_XXXX''  (universal/com_vector4_const.cpp:50)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XXXX__(void)
 
 {
-  g_XXXX.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XXXX.field0_0x0.vector4_f32[1] = (float)0x10203;
-  g_XXXX.field0_0x0.vector4_f32[2] = (float)0x10203;
-  g_XXXX.field0_0x0.vector4_f32[3] = (float)0x10203;
+  _DAT_8404f650 = 0x10203;
+  uRam8404f654 = 0x10203;
+  uRam8404f658 = 0x10203;
+  uRam8404f65c = 0x10203;
   return;
 }
 
 
 // 8293DD00  `dynamic_initializer_for_'g_YYYY''  (universal/com_vector4_const.cpp:51)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_YYYY__(void)
 
 {
-  g_YYYY.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_YYYY.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_YYYY.field0_0x0.vector4_f32[2] = (float)0x4050607;
-  g_YYYY.field0_0x0.vector4_f32[3] = (float)0x4050607;
+  _DAT_8404f9e0 = 0x4050607;
+  uRam8404f9e4 = 0x4050607;
+  uRam8404f9e8 = 0x4050607;
+  uRam8404f9ec = 0x4050607;
   return;
 }
 
 
 // 8293DD20  `dynamic_initializer_for_'g_ZZZZ''  (universal/com_vector4_const.cpp:52)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_ZZZZ__(void)
 
 {
-  g_ZZZZ.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
-  g_ZZZZ.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
-  g_ZZZZ.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_ZZZZ.field0_0x0.vector4_f32[3] = (float)0x8090a0b;
+  _DAT_8404fa00 = 0x8090a0b;
+  uRam8404fa04 = 0x8090a0b;
+  uRam8404fa08 = 0x8090a0b;
+  uRam8404fa0c = 0x8090a0b;
   return;
 }
 
 
 // 8293DD40  `dynamic_initializer_for_'g_WWWW''  (universal/com_vector4_const.cpp:53)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_WWWW__(void)
 
 {
-  g_WWWW.field0_0x0.vector4_f32[0] = (float)0xc0d0e0f;
-  g_WWWW.field0_0x0.vector4_f32[1] = (float)0xc0d0e0f;
-  g_WWWW.field0_0x0.vector4_f32[2] = (float)0xc0d0e0f;
-  g_WWWW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404fa20 = 0xc0d0e0f;
+  uRam8404fa24 = 0xc0d0e0f;
+  uRam8404fa28 = 0xc0d0e0f;
+  uRam8404fa2c = 0xc0d0e0f;
   return;
 }
 
 
 // 8293DD60  `dynamic_initializer_for_'g_xYZW''  (universal/com_vector4_const.cpp:54)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_xYZW__(void)
 
 {
-  g_xYZW.field0_0x0.vector4_f32[0] = (float)0x10111213;
-  g_xYZW.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_xYZW.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_xYZW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f8d0 = 0x10111213;
+  uRam8404f8d4 = 0x4050607;
+  uRam8404f8d8 = 0x8090a0b;
+  uRam8404f8dc = 0xc0d0e0f;
   return;
 }
 
 
 // 8293DD80  `dynamic_initializer_for_'g_XyZW''  (universal/com_vector4_const.cpp:55)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XyZW__(void)
 
 {
-  g_XyZW.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XyZW.field0_0x0.vector4_f32[1] = (float)0x14151617;
-  g_XyZW.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_XyZW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f7e0 = 0x10203;
+  uRam8404f7e4 = 0x14151617;
+  uRam8404f7e8 = 0x8090a0b;
+  uRam8404f7ec = 0xc0d0e0f;
   return;
 }
 
 
 // 8293DDA0  `dynamic_initializer_for_'g_XYzW''  (universal/com_vector4_const.cpp:56)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XYzW__(void)
 
 {
-  g_XYzW.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XYzW.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_XYzW.field0_0x0.vector4_f32[2] = (float)0x18191a1b;
-  g_XYzW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f6d0 = 0x10203;
+  uRam8404f6d4 = 0x4050607;
+  uRam8404f6d8 = 0x18191a1b;
+  uRam8404f6dc = 0xc0d0e0f;
   return;
 }
 
 
 // 8293DDC0  `dynamic_initializer_for_'g_XYZw''  (universal/com_vector4_const.cpp:57)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XYZw__(void)
 
 {
-  g_XYZw.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XYZw.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_XYZw.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_XYZw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  _DAT_8404f590 = 0x10203;
+  uRam8404f594 = 0x4050607;
+  uRam8404f598 = 0x8090a0b;
+  uRam8404f59c = 0x1c1d1e1f;
   return;
 }
 
 
 // 8293DDE0  `dynamic_initializer_for_'g_XxYy''  (universal/com_vector4_const.cpp:59)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XxYy__(void)
 
 {
-  g_XxYy.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XxYy.field0_0x0.vector4_f32[1] = (float)0x10111213;
-  g_XxYy.field0_0x0.vector4_f32[2] = (float)0x4050607;
-  g_XxYy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  _DAT_8404f6f0 = 0x10203;
+  uRam8404f6f4 = 0x10111213;
+  uRam8404f6f8 = 0x4050607;
+  uRam8404f6fc = 0x14151617;
   return;
 }
 
 
 // 8293DE00  `dynamic_initializer_for_'g_ZzWw''  (universal/com_vector4_const.cpp:60)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_ZzWw__(void)
 
 {
-  g_ZzWw.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
-  g_ZzWw.field0_0x0.vector4_f32[1] = (float)0x18191a1b;
-  g_ZzWw.field0_0x0.vector4_f32[2] = (float)0xc0d0e0f;
-  g_ZzWw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  _DAT_8404f680 = 0x8090a0b;
+  uRam8404f684 = 0x18191a1b;
+  uRam8404f688 = 0xc0d0e0f;
+  uRam8404f68c = 0x1c1d1e1f;
   return;
 }
 
 
 // 8293DE20  `dynamic_initializer_for_'g_Xxxx''  (universal/com_vector4_const.cpp:62)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_Xxxx__(void)
 
 {
-  g_Xxxx.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_Xxxx.field0_0x0.vector4_f32[1] = (float)0x10111213;
-  g_Xxxx.field0_0x0.vector4_f32[2] = (float)0x10111213;
-  g_Xxxx.field0_0x0.vector4_f32[3] = (float)0x10111213;
+  _DAT_8404f670 = 0x10203;
+  uRam8404f674 = 0x10111213;
+  uRam8404f678 = 0x10111213;
+  uRam8404f67c = 0x10111213;
   return;
 }
 
 
 // 8293DE40  `dynamic_initializer_for_'g_Yyyy''  (universal/com_vector4_const.cpp:63)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_Yyyy__(void)
 
 {
-  g_Yyyy.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_Yyyy.field0_0x0.vector4_f32[1] = (float)0x14151617;
-  g_Yyyy.field0_0x0.vector4_f32[2] = (float)0x14151617;
-  g_Yyyy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  _DAT_8404f830 = 0x4050607;
+  uRam8404f834 = 0x14151617;
+  uRam8404f838 = 0x14151617;
+  uRam8404f83c = 0x14151617;
   return;
 }
 
 
 // 8293DE60  `dynamic_initializer_for_'g_yYyy''  (universal/com_vector4_const.cpp:64)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_yYyy__(void)
 
 {
-  g_yYyy.field0_0x0.vector4_f32[0] = (float)0x14151617;
-  g_yYyy.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_yYyy.field0_0x0.vector4_f32[2] = (float)0x14151617;
-  g_yYyy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  _DAT_8404f720 = 0x14151617;
+  uRam8404f724 = 0x4050607;
+  uRam8404f728 = 0x14151617;
+  uRam8404f72c = 0x14151617;
   return;
 }
 
 
 // 8293DE80  `dynamic_initializer_for_'g_yyYy''  (universal/com_vector4_const.cpp:65)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_yyYy__(void)
 
 {
-  g_yyYy.field0_0x0.vector4_f32[0] = (float)0x14151617;
-  g_yyYy.field0_0x0.vector4_f32[1] = (float)0x14151617;
-  g_yyYy.field0_0x0.vector4_f32[2] = (float)0x4050607;
-  g_yyYy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  _DAT_8404f580 = 0x14151617;
+  uRam8404f584 = 0x14151617;
+  uRam8404f588 = 0x4050607;
+  uRam8404f58c = 0x14151617;
   return;
 }
 
 
 // 8293DEA0  `dynamic_initializer_for_'g_yyyY''  (universal/com_vector4_const.cpp:66)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_yyyY__(void)
 
 {
-  g_yyyY.field0_0x0.vector4_f32[0] = (float)0x14151617;
-  g_yyyY.field0_0x0.vector4_f32[1] = (float)0x14151617;
-  g_yyyY.field0_0x0.vector4_f32[2] = (float)0x14151617;
-  g_yyyY.field0_0x0.vector4_f32[3] = (float)0x4050607;
+  _DAT_8404f840 = 0x14151617;
+  uRam8404f844 = 0x14151617;
+  uRam8404f848 = 0x14151617;
+  uRam8404f84c = 0x4050607;
   return;
 }
 
 
 // 8293DEC0  `dynamic_initializer_for_'g_zzZz''  (universal/com_vector4_const.cpp:67)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_zzZz__(void)
 
 {
-  g_zzZz.field0_0x0.vector4_f32[0] = (float)0x18191a1b;
-  g_zzZz.field0_0x0.vector4_f32[1] = (float)0x18191a1b;
-  g_zzZz.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_zzZz.field0_0x0.vector4_f32[3] = (float)0x18191a1b;
+  _DAT_8404f610 = 0x18191a1b;
+  uRam8404f614 = 0x18191a1b;
+  uRam8404f618 = 0x8090a0b;
+  uRam8404f61c = 0x18191a1b;
   return;
 }
 
 
 // 8293DEE0  `dynamic_initializer_for_'g_ZWxy''  (universal/com_vector4_const.cpp:69)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_ZWxy__(void)
 
 {
-  g_ZWxy.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
-  g_ZWxy.field0_0x0.vector4_f32[1] = (float)0xc0d0e0f;
-  g_ZWxy.field0_0x0.vector4_f32[2] = (float)0x10111213;
-  g_ZWxy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  _DAT_8404f860 = 0x8090a0b;
+  uRam8404f864 = 0xc0d0e0f;
+  uRam8404f868 = 0x10111213;
+  uRam8404f86c = 0x14151617;
   return;
 }
 
 
 // 8293DF00  `dynamic_initializer_for_'g_XZxz''  (universal/com_vector4_const.cpp:70)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XZxz__(void)
 
 {
-  g_XZxz.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XZxz.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
-  g_XZxz.field0_0x0.vector4_f32[2] = (float)0x10111213;
-  g_XZxz.field0_0x0.vector4_f32[3] = (float)0x18191a1b;
+  _DAT_8404f700 = 0x10203;
+  uRam8404f704 = 0x8090a0b;
+  uRam8404f708 = 0x10111213;
+  uRam8404f70c = 0x18191a1b;
   return;
 }
 
 
 // 8293DF20  `dynamic_initializer_for_'g_YXyx''  (universal/com_vector4_const.cpp:71)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_YXyx__(void)
 
 {
-  g_YXyx.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_YXyx.field0_0x0.vector4_f32[1] = (float)0x10203;
-  g_YXyx.field0_0x0.vector4_f32[2] = (float)0x14151617;
-  g_YXyx.field0_0x0.vector4_f32[3] = (float)0x10111213;
+  _DAT_8404f8a0 = 0x4050607;
+  uRam8404f8a4 = 0x10203;
+  uRam8404f8a8 = 0x14151617;
+  uRam8404f8ac = 0x10111213;
   return;
 }
 
 
 // 8293DF40  `dynamic_initializer_for_'g_YZWW''  (universal/com_vector4_const.cpp:72)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_YZWW__(void)
 
 {
-  g_YZWW.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_YZWW.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
-  g_YZWW.field0_0x0.vector4_f32[2] = (float)0xc0d0e0f;
-  g_YZWW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f800 = 0x4050607;
+  uRam8404f804 = 0x8090a0b;
+  uRam8404f808 = 0xc0d0e0f;
+  uRam8404f80c = 0xc0d0e0f;
   return;
 }
 
 
 // 8293DF60  `dynamic_initializer_for_'g_YyXx''  (universal/com_vector4_const.cpp:74)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_YyXx__(void)
 
 {
-  g_YyXx.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_YyXx.field0_0x0.vector4_f32[1] = (float)0x14151617;
-  g_YyXx.field0_0x0.vector4_f32[2] = (float)0x10203;
-  g_YyXx.field0_0x0.vector4_f32[3] = (float)0x10111213;
+  _DAT_8404fa40 = 0x4050607;
+  uRam8404fa44 = 0x14151617;
+  uRam8404fa48 = 0x10203;
+  uRam8404fa4c = 0x10111213;
   return;
 }
 
 
 // 8293DF80  `dynamic_initializer_for_'g_ZzZz''  (universal/com_vector4_const.cpp:75)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_ZzZz__(void)
 
 {
-  g_ZzZz.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
-  g_ZzZz.field0_0x0.vector4_f32[1] = (float)0x18191a1b;
-  g_ZzZz.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_ZzZz.field0_0x0.vector4_f32[3] = (float)0x18191a1b;
+  _DAT_8404f990 = 0x8090a0b;
+  uRam8404f994 = 0x18191a1b;
+  uRam8404f998 = 0x8090a0b;
+  uRam8404f99c = 0x18191a1b;
   return;
 }
 
 
 // 8293DFA0  `dynamic_initializer_for_'g_YyYy''  (universal/com_vector4_const.cpp:76)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_YyYy__(void)
 
 {
-  g_YyYy.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_YyYy.field0_0x0.vector4_f32[1] = (float)0x14151617;
-  g_YyYy.field0_0x0.vector4_f32[2] = (float)0x4050607;
-  g_YyYy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  _DAT_8404f8f0 = 0x4050607;
+  uRam8404f8f4 = 0x14151617;
+  uRam8404f8f8 = 0x4050607;
+  uRam8404f8fc = 0x14151617;
   return;
 }
 
 
 // 8293DFC0  `dynamic_initializer_for_'g_XYzw''  (universal/com_vector4_const.cpp:77)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XYzw__(void)
 
 {
-  g_XYzw.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XYzw.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_XYzw.field0_0x0.vector4_f32[2] = (float)0x18191a1b;
-  g_XYzw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  _DAT_8404f880 = 0x10203;
+  uRam8404f884 = 0x4050607;
+  uRam8404f888 = 0x18191a1b;
+  uRam8404f88c = 0x1c1d1e1f;
   return;
 }
 
 
 // 8293DFE0  `dynamic_initializer_for_'g_zwXY''  (universal/com_vector4_const.cpp:78)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_zwXY__(void)
 
 {
-  g_zwXY.field0_0x0.vector4_f32[0] = (float)0x18191a1b;
-  g_zwXY.field0_0x0.vector4_f32[1] = (float)0x1c1d1e1f;
-  g_zwXY.field0_0x0.vector4_f32[2] = (float)0x10203;
-  g_zwXY.field0_0x0.vector4_f32[3] = (float)0x4050607;
+  _DAT_8404f9d0 = 0x18191a1b;
+  uRam8404f9d4 = 0x1c1d1e1f;
+  uRam8404f9d8 = 0x10203;
+  uRam8404f9dc = 0x4050607;
   return;
 }
 
 
 // 8293E000  `dynamic_initializer_for_'g_ZzXx''  (universal/com_vector4_const.cpp:79)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_ZzXx__(void)
 
 {
-  g_ZzXx.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
-  g_ZzXx.field0_0x0.vector4_f32[1] = (float)0x18191a1b;
-  g_ZzXx.field0_0x0.vector4_f32[2] = (float)0x10203;
-  g_ZzXx.field0_0x0.vector4_f32[3] = (float)0x10111213;
+  _DAT_8404f8b0 = 0x8090a0b;
+  uRam8404f8b4 = 0x18191a1b;
+  uRam8404f8b8 = 0x10203;
+  uRam8404f8bc = 0x10111213;
   return;
 }
 
 
 // 8293E020  `dynamic_initializer_for_'g_WwYy''  (universal/com_vector4_const.cpp:80)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_WwYy__(void)
 
 {
-  g_WwYy.field0_0x0.vector4_f32[0] = (float)0xc0d0e0f;
-  g_WwYy.field0_0x0.vector4_f32[1] = (float)0x1c1d1e1f;
-  g_WwYy.field0_0x0.vector4_f32[2] = (float)0x4050607;
-  g_WwYy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  _DAT_8404f970 = 0xc0d0e0f;
+  uRam8404f974 = 0x1c1d1e1f;
+  uRam8404f978 = 0x4050607;
+  uRam8404f97c = 0x14151617;
   return;
 }
 
 
 // 8293E040  `dynamic_initializer_for_'g_XWxw''  (universal/com_vector4_const.cpp:82)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_XWxw__(void)
 
 {
-  g_XWxw.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_XWxw.field0_0x0.vector4_f32[1] = (float)0xc0d0e0f;
-  g_XWxw.field0_0x0.vector4_f32[2] = (float)0x10111213;
-  g_XWxw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  _DAT_8404f8e0 = 0x10203;
+  uRam8404f8e4 = 0xc0d0e0f;
+  uRam8404f8e8 = 0x10111213;
+  uRam8404f8ec = 0x1c1d1e1f;
   return;
 }
 
 
 // 8293E060  `dynamic_initializer_for_'g_YZyz''  (universal/com_vector4_const.cpp:83)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_YZyz__(void)
 
 {
-  g_YZyz.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_YZyz.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
-  g_YZyz.field0_0x0.vector4_f32[2] = (float)0x14151617;
-  g_YZyz.field0_0x0.vector4_f32[3] = (float)0x18191a1b;
+  _DAT_8404f660 = 0x4050607;
+  uRam8404f664 = 0x8090a0b;
+  uRam8404f668 = 0x14151617;
+  uRam8404f66c = 0x18191a1b;
   return;
 }
 
 
 // 8293E080  `dynamic_initializer_for_'g_YWyw''  (universal/com_vector4_const.cpp:84)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_YWyw__(void)
 
 {
-  g_YWyw.field0_0x0.vector4_f32[0] = (float)0x4050607;
-  g_YWyw.field0_0x0.vector4_f32[1] = (float)0xc0d0e0f;
-  g_YWyw.field0_0x0.vector4_f32[2] = (float)0x14151617;
-  g_YWyw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  _DAT_8404f7d0 = 0x4050607;
+  uRam8404f7d4 = 0xc0d0e0f;
+  uRam8404f7d8 = 0x14151617;
+  uRam8404f7dc = 0x1c1d1e1f;
   return;
 }
 
 
 // 8293E0A0  `dynamic_initializer_for_'g_ebCDEFGH''  (universal/com_vector4_const.cpp:86)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_ebCDEFGH__(void)
 
 {
-  g_ebCDEFGH.field0_0x0.vector4_f32[0] = (float)0x18191213;
-  g_ebCDEFGH.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_ebCDEFGH.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_ebCDEFGH.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f5b0 = 0x18191213;
+  uRam8404f5b4 = 0x4050607;
+  uRam8404f5b8 = 0x8090a0b;
+  uRam8404f5bc = 0xc0d0e0f;
   return;
 }
 
 
 // 8293E0C0  `dynamic_initializer_for_'g_ABebEFGH''  (universal/com_vector4_const.cpp:87)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_ABebEFGH__(void)
 
 {
-  g_ABebEFGH.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_ABebEFGH.field0_0x0.vector4_f32[1] = (float)0x18191213;
-  g_ABebEFGH.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_ABebEFGH.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f960 = 0x10203;
+  uRam8404f964 = 0x18191213;
+  uRam8404f968 = 0x8090a0b;
+  uRam8404f96c = 0xc0d0e0f;
   return;
 }
 
 
 // 8293E0E0  `dynamic_initializer_for_'g_ABCDebGH''  (universal/com_vector4_const.cpp:88)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_ABCDebGH__(void)
 
 {
-  g_ABCDebGH.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_ABCDebGH.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_ABCDebGH.field0_0x0.vector4_f32[2] = (float)0x18191213;
-  g_ABCDebGH.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f890 = 0x10203;
+  uRam8404f894 = 0x4050607;
+  uRam8404f898 = 0x18191213;
+  uRam8404f89c = 0xc0d0e0f;
   return;
 }
 
 
 // 8293E100  `dynamic_initializer_for_'g_ABCDEFeb''  (universal/com_vector4_const.cpp:89)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_ABCDEFeb__(void)
 
 {
-  g_ABCDEFeb.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_ABCDEFeb.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_ABCDEFeb.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_ABCDEFeb.field0_0x0.vector4_f32[3] = (float)0x18191213;
+  _DAT_8404f900 = 0x10203;
+  uRam8404f904 = 0x4050607;
+  uRam8404f908 = 0x8090a0b;
+  uRam8404f90c = 0x18191213;
   return;
 }
 
 
 // 8293E120  `dynamic_initializer_for_'g_AbCdEfGh''  (universal/com_vector4_const.cpp:90)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_AbCdEfGh__(void)
 
 {
-  g_AbCdEfGh.field0_0x0.vector4_f32[0] = (float)0x11213;
-  g_AbCdEfGh.field0_0x0.vector4_f32[1] = (float)0x4051617;
-  g_AbCdEfGh.field0_0x0.vector4_f32[2] = (float)0x8091a1b;
-  g_AbCdEfGh.field0_0x0.vector4_f32[3] = (float)0xc0d1e1f;
+  _DAT_8404f980 = 0x11213;
+  uRam8404f984 = 0x4051617;
+  uRam8404f988 = 0x8091a1b;
+  uRam8404f98c = 0xc0d1e1f;
   return;
 }
 
 
 // 8293E140  `dynamic_initializer_for_'g_PPPPPPPPPPPPPPPP''  (universal/com_vector4_const.cpp:92)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_PPPPPPPPPPPPPPPP__(void)
 
 {
-  g_PPPPPPPPPPPPPPPP.field0_0x0.vector4_f32[0] = (float)0xf0f0f0f;
-  g_PPPPPPPPPPPPPPPP.field0_0x0.vector4_f32[1] = (float)0xf0f0f0f;
-  g_PPPPPPPPPPPPPPPP.field0_0x0.vector4_f32[2] = (float)0xf0f0f0f;
-  g_PPPPPPPPPPPPPPPP.field0_0x0.vector4_f32[3] = (float)0xf0f0f0f;
+  _DAT_8404f7b0 = 0xf0f0f0f;
+  uRam8404f7b4 = 0xf0f0f0f;
+  uRam8404f7b8 = 0xf0f0f0f;
+  uRam8404f7bc = 0xf0f0f0f;
   return;
 }
 
 
 // 8293E160  `dynamic_initializer_for_'g_DDDDDDDDDDDDDDDD''  (universal/com_vector4_const.cpp:93)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_DDDDDDDDDDDDDDDD__(void)
 
 {
-  g_DDDDDDDDDDDDDDDD.field0_0x0.vector4_f32[0] = (float)0x3030303;
-  g_DDDDDDDDDDDDDDDD.field0_0x0.vector4_f32[1] = (float)0x3030303;
-  g_DDDDDDDDDDDDDDDD.field0_0x0.vector4_f32[2] = (float)0x3030303;
-  g_DDDDDDDDDDDDDDDD.field0_0x0.vector4_f32[3] = (float)0x3030303;
+  _DAT_8404f850 = 0x3030303;
+  uRam8404f854 = 0x3030303;
+  uRam8404f858 = 0x3030303;
+  uRam8404f85c = 0x3030303;
   return;
 }
 
 
 // 8293E180  `dynamic_initializer_for_'g_keepYZW''  (universal/com_vector4_const.cpp:117)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_keepYZW__(void)
 
 {
-  g_keepYZW.field0_0x0.vector4_f32[0] = (float)0;
-  g_keepYZW.field0_0x0.vector4_f32[1] = (float)0xffffffff;
-  g_keepYZW.field0_0x0.vector4_f32[2] = (float)0xffffffff;
-  g_keepYZW.field0_0x0.vector4_f32[3] = (float)0xffffffff;
+  _DAT_8404fa30 = 0;
+  uRam8404fa34 = 0xffffffff;
+  uRam8404fa38 = 0xffffffff;
+  uRam8404fa3c = 0xffffffff;
   return;
 }
 
 
 // 8293E1A0  `dynamic_initializer_for_'g_keepXZW''  (universal/com_vector4_const.cpp:118)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_keepXZW__(void)
 
 {
-  g_keepXZW.field0_0x0.vector4_f32[0] = (float)0xffffffff;
-  g_keepXZW.field0_0x0.vector4_f32[1] = (float)0;
-  g_keepXZW.field0_0x0.vector4_f32[2] = (float)0xffffffff;
-  g_keepXZW.field0_0x0.vector4_f32[3] = (float)0xffffffff;
+  _DAT_8404f6c0 = 0xffffffff;
+  uRam8404f6c4 = 0;
+  uRam8404f6c8 = 0xffffffff;
+  uRam8404f6cc = 0xffffffff;
   return;
 }
 
 
 // 8293E1C0  `dynamic_initializer_for_'g_keepXYW''  (universal/com_vector4_const.cpp:119)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_keepXYW__(void)
 
 {
-  g_keepXYW.field0_0x0.vector4_f32[0] = (float)0xffffffff;
-  g_keepXYW.field0_0x0.vector4_f32[1] = (float)0xffffffff;
-  g_keepXYW.field0_0x0.vector4_f32[2] = (float)0;
-  g_keepXYW.field0_0x0.vector4_f32[3] = (float)0xffffffff;
+  _DAT_8404fa50 = 0xffffffff;
+  uRam8404fa54 = 0xffffffff;
+  uRam8404fa58 = 0;
+  uRam8404fa5c = 0xffffffff;
   return;
 }
 
 
 // 8293E1E0  `dynamic_initializer_for_'g_keepXYZ''  (universal/com_vector4_const.cpp:120)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_keepXYZ__(void)
 
 {
-  g_keepXYZ.field0_0x0.vector4_f32[0] = (float)0xffffffff;
-  g_keepXYZ.field0_0x0.vector4_f32[1] = (float)0xffffffff;
-  g_keepXYZ.field0_0x0.vector4_f32[2] = (float)0xffffffff;
-  g_keepXYZ.field0_0x0.vector4_f32[3] = (float)0;
+  _DAT_8404f950 = 0xffffffff;
+  uRam8404f954 = 0xffffffff;
+  uRam8404f958 = 0xffffffff;
+  uRam8404f95c = 0;
   return;
 }
 
 
 // 8293E200  `dynamic_initializer_for_'g_keepXY''  (universal/com_vector4_const.cpp:121)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_keepXY__(void)
 
 {
-  g_keepXY.field0_0x0.vector4_f32[0] = (float)0xffffffff;
-  g_keepXY.field0_0x0.vector4_f32[1] = (float)0xffffffff;
-  g_keepXY.field0_0x0.vector4_f32[2] = (float)0;
-  g_keepXY.field0_0x0.vector4_f32[3] = (float)0;
+  _DAT_8404f7f0 = 0xffffffff;
+  uRam8404f7f4 = 0xffffffff;
+  uRam8404f7f8 = 0;
+  uRam8404f7fc = 0;
   return;
 }
 
 
 // 8293E220  `dynamic_initializer_for_'g_keepZW''  (universal/com_vector4_const.cpp:122)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_keepZW__(void)
 
 {
-  g_keepZW.field0_0x0.vector4_f32[0] = (float)0;
-  g_keepZW.field0_0x0.vector4_f32[1] = (float)0;
-  g_keepZW.field0_0x0.vector4_f32[2] = (float)0xffffffff;
-  g_keepZW.field0_0x0.vector4_f32[3] = (float)0xffffffff;
+  _DAT_8404f570 = 0;
+  uRam8404f574 = 0;
+  uRam8404f578 = 0xffffffff;
+  uRam8404f57c = 0xffffffff;
   return;
 }
 
 
 // 8293E240  `dynamic_initializer_for_'g_keepX''  (universal/com_vector4_const.cpp:123)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_keepX__(void)
 
 {
-  g_keepX.field0_0x0.vector4_f32[0] = (float)0xffffffff;
-  g_keepX.field0_0x0.vector4_f32[1] = (float)0;
-  g_keepX.field0_0x0.vector4_f32[2] = (float)0;
-  g_keepX.field0_0x0.vector4_f32[3] = (float)0;
+  _DAT_8404f8c0 = 0xffffffff;
+  uRam8404f8c4 = 0;
+  uRam8404f8c8 = 0;
+  uRam8404f8cc = 0;
   return;
 }
 
 
 // 8293E260  `dynamic_initializer_for_'g_keepZ''  (universal/com_vector4_const.cpp:124)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_keepZ__(void)
 
 {
-  g_keepZ.field0_0x0.vector4_f32[0] = (float)0;
-  g_keepZ.field0_0x0.vector4_f32[1] = (float)0;
-  g_keepZ.field0_0x0.vector4_f32[2] = (float)0xffffffff;
-  g_keepZ.field0_0x0.vector4_f32[3] = (float)0;
+  _DAT_8404f740 = 0;
+  uRam8404f744 = 0;
+  uRam8404f748 = 0xffffffff;
+  uRam8404f74c = 0;
   return;
 }
 
 
 // 8293E280  `dynamic_initializer_for_'g_packedMaskQuat''  (universal/com_vector4_const.cpp:128)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_packedMaskQuat__(void)
 
 {
-  g_packedMaskQuat.field0_0x0.vector4_f32[0] = (float)0x1ff;
-  g_packedMaskQuat.field0_0x0.vector4_f32[1] = (float)0x3ff;
-  g_packedMaskQuat.field0_0x0.vector4_f32[2] = (float)0x3ff;
-  g_packedMaskQuat.field0_0x0.vector4_f32[3] = (float)0;
+  _DAT_8404f770 = 0x1ff;
+  uRam8404f774 = 0x3ff;
+  uRam8404f778 = 0x3ff;
+  uRam8404f77c = 0;
   return;
 }
 
 
 // 8293E2A0  `dynamic_initializer_for_'g_unpackSignBitQuat''  (universal/com_vector4_const.cpp:129)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_unpackSignBitQuat__(void)
 
 {
-  g_unpackSignBitQuat.field0_0x0.vector4_f32[0] = (float)0x200;
-  g_unpackSignBitQuat.field0_0x0.vector4_f32[1] = (float)0x400;
-  g_unpackSignBitQuat.field0_0x0.vector4_f32[2] = (float)0x400;
-  g_unpackSignBitQuat.field0_0x0.vector4_f32[3] = (float)0;
+  _DAT_8404f6a0 = 0x200;
+  uRam8404f6a4 = 0x400;
+  uRam8404f6a8 = 0x400;
+  uRam8404f6ac = 0;
   return;
 }
 
 
 // 8293E2C0  `dynamic_initializer_for_'g_unpackAndQuat''  (universal/com_vector4_const.cpp:132)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_unpackAndQuat__(void)
 
 {
-  g_unpackAndQuat.field0_0x0.vector4_f32[0] = (float)0xffffffff;
-  g_unpackAndQuat.field0_0x0.vector4_f32[1] = (float)0xffffffff;
-  g_unpackAndQuat.field0_0x0.vector4_f32[2] = (float)0xffffffff;
-  g_unpackAndQuat.field0_0x0.vector4_f32[3] = (float)0;
+  _DAT_8404f630 = 0xffffffff;
+  uRam8404f634 = 0xffffffff;
+  uRam8404f638 = 0xffffffff;
+  uRam8404f63c = 0;
   return;
 }
 
 
 // 8293E2E0  `dynamic_initializer_for_'g_packMantissa''  (universal/com_vector4_const.cpp:133)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_packMantissa__(void)
 
 {
-  g_packMantissa.field0_0x0.vector4_f32[0] = (float)0x40400000;
-  g_packMantissa.field0_0x0.vector4_f32[1] = (float)0x40400000;
-  g_packMantissa.field0_0x0.vector4_f32[2] = (float)0x40400000;
-  g_packMantissa.field0_0x0.vector4_f32[3] = (float)0;
+  _DAT_8404f5c0 = 0x40400000;
+  uRam8404f5c4 = 0x40400000;
+  uRam8404f5c8 = 0x40400000;
+  uRam8404f5cc = 0;
   return;
 }
 
 
 // 8293E300  `dynamic_initializer_for_'g_packedMaskSimpleQuat''  (universal/com_vector4_const.cpp:135)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_packedMaskSimpleQuat__(void)
 
 {
-  g_packedMaskSimpleQuat.field0_0x0.vector4_f32[0] = (float)0;
-  g_packedMaskSimpleQuat.field0_0x0.vector4_f32[1] = (float)0;
-  g_packedMaskSimpleQuat.field0_0x0.vector4_f32[2] = (float)0x3fff;
-  g_packedMaskSimpleQuat.field0_0x0.vector4_f32[3] = (float)0;
+  _DAT_8404f620 = 0;
+  uRam8404f624 = 0;
+  uRam8404f628 = 0x3fff;
+  uRam8404f62c = 0;
   return;
 }
 
 
 // 8293E320  `dynamic_initializer_for_'g_unpackSignBitSimpleQuat''  (universal/com_vector4_const.cpp:136)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_unpackSignBitSimpleQuat__(void)
 
 {
-  g_unpackSignBitSimpleQuat.field0_0x0.vector4_f32[0] = (float)0;
-  g_unpackSignBitSimpleQuat.field0_0x0.vector4_f32[1] = (float)0;
-  g_unpackSignBitSimpleQuat.field0_0x0.vector4_f32[2] = (float)0x4000;
-  g_unpackSignBitSimpleQuat.field0_0x0.vector4_f32[3] = (float)0;
+  _DAT_8404f750 = 0;
+  uRam8404f754 = 0;
+  uRam8404f758 = 0x4000;
+  uRam8404f75c = 0;
   return;
 }
 
 
 // 8293E340  `dynamic_initializer_for_'g_unpackAndSimpleQuat''  (universal/com_vector4_const.cpp:139)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_unpackAndSimpleQuat__(void)
 
 {
-  g_unpackAndSimpleQuat.field0_0x0.vector4_f32[0] = (float)0;
-  g_unpackAndSimpleQuat.field0_0x0.vector4_f32[1] = (float)0;
-  g_unpackAndSimpleQuat.field0_0x0.vector4_f32[2] = (float)0xffffffff;
-  g_unpackAndSimpleQuat.field0_0x0.vector4_f32[3] = (float)0;
+  _DAT_8404f9c0 = 0;
+  uRam8404f9c4 = 0;
+  uRam8404f9c8 = 0xffffffff;
+  uRam8404f9cc = 0;
   return;
 }
 
 
 // 8293E360  `dynamic_initializer_for_'g_unpackQuatRotateMask''  (universal/com_vector4_const.cpp:141)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_unpackQuatRotateMask__(void)
 
 {
-  g_unpackQuatRotateMask.field0_0x0.vector4_f32[0] = (float)0;
-  g_unpackQuatRotateMask.field0_0x0.vector4_f32[1] = (float)0;
-  g_unpackQuatRotateMask.field0_0x0.vector4_f32[2] = (float)0;
-  g_unpackQuatRotateMask.field0_0x0.vector4_f32[3] = (float)0xc;
+  _DAT_8404f6b0 = 0;
+  uRam8404f6b4 = 0;
+  uRam8404f6b8 = 0;
+  uRam8404f6bc = 0xc;
   return;
 }
 
 
 // 8293E380  `dynamic_initializer_for_'g_unpackQuatSignBit''  (universal/com_vector4_const.cpp:142)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_unpackQuatSignBit__(void)
 
 {
-  g_unpackQuatSignBit.field0_0x0.vector4_f32[0] = (float)0x80000000;
-  g_unpackQuatSignBit.field0_0x0.vector4_f32[1] = (float)0x80000000;
-  g_unpackQuatSignBit.field0_0x0.vector4_f32[2] = (float)0x80000000;
-  g_unpackQuatSignBit.field0_0x0.vector4_f32[3] = (float)0x80000000;
+  _DAT_8404f780 = 0x80000000;
+  uRam8404f784 = 0x80000000;
+  uRam8404f788 = 0x80000000;
+  uRam8404f78c = 0x80000000;
   return;
 }
 
 
 // 8293E3A0  `dynamic_initializer_for_'g_unpackSimpleQuatRotateMask''  (universal/com_vector4_const.cpp:143)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_unpackSimpleQuatRotateMask__(void)
 
 {
-  g_unpackSimpleQuatRotateMask.field0_0x0.vector4_f32[0] = (float)0;
-  g_unpackSimpleQuatRotateMask.field0_0x0.vector4_f32[1] = (float)0;
-  g_unpackSimpleQuatRotateMask.field0_0x0.vector4_f32[2] = (float)0;
-  g_unpackSimpleQuatRotateMask.field0_0x0.vector4_f32[3] = (float)4;
+  _DAT_8404f7a0 = 0;
+  uRam8404f7a4 = 0;
+  uRam8404f7a8 = 0;
+  uRam8404f7ac = 4;
   return;
 }
 
 
 // 8293E3C0  `dynamic_initializer_for_'g_unpackQuatRotateAdd''  (universal/com_vector4_const.cpp:144)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_unpackQuatRotateAdd__(void)
 
 {
-  g_unpackQuatRotateAdd.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_unpackQuatRotateAdd.field0_0x0.vector4_f32[1] = (float)0x4050607;
-  g_unpackQuatRotateAdd.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_unpackQuatRotateAdd.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f640 = 0x10203;
+  uRam8404f644 = 0x4050607;
+  uRam8404f648 = 0x8090a0b;
+  uRam8404f64c = 0xc0d0e0f;
   return;
 }
 
 
 // 8293E3E0  `dynamic_initializer_for_'g_unpackSimpleQuatRotateAdd''  (universal/com_vector4_const.cpp:145)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_unpackSimpleQuatRotateAdd__(void)
 
 {
-  g_unpackSimpleQuatRotateAdd.field0_0x0.vector4_f32[0] = (float)0x10203;
-  g_unpackSimpleQuatRotateAdd.field0_0x0.vector4_f32[1] = (float)0x10203;
-  g_unpackSimpleQuatRotateAdd.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
-  g_unpackSimpleQuatRotateAdd.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  _DAT_8404f5e0 = 0x10203;
+  uRam8404f5e4 = 0x10203;
+  uRam8404f5e8 = 0x8090a0b;
+  uRam8404f5ec = 0xc0d0e0f;
   return;
 }
 
 
 // 8293E400  `dynamic_initializer_for_'g_unpackShiftQuat''  (universal/com_vector4_const.cpp:151)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_unpackShiftQuat__(void)
 
 {
-  g_unpackShiftQuat.field0_0x0.vector4_f32[0] = (float)0;
-  g_unpackShiftQuat.field0_0x0.vector4_f32[1] = (float)9;
-  g_unpackShiftQuat.field0_0x0.vector4_f32[2] = (float)0x13;
-  g_unpackShiftQuat.field0_0x0.vector4_f32[3] = (float)0x1b;
+  _DAT_8404f940 = 0;
+  uRam8404f944 = 9;
+  uRam8404f948 = 0x13;
+  uRam8404f94c = 0x1b;
   return;
 }
 
 
 // 8293E420  `dynamic_initializer_for_'g_unpackSignShiftQuat''  (universal/com_vector4_const.cpp:152)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_unpackSignShiftQuat__(void)
 
 {
-  g_unpackSignShiftQuat.field0_0x0.vector4_f32[0] = (float)1;
-  g_unpackSignShiftQuat.field0_0x0.vector4_f32[1] = (float)1;
-  g_unpackSignShiftQuat.field0_0x0.vector4_f32[2] = (float)1;
-  g_unpackSignShiftQuat.field0_0x0.vector4_f32[3] = (float)1;
+  _DAT_8404f7c0 = 1;
+  uRam8404f7c4 = 1;
+  uRam8404f7c8 = 1;
+  uRam8404f7cc = 1;
   return;
 }
 
 
 // 8293E440  `dynamic_initializer_for_'g_unpackShiftSimpleQuat''  (universal/com_vector4_const.cpp:153)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void _dynamic_initializer_for__g_unpackShiftSimpleQuat__(void)
 
 {
-  g_unpackShiftSimpleQuat.field0_0x0.vector4_f32[0] = (float)0;
-  g_unpackShiftSimpleQuat.field0_0x0.vector4_f32[1] = (float)0;
-  g_unpackShiftSimpleQuat.field0_0x0.vector4_f32[2] = (float)0x10;
-  g_unpackShiftSimpleQuat.field0_0x0.vector4_f32[3] = (float)0x1c;
+  _DAT_8404f920 = 0;
+  uRam8404f924 = 0;
+  uRam8404f928 = 0x10;
+  uRam8404f92c = 0x1c;
   return;
 }
 

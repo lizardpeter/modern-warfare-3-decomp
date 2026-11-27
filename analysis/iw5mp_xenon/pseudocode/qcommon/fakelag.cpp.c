@@ -2,92 +2,69 @@
 
 // 824FFF50  FakeLag_DestroyPacket  (qcommon/fakelag.cpp:89)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-bool FakeLag_DestroyPacket(uint param_1)
+void FakeLag_DestroyPacket(void)
 
 {
   int iVar1;
-  undefined1 uVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (g_fakelagHeap == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x5b,0,
-                    "%s");
+  iVar1 = __savegprlr_29();
+  if (DAT_83670a44 == 0) {
+    MyAssertHandler(0xffffffff8208e040,0x5b,0,0xffffffff82000f98,0xffffffff8208e080);
   }
-  RtlFreeHeap(g_fakelagHeap,0,laggedPackets[iVar1].data);
-  laggedPackets[iVar1].data = (uchar *)0x0;
-  laggedPackets[iVar1].msg.data = (uchar *)0x0;
-  laggedPackets[iVar1].length = 0;
-  laggedPackets[iVar1].msg.cursize = 0;
-  uVar2 = __restgprlr_29(1);
-  return (bool)uVar2;
+  RtlFreeHeap(DAT_83670a44,0,(&DAT_83670a64)[iVar1 * 0x14]);
+  (&DAT_83670a64)[iVar1 * 0x14] = 0;
+  *(undefined4 *)(&DAT_83670a74 + iVar1 * 0x50) = 0;
+  (&DAT_83670a60)[iVar1 * 0x14] = 0;
+  (&DAT_83670a80)[iVar1 * 0x14] = 0;
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 824FFFE8  FakeLag_SendPacket_Real  (qcommon/fakelag.cpp:112)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void FakeLag_SendPacket_Real(uint param_1)
+void FakeLag_SendPacket_Real(void)
 
 {
   uint uVar1;
-  bool bVar2;
-  netadr_t in_stack_ffffff78;
   
-  uVar1 = __savegprlr_26(param_1);
+  uVar1 = __savegprlr_26();
   if (0x1ff < uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x71,0,
-                    "%s");
+    MyAssertHandler(0xffffffff8208e040,0x71,0,0xffffffff82000f98,0xffffffff8208e0d4);
   }
-  if (laggedPackets[uVar1].outbound == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x72,0,
-                    "%s");
+  if ((&DAT_83670a48)[uVar1 * 0x50] == '\0') {
+    MyAssertHandler(0xffffffff8208e040,0x72,0,0xffffffff82000f98,0xffffffff8208e0b0);
   }
-  if (laggedPackets[uVar1].data == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x73,0,
-                    "%s");
+  if ((&DAT_83670a64)[uVar1 * 0x14] == 0) {
+    MyAssertHandler(0xffffffff8208e040,0x73,0,0xffffffff82000f98,0xffffffff8208e090);
   }
-  NET_SendPacket(laggedPackets[uVar1].sock,laggedPackets[uVar1].length,laggedPackets[uVar1].data,
-                 in_stack_ffffff78);
-  bVar2 = FakeLag_DestroyPacket(uVar1);
-  __restgprlr_26(bVar2);
+  NET_SendPacket((&DAT_83670a4c)[uVar1 * 0x14],(&DAT_83670a60)[uVar1 * 0x14],
+                 (&DAT_83670a64)[uVar1 * 0x14],*(undefined8 *)(&DAT_83670a50 + uVar1 * 0x14),
+                 *(undefined8 *)(&DAT_83670a58 + uVar1 * 0x14));
+  FakeLag_DestroyPacket(uVar1);
+  __restgprlr_26();
   return;
 }
 
 
 // 825000D0  FakeLag_Init  (qcommon/fakelag.cpp:124)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void FakeLag_Init(void)
 
 {
-  ushort uVar1;
-  char *pcVar2;
-  
-  if (!fakelagInitialized) {
-    memset();
-    if (g_fakelagHeap != (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x85,0,
-                      "%s");
+  if (DAT_8367aa5c == '\0') {
+    memset(&DAT_83670a48,0,0xa000);
+    if (DAT_83670a44 != (HANDLE)0x0) {
+      MyAssertHandler(0xffffffff8208e040,0x85,0,0xffffffff82000f98,0xffffffff8208e238);
     }
-    g_fakelagHeap = HeapCreate(0,0xfa88,0xfa88);
-    fakelag_current = Dvar_RegisterInt("fakelag_current",0,0,999,0,"Current fake lag value");
-    fakelag_target = Dvar_RegisterInt("fakelag_target",0,0,999,0,"Target value for lag debugging");
-    fakelag_currentjitter =
-         Dvar_RegisterInt("fakelag_currentjitter",0,0,999,0,
-                          "Current jitter amount for lag debugging");
-    fakelag_jitter =
-         Dvar_RegisterInt("fakelag_jitter",0,0,999,0,"Amount of jitter for lag debugging");
-    pcVar2 = (char *)0x0;
-    uVar1 = 2000;
-    fakelag_jitterinterval =
-         Dvar_RegisterInt("fakelag_jitterinterval",2000,0,60000,0,
-                          "jitter interval for lag debugging");
-    fakelag_packetloss = Dvar_RegisterFloat("fakelag_packetloss",0.0,0.0,1.0,uVar1,pcVar2);
-    fakelagInitialized = true;
+    DAT_83670a44 = HeapCreate(0,0xfa88,0xfa88);
+    DAT_8367aa54 = Dvar_RegisterInt(0xffffffff8208e210,0,0,999,0,0xffffffff8208e220);
+    DAT_83670a40 = Dvar_RegisterInt(0xffffffff8208e1e0,0,0,999,0,0xffffffff8208e1f0);
+    DAT_8367aa4c = Dvar_RegisterInt(0xffffffff8208e1a0,0,0,999,0,0xffffffff8208e1b8);
+    DAT_8367aa50 = Dvar_RegisterInt(0xffffffff8208e190,0,0,999,0,0xffffffff8208e16c);
+    DAT_8367aa58 = Dvar_RegisterInt(0xffffffff8208e130,2000,0,60000,0,0xffffffff8208e148);
+    DAT_8367aa48 = Dvar_RegisterFloat(0,0,0x3ff0000000000000,0xffffffff8208e0fc);
+    DAT_8367aa5c = '\x01';
   }
   return;
 }
@@ -95,168 +72,163 @@ void FakeLag_Init(void)
 
 // 82500290  FakeLag_GetFreeSlot  (qcommon/fakelag.cpp:152)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int FakeLag_GetFreeSlot(void)
+void FakeLag_GetFreeSlot(void)
 
 {
   int iVar1;
-  int *piVar2;
-  uint uVar3;
-  uint *puVar4;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
   int iVar5;
-  uint uVar6;
   
   __savegprlr_27();
-  uVar6 = 0;
-  puVar4 = &laggedPackets[0].length;
+  piVar3 = &DAT_83670a60;
+  iVar5 = 0;
   do {
-    if (*puVar4 == 0) goto LAB_8250041c;
-    puVar4 = puVar4 + 0x14;
-    uVar6 = uVar6 + 1;
-  } while ((int)puVar4 < -0x7c9855a0);
-  uVar6 = 0;
-  iVar1 = Sys_Milliseconds();
-  piVar2 = &laggedPackets[0].startTime;
-  uVar3 = 2;
+    if (*piVar3 == 0) goto LAB_8250041c;
+    piVar3 = piVar3 + 0x14;
+    iVar1 = iVar5 + 1;
+    iVar5 = iVar1;
+  } while ((int)piVar3 < -0x7c9855a0);
+  iVar5 = 0;
+  iVar2 = Sys_Milliseconds(iVar1);
+  piVar3 = &DAT_83670a68;
+  iVar1 = 2;
   do {
-    if (((fakedLatencyPackets_t *)(piVar2 + -8))->outbound != false) {
-      if (*piVar2 < iVar1) {
-        uVar6 = uVar3 - 2;
-        iVar1 = *piVar2;
-      }
+    if ((*(char *)(piVar3 + -8) != '\0') && (*piVar3 < iVar2)) {
+      iVar5 = iVar1 + -2;
+      iVar2 = *piVar3;
     }
-    if (*(char *)(piVar2 + 0xc) != '\0') {
-      if (piVar2[0x14] < iVar1) {
-        uVar6 = uVar3 - 1;
-        iVar1 = piVar2[0x14];
-      }
+    if ((*(char *)(piVar3 + 0xc) != '\0') && (piVar3[0x14] < iVar2)) {
+      iVar5 = iVar1 + -1;
+      iVar2 = piVar3[0x14];
     }
-    if (*(char *)(piVar2 + 0x20) != '\0') {
-      if (piVar2[0x28] < iVar1) {
-        iVar1 = piVar2[0x28];
-        uVar6 = uVar3;
-      }
+    if ((*(char *)(piVar3 + 0x20) != '\0') && (piVar3[0x28] < iVar2)) {
+      iVar5 = iVar1;
+      iVar2 = piVar3[0x28];
     }
-    if (*(char *)(piVar2 + 0x34) != '\0') {
-      if (piVar2[0x3c] < iVar1) {
-        uVar6 = uVar3 + 1;
-        iVar1 = piVar2[0x3c];
-      }
+    if ((*(char *)(piVar3 + 0x34) != '\0') && (piVar3[0x3c] < iVar2)) {
+      iVar5 = iVar1 + 1;
+      iVar2 = piVar3[0x3c];
     }
-    piVar2 = piVar2 + 0x50;
-    iVar5 = uVar3 + 2;
-    uVar3 = uVar3 + 4;
-  } while (iVar5 < 0x200);
-  Com_Printf(0x19,
-             "fake lag buffer is full, you should increase FAKELATENCY_MAX_PACKETS_HELD or reduce your latency\n"
-            );
-  if (laggedPackets[uVar6].outbound != false) {
-    FakeLag_SendPacket_Real(uVar6);
-    iVar1 = __restgprlr_27(uVar6);
-    return iVar1;
+    piVar3 = piVar3 + 0x50;
+    iVar4 = iVar1 + 2;
+    iVar1 = iVar1 + 4;
+  } while (iVar4 < 0x200);
+  Com_Printf(0x19,0xffffffff8208e248);
+  if ((&DAT_83670a48)[iVar5 * 0x50] != '\0') {
+    FakeLag_SendPacket_Real(iVar5);
+    __restgprlr_27(iVar5);
+    return;
   }
-  if (g_fakelagHeap == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x5b,0,
-                    "%s");
+  if (DAT_83670a44 == 0) {
+    MyAssertHandler(0xffffffff8208e040,0x5b,0,0xffffffff82000f98,0xffffffff8208e080);
   }
-  RtlFreeHeap(g_fakelagHeap,0,laggedPackets[uVar6].data);
-  laggedPackets[uVar6].data = (uchar *)0x0;
-  laggedPackets[uVar6].msg.data = (uchar *)0x0;
-  laggedPackets[uVar6].length = 0;
-  laggedPackets[uVar6].msg.cursize = 0;
+  RtlFreeHeap(DAT_83670a44,0,(&DAT_83670a64)[iVar5 * 0x14]);
+  (&DAT_83670a64)[iVar5 * 0x14] = 0;
+  *(undefined4 *)(&DAT_83670a74 + iVar5 * 0x50) = 0;
+  (&DAT_83670a60)[iVar5 * 0x14] = 0;
+  (&DAT_83670a80)[iVar5 * 0x14] = 0;
 LAB_8250041c:
-  iVar1 = __restgprlr_27(uVar6);
-  return iVar1;
+  __restgprlr_27(iVar5);
+  return;
 }
 
 
 // 82500428  FakeLag_HostingGameOrParty  (qcommon/fakelag.cpp:194)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-bool FakeLag_HostingGameOrParty(void)
+undefined8 FakeLag_HostingGameOrParty(void)
 
 {
   int iVar1;
-  bool bVar2;
+  char cVar2;
   
-  if ((((com_sv_running->current).enabled == false) &&
-      (iVar1 = Party_AreWeHost(&g_partyData), iVar1 == 0)) && (bVar2 = Lobby_AreWeHost(), !bVar2)) {
-    return false;
+  if (((*(char *)(DAT_83666174 + 0xc) == '\0') &&
+      (iVar1 = Party_AreWeHost(0xffffffff82b55118), iVar1 == 0)) &&
+     (cVar2 = Lobby_AreWeHost(), cVar2 == '\0')) {
+    return 0;
   }
-  return true;
+  return 1;
 }
 
 
 // 82500488  FakeLag_SendLaggedPackets  (qcommon/fakelag.cpp:204)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int FakeLag_SendLaggedPackets(void)
+void FakeLag_SendLaggedPackets(void)
 
 {
   uint uVar1;
-  int iVar2;
-  bool bVar4;
-  int iVar3;
-  longlong lVar5;
-  uint uVar6;
-  bool *pbVar7;
+  uint uVar2;
+  int iVar5;
+  char cVar7;
+  int iVar6;
+  longlong lVar3;
+  undefined8 uVar4;
+  longlong lVar8;
+  longlong lVar9;
+  char *pcVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
   
   __savegprlr_15();
-  if (fakelagInitialized == false) {
-    iVar2 = __restgprlr_15(0);
-    return iVar2;
+  if (DAT_8367aa5c == '\0') {
+    __restgprlr_15(0);
+    return;
   }
-  Sys_EnterCriticalSection(CRITSECT_FAKELAG);
-  iVar2 = Sys_Milliseconds();
-  uVar1 = (fakelag_current->current).integer;
-  bVar4 = FakeLag_HostingGameOrParty();
-  if (bVar4) {
-    iVar3 = Sys_Milliseconds();
+  Sys_EnterCriticalSection(9);
+  iVar5 = Sys_Milliseconds();
+  uVar1 = *(uint *)(DAT_8367aa54 + 0xc);
+  cVar7 = FakeLag_HostingGameOrParty();
+  if (cVar7 == '\0') {
+    iVar6 = Sys_Milliseconds();
+    uVar2 = *(uint *)(DAT_8367aa54 + 0xc);
+    iVar6 = iVar6 - (((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0));
   }
   else {
-    iVar3 = Sys_Milliseconds();
-    uVar6 = (fakelag_current->current).integer;
-    iVar3 = iVar3 - (((int)uVar6 >> 1) + (uint)((int)uVar6 < 0 && (uVar6 & 1) != 0));
+    iVar6 = Sys_Milliseconds();
   }
-  lVar5 = 0;
-  uVar6 = 0;
-  pbVar7 = &laggedPackets[0].loopback;
+  lVar8 = 0;
+  lVar9 = 0;
+  pcVar10 = &DAT_83670a49;
   do {
-    if ((*(uint *)(pbVar7 + 0x17) != 0) &&
-       (((fakedLatencyPackets_t *)(pbVar7 + -1))->outbound != false)) {
-      bVar4 = *pbVar7;
-      if (bVar4 == false) {
+    if ((*(int *)(pcVar10 + 0x17) != 0) && (pcVar10[-1] != '\0')) {
+      cVar7 = *pcVar10;
+      if (cVar7 == '\0') {
 LAB_8250058c:
-        if (iVar3 < *(int *)(pbVar7 + 0x1f)) goto LAB_82500624;
+        if (iVar6 < *(int *)(pcVar10 + 0x1f)) goto LAB_82500624;
       }
-      else if ((int)(iVar2 - (((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0))) <
-               *(int *)(pbVar7 + 0x1f)) {
-        if (bVar4 != false) goto LAB_82500624;
+      else if ((int)(iVar5 - (((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0))) <
+               *(int *)(pcVar10 + 0x1f)) {
+        if (cVar7 != '\0') goto LAB_82500624;
         goto LAB_8250058c;
       }
-      if (((showpackets->current).integer != 0) &&
-         ((1 < (showpackets->current).integer || (bVar4 == false)))) {
-        Sys_Milliseconds();
-        Sys_Milliseconds();
-        Com_Printf(0x19,"[%i] delivering outbound %s packet for %s (from %i) (%ims delay)\n");
+      if ((*(int *)(DAT_83691660 + 0xc) != 0) &&
+         ((1 < *(int *)(DAT_83691660 + 0xc) || (cVar7 == '\0')))) {
+        uVar11 = 0xffffffff8203869c;
+        if ((*(int *)(pcVar10 + 3) != 4) && (uVar11 = 0xffffffff820386a4, 3 < *(int *)(pcVar10 + 3))
+           ) {
+          uVar11 = 0xffffffff820068af;
+        }
+        uVar12 = 0xffffffff8208e2ac;
+        if (cVar7 == '\0') {
+          uVar12 = 0xffffffff82038650;
+        }
+        uVar2 = *(uint *)(pcVar10 + 0x1f);
+        lVar3 = Sys_Milliseconds();
+        uVar4 = Sys_Milliseconds();
+        Com_Printf(0x19,0xffffffff8208e2b8,uVar4,uVar12,uVar11,(ulonglong)uVar2,
+                   lVar3 - (ulonglong)uVar2);
       }
-      FakeLag_SendPacket_Real(uVar6);
-      lVar5 = lVar5 + 1;
+      FakeLag_SendPacket_Real(lVar9);
+      lVar8 = lVar8 + 1;
     }
 LAB_82500624:
-    pbVar7 = pbVar7 + 0x50;
-    uVar6 = uVar6 + 1;
-    if (-0x7c9855b8 < (int)pbVar7) {
-      Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-      iVar2 = __restgprlr_15(lVar5);
-      return iVar2;
+    pcVar10 = pcVar10 + 0x50;
+    lVar9 = lVar9 + 1;
+    if (-0x7c9855b8 < (int)pcVar10) {
+      Sys_LeaveCriticalSection(9);
+      __restgprlr_15(lVar8);
+      return;
     }
   } while( true );
 }
@@ -264,47 +236,50 @@ LAB_82500624:
 
 // 82500650  FakeLag_UpdateCurrentValues  (qcommon/fakelag.cpp:250)
 
-void FakeLag_UpdateCurrentValues(int param_1)
+void FakeLag_UpdateCurrentValues(void)
 
 {
-  char *pcVar1;
-  char *pcVar2;
-  uint uVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  double dVar7;
-  double dVar8;
-  float fVar9;
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  longlong lVar8;
+  int iVar9;
+  double dVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
   
-  iVar4 = __savegprlr_27(param_1);
-  pcVar1 = (fakelag_target->current).string;
-  pcVar2 = (fakelag_current->current).string;
-  if ((fakelag_jitter->current).string + (int)pcVar1 != pcVar2) {
-    uVar3 = (int)(pcVar2 + (-(int)pcVar1 - (fakelag_currentjitter->current).integer)) >> 0x1f;
-    iVar5 = ((uint)(pcVar2 + (-(int)pcVar1 - (fakelag_currentjitter->current).integer)) ^ uVar3) -
-            uVar3;
-    iVar6 = iVar4 - lastCall;
-    if (iVar5 < iVar4 - lastCall) {
-      iVar6 = iVar5;
+  lVar4 = __savegprlr_27();
+  uVar1 = *(uint *)(DAT_83670a40 + 0xc);
+  uVar2 = *(uint *)(DAT_8367aa54 + 0xc);
+  if (*(int *)(DAT_8367aa50 + 0xc) + uVar1 != uVar2) {
+    uVar6 = ((ulonglong)uVar2 - (ulonglong)*(uint *)(DAT_8367aa4c + 0xc)) - (ulonglong)uVar1;
+    uVar5 = (ulonglong)((int)uVar6 >> 0x1f);
+    lVar7 = (uVar6 ^ uVar5) - uVar5;
+    lVar8 = lVar4 - (ulonglong)DAT_8367aa64;
+    if ((int)lVar7 < (int)(lVar4 - (ulonglong)DAT_8367aa64)) {
+      lVar8 = lVar7;
     }
-    if ((int)(pcVar1 + (fakelag_currentjitter->current).integer) < (int)pcVar2) {
-      iVar6 = -iVar6;
+    if ((int)(*(uint *)(DAT_8367aa4c + 0xc) + uVar1) < (int)uVar2) {
+      lVar8 = -lVar8;
     }
-    Dvar_SetInt(fakelag_current,(int)(pcVar2 + iVar6));
+    Dvar_SetInt(DAT_8367aa54,(ulonglong)uVar2 + lVar8);
   }
-  if (((0 < (fakelag_currentjitter->current).integer) || (0 < (fakelag_jitter->current).integer)) &&
-     (nextChangeTime < iVar4)) {
-    dVar8 = 1.0;
-    dVar7 = 0.0;
-    fVar9 = flrand(0.0,1.0);
-    Dvar_SetInt(fakelag_currentjitter,
-                (int)(fVar9 * (float)(longlong)(fakelag_jitter->current).integer));
-    pcVar1 = (fakelag_jitterinterval->current).string;
-    fVar9 = flrand((float)dVar7,(float)dVar8);
-    nextChangeTime = (int)(pcVar1 + iVar4 + (int)(fVar9 * (float)(longlong)((int)pcVar1 << 1)));
+  iVar9 = (int)lVar4;
+  if (((0 < *(int *)(DAT_8367aa4c + 0xc)) || (0 < *(int *)(DAT_8367aa50 + 0xc))) &&
+     (DAT_8367aa60 < iVar9)) {
+    uVar12 = 0x3ff0000000000000;
+    uVar11 = 0;
+    dVar10 = (double)flrand(0,0x3ff0000000000000);
+    Dvar_SetInt(DAT_8367aa4c,(int)(dVar10 * (double)(longlong)*(int *)(DAT_8367aa50 + 0xc)));
+    iVar3 = *(int *)(DAT_8367aa58 + 0xc);
+    dVar10 = (double)flrand(uVar11,uVar12);
+    DAT_8367aa60 = (int)(dVar10 * (double)(longlong)(iVar3 << 1)) + iVar3 + iVar9;
   }
-  lastCall = iVar4;
+  DAT_8367aa64 = iVar9;
   __restgprlr_27();
   return;
 }
@@ -312,342 +287,377 @@ void FakeLag_UpdateCurrentValues(int param_1)
 
 // 825007C8  FakeLag_SendPacket  (qcommon/fakelag.cpp:282)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int FakeLag_SendPacket(netsrc_t param_1,int param_2,void *param_3,netadr_t param_4)
+void FakeLag_SendPacket(undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
+                       undefined8 param_5)
 
 {
-  dvar_t *pdVar1;
-  netsrc_t nVar2;
+  int iVar1;
+  int iVar2;
   int iVar3;
-  bool bVar8;
-  int iVar4;
-  uchar *puVar5;
-  int iVar6;
+  undefined8 uVar4;
+  longlong lVar5;
+  char cVar9;
+  undefined8 uVar6;
+  void *_Dst;
   int iVar7;
-  ulonglong uVar9;
-  undefined8 in_r6;
-  undefined8 in_r7;
-  float fVar10;
-  netadrtype_t nStack00000030;
+  int iVar8;
+  size_t _Size;
+  undefined8 uVar10;
+  int iVar11;
+  double dVar12;
+  int iStack00000030;
   undefined4 uStack00000034;
   undefined4 uStack00000038;
-  netsrc_t nStack0000003c;
-  netadr_t in_stack_ffffff58;
+  undefined4 uStack0000003c;
   
-  uVar9 = (ulonglong)(int)param_3;
-  nVar2 = __savegprlr_21(param_1);
-  _nStack00000030 = in_r6;
-  _uStack00000038 = in_r7;
-  if (param_2 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x11f,0,
-                    "%s");
+  uVar4 = __savegprlr_21();
+  _Size = (size_t)param_2;
+  if ((int)_Size < 1) {
+    MyAssertHandler(0xffffffff8208e040,0x11f,0,0xffffffff82000f98,0xffffffff82084270);
   }
-  if ((uVar9 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x120,0,
-                    "%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208e040,0x120,0,0xffffffff82000f98,0xffffffff8208e364);
   }
-  Sys_EnterCriticalSection(CRITSECT_FAKELAG);
-  iVar3 = Sys_Milliseconds();
-  FakeLag_UpdateCurrentValues(iVar3);
-  pdVar1 = fakelag_packetloss;
-  if ((0.0 < (fakelag_packetloss->current).value) &&
-     (fVar10 = flrand(0.0,1.0), fVar10 <= (pdVar1->current).value)) {
-    Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-    iVar3 = __restgprlr_21(0xffffffffffffffff);
-    return iVar3;
+  Sys_EnterCriticalSection(9);
+  lVar5 = Sys_Milliseconds();
+  FakeLag_UpdateCurrentValues();
+  iVar1 = DAT_8367aa48;
+  if ((0.0 < *(float *)(DAT_8367aa48 + 0xc)) &&
+     (dVar12 = (double)flrand(0,0x3ff0000000000000), dVar12 <= (double)*(float *)(iVar1 + 0xc))) {
+    Sys_LeaveCriticalSection(9);
+    __restgprlr_21(0xffffffffffffffff);
+    return;
   }
-  if ((fakelagInitialized != false) &&
-     (((fakelag_current->current).integer != 0 || ((fakelag_currentjitter->current).integer != 0))))
-  {
-    bVar8 = FakeLag_HostingGameOrParty();
-    iVar6 = nStack00000030;
-    if ((!bVar8) || (nStack00000030 != 4)) {
-      iVar4 = FakeLag_GetFreeSlot();
-      if (g_fakelagHeap == (void *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x141
-                        ,0,"%s");
+  if ((DAT_8367aa5c != '\0') &&
+     ((*(int *)(DAT_8367aa54 + 0xc) != 0 || (*(int *)(DAT_8367aa4c + 0xc) != 0)))) {
+    cVar9 = FakeLag_HostingGameOrParty();
+    iStack00000030 = (int)((ulonglong)param_4 >> 0x20);
+    if ((cVar9 == '\0') || (iStack00000030 != 4)) {
+      uVar6 = FakeLag_GetFreeSlot();
+      if (DAT_83670a44 == 0) {
+        MyAssertHandler(0xffffffff8208e040,0x141,0,0xffffffff82000f98,0xffffffff8208e080);
       }
-      puVar5 = RtlAllocateHeap(g_fakelagHeap,0,param_2);
-      laggedPackets[iVar4].data = puVar5;
-      if (puVar5 == (uchar *)0x0) {
-        Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-        Com_PrintWarning(0x19,"Your fakelag settings are too high - fakelag buffer is full!\n");
-        bVar8 = NET_SendPacket(nVar2,param_2,(void *)uVar9,in_stack_ffffff58);
-        iVar3 = __restgprlr_21(((ulonglong)!bVar8 ^ 1) - 2);
-        return iVar3;
+      _Dst = (void *)RtlAllocateHeap(DAT_83670a44,0,param_2);
+      iVar2 = (int)uVar6;
+      iVar1 = iVar2 * 0x50;
+      (&DAT_83670a64)[iVar2 * 0x14] = _Dst;
+      if (_Dst == (void *)0x0) {
+        Sys_LeaveCriticalSection(9);
+        Com_PrintWarning(0x19,0xffffffff8208e324);
+        cVar9 = NET_SendPacket(uVar4,param_2,param_3,param_4,param_5);
+        __restgprlr_21(((ulonglong)(cVar9 == '\0') ^ 1) - 2);
+        return;
       }
-      laggedPackets[iVar4].msg.data = puVar5;
-      memcpy();
-      laggedPackets[iVar4].addr.type = nStack00000030;
-      laggedPackets[iVar4].length = param_2;
-      *(undefined4 *)laggedPackets[iVar4].addr.ip = uStack00000034;
-      laggedPackets[iVar4].outbound = true;
-      laggedPackets[iVar4].sock = nVar2;
-      *(bool *)(iVar4 * 0x50 + -0x7c98f5b7) = iVar6 == 2;
-      *(undefined4 *)&laggedPackets[iVar4].addr.port = uStack00000038;
-      laggedPackets[iVar4].addr.localNetID = nStack0000003c;
-      if ((fakelag_jitter->current).integer == 0) {
-        iVar6 = 0;
+      *(void **)(&DAT_83670a74 + iVar1) = _Dst;
+      memcpy(_Dst,(void *)param_3,_Size);
+      uStack00000034 = (undefined4)param_4;
+      uStack00000038 = (undefined4)((ulonglong)param_5 >> 0x20);
+      uStack0000003c = (undefined4)param_5;
+      (&DAT_83670a50)[iVar2 * 0x14] = iStack00000030;
+      (&DAT_83670a60)[iVar2 * 0x14] = _Size;
+      (&DAT_83670a54)[iVar2 * 0x14] = uStack00000034;
+      (&DAT_83670a48)[iVar1] = 1;
+      iVar11 = (int)uVar4;
+      (&DAT_83670a4c)[iVar2 * 0x14] = iVar11;
+      (&DAT_83670a49)[iVar1] = iStack00000030 == 2;
+      (&DAT_83670a58)[iVar2 * 0x14] = uStack00000038;
+      (&DAT_83670a5c)[iVar2 * 0x14] = uStack0000003c;
+      if (*(int *)(DAT_8367aa50 + 0xc) == 0) {
+        iVar7 = 0;
       }
       else {
-        iVar6 = irand(0,lastCall - iVar3);
+        iVar7 = irand(0,(ulonglong)DAT_8367aa68 - lVar5);
       }
-      iVar7 = Sys_Milliseconds();
-      pdVar1 = showpackets;
-      laggedPackets[iVar4].startTime = iVar7 + iVar6;
-      if (((pdVar1->current).integer != 0) &&
-         ((1 < (pdVar1->current).integer || (laggedPackets[iVar4].loopback == false)))) {
-        Com_Printf(0x19,"[%i] adding outbound %s packet for %s\n");
+      iVar8 = Sys_Milliseconds();
+      iVar3 = DAT_83691660;
+      (&DAT_83670a68)[iVar2 * 0x14] = iVar8 + iVar7;
+      if ((*(int *)(iVar3 + 0xc) != 0) &&
+         ((1 < *(int *)(iVar3 + 0xc) || ((&DAT_83670a49)[iVar1] == '\0')))) {
+        if (iVar11 == 4) {
+          uVar4 = 0xffffffff8203869c;
+        }
+        else if (iVar11 < 4) {
+          uVar4 = 0xffffffff820386a4;
+        }
+        else {
+          uVar4 = 0xffffffff820068af;
+        }
+        if ((&DAT_83670a49)[iVar1] == '\0') {
+          uVar10 = 0xffffffff82038650;
+        }
+        else {
+          uVar10 = 0xffffffff8208e2ac;
+        }
+        Com_Printf(0x19,0xffffffff8208e2fc,lVar5,uVar10,uVar4);
       }
-      lastCall = iVar3;
-      Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-      iVar3 = __restgprlr_21(iVar4);
-      return iVar3;
+      DAT_8367aa68 = (uint)lVar5;
+      Sys_LeaveCriticalSection(9);
+      __restgprlr_21(uVar6);
+      return;
     }
   }
-  Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-  bVar8 = NET_SendPacket(nVar2,param_2,(void *)uVar9,in_stack_ffffff58);
-  iVar3 = __restgprlr_21(((ulonglong)!bVar8 ^ 1) - 2);
-  return iVar3;
+  Sys_LeaveCriticalSection(9);
+  cVar9 = NET_SendPacket(uVar4,param_2,param_3,param_4,param_5);
+  __restgprlr_21(((ulonglong)(cVar9 == '\0') ^ 1) - 2);
+  return;
 }
 
 
 // 82500B38  FakeLag_QueueIncomingPacket  (qcommon/fakelag.cpp:376)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int FakeLag_QueueIncomingPacket(bool param_1,netsrc_t param_2,netadr_t *param_3,msg_t *param_4)
+void FakeLag_QueueIncomingPacket(undefined8 param_1,int param_2,undefined4 *param_3,void *param_4)
 
 {
-  char *pcVar1;
-  char *pcVar2;
-  uint uVar3;
-  undefined2 uVar4;
-  dvar_t *pdVar5;
-  bool bVar11;
-  int iVar6;
-  int iVar7;
-  uchar *puVar8;
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  char cVar10;
+  longlong lVar6;
+  undefined8 uVar7;
+  void *_Dst;
+  int iVar8;
   int iVar9;
-  int iVar10;
-  float fVar12;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  undefined8 uVar13;
+  undefined8 uVar14;
+  longlong lVar15;
+  longlong lVar16;
+  double dVar17;
   
-  bVar11 = (bool)__savegprlr_20(param_1);
-  if (param_4->cursize < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x180,0,
-                    "%s");
+  cVar10 = __savegprlr_20();
+  if (*(int *)((int)param_4 + 0x14) < 1) {
+    MyAssertHandler(0xffffffff8208e040,0x180,0,0xffffffff82000f98,0xffffffff8208e3b0);
   }
-  if (param_4->data == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x181,0,
-                    "%s");
+  if (*(int *)((int)param_4 + 8) == 0) {
+    MyAssertHandler(0xffffffff8208e040,0x181,0,0xffffffff82000f98,0xffffffff8208e39c);
   }
-  Sys_EnterCriticalSection(CRITSECT_FAKELAG);
-  iVar6 = Sys_Milliseconds();
-  pcVar1 = (fakelag_target->current).string;
-  pcVar2 = (fakelag_current->current).string;
-  if ((fakelag_jitter->current).string + (int)pcVar1 != pcVar2) {
-    uVar3 = (int)(pcVar2 + (-(int)pcVar1 - (fakelag_currentjitter->current).integer)) >> 0x1f;
-    iVar9 = ((uint)(pcVar2 + (-(int)pcVar1 - (fakelag_currentjitter->current).integer)) ^ uVar3) -
-            uVar3;
-    iVar7 = iVar6 - lastCall;
-    if (iVar9 < iVar6 - lastCall) {
-      iVar7 = iVar9;
+  Sys_EnterCriticalSection(9);
+  lVar6 = Sys_Milliseconds();
+  uVar1 = *(uint *)(DAT_83670a40 + 0xc);
+  uVar2 = *(uint *)(DAT_8367aa54 + 0xc);
+  if (*(int *)(DAT_8367aa50 + 0xc) + uVar1 != uVar2) {
+    uVar12 = ((ulonglong)uVar2 - (ulonglong)*(uint *)(DAT_8367aa4c + 0xc)) - (ulonglong)uVar1;
+    uVar11 = (ulonglong)((int)uVar12 >> 0x1f);
+    lVar15 = (uVar12 ^ uVar11) - uVar11;
+    lVar16 = lVar6 - (ulonglong)DAT_8367aa6c;
+    if ((int)lVar15 < (int)(lVar6 - (ulonglong)DAT_8367aa6c)) {
+      lVar16 = lVar15;
     }
-    if ((int)(pcVar1 + (fakelag_currentjitter->current).integer) < (int)pcVar2) {
-      iVar7 = -iVar7;
+    if ((int)(*(uint *)(DAT_8367aa4c + 0xc) + uVar1) < (int)uVar2) {
+      lVar16 = -lVar16;
     }
-    Dvar_SetInt(fakelag_current,(int)(pcVar2 + iVar7));
+    Dvar_SetInt(DAT_8367aa54,(ulonglong)uVar2 + lVar16);
   }
-  pdVar5 = fakelag_packetloss;
-  if ((0.0 < (fakelag_packetloss->current).value) &&
-     (fVar12 = flrand(0.0,1.0), fVar12 <= (pdVar5->current).value)) {
-    Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-    iVar6 = __restgprlr_20(0xffffffffffffffff);
-    return iVar6;
+  iVar3 = DAT_8367aa48;
+  if ((0.0 < *(float *)(DAT_8367aa48 + 0xc)) &&
+     (dVar17 = (double)flrand(0,0x3ff0000000000000), dVar17 <= (double)*(float *)(iVar3 + 0xc))) {
+    Sys_LeaveCriticalSection(9);
+    __restgprlr_20(0xffffffffffffffff);
+    return;
   }
-  iVar7 = FakeLag_GetFreeSlot();
-  if (g_fakelagHeap == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x1a3,0,
-                    "%s");
+  uVar7 = FakeLag_GetFreeSlot();
+  if (DAT_83670a44 == 0) {
+    MyAssertHandler(0xffffffff8208e040,0x1a3,0,0xffffffff82000f98,0xffffffff8208e080);
   }
-  puVar8 = RtlAllocateHeap(g_fakelagHeap,0,param_4->cursize);
-  laggedPackets[iVar7].data = puVar8;
-  if (puVar8 == (uchar *)0x0) {
-    Com_PrintWarning(0x19,"Your fakelag settings are too high - fakelag buffer is full!\n");
-    laggedPackets[iVar7].length = 0;
-    Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-    iVar6 = __restgprlr_20(0xffffffffffffffff);
-    return iVar6;
+  _Dst = (void *)RtlAllocateHeap(DAT_83670a44,0,*(undefined4 *)((int)param_4 + 0x14));
+  iVar4 = (int)uVar7;
+  iVar3 = iVar4 * 0x50;
+  (&DAT_83670a64)[iVar4 * 0x14] = _Dst;
+  if (_Dst == (void *)0x0) {
+    Com_PrintWarning(0x19,0xffffffff8208e324);
+    (&DAT_83670a60)[iVar4 * 0x14] = 0;
+    Sys_LeaveCriticalSection(9);
+    __restgprlr_20(0xffffffffffffffff);
+    return;
   }
-  memcpy();
-  memcpy();
-  pdVar5 = fakelag_jitter;
-  laggedPackets[iVar7].msg.data = laggedPackets[iVar7].data;
-  laggedPackets[iVar7].outbound = false;
-  laggedPackets[iVar7].loopback = bVar11;
-  laggedPackets[iVar7].sock = param_2;
-  laggedPackets[iVar7].addr.type = param_3->type;
-  *(undefined4 *)laggedPackets[iVar7].addr.ip = *(undefined4 *)param_3->ip;
-  uVar4 = *(undefined2 *)&param_3->field_0xa;
-  laggedPackets[iVar7].addr.port = param_3->port;
-  *(undefined2 *)&laggedPackets[iVar7].addr.field_0xa = uVar4;
-  laggedPackets[iVar7].addr.localNetID = param_3->localNetID;
-  laggedPackets[iVar7].length = param_4->cursize;
-  if ((pdVar5->current).integer == 0) {
-    iVar9 = 0;
+  memcpy(_Dst,*(void **)((int)param_4 + 8),*(size_t *)((int)param_4 + 0x14));
+  memcpy(&DAT_83670a6c + iVar4 * 0x14,param_4,0x2c);
+  iVar8 = DAT_8367aa50;
+  *(undefined4 *)(&DAT_83670a74 + iVar3) = (&DAT_83670a64)[iVar4 * 0x14];
+  (&DAT_83670a48)[iVar3] = 0;
+  (&DAT_83670a49)[iVar3] = cVar10;
+  (&DAT_83670a4c)[iVar4 * 0x14] = param_2;
+  (&DAT_83670a50)[iVar4 * 0x14] = *param_3;
+  (&DAT_83670a54)[iVar4 * 0x14] = param_3[1];
+  (&DAT_83670a58)[iVar4 * 0x14] = param_3[2];
+  (&DAT_83670a5c)[iVar4 * 0x14] = param_3[3];
+  (&DAT_83670a60)[iVar4 * 0x14] = *(undefined4 *)((int)param_4 + 0x14);
+  if (*(int *)(iVar8 + 0xc) == 0) {
+    iVar8 = 0;
   }
   else {
-    iVar9 = irand(0,lastCall - iVar6);
+    iVar8 = irand(0,(ulonglong)DAT_8367aa6c - lVar6);
   }
-  iVar10 = Sys_Milliseconds();
-  pdVar5 = showpackets;
-  laggedPackets[iVar7].startTime = iVar10 + iVar9;
-  if (((pdVar5->current).integer != 0) &&
-     ((1 < (pdVar5->current).integer || (laggedPackets[iVar7].loopback == false)))) {
-    Com_Printf(0x19,"[%i] adding incoming %s packet for %s\n");
+  iVar9 = Sys_Milliseconds();
+  iVar5 = DAT_83691660;
+  (&DAT_83670a68)[iVar4 * 0x14] = iVar9 + iVar8;
+  if ((*(int *)(iVar5 + 0xc) != 0) &&
+     ((1 < *(int *)(iVar5 + 0xc) || ((&DAT_83670a49)[iVar3] == '\0')))) {
+    if (param_2 == 4) {
+      uVar14 = 0xffffffff8203869c;
+    }
+    else if (param_2 < 4) {
+      uVar14 = 0xffffffff820386a4;
+    }
+    else {
+      uVar14 = 0xffffffff820068af;
+    }
+    if (cVar10 == '\0') {
+      uVar13 = 0xffffffff82038650;
+    }
+    else {
+      uVar13 = 0xffffffff8208e2ac;
+    }
+    Com_Printf(0x19,0xffffffff8208e374,lVar6,uVar13,uVar14);
   }
-  lastCall = iVar6;
-  Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-  iVar6 = __restgprlr_20(iVar7);
-  return iVar6;
+  DAT_8367aa6c = (uint)lVar6;
+  Sys_LeaveCriticalSection(9);
+  __restgprlr_20(uVar7);
+  return;
 }
 
 
 // 82500E78  FakeLag_ReceivePackets  (qcommon/fakelag.cpp:476)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
 void FakeLag_ReceivePackets(void)
 
 {
-  char *pcVar1;
-  char *pcVar2;
-  uint uVar3;
-  dvar_t *pdVar4;
-  uchar *puVar5;
-  int iVar6;
-  uchar *puVar7;
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar5;
+  int iVar7;
+  longlong lVar6;
+  void *_Dst;
   int iVar8;
   int iVar9;
-  int iVar10;
-  netsrc_t nVar11;
-  double dVar12;
-  double dVar13;
-  float fVar14;
-  LargeLocal LStack_108;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  longlong lVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  double dVar15;
+  undefined8 uVar16;
+  double dVar17;
+  undefined1 auStack_108 [8];
   longlong local_100;
-  netadr_t local_f0;
-  msg_t amStack_e0 [5];
+  undefined4 local_f0;
+  undefined4 local_ec;
+  undefined4 local_e8;
+  undefined4 local_e4;
+  undefined1 auStack_e0 [8];
+  void *local_d8;
+  size_t local_cc;
   
   __savegprlr();
-  LargeLocal::LargeLocal(&LStack_108,0x10000);
-  puVar5 = LargeLocal::GetBuf(&LStack_108);
-  if (((fakelag_current->current).integer != 0) || ((fakelag_currentjitter->current).integer != 0))
-  {
-    MSG_Init(amStack_e0,puVar5,0x10000);
-    iVar6 = NET_GetLoopPacket_Real(NS_MAXCLIENTS,&local_f0,amStack_e0);
-    if (iVar6 != 0) {
-      dVar12 = 1.0;
-      dVar13 = 0.0;
+  LargeLocal__LargeLocal(auStack_108,0x10000);
+  uVar5 = LargeLocal__GetBuf(auStack_108);
+  if ((*(int *)(DAT_8367aa54 + 0xc) != 0) || (*(int *)(DAT_8367aa4c + 0xc) != 0)) {
+    MSG_Init(auStack_e0,uVar5,0x10000);
+    iVar7 = NET_GetLoopPacket_Real(4,&local_f0,auStack_e0);
+    uVar14 = uVar5;
+    if (iVar7 != 0) {
+      uVar16 = 0x3ff0000000000000;
+      dVar17 = 0.0;
       do {
-        if (amStack_e0[0].cursize < 1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",
-                          0x180,0,"%s");
+        if ((int)local_cc < 1) {
+          MyAssertHandler(0xffffffff8208e040,0x180,0,0xffffffff82000f98,"msg->cursize > 0");
         }
-        if (amStack_e0[0].data == (uchar *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",
-                          0x181,0,"%s");
+        if (local_d8 == (void *)0x0) {
+          MyAssertHandler(0xffffffff8208e040,0x181,0,0xffffffff82000f98,"msg->data != NULL");
         }
-        Sys_EnterCriticalSection(CRITSECT_FAKELAG);
-        iVar6 = Sys_Milliseconds();
-        pcVar1 = (fakelag_target->current).string;
-        pcVar2 = (fakelag_current->current).string;
-        if ((fakelag_jitter->current).string + (int)pcVar1 != pcVar2) {
-          uVar3 = (int)(pcVar2 + (-(fakelag_currentjitter->current).integer - (int)pcVar1)) >> 0x1f;
-          iVar8 = ((uint)(pcVar2 + (-(fakelag_currentjitter->current).integer - (int)pcVar1)) ^
-                  uVar3) - uVar3;
-          iVar10 = iVar6 - lastCall;
-          if (iVar8 < iVar6 - lastCall) {
-            iVar10 = iVar8;
+        Sys_EnterCriticalSection(9);
+        lVar6 = Sys_Milliseconds();
+        uVar1 = *(uint *)(DAT_83670a40 + 0xc);
+        uVar2 = *(uint *)(DAT_8367aa54 + 0xc);
+        if (*(int *)(DAT_8367aa50 + 0xc) + uVar1 != uVar2) {
+          uVar11 = ((ulonglong)uVar2 - (ulonglong)uVar1) - (ulonglong)*(uint *)(DAT_8367aa4c + 0xc);
+          uVar10 = (ulonglong)((int)uVar11 >> 0x1f);
+          lVar12 = (uVar11 ^ uVar10) - uVar10;
+          lVar13 = lVar6 - (ulonglong)DAT_8367aa6c;
+          if ((int)lVar12 < (int)(lVar6 - (ulonglong)DAT_8367aa6c)) {
+            lVar13 = lVar12;
           }
-          if ((int)(pcVar1 + (fakelag_currentjitter->current).integer) < (int)pcVar2) {
-            iVar10 = -iVar10;
+          if ((int)(uVar1 + *(uint *)(DAT_8367aa4c + 0xc)) < (int)uVar2) {
+            lVar13 = -lVar13;
           }
-          Dvar_SetInt(fakelag_current,(int)(pcVar2 + iVar10));
+          Dvar_SetInt(DAT_8367aa54,(ulonglong)uVar2 + lVar13);
         }
-        pdVar4 = fakelag_packetloss;
-        if (((double)(fakelag_packetloss->current).value <= dVar13) ||
-           (fVar14 = flrand((float)dVar13,(float)dVar12), (pdVar4->current).value < fVar14)) {
-          iVar10 = FakeLag_GetFreeSlot();
-          if (g_fakelagHeap == (void *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",
-                            0x1a3,0,"%s");
+        iVar7 = DAT_8367aa48;
+        if (((double)*(float *)(DAT_8367aa48 + 0xc) <= dVar17) ||
+           (dVar15 = (double)flrand(dVar17,uVar16), (double)*(float *)(iVar7 + 0xc) < dVar15)) {
+          iVar7 = FakeLag_GetFreeSlot();
+          if (DAT_83670a44 == 0) {
+            MyAssertHandler(0xffffffff8208e040,0x1a3,0,0xffffffff82000f98,0xffffffff8208e080);
           }
-          puVar7 = RtlAllocateHeap(g_fakelagHeap,0,amStack_e0[0].cursize);
-          laggedPackets[iVar10].data = puVar7;
-          if (puVar7 == (uchar *)0x0) {
+          _Dst = (void *)RtlAllocateHeap(DAT_83670a44,0,local_cc);
+          iVar3 = iVar7 * 0x50;
+          (&DAT_83670a64)[iVar7 * 0x14] = _Dst;
+          if (_Dst == (void *)0x0) {
             Com_PrintWarning(0x19,"Your fakelag settings are too high - fakelag buffer is full!\n");
-            laggedPackets[iVar10].length = 0;
-            Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
+            (&DAT_83670a60)[iVar7 * 0x14] = 0;
+            Sys_LeaveCriticalSection(9);
           }
           else {
-            memcpy();
-            memcpy();
-            pdVar4 = fakelag_jitter;
-            laggedPackets[iVar10].outbound = false;
-            laggedPackets[iVar10].addr.type = local_f0.type;
-            laggedPackets[iVar10].addr.port = local_f0.port;
-            *(undefined2 *)&laggedPackets[iVar10].addr.field_0xa = local_f0._10_2_;
-            *&laggedPackets[iVar10].addr.ip = local_f0.ip;
-            laggedPackets[iVar10].addr.localNetID = local_f0.localNetID;
-            laggedPackets[iVar10].loopback = true;
-            laggedPackets[iVar10].sock = NS_MAXCLIENTS;
-            laggedPackets[iVar10].length = amStack_e0[0].cursize;
-            laggedPackets[iVar10].msg.data = laggedPackets[iVar10].data;
-            local_100 = (longlong)iVar6;
-            if ((pdVar4->current).integer == 0) {
+            memcpy(_Dst,local_d8,local_cc);
+            memcpy(&DAT_83670a6c + iVar7 * 0x14,auStack_e0,0x2c);
+            iVar8 = DAT_8367aa50;
+            (&DAT_83670a48)[iVar3] = 0;
+            (&DAT_83670a50)[iVar7 * 0x14] = local_f0;
+            (&DAT_83670a58)[iVar7 * 0x14] = local_e8;
+            (&DAT_83670a54)[iVar7 * 0x14] = local_ec;
+            (&DAT_83670a5c)[iVar7 * 0x14] = local_e4;
+            (&DAT_83670a49)[iVar3] = 1;
+            (&DAT_83670a4c)[iVar7 * 0x14] = 4;
+            (&DAT_83670a60)[iVar7 * 0x14] = local_cc;
+            *(undefined4 *)(&DAT_83670a74 + iVar3) = (&DAT_83670a64)[iVar7 * 0x14];
+            local_100 = lVar6;
+            if (*(int *)(iVar8 + 0xc) == 0) {
               iVar8 = 0;
             }
             else {
-              iVar8 = irand(0,lastCall - iVar6);
+              iVar8 = irand(0,(ulonglong)DAT_8367aa6c - lVar6);
             }
             iVar9 = Sys_Milliseconds();
-            pdVar4 = showpackets;
-            laggedPackets[iVar10].startTime = iVar9 + iVar8;
-            if (((pdVar4->current).integer != 0) &&
-               ((1 < (pdVar4->current).integer || (laggedPackets[iVar10].loopback == false)))) {
-              Com_Printf(0x19,"[%i] adding incoming %s packet for %s\n");
+            iVar4 = DAT_83691660;
+            (&DAT_83670a68)[iVar7 * 0x14] = iVar9 + iVar8;
+            if ((*(int *)(iVar4 + 0xc) != 0) &&
+               ((1 < *(int *)(iVar4 + 0xc) || ((&DAT_83670a49)[iVar3] == '\0')))) {
+              Com_Printf(0x19,0xffffffff8208e374,lVar6,0xffffffff8208e2ac,"server");
             }
-            lastCall = iVar6;
-            Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
+            DAT_8367aa6c = (uint)lVar6;
+            Sys_LeaveCriticalSection(9);
+            uVar14 = uVar5 & 0xffffffff;
           }
         }
         else {
-          Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
+          Sys_LeaveCriticalSection(9);
         }
-        iVar6 = NET_GetLoopPacket_Real(NS_MAXCLIENTS,&local_f0,amStack_e0);
-      } while (iVar6 != 0);
+        iVar7 = NET_GetLoopPacket_Real(4,&local_f0,auStack_e0);
+      } while (iVar7 != 0);
     }
-    MSG_Init(amStack_e0,puVar5,0x10000);
-    nVar11 = NS_CLIENT1;
+    MSG_Init(auStack_e0,uVar14,0x10000);
+    lVar6 = 0;
     do {
-      iVar6 = NET_GetLoopPacket_Real(nVar11,&local_f0,amStack_e0);
-      while (iVar6 != 0) {
-        FakeLag_QueueIncomingPacket(true,nVar11,&local_f0,amStack_e0);
-        iVar6 = NET_GetLoopPacket_Real(nVar11,&local_f0,amStack_e0);
+      iVar7 = NET_GetLoopPacket_Real(lVar6,&local_f0,auStack_e0);
+      while (iVar7 != 0) {
+        FakeLag_QueueIncomingPacket(1,lVar6,&local_f0,auStack_e0);
+        iVar7 = NET_GetLoopPacket_Real(lVar6,&local_f0,auStack_e0);
       }
-      nVar11 = nVar11 + NS_CLIENT2;
-    } while ((int)nVar11 < 4);
-    MSG_Init(amStack_e0,puVar5,0x10000);
-    iVar6 = Sys_GetPacket(&local_f0,amStack_e0);
-    while (iVar6 != 0) {
-      FakeLag_QueueIncomingPacket(false,NS_PACKET,&local_f0,amStack_e0);
-      iVar6 = Sys_GetPacket(&local_f0,amStack_e0);
+      lVar6 = lVar6 + 1;
+    } while ((int)lVar6 < 4);
+    MSG_Init(auStack_e0,uVar14,0x10000);
+    iVar7 = Sys_GetPacket(&local_f0,auStack_e0);
+    while (iVar7 != 0) {
+      FakeLag_QueueIncomingPacket(0,5,&local_f0,auStack_e0);
+      iVar7 = Sys_GetPacket(&local_f0,auStack_e0);
     }
   }
-  LargeLocal::~LargeLocal(&LStack_108);
+  LargeLocal___LargeLocal(auStack_108);
   __restgprlr();
   return;
 }
@@ -655,79 +665,78 @@ void FakeLag_ReceivePackets(void)
 
 // 82501300  FakeLag_GetPacket  (qcommon/fakelag.cpp:518)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int FakeLag_GetPacket(bool param_1,netsrc_t param_2,netadr_t *param_3,msg_t *param_4)
+void FakeLag_GetPacket(undefined8 param_1,int param_2,undefined4 *param_3,undefined4 *param_4)
 
 {
   uint uVar1;
-  undefined2 uVar2;
+  int iVar2;
   char cVar4;
-  int iVar3;
-  bool bVar5;
-  uint uVar6;
-  fakedLatencyPackets_t *pfVar7;
+  longlong lVar3;
+  char cVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  char *pcVar8;
   
-  cVar4 = __savegprlr_20(param_1);
-  Sys_EnterCriticalSection(CRITSECT_FAKELAG);
-  iVar3 = Sys_Milliseconds();
-  pfVar7 = laggedPackets;
-  uVar6 = 0;
+  cVar4 = __savegprlr_20();
+  Sys_EnterCriticalSection(9);
+  lVar3 = Sys_Milliseconds();
+  pcVar8 = &DAT_83670a48;
+  uVar7 = 0;
   do {
-    if ((((pfVar7->length != 0) && (pfVar7->outbound == false)) && (pfVar7->sock == param_2)) &&
-       (pfVar7->loopback == (bool)cVar4)) {
-      if (pfVar7->data == (uchar *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x218
-                        ,0,"%s");
+    if ((((*(int *)(pcVar8 + 0x18) != 0) && (*pcVar8 == '\0')) && (*(int *)(pcVar8 + 4) == param_2))
+       && (pcVar8[1] == cVar4)) {
+      if (*(int *)(pcVar8 + 0x1c) == 0) {
+        MyAssertHandler(0xffffffff8208e040,0x218,0,0xffffffff82000f98,0xffffffff8208e47c);
       }
-      bVar5 = FakeLag_HostingGameOrParty();
-      if (((bVar5) && (pfVar7->loopback == false)) ||
-         (uVar1 = (fakelag_current->current).integer,
-         (int)(((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0) + pfVar7->startTime)
-         <= iVar3)) {
-        if (((showpackets->current).integer != 0) &&
-           ((1 < (showpackets->current).integer || (laggedPackets[uVar6].loopback == false)))) {
-          Com_Printf(0x19,"[%i] delivering incoming packet from %i (time: %i) (%ims latency)\n");
+      cVar5 = FakeLag_HostingGameOrParty();
+      if ((cVar5 != '\0') && (pcVar8[1] == '\0')) {
+LAB_82501418:
+        if ((*(int *)(DAT_83691660 + 0xc) != 0) &&
+           ((1 < *(int *)(DAT_83691660 + 0xc) ||
+            ((&DAT_83670a49)[(int)((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0xffffffff) << 4)] == '\0')))
+           ) {
+          uVar6 = (ulonglong)
+                  *(uint *)((int)&DAT_83670a68 +
+                           (int)((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0xffffffff) << 4));
+          Com_Printf(0x19,0xffffffff8208e438,lVar3,uVar6,uVar6,lVar3 - uVar6);
         }
-        param_3->type = laggedPackets[uVar6].addr.type;
-        *(undefined4 *)param_3->ip = *(undefined4 *)laggedPackets[uVar6].addr.ip;
-        uVar2 = *(undefined2 *)&laggedPackets[uVar6].addr.field_0xa;
-        param_3->port = laggedPackets[uVar6].addr.port;
-        *(undefined2 *)&param_3->field_0xa = uVar2;
-        param_3->localNetID = laggedPackets[uVar6].addr.localNetID;
-        param_4->bit = laggedPackets[uVar6].msg.bit;
-        param_4->cursize = laggedPackets[uVar6].msg.cursize;
-        param_4->maxsize = laggedPackets[uVar6].msg.maxsize;
-        param_4->overflowed = laggedPackets[uVar6].msg.overflowed;
-        param_4->readcount = laggedPackets[uVar6].msg.readcount;
-        if (NS_PACKET < laggedPackets[uVar6].msg.targetLocalNetID) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",
-                          0x22b,0,
-                          "laggedPackets[packet].msg.targetLocalNetID doesn\'t index NS_INVALID_NETSRC\n\t%i not in [0, %i)"
-                         );
+        iVar2 = (int)uVar7;
+        *param_3 = (&DAT_83670a50)[iVar2 * 0x14];
+        param_3[1] = (&DAT_83670a54)[iVar2 * 0x14];
+        param_3[2] = (&DAT_83670a58)[iVar2 * 0x14];
+        param_3[3] = (&DAT_83670a5c)[iVar2 * 0x14];
+        param_4[8] = (&DAT_83670a8c)[iVar2 * 0x14];
+        param_4[5] = (&DAT_83670a80)[iVar2 * 0x14];
+        param_4[4] = (&DAT_83670a7c)[iVar2 * 0x14];
+        *param_4 = (&DAT_83670a6c)[iVar2 * 0x14];
+        param_4[7] = (&DAT_83670a88)[iVar2 * 0x14];
+        if (5 < (uint)(&DAT_83670a94)[iVar2 * 0x14]) {
+          MyAssertHandler(0xffffffff8208e040,0x22b,0,0xffffffff8208e3d8,
+                          (&DAT_83670a94)[iVar2 * 0x14],6);
         }
-        param_4->targetLocalNetID = laggedPackets[uVar6].msg.targetLocalNetID;
-        if (laggedPackets[uVar6].data == (uchar *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",
-                          0x22f,0,"%s");
+        param_4[10] = (&DAT_83670a94)[iVar2 * 0x14];
+        if ((&DAT_83670a64)[iVar2 * 0x14] == 0) {
+          MyAssertHandler(0xffffffff8208e040,0x22f,0,0xffffffff82000f98,0xffffffff8208e47c);
         }
-        if (param_4->data == (uchar *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",
-                          0x230,0,"%s");
+        if (param_4[2] == 0) {
+          MyAssertHandler(0xffffffff8208e040,0x230,0,0xffffffff82000f98,0xffffffff8208e3c4);
         }
-        XMemCpy(param_4->data,laggedPackets[uVar6].data,laggedPackets[uVar6].length);
-        FakeLag_DestroyPacket(uVar6);
-        Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-        iVar3 = __restgprlr_20(1);
-        return iVar3;
+        XMemCpy(param_4[2],(&DAT_83670a64)[iVar2 * 0x14],(&DAT_83670a60)[iVar2 * 0x14]);
+        FakeLag_DestroyPacket(uVar7);
+        Sys_LeaveCriticalSection(9);
+        __restgprlr_20(1);
+        return;
       }
+      uVar1 = *(uint *)(DAT_8367aa54 + 0xc);
+      if ((int)(((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0) +
+               *(int *)(pcVar8 + 0x20)) <= (int)lVar3) goto LAB_82501418;
     }
-    pfVar7 = pfVar7 + 1;
-    uVar6 = uVar6 + 1;
-    if (-0x7c9855b9 < (int)pfVar7) {
-      Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-      iVar3 = __restgprlr_20(0);
-      return iVar3;
+    pcVar8 = pcVar8 + 0x50;
+    uVar7 = uVar7 + 1;
+    if (-0x7c9855b9 < (int)pcVar8) {
+      Sys_LeaveCriticalSection(9);
+      __restgprlr_20(0);
+      return;
     }
   } while( true );
 }
@@ -735,16 +744,12 @@ int FakeLag_GetPacket(bool param_1,netsrc_t param_2,netadr_t *param_3,msg_t *par
 
 // 825015A8  FakeLag_Frame  (qcommon/fakelag.cpp:584)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void FakeLag_Frame(void)
 
 {
-  int iVar1;
-  
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"FakeLag_Frame");
-  iVar1 = Sys_Milliseconds();
-  FakeLag_UpdateCurrentValues(iVar1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8208e498);
+  Sys_Milliseconds();
+  FakeLag_UpdateCurrentValues();
   FakeLag_ReceivePackets();
   FakeLag_SendLaggedPackets();
   PIXEndNamedEvent();
@@ -754,40 +759,37 @@ void FakeLag_Frame(void)
 
 // 825015E8  FakeLag_Shutdown  (qcommon/fakelag.cpp:597)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
 void FakeLag_Shutdown(void)
 
 {
-  int iVar1;
-  uint uVar2;
-  fakedLatencyPackets_t *pfVar3;
+  BOOL BVar1;
+  longlong lVar2;
+  char *pcVar3;
   
-  iVar1 = __savegprlr_28();
-  if (fakelagInitialized != false) {
-    uVar2 = 0;
-    pfVar3 = laggedPackets;
+  BVar1 = __savegprlr_28();
+  if (DAT_8367aa5c != '\0') {
+    lVar2 = 0;
+    pcVar3 = &DAT_83670a48;
     do {
-      if (pfVar3->length != 0) {
-        if (pfVar3->outbound == false) {
-          FakeLag_DestroyPacket(uVar2);
+      if (*(int *)(pcVar3 + 0x18) != 0) {
+        if (*pcVar3 == '\0') {
+          FakeLag_DestroyPacket(lVar2);
         }
         else {
-          FakeLag_SendPacket_Real(uVar2);
+          FakeLag_SendPacket_Real();
         }
       }
-      pfVar3 = pfVar3 + 1;
-      uVar2 = uVar2 + 1;
-    } while ((int)pfVar3 < -0x7c9855b8);
-    iVar1 = 0;
-    if (g_fakelagHeap != (void *)0x0) {
-      iVar1 = HeapDestroy(g_fakelagHeap);
-      g_fakelagHeap = (void *)0x0;
+      pcVar3 = pcVar3 + 0x50;
+      lVar2 = lVar2 + 1;
+    } while ((int)pcVar3 < -0x7c9855b8);
+    BVar1 = 0;
+    if (DAT_83670a44 != (HANDLE)0x0) {
+      BVar1 = HeapDestroy(DAT_83670a44);
+      DAT_83670a44 = (HANDLE)0x0;
     }
-    fakelagInitialized = false;
+    DAT_8367aa5c = '\0';
   }
-  __restgprlr_28(iVar1);
+  __restgprlr_28(BVar1);
   return;
 }
 

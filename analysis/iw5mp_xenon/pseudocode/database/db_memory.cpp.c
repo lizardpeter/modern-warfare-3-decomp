@@ -2,73 +2,65 @@
 
 // 823EC698  DB_AllocXZoneMemoryInternal  (database/db_memory.cpp:77)
 
-void DB_AllocXZoneMemoryInternal(uint *param_1,char *param_2,XZoneMemory *param_3,uint param_4)
+void DB_AllocXZoneMemoryInternal(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-  int iVar1;
-  int *piVar2;
-  void *pvVar3;
-  ulonglong uVar4;
-  uint uVar5;
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  uint *puVar4;
+  ulonglong uVar5;
   longlong lVar6;
   longlong lVar7;
-  longlong lVar8;
-  uint uVar9;
-  int *piVar10;
-  int *piVar11;
+  ulonglong uVar8;
+  uint *puVar9;
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  piVar2 = (int *)__savegprlr_20(param_1,lVar6,uVar4,param_4);
-  iVar1 = (int)uVar4;
-  lVar6 = lVar6 + 4;
-  uVar5 = g_memoryTypeInfo[iVar1].alignment - 1;
-  uVar9 = 0;
-  lVar7 = 7;
-  lVar8 = lVar6;
-  piVar10 = piVar2;
+  puVar4 = (uint *)__savegprlr_20();
+  iVar3 = (int)param_3 * 0xc;
+  iVar2 = -0x7d698bf0 - (int)puVar4;
+  param_2 = param_2 + 4;
+  uVar5 = (ulonglong)*(uint *)(&DAT_8296742c + iVar3) - 1;
+  uVar8 = 0;
+  lVar6 = 7;
+  lVar7 = param_2;
+  puVar9 = puVar4;
   do {
-    if ((ulonglong)*(uint *)((int)g_block_mem_type + ((int)piVar10 - (int)piVar2)) ==
-        (uVar4 & 0xffffffff)) {
-      if (*(int *)lVar8 != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_memory.cpp",
-                        0x5e,0,"zoneMem->blocks[blockIndex].size == 0\n\t%i, %i");
+    if ((ulonglong)*(uint *)(iVar2 + (int)puVar9) == (param_3 & 0xffffffff)) {
+      if (*(int *)lVar7 != 0) {
+        MyAssertHandler(0xffffffff8205af40,0x5e,0,0xffffffff8205af10,*(int *)lVar7,0);
       }
-      uVar9 = (uVar5 + *piVar10 & ~uVar5) + uVar9;
+      uVar8 = (uVar5 + *puVar9 & ~uVar5) + uVar8;
     }
-    lVar7 = lVar7 + -1;
-    lVar8 = lVar8 + 8;
-    piVar10 = piVar10 + 1;
-  } while (lVar7 != 0);
-  if (uVar9 != 0) {
-    pvVar3 = PMem_AllocFromSource_NoDebug
-                       (uVar9,g_memoryTypeInfo[iVar1].alignment,g_memoryTypeInfo[iVar1].physicalType
-                        ,g_memoryTypeInfo[iVar1].physicalSource);
-    if (pvVar3 == (void *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_memory.cpp",0x66
-                      ,0,"%s");
+    lVar6 = lVar6 + -1;
+    lVar7 = lVar7 + 8;
+    puVar9 = puVar9 + 1;
+  } while (lVar6 != 0);
+  if ((uVar8 & 0xffffffff) != 0) {
+    uVar8 = PMem_AllocFromSource_NoDebug
+                      (uVar8,*(undefined4 *)(&DAT_8296742c + iVar3),
+                       *(undefined4 *)(&DAT_82967430 + iVar3),*(undefined4 *)(&DAT_82967434 + iVar3)
+                      );
+    if ((uVar8 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff8205af40,0x66,0,0xffffffff82000f98,0xffffffff8205af0c);
     }
-    lVar8 = 7;
-    piVar10 = piVar2;
+    lVar7 = 7;
     do {
-      if ((ulonglong)*(uint *)((int)g_block_mem_type + ((int)piVar10 - (int)piVar2)) ==
-          (uVar4 & 0xffffffff)) {
-        piVar11 = (int *)lVar6;
-        if (*piVar11 != 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_memory.cpp",
-                          0x6c,0,"zoneMem->blocks[blockIndex].size == 0\n\t%i, %i");
+      if ((ulonglong)*(uint *)((int)puVar4 + iVar2) == (param_3 & 0xffffffff)) {
+        puVar9 = (uint *)param_2;
+        if (*puVar9 != 0) {
+          MyAssertHandler(0xffffffff8205af40,0x6c,0,0xffffffff8205af10,*puVar9,0);
         }
-        iVar1 = *piVar10;
-        if (iVar1 != 0) {
-          *piVar11 = iVar1;
-          piVar11[-1] = (int)pvVar3;
-          pvVar3 = (void *)((iVar1 + uVar5 & ~uVar5) + (int)pvVar3);
+        uVar1 = *puVar4;
+        if ((ulonglong)uVar1 != 0) {
+          *puVar9 = uVar1;
+          puVar9[-1] = (uint)uVar8;
+          uVar8 = (uVar1 + uVar5 & ~uVar5) + uVar8;
         }
       }
-      lVar8 = lVar8 + -1;
-      piVar10 = piVar10 + 1;
-      lVar6 = lVar6 + 8;
-    } while (lVar8 != 0);
+      lVar7 = lVar7 + -1;
+      puVar4 = puVar4 + 1;
+      param_2 = param_2 + 8;
+    } while (lVar7 != 0);
   }
   __restgprlr_20();
   return;
@@ -77,68 +69,62 @@ void DB_AllocXZoneMemoryInternal(uint *param_1,char *param_2,XZoneMemory *param_
 
 // 823EC800  DB_AllocXZoneMemory  (database/db_memory.cpp:121)
 
-void DB_AllocXZoneMemory(uint *param_1,char *param_2,XZoneMemory *param_3)
+void DB_AllocXZoneMemory(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
-  uint in_r6;
-  
-  DB_AllocXZoneMemoryInternal(param_1,(char *)param_3,(XZoneMemory *)0x1,in_r6);
-  DB_AllocXZoneMemoryInternal(param_1,(char *)param_3,(XZoneMemory *)0x0,in_r6);
-  db_callbackMemoryPos = 0;
-  DAT_82cc6d48 = param_3->blocks[5].data;
-  db_callbackMemorySize = param_3->blocks[5].size;
+  DB_AllocXZoneMemoryInternal(param_1,param_3,1);
+  DB_AllocXZoneMemoryInternal(param_1,param_3,0);
+  DAT_82cc6d4c = 0;
+  DAT_82cc6d48 = *(undefined4 *)(param_3 + 0x28);
+  DAT_82cc6d44 = *(undefined4 *)(param_3 + 0x2c);
   return;
 }
 
 
 // 823EC870  DB_Alloc  (database/db_memory.cpp:159)
 
-void * DB_Alloc(uint param_1,uint param_2)
+void DB_Alloc(undefined8 param_1,longlong param_2)
 
 {
-  int iVar1;
-  void *pvVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  ulonglong uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
   
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_memory.cpp",0xa2,0
-                    ,"%s");
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205af40,0xa2,0,0xffffffff82000f98,0xffffffff82036204);
   }
-  uVar4 = (ulonglong)DAT_82cc6d48;
-  uVar5 = (ulonglong)db_callbackMemoryPos + (lVar3 - 1U) & ~(lVar3 - 1U);
-  db_callbackMemoryPos = (int)uVar5 + iVar1;
-  if (db_callbackMemorySize < db_callbackMemoryPos) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_memory.cpp",0xa8,0
-                    ,"%s\n\t(db_callbackMemoryPos) = %i");
+  uVar2 = (ulonglong)DAT_82cc6d48;
+  uVar3 = (ulonglong)DAT_82cc6d4c + (param_2 - 1U) & ~(param_2 - 1U);
+  uVar1 = uVar3 + uVar1;
+  DAT_82cc6d4c = (uint)uVar1;
+  if ((ulonglong)DAT_82cc6d44 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8205af40,0xa8,0,0xffffffff8205af84,0xffffffff8205afa4);
   }
-  pvVar2 = (void *)__restgprlr_29(uVar4 + uVar5);
-  return pvVar2;
+  __restgprlr_29(uVar2 + uVar3);
+  return;
 }
 
 
 // 823EC918  DB_FreeXZoneMemory  (database/db_memory.cpp:176)
 
-void DB_FreeXZoneMemory(XZoneMemory *param_1)
+void DB_FreeXZoneMemory(undefined4 *param_1)
 
 {
-  param_1->blocks[0].data = (uchar *)0x0;
-  param_1->blocks[0].size = 0;
-  param_1->blocks[1].data = (uchar *)0x0;
-  param_1->blocks[1].size = 0;
-  param_1->blocks[2].data = (uchar *)0x0;
-  param_1->blocks[2].size = 0;
-  param_1->blocks[3].data = (uchar *)0x0;
-  param_1->blocks[3].size = 0;
-  param_1->blocks[4].data = (uchar *)0x0;
-  param_1->blocks[4].size = 0;
-  param_1->blocks[5].data = (uchar *)0x0;
-  param_1->blocks[5].size = 0;
-  param_1->blocks[6].data = (uchar *)0x0;
-  param_1->blocks[6].size = 0;
+  *param_1 = 0;
+  param_1[1] = 0;
+  param_1[2] = 0;
+  param_1[3] = 0;
+  param_1[4] = 0;
+  param_1[5] = 0;
+  param_1[6] = 0;
+  param_1[7] = 0;
+  param_1[8] = 0;
+  param_1[9] = 0;
+  param_1[10] = 0;
+  param_1[0xb] = 0;
+  param_1[0xc] = 0;
+  param_1[0xd] = 0;
   return;
 }
 

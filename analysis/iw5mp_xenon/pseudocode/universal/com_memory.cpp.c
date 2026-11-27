@@ -2,53 +2,47 @@
 
 // 825E04B8  CanUseServerLargeLocal  (universal/com_memory.cpp:171)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int CanUseServerLargeLocal(void)
+undefined1 CanUseServerLargeLocal(void)
 
 {
   int iVar1;
-  bool bVar2;
+  undefined1 uVar2;
   
   iVar1 = SV_GetServerThreadOwnsGame();
   if (iVar1 != 0) {
-    bVar2 = Sys_IsServerThread();
-    return (uint)bVar2;
+    uVar2 = Sys_IsServerThread();
+    return uVar2;
   }
-  bVar2 = Sys_IsRenderThread();
-  return (uint)bVar2;
+  uVar2 = Sys_IsRenderThread();
+  return uVar2;
 }
 
 
 // 825E0500  TRACK_com_memory  (universal/com_memory.cpp:313)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_com_memory(void)
 
 {
-  track_static_alloc_internal(com_fileDataHashTable,0x1000,"com_fileDataHashTable",10);
+  track_static_alloc_internal(0xffffffff84015d60,0x1000,0xffffffff82175728,10);
   return;
 }
 
 
 // 825E0520  Z_VirtualReserve  (universal/com_memory.cpp:416)
 
-void * Z_VirtualReserve(int param_1,char *param_2)
+LPVOID Z_VirtualReserve(undefined8 param_1)
 
 {
-  void *pvVar1;
+  LPVOID pvVar1;
   
-  if (param_1 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x1a1,0,"%s\n\t(size) = %i");
+  if ((int)(SIZE_T)param_1 < 1) {
+    MyAssertHandler(0xffffffff82175740,0x1a1,0,0xffffffff8203b444,0xffffffff8215b334,param_1);
   }
   Profile_Begin(0x1b7);
-  pvVar1 = VirtualAlloc((void *)0x0,param_1,0x20002000,4);
-  Profile_EndInternal((double *)0x0);
-  if (pvVar1 == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x1f2,0,"%s");
+  pvVar1 = VirtualAlloc((LPVOID)0x0,(SIZE_T)param_1,0x20002000,4);
+  Profile_EndInternal(0);
+  if (pvVar1 == (LPVOID)0x0) {
+    MyAssertHandler(0xffffffff82175740,0x1f2,0,0xffffffff82000f98,0xffffffff8205af0c);
   }
   return pvVar1;
 }
@@ -56,88 +50,86 @@ void * Z_VirtualReserve(int param_1,char *param_2)
 
 // 825E05E0  Z_TryVirtualCommitInternal  (universal/com_memory.cpp:560)
 
-int Z_TryVirtualCommitInternal(void *param_1,int param_2)
+bool Z_TryVirtualCommitInternal(LPVOID param_1,undefined8 param_2)
 
 {
-  void *pvVar1;
+  LPVOID pvVar1;
   
-  if (param_2 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x237,0,"%s\n\t(size) = %i");
+  if ((int)(SIZE_T)param_2 < 0) {
+    MyAssertHandler(0xffffffff82175740,0x237,0,0xffffffff8203b444,0xffffffff82175784,param_2);
   }
   Profile_Begin(0x1b7);
-  pvVar1 = VirtualAlloc(param_1,param_2,0x20001000,4);
-  if (pvVar1 != (void *)0x0) {
+  pvVar1 = VirtualAlloc(param_1,(SIZE_T)param_2,0x20001000,4);
+  if (pvVar1 != (LPVOID)0x0) {
     UpdateMemStats();
-    Profile_EndInternal((double *)0x0);
+    Profile_EndInternal(0);
   }
   else {
-    Profile_EndInternal((double *)0x0);
+    Profile_EndInternal();
   }
-  return (int)(pvVar1 != (void *)0x0);
+  return pvVar1 != (LPVOID)0x0;
 }
 
 
 // 825E0688  Z_VirtualDecommitInternal  (universal/com_memory.cpp:616)
 
-void Z_VirtualDecommitInternal(void *param_1,int param_2)
+void Z_VirtualDecommitInternal(LPVOID param_1,undefined8 param_2)
 
 {
-  if (param_2 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x270,0,"%s\n\t(size) = %i");
+  BOOL BVar1;
+  
+  if ((int)(SIZE_T)param_2 < 0) {
+    MyAssertHandler(0xffffffff82175740,0x270,0,0xffffffff8203b444,0xffffffff82175784,param_2);
   }
   Profile_Begin(0x1b7);
-  VirtualFree(param_1,param_2,0x4000);
-  UpdateMemStats();
-  Profile_EndInternal((double *)0x0);
+  BVar1 = VirtualFree(param_1,(SIZE_T)param_2,0x4000);
+  UpdateMemStats(BVar1);
+  Profile_EndInternal(0);
   return;
 }
 
 
 // 825E0710  Z_VirtualFreeInternal  (universal/com_memory.cpp:667)
 
-void Z_VirtualFreeInternal(void *param_1)
+void Z_VirtualFreeInternal(LPVOID param_1)
 
 {
   Profile_Begin(0x1b7);
   UpdateMemStats();
   VirtualFree(param_1,0,0x8000);
-  Profile_EndInternal((double *)0x0);
+  Profile_EndInternal(0);
   return;
 }
 
 
 // 825E3F18  Z_TryVirtualAllocInternal  (universal/com_memory.cpp:722)
 
-void * Z_TryVirtualAllocInternal(int param_1,char *param_2)
+undefined8 Z_TryVirtualAllocInternal(undefined8 param_1)
 
 {
-  void *pvVar1;
+  undefined8 uVar1;
   int iVar2;
   
-  pvVar1 = Z_VirtualReserve(param_1,param_2);
-  iVar2 = Z_TryVirtualCommitInternal(pvVar1,param_1);
+  uVar1 = Z_VirtualReserve();
+  iVar2 = Z_TryVirtualCommitInternal(uVar1,param_1);
   if (iVar2 == 0) {
-    Z_VirtualFree(pvVar1,0);
-    pvVar1 = (void *)0x0;
+    Z_VirtualFree(uVar1,0);
+    uVar1 = 0;
   }
-  return pvVar1;
+  return uVar1;
 }
 
 
 // 825E0760  Z_VirtualCommitInternal  (universal/com_memory.cpp:734)
 
-void Z_VirtualCommitInternal(void *param_1,int param_2)
+void Z_VirtualCommitInternal(void)
 
 {
   int iVar1;
   
-  iVar1 = Z_TryVirtualCommitInternal(param_1,param_2);
+  iVar1 = Z_TryVirtualCommitInternal();
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
-    Sys_OutOfMemErrorInternal
-              (2,"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",0x2e8);
+    Sys_OutOfMemErrorInternal(2,0xffffffff82175740,0x2e8);
   }
   return;
 }
@@ -145,292 +137,271 @@ void Z_VirtualCommitInternal(void *param_1,int param_2)
 
 // 825E07A0  Z_VirtualFree  (universal/com_memory.cpp:838)
 
-void Z_VirtualFree(void *param_1,int param_2)
+void Z_VirtualFree(undefined8 param_1,undefined8 param_2)
 
 {
-  void *pvVar1;
-  void *pvVar2;
-  ulong uVar3;
-  int iVar4;
-  void *pvVar5;
+  PVOID pvVar1;
+  ulonglong uVar2;
+  SIZE_T SVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
   _MEMORY_BASIC_INFORMATION local_80 [4];
+  LPCVOID lpAddress;
   
-  pvVar2 = (void *)__savegprlr_22(param_1);
-  if (pvVar2 == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x34e,0,"%s");
+  uVar2 = __savegprlr_22();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82175740,0x34e,0,0xffffffff82000f98,0xffffffff82175804);
   }
-  iVar4 = 0;
-  uVar3 = VirtualQuery(pvVar2,local_80,0x1c);
+  lVar5 = 0;
+  lpAddress = (LPCVOID)uVar2;
+  SVar3 = VirtualQuery(lpAddress,local_80,0x1c);
   pvVar1 = local_80[0].AllocationBase;
-  if (uVar3 != 0) {
-    if (local_80[0].AllocationBase != pvVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0x355,0,"%s");
+  if (SVar3 != 0) {
+    if (ZEXT48(local_80[0].AllocationBase) != (uVar2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82175740,0x355,0,0xffffffff82000f98,0xffffffff821757f8);
     }
-    if (local_80[0].BaseAddress != pvVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0x356,0,"%s");
+    if (ZEXT48(local_80[0].BaseAddress) != (uVar2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82175740,0x356,0,0xffffffff82000f98,0xffffffff821757e0);
     }
-    uVar3 = VirtualQuery(pvVar2,local_80,0x1c);
-    pvVar5 = pvVar2;
-    if (uVar3 != 0) {
+    SVar3 = VirtualQuery(lpAddress,local_80,0x1c);
+    uVar6 = uVar2;
+    if (SVar3 != 0) {
       do {
-        if (local_80[0].BaseAddress != pvVar5) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp"
-                          ,0x360,0,"%s");
+        if (ZEXT48(local_80[0].BaseAddress) != (uVar6 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff82175740,0x360,0,0xffffffff82000f98,0xffffffff82175790);
         }
         if (local_80[0].AllocationBase != pvVar1) break;
-        if (local_80[0].RegionSize == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp"
-                          ,0x365,0,"%s\n\t(info.RegionSize) = %i");
+        uVar4 = (ulonglong)local_80[0].RegionSize;
+        if (uVar4 == 0) {
+          MyAssertHandler(0xffffffff82175740,0x365,0,0xffffffff821757c4,0xffffffff821757b0,0);
+          uVar4 = (ulonglong)local_80[0].RegionSize;
         }
         if (local_80[0].State == 0x1000) {
-          iVar4 = local_80[0].RegionSize + iVar4;
+          lVar5 = uVar4 + lVar5;
         }
-        pvVar5 = (void *)(local_80[0].RegionSize + (int)pvVar5);
-        uVar3 = VirtualQuery(pvVar5,local_80,0x1c);
-      } while (uVar3 != 0);
-      if (iVar4 != 0) {
-        track_z_decommit(pvVar2,iVar4,param_2);
+        SVar3 = VirtualQuery((LPCVOID)(uVar4 + uVar6),local_80,0x1c);
+        uVar6 = uVar4 + uVar6;
+      } while (SVar3 != 0);
+      if ((int)lVar5 != 0) {
+        track_z_decommit(uVar2,lVar5,param_2);
       }
     }
   }
   Profile_Begin(0x1b7);
   UpdateMemStats();
-  VirtualFree(pvVar2,0,0x8000);
-  iVar4 = Profile_EndInternal((double *)0x0);
-  __restgprlr_22(iVar4);
+  VirtualFree(lpAddress,0,0x8000);
+  Profile_EndInternal(0);
+  __restgprlr_22();
   return;
 }
 
 
 // 825E0960  Z_VirtualDecommit  (universal/com_memory.cpp:896)
 
-void Z_VirtualDecommit(void *param_1,int param_2,int param_3)
+void Z_VirtualDecommit(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-  void *pvVar1;
-  void *pvVar2;
-  ulong uVar3;
-  int iVar4;
-  ulong uVar5;
+  PVOID pvVar1;
+  ulonglong uVar2;
+  SIZE_T SVar3;
+  BOOL BVar4;
+  SIZE_T dwSize;
+  longlong lVar5;
   longlong lVar6;
-  void *pvVar7;
+  ulonglong uVar7;
   _MEMORY_BASIC_INFORMATION local_90 [5];
   
-  lVar6 = (longlong)param_2;
-  pvVar2 = (void *)__savegprlr_19(param_1);
-  if (pvVar2 == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x388,0,"%s");
+  uVar2 = __savegprlr_19();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82175740,0x388,0,0xffffffff82000f98,0xffffffff82175804);
   }
-  uVar5 = (ulong)lVar6;
-  if (uVar5 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x389,0,"%s");
+  dwSize = (SIZE_T)param_2;
+  if (dwSize == 0) {
+    MyAssertHandler(0xffffffff82175740,0x389,0,0xffffffff82000f98,0xffffffff82036204);
   }
-  iVar4 = 0;
-  uVar3 = VirtualQuery(pvVar2,local_90,0x1c);
-  if (uVar3 != 0) {
-    if (local_90[0].BaseAddress != pvVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0x38f,0,"%s");
+  lVar5 = 0;
+  SVar3 = VirtualQuery((LPCVOID)uVar2,local_90,0x1c);
+  if (SVar3 != 0) {
+    if (ZEXT48(local_90[0].BaseAddress) != (uVar2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82175740,0x38f,0,0xffffffff82000f98,0xffffffff821757e0);
     }
     pvVar1 = local_90[0].AllocationBase;
-    if (0 < (int)uVar5) {
-      lVar6 = ((lVar6 - 1U & 0xffffffff) >> 0x10) + 1;
-      pvVar7 = pvVar2;
+    if (0 < (int)dwSize) {
+      lVar6 = ((param_2 - 1U & 0xffffffff) >> 0x10) + 1;
+      uVar7 = uVar2;
       do {
-        uVar3 = VirtualQuery(pvVar7,local_90,0x1c);
-        if (uVar3 == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp"
-                          ,0x397,0,"%s");
+        SVar3 = VirtualQuery((LPCVOID)uVar7,local_90,0x1c);
+        if (SVar3 == 0) {
+          MyAssertHandler(0xffffffff82175740,0x397,0,0xffffffff82000f98,0xffffffff82175840);
         }
         if (local_90[0].AllocationBase != pvVar1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp"
-                          ,0x398,0,"%s");
+          MyAssertHandler(0xffffffff82175740,0x398,0,0xffffffff82000f98,0xffffffff8217584c);
         }
-        if (local_90[0].BaseAddress != pvVar7) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp"
-                          ,0x399,0,"%s");
+        if (ZEXT48(local_90[0].BaseAddress) != (uVar7 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff82175740,0x399,0,0xffffffff82000f98,0xffffffff82175808);
         }
         if (local_90[0].State == 0x1000) {
-          iVar4 = iVar4 + 0x10000;
+          lVar5 = lVar5 + 0x10000;
         }
         lVar6 = lVar6 + -1;
-        pvVar7 = (void *)((int)pvVar7 + 0x10000);
+        uVar7 = uVar7 + 0x10000;
       } while (lVar6 != 0);
-      if (iVar4 != 0) {
-        track_z_decommit(pvVar2,iVar4,param_3);
+      if ((int)lVar5 != 0) {
+        track_z_decommit(uVar2,lVar5,param_3);
       }
     }
   }
-  if ((int)uVar5 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x270,0,"%s\n\t(size) = %i");
+  if ((int)dwSize < 0) {
+    MyAssertHandler(0xffffffff82175740,0x270,0,0xffffffff8203b444,0xffffffff82175784,param_2);
   }
   Profile_Begin(0x1b7);
-  VirtualFree(pvVar2,uVar5,0x4000);
-  UpdateMemStats();
-  iVar4 = Profile_EndInternal((double *)0x0);
-  __restgprlr_19(iVar4);
+  BVar4 = VirtualFree((LPCVOID)uVar2,dwSize,0x4000);
+  UpdateMemStats(BVar4);
+  Profile_EndInternal(0);
+  __restgprlr_19();
   return;
 }
 
 
 // 825E3F70  Z_TryVirtualAlloc  (universal/com_memory.cpp:1068)
 
-void * Z_TryVirtualAlloc(int param_1,char *param_2,int param_3)
+void Z_TryVirtualAlloc(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  void *pvVar2;
+  longlong lVar1;
+  ulonglong uVar2;
   int iVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  pvVar2 = Z_VirtualReserve(iVar1,param_2);
-  iVar3 = Z_TryVirtualCommitInternal(pvVar2,iVar1);
+  lVar1 = __savegprlr_29();
+  uVar2 = Z_VirtualReserve();
+  iVar3 = Z_TryVirtualCommitInternal(uVar2,lVar1);
   if (iVar3 == 0) {
-    Z_VirtualFree(pvVar2,0);
-    pvVar2 = (void *)__restgprlr_29(0);
-    return pvVar2;
+    Z_VirtualFree(uVar2,0);
+    __restgprlr_29(0);
+    return;
   }
-  if (pvVar2 != (void *)0x0) {
-    track_z_commit(pvVar2,iVar1 + 0xffffU & 0xffff0000,param_3);
+  if ((uVar2 & 0xffffffff) != 0) {
+    track_z_commit(uVar2,lVar1 + 0xffffU & 0xffff0000,param_3);
   }
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 825E3FE0  Z_VirtualAlloc  (universal/com_memory.cpp:1090)
 
-void * Z_VirtualAlloc(int param_1,char *param_2,int param_3)
+void Z_VirtualAlloc(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  void *pvVar2;
+  longlong lVar1;
+  ulonglong uVar2;
   int iVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  pvVar2 = Z_VirtualReserve(iVar1,param_2);
-  iVar3 = Z_TryVirtualCommitInternal(pvVar2,iVar1);
+  lVar1 = __savegprlr_29();
+  uVar2 = Z_VirtualReserve();
+  iVar3 = Z_TryVirtualCommitInternal(uVar2,lVar1);
   if (iVar3 == 0) {
-    Z_VirtualFree(pvVar2,0);
+    Z_VirtualFree(uVar2,0);
   }
-  else if (pvVar2 != (void *)0x0) {
-    track_z_commit(pvVar2,iVar1 + 0xffffU & 0xffff0000,param_3);
-    pvVar2 = (void *)__restgprlr_29(pvVar2);
-    return pvVar2;
+  else if ((uVar2 & 0xffffffff) != 0) {
+    track_z_commit(uVar2,lVar1 + 0xffffU & 0xffff0000,param_3);
+    __restgprlr_29(uVar2);
+    return;
   }
-                    /* WARNING: Subroutine does not return */
-  Sys_OutOfMemErrorInternal
-            (4,"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",0x44a);
+  Sys_OutOfMemErrorInternal(4,0xffffffff82175740,0x44a);
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 825E0B50  Z_VirtualCommit  (universal/com_memory.cpp:1109)
 
-void Z_VirtualCommit(void *param_1,int param_2,int param_3)
+void Z_VirtualCommit(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  void *pvVar1;
-  void *pvVar2;
-  ulong uVar3;
+  PVOID pvVar1;
+  ulonglong uVar2;
+  SIZE_T SVar3;
   int iVar4;
-  int iVar5;
+  longlong lVar5;
+  int iVar6;
   _MEMORY_BASIC_INFORMATION a_Stack_80 [4];
   
-  pvVar2 = (void *)__savegprlr_21(param_1);
-  if (pvVar2 == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x45d,0,"%s");
+  uVar2 = __savegprlr_21();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82175740,0x45d,0,0xffffffff82000f98,0xffffffff82175804);
   }
-  if (param_2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x45e,0,"%s");
+  iVar4 = (int)param_2;
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x45e,0,0xffffffff82000f98,0xffffffff82036204);
   }
-  iVar4 = 0;
-  uVar3 = VirtualQuery(pvVar2,a_Stack_80,0x1c);
+  lVar5 = 0;
+  SVar3 = VirtualQuery((LPCVOID)uVar2,a_Stack_80,0x1c);
   pvVar1 = a_Stack_80[0].AllocationBase;
-  if ((uVar3 != 0) && (iVar5 = 0, 0 < param_2)) {
+  if ((SVar3 != 0) && (iVar6 = 0, 0 < iVar4)) {
     do {
-      uVar3 = VirtualQuery((void *)(iVar5 + (int)pvVar2),a_Stack_80,0x1c);
-      if (uVar3 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                        0x46a,0,"%s");
+      SVar3 = VirtualQuery((LPCVOID)(iVar6 + (int)(LPCVOID)uVar2),a_Stack_80,0x1c);
+      if (SVar3 == 0) {
+        MyAssertHandler(0xffffffff82175740,0x46a,0,0xffffffff82000f98,0xffffffff82175840);
       }
       if (a_Stack_80[0].AllocationBase != pvVar1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                        0x46b,0,"%s");
+        MyAssertHandler(0xffffffff82175740,0x46b,0,0xffffffff82000f98,0xffffffff8217584c);
       }
       if (a_Stack_80[0].State == 0x2000) {
-        iVar4 = iVar4 + 0x10000;
+        lVar5 = lVar5 + 0x10000;
       }
-      iVar5 = iVar5 + 0x10000;
-    } while (iVar5 < param_2);
-    if (iVar4 != 0) {
-      track_z_commit(pvVar2,iVar4,param_3);
+      iVar6 = iVar6 + 0x10000;
+    } while (iVar6 < iVar4);
+    if ((int)lVar5 != 0) {
+      track_z_commit(uVar2,lVar5,param_3);
     }
   }
-  iVar4 = Z_TryVirtualCommitInternal(pvVar2,param_2);
-  if (iVar4 != 0) {
-    __restgprlr_21();
-    return;
+  iVar4 = Z_TryVirtualCommitInternal(uVar2,param_2);
+  if (iVar4 == 0) {
+    Sys_OutOfMemErrorInternal(2,0xffffffff82175740,0x2e8);
   }
-                    /* WARNING: Subroutine does not return */
-  Sys_OutOfMemErrorInternal
-            (2,"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",0x2e8);
+  __restgprlr_21();
+  return;
 }
 
 
 // 825E0CB8  CopyString  (universal/com_memory.cpp:1218)
 
-char * CopyString(char *param_1,char *param_2,int param_3)
+void CopyString(ulonglong param_1)
 
 {
-  uint uVar1;
-  char *pcVar2;
-  
-  if (param_1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x4c5,0,"%s");
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82175740,0x4c5,0,0xffffffff82000f98,0xffffffff82002030);
   }
-  uVar1 = SL_GetString_(param_1,0,0x16);
-  pcVar2 = SL_ConvertToString(uVar1);
-  return pcVar2;
+  SL_GetString_(param_1,0,0x16);
+  SL_ConvertToString();
+  return;
 }
 
 
 // 825E4068  ReplaceString  (universal/com_memory.cpp:1234)
 
-void ReplaceString(char **param_1,char *param_2,char *param_3,int param_4)
+void ReplaceString(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  undefined4 *puVar1;
-  uint uVar2;
-  char *pcVar3;
-  ulonglong uVar4;
+  int *piVar1;
+  int iVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  puVar1 = (undefined4 *)__savegprlr_26(param_1,uVar4,param_3);
-  if (puVar1 == (undefined4 *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x4d5,0,"%s");
+  piVar1 = (int *)__savegprlr_26();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82175740,0x4d5,0,0xffffffff82000f98,0xffffffff8202e030);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x4d6,0,"%s");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x4c5,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82175740,0x4d6,0,0xffffffff82000f98,0xffffffff82002030);
+    MyAssertHandler(0xffffffff82175740,0x4c5,0,0xffffffff82000f98,0xffffffff82002030);
   }
-  uVar2 = SL_GetString_((char *)uVar4,0,0x16);
-  pcVar3 = SL_ConvertToString(uVar2);
-  if ((char *)*puVar1 != (char *)0x0) {
-    FreeString((char *)*puVar1,param_4);
+  SL_GetString_(param_2,0,0x16);
+  iVar2 = SL_ConvertToString();
+  if (*piVar1 != 0) {
+    FreeString(*piVar1,param_4);
   }
-  *puVar1 = pcVar3;
+  *piVar1 = iVar2;
   __restgprlr_26();
   return;
 }
@@ -438,23 +409,20 @@ void ReplaceString(char **param_1,char *param_2,char *param_3,int param_4)
 
 // 825E0D20  FreeString  (universal/com_memory.cpp:1253)
 
-void FreeString(char *param_1,int param_2)
+void FreeString(void)
 
 {
-  char *pcVar1;
-  uint uVar2;
+  ulonglong uVar1;
   
-  pcVar1 = (char *)__savegprlr_29(param_1,param_2);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x4e8,0,"%s");
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82175740,0x4e8,0,0xffffffff82000f98,0xffffffff8202e030);
   }
-  uVar2 = SL_FindString(pcVar1);
-  if (uVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x4ea,0,"%s");
+  uVar1 = SL_FindString(uVar1);
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82175740,0x4ea,0,0xffffffff82000f98,0xffffffff8200202c);
   }
-  SL_RemoveRefToString(uVar2);
+  SL_RemoveRefToString(uVar1);
   __restgprlr_29();
   return;
 }
@@ -462,57 +430,48 @@ void FreeString(char *param_1,int param_2)
 
 // 825E0DA8  Com_Meminfo_f  (universal/com_memory.cpp:1519)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Com_Meminfo_f(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x5f0,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x5f0,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   track_PrintInfo();
-  Com_Printf(0,
-             "Related commands: meminfo, imagelist, gfx_world, gfx_model, cg_drawfps, com_statmon, tempmeminfo\n"
-            );
+  Com_Printf(0,0xffffffff82175868);
   return;
 }
 
 
 // 825E4130  Com_InitHunkMemory  (universal/com_memory.cpp:1643)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Com_InitHunkMemory(void)
 
 {
-  bool bVar1;
+  char cVar2;
+  undefined8 uVar1;
   
   __savegprlr_29();
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x66c,0,"%s");
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x66c,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (s_hunkData != (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x66d,0,"%s");
+  if (DAT_84016d60 != 0) {
+    MyAssertHandler(0xffffffff82175740,0x66d,0,0xffffffff82000f98,0xffffffff82176004);
   }
-  s_hunkTotal = 0x500000;
-  s_hunkData = PMem_Alloc_NoDebug(0x500000,0x10000,4);
-  XPhysicalProtect(s_hunkData,s_hunkTotal,0x404);
-  ImageCache_GiveMemory(s_hunkData,s_hunkData + s_hunkTotal);
-  if (s_hunkData == (uchar *)0x0) {
-                    /* WARNING: Subroutine does not return */
-    Sys_OutOfMemErrorInternal
-              (6,"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",0x6b1);
+  DAT_84015a94 = 0x500000;
+  uVar1 = PMem_Alloc_NoDebug(0x500000,0x10000,4);
+  DAT_84016d60 = (uint)uVar1;
+  XPhysicalProtect(uVar1,DAT_84015a94,0x404);
+  ImageCache_GiveMemory((ulonglong)DAT_84016d60,(ulonglong)DAT_84015a94 + (ulonglong)DAT_84016d60);
+  if (DAT_84016d60 == 0) {
+    Sys_OutOfMemErrorInternal(6,0xffffffff82175740,0x6b1);
   }
-  track_set_hunk_size(s_hunkTotal);
-  Cmd_AddCommandInternal("meminfo",Com_Meminfo_f,&Com_Meminfo_f_VAR);
-  Cmd_AddCommandInternal("hunk_user_info",Hunk_UserMemoryInfo_f,&Hunk_UserMemoryInfo_f_VAR);
+  track_set_hunk_size(DAT_84015a94);
+  Cmd_AddCommandInternal(0xffffffff82175ffc,0xffffffff825e0da8,0xffffffff84016d78);
+  Cmd_AddCommandInternal(0xffffffff82175fec,0xffffffff825e37f8,0xffffffff84016d64);
   __restgprlr_29();
   return;
 }
@@ -520,17 +479,14 @@ void Com_InitHunkMemory(void)
 
 // 825E0E10  Com_FreeHunkMemory  (universal/com_memory.cpp:1747)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Com_FreeHunkMemory(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x6d4,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x6d4,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   return;
 }
@@ -538,168 +494,148 @@ void Com_FreeHunkMemory(void)
 
 // 825E0E60  Hunk_FindDataForFileInternal  (universal/com_memory.cpp:1781)
 
-void * Hunk_FindDataForFileInternal(int param_1,char *param_2,int param_3)
+void Hunk_FindDataForFileInternal(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
   undefined4 *puVar1;
   uint uVar2;
   int iVar3;
-  void *pvVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)param_3;
-  uVar2 = __savegprlr_29(param_1);
-  puVar1 = *(undefined4 **)((int)com_fileDataHashTable + (int)((uVar5 & 0xffffffff) << 2));
+  uVar2 = __savegprlr_29();
+  puVar1 = *(undefined4 **)((int)&DAT_84015d60 + (int)((param_3 & 0xffffffff) << 2));
   while( true ) {
     if (puVar1 == (undefined4 *)0x0) {
-      pvVar4 = (void *)__restgprlr_29(0);
-      return pvVar4;
+      __restgprlr_29(0);
+      return;
     }
-    if ((*(byte *)(puVar1 + 2) == uVar2) &&
-       (iVar3 = I_stricmp((char *)((int)puVar1 + 9),param_2), iVar3 == 0)) break;
+    if ((*(byte *)(puVar1 + 2) == uVar2) && (iVar3 = I_stricmp((int)puVar1 + 9,param_2), iVar3 == 0)
+       ) break;
     puVar1 = (undefined4 *)puVar1[1];
   }
-  pvVar4 = (void *)__restgprlr_29(*puVar1);
-  return pvVar4;
+  __restgprlr_29(*puVar1);
+  return;
 }
 
 
 // 825E0ED0  Hunk_FindDataForFile  (universal/com_memory.cpp:1803)
 
-void * Hunk_FindDataForFile(int param_1,char *param_2)
+void Hunk_FindDataForFile(undefined8 param_1,undefined8 param_2)
 
 {
-  long lVar1;
-  void *pvVar2;
+  undefined8 uVar1;
   
-  lVar1 = FS_HashFileName(param_2,0x400);
-  pvVar2 = Hunk_FindDataForFileInternal(param_1,param_2,lVar1);
-  return pvVar2;
+  uVar1 = FS_HashFileName(param_2,0x400);
+  Hunk_FindDataForFileInternal(param_1,param_2,uVar1);
+  return;
 }
 
 
 // 825E0F20  Hunk_DataOnHunk  (universal/com_memory.cpp:1818)
 
-int Hunk_DataOnHunk(void *param_1)
+void Hunk_DataOnHunk(void)
 
 {
   ulonglong uVar1;
-  bool bVar3;
-  int iVar2;
-  ulonglong uVar4;
+  char cVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_28(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x71b,0,"%s");
+  uVar1 = __savegprlr_28();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x71b,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  uVar4 = ZEXT48(s_hunkData);
-  if (uVar4 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x71c,0,"%s");
-    uVar4 = ZEXT48(s_hunkData);
+  uVar3 = (ulonglong)DAT_84016d60;
+  if (uVar3 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x71c,0,0xffffffff82000f98,0xffffffff821758cc);
+    uVar3 = (ulonglong)DAT_84016d60;
   }
-  if ((uVar1 & 0xffffffff) < uVar4) {
-    iVar2 = __restgprlr_28(0);
-    return iVar2;
+  if ((uVar1 & 0xffffffff) < uVar3) {
+    __restgprlr_28(0);
+    return;
   }
-  iVar2 = __restgprlr_28(-(uVar1 < (uint)s_hunkTotal + uVar4) & 1);
-  return iVar2;
+  __restgprlr_28(-(uVar1 < DAT_84015a94 + uVar3) & 1);
+  return;
 }
 
 
 // 825E0FD0  Hunk_SetDataForFile  (universal/com_memory.cpp:1838)
 
-char * Hunk_SetDataForFile(int param_1,char *param_2,void *param_3,
-                          _func___cdecl_void_ptr_int *param_4)
+void Hunk_SetDataForFile(undefined8 param_1,longlong param_2,undefined4 param_3,code *param_4)
 
 {
-  char cVar1;
-  uint uVar2;
-  bool bVar8;
-  long lVar3;
-  void *pvVar4;
-  fileData_s *pfVar5;
-  int iVar6;
+  undefined8 uVar1;
+  char cVar5;
+  int iVar2;
+  int iVar3;
+  undefined4 *puVar4;
   char *pcVar7;
-  char *pcVar11;
-  longlong lVar9;
-  longlong lVar10;
+  longlong lVar6;
   
-  lVar10 = (longlong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1);
-  bVar8 = Sys_IsMainThread();
-  if (!bVar8) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x732,0,"%s");
+  uVar1 = __savegprlr_25();
+  cVar5 = Sys_IsMainThread();
+  if (cVar5 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x732,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  pcVar7 = (char *)lVar10;
-  lVar3 = FS_HashFileName(pcVar7,0x400);
-  pvVar4 = Hunk_FindDataForFileInternal(uVar2,pcVar7,lVar3);
-  lVar9 = lVar10;
-  if (pvVar4 != (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x735,0,"%s");
+  iVar2 = FS_HashFileName(param_2,0x400);
+  iVar3 = Hunk_FindDataForFileInternal(uVar1,param_2,iVar2);
+  lVar6 = param_2;
+  if (iVar3 != 0) {
+    MyAssertHandler(0xffffffff82175740,0x735,0,0xffffffff82000f98,0xffffffff8217590c);
   }
   do {
-    pcVar11 = (char *)lVar9;
-    lVar9 = lVar9 + 1;
-  } while (*pcVar11 != '\0');
-  pfVar5 = (*param_4)(((int)lVar9 - (int)pcVar7) + 9);
-  iVar6 = Hunk_DataOnHunk(pfVar5);
-  if (iVar6 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x73a,0,"%s");
+    pcVar7 = (char *)lVar6;
+    lVar6 = lVar6 + 1;
+  } while (*pcVar7 != '\0');
+  puVar4 = (undefined4 *)(*param_4)(((lVar6 - param_2) - 1U & 0xffffffff) + 10);
+  iVar3 = Hunk_DataOnHunk();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x73a,0,0xffffffff82000f98,0xffffffff821758f0);
   }
-  pfVar5->data = param_3;
-  pfVar5->type = (uchar)uVar2;
-  if (uVar2 != (uVar2 & 0xff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x73f,0,"%s");
+  *puVar4 = param_3;
+  *(char *)(puVar4 + 2) = (char)uVar1;
+  if ((uint)uVar1 != ((uint)uVar1 & 0xff)) {
+    MyAssertHandler(0xffffffff82175740,0x73f,0,0xffffffff82000f98,0xffffffff821758d8);
   }
+  iVar3 = (int)param_2;
   do {
-    cVar1 = *(char *)lVar10;
-    ((char *)lVar10)[(int)pfVar5 + (9 - (int)pcVar7)] = cVar1;
-    lVar10 = lVar10 + 1;
-  } while (cVar1 != '\0');
-  pfVar5->next = com_fileDataHashTable[lVar3];
-  com_fileDataHashTable[lVar3] = pfVar5;
-  pcVar7 = (char *)__restgprlr_25();
-  return pcVar7;
+    cVar5 = *(char *)param_2;
+    ((char *)param_2)[(int)puVar4 + (9 - iVar3)] = cVar5;
+    param_2 = param_2 + 1;
+  } while (cVar5 != '\0');
+  puVar4[1] = (&DAT_84015d60)[iVar2];
+  (&DAT_84015d60)[iVar2] = puVar4;
+  __restgprlr_25();
+  return;
 }
 
 
 // 825E1138  Hunk_AddData  (universal/com_memory.cpp:1870)
 
-void Hunk_AddData(int param_1,void *param_2,_func___cdecl_void_ptr_int *param_3)
+void Hunk_AddData(undefined8 param_1,undefined4 param_2,code *param_3)
 
 {
   uint uVar1;
-  bool bVar4;
-  fileData_s *pfVar2;
+  char cVar4;
+  undefined4 *puVar2;
   int iVar3;
   
-  uVar1 = __savegprlr_27(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x751,0,"%s");
+  uVar1 = __savegprlr_27();
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x751,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  pfVar2 = (*param_3)(9);
-  iVar3 = Hunk_DataOnHunk(pfVar2);
+  puVar2 = (undefined4 *)(*param_3)(9);
+  iVar3 = Hunk_DataOnHunk();
   if (iVar3 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x756,0,"%s");
+    MyAssertHandler(0xffffffff82175740,0x756,0,0xffffffff82000f98,0xffffffff821758f0);
   }
-  pfVar2->data = param_2;
-  pfVar2->type = (uchar)uVar1;
+  *puVar2 = param_2;
+  *(char *)(puVar2 + 2) = (char)uVar1;
   if (uVar1 != (uVar1 & 0xff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x75b,0,"%s");
+    MyAssertHandler(0xffffffff82175740,0x75b,0,0xffffffff82000f98,0xffffffff821758d8);
   }
-  pfVar2->next = com_hunkData;
-  com_hunkData = pfVar2;
+  puVar2[1] = DAT_84015ca8;
+  DAT_84015ca8 = puVar2;
   __restgprlr_27();
   return;
 }
@@ -707,31 +643,26 @@ void Hunk_AddData(int param_1,void *param_2,_func___cdecl_void_ptr_int *param_3)
 
 // 825E1210  Hunk_ClearDataFor  (universal/com_memory.cpp:1928)
 
-void Hunk_ClearDataFor(fileData_s **param_1,uchar *param_2,uchar *param_3)
+void Hunk_ClearDataFor(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   int iVar1;
   uint uVar2;
   longlong lVar3;
-  bool bVar4;
+  char cVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  lVar3 = __savegprlr_29(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x78e,0,"%s");
+  lVar3 = __savegprlr_29();
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x78e,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   iVar1 = *(int *)lVar3;
   while (iVar1 != 0) {
     uVar2 = *(uint *)lVar3;
-    uVar7 = (ulonglong)uVar2;
-    if ((uVar7 < (uVar5 & 0xffffffff)) || ((uVar6 & 0xffffffff) <= uVar7)) {
-      lVar3 = uVar7 + 4;
+    uVar5 = (ulonglong)uVar2;
+    if ((uVar5 < (param_2 & 0xffffffff)) || ((param_3 & 0xffffffff) <= uVar5)) {
+      lVar3 = uVar5 + 4;
     }
     else {
       *(uint *)lVar3 = *(uint *)(uVar2 + 4);
@@ -745,72 +676,66 @@ void Hunk_ClearDataFor(fileData_s **param_1,uchar *param_2,uchar *param_3)
 
 // 825E12A0  Hunk_ClearData  (universal/com_memory.cpp:1975)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hunk_ClearData(void)
 
 {
-  fileData_s *pfVar1;
-  bool bVar2;
-  fileData_s *pfVar3;
-  fileData_s *pfVar4;
+  uint uVar1;
+  char cVar2;
+  uint uVar3;
+  uint uVar4;
   longlong lVar5;
-  fileData_s **ppfVar6;
-  fileData_s **ppfVar7;
-  fileData_s **ppfVar8;
+  uint *puVar6;
+  uint *puVar7;
+  uint *puVar8;
   
   __savegprlr_23();
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x7bd,0,"%s");
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x7bd,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  ppfVar8 = &com_hunkData;
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x7be,0,"%s");
+  puVar8 = &DAT_84015ca8;
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x7be,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  ppfVar6 = com_fileDataHashTable;
+  puVar6 = &DAT_84015d60;
   lVar5 = 0x400;
-  pfVar4 = (fileData_s *)(s_hunkData + hunk_low.permanent);
-  pfVar3 = (fileData_s *)(s_hunkData + (s_hunkTotal - hunk_high.permanent));
+  uVar4 = DAT_84015d54 + DAT_84016d60;
+  uVar3 = (DAT_84015a94 - DAT_84015d4c) + DAT_84016d60;
   do {
-    bVar2 = Sys_IsMainThread();
-    if (!bVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0x78e,0,"%s");
+    cVar2 = Sys_IsMainThread();
+    if (cVar2 == '\0') {
+      MyAssertHandler(0xffffffff82175740,0x78e,0,0xffffffff82000f98,0xffffffff82010b48);
     }
-    pfVar1 = *ppfVar6;
-    ppfVar7 = ppfVar6;
-    while (pfVar1 != (fileData_s *)0x0) {
-      pfVar1 = *ppfVar7;
-      if ((pfVar1 < pfVar4) || (pfVar3 <= pfVar1)) {
-        ppfVar7 = &pfVar1->next;
+    uVar1 = *puVar6;
+    puVar7 = puVar6;
+    while (uVar1 != 0) {
+      uVar1 = *puVar7;
+      if ((uVar1 < uVar4) || (uVar3 <= uVar1)) {
+        puVar7 = (uint *)(uVar1 + 4);
       }
       else {
-        *ppfVar7 = pfVar1->next;
+        *puVar7 = *(uint *)(uVar1 + 4);
       }
-      pfVar1 = *ppfVar7;
+      uVar1 = *puVar7;
     }
     lVar5 = lVar5 + -1;
-    ppfVar6 = ppfVar6 + 1;
+    puVar6 = puVar6 + 1;
   } while (lVar5 != 0);
-  bVar2 = Sys_IsMainThread();
-  pfVar1 = com_hunkData;
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x78e,0,"%s");
-    pfVar1 = com_hunkData;
+  cVar2 = Sys_IsMainThread();
+  uVar1 = DAT_84015ca8;
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x78e,0,0xffffffff82000f98,0xffffffff82010b48);
+    uVar1 = DAT_84015ca8;
   }
-  while (pfVar1 != (fileData_s *)0x0) {
-    pfVar1 = *ppfVar8;
-    if ((pfVar1 < pfVar4) || (pfVar3 <= pfVar1)) {
-      ppfVar8 = &pfVar1->next;
+  while (uVar1 != 0) {
+    uVar1 = *puVar8;
+    if ((uVar1 < uVar4) || (uVar3 <= uVar1)) {
+      puVar8 = (uint *)(uVar1 + 4);
     }
     else {
-      *ppfVar8 = pfVar1->next;
+      *puVar8 = *(uint *)(uVar1 + 4);
     }
-    pfVar1 = *ppfVar8;
+    uVar1 = *puVar8;
   }
   __restgprlr_23();
   return;
@@ -819,126 +744,105 @@ void Hunk_ClearData(void)
 
 // 825E1428  Hunk_GetFileHandle  (universal/com_memory.cpp:2003)
 
-void * Hunk_GetFileHandle(int param_1,char *param_2)
+void Hunk_GetFileHandle(undefined8 param_1,ulonglong param_2)
 
 {
-  fileData_s *pfVar1;
-  uint uVar2;
-  long lVar3;
-  int iVar4;
-  void *pvVar5;
-  ulonglong uVar6;
+  uint uVar1;
+  int iVar2;
+  int iVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x7d8,0,"%s");
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82175740,0x7d8,0,0xffffffff82000f98,0xffffffff82021a74);
   }
-  lVar3 = FS_HashFileName((char *)uVar6,0x400);
-  pfVar1 = com_fileDataHashTable[lVar3];
+  iVar2 = FS_HashFileName(param_2,0x400);
+  iVar2 = (&DAT_84015d60)[iVar2];
   while( true ) {
-    if (pfVar1 == (fileData_s *)0x0) {
-      pvVar5 = (void *)__restgprlr_28(0);
-      return pvVar5;
+    if (iVar2 == 0) {
+      __restgprlr_28(0);
+      return;
     }
-    if ((pfVar1->type == uVar2) && (iVar4 = I_stricmp(pfVar1->name,(char *)uVar6), iVar4 == 0))
+    if ((*(byte *)(iVar2 + 8) == uVar1) && (iVar3 = I_stricmp(iVar2 + 9,param_2), iVar3 == 0))
     break;
-    pfVar1 = pfVar1->next;
+    iVar2 = *(int *)(iVar2 + 4);
   }
-  pvVar5 = (void *)__restgprlr_28(pfVar1);
-  return pvVar5;
+  __restgprlr_28(iVar2);
+  return;
 }
 
 
 // 825E14D8  Hunk_OrphanFile  (universal/com_memory.cpp:2032)
 
-void Hunk_OrphanFile(void *param_1)
+void Hunk_OrphanFile(int param_1)
 
 {
-  fileData_s **ppfVar1;
-  long lVar2;
-  fileData_s *pfVar3;
-  fileData_s *pfVar4;
+  int *piVar1;
+  int iVar2;
+  int iVar3;
   
-  if (param_1 != (void *)0x0) {
-    lVar2 = FS_HashFileName((char *)((int)param_1 + 9),0x400);
-    pfVar3 = com_fileDataHashTable[lVar2];
-    if (pfVar3 == param_1) {
-      com_fileDataHashTable[lVar2] = *(fileData_s **)((int)param_1 + 4);
+  if (param_1 != 0) {
+    iVar2 = FS_HashFileName(param_1 + 9,0x400);
+    iVar3 = (&DAT_84015d60)[iVar2];
+    if (iVar3 == param_1) {
+      (&DAT_84015d60)[iVar2] = *(undefined4 *)(param_1 + 4);
       return;
     }
-    if ((pfVar3 != (fileData_s *)0x0) && (pfVar4 = pfVar3->next, pfVar3->next != (fileData_s *)0x0))
-    {
-      while (pfVar4 != param_1) {
-        ppfVar1 = &pfVar4->next;
-        pfVar3 = pfVar4;
-        pfVar4 = *ppfVar1;
-        if (*ppfVar1 == (fileData_s *)0x0) {
+    if ((iVar3 != 0) && (iVar2 = *(int *)(iVar3 + 4), *(int *)(iVar3 + 4) != 0)) {
+      while (iVar2 != param_1) {
+        piVar1 = (int *)(iVar2 + 4);
+        iVar3 = iVar2;
+        iVar2 = *piVar1;
+        if (*piVar1 == 0) {
           return;
         }
       }
-      pfVar3->next = *(fileData_s **)((int)param_1 + 4);
+      *(undefined4 *)(iVar3 + 4) = *(undefined4 *)(param_1 + 4);
     }
   }
   return;
 }
 
 
-// 825E1598  DB_GetAllXAssetOfType  (universal/com_memory.cpp:2204)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
-
-// 825E15A0  DB_EnumXAssets  (universal/com_memory.cpp:2210)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
-
 // 825E4248  Hunk_SetMark  (universal/com_memory.cpp:2250)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Hunk_SetMark(void)
+undefined4 Hunk_SetMark(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x8cb,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x8cb,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   Hunk_CheckTempMemoryHighClear();
-  return hunk_high.permanent;
+  return DAT_84015d4c;
 }
 
 
 // 825E42A8  Hunk_ClearToMark  (universal/com_memory.cpp:2265)
 
-void Hunk_ClearToMark(int param_1)
+void Hunk_ClearToMark(void)
 
 {
-  int iVar1;
-  bool bVar2;
+  undefined8 uVar1;
+  char cVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x8e0,0,"%s");
+  uVar1 = __savegprlr_28();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x8e0,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x8e1,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x8e1,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x8e3,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x8e3,0,0xffffffff82000f98,0xffffffff82175940);
   }
   Hunk_CheckTempMemoryHighClear();
-  hunk_high.permanent = iVar1;
-  hunk_high.temp = iVar1;
+  DAT_84015d4c = (undefined4)uVar1;
+  DAT_84015d50 = DAT_84015d4c;
   Hunk_ClearData();
-  track_hunk_ClearToMarkHigh(iVar1);
+  track_hunk_ClearToMarkHigh(uVar1);
   __restgprlr_28();
   return;
 }
@@ -946,50 +850,44 @@ void Hunk_ClearToMark(int param_1)
 
 // 825E4370  Hunk_SetMarkLow  (universal/com_memory.cpp:2311)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Hunk_SetMarkLow(void)
+undefined4 Hunk_SetMarkLow(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x908,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x908,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   Hunk_CheckTempMemoryClear();
-  return hunk_low.permanent;
+  return DAT_84015d54;
 }
 
 
 // 825E43D0  Hunk_ClearToMarkLow  (universal/com_memory.cpp:2326)
 
-void Hunk_ClearToMarkLow(int param_1)
+void Hunk_ClearToMarkLow(void)
 
 {
-  int iVar1;
-  bool bVar2;
+  undefined8 uVar1;
+  char cVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x91d,0,"%s");
+  uVar1 = __savegprlr_28();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x91d,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x91e,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x91e,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x920,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x920,0,0xffffffff82000f98,0xffffffff82175940);
   }
   Hunk_CheckTempMemoryClear();
-  hunk_low.permanent = iVar1;
-  hunk_low.temp = iVar1;
+  DAT_84015d54 = (undefined4)uVar1;
+  DAT_84015d58 = DAT_84015d54;
   Hunk_ClearData();
-  track_hunk_ClearToMarkLow(iVar1);
+  track_hunk_ClearToMarkLow(uVar1);
   __restgprlr_28();
   return;
 }
@@ -997,31 +895,26 @@ void Hunk_ClearToMarkLow(int param_1)
 
 // 825E15A8  Hunk_Clear  (universal/com_memory.cpp:2373)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hunk_Clear(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
   __savegprlr_29();
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x946,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x946,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x947,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x947,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x949,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x949,0,0xffffffff82000f98,0xffffffff82175940);
   }
-  hunk_low.permanent = 0;
-  hunk_low.temp = 0;
-  hunk_high.permanent = 0;
-  hunk_high.temp = 0;
+  DAT_84015d54 = 0;
+  DAT_84015d58 = 0;
+  DAT_84015d4c = 0;
+  DAT_84015d50 = 0;
   Hunk_ClearData();
   track_hunk_ClearToMarkLow(0);
   track_hunk_ClearToMarkHigh(0);
@@ -1033,181 +926,165 @@ void Hunk_Clear(void)
 
 // 825E1688  Hunk_Used  (universal/com_memory.cpp:2411)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Hunk_Used(void)
+longlong Hunk_Used(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x96c,0,"%s");
-    return hunk_high.permanent + hunk_low.permanent;
+  cVar1 = Sys_IsMainThread();
+  if ((cVar1 == '\0') && (cVar1 = Sys_IsRenderThread(), cVar1 == '\0')) {
+    MyAssertHandler(0xffffffff82175740,0x96c,0,0xffffffff82000f98,0xffffffff8202e2c8);
+    return (ulonglong)DAT_84015d4c + (ulonglong)DAT_84015d54;
   }
-  return hunk_high.permanent + hunk_low.permanent;
+  return (ulonglong)DAT_84015d4c + (ulonglong)DAT_84015d54;
 }
 
 
 // 825E4D88  Hunk_Alloc  (universal/com_memory.cpp:2427)
 
-void * Hunk_Alloc(int param_1,char *param_2,int param_3)
+void Hunk_Alloc(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  bool bVar3;
-  void *pvVar2;
+  undefined8 uVar1;
+  char cVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x97c,0,"%s");
+  uVar1 = __savegprlr_29();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x97c,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  pvVar2 = Hunk_AllocAlign(iVar1,0x20,param_2,param_3);
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  Hunk_AllocAlign(uVar1,0x20,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 825E4498  Hunk_AllocAlign  (universal/com_memory.cpp:2459)
 
-void * Hunk_AllocAlign(int param_1,int param_2,char *param_3,int param_4)
+void Hunk_AllocAlign(undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  int iVar1;
-  longlong lVar2;
-  bool bVar4;
-  void *pvVar3;
-  longlong lVar5;
-  int iVar6;
+  void *_Dst;
+  longlong lVar1;
+  char cVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   ulonglong uVar7;
-  ulonglong uVar8;
-  int iVar9;
-  ulonglong uVar10;
   
-  lVar5 = (longlong)param_2;
-  lVar2 = __savegprlr_23(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x9ab,0,"%s");
+  lVar1 = __savegprlr_23();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x9ab,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x9ac,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x9ac,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x9ae,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x9ae,0,0xffffffff82000f98,0xffffffff82175940);
   }
-  uVar10 = lVar5 - 1;
-  if (((uint)uVar10 & (uint)lVar5) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x9ba,0,"%s");
+  uVar7 = param_2 - 1;
+  if (((uint)uVar7 & (uint)param_2) != 0) {
+    MyAssertHandler(0xffffffff82175740,0x9ba,0,0xffffffff82000f98,0xffffffff82175dfc);
   }
-  if (0x1000 < (int)(uint)lVar5) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x9bb,0,"%s");
+  if (0x1000 < (int)(uint)param_2) {
+    MyAssertHandler(0xffffffff82175740,0x9bb,0,0xffffffff82000f98,0xffffffff82175ddc);
   }
   Hunk_CheckTempMemoryHighClear();
-  iVar1 = hunk_high.permanent;
-  uVar7 = (ulonglong)(uint)hunk_high.permanent + lVar2 + uVar10 & ~uVar10;
-  hunk_high.permanent = (int)uVar7;
-  lVar2 = ((uint)s_hunkTotal - uVar7) + ZEXT48(s_hunkData);
-  uVar8 = uVar7;
-  hunk_high.temp = hunk_high.permanent;
-  if (((uint)lVar2 & (uint)uVar10) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x9ce,0,"%s");
-    uVar7 = (ulonglong)(uint)hunk_high.temp;
-    uVar8 = (ulonglong)(uint)hunk_high.permanent;
+  uVar3 = (ulonglong)DAT_84015d4c;
+  uVar4 = uVar3 + lVar1 + uVar7 & ~uVar7;
+  DAT_84015d4c = (uint)uVar4;
+  lVar6 = (DAT_84015a94 - uVar4) + (ulonglong)DAT_84016d60;
+  _Dst = (void *)lVar6;
+  uVar5 = uVar4;
+  DAT_84015d50 = DAT_84015d4c;
+  if (((uint)_Dst & (uint)uVar7) != 0) {
+    MyAssertHandler(0xffffffff82175740,0x9ce,0,0xffffffff82000f98,0xffffffff8217605c);
+    uVar4 = (ulonglong)DAT_84015d50;
+    uVar5 = (ulonglong)DAT_84015d4c;
   }
-  iVar6 = (int)uVar7;
-  iVar9 = (int)uVar8;
-  if (s_hunkTotal < hunk_low.temp + (int)uVar7) {
+  if ((int)DAT_84015a94 < (int)(DAT_84015d58 + (int)uVar4)) {
     track_PrintAllInfo();
-    Com_Error(ERR_DROP,"\x15Hunk_AllocAlign failed on %i bytes (total %i MB, low %i MB, high %i MB)"
-             );
-    iVar6 = hunk_high.temp;
-    iVar9 = hunk_high.permanent;
+    Com_Error(1,0xffffffff82176010,lVar1,
+              (longlong)((int)DAT_84015a94 >> 0x14) +
+              (ulonglong)((int)DAT_84015a94 < 0 && (DAT_84015a94 & 0xfffff) != 0),
+              (longlong)((int)DAT_84015d58 >> 0x14) +
+              (ulonglong)((int)DAT_84015d58 < 0 && (DAT_84015d58 & 0xfffff) != 0),
+              (longlong)((int)DAT_84015d50 >> 0x14) +
+              (ulonglong)((int)DAT_84015d50 < 0 && (DAT_84015d50 & 0xfffff) != 0));
+    uVar4 = (ulonglong)DAT_84015d50;
+    uVar5 = (ulonglong)DAT_84015d4c;
   }
-  track_hunk_alloc(iVar9 - iVar1,iVar6,param_3,param_4);
-  memset();
-  pvVar3 = (void *)__restgprlr_23(lVar2);
-  return pvVar3;
+  track_hunk_alloc(uVar5 - uVar3,uVar4,param_3,param_4);
+  memset(_Dst,0,(size_t)lVar1);
+  __restgprlr_23(lVar6);
+  return;
 }
 
 
 // 825E1720  Hunk_AllocateTempMemoryHigh  (universal/com_memory.cpp:2557)
 
-void * Hunk_AllocateTempMemoryHigh(int param_1,char *param_2)
+void Hunk_AllocateTempMemoryHigh(void)
 
 {
   longlong lVar1;
-  bool bVar3;
-  void *pvVar2;
+  char cVar2;
+  ulonglong uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
   
-  lVar1 = __savegprlr_27(param_1,param_2);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xa09,0,"%s");
+  lVar1 = __savegprlr_27();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xa09,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xa0a,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xa0a,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xa0c,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xa0c,0,0xffffffff82000f98,0xffffffff82175940);
   }
-  uVar4 = (ulonglong)(uint)hunk_high.temp + lVar1 + 0xf & 0xfffffff0;
-  hunk_high.temp = (int)uVar4;
-  uVar5 = ((uint)s_hunkTotal - uVar4) + ZEXT48(s_hunkData);
-  if ((uVar5 & 0xf) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xa20,0,"%s");
-    uVar4 = (ulonglong)(uint)hunk_high.temp;
+  uVar3 = (ulonglong)DAT_84015d50 + lVar1 + 0xf & 0xfffffff0;
+  DAT_84015d50 = (uint)uVar3;
+  uVar4 = (DAT_84015a94 - uVar3) + (ulonglong)DAT_84016d60;
+  if ((uVar4 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff82175740,0xa20,0,0xffffffff82000f98,0xffffffff821759a8);
+    uVar3 = (ulonglong)DAT_84015d50;
   }
-  if (s_hunkTotal < hunk_low.temp + (int)uVar4) {
+  if ((int)DAT_84015a94 < (int)(DAT_84015d58 + (int)uVar3)) {
     track_PrintAllInfo();
-    Com_Error(ERR_DROP,
-              "\x15Hunk_AllocateTempMemoryHigh: failed on %i bytes (total %i MB, low %i MB, high %i MB)"
-             );
+    Com_Error(1,0xffffffff82175950,lVar1,
+              (longlong)((int)DAT_84015a94 >> 0x14) +
+              (ulonglong)((int)DAT_84015a94 < 0 && (DAT_84015a94 & 0xfffff) != 0),
+              (longlong)((int)DAT_84015d58 >> 0x14) +
+              (ulonglong)((int)DAT_84015d58 < 0 && (DAT_84015d58 & 0xfffff) != 0),
+              (longlong)((int)DAT_84015d50 >> 0x14) +
+              (ulonglong)((int)DAT_84015d50 < 0 && (DAT_84015d50 & 0xfffff) != 0));
   }
-  pvVar2 = (void *)__restgprlr_27(uVar5);
-  return pvVar2;
+  __restgprlr_27(uVar4);
+  return;
 }
 
 
 // 825E1870  Hunk_ClearTempMemoryHigh  (universal/com_memory.cpp:2637)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hunk_ClearTempMemoryHigh(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
   __savegprlr_29();
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xa54,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xa54,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xa55,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xa55,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xa57,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xa57,0,0xffffffff82000f98,0xffffffff82175940);
   }
-  hunk_high.temp = hunk_high.permanent;
+  DAT_84015d50 = DAT_84015d4c;
   __restgprlr_29();
   return;
 }
@@ -1215,180 +1092,171 @@ void Hunk_ClearTempMemoryHigh(void)
 
 // 825E4DF0  Hunk_AllocLow  (universal/com_memory.cpp:2683)
 
-void * Hunk_AllocLow(int param_1,char *param_2,int param_3)
+void Hunk_AllocLow(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  int iVar1;
-  bool bVar3;
-  void *pvVar2;
+  undefined8 uVar1;
+  char cVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xa7c,0,"%s");
+  uVar1 = __savegprlr_29();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xa7c,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  pvVar2 = Hunk_AllocLowAlign(iVar1,0x20,param_2,param_3);
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  Hunk_AllocLowAlign(uVar1,0x20,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 825E4680  Hunk_AllocLowAlign  (universal/com_memory.cpp:2715)
 
-void * Hunk_AllocLowAlign(int param_1,int param_2,char *param_3,int param_4)
+void Hunk_AllocLowAlign(undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  int iVar1;
-  int iVar2;
-  bool bVar4;
-  void *pvVar3;
-  ulonglong uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  void *_Dst;
+  longlong lVar1;
+  char cVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
   
-  lVar6 = (longlong)param_2;
-  iVar2 = __savegprlr_23(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xaab,0,"%s");
+  lVar1 = __savegprlr_23();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xaab,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xaac,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xaac,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xaae,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xaae,0,0xffffffff82000f98,0xffffffff82175940);
   }
-  uVar7 = lVar6 - 1;
-  if (((uint)uVar7 & (uint)lVar6) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xaba,0,"%s");
+  uVar6 = param_2 - 1;
+  if (((uint)uVar6 & (uint)param_2) != 0) {
+    MyAssertHandler(0xffffffff82175740,0xaba,0,0xffffffff82000f98,0xffffffff82175dfc);
   }
-  if (0x1000 < (int)(uint)lVar6) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xabb,0,"%s");
+  if (0x1000 < (int)(uint)param_2) {
+    MyAssertHandler(0xffffffff82175740,0xabb,0,0xffffffff82000f98,0xffffffff82175ddc);
   }
   Hunk_CheckTempMemoryClear();
-  iVar1 = hunk_low.permanent;
-  uVar5 = (uint)hunk_low.permanent + uVar7 & ~uVar7;
-  lVar6 = uVar5 + ZEXT48(s_hunkData);
-  hunk_low.permanent = (int)uVar5;
-  if (((uint)lVar6 & (uint)uVar7) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xacb,0,"%s");
-    uVar5 = (ulonglong)(uint)hunk_low.permanent;
+  uVar3 = (ulonglong)DAT_84015d54;
+  uVar4 = uVar3 + uVar6 & ~uVar6;
+  lVar5 = uVar4 + DAT_84016d60;
+  DAT_84015d54 = (uint)uVar4;
+  _Dst = (void *)lVar5;
+  if (((uint)_Dst & (uint)uVar6) != 0) {
+    MyAssertHandler(0xffffffff82175740,0xacb,0,0xffffffff82000f98,0xffffffff8217605c);
+    uVar4 = (ulonglong)DAT_84015d54;
   }
-  hunk_low.permanent = (int)uVar5 + iVar2;
-  hunk_low.temp = hunk_low.permanent;
-  if (s_hunkTotal < hunk_high.temp + hunk_low.permanent) {
+  uVar4 = uVar4 + lVar1;
+  DAT_84015d54 = (uint)uVar4;
+  DAT_84015d58 = DAT_84015d54;
+  if ((int)DAT_84015a94 < (int)(DAT_84015d50 + DAT_84015d54)) {
     track_PrintAllInfo();
-    Com_Error(ERR_DROP,
-              "\x15Hunk_AllocLowAlign failed on %i bytes (total %i MB, low %i MB, high %i MB)");
+    Com_Error(1,0xffffffff82176080,lVar1,
+              (longlong)((int)DAT_84015a94 >> 0x14) +
+              (ulonglong)((int)DAT_84015a94 < 0 && (DAT_84015a94 & 0xfffff) != 0),
+              (longlong)((int)DAT_84015d58 >> 0x14) +
+              (ulonglong)((int)DAT_84015d58 < 0 && (DAT_84015d58 & 0xfffff) != 0),
+              (longlong)((int)DAT_84015d50 >> 0x14) +
+              (ulonglong)((int)DAT_84015d50 < 0 && (DAT_84015d50 & 0xfffff) != 0));
+    uVar4 = (ulonglong)DAT_84015d54;
   }
-  track_hunk_allocLow(hunk_low.permanent - iVar1,hunk_low.permanent,param_3,param_4);
-  memset();
-  pvVar3 = (void *)__restgprlr_23(lVar6);
-  return pvVar3;
+  track_hunk_allocLow(uVar4 - uVar3,uVar4,param_3,param_4);
+  memset(_Dst,0,(size_t)lVar1);
+  __restgprlr_23(lVar5);
+  return;
 }
 
 
 // 825E1920  Hunk_AllocateTempMemory  (universal/com_memory.cpp:2814)
 
-void * Hunk_AllocateTempMemory(int param_1,char *param_2)
+void Hunk_AllocateTempMemory(void)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
-  bool bVar5;
-  void *pvVar4;
-  uchar *puVar6;
+  longlong lVar3;
+  char cVar4;
+  undefined4 *puVar5;
   
-  iVar3 = __savegprlr_25(param_1,param_2);
-  bVar5 = Sys_IsMainThread();
-  if (!bVar5) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xb0c,0,"%s");
+  lVar3 = __savegprlr_25();
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xb0c,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xb0e,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xb0e,0,0xffffffff82000f98,0xffffffff82175940);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xb1e,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xb1e,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  iVar2 = hunk_low.temp;
-  uVar1 = hunk_low.temp + 0xfU & 0xfffffff0;
-  puVar6 = s_hunkData + uVar1;
-  hunk_low.temp = uVar1 + iVar3 + 0x10;
-  if (((uint)(puVar6 + 0x10) & 0xf) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xb2f,0,"%s");
+  iVar2 = DAT_84015d58;
+  uVar1 = DAT_84015d58 + 0xf & 0xfffffff0;
+  puVar5 = (undefined4 *)(uVar1 + DAT_84016d60);
+  DAT_84015d58 = uVar1 + (int)(lVar3 + 0x10);
+  if (((uint)(puVar5 + 4) & 0xf) != 0) {
+    MyAssertHandler(0xffffffff82175740,0xb2f,0,0xffffffff82000f98,0xffffffff821759a8);
   }
-  if (s_hunkTotal < hunk_high.temp + hunk_low.temp) {
+  if ((int)DAT_84015a94 < (int)(DAT_84015d50 + DAT_84015d58)) {
     track_PrintAllInfo();
-    Com_Error(ERR_DROP,
-              "\x15Hunk_AllocateTempMemory: failed on %i bytes (total %i MB, low %i MB, high %i MB), needs %i more hunk bytes"
-             );
+    Com_Error(1,0xffffffff821759c8,lVar3 + 0x10,
+              (longlong)((int)DAT_84015a94 >> 0x14) +
+              (ulonglong)((int)DAT_84015a94 < 0 && (DAT_84015a94 & 0xfffff) != 0),
+              (longlong)((int)DAT_84015d58 >> 0x14) +
+              (ulonglong)((int)DAT_84015d58 < 0 && (DAT_84015d58 & 0xfffff) != 0),
+              (longlong)((int)DAT_84015d50 >> 0x14) +
+              (ulonglong)((int)DAT_84015d50 < 0 && (DAT_84015d50 & 0xfffff) != 0),
+              ((ulonglong)DAT_84015d50 - (ulonglong)DAT_84015a94) + (ulonglong)DAT_84015d58);
   }
-  *(int *)(puVar6 + 4) = hunk_low.temp - iVar2;
-  puVar6[0] = 0x89;
-  puVar6[1] = 'S';
-  puVar6[2] = 'x';
-  puVar6[3] = 0x92;
-  pvVar4 = (void *)__restgprlr_25(puVar6 + 0x10);
-  return pvVar4;
+  puVar5[1] = DAT_84015d58 - iVar2;
+  *puVar5 = 0x89537892;
+  __restgprlr_25(puVar5 + 4);
+  return;
 }
 
 
 // 825E1A98  Hunk_FreeTempMemory  (universal/com_memory.cpp:2911)
 
-void Hunk_FreeTempMemory(void *param_1)
+void Hunk_FreeTempMemory(void)
 
 {
-  uchar *puVar1;
+  int iVar1;
   int iVar2;
-  bool bVar3;
+  char cVar3;
   int iVar4;
   int iVar5;
   int *piVar6;
   
-  iVar2 = __savegprlr_28(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xb67,0,"%s");
+  iVar2 = __savegprlr_28();
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xb67,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xb69,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xb69,0,0xffffffff82000f98,0xffffffff82175940);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xb73,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xb73,0,0xffffffff82000f98,0xffffffff821758cc);
   }
   if (iVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xb74,0,"%s");
+    MyAssertHandler(0xffffffff82175740,0xb74,0,0xffffffff82000f98,0xffffffff8205af0c);
   }
   piVar6 = (int *)(iVar2 + -0x10);
   if (*piVar6 != -0x76ac876e) {
-    Com_Error(ERR_FATAL,"\x15Hunk_FreeTempMemory: bad magic");
+    Com_Error(0,0xffffffff82175a84);
   }
-  puVar1 = s_hunkData;
-  iVar5 = hunk_low.temp;
-  iVar4 = hunk_low.temp - *(int *)(iVar2 + -0xc);
+  iVar1 = DAT_84016d60;
+  iVar5 = DAT_84015d58;
+  iVar4 = DAT_84015d58 - *(int *)(iVar2 + -0xc);
   *piVar6 = -0x76ac876d;
-  if (piVar6 != (int *)(puVar1 + (iVar4 + 0xfU & 0xfffffff0))) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xb81,0,"%s");
-    iVar5 = hunk_low.temp;
+  if (piVar6 != (int *)((iVar4 + 0xfU & 0xfffffff0) + iVar1)) {
+    MyAssertHandler(0xffffffff82175740,0xb81,0,0xffffffff82000f98,0xffffffff82175a38);
+    iVar5 = DAT_84015d58;
   }
-  hunk_low.temp = iVar5 - *(int *)(iVar2 + -0xc);
+  DAT_84015d58 = iVar5 - *(int *)(iVar2 + -0xc);
   __restgprlr_28();
   return;
 }
@@ -1396,28 +1264,23 @@ void Hunk_FreeTempMemory(void *param_1)
 
 // 825E1BF0  Hunk_ClearTempMemory  (universal/com_memory.cpp:2974)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hunk_ClearTempMemory(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
   __savegprlr_29();
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xba5,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xba5,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xba6,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xba6,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xba8,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xba8,0,0xffffffff82000f98,0xffffffff82175940);
   }
-  hunk_low.temp = hunk_low.permanent;
+  DAT_84015d58 = DAT_84015d54;
   __restgprlr_29();
   return;
 }
@@ -1425,26 +1288,21 @@ void Hunk_ClearTempMemory(void)
 
 // 825E1CA0  Hunk_CheckTempMemoryClear  (universal/com_memory.cpp:3019)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hunk_CheckTempMemoryClear(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
   __savegprlr_29();
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xbcc,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xbcc,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xbcd,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xbcd,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  if (hunk_low.temp != hunk_low.permanent) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xbce,0,"%s");
+  if (DAT_84015d58 != DAT_84015d54) {
+    MyAssertHandler(0xffffffff82175740,0xbce,0,0xffffffff82000f98,0xffffffff82175aa4);
   }
   __restgprlr_29();
   return;
@@ -1453,26 +1311,21 @@ void Hunk_CheckTempMemoryClear(void)
 
 // 825E1D50  Hunk_CheckTempMemoryHighClear  (universal/com_memory.cpp:3032)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hunk_CheckTempMemoryHighClear(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
   __savegprlr_29();
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xbd9,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xbd9,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xbda,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xbda,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  if (hunk_high.temp != hunk_high.permanent) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xbdb,0,"%s");
+  if (DAT_84015d50 != DAT_84015d4c) {
+    MyAssertHandler(0xffffffff82175740,0xbdb,0,0xffffffff82000f98,0xffffffff82175ac8);
   }
   __restgprlr_29();
   return;
@@ -1481,51 +1334,45 @@ void Hunk_CheckTempMemoryHighClear(void)
 
 // 825E1E00  Hunk_HideTempMemory  (universal/com_memory.cpp:3047)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Hunk_HideTempMemory(void)
+void Hunk_HideTempMemory(void)
 
 {
-  bool bVar2;
-  int iVar1;
+  undefined4 uVar1;
+  char cVar2;
   
   __savegprlr_29();
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xbea,0,"%s");
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xbea,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xbec,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xbec,0,0xffffffff82000f98,0xffffffff82175940);
   }
-  iVar1 = hunk_low.permanent;
-  hunk_low.permanent = hunk_low.temp;
-  iVar1 = __restgprlr_29(iVar1);
-  return iVar1;
+  uVar1 = DAT_84015d54;
+  DAT_84015d54 = DAT_84015d58;
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 825E1E90  Hunk_ShowTempMemory  (universal/com_memory.cpp:3068)
 
-void Hunk_ShowTempMemory(int param_1)
+void Hunk_ShowTempMemory(void)
 
 {
-  int iVar1;
-  bool bVar2;
+  undefined4 uVar1;
+  char cVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xbfd,0,"%s");
+  uVar1 = __savegprlr_28();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xbfd,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xbff,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xbff,0,0xffffffff82000f98,0xffffffff82175940);
   }
   Hunk_CheckTempMemoryClear();
-  hunk_low.permanent = iVar1;
+  DAT_84015d54 = uVar1;
   __restgprlr_28();
   return;
 }
@@ -1533,51 +1380,45 @@ void Hunk_ShowTempMemory(int param_1)
 
 // 825E1F20  Hunk_HideTempMemoryHigh  (universal/com_memory.cpp:3086)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Hunk_HideTempMemoryHigh(void)
+void Hunk_HideTempMemoryHigh(void)
 
 {
-  bool bVar2;
-  int iVar1;
+  undefined4 uVar1;
+  char cVar2;
   
   __savegprlr_29();
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc11,0,"%s");
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xc11,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc13,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xc13,0,0xffffffff82000f98,0xffffffff82175940);
   }
-  iVar1 = hunk_high.permanent;
-  hunk_high.permanent = hunk_high.temp;
-  iVar1 = __restgprlr_29(iVar1);
-  return iVar1;
+  uVar1 = DAT_84015d4c;
+  DAT_84015d4c = DAT_84015d50;
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 825E1FB0  Hunk_ShowTempMemoryHigh  (universal/com_memory.cpp:3107)
 
-void Hunk_ShowTempMemoryHigh(int param_1)
+void Hunk_ShowTempMemoryHigh(void)
 
 {
-  int iVar1;
-  bool bVar2;
+  undefined4 uVar1;
+  char cVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc24,0,"%s");
+  uVar1 = __savegprlr_28();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xc24,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc26,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xc26,0,0xffffffff82000f98,0xffffffff82175940);
   }
   Hunk_CheckTempMemoryHighClear();
-  hunk_high.permanent = iVar1;
+  DAT_84015d4c = uVar1;
   __restgprlr_28();
   return;
 }
@@ -1585,85 +1426,76 @@ void Hunk_ShowTempMemoryHigh(int param_1)
 
 // 825E2040  LargeLocalBegin  (universal/com_memory.cpp:3127)
 
-int LargeLocalBegin(int param_1)
+void LargeLocalBegin(void)
 
 {
   ulonglong uVar1;
   ulonglong uVar2;
-  bool bVar4;
-  int iVar3;
-  longlong lVar5;
+  char cVar3;
+  longlong lVar4;
+  ulonglong uVar5;
   ulonglong uVar6;
   ulonglong uVar7;
-  ulonglong uVar8;
-  uint uVar9;
+  uint uVar8;
   
-  uVar2 = __savegprlr_25(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc3d,0,"%s");
+  uVar2 = __savegprlr_25();
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xc3d,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   if ((uVar2 & 0x7f) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc3e,0,"%s");
+    MyAssertHandler(0xffffffff82175740,0xc3e,0,0xffffffff82000f98,0xffffffff82175b94);
   }
-  uVar6 = ZEXT48(g_largeLocalBuf);
-  if (uVar6 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc3f,0,"%s");
-    uVar6 = ZEXT48(g_largeLocalBuf);
+  uVar5 = (ulonglong)DAT_84015a98;
+  if (uVar5 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xc3f,0,0xffffffff82000f98,0xffffffff82175b84);
+    uVar5 = (ulonglong)DAT_84015a98;
   }
-  uVar7 = (ulonglong)DAT_84015d5c;
-  uVar2 = uVar7 + uVar2;
+  uVar6 = (ulonglong)DAT_84015d5c;
+  uVar2 = uVar6 + uVar2;
   DAT_84015d5c = (uint)uVar2;
-  uVar1 = DAT_84015a9c + uVar6 + 0xffff & 0xffff0000;
-  uVar8 = (ulonglong)DAT_84015a9c;
+  uVar1 = DAT_84015a9c + uVar5 + 0xffff & 0xffff0000;
+  uVar7 = (ulonglong)DAT_84015a9c;
   if ((int)DAT_84015a9c < (int)DAT_84015d5c) {
-    uVar8 = uVar2;
+    uVar7 = uVar2;
     DAT_84015a9c = DAT_84015d5c;
   }
-  uVar9 = (uint)uVar8;
-  if (0x90000 < (int)(uint)uVar8) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc48,0,"%s");
-    uVar9 = DAT_84015a9c;
+  uVar8 = (uint)uVar7;
+  if (0x90000 < (int)(uint)uVar7) {
+    MyAssertHandler(0xffffffff82175740,0xc48,0,0xffffffff82000f98,0xffffffff82175b58);
+    uVar8 = DAT_84015a9c;
   }
-  if ((int)(g_minLargeLocalRightPos & 0xffff0000U) < (int)(uVar9 + 0xffff & 0xffff0000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc49,0,"%s");
+  if ((int)(DAT_84015ca4 & 0xffff0000) < (int)(uVar8 + 0xffff & 0xffff0000)) {
+    MyAssertHandler(0xffffffff82175740,0xc49,0,0xffffffff82000f98,0xffffffff82175af0);
   }
-  lVar5 = (uVar8 + uVar6 + 0xffff & 0xffff0000) - uVar1;
-  if (lVar5 != 0) {
-    Z_VirtualCommit((void *)uVar1,(int)lVar5,10);
+  lVar4 = (uVar7 + uVar5 + 0xffff & 0xffff0000) - uVar1;
+  if (lVar4 != 0) {
+    Z_VirtualCommit(uVar1,lVar4,10);
   }
-  iVar3 = __restgprlr_25(uVar7);
-  return iVar3;
+  __restgprlr_25(uVar6);
+  return;
 }
 
 
 // 825E21B0  LargeLocalEnd  (universal/com_memory.cpp:3166)
 
-void LargeLocalEnd(int param_1)
+void LargeLocalEnd(void)
 
 {
   undefined4 uVar1;
-  bool bVar2;
+  char cVar2;
   
-  uVar1 = __savegprlr_28(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc5f,0,"%s");
+  uVar1 = __savegprlr_28();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xc5f,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_largeLocalBuf == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc60,0,"%s");
+  if (DAT_84015a98 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xc60,0,0xffffffff82000f98,0xffffffff82175b84);
   }
   DAT_84015d5c = uVar1;
-  if ((int)(g_minLargeLocalRightPos & 0xffff0000U) < (int)(DAT_84015a9c + 0xffffU & 0xffff0000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc64,0,"%s");
+  if ((int)(DAT_84015ca4 & 0xffff0000) < (int)(DAT_84015a9c + 0xffffU & 0xffff0000)) {
+    MyAssertHandler(0xffffffff82175740,0xc64,0,0xffffffff82000f98,0xffffffff82175af0);
   }
   __restgprlr_28();
   return;
@@ -1672,92 +1504,85 @@ void LargeLocalEnd(int param_1)
 
 // 825E2278  LargeLocalBeginRight  (universal/com_memory.cpp:3182)
 
-int LargeLocalBeginRight(int param_1)
+void LargeLocalBeginRight(void)
 
 {
   ulonglong uVar1;
   int iVar2;
-  bool bVar3;
+  char cVar3;
   longlong lVar4;
   ulonglong uVar5;
   ulonglong uVar6;
   ulonglong uVar7;
   ulonglong uVar8;
   
-  uVar1 = __savegprlr_27(param_1);
+  uVar1 = __savegprlr_27();
   iVar2 = SV_GetServerThreadOwnsGame();
   if (iVar2 == 0) {
-    bVar3 = Sys_IsRenderThread();
+    cVar3 = Sys_IsRenderThread();
   }
   else {
-    bVar3 = Sys_IsServerThread();
+    cVar3 = Sys_IsServerThread();
   }
-  if (bVar3 == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc74,0,"%s");
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xc74,0,0xffffffff82000f98,0xffffffff82175ba4);
   }
   if ((uVar1 & 0x7f) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc75,0,"%s");
+    MyAssertHandler(0xffffffff82175740,0xc75,0,0xffffffff82000f98,0xffffffff82175b94);
   }
-  uVar5 = ZEXT48(g_largeLocalBuf);
+  uVar5 = (ulonglong)DAT_84015a98;
   if (uVar5 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc76,0,"%s");
-    uVar5 = ZEXT48(g_largeLocalBuf);
+    MyAssertHandler(0xffffffff82175740,0xc76,0,0xffffffff82000f98,0xffffffff82175b84);
+    uVar5 = (ulonglong)DAT_84015a98;
   }
-  uVar6 = (ulonglong)(uint)g_largeLocalRightPos;
-  uVar7 = (ulonglong)(uint)g_minLargeLocalRightPos;
+  uVar6 = (ulonglong)DAT_84015a88;
+  uVar7 = (ulonglong)DAT_84015ca4;
   uVar1 = uVar6 - uVar1;
-  g_largeLocalRightPos = (int)uVar1;
+  DAT_84015a88 = (uint)uVar1;
   uVar8 = uVar7;
-  if (g_largeLocalRightPos < g_minLargeLocalRightPos) {
+  if ((int)DAT_84015a88 < (int)DAT_84015ca4) {
     uVar8 = uVar1;
-    g_minLargeLocalRightPos = g_largeLocalRightPos;
+    DAT_84015ca4 = DAT_84015a88;
   }
   uVar1 = uVar8 + uVar5 & 0xffff0000;
   if ((int)((uint)uVar8 & 0xffff0000) < (int)(DAT_84015a9c + 0xffffU & 0xffff0000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc7f,0,"%s");
+    MyAssertHandler(0xffffffff82175740,0xc7f,0,0xffffffff82000f98,0xffffffff82175af0);
   }
   lVar4 = (uVar7 + uVar5 & 0xffff0000) - uVar1;
   if (lVar4 != 0) {
-    Z_VirtualCommit((void *)uVar1,(int)lVar4,10);
+    Z_VirtualCommit(uVar1,lVar4,10);
   }
-  iVar2 = __restgprlr_27(uVar6);
-  return iVar2;
+  __restgprlr_27(uVar6);
+  return;
 }
 
 
 // 825E23C0  LargeLocalEndRight  (universal/com_memory.cpp:3220)
 
-void LargeLocalEndRight(int param_1)
+void LargeLocalEndRight(void)
 
 {
-  int iVar1;
+  undefined4 uVar1;
   int iVar2;
-  bool bVar3;
+  char cVar3;
   
-  iVar1 = __savegprlr_28(param_1);
+  uVar1 = __savegprlr_28();
   iVar2 = SV_GetServerThreadOwnsGame();
   if (iVar2 == 0) {
-    bVar3 = Sys_IsRenderThread();
+    cVar3 = Sys_IsRenderThread();
   }
   else {
-    bVar3 = Sys_IsServerThread();
+    cVar3 = Sys_IsServerThread();
   }
-  if (bVar3 == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc95,0,"%s");
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xc95,0,0xffffffff82000f98,0xffffffff82175ba4);
   }
-  if (g_largeLocalBuf == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc96,0,"%s");
+  if (DAT_84015a98 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xc96,0,0xffffffff82000f98,0xffffffff82175b84);
   }
-  g_largeLocalRightPos = iVar1;
-  if ((int)(g_minLargeLocalRightPos & 0xffff0000U) < (int)(DAT_84015a9c + 0xffffU & 0xffff0000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xc9a,0,"%s");
+  DAT_84015a88 = uVar1;
+  if ((int)(DAT_84015ca4 & 0xffff0000) < (int)(DAT_84015a9c + 0xffffU & 0xffff0000)) {
+    MyAssertHandler(0xffffffff82175740,0xc9a,0,0xffffffff82000f98,0xffffffff82175af0);
   }
   __restgprlr_28();
   return;
@@ -1766,31 +1591,29 @@ void LargeLocalEndRight(int param_1)
 
 // 825E2498  LargeLocalGetMark  (universal/com_memory.cpp:3231)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int LargeLocalGetMark(void)
+undefined4 LargeLocalGetMark(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (bVar1) {
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 != '\0') {
     return DAT_84015d5c;
   }
-  return g_largeLocalRightPos;
+  return DAT_84015a88;
 }
 
 
 // 825E24E8  LargeLocalResetToMark  (universal/com_memory.cpp:3240)
 
-void LargeLocalResetToMark(int param_1)
+void LargeLocalResetToMark(undefined8 param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (bVar1) {
-    LargeLocalEnd(param_1);
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 != '\0') {
+    LargeLocalEnd();
     return;
   }
   LargeLocalEndRight(param_1);
@@ -1800,210 +1623,194 @@ void LargeLocalResetToMark(int param_1)
 
 // 825E2540  LargeLocalGetBuf  (universal/com_memory.cpp:3271)
 
-void * LargeLocalGetBuf(int param_1,int param_2)
+void LargeLocalGetBuf(undefined8 param_1,ulonglong param_2)
 
 {
   longlong lVar1;
-  bool bVar4;
+  char cVar3;
   int iVar2;
-  void *pvVar3;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)param_2;
-  lVar1 = __savegprlr_27(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  lVar1 = __savegprlr_27();
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
     iVar2 = SV_GetServerThreadOwnsGame();
     if (iVar2 == 0) {
-      bVar4 = Sys_IsRenderThread();
+      cVar3 = Sys_IsRenderThread();
     }
     else {
-      bVar4 = Sys_IsServerThread();
+      cVar3 = Sys_IsServerThread();
     }
-    if (bVar4 == false) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xcca,0,"%s");
+    if (cVar3 == '\0') {
+      MyAssertHandler(0xffffffff82175740,0xcca,0,0xffffffff82000f98,0xffffffff82175bd0);
     }
   }
-  if (g_largeLocalBuf == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xccb,0,"%s");
+  if (DAT_84015a98 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xccb,0,0xffffffff82000f98,0xffffffff82175b84);
   }
-  if ((uVar5 & 0x7f) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xccc,0,"%s");
+  if ((param_2 & 0x7f) != 0) {
+    MyAssertHandler(0xffffffff82175740,0xccc,0,0xffffffff82000f98,0xffffffff82175b94);
   }
-  bVar4 = Sys_IsMainThread();
-  if ((!bVar4) && (lVar1 = lVar1 - uVar5, lVar1 < 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xcd3,0,"%s");
+  cVar3 = Sys_IsMainThread();
+  if ((cVar3 == '\0') && (lVar1 = lVar1 - param_2, lVar1 < 0)) {
+    MyAssertHandler(0xffffffff82175740,0xcd3,0,0xffffffff82000f98,0xffffffff82175bc0);
   }
-  pvVar3 = (void *)__restgprlr_27(ZEXT48(g_largeLocalBuf) + lVar1);
-  return pvVar3;
+  __restgprlr_27((ulonglong)DAT_84015a98 + lVar1);
+  return;
 }
 
 
-// 825E2650  LargeLocal  (universal/com_memory.cpp:3299)
+// 825E2650  LargeLocal::LargeLocal  (universal/com_memory.cpp:3299)
 
-LargeLocal * __thiscall LargeLocal::LargeLocal(LargeLocal *this,int param_1)
+void LargeLocal__LargeLocal(undefined8 param_1,longlong param_2)
 
 {
-  uint uVar1;
-  int *piVar2;
-  bool bVar5;
+  ulonglong uVar1;
+  undefined4 *puVar2;
+  char cVar5;
   int iVar3;
-  LargeLocal *pLVar4;
+  undefined4 uVar4;
+  undefined4 uVar6;
   
-  piVar2 = (int *)__savegprlr_28(this);
-  if (param_1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xce4,0,"%s");
+  puVar2 = (undefined4 *)__savegprlr_28();
+  if ((int)param_2 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xce4,0,0xffffffff82000f98,0xffffffff82175c00);
   }
-  bVar5 = Sys_IsMainThread();
-  if (!bVar5) {
+  cVar5 = Sys_IsMainThread();
+  if (cVar5 == '\0') {
     iVar3 = SV_GetServerThreadOwnsGame();
     if (iVar3 == 0) {
-      bVar5 = Sys_IsRenderThread();
+      cVar5 = Sys_IsRenderThread();
     }
     else {
-      bVar5 = Sys_IsServerThread();
+      cVar5 = Sys_IsServerThread();
     }
-    if (bVar5 == false) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xce5,0,"%s");
+    if (cVar5 == '\0') {
+      MyAssertHandler(0xffffffff82175740,0xce5,0,0xffffffff82000f98,0xffffffff82175bd0);
     }
   }
-  uVar1 = param_1 + 0x7fU & 0xffffff80;
-  bVar5 = Sys_IsMainThread();
-  if (bVar5) {
-    iVar3 = LargeLocalBegin(uVar1);
-    *piVar2 = iVar3;
-    piVar2[1] = uVar1;
-    pLVar4 = (LargeLocal *)__restgprlr_28(piVar2);
-    return pLVar4;
+  uVar1 = param_2 + 0x7fU & 0xffffff80;
+  cVar5 = Sys_IsMainThread();
+  uVar6 = (undefined4)uVar1;
+  if (cVar5 != '\0') {
+    uVar4 = LargeLocalBegin();
+    *puVar2 = uVar4;
+    puVar2[1] = uVar6;
+    __restgprlr_28(puVar2);
+    return;
   }
-  iVar3 = LargeLocalBeginRight(uVar1);
-  *piVar2 = iVar3;
-  piVar2[1] = uVar1;
-  pLVar4 = (LargeLocal *)__restgprlr_28(piVar2);
-  return pLVar4;
+  uVar4 = LargeLocalBeginRight(uVar1);
+  *puVar2 = uVar4;
+  puVar2[1] = uVar6;
+  __restgprlr_28(puVar2);
+  return;
 }
 
 
-// 825E2738  PopBuf  (universal/com_memory.cpp:3319)
+// 825E2738  LargeLocal::PopBuf  (universal/com_memory.cpp:3319)
 
-void __thiscall LargeLocal::PopBuf(LargeLocal *this)
+void LargeLocal__PopBuf(void)
 
 {
-  int *piVar1;
-  bool bVar3;
+  undefined4 *puVar1;
+  char cVar3;
   int iVar2;
   
-  piVar1 = (int *)__savegprlr_29(this);
-  if (piVar1[1] == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xcf8,0,"%s");
+  puVar1 = (undefined4 *)__savegprlr_29();
+  if (puVar1[1] == 0) {
+    MyAssertHandler(0xffffffff82175740,0xcf8,0,0xffffffff82000f98,0xffffffff82036204);
   }
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
     iVar2 = SV_GetServerThreadOwnsGame();
     if (iVar2 == 0) {
-      bVar3 = Sys_IsRenderThread();
+      cVar3 = Sys_IsRenderThread();
     }
     else {
-      bVar3 = Sys_IsServerThread();
+      cVar3 = Sys_IsServerThread();
     }
-    if (bVar3 == false) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xcf9,0,"%s");
+    if (cVar3 == '\0') {
+      MyAssertHandler(0xffffffff82175740,0xcf9,0,0xffffffff82000f98,0xffffffff82175bd0);
     }
   }
-  bVar3 = Sys_IsMainThread();
-  if (bVar3) {
-    LargeLocalEnd(*piVar1);
-    piVar1[1] = 0;
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 != '\0') {
+    LargeLocalEnd();
+    puVar1[1] = 0;
     __restgprlr_29();
     return;
   }
-  LargeLocalEndRight(*piVar1);
-  piVar1[1] = 0;
+  LargeLocalEndRight(*puVar1);
+  puVar1[1] = 0;
   __restgprlr_29();
   return;
 }
 
 
-// 825E2810  ~LargeLocal  (universal/com_memory.cpp:3342)
+// 825E2810  LargeLocal::~LargeLocal  (universal/com_memory.cpp:3342)
 
-void __thiscall LargeLocal::~LargeLocal(LargeLocal *this)
+void LargeLocal___LargeLocal(int param_1)
 
 {
-  if (this->size == 0) {
+  if (*(int *)(param_1 + 4) == 0) {
     return;
   }
-  PopBuf(this);
+  LargeLocal__PopBuf();
   return;
 }
 
 
-// 825E2828  GetBuf  (universal/com_memory.cpp:3354)
+// 825E2828  LargeLocal::GetBuf  (universal/com_memory.cpp:3354)
 
-void * __thiscall LargeLocal::GetBuf(LargeLocal *this)
+void LargeLocal__GetBuf(void)
 
 {
-  int *piVar1;
-  bool bVar4;
+  undefined4 *puVar1;
+  char cVar3;
   int iVar2;
-  void *pvVar3;
   
-  piVar1 = (int *)__savegprlr_29(this);
-  if (piVar1[1] == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xd1b,0,"%s");
+  puVar1 = (undefined4 *)__savegprlr_29();
+  if (puVar1[1] == 0) {
+    MyAssertHandler(0xffffffff82175740,0xd1b,0,0xffffffff82000f98,0xffffffff82036204);
   }
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
     iVar2 = SV_GetServerThreadOwnsGame();
     if (iVar2 == 0) {
-      bVar4 = Sys_IsRenderThread();
+      cVar3 = Sys_IsRenderThread();
     }
     else {
-      bVar4 = Sys_IsServerThread();
+      cVar3 = Sys_IsServerThread();
     }
-    if (bVar4 == false) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xd1c,0,"%s");
+    if (cVar3 == '\0') {
+      MyAssertHandler(0xffffffff82175740,0xd1c,0,0xffffffff82000f98,0xffffffff82175bd0);
     }
   }
-  pvVar3 = LargeLocalGetBuf(*piVar1,piVar1[1]);
-  pvVar3 = (void *)__restgprlr_29(pvVar3);
-  return pvVar3;
+  LargeLocalGetBuf(*puVar1,puVar1[1]);
+  __restgprlr_29();
+  return;
 }
 
 
 // 825E4858  LargeLocalInit  (universal/com_memory.cpp:3368)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void LargeLocalInit(void)
 
 {
-  uchar *puVar1;
+  LPVOID pvVar1;
   
   __savegprlr_28();
-  if (g_largeLocalBuf != (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xd29,0,"%s");
+  if (DAT_84015a98 != (LPVOID)0x0) {
+    MyAssertHandler(0xffffffff82175740,0xd29,0,0xffffffff82000f98,0xffffffff821760cc);
   }
   Profile_Begin(0x1b7);
-  puVar1 = VirtualAlloc((void *)0x0,0x90000,0x20002000,4);
-  Profile_EndInternal((double *)0x0);
-  if (puVar1 == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x1f2,0,"%s");
+  pvVar1 = VirtualAlloc((LPVOID)0x0,0x90000,0x20002000,4);
+  Profile_EndInternal(0);
+  if (pvVar1 == (LPVOID)0x0) {
+    MyAssertHandler(0xffffffff82175740,0x1f2,0,0xffffffff82000f98,0xffffffff8205af0c);
   }
   DAT_84015a9c = 0;
-  g_minLargeLocalRightPos = 0x90000;
-  g_largeLocalBuf = puVar1;
+  DAT_84015ca4 = 0x90000;
+  DAT_84015a98 = pvVar1;
   LargeLocalClear();
   __restgprlr_28();
   return;
@@ -2012,21 +1819,17 @@ void LargeLocalInit(void)
 
 // 825E4918  LargeLocalShutdown  (universal/com_memory.cpp:3386)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void LargeLocalShutdown(void)
 
 {
   if (DAT_84015d5c != 0x80) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xd3b,0,"%s\n\t(g_largeLocalPos) = %i");
+    MyAssertHandler(0xffffffff82175740,0xd3b,0,0xffffffff82176130,0xffffffff8217614c);
   }
   DAT_84015d5c = 0;
-  if (g_largeLocalRightPos != 0x8ff80) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xd3e,0,"%s\n\t(g_largeLocalRightPos) = %i");
+  if (DAT_84015a88 != 0x8ff80) {
+    MyAssertHandler(0xffffffff82175740,0xd3e,0,0xffffffff821760e0,0xffffffff82176100);
   }
-  g_largeLocalRightPos = 0x90000;
+  DAT_84015a88 = 0x90000;
   LargeLocalReset();
   return;
 }
@@ -2034,41 +1837,37 @@ void LargeLocalShutdown(void)
 
 // 825E28D8  LargeLocalReset  (universal/com_memory.cpp:3403)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void LargeLocalReset(void)
 
 {
-  uint uVar1;
-  uint uVar2;
-  bool bVar4;
-  int iVar3;
+  ulonglong uVar1;
+  ulonglong uVar2;
+  char cVar4;
+  undefined8 uVar3;
   
   __savegprlr_29();
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xd52,0,"%s");
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xd52,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_largeLocalBuf == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xd53,0,"%s");
+  if (DAT_84015a98 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xd53,0,0xffffffff82000f98,0xffffffff82175b84);
   }
-  iVar3 = R_PopRemoteScreenUpdate();
+  uVar3 = R_PopRemoteScreenUpdate();
   R_SyncRenderThread();
-  uVar1 = DAT_84015a9c + 0xffffU & 0xffff0000;
-  uVar2 = DAT_84015d5c + 0xffffU & 0xffff0000;
-  if (uVar2 != uVar1) {
-    Z_VirtualDecommit(g_largeLocalBuf + uVar2,uVar1 - uVar2,10);
+  uVar1 = (ulonglong)DAT_84015a9c + 0xffff & 0xffff0000;
+  uVar2 = (ulonglong)DAT_84015d5c + 0xffff & 0xffff0000;
+  if ((int)uVar2 != (int)uVar1) {
+    Z_VirtualDecommit(DAT_84015a98 + uVar2,uVar1 - uVar2,10);
   }
   DAT_84015a9c = DAT_84015d5c;
-  uVar1 = g_minLargeLocalRightPos & 0xffff0000;
-  if (uVar1 != (g_largeLocalRightPos & 0xffff0000U)) {
-    Z_VirtualDecommit(g_largeLocalBuf + uVar1,(g_largeLocalRightPos & 0xffff0000U) - uVar1,10);
+  uVar1 = (ulonglong)DAT_84015ca4 & 0xffff0000;
+  if ((int)uVar1 != (int)((ulonglong)DAT_84015a88 & 0xffff0000)) {
+    Z_VirtualDecommit(DAT_84015a98 + uVar1,((ulonglong)DAT_84015a88 & 0xffff0000) - uVar1,10);
   }
-  g_minLargeLocalRightPos = g_largeLocalRightPos;
+  DAT_84015ca4 = DAT_84015a88;
   R_ReleaseThreadOwnership();
-  R_PushRemoteScreenUpdate(iVar3);
+  R_PushRemoteScreenUpdate(uVar3);
   __restgprlr_29();
   return;
 }
@@ -2076,58 +1875,63 @@ void LargeLocalReset(void)
 
 // 825E29F0  LargeLocalClear  (universal/com_memory.cpp:3445)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void LargeLocalClear(void)
 
 {
-  bool bVar2;
+  char cVar2;
   int iVar1;
   longlong lVar3;
-  uchar *puVar4;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
   
   __savegprlr_29();
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
     iVar1 = SV_GetServerThreadOwnsGame();
     if (iVar1 == 0) {
-      bVar2 = Sys_IsRenderThread();
+      cVar2 = Sys_IsRenderThread();
     }
     else {
-      bVar2 = Sys_IsServerThread();
+      cVar2 = Sys_IsServerThread();
     }
-    if (bVar2 == false) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xd7a,0,"%s");
+    if (cVar2 == '\0') {
+      MyAssertHandler(0xffffffff82175740,0xd7a,0,0xffffffff82000f98,0xffffffff82175bd0);
     }
   }
-  if (g_largeLocalBuf == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xd7b,0,"%s");
+  if (DAT_84015a98 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xd7b,0,0xffffffff82000f98,0xffffffff82175b84);
   }
   DAT_84015d5c = 0;
-  g_largeLocalRightPos = 0x90000;
+  DAT_84015a88 = 0x90000;
   LargeLocalReset();
-  DAT_84015d5c = DAT_84015d5c + 0x80;
-  iVar1 = DAT_84015a9c + 0xffff;
-  if (DAT_84015a9c < DAT_84015d5c) {
+  uVar6 = (ulonglong)DAT_84015a98;
+  uVar4 = (ulonglong)DAT_84015d5c;
+  DAT_84015d5c = (uint)(uVar4 + 0x80);
+  uVar7 = DAT_84015a9c + uVar6 + 0xffff & 0xffff0000;
+  uVar5 = (ulonglong)DAT_84015a9c;
+  if ((int)DAT_84015a9c < (int)DAT_84015d5c) {
+    uVar5 = uVar4 + 0x80;
     DAT_84015a9c = DAT_84015d5c;
   }
-  lVar3 = (ZEXT48(g_largeLocalBuf + DAT_84015a9c + 0xffff) & 0xffff0000) -
-          (ZEXT48(g_largeLocalBuf + iVar1) & 0xffff0000);
+  lVar3 = (uVar5 + uVar6 + 0xffff & 0xffff0000) - uVar7;
   if (lVar3 != 0) {
-    Z_VirtualCommit((void *)(ZEXT48(g_largeLocalBuf + iVar1) & 0xffff0000),(int)lVar3,10);
+    Z_VirtualCommit(uVar7,lVar3,10);
+    uVar6 = (ulonglong)DAT_84015a98;
   }
-  g_largeLocalRightPos = g_largeLocalRightPos + -0x80;
-  puVar4 = g_largeLocalBuf + g_minLargeLocalRightPos;
-  if (g_largeLocalRightPos < g_minLargeLocalRightPos) {
-    g_minLargeLocalRightPos = g_largeLocalRightPos;
+  uVar5 = (ulonglong)DAT_84015a88;
+  uVar4 = (ulonglong)DAT_84015ca4;
+  DAT_84015a88 = (uint)(uVar5 - 0x80);
+  uVar7 = uVar4;
+  if ((int)DAT_84015a88 < (int)DAT_84015ca4) {
+    uVar7 = uVar5 - 0x80;
+    DAT_84015ca4 = DAT_84015a88;
   }
-  lVar3 = (ZEXT48(puVar4) & 0xffff0000) -
-          (ZEXT48(g_largeLocalBuf + g_minLargeLocalRightPos) & 0xffff0000);
+  uVar7 = uVar7 + uVar6 & 0xffff0000;
+  lVar3 = (uVar4 + uVar6 & 0xffff0000) - uVar7;
   if (lVar3 != 0) {
-    Z_VirtualCommit((void *)(ZEXT48(g_largeLocalBuf + g_minLargeLocalRightPos) & 0xffff0000),
-                    (int)lVar3,10);
+    Z_VirtualCommit(uVar7,lVar3,10);
   }
   __restgprlr_29();
   return;
@@ -2136,24 +1940,20 @@ void LargeLocalClear(void)
 
 // 825E49C8  Hunk_InitDebugMemory  (universal/com_memory.cpp:3494)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hunk_InitDebugMemory(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
   __savegprlr_29();
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xda7,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xda7,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_debugUser != (HunkUser *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xda8,0,"%s");
+  if (DAT_84015a90 != 0) {
+    MyAssertHandler(0xffffffff82175740,0xda8,0,0xffffffff82000f98,0xffffffff82176180);
   }
-  g_debugUser = Hunk_UserCreate(0x1000000,"Hunk_InitDebugMemory",false,0);
+  DAT_84015a90 = Hunk_UserCreate(0x1000000,0xffffffff82176168,0,0);
   __restgprlr_29();
   return;
 }
@@ -2161,25 +1961,21 @@ void Hunk_InitDebugMemory(void)
 
 // 825E4A60  Hunk_ShutdownDebugMemory  (universal/com_memory.cpp:3509)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hunk_ShutdownDebugMemory(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
   __savegprlr_29();
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xdb6,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xdb6,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_debugUser == (HunkUser *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xdb7,0,"%s");
+  if (DAT_84015a90 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xdb7,0,0xffffffff82000f98,0xffffffff82175c0c);
   }
-  Hunk_UserDestroy(g_debugUser);
-  g_debugUser = (HunkUser *)0x0;
+  Hunk_UserDestroy(DAT_84015a90);
+  DAT_84015a90 = 0;
   __restgprlr_29();
   return;
 }
@@ -2187,20 +1983,17 @@ void Hunk_ShutdownDebugMemory(void)
 
 // 825E4E58  Hunk_ResetDebugMem  (universal/com_memory.cpp:3525)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hunk_ResetDebugMem(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xdc6,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xdc6,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_debugUser != (HunkUser *)0x0) {
-    Hunk_UserReset(g_debugUser);
+  if (DAT_84015a90 != 0) {
+    Hunk_UserReset();
   }
   return;
 }
@@ -2208,69 +2001,61 @@ void Hunk_ResetDebugMem(void)
 
 // 825E4AF0  Hunk_AllocDebugMem  (universal/com_memory.cpp:3540)
 
-void * Hunk_AllocDebugMem(int param_1,char *param_2)
+void Hunk_AllocDebugMem(void)
 
 {
-  int iVar1;
-  bool bVar3;
-  void *pvVar2;
+  undefined8 uVar1;
+  char cVar2;
   
-  iVar1 = __savegprlr_28(param_1,param_2);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xdd5,0,"%s");
+  uVar1 = __savegprlr_28();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xdd5,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_debugUser == (HunkUser *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xdd6,0,"%s");
+  if (DAT_84015a90 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xdd6,0,0xffffffff82000f98,0xffffffff82175c0c);
   }
-  pvVar2 = Hunk_UserAlloc(g_debugUser,iVar1,4);
-  pvVar2 = (void *)__restgprlr_28(pvVar2);
-  return pvVar2;
+  Hunk_UserAlloc(DAT_84015a90,uVar1,4);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825E4B80  Hunk_AllocDebugMemAligned  (universal/com_memory.cpp:3555)
 
-void * Hunk_AllocDebugMemAligned(int param_1,int param_2)
+void Hunk_AllocDebugMemAligned(undefined8 param_1,undefined8 param_2)
 
 {
-  int iVar1;
-  bool bVar3;
-  void *pvVar2;
+  undefined8 uVar1;
+  char cVar2;
   
-  iVar1 = __savegprlr_27(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xde4,0,"%s");
+  uVar1 = __savegprlr_27();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xde4,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_debugUser == (HunkUser *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xde5,0,"%s");
+  if (DAT_84015a90 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xde5,0,0xffffffff82000f98,0xffffffff82175c0c);
   }
-  pvVar2 = Hunk_UserAlloc(g_debugUser,iVar1,param_2);
-  pvVar2 = (void *)__restgprlr_27(pvVar2);
-  return pvVar2;
+  Hunk_UserAlloc(DAT_84015a90,uVar1,param_2);
+  __restgprlr_27();
+  return;
 }
 
 
 // 825E2B40  Hunk_FreeDebugMem  (universal/com_memory.cpp:3570)
 
-void Hunk_FreeDebugMem(void *param_1)
+void Hunk_FreeDebugMem(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xdf3,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xdf3,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_debugUser == (HunkUser *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xdf4,0,"%s");
+  if (DAT_84015a90 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xdf4,0,0xffffffff82000f98,0xffffffff82175c0c);
   }
   return;
 }
@@ -2278,312 +2063,277 @@ void Hunk_FreeDebugMem(void *param_1)
 
 // 825E2BD8  Hunk_UserCreate  (universal/com_memory.cpp:3624)
 
-HunkUser * Hunk_UserCreate(int param_1,char *param_2,bool param_3,int param_4)
+void Hunk_UserCreate(undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
 
 {
-  HunkUser **ppHVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  uint uVar4;
-  bool bVar8;
-  uchar *puVar5;
-  void *pvVar6;
-  HunkUser *pHVar7;
-  ulonglong uVar9;
+  undefined4 *puVar1;
+  ulonglong uVar2;
+  int iVar5;
+  char cVar7;
+  longlong lVar3;
+  undefined8 uVar4;
+  undefined *puVar6;
+  uint uVar8;
   
-  uVar9 = (ulonglong)param_3;
-  uVar3 = __savegprlr_23(param_1);
-  uVar4 = (uint)uVar3;
-  if (uVar3 != ((longlong)((int)uVar4 >> 0x10) +
-                (ulonglong)((int)uVar4 < 0 && (uVar3 & 0xffff) != 0) & 0xffff) << 0x10) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xe2b,0,"%s\n\t(maxSize) = %i");
+  uVar2 = __savegprlr_23();
+  iVar5 = (int)uVar2;
+  if (uVar2 != ((longlong)(iVar5 >> 0x10) + (ulonglong)(iVar5 < 0 && (uVar2 & 0xffff) != 0) & 0xffff
+               ) << 0x10) {
+    MyAssertHandler(0xffffffff82175740,0xe2b,0,0xffffffff82175d04,0xffffffff82175d18,uVar2);
   }
-  if ((uVar9 & 0xff) == 0) {
-    pHVar7 = Z_VirtualReserve(uVar4,param_2);
-    Z_VirtualCommit(pHVar7,0x20,param_4);
-    pHVar7->end = (int)(pHVar7->buf + (uVar4 - 0x20));
-    pHVar7->pos = (int)pHVar7->buf;
+  if ((param_3 & 0xff) == 0) {
+    puVar6 = (undefined *)Z_VirtualReserve(uVar2,param_2);
+    Z_VirtualCommit(puVar6,0x20,param_4);
+    *(undefined **)(puVar6 + 0xc) = puVar6 + iVar5;
+    *(undefined **)(puVar6 + 0x10) = puVar6 + 0x20;
     if (0x7f < DAT_84015cac) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xe6a,0,"%s");
+      MyAssertHandler(0xffffffff82175740,0xe6a,0,0xffffffff82000f98,0xffffffff82175c50);
     }
-    ppHVar1 = g_virtualHunkUser + DAT_84015cac;
+    puVar1 = &DAT_84015aa0 + DAT_84015cac;
     DAT_84015cac = DAT_84015cac + 1;
-    *ppHVar1 = pHVar7;
+    *puVar1 = puVar6;
   }
   else {
-    bVar8 = Sys_IsMainThread();
-    if (bVar8) {
-      if (g_hunkInuse != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                        0xe34,0,"%s");
+    cVar7 = Sys_IsMainThread();
+    if (cVar7 == '\0') {
+      cVar7 = Sys_IsDatabaseThread();
+      if (cVar7 == '\0') {
+        MyAssertHandler(0xffffffff82175740,0xe49,0,0xffffffff82000f98,0xffffffff82059784);
       }
-      uVar2 = DAT_84015ca0;
+      if (DAT_84015d40 == 0) {
+        MyAssertHandler(0xffffffff82175740,0xe4a,0,0xffffffff82000f98,0xffffffff82175940);
+      }
+      uVar8 = DAT_84015ca0;
       if (3 < DAT_84015ca0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                        0xe36,0,
-                        "g_fixedHunkUserCount doesn\'t index FIXED_HUNK_USER_COUNT\n\t%i not in [0, %i)"
-                       );
-        uVar2 = DAT_84015ca0;
+        MyAssertHandler(0xffffffff82175740,0xe4c,0,0xffffffff82175ca8,DAT_84015ca0,4);
+        uVar8 = DAT_84015ca0;
         if (3 < DAT_84015ca0) {
-                    /* WARNING: Subroutine does not return */
-          Sys_Error("FIXED_HUNK_USER_COUNT exceeded for \'%s\'");
+          Sys_Error(0xffffffff82175c80,param_2);
+          uVar8 = DAT_84015ca0;
         }
       }
-      DAT_84015ca0 = uVar2 + 1;
-      pHVar7 = g_fixedHunkUser + uVar2;
-      puVar5 = PMem_Alloc_NoDebug(uVar4,0x10000,4);
-      g_fixedHunkUser[uVar2].pos = (int)puVar5;
-      g_fixedHunkUser[uVar2].end = (int)(puVar5 + uVar4);
-      XPhysicalProtect(puVar5,uVar4,0x404);
-      ImageCache_GiveMemory(puVar5,puVar5 + uVar4);
+      DAT_84015ca0 = uVar8 + 1;
+      puVar6 = &DAT_84015cb0 + uVar8 * 0x24;
+      uVar4 = PMem_AllocFromSource_NoDebug(uVar2,0x10000,4,1);
+      (&DAT_84015cc0)[uVar8 * 9] = (int)uVar4;
+      (&DAT_84015cbc)[uVar8 * 9] = (int)uVar4 + iVar5;
+      Com_Memset(uVar4,0,uVar2);
     }
     else {
-      bVar8 = Sys_IsDatabaseThread();
-      if (!bVar8) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                        0xe49,0,"%s");
+      if (DAT_84015d40 != 0) {
+        MyAssertHandler(0xffffffff82175740,0xe34,0,0xffffffff82000f98,0xffffffff82175cf4);
       }
-      if (g_hunkInuse == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                        0xe4a,0,"%s");
-      }
-      uVar2 = DAT_84015ca0;
+      uVar8 = DAT_84015ca0;
       if (3 < DAT_84015ca0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                        0xe4c,0,
-                        "g_fixedHunkUserCount doesn\'t index FIXED_HUNK_USER_COUNT\n\t%i not in [0, %i)"
-                       );
-        uVar2 = DAT_84015ca0;
+        MyAssertHandler(0xffffffff82175740,0xe36,0,0xffffffff82175ca8,DAT_84015ca0,4);
+        uVar8 = DAT_84015ca0;
         if (3 < DAT_84015ca0) {
-                    /* WARNING: Subroutine does not return */
-          Sys_Error("FIXED_HUNK_USER_COUNT exceeded for \'%s\'");
+          Sys_Error(0xffffffff82175c80,param_2);
+          uVar8 = DAT_84015ca0;
         }
       }
-      DAT_84015ca0 = uVar2 + 1;
-      pHVar7 = g_fixedHunkUser + uVar2;
-      pvVar6 = PMem_AllocFromSource_NoDebug(uVar4,0x10000,4,PMEM_SOURCE_DATABASE);
-      g_fixedHunkUser[uVar2].pos = (int)pvVar6;
-      g_fixedHunkUser[uVar2].end = (int)pvVar6 + uVar4;
-      Com_Memset(pvVar6,0,uVar4);
+      DAT_84015ca0 = uVar8 + 1;
+      puVar6 = &DAT_84015cb0 + uVar8 * 0x24;
+      lVar3 = PMem_Alloc_NoDebug(uVar2,0x10000,4);
+      (&DAT_84015cc0)[uVar8 * 9] = (int)lVar3;
+      (&DAT_84015cbc)[uVar8 * 9] = (int)(lVar3 + uVar2);
+      XPhysicalProtect(lVar3,uVar2,0x404);
+      ImageCache_GiveMemory(lVar3,lVar3 + uVar2);
     }
   }
-  if ((pHVar7->pos & 0x1fU) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xe71,0,"%s\n\t(user->pos) = %i");
+  if ((*(uint *)(puVar6 + 0x10) & 0x1f) != 0) {
+    MyAssertHandler(0xffffffff82175740,0xe71,0,0xffffffff82175c24,0xffffffff82175c3c);
   }
-  pHVar7->maxSize = uVar4;
-  pHVar7->current = pHVar7;
-  pHVar7->fixed = SUB81(uVar9,0);
-  pHVar7->name = param_2;
-  pHVar7->type = param_4;
-  if (pHVar7->next != (HunkUser *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xe77,0,"%s");
+  *(int *)(puVar6 + 8) = iVar5;
+  *(undefined **)puVar6 = puVar6;
+  puVar6[0x18] = (char)param_3;
+  *(int *)(puVar6 + 0x14) = (int)param_2;
+  *(int *)(puVar6 + 0x1c) = (int)param_4;
+  if (*(int *)(puVar6 + 4) != 0) {
+    MyAssertHandler(0xffffffff82175740,0xe77,0,0xffffffff82000f98,0xffffffff82175c18);
   }
-  pHVar7 = (HunkUser *)__restgprlr_23(pHVar7);
-  return pHVar7;
+  __restgprlr_23(puVar6);
+  return;
 }
 
 
 // 825E2F10  Hunk_UserAlloc  (universal/com_memory.cpp:3715)
 
-void * Hunk_UserAlloc(HunkUser *param_1,int param_2,int param_3)
+void Hunk_UserAlloc(undefined8 param_1,ulonglong param_2,longlong param_3)
 
 {
-  int *piVar1;
-  HunkUser *pHVar2;
-  bool bVar4;
-  void *pvVar3;
+  int *piVar2;
+  undefined8 uVar1;
+  int iVar3;
+  char cVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  HunkUser *pHVar9;
-  ulonglong uVar10;
+  longlong lVar6;
+  ulonglong uVar7;
+  int iVar8;
+  ulonglong uVar9;
   
-  lVar7 = (longlong)param_3;
-  uVar5 = (ulonglong)param_2;
-  piVar1 = (int *)__savegprlr_19(param_1);
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xe89,0,"%s");
+  piVar2 = (int *)__savegprlr_19();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82175740,0xe89,0,0xffffffff82000f98,0xffffffff82152ddc);
   }
-  uVar8 = lVar7 - 1;
-  if (((uint)uVar8 & (uint)lVar7) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xe8a,0,"%s");
+  uVar7 = param_3 - 1;
+  if (((uint)uVar7 & (uint)param_3) != 0) {
+    MyAssertHandler(0xffffffff82175740,0xe8a,0,0xffffffff82000f98,0xffffffff82175dfc);
   }
-  if (0x1000 < (int)(uint)lVar7) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xe8b,0,"%s");
+  if (0x1000 < (int)(uint)param_3) {
+    MyAssertHandler(0xffffffff82175740,0xe8b,0,0xffffffff82000f98,0xffffffff82175ddc);
   }
-  pHVar2 = (HunkUser *)*piVar1;
-  uVar6 = (ulonglong)(uint)pHVar2->pos;
-  uVar10 = uVar6 + uVar8 & ~uVar8;
-  lVar7 = uVar10 + uVar5;
-  pHVar9 = pHVar2;
-  if (pHVar2->end < (int)lVar7) {
+  iVar3 = *piVar2;
+  uVar5 = (ulonglong)*(uint *)(iVar3 + 0x10);
+  uVar9 = uVar5 + uVar7 & ~uVar7;
+  lVar6 = uVar9 + param_2;
+  iVar8 = iVar3;
+  if (*(int *)(iVar3 + 0xc) < (int)lVar6) {
     do {
-      if (*(char *)(piVar1 + 6) != '\0') {
-        Com_Error(ERR_FATAL,"Hunk_UserAlloc: out of memory for \'%s\'");
+      if (*(char *)(piVar2 + 6) != '\0') {
+        Com_Error(0,0xffffffff82175d4c,piVar2[5]);
       }
-      if ((ulonglong)(piVar1[2] - 0x20) < (uVar5 & 0xffffffff)) {
-        va("size: %d, maxSize: %d");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                        0xe9f,0,"%s\n\t%s");
+      if (((ulonglong)(uint)piVar2[2] - 0x20 & 0xffffffff) < (param_2 & 0xffffffff)) {
+        uVar1 = va(0xffffffff82175d74,param_2);
+        MyAssertHandler(0xffffffff82175740,0xe9f,0,0xffffffff820011f4,0xffffffff82175d90,uVar1);
       }
-      pHVar2 = Hunk_UserCreate(piVar1[2],(char *)piVar1[5],false,piVar1[7]);
-      *piVar1 = (int)pHVar2;
-      pHVar9->next = pHVar2;
-      uVar6 = (ulonglong)(uint)pHVar2->pos;
-      uVar10 = uVar6 + uVar8 & ~uVar8;
-      lVar7 = uVar10 + uVar5;
-      pHVar9 = pHVar2;
-    } while (pHVar2->end < (int)lVar7);
+      iVar3 = Hunk_UserCreate(piVar2[2],piVar2[5],0,piVar2[7]);
+      *piVar2 = iVar3;
+      *(int *)(iVar8 + 4) = iVar3;
+      uVar5 = (ulonglong)*(uint *)(iVar3 + 0x10);
+      uVar9 = uVar5 + uVar7 & ~uVar7;
+      lVar6 = uVar9 + param_2;
+      iVar8 = iVar3;
+    } while (*(int *)(iVar3 + 0xc) < (int)lVar6);
   }
-  pHVar2->pos = (int)lVar7;
-  if (*(char *)(piVar1 + 6) == '\0') {
-    uVar5 = uVar6 + 0xffff & 0xffff0000;
-    pvVar3 = (void *)uVar5;
-    if (pvVar3 != (void *)((int)lVar7 + 0xffffU & 0xffff0000)) {
-      if ((longlong)(lVar7 - uVar5) < 1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                        0xeb3,0,"%s");
+  *(uint *)(iVar3 + 0x10) = (uint)lVar6;
+  if (*(char *)(piVar2 + 6) == '\0') {
+    uVar7 = uVar5 + 0xffff & 0xffff0000;
+    if ((uint)uVar7 != ((uint)lVar6 + 0xffff & 0xffff0000)) {
+      if ((longlong)(lVar6 - uVar7) < 1) {
+        MyAssertHandler(0xffffffff82175740,0xeb3,0,0xffffffff82000f98,0xffffffff82175d34);
       }
-      Z_VirtualCommit(pvVar3,pHVar2->pos - (int)pvVar3,piVar1[7]);
+      Z_VirtualCommit(uVar7,*(uint *)(iVar3 + 0x10) - uVar7,piVar2[7]);
     }
   }
   else {
-    bVar4 = Sys_IsMainThread();
-    if (!bVar4) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xeaa,0,"%s");
+    cVar4 = Sys_IsMainThread();
+    if (cVar4 == '\0') {
+      MyAssertHandler(0xffffffff82175740,0xeaa,0,0xffffffff82000f98,0xffffffff82010b48);
     }
-    if (g_hunkInuse == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xeab,0,"%s");
-      pvVar3 = (void *)__restgprlr_19(uVar10);
-      return pvVar3;
+    if (DAT_84015d40 == 0) {
+      MyAssertHandler(0xffffffff82175740,0xeab,0,0xffffffff82000f98,0xffffffff82175940);
+      __restgprlr_19(uVar9);
+      return;
     }
   }
-  pvVar3 = (void *)__restgprlr_19(uVar10);
-  return pvVar3;
+  __restgprlr_19(uVar9);
+  return;
 }
 
 
 // 825E3160  Hunk_UserAllocAlign  (universal/com_memory.cpp:3779)
 
-void * Hunk_UserAllocAlign(HunkUser *param_1,int param_2)
+void Hunk_UserAllocAlign(int param_1,ulonglong param_2)
 
 {
   int iVar1;
-  void *pvVar2;
+  undefined8 uVar2;
   uint uVar3;
   
-  if ((param_2 & 3U) == 0) {
-    uVar3 = -param_1->pos;
-    iVar1 = ((uint)LZCOUNT(uVar3 & 0x1c) >> 5) * (uVar3 & 3) + param_1->pos;
-    param_1->pos = iVar1;
-    if (iVar1 <= param_1->end) goto LAB_825e3218;
-    iVar1 = 0xed4;
+  if ((param_2 & 3) == 0) {
+    uVar3 = -*(int *)(param_1 + 0x10);
+    iVar1 = ((uint)LZCOUNT(uVar3 & 0x1c) >> 5) * (uVar3 & 3) + *(int *)(param_1 + 0x10);
+    *(int *)(param_1 + 0x10) = iVar1;
+    if (iVar1 <= *(int *)(param_1 + 0xc)) goto LAB_825e3218;
+    uVar2 = 0xed4;
   }
   else {
-    if ((param_2 & 1U) != 0) goto LAB_825e3218;
-    uVar3 = param_1->pos;
+    if ((param_2 & 1) != 0) goto LAB_825e3218;
+    uVar3 = *(uint *)(param_1 + 0x10);
     iVar1 = ((int)(uVar3 + 1 ^ uVar3) >> 5 & 1U) + uVar3;
-    param_1->pos = iVar1;
-    if (iVar1 <= param_1->end) goto LAB_825e3218;
-    iVar1 = 0xed9;
+    *(int *)(param_1 + 0x10) = iVar1;
+    if (iVar1 <= *(int *)(param_1 + 0xc)) goto LAB_825e3218;
+    uVar2 = 0xed9;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",iVar1,
-                  0,"%s");
+  MyAssertHandler(0xffffffff82175740,uVar2,0,0xffffffff82000f98,0xffffffff82175e1c);
 LAB_825e3218:
-  pvVar2 = Hunk_UserAlloc(param_1,param_2,1);
-  return pvVar2;
+  Hunk_UserAlloc(param_1,param_2,1);
+  return;
 }
 
 
 // 825E3240  Hunk_UserAllocAlign32  (universal/com_memory.cpp:3817)
 
-void * Hunk_UserAllocAlign32(HunkUser *param_1,int param_2)
+void Hunk_UserAllocAlign32(int param_1,undefined8 param_2)
 
 {
   uint uVar1;
-  void *pvVar2;
   
-  uVar1 = param_1->pos + 0x1fU & 0xffffffe0;
-  param_1->pos = uVar1;
-  if (param_1->end < (int)uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xeec,0,"%s");
+  uVar1 = *(int *)(param_1 + 0x10) + 0x1fU & 0xffffffe0;
+  *(uint *)(param_1 + 0x10) = uVar1;
+  if (*(int *)(param_1 + 0xc) < (int)uVar1) {
+    MyAssertHandler(0xffffffff82175740,0xeec,0,0xffffffff82000f98,0xffffffff82175e1c);
   }
-  pvVar2 = Hunk_UserAlloc(param_1,param_2,1);
-  return pvVar2;
+  Hunk_UserAlloc(param_1,param_2,1);
+  return;
 }
 
 
 // 825E32C8  Hunk_UserAllocAlignStrict  (universal/com_memory.cpp:3834)
 
-void * Hunk_UserAllocAlignStrict(HunkUser *param_1,int param_2)
+void Hunk_UserAllocAlignStrict(int param_1,ulonglong param_2)
 
 {
   uint uVar1;
-  void *pvVar2;
-  int iVar3;
+  undefined8 uVar2;
   
-  if ((param_2 & 3U) == 0) {
-    uVar1 = param_1->pos + 3U & 0xfffffffc;
-    param_1->pos = uVar1;
-    if ((int)uVar1 <= param_1->end) goto LAB_825e3360;
-    iVar3 = 0xeff;
+  if ((param_2 & 3) == 0) {
+    uVar1 = *(int *)(param_1 + 0x10) + 3U & 0xfffffffc;
+    *(uint *)(param_1 + 0x10) = uVar1;
+    if ((int)uVar1 <= *(int *)(param_1 + 0xc)) goto LAB_825e3360;
+    uVar2 = 0xeff;
   }
   else {
-    if (((param_2 & 1U) != 0) ||
-       (uVar1 = param_1->pos + 1U & 0xfffffffe, param_1->pos = uVar1, (int)uVar1 <= param_1->end))
-    goto LAB_825e3360;
-    iVar3 = 0xf04;
+    if ((param_2 & 1) != 0) goto LAB_825e3360;
+    uVar1 = *(int *)(param_1 + 0x10) + 1U & 0xfffffffe;
+    *(uint *)(param_1 + 0x10) = uVar1;
+    if ((int)uVar1 <= *(int *)(param_1 + 0xc)) goto LAB_825e3360;
+    uVar2 = 0xf04;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",iVar3,
-                  0,"%s");
+  MyAssertHandler(0xffffffff82175740,uVar2,0,0xffffffff82000f98,0xffffffff82175e1c);
 LAB_825e3360:
-  pvVar2 = Hunk_UserAlloc(param_1,param_2,1);
-  return pvVar2;
+  Hunk_UserAlloc(param_1,param_2,1);
+  return;
 }
 
 
 // 825E3388  Hunk_UserSetPos  (universal/com_memory.cpp:3859)
 
-void Hunk_UserSetPos(HunkUser *param_1,void *param_2)
+void Hunk_UserSetPos(undefined8 param_1,int param_2)
 
 {
   int iVar1;
-  bool bVar2;
+  char cVar2;
   
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28();
   if (*(char *)(iVar1 + 0x18) == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xf14,0,"%s");
+    MyAssertHandler(0xffffffff82175740,0xf14,0,0xffffffff82000f98,0xffffffff82175e74);
   }
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xf16,0,"%s");
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xf16,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xf17,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xf17,0,0xffffffff82000f98,0xffffffff82175940);
   }
-  if ((int)param_2 < *(int *)(iVar1 + 0xc) - *(int *)(iVar1 + 8)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xf18,0,"%s");
+  if (param_2 < *(int *)(iVar1 + 0xc) - *(int *)(iVar1 + 8)) {
+    MyAssertHandler(0xffffffff82175740,0xf18,0,0xffffffff82000f98,0xffffffff82175e4c);
   }
-  if (*(int *)(iVar1 + 0x10) < (int)param_2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xf1c,0,"%s");
+  if (*(int *)(iVar1 + 0x10) < param_2) {
+    MyAssertHandler(0xffffffff82175740,0xf1c,0,0xffffffff82000f98,0xffffffff82175e34);
   }
-  *(void **)(iVar1 + 0x10) = param_2;
+  *(int *)(iVar1 + 0x10) = param_2;
   __restgprlr_28();
   return;
 }
@@ -2591,119 +2341,119 @@ void Hunk_UserSetPos(HunkUser *param_1,void *param_2)
 
 // 825E4C18  Hunk_UserReset  (universal/com_memory.cpp:3881)
 
-void Hunk_UserReset(HunkUser *param_1)
+void Hunk_UserReset(void)
 
 {
   int iVar1;
   ulonglong uVar2;
-  bool bVar3;
-  void *pvVar4;
+  char cVar4;
+  void *pvVar3;
+  longlong lVar5;
   
-  uVar2 = __savegprlr_28(param_1);
+  uVar2 = __savegprlr_28();
   if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xf2c,0,"%s");
+    MyAssertHandler(0xffffffff82175740,0xf2c,0,0xffffffff82000f98,0xffffffff82152ddc);
   }
   iVar1 = (int)uVar2;
   if (*(char *)(iVar1 + 0x18) != '\0') {
-    bVar3 = Sys_IsMainThread();
-    if (!bVar3) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xf33,0,"%s");
+    cVar4 = Sys_IsMainThread();
+    if (cVar4 == '\0') {
+      MyAssertHandler(0xffffffff82175740,0xf33,0,0xffffffff82000f98,0xffffffff82010b48);
     }
-    if (g_hunkInuse == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xf34,0,"%s");
+    if (DAT_84015d40 == 0) {
+      MyAssertHandler(0xffffffff82175740,0xf34,0,0xffffffff82000f98,0xffffffff82175940);
     }
-    pvVar4 = (void *)(*(int *)(iVar1 + 0xc) - *(int *)(iVar1 + 8));
-    Com_Memset(pvVar4,0,*(int *)(iVar1 + 0x10) - (int)pvVar4);
-    *(void **)(iVar1 + 0x10) = pvVar4;
+    lVar5 = (ulonglong)*(uint *)(iVar1 + 0xc) - (ulonglong)*(uint *)(iVar1 + 8);
+    Com_Memset(lVar5,0,(ulonglong)*(uint *)(iVar1 + 0x10) - lVar5);
+    *(int *)(iVar1 + 0x10) = (int)lVar5;
     __restgprlr_28();
     return;
   }
-  if (*(HunkUser **)(iVar1 + 4) != (HunkUser *)0x0) {
-    Hunk_UserDestroy(*(HunkUser **)(iVar1 + 4));
+  if (*(int *)(iVar1 + 4) != 0) {
+    Hunk_UserDestroy();
     *(int *)iVar1 = iVar1;
     *(undefined4 *)(iVar1 + 4) = 0;
   }
   uVar2 = uVar2 + 0x1001f & 0xffff0000;
-  pvVar4 = (void *)uVar2;
-  if (pvVar4 != (void *)(*(uint *)(iVar1 + 0x10) + 0xffff & 0xffff0000)) {
+  if ((uint)uVar2 != (*(uint *)(iVar1 + 0x10) + 0xffff & 0xffff0000)) {
     if ((longlong)(*(uint *)(iVar1 + 0x10) - uVar2) < 1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xf47,0,"%s");
+      MyAssertHandler(0xffffffff82175740,0xf47,0,0xffffffff82000f98,0xffffffff82176190);
     }
-    Z_VirtualDecommit(pvVar4,*(int *)(iVar1 + 0x10) - (int)pvVar4,*(int *)(iVar1 + 0x1c));
+    Z_VirtualDecommit(uVar2,*(uint *)(iVar1 + 0x10) - uVar2,*(undefined4 *)(iVar1 + 0x1c));
   }
-  *(int *)(iVar1 + 0x10) = iVar1 + 0x20;
-  memset();
-  __restgprlr_28();
+  *(void **)(iVar1 + 0x10) = (void *)(iVar1 + 0x20);
+  pvVar3 = memset((void *)(iVar1 + 0x20),0,0xffe0);
+  __restgprlr_28(pvVar3);
   return;
 }
 
 
 // 825E3490  Hunk_UserDestroy  (universal/com_memory.cpp:3927)
 
-void Hunk_UserDestroy(HunkUser *param_1)
+void Hunk_UserDestroy(void)
 
 {
-  void *pvVar1;
-  bool bVar2;
-  longlong lVar3;
+  int iVar1;
+  int iVar2;
+  char cVar3;
   ulonglong uVar4;
+  uint uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
   
-  pvVar1 = (void *)__savegprlr_27(param_1);
-  if (*(char *)((int)pvVar1 + 0x18) != '\0') {
-    bVar2 = Sys_IsMainThread();
-    if (!bVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xf62,0,"%s");
+  iVar2 = __savegprlr_27();
+  if (*(char *)(iVar2 + 0x18) != '\0') {
+    cVar3 = Sys_IsMainThread();
+    if (cVar3 == '\0') {
+      MyAssertHandler(0xffffffff82175740,0xf62,0,0xffffffff82000f98,0xffffffff82010b48);
     }
     if (DAT_84015ca0 == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xf63,0,"%s");
+      MyAssertHandler(0xffffffff82175740,0xf63,0,0xffffffff82000f98,0xffffffff82175ed0);
     }
-    if (pvVar1 != (void *)(DAT_84015ca0 * 0x24 + -0x7bfea374)) {
-                    /* WARNING: Subroutine does not return */
-      Sys_Error("Hunk_UserDestroy cannot be called on \'%s\'");
-    }
-    if (g_hunkInuse == 0) {
-      uVar4 = (ulonglong)*(uint *)((int)pvVar1 + 0x10) + 0xffff & 0xffff0000;
-      if (0 < (longlong)(ZEXT48(*(uchar **)((int)pvVar1 + 0xc)) - uVar4)) {
-        ImageCache_FreeMemory((uchar *)uVar4,*(uchar **)((int)pvVar1 + 0xc));
+    if (iVar2 == DAT_84015ca0 * 0x24 + -0x7bfea374) {
+      if ((DAT_84015d40 == 0) &&
+         (0 < (longlong)
+              ((ulonglong)*(uint *)(iVar2 + 0xc) -
+              ((ulonglong)*(uint *)(iVar2 + 0x10) + 0xffff & 0xffff0000)))) {
+        ImageCache_FreeMemory();
       }
+      DAT_84015ca0 = DAT_84015ca0 + -1;
+      __restgprlr_27();
+      return;
     }
-    DAT_84015ca0 = DAT_84015ca0 + -1;
-    __restgprlr_27();
-    return;
+    Sys_Error(0xffffffff82175ea4,*(undefined4 *)(iVar2 + 0x14));
   }
-  if (*(HunkUser **)((int)pvVar1 + 4) != (HunkUser *)0x0) {
-    Hunk_UserDestroy(*(HunkUser **)((int)pvVar1 + 4));
+  if (*(int *)(iVar2 + 4) != 0) {
+    Hunk_UserDestroy();
   }
-  if (*(char *)((int)pvVar1 + 0x18) != '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xf81,0,"%s");
+  if (*(char *)(iVar2 + 0x18) != '\0') {
+    MyAssertHandler(0xffffffff82175740,0xf81,0,0xffffffff82000f98,0xffffffff82175e94);
   }
-  uVar4 = (ulonglong)DAT_84015cac - 1;
-  if (-1 < (longlong)uVar4) {
-    lVar3 = (uVar4 & 0x3fffffff) * 4 + -0x7bfea560;
+  uVar4 = (ulonglong)DAT_84015cac;
+  uVar7 = uVar4 - 1;
+  if (-1 < (longlong)uVar7) {
+    lVar6 = (uVar7 & 0x3fffffff) * 4 + -0x7bfea560;
     do {
-      if ((void *)*(int *)lVar3 == pvVar1) {
-        if (-1 < (int)uVar4) goto LAB_825e361c;
+      if (*(int *)lVar6 == iVar2) {
+        if (-1 < (int)uVar7) goto LAB_825e361c;
         break;
       }
-      uVar4 = uVar4 - 1;
-      lVar3 = lVar3 + -4;
-    } while (-1 < (longlong)uVar4);
+      uVar7 = uVar7 - 1;
+      lVar6 = lVar6 + -4;
+    } while (-1 < (longlong)uVar7);
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",0xf8b,
-                  0,"%s");
+  MyAssertHandler(0xffffffff82175740,0xf8b,0,0xffffffff82000f98,0xffffffff82175e80);
+  uVar4 = (ulonglong)DAT_84015cac;
 LAB_825e361c:
-  if ((int)uVar4 != DAT_84015cac - 1) {
-    memmove();
+  uVar5 = (uint)uVar4;
+  if ((int)uVar7 != (uint)uVar4 - 1) {
+    iVar1 = (int)((uVar7 & 0xffffffff) << 2);
+    memmove((void *)((int)&DAT_84015aa0 + iVar1),(void *)((int)&DAT_84015aa4 + iVar1),
+            (size_t)(((uVar4 - uVar7) - 1 & 0xffffffff) << 2));
+    uVar5 = DAT_84015cac;
   }
-  DAT_84015cac = DAT_84015cac - 1;
-  Z_VirtualFree(pvVar1,*(int *)((int)pvVar1 + 0x1c));
+  DAT_84015cac = uVar5 - 1;
+  Z_VirtualFree(iVar2,*(undefined4 *)(iVar2 + 0x1c));
   __restgprlr_27();
   return;
 }
@@ -2711,92 +2461,120 @@ LAB_825e361c:
 
 // 825E3668  Hunk_UserFreeMemoryAmount  (universal/com_memory.cpp:3992)
 
-uint Hunk_UserFreeMemoryAmount(HunkUser *param_1)
+longlong Hunk_UserFreeMemoryAmount(int param_1)
 
 {
-  if (param_1->fixed == false) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xf99,0,"%s");
+  if (*(char *)(param_1 + 0x18) == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xf99,0,0xffffffff82000f98,0xffffffff82175e74);
   }
-  return param_1->end - param_1->pos;
+  return (ulonglong)*(uint *)(param_1 + 0xc) - (ulonglong)*(uint *)(param_1 + 0x10);
 }
 
 
 // 825E36D0  Hunk_UserUsedSize  (universal/com_memory.cpp:4007)
 
-int Hunk_UserUsedSize(HunkUser *param_1)
+void Hunk_UserUsedSize(void)
 
 {
   int *piVar1;
   int *piVar2;
-  bool bVar4;
-  int iVar3;
+  char cVar3;
+  int iVar4;
   
-  piVar2 = (int *)__savegprlr_26(param_1);
+  piVar2 = (int *)__savegprlr_26();
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xfac,0,"%s");
+    MyAssertHandler(0xffffffff82175740,0xfac,0,0xffffffff82000f98,0xffffffff82152ddc);
   }
   if (*(char *)(piVar2 + 6) == '\0') {
     piVar1 = (int *)*piVar2;
-    iVar3 = piVar1[4] - (int)piVar1;
+    iVar4 = piVar1[4] - (int)piVar1;
     for (; piVar2 != piVar1; piVar2 = (int *)piVar2[1]) {
       if (piVar2 == (int *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                        0xfbf,0,"%s");
+        MyAssertHandler(0xffffffff82175740,0xfbf,0,0xffffffff82000f98,0xffffffff82152ddc);
       }
-      iVar3 = (piVar2[4] - (int)piVar2) + iVar3 + -0x20;
+      iVar4 = (piVar2[4] - (int)piVar2) + iVar4 + -0x20;
     }
-    iVar3 = __restgprlr_26(iVar3 + -0x20);
-    return iVar3;
+    __restgprlr_26(iVar4 + -0x20);
+    return;
   }
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xfb1,0,"%s");
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0xfb1,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xfb2,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0xfb2,0,0xffffffff82000f98,0xffffffff82175940);
   }
-  iVar3 = __restgprlr_26(((ulonglong)(uint)piVar2[4] - (ulonglong)(uint)piVar2[3]) +
-                         (ulonglong)(uint)piVar2[2]);
-  return iVar3;
+  __restgprlr_26(((ulonglong)(uint)piVar2[4] - (ulonglong)(uint)piVar2[3]) +
+                 (ulonglong)(uint)piVar2[2]);
+  return;
 }
 
 
 // 825E37F8  Hunk_UserMemoryInfo_f  (universal/com_memory.cpp:4044)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hunk_UserMemoryInfo_f(void)
 
 {
-  uint uVar1;
-  int iVar2;
+  int iVar1;
+  int *piVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  uint uVar8;
+  uint uVar9;
+  uint *puVar10;
+  int iVar11;
   
   __savegprlr_24();
   if (DAT_84015ca0 != 0) {
-    Com_Printf(0x10,"Fixed Hunk Users: %d\n");
-    uVar1 = 0;
+    uVar3 = 0;
+    uVar4 = 0;
+    Com_Printf(0x10,0xffffffff82175fa0);
+    uVar8 = 0;
     if (DAT_84015ca0 != 0) {
+      puVar10 = &DAT_84015cb8;
       do {
-        Com_Printf(0x10,"\tFixed : %6d/%6d KB used : 0x%08x : %s\n");
-        uVar1 = uVar1 + 1;
-      } while (uVar1 < DAT_84015ca0);
+        uVar5 = *puVar10;
+        uVar6 = ((ulonglong)puVar10[2] - (ulonglong)puVar10[1]) + (ulonglong)uVar5;
+        Com_Printf(0x10,0xffffffff82175f78,(uVar6 & 0xffffffff) >> 10,
+                   (longlong)((int)uVar5 >> 10) +
+                   (ulonglong)((int)uVar5 < 0 && (uVar5 & 0x3ff) != 0),
+                   (ulonglong)puVar10[1] - (ulonglong)uVar5,puVar10[3]);
+        uVar5 = *puVar10;
+        uVar8 = uVar8 + 1;
+        uVar4 = uVar6 + uVar4;
+        puVar10 = puVar10 + 9;
+        uVar3 = uVar3 + uVar5;
+      } while (uVar8 < DAT_84015ca0);
     }
-    Com_Printf(0x10,"Fixed Total: %6d/%6d KB used\n");
+    Com_Printf(0x10,0xffffffff82175f58,(uVar4 & 0xffffffff) >> 10,(uVar3 & 0xffffffff) >> 10);
   }
   if (0 < DAT_84015cac) {
-    Com_Printf(0x10,"Virtual Hunk Users: %d\n");
-    iVar2 = 0;
+    uVar5 = 0;
+    uVar8 = 0;
+    Com_Printf(0x10,0xffffffff82175f40);
+    iVar11 = 0;
     if (0 < DAT_84015cac) {
+      piVar2 = &DAT_84015a9c;
       do {
-        Com_Printf(0x10,"\tVirtual : %6d/%6d KB committed : 0x%08x : %s\n");
-        iVar2 = iVar2 + 1;
-      } while (iVar2 < DAT_84015cac);
+        piVar2 = piVar2 + 1;
+        iVar1 = *piVar2;
+        uVar9 = *(int *)(iVar1 + 0xc) - iVar1;
+        uVar7 = *(int *)(iVar1 + 0x10) - iVar1;
+        Com_Printf(0x10,0xffffffff82175f10,
+                   (longlong)((int)uVar7 >> 10) +
+                   (ulonglong)((int)uVar7 < 0 && (uVar7 & 0x3ff) != 0),
+                   (longlong)((int)uVar9 >> 10) +
+                   (ulonglong)((int)uVar9 < 0 && (uVar9 & 0x3ff) != 0),iVar1,
+                   *(undefined4 *)(iVar1 + 0x14));
+        iVar11 = iVar11 + 1;
+        uVar5 = uVar9 + uVar5;
+        uVar8 = uVar7 + uVar8;
+      } while (iVar11 < DAT_84015cac);
     }
-    Com_Printf(0x10,"Virtual Total : %6d/%6d KB committed\n");
+    Com_Printf(0x10,0xffffffff82175ee8,uVar8 >> 10,uVar5 >> 10);
   }
   __restgprlr_24();
   return;
@@ -2805,81 +2583,72 @@ void Hunk_UserMemoryInfo_f(void)
 
 // 825E3970  Hunk_Begin  (universal/com_memory.cpp:4106)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hunk_Begin(void)
 
 {
-  ulonglong uVar1;
-  bool bVar3;
-  void *pvVar2;
-  ulong uVar4;
+  char cVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  longlong lVar4;
   uint uVar5;
-  longlong lVar6;
-  uint uVar7;
-  int *piVar8;
+  uint *puVar6;
   
   __savegprlr_26();
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x1014,0,"%s");
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x1014,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (s_hunkData == (uchar *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x1015,0,"%s");
+  if (DAT_84016d60 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x1015,0,0xffffffff82000f98,0xffffffff821758cc);
   }
-  if (g_hunkInuse != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x1016,0,"%s");
+  if (DAT_84015d40 != 0) {
+    MyAssertHandler(0xffffffff82175740,0x1016,0,0xffffffff82000f98,0xffffffff82175cf4);
   }
-  if ((int)(s_hunkTotal - DAT_84015d48) < (int)DAT_84015d44) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x1017,0,"%s");
+  if ((int)(DAT_84015a94 - DAT_84015d48) < (int)DAT_84015d44) {
+    MyAssertHandler(0xffffffff82175740,0x1017,0,0xffffffff82000f98,0xffffffff82175fb8);
   }
-  lVar6 = ((ulonglong)(uint)s_hunkTotal - (ulonglong)DAT_84015d48) - (ulonglong)DAT_84015d44;
-  g_hunkInuse = 1;
-  if (0 < lVar6) {
+  uVar3 = (ulonglong)DAT_84015d44;
+  lVar4 = ((ulonglong)DAT_84015a94 - (ulonglong)DAT_84015d48) - uVar3;
+  DAT_84015d40 = 1;
+  if (0 < lVar4) {
     ImageCache_FreeMemory
-              (s_hunkData + DAT_84015d44,
-               s_hunkData + (int)((ulonglong)(uint)s_hunkTotal - (ulonglong)DAT_84015d48));
+              (uVar3 + DAT_84016d60,
+               ((ulonglong)DAT_84015a94 - (ulonglong)DAT_84015d48) + (ulonglong)DAT_84016d60);
+    uVar3 = (ulonglong)DAT_84015d44;
   }
-  uVar7 = 0;
-  uVar5 = DAT_84015ca0;
+  uVar5 = 0;
+  uVar2 = DAT_84015ca0;
   if (DAT_84015ca0 != 0) {
-    piVar8 = &g_fixedHunkUser[0].end;
+    puVar6 = &DAT_84015cbc;
     do {
-      uVar1 = (ulonglong)(uint)piVar8[1] + 0xffff & 0xffff0000;
-      if (0 < (longlong)(ZEXT48((uchar *)*piVar8) - uVar1)) {
-        ImageCache_FreeMemory((uchar *)uVar1,(uchar *)*piVar8);
-        uVar5 = DAT_84015ca0;
+      if (0 < (longlong)((ulonglong)*puVar6 - ((ulonglong)puVar6[1] + 0xffff & 0xffff0000))) {
+        ImageCache_FreeMemory();
+        uVar2 = DAT_84015ca0;
       }
-      uVar7 = uVar7 + 1;
-      piVar8 = piVar8 + 9;
-    } while (uVar7 < uVar5);
+      uVar5 = uVar5 + 1;
+      puVar6 = puVar6 + 9;
+    } while (uVar5 < uVar2);
+    uVar3 = (ulonglong)DAT_84015d44;
   }
-  uVar4 = (ulong)lVar6;
-  if (0 < (int)uVar4) {
-    XPhysicalProtect(s_hunkData + DAT_84015d44,uVar4,4);
-    Com_Memset(s_hunkData + DAT_84015d44,0,uVar4);
-    uVar5 = DAT_84015ca0;
+  if (0 < (int)lVar4) {
+    XPhysicalProtect(uVar3 + DAT_84016d60,lVar4,4);
+    Com_Memset((ulonglong)DAT_84015d44 + (ulonglong)DAT_84016d60,0,lVar4);
+    uVar2 = DAT_84015ca0;
   }
-  uVar7 = 0;
-  if (uVar5 != 0) {
-    piVar8 = &g_fixedHunkUser[0].end;
+  uVar5 = 0;
+  if (uVar2 != 0) {
+    puVar6 = &DAT_84015cbc;
     do {
-      uVar1 = (ulonglong)(uint)piVar8[1] + 0xffff & 0xffff0000;
-      lVar6 = (uint)*piVar8 - uVar1;
-      if (0 < lVar6) {
-        pvVar2 = (void *)uVar1;
-        uVar4 = (ulong)lVar6;
-        XPhysicalProtect(pvVar2,uVar4,4);
-        Com_Memset(pvVar2,0,uVar4);
-        uVar5 = DAT_84015ca0;
+      uVar3 = (ulonglong)puVar6[1] + 0xffff & 0xffff0000;
+      lVar4 = *puVar6 - uVar3;
+      if (0 < lVar4) {
+        XPhysicalProtect(uVar3,lVar4,4);
+        Com_Memset(uVar3,0,lVar4);
+        uVar2 = DAT_84015ca0;
       }
-      uVar7 = uVar7 + 1;
-      piVar8 = piVar8 + 9;
-    } while (uVar7 < uVar5);
+      uVar5 = uVar5 + 1;
+      puVar6 = puVar6 + 9;
+    } while (uVar5 < uVar2);
   }
   __restgprlr_26();
   return;
@@ -2888,75 +2657,71 @@ void Hunk_Begin(void)
 
 // 825E3B68  Hunk_End  (universal/com_memory.cpp:4182)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Hunk_End(void)
 
 {
   ulonglong uVar1;
   ulonglong uVar2;
-  bool bVar4;
+  char cVar4;
   int iVar3;
-  uint uVar5;
-  longlong lVar6;
-  ulong uVar7;
+  longlong lVar5;
+  uint uVar6;
+  longlong lVar7;
   uint uVar8;
-  int *piVar9;
+  uint *puVar9;
   
   __savegprlr_26();
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x1061,0,"%s");
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x1061,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (g_hunkInuse == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x1062,0,"%s");
+  if (DAT_84015d40 == 0) {
+    MyAssertHandler(0xffffffff82175740,0x1062,0,0xffffffff82000f98,0xffffffff82175940);
   }
   Hunk_CheckTempMemoryClear();
   Hunk_CheckTempMemoryHighClear();
-  g_hunkInuse = 0;
-  uVar1 = (ulonglong)(uint)hunk_low.permanent + 0xffff & 0xffff0000;
-  uVar2 = (ulonglong)(uint)hunk_high.permanent + 0xffff & 0xffff0000;
-  DAT_84015d44 = (int)uVar1;
-  DAT_84015d48 = (int)uVar2;
-  lVar6 = ((uint)s_hunkTotal - uVar2) - uVar1;
-  uVar7 = (ulong)lVar6;
-  if (0 < lVar6) {
-    XPhysicalProtect(s_hunkData + DAT_84015d44,uVar7,0x404);
+  DAT_84015d40 = 0;
+  uVar1 = (ulonglong)DAT_84015d54 + 0xffff & 0xffff0000;
+  uVar2 = (ulonglong)DAT_84015d4c + 0xffff & 0xffff0000;
+  DAT_84015d44 = (uint)uVar1;
+  DAT_84015d48 = (uint)uVar2;
+  lVar7 = (DAT_84015a94 - uVar2) - uVar1;
+  if (0 < lVar7) {
+    XPhysicalProtect(DAT_84016d60 + uVar1,lVar7,0x404);
   }
   uVar8 = 0;
   if (DAT_84015ca0 != 0) {
-    piVar9 = &g_fixedHunkUser[0].end;
-    uVar5 = DAT_84015ca0;
+    puVar9 = &DAT_84015cbc;
+    uVar6 = DAT_84015ca0;
     do {
-      uVar1 = (ulonglong)(uint)piVar9[1] + 0xffff & 0xffff0000;
-      lVar6 = (uint)*piVar9 - uVar1;
-      if (0 < lVar6) {
-        XPhysicalProtect((void *)uVar1,(ulong)lVar6,0x404);
-        uVar5 = DAT_84015ca0;
+      uVar1 = (ulonglong)puVar9[1] + 0xffff & 0xffff0000;
+      lVar5 = *puVar9 - uVar1;
+      if (0 < lVar5) {
+        XPhysicalProtect(uVar1,lVar5,0x404);
+        uVar6 = DAT_84015ca0;
       }
       uVar8 = uVar8 + 1;
-      piVar9 = piVar9 + 9;
-    } while (uVar8 < uVar5);
+      puVar9 = puVar9 + 9;
+    } while (uVar8 < uVar6);
   }
   iVar3 = DB_EnterStreaming();
-  if (0 < (int)uVar7) {
-    ImageCache_GiveMemory(s_hunkData + DAT_84015d44,s_hunkData + (s_hunkTotal - DAT_84015d48));
+  if (0 < (int)lVar7) {
+    ImageCache_GiveMemory
+              ((ulonglong)DAT_84016d60 + (ulonglong)DAT_84015d44,
+               ((ulonglong)DAT_84016d60 - (ulonglong)DAT_84015d48) + (ulonglong)DAT_84015a94);
   }
   uVar8 = 0;
   if (DAT_84015ca0 != 0) {
-    piVar9 = &g_fixedHunkUser[0].end;
-    uVar5 = DAT_84015ca0;
+    puVar9 = &DAT_84015cbc;
+    uVar6 = DAT_84015ca0;
     do {
-      uVar1 = (ulonglong)(uint)piVar9[1] + 0xffff & 0xffff0000;
-      if (0 < (longlong)(ZEXT48((uchar *)*piVar9) - uVar1)) {
-        ImageCache_GiveMemory((uchar *)uVar1,(uchar *)*piVar9);
-        uVar5 = DAT_84015ca0;
+      if (0 < (longlong)((ulonglong)*puVar9 - ((ulonglong)puVar9[1] + 0xffff & 0xffff0000))) {
+        ImageCache_GiveMemory();
+        uVar6 = DAT_84015ca0;
       }
       uVar8 = uVar8 + 1;
-      piVar9 = piVar9 + 9;
-    } while (uVar8 < uVar5);
+      puVar9 = puVar9 + 9;
+    } while (uVar8 < uVar6);
   }
   DB_LeaveStreaming();
   if (iVar3 != 0) {
@@ -2969,72 +2734,65 @@ void Hunk_End(void)
 
 // 825E3D10  Hunk_Inuse  (universal/com_memory.cpp:4264)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Hunk_Inuse(void)
+undefined4 Hunk_Inuse(void)
 
 {
-  bool bVar1;
+  char cVar1;
   
-  bVar1 = Sys_IsMainThread();
-  if (!bVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0x10a9,0,"%s");
-    return g_hunkInuse;
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82175740,0x10a9,0,0xffffffff82000f98,0xffffffff82010b48);
+    return DAT_84015d40;
   }
-  return g_hunkInuse;
+  return DAT_84015d40;
 }
 
 
 // 825E3D80  Hunk_FreeMemory  (universal/com_memory.cpp:4272)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int Hunk_FreeMemory(void)
+void Hunk_FreeMemory(void)
 
 {
-  HunkUser **ppHVar1;
-  HunkUser **ppHVar2;
-  HunkUser **ppHVar3;
-  int iVar4;
+  uint *puVar1;
+  uint *puVar2;
+  uint *puVar3;
+  longlong lVar4;
   longlong lVar5;
-  longlong lVar6;
-  uint uVar7;
-  HunkUser **ppHVar8;
-  longlong lVar9;
+  uint uVar6;
+  uint *puVar7;
+  longlong lVar8;
   
   __savegprlr_27();
-  lVar6 = 0;
   lVar5 = 0;
-  uVar7 = 0;
-  lVar9 = ((ulonglong)(uint)s_hunkTotal - (ulonglong)DAT_84015d44) - (ulonglong)DAT_84015d48;
+  lVar4 = 0;
+  uVar6 = 0;
+  lVar8 = ((ulonglong)DAT_84015a94 - (ulonglong)DAT_84015d44) - (ulonglong)DAT_84015d48;
   if (1 < (int)DAT_84015ca0) {
-    ppHVar8 = g_virtualHunkUser + 0x7f;
+    puVar7 = (uint *)0x84015c9c;
     do {
-      ppHVar1 = ppHVar8 + 8;
-      uVar7 = uVar7 + 2;
-      ppHVar2 = ppHVar8 + 9;
-      ppHVar3 = ppHVar8 + 0x11;
-      ppHVar8 = ppHVar8 + 0x12;
-      lVar6 = (ZEXT48(*ppHVar1) - (ZEXT48(*ppHVar2) + 0xffff & 0xffff0000)) + lVar6;
-      lVar5 = (ZEXT48(*ppHVar3) - (ZEXT48(*ppHVar8) + 0xffff & 0xffff0000)) + lVar5;
-    } while (uVar7 < DAT_84015ca0 - 1);
+      puVar1 = puVar7 + 8;
+      uVar6 = uVar6 + 2;
+      puVar2 = puVar7 + 9;
+      puVar3 = puVar7 + 0x11;
+      puVar7 = puVar7 + 0x12;
+      lVar5 = ((ulonglong)*puVar1 - ((ulonglong)*puVar2 + 0xffff & 0xffff0000)) + lVar5;
+      lVar4 = ((ulonglong)*puVar3 - ((ulonglong)*puVar7 + 0xffff & 0xffff0000)) + lVar4;
+    } while (uVar6 < DAT_84015ca0 - 1);
   }
-  if (uVar7 < DAT_84015ca0) {
-    iVar4 = __restgprlr_27(lVar5 + lVar6 +
-                           ((ulonglong)(uint)g_fixedHunkUser[uVar7].end -
-                           ((ulonglong)(uint)g_fixedHunkUser[uVar7].pos + 0xffff & 0xffff0000)) +
-                           lVar9);
-    return iVar4;
+  if (uVar6 < DAT_84015ca0) {
+    __restgprlr_27(lVar4 + lVar5 +
+                   ((ulonglong)(uint)(&DAT_84015cbc)[uVar6 * 9] -
+                   ((ulonglong)(uint)(&DAT_84015cc0)[uVar6 * 9] + 0xffff & 0xffff0000)) + lVar8);
+    return;
   }
-  iVar4 = __restgprlr_27(lVar5 + lVar6 + lVar9);
-  return iVar4;
+  __restgprlr_27(lVar4 + lVar5 + lVar8);
+  return;
 }
 
 
 // 825E3E58  Hunk_CopyString  (universal/com_memory.cpp:4306)
 
-char * Hunk_CopyString(HunkUser *param_1,char *param_2)
+void Hunk_CopyString(undefined8 param_1,char *param_2)
 
 {
   char cVar1;
@@ -3046,30 +2804,30 @@ char * Hunk_CopyString(HunkUser *param_1,char *param_2)
     cVar1 = *pcVar3;
     pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  pcVar3 = Hunk_UserAlloc(param_1,(int)pcVar3 - (int)param_2,1);
-  iVar2 = (int)pcVar3 - (int)param_2;
+  iVar2 = Hunk_UserAlloc(param_1,(int)pcVar3 - (int)param_2,1);
+  iVar2 = iVar2 - (int)param_2;
   do {
     cVar1 = *param_2;
     param_2[iVar2] = cVar1;
     param_2 = param_2 + 1;
   } while (cVar1 != '\0');
-  return pcVar3;
+  return;
 }
 
 
 // 825E3ED0  Hunk_CopyNString  (universal/com_memory.cpp:4322)
 
-char * Hunk_CopyNString(HunkUser *param_1,char *param_2,int param_3)
+void Hunk_CopyNString(undefined8 param_1,char *param_2,longlong param_3)
 
 {
-  HunkUser *pHVar1;
-  char *pcVar2;
+  undefined8 uVar1;
+  char *_Dest;
   
-  pHVar1 = (HunkUser *)__savegprlr_29(param_1);
-  pcVar2 = Hunk_UserAlloc(pHVar1,param_3 + 1,1);
-  strncpy(pcVar2,param_2,param_3);
-  pcVar2[param_3] = '\0';
-  pcVar2 = (char *)__restgprlr_29(pcVar2);
-  return pcVar2;
+  uVar1 = __savegprlr_29();
+  _Dest = (char *)Hunk_UserAlloc(uVar1,param_3 + 1,1);
+  strncpy(_Dest,param_2,(size_t)param_3);
+  _Dest[(size_t)param_3] = '\0';
+  __restgprlr_29(_Dest);
+  return;
 }
 

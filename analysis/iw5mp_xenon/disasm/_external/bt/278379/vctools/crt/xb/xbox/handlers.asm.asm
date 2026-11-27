@@ -13,7 +13,6 @@
   8292A554  93C10004             stw r30,0x4(r1)
   8292A558  7C6803A6             mtspr LR,r3
   8292A55C  4E800021             blrl
-__NLG_Return:
   8292A560  7FE5FB78             or r5,r31,r31
   8292A564  281F0100             cmplwi r31,0x100
   8292A568  40820008             bne 0x8292a570

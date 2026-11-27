@@ -2,36 +2,35 @@
 
 // 824460B0  FX_RequestLock  (EffectsCore/fx_system.h:228)
 
-uchar FX_RequestLock(FxAccessLock *param_1)
+uint FX_RequestLock(undefined8 param_1)
 
 {
-  <unnamed_type_m> <Var1;
-  long lVar2;
+  uint uVar1;
+  uint uVar2;
   char in_RESERVE;
   byte in_cr0;
   
   do {
-    <Var1 = param_1->m;
+    uVar1 = *(uint *)param_1;
     if (in_RESERVE != '\0') {
-      lVar2 = storeWordConditionalIndexed((ulonglong)(uint)<Var1 + 0x10000,0,(longlong)(int)param_1)
-      ;
-      param_1->data = lVar2;
+      uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 + 0x10000,0,param_1);
+      *(uint *)param_1 = uVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  return <Var1.request;
+  return uVar1 >> 0x10 & 0xff;
 }
 
 
 // 824460E0  FX_EnterReadLock  (EffectsCore/fx_system.h:239)
 
-int FX_EnterReadLock(FxAccessLock *param_1,uchar param_2)
+undefined8 FX_EnterReadLock(int param_1,char param_2)
 
 {
-  if (param_2 != (param_1->m).read) {
+  if (param_2 != *(char *)(param_1 + 2)) {
     return 0;
   }
-  (param_1->m).read = (param_1->m).read + '\x01';
+  *(char *)(param_1 + 2) = *(char *)(param_1 + 2) + '\x01';
   sync(1);
   return 1;
 }
@@ -39,32 +38,34 @@ int FX_EnterReadLock(FxAccessLock *param_1,uchar param_2)
 
 // 82446110  FX_ExitReadLock  (EffectsCore/fx_system.h:253)
 
-void FX_ExitReadLock(FxAccessLock *param_1)
+void FX_ExitReadLock(undefined8 param_1)
 
 {
   uint uVar1;
   uint uVar2;
-  long lVar3;
+  uint uVar3;
+  uint *puVar4;
   char in_RESERVE;
   byte in_cr0;
   
   do {
-    uVar2 = param_1->data;
+    puVar4 = (uint *)param_1;
+    uVar2 = *puVar4;
     do {
-      uVar1 = param_1->data;
+      uVar1 = *puVar4;
       if (uVar1 != uVar2) {
         if (in_RESERVE != '\0') {
-          lVar3 = storeWordConditionalIndexed((ulonglong)uVar1,0,(longlong)(int)param_1);
-          param_1->data = lVar3;
+          uVar3 = storeWordConditionalIndexed((ulonglong)uVar1,0,param_1);
+          *puVar4 = uVar3;
           in_cr0 = 2;
         }
         break;
       }
       if (in_RESERVE != '\0') {
-        lVar3 = storeWordConditionalIndexed
+        uVar3 = storeWordConditionalIndexed
                           ((ulonglong)uVar2 & 0xffffff00 | (ulonglong)uVar2 + 1 & 0xffffffff000000ff
-                           ,0,(longlong)(int)param_1);
-        param_1->data = lVar3;
+                           ,0,param_1);
+        *puVar4 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -77,10 +78,10 @@ void FX_ExitReadLock(FxAccessLock *param_1)
 
 // 82446158  FX_EnterWriteLock  (EffectsCore/fx_system.h:265)
 
-int FX_EnterWriteLock(FxAccessLock *param_1,uchar param_2)
+undefined8 FX_EnterWriteLock(int param_1,char param_2)
 
 {
-  if (param_2 != (param_1->m).write) {
+  if (param_2 != *(char *)(param_1 + 3)) {
     return 0;
   }
   sync(1);
@@ -90,46 +91,37 @@ int FX_EnterWriteLock(FxAccessLock *param_1,uchar param_2)
 
 // 82446180  FX_ExitWriteLock  (EffectsCore/fx_system.h:275)
 
-void FX_ExitWriteLock(FxAccessLock *param_1)
+void FX_ExitWriteLock(int param_1)
 
 {
   sync(1);
-  (param_1->u).writeRead =
-       (param_1->u).writeRead + 1 & 0xff | ((param_1->u).writeRead & 0xff00) + 0x100;
+  *(ushort *)(param_1 + 2) =
+       *(ushort *)(param_1 + 2) + 1 & 0xff | (*(ushort *)(param_1 + 2) & 0xff00) + 0x100;
   return;
 }
 
 
 // 824461A8  FX_GetDeferElemDeleteRequest  (EffectsCore/fx_system_util.cpp:590)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-ElemDeferDelete * FX_GetDeferElemDeleteRequest(FxSystem *param_1)
+longlong FX_GetDeferElemDeleteRequest(int param_1)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
   
-  iVar1 = param_1->numDeleteElementRequest;
-  iVar2 = iVar1 + 1;
-  param_1->numDeleteElementRequest = iVar2;
+  uVar1 = *(uint *)(param_1 + 0xc0);
+  iVar2 = uVar1 + 1;
+  *(int *)(param_1 + 0xc0) = iVar2;
   if (0x7ff < iVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x252,0,"%s");
+    MyAssertHandler(0xffffffff82069358,0x252,0,0xffffffff82000f98,0xffffffff820693a4);
   }
-  return param_1->deleteElementRequest + iVar1;
+  return (ulonglong)*(uint *)(param_1 + 0xbc) + ((ulonglong)uVar1 & 0x1fffffff) * 8;
 }
 
 
 // 82446220  FX_CommitDeferElemDeleteRequest  (EffectsCore/fx_system_util.cpp:600)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_CommitDeferElemDeleteRequest(FxSystem *param_1)
+void FX_CommitDeferElemDeleteRequest(void)
 
 {
   return;
@@ -138,34 +130,24 @@ void FX_CommitDeferElemDeleteRequest(FxSystem *param_1)
 
 // 82446228  FX_GetDeferElemSpawnRequest  (EffectsCore/fx_system_util.cpp:606)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-ElemDeferSpawn * FX_GetDeferElemSpawnRequest(FxSystem *param_1)
+longlong FX_GetDeferElemSpawnRequest(int param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  uint uVar1;
   
-  iVar1 = param_1->numSpawnElementRequest;
-  iVar2 = iVar1 + 1;
-  param_1->numSpawnElementRequest = iVar2;
-  if (0x800 < iVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x262,0,"%s");
+  uVar1 = *(uint *)(param_1 + 200);
+  *(uint *)(param_1 + 200) = uVar1 + 1;
+  if (0x800 < (int)(uVar1 + 1)) {
+    MyAssertHandler(0xffffffff82069358,0x262,0,0xffffffff82000f98,0xffffffff820693d4);
   }
-  return param_1->spawnElementRequest + iVar1;
+  return (ulonglong)*(uint *)(param_1 + 0xc4) +
+         ((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
 }
 
 
 // 824462A8  FX_CommitDeferElemSpawnRequest  (EffectsCore/fx_system_util.cpp:616)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_CommitDeferElemSpawnRequest(FxSystem *param_1)
+void FX_CommitDeferElemSpawnRequest(void)
 
 {
   return;
@@ -174,15 +156,11 @@ void FX_CommitDeferElemSpawnRequest(FxSystem *param_1)
 
 // 82446768  FX_PushElemUpdate  (EffectsCore/fx_system_util.cpp:623)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_PushElemUpdate(FxSystem *param_1,int param_2,FxEffect *param_3,ushort param_4,ushort param_5
-                      )
+void FX_PushElemUpdate(undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4,
+                      undefined8 param_5)
 
 {
-  if (g_autoAddElemForUpdate == 0) {
+  if (DAT_8333caa8 == 0) {
     return;
   }
   if (param_2 == 0) {
@@ -195,33 +173,23 @@ void FX_PushElemUpdate(FxSystem *param_1,int param_2,FxEffect *param_3,ushort pa
 
 // 824462B0  FX_ForcePushElemUpdate  (EffectsCore/fx_system_util.cpp:632)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_ForcePushElemUpdate(FxSystem *param_1,FxEffect *param_2,ushort param_3,ushort param_4)
+void FX_ForcePushElemUpdate
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(short)param_4;
-  uVar2 = (ulonglong)(short)param_3;
-  iVar1 = __savegprlr_27(param_1,param_2);
+  iVar1 = __savegprlr_27();
   if (0x7ff < *(int *)(iVar1 + 0xd0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x27d,0,"%s");
+    MyAssertHandler(0xffffffff82069358,0x27d,0,0xffffffff82000f98,0xffffffff82069444);
   }
-  *(short *)(*(int *)(iVar1 + 0xd0) * 4 + *(int *)(iVar1 + 0xcc)) = (short)uVar2;
-  if ((uVar2 & 0xffff) == 0xffff) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x27f,0,"%s");
+  *(short *)(*(int *)(iVar1 + 0xd0) * 4 + *(int *)(iVar1 + 0xcc)) = (short)param_3;
+  if ((param_3 & 0xffff) == 0xffff) {
+    MyAssertHandler(0xffffffff82069358,0x27f,0,0xffffffff82000f98,0xffffffff82069424);
   }
-  *(short *)(*(int *)(iVar1 + 0xd0) * 4 + *(int *)(iVar1 + 0xcc) + 2) = (short)uVar3;
-  if ((uVar3 & 0xffff) == 0xffff) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x281,0,"%s");
+  *(short *)(*(int *)(iVar1 + 0xd0) * 4 + *(int *)(iVar1 + 0xcc) + 2) = (short)param_4;
+  if ((param_4 & 0xffff) == 0xffff) {
+    MyAssertHandler(0xffffffff82069358,0x281,0,0xffffffff82000f98,0xffffffff82069404);
   }
   *(int *)(iVar1 + 0xd0) = *(int *)(iVar1 + 0xd0) + 1;
   __restgprlr_27();
@@ -231,57 +199,49 @@ void FX_ForcePushElemUpdate(FxSystem *param_1,FxEffect *param_2,ushort param_3,u
 
 // 82446388  FX_AutoAddElemForUpdate  (EffectsCore/fx_system_util.cpp:651)
 
-void FX_AutoAddElemForUpdate(int param_1)
+void FX_AutoAddElemForUpdate(undefined4 param_1)
 
 {
-  g_autoAddElemForUpdate = param_1;
+  DAT_8333caa8 = param_1;
   return;
 }
 
 
 // 82446398  FX_AssertCheckElemIsInEffect  (EffectsCore/fx_system_util.cpp:658)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_AssertCheckElemIsInEffect(FxSystem *param_1,FxEffect *param_2,ushort param_3,ushort param_4)
+void FX_AssertCheckElemIsInEffect
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
 
 {
   ulonglong uVar1;
-  FxSystem *pFVar2;
-  FxEffect *pFVar3;
-  ushort uVar4;
-  ulonglong uVar5;
-  int iVar6;
-  ushort *puVar7;
-  ulonglong uVar8;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  ushort *puVar5;
+  ulonglong uVar6;
   
-  uVar5 = (ulonglong)(short)param_4;
-  pFVar2 = (FxSystem *)__savegprlr_27(param_1,param_2);
-  if (pFVar2->nextElemHandleInEffect != (ushort *)0x0) {
-    uVar8 = 0xffffffffffffffff;
-    pFVar3 = FX_EffectFromHandle(pFVar2,param_3);
-    uVar5 = uVar5 & 0xffff;
-    iVar6 = 0;
-    if (uVar5 != 0xffff) {
-      puVar7 = pFVar3->firstElemHandle;
+  iVar2 = __savegprlr_27();
+  if (*(int *)(iVar2 + 0x44) != 0) {
+    uVar6 = 0xffffffffffffffff;
+    iVar3 = FX_EffectFromHandle(iVar2,param_3);
+    param_4 = param_4 & 0xffff;
+    iVar4 = 0;
+    if (param_4 != 0xffff) {
+      puVar5 = (ushort *)(iVar3 + 8);
       do {
-        if (2 < iVar6) break;
-        uVar8 = (ulonglong)*puVar7;
-        uVar1 = uVar8;
-        while ((uVar1 != uVar5 && (uVar1 != 0xffff))) {
-          uVar4 = FX_GetNextElemInEffect(pFVar2,(ushort)uVar8);
-          uVar8 = (ulonglong)(short)uVar4;
-          uVar1 = (ulonglong)uVar4;
+        if (2 < iVar4) break;
+        uVar6 = (ulonglong)*puVar5;
+        uVar1 = uVar6;
+        while ((uVar1 != param_4 && (uVar1 != 0xffff))) {
+          uVar6 = FX_GetNextElemInEffect(iVar2,uVar6);
+          uVar1 = uVar6 & 0xffff;
         }
-        iVar6 = iVar6 + 1;
-        puVar7 = puVar7 + 1;
-      } while (uVar1 != uVar5);
+        iVar4 = iVar4 + 1;
+        puVar5 = puVar5 + 1;
+      } while (uVar1 != param_4);
     }
-    if ((uVar8 & 0xffff) != uVar5) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                      ,0x29f,0,"%s");
+    if ((uVar6 & 0xffff) != param_4) {
+      MyAssertHandler(0xffffffff82069358,0x29f,0,0xffffffff82000f98,0xffffffff82069470);
     }
   }
   __restgprlr_27();
@@ -291,22 +251,18 @@ void FX_AssertCheckElemIsInEffect(FxSystem *param_1,FxEffect *param_2,ushort par
 
 // 82446798  FX_AssertCheckReferenceCount  (EffectsCore/fx_system_util.cpp:676)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_AssertCheckReferenceCount(FxSystem *param_1,FxEffect *param_2,ushort param_3)
+void FX_AssertCheckReferenceCount(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
   ushort uVar1;
-  uint uVar2;
-  FxPool<FxTrail> *pFVar3;
-  FxPool<FxTrailElem> *pFVar4;
+  ushort uVar2;
+  uint uVar3;
+  ulonglong uVar4;
   uint uVar5;
   undefined8 in_r0;
-  FxSystem *pFVar6;
-  FxEffect *pFVar7;
-  ushort uVar8;
+  int iVar7;
+  int iVar8;
+  undefined8 uVar6;
   ulonglong uVar9;
   int iVar10;
   int iVar11;
@@ -314,52 +270,53 @@ void FX_AssertCheckReferenceCount(FxSystem *param_1,FxEffect *param_2,ushort par
   longlong lVar13;
   ushort *puVar14;
   
-  uVar9 = (ulonglong)(short)param_3;
-  pFVar6 = (FxSystem *)__savegprlr_16(param_1,param_2);
-  pFVar7 = FX_EffectFromHandle(pFVar6,(ushort)uVar9);
-  uVar2 = pFVar7->status;
-  uVar1 = pFVar7->flags;
-  if ((pFVar6->activeSpotLightElemCount < 1) ||
-     (iVar10 = 1, (uVar9 & 0xffff) != (ulonglong)pFVar6->activeSpotLightEffectHandle)) {
+  iVar7 = __savegprlr_16();
+  iVar8 = FX_EffectFromHandle(iVar7,param_3);
+  uVar3 = *(uint *)(iVar8 + 4);
+  uVar1 = *(ushort *)(iVar8 + 0x24);
+  if ((*(int *)(iVar7 + 0x7c) < 1) ||
+     (iVar10 = 1, (param_3 & 0xffff) != (ulonglong)*(ushort *)(iVar7 + 0x80))) {
     iVar10 = 0;
   }
   iVar11 = 0;
-  puVar14 = pFVar7->firstElemHandle;
+  puVar14 = (ushort *)(iVar8 + 8);
   lVar13 = 3;
   do {
-    for (uVar8 = *puVar14; uVar8 != 0xffff; uVar8 = FX_GetNextElemInEffect(pFVar6,uVar8)) {
+    uVar9 = (ulonglong)*puVar14;
+    uVar4 = uVar9;
+    while (uVar4 != 0xffff) {
       iVar11 = iVar11 + 1;
+      uVar9 = FX_GetNextElemInEffect(iVar7,uVar9);
+      uVar4 = uVar9 & 0xffff;
     }
     lVar13 = lVar13 + -1;
     puVar14 = puVar14 + 1;
   } while (lVar13 != 0);
   iVar12 = 0;
-  uVar8 = pFVar7->firstTrailHandle;
-  while (uVar5 = (uint)uVar8, uVar5 != 0xffff) {
-    pFVar3 = pFVar6->trails;
-    if ((0x1ff < uVar5) || ((uVar8 & 3) != 0)) {
-      va("%p %i");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                      ,0x54,0,"%s\n\t%s");
+  uVar2 = *(ushort *)(iVar8 + 0x10);
+  while (uVar5 = (uint)uVar2, uVar5 != 0xffff) {
+    iVar8 = *(int *)(iVar7 + 0x14);
+    if ((0x1ff < uVar5) || ((uVar2 & 3) != 0)) {
+      uVar6 = va(0xffffffff82060820,iVar8,uVar5);
+      MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar6);
     }
-    puVar14 = (ushort *)((int)&pFVar3->field0_0x0 + uVar5 * 4);
-    uVar8 = puVar14[1];
-    while (uVar5 = (uint)uVar8, uVar5 != 0xffff) {
-      pFVar4 = pFVar6->trailElems;
-      if ((0x3fff < uVar5) || ((uVar8 & 7) != 0)) {
-        va("%p %i");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                        ,0x54,0,"%s\n\t%s");
+    puVar14 = (ushort *)(uVar5 * 4 + iVar8);
+    uVar2 = puVar14[1];
+    while (uVar5 = (uint)uVar2, uVar5 != 0xffff) {
+      iVar8 = *(int *)(iVar7 + 0x38);
+      if ((0x3fff < uVar5) || ((uVar2 & 7) != 0)) {
+        uVar6 = va(0xffffffff82060820,iVar8,uVar5);
+        MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar6);
       }
       iVar12 = iVar12 + 1;
-      uVar8 = *(ushort *)((int)&pFVar4->field0_0x0 + uVar5 * 4 + 0x14);
+      uVar2 = *(ushort *)((uVar5 + 5) * 4 + iVar8);
     }
-    uVar8 = *puVar14;
+    uVar2 = *puVar14;
   }
-  if ((*pFVar6->spawnCmdRead == -1) &&
-     ((uVar2 & 0x1fff) !=
-      iVar12 + iVar11 + iVar10 + (uint)(uVar1 >> 0xf) + (uVar1 >> 0xe & 1) + (uVar2 >> 0xe & 1) +
-      ((int)uVar2 >> 0xf & 0x3ffU))) {
+  if ((**(int **)(iVar7 + 0xa8) == -1) &&
+     ((uVar3 & 0x1fff) !=
+      iVar12 + iVar11 + iVar10 + (uint)(uVar1 >> 0xf) + (uVar1 >> 0xe & 1) + (uVar3 >> 0xe & 1) +
+      ((int)uVar3 >> 0xf & 0x3ffU))) {
     trapWord(0x1f,in_r0,0x16);
   }
   __restgprlr_16();
@@ -369,134 +326,111 @@ void FX_AssertCheckReferenceCount(FxSystem *param_1,FxEffect *param_2,ushort par
 
 // 82446970  FX_AssertCheckEffect  (EffectsCore/fx_system_util.cpp:740)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_AssertCheckEffect(FxSystem *param_1,FxEffect *param_2,ushort param_3,int param_4)
+void FX_AssertCheckEffect(undefined8 param_1,longlong param_2,undefined8 param_3,int param_4)
 
 {
-  FxEffectDef *pFVar1;
-  FxPool<FxElem> *pFVar2;
-  FxPool<FxTrail> *pFVar3;
-  FxElemDef *pFVar4;
-  ushort *puVar5;
-  ulonglong uVar6;
+  ushort uVar1;
+  int iVar2;
+  ushort *puVar3;
+  ulonglong uVar4;
+  int iVar6;
+  undefined8 uVar5;
   uint uVar7;
-  ulonglong uVar8;
-  FxSystem *pFVar9;
-  ushort uVar10;
-  FxEffect *pFVar11;
-  ulonglong uVar12;
-  longlong lVar13;
+  int *piVar8;
+  int iVar10;
+  ulonglong uVar9;
+  longlong lVar11;
+  longlong lVar12;
+  ulonglong uVar13;
   longlong lVar14;
-  longlong lVar15;
-  uint uVar16;
-  byte *pbVar17;
+  uint uVar15;
+  byte *pbVar16;
   
-  lVar13 = (longlong)(int)param_2;
-  uVar8 = (ulonglong)(int)param_1;
-  __savegprlr();
-  pFVar9 = (FxSystem *)uVar8;
-  pFVar11 = (FxEffect *)lVar13;
-  FX_AssertCheckReferenceCount(pFVar9,pFVar11,param_3);
-  lVar13 = lVar13 + 8;
-  lVar14 = 3;
-  pFVar1 = pFVar11->def;
-  lVar15 = lVar13;
+  iVar6 = __savegprlr();
+  FX_AssertCheckReferenceCount();
+  lVar11 = param_2 + 8;
+  lVar12 = 3;
+  piVar8 = (int *)param_2;
+  iVar2 = *piVar8;
+  lVar14 = lVar11;
   do {
-    uVar16 = (uint)*(ushort *)lVar15;
-    uVar7 = uVar16;
-    while (uVar7 != 0xffff) {
-      if ((uVar8 & 0xffffffff) == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                        ,0x69,0,"%s");
+    uVar15 = (uint)*(ushort *)lVar14;
+    uVar7 = uVar15;
+    while (uVar15 != 0xffff) {
+      if (iVar6 == 0) {
+        MyAssertHandler(0xffffffff82060828,0x69,0,0xffffffff82000f98,0xffffffff82038694);
       }
-      pFVar2 = pFVar9->elems;
-      if ((0x3fff < uVar7) || ((uVar7 & 7) != 0)) {
-        va("%p %i");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                        ,0x54,0,"%s\n\t%s");
+      iVar10 = *(int *)(iVar6 + 0x3c);
+      if ((0x3fff < uVar15) || ((uVar15 & 7) != 0)) {
+        uVar5 = va(0xffffffff82060820,iVar10,uVar15);
+        MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar5);
       }
-      if (pFVar1->elemDefCountEmission + pFVar1->elemDefCountOneShot + pFVar1->elemDefCountLooping
-          <= (int)(uint)(*(byte *)((int)&pFVar2->field0_0x0 + uVar7 * 4) >> 2)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                        ,0x2f2,0,"%s");
+      if (*(int *)(iVar2 + 0x18) + *(int *)(iVar2 + 0x14) + *(int *)(iVar2 + 0x10) <=
+          (int)(uint)(*(byte *)(uVar15 * 4 + iVar10) >> 2)) {
+        MyAssertHandler(0xffffffff82069358,0x2f2,0,0xffffffff82000f98,0xffffffff820674f8);
       }
-      uVar10 = FX_GetNextElemInEffect(pFVar9,(ushort)uVar16);
-      uVar16 = (uint)(short)uVar10;
-      uVar7 = (uint)uVar10;
+      uVar7 = FX_GetNextElemInEffect(iVar6,uVar7);
+      uVar15 = uVar7 & 0xffff;
     }
-    lVar14 = lVar14 + -1;
-    lVar15 = lVar15 + 2;
-  } while (lVar14 != 0);
-  uVar10 = pFVar11->firstTrailHandle;
-  while (uVar7 = (uint)uVar10, uVar7 != 0xffff) {
-    if ((uVar8 & 0xffffffff) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                      ,0x8c,0,"%s");
+    lVar12 = lVar12 + -1;
+    lVar14 = lVar14 + 2;
+  } while (lVar12 != 0);
+  uVar1 = *(ushort *)(piVar8 + 4);
+  while (uVar15 = (uint)uVar1, uVar15 != 0xffff) {
+    if (iVar6 == 0) {
+      MyAssertHandler(0xffffffff82060828,0x8c,0,0xffffffff82000f98,0xffffffff82038694);
     }
-    pFVar3 = pFVar9->trails;
-    if ((0x1ff < uVar7) || ((uVar10 & 3) != 0)) {
-      va("%p %i");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                      ,0x54,0,"%s\n\t%s");
+    iVar10 = *(int *)(iVar6 + 0x14);
+    if ((0x1ff < uVar15) || ((uVar1 & 3) != 0)) {
+      uVar5 = va(0xffffffff82060820,iVar10,uVar15);
+      MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar5);
     }
-    puVar5 = (ushort *)((int)&pFVar3->field0_0x0 + uVar7 * 4);
-    if ((uint)(pFVar1->elemDefCountEmission + pFVar1->elemDefCountOneShot +
-              pFVar1->elemDefCountLooping) <= (uint)(int)*(char *)(puVar5 + 3)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                      ,0x2fb,0,
-                      "trail->defIndex doesn\'t index def->elemDefCountLooping + def->elemDefCountOneShot + def->elemDefCountEmission\n\t%i not in [0, %i)"
-                     );
+    puVar3 = (ushort *)(uVar15 * 4 + iVar10);
+    if ((uint)(*(int *)(iVar2 + 0x18) + *(int *)(iVar2 + 0x14) + *(int *)(iVar2 + 0x10)) <=
+        (uint)(int)*(char *)(puVar3 + 3)) {
+      MyAssertHandler(0xffffffff82069358,0x2fb,0,0xffffffff820694d8);
     }
-    uVar10 = *puVar5;
+    uVar1 = *puVar3;
   }
   if (param_4 != 0) {
-    lVar15 = 3;
+    lVar14 = 3;
     do {
-      uVar16 = (uint)*(ushort *)lVar13;
-      uVar7 = uVar16;
-      while (uVar7 != 0xffff) {
-        if ((uVar8 & 0xffffffff) == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                          ,0x69,0,"%s");
+      uVar13 = (ulonglong)*(ushort *)lVar11;
+      uVar4 = uVar13;
+      while (uVar4 != 0xffff) {
+        if (iVar6 == 0) {
+          MyAssertHandler(0xffffffff82060828,0x69,0,0xffffffff82000f98,0xffffffff82038694);
         }
-        pFVar2 = pFVar9->elems;
-        if ((0x3fff < uVar7) || ((uVar7 & 7) != 0)) {
-          va("%p %i");
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                          ,0x54,0,"%s\n\t%s");
+        iVar10 = *(int *)(iVar6 + 0x3c);
+        if ((0x3fff < uVar4) || ((uVar4 & 7) != 0)) {
+          uVar5 = va(0xffffffff82060820,iVar10,uVar4);
+          MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar5);
         }
-        pbVar17 = (byte *)((int)&pFVar2->field0_0x0 + uVar7 * 4);
-        if (pFVar1->elemDefCountEmission + pFVar1->elemDefCountOneShot + pFVar1->elemDefCountLooping
-            <= (int)(uint)(*pbVar17 >> 2)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                          ,0x307,0,"%s");
+        pbVar16 = (byte *)((int)uVar4 * 4 + iVar10);
+        if (*(int *)(iVar2 + 0x18) + *(int *)(iVar2 + 0x14) + *(int *)(iVar2 + 0x10) <=
+            (int)(uint)(*pbVar16 >> 2)) {
+          MyAssertHandler(0xffffffff82069358,0x307,0,0xffffffff82000f98,
+                          "localElem->defIndex < (def->elemDefCountEmission + def->elemDefCountLooping + def->elemDefCountOneShot)"
+                         );
         }
-        uVar7 = *pbVar17 & 0x3fffffc;
-        pFVar4 = pFVar11->def->elemDefs;
-        uVar12 = (ulonglong)pbVar17[1] * 0x128 +
-                 (ulonglong)*(uint *)((int)&pFVar4->collBounds + uVar7 * 0x40 + 0x3c) +
-                 (ulonglong)pFVar11->randomSeed + (ulonglong)*(uint *)(pbVar17 + 4);
-        uVar6 = (uVar12 & 0xffffffff) * 0x11a3019b >> 0x20;
+        iVar10 = (*pbVar16 & 0x3fffffc) * 0x40 + *(int *)(*piVar8 + 0x30);
+        uVar9 = (ulonglong)pbVar16[1] * 0x128 + (ulonglong)*(uint *)(iVar10 + 0xfc) +
+                (ulonglong)*(ushort *)((int)piVar8 + 0x16) + (ulonglong)*(uint *)(pbVar16 + 4);
+        uVar4 = (uVar9 & 0xffffffff) * 0x11a3019b >> 0x20;
         if ((int)(((int)((uint)*(ushort *)
                                 (&DAT_82066b0e +
-                                ((uint)((uVar12 + (((uVar12 - uVar6 & 0xffffffff) >> 1) + uVar6 >> 8
-                                                  ) * -0x1df & 0xffffffff) << 2) & 0x3fffc)) *
-                        ((int)pFVar4->spawnOrigin[uVar7 * 8 + -1].amplitude + 1)) >> 0x10) +
-                  *(uint *)(pbVar17 + 4) + (int)pFVar4->spawnOrigin[uVar7 * 8 + -1].base) <
-            pFVar11->msecLastUpdate) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                          ,0x30b,0,"%s");
+                                ((uint)((uVar9 + (((uVar9 - uVar4 & 0xffffffff) >> 1) + uVar4 >> 8)
+                                                 * -0x1df & 0xffffffff) << 2) & 0x3fffc)) *
+                        (*(int *)(iVar10 + 0x34) + 1)) >> 0x10) + *(uint *)(pbVar16 + 4) +
+                 *(int *)(iVar10 + 0x30)) < piVar8[0xc]) {
+          MyAssertHandler(0xffffffff82069358,0x30b,0,0xffffffff82000f98,0xffffffff82069490);
         }
-        uVar10 = FX_GetNextElemInEffect(pFVar9,(ushort)uVar16);
-        uVar16 = (uint)(short)uVar10;
-        uVar7 = (uint)uVar10;
+        uVar13 = FX_GetNextElemInEffect(iVar6,uVar13);
+        uVar4 = uVar13 & 0xffff;
       }
-      lVar15 = lVar15 + -1;
-      lVar13 = lVar13 + 2;
-    } while (lVar15 != 0);
+      lVar14 = lVar14 + -1;
+      lVar11 = lVar11 + 2;
+    } while (lVar14 != 0);
   }
   __restgprlr();
   return;
@@ -505,85 +439,78 @@ void FX_AssertCheckEffect(FxSystem *param_1,FxEffect *param_2,ushort param_3,int
 
 // 82446D30  FX_AssertCheckEffectListForRewind  (EffectsCore/fx_system_util.cpp:788)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_AssertCheckEffectListForRewind(FxSystem *param_1,int param_2)
+void FX_AssertCheckEffectListForRewind(undefined8 param_1,int param_2)
 
 {
-  uint uVar1;
-  FxSystem *pFVar2;
-  FxEffect *pFVar3;
-  FxEffect *pFVar4;
-  ushort uVar5;
-  int iVar6;
-  int iVar7;
-  uint uVar8;
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar6;
+  uint uVar7;
   
-  pFVar2 = (FxSystem *)__savegprlr_23(param_1);
-  iVar6 = 0;
-  iVar7 = 0;
+  iVar3 = __savegprlr_23();
+  iVar4 = 0;
+  iVar5 = 0;
   do {
-    if ((*(short *)(iVar7 + (int)pFVar2->elemChild) != -1) &&
-       ((*(byte *)((int)&pFVar2->elems->field0_0x0 + iVar6) & 1) == 0)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                      ,0x31d,0,"%s");
+    if ((*(short *)(iVar5 + *(int *)(iVar3 + 0x40)) != -1) &&
+       ((*(byte *)(*(int *)(iVar3 + 0x3c) + iVar4) & 1) == 0)) {
+      MyAssertHandler(0xffffffff82069358,0x31d,0,0xffffffff82000f98,0xffffffff8206959c);
     }
-    if ((*(short *)(iVar7 + (int)pFVar2->nextElemHandleInEffect) != -1) &&
-       ((*(byte *)((int)&pFVar2->elems->field0_0x0 + iVar6) & 1) == 0)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                      ,799,0,"%s");
+    if ((*(short *)(iVar5 + *(int *)(iVar3 + 0x44)) != -1) &&
+       ((*(byte *)(*(int *)(iVar3 + 0x3c) + iVar4) & 1) == 0)) {
+      MyAssertHandler(0xffffffff82069358,799,0,0xffffffff82000f98,0xffffffff8206959c);
     }
-    if ((*(short *)(iVar7 + (int)pFVar2->prevElemHandleInEffect) != -1) &&
-       ((*(byte *)((int)&pFVar2->elems->field0_0x0 + iVar6) & 1) == 0)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                      ,0x321,0,"%s");
+    if ((*(short *)(iVar5 + *(int *)(iVar3 + 0x48)) != -1) &&
+       ((*(byte *)(*(int *)(iVar3 + 0x3c) + iVar4) & 1) == 0)) {
+      MyAssertHandler(0xffffffff82069358,0x321,0,0xffffffff82000f98,0xffffffff8206959c);
     }
-    iVar7 = iVar7 + 2;
-    iVar6 = iVar6 + 0x20;
-  } while (iVar7 < 0x1000);
-  uVar8 = pFVar2->firstActiveEffect;
-  if (uVar8 != pFVar2->firstNewEffect) {
+    iVar5 = iVar5 + 2;
+    iVar4 = iVar4 + 0x20;
+  } while (iVar5 < 0x1000);
+  uVar7 = *(uint *)(iVar3 + 0x68);
+  if (uVar7 != *(uint *)(iVar3 + 0x6c)) {
     do {
-      pFVar3 = FX_EffectFromHandle(pFVar2,pFVar2->allEffectHandles[uVar8 & 0x3ff]);
-      uVar5 = pFVar3->flags;
-      if (((uVar5 & 0x1000) == 0) && ((param_2 != 0 || (pFVar3->msecBegin < pFVar2->msecNow)))) {
-        uVar1 = pFVar3->status & 0x1fff;
-        if (uVar1 == 0) goto LAB_82446f60;
-        if ((pFVar3->status & 0x4000000U) == 0) {
-          if ((uVar5 & 0x8000) != 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                            ,0x337,0,"%s");
+      iVar4 = FX_EffectFromHandle(iVar3,*(undefined2 *)
+                                         ((uVar7 & 0x3ff) * 2 + *(int *)(iVar3 + 0x74)));
+      uVar1 = *(ushort *)(iVar4 + 0x24);
+      if (((uVar1 & 0x1000) == 0) &&
+         ((param_2 != 0 || (*(int *)(iVar4 + 0x2c) < *(int *)(iVar3 + 0x88))))) {
+        uVar2 = *(uint *)(iVar4 + 4) & 0x1fff;
+        if (uVar2 == 0) goto LAB_82446f60;
+        if ((*(uint *)(iVar4 + 4) & 0x4000000) == 0) {
+          if ((uVar1 & 0x8000) != 0) {
+            MyAssertHandler(0xffffffff82069358,0x337,0,0xffffffff82000f98,0xffffffff82069564);
           }
           do {
-            pFVar4 = FX_EffectFromHandle(pFVar2,pFVar3->owner);
-          } while ((pFVar4->status & 0x4000000U) == 0);
-          if (((pFVar4->flags & 0x1000) == 0) && ((pFVar3->status & 0x1fffU) != 0)) {
-            if (alwaysfails == 0) {
-              iVar6 = 0x33e;
+            iVar5 = FX_EffectFromHandle(iVar3,*(undefined2 *)(iVar4 + 0x18));
+          } while ((*(uint *)(iVar5 + 4) & 0x4000000) == 0);
+          if (((*(ushort *)(iVar5 + 0x24) & 0x1000) == 0) && ((*(uint *)(iVar4 + 4) & 0x1fff) != 0))
+          {
+            if (DAT_84013128 == 0) {
+              uVar6 = 0x33e;
               goto LAB_82446f50;
             }
             goto LAB_82446f60;
           }
         }
-        else if (uVar1 != ((uint)LZCOUNT(uVar5 & 0x8000) >> 5 ^ 1) + 1) {
-          if (alwaysfails == 0) {
-            iVar6 = 0x331;
+        else if (uVar2 != ((uVar1 & 0x8000) == 0 ^ 1) + 1) {
+          if (DAT_84013128 == 0) {
+            uVar6 = 0x331;
 LAB_82446f50:
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                            ,iVar6,0,"Failed");
+            MyAssertHandler(0xffffffff82069358,uVar6,0,0xffffffff8206955c);
           }
           goto LAB_82446f60;
         }
       }
       else {
 LAB_82446f60:
-        uVar5 = FX_EffectToHandle(pFVar2,pFVar3);
-        FX_AssertCheckReferenceCount(pFVar2,pFVar3,uVar5);
+        uVar6 = FX_EffectToHandle(iVar3,iVar4);
+        FX_AssertCheckReferenceCount(iVar3,iVar4,uVar6);
       }
-      uVar8 = uVar8 + 1;
-    } while (uVar8 != pFVar2->firstNewEffect);
+      uVar7 = uVar7 + 1;
+    } while (uVar7 != *(uint *)(iVar3 + 0x6c));
   }
   __restgprlr_23();
   return;
@@ -592,53 +519,50 @@ LAB_82446f60:
 
 // 82446F98  FX_AssertCheckEffectList  (EffectsCore/fx_system_util.cpp:840)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_AssertCheckEffectList(FxSystem *param_1)
+void FX_AssertCheckEffectList(void)
 
 {
-  FxSystem *pFVar1;
-  FxEffect *pFVar2;
-  FxEffect *pFVar3;
-  ushort uVar4;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  uint uVar7;
+  uint uVar6;
   
-  pFVar1 = (FxSystem *)__savegprlr_26(param_1);
-  uVar7 = pFVar1->firstActiveEffect;
-  if (uVar7 != pFVar1->firstNewEffect) {
+  iVar3 = __savegprlr_26();
+  uVar6 = *(uint *)(iVar3 + 0x68);
+  if (uVar6 != *(uint *)(iVar3 + 0x6c)) {
     do {
-      pFVar2 = FX_EffectFromHandle(pFVar1,pFVar1->allEffectHandles[uVar7 & 0x3ff]);
-      pFVar3 = FX_EffectFromHandle(pFVar1,pFVar1->allEffectHandles[uVar7 & 0x3ff]);
-      uVar4 = FX_EffectToHandle(pFVar1,pFVar2);
-      FX_AssertCheckEffect(pFVar1,pFVar3,uVar4,0);
-      uVar7 = uVar7 + 1;
-    } while (uVar7 != pFVar1->firstNewEffect);
+      uVar1 = FX_EffectFromHandle(iVar3,*(undefined2 *)
+                                         ((uVar6 & 0x3ff) * 2 + *(int *)(iVar3 + 0x74)));
+      uVar2 = FX_EffectFromHandle(iVar3,*(undefined2 *)
+                                         ((uVar6 & 0x3ff) * 2 + *(int *)(iVar3 + 0x74)));
+      uVar1 = FX_EffectToHandle(iVar3,uVar1);
+      FX_AssertCheckEffect(iVar3,uVar2,uVar1,0);
+      uVar6 = uVar6 + 1;
+    } while (uVar6 != *(uint *)(iVar3 + 0x6c));
   }
+  iVar4 = 0;
   iVar5 = 0;
-  iVar6 = 0;
   do {
-    if ((*(short *)((int)pFVar1->elemChild + iVar6) != -1) &&
-       ((*(byte *)((int)&pFVar1->elems->field0_0x0 + iVar5) & 1) == 0)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                      ,0x34f,0,"%s");
+    if (*(short *)(*(int *)(iVar3 + 0x40) + iVar5) != -1) {
+      if ((*(byte *)(*(int *)(iVar3 + 0x3c) + iVar4) & 1) == 0) {
+        MyAssertHandler(0xffffffff82069358,0x34f,0,0xffffffff82000f98,0xffffffff8206959c);
+      }
     }
-    if ((*(short *)(iVar6 + (int)pFVar1->nextElemHandleInEffect) != -1) &&
-       ((*(byte *)((int)&pFVar1->elems->field0_0x0 + iVar5) & 1) == 0)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                      ,0x351,0,"%s");
+    if (*(short *)(iVar5 + *(int *)(iVar3 + 0x44)) != -1) {
+      if ((*(byte *)(*(int *)(iVar3 + 0x3c) + iVar4) & 1) == 0) {
+        MyAssertHandler(0xffffffff82069358,0x351,0,0xffffffff82000f98,0xffffffff8206959c);
+      }
     }
-    if ((*(short *)(iVar6 + (int)pFVar1->prevElemHandleInEffect) != -1) &&
-       ((*(byte *)((int)&pFVar1->elems->field0_0x0 + iVar5) & 1) == 0)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                      ,0x353,0,"%s");
+    if (*(short *)(iVar5 + *(int *)(iVar3 + 0x48)) != -1) {
+      if ((*(byte *)(*(int *)(iVar3 + 0x3c) + iVar4) & 1) == 0) {
+        MyAssertHandler(0xffffffff82069358,0x353,0,0xffffffff82000f98,0xffffffff8206959c);
+      }
     }
-    iVar6 = iVar6 + 2;
-    iVar5 = iVar5 + 0x20;
-  } while (iVar6 < 0x1000);
+    iVar5 = iVar5 + 2;
+    iVar4 = iVar4 + 0x20;
+  } while (iVar5 < 0x1000);
   __restgprlr_26();
   return;
 }
@@ -646,55 +570,38 @@ void FX_AssertCheckEffectList(FxSystem *param_1)
 
 // 82446460  FXW_GetEffectStatus  (EffectsCore/fx_system_util.cpp:858)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-uint FXW_GetEffectStatus(FxSystem *param_1,FxEffect *param_2)
+void FXW_GetEffectStatus(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  uint uVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
+  iVar1 = __savegprlr_29();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x35b,0,"%s");
+    MyAssertHandler(0xffffffff82069358,0x35b,0,0xffffffff82000f98,0xffffffff82038694);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x35c,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82069358,0x35c,0,0xffffffff82000f98,0xffffffff8206823c);
   }
-  uVar2 = __restgprlr_29(*(undefined4 *)((int)uVar3 + 4));
-  return uVar2;
+  __restgprlr_29(*(undefined4 *)((int)param_2 + 4));
+  return;
 }
 
 
 // 824464D8  FXW_PutEffectStatus  (EffectsCore/fx_system_util.cpp:885)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FXW_PutEffectStatus(FxSystem *param_1,FxEffect *param_2,uint param_3)
+void FXW_PutEffectStatus(undefined8 param_1,ulonglong param_2,undefined4 param_3)
 
 {
   int iVar1;
-  ulonglong uVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x376,0,"%s");
+    MyAssertHandler(0xffffffff82069358,0x376,0,0xffffffff82000f98,0xffffffff82038694);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x377,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82069358,0x377,0,0xffffffff82000f98,0xffffffff8206823c);
   }
-  *(uint *)((int)uVar2 + 4) = param_3;
+  *(undefined4 *)((int)param_2 + 4) = param_3;
   __restgprlr_28();
   return;
 }
@@ -702,55 +609,38 @@ void FXW_PutEffectStatus(FxSystem *param_1,FxEffect *param_2,uint param_3)
 
 // 82446550  FXW_GetEffectFlags  (EffectsCore/fx_system_util.cpp:909)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-ushort FXW_GetEffectFlags(FxSystem *param_1,FxEffect *param_2)
+void FXW_GetEffectFlags(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  ushort uVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
+  iVar1 = __savegprlr_29();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x38e,0,"%s");
+    MyAssertHandler(0xffffffff82069358,0x38e,0,0xffffffff82000f98,0xffffffff82038694);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x38f,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82069358,0x38f,0,0xffffffff82000f98,0xffffffff8206823c);
   }
-  uVar2 = __restgprlr_29(*(undefined2 *)((int)uVar3 + 0x24));
-  return uVar2;
+  __restgprlr_29(*(undefined2 *)((int)param_2 + 0x24));
+  return;
 }
 
 
 // 824465C8  FXW_PutEffectFlags  (EffectsCore/fx_system_util.cpp:936)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FXW_PutEffectFlags(FxSystem *param_1,FxEffect *param_2,ushort param_3)
+void FXW_PutEffectFlags(undefined8 param_1,ulonglong param_2,undefined2 param_3)
 
 {
   int iVar1;
-  ulonglong uVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x3a9,0,"%s");
+    MyAssertHandler(0xffffffff82069358,0x3a9,0,0xffffffff82000f98,0xffffffff82038694);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_util.cpp"
-                    ,0x3aa,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82069358,0x3aa,0,0xffffffff82000f98,0xffffffff8206823c);
   }
-  *(ushort *)((int)uVar2 + 0x24) = param_3;
+  *(undefined2 *)((int)param_2 + 0x24) = param_3;
   __restgprlr_28();
   return;
 }
@@ -758,90 +648,54 @@ void FXW_PutEffectFlags(FxSystem *param_1,FxEffect *param_2,ushort param_3)
 
 // 82446640  FX_WaitEnterReadSystemLock  (EffectsCore/fx_system_util.cpp:960)
 
-void FX_WaitEnterReadSystemLock(FxAccessLock *param_1)
+void FX_WaitEnterReadSystemLock(undefined8 param_1)
 
 {
   uint uVar1;
-  long lVar2;
+  uint uVar2;
+  uint *puVar3;
   char in_RESERVE;
   byte in_cr0;
   
   do {
-    uVar1 = param_1->data;
+    puVar3 = (uint *)param_1;
+    uVar1 = *puVar3;
     if (in_RESERVE != '\0') {
-      lVar2 = storeWordConditionalIndexed((ulonglong)uVar1 + 0x10000,0,(longlong)(int)param_1);
-      param_1->data = lVar2;
+      uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 + 0x10000,0,param_1);
+      *puVar3 = uVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  while ((uVar1 >> 0x10 & 0xff) != (uint)(param_1->m).read) {
+  while ((uVar1 >> 0x10 & 0xff) != (uint)*(byte *)((int)puVar3 + 2)) {
     Sys_Sleep(0);
   }
-  (param_1->m).read = (param_1->m).read + 1;
+  *(byte *)((int)puVar3 + 2) = *(byte *)((int)puVar3 + 2) + 1;
   sync(1);
   return;
 }
 
 
-// 824466C0  FX_ExitReadSystemLock  (EffectsCore/fx_system_util.cpp:973)
+// 824466C8  FX_WaitEnterWriteSystemLock  (EffectsCore/fx_system_util.cpp:979)
 
-/* void __cdecl FX_ExitReadSystemLock(union FxAccessLock *) */
-
-void FX_ExitReadSystemLock(FxAccessLock *param_1)
+void FX_WaitEnterWriteSystemLock(undefined8 param_1)
 
 {
   uint uVar1;
   uint uVar2;
-  long lVar3;
+  uint *puVar3;
   char in_RESERVE;
   byte in_cr0;
   
   do {
-    uVar2 = param_1->data;
-    do {
-      uVar1 = param_1->data;
-      if (uVar1 != uVar2) {
-        if (in_RESERVE != '\0') {
-          lVar3 = storeWordConditionalIndexed((ulonglong)uVar1,0,(longlong)(int)param_1);
-          param_1->data = lVar3;
-          in_cr0 = 2;
-        }
-        break;
-      }
-      if (in_RESERVE != '\0') {
-        lVar3 = storeWordConditionalIndexed
-                          ((ulonglong)uVar2 & 0xffffff00 | (ulonglong)uVar2 + 1 & 0xffffffff000000ff
-                           ,0,(longlong)(int)param_1);
-        param_1->data = lVar3;
-        in_cr0 = 2;
-      }
-    } while (!(bool)(in_cr0 >> 1 & 1));
-    if ((ulonglong)uVar2 == (ulonglong)uVar1) {
-      return;
-    }
-  } while( true );
-}
-
-
-// 824466C8  FX_WaitEnterWriteSystemLock  (EffectsCore/fx_system_util.cpp:979)
-
-void FX_WaitEnterWriteSystemLock(FxAccessLock *param_1)
-
-{
-  uint uVar1;
-  long lVar2;
-  char in_RESERVE;
-  byte in_cr0;
-  
-  do {
-    uVar1 = param_1->data;
+    puVar3 = (uint *)param_1;
+    uVar1 = *puVar3;
     if (in_RESERVE != '\0') {
-      lVar2 = storeWordConditionalIndexed((ulonglong)uVar1 + 0x10000,0,(longlong)(int)param_1);
-      param_1->data = lVar2;
+      uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 + 0x10000,0,param_1);
+      *puVar3 = uVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  while ((uVar1 >> 0x10 & 0xff) != (uint)(param_1->m).write) {
+  while ((uVar1 >> 0x10 & 0xff) != (uint)(byte)*puVar3) {
     Sys_Sleep(0);
   }
   sync(1);
@@ -851,12 +705,12 @@ void FX_WaitEnterWriteSystemLock(FxAccessLock *param_1)
 
 // 82446740  FX_ExitWriteSystemLock  (EffectsCore/fx_system_util.cpp:992)
 
-void FX_ExitWriteSystemLock(FxAccessLock *param_1)
+void FX_ExitWriteSystemLock(int param_1)
 
 {
   sync(1);
-  (param_1->u).writeRead =
-       (param_1->u).writeRead + 1 & 0xff | ((param_1->u).writeRead & 0xff00) + 0x100;
+  *(ushort *)(param_1 + 2) =
+       *(ushort *)(param_1 + 2) + 1 & 0xff | (*(ushort *)(param_1 + 2) & 0xff00) + 0x100;
   return;
 }
 

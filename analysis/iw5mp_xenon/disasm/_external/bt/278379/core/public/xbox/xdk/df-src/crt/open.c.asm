@@ -61,7 +61,7 @@ LAB_8292a38c:
   8292A39C  EBE1FFF0             ld r31,-0x10(r1)
   8292A3A0  4E800020             blr
 
-; 82929DA0  _tsopen_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/open.c:194)
+; 82929DA0  tsopen_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/open.c:194)
   82929DA0  7D8802A6             mfspr r12,LR
   82929DA4  4BFEC8F5             bl 0x82916698
   82929DA8  9421FF40             stwu r1,-0xc0(r1)

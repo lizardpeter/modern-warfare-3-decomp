@@ -7,8 +7,7 @@ void __unwind_78064(void)
 {
   int in_r12;
   
-  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>
-            (*(bdReference<bdRemoteTask> **)(in_r12 + 0x1c));
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(*(undefined4 *)(in_r12 + 0x1c));
   return;
 }
 
@@ -20,8 +19,7 @@ void __unwind_78065(void)
 {
   int in_r12;
   
-  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>
-            (*(bdReference<bdTaskByteBuffer> **)(in_r12 + -0x4c));
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(*(undefined4 *)(in_r12 + -0x4c));
   return;
 }
 
@@ -33,8 +31,7 @@ void __unwind_78145(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
-            (*(bdReference<bdByteBuffer> **)(in_r12 + 0x1c));
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
   return;
 }
 
@@ -44,10 +41,9 @@ void __unwind_78145(void)
 void __unwind_78146(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>
-            ((bdReference<bdRemoteTask> *)(in_r12 + -0x40));
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(in_r12 + -0x40);
   return;
 }
 
@@ -59,8 +55,7 @@ void __unwind_78240(void)
 {
   int in_r12;
   
-  bdReference<bdLobbyConnection>::~bdReference<bdLobbyConnection>
-            (*(bdReference<bdLobbyConnection> **)(in_r12 + 0x1c));
+  bdReference<bdLobbyConnection>___bdReference<bdLobbyConnection>(*(undefined4 *)(in_r12 + 0x1c));
   return;
 }
 
@@ -72,9 +67,8 @@ void __unwind_78241(void)
 {
   int in_r12;
   
-  bdLinkedList<bdReference<bdRemoteTask>_>::
-  __1__bdLinkedList_V__bdReference_VbdRemoteTask______QAA_XZ
-            ((bdLinkedList<bdReference<bdRemoteTask>_> *)(*(int *)(in_r12 + 0x14) + 8));
+  bdLinkedList<bdReference<bdRemoteTask>_>___bdLinkedList<bdReference<bdRemoteTask>_>
+            ((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
   return;
 }
 
@@ -86,10 +80,8 @@ void __unwind_78242(void)
 {
   int in_r12;
   
-  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::
-  ~bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>
-            ((bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *)
-             (*(int *)(in_r12 + 0x14) + 0x14));
+  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>___bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>
+            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x14);
   return;
 }
 
@@ -101,9 +93,8 @@ void __unwind_78305(void)
 {
   int in_r12;
   
-  bdLinkedList<bdReference<bdRemoteTask>_>::
-  __1__bdLinkedList_V__bdReference_VbdRemoteTask______QAA_XZ
-            ((bdLinkedList<bdReference<bdRemoteTask>_> *)(*(int *)(in_r12 + 0x14) + 8));
+  bdLinkedList<bdReference<bdRemoteTask>_>___bdLinkedList<bdReference<bdRemoteTask>_>
+            ((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
   return;
 }
 
@@ -115,10 +106,8 @@ void __unwind_78306(void)
 {
   int in_r12;
   
-  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::
-  ~bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>
-            ((bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *)
-             (*(int *)(in_r12 + 0x14) + 0x14));
+  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>___bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>
+            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x14);
   return;
 }
 
@@ -130,10 +119,8 @@ void __unwind_78307(void)
 {
   int in_r12;
   
-  bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::
-  ~bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>
-            ((bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass> *)
-             (*(int *)(in_r12 + 0x14) + 0x30));
+  bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>___bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>
+            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x30);
   return;
 }
 
@@ -145,8 +132,8 @@ void __unwind_78308(void)
 {
   int in_r12;
   
-  bdReference<bdLobbyConnection>::~bdReference<bdLobbyConnection>
-            ((bdReference<bdLobbyConnection> *)(*(int *)(in_r12 + 0x14) + 0x4c));
+  bdReference<bdLobbyConnection>___bdReference<bdLobbyConnection>
+            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x4c);
   return;
 }
 
@@ -158,7 +145,7 @@ void __unwind_78396(void)
 {
   int in_r12;
   
-  bdMemory::__3bdRemoteTask__SAXPAX_Z(*(void **)(in_r12 + -0x30));
+  bdRemoteTask__operator_delete(*(undefined4 *)(in_r12 + -0x30));
   return;
 }
 
@@ -170,8 +157,7 @@ void __unwind_78490(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
-            (*(bdReference<bdByteBuffer> **)(in_r12 + 0x1c));
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
   return;
 }
 
@@ -181,10 +167,9 @@ void __unwind_78490(void)
 void __unwind_78491(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>
-            ((bdReference<bdRemoteTask> *)(in_r12 + -0x3c));
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(in_r12 + -0x3c);
   return;
 }
 
@@ -194,10 +179,9 @@ void __unwind_78491(void)
 void __unwind_78493(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
-            ((bdReference<bdByteBuffer> *)(in_r12 + -0x40));
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(in_r12 + -0x40);
   return;
 }
 
@@ -209,8 +193,7 @@ void __unwind_78620(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
-            (*(bdReference<bdByteBuffer> **)(in_r12 + 0x1c));
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
   return;
 }
 
@@ -220,10 +203,9 @@ void __unwind_78620(void)
 void __unwind_78621(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>
-            ((bdReference<bdRemoteTask> *)(in_r12 + -0x4c));
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(in_r12 + -0x4c);
   return;
 }
 

@@ -2,32 +2,26 @@
 
 // 8278CA28  R_UpdateGlass  (gfx_d3d/r_workercmds_common.cpp:18)
 
-/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
-
-void R_UpdateGlass(uint param_1)
+void R_UpdateGlass(undefined4 param_1)
 
 {
-  uint uStack00000014;
+  undefined4 uStack00000014;
   
   uStack00000014 = param_1;
-  R_AddWorkerCmd(WRKCMD_UPDATE_GLASS,&stack0x00000014);
+  R_AddWorkerCmd(0xb,&stack0x00000014);
   return;
 }
 
 
 // 8278CA58  R_UpdateXModelBoundsDelayed  (gfx_d3d/r_workercmds_common.cpp:24)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
-
-void R_UpdateXModelBoundsDelayed(GfxSceneEntity *param_1)
+void R_UpdateXModelBoundsDelayed(undefined4 param_1)
 
 {
-  GfxSceneEntity *pGStack00000014;
+  undefined4 uStack00000014;
   
-  pGStack00000014 = param_1;
-  R_AddWorkerCmd(WRKCMD_BOUNDS_ENT_DELAYED,&stack0x00000014);
+  uStack00000014 = param_1;
+  R_AddWorkerCmd(5,&stack0x00000014);
   return;
 }
 

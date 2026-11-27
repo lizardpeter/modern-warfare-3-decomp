@@ -3743,7 +3743,7 @@ LAB_8278dc74:
   8278DCA8  80630004             lwz r3,0x4(r3)
   8278DCAC  4801C794             b 0x827aa440
 
-; 8279AC50  Tess  (gfx_d3d/rb_backend.cpp:1636)
+; 8279AC50  GfxDrawSurfTessCallback::Tess  (gfx_d3d/rb_backend.cpp:1636)
   8279AC50  7D8802A6             mfspr r12,LR
   8279AC54  4817BA5D             bl 0x829166b0
   8279AC58  9421FF70             stwu r1,-0x90(r1)

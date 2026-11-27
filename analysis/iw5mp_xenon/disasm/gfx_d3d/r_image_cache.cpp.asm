@@ -92,12 +92,17 @@ LAB_82745960:
 LAB_82745990:
   82745990  3D60821C             lis r11,-0x7de4
   82745994  3BAB4B10             addi r29,r11,0x4b10
+LAB_82745998:
   82745998  7FE3FB78             or r3,r31,r31
   8274599C  48002C65             bl 0x82748600
   827459A0  7C651B78             or r5,r3,r3
   827459A4  3880009F             li r4,0x9f
   827459A8  7FA3EB78             or r3,r29,r29
   827459AC  4BF08A25             bl 0x8264e3d0
+  827459B0  817A3128             lwz r11,0x3128(r26)
+  827459B4  2F0B0000             cmpwi cr6,r11,0x0
+  827459B8  409AFFE0             bne cr6,0x82745998
+  827459BC  807BFFF0             lwz r3,-0x10(r27)
 LAB_827459c0:
   827459C0  2B030000             cmplwi cr6,r3,0x0
   827459C4  409A0028             bne cr6,0x827459ec
@@ -129,12 +134,16 @@ LAB_827459f4:
 LAB_82745a24:
   82745A24  3D60821C             lis r11,-0x7de4
   82745A28  3BAB4A60             addi r29,r11,0x4a60
+LAB_82745a2c:
   82745A2C  7FE3FB78             or r3,r31,r31
   82745A30  48002BD1             bl 0x82748600
   82745A34  7C651B78             or r5,r3,r3
   82745A38  388000A2             li r4,0xa2
   82745A3C  7FA3EB78             or r3,r29,r29
   82745A40  4BF08991             bl 0x8264e3d0
+  82745A44  817A3128             lwz r11,0x3128(r26)
+  82745A48  2F0B0000             cmpwi cr6,r11,0x0
+  82745A4C  409AFFE0             bne cr6,0x82745a2c
 LAB_82745a50:
   82745A50  7F83E378             or r3,r28,r28
   82745A54  4812537D             bl 0x8286add0
@@ -151,12 +160,16 @@ LAB_82745a50:
 LAB_82745a80:
   82745A80  3D60821C             lis r11,-0x7de4
   82745A84  3BCB49C8             addi r30,r11,0x49c8
+LAB_82745a88:
   82745A88  7FE3FB78             or r3,r31,r31
   82745A8C  48002B75             bl 0x82748600
   82745A90  7C651B78             or r5,r3,r3
   82745A94  388000A3             li r4,0xa3
   82745A98  7FC3F378             or r3,r30,r30
   82745A9C  4BF08935             bl 0x8264e3d0
+  82745AA0  817A3128             lwz r11,0x3128(r26)
+  82745AA4  2F0B0000             cmpwi cr6,r11,0x0
+  82745AA8  409AFFE0             bne cr6,0x82745a88
 LAB_82745aac:
   82745AAC  38A00004             li r5,0x4
   82745AB0  38801000             li r4,0x1000

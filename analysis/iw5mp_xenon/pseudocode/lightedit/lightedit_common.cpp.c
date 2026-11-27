@@ -2,12 +2,10 @@
 
 // 826DD410  LightEdit_InitMsg  (lightedit/lightedit_common.cpp:22)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void LightEdit_InitMsg(msg_t *param_1,LightEditMsg param_2)
+void LightEdit_InitMsg(undefined8 param_1,undefined8 param_2)
 
 {
-  MSG_Init(param_1,g_lighteditCommon.msgBuf,0xffc);
+  MSG_Init(param_1,0xffffffff844cb0c8,0xffc);
   MSG_WriteByte(param_1,param_2);
   return;
 }
@@ -15,47 +13,36 @@ void LightEdit_InitMsg(msg_t *param_1,LightEditMsg param_2)
 
 // 826DD460  LightEdit_SendMsg  (lightedit/lightedit_common.cpp:29)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-bool LightEdit_SendMsg(void *param_1,msg_t *param_2)
+void LightEdit_SendMsg(undefined8 param_1,ulonglong param_2)
 
 {
-  void *pvVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  int *piVar5;
+  undefined8 uVar1;
+  int *piVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pvVar1 = (void *)__savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_common.cpp"
-                    ,0x1e,0,"%s");
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a71f0,0x1e,0,0xffffffff82000f98,0xffffffff82004d74);
   }
-  piVar5 = (int *)uVar4;
-  if (*piVar5 != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_common.cpp"
-                    ,0x1f,0,"%s");
+  piVar2 = (int *)param_2;
+  if (*piVar2 != 0) {
+    MyAssertHandler(0xffffffff821a71f0,0x1f,0,0xffffffff82000f98,0xffffffff8208f29c);
   }
-  bVar2 = NET_RemoteDbgSendMessageBlocking(pvVar1,10,(uchar *)piVar5[2],piVar5[5]);
-  uVar3 = __restgprlr_28(bVar2);
-  return (bool)uVar3;
+  NET_RemoteDbgSendMessageBlocking(uVar1,10,piVar2[2],piVar2[5]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826DD4F0  LightEdit_SendSimpleMsg  (lightedit/lightedit_common.cpp:45)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-bool LightEdit_SendSimpleMsg(void *param_1,LightEditMsg param_2)
+void LightEdit_SendSimpleMsg(undefined8 param_1,undefined8 param_2)
 
 {
-  bool bVar1;
-  msg_t mStack_50;
+  undefined1 auStack_50 [56];
   
-  MSG_Init(&mStack_50,g_lighteditCommon.msgBuf,0xffc);
-  MSG_WriteByte(&mStack_50,param_2);
-  bVar1 = LightEdit_SendMsg(param_1,&mStack_50);
-  return bVar1;
+  MSG_Init(auStack_50,0xffffffff844cb0c8,0xffc);
+  MSG_WriteByte(auStack_50,param_2);
+  LightEdit_SendMsg(param_1,auStack_50);
+  return;
 }
 

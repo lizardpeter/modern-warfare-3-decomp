@@ -2,76 +2,79 @@
 
 // 828CD168  SetAmpAndPhase  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/setamps.c:152)
 
-void SetAmpAndPhase(float param_1,float param_2,float param_3,int param_4,int param_5,float *param_6
-                   ,float *param_7,float *param_8,float *param_9,float *param_10,float param_11)
+void SetAmpAndPhase(undefined8 param_1,double param_2,undefined8 param_3,double param_4)
 
 {
   int iVar1;
   float fVar2;
-  int iVar3;
-  ulonglong uVar4;
+  float fVar3;
+  int iVar4;
+  undefined4 uVar5;
+  undefined8 in_r6;
+  int iVar6;
+  undefined4 uVar7;
+  undefined8 in_r7;
+  uint uVar8;
+  int in_r8;
+  longlong in_r9;
   int in_r10;
-  longlong lVar5;
-  int iVar7;
-  longlong lVar6;
-  longlong lVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
+  longlong lVar9;
+  int iVar10;
+  longlong lVar11;
   double dVar12;
   double dVar13;
+  double dVar14;
   float *in_stack_00000054;
   int in_stack_0000005c;
   
-  dVar12 = (double)param_11;
-  dVar11 = (double)param_2;
-  lVar6 = (longlong)(int)param_10;
-  uVar4 = (ulonglong)(int)param_8;
-  lVar5 = (longlong)(int)param_7;
-  dVar10 = (double)__savegprlr_26((double)param_1,dVar11,(double)param_3,param_4,param_5,param_6);
-  param_9[0x242] = param_9[0x241];
-  param_9[0x283] = param_9[0x282];
-  if (0 < (int)lVar5) {
-    iVar3 = (int)lVar6 - (int)in_stack_00000054;
-    lVar8 = lVar5;
-    dVar9 = dVar11;
+  uVar8 = (uint)in_r7;
+  uVar7 = (undefined4)((ulonglong)in_r7 >> 0x20);
+  iVar6 = (int)in_r6;
+  uVar5 = (undefined4)((ulonglong)in_r6 >> 0x20);
+  dVar13 = (double)__savegprlr_26();
+  *(undefined4 *)(in_r8 + 0x908) = *(undefined4 *)(in_r8 + 0x904);
+  *(undefined4 *)(in_r8 + 0xa0c) = *(undefined4 *)(in_r8 + 0xa08);
+  if (0 < iVar6) {
+    lVar11 = CONCAT44(uVar5,iVar6);
+    iVar4 = (int)in_r9 - (int)in_stack_00000054;
+    dVar12 = param_2;
     do {
-      if (dVar9 <= 97.0) {
-        dVar13 = dVar9 * 1.26953125;
+      if (dVar12 <= 97.0) {
+        dVar14 = dVar12 * 1.26953125;
       }
       else {
-        dVar13 = -(double)(float)(dVar9 * 0.0016021728515625 - 1.40234375) * dVar9 + 1.7890625;
+        dVar14 = -(double)(float)(dVar12 * 0.0016021728515625 - 1.40234375) * dVar12 + 1.7890625;
       }
-      dVar9 = (double)(float)(dVar9 + dVar11);
-      iVar1 = (int)((float)dVar13 * 0.25);
-      iVar7 = iVar1 * 4;
-      fVar2 = (float)dVar13 * 0.25 - (float)(longlong)iVar1;
-      dVar13 = (double)((*(float *)(iVar7 + in_r10 + 4) - *(float *)(iVar7 + in_r10)) * fVar2 +
-                       *(float *)(iVar7 + in_r10));
-      *(float *)(iVar3 + (int)in_stack_00000054) =
-           (float)((double)(float)((double)((param_9[iVar1 + 0x203] - param_9[iVar1 + 0x202]) *
-                                            fVar2 + param_9[iVar1 + 0x202]) - dVar13) * dVar12 +
-                  dVar13);
-      dVar13 = (double)((*(float *)(iVar7 + in_stack_0000005c + 4) -
-                        *(float *)(iVar7 + in_stack_0000005c)) * fVar2 +
-                       *(float *)(iVar7 + in_stack_0000005c));
+      dVar12 = (double)(float)(dVar12 + param_2);
+      iVar1 = (int)((float)dVar14 * 0.25);
+      iVar10 = iVar1 * 4;
+      fVar2 = *(float *)(iVar10 + in_r8 + 0x808);
+      fVar3 = (float)dVar14 * 0.25 - (float)(longlong)iVar1;
+      dVar14 = (double)((*(float *)(iVar10 + in_r10 + 4) - *(float *)(iVar10 + in_r10)) * fVar3 +
+                       *(float *)(iVar10 + in_r10));
+      *(float *)(iVar4 + (int)in_stack_00000054) =
+           (float)((double)(float)((double)((*(float *)(iVar10 + in_r8 + 0x808 + 4) - fVar2) * fVar3
+                                           + fVar2) - dVar14) * param_4 + dVar14);
+      fVar2 = *(float *)(iVar10 + in_r8 + 0x90c);
+      dVar14 = (double)((*(float *)(iVar10 + in_stack_0000005c + 4) -
+                        *(float *)(iVar10 + in_stack_0000005c)) * fVar3 +
+                       *(float *)(iVar10 + in_stack_0000005c));
       *in_stack_00000054 =
-           (float)((double)(float)((double)((param_9[iVar1 + 0x244] - param_9[iVar1 + 0x243]) *
-                                            fVar2 + param_9[iVar1 + 0x243]) - dVar13) * dVar12 +
-                  dVar13);
+           (float)((double)(float)((double)((*(float *)(iVar10 + in_r8 + 0x90c + 4) - fVar2) * fVar3
+                                           + fVar2) - dVar14) * param_4 + dVar14);
       in_stack_00000054 = in_stack_00000054 + 1;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
   }
-  if ((int)uVar4 < (int)lVar5) {
-    lVar5 = lVar5 - uVar4;
-    lVar6 = (uVar4 & 0x3fffffff) * 4 + lVar6 + -4;
+  if ((int)uVar8 < iVar6) {
+    lVar9 = CONCAT44(uVar5,iVar6) - CONCAT44(uVar7,uVar8);
+    lVar11 = ((ulonglong)uVar8 & 0x3fffffff) * 4 + in_r9 + -4;
     do {
-      iVar3 = (int)lVar6;
-      lVar6 = lVar6 + 4;
-      *(float *)lVar6 = (float)((double)*(float *)(iVar3 + 4) + dVar10);
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
+      iVar6 = (int)lVar11;
+      lVar11 = lVar11 + 4;
+      *(float *)lVar11 = (float)((double)*(float *)(iVar6 + 4) + dVar13);
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
   }
   __restgprlr_26();
   return;

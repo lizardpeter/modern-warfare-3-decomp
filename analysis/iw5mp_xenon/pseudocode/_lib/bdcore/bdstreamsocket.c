@@ -7,7 +7,7 @@ void __unwind_68551(void)
 {
   int in_r12;
   
-  bdAddr::~bdAddr(*(bdAddr **)(in_r12 + 0x1c));
+  bdAddr___bdAddr(*(undefined4 *)(in_r12 + 0x1c));
   return;
 }
 

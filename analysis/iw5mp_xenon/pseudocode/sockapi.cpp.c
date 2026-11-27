@@ -2,23 +2,17 @@
 
 // 828B8598  NetDll_WSAStartup_Override  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:62)
 
-/* WARNING: Enum "_XNCALLER_TYPE": Some values do not have unique names */
-
-int NetDll_WSAStartup_Override(_XNCALLER_TYPE param_1,ushort param_2,WSAData *param_3)
+void NetDll_WSAStartup_Override(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   undefined8 uVar1;
   uint uVar3;
   int iVar4;
   ulonglong uVar2;
-  longlong lVar5;
-  longlong lVar6;
   uint local_30;
   undefined4 local_2c [11];
   
-  lVar6 = (longlong)(int)param_3;
-  lVar5 = (longlong)(short)param_2;
-  uVar1 = __savegprlr_29(param_1,lVar5,lVar6);
+  uVar1 = __savegprlr_29();
   local_30 = 0;
   uVar3 = XamGetSystemVersion();
   if ((uVar3 < 0x200a3200) || (iVar4 = XexGetModuleHandle(0xffffffff82201a78,local_2c), iVar4 < 0))
@@ -31,33 +25,29 @@ int NetDll_WSAStartup_Override(_XNCALLER_TYPE param_1,ushort param_2,WSAData *pa
     local_30 = (uint)uVar2;
   }
   if (uVar2 == 0) {
-    NetDll_WSAStartup(uVar1,lVar5,lVar6);
+    NetDll_WSAStartup(uVar1,param_2,param_3);
   }
   else {
     (*(code *)uVar2)();
   }
-  iVar4 = __restgprlr_29();
-  return iVar4;
+  __restgprlr_29();
+  return;
 }
 
 
 // 828B8648  WSAStartup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-/* WARNING: Enum "_XNCALLER_TYPE": Some values do not have unique names */
-
-int WSAStartup(ushort param_1,WSAData *param_2)
+int WSAStartup(WORD wVersionRequired,LPWSADATA lpWSAData)
 
 {
   int iVar1;
   
-  iVar1 = NetDll_WSAStartup_Override(XNCALLER_TITLE,param_1,param_2);
+  iVar1 = NetDll_WSAStartup_Override(1,wVersionRequired,lpWSAData);
   return iVar1;
 }
 
 
 // 828B8658  WSACleanup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int WSACleanup(void)
 
@@ -71,156 +61,156 @@ int WSACleanup(void)
 
 // 828B8660  socket  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-uint socket(int param_1,int param_2,int param_3)
+SOCKET socket(int af,int type,int protocol)
 
 {
-  uint uVar1;
+  SOCKET SVar1;
   
-  uVar1 = NetDll_socket(1,param_1,param_2,param_3);
-  return uVar1;
+  SVar1 = NetDll_socket(1,af,type,protocol);
+  return SVar1;
 }
 
 
 // 828B8678  closesocket  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-int closesocket(uint param_1)
+int closesocket(SOCKET s)
 
 {
   int iVar1;
   
-  iVar1 = NetDll_closesocket(1,param_1);
+  iVar1 = NetDll_closesocket(1,s);
   return iVar1;
 }
 
 
 // 828B8688  ioctlsocket  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-int ioctlsocket(uint param_1,long param_2,ulong *param_3)
+int ioctlsocket(SOCKET s,long cmd,u_long *argp)
 
 {
   int iVar1;
   
-  iVar1 = NetDll_ioctlsocket(1,param_1,param_2,param_3);
+  iVar1 = NetDll_ioctlsocket(1,s,cmd,argp);
   return iVar1;
 }
 
 
 // 828B86A0  setsockopt  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-int setsockopt(uint param_1,int param_2,int param_3,char *param_4,int param_5)
+int setsockopt(SOCKET s,int level,int optname,char *optval,int optlen)
 
 {
   int iVar1;
   
-  iVar1 = NetDll_setsockopt(1,param_1,param_2,param_3,param_4,param_5);
+  iVar1 = NetDll_setsockopt(1,s,level,optname,optval,optlen);
   return iVar1;
 }
 
 
 // 828B86C0  bind  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-int bind(uint param_1,sockaddr *param_2,int param_3)
+int bind(SOCKET s,sockaddr *addr,int namelen)
 
 {
   int iVar1;
   
-  iVar1 = NetDll_bind(1,param_1,param_2,param_3);
+  iVar1 = NetDll_bind(1,s,addr,namelen);
   return iVar1;
 }
 
 
 // 828B86D8  connect  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-int connect(uint param_1,sockaddr *param_2,int param_3)
+int connect(SOCKET s,sockaddr *name,int namelen)
 
 {
   int iVar1;
   
-  iVar1 = NetDll_connect(1,param_1,param_2,param_3);
+  iVar1 = NetDll_connect(1,s,name,namelen);
   return iVar1;
 }
 
 
 // 828B86F0  listen  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-int listen(uint param_1,int param_2)
+int listen(SOCKET s,int backlog)
 
 {
   int iVar1;
   
-  iVar1 = NetDll_listen(1,param_1,param_2);
+  iVar1 = NetDll_listen(1,s,backlog);
   return iVar1;
 }
 
 
 // 828B8700  accept  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-uint accept(uint param_1,sockaddr *param_2,int *param_3)
+SOCKET accept(SOCKET s,sockaddr *addr,int *addrlen)
 
 {
-  uint uVar1;
+  SOCKET SVar1;
   
-  uVar1 = NetDll_accept(1,param_1,param_2,param_3);
-  return uVar1;
+  SVar1 = NetDll_accept(1,s,addr,addrlen);
+  return SVar1;
 }
 
 
 // 828B8718  select  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-int select(int param_1,fd_set *param_2,fd_set *param_3,fd_set *param_4,timeval *param_5)
+int select(int nfds,fd_set *readfds,fd_set *writefds,fd_set *exceptfds,timeval *timeout)
 
 {
   int iVar1;
   
-  iVar1 = NetDll_select(1,param_1,param_2,param_3,param_4,param_5);
+  iVar1 = NetDll_select(1,nfds,readfds,writefds,exceptfds,timeout);
   return iVar1;
 }
 
 
 // 828B8738  recv  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-int recv(uint param_1,char *param_2,int param_3,int param_4)
+int recv(SOCKET s,char *buf,int len,int flags)
 
 {
   int iVar1;
   
-  iVar1 = NetDll_recv(1,param_1,param_2,param_3,param_4);
+  iVar1 = NetDll_recv(1,s,buf,len,flags);
   return iVar1;
 }
 
 
 // 828B8750  recvfrom  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-int recvfrom(uint param_1,char *param_2,int param_3,int param_4,sockaddr *param_5,int *param_6)
+int recvfrom(SOCKET s,char *buf,int len,int flags,sockaddr *from,int *fromlen)
 
 {
   int iVar1;
   
-  iVar1 = NetDll_recvfrom(1,param_1,param_2,param_3,param_4,param_5,param_6);
+  iVar1 = NetDll_recvfrom(1,s,buf,len,flags,from,fromlen);
   return iVar1;
 }
 
 
 // 828B8770  send  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-int send(uint param_1,char *param_2,int param_3,int param_4)
+int send(SOCKET s,char *buf,int len,int flags)
 
 {
   int iVar1;
   
-  iVar1 = NetDll_send(1,param_1,param_2,param_3,param_4);
+  iVar1 = NetDll_send(1,s,buf,len,flags);
   return iVar1;
 }
 
 
 // 828B8788  sendto  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
 
-int sendto(uint param_1,char *param_2,int param_3,int param_4,sockaddr *param_5,int param_6)
+int sendto(SOCKET s,char *buf,int len,int flags,sockaddr *to,int tolen)
 
 {
   int iVar1;
   
-  iVar1 = NetDll_sendto(1,param_1,param_2,param_3,param_4,param_5,param_6);
+  iVar1 = NetDll_sendto(1,s,buf,len,flags,to,tolen);
   return iVar1;
 }
 
@@ -229,7 +219,7 @@ int sendto(uint param_1,char *param_2,int param_3,int param_4,sockaddr *param_5,
 
 /* WARNING: Control flow encountered bad instruction data */
 
-ulong inet_addr(char *param_1)
+ulong inet_addr(char *cp)
 
 {
                     /* WARNING: Bad instruction - Truncating control flow here */
@@ -240,7 +230,6 @@ ulong inet_addr(char *param_1)
 // 828B87B0  WSAGetLastError  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:193)
 
 /* WARNING: Control flow encountered bad instruction data */
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int WSAGetLastError(void)
 
@@ -253,9 +242,8 @@ int WSAGetLastError(void)
 // 828B87B8  WSACreateEvent  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:193)
 
 /* WARNING: Control flow encountered bad instruction data */
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-void * WSACreateEvent(void)
+void WSACreateEvent(void)
 
 {
                     /* WARNING: Bad instruction - Truncating control flow here */
@@ -267,7 +255,7 @@ void * WSACreateEvent(void)
 
 /* WARNING: Control flow encountered bad instruction data */
 
-int WSACloseEvent(void *param_1)
+void WSACloseEvent(void)
 
 {
                     /* WARNING: Bad instruction - Truncating control flow here */
@@ -279,7 +267,7 @@ int WSACloseEvent(void *param_1)
 
 /* WARNING: Control flow encountered bad instruction data */
 
-int WSAResetEvent(void *param_1)
+void WSAResetEvent(void)
 
 {
                     /* WARNING: Bad instruction - Truncating control flow here */
@@ -291,7 +279,7 @@ int WSAResetEvent(void *param_1)
 
 /* WARNING: Control flow encountered bad instruction data */
 
-int __WSAFDIsSet(uint param_1,fd_set *param_2)
+int __WSAFDIsSet(SOCKET param_1,fd_set *param_2)
 
 {
                     /* WARNING: Bad instruction - Truncating control flow here */

@@ -2,16 +2,13 @@
 
 // 82923820  _NLG_Notify  (<external>/bt/278379/vctools/crt/xb/xbox/exsup.asm:78)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _NLG_Notify(void)
+void _NLG_Notify(ulong param_1)
 
 {
-  undefined4 in_r3;
   undefined4 in_r4;
   undefined4 in_r5;
   
-  DAT_829b0934 = in_r3;
+  DAT_829b0934 = param_1;
   DAT_829b093c = in_r4;
   DAT_829b0938 = in_r5;
   return;

@@ -2,19 +2,18 @@
 
 // 828B3738  XapiFormatFATVolumeEx  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/format.c:39)
 
-long XapiFormatFATVolumeEx(_STRING *param_1,ulong param_2)
+void XapiFormatFATVolumeEx(undefined8 param_1,ulonglong param_2)
 
 {
   ulonglong uVar1;
   bool bVar2;
   longlong lVar3;
-  long lVar4;
-  undefined4 *puVar5;
+  undefined4 *_Dst;
+  SIZE_T uBytes;
+  uint uVar5;
+  ulonglong uVar4;
   ulonglong uVar6;
-  uint uVar8;
   ulonglong uVar7;
-  ulonglong uVar9;
-  ulonglong uVar10;
   undefined4 local_b0 [2];
   ulonglong local_a8;
   undefined1 auStack_a0 [12];
@@ -27,8 +26,7 @@ long XapiFormatFATVolumeEx(_STRING *param_1,ulong param_2)
   undefined4 local_78;
   ulonglong local_68;
   
-  uVar6 = (ulonglong)(int)param_2;
-  local_7c = __savegprlr_22(param_1);
+  local_7c = __savegprlr_22();
   local_78 = 0x40;
   local_80 = 0;
   lVar3 = NtOpenFile(local_b0,0x100003,&local_80,auStack_a0,0,0x18);
@@ -40,10 +38,10 @@ long XapiFormatFATVolumeEx(_STRING *param_1,ulong param_2)
     goto LAB_828b3794;
   }
   if (local_94 == 0) {
-    uVar8 = 0;
+    uVar5 = 0;
   }
   else {
-    uVar8 = 0x1f - (int)LZCOUNT(local_94);
+    uVar5 = 0x1f - (int)LZCOUNT(local_94);
   }
   lVar3 = NtDeviceIoControlFile(local_b0[0],0,0,0,auStack_a0,0x74004,0,0);
   if (-1 < (int)lVar3) {
@@ -52,81 +50,82 @@ long XapiFormatFATVolumeEx(_STRING *param_1,ulong param_2)
     }
     if (-1 < (int)lVar3) {
       uVar1 = (ulonglong)local_94 + 0xfff & 0xfffff000;
-      if ((uVar6 & 0xffffffff) < uVar1) {
-        uVar6 = uVar1;
+      if ((param_2 & 0xffffffff) < uVar1) {
+        param_2 = uVar1;
       }
-      uVar10 = 0x1000;
+      uVar7 = 0x1000;
       if (0x1000 < uVar1) {
-        uVar10 = uVar1;
+        uVar7 = uVar1;
       }
-      if (uVar10 < local_68) {
-        uVar9 = uVar6 & 0xffffffff;
-        uVar7 = ((longlong)local_68 / (longlong)uVar9 & 0xffffffffU) + 1;
-        trapDoubleWordImmediate(6,uVar9,0);
-        trapDoubleWordImmediate(5,uVar9 & ~((local_68 << 1 | local_68 >> 0x3f) - 1),0xffff);
-        if (((uVar7 & 0xffffffff) < 0xfff0) && (local_90[0] != 0x46)) {
-          lVar3 = (uVar7 & 0x7fffffff) << 1;
+      if (uVar7 < local_68) {
+        uVar6 = param_2 & 0xffffffff;
+        uVar4 = ((longlong)local_68 / (longlong)uVar6 & 0xffffffffU) + 1;
+        trapDoubleWordImmediate(6,uVar6,0);
+        trapDoubleWordImmediate(5,uVar6 & ~((local_68 << 1 | local_68 >> 0x3f) - 1),0xffff);
+        if (((uVar4 & 0xffffffff) < 0xfff0) && (local_90[0] != 0x46)) {
+          lVar3 = (uVar4 & 0x7fffffff) << 1;
           bVar2 = true;
         }
         else {
-          lVar3 = (uVar7 & 0x3fffffff) << 2;
+          lVar3 = (uVar4 & 0x3fffffff) << 2;
           bVar2 = false;
         }
-        uVar7 = (lVar3 + uVar1) - 1 & ~(uVar1 - 1);
-        if (((uVar7 & 0xffffffff) <= local_68 - uVar10) &&
-           (uVar9 <= (local_68 - uVar10) - (uVar7 & 0xffffffff))) {
-          puVar5 = LocalAlloc(0,(ulong)uVar1);
-          if (puVar5 == (undefined4 *)0x0) {
+        uVar4 = (lVar3 + uVar1) - 1 & ~(uVar1 - 1);
+        if (((uVar4 & 0xffffffff) <= local_68 - uVar7) &&
+           (uVar6 <= (local_68 - uVar7) - (uVar4 & 0xffffffff))) {
+          uBytes = (SIZE_T)uVar1;
+          _Dst = LocalAlloc(0,uBytes);
+          if (_Dst == (undefined4 *)0x0) {
             lVar3 = -0x3fffff66;
           }
           else {
-            memset();
+            memset(_Dst,0,uBytes);
             local_a8 = 0;
-            lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,puVar5,uVar1,&local_a8);
+            lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,_Dst,uVar1,&local_a8);
             if (-1 < lVar3) {
-              memset();
-              local_a8 = uVar10;
+              memset(_Dst,0,uBytes);
+              local_a8 = uVar7;
               if (bVar2) {
-                *(undefined2 *)puVar5 = 0xfff8;
-                *(undefined2 *)((int)puVar5 + 2) = 0xffff;
+                *(undefined2 *)_Dst = 0xfff8;
+                *(undefined2 *)((int)_Dst + 2) = 0xffff;
               }
               else {
-                *puVar5 = 0xfffffff8;
-                puVar5[1] = 0xffffffff;
+                *_Dst = 0xfffffff8;
+                _Dst[1] = 0xffffffff;
               }
               do {
-                lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,puVar5,uVar1,&local_a8);
+                lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,_Dst,uVar1,&local_a8);
                 if (lVar3 < 0) goto LAB_828b3b38;
-                memset();
+                memset(_Dst,0,8);
+                uVar4 = uVar4 - uVar1;
+                local_a8 = uVar1 + local_a8;
+              } while (uVar4 != 0);
+              memset(_Dst,0xff,uBytes);
+              uVar6 = param_2;
+              do {
+                lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,_Dst,uVar1,&local_a8);
+                if (lVar3 < 0) goto LAB_828b3b38;
+                uVar6 = uVar6 - uVar1;
+                local_a8 = uVar1 + local_a8;
+              } while (uVar6 != 0);
+              memset(_Dst,0xff,uBytes);
+              *(undefined2 *)(_Dst + 4) = 0;
+              _Dst[2] = (uint)param_2 >> (uVar5 & 0x3f) & 0xff;
+              *_Dst = 0x58544146;
+              _Dst[3] = 1;
+              KeQuerySystemTime(auStack_88);
+              _Dst[1] = local_84;
+              local_a8 = 0;
+              do {
+                lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,_Dst,uVar1,&local_a8);
+                if (lVar3 < 0) break;
+                memset(_Dst,0,uBytes);
                 uVar7 = uVar7 - uVar1;
                 local_a8 = uVar1 + local_a8;
               } while (uVar7 != 0);
-              memset();
-              uVar9 = uVar6;
-              do {
-                lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,puVar5,uVar1,&local_a8);
-                if (lVar3 < 0) goto LAB_828b3b38;
-                uVar9 = uVar9 - uVar1;
-                local_a8 = uVar1 + local_a8;
-              } while (uVar9 != 0);
-              memset();
-              *(undefined2 *)(puVar5 + 4) = 0;
-              puVar5[2] = (uint)uVar6 >> (uVar8 & 0x3f) & 0xff;
-              *puVar5 = 0x58544146;
-              puVar5[3] = 1;
-              KeQuerySystemTime(auStack_88);
-              puVar5[1] = local_84;
-              local_a8 = 0;
-              do {
-                lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,puVar5,uVar1,&local_a8);
-                if (lVar3 < 0) break;
-                memset();
-                uVar10 = uVar10 - uVar1;
-                local_a8 = uVar1 + local_a8;
-              } while (uVar10 != 0);
             }
 LAB_828b3b38:
-            LocalFree(puVar5);
+            LocalFree(_Dst);
             IoDismountVolumeByFileHandle(local_b0[0]);
           }
           goto LAB_828b3888;
@@ -138,7 +137,7 @@ LAB_828b3b38:
 LAB_828b3888:
   NtClose(local_b0[0]);
 LAB_828b3794:
-  lVar4 = __restgprlr_22(lVar3);
-  return lVar4;
+  __restgprlr_22(lVar3);
+  return;
 }
 

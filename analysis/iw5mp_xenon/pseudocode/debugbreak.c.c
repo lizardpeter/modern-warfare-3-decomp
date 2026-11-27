@@ -2,8 +2,6 @@
 
 // 828ABA28  DebugBreak  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/debugbreak.c:18)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void DebugBreak(void)
 
 {

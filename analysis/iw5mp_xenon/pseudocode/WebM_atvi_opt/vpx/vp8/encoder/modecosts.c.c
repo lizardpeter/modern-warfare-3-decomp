@@ -2,34 +2,32 @@
 
 // 8282C7E0  vp8_init_mode_costs  (WebM_atvi_opt/vpx/vp8/encoder/modecosts.c:23)
 
-void vp8_init_mode_costs(VP8_COMP *param_1)
+void vp8_init_mode_costs(void)
 
 {
-  int iVar1;
+  longlong lVar1;
   ulonglong uVar2;
   longlong lVar3;
   longlong lVar4;
   
-  iVar1 = __savegprlr_26(param_1);
+  lVar1 = __savegprlr_26();
   lVar3 = 0;
   do {
     lVar4 = 0;
     do {
       uVar2 = lVar3 + lVar4;
-      vp8_cost_tokens((int *)((int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 3) + iVar1 +
-                             0x18dc0),
-                      (uchar *)((int)uVar2 + (int)((uVar2 & 0xffffffff) << 3) + iVar1 + 0x20fb1),"")
-      ;
+      vp8_cost_tokens((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0x1fffffff) * 8 + lVar1 + 0x18dc0,
+                      uVar2 + (uVar2 & 0x1fffffff) * 8 + lVar1 + 0x20fb1,0xffffffff821e88c8);
       lVar4 = lVar4 + 1;
     } while ((int)lVar4 < 10);
     lVar3 = lVar3 + 10;
   } while ((int)lVar3 < 100);
-  vp8_cost_tokens((int *)(iVar1 + 0x19d60),(uchar *)(iVar1 + 0x217bb),"");
-  vp8_cost_tokens((int *)(iVar1 + 0x19d60),(uchar *)(iVar1 + 0x217cb),&vp8_sub_mv_ref_tree);
-  vp8_cost_tokens((int *)(iVar1 + 0x18d48),(uchar *)(iVar1 + 0x217c4),"");
-  vp8_cost_tokens((int *)(iVar1 + 0x18d20),(uchar *)(iVar1 + 0x21335),&vp8_kf_ymode_tree);
-  vp8_cost_tokens((int *)(iVar1 + 0x18d98),(uchar *)(iVar1 + 0x217c8),"");
-  vp8_cost_tokens((int *)(iVar1 + 0x18d70),(uchar *)(iVar1 + 0x21339),"");
+  vp8_cost_tokens(lVar1 + 0x19d60,lVar1 + 0x217bb,0xffffffff821e88c8);
+  vp8_cost_tokens(lVar1 + 0x19d60,lVar1 + 0x217cb,0xffffffff821e8904);
+  vp8_cost_tokens(lVar1 + 0x18d48,lVar1 + 0x217c4,0xffffffff821e88dc);
+  vp8_cost_tokens(lVar1 + 0x18d20,lVar1 + 0x21335,0xffffffff821e88e4);
+  vp8_cost_tokens(lVar1 + 0x18d98,lVar1 + 0x217c8,0xffffffff821e88ec);
+  vp8_cost_tokens(lVar1 + 0x18d70,lVar1 + 0x21339,0xffffffff821e88ec);
   __restgprlr_26();
   return;
 }

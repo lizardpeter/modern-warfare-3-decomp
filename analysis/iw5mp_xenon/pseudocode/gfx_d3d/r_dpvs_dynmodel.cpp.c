@@ -3,69 +3,64 @@
 // 82731B70  R_CullDynModelInCell  (gfx_d3d/r_dpvs_dynmodel.cpp:33)
 
 void R_CullDynModelInCell
-               (uint *param_1,uint param_2,DynEntityPose *param_3,DpvsPlane *param_4,int param_5,
-               uchar *param_6)
+               (undefined8 param_1,ulonglong param_2,int param_3,longlong param_4,int param_5,
+               int param_6)
 
 {
   uint uVar1;
   int iVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  longlong lVar5;
+  int iVar3;
+  float *pfVar4;
+  uint *puVar5;
   int iVar6;
   longlong lVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  uint uVar10;
-  ulonglong uVar11;
-  double dVar12;
+  ulonglong uVar8;
+  uint uVar9;
+  ulonglong uVar10;
+  double dVar11;
   
-  lVar5 = (longlong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  lVar8 = (longlong)(int)param_1;
-  __savegprlr();
-  uVar9 = 0;
-  if ((uVar4 & 0xffffffff) != 0) {
-    dVar12 = 0.0;
+  puVar5 = (uint *)__savegprlr();
+  uVar8 = 0;
+  if ((param_2 & 0xffffffff) != 0) {
+    dVar11 = 0.0;
     do {
-      uVar10 = *(uint *)lVar8;
-      uVar11 = LZCOUNT(uVar10);
-      if (uVar11 < 0x20) {
+      uVar9 = *puVar5;
+      uVar10 = LZCOUNT(uVar9);
+      if (uVar10 < 0x20) {
         do {
-          iVar2 = (int)uVar9 * 0x20 + (int)uVar11;
-          if (0x20 < uVar11) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
-                            0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
+          iVar2 = (int)uVar8 * 0x20 + (int)uVar10;
+          if (0x20 < uVar10) {
+            MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar10,0x21);
           }
-          uVar1 = *(uint *)(&g_bitShift + (int)(uVar11 << 2));
-          if ((uVar1 & uVar10) == 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_dynmodel.cpp"
-                            ,0x36,0,"%s");
+          uVar1 = *(uint *)((int)&DAT_82992400 + (int)(uVar10 << 2));
+          if ((uVar1 & uVar9) == 0) {
+            MyAssertHandler(0xffffffff821bd468,0x36,0,0xffffffff82000f98,0xffffffff8205cd08);
           }
-          uVar10 = uVar10 & ~uVar1;
-          if (param_6[iVar2] == '\0') {
+          uVar9 = uVar9 & ~uVar1;
+          if (*(char *)(iVar2 + param_6) == '\0') {
             iVar6 = 0;
+            iVar3 = iVar2 * 0x20 + param_3;
             if (0 < param_5) {
-              lVar7 = lVar5 + 8;
+              lVar7 = param_4 + 8;
               do {
-                pfVar3 = (float *)lVar7;
-                if ((double)(*pfVar3 * param_3[iVar2].pose.origin[2] +
-                             pfVar3[-2] * param_3[iVar2].pose.origin[0] +
-                             pfVar3[-1] * param_3[iVar2].pose.origin[1] + pfVar3[1] +
-                            param_3[iVar2].radius) <= dVar12) goto LAB_82731cc0;
+                pfVar4 = (float *)lVar7;
+                if ((double)(*pfVar4 * *(float *)(iVar3 + 0x18) +
+                             pfVar4[-2] * *(float *)(iVar3 + 0x10) +
+                             pfVar4[-1] * *(float *)(iVar3 + 0x14) + pfVar4[1] +
+                            *(float *)(iVar3 + 0x1c)) <= dVar11) goto LAB_82731cc0;
                 iVar6 = iVar6 + 1;
                 lVar7 = lVar7 + 0x10;
               } while (iVar6 < param_5);
             }
-            param_6[iVar2] = '\x01';
+            *(undefined1 *)(iVar2 + param_6) = 1;
           }
 LAB_82731cc0:
-          uVar11 = LZCOUNT(uVar10);
-        } while (uVar11 < 0x20);
+          uVar10 = LZCOUNT(uVar9);
+        } while (uVar10 < 0x20);
       }
-      uVar9 = uVar9 + 1;
-      lVar8 = lVar8 + 4;
-    } while ((uVar9 & 0xffffffff) < (uVar4 & 0xffffffff));
+      uVar8 = uVar8 + 1;
+      puVar5 = puVar5 + 1;
+    } while ((uVar8 & 0xffffffff) < (param_2 & 0xffffffff));
   }
   __restgprlr();
   return;
@@ -73,5 +68,39 @@ LAB_82731cc0:
 
 
 // 82731CE8  R_AddCellDynModelSurfacesInFrustumCmd  (gfx_d3d/r_dpvs_dynmodel.cpp:97)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_AddCellDynModelSurfacesInFrustumCmd(void)
+
+{
+  undefined1 uVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  undefined4 uVar5;
+  int iVar6;
+  undefined4 *puVar8;
+  undefined8 uVar7;
+  int *piVar9;
+  
+  puVar8 = (undefined4 *)__savegprlr_27();
+  iVar6 = DAT_8461658c;
+  if (*(char *)(DAT_845aa5dc + 0xc) != '\0') {
+    piVar9 = (int *)(DAT_8461658c + 0x294);
+    if (*(uint *)(DAT_8461658c + 0x34) <= (uint)puVar8[1]) {
+      MyAssertHandler(0xffffffff821bd468,0x88,0,0xffffffff821bd4b0);
+    }
+    iVar2 = puVar8[1];
+    iVar3 = *piVar9;
+    uVar4 = *(uint *)(iVar6 + 0x2a4);
+    uVar1 = *(undefined1 *)(puVar8 + 2);
+    uVar5 = *puVar8;
+    iVar6 = piVar9[*(ushort *)((int)puVar8 + 10) + 6];
+    uVar7 = DynEnt_GetClientModelPoseList();
+    R_CullDynModelInCell
+              (((longlong)iVar2 * (longlong)iVar3 & 0x3fffffffU) * 4 + (ulonglong)uVar4,iVar3,uVar7,
+               uVar5,uVar1,iVar6);
+  }
+  __restgprlr_27();
+  return;
+}
+

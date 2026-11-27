@@ -2,7 +2,7 @@
 
 // 8268CC18  dBodyAddTorque  (physics/ode/src/joint.cpp:46)
 
-void dBodyAddTorque(dxBody *param_1,float param_2,float param_3,float param_4)
+void dBodyAddTorque(undefined8 param_1,double param_2,double param_3)
 
 {
   float fVar1;
@@ -11,40 +11,34 @@ void dBodyAddTorque(dxBody *param_1,float param_2,float param_3,float param_4)
   int iVar4;
   double extraout_f1;
   double dVar5;
-  double dVar6;
-  double dVar7;
   
-  dVar6 = (double)param_4;
-  dVar5 = (double)param_3;
-  iVar4 = __savegprlr_28((double)param_2,param_1);
-  dVar7 = extraout_f1;
+  iVar4 = __savegprlr_28();
+  dVar5 = extraout_f1;
   if (iVar4 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x2f,0,"%s");
-  }
-  if (((uint)(float)dVar7 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x30,0,"%s");
+    MyAssertHandler(0xffffffff82198a88,0x2f,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   if (((uint)(float)dVar5 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x31,0,"%s");
+    MyAssertHandler(0xffffffff82198a88,0x30,0,0xffffffff82000f98,0xffffffff82198a78);
   }
-  if (((uint)(float)dVar6 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x32,0,"%s");
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82198a88,0x31,0,0xffffffff82000f98,0xffffffff82198a6c);
   }
-  fVar1 = (float)((double)*(float *)(iVar4 + 0xa8) + dVar7);
+  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82198a88,0x32,0,0xffffffff82000f98,0xffffffff82198a60);
+  }
+  fVar1 = (float)((double)*(float *)(iVar4 + 0xa8) + dVar5);
   *(float *)(iVar4 + 0xa8) = fVar1;
-  fVar2 = (float)((double)*(float *)(iVar4 + 0xac) + dVar5);
-  fVar3 = (float)((double)*(float *)(iVar4 + 0xb0) + dVar6);
+  fVar2 = (float)((double)*(float *)(iVar4 + 0xac) + param_2);
+  fVar3 = (float)((double)*(float *)(iVar4 + 0xb0) + param_3);
   *(float *)(iVar4 + 0xac) = fVar2;
   *(float *)(iVar4 + 0xb0) = fVar3;
-  if (((((uint)fVar1 & 0x7f800000) == 0x7f800000) || (((uint)fVar2 & 0x7f800000) == 0x7f800000)) ||
-     (((uint)fVar3 & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x38,0,"%s");
+  if (((uint)fVar1 & 0x7f800000) != 0x7f800000) {
+    if (((uint)fVar2 & 0x7f800000) != 0x7f800000) {
+      if (((uint)fVar3 & 0x7f800000) != 0x7f800000) goto LAB_8268cd84;
+    }
   }
+  MyAssertHandler(0xffffffff82198a88,0x38,0,0xffffffff82000f98,0xffffffff82198a18);
+LAB_8268cd84:
   __restgprlr_28();
   return;
 }
@@ -52,38 +46,30 @@ void dBodyAddTorque(dxBody *param_1,float param_2,float param_3,float param_4)
 
 // 8268CD98  dBodyAddForce  (physics/ode/src/joint.cpp:61)
 
-void dBodyAddForce(dxBody *param_1,float param_2,float param_3,float param_4)
+void dBodyAddForce(undefined8 param_1,double param_2,double param_3)
 
 {
   int iVar1;
   double extraout_f1;
   double dVar2;
-  double dVar3;
-  double dVar4;
   
-  dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
-  iVar1 = __savegprlr_28((double)param_2,param_1);
-  dVar4 = extraout_f1;
+  iVar1 = __savegprlr_28();
+  dVar2 = extraout_f1;
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x3e,0,"%s");
-  }
-  if (((uint)(float)dVar4 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x3f,0,"%s");
+    MyAssertHandler(0xffffffff82198a88,0x3e,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   if (((uint)(float)dVar2 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x40,0,"%s");
+    MyAssertHandler(0xffffffff82198a88,0x3f,0,0xffffffff82000f98,0xffffffff82198a78);
   }
-  if (((uint)(float)dVar3 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x41,0,"%s");
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82198a88,0x40,0,0xffffffff82000f98,0xffffffff82198a6c);
   }
-  *(float *)(iVar1 + 0x98) = (float)((double)*(float *)(iVar1 + 0x98) + dVar4);
-  *(float *)(iVar1 + 0x9c) = (float)((double)*(float *)(iVar1 + 0x9c) + dVar2);
-  *(float *)(iVar1 + 0xa0) = (float)((double)*(float *)(iVar1 + 0xa0) + dVar3);
+  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82198a88,0x41,0,0xffffffff82000f98,0xffffffff82198a60);
+  }
+  *(float *)(iVar1 + 0x98) = (float)((double)*(float *)(iVar1 + 0x98) + dVar2);
+  *(float *)(iVar1 + 0x9c) = (float)((double)*(float *)(iVar1 + 0x9c) + param_2);
+  *(float *)(iVar1 + 0xa0) = (float)((double)*(float *)(iVar1 + 0xa0) + param_3);
   __restgprlr_28();
   return;
 }
@@ -91,7 +77,7 @@ void dBodyAddForce(dxBody *param_1,float param_2,float param_3,float param_4)
 
 // 82690750  setBall  (physics/ode/src/joint.cpp:80)
 
-void setBall(dxJoint *param_1,Info2 *param_2,float *param_3,float *param_4)
+void setBall(int param_1,float *param_2,float *param_3,float *param_4)
 
 {
   float fVar1;
@@ -104,80 +90,88 @@ void setBall(dxJoint *param_1,Info2 *param_2,float *param_3,float *param_4)
   float fVar8;
   float fVar9;
   int iVar10;
-  dxBody *pdVar11;
-  float fVar12;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  float fVar14;
   float local_10;
   float local_c;
   float local_8;
   
-  iVar10 = param_2->rowskip;
-  *param_2->J1l = 1.0;
-  param_2->J1l[iVar10 + 1] = 1.0;
-  param_2->J1l[iVar10 * 2 + 2] = 1.0;
-  pdVar11 = param_1->node[0].body;
+  fVar9 = param_2[6];
+  iVar11 = (int)fVar9 * 4;
+  iVar12 = (int)fVar9 * 8;
+  *(undefined4 *)param_2[2] = 0x3f800000;
+  *(undefined4 *)((int)param_2[2] + iVar11 + 4) = 0x3f800000;
+  *(undefined4 *)((int)param_2[2] + iVar12 + 8) = 0x3f800000;
+  iVar10 = *(int *)(param_1 + 0x20);
   fVar1 = param_3[1];
   fVar2 = *param_3;
-  fVar3 = param_3[2];
-  fVar4 = (pdVar11->info).R[6];
-  fVar5 = (pdVar11->info).R[2];
-  fVar6 = (pdVar11->info).R[5];
-  fVar7 = (pdVar11->info).R[1];
-  fVar8 = (pdVar11->info).R[4];
-  fVar9 = (pdVar11->info).R[0];
-  fVar12 = (pdVar11->info).R[8] * fVar2 +
-           (pdVar11->info).R[9] * fVar1 + (pdVar11->info).R[10] * fVar3;
-  param_2->J1a[1] = fVar12;
-  fVar4 = fVar8 * fVar2 + fVar6 * fVar1 + fVar4 * fVar3;
-  fVar1 = fVar2 * fVar9 + fVar7 * fVar1 + fVar5 * fVar3;
-  param_2->J1a[2] = -fVar4;
-  param_2->J1a[iVar10] = -fVar12;
-  param_2->J1a[iVar10 + 2] = fVar1;
-  param_2->J1a[iVar10 * 2] = fVar4;
-  param_2->J1a[iVar10 * 2 + 1] = -fVar1;
-  if (param_1->node[1].body != (dxBody *)0x0) {
-    *param_2->J2l = -1.0;
-    param_2->J2l[iVar10 + 1] = -1.0;
-    param_2->J2l[iVar10 * 2 + 2] = -1.0;
-    pdVar11 = param_1->node[1].body;
+  iVar13 = ((int)fVar9 + 2) * 4;
+  fVar9 = param_3[2];
+  fVar3 = *(float *)(iVar10 + 0x118);
+  fVar4 = *(float *)(iVar10 + 0x108);
+  fVar5 = *(float *)(iVar10 + 0x114);
+  fVar6 = *(float *)(iVar10 + 0x104);
+  fVar7 = *(float *)(iVar10 + 0x110);
+  fVar8 = *(float *)(iVar10 + 0x100);
+  fVar14 = *(float *)(iVar10 + 0x120) * fVar2 +
+           *(float *)(iVar10 + 0x124) * fVar1 + *(float *)(iVar10 + 0x128) * fVar9;
+  *(float *)((int)param_2[3] + 4) = fVar14;
+  fVar3 = fVar7 * fVar2 + fVar5 * fVar1 + fVar3 * fVar9;
+  fVar1 = fVar2 * fVar8 + fVar6 * fVar1 + fVar4 * fVar9;
+  *(float *)((int)param_2[3] + 8) = -fVar3;
+  *(float *)((int)param_2[3] + iVar11) = -fVar14;
+  *(float *)((int)param_2[3] + iVar13) = fVar1;
+  *(float *)((int)param_2[3] + iVar12) = fVar3;
+  *(float *)((int)param_2[3] + iVar12 + 4) = -fVar1;
+  if (*(int *)(param_1 + 0x30) != 0) {
+    *(undefined4 *)param_2[4] = 0xbf800000;
+    *(undefined4 *)((int)param_2[4] + iVar11 + 4) = 0xbf800000;
+    *(undefined4 *)((int)param_2[4] + iVar12 + 8) = 0xbf800000;
+    iVar10 = *(int *)(param_1 + 0x30);
     fVar2 = param_4[1];
-    fVar3 = *param_4;
-    fVar5 = param_4[2];
-    local_8 = fVar3 * (pdVar11->info).R[8] +
-              (pdVar11->info).R[9] * fVar2 + (pdVar11->info).R[10] * fVar5;
-    local_10 = fVar3 * (pdVar11->info).R[0] +
-               (pdVar11->info).R[1] * fVar2 + (pdVar11->info).R[2] * fVar5;
-    local_c = fVar3 * (pdVar11->info).R[4] +
-              (pdVar11->info).R[5] * fVar2 + (pdVar11->info).R[6] * fVar5;
-    param_2->J2a[1] = -local_8;
-    param_2->J2a[2] = local_c;
-    param_2->J2a[iVar10] = local_8;
-    param_2->J2a[iVar10 + 2] = -local_10;
-    param_2->J2a[iVar10 * 2] = -local_c;
-    param_2->J2a[iVar10 * 2 + 1] = local_10;
+    fVar9 = *param_4;
+    fVar4 = param_4[2];
+    local_8 = fVar9 * *(float *)(iVar10 + 0x120) +
+              *(float *)(iVar10 + 0x124) * fVar2 + *(float *)(iVar10 + 0x128) * fVar4;
+    local_10 = fVar9 * *(float *)(iVar10 + 0x100) +
+               *(float *)(iVar10 + 0x104) * fVar2 + *(float *)(iVar10 + 0x108) * fVar4;
+    local_c = fVar9 * *(float *)(iVar10 + 0x110) +
+              *(float *)(iVar10 + 0x114) * fVar2 + *(float *)(iVar10 + 0x118) * fVar4;
+    *(float *)((int)param_2[5] + 4) = -local_8;
+    *(float *)((int)param_2[5] + 8) = local_c;
+    *(float *)((int)param_2[5] + iVar11) = local_8;
+    *(float *)((int)param_2[5] + iVar13) = -local_10;
+    *(float *)((int)param_2[5] + iVar12) = -local_c;
+    *(float *)((int)param_2[5] + iVar12 + 4) = local_10;
   }
-  pdVar11 = param_1->node[1].body;
-  fVar2 = param_2->erp * param_2->fps;
-  if (pdVar11 == (dxBody *)0x0) {
-    *param_2->c = ((*param_4 - fVar1) - ((param_1->node[0].body)->info).pos[0]) * fVar2;
-    param_2->c[1] = ((param_4[1] - fVar4) - ((param_1->node[0].body)->info).pos[1]) * fVar2;
-    param_2->c[2] = ((param_4[2] - fVar12) - ((param_1->node[0].body)->info).pos[2]) * fVar2;
+  fVar2 = param_2[1] * *param_2;
+  if (*(int *)(param_1 + 0x30) == 0) {
+    *(float *)param_2[7] =
+         ((*param_4 - fVar1) - *(float *)(*(int *)(param_1 + 0x20) + 0xe0)) * fVar2;
+    *(float *)((int)param_2[7] + 4) =
+         ((param_4[1] - fVar3) - *(float *)(*(int *)(param_1 + 0x20) + 0xe4)) * fVar2;
+    *(float *)((int)param_2[7] + 8) =
+         ((param_4[2] - fVar14) - *(float *)(*(int *)(param_1 + 0x20) + 0xe8)) * fVar2;
     return;
   }
-  *param_2->c = ((((pdVar11->info).pos[0] + local_10) - fVar1) -
-                ((param_1->node[0].body)->info).pos[0]) * fVar2;
-  param_2->c[1] =
-       (((((param_1->node[1].body)->info).pos[1] + local_c) - fVar4) -
-       ((param_1->node[0].body)->info).pos[1]) * fVar2;
-  param_2->c[2] =
-       (((((param_1->node[1].body)->info).pos[2] + local_8) - fVar12) -
-       ((param_1->node[0].body)->info).pos[2]) * fVar2;
+  *(float *)param_2[7] =
+       (((*(float *)(*(int *)(param_1 + 0x30) + 0xe0) + local_10) - fVar1) -
+       *(float *)(*(int *)(param_1 + 0x20) + 0xe0)) * fVar2;
+  *(float *)((int)param_2[7] + 4) =
+       (((*(float *)(*(int *)(param_1 + 0x30) + 0xe4) + local_c) - fVar3) -
+       *(float *)(*(int *)(param_1 + 0x20) + 0xe4)) * fVar2;
+  *(float *)((int)param_2[7] + 8) =
+       (((*(float *)(*(int *)(param_1 + 0x30) + 0xe8) + local_8) - fVar14) -
+       *(float *)(*(int *)(param_1 + 0x20) + 0xe8)) * fVar2;
   return;
 }
 
 
 // 826909F0  setFixedOrientation  (physics/ode/src/joint.cpp:180)
 
-void setFixedOrientation(dxJoint *param_1,Info2 *param_2,float *param_3,int param_4)
+void setFixedOrientation(undefined8 param_1,float *param_2,undefined8 param_3,ulonglong param_4)
 
 {
   float fVar1;
@@ -186,64 +180,61 @@ void setFixedOrientation(dxJoint *param_1,Info2 *param_2,float *param_3,int para
   float fVar4;
   float fVar5;
   float fVar6;
-  uint uVar7;
-  int iVar8;
-  float fVar9;
+  int iVar7;
+  float fVar8;
+  int iVar9;
   int iVar10;
   int iVar11;
-  int iVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
+  ulonglong uVar12;
   float local_50;
   float local_4c;
   float local_48;
   float local_44;
-  float afStack_40 [16];
+  undefined1 auStack_40 [64];
   
-  uVar13 = (ulonglong)param_4;
-  iVar12 = __savegprlr_28(param_1);
-  uVar7 = param_2->rowskip;
-  uVar14 = (longlong)(int)uVar7 * (longlong)(int)uVar13;
-  iVar8 = (int)((uVar14 & 0xffffffff) << 2);
-  *(undefined4 *)(iVar8 + (int)param_2->J1a) = 0x3f800000;
-  iVar10 = (int)((uVar14 + uVar7 & 0xffffffff) << 2);
-  iVar11 = (int)((((ulonglong)uVar7 + 1 & 0x7fffffff) * 2 + uVar14 & 0xffffffff) << 2);
-  *(undefined4 *)((int)param_2->J1a + iVar10 + 4) = 0x3f800000;
-  *(undefined4 *)(iVar11 + (int)param_2->J1a) = 0x3f800000;
-  if (*(int *)(iVar12 + 0x30) != 0) {
-    *(undefined4 *)(iVar8 + (int)param_2->J2a) = 0xbf800000;
-    *(undefined4 *)((int)param_2->J2a + iVar10 + 4) = 0xbf800000;
-    *(undefined4 *)(iVar11 + (int)param_2->J2a) = 0xbf800000;
+  iVar11 = __savegprlr_28();
+  fVar6 = param_2[6];
+  uVar12 = (longlong)(int)fVar6 * (longlong)(int)param_4;
+  iVar9 = (int)((uVar12 & 0xffffffff) << 2);
+  *(undefined4 *)(iVar9 + (int)param_2[3]) = 0x3f800000;
+  iVar7 = (int)((uVar12 + (uint)fVar6 & 0x3fffffff) << 2);
+  iVar10 = (int)((((ulonglong)(uint)fVar6 + 1 & 0x7fffffff) * 2 + uVar12 & 0xffffffff) << 2);
+  *(undefined4 *)(iVar7 + (int)param_2[3] + 4) = 0x3f800000;
+  *(undefined4 *)(iVar10 + (int)param_2[3]) = 0x3f800000;
+  if (*(int *)(iVar11 + 0x30) != 0) {
+    *(undefined4 *)(iVar9 + (int)param_2[5]) = 0xbf800000;
+    *(undefined4 *)(iVar7 + (int)param_2[5] + 4) = 0xbf800000;
+    *(undefined4 *)(iVar10 + (int)param_2[5]) = 0xbf800000;
   }
-  if (*(int *)(iVar12 + 0x30) == 0) {
-    dQMultiply3(&local_50,(float *)(*(int *)(iVar12 + 0x20) + 0xf0),param_3);
+  if ((ulonglong)*(uint *)(iVar11 + 0x30) == 0) {
+    dQMultiply3(&local_50,(ulonglong)*(uint *)(iVar11 + 0x20) + 0xf0,param_3);
   }
   else {
-    dQMultiply1(afStack_40,(float *)(*(int *)(iVar12 + 0x20) + 0xf0),
-                (float *)(*(int *)(iVar12 + 0x30) + 0xf0));
-    dQMultiply2(&local_50,afStack_40,param_3);
+    dQMultiply1(auStack_40,(ulonglong)*(uint *)(iVar11 + 0x20) + 0xf0,
+                (ulonglong)*(uint *)(iVar11 + 0x30) + 0xf0);
+    dQMultiply2(&local_50,auStack_40,param_3);
   }
   if (local_50 < 0.0) {
     local_48 = -local_48;
     local_4c = -local_4c;
     local_44 = -local_44;
   }
-  iVar8 = *(int *)(iVar12 + 0x20);
-  fVar9 = param_2->erp * param_2->fps;
-  fVar1 = *(float *)(iVar8 + 0x114);
-  fVar2 = *(float *)(iVar8 + 0x124);
-  fVar3 = *(float *)(iVar8 + 0x118);
-  fVar4 = *(float *)(iVar8 + 0x128);
-  fVar5 = *(float *)(iVar8 + 0x110);
-  fVar6 = *(float *)(iVar8 + 0x120);
-  iVar10 = (int)((uVar13 & 0x3fffffff) << 2);
-  *(float *)(iVar10 + (int)param_2->c) =
-       (*(float *)(iVar8 + 0x100) * local_4c +
-       *(float *)(iVar8 + 0x108) * local_44 + *(float *)(iVar8 + 0x104) * local_48) * fVar9 * 2.0;
-  *(float *)((int)param_2->c + iVar10 + 4) =
-       (fVar5 * local_4c + fVar3 * local_44 + fVar1 * local_48) * fVar9 * 2.0;
-  *(float *)((int)((uVar13 + 2 & 0xffffffff) << 2) + (int)param_2->c) =
-       (fVar6 * local_4c + fVar4 * local_44 + fVar2 * local_48) * fVar9 * 2.0;
+  iVar7 = *(int *)(iVar11 + 0x20);
+  fVar8 = param_2[1] * *param_2;
+  fVar6 = *(float *)(iVar7 + 0x114);
+  fVar1 = *(float *)(iVar7 + 0x124);
+  fVar2 = *(float *)(iVar7 + 0x118);
+  fVar3 = *(float *)(iVar7 + 0x128);
+  fVar4 = *(float *)(iVar7 + 0x110);
+  fVar5 = *(float *)(iVar7 + 0x120);
+  iVar9 = (int)((param_4 & 0x3fffffff) << 2);
+  *(float *)(iVar9 + (int)param_2[7]) =
+       (*(float *)(iVar7 + 0x100) * local_4c +
+       *(float *)(iVar7 + 0x108) * local_44 + *(float *)(iVar7 + 0x104) * local_48) * fVar8 * 2.0;
+  *(float *)(iVar9 + (int)param_2[7] + 4) =
+       (fVar4 * local_4c + fVar2 * local_44 + fVar6 * local_48) * fVar8 * 2.0;
+  *(float *)((int)((param_4 + 2 & 0xffffffff) << 2) + (int)param_2[7]) =
+       (fVar5 * local_4c + fVar3 * local_44 + fVar1 * local_48) * fVar8 * 2.0;
   __restgprlr_28();
   return;
 }
@@ -251,46 +242,45 @@ void setFixedOrientation(dxJoint *param_1,Info2 *param_2,float *param_3,int para
 
 // 82690BC0  setAnchors  (physics/ode/src/joint.cpp:235)
 
-void setAnchors(dxJoint *param_1,float param_2,float param_3,float param_4,float *param_5,
-               float *param_6)
+void setAnchors(double param_1,double param_2,double param_3,int param_4)
 
 {
-  dxBody *pdVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
+  int iVar4;
   float *in_r7;
   float *in_r8;
   
-  pdVar1 = param_1->node[0].body;
-  if (pdVar1 != (dxBody *)0x0) {
-    fVar3 = param_3 - (pdVar1->info).pos[1];
-    fVar2 = param_4 - (pdVar1->info).pos[2];
-    fVar4 = param_2 - (pdVar1->info).pos[0];
-    *in_r7 = (pdVar1->info).R[0] * fVar4 + (pdVar1->info).R[8] * fVar2 + (pdVar1->info).R[4] * fVar3
-    ;
-    in_r7[1] = fVar4 * (pdVar1->info).R[1] +
-               (pdVar1->info).R[9] * fVar2 + (pdVar1->info).R[5] * fVar3;
-    in_r7[2] = (pdVar1->info).R[2] * fVar4 +
-               (pdVar1->info).R[10] * fVar2 + (pdVar1->info).R[6] * fVar3;
-    pdVar1 = param_1->node[1].body;
-    if (pdVar1 != (dxBody *)0x0) {
-      fVar3 = param_3 - (pdVar1->info).pos[1];
-      fVar2 = param_4 - (pdVar1->info).pos[2];
-      fVar4 = param_2 - (pdVar1->info).pos[0];
-      *in_r8 = (pdVar1->info).R[0] * fVar4 +
-               (pdVar1->info).R[8] * fVar2 + (pdVar1->info).R[4] * fVar3;
-      in_r8[1] = (pdVar1->info).R[1] * fVar4 +
-                 (pdVar1->info).R[9] * fVar2 + (pdVar1->info).R[5] * fVar3;
-      in_r8[2] = (pdVar1->info).R[2] * fVar4 +
-                 (pdVar1->info).R[10] * fVar2 + (pdVar1->info).R[6] * fVar3;
+  iVar4 = *(int *)(param_4 + 0x20);
+  if (iVar4 != 0) {
+    fVar1 = (float)(param_2 - (double)*(float *)(iVar4 + 0xe4));
+    fVar2 = (float)(param_3 - (double)*(float *)(iVar4 + 0xe8));
+    fVar3 = (float)(param_1 - (double)*(float *)(iVar4 + 0xe0));
+    *in_r7 = *(float *)(iVar4 + 0x100) * fVar3 +
+             *(float *)(iVar4 + 0x120) * fVar2 + *(float *)(iVar4 + 0x110) * fVar1;
+    in_r7[1] = fVar3 * *(float *)(iVar4 + 0x104) +
+               *(float *)(iVar4 + 0x124) * fVar2 + *(float *)(iVar4 + 0x114) * fVar1;
+    in_r7[2] = *(float *)(iVar4 + 0x108) * fVar3 +
+               *(float *)(iVar4 + 0x128) * fVar2 + *(float *)(iVar4 + 0x118) * fVar1;
+    iVar4 = *(int *)(param_4 + 0x30);
+    if (iVar4 != 0) {
+      fVar1 = (float)(param_2 - (double)*(float *)(iVar4 + 0xe4));
+      fVar2 = (float)(param_3 - (double)*(float *)(iVar4 + 0xe8));
+      fVar3 = (float)(param_1 - (double)*(float *)(iVar4 + 0xe0));
+      *in_r8 = *(float *)(iVar4 + 0x100) * fVar3 +
+               *(float *)(iVar4 + 0x120) * fVar2 + *(float *)(iVar4 + 0x110) * fVar1;
+      in_r8[1] = *(float *)(iVar4 + 0x104) * fVar3 +
+                 *(float *)(iVar4 + 0x124) * fVar2 + *(float *)(iVar4 + 0x114) * fVar1;
+      in_r8[2] = *(float *)(iVar4 + 0x108) * fVar3 +
+                 *(float *)(iVar4 + 0x128) * fVar2 + *(float *)(iVar4 + 0x118) * fVar1;
       in_r7[3] = 0.0;
       in_r8[3] = 0.0;
       return;
     }
-    *in_r8 = param_2;
-    in_r8[1] = param_3;
-    in_r8[2] = param_4;
+    *in_r8 = (float)param_1;
+    in_r8[1] = (float)param_2;
+    in_r8[2] = (float)param_3;
   }
   in_r7[3] = 0.0;
   in_r8[3] = 0.0;
@@ -300,8 +290,7 @@ void setAnchors(dxJoint *param_1,float param_2,float param_3,float param_4,float
 
 // 82690CF8  setAxes  (physics/ode/src/joint.cpp:265)
 
-void setAxes(dxJoint *param_1,float param_2,float param_3,float param_4,float *param_5,
-            float *param_6)
+void setAxes(undefined8 param_1,double param_2,double param_3)
 
 {
   float fVar1;
@@ -315,24 +304,20 @@ void setAxes(dxJoint *param_1,float param_2,float param_3,float param_4,float *p
   double extraout_f1;
   double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
   float local_50;
   float local_4c;
   float local_48;
   undefined4 local_44;
   
-  dVar8 = (double)param_4;
-  dVar7 = (double)param_3;
-  __savegprlr_29((double)param_2,param_1,param_5,param_6);
+  __savegprlr_29();
   iVar5 = __savefpr_28();
   if (*(int *)(iVar5 + 0x20) != 0) {
     local_50 = (float)extraout_f1;
-    local_4c = (float)dVar7;
-    local_48 = (float)dVar8;
-    dVar10 = 0.0;
+    local_4c = (float)param_2;
+    local_48 = (float)param_3;
+    dVar8 = 0.0;
     local_44 = 0;
-    dVar9 = extraout_f1;
+    dVar7 = extraout_f1;
     dNormalize3(&local_50);
     if ((in_r7 & 0xffffffff) != 0) {
       iVar4 = *(int *)(iVar5 + 0x20);
@@ -344,7 +329,7 @@ void setAxes(dxJoint *param_1,float param_2,float param_3,float param_4,float *p
       fVar1 = *(float *)(iVar4 + 0x128);
       fVar2 = *(float *)(iVar4 + 0x108);
       fVar3 = *(float *)(iVar4 + 0x118);
-      pfVar6[3] = (float)dVar10;
+      pfVar6[3] = (float)dVar8;
       pfVar6[2] = fVar2 * local_50 + fVar1 * local_48 + fVar3 * local_4c;
     }
     if ((in_r8 & 0xffffffff) != 0) {
@@ -358,16 +343,16 @@ void setAxes(dxJoint *param_1,float param_2,float param_3,float param_4,float *p
         fVar1 = *(float *)(iVar5 + 0x128);
         fVar2 = *(float *)(iVar5 + 0x118);
         fVar3 = *(float *)(iVar5 + 0x108);
-        pfVar6[3] = (float)dVar10;
+        pfVar6[3] = (float)dVar8;
         pfVar6[2] = fVar3 * local_50 + fVar1 * local_48 + fVar2 * local_4c;
         __restfpr_28();
         __restgprlr_29();
         return;
       }
-      *pfVar6 = (float)dVar9;
-      pfVar6[1] = (float)dVar7;
-      pfVar6[2] = (float)dVar8;
-      pfVar6[3] = (float)dVar10;
+      *pfVar6 = (float)dVar7;
+      pfVar6[1] = (float)param_2;
+      pfVar6[2] = (float)param_3;
+      pfVar6[3] = (float)dVar8;
     }
   }
   __restfpr_28();
@@ -378,58 +363,58 @@ void setAxes(dxJoint *param_1,float param_2,float param_3,float param_4,float *p
 
 // 82690E68  getAnchor  (physics/ode/src/joint.cpp:293)
 
-void getAnchor(dxJoint *param_1,float *param_2,float *param_3)
+void getAnchor(int param_1,float *param_2,float *param_3)
 
 {
-  dxBody *pdVar1;
+  int iVar1;
   float fVar2;
   float fVar3;
   float fVar4;
   
-  pdVar1 = param_1->node[0].body;
-  if (pdVar1 == (dxBody *)0x0) {
+  iVar1 = *(int *)(param_1 + 0x20);
+  if (iVar1 == 0) {
     return;
   }
-  fVar2 = (pdVar1->info).R[0] * *param_3 +
-          (pdVar1->info).R[1] * param_3[1] + (pdVar1->info).R[2] * param_3[2];
+  fVar2 = *(float *)(iVar1 + 0x100) * *param_3 +
+          *(float *)(iVar1 + 0x104) * param_3[1] + *(float *)(iVar1 + 0x108) * param_3[2];
   *param_2 = fVar2;
-  fVar3 = *param_3 * (pdVar1->info).R[4] +
-          (pdVar1->info).R[5] * param_3[1] + (pdVar1->info).R[6] * param_3[2];
+  fVar3 = *param_3 * *(float *)(iVar1 + 0x110) +
+          *(float *)(iVar1 + 0x114) * param_3[1] + *(float *)(iVar1 + 0x118) * param_3[2];
   param_2[1] = fVar3;
-  fVar4 = (pdVar1->info).R[8] * *param_3 +
-          (pdVar1->info).R[9] * param_3[1] + (pdVar1->info).R[10] * param_3[2];
+  fVar4 = *(float *)(iVar1 + 0x120) * *param_3 +
+          *(float *)(iVar1 + 0x124) * param_3[1] + *(float *)(iVar1 + 0x128) * param_3[2];
   param_2[2] = fVar4;
-  *param_2 = ((param_1->node[0].body)->info).pos[0] + fVar2;
-  param_2[1] = ((param_1->node[0].body)->info).pos[1] + fVar3;
-  param_2[2] = ((param_1->node[0].body)->info).pos[2] + fVar4;
+  *param_2 = *(float *)(*(int *)(param_1 + 0x20) + 0xe0) + fVar2;
+  param_2[1] = *(float *)(*(int *)(param_1 + 0x20) + 0xe4) + fVar3;
+  param_2[2] = *(float *)(*(int *)(param_1 + 0x20) + 0xe8) + fVar4;
   return;
 }
 
 
 // 82690F38  getAnchor2  (physics/ode/src/joint.cpp:304)
 
-void getAnchor2(dxJoint *param_1,float *param_2,float *param_3)
+void getAnchor2(int param_1,float *param_2,float *param_3)
 
 {
-  dxBody *pdVar1;
+  int iVar1;
   float fVar2;
   float fVar3;
   float fVar4;
   
-  pdVar1 = param_1->node[1].body;
-  if (pdVar1 != (dxBody *)0x0) {
-    fVar2 = (pdVar1->info).R[0] * *param_3 +
-            (pdVar1->info).R[1] * param_3[1] + (pdVar1->info).R[2] * param_3[2];
+  iVar1 = *(int *)(param_1 + 0x30);
+  if (iVar1 != 0) {
+    fVar2 = *(float *)(iVar1 + 0x100) * *param_3 +
+            *(float *)(iVar1 + 0x104) * param_3[1] + *(float *)(iVar1 + 0x108) * param_3[2];
     *param_2 = fVar2;
-    fVar3 = *param_3 * (pdVar1->info).R[4] +
-            (pdVar1->info).R[5] * param_3[1] + (pdVar1->info).R[6] * param_3[2];
+    fVar3 = *param_3 * *(float *)(iVar1 + 0x110) +
+            *(float *)(iVar1 + 0x114) * param_3[1] + *(float *)(iVar1 + 0x118) * param_3[2];
     param_2[1] = fVar3;
-    fVar4 = (pdVar1->info).R[8] * *param_3 +
-            (pdVar1->info).R[9] * param_3[1] + (pdVar1->info).R[10] * param_3[2];
+    fVar4 = *(float *)(iVar1 + 0x120) * *param_3 +
+            *(float *)(iVar1 + 0x124) * param_3[1] + *(float *)(iVar1 + 0x128) * param_3[2];
     param_2[2] = fVar4;
-    *param_2 = ((param_1->node[1].body)->info).pos[0] + fVar2;
-    param_2[1] = ((param_1->node[1].body)->info).pos[1] + fVar3;
-    param_2[2] = ((param_1->node[1].body)->info).pos[2] + fVar4;
+    *param_2 = *(float *)(*(int *)(param_1 + 0x30) + 0xe0) + fVar2;
+    param_2[1] = *(float *)(*(int *)(param_1 + 0x30) + 0xe4) + fVar3;
+    param_2[2] = *(float *)(*(int *)(param_1 + 0x30) + 0xe8) + fVar4;
     return;
   }
   *param_2 = *param_3;
@@ -441,40 +426,40 @@ void getAnchor2(dxJoint *param_1,float *param_2,float *param_3)
 
 // 82691020  getAxis  (physics/ode/src/joint.cpp:320)
 
-void getAxis(dxJoint *param_1,float *param_2,float *param_3)
+void getAxis(int param_1,float *param_2,float *param_3)
 
 {
-  dxBody *pdVar1;
+  int iVar1;
   
-  pdVar1 = param_1->node[0].body;
-  if (pdVar1 == (dxBody *)0x0) {
+  iVar1 = *(int *)(param_1 + 0x20);
+  if (iVar1 == 0) {
     return;
   }
-  *param_2 = (pdVar1->info).R[0] * *param_3 +
-             (pdVar1->info).R[1] * param_3[1] + (pdVar1->info).R[2] * param_3[2];
-  param_2[1] = *param_3 * (pdVar1->info).R[4] +
-               (pdVar1->info).R[5] * param_3[1] + (pdVar1->info).R[6] * param_3[2];
-  param_2[2] = (pdVar1->info).R[8] * *param_3 +
-               (pdVar1->info).R[9] * param_3[1] + (pdVar1->info).R[10] * param_3[2];
+  *param_2 = *(float *)(iVar1 + 0x100) * *param_3 +
+             *(float *)(iVar1 + 0x104) * param_3[1] + *(float *)(iVar1 + 0x108) * param_3[2];
+  param_2[1] = *param_3 * *(float *)(iVar1 + 0x110) +
+               *(float *)(iVar1 + 0x114) * param_3[1] + *(float *)(iVar1 + 0x118) * param_3[2];
+  param_2[2] = *(float *)(iVar1 + 0x120) * *param_3 +
+               *(float *)(iVar1 + 0x124) * param_3[1] + *(float *)(iVar1 + 0x128) * param_3[2];
   return;
 }
 
 
 // 826910B0  getAxis2  (physics/ode/src/joint.cpp:328)
 
-void getAxis2(dxJoint *param_1,float *param_2,float *param_3)
+void getAxis2(int param_1,float *param_2,float *param_3)
 
 {
-  dxBody *pdVar1;
+  int iVar1;
   
-  pdVar1 = param_1->node[1].body;
-  if (pdVar1 != (dxBody *)0x0) {
-    *param_2 = (pdVar1->info).R[0] * *param_3 +
-               (pdVar1->info).R[1] * param_3[1] + (pdVar1->info).R[2] * param_3[2];
-    param_2[1] = *param_3 * (pdVar1->info).R[4] +
-                 (pdVar1->info).R[5] * param_3[1] + (pdVar1->info).R[6] * param_3[2];
-    param_2[2] = (pdVar1->info).R[8] * *param_3 +
-                 (pdVar1->info).R[9] * param_3[1] + (pdVar1->info).R[10] * param_3[2];
+  iVar1 = *(int *)(param_1 + 0x30);
+  if (iVar1 != 0) {
+    *param_2 = *(float *)(iVar1 + 0x100) * *param_3 +
+               *(float *)(iVar1 + 0x104) * param_3[1] + *(float *)(iVar1 + 0x108) * param_3[2];
+    param_2[1] = *param_3 * *(float *)(iVar1 + 0x110) +
+                 *(float *)(iVar1 + 0x114) * param_3[1] + *(float *)(iVar1 + 0x118) * param_3[2];
+    param_2[2] = *(float *)(iVar1 + 0x120) * *param_3 +
+                 *(float *)(iVar1 + 0x124) * param_3[1] + *(float *)(iVar1 + 0x128) * param_3[2];
     return;
   }
   *param_2 = *param_3;
@@ -486,7 +471,7 @@ void getAxis2(dxJoint *param_1,float *param_2,float *param_3)
 
 // 8268CEC0  getHingeAngleFromRelativeQuat  (physics/ode/src/joint.cpp:341)
 
-float getHingeAngleFromRelativeQuat(float *param_1,float *param_2)
+double getHingeAngleFromRelativeQuat(float *param_1,float *param_2)
 
 {
   float fVar1;
@@ -502,176 +487,178 @@ float getHingeAngleFromRelativeQuat(float *param_1,float *param_2)
     dVar4 = -dVar4;
   }
   dVar4 = atan2((double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1),dVar4);
-  fVar1 = (float)dVar4 * 2.0;
-  if (3.1415927 < fVar1) {
-    fVar1 = fVar1 - 6.2831855;
+  dVar4 = (double)((float)dVar4 * 2.0);
+  if (3.1415927410125732 < dVar4) {
+    dVar4 = (double)(float)(dVar4 - 6.2831854820251465);
   }
-  return -fVar1;
+  return -dVar4;
 }
 
 
 // 8268CF68  getHingeAngle  (physics/ode/src/joint.cpp:393)
 
-float getHingeAngle(dxBody *param_1,dxBody *param_2,float *param_3,float *param_4)
+void getHingeAngle(longlong param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  float fVar1;
-  float afStack_40 [4];
-  float afStack_30 [6];
+  undefined1 auStack_40 [16];
+  undefined1 auStack_30 [24];
   
-  if (param_2 == (dxBody *)0x0) {
-    dQMultiply3(afStack_40,(param_1->info).q,param_4);
+  if ((param_2 & 0xffffffff) == 0) {
+    dQMultiply3(auStack_40,param_1 + 0xf0,param_4);
   }
   else {
-    dQMultiply1(afStack_30,(param_1->info).q,(param_2->info).q);
-    dQMultiply2(afStack_40,afStack_30,param_4);
+    dQMultiply1(auStack_30,param_1 + 0xf0,param_2 + 0xf0);
+    dQMultiply2(auStack_40,auStack_30,param_4);
   }
-  fVar1 = getHingeAngleFromRelativeQuat(afStack_40,param_3);
-  return fVar1;
+  getHingeAngleFromRelativeQuat(auStack_40,param_3);
+  return;
 }
 
 
-// 8268CFE8  init  (physics/ode/src/joint.cpp:413)
+// 8268CFE8  dxJointLimitMotor::init  (physics/ode/src/joint.cpp:413)
 
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
-void __thiscall dxJointLimitMotor::init(dxJointLimitMotor *this,dxWorld *param_1)
+void dxJointLimitMotor__init(undefined4 *param_1,int param_2)
 
 {
-  float fVar1;
+  undefined4 uVar1;
   
-  this->vel = 0.0;
-  this->fmax = 0.0;
-  this->lostop = -3.4028235e+38;
-  this->histop = 3.4028235e+38;
-  this->fudge_factor = 1.0;
-  this->normal_cfm = (param_1->stepInfo).global_cfm;
-  this->stop_erp = (param_1->stepInfo).global_erp;
-  fVar1 = (param_1->stepInfo).global_cfm;
-  this->limit = 0;
-  this->stop_cfm = fVar1;
-  this->bounce = 0.0;
-  this->limit_err = 0.0;
+  *param_1 = 0;
+  param_1[1] = 0;
+  param_1[2] = 0xff7fffff;
+  param_1[3] = 0x7f7fffff;
+  param_1[4] = 0x3f800000;
+  param_1[5] = *(undefined4 *)(param_2 + 0x24);
+  param_1[6] = *(undefined4 *)(param_2 + 0x20);
+  uVar1 = *(undefined4 *)(param_2 + 0x24);
+  param_1[9] = 0;
+  param_1[7] = uVar1;
+  param_1[8] = 0;
+  param_1[10] = 0;
   return;
 }
 
 
-// 8268D048  set  (physics/ode/src/joint.cpp:429)
+// 8268D048  dxJointLimitMotor::set  (physics/ode/src/joint.cpp:429)
 
-void __thiscall dxJointLimitMotor::set(dxJointLimitMotor *this,int param_1,float param_2)
+void dxJointLimitMotor__set(double param_1,float *param_2,longlong param_3)
 
 {
-  if (8 < (uint)param_1) {
+  bool bVar1;
+  
+  if (8 < (uint)param_3) {
     return;
   }
-  if (param_1 == 1) {
-    this->histop = param_2;
+  bVar1 = (uint)param_3 != 0;
+  if (param_3 == 1 && bVar1) {
+    param_2[3] = (float)param_1;
     return;
   }
-  if (param_1 == 2) {
-    this->vel = param_2;
+  if (param_3 == 2 && bVar1) {
+    *param_2 = (float)param_1;
     return;
   }
-  if (param_1 == 3) {
-    if (param_2 < 0.0) {
+  if (param_3 == 3 && bVar1) {
+    if (param_1 < 0.0) {
       return;
     }
-    this->fmax = param_2;
+    param_2[1] = (float)param_1;
     return;
   }
-  if (param_1 == 4) {
-    if (param_2 < 0.0) {
+  if (param_3 == 4 && bVar1) {
+    if (param_1 < 0.0) {
       return;
     }
-    if (1.0 < param_2) {
+    if (1.0 < param_1) {
       return;
     }
-    this->fudge_factor = param_2;
+    param_2[4] = (float)param_1;
     return;
   }
-  if (param_1 == 5) {
-    this->bounce = param_2;
+  if (param_3 == 5 && bVar1) {
+    param_2[8] = (float)param_1;
     return;
   }
-  if (param_1 != 6) {
-    if (param_1 == 7) {
-      this->stop_erp = param_2;
+  if (param_3 != 6 || !bVar1) {
+    if (param_3 == 7 && bVar1) {
+      param_2[6] = (float)param_1;
       return;
     }
-    if (param_1 == 0) {
-      this->lostop = param_2;
+    if (!bVar1) {
+      param_2[2] = (float)param_1;
       return;
     }
-    this->stop_cfm = param_2;
+    param_2[7] = (float)param_1;
     return;
   }
-  this->normal_cfm = param_2;
+  param_2[5] = (float)param_1;
   return;
 }
 
 
-// 8268D0F0  get  (physics/ode/src/joint.cpp:463)
+// 8268D0F0  dxJointLimitMotor::get  (physics/ode/src/joint.cpp:463)
 
-float __thiscall dxJointLimitMotor::get(dxJointLimitMotor *this,int param_1)
+double dxJointLimitMotor__get(float *param_1,longlong param_2)
 
 {
-  if (8 < (uint)param_1) {
+  bool bVar1;
+  
+  if (8 < (uint)param_2) {
     return 0.0;
   }
-  if (param_1 == 1) {
-    return this->histop;
+  bVar1 = (uint)param_2 != 0;
+  if (param_2 == 1 && bVar1) {
+    return (double)param_1[3];
   }
-  if (param_1 == 2) {
-    return this->vel;
+  if (param_2 == 2 && bVar1) {
+    return (double)*param_1;
   }
-  if (param_1 == 3) {
-    return this->fmax;
+  if (param_2 == 3 && bVar1) {
+    return (double)param_1[1];
   }
-  if (param_1 == 4) {
-    return this->fudge_factor;
+  if (param_2 == 4 && bVar1) {
+    return (double)param_1[4];
   }
-  if (param_1 == 5) {
-    return this->bounce;
+  if (param_2 == 5 && bVar1) {
+    return (double)param_1[8];
   }
-  if (param_1 == 6) {
-    return this->normal_cfm;
+  if (param_2 == 6 && bVar1) {
+    return (double)param_1[5];
   }
-  if (param_1 != 7) {
-    if (param_1 == 0) {
-      return this->lostop;
+  if (param_2 != 7 || !bVar1) {
+    if (!bVar1) {
+      return (double)param_1[2];
     }
-    return this->stop_cfm;
+    return (double)param_1[7];
   }
-  return this->stop_erp;
+  return (double)param_1[6];
 }
 
 
-// 8268D178  testRotationalLimit  (physics/ode/src/joint.cpp:480)
+// 8268D178  dxJointLimitMotor::testRotationalLimit  (physics/ode/src/joint.cpp:480)
 
-int __thiscall dxJointLimitMotor::testRotationalLimit(dxJointLimitMotor *this,float param_1)
+undefined8 dxJointLimitMotor__testRotationalLimit(double param_1,int param_2)
 
 {
-  if (param_1 <= this->lostop) {
-    this->limit_err = param_1 - this->lostop;
-    this->limit = 1;
+  if (param_1 <= (double)*(float *)(param_2 + 8)) {
+    *(float *)(param_2 + 0x28) = (float)(param_1 - (double)*(float *)(param_2 + 8));
+    *(undefined4 *)(param_2 + 0x24) = 1;
     return 1;
   }
-  if (this->histop <= param_1) {
-    this->limit_err = param_1 - this->histop;
-    this->limit = 2;
+  if ((double)*(float *)(param_2 + 0xc) <= param_1) {
+    *(float *)(param_2 + 0x28) = (float)(param_1 - (double)*(float *)(param_2 + 0xc));
+    *(undefined4 *)(param_2 + 0x24) = 2;
     return 1;
   }
-  this->limit = 0;
+  *(undefined4 *)(param_2 + 0x24) = 0;
   return 0;
 }
 
 
-// 8268D1D8  addLimot  (physics/ode/src/joint.cpp:499)
+// 8268D1D8  dxJointLimitMotor::addLimot  (physics/ode/src/joint.cpp:499)
 
-int __thiscall
-dxJointLimitMotor::addLimot
-          (dxJointLimitMotor *this,dxJoint *param_1,Info2 *param_2,int param_3,float *param_4,
-          int param_5)
+void dxJointLimitMotor__addLimot
+               (undefined8 param_1,int param_2,float *param_3,ulonglong param_4,float *param_5,
+               int param_6)
 
 {
   float fVar1;
@@ -679,260 +666,248 @@ dxJointLimitMotor::addLimot
   float fVar3;
   float fVar4;
   float fVar5;
-  float *pfVar6;
-  float *pfVar7;
-  dxBody *pdVar8;
-  float fVar9;
-  int iVar10;
-  bool bVar11;
-  float *pfVar12;
-  dxBody *pdVar13;
-  int iVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
+  float fVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  bool bVar10;
+  float *pfVar11;
+  int iVar12;
+  ulonglong uVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
   float local_90;
   float local_8c;
   float local_88;
   
-  uVar15 = (ulonglong)param_3;
-  pfVar12 = (float *)__savegprlr_21(this);
-  uVar16 = (longlong)param_2->rowskip * (longlong)(int)uVar15;
-  if (((((uint)*param_4 & 0x7f800000) == 0x7f800000) ||
-      (((uint)param_4[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)param_4[2] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x1f6,0,"%s");
+  pfVar11 = (float *)__savegprlr_21();
+  uVar13 = (longlong)(int)param_3[6] * (longlong)(int)param_4;
+  if (((((uint)*param_5 & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_5[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_5[2] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82198a88,0x1f6,0,0xffffffff82000f98,0xffffffff82198ae4);
   }
-  dVar18 = 0.0;
-  if (pfVar12[1] <= 0.0) {
-    bVar11 = false;
-    if (pfVar12[9] == 0.0) {
-      iVar14 = __restgprlr_21(0);
-      return iVar14;
+  dVar17 = 0.0;
+  if (pfVar11[1] <= 0.0) {
+    bVar10 = false;
+    if (pfVar11[9] == 0.0) {
+      __restgprlr_21(0);
+      return;
     }
   }
   else {
-    bVar11 = true;
+    bVar10 = true;
   }
-  if (param_5 == 0) {
-    pfVar6 = param_2->J1l;
-    pfVar7 = param_2->J2l;
+  if (param_6 == 0) {
+    fVar5 = param_3[2];
+    fVar6 = param_3[4];
   }
   else {
-    pfVar6 = param_2->J1a;
-    pfVar7 = param_2->J2a;
+    fVar5 = param_3[3];
+    fVar6 = param_3[5];
   }
-  iVar14 = (int)((uVar16 & 0x3fffffff) << 2);
-  *(float *)(iVar14 + (int)pfVar6) = *param_4;
-  *(float *)((int)pfVar6 + iVar14 + 4) = param_4[1];
-  iVar10 = (int)((uVar16 + 2 & 0x3fffffff) << 2);
-  *(float *)(iVar10 + (int)pfVar6) = param_4[2];
-  if (param_1->node[1].body != (dxBody *)0x0) {
-    *(float *)(iVar14 + (int)pfVar7) = -*param_4;
-    *(float *)((int)pfVar7 + iVar14 + 4) = -param_4[1];
-    *(float *)(iVar10 + (int)pfVar7) = -param_4[2];
+  iVar9 = (int)((uVar13 & 0x3fffffff) << 2);
+  *(float *)(iVar9 + (int)fVar5) = *param_5;
+  *(float *)(iVar9 + (int)fVar5 + 4) = param_5[1];
+  iVar12 = (int)((uVar13 + 2 & 0x3fffffff) << 2);
+  *(float *)(iVar12 + (int)fVar5) = param_5[2];
+  if (*(int *)(param_2 + 0x30) != 0) {
+    *(float *)(iVar9 + (int)fVar6) = -*param_5;
+    *(float *)(iVar9 + (int)fVar6 + 4) = -param_5[1];
+    *(float *)(iVar12 + (int)fVar6) = -param_5[2];
   }
   dSetZero(&local_90,4);
-  if ((param_5 == 0) && (pdVar13 = param_1->node[1].body, pdVar13 != (dxBody *)0x0)) {
-    pdVar8 = param_1->node[0].body;
-    fVar9 = ((pdVar13->info).pos[2] - (pdVar8->info).pos[2]) * 0.5;
-    fVar1 = ((pdVar13->info).pos[1] - (pdVar8->info).pos[1]) * 0.5;
-    fVar2 = ((pdVar13->info).pos[0] - (pdVar8->info).pos[0]) * 0.5;
-    local_90 = param_4[2] * fVar1 - param_4[1] * fVar9;
-    local_88 = param_4[1] * fVar2 - *param_4 * fVar1;
-    local_8c = *param_4 * fVar9 - param_4[2] * fVar2;
-    *(float *)(iVar14 + (int)param_2->J1a) = local_90;
-    *(float *)((int)param_2->J1a + iVar14 + 4) = local_8c;
-    *(float *)(iVar10 + (int)param_2->J1a) = local_88;
-    *(float *)(iVar14 + (int)param_2->J2a) = local_90;
-    *(float *)((int)param_2->J2a + iVar14 + 4) = local_8c;
-    *(float *)(iVar10 + (int)param_2->J2a) = local_88;
+  if ((param_6 == 0) && (iVar7 = *(int *)(param_2 + 0x30), iVar7 != 0)) {
+    iVar8 = *(int *)(param_2 + 0x20);
+    fVar5 = (*(float *)(iVar7 + 0xe8) - *(float *)(iVar8 + 0xe8)) * 0.5;
+    fVar6 = (*(float *)(iVar7 + 0xe4) - *(float *)(iVar8 + 0xe4)) * 0.5;
+    fVar1 = (*(float *)(iVar7 + 0xe0) - *(float *)(iVar8 + 0xe0)) * 0.5;
+    local_90 = param_5[2] * fVar6 - param_5[1] * fVar5;
+    local_88 = param_5[1] * fVar1 - *param_5 * fVar6;
+    local_8c = *param_5 * fVar5 - param_5[2] * fVar1;
+    *(float *)(iVar9 + (int)param_3[3]) = local_90;
+    *(float *)(iVar9 + (int)param_3[3] + 4) = local_8c;
+    *(float *)(iVar12 + (int)param_3[3]) = local_88;
+    *(float *)(iVar9 + (int)param_3[5]) = local_90;
+    *(float *)(iVar9 + (int)param_3[5] + 4) = local_8c;
+    *(float *)(iVar12 + (int)param_3[5]) = local_88;
   }
-  if (((pfVar12[9] == 0.0) || (pfVar12[2] != pfVar12[3])) && (bVar11)) {
-    iVar10 = (int)((uVar15 & 0xffffffff) << 2);
-    *(float *)((int)param_2->cfm + iVar10) = pfVar12[5];
-    fVar9 = pfVar12[9];
-    dVar17 = (double)*pfVar12;
-    if (fVar9 == 0.0) {
-      *(float *)((int)param_2->c + iVar10) = *pfVar12;
-      *(float *)((int)param_2->lo + iVar14) = -pfVar12[1];
-      *(float *)((int)param_2->hi + iVar14) = pfVar12[1];
+  if (((pfVar11[9] == 0.0) || (pfVar11[2] != pfVar11[3])) && (bVar10)) {
+    iVar12 = (int)((param_4 & 0xffffffff) << 2);
+    *(float *)((int)param_3[8] + iVar12) = pfVar11[5];
+    fVar5 = pfVar11[9];
+    dVar14 = (double)*pfVar11;
+    if (fVar5 == 0.0) {
+      *(float *)((int)param_3[7] + iVar12) = *pfVar11;
+      *(float *)((int)param_3[9] + iVar9) = -pfVar11[1];
+      *(float *)((int)param_3[10] + iVar9) = pfVar11[1];
     }
     else {
-      dVar19 = (double)pfVar12[1];
-      if ((dVar18 < dVar17) || ((dVar17 == dVar18 && (fVar9 == 2.8026e-45)))) {
-        dVar19 = -dVar19;
+      dVar18 = (double)pfVar11[1];
+      if ((dVar17 < dVar14) || ((dVar14 == dVar17 && (fVar5 == 2.8026e-45)))) {
+        dVar18 = -dVar18;
       }
-      if (((fVar9 == 1.4013e-45) && (dVar18 < dVar17)) ||
-         ((fVar9 == 2.8026e-45 && (dVar17 < dVar18)))) {
-        dVar19 = (double)(float)((double)pfVar12[4] * dVar19);
+      if (((fVar5 == 1.4013e-45) && (dVar17 < dVar14)) ||
+         ((fVar5 == 2.8026e-45 && (dVar14 < dVar17)))) {
+        dVar18 = (double)(float)((double)pfVar11[4] * dVar18);
       }
-      pdVar13 = param_1->node[0].body;
-      if (param_5 == 0) {
-        dBodyAddForce(pdVar13,-(float)((double)*param_4 * dVar19),
-                      -(float)(dVar19 * (double)param_4[1]),-(float)((double)param_4[2] * dVar19));
-        pdVar13 = param_1->node[1].body;
-        if (pdVar13 != (dxBody *)0x0) {
-          dBodyAddForce(pdVar13,(float)((double)*param_4 * dVar19),
-                        (float)(dVar19 * (double)param_4[1]),(float)((double)param_4[2] * dVar19));
-          dBodyAddTorque(param_1->node[0].body,-(float)(dVar19 * (double)local_90),
-                         -(float)(dVar19 * (double)local_8c),-(float)(dVar19 * (double)local_88));
-          pdVar13 = param_1->node[1].body;
-          fVar1 = -(float)(dVar19 * (double)local_8c);
-          fVar2 = -(float)(dVar19 * (double)local_90);
-          fVar9 = -(float)(dVar19 * (double)local_88);
+      if (param_6 == 0) {
+        dBodyAddForce(-(double)(float)((double)*param_5 * dVar18),
+                      -(double)(float)(dVar18 * (double)param_5[1]),
+                      -(double)(float)((double)param_5[2] * dVar18),*(undefined4 *)(param_2 + 0x20))
+        ;
+        if (*(int *)(param_2 + 0x30) != 0) {
+          dBodyAddForce((double)(float)((double)*param_5 * dVar18),
+                        (double)(float)(dVar18 * (double)param_5[1]),
+                        (double)(float)((double)param_5[2] * dVar18));
+          dBodyAddTorque(-(double)(float)(dVar18 * (double)local_90),
+                         -(double)(float)(dVar18 * (double)local_8c),
+                         -(double)(float)(dVar18 * (double)local_88),*(undefined4 *)(param_2 + 0x20)
+                        );
+          iVar12 = *(int *)(param_2 + 0x30);
+          dVar15 = -(double)(float)(dVar18 * (double)local_8c);
+          dVar14 = -(double)(float)(dVar18 * (double)local_90);
+          dVar16 = -(double)(float)(dVar18 * (double)local_88);
           goto LAB_8268d5ac;
         }
       }
       else {
-        dBodyAddTorque(pdVar13,-(float)((double)*param_4 * dVar19),
-                       -(float)(dVar19 * (double)param_4[1]),-(float)((double)param_4[2] * dVar19));
-        pdVar13 = param_1->node[1].body;
-        if (pdVar13 != (dxBody *)0x0) {
-          fVar9 = (float)((double)param_4[2] * dVar19);
-          fVar1 = (float)(dVar19 * (double)param_4[1]);
-          fVar2 = (float)((double)*param_4 * dVar19);
+        dBodyAddTorque();
+        iVar12 = *(int *)(param_2 + 0x30);
+        if (iVar12 != 0) {
+          dVar16 = (double)(float)((double)param_5[2] * dVar18);
+          dVar15 = (double)(float)(dVar18 * (double)param_5[1]);
+          dVar14 = (double)(float)((double)*param_5 * dVar18);
 LAB_8268d5ac:
-          dBodyAddTorque(pdVar13,fVar2,fVar1,fVar9);
+          dBodyAddTorque(dVar14,dVar15,dVar16,iVar12);
         }
       }
     }
   }
-  if (pfVar12[9] == 0.0) goto LAB_8268d768;
-  dVar17 = (double)(pfVar12[6] * param_2->fps);
-  dVar19 = 3.4028234663852886e+38;
-  if (pfVar12[10] == 3.4028235e+38) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x260,0,"%s");
+  if (pfVar11[9] == 0.0) goto LAB_8268d768;
+  dVar14 = (double)(pfVar11[6] * *param_3);
+  dVar18 = 3.4028234663852886e+38;
+  if (pfVar11[10] == 3.4028235e+38) {
+    MyAssertHandler(0xffffffff82198a88,0x260,0,0xffffffff82000f98,0xffffffff82198acc);
   }
-  iVar10 = (int)((uVar15 & 0x3fffffff) << 2);
-  *(float *)(iVar10 + (int)param_2->c) = -(float)((double)pfVar12[10] * dVar17);
-  *(float *)((int)param_2->cfm + iVar10) = pfVar12[7];
-  if (pfVar12[2] == pfVar12[3]) {
-    *(undefined4 *)((int)param_2->lo + iVar14) = 0xff7fffff;
-    *(float *)((int)param_2->hi + iVar14) = (float)dVar19;
+  iVar12 = (int)((param_4 & 0x3fffffff) << 2);
+  *(float *)(iVar12 + (int)param_3[7]) = -(float)((double)pfVar11[10] * dVar14);
+  *(float *)((int)param_3[8] + iVar12) = pfVar11[7];
+  if (pfVar11[2] == pfVar11[3]) {
+    *(undefined4 *)((int)param_3[9] + iVar9) = 0xff7fffff;
+    *(float *)((int)param_3[10] + iVar9) = (float)dVar18;
     goto LAB_8268d768;
   }
-  if (pfVar12[9] == 1.4013e-45) {
-    *(float *)((int)param_2->lo + iVar14) = (float)dVar18;
-    *(float *)((int)param_2->hi + iVar14) = (float)dVar19;
+  if (pfVar11[9] == 1.4013e-45) {
+    *(float *)((int)param_3[9] + iVar9) = (float)dVar17;
+    *(float *)((int)param_3[10] + iVar9) = (float)dVar18;
   }
   else {
-    *(undefined4 *)((int)param_2->lo + iVar14) = 0xff7fffff;
-    *(float *)((int)param_2->hi + iVar14) = (float)dVar18;
+    *(undefined4 *)((int)param_3[9] + iVar9) = 0xff7fffff;
+    *(float *)((int)param_3[10] + iVar9) = (float)dVar17;
   }
-  dVar17 = (double)pfVar12[8];
-  if (dVar17 <= dVar18) goto LAB_8268d768;
-  pdVar13 = param_1->node[0].body;
-  fVar9 = param_4[1];
-  fVar1 = param_4[2];
-  pdVar8 = param_1->node[1].body;
-  fVar2 = *param_4;
-  if (param_5 == 0) {
-    dVar19 = (double)(fVar2 * (pdVar13->info).lvel[0] +
-                     (pdVar13->info).lvel[2] * fVar1 + (pdVar13->info).lvel[1] * fVar9);
-    if (pdVar8 != (dxBody *)0x0) {
-      fVar3 = (pdVar8->info).lvel[1];
-      fVar4 = (pdVar8->info).lvel[2];
-      fVar5 = (pdVar8->info).lvel[0];
+  dVar14 = (double)pfVar11[8];
+  if (dVar14 <= dVar17) goto LAB_8268d768;
+  iVar9 = *(int *)(param_2 + 0x20);
+  fVar5 = param_5[1];
+  fVar6 = param_5[2];
+  iVar7 = *(int *)(param_2 + 0x30);
+  fVar1 = *param_5;
+  if (param_6 == 0) {
+    dVar18 = (double)(fVar1 * *(float *)(iVar9 + 0x130) +
+                     *(float *)(iVar9 + 0x138) * fVar6 + *(float *)(iVar9 + 0x134) * fVar5);
+    if (iVar7 != 0) {
+      fVar2 = *(float *)(iVar7 + 0x134);
+      fVar3 = *(float *)(iVar7 + 0x138);
+      fVar4 = *(float *)(iVar7 + 0x130);
       goto LAB_8268d704;
     }
   }
   else {
-    dVar19 = (double)((pdVar13->info).avel[0] * fVar2 +
-                     (pdVar13->info).avel[2] * fVar1 + (pdVar13->info).avel[1] * fVar9);
-    if (pdVar8 != (dxBody *)0x0) {
-      fVar3 = (pdVar8->info).avel[1];
-      fVar4 = (pdVar8->info).avel[2];
-      fVar5 = (pdVar8->info).avel[0];
+    dVar18 = (double)(*(float *)(iVar9 + 0x140) * fVar1 +
+                     *(float *)(iVar9 + 0x148) * fVar6 + *(float *)(iVar9 + 0x144) * fVar5);
+    if (iVar7 != 0) {
+      fVar2 = *(float *)(iVar7 + 0x144);
+      fVar3 = *(float *)(iVar7 + 0x148);
+      fVar4 = *(float *)(iVar7 + 0x140);
 LAB_8268d704:
-      dVar19 = (double)(float)(dVar19 - (double)(fVar2 * fVar5 + fVar4 * fVar1 + fVar3 * fVar9));
+      dVar18 = (double)(float)(dVar18 - (double)(fVar1 * fVar4 + fVar3 * fVar6 + fVar2 * fVar5));
     }
   }
-  if (pfVar12[9] == 1.4013e-45) {
-    if (dVar18 <= dVar19) goto LAB_8268d768;
-    pfVar12 = param_2->c;
-    fVar9 = -(float)(dVar17 * dVar19);
-    if (fVar9 <= *(float *)(iVar10 + (int)pfVar12)) goto LAB_8268d768;
+  if (pfVar11[9] == 1.4013e-45) {
+    if (dVar17 <= dVar18) goto LAB_8268d768;
+    fVar5 = param_3[7];
+    fVar6 = -(float)(dVar14 * dVar18);
+    if (fVar6 <= *(float *)(iVar12 + (int)fVar5)) goto LAB_8268d768;
   }
   else {
-    if (dVar19 <= dVar18) goto LAB_8268d768;
-    pfVar12 = param_2->c;
-    fVar9 = -(float)(dVar17 * dVar19);
-    if (*(float *)(iVar10 + (int)pfVar12) <= fVar9) goto LAB_8268d768;
+    if (dVar18 <= dVar17) goto LAB_8268d768;
+    fVar5 = param_3[7];
+    fVar6 = -(float)(dVar14 * dVar18);
+    if (*(float *)(iVar12 + (int)fVar5) <= fVar6) goto LAB_8268d768;
   }
-  *(float *)(iVar10 + (int)pfVar12) = fVar9;
+  *(float *)(iVar12 + (int)fVar5) = fVar6;
 LAB_8268d768:
-  iVar14 = __restgprlr_21(1);
-  return iVar14;
+  __restgprlr_21(1);
+  return;
 }
 
 
 // 8268D780  ballInit  (physics/ode/src/joint.cpp:677)
 
-void ballInit(dxJointBall *param_1)
+void ballInit(longlong param_1)
 
 {
-  dSetZero(param_1->anchor1,4);
-  dSetZero(param_1->anchor2,4);
+  dSetZero(param_1 + 0x3c,4);
+  dSetZero(param_1 + 0x4c,4);
   return;
 }
 
 
 // 8268D7C0  ballGetInfo1  (physics/ode/src/joint.cpp:684)
 
-void ballGetInfo1(dxJointBall *param_1,Info1 *param_2)
+void ballGetInfo1(undefined4 *param_1)
 
 {
-  param_1->_padding_ = 3;
-  param_1->_padding_ = 3;
+  *param_1 = 3;
+  param_1[1] = 3;
   return;
 }
 
 
 // 82691158  ballGetInfo2  (physics/ode/src/joint.cpp:691)
 
-void ballGetInfo2(dxJointBall *param_1,dxWorldStepInfo *param_2,Info2 *param_3)
+void ballGetInfo2(longlong param_1,undefined8 param_2)
 
 {
-  setBall((dxJoint *)param_1,(Info2 *)param_2,param_1->anchor1,param_1->anchor2);
+  setBall(param_1,param_2,param_1 + 0x3c,param_1 + 0x4c);
   return;
 }
 
 
 // 82691168  dJointSetBallAnchor  (physics/ode/src/joint.cpp:698)
 
-void dJointSetBallAnchor(dxJointBall *param_1,float param_2,float param_3,float param_4)
+void dJointSetBallAnchor(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  dxJoint *pdVar1;
-  float *in_r4;
-  float *in_r5;
-  double extraout_f1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
+  int iVar1;
+  undefined8 extraout_f1;
+  undefined8 uVar2;
   
-  dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
-  pdVar1 = (dxJoint *)__savegprlr_29((double)param_2,param_1);
-  dVar4 = extraout_f1;
-  if (pdVar1 == (dxJoint *)0x0) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x2bb;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    699,0,"%s\n\t%s");
+  iVar1 = __savegprlr_29();
+  uVar2 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,699,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if (pdVar1->type != ODE_JOINT_TYPE_BALL) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x2bc;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    700,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 1) {
+    MyAssertHandler(0xffffffff82198a88,700,0,0xffffffff820011f4,0xffffffff821992c8,
+                    0xffffffff821992ec);
   }
-  setAnchors(pdVar1,(float)dVar4,(float)dVar2,(float)dVar3,in_r4,in_r5);
+  setAnchors(uVar2,param_2,param_3,iVar1);
   __restgprlr_29();
   return;
 }
@@ -940,32 +915,30 @@ void dJointSetBallAnchor(dxJointBall *param_1,float param_2,float param_3,float 
 
 // 82691230  dJointGetBallAnchor  (physics/ode/src/joint.cpp:706)
 
-void dJointGetBallAnchor(dxJointBall *param_1,float *param_2)
+void dJointGetBallAnchor(undefined8 param_1,ulonglong param_2)
 
 {
-  dxJoint *pdVar1;
-  ulonglong uVar2;
+  int iVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pdVar1 = (dxJoint *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x2c3,0,"%s\n\t%s");
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x2c3,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x2c4,0,"%s\n\t%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x2c4,0,0xffffffff820011f4,0xffffffff82012420,
+                    0xffffffff82199300);
   }
-  if (pdVar1->type != ODE_JOINT_TYPE_BALL) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x2c5,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 1) {
+    MyAssertHandler(0xffffffff82198a88,0x2c5,0,0xffffffff820011f4,0xffffffff821992c8,
+                    0xffffffff821992ec);
   }
-  if ((pdVar1->flags & 2U) != 0) {
-    getAnchor2(pdVar1,(float *)uVar2,(float *)&pdVar1[1]._padding_);
+  if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
+    getAnchor2(iVar1,param_2,iVar1 + 0x4c);
     __restgprlr_28();
     return;
   }
-  getAnchor(pdVar1,(float *)uVar2,(float *)(pdVar1 + 1));
+  getAnchor(iVar1,param_2,iVar1 + 0x3c);
   __restgprlr_28();
   return;
 }
@@ -973,32 +946,30 @@ void dJointGetBallAnchor(dxJointBall *param_1,float *param_2)
 
 // 82691318  dJointGetBallAnchor2  (physics/ode/src/joint.cpp:718)
 
-void dJointGetBallAnchor2(dxJointBall *param_1,float *param_2)
+void dJointGetBallAnchor2(undefined8 param_1,ulonglong param_2)
 
 {
-  dxJoint *pdVar1;
-  ulonglong uVar2;
+  int iVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pdVar1 = (dxJoint *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x2cf,0,"%s\n\t%s");
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x2cf,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x2d0,0,"%s\n\t%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x2d0,0,0xffffffff820011f4,0xffffffff82012420,
+                    0xffffffff82199300);
   }
-  if (pdVar1->type != ODE_JOINT_TYPE_BALL) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x2d1,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 1) {
+    MyAssertHandler(0xffffffff82198a88,0x2d1,0,0xffffffff820011f4,0xffffffff821992c8,
+                    0xffffffff821992ec);
   }
-  if ((pdVar1->flags & 2U) != 0) {
-    getAnchor(pdVar1,(float *)uVar2,(float *)(pdVar1 + 1));
+  if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
+    getAnchor(iVar1,param_2,iVar1 + 0x3c);
     __restgprlr_28();
     return;
   }
-  getAnchor2(pdVar1,(float *)uVar2,(float *)&pdVar1[1]._padding_);
+  getAnchor2(iVar1,param_2,iVar1 + 0x4c);
   __restgprlr_28();
   return;
 }
@@ -1006,77 +977,77 @@ void dJointGetBallAnchor2(dxJointBall *param_1,float *param_2)
 
 // 8268D7D0  hingeInit  (physics/ode/src/joint.cpp:733)
 
-void hingeInit(dxJointHinge *param_1)
+void hingeInit(int param_1)
 
 {
-  float fVar1;
+  undefined4 uVar1;
   int iVar2;
   double dVar3;
   
-  dSetZero(param_1->anchor1,4);
-  dSetZero(param_1->anchor2,4);
-  dSetZero(param_1->axis1,4);
+  dSetZero(param_1 + 0x3c,4);
+  dSetZero(param_1 + 0x4c,4);
+  dSetZero(param_1 + 0x5c,4);
   dVar3 = 1.0;
-  param_1->axis1[0] = 1.0;
-  dSetZero(param_1->axis2,4);
-  param_1->axis2[0] = (float)dVar3;
-  dSetZero(param_1->qrel,4);
-  iVar2 = param_1->_padding_;
-  (param_1->limot).fudge_factor = (float)dVar3;
-  (param_1->limot).vel = 0.0;
-  (param_1->limot).fmax = 0.0;
-  (param_1->limot).lostop = -3.4028235e+38;
-  (param_1->limot).histop = 3.4028235e+38;
-  (param_1->limot).normal_cfm = *(float *)(iVar2 + 0x24);
-  (param_1->limot).stop_erp = *(float *)(iVar2 + 0x20);
-  fVar1 = *(float *)(iVar2 + 0x24);
-  (param_1->limot).limit = 0;
-  (param_1->limot).stop_cfm = fVar1;
-  (param_1->limot).bounce = 0.0;
-  (param_1->limot).limit_err = 0.0;
+  *(undefined4 *)(param_1 + 0x5c) = 0x3f800000;
+  dSetZero(param_1 + 0x6c,4);
+  *(float *)(param_1 + 0x6c) = (float)dVar3;
+  dSetZero(param_1 + 0x7c,4);
+  iVar2 = *(int *)(param_1 + 0x10);
+  *(float *)(param_1 + 0x9c) = (float)dVar3;
+  *(undefined4 *)(param_1 + 0x8c) = 0;
+  *(undefined4 *)(param_1 + 0x90) = 0;
+  *(undefined4 *)(param_1 + 0x94) = 0xff7fffff;
+  *(undefined4 *)(param_1 + 0x98) = 0x7f7fffff;
+  *(undefined4 *)(param_1 + 0xa0) = *(undefined4 *)(iVar2 + 0x24);
+  *(undefined4 *)(param_1 + 0xa4) = *(undefined4 *)(iVar2 + 0x20);
+  uVar1 = *(undefined4 *)(iVar2 + 0x24);
+  *(undefined4 *)(param_1 + 0xb0) = 0;
+  *(undefined4 *)(param_1 + 0xa8) = uVar1;
+  *(undefined4 *)(param_1 + 0xac) = 0;
+  *(undefined4 *)(param_1 + 0xb4) = 0;
   return;
 }
 
 
 // 8268D8A8  hingeGetInfo1  (physics/ode/src/joint.cpp:746)
 
-void hingeGetInfo1(dxJointHinge *param_1,Info1 *param_2)
+void hingeGetInfo1(undefined8 param_1,undefined4 *param_2)
 
 {
-  float fVar1;
-  int iVar2;
-  undefined4 uVar3;
-  float fVar4;
+  int iVar1;
+  undefined4 uVar2;
+  double dVar3;
+  double dVar4;
   
-  iVar2 = __savegprlr_29(param_1);
-  *(undefined4 *)(iVar2 + 0xb4) = 0x7f7fffff;
-  param_2->nub = 5;
-  if (*(float *)(iVar2 + 0x90) <= 0.0) {
-    param_2->m = 5;
+  iVar1 = __savegprlr_29();
+  *(undefined4 *)(iVar1 + 0xb4) = 0x7f7fffff;
+  param_2[1] = 5;
+  if (*(float *)(iVar1 + 0x90) <= 0.0) {
+    *param_2 = 5;
   }
   else {
-    param_2->m = 6;
+    *param_2 = 6;
   }
-  if (((-3.1415927 <= *(float *)(iVar2 + 0x94)) || (*(float *)(iVar2 + 0x98) <= 3.1415927)) &&
-     (*(float *)(iVar2 + 0x94) <= *(float *)(iVar2 + 0x98))) {
-    fVar4 = getHingeAngle(*(dxBody **)(iVar2 + 0x20),*(dxBody **)(iVar2 + 0x30),
-                          (float *)(iVar2 + 0x5c),(float *)(iVar2 + 0x7c));
-    fVar1 = *(float *)(iVar2 + 0x94);
-    if (fVar1 < fVar4) {
-      fVar1 = *(float *)(iVar2 + 0x98);
-      if (fVar4 < fVar1) {
-        *(undefined4 *)(iVar2 + 0xb0) = 0;
+  if (((-3.1415927 <= *(float *)(iVar1 + 0x94)) || (*(float *)(iVar1 + 0x98) <= 3.1415927)) &&
+     (*(float *)(iVar1 + 0x94) <= *(float *)(iVar1 + 0x98))) {
+    dVar4 = (double)getHingeAngle(*(undefined4 *)(iVar1 + 0x20),*(undefined4 *)(iVar1 + 0x30),
+                                  iVar1 + 0x5c,iVar1 + 0x7c);
+    dVar3 = (double)*(float *)(iVar1 + 0x94);
+    if (dVar3 < dVar4) {
+      dVar3 = (double)*(float *)(iVar1 + 0x98);
+      if (dVar4 < dVar3) {
+        *(undefined4 *)(iVar1 + 0xb0) = 0;
         __restgprlr_29();
         return;
       }
-      uVar3 = 2;
+      uVar2 = 2;
     }
     else {
-      uVar3 = 1;
+      uVar2 = 1;
     }
-    *(float *)(iVar2 + 0xb4) = fVar4 - fVar1;
-    *(undefined4 *)(iVar2 + 0xb0) = uVar3;
-    param_2->m = 6;
+    *(float *)(iVar1 + 0xb4) = (float)(dVar4 - dVar3);
+    *(undefined4 *)(iVar1 + 0xb0) = uVar2;
+    *param_2 = 6;
   }
   __restgprlr_29();
   return;
@@ -1085,7 +1056,7 @@ void hingeGetInfo1(dxJointHinge *param_1,Info1 *param_2)
 
 // 82691400  hingeGetInfo2  (physics/ode/src/joint.cpp:770)
 
-void hingeGetInfo2(dxJointHinge *param_1,dxWorldStepInfo *param_2,Info2 *param_3)
+void hingeGetInfo2(int param_1,float *param_2)
 
 {
   float fVar1;
@@ -1094,12 +1065,11 @@ void hingeGetInfo2(dxJointHinge *param_1,dxWorldStepInfo *param_2,Info2 *param_3
   float fVar4;
   float fVar5;
   int iVar6;
-  uint uVar7;
+  float fVar7;
   int iVar8;
   int iVar9;
   int iVar10;
-  dxJointHinge *pdVar11;
-  ulonglong uVar12;
+  ulonglong uVar11;
   float local_50;
   float local_4c;
   float local_48;
@@ -1110,136 +1080,124 @@ void hingeGetInfo2(dxJointHinge *param_1,dxWorldStepInfo *param_2,Info2 *param_3
   float local_2c;
   float local_28;
   
-  pdVar11 = param_1;
-  setBall((dxJoint *)param_1,(Info2 *)param_2,param_1->anchor1,param_1->anchor2);
-  iVar6 = pdVar11->_padding_;
-  fVar1 = param_1->axis1[2];
-  fVar2 = param_1->axis1[1];
-  fVar3 = param_1->axis1[0];
-  local_30 = *(float *)(iVar6 + 0x100) * fVar3 +
-             *(float *)(iVar6 + 0x104) * fVar2 + *(float *)(iVar6 + 0x108) * fVar1;
-  local_2c = *(float *)(iVar6 + 0x110) * fVar3 +
-             *(float *)(iVar6 + 0x114) * fVar2 + *(float *)(iVar6 + 0x118) * fVar1;
-  local_28 = fVar3 * *(float *)(iVar6 + 0x120) +
-             *(float *)(iVar6 + 0x128) * fVar1 + *(float *)(iVar6 + 0x124) * fVar2;
+  iVar10 = setBall(param_1,param_2,param_1 + 0x3c,param_1 + 0x4c);
+  iVar10 = *(int *)(iVar10 + 0x20);
+  fVar1 = *(float *)(param_1 + 100);
+  fVar2 = *(float *)(param_1 + 0x60);
+  fVar3 = *(float *)(param_1 + 0x5c);
+  local_30 = *(float *)(iVar10 + 0x100) * fVar3 +
+             *(float *)(iVar10 + 0x104) * fVar2 + *(float *)(iVar10 + 0x108) * fVar1;
+  local_2c = *(float *)(iVar10 + 0x110) * fVar3 +
+             *(float *)(iVar10 + 0x114) * fVar2 + *(float *)(iVar10 + 0x118) * fVar1;
+  local_28 = fVar3 * *(float *)(iVar10 + 0x120) +
+             *(float *)(iVar10 + 0x128) * fVar1 + *(float *)(iVar10 + 0x124) * fVar2;
   dPlaneSpace(&local_30,&local_50,&local_40);
-  uVar7 = (param_2->qs).num_iterations;
-  iVar6 = uVar7 * 0x10;
-  uVar12 = (ulonglong)uVar7 + ((ulonglong)uVar7 & 0x7fffffff) * 2;
-  iVar9 = (int)((uVar12 + 2 & 0xffffffff) << 2);
-  iVar10 = (uVar7 * 4 + 2) * 4;
-  iVar8 = (int)((uVar12 & 0x3fffffff) << 2);
-  *(float *)(iVar8 + (int)param_2->gravity[3]) = local_50;
-  *(float *)(iVar8 + (int)param_2->gravity[3] + 4) = local_4c;
-  *(float *)(iVar9 + (int)param_2->gravity[3]) = local_48;
-  *(float *)(iVar6 + (int)param_2->gravity[3]) = local_40;
-  *(float *)(iVar6 + (int)param_2->gravity[3] + 4) = local_3c;
-  *(float *)(iVar10 + (int)param_2->gravity[3]) = local_38;
-  if (param_1->_padding_ != 0) {
-    *(float *)((int)param_2->global_cfm + iVar8) = -local_50;
-    *(float *)((int)param_2->global_cfm + iVar8 + 4) = -local_4c;
-    *(float *)((int)param_2->global_cfm + iVar9) = -local_48;
-    *(float *)((int)param_2->global_cfm + iVar6) = -local_40;
-    *(float *)((int)param_2->global_cfm + iVar6 + 4) = -local_3c;
-    *(float *)((int)param_2->global_cfm + iVar10) = -local_38;
+  fVar1 = param_2[6];
+  iVar10 = (int)fVar1 * 0x10;
+  uVar11 = (ulonglong)(uint)fVar1 + ((ulonglong)(uint)fVar1 & 0x7fffffff) * 2;
+  iVar8 = (int)((uVar11 + 2 & 0xffffffff) << 2);
+  iVar9 = ((int)fVar1 * 4 + 2) * 4;
+  iVar6 = (int)((uVar11 & 0x3fffffff) << 2);
+  *(float *)(iVar6 + (int)param_2[3]) = local_50;
+  *(float *)(iVar6 + (int)param_2[3] + 4) = local_4c;
+  *(float *)(iVar8 + (int)param_2[3]) = local_48;
+  *(float *)(iVar10 + (int)param_2[3]) = local_40;
+  *(float *)(iVar10 + (int)param_2[3] + 4) = local_3c;
+  *(float *)(iVar9 + (int)param_2[3]) = local_38;
+  if (*(int *)(param_1 + 0x30) != 0) {
+    *(float *)((int)param_2[5] + iVar6) = -local_50;
+    *(float *)((int)param_2[5] + iVar6 + 4) = -local_4c;
+    *(float *)((int)param_2[5] + iVar8) = -local_48;
+    *(float *)((int)param_2[5] + iVar10) = -local_40;
+    *(float *)((int)param_2[5] + iVar10 + 4) = -local_3c;
+    *(float *)((int)param_2[5] + iVar9) = -local_38;
   }
-  iVar6 = param_1->_padding_;
-  if (iVar6 == 0) {
-    fVar1 = param_1->axis2[1];
-    fVar2 = param_1->axis2[2];
-    fVar3 = param_1->axis2[0];
+  iVar10 = *(int *)(param_1 + 0x30);
+  if (iVar10 == 0) {
+    fVar1 = *(float *)(param_1 + 0x70);
+    fVar2 = *(float *)(param_1 + 0x74);
+    fVar3 = *(float *)(param_1 + 0x6c);
   }
   else {
-    fVar2 = param_1->axis2[2];
-    fVar4 = param_1->axis2[1];
-    fVar5 = param_1->axis2[0];
-    fVar3 = *(float *)(iVar6 + 0x100) * fVar5 +
-            *(float *)(iVar6 + 0x104) * fVar4 + *(float *)(iVar6 + 0x108) * fVar2;
-    fVar1 = fVar5 * *(float *)(iVar6 + 0x110) +
-            *(float *)(iVar6 + 0x114) * fVar4 + *(float *)(iVar6 + 0x118) * fVar2;
-    fVar2 = fVar5 * *(float *)(iVar6 + 0x120) +
-            *(float *)(iVar6 + 0x124) * fVar4 + *(float *)(iVar6 + 0x128) * fVar2;
+    fVar2 = *(float *)(param_1 + 0x74);
+    fVar4 = *(float *)(param_1 + 0x70);
+    fVar5 = *(float *)(param_1 + 0x6c);
+    fVar3 = *(float *)(iVar10 + 0x100) * fVar5 +
+            *(float *)(iVar10 + 0x104) * fVar4 + *(float *)(iVar10 + 0x108) * fVar2;
+    fVar1 = fVar5 * *(float *)(iVar10 + 0x110) +
+            *(float *)(iVar10 + 0x114) * fVar4 + *(float *)(iVar10 + 0x118) * fVar2;
+    fVar2 = fVar5 * *(float *)(iVar10 + 0x120) +
+            *(float *)(iVar10 + 0x124) * fVar4 + *(float *)(iVar10 + 0x128) * fVar2;
   }
-  fVar5 = param_2->gravity[1] * param_2->gravity[0];
-  fVar4 = local_28 * fVar3 - local_30 * fVar2;
+  fVar4 = *param_2;
+  fVar5 = param_2[1];
+  fVar7 = local_28 * fVar3 - local_30 * fVar2;
   fVar3 = local_30 * fVar1 - local_2c * fVar3;
   fVar1 = local_2c * fVar2 - local_28 * fVar1;
-  *(float *)((int)(param_2->qs).w + 0xc) =
-       (fVar1 * local_50 + fVar3 * local_48 + fVar4 * local_4c) * fVar5;
-  *(float *)((int)(param_2->qs).w + 0x10) =
-       (fVar1 * local_40 + fVar3 * local_38 + fVar4 * local_3c) * fVar5;
-  dxJointLimitMotor::addLimot(&param_1->limot,(dxJoint *)param_1,(Info2 *)param_2,5,&local_30,1);
+  *(float *)((int)param_2[7] + 0xc) =
+       (fVar1 * local_50 + fVar3 * local_48 + fVar7 * local_4c) * fVar5 * fVar4;
+  *(float *)((int)param_2[7] + 0x10) =
+       (fVar1 * local_40 + fVar3 * local_38 + fVar7 * local_3c) * fVar5 * fVar4;
+  dxJointLimitMotor__addLimot(param_1 + 0x8c,param_1,param_2,5,&local_30,1);
   return;
 }
 
 
 // 8268D988  hingeComputeInitialRelativeRotation  (physics/ode/src/joint.cpp:844)
 
-void hingeComputeInitialRelativeRotation(dxJointHinge *param_1)
+void hingeComputeInitialRelativeRotation(int param_1)
 
 {
   int iVar1;
   
-  iVar1 = param_1->_padding_;
+  iVar1 = *(int *)(param_1 + 0x20);
   if (iVar1 == 0) {
     return;
   }
-  if (param_1->_padding_ != 0) {
-    dQMultiply1(param_1->qrel,(float *)(iVar1 + 0xf0),(float *)(param_1->_padding_ + 0xf0));
+  if ((ulonglong)*(uint *)(param_1 + 0x30) != 0) {
+    dQMultiply1(param_1 + 0x7c,iVar1 + 0xf0,(ulonglong)*(uint *)(param_1 + 0x30) + 0xf0);
     return;
   }
-  param_1->qrel[0] = *(float *)(iVar1 + 0xf0);
-  param_1->qrel[1] = -*(float *)(param_1->_padding_ + 0xf4);
-  param_1->qrel[2] = -*(float *)(param_1->_padding_ + 0xf8);
-  param_1->qrel[3] = -*(float *)(param_1->_padding_ + 0xfc);
+  *(undefined4 *)(param_1 + 0x7c) = *(undefined4 *)(iVar1 + 0xf0);
+  *(float *)(param_1 + 0x80) = -*(float *)(*(int *)(param_1 + 0x20) + 0xf4);
+  *(float *)(param_1 + 0x84) = -*(float *)(*(int *)(param_1 + 0x20) + 0xf8);
+  *(float *)(param_1 + 0x88) = -*(float *)(*(int *)(param_1 + 0x20) + 0xfc);
   return;
 }
 
 
 // 826916B0  dJointSetHingeAnchor  (physics/ode/src/joint.cpp:860)
 
-void dJointSetHingeAnchor(dxJointHinge *param_1,float param_2,float param_3,float param_4)
+void dJointSetHingeAnchor(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  dxBody *pdVar1;
-  dxBody *pdVar2;
-  dxJoint *pdVar3;
-  float *in_r4;
-  float *in_r5;
-  double extraout_f1;
-  double dVar4;
-  double dVar5;
-  double dVar6;
+  int iVar1;
+  int iVar2;
+  undefined8 extraout_f1;
+  undefined8 uVar3;
   
-  dVar5 = (double)param_4;
-  dVar4 = (double)param_3;
-  pdVar3 = (dxJoint *)__savegprlr_29((double)param_2,param_1);
-  dVar6 = extraout_f1;
-  if (pdVar3 == (dxJoint *)0x0) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x35d;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x35d,0,"%s\n\t%s");
+  iVar2 = __savegprlr_29();
+  uVar3 = extraout_f1;
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x35d,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if (pdVar3->type != ODE_JOINT_TYPE_HINGE) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x35e;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x35e,0,"%s\n\t%s");
+  if (*(int *)(iVar2 + 0x14) != 2) {
+    MyAssertHandler(0xffffffff82198a88,0x35e,0,0xffffffff820011f4,0xffffffff82194e3c,
+                    0xffffffff82198b20);
   }
-  setAnchors(pdVar3,(float)dVar6,(float)dVar4,(float)dVar5,in_r4,in_r5);
-  pdVar1 = pdVar3->node[0].body;
-  if (pdVar1 != (dxBody *)0x0) {
-    pdVar2 = pdVar3->node[1].body;
-    if (pdVar2 != (dxBody *)0x0) {
-      dQMultiply1((float *)&pdVar3[2]._padding_,(pdVar1->info).q,(pdVar2->info).q);
+  setAnchors(uVar3,param_2,param_3,iVar2);
+  iVar1 = *(int *)(iVar2 + 0x20);
+  if (iVar1 != 0) {
+    if ((ulonglong)*(uint *)(iVar2 + 0x30) != 0) {
+      dQMultiply1(iVar2 + 0x7c,iVar1 + 0xf0,(ulonglong)*(uint *)(iVar2 + 0x30) + 0xf0);
       __restgprlr_29();
       return;
     }
-    pdVar3[2]._padding_ = (int)(pdVar1->info).q[0];
-    pdVar3[2]._padding_ = (int)-((pdVar3->node[0].body)->info).q[1];
-    pdVar3[2]._padding_ = (int)-((pdVar3->node[0].body)->info).q[2];
-    pdVar3[2]._padding_ = (int)-((pdVar3->node[0].body)->info).q[3];
+    *(undefined4 *)(iVar2 + 0x7c) = *(undefined4 *)(iVar1 + 0xf0);
+    *(float *)(iVar2 + 0x80) = -*(float *)(*(int *)(iVar2 + 0x20) + 0xf4);
+    *(float *)(iVar2 + 0x84) = -*(float *)(*(int *)(iVar2 + 0x20) + 0xf8);
+    *(float *)(iVar2 + 0x88) = -*(float *)(*(int *)(iVar2 + 0x20) + 0xfc);
   }
   __restgprlr_29();
   return;
@@ -1248,48 +1206,36 @@ void dJointSetHingeAnchor(dxJointHinge *param_1,float param_2,float param_3,floa
 
 // 826917E8  dJointSetHingeAxis  (physics/ode/src/joint.cpp:870)
 
-void dJointSetHingeAxis(dxJointHinge *param_1,float param_2,float param_3,float param_4)
+void dJointSetHingeAxis(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  dxBody *pdVar1;
-  dxBody *pdVar2;
-  dxJoint *pdVar3;
-  float *in_r4;
-  float *in_r5;
-  double extraout_f1;
-  double dVar4;
-  double dVar5;
-  double dVar6;
+  int iVar1;
+  int iVar2;
+  undefined8 extraout_f1;
+  undefined8 uVar3;
   
-  dVar4 = (double)param_3;
-  dVar5 = (double)param_4;
-  pdVar3 = (dxJoint *)__savegprlr_29((double)param_2,param_1);
-  dVar6 = extraout_f1;
-  if (pdVar3 == (dxJoint *)0x0) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x367;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x367,0,"%s\n\t%s");
+  iVar2 = __savegprlr_29();
+  uVar3 = extraout_f1;
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x367,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if (pdVar3->type != ODE_JOINT_TYPE_HINGE) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x368;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x368,0,"%s\n\t%s");
+  if (*(int *)(iVar2 + 0x14) != 2) {
+    MyAssertHandler(0xffffffff82198a88,0x368,0,0xffffffff820011f4,0xffffffff82194e3c,
+                    0xffffffff82198b20);
   }
-  setAxes(pdVar3,(float)dVar6,(float)dVar4,(float)dVar5,in_r4,in_r5);
-  pdVar1 = pdVar3->node[0].body;
-  if (pdVar1 != (dxBody *)0x0) {
-    pdVar2 = pdVar3->node[1].body;
-    if (pdVar2 != (dxBody *)0x0) {
-      dQMultiply1((float *)&pdVar3[2]._padding_,(pdVar1->info).q,(pdVar2->info).q);
+  setAxes(uVar3,param_2,param_3,iVar2);
+  iVar1 = *(int *)(iVar2 + 0x20);
+  if (iVar1 != 0) {
+    if ((ulonglong)*(uint *)(iVar2 + 0x30) != 0) {
+      dQMultiply1(iVar2 + 0x7c,iVar1 + 0xf0,(ulonglong)*(uint *)(iVar2 + 0x30) + 0xf0);
       __restgprlr_29();
       return;
     }
-    pdVar3[2]._padding_ = (int)(pdVar1->info).q[0];
-    pdVar3[2]._padding_ = (int)-((pdVar3->node[0].body)->info).q[1];
-    pdVar3[2]._padding_ = (int)-((pdVar3->node[0].body)->info).q[2];
-    pdVar3[2]._padding_ = (int)-((pdVar3->node[0].body)->info).q[3];
+    *(undefined4 *)(iVar2 + 0x7c) = *(undefined4 *)(iVar1 + 0xf0);
+    *(float *)(iVar2 + 0x80) = -*(float *)(*(int *)(iVar2 + 0x20) + 0xf4);
+    *(float *)(iVar2 + 0x84) = -*(float *)(*(int *)(iVar2 + 0x20) + 0xf8);
+    *(float *)(iVar2 + 0x88) = -*(float *)(*(int *)(iVar2 + 0x20) + 0xfc);
   }
   __restgprlr_29();
   return;
@@ -1298,32 +1244,30 @@ void dJointSetHingeAxis(dxJointHinge *param_1,float param_2,float param_3,float 
 
 // 82691920  dJointGetHingeAnchor  (physics/ode/src/joint.cpp:879)
 
-void dJointGetHingeAnchor(dxJointHinge *param_1,float *param_2)
+void dJointGetHingeAnchor(undefined8 param_1,ulonglong param_2)
 
 {
-  dxJoint *pdVar1;
-  ulonglong uVar2;
+  int iVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pdVar1 = (dxJoint *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x370,0,"%s\n\t%s");
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x370,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x371,0,"%s\n\t%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x371,0,0xffffffff820011f4,0xffffffff82012420,
+                    0xffffffff82199300);
   }
-  if (pdVar1->type != ODE_JOINT_TYPE_HINGE) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x372,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 2) {
+    MyAssertHandler(0xffffffff82198a88,0x372,0,0xffffffff820011f4,0xffffffff82194e3c,
+                    0xffffffff82198b20);
   }
-  if ((pdVar1->flags & 2U) != 0) {
-    getAnchor2(pdVar1,(float *)uVar2,(float *)&pdVar1[1]._padding_);
+  if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
+    getAnchor2(iVar1,param_2,iVar1 + 0x4c);
     __restgprlr_28();
     return;
   }
-  getAnchor(pdVar1,(float *)uVar2,(float *)(pdVar1 + 1));
+  getAnchor(iVar1,param_2,iVar1 + 0x3c);
   __restgprlr_28();
   return;
 }
@@ -1331,32 +1275,30 @@ void dJointGetHingeAnchor(dxJointHinge *param_1,float *param_2)
 
 // 82691A08  dJointGetHingeAnchor2  (physics/ode/src/joint.cpp:891)
 
-void dJointGetHingeAnchor2(dxJointHinge *param_1,float *param_2)
+void dJointGetHingeAnchor2(undefined8 param_1,ulonglong param_2)
 
 {
-  dxJoint *pdVar1;
-  ulonglong uVar2;
+  int iVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pdVar1 = (dxJoint *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x37c,0,"%s\n\t%s");
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x37c,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x37d,0,"%s\n\t%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x37d,0,0xffffffff820011f4,0xffffffff82012420,
+                    0xffffffff82199300);
   }
-  if (pdVar1->type != ODE_JOINT_TYPE_HINGE) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x37e,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 2) {
+    MyAssertHandler(0xffffffff82198a88,0x37e,0,0xffffffff820011f4,0xffffffff82194e3c,
+                    0xffffffff82198b20);
   }
-  if ((pdVar1->flags & 2U) != 0) {
-    getAnchor(pdVar1,(float *)uVar2,(float *)(pdVar1 + 1));
+  if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
+    getAnchor(iVar1,param_2,iVar1 + 0x3c);
     __restgprlr_28();
     return;
   }
-  getAnchor2(pdVar1,(float *)uVar2,(float *)&pdVar1[1]._padding_);
+  getAnchor2(iVar1,param_2,iVar1 + 0x4c);
   __restgprlr_28();
   return;
 }
@@ -1364,27 +1306,25 @@ void dJointGetHingeAnchor2(dxJointHinge *param_1,float *param_2)
 
 // 82691AF0  dJointGetHingeAxis  (physics/ode/src/joint.cpp:903)
 
-void dJointGetHingeAxis(dxJointHinge *param_1,float *param_2)
+void dJointGetHingeAxis(undefined8 param_1,ulonglong param_2)
 
 {
-  dxJoint *pdVar1;
-  ulonglong uVar2;
+  int iVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pdVar1 = (dxJoint *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x388,0,"%s\n\t%s");
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x388,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x389,0,"%s\n\t%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x389,0,0xffffffff820011f4,0xffffffff82012420,
+                    0xffffffff82199300);
   }
-  if (pdVar1->type != ODE_JOINT_TYPE_HINGE) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x38a,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 2) {
+    MyAssertHandler(0xffffffff82198a88,0x38a,0,0xffffffff820011f4,0xffffffff82194e3c,
+                    0xffffffff82198b20);
   }
-  getAxis(pdVar1,(float *)uVar2,(float *)&pdVar1[1].node[0].body);
+  getAxis(iVar1,param_2,iVar1 + 0x5c);
   __restgprlr_28();
   return;
 }
@@ -1392,24 +1332,24 @@ void dJointGetHingeAxis(dxJointHinge *param_1,float *param_2)
 
 // 8268D9F0  dJointSetHingeParam  (physics/ode/src/joint.cpp:912)
 
-void dJointSetHingeParam(dxJointHinge *param_1,int param_2,float param_3)
+void dJointSetHingeParam(undefined8 param_1,undefined8 param_2)
 
 {
   int iVar1;
-  double extraout_f1;
-  double dVar2;
+  undefined8 extraout_f1;
+  undefined8 uVar2;
   
-  iVar1 = __savegprlr_28((double)param_3,param_1);
-  dVar2 = extraout_f1;
+  iVar1 = __savegprlr_28();
+  uVar2 = extraout_f1;
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x391,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x391,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
   if (*(int *)(iVar1 + 0x14) != 2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x392,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x392,0,0xffffffff820011f4,0xffffffff82194e3c,
+                    0xffffffff82198b20);
   }
-  dxJointLimitMotor::set((dxJointLimitMotor *)(iVar1 + 0x8c),param_2,(float)dVar2);
+  dxJointLimitMotor__set(uVar2,iVar1 + 0x8c,param_2);
   __restgprlr_28();
   return;
 }
@@ -1417,60 +1357,57 @@ void dJointSetHingeParam(dxJointHinge *param_1,int param_2,float param_3)
 
 // 8268DA98  dJointGetHingeParam  (physics/ode/src/joint.cpp:920)
 
-float dJointGetHingeParam(dxJointHinge *param_1,int param_2)
+void dJointGetHingeParam(undefined8 param_1,undefined8 param_2)
 
 {
   int iVar1;
-  double dVar2;
-  float fVar3;
   
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x399,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x399,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
   if (*(int *)(iVar1 + 0x14) != 2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x39a,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x39a,0,0xffffffff820011f4,0xffffffff82194e3c,
+                    0xffffffff82198b20);
   }
-  fVar3 = dxJointLimitMotor::get((dxJointLimitMotor *)(iVar1 + 0x8c),param_2);
-  dVar2 = (double)__restgprlr_28((double)fVar3);
-  return (float)dVar2;
+  dxJointLimitMotor__get(iVar1 + 0x8c,param_2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 8268DB30  dJointGetHingeAngle  (physics/ode/src/joint.cpp:928)
 
-float dJointGetHingeAngle(dxJointHinge *param_1)
+double dJointGetHingeAngle(int param_1)
 
 {
-  float fVar1;
+  double dVar1;
   
-  if (param_1 == (dxJointHinge *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x3a1,0,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x3a1,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
-  if (param_1->_padding_ != 2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x3a2,0,"%s\n\t%s");
+  if (*(int *)(param_1 + 0x14) != 2) {
+    MyAssertHandler(0xffffffff82198a88,0x3a2,0,0xffffffff820011f4,0xffffffff82194e3c,
+                    0xffffffff82198b20);
   }
-  if ((dxBody *)param_1->_padding_ == (dxBody *)0x0) {
-    fVar1 = 0.0;
+  if (*(int *)(param_1 + 0x20) == 0) {
+    dVar1 = 0.0;
   }
   else {
-    fVar1 = getHingeAngle((dxBody *)param_1->_padding_,(dxBody *)param_1->_padding_,param_1->axis1,
-                          param_1->qrel);
-    if ((param_1->_padding_ & 2U) != 0) {
-      fVar1 = -fVar1;
+    dVar1 = (double)getHingeAngle(*(int *)(param_1 + 0x20),*(undefined4 *)(param_1 + 0x30),
+                                  param_1 + 0x5c,param_1 + 0x7c);
+    if ((*(uint *)(param_1 + 0x18) & 2) != 0) {
+      dVar1 = -dVar1;
     }
   }
-  return fVar1;
+  return dVar1;
 }
 
 
 // 82691BB8  dJointGetHingeAngleRate  (physics/ode/src/joint.cpp:944)
 
-float dJointGetHingeAngleRate(dxJointHinge *param_1)
+double dJointGetHingeAngleRate(int param_1)
 
 {
   float fVar1;
@@ -1480,79 +1417,76 @@ float dJointGetHingeAngleRate(dxJointHinge *param_1)
   int iVar5;
   float fVar6;
   float fVar7;
+  double dVar8;
   
-  if (param_1 == (dxJointHinge *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x3b1,0,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x3b1,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
-  if (param_1->_padding_ != 2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x3b2,0,"%s\n\t%s");
+  if (*(int *)(param_1 + 0x14) != 2) {
+    MyAssertHandler(0xffffffff82198a88,0x3b2,0,0xffffffff820011f4,0xffffffff82194e3c,
+                    0xffffffff82199314);
   }
-  iVar4 = param_1->_padding_;
+  iVar4 = *(int *)(param_1 + 0x20);
   if (iVar4 == 0) {
-    fVar1 = 0.0;
+    dVar8 = 0.0;
   }
   else {
-    fVar1 = param_1->axis1[2];
-    fVar2 = param_1->axis1[1];
-    iVar5 = param_1->_padding_;
-    fVar3 = param_1->axis1[0];
+    fVar1 = *(float *)(param_1 + 100);
+    fVar2 = *(float *)(param_1 + 0x60);
+    iVar5 = *(int *)(param_1 + 0x30);
+    fVar3 = *(float *)(param_1 + 0x5c);
     fVar7 = fVar3 * *(float *)(iVar4 + 0x110) +
             *(float *)(iVar4 + 0x114) * fVar2 + *(float *)(iVar4 + 0x118) * fVar1;
     fVar6 = fVar3 * *(float *)(iVar4 + 0x120) +
             *(float *)(iVar4 + 0x124) * fVar2 + *(float *)(iVar4 + 0x128) * fVar1;
-    fVar2 = *(float *)(iVar4 + 0x100) * fVar3 +
+    fVar1 = *(float *)(iVar4 + 0x100) * fVar3 +
             *(float *)(iVar4 + 0x104) * fVar2 + *(float *)(iVar4 + 0x108) * fVar1;
-    fVar1 = *(float *)(iVar4 + 0x140) * fVar2 +
-            *(float *)(iVar4 + 0x148) * fVar6 + *(float *)(iVar4 + 0x144) * fVar7;
+    dVar8 = (double)(*(float *)(iVar4 + 0x140) * fVar1 +
+                    *(float *)(iVar4 + 0x148) * fVar6 + *(float *)(iVar4 + 0x144) * fVar7);
     if (iVar5 != 0) {
-      fVar1 = fVar1 - (fVar2 * *(float *)(iVar5 + 0x140) +
-                      *(float *)(iVar5 + 0x148) * fVar6 + *(float *)(iVar5 + 0x144) * fVar7);
+      dVar8 = (double)(float)(dVar8 - (double)(fVar1 * *(float *)(iVar5 + 0x140) +
+                                              *(float *)(iVar5 + 0x148) * fVar6 +
+                                              *(float *)(iVar5 + 0x144) * fVar7));
     }
-    if ((param_1->_padding_ & 2U) != 0) {
-      fVar1 = -fVar1;
+    if ((*(uint *)(param_1 + 0x18) & 2) != 0) {
+      dVar8 = -dVar8;
     }
   }
-  return fVar1;
+  return dVar8;
 }
 
 
 // 82691D18  dJointAddHingeTorque  (physics/ode/src/joint.cpp:960)
 
-void dJointAddHingeTorque(dxJointHinge *param_1,float param_2)
+void dJointAddHingeTorque(double param_1,int param_2)
 
 {
   double dVar1;
   double dVar2;
   double dVar3;
-  double dVar4;
   float local_40;
   float local_3c;
   float local_38;
   
-  dVar3 = (double)param_2;
-  if (param_1 == (dxJointHinge *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x3c2,0,"%s");
+  if (param_2 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x3c2,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
-  if (param_1->_padding_ != 2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x3c3,0,"%s\n\t%s");
+  if (*(int *)(param_2 + 0x14) != 2) {
+    MyAssertHandler(0xffffffff82198a88,0x3c3,0,0xffffffff820011f4,0xffffffff82194e3c,
+                    0xffffffff82199314);
   }
-  if ((param_1->_padding_ & 2U) != 0) {
-    dVar3 = -dVar3;
+  if ((*(uint *)(param_2 + 0x18) & 2) != 0) {
+    param_1 = -param_1;
   }
-  getAxis((dxJoint *)param_1,&local_40,param_1->axis1);
-  dVar2 = (double)(float)((double)local_40 * dVar3);
-  dVar1 = (double)(float)((double)local_3c * dVar3);
-  dVar4 = (double)(float)((double)local_38 * dVar3);
-  if ((dxBody *)param_1->_padding_ != (dxBody *)0x0) {
-    dBodyAddTorque((dxBody *)param_1->_padding_,(float)((double)local_40 * dVar3),
-                   (float)((double)local_3c * dVar3),(float)((double)local_38 * dVar3));
+  getAxis(param_2,&local_40,param_2 + 0x5c);
+  dVar2 = (double)(float)((double)local_40 * param_1);
+  dVar1 = (double)(float)((double)local_3c * param_1);
+  dVar3 = (double)(float)((double)local_38 * param_1);
+  if (*(int *)(param_2 + 0x20) != 0) {
+    dBodyAddTorque(dVar2,dVar1,dVar3);
   }
-  if ((dxBody *)param_1->_padding_ != (dxBody *)0x0) {
-    dBodyAddTorque((dxBody *)param_1->_padding_,(float)-dVar2,(float)-dVar1,(float)-dVar4);
+  if (*(int *)(param_2 + 0x30) != 0) {
+    dBodyAddTorque(-dVar2,-dVar1,-dVar3);
   }
   return;
 }
@@ -1560,57 +1494,57 @@ void dJointAddHingeTorque(dxJointHinge *param_1,float param_2)
 
 // 8268DC00  ODE_OrientationGetInfo1  (physics/ode/src/joint.cpp:985)
 
-void ODE_OrientationGetInfo1(JointOrientation *param_1,Info1 *param_2)
+void ODE_OrientationGetInfo1(int param_1,int *param_2)
 
 {
-  uint uVar1;
+  int iVar1;
   
-  param_2->m = 0;
-  param_2->nub = 0;
-  if (0.0 < param_1->rollResistance) {
-    param_2->m = 1;
-    param_2->nub = 1;
+  *param_2 = 0;
+  param_2[1] = 0;
+  if (0.0 < *(float *)(param_1 + 0x40)) {
+    *param_2 = 1;
+    param_2[1] = 1;
   }
-  if (0.0 < param_1->pitchResistance) {
-    param_2->m = param_2->m + 1;
-    param_2->nub = param_2->nub + 1;
+  if (0.0 < *(float *)(param_1 + 0x44)) {
+    *param_2 = *param_2 + 1;
+    param_2[1] = param_2[1] + 1;
   }
-  if (0.0 < param_1->yawResistance) {
-    param_2->m = param_2->m + 1;
-    param_2->nub = param_2->nub + 1;
+  if (0.0 < *(float *)(param_1 + 0x48)) {
+    *param_2 = *param_2 + 1;
+    param_2[1] = param_2[1] + 1;
   }
-  if (0.0 < param_1->uprightStrengthRoll) {
-    param_2->m = param_2->m + 1;
+  if (0.0 < *(float *)(param_1 + 0x4c)) {
+    *param_2 = *param_2 + 1;
   }
-  uVar1 = param_2->m;
-  if (0.0 < param_1->uprightStrengthPitch) {
-    param_2->m = uVar1 + 1;
-    param_1->constraintRowCount = uVar1 + 1;
+  iVar1 = *param_2;
+  if (0.0 < *(float *)(param_1 + 0x50)) {
+    *param_2 = iVar1 + 1;
+    *(int *)(param_1 + 0x3c) = iVar1 + 1;
     return;
   }
-  param_1->constraintRowCount = uVar1;
+  *(int *)(param_1 + 0x3c) = iVar1;
   return;
 }
 
 
 // 8268DCB8  ODE_OrientationGetInfo2  (physics/ode/src/joint.cpp:1018)
 
-void ODE_OrientationGetInfo2(JointOrientation *param_1,dxWorldStepInfo *param_2,Info2 *param_3)
+void ODE_OrientationGetInfo2(undefined8 param_1,int param_2)
 
 {
   float fVar1;
-  dxBody *pdVar2;
+  int iVar2;
   uint *puVar3;
   int iVar4;
-  int iVar5;
+  longlong lVar5;
   int iVar6;
   int iVar7;
-  longlong lVar8;
-  int iVar9;
-  undefined4 *puVar10;
-  float *pfVar11;
+  int iVar8;
+  undefined4 *puVar9;
+  float *pfVar10;
+  ulonglong uVar11;
   ulonglong uVar12;
-  ulonglong uVar13;
+  double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
@@ -1629,7 +1563,6 @@ void ODE_OrientationGetInfo2(JointOrientation *param_1,dxWorldStepInfo *param_2,
   double dVar29;
   double dVar30;
   double dVar31;
-  double dVar32;
   float local_148;
   float local_144;
   float local_140;
@@ -1646,275 +1579,265 @@ void ODE_OrientationGetInfo2(JointOrientation *param_1,dxWorldStepInfo *param_2,
   undefined4 local_104;
   float local_100;
   
-  lVar8 = (longlong)(int)param_2;
-  iVar7 = __savegprlr_21(param_1,lVar8,param_3);
-  iVar9 = (int)lVar8;
-  __savefpr();
-  if (*(int *)(iVar7 + 0x20) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x408,0,"%s");
+  __savegprlr_21();
+  iVar8 = __savefpr();
+  if (*(int *)(iVar8 + 0x20) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x408,0,0xffffffff82000f98,0xffffffff82198c70);
   }
-  if (*(int *)(iVar7 + 0x30) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x409,0,"%s");
+  if (*(int *)(iVar8 + 0x30) != 0) {
+    MyAssertHandler(0xffffffff82198a88,0x409,0,0xffffffff82000f98,0xffffffff82198c58);
   }
-  pdVar2 = *(dxBody **)(iVar7 + 0x20);
-  Phys_OdeMatrix3ToAxis((pdVar2->info).R,(float (*) [3])&local_120);
-  dVar32 = 0.0;
+  iVar2 = *(int *)(iVar8 + 0x20);
+  Phys_OdeMatrix3ToAxis(iVar2 + 0x100,&local_120);
+  dVar31 = 0.0;
+  uVar11 = 0;
+  dVar14 = 3.4028234663852886e+38;
   uVar12 = 0;
-  dVar15 = 3.4028234663852886e+38;
-  uVar13 = 0;
-  dVar16 = -3.4028234663852886e+38;
-  dVar27 = 1.0;
-  dVar19 = (double)local_118;
-  dVar18 = (double)local_11c;
-  dVar17 = (double)local_120;
-  if (0.0 < *(float *)(iVar7 + 0x40)) {
-    pfVar11 = *(float **)(iVar9 + 0xc);
-    dVar28 = (double)(1.0 / *(float *)(iVar7 + 0x40));
-    *pfVar11 = local_120;
-    pfVar11[1] = local_11c;
-    pfVar11[2] = local_118;
-    puVar3 = *(uint **)(iVar9 + 0xc);
+  dVar15 = -3.4028234663852886e+38;
+  dVar26 = 1.0;
+  dVar18 = (double)local_118;
+  dVar17 = (double)local_11c;
+  dVar16 = (double)local_120;
+  if (0.0 < *(float *)(iVar8 + 0x40)) {
+    pfVar10 = *(float **)(param_2 + 0xc);
+    dVar27 = (double)(1.0 / *(float *)(iVar8 + 0x40));
+    *pfVar10 = local_120;
+    pfVar10[1] = local_11c;
+    pfVar10[2] = local_118;
+    puVar3 = *(uint **)(param_2 + 0xc);
     if ((((*puVar3 & 0x7f800000) == 0x7f800000) || ((puVar3[1] & 0x7f800000) == 0x7f800000)) ||
        ((puVar3[2] & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x417,0,"%s");
+      MyAssertHandler(0xffffffff82198a88,0x417,0,0xffffffff82000f98,0xffffffff82198c08);
     }
-    uVar12 = 1;
-    **(float **)(iVar9 + 0x24) = (float)dVar16;
-    **(float **)(iVar9 + 0x28) = (float)dVar15;
-    **(float **)(iVar9 + 0x20) = (float)dVar28;
-    uVar13 = (ulonglong)*(uint *)(iVar9 + 0x18);
+    uVar11 = 1;
+    **(float **)(param_2 + 0x24) = (float)dVar15;
+    **(float **)(param_2 + 0x28) = (float)dVar14;
+    **(float **)(param_2 + 0x20) = (float)dVar27;
+    uVar12 = (ulonglong)*(uint *)(param_2 + 0x18);
   }
-  dVar23 = (double)local_10c;
-  dVar22 = (double)local_110;
-  dVar28 = (double)local_114;
-  if (dVar32 < (double)*(float *)(iVar7 + 0x44)) {
-    iVar6 = (int)uVar13 * 4;
-    dVar29 = (double)(float)(dVar27 / (double)*(float *)(iVar7 + 0x44));
-    pfVar11 = (float *)(*(int *)(iVar9 + 0xc) + iVar6);
-    pfVar11[1] = local_110;
-    pfVar11[2] = local_10c;
-    *pfVar11 = local_114;
-    iVar4 = *(int *)(iVar9 + 0xc);
-    if ((((*(uint *)(iVar4 + iVar6) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar4 + iVar6 + 4) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)((int)((uVar13 + 2 & 0xffffffff) << 2) + iVar4) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x426,0,"%s");
+  dVar22 = (double)local_10c;
+  dVar21 = (double)local_110;
+  dVar27 = (double)local_114;
+  if (dVar31 < (double)*(float *)(iVar8 + 0x44)) {
+    iVar7 = (int)uVar12 * 4;
+    dVar28 = (double)(float)(dVar26 / (double)*(float *)(iVar8 + 0x44));
+    pfVar10 = (float *)(*(int *)(param_2 + 0xc) + iVar7);
+    pfVar10[1] = local_110;
+    pfVar10[2] = local_10c;
+    *pfVar10 = local_114;
+    iVar4 = *(int *)(param_2 + 0xc);
+    if ((((*(uint *)(iVar4 + iVar7) & 0x7f800000) == 0x7f800000) ||
+        ((*(uint *)(iVar4 + iVar7 + 4) & 0x7f800000) == 0x7f800000)) ||
+       ((*(uint *)((int)((uVar12 + 2 & 0xffffffff) << 2) + iVar4) & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler(0xffffffff82198a88,0x426,0,0xffffffff82000f98,0xffffffff82198b90);
     }
-    lVar8 = uVar12 << 2;
-    uVar12 = uVar12 + 1;
-    *(float *)(*(int *)(iVar9 + 0x24) + iVar6) = (float)dVar16;
-    *(float *)(*(int *)(iVar9 + 0x28) + iVar6) = (float)dVar15;
-    *(float *)((int)lVar8 + *(int *)(iVar9 + 0x20)) = (float)dVar29;
-    uVar13 = *(uint *)(iVar9 + 0x18) + uVar13;
+    lVar5 = uVar11 << 2;
+    uVar11 = uVar11 + 1;
+    *(float *)(*(int *)(param_2 + 0x24) + iVar7) = (float)dVar15;
+    *(float *)(*(int *)(param_2 + 0x28) + iVar7) = (float)dVar14;
+    *(float *)((int)lVar5 + *(int *)(param_2 + 0x20)) = (float)dVar28;
+    uVar12 = *(uint *)(param_2 + 0x18) + uVar12;
   }
-  dVar29 = (double)local_100;
-  if (dVar32 < (double)*(float *)(iVar7 + 0x48)) {
-    iVar6 = (int)uVar13 * 4;
-    dVar30 = (double)(float)(dVar27 / (double)*(float *)(iVar7 + 0x48));
-    puVar10 = (undefined4 *)(*(int *)(iVar9 + 0xc) + iVar6);
-    *puVar10 = local_108;
-    puVar10[2] = local_100;
-    puVar10[1] = local_104;
-    iVar4 = *(int *)(iVar9 + 0xc);
-    if ((((*(uint *)(iVar4 + iVar6) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar4 + iVar6 + 4) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)((int)((uVar13 + 2 & 0xffffffff) << 2) + iVar4) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x435,0,"%s");
+  dVar28 = (double)local_100;
+  if (dVar31 < (double)*(float *)(iVar8 + 0x48)) {
+    iVar7 = (int)uVar12 * 4;
+    dVar29 = (double)(float)(dVar26 / (double)*(float *)(iVar8 + 0x48));
+    puVar9 = (undefined4 *)(*(int *)(param_2 + 0xc) + iVar7);
+    *puVar9 = local_108;
+    puVar9[2] = local_100;
+    puVar9[1] = local_104;
+    iVar4 = *(int *)(param_2 + 0xc);
+    if ((((*(uint *)(iVar4 + iVar7) & 0x7f800000) == 0x7f800000) ||
+        ((*(uint *)(iVar4 + iVar7 + 4) & 0x7f800000) == 0x7f800000)) ||
+       ((*(uint *)((int)((uVar12 + 2 & 0xffffffff) << 2) + iVar4) & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler(0xffffffff82198a88,0x435,0,0xffffffff82000f98,0xffffffff82198b90);
     }
-    lVar8 = uVar12 << 2;
-    uVar12 = uVar12 + 1;
-    *(float *)(*(int *)(iVar9 + 0x24) + iVar6) = (float)dVar16;
-    *(float *)(*(int *)(iVar9 + 0x28) + iVar6) = (float)dVar15;
-    *(float *)((int)lVar8 + *(int *)(iVar9 + 0x20)) = (float)dVar30;
-    uVar13 = *(uint *)(iVar9 + 0x18) + uVar13;
+    lVar5 = uVar11 << 2;
+    uVar11 = uVar11 + 1;
+    *(float *)(*(int *)(param_2 + 0x24) + iVar7) = (float)dVar15;
+    *(float *)(*(int *)(param_2 + 0x28) + iVar7) = (float)dVar14;
+    *(float *)((int)lVar5 + *(int *)(param_2 + 0x20)) = (float)dVar29;
+    uVar12 = *(uint *)(param_2 + 0x18) + uVar12;
   }
-  dVar30 = 20.0;
-  dVar21 = 16.0;
-  dVar20 = 0.0010000000474974513;
-  if (dVar32 < (double)*(float *)(iVar7 + 0x50)) {
-    dVar31 = dVar27;
-    if (dVar32 <= dVar29) {
-      dVar24 = -dVar19;
-      if ((float)(dVar24 - dVar27) < 0.0) {
-        dVar31 = dVar24;
+  dVar29 = 20.0;
+  dVar20 = 16.0;
+  dVar19 = 0.0010000000474974513;
+  if (dVar31 < (double)*(float *)(iVar8 + 0x50)) {
+    dVar30 = dVar26;
+    if (dVar31 <= dVar28) {
+      dVar23 = -dVar18;
+      if ((float)(dVar23 - dVar26) < 0.0) {
+        dVar30 = dVar23;
       }
-      dVar14 = -1.0;
-      if ((float)(-1.0 - dVar24) < 0.0) {
-        dVar14 = dVar31;
+      dVar13 = -1.0;
+      if ((float)(-1.0 - dVar23) < 0.0) {
+        dVar13 = dVar30;
       }
-      dVar31 = asin(dVar14);
-      dVar31 = ABS((double)(((float)dVar31 - *(float *)(iVar7 + 0x58)) * 0.63661975));
+      dVar30 = asin(dVar13);
+      dVar30 = ABS((double)(((float)dVar30 - *(float *)(iVar8 + 0x58)) * 0.63661975));
     }
-    iVar6 = (int)uVar13 * 4;
-    pfVar11 = (float *)(*(int *)(iVar9 + 0xc) + iVar6);
-    pfVar11[1] = (float)dVar22;
-    pfVar11[2] = (float)dVar23;
-    *pfVar11 = (float)dVar28;
-    iVar4 = *(int *)(iVar9 + 0xc);
-    if ((((*(uint *)(iVar4 + iVar6) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar4 + iVar6 + 4) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)((int)((uVar13 + 2 & 0xffffffff) << 2) + iVar4) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x450,0,"%s");
+    iVar7 = (int)uVar12 * 4;
+    pfVar10 = (float *)(*(int *)(param_2 + 0xc) + iVar7);
+    pfVar10[1] = (float)dVar21;
+    pfVar10[2] = (float)dVar22;
+    *pfVar10 = (float)dVar27;
+    iVar4 = *(int *)(param_2 + 0xc);
+    if ((((*(uint *)(iVar4 + iVar7) & 0x7f800000) == 0x7f800000) ||
+        ((*(uint *)(iVar4 + iVar7 + 4) & 0x7f800000) == 0x7f800000)) ||
+       ((*(uint *)((int)((uVar12 + 2 & 0xffffffff) << 2) + iVar4) & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler(0xffffffff82198a88,0x450,0,0xffffffff82000f98,0xffffffff82198b90);
     }
-    local_148 = (float)dVar32;
-    local_144 = (float)dVar32;
-    local_140 = (float)dVar27;
+    local_148 = (float)dVar31;
+    local_144 = (float)dVar31;
+    local_140 = (float)dVar26;
     Vec3Cross(&local_114,&local_148,&local_138);
-    dVar14 = (double)SQRT(local_138 * local_138 + local_130 * local_130 + local_134 * local_134);
-    dVar24 = dVar27;
-    if (-dVar14 < 0.0) {
-      dVar24 = dVar14;
+    dVar13 = (double)SQRT(local_138 * local_138 + local_130 * local_130 + local_134 * local_134);
+    dVar23 = dVar26;
+    if (-dVar13 < 0.0) {
+      dVar23 = dVar13;
     }
-    fVar1 = (float)(dVar27 / dVar24);
+    fVar1 = (float)(dVar26 / dVar23);
     local_138 = local_138 * fVar1;
-    dVar26 = (double)local_138;
+    dVar25 = (double)local_138;
     local_134 = local_134 * fVar1;
-    dVar25 = (double)local_134;
+    dVar24 = (double)local_134;
     local_130 = local_130 * fVar1;
-    dVar24 = (double)local_130;
-    if (dVar20 <= dVar14) {
-      dVar31 = (double)(float)((double)*(float *)(iVar7 + 0x50) * dVar31);
+    dVar23 = (double)local_130;
+    if (dVar19 <= dVar13) {
+      dVar30 = (double)(float)((double)*(float *)(iVar8 + 0x50) * dVar30);
       Vec3Cross(&local_138,&local_114,&local_148);
-      dVar24 = atan2((double)(float)((double)local_140 * dVar19 +
-                                    (double)(float)((double)local_144 * dVar18 +
-                                                   (double)(float)((double)local_148 * dVar17))),
-                     (double)(float)(dVar24 * dVar19 +
-                                    (double)(float)(dVar25 * dVar18 +
-                                                   (double)(float)(dVar26 * dVar17))));
-      dVar24 = (double)(float)dVar24;
-      iVar4 = *(int *)(iVar9 + 0x24);
-      if (ABS(dVar24) < (double)*(float *)(iVar7 + 0x60)) {
-        *(float *)(iVar4 + iVar6) = (float)-dVar31;
-        iVar4 = (int)(uVar12 << 2);
-        *(float *)(*(int *)(iVar9 + 0x28) + iVar6) = (float)dVar31;
-        *(float *)(*(int *)(iVar9 + 0x20) + iVar4) = (float)dVar32;
-        *(float *)(*(int *)(iVar9 + 0x1c) + iVar4) =
-             (float)((double)(float)((double)*(float *)(iVar7 + 0x58) + dVar24) * dVar30);
+      dVar23 = atan2((double)(float)((double)local_140 * dVar18 +
+                                    (double)(float)((double)local_144 * dVar17 +
+                                                   (double)(float)((double)local_148 * dVar16))),
+                     (double)(float)(dVar23 * dVar18 +
+                                    (double)(float)(dVar24 * dVar17 +
+                                                   (double)(float)(dVar25 * dVar16))));
+      dVar23 = (double)(float)dVar23;
+      iVar4 = *(int *)(param_2 + 0x24);
+      if (ABS(dVar23) < (double)*(float *)(iVar8 + 0x60)) {
+        *(float *)(iVar4 + iVar7) = (float)-dVar30;
+        iVar4 = (int)(uVar11 << 2);
+        *(float *)(*(int *)(param_2 + 0x28) + iVar7) = (float)dVar30;
+        *(float *)(*(int *)(param_2 + 0x20) + iVar4) = (float)dVar31;
+        *(float *)(*(int *)(param_2 + 0x1c) + iVar4) =
+             (float)((double)(float)((double)*(float *)(iVar8 + 0x58) + dVar23) * dVar29);
       }
       else {
-        iVar5 = (int)(uVar12 << 2);
-        if (dVar24 <= dVar32) {
-          *(float *)(iVar4 + iVar6) = (float)dVar16;
-          dVar31 = -dVar31;
-          *(float *)(*(int *)(iVar9 + 0x28) + iVar6) = (float)dVar32;
-          *(float *)(*(int *)(iVar9 + 0x1c) + iVar5) =
-               (float)((double)(float)(dVar24 + (double)*(float *)(iVar7 + 0x60)) * dVar21);
+        iVar6 = (int)(uVar11 << 2);
+        if (dVar23 <= dVar31) {
+          *(float *)(iVar4 + iVar7) = (float)dVar15;
+          dVar30 = -dVar30;
+          *(float *)(*(int *)(param_2 + 0x28) + iVar7) = (float)dVar31;
+          *(float *)(*(int *)(param_2 + 0x1c) + iVar6) =
+               (float)((double)(float)(dVar23 + (double)*(float *)(iVar8 + 0x60)) * dVar20);
         }
         else {
-          *(float *)(iVar4 + iVar6) = (float)dVar32;
-          *(float *)(*(int *)(iVar9 + 0x28) + iVar6) = (float)dVar15;
-          *(float *)(*(int *)(iVar9 + 0x1c) + iVar5) =
-               (float)((double)(float)(dVar24 - (double)*(float *)(iVar7 + 0x60)) * dVar21);
+          *(float *)(iVar4 + iVar7) = (float)dVar31;
+          *(float *)(*(int *)(param_2 + 0x28) + iVar7) = (float)dVar14;
+          *(float *)(*(int *)(param_2 + 0x1c) + iVar6) =
+               (float)((double)(float)(dVar23 - (double)*(float *)(iVar8 + 0x60)) * dVar20);
         }
-        dBodyAddTorque(pdVar2,(float)(dVar28 * dVar31),(float)(dVar22 * dVar31),
-                       (float)(dVar23 * dVar31));
-        *(float *)(*(int *)(iVar9 + 0x20) + iVar5) = pdVar2->invMass * 0.0001;
+        dBodyAddTorque((double)(float)(dVar27 * dVar30),(double)(float)(dVar21 * dVar30),
+                       (double)(float)(dVar22 * dVar30),iVar2);
+        *(float *)(*(int *)(param_2 + 0x20) + iVar6) = *(float *)(iVar2 + 0x94) * 0.0001;
       }
     }
     else {
-      *(float *)(*(int *)(iVar9 + 0x24) + iVar6) = (float)dVar32;
-      *(float *)(*(int *)(iVar9 + 0x28) + iVar6) = (float)dVar32;
+      *(float *)(*(int *)(param_2 + 0x24) + iVar7) = (float)dVar31;
+      *(float *)(*(int *)(param_2 + 0x28) + iVar7) = (float)dVar31;
     }
-    uVar12 = uVar12 + 1;
-    uVar13 = *(uint *)(iVar9 + 0x18) + uVar13;
+    uVar11 = uVar11 + 1;
+    uVar12 = *(uint *)(param_2 + 0x18) + uVar12;
   }
-  if (dVar32 < (double)*(float *)(iVar7 + 0x4c)) {
-    dVar31 = ABS(dVar23);
-    if (dVar29 < dVar32) {
-      dVar31 = dVar27;
+  if (dVar31 < (double)*(float *)(iVar8 + 0x4c)) {
+    dVar30 = ABS(dVar22);
+    if (dVar28 < dVar31) {
+      dVar30 = dVar26;
     }
-    iVar6 = (int)uVar13 * 4;
-    pfVar11 = (float *)(*(int *)(iVar9 + 0xc) + iVar6);
-    *pfVar11 = (float)dVar17;
-    pfVar11[1] = (float)dVar18;
-    pfVar11[2] = (float)dVar19;
-    iVar4 = *(int *)(iVar9 + 0xc);
-    if ((((*(uint *)(iVar4 + iVar6) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar4 + iVar6 + 4) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)((int)((uVar13 + 2 & 0xffffffff) << 2) + iVar4) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x48e,0,"%s");
+    iVar7 = (int)uVar12 * 4;
+    pfVar10 = (float *)(*(int *)(param_2 + 0xc) + iVar7);
+    *pfVar10 = (float)dVar16;
+    pfVar10[1] = (float)dVar17;
+    pfVar10[2] = (float)dVar18;
+    iVar4 = *(int *)(param_2 + 0xc);
+    if ((((*(uint *)(iVar4 + iVar7) & 0x7f800000) == 0x7f800000) ||
+        ((*(uint *)(iVar4 + iVar7 + 4) & 0x7f800000) == 0x7f800000)) ||
+       ((*(uint *)((int)((uVar12 + 2 & 0xffffffff) << 2) + iVar4) & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler(0xffffffff82198a88,0x48e,0,0xffffffff82000f98,0xffffffff82198b90);
     }
-    local_148 = (float)dVar32;
-    local_144 = (float)dVar32;
-    local_140 = (float)dVar27;
+    local_148 = (float)dVar31;
+    local_144 = (float)dVar31;
+    local_140 = (float)dVar26;
     Vec3Cross(&local_148,&local_120,&local_138);
-    dVar24 = (double)SQRT(local_138 * local_138 + local_130 * local_130 + local_134 * local_134);
-    dVar29 = dVar27;
-    if (-dVar24 < 0.0) {
-      dVar29 = dVar24;
+    dVar23 = (double)SQRT(local_138 * local_138 + local_130 * local_130 + local_134 * local_134);
+    dVar28 = dVar26;
+    if (-dVar23 < 0.0) {
+      dVar28 = dVar23;
     }
-    fVar1 = (float)(dVar27 / dVar29);
+    fVar1 = (float)(dVar26 / dVar28);
     local_138 = local_138 * fVar1;
-    dVar14 = (double)local_138;
+    dVar13 = (double)local_138;
     local_134 = local_134 * fVar1;
-    dVar29 = (double)local_134;
+    dVar28 = (double)local_134;
     local_130 = local_130 * fVar1;
-    dVar27 = (double)local_130;
-    if (dVar20 <= dVar24) {
-      dVar20 = (double)(float)((double)*(float *)(iVar7 + 0x4c) * dVar31);
+    dVar26 = (double)local_130;
+    if (dVar19 <= dVar23) {
+      dVar19 = (double)(float)((double)*(float *)(iVar8 + 0x4c) * dVar30);
       Vec3Cross(&local_120,&local_138,&local_148);
-      dVar27 = atan2((double)(float)((double)local_140 * dVar23 +
-                                    (double)(float)((double)local_144 * dVar22 +
-                                                   (double)(float)((double)local_148 * dVar28))),
-                     (double)(float)(dVar27 * dVar23 +
-                                    (double)(float)(dVar29 * dVar22 +
-                                                   (double)(float)(dVar14 * dVar28))));
-      dVar27 = -(double)(float)dVar27;
-      if (ABS(dVar27) < (double)*(float *)(iVar7 + 0x5c)) {
-        *(float *)(*(int *)(iVar9 + 0x24) + iVar6) = (float)-dVar20;
-        *(float *)(*(int *)(iVar9 + 0x28) + iVar6) = (float)dVar20;
-        iVar4 = (int)(uVar12 << 2);
-        *(float *)(*(int *)(iVar9 + 0x20) + iVar4) = (float)dVar32;
-        if (*(char *)(iVar7 + 0x54) == '\0') {
-          *(float *)(*(int *)(iVar9 + 0x1c) + iVar4) = (float)dVar32;
-          if (dVar32 <= dVar27) {
-            iVar9 = *(int *)(iVar9 + 0x24);
+      dVar26 = atan2((double)(float)((double)local_140 * dVar22 +
+                                    (double)(float)((double)local_144 * dVar21 +
+                                                   (double)(float)((double)local_148 * dVar27))),
+                     (double)(float)(dVar26 * dVar22 +
+                                    (double)(float)(dVar28 * dVar21 +
+                                                   (double)(float)(dVar13 * dVar27))));
+      dVar26 = -(double)(float)dVar26;
+      if (ABS(dVar26) < (double)*(float *)(iVar8 + 0x5c)) {
+        *(float *)(*(int *)(param_2 + 0x24) + iVar7) = (float)-dVar19;
+        *(float *)(*(int *)(param_2 + 0x28) + iVar7) = (float)dVar19;
+        iVar2 = (int)(uVar11 << 2);
+        *(float *)(*(int *)(param_2 + 0x20) + iVar2) = (float)dVar31;
+        if (*(char *)(iVar8 + 0x54) == '\0') {
+          *(float *)(*(int *)(param_2 + 0x1c) + iVar2) = (float)dVar31;
+          if (dVar31 <= dVar26) {
+            iVar2 = *(int *)(param_2 + 0x24);
           }
           else {
-            iVar9 = *(int *)(iVar9 + 0x28);
+            iVar2 = *(int *)(param_2 + 0x28);
           }
-          *(float *)(iVar9 + iVar6) = (float)dVar32;
+          *(float *)(iVar2 + iVar7) = (float)dVar31;
         }
         else {
-          *(float *)(*(int *)(iVar9 + 0x1c) + iVar4) = (float)(dVar27 * dVar30);
+          *(float *)(*(int *)(param_2 + 0x1c) + iVar2) = (float)(dVar26 * dVar29);
         }
       }
       else {
-        iVar4 = (int)(uVar12 << 2);
-        if (dVar27 <= dVar32) {
-          *(float *)(*(int *)(iVar9 + 0x24) + iVar6) = (float)dVar16;
-          dVar20 = -dVar20;
-          *(float *)(*(int *)(iVar9 + 0x28) + iVar6) = (float)dVar32;
-          *(float *)(*(int *)(iVar9 + 0x1c) + iVar4) =
-               (float)((double)(float)((double)*(float *)(iVar7 + 0x5c) + dVar27) * dVar21);
+        iVar4 = (int)(uVar11 << 2);
+        if (dVar26 <= dVar31) {
+          *(float *)(*(int *)(param_2 + 0x24) + iVar7) = (float)dVar15;
+          dVar19 = -dVar19;
+          *(float *)(*(int *)(param_2 + 0x28) + iVar7) = (float)dVar31;
+          *(float *)(*(int *)(param_2 + 0x1c) + iVar4) =
+               (float)((double)(float)((double)*(float *)(iVar8 + 0x5c) + dVar26) * dVar20);
         }
         else {
-          *(float *)(*(int *)(iVar9 + 0x24) + iVar6) = (float)dVar32;
-          *(float *)(*(int *)(iVar9 + 0x28) + iVar6) = (float)dVar15;
-          *(float *)(*(int *)(iVar9 + 0x1c) + iVar4) =
-               (float)((double)(float)(dVar27 - (double)*(float *)(iVar7 + 0x5c)) * dVar21);
+          *(float *)(*(int *)(param_2 + 0x24) + iVar7) = (float)dVar31;
+          *(float *)(*(int *)(param_2 + 0x28) + iVar7) = (float)dVar14;
+          *(float *)(*(int *)(param_2 + 0x1c) + iVar4) =
+               (float)((double)(float)(dVar26 - (double)*(float *)(iVar8 + 0x5c)) * dVar20);
         }
-        dBodyAddTorque(pdVar2,(float)(dVar17 * dVar20),(float)(dVar18 * dVar20),
-                       (float)(dVar20 * dVar19));
-        *(float *)(*(int *)(iVar9 + 0x20) + iVar4) = pdVar2->invMass * 0.0001;
+        dBodyAddTorque((double)(float)(dVar16 * dVar19),(double)(float)(dVar17 * dVar19),
+                       (double)(float)(dVar19 * dVar18),iVar2);
+        *(float *)(*(int *)(param_2 + 0x20) + iVar4) = *(float *)(iVar2 + 0x94) * 0.0001;
       }
     }
     else {
-      *(float *)(*(int *)(iVar9 + 0x24) + iVar6) = (float)dVar32;
-      *(float *)(*(int *)(iVar9 + 0x28) + iVar6) = (float)dVar32;
+      *(float *)(*(int *)(param_2 + 0x24) + iVar7) = (float)dVar31;
+      *(float *)(*(int *)(param_2 + 0x28) + iVar7) = (float)dVar31;
     }
-    uVar12 = uVar12 + 1;
+    uVar11 = uVar11 + 1;
   }
-  if (uVar12 != *(uint *)(iVar7 + 0x3c)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x4cc,1,"%s");
+  if (uVar11 != *(uint *)(iVar8 + 0x3c)) {
+    MyAssertHandler(0xffffffff82198a88,0x4cc,1,0xffffffff82000f98,0xffffffff82198b4c);
   }
   __restfpr();
   __restgprlr_21();
@@ -1924,108 +1847,98 @@ void ODE_OrientationGetInfo2(JointOrientation *param_1,dxWorldStepInfo *param_2,
 
 // 8268E510  ODE_PathConstraintGetInfo1  (physics/ode/src/joint.cpp:1235)
 
-void ODE_PathConstraintGetInfo1(JointPath *param_1,Info1 *param_2)
+void ODE_PathConstraintGetInfo1(int param_1,undefined4 *param_2)
 
 {
-  int iVar1;
+  undefined4 uVar1;
   
-  iVar1 = 3;
-  if (param_1->enabled == false) {
-    iVar1 = 0;
+  uVar1 = 3;
+  if (*(char *)(param_1 + 0x60) == '\0') {
+    uVar1 = 0;
   }
-  param_2->nub = iVar1;
-  param_2->m = iVar1;
+  param_2[1] = uVar1;
+  *param_2 = uVar1;
   return;
 }
 
 
 // 8268E530  ODE_PathConstraintGetInfo2  (physics/ode/src/joint.cpp:1250)
 
-void ODE_PathConstraintGetInfo2(JointPath *param_1,dxWorldStepInfo *param_2,Info2 *param_3)
+void ODE_PathConstraintGetInfo2(undefined8 param_1,float *param_2)
 
 {
   undefined4 *puVar1;
   int iVar2;
   float fVar3;
-  float *pfVar4;
-  int iVar5;
-  longlong lVar6;
-  float *pfVar7;
+  int iVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
-  float fStack_a8;
+  undefined1 auStack_a8 [4];
   float local_a4;
-  float afStack_90 [36];
+  undefined1 auStack_90 [144];
   
-  lVar6 = (longlong)(int)param_2;
-  iVar5 = __savegprlr_24(param_1,lVar6,param_3);
-  if (*(char *)(iVar5 + 0x60) != '\0') {
-    if (*(int *)(iVar5 + 0x20) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x4ee,0,"%s");
+  iVar4 = __savegprlr_24();
+  if (*(char *)(iVar4 + 0x60) != '\0') {
+    if (*(int *)(iVar4 + 0x20) == 0) {
+      MyAssertHandler(0xffffffff82198a88,0x4ee,0,0xffffffff82000f98,0xffffffff82198c70);
     }
-    if (*(int *)(iVar5 + 0x30) != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x4ef,0,"%s");
+    if (*(int *)(iVar4 + 0x30) != 0) {
+      MyAssertHandler(0xffffffff82198a88,0x4ef,0,0xffffffff82000f98,0xffffffff82198c58);
     }
-    if (*(int *)(iVar5 + 0x3c) < 1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x4f0,0,"%s");
+    if (*(int *)(iVar4 + 0x3c) < 1) {
+      MyAssertHandler(0xffffffff82198a88,0x4f0,0,0xffffffff82000f98,0xffffffff82198ca0);
     }
-    pfVar4 = (float *)lVar6;
-    puVar1 = (undefined4 *)pfVar4[2];
-    iVar2 = *(int *)(iVar5 + 0x20);
-    dVar9 = (double)(*(float *)(iVar5 + 0x5c) * *pfVar4);
-    dVar8 = 1.0;
-    dVar10 = 0.0;
+    puVar1 = (undefined4 *)param_2[2];
+    iVar2 = *(int *)(iVar4 + 0x20);
+    dVar7 = (double)(*(float *)(iVar4 + 0x5c) * *param_2);
+    dVar6 = 1.0;
+    dVar8 = 0.0;
     *puVar1 = 0x3f800000;
     puVar1[1] = 0;
     puVar1[2] = 0;
-    *(float *)pfVar4[7] =
-         (float)(-(double)(float)((double)((float)(longlong)*(int *)(iVar5 + 0x3c) / *pfVar4) *
-                                  (double)*(float *)(iVar5 + 0x48) -
-                                 (double)(*(float *)(iVar5 + 0x40) - *(float *)(iVar2 + 0xe0))) *
-                 dVar9 + (double)*(float *)(iVar5 + 0x48));
-    if ((*(uint *)pfVar4[7] & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x4fb,0,"%s");
+    *(float *)param_2[7] =
+         (float)(-(double)(float)((double)((float)(longlong)*(int *)(iVar4 + 0x3c) / *param_2) *
+                                  (double)*(float *)(iVar4 + 0x48) -
+                                 (double)(*(float *)(iVar4 + 0x40) - *(float *)(iVar2 + 0xe0))) *
+                 dVar7 + (double)*(float *)(iVar4 + 0x48));
+    if ((*(uint *)param_2[7] & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler(0xffffffff82198a88,0x4fb,0,0xffffffff82000f98,0xffffffff82198c84);
     }
-    *(undefined4 *)pfVar4[8] = *(undefined4 *)(iVar5 + 0x58);
-    fVar3 = pfVar4[6];
-    pfVar7 = (float *)((int)fVar3 * 4 + (int)pfVar4[2]);
-    pfVar7[2] = (float)dVar10;
-    *pfVar7 = (float)dVar10;
-    pfVar7[1] = (float)dVar8;
-    *(float *)((int)pfVar4[7] + 4) =
-         (float)(-(double)(float)((double)((float)(longlong)*(int *)(iVar5 + 0x3c) / *pfVar4) *
-                                  (double)*(float *)(iVar5 + 0x4c) -
-                                 (double)(*(float *)(iVar5 + 0x44) - *(float *)(iVar2 + 0xe4))) *
-                 dVar9 + (double)*(float *)(iVar5 + 0x4c));
-    if ((*(uint *)((int)pfVar4[7] + 4) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x505,0,"%s");
+    *(undefined4 *)param_2[8] = *(undefined4 *)(iVar4 + 0x58);
+    fVar3 = param_2[6];
+    pfVar5 = (float *)((int)fVar3 * 4 + (int)param_2[2]);
+    pfVar5[2] = (float)dVar8;
+    *pfVar5 = (float)dVar8;
+    pfVar5[1] = (float)dVar6;
+    *(float *)((int)param_2[7] + 4) =
+         (float)(-(double)(float)((double)((float)(longlong)*(int *)(iVar4 + 0x3c) / *param_2) *
+                                  (double)*(float *)(iVar4 + 0x4c) -
+                                 (double)(*(float *)(iVar4 + 0x44) - *(float *)(iVar2 + 0xe4))) *
+                 dVar7 + (double)*(float *)(iVar4 + 0x4c));
+    if ((*(uint *)((int)param_2[7] + 4) & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler(0xffffffff82198a88,0x505,0,0xffffffff82000f98,0xffffffff82198c84);
     }
-    *(undefined4 *)((int)pfVar4[8] + 4) = *(undefined4 *)(iVar5 + 0x58);
-    pfVar7 = (float *)(((int)pfVar4[6] + (int)fVar3) * 4 + (int)pfVar4[3]);
-    *pfVar7 = (float)dVar10;
-    pfVar7[1] = (float)dVar10;
-    pfVar7[2] = (float)dVar8;
-    Phys_OdeMatrix3ToAxis((float *)(iVar2 + 0x100),(float (*) [3])afStack_90);
-    vectoangles(afStack_90,&fStack_a8);
-    dVar10 = (double)((*(float *)(iVar5 + 0x50) -
-                      (((float)(longlong)*(int *)(iVar5 + 0x3c) / *pfVar4) *
-                       *(float *)(iVar5 + 0x54) + local_a4)) * 0.0027777778);
-    dVar8 = floor((double)(float)(dVar10 + 0.5));
-    *(float *)((int)pfVar4[7] + 8) =
-         (float)((double)((float)(dVar10 - (double)(float)dVar8) * 360.0) * dVar9 +
-                (double)*(float *)(iVar5 + 0x54)) * 0.017453292;
-    if ((*(uint *)((int)pfVar4[7] + 8) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x511,0,"%s");
+    *(undefined4 *)((int)param_2[8] + 4) = *(undefined4 *)(iVar4 + 0x58);
+    pfVar5 = (float *)(((int)param_2[6] + (int)fVar3) * 4 + (int)param_2[3]);
+    *pfVar5 = (float)dVar8;
+    pfVar5[1] = (float)dVar8;
+    pfVar5[2] = (float)dVar6;
+    Phys_OdeMatrix3ToAxis(iVar2 + 0x100,auStack_90);
+    vectoangles(auStack_90,auStack_a8);
+    dVar8 = (double)((*(float *)(iVar4 + 0x50) -
+                     (((float)(longlong)*(int *)(iVar4 + 0x3c) / *param_2) *
+                      *(float *)(iVar4 + 0x54) + local_a4)) * 0.0027777778);
+    dVar6 = floor((double)(float)(dVar8 + 0.5));
+    *(float *)((int)param_2[7] + 8) =
+         (float)((double)((float)(dVar8 - (double)(float)dVar6) * 360.0) * dVar7 +
+                (double)*(float *)(iVar4 + 0x54)) * 0.017453292;
+    if ((*(uint *)((int)param_2[7] + 8) & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler(0xffffffff82198a88,0x511,0,0xffffffff82000f98,0xffffffff82198c84);
     }
-    *(undefined4 *)((int)pfVar4[8] + 8) = *(undefined4 *)(iVar5 + 0x58);
-    *(int *)(iVar5 + 0x3c) = *(int *)(iVar5 + 0x3c) + -1;
+    *(undefined4 *)((int)param_2[8] + 8) = *(undefined4 *)(iVar4 + 0x58);
+    *(int *)(iVar4 + 0x3c) = *(int *)(iVar4 + 0x3c) + -1;
   }
   __restgprlr_24();
   return;
@@ -2034,38 +1947,38 @@ void ODE_PathConstraintGetInfo2(JointPath *param_1,dxWorldStepInfo *param_2,Info
 
 // 8268E858  sliderInit  (physics/ode/src/joint.cpp:1308)
 
-void sliderInit(dxJointSlider *param_1)
+void sliderInit(int param_1)
 
 {
-  float fVar1;
+  undefined4 uVar1;
   int iVar2;
   double dVar3;
   
-  dSetZero(param_1->axis1,4);
+  dSetZero(param_1 + 0x3c,4);
   dVar3 = 1.0;
-  param_1->axis1[0] = 1.0;
-  dSetZero(param_1->qrel,4);
-  dSetZero(param_1->offset,4);
-  iVar2 = param_1->_padding_;
-  (param_1->limot).fudge_factor = (float)dVar3;
-  (param_1->limot).vel = 0.0;
-  (param_1->limot).fmax = 0.0;
-  (param_1->limot).lostop = -3.4028235e+38;
-  (param_1->limot).histop = 3.4028235e+38;
-  (param_1->limot).normal_cfm = *(float *)(iVar2 + 0x24);
-  (param_1->limot).stop_erp = *(float *)(iVar2 + 0x20);
-  fVar1 = *(float *)(iVar2 + 0x24);
-  (param_1->limot).limit = 0;
-  (param_1->limot).stop_cfm = fVar1;
-  (param_1->limot).bounce = 0.0;
-  (param_1->limot).limit_err = 0.0;
+  *(undefined4 *)(param_1 + 0x3c) = 0x3f800000;
+  dSetZero(param_1 + 0x4c,4);
+  dSetZero(param_1 + 0x5c,4);
+  iVar2 = *(int *)(param_1 + 0x10);
+  *(float *)(param_1 + 0x7c) = (float)dVar3;
+  *(undefined4 *)(param_1 + 0x6c) = 0;
+  *(undefined4 *)(param_1 + 0x70) = 0;
+  *(undefined4 *)(param_1 + 0x74) = 0xff7fffff;
+  *(undefined4 *)(param_1 + 0x78) = 0x7f7fffff;
+  *(undefined4 *)(param_1 + 0x80) = *(undefined4 *)(iVar2 + 0x24);
+  *(undefined4 *)(param_1 + 0x84) = *(undefined4 *)(iVar2 + 0x20);
+  uVar1 = *(undefined4 *)(iVar2 + 0x24);
+  *(undefined4 *)(param_1 + 0x90) = 0;
+  *(undefined4 *)(param_1 + 0x88) = uVar1;
+  *(undefined4 *)(param_1 + 0x8c) = 0;
+  *(undefined4 *)(param_1 + 0x94) = 0;
   return;
 }
 
 
 // 82691E40  dJointGetSliderPosition  (physics/ode/src/joint.cpp:1318)
 
-float dJointGetSliderPosition(dxJointSlider *param_1)
+void dJointGetSliderPosition(void)
 
 {
   float fVar1;
@@ -2079,16 +1992,15 @@ float dJointGetSliderPosition(dxJointSlider *param_1)
   float fVar9;
   float fVar10;
   int iVar11;
-  double dVar12;
   
-  iVar11 = __savegprlr_29(param_1);
+  iVar11 = __savegprlr_29();
   if (iVar11 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x527,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x527,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
   if (*(int *)(iVar11 + 0x14) != 3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x528,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x528,0,0xffffffff820011f4,0xffffffff82198cb4,
+                    0xffffffff82198cdc);
   }
   iVar7 = *(int *)(iVar11 + 0x20);
   fVar1 = *(float *)(iVar11 + 0x44);
@@ -2117,22 +2029,22 @@ float dJointGetSliderPosition(dxJointSlider *param_1)
             *(float *)(iVar8 + 0x124) * fVar5 + *(float *)(iVar8 + 0x128) * fVar4)) -
             *(float *)(iVar8 + 0xe8);
   }
-  dVar12 = (double)__restgprlr_29((double)(fVar9 * (*(float *)(iVar7 + 0x100) * fVar3 +
-                                                   *(float *)(iVar7 + 0x104) * fVar2 +
-                                                   *(float *)(iVar7 + 0x108) * fVar1) +
-                                          fVar4 * (*(float *)(iVar7 + 0x120) * fVar3 +
-                                                  *(float *)(iVar7 + 0x124) * fVar2 +
-                                                  *(float *)(iVar7 + 0x128) * fVar1) +
-                                          fVar10 * (fVar3 * *(float *)(iVar7 + 0x110) +
-                                                   *(float *)(iVar7 + 0x114) * fVar2 +
-                                                   *(float *)(iVar7 + 0x118) * fVar1)));
-  return (float)dVar12;
+  __restgprlr_29((double)(fVar9 * (*(float *)(iVar7 + 0x100) * fVar3 +
+                                  *(float *)(iVar7 + 0x104) * fVar2 +
+                                  *(float *)(iVar7 + 0x108) * fVar1) +
+                         fVar4 * (*(float *)(iVar7 + 0x120) * fVar3 +
+                                 *(float *)(iVar7 + 0x124) * fVar2 +
+                                 *(float *)(iVar7 + 0x128) * fVar1) +
+                         fVar10 * (fVar3 * *(float *)(iVar7 + 0x110) +
+                                  *(float *)(iVar7 + 0x114) * fVar2 +
+                                  *(float *)(iVar7 + 0x118) * fVar1)));
+  return;
 }
 
 
 // 82691FF8  dJointGetSliderPositionRate  (physics/ode/src/joint.cpp:1342)
 
-float dJointGetSliderPositionRate(dxJointSlider *param_1)
+void dJointGetSliderPositionRate(void)
 
 {
   float fVar1;
@@ -2143,16 +2055,15 @@ float dJointGetSliderPositionRate(dxJointSlider *param_1)
   float fVar6;
   float fVar7;
   int iVar8;
-  double dVar9;
   
-  iVar8 = __savegprlr_29(param_1);
+  iVar8 = __savegprlr_29();
   if (iVar8 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x53f,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x53f,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
   if (*(int *)(iVar8 + 0x14) != 3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x540,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x540,0,0xffffffff820011f4,0xffffffff82198cb4,
+                    0xffffffff82198cdc);
   }
   iVar4 = *(int *)(iVar8 + 0x20);
   fVar1 = *(float *)(iVar8 + 0x44);
@@ -2166,57 +2077,53 @@ float dJointGetSliderPositionRate(dxJointSlider *param_1)
   fVar1 = fVar3 * *(float *)(iVar4 + 0x120) +
           *(float *)(iVar4 + 0x124) * fVar2 + *(float *)(iVar4 + 0x128) * fVar1;
   if (iVar5 != 0) {
-    dVar9 = (double)__restgprlr_29((double)((*(float *)(iVar4 + 0x130) * fVar7 +
-                                            *(float *)(iVar4 + 0x138) * fVar1 +
-                                            *(float *)(iVar4 + 0x134) * fVar6) -
-                                           (*(float *)(iVar5 + 0x130) * fVar7 +
-                                           *(float *)(iVar5 + 0x138) * fVar1 +
-                                           *(float *)(iVar5 + 0x134) * fVar6)));
-    return (float)dVar9;
+    __restgprlr_29((double)((*(float *)(iVar4 + 0x130) * fVar7 +
+                            *(float *)(iVar4 + 0x138) * fVar1 + *(float *)(iVar4 + 0x134) * fVar6) -
+                           (*(float *)(iVar5 + 0x130) * fVar7 +
+                           *(float *)(iVar5 + 0x138) * fVar1 + *(float *)(iVar5 + 0x134) * fVar6)));
+    return;
   }
-  dVar9 = (double)__restgprlr_29((double)(*(float *)(iVar4 + 0x130) * fVar7 +
-                                         *(float *)(iVar4 + 0x138) * fVar1 +
-                                         *(float *)(iVar4 + 0x134) * fVar6));
-  return (float)dVar9;
+  __restgprlr_29((double)(*(float *)(iVar4 + 0x130) * fVar7 +
+                         *(float *)(iVar4 + 0x138) * fVar1 + *(float *)(iVar4 + 0x134) * fVar6));
+  return;
 }
 
 
 // 82692138  sliderGetInfo1  (physics/ode/src/joint.cpp:1361)
 
-void sliderGetInfo1(dxJointSlider *param_1,Info1 *param_2)
+void sliderGetInfo1(undefined8 param_1,undefined4 *param_2)
 
 {
-  float fVar1;
-  dxJointSlider *pdVar2;
-  int iVar3;
-  float fVar4;
+  int iVar1;
+  undefined4 uVar2;
+  double dVar3;
+  double dVar4;
   
-  pdVar2 = (dxJointSlider *)__savegprlr_29(param_1);
-  (pdVar2->limot).limit_err = 3.4028235e+38;
-  param_2->nub = 5;
-  if ((pdVar2->limot).fmax <= 0.0) {
-    param_2->m = 5;
+  iVar1 = __savegprlr_29();
+  *(undefined4 *)(iVar1 + 0x94) = 0x7f7fffff;
+  param_2[1] = 5;
+  if (*(float *)(iVar1 + 0x70) <= 0.0) {
+    *param_2 = 5;
   }
   else {
-    param_2->m = 6;
+    *param_2 = 6;
   }
-  fVar1 = (pdVar2->limot).lostop;
-  (pdVar2->limot).limit = 0;
-  if (((-3.4028235e+38 < fVar1) || ((pdVar2->limot).histop < 3.4028235e+38)) &&
-     (fVar1 <= (pdVar2->limot).histop)) {
-    fVar4 = dJointGetSliderPosition(pdVar2);
-    fVar1 = (pdVar2->limot).lostop;
-    if (fVar1 < fVar4) {
-      fVar1 = (pdVar2->limot).histop;
-      if (fVar4 < fVar1) goto LAB_826921f4;
-      iVar3 = 2;
+  *(undefined4 *)(iVar1 + 0x90) = 0;
+  if (((-3.4028235e+38 < *(float *)(iVar1 + 0x74)) || (*(float *)(iVar1 + 0x78) < 3.4028235e+38)) &&
+     (*(float *)(iVar1 + 0x74) <= *(float *)(iVar1 + 0x78))) {
+    dVar4 = (double)dJointGetSliderPosition(iVar1);
+    dVar3 = (double)*(float *)(iVar1 + 0x74);
+    if (dVar3 < dVar4) {
+      dVar3 = (double)*(float *)(iVar1 + 0x78);
+      if (dVar4 < dVar3) goto LAB_826921f4;
+      uVar2 = 2;
     }
     else {
-      iVar3 = 1;
+      uVar2 = 1;
     }
-    (pdVar2->limot).limit_err = fVar4 - fVar1;
-    (pdVar2->limot).limit = iVar3;
-    param_2->m = 6;
+    *(float *)(iVar1 + 0x94) = (float)(dVar4 - dVar3);
+    *(undefined4 *)(iVar1 + 0x90) = uVar2;
+    *param_2 = 6;
   }
 LAB_826921f4:
   __restgprlr_29();
@@ -2226,31 +2133,29 @@ LAB_826921f4:
 
 // 82692200  sliderGetInfo2  (physics/ode/src/joint.cpp:1394)
 
-void sliderGetInfo2(dxJointSlider *param_1,dxWorldStepInfo *param_2,Info2 *param_3)
+void sliderGetInfo2(undefined8 param_1,undefined8 param_2)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  dxJointNode *pdVar5;
-  uint uVar6;
-  dxBody *pdVar7;
-  dxBody *pdVar8;
-  Info2 *pIVar9;
+  float fVar5;
+  float fVar6;
+  int iVar7;
+  int iVar8;
+  float *pfVar9;
   int iVar10;
   int iVar11;
-  int iVar12;
-  ulonglong uVar13;
+  ulonglong uVar12;
+  int iVar13;
   int iVar14;
-  dxJoint *pdVar15;
-  int iVar16;
-  longlong lVar17;
-  float *pfVar18;
-  ulonglong uVar19;
+  int iVar15;
+  float *pfVar16;
+  ulonglong uVar17;
+  double dVar18;
+  double dVar19;
   double dVar20;
-  double dVar21;
-  double dVar22;
   float local_90;
   float local_8c;
   float local_88;
@@ -2261,169 +2166,159 @@ void sliderGetInfo2(dxJointSlider *param_1,dxWorldStepInfo *param_2,Info2 *param
   float local_6c;
   float local_68;
   
-  lVar17 = (longlong)(int)param_2;
-  pdVar15 = (dxJoint *)__savegprlr_25(param_1,lVar17,param_3);
-  pIVar9 = (Info2 *)lVar17;
-  uVar6 = pIVar9->rowskip;
-  pdVar7 = pdVar15->node[0].body;
-  pdVar8 = pdVar15->node[1].body;
-  uVar13 = (ulonglong)uVar6 & 0x3fffffff;
-  iVar16 = (int)uVar13 * 4;
-  uVar19 = (ulonglong)uVar6 + ((ulonglong)uVar6 & 0x7fffffff) * 2;
-  if (pdVar8 == (dxBody *)0x0) {
-    pfVar18 = (float *)0x0;
+  iVar15 = __savegprlr_25();
+  pfVar9 = (float *)param_2;
+  fVar6 = pfVar9[6];
+  iVar7 = *(int *)(iVar15 + 0x20);
+  iVar8 = *(int *)(iVar15 + 0x30);
+  uVar12 = (ulonglong)(uint)fVar6 & 0x3fffffff;
+  iVar14 = (int)uVar12 * 4;
+  uVar17 = (ulonglong)(uint)fVar6 + ((ulonglong)(uint)fVar6 & 0x7fffffff) * 2;
+  if (iVar8 == 0) {
+    pfVar16 = (float *)0x0;
   }
   else {
-    pfVar18 = (pdVar8->info).R;
-    local_70 = (pdVar8->info).pos[0] - (pdVar7->info).pos[0];
-    local_6c = (pdVar8->info).pos[1] - (pdVar7->info).pos[1];
-    local_68 = (pdVar8->info).pos[2] - (pdVar7->info).pos[2];
+    pfVar16 = (float *)(iVar8 + 0x100);
+    local_70 = *(float *)(iVar8 + 0xe0) - *(float *)(iVar7 + 0xe0);
+    local_6c = *(float *)(iVar8 + 0xe4) - *(float *)(iVar7 + 0xe4);
+    local_68 = *(float *)(iVar8 + 0xe8) - *(float *)(iVar7 + 0xe8);
   }
-  dVar22 = (double)local_68;
-  dVar21 = (double)local_6c;
-  dVar20 = (double)local_70;
-  setFixedOrientation(pdVar15,pIVar9,(float *)&pdVar15[1]._padding_,0);
-  fVar2 = (float)pdVar15[1]._padding_;
-  fVar3 = (float)pdVar15[1]._padding_;
-  fVar4 = (float)pdVar15[1]._padding_;
-  local_70 = fVar4 * (pdVar7->info).R[0] + (pdVar7->info).R[1] * fVar3 + (pdVar7->info).R[2] * fVar2
-  ;
-  local_6c = (pdVar7->info).R[4] * fVar4 + (pdVar7->info).R[5] * fVar3 + (pdVar7->info).R[6] * fVar2
-  ;
-  local_68 = (pdVar7->info).R[8] * fVar4 +
-             (pdVar7->info).R[9] * fVar3 + (pdVar7->info).R[10] * fVar2;
+  dVar20 = (double)local_68;
+  dVar19 = (double)local_6c;
+  dVar18 = (double)local_70;
+  setFixedOrientation(iVar15,param_2,iVar15 + 0x4c,0);
+  fVar1 = *(float *)(iVar15 + 0x44);
+  fVar2 = *(float *)(iVar15 + 0x40);
+  fVar3 = *(float *)(iVar15 + 0x3c);
+  local_70 = fVar3 * *(float *)(iVar7 + 0x100) +
+             *(float *)(iVar7 + 0x104) * fVar2 + *(float *)(iVar7 + 0x108) * fVar1;
+  local_6c = *(float *)(iVar7 + 0x110) * fVar3 +
+             *(float *)(iVar7 + 0x114) * fVar2 + *(float *)(iVar7 + 0x118) * fVar1;
+  local_68 = *(float *)(iVar7 + 0x120) * fVar3 +
+             *(float *)(iVar7 + 0x124) * fVar2 + *(float *)(iVar7 + 0x128) * fVar1;
   dPlaneSpace(&local_70,&local_90,&local_80);
-  if (pdVar15->node[1].body != (dxBody *)0x0) {
-    iVar14 = iVar16 + 2;
-    fVar2 = (float)((double)local_88 * dVar21 - (double)(float)((double)local_8c * dVar22)) * 0.5;
-    iVar10 = (int)((uVar19 & 0x3fffffff) << 2);
-    *(float *)((int)pIVar9->J2a + iVar10) = fVar2;
-    fVar3 = (float)((double)local_90 * dVar22 - (double)(float)(dVar20 * (double)local_88)) * 0.5;
-    *(float *)((int)pIVar9->J2a + iVar10 + 4) = fVar3;
-    fVar4 = (float)(dVar20 * (double)local_8c - (double)(float)((double)local_90 * dVar21)) * 0.5;
-    iVar11 = (int)((uVar19 + 2 & 0x3fffffff) << 2);
-    *(float *)((int)pIVar9->J2a + iVar11) = fVar4;
-    *(float *)((int)pIVar9->J2a + iVar10) = fVar2;
-    *(float *)((int)pIVar9->J2a + iVar10 + 4) = fVar3;
-    *(float *)((int)pIVar9->J2a + iVar11) = fVar4;
-    fVar2 = (float)((double)local_78 * dVar21 - (double)(float)((double)local_7c * dVar22)) * 0.5;
-    iVar12 = (int)(((ulonglong)uVar6 & 0xfffffff) << 4);
-    *(float *)((int)pIVar9->J2a + iVar12) = fVar2;
-    fVar3 = (float)((double)local_80 * dVar22 - (double)(float)((double)local_78 * dVar20)) * 0.5;
-    *(float *)((int)pIVar9->J2a + iVar12 + 4) = fVar3;
-    fVar4 = (float)((double)local_7c * dVar20 - (double)(float)((double)local_80 * dVar21)) * 0.5;
-    pIVar9->J2a[iVar14] = fVar4;
-    *(float *)((int)pIVar9->J2a + iVar12) = fVar2;
-    *(float *)((int)pIVar9->J2a + iVar12 + 4) = fVar3;
-    pIVar9->J2a[iVar14] = fVar4;
-    *(float *)(iVar10 + (int)pIVar9->J2l) = -local_90;
-    *(float *)((int)pIVar9->J2l + iVar10 + 4) = -local_8c;
-    *(float *)(iVar11 + (int)pIVar9->J2l) = -local_88;
-    *(float *)(iVar12 + (int)pIVar9->J2l) = -local_80;
-    *(float *)((int)pIVar9->J2l + iVar12 + 4) = -local_7c;
-    pIVar9->J2l[iVar14] = -local_78;
+  if (*(int *)(iVar15 + 0x30) != 0) {
+    iVar13 = (iVar14 + 2) * 4;
+    fVar1 = (float)((double)local_88 * dVar19 - (double)(float)((double)local_8c * dVar20)) * 0.5;
+    iVar8 = (int)((uVar17 & 0x3fffffff) << 2);
+    *(float *)((int)pfVar9[5] + iVar8) = fVar1;
+    fVar2 = (float)((double)local_90 * dVar20 - (double)(float)(dVar18 * (double)local_88)) * 0.5;
+    *(float *)((int)pfVar9[5] + iVar8 + 4) = fVar2;
+    fVar3 = (float)(dVar18 * (double)local_8c - (double)(float)((double)local_90 * dVar19)) * 0.5;
+    iVar10 = (int)((uVar17 + 2 & 0x3fffffff) << 2);
+    *(float *)((int)pfVar9[5] + iVar10) = fVar3;
+    *(float *)((int)pfVar9[5] + iVar8) = fVar1;
+    *(float *)((int)pfVar9[5] + iVar8 + 4) = fVar2;
+    *(float *)((int)pfVar9[5] + iVar10) = fVar3;
+    fVar1 = (float)((double)local_78 * dVar19 - (double)(float)((double)local_7c * dVar20)) * 0.5;
+    iVar11 = (int)(((ulonglong)(uint)fVar6 & 0xfffffff) << 4);
+    *(float *)((int)pfVar9[5] + iVar11) = fVar1;
+    fVar6 = (float)((double)local_80 * dVar20 - (double)(float)((double)local_78 * dVar18)) * 0.5;
+    *(float *)((int)pfVar9[5] + iVar11 + 4) = fVar6;
+    fVar2 = (float)((double)local_7c * dVar18 - (double)(float)((double)local_80 * dVar19)) * 0.5;
+    *(float *)((int)pfVar9[5] + iVar13) = fVar2;
+    *(float *)((int)pfVar9[5] + iVar11) = fVar1;
+    *(float *)((int)pfVar9[5] + iVar11 + 4) = fVar6;
+    *(float *)((int)pfVar9[5] + iVar13) = fVar2;
+    *(float *)(iVar8 + (int)pfVar9[4]) = -local_90;
+    *(float *)(iVar8 + (int)pfVar9[4] + 4) = -local_8c;
+    *(float *)(iVar10 + (int)pfVar9[4]) = -local_88;
+    *(float *)(iVar11 + (int)pfVar9[4]) = -local_80;
+    *(float *)(iVar11 + (int)pfVar9[4] + 4) = -local_7c;
+    *(float *)(iVar13 + (int)pfVar9[4]) = -local_78;
   }
-  iVar10 = (int)((uVar19 & 0xffffffff) << 2);
-  iVar11 = (int)(uVar13 << 4);
-  *(float *)(iVar10 + (int)pIVar9->J1l) = local_90;
-  *(float *)((int)pIVar9->J1l + iVar10 + 4) = local_8c;
-  *(float *)((int)((uVar19 + 2 & 0xffffffff) << 2) + (int)pIVar9->J1l) = local_88;
-  *(float *)(iVar11 + (int)pIVar9->J1l) = local_80;
-  *(float *)((int)pIVar9->J1l + iVar11 + 4) = local_7c;
-  pIVar9->J1l[iVar16 + 2] = local_78;
-  fVar2 = (float)pdVar15[1].node[0].bodyTag;
-  fVar3 = pIVar9->erp * pIVar9->fps;
-  if (pdVar15->node[1].body == (dxBody *)0x0) {
-    fVar4 = (float)pdVar15[1].node[0].body - (pdVar7->info).pos[0];
-    fVar2 = fVar2 - (pdVar7->info).pos[1];
-    fVar1 = (float)pdVar15[1].node[0].next - (pdVar7->info).pos[2];
-    pIVar9->c[3] = (fVar1 * local_88 + fVar2 * local_8c + fVar4 * local_90) * fVar3;
-    pIVar9->c[4] = (fVar4 * local_80 + fVar2 * local_7c + fVar1 * local_78) * fVar3;
+  iVar8 = (int)((uVar17 & 0xffffffff) << 2);
+  iVar10 = (int)(uVar12 << 4);
+  *(float *)(iVar8 + (int)pfVar9[2]) = local_90;
+  *(float *)(iVar8 + (int)pfVar9[2] + 4) = local_8c;
+  *(float *)((int)((uVar17 + 2 & 0xffffffff) << 2) + (int)pfVar9[2]) = local_88;
+  *(float *)(iVar10 + (int)pfVar9[2]) = local_80;
+  *(float *)(iVar10 + (int)pfVar9[2] + 4) = local_7c;
+  *(float *)((iVar14 + 2) * 4 + (int)pfVar9[2]) = local_78;
+  fVar6 = *(float *)(iVar15 + 0x60);
+  fVar1 = pfVar9[1] * *pfVar9;
+  if (*(int *)(iVar15 + 0x30) == 0) {
+    fVar2 = *(float *)(iVar15 + 0x5c) - *(float *)(iVar7 + 0xe0);
+    fVar6 = fVar6 - *(float *)(iVar7 + 0xe4);
+    fVar3 = *(float *)(iVar15 + 100) - *(float *)(iVar7 + 0xe8);
+    *(float *)((int)pfVar9[7] + 0xc) =
+         (fVar3 * local_88 + fVar6 * local_8c + fVar2 * local_90) * fVar1;
+    *(float *)((int)pfVar9[7] + 0x10) =
+         (fVar2 * local_80 + fVar6 * local_7c + fVar3 * local_78) * fVar1;
   }
   else {
-    pdVar5 = pdVar15[1].node[0].next;
-    pdVar7 = pdVar15[1].node[0].body;
-    fVar4 = (float)((double)(pfVar18[8] * (float)pdVar7 +
-                            pfVar18[9] * fVar2 + pfVar18[10] * (float)pdVar5) + dVar22);
-    fVar1 = (float)((double)(*pfVar18 * (float)pdVar7 +
-                            pfVar18[1] * fVar2 + pfVar18[2] * (float)pdVar5) + dVar20);
-    fVar2 = (float)((double)((float)pdVar7 * pfVar18[4] +
-                            pfVar18[5] * fVar2 + pfVar18[6] * (float)pdVar5) + dVar21);
-    pIVar9->c[3] = (local_8c * fVar2 + fVar1 * local_90 + fVar4 * local_88) * fVar3;
-    pIVar9->c[4] = (local_7c * fVar2 + local_80 * fVar1 + local_78 * fVar4) * fVar3;
+    fVar4 = *(float *)(iVar15 + 100);
+    fVar5 = *(float *)(iVar15 + 0x5c);
+    fVar2 = (float)((double)(pfVar16[8] * fVar5 + pfVar16[9] * fVar6 + pfVar16[10] * fVar4) + dVar20
+                   );
+    fVar3 = (float)((double)(*pfVar16 * fVar5 + pfVar16[1] * fVar6 + pfVar16[2] * fVar4) + dVar18);
+    fVar6 = (float)((double)(fVar5 * pfVar16[4] + pfVar16[5] * fVar6 + pfVar16[6] * fVar4) + dVar19)
+    ;
+    *(float *)((int)pfVar9[7] + 0xc) =
+         (local_8c * fVar6 + fVar3 * local_90 + fVar2 * local_88) * fVar1;
+    *(float *)((int)pfVar9[7] + 0x10) =
+         (local_7c * fVar6 + local_80 * fVar3 + local_78 * fVar2) * fVar1;
   }
-  iVar16 = dxJointLimitMotor::addLimot
-                     ((dxJointLimitMotor *)&pdVar15[1].node[1].body,pdVar15,pIVar9,5,&local_70,0);
-  __restgprlr_25(iVar16);
+  dxJointLimitMotor__addLimot(iVar15 + 0x6c,iVar15,param_2,5,&local_70,0);
+  __restgprlr_25();
   return;
 }
 
 
 // 82692630  dJointSetSliderAxis  (physics/ode/src/joint.cpp:1468)
 
-void dJointSetSliderAxis(dxJointSlider *param_1,float param_2,float param_3,float param_4)
+void dJointSetSliderAxis(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  dxBody *pdVar1;
-  dxBody *pdVar2;
-  dxBody *pdVar3;
+  int iVar1;
+  int iVar2;
+  int iVar3;
   float fVar4;
   float fVar5;
   float fVar6;
-  dxJoint *pdVar7;
-  float *in_r4;
-  float *in_r5;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
-  double dVar10;
+  int iVar7;
+  undefined8 extraout_f1;
+  undefined8 uVar8;
   
-  dVar9 = (double)param_4;
-  dVar8 = (double)param_3;
-  pdVar7 = (dxJoint *)__savegprlr_29((double)param_2,param_1);
-  dVar10 = extraout_f1;
-  if (pdVar7 == (dxJoint *)0x0) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x5be;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x5be,0,"%s\n\t%s");
+  iVar7 = __savegprlr_29();
+  uVar8 = extraout_f1;
+  if (iVar7 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x5be,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if (pdVar7->type != ODE_JOINT_TYPE_SLIDER) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x5bf;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x5bf,0,"%s\n\t%s");
+  if (*(int *)(iVar7 + 0x14) != 3) {
+    MyAssertHandler(0xffffffff82198a88,0x5bf,0,0xffffffff820011f4,0xffffffff82198cb4,
+                    0xffffffff82198cdc);
   }
-  setAxes(pdVar7,(float)dVar10,(float)dVar8,(float)dVar9,in_r4,in_r5);
-  pdVar1 = pdVar7->node[1].body;
-  if (pdVar1 != (dxBody *)0x0) {
-    dQMultiply1((float *)&pdVar7[1]._padding_,((pdVar7->node[0].body)->info).q,(pdVar1->info).q);
-    pdVar1 = pdVar7->node[0].body;
-    pdVar2 = pdVar7->node[1].body;
-    pdVar3 = pdVar7->node[1].body;
-    fVar4 = (pdVar1->info).pos[2] - (pdVar2->info).pos[2];
-    fVar5 = (pdVar1->info).pos[1] - (pdVar2->info).pos[1];
-    fVar6 = (pdVar1->info).pos[0] - (pdVar2->info).pos[0];
-    pdVar7[1].node[0].body =
-         (dxBody *)
-         (fVar6 * (pdVar3->info).R[0] + (pdVar3->info).R[4] * fVar5 + (pdVar3->info).R[8] * fVar4);
-    pdVar7[1].node[0].bodyTag =
-         (int)((pdVar3->info).R[1] * fVar6 +
-              (pdVar3->info).R[5] * fVar5 + (pdVar3->info).R[9] * fVar4);
-    pdVar7[1].node[0].next =
-         (dxJointNode *)
-         ((pdVar3->info).R[2] * fVar6 + (pdVar3->info).R[6] * fVar5 + (pdVar3->info).R[10] * fVar4);
+  setAxes(uVar8,param_2,param_3,iVar7);
+  if ((ulonglong)*(uint *)(iVar7 + 0x30) != 0) {
+    dQMultiply1(iVar7 + 0x4c,(ulonglong)*(uint *)(iVar7 + 0x20) + 0xf0,
+                (ulonglong)*(uint *)(iVar7 + 0x30) + 0xf0);
+    iVar1 = *(int *)(iVar7 + 0x20);
+    iVar2 = *(int *)(iVar7 + 0x30);
+    iVar3 = *(int *)(iVar7 + 0x30);
+    fVar4 = *(float *)(iVar1 + 0xe8) - *(float *)(iVar2 + 0xe8);
+    fVar5 = *(float *)(iVar1 + 0xe4) - *(float *)(iVar2 + 0xe4);
+    fVar6 = *(float *)(iVar1 + 0xe0) - *(float *)(iVar2 + 0xe0);
+    *(float *)(iVar7 + 0x5c) =
+         fVar6 * *(float *)(iVar3 + 0x100) +
+         *(float *)(iVar3 + 0x110) * fVar5 + *(float *)(iVar3 + 0x120) * fVar4;
+    *(float *)(iVar7 + 0x60) =
+         *(float *)(iVar3 + 0x104) * fVar6 +
+         *(float *)(iVar3 + 0x114) * fVar5 + *(float *)(iVar3 + 0x124) * fVar4;
+    *(float *)(iVar7 + 100) =
+         *(float *)(iVar3 + 0x108) * fVar6 +
+         *(float *)(iVar3 + 0x118) * fVar5 + *(float *)(iVar3 + 0x128) * fVar4;
     __restgprlr_29();
     return;
   }
-  pdVar1 = pdVar7->node[0].body;
-  pdVar7[1]._padding_ = (int)(pdVar1->info).q[0];
-  pdVar7[1].type = (JointType)-(pdVar1->info).q[1];
-  pdVar7[1].flags = (int)-((pdVar7->node[0].body)->info).q[2];
-  pdVar7[1].node[0].joint = (dxJoint *)-((pdVar7->node[0].body)->info).q[3];
-  pdVar7[1].node[0].body = (dxBody *)((pdVar7->node[0].body)->info).pos[0];
-  pdVar7[1].node[0].bodyTag = (int)((pdVar7->node[0].body)->info).pos[1];
-  pdVar7[1].node[0].next = (dxJointNode *)((pdVar7->node[0].body)->info).pos[2];
+  *(undefined4 *)(iVar7 + 0x4c) = *(undefined4 *)(*(int *)(iVar7 + 0x20) + 0xf0);
+  *(float *)(iVar7 + 0x50) = -*(float *)(*(int *)(iVar7 + 0x20) + 0xf4);
+  *(float *)(iVar7 + 0x54) = -*(float *)(*(int *)(iVar7 + 0x20) + 0xf8);
+  *(float *)(iVar7 + 0x58) = -*(float *)(*(int *)(iVar7 + 0x20) + 0xfc);
+  *(undefined4 *)(iVar7 + 0x5c) = *(undefined4 *)(*(int *)(iVar7 + 0x20) + 0xe0);
+  *(undefined4 *)(iVar7 + 0x60) = *(undefined4 *)(*(int *)(iVar7 + 0x20) + 0xe4);
+  *(undefined4 *)(iVar7 + 100) = *(undefined4 *)(*(int *)(iVar7 + 0x20) + 0xe8);
   __restgprlr_29();
   return;
 }
@@ -2431,27 +2326,25 @@ void dJointSetSliderAxis(dxJointSlider *param_1,float param_2,float param_3,floa
 
 // 82692810  dJointGetSliderAxis  (physics/ode/src/joint.cpp:1493)
 
-void dJointGetSliderAxis(dxJointSlider *param_1,float *param_2)
+void dJointGetSliderAxis(undefined8 param_1,ulonglong param_2)
 
 {
-  dxJoint *pdVar1;
-  ulonglong uVar2;
+  int iVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pdVar1 = (dxJoint *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x5d6,0,"%s\n\t%s");
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x5d6,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x5d7,0,"%s\n\t%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x5d7,0,0xffffffff820011f4,0xffffffff82012420,
+                    0xffffffff82199300);
   }
-  if (pdVar1->type != ODE_JOINT_TYPE_SLIDER) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x5d8,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 3) {
+    MyAssertHandler(0xffffffff82198a88,0x5d8,0,0xffffffff820011f4,0xffffffff82198cb4,
+                    0xffffffff82198cdc);
   }
-  getAxis(pdVar1,(float *)uVar2,(float *)(pdVar1 + 1));
+  getAxis(iVar1,param_2,iVar1 + 0x3c);
   __restgprlr_28();
   return;
 }
@@ -2459,24 +2352,24 @@ void dJointGetSliderAxis(dxJointSlider *param_1,float *param_2)
 
 // 8268E910  dJointSetSliderParam  (physics/ode/src/joint.cpp:1503)
 
-void dJointSetSliderParam(dxJointSlider *param_1,int param_2,float param_3)
+void dJointSetSliderParam(undefined8 param_1,undefined8 param_2)
 
 {
   int iVar1;
-  double extraout_f1;
-  double dVar2;
+  undefined8 extraout_f1;
+  undefined8 uVar2;
   
-  iVar1 = __savegprlr_28((double)param_3,param_1);
-  dVar2 = extraout_f1;
+  iVar1 = __savegprlr_28();
+  uVar2 = extraout_f1;
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x5e0,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x5e0,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
   if (*(int *)(iVar1 + 0x14) != 3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x5e1,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x5e1,0,0xffffffff820011f4,0xffffffff82198cb4,
+                    0xffffffff82198cdc);
   }
-  dxJointLimitMotor::set((dxJointLimitMotor *)(iVar1 + 0x6c),param_2,(float)dVar2);
+  dxJointLimitMotor__set(uVar2,iVar1 + 0x6c,param_2);
   __restgprlr_28();
   return;
 }
@@ -2484,69 +2377,62 @@ void dJointSetSliderParam(dxJointSlider *param_1,int param_2,float param_3)
 
 // 8268E9B8  dJointGetSliderParam  (physics/ode/src/joint.cpp:1511)
 
-float dJointGetSliderParam(dxJointSlider *param_1,int param_2)
+void dJointGetSliderParam(undefined8 param_1,undefined8 param_2)
 
 {
   int iVar1;
-  double dVar2;
-  float fVar3;
   
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x5e8,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x5e8,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
   if (*(int *)(iVar1 + 0x14) != 3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x5e9,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x5e9,0,0xffffffff820011f4,0xffffffff82198cb4,
+                    0xffffffff82198cdc);
   }
-  fVar3 = dxJointLimitMotor::get((dxJointLimitMotor *)(iVar1 + 0x6c),param_2);
-  dVar2 = (double)__restgprlr_28((double)fVar3);
-  return (float)dVar2;
+  dxJointLimitMotor__get(iVar1 + 0x6c,param_2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826928D8  dJointAddSliderForce  (physics/ode/src/joint.cpp:1519)
 
-void dJointAddSliderForce(dxJointSlider *param_1,float param_2)
+void dJointAddSliderForce(void)
 
 {
-  dxBody *pdVar1;
-  dxJoint *pdVar2;
+  int iVar1;
   double extraout_f1;
+  double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
-  double dVar6;
   float local_50;
   float local_4c;
   float local_48;
   
-  pdVar2 = (dxJoint *)__savegprlr_29((double)param_2,param_1);
-  dVar5 = extraout_f1;
-  if (pdVar2 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x5f1,0,"%s\n\t%s");
+  iVar1 = __savegprlr_29();
+  dVar4 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x5f1,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if (pdVar2->type != ODE_JOINT_TYPE_SLIDER) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x5f2,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 3) {
+    MyAssertHandler(0xffffffff82198a88,0x5f2,0,0xffffffff820011f4,0xffffffff82198cb4,
+                    0xffffffff82198cdc);
   }
-  if ((pdVar2->flags & 2U) != 0) {
-    dVar5 = 0.0;
+  if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
+    dVar4 = 0.0;
   }
-  getAxis(pdVar2,&local_50,(float *)(pdVar2 + 1));
-  pdVar1 = pdVar2->node[0].body;
-  dVar4 = (double)(float)((double)local_50 * dVar5);
-  dVar3 = (double)(float)((double)local_4c * dVar5);
-  dVar6 = (double)(float)((double)local_48 * dVar5);
-  if (pdVar1 != (dxBody *)0x0) {
-    dBodyAddForce(pdVar1,(float)((double)local_50 * dVar5),(float)((double)local_4c * dVar5),
-                  (float)((double)local_48 * dVar5));
+  getAxis(iVar1,&local_50,iVar1 + 0x3c);
+  dVar3 = (double)(float)((double)local_50 * dVar4);
+  dVar2 = (double)(float)((double)local_4c * dVar4);
+  dVar4 = (double)(float)((double)local_48 * dVar4);
+  if (*(int *)(iVar1 + 0x20) != 0) {
+    dBodyAddForce(dVar3,dVar2,dVar4);
   }
-  pdVar1 = pdVar2->node[1].body;
-  if (pdVar1 != (dxBody *)0x0) {
-    dBodyAddForce(pdVar1,(float)-dVar4,(float)-dVar3,(float)-dVar6);
+  if (*(int *)(iVar1 + 0x30) != 0) {
+    dBodyAddForce(-dVar3,-dVar2,-dVar4);
   }
   __restgprlr_29();
   return;
@@ -2555,61 +2441,56 @@ void dJointAddSliderForce(dxJointSlider *param_1,float param_2)
 
 // 8268EA50  ContactGetInfo1  (physics/ode/src/joint.cpp:1543)
 
-void ContactGetInfo1(dxJointContact *param_1,Info1 *param_2)
+void ContactGetInfo1(int param_1,uint *param_2)
 
 {
   float fVar1;
-  float fVar2;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
-  uint uVar5;
   
-  uVar3 = (param_1->contact).surface.mode;
-  uVar5 = 0;
-  uVar4 = (uint)((~(ulonglong)uVar3 & 0xffffffff) >> 10) & 1;
-  if ((param_1->contact).surface.mu < 0.0) {
-    (param_1->contact).surface.mu = 0.0;
+  uVar3 = 0;
+  uVar2 = (uint)((~(ulonglong)*(uint *)(param_1 + 0x40) & 0xffffffff) >> 10) & 1;
+  if (*(float *)(param_1 + 0x44) < 0.0) {
+    *(undefined4 *)(param_1 + 0x44) = 0;
   }
-  if ((uVar3 & 1) == 0) {
-    fVar1 = (param_1->contact).surface.mu;
-    if (0.0 < fVar1) {
-      uVar4 = uVar4 + 2;
+  if ((*(uint *)(param_1 + 0x40) & 1) == 0) {
+    if (0.0 < *(float *)(param_1 + 0x44)) {
+      uVar2 = uVar2 + 2;
     }
-    if (fVar1 == 3.4028235e+38) {
-      uVar5 = 2;
+    if (*(float *)(param_1 + 0x44) == 3.4028235e+38) {
+      uVar3 = 2;
     }
   }
   else {
-    fVar1 = (param_1->contact).surface.mu;
+    fVar1 = *(float *)(param_1 + 0x44);
     if (0.0 < fVar1) {
-      uVar4 = uVar4 + 1;
+      uVar2 = uVar2 + 1;
     }
-    if ((param_1->contact).surface.mu2 < 0.0) {
-      (param_1->contact).surface.mu2 = 0.0;
+    if (*(float *)(param_1 + 0x48) < 0.0) {
+      *(undefined4 *)(param_1 + 0x48) = 0;
     }
-    fVar2 = (param_1->contact).surface.mu2;
-    if (0.0 < fVar2) {
-      uVar4 = uVar4 + 1;
+    if (0.0 < *(float *)(param_1 + 0x48)) {
+      uVar2 = uVar2 + 1;
     }
-    uVar5 = (uint)(fVar1 == 3.4028235e+38);
-    if (fVar2 == 3.4028235e+38) {
-      uVar5 = (fVar1 == 3.4028235e+38) + 1;
+    uVar3 = (uint)(fVar1 == 3.4028235e+38);
+    if (*(float *)(param_1 + 0x48) == 3.4028235e+38) {
+      uVar3 = (fVar1 == 3.4028235e+38) + 1;
     }
   }
-  param_1->the_m = uVar4;
-  param_2->m = uVar4;
-  param_2->nub = uVar5;
-  if ((phys_dumpcontacts->current).enabled == false) {
+  *(uint *)(param_1 + 0x3c) = uVar2;
+  *param_2 = uVar2;
+  param_2[1] = uVar3;
+  if (*(char *)(DAT_8427b930 + 0xc) == '\0') {
     return;
   }
-  Com_Printf(0x14,"0x%p info1: constraintRowCount %d  unboundedRowCount %d\n");
+  Com_Printf(0x14,0xffffffff82198cf4);
   return;
 }
 
 
 // 8268EB38  pr  (physics/ode/src/joint.cpp:1586)
 
-void pr(char *param_1)
+void pr(undefined8 param_1)
 
 {
   Com_Printf(0x14,param_1);
@@ -2619,25 +2500,47 @@ void pr(char *param_1)
 
 // 8268EB48  dumpJointInfo2  (physics/ode/src/joint.cpp:1592)
 
-void dumpJointInfo2(dxJointContact *param_1,Info2 *param_2)
+void dumpJointInfo2(undefined8 param_1,float *param_2)
 
 {
-  int iVar1;
-  char *pcVar2;
+  float fVar1;
+  float fVar2;
   int iVar3;
+  int iVar4;
+  int iVar6;
+  undefined8 uVar5;
+  ulonglong uVar7;
+  longlong lVar8;
+  int iVar9;
   
-  iVar1 = __savegprlr_25(param_1);
-  pcVar2 = va("0x%p 2: m %d skip %d  fps %f  erp %f\n");
-  Com_Printf(0x14,pcVar2);
-  iVar3 = 0;
-  if (0 < *(int *)(iVar1 + 0x3c)) {
+  iVar6 = __savegprlr_25();
+  uVar5 = va(0xffffffff82198d84,iVar6,*(undefined4 *)(iVar6 + 0x3c),param_2[6],(double)*param_2,
+             (double)param_2[1]);
+  Com_Printf(0x14,uVar5);
+  lVar8 = 0;
+  uVar7 = 0;
+  if (0 < *(int *)(iVar6 + 0x3c)) {
+    iVar9 = 0;
     do {
-      pcVar2 = va("  %d: J = %f %f %f %f %f %f  ");
-      Com_Printf(0x14,pcVar2);
-      pcVar2 = va("c = %f  cfm = %f  lo = %g  hi = %g  findex = %d\n");
-      Com_Printf(0x14,pcVar2);
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < *(int *)(iVar1 + 0x3c));
+      fVar1 = param_2[3];
+      iVar3 = (int)((uVar7 & 0xffffffff) << 2);
+      fVar2 = param_2[2];
+      iVar4 = (int)((uVar7 + 2 & 0xffffffff) << 2);
+      uVar5 = va(0xffffffff82198d30,lVar8,(double)*(float *)((int)fVar2 + iVar3),
+                 (double)*(float *)((int)fVar2 + iVar3 + 4),(double)*(float *)((int)fVar2 + iVar4),
+                 (double)*(float *)(iVar3 + (int)fVar1),(double)*(float *)(iVar3 + (int)fVar1 + 4),
+                 (double)*(float *)((int)fVar1 + iVar4));
+      Com_Printf(0x14,uVar5);
+      uVar5 = va(0xffffffff82198d50,(double)*(float *)((int)param_2[7] + iVar9),
+                 (double)*(float *)(iVar9 + (int)param_2[8]),
+                 (double)*(float *)(iVar9 + (int)param_2[9]),
+                 (double)*(float *)((int)param_2[10] + iVar9),
+                 *(undefined4 *)((int)param_2[0xc] + iVar9));
+      Com_Printf(0x14,uVar5);
+      lVar8 = lVar8 + 1;
+      iVar9 = iVar9 + 4;
+      uVar7 = (uint)param_2[6] + uVar7;
+    } while ((int)lVar8 < *(int *)(iVar6 + 0x3c));
   }
   __restgprlr_25();
   return;
@@ -2646,24 +2549,24 @@ void dumpJointInfo2(dxJointContact *param_1,Info2 *param_2)
 
 // 8268ECC0  ContactGetInfo2  (physics/ode/src/joint.cpp:1609)
 
-void ContactGetInfo2(dxJointContact *param_1,dxWorldStepInfo *param_2,Info2 *param_3)
+void ContactGetInfo2(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
   float fVar1;
   float fVar2;
-  uint uVar3;
-  int iVar4;
+  int iVar3;
+  uint *puVar4;
   float *pfVar5;
   int iVar6;
-  float fVar7;
-  Info2 *pIVar8;
-  dxJointContact *pdVar9;
-  ulonglong uVar10;
+  float *pfVar7;
+  float fVar8;
+  int iVar10;
+  undefined8 uVar9;
   float *pfVar11;
   uint uVar12;
   ulonglong uVar13;
   ulonglong uVar14;
-  dContactGeom *pdVar15;
+  double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
@@ -2671,8 +2574,6 @@ void ContactGetInfo2(dxJointContact *param_1,dxWorldStepInfo *param_2,Info2 *par
   double dVar20;
   double dVar21;
   double dVar22;
-  double dVar23;
-  double dVar24;
   float local_108;
   float local_104;
   float local_100;
@@ -2683,382 +2584,397 @@ void ContactGetInfo2(dxJointContact *param_1,dxWorldStepInfo *param_2,Info2 *par
   float local_e4;
   float local_e0;
   
-  uVar10 = (ulonglong)(int)param_3;
-  __savegprlr_15(param_1);
-  pdVar9 = (dxJointContact *)__savefpr_24();
-  if (pdVar9 == (dxJointContact *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x654,0,"%s");
+  __savegprlr_15();
+  iVar10 = __savefpr_24();
+  if (iVar10 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x654,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
-  if ((uVar10 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x655,0,"%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x655,0,0xffffffff82000f98,0xffffffff82021a7c);
   }
-  uVar3 = (pdVar9->contact).surface.mode;
   uVar12 = 1;
   uVar13 = 0;
   uVar14 = 0;
-  if ((uVar3 & 0x4000) == 0) {
-    uVar12 = uVar3 >> 0xe & 2;
+  if ((*(uint *)(iVar10 + 0x40) & 0x4000) == 0) {
+    uVar12 = *(uint *)(iVar10 + 0x40) >> 0xe & 2;
   }
-  local_108 = (pdVar9->contact).geom.normal[0];
-  local_104 = (pdVar9->contact).geom.normal[1];
-  local_100 = (pdVar9->contact).geom.normal[2];
-  if ((pdVar9->_padding_ & 2U) != 0) {
+  local_108 = *(float *)(iVar10 + 0x78);
+  local_104 = *(float *)(iVar10 + 0x7c);
+  local_100 = *(float *)(iVar10 + 0x80);
+  if ((*(uint *)(iVar10 + 0x18) & 2) != 0) {
     local_108 = -local_108;
     local_104 = -local_104;
     local_100 = -local_100;
   }
-  if (((((uint)local_108 & 0x7f800000) == 0x7f800000) ||
-      (((uint)local_104 & 0x7f800000) == 0x7f800000)) ||
-     (((uint)local_100 & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x667,0,"%s");
+  if (((uint)local_108 & 0x7f800000) == 0x7f800000) {
+LAB_8268edd0:
+    MyAssertHandler(0xffffffff82198a88,0x667,0,0xffffffff82000f98,0xffffffff821926e0);
   }
-  if (0.002 <= ABS((local_108 * local_108 + local_100 * local_100 + local_104 * local_104) - 1.0)) {
-    va("(%g %g %g) len %g");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x668,0,"%s\n\t%s");
+  else {
+    if (((uint)local_104 & 0x7f800000) == 0x7f800000) goto LAB_8268edd0;
+    if (((uint)local_100 & 0x7f800000) == 0x7f800000) goto LAB_8268edd0;
   }
-  if (pdVar9->_padding_ == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x66a,0,"%s");
+  dVar17 = (double)local_104;
+  dVar18 = (double)local_100;
+  dVar16 = (double)local_108;
+  fVar1 = (float)(dVar16 * dVar16 +
+                 (double)(float)(dVar18 * dVar18 + (double)(float)(dVar17 * dVar17)));
+  if (0.002 <= ABS(fVar1 - 1.0)) {
+    uVar9 = va(0xffffffff82015f2c,dVar16,dVar17,dVar18,(double)SQRT(fVar1));
+    MyAssertHandler(0xffffffff82198a88,0x668,0,0xffffffff820011f4,0xffffffff821755f8,uVar9);
   }
-  pdVar15 = &(pdVar9->contact).geom;
-  if (((((uint)(pdVar9->contact).geom.pos[0] & 0x7f800000) == 0x7f800000) ||
-      (((uint)(pdVar9->contact).geom.pos[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)(pdVar9->contact).geom.pos[2] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x66b,0,"%s");
+  if (*(int *)(iVar10 + 0x20) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x66a,0,0xffffffff82000f98,0xffffffff82198c70);
   }
-  iVar4 = pdVar9->_padding_;
-  if ((((*(uint *)(iVar4 + 0xe0) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)(iVar4 + 0xe4) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)(iVar4 + 0xe8) & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x66c,0,"%s");
+  if ((*(uint *)(iVar10 + 0x6c) & 0x7f800000) == 0x7f800000) {
+LAB_8268eeec:
+    MyAssertHandler(0xffffffff82198a88,0x66b,0,0xffffffff82000f98,0xffffffff82199180);
   }
-  iVar4 = pdVar9->_padding_;
-  fVar1 = pdVar15->pos[0] - *(float *)(iVar4 + 0xe0);
-  dVar20 = (double)fVar1;
-  fVar2 = (pdVar9->contact).geom.pos[1] - *(float *)(iVar4 + 0xe4);
-  dVar19 = (double)fVar2;
-  fVar7 = (pdVar9->contact).geom.pos[2] - *(float *)(iVar4 + 0xe8);
-  dVar18 = (double)fVar7;
-  if (((((uint)fVar1 & 0x7f800000) == 0x7f800000) || (((uint)fVar2 & 0x7f800000) == 0x7f800000)) ||
-     (((uint)fVar7 & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x66f,0,"%s");
+  else {
+    if ((*(uint *)(iVar10 + 0x70) & 0x7f800000) == 0x7f800000) goto LAB_8268eeec;
+    if ((*(uint *)(iVar10 + 0x74) & 0x7f800000) == 0x7f800000) goto LAB_8268eeec;
   }
-  dVar23 = 0.0;
-  pIVar8 = (Info2 *)uVar10;
-  dVar21 = dVar23;
-  dVar22 = dVar23;
-  dVar24 = dVar23;
-  if (((pdVar9->contact).surface.mode & 0x400U) == 0) {
-    pfVar11 = pIVar8->J1l;
+  iVar3 = *(int *)(iVar10 + 0x20);
+  if ((*(uint *)(iVar3 + 0xe0) & 0x7f800000) == 0x7f800000) {
+LAB_8268ef54:
+    MyAssertHandler(0xffffffff82198a88,0x66c,0,0xffffffff82000f98,0xffffffff821990f0);
+  }
+  else {
+    if ((*(uint *)(iVar3 + 0xe4) & 0x7f800000) == 0x7f800000) goto LAB_8268ef54;
+    if ((*(uint *)(iVar3 + 0xe8) & 0x7f800000) == 0x7f800000) goto LAB_8268ef54;
+  }
+  iVar3 = *(int *)(iVar10 + 0x20);
+  fVar1 = *(float *)(iVar10 + 0x6c) - *(float *)(iVar3 + 0xe0);
+  dVar18 = (double)fVar1;
+  fVar2 = *(float *)(iVar10 + 0x70) - *(float *)(iVar3 + 0xe4);
+  dVar17 = (double)fVar2;
+  fVar8 = *(float *)(iVar10 + 0x74) - *(float *)(iVar3 + 0xe8);
+  dVar16 = (double)fVar8;
+  if (((uint)fVar1 & 0x7f800000) == 0x7f800000) {
+LAB_8268efd4:
+    MyAssertHandler(0xffffffff82198a88,0x66f,0,0xffffffff82000f98,0xffffffff82199080);
+  }
+  else {
+    if (((uint)fVar2 & 0x7f800000) == 0x7f800000) goto LAB_8268efd4;
+    if (((uint)fVar8 & 0x7f800000) == 0x7f800000) goto LAB_8268efd4;
+  }
+  dVar21 = 0.0;
+  pfVar7 = (float *)param_3;
+  dVar19 = dVar21;
+  dVar20 = dVar21;
+  dVar22 = dVar21;
+  if ((*(uint *)(iVar10 + 0x40) & 0x400) == 0) {
+    pfVar11 = (float *)pfVar7[2];
     *pfVar11 = local_108;
     pfVar11[1] = local_104;
     pfVar11[2] = local_100;
-    pfVar11 = pIVar8->J1l;
-    if (((((uint)*pfVar11 & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar11[1] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pfVar11[2] & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x676,0,"%s");
-    }
-    *pIVar8->J1a = (float)(dVar19 * (double)local_100 - (double)(float)(dVar18 * (double)local_104))
-    ;
-    pIVar8->J1a[1] =
-         (float)(dVar18 * (double)local_108 - (double)(float)(dVar20 * (double)local_100));
-    pIVar8->J1a[2] =
-         (float)(dVar20 * (double)local_104 - (double)(float)(dVar19 * (double)local_108));
-    pfVar11 = pIVar8->J1a;
-    if (((((uint)*pfVar11 & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar11[1] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pfVar11[2] & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x678,0,"%s");
-    }
-    iVar4 = pdVar9->_padding_;
-    if (iVar4 != 0) {
-      pfVar11 = pIVar8->J2l;
-      dVar22 = (double)(pdVar15->pos[0] - *(float *)(iVar4 + 0xe0));
-      fVar1 = (pdVar9->contact).geom.pos[2];
-      dVar21 = (double)((pdVar9->contact).geom.pos[1] - *(float *)(iVar4 + 0xe4));
-      fVar2 = *(float *)(iVar4 + 0xe8);
-      *pfVar11 = -local_108;
-      dVar23 = (double)(fVar1 - fVar2);
-      pfVar11[1] = -local_104;
-      pfVar11[2] = -local_100;
-      pfVar11 = pIVar8->J2l;
-      if (((((uint)*pfVar11 & 0x7f800000) == 0x7f800000) ||
-          (((uint)pfVar11[1] & 0x7f800000) == 0x7f800000)) ||
-         (((uint)pfVar11[2] & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                        ,0x67e,0,"%s");
-      }
-      *pIVar8->J2a = -(float)(dVar21 * (double)local_100 -
-                             (double)(float)(dVar23 * (double)local_104));
-      pIVar8->J2a[1] =
-           -(float)(dVar23 * (double)local_108 - (double)(float)(dVar22 * (double)local_100));
-      pIVar8->J2a[2] =
-           -(float)(dVar22 * (double)local_104 - (double)(float)(dVar21 * (double)local_108));
-      pfVar11 = pIVar8->J2a;
-      if (((((uint)*pfVar11 & 0x7f800000) == 0x7f800000) ||
-          (((uint)pfVar11[1] & 0x7f800000) == 0x7f800000)) ||
-         (((uint)pfVar11[2] & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                        ,0x680,0,"%s");
-      }
-    }
-    uVar3 = (pdVar9->contact).surface.mode;
-    fVar1 = pIVar8->erp;
-    if ((uVar3 & 8) != 0) {
-      fVar1 = (pdVar9->contact).surface.soft_erp;
-    }
-    dVar16 = (double)((pdVar9->contact).geom.depth - (param_2->contactp).min_depth);
-    dVar17 = (double)(pIVar8->fps * fVar1);
-    if (dVar16 < dVar24) {
-      dVar16 = dVar24;
-    }
-    fVar1 = (param_2->contactp).max_vel;
-    if (((uVar3 & 0x200) != 0) || ((float)(dVar16 * dVar17) <= fVar1)) {
-      *pIVar8->c = (float)(dVar16 * dVar17);
+    puVar4 = (uint *)pfVar7[2];
+    if ((*puVar4 & 0x7f800000) == 0x7f800000) {
+LAB_8268f080:
+      MyAssertHandler(0xffffffff82198a88,0x676,0,0xffffffff82000f98,0xffffffff82199030);
     }
     else {
-      *pIVar8->c = fVar1;
+      if ((puVar4[1] & 0x7f800000) == 0x7f800000) goto LAB_8268f080;
+      if ((puVar4[2] & 0x7f800000) == 0x7f800000) goto LAB_8268f080;
     }
-    if (((uint)*pIVar8->c & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x691,0,"%s");
+    *(float *)pfVar7[3] =
+         (float)(dVar17 * (double)local_100 - (double)(float)(dVar16 * (double)local_104));
+    *(float *)((int)pfVar7[3] + 4) =
+         (float)(dVar16 * (double)local_108 - (double)(float)(dVar18 * (double)local_100));
+    *(float *)((int)pfVar7[3] + 8) =
+         (float)(dVar18 * (double)local_104 - (double)(float)(dVar17 * (double)local_108));
+    puVar4 = (uint *)pfVar7[3];
+    if ((*puVar4 & 0x7f800000) == 0x7f800000) {
+LAB_8268f134:
+      MyAssertHandler(0xffffffff82198a88,0x678,0,0xffffffff82000f98,0xffffffff82198c08);
     }
-    if (((pdVar9->contact).surface.mode & 0x10U) != 0) {
-      *pIVar8->cfm = (pdVar9->contact).surface.soft_cfm;
+    else {
+      if ((puVar4[1] & 0x7f800000) == 0x7f800000) goto LAB_8268f134;
+      if ((puVar4[2] & 0x7f800000) == 0x7f800000) goto LAB_8268f134;
     }
-    if (((pdVar9->contact).surface.mode & 4U) != 0) {
-      iVar4 = pdVar9->_padding_;
-      pfVar11 = pIVar8->J1l;
-      pfVar5 = pIVar8->J1a;
-      iVar6 = pdVar9->_padding_;
-      dVar16 = (double)(*(float *)(iVar4 + 0x130) * *pfVar11 +
-                        pfVar11[2] * *(float *)(iVar4 + 0x138) +
-                        pfVar11[1] * *(float *)(iVar4 + 0x134) +
-                       *pfVar5 * *(float *)(iVar4 + 0x140) +
-                       pfVar5[2] * *(float *)(iVar4 + 0x148) + pfVar5[1] * *(float *)(iVar4 + 0x144)
+    iVar3 = *(int *)(iVar10 + 0x30);
+    if (iVar3 != 0) {
+      pfVar11 = (float *)pfVar7[4];
+      dVar20 = (double)(*(float *)(iVar10 + 0x6c) - *(float *)(iVar3 + 0xe0));
+      fVar1 = *(float *)(iVar10 + 0x74);
+      dVar19 = (double)(*(float *)(iVar10 + 0x70) - *(float *)(iVar3 + 0xe4));
+      fVar2 = *(float *)(iVar3 + 0xe8);
+      *pfVar11 = -local_108;
+      dVar21 = (double)(fVar1 - fVar2);
+      pfVar11[1] = -local_104;
+      pfVar11[2] = -local_100;
+      puVar4 = (uint *)pfVar7[4];
+      if ((*puVar4 & 0x7f800000) == 0x7f800000) {
+LAB_8268f1f8:
+        MyAssertHandler(0xffffffff82198a88,0x67e,0,0xffffffff82000f98,0xffffffff82198fe0);
+      }
+      else {
+        if ((puVar4[1] & 0x7f800000) == 0x7f800000) goto LAB_8268f1f8;
+        if ((puVar4[2] & 0x7f800000) == 0x7f800000) goto LAB_8268f1f8;
+      }
+      *(float *)pfVar7[5] =
+           -(float)(dVar19 * (double)local_100 - (double)(float)(dVar21 * (double)local_104));
+      *(float *)((int)pfVar7[5] + 4) =
+           -(float)(dVar21 * (double)local_108 - (double)(float)(dVar20 * (double)local_100));
+      *(float *)((int)pfVar7[5] + 8) =
+           -(float)(dVar20 * (double)local_104 - (double)(float)(dVar19 * (double)local_108));
+      puVar4 = (uint *)pfVar7[5];
+      if ((*puVar4 & 0x7f800000) != 0x7f800000) {
+        if ((puVar4[1] & 0x7f800000) != 0x7f800000) {
+          if ((puVar4[2] & 0x7f800000) != 0x7f800000) goto LAB_8268f2c8;
+        }
+      }
+      MyAssertHandler(0xffffffff82198a88,0x680,0,0xffffffff82000f98,0xffffffff82198f90);
+    }
+LAB_8268f2c8:
+    fVar1 = pfVar7[1];
+    if ((*(uint *)(iVar10 + 0x40) & 8) != 0) {
+      fVar1 = *(float *)(iVar10 + 0x54);
+    }
+    dVar15 = (double)(*(float *)(iVar10 + 0x84) - *(float *)(param_2 + 0x24));
+    if (dVar15 < dVar22) {
+      dVar15 = dVar22;
+    }
+    if (((*(uint *)(iVar10 + 0x40) & 0x200) != 0) ||
+       ((float)(dVar15 * (double)(*pfVar7 * fVar1)) <= *(float *)(param_2 + 0x20))) {
+      *(float *)pfVar7[7] = (float)(dVar15 * (double)(*pfVar7 * fVar1));
+    }
+    else {
+      *(float *)pfVar7[7] = *(float *)(param_2 + 0x20);
+    }
+    if ((*(uint *)pfVar7[7] & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler(0xffffffff82198a88,0x691,0,0xffffffff82000f98,0xffffffff82198f7c);
+    }
+    if ((*(uint *)(iVar10 + 0x40) & 0x10) != 0) {
+      *(undefined4 *)pfVar7[8] = *(undefined4 *)(iVar10 + 0x58);
+    }
+    if ((*(uint *)(iVar10 + 0x40) & 4) != 0) {
+      iVar3 = *(int *)(iVar10 + 0x20);
+      pfVar11 = (float *)pfVar7[2];
+      pfVar5 = (float *)pfVar7[3];
+      iVar6 = *(int *)(iVar10 + 0x30);
+      dVar15 = (double)(*(float *)(iVar3 + 0x130) * *pfVar11 +
+                        pfVar11[2] * *(float *)(iVar3 + 0x138) +
+                        pfVar11[1] * *(float *)(iVar3 + 0x134) +
+                       *pfVar5 * *(float *)(iVar3 + 0x140) +
+                       pfVar5[2] * *(float *)(iVar3 + 0x148) + pfVar5[1] * *(float *)(iVar3 + 0x144)
                        );
       if (iVar6 != 0) {
-        pfVar11 = pIVar8->J2l;
-        pfVar5 = pIVar8->J2a;
-        dVar16 = (double)(float)((double)(*pfVar5 * *(float *)(iVar6 + 0x140) +
+        pfVar11 = (float *)pfVar7[4];
+        pfVar5 = (float *)pfVar7[5];
+        dVar15 = (double)(float)((double)(*pfVar5 * *(float *)(iVar6 + 0x140) +
                                           pfVar5[2] * *(float *)(iVar6 + 0x148) +
                                           pfVar5[1] * *(float *)(iVar6 + 0x144) +
                                          *pfVar11 * *(float *)(iVar6 + 0x130) +
                                          pfVar11[2] * *(float *)(iVar6 + 0x138) +
-                                         pfVar11[1] * *(float *)(iVar6 + 0x134)) + dVar16);
+                                         pfVar11[1] * *(float *)(iVar6 + 0x134)) + dVar15);
       }
-      dVar17 = (double)(pdVar9->contact).surface.bounce_vel;
-      if ((dVar24 <= dVar17) && (dVar17 < -dVar16)) {
-        fVar1 = -(float)((double)(pdVar9->contact).surface.bounce * dVar16);
-        if (*pIVar8->c < fVar1) {
-          *pIVar8->c = fVar1;
-          if (((uint)*pIVar8->c & 0x7f800000) == 0x7f800000) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                            ,0x6a7,0,"%s");
+      if ((dVar22 <= (double)*(float *)(iVar10 + 0x50)) &&
+         ((double)*(float *)(iVar10 + 0x50) < -dVar15)) {
+        fVar1 = -(float)((double)*(float *)(iVar10 + 0x4c) * dVar15);
+        if (*(float *)pfVar7[7] < fVar1) {
+          *(float *)pfVar7[7] = fVar1;
+          if ((*(uint *)pfVar7[7] & 0x7f800000) == 0x7f800000) {
+            MyAssertHandler(0xffffffff82198a88,0x6a7,0,0xffffffff82000f98,0xffffffff82198f7c);
           }
         }
       }
     }
     uVar13 = 1;
-    *pIVar8->lo = (float)dVar24;
-    *pIVar8->hi = 3.4028235e+38;
-    *pIVar8->oneSided = uVar12;
-    uVar14 = (ulonglong)(uint)pIVar8->rowskip;
+    *(float *)pfVar7[9] = (float)dVar22;
+    *(undefined4 *)pfVar7[10] = 0x7f7fffff;
+    *(uint *)pfVar7[0xb] = uVar12;
+    uVar14 = (ulonglong)(uint)pfVar7[6];
   }
-  if ((uint)pdVar9->the_m <= uVar13) goto LAB_8268fd50;
-  if (((pdVar9->contact).surface.mode & 2U) == 0) {
+  if (*(uint *)(iVar10 + 0x3c) <= uVar13) goto LAB_8268fd50;
+  if ((*(uint *)(iVar10 + 0x40) & 2) == 0) {
     dPlaneSpace(&local_108,&local_f8,&local_e8);
   }
   else {
-    local_f8 = (pdVar9->contact).fdir1[0];
-    local_f4 = (pdVar9->contact).fdir1[1];
-    local_f0 = (pdVar9->contact).fdir1[2];
+    local_f8 = *(float *)(iVar10 + 0x8c);
+    local_f4 = *(float *)(iVar10 + 0x90);
+    local_f0 = *(float *)(iVar10 + 0x94);
     local_e0 = local_f4 * local_108 - local_f8 * local_104;
     local_e8 = local_f0 * local_104 - local_f4 * local_100;
     local_e4 = local_f8 * local_100 - local_f0 * local_108;
   }
-  if (dVar24 < (double)(pdVar9->contact).surface.mu) {
-    if ((uint)pdVar9->the_m <= uVar13) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x6c5,0,"rowIndex doesn\'t index joint->the_m\n\t%i not in [0, %i)");
+  if (dVar22 < (double)*(float *)(iVar10 + 0x44)) {
+    if (*(uint *)(iVar10 + 0x3c) <= uVar13) {
+      MyAssertHandler(0xffffffff82198a88,0x6c5,0,0xffffffff82198ddc,uVar13);
     }
-    iVar4 = (int)uVar14;
-    pfVar11 = pIVar8->J1l + iVar4;
+    iVar3 = (int)uVar14 * 4;
+    pfVar11 = (float *)(iVar3 + (int)pfVar7[2]);
     *pfVar11 = local_f8;
     pfVar11[1] = local_f4;
     pfVar11[2] = local_f0;
-    pfVar11 = pIVar8->J1l;
-    if ((((uint)pfVar11[iVar4] & 0x7f800000) == 0x7f800000) ||
-       (((uint)pfVar11[iVar4 + 1] & 0x7f800000) == 0x7f800000)) {
+    fVar1 = pfVar7[2];
+    if ((*(uint *)(iVar3 + (int)fVar1) & 0x7f800000) == 0x7f800000) {
 LAB_8268f650:
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x6c8,0,"%s");
+      MyAssertHandler(0xffffffff82198a88,0x6c8,0,0xffffffff82000f98,0xffffffff82198e18);
     }
-    else if ((*(uint *)((int)((uVar14 + 2 & 0xffffffff) << 2) + (int)pfVar11) & 0x7f800000) ==
-             0x7f800000) goto LAB_8268f650;
-    pIVar8->J1a[iVar4] =
-         (float)((double)local_f0 * dVar19 - (double)(float)((double)local_f4 * dVar18));
-    pIVar8->J1a[iVar4 + 1] =
-         (float)((double)local_f8 * dVar18 - (double)(float)((double)local_f0 * dVar20));
+    else {
+      if ((*(uint *)((int)fVar1 + iVar3 + 4) & 0x7f800000) == 0x7f800000) goto LAB_8268f650;
+      if ((*(uint *)((int)((uVar14 + 2 & 0xffffffff) << 2) + (int)fVar1) & 0x7f800000) == 0x7f800000
+         ) goto LAB_8268f650;
+    }
+    *(float *)(iVar3 + (int)pfVar7[3]) =
+         (float)((double)local_f0 * dVar17 - (double)(float)((double)local_f4 * dVar16));
+    *(float *)(iVar3 + (int)pfVar7[3] + 4) =
+         (float)((double)local_f8 * dVar16 - (double)(float)((double)local_f0 * dVar18));
     iVar6 = (int)((uVar14 + 2 & 0x3fffffff) << 2);
-    *(float *)(iVar6 + (int)pIVar8->J1a) =
-         (float)((double)local_f4 * dVar20 - (double)(float)((double)local_f8 * dVar19));
-    pfVar11 = pIVar8->J1a;
-    if (((((uint)pfVar11[iVar4] & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar11[iVar4 + 1] & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)((int)pfVar11 + iVar6) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x6cb,0,"%s");
+    *(float *)(iVar6 + (int)pfVar7[3]) =
+         (float)((double)local_f4 * dVar18 - (double)(float)((double)local_f8 * dVar17));
+    fVar1 = pfVar7[3];
+    if ((*(uint *)(iVar3 + (int)fVar1) & 0x7f800000) == 0x7f800000) {
+LAB_8268f710:
+      MyAssertHandler(0xffffffff82198a88,0x6cb,0,0xffffffff82000f98,0xffffffff82198b90);
     }
-    if (pdVar9->_padding_ != 0) {
-      pfVar11 = pIVar8->J2l + iVar4;
+    else {
+      if ((*(uint *)((int)fVar1 + iVar3 + 4) & 0x7f800000) == 0x7f800000) goto LAB_8268f710;
+      if ((*(uint *)((int)fVar1 + iVar6) & 0x7f800000) == 0x7f800000) goto LAB_8268f710;
+    }
+    if (*(int *)(iVar10 + 0x30) != 0) {
+      pfVar11 = (float *)((int)pfVar7[4] + iVar3);
       *pfVar11 = -local_f8;
       pfVar11[1] = -local_f4;
       pfVar11[2] = -local_f0;
-      pfVar11 = pIVar8->J2l;
-      if (((((uint)pfVar11[iVar4] & 0x7f800000) == 0x7f800000) ||
-          (((uint)pfVar11[iVar4 + 1] & 0x7f800000) == 0x7f800000)) ||
-         ((*(uint *)((int)pfVar11 + iVar6) & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                        ,0x6d0,0,"%s");
+      fVar1 = pfVar7[4];
+      if ((*(uint *)((int)fVar1 + iVar3) & 0x7f800000) == 0x7f800000) {
+LAB_8268f7b4:
+        MyAssertHandler(0xffffffff82198a88,0x6d0,0,0xffffffff82000f98,0xffffffff82198e90);
       }
-      pIVar8->J2a[iVar4] =
-           -(float)((double)local_f0 * dVar21 - (double)(float)((double)local_f4 * dVar23));
-      pIVar8->J2a[iVar4 + 1] =
-           -(float)((double)local_f8 * dVar23 - (double)(float)((double)local_f0 * dVar22));
-      *(float *)((int)pIVar8->J2a + iVar6) =
-           -(float)((double)local_f4 * dVar22 - (double)(float)((double)local_f8 * dVar21));
-      pfVar11 = pIVar8->J2a;
-      if (((((uint)pfVar11[iVar4] & 0x7f800000) == 0x7f800000) ||
-          (((uint)pfVar11[iVar4 + 1] & 0x7f800000) == 0x7f800000)) ||
-         ((*(uint *)(iVar6 + (int)pfVar11) & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                        ,0x6d2,0,"%s");
+      else {
+        if ((*(uint *)((int)fVar1 + iVar3 + 4) & 0x7f800000) == 0x7f800000) goto LAB_8268f7b4;
+        if ((*(uint *)((int)fVar1 + iVar6) & 0x7f800000) == 0x7f800000) goto LAB_8268f7b4;
       }
+      *(float *)((int)pfVar7[5] + iVar3) =
+           -(float)((double)local_f0 * dVar19 - (double)(float)((double)local_f4 * dVar21));
+      *(float *)((int)pfVar7[5] + iVar3 + 4) =
+           -(float)((double)local_f8 * dVar21 - (double)(float)((double)local_f0 * dVar20));
+      *(float *)((int)pfVar7[5] + iVar6) =
+           -(float)((double)local_f4 * dVar20 - (double)(float)((double)local_f8 * dVar19));
+      fVar1 = pfVar7[5];
+      if ((*(uint *)((int)fVar1 + iVar3) & 0x7f800000) != 0x7f800000) {
+        if ((*(uint *)(iVar3 + (int)fVar1 + 4) & 0x7f800000) != 0x7f800000) {
+          if ((*(uint *)(iVar6 + (int)fVar1) & 0x7f800000) != 0x7f800000) goto LAB_8268f884;
+        }
+      }
+      MyAssertHandler(0xffffffff82198a88,0x6d2,0,0xffffffff82000f98,0xffffffff82198f08);
     }
-    if (((pdVar9->contact).surface.mode & 0x20U) != 0) {
+LAB_8268f884:
+    if ((*(uint *)(iVar10 + 0x40) & 0x20) != 0) {
       iVar6 = (int)(uVar13 << 2);
-      *(float *)((int)pIVar8->c + iVar6) = (pdVar9->contact).surface.motion1;
-      if ((*(uint *)((int)pIVar8->c + iVar6) & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                        ,0x6d8,0,"%s");
+      *(undefined4 *)((int)pfVar7[7] + iVar6) = *(undefined4 *)(iVar10 + 0x5c);
+      if ((*(uint *)((int)pfVar7[7] + iVar6) & 0x7f800000) == 0x7f800000) {
+        MyAssertHandler(0xffffffff82198a88,0x6d8,0,0xffffffff82000f98,0xffffffff82198c84);
       }
     }
-    pIVar8->lo[iVar4] = -(pdVar9->contact).surface.mu;
-    pIVar8->hi[iVar4] = (pdVar9->contact).surface.mu;
-    pIVar8->oneSided[iVar4] = uVar12;
-    uVar3 = (pdVar9->contact).surface.mode;
-    if (((uVar3 & 0x1000) != 0) && ((uVar3 & 0x400) == 0)) {
-      *(undefined4 *)((int)(uVar13 << 2) + (int)pIVar8->findex) = 0;
+    *(float *)((int)pfVar7[9] + iVar3) = -*(float *)(iVar10 + 0x44);
+    *(undefined4 *)((int)pfVar7[10] + iVar3) = *(undefined4 *)(iVar10 + 0x44);
+    *(uint *)((int)pfVar7[0xb] + iVar3) = uVar12;
+    if (((*(uint *)(iVar10 + 0x40) & 0x1000) != 0) && ((*(uint *)(iVar10 + 0x40) & 0x400) == 0)) {
+      *(undefined4 *)((int)(uVar13 << 2) + (int)pfVar7[0xc]) = 0;
     }
-    if (((pdVar9->contact).surface.mode & 0x80U) != 0) {
-      *(float *)((int)(uVar13 << 2) + (int)pIVar8->cfm) = (pdVar9->contact).surface.slip1;
+    if ((*(uint *)(iVar10 + 0x40) & 0x80) != 0) {
+      *(undefined4 *)((int)(uVar13 << 2) + (int)pfVar7[8]) = *(undefined4 *)(iVar10 + 100);
     }
     uVar13 = uVar13 + 1;
-    uVar14 = (uint)pIVar8->rowskip + uVar14;
+    uVar14 = (uint)pfVar7[6] + uVar14;
   }
-  if (((pdVar9->contact).surface.mode & 1U) == 0) {
-    fVar1 = (pdVar9->contact).surface.mu;
+  if ((*(uint *)(iVar10 + 0x40) & 1) == 0) {
+    fVar1 = *(float *)(iVar10 + 0x44);
   }
   else {
-    fVar1 = (pdVar9->contact).surface.mu2;
+    fVar1 = *(float *)(iVar10 + 0x48);
   }
-  dVar16 = (double)fVar1;
-  if (dVar24 < dVar16) {
-    if ((uint)pdVar9->the_m <= uVar13) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x6ec,0,"rowIndex doesn\'t index joint->the_m\n\t%i not in [0, %i)");
+  dVar15 = (double)fVar1;
+  if (dVar22 < dVar15) {
+    if (*(uint *)(iVar10 + 0x3c) <= uVar13) {
+      MyAssertHandler(0xffffffff82198a88,0x6ec,0,0xffffffff82198ddc,uVar13);
     }
-    iVar4 = (int)uVar14;
-    pfVar11 = pIVar8->J1l + iVar4;
+    iVar3 = (int)uVar14 * 4;
+    pfVar11 = (float *)(iVar3 + (int)pfVar7[2]);
     *pfVar11 = local_e8;
     pfVar11[1] = local_e4;
     pfVar11[2] = local_e0;
-    pfVar11 = pIVar8->J1l;
-    if ((((uint)pfVar11[iVar4] & 0x7f800000) == 0x7f800000) ||
-       (((uint)pfVar11[iVar4 + 1] & 0x7f800000) == 0x7f800000)) {
+    fVar1 = pfVar7[2];
+    if ((*(uint *)(iVar3 + (int)fVar1) & 0x7f800000) == 0x7f800000) {
 LAB_8268fa18:
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x6ef,0,"%s");
+      MyAssertHandler(0xffffffff82198a88,0x6ef,0,0xffffffff82000f98,0xffffffff82198e18);
     }
-    else if ((*(uint *)((int)((uVar14 + 2 & 0xffffffff) << 2) + (int)pfVar11) & 0x7f800000) ==
-             0x7f800000) goto LAB_8268fa18;
-    pIVar8->J1a[iVar4] =
-         (float)((double)local_e0 * dVar19 - (double)(float)((double)local_e4 * dVar18));
-    pIVar8->J1a[iVar4 + 1] =
-         (float)((double)local_e8 * dVar18 - (double)(float)((double)local_e0 * dVar20));
+    else {
+      if ((*(uint *)((int)fVar1 + iVar3 + 4) & 0x7f800000) == 0x7f800000) goto LAB_8268fa18;
+      if ((*(uint *)((int)((uVar14 + 2 & 0xffffffff) << 2) + (int)fVar1) & 0x7f800000) == 0x7f800000
+         ) goto LAB_8268fa18;
+    }
+    *(float *)(iVar3 + (int)pfVar7[3]) =
+         (float)((double)local_e0 * dVar17 - (double)(float)((double)local_e4 * dVar16));
+    *(float *)(iVar3 + (int)pfVar7[3] + 4) =
+         (float)((double)local_e8 * dVar16 - (double)(float)((double)local_e0 * dVar18));
     iVar6 = (int)((uVar14 + 2 & 0x3fffffff) << 2);
-    *(float *)(iVar6 + (int)pIVar8->J1a) =
-         (float)((double)local_e4 * dVar20 - (double)(float)((double)local_e8 * dVar19));
-    pfVar11 = pIVar8->J1a;
-    if (((((uint)pfVar11[iVar4] & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar11[iVar4 + 1] & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)((int)pfVar11 + iVar6) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x6f1,0,"%s");
+    *(float *)(iVar6 + (int)pfVar7[3]) =
+         (float)((double)local_e4 * dVar18 - (double)(float)((double)local_e8 * dVar17));
+    fVar1 = pfVar7[3];
+    if ((*(uint *)(iVar3 + (int)fVar1) & 0x7f800000) == 0x7f800000) {
+LAB_8268fad8:
+      MyAssertHandler(0xffffffff82198a88,0x6f1,0,0xffffffff82000f98,0xffffffff82198b90);
     }
-    if (pdVar9->_padding_ != 0) {
-      pfVar11 = pIVar8->J2l + iVar4;
+    else {
+      if ((*(uint *)((int)fVar1 + iVar3 + 4) & 0x7f800000) == 0x7f800000) goto LAB_8268fad8;
+      if ((*(uint *)((int)fVar1 + iVar6) & 0x7f800000) == 0x7f800000) goto LAB_8268fad8;
+    }
+    if (*(int *)(iVar10 + 0x30) != 0) {
+      pfVar11 = (float *)((int)pfVar7[4] + iVar3);
       *pfVar11 = -local_e8;
       pfVar11[1] = -local_e4;
       pfVar11[2] = -local_e0;
-      pfVar11 = pIVar8->J2l;
-      if (((((uint)pfVar11[iVar4] & 0x7f800000) == 0x7f800000) ||
-          (((uint)pfVar11[iVar4 + 1] & 0x7f800000) == 0x7f800000)) ||
-         ((*(uint *)((int)pfVar11 + iVar6) & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                        ,0x6f6,0,"%s");
+      fVar1 = pfVar7[4];
+      if ((*(uint *)((int)fVar1 + iVar3) & 0x7f800000) == 0x7f800000) {
+LAB_8268fb7c:
+        MyAssertHandler(0xffffffff82198a88,0x6f6,0,0xffffffff82000f98,0xffffffff82198e90);
       }
-      pIVar8->J2a[iVar4] =
-           -(float)((double)local_e0 * dVar21 - (double)(float)((double)local_e4 * dVar23));
-      pIVar8->J2a[iVar4 + 1] =
-           -(float)((double)local_e8 * dVar23 - (double)(float)((double)local_e0 * dVar22));
-      *(float *)((int)pIVar8->J2a + iVar6) =
-           -(float)((double)local_e4 * dVar22 - (double)(float)((double)local_e8 * dVar21));
-      pfVar11 = pIVar8->J2a;
-      if (((((uint)pfVar11[iVar4] & 0x7f800000) == 0x7f800000) ||
-          (((uint)pfVar11[iVar4 + 1] & 0x7f800000) == 0x7f800000)) ||
-         ((*(uint *)(iVar6 + (int)pfVar11) & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                        ,0x6f8,0,"%s");
+      else {
+        if ((*(uint *)((int)fVar1 + iVar3 + 4) & 0x7f800000) == 0x7f800000) goto LAB_8268fb7c;
+        if ((*(uint *)((int)fVar1 + iVar6) & 0x7f800000) == 0x7f800000) goto LAB_8268fb7c;
       }
+      *(float *)((int)pfVar7[5] + iVar3) =
+           -(float)((double)local_e0 * dVar19 - (double)(float)((double)local_e4 * dVar21));
+      *(float *)((int)pfVar7[5] + iVar3 + 4) =
+           -(float)((double)local_e8 * dVar21 - (double)(float)((double)local_e0 * dVar20));
+      *(float *)((int)pfVar7[5] + iVar6) =
+           -(float)((double)local_e4 * dVar20 - (double)(float)((double)local_e8 * dVar19));
+      fVar1 = pfVar7[5];
+      if ((*(uint *)((int)fVar1 + iVar3) & 0x7f800000) != 0x7f800000) {
+        if ((*(uint *)(iVar3 + (int)fVar1 + 4) & 0x7f800000) != 0x7f800000) {
+          if ((*(uint *)(iVar6 + (int)fVar1) & 0x7f800000) != 0x7f800000) goto LAB_8268fc4c;
+        }
+      }
+      MyAssertHandler(0xffffffff82198a88,0x6f8,0,0xffffffff82000f98,0xffffffff82198f08);
     }
-    if (((pdVar9->contact).surface.mode & 0x40U) != 0) {
+LAB_8268fc4c:
+    if ((*(uint *)(iVar10 + 0x40) & 0x40) != 0) {
       iVar6 = (int)(uVar13 << 2);
-      *(float *)((int)pIVar8->c + iVar6) = (pdVar9->contact).surface.motion2;
-      if ((*(uint *)((int)pIVar8->c + iVar6) & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                        ,0x6ff,0,"%s");
+      *(undefined4 *)((int)pfVar7[7] + iVar6) = *(undefined4 *)(iVar10 + 0x60);
+      if ((*(uint *)((int)pfVar7[7] + iVar6) & 0x7f800000) == 0x7f800000) {
+        MyAssertHandler(0xffffffff82198a88,0x6ff,0,0xffffffff82000f98,0xffffffff82198c84);
       }
     }
-    pIVar8->lo[iVar4] = (float)-dVar16;
-    pIVar8->hi[iVar4] = (float)dVar16;
-    pIVar8->oneSided[iVar4] = uVar12;
-    uVar3 = (pdVar9->contact).surface.mode;
-    if (((uVar3 & 0x2000) != 0) && ((uVar3 & 0x400) == 0)) {
-      *(undefined4 *)((int)(uVar13 << 2) + (int)pIVar8->findex) = 0;
+    *(float *)((int)pfVar7[9] + iVar3) = (float)-dVar15;
+    *(float *)((int)pfVar7[10] + iVar3) = (float)dVar15;
+    *(uint *)((int)pfVar7[0xb] + iVar3) = uVar12;
+    if (((*(uint *)(iVar10 + 0x40) & 0x2000) != 0) && ((*(uint *)(iVar10 + 0x40) & 0x400) == 0)) {
+      *(undefined4 *)((int)(uVar13 << 2) + (int)pfVar7[0xc]) = 0;
     }
-    if (((pdVar9->contact).surface.mode & 0x100U) != 0) {
-      *(float *)((int)(uVar13 << 2) + (int)pIVar8->cfm) = (pdVar9->contact).surface.slip2;
+    if ((*(uint *)(iVar10 + 0x40) & 0x100) != 0) {
+      *(undefined4 *)((int)(uVar13 << 2) + (int)pfVar7[8]) = *(undefined4 *)(iVar10 + 0x68);
     }
     uVar13 = uVar13 + 1;
   }
-  if (uVar13 != (uint)pdVar9->the_m) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x70f,1,"%s");
+  if (uVar13 != *(uint *)(iVar10 + 0x3c)) {
+    MyAssertHandler(0xffffffff82198a88,0x70f,1,0xffffffff82000f98,0xffffffff82198dac);
   }
-  if ((phys_dumpcontacts->current).enabled != false) {
-    dumpJointInfo2(pdVar9,pIVar8);
+  if (*(char *)(DAT_8427b930 + 0xc) != '\0') {
+    dumpJointInfo2(iVar10,param_3);
   }
 LAB_8268fd50:
   __restfpr_24();
@@ -3069,151 +2985,153 @@ LAB_8268fd50:
 
 // 8268FD60  universalInit  (physics/ode/src/joint.cpp:1827)
 
-void universalInit(dxJointUniversal *param_1)
+void universalInit(int param_1)
 
 {
-  float fVar1;
+  undefined4 uVar1;
   int iVar2;
   double dVar3;
   
-  dSetZero(param_1->anchor1,4);
-  dSetZero(param_1->anchor2,4);
-  dSetZero(param_1->axis1,4);
+  dSetZero(param_1 + 0x3c,4);
+  dSetZero(param_1 + 0x4c,4);
+  dSetZero(param_1 + 0x5c,4);
   dVar3 = 1.0;
-  param_1->axis1[0] = 1.0;
-  dSetZero(param_1->axis2,4);
-  param_1->axis2[1] = (float)dVar3;
-  dSetZero(param_1->qrel1,4);
-  dSetZero(param_1->qrel2,4);
-  iVar2 = param_1->_padding_;
-  (param_1->limot1).fudge_factor = (float)dVar3;
-  (param_1->limot1).vel = 0.0;
-  (param_1->limot1).fmax = 0.0;
-  (param_1->limot1).lostop = -3.4028235e+38;
-  (param_1->limot1).histop = 3.4028235e+38;
-  (param_1->limot1).normal_cfm = *(float *)(iVar2 + 0x24);
-  (param_1->limot1).stop_erp = *(float *)(iVar2 + 0x20);
-  fVar1 = *(float *)(iVar2 + 0x24);
-  (param_1->limot1).limit = 0;
-  (param_1->limot1).stop_cfm = fVar1;
-  (param_1->limot1).bounce = 0.0;
-  (param_1->limot1).limit_err = 0.0;
-  iVar2 = param_1->_padding_;
-  (param_1->limot2).vel = 0.0;
-  (param_1->limot2).fmax = 0.0;
-  (param_1->limot2).lostop = -3.4028235e+38;
-  (param_1->limot2).histop = 3.4028235e+38;
-  (param_1->limot2).fudge_factor = (float)dVar3;
-  (param_1->limot2).normal_cfm = *(float *)(iVar2 + 0x24);
-  (param_1->limot2).stop_erp = *(float *)(iVar2 + 0x20);
-  fVar1 = *(float *)(iVar2 + 0x24);
-  (param_1->limot2).limit = 0;
-  (param_1->limot2).stop_cfm = fVar1;
-  (param_1->limot2).bounce = 0.0;
-  (param_1->limot2).limit_err = 0.0;
+  *(undefined4 *)(param_1 + 0x5c) = 0x3f800000;
+  dSetZero(param_1 + 0x6c,4);
+  *(float *)(param_1 + 0x70) = (float)dVar3;
+  dSetZero(param_1 + 0x7c,4);
+  dSetZero(param_1 + 0x8c,4);
+  iVar2 = *(int *)(param_1 + 0x10);
+  *(float *)(param_1 + 0xac) = (float)dVar3;
+  *(undefined4 *)(param_1 + 0x9c) = 0;
+  *(undefined4 *)(param_1 + 0xa0) = 0;
+  *(undefined4 *)(param_1 + 0xa4) = 0xff7fffff;
+  *(undefined4 *)(param_1 + 0xa8) = 0x7f7fffff;
+  *(undefined4 *)(param_1 + 0xb0) = *(undefined4 *)(iVar2 + 0x24);
+  *(undefined4 *)(param_1 + 0xb4) = *(undefined4 *)(iVar2 + 0x20);
+  uVar1 = *(undefined4 *)(iVar2 + 0x24);
+  *(undefined4 *)(param_1 + 0xc0) = 0;
+  *(undefined4 *)(param_1 + 0xb8) = uVar1;
+  *(undefined4 *)(param_1 + 0xbc) = 0;
+  *(undefined4 *)(param_1 + 0xc4) = 0;
+  iVar2 = *(int *)(param_1 + 0x10);
+  *(undefined4 *)(param_1 + 200) = 0;
+  *(undefined4 *)(param_1 + 0xcc) = 0;
+  *(undefined4 *)(param_1 + 0xd0) = 0xff7fffff;
+  *(undefined4 *)(param_1 + 0xd4) = 0x7f7fffff;
+  *(float *)(param_1 + 0xd8) = (float)dVar3;
+  *(undefined4 *)(param_1 + 0xdc) = *(undefined4 *)(iVar2 + 0x24);
+  *(undefined4 *)(param_1 + 0xe0) = *(undefined4 *)(iVar2 + 0x20);
+  uVar1 = *(undefined4 *)(iVar2 + 0x24);
+  *(undefined4 *)(param_1 + 0xec) = 0;
+  *(undefined4 *)(param_1 + 0xe4) = uVar1;
+  *(undefined4 *)(param_1 + 0xe8) = 0;
+  *(undefined4 *)(param_1 + 0xf0) = 0;
   return;
 }
 
 
 // 826929F0  getUniversalAxes  (physics/ode/src/joint.cpp:1842)
 
-void getUniversalAxes(dxJointUniversal *param_1,float *param_2,float *param_3)
+void getUniversalAxes(int param_1,float *param_2,float *param_3)
 
 {
   int iVar1;
   
-  iVar1 = param_1->_padding_;
-  *param_2 = *(float *)(iVar1 + 0x100) * param_1->axis1[0] +
-             *(float *)(iVar1 + 0x104) * param_1->axis1[1] +
-             *(float *)(iVar1 + 0x108) * param_1->axis1[2];
-  param_2[1] = param_1->axis1[0] * *(float *)(iVar1 + 0x110) +
-               *(float *)(iVar1 + 0x114) * param_1->axis1[1] +
-               *(float *)(iVar1 + 0x118) * param_1->axis1[2];
-  param_2[2] = param_1->axis1[0] * *(float *)(iVar1 + 0x120) +
-               *(float *)(iVar1 + 0x124) * param_1->axis1[1] +
-               *(float *)(iVar1 + 0x128) * param_1->axis1[2];
-  iVar1 = param_1->_padding_;
+  iVar1 = *(int *)(param_1 + 0x20);
+  *param_2 = *(float *)(iVar1 + 0x100) * *(float *)(param_1 + 0x5c) +
+             *(float *)(iVar1 + 0x104) * *(float *)(param_1 + 0x60) +
+             *(float *)(iVar1 + 0x108) * *(float *)(param_1 + 100);
+  param_2[1] = *(float *)(param_1 + 0x5c) * *(float *)(iVar1 + 0x110) +
+               *(float *)(iVar1 + 0x114) * *(float *)(param_1 + 0x60) +
+               *(float *)(iVar1 + 0x118) * *(float *)(param_1 + 100);
+  param_2[2] = *(float *)(param_1 + 0x5c) * *(float *)(iVar1 + 0x120) +
+               *(float *)(iVar1 + 0x124) * *(float *)(param_1 + 0x60) +
+               *(float *)(iVar1 + 0x128) * *(float *)(param_1 + 100);
+  iVar1 = *(int *)(param_1 + 0x30);
   if (iVar1 != 0) {
-    *param_3 = *(float *)(iVar1 + 0x100) * param_1->axis2[0] +
-               *(float *)(iVar1 + 0x108) * param_1->axis2[2] +
-               *(float *)(iVar1 + 0x104) * param_1->axis2[1];
-    param_3[1] = param_1->axis2[0] * *(float *)(iVar1 + 0x110) +
-                 *(float *)(iVar1 + 0x118) * param_1->axis2[2] +
-                 *(float *)(iVar1 + 0x114) * param_1->axis2[1];
-    param_3[2] = *(float *)(iVar1 + 0x120) * param_1->axis2[0] +
-                 *(float *)(iVar1 + 0x128) * param_1->axis2[2] +
-                 *(float *)(iVar1 + 0x124) * param_1->axis2[1];
+    *param_3 = *(float *)(iVar1 + 0x100) * *(float *)(param_1 + 0x6c) +
+               *(float *)(iVar1 + 0x108) * *(float *)(param_1 + 0x74) +
+               *(float *)(iVar1 + 0x104) * *(float *)(param_1 + 0x70);
+    param_3[1] = *(float *)(param_1 + 0x6c) * *(float *)(iVar1 + 0x110) +
+                 *(float *)(iVar1 + 0x118) * *(float *)(param_1 + 0x74) +
+                 *(float *)(iVar1 + 0x114) * *(float *)(param_1 + 0x70);
+    param_3[2] = *(float *)(iVar1 + 0x120) * *(float *)(param_1 + 0x6c) +
+                 *(float *)(iVar1 + 0x128) * *(float *)(param_1 + 0x74) +
+                 *(float *)(iVar1 + 0x124) * *(float *)(param_1 + 0x70);
     return;
   }
-  *param_3 = param_1->axis2[0];
-  param_3[1] = param_1->axis2[1];
-  param_3[2] = param_1->axis2[2];
+  *param_3 = *(float *)(param_1 + 0x6c);
+  param_3[1] = *(float *)(param_1 + 0x70);
+  param_3[2] = *(float *)(param_1 + 0x74);
   return;
 }
 
 
 // 82692B20  getUniversalAngle1  (physics/ode/src/joint.cpp:1858)
 
-float getUniversalAngle1(dxJointUniversal *param_1)
+undefined8 getUniversalAngle1(int param_1)
 
 {
-  float fVar1;
+  undefined8 uVar1;
   float local_90;
   float local_8c;
   float local_88;
   float local_80;
   float local_7c;
   float local_78;
-  float afStack_70 [4];
-  float afStack_60 [4];
-  float afStack_50 [4];
-  float afStack_40 [12];
+  undefined1 auStack_70 [16];
+  undefined1 auStack_60 [16];
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [48];
   
-  if (param_1->_padding_ != 0) {
+  if (*(int *)(param_1 + 0x20) != 0) {
     getUniversalAxes(param_1,&local_80,&local_90);
-    dRFrom2Axes(afStack_40,local_80,local_7c,local_78,local_90,local_8c,local_88);
-    dQfromR(afStack_70,afStack_40);
-    dQMultiply1(afStack_60,(float *)(param_1->_padding_ + 0xf0),afStack_70);
-    dQMultiply2(afStack_50,afStack_60,param_1->qrel1);
-    fVar1 = getHingeAngleFromRelativeQuat(afStack_50,param_1->axis1);
-    return fVar1;
+    dRFrom2Axes((double)local_80,(double)local_7c,(double)local_78,(double)local_90,(double)local_8c
+                ,(double)local_88,auStack_40);
+    dQfromR(auStack_70,auStack_40);
+    dQMultiply1(auStack_60,(ulonglong)*(uint *)(param_1 + 0x20) + 0xf0,auStack_70);
+    dQMultiply2(auStack_50,auStack_60,param_1 + 0x7c);
+    uVar1 = getHingeAngleFromRelativeQuat(auStack_50,param_1 + 0x5c);
+    return uVar1;
   }
-  return 0.0;
+  return 0;
 }
 
 
 // 82692BD8  getUniversalAngle2  (physics/ode/src/joint.cpp:1898)
 
-float getUniversalAngle2(dxJointUniversal *param_1)
+double getUniversalAngle2(int param_1)
 
 {
-  float *pfVar1;
-  float fVar2;
+  undefined1 *puVar1;
+  double dVar2;
   float local_90;
   float local_8c;
   float local_88;
   float local_80;
   float local_7c;
   float local_78;
-  float afStack_70 [4];
-  float afStack_60 [4];
-  float afStack_50 [4];
-  float afStack_40 [12];
+  undefined1 auStack_70 [16];
+  undefined1 auStack_60 [16];
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [48];
   
-  if (param_1->_padding_ != 0) {
+  if (*(int *)(param_1 + 0x20) != 0) {
     getUniversalAxes(param_1,&local_90,&local_80);
-    dRFrom2Axes(afStack_40,local_80,local_7c,local_78,local_90,local_8c,local_88);
-    dQfromR(afStack_70,afStack_40);
-    if (param_1->_padding_ == 0) {
-      pfVar1 = afStack_70;
+    dRFrom2Axes((double)local_80,(double)local_7c,(double)local_78,(double)local_90,(double)local_8c
+                ,(double)local_88,auStack_40);
+    dQfromR(auStack_70,auStack_40);
+    if ((ulonglong)*(uint *)(param_1 + 0x30) == 0) {
+      puVar1 = auStack_70;
     }
     else {
-      dQMultiply1(afStack_50,(float *)(param_1->_padding_ + 0xf0),afStack_70);
-      pfVar1 = afStack_50;
+      dQMultiply1(auStack_50,(ulonglong)*(uint *)(param_1 + 0x30) + 0xf0,auStack_70);
+      puVar1 = auStack_50;
     }
-    dQMultiply2(afStack_60,pfVar1,param_1->qrel2);
-    fVar2 = getHingeAngleFromRelativeQuat(afStack_60,param_1->axis2);
-    return -fVar2;
+    dQMultiply2(auStack_60,puVar1,param_1 + 0x8c);
+    dVar2 = (double)getHingeAngleFromRelativeQuat(auStack_60,param_1 + 0x6c);
+    return -dVar2;
   }
   return 0.0;
 }
@@ -3221,81 +3139,72 @@ float getUniversalAngle2(dxJointUniversal *param_1)
 
 // 82692CA8  universalGetInfo1  (physics/ode/src/joint.cpp:1940)
 
-void universalGetInfo1(dxJointUniversal *param_1,Info1 *param_2)
+void universalGetInfo1(undefined8 param_1,int *param_2)
 
 {
-  float fVar1;
-  dxJointUniversal *pdVar2;
+  int iVar1;
+  bool bVar2;
   bool bVar3;
   bool bVar4;
   bool bVar5;
-  bool bVar6;
+  double dVar6;
   double dVar7;
-  double dVar8;
-  float fVar9;
   
-  pdVar2 = (dxJointUniversal *)__savegprlr_24(param_1);
-  (pdVar2->limot1).limit_err = 3.4028235e+38;
-  (pdVar2->limot2).limit_err = 3.4028235e+38;
-  param_2->nub = 4;
-  param_2->m = 4;
-  bVar5 = 0.0 < (pdVar2->limot1).fmax;
-  bVar6 = 0.0 < (pdVar2->limot2).fmax;
-  fVar9 = (pdVar2->limot1).lostop;
-  if (((fVar9 < -3.1415927) && (3.1415927 < (pdVar2->limot1).histop)) ||
-     (bVar3 = true, (pdVar2->limot1).histop < fVar9)) {
+  iVar1 = __savegprlr_24();
+  *(undefined4 *)(iVar1 + 0xc4) = 0x7f7fffff;
+  *(undefined4 *)(iVar1 + 0xf0) = 0x7f7fffff;
+  param_2[1] = 4;
+  *param_2 = 4;
+  bVar4 = 0.0 < *(float *)(iVar1 + 0xa0);
+  bVar5 = 0.0 < *(float *)(iVar1 + 0xcc);
+  if (((*(float *)(iVar1 + 0xa4) < -3.1415927) && (3.1415927 < *(float *)(iVar1 + 0xa8))) ||
+     (bVar2 = true, *(float *)(iVar1 + 0xa8) < *(float *)(iVar1 + 0xa4))) {
+    bVar2 = false;
+  }
+  if (((*(float *)(iVar1 + 0xd0) < -3.1415927) && (3.1415927 < *(float *)(iVar1 + 0xd4))) ||
+     (bVar3 = true, *(float *)(iVar1 + 0xd4) < *(float *)(iVar1 + 0xd0))) {
     bVar3 = false;
   }
-  fVar9 = (pdVar2->limot2).lostop;
-  if (((fVar9 < -3.1415927) && (3.1415927 < (pdVar2->limot2).histop)) ||
-     (bVar4 = true, (pdVar2->limot2).histop < fVar9)) {
-    bVar4 = false;
-  }
-  if ((!bVar3) && (!bVar4)) goto LAB_82692e08;
-  fVar9 = getUniversalAngle1(pdVar2);
-  dVar8 = (double)fVar9;
-  fVar9 = getUniversalAngle2(pdVar2);
-  if (bVar3) {
-    dVar7 = (double)(pdVar2->limot1).lostop;
-    if (dVar7 < dVar8) {
-      dVar7 = (double)(pdVar2->limot1).histop;
-      if (dVar8 < dVar7) {
-        (pdVar2->limot1).limit = 0;
+  if ((!bVar2) && (!bVar3)) goto LAB_82692e08;
+  dVar6 = (double)getUniversalAngle1(iVar1);
+  dVar7 = (double)getUniversalAngle2(iVar1);
+  if (bVar2) {
+    if ((double)*(float *)(iVar1 + 0xa4) < dVar6) {
+      if (dVar6 < (double)*(float *)(iVar1 + 0xa8)) {
+        *(undefined4 *)(iVar1 + 0xc0) = 0;
         goto LAB_82692de0;
       }
-      (pdVar2->limot1).limit_err = (float)(dVar8 - dVar7);
-      (pdVar2->limot1).limit = 2;
+      *(float *)(iVar1 + 0xc4) = (float)(dVar6 - (double)*(float *)(iVar1 + 0xa8));
+      *(undefined4 *)(iVar1 + 0xc0) = 2;
     }
     else {
-      (pdVar2->limot1).limit_err = (float)(dVar8 - dVar7);
-      (pdVar2->limot1).limit = 1;
+      *(float *)(iVar1 + 0xc4) = (float)(dVar6 - (double)*(float *)(iVar1 + 0xa4));
+      *(undefined4 *)(iVar1 + 0xc0) = 1;
+    }
+    bVar4 = true;
+  }
+LAB_82692de0:
+  if (bVar3) {
+    if ((double)*(float *)(iVar1 + 0xd0) < dVar7) {
+      if (dVar7 < (double)*(float *)(iVar1 + 0xd4)) {
+        *(undefined4 *)(iVar1 + 0xec) = 0;
+        goto LAB_82692e08;
+      }
+      *(float *)(iVar1 + 0xf0) = (float)(dVar7 - (double)*(float *)(iVar1 + 0xd4));
+      *(undefined4 *)(iVar1 + 0xec) = 2;
+    }
+    else {
+      *(float *)(iVar1 + 0xf0) = (float)(dVar7 - (double)*(float *)(iVar1 + 0xd0));
+      *(undefined4 *)(iVar1 + 0xec) = 1;
     }
     bVar5 = true;
   }
-LAB_82692de0:
-  if (bVar4) {
-    fVar1 = (pdVar2->limot2).lostop;
-    if (fVar1 < fVar9) {
-      fVar1 = (pdVar2->limot2).histop;
-      if (fVar9 < fVar1) {
-        (pdVar2->limot2).limit = 0;
-        goto LAB_82692e08;
-      }
-      (pdVar2->limot2).limit_err = fVar9 - fVar1;
-      (pdVar2->limot2).limit = 2;
-    }
-    else {
-      (pdVar2->limot2).limit_err = fVar9 - fVar1;
-      (pdVar2->limot2).limit = 1;
-    }
-    bVar6 = true;
-  }
 LAB_82692e08:
-  if (bVar5) {
-    param_2->m = param_2->m + 1;
+  if (bVar4) {
+    *param_2 = *param_2 + 1;
   }
-  if (bVar6) {
-    param_2->m = param_2->m + 1;
+  if (bVar5) {
+    *param_2 = *param_2 + 1;
   }
   __restgprlr_24();
   return;
@@ -3304,13 +3213,13 @@ LAB_82692e08:
 
 // 82692E90  universalGetInfo2  (physics/ode/src/joint.cpp:1975)
 
-void universalGetInfo2(dxJointUniversal *param_1,dxWorldStepInfo *param_2,Info2 *param_3)
+void universalGetInfo2(int param_1,float *param_2)
 
 {
-  uint uVar1;
+  int iVar1;
   int iVar2;
-  dxJointUniversal *pdVar3;
-  int iVar4;
+  undefined8 uVar3;
+  longlong lVar4;
   ulonglong uVar5;
   double dVar6;
   double dVar7;
@@ -3329,9 +3238,8 @@ void universalGetInfo2(dxJointUniversal *param_1,dxWorldStepInfo *param_2,Info2 
   float local_2c;
   float local_28;
   
-  pdVar3 = param_1;
-  setBall((dxJoint *)param_1,(Info2 *)param_2,param_1->anchor1,param_1->anchor2);
-  getUniversalAxes(pdVar3,&local_40,&local_30);
+  uVar3 = setBall(param_1,param_2,param_1 + 0x3c,param_1 + 0x4c);
+  getUniversalAxes(uVar3,&local_40,&local_30);
   dVar6 = (double)local_3c;
   dVar11 = (double)local_38;
   dVar10 = (double)local_40;
@@ -3345,75 +3253,70 @@ void universalGetInfo2(dxJointUniversal *param_1,dxWorldStepInfo *param_2,Info2 
   local_50 = (float)(dVar7 * dVar6 - (double)(float)(dVar11 * dVar8));
   local_4c = (float)(dVar11 * dVar9 - (double)(float)(dVar7 * dVar10));
   dNormalize3(&local_50);
-  uVar1 = (param_2->qs).num_iterations;
-  uVar5 = (ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2;
+  uVar5 = (ulonglong)(uint)param_2[6] + ((ulonglong)(uint)param_2[6] & 0x7fffffff) * 2;
   iVar2 = (int)((uVar5 + 2 & 0xffffffff) << 2);
-  iVar4 = (int)((uVar5 & 0x3fffffff) << 2);
-  *(float *)((int)param_2->gravity[3] + iVar4) = local_50;
-  *(float *)((int)param_2->gravity[3] + iVar4 + 4) = local_4c;
-  *(float *)((int)param_2->gravity[3] + iVar2) = local_48;
-  if (param_1->_padding_ != 0) {
-    *(float *)((int)param_2->global_cfm + iVar4) = -local_50;
-    *(float *)((int)param_2->global_cfm + iVar4 + 4) = -local_4c;
-    *(float *)((int)param_2->global_cfm + iVar2) = -local_48;
+  iVar1 = (int)((uVar5 & 0x3fffffff) << 2);
+  *(float *)((int)param_2[3] + iVar1) = local_50;
+  *(float *)((int)param_2[3] + iVar1 + 4) = local_4c;
+  *(float *)((int)param_2[3] + iVar2) = local_48;
+  if (*(int *)(param_1 + 0x30) != 0) {
+    *(float *)((int)param_2[5] + iVar1) = -local_50;
+    *(float *)((int)param_2[5] + iVar1 + 4) = -local_4c;
+    *(float *)((int)param_2[5] + iVar2) = -local_48;
   }
-  *(float *)((int)(param_2->qs).w + 0xc) =
-       -((float)((double)param_2->gravity[1] * dVar12) * param_2->gravity[0]);
-  iVar4 = dxJointLimitMotor::addLimot
-                    (&param_1->limot1,(dxJoint *)param_1,(Info2 *)param_2,4,&local_40,1);
-  dxJointLimitMotor::addLimot
-            (&param_1->limot2,(dxJoint *)param_1,(Info2 *)param_2,iVar4 + 4,&local_30,1);
+  *(float *)((int)param_2[7] + 0xc) = -((float)((double)param_2[1] * dVar12) * *param_2);
+  lVar4 = dxJointLimitMotor__addLimot(param_1 + 0x9c,param_1,param_2,4,&local_40,1);
+  dxJointLimitMotor__addLimot(param_1 + 200,param_1,param_2,lVar4 + 4,&local_30,1);
   return;
 }
 
 
 // 82693018  universalComputeInitialRelativeRotations  (physics/ode/src/joint.cpp:2039)
 
-void universalComputeInitialRelativeRotations(dxJointUniversal *param_1)
+void universalComputeInitialRelativeRotations(void)
 
 {
-  dxJointUniversal *pdVar1;
+  int iVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  float local_a0;
-  float local_9c;
-  float local_98;
-  float local_94;
+  undefined4 local_a0;
+  undefined4 local_9c;
+  undefined4 local_98;
+  undefined4 local_94;
   float local_90;
   float local_8c;
   float local_88;
   float local_80;
   float local_7c;
   float local_78;
-  float afStack_70 [24];
+  undefined1 auStack_70 [96];
   
-  pdVar1 = (dxJointUniversal *)__savefpr_26(param_1);
-  if (pdVar1->_padding_ != 0) {
-    getUniversalAxes(pdVar1,&local_80,&local_90);
+  iVar1 = __savefpr_26();
+  if (*(int *)(iVar1 + 0x20) != 0) {
+    getUniversalAxes(iVar1,&local_80,&local_90);
     dVar7 = (double)local_88;
     dVar6 = (double)local_8c;
     dVar5 = (double)local_90;
     dVar4 = (double)local_78;
     dVar3 = (double)local_7c;
     dVar2 = (double)local_80;
-    dRFrom2Axes(afStack_70,local_80,local_7c,local_78,local_90,local_8c,local_88);
-    dQfromR(&local_a0,afStack_70);
-    dQMultiply1(pdVar1->qrel1,(float *)(pdVar1->_padding_ + 0xf0),&local_a0);
-    dRFrom2Axes(afStack_70,(float)dVar5,(float)dVar6,(float)dVar7,(float)dVar2,(float)dVar3,
-                (float)dVar4);
-    dQfromR(&local_a0,afStack_70);
-    if (pdVar1->_padding_ == 0) {
-      pdVar1->qrel2[0] = local_a0;
-      pdVar1->qrel2[1] = local_9c;
-      pdVar1->qrel2[2] = local_98;
-      pdVar1->qrel2[3] = local_94;
+    dRFrom2Axes(dVar2,dVar3,dVar4,dVar5,dVar6,dVar7,auStack_70);
+    dQfromR(&local_a0,auStack_70);
+    dQMultiply1(iVar1 + 0x7c,(ulonglong)*(uint *)(iVar1 + 0x20) + 0xf0,&local_a0);
+    dRFrom2Axes(dVar5,dVar6,dVar7,dVar2,dVar3,dVar4,auStack_70);
+    dQfromR(&local_a0,auStack_70);
+    if ((ulonglong)*(uint *)(iVar1 + 0x30) == 0) {
+      *(undefined4 *)(iVar1 + 0x8c) = local_a0;
+      *(undefined4 *)(iVar1 + 0x90) = local_9c;
+      *(undefined4 *)(iVar1 + 0x94) = local_98;
+      *(undefined4 *)(iVar1 + 0x98) = local_94;
     }
     else {
-      dQMultiply1(pdVar1->qrel2,(float *)(pdVar1->_padding_ + 0xf0),&local_a0);
+      dQMultiply1(iVar1 + 0x8c,(ulonglong)*(uint *)(iVar1 + 0x30) + 0xf0,&local_a0);
     }
   }
   __restfpr_26();
@@ -3423,35 +3326,25 @@ void universalComputeInitialRelativeRotations(dxJointUniversal *param_1)
 
 // 82693130  dJointSetUniversalAnchor  (physics/ode/src/joint.cpp:2068)
 
-void dJointSetUniversalAnchor(dxJointUniversal *param_1,float param_2,float param_3,float param_4)
+void dJointSetUniversalAnchor(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  dxJointUniversal *pdVar1;
-  float *in_r4;
-  float *in_r5;
-  double extraout_f1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
+  int iVar1;
+  undefined8 extraout_f1;
+  undefined8 uVar2;
   
-  dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
-  pdVar1 = (dxJointUniversal *)__savegprlr_29((double)param_2,param_1);
-  dVar4 = extraout_f1;
-  if (pdVar1 == (dxJointUniversal *)0x0) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x815;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x815,0,"%s\n\t%s");
+  iVar1 = __savegprlr_29();
+  uVar2 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x815,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if (pdVar1->_padding_ != ODE_JOINT_TYPE_UNIVERSAL) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x816;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x816,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 7) {
+    MyAssertHandler(0xffffffff82198a88,0x816,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  setAnchors((dxJoint *)pdVar1,(float)dVar4,(float)dVar2,(float)dVar3,in_r4,in_r5);
-  universalComputeInitialRelativeRotations(pdVar1);
+  setAnchors(uVar2,param_2,param_3,iVar1);
+  universalComputeInitialRelativeRotations();
   __restgprlr_29();
   return;
 }
@@ -3459,35 +3352,25 @@ void dJointSetUniversalAnchor(dxJointUniversal *param_1,float param_2,float para
 
 // 826931F8  dJointSetUniversalAxis1  (physics/ode/src/joint.cpp:2078)
 
-void dJointSetUniversalAxis1(dxJointUniversal *param_1,float param_2,float param_3,float param_4)
+void dJointSetUniversalAxis1(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  dxJointUniversal *pdVar1;
-  float *in_r4;
-  float *in_r5;
-  double extraout_f1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
+  int iVar1;
+  undefined8 extraout_f1;
+  undefined8 uVar2;
   
-  dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
-  pdVar1 = (dxJointUniversal *)__savegprlr_29((double)param_2,param_1);
-  dVar4 = extraout_f1;
-  if (pdVar1 == (dxJointUniversal *)0x0) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x81f;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x81f,0,"%s\n\t%s");
+  iVar1 = __savegprlr_29();
+  uVar2 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x81f,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if (pdVar1->_padding_ != 7) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x820;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x820,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 7) {
+    MyAssertHandler(0xffffffff82198a88,0x820,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  setAxes((dxJoint *)pdVar1,(float)dVar4,(float)dVar2,(float)dVar3,in_r4,in_r5);
-  universalComputeInitialRelativeRotations(pdVar1);
+  setAxes(uVar2,param_2,param_3,iVar1);
+  universalComputeInitialRelativeRotations(iVar1);
   __restgprlr_29();
   return;
 }
@@ -3495,35 +3378,25 @@ void dJointSetUniversalAxis1(dxJointUniversal *param_1,float param_2,float param
 
 // 826932E0  dJointSetUniversalAxis2  (physics/ode/src/joint.cpp:2091)
 
-void dJointSetUniversalAxis2(dxJointUniversal *param_1,float param_2,float param_3,float param_4)
+void dJointSetUniversalAxis2(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  dxJointUniversal *pdVar1;
-  float *in_r4;
-  float *in_r5;
-  double extraout_f1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
+  int iVar1;
+  undefined8 extraout_f1;
+  undefined8 uVar2;
   
-  dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
-  pdVar1 = (dxJointUniversal *)__savegprlr_29((double)param_2,param_1);
-  dVar4 = extraout_f1;
-  if (pdVar1 == (dxJointUniversal *)0x0) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x82c;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x82c,0,"%s\n\t%s");
+  iVar1 = __savegprlr_29();
+  uVar2 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x82c,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if (pdVar1->_padding_ != 7) {
-    in_r5 = (float *)0x0;
-    in_r4 = (float *)0x82d;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x82d,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 7) {
+    MyAssertHandler(0xffffffff82198a88,0x82d,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  setAxes((dxJoint *)pdVar1,(float)dVar4,(float)dVar2,(float)dVar3,in_r4,in_r5);
-  universalComputeInitialRelativeRotations(pdVar1);
+  setAxes(uVar2,param_2,param_3,iVar1);
+  universalComputeInitialRelativeRotations(iVar1);
   __restgprlr_29();
   return;
 }
@@ -3531,32 +3404,30 @@ void dJointSetUniversalAxis2(dxJointUniversal *param_1,float param_2,float param
 
 // 826933C8  dJointGetUniversalAnchor  (physics/ode/src/joint.cpp:2104)
 
-void dJointGetUniversalAnchor(dxJointUniversal *param_1,float *param_2)
+void dJointGetUniversalAnchor(undefined8 param_1,ulonglong param_2)
 
 {
-  dxJoint *pdVar1;
-  ulonglong uVar2;
+  int iVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pdVar1 = (dxJoint *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x839,0,"%s\n\t%s");
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x839,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x83a,0,"%s\n\t%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x83a,0,0xffffffff820011f4,0xffffffff82012420,
+                    0xffffffff82199300);
   }
-  if (pdVar1->type != ODE_JOINT_TYPE_UNIVERSAL) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x83b,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 7) {
+    MyAssertHandler(0xffffffff82198a88,0x83b,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  if ((pdVar1->flags & 2U) != 0) {
-    getAnchor2(pdVar1,(float *)uVar2,(float *)&pdVar1[1]._padding_);
+  if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
+    getAnchor2(iVar1,param_2,iVar1 + 0x4c);
     __restgprlr_28();
     return;
   }
-  getAnchor(pdVar1,(float *)uVar2,(float *)(pdVar1 + 1));
+  getAnchor(iVar1,param_2,iVar1 + 0x3c);
   __restgprlr_28();
   return;
 }
@@ -3564,32 +3435,30 @@ void dJointGetUniversalAnchor(dxJointUniversal *param_1,float *param_2)
 
 // 826934B0  dJointGetUniversalAnchor2  (physics/ode/src/joint.cpp:2117)
 
-void dJointGetUniversalAnchor2(dxJointUniversal *param_1,float *param_2)
+void dJointGetUniversalAnchor2(undefined8 param_1,ulonglong param_2)
 
 {
-  dxJoint *pdVar1;
-  ulonglong uVar2;
+  int iVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pdVar1 = (dxJoint *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x846,0,"%s\n\t%s");
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x846,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x847,0,"%s\n\t%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x847,0,0xffffffff820011f4,0xffffffff82012420,
+                    0xffffffff82199300);
   }
-  if (pdVar1->type != ODE_JOINT_TYPE_UNIVERSAL) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x848,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 7) {
+    MyAssertHandler(0xffffffff82198a88,0x848,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  if ((pdVar1->flags & 2U) != 0) {
-    getAnchor(pdVar1,(float *)uVar2,(float *)(pdVar1 + 1));
+  if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
+    getAnchor(iVar1,param_2,iVar1 + 0x3c);
     __restgprlr_28();
     return;
   }
-  getAnchor2(pdVar1,(float *)uVar2,(float *)&pdVar1[1]._padding_);
+  getAnchor2(iVar1,param_2,iVar1 + 0x4c);
   __restgprlr_28();
   return;
 }
@@ -3597,32 +3466,30 @@ void dJointGetUniversalAnchor2(dxJointUniversal *param_1,float *param_2)
 
 // 82693598  dJointGetUniversalAxis1  (physics/ode/src/joint.cpp:2130)
 
-void dJointGetUniversalAxis1(dxJointUniversal *param_1,float *param_2)
+void dJointGetUniversalAxis1(undefined8 param_1,ulonglong param_2)
 
 {
-  dxJoint *pdVar1;
-  ulonglong uVar2;
+  int iVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pdVar1 = (dxJoint *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x853,0,"%s\n\t%s");
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x853,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x854,0,"%s\n\t%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x854,0,0xffffffff820011f4,0xffffffff82012420,
+                    0xffffffff82199300);
   }
-  if (pdVar1->type != ODE_JOINT_TYPE_UNIVERSAL) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x855,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 7) {
+    MyAssertHandler(0xffffffff82198a88,0x855,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  if ((pdVar1->flags & 2U) != 0) {
-    getAxis2(pdVar1,(float *)uVar2,(float *)&pdVar1[1].node[1].body);
+  if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
+    getAxis2(iVar1,param_2,iVar1 + 0x6c);
     __restgprlr_28();
     return;
   }
-  getAxis(pdVar1,(float *)uVar2,(float *)&pdVar1[1].node[0].body);
+  getAxis(iVar1,param_2,iVar1 + 0x5c);
   __restgprlr_28();
   return;
 }
@@ -3630,32 +3497,30 @@ void dJointGetUniversalAxis1(dxJointUniversal *param_1,float *param_2)
 
 // 82693680  dJointGetUniversalAxis2  (physics/ode/src/joint.cpp:2143)
 
-void dJointGetUniversalAxis2(dxJointUniversal *param_1,float *param_2)
+void dJointGetUniversalAxis2(undefined8 param_1,ulonglong param_2)
 
 {
-  dxJoint *pdVar1;
-  ulonglong uVar2;
+  int iVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pdVar1 = (dxJoint *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x860,0,"%s\n\t%s");
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x860,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x861,0,"%s\n\t%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x861,0,0xffffffff820011f4,0xffffffff82012420,
+                    0xffffffff82199300);
   }
-  if (pdVar1->type != ODE_JOINT_TYPE_UNIVERSAL) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x862,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 7) {
+    MyAssertHandler(0xffffffff82198a88,0x862,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  if ((pdVar1->flags & 2U) != 0) {
-    getAxis(pdVar1,(float *)uVar2,(float *)&pdVar1[1].node[0].body);
+  if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
+    getAxis(iVar1,param_2,iVar1 + 0x5c);
     __restgprlr_28();
     return;
   }
-  getAxis2(pdVar1,(float *)uVar2,(float *)&pdVar1[1].node[1].body);
+  getAxis2(iVar1,param_2,iVar1 + 0x6c);
   __restgprlr_28();
   return;
 }
@@ -3663,29 +3528,29 @@ void dJointGetUniversalAxis2(dxJointUniversal *param_1,float *param_2)
 
 // 8268FE80  dJointSetUniversalParam  (physics/ode/src/joint.cpp:2156)
 
-void dJointSetUniversalParam(dxJointUniversal *param_1,int param_2,float param_3)
+void dJointSetUniversalParam(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  double extraout_f1;
-  double dVar2;
+  undefined8 extraout_f1;
+  undefined8 uVar2;
   
-  iVar1 = __savegprlr_28((double)param_3,param_1);
-  dVar2 = extraout_f1;
+  iVar1 = __savegprlr_28();
+  uVar2 = extraout_f1;
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x86d,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x86d,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
   if (*(int *)(iVar1 + 0x14) != 7) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x86e,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x86e,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  if ((param_2 & 0xff00U) == 0x100) {
-    dxJointLimitMotor::set((dxJointLimitMotor *)(iVar1 + 200),param_2 & 0xff,(float)dVar2);
+  if (((uint)param_2 & 0xff00) == 0x100) {
+    dxJointLimitMotor__set(uVar2,iVar1 + 200,param_2 & 0xff);
     __restgprlr_28();
     return;
   }
-  dxJointLimitMotor::set((dxJointLimitMotor *)(iVar1 + 0x9c),param_2,(float)dVar2);
+  dxJointLimitMotor__set(uVar2,iVar1 + 0x9c,param_2);
   __restgprlr_28();
   return;
 }
@@ -3693,206 +3558,188 @@ void dJointSetUniversalParam(dxJointUniversal *param_1,int param_2,float param_3
 
 // 8268FF48  dJointGetUniversalParam  (physics/ode/src/joint.cpp:2169)
 
-float dJointGetUniversalParam(dxJointUniversal *param_1,int param_2)
+void dJointGetUniversalParam(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  double dVar2;
-  float fVar3;
   
-  iVar1 = __savegprlr_28(param_1);
+  iVar1 = __savegprlr_28();
   if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x87a,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x87a,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
   if (*(int *)(iVar1 + 0x14) != 7) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x87b,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x87b,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  if ((param_2 & 0xff00U) == 0x100) {
-    fVar3 = dxJointLimitMotor::get((dxJointLimitMotor *)(iVar1 + 200),param_2 & 0xff);
-    dVar2 = (double)__restgprlr_28((double)fVar3);
-    return (float)dVar2;
+  if (((uint)param_2 & 0xff00) == 0x100) {
+    dxJointLimitMotor__get(iVar1 + 200,param_2 & 0xff);
+    __restgprlr_28();
+    return;
   }
-  fVar3 = dxJointLimitMotor::get((dxJointLimitMotor *)(iVar1 + 0x9c),param_2);
-  dVar2 = (double)__restgprlr_28((double)fVar3);
-  return (float)dVar2;
+  dxJointLimitMotor__get(iVar1 + 0x9c,param_2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 82693768  dJointGetUniversalAngle1  (physics/ode/src/joint.cpp:2182)
 
-float dJointGetUniversalAngle1(dxJointUniversal *param_1)
+void dJointGetUniversalAngle1(void)
 
 {
-  dxJointUniversal *pdVar1;
-  double dVar2;
-  float fVar3;
+  int iVar1;
   
-  pdVar1 = (dxJointUniversal *)__savegprlr_29(param_1);
-  if (pdVar1 == (dxJointUniversal *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x887,0,"%s\n\t%s");
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x887,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if (pdVar1->_padding_ != 7) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x888,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 7) {
+    MyAssertHandler(0xffffffff82198a88,0x888,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  if ((pdVar1->_padding_ & 2U) != 0) {
-    fVar3 = getUniversalAngle2(pdVar1);
-    dVar2 = (double)__restgprlr_29((double)fVar3);
-    return (float)dVar2;
+  if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
+    getUniversalAngle2();
+    __restgprlr_29();
+    return;
   }
-  fVar3 = getUniversalAngle1(pdVar1);
-  dVar2 = (double)__restgprlr_29((double)fVar3);
-  return (float)dVar2;
+  getUniversalAngle1(iVar1);
+  __restgprlr_29();
+  return;
 }
 
 
 // 82693810  dJointGetUniversalAngle2  (physics/ode/src/joint.cpp:2193)
 
-float dJointGetUniversalAngle2(dxJointUniversal *param_1)
+void dJointGetUniversalAngle2(void)
 
 {
-  dxJointUniversal *pdVar1;
-  double dVar2;
-  float fVar3;
+  int iVar1;
   
-  pdVar1 = (dxJointUniversal *)__savegprlr_29(param_1);
-  if (pdVar1 == (dxJointUniversal *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x892,0,"%s\n\t%s");
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x892,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if (pdVar1->_padding_ != 7) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x893,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 7) {
+    MyAssertHandler(0xffffffff82198a88,0x893,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  if ((pdVar1->_padding_ & 2U) != 0) {
-    fVar3 = getUniversalAngle1(pdVar1);
-    dVar2 = (double)__restgprlr_29((double)fVar3);
-    return (float)dVar2;
+  if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
+    getUniversalAngle1();
+    __restgprlr_29();
+    return;
   }
-  fVar3 = getUniversalAngle2(pdVar1);
-  dVar2 = (double)__restgprlr_29((double)fVar3);
-  return (float)dVar2;
+  getUniversalAngle2(iVar1);
+  __restgprlr_29();
+  return;
 }
 
 
 // 826938B8  dJointGetUniversalAngle1Rate  (physics/ode/src/joint.cpp:2204)
 
-float dJointGetUniversalAngle1Rate(dxJointUniversal *param_1)
+void dJointGetUniversalAngle1Rate(void)
 
 {
-  dxBody *pdVar1;
-  dxJoint *pdVar2;
-  dxBody *pdVar3;
-  double dVar4;
+  int iVar1;
+  int iVar2;
+  double dVar3;
   float local_30;
   float local_2c;
   float local_28;
   
-  pdVar2 = (dxJoint *)__savegprlr_29(param_1);
-  if (pdVar2 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x89d,0,"%s\n\t%s");
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x89d,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if (pdVar2->type != ODE_JOINT_TYPE_UNIVERSAL) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x89e,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 7) {
+    MyAssertHandler(0xffffffff82198a88,0x89e,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  pdVar3 = pdVar2->node[0].body;
-  if (pdVar3 == (dxBody *)0x0) {
-    dVar4 = 0.0;
+  iVar2 = *(int *)(iVar1 + 0x20);
+  if (iVar2 == 0) {
+    dVar3 = 0.0;
   }
   else {
-    if ((pdVar2->flags & 2U) == 0) {
-      getAxis(pdVar2,&local_30,(float *)&pdVar2[1].node[0].body);
+    if ((*(uint *)(iVar1 + 0x18) & 2) == 0) {
+      getAxis(iVar1,&local_30,iVar1 + 0x5c);
     }
     else {
-      getAxis2(pdVar2,&local_30,(float *)&pdVar2[1].node[1].body);
+      getAxis2(iVar1,&local_30,iVar1 + 0x6c);
     }
-    pdVar1 = pdVar2->node[1].body;
-    dVar4 = (double)((pdVar3->info).avel[0] * local_30 +
-                    (pdVar3->info).avel[1] * local_2c + (pdVar3->info).avel[2] * local_28);
-    if (pdVar1 != (dxBody *)0x0) {
-      dVar4 = (double)__restgprlr_29((double)(float)(dVar4 - (double)((pdVar1->info).avel[0] *
-                                                                      local_30 +
-                                                                     (pdVar1->info).avel[1] *
-                                                                     local_2c +
-                                                                     (pdVar1->info).avel[2] *
-                                                                     local_28)));
-      return (float)dVar4;
+    iVar1 = *(int *)(iVar1 + 0x30);
+    dVar3 = (double)(*(float *)(iVar2 + 0x140) * local_30 +
+                    *(float *)(iVar2 + 0x144) * local_2c + *(float *)(iVar2 + 0x148) * local_28);
+    if (iVar1 != 0) {
+      __restgprlr_29((double)(float)(dVar3 - (double)(*(float *)(iVar1 + 0x140) * local_30 +
+                                                     *(float *)(iVar1 + 0x144) * local_2c +
+                                                     *(float *)(iVar1 + 0x148) * local_28)));
+      return;
     }
   }
-  dVar4 = (double)__restgprlr_29(dVar4);
-  return (float)dVar4;
+  __restgprlr_29(dVar3);
+  return;
 }
 
 
 // 826939D8  dJointGetUniversalAngle2Rate  (physics/ode/src/joint.cpp:2225)
 
-float dJointGetUniversalAngle2Rate(dxJointUniversal *param_1)
+void dJointGetUniversalAngle2Rate(void)
 
 {
-  dxBody *pdVar1;
-  dxJoint *pdVar2;
-  dxBody *pdVar3;
-  double dVar4;
+  int iVar1;
+  int iVar2;
+  double dVar3;
   float local_30;
   float local_2c;
   float local_28;
   
-  pdVar2 = (dxJoint *)__savegprlr_29(param_1);
-  if (pdVar2 == (dxJoint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x8b2,0,"%s\n\t%s");
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x8b2,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
-  if (pdVar2->type != ODE_JOINT_TYPE_UNIVERSAL) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x8b3,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 7) {
+    MyAssertHandler(0xffffffff82198a88,0x8b3,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  pdVar3 = pdVar2->node[0].body;
-  if (pdVar3 == (dxBody *)0x0) {
-    dVar4 = 0.0;
+  iVar2 = *(int *)(iVar1 + 0x20);
+  if (iVar2 == 0) {
+    dVar3 = 0.0;
   }
   else {
-    if ((pdVar2->flags & 2U) == 0) {
-      getAxis2(pdVar2,&local_30,(float *)&pdVar2[1].node[1].body);
+    if ((*(uint *)(iVar1 + 0x18) & 2) == 0) {
+      getAxis2(iVar1,&local_30,iVar1 + 0x6c);
     }
     else {
-      getAxis(pdVar2,&local_30,(float *)&pdVar2[1].node[0].body);
+      getAxis(iVar1,&local_30,iVar1 + 0x5c);
     }
-    pdVar1 = pdVar2->node[1].body;
-    dVar4 = (double)((pdVar3->info).avel[0] * local_30 +
-                    (pdVar3->info).avel[1] * local_2c + (pdVar3->info).avel[2] * local_28);
-    if (pdVar1 != (dxBody *)0x0) {
-      dVar4 = (double)__restgprlr_29((double)(float)(dVar4 - (double)((pdVar1->info).avel[0] *
-                                                                      local_30 +
-                                                                     (pdVar1->info).avel[1] *
-                                                                     local_2c +
-                                                                     (pdVar1->info).avel[2] *
-                                                                     local_28)));
-      return (float)dVar4;
+    iVar1 = *(int *)(iVar1 + 0x30);
+    dVar3 = (double)(*(float *)(iVar2 + 0x140) * local_30 +
+                    *(float *)(iVar2 + 0x144) * local_2c + *(float *)(iVar2 + 0x148) * local_28);
+    if (iVar1 != 0) {
+      __restgprlr_29((double)(float)(dVar3 - (double)(*(float *)(iVar1 + 0x140) * local_30 +
+                                                     *(float *)(iVar1 + 0x144) * local_2c +
+                                                     *(float *)(iVar1 + 0x148) * local_28)));
+      return;
     }
   }
-  dVar4 = (double)__restgprlr_29(dVar4);
-  return (float)dVar4;
+  __restgprlr_29(dVar3);
+  return;
 }
 
 
 // 82693AF8  dJointAddUniversalTorques  (physics/ode/src/joint.cpp:2246)
 
-void dJointAddUniversalTorques(dxJointUniversal *param_1,float param_2,float param_3)
+void dJointAddUniversalTorques(double param_1,double param_2,int param_3)
 
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  dxJointUniversal *pdVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
+  undefined8 uVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   float local_50;
   float local_4c;
   float local_48;
@@ -3900,35 +3747,28 @@ void dJointAddUniversalTorques(dxJointUniversal *param_1,float param_2,float par
   float local_3c;
   float local_38;
   
-  dVar5 = (double)param_2;
-  dVar6 = (double)param_3;
-  if (param_1 == (dxJointUniversal *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x8c8,0,"%s");
+  if (param_3 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x8c8,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
-  if (param_1->_padding_ != 7) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x8c9,0,"%s\n\t%s");
+  if (*(int *)(param_3 + 0x14) != 7) {
+    MyAssertHandler(0xffffffff82198a88,0x8c9,0,0xffffffff820011f4,0xffffffff821991f8,
+                    0xffffffff82199220);
   }
-  dVar8 = dVar5;
-  if ((param_1->_padding_ & 2U) != 0) {
-    dVar8 = -dVar6;
-    dVar6 = -dVar5;
+  dVar4 = param_1;
+  if ((*(uint *)(param_3 + 0x18) & 2) != 0) {
+    dVar4 = -param_2;
+    param_2 = -param_1;
   }
-  pdVar4 = param_1;
-  getAxis((dxJoint *)param_1,&local_50,param_1->axis1);
-  getAxis2((dxJoint *)pdVar4,&local_40,param_1->axis2);
-  fVar1 = (float)((double)local_50 * dVar8 + (double)(float)((double)local_40 * dVar6));
-  dVar7 = (double)fVar1;
-  fVar2 = (float)((double)local_4c * dVar8 + (double)(float)((double)local_3c * dVar6));
-  dVar5 = (double)fVar2;
-  fVar3 = (float)((double)local_48 * dVar8 + (double)(float)((double)local_38 * dVar6));
-  dVar6 = (double)fVar3;
-  if ((dxBody *)param_1->_padding_ != (dxBody *)0x0) {
-    dBodyAddTorque((dxBody *)param_1->_padding_,fVar1,fVar2,fVar3);
+  uVar1 = getAxis(param_3,&local_50,param_3 + 0x5c);
+  getAxis2(uVar1,&local_40,param_3 + 0x6c);
+  dVar3 = (double)(float)((double)local_50 * dVar4 + (double)(float)((double)local_40 * param_2));
+  dVar2 = (double)(float)((double)local_4c * dVar4 + (double)(float)((double)local_3c * param_2));
+  dVar4 = (double)(float)((double)local_48 * dVar4 + (double)(float)((double)local_38 * param_2));
+  if (*(int *)(param_3 + 0x20) != 0) {
+    dBodyAddTorque(dVar3,dVar2,dVar4);
   }
-  if ((dxBody *)param_1->_padding_ != (dxBody *)0x0) {
-    dBodyAddTorque((dxBody *)param_1->_padding_,(float)-dVar7,(float)-dVar5,(float)-dVar6);
+  if (*(int *)(param_3 + 0x30) != 0) {
+    dBodyAddTorque(-dVar3,-dVar2,-dVar4);
   }
   return;
 }
@@ -3936,14 +3776,14 @@ void dJointAddUniversalTorques(dxJointUniversal *param_1,float param_2,float par
 
 // 82690000  amotorInit  (physics/ode/src/joint.cpp:2274)
 
-void amotorInit(dxJointAMotor *param_1)
+void amotorInit(void)
 
 {
   float fVar1;
   int iVar2;
   int iVar3;
   undefined4 *puVar4;
-  float *pfVar5;
+  int iVar5;
   longlong lVar6;
   float *pfVar7;
   double dVar8;
@@ -3951,11 +3791,11 @@ void amotorInit(dxJointAMotor *param_1)
   double dVar10;
   double dVar11;
   
-  __savegprlr_26(param_1);
+  __savegprlr_26();
   iVar3 = __savefpr_28();
   dVar8 = 1.0;
   dVar9 = 3.4028234663852886e+38;
-  pfVar5 = (float *)(iVar3 + 0x50);
+  iVar5 = iVar3 + 0x50;
   dVar10 = -3.4028234663852886e+38;
   *(undefined4 *)(iVar3 + 0x3c) = 0;
   dVar11 = 0.0;
@@ -3966,12 +3806,12 @@ void amotorInit(dxJointAMotor *param_1)
   do {
     puVar4 = puVar4 + 1;
     *puVar4 = 0;
-    dSetZero(pfVar5,4);
+    dSetZero(iVar5,4);
     iVar2 = *(int *)(iVar3 + 0x10);
     pfVar7[1] = (float)dVar11;
     lVar6 = lVar6 + -1;
     pfVar7[2] = (float)dVar11;
-    pfVar5 = pfVar5 + 4;
+    iVar5 = iVar5 + 0x10;
     pfVar7[3] = (float)dVar10;
     pfVar7[4] = (float)dVar9;
     pfVar7[5] = (float)dVar8;
@@ -3984,8 +3824,8 @@ void amotorInit(dxJointAMotor *param_1)
     pfVar7 = pfVar7 + 0xb;
     *pfVar7 = (float)dVar11;
   } while (lVar6 != 0);
-  dSetZero((float *)(iVar3 + 0x104),4);
-  dSetZero((float *)(iVar3 + 0x114),4);
+  dSetZero(iVar3 + 0x104,4);
+  dSetZero(iVar3 + 0x114,4);
   __restfpr_28();
   __restgprlr_26();
   return;
@@ -3994,7 +3834,7 @@ void amotorInit(dxJointAMotor *param_1)
 
 // 82693C50  amotorComputeGlobalAxes  (physics/ode/src/joint.cpp:2291)
 
-void amotorComputeGlobalAxes(dxJointAMotor *param_1,float (*param_2) [4])
+void amotorComputeGlobalAxes(undefined8 param_1,longlong param_2)
 
 {
   int iVar1;
@@ -4002,149 +3842,160 @@ void amotorComputeGlobalAxes(dxJointAMotor *param_1,float (*param_2) [4])
   float *pfVar3;
   int iVar4;
   int *piVar5;
-  longlong lVar6;
-  float *pfVar7;
+  float *pfVar6;
   
-  lVar6 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_24(param_1);
+  iVar2 = __savegprlr_24();
   if (iVar2 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x8f4,0,"%s");
+    MyAssertHandler(0xffffffff82198a88,0x8f4,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
-  if (*(int *)(iVar2 + 0x40) == 1) {
-    if ((((*(uint *)(iVar2 + 0x50) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar2 + 0x54) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)(iVar2 + 0x58) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x8f9,0,"%s");
+  if (*(int *)(iVar2 + 0x40) != 1) {
+    iVar4 = 0;
+    if (0 < *(int *)(iVar2 + 0x3c)) {
+      param_2 = param_2 + 8;
+      piVar5 = (int *)(iVar2 + 0x44);
+      pfVar3 = (float *)(iVar2 + 0x54);
+      do {
+        pfVar6 = (float *)param_2;
+        if (*piVar5 == 1) {
+          iVar1 = *(int *)(iVar2 + 0x20);
+          pfVar6[-2] = *(float *)(iVar1 + 0x100) * pfVar3[-1] +
+                       *(float *)(iVar1 + 0x108) * pfVar3[1] + *(float *)(iVar1 + 0x104) * *pfVar3;
+          pfVar6[-1] = pfVar3[-1] * *(float *)(iVar1 + 0x110) +
+                       *(float *)(iVar1 + 0x118) * pfVar3[1] + *(float *)(iVar1 + 0x114) * *pfVar3;
+          *pfVar6 = pfVar3[-1] * *(float *)(iVar1 + 0x120) +
+                    *(float *)(iVar1 + 0x128) * pfVar3[1] + *(float *)(iVar1 + 0x124) * *pfVar3;
+        }
+        else if (*piVar5 == 2) {
+          if (*(int *)(iVar2 + 0x30) == 0) {
+            MyAssertHandler(0xffffffff82198a88,0x91b,0,0xffffffff82000f98,0xffffffff8219932c);
+          }
+          iVar1 = *(int *)(iVar2 + 0x30);
+          pfVar6[-2] = pfVar3[-1] * *(float *)(iVar1 + 0x100) +
+                       *(float *)(iVar1 + 0x108) * pfVar3[1] + *(float *)(iVar1 + 0x104) * *pfVar3;
+          pfVar6[-1] = *(float *)(iVar1 + 0x110) * pfVar3[-1] +
+                       *(float *)(iVar1 + 0x118) * pfVar3[1] + *(float *)(iVar1 + 0x114) * *pfVar3;
+          *pfVar6 = *(float *)(iVar1 + 0x120) * pfVar3[-1] +
+                    *(float *)(iVar1 + 0x128) * pfVar3[1] + *(float *)(iVar1 + 0x124) * *pfVar3;
+        }
+        else {
+          pfVar6[-2] = pfVar3[-1];
+          pfVar6[-1] = *pfVar3;
+          *pfVar6 = pfVar3[1];
+        }
+        iVar4 = iVar4 + 1;
+        piVar5 = piVar5 + 1;
+        pfVar3 = pfVar3 + 4;
+        param_2 = param_2 + 0x10;
+      } while (iVar4 < *(int *)(iVar2 + 0x3c));
     }
-    if ((((*(uint *)(iVar2 + 0x70) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar2 + 0x74) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)(iVar2 + 0x78) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x8fa,0,"%s");
-    }
-    if (*(int *)(iVar2 + 0x20) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x8fc,0,"%s");
-    }
-    iVar4 = *(int *)(iVar2 + 0x20);
-    if ((((*(uint *)(iVar4 + 0x100) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar4 + 0x104) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)(iVar4 + 0x108) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x8fd,0,"%s");
-    }
-    iVar4 = *(int *)(iVar2 + 0x20);
-    if ((((*(uint *)(iVar4 + 0x110) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar4 + 0x114) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)(iVar4 + 0x118) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x8fe,0,"%s");
-    }
-    iVar4 = *(int *)(iVar2 + 0x20);
-    if ((((*(uint *)(iVar4 + 0x120) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar4 + 0x124) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)(iVar4 + 0x128) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x8ff,0,"%s");
-    }
-    iVar4 = *(int *)(iVar2 + 0x20);
-    pfVar3 = (float *)lVar6;
-    *pfVar3 = *(float *)(iVar4 + 0x100) * *(float *)(iVar2 + 0x50) +
-              *(float *)(iVar4 + 0x108) * *(float *)(iVar2 + 0x58) +
-              *(float *)(iVar4 + 0x104) * *(float *)(iVar2 + 0x54);
-    pfVar3[1] = *(float *)(iVar4 + 0x110) * *(float *)(iVar2 + 0x50) +
-                *(float *)(iVar4 + 0x118) * *(float *)(iVar2 + 0x58) +
-                *(float *)(iVar4 + 0x114) * *(float *)(iVar2 + 0x54);
-    pfVar3[2] = *(float *)(iVar4 + 0x120) * *(float *)(iVar2 + 0x50) +
-                *(float *)(iVar4 + 0x128) * *(float *)(iVar2 + 0x58) +
-                *(float *)(iVar4 + 0x124) * *(float *)(iVar2 + 0x54);
-    iVar4 = *(int *)(iVar2 + 0x30);
-    if (iVar4 == 0) {
-      pfVar3[8] = *(float *)(iVar2 + 0x70);
-      pfVar3[9] = *(float *)(iVar2 + 0x74);
-      pfVar3[10] = *(float *)(iVar2 + 0x78);
-    }
-    else {
-      if ((((*(uint *)(iVar4 + 0x100) & 0x7f800000) == 0x7f800000) ||
-          ((*(uint *)(iVar4 + 0x104) & 0x7f800000) == 0x7f800000)) ||
-         ((*(uint *)(iVar4 + 0x108) & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                        ,0x904,0,"%s");
-      }
-      iVar4 = *(int *)(iVar2 + 0x30);
-      if ((((*(uint *)(iVar4 + 0x110) & 0x7f800000) == 0x7f800000) ||
-          ((*(uint *)(iVar4 + 0x114) & 0x7f800000) == 0x7f800000)) ||
-         ((*(uint *)(iVar4 + 0x118) & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                        ,0x905,0,"%s");
-      }
-      iVar4 = *(int *)(iVar2 + 0x30);
-      if ((((*(uint *)(iVar4 + 0x120) & 0x7f800000) == 0x7f800000) ||
-          ((*(uint *)(iVar4 + 0x124) & 0x7f800000) == 0x7f800000)) ||
-         ((*(uint *)(iVar4 + 0x128) & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                        ,0x906,0,"%s");
-      }
-      iVar4 = *(int *)(iVar2 + 0x30);
-      pfVar3[8] = *(float *)(iVar4 + 0x100) * *(float *)(iVar2 + 0x70) +
-                  *(float *)(iVar4 + 0x108) * *(float *)(iVar2 + 0x78) +
-                  *(float *)(iVar4 + 0x104) * *(float *)(iVar2 + 0x74);
-      pfVar3[9] = *(float *)(iVar4 + 0x110) * *(float *)(iVar2 + 0x70) +
-                  *(float *)(iVar4 + 0x118) * *(float *)(iVar2 + 0x78) +
-                  *(float *)(iVar4 + 0x114) * *(float *)(iVar2 + 0x74);
-      pfVar3[10] = *(float *)(iVar4 + 0x120) * *(float *)(iVar2 + 0x70) +
-                   *(float *)(iVar4 + 0x128) * *(float *)(iVar2 + 0x78) +
-                   *(float *)(iVar4 + 0x124) * *(float *)(iVar2 + 0x74);
-    }
-    pfVar3[4] = pfVar3[2] * pfVar3[9] - pfVar3[1] * pfVar3[10];
-    pfVar3[6] = pfVar3[8] * pfVar3[1] - *pfVar3 * pfVar3[9];
-    pfVar3[5] = *pfVar3 * pfVar3[10] - pfVar3[8] * pfVar3[2];
-    dNormalize3(pfVar3 + 4);
     __restgprlr_24();
     return;
   }
-  iVar4 = 0;
-  if (0 < *(int *)(iVar2 + 0x3c)) {
-    lVar6 = lVar6 + 8;
-    piVar5 = (int *)(iVar2 + 0x44);
-    pfVar3 = (float *)(iVar2 + 0x54);
-    do {
-      pfVar7 = (float *)lVar6;
-      if (*piVar5 == 1) {
-        iVar1 = *(int *)(iVar2 + 0x20);
-        pfVar7[-2] = *(float *)(iVar1 + 0x100) * pfVar3[-1] +
-                     *(float *)(iVar1 + 0x108) * pfVar3[1] + *(float *)(iVar1 + 0x104) * *pfVar3;
-        pfVar7[-1] = pfVar3[-1] * *(float *)(iVar1 + 0x110) +
-                     *(float *)(iVar1 + 0x118) * pfVar3[1] + *(float *)(iVar1 + 0x114) * *pfVar3;
-        *pfVar7 = pfVar3[-1] * *(float *)(iVar1 + 0x120) +
-                  *(float *)(iVar1 + 0x128) * pfVar3[1] + *(float *)(iVar1 + 0x124) * *pfVar3;
-      }
-      else if (*piVar5 == 2) {
-        if (*(int *)(iVar2 + 0x30) == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                          ,0x91b,0,"%s");
-        }
-        iVar1 = *(int *)(iVar2 + 0x30);
-        pfVar7[-2] = pfVar3[-1] * *(float *)(iVar1 + 0x100) +
-                     *(float *)(iVar1 + 0x108) * pfVar3[1] + *(float *)(iVar1 + 0x104) * *pfVar3;
-        pfVar7[-1] = *(float *)(iVar1 + 0x110) * pfVar3[-1] +
-                     *(float *)(iVar1 + 0x118) * pfVar3[1] + *(float *)(iVar1 + 0x114) * *pfVar3;
-        *pfVar7 = *(float *)(iVar1 + 0x120) * pfVar3[-1] +
-                  *(float *)(iVar1 + 0x128) * pfVar3[1] + *(float *)(iVar1 + 0x124) * *pfVar3;
-      }
-      else {
-        pfVar7[-2] = pfVar3[-1];
-        pfVar7[-1] = *pfVar3;
-        *pfVar7 = pfVar3[1];
-      }
-      iVar4 = iVar4 + 1;
-      piVar5 = piVar5 + 1;
-      pfVar3 = pfVar3 + 4;
-      lVar6 = lVar6 + 0x10;
-    } while (iVar4 < *(int *)(iVar2 + 0x3c));
+  if ((*(uint *)(iVar2 + 0x50) & 0x7f800000) == 0x7f800000) {
+LAB_82693cf0:
+    MyAssertHandler(0xffffffff82198a88,0x8f9,0,0xffffffff82000f98,0xffffffff821996f0);
   }
+  else {
+    if ((*(uint *)(iVar2 + 0x54) & 0x7f800000) == 0x7f800000) goto LAB_82693cf0;
+    if ((*(uint *)(iVar2 + 0x58) & 0x7f800000) == 0x7f800000) goto LAB_82693cf0;
+  }
+  if ((*(uint *)(iVar2 + 0x70) & 0x7f800000) == 0x7f800000) {
+LAB_82693d54:
+    MyAssertHandler(0xffffffff82198a88,0x8fa,0,0xffffffff82000f98,0xffffffff82199690);
+  }
+  else {
+    if ((*(uint *)(iVar2 + 0x74) & 0x7f800000) == 0x7f800000) goto LAB_82693d54;
+    if ((*(uint *)(iVar2 + 0x78) & 0x7f800000) == 0x7f800000) goto LAB_82693d54;
+  }
+  if (*(int *)(iVar2 + 0x20) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x8fc,0,0xffffffff82000f98,0xffffffff82198c70);
+  }
+  iVar4 = *(int *)(iVar2 + 0x20);
+  if ((*(uint *)(iVar4 + 0x100) & 0x7f800000) == 0x7f800000) {
+LAB_82693de4:
+    MyAssertHandler(0xffffffff82198a88,0x8fd,0,0xffffffff82000f98,0xffffffff82199608);
+  }
+  else {
+    if ((*(uint *)(iVar4 + 0x104) & 0x7f800000) == 0x7f800000) goto LAB_82693de4;
+    if ((*(uint *)(iVar4 + 0x108) & 0x7f800000) == 0x7f800000) goto LAB_82693de4;
+  }
+  iVar4 = *(int *)(iVar2 + 0x20);
+  if ((*(uint *)(iVar4 + 0x110) & 0x7f800000) == 0x7f800000) {
+LAB_82693e4c:
+    MyAssertHandler(0xffffffff82198a88,0x8fe,0,0xffffffff82000f98,0xffffffff82199578);
+  }
+  else {
+    if ((*(uint *)(iVar4 + 0x114) & 0x7f800000) == 0x7f800000) goto LAB_82693e4c;
+    if ((*(uint *)(iVar4 + 0x118) & 0x7f800000) == 0x7f800000) goto LAB_82693e4c;
+  }
+  iVar4 = *(int *)(iVar2 + 0x20);
+  if ((*(uint *)(iVar4 + 0x120) & 0x7f800000) == 0x7f800000) {
+LAB_82693eb4:
+    MyAssertHandler(0xffffffff82198a88,0x8ff,0,0xffffffff82000f98,0xffffffff821994e8);
+  }
+  else {
+    if ((*(uint *)(iVar4 + 0x124) & 0x7f800000) == 0x7f800000) goto LAB_82693eb4;
+    if ((*(uint *)(iVar4 + 0x128) & 0x7f800000) == 0x7f800000) goto LAB_82693eb4;
+  }
+  iVar4 = *(int *)(iVar2 + 0x20);
+  pfVar3 = (float *)param_2;
+  *pfVar3 = *(float *)(iVar4 + 0x100) * *(float *)(iVar2 + 0x50) +
+            *(float *)(iVar4 + 0x108) * *(float *)(iVar2 + 0x58) +
+            *(float *)(iVar4 + 0x104) * *(float *)(iVar2 + 0x54);
+  pfVar3[1] = *(float *)(iVar4 + 0x110) * *(float *)(iVar2 + 0x50) +
+              *(float *)(iVar4 + 0x118) * *(float *)(iVar2 + 0x58) +
+              *(float *)(iVar4 + 0x114) * *(float *)(iVar2 + 0x54);
+  pfVar3[2] = *(float *)(iVar4 + 0x120) * *(float *)(iVar2 + 0x50) +
+              *(float *)(iVar4 + 0x128) * *(float *)(iVar2 + 0x58) +
+              *(float *)(iVar4 + 0x124) * *(float *)(iVar2 + 0x54);
+  iVar4 = *(int *)(iVar2 + 0x30);
+  if (iVar4 == 0) {
+    pfVar3[8] = *(float *)(iVar2 + 0x70);
+    pfVar3[9] = *(float *)(iVar2 + 0x74);
+    pfVar3[10] = *(float *)(iVar2 + 0x78);
+    goto LAB_82694128;
+  }
+  if ((*(uint *)(iVar4 + 0x100) & 0x7f800000) == 0x7f800000) {
+LAB_82693fa0:
+    MyAssertHandler(0xffffffff82198a88,0x904,0,0xffffffff82000f98,0xffffffff82199460);
+  }
+  else {
+    if ((*(uint *)(iVar4 + 0x104) & 0x7f800000) == 0x7f800000) goto LAB_82693fa0;
+    if ((*(uint *)(iVar4 + 0x108) & 0x7f800000) == 0x7f800000) goto LAB_82693fa0;
+  }
+  iVar4 = *(int *)(iVar2 + 0x30);
+  if ((*(uint *)(iVar4 + 0x110) & 0x7f800000) == 0x7f800000) {
+LAB_82694008:
+    MyAssertHandler(0xffffffff82198a88,0x905,0,0xffffffff82000f98,0xffffffff821993d0);
+  }
+  else {
+    if ((*(uint *)(iVar4 + 0x114) & 0x7f800000) == 0x7f800000) goto LAB_82694008;
+    if ((*(uint *)(iVar4 + 0x118) & 0x7f800000) == 0x7f800000) goto LAB_82694008;
+  }
+  iVar4 = *(int *)(iVar2 + 0x30);
+  if ((*(uint *)(iVar4 + 0x120) & 0x7f800000) == 0x7f800000) {
+LAB_82694070:
+    MyAssertHandler(0xffffffff82198a88,0x906,0,0xffffffff82000f98,0xffffffff82199340);
+  }
+  else {
+    if ((*(uint *)(iVar4 + 0x124) & 0x7f800000) == 0x7f800000) goto LAB_82694070;
+    if ((*(uint *)(iVar4 + 0x128) & 0x7f800000) == 0x7f800000) goto LAB_82694070;
+  }
+  iVar4 = *(int *)(iVar2 + 0x30);
+  pfVar3[8] = *(float *)(iVar4 + 0x100) * *(float *)(iVar2 + 0x70) +
+              *(float *)(iVar4 + 0x108) * *(float *)(iVar2 + 0x78) +
+              *(float *)(iVar4 + 0x104) * *(float *)(iVar2 + 0x74);
+  pfVar3[9] = *(float *)(iVar4 + 0x110) * *(float *)(iVar2 + 0x70) +
+              *(float *)(iVar4 + 0x118) * *(float *)(iVar2 + 0x78) +
+              *(float *)(iVar4 + 0x114) * *(float *)(iVar2 + 0x74);
+  pfVar3[10] = *(float *)(iVar4 + 0x120) * *(float *)(iVar2 + 0x70) +
+               *(float *)(iVar4 + 0x128) * *(float *)(iVar2 + 0x78) +
+               *(float *)(iVar4 + 0x124) * *(float *)(iVar2 + 0x74);
+LAB_82694128:
+  pfVar3[4] = pfVar3[2] * pfVar3[9] - pfVar3[1] * pfVar3[10];
+  pfVar3[6] = pfVar3[8] * pfVar3[1] - *pfVar3 * pfVar3[9];
+  pfVar3[5] = *pfVar3 * pfVar3[10] - pfVar3[8] * pfVar3[2];
+  dNormalize3(param_2 + 0x10);
   __restgprlr_24();
   return;
 }
@@ -4152,7 +4003,7 @@ void amotorComputeGlobalAxes(dxJointAMotor *param_1,float (*param_2) [4])
 
 // 82694318  amotorComputeEulerAngles  (physics/ode/src/joint.cpp:2346)
 
-void amotorComputeEulerAngles(dxJointAMotor *param_1,float (*param_2) [4],float *param_3)
+void amotorComputeEulerAngles(int param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
@@ -4172,11 +4023,11 @@ void amotorComputeEulerAngles(dxJointAMotor *param_1,float (*param_2) [4],float 
   double dVar15;
   double dVar16;
   
-  iVar7 = param_1->_padding_;
-  fVar1 = param_1->reference1[2];
-  fVar2 = param_1->reference1[1];
-  iVar8 = param_1->_padding_;
-  fVar3 = param_1->reference1[0];
+  iVar7 = *(int *)(param_1 + 0x20);
+  fVar1 = *(float *)(param_1 + 0x10c);
+  fVar2 = *(float *)(param_1 + 0x108);
+  iVar8 = *(int *)(param_1 + 0x30);
+  fVar3 = *(float *)(param_1 + 0x104);
   fVar10 = fVar3 * *(float *)(iVar7 + 0x100) +
            *(float *)(iVar7 + 0x104) * fVar2 + *(float *)(iVar7 + 0x108) * fVar1;
   fVar9 = *(float *)(iVar7 + 0x110) * fVar3 +
@@ -4184,14 +4035,14 @@ void amotorComputeEulerAngles(dxJointAMotor *param_1,float (*param_2) [4],float 
   fVar1 = *(float *)(iVar7 + 0x120) * fVar3 +
           *(float *)(iVar7 + 0x124) * fVar2 + *(float *)(iVar7 + 0x128) * fVar1;
   if (iVar8 == 0) {
-    fVar2 = param_1->reference2[1];
-    fVar3 = param_1->reference2[2];
-    fVar6 = param_1->reference2[0];
+    fVar2 = *(float *)(param_1 + 0x118);
+    fVar3 = *(float *)(param_1 + 0x11c);
+    fVar6 = *(float *)(param_1 + 0x114);
   }
   else {
-    fVar3 = param_1->reference2[2];
-    fVar4 = param_1->reference2[1];
-    fVar5 = param_1->reference2[0];
+    fVar3 = *(float *)(param_1 + 0x11c);
+    fVar4 = *(float *)(param_1 + 0x118);
+    fVar5 = *(float *)(param_1 + 0x114);
     fVar6 = fVar5 * *(float *)(iVar8 + 0x100) +
             *(float *)(iVar8 + 0x104) * fVar4 + *(float *)(iVar8 + 0x108) * fVar3;
     fVar2 = fVar5 * *(float *)(iVar8 + 0x110) +
@@ -4202,34 +4053,33 @@ void amotorComputeEulerAngles(dxJointAMotor *param_1,float (*param_2) [4],float 
   dVar16 = (double)fVar2;
   dVar15 = (double)fVar3;
   dVar14 = (double)fVar6;
-  dVar11 = atan2((double)(param_2[2][1] * ((*param_2)[2] * fVar10 - (*param_2)[0] * fVar1) +
-                         param_2[2][0] * ((*param_2)[1] * fVar1 - (*param_2)[2] * fVar9) +
-                         param_2[2][2] * ((*param_2)[0] * fVar9 - (*param_2)[1] * fVar10)),
-                 (double)(param_2[2][1] * fVar9 + param_2[2][0] * fVar10 + param_2[2][2] * fVar1));
+  dVar11 = atan2((double)(param_2[9] * (param_2[2] * fVar10 - *param_2 * fVar1) +
+                         param_2[8] * (param_2[1] * fVar1 - param_2[2] * fVar9) +
+                         param_2[10] * (*param_2 * fVar9 - param_2[1] * fVar10)),
+                 (double)(param_2[9] * fVar9 + param_2[8] * fVar10 + param_2[10] * fVar1));
   *param_3 = -(float)dVar11;
-  fVar1 = (*param_2)[2];
-  fVar2 = (*param_2)[0];
-  fVar3 = (*param_2)[1];
-  dVar11 = atan2((double)(param_2[2][0] * fVar2 + param_2[2][2] * fVar1 + param_2[2][1] * fVar3),
-                 (double)(param_2[2][1] * (param_2[1][0] * fVar1 - param_2[1][2] * fVar2) +
-                         param_2[2][0] * (fVar3 * param_2[1][2] - fVar1 * param_2[1][1]) +
-                         param_2[2][2] * (param_2[1][1] * fVar2 - param_2[1][0] * fVar3)));
+  fVar1 = param_2[2];
+  fVar2 = *param_2;
+  fVar3 = param_2[1];
+  dVar11 = atan2((double)(param_2[8] * fVar2 + param_2[10] * fVar1 + param_2[9] * fVar3),
+                 (double)(param_2[9] * (param_2[4] * fVar1 - param_2[6] * fVar2) +
+                         param_2[8] * (fVar3 * param_2[6] - fVar1 * param_2[5]) +
+                         param_2[10] * (param_2[5] * fVar2 - param_2[4] * fVar3)));
   param_3[1] = -(float)dVar11;
-  dVar12 = (double)param_2[1][1];
-  dVar11 = (double)param_2[1][2];
-  dVar13 = (double)param_2[1][0];
+  dVar12 = (double)param_2[5];
+  dVar11 = (double)param_2[6];
+  dVar13 = (double)param_2[4];
   dVar11 = atan2((double)(float)(dVar13 * dVar14 +
                                 (double)(float)(dVar11 * dVar15 + (double)(float)(dVar12 * dVar16)))
-                 ,(double)(float)((double)(float)(dVar12 * (double)param_2[2][2] -
-                                                 (double)(float)(dVar11 * (double)param_2[2][1])) *
+                 ,(double)(float)((double)(float)(dVar12 * (double)param_2[10] -
+                                                 (double)(float)(dVar11 * (double)param_2[9])) *
                                   dVar14 + (double)(float)((double)(float)(dVar13 * (double)param_2[
-                                                  2][1] - (double)(float)((double)param_2[2][0] *
-                                                                         dVar12)) * dVar15 +
-                                                  (double)(float)((double)(float)((double)param_2[2]
-                                                                                          [0] *
-                                                                                  dVar11 - (double)(
-                                                  float)(dVar13 * (double)param_2[2][2])) * dVar16))
-                                 ));
+                                                  9] - (double)(float)((double)param_2[8] * dVar12))
+                                                  * dVar15 +
+                                                  (double)(float)((double)(float)((double)param_2[8]
+                                                                                  * dVar11 -
+                                                                                 (double)(float)(
+                                                  dVar13 * (double)param_2[10])) * dVar16))));
   param_3[2] = -(float)dVar11;
   return;
 }
@@ -4237,7 +4087,7 @@ void amotorComputeEulerAngles(dxJointAMotor *param_1,float (*param_2) [4],float 
 
 // 82694558  amotorSetEulerReferenceVectors  (physics/ode/src/joint.cpp:2392)
 
-void amotorSetEulerReferenceVectors(dxJointAMotor *param_1)
+void amotorSetEulerReferenceVectors(int param_1)
 
 {
   float fVar1;
@@ -4248,149 +4098,147 @@ void amotorSetEulerReferenceVectors(dxJointAMotor *param_1)
   float fVar6;
   float fVar7;
   
-  if (param_1->_padding_ == 0) {
+  if (*(int *)(param_1 + 0x20) == 0) {
     return;
   }
-  iVar4 = param_1->_padding_;
+  iVar4 = *(int *)(param_1 + 0x30);
   if (iVar4 != 0) {
-    fVar1 = param_1->axis[2][2];
-    fVar2 = param_1->axis[2][1];
-    iVar5 = param_1->_padding_;
-    fVar3 = param_1->axis[2][0];
+    fVar1 = *(float *)(param_1 + 0x78);
+    fVar2 = *(float *)(param_1 + 0x74);
+    iVar5 = *(int *)(param_1 + 0x20);
+    fVar3 = *(float *)(param_1 + 0x70);
     fVar7 = fVar3 * *(float *)(iVar4 + 0x110) +
             *(float *)(iVar4 + 0x114) * fVar2 + *(float *)(iVar4 + 0x118) * fVar1;
     fVar6 = fVar3 * *(float *)(iVar4 + 0x120) +
             *(float *)(iVar4 + 0x124) * fVar2 + *(float *)(iVar4 + 0x128) * fVar1;
     fVar1 = fVar3 * *(float *)(iVar4 + 0x100) +
             *(float *)(iVar4 + 0x104) * fVar2 + *(float *)(iVar4 + 0x108) * fVar1;
-    param_1->reference1[0] =
+    *(float *)(param_1 + 0x104) =
          *(float *)(iVar5 + 0x100) * fVar1 +
          *(float *)(iVar5 + 0x120) * fVar6 + *(float *)(iVar5 + 0x110) * fVar7;
-    param_1->reference1[1] =
+    *(float *)(param_1 + 0x108) =
          *(float *)(iVar5 + 0x104) * fVar1 +
          *(float *)(iVar5 + 0x124) * fVar6 + *(float *)(iVar5 + 0x114) * fVar7;
-    param_1->reference1[2] =
+    *(float *)(param_1 + 0x10c) =
          *(float *)(iVar5 + 0x108) * fVar1 +
          *(float *)(iVar5 + 0x128) * fVar6 + *(float *)(iVar5 + 0x118) * fVar7;
-    iVar4 = param_1->_padding_;
-    fVar1 = param_1->axis[0][1];
-    iVar5 = param_1->_padding_;
-    fVar2 = param_1->axis[0][0];
-    fVar3 = param_1->axis[0][2];
+    iVar4 = *(int *)(param_1 + 0x20);
+    fVar1 = *(float *)(param_1 + 0x54);
+    iVar5 = *(int *)(param_1 + 0x30);
+    fVar2 = *(float *)(param_1 + 0x50);
+    fVar3 = *(float *)(param_1 + 0x58);
     fVar7 = fVar2 * *(float *)(iVar4 + 0x110) +
             *(float *)(iVar4 + 0x114) * fVar1 + *(float *)(iVar4 + 0x118) * fVar3;
     fVar6 = fVar2 * *(float *)(iVar4 + 0x120) +
             *(float *)(iVar4 + 0x124) * fVar1 + *(float *)(iVar4 + 0x128) * fVar3;
     fVar1 = fVar2 * *(float *)(iVar4 + 0x100) +
             *(float *)(iVar4 + 0x104) * fVar1 + *(float *)(iVar4 + 0x108) * fVar3;
-    param_1->reference2[0] =
+    *(float *)(param_1 + 0x114) =
          *(float *)(iVar5 + 0x100) * fVar1 +
          *(float *)(iVar5 + 0x120) * fVar6 + *(float *)(iVar5 + 0x110) * fVar7;
-    param_1->reference2[1] =
+    *(float *)(param_1 + 0x118) =
          *(float *)(iVar5 + 0x104) * fVar1 +
          *(float *)(iVar5 + 0x124) * fVar6 + *(float *)(iVar5 + 0x114) * fVar7;
-    param_1->reference2[2] =
+    *(float *)(param_1 + 0x11c) =
          *(float *)(iVar5 + 0x108) * fVar1 +
          *(float *)(iVar5 + 0x128) * fVar6 + *(float *)(iVar5 + 0x118) * fVar7;
     return;
   }
-  if (param_1->_padding_ == 0) {
+  if (*(int *)(param_1 + 0x20) == 0) {
     return;
   }
-  iVar4 = param_1->_padding_;
-  param_1->reference1[0] =
-       *(float *)(iVar4 + 0x100) * param_1->axis[2][0] +
-       *(float *)(iVar4 + 0x110) * param_1->axis[2][1] +
-       *(float *)(iVar4 + 0x120) * param_1->axis[2][2];
-  param_1->reference1[1] =
-       param_1->axis[2][0] * *(float *)(iVar4 + 0x104) +
-       *(float *)(iVar4 + 0x114) * param_1->axis[2][1] +
-       *(float *)(iVar4 + 0x124) * param_1->axis[2][2];
-  param_1->reference1[2] =
-       *(float *)(iVar4 + 0x108) * param_1->axis[2][0] +
-       *(float *)(iVar4 + 0x118) * param_1->axis[2][1] +
-       *(float *)(iVar4 + 0x128) * param_1->axis[2][2];
-  iVar4 = param_1->_padding_;
-  param_1->reference2[0] =
-       param_1->axis[0][0] * *(float *)(iVar4 + 0x100) +
-       *(float *)(iVar4 + 0x104) * param_1->axis[0][1] +
-       *(float *)(iVar4 + 0x108) * param_1->axis[0][2];
-  param_1->reference2[1] =
-       *(float *)(iVar4 + 0x110) * param_1->axis[0][0] +
-       *(float *)(iVar4 + 0x114) * param_1->axis[0][1] +
-       *(float *)(iVar4 + 0x118) * param_1->axis[0][2];
-  param_1->reference2[2] =
-       *(float *)(iVar4 + 0x120) * param_1->axis[0][0] +
-       *(float *)(iVar4 + 0x124) * param_1->axis[0][1] +
-       *(float *)(iVar4 + 0x128) * param_1->axis[0][2];
+  iVar4 = *(int *)(param_1 + 0x20);
+  *(float *)(param_1 + 0x104) =
+       *(float *)(iVar4 + 0x100) * *(float *)(param_1 + 0x70) +
+       *(float *)(iVar4 + 0x110) * *(float *)(param_1 + 0x74) +
+       *(float *)(iVar4 + 0x120) * *(float *)(param_1 + 0x78);
+  *(float *)(param_1 + 0x108) =
+       *(float *)(param_1 + 0x70) * *(float *)(iVar4 + 0x104) +
+       *(float *)(iVar4 + 0x114) * *(float *)(param_1 + 0x74) +
+       *(float *)(iVar4 + 0x124) * *(float *)(param_1 + 0x78);
+  *(float *)(param_1 + 0x10c) =
+       *(float *)(iVar4 + 0x108) * *(float *)(param_1 + 0x70) +
+       *(float *)(iVar4 + 0x118) * *(float *)(param_1 + 0x74) +
+       *(float *)(iVar4 + 0x128) * *(float *)(param_1 + 0x78);
+  iVar4 = *(int *)(param_1 + 0x20);
+  *(float *)(param_1 + 0x114) =
+       *(float *)(param_1 + 0x50) * *(float *)(iVar4 + 0x100) +
+       *(float *)(iVar4 + 0x104) * *(float *)(param_1 + 0x54) +
+       *(float *)(iVar4 + 0x108) * *(float *)(param_1 + 0x58);
+  *(float *)(param_1 + 0x118) =
+       *(float *)(iVar4 + 0x110) * *(float *)(param_1 + 0x50) +
+       *(float *)(iVar4 + 0x114) * *(float *)(param_1 + 0x54) +
+       *(float *)(iVar4 + 0x118) * *(float *)(param_1 + 0x58);
+  *(float *)(param_1 + 0x11c) =
+       *(float *)(iVar4 + 0x120) * *(float *)(param_1 + 0x50) +
+       *(float *)(iVar4 + 0x124) * *(float *)(param_1 + 0x54) +
+       *(float *)(iVar4 + 0x128) * *(float *)(param_1 + 0x58);
   return;
 }
 
 
 // 826947E8  amotorGetInfo1  (physics/ode/src/joint.cpp:2408)
 
-void amotorGetInfo1(dxJointAMotor *param_1,Info1 *param_2)
+void amotorGetInfo1(undefined8 param_1,int *param_2)
 
 {
   float fVar1;
-  dxJointAMotor *pdVar2;
+  int iVar2;
   float *pfVar3;
-  int iVar4;
-  float *pfVar5;
-  undefined8 in_f31;
-  double dVar6;
+  undefined4 *puVar4;
+  int iVar5;
+  float *pfVar6;
+  double dVar7;
   float local_70 [4];
-  float afStack_60 [14];
-  undefined8 local_28;
+  undefined1 auStack_60 [96];
   
-  pdVar2 = (dxJointAMotor *)__savegprlr_29(param_1);
-  local_28 = in_f31;
-  iVar4 = 0;
-  if (0 < pdVar2->num) {
-    pfVar3 = pdVar2->axis[2] + 3;
+  iVar2 = __savegprlr_29();
+  iVar5 = 0;
+  if (0 < *(int *)(iVar2 + 0x3c)) {
+    puVar4 = (undefined4 *)(iVar2 + 0x7c);
     do {
-      iVar4 = iVar4 + 1;
-      pfVar3 = pfVar3 + 0xb;
-      *pfVar3 = 3.4028235e+38;
-    } while (iVar4 < pdVar2->num);
+      iVar5 = iVar5 + 1;
+      puVar4 = puVar4 + 0xb;
+      *puVar4 = 0x7f7fffff;
+    } while (iVar5 < *(int *)(iVar2 + 0x3c));
   }
-  param_2->m = 0;
-  param_2->nub = 0;
-  dVar6 = 0.0;
-  if (pdVar2->mode == 1) {
-    amotorComputeGlobalAxes(pdVar2,(float (*) [4])afStack_60);
-    amotorComputeEulerAngles(pdVar2,(float (*) [4])afStack_60,local_70);
+  *param_2 = 0;
+  param_2[1] = 0;
+  dVar7 = 0.0;
+  if (*(int *)(iVar2 + 0x40) == 1) {
+    amotorComputeGlobalAxes(iVar2,auStack_60);
+    amotorComputeEulerAngles(iVar2,auStack_60,local_70);
   }
   else {
     local_70[0] = 0.0;
     local_70[1] = 0.0;
     local_70[2] = 0.0;
   }
-  iVar4 = 0;
-  if (0 < pdVar2->num) {
+  iVar5 = 0;
+  if (0 < *(int *)(iVar2 + 0x3c)) {
     pfVar3 = local_70;
-    pfVar5 = &pdVar2->limot[0].histop;
+    pfVar6 = (float *)(iVar2 + 0x8c);
     do {
       fVar1 = *pfVar3;
-      if (pfVar5[-1] < fVar1) {
-        if (*pfVar5 <= fVar1) {
-          pfVar5[7] = fVar1 - *pfVar5;
-          pfVar5[6] = 2.8026e-45;
+      if (pfVar6[-1] < fVar1) {
+        if (*pfVar6 <= fVar1) {
+          pfVar6[7] = fVar1 - *pfVar6;
+          pfVar6[6] = 2.8026e-45;
           goto LAB_826948e8;
         }
-        pfVar5[6] = 0.0;
-        if (dVar6 < (double)pfVar5[-2]) goto LAB_826948e8;
+        pfVar6[6] = 0.0;
+        if (dVar7 < (double)pfVar6[-2]) goto LAB_826948e8;
       }
       else {
-        pfVar5[7] = fVar1 - pfVar5[-1];
-        pfVar5[6] = 1.4013e-45;
+        pfVar6[7] = fVar1 - pfVar6[-1];
+        pfVar6[6] = 1.4013e-45;
 LAB_826948e8:
-        param_2->m = param_2->m + 1;
+        *param_2 = *param_2 + 1;
       }
-      iVar4 = iVar4 + 1;
+      iVar5 = iVar5 + 1;
       pfVar3 = pfVar3 + 1;
-      pfVar5 = pfVar5 + 0xb;
-    } while (iVar4 < pdVar2->num);
+      pfVar6 = pfVar6 + 0xb;
+    } while (iVar5 < *(int *)(iVar2 + 0x3c));
   }
   __restgprlr_29();
   return;
@@ -4399,18 +4247,19 @@ LAB_826948e8:
 
 // 82694918  amotorGetInfo2  (physics/ode/src/joint.cpp:2442)
 
-void amotorGetInfo2(dxJointAMotor *param_1,dxWorldStepInfo *param_2,Info2 *param_3)
+void amotorGetInfo2(undefined8 param_1,undefined8 param_2)
 
 {
-  dxJointAMotor *pdVar1;
   int iVar2;
-  longlong lVar3;
-  undefined4 *puVar4;
+  longlong lVar1;
+  undefined4 *puVar3;
+  longlong lVar4;
   int iVar5;
   int iVar6;
-  dxJointLimitMotor *this;
   undefined4 uStack_a4;
-  float *local_a0 [4];
+  float *local_a0;
+  float *local_9c;
+  float *local_98;
   float local_90;
   float local_8c;
   float local_88;
@@ -4427,15 +4276,14 @@ void amotorGetInfo2(dxJointAMotor *param_1,dxWorldStepInfo *param_2,Info2 *param
   float local_4c;
   float local_48;
   
-  lVar3 = (longlong)(int)param_2;
-  pdVar1 = (dxJointAMotor *)__savegprlr_26(param_1,lVar3,param_3);
-  amotorComputeGlobalAxes(pdVar1,(float (*) [4])&local_70);
-  local_a0[0] = &local_70;
-  local_a0[1] = &local_60;
-  local_a0[2] = &local_50;
-  if (pdVar1->mode == 1) {
-    local_a0[2] = &local_90;
-    local_a0[0] = &local_80;
+  iVar2 = __savegprlr_26();
+  amotorComputeGlobalAxes(iVar2,&local_70);
+  local_a0 = &local_70;
+  local_9c = &local_60;
+  local_98 = &local_50;
+  if (*(int *)(iVar2 + 0x40) == 1) {
+    local_98 = &local_90;
+    local_a0 = &local_80;
     local_90 = local_58 * local_6c - local_5c * local_68;
     local_8c = local_60 * local_68 - local_70 * local_58;
     local_88 = local_70 * local_5c - local_60 * local_6c;
@@ -4443,19 +4291,18 @@ void amotorGetInfo2(dxJointAMotor *param_1,dxWorldStepInfo *param_2,Info2 *param
     local_7c = local_50 * local_58 - local_48 * local_60;
     local_78 = local_4c * local_60 - local_50 * local_5c;
   }
+  lVar4 = 0;
   iVar5 = 0;
-  iVar6 = 0;
-  if (0 < pdVar1->num) {
-    this = pdVar1->limot;
-    puVar4 = &uStack_a4;
+  if (0 < *(int *)(iVar2 + 0x3c)) {
+    iVar6 = iVar2 + 0x80;
+    puVar3 = &uStack_a4;
     do {
-      puVar4 = puVar4 + 1;
-      iVar2 = dxJointLimitMotor::addLimot
-                        (this,(dxJoint *)pdVar1,(Info2 *)lVar3,iVar5,(float *)*puVar4,1);
-      iVar6 = iVar6 + 1;
-      iVar5 = iVar2 + iVar5;
-      this = this + 1;
-    } while (iVar6 < pdVar1->num);
+      puVar3 = puVar3 + 1;
+      lVar1 = dxJointLimitMotor__addLimot(iVar6,iVar2,param_2,lVar4,*puVar3,1);
+      iVar5 = iVar5 + 1;
+      lVar4 = lVar1 + lVar4;
+      iVar6 = iVar6 + 0x2c;
+    } while (iVar5 < *(int *)(iVar2 + 0x3c));
   }
   __restgprlr_26();
   return;
@@ -4464,19 +4311,18 @@ void amotorGetInfo2(dxJointAMotor *param_1,dxWorldStepInfo *param_2,Info2 *param
 
 // 826900D8  dJointSetAMotorNumAxes  (physics/ode/src/joint.cpp:2486)
 
-void dJointSetAMotorNumAxes(dxJointAMotor *param_1,int param_2)
+void dJointSetAMotorNumAxes(undefined8 param_1,int param_2)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_29(param_1);
+  iVar1 = __savegprlr_29();
   if (((iVar1 == 0) || (param_2 < 0)) || (3 < param_2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x9b7,0,"%s");
+    MyAssertHandler(0xffffffff82198a88,0x9b7,0,0xffffffff82000f98,0xffffffff82199254);
   }
   if (*(int *)(iVar1 + 0x14) != 10) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x9b8,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0x9b8,0,0xffffffff820011f4,0xffffffff82194e60,
+                    0xffffffff8219923c);
   }
   if (*(int *)(iVar1 + 0x40) == 1) {
     *(undefined4 *)(iVar1 + 0x3c) = 3;
@@ -4499,100 +4345,96 @@ void dJointSetAMotorNumAxes(dxJointAMotor *param_1,int param_2)
 
 // 82694A38  dJointSetAMotorAxis  (physics/ode/src/joint.cpp:2502)
 
-void dJointSetAMotorAxis(dxJointAMotor *param_1,int param_2,int param_3,float param_4,float param_5,
-                        float param_6)
+void dJointSetAMotorAxis(undefined8 param_1,double param_2,double param_3,undefined8 param_4,
+                        ulonglong param_5,int param_6)
 
 {
   int iVar1;
-  dxJointAMotor *pdVar2;
-  float (*pafVar3) [4];
+  ulonglong uVar2;
+  longlong lVar3;
   int iVar4;
-  ulonglong uVar5;
+  longlong lVar5;
   double extraout_f1;
   double dVar6;
-  double dVar7;
-  double dVar8;
   
-  dVar6 = (double)param_5;
-  dVar7 = (double)param_6;
-  uVar5 = (ulonglong)param_2;
-  pdVar2 = (dxJointAMotor *)__savegprlr_26((double)param_4,param_1);
-  iVar4 = (int)uVar5;
-  dVar8 = extraout_f1;
-  if ((((pdVar2 == (dxJointAMotor *)0x0) || (iVar4 < 0)) || (2 < iVar4)) ||
-     ((param_3 < 0 || (2 < param_3)))) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x9c7,0,"%s");
+  uVar2 = __savegprlr_26();
+  iVar4 = (int)param_5;
+  dVar6 = extraout_f1;
+  if (((((uVar2 & 0xffffffff) == 0) || (iVar4 < 0)) || (2 < iVar4)) ||
+     ((param_6 < 0 || (2 < param_6)))) {
+    MyAssertHandler(0xffffffff82198a88,0x9c7,0,0xffffffff82000f98,0xffffffff8219982c);
   }
-  if (pdVar2->_padding_ != 10) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x9c8,0,"%s\n\t%s");
+  iVar1 = (int)uVar2;
+  if (*(int *)(iVar1 + 0x14) != 10) {
+    MyAssertHandler(0xffffffff82198a88,0x9c8,0,0xffffffff820011f4,0xffffffff82194e60,
+                    0xffffffff8219923c);
   }
-  if (((pdVar2->_padding_ == 0) && ((pdVar2->_padding_ & 2U) != 0)) && (param_3 == 1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x9c9,0,"%s\n\t%s");
+  if (((*(int *)(iVar1 + 0x30) == 0) && ((*(uint *)(iVar1 + 0x18) & 2) != 0)) && (param_6 == 1)) {
+    MyAssertHandler(0xffffffff82198a88,0x9c9,0,0xffffffff820011f4,0xffffffff821997c0,
+                    0xffffffff82199808);
   }
-  if (((pdVar2->_padding_ == 0) && ((pdVar2->_padding_ & 2U) == 0)) && (param_3 == 2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x9ca,0,"%s\n\t%s");
+  if (((*(int *)(iVar1 + 0x30) == 0) && ((*(uint *)(iVar1 + 0x18) & 2) == 0)) && (param_6 == 2)) {
+    MyAssertHandler(0xffffffff82198a88,0x9ca,0,0xffffffff820011f4,0xffffffff82199750,
+                    0xffffffff82199798);
   }
   if (iVar4 < 0) {
-    uVar5 = 0;
+    param_5 = 0;
   }
   else if (2 < iVar4) {
-    uVar5 = 2;
+    param_5 = 2;
   }
-  if ((pdVar2->_padding_ == 0) && (param_3 == 2)) {
-    param_3 = 1;
+  if ((*(int *)(iVar1 + 0x30) == 0) && (param_6 == 2)) {
+    param_6 = 1;
   }
-  *(int *)((int)pdVar2->rel + (int)((uVar5 + 0x11 & 0xffffffff) << 2) + -0x44) = param_3;
-  iVar4 = (int)uVar5;
-  if (param_3 < 1) {
-    iVar1 = (int)((uVar5 & 0xffffffff) << 4);
-    pafVar3 = pdVar2->axis + iVar4;
-    pdVar2->axis[iVar4][0] = (float)dVar8;
-    *(float *)((int)pdVar2->axis[0] + iVar1 + 4) = (float)dVar6;
-    *(float *)((int)pdVar2->axis[0] + iVar1 + 8) = (float)dVar7;
+  *(int *)((int)((param_5 + 0x11 & 0xffffffff) << 2) + iVar1) = param_6;
+  if (param_6 < 1) {
+    lVar5 = (param_5 + 5 & 0xfffffff) * 0x10;
+    iVar4 = (int)((param_5 & 0xffffffff) << 4) + iVar1;
+    lVar3 = lVar5 + uVar2;
+    *(float *)((int)lVar5 + iVar1) = (float)dVar6;
+    *(float *)(iVar4 + 0x54) = (float)param_2;
+    *(float *)(iVar4 + 0x58) = (float)param_3;
   }
-  else if (param_3 == 1) {
-    iVar1 = pdVar2->_padding_;
-    pafVar3 = pdVar2->axis + iVar4;
-    pdVar2->axis[iVar4][0] =
-         (float)((double)*(float *)(iVar1 + 0x100) * dVar8 +
-                (double)(float)((double)*(float *)(iVar1 + 0x110) * dVar6 +
-                               (double)(float)((double)*(float *)(iVar1 + 0x120) * dVar7)));
-    (*pafVar3)[1] =
-         (float)(dVar8 * (double)*(float *)(iVar1 + 0x104) +
-                (double)(float)((double)*(float *)(iVar1 + 0x114) * dVar6 +
-                               (double)(float)((double)*(float *)(iVar1 + 0x124) * dVar7)));
-    (*pafVar3)[2] =
-         (float)((double)*(float *)(iVar1 + 0x108) * dVar8 +
-                (double)(float)((double)*(float *)(iVar1 + 0x118) * dVar6 +
-                               (double)(float)((double)*(float *)(iVar1 + 0x128) * dVar7)));
+  else if (param_6 == 1) {
+    iVar4 = *(int *)(iVar1 + 0x20);
+    lVar5 = (param_5 + 5 & 0xfffffff) * 0x10;
+    lVar3 = lVar5 + uVar2;
+    *(float *)((int)lVar5 + iVar1) =
+         (float)((double)*(float *)(iVar4 + 0x100) * dVar6 +
+                (double)(float)((double)*(float *)(iVar4 + 0x110) * param_2 +
+                               (double)(float)((double)*(float *)(iVar4 + 0x120) * param_3)));
+    *(float *)((int)lVar3 + 4) =
+         (float)(dVar6 * (double)*(float *)(iVar4 + 0x104) +
+                (double)(float)((double)*(float *)(iVar4 + 0x114) * param_2 +
+                               (double)(float)((double)*(float *)(iVar4 + 0x124) * param_3)));
+    *(float *)((int)lVar3 + 8) =
+         (float)((double)*(float *)(iVar4 + 0x108) * dVar6 +
+                (double)(float)((double)*(float *)(iVar4 + 0x118) * param_2 +
+                               (double)(float)((double)*(float *)(iVar4 + 0x128) * param_3)));
   }
   else {
-    if (pdVar2->_padding_ == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0x9df,0,"%s");
+    if (*(int *)(iVar1 + 0x30) == 0) {
+      MyAssertHandler(0xffffffff82198a88,0x9df,0,0xffffffff82000f98,0xffffffff8219932c);
     }
-    iVar1 = pdVar2->_padding_;
-    pafVar3 = pdVar2->axis + iVar4;
-    pdVar2->axis[iVar4][0] =
-         (float)((double)*(float *)(iVar1 + 0x100) * dVar8 +
-                (double)(float)((double)*(float *)(iVar1 + 0x110) * dVar6 +
-                               (double)(float)((double)*(float *)(iVar1 + 0x120) * dVar7)));
-    (*pafVar3)[1] =
-         (float)((double)*(float *)(iVar1 + 0x104) * dVar8 +
-                (double)(float)((double)*(float *)(iVar1 + 0x114) * dVar6 +
-                               (double)(float)((double)*(float *)(iVar1 + 0x124) * dVar7)));
-    (*pafVar3)[2] =
-         (float)((double)*(float *)(iVar1 + 0x108) * dVar8 +
-                (double)(float)((double)*(float *)(iVar1 + 0x118) * dVar6 +
-                               (double)(float)((double)*(float *)(iVar1 + 0x128) * dVar7)));
+    iVar4 = *(int *)(iVar1 + 0x30);
+    lVar5 = (param_5 + 5 & 0xfffffff) * 0x10;
+    lVar3 = lVar5 + uVar2;
+    *(float *)((int)lVar5 + iVar1) =
+         (float)((double)*(float *)(iVar4 + 0x100) * dVar6 +
+                (double)(float)((double)*(float *)(iVar4 + 0x110) * param_2 +
+                               (double)(float)((double)*(float *)(iVar4 + 0x120) * param_3)));
+    *(float *)((int)lVar3 + 4) =
+         (float)((double)*(float *)(iVar4 + 0x104) * dVar6 +
+                (double)(float)((double)*(float *)(iVar4 + 0x114) * param_2 +
+                               (double)(float)((double)*(float *)(iVar4 + 0x124) * param_3)));
+    *(float *)((int)lVar3 + 8) =
+         (float)((double)*(float *)(iVar4 + 0x108) * dVar6 +
+                (double)(float)((double)*(float *)(iVar4 + 0x118) * param_2 +
+                               (double)(float)((double)*(float *)(iVar4 + 0x128) * param_3)));
   }
-  dNormalize3(*pafVar3);
-  if (pdVar2->mode == 1) {
-    amotorSetEulerReferenceVectors(pdVar2);
+  dNormalize3(lVar3);
+  if (*(int *)(iVar1 + 0x40) == 1) {
+    amotorSetEulerReferenceVectors(uVar2);
   }
   __restgprlr_26();
   return;
@@ -4601,33 +4443,33 @@ void dJointSetAMotorAxis(dxJointAMotor *param_1,int param_2,int param_3,float pa
 
 // 826901B0  dJointSetAMotorParam  (physics/ode/src/joint.cpp:2543)
 
-void dJointSetAMotorParam(dxJointAMotor *param_1,int param_2,float param_3)
+void dJointSetAMotorParam(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  int iVar2;
-  double extraout_f1;
-  double dVar3;
+  ulonglong uVar2;
+  longlong lVar3;
+  undefined8 extraout_f1;
+  undefined8 uVar4;
   
-  iVar1 = __savegprlr_29((double)param_3,param_1);
-  dVar3 = extraout_f1;
-  if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x9f0,0,"%s");
+  uVar2 = __savegprlr_29();
+  uVar4 = extraout_f1;
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x9f0,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
-  if (*(int *)(iVar1 + 0x14) != 10) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x9f1,0,"%s\n\t%s");
+  if (*(int *)((int)uVar2 + 0x14) != 10) {
+    MyAssertHandler(0xffffffff82198a88,0x9f1,0,0xffffffff820011f4,0xffffffff82194e60,
+                    0xffffffff8219923c);
   }
-  iVar2 = param_2 >> 8;
-  if (iVar2 < 0) {
-    iVar2 = 0;
+  iVar1 = (int)param_2 >> 8;
+  lVar3 = (longlong)iVar1;
+  if (lVar3 < 0) {
+    lVar3 = 0;
   }
-  else if (2 < iVar2) {
-    iVar2 = 2;
+  else if (2 < iVar1) {
+    lVar3 = 2;
   }
-  dxJointLimitMotor::set
-            ((dxJointLimitMotor *)(iVar2 * 0x2c + iVar1 + 0x80),param_2 & 0xff,(float)dVar3);
+  dxJointLimitMotor__set(uVar4,lVar3 * 0x2c + uVar2 + 0x80,param_2 & 0xff);
   __restgprlr_29();
   return;
 }
@@ -4635,24 +4477,23 @@ void dJointSetAMotorParam(dxJointAMotor *param_1,int param_2,float param_3)
 
 // 82694D20  dJointSetAMotorMode  (physics/ode/src/joint.cpp:2555)
 
-void dJointSetAMotorMode(dxJointAMotor *param_1,int param_2)
+void dJointSetAMotorMode(undefined8 param_1,int param_2)
 
 {
-  dxJointAMotor *pdVar1;
+  int iVar1;
   
-  pdVar1 = (dxJointAMotor *)__savegprlr_29(param_1);
-  if (pdVar1 == (dxJointAMotor *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x9fc,0,"%s");
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0x9fc,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
-  if (pdVar1->_padding_ != 10) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0x9fd,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 10) {
+    MyAssertHandler(0xffffffff82198a88,0x9fd,0,0xffffffff820011f4,0xffffffff82194e60,
+                    0xffffffff8219923c);
   }
-  pdVar1->mode = param_2;
+  *(int *)(iVar1 + 0x40) = param_2;
   if (param_2 == 1) {
-    pdVar1->num = 3;
-    amotorSetEulerReferenceVectors(pdVar1);
+    *(undefined4 *)(iVar1 + 0x3c) = 3;
+    amotorSetEulerReferenceVectors(iVar1);
   }
   __restgprlr_29();
   return;
@@ -4661,51 +4502,47 @@ void dJointSetAMotorMode(dxJointAMotor *param_1,int param_2)
 
 // 82690270  dJointGetAMotorNumAxes  (physics/ode/src/joint.cpp:2567)
 
-int dJointGetAMotorNumAxes(dxJointAMotor *param_1)
+undefined4 dJointGetAMotorNumAxes(int param_1)
 
 {
-  if (param_1 == (dxJointAMotor *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa08,0,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0xa08,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
-  if (param_1->_padding_ != 10) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa09,0,"%s\n\t%s");
+  if (*(int *)(param_1 + 0x14) != 10) {
+    MyAssertHandler(0xffffffff82198a88,0xa09,0,0xffffffff820011f4,0xffffffff82194e60,
+                    0xffffffff8219923c);
   }
-  return param_1->num;
+  return *(undefined4 *)(param_1 + 0x3c);
 }
 
 
 // 82694DC0  dJointGetAMotorAxis  (physics/ode/src/joint.cpp:2576)
 
-void dJointGetAMotorAxis(dxJointAMotor *param_1,int param_2,float *param_3)
+void dJointGetAMotorAxis(undefined8 param_1,ulonglong param_2,float *param_3)
 
 {
   float *pfVar1;
   int iVar2;
   int iVar3;
   int iVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)param_2;
-  iVar3 = __savegprlr_28(param_1);
-  iVar4 = (int)uVar5;
+  iVar3 = __savegprlr_28();
+  iVar4 = (int)param_2;
   if (((iVar3 == 0) || (iVar4 < 0)) || (2 < iVar4)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa11,0,"%s");
+    MyAssertHandler(0xffffffff82198a88,0xa11,0,0xffffffff82000f98,0xffffffff82199274);
   }
   if (*(int *)(iVar3 + 0x14) != 10) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa12,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0xa12,0,0xffffffff820011f4,0xffffffff82194e60,
+                    0xffffffff8219923c);
   }
   if (iVar4 < 0) {
-    uVar5 = 0;
+    param_2 = 0;
   }
   else if (2 < iVar4) {
-    uVar5 = 2;
+    param_2 = 2;
   }
-  iVar4 = *(int *)((int)((uVar5 + 0x11 & 0xffffffff) << 2) + iVar3);
-  iVar2 = ((int)uVar5 + 5) * 0x10;
+  iVar4 = *(int *)((int)((param_2 + 0x11 & 0xffffffff) << 2) + iVar3);
+  iVar2 = ((int)param_2 + 5) * 0x10;
   if (0 < iVar4) {
     pfVar1 = (float *)(iVar2 + iVar3);
     if (iVar4 == 1) {
@@ -4730,7 +4567,7 @@ void dJointGetAMotorAxis(dxJointAMotor *param_1,int param_2,float *param_3)
     return;
   }
   *param_3 = *(float *)(iVar2 + iVar3);
-  iVar3 = (int)((uVar5 & 0xffffffff) << 4) + iVar3;
+  iVar3 = (int)((param_2 & 0xffffffff) << 4) + iVar3;
   param_3[1] = *(float *)(iVar3 + 0x54);
   param_3[2] = *(float *)(iVar3 + 0x58);
   __restgprlr_28();
@@ -4740,111 +4577,103 @@ void dJointGetAMotorAxis(dxJointAMotor *param_1,int param_2,float *param_3)
 
 // 82690308  dJointGetAMotorAxisRel  (physics/ode/src/joint.cpp:2598)
 
-int dJointGetAMotorAxisRel(dxJointAMotor *param_1,int param_2)
+void dJointGetAMotorAxisRel(undefined8 param_1,longlong param_2)
 
 {
   int iVar1;
   int iVar2;
-  longlong lVar3;
   
-  lVar3 = (longlong)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  iVar2 = (int)lVar3;
+  iVar1 = __savegprlr_29();
+  iVar2 = (int)param_2;
   if (((iVar1 == 0) || (iVar2 < 0)) || (2 < iVar2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa27,0,"%s");
+    MyAssertHandler(0xffffffff82198a88,0xa27,0,0xffffffff82000f98,0xffffffff82199274);
   }
   if (*(int *)(iVar1 + 0x14) != 10) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa28,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0xa28,0,0xffffffff820011f4,0xffffffff82194e60,
+                    0xffffffff8219923c);
   }
   if (iVar2 < 0) {
-    iVar1 = __restgprlr_29(*(undefined4 *)(iVar1 + 0x44));
-    return iVar1;
+    __restgprlr_29(*(undefined4 *)(iVar1 + 0x44));
+    return;
   }
   if (2 < iVar2) {
-    lVar3 = 2;
+    param_2 = 2;
   }
-  iVar1 = __restgprlr_29(*(undefined4 *)((int)((lVar3 + 0x11U & 0xffffffff) << 2) + iVar1));
-  return iVar1;
+  __restgprlr_29(*(undefined4 *)((int)((param_2 + 0x11U & 0xffffffff) << 2) + iVar1));
+  return;
 }
 
 
 // 826903D0  dJointGetAMotorAngleRate  (physics/ode/src/joint.cpp:2608)
 
-float dJointGetAMotorAngleRate(dxJointAMotor *param_1,int param_2)
+undefined8 dJointGetAMotorAngleRate(void)
 
 {
-  if (alwaysfails == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa32,0,"not yet implemented");
-    return 0.0;
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0xa32,0,0xffffffff82199294);
+    return 0;
   }
-  return 0.0;
+  return 0;
 }
 
 
 // 82690438  dJointGetAMotorParam  (physics/ode/src/joint.cpp:2616)
 
-float dJointGetAMotorParam(dxJointAMotor *param_1,int param_2)
+void dJointGetAMotorParam(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  int iVar2;
-  double dVar3;
-  float fVar4;
+  ulonglong uVar2;
+  longlong lVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa39,0,"%s");
+  uVar2 = __savegprlr_29();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82198a88,0xa39,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
-  if (*(int *)(iVar1 + 0x14) != 10) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa3a,0,"%s\n\t%s");
+  if (*(int *)((int)uVar2 + 0x14) != 10) {
+    MyAssertHandler(0xffffffff82198a88,0xa3a,0,0xffffffff820011f4,0xffffffff82194e60,
+                    0xffffffff8219923c);
   }
-  iVar2 = param_2 >> 8;
-  if (iVar2 < 0) {
-    iVar2 = 0;
+  iVar1 = (int)param_2 >> 8;
+  lVar3 = (longlong)iVar1;
+  if (lVar3 < 0) {
+    lVar3 = 0;
   }
-  else if (2 < iVar2) {
-    iVar2 = 2;
+  else if (2 < iVar1) {
+    lVar3 = 2;
   }
-  fVar4 = dxJointLimitMotor::get((dxJointLimitMotor *)(iVar2 * 0x2c + iVar1 + 0x80),param_2 & 0xff);
-  dVar3 = (double)__restgprlr_29((double)fVar4);
-  return (float)dVar3;
+  dxJointLimitMotor__get(lVar3 * 0x2c + uVar2 + 0x80,param_2 & 0xff);
+  __restgprlr_29();
+  return;
 }
 
 
 // 826904E8  dJointGetAMotorMode  (physics/ode/src/joint.cpp:2628)
 
-int dJointGetAMotorMode(dxJointAMotor *param_1)
+undefined4 dJointGetAMotorMode(int param_1)
 
 {
-  if (param_1 == (dxJointAMotor *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa45,0,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0xa45,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
-  if (param_1->_padding_ != 10) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa46,0,"%s\n\t%s");
+  if (*(int *)(param_1 + 0x14) != 10) {
+    MyAssertHandler(0xffffffff82198a88,0xa46,0,0xffffffff820011f4,0xffffffff82194e60,
+                    0xffffffff8219923c);
   }
-  return param_1->mode;
+  return *(undefined4 *)(param_1 + 0x40);
 }
 
 
 // 82694FC0  dJointAddAMotorTorques  (physics/ode/src/joint.cpp:2636)
 
-void dJointAddAMotorTorques(dxJointAMotor *param_1,float param_2,float param_3,float param_4)
+void dJointAddAMotorTorques(undefined8 param_1,double param_2,double param_3)
 
 {
-  dxJointAMotor *pdVar1;
+  int iVar1;
   double extraout_f1;
   double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
-  double dVar6;
   float local_70;
   float local_6c;
   float local_68;
@@ -4855,54 +4684,51 @@ void dJointAddAMotorTorques(dxJointAMotor *param_1,float param_2,float param_3,f
   float local_4c;
   float local_48;
   
-  dVar5 = (double)param_4;
-  dVar3 = (double)param_3;
-  pdVar1 = (dxJointAMotor *)__savegprlr_29((double)param_2,param_1);
-  dVar6 = extraout_f1;
-  if (pdVar1 == (dxJointAMotor *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa4e,0,"%s");
+  iVar1 = __savegprlr_29();
+  dVar4 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82198a88,0xa4e,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
-  if (pdVar1->_padding_ != 10) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xa4f,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x14) != 10) {
+    MyAssertHandler(0xffffffff82198a88,0xa4f,0,0xffffffff820011f4,0xffffffff82194e60,
+                    0xffffffff8219923c);
   }
-  if (pdVar1->num != 0) {
-    if ((pdVar1->_padding_ & 2U) != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0xa53,0,"%s\n\t%s");
+  if (*(int *)(iVar1 + 0x3c) != 0) {
+    if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
+      MyAssertHandler(0xffffffff82198a88,0xa53,0,0xffffffff820011f4,0xffffffff82199864,
+                      0xffffffff82199890);
     }
-    amotorComputeGlobalAxes(pdVar1,(float (*) [4])&local_70);
-    local_70 = (float)((double)local_70 * dVar6);
+    amotorComputeGlobalAxes(iVar1,&local_70);
+    local_70 = (float)((double)local_70 * dVar4);
     dVar2 = (double)local_70;
-    local_6c = (float)((double)local_6c * dVar6);
-    dVar4 = (double)local_6c;
-    local_68 = (float)((double)local_68 * dVar6);
-    dVar6 = (double)local_68;
-    if (1 < pdVar1->num) {
-      local_70 = (float)((double)local_60 * dVar3 + dVar2);
+    local_6c = (float)((double)local_6c * dVar4);
+    dVar3 = (double)local_6c;
+    local_68 = (float)((double)local_68 * dVar4);
+    dVar4 = (double)local_68;
+    if (1 < *(int *)(iVar1 + 0x3c)) {
+      local_70 = (float)((double)local_60 * param_2 + dVar2);
       dVar2 = (double)local_70;
-      local_6c = (float)((double)local_5c * dVar3 + dVar4);
-      dVar4 = (double)local_6c;
-      local_68 = (float)((double)local_58 * dVar3 + dVar6);
-      dVar6 = (double)local_68;
-      if (2 < pdVar1->num) {
-        local_70 = (float)((double)local_50 * dVar5 + dVar2);
+      local_6c = (float)((double)local_5c * param_2 + dVar3);
+      dVar3 = (double)local_6c;
+      local_68 = (float)((double)local_58 * param_2 + dVar4);
+      dVar4 = (double)local_68;
+      if (2 < *(int *)(iVar1 + 0x3c)) {
+        local_70 = (float)((double)local_50 * param_3 + dVar2);
         dVar2 = (double)local_70;
-        local_6c = (float)((double)local_4c * dVar5 + dVar4);
-        dVar4 = (double)local_6c;
-        local_68 = (float)((double)local_48 * dVar5 + dVar6);
-        dVar6 = (double)local_68;
+        local_6c = (float)((double)local_4c * param_3 + dVar3);
+        dVar3 = (double)local_6c;
+        local_68 = (float)((double)local_48 * param_3 + dVar4);
+        dVar4 = (double)local_68;
       }
     }
-    if ((dxBody *)pdVar1->_padding_ != (dxBody *)0x0) {
-      dBodyAddTorque((dxBody *)pdVar1->_padding_,(float)dVar2,(float)dVar4,(float)dVar6);
-      dVar6 = (double)local_68;
-      dVar4 = (double)local_6c;
+    if (*(int *)(iVar1 + 0x20) != 0) {
+      dBodyAddTorque();
+      dVar4 = (double)local_68;
+      dVar3 = (double)local_6c;
       dVar2 = (double)local_70;
     }
-    if ((dxBody *)pdVar1->_padding_ != (dxBody *)0x0) {
-      dBodyAddTorque((dxBody *)pdVar1->_padding_,(float)-dVar2,(float)-dVar4,(float)-dVar6);
+    if (*(int *)(iVar1 + 0x30) != 0) {
+      dBodyAddTorque(-dVar2,-dVar3,-dVar4);
     }
   }
   __restgprlr_29();
@@ -4912,82 +4738,91 @@ void dJointAddAMotorTorques(dxJointAMotor *param_1,float param_2,float param_3,f
 
 // 82690580  fixedInit  (physics/ode/src/joint.cpp:2671)
 
-void fixedInit(dxJointFixed *param_1)
+void fixedInit(longlong param_1)
 
 {
-  dSetZero(param_1->offset,4);
-  dSetZero(param_1->qrel,4);
+  dSetZero(param_1 + 0x4c,4);
+  dSetZero(param_1 + 0x3c,4);
   return;
 }
 
 
 // 826905C0  fixedGetInfo1  (physics/ode/src/joint.cpp:2678)
 
-void fixedGetInfo1(dxJointFixed *param_1,Info1 *param_2)
+void fixedGetInfo1(undefined4 *param_1)
 
 {
-  param_1->_padding_ = 6;
-  param_1->_padding_ = 6;
+  *param_1 = 6;
+  param_1[1] = 6;
   return;
 }
 
 
 // 82695168  fixedGetInfo2  (physics/ode/src/joint.cpp:2685)
 
-void fixedGetInfo2(dxJointFixed *param_1,dxWorldStepInfo *param_2,Info2 *param_3)
+void fixedGetInfo2(undefined8 param_1,float *param_2)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  dxBody *pdVar5;
-  Info2 *pIVar6;
+  float fVar4;
+  int iVar5;
+  float fVar6;
   float fVar7;
-  float fVar8;
-  dxJoint *pdVar9;
-  longlong lVar10;
+  int iVar8;
+  int iVar9;
+  int iVar10;
   
-  lVar10 = (longlong)(int)param_2;
-  pdVar9 = (dxJoint *)__savegprlr_29(param_1,lVar10,param_3);
-  pIVar6 = (Info2 *)lVar10;
-  iVar4 = pIVar6->rowskip;
-  setFixedOrientation(pdVar9,pIVar6,(float *)(pdVar9 + 1),3);
-  *pIVar6->J1l = 1.0;
-  pIVar6->J1l[iVar4 + 1] = 1.0;
-  pIVar6->J1l[iVar4 * 2 + 2] = 1.0;
-  pdVar5 = pdVar9->node[0].body;
-  fVar1 = (float)pdVar9[1].flags;
-  fVar2 = (float)pdVar9[1].type;
-  fVar3 = (float)pdVar9[1]._padding_;
-  fVar8 = (pdVar5->info).R[0] * fVar3 + (pdVar5->info).R[1] * fVar2 + (pdVar5->info).R[2] * fVar1;
-  fVar7 = fVar3 * (pdVar5->info).R[4] + (pdVar5->info).R[5] * fVar2 + (pdVar5->info).R[6] * fVar1;
-  fVar1 = fVar3 * (pdVar5->info).R[8] + (pdVar5->info).R[9] * fVar2 + (pdVar5->info).R[10] * fVar1;
-  if (pdVar9->node[1].body != (dxBody *)0x0) {
-    pIVar6->J1a[1] = -fVar1;
-    pIVar6->J1a[2] = fVar7;
-    pIVar6->J1a[iVar4] = fVar1;
-    pIVar6->J1a[iVar4 + 2] = -fVar8;
-    pIVar6->J1a[iVar4 * 2] = -fVar7;
-    pIVar6->J1a[iVar4 * 2 + 1] = fVar8;
-    *pIVar6->J2l = -1.0;
-    pIVar6->J2l[iVar4 + 1] = -1.0;
-    pIVar6->J2l[iVar4 * 2 + 2] = -1.0;
+  iVar10 = __savegprlr_29();
+  fVar4 = param_2[6];
+  setFixedOrientation();
+  iVar8 = (int)fVar4 * 4;
+  iVar9 = (int)fVar4 * 8;
+  *(undefined4 *)param_2[2] = 0x3f800000;
+  *(undefined4 *)(iVar8 + (int)param_2[2] + 4) = 0x3f800000;
+  *(undefined4 *)(iVar9 + (int)param_2[2] + 8) = 0x3f800000;
+  iVar5 = *(int *)(iVar10 + 0x20);
+  fVar1 = *(float *)(iVar10 + 0x54);
+  fVar2 = *(float *)(iVar10 + 0x50);
+  fVar3 = *(float *)(iVar10 + 0x4c);
+  fVar7 = *(float *)(iVar5 + 0x100) * fVar3 +
+          *(float *)(iVar5 + 0x104) * fVar2 + *(float *)(iVar5 + 0x108) * fVar1;
+  fVar6 = fVar3 * *(float *)(iVar5 + 0x110) +
+          *(float *)(iVar5 + 0x114) * fVar2 + *(float *)(iVar5 + 0x118) * fVar1;
+  fVar1 = fVar3 * *(float *)(iVar5 + 0x120) +
+          *(float *)(iVar5 + 0x124) * fVar2 + *(float *)(iVar5 + 0x128) * fVar1;
+  if (*(int *)(iVar10 + 0x30) != 0) {
+    *(float *)((int)param_2[3] + 4) = -fVar1;
+    *(float *)((int)param_2[3] + 8) = fVar6;
+    *(float *)((int)param_2[3] + iVar8) = fVar1;
+    *(float *)(((int)fVar4 + 2) * 4 + (int)param_2[3]) = -fVar7;
+    *(float *)((int)param_2[3] + iVar9) = -fVar6;
+    *(float *)((int)param_2[3] + iVar9 + 4) = fVar7;
+    *(undefined4 *)param_2[4] = 0xbf800000;
+    *(undefined4 *)(iVar8 + (int)param_2[4] + 4) = 0xbf800000;
+    *(undefined4 *)(iVar9 + (int)param_2[4] + 8) = 0xbf800000;
   }
-  pdVar5 = pdVar9->node[1].body;
-  fVar2 = pIVar6->erp * pIVar6->fps;
-  if (pdVar5 != (dxBody *)0x0) {
-    *pIVar6->c = (((pdVar5->info).pos[0] - ((pdVar9->node[0].body)->info).pos[0]) + fVar8) * fVar2;
-    pIVar6->c[1] = ((((pdVar9->node[1].body)->info).pos[1] - ((pdVar9->node[0].body)->info).pos[1])
-                   + fVar7) * fVar2;
-    pIVar6->c[2] = ((((pdVar9->node[1].body)->info).pos[2] - ((pdVar9->node[0].body)->info).pos[2])
-                   + fVar1) * fVar2;
+  fVar2 = param_2[1] * *param_2;
+  if (*(int *)(iVar10 + 0x30) != 0) {
+    *(float *)param_2[7] =
+         ((*(float *)(*(int *)(iVar10 + 0x30) + 0xe0) - *(float *)(*(int *)(iVar10 + 0x20) + 0xe0))
+         + fVar7) * fVar2;
+    *(float *)((int)param_2[7] + 4) =
+         ((*(float *)(*(int *)(iVar10 + 0x30) + 0xe4) - *(float *)(*(int *)(iVar10 + 0x20) + 0xe4))
+         + fVar6) * fVar2;
+    *(float *)((int)param_2[7] + 8) =
+         ((*(float *)(*(int *)(iVar10 + 0x30) + 0xe8) - *(float *)(*(int *)(iVar10 + 0x20) + 0xe8))
+         + fVar1) * fVar2;
     __restgprlr_29();
     return;
   }
-  *pIVar6->c = ((float)pdVar9[1]._padding_ - ((pdVar9->node[0].body)->info).pos[0]) * fVar2;
-  pIVar6->c[1] = ((float)pdVar9[1].type - ((pdVar9->node[0].body)->info).pos[1]) * fVar2;
-  pIVar6->c[2] = ((float)pdVar9[1].flags - ((pdVar9->node[0].body)->info).pos[2]) * fVar2;
+  *(float *)param_2[7] =
+       (*(float *)(iVar10 + 0x4c) - *(float *)(*(int *)(iVar10 + 0x20) + 0xe0)) * fVar2;
+  *(float *)((int)param_2[7] + 4) =
+       (*(float *)(iVar10 + 0x50) - *(float *)(*(int *)(iVar10 + 0x20) + 0xe4)) * fVar2;
+  *(float *)((int)param_2[7] + 8) =
+       (*(float *)(iVar10 + 0x54) - *(float *)(*(int *)(iVar10 + 0x20) + 0xe8)) * fVar2;
   __restgprlr_29();
   return;
 }
@@ -4995,7 +4830,7 @@ void fixedGetInfo2(dxJointFixed *param_1,dxWorldStepInfo *param_2,Info2 *param_3
 
 // 82695378  dJointSetFixed  (physics/ode/src/joint.cpp:2721)
 
-void dJointSetFixed(dxJointFixed *param_1)
+void dJointSetFixed(void)
 
 {
   int iVar1;
@@ -5006,20 +4841,19 @@ void dJointSetFixed(dxJointFixed *param_1)
   float fVar6;
   int iVar7;
   
-  iVar7 = __savegprlr_29(param_1);
+  iVar7 = __savegprlr_29();
   if (iVar7 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xaa2,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0xaa2,0,0xffffffff820011f4,0xffffffff82194ed4,
+                    0xffffffff82198b38);
   }
   if (*(int *)(iVar7 + 0x14) != 8) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                    0xaa3,0,"%s\n\t%s");
+    MyAssertHandler(0xffffffff82198a88,0xaa3,0,0xffffffff820011f4,0xffffffff821998d8,
+                    0xffffffff821998fc);
   }
   iVar1 = *(int *)(iVar7 + 0x20);
   if (iVar1 != 0) {
-    if (*(int *)(iVar7 + 0x30) != 0) {
-      dQMultiply1((float *)(iVar7 + 0x3c),(float *)(iVar1 + 0xf0),
-                  (float *)(*(int *)(iVar7 + 0x30) + 0xf0));
+    if ((ulonglong)*(uint *)(iVar7 + 0x30) != 0) {
+      dQMultiply1(iVar7 + 0x3c,iVar1 + 0xf0,(ulonglong)*(uint *)(iVar7 + 0x30) + 0xf0);
       iVar1 = *(int *)(iVar7 + 0x20);
       iVar2 = *(int *)(iVar7 + 0x30);
       iVar3 = *(int *)(iVar7 + 0x20);
@@ -5054,70 +4888,67 @@ void dJointSetFixed(dxJointFixed *param_1)
 
 // 826905D0  nullGetInfo1  (physics/ode/src/joint.cpp:2751)
 
-void nullGetInfo1(dxJointNull *param_1,Info1 *param_2)
+void nullGetInfo1(undefined4 *param_1)
 
 {
-  *(undefined4 *)param_1 = 0;
-  *(undefined4 *)&param_1->field_0x4 = 0;
+  *param_1 = 0;
+  param_1[1] = 0;
   return;
 }
 
 
 // 826905E0  nullGetInfo2  (physics/ode/src/joint.cpp:2758)
 
-void nullGetInfo2(dxJointNull *param_1,dxWorldStepInfo *param_2,Info2 *param_3)
+void nullGetInfo2(void)
 
 {
-  if (alwaysfails != 0) {
+  if (DAT_84013128 != 0) {
     return;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                  0xac8,0,"this should never get called");
+  MyAssertHandler(0xffffffff82198a88,0xac8,0,0xffffffff821992a8);
   return;
 }
 
 
 // 82690610  jointInit  (physics/ode/src/joint.cpp:2769)
 
-void jointInit(dxJoint *param_1)
+void jointInit(int param_1)
 
 {
-  JointType JVar1;
+  int iVar1;
   
-  JVar1 = param_1->type;
-  if (JVar1 - ODE_JOINT_TYPE_BALL < 9) {
-    if (JVar1 == ODE_JOINT_TYPE_HINGE) {
-      hingeInit((dxJointHinge *)param_1);
+  iVar1 = *(int *)(param_1 + 0x14);
+  if (iVar1 - 1U < 9) {
+    if (iVar1 == 2) {
+      hingeInit(param_1);
       return;
     }
-    if (JVar1 == ODE_JOINT_TYPE_SLIDER) {
-      sliderInit((dxJointSlider *)param_1);
+    if (iVar1 == 3) {
+      sliderInit(param_1);
       return;
     }
-    if (((JVar1 != ODE_JOINT_TYPE_CONTACT) && (JVar1 != ODE_JOINT_TYPE_ORIENTATION)) &&
-       (JVar1 != ODE_JOINT_TYPE_PATH)) {
-      if (JVar1 == ODE_JOINT_TYPE_UNIVERSAL) {
-        universalInit((dxJointUniversal *)param_1);
+    if (((iVar1 != 4) && (iVar1 != 5)) && (iVar1 != 6)) {
+      if (iVar1 == 7) {
+        universalInit(param_1);
         return;
       }
-      if (JVar1 == ODE_JOINT_TYPE_FIXED) {
-        dSetZero((float *)&param_1[1]._padding_,4);
-        dSetZero((float *)(param_1 + 1),4);
+      if (iVar1 == 8) {
+        dSetZero(param_1 + 0x4c,4);
+        dSetZero(param_1 + 0x3c,4);
         return;
       }
-      if (JVar1 == ODE_JOINT_TYPE_BALL) {
-        dSetZero((float *)(param_1 + 1),4);
-        dSetZero((float *)&param_1[1]._padding_,4);
+      if (iVar1 == 1) {
+        dSetZero(param_1 + 0x3c,4);
+        dSetZero(param_1 + 0x4c,4);
         return;
       }
     }
   }
   else {
-    if (JVar1 != ODE_JOINT_TYPE_AMOTOR) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0xaf5,0,"%s");
+    if (iVar1 != 10) {
+      MyAssertHandler(0xffffffff82198a88,0xaf5,0,0xffffffff82000f98,0xffffffff82194e60);
     }
-    amotorInit((dxJointAMotor *)param_1);
+    amotorInit(param_1);
   }
   return;
 }
@@ -5125,92 +4956,92 @@ void jointInit(dxJoint *param_1)
 
 // 82695520  jointGetInfo1  (physics/ode/src/joint.cpp:2813)
 
-void jointGetInfo1(dxJoint *param_1,Info1 *param_2)
+void jointGetInfo1(undefined8 param_1,undefined8 param_2)
 
 {
-  dxJointAMotor *pdVar1;
+  int iVar1;
   int iVar2;
+  int *piVar4;
+  undefined8 uVar3;
   
-  pdVar1 = (dxJointAMotor *)__savegprlr_28(param_1);
-  iVar2 = pdVar1->_padding_;
-  if (iVar2 - 1U < 9) {
-    if (iVar2 == 1) {
+  iVar2 = __savegprlr_28();
+  iVar1 = *(int *)(iVar2 + 0x14);
+  piVar4 = (int *)param_2;
+  if (iVar1 - 1U < 9) {
+    if (iVar1 == 1) {
 LAB_826955bc:
-      param_2->m = 3;
-      param_2->nub = 3;
+      *piVar4 = 3;
+      piVar4[1] = 3;
       __restgprlr_28();
       return;
     }
-    if (iVar2 == 2) {
-      hingeGetInfo1((dxJointHinge *)pdVar1,param_2);
-      iVar2 = param_2->m;
-      if (((-1 < iVar2) && (iVar2 < 7)) && ((-1 < param_2->nub && (param_2->nub <= iVar2))))
+    if (iVar1 == 2) {
+      hingeGetInfo1(iVar2,param_2);
+      iVar1 = *piVar4;
+      if (((-1 < iVar1) && (iVar1 < 7)) && ((-1 < piVar4[1] && (piVar4[1] <= iVar1))))
       goto LAB_826957cc;
-      iVar2 = 0xb0c;
+      uVar3 = 0xb0c;
     }
-    else if (iVar2 == 3) {
-      sliderGetInfo1((dxJointSlider *)pdVar1,param_2);
-      iVar2 = param_2->m;
-      if (((-1 < iVar2) && (iVar2 < 7)) && ((-1 < param_2->nub && (param_2->nub <= iVar2))))
+    else if (iVar1 == 3) {
+      sliderGetInfo1(iVar2,param_2);
+      iVar1 = *piVar4;
+      if (((-1 < iVar1) && (iVar1 < 7)) && ((-1 < piVar4[1] && (piVar4[1] <= iVar1))))
       goto LAB_826957cc;
-      iVar2 = 0xb1b;
+      uVar3 = 0xb1b;
     }
-    else if (iVar2 == 4) {
-      ContactGetInfo1((dxJointContact *)pdVar1,param_2);
-      iVar2 = param_2->m;
-      if ((((-1 < iVar2) && (iVar2 < 7)) && (-1 < param_2->nub)) && (param_2->nub <= iVar2))
+    else if (iVar1 == 4) {
+      ContactGetInfo1(iVar2,param_2);
+      iVar1 = *piVar4;
+      if ((((-1 < iVar1) && (iVar1 < 7)) && (-1 < piVar4[1])) && (piVar4[1] <= iVar1))
       goto LAB_826957cc;
-      iVar2 = 0xb02;
+      uVar3 = 0xb02;
     }
     else {
-      if (iVar2 == 5) {
-        ODE_OrientationGetInfo1((JointOrientation *)pdVar1,param_2);
-        iVar2 = param_2->m;
-        if (((iVar2 < 0) || (5 < iVar2)) || ((param_2->nub < 0 || (iVar2 < param_2->nub)))) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                          ,0xb11,0,"%s");
+      if (iVar1 == 5) {
+        ODE_OrientationGetInfo1(iVar2,param_2);
+        iVar1 = *piVar4;
+        if (((iVar1 < 0) || (5 < iVar1)) || ((piVar4[1] < 0 || (iVar1 < piVar4[1])))) {
+          MyAssertHandler(0xffffffff82198a88,0xb11,0,0xffffffff82000f98,0xffffffff82199958);
           __restgprlr_28();
           return;
         }
         goto LAB_826957cc;
       }
-      if (iVar2 == 6) {
-        if (*(char *)pdVar1->axis[1] != '\0') goto LAB_826955bc;
+      if (iVar1 == 6) {
+        if (*(char *)(iVar2 + 0x60) != '\0') goto LAB_826955bc;
 LAB_82695688:
-        param_2->m = 0;
-        param_2->nub = 0;
+        *piVar4 = 0;
+        piVar4[1] = 0;
         __restgprlr_28();
         return;
       }
-      if (iVar2 != 7) {
-        if (iVar2 == 8) {
-          param_2->m = 6;
-          param_2->nub = 6;
+      if (iVar1 != 7) {
+        if (iVar1 == 8) {
+          *piVar4 = 6;
+          piVar4[1] = 6;
           __restgprlr_28();
           return;
         }
         goto LAB_82695688;
       }
-      universalGetInfo1((dxJointUniversal *)pdVar1,param_2);
-      iVar2 = param_2->m;
-      if (((-1 < iVar2) && (iVar2 < 7)) && ((-1 < param_2->nub && (param_2->nub <= iVar2))))
+      universalGetInfo1(iVar2,param_2);
+      iVar1 = *piVar4;
+      if (((-1 < iVar1) && (iVar1 < 7)) && ((-1 < piVar4[1] && (piVar4[1] <= iVar1))))
       goto LAB_826957cc;
-      iVar2 = 0xb20;
+      uVar3 = 0xb20;
     }
   }
   else {
-    if (iVar2 != 10) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0xb2e,0,"%s");
+    if (iVar1 != 10) {
+      MyAssertHandler(0xffffffff82198a88,0xb2e,0,0xffffffff82000f98,0xffffffff82194e60);
     }
-    amotorGetInfo1(pdVar1,param_2);
-    iVar2 = param_2->m;
-    if ((((-1 < iVar2) && (iVar2 < 7)) && (-1 < param_2->nub)) && (param_2->nub <= iVar2))
+    amotorGetInfo1(iVar2,param_2);
+    iVar1 = *piVar4;
+    if ((((-1 < iVar1) && (iVar1 < 7)) && (-1 < piVar4[1])) && (piVar4[1] <= iVar1))
     goto LAB_826957cc;
-    iVar2 = 0xb30;
+    uVar3 = 0xb30;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
-                  iVar2,0,"%s");
+  MyAssertHandler(0xffffffff82198a88,uVar3,0,0xffffffff82000f98,0xffffffff82199910);
 LAB_826957cc:
   __restgprlr_28();
   return;
@@ -5219,51 +5050,46 @@ LAB_826957cc:
 
 // 826957D8  jointGetInfo2  (physics/ode/src/joint.cpp:2871)
 
-void jointGetInfo2(dxJoint *param_1,dxWorldStepInfo *param_2,Info2 *param_3)
+void jointGetInfo2(int param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  JointType JVar1;
-  Info2 *pIVar2;
+  int iVar1;
   
-  JVar1 = param_1->type;
-  if (JVar1 - ODE_JOINT_TYPE_BALL < 9) {
-    if (JVar1 == ODE_JOINT_TYPE_BALL) {
-      setBall(param_1,param_3,(float *)(param_1 + 1),(float *)&param_1[1]._padding_);
+  iVar1 = *(int *)(param_1 + 0x14);
+  if (iVar1 - 1U < 9) {
+    if (iVar1 == 1) {
+      setBall(param_1,param_3,param_1 + 0x3c,param_1 + 0x4c);
     }
-    else if (JVar1 == ODE_JOINT_TYPE_HINGE) {
-      hingeGetInfo2((dxJointHinge *)param_1,(dxWorldStepInfo *)param_3,param_3);
+    else if (iVar1 == 2) {
+      hingeGetInfo2(param_1,param_3);
     }
-    else if (JVar1 == ODE_JOINT_TYPE_SLIDER) {
-      sliderGetInfo2((dxJointSlider *)param_1,(dxWorldStepInfo *)param_3,param_3);
+    else if (iVar1 == 3) {
+      sliderGetInfo2(param_1,param_3);
     }
-    else if (JVar1 == ODE_JOINT_TYPE_CONTACT) {
-      ContactGetInfo2((dxJointContact *)param_1,param_2,param_3);
+    else if (iVar1 == 4) {
+      ContactGetInfo2(param_1,param_2,param_3);
     }
-    else if (JVar1 == ODE_JOINT_TYPE_ORIENTATION) {
-      ODE_OrientationGetInfo2((JointOrientation *)param_1,(dxWorldStepInfo *)param_3,param_3);
+    else if (iVar1 == 5) {
+      ODE_OrientationGetInfo2(param_1,param_3);
     }
-    else if (JVar1 == ODE_JOINT_TYPE_PATH) {
-      ODE_PathConstraintGetInfo2((JointPath *)param_1,(dxWorldStepInfo *)param_3,param_3);
+    else if (iVar1 == 6) {
+      ODE_PathConstraintGetInfo2(param_1,param_3);
     }
-    else if (JVar1 == ODE_JOINT_TYPE_UNIVERSAL) {
-      universalGetInfo2((dxJointUniversal *)param_1,(dxWorldStepInfo *)param_3,param_3);
+    else if (iVar1 == 7) {
+      universalGetInfo2(param_1,param_3);
     }
-    else if (JVar1 == ODE_JOINT_TYPE_FIXED) {
-      fixedGetInfo2((dxJointFixed *)param_1,(dxWorldStepInfo *)param_3,param_3);
+    else if (iVar1 == 8) {
+      fixedGetInfo2(param_1,param_3);
     }
-    else if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0xac8,0,"this should never get called");
+    else if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82198a88,0xac8,0,0xffffffff821992a8);
     }
   }
   else {
-    pIVar2 = param_3;
-    if (JVar1 != ODE_JOINT_TYPE_AMOTOR) {
-      pIVar2 = (Info2 *)0x0;
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp"
-                      ,0xb5f,0,"%s");
+    if (iVar1 != 10) {
+      MyAssertHandler(0xffffffff82198a88,0xb5f,0,0xffffffff82000f98,0xffffffff82194e60);
     }
-    amotorGetInfo2((dxJointAMotor *)param_1,(dxWorldStepInfo *)param_3,pIVar2);
+    amotorGetInfo2(param_1,param_3);
   }
   return;
 }

@@ -80,7 +80,7 @@
   8293EB20  EBE1FFF0             ld r31,-0x10(r1)
   8293EB24  4E800020             blr
 
-; 826E83B8  onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
+; 826E83B8  dwLobbyEventHandler<0>::onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
   826E83B8  7D8802A6             mfspr r12,LR
   826E83BC  9181FFF8             stw r12,-0x8(r1)
   826E83C0  FBE1FFF0             std r31,-0x10(r1)
@@ -112,7 +112,7 @@ LAB_826e8400:
   826E8420  EBE1FFF0             ld r31,-0x10(r1)
   826E8424  4E800020             blr
 
-; 826E8428  onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
+; 826E8428  dwLobbyEventHandler<1>::onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
   826E8428  7D8802A6             mfspr r12,LR
   826E842C  9181FFF8             stw r12,-0x8(r1)
   826E8430  FBE1FFF0             std r31,-0x10(r1)
@@ -144,7 +144,7 @@ LAB_826e8470:
   826E8490  EBE1FFF0             ld r31,-0x10(r1)
   826E8494  4E800020             blr
 
-; 826E8498  onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
+; 826E8498  dwLobbyEventHandler<2>::onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
   826E8498  7D8802A6             mfspr r12,LR
   826E849C  9181FFF8             stw r12,-0x8(r1)
   826E84A0  FBE1FFF0             std r31,-0x10(r1)
@@ -176,7 +176,7 @@ LAB_826e84e0:
   826E8500  EBE1FFF0             ld r31,-0x10(r1)
   826E8504  4E800020             blr
 
-; 826E8508  onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
+; 826E8508  dwLobbyEventHandler<3>::onChallengesReceived  (DW/dwlobbyeventhandler.h:43)
   826E8508  7D8802A6             mfspr r12,LR
   826E850C  9181FFF8             stw r12,-0x8(r1)
   826E8510  FBE1FFF0             std r31,-0x10(r1)
@@ -208,23 +208,23 @@ LAB_826e8550:
   826E8570  EBE1FFF0             ld r31,-0x10(r1)
   826E8574  4E800020             blr
 
-; 826E82B0  onNewMail  (DW/dwlobbyeventhandler.h:50)
+; 826E82B0  dwLobbyEventHandler<0>::onNewMail  (DW/dwlobbyeventhandler.h:50)
   826E82B0  38600000             li r3,0x0
   826E82B4  48001D94             b 0x826ea048
 
-; 826E82D0  onNewMail  (DW/dwlobbyeventhandler.h:50)
+; 826E82D0  dwLobbyEventHandler<1>::onNewMail  (DW/dwlobbyeventhandler.h:50)
   826E82D0  38600001             li r3,0x1
   826E82D4  48001D74             b 0x826ea048
 
-; 826E82F0  onNewMail  (DW/dwlobbyeventhandler.h:50)
+; 826E82F0  dwLobbyEventHandler<2>::onNewMail  (DW/dwlobbyeventhandler.h:50)
   826E82F0  38600002             li r3,0x2
   826E82F4  48001D54             b 0x826ea048
 
-; 826E8310  onNewMail  (DW/dwlobbyeventhandler.h:50)
+; 826E8310  dwLobbyEventHandler<3>::onNewMail  (DW/dwlobbyeventhandler.h:50)
   826E8310  38600003             li r3,0x3
   826E8314  48001D34             b 0x826ea048
 
-; 826E8330  ~bdReference<bdAntiCheatChallenges>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdreference/bdreference.inl:55)
+; 826E8330  bdReference<bdAntiCheatChallenges>::~bdReference<bdAntiCheatChallenges>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdreference/bdreference.inl:55)
   826E8330  7D8802A6             mfspr r12,LR
   826E8334  9181FFF8             stw r12,-0x8(r1)
   826E8338  FBE1FFF0             std r31,-0x10(r1)
@@ -263,43 +263,43 @@ LAB_826e83a4:
   826E83B0  EBE1FFF0             ld r31,-0x10(r1)
   826E83B4  4E800020             blr
 
-; 826E82B8  onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
+; 826E82B8  dwLobbyEventHandler<0>::onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
   826E82B8  7C832378             or r3,r4,r4
   826E82BC  480279C4             b 0x8270fc80
 
-; 826E82D8  onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
+; 826E82D8  dwLobbyEventHandler<1>::onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
   826E82D8  7C832378             or r3,r4,r4
   826E82DC  480279A4             b 0x8270fc80
 
-; 826E82F8  onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
+; 826E82F8  dwLobbyEventHandler<2>::onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
   826E82F8  7C832378             or r3,r4,r4
   826E82FC  48027984             b 0x8270fc80
 
-; 826E8318  onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
+; 826E8318  dwLobbyEventHandler<3>::onPlayerBanned  (DW/dwlobbyeventhandler.h:57)
   826E8318  7C832378             or r3,r4,r4
   826E831C  48027964             b 0x8270fc80
 
-; 826E82C0  onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
+; 826E82C0  dwLobbyEventHandler<0>::onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
   826E82C0  7CC43378             or r4,r6,r6
   826E82C4  38600000             li r3,0x0
   826E82C8  4801A848             b 0x82702b10
 
-; 826E82E0  onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
+; 826E82E0  dwLobbyEventHandler<1>::onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
   826E82E0  7CC43378             or r4,r6,r6
   826E82E4  38600001             li r3,0x1
   826E82E8  4801A828             b 0x82702b10
 
-; 826E8300  onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
+; 826E8300  dwLobbyEventHandler<2>::onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
   826E8300  7CC43378             or r4,r6,r6
   826E8304  38600002             li r3,0x2
   826E8308  4801A808             b 0x82702b10
 
-; 826E8320  onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
+; 826E8320  dwLobbyEventHandler<3>::onGlobalInstantMessage  (DW/dwlobbyeventhandler.h:64)
   826E8320  7CC43378             or r4,r6,r6
   826E8324  38600003             li r3,0x3
   826E8328  4801A7E8             b 0x82702b10
 
-; 826E8170  `scalar_deleting_destructor'  (line unknown)
+; 826E8170  dwLobbyEventHandler<0>::`scalar_deleting_destructor'  (line unknown)
   826E8170  7D8802A6             mfspr r12,LR
   826E8174  9181FFF8             stw r12,-0x8(r1)
   826E8178  FBC1FFE8             std r30,-0x18(r1)
@@ -322,7 +322,7 @@ LAB_826e81a8:
   826E81B8  EBE1FFF0             ld r31,-0x10(r1)
   826E81BC  4E800020             blr
 
-; 826E81C0  `scalar_deleting_destructor'  (line unknown)
+; 826E81C0  dwLobbyEventHandler<1>::`scalar_deleting_destructor'  (line unknown)
   826E81C0  7D8802A6             mfspr r12,LR
   826E81C4  9181FFF8             stw r12,-0x8(r1)
   826E81C8  FBC1FFE8             std r30,-0x18(r1)
@@ -345,7 +345,7 @@ LAB_826e81f8:
   826E8208  EBE1FFF0             ld r31,-0x10(r1)
   826E820C  4E800020             blr
 
-; 826E8210  `scalar_deleting_destructor'  (line unknown)
+; 826E8210  dwLobbyEventHandler<2>::`scalar_deleting_destructor'  (line unknown)
   826E8210  7D8802A6             mfspr r12,LR
   826E8214  9181FFF8             stw r12,-0x8(r1)
   826E8218  FBC1FFE8             std r30,-0x18(r1)
@@ -368,7 +368,7 @@ LAB_826e8248:
   826E8258  EBE1FFF0             ld r31,-0x10(r1)
   826E825C  4E800020             blr
 
-; 826E8260  `scalar_deleting_destructor'  (line unknown)
+; 826E8260  dwLobbyEventHandler<3>::`scalar_deleting_destructor'  (line unknown)
   826E8260  7D8802A6             mfspr r12,LR
   826E8264  9181FFF8             stw r12,-0x8(r1)
   826E8268  FBC1FFE8             std r30,-0x18(r1)

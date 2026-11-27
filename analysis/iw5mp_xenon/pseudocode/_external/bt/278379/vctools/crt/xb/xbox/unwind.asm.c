@@ -2,62 +2,41 @@
 
 // 8292A6A0  _UnwindNestedFrames  (<external>/bt/278379/vctools/crt/xb/xbox/unwind.asm:37)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _UnwindNestedFrames(void)
+void _UnwindNestedFrames(PVOID param_1,PEXCEPTION_RECORD param_2,void *param_3)
 
 {
-  PVOID in_r3;
-  _CONTEXT *p_Var1;
-  PEXCEPTION_RECORD in_r4;
+  undefined1 auStack_14a0 [2624];
   undefined1 auStack_a60 [8];
   undefined4 local_a58;
   
-  memcpy();
-  p_Var1 = (_CONTEXT *)RtlCaptureContext(auStack_a60);
+  memcpy(auStack_14a0,param_3,0xa40);
+  RtlCaptureContext(auStack_a60);
   local_a58 = 0x8292a704;
-  _SaveUnwindContext(p_Var1);
-  RtlUnwind(in_r3,(PVOID)0x8292a704,in_r4,(PVOID)0x0);
-  memcpy();
-  _SaveUnwindContext((_CONTEXT *)0x0);
-  in_r4->ExceptionFlags = in_r4->ExceptionFlags & 0xfffffffd;
+  _SaveUnwindContext();
+  RtlUnwind(param_1,(PVOID)0x8292a704,param_2,(PVOID)0x0);
+  memcpy(param_3,auStack_14a0,0xa40);
+  _SaveUnwindContext(0);
+  param_2->ExceptionFlags = param_2->ExceptionFlags & 0xfffffffd;
   return;
 }
 
 
 // 8292A74C  _CallCatchBlock  (<external>/bt/278379/vctools/crt/xb/xbox/unwind.asm:152)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
 void _CallCatchBlock(void)
 
 {
-  EHExceptionRecord *in_r3;
-  ulong *in_r4;
-  _CONTEXT *in_r5;
-  _s_FuncInfo *in_r6;
-  void *in_r7;
-  EHNodeInfo **in_r8;
-  FrameInfo *in_r9;
-  
-  CallCatchBlock(in_r3,in_r4,in_r5,in_r6,in_r7,in_r8,in_r9);
+  CallCatchBlock();
   return;
 }
 
 
 // 8292A770  _SkipUnwoundFrames  (<external>/bt/278379/vctools/crt/xb/xbox/unwind.asm:182)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void _SkipUnwoundFrames(void)
+void _SkipUnwoundFrames(undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  EHExceptionRecord *in_r3;
-  int in_r4;
-  _xDISPATCHER_CONTEXT *in_r6;
-  
-  SkipUnwoundFrames(in_r3,in_r6,*(_CONTEXT **)(in_r4 + -0x58));
+  SkipUnwoundFrames(param_1,param_4,*(undefined4 *)(param_2 + -0x58));
   return;
 }
 

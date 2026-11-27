@@ -2,38 +2,38 @@
 
 // 827B48B8  jinit_compress_master  (jpeg-6/jcinit.c:31)
 
-void jinit_compress_master(jpeg_compress_struct *param_1)
+void jinit_compress_master(int *param_1)
 
 {
-  uchar uVar1;
+  undefined8 uVar1;
   
-  jinit_c_master_control(param_1,'\0');
-  if (param_1->raw_data_in == '\0') {
+  jinit_c_master_control(param_1,0);
+  if (*(char *)(param_1 + 0x2e) == '\0') {
     jinit_color_converter(param_1);
     jinit_downsampler(param_1);
-    jinit_c_prep_controller(param_1,'\0');
+    jinit_c_prep_controller(param_1,0);
   }
   jinit_forward_dct(param_1);
-  if (param_1->arith_code == '\0') {
-    if (param_1->progressive_mode == '\0') {
+  if (*(char *)((int)param_1 + 0xb9) == '\0') {
+    if (*(char *)(param_1 + 0x37) == '\0') {
       jinit_huff_encoder(param_1);
     }
     else {
-      jinit_phuff_encoder(param_1);
+      jinit_phuff_encoder();
     }
   }
   else {
-    param_1->err->msg_code = 1;
-    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
+    *(undefined4 *)(*param_1 + 0x14) = 1;
+    (**(code **)*param_1)(param_1);
   }
-  if ((1 < param_1->num_scans) || (uVar1 = '\0', param_1->optimize_coding != '\0')) {
-    uVar1 = '\x01';
+  if ((1 < param_1[0x2c]) || (uVar1 = 0, *(char *)((int)param_1 + 0xba) != '\0')) {
+    uVar1 = 1;
   }
   jinit_c_coef_controller(param_1,uVar1);
-  jinit_c_main_controller(param_1,'\0');
+  jinit_c_main_controller(param_1,0);
   jinit_marker_writer(param_1);
-  (*param_1->mem->realize_virt_arrays)((jpeg_common_struct *)param_1);
-  (*param_1->marker->write_file_header)(param_1);
+  (**(code **)(param_1[1] + 0x18))(param_1);
+  (**(code **)param_1[0x55])(param_1);
   return;
 }
 

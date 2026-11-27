@@ -2,7 +2,7 @@
 
 // 828C9640  NellyAdaptiveWindow  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/window.c:37)
 
-int NellyAdaptiveWindow(float param_1)
+undefined8 NellyAdaptiveWindow(double param_1)
 
 {
   if (96.0 < param_1) {

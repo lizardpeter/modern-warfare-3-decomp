@@ -2,7 +2,7 @@
 
 // 82731DA0  R_BoundsInCell_r  (gfx_d3d/r_dpvs_entity.cpp:40)
 
-int R_BoundsInCell_r(mnode_t *param_1,int param_2,Bounds *param_3)
+void R_BoundsInCell_r(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
   float fVar1;
@@ -12,71 +12,69 @@ int R_BoundsInCell_r(mnode_t *param_1,int param_2,Bounds *param_3)
   int iVar5;
   undefined4 *puVar7;
   ulonglong uVar6;
-  longlong lVar8;
-  cplane_s *pcVar9;
-  uint uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
+  float *pfVar8;
+  uint uVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
   undefined4 uStack_84;
-  Bounds local_80 [5];
+  float local_80 [4];
+  float local_70;
+  float local_6c;
   
-  lVar8 = (longlong)(int)param_3;
-  __savegprlr_24(param_1);
+  __savegprlr_24();
   puVar4 = (ushort *)__savefpr_28();
   puVar7 = &uStack_84;
-  uVar11 = (ulonglong)(uint)g_worldCellCountPlusOne;
-  lVar8 = lVar8 + -4;
-  lVar12 = 6;
+  uVar10 = (ulonglong)DAT_84617878;
+  param_3 = param_3 + -4;
+  lVar11 = 6;
   do {
-    lVar8 = lVar8 + 4;
+    param_3 = param_3 + 4;
     puVar7 = puVar7 + 1;
-    *puVar7 = *(undefined4 *)lVar8;
-    lVar12 = lVar12 + -1;
-  } while (lVar12 != 0);
+    *puVar7 = *(undefined4 *)param_3;
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
   uVar6 = (ulonglong)*puVar4;
-  lVar8 = uVar6 - uVar11;
-  if (-1 < lVar8) {
-    dVar14 = 0.5;
-    dVar15 = 0.0010000000474974513;
+  lVar11 = uVar6 - uVar10;
+  if (-1 < lVar11) {
+    dVar13 = 0.5;
+    dVar14 = 0.0010000000474974513;
     do {
-      pcVar9 = g_worldPlanes + (int)lVar8;
-      dVar17 = (double)pcVar9->dist;
-      fVar1 = (float)((double)(pcVar9->normal[2] * local_80[0].midPoint[2] +
-                              pcVar9->normal[0] * local_80[0].midPoint[0] +
-                              pcVar9->normal[1] * local_80[0].midPoint[1]) - dVar17);
-      fVar2 = (float)((double)(ABS(pcVar9->normal[1]) * local_80[0].halfSize[1] +
-                              ABS(pcVar9->normal[2]) * local_80[0].halfSize[2] +
-                              ABS(pcVar9->normal[0]) * local_80[0].halfSize[0]) - dVar15);
+      pfVar8 = (float *)((int)lVar11 * 0x14 + DAT_84618180);
+      dVar16 = (double)pfVar8[3];
+      fVar1 = (float)((double)(pfVar8[2] * local_80[2] +
+                              *pfVar8 * local_80[0] + pfVar8[1] * local_80[1]) - dVar16);
+      fVar2 = (float)((double)(ABS(pfVar8[1]) * local_70 +
+                              ABS(pfVar8[2]) * local_6c + ABS(*pfVar8) * local_80[3]) - dVar14);
       if (fVar1 <= fVar2) {
         if (fVar1 < -fVar2) {
           iVar5 = 1;
           goto LAB_82731e74;
         }
         uVar3 = puVar4[1];
-        uVar10 = (uint)pcVar9->type;
-        if (uVar10 < 3) {
-          dVar13 = (double)(local_80[0].halfSize[uVar10] + local_80[0].midPoint[uVar10]);
-          dVar16 = (double)(local_80[0].midPoint[uVar10] - local_80[0].halfSize[uVar10]);
-          local_80[0].midPoint[uVar10] = (float)((double)(float)(dVar13 + dVar17) * dVar14);
-          local_80[0].halfSize[uVar10] = (float)((double)(float)(dVar13 - dVar17) * dVar14);
-          if ((dVar17 < dVar13) &&
-             (iVar5 = R_BoundsInCell_r((mnode_t *)(puVar4 + 2),param_2,local_80), iVar5 != 0)) {
+        uVar9 = (uint)*(byte *)(pfVar8 + 4);
+        if (uVar9 < 3) {
+          dVar12 = (double)(local_80[uVar9 + 3] + local_80[uVar9]);
+          dVar15 = (double)(local_80[uVar9] - local_80[uVar9 + 3]);
+          local_80[uVar9] = (float)((double)(float)(dVar12 + dVar16) * dVar13);
+          local_80[uVar9 + 3] = (float)((double)(float)(dVar12 - dVar16) * dVar13);
+          if ((dVar16 < dVar12) &&
+             (iVar5 = R_BoundsInCell_r(puVar4 + 2,param_2,local_80), iVar5 != 0)) {
 LAB_82731f90:
             __restfpr_28(1);
-            iVar5 = __restgprlr_24();
-            return iVar5;
+            __restgprlr_24();
+            return;
           }
           puVar4 = puVar4 + uVar3;
-          local_80[0].midPoint[uVar10] = (float)((double)(float)(dVar16 + dVar17) * dVar14);
-          local_80[0].halfSize[uVar10] = (float)((double)(float)(dVar17 - dVar16) * dVar14);
+          local_80[uVar9] = (float)((double)(float)(dVar15 + dVar16) * dVar13);
+          local_80[uVar9 + 3] = (float)((double)(float)(dVar16 - dVar15) * dVar13);
         }
         else {
-          iVar5 = R_BoundsInCell_r((mnode_t *)(puVar4 + 2),param_2,local_80);
+          iVar5 = R_BoundsInCell_r(puVar4 + 2,param_2,local_80);
           if (iVar5 != 0) goto LAB_82731f90;
           puVar4 = puVar4 + uVar3;
         }
@@ -87,20 +85,79 @@ LAB_82731e74:
         puVar4 = puVar4 + (puVar4[1] - 2) * iVar5 + 2;
       }
       uVar6 = (ulonglong)*puVar4;
-      lVar8 = uVar6 - uVar11;
-    } while (-1 < lVar8);
+      lVar11 = uVar6 - uVar10;
+    } while (-1 < lVar11);
   }
   if ((int)uVar6 != 0) {
-    __restfpr_28(param_2 == (int)uVar6 + -1);
-    iVar5 = __restgprlr_24();
-    return iVar5;
+    __restfpr_28((int)param_2 == (int)uVar6 + -1);
+    __restgprlr_24();
+    return;
   }
   __restfpr_28(0);
-  iVar5 = __restgprlr_24();
-  return iVar5;
+  __restgprlr_24();
+  return;
 }
 
 
 // 82731FB0  R_AddEntitySurfacesInFrustumCmd  (gfx_d3d/r_dpvs_entity.cpp:273)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void R_AddEntitySurfacesInFrustumCmd(void)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  ulonglong uVar2;
+  int iVar4;
+  int iVar5;
+  float *pfVar6;
+  int local_40;
+  undefined4 local_3c [15];
+  
+  puVar3 = (undefined4 *)__savegprlr_26();
+  iVar4 = DAT_8461658c;
+  uVar1 = *puVar3;
+  uVar2 = R_UpdateSceneEntBounds(uVar1,&local_40,local_3c,1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    if (local_40 != 0) {
+      CG_UsedDObjCalcPose(*(undefined4 *)(local_40 + 0x70));
+      __restgprlr_26();
+      return;
+    }
+  }
+  else {
+    if (local_40 == 0) {
+      MyAssertHandler(0xffffffff821bd5d8,0x12e,0,0xffffffff82000f98,0xffffffff821bc334);
+    }
+    sync(1);
+    pfVar6 = (float *)puVar3[1];
+    iVar5 = 0;
+    if (*(ushort *)(puVar3 + 2) != 0) {
+      do {
+        if (*(float *)(local_40 + 0x34) * pfVar6[2] +
+            *(float *)(local_40 + 0x30) * pfVar6[1] +
+            *(float *)(local_40 + 0x2c) * *pfVar6 +
+            ABS(pfVar6[2]) * *(float *)(local_40 + 0x40) +
+            ABS(*pfVar6) * *(float *)(local_40 + 0x38) +
+            ABS(pfVar6[1]) * *(float *)(local_40 + 0x3c) + pfVar6[3] <= 0.0) goto LAB_82732168;
+        iVar5 = iVar5 + 1;
+        pfVar6 = pfVar6 + 4;
+      } while (iVar5 < (int)(uint)*(ushort *)(puVar3 + 2));
+    }
+    iVar4 = R_BoundsInCell(*(undefined4 *)(iVar4 + 0x3c),*(undefined2 *)((int)puVar3 + 10));
+    if (iVar4 != 0) {
+      CG_CullIn(*(undefined4 *)(local_40 + 0x70));
+      R_SkinSceneDObj(uVar1,local_40,local_3c[0],uVar2);
+      if ((*(uint *)(local_40 + 0x68) >> 0xd & 0xfff) == DAT_84613768) {
+        MyAssertHandler(0xffffffff821bd5d8,0x147,0,0xffffffff82000f98,0xffffffff821bd5ac);
+      }
+      *(undefined1 *)((*(uint *)(local_40 + 0x68) >> 0xd & 0xfff) + puVar3[3]) = 1;
+      __restgprlr_26();
+      return;
+    }
+LAB_82732168:
+    CG_UsedDObjCalcPose(*(undefined4 *)(local_40 + 0x70));
+  }
+  __restgprlr_26();
+  return;
+}
+

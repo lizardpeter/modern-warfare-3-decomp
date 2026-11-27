@@ -2,7 +2,7 @@
 
 // 8280EC28  Swap64  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:28)
 
-ulong64 Swap64(ulong64 param_1)
+ulonglong Swap64(ulonglong param_1)
 
 {
   return (((((((param_1 & 0xff) << 8 | param_1 >> 8 & 0xff) << 8 | param_1 >> 0x10 & 0xff) << 8 |
@@ -13,68 +13,83 @@ ulong64 Swap64(ulong64 param_1)
 
 // 8280EC78  Swap32  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:34)
 
-uint Swap32(uint param_1)
+undefined4 Swap32(undefined4 param_1)
 
 {
+  undefined1 uStack00000014;
   undefined1 uStack00000015;
   undefined1 uStack00000016;
   undefined1 uStack00000017;
   
-  uStack00000015 = (undefined1)(param_1 >> 0x10);
-  uStack00000016 = (undefined1)(param_1 >> 8);
+  uStack00000015 = (undefined1)((uint)param_1 >> 0x10);
+  uStack00000014 = (undefined1)((uint)param_1 >> 0x18);
+  uStack00000016 = (undefined1)((uint)param_1 >> 8);
   uStack00000017 = (undefined1)param_1;
-  return (uint)CONCAT21(CONCAT11(uStack00000017,uStack00000016),uStack00000015) << 8 |
-         param_1 >> 0x18;
+  return CONCAT31(CONCAT21(CONCAT11(uStack00000017,uStack00000016),uStack00000015),uStack00000014);
 }
 
 
 // 8280ECA0  Ebml_WriteLen  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:40)
 
-void Ebml_WriteLen(EbmlGlobal *param_1,long64 param_2)
+void Ebml_WriteLen(undefined8 param_1,ulonglong param_2)
 
 {
   ulonglong uVar1;
   uint uVar2;
-  ulonglong uStack00000018;
+  undefined8 uStack00000018;
+  undefined1 local_20;
+  undefined1 uStack_1f;
+  undefined1 uStack_1e;
+  undefined1 uStack_1d;
+  undefined1 uStack_1c;
+  undefined1 uStack_1b;
+  undefined1 uStack_1a;
+  undefined1 uStack_19;
   
   uVar1 = 0xff;
   uVar2 = 1;
   do {
-    if ((ulonglong)param_2 < uVar1) break;
+    if (param_2 < uVar1) break;
     uVar1 = uVar1 << 7;
     uVar2 = uVar2 + 1 & 0xff;
   } while (uVar2 < 8);
-  uVar1 = 0x80 << (uVar2 * 7 - 7 & 0x3f) | param_2;
+  param_2 = (longlong)(0x80 << (uVar2 * 7 - 7 & 0x3f)) | param_2;
+  uStack_1c = (undefined1)(param_2 >> 0x18);
+  uStack_1b = (undefined1)(param_2 >> 0x10);
+  uStack_1d = (undefined1)(param_2 >> 0x20);
+  uStack_1e = (undefined1)(param_2 >> 0x28);
+  uStack_1f = (undefined1)(param_2 >> 0x30);
+  local_20 = (undefined1)(param_2 >> 0x38);
+  uStack_19 = (undefined1)param_2;
+  uStack_1a = (undefined1)(param_2 >> 8);
   uStack00000018 =
-       (((((((uVar1 & 0xff) << 8 | uVar1 >> 8 & 0xff) << 8 | uVar1 >> 0x10 & 0xff) << 8 |
-          uVar1 >> 0x18 & 0xff) << 8 | uVar1 >> 0x20 & 0xff) << 8 | uVar1 >> 0x28 & 0xff) << 8 |
-       uVar1 >> 0x30 & 0xff) << 8 | uVar1 >> 0x38;
-  Ebml_Serialize(param_1,&stack0x00000018,uVar2);
+       CONCAT71(CONCAT61(CONCAT51(CONCAT41(CONCAT31(CONCAT21(CONCAT11(uStack_19,uStack_1a),uStack_1b
+                                                            ),uStack_1c),uStack_1d),uStack_1e),
+                         uStack_1f),local_20);
+  Ebml_Serialize(param_1,&stack0x00000018);
   return;
 }
 
 
 // 8280ED78  Ebml_WriteString  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:61)
 
-void Ebml_WriteString(EbmlGlobal *param_1,char *param_2)
+void Ebml_WriteString(undefined8 param_1,longlong param_2)
 
 {
-  EbmlGlobal *pEVar1;
-  longlong lVar2;
-  char *pcVar5;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  char *pcVar4;
   longlong lVar3;
-  ulonglong uVar4;
   
-  lVar2 = (longlong)(int)param_2;
-  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
-  lVar3 = lVar2;
+  uVar2 = __savegprlr_29();
+  lVar3 = param_2;
   do {
-    pcVar5 = (char *)lVar3;
+    pcVar4 = (char *)lVar3;
     lVar3 = lVar3 + 1;
-  } while (*pcVar5 != '\0');
-  uVar4 = (lVar3 - lVar2) - 1;
-  Ebml_WriteLen(pEVar1,uVar4 & 0xffffffff);
-  Ebml_Write(pEVar1,(void *)lVar2,(ulong)uVar4);
+  } while (*pcVar4 != '\0');
+  uVar1 = (lVar3 - param_2) - 1U & 0xffffffff;
+  Ebml_WriteLen(uVar2,uVar1);
+  Ebml_Write(uVar2,param_2,uVar1);
   __restgprlr_29();
   return;
 }
@@ -82,16 +97,16 @@ void Ebml_WriteString(EbmlGlobal *param_1,char *param_2)
 
 // 8280EDD0  Ebml_WriteUTF8  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:71)
 
-void Ebml_WriteUTF8(EbmlGlobal *param_1,wchar_t *param_2)
+void Ebml_WriteUTF8(undefined8 param_1,undefined8 param_2)
 
 {
-  EbmlGlobal *pEVar1;
-  uint uVar2;
+  undefined8 uVar1;
+  size_t sVar2;
   
-  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
-  uVar2 = wcslen(param_2);
-  Ebml_WriteLen(pEVar1,(ulonglong)uVar2);
-  Ebml_Write(pEVar1,param_2,uVar2);
+  uVar1 = __savegprlr_29();
+  sVar2 = wcslen((wchar_t *)param_2);
+  Ebml_WriteLen(uVar1,sVar2);
+  Ebml_Write(uVar1,param_2,sVar2);
   __restgprlr_29();
   return;
 }
@@ -99,11 +114,14 @@ void Ebml_WriteUTF8(EbmlGlobal *param_1,wchar_t *param_2)
 
 // 8280EE18  Ebml_WriteID  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:83)
 
-void Ebml_WriteID(EbmlGlobal *param_1,ulong param_2)
+void Ebml_WriteID(undefined8 param_1,uint param_2)
 
 {
-  ulong uVar1;
-  uint uStack0000001c;
+  undefined8 uVar1;
+  undefined1 uStack0000001c;
+  undefined1 uStack0000001d;
+  undefined1 uStack0000001e;
+  undefined1 uStack0000001f;
   
   if (param_2 < 0x1000000) {
     if (param_2 < 0x10000) {
@@ -119,12 +137,12 @@ void Ebml_WriteID(EbmlGlobal *param_1,ulong param_2)
   else {
     uVar1 = 4;
   }
-  uStack0000001c._3_1_ = (undefined1)param_2;
-  uStack0000001c._2_1_ = (undefined1)(param_2 >> 8);
-  uStack0000001c._1_1_ = (undefined1)(param_2 >> 0x10);
-  uStack0000001c =
-       (uint)CONCAT21(CONCAT11((undefined1)uStack0000001c,uStack0000001c._2_1_),uStack0000001c._1_1_
-                     ) << 8 | param_2 >> 0x18;
+  uStack0000001f = (undefined1)param_2;
+  uStack0000001e = (undefined1)(param_2 >> 8);
+  uStack0000001d = (undefined1)(param_2 >> 0x10);
+  uStack0000001c = (undefined1)(param_2 >> 0x18);
+  _uStack0000001c =
+       CONCAT31(CONCAT21(CONCAT11(uStack0000001f,uStack0000001e),uStack0000001d),uStack0000001c);
   Ebml_Serialize(param_1,&stack0x0000001c,uVar1);
   return;
 }
@@ -132,21 +150,28 @@ void Ebml_WriteID(EbmlGlobal *param_1,ulong param_2)
 
 // 8280EEA0  Ebml_SerializeUnsigned64  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:99)
 
-void Ebml_SerializeUnsigned64(EbmlGlobal *param_1,ulong param_2,ulong64 param_3)
+void Ebml_SerializeUnsigned64(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  ulong64 uStack00000020;
+  undefined1 uStack00000020;
+  undefined1 uStack00000021;
+  undefined1 uStack00000022;
+  undefined1 uStack00000023;
+  undefined1 uStack00000024;
+  undefined1 uStack00000025;
+  undefined1 uStack00000026;
+  undefined1 uStack00000027;
   undefined1 local_20 [16];
   
   local_20[0] = 0x88;
-  uStack00000020 = param_3;
-  Ebml_WriteID(param_1,param_2);
+  _uStack00000020 = param_3;
+  Ebml_WriteID();
   Ebml_Serialize(param_1,local_20,1);
-  uStack00000020 =
-       (((((((uStack00000020 & 0xff) << 8 | uStack00000020 >> 8 & 0xff) << 8 |
-           uStack00000020 >> 0x10 & 0xff) << 8 | uStack00000020 >> 0x18 & 0xff) << 8 |
-         uStack00000020 >> 0x20 & 0xff) << 8 | uStack00000020 >> 0x28 & 0xff) << 8 |
-       uStack00000020 >> 0x30 & 0xff) << 8 | uStack00000020 >> 0x38;
+  _uStack00000020 =
+       CONCAT71(CONCAT61(CONCAT51(CONCAT41(CONCAT31(CONCAT21(CONCAT11(uStack00000027,uStack00000026)
+                                                             ,uStack00000025),uStack00000024),
+                                           uStack00000023),uStack00000022),uStack00000021),
+                uStack00000020);
   Ebml_Serialize(param_1,&stack0x00000020,8);
   return;
 }
@@ -154,103 +179,106 @@ void Ebml_SerializeUnsigned64(EbmlGlobal *param_1,ulong param_2,ulong64 param_3)
 
 // 8280EF40  Ebml_SerializeUnsigned  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:108)
 
-void Ebml_SerializeUnsigned(EbmlGlobal *param_1,ulong param_2,ulong param_3)
+void Ebml_SerializeUnsigned(undefined8 param_1,undefined8 param_2,uint param_3)
 
 {
-  uint uVar1;
+  byte bVar1;
   uint uVar2;
-  ulong uStack00000024;
+  undefined1 uStack00000024;
+  undefined1 uStack00000025;
+  undefined1 uStack00000026;
+  undefined1 uStack00000027;
   byte local_20 [8];
   
   local_20[0] = 0;
-  uStack00000024 = param_3;
-  Ebml_WriteID(param_1,param_2);
+  _uStack00000024 = param_3;
+  Ebml_WriteID();
   uVar2 = 0x7f;
-  uVar1 = 1;
+  bVar1 = 1;
   do {
-    if (uStack00000024 < uVar2) break;
+    if (_uStack00000024 < uVar2) break;
     uVar2 = uVar2 << 7;
-    uVar1 = uVar1 + 1 & 0xff;
-  } while (uVar1 < 4);
-  local_20[0] = (byte)uVar1 | 0x80;
+    bVar1 = bVar1 + 1;
+  } while (bVar1 < 4);
+  local_20[0] = bVar1 | 0x80;
   Ebml_Serialize(param_1,local_20,1);
-  uStack00000024 =
-       (uint)CONCAT21(CONCAT11((undefined1)uStack00000024,uStack00000024._2_1_),uStack00000024._1_1_
-                     ) << 8 | uStack00000024 >> 0x18;
-  Ebml_Serialize(param_1,&stack0x00000024,uVar1);
+  _uStack00000024 =
+       CONCAT31(CONCAT21(CONCAT11(uStack00000027,uStack00000026),uStack00000025),uStack00000024);
+  Ebml_Serialize(param_1,&stack0x00000024,bVar1);
   return;
 }
 
 
 // 8280F000  Ebml_SerializeBinary  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:133)
 
-void Ebml_SerializeBinary(EbmlGlobal *param_1,ulong param_2,ulong param_3)
+void Ebml_SerializeBinary(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  EbmlGlobal *pEVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulong uVar4;
-  longlong lVar5;
-  int iVar6;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  int iVar4;
   undefined1 uStack0000001c;
   undefined1 uStack0000001d;
   undefined1 uStack0000001e;
   undefined1 uStack0000001f;
-  uint uStack00000024;
-  uint local_40 [16];
+  undefined1 uStack00000024;
+  undefined1 uStack00000025;
+  undefined1 uStack00000026;
+  undefined1 uStack00000027;
+  undefined4 local_40 [16];
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pEVar1 = (EbmlGlobal *)__savegprlr_27(param_1);
-  uStack00000024 = (uint)uVar3;
-  iVar6 = 4;
-  lVar5 = 0x18;
+  uVar1 = __savegprlr_27();
+  iVar4 = 4;
+  lVar3 = 0x18;
   do {
-    if (((uint)(0xff << ((uint)lVar5 & 0x3f)) & uVar3) != 0) break;
-    lVar5 = lVar5 + -8;
-    iVar6 = iVar6 + -1;
-  } while (0 < lVar5);
-  if ((uVar2 & 0xffffffff) < 0x1000000) {
-    if ((uVar2 & 0xffffffff) < 0x10000) {
-      uVar4 = 2;
-      if ((uVar2 & 0xffffffff) < 0x100) {
-        uVar4 = 1;
+    if (((uint)(0xff << ((uint)lVar3 & 0x3f)) & param_3) != 0) break;
+    lVar3 = lVar3 + -8;
+    iVar4 = iVar4 + -1;
+  } while (0 < lVar3);
+  if ((param_2 & 0xffffffff) < 0x1000000) {
+    if ((param_2 & 0xffffffff) < 0x10000) {
+      uVar2 = 2;
+      if ((param_2 & 0xffffffff) < 0x100) {
+        uVar2 = 1;
       }
     }
     else {
-      uVar4 = 3;
+      uVar2 = 3;
     }
   }
   else {
-    uVar4 = 4;
+    uVar2 = 4;
   }
-  uStack0000001f = (undefined1)uVar2;
-  uStack0000001e = (undefined1)(uVar2 >> 8);
-  uStack0000001d = (undefined1)(uVar2 >> 0x10);
-  uStack0000001c = (undefined1)(uVar2 >> 0x18);
+  uStack0000001f = (undefined1)param_2;
+  uStack0000001e = (undefined1)(param_2 >> 8);
+  uStack0000001d = (undefined1)(param_2 >> 0x10);
+  uStack0000001c = (undefined1)(param_2 >> 0x18);
   local_40[0] = CONCAT31(CONCAT21(CONCAT11(uStack0000001f,uStack0000001e),uStack0000001d),
                          uStack0000001c);
-  _uStack0000001c = (int)uVar2;
-  Ebml_Serialize(pEVar1,local_40,uVar4);
-  Ebml_WriteLen(pEVar1,(longlong)iVar6);
-  if ((uVar3 & 0xffffffff) < 0x1000000) {
-    if ((uVar3 & 0xffffffff) < 0x10000) {
-      uVar4 = 2;
-      if ((uVar3 & 0xffffffff) < 0x100) {
-        uVar4 = 1;
+  Ebml_Serialize(uVar1,local_40,uVar2);
+  Ebml_WriteLen(uVar1,iVar4);
+  if ((param_3 & 0xffffffff) < 0x1000000) {
+    if ((param_3 & 0xffffffff) < 0x10000) {
+      uVar2 = 2;
+      if ((param_3 & 0xffffffff) < 0x100) {
+        uVar2 = 1;
       }
     }
     else {
-      uVar4 = 3;
+      uVar2 = 3;
     }
   }
   else {
-    uVar4 = 4;
+    uVar2 = 4;
   }
-  local_40[0] = (uint)CONCAT21(CONCAT11((undefined1)uStack00000024,uStack00000024._2_1_),
-                               uStack00000024._1_1_) << 8 | uStack00000024 >> 0x18;
-  Ebml_Serialize(pEVar1,local_40,uVar4);
+  uStack00000027 = (undefined1)param_3;
+  uStack00000026 = (undefined1)(param_3 >> 8);
+  uStack00000025 = (undefined1)(param_3 >> 0x10);
+  uStack00000024 = (undefined1)(param_3 >> 0x18);
+  local_40[0] = CONCAT31(CONCAT21(CONCAT11(uStack00000027,uStack00000026),uStack00000025),
+                         uStack00000024);
+  Ebml_Serialize(uVar1,local_40,uVar2);
   __restgprlr_27();
   return;
 }
@@ -258,31 +286,37 @@ void Ebml_SerializeBinary(EbmlGlobal *param_1,ulong param_2,ulong param_3)
 
 // 8280F120  Ebml_SerializeFloat  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:146)
 
-void Ebml_SerializeFloat(EbmlGlobal *param_1,ulong param_2,double param_3)
+void Ebml_SerializeFloat(undefined8 param_1,undefined8 param_2)
 
 {
-  double dStack00000020;
+  undefined1 uStack00000020;
+  undefined1 uStack00000021;
+  undefined1 uStack00000022;
+  undefined1 uStack00000023;
+  undefined1 uStack00000024;
+  undefined1 uStack00000025;
+  undefined1 uStack00000026;
+  undefined1 uStack00000027;
   undefined1 local_20 [8];
-  ulonglong local_18;
+  undefined8 local_18;
   
   local_20[0] = 0x88;
-  dStack00000020 = param_3;
-  Ebml_WriteID(param_1,param_2);
-  Ebml_Serialize(param_1,local_20,1);
-  local_18 = ((((((((ulonglong)dStack00000020 & 0xff) << 8 | (ulonglong)dStack00000020 >> 8 & 0xff)
-                  << 8 | (ulonglong)dStack00000020 >> 0x10 & 0xff) << 8 |
-                (ulonglong)dStack00000020 >> 0x18 & 0xff) << 8 |
-               (ulonglong)dStack00000020 >> 0x20 & 0xff) << 8 |
-              (ulonglong)dStack00000020 >> 0x28 & 0xff) << 8 |
-             (ulonglong)dStack00000020 >> 0x30 & 0xff) << 8 | (ulonglong)dStack00000020 >> 0x38;
-  Ebml_Serialize(param_1,&local_18,8);
+  _uStack00000020 = param_1;
+  Ebml_WriteID();
+  Ebml_Serialize(param_2,local_20,1);
+  local_18 = CONCAT71(CONCAT61(CONCAT51(CONCAT41(CONCAT31(CONCAT21(CONCAT11(uStack00000027,
+                                                                            uStack00000026),
+                                                                   uStack00000025),uStack00000024),
+                                                 uStack00000023),uStack00000022),uStack00000021),
+                      uStack00000020);
+  Ebml_Serialize(param_2,&local_18,8);
   return;
 }
 
 
 // 8280F1C0  Ebml_WriteSigned16  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:157)
 
-void Ebml_WriteSigned16(EbmlGlobal *param_1,short param_2)
+void Ebml_WriteSigned16(undefined8 param_1,short param_2)
 
 {
   uint uVar1;
@@ -291,7 +325,8 @@ void Ebml_WriteSigned16(EbmlGlobal *param_1,short param_2)
   uVar1 = (int)param_2 & 0x1fffff;
   local_10._1_1_ = (undefined1)(uVar1 >> 8);
   local_10._2_1_ = (undefined1)uVar1;
-  local_10 = (uint)CONCAT11(local_10._2_1_,local_10._1_1_) << 8 | (uVar1 << 8 | 0x20000000) >> 0x18;
+  local_10 = (uint)(uint3)(CONCAT21(CONCAT11(local_10._2_1_,local_10._1_1_),(char)(uVar1 >> 0x10)) |
+                          0x20);
   Ebml_Serialize(param_1,&local_10,3);
   return;
 }
@@ -299,26 +334,24 @@ void Ebml_WriteSigned16(EbmlGlobal *param_1,short param_2)
 
 // 8280F220  Ebml_SerializeString  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:164)
 
-void Ebml_SerializeString(EbmlGlobal *param_1,ulong param_2,char *param_3)
+void Ebml_SerializeString(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-  EbmlGlobal *pEVar1;
-  longlong lVar2;
-  char *pcVar5;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  char *pcVar4;
   longlong lVar3;
-  ulonglong uVar4;
   
-  lVar2 = (longlong)(int)param_3;
-  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
-  Ebml_WriteID(pEVar1,param_2);
-  lVar3 = lVar2;
+  uVar2 = __savegprlr_29();
+  Ebml_WriteID();
+  lVar3 = param_3;
   do {
-    pcVar5 = (char *)lVar3;
+    pcVar4 = (char *)lVar3;
     lVar3 = lVar3 + 1;
-  } while (*pcVar5 != '\0');
-  uVar4 = (lVar3 - lVar2) - 1;
-  Ebml_WriteLen(pEVar1,uVar4 & 0xffffffff);
-  Ebml_Write(pEVar1,(void *)lVar2,(ulong)uVar4);
+  } while (*pcVar4 != '\0');
+  uVar1 = (lVar3 - param_3) - 1U & 0xffffffff;
+  Ebml_WriteLen(uVar2,uVar1);
+  Ebml_Write(uVar2,param_3,uVar1);
   __restgprlr_29();
   return;
 }
@@ -326,17 +359,17 @@ void Ebml_SerializeString(EbmlGlobal *param_1,ulong param_2,char *param_3)
 
 // 8280F280  Ebml_SerializeUTF8  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:170)
 
-void Ebml_SerializeUTF8(EbmlGlobal *param_1,ulong param_2,ushort *param_3)
+void Ebml_SerializeUTF8(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  EbmlGlobal *pEVar1;
-  uint uVar2;
+  undefined8 uVar1;
+  size_t sVar2;
   
-  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
-  Ebml_WriteID(pEVar1,param_2);
-  uVar2 = wcslen((wchar_t *)param_3);
-  Ebml_WriteLen(pEVar1,(ulonglong)uVar2);
-  Ebml_Write(pEVar1,param_3,uVar2);
+  uVar1 = __savegprlr_29();
+  Ebml_WriteID();
+  sVar2 = wcslen((wchar_t *)param_3);
+  Ebml_WriteLen(uVar1,sVar2);
+  Ebml_Write(uVar1,param_3,sVar2);
   __restgprlr_29();
   return;
 }
@@ -344,17 +377,15 @@ void Ebml_SerializeUTF8(EbmlGlobal *param_1,ulong param_2,ushort *param_3)
 
 // 8280F2C8  Ebml_SerializeData  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:176)
 
-void Ebml_SerializeData(EbmlGlobal *param_1,ulong param_2,uchar *param_3,ulong param_4)
+void Ebml_SerializeData(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-  EbmlGlobal *pEVar1;
-  ulonglong uVar2;
+  undefined8 uVar1;
   
-  uVar2 = (ulonglong)(int)param_4;
-  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
-  Ebml_WriteID(pEVar1,param_2);
-  Ebml_WriteLen(pEVar1,uVar2 & 0xffffffff);
-  Ebml_Write(pEVar1,param_3,(ulong)uVar2);
+  uVar1 = __savegprlr_29();
+  Ebml_WriteID();
+  Ebml_WriteLen(uVar1,param_4 & 0xffffffff);
+  Ebml_Write(uVar1,param_3,param_4);
   __restgprlr_29();
   return;
 }
@@ -362,23 +393,22 @@ void Ebml_SerializeData(EbmlGlobal *param_1,ulong param_2,uchar *param_3,ulong p
 
 // 8280F308  Ebml_WriteVoid  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:184)
 
-void Ebml_WriteVoid(EbmlGlobal *param_1,ulong param_2)
+void Ebml_WriteVoid(undefined8 param_1,ulonglong param_2)
 
 {
-  longlong lVar1;
+  ulonglong uVar1;
   undefined1 local_20 [4];
   undefined4 local_1c;
   
-  lVar1 = (longlong)(int)param_2;
   local_20[0] = 0;
   local_1c = 0xec000000;
   Ebml_Serialize(param_1,&local_1c,1);
-  Ebml_WriteLen(param_1,(ulonglong)param_2);
-  if (param_2 != 0) {
-    do {
-      Ebml_Write(param_1,local_20,1);
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+  Ebml_WriteLen(param_1,param_2 & 0xffffffff);
+  uVar1 = param_2 & 0xffffffff;
+  while (uVar1 != 0) {
+    Ebml_Write(param_1,local_20,1);
+    param_2 = param_2 - 1;
+    uVar1 = param_2;
   }
   return;
 }

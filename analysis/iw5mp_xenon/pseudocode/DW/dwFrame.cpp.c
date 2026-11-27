@@ -2,19 +2,17 @@
 
 // 826E7FD0  DW_SetDisableLogonRetry  (DW/dwFrame.cpp:49)
 
-void DW_SetDisableLogonRetry(bool param_1)
+void DW_SetDisableLogonRetry(undefined1 param_1)
 
 {
-  disableLogonRetry = param_1;
+  DAT_844f221c = param_1;
   return;
 }
 
 
 // 826E7FE0  DW_IsOfflineTool  (DW/dwFrame.cpp:55)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int DW_IsOfflineTool(void)
+undefined8 DW_IsOfflineTool(void)
 
 {
   return 0;
@@ -23,61 +21,56 @@ int DW_IsOfflineTool(void)
 
 // 826E7FE8  DW_Frame  (DW/dwFrame.cpp:79)
 
-void DW_Frame(int param_1)
+void DW_Frame(void)
 
 {
-  int iVar1;
-  DWOnlineStatus DVar2;
-  DWOnlineStatus DVar3;
-  bdLobbyService *this;
+  undefined8 uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
   
-  iVar1 = __savegprlr_29(param_1);
-  DVar2 = dwGetLogOnStatus(iVar1);
-  if (DVar2 == DW_LIVE_DISCONNECTED) {
-    if (((dw_test_disconnect == (dvar_t *)0x0) ||
-        (((dw_test_disconnect->current).integer != 5 &&
-         ((dw_test_disconnect->current).integer != iVar1 + 1)))) && (disableLogonRetry == false)) {
-      dwLogOnStart(iVar1);
+  uVar1 = __savegprlr_29();
+  uVar2 = dwGetLogOnStatus();
+  if (uVar2 == 0) {
+    if (((DAT_84584ef8 == 0) ||
+        ((*(int *)(DAT_84584ef8 + 0xc) != 5 && (*(int *)(DAT_84584ef8 + 0xc) != (int)uVar1 + 1))))
+       && (DAT_844f221c == '\0')) {
+      dwLogOnStart(uVar1);
     }
   }
-  else if (DVar2 == DW_LIVE_CONNECTING) {
-    dwLogOnComplete(iVar1);
+  else if (uVar2 == 1) {
+    dwLogOnComplete(uVar1);
   }
-  else if (DVar2 < (DW_LIVE_CONNECTED|DW_LIVE_CONNECTING)) {
-    dwLobbyPump(iVar1);
+  else if (uVar2 < 3) {
+    dwLobbyPump(uVar1);
   }
-  DVar3 = dwGetLogOnStatus(iVar1);
-  if (DVar3 != DVar2) {
-    if (DVar3 == DW_LIVE_DISCONNECTED) {
-      if (DVar2 == DW_LIVE_CONNECTING) {
-        Com_PrintWarning(0x19,"DW_Frame() Failed to log on.\n");
+  uVar3 = dwGetLogOnStatus(uVar1);
+  if (uVar3 != uVar2) {
+    if (uVar3 == 0) {
+      if (uVar2 == 1) {
+        Com_PrintWarning(0x19,0xffffffff821aa1e8);
       }
-      else if (DVar2 == DW_LIVE_CONNECTED) {
-        Com_Printf(0x19,
-                   "DW_Frame() Lost connection to lobby server. (dwGetLogOnStatus returned DW_LIVE_DISCONNECTED previous status was DW_LIVE_CONNECTED.\n"
-                  );
+      else if (uVar2 == 2) {
+        Com_Printf(0x19,0xffffffff821aa208);
       }
     }
-    else if (DVar3 == DW_LIVE_CONNECTED) {
-      if ((dw_test_retry_disconnect == (dvar_t *)0x0) ||
-         ((dw_test_retry_disconnect->current).enabled == false)) {
-        dwResetLogonAttempts(iVar1);
+    else if (uVar3 == 2) {
+      if ((DAT_84584f0c == 0) || (*(char *)(DAT_84584f0c + 0xc) == '\0')) {
+        dwResetLogonAttempts(uVar1);
       }
       else {
-        this = dwGetLobbyService(iVar1);
-        if (this != (bdLobbyService *)0x0) {
-          bdLobbyService::disconnect(this);
-          dwSetLogonStatus(iVar1,DW_LOGON_ERROR);
+        iVar4 = dwGetLobbyService(uVar1);
+        if (iVar4 != 0) {
+          bdLobbyService__disconnect();
+          dwSetLogonStatus(uVar1,0);
         }
       }
     }
   }
-  iVar1 = Sys_Milliseconds();
-  if ((dw_memory_display_time->current).integer * 1000 <= iVar1 - lastMemPrint) {
-    lastMemPrint = iVar1;
-    Com_Printf(0x10,
-               "DW memory:  highwatermark: %u bytes  current: %u bytes, %u allocations (largest contiguous %d)\n"
-              );
+  iVar4 = Sys_Milliseconds();
+  if (*(int *)(DAT_84584f14 + 0xc) * 1000 <= iVar4 - DAT_844f2220) {
+    DAT_844f2220 = iVar4;
+    Com_Printf(0x10,0xffffffff821aa188,DAT_84895d94,DAT_84895d88,DAT_84895d8c,DAT_84895d90);
   }
   __restgprlr_29();
   return;

@@ -2,30 +2,28 @@
 
 // 823A01A0  VoiceMute_Init  (client_mp/voicemute.cpp:39)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void VoiceMute_Init(void)
+void * VoiceMute_Init(void)
 
 {
-  memset();
-  return;
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_82b5c8f8,0,0x408);
+  return pvVar1;
 }
 
 
 // 823A01B8  VoiceMute_GetMuteData  (client_mp/voicemute.cpp:49)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-MuteData * VoiceMute_GetMuteData(void)
+undefined8 VoiceMute_GetMuteData(void)
 
 {
-  return &g_muteData;
+  return 0xffffffff82b5c8f8;
 }
 
 
 // 823A01C8  VoiceMute_UserEquals  (client_mp/voicemute.cpp:59)
 
-int VoiceMute_UserEquals(ulong64 param_1,ulong64 param_2)
+undefined8 VoiceMute_UserEquals(longlong param_1,longlong param_2)
 
 {
   if (param_1 == param_2) {
@@ -37,12 +35,11 @@ int VoiceMute_UserEquals(ulong64 param_1,ulong64 param_2)
 
 // 823A01E0  VoiceMute_UserSet  (client_mp/voicemute.cpp:69)
 
-void VoiceMute_UserSet(ulong64 *param_1,ulong64 param_2)
+void VoiceMute_UserSet(undefined8 *param_1,undefined8 param_2)
 
 {
-  if (param_1 == (ulong64 *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x46,
-                    0,"%s");
+  if (param_1 == (undefined8 *)0x0) {
+    MyAssertHandler(0xffffffff820585d0,0x46,0,0xffffffff82000f98,0xffffffff82058614);
   }
   *param_1 = param_2;
   return;
@@ -51,112 +48,104 @@ void VoiceMute_UserSet(ulong64 *param_1,ulong64 param_2)
 
 // 823A0248  VoiceMute_FindUserIndex  (client_mp/voicemute.cpp:79)
 
-uint VoiceMute_FindUserIndex(ulong64 param_1)
+void VoiceMute_FindUserIndex(void)
 
 {
   longlong lVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
+  ulonglong uVar2;
+  longlong lVar3;
   
   lVar1 = __savegprlr_29();
   if (lVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x55,
-                    0,"%s");
+    MyAssertHandler(0xffffffff820585d0,0x55,0,0xffffffff82000f98,0xffffffff8205865c);
   }
-  uVar3 = (ulonglong)g_muteData.userCount;
-  if (0x80 < uVar3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x59,
-                    0,"%s\n\t(muteData->userCount) = %i");
-    uVar3 = (ulonglong)g_muteData.userCount;
+  uVar2 = (ulonglong)DAT_82b5c8f8;
+  if (0x80 < uVar2) {
+    MyAssertHandler(0xffffffff820585d0,0x59,0,0xffffffff8205861c,0xffffffff8205863c,uVar2);
+    uVar2 = (ulonglong)DAT_82b5c8f8;
   }
-  uVar3 = uVar3 - 1;
-  if (-1 < (longlong)uVar3) {
-    lVar4 = (uVar3 & 0x1fffffff) * 8 + -0x7d4a3700;
+  uVar2 = uVar2 - 1;
+  if (-1 < (longlong)uVar2) {
+    lVar3 = (uVar2 & 0x1fffffff) * 8 + -0x7d4a3700;
     do {
-      if (*(longlong *)lVar4 == lVar1) goto LAB_823a02f8;
-      uVar3 = uVar3 - 1;
-      lVar4 = lVar4 + -8;
-    } while (-1 < (longlong)uVar3);
+      if (*(longlong *)lVar3 == lVar1) goto LAB_823a02f8;
+      uVar2 = uVar2 - 1;
+      lVar3 = lVar3 + -8;
+    } while (-1 < (longlong)uVar2);
   }
-  uVar3 = 0x80;
+  uVar2 = 0x80;
 LAB_823a02f8:
-  uVar2 = __restgprlr_29(uVar3);
-  return uVar2;
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 823A0300  VoiceMute_ObliterateUser  (client_mp/voicemute.cpp:107)
 
-void VoiceMute_ObliterateUser(uint param_1)
+void VoiceMute_ObliterateUser(void)
 
 {
-  uint uVar1;
-  uint uVar2;
+  ulonglong uVar1;
+  void *pvVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_26(param_1);
-  if (uVar1 == 0x80) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x6e,
-                    0,"%s");
+  uVar1 = __savegprlr_26();
+  if ((uVar1 & 0xffffffff) == 0x80) {
+    MyAssertHandler(0xffffffff820585d0,0x6e,0,0xffffffff82000f98,0xffffffff820586b8);
   }
-  uVar2 = (uint)g_muteData.userCount;
-  if (uVar2 <= uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x72,
-                    0,"%s\n\t(muteData->userCount) = %i");
-    uVar2 = (uint)g_muteData.userCount;
+  uVar3 = (ulonglong)DAT_82b5c8f8;
+  if (uVar3 <= (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820585d0,0x72,0,0xffffffff8205861c,0xffffffff82058694,uVar3);
+    uVar3 = (ulonglong)DAT_82b5c8f8;
   }
-  if (0x80 < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x73,
-                    0,"%s\n\t(muteData->userCount) = %i");
+  if (0x80 < uVar3) {
+    MyAssertHandler(0xffffffff820585d0,0x73,0,0xffffffff8205861c,0xffffffff8205863c);
+    uVar3 = (ulonglong)DAT_82b5c8f8;
   }
-  memmove();
-  g_muteData.userCount = g_muteData.userCount + 0xff;
-  if (uVar1 == 0x80) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x7a,
-                    0,"%s");
+  pvVar2 = memmove(&DAT_82b5c900 + (int)((uVar1 & 0xffffffff) << 3),
+                   &DAT_82b5c908 + (int)((uVar1 & 0xffffffff) << 3),
+                   (size_t)(((uVar3 - uVar1) - 1 & 0xffffffff) << 3));
+  DAT_82b5c8f8 = DAT_82b5c8f8 - 1;
+  if ((uVar1 & 0xffffffff) == 0x80) {
+    pvVar2 = (void *)MyAssertHandler(0xffffffff820585d0,0x7a,0,0xffffffff82000f98,0xffffffff820586b8
+                                    );
   }
-  if (g_muteData.users + g_muteData.userCount == (ulong64 *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x46,
-                    0,"%s");
+  if ((undefined8 *)(&DAT_82b5c900 + (uint)DAT_82b5c8f8 * 8) == (undefined8 *)0x0) {
+    MyAssertHandler(0xffffffff820585d0,0x46,0,0xffffffff82000f98,0xffffffff82058614);
     uRam00000000 = 0;
     __restgprlr_26();
     return;
   }
-  g_muteData.users[g_muteData.userCount] = 0;
-  __restgprlr_26();
+  *(undefined8 *)(&DAT_82b5c900 + (uint)DAT_82b5c8f8 * 8) = 0;
+  __restgprlr_26(pvVar2);
   return;
 }
 
 
 // 823A0460  VoiceMute_InsertUser  (client_mp/voicemute.cpp:131)
 
-void VoiceMute_InsertUser(ulong64 param_1)
+void VoiceMute_InsertUser(void)
 
 {
-  ulong64 uVar1;
+  longlong lVar1;
   uint uVar2;
   
-  uVar1 = __savegprlr_27();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x86,
-                    0,"%s");
+  lVar1 = __savegprlr_27();
+  if (lVar1 == 0) {
+    MyAssertHandler(0xffffffff820585d0,0x86,0,0xffffffff82000f98,0xffffffff8205865c);
   }
-  uVar2 = (uint)g_muteData.userCount;
+  uVar2 = (uint)DAT_82b5c8f8;
   if (0x7f < uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x8a,
-                    0,"muteData->userCount doesn\'t index MUTED_USER_LIST_MAX\n\t%i not in [0, %i)")
-    ;
-    uVar2 = (uint)g_muteData.userCount;
+    MyAssertHandler(0xffffffff820585d0,0x8a,0,0xffffffff820586e0,uVar2,0x80);
+    uVar2 = (uint)DAT_82b5c8f8;
   }
-  if (g_muteData.users + uVar2 == (ulong64 *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x46,
-                    0,"%s");
+  if ((longlong *)(&DAT_82b5c900 + uVar2 * 8) == (longlong *)0x0) {
+    MyAssertHandler(0xffffffff820585d0,0x46,0,0xffffffff82000f98,0xffffffff82058614);
   }
-  g_muteData.users[uVar2] = uVar1;
-  g_muteData.userCount = g_muteData.userCount + 1;
-  if (0x80 < g_muteData.userCount) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x8f,
-                    1,"%s\n\t(muteData->userCount) = %i");
+  *(longlong *)(&DAT_82b5c900 + uVar2 * 8) = lVar1;
+  DAT_82b5c8f8 = DAT_82b5c8f8 + 1;
+  if (0x80 < DAT_82b5c8f8) {
+    MyAssertHandler(0xffffffff820585d0,0x8f,1,0xffffffff8205861c,0xffffffff8205863c,DAT_82b5c8f8);
   }
   __restgprlr_27();
   return;
@@ -165,31 +154,28 @@ void VoiceMute_InsertUser(ulong64 param_1)
 
 // 823A0550  VoiceMute_AddUser  (client_mp/voicemute.cpp:151)
 
-void VoiceMute_AddUser(ulong64 param_1)
+void VoiceMute_AddUser(void)
 
 {
-  ulong64 uVar1;
-  uint uVar2;
+  longlong lVar1;
+  int iVar2;
   
-  uVar1 = __savegprlr_28();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x9a,
-                    0,"%s");
+  lVar1 = __savegprlr_28();
+  if (lVar1 == 0) {
+    MyAssertHandler(0xffffffff820585d0,0x9a,0,0xffffffff82000f98,0xffffffff8205865c);
   }
-  if (0x80 < g_muteData.userCount) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0x9e,
-                    0,"%s\n\t(muteData->userCount) = %i");
+  if (0x80 < DAT_82b5c8f8) {
+    MyAssertHandler(0xffffffff820585d0,0x9e,0,0xffffffff8205861c,0xffffffff8205863c);
   }
-  uVar2 = VoiceMute_FindUserIndex(uVar1);
-  if (uVar2 != 0x80) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0xa1,
-                    0,"%s");
+  iVar2 = VoiceMute_FindUserIndex(lVar1);
+  if (iVar2 != 0x80) {
+    MyAssertHandler(0xffffffff820585d0,0xa1,0,0xffffffff82000f98,0xffffffff82058750);
   }
-  if (g_muteData.userCount == 0x80) {
+  if (DAT_82b5c8f8 == 0x80) {
     VoiceMute_ObliterateUser(0);
   }
-  VoiceMute_InsertUser(uVar1);
-  Com_Printf(0xe,"Voice: Adding Mute [XUID %llx].\n");
+  VoiceMute_InsertUser(lVar1);
+  Com_Printf(0xe,0xffffffff8205872c,lVar1);
   __restgprlr_28();
   return;
 }
@@ -197,19 +183,18 @@ void VoiceMute_AddUser(ulong64 param_1)
 
 // 823A0628  VoiceMute_RemoveUser  (client_mp/voicemute.cpp:176)
 
-void VoiceMute_RemoveUser(ulong64 param_1)
+void VoiceMute_RemoveUser(longlong param_1)
 
 {
-  uint uVar1;
+  int iVar1;
   
   if (param_1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0xb3,
-                    0,"%s");
+    MyAssertHandler(0xffffffff820585d0,0xb3,0,0xffffffff82000f98,0xffffffff8205865c);
   }
-  uVar1 = VoiceMute_FindUserIndex(param_1);
-  if (uVar1 != 0x80) {
-    VoiceMute_ObliterateUser(uVar1);
-    Com_Printf(0xe,"Voice: Removing Mute [XUID %llx].\n");
+  iVar1 = VoiceMute_FindUserIndex(param_1);
+  if (iVar1 != 0x80) {
+    VoiceMute_ObliterateUser();
+    Com_Printf(0xe,0xffffffff8205878c,param_1);
   }
   return;
 }
@@ -217,36 +202,36 @@ void VoiceMute_RemoveUser(ulong64 param_1)
 
 // 823A06A8  VoiceMute_QueryAndRefreshUserStatus  (client_mp/voicemute.cpp:195)
 
-int VoiceMute_QueryAndRefreshUserStatus(ulong64 param_1)
+void VoiceMute_QueryAndRefreshUserStatus(void)
 
 {
-  ulong64 uVar1;
-  uint uVar2;
-  int iVar3;
-  uint uVar4;
+  longlong lVar1;
+  ulonglong uVar2;
+  undefined8 in_r8;
+  undefined8 in_r9;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_27();
-  if (uVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",199,0
-                    ,"%s");
+  lVar1 = __savegprlr_27();
+  if (lVar1 == 0) {
+    MyAssertHandler(0xffffffff820585d0,199,0,0xffffffff82000f98,0xffffffff8205865c);
   }
-  uVar2 = VoiceMute_FindUserIndex(uVar1);
-  if (uVar2 == 0x80) {
-    iVar3 = __restgprlr_27(0);
-    return iVar3;
+  uVar2 = VoiceMute_FindUserIndex(lVar1);
+  if ((uVar2 & 0xffffffff) == 0x80) {
+    __restgprlr_27(0);
+    return;
   }
-  uVar4 = (uint)g_muteData.userCount;
-  if (uVar4 <= uVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\voicemute.cpp",0xd2,
-                    1,"%s");
-    uVar4 = (uint)g_muteData.userCount;
+  uVar3 = (ulonglong)DAT_82b5c8f8;
+  if (uVar3 <= (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820585d0,0xd2,1,0xffffffff82000f98,0xffffffff820587d8,in_r8,in_r9,
+                    uVar3);
+    uVar3 = (ulonglong)DAT_82b5c8f8;
   }
-  if (0x12 < uVar4 - uVar2) {
+  if (0x12 < (uVar3 - uVar2 & 0xffffffff)) {
     VoiceMute_ObliterateUser(uVar2);
-    VoiceMute_InsertUser(uVar1);
-    Com_Printf(0xe,"Voice: Refreshing Mute [XUID %llx].\n");
+    VoiceMute_InsertUser(lVar1);
+    Com_Printf(0xe,0xffffffff820587b0,lVar1);
   }
-  iVar3 = __restgprlr_27(1);
-  return iVar3;
+  __restgprlr_27(1);
+  return;
 }
 

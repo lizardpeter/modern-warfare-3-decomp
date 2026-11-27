@@ -13,7 +13,7 @@ longlong find_hash(char *param_1)
   char *pcVar6;
   
   lVar3 = 0;
-  puVar4 = (undefined4 *)&hash_descriptor;
+  puVar4 = &DAT_84896148;
   do {
     pcVar6 = (char *)*puVar4;
     pcVar5 = param_1;

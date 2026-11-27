@@ -2,134 +2,138 @@
 
 // 828AB200  PulseEvent  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:100)
 
-int PulseEvent(void *param_1)
+BOOL PulseEvent(HANDLE hEvent)
 
 {
-  long lVar1;
+  int iVar1;
   
-  lVar1 = NtPulseEvent(param_1,0);
-  if (lVar1 < 0) {
-    XapiSetLastNTError(lVar1);
+  iVar1 = NtPulseEvent(hEvent,0);
+  if (iVar1 < 0) {
+    XapiSetLastNTError();
   }
-  return (int)(lVar1 >= 0);
+  return (BOOL)(iVar1 >= 0);
 }
 
 
 // 828AB258  CreateSemaphoreA  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:177)
 
-void * CreateSemaphoreA(void *param_1,long param_2,long param_3,char *param_4)
+HANDLE CreateSemaphoreA(LPSECURITY_ATTRIBUTES lpSemaphoreAttributes,LONG lInitialCount,
+                       LONG lMaximumCount,LPCSTR lpName)
 
 {
-  _OBJECT_ATTRIBUTES *p_Var1;
-  long lVar2;
-  ulong uVar3;
-  void *pvVar4;
+  undefined8 uVar1;
+  int iVar2;
+  DWORD dwErrCode;
+  HANDLE pvVar3;
+  longlong lVar4;
   longlong lVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  ulonglong uVar6;
   undefined4 local_40 [2];
-  _STRING _Stack_38;
-  _OBJECT_ATTRIBUTES a_Stack_30 [4];
+  undefined1 auStack_38 [8];
+  undefined1 auStack_30 [48];
   
-  uVar7 = (ulonglong)(int)param_4;
-  lVar6 = (longlong)param_3;
-  lVar5 = (longlong)param_2;
-  __savegprlr_29(param_1,lVar5,lVar6);
-  if ((uVar7 & 0xffffffff) == 0) {
-    p_Var1 = (_OBJECT_ATTRIBUTES *)0x0;
+  uVar6 = (ulonglong)(int)lpName;
+  lVar5 = (longlong)lMaximumCount;
+  lVar4 = (longlong)lInitialCount;
+  __savegprlr_29(lpSemaphoreAttributes,lVar4,lVar5);
+  if ((uVar6 & 0xffffffff) == 0) {
+    uVar1 = 0;
   }
   else {
-    p_Var1 = XapiFormatObjectAttributes(a_Stack_30,&_Stack_38,(uchar *)uVar7);
+    uVar1 = XapiFormatObjectAttributes(auStack_30,auStack_38,uVar6);
   }
-  lVar2 = NtCreateSemaphore(local_40,p_Var1,lVar5,lVar6);
-  if (lVar2 < 0) {
-    XapiSetLastNTError(lVar2);
+  iVar2 = NtCreateSemaphore(local_40,uVar1,lVar4,lVar5);
+  if (iVar2 < 0) {
+    XapiSetLastNTError();
     local_40[0] = 0;
   }
   else {
-    uVar3 = 0xb7;
-    if (lVar2 != 0x40000000) {
-      uVar3 = 0;
+    dwErrCode = 0xb7;
+    if (iVar2 != 0x40000000) {
+      dwErrCode = 0;
     }
-    SetLastError(uVar3);
+    SetLastError(dwErrCode);
   }
-  pvVar4 = (void *)__restgprlr_29(local_40[0]);
-  return pvVar4;
+  pvVar3 = (HANDLE)__restgprlr_29(local_40[0]);
+  return pvVar3;
 }
 
 
 // 828AB2E8  ReleaseSemaphore  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:299)
 
-int ReleaseSemaphore(void *param_1,long param_2,long *param_3)
+BOOL ReleaseSemaphore(HANDLE hSemaphore,LONG lReleaseCount,LPLONG lpPreviousCount)
 
 {
   undefined8 uVar1;
-  long lVar2;
-  int iVar3;
+  int iVar2;
+  BOOL BVar3;
   longlong lVar4;
   longlong lVar5;
   
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)param_2;
-  uVar1 = __savegprlr_29(param_1,lVar4,lVar5);
-  lVar2 = NtReleaseSemaphore(uVar1,lVar4,lVar5);
-  if (lVar2 < 0) {
-    XapiSetLastNTError(lVar2);
+  lVar5 = (longlong)(int)lpPreviousCount;
+  lVar4 = (longlong)lReleaseCount;
+  uVar1 = __savegprlr_29(hSemaphore,lVar4,lVar5);
+  iVar2 = NtReleaseSemaphore(uVar1,lVar4,lVar5);
+  if (iVar2 < 0) {
+    XapiSetLastNTError();
   }
-  iVar3 = __restgprlr_29(lVar2 >= 0);
-  return iVar3;
+  BVar3 = __restgprlr_29(iVar2 >= 0);
+  return BVar3;
 }
 
 
 // 828AB408  WaitForMultipleObjects  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:404)
 
-ulong WaitForMultipleObjects(ulong param_1,void **param_2,int param_3,ulong param_4)
+DWORD WaitForMultipleObjects(DWORD nCount,HANDLE *lpHandles,BOOL bWaitAll,DWORD dwMilliseconds)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = __savegprlr_28(param_1);
-  uVar1 = WaitForMultipleObjectsEx(uVar1,param_2,param_3,param_4,0);
-  uVar1 = __restgprlr_28(uVar1);
-  return uVar1;
+  DVar1 = __savegprlr_28(nCount);
+  DVar1 = WaitForMultipleObjectsEx(DVar1,lpHandles,bWaitAll,dwMilliseconds,0);
+  DVar1 = __restgprlr_28(DVar1);
+  return DVar1;
 }
 
 
 // 828AB340  WaitForMultipleObjectsEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:486)
 
-ulong WaitForMultipleObjectsEx(ulong param_1,void **param_2,int param_3,ulong param_4,int param_5)
+DWORD WaitForMultipleObjectsEx
+                (DWORD nCount,HANDLE *lpHandles,BOOL bWaitAll,DWORD dwMilliseconds,BOOL bAlertable)
 
 {
-  uint uVar2;
+  uint uVar3;
   longlong lVar1;
-  _LARGE_INTEGER *p_Var3;
-  ulong uVar4;
+  undefined8 uVar2;
+  DWORD DVar4;
   longlong lVar5;
-  ulonglong uVar6;
-  _LARGE_INTEGER a_Stack_150 [2];
+  longlong lVar6;
+  ulonglong uVar7;
+  undefined1 auStack_150 [16];
   undefined1 auStack_140 [320];
   
-  uVar6 = (ulonglong)param_5;
-  lVar5 = (longlong)param_3;
-  uVar2 = __savegprlr_26(param_1,param_2,lVar5);
-  if (uVar2 < 0x41) {
-    memcpy();
-    p_Var3 = XapiFormatTimeOut(a_Stack_150,param_4);
-    while( true ) {
-      lVar1 = NtWaitForMultipleObjectsEx
-                        ((char)uVar2,auStack_140,(int)lVar5 == 0,1,uVar6 & 0xff,p_Var3);
-      if (lVar1 < 0) break;
-      if (((int)uVar6 == 0) || ((int)lVar1 != 0x101)) goto LAB_828ab400;
+  uVar7 = (ulonglong)bAlertable;
+  lVar6 = (longlong)(int)dwMilliseconds;
+  lVar5 = (longlong)bWaitAll;
+  lVar1 = (longlong)(int)lpHandles;
+  uVar3 = __savegprlr_26(nCount,lVar1,lVar5,lVar6);
+  if (uVar3 < 0x41) {
+    memcpy(auStack_140,(void *)lVar1,uVar3 << 2);
+    uVar2 = XapiFormatTimeOut(auStack_150,lVar6);
+    while (lVar1 = NtWaitForMultipleObjectsEx
+                             ((char)uVar3,auStack_140,(int)lVar5 == 0,1,uVar7 & 0xff,uVar2),
+          -1 < lVar1) {
+      if (((int)uVar7 == 0) || ((int)lVar1 != 0x101)) goto LAB_828ab400;
     }
-    XapiSetLastNTError((int)lVar1);
+    XapiSetLastNTError(lVar1);
     lVar1 = -1;
   }
   else {
-    XapiSetLastNTError(-0x3ffffff3);
+    XapiSetLastNTError(0xffffffffc000000d);
     lVar1 = -1;
   }
 LAB_828ab400:
-  uVar4 = __restgprlr_26(lVar1);
-  return uVar4;
+  DVar4 = __restgprlr_26(lVar1);
+  return DVar4;
 }
 

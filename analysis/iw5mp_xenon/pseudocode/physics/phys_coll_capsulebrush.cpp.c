@@ -2,35 +2,38 @@
 
 // 82665888  Phys_AddLocalContactData  (physics/phys_coll_capsulebrush.cpp:72)
 
-void Phys_AddLocalContactData(float param_1,float *param_2,float *param_3,int param_4)
+void Phys_AddLocalContactData
+               (undefined8 param_1,uint *param_2,undefined4 *param_3,undefined4 param_4)
 
 {
   int iVar1;
-  undefined4 in_r6;
   int iVar2;
   double dVar3;
   
-  dVar3 = (double)__savegprlr_28((double)param_1,param_2);
-  if (numLocalContacts < 0x20) {
-    if (((((uint)*param_3 & 0x7f800000) == 0x7f800000) ||
-        (((uint)param_3[1] & 0x7f800000) == 0x7f800000)) ||
-       (iVar1 = numLocalContacts, ((uint)param_3[2] & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_capsulebrush.cpp"
-                      ,0x4e,0,"%s");
-      iVar1 = numLocalContacts;
-    }
-    numLocalContacts = iVar1 + 1;
-    iVar2 = iVar1 * 0x24;
-    *(undefined4 *)(&DAT_8427b3a8 + iVar2) = *(undefined4 *)param_4;
-    *(undefined4 *)(&DAT_8427b3ac + iVar2) = *(undefined4 *)(param_4 + 4);
-    *(undefined4 *)(&DAT_8427b3b0 + iVar2) = *(undefined4 *)(param_4 + 8);
-    (&DAT_8427b3b4)[iVar1 * 9] = *param_3;
-    (&DAT_8427b3b8)[iVar1 * 9] = param_3[1];
-    (&DAT_8427b3bc)[iVar1 * 9] = param_3[2];
-    (&DAT_8427b3c4)[iVar1 * 9] = in_r6;
-    (&DAT_8427b3c0)[iVar1 * 9] = (float)dVar3;
-    (&DAT_8427b3c8)[iVar1 * 9] = 1;
+  dVar3 = (double)__savegprlr_28();
+  if (0x1f < DAT_8427b3a0) goto LAB_8266598c;
+  if ((*param_2 & 0x7f800000) == 0x7f800000) {
+LAB_82665908:
+    MyAssertHandler(0xffffffff821934d8,0x4e,0,0xffffffff82000f98,0xffffffff821926e0);
+    iVar1 = DAT_8427b3a0;
   }
+  else {
+    if ((param_2[1] & 0x7f800000) == 0x7f800000) goto LAB_82665908;
+    iVar1 = DAT_8427b3a0;
+    if ((param_2[2] & 0x7f800000) == 0x7f800000) goto LAB_82665908;
+  }
+  DAT_8427b3a0 = iVar1 + 1;
+  iVar2 = iVar1 * 0x24;
+  *(undefined4 *)(&DAT_8427b3a8 + iVar2) = *param_3;
+  *(undefined4 *)(&DAT_8427b3ac + iVar2) = param_3[1];
+  *(undefined4 *)(&DAT_8427b3b0 + iVar2) = param_3[2];
+  (&DAT_8427b3b4)[iVar1 * 9] = *param_2;
+  (&DAT_8427b3b8)[iVar1 * 9] = param_2[1];
+  (&DAT_8427b3bc)[iVar1 * 9] = param_2[2];
+  (&DAT_8427b3c4)[iVar1 * 9] = param_4;
+  (&DAT_8427b3c0)[iVar1 * 9] = (float)dVar3;
+  (&DAT_8427b3c8)[iVar1 * 9] = 1;
+LAB_8266598c:
   __restgprlr_28();
   return;
 }
@@ -38,88 +41,81 @@ void Phys_AddLocalContactData(float param_1,float *param_2,float *param_3,int pa
 
 // 82665998  Phys_SimilarContacts  (physics/phys_coll_capsulebrush.cpp:90)
 
-bool Phys_SimilarContacts(LocalContactData *param_1,LocalContactData *param_2)
+void Phys_SimilarContacts(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-  float *pfVar1;
+  longlong lVar1;
   int iVar2;
   int iVar3;
-  undefined1 uVar4;
-  int in_r5;
-  undefined8 uVar5;
-  double dVar6;
+  undefined8 uVar4;
   
-  pfVar1 = (float *)__savegprlr_29(param_1);
-  dVar6 = 0.0010000000474974513;
-  iVar2 = VecNCompareCustomEpsilon(pfVar1,param_2->pos,0.001,in_r5);
-  iVar3 = VecNCompareCustomEpsilon(pfVar1 + 3,param_2->normal,(float)dVar6,in_r5);
-  if ((iVar2 == 0) || (uVar5 = 1, iVar3 == 0)) {
-    uVar5 = 0;
+  lVar1 = __savegprlr_29();
+  uVar4 = 0x3f50624de0000000;
+  iVar2 = VecNCompareCustomEpsilon(0x3f50624de0000000);
+  iVar3 = VecNCompareCustomEpsilon(uVar4,lVar1 + 0xc,param_2 + 0xc,param_3,3);
+  if ((iVar2 == 0) || (uVar4 = 1, iVar3 == 0)) {
+    uVar4 = 0;
   }
-  uVar4 = __restgprlr_29(uVar5);
-  return (bool)uVar4;
+  __restgprlr_29(uVar4);
+  return;
 }
 
 
 // 82665A08  Phys_ContactBetter  (physics/phys_coll_capsulebrush.cpp:102)
 
-bool Phys_ContactBetter(LocalContactData *param_1,LocalContactData *param_2)
+bool Phys_ContactBetter(int param_1,int param_2)
 
 {
-  return param_2->depth < param_1->depth;
+  return *(float *)(param_2 + 0x18) < *(float *)(param_1 + 0x18);
 }
 
 
 // 82665A28  Phys_CancelSimilarContacts  (physics/phys_coll_capsulebrush.cpp:108)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Phys_CancelSimilarContacts(void)
+void Phys_CancelSimilarContacts(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   bool bVar1;
-  int iVar2;
+  uint uVar2;
   int iVar3;
   int iVar4;
-  int in_r5;
   longlong lVar5;
   ulonglong uVar6;
   longlong lVar7;
   longlong lVar8;
   int iVar9;
-  float *pfVar10;
-  double dVar11;
+  undefined *puVar10;
+  undefined8 uVar11;
   
   __savegprlr_22();
-  iVar2 = numLocalContacts;
-  uVar6 = (ulonglong)(uint)numLocalContacts;
+  uVar2 = DAT_8427b3a0;
+  uVar6 = (ulonglong)DAT_8427b3a0;
   lVar5 = uVar6 - 1;
   if (0 < lVar5) {
     lVar7 = 1;
     iVar9 = 0;
-    dVar11 = 0.0010000000474974513;
+    uVar11 = 0x3f50624de0000000;
     do {
-      if ((int)lVar7 < iVar2) {
+      if ((int)lVar7 < (int)uVar2) {
         lVar8 = uVar6 - lVar7;
-        pfVar10 = (float *)(&DAT_8427b3cc + iVar9);
+        puVar10 = &DAT_8427b3cc + iVar9;
         do {
-          iVar3 = VecNCompareCustomEpsilon
-                            ((float *)(&DAT_8427b3a8 + iVar9),pfVar10,(float)dVar11,in_r5);
+          iVar3 = VecNCompareCustomEpsilon(uVar11,&DAT_8427b3a8 + iVar9,puVar10,param_3,3);
           iVar4 = VecNCompareCustomEpsilon
-                            ((float *)((int)&DAT_8427b3b4 + iVar9),pfVar10 + 3,(float)dVar11,in_r5);
+                            (uVar11,(int)&DAT_8427b3b4 + iVar9,puVar10 + 0xc,param_3,3);
           if ((iVar3 == 0) || (bVar1 = true, iVar4 == 0)) {
             bVar1 = false;
           }
           if (bVar1) {
-            if (*(float *)((int)&DAT_8427b3c0 + iVar9) <= pfVar10[6]) {
+            if (*(float *)((int)&DAT_8427b3c0 + iVar9) <= *(float *)(puVar10 + 0x18)) {
               *(undefined4 *)((int)&DAT_8427b3c8 + iVar9) = 0;
             }
             else {
-              pfVar10[8] = 0.0;
+              *(undefined4 *)(puVar10 + 0x20) = 0;
             }
           }
           lVar8 = lVar8 + -1;
-          pfVar10 = pfVar10 + 9;
+          puVar10 = puVar10 + 0x24;
         } while (lVar8 != 0);
       }
       lVar5 = lVar5 + -1;
@@ -134,34 +130,34 @@ void Phys_CancelSimilarContacts(void)
 
 // 82665B40  Phys_CapsuleOptimizeLocalResults  (physics/phys_coll_capsulebrush.cpp:131)
 
-void Phys_CapsuleOptimizeLocalResults(Results *param_1)
+void Phys_CapsuleOptimizeLocalResults(void)
 
 {
-  Results *pRVar1;
-  undefined8 in_r4;
+  undefined8 uVar1;
   int iVar2;
   int iVar3;
   uint *puVar4;
   
-  pRVar1 = (Results *)__savegprlr_23(param_1);
-  if (1 < numLocalContacts) {
+  uVar1 = __savegprlr_23();
+  if (1 < DAT_8427b3a0) {
     Phys_CancelSimilarContacts();
   }
   iVar3 = 0;
-  if (0 < numLocalContacts) {
+  if (0 < DAT_8427b3a0) {
     puVar4 = &DAT_8427b3b8;
-    iVar2 = numLocalContacts;
+    iVar2 = DAT_8427b3a0;
     do {
       if (puVar4[4] != 0) {
-        if ((((puVar4[-1] & 0x7f800000) == 0x7f800000) || ((*puVar4 & 0x7f800000) == 0x7f800000)) ||
-           ((puVar4[1] & 0x7f800000) == 0x7f800000)) {
-          in_r4 = 0x8d;
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_capsulebrush.cpp"
-                          ,0x8d,0,"%s");
+        if ((puVar4[-1] & 0x7f800000) == 0x7f800000) {
+LAB_82665bf4:
+          MyAssertHandler(0xffffffff821934d8,0x8d,0,0xffffffff82000f98,0xffffffff82193528);
         }
-        Phys_AddContactData(pRVar1,(float)puVar4[2],(float *)in_r4,(float *)(puVar4 + -1),
-                            (int)(puVar4 + -4));
-        iVar2 = numLocalContacts;
+        else {
+          if ((*puVar4 & 0x7f800000) == 0x7f800000) goto LAB_82665bf4;
+          if ((puVar4[1] & 0x7f800000) == 0x7f800000) goto LAB_82665bf4;
+        }
+        Phys_AddContactData((double)(float)puVar4[2],uVar1);
+        iVar2 = DAT_8427b3a0;
       }
       iVar3 = iVar3 + 1;
       puVar4 = puVar4 + 9;
@@ -174,7 +170,7 @@ void Phys_CapsuleOptimizeLocalResults(Results *param_1)
 
 // 82665C40  Phys_CapsuleClipEdgeToPlane  (physics/phys_coll_capsulebrush.cpp:483)
 
-bool Phys_CapsuleClipEdgeToPlane(float *param_1,float *param_2,float *param_3)
+undefined8 Phys_CapsuleClipEdgeToPlane(float *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
@@ -189,19 +185,19 @@ bool Phys_CapsuleClipEdgeToPlane(float *param_1,float *param_2,float *param_3)
   fVar4 = param_3[2] * fVar3 + *param_3 * fVar2 + param_3[1] * fVar1 + param_3[3];
   fVar5 = param_2[2] * param_3[2] + *param_2 * *param_3 + param_2[1] * param_3[1] + param_3[3];
   if ((fVar4 < 0.0) && (fVar5 < 0.0)) {
-    return false;
+    return 0;
   }
   if (0.0 < fVar4) {
     if (0.0 < fVar5) {
-      return true;
+      return 1;
     }
     if (fVar5 < 0.0) goto LAB_82665cd0;
   }
   if (0.0 <= fVar4) {
-    return true;
+    return 1;
   }
   if (fVar5 <= 0.0) {
-    return true;
+    return 1;
   }
 LAB_82665cd0:
   fVar5 = fVar4 / (fVar4 - fVar5);
@@ -212,19 +208,19 @@ LAB_82665cd0:
     *param_2 = fVar2;
     param_2[1] = fVar1;
     param_2[2] = fVar3;
-    return true;
+    return 1;
   }
   *param_1 = fVar2;
   param_1[1] = fVar1;
   param_1[2] = fVar3;
-  return true;
+  return 1;
 }
 
 
 // 82665D20  Phys_TestAxis  (physics/phys_coll_capsulebrush.cpp:523)
 
-bool Phys_TestAxis(AxisTestResults *param_1,Capsule *param_2,float *param_3,float *param_4,
-                  float *param_5,float *param_6,int param_7,bool param_8)
+void Phys_TestAxis(undefined8 param_1,int param_2,float *param_3,float *param_4,float *param_5,
+                  float *param_6,float param_7,ulonglong param_8)
 
 {
   float fVar1;
@@ -235,11 +231,8 @@ bool Phys_TestAxis(AxisTestResults *param_1,Capsule *param_2,float *param_3,floa
   float fVar6;
   float fVar7;
   float *pfVar8;
-  undefined1 uVar9;
-  ulonglong uVar10;
   
-  uVar10 = (ulonglong)param_8;
-  pfVar8 = (float *)__savefpr_27(param_1);
+  pfVar8 = (float *)__savefpr_27();
   fVar1 = *param_6;
   fVar5 = SQRT(param_6[2] * param_6[2] + fVar1 * fVar1 + param_6[1] * param_6[1]);
   if (1e-06 <= fVar5) {
@@ -265,12 +258,12 @@ bool Phys_TestAxis(AxisTestResults *param_1,Capsule *param_2,float *param_3,floa
     }
     fVar6 = (fVar2 + fVar3) * 0.5;
     fVar3 = (fVar2 - fVar3) * 0.5;
-    fVar2 = fVar3 + ABS(param_2->axis[2] * fVar5 +
-                        param_2->axis[1] * fVar4 + param_2->axis[0] * fVar1) * param_2->halfHeight +
-                    param_2->radius;
+    fVar2 = fVar3 + ABS(*(float *)(param_2 + 0x2c) * fVar5 +
+                        *(float *)(param_2 + 0x28) * fVar4 + *(float *)(param_2 + 0x24) * fVar1) *
+                    *(float *)(param_2 + 0x3c) + *(float *)(param_2 + 0x30);
     if (fVar2 < ABS(fVar6)) {
-      uVar9 = __restfpr_27(0);
-      return (bool)uVar9;
+      __restfpr_27(0);
+      return;
     }
     fVar2 = ABS(fVar6) - fVar2;
     if (*pfVar8 < fVar2) {
@@ -280,8 +273,8 @@ bool Phys_TestAxis(AxisTestResults *param_1,Capsule *param_2,float *param_3,floa
       pfVar8[4] = fVar1;
       pfVar8[5] = fVar4;
       pfVar8[6] = fVar5;
-      pfVar8[2] = (float)param_7;
-      if ((fVar6 < 0.0) && ((uVar10 & 0xff) == 0)) {
+      pfVar8[2] = param_7;
+      if ((fVar6 < 0.0) && ((param_8 & 0xff) == 0)) {
         pfVar8[4] = -pfVar8[4];
         pfVar8[5] = -pfVar8[5];
         pfVar8[6] = -pfVar8[6];
@@ -289,52 +282,55 @@ bool Phys_TestAxis(AxisTestResults *param_1,Capsule *param_2,float *param_3,floa
       }
     }
   }
-  uVar9 = __restfpr_27(1);
-  return (bool)uVar9;
+  __restfpr_27(1);
+  return;
 }
 
 
 // 82665EF8  Phys_CalcAxis  (physics/phys_coll_capsulebrush.cpp:598)
 
-void Phys_CalcAxis(float *param_1,float *param_2,float *param_3,float *param_4)
+void Phys_CalcAxis(float *param_1,float *param_2,undefined8 param_3,undefined8 param_4)
 
 {
   float local_40;
   float local_3c;
   float local_38;
-  float afStack_30 [6];
+  undefined1 auStack_30 [24];
   
   local_40 = *param_1 - *param_2;
   local_3c = param_1[1] - param_2[1];
   local_38 = param_1[2] - param_2[2];
-  Vec3Cross(&local_40,param_3,afStack_30);
-  Vec3Cross(afStack_30,param_3,param_4);
+  Vec3Cross(&local_40,param_3,auStack_30);
+  Vec3Cross(auStack_30,param_3,param_4);
   return;
 }
 
 
 // 82665F88  Phys_CapsuleSeparatingAxisTest  (physics/phys_coll_capsulebrush.cpp:609)
 
-bool Phys_CapsuleSeparatingAxisTest
-               (AxisTestResults *param_1,float *param_2,Capsule *param_3,float *param_4,
-               float *param_5,float *param_6)
+void Phys_CapsuleSeparatingAxisTest
+               (undefined8 param_1,float *param_2,longlong param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  float fVar5;
-  AxisTestResults *pAVar6;
-  bool bVar7;
-  undefined1 uVar8;
-  float *pfVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  int iVar5;
+  float *pfVar6;
+  float fVar7;
+  undefined4 *puVar8;
+  char cVar9;
+  float *pfVar10;
+  float *pfVar11;
+  longlong lVar12;
   double dVar13;
   double dVar14;
   double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
   float local_100;
   float local_fc;
   float local_f8;
@@ -363,140 +359,135 @@ bool Phys_CapsuleSeparatingAxisTest
   float local_7c;
   float local_78;
   
-  __savegprlr_25(param_1);
-  pAVar6 = (AxisTestResults *)__savefpr_26();
-  local_f0 = param_3->center[0];
-  local_ec = param_3->center[1];
-  local_e8 = param_3->center[2];
-  fVar1 = param_3->halfHeight;
-  fVar2 = param_3->axis[0];
-  fVar5 = -fVar1;
-  fVar3 = param_3->axis[1];
-  pAVar6->bestAxis = 0;
-  fVar4 = param_3->axis[2];
+  __savegprlr_25();
+  puVar8 = (undefined4 *)__savefpr_26();
+  iVar5 = (int)param_3;
+  local_f0 = *(float *)(iVar5 + 0x18);
+  local_ec = *(float *)(iVar5 + 0x1c);
+  local_e8 = *(float *)(iVar5 + 0x20);
+  fVar1 = *(float *)(iVar5 + 0x3c);
+  fVar2 = *(float *)(iVar5 + 0x24);
+  fVar7 = -fVar1;
+  fVar3 = *(float *)(iVar5 + 0x28);
+  puVar8[2] = 0;
+  fVar4 = *(float *)(iVar5 + 0x2c);
   local_c0 = fVar2 * fVar1 + local_f0;
-  dVar15 = (double)local_c0;
+  dVar18 = (double)local_c0;
   local_bc = fVar1 * fVar3 + local_ec;
-  dVar14 = (double)local_bc;
+  dVar17 = (double)local_bc;
   local_b8 = fVar4 * fVar1 + local_e8;
-  dVar13 = (double)local_b8;
-  pAVar6->bestDepth = -3.4028235e+38;
-  pAVar6->bestCenter = 0.0;
-  pfVar9 = param_3->axis;
-  pAVar6->bestRt = 0.0;
-  pAVar6->normal[0] = 0.0;
-  pAVar6->normal[1] = 0.0;
-  pAVar6->normal[2] = 0.0;
-  local_78 = fVar4 * fVar5 + local_e8;
-  dVar10 = (double)local_78;
-  local_7c = fVar5 * fVar3 + local_ec;
-  dVar11 = (double)local_7c;
-  local_80 = fVar2 * fVar5 + local_f0;
-  dVar12 = (double)local_80;
-  local_d0 = *param_4 - local_f0;
-  local_cc = param_4[1] - local_ec;
-  local_c8 = param_4[2] - local_e8;
-  local_dc = param_5[1] - local_ec;
-  local_e0 = *param_5 - local_f0;
-  local_f0 = *param_6 - local_f0;
-  local_ec = param_6[1] - local_ec;
-  local_d8 = param_5[2] - local_e8;
-  local_e8 = param_6[2] - local_e8;
-  Phys_CalcAxis(param_4,&local_c0,pfVar9,&local_100);
-  bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,&local_100,0xb,false);
-  if (bVar7) {
-    local_90 = *param_5 - *param_4;
-    local_8c = param_5[1] - param_4[1];
-    local_88 = param_5[2] - param_4[2];
-    Vec3Cross(pfVar9,&local_90,&local_100);
-    bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,&local_100,2,false);
-    if (bVar7) {
-      local_a0 = *param_6 - *param_5;
-      local_9c = param_6[1] - param_5[1];
-      local_98 = param_6[2] - param_5[2];
-      Vec3Cross(pfVar9,&local_a0,&local_100);
-      bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,&local_100,3,false);
-      if (bVar7) {
-        local_b0 = *param_4 - *param_6;
-        local_ac = param_4[1] - param_6[1];
-        local_a8 = param_4[2] - param_6[2];
-        Vec3Cross(pfVar9,&local_b0,&local_100);
-        bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,&local_100,4,false);
-        if (bVar7) {
+  dVar16 = (double)local_b8;
+  *puVar8 = 0xff7fffff;
+  puVar8[1] = 0;
+  lVar12 = param_3 + 0x24;
+  puVar8[3] = 0;
+  puVar8[4] = 0;
+  puVar8[5] = 0;
+  puVar8[6] = 0;
+  local_78 = fVar4 * fVar7 + local_e8;
+  dVar13 = (double)local_78;
+  local_7c = fVar7 * fVar3 + local_ec;
+  dVar14 = (double)local_7c;
+  local_80 = fVar2 * fVar7 + local_f0;
+  dVar15 = (double)local_80;
+  pfVar10 = (float *)param_4;
+  local_d0 = *pfVar10 - local_f0;
+  local_cc = pfVar10[1] - local_ec;
+  pfVar6 = (float *)param_5;
+  local_c8 = pfVar10[2] - local_e8;
+  local_dc = pfVar6[1] - local_ec;
+  pfVar11 = (float *)param_6;
+  local_e0 = *pfVar6 - local_f0;
+  local_f0 = *pfVar11 - local_f0;
+  local_ec = pfVar11[1] - local_ec;
+  local_d8 = pfVar6[2] - local_e8;
+  local_e8 = pfVar11[2] - local_e8;
+  Phys_CalcAxis(param_4,&local_c0,lVar12,&local_100);
+  cVar9 = Phys_TestAxis(puVar8,param_3,&local_d0,&local_e0,&local_f0,&local_100,0xb,0);
+  if (cVar9 != '\0') {
+    local_90 = *pfVar6 - *pfVar10;
+    local_8c = pfVar6[1] - pfVar10[1];
+    local_88 = pfVar6[2] - pfVar10[2];
+    Vec3Cross(lVar12,&local_90,&local_100);
+    cVar9 = Phys_TestAxis(puVar8,param_3,&local_d0,&local_e0,&local_f0,&local_100,2,0);
+    if (cVar9 != '\0') {
+      local_a0 = *pfVar11 - *pfVar6;
+      local_9c = pfVar11[1] - pfVar6[1];
+      local_98 = pfVar11[2] - pfVar6[2];
+      Vec3Cross(lVar12,&local_a0,&local_100);
+      cVar9 = Phys_TestAxis(puVar8,param_3,&local_d0,&local_e0,&local_f0,&local_100,3,0);
+      if (cVar9 != '\0') {
+        local_b0 = *pfVar10 - *pfVar11;
+        local_ac = pfVar10[1] - pfVar11[1];
+        local_a8 = pfVar10[2] - pfVar11[2];
+        Vec3Cross(lVar12,&local_b0,&local_100);
+        cVar9 = Phys_TestAxis(puVar8,param_3,&local_d0,&local_e0,&local_f0,&local_100,4,0);
+        if (cVar9 != '\0') {
           Phys_CalcAxis(&local_c0,param_4,&local_90,&local_100);
-          bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,&local_100,5,false);
-          if (bVar7) {
+          cVar9 = Phys_TestAxis(puVar8,param_3,&local_d0,&local_e0,&local_f0,&local_100,5,0);
+          if (cVar9 != '\0') {
             Phys_CalcAxis(&local_c0,param_5,&local_a0,&local_100);
-            bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,&local_100,6,false);
-            if (bVar7) {
+            cVar9 = Phys_TestAxis(puVar8,param_3,&local_d0,&local_e0,&local_f0,&local_100,6,0);
+            if (cVar9 != '\0') {
               Phys_CalcAxis(&local_c0,param_6,&local_b0,&local_100);
-              bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,&local_100,7,false)
-              ;
-              if (bVar7) {
+              cVar9 = Phys_TestAxis(puVar8,param_3,&local_d0,&local_e0,&local_f0,&local_100,7,0);
+              if (cVar9 != '\0') {
                 Phys_CalcAxis(&local_80,param_6,&local_b0,&local_100);
-                bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,&local_100,10,
-                                      false);
-                if (bVar7) {
+                cVar9 = Phys_TestAxis(puVar8,param_3,&local_d0,&local_e0,&local_f0,&local_100,10,0);
+                if (cVar9 != '\0') {
                   Phys_CalcAxis(&local_80,param_5,&local_a0,&local_100);
-                  bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,&local_100,9,
-                                        false);
-                  if (bVar7) {
+                  cVar9 = Phys_TestAxis(puVar8,param_3,&local_d0,&local_e0,&local_f0,&local_100,9,0)
+                  ;
+                  if (cVar9 != '\0') {
                     Phys_CalcAxis(&local_80,param_4,&local_90,&local_100);
-                    bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,&local_100,8,
-                                          false);
-                    if (bVar7) {
-                      Phys_CalcAxis(param_5,&local_c0,pfVar9,&local_100);
-                      bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,&local_100,
-                                            0xc,false);
-                      if (bVar7) {
-                        Phys_CalcAxis(param_6,&local_c0,pfVar9,&local_100);
-                        bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,
-                                              &local_100,0xd,false);
-                        if (bVar7) {
-                          local_100 = (float)((double)*param_4 - dVar15);
-                          local_fc = (float)((double)param_4[1] - dVar14);
-                          local_f8 = (float)((double)param_4[2] - dVar13);
-                          bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,
-                                                &local_100,0xe,false);
-                          if (bVar7) {
-                            local_100 = (float)((double)*param_5 - dVar15);
-                            local_fc = (float)((double)param_5[1] - dVar14);
-                            local_f8 = (float)((double)param_5[2] - dVar13);
-                            bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,
-                                                  &local_100,0xf,false);
-                            if (bVar7) {
-                              local_100 = (float)((double)*param_6 - dVar15);
-                              local_fc = (float)((double)param_6[1] - dVar14);
-                              local_f8 = (float)((double)param_6[2] - dVar13);
-                              bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,
-                                                    &local_100,0x10,false);
-                              if (bVar7) {
-                                local_100 = (float)((double)*param_4 - dVar12);
-                                local_fc = (float)((double)param_4[1] - dVar11);
-                                local_f8 = (float)((double)param_4[2] - dVar10);
-                                bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0,
-                                                      &local_100,0x11,false);
-                                if (bVar7) {
-                                  local_100 = (float)((double)*param_5 - dVar12);
-                                  local_fc = (float)((double)param_5[1] - dVar11);
-                                  local_f8 = (float)((double)param_5[2] - dVar10);
-                                  bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,&local_f0
-                                                        ,&local_100,0x12,false);
-                                  if (bVar7) {
-                                    local_100 = (float)((double)*param_6 - dVar12);
-                                    local_fc = (float)((double)param_6[1] - dVar11);
-                                    local_f8 = (float)((double)param_6[2] - dVar10);
-                                    bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,
-                                                          &local_f0,&local_100,0x13,false);
-                                    if (bVar7) {
+                    cVar9 = Phys_TestAxis(puVar8,param_3,&local_d0,&local_e0,&local_f0,&local_100,8,
+                                          0);
+                    if (cVar9 != '\0') {
+                      Phys_CalcAxis(param_5,&local_c0,lVar12,&local_100);
+                      cVar9 = Phys_TestAxis(puVar8,param_3,&local_d0,&local_e0,&local_f0,&local_100,
+                                            0xc,0);
+                      if (cVar9 != '\0') {
+                        Phys_CalcAxis(param_6,&local_c0,lVar12,&local_100);
+                        cVar9 = Phys_TestAxis(puVar8,param_3,&local_d0,&local_e0,&local_f0,
+                                              &local_100,0xd,0);
+                        if (cVar9 != '\0') {
+                          local_100 = (float)((double)*pfVar10 - dVar18);
+                          local_fc = (float)((double)pfVar10[1] - dVar17);
+                          local_f8 = (float)((double)pfVar10[2] - dVar16);
+                          cVar9 = Phys_TestAxis(puVar8);
+                          if (cVar9 != '\0') {
+                            local_100 = (float)((double)*pfVar6 - dVar18);
+                            local_fc = (float)((double)pfVar6[1] - dVar17);
+                            local_f8 = (float)((double)pfVar6[2] - dVar16);
+                            cVar9 = Phys_TestAxis(puVar8);
+                            if (cVar9 != '\0') {
+                              local_100 = (float)((double)*pfVar11 - dVar18);
+                              local_fc = (float)((double)pfVar11[1] - dVar17);
+                              local_f8 = (float)((double)pfVar11[2] - dVar16);
+                              cVar9 = Phys_TestAxis(puVar8);
+                              if (cVar9 != '\0') {
+                                local_100 = (float)((double)*pfVar10 - dVar15);
+                                local_fc = (float)((double)pfVar10[1] - dVar14);
+                                local_f8 = (float)((double)pfVar10[2] - dVar13);
+                                cVar9 = Phys_TestAxis(puVar8);
+                                if (cVar9 != '\0') {
+                                  local_100 = (float)((double)*pfVar6 - dVar15);
+                                  local_fc = (float)((double)pfVar6[1] - dVar14);
+                                  local_f8 = (float)((double)pfVar6[2] - dVar13);
+                                  cVar9 = Phys_TestAxis(puVar8);
+                                  if (cVar9 != '\0') {
+                                    local_100 = (float)((double)*pfVar11 - dVar15);
+                                    local_fc = (float)((double)pfVar11[1] - dVar14);
+                                    local_f8 = (float)((double)pfVar11[2] - dVar13);
+                                    cVar9 = Phys_TestAxis(puVar8);
+                                    if (cVar9 != '\0') {
                                       local_100 = -*param_2;
                                       local_fc = -param_2[1];
                                       local_f8 = -param_2[2];
-                                      bVar7 = Phys_TestAxis(pAVar6,param_3,&local_d0,&local_e0,
-                                                            &local_f0,&local_100,1,true);
-                                      __restfpr_26(bVar7);
-                                      uVar8 = __restgprlr_25();
-                                      return (bool)uVar8;
+                                      cVar9 = Phys_TestAxis(puVar8);
+                                      __restfpr_26(cVar9 != '\0');
+                                      __restgprlr_25();
+                                      return;
                                     }
                                   }
                                 }
@@ -516,30 +507,32 @@ bool Phys_CapsuleSeparatingAxisTest
     }
   }
   __restfpr_26(0);
-  uVar8 = __restgprlr_25();
-  return (bool)uVar8;
+  __restgprlr_25();
+  return;
 }
 
 
 // 826666B0  Phys_CapsuleSeparatingAxisTestEndEdges  (physics/phys_coll_capsulebrush.cpp:746)
 
-bool Phys_CapsuleSeparatingAxisTestEndEdges
-               (AxisTestResults *param_1,float *param_2,Capsule *param_3,float *param_4,
-               float *param_5,float *param_6)
+void Phys_CapsuleSeparatingAxisTestEndEdges
+               (undefined8 param_1,float *param_2,longlong param_3,float *param_4,undefined8 param_5
+               ,undefined8 param_6)
 
 {
   float fVar1;
-  float fVar2;
-  AxisTestResults *pAVar3;
-  float *pfVar4;
-  bool bVar5;
-  undefined1 uVar6;
-  double dVar7;
-  double dVar8;
+  int iVar2;
+  float fVar3;
+  undefined4 *puVar4;
+  char cVar5;
+  float *pfVar6;
+  float *pfVar7;
+  longlong lVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
+  double dVar13;
+  double dVar14;
   float local_f0;
   float local_ec;
   float local_e8;
@@ -565,106 +558,103 @@ bool Phys_CapsuleSeparatingAxisTestEndEdges
   float local_7c;
   float local_78;
   
-  __savegprlr_26(param_1);
-  pAVar3 = (AxisTestResults *)__savefpr_26();
+  __savegprlr_26();
+  puVar4 = (undefined4 *)__savefpr_26();
   local_f0 = -*param_2;
   local_ec = -param_2[1];
-  local_b0 = param_3->center[0];
-  pAVar3->bestAxis = 0;
-  pAVar3->bestDepth = -3.4028235e+38;
-  pAVar3->bestCenter = 0.0;
-  pfVar4 = param_3->axis;
-  pAVar3->bestRt = 0.0;
-  pAVar3->normal[0] = 0.0;
-  pAVar3->normal[1] = 0.0;
-  pAVar3->normal[2] = 0.0;
-  fVar1 = param_3->halfHeight;
-  fVar2 = -fVar1;
+  iVar2 = (int)param_3;
+  local_b0 = *(float *)(iVar2 + 0x18);
+  puVar4[2] = 0;
+  *puVar4 = 0xff7fffff;
+  puVar4[1] = 0;
+  lVar8 = param_3 + 0x24;
+  puVar4[3] = 0;
+  puVar4[4] = 0;
+  puVar4[5] = 0;
+  puVar4[6] = 0;
+  fVar1 = *(float *)(iVar2 + 0x3c);
+  fVar3 = -fVar1;
+  pfVar6 = (float *)param_5;
   local_c0 = *param_4 - local_b0;
-  local_ac = param_3->center[1];
-  local_d0 = *param_5 - local_b0;
+  local_ac = *(float *)(iVar2 + 0x1c);
+  local_d0 = *pfVar6 - local_b0;
   local_bc = param_4[1] - local_ac;
-  local_cc = param_5[1] - local_ac;
-  local_78 = param_3->center[2];
-  local_e0 = *param_6 - local_b0;
+  pfVar7 = (float *)param_6;
+  local_cc = pfVar6[1] - local_ac;
+  local_78 = *(float *)(iVar2 + 0x20);
+  local_e0 = *pfVar7 - local_b0;
   local_b8 = param_4[2] - local_78;
-  local_c8 = param_5[2] - local_78;
+  local_c8 = pfVar6[2] - local_78;
   local_e8 = -param_2[2];
-  local_dc = param_6[1] - local_ac;
-  local_d8 = param_6[2] - local_78;
-  local_80 = param_3->axis[0] * fVar2 + local_b0;
-  dVar9 = (double)local_80;
-  local_7c = param_3->axis[1] * fVar2 + local_ac;
-  dVar8 = (double)local_7c;
-  local_ac = param_3->axis[1] * fVar1 + local_ac;
-  dVar11 = (double)local_ac;
-  local_a8 = param_3->axis[2] * fVar1 + local_78;
-  dVar10 = (double)local_a8;
-  local_b0 = param_3->axis[0] * fVar1 + local_b0;
-  dVar12 = (double)local_b0;
-  local_78 = param_3->axis[2] * fVar2 + local_78;
-  dVar7 = (double)local_78;
-  bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,&local_f0,1,true);
-  if (bVar5) {
-    local_a0 = *param_6 - *param_5;
-    local_9c = param_6[1] - param_5[1];
-    local_98 = param_6[2] - param_5[2];
-    Vec3Cross(pfVar4,&local_a0,&local_f0);
-    bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,&local_f0,3,false);
-    if (bVar5) {
-      local_90 = *param_4 - *param_6;
-      local_8c = param_4[1] - param_6[1];
-      local_88 = param_4[2] - param_6[2];
-      Vec3Cross(pfVar4,&local_90,&local_f0);
-      bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,&local_f0,4,false);
-      if (bVar5) {
+  local_dc = pfVar7[1] - local_ac;
+  local_d8 = pfVar7[2] - local_78;
+  local_80 = *(float *)(iVar2 + 0x24) * fVar3 + local_b0;
+  dVar11 = (double)local_80;
+  local_7c = *(float *)(iVar2 + 0x28) * fVar3 + local_ac;
+  dVar10 = (double)local_7c;
+  local_ac = *(float *)(iVar2 + 0x28) * fVar1 + local_ac;
+  dVar13 = (double)local_ac;
+  local_a8 = *(float *)(iVar2 + 0x2c) * fVar1 + local_78;
+  dVar12 = (double)local_a8;
+  local_b0 = *(float *)(iVar2 + 0x24) * fVar1 + local_b0;
+  dVar14 = (double)local_b0;
+  local_78 = *(float *)(iVar2 + 0x2c) * fVar3 + local_78;
+  dVar9 = (double)local_78;
+  cVar5 = Phys_TestAxis(puVar4,param_3,&local_c0,&local_d0,&local_e0,&local_f0,1,1);
+  if (cVar5 != '\0') {
+    local_a0 = *pfVar7 - *pfVar6;
+    local_9c = pfVar7[1] - pfVar6[1];
+    local_98 = pfVar7[2] - pfVar6[2];
+    Vec3Cross(lVar8,&local_a0,&local_f0);
+    cVar5 = Phys_TestAxis(puVar4,param_3,&local_c0,&local_d0,&local_e0,&local_f0,3,0);
+    if (cVar5 != '\0') {
+      local_90 = *param_4 - *pfVar7;
+      local_8c = param_4[1] - pfVar7[1];
+      local_88 = param_4[2] - pfVar7[2];
+      Vec3Cross(lVar8,&local_90,&local_f0);
+      cVar5 = Phys_TestAxis(puVar4,param_3,&local_c0,&local_d0,&local_e0,&local_f0,4,0);
+      if (cVar5 != '\0') {
         Phys_CalcAxis(&local_b0,param_5,&local_a0,&local_f0);
-        bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,&local_f0,6,false);
-        if (bVar5) {
+        cVar5 = Phys_TestAxis(puVar4,param_3,&local_c0,&local_d0,&local_e0,&local_f0,6,0);
+        if (cVar5 != '\0') {
           Phys_CalcAxis(&local_b0,param_6,&local_90,&local_f0);
-          bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,&local_f0,7,false);
-          if (bVar5) {
+          cVar5 = Phys_TestAxis(puVar4,param_3,&local_c0,&local_d0,&local_e0,&local_f0,7,0);
+          if (cVar5 != '\0') {
             Phys_CalcAxis(&local_80,param_5,&local_a0,&local_f0);
-            bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,&local_f0,9,false);
-            if (bVar5) {
+            cVar5 = Phys_TestAxis(puVar4,param_3,&local_c0,&local_d0,&local_e0,&local_f0,9,0);
+            if (cVar5 != '\0') {
               Phys_CalcAxis(&local_80,param_6,&local_90,&local_f0);
-              bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,&local_f0,10,false)
-              ;
-              if (bVar5) {
-                Phys_CalcAxis(param_5,&local_b0,pfVar4,&local_f0);
-                bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,&local_f0,0xc,
-                                      false);
-                if (bVar5) {
-                  Phys_CalcAxis(param_6,&local_b0,pfVar4,&local_f0);
-                  bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,&local_f0,0xd,
-                                        false);
-                  if (bVar5) {
-                    local_f0 = (float)((double)*param_5 - dVar12);
-                    local_ec = (float)((double)param_5[1] - dVar11);
-                    local_e8 = (float)((double)param_5[2] - dVar10);
-                    bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,&local_f0,0xf
-                                          ,false);
-                    if (bVar5) {
-                      local_f0 = (float)((double)*param_6 - dVar12);
-                      local_ec = (float)((double)param_6[1] - dVar11);
-                      local_e8 = (float)((double)param_6[2] - dVar10);
-                      bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,&local_f0,
-                                            0x10,false);
-                      if (bVar5) {
-                        local_f0 = (float)((double)*param_5 - dVar9);
-                        local_ec = (float)((double)param_5[1] - dVar8);
-                        local_e8 = (float)((double)param_5[2] - dVar7);
-                        bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,&local_f0
-                                              ,0x12,false);
-                        if (bVar5) {
-                          local_f0 = (float)((double)*param_6 - dVar9);
-                          local_ec = (float)((double)param_6[1] - dVar8);
-                          local_e8 = (float)((double)param_6[2] - dVar7);
-                          bVar5 = Phys_TestAxis(pAVar3,param_3,&local_c0,&local_d0,&local_e0,
-                                                &local_f0,0x13,false);
-                          __restfpr_26(bVar5);
-                          uVar6 = __restgprlr_26();
-                          return (bool)uVar6;
+              cVar5 = Phys_TestAxis(puVar4,param_3,&local_c0,&local_d0,&local_e0,&local_f0,10,0);
+              if (cVar5 != '\0') {
+                Phys_CalcAxis(param_5,&local_b0,lVar8,&local_f0);
+                cVar5 = Phys_TestAxis(puVar4,param_3,&local_c0,&local_d0,&local_e0,&local_f0,0xc,0);
+                if (cVar5 != '\0') {
+                  Phys_CalcAxis(param_6,&local_b0,lVar8,&local_f0);
+                  cVar5 = Phys_TestAxis(puVar4,param_3,&local_c0,&local_d0,&local_e0,&local_f0,0xd,0
+                                       );
+                  if (cVar5 != '\0') {
+                    local_f0 = (float)((double)*pfVar6 - dVar14);
+                    local_ec = (float)((double)pfVar6[1] - dVar13);
+                    local_e8 = (float)((double)pfVar6[2] - dVar12);
+                    cVar5 = Phys_TestAxis(puVar4);
+                    if (cVar5 != '\0') {
+                      local_f0 = (float)((double)*pfVar7 - dVar14);
+                      local_ec = (float)((double)pfVar7[1] - dVar13);
+                      local_e8 = (float)((double)pfVar7[2] - dVar12);
+                      cVar5 = Phys_TestAxis(puVar4);
+                      if (cVar5 != '\0') {
+                        local_f0 = (float)((double)*pfVar6 - dVar11);
+                        local_ec = (float)((double)pfVar6[1] - dVar10);
+                        local_e8 = (float)((double)pfVar6[2] - dVar9);
+                        cVar5 = Phys_TestAxis(puVar4);
+                        if (cVar5 != '\0') {
+                          local_f0 = (float)((double)*pfVar7 - dVar11);
+                          local_ec = (float)((double)pfVar7[1] - dVar10);
+                          local_e8 = (float)((double)pfVar7[2] - dVar9);
+                          cVar5 = Phys_TestAxis(puVar4);
+                          __restfpr_26(cVar5 != '\0');
+                          __restgprlr_26();
+                          return;
                         }
                       }
                     }
@@ -678,29 +668,30 @@ bool Phys_CapsuleSeparatingAxisTestEndEdges
     }
   }
   __restfpr_26(0);
-  uVar6 = __restgprlr_26();
-  return (bool)uVar6;
+  __restgprlr_26();
+  return;
 }
 
 
 // 82666BF8  Phys_CapsuleSeparatingAxisTestMiddleEdge  (physics/phys_coll_capsulebrush.cpp:850)
 
-bool Phys_CapsuleSeparatingAxisTestMiddleEdge
-               (AxisTestResults *param_1,float *param_2,Capsule *param_3,float *param_4,
-               float *param_5,float *param_6)
+void Phys_CapsuleSeparatingAxisTestMiddleEdge
+               (undefined8 param_1,float *param_2,longlong param_3,float *param_4,undefined8 param_5
+               ,float *param_6)
 
 {
   float fVar1;
-  float fVar2;
-  AxisTestResults *pAVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  double dVar6;
+  int iVar2;
+  float *pfVar3;
+  float fVar4;
+  undefined4 *puVar5;
+  char cVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
+  double dVar12;
   float local_d0;
   float local_cc;
   float local_c8;
@@ -723,76 +714,77 @@ bool Phys_CapsuleSeparatingAxisTestMiddleEdge
   float local_6c;
   float local_68;
   
-  __savegprlr_27(param_1);
-  pAVar3 = (AxisTestResults *)__savefpr_26();
-  local_68 = param_3->center[2];
-  local_70 = param_3->center[0];
+  __savegprlr_27();
+  puVar5 = (undefined4 *)__savefpr_26();
+  iVar2 = (int)param_3;
+  local_68 = *(float *)(iVar2 + 0x20);
+  local_70 = *(float *)(iVar2 + 0x18);
   local_98 = param_4[2] - local_68;
-  local_6c = param_3->center[1];
+  local_6c = *(float *)(iVar2 + 0x1c);
+  pfVar3 = (float *)param_5;
   local_a0 = *param_4 - local_70;
-  local_ac = param_5[1] - local_6c;
+  local_ac = pfVar3[1] - local_6c;
   local_9c = param_4[1] - local_6c;
-  local_b0 = *param_5 - local_70;
-  local_a8 = param_5[2] - local_68;
+  local_b0 = *pfVar3 - local_70;
+  local_a8 = pfVar3[2] - local_68;
   local_d0 = -*param_2;
   local_c0 = *param_6;
   local_cc = -param_2[1];
   local_bc = param_6[1];
-  pAVar3->bestAxis = 0;
+  puVar5[2] = 0;
   local_c0 = local_c0 - local_70;
   local_bc = local_bc - local_6c;
   local_b8 = param_6[2] - local_68;
   local_c8 = -param_2[2];
-  pAVar3->bestDepth = -3.4028235e+38;
-  pAVar3->bestCenter = 0.0;
-  pAVar3->bestRt = 0.0;
-  pAVar3->normal[0] = 0.0;
-  pAVar3->normal[1] = 0.0;
-  pAVar3->normal[2] = 0.0;
-  fVar1 = param_3->halfHeight;
-  fVar2 = -fVar1;
-  local_80 = param_3->axis[0] * fVar1 + local_70;
-  dVar11 = (double)local_80;
-  local_7c = param_3->axis[1] * fVar1 + local_6c;
-  dVar10 = (double)local_7c;
-  local_78 = param_3->axis[2] * fVar1 + local_68;
-  dVar9 = (double)local_78;
-  local_70 = param_3->axis[0] * fVar2 + local_70;
-  dVar8 = (double)local_70;
-  local_6c = param_3->axis[1] * fVar2 + local_6c;
-  dVar7 = (double)local_6c;
-  local_68 = param_3->axis[2] * fVar2 + local_68;
-  dVar6 = (double)local_68;
-  bVar4 = Phys_TestAxis(pAVar3,param_3,&local_a0,&local_b0,&local_c0,&local_d0,1,true);
-  if (bVar4) {
-    local_90 = *param_6 - *param_5;
-    local_8c = param_6[1] - param_5[1];
-    local_88 = param_6[2] - param_5[2];
-    Vec3Cross(param_3->axis,&local_90,&local_d0);
-    bVar4 = Phys_TestAxis(pAVar3,param_3,&local_a0,&local_b0,&local_c0,&local_d0,3,false);
-    if (bVar4) {
+  *puVar5 = 0xff7fffff;
+  puVar5[1] = 0;
+  puVar5[3] = 0;
+  puVar5[4] = 0;
+  puVar5[5] = 0;
+  puVar5[6] = 0;
+  fVar1 = *(float *)(iVar2 + 0x3c);
+  fVar4 = -fVar1;
+  local_80 = *(float *)(iVar2 + 0x24) * fVar1 + local_70;
+  dVar12 = (double)local_80;
+  local_7c = *(float *)(iVar2 + 0x28) * fVar1 + local_6c;
+  dVar11 = (double)local_7c;
+  local_78 = *(float *)(iVar2 + 0x2c) * fVar1 + local_68;
+  dVar10 = (double)local_78;
+  local_70 = *(float *)(iVar2 + 0x24) * fVar4 + local_70;
+  dVar9 = (double)local_70;
+  local_6c = *(float *)(iVar2 + 0x28) * fVar4 + local_6c;
+  dVar8 = (double)local_6c;
+  local_68 = *(float *)(iVar2 + 0x2c) * fVar4 + local_68;
+  dVar7 = (double)local_68;
+  cVar6 = Phys_TestAxis(puVar5,param_3,&local_a0,&local_b0,&local_c0,&local_d0,1,1);
+  if (cVar6 != '\0') {
+    local_90 = *param_6 - *pfVar3;
+    local_8c = param_6[1] - pfVar3[1];
+    local_88 = param_6[2] - pfVar3[2];
+    Vec3Cross(param_3 + 0x24,&local_90,&local_d0);
+    cVar6 = Phys_TestAxis(puVar5,param_3,&local_a0,&local_b0,&local_c0,&local_d0,3,0);
+    if (cVar6 != '\0') {
       Phys_CalcAxis(&local_80,param_5,&local_90,&local_d0);
-      bVar4 = Phys_TestAxis(pAVar3,param_3,&local_a0,&local_b0,&local_c0,&local_d0,6,false);
-      if (bVar4) {
+      cVar6 = Phys_TestAxis(puVar5,param_3,&local_a0,&local_b0,&local_c0,&local_d0,6,0);
+      if (cVar6 != '\0') {
         Phys_CalcAxis(&local_70,param_5,&local_90,&local_d0);
-        bVar4 = Phys_TestAxis(pAVar3,param_3,&local_a0,&local_b0,&local_c0,&local_d0,9,false);
-        if (bVar4) {
-          Phys_CalcAxis(param_5,&local_80,param_3->axis,&local_d0);
-          bVar4 = Phys_TestAxis(pAVar3,param_3,&local_a0,&local_b0,&local_c0,&local_d0,0xc,false);
-          if (bVar4) {
-            local_d0 = (float)((double)*param_5 - dVar11);
-            local_cc = (float)((double)param_5[1] - dVar10);
-            local_c8 = (float)((double)param_5[2] - dVar9);
-            bVar4 = Phys_TestAxis(pAVar3,param_3,&local_a0,&local_b0,&local_c0,&local_d0,0xf,false);
-            if (bVar4) {
-              local_d0 = (float)((double)*param_5 - dVar8);
-              local_cc = (float)((double)param_5[1] - dVar7);
-              local_c8 = (float)((double)param_5[2] - dVar6);
-              bVar4 = Phys_TestAxis(pAVar3,param_3,&local_a0,&local_b0,&local_c0,&local_d0,0x12,
-                                    false);
-              __restfpr_26(bVar4);
-              uVar5 = __restgprlr_27();
-              return (bool)uVar5;
+        cVar6 = Phys_TestAxis(puVar5,param_3,&local_a0,&local_b0,&local_c0,&local_d0,9,0);
+        if (cVar6 != '\0') {
+          Phys_CalcAxis(param_5,&local_80,param_3 + 0x24,&local_d0);
+          cVar6 = Phys_TestAxis(puVar5,param_3,&local_a0,&local_b0,&local_c0,&local_d0,0xc,0);
+          if (cVar6 != '\0') {
+            local_d0 = (float)((double)*pfVar3 - dVar12);
+            local_cc = (float)((double)pfVar3[1] - dVar11);
+            local_c8 = (float)((double)pfVar3[2] - dVar10);
+            cVar6 = Phys_TestAxis(puVar5);
+            if (cVar6 != '\0') {
+              local_d0 = (float)((double)*pfVar3 - dVar9);
+              local_cc = (float)((double)pfVar3[1] - dVar8);
+              local_c8 = (float)((double)pfVar3[2] - dVar7);
+              cVar6 = Phys_TestAxis(puVar5);
+              __restfpr_26(cVar6 != '\0');
+              __restgprlr_27();
+              return;
             }
           }
         }
@@ -800,15 +792,14 @@ bool Phys_CapsuleSeparatingAxisTestMiddleEdge
     }
   }
   __restfpr_26(0);
-  uVar5 = __restgprlr_27();
-  return (bool)uVar5;
+  __restgprlr_27();
+  return;
 }
 
 
 // 82666F60  Phys_CapsuleCenterEdgePts  (physics/phys_coll_capsulebrush.cpp:922)
 
-void Phys_CapsuleCenterEdgePts
-               (AxisTestResults *param_1,Capsule *param_2,float *param_3,float *param_4)
+void Phys_CapsuleCenterEdgePts(int param_1,int param_2,float *param_3,float *param_4)
 
 {
   float fVar1;
@@ -816,18 +807,18 @@ void Phys_CapsuleCenterEdgePts
   float fVar3;
   float fVar4;
   
-  fVar1 = param_2->radius;
-  fVar4 = param_1->normal[0] * fVar1 + param_2->center[0];
-  fVar3 = param_1->normal[1] * fVar1 + param_2->center[1];
-  fVar2 = param_1->normal[2] * fVar1 + param_2->center[2];
-  fVar1 = param_2->halfHeight;
-  *param_3 = param_2->axis[0] * fVar1 + fVar4;
-  param_3[1] = param_2->axis[1] * fVar1 + fVar3;
-  param_3[2] = param_2->axis[2] * fVar1 + fVar2;
-  fVar1 = -param_2->halfHeight;
-  *param_4 = param_2->axis[0] * fVar1 + fVar4;
-  param_4[1] = param_2->axis[1] * fVar1 + fVar3;
-  param_4[2] = param_2->axis[2] * fVar1 + fVar2;
+  fVar1 = *(float *)(param_2 + 0x30);
+  fVar4 = *(float *)(param_1 + 0x10) * fVar1 + *(float *)(param_2 + 0x18);
+  fVar3 = *(float *)(param_1 + 0x14) * fVar1 + *(float *)(param_2 + 0x1c);
+  fVar2 = *(float *)(param_1 + 0x18) * fVar1 + *(float *)(param_2 + 0x20);
+  fVar1 = *(float *)(param_2 + 0x3c);
+  *param_3 = *(float *)(param_2 + 0x24) * fVar1 + fVar4;
+  param_3[1] = *(float *)(param_2 + 0x28) * fVar1 + fVar3;
+  param_3[2] = *(float *)(param_2 + 0x2c) * fVar1 + fVar2;
+  fVar1 = -*(float *)(param_2 + 0x3c);
+  *param_4 = *(float *)(param_2 + 0x24) * fVar1 + fVar4;
+  param_4[1] = *(float *)(param_2 + 0x28) * fVar1 + fVar3;
+  param_4[2] = *(float *)(param_2 + 0x2c) * fVar1 + fVar2;
   return;
 }
 
@@ -835,25 +826,31 @@ void Phys_CapsuleCenterEdgePts
 // 82666FE8  Phys_CapsuleBuildContactsForTri  (physics/phys_coll_capsulebrush.cpp:932)
 
 void Phys_CapsuleBuildContactsForTri
-               (Results *param_1,float *param_2,Capsule *param_3,float *param_4,float *param_5,
-               float *param_6,int param_7)
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  float fVar5;
-  float *pfVar6;
-  bool bVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
+  int iVar5;
+  float fVar6;
+  float *pfVar9;
+  char cVar10;
+  ulonglong uVar7;
+  undefined8 uVar8;
+  float *pfVar11;
+  float *pfVar12;
+  float *pfVar13;
   double dVar14;
   double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
   float local_e0;
   float local_dc;
   float local_d8;
@@ -867,96 +864,97 @@ void Phys_CapsuleBuildContactsForTri
   float local_ac;
   float local_a8;
   float local_a4;
-  AxisTestResults aAStack_a0 [5];
+  undefined1 auStack_a0 [4];
+  float local_9c;
+  float local_94;
+  float local_90;
+  float local_8c;
+  float local_88;
   
-  __savegprlr_25(param_1);
-  pfVar6 = (float *)__savefpr_24();
-  bVar7 = Phys_CapsuleSeparatingAxisTest
-                    (aAStack_a0,pfVar6,(Capsule *)param_2,param_3->p0,param_4,param_5);
-  if (bVar7) {
-    dVar8 = (double)((Capsule *)param_2)->radius;
-    dVar14 = (double)aAStack_a0[0].normal[0];
-    fVar4 = ((Capsule *)param_2)->halfHeight;
-    fVar1 = (float)(dVar14 * dVar8 + (double)((Capsule *)param_2)->center[0]);
-    fVar5 = -fVar4;
-    dVar13 = (double)aAStack_a0[0].normal[1];
-    fVar2 = (float)(dVar13 * dVar8 + (double)((Capsule *)param_2)->center[1]);
-    dVar12 = (double)aAStack_a0[0].normal[2];
-    fVar3 = (float)(dVar12 * dVar8 + (double)((Capsule *)param_2)->center[2]);
-    local_b0 = -*pfVar6;
-    dVar8 = (double)param_3->p0[0];
-    dVar15 = 0.0;
+  __savegprlr_25();
+  pfVar9 = (float *)__savefpr_24();
+  cVar10 = Phys_CapsuleSeparatingAxisTest(auStack_a0,pfVar9,param_2,param_3,param_4,param_5);
+  if (cVar10 != '\0') {
+    iVar5 = (int)param_2;
+    dVar14 = (double)*(float *)(iVar5 + 0x30);
+    dVar20 = (double)local_90;
+    fVar4 = *(float *)(iVar5 + 0x3c);
+    fVar1 = (float)(dVar20 * dVar14 + (double)*(float *)(iVar5 + 0x18));
+    fVar6 = -fVar4;
+    dVar19 = (double)local_8c;
+    fVar2 = (float)(dVar19 * dVar14 + (double)*(float *)(iVar5 + 0x1c));
+    dVar18 = (double)local_88;
+    fVar3 = (float)(dVar18 * dVar14 + (double)*(float *)(iVar5 + 0x20));
+    local_b0 = -*pfVar9;
+    pfVar11 = (float *)param_3;
+    dVar14 = (double)*pfVar11;
+    dVar21 = 0.0;
     local_a4 = 0.0;
-    local_ac = -pfVar6[1];
-    local_a8 = -pfVar6[2];
-    local_e0 = (float)((double)(((Capsule *)param_2)->axis[0] * fVar4 + fVar1) - dVar8);
-    local_d0 = (float)((double)(((Capsule *)param_2)->axis[0] * fVar5 + fVar1) - dVar8);
-    local_dc = (((Capsule *)param_2)->axis[1] * fVar4 + fVar2) - param_3->p0[1];
-    local_cc = (((Capsule *)param_2)->axis[1] * fVar5 + fVar2) - param_3->p0[1];
-    local_c8 = (((Capsule *)param_2)->axis[2] * fVar5 + fVar3) - param_3->p0[2];
-    local_d8 = (((Capsule *)param_2)->axis[2] * fVar4 + fVar3) - param_3->p0[2];
-    bVar7 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
-    if (bVar7) {
-      local_c0 = (float)((double)*param_4 - dVar8);
-      dVar11 = (double)local_c0;
-      local_bc = param_4[1] - param_3->p0[1];
-      dVar10 = (double)local_bc;
-      local_b8 = param_4[2] - param_3->p0[2];
-      dVar9 = (double)local_b8;
-      Vec3Cross(pfVar6,&local_c0,&local_b0);
-      dVar8 = 9.999999974752427e-07;
+    local_ac = -pfVar9[1];
+    local_a8 = -pfVar9[2];
+    local_e0 = (float)((double)(*(float *)(iVar5 + 0x24) * fVar4 + fVar1) - dVar14);
+    local_d0 = (float)((double)(*(float *)(iVar5 + 0x24) * fVar6 + fVar1) - dVar14);
+    local_dc = (*(float *)(iVar5 + 0x28) * fVar4 + fVar2) - pfVar11[1];
+    local_cc = (*(float *)(iVar5 + 0x28) * fVar6 + fVar2) - pfVar11[1];
+    local_c8 = (*(float *)(iVar5 + 0x2c) * fVar6 + fVar3) - pfVar11[2];
+    local_d8 = (*(float *)(iVar5 + 0x2c) * fVar4 + fVar3) - pfVar11[2];
+    cVar10 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
+    if (cVar10 != '\0') {
+      pfVar12 = (float *)param_4;
+      local_c0 = (float)((double)*pfVar12 - dVar14);
+      dVar17 = (double)local_c0;
+      local_bc = pfVar12[1] - pfVar11[1];
+      dVar16 = (double)local_bc;
+      local_b8 = pfVar12[2] - pfVar11[2];
+      dVar15 = (double)local_b8;
+      Vec3Cross(pfVar9,&local_c0,&local_b0);
+      dVar14 = 9.999999974752427e-07;
       local_a4 = 1e-06;
-      bVar7 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
-      if (bVar7) {
-        local_c0 = *param_5 - *param_4;
-        local_bc = param_5[1] - param_4[1];
-        local_b8 = param_5[2] - param_4[2];
-        Vec3Cross(pfVar6,&local_c0,&local_b0);
-        local_a4 = -((float)(dVar9 * (double)local_a8 +
-                            (double)(float)(dVar10 * (double)local_ac +
-                                           (double)(float)(dVar11 * (double)local_b0))) - 1e-06);
-        bVar7 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
-        if (bVar7) {
-          local_c0 = param_3->p0[0] - *param_5;
-          local_bc = param_3->p0[1] - param_5[1];
-          local_b8 = param_3->p0[2] - param_5[2];
-          Vec3Cross(pfVar6,&local_c0,&local_b0);
-          local_a4 = (float)dVar8;
-          bVar7 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
-          pfVar6 = (float *)(int)bVar7;
-          if (bVar7) {
-            local_e0 = param_3->p0[0] + local_e0;
-            local_dc = param_3->p0[1] + local_dc;
-            local_d8 = param_3->p0[2] + local_d8;
-            local_d0 = param_3->p0[0] + local_d0;
-            local_cc = param_3->p0[1] + local_cc;
-            local_c8 = param_3->p0[2] + local_c8;
-            dVar9 = (double)((float)(dVar12 * (double)(local_d8 - ((Capsule *)param_2)->center[2]) +
-                                    (double)(float)(dVar13 * (double)(local_dc -
-                                                                     ((Capsule *)param_2)->center[1]
-                                                                     ) +
-                                                   (double)(float)(dVar14 * (double)(local_e0 -
-                                                                                    ((Capsule *)
-                                                                                    param_2)->center
-                                                                                    [0])))) -
-                            (aAStack_a0[0].bestCenter - aAStack_a0[0].bestRt));
-            dVar8 = (double)((float)(dVar12 * (double)(local_c8 - ((Capsule *)param_2)->center[2]) +
-                                    (double)(float)(dVar13 * (double)(local_cc -
-                                                                     ((Capsule *)param_2)->center[1]
-                                                                     ) +
-                                                   (double)(float)(dVar14 * (double)(local_d0 -
-                                                                                    ((Capsule *)
-                                                                                    param_2)->center
-                                                                                    [0])))) -
-                            (aAStack_a0[0].bestCenter - aAStack_a0[0].bestRt));
-            if (dVar9 < 0.0) {
-              dVar9 = dVar15;
+      cVar10 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
+      if (cVar10 != '\0') {
+        pfVar13 = (float *)param_5;
+        local_c0 = *pfVar13 - *pfVar12;
+        local_bc = pfVar13[1] - pfVar12[1];
+        local_b8 = pfVar13[2] - pfVar12[2];
+        Vec3Cross(pfVar9,&local_c0,&local_b0);
+        local_a4 = -((float)(dVar15 * (double)local_a8 +
+                            (double)(float)(dVar16 * (double)local_ac +
+                                           (double)(float)(dVar17 * (double)local_b0))) - 1e-06);
+        cVar10 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
+        if (cVar10 != '\0') {
+          local_c0 = *pfVar11 - *pfVar13;
+          local_bc = pfVar11[1] - pfVar13[1];
+          local_b8 = pfVar11[2] - pfVar13[2];
+          Vec3Cross(pfVar9,&local_c0,&local_b0);
+          local_a4 = (float)dVar14;
+          uVar7 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
+          if ((uVar7 & 0xff) != 0) {
+            local_e0 = *pfVar11 + local_e0;
+            local_dc = pfVar11[1] + local_dc;
+            local_d8 = pfVar11[2] + local_d8;
+            local_d0 = *pfVar11 + local_d0;
+            local_cc = pfVar11[1] + local_cc;
+            local_c8 = pfVar11[2] + local_c8;
+            dVar15 = (double)((float)(dVar18 * (double)(local_d8 - *(float *)(iVar5 + 0x20)) +
+                                     (double)(float)(dVar19 * (double)(local_dc -
+                                                                      *(float *)(iVar5 + 0x1c)) +
+                                                    (double)(float)(dVar20 * (double)(local_e0 -
+                                                                                     *(float *)(
+                                                  iVar5 + 0x18))))) - (local_9c - local_94));
+            dVar14 = (double)((float)(dVar18 * (double)(local_c8 - *(float *)(iVar5 + 0x20)) +
+                                     (double)(float)(dVar19 * (double)(local_cc -
+                                                                      *(float *)(iVar5 + 0x1c)) +
+                                                    (double)(float)(dVar20 * (double)(local_d0 -
+                                                                                     *(float *)(
+                                                  iVar5 + 0x18))))) - (local_9c - local_94));
+            if (dVar15 < 0.0) {
+              dVar15 = dVar21;
             }
-            Phys_AddLocalContactData((float)dVar9,(float *)0x1,aAStack_a0[0].normal,(int)&local_e0);
-            if (dVar8 < 0.0) {
-              dVar8 = dVar15;
+            uVar8 = Phys_AddLocalContactData(dVar15,uVar7,&local_90,&local_e0,param_6);
+            if (dVar14 < 0.0) {
+              dVar14 = dVar21;
             }
-            Phys_AddLocalContactData((float)dVar8,pfVar6,aAStack_a0[0].normal,(int)&local_d0);
+            Phys_AddLocalContactData(dVar14,uVar8,&local_90,&local_d0,param_6);
           }
         }
       }
@@ -971,24 +969,30 @@ void Phys_CapsuleBuildContactsForTri
 // 82667348  Phys_CapsuleBuildContactsForTriEndEdges  (physics/phys_coll_capsulebrush.cpp:1000)
 
 void Phys_CapsuleBuildContactsForTriEndEdges
-               (Results *param_1,float *param_2,Capsule *param_3,float *param_4,float *param_5,
-               float *param_6,int param_7)
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  float fVar5;
-  float *pfVar6;
-  bool bVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
+  int iVar5;
+  float fVar6;
+  float *pfVar9;
+  char cVar10;
+  ulonglong uVar7;
+  undefined8 uVar8;
+  float *pfVar11;
+  float *pfVar12;
+  float *pfVar13;
   double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
   float local_e0;
   float local_dc;
   float local_d8;
@@ -1002,86 +1006,90 @@ void Phys_CapsuleBuildContactsForTriEndEdges
   float local_ac;
   float local_a8;
   float local_a4;
-  AxisTestResults aAStack_a0 [5];
+  undefined1 auStack_a0 [4];
+  float local_9c;
+  float local_94;
+  float local_90;
+  float local_8c;
+  float local_88;
   
-  __savegprlr_25(param_1);
-  pfVar6 = (float *)__savefpr_25();
-  bVar7 = Phys_CapsuleSeparatingAxisTestEndEdges
-                    (aAStack_a0,pfVar6,(Capsule *)param_2,param_3->p0,param_4,param_5);
-  if (bVar7) {
-    dVar8 = (double)((Capsule *)param_2)->radius;
-    dVar13 = (double)aAStack_a0[0].normal[0];
-    fVar4 = ((Capsule *)param_2)->halfHeight;
-    fVar1 = (float)(dVar13 * dVar8 + (double)((Capsule *)param_2)->center[0]);
-    fVar5 = -fVar4;
-    dVar12 = (double)aAStack_a0[0].normal[1];
-    fVar2 = (float)(dVar12 * dVar8 + (double)((Capsule *)param_2)->center[1]);
-    dVar11 = (double)aAStack_a0[0].normal[2];
-    fVar3 = (float)(dVar11 * dVar8 + (double)((Capsule *)param_2)->center[2]);
-    local_b0 = -*pfVar6;
-    dVar8 = (double)param_3->p0[0];
-    dVar14 = 0.0;
+  __savegprlr_25();
+  pfVar9 = (float *)__savefpr_25();
+  cVar10 = Phys_CapsuleSeparatingAxisTestEndEdges(auStack_a0,pfVar9,param_2,param_3,param_4,param_5)
+  ;
+  if (cVar10 != '\0') {
+    iVar5 = (int)param_2;
+    dVar14 = (double)*(float *)(iVar5 + 0x30);
+    dVar19 = (double)local_90;
+    fVar4 = *(float *)(iVar5 + 0x3c);
+    fVar1 = (float)(dVar19 * dVar14 + (double)*(float *)(iVar5 + 0x18));
+    fVar6 = -fVar4;
+    dVar18 = (double)local_8c;
+    fVar2 = (float)(dVar18 * dVar14 + (double)*(float *)(iVar5 + 0x1c));
+    dVar17 = (double)local_88;
+    fVar3 = (float)(dVar17 * dVar14 + (double)*(float *)(iVar5 + 0x20));
+    local_b0 = -*pfVar9;
+    pfVar11 = (float *)param_3;
+    dVar14 = (double)*pfVar11;
+    dVar20 = 0.0;
     local_a4 = 0.0;
-    local_ac = -pfVar6[1];
-    local_a8 = -pfVar6[2];
-    local_e0 = (float)((double)(((Capsule *)param_2)->axis[0] * fVar4 + fVar1) - dVar8);
-    local_d0 = (float)((double)(((Capsule *)param_2)->axis[0] * fVar5 + fVar1) - dVar8);
-    local_dc = (((Capsule *)param_2)->axis[1] * fVar4 + fVar2) - param_3->p0[1];
-    local_cc = (((Capsule *)param_2)->axis[1] * fVar5 + fVar2) - param_3->p0[1];
-    local_c8 = (((Capsule *)param_2)->axis[2] * fVar5 + fVar3) - param_3->p0[2];
-    local_d8 = (((Capsule *)param_2)->axis[2] * fVar4 + fVar3) - param_3->p0[2];
-    bVar7 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
-    if (bVar7) {
-      dVar10 = (double)(float)((double)*param_4 - dVar8);
-      local_c0 = (float)((double)*param_5 - (double)*param_4);
-      local_bc = param_5[1] - param_4[1];
-      local_b8 = param_5[2] - param_4[2];
-      dVar9 = (double)(param_4[1] - param_3->p0[1]);
-      dVar8 = (double)(param_4[2] - param_3->p0[2]);
-      Vec3Cross(pfVar6,&local_c0,&local_b0);
-      local_a4 = -((float)(dVar8 * (double)local_a8 +
-                          (double)(float)(dVar9 * (double)local_ac +
-                                         (double)(float)(dVar10 * (double)local_b0))) - 1e-06);
-      bVar7 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
-      if (bVar7) {
-        local_c0 = param_3->p0[0] - *param_5;
-        local_bc = param_3->p0[1] - param_5[1];
-        local_b8 = param_3->p0[2] - param_5[2];
-        Vec3Cross(pfVar6,&local_c0,&local_b0);
+    local_ac = -pfVar9[1];
+    local_a8 = -pfVar9[2];
+    local_e0 = (float)((double)(*(float *)(iVar5 + 0x24) * fVar4 + fVar1) - dVar14);
+    local_d0 = (float)((double)(*(float *)(iVar5 + 0x24) * fVar6 + fVar1) - dVar14);
+    local_dc = (*(float *)(iVar5 + 0x28) * fVar4 + fVar2) - pfVar11[1];
+    local_cc = (*(float *)(iVar5 + 0x28) * fVar6 + fVar2) - pfVar11[1];
+    local_c8 = (*(float *)(iVar5 + 0x2c) * fVar6 + fVar3) - pfVar11[2];
+    local_d8 = (*(float *)(iVar5 + 0x2c) * fVar4 + fVar3) - pfVar11[2];
+    cVar10 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
+    if (cVar10 != '\0') {
+      pfVar12 = (float *)param_4;
+      pfVar13 = (float *)param_5;
+      dVar16 = (double)(float)((double)*pfVar12 - dVar14);
+      local_c0 = (float)((double)*pfVar13 - (double)*pfVar12);
+      local_bc = pfVar13[1] - pfVar12[1];
+      local_b8 = pfVar13[2] - pfVar12[2];
+      dVar15 = (double)(pfVar12[1] - pfVar11[1]);
+      dVar14 = (double)(pfVar12[2] - pfVar11[2]);
+      Vec3Cross(pfVar9,&local_c0,&local_b0);
+      local_a4 = -((float)(dVar14 * (double)local_a8 +
+                          (double)(float)(dVar15 * (double)local_ac +
+                                         (double)(float)(dVar16 * (double)local_b0))) - 1e-06);
+      cVar10 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
+      if (cVar10 != '\0') {
+        local_c0 = *pfVar11 - *pfVar13;
+        local_bc = pfVar11[1] - pfVar13[1];
+        local_b8 = pfVar11[2] - pfVar13[2];
+        Vec3Cross(pfVar9,&local_c0,&local_b0);
         local_a4 = 1e-06;
-        bVar7 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
-        pfVar6 = (float *)(int)bVar7;
-        if (bVar7) {
-          local_e0 = param_3->p0[0] + local_e0;
-          local_dc = param_3->p0[1] + local_dc;
-          local_d8 = param_3->p0[2] + local_d8;
-          local_d0 = param_3->p0[0] + local_d0;
-          local_cc = param_3->p0[1] + local_cc;
-          local_c8 = param_3->p0[2] + local_c8;
-          dVar9 = (double)((float)(dVar11 * (double)(local_d8 - ((Capsule *)param_2)->center[2]) +
-                                  (double)(float)(dVar12 * (double)(local_dc -
-                                                                   ((Capsule *)param_2)->center[1])
-                                                 + (double)(float)(dVar13 * (double)(local_e0 -
-                                                                                    ((Capsule *)
-                                                                                    param_2)->center
-                                                                                    [0])))) -
-                          (aAStack_a0[0].bestCenter - aAStack_a0[0].bestRt));
-          dVar8 = (double)((float)(dVar11 * (double)(local_c8 - ((Capsule *)param_2)->center[2]) +
-                                  (double)(float)(dVar12 * (double)(local_cc -
-                                                                   ((Capsule *)param_2)->center[1])
-                                                 + (double)(float)(dVar13 * (double)(local_d0 -
-                                                                                    ((Capsule *)
-                                                                                    param_2)->center
-                                                                                    [0])))) -
-                          (aAStack_a0[0].bestCenter - aAStack_a0[0].bestRt));
-          if (dVar9 < 0.0) {
-            dVar9 = dVar14;
+        uVar7 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
+        if ((uVar7 & 0xff) != 0) {
+          local_e0 = *pfVar11 + local_e0;
+          local_dc = pfVar11[1] + local_dc;
+          local_d8 = pfVar11[2] + local_d8;
+          local_d0 = *pfVar11 + local_d0;
+          local_cc = pfVar11[1] + local_cc;
+          local_c8 = pfVar11[2] + local_c8;
+          dVar15 = (double)((float)(dVar17 * (double)(local_d8 - *(float *)(iVar5 + 0x20)) +
+                                   (double)(float)(dVar18 * (double)(local_dc -
+                                                                    *(float *)(iVar5 + 0x1c)) +
+                                                  (double)(float)(dVar19 * (double)(local_e0 -
+                                                                                   *(float *)(iVar5 
+                                                  + 0x18))))) - (local_9c - local_94));
+          dVar14 = (double)((float)(dVar17 * (double)(local_c8 - *(float *)(iVar5 + 0x20)) +
+                                   (double)(float)(dVar18 * (double)(local_cc -
+                                                                    *(float *)(iVar5 + 0x1c)) +
+                                                  (double)(float)(dVar19 * (double)(local_d0 -
+                                                                                   *(float *)(iVar5 
+                                                  + 0x18))))) - (local_9c - local_94));
+          if (dVar15 < 0.0) {
+            dVar15 = dVar20;
           }
-          Phys_AddLocalContactData((float)dVar9,(float *)0x1,aAStack_a0[0].normal,(int)&local_e0);
-          if (dVar8 < 0.0) {
-            dVar8 = dVar14;
+          uVar8 = Phys_AddLocalContactData(dVar15,uVar7,&local_90,&local_e0,param_6);
+          if (dVar14 < 0.0) {
+            dVar14 = dVar20;
           }
-          Phys_AddLocalContactData((float)dVar8,pfVar6,aAStack_a0[0].normal,(int)&local_d0);
+          Phys_AddLocalContactData(dVar14,uVar8,&local_90,&local_d0,param_6);
         }
       }
     }
@@ -1095,24 +1103,30 @@ void Phys_CapsuleBuildContactsForTriEndEdges
 // 82667660  Phys_CapsuleBuildContactsForTriMiddleEdge  (physics/phys_coll_capsulebrush.cpp:1063)
 
 void Phys_CapsuleBuildContactsForTriMiddleEdge
-               (Results *param_1,float *param_2,Capsule *param_3,float *param_4,float *param_5,
-               float *param_6,int param_7)
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  float fVar5;
-  float *pfVar6;
-  bool bVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
+  int iVar5;
+  float fVar6;
+  float *pfVar9;
+  char cVar10;
+  ulonglong uVar7;
+  undefined8 uVar8;
+  float *pfVar11;
+  float *pfVar12;
+  float *pfVar13;
   double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
   float local_e0;
   float local_dc;
   float local_d8;
@@ -1126,77 +1140,83 @@ void Phys_CapsuleBuildContactsForTriMiddleEdge
   float local_ac;
   float local_a8;
   float local_a4;
-  AxisTestResults aAStack_a0 [5];
+  undefined1 auStack_a0 [4];
+  float local_9c;
+  float local_94;
+  float local_90;
+  float local_8c;
+  float local_88;
   
-  __savegprlr_25(param_1);
-  pfVar6 = (float *)__savefpr_25();
-  bVar7 = Phys_CapsuleSeparatingAxisTestMiddleEdge
-                    (aAStack_a0,pfVar6,(Capsule *)param_2,param_3->p0,param_4,param_5);
-  if (bVar7) {
-    dVar8 = (double)((Capsule *)param_2)->radius;
-    dVar13 = (double)aAStack_a0[0].normal[0];
-    fVar4 = ((Capsule *)param_2)->halfHeight;
-    fVar1 = (float)(dVar13 * dVar8 + (double)((Capsule *)param_2)->center[0]);
-    fVar5 = -fVar4;
-    dVar12 = (double)aAStack_a0[0].normal[1];
-    fVar2 = (float)(dVar12 * dVar8 + (double)((Capsule *)param_2)->center[1]);
-    dVar11 = (double)aAStack_a0[0].normal[2];
-    fVar3 = (float)(dVar11 * dVar8 + (double)((Capsule *)param_2)->center[2]);
-    local_b0 = -*pfVar6;
-    dVar8 = (double)param_3->p0[0];
-    dVar14 = 0.0;
+  __savegprlr_25();
+  pfVar9 = (float *)__savefpr_25();
+  cVar10 = Phys_CapsuleSeparatingAxisTestMiddleEdge
+                     (auStack_a0,pfVar9,param_2,param_3,param_4,param_5);
+  if (cVar10 != '\0') {
+    iVar5 = (int)param_2;
+    dVar14 = (double)*(float *)(iVar5 + 0x30);
+    dVar19 = (double)local_90;
+    fVar4 = *(float *)(iVar5 + 0x3c);
+    fVar1 = (float)(dVar19 * dVar14 + (double)*(float *)(iVar5 + 0x18));
+    fVar6 = -fVar4;
+    dVar18 = (double)local_8c;
+    fVar2 = (float)(dVar18 * dVar14 + (double)*(float *)(iVar5 + 0x1c));
+    dVar17 = (double)local_88;
+    fVar3 = (float)(dVar17 * dVar14 + (double)*(float *)(iVar5 + 0x20));
+    local_b0 = -*pfVar9;
+    pfVar11 = (float *)param_3;
+    dVar14 = (double)*pfVar11;
+    dVar20 = 0.0;
     local_a4 = 0.0;
-    local_ac = -pfVar6[1];
-    local_a8 = -pfVar6[2];
-    local_e0 = (float)((double)(((Capsule *)param_2)->axis[0] * fVar4 + fVar1) - dVar8);
-    local_d0 = (float)((double)(((Capsule *)param_2)->axis[0] * fVar5 + fVar1) - dVar8);
-    local_dc = (((Capsule *)param_2)->axis[1] * fVar4 + fVar2) - param_3->p0[1];
-    local_cc = (((Capsule *)param_2)->axis[1] * fVar5 + fVar2) - param_3->p0[1];
-    local_c8 = (((Capsule *)param_2)->axis[2] * fVar5 + fVar3) - param_3->p0[2];
-    local_d8 = (((Capsule *)param_2)->axis[2] * fVar4 + fVar3) - param_3->p0[2];
-    bVar7 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
-    if (bVar7) {
-      dVar10 = (double)(float)((double)*param_4 - dVar8);
-      local_c0 = (float)((double)*param_5 - (double)*param_4);
-      local_bc = param_5[1] - param_4[1];
-      local_b8 = param_5[2] - param_4[2];
-      dVar9 = (double)(param_4[1] - param_3->p0[1]);
-      dVar8 = (double)(param_4[2] - param_3->p0[2]);
-      Vec3Cross(pfVar6,&local_c0,&local_b0);
-      local_a4 = -((float)(dVar8 * (double)local_a8 +
-                          (double)(float)(dVar9 * (double)local_ac +
-                                         (double)(float)(dVar10 * (double)local_b0))) - 1e-06);
-      bVar7 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
-      pfVar6 = (float *)(int)bVar7;
-      if (bVar7) {
-        local_e0 = param_3->p0[0] + local_e0;
-        local_dc = param_3->p0[1] + local_dc;
-        local_d8 = param_3->p0[2] + local_d8;
-        local_d0 = param_3->p0[0] + local_d0;
-        local_cc = param_3->p0[1] + local_cc;
-        local_c8 = param_3->p0[2] + local_c8;
-        dVar9 = (double)((float)(dVar11 * (double)(local_d8 - ((Capsule *)param_2)->center[2]) +
-                                (double)(float)(dVar12 * (double)(local_dc -
-                                                                 ((Capsule *)param_2)->center[1]) +
-                                               (double)(float)(dVar13 * (double)(local_e0 -
-                                                                                ((Capsule *)param_2)
-                                                                                ->center[0])))) -
-                        (aAStack_a0[0].bestCenter - aAStack_a0[0].bestRt));
-        dVar8 = (double)((float)(dVar11 * (double)(local_c8 - ((Capsule *)param_2)->center[2]) +
-                                (double)(float)(dVar12 * (double)(local_cc -
-                                                                 ((Capsule *)param_2)->center[1]) +
-                                               (double)(float)(dVar13 * (double)(local_d0 -
-                                                                                ((Capsule *)param_2)
-                                                                                ->center[0])))) -
-                        (aAStack_a0[0].bestCenter - aAStack_a0[0].bestRt));
-        if (dVar9 < 0.0) {
-          dVar9 = dVar14;
+    local_ac = -pfVar9[1];
+    local_a8 = -pfVar9[2];
+    local_e0 = (float)((double)(*(float *)(iVar5 + 0x24) * fVar4 + fVar1) - dVar14);
+    local_d0 = (float)((double)(*(float *)(iVar5 + 0x24) * fVar6 + fVar1) - dVar14);
+    local_dc = (*(float *)(iVar5 + 0x28) * fVar4 + fVar2) - pfVar11[1];
+    local_cc = (*(float *)(iVar5 + 0x28) * fVar6 + fVar2) - pfVar11[1];
+    local_c8 = (*(float *)(iVar5 + 0x2c) * fVar6 + fVar3) - pfVar11[2];
+    local_d8 = (*(float *)(iVar5 + 0x2c) * fVar4 + fVar3) - pfVar11[2];
+    cVar10 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
+    if (cVar10 != '\0') {
+      pfVar12 = (float *)param_4;
+      pfVar13 = (float *)param_5;
+      dVar16 = (double)(float)((double)*pfVar12 - dVar14);
+      local_c0 = (float)((double)*pfVar13 - (double)*pfVar12);
+      local_bc = pfVar13[1] - pfVar12[1];
+      local_b8 = pfVar13[2] - pfVar12[2];
+      dVar15 = (double)(pfVar12[1] - pfVar11[1]);
+      dVar14 = (double)(pfVar12[2] - pfVar11[2]);
+      Vec3Cross(pfVar9,&local_c0,&local_b0);
+      local_a4 = -((float)(dVar14 * (double)local_a8 +
+                          (double)(float)(dVar15 * (double)local_ac +
+                                         (double)(float)(dVar16 * (double)local_b0))) - 1e-06);
+      uVar7 = Phys_CapsuleClipEdgeToPlane(&local_e0,&local_d0,&local_b0);
+      if ((uVar7 & 0xff) != 0) {
+        local_e0 = *pfVar11 + local_e0;
+        local_dc = pfVar11[1] + local_dc;
+        local_d8 = pfVar11[2] + local_d8;
+        local_d0 = *pfVar11 + local_d0;
+        local_cc = pfVar11[1] + local_cc;
+        local_c8 = pfVar11[2] + local_c8;
+        dVar15 = (double)((float)(dVar17 * (double)(local_d8 - *(float *)(iVar5 + 0x20)) +
+                                 (double)(float)(dVar18 * (double)(local_dc -
+                                                                  *(float *)(iVar5 + 0x1c)) +
+                                                (double)(float)(dVar19 * (double)(local_e0 -
+                                                                                 *(float *)(iVar5 + 
+                                                  0x18))))) - (local_9c - local_94));
+        dVar14 = (double)((float)(dVar17 * (double)(local_c8 - *(float *)(iVar5 + 0x20)) +
+                                 (double)(float)(dVar18 * (double)(local_cc -
+                                                                  *(float *)(iVar5 + 0x1c)) +
+                                                (double)(float)(dVar19 * (double)(local_d0 -
+                                                                                 *(float *)(iVar5 + 
+                                                  0x18))))) - (local_9c - local_94));
+        if (dVar15 < 0.0) {
+          dVar15 = dVar20;
         }
-        Phys_AddLocalContactData((float)dVar9,(float *)0x1,aAStack_a0[0].normal,(int)&local_e0);
-        if (dVar8 < 0.0) {
-          dVar8 = dVar14;
+        uVar8 = Phys_AddLocalContactData(dVar15,uVar7,&local_90,&local_e0,param_6);
+        if (dVar14 < 0.0) {
+          dVar14 = dVar20;
         }
-        Phys_AddLocalContactData((float)dVar8,pfVar6,aAStack_a0[0].normal,(int)&local_d0);
+        Phys_AddLocalContactData(dVar14,uVar8,&local_90,&local_d0,param_6);
       }
     }
   }
@@ -1208,16 +1228,14 @@ void Phys_CapsuleBuildContactsForTriMiddleEdge
 
 // 82667910  Phys_TestCapsulePlane  (physics/phys_coll_capsulebrush.cpp:1120)
 
-int Phys_TestCapsulePlane(float *param_1,Capsule *param_2)
+undefined8 Phys_TestCapsulePlane(float *param_1,float *param_2)
 
 {
   float fVar1;
   float fVar2;
   
-  fVar1 = (param_2->p0[2] * param_1[2] + param_2->p0[1] * param_1[1] + *param_1 * param_2->p0[0]) -
-          param_1[3];
-  fVar2 = (param_2->p1[2] * param_1[2] + param_2->p1[1] * param_1[1] + param_2->p1[0] * *param_1) -
-          param_1[3];
+  fVar1 = (param_2[2] * param_1[2] + param_2[1] * param_1[1] + *param_1 * *param_2) - param_1[3];
+  fVar2 = (param_2[5] * param_1[2] + param_2[4] * param_1[1] + param_2[3] * *param_1) - param_1[3];
   if (fVar2 * fVar1 < 0.0) {
     return 1;
   }
@@ -1226,7 +1244,7 @@ int Phys_TestCapsulePlane(float *param_1,Capsule *param_2)
   if (fVar2 - fVar1 < 0.0) {
     fVar1 = fVar2;
   }
-  if (fVar1 < param_2->radius) {
+  if (fVar1 < param_2[0xc]) {
     return 1;
   }
   return 0;
@@ -1235,47 +1253,42 @@ int Phys_TestCapsulePlane(float *param_1,Capsule *param_2)
 
 // 82667998  Phys_InfoToCapsule  (physics/phys_coll_capsulebrush.cpp:1178)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
-void Phys_InfoToCapsule(objInfo *param_1,Capsule *param_2)
+void Phys_InfoToCapsule(undefined8 param_1,float *param_2)
 
 {
   float fVar1;
   float fVar2;
   int iVar3;
-  longlong lVar4;
-  int iVar5;
+  int iVar4;
+  longlong lVar5;
   
-  iVar3 = __savegprlr_29(param_1);
-  lVar4 = (ulonglong)*(uint *)(iVar3 + 4) - 1;
-  iVar5 = (int)lVar4;
-  if ((lVar4 < 0) || (2 < iVar5)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_capsulebrush.cpp"
-                    ,0x49e,0,"dir not in [0, 2]\n\t%i not in [%i, %i]");
+  iVar4 = __savegprlr_29();
+  lVar5 = (ulonglong)*(uint *)(iVar4 + 4) - 1;
+  if ((lVar5 < 0) || (2 < (int)lVar5)) {
+    MyAssertHandler(0xffffffff821934d8,0x49e,0,0xffffffff821935a0,lVar5,0,2);
   }
-  fVar1 = *(float *)(iVar3 + 0x88);
-  param_2->radius = fVar1;
-  fVar2 = *(float *)(iVar3 + 0x90);
-  param_2->halfLength = fVar1 + fVar2;
-  param_2->sqRadius = fVar1 * fVar1;
-  param_2->halfHeight = fVar2;
-  param_2->center[0] = *(float *)(iVar3 + 0x34);
-  iVar5 = iVar5 * 0xc + iVar3;
-  param_2->center[1] = *(float *)(iVar3 + 0x38);
-  param_2->center[2] = *(float *)(iVar3 + 0x3c);
-  fVar1 = *(float *)(iVar5 + 0x40);
-  param_2->axis[0] = -fVar1;
-  param_2->axis[1] = -*(float *)(iVar5 + 0x44);
-  param_2->axis[2] = -*(float *)(iVar5 + 0x48);
-  fVar2 = -*(float *)(iVar3 + 0x90);
-  param_2->p0[0] = -fVar1 * fVar2 + param_2->center[0];
-  param_2->p0[1] = param_2->axis[1] * fVar2 + param_2->center[1];
-  param_2->p0[2] = param_2->axis[2] * fVar2 + param_2->center[2];
-  fVar1 = *(float *)(iVar3 + 0x90);
-  param_2->p1[0] = param_2->axis[0] * fVar1 + param_2->center[0];
-  param_2->p1[1] = param_2->axis[1] * fVar1 + param_2->center[1];
-  param_2->p1[2] = param_2->axis[2] * fVar1 + param_2->center[2];
+  fVar1 = *(float *)(iVar4 + 0x88);
+  param_2[0xc] = fVar1;
+  fVar2 = *(float *)(iVar4 + 0x90);
+  param_2[0xe] = fVar1 + fVar2;
+  param_2[0xd] = fVar1 * fVar1;
+  param_2[0xf] = fVar2;
+  param_2[6] = *(float *)(iVar4 + 0x34);
+  iVar3 = (int)lVar5 * 0xc + iVar4;
+  param_2[7] = *(float *)(iVar4 + 0x38);
+  param_2[8] = *(float *)(iVar4 + 0x3c);
+  fVar1 = *(float *)(iVar3 + 0x40);
+  param_2[9] = -fVar1;
+  param_2[10] = -*(float *)(iVar3 + 0x44);
+  param_2[0xb] = -*(float *)(iVar3 + 0x48);
+  fVar2 = -*(float *)(iVar4 + 0x90);
+  *param_2 = -fVar1 * fVar2 + param_2[6];
+  param_2[1] = param_2[10] * fVar2 + param_2[7];
+  param_2[2] = param_2[0xb] * fVar2 + param_2[8];
+  fVar1 = *(float *)(iVar4 + 0x90);
+  param_2[3] = param_2[9] * fVar1 + param_2[6];
+  param_2[4] = param_2[10] * fVar1 + param_2[7];
+  param_2[5] = param_2[0xb] * fVar1 + param_2[8];
   __restgprlr_29();
   return;
 }
@@ -1283,198 +1296,178 @@ void Phys_InfoToCapsule(objInfo *param_1,Capsule *param_2)
 
 // 82667AD8  Phys_DistanceOfCapsuleFromPlane  (physics/phys_coll_capsulebrush.cpp:1196)
 
-float Phys_DistanceOfCapsuleFromPlane(float *param_1,Capsule *param_2)
+double Phys_DistanceOfCapsuleFromPlane(float *param_1,float *param_2)
 
 {
   float fVar1;
-  float fVar2;
+  double dVar2;
+  double dVar3;
   
   fVar1 = *param_1;
-  if ((param_2->center[2] * param_1[2] +
-      param_2->center[1] * param_1[1] + param_2->center[0] * fVar1) - param_1[3] < 0.0) {
-    return -3.4028235e+38;
+  if ((param_2[8] * param_1[2] + param_2[7] * param_1[1] + param_2[6] * fVar1) - param_1[3] < 0.0) {
+    return -3.4028234663852886e+38;
   }
-  fVar2 = ((param_2->p0[2] * param_1[2] + param_2->p0[1] * param_1[1] + fVar1 * param_2->p0[0]) -
-          param_1[3]) - param_2->radius;
-  fVar1 = ((param_2->p1[2] * param_1[2] + param_2->p1[1] * param_1[1] + fVar1 * param_2->p1[0]) -
-          param_1[3]) - param_2->radius;
-  if (fVar1 - fVar2 < 0.0) {
-    fVar2 = fVar1;
+  dVar3 = (double)(((param_2[2] * param_1[2] + param_2[1] * param_1[1] + fVar1 * *param_2) -
+                   param_1[3]) - param_2[0xc]);
+  dVar2 = (double)(((param_2[5] * param_1[2] + param_2[4] * param_1[1] + fVar1 * param_2[3]) -
+                   param_1[3]) - param_2[0xc]);
+  if ((float)(dVar2 - dVar3) < 0.0) {
+    dVar3 = dVar2;
   }
-  return fVar2;
+  return dVar3;
 }
 
 
 // 82667CB0  Phys_CollideCapsuleWithBrush  (physics/phys_coll_capsulebrush.cpp:1213)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
 void Phys_CollideCapsuleWithBrush
-               (Bounds *param_1,cbrush_t *param_2,objInfo *param_3,Results *param_4)
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  cbrush_t *pcVar1;
-  Capsule *pCVar2;
-  float (*pafVar3) [3];
-  Bounds *pBVar4;
-  float *pfVar5;
-  ulonglong uVar6;
+  ushort *puVar1;
+  undefined1 *puVar2;
+  uint uVar3;
+  undefined8 uVar4;
+  ulonglong uVar5;
+  int iVar6;
   ulonglong uVar7;
-  int iVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  float *pfVar12;
-  ulonglong uVar13;
+  longlong lVar8;
+  ulonglong uVar9;
+  undefined1 *puVar10;
+  float *pfVar11;
+  ulonglong uVar12;
+  double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
-  double dVar20;
-  float fVar21;
-  Results local_dc0;
-  Poly local_db0 [2];
+  float local_dc0;
+  float local_dbc;
+  float local_db8;
+  float local_db4;
+  undefined1 *local_db0;
+  uint local_dac;
   float local_da0;
   float local_d9c;
   float local_d98;
   float local_d94;
-  Capsule CStack_d90;
-  float afStack_d50 [24];
-  float local_cf0 [24];
-  Capsule aCStack_c90 [50];
+  undefined1 auStack_d90 [64];
+  undefined1 auStack_d50 [96];
+  undefined1 local_cf0 [8];
+  float local_ce8 [22];
+  undefined1 auStack_c90 [3216];
   
-  uVar7 = (ulonglong)(int)param_2;
-  __savegprlr_21(param_1);
-  pBVar4 = (Bounds *)__savefpr_26();
-  if (param_4->maxContacts <= param_4->contactCount) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_capsulebrush.cpp"
-                    ,0x4ca,0,"%s");
+  __savegprlr_21();
+  uVar4 = __savefpr_26();
+  if (*(int *)((int)param_4 + 8) <= *(int *)((int)param_4 + 4)) {
+    MyAssertHandler(0xffffffff821934d8,0x4ca,0,0xffffffff82000f98,0xffffffff82192624);
   }
-  numLocalContacts = 0;
-  Phys_InfoToCapsule(param_3,&CStack_d90);
-  if ((uVar7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_local.h",
-                    0xbb,0,"%s");
+  DAT_8427b3a0 = 0;
+  Phys_InfoToCapsule(param_3,auStack_d90);
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82192560,0xbb,0,0xffffffff82000f98,0xffffffff82082224);
   }
-  uVar10 = 0xffffffffffffffff;
-  dVar15 = 0.0;
-  dVar16 = -3.4028234663852886e+38;
-  local_dc0.contacts = (dContactGeom *)0x0;
-  local_dc0.contactCount = 0;
-  local_dc0.maxContacts = 0;
-  local_dc0.stride = 0;
-  CM_BuildAxialPlanes(pBVar4,(float (*) [4])local_cf0);
-  uVar13 = 0;
-  pfVar5 = local_cf0 + 2;
+  uVar9 = 0xffffffffffffffff;
+  dVar14 = 0.0;
+  dVar15 = -3.4028234663852886e+38;
+  local_dc0 = 0.0;
+  local_dbc = 0.0;
+  local_db8 = 0.0;
+  local_db4 = 0.0;
+  CM_BuildAxialPlanes(uVar4,local_cf0);
+  uVar12 = 0;
+  pfVar11 = local_ce8;
   do {
-    fVar21 = Phys_DistanceOfCapsuleFromPlane(pfVar5 + -2,&CStack_d90);
-    dVar14 = (double)fVar21;
-    if (dVar15 <= dVar14) goto LAB_8266807c;
-    if (5 < (uVar13 & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_local.h",
-                      0xa1,0,"axialSide doesn\'t index 6\n\t%i not in [0, %i)");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_local.h",
-                      0xa8,0,"axialSide doesn\'t index 6\n\t%i not in [0, %i)");
+    dVar13 = (double)Phys_DistanceOfCapsuleFromPlane(pfVar11 + -2,auStack_d90);
+    if (dVar14 <= dVar13) goto LAB_8266807c;
+    if (5 < (uVar12 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82192560,0xa1,0,0xffffffff821925a4,uVar12,6);
+      MyAssertHandler(0xffffffff82192560,0xa8,0,0xffffffff821925a4,uVar12,6);
     }
-    pcVar1 = (cbrush_t *)uVar7;
-    if ((pcVar1->edgeCount[(uint)uVar13 & 1][(uint)uVar13 >> 1] != '\0') && (dVar16 < dVar14)) {
-      local_dc0.contacts = (dContactGeom *)pfVar5[-2];
-      local_dc0.contactCount = (int)pfVar5[-1];
-      local_dc0.maxContacts = (int)*pfVar5;
-      local_dc0.stride = (int)pfVar5[1];
-      uVar10 = uVar13;
-      dVar16 = dVar14;
+    puVar1 = (ushort *)param_2;
+    if ((*(char *)((((uint)uVar12 & 1) + 10) * 3 + ((uint)uVar12 >> 1) + (int)puVar1) != '\0') &&
+       (dVar15 < dVar13)) {
+      local_dc0 = pfVar11[-2];
+      local_dbc = pfVar11[-1];
+      local_db8 = *pfVar11;
+      local_db4 = pfVar11[1];
+      uVar9 = uVar12;
+      dVar15 = dVar13;
     }
-    uVar13 = uVar13 + 1;
-    pfVar5 = pfVar5 + 4;
-  } while ((uVar13 & 0xffffffff) < 6);
-  uVar7 = (ulonglong)pcVar1->numsides;
-  uVar13 = 0;
-  if (uVar7 != 0) {
-    uVar6 = ZEXT48(pcVar1->sides);
-    lVar9 = 0;
+    uVar12 = uVar12 + 1;
+    pfVar11 = pfVar11 + 4;
+  } while ((uVar12 & 0xffffffff) < 6);
+  uVar12 = (ulonglong)*puVar1;
+  uVar7 = 0;
+  if (uVar12 != 0) {
+    uVar5 = (ulonglong)*(uint *)(puVar1 + 2);
+    lVar8 = 0;
     do {
-      pfVar5 = *(float **)((int)lVar9 + (int)uVar6);
-      iVar8 = (int)lVar9 + (int)uVar6;
-      local_da0 = *pfVar5;
-      dVar20 = (double)local_da0;
-      local_d9c = pfVar5[1];
-      dVar19 = (double)local_d9c;
-      local_d98 = pfVar5[2];
-      dVar18 = (double)local_d98;
-      local_d94 = pfVar5[3];
-      dVar17 = (double)local_d94;
-      fVar21 = Phys_DistanceOfCapsuleFromPlane(&local_da0,&CStack_d90);
-      dVar14 = (double)fVar21;
-      if (dVar15 <= dVar14) goto LAB_8266807c;
-      if ((*(char *)(iVar8 + 7) != '\0') && (dVar16 < dVar14)) {
-        local_dc0.contacts = (dContactGeom *)(float)dVar20;
-        local_dc0.contactCount = (int)(float)dVar19;
-        uVar10 = uVar13 + 6;
-        local_dc0.maxContacts = (int)(float)dVar18;
-        local_dc0.stride = (int)(float)dVar17;
-        dVar16 = dVar14;
+      pfVar11 = *(float **)((int)lVar8 + (int)uVar5);
+      iVar6 = (int)lVar8 + (int)uVar5;
+      local_da0 = *pfVar11;
+      dVar19 = (double)local_da0;
+      local_d9c = pfVar11[1];
+      dVar18 = (double)local_d9c;
+      local_d98 = pfVar11[2];
+      dVar17 = (double)local_d98;
+      local_d94 = pfVar11[3];
+      dVar16 = (double)local_d94;
+      dVar13 = (double)Phys_DistanceOfCapsuleFromPlane(&local_da0,auStack_d90);
+      if (dVar14 <= dVar13) goto LAB_8266807c;
+      if ((*(char *)(iVar6 + 7) != '\0') && (dVar15 < dVar13)) {
+        local_dc0 = (float)dVar19;
+        local_dbc = (float)dVar18;
+        uVar9 = uVar7 + 6;
+        local_db8 = (float)dVar17;
+        local_db4 = (float)dVar16;
+        dVar15 = dVar13;
       }
-      uVar13 = uVar13 + 1;
-      lVar9 = lVar9 + 8;
-    } while ((uVar13 & 0xffffffff) < (uVar7 & 0xffffffff));
+      uVar7 = uVar7 + 1;
+      lVar8 = lVar8 + 8;
+    } while ((uVar7 & 0xffffffff) < (uVar12 & 0xffffffff));
   }
-  uVar11 = (uint)uVar10;
-  if (-1 < (int)uVar11) {
-    if ((uVar7 + 6 & 0xffffffff) <= (uVar10 & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_capsulebrush.cpp"
-                      ,0x4d6,0,
-                      "brushSideIndex doesn\'t index static_cast< int >( brush->numsides ) + 6\n\t%i not in [0, %i)"
-                     );
+  if (-1 < (int)uVar9) {
+    if ((uVar12 + 6 & 0xffffffff) <= (uVar9 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff821934d8,0x4d6,0,0xffffffff82193060,uVar9);
     }
-    iVar8 = Phys_TestCapsulePlane((float *)&local_dc0,&CStack_d90);
-    if (iVar8 != 0) {
-      local_db0[0].pts = &aCStack_c90[0].p0;
-      local_db0[0].ptCount = 0;
-      CM_BuildAxialPlanes(pBVar4,(float (*) [4])afStack_d50);
-      Phys_GetWindingForBrushFace2(pBVar4,pcVar1,uVar11,local_db0,0x100,(float (*) [4])afStack_d50);
-      uVar7 = (ulonglong)local_db0[0].ptCount;
-      if (uVar7 != 0) {
-        if ((phys_drawCollisionWorld->current).enabled != false) {
-          Phys_DrawPoly(param_3->worldIndex,local_db0,colorCyan);
+    iVar6 = Phys_TestCapsulePlane(&local_dc0,auStack_d90);
+    if (iVar6 != 0) {
+      local_db0 = auStack_c90;
+      local_dac = 0;
+      CM_BuildAxialPlanes(uVar4,auStack_d50);
+      Phys_GetWindingForBrushFace2(uVar4,param_2,uVar9,&local_db0,0x100,auStack_d50);
+      uVar3 = local_dac;
+      if (local_dac != 0) {
+        if (*(char *)(DAT_8427b8e0 + 0xc) != '\0') {
+          Phys_DrawPoly(*(undefined4 *)((int)param_3 + 0xa4),&local_db0,0xffffffff82181878);
         }
-        if (uVar7 < 3) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_capsulebrush.cpp"
-                          ,0x4ea,0,"%s\n\t(ptCount) = %i");
+        if (uVar3 < 3) {
+          MyAssertHandler(0xffffffff821934d8,0x4ea,0,0xffffffff821935c8,0xffffffff821935dc,uVar3);
         }
-        pafVar3 = local_db0[0].pts;
-        uVar10 = uVar7 - 3;
-        pfVar5 = (float *)Phys_GetSurfaceFlagsFromBrush(pcVar1,uVar11);
-        if ((uVar10 & 0xffffffff) == 0) {
-          Phys_CapsuleBuildContactsForTri
-                    (&local_dc0,CStack_d90.p0,(Capsule *)pafVar3,(float *)((int)pafVar3 + 0x18),
-                     (float *)((int)pafVar3 + 0xc),pfVar5,(int)uVar13);
+        puVar2 = local_db0;
+        uVar4 = Phys_GetSurfaceFlagsFromBrush(param_2,uVar9);
+        if (uVar3 == 3) {
+          Phys_CapsuleBuildContactsForTri();
         }
         else {
           Phys_CapsuleBuildContactsForTriEndEdges
-                    (&local_dc0,CStack_d90.p0,(Capsule *)pafVar3,(float *)((int)pafVar3 + 0x18),
-                     (float *)((int)pafVar3 + 0xc),pfVar5,(int)uVar13);
-          if (1 < (uVar10 & 0xffffffff)) {
-            pfVar12 = (float *)((int)pafVar3 + 0x24);
-            lVar9 = uVar7 - 4;
+                    (&local_dc0,auStack_d90,puVar2,puVar2 + 0x18,puVar2 + 0xc,uVar4);
+          if (1 < uVar3 - 3) {
+            puVar10 = puVar2 + 0x24;
+            iVar6 = uVar3 - 4;
             do {
               Phys_CapsuleBuildContactsForTriMiddleEdge
-                        (&local_dc0,CStack_d90.p0,(Capsule *)pafVar3,pfVar12,pfVar12 + -3,pfVar5,
-                         (int)uVar13);
-              lVar9 = lVar9 + -1;
-              pfVar12 = pfVar12 + 3;
-            } while (lVar9 != 0);
+                        (&local_dc0,auStack_d90,puVar2,puVar10,puVar10 + -0xc,uVar4);
+              iVar6 = iVar6 + -1;
+              puVar10 = puVar10 + 0xc;
+            } while (iVar6 != 0);
           }
-          iVar8 = (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
-          pCVar2 = (Capsule *)((int)*pafVar3 + iVar8);
           Phys_CapsuleBuildContactsForTriEndEdges
-                    (&local_dc0,CStack_d90.p0,pCVar2,
-                     (float *)((int)*pafVar3 +
-                              (int)(((uVar7 - 1) + (uVar7 - 1 & 0x7fffffff) * 2 & 0xffffffff) << 2))
-                     ,pCVar2->p1,pfVar5,iVar8);
+                    (&local_dc0,auStack_d90,puVar2 + (uVar3 - 3) * 0xc,puVar2 + (uVar3 - 1) * 0xc,
+                     puVar2 + (uVar3 - 3) * 0xc + 0xc,uVar4);
         }
         Phys_CapsuleOptimizeLocalResults(param_4);
       }
@@ -1489,56 +1482,48 @@ LAB_8266807c:
 
 // 82667B80  Phys_CollideCapsuleWithTriangleList  (physics/phys_coll_capsulebrush.cpp:1283)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
 void Phys_CollideCapsuleWithTriangleList
-               (ushort *param_1,float (*param_2) [3],uint param_3,objInfo *param_4,int param_5,
-               Results *param_6)
+               (undefined8 param_1,longlong param_2,ulonglong param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
   ushort uVar1;
-  ushort uVar2;
-  ushort uVar3;
-  ulonglong uVar4;
-  ushort *puVar5;
-  int iVar6;
-  int iVar7;
-  ulonglong uVar8;
-  double dVar9;
-  float local_b0;
-  float local_ac;
-  float local_a8;
-  Results RStack_a0;
-  Capsule aCStack_90 [2];
+  ulonglong uVar2;
+  ushort *puVar3;
+  int iVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  double dVar8;
+  undefined4 local_b0;
+  undefined4 local_ac;
+  undefined4 local_a8;
+  undefined1 auStack_a0 [16];
+  undefined1 auStack_90 [144];
   
-  uVar8 = (ulonglong)(int)param_3;
-  puVar5 = (ushort *)__savegprlr_24(param_1);
-  if (param_6->contactCount < param_6->maxContacts) {
-    Phys_InfoToCapsule(param_4,aCStack_90);
-    local_b0 = param_4->pos[0];
-    local_ac = param_4->pos[1];
-    local_a8 = param_4->pos[2];
-    numLocalContacts = 0;
-    dVar9 = (double)param_4->radius;
-    uVar4 = uVar8 & 0xffffffff;
-    while (uVar4 != 0) {
-      uVar1 = *puVar5;
-      uVar2 = puVar5[1];
-      uVar3 = puVar5[2];
-      iVar7 = (uint)uVar1 * 0xc;
-      puVar5 = puVar5 + 3;
-      iVar6 = Phys_GetPlaneForTriangleNotCulledBySphere
-                        ((float *)(param_2 + uVar1),param_2[uVar2],param_2[uVar3],&local_b0,
-                         (float)dVar9,(float *)(uint)uVar1);
-      if ((iVar6 != 0) &&
-         (iVar6 = Phys_TestCapsulePlane((float *)&RStack_a0,aCStack_90), iVar6 != 0)) {
-        Phys_CapsuleBuildContactsForTri
-                  (&RStack_a0,aCStack_90[0].p0,(Capsule *)(param_2 + uVar1),param_2[uVar3],
-                   param_2[uVar2],(float *)param_5,iVar7);
+  puVar3 = (ushort *)__savegprlr_24();
+  if (*(int *)((int)param_6 + 4) < *(int *)((int)param_6 + 8)) {
+    Phys_InfoToCapsule(param_4,auStack_90);
+    iVar4 = (int)param_4;
+    local_b0 = *(undefined4 *)(iVar4 + 0x34);
+    local_ac = *(undefined4 *)(iVar4 + 0x38);
+    local_a8 = *(undefined4 *)(iVar4 + 0x3c);
+    DAT_8427b3a0 = 0;
+    dVar8 = (double)*(float *)(iVar4 + 0x2c);
+    uVar2 = param_3 & 0xffffffff;
+    while (uVar2 != 0) {
+      uVar1 = *puVar3;
+      lVar7 = (ulonglong)uVar1 * 0xc + param_2;
+      lVar6 = (ulonglong)puVar3[1] * 0xc + param_2;
+      lVar5 = (ulonglong)puVar3[2] * 0xc + param_2;
+      puVar3 = puVar3 + 3;
+      iVar4 = Phys_GetPlaneForTriangleNotCulledBySphere
+                        (dVar8,lVar7,lVar6,lVar5,&local_b0,(ulonglong)uVar1,auStack_a0);
+      if ((iVar4 != 0) && (iVar4 = Phys_TestCapsulePlane(auStack_a0,auStack_90), iVar4 != 0)) {
+        Phys_CapsuleBuildContactsForTri(auStack_a0,auStack_90,lVar7,lVar5,lVar6,param_5);
       }
-      uVar8 = uVar8 - 1;
-      uVar4 = uVar8;
+      param_3 = param_3 - 1;
+      uVar2 = param_3;
     }
     Phys_CapsuleOptimizeLocalResults(param_6);
   }

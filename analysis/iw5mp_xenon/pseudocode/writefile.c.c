@@ -2,14 +2,15 @@
 
 // 828A33C0  WriteFile  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/writefile.c:83)
 
-int WriteFile(void *param_1,void *param_2,ulong param_3,ulong *param_4,_OVERLAPPED *param_5)
+BOOL WriteFile(HANDLE hFile,LPCVOID lpBuffer,DWORD nNumberOfBytesToWrite,
+              LPDWORD lpNumberOfBytesWritten,LPOVERLAPPED lpOverlapped)
 
 {
   undefined4 *puVar1;
   undefined8 uVar2;
   uint uVar3;
   uint uVar4;
-  int iVar5;
+  BOOL BVar5;
   longlong lVar6;
   longlong lVar7;
   ulonglong uVar8;
@@ -20,25 +21,25 @@ int WriteFile(void *param_1,void *param_2,ulong param_3,ulong *param_4,_OVERLAPP
   undefined4 local_38;
   undefined4 local_34;
   
-  uVar10 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_4;
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  uVar2 = __savegprlr_27(param_1,lVar6,lVar7);
+  uVar10 = (ulonglong)(int)lpOverlapped;
+  uVar8 = (ulonglong)(int)lpNumberOfBytesWritten;
+  lVar7 = (longlong)(int)nNumberOfBytesToWrite;
+  lVar6 = (longlong)(int)lpBuffer;
+  uVar2 = __savegprlr_27(hFile,lVar6,lVar7);
   puVar9 = (undefined4 *)uVar8;
   if ((uVar8 & 0xffffffff) != 0) {
     *puVar9 = 0;
   }
   if ((uVar10 & 0xffffffff) == 0) {
-    uVar4 = NtWriteFile(uVar2,0,0,0,&local_40,lVar6,lVar7,0);
-    if (((uVar4 != 0x103) ||
-        (uVar3 = NtWaitForSingleObjectEx(uVar2,1,0,0), uVar4 = local_40, -1 < (int)uVar3)) &&
-       (uVar3 = uVar4, -1 < (int)uVar4)) {
+    uVar3 = NtWriteFile(uVar2,0,0,0,&local_40,lVar6,lVar7,0);
+    if (((uVar3 != 0x103) ||
+        (uVar4 = NtWaitForSingleObjectEx(uVar2,1,0,0), uVar3 = local_40, -1 < (int)uVar4)) &&
+       (uVar4 = uVar3, -1 < (int)uVar3)) {
 LAB_828a3468:
       *puVar9 = local_3c;
       goto LAB_828a346c;
     }
-    if ((uVar3 & 0xc0000000) == 0x80000000) {
+    if ((uVar4 & 0xc0000000) == 0x80000000) {
       *puVar9 = local_3c;
     }
   }
@@ -59,10 +60,10 @@ LAB_828a346c:
       goto LAB_828a34ec;
     }
   }
-  RtlSetLastNTError(uVar3);
+  RtlSetLastNTError();
   uVar2 = 0;
 LAB_828a34ec:
-  iVar5 = __restgprlr_27(uVar2);
-  return iVar5;
+  BVar5 = __restgprlr_27(uVar2);
+  return BVar5;
 }
 

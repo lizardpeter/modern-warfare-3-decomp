@@ -6,7 +6,7 @@
   828D21C8  91640000             stw r11,0x0(r4)
   828D21CC  4E800020             blr
 
-; 828D2030  AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:71)
+; 828D2030  XAUDIO::CXenonRenderer::AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:71)
   828D2030  81230008             lwz r9,0x8(r3)
   828D2034  7C6B1B78             or r11,r3,r3
   828D2038  39430004             addi r10,r3,0x4
@@ -14,7 +14,7 @@
   828D2040  906B0008             stw r3,0x8(r11)
   828D2044  4E800020             blr
 
-; 828D2048  Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:76)
+; 828D2048  XAUDIO::CXenonRenderer::Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:76)
   828D2048  7D8802A6             mfspr r12,LR
   828D204C  9181FFF8             stw r12,-0x8(r1)
   828D2050  9421FFA0             stwu r1,-0x60(r1)
@@ -35,7 +35,7 @@ LAB_828d2080:
   828D2088  7D8803A6             mtspr LR,r12
   828D208C  4E800020             blr
 
-; 828D2090  GetInfo  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:81)
+; 828D2090  XAUDIO::CXenonRenderer::GetInfo  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:81)
   828D2090  39600002             li r11,0x2
   828D2094  39400000             li r10,0x0
   828D2098  99640000             stb r11,0x0(r4)
@@ -103,32 +103,32 @@ LAB_828d2308:
   828D2320  38210080             addi r1,r1,0x80
   828D2324  480443E0             b 0x82916704
 
-; 828D20A8  GetContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:89)
+; 828D20A8  XAUDIO::CXenonRenderer::GetContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:89)
   828D20A8  8163000C             lwz r11,0xc(r3)
   828D20AC  38600000             li r3,0x0
   828D20B0  91640000             stw r11,0x0(r4)
   828D20B4  4E800020             blr
 
-; 828D20B8  GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:94)
+; 828D20B8  XAUDIO::CXenonRenderer::GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:94)
   828D20B8  3C608000             lis r3,-0x8000
   828D20BC  60634001             ori r3,r3,0x4001
   828D20C0  4E800020             blr
 
-; 828D20C8  SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:100)
+; 828D20C8  XAUDIO::CXenonRenderer::SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:100)
   828D20C8  3C608000             lis r3,-0x8000
   828D20CC  60634001             ori r3,r3,0x4001
   828D20D0  4E800020             blr
 
-; 828D20D8  QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:106)
+; 828D20D8  XAUDIO::CXenonRenderer::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:106)
   828D20D8  3963FFFC             subi r11,r3,0x4
   828D20DC  91640000             stw r11,0x0(r4)
   828D20E0  4E800020             blr
 
-; 828D20E8  QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:111)
+; 828D20E8  XAUDIO::CXenonRenderer::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:111)
   828D20E8  90640000             stw r3,0x0(r4)
   828D20EC  4E800020             blr
 
-; 828D2200  CXenonRenderer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:130)
+; 828D2200  XAUDIO::CXenonRenderer::CXenonRenderer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:130)
   828D2200  3D608220             lis r11,-0x7de0
   828D2204  39400001             li r10,0x1
   828D2208  392B735C             addi r9,r11,0x735c
@@ -148,7 +148,7 @@ LAB_828d2308:
   828D2240  91430014             stw r10,0x14(r3)
   828D2244  4E800020             blr
 
-; 828D1F70  ~CXenonRenderer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:155)
+; 828D1F70  XAUDIO::CXenonRenderer::~CXenonRenderer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:155)
   828D1F70  7D8802A6             mfspr r12,LR
   828D1F74  9181FFF8             stw r12,-0x8(r1)
   828D1F78  FBC1FFE8             std r30,-0x18(r1)
@@ -199,7 +199,7 @@ LAB_828d2000:
   828D201C  EBE1FFF0             ld r31,-0x10(r1)
   828D2020  4E800020             blr
 
-; 828D1E28  Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:184)
+; 828D1E28  XAUDIO::CXenonRenderer::Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:184)
   828D1E28  3D40848A             lis r10,-0x7b76
   828D1E2C  39600000             li r11,0x0
   828D1E30  916A8204             stw r11,-0x7dfc(r10)
@@ -209,7 +209,7 @@ LAB_828d2000:
   828D1E40  7D0903A6             mtspr CTR,r8
   828D1E44  4E800420             bctr
 
-; 828D20F0  Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:213)
+; 828D20F0  XAUDIO::CXenonRenderer::Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:213)
   828D20F0  7D8802A6             mfspr r12,LR
   828D20F4  9181FFF8             stw r12,-0x8(r1)
   828D20F8  FBE1FFF0             std r31,-0x10(r1)
@@ -236,7 +236,7 @@ LAB_828d213c:
   828D2148  EBE1FFF0             ld r31,-0x10(r1)
   828D214C  4E800020             blr
 
-; 828D1E48  SetCallback  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:277)
+; 828D1E48  XAUDIO::CXenonRenderer::SetCallback  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:277)
   828D1E48  7D8802A6             mfspr r12,LR
   828D1E4C  48044871             bl 0x829166bc
   828D1E50  9421FF80             stwu r1,-0x80(r1)
@@ -266,7 +266,7 @@ LAB_828d1ea8:
   828D1EA8  38210080             addi r1,r1,0x80
   828D1EAC  48044860             b 0x8291670c
 
-; 828D1EB0  CaptureXBMAudioFrame  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:323)
+; 828D1EB0  XAUDIO::CXenonRenderer::CaptureXBMAudioFrame  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:323)
   828D1EB0  7D8802A6             mfspr r12,LR
   828D1EB4  9181FFF8             stw r12,-0x8(r1)
   828D1EB8  9421FFA0             stwu r1,-0x60(r1)
@@ -321,23 +321,23 @@ LAB_828d1f60:
   828D1F68  7D8803A6             mtspr LR,r12
   828D1F6C  4E800020             blr
 
-; 828D2028  `vector_deleting_destructor'`adjustor{4}'  (line unknown)
+; 828D2028  [thunk]:XAUDIO::CXenonRenderer::`vector_deleting_destructor'  (line unknown)
   828D2028  3863FFFC             subi r3,r3,0x4
   828D202C  480001A4             b 0x828d21d0
 
-; 828D2150  GetContext`adjustor{4}'  (line unknown)
+; 828D2150  [thunk]:XAUDIO::CXenonRenderer::GetContext`adjustor{4}'  (line unknown)
   828D2150  3863FFFC             subi r3,r3,0x4
   828D2154  4BFFFF54             b 0x828d20a8
 
-; 828D2158  Release`adjustor{4}'  (line unknown)
+; 828D2158  [thunk]:XAUDIO::CXenonRenderer::Release`adjustor{4}'  (line unknown)
   828D2158  3863FFFC             subi r3,r3,0x4
   828D215C  4BFFFEEC             b 0x828d2048
 
-; 828D2160  AddRef`adjustor{4}'  (line unknown)
+; 828D2160  [thunk]:XAUDIO::CXenonRenderer::AddRef`adjustor{4}'  (line unknown)
   828D2160  3863FFFC             subi r3,r3,0x4
   828D2164  4BFFFECC             b 0x828d2030
 
-; 828D2168  `scalar_deleting_destructor'  (line unknown)
+; 828D2168  XAUDIO::CEffect::`scalar_deleting_destructor'  (line unknown)
   828D2168  7D8802A6             mfspr r12,LR
   828D216C  9181FFF8             stw r12,-0x8(r1)
   828D2170  FBE1FFF0             std r31,-0x10(r1)
@@ -362,7 +362,7 @@ LAB_828d21a8:
   828D21B8  EBE1FFF0             ld r31,-0x10(r1)
   828D21BC  4E800020             blr
 
-; 828D21D0  `scalar_deleting_destructor'  (line unknown)
+; 828D21D0  XAUDIO::CXenonRenderer::`scalar_deleting_destructor'  (line unknown)
   828D21D0  7D8802A6             mfspr r12,LR
   828D21D4  9181FFF8             stw r12,-0x8(r1)
   828D21D8  FBE1FFF0             std r31,-0x10(r1)

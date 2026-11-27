@@ -2,72 +2,70 @@
 
 // 827581C0  R_Track_Init  (gfx_d3d/r_mem_track.cpp:61)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void R_Track_Init(void)
 
 {
-  g_mem_track_filename = "rb_sky";
+  DAT_8367aa78 = "rb_sky";
   TRACK_rb_sky();
-  g_mem_track_filename = "rb_query";
+  DAT_8367aa78 = "rb_query";
   TRACK_rb_query();
-  g_mem_track_filename = "r_buffers";
+  DAT_8367aa78 = "r_buffers";
   TRACK_r_buffers();
-  g_mem_track_filename = "r_debug";
+  DAT_8367aa78 = "r_debug";
   TRACK_r_debug();
-  g_mem_track_filename = "r_dpvs";
+  DAT_8367aa78 = "r_dpvs";
   TRACK_r_dpvs();
-  g_mem_track_filename = "r_fog";
+  DAT_8367aa78 = "r_fog";
   TRACK_r_fog();
-  g_mem_track_filename = "r_font";
+  DAT_8367aa78 = "r_font";
   TRACK_r_font();
-  g_mem_track_filename = "r_image";
+  DAT_8367aa78 = "r_image";
   TRACK_r_image();
-  g_mem_track_filename = "r_image_wavelet";
+  DAT_8367aa78 = "r_image_wavelet";
   TRACK_r_image_wavelet();
-  g_mem_track_filename = "r_init";
+  DAT_8367aa78 = "r_init";
   TRACK_r_init();
-  g_mem_track_filename = "r_marks";
+  DAT_8367aa78 = "r_marks";
   TRACK_r_marks();
-  g_mem_track_filename = "r_material";
+  DAT_8367aa78 = "r_material";
   TRACK_r_material();
-  g_mem_track_filename = "r_model";
+  DAT_8367aa78 = "r_model";
   TRACK_r_model();
-  g_mem_track_filename = "r_rendercmds";
+  DAT_8367aa78 = "r_rendercmds";
   TRACK_r_rendercmds();
-  g_mem_track_filename = "r_scene";
+  DAT_8367aa78 = "r_scene";
   TRACK_r_scene();
-  g_mem_track_filename = "r_screenshot";
+  DAT_8367aa78 = "r_screenshot";
   TRACK_r_screenshot();
-  g_mem_track_filename = "r_staticmodel";
+  DAT_8367aa78 = "r_staticmodel";
   TRACK_r_staticmodel();
-  g_mem_track_filename = "r_utils";
+  DAT_8367aa78 = "r_utils";
   TRACK_r_utils();
-  g_mem_track_filename = "r_xsurface";
+  DAT_8367aa78 = "r_xsurface";
   TRACK_r_xsurface();
-  g_mem_track_filename = "r_water";
+  DAT_8367aa78 = "r_water";
   TRACK_r_water();
-  g_mem_track_filename = "r_workercmds";
+  DAT_8367aa78 = "r_workercmds";
   TRACK_r_workercmds();
-  g_mem_track_filename = "r_light";
+  DAT_8367aa78 = "r_light";
   TRACK_r_light();
-  g_mem_track_filename = "rb_debug";
+  DAT_8367aa78 = "rb_debug";
   TRACK_rb_debug();
-  g_mem_track_filename = "rb_backend";
+  DAT_8367aa78 = "rb_backend";
   TRACK_rb_backend();
-  g_mem_track_filename = "rb_drawprofile";
+  DAT_8367aa78 = "rb_drawprofile";
   TRACK_rb_drawprofile();
-  g_mem_track_filename = "rb_shade";
+  DAT_8367aa78 = "rb_shade";
   TRACK_rb_shade();
-  g_mem_track_filename = "rb_showcollision";
+  DAT_8367aa78 = "rb_showcollision";
   TRACK_rb_showcollision();
-  g_mem_track_filename = "rb_state";
+  DAT_8367aa78 = "rb_state";
   TRACK_rb_state();
-  g_mem_track_filename = "rb_stats";
+  DAT_8367aa78 = "rb_stats";
   TRACK_rb_stats();
-  g_mem_track_filename = "rb_sunshadow";
+  DAT_8367aa78 = "rb_sunshadow";
   TRACK_rb_sunshadow();
-  g_mem_track_filename = "rb_tess";
+  DAT_8367aa78 = "rb_tess";
   TRACK_rb_tess();
   return;
 }

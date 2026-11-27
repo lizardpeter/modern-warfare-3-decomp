@@ -2,48 +2,42 @@
 
 // 826A1100  dInternalHandleAutoDisabling  (physics/ode/src/util.cpp:51)
 
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-
-void dInternalHandleAutoDisabling(dxWorld *param_1,float param_2)
+void dInternalHandleAutoDisabling(double param_1,int *param_2)
 
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  dxBody *pdVar4;
-  int iVar5;
-  double dVar6;
-  double dVar7;
+  int iVar1;
+  double dVar2;
   
-  dVar6 = (double)param_2;
-  pdVar4 = param_1->firstbody;
-  if (pdVar4 != (dxBody *)0x0) {
-    dVar7 = 0.0;
+  param_2 = (int *)*param_2;
+  if (param_2 != (int *)0x0) {
+    dVar2 = 0.0;
     do {
-      if ((pdVar4->flags & 0x14U) == 0x10) {
-        fVar1 = (pdVar4->info).lvel[2];
-        fVar2 = (pdVar4->info).lvel[0];
-        fVar3 = (pdVar4->info).lvel[1];
-        if (((pdVar4->adis).linearThresholdSqrd < fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) ||
-           (fVar1 = (pdVar4->info).avel[1], fVar2 = (pdVar4->info).avel[2],
-           fVar3 = (pdVar4->info).avel[0],
-           (pdVar4->adis).angularThresholdSqrd < fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1)) {
-          iVar5 = (pdVar4->adis).idle_steps;
-          pdVar4->adis_timeleft = (pdVar4->adis).idle_time;
+      if ((param_2[6] & 0x14U) == 0x10) {
+        if ((float)param_2[0x32] <
+            (float)param_2[0x4d] * (float)param_2[0x4d] +
+            (float)param_2[0x4c] * (float)param_2[0x4c] +
+            (float)param_2[0x4e] * (float)param_2[0x4e]) {
+LAB_826a11bc:
+          iVar1 = param_2[0x35];
+          param_2[0x36] = param_2[0x34];
         }
         else {
-          pdVar4->adis_timeleft = (float)((double)pdVar4->adis_timeleft - dVar6);
-          iVar5 = pdVar4->adis_stepsleft + -1;
+          if ((float)param_2[0x33] <
+              (float)param_2[0x50] * (float)param_2[0x50] +
+              (float)param_2[0x52] * (float)param_2[0x52] +
+              (float)param_2[0x51] * (float)param_2[0x51]) goto LAB_826a11bc;
+          param_2[0x36] = (int)(float)((double)(float)param_2[0x36] - param_1);
+          iVar1 = param_2[0x37] + -1;
         }
-        pdVar4->adis_stepsleft = iVar5;
-        if ((iVar5 < 0) && ((double)pdVar4->adis_timeleft < dVar7)) {
-          dBodySetLinearVel(pdVar4,(float)dVar7,(float)dVar7,(float)dVar7);
-          dBodySetAngularVel(pdVar4,(float)dVar7,(float)dVar7,(float)dVar7);
-          pdVar4->flags = pdVar4->flags | 4;
+        param_2[0x37] = iVar1;
+        if ((iVar1 < 0) && ((double)(float)param_2[0x36] < dVar2)) {
+          dBodySetLinearVel(dVar2,dVar2,dVar2,param_2);
+          dBodySetAngularVel(dVar2,dVar2,dVar2,param_2);
+          param_2[6] = param_2[6] | 4;
         }
       }
-      pdVar4 = (dxBody *)pdVar4->_padding_;
-    } while (pdVar4 != (dxBody *)0x0);
+      param_2 = (int *)*param_2;
+    } while (param_2 != (int *)0x0);
   }
   return;
 }
@@ -51,32 +45,26 @@ void dInternalHandleAutoDisabling(dxWorld *param_1,float param_2)
 
 // 826A1240  TryWaitForPhysics  (physics/ode/src/util.cpp:153)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
-
-int TryWaitForPhysics(void)
+undefined8 TryWaitForPhysics(void)
 
 {
   int iVar1;
   
-  Sys_EnterCriticalSection(CRITSECT_PHYSICS_ALLOC);
-  iVar1 = R_ExistsWorkerCmdsOfType(WRKCMD_PHYSICS);
+  Sys_EnterCriticalSection(0x29);
+  iVar1 = R_ExistsWorkerCmdsOfType(0x1d);
   if (iVar1 != 0) {
-    Sys_LeaveCriticalSection(CRITSECT_PHYSICS_ALLOC);
+    Sys_LeaveCriticalSection(0x29);
     return 0;
   }
   sync(1);
-  g_totalJointCount = 0;
+  DAT_844361e0 = 0;
   DAT_844361e4 = 0;
-  Sys_LeaveCriticalSection(CRITSECT_PHYSICS_ALLOC);
+  Sys_LeaveCriticalSection(0x29);
   return 1;
 }
 
 
 // 826A12B8  WaitForPhysics  (physics/ode/src/util.cpp:173)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
 
 void WaitForPhysics(void)
 
@@ -84,364 +72,416 @@ void WaitForPhysics(void)
   int iVar1;
   
   while( true ) {
-    Sys_EnterCriticalSection(CRITSECT_PHYSICS_ALLOC);
-    iVar1 = R_ExistsWorkerCmdsOfType(WRKCMD_PHYSICS);
+    Sys_EnterCriticalSection(0x29);
+    iVar1 = R_ExistsWorkerCmdsOfType(0x1d);
     if (iVar1 == 0) break;
-    Sys_LeaveCriticalSection(CRITSECT_PHYSICS_ALLOC);
-    Sys_LeaveCriticalSection(CRITSECT_PHYSICS_ALLOC);
-    R_WaitWorkerCmdsOnlyOfType(WRKCMD_PHYSICS);
-    Sys_EnterCriticalSection(CRITSECT_PHYSICS_ALLOC);
+    Sys_LeaveCriticalSection(0x29);
+    Sys_LeaveCriticalSection(0x29);
+    R_WaitWorkerCmdsOnlyOfType(0x1d);
+    Sys_EnterCriticalSection(0x29);
   }
   sync(1);
-  g_totalJointCount = 0;
+  DAT_844361e0 = 0;
   DAT_844361e4 = 0;
-  Sys_LeaveCriticalSection(CRITSECT_PHYSICS_ALLOC);
+  Sys_LeaveCriticalSection(0x29);
   return;
 }
 
 
 // 826A1338  dxProcessIslands  (physics/ode/src/util.cpp:203)
 
-/* WARNING: Type propagation algorithm not settling */
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
-
-void dxProcessIslands(dxWorld *param_1,float param_2)
+void dxProcessIslands(void)
 
 {
-  dxBody *pdVar1;
-  dxJoint *pdVar2;
-  dxWorld *pdVar3;
-  GfxWarningType GVar4;
-  uint uVar5;
-  ulonglong uVar6;
+  longlong lVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  int iVar4;
+  undefined4 uVar5;
+  undefined4 uVar6;
   int iVar7;
-  int *piVar8;
-  dxJoint **ppdVar9;
-  uint uVar10;
-  uint uVar11;
-  dxJointNode *pdVar13;
-  ulonglong uVar12;
-  dxBody *pdVar14;
-  int iVar15;
-  dxBody **ppdVar16;
-  double dVar17;
-  dxWorld *pdStack00000014;
-  dxWorld *local_2080;
-  undefined2 local_207c;
-  undefined2 local_207a;
-  int local_2078;
-  dxJoint **local_2074;
-  float local_2070;
-  int iStack_2064;
-  dxBody *local_2060 [503];
-  dxJoint *apdStack_1884 [1024];
-  int aiStack_884 [545];
+  ulonglong uVar8;
+  int *piVar10;
+  undefined8 uVar9;
+  void *_Dst;
+  undefined4 uVar11;
+  longlong lVar12;
+  longlong lVar13;
+  longlong lVar14;
+  ulonglong uVar15;
+  int iVar16;
+  ulonglong uVar17;
+  int iVar18;
+  longlong lVar19;
+  longlong lVar20;
+  longlong lVar21;
+  ulonglong uVar22;
+  int iVar23;
+  double extraout_f1;
+  double dVar24;
   
-  dVar17 = (double)param_2;
-  __savegprlr();
-  pdStack00000014 = param_1;
-  if (0x1f8 < param_1->bodyCount) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp",
-                    0xe1,0,"%s\n\t(world->bodyCount) = %i");
+  uVar8 = ZEXT48(&stack0x00000000);
+  piVar10 = (int *)__savegprlr();
+  lVar1 = uVar8 - 0x2150;
+  iVar7 = (int)lVar1;
+  *(BADSPACEBASE **)iVar7 = register0x0000000c;
+  iVar23 = piVar10[2];
+  *(int **)(iVar7 + 0x2164) = piVar10;
+  *(char **)(iVar7 + 0x70) =
+       "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp";
+  dVar24 = extraout_f1;
+  if (0x1f8 < iVar23) {
+    MyAssertHandler(0xffffffff8219b1a0,0xe1,0,0xffffffff82194c74,0xffffffff8219b140);
   }
-  if (0x400 < param_1->jointCount) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp",
-                    0xe2,0,"%s\n\t(world->jointCount) = %i");
+  if (0x400 < piVar10[3]) {
+    MyAssertHandler(0xffffffff8219b1a0,0xe2,0,0xffffffff8219b104,0xffffffff8219b124);
   }
-  if (param_1->useWorkerCmd != 0) {
-    param_1->allowDelete = 0;
+  if (piVar10[0x16] != 0) {
+    piVar10[0x14] = 0;
   }
-  if (0 < param_1->bodyCount) {
-    dInternalHandleAutoDisabling(param_1,(float)dVar17);
-    pdVar3 = pdStack00000014;
-    for (pdVar1 = param_1->firstbody; pdVar1 != (dxBody *)0x0; pdVar1 = (dxBody *)pdVar1->_padding_)
-    {
-      pdVar1->_padding_ = 0;
+  if (0 < piVar10[2]) {
+    dInternalHandleAutoDisabling(dVar24,piVar10);
+    for (puVar2 = (undefined4 *)*piVar10; puVar2 != (undefined4 *)0x0;
+        puVar2 = (undefined4 *)*puVar2) {
+      puVar2[3] = 0;
     }
-    for (pdVar2 = param_1->firstjoint; pdVar2 != (dxJoint *)0x0;
-        pdVar2 = (dxJoint *)pdVar2->_padding_) {
-      pdVar2->_padding_ = 0;
+    for (puVar2 = (undefined4 *)piVar10[1]; puVar2 != (undefined4 *)0x0;
+        puVar2 = (undefined4 *)*puVar2) {
+      puVar2[3] = 0;
     }
-    for (pdVar1 = param_1->firstbody; pdVar1 != (dxBody *)0x0; pdVar1 = (dxBody *)pdVar1->_padding_)
-    {
-      if ((pdVar1->_padding_ != 0) && (pdVar1->_padding_ != -1)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                        ,0xfb,0,"%s\n\t(bb->tag) = %i");
-      }
-      if ((pdVar1->_padding_ == 0) && ((pdVar1->flags & 4U) == 0)) {
-        uVar6 = 1;
-        uVar5 = 0;
-        ppdVar16 = local_2060;
-        pdVar1->_padding_ = -1;
-        uVar10 = 0;
-        pdVar14 = pdVar1;
-        local_2060[0] = pdVar1;
-        while( true ) {
-          pdVar13 = pdVar14->firstjoint;
-          if (pdVar13 != (dxJointNode *)0x0) {
-            piVar8 = aiStack_884 + uVar10;
-            ppdVar9 = apdStack_1884 + uVar5;
-            do {
-              iVar7 = pdVar13->joint->_padding_;
-              if ((iVar7 != 0) && (iVar7 != -1)) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x10f,0,"%s\n\t(n->joint->tag) = %i");
-              }
-              if (pdVar13->joint->_padding_ == 0) {
-                pdVar13->joint->_padding_ = -1;
-                uVar5 = uVar5 + 1;
-                ppdVar9 = ppdVar9 + 1;
-                *ppdVar9 = pdVar13->joint;
-                pdVar14 = pdVar13->body;
-                if (pdVar14 != (dxBody *)0x0) {
-                  if ((pdVar14->_padding_ != 0) && (pdVar14->_padding_ != -1)) {
-                    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                    ,0x117,0,"%s\n\t(b->tag) = %i");
-                  }
-                  if (pdVar14->_padding_ == 0) {
-                    pdVar14->_padding_ = -1;
-                    pdVar14->flags = pdVar14->flags & 0xfffffffb;
-                    if (0x1f7 < uVar10) {
-                      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                      ,0x11d,0,
-                                      "stacksize doesn\'t index ARRAY_COUNT( stack )\n\t%i not in [0, %i)"
+    iVar23 = *piVar10;
+    *(int *)(iVar7 + 0x60) = iVar23;
+    if (iVar23 != 0) {
+      *(char **)(iVar7 + 0x50) = "";
+      *(char **)(iVar7 + 0x58) = "";
+      *(char **)(iVar7 + 0x50) = "";
+      *(char **)(iVar7 + 0x54) = "";
+      *(char **)(iVar7 + 0x50) = "";
+      *(char **)(iVar7 + 0xbc) = "physics step";
+      *(char **)(iVar7 + 0xb4) =
+           "((uint)jointCount <= (sizeof( g_joint ) / (sizeof( g_joint[0] ) * (sizeof( g_joint ) != 4 || sizeof( g_joint[0] ) <= 4))))"
+      ;
+      *(char **)(iVar7 + 0x50) = "";
+      *(char **)(iVar7 + 0x54) = "";
+      *(char **)(iVar7 + 0x58) = "";
+      *(char **)(iVar7 + 100) = "";
+      *(char **)(iVar7 + 0x6c) = "";
+      *(char **)(iVar7 + 0x68) = "";
+      *(IMAGE_DOS_HEADER **)(iVar7 + 0x5c) = &IMAGE_DOS_HEADER_82000000;
+      *(char **)(iVar7 + 0xac) =
+           "((uint)bodyCount <= (sizeof( g_body ) / (sizeof( g_body[0] ) * (sizeof( g_body ) != 4 || sizeof( g_body[0] ) <= 4))))"
+      ;
+      *(char **)(iVar7 + 0xa4) = "(body[i]->tag >= 0)";
+      *(char **)(iVar7 + 0x9c) = "joint[i]->node[1].bodyTag < bodyCount";
+      *(char **)(iVar7 + 0x7c) = "%s\n\t(joint[i]->node[1].body->tag) = %i";
+      *(char **)(iVar7 + 0x94) = "body2 doesn\'t index bodyCount\n\t%i not in [0, %i). World: %i";
+      *(char **)(iVar7 + 0x8c) = "joint[i]->node[0].bodyTag < bodyCount";
+      *(char **)(iVar7 + 0x84) = "body1 doesn\'t index bodyCount\n\t%i not in [0, %i). World: %i";
+      *(char **)(iVar7 + 0x78) = "(!joint[i]->node[1].body || (joint[i]->node[1].body->tag != -1))";
+      *(char **)(iVar7 + 0xa8) = "%s\n\t(joint[i]->node[0].body->tag) = %i";
+      *(char **)(iVar7 + 0xc0) = "(!joint[i]->node[0].body || (joint[i]->node[0].body->tag != -1))";
+      iVar23 = *(int *)(iVar7 + 0x58);
+      uVar3 = *(uint *)(iVar7 + 100);
+      *(undefined4 *)(iVar7 + 0x5c) = *(undefined4 *)(iVar7 + 0x5c);
+      *(int *)(iVar7 + 0x58) = *(int *)(iVar7 + 0x50) + -0x509c;
+      iVar4 = *(int *)(iVar7 + 0x2164);
+      *(int *)(iVar7 + 0xa0) = *(int *)(iVar7 + 0x68) + -0x55e8;
+      uVar5 = *(undefined4 *)(iVar7 + 0x70);
+      *(int *)(iVar7 + 0x50) = *(int *)(iVar7 + 0x54) + -0x5084;
+      *(int *)(iVar7 + 0x54) = iVar23 + -0x50c8;
+      *(char **)(iVar7 + 0x68) = "%s\n\t(jointCount) = %i";
+      *(char **)(iVar7 + 0xc4) = "!(b->flags & ODE_BODY_FLAG_DISABLED)";
+      *(char **)(iVar7 + 0x74) = "(b->tag == -1)";
+      *(char **)(iVar7 + 0xb8) = "(jointCount <= world->jointCount)";
+      *(char **)(iVar7 + 100) = "%s\n\t(bodyCount) = %i";
+      lVar12 = (ulonglong)*(uint *)(iVar7 + 0x6c) - 0x50f8;
+      *(char **)(iVar7 + 0x90) = "(bodyCount <= world->bodyCount)";
+      *(char **)(iVar7 + 200) = "(stacksize <= world->jointCount)";
+      lVar14 = (ulonglong)uVar3 - 0x50e0;
+      *(char **)(iVar7 + 0x6c) = "%s\n\t(stacksize) = %i";
+      *(char **)(iVar7 + 0x88) = "(stacksize <= world->bodyCount)";
+      *(char **)(iVar7 + 0xb0) =
+           "stacksize doesn\'t index ARRAY_COUNT( stack )\n\t%i not in [0, %i)";
+      *(char **)(iVar7 + 0x80) = "(!b || (b->tag == 0) || (b->tag == -1))";
+      *(char **)(iVar7 + 0xcc) = "%s\n\t(n->joint->tag) = %i";
+      *(char **)(iVar7 + 0x98) = "((n->joint->tag == 0) || (n->joint->tag == -1))";
+      uVar3 = *(uint *)(iVar7 + 0x5c);
+      *(char **)(iVar7 + 0x5c) = "%s\n\t(bb->tag) = %i";
+      lVar13 = (ulonglong)uVar3 + 0xf98;
+      *(char **)(iVar7 + 0x70) = "((bb->tag == 0) || (bb->tag == -1))";
+      do {
+        iVar23 = *(int *)(iVar7 + 0x60);
+        iVar18 = *(int *)(iVar23 + 0xc);
+        if ((iVar18 != 0) && (iVar18 != -1)) {
+          MyAssertHandler(uVar5,0xfb,0,*(undefined4 *)(iVar7 + 0x5c),*(undefined4 *)(iVar7 + 0x70));
+        }
+        if ((*(int *)(iVar23 + 0xc) == 0) &&
+           (iVar23 = *(int *)(iVar7 + 0x60), (*(uint *)(iVar23 + 0x18) & 4) == 0)) {
+          uVar22 = 0;
+          uVar17 = 1;
+          uVar15 = 0;
+          lVar19 = uVar8 - 0x2060;
+          *(undefined4 *)(iVar23 + 0xc) = 0xffffffff;
+          *(int *)(iVar7 + 0xf0) = iVar23;
+          while( true ) {
+            piVar10 = *(int **)(iVar23 + 0x14);
+            if (piVar10 != (int *)0x0) {
+              lVar20 = (uVar22 & 0x3fffffff) * 4 + lVar1 + 0x18cc;
+              lVar21 = (uVar15 & 0x3fffffff) * 4 + lVar1 + 0x8cc;
+              do {
+                if ((*(int *)(*piVar10 + 0xc) != 0) && (*(int *)(*piVar10 + 0xc) != -1)) {
+                  MyAssertHandler(uVar5,0x10f,0,*(undefined4 *)(iVar7 + 0xcc),
+                                  *(undefined4 *)(iVar7 + 0x98));
+                }
+                if (*(int *)(*piVar10 + 0xc) == 0) {
+                  *(undefined4 *)(*piVar10 + 0xc) = 0xffffffff;
+                  uVar15 = uVar15 + 1;
+                  lVar21 = lVar21 + 4;
+                  *(int *)lVar21 = *piVar10;
+                  iVar23 = piVar10[1];
+                  if (iVar23 != 0) {
+                    if ((*(int *)(iVar23 + 0xc) != 0) && (*(int *)(iVar23 + 0xc) != -1)) {
+                      MyAssertHandler(uVar5,0x117,0,0xffffffff8219ac78,*(undefined4 *)(iVar7 + 0x80)
                                      );
                     }
-                    piVar8 = piVar8 + 1;
-                    *piVar8 = (int)pdVar14;
-                    uVar10 = uVar10 + 1;
+                    if (*(int *)(iVar23 + 0xc) == 0) {
+                      *(undefined4 *)(iVar23 + 0xc) = 0xffffffff;
+                      *(uint *)(iVar23 + 0x18) = *(uint *)(iVar23 + 0x18) & 0xfffffffb;
+                      if (0x1f7 < (uVar22 & 0xffffffff)) {
+                        MyAssertHandler(uVar5,0x11d,0,*(undefined4 *)(iVar7 + 0xb0),uVar22,0x1f8);
+                      }
+                      lVar20 = lVar20 + 4;
+                      *(int *)lVar20 = iVar23;
+                      uVar22 = uVar22 + 1;
+                    }
+                  }
+                  if ((*(int *)(*piVar10 + 0x20) != 0) &&
+                     (*(int *)(*(int *)(*piVar10 + 0x20) + 0xc) != -1)) {
+                    MyAssertHandler(uVar5,0x123,0,0xffffffff8219ac78,0xffffffff8219acd0);
+                  }
+                  if ((*(int *)(*piVar10 + 0x30) != 0) &&
+                     (*(int *)(*(int *)(*piVar10 + 0x30) + 0xc) != -1)) {
+                    MyAssertHandler(uVar5,0x126,0,0xffffffff8219ac78,0xffffffff8219acd0);
                   }
                 }
-                pdVar14 = pdVar13->joint->node[0].body;
-                if ((pdVar14 != (dxBody *)0x0) && (pdVar14->_padding_ != -1)) {
-                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                  ,0x123,0,"%s\n\t(b->tag) = %i");
-                }
-                pdVar14 = pdVar13->joint->node[1].body;
-                if ((pdVar14 != (dxBody *)0x0) && (pdVar14->_padding_ != -1)) {
-                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                  ,0x126,0,"%s\n\t(b->tag) = %i");
-                }
-              }
-              pdVar13 = pdVar13->next;
-            } while (pdVar13 != (dxJointNode *)0x0);
-          }
-          if (pdVar3->bodyCount < (int)uVar10) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                            ,299,0,"%s\n\t(stacksize) = %i");
-          }
-          if (pdVar3->jointCount < (int)uVar10) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                            ,300,0,"%s\n\t(stacksize) = %i");
-          }
-          iVar7 = (int)uVar6;
-          if (pdVar3->bodyCount < iVar7) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                            ,0x12d,0,"%s\n\t(bodyCount) = %i");
-          }
-          if (pdVar3->jointCount < (int)uVar5) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                            ,0x12e,0,"%s\n\t(jointCount) = %i");
-          }
-          if (uVar10 == 0) break;
-          uVar11 = uVar10 - 1;
-          uVar6 = uVar6 + 1;
-          pdVar14 = (dxBody *)aiStack_884[uVar10];
-          ppdVar16 = ppdVar16 + 1;
-          *ppdVar16 = pdVar14;
-          if (pdVar14->_padding_ != -1) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                            ,0x136,0,"%s\n\t(b->tag) = %i");
-          }
-          uVar10 = uVar11;
-          if ((pdVar14->flags & 4U) != 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                            ,0x137,0,"%s");
-          }
-        }
-        if (0xd < (uVar6 & 0xffffffff)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                          ,0x13a,0,
-                          "bodyCount doesn\'t index ISLAND_MAX_BODY_COUNT\n\t%i not in [0, %i)");
-        }
-        if ((int)uVar5 < 0x60) {
-          if (0 < iVar7) {
-            ppdVar16 = local_2060;
-            uVar12 = uVar6;
-            do {
-              if ((*ppdVar16)->_padding_ != -1) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x148,0,"%s\n\t(body[i]->tag) = %i");
-              }
-              if (((*ppdVar16)->flags & 4U) != 0) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x149,0,"%s");
-              }
-              uVar12 = uVar12 - 1;
-              ppdVar16 = ppdVar16 + 1;
-            } while (uVar12 != 0);
-          }
-          if (0 < (int)uVar5) {
-            ppdVar9 = apdStack_1884;
-            uVar10 = uVar5;
-            do {
-              ppdVar9 = ppdVar9 + 1;
-              if ((*ppdVar9)->_padding_ != -1) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x14d,0,"%s\n\t(joint[i]->tag) = %i");
-              }
-              uVar10 = uVar10 - 1;
-            } while (uVar10 != 0);
-          }
-          iVar15 = 0;
-          if (0 < iVar7) {
-            piVar8 = &iStack_2064;
-            do {
-              if (*(int *)(piVar8[1] + 0xc) != -1) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x153,0,"%s\n\t(body[i]->tag) = %i");
-              }
-              piVar8 = piVar8 + 1;
-              *(int *)(*piVar8 + 0xc) = iVar15;
-              iVar15 = iVar15 + 1;
-            } while (iVar15 < iVar7);
-          }
-          if (0 < (int)uVar5) {
-            ppdVar9 = apdStack_1884;
-            uVar10 = uVar5;
-            do {
-              ppdVar9 = ppdVar9 + 1;
-              pdVar14 = (*ppdVar9)->node[0].body;
-              if ((pdVar14 != (dxBody *)0x0) && (pdVar14->_padding_ == -1)) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x159,0,"%s\n\t(joint[i]->node[0].body->tag) = %i");
-              }
-              pdVar14 = (*ppdVar9)->node[1].body;
-              if ((pdVar14 != (dxBody *)0x0) && (pdVar14->_padding_ == -1)) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x15a,0,"%s\n\t(joint[i]->node[1].body->tag) = %i");
-              }
-              pdVar14 = (*ppdVar9)->node[0].body;
-              if (pdVar14 == (dxBody *)0x0) {
-                iVar15 = -1;
-              }
-              else {
-                iVar15 = pdVar14->_padding_;
-              }
-              (*ppdVar9)->node[0].bodyTag = iVar15;
-              pdVar14 = (*ppdVar9)->node[1].body;
-              if (pdVar14 == (dxBody *)0x0) {
-                iVar15 = -1;
-              }
-              else {
-                iVar15 = pdVar14->_padding_;
-              }
-              (*ppdVar9)->node[1].bodyTag = iVar15;
-              if (iVar7 <= (*ppdVar9)->node[0].bodyTag) {
-                va("body1 doesn\'t index bodyCount\n\t%i not in [0, %i). World: %i");
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x15f,0,"%s\n\t%s");
-              }
-              if (iVar7 <= (*ppdVar9)->node[1].bodyTag) {
-                va("body2 doesn\'t index bodyCount\n\t%i not in [0, %i). World: %i");
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x160,0,"%s\n\t%s");
-              }
-              uVar10 = uVar10 - 1;
-            } while (uVar10 != 0);
-          }
-          if (0 < iVar7) {
-            piVar8 = &iStack_2064;
-            uVar12 = uVar6;
-            do {
-              if (*(int *)(piVar8[1] + 0xc) < 0) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x165,0,"%s\n\t(body[i]->tag) = %i");
-              }
-              piVar8 = piVar8 + 1;
-              uVar12 = uVar12 - 1;
-              *(undefined4 *)(*piVar8 + 0xc) = 0xffffffff;
-            } while (uVar12 != 0);
-          }
-          if (pdVar3->useWorkerCmd == 0) {
-            PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"physics step");
-            dxQuickStepper(pdVar3,local_2060,iVar7,apdStack_1884 + 1,uVar5,(float)dVar17);
-            PIXEndNamedEvent();
-          }
-          else {
-            if (0x1f8 < (uVar6 & 0xffffffff)) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                              ,0x172,0,"%s\n\t(bodyCount) = %i");
+                piVar10 = (int *)piVar10[3];
+              } while (piVar10 != (int *)0x0);
             }
-            if (0x400 < uVar5) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                              ,0x173,0,"%s\n\t(jointCount) = %i");
+            iVar23 = (int)uVar22;
+            if (*(int *)(iVar4 + 8) < iVar23) {
+              MyAssertHandler(uVar5,299,0,*(undefined4 *)(iVar7 + 0x6c),
+                              *(undefined4 *)(iVar7 + 0x88),uVar22);
             }
-            Sys_EnterCriticalSection(CRITSECT_PHYSICS_ALLOC);
-            if ((DAT_844361e4 + uVar6 & 0xffffffff) < 0x1f9) {
-              if (0x400 < g_totalJointCount + uVar5) {
-                GVar4 = R_WARN_PHYSICS_JOINT;
-                goto LAB_826a1ca8;
-              }
+            if (*(int *)(iVar4 + 0xc) < iVar23) {
+              MyAssertHandler(uVar5,300,0,*(undefined4 *)(iVar7 + 0x6c),*(undefined4 *)(iVar7 + 200)
+                              ,uVar22);
+            }
+            iVar18 = (int)uVar17;
+            if (*(int *)(iVar4 + 8) < iVar18) {
+              MyAssertHandler(uVar5,0x12d,0,*(undefined4 *)(iVar7 + 100),
+                              *(undefined4 *)(iVar7 + 0x90),uVar17);
+            }
+            iVar16 = (int)uVar15;
+            if (*(int *)(iVar4 + 0xc) < iVar16) {
+              MyAssertHandler(uVar5,0x12e,0,*(undefined4 *)(iVar7 + 0x68),
+                              *(undefined4 *)(iVar7 + 0xb8),uVar15);
+            }
+            if (iVar23 == 0) break;
+            uVar22 = uVar22 - 1;
+            uVar17 = uVar17 + 1;
+            iVar23 = *(int *)((int)((uVar22 & 0xffffffff) << 2) + iVar7 + 0x18d0);
+            lVar19 = lVar19 + 4;
+            *(int *)lVar19 = iVar23;
+            if (*(int *)(iVar23 + 0xc) != -1) {
+              MyAssertHandler(uVar5,0x136,0,0xffffffff8219ac78,*(undefined4 *)(iVar7 + 0x74));
+            }
+            if ((*(uint *)(iVar23 + 0x18) & 4) != 0) {
+              MyAssertHandler(uVar5,0x137,0,lVar13,*(undefined4 *)(iVar7 + 0xc4));
+            }
+          }
+          if (0xd < (uVar17 & 0xffffffff)) {
+            MyAssertHandler(uVar5,0x13a,0,*(undefined4 *)(iVar7 + 0xa0),uVar17,0xe);
+          }
+          if (iVar16 < 0x60) {
+            if (0 < iVar18) {
+              lVar19 = uVar8 - 0x2060;
+              uVar22 = uVar17;
+              do {
+                if (*(int *)(*(int *)lVar19 + 0xc) != -1) {
+                  MyAssertHandler(uVar5,0x148,0,lVar14,lVar12);
+                }
+                if ((*(uint *)(*(int *)lVar19 + 0x18) & 4) != 0) {
+                  MyAssertHandler(uVar5,0x149,0,lVar13,*(undefined4 *)(iVar7 + 0x54));
+                }
+                uVar22 = uVar22 - 1;
+                lVar19 = lVar19 + 4;
+              } while (uVar22 != 0);
+            }
+            if (0 < iVar16) {
+              lVar19 = uVar8 - 0x1880;
+              uVar22 = uVar15;
+              do {
+                if (*(int *)(*(int *)lVar19 + 0xc) != -1) {
+                  MyAssertHandler(uVar5,0x14d,0,*(undefined4 *)(iVar7 + 0x50),
+                                  *(undefined4 *)(iVar7 + 0x58));
+                }
+                uVar22 = uVar22 - 1;
+                lVar19 = lVar19 + 4;
+              } while (uVar22 != 0);
+            }
+            iVar23 = 0;
+            if (0 < iVar18) {
+              lVar19 = uVar8 - 0x2064;
+              do {
+                if (*(int *)(*(int *)((int)lVar19 + 4) + 0xc) != -1) {
+                  MyAssertHandler(uVar5,0x153,0,lVar14,lVar12);
+                }
+                lVar19 = lVar19 + 4;
+                *(int *)(*(int *)lVar19 + 0xc) = iVar23;
+                iVar23 = iVar23 + 1;
+              } while (iVar23 < iVar18);
+            }
+            if (0 < iVar16) {
+              lVar19 = uVar8 - 0x1880;
+              uVar22 = uVar15;
+              do {
+                piVar10 = (int *)lVar19;
+                if ((*(int *)(*piVar10 + 0x20) != 0) &&
+                   (*(int *)(*(int *)(*piVar10 + 0x20) + 0xc) == -1)) {
+                  MyAssertHandler(uVar5,0x159,0,*(undefined4 *)(iVar7 + 0xa8),
+                                  *(undefined4 *)(iVar7 + 0xc0));
+                }
+                if ((*(int *)(*piVar10 + 0x30) != 0) &&
+                   (*(int *)(*(int *)(*piVar10 + 0x30) + 0xc) == -1)) {
+                  MyAssertHandler(uVar5,0x15a,0,*(undefined4 *)(iVar7 + 0x7c),
+                                  *(undefined4 *)(iVar7 + 0x78));
+                }
+                iVar23 = *(int *)(*piVar10 + 0x20);
+                if (iVar23 == 0) {
+                  uVar11 = 0xffffffff;
+                }
+                else {
+                  uVar11 = *(undefined4 *)(iVar23 + 0xc);
+                }
+                *(undefined4 *)(*piVar10 + 0x24) = uVar11;
+                iVar23 = *(int *)(*piVar10 + 0x30);
+                if (iVar23 == 0) {
+                  uVar11 = 0xffffffff;
+                }
+                else {
+                  uVar11 = *(undefined4 *)(iVar23 + 0xc);
+                }
+                *(undefined4 *)(*piVar10 + 0x34) = uVar11;
+                if (iVar18 <= *(int *)(*piVar10 + 0x24)) {
+                  uVar9 = va(*(undefined4 *)(iVar7 + 0x84),*(int *)(*piVar10 + 0x24),uVar17,
+                             *(undefined4 *)(iVar4 + 0x5c));
+                  MyAssertHandler(uVar5,0x15f,0,0xffffffff820011f4,*(undefined4 *)(iVar7 + 0x8c),
+                                  uVar9);
+                }
+                if (iVar18 <= *(int *)(*piVar10 + 0x34)) {
+                  uVar9 = va(*(undefined4 *)(iVar7 + 0x94),*(int *)(*piVar10 + 0x34),uVar17,
+                             *(undefined4 *)(iVar4 + 0x5c));
+                  MyAssertHandler(uVar5,0x160,0,0xffffffff820011f4,*(undefined4 *)(iVar7 + 0x9c),
+                                  uVar9);
+                }
+                uVar22 = uVar22 - 1;
+                lVar19 = lVar19 + 4;
+              } while (uVar22 != 0);
+            }
+            if (0 < iVar18) {
+              lVar19 = uVar8 - 0x2064;
+              uVar22 = uVar17;
+              do {
+                if (*(int *)(*(int *)((int)lVar19 + 4) + 0xc) < 0) {
+                  MyAssertHandler(uVar5,0x165,0,lVar14,*(undefined4 *)(iVar7 + 0xa4));
+                }
+                lVar19 = lVar19 + 4;
+                uVar22 = uVar22 - 1;
+                *(undefined4 *)(*(int *)lVar19 + 0xc) = 0xffffffff;
+              } while (uVar22 != 0);
+            }
+            if (*(int *)(iVar4 + 0x58) == 0) {
+              PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,*(undefined4 *)(iVar7 + 0xbc));
+              dxQuickStepper(dVar24,iVar4,uVar8 - 0x2060,uVar17,uVar8 - 0x1880,uVar15);
+              PIXEndNamedEvent();
             }
             else {
-              GVar4 = R_WARN_PHYSICS_BODY;
+              if (0x1f8 < (uVar17 & 0xffffffff)) {
+                MyAssertHandler(uVar5,0x172,0,*(undefined4 *)(iVar7 + 100),
+                                *(undefined4 *)(iVar7 + 0xac),uVar17);
+              }
+              if (0x400 < (uVar15 & 0xffffffff)) {
+                MyAssertHandler(uVar5,0x173,0,*(undefined4 *)(iVar7 + 0x68),
+                                *(undefined4 *)(iVar7 + 0xb4),uVar15);
+              }
+              Sys_EnterCriticalSection(0x29);
+              if ((DAT_844361e4 + uVar17 & 0xffffffff) < 0x1f9) {
+                if (0x400 < (DAT_844361e0 + uVar15 & 0xffffffff)) {
+                  uVar9 = 0x38;
+                  goto LAB_826a1ca8;
+                }
+              }
+              else {
+                uVar9 = 0x37;
 LAB_826a1ca8:
-              R_WarnOncePerFrame(GVar4);
-              WaitForPhysics();
+                R_WarnOncePerFrame(uVar9);
+                WaitForPhysics();
+              }
+              iVar23 = DAT_844361e4 * 4;
+              memcpy(&DAT_84435a00 + iVar23,(void *)(iVar7 + 0xf0),
+                     (size_t)((uVar17 & 0xffffffff) << 2));
+              _Dst = (void *)(DAT_844361e0 * 4 + -0x7bbcb600);
+              memcpy(_Dst,(void *)(iVar7 + 0x8d0),(size_t)((uVar15 & 0xffffffff) << 2));
+              *(float *)(iVar7 + 0xe0) = (float)dVar24;
+              *(int *)(iVar7 + 0xd0) = iVar4;
+              *(short *)(iVar7 + 0xd4) = (short)uVar17;
+              *(short *)(iVar7 + 0xd6) = (short)uVar15;
+              *(undefined **)(iVar7 + 0xd8) = &DAT_84435a00 + iVar23;
+              *(void **)(iVar7 + 0xdc) = _Dst;
+              R_AddWorkerCmd(0x1d,uVar8 - 0x2080);
+              DAT_844361e4 = DAT_844361e4 + iVar18;
+              DAT_844361e0 = DAT_844361e0 + iVar16;
+              Sys_LeaveCriticalSection(0x29);
             }
-            iVar15 = DAT_844361e4 * 4;
-            memcpy();
-            ppdVar9 = g_joint + g_totalJointCount;
-            memcpy();
-            local_2070 = (float)dVar17;
-            local_2080 = pdVar3;
-            local_207c = (undefined2)uVar6;
-            local_207a = (undefined2)uVar5;
-            local_2078 = iVar15 + -0x7bbca600;
-            local_2074 = ppdVar9;
-            R_AddWorkerCmd(WRKCMD_PHYSICS,&local_2080);
-            DAT_844361e4 = DAT_844361e4 + iVar7;
-            g_totalJointCount = g_totalJointCount + uVar5;
-            Sys_LeaveCriticalSection(CRITSECT_PHYSICS_ALLOC);
+            if (0 < iVar18) {
+              uVar11 = *(undefined4 *)(iVar7 + 0x54);
+              lVar19 = uVar8 - 0x2060;
+              do {
+                if (*(int *)(*(int *)lVar19 + 0xc) != -1) {
+                  MyAssertHandler(uVar5,0x19e,0,lVar14,lVar12);
+                }
+                if ((*(uint *)(*(int *)lVar19 + 0x18) & 4) != 0) {
+                  MyAssertHandler(uVar5,0x19f,0,lVar13,uVar11);
+                }
+                uVar17 = uVar17 - 1;
+                lVar19 = lVar19 + 4;
+              } while (uVar17 != 0);
+            }
+            if (0 < iVar16) {
+              uVar11 = *(undefined4 *)(iVar7 + 0x58);
+              lVar19 = uVar8 - 0x1880;
+              uVar6 = *(undefined4 *)(iVar7 + 0x50);
+              do {
+                if (*(int *)(*(int *)lVar19 + 0xc) != -1) {
+                  MyAssertHandler(uVar5,0x1a3,0,uVar6,uVar11);
+                }
+                uVar15 = uVar15 - 1;
+                lVar19 = lVar19 + 4;
+              } while (uVar15 != 0);
+            }
           }
-          if (0 < iVar7) {
-            ppdVar16 = local_2060;
+          else if (0 < iVar18) {
+            lVar19 = uVar8 - 0x2064;
             do {
-              if ((*ppdVar16)->_padding_ != -1) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x19e,0,"%s\n\t(body[i]->tag) = %i");
-              }
-              if (((*ppdVar16)->flags & 4U) != 0) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x19f,0,"%s");
-              }
-              uVar6 = uVar6 - 1;
-              ppdVar16 = ppdVar16 + 1;
-            } while (uVar6 != 0);
-          }
-          if (0 < (int)uVar5) {
-            ppdVar9 = apdStack_1884;
-            do {
-              ppdVar9 = ppdVar9 + 1;
-              if ((*ppdVar9)->_padding_ != -1) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp"
-                                ,0x1a3,0,"%s\n\t(joint[i]->tag) = %i");
-              }
-              uVar5 = uVar5 - 1;
-            } while (uVar5 != 0);
+              lVar19 = lVar19 + 4;
+              dBodyDisable(*(undefined4 *)lVar19);
+              uVar17 = uVar17 - 1;
+            } while (uVar17 != 0);
           }
         }
-        else if (0 < iVar7) {
-          piVar8 = &iStack_2064;
-          do {
-            piVar8 = piVar8 + 1;
-            dBodyDisable((dxBody *)*piVar8);
-            uVar6 = uVar6 - 1;
-          } while (uVar6 != 0);
-        }
-      }
+        iVar23 = **(int **)(iVar7 + 0x60);
+        *(int *)(iVar7 + 0x60) = iVar23;
+      } while (iVar23 != 0);
     }
   }
   __restgprlr();

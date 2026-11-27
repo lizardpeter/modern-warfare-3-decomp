@@ -2,14 +2,12 @@
 
 // 828A2D38  GetLastError  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/getlasterror.c:42)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ulong GetLastError(void)
+DWORD GetLastError(void)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = RtlGetLastError();
-  return uVar1;
+  DVar1 = RtlGetLastError();
+  return DVar1;
 }
 

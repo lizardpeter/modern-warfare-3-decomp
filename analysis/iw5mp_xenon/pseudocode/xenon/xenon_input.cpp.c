@@ -2,8 +2,6 @@
 
 // 82643688  TRACK_xenon_input  (xenon/xenon_input.cpp:268)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_xenon_input(void)
 
 {
@@ -13,88 +11,83 @@ void TRACK_xenon_input(void)
 
 // 82643690  IN_StartupGamepads  (xenon/xenon_input.cpp:288)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void IN_StartupGamepads(void)
 
 {
   GPad_InitAll();
-  GPad_SetInsertedCB(CL_ControllerInserted);
-  GPad_SetRemovedCB(CL_ControllerRemoved);
+  GPad_SetInsertedCB(0xffffffff8234be58);
+  GPad_SetRemovedCB(0xffffffff8234be90);
   return;
 }
 
 
 // 826436C8  IN_GamepadsMove  (xenon/xenon_input.cpp:300)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void IN_GamepadsMove(void)
 
 {
-  double dVar1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  uint uVar7;
-  bool bVar8;
-  int iVar9;
-  longlong lVar10;
-  int *piVar11;
-  int iVar12;
+  undefined8 uVar1;
+  char cVar2;
+  undefined8 uVar3;
+  longlong lVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   double dVar13;
-  float fVar14;
   
   __savegprlr_24();
   GPad_UpdateAll();
-  uVar7 = Sys_Milliseconds();
-  iVar12 = 0;
+  uVar1 = Sys_Milliseconds();
+  lVar6 = 0;
   dVar13 = 65535.0;
   do {
-    bVar8 = GPad_IsActive(iVar12);
-    if (bVar8) {
-      fVar14 = GPad_GetStick(iVar12,GPAD_LX);
-      dVar1 = (double)fVar14 * dVar13;
-      fVar14 = GPad_GetStick(iVar12,GPAD_LY);
-      dVar2 = (double)fVar14 * dVar13;
-      fVar14 = GPad_GetStick(iVar12,GPAD_RX);
-      dVar3 = (double)fVar14 * dVar13;
-      fVar14 = GPad_GetStick(iVar12,GPAD_RY);
-      dVar4 = (double)fVar14 * dVar13;
-      fVar14 = GPad_GetButton(iVar12,GPAD_L_TRIG);
-      dVar5 = (double)fVar14 * dVar13;
-      fVar14 = GPad_GetButton(iVar12,GPAD_R_TRIG);
-      dVar6 = (double)fVar14 * dVar13;
-      CL_GamepadEvent(iVar12,0,(int)dVar3,uVar7);
-      CL_GamepadEvent(iVar12,1,(int)dVar4,uVar7);
-      CL_GamepadEvent(iVar12,2,(int)dVar1,uVar7);
-      CL_GamepadEvent(iVar12,3,(int)dVar2,uVar7);
-      CL_GamepadEvent(iVar12,5,(int)dVar5,uVar7);
-      CL_GamepadEvent(iVar12,4,(int)dVar6,uVar7);
-      lVar10 = 0x10;
-      piVar11 = &buttonList[0].code;
+    cVar2 = GPad_IsActive(lVar6);
+    if (cVar2 != '\0') {
+      dVar7 = (double)GPad_GetStick(lVar6,0x40000000);
+      dVar7 = dVar7 * dVar13;
+      dVar8 = (double)GPad_GetStick(lVar6,0x40000001);
+      dVar8 = dVar8 * dVar13;
+      dVar9 = (double)GPad_GetStick(lVar6,0x40000002);
+      dVar9 = dVar9 * dVar13;
+      dVar10 = (double)GPad_GetStick(lVar6,0x40000003);
+      dVar10 = dVar10 * dVar13;
+      dVar11 = (double)GPad_GetButton(lVar6,0x20000000);
+      dVar11 = dVar11 * dVar13;
+      dVar12 = (double)GPad_GetButton(lVar6,0x20000001);
+      dVar12 = dVar12 * dVar13;
+      CL_GamepadEvent(lVar6,0,(int)dVar9,uVar1);
+      CL_GamepadEvent(lVar6,1,(int)dVar10,uVar1);
+      CL_GamepadEvent(lVar6,2,(int)dVar7,uVar1);
+      CL_GamepadEvent(lVar6,3,(int)dVar8,uVar1);
+      CL_GamepadEvent(lVar6,5,(int)dVar11,uVar1);
+      CL_GamepadEvent(lVar6,4,(int)dVar12,uVar1);
+      lVar4 = 0x10;
+      puVar5 = &DAT_82994f5c;
       do {
-        bVar8 = GPad_IsButtonPressed(iVar12,((ButtonToCodeMap_t *)(piVar11 + -1))->padButton);
-        if (bVar8) {
-          iVar9 = 1;
-LAB_82643884:
-          CL_GamepadButtonEventForPort(iVar12,*piVar11,iVar9,uVar7);
-        }
-        else {
-          bVar8 = GPad_IsButtonReleased(iVar12,((ButtonToCodeMap_t *)(piVar11 + -1))->padButton);
-          if (bVar8) {
-            iVar9 = 0;
+        cVar2 = GPad_IsButtonPressed(lVar6,puVar5[-1]);
+        if (cVar2 == '\0') {
+          cVar2 = GPad_IsButtonReleased(lVar6,puVar5[-1]);
+          if (cVar2 != '\0') {
+            uVar3 = 0;
             goto LAB_82643884;
           }
         }
-        lVar10 = lVar10 + -1;
-        piVar11 = piVar11 + 2;
-      } while (lVar10 != 0);
+        else {
+          uVar3 = 1;
+LAB_82643884:
+          CL_GamepadButtonEventForPort(lVar6,*puVar5,uVar3,uVar1);
+        }
+        lVar4 = lVar4 + -1;
+        puVar5 = puVar5 + 2;
+      } while (lVar4 != 0);
     }
-    iVar12 = iVar12 + 1;
-    if (3 < iVar12) {
+    lVar6 = lVar6 + 1;
+    if (3 < (int)lVar6) {
       __restgprlr_24();
       return;
     }
@@ -104,27 +97,27 @@ LAB_82643884:
 
 // 826438B8  IN_GamepadsReset  (xenon/xenon_input.cpp:352)
 
-void IN_GamepadsReset(int param_1)
+void IN_GamepadsReset(void)
 
 {
-  int iVar1;
-  uint uVar2;
-  char **ppcVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined **ppuVar3;
   longlong lVar4;
   
-  iVar1 = __savegprlr_28(param_1);
+  uVar1 = __savegprlr_28();
   uVar2 = Sys_Milliseconds();
-  CL_GamepadEvent(iVar1,0,0,uVar2);
-  CL_GamepadEvent(iVar1,1,0,uVar2);
-  CL_GamepadEvent(iVar1,2,0,uVar2);
-  CL_GamepadEvent(iVar1,3,0,uVar2);
-  CL_GamepadEvent(iVar1,5,0,uVar2);
-  CL_GamepadEvent(iVar1,4,0,uVar2);
+  CL_GamepadEvent(uVar1,0,0,uVar2);
+  CL_GamepadEvent(uVar1,1,0,uVar2);
+  CL_GamepadEvent(uVar1,2,0,uVar2);
+  CL_GamepadEvent(uVar1,3,0,uVar2);
+  CL_GamepadEvent(uVar1,5,0,uVar2);
+  CL_GamepadEvent(uVar1,4,0,uVar2);
   lVar4 = 0x10;
-  ppcVar3 = demoExeModeNames + 5;
+  ppuVar3 = &PTR_caseD_39_82994f54;
   do {
-    ppcVar3 = ppcVar3 + 2;
-    CL_GamepadButtonEventForPort(iVar1,(int)*ppcVar3,0,uVar2);
+    ppuVar3 = ppuVar3 + 2;
+    CL_GamepadButtonEventForPort(uVar1,*ppuVar3,0,uVar2);
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
   __restgprlr_28();
@@ -134,48 +127,46 @@ void IN_GamepadsReset(int param_1)
 
 // 82643980  IN_StartupXenonDevKeyboard  (xenon/xenon_input.cpp:377)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void IN_StartupXenonDevKeyboard(void)
+void * IN_StartupXenonDevKeyboard(void)
 
 {
-  memset();
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_8424a538,0,0x100);
   DAT_8424a638 = 0;
-  return;
+  return pvVar1;
 }
 
 
 // 826439C8  IN_XenonDevKeyboardHandleModifiers  (xenon/xenon_input.cpp:384)
 
-void IN_XenonDevKeyboardHandleModifiers(int param_1,ushort param_2)
+void IN_XenonDevKeyboardHandleModifiers(undefined8 param_1,ulonglong param_2)
 
 {
   int iVar1;
-  bool bVar2;
-  int iVar3;
-  uint uVar4;
-  ulonglong uVar5;
-  ushort *puVar6;
-  longlong lVar7;
-  int *piVar8;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  ushort *puVar4;
+  longlong lVar5;
+  int *piVar6;
+  bool bVar7;
   
-  uVar5 = (ulonglong)(short)param_2;
-  iVar3 = __savegprlr_25(param_1);
-  uVar4 = Sys_Milliseconds();
-  puVar6 = modifierMasks;
-  piVar8 = modifierKeyCodes;
-  lVar7 = 3;
+  uVar2 = __savegprlr_25();
+  uVar3 = Sys_Milliseconds();
+  puVar4 = &DAT_8218b418;
+  piVar6 = &DAT_8218b420;
+  lVar5 = 3;
   do {
-    iVar1 = *piVar8;
-    bVar2 = (uVar5 & 0xffff & (ulonglong)*puVar6) != 0;
-    if (bVar2 != xenonDevKeyIsDown[iVar1]) {
-      xenonDevKeyIsDown[iVar1] = bVar2;
-      CL_GamepadButtonEventForPort(iVar3,iVar1,(uint)bVar2,uVar4);
+    iVar1 = *piVar6;
+    bVar7 = (param_2 & 0xffff & (ulonglong)*puVar4) != 0;
+    if (bVar7 != (bool)(&DAT_8424a538)[iVar1]) {
+      (&DAT_8424a538)[iVar1] = bVar7;
+      CL_GamepadButtonEventForPort(uVar2,iVar1,bVar7,uVar3);
     }
-    lVar7 = lVar7 + -1;
-    puVar6 = puVar6 + 1;
-    piVar8 = piVar8 + 1;
-  } while (lVar7 != 0);
+    lVar5 = lVar5 + -1;
+    puVar4 = puVar4 + 1;
+    piVar6 = piVar6 + 1;
+  } while (lVar5 != 0);
   __restgprlr_25();
   return;
 }
@@ -183,23 +174,23 @@ void IN_XenonDevKeyboardHandleModifiers(int param_1,ushort param_2)
 
 // 82643A50  IN_XenonDevKeyboardConvertKey  (xenon/xenon_input.cpp:406)
 
-uint IN_XenonDevKeyboardConvertKey(int param_1)
+uint IN_XenonDevKeyboardConvertKey(ulonglong param_1)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
+  int iVar1;
+  uint uVar2;
   
-  if ((0 < param_1) && (param_1 < 0x92)) {
-    uVar1 = tolower((uint)virtualKeyConvert[param_1][1]);
-    return uVar1;
+  iVar1 = (int)param_1;
+  if ((0 < iVar1) && (iVar1 < 0x92)) {
+    uVar2 = tolower((uint)(byte)(&DAT_8218b431)[(int)((param_1 & 0xffffffff) << 1)]);
+    return uVar2;
   }
-  if ((0xb9 < param_1) && (param_1 < 0xdf)) {
-    uVar2 = (longlong)param_1 - 0xba;
-    if (((longlong)uVar2 < 0) || (0x24 < (uVar2 & 0xffffffff))) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_input.cpp",0x1a4
-                      ,0,"%s");
+  if ((0xb9 < iVar1) && (iVar1 < 0xdf)) {
+    param_1 = param_1 - 0xba;
+    if (((longlong)param_1 < 0) || (0x24 < (param_1 & 0xffffffff))) {
+      MyAssertHandler(0xffffffff8218b580,0x1a4,0,0xffffffff82000f98,0xffffffff8218b5c0);
     }
-    return (uint)";=,-./`"[(int)uVar2];
+    return (uint)(byte)(&UNK_8218b554)[(int)param_1];
   }
   return 0;
 }
@@ -207,18 +198,19 @@ uint IN_XenonDevKeyboardConvertKey(int param_1)
 
 // 82643B20  IN_XenonDevKeyboardProcessKeyDown  (xenon/xenon_input.cpp:429)
 
-void IN_XenonDevKeyboardProcessKeyDown(int param_1,int param_2,char param_3,int param_4,int param_5)
+void IN_XenonDevKeyboardProcessKeyDown
+               (undefined8 param_1,int param_2,char param_3,undefined8 param_4,undefined8 param_5)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  xenonDevKeyIsDown[param_2] = true;
-  if (param_4 != 0) {
-    CL_GamepadButtonEventForPort(iVar1,param_4,1,param_5);
+  uVar1 = __savegprlr_29();
+  (&DAT_8424a538)[param_2] = 1;
+  if ((int)param_4 != 0) {
+    CL_GamepadButtonEventForPort(uVar1,param_4,1,param_5);
   }
-  if (param_3 != 0) {
-    Sys_QueEvent(param_5,SE_CHAR,(int)param_3,0,iVar1,0,(void *)0x0);
+  if (param_3 != '\0') {
+    Sys_QueEvent(param_5,1,param_3,0,uVar1,0,0);
   }
   __restgprlr_29();
   return;
@@ -228,21 +220,17 @@ void IN_XenonDevKeyboardProcessKeyDown(int param_1,int param_2,char param_3,int 
 // 82643B98  IN_XenonDevKeyboardProcessKeyRepeat  (xenon/xenon_input.cpp:441)
 
 void IN_XenonDevKeyboardProcessKeyRepeat
-               (int param_1,int param_2,char param_3,int param_4,int param_5)
+               (undefined8 param_1,char param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  int iVar1;
-  char cVar2;
-  int iVar3;
+  undefined8 uVar1;
   
-  iVar3 = (int)param_3;
-  cVar2 = (char)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar3 != 0) {
-    CL_GamepadButtonEventForPort(iVar1,iVar3,1,param_4);
+  uVar1 = __savegprlr_29();
+  if ((int)param_3 != 0) {
+    CL_GamepadButtonEventForPort(uVar1,param_3,1);
   }
-  if (cVar2 != 0) {
-    Sys_QueEvent(param_4,SE_CHAR,(int)cVar2,0,iVar1,0,(void *)0x0);
+  if (param_2 != '\0') {
+    Sys_QueEvent(param_4,1,param_2,0,uVar1,0,0);
   }
   __restgprlr_29();
   return;
@@ -251,11 +239,11 @@ void IN_XenonDevKeyboardProcessKeyRepeat
 
 // 82643BF8  IN_XenonDevKeyboardProcessKeyUp  (xenon/xenon_input.cpp:451)
 
-void IN_XenonDevKeyboardProcessKeyUp(int param_1,int param_2,int param_3,int param_4)
+void IN_XenonDevKeyboardProcessKeyUp(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-  xenonDevKeyIsDown[param_2] = false;
-  CL_GamepadButtonEventForPort(param_1,param_3,0,param_4);
+  (&DAT_8424a538)[param_2] = 0;
+  CL_GamepadButtonEventForPort(param_1,param_3,0);
   return;
 }
 
@@ -263,30 +251,29 @@ void IN_XenonDevKeyboardProcessKeyUp(int param_1,int param_2,int param_3,int par
 // 82643C18  IN_XenonGenerateFakeKeyPress  (xenon/xenon_input.cpp:459)
 
 void IN_XenonGenerateFakeKeyPress
-               (int param_1,uint param_2,char param_3,int param_4,int param_5,bool param_6)
+               (undefined8 param_1,int param_2,char param_3,undefined8 param_4,undefined8 param_5,
+               ulonglong param_6)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  undefined8 uVar1;
   
-  uVar2 = (ulonglong)param_6;
-  iVar1 = __savegprlr_24(param_1);
-  if ((uVar2 & 0xff) != 0) {
-    xenonDevKeyIsDown[param_2] = true;
-    CL_GamepadButtonEventForPort(iVar1,0xa0,1,param_5);
+  uVar1 = __savegprlr_24();
+  if ((param_6 & 0xff) != 0) {
+    (&DAT_8424a538)[param_2] = 1;
+    CL_GamepadButtonEventForPort(uVar1,0xa0,1,param_5);
   }
-  xenonDevKeyIsDown[param_2] = true;
-  if (param_4 != 0) {
-    CL_GamepadButtonEventForPort(iVar1,param_4,1,param_5);
+  (&DAT_8424a538)[param_2] = 1;
+  if ((int)param_4 != 0) {
+    CL_GamepadButtonEventForPort(uVar1,param_4,1,param_5);
   }
-  if (param_3 != 0) {
-    Sys_QueEvent(param_5,SE_CHAR,(int)param_3,0,iVar1,0,(void *)0x0);
+  if (param_3 != '\0') {
+    Sys_QueEvent(param_5,1,param_3,0,uVar1,0,0);
   }
-  xenonDevKeyIsDown[param_2] = false;
-  CL_GamepadButtonEventForPort(iVar1,param_4,0,param_5);
-  if ((uVar2 & 0xff) != 0) {
-    xenonDevKeyIsDown[param_2] = false;
-    CL_GamepadButtonEventForPort(iVar1,0xa0,0,param_5);
+  (&DAT_8424a538)[param_2] = 0;
+  CL_GamepadButtonEventForPort(uVar1,param_4,0,param_5);
+  if ((param_6 & 0xff) != 0) {
+    (&DAT_8424a538)[param_2] = 0;
+    CL_GamepadButtonEventForPort(uVar1,0xa0,0,param_5);
   }
   __restgprlr_24();
   return;
@@ -295,146 +282,145 @@ void IN_XenonGenerateFakeKeyPress
 
 // 82643CF0  IN_XenonChatpadGenerateFakeKeys  (xenon/xenon_input.cpp:470)
 
-bool IN_XenonChatpadGenerateFakeKeys
-               (_XINPUT_KEYSTROKE *param_1,int param_2,uint param_3,int param_4)
+void IN_XenonChatpadGenerateFakeKeys
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
   ushort uVar1;
   int iVar2;
-  undefined1 uVar3;
-  char cVar4;
-  bool bVar5;
-  char acStack_140 [320];
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined1 auStack_140 [320];
   
-  iVar2 = __savegprlr_28(param_1);
-  memcpy();
+  iVar2 = __savegprlr_28();
+  memcpy(auStack_140,
+         "XBox 360 Messenger Kit Chatpad Help:\nORANGE+. (upside down questionmark) - This help (and toggle console output window)\nORANGE+Q - Toggle console\nORANGE+A - Toggle console output window\nORANGE+W - Up\nORANGE+S - Down\nORANGE+E - PageUp\nORANGE+D - PageDown\nORANGE+Z - Tab\n\n"
+         ,0x10f);
   if ((*(ushort *)(iVar2 + 4) & 0x1000) == 0) goto LAB_82643dd8;
   uVar1 = *(ushort *)(iVar2 + 2);
   if (uVar1 < 0xe6) {
     if (uVar1 == 0xe5) {
-      iVar2 = 0x9a;
+      uVar4 = 0x9a;
       goto LAB_82643df8;
     }
     if (0xdf < uVar1) {
       if (uVar1 != 0xe1) {
 LAB_82643dd8:
-        uVar3 = __restgprlr_28(0);
-        return (bool)uVar3;
+        __restgprlr_28(0);
+        return;
       }
-      bVar5 = true;
-      iVar2 = 0x60;
-      cVar4 = '~';
+      uVar5 = 1;
+      uVar4 = 0x60;
+      uVar3 = 0x7e;
       goto LAB_82643e00;
     }
     if (uVar1 == 0xdf) {
-      iVar2 = 0x9b;
+      uVar4 = 0x9b;
       goto LAB_82643df8;
     }
     if (uVar1 != 0xa1) {
       if (uVar1 == 0xbf) {
-        IN_XenonGenerateFakeKeyPress(param_2,param_3,'`',0x60,param_4,true);
-        Com_Printf_NoFilter(acStack_140);
-        uVar3 = __restgprlr_28(1);
-        return (bool)uVar3;
+        IN_XenonGenerateFakeKeyPress(param_2,param_3,0x60,0x60,param_4,1);
+        Com_Printf_NoFilter(auStack_140);
+        __restgprlr_28(1);
+        return;
       }
       goto LAB_82643dd8;
     }
-    iVar2 = 0x60;
-    cVar4 = '`';
+    uVar4 = 0x60;
+    uVar3 = 0x60;
   }
   else {
     if (uVar1 == 0xe6) {
-      iVar2 = 9;
+      uVar4 = 9;
     }
     else if (uVar1 == 0xe9) {
-      iVar2 = 0xa4;
+      uVar4 = 0xa4;
     }
     else {
       if (uVar1 != 0xf0) goto LAB_82643dd8;
-      iVar2 = 0xa3;
+      uVar4 = 0xa3;
     }
 LAB_82643df8:
-    cVar4 = '\0';
+    uVar3 = 0;
   }
-  bVar5 = false;
+  uVar5 = 0;
 LAB_82643e00:
-  IN_XenonGenerateFakeKeyPress(param_2,param_3,cVar4,iVar2,param_4,bVar5);
-  uVar3 = __restgprlr_28(1);
-  return (bool)uVar3;
+  IN_XenonGenerateFakeKeyPress(param_2,param_3,uVar3,uVar4,param_4,uVar5);
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 82643E20  IN_XenonDevKeyboard  (xenon/xenon_input.cpp:526)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void IN_XenonDevKeyboard(void)
 
 {
-  ushort uVar1;
-  int iVar2;
-  uint uVar3;
-  bool bVar6;
-  ulong uVar4;
-  uint uVar5;
+  undefined4 uVar1;
+  ushort uVar2;
+  undefined8 uVar3;
   char cVar7;
-  ulong uVar8;
-  _XINPUT_KEYSTROKE local_60 [12];
+  int iVar6;
+  ulonglong uVar4;
+  undefined8 uVar5;
+  longlong lVar8;
+  ushort local_60;
+  ushort local_5e;
+  ushort local_5c;
   
   __savegprlr_23();
   uVar3 = Sys_Milliseconds();
-  iVar2 = cl_controller_in_use;
-  uVar8 = 0;
+  uVar1 = DAT_82b5c820;
+  lVar8 = 0;
   do {
-    bVar6 = GPad_HasKeyboard(uVar8);
-    if (bVar6) {
-      uVar4 = XInputGetKeystroke(uVar8,2,local_60);
-      uVar1 = local_60[0].VirtualKey;
-      while ((local_60[0].VirtualKey = uVar1, uVar4 == 0 && (local_60[0].Flags != 0))) {
-        uVar5 = IN_XenonDevKeyboardConvertKey((uint)uVar1);
-        if (uVar1 < 0x100) {
-          bVar6 = IN_XenonChatpadGenerateFakeKeys(local_60,iVar2,(uint)uVar1,uVar3);
-          uVar5 = -(uint)!bVar6 & uVar5;
-          IN_XenonDevKeyboardHandleModifiers(uVar8,local_60[0].Flags);
-          if (((local_60[0].Flags & 1) != 0) && (xenonDevKeyIsDown[uVar1] == false)) {
-            if (((local_60[0].Flags & 0x1000) == 0) ||
-               (cVar7 = (char)local_60[0].Unicode, 0x7f < (ushort)local_60[0].Unicode)) {
+    cVar7 = GPad_HasKeyboard(lVar8);
+    if (cVar7 != '\0') {
+      iVar6 = XInputGetKeystroke(lVar8,2,&local_60);
+      while ((uVar2 = local_60, iVar6 == 0 && (local_5c != 0))) {
+        uVar4 = IN_XenonDevKeyboardConvertKey(local_60);
+        if (uVar2 < 0x100) {
+          cVar7 = IN_XenonChatpadGenerateFakeKeys(&local_60,uVar1,uVar2,uVar3);
+          uVar4 = -(ulonglong)(cVar7 == '\0') & uVar4;
+          IN_XenonDevKeyboardHandleModifiers(lVar8,local_5c);
+          if (((local_5c & 1) != 0) && ((&DAT_8424a538)[uVar2] == '\0')) {
+            if (((local_5c & 0x1000) == 0) || (cVar7 = (char)local_5e, 0x7f < local_5e)) {
               cVar7 = '\0';
             }
-            xenonDevKeyIsDown[uVar1] = true;
-            if (uVar5 != 0) {
-              CL_GamepadButtonEventForPort(iVar2,uVar5,1,uVar3);
+            (&DAT_8424a538)[uVar2] = 1;
+            if ((int)uVar4 != 0) {
+              CL_GamepadButtonEventForPort(uVar1,uVar4,1,uVar3);
             }
-            if (cVar7 != 0) {
-              Sys_QueEvent(uVar3,SE_CHAR,(int)cVar7,0,iVar2,0,(void *)0x0);
+            if (cVar7 != '\0') {
+              Sys_QueEvent(uVar3,1,cVar7,0,uVar1,0);
             }
-            DAT_8424a638 = (uint)uVar1;
-            DAT_8424a63c = uVar3;
+            DAT_8424a638 = (uint)uVar2;
+            DAT_8424a63c = (int)uVar3;
             DAT_8424a640 = cVar7;
           }
-          if (((local_60[0].Flags & 2) != 0) && (xenonDevKeyIsDown[uVar1] != false)) {
-            xenonDevKeyIsDown[uVar1] = false;
-            CL_GamepadButtonEventForPort(iVar2,uVar5,0,uVar3);
+          if (((local_5c & 2) != 0) && ((&DAT_8424a538)[uVar2] != '\0')) {
+            (&DAT_8424a538)[uVar2] = 0;
+            CL_GamepadButtonEventForPort(uVar1,uVar4,0,uVar3);
           }
         }
-        uVar4 = XInputGetKeystroke(uVar8,2,local_60);
-        uVar1 = local_60[0].VirtualKey;
+        iVar6 = XInputGetKeystroke(lVar8,2,&local_60);
       }
-      if (((DAT_8424a638 != 0) && (xenonDevKeyIsDown[DAT_8424a638] != false)) &&
-         (500 < (int)(uVar3 - DAT_8424a63c))) {
+      if (((DAT_8424a638 != 0) && ((&DAT_8424a538)[DAT_8424a638] != '\0')) &&
+         (500 < (int)uVar3 - DAT_8424a63c)) {
         DAT_8424a63c = DAT_8424a63c + 0x32;
-        uVar5 = IN_XenonDevKeyboardConvertKey(DAT_8424a638);
+        uVar5 = IN_XenonDevKeyboardConvertKey();
         cVar7 = DAT_8424a640;
-        if (uVar5 != 0) {
-          CL_GamepadButtonEventForPort(iVar2,uVar5,1,uVar3);
+        if ((int)uVar5 != 0) {
+          CL_GamepadButtonEventForPort(uVar1,uVar5,1,uVar3);
         }
-        if (cVar7 != 0) {
-          Sys_QueEvent(uVar3,SE_CHAR,(int)cVar7,0,iVar2,0,(void *)0x0);
+        if (cVar7 != '\0') {
+          Sys_QueEvent(uVar3,1,cVar7,0,uVar1,0);
         }
       }
     }
-    uVar8 = uVar8 + 1;
-  } while ((int)uVar8 < 4);
+    lVar8 = lVar8 + 1;
+  } while ((int)lVar8 < 4);
   __restgprlr_23();
   return;
 }
@@ -442,12 +428,10 @@ void IN_XenonDevKeyboard(void)
 
 // 82644048  IN_Frame  (xenon/xenon_input.cpp:587)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void IN_Frame(void)
 
 {
-  if (g_consoleDevKeyboardEnabled) {
+  if (DAT_82994fd8 != '\0') {
     IN_XenonDevKeyboard();
   }
   IN_GamepadsMove();
@@ -457,41 +441,39 @@ void IN_Frame(void)
 
 // 82644080  IN_Init  (xenon/xenon_input.cpp:597)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void IN_Init(void)
 
 {
-  memset();
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_8424a538,0,0x100);
   DAT_8424a638 = 0;
-  GPad_InitAll();
-  GPad_SetInsertedCB(CL_ControllerInserted);
-  GPad_SetRemovedCB(CL_ControllerRemoved);
+  GPad_InitAll(pvVar1);
+  GPad_SetInsertedCB(0xffffffff8234be58);
+  GPad_SetRemovedCB(0xffffffff8234be90);
   return;
 }
 
 
 // 826440E0  IN_Shutdown  (xenon/xenon_input.cpp:607)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void IN_Shutdown(void)
 
 {
-  int iVar1;
+  longlong lVar1;
   
-  iVar1 = 0;
+  lVar1 = 0;
   do {
-    GPad_StopRumbles(iVar1);
-    iVar1 = iVar1 + 1;
-  } while (iVar1 < 4);
+    GPad_StopRumbles(lVar1);
+    lVar1 = lVar1 + 1;
+  } while ((int)lVar1 < 4);
   return;
 }
 
 
 // 82644120  IN_ActivateMouse  (xenon/xenon_input.cpp:618)
 
-void IN_ActivateMouse(int param_1)
+void IN_ActivateMouse(void)
 
 {
   return;
@@ -499,8 +481,6 @@ void IN_ActivateMouse(int param_1)
 
 
 // 82644128  IN_SetForegroundWindow  (xenon/xenon_input.cpp:619)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void IN_SetForegroundWindow(void)
 
@@ -511,9 +491,7 @@ void IN_SetForegroundWindow(void)
 
 // 82644130  IN_IsForegroundWindow  (xenon/xenon_input.cpp:620)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int IN_IsForegroundWindow(void)
+undefined8 IN_IsForegroundWindow(void)
 
 {
   return 1;
@@ -521,8 +499,6 @@ int IN_IsForegroundWindow(void)
 
 
 // 82644138  IN_DeactivateMouse  (xenon/xenon_input.cpp:621)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void IN_DeactivateMouse(void)
 

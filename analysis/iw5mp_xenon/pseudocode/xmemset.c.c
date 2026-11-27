@@ -2,115 +2,110 @@
 
 // 828A27F0  XMemSet  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xmemset.c:31)
 
-void * XMemSet(void *param_1,int param_2,ulong param_3)
+void XMemSet(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   uint uVar1;
   undefined8 in_r0;
   longlong lVar2;
-  void *pvVar3;
+  ulonglong uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
   longlong lVar6;
   longlong lVar7;
   int iVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
   undefined1 auVar12 [16];
-  undefined1 auVar13 [16];
-  undefined1 auVar14 [16];
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar11 = (ulonglong)param_2;
-  lVar2 = __savegprlr_29(param_1);
-  if ((uVar9 & 0xffffffff) < 0x10) {
+  lVar2 = __savegprlr_29();
+  if ((param_3 & 0xffffffff) < 0x10) {
     iVar8 = 0;
-    if ((uVar9 & 0xffffffff) != 0) {
+    if ((param_3 & 0xffffffff) != 0) {
       do {
-        *(char *)(iVar8 + (int)lVar2) = (char)uVar11;
+        *(char *)(iVar8 + (int)lVar2) = (char)param_2;
         iVar8 = iVar8 + 1;
-        uVar9 = uVar9 - 1;
-      } while (uVar9 != 0);
+        param_3 = param_3 - 1;
+      } while (param_3 != 0);
     }
   }
   else {
-    auVar12 = vectorSplatImmediateSignedByte(4);
-    auVar14 = loadVectorForShiftLeft(in_r0,uVar11);
-    uVar10 = -lVar2 & 0xf;
-    auVar13 = loadVectorForShiftLeft(in_r0,(longlong)((int)uVar11 >> 4));
-    uVar5 = (ulonglong)(uint)((int)-lVar2 >> 4) & 7;
-    auVar12 = vectorShiftLeftIntegerByte(auVar13,auVar12);
-    auVar12 = (auVar14 | auVar12) >> 0x78;
-    auVar12 = auVar12 & (undefined1  [16])0xff | auVar12 << 8 | auVar12 << 0x10 | auVar12 << 0x18 |
-              auVar12 << 0x20 | auVar12 << 0x28 | auVar12 << 0x30 | auVar12 << 0x38 |
-              auVar12 << 0x40 | auVar12 << 0x48 | auVar12 << 0x50 | auVar12 << 0x58 |
-              auVar12 << 0x60 | auVar12 << 0x68 | auVar12 << 0x70 | auVar12 << 0x78;
+    auVar10 = vectorSplatImmediateSignedByte(4);
+    auVar12 = loadVectorForShiftLeft(in_r0,param_2);
+    uVar9 = -lVar2 & 0xf;
+    auVar11 = loadVectorForShiftLeft(in_r0,(longlong)((int)param_2 >> 4));
+    uVar4 = (ulonglong)(uint)((int)-lVar2 >> 4) & 7;
+    auVar10 = vectorShiftLeftIntegerByte(auVar11,auVar10);
+    auVar10 = (auVar12 | auVar10) >> 0x78;
+    auVar10 = auVar10 & (undefined1  [16])0xff | auVar10 << 8 | auVar10 << 0x10 | auVar10 << 0x18 |
+              auVar10 << 0x20 | auVar10 << 0x28 | auVar10 << 0x30 | auVar10 << 0x38 |
+              auVar10 << 0x40 | auVar10 << 0x48 | auVar10 << 0x50 | auVar10 << 0x58 |
+              auVar10 << 0x60 | auVar10 << 0x68 | auVar10 << 0x70 | auVar10 << 0x78;
     lVar7 = lVar2;
-    if (uVar10 != 0) {
-      storeVectorLeftIndexed(auVar12,lVar2);
-      uVar9 = uVar9 - uVar10;
-      lVar7 = uVar10 + lVar2;
+    if (uVar9 != 0) {
+      storeVectorLeftIndexed(auVar10,lVar2);
+      param_3 = param_3 - uVar9;
+      lVar7 = uVar9 + lVar2;
     }
-    uVar10 = (uVar9 & 0xffffffff) >> 4;
-    if (uVar10 < uVar5) {
-      uVar5 = uVar10;
+    uVar9 = (param_3 & 0xffffffff) >> 4;
+    if (uVar9 < uVar4) {
+      uVar4 = uVar9;
     }
-    uVar4 = (ulonglong)(uint)s_16;
-    for (uVar10 = uVar5; uVar10 != 0; uVar10 = uVar10 - 1) {
-      *(undefined1 (*) [16])((uint)lVar7 & 0xfffffff0) = auVar12;
-      lVar7 = uVar4 + lVar7;
+    uVar3 = (ulonglong)DAT_829a84b8;
+    for (uVar9 = uVar4; uVar9 != 0; uVar9 = uVar9 - 1) {
+      *(undefined1 (*) [16])((uint)lVar7 & 0xfffffff0) = auVar10;
+      lVar7 = uVar3 + lVar7;
     }
-    uVar9 = uVar9 + uVar5 * -0x10;
-    uVar10 = (uVar9 & 0xffffffff) >> 7;
-    uVar5 = uVar10;
-    if ((uVar11 & 0xff) == 0) {
-      for (; uVar5 != 0; uVar5 = uVar5 - 1) {
+    param_3 = param_3 + uVar4 * -0x10;
+    uVar9 = (param_3 & 0xffffffff) >> 7;
+    uVar4 = uVar9;
+    if ((param_2 & 0xff) == 0) {
+      for (; uVar4 != 0; uVar4 = uVar4 - 1) {
         dataCacheBlockClearToZero128(lVar7);
         lVar7 = lVar7 + 0x80;
       }
     }
     else {
-      uVar11 = uVar10;
-      if (3 < uVar10) {
-        uVar11 = 4;
+      if (3 < uVar9) {
+        uVar4 = 4;
       }
       uVar5 = 0;
-      for (; uVar11 != 0; uVar11 = uVar11 - 1) {
+      for (; uVar4 != 0; uVar4 = uVar4 - 1) {
         dataCacheBlockClearToZero128((uVar5 & 0x1ffffff) * 0x80 + lVar7);
         uVar5 = uVar5 + 1;
       }
       lVar6 = 0;
-      for (uVar11 = uVar10; uVar11 != 0; uVar11 = uVar11 - 1) {
-        if ((lVar6 + 4U & 0xffffffff) < uVar10) {
+      for (uVar4 = uVar9; uVar4 != 0; uVar4 = uVar4 - 1) {
+        if ((lVar6 + 4U & 0xffffffff) < uVar9) {
           dataCacheBlockClearToZero128(lVar7 + 0x200);
         }
         uVar1 = (uint)lVar7;
-        *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar12;
-        *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0) = auVar12;
-        *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0) = auVar12;
-        *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0) = auVar12;
+        *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar10;
+        *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0) = auVar10;
+        *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0) = auVar10;
+        *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0) = auVar10;
         lVar6 = lVar6 + 1;
-        *(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0) = auVar12;
-        *(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0) = auVar12;
-        *(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0) = auVar12;
-        *(undefined1 (*) [16])(uVar1 + 0x70 & 0xfffffff0) = auVar12;
+        *(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0) = auVar10;
+        *(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0) = auVar10;
+        *(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0) = auVar10;
+        *(undefined1 (*) [16])(uVar1 + 0x70 & 0xfffffff0) = auVar10;
         lVar7 = lVar7 + 0x80;
       }
     }
-    uVar9 = uVar9 + uVar10 * -0x80;
-    if (0xf < (uVar9 & 0xffffffff)) {
-      uVar11 = (uVar9 & 0xffffffff) >> 4;
+    param_3 = param_3 + uVar9 * -0x80;
+    if (0xf < (param_3 & 0xffffffff)) {
+      uVar9 = (param_3 & 0xffffffff) >> 4;
       do {
-        *(undefined1 (*) [16])((uint)lVar7 & 0xfffffff0) = auVar12;
-        lVar7 = uVar4 + lVar7;
-        uVar9 = uVar9 - 0x10;
-        uVar11 = uVar11 - 1;
-      } while (uVar11 != 0);
+        *(undefined1 (*) [16])((uint)lVar7 & 0xfffffff0) = auVar10;
+        lVar7 = uVar3 + lVar7;
+        param_3 = param_3 - 0x10;
+        uVar9 = uVar9 - 1;
+      } while (uVar9 != 0);
     }
-    storeVectorRightIndexed(auVar12,lVar7 + uVar9);
+    storeVectorRightIndexed(auVar10,lVar7 + param_3);
   }
-  pvVar3 = (void *)__restgprlr_29(lVar2);
-  return pvVar3;
+  __restgprlr_29(lVar2);
+  return;
 }
 

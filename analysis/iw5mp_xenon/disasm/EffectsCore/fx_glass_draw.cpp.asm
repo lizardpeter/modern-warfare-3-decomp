@@ -3056,7 +3056,7 @@ LAB_8242dc9c:
   8242DCC8  EBE1FFF0             ld r31,-0x10(r1)
   8242DCCC  4E800020             blr
 
-; 8242DFF0  _Push_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 8242DFF0  std::_Push_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   8242DFF0  7D8802A6             mfspr r12,LR
   8242DFF4  484E86B9             bl 0x829166ac
   8242DFF8  9421FF70             stwu r1,-0x90(r1)
@@ -3102,7 +3102,7 @@ LAB_8242e078:
   8242E090  38210090             addi r1,r1,0x90
   8242E094  484E8668             b 0x829166fc
 
-; 8242E098  _Adjust_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 8242E098  std::_Adjust_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   8242E098  7D8802A6             mfspr r12,LR
   8242E09C  484E8611             bl 0x829166ac
   8242E0A0  9421FF70             stwu r1,-0x90(r1)
@@ -3191,7 +3191,7 @@ LAB_8242e1bc:
   8242E1D4  38210090             addi r1,r1,0x90
   8242E1D8  484E8524             b 0x829166fc
 
-; 8242E1E0  _Make_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 8242E1E0  std::_Make_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   8242E1E0  7D8802A6             mfspr r12,LR
   8242E1E4  484E84C5             bl 0x829166a8
   8242E1E8  9421FF60             stwu r1,-0xa0(r1)
@@ -3264,7 +3264,7 @@ LAB_8242e2dc:
   8242E2DC  382100A0             addi r1,r1,0xa0
   8242E2E0  484E8418             b 0x829166f8
 
-; 8242E800  _Sort_heap<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 8242E800  std::_Sort_heap<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   8242E800  7D8802A6             mfspr r12,LR
   8242E804  484E7EB9             bl 0x829166bc
   8242E808  9421FF80             stwu r1,-0x80(r1)
@@ -3299,7 +3299,7 @@ LAB_8242e874:
   8242E874  38210080             addi r1,r1,0x80
   8242E878  484E7E94             b 0x8291670c
 
-; 8242E450  _Insertion_sort1<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&),FxGlassPieceVisRef>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 8242E450  std::_Insertion_sort1<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&),FxGlassPieceVisRef>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   8242E450  7D8802A6             mfspr r12,LR
   8242E454  484E8259             bl 0x829166ac
   8242E458  9421FF60             stwu r1,-0xa0(r1)
@@ -3373,7 +3373,7 @@ LAB_8242e548:
   8242E548  382100A0             addi r1,r1,0xa0
   8242E54C  484E81B0             b 0x829166fc
 
-; 8242E2E8  _Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 8242E2E8  std::_Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   8242E2E8  7D8802A6             mfspr r12,LR
   8242E2EC  484E83CD             bl 0x829166b8
   8242E2F0  9421FF80             stwu r1,-0x80(r1)
@@ -3426,7 +3426,7 @@ LAB_8242e3a0:
   8242E3A0  38210080             addi r1,r1,0x80
   8242E3A4  484E8364             b 0x82916708
 
-; 8242E3A8  _Median<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 8242E3A8  std::_Median<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   8242E3A8  7D8802A6             mfspr r12,LR
   8242E3AC  484E8305             bl 0x829166b0
   8242E3B0  9421FF70             stwu r1,-0x90(r1)
@@ -3471,7 +3471,7 @@ LAB_8242e43c:
   8242E448  38210090             addi r1,r1,0x90
   8242E44C  484E82B4             b 0x82916700
 
-; 8242E550  _Unguarded_partition<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 8242E550  std::_Unguarded_partition<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   8242E550  7D8802A6             mfspr r12,LR
   8242E554  484E8151             bl 0x829166a4
   8242E558  9421FF60             stwu r1,-0xa0(r1)
@@ -3661,7 +3661,7 @@ LAB_8242e7e8:
   8242E7F4  382100A0             addi r1,r1,0xa0
   8242E7F8  484E7EFC             b 0x829166f4
 
-; 8242E880  _Sort<FxGlassPieceVisRef_*,int,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 8242E880  std::_Sort<FxGlassPieceVisRef_*,int,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   8242E880  7D8802A6             mfspr r12,LR
   8242E884  484E7E2D             bl 0x829166b0
   8242E888  9421FF70             stwu r1,-0x90(r1)

@@ -2,22 +2,22 @@
 
 // 828A2E70  Sleep  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/sleep.c:45)
 
-void Sleep(ulong param_1)
+void Sleep(DWORD dwMilliseconds)
 
 {
-  SleepEx(param_1,0);
+  SleepEx(dwMilliseconds,0);
   return;
 }
 
 
 // 828A2E10  SleepEx  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/sleep.c:95)
 
-ulong SleepEx(ulong param_1,int param_2)
+DWORD SleepEx(DWORD dwMilliseconds,BOOL bAlertable)
 
 {
-  long lVar1;
+  longlong lVar1;
   
-  lVar1 = RtlSleep(param_1,(uchar)param_2);
+  lVar1 = RtlSleep(dwMilliseconds,bAlertable & 0xff);
   return -(uint)(lVar1 == 0xc0) & 0xc0;
 }
 

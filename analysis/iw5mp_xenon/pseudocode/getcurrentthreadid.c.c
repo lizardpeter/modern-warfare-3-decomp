@@ -2,13 +2,11 @@
 
 // 828A91D8  GetCurrentThreadId  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/getcurrentthreadid.c:38)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ulong GetCurrentThreadId(void)
+DWORD GetCurrentThreadId(void)
 
 {
   int in_r13;
   
-  return *(ulong *)(*(int *)(in_r13 + 0x100) + 0x14c);
+  return *(DWORD *)(*(int *)(in_r13 + 0x100) + 0x14c);
 }
 

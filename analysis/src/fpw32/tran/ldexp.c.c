@@ -2,80 +2,83 @@
 
 // 8291C100  ldexp  (<external>/bt/278379/vctools/crt/src/fpw32/tran/ldexp.c:37)
 
-double ldexp(double param_1,int param_2)
+double ldexp(double _X,int _Y)
 
 {
-  int iVar1;
-  int *piVar2;
-  int in_r4;
-  uint uVar3;
-  uint in_r5;
-  double dVar4;
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  longlong in_r4;
+  int iVar4;
   double dVar5;
+  double _Sign;
   double dVar6;
-  double dStack00000010;
-  int local_40;
+  ushort uStack00000010;
+  uint local_40 [2];
+  longlong local_38;
   
-  dVar4 = (double)__savegprlr_29(param_2);
-  uVar3 = 0xc007feff;
-  piVar2 = (int *)0xf8;
-  dStack00000010 = dVar4;
-  _ctrlfp();
-  if (((ulonglong)dStack00000010 >> 0x30 & 0x7ff0) == 0x7ff0) {
-    iVar1 = _sptype(dVar4);
-    if (0 < iVar1) {
-      if (iVar1 < 3) goto LAB_8291c2b4;
-      if (iVar1 == 3) {
-        dVar4 = _handle_qnan2(0x19,dVar4,(double)(longlong)in_r4,uVar3);
+  dVar5 = (double)__savegprlr_29(_Y);
+  _uStack00000010 = dVar5;
+  uVar1 = ctrlfp(0xf8,0xffffffffc007feff);
+  iVar4 = (int)in_r4;
+  if ((uStack00000010 & 0x7ff0) == 0x7ff0) {
+    iVar3 = sptype(dVar5);
+    if (0 < iVar3) {
+      if (iVar3 < 3) goto LAB_8291c2b4;
+      if (iVar3 == 3) {
+        local_38 = (longlong)iVar4;
+        dVar5 = (double)handle_qnan2(dVar5,(double)local_38,0x19);
         goto LAB_8291c2c4;
       }
     }
-    iVar1 = 8;
-    dVar5 = dVar4 + 1.0;
+    uVar1 = 8;
+    dVar6 = dVar5 + 1.0;
   }
   else {
     dVar6 = 0.0;
-    if (dVar4 == 0.0) {
+    if (dVar5 == 0.0) {
 LAB_8291c2b4:
-      _ctrlfp();
+      ctrlfp(uVar1,0xffffffffc007feff);
       goto LAB_8291c2c4;
     }
-    dVar5 = _decomp(dVar4,piVar2);
-    if (in_r4 < 0) {
-      if (local_40 < -0x80000000 - in_r4) {
+    uVar2 = decomp(dVar5,uVar1,local_40);
+    if (iVar4 < 0) {
+      if ((int)local_40[0] < -0x80000000 - iVar4) {
 LAB_8291c270:
-        dVar5 = dVar5 * dVar6;
-        iVar1 = 0x12;
+        dVar6 = _Sign * dVar6;
+        uVar1 = 0x12;
         goto LAB_8291c1ac;
       }
 LAB_8291c210:
-      iVar1 = local_40 + in_r4;
-      if (0xa00 < iVar1) goto LAB_8291c21c;
-      if (iVar1 < 0x401) {
-        if (-0x9fe < iVar1) {
-          if (iVar1 < -0x3fd) {
-            dVar5 = _set_exp(dVar5,(int)piVar2);
-            iVar1 = 0x12;
+      in_r4 = (ulonglong)local_40[0] + in_r4;
+      iVar3 = (int)in_r4;
+      if (0xa00 < iVar3) goto LAB_8291c21c;
+      if (iVar3 < 0x401) {
+        if (-0x9fe < iVar3) {
+          if (iVar3 < -0x3fd) {
+            dVar6 = (double)set_exp(uVar2,in_r4 + 0x600);
+            uVar1 = 0x12;
             goto LAB_8291c1ac;
           }
-          dVar4 = _set_exp(dVar5,(int)piVar2);
+          dVar5 = (double)set_exp();
           goto LAB_8291c2b4;
         }
         goto LAB_8291c270;
       }
-      dVar5 = _set_exp(dVar5,(int)piVar2);
+      dVar6 = (double)set_exp(uVar2,in_r4 + -0x600);
     }
     else {
-      if (local_40 <= 0x7fffffff - in_r4) goto LAB_8291c210;
+      if ((int)local_40[0] <= 0x7fffffff - iVar4) goto LAB_8291c210;
 LAB_8291c21c:
-      dVar5 = _copysign(_d_inf.dbl,dVar5);
+      dVar6 = _copysign(DAT_829b0418,_Sign);
     }
-    iVar1 = 0x11;
+    uVar1 = 0x11;
   }
 LAB_8291c1ac:
-  dVar4 = _except2(iVar1,0x19,dVar4,(double)(longlong)in_r4,dVar5,in_r5);
+  local_38 = (longlong)iVar4;
+  dVar5 = (double)except2(dVar5,(double)(longlong)iVar4,dVar6,uVar1,0x19);
 LAB_8291c2c4:
-  dVar4 = (double)__restgprlr_29(dVar4);
-  return dVar4;
+  dVar5 = (double)__restgprlr_29(dVar5);
+  return dVar5;
 }
 

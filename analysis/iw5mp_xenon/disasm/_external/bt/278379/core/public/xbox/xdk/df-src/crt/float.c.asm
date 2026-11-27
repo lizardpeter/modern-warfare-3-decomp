@@ -41,7 +41,7 @@ LAB_8292a4ec:
   8292A4EC  65630008             oris r3,r11,0x8
   8292A4F0  4E800020             blr
 
-; 8292A4F8  _clrfp  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/float.c:202)
+; 8292A4F8  clrfp  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/float.c:202)
   8292A4F8  7D8802A6             mfspr r12,LR
   8292A4FC  9181FFF8             stw r12,-0x8(r1)
   8292A500  9421FFA0             stwu r1,-0x60(r1)

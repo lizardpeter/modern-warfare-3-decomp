@@ -2,19 +2,17 @@
 
 // 82609040  TRACK_profileMem  (universal/profile_mem.cpp:48)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_profileMem(void)
 
 {
-  track_static_alloc_internal(&profmemTreeGlob,0x2008,"profmemTreeGlob",0);
+  track_static_alloc_internal(0xffffffff84185610,0x2008,0xffffffff82181294,0);
   return;
 }
 
 
 // 82609060  ProfMem_IncrementIter  (universal/profile_mem.cpp:55)
 
-void ProfMem_IncrementIter(profMemTreeIter_t *param_1)
+void ProfMem_IncrementIter(void)
 
 {
   int *piVar1;
@@ -22,14 +20,12 @@ void ProfMem_IncrementIter(profMemTreeIter_t *param_1)
   int *piVar3;
   int iVar4;
   
-  piVar3 = (int *)__savegprlr_28(param_1);
+  piVar3 = (int *)__savegprlr_28();
   if (piVar3 == (int *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile_mem.cpp",
-                    0x38,0,"%s");
+    MyAssertHandler(0xffffffff821812e0,0x38,0,0xffffffff82000f98,0xffffffff821812d8);
   }
   if (*piVar3 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile_mem.cpp",
-                    0x39,0,"%s");
+    MyAssertHandler(0xffffffff821812e0,0x39,0,0xffffffff82000f98,0xffffffff821812cc);
   }
   piVar1 = (int *)*piVar3;
   iVar4 = *piVar1;
@@ -47,8 +43,7 @@ LAB_82609130:
       *piVar3 = piVar1[1];
       piVar3[1] = (int)((ulonglong)uVar2 - 1);
       if ((longlong)((ulonglong)uVar2 - 1) < 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile_mem.cpp"
-                        ,0x53,0,"%s");
+        MyAssertHandler(0xffffffff821812e0,0x53,0,0xffffffff82000f98,0xffffffff821812b8);
       }
       piVar1 = (int *)*piVar3;
       iVar4 = piVar1[3];
@@ -56,8 +51,7 @@ LAB_82609130:
       iVar4 = piVar1[1];
     }
     if (piVar3[1] != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile_mem.cpp",
-                      0x5d,0,"%s");
+      MyAssertHandler(0xffffffff821812e0,0x5d,0,0xffffffff82000f98,0xffffffff821812a4);
     }
     *piVar3 = 0;
   }
@@ -80,60 +74,55 @@ LAB_82609130:
 
 // 826091D8  ProfMem_GetChildrenBytesUsed  (universal/profile_mem.cpp:99)
 
-uint ProfMem_GetChildrenBytesUsed(profilemem_t *param_1)
+longlong ProfMem_GetChildrenBytesUsed(int *param_1)
 
 {
   uint *puVar1;
-  uint uVar2;
-  profilemem_t *ppVar3;
+  longlong lVar2;
+  int iVar3;
   
-  ppVar3 = param_1->child;
-  uVar2 = 0;
-  if (ppVar3 == (profilemem_t *)0x0) {
-    return 0;
+  iVar3 = *param_1;
+  lVar2 = 0;
+  if (iVar3 == 0) {
+    return lVar2;
   }
   do {
-    puVar1 = &ppVar3->totalSize;
-    ppVar3 = ppVar3->nextSibling;
-    uVar2 = *puVar1 + uVar2;
-  } while (ppVar3 != (profilemem_t *)0x0);
-  return uVar2;
+    puVar1 = (uint *)(iVar3 + 0x14);
+    iVar3 = *(int *)(iVar3 + 8);
+    lVar2 = (ulonglong)*puVar1 + lVar2;
+  } while (iVar3 != 0);
+  return lVar2;
 }
 
 
 // 82609200  ProfMem_GetTree  (universal/profile_mem.cpp:112)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-ProfileMemTree * ProfMem_GetTree(void)
+undefined8 ProfMem_GetTree(void)
 
 {
-  return &profmemTreeGlob;
+  return 0xffffffff84185610;
 }
 
 
 // 82609210  CloseTreeWithWarningsIfLeftOpen  (universal/profile_mem.cpp:118)
 
-void CloseTreeWithWarningsIfLeftOpen(ProfileMemTree *param_1)
+void CloseTreeWithWarningsIfLeftOpen(int *param_1)
 
 {
-  profilemem_t *ppVar1;
+  int iVar1;
   
-  if (param_1 == (ProfileMemTree *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile_mem.cpp",
-                    0x77,0,"%s");
+  if (param_1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff821812e0,0x77,0,0xffffffff82000f98,0xffffffff821813e0);
   }
-  if ((param_1->treeSize != 0) && (param_1->currentNode != (profilemem_t *)0x0)) {
-    Com_PrintError(10,
-                   "Profiling didn\'t complete as normal!  Either there are orphaned BEGIN/END blocks in code, or an error has interrupted normal execution flow.  These nodes have incomplete information:"
-                  );
-    ppVar1 = param_1->currentNode;
-    while (ppVar1 != (profilemem_t *)0x0) {
-      Com_PrintError(10,"  %s\n");
-      ppVar1 = param_1->currentNode->parent;
-      param_1->currentNode = ppVar1;
+  if ((param_1[0x801] != 0) && (*param_1 != 0)) {
+    Com_PrintError(10,0xffffffff82181328);
+    iVar1 = *param_1;
+    while (iVar1 != 0) {
+      Com_PrintError(10,0xffffffff82039718,*(undefined4 *)(*param_1 + 0x1c));
+      iVar1 = *(int *)(*param_1 + 4);
+      *param_1 = iVar1;
     }
-    Com_PrintError(10,"\n");
+    Com_PrintError(10,0xffffffff820044d8,*(undefined4 *)(*param_1 + 0x1c));
   }
   return;
 }
@@ -141,148 +130,147 @@ void CloseTreeWithWarningsIfLeftOpen(ProfileMemTree *param_1)
 
 // 826092F0  ProfMem_PrintTree  (universal/profile_mem.cpp:139)
 
-void ProfMem_PrintTree(bool param_1)
+void ProfMem_PrintTree(void)
 
 {
-  profilemem_t *ppVar1;
-  uint uVar2;
-  profilemem_t *ppVar3;
-  char cVar5;
-  char *pcVar4;
-  longlong lVar6;
-  ulonglong uVar7;
-  int iVar8;
-  profMemTreeIter_t local_c0;
+  int iVar1;
+  int *piVar2;
+  char cVar4;
+  undefined8 uVar3;
+  longlong lVar5;
+  ulonglong uVar6;
+  int iVar7;
+  ulonglong uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  int *local_c0;
+  uint local_bc;
   longlong local_b8;
   ulonglong local_b0;
   ulonglong local_a8;
   ulonglong local_a0;
   
-  cVar5 = __savegprlr_18(param_1);
-  if (((savegame_profile != (dvar_t *)0x0) && ((savegame_profile->current).integer != 0)) &&
-     (profmemTreeGlob.treeSize != 0)) {
-    CloseTreeWithWarningsIfLeftOpen(&profmemTreeGlob);
-    uVar2 = profmemTreeGlob.nodePool[0].totalSize;
-    uVar7 = 0;
-    local_c0.nesting = 0;
-    Com_Printf(0xc,"\n%-40.40s %12s %7s %6s %5s %8s\n");
-    Com_Printf(0xc,
-               "-----------------------------------------------------------------------------------\n"
-              );
-    local_c0.node = profmemTreeGlob.nodePool;
+  cVar4 = __savegprlr_18();
+  if (((DAT_84185608 != 0) && (*(int *)(DAT_84185608 + 0xc) != 0)) && (DAT_84187614 != 0)) {
+    CloseTreeWithWarningsIfLeftOpen(0xffffffff84185610);
+    iVar1 = DAT_84185628;
+    uVar6 = 0;
+    local_bc = 0;
+    Com_Printf(0xc,0xffffffff82181490,0xffffffff821814b0,0xffffffff821814c4,0xffffffff8208eb58,
+               0xffffffff821814d0,0xffffffff8211a098,0xffffffff821814d8);
+    Com_Printf(0xc,0xffffffff82181438);
+    local_c0 = &DAT_84185614;
+    dVar10 = 100.0;
     do {
-      ppVar3 = local_c0.node;
-      iVar8 = (int)uVar7;
-      if (((cVar5 != '\0') || (savegame_profile == (dvar_t *)0x0)) ||
-         (((savegame_profile->current).integer != 2 || (iVar8 < 3)))) {
-        if (iVar8 < 0x1e) {
-          if (0 < iVar8) goto LAB_82609438;
+      piVar2 = local_c0;
+      iVar7 = (int)uVar6;
+      if (((cVar4 != '\0') || (DAT_84185608 == 0)) ||
+         ((*(int *)(DAT_84185608 + 0xc) != 2 || (iVar7 < 3)))) {
+        if (iVar7 < 0x1e) {
+          uVar8 = uVar6;
+          if (0 < iVar7) goto LAB_82609438;
         }
         else {
-          uVar7 = 0x1e;
+          uVar6 = 0x1e;
+          uVar8 = uVar6;
 LAB_82609438:
           do {
-            Com_Printf(0xc," ");
-            uVar7 = uVar7 - 1;
-          } while (uVar7 != 0);
+            Com_Printf(0xc,0xffffffff820034a0);
+            uVar8 = uVar8 - 1;
+          } while (uVar8 != 0);
         }
-        if ((int)uVar2 < 1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile_mem.cpp"
-                          ,0xb0,0,"%s");
+        if (iVar1 < 1) {
+          MyAssertHandler(0xffffffff821812e0,0xb0,0,0xffffffff82000f98,0xffffffff821813e8);
         }
-        local_b0 = (ulonglong)ppVar3->totalSize;
-        local_b8 = (longlong)(int)uVar2;
-        lVar6 = 0;
-        for (ppVar1 = ppVar3->child; ppVar1 != (profilemem_t *)0x0; ppVar1 = ppVar1->nextSibling) {
-          lVar6 = (ulonglong)ppVar1->totalSize + lVar6;
+        local_b0 = (ulonglong)(uint)piVar2[5];
+        local_b8 = (longlong)iVar1;
+        lVar5 = 0;
+        dVar11 = (double)((float)((double)local_b0 * dVar10) / (float)local_b8);
+        for (iVar7 = *piVar2; iVar7 != 0; iVar7 = *(int *)(iVar7 + 8)) {
+          lVar5 = (ulonglong)*(uint *)(iVar7 + 0x14) + lVar5;
         }
-        uVar7 = local_b0 - lVar6;
-        if (ppVar3->hits == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile_mem.cpp"
-                          ,0xb3,0,"%s");
+        uVar8 = local_b0 - lVar5;
+        if (piVar2[6] == 0) {
+          MyAssertHandler(0xffffffff821812e0,0xb3,0,0xffffffff82000f98,0xffffffff821813f4);
         }
-        local_a0 = (ulonglong)ppVar3->hits;
-        local_a8 = uVar7 & 0xffffffff;
-        pcVar4 = va("%%-%i.%is %%12i %%7i %%5.1f%%%% %%5i %%8.2f\n");
-        Com_Printf(0xc,pcVar4);
+        local_a0 = (ulonglong)(uint)piVar2[6];
+        local_a8 = uVar8 & 0xffffffff;
+        dVar9 = (double)(float)((double)local_a8 / (double)local_a0);
+        uVar3 = va(0xffffffff82181408,0x28 - uVar6);
+        Com_Printf(dVar11,dVar9,0xc,uVar3,piVar2[7],uVar8,piVar2[5],dVar11,piVar2[6],dVar9);
       }
       ProfMem_IncrementIter(&local_c0);
-      if (local_c0.node == (profilemem_t *)0x0) goto code_r0x82609570;
-      uVar7 = (ulonglong)(uint)local_c0.nesting;
+      if (local_c0 == (int *)0x0) goto code_r0x82609570;
+      uVar6 = (ulonglong)local_bc;
     } while( true );
   }
 LAB_8260957c:
   __restgprlr_18();
   return;
 code_r0x82609570:
-  Com_Printf(0xc,
-             "-----------------------------------------------------------------------------------\n"
-            );
+  Com_Printf(0xc,0xffffffff82181438);
   goto LAB_8260957c;
 }
 
 
 // 82609590  ProfMem_Begin  (universal/profile_mem.cpp:190)
 
-void ProfMem_Begin(char *param_1,uint param_2)
+void ProfMem_Begin(undefined8 param_1,undefined4 param_2)
 
 {
-  profilemem_t *ppVar1;
-  char *pcVar2;
-  int iVar3;
-  uint uVar4;
-  char **ppcVar5;
-  profilemem_t *ppVar6;
+  ulonglong uVar1;
+  int iVar2;
+  uint uVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  int *piVar6;
   longlong lVar7;
   
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  if ((savegame_profile != (dvar_t *)0x0) && ((savegame_profile->current).integer != 0)) {
-    if (profmemTreeGlob.currentNode == (profilemem_t *)0x0) {
-      uVar4 = 0;
+  uVar1 = __savegprlr_28();
+  if ((DAT_84185608 != 0) && (*(int *)(DAT_84185608 + 0xc) != 0)) {
+    if (DAT_84185610 == (int *)0x0) {
+      uVar3 = 0;
     }
     else {
-      for (ppVar6 = (profmemTreeGlob.currentNode)->child; ppVar6 != (profilemem_t *)0x0;
-          ppVar6 = ppVar6->nextSibling) {
-        if ((pcVar2 == ppVar6->name) || (iVar3 = I_strcmp(pcVar2,ppVar6->name), iVar3 == 0)) {
-          ppVar6->startSize = param_2;
-          ppVar6->hits = ppVar6->hits + 1;
-          profmemTreeGlob.currentNode = ppVar6;
+      for (iVar5 = *DAT_84185610; iVar5 != 0; iVar5 = *(int *)(iVar5 + 8)) {
+        if (((uVar1 & 0xffffffff) == (ulonglong)*(uint *)(iVar5 + 0x1c)) ||
+           (iVar2 = I_strcmp(uVar1), iVar2 == 0)) {
+          *(undefined4 *)(iVar5 + 0x10) = param_2;
+          *(int *)(iVar5 + 0x18) = *(int *)(iVar5 + 0x18) + 1;
+          DAT_84185610 = (int *)iVar5;
           __restgprlr_28();
           return;
         }
       }
-      uVar4 = profmemTreeGlob.treeSize;
-      if (0xff < profmemTreeGlob.treeSize) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile_mem.cpp"
-                        ,0xdc,0,
-                        "tree->treeSize doesn\'t index ARRAY_COUNT( tree->nodePool )\n\t%i not in [0, %i)"
-                       );
-        uVar4 = profmemTreeGlob.treeSize;
+      uVar3 = DAT_84187614;
+      if (0xff < DAT_84187614) {
+        MyAssertHandler(0xffffffff821812e0,0xdc,0,0xffffffff821814e8,DAT_84187614,0x100);
+        uVar3 = DAT_84187614;
       }
     }
-    profmemTreeGlob.treeSize = uVar4 + 1;
-    ppVar6 = profmemTreeGlob.nodePool + uVar4;
-    ppcVar5 = &profmemTreeGlob.nodePool[uVar4 - 1].name;
+    iVar5 = uVar3 * 0x20;
+    DAT_84187614 = uVar3 + 1;
+    piVar6 = &DAT_84185614 + uVar3 * 8;
+    puVar4 = &DAT_84185610 + uVar3 * 8;
     lVar7 = 8;
     do {
-      ppcVar5 = ppcVar5 + 1;
-      *ppcVar5 = (char *)0x0;
+      puVar4 = puVar4 + 1;
+      *puVar4 = 0;
       lVar7 = lVar7 + -1;
     } while (lVar7 != 0);
-    profmemTreeGlob.nodePool[uVar4].parent = profmemTreeGlob.currentNode;
-    if (profmemTreeGlob.currentNode != (profilemem_t *)0x0) {
-      ppVar1 = profmemTreeGlob.nodePool[uVar4].parent;
-      profmemTreeGlob.nodePool[uVar4].nextSibling = (profmemTreeGlob.currentNode)->child;
-      ppVar1->child = ppVar6;
-      ppVar1 = profmemTreeGlob.nodePool[uVar4].nextSibling;
-      if (ppVar1 != (profilemem_t *)0x0) {
-        ppVar1->prevSibling = ppVar6;
+    *(int **)(&DAT_84185618 + iVar5) = DAT_84185610;
+    if (DAT_84185610 != (int *)0x0) {
+      *(int *)(&DAT_8418561c + iVar5) = *DAT_84185610;
+      **(undefined4 **)(&DAT_84185618 + iVar5) = piVar6;
+      if (*(int *)(&DAT_8418561c + iVar5) != 0) {
+        *(int **)(*(int *)(&DAT_8418561c + iVar5) + 0xc) = piVar6;
       }
     }
-    profmemTreeGlob.nodePool[uVar4].name = pcVar2;
-    profmemTreeGlob.nodePool[uVar4].startSize = param_2;
-    profmemTreeGlob.nodePool[uVar4].hits = 1;
-    profmemTreeGlob.currentNode = ppVar6;
+    (&DAT_84185630)[uVar3 * 8] = (int)uVar1;
+    *(undefined4 *)(&DAT_84185624 + iVar5) = param_2;
+    (&DAT_8418562c)[uVar3 * 8] = 1;
+    DAT_84185610 = piVar6;
   }
   __restgprlr_28();
   return;
@@ -291,26 +279,20 @@ void ProfMem_Begin(char *param_1,uint param_2)
 
 // 826096D8  ProfMem_End  (universal/profile_mem.cpp:244)
 
-void ProfMem_End(uint param_1)
+void ProfMem_End(longlong param_1)
 
 {
-  longlong lVar1;
-  
-  if ((savegame_profile != (dvar_t *)0x0) && ((savegame_profile->current).integer != 0)) {
-    if (profmemTreeGlob.currentNode == (profilemem_t *)0x0) {
-      Com_PrintError(10,
-                     "Profiling tried to end a block, but the profiling tree is unexpectedly empty.  Either there are mismatched BEGIN/END blocks in code, or an error has interrupted normal execution flow.\n"
-                    );
+  if ((DAT_84185608 != 0) && (*(int *)(DAT_84185608 + 0xc) != 0)) {
+    if (DAT_84185610 == 0) {
+      Com_PrintError(10,0xffffffff82181550);
     }
     else {
-      lVar1 = (longlong)(int)param_1 - (ulonglong)(profmemTreeGlob.currentNode)->startSize;
-      if (lVar1 < 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile_mem.cpp"
-                        ,0x104,0,"%s");
+      param_1 = param_1 - (ulonglong)*(uint *)(DAT_84185610 + 0x10);
+      if (param_1 < 0) {
+        MyAssertHandler(0xffffffff821812e0,0x104,0,0xffffffff82000f98,0xffffffff82181538);
       }
-      (profmemTreeGlob.currentNode)->totalSize =
-           (profmemTreeGlob.currentNode)->totalSize + (int)lVar1;
-      profmemTreeGlob.currentNode = (profmemTreeGlob.currentNode)->parent;
+      *(int *)(DAT_84185610 + 0x14) = *(int *)(DAT_84185610 + 0x14) + (int)param_1;
+      DAT_84185610 = *(int *)(DAT_84185610 + 4);
     }
   }
   return;
@@ -319,38 +301,34 @@ void ProfMem_End(uint param_1)
 
 // 82609790  ProfMem_EndAllForError  (universal/profile_mem.cpp:268)
 
-void ProfMem_EndAllForError(uint param_1)
+void ProfMem_EndAllForError(void)
 
 {
-  dvar_t *pdVar1;
+  int iVar1;
   longlong lVar2;
-  profilemem_t *ppVar3;
+  int iVar3;
   longlong lVar4;
   
-  lVar2 = __savegprlr_24(param_1);
-  if ((savegame_profile != (dvar_t *)0x0) &&
-     (pdVar1 = savegame_profile, ppVar3 = profmemTreeGlob.currentNode,
-     (savegame_profile->current).integer != 0)) {
-    while (ppVar3 != (profilemem_t *)0x0) {
-      if ((pdVar1 != (dvar_t *)0x0) && ((pdVar1->current).integer != 0)) {
-        if (ppVar3 == (profilemem_t *)0x0) {
-          Com_PrintError(10,
-                         "Profiling tried to end a block, but the profiling tree is unexpectedly empty.  Either there are mismatched BEGIN/END blocks in code, or an error has interrupted normal execution flow.\n"
-                        );
-          pdVar1 = savegame_profile;
-          ppVar3 = profmemTreeGlob.currentNode;
+  lVar2 = __savegprlr_24();
+  if ((DAT_84185608 != 0) &&
+     (iVar1 = DAT_84185608, iVar3 = DAT_84185610, *(int *)(DAT_84185608 + 0xc) != 0)) {
+    while (iVar3 != 0) {
+      if ((iVar1 != 0) && (*(int *)(iVar1 + 0xc) != 0)) {
+        if (iVar3 == 0) {
+          Com_PrintError(10,0xffffffff82181550);
+          iVar1 = DAT_84185608;
+          iVar3 = DAT_84185610;
         }
         else {
-          lVar4 = lVar2 - (ulonglong)ppVar3->startSize;
+          lVar4 = lVar2 - (ulonglong)*(uint *)(iVar3 + 0x10);
           if (lVar4 < 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile_mem.cpp"
-                            ,0x104,0,"%s");
-            ppVar3 = profmemTreeGlob.currentNode;
+            MyAssertHandler(0xffffffff821812e0,0x104,0,0xffffffff82000f98,0xffffffff82181538);
+            iVar3 = DAT_84185610;
           }
-          ppVar3->totalSize = ppVar3->totalSize + (int)lVar4;
-          ppVar3 = (profmemTreeGlob.currentNode)->parent;
-          pdVar1 = savegame_profile;
-          profmemTreeGlob.currentNode = ppVar3;
+          *(int *)(iVar3 + 0x14) = *(int *)(iVar3 + 0x14) + (int)lVar4;
+          iVar3 = *(int *)(DAT_84185610 + 4);
+          iVar1 = DAT_84185608;
+          DAT_84185610 = iVar3;
         }
       }
     }

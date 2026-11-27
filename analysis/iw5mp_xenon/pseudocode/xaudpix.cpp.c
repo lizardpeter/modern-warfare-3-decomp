@@ -2,9 +2,7 @@
 
 // 828D7E58  XAudPixInit  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:26)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-undefined4 XAudPixInit(void)
+undefined8 XAudPixInit(void)
 
 {
   return 0;
@@ -13,9 +11,7 @@ undefined4 XAudPixInit(void)
 
 // 828D7E60  XAudPixCleanup  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:43)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-undefined4 XAudPixCleanup(void)
+undefined8 XAudPixCleanup(void)
 
 {
   return 0;
@@ -24,7 +20,7 @@ undefined4 XAudPixCleanup(void)
 
 // 828D7E68  XAudPixIncrementCounter  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:62)
 
-undefined4 XAudPixIncrementCounter(_XAUDIOPIXCOUNTER param_1,long param_2)
+undefined8 XAudPixIncrementCounter(ulonglong param_1,longlong param_2)
 
 {
   uint uVar1;
@@ -33,11 +29,11 @@ undefined4 XAudPixIncrementCounter(_XAUDIOPIXCOUNTER param_1,long param_2)
   char in_RESERVE;
   byte in_cr0;
   
-  lVar2 = ((ulonglong)param_1 & 0x3fffffff) * 4 + -0x7b76a6b0;
+  lVar2 = (param_1 & 0x3fffffff) * 4 + -0x7b76a6b0;
   do {
     puVar3 = (uint *)lVar2;
     if (in_RESERVE != '\0') {
-      uVar1 = storeWordConditionalIndexed((longlong)param_2 + (ulonglong)*puVar3,0,lVar2);
+      uVar1 = storeWordConditionalIndexed(param_2 + (ulonglong)*puVar3,0,lVar2);
       *puVar3 = uVar1;
       in_cr0 = 2;
     }
@@ -48,9 +44,7 @@ undefined4 XAudPixIncrementCounter(_XAUDIOPIXCOUNTER param_1,long param_2)
 
 // 828D7EB0  XAudPixAudioBeginFrame  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:120)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-undefined4 XAudPixAudioBeginFrame(void)
+undefined8 XAudPixAudioBeginFrame(void)
 
 {
   return 0;
@@ -59,49 +53,46 @@ undefined4 XAudPixAudioBeginFrame(void)
 
 // 828D7EB8  XAudPixAudioEndFrame  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:140)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-undefined4 XAudPixAudioEndFrame(void)
+void XAudPixAudioEndFrame(void)
 
 {
-  ulonglong uVar1;
-  undefined4 uVar2;
+  undefined4 uVar1;
+  undefined8 uVar2;
   int iVar3;
   longlong lVar4;
-  ulonglong local_60;
+  undefined1 local_60 [8];
   undefined8 local_58;
-  long local_50;
-  long lStack_4c;
-  long local_48;
-  long lStack_44;
-  long local_40;
-  long lStack_3c;
+  undefined4 local_50;
+  undefined4 uStack_4c;
+  undefined4 local_48;
+  undefined4 uStack_44;
+  undefined4 local_40;
+  undefined4 uStack_3c;
   
   __savegprlr_26();
-  uVar1 = TBLr;
-  local_60 = uVar1 >> 0x20;
-  local_58 = CONCAT44((int)uVar1,g_pixCountersCurrent[0]);
-  _local_50 = CONCAT44(g_pixCountersCurrent[1],g_pixCountersCurrent[2]);
-  _local_48 = CONCAT44(g_pixCountersCurrent[3],g_pixCountersCurrent[4]);
-  _local_40 = CONCAT44(g_pixCountersCurrent[5],g_pixCountersCurrent[6]);
-  PIXSubmitDrPixCounters(0x58417564,&local_60,0x28);
+  uVar2 = TBLr;
+  local_58 = CONCAT44((int)uVar2,DAT_84895950);
+  _local_50 = CONCAT44(DAT_84895954,DAT_84895958);
+  _local_48 = CONCAT44(DAT_8489595c,DAT_84895960);
+  _local_40 = CONCAT44(DAT_84895964,DAT_84895968);
+  PIXSubmitDrPixCounters(0x58417564,local_60,0x28);
   iVar3 = 0;
   lVar4 = 7;
   do {
-    uVar2 = *(undefined4 *)((int)g_pixCountersCurrent + iVar3);
-    *(undefined4 *)((int)g_pixCountersCurrent + iVar3) = 0;
-    *(undefined4 *)((int)g_pixCountersLastAudioFrame + iVar3) = uVar2;
+    uVar1 = *(undefined4 *)((int)&DAT_84895950 + iVar3);
+    *(undefined4 *)((int)&DAT_84895950 + iVar3) = 0;
+    *(undefined4 *)((int)&DAT_8489596c + iVar3) = uVar1;
     iVar3 = iVar3 + 4;
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
-  uVar2 = __restgprlr_26(0);
-  return uVar2;
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 828D7EA0  XAudPixBeginEvent  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:185)
 
-undefined4 XAudPixBeginEvent(_XAUDIOPIXEVENT param_1)
+undefined8 XAudPixBeginEvent(void)
 
 {
   return 0;
@@ -110,7 +101,7 @@ undefined4 XAudPixBeginEvent(_XAUDIOPIXEVENT param_1)
 
 // 828D7EA8  XAudPixEndEvent  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:201)
 
-undefined4 XAudPixEndEvent(_XAUDIOPIXEVENT param_1)
+undefined8 XAudPixEndEvent(void)
 
 {
   return 0;

@@ -2,37 +2,33 @@
 
 // 824BB848  TRACK_save_memory  (game_mp/savememory_mp.cpp:31)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void TRACK_save_memory(void)
 
 {
-  track_static_alloc_internal(&saveMemoryGlob,0x500,"saveMemoryGlob",10);
+  track_static_alloc_internal(0xffffffff835a0680,0x500,0xffffffff82080230,10);
   return;
 }
 
 
 // 824BB868  SaveMemory_GetBuffer  (game_mp/savememory_mp.cpp:39)
 
-uchar * SaveMemory_GetBuffer(SaveHandleType param_1)
+undefined8 SaveMemory_GetBuffer(void)
 
 {
-  if (alwaysfails == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\savememory_mp.cpp",
-                    0x30,0,"unreachable");
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff82080240,0x30,0,0xffffffff8202882c);
   }
-  return (uchar *)0x0;
+  return 0;
 }
 
 
 // 824BB8B8  SaveMemory_GetBufferSize  (game_mp/savememory_mp.cpp:54)
 
-uint SaveMemory_GetBufferSize(SaveHandleType param_1)
+undefined8 SaveMemory_GetBufferSize(void)
 
 {
-  if (alwaysfails == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\savememory_mp.cpp",
-                    0x3f,0,"unreachable");
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff82080240,0x3f,0,0xffffffff8202882c);
   }
   return 0;
 }
@@ -40,16 +36,14 @@ uint SaveMemory_GetBufferSize(SaveHandleType param_1)
 
 // 824BB908  SaveMemory_GetSaveHandle  (game_mp/savememory_mp.cpp:70)
 
-SaveGame * SaveMemory_GetSaveHandle(SaveHandleType param_1)
+ulonglong SaveMemory_GetSaveHandle(longlong param_1)
 
 {
-  return (SaveGame *)(-(uint)(param_1 == SAVE_MIGRATION_HANDLE) & 0x835a0680);
+  return -(ulonglong)(param_1 == 0) & 0xffffffff835a0680;
 }
 
 
 // 824BB920  SaveMemory_InitializeSaveSystem  (game_mp/savememory_mp.cpp:104)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SaveMemory_InitializeSaveSystem(void)
 
@@ -60,19 +54,16 @@ void SaveMemory_InitializeSaveSystem(void)
 
 // 824BB928  SaveMemory_LoadRead  (game_mp/savememory_mp.cpp:109)
 
-void SaveMemory_LoadRead(void *param_1,int param_2,SaveGame *param_3)
+void SaveMemory_LoadRead(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  void *pvVar1;
-  ulonglong uVar2;
+  undefined8 uVar1;
   
-  uVar2 = (ulonglong)(int)param_3;
-  pvVar1 = (void *)__savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\savememory_mp.cpp",
-                    0x6e,(int)uVar2,"%s");
+  uVar1 = __savegprlr_29();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82080240,0x6e);
   }
-  MemFile_ReadData((MemoryFile *)((int)uVar2 + 0x480),param_2,pvVar1);
+  MemFile_ReadData(param_3 + 0x480,param_2,uVar1);
   __restgprlr_29();
   return;
 }
@@ -80,13 +71,12 @@ void SaveMemory_LoadRead(void *param_1,int param_2,SaveGame *param_3)
 
 // 824BB980  SaveMemory_GetHeader  (game_mp/savememory_mp.cpp:116)
 
-SaveHeader * SaveMemory_GetHeader(SaveGame *param_1)
+ulonglong SaveMemory_GetHeader(ulonglong param_1)
 
 {
-  if (param_1 == (SaveGame *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\savememory_mp.cpp",
-                    0x75,0,"%s");
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82080240,0x75,0,0xffffffff82000f98,0xffffffff82075e4c);
   }
-  return &param_1->header;
+  return param_1;
 }
 

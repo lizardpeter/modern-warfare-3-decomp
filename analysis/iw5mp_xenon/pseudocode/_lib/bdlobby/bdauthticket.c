@@ -5,9 +5,9 @@
 void __unwind_73785(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdHashTiger192::~bdHashTiger192((bdHashTiger192 *)(in_r12 + -0x78));
+  bdHashTiger192___bdHashTiger192(in_r12 + -0x78);
   return;
 }
 

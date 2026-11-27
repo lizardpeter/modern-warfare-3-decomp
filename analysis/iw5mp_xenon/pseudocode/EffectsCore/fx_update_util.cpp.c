@@ -2,14 +2,14 @@
 
 // 8244F3A0  FX_TransformPosFromLocalToWorld  (EffectsCore/fx_update_util.cpp:80)
 
-void FX_TransformPosFromLocalToWorld(FxSpatialFrame *param_1,float *param_2,float *param_3)
+void FX_TransformPosFromLocalToWorld(undefined8 param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  float *pfVar5;
+  int iVar5;
   float local_50;
   float local_4c;
   float local_48;
@@ -20,14 +20,14 @@ void FX_TransformPosFromLocalToWorld(FxSpatialFrame *param_1,float *param_2,floa
   float local_34;
   float local_30;
   
-  pfVar5 = (float *)__savegprlr_29(param_1);
-  UnitQuatToAxis(pfVar5,(float (*) [3])&local_50);
+  iVar5 = __savegprlr_29();
+  UnitQuatToAxis(iVar5,&local_50);
   fVar1 = *param_2;
-  fVar4 = local_50 * fVar1 + pfVar5[4];
+  fVar4 = local_50 * fVar1 + *(float *)(iVar5 + 0x10);
   *param_3 = fVar4;
-  fVar3 = fVar1 * local_4c + pfVar5[5];
+  fVar3 = fVar1 * local_4c + *(float *)(iVar5 + 0x14);
   param_3[1] = fVar3;
-  fVar2 = local_48 * fVar1 + pfVar5[6];
+  fVar2 = local_48 * fVar1 + *(float *)(iVar5 + 0x18);
   param_3[2] = fVar2;
   fVar1 = param_2[1];
   fVar4 = local_44 * fVar1 + fVar4;
@@ -47,10 +47,7 @@ void FX_TransformPosFromLocalToWorld(FxSpatialFrame *param_1,float *param_2,floa
 
 // 8244F458  FX_OffsetSpawnOrigin  (EffectsCore/fx_update_util.cpp:96)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void FX_OffsetSpawnOrigin(FxSpatialFrame *param_1,FxElemDef *param_2,int param_3,float *param_4)
+void FX_OffsetSpawnOrigin(undefined8 param_1,uint *param_2,ulonglong param_3,float *param_4)
 
 {
   float fVar1;
@@ -59,10 +56,9 @@ void FX_OffsetSpawnOrigin(FxSpatialFrame *param_1,FxElemDef *param_2,int param_3
   float fVar4;
   float fVar5;
   uint uVar6;
-  float *pfVar7;
-  ulonglong uVar8;
+  undefined8 uVar7;
+  double dVar8;
   double dVar9;
-  double dVar10;
   float local_90;
   float local_8c;
   float local_88;
@@ -78,40 +74,37 @@ void FX_OffsetSpawnOrigin(FxSpatialFrame *param_1,FxElemDef *param_2,int param_3
   float local_54;
   float local_50;
   
-  uVar8 = (ulonglong)param_3;
-  pfVar7 = (float *)__savegprlr_27(param_1);
-  uVar6 = param_2->flags & 0x30;
+  uVar7 = __savegprlr_27();
+  uVar6 = *param_2 & 0x30;
   if (uVar6 != 0) {
     if (uVar6 != 0x10) {
       if (uVar6 != 0x20) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                        ,0x75,0,"%s\n\t(elemDef->flags & FX_ELEM_SPAWN_OFFSET_MASK) = %i");
+        MyAssertHandler(0xffffffff8206a9e8,0x75,0,0xffffffff8206aa34,0xffffffff8206aa70);
       }
-      iVar3 = (int)((uVar8 & 0x3fffffff) << 2);
-      dVar10 = (double)*(float *)(&DAT_82066aec + iVar3);
-      dVar9 = (double)(*(float *)(&DAT_82066af4 + iVar3) * (param_2->spawnOffsetRadius).amplitude +
-                      (param_2->spawnOffsetRadius).base);
-      UnitQuatToAxis(pfVar7,(float (*) [3])&local_70);
-      FastSinCos((float)(dVar10 * 6.2831854820251465),pfVar7,&local_90);
-      fVar1 = (float)((double)local_8c * dVar9);
-      fVar2 = (float)((double)local_90 * dVar9);
+      iVar3 = (int)((param_3 & 0x3fffffff) << 2);
+      dVar9 = (double)*(float *)(&DAT_82066aec + iVar3);
+      dVar8 = (double)(*(float *)(&DAT_82066af4 + iVar3) * (float)param_2[0x15] +
+                      (float)param_2[0x14]);
+      uVar7 = UnitQuatToAxis(uVar7,&local_70);
+      FastSinCos((double)(float)(dVar9 * 6.2831854820251465),uVar7,&local_90,&local_8c);
+      fVar1 = (float)((double)local_8c * dVar8);
+      fVar2 = (float)((double)local_90 * dVar8);
       fVar4 = local_58 * fVar2 + local_64 * fVar1 + *param_4;
       *param_4 = fVar4;
       fVar5 = local_60 * fVar1 + local_54 * fVar2 + param_4[1];
       param_4[1] = fVar5;
       fVar1 = local_5c * fVar1 + local_50 * fVar2 + param_4[2];
       param_4[2] = fVar1;
-      fVar2 = *(float *)(&DAT_82066af0 + iVar3) * (param_2->spawnOffsetHeight).amplitude +
-              (param_2->spawnOffsetHeight).base;
+      fVar2 = *(float *)(&DAT_82066af0 + iVar3) * (float)param_2[0x17] + (float)param_2[0x16];
       *param_4 = local_70 * fVar2 + fVar4;
       param_4[1] = local_6c * fVar2 + fVar5;
       param_4[2] = local_68 * fVar2 + fVar1;
       __restgprlr_27();
       return;
     }
-    FX_RandomDir((int)uVar8,&local_88);
-    fVar1 = *(float *)(&DAT_82066af4 + (int)((uVar8 & 0xffffffff) << 2)) *
-            (param_2->spawnOffsetRadius).amplitude + (param_2->spawnOffsetRadius).base;
+    FX_RandomDir(param_3,&local_88);
+    fVar1 = *(float *)(&DAT_82066af4 + (int)((param_3 & 0xffffffff) << 2)) * (float)param_2[0x15] +
+            (float)param_2[0x14];
     *param_4 = local_88 * fVar1 + *param_4;
     param_4[1] = local_84 * fVar1 + param_4[1];
     param_4[2] = local_80 * fVar1 + param_4[2];
@@ -123,19 +116,14 @@ void FX_OffsetSpawnOrigin(FxSpatialFrame *param_1,FxElemDef *param_2,int param_3
 
 // 82450AF0  FX_GetOriginForTrailElem  (EffectsCore/fx_update_util.cpp:138)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
 void FX_GetOriginForTrailElem
-               (FxElemDef *param_1,FxTrail *param_2,FxSpatialFrame *param_3,int param_4,
-               float *param_5,float *param_6,float *param_7)
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,ulonglong param_6,undefined4 *param_7)
 
 {
-  FxElemDef *pFVar1;
-  ulonglong uVar2;
-  undefined4 *puVar3;
-  ulonglong uVar4;
-  float afStack_70 [3];
+  uint *puVar1;
+  undefined4 *puVar2;
+  undefined1 auStack_70 [12];
   undefined4 local_64;
   undefined4 local_60;
   undefined4 local_5c;
@@ -143,28 +131,23 @@ void FX_GetOriginForTrailElem
   undefined4 local_54;
   undefined4 local_50;
   
-  uVar4 = (ulonglong)(int)param_7;
-  uVar2 = (ulonglong)(int)param_6;
-  pFVar1 = (FxElemDef *)__savegprlr_25(param_1,param_2);
-  if (((uVar2 & 0xffffffff) == 0) || ((uVar4 & 0xffffffff) == 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x8d,0,"%s");
+  puVar1 = (uint *)__savegprlr_25();
+  if (((param_6 & 0xffffffff) == 0) || (param_7 == (undefined4 *)0x0)) {
+    MyAssertHandler(0xffffffff8206a9e8,0x8d,0,0xffffffff82000f98,0xffffffff8206ad70);
   }
-  if ((pFVar1->flags & 0xc0U) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x8e,0,"%s\n\t((elemDef->flags & FX_ELEM_RUN_MASK)) = %i");
+  if ((*puVar1 & 0xc0) != 0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x8e,0,0xffffffff8206acf8,0xffffffff8206ad28);
   }
-  UnitQuatToAxis(param_3->quat,&afStack_70);
-  puVar3 = (undefined4 *)uVar2;
-  *puVar3 = local_64;
-  puVar3[1] = local_60;
-  puVar3[2] = local_5c;
-  puVar3 = (undefined4 *)uVar4;
-  *puVar3 = local_58;
-  puVar3[1] = local_54;
-  puVar3[2] = local_50;
-  FX_GetSpawnOrigin(param_3,pFVar1,param_4,param_5);
-  FX_OffsetSpawnOrigin(param_3,pFVar1,param_4,param_5);
+  UnitQuatToAxis(param_3,auStack_70);
+  puVar2 = (undefined4 *)param_6;
+  *puVar2 = local_64;
+  puVar2[1] = local_60;
+  puVar2[2] = local_5c;
+  *param_7 = local_58;
+  param_7[1] = local_54;
+  param_7[2] = local_50;
+  FX_GetSpawnOrigin(param_3,puVar1,param_4,param_5);
+  FX_OffsetSpawnOrigin(param_3,puVar1,param_4,param_5);
   __restgprlr_25();
   return;
 }
@@ -172,99 +155,91 @@ void FX_GetOriginForTrailElem
 
 // 8244F628  FX_GetSpawnOrigin  (EffectsCore/fx_update_util.cpp:154)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void FX_GetSpawnOrigin(FxSpatialFrame *param_1,FxElemDef *param_2,int param_3,float *param_4)
+void FX_GetSpawnOrigin(int param_1,uint *param_2,int param_3,float *param_4)
 
 {
-  int iVar1;
   float local_20;
   float local_1c;
   float local_18;
   
-  iVar1 = param_3 * 4;
-  local_20 = *(float *)(&DAT_82066ae0 + iVar1) * param_2->spawnOrigin[0].amplitude +
-             param_2->spawnOrigin[0].base;
-  local_1c = *(float *)(&DAT_82066ae4 + iVar1) * param_2->spawnOrigin[1].amplitude +
-             param_2->spawnOrigin[1].base;
-  local_18 = *(float *)(&DAT_82066ae8 + iVar1) * param_2->spawnOrigin[2].amplitude +
-             param_2->spawnOrigin[2].base;
-  if ((param_2->flags & 2U) != 0) {
+  param_3 = param_3 * 4;
+  local_20 = *(float *)(&DAT_82066ae0 + param_3) * (float)param_2[0xf] + (float)param_2[0xe];
+  local_1c = *(float *)(&DAT_82066ae4 + param_3) * (float)param_2[0x11] + (float)param_2[0x10];
+  local_18 = *(float *)(&DAT_82066ae8 + param_3) * (float)param_2[0x13] + (float)param_2[0x12];
+  if ((*param_2 & 2) != 0) {
     FX_TransformPosFromLocalToWorld(param_1,&local_20,param_4);
     return;
   }
-  *param_4 = param_1->origin[0] + local_20;
-  param_4[1] = param_1->origin[1] + local_1c;
-  param_4[2] = param_1->origin[2] + local_18;
+  *param_4 = *(float *)(param_1 + 0x10) + local_20;
+  param_4[1] = *(float *)(param_1 + 0x14) + local_1c;
+  param_4[2] = *(float *)(param_1 + 0x18) + local_18;
   return;
 }
 
 
 // 8244F6E8  FX_SpatialFrameToOrientation  (EffectsCore/fx_update_util.cpp:171)
 
-void FX_SpatialFrameToOrientation(FxSpatialFrame *param_1,orientation_t *param_2)
+void FX_SpatialFrameToOrientation(int param_1,undefined4 *param_2)
 
 {
-  param_2->origin[0] = param_1->origin[0];
-  param_2->origin[1] = param_1->origin[1];
-  param_2->origin[2] = param_1->origin[2];
-  UnitQuatToAxis(param_1->quat,param_2->axis);
+  *param_2 = *(undefined4 *)(param_1 + 0x10);
+  param_2[1] = *(undefined4 *)(param_1 + 0x14);
+  param_2[2] = *(undefined4 *)(param_1 + 0x18);
+  UnitQuatToAxis(param_1,param_2 + 3);
   return;
 }
 
 
 // 8244F710  FX_SpatialFrameSetIdentity  (EffectsCore/fx_update_util.cpp:182)
 
-void FX_SpatialFrameSetIdentity(FxSpatialFrame *param_1)
+void FX_SpatialFrameSetIdentity(undefined4 *param_1)
 
 {
-  param_1->origin[0] = 0.0;
-  param_1->origin[1] = 0.0;
-  param_1->origin[2] = 0.0;
-  param_1->quat[0] = 0.0;
-  param_1->quat[1] = 0.0;
-  param_1->quat[2] = 0.0;
-  param_1->quat[3] = 1.0;
+  param_1[4] = 0;
+  param_1[5] = 0;
+  param_1[6] = 0;
+  *param_1 = 0;
+  param_1[1] = 0;
+  param_1[2] = 0;
+  param_1[3] = 0x3f800000;
   return;
 }
 
 
 // 8244F750  FX_SpatialFrameInvert  (EffectsCore/fx_update_util.cpp:190)
 
-void FX_SpatialFrameInvert(FxSpatialFrame *param_1,FxSpatialFrame *param_2)
+void FX_SpatialFrameInvert(int param_1,longlong param_2)
 
 {
   float local_30;
   float local_2c;
   float local_28;
   
-  QuatInverse(param_1->quat,param_2->quat);
-  local_30 = -param_1->origin[0];
-  local_2c = -param_1->origin[1];
-  local_28 = -param_1->origin[2];
-  QuatTransform(param_2->quat,&local_30,param_2->origin);
+  QuatInverse();
+  local_30 = -*(float *)(param_1 + 0x10);
+  local_2c = -*(float *)(param_1 + 0x14);
+  local_28 = -*(float *)(param_1 + 0x18);
+  QuatTransform(param_2,&local_30,param_2 + 0x10);
   return;
 }
 
 
 // 8244F7C0  FX_SpatialFrameMultiply  (EffectsCore/fx_update_util.cpp:202)
 
-void FX_SpatialFrameMultiply
-               (FxSpatialFrame *param_1,FxSpatialFrame *param_2,FxSpatialFrame *param_3)
+void FX_SpatialFrameMultiply(undefined8 param_1,longlong param_2,int param_3)
 
 {
-  float *pfVar1;
+  int iVar1;
   float local_30;
   float local_2c;
   float local_28;
   
-  pfVar1 = (float *)__savegprlr_29(param_1);
-  QuatMultiply(pfVar1,param_2->quat,param_3->quat);
-  QuatTransform(pfVar1,param_2->origin,&local_30);
-  param_3->origin[0] = pfVar1[4] + local_30;
-  param_3->origin[1] = pfVar1[5] + local_2c;
-  param_3->origin[2] = pfVar1[6] + local_28;
+  iVar1 = __savegprlr_29();
+  QuatMultiply();
+  QuatTransform(iVar1,param_2 + 0x10,&local_30);
+  *(float *)(param_3 + 0x10) = *(float *)(iVar1 + 0x10) + local_30;
+  *(float *)(param_3 + 0x14) = *(float *)(iVar1 + 0x14) + local_2c;
+  *(float *)(param_3 + 0x18) = *(float *)(iVar1 + 0x18) + local_28;
   __restgprlr_29();
   return;
 }
@@ -272,149 +247,158 @@ void FX_SpatialFrameMultiply
 
 // 8244F828  FX_GetOrientation  (EffectsCore/fx_update_util.cpp:213)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void FX_GetOrientation(FxElemDef *param_1,FxSpatialFrame *param_2,FxSpatialFrame *param_3,
-                      int param_4,orientation_t *param_5)
+void FX_GetOrientation(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                      longlong param_5)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  uint uVar5;
-  FxElemDef *pFVar6;
-  float (*pafVar7) [3];
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
+  float *pfVar5;
+  float *pfVar6;
+  float *pfVar7;
+  uint uVar8;
+  uint *puVar10;
+  undefined8 uVar9;
+  longlong lVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
   float local_70;
   float local_6c;
   float local_68;
   
-  pFVar6 = (FxElemDef *)__savegprlr_24(param_1);
-  dVar11 = 1.0;
-  dVar9 = 0.0020000000949949026;
-  if (0.002 <= ABS((param_2->quat[3] * param_2->quat[3] +
-                   param_2->quat[2] * param_2->quat[2] +
-                   param_2->quat[0] * param_2->quat[0] + param_2->quat[1] * param_2->quat[1]) - 1.0)
-     ) {
-    va("%g %g %g %g");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0xd9,0,"%s\n\t%s");
+  puVar10 = (uint *)__savegprlr_24();
+  pfVar5 = (float *)param_2;
+  dVar12 = (double)pfVar5[1];
+  dVar13 = (double)*pfVar5;
+  dVar15 = (double)pfVar5[2];
+  dVar14 = (double)pfVar5[3];
+  dVar17 = 1.0;
+  dVar16 = 0.0020000000949949026;
+  if (0.002 <= ABS((float)(dVar14 * dVar14 +
+                          (double)(float)(dVar15 * dVar15 +
+                                         (double)(float)(dVar13 * dVar13 +
+                                                        (double)(float)(dVar12 * dVar12)))) - 1.0))
+  {
+    uVar9 = va(dVar13,dVar12,dVar15,dVar14,0xffffffff8200c4fc,dVar13,dVar12,dVar15,dVar14);
+    MyAssertHandler(0xffffffff8206a9e8,0xd9,0,0xffffffff820011f4,0xffffffff8206ab30,uVar9);
   }
-  if (dVar9 <= ABS((double)(float)((double)(param_3->quat[3] * param_3->quat[3] +
-                                           param_3->quat[2] * param_3->quat[2] +
-                                           param_3->quat[0] * param_3->quat[0] +
-                                           param_3->quat[1] * param_3->quat[1]) - dVar11))) {
-    va("%g %g %g %g");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0xda,0,"%s\n\t%s");
+  pfVar6 = (float *)param_3;
+  dVar12 = (double)pfVar6[1];
+  dVar13 = (double)*pfVar6;
+  dVar15 = (double)pfVar6[2];
+  dVar14 = (double)pfVar6[3];
+  if (dVar16 <= ABS((double)(float)((double)(float)(dVar14 * dVar14 +
+                                                   (double)(float)(dVar15 * dVar15 +
+                                                                  (double)(float)(dVar13 * dVar13 +
+                                                                                 (double)(float)(
+                                                  dVar12 * dVar12)))) - dVar17))) {
+    uVar9 = va(dVar13,dVar12,dVar15,dVar14,0xffffffff8200c4fc,dVar13,dVar12,dVar15,dVar14);
+    MyAssertHandler(0xffffffff8206a9e8,0xda,0,0xffffffff820011f4,0xffffffff8206ab0c,uVar9);
   }
-  uVar5 = pFVar6->flags & 0xc0;
-  if (uVar5 == 0) {
-    param_5->origin[0] = 0.0;
-    param_5->origin[1] = 0.0;
-    param_5->origin[2] = 0.0;
-    param_5->axis[0][0] = (float)dVar11;
-    param_5->axis[0][1] = 0.0;
-    param_5->axis[0][2] = 0.0;
-    param_5->axis[1][0] = 0.0;
-    param_5->axis[1][1] = (float)dVar11;
-    param_5->axis[1][2] = 0.0;
-    param_5->axis[2][0] = 0.0;
-    param_5->axis[2][1] = 0.0;
-    param_5->axis[2][2] = (float)dVar11;
+  uVar8 = *puVar10 & 0xc0;
+  pfVar7 = (float *)param_5;
+  if (uVar8 == 0) {
+    *pfVar7 = 0.0;
+    pfVar7[1] = 0.0;
+    pfVar7[2] = 0.0;
+    pfVar7[3] = (float)dVar17;
+    pfVar7[4] = 0.0;
+    pfVar7[5] = 0.0;
+    pfVar7[6] = 0.0;
+    pfVar7[7] = (float)dVar17;
+    pfVar7[8] = 0.0;
+    pfVar7[9] = 0.0;
+    pfVar7[10] = 0.0;
+    pfVar7[0xb] = (float)dVar17;
     __restgprlr_24();
     return;
   }
-  if (uVar5 == 0x40) {
-    param_5->origin[0] = param_2->origin[0];
-    param_5->origin[1] = param_2->origin[1];
-    param_5->origin[2] = param_2->origin[2];
-    UnitQuatToAxis(param_2->quat,param_5->axis);
+  if (uVar8 == 0x40) {
+    *pfVar7 = pfVar5[4];
+    pfVar7[1] = pfVar5[5];
+    pfVar7[2] = pfVar5[6];
+    UnitQuatToAxis(param_2,param_5 + 0xc);
     __restgprlr_24();
     return;
   }
-  if (uVar5 != 0x80) {
-    if (uVar5 != 0xc0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                      ,0xf2,0,"%s\n\t(runFlags) = %i");
+  if (uVar8 != 0x80) {
+    if (uVar8 != 0xc0) {
+      MyAssertHandler(0xffffffff8206a9e8,0xf2,0,0xffffffff8206a7d4,0xffffffff8206a7e8);
     }
-    if ((pFVar6->flags & 0x30U) == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                      ,0xf3,0,"%s\n\t(elemDef->flags & FX_ELEM_SPAWN_OFFSET_MASK) = %i");
+    if ((*puVar10 & 0x30) == 0) {
+      MyAssertHandler(0xffffffff8206a9e8,0xf3,0,0xffffffff8206aa34,0xffffffff8206aac0,0);
     }
-    FX_GetSpawnOrigin(param_2,pFVar6,param_4,param_5->origin);
-    pafVar7 = param_5->axis;
-    dVar10 = 0.0;
-    param_5->axis[0][0] = 0.0;
-    param_5->axis[0][1] = 0.0;
-    param_5->axis[0][2] = 0.0;
-    FX_OffsetSpawnOrigin(param_2,pFVar6,param_4,*pafVar7);
-    fVar2 = param_5->origin[1];
-    param_5->origin[0] = param_5->axis[0][0] + param_5->origin[0];
-    param_5->origin[1] = param_5->axis[0][1] + fVar2;
-    param_5->origin[2] = param_5->origin[2] + param_5->axis[0][2];
-    fVar2 = param_5->axis[0][0];
-    fVar3 = param_5->axis[0][2];
-    fVar4 = param_5->axis[0][1];
-    dVar8 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar4 * fVar4);
-    dVar9 = dVar11;
-    if (-dVar8 < 0.0) {
-      dVar9 = dVar8;
+    FX_GetSpawnOrigin(param_2,puVar10,param_4,param_5);
+    lVar11 = param_5 + 0xc;
+    dVar14 = 0.0;
+    pfVar7[3] = 0.0;
+    pfVar7[4] = 0.0;
+    pfVar7[5] = 0.0;
+    FX_OffsetSpawnOrigin(param_2,puVar10,param_4,lVar11);
+    *pfVar7 = pfVar7[3] + *pfVar7;
+    pfVar7[1] = pfVar7[4] + pfVar7[1];
+    pfVar7[2] = pfVar7[2] + pfVar7[5];
+    fVar2 = pfVar7[3];
+    fVar3 = pfVar7[5];
+    fVar4 = pfVar7[4];
+    dVar13 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar4 * fVar4);
+    dVar12 = dVar17;
+    if (-dVar13 < 0.0) {
+      dVar12 = dVar13;
     }
-    fVar1 = (float)(dVar11 / dVar9);
-    param_5->axis[0][0] = fVar2 * fVar1;
-    param_5->axis[0][1] = fVar4 * fVar1;
-    param_5->axis[0][2] = fVar3 * fVar1;
-    if (dVar8 == dVar10) {
-      (*pafVar7)[0] = (float)dVar11;
-      param_5->axis[0][1] = (float)dVar10;
-      param_5->axis[0][2] = (float)dVar10;
+    fVar1 = (float)(dVar17 / dVar12);
+    pfVar7[3] = fVar2 * fVar1;
+    pfVar7[4] = fVar4 * fVar1;
+    pfVar7[5] = fVar3 * fVar1;
+    if (dVar13 == dVar14) {
+      *(float *)lVar11 = (float)dVar17;
+      pfVar7[4] = (float)dVar14;
+      pfVar7[5] = (float)dVar14;
     }
-    uVar5 = pFVar6->flags & 0x30;
-    if (uVar5 != 0x10) {
-      if (uVar5 != 0x20) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                        ,0x104,0,"%s\n\t(elemDef->flags & FX_ELEM_SPAWN_OFFSET_MASK) = %i");
+    if ((*puVar10 & 0x30) != 0x10) {
+      if ((*puVar10 & 0x30) != 0x20) {
+        MyAssertHandler(0xffffffff8206a9e8,0x104,0,0xffffffff8206aa34,0xffffffff8206aa70);
       }
-      local_70 = (float)dVar10;
-      dVar9 = dVar10;
-      dVar8 = dVar11;
-      if (0.999 <= ABS(param_5->axis[0][2])) {
-        dVar9 = dVar11;
-        dVar8 = dVar10;
+      local_70 = (float)dVar14;
+      dVar12 = dVar14;
+      dVar13 = dVar17;
+      if (0.999 <= ABS(pfVar7[5])) {
+        dVar12 = dVar17;
+        dVar13 = dVar14;
       }
-      local_68 = (float)dVar8;
-      local_6c = (float)dVar9;
-      Vec3Cross(&local_70,*pafVar7,param_5->axis[1]);
-      fVar2 = param_5->axis[1][1];
-      fVar3 = param_5->axis[1][0];
-      fVar4 = param_5->axis[1][2];
-      dVar8 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-      dVar9 = dVar11;
-      if (-dVar8 < 0.0) {
-        dVar9 = dVar8;
+      local_68 = (float)dVar13;
+      local_6c = (float)dVar12;
+      Vec3Cross(&local_70,lVar11,param_5 + 0x18);
+      fVar2 = pfVar7[7];
+      fVar3 = pfVar7[6];
+      fVar4 = pfVar7[8];
+      dVar13 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+      dVar12 = dVar17;
+      if (-dVar13 < 0.0) {
+        dVar12 = dVar13;
       }
-      fVar1 = (float)(dVar11 / dVar9);
-      param_5->axis[1][0] = fVar3 * fVar1;
-      param_5->axis[1][1] = fVar2 * fVar1;
-      param_5->axis[1][2] = fVar4 * fVar1;
-      Vec3Cross(*pafVar7,param_5->axis[1],param_5->axis[2]);
+      fVar1 = (float)(dVar17 / dVar12);
+      pfVar7[6] = fVar3 * fVar1;
+      pfVar7[7] = fVar2 * fVar1;
+      pfVar7[8] = fVar4 * fVar1;
+      Vec3Cross(lVar11,param_5 + 0x18,param_5 + 0x24);
       __restgprlr_24();
       return;
     }
-    Vec3Basis_RightHanded(*pafVar7,param_5->axis[1],param_5->axis[2]);
+    Vec3Basis_RightHanded(lVar11,param_5 + 0x18,param_5 + 0x24);
     __restgprlr_24();
     return;
   }
-  param_5->origin[0] = param_3->origin[0];
-  param_5->origin[1] = param_3->origin[1];
-  param_5->origin[2] = param_3->origin[2];
-  UnitQuatToAxis(param_3->quat,param_5->axis);
+  *pfVar7 = pfVar6[4];
+  pfVar7[1] = pfVar6[5];
+  pfVar7[2] = pfVar6[6];
+  UnitQuatToAxis(param_3,param_5 + 0xc);
   __restgprlr_24();
   return;
 }
@@ -423,119 +407,106 @@ void FX_GetOrientation(FxElemDef *param_1,FxSpatialFrame *param_2,FxSpatialFrame
 // 8244FC70  FX_GetVelocityAtTimeInFrame  (EffectsCore/fx_update_util.cpp:276)
 
 void FX_GetVelocityAtTimeInFrame
-               (FxElemVelStateInFrame *param_1,FxElemVelStateInFrame *param_2,float *param_3,
-               float *param_4,float *param_5)
+               (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5)
 
 {
   float fVar1;
   
-  fVar1 = ((param_1->velocity).amplitude[0] * *param_3 + (param_1->velocity).base[0]) * *param_4;
+  fVar1 = (param_1[3] * *param_3 + *param_1) * *param_4;
   *param_5 = fVar1;
-  *param_5 = ((param_2->velocity).amplitude[0] * *param_3 + (param_2->velocity).base[0]) *
-             param_4[1] + fVar1;
-  fVar1 = ((param_1->velocity).amplitude[1] * param_3[1] + (param_1->velocity).base[1]) * *param_4;
+  *param_5 = (param_2[3] * *param_3 + *param_2) * param_4[1] + fVar1;
+  fVar1 = (param_1[4] * param_3[1] + param_1[1]) * *param_4;
   param_5[1] = fVar1;
-  param_5[1] = ((param_2->velocity).amplitude[1] * param_3[1] + (param_2->velocity).base[1]) *
-               param_4[1] + fVar1;
-  fVar1 = ((param_1->velocity).amplitude[2] * param_3[2] + (param_1->velocity).base[2]) * *param_4;
+  param_5[1] = (param_2[4] * param_3[1] + param_2[1]) * param_4[1] + fVar1;
+  fVar1 = (param_1[5] * param_3[2] + param_1[2]) * *param_4;
   param_5[2] = fVar1;
-  param_5[2] = ((param_2->velocity).amplitude[2] * param_3[2] + (param_2->velocity).base[2]) *
-               param_4[1] + fVar1;
+  param_5[2] = (param_2[5] * param_3[2] + param_2[2]) * param_4[1] + fVar1;
   return;
 }
 
 
 // 8244FD28  FX_GetVelocityAtTime  (EffectsCore/fx_update_util.cpp:287)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
 void FX_GetVelocityAtTime
-               (FxElemDef *param_1,int param_2,float param_3,float param_4,orientation_t *param_5,
-               float *param_6,float *param_7)
+               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4,
+               undefined8 param_5,undefined8 param_6,longlong param_7,float *param_8,float *param_9)
 
 {
-  int iVar1;
+  uint uVar1;
   byte bVar2;
   uint uVar3;
-  uint *puVar4;
-  ulonglong uVar5;
-  float *in_r8;
-  float *in_r9;
-  FxElemVelStateInFrame *pFVar6;
+  int iVar4;
+  uint *puVar6;
+  undefined8 uVar5;
+  longlong lVar7;
+  ulonglong uVar8;
   double extraout_f1;
-  double dVar7;
-  double dVar8;
   double dVar9;
+  double _X;
+  double dVar10;
+  double dVar11;
   undefined8 local_a0;
   float local_98;
   float local_94;
   float local_90;
-  float local_88;
+  undefined4 local_88;
   undefined4 local_84;
   undefined4 local_80;
-  float afStack_78 [30];
+  undefined1 auStack_78 [120];
   
-  dVar7 = (double)param_4;
-  uVar5 = (ulonglong)param_2;
-  puVar4 = (uint *)__savegprlr_24((double)param_3,param_1,uVar5,param_5,param_6);
+  puVar6 = (uint *)__savegprlr_24();
   dVar9 = extraout_f1;
-  if (puVar4 == (uint *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x12e,0,"%s");
+  if (puVar6 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x12e,0,0xffffffff82000f98,0xffffffff82061c6c);
   }
-  if (puVar4[0x2d] == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x12f,0,"%s");
+  if (puVar6[0x2d] == 0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x12f,0,0xffffffff82000f98,0xffffffff8206a364);
   }
-  if (*(char *)((int)puVar4 + 0xb2) == '\0') {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x130,0,"%s\n\t(elemDef->velIntervalCount) = %i");
+  if (*(char *)((int)puVar6 + 0xb2) == '\0') {
+    MyAssertHandler(0xffffffff8206a9e8,0x130,0,0xffffffff8206a318,0xffffffff8206a340);
   }
-  dVar9 = (double)(float)(dVar7 / dVar9);
-  if ((dVar9 < 0.0) || (1.0 <= dVar9)) {
-    va("%g: %g, %g");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x133,0,"%s\n\t%s");
+  dVar11 = (double)(float)(param_2 / dVar9);
+  if ((dVar11 < 0.0) || (1.0 <= dVar11)) {
+    uVar5 = va(dVar11,param_2,dVar9,0xffffffff8206ac0c,dVar11,param_2,dVar9);
+    MyAssertHandler(0xffffffff8206a9e8,0x133,0,0xffffffff820011f4,0xffffffff8206abe4,uVar5);
   }
-  bVar2 = *(byte *)((int)puVar4 + 0xb2);
-  local_a0 = (ulonglong)bVar2;
-  dVar8 = (double)local_a0;
-  iVar1 = (int)((uVar5 & 0x3fffffff) << 2);
-  local_88 = *(float *)(&fx_randomTable + iVar1);
-  local_84 = *(undefined4 *)(&DAT_82066acc + iVar1);
-  local_80 = *(undefined4 *)(&DAT_82066ad0 + iVar1);
-  dVar7 = (double)(float)(dVar8 * dVar9);
-  dVar9 = floor(dVar7);
-  iVar1 = (int)dVar9;
-  local_a0 = (ulonglong)iVar1;
-  dVar9 = (double)(float)(dVar7 - (double)(longlong)local_a0);
-  if ((iVar1 < 0) || ((int)(uint)bVar2 <= iVar1)) {
-    va("%i for %g on %i intervals");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x13d,1,
-                    "%s\n\t(va( \"%i for %g on %i intervals\", sampleIndex, sampleTime, intervalCount )) = %i"
-                   );
+  bVar2 = *(byte *)((int)puVar6 + 0xb2);
+  uVar8 = (ulonglong)bVar2;
+  dVar10 = (double)uVar8;
+  iVar4 = (int)((param_4 & 0x3fffffff) << 2);
+  local_88 = *(undefined4 *)(&DAT_82066ac8 + iVar4);
+  local_84 = *(undefined4 *)(&DAT_82066acc + iVar4);
+  local_80 = *(undefined4 *)(&DAT_82066ad0 + iVar4);
+  _X = (double)(float)(dVar10 * dVar11);
+  local_a0 = uVar8;
+  dVar9 = floor(_X);
+  uVar1 = (uint)dVar9;
+  local_a0 = (ulonglong)(int)uVar1;
+  dVar9 = (double)(float)(_X - (double)(longlong)local_a0);
+  if (((int)uVar1 < 0) || ((int)(uint)bVar2 <= (int)uVar1)) {
+    uVar5 = va(dVar11,0xffffffff820651e4,(ulonglong)uVar1,dVar11,uVar8);
+    MyAssertHandler(0xffffffff8206a9e8,0x13d,1,0xffffffff8206ab58,0xffffffff8206abb0,uVar5);
   }
-  uVar3 = puVar4[0x2d];
-  *in_r9 = *in_r8;
-  dVar7 = 1000.0;
-  pFVar6 = (FxElemVelStateInFrame *)(iVar1 * 0x60 + uVar3);
-  local_a0 = CONCAT44((float)(dVar8 - (double)(float)(dVar8 * dVar9)),(float)(dVar8 * dVar9));
-  in_r9[1] = in_r8[1];
-  in_r9[2] = in_r8[2];
-  if ((*puVar4 & 0x2000000) != 0) {
-    FX_GetVelocityAtTimeInFrame(pFVar6 + 1,pFVar6 + 3,&local_88,(float *)&local_a0,&local_98);
-    *in_r9 = (float)((double)local_98 * dVar7 + (double)*in_r9);
-    in_r9[1] = (float)((double)local_94 * dVar7 + (double)in_r9[1]);
-    in_r9[2] = (float)((double)local_90 * dVar7 + (double)in_r9[2]);
+  uVar3 = puVar6[0x2d];
+  *param_9 = *param_8;
+  dVar11 = 1000.0;
+  lVar7 = ((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20 +
+          (ulonglong)uVar3;
+  local_a0 = CONCAT44((float)(dVar10 - (double)(float)(dVar10 * dVar9)),(float)(dVar10 * dVar9));
+  param_9[1] = param_8[1];
+  param_9[2] = param_8[2];
+  if ((*puVar6 & 0x2000000) != 0) {
+    FX_GetVelocityAtTimeInFrame(lVar7 + 0x30,lVar7 + 0x90,&local_88,&local_a0,&local_98);
+    *param_9 = (float)((double)local_98 * dVar11 + (double)*param_9);
+    param_9[1] = (float)((double)local_94 * dVar11 + (double)param_9[1]);
+    param_9[2] = (float)((double)local_90 * dVar11 + (double)param_9[2]);
   }
-  if ((*puVar4 & 0x1000000) != 0) {
-    FX_GetVelocityAtTimeInFrame(pFVar6,pFVar6 + 2,&local_88,(float *)&local_a0,afStack_78);
-    MatrixTransformVector(afStack_78,(float (*) [3])(param_7 + 3),&local_98);
-    *in_r9 = (float)((double)local_98 * dVar7 + (double)*in_r9);
-    in_r9[1] = (float)((double)local_94 * dVar7 + (double)in_r9[1]);
-    in_r9[2] = (float)((double)local_90 * dVar7 + (double)in_r9[2]);
+  if ((*puVar6 & 0x1000000) != 0) {
+    FX_GetVelocityAtTimeInFrame(lVar7,lVar7 + 0x60,&local_88,&local_a0,auStack_78);
+    MatrixTransformVector(auStack_78,param_7 + 0xc,&local_98);
+    *param_9 = (float)((double)local_98 * dVar11 + (double)*param_9);
+    param_9[1] = (float)((double)local_94 * dVar11 + (double)param_9[1]);
+    param_9[2] = (float)((double)local_90 * dVar11 + (double)param_9[2]);
   }
   __restgprlr_24();
   return;
@@ -544,27 +515,22 @@ void FX_GetVelocityAtTime
 
 // 82450040  FX_OrientationPosToWorldPos  (EffectsCore/fx_update_util.cpp:343)
 
-void FX_OrientationPosToWorldPos(orientation_t *param_1,float *param_2,float *param_3)
+void FX_OrientationPosToWorldPos(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   float *pfVar1;
-  ulonglong uVar2;
+  float *pfVar2;
   float *pfVar3;
-  ulonglong uVar4;
-  float *pfVar5;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pfVar1 = (float *)__savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == (uVar4 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x158,0,"%s");
+  pfVar1 = (float *)__savegprlr_29();
+  if ((param_2 & 0xffffffff) == (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8206a9e8,0x158,0,0xffffffff82000f98,0xffffffff8206ac18);
   }
-  pfVar3 = (float *)uVar2;
-  pfVar5 = (float *)uVar4;
-  *pfVar5 = pfVar1[9] * pfVar3[2] + pfVar1[6] * pfVar3[1] + pfVar1[3] * *pfVar3 + *pfVar1;
-  pfVar5[1] = pfVar1[10] * pfVar3[2] + pfVar1[7] * pfVar3[1] + pfVar1[4] * *pfVar3 + pfVar1[1];
-  pfVar5[2] = pfVar1[0xb] * pfVar3[2] + pfVar1[8] * pfVar3[1] + pfVar1[5] * *pfVar3 + pfVar1[2];
+  pfVar2 = (float *)param_2;
+  pfVar3 = (float *)param_3;
+  *pfVar3 = pfVar1[9] * pfVar2[2] + pfVar1[6] * pfVar2[1] + pfVar1[3] * *pfVar2 + *pfVar1;
+  pfVar3[1] = pfVar1[10] * pfVar2[2] + pfVar1[7] * pfVar2[1] + pfVar1[4] * *pfVar2 + pfVar1[1];
+  pfVar3[2] = pfVar1[0xb] * pfVar2[2] + pfVar1[8] * pfVar2[1] + pfVar1[5] * *pfVar2 + pfVar1[2];
   __restgprlr_29();
   return;
 }
@@ -572,32 +538,27 @@ void FX_OrientationPosToWorldPos(orientation_t *param_1,float *param_2,float *pa
 
 // 82450120  FX_OrientationPosFromWorldPos  (EffectsCore/fx_update_util.cpp:352)
 
-void FX_OrientationPosFromWorldPos(orientation_t *param_1,float *param_2,float *param_3)
+void FX_OrientationPosFromWorldPos(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float *pfVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  float *pfVar7;
+  float *pfVar5;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pfVar4 = (float *)__savegprlr_29(param_1);
-  if ((uVar5 & 0xffffffff) == (uVar6 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x163,0,"%s");
+  pfVar4 = (float *)__savegprlr_29();
+  if ((param_2 & 0xffffffff) == (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8206a9e8,0x163,0,0xffffffff82000f98,0xffffffff8206ac18);
   }
-  pfVar7 = (float *)uVar5;
-  fVar1 = pfVar7[1] - pfVar4[1];
-  fVar2 = pfVar7[2] - pfVar4[2];
-  fVar3 = *pfVar7 - *pfVar4;
-  pfVar7 = (float *)uVar6;
-  *pfVar7 = pfVar4[3] * fVar3 + pfVar4[5] * fVar2 + pfVar4[4] * fVar1;
-  pfVar7[1] = pfVar4[6] * fVar3 + pfVar4[8] * fVar2 + pfVar4[7] * fVar1;
-  pfVar7[2] = pfVar4[9] * fVar3 + pfVar4[0xb] * fVar2 + pfVar4[10] * fVar1;
+  pfVar5 = (float *)param_2;
+  fVar1 = pfVar5[1] - pfVar4[1];
+  fVar2 = pfVar5[2] - pfVar4[2];
+  fVar3 = *pfVar5 - *pfVar4;
+  pfVar5 = (float *)param_3;
+  *pfVar5 = pfVar4[3] * fVar3 + pfVar4[5] * fVar2 + pfVar4[4] * fVar1;
+  pfVar5[1] = pfVar4[6] * fVar3 + pfVar4[8] * fVar2 + pfVar4[7] * fVar1;
+  pfVar5[2] = pfVar4[9] * fVar3 + pfVar4[0xb] * fVar2 + pfVar4[10] * fVar1;
   __restgprlr_29();
   return;
 }
@@ -605,95 +566,91 @@ void FX_OrientationPosFromWorldPos(orientation_t *param_1,float *param_2,float *
 
 // 824501E8  FX_CullSphere  (EffectsCore/fx_update_util.cpp:368)
 
-bool FX_CullSphere(FxCamera *param_1,uint param_2,float *param_3,float param_4)
+void FX_CullSphere(undefined8 param_1,ulonglong param_2,float *param_3)
 
 {
-  int iVar1;
-  undefined1 uVar2;
+  int iVar2;
+  undefined8 uVar1;
   ulonglong uVar3;
-  ulonglong uVar4;
-  float *pfVar5;
+  float *pfVar4;
   double extraout_f1;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
+  double dVar9;
+  double dVar10;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_24((double)param_4,param_1);
-  dVar6 = extraout_f1;
-  if (*(int *)(iVar1 + 0xc) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x174,0,"%s");
+  iVar2 = __savegprlr_24();
+  dVar8 = extraout_f1;
+  if (*(int *)(iVar2 + 0xc) == 0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x174,0,0xffffffff82000f98,0xffffffff82061590);
   }
-  if (((uVar3 & 0xffffffff) != (ulonglong)*(uint *)(iVar1 + 0x94)) && ((uVar3 & 0xffffffff) != 5)) {
-    va("%i, %i");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x175,0,"%s\n\t%s");
+  if (((param_2 & 0xffffffff) != (ulonglong)*(uint *)(iVar2 + 0x94)) &&
+     ((param_2 & 0xffffffff) != 5)) {
+    uVar1 = va(0xffffffff82061b5c,param_2);
+    MyAssertHandler(0xffffffff8206a9e8,0x175,0,0xffffffff820011f4,0xffffffff82061b10,uVar1);
   }
-  uVar4 = 0;
-  if ((uVar3 & 0xffffffff) != 0) {
-    dVar6 = -dVar6;
-    pfVar5 = (float *)(iVar1 + 0x18);
-    dVar7 = 0.0020000000949949026;
-    dVar8 = 1.0;
+  uVar3 = 0;
+  if ((param_2 & 0xffffffff) != 0) {
+    dVar8 = -dVar8;
+    pfVar4 = (float *)(iVar2 + 0x18);
+    dVar9 = 0.0020000000949949026;
+    dVar10 = 1.0;
     do {
-      if (dVar7 <= ABS((double)(float)((double)(pfVar5[-1] * pfVar5[-1] + *pfVar5 * *pfVar5 +
-                                               pfVar5[-2] * pfVar5[-2]) - dVar8))) {
-        va("(%g %g %g) len %g");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                        ,0x179,0,"%s\n\t%s");
+      dVar5 = (double)pfVar4[-2];
+      if (dVar9 <= ABS((double)(float)((double)(pfVar4[-1] * pfVar4[-1] + *pfVar4 * *pfVar4 +
+                                               (float)(dVar5 * dVar5)) - dVar10))) {
+        dVar7 = (double)*pfVar4;
+        dVar6 = (double)pfVar4[-1];
+        uVar1 = va(dVar5,dVar6,dVar7,0xffffffff82015f2c,dVar5,dVar6,dVar7,
+                   (double)SQRT((float)(dVar6 * dVar6 + (double)(float)(dVar7 * dVar7)) +
+                                (float)(dVar5 * dVar5)));
+        MyAssertHandler(0xffffffff8206a9e8,0x179,0,0xffffffff820011f4,0xffffffff82061ae0,uVar1);
       }
-      if ((double)((*pfVar5 * param_3[2] + pfVar5[-1] * param_3[1] + pfVar5[-2] * *param_3) -
-                  pfVar5[1]) <= dVar6) {
-        uVar2 = __restgprlr_24(1);
-        return (bool)uVar2;
+      if ((double)((*pfVar4 * param_3[2] + pfVar4[-1] * param_3[1] + pfVar4[-2] * *param_3) -
+                  pfVar4[1]) <= dVar8) {
+        __restgprlr_24(1);
+        return;
       }
-      uVar4 = uVar4 + 1;
-      pfVar5 = pfVar5 + 4;
-    } while ((uVar4 & 0xffffffff) < (uVar3 & 0xffffffff));
+      uVar3 = uVar3 + 1;
+      pfVar4 = pfVar4 + 4;
+    } while ((uVar3 & 0xffffffff) < (param_2 & 0xffffffff));
   }
-  uVar2 = __restgprlr_24(0);
-  return (bool)uVar2;
+  __restgprlr_24(0);
+  return;
 }
 
 
 // 824503C8  FX_AnglesToOrientedAxis  (EffectsCore/fx_update_util.cpp:389)
 
-void FX_AnglesToOrientedAxis(float *param_1,orientation_t *param_2,float (*param_3) [3])
+void FX_AnglesToOrientedAxis(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-  float afStack_40 [10];
+  undefined1 auStack_40 [40];
   
-  RadianToAxis(param_1,(float (*) [3])afStack_40);
-  MatrixMultiply((float (*) [3])afStack_40,param_2->axis,param_3);
+  RadianToAxis(param_1,auStack_40);
+  MatrixMultiply(auStack_40,param_2 + 0xc,param_3);
   return;
 }
 
 
 // 82450418  FX_GetElemAxis  (EffectsCore/fx_update_util.cpp:398)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void FX_GetElemAxis(FxElemDef *param_1,int param_2,orientation_t *param_3,float param_4,
-                   float (*param_5) [3])
+void FX_GetElemAxis(undefined8 param_1,ulonglong param_2,longlong param_3,undefined8 param_4,
+                   undefined8 param_5)
 
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  float (*in_r7) [3];
   double extraout_f1;
   float local_60;
   float local_5c;
   float local_58;
-  float afStack_50 [20];
+  undefined1 auStack_50 [80];
   
-  lVar4 = (longlong)(int)param_3;
-  uVar3 = (ulonglong)param_2;
-  iVar2 = __savegprlr_29((double)param_4,param_1,uVar3,lVar4,param_5);
-  iVar1 = (int)((uVar3 & 0x3fffffff) << 2);
+  iVar2 = __savegprlr_29();
+  iVar1 = (int)((param_2 & 0x3fffffff) << 2);
   local_60 = (float)((double)(*(float *)(&DAT_82066ad4 + iVar1) * *(float *)(iVar2 + 0x7c) +
                              *(float *)(iVar2 + 0x78)) * extraout_f1 +
                     (double)(*(float *)(&DAT_82066af8 + iVar1) * *(float *)(iVar2 + 100) +
@@ -706,8 +663,8 @@ void FX_GetElemAxis(FxElemDef *param_1,int param_2,orientation_t *param_3,float 
                              *(float *)(iVar2 + 0x88)) * extraout_f1 +
                     (double)(*(float *)(&DAT_82066b00 + iVar1) * *(float *)(iVar2 + 0x74) +
                             *(float *)(iVar2 + 0x70)));
-  RadianToAxis(&local_60,(float (*) [3])afStack_50);
-  MatrixMultiply((float (*) [3])afStack_50,(float (*) [3])((int)lVar4 + 0xc),in_r7);
+  RadianToAxis(&local_60,auStack_50);
+  MatrixMultiply(auStack_50,param_3 + 0xc,param_5);
   __restgprlr_29();
   return;
 }
@@ -715,107 +672,103 @@ void FX_GetElemAxis(FxElemDef *param_1,int param_2,orientation_t *param_3,float 
 
 // 824504F8  FX_SetUpdateCamera  (EffectsCore/fx_update_util.cpp:414)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_SetUpdateCamera(refdef_t *param_1,RefdefView *param_2,float param_3,int param_4,
-                       FxCamera *param_5)
+void FX_SetUpdateCamera(undefined8 param_1,ulonglong param_2,undefined8 param_3,longlong param_4,
+                       ulonglong param_5)
 
 {
   float fVar1;
   float *pfVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong in_r7;
-  float *pfVar8;
-  float fVar9;
-  longlong lVar10;
+  int iVar6;
+  undefined8 uVar5;
+  float *pfVar7;
+  float fVar8;
+  longlong lVar9;
   double extraout_f1;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
+  double dVar14;
   
-  lVar7 = (longlong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar5 = __savegprlr_23((double)param_3,param_1,uVar6,param_4);
-  dVar11 = extraout_f1;
-  if (iVar5 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x1a3,0,"%s");
+  iVar6 = __savegprlr_23();
+  dVar12 = extraout_f1;
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x1a3,0,0xffffffff82000f98,0xffffffff82015314);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x1a4,0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x1a4,0,0xffffffff82000f98,0xffffffff8206ac2c);
   }
-  if ((in_r7 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x1a5,0,"%s");
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x1a5,0,0xffffffff82000f98,0xffffffff8206ac24);
   }
-  pfVar2 = (float *)uVar6;
-  pfVar8 = (float *)in_r7;
-  *pfVar8 = pfVar2[2];
-  pfVar8[1] = pfVar2[3];
-  pfVar8[2] = pfVar2[4];
-  AxisCopy((float (*) [3])(pfVar2 + 5),(float (*) [3])(pfVar8 + 0x1c));
-  pfVar8[4] = pfVar2[5];
-  pfVar8[5] = pfVar2[6];
-  pfVar8[6] = pfVar2[7];
-  pfVar8[0x26] = *(float *)(iVar5 + 0x4c);
-  pfVar8[0x27] = *(float *)(iVar5 + 0x50);
-  pfVar8[0x28] = *(float *)(iVar5 + 0x54);
-  dVar13 = 1.0;
+  pfVar2 = (float *)param_2;
+  pfVar7 = (float *)param_5;
+  *pfVar7 = pfVar2[2];
+  pfVar7[1] = pfVar2[3];
+  pfVar7[2] = pfVar2[4];
+  AxisCopy(param_2 + 0x14,param_5 + 0x70);
+  pfVar7[4] = pfVar2[5];
+  pfVar7[5] = pfVar2[6];
+  pfVar7[6] = pfVar2[7];
+  pfVar7[0x26] = *(float *)(iVar6 + 0x4c);
+  pfVar7[0x27] = *(float *)(iVar6 + 0x50);
+  pfVar7[0x28] = *(float *)(iVar6 + 0x54);
+  dVar14 = 1.0;
   fVar1 = *pfVar2;
   fVar4 = 1.0 / SQRT(fVar1 * fVar1 + 1.0);
   fVar1 = fVar1 * fVar4;
   fVar3 = -fVar4;
-  pfVar8[8] = pfVar2[8] * fVar4 + pfVar2[5] * fVar1;
-  pfVar8[9] = pfVar2[6] * fVar1 + fVar4 * pfVar2[9];
-  pfVar8[10] = pfVar2[10] * fVar4 + fVar1 * pfVar2[7];
-  pfVar8[0xc] = pfVar2[8] * fVar3 + pfVar2[5] * fVar1;
-  pfVar8[0xd] = fVar3 * pfVar2[9] + pfVar2[6] * fVar1;
-  pfVar8[0xe] = fVar3 * pfVar2[10] + fVar1 * pfVar2[7];
+  pfVar7[8] = pfVar2[8] * fVar4 + pfVar2[5] * fVar1;
+  pfVar7[9] = pfVar2[6] * fVar1 + fVar4 * pfVar2[9];
+  pfVar7[10] = pfVar2[10] * fVar4 + fVar1 * pfVar2[7];
+  pfVar7[0xc] = pfVar2[8] * fVar3 + pfVar2[5] * fVar1;
+  pfVar7[0xd] = fVar3 * pfVar2[9] + pfVar2[6] * fVar1;
+  pfVar7[0xe] = fVar3 * pfVar2[10] + fVar1 * pfVar2[7];
   fVar1 = pfVar2[1];
   fVar4 = 1.0 / SQRT(fVar1 * fVar1 + 1.0);
   fVar1 = fVar1 * fVar4;
   fVar3 = -fVar4;
-  pfVar8[0x10] = pfVar2[5] * fVar1 + fVar4 * pfVar2[0xb];
-  pfVar8[0x11] = pfVar2[6] * fVar1 + pfVar2[0xc] * fVar4;
-  fVar9 = 0.0;
-  lVar10 = in_r7 + 0xc;
-  dVar12 = 0.0020000000949949026;
-  pfVar8[0x12] = pfVar2[0xd] * fVar4 + fVar1 * pfVar2[7];
-  pfVar8[0x14] = fVar3 * pfVar2[0xb] + pfVar2[5] * fVar1;
-  pfVar8[0x15] = fVar3 * pfVar2[0xc] + pfVar2[6] * fVar1;
-  pfVar8[0x16] = pfVar2[0xd] * fVar3 + fVar1 * pfVar2[7];
-  pfVar8[0x25] = 7.00649e-45;
+  pfVar7[0x10] = pfVar2[5] * fVar1 + fVar4 * pfVar2[0xb];
+  pfVar7[0x11] = pfVar2[6] * fVar1 + pfVar2[0xc] * fVar4;
+  fVar8 = 0.0;
+  lVar9 = param_5 + 0xc;
+  dVar13 = 0.0020000000949949026;
+  pfVar7[0x12] = pfVar2[0xd] * fVar4 + fVar1 * pfVar2[7];
+  pfVar7[0x14] = fVar3 * pfVar2[0xb] + pfVar2[5] * fVar1;
+  pfVar7[0x15] = fVar3 * pfVar2[0xc] + pfVar2[6] * fVar1;
+  pfVar7[0x16] = pfVar2[0xd] * fVar3 + fVar1 * pfVar2[7];
+  pfVar7[0x25] = 7.00649e-45;
   do {
-    iVar5 = (int)lVar10;
-    if (dVar12 <= ABS((double)(float)((double)(*(float *)(iVar5 + 8) * *(float *)(iVar5 + 8) +
-                                               *(float *)(iVar5 + 0xc) * *(float *)(iVar5 + 0xc) +
-                                              *(float *)(iVar5 + 4) * *(float *)(iVar5 + 4)) -
-                                     dVar13))) {
-      va("(%g %g %g) len %g");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                      ,0x1ba,0,"%s\n\t%s");
+    iVar6 = (int)lVar9;
+    fVar1 = *(float *)(iVar6 + 4) * *(float *)(iVar6 + 4);
+    if (dVar13 <= ABS((double)(float)((double)(*(float *)(iVar6 + 8) * *(float *)(iVar6 + 8) +
+                                               *(float *)(iVar6 + 0xc) * *(float *)(iVar6 + 0xc) +
+                                              fVar1) - dVar14))) {
+      dVar11 = (double)*(float *)(iVar6 + 0xc);
+      dVar10 = (double)*(float *)(iVar6 + 8);
+      uVar5 = va((double)*(float *)(iVar6 + 4),dVar10,dVar11,0xffffffff82015f2c,
+                 (double)*(float *)(iVar6 + 4),dVar10,dVar11,
+                 (double)SQRT((float)(dVar10 * dVar10 + (double)(float)(dVar11 * dVar11)) + fVar1));
+      MyAssertHandler(0xffffffff8206a9e8,0x1ba,0,0xffffffff820011f4,0xffffffff82061ae0,uVar5);
     }
-    fVar9 = (float)((int)fVar9 + 1);
-    lVar10 = lVar10 + 0x10;
-    *(float *)lVar10 =
-         *(float *)(iVar5 + 0xc) * pfVar8[2] +
-         *(float *)(iVar5 + 4) * *pfVar8 + *(float *)(iVar5 + 8) * pfVar8[1];
-  } while ((uint)fVar9 < (uint)pfVar8[0x25]);
-  if (0.0 < dVar11) {
-    pfVar8[0x18] = -(*(float (*) [3])(pfVar2 + 5))[0];
-    pfVar8[0x19] = -pfVar2[6];
-    pfVar8[0x1a] = -pfVar2[7];
-    pfVar8[0x25] = 8.40779e-45;
-    pfVar8[0x1b] = (float)(-(double)pfVar8[7] - dVar11);
+    fVar8 = (float)((int)fVar8 + 1);
+    lVar9 = lVar9 + 0x10;
+    *(float *)lVar9 =
+         *(float *)(iVar6 + 0xc) * pfVar7[2] +
+         *(float *)(iVar6 + 4) * *pfVar7 + *(float *)(iVar6 + 8) * pfVar7[1];
+  } while ((uint)fVar8 < (uint)pfVar7[0x25]);
+  if (0.0 < dVar12) {
+    pfVar7[0x18] = -*(float *)(param_2 + 0x14);
+    pfVar7[0x19] = -pfVar2[6];
+    pfVar7[0x1a] = -pfVar2[7];
+    pfVar7[0x25] = 8.40779e-45;
+    pfVar7[0x1b] = (float)(-(double)pfVar7[7] - dVar12);
   }
-  *(bool *)(pfVar8 + 0x29) = lVar7 != 0;
+  *(bool *)(pfVar7 + 0x29) = param_4 != 0;
   sync(1);
-  pfVar8[3] = 1.4013e-45;
+  pfVar7[3] = 1.4013e-45;
   __restgprlr_23();
   return;
 }
@@ -823,11 +776,7 @@ void FX_SetUpdateCamera(refdef_t *param_1,RefdefView *param_2,float param_3,int 
 
 // 824508A0  FX_AddVisBlocker  (EffectsCore/fx_update_util.cpp:462)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_AddVisBlocker(FxSystem *param_1,float *param_2,float param_3,float param_4)
+void FX_AddVisBlocker(undefined8 param_1,double param_2,undefined8 param_3,undefined4 *param_4)
 
 {
   uint uVar1;
@@ -835,39 +784,35 @@ void FX_AddVisBlocker(FxSystem *param_1,float *param_2,float param_3,float param
   int iVar3;
   int iVar4;
   uint *puVar5;
-  float *pfVar6;
+  undefined4 *puVar6;
   char in_RESERVE;
   byte in_cr0;
   double extraout_f1;
   double dVar7;
   double dVar8;
-  double dVar9;
   undefined2 uStack_4a;
   undefined2 uStack_42;
   
-  dVar7 = (double)param_4;
-  iVar3 = __savegprlr_28((double)param_3,param_1);
+  iVar3 = __savegprlr_28();
   uVar1 = *(uint *)(iVar3 + 100);
   iVar4 = *(int *)(uVar1 + 0x1000) + 1;
   if (iVar4 < 0x100) {
-    pfVar6 = (float *)(iVar4 * 0x10 + uVar1);
-    *pfVar6 = *param_2;
-    pfVar6[1] = param_2[1];
-    pfVar6[2] = param_2[2];
-    dVar8 = extraout_f1;
+    puVar6 = (undefined4 *)(iVar4 * 0x10 + uVar1);
+    *puVar6 = *param_4;
+    puVar6[1] = param_4[1];
+    puVar6[2] = param_4[2];
+    dVar7 = extraout_f1;
     if (4096.0 <= extraout_f1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                      ,0x1f1,0,"%s");
+      MyAssertHandler(0xffffffff8206a9e8,0x1f1,0,0xffffffff82000f98,0xffffffff8206ac84);
     }
-    dVar9 = 1.0;
-    if ((dVar7 < 0.0) || (1.0 <= dVar7)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                      ,0x1f2,0,"%s");
+    dVar8 = 1.0;
+    if ((param_2 < 0.0) || (1.0 <= param_2)) {
+      MyAssertHandler(0xffffffff8206a9e8,0x1f2,0,0xffffffff82000f98,0xffffffff8206ac38);
     }
-    uStack_42 = (undefined2)(longlong)(dVar8 * 16.0);
-    *(undefined2 *)(pfVar6 + 3) = uStack_42;
-    uStack_4a = (undefined2)(longlong)((float)(dVar9 - dVar7) * 65536.0);
-    *(undefined2 *)((int)pfVar6 + 0xe) = uStack_4a;
+    uStack_42 = (undefined2)(longlong)(dVar7 * 16.0);
+    *(undefined2 *)(puVar6 + 3) = uStack_42;
+    uStack_4a = (undefined2)(longlong)((float)(dVar8 - param_2) * 65536.0);
+    *(undefined2 *)((int)puVar6 + 0xe) = uStack_4a;
     do {
       puVar5 = (uint *)((ulonglong)uVar1 + 0x1000);
       if (in_RESERVE != '\0') {
@@ -877,9 +822,9 @@ void FX_AddVisBlocker(FxSystem *param_1,float *param_2,float param_3,float param
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  else if (warnCount != *(int *)(iVar3 + 0x94)) {
-    warnCount = *(int *)(iVar3 + 0x94);
-    Com_PrintWarning(0x15,"More than %i visibility blocking particles exist concurrently\n");
+  else if (DAT_8333cabc != *(int *)(iVar3 + 0x94)) {
+    DAT_8333cabc = *(int *)(iVar3 + 0x94);
+    Com_PrintWarning(0x15,0xffffffff8206acb8,0x100);
     __restgprlr_28();
     return;
   }
@@ -890,44 +835,39 @@ void FX_AddVisBlocker(FxSystem *param_1,float *param_2,float param_3,float param
 
 // 82450A20  FX_ToggleVisBlockerFrame  (EffectsCore/fx_update_util.cpp:509)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_ToggleVisBlockerFrame(FxSystem *param_1,FxSystem *param_2)
+void FX_ToggleVisBlockerFrame(int param_1)
 
 {
-  FxVisState *pFVar1;
-  FxVisState *pFVar2;
+  int iVar1;
+  undefined4 uVar2;
   
-  if (param_1 == (FxSystem *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
-                    ,0x202,0,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x202,0,0xffffffff82000f98,0xffffffff82038694);
   }
-  Sys_EnterCriticalSection(CRITSECT_FX_VIS);
-  pFVar1 = param_1->visStateBufferRead;
-  pFVar2 = param_1->visStateBufferWrite;
-  param_1->visStateBufferWrite = pFVar1;
-  param_1->visStateBufferRead = pFVar2;
-  pFVar1->blockerCount = 0;
-  Sys_LeaveCriticalSection(CRITSECT_FX_VIS);
+  Sys_EnterCriticalSection(0xf);
+  iVar1 = *(int *)(param_1 + 0x60);
+  uVar2 = *(undefined4 *)(param_1 + 100);
+  *(int *)(param_1 + 100) = iVar1;
+  *(undefined4 *)(param_1 + 0x60) = uVar2;
+  *(undefined4 *)(iVar1 + 0x1000) = 0;
+  Sys_LeaveCriticalSection(0xf);
   return;
 }
 
 
 // 82450AA0  FX_WorldTrace  (EffectsCore/fx_update_util.cpp:554)
 
-void FX_WorldTrace(trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,int param_5)
+void FX_WorldTrace(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                  undefined8 param_5)
 
 {
-  trace_t *ptVar1;
-  int iVar2;
+  undefined8 uVar1;
   
-  ptVar1 = (trace_t *)__savegprlr_27(param_1);
+  uVar1 = __savegprlr_27();
   Profile_Begin(0xbe);
-  CG_WorldTrace(ptVar1,param_2,param_3,param_4,param_5);
-  iVar2 = Profile_EndInternal((double *)0x0);
-  __restgprlr_27(iVar2);
+  CG_WorldTrace(uVar1,param_2,param_3,param_4,param_5);
+  Profile_EndInternal(0);
+  __restgprlr_27();
   return;
 }
 

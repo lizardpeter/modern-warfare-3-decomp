@@ -2,54 +2,56 @@
 
 // 82838E78  vp8_update_gf_useage_maps  (WebM_atvi_opt/vpx/vp8/encoder/segmentation.c:20)
 
-void vp8_update_gf_useage_maps(VP8_COMP *param_1,VP8Common *param_2,MACROBLOCK *param_3)
+void * vp8_update_gf_useage_maps(void *param_1,int param_2,int param_3)
 
 {
-  MV_REFERENCE_FRAME MVar1;
+  void *pvVar1;
   int iVar2;
-  char **ppcVar3;
+  int *piVar3;
   int iVar4;
-  MODE_INFO *pMVar5;
+  int *piVar5;
   int iVar6;
   
-  pMVar5 = param_2->mi;
-  ppcVar3 = &param_3->gf_active_ptr;
-  *ppcVar3 = (char *)param_1->gf_active_flags;
-  if ((param_2->frame_type == KEY_FRAME) || (param_2->refresh_golden_frame != 0)) {
-    vpx_memset(param_1->gf_active_flags,1,param_2->mb_cols * param_2->mb_rows);
-    param_1->gf_active_count = param_2->mb_cols * param_2->mb_rows;
+  piVar5 = *(int **)(param_2 + 0x3770);
+  piVar3 = (int *)(param_3 + 0xadb4);
+  *piVar3 = *(int *)((int)param_1 + 0x30e0c);
+  if ((*(int *)(param_2 + 0x3718) == 0) || (*(int *)(param_2 + 0x5fa0) != 0)) {
+    pvVar1 = vpx_memset(*(void **)((int)param_1 + 0x30e0c),1,
+                        *(int *)(param_2 + 0x372c) * *(int *)(param_2 + 0x3728));
+    *(int *)((int)param_1 + 0x30e10) = *(int *)(param_2 + 0x372c) * *(int *)(param_2 + 0x3728);
   }
   else {
     iVar2 = 0;
-    if (0 < param_2->mb_rows) {
+    pvVar1 = param_1;
+    if (0 < *(int *)(param_2 + 0x3728)) {
       do {
         iVar4 = 0;
-        if (0 < param_2->mb_cols) {
+        if (0 < *(int *)(param_2 + 0x372c)) {
           do {
-            MVar1 = (pMVar5->mbmi).ref_frame;
-            if ((MVar1 == GOLDEN_FRAME) || (MVar1 == ALTREF_FRAME)) {
-              if (**ppcVar3 == '\0') {
-                **ppcVar3 = '\x01';
-                iVar6 = param_1->gf_active_count + 1;
+            if ((piVar5[2] == 2) || (piVar5[2] == 3)) {
+              if (*(char *)*piVar3 == '\0') {
+                *(char *)*piVar3 = '\x01';
+                iVar6 = *(int *)((int)param_1 + 0x30e10) + 1;
                 goto LAB_82838f54;
               }
             }
-            else if (((pMVar5->mbmi).mode != ZEROMV) && (**ppcVar3 != '\0')) {
-              **ppcVar3 = '\0';
-              iVar6 = param_1->gf_active_count + -1;
+            else if ((*piVar5 != 7) && (*(char *)*piVar3 != '\0')) {
+              *(char *)*piVar3 = '\0';
+              iVar6 = *(int *)((int)param_1 + 0x30e10) + -1;
 LAB_82838f54:
-              param_1->gf_active_count = iVar6;
+              *(int *)((int)param_1 + 0x30e10) = iVar6;
             }
             iVar4 = iVar4 + 1;
-            pMVar5 = pMVar5 + 1;
-            *ppcVar3 = *ppcVar3 + 1;
-          } while (iVar4 < param_2->mb_cols);
+            piVar5 = piVar5 + 0x26;
+            *piVar3 = *piVar3 + 1;
+            pvVar1 = *(void **)(param_2 + 0x372c);
+          } while (iVar4 < (int)pvVar1);
         }
         iVar2 = iVar2 + 1;
-        pMVar5 = pMVar5 + 1;
-      } while (iVar2 < param_2->mb_rows);
+        piVar5 = piVar5 + 0x26;
+      } while (iVar2 < *(int *)(param_2 + 0x3728));
     }
   }
-  return;
+  return pvVar1;
 }
 

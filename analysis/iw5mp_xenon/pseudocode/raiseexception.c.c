@@ -2,7 +2,8 @@
 
 // 828A97A0  RaiseException  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/raiseexception.c:62)
 
-void RaiseException(ulong param_1,ulong param_2,ulong param_3,ulong *param_4)
+void RaiseException(DWORD dwExceptionCode,DWORD dwExceptionFlags,DWORD nNumberOfArguments,
+                   ULONG_PTR *lpArguments)
 
 {
   ulonglong uVar1;
@@ -11,24 +12,25 @@ void RaiseException(ulong param_1,ulong param_2,ulong param_3,ulong *param_4)
   uint local_7c;
   undefined4 local_78;
   code *local_74;
-  int local_70;
+  undefined4 local_70;
+  undefined1 auStack_6c [108];
   
-  uVar2 = (ulonglong)(int)param_4;
-  uVar1 = (ulonglong)(int)param_3;
-  local_80 = __savegprlr_28(param_1);
-  local_7c = param_2 & 1;
+  uVar1 = (ulonglong)(int)lpArguments;
+  uVar2 = (ulonglong)(int)nNumberOfArguments;
+  local_80 = __savegprlr_28(dwExceptionCode);
+  local_7c = dwExceptionFlags & 1;
   local_78 = 0;
   local_74 = RaiseException;
-  if ((uVar2 & 0xffffffff) == 0) {
+  if ((uVar1 & 0xffffffff) == 0) {
     local_70 = 0;
   }
   else {
-    local_70 = (int)uVar1;
-    if (0xf < (uVar1 & 0xffffffff)) {
-      local_70 = 0xf;
+    if (0xf < (uVar2 & 0xffffffff)) {
+      uVar2 = 0xf;
     }
-    if (local_70 != 0) {
-      _blkmov();
+    local_70 = (undefined4)uVar2;
+    if ((uVar2 & 0xffffffff) != 0) {
+      blkmov(auStack_6c,uVar1,(uVar2 & 0x3fffffff) << 2);
     }
   }
   RtlRaiseException(&local_80);

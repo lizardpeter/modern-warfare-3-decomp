@@ -8657,18 +8657,18 @@ LAB_8264bf40:
   8264BF74  7C0903A6             mtspr CTR,r0
 switchD:
   8264BF78  4E800420             bctr
-caseD_a:
+caseD_1:
   8264BFA4  80610184             lwz r3,0x184(r1)
   8264BFA8  4BD4F089             bl 0x8239b030
   8264BFAC  80810050             lwz r4,0x50(r1)
   8264BFB0  4BFFF5F1             bl 0x8264b5a0
   8264BFB4  4800043C             b 0x8264c3f0
-caseD_9:
+caseD_0:
   8264BFB8  80610184             lwz r3,0x184(r1)
   8264BFBC  80810050             lwz r4,0x50(r1)
   8264BFC0  4BFFFBF1             bl 0x8264bbb0
   8264BFC4  4800042C             b 0x8264c3f0
-caseD_12:
+caseD_9:
   8264BFC8  4BFF7511             bl 0x826434d8
   8264BFCC  8161006C             lwz r11,0x6c(r1)
   8264BFD0  816B6E98             lwz r11,0x6e98(r11)
@@ -8701,7 +8701,7 @@ LAB_8264c01c:
   8264C030  419A03C0             beq cr6,0x8264c3f0
   8264C034  4BD510B5             bl 0x8239d0e8
   8264C038  480003B8             b 0x8264c3f0
-caseD_b:
+caseD_2:
   8264C03C  480035AD             bl 0x8264f5e8
   8264C040  3BE00000             li r31,0x0
 LAB_8264c044:
@@ -8738,7 +8738,7 @@ LAB_8264c07c:
   8264C0B0  7C0903A6             mtspr CTR,r0
 switchD:
   8264C0B4  4E800420             bctr
-caseD_2000003:
+caseD_2:
   8264C0E0  81610050             lwz r11,0x50(r1)
   8264C0E4  38600010             li r3,0x10
   8264C0E8  2B0B0000             cmplwi cr6,r11,0x0
@@ -8750,7 +8750,7 @@ LAB_8264c0fc:
   8264C0FC  80810064             lwz r4,0x64(r1)
   8264C100  4BEAA681             bl 0x824f6780
   8264C104  480002EC             b 0x8264c3f0
-caseD_2000001:
+caseD_0:
   8264C108  7E048378             or r4,r16,r16
   8264C10C  80A10050             lwz r5,0x50(r1)
   8264C110  38600010             li r3,0x10
@@ -8872,17 +8872,17 @@ LAB_8264c2bc:
   8264C2C0  38600010             li r3,0x10
   8264C2C4  4BEAA9BD             bl 0x824f6c80
   8264C2C8  48000128             b 0x8264c3f0
-caseD_2000008:
+caseD_7:
   8264C2CC  38600010             li r3,0x10
   8264C2D0  80810070             lwz r4,0x70(r1)
   8264C2D4  4BEAA4AD             bl 0x824f6780
   8264C2D8  48000118             b 0x8264c3f0
-caseD_200000a:
+caseD_9:
   8264C2DC  80610184             lwz r3,0x184(r1)
   8264C2E0  480B8881             bl 0x82704b60
   8264C2E4  4800099D             bl 0x8264cc80
   8264C2E8  48000108             b 0x8264c3f0
-caseD_2000002:
+caseD_1:
   8264C2EC  80610050             lwz r3,0x50(r1)
   8264C2F0  38810080             addi r4,r1,0x80
   8264C2F4  7C7F1B78             or r31,r3,r3
@@ -8893,7 +8893,7 @@ caseD_2000002:
   8264C308  7FE3FB78             or r3,r31,r31
   8264C30C  4BFFE375             bl 0x8264a680
   8264C310  480000E0             b 0x8264c3f0
-caseD_2000007:
+caseD_6:
   8264C314  3BE00000             li r31,0x0
 LAB_8264c318:
   8264C318  7FE3FB78             or r3,r31,r31
@@ -8945,7 +8945,7 @@ LAB_8264c3c0:
   8264C3C4  61490002             ori r9,r10,0x2
   8264C3C8  7F0B4840             cmplw cr6,r11,r9
   8264C3CC  419A0020             beq cr6,0x8264c3ec
-caseD_c:
+caseD_3:
   8264C3D0  7DE47B78             or r4,r15,r15
   8264C3D4  5567043E             rlwinm r7,r11,0x0,0x10,0x1f
   8264C3D8  55663EBE             rlwinm r6,r11,0x7,0x1a,0x1f
@@ -8955,7 +8955,7 @@ caseD_c:
   8264C3E8  48000008             b 0x8264c3f0
 LAB_8264c3ec:
   8264C3EC  4800192D             bl 0x8264dd18
-caseD_e:
+caseD_5:
   8264C3F0  81610078             lwz r11,0x78(r1)
   8264C3F4  38C10050             addi r6,r1,0x50
   8264C3F8  38A10054             addi r5,r1,0x54

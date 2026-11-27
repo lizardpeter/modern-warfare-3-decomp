@@ -2,37 +2,35 @@
 
 // 82788DE8  VertexDecl_GetName  (gfx_d3d/r_vertex_decl.cpp:54)
 
-char * VertexDecl_GetName(int param_1)
+undefined * VertexDecl_GetName(uint param_1)
 
 {
-  if (0x14 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_vertex_decl.cpp",
-                    0x37,0,"declType doesn\'t index VERTDECL_COUNT\n\t%i not in [0, %i)");
+  if (0x14 < param_1) {
+    MyAssertHandler(0xffffffff821d2998,0x37,0,0xffffffff821d29dc,param_1,0x15);
   }
-  return s_vertexDeclNames[param_1];
+  return (&PTR_s_generic_829a2ef8)[param_1];
 }
 
 
 // 82788E50  VertexDecl_GetType  (gfx_d3d/r_vertex_decl.cpp:62)
 
-int VertexDecl_GetType(char *param_1)
+longlong VertexDecl_GetType(char *param_1)
 
 {
   char cVar1;
   char cVar2;
-  int iVar3;
-  char **ppcVar4;
+  longlong lVar3;
+  undefined **ppuVar4;
   char *pcVar5;
   char *pcVar6;
   
   if (param_1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_vertex_decl.cpp",
-                    0x3f,0,"%s");
+    MyAssertHandler(0xffffffff821d2998,0x3f,0,0xffffffff82000f98,0xffffffff821d2a18);
   }
-  iVar3 = 0;
-  ppcVar4 = s_vertexDeclNames;
+  lVar3 = 0;
+  ppuVar4 = &PTR_s_generic_829a2ef8;
   do {
-    pcVar5 = *ppcVar4;
+    pcVar5 = *ppuVar4;
     pcVar6 = param_1;
     do {
       cVar1 = *pcVar6;
@@ -42,11 +40,11 @@ int VertexDecl_GetType(char *param_1)
       pcVar5 = pcVar5 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      return iVar3;
+      return lVar3;
     }
-    ppcVar4 = ppcVar4 + 1;
-    iVar3 = iVar3 + 1;
-    if (-0x7d65d0b5 < (int)ppcVar4) {
+    ppuVar4 = ppuVar4 + 1;
+    lVar3 = lVar3 + 1;
+    if (-0x7d65d0b5 < (int)ppuVar4) {
       return 0x15;
     }
   } while( true );

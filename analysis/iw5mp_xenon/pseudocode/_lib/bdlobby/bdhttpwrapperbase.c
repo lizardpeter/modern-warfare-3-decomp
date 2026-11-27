@@ -7,7 +7,7 @@ void __unwind_72631(void)
 {
   int in_r12;
   
-  bdRunnable::~bdRunnable(*(bdRunnable **)(in_r12 + 0x14));
+  bdRunnable___bdRunnable(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 
@@ -19,7 +19,7 @@ void __unwind_72632(void)
 {
   int in_r12;
   
-  bdMutex::~bdMutex((bdMutex *)(*(int *)(in_r12 + 0x14) + 0x14));
+  bdMutex___bdMutex((ulonglong)*(uint *)(in_r12 + 0x14) + 0x14);
   return;
 }
 
@@ -31,7 +31,7 @@ void __unwind_72633(void)
 {
   int in_r12;
   
-  bdMemory::__3bdSemaphore__SAXPAX_Z(*(void **)(in_r12 + -0x30));
+  bdSemaphore__operator_delete(*(undefined4 *)(in_r12 + -0x30));
   return;
 }
 
@@ -43,7 +43,7 @@ void __unwind_72668(void)
 {
   int in_r12;
   
-  bdRunnable::~bdRunnable(*(bdRunnable **)(in_r12 + 0x14));
+  bdRunnable___bdRunnable(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 
@@ -55,7 +55,7 @@ void __unwind_72669(void)
 {
   int in_r12;
   
-  bdMutex::~bdMutex((bdMutex *)(*(int *)(in_r12 + 0x14) + 0x14));
+  bdMutex___bdMutex((ulonglong)*(uint *)(in_r12 + 0x14) + 0x14);
   return;
 }
 
@@ -67,7 +67,7 @@ void __unwind_72769(void)
 {
   int in_r12;
   
-  bdString::operator_delete(*(void **)(in_r12 + -0x20),*(void **)(in_r12 + 0x1c));
+  bdString__operator_delete(*(undefined4 *)(in_r12 + -0x20),*(undefined4 *)(in_r12 + 0x1c));
   return;
 }
 
@@ -79,7 +79,7 @@ void __unwind_72809(void)
 {
   int in_r12;
   
-  bdString::operator_delete(*(void **)(in_r12 + -0x2c),*(void **)(in_r12 + -0x30));
+  bdString__operator_delete(*(undefined4 *)(in_r12 + -0x2c),*(undefined4 *)(in_r12 + -0x30));
   return;
 }
 
@@ -91,7 +91,7 @@ void __unwind_73143(void)
 {
   int in_r12;
   
-  bdArray<bdString>::__1__bdArray_VbdString____QAA_XZ(*(bdArray<bdString> **)(in_r12 + 0x14));
+  bdArray<bdString>___bdArray<bdString>(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 
@@ -103,7 +103,7 @@ void __unwind_73164(void)
 {
   int in_r12;
   
-  bdArray<bdString>::__1__bdArray_VbdString____QAA_XZ(*(bdArray<bdString> **)(in_r12 + 0x14));
+  bdArray<bdString>___bdArray<bdString>(*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 
@@ -115,8 +115,8 @@ void __unwind_73250(void)
 {
   int in_r12;
   
-  bdMemory::__3Node___bdHashMap_VbdString__V__bdArray_VbdString____VbdHashingClass____SAXPAX_Z
-            (*(void **)(in_r12 + -0x50));
+  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__Node__operator_delete
+            (*(undefined4 *)(in_r12 + -0x50));
   return;
 }
 
@@ -126,9 +126,9 @@ void __unwind_73250(void)
 void __unwind_73399(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdString::~bdString((bdString *)(in_r12 + -0x40));
+  bdString___bdString(in_r12 + -0x40);
   return;
 }
 
@@ -138,9 +138,9 @@ void __unwind_73399(void)
 void __unwind_73400(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdArray<bdString>::__1__bdArray_VbdString____QAA_XZ((bdArray<bdString> *)(in_r12 + -0x38));
+  bdArray<bdString>___bdArray<bdString>(in_r12 + -0x38);
   return;
 }
 
@@ -150,9 +150,9 @@ void __unwind_73400(void)
 void __unwind_73401(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdRandom::~bdRandom((bdRandom *)(in_r12 + -0x3c));
+  bdRandom___bdRandom(in_r12 + -0x3c);
   return;
 }
 
@@ -164,9 +164,8 @@ void __unwind_73468(void)
 {
   int in_r12;
   
-  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::
-  ~bdHashMap<bdString,bdArray<bdString>,bdHashingClass>
-            (*(bdHashMap<bdString,bdArray<bdString>,bdHashingClass> **)(in_r12 + 0x14));
+  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>___bdHashMap<bdString,bdArray<bdString>,bdHashingClass>
+            (*(undefined4 *)(in_r12 + 0x14));
   return;
 }
 
@@ -176,9 +175,9 @@ void __unwind_73468(void)
 void __unwind_73496(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdString::~bdString((bdString *)(in_r12 + -0xbc));
+  bdString___bdString(in_r12 + -0xbc);
   return;
 }
 
@@ -188,9 +187,9 @@ void __unwind_73496(void)
 void __unwind_73497(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdArray<bdString>::__1__bdArray_VbdString____QAA_XZ((bdArray<bdString> *)(in_r12 + -0xb0));
+  bdArray<bdString>___bdArray<bdString>(in_r12 + -0xb0);
   return;
 }
 
@@ -200,9 +199,9 @@ void __unwind_73497(void)
 void __unwind_73498(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdString::~bdString((bdString *)(in_r12 + -0xb8));
+  bdString___bdString(in_r12 + -0xb8);
   return;
 }
 
@@ -212,9 +211,9 @@ void __unwind_73498(void)
 void __unwind_73499(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdString::~bdString((bdString *)(in_r12 + -0xb4));
+  bdString___bdString(in_r12 + -0xb4);
   return;
 }
 

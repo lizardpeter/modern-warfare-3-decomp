@@ -2,28 +2,29 @@
 
 // 828BAC08  XSessionCalculateSkill  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/sessionskill.cpp:37)
 
-ulong XSessionCalculateSkill
-                (ulong param_1,double *param_2,double *param_3,double *param_4,double *param_5)
+undefined8
+XSessionCalculateSkill
+          (ulonglong param_1,int param_2,double *param_3,double *param_4,double *param_5)
 
 {
-  int iVar1;
-  longlong lVar2;
-  double dVar3;
+  ulonglong uVar1;
+  double dVar2;
   
-  lVar2 = (longlong)(int)param_1;
   *param_4 = 0.0;
   *param_5 = 0.0;
-  if (param_1 != 0) {
-    iVar1 = (int)param_2 - (int)param_3;
+  if ((param_1 & 0xffffffff) != 0) {
+    param_2 = param_2 - (int)param_3;
+    uVar1 = param_1;
     do {
-      *param_4 = *(double *)(iVar1 + (int)param_3) + *param_4;
-      dVar3 = *param_3;
+      *param_4 = *(double *)(param_2 + (int)param_3) + *param_4;
+      dVar2 = *param_3;
       param_3 = param_3 + 1;
-      *param_5 = dVar3 * dVar3 + *param_5;
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
-    *param_4 = *param_4 * (1.0 / (double)param_1);
-    *param_5 = SQRT((1.0 / (double)param_1) * *param_5);
+      *param_5 = dVar2 * dVar2 + *param_5;
+      uVar1 = uVar1 - 1;
+    } while (uVar1 != 0);
+    dVar2 = 1.0 / (double)(param_1 & 0xffffffff);
+    *param_4 = *param_4 * dVar2;
+    *param_5 = SQRT(dVar2 * *param_5);
   }
   return 0;
 }
@@ -31,31 +32,28 @@ ulong XSessionCalculateSkill
 
 // 828BAC98  XSessionModifySkill  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/sessionskill.cpp:88)
 
-ulong XSessionModifySkill(void *param_1,ulong param_2,ulong64 *param_3,_XOVERLAPPED *param_4)
+void XSessionModifySkill(undefined8 param_1,undefined4 param_2,undefined4 param_3,ulonglong param_4)
 
 {
   undefined8 uVar1;
   uint uVar2;
-  long lVar3;
-  ulong uVar4;
-  ulonglong uVar5;
-  ulong local_60;
+  int iVar3;
+  uint local_60;
   int local_5c;
   int local_58 [2];
   int local_50;
-  ulong local_4c;
-  ulong64 *local_48;
+  undefined4 local_4c;
+  undefined4 local_48;
   undefined4 local_44;
   undefined4 local_40;
   undefined4 local_3c;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar1 = __savegprlr_27(param_1);
+  uVar1 = __savegprlr_27();
   local_60 = 0;
   local_5c = 0;
   uVar2 = XamGetSystemVersion();
   if (uVar2 < 0x200ed800) {
-    SetExtendedError(0x65b,&local_60,local_58,(_XOVERLAPPED *)uVar5);
+    SetExtendedError(0x65b,&local_60,local_58,param_4);
   }
   else {
     local_60 = XamSessionRefObjByHandle(uVar1,&local_5c);
@@ -66,13 +64,13 @@ ulong XSessionModifySkill(void *param_1,ulong param_2,ulong64 *param_3,_XOVERLAP
       local_3c = 0;
       local_4c = param_2;
       local_48 = param_3;
-      local_58[0] = XMsgStartIORequest(0xfb,0xb001f,uVar5,&local_50,0x18);
+      local_58[0] = XMsgStartIORequest(0xfb,0xb001f,param_4,&local_50,0x18);
       if (local_58[0] < 0) {
         local_60 = 0x65b;
       }
-      else if ((uVar5 & 0xffffffff) == 0) {
-        lVar3 = RtlGetLastError();
-        local_60 = lVar3 >> 0x1f & 0x65b;
+      else if ((param_4 & 0xffffffff) == 0) {
+        iVar3 = RtlGetLastError();
+        local_60 = iVar3 >> 0x1f & 0x65b;
       }
       else {
         local_60 = 0x3e5;
@@ -82,7 +80,7 @@ ulong XSessionModifySkill(void *param_1,ulong param_2,ulong64 *param_3,_XOVERLAP
   if (local_5c != 0) {
     ObDereferenceObject();
   }
-  uVar4 = __restgprlr_27(local_60);
-  return uVar4;
+  __restgprlr_27(local_60);
+  return;
 }
 

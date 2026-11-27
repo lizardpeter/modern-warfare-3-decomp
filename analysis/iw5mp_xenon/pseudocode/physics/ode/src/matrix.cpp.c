@@ -2,23 +2,24 @@
 
 // 82696C90  dSetZero  (physics/ode/src/matrix.cpp:30)
 
-void dSetZero(float *param_1,int param_2)
+void dSetZero(int param_1,ulonglong param_2)
 
 {
-  float *pfVar1;
-  longlong lVar2;
+  ulonglong uVar1;
+  undefined4 *puVar2;
   
-  lVar2 = (longlong)param_2;
-  if ((param_1 == (float *)0x0) || (param_2 < 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\matrix.cpp",
-                    0x1f,0,"%s");
+  if ((param_1 == 0) || ((int)param_2 < 0)) {
+    MyAssertHandler(0xffffffff82199ad0,0x1f,0,0xffffffff82000f98,0xffffffff82199b18);
   }
-  if ((0 < param_2) && (pfVar1 = param_1 + -1, param_2 != 0)) {
-    do {
-      pfVar1 = pfVar1 + 1;
-      *pfVar1 = 0.0;
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+  if (0 < (int)param_2) {
+    puVar2 = (undefined4 *)(param_1 + -4);
+    uVar1 = param_2 & 0xffffffff;
+    while (uVar1 != 0) {
+      puVar2 = puVar2 + 1;
+      *puVar2 = 0;
+      param_2 = param_2 - 1;
+      uVar1 = param_2;
+    }
   }
   return;
 }
@@ -26,19 +27,15 @@ void dSetZero(float *param_1,int param_2)
 
 // 82696D20  dSetValue  (physics/ode/src/matrix.cpp:40)
 
-void dSetValue(float *param_1,int param_2,float param_3)
+void dSetValue(double param_1,float *param_2,int param_3)
 
 {
-  double dVar1;
-  
-  dVar1 = (double)param_3;
-  if ((param_1 == (float *)0x0) || (param_2 < 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\matrix.cpp",
-                    0x29,0,"%s");
+  if ((param_2 == (float *)0x0) || (param_3 < 0)) {
+    MyAssertHandler(0xffffffff82199ad0,0x29,0,0xffffffff82000f98,0xffffffff82199b18);
   }
-  if (0 < param_2) {
-    *param_1 = (float)dVar1;
-    _blkmov();
+  if (0 < param_3) {
+    *param_2 = (float)param_1;
+    blkmov(param_2 + 1,param_2,param_3 * 4 + -4);
   }
   return;
 }
@@ -46,17 +43,17 @@ void dSetValue(float *param_1,int param_2,float param_3)
 
 // 82696DB8  dFactorCholesky3  (physics/ode/src/matrix.cpp:55)
 
-int dFactorCholesky3(float *param_1)
+void dFactorCholesky3(void)
 
 {
   float fVar1;
   float *pfVar2;
-  int iVar3;
-  float *pfVar4;
-  int iVar5;
-  longlong lVar6;
+  float *pfVar3;
+  int iVar4;
+  longlong lVar5;
+  float *pfVar6;
   float *pfVar7;
-  float *pfVar8;
+  int iVar8;
   float *pfVar9;
   longlong lVar10;
   int iVar11;
@@ -72,73 +69,71 @@ int dFactorCholesky3(float *param_1)
   undefined8 local_60;
   undefined8 local_58;
   
-  pfVar2 = (float *)__savegprlr_23(param_1);
+  pfVar2 = (float *)__savegprlr_23();
   local_60 = in_f30;
   local_58 = in_f31;
   if (pfVar2 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\matrix.cpp",
-                    0x3f,0,"%s");
+    MyAssertHandler(0xffffffff82199ad0,0x3f,0,0xffffffff82000f98,0xffffffff820755b8);
   }
-  pfVar8 = &fStack_74;
+  pfVar7 = &fStack_74;
   dVar15 = 1.0;
   lVar10 = 0;
   dVar16 = 0.0;
-  iVar3 = 0;
+  iVar8 = 0;
   pfVar9 = pfVar2;
   while( true ) {
-    lVar6 = 0;
+    lVar5 = 0;
     iVar11 = (int)lVar10;
     pfVar12 = pfVar2;
     if (0 < iVar11) {
-      pfVar4 = &fStack_74;
-      iVar5 = iVar3;
+      pfVar3 = &fStack_74;
+      iVar4 = iVar8;
       do {
         fVar1 = *pfVar12;
-        lVar13 = lVar6;
-        pfVar7 = pfVar9;
-        if ((int)lVar6 != 0) {
+        lVar13 = lVar5;
+        pfVar6 = pfVar9;
+        if ((int)lVar5 != 0) {
           do {
-            fVar1 = -(*(float *)(iVar5 + (int)pfVar7) * *pfVar7 - fVar1);
+            fVar1 = -(*(float *)(iVar4 + (int)pfVar6) * *pfVar6 - fVar1);
             lVar13 = lVar13 + -1;
-            pfVar7 = pfVar7 + 1;
+            pfVar6 = pfVar6 + 1;
           } while (lVar13 != 0);
         }
-        pfVar4 = pfVar4 + 1;
-        lVar6 = lVar6 + 1;
-        *pfVar12 = *pfVar4 * fVar1;
-        iVar5 = iVar5 + 0x10;
+        pfVar3 = pfVar3 + 1;
+        lVar5 = lVar5 + 1;
+        *pfVar12 = *pfVar3 * fVar1;
+        iVar4 = iVar4 + 0x10;
         pfVar12 = pfVar12 + 1;
-      } while ((int)lVar6 < iVar11);
+      } while ((int)lVar5 < iVar11);
     }
     dVar14 = (double)*pfVar12;
     if (iVar11 != 0) {
-      pfVar4 = pfVar9 + -1;
-      lVar6 = lVar10;
+      pfVar3 = pfVar9 + -1;
+      lVar5 = lVar10;
       do {
-        pfVar4 = pfVar4 + 1;
-        dVar14 = -(double)(float)((double)*pfVar4 * (double)*pfVar4 - dVar14);
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
+        pfVar3 = pfVar3 + 1;
+        dVar14 = -(double)(float)((double)*pfVar3 * (double)*pfVar3 - dVar14);
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
     }
     if (dVar14 <= dVar16) break;
     *pfVar12 = (float)SQRT(dVar14);
     if ((double)(float)SQRT(dVar14) <= dVar16) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\matrix.cpp"
-                      ,0x59,0,"%s");
+      MyAssertHandler(0xffffffff82199ad0,0x59,0,0xffffffff82000f98,0xffffffff82199b24);
     }
     lVar10 = lVar10 + 1;
-    pfVar8 = pfVar8 + 1;
-    *pfVar8 = (float)(dVar15 / (double)*pfVar12);
+    pfVar7 = pfVar7 + 1;
+    *pfVar7 = (float)(dVar15 / (double)*pfVar12);
     pfVar9 = pfVar9 + 4;
-    iVar3 = iVar3 + -0x10;
+    iVar8 = iVar8 + -0x10;
     pfVar2 = pfVar2 + 4;
     if (2 < (int)lVar10) {
-      iVar3 = __restgprlr_23(1);
-      return iVar3;
+      __restgprlr_23(1);
+      return;
     }
   }
-  iVar3 = __restgprlr_23(0);
-  return iVar3;
+  __restgprlr_23(0);
+  return;
 }
 
 
@@ -146,119 +141,114 @@ int dFactorCholesky3(float *param_1)
 
 /* WARNING: Type propagation algorithm not settling */
 
-void dSolveCholesky3(float *param_1,float *param_2)
+void dSolveCholesky3(undefined8 param_1,ulonglong param_2)
 
 {
   float *pfVar1;
   int iVar2;
   int iVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  float *pfVar10;
-  longlong lVar9;
-  ulonglong uVar11;
+  longlong lVar5;
+  ulonglong uVar6;
+  float *pfVar7;
+  float *pfVar9;
+  longlong lVar8;
+  ulonglong uVar10;
+  longlong lVar11;
   longlong lVar12;
-  longlong lVar13;
-  int iVar14;
-  longlong lVar15;
+  int iVar13;
+  longlong lVar14;
+  double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
   float fStack_84;
   float local_80 [32];
   
-  uVar5 = (ulonglong)(int)param_2;
-  uVar4 = __savegprlr_21(param_1);
-  if (((uVar4 & 0xffffffff) == 0) || ((uVar5 & 0xffffffff) == 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\matrix.cpp",
-                    0x6d,0,"%s");
+  uVar4 = __savegprlr_21();
+  if (((uVar4 & 0xffffffff) == 0) || ((param_2 & 0xffffffff) == 0)) {
+    MyAssertHandler(0xffffffff82199ad0,0x6d,0,0xffffffff82000f98,0xffffffff82199b5c);
   }
-  iVar2 = (int)uVar5;
-  iVar14 = 0;
-  lVar15 = 0;
-  dVar19 = 0.0;
-  lVar13 = uVar4 - 0x14;
+  iVar2 = (int)param_2;
+  iVar13 = 0;
+  lVar14 = 0;
+  dVar18 = 0.0;
+  lVar12 = uVar4 - 0x14;
   do {
-    uVar11 = 0;
+    uVar10 = 0;
     iVar3 = (int)uVar4;
-    dVar16 = dVar19;
-    dVar18 = dVar19;
-    if (1 < iVar14) {
-      pfVar10 = &fStack_84;
+    dVar15 = dVar18;
+    dVar17 = dVar18;
+    if (1 < iVar13) {
+      pfVar9 = &fStack_84;
       do {
-        uVar7 = lVar15 + uVar11;
-        pfVar1 = pfVar10 + 1;
-        uVar11 = uVar11 + 2;
-        pfVar10 = pfVar10 + 2;
-        pfVar8 = (float *)((int)((uVar7 & 0xffffffff) << 2) + iVar3);
-        dVar16 = (double)(float)((double)*pfVar1 * (double)*pfVar8 + dVar16);
-        dVar18 = (double)(float)((double)pfVar8[1] * (double)*pfVar10 + dVar18);
-      } while ((int)uVar11 < iVar14 + -1);
+        uVar6 = lVar14 + uVar10;
+        pfVar1 = pfVar9 + 1;
+        uVar10 = uVar10 + 2;
+        pfVar9 = pfVar9 + 2;
+        pfVar7 = (float *)((int)((uVar6 & 0xffffffff) << 2) + iVar3);
+        dVar15 = (double)(float)((double)*pfVar1 * (double)*pfVar7 + dVar15);
+        dVar17 = (double)(float)((double)pfVar7[1] * (double)*pfVar9 + dVar17);
+      } while ((int)uVar10 < iVar13 + -1);
     }
-    dVar17 = dVar19;
-    if ((int)uVar11 < iVar14) {
-      dVar17 = (double)(*(float *)((int)((lVar15 + uVar11 & 0xffffffff) << 2) + iVar3) *
-                       *(float *)((int)local_80 + (int)((uVar11 & 0xffffffff) << 2)));
+    dVar16 = dVar18;
+    if ((int)uVar10 < iVar13) {
+      dVar16 = (double)(*(float *)((int)((lVar14 + uVar10 & 0xffffffff) << 2) + iVar3) *
+                       *(float *)((int)local_80 + (int)((uVar10 & 0xffffffff) << 2)));
     }
-    dVar16 = (double)(float)((double)(float)(dVar18 + dVar16) + dVar17);
-    if ((double)*(float *)((int)lVar13 + 0x14) == dVar19) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\matrix.cpp"
-                      ,0x75,0,"%s");
+    dVar15 = (double)(float)((double)(float)(dVar17 + dVar15) + dVar16);
+    if ((double)*(float *)((int)lVar12 + 0x14) == dVar18) {
+      MyAssertHandler(0xffffffff82199ad0,0x75,0,0xffffffff82000f98,0xffffffff82199b48);
     }
-    lVar13 = lVar13 + 0x14;
-    iVar14 = iVar14 + 1;
-    pfVar10 = (float *)((int)local_80 + (int)lVar15);
-    lVar15 = lVar15 + 4;
-    *pfVar10 = (float)((double)*(float *)((iVar2 - (int)local_80) + (int)pfVar10) - dVar16) /
-               *(float *)lVar13;
-  } while ((int)lVar15 < 0xc);
-  lVar13 = uVar4 + 0x3c;
-  lVar15 = 0xc;
-  iVar14 = 0;
-  uVar11 = 3;
+    lVar12 = lVar12 + 0x14;
+    iVar13 = iVar13 + 1;
+    pfVar9 = (float *)((int)local_80 + (int)lVar14);
+    lVar14 = lVar14 + 4;
+    *pfVar9 = (float)((double)*(float *)((iVar2 - (int)local_80) + (int)pfVar9) - dVar15) /
+              *(float *)lVar12;
+  } while ((int)lVar14 < 0xc);
+  lVar12 = uVar4 + 0x3c;
+  lVar14 = 0xc;
+  iVar13 = 0;
+  uVar10 = 3;
   do {
-    dVar16 = dVar19;
-    if ((int)uVar11 < 3) {
-      uVar7 = uVar11;
-      dVar18 = dVar19;
-      if (1 < iVar14) {
-        lVar12 = ((1 - uVar11 & 0xffffffff) >> 1) + 1;
-        lVar6 = lVar15 + uVar5 + -4;
-        lVar9 = ((uVar11 + lVar15) - 5 & 0x3fffffff) * 4 + uVar4;
-        uVar7 = (lVar12 * 2 & 0xfffffffeU) + uVar11;
+    dVar15 = dVar18;
+    if ((int)uVar10 < 3) {
+      uVar6 = uVar10;
+      dVar17 = dVar18;
+      if (1 < iVar13) {
+        lVar11 = ((1 - uVar10 & 0xffffffff) >> 1) + 1;
+        lVar5 = lVar14 + param_2 + -4;
+        lVar8 = ((uVar10 + lVar14) - 5 & 0x3fffffff) * 4 + uVar4;
+        uVar6 = (lVar11 * 2 & 0xfffffffeU) + uVar10;
         do {
-          dVar16 = (double)(float)((double)*(float *)((int)lVar9 + 0x10) *
-                                   (double)*(float *)((int)lVar6 + 4) + dVar16);
-          lVar9 = lVar9 + 0x20;
-          lVar6 = lVar6 + 8;
-          dVar18 = (double)(float)((double)*(float *)lVar9 * (double)*(float *)lVar6 + dVar18);
-          lVar12 = lVar12 + -1;
-        } while (lVar12 != 0);
+          dVar15 = (double)(float)((double)*(float *)((int)lVar8 + 0x10) *
+                                   (double)*(float *)((int)lVar5 + 4) + dVar15);
+          lVar8 = lVar8 + 0x20;
+          lVar5 = lVar5 + 8;
+          dVar17 = (double)(float)((double)*(float *)lVar8 * (double)*(float *)lVar5 + dVar17);
+          lVar11 = lVar11 + -1;
+        } while (lVar11 != 0);
       }
-      dVar17 = dVar19;
-      if ((int)uVar7 < 3) {
-        lVar9 = (uVar7 & 0x3fffffff) * 4;
-        dVar17 = (double)(*(float *)((int)((uVar11 + lVar9 & 0xffffffff) << 2) + iVar3 + -4) *
-                         *(float *)((int)lVar9 + iVar2));
+      dVar16 = dVar18;
+      if ((int)uVar6 < 3) {
+        lVar8 = (uVar6 & 0x3fffffff) * 4;
+        dVar16 = (double)(*(float *)((int)((uVar10 + lVar8 & 0xffffffff) << 2) + iVar3 + -4) *
+                         *(float *)((int)lVar8 + iVar2));
       }
-      dVar16 = (double)(float)((double)(float)(dVar18 + dVar16) + dVar17);
+      dVar15 = (double)(float)((double)(float)(dVar17 + dVar15) + dVar16);
     }
-    if ((double)*(float *)((int)lVar13 + -0x14) == dVar19) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\matrix.cpp"
-                      ,0x7d,0,"%s");
+    if ((double)*(float *)((int)lVar12 + -0x14) == dVar18) {
+      MyAssertHandler(0xffffffff82199ad0,0x7d,0,0xffffffff82000f98,0xffffffff82199b34);
     }
-    lVar13 = lVar13 + -0x14;
-    lVar9 = uVar11 - 2;
-    iVar14 = iVar14 + 1;
-    *(float *)(iVar2 + -4 + (int)lVar15) =
-         (float)((double)*(float *)((int)&fStack_84 + (int)lVar15) - dVar16) / *(float *)lVar13;
-    lVar15 = lVar15 + -4;
-    uVar11 = uVar11 - 1;
-  } while (-1 < lVar9);
+    lVar12 = lVar12 + -0x14;
+    lVar8 = uVar10 - 2;
+    iVar13 = iVar13 + 1;
+    *(float *)(iVar2 + -4 + (int)lVar14) =
+         (float)((double)*(float *)((int)&fStack_84 + (int)lVar14) - dVar15) / *(float *)lVar12;
+    lVar14 = lVar14 + -4;
+    uVar10 = uVar10 - 1;
+  } while (-1 < lVar8);
   __restgprlr_21();
   return;
 }
@@ -266,68 +256,67 @@ void dSolveCholesky3(float *param_1,float *param_2)
 
 // 82697198  dInvertPDMatrix3  (physics/ode/src/matrix.cpp:132)
 
-int dInvertPDMatrix3(float *param_1,float *param_2)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void dInvertPDMatrix3(undefined8 param_1,ulonglong param_2)
 
 {
+  void *_Src;
   int iVar1;
-  ulonglong uVar2;
-  float *pfVar3;
+  float *pfVar2;
+  longlong lVar3;
   longlong lVar4;
-  longlong lVar5;
-  double dVar6;
+  double dVar5;
   float fStack_74;
-  float local_70 [4];
-  float afStack_60 [24];
+  undefined1 local_70 [4];
+  undefined4 local_6c;
+  undefined4 local_68;
+  undefined1 auStack_60 [96];
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if ((iVar1 == 0) || ((uVar2 & 0xffffffff) == 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\matrix.cpp",
-                    0x8c,0,"%s");
+  _Src = (void *)__savegprlr_28();
+  if ((_Src == (void *)0x0) || ((param_2 & 0xffffffff) == 0)) {
+    MyAssertHandler(0xffffffff82199ad0,0x8c,0,0xffffffff82000f98,0xffffffff82199b64);
   }
-  memcpy();
-  iVar1 = dFactorCholesky3(afStack_60);
+  memcpy(auStack_60,_Src,0x30);
+  iVar1 = dFactorCholesky3(auStack_60);
   if (iVar1 == 0) {
-    iVar1 = __restgprlr_28();
-    return iVar1;
+    __restgprlr_28();
+    return;
   }
-  dSetZero((float *)uVar2,0xc);
-  lVar5 = uVar2 + 0x1c;
-  pfVar3 = &fStack_74;
-  lVar4 = 3;
-  dVar6 = 1.0;
+  dSetZero(param_2,0xc);
+  lVar4 = param_2 + 0x1c;
+  pfVar2 = &fStack_74;
+  lVar3 = 3;
+  dVar5 = 1.0;
   do {
-    local_70[0] = 0.0;
-    local_70[1] = 0.0;
-    local_70[2] = 0.0;
-    pfVar3 = pfVar3 + 1;
-    *pfVar3 = (float)dVar6;
-    dSolveCholesky3(afStack_60,local_70);
-    lVar4 = lVar4 + -1;
-    *(float *)((int)lVar5 + -0x1c) = local_70[0];
-    *(float *)((int)lVar5 + -0xc) = local_70[1];
-    lVar5 = lVar5 + 4;
-    *(undefined4 *)lVar5 = local_70[2];
-  } while (lVar4 != 0);
-  iVar1 = __restgprlr_28(1);
-  return iVar1;
+    local_6c = 0;
+    local_68 = 0;
+    pfVar2 = pfVar2 + 1;
+    *pfVar2 = (float)dVar5;
+    dSolveCholesky3(auStack_60,local_70);
+    lVar3 = lVar3 + -1;
+    *(undefined4 *)((int)lVar4 + -0x1c) = 0;
+    *(undefined4 *)((int)lVar4 + -0xc) = local_6c;
+    lVar4 = lVar4 + 4;
+    *(undefined4 *)lVar4 = local_68;
+  } while (lVar3 != 0);
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 82697288  dIsPositiveDefinite3  (physics/ode/src/matrix.cpp:161)
 
-int dIsPositiveDefinite3(float *param_1)
+void dIsPositiveDefinite3(void *param_1)
 
 {
-  int iVar1;
-  float afStack_40 [12];
+  undefined1 auStack_40 [48];
   
-  if (param_1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\matrix.cpp",
-                    0xa6,0,"%s");
+  if (param_1 == (void *)0x0) {
+    MyAssertHandler(0xffffffff82199ad0,0xa6,0,0xffffffff82000f98,0xffffffff820755b8);
   }
-  memcpy();
-  iVar1 = dFactorCholesky3(afStack_40);
-  return iVar1;
+  memcpy(auStack_40,param_1,0x30);
+  dFactorCholesky3(auStack_40);
+  return;
 }
 

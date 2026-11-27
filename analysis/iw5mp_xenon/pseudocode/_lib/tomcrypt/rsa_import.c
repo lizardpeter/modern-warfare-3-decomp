@@ -7,7 +7,7 @@ void rsa_import(undefined8 param_1,undefined8 param_2,longlong param_3)
 {
   undefined8 uVar1;
   undefined8 uVar2;
-  void *pvVar3;
+  int iVar3;
   int iVar4;
   int iVar5;
   ulonglong uVar6;
@@ -16,13 +16,13 @@ void rsa_import(undefined8 param_1,undefined8 param_2,longlong param_3)
   byte bVar9;
   undefined4 *puVar10;
   undefined4 *puVar11;
-  void *local_160 [4];
+  undefined4 local_160 [4];
   undefined4 local_150;
   undefined4 *local_14c;
   undefined4 local_148;
   undefined4 local_144;
   undefined4 local_130;
-  void *local_12c;
+  int local_12c;
   uint local_128;
   undefined4 local_124;
   undefined4 local_110;
@@ -39,11 +39,11 @@ void rsa_import(undefined8 param_1,undefined8 param_2,longlong param_3)
   uVar2 = ltc_init_multi(param_3 + 4,param_3 + 8,param_3 + 0xc,param_3 + 0x20,param_3 + 0x1c,
                          param_3 + 0x18,param_3 + 0x10,param_3 + 0x14);
   if ((int)uVar2 == 0) {
-    pvVar3 = tom_game_calloc(1,0x4000);
+    iVar3 = tom_game_calloc(1,0x4000);
     puVar11 = (undefined4 *)(param_3 + 0xc);
     puVar10 = (undefined4 *)(param_3 + 4);
-    if (pvVar3 == (void *)0x0) {
-      iVar4 = 0xd;
+    if (iVar3 == 0) {
+      uVar2 = 0xd;
       goto LAB_8225275c;
     }
     local_10c = auStack_d0;
@@ -61,7 +61,7 @@ void rsa_import(undefined8 param_1,undefined8 param_2,longlong param_3)
     local_144 = 0;
     local_128 = 0x4000;
     local_124 = 0;
-    local_12c = pvVar3;
+    local_12c = iVar3;
     iVar4 = der_decode_sequence_ex(uVar1,param_2,&local_150,2,1);
     if (iVar4 == 0) {
       iVar4 = 0;
@@ -70,57 +70,57 @@ void rsa_import(undefined8 param_1,undefined8 param_2,longlong param_3)
       iVar5 = 0;
       for (uVar6 = (ulonglong)local_128; uVar6 != 0; uVar6 = uVar6 - 1) {
         iVar7 = iVar7 + 1;
-        bVar8 = *(byte *)(iVar4 + (int)pvVar3) | bVar9 << 1;
+        bVar8 = *(byte *)(iVar4 + iVar3) | bVar9 << 1;
         bVar9 = bVar8;
         if (iVar7 == 8) {
           bVar9 = 0;
-          *(byte *)(iVar5 + (int)pvVar3) = bVar8;
+          *(byte *)(iVar5 + iVar3) = bVar8;
           iVar5 = iVar5 + 1;
           iVar7 = 0;
         }
         iVar4 = iVar4 + 1;
       }
-      iVar4 = der_decode_sequence_multi(pvVar3,iVar5,2,1,*puVar11,2,1,*puVar10);
-      if (iVar4 != 0) {
-        tom_game_free(pvVar3);
+      uVar2 = der_decode_sequence_multi(iVar3,iVar5,2,1,*puVar11,2,1,*puVar10);
+      if ((int)uVar2 != 0) {
+        tom_game_free(iVar3);
         goto LAB_8225275c;
       }
-      tom_game_free(pvVar3);
+      tom_game_free(iVar3);
     }
     else {
-      tom_game_free(pvVar3);
-      iVar4 = der_decode_sequence_multi(uVar1,param_2,2,1,*puVar11,0,0,0);
-      if (iVar4 != 0) {
+      tom_game_free(iVar3);
+      uVar2 = der_decode_sequence_multi(uVar1,param_2,2,1,*puVar11,0,0,0);
+      if ((int)uVar2 != 0) {
 LAB_8225275c:
         ltc_deinit_multi(*(undefined4 *)(param_3 + 8),*puVar10,*puVar11,
                          *(undefined4 *)(param_3 + 0x20),*(undefined4 *)(param_3 + 0x1c),
                          *(undefined4 *)(param_3 + 0x18),*(undefined4 *)(param_3 + 0x10),
                          *(undefined4 *)(param_3 + 0x14));
-        __restgprlr_15(iVar4);
+        __restgprlr_15(uVar2);
         return;
       }
-      iVar4 = (*ltc_mp.compare_d)((void *)*puVar11,0);
-      if (iVar4 == 0) {
-        iVar4 = (*ltc_mp.init)(local_160);
-        if (iVar4 == 0) {
-          iVar4 = der_decode_sequence_multi(uVar1,param_2,2,1,local_160[0],2,1,*puVar11);
-          if (iVar4 == 0) {
-            (*ltc_mp.deinit)(local_160[0]);
+      iVar3 = (*DAT_84897f10)(*puVar11,0);
+      if (iVar3 == 0) {
+        uVar2 = (*DAT_84897ee8)(local_160);
+        if ((int)uVar2 == 0) {
+          uVar2 = der_decode_sequence_multi(uVar1,param_2,2,1,local_160[0],2,1,*puVar11);
+          if ((int)uVar2 == 0) {
+            (*DAT_84897ef0)(local_160[0]);
             *(undefined4 *)param_3 = 1;
             __restgprlr_15(0);
             return;
           }
-          (*ltc_mp.deinit)(local_160[0]);
+          (*DAT_84897ef0)(local_160[0]);
         }
         goto LAB_8225275c;
       }
-      iVar4 = (*ltc_mp.compare_d)((void *)*puVar11,1);
-      if (iVar4 == 0) {
-        iVar4 = 0x12;
+      iVar3 = (*DAT_84897f10)(*puVar11,1);
+      if (iVar3 == 0) {
+        uVar2 = 0x12;
         goto LAB_8225275c;
       }
-      iVar4 = der_decode_sequence_multi(uVar1,param_2,2,1,*puVar11,2,1,*puVar10);
-      if (iVar4 != 0) goto LAB_8225275c;
+      uVar2 = der_decode_sequence_multi(uVar1,param_2,2,1,*puVar11,2,1,*puVar10);
+      if ((int)uVar2 != 0) goto LAB_8225275c;
     }
     *(undefined4 *)param_3 = 0;
     uVar2 = 0;

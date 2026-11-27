@@ -2,21 +2,17 @@
 
 // 824C3AF8  TRACK_cm_load  (qcommon/cm_load.cpp:41)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
 void TRACK_cm_load(void)
 
 {
-  track_static_alloc_internal(&cm,0x100,"cm",0x19);
+  track_static_alloc_internal(0xffffffff835a2880,0x100,0xffffffff82081b78,0x19);
   return;
 }
 
 
 // 824C3B18  Load_ClipInfoFixup  (qcommon/cm_load.cpp:50)
 
-void Load_ClipInfoFixup(ClipInfo **param_1,ClipInfo *param_2)
+void Load_ClipInfoFixup(undefined4 *param_1,undefined4 param_2)
 
 {
   *param_1 = param_2;
@@ -26,107 +22,133 @@ void Load_ClipInfoFixup(ClipInfo **param_1,ClipInfo *param_2)
 
 // 824C3B20  CM_InitThreadData  (qcommon/cm_load.cpp:66)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void CM_InitThreadData(int param_1)
+void CM_InitThreadData(uint param_1)
 
 {
-  int *piVar1;
-  trace_t *ptVar2;
+  undefined4 uVar1;
+  int iVar2;
   
-  if (5 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x45,0,
-                    "threadContext doesn\'t index THREAD_CONTEXT_TRACE_COUNT\n\t%i not in [0, %i)");
+  if (5 < param_1) {
+    MyAssertHandler(0xffffffff82081b90,0x45,0,0xffffffff82081bd0,param_1,6);
   }
-  g_traceThreadInfo[param_1].checkcount.global = 0;
-  piVar1 = Hunk_Alloc(cm.partitionCount << 2,"CM_InitThreadData",0x1c);
-  g_traceThreadInfo[param_1].checkcount.partitions = piVar1;
-  ptVar2 = Hunk_AllocAlign(0x40,0x80,"CM_InitThreadData",0x1c);
-  g_traceThreadInfo[param_1].results = ptVar2;
+  iVar2 = param_1 * 0xc;
+  *(undefined4 *)(&DAT_841ac21c + iVar2) = 0;
+  uVar1 = Hunk_Alloc(DAT_835a2900 << 2,0xffffffff82081b7c,0x1c);
+  *(undefined4 *)(&DAT_841ac220 + iVar2) = uVar1;
+  uVar1 = Hunk_AllocAlign(0x40,0x80,0xffffffff82081b7c,0x1c);
+  *(undefined4 *)(&DAT_841ac218 + iVar2) = uVar1;
   return;
 }
 
 
 // 824C3BE0  CM_InitAllThreadData  (qcommon/cm_load.cpp:89)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
 void CM_InitAllThreadData(void)
 
 {
-  int *piVar1;
-  trace_t *ptVar2;
-  longlong lVar3;
-  uint uVar4;
-  TraceThreadInfo *pTVar5;
+  undefined4 uVar1;
+  longlong lVar2;
+  ulonglong uVar3;
+  undefined4 *puVar4;
   
   __savegprlr_23();
   CM_InitThreadData(0);
   CM_InitThreadData(1);
-  uVar4 = 2;
-  lVar3 = 3;
-  pTVar5 = g_traceThreadInfo + 1;
+  uVar3 = 2;
+  lVar2 = 3;
+  puVar4 = (undefined4 *)0x841ac224;
   do {
-    if (5 < uVar4) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x45,0,
-                      "threadContext doesn\'t index THREAD_CONTEXT_TRACE_COUNT\n\t%i not in [0, %i)"
-                     );
+    if (5 < (uVar3 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82081b90,0x45,0,0xffffffff82081bd0,uVar3,6);
     }
-    pTVar5[1].checkcount.global = 0;
-    piVar1 = Hunk_Alloc(cm.partitionCount << 2,"CM_InitThreadData",0x1c);
-    pTVar5[1].checkcount.partitions = piVar1;
-    ptVar2 = Hunk_AllocAlign(0x40,0x80,"CM_InitThreadData",0x1c);
-    lVar3 = lVar3 + -1;
-    pTVar5 = pTVar5 + 1;
-    pTVar5->results = ptVar2;
-    uVar4 = uVar4 + 1;
-  } while (lVar3 != 0);
-  g_traceThreadInfo[5].checkcount.global = 0;
-  g_traceThreadInfo[5].checkcount.partitions =
-       Hunk_Alloc(cm.partitionCount << 2,"CM_InitThreadData",0x1c);
-  g_traceThreadInfo[5].results = Hunk_AllocAlign(0x40,0x80,"CM_InitThreadData",0x1c);
+    puVar4[4] = 0;
+    uVar1 = Hunk_Alloc(DAT_835a2900 << 2,0xffffffff82081b7c,0x1c);
+    puVar4[5] = uVar1;
+    uVar1 = Hunk_AllocAlign(0x40,0x80,0xffffffff82081b7c,0x1c);
+    lVar2 = lVar2 + -1;
+    puVar4 = puVar4 + 3;
+    *puVar4 = uVar1;
+    uVar3 = uVar3 + 1;
+  } while (lVar2 != 0);
+  DAT_841ac258 = 0;
+  DAT_841ac25c = Hunk_Alloc(DAT_835a2900 << 2,0xffffffff82081b7c,0x1c);
+  DAT_841ac254 = Hunk_AllocAlign(0x40,0x80,0xffffffff82081b7c,0x1c);
   __restgprlr_23();
   return;
 }
 
 
 // 824C3CD8  CM_LoadMapData_FastFile  (qcommon/cm_load.cpp:147)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void CM_LoadMapData_FastFile(void)
+
+{
+  undefined8 uVar1;
+  undefined *puVar2;
+  
+  uVar1 = __savegprlr_29();
+  puVar2 = (undefined *)DB_FindXAssetHeader(0xc,uVar1,1);
+  if (puVar2 != &DAT_835a2880) {
+    MyAssertHandler(0xffffffff82081b90,0x9b,0,0xffffffff82000f98,0xffffffff82081c28);
+  }
+  if (DAT_835a2884 == 0) {
+    MyAssertHandler(0xffffffff82081b90,0x9c,0,0xffffffff82000f98,0xffffffff82081c1c);
+  }
+  __restgprlr_29();
+  return;
+}
+
 
 // 824C3D68  CM_LoadMap  (qcommon/cm_load.cpp:174)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void CM_LoadMap(char *param_1,int *param_2)
+void CM_LoadMap(char *param_1,undefined4 *param_2)
 
 {
   if ((param_1 == (char *)0x0) || (*param_1 == '\0')) {
-    Com_Error(ERR_DROP,"\x15CM_LoadMap: NULL name");
+    Com_Error(1,0xffffffff82081c38);
   }
   CM_LoadMapData_FastFile(param_1);
   CM_InitAllThreadData();
-  *param_2 = cm.checksum;
+  *param_2 = DAT_835a2968;
   return;
 }
 
 
 // 824C3DE0  CM_LoadAddonMapEnts_FastFile  (qcommon/cm_load.cpp:193)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
+
+void CM_LoadAddonMapEnts_FastFile(void)
+
+{
+  undefined8 uVar1;
+  void *pvVar2;
+  
+  uVar1 = __savegprlr_28();
+  DAT_835a2980 = (void *)DB_FindXAssetHeader(0x2b,uVar1,0);
+  if (DAT_835a2980 == (void *)0x0) {
+    MyAssertHandler(0xffffffff82081b90,0xc5,0,0xffffffff82000f98,0xffffffff82081c80);
+  }
+  pvVar2 = DAT_835a2980;
+  if (*(uint *)((int)DAT_835a2980 + 0x28) != 0) {
+    if (*(uint *)((int)DAT_835a2980 + 0x28) < DAT_835a2910) {
+      MyAssertHandler(0xffffffff82081b90,0xc9,0,0xffffffff82000f98,0xffffffff82081c50);
+    }
+    pvVar2 = memcpy(*(void **)((int)DAT_835a2980 + 0x2c),DAT_835a2914,DAT_835a2910 * 0x48);
+    DAT_835a2914 = *(void **)((int)DAT_835a2980 + 0x2c);
+    DAT_835a2910 = *(uint *)((int)DAT_835a2980 + 0x28);
+  }
+  __restgprlr_28(pvVar2);
+  return;
+}
+
 
 // 824C3EB8  CM_LoadAddonMapEnts  (qcommon/cm_load.cpp:211)
 
-void CM_LoadAddonMapEnts(char *param_1)
+void CM_LoadAddonMapEnts(undefined8 param_1)
 
 {
   char acStack_50 [80];
   
-  sprintf(acStack_50,"maps/%s.mapents");
+  sprintf(acStack_50,"maps/%s.mapents",param_1);
   CM_LoadAddonMapEnts_FastFile(acStack_50);
   return;
 }
@@ -134,45 +156,40 @@ void CM_LoadAddonMapEnts(char *param_1)
 
 // 824C3EF0  CM_LoadAddOnMapEnts  (qcommon/cm_load.cpp:225)
 
-void CM_LoadAddOnMapEnts(char *param_1)
+void CM_LoadAddOnMapEnts(undefined8 param_1)
 
 {
-  bool bVar1;
+  char cVar1;
   char acStack_50 [64];
   
-  bVar1 = Com_IsAddonMap(param_1,(char **)0x0);
-  if (bVar1) {
-    sprintf(acStack_50,"maps/%s.mapents");
+  cVar1 = Com_IsAddonMap(param_1,0);
+  if (cVar1 != '\0') {
+    sprintf(acStack_50,"maps/%s.mapents",param_1);
     CM_LoadAddonMapEnts_FastFile(acStack_50);
     return;
   }
-  g_addonMapEnts = (AddonMapEnts *)0x0;
+  DAT_835a2980 = 0;
   return;
 }
 
 
 // 824C3F68  CM_Unload  (qcommon/cm_load.cpp:266)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void CM_Unload(clipMap_t *param_1)
+void CM_Unload(void)
 
 {
   undefined4 uVar1;
   undefined4 *puVar2;
   
-  puVar2 = (undefined4 *)__savegprlr_28(param_1);
+  puVar2 = (undefined4 *)__savegprlr_28();
   if (puVar2[1] == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x10e,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82081b90,0x10e,0,0xffffffff82000f98,0xffffffff82081cb4);
   }
   uVar1 = *puVar2;
-  Com_Memset(&cm,0,0x100);
+  Com_Memset(0xffffffff835a2880,0,0x100);
   *puVar2 = uVar1;
   if (puVar2[1] != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x113,0,
-                    "%s");
+    MyAssertHandler(0xffffffff82081b90,0x113,0,0xffffffff82000f98,0xffffffff82081ca0);
   }
   __restgprlr_28();
   return;
@@ -181,32 +198,26 @@ void CM_Unload(clipMap_t *param_1)
 
 // 824C4000  CM_BrushModelBounds  (qcommon/cm_load.cpp:284)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void CM_BrushModelBounds(uint param_1,Bounds *param_2)
+void CM_BrushModelBounds(undefined8 param_1,longlong param_2)
 
 {
   uint uVar1;
-  longlong lVar2;
-  int *piVar3;
-  longlong lVar4;
+  undefined4 *puVar2;
+  longlong lVar3;
   
-  lVar2 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if (cm.numSubModels <= uVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x12a,0,
-                    "bmodelIndex doesn\'t index cm.numSubModels\n\t%i not in [0, %i)");
+  uVar1 = __savegprlr_29();
+  if (DAT_835a2910 <= uVar1) {
+    MyAssertHandler(0xffffffff82081b90,0x12a,0,0xffffffff82081cc8,uVar1);
   }
-  lVar2 = lVar2 + -4;
-  lVar4 = 6;
-  piVar3 = &cm.cmodels[uVar1 - 1].leaf.leafBrushNode;
+  param_2 = param_2 + -4;
+  lVar3 = 6;
+  puVar2 = (undefined4 *)(uVar1 * 0x48 + DAT_835a2914 + -4);
   do {
-    piVar3 = piVar3 + 1;
-    lVar2 = lVar2 + 4;
-    *(int *)lVar2 = *piVar3;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    puVar2 = puVar2 + 1;
+    param_2 = param_2 + 4;
+    *(undefined4 *)param_2 = *puVar2;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
   __restgprlr_29();
   return;
 }
@@ -214,14 +225,16 @@ void CM_BrushModelBounds(uint param_1,Bounds *param_2)
 
 // 824C4268  CM_TriggerModelBounds  (qcommon/cm_load.cpp:307)
 
-void CM_TriggerModelBounds(uint param_1,Bounds *param_2)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void CM_TriggerModelBounds(undefined8 param_1,longlong param_2)
 
 {
-  uint uVar1;
-  MapTriggers *pMVar2;
-  TriggerModel *pTVar3;
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
   longlong lVar4;
-  longlong lVar5;
+  uint uVar5;
   longlong lVar6;
   longlong lVar7;
   longlong lVar8;
@@ -234,40 +247,38 @@ void CM_TriggerModelBounds(uint param_1,Bounds *param_2)
   undefined1 auVar15 [16];
   undefined1 auVar16 [16];
   
-  lVar4 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  pMVar2 = CM_TriggerSource(uVar1);
-  pTVar3 = CM_GetTriggerModel(uVar1);
-  if (pTVar3->hullCount == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x13c,0,
-                    "%s");
+  uVar1 = __savegprlr_28();
+  iVar2 = CM_TriggerSource();
+  iVar3 = CM_GetTriggerModel(uVar1);
+  if (*(short *)(iVar3 + 4) == 0) {
+    MyAssertHandler(0xffffffff82081b90,0x13c,0,0xffffffff82000f98,0xffffffff82081d54);
   }
-  lVar5 = lVar4 + -4;
-  lVar7 = (ulonglong)pTVar3->firstHull * 0x20 + ZEXT48(pMVar2->hulls);
+  lVar4 = param_2 + -4;
+  lVar7 = (ulonglong)*(ushort *)(iVar3 + 6) * 0x20 + (ulonglong)*(uint *)(iVar2 + 0xc);
   lVar8 = 6;
   lVar6 = lVar7 + -4;
   do {
     lVar6 = lVar6 + 4;
-    lVar5 = lVar5 + 4;
-    *(undefined4 *)lVar5 = *(undefined4 *)lVar6;
+    lVar4 = lVar4 + 4;
+    *(undefined4 *)lVar4 = *(undefined4 *)lVar6;
     lVar8 = lVar8 + -1;
   } while (lVar8 != 0);
-  uVar1 = 1;
-  if (1 < pTVar3->hullCount) {
+  uVar5 = 1;
+  if (1 < *(ushort *)(iVar3 + 4)) {
     do {
-      auVar16 = loadVectorRightIndexed(lVar4 + 0x10);
-      auVar15 = loadVectorLeftIndexed(lVar4);
-      uVar1 = uVar1 + 1;
-      auVar14 = loadVectorRightIndexed(lVar4 + 0x1c);
-      auVar13 = loadVectorLeftIndexed(lVar4 + 0xc);
+      auVar16 = loadVectorRightIndexed(param_2 + 0x10);
+      auVar15 = loadVectorLeftIndexed(param_2);
+      uVar5 = uVar5 + 1;
+      auVar14 = loadVectorRightIndexed(param_2 + 0x1c);
+      auVar13 = loadVectorLeftIndexed(param_2 + 0xc);
       auVar12 = loadVectorLeftIndexed(lVar7 + 0x20);
       auVar11 = loadVectorRightIndexed(lVar7 + 0x30);
       auVar10 = loadVectorLeftIndexed(lVar7 + 0x2c);
       auVar9 = loadVectorRightIndexed(lVar7 + 0x3c);
-      auVar15 = (auVar15 | auVar16) & (undefined1  [16])g_keepXYZ.field0_0x0;
-      auVar13 = (auVar13 | auVar14) & (undefined1  [16])g_keepXYZ.field0_0x0;
-      auVar11 = (auVar12 | auVar11) & (undefined1  [16])g_keepXYZ.field0_0x0;
-      auVar9 = (auVar10 | auVar9) & (undefined1  [16])g_keepXYZ.field0_0x0;
+      auVar15 = (auVar15 | auVar16) & _DAT_8404f950;
+      auVar13 = (auVar13 | auVar14) & _DAT_8404f950;
+      auVar11 = (auVar12 | auVar11) & _DAT_8404f950;
+      auVar9 = (auVar10 | auVar9) & _DAT_8404f950;
       auVar10 = vectorSubtractFloatingPoint128(auVar15,auVar13);
       auVar15 = vectorAddFloatingPoint128(auVar15,auVar13);
       auVar13 = vectorSubtractFloatingPoint128(auVar11,auVar9);
@@ -275,22 +286,22 @@ void CM_TriggerModelBounds(uint param_1,Bounds *param_2)
       auVar13 = vectorMinimumFloatingPoint128(auVar13,auVar10);
       auVar9 = vectorMaximumFloatingPoint128(auVar9,auVar15);
       auVar9 = vectorAddFloatingPoint128(auVar13,auVar9);
-      auVar9 = vectorMultiplyFloatingPoint(auVar9,(undefined1  [16])g_oneHalf.field0_0x0);
+      auVar9 = vectorMultiplyFloatingPoint(auVar9,_DAT_8217a060);
       auVar10 = vectorSubtractFloatingPoint128(auVar9,auVar13);
       auVar15 = vectorSplatWord(auVar9,0);
       auVar13 = vectorSplatWord(auVar9,1);
       auVar9 = vectorSplatWord(auVar9,2);
-      storeVectorElementWordIndexed(auVar15,lVar4);
-      storeVectorElementWordIndexed(auVar13,lVar4 + 4);
-      storeVectorElementWordIndexed(auVar9,lVar4 + 8);
+      storeVectorElementWordIndexed(auVar15,param_2);
+      storeVectorElementWordIndexed(auVar13,param_2 + 4);
+      storeVectorElementWordIndexed(auVar9,param_2 + 8);
       auVar15 = vectorSplatWord(auVar10,0);
       auVar13 = vectorSplatWord(auVar10,1);
       auVar9 = vectorSplatWord(auVar10,2);
-      storeVectorElementWordIndexed(auVar15,lVar4 + 0xc);
-      storeVectorElementWordIndexed(auVar13,lVar4 + 0x10);
-      storeVectorElementWordIndexed(auVar9,lVar4 + 0x14);
+      storeVectorElementWordIndexed(auVar15,param_2 + 0xc);
+      storeVectorElementWordIndexed(auVar13,param_2 + 0x10);
+      storeVectorElementWordIndexed(auVar9,param_2 + 0x14);
       lVar7 = lVar7 + 0x20;
-    } while (uVar1 < pTVar3->hullCount);
+    } while (uVar5 < *(ushort *)(iVar3 + 4));
   }
   __restgprlr_28();
   return;
@@ -299,109 +310,85 @@ void CM_TriggerModelBounds(uint param_1,Bounds *param_2)
 
 // 824C4080  CM_TriggerModelIsValid  (qcommon/cm_load.cpp:327)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-bool CM_TriggerModelIsValid(uint param_1)
+byte CM_TriggerModelIsValid(ulonglong param_1)
 
 {
   ulonglong uVar1;
   
-  uVar1 = (ulonglong)((cm.mapEnts)->trigger).count;
-  if (g_addonMapEnts != (AddonMapEnts *)0x0) {
-    uVar1 = (g_addonMapEnts->trigger).count + uVar1;
+  uVar1 = (ulonglong)*(uint *)(DAT_835a2918 + 0xc);
+  if (DAT_835a2980 != 0) {
+    uVar1 = *(uint *)(DAT_835a2980 + 0xc) + uVar1;
   }
-  return (bool)(-((ulonglong)(longlong)(int)param_1 < uVar1) & 1);
+  return -(param_1 < uVar1) & 1;
 }
 
 
 // 824C40B8  CM_TriggerModelCount  (qcommon/cm_load.cpp:345)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-uint CM_TriggerModelCount(void)
+undefined4 CM_TriggerModelCount(void)
 
 {
-  return ((cm.mapEnts)->trigger).count;
+  return *(undefined4 *)(DAT_835a2918 + 0xc);
 }
 
 
 // 824C40D0  CM_TriggerSource  (qcommon/cm_load.cpp:350)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-MapTriggers * CM_TriggerSource(uint param_1)
+void CM_TriggerSource(void)
 
 {
-  MapEnts *pMVar1;
+  int iVar1;
   uint uVar2;
-  MapTriggers *pMVar3;
   
-  uVar2 = __savegprlr_28(param_1);
-  pMVar1 = cm.mapEnts;
-  if (((cm.mapEnts)->trigger).count <= uVar2) {
-    if (g_addonMapEnts == (AddonMapEnts *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x163,0
-                      ,"%s");
+  uVar2 = __savegprlr_28();
+  iVar1 = DAT_835a2918;
+  if (*(uint *)(DAT_835a2918 + 0xc) <= uVar2) {
+    if (DAT_835a2980 == 0) {
+      MyAssertHandler(0xffffffff82081b90,0x163,0,0xffffffff82000f98,0xffffffff82081c80);
     }
-    pMVar1 = (MapEnts *)g_addonMapEnts;
-    if ((g_addonMapEnts->trigger).count <= uVar2 - ((cm.mapEnts)->trigger).count) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x166,0
-                      ,
-                      "triggerIndex doesn\'t index g_addonMapEnts->trigger.count\n\t%i not in [0, %i)"
-                     );
-      pMVar1 = (MapEnts *)g_addonMapEnts;
+    iVar1 = DAT_835a2980;
+    if (*(uint *)(DAT_835a2980 + 0xc) <= uVar2 - *(int *)(DAT_835a2918 + 0xc)) {
+      MyAssertHandler(0xffffffff82081b90,0x166,0,0xffffffff82081d08);
+      iVar1 = DAT_835a2980;
     }
   }
-  pMVar3 = (MapTriggers *)__restgprlr_28(&pMVar1->trigger);
-  return pMVar3;
+  __restgprlr_28(iVar1 + 0xc);
+  return;
 }
 
 
 // 824C4178  CM_GetTriggerModel  (qcommon/cm_load.cpp:369)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-TriggerModel * CM_GetTriggerModel(uint param_1)
+void CM_GetTriggerModel(void)
 
 {
   ulonglong uVar1;
-  TriggerModel *pTVar2;
   
-  uVar1 = __savegprlr_28(param_1);
-  if ((uVar1 & 0xffffffff) < (ulonglong)((cm.mapEnts)->trigger).count) {
-    pTVar2 = (TriggerModel *)
-             __restgprlr_28(ZEXT48(((cm.mapEnts)->trigger).models) + (uVar1 & 0x1fffffff) * 8);
-    return pTVar2;
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) < (ulonglong)*(uint *)(DAT_835a2918 + 0xc)) {
+    __restgprlr_28((ulonglong)*(uint *)(DAT_835a2918 + 0x10) + (uVar1 & 0x1fffffff) * 8);
+    return;
   }
-  if (g_addonMapEnts == (AddonMapEnts *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x176,0,
-                    "%s");
+  if (DAT_835a2980 == 0) {
+    MyAssertHandler(0xffffffff82081b90,0x176,0,0xffffffff82000f98,0xffffffff82081c80);
   }
-  uVar1 = uVar1 - ((cm.mapEnts)->trigger).count;
-  if ((ulonglong)(g_addonMapEnts->trigger).count <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x179,0,
-                    "triggerIndex doesn\'t index g_addonMapEnts->trigger.count\n\t%i not in [0, %i)"
-                   );
+  uVar1 = uVar1 - *(uint *)(DAT_835a2918 + 0xc);
+  if ((ulonglong)*(uint *)(DAT_835a2980 + 0xc) <= (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82081b90,0x179,0,0xffffffff82081d08,uVar1);
   }
-  pTVar2 = (TriggerModel *)
-           __restgprlr_28(ZEXT48((g_addonMapEnts->trigger).models) + (uVar1 & 0x1fffffff) * 8);
-  return pTVar2;
+  __restgprlr_28((ulonglong)*(uint *)(DAT_835a2980 + 0x10) + (uVar1 & 0x1fffffff) * 8);
+  return;
 }
 
 
 // 824C4240  CM_ContentsOfTriggerModel  (qcommon/cm_load.cpp:391)
 
-int CM_ContentsOfTriggerModel(uint param_1)
+undefined4 CM_ContentsOfTriggerModel(void)
 
 {
-  TriggerModel *pTVar1;
+  undefined4 *puVar1;
   
-  pTVar1 = CM_GetTriggerModel(param_1);
-  return pTVar1->contents;
+  puVar1 = (undefined4 *)CM_GetTriggerModel();
+  return *puVar1;
 }
 

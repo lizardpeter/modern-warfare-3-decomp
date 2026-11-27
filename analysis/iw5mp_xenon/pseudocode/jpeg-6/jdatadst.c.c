@@ -2,62 +2,62 @@
 
 // 827BBF60  init_destination  (jpeg-6/jdatadst.c:44)
 
-void init_destination(jpeg_compress_struct *param_1)
+void init_destination(int param_1)
 
 {
-  jpeg_destination_mgr *pjVar1;
-  uchar *puVar2;
+  undefined4 *puVar1;
+  undefined4 uVar2;
   
-  pjVar1 = param_1->dest;
-  puVar2 = (*param_1->mem->alloc_small)((jpeg_common_struct *)param_1,1,0x1000);
-  pjVar1[1].free_in_buffer = (uint)puVar2;
-  pjVar1->next_output_byte = puVar2;
-  pjVar1->free_in_buffer = 0x1000;
+  puVar1 = *(undefined4 **)(param_1 + 0x20);
+  uVar2 = (*(code *)**(undefined4 **)(param_1 + 4))(param_1,1,0x1000);
+  puVar1[6] = uVar2;
+  *puVar1 = uVar2;
+  puVar1[1] = 0x1000;
   return;
 }
 
 
 // 827BBFB0  empty_output_buffer  (jpeg-6/jdatadst.c:82)
 
-uchar empty_output_buffer(jpeg_compress_struct *param_1)
+undefined8 empty_output_buffer(int *param_1)
 
 {
-  jpeg_destination_mgr *pjVar1;
-  uint uVar2;
+  undefined4 *puVar1;
+  size_t sVar2;
   
-  pjVar1 = param_1->dest;
-  uVar2 = fwrite((void *)pjVar1[1].free_in_buffer,1,0x1000,(_iobuf *)pjVar1[1].next_output_byte);
-  if (uVar2 != 0x1000) {
-    param_1->err->msg_code = 0x25;
-    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
+  puVar1 = (undefined4 *)param_1[8];
+  sVar2 = fwrite((void *)puVar1[6],1,0x1000,(FILE *)puVar1[5]);
+  if (sVar2 != 0x1000) {
+    *(undefined4 *)(*param_1 + 0x14) = 0x25;
+    (**(code **)*param_1)(param_1);
   }
-  pjVar1->free_in_buffer = 0x1000;
-  pjVar1->next_output_byte = (uchar *)pjVar1[1].free_in_buffer;
-  return '\x01';
+  puVar1[1] = 0x1000;
+  *puVar1 = puVar1[6];
+  return 1;
 }
 
 
 // 827BC038  term_destination  (jpeg-6/jdatadst.c:107)
 
-void term_destination(jpeg_compress_struct *param_1)
+void term_destination(void)
 
 {
   int *piVar1;
-  uint uVar2;
+  size_t sVar2;
   int iVar3;
-  uint uVar4;
+  size_t _Count;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
+  piVar1 = (int *)__savegprlr_28();
   iVar3 = piVar1[8];
-  uVar4 = 0x1000 - *(int *)(iVar3 + 4);
-  if ((uVar4 != 0) &&
-     (uVar2 = fwrite(*(void **)(iVar3 + 0x18),1,uVar4,*(_iobuf **)(iVar3 + 0x14)), uVar2 != uVar4))
+  _Count = 0x1000 - *(int *)(iVar3 + 4);
+  if ((_Count != 0) &&
+     (sVar2 = fwrite(*(void **)(iVar3 + 0x18),1,_Count,*(FILE **)(iVar3 + 0x14)), sVar2 != _Count))
   {
     *(undefined4 *)(*piVar1 + 0x14) = 0x25;
     (**(code **)*piVar1)(piVar1);
   }
-  fflush(*(_iobuf **)(iVar3 + 0x14));
-  iVar3 = ferror(*(_iobuf **)(iVar3 + 0x14));
+  fflush(*(FILE **)(iVar3 + 0x14));
+  iVar3 = ferror(*(FILE **)(iVar3 + 0x14));
   if (iVar3 != 0) {
     *(undefined4 *)(*piVar1 + 0x14) = 0x25;
     (**(code **)*piVar1)(piVar1);
@@ -69,20 +69,21 @@ void term_destination(jpeg_compress_struct *param_1)
 
 // 827BC0D8  jpeg_stdio_dest  (jpeg-6/jdatadst.c:131)
 
-void jpeg_stdio_dest(jpeg_compress_struct *param_1,_iobuf *param_2)
+void jpeg_stdio_dest(int param_1,undefined4 param_2)
 
 {
-  jpeg_destination_mgr *pjVar1;
+  int iVar1;
+  undefined4 uVar2;
   
-  if (param_1->dest == (jpeg_destination_mgr *)0x0) {
-    pjVar1 = (*param_1->mem->alloc_small)((jpeg_common_struct *)param_1,0,0x1c);
-    param_1->dest = pjVar1;
+  if (*(int *)(param_1 + 0x20) == 0) {
+    uVar2 = (*(code *)**(undefined4 **)(param_1 + 4))(param_1,0,0x1c);
+    *(undefined4 *)(param_1 + 0x20) = uVar2;
   }
-  pjVar1 = param_1->dest;
-  pjVar1->init_destination = init_destination;
-  pjVar1->empty_output_buffer = empty_output_buffer;
-  pjVar1->term_destination = term_destination;
-  pjVar1[1].next_output_byte = (uchar *)param_2;
+  iVar1 = *(int *)(param_1 + 0x20);
+  *(code **)(iVar1 + 8) = init_destination;
+  *(code **)(iVar1 + 0xc) = empty_output_buffer;
+  *(code **)(iVar1 + 0x10) = term_destination;
+  *(undefined4 *)(iVar1 + 0x14) = param_2;
   return;
 }
 

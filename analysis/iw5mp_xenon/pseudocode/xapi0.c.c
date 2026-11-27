@@ -2,32 +2,30 @@
 
 // 828AB4F8  XapiShowErrorAndWait  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0.c:27)
 
-void XapiShowErrorAndWait(wchar_t *param_1,wchar_t *param_2,ulong param_3)
+void XapiShowErrorAndWait(undefined8 param_1,undefined4 param_2,undefined8 param_3)
 
 {
   undefined8 uVar1;
   int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  undefined4 uStack0000001c;
-  ulong local_50 [2];
+  undefined4 in_stack_0000001c;
+  int local_50 [2];
   undefined4 local_48;
-  _XOVERLAPPED local_40 [2];
+  undefined4 local_40;
+  undefined1 auStack_3c [8];
+  undefined4 local_34 [13];
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1,lVar3,lVar4);
-  uStack0000001c = (undefined4)lVar3;
-  local_40[0].InternalLow = 0;
-  memset();
+  uVar1 = __savegprlr_29();
+  local_40 = 0;
+  in_stack_0000001c = param_2;
+  memset(auStack_3c,0,0x18);
   local_48 = 0;
-  iVar2 = NtCreateEvent(&local_40[0].hEvent,0,1,0);
+  iVar2 = NtCreateEvent(local_34,0,1,0);
   if (-1 < iVar2) {
-    local_50[0] = XamShowMessageBoxUIEx(0xff,0,uVar1,1,&stack0x0000001c,0,1,lVar4);
+    local_50[0] = XamShowMessageBoxUIEx(0xff,0,uVar1,1,&stack0x0000001c,0,1,param_3);
     if (local_50[0] == 0x3e5) {
-      XGetOverlappedResult(local_40,local_50,1);
+      XGetOverlappedResult(&local_40,local_50,1);
     }
-    NtClose(local_40[0].hEvent);
+    NtClose(local_34[0]);
   }
   __restgprlr_29();
   return;
@@ -36,47 +34,43 @@ void XapiShowErrorAndWait(wchar_t *param_1,wchar_t *param_2,ulong param_3)
 
 // 828AB5B8  XapiLookupString  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0.c:67)
 
-void XapiLookupString(ulong param_1,ushort *param_2,uint param_3)
+void XapiLookupString(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
   uint uVar1;
-  longlong lVar2;
+  uint uVar2;
   longlong lVar3;
-  uint uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  undefined2 *puVar9;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  undefined2 *puVar7;
   
-  lVar3 = (longlong)(int)param_3;
-  lVar2 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  uVar4 = 0;
-  lVar8 = -0x7ddfe478;
+  uVar1 = __savegprlr_29();
+  uVar2 = 0;
+  lVar6 = -0x7ddfe478;
   do {
-    uVar6 = (ulonglong)*(ushort *)lVar8;
-    lVar8 = lVar8 + 2;
-    if (uVar4 == uVar1) {
-      uVar7 = 0;
-      if (uVar6 != 0) {
-        lVar5 = lVar2 + -2;
+    uVar4 = (ulonglong)*(ushort *)lVar6;
+    lVar6 = lVar6 + 2;
+    if (uVar2 == uVar1) {
+      uVar5 = 0;
+      if (uVar4 != 0) {
+        lVar3 = param_2 + -2;
         do {
-          if ((lVar3 - 1U & 0xffffffff) <= (uVar7 & 0xffffffff)) break;
-          puVar9 = (undefined2 *)lVar8;
-          uVar7 = uVar7 + 1;
-          lVar8 = lVar8 + 2;
-          lVar5 = lVar5 + 2;
-          *(undefined2 *)lVar5 = *puVar9;
-        } while ((uVar7 & 0xffffffff) < uVar6);
+          if ((param_3 - 1U & 0xffffffff) <= (uVar5 & 0xffffffff)) break;
+          puVar7 = (undefined2 *)lVar6;
+          uVar5 = uVar5 + 1;
+          lVar6 = lVar6 + 2;
+          lVar3 = lVar3 + 2;
+          *(undefined2 *)lVar3 = *puVar7;
+        } while ((uVar5 & 0xffffffff) < uVar4);
       }
-      *(undefined2 *)((int)((uVar7 & 0xffffffff) << 1) + (int)lVar2) = 0;
+      *(undefined2 *)((int)((uVar5 & 0xffffffff) << 1) + (int)param_2) = 0;
     }
     else {
-      lVar8 = uVar6 * 2 + lVar8;
+      lVar6 = uVar4 * 2 + lVar6;
     }
-    uVar4 = uVar4 + 1;
-    if (uVar1 < uVar4) {
+    uVar2 = uVar2 + 1;
+    if (uVar1 < uVar2) {
       __restgprlr_29();
       return;
     }
@@ -86,23 +80,23 @@ void XapiLookupString(ulong param_1,ushort *param_2,uint param_3)
 
 // 828AB658  XapiPAL50Incompatible  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0.c:101)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int XapiPAL50Incompatible(void)
+undefined8 XapiPAL50Incompatible(void)
 
 {
   int iVar1;
   uint uVar2;
-  int iVar3;
+  undefined8 uVar3;
   undefined1 auStack_2d0 [4];
   uint local_2cc;
   uint local_2c8 [2];
-  ulong local_2c0 [12];
-  ulong local_290 [12];
-  wchar_t local_260 [32];
-  wchar_t local_220 [260];
+  undefined4 local_2c0 [12];
+  undefined4 local_290 [12];
+  undefined2 local_260;
+  undefined1 auStack_25e [62];
+  undefined2 local_220;
+  undefined1 auStack_21e [518];
   
-  iVar3 = 0;
+  uVar3 = 0;
   iVar1 = XexCheckExecutablePrivilege(10);
   if (((((iVar1 != 0) && (iVar1 = XGetAVPack(), iVar1 != 3)) && (iVar1 != 6)) &&
       ((iVar1 != 8 && (iVar1 != 4)))) &&
@@ -112,10 +106,10 @@ int XapiPAL50Incompatible(void)
     if (iVar1 == 0) {
       if (((local_2c8[0] & 0x800000) != 0) || ((local_2c8[0] & 0x400000) == 0)) {
         uVar2 = XGetLanguage();
-        local_220[0] = L'\0';
-        memset();
-        local_260[0] = L'\0';
-        memset();
+        local_220 = 0;
+        memset(auStack_21e,0,0x1fe);
+        local_260 = 0;
+        memset(auStack_25e,0,0x3e);
         local_290[0] = 0;
         local_2c0[0] = 9;
         local_2c0[1] = 9;
@@ -139,90 +133,96 @@ int XapiPAL50Incompatible(void)
         if (9 < uVar2) {
           uVar2 = 1;
         }
-        XapiLookupString(local_2c0[uVar2],(ushort *)local_220,0x100);
-        XapiLookupString(local_290[uVar2],(ushort *)local_260,0x20);
-        XapiShowErrorAndWait(local_220,local_260,1);
-        iVar3 = 1;
+        XapiLookupString(local_2c0[uVar2],&local_220,0x100);
+        XapiLookupString(local_290[uVar2],&local_260,0x20);
+        XapiShowErrorAndWait(&local_220,&local_260,1);
+        uVar3 = 1;
       }
     }
   }
-  return iVar3;
+  return uVar3;
 }
 
 
 // 828AB848  mainCRTStartup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0.c:209)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void mainCRTStartup(void)
+LONG mainCRTStartup(void)
 
 {
   bool bVar1;
   int iVar2;
-  _EXCEPTION_POINTERS *p_Var3;
-  char cVar4;
-  char *pcVar5;
-  longlong lVar6;
-  undefined4 *puVar7;
+  _EXCEPTION_POINTERS *ExceptionInfo;
+  LONG LVar3;
+  char **ppcVar4;
+  char cVar5;
+  char *pcVar6;
+  longlong lVar7;
   char *local_198;
-  undefined4 local_180 [20];
+  char *local_180 [20];
   char local_130 [304];
   
   __savegprlr_28();
-  __onexitend = (_func___cdecl_void **)0xffffffff;
-  __onexitbegin = (_func___cdecl_void **)0xffffffff;
+  DAT_84897ec8 = 0xffffffff;
+  DAT_84897ecc = 0xffffffff;
   XapiInitProcess();
   XapiCallThreadNotifyRoutines(1);
   iVar2 = XapiPAL50Incompatible();
   if (iVar2 != 0) {
     XamTerminateTitle();
   }
-  _mtinit();
-  _rtinit();
+  iVar2 = _mtinit();
+  rtinit(iVar2);
   _cinit(1);
-  if (_CRTCommandLineArgs != 0) {
-    puVar7 = local_180;
+  if (DAT_848957e0 == 0) {
+    ppcVar4 = (char **)0x0;
+    iVar2 = 0;
+  }
+  else {
+    ppcVar4 = local_180;
     iVar2 = 0;
     local_198 = GetCommandLineA();
-    if (local_198 != (char *)0x0) {
-      pcVar5 = local_130;
+    if (local_198 != (LPSTR)0x0) {
+      pcVar6 = local_130;
       while( true ) {
-        cVar4 = *local_198;
-        while ((lVar6 = (longlong)cVar4, lVar6 != 0 && ((cVar4 == ' ' || (cVar4 == '\t'))))) {
-          *pcVar5 = '\0';
-          pcVar5 = pcVar5 + 1;
+        cVar5 = *local_198;
+        while( true ) {
+          lVar7 = (longlong)cVar5;
+          if ((lVar7 == 0) || ((cVar5 != ' ' && (cVar5 != '\t')))) break;
+          *pcVar6 = '\0';
+          pcVar6 = pcVar6 + 1;
           local_198 = local_198 + 1;
-          cVar4 = *local_198;
+          cVar5 = *local_198;
         }
-        if (cVar4 == '\0') break;
-        *puVar7 = pcVar5;
+        if (cVar5 == '\0') break;
+        *ppcVar4 = pcVar6;
         iVar2 = iVar2 + 1;
-        puVar7 = puVar7 + 1;
+        ppcVar4 = ppcVar4 + 1;
         bVar1 = false;
         do {
-          if ((int)lVar6 == 0x22) {
+          if ((int)lVar7 == 0x22) {
             bVar1 = !bVar1;
           }
           else {
-            *pcVar5 = cVar4;
-            pcVar5 = pcVar5 + 1;
+            *pcVar6 = cVar5;
+            pcVar6 = pcVar6 + 1;
           }
           local_198 = local_198 + 1;
-          cVar4 = *local_198;
-          lVar6 = (longlong)cVar4;
-        } while ((lVar6 != 0) && ((bVar1 || ((cVar4 != ' ' && (cVar4 != '\t'))))));
-        if ((cVar4 == '\0') || (0x10 < iVar2)) break;
+          cVar5 = *local_198;
+          lVar7 = (longlong)cVar5;
+        } while ((lVar7 != 0) && ((bVar1 || ((cVar5 != ' ' && (cVar5 != '\t'))))));
+        if ((cVar5 == '\0') || (0x10 < iVar2)) break;
       }
-      *pcVar5 = '\0';
+      *pcVar6 = '\0';
     }
-    *puVar7 = 0;
-    puVar7[1] = 0;
+    *ppcVar4 = (char *)0x0;
+    ppcVar4[1] = (char *)0x0;
+    ppcVar4 = local_180;
   }
-  iVar2 = main();
+  iVar2 = main(iVar2,ppcVar4,(char **)0x0);
   _cexit();
   DbgPrint(0xffffffff822025f8,iVar2);
-  p_Var3 = (_EXCEPTION_POINTERS *)XamTerminateTitle();
-  UnhandledExceptionFilter(p_Var3);
-  return;
+  ExceptionInfo = (_EXCEPTION_POINTERS *)XamTerminateTitle();
+  LVar3 = UnhandledExceptionFilter(ExceptionInfo);
+  return LVar3;
 }
 

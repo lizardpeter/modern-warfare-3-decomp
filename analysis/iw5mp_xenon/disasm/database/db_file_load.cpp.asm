@@ -255,6 +255,8 @@ LAB_823a3d4c:
   823A3D8C  386A96C4             subi r3,r10,0x693c
   823A3D90  388B000C             addi r4,r11,0xc
   823A3D94  482AA63D             bl 0x8264e3d0
+  823A3D98  38210090             addi r1,r1,0x90
+  823A3D9C  48572964             b 0x82916700
 LAB_823a3da0:
   823A3DA0  39600001             li r11,0x1
   823A3DA4  917A5B94             stw r11,0x5b94(r26)
@@ -1054,6 +1056,10 @@ LAB_823a4e7c:
   823A4088  481753B9             bl 0x82519440
   823A408C  48255895             bl 0x825f9920
   823A4090  483F4C81             bl 0x82798d10
+  823A4094  38210060             addi r1,r1,0x60
+  823A4098  8181FFF8             lwz r12,-0x8(r1)
+  823A409C  7D8803A6             mtspr LR,r12
+  823A40A0  4E800020             blr
 
 ; 823A40A8  DB_InitLoadXFile  (database/db_file_load.cpp:955)
   823A40A8  7D8802A6             mfspr r12,LR

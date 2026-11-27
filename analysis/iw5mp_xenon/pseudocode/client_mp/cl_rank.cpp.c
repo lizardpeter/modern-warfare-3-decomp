@@ -2,256 +2,219 @@
 
 // 82352798  CL_GetRankForXpTable  (client_mp/cl_rank.cpp:21)
 
-int CL_GetRankForXpTable(int param_1,char *param_2)
+void CL_GetRankForXpTable(undefined8 param_1,ulonglong param_2)
 
 {
-  int iVar1;
   int iVar2;
+  longlong lVar1;
   char *pcVar3;
   int iVar4;
   int iVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  int iVar8;
-  int iVar9;
-  StringTable *local_60 [24];
+  uint uVar6;
+  longlong lVar7;
+  longlong lVar8;
+  int local_60 [24];
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_23(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x1d,0,
-                    "%s");
+  iVar2 = __savegprlr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0x1d,0,0xffffffff82000f98,0xffffffff820362f0);
   }
-  StringTable_GetAsset((char *)uVar6,local_60);
-  if (local_60[0] == (StringTable *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x20,0,
-                    "%s");
+  StringTable_GetAsset(param_2,local_60);
+  if (local_60[0] == 0) {
+    MyAssertHandler(0xffffffff82036300,0x20,0,0xffffffff82000f98,0xffffffff820362e8);
   }
-  iVar2 = StringTable_LookupRowNumForValue(local_60[0],0,"maxrank");
-  iVar2 = iVar2 + 1;
-  if (iVar2 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x23,0,
-                    "%s");
+  lVar1 = StringTable_LookupRowNumForValue(local_60[0],0,0xffffffff820362e0);
+  lVar1 = lVar1 + 1;
+  iVar4 = (int)lVar1;
+  if (iVar4 < 1) {
+    MyAssertHandler(0xffffffff82036300,0x23,0,0xffffffff82000f98,0xffffffff820362d0);
   }
-  iVar8 = local_60[0]->rowCount + -1;
-  if (iVar8 < iVar2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x25,0,
-                    "%s");
+  lVar7 = (ulonglong)*(uint *)(local_60[0] + 8) - 1;
+  iVar5 = (int)lVar7;
+  if (iVar5 < iVar4) {
+    MyAssertHandler(0xffffffff82036300,0x25,0,0xffffffff82000f98,0xffffffff820362bc);
   }
-  uVar7 = iVar8 - iVar2;
-  iVar9 = ((int)uVar7 >> 1) + (uint)((int)uVar7 < 0 && (uVar7 & 1) != 0) + iVar2;
-  if (iVar2 < iVar8) {
+  uVar6 = iVar5 - iVar4;
+  lVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0) + lVar1;
+  if (iVar4 < iVar5) {
     do {
-      pcVar3 = StringTable_GetColumnValueForRow(local_60[0],iVar9,2);
+      pcVar3 = (char *)StringTable_GetColumnValueForRow(local_60[0],lVar8,2);
       iVar4 = atoi(pcVar3);
-      pcVar3 = StringTable_GetColumnValueForRow(local_60[0],iVar9,7);
+      pcVar3 = (char *)StringTable_GetColumnValueForRow(local_60[0],lVar8,7);
       iVar5 = atoi(pcVar3);
       if (iVar5 < iVar4) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",
-                        0x30,0,"%s");
+        MyAssertHandler(0xffffffff82036300,0x30,0,0xffffffff82000f98,0xffffffff820362ac);
       }
-      if (iVar1 < iVar4) {
-        iVar8 = iVar9 + -1;
+      if (iVar2 < iVar4) {
+        lVar7 = lVar8 + -1;
       }
       else {
-        if (iVar1 < iVar5) break;
-        iVar2 = iVar9 + 1;
+        if (iVar2 < iVar5) break;
+        lVar1 = lVar8 + 1;
       }
-      uVar7 = iVar8 - iVar2;
-      iVar9 = ((int)uVar7 >> 1) + (uint)((int)uVar7 < 0 && (uVar7 & 1) != 0) + iVar2;
-    } while (iVar2 < iVar8);
+      uVar6 = (int)lVar7 - (int)lVar1;
+      lVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0) + lVar1;
+    } while ((int)lVar1 < (int)lVar7);
   }
-  if ((iVar9 < 0) || (local_60[0]->rowCount <= iVar9)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x3b,0,
-                    "%s\n\t(row) = %i");
+  if (((int)lVar8 < 0) || (*(int *)(local_60[0] + 8) <= (int)lVar8)) {
+    MyAssertHandler(0xffffffff82036300,0x3b,0,0xffffffff82036278,0xffffffff82036288,lVar8);
   }
-  pcVar3 = StringTable_GetColumnValueForRow(local_60[0],iVar9,0);
-  iVar1 = atoi(pcVar3);
-  iVar1 = __restgprlr_23(iVar1);
-  return iVar1;
+  pcVar3 = (char *)StringTable_GetColumnValueForRow(local_60[0],lVar8,0);
+  iVar2 = atoi(pcVar3);
+  __restgprlr_23(iVar2);
+  return;
 }
 
 
 // 82352988  CL_GetRankForXpMP  (client_mp/cl_rank.cpp:66)
 
-int CL_GetRankForXpMP(int param_1)
+void CL_GetRankForXpMP(undefined8 param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = CL_GetRankForXpTable(param_1,"mp/rankTable.csv");
-  return iVar1;
+  CL_GetRankForXpTable(param_1,0xffffffff82036340);
+  return;
 }
 
 
 // 82352998  CL_GetRankForXpSO  (client_mp/cl_rank.cpp:72)
 
-int CL_GetRankForXpSO(int param_1)
+void CL_GetRankForXpSO(undefined8 param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = CL_GetRankForXpTable(param_1,"sp/rankTable.csv");
-  return iVar1;
+  CL_GetRankForXpTable(param_1,0xffffffff82036354);
+  return;
 }
 
 
 // 823529A8  CL_GetXpForRankTable  (client_mp/cl_rank.cpp:78)
 
-int CL_GetXpForRankTable(int param_1,char *param_2)
+void CL_GetXpForRankTable(undefined8 param_1,ulonglong param_2)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
+  char *_Str;
   int iVar2;
-  ulonglong uVar3;
-  StringTable *local_30 [12];
+  int local_30 [12];
   
-  uVar3 = (ulonglong)(int)param_2;
-  __savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x52,0,
-                    "%s");
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0x52,0,0xffffffff82000f98,0xffffffff820362f0);
   }
-  StringTable_GetAsset((char *)uVar3,local_30);
-  if (local_30[0] == (StringTable *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x55,0,
-                    "%s");
+  StringTable_GetAsset(param_2,local_30);
+  if (local_30[0] == 0) {
+    MyAssertHandler(0xffffffff82036300,0x55,0,0xffffffff82000f98,0xffffffff820362e8);
   }
-  pcVar1 = va("%d");
-  pcVar1 = StringTable_Lookup(local_30[0],0,pcVar1,2);
-  if (*pcVar1 == '\0') {
-    iVar2 = __restgprlr_28(100000000);
-    return iVar2;
+  uVar1 = va(0xffffffff82013b64,uVar1);
+  _Str = (char *)StringTable_Lookup(local_30[0],0,uVar1,2);
+  if (*_Str == '\0') {
+    __restgprlr_28(100000000);
+    return;
   }
-  iVar2 = atoi(pcVar1);
-  iVar2 = __restgprlr_28(iVar2);
-  return iVar2;
+  iVar2 = atoi(_Str);
+  __restgprlr_28(iVar2);
+  return;
 }
 
 
 // 82352A70  CL_GetXpForRankMP  (client_mp/cl_rank.cpp:100)
 
-int CL_GetXpForRankMP(int param_1)
+void CL_GetXpForRankMP(undefined8 param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = CL_GetXpForRankTable(param_1,"mp/rankTable.csv");
-  return iVar1;
+  CL_GetXpForRankTable(param_1,0xffffffff82036340);
+  return;
 }
 
 
 // 82352A80  CL_GetXpForRankSO  (client_mp/cl_rank.cpp:106)
 
-int CL_GetXpForRankSO(int param_1)
+void CL_GetXpForRankSO(undefined8 param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = CL_GetXpForRankTable(param_1,"sp/rankTable.csv");
-  return iVar1;
+  CL_GetXpForRankTable(param_1,0xffffffff82036354);
+  return;
 }
 
 
 // 82352A90  CL_GetRankDataFromTable  (client_mp/cl_rank.cpp:112)
 
-char * CL_GetRankDataFromTable(int param_1,rankTableColumns_t param_2,char *param_3)
+void CL_GetRankDataFromTable(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  char *pcVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  StringTable *local_40;
-  char acStack_3c [60];
+  undefined8 uVar1;
+  int local_40;
+  undefined1 auStack_3c [60];
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  __savegprlr_27(param_1);
-  if (0xe < (uVar2 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x75,0,
-                    "column doesn\'t index RANKTABLE_COUNT\n\t%i not in [0, %i)");
+  uVar1 = __savegprlr_27();
+  if (0xe < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82036300,0x75,0,0xffffffff82036368,param_2,0xf);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x76,0,
-                    "%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0x76,0,0xffffffff82000f98,0xffffffff820362f0);
   }
-  StringTable_GetAsset((char *)uVar3,&local_40);
-  if (local_40 == (StringTable *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x79,0,
-                    "%s");
+  StringTable_GetAsset(param_3,&local_40);
+  if (local_40 == 0) {
+    MyAssertHandler(0xffffffff82036300,0x79,0,0xffffffff82000f98,0xffffffff820362e8);
   }
-  Com_sprintf(acStack_3c,4,"%i");
-  pcVar1 = StringTable_Lookup(local_40,0,acStack_3c,(int)uVar2);
-  pcVar1 = (char *)__restgprlr_27(pcVar1);
-  return pcVar1;
+  Com_sprintf(auStack_3c,4,0xffffffff8200c28c,uVar1);
+  StringTable_Lookup(local_40,0,auStack_3c,param_2);
+  __restgprlr_27();
+  return;
 }
 
 
 // 82352B70  CL_GetRankDataMP  (client_mp/cl_rank.cpp:131)
 
-char * CL_GetRankDataMP(int param_1,rankTableColumns_t param_2)
+void CL_GetRankDataMP(undefined8 param_1,undefined8 param_2)
 
 {
-  char *pcVar1;
-  
-  pcVar1 = CL_GetRankDataFromTable(param_1,param_2,"mp/rankTable.csv");
-  return pcVar1;
+  CL_GetRankDataFromTable(param_1,param_2,0xffffffff82036340);
+  return;
 }
 
 
 // 82352B80  CL_GetRankDataSO  (client_mp/cl_rank.cpp:137)
 
-char * CL_GetRankDataSO(int param_1,rankTableColumns_t param_2)
+void CL_GetRankDataSO(undefined8 param_1,undefined8 param_2)
 
 {
-  char *pcVar1;
-  
-  pcVar1 = CL_GetRankDataFromTable(param_1,param_2,"sp/rankTable.csv");
-  return pcVar1;
+  CL_GetRankDataFromTable(param_1,param_2,0xffffffff82036354);
+  return;
 }
 
 
 // 82352B90  CL_GetRankIcon  (client_mp/cl_rank.cpp:143)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void CL_GetRankIcon(int param_1,int param_2,Material **param_3)
+void CL_GetRankIcon(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-  int iVar1;
-  char *pcVar2;
-  Material *pMVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  StringTable *local_40;
-  char acStack_3c [60];
+  undefined8 uVar1;
+  undefined4 uVar2;
+  char cVar3;
+  int local_40;
+  undefined1 auStack_3c [60];
   
-  uVar5 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x94,0,
-                    "%s\n\t(rank) = %i");
+  uVar1 = __savegprlr_27();
+  if ((int)uVar1 < 0) {
+    MyAssertHandler(0xffffffff82036300,0x94,0,0xffffffff820363e4,0xffffffff820363f4,uVar1);
   }
-  if (param_2 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x95,0,
-                    "%s\n\t(prestige) = %i");
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff82036300,0x95,0,0xffffffff820363c0,0xffffffff820363d4,param_2);
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x96,0,
-                    "%s");
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0x96,0,0xffffffff82000f98,0xffffffff820363b8);
   }
-  StringTable_GetAsset("mp/rankIconTable.csv",&local_40);
-  if (local_40 == (StringTable *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x9e,0,
-                    "%s");
+  StringTable_GetAsset(0xffffffff820363a0,&local_40);
+  if (local_40 == 0) {
+    MyAssertHandler(0xffffffff82036300,0x9e,0,0xffffffff82000f98,0xffffffff820362e8);
   }
-  Com_sprintf(acStack_3c,4,"%i");
-  pcVar2 = StringTable_Lookup(local_40,0,acStack_3c,param_2 + 1);
-  pMVar3 = Material_RegisterHandle(pcVar2,7);
-  *(undefined4 *)uVar5 = pMVar3;
-  bVar4 = Material_IsDefault(pMVar3);
-  if (bVar4) {
-    *(undefined4 *)uVar5 = 0;
+  Com_sprintf(auStack_3c,4,0xffffffff8200c28c,uVar1);
+  uVar1 = StringTable_Lookup(local_40,0,auStack_3c,param_2 + 1);
+  uVar2 = Material_RegisterHandle(uVar1,7);
+  *(undefined4 *)param_3 = uVar2;
+  cVar3 = Material_IsDefault();
+  if (cVar3 != '\0') {
+    *(undefined4 *)param_3 = 0;
   }
   __restgprlr_27();
   return;
@@ -260,273 +223,227 @@ void CL_GetRankIcon(int param_1,int param_2,Material **param_3)
 
 // 82352CC8  CL_GetMaxRankFromFile  (client_mp/cl_rank.cpp:176)
 
-int CL_GetMaxRankFromFile(char *param_1)
+void CL_GetMaxRankFromFile(void)
 
 {
-  char *pcVar1;
+  ulonglong uVar1;
+  char *_Str;
   int iVar2;
-  StringTable *local_30 [12];
+  int local_30 [12];
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0xb4,0,
-                    "%s");
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0xb4,0,0xffffffff82000f98,0xffffffff820362f0);
   }
-  StringTable_GetAsset(pcVar1,local_30);
-  if (local_30[0] == (StringTable *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0xb7,0,
-                    "%s");
+  StringTable_GetAsset(uVar1,local_30);
+  if (local_30[0] == 0) {
+    MyAssertHandler(0xffffffff82036300,0xb7,0,0xffffffff82000f98,0xffffffff820362e8);
   }
-  pcVar1 = StringTable_Lookup(local_30[0],0,"maxrank",1);
-  iVar2 = atoi(pcVar1);
-  iVar2 = __restgprlr_29((longlong)iVar2 + 1);
-  return iVar2;
+  _Str = (char *)StringTable_Lookup(local_30[0],0,0xffffffff820362e0,1);
+  iVar2 = atoi(_Str);
+  __restgprlr_29((longlong)iVar2 + 1);
+  return;
 }
 
 
 // 82352D68  CL_GetMaxRankMP  (client_mp/cl_rank.cpp:192)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int CL_GetMaxRankMP(void)
+void CL_GetMaxRankMP(void)
 
 {
-  int iVar1;
-  
-  iVar1 = CL_GetMaxRankFromFile("mp/rankTable.csv");
-  return iVar1;
+  CL_GetMaxRankFromFile(0xffffffff82036340);
+  return;
 }
 
 
 // 82352D78  CL_GetMaxRankSO  (client_mp/cl_rank.cpp:198)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int CL_GetMaxRankSO(void)
+void CL_GetMaxRankSO(void)
 
 {
-  int iVar1;
-  
-  iVar1 = CL_GetMaxRankFromFile("sp/rankTable.csv");
-  return iVar1;
+  CL_GetMaxRankFromFile(0xffffffff82036354);
+  return;
 }
 
 
 // 82352D88  CL_GetMaxXPFromFile  (client_mp/cl_rank.cpp:204)
 
-int CL_GetMaxXPFromFile(char *param_1)
+void CL_GetMaxXPFromFile(void)
 
 {
-  char *pcVar1;
-  int iVar2;
-  StringTable *local_30 [12];
+  ulonglong uVar1;
+  undefined8 uVar2;
+  char *_Str;
+  int iVar3;
+  int local_30 [12];
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0xd1,0,
-                    "%s");
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0xd1,0,0xffffffff82000f98,0xffffffff820362f0);
   }
-  StringTable_GetAsset(pcVar1,local_30);
-  if (local_30[0] == (StringTable *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0xd4,0,
-                    "%s");
+  StringTable_GetAsset(uVar1,local_30);
+  if (local_30[0] == 0) {
+    MyAssertHandler(0xffffffff82036300,0xd4,0,0xffffffff82000f98,0xffffffff820362e8);
   }
-  pcVar1 = StringTable_Lookup(local_30[0],0,"maxrank",1);
-  pcVar1 = StringTable_Lookup(local_30[0],0,pcVar1,7);
-  iVar2 = atoi(pcVar1);
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  uVar2 = StringTable_Lookup(local_30[0],0,0xffffffff820362e0,1);
+  _Str = (char *)StringTable_Lookup(local_30[0],0,uVar2,7);
+  iVar3 = atoi(_Str);
+  __restgprlr_29(iVar3);
+  return;
 }
 
 
 // 82352E38  CL_GetMaxXPMP  (client_mp/cl_rank.cpp:222)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int CL_GetMaxXPMP(void)
+void CL_GetMaxXPMP(void)
 
 {
-  int iVar1;
-  
-  iVar1 = CL_GetMaxXPFromFile("mp/rankTable.csv");
-  return iVar1;
+  CL_GetMaxXPFromFile(0xffffffff82036340);
+  return;
 }
 
 
 // 82352E48  CL_GetMaxXPSO  (client_mp/cl_rank.cpp:228)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int CL_GetMaxXPSO(void)
+void CL_GetMaxXPSO(void)
 
 {
-  int iVar1;
-  
-  iVar1 = CL_GetMaxXPFromFile("sp/rankTable.csv");
-  return iVar1;
+  CL_GetMaxXPFromFile(0xffffffff82036354);
+  return;
 }
 
 
 // 82352E58  CL_GetPastTitleRank  (client_mp/cl_rank.cpp:237)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int CL_GetPastTitleRank(LocalClientNum_t param_1,char *param_2)
+void CL_GetPastTitleRank(undefined8 param_1,ulonglong param_2)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   int iVar2;
-  int iVar3;
-  ulong uVar5;
-  ulonglong uVar6;
-  char *pcVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_28(param_1);
-  if (3 < (int)LVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0xef,0,
-                    "%s");
+  uVar1 = __savegprlr_28();
+  if (3 < (int)uVar1) {
+    MyAssertHandler(0xffffffff82036300,0xef,0,0xffffffff82000f98,0xffffffff82036418);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0xf0,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0xf0,0,0xffffffff82000f98,0xffffffff820268e0);
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pcVar4 = (char *)uVar6;
-  iVar3 = I_stricmp(pcVar4,"blackops");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitleRank(0x1442,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+  iVar2 = I_stricmp(param_2,0xffffffff8203640c);
+  if (iVar2 == 0) {
+    GetPastTitleRank(0x1442,uVar1);
+    __restgprlr_28();
+    return;
   }
-  iVar3 = I_stricmp(pcVar4,"mw2");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitleRank(0x41560817,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar2 = I_stricmp(param_2,0xffffffff82036408);
+  if (iVar2 == 0) {
+    GetPastTitleRank(0x41560817,uVar1);
+    __restgprlr_28();
+    return;
   }
-  iVar3 = I_stricmp(pcVar4,"waw");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitleRank(0x4156081c,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar2 = I_stricmp(param_2,0xffffffff82036404);
+  if (iVar2 == 0) {
+    GetPastTitleRank(0x4156081c,uVar1);
+    __restgprlr_28();
+    return;
   }
-  iVar3 = I_stricmp(pcVar4,"mw");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitleRank(0x415607e6,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar2 = I_stricmp(param_2,0xffffffff82036400);
+  if (iVar2 == 0) {
+    GetPastTitleRank(0x415607e6,uVar1);
+    __restgprlr_28();
+    return;
   }
-  iVar2 = __restgprlr_28(1);
-  return iVar2;
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 82352F98  CL_GetPastTitlePrestige  (client_mp/cl_rank.cpp:256)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-int CL_GetPastTitlePrestige(LocalClientNum_t param_1,char *param_2)
+void CL_GetPastTitlePrestige(undefined8 param_1,ulonglong param_2)
 
 {
-  LocalClientNum_t LVar1;
+  undefined8 uVar1;
   int iVar2;
-  int iVar3;
-  ulong uVar5;
-  ulonglong uVar6;
-  char *pcVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_28(param_1);
-  if (3 < (int)LVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x102,0
-                    ,"%s");
+  uVar1 = __savegprlr_28();
+  if (3 < (int)uVar1) {
+    MyAssertHandler(0xffffffff82036300,0x102,0,0xffffffff82000f98,0xffffffff82036418);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x103,0
-                    ,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0x103,0,0xffffffff82000f98,0xffffffff820268e0);
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pcVar4 = (char *)uVar6;
-  iVar3 = I_stricmp(pcVar4,"blackops");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitlePrestigeLevel(0x1442,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+  iVar2 = I_stricmp(param_2,0xffffffff8203640c);
+  if (iVar2 == 0) {
+    GetPastTitlePrestigeLevel(0x1442,uVar1);
+    __restgprlr_28();
+    return;
   }
-  iVar3 = I_stricmp(pcVar4,"mw2");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitlePrestigeLevel(0x41560817,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar2 = I_stricmp(param_2,0xffffffff82036408);
+  if (iVar2 == 0) {
+    GetPastTitlePrestigeLevel(0x41560817,uVar1);
+    __restgprlr_28();
+    return;
   }
-  iVar3 = I_stricmp(pcVar4,"waw");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitlePrestigeLevel(0x4156081c,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar2 = I_stricmp(param_2,0xffffffff82036404);
+  if (iVar2 == 0) {
+    GetPastTitlePrestigeLevel(0x4156081c,uVar1);
+    __restgprlr_28();
+    return;
   }
-  iVar3 = I_stricmp(pcVar4,"mw");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitlePrestigeLevel(0x415607e6,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar2 = I_stricmp(param_2,0xffffffff82036400);
+  if (iVar2 == 0) {
+    GetPastTitlePrestigeLevel(0x415607e6,uVar1);
+    __restgprlr_28();
+    return;
   }
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 823530D8  CL_SetPastTitleRank  (client_mp/cl_rank.cpp:276)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_SetPastTitleRank(LocalClientNum_t param_1,char *param_2,int param_3)
+void CL_SetPastTitleRank(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  undefined8 uVar1;
   int iVar3;
-  ulong uVar5;
-  ulonglong uVar6;
-  char *pcVar4;
+  undefined8 uVar2;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_27(param_1);
-  if (3 < (int)LVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x116,0
-                    ,"%s");
+  uVar1 = __savegprlr_27();
+  if (3 < (int)uVar1) {
+    MyAssertHandler(0xffffffff82036300,0x116,0,0xffffffff82000f98,0xffffffff82036418);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x117,0
-                    ,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0x117,0,0xffffffff82000f98,0xffffffff820268e0);
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pcVar4 = (char *)uVar6;
-  iVar3 = I_stricmp(pcVar4,"blackops");
+  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+  iVar3 = I_stricmp(param_2,0xffffffff8203640c);
   if (iVar3 == 0) {
-    uVar5 = 0x1442;
+    uVar2 = 0x1442;
   }
   else {
-    iVar3 = I_stricmp(pcVar4,"mw2");
+    iVar3 = I_stricmp(param_2,0xffffffff82036408);
     if (iVar3 == 0) {
-      uVar5 = 0x41560817;
+      uVar2 = 0x41560817;
     }
     else {
-      iVar3 = I_stricmp(pcVar4,"waw");
+      iVar3 = I_stricmp(param_2,0xffffffff82036404);
       if (iVar3 == 0) {
-        uVar5 = 0x4156081c;
+        uVar2 = 0x4156081c;
       }
       else {
-        iVar3 = I_stricmp(pcVar4,"mw");
+        iVar3 = I_stricmp(param_2,0xffffffff82036400);
         if (iVar3 != 0) goto LAB_823531e8;
-        uVar5 = 0x415607e6;
+        uVar2 = 0x415607e6;
       }
     }
   }
-  SetPastTitleRank(uVar5,param_3,iVar2);
+  SetPastTitleRank(uVar2,param_3,uVar1);
 LAB_823531e8:
-  GamerProfile_UpdateProfilePastTitleData(iVar2);
+  GamerProfile_UpdateProfilePastTitleData(uVar1);
   __restgprlr_27();
   return;
 }
@@ -534,54 +451,45 @@ LAB_823531e8:
 
 // 823531F8  CL_SetPastTitlePrestige  (client_mp/cl_rank.cpp:296)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void CL_SetPastTitlePrestige(LocalClientNum_t param_1,char *param_2,int param_3)
+void CL_SetPastTitlePrestige(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  undefined8 uVar1;
   int iVar3;
-  ulong uVar5;
-  ulonglong uVar6;
-  char *pcVar4;
+  undefined8 uVar2;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_27(param_1);
-  if (3 < (int)LVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x12a,0
-                    ,"%s");
+  uVar1 = __savegprlr_27();
+  if (3 < (int)uVar1) {
+    MyAssertHandler(0xffffffff82036300,0x12a,0,0xffffffff82000f98,0xffffffff82036418);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",299,0,
-                    "%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,299,0,0xffffffff82000f98,0xffffffff820268e0);
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pcVar4 = (char *)uVar6;
-  iVar3 = I_stricmp(pcVar4,"blackops");
+  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+  iVar3 = I_stricmp(param_2,0xffffffff8203640c);
   if (iVar3 == 0) {
-    uVar5 = 0x1442;
+    uVar2 = 0x1442;
   }
   else {
-    iVar3 = I_stricmp(pcVar4,"mw2");
+    iVar3 = I_stricmp(param_2,0xffffffff82036408);
     if (iVar3 == 0) {
-      uVar5 = 0x41560817;
+      uVar2 = 0x41560817;
     }
     else {
-      iVar3 = I_stricmp(pcVar4,"waw");
+      iVar3 = I_stricmp(param_2,0xffffffff82036404);
       if (iVar3 == 0) {
-        uVar5 = 0x4156081c;
+        uVar2 = 0x4156081c;
       }
       else {
-        iVar3 = I_stricmp(pcVar4,"mw");
+        iVar3 = I_stricmp(param_2,0xffffffff82036400);
         if (iVar3 != 0) goto LAB_82353308;
-        uVar5 = 0x415607e6;
+        uVar2 = 0x415607e6;
       }
     }
   }
-  SetPastTitlePrestigeLevel(uVar5,param_3,iVar2);
+  SetPastTitlePrestigeLevel(uVar2,param_3,uVar1);
 LAB_82353308:
-  GamerProfile_UpdateProfilePastTitleData(iVar2);
+  GamerProfile_UpdateProfilePastTitleData(uVar1);
   __restgprlr_27();
   return;
 }
@@ -589,27 +497,25 @@ LAB_82353308:
 
 // 82353318  CL_SetPastTitleRank_f  (client_mp/cl_rank.cpp:316)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_SetPastTitleRank_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  LocalClientNum_t LVar3;
+  int iVar3;
+  undefined8 uVar1;
+  char *_Str;
+  undefined8 uVar2;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 == 3) {
-    pcVar2 = Cmd_Argv(2);
-    iVar1 = atoi(pcVar2);
-    pcVar2 = Cmd_Argv(1);
-    LVar3 = Cmd_LocalClientNum();
-    CL_SetPastTitleRank(LVar3,pcVar2,iVar1);
+  iVar3 = Cmd_Argc();
+  if (iVar3 == 3) {
+    _Str = (char *)Cmd_Argv(2);
+    iVar3 = atoi(_Str);
+    uVar1 = Cmd_Argv(1);
+    uVar2 = Cmd_LocalClientNum();
+    CL_SetPastTitleRank(uVar2,uVar1,iVar3);
   }
   else {
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s <title-code> <rank>\n");
+    uVar1 = Cmd_Argv(0);
+    Com_Printf(0,0xffffffff82036444,uVar1);
   }
   return;
 }
@@ -617,27 +523,25 @@ void CL_SetPastTitleRank_f(void)
 
 // 823533A0  CL_SetPastTitlePrestige_f  (client_mp/cl_rank.cpp:328)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
 void CL_SetPastTitlePrestige_f(void)
 
 {
-  int iVar1;
-  char *pcVar2;
-  LocalClientNum_t LVar3;
+  int iVar3;
+  undefined8 uVar1;
+  char *_Str;
+  undefined8 uVar2;
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 == 3) {
-    pcVar2 = Cmd_Argv(2);
-    iVar1 = atoi(pcVar2);
-    pcVar2 = Cmd_Argv(1);
-    LVar3 = Cmd_LocalClientNum();
-    CL_SetPastTitlePrestige(LVar3,pcVar2,iVar1);
+  iVar3 = Cmd_Argc();
+  if (iVar3 == 3) {
+    _Str = (char *)Cmd_Argv(2);
+    iVar3 = atoi(_Str);
+    uVar1 = Cmd_Argv(1);
+    uVar2 = Cmd_LocalClientNum();
+    CL_SetPastTitlePrestige(uVar2,uVar1,iVar3);
   }
   else {
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s <title-code> <prestige>\n");
+    uVar1 = Cmd_Argv(0);
+    Com_Printf(0,0xffffffff82036464,uVar1);
   }
   return;
 }

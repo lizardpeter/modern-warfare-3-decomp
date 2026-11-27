@@ -2,144 +2,137 @@
 
 // 828C7BB8  NellyMSVQEncPred  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libquan.c:84)
 
-void NellyMSVQEncPred(float *param_1,int *param_2,int param_3,float param_4)
+void NellyMSVQEncPred(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-  int *piVar1;
-  float *pfVar2;
-  int iVar3;
-  float *pfVar4;
-  float fVar5;
+  float fVar1;
+  undefined4 *puVar2;
+  float *pfVar3;
+  int iVar4;
+  uint uVar5;
   float *pfVar6;
-  float **ppfVar7;
+  float *pfVar7;
   int iVar8;
-  longlong lVar9;
-  float *pfVar10;
+  int iVar9;
   float *pfVar11;
-  int iVar12;
+  longlong lVar10;
+  float *pfVar12;
   int iVar13;
-  int *piVar14;
-  float **ppfVar15;
-  longlong lVar16;
+  int iVar14;
+  int *piVar15;
+  undefined **ppuVar16;
   float *pfVar17;
   longlong lVar18;
   longlong lVar19;
-  longlong lVar20;
-  double dVar21;
+  double dVar20;
   double extraout_f1;
+  double dVar21;
+  double extraout_f1_00;
   double dVar22;
-  undefined8 in_f31;
-  double dVar23;
-  float *in_stack_fffffeb8;
-  int in_stack_fffffebc;
-  int *in_stack_fffffec0;
   float fStack_e4;
-  float local_e0 [4];
+  float local_e0;
+  float local_dc;
   int local_d0;
-  RS2StageVQ_MBlk *local_cc;
-  RS2StageVQ_MBlk *local_c8;
-  RS2StageVQ_MBlk *local_c4;
-  float local_c0 [12];
-  undefined8 local_90;
+  undefined *local_cc;
+  undefined *local_c8;
+  undefined *local_c4;
+  float local_c0 [48];
   
-  lVar20 = (longlong)param_3;
-  lVar16 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_16((double)param_4,param_1);
-  local_90 = in_f31;
-  ppfVar7 = ptab_ASK12_V_Pred;
-  pfVar11 = tab_ASK12_V_Means;
+  iVar4 = __savegprlr_16();
+  iVar8 = -0x7d6501f0;
+  pfVar12 = (float *)&DAT_82202b10;
   if (extraout_f1 <= 0.800000011920929) {
-    iVar12 = 0xab8;
-    pfVar11 = tab_ASK12_UV_Means;
-    ppfVar7 = ptab_ASK12_UV_Pred;
+    local_d0 = 0xab8;
+    pfVar12 = (float *)&DAT_82202b40;
+    iVar8 = -0x7d6501d8;
   }
   else {
-    iVar12 = 0x66c;
+    local_d0 = 0x66c;
   }
-  local_d0 = (int)tab_ASK12_V_Means + iVar12;
-  local_cc = &ASK2_3_mblk;
-  local_c8 = &ASK4_5_mblk;
-  local_c4 = &ASK6_7_mblk;
-  if (0 < (int)lVar20) {
-    lVar18 = lVar20;
-    pfVar10 = pfVar11;
+  local_d0 = (int)&DAT_82202b10 + local_d0;
+  local_cc = &DAT_82203920;
+  local_c8 = &DAT_82203bf4;
+  local_c4 = &DAT_82203e88;
+  if (0 < (int)param_3) {
+    lVar18 = param_3;
+    pfVar11 = pfVar12;
     do {
-      *(float *)(((int)local_c0 - (int)pfVar11) + (int)pfVar10) =
-           *(float *)((iVar3 - (int)pfVar11) + (int)pfVar10) - *pfVar10;
-      pfVar10 = pfVar10 + 1;
+      *(float *)(((int)local_c0 - (int)pfVar12) + (int)pfVar11) =
+           *(float *)((iVar4 - (int)pfVar12) + (int)pfVar11) - *pfVar11;
+      pfVar11 = pfVar11 + 1;
       lVar18 = lVar18 + -1;
     } while (lVar18 != 0);
   }
-  ppfVar15 = ptab_ASK12_UV_Pred + 2;
+  ppuVar16 = &PTR_DAT_829afe30;
   lVar18 = 0;
-  iVar12 = 0;
   iVar13 = 0;
+  iVar14 = 0;
   pfVar17 = local_c0;
-  dVar23 = 0.0;
-  piVar14 = &local_d0;
-  pfVar10 = local_c0 + 1;
+  dVar22 = 0.0;
+  piVar15 = &local_d0;
+  pfVar11 = local_c0 + 1;
   do {
-    pfVar4 = &fStack_e4;
-    iVar8 = *(int *)(((int)ppfVar7 - (int)&local_d0) + (int)piVar14) - (int)local_c0;
-    lVar9 = 2;
+    pfVar6 = &fStack_e4;
+    iVar9 = *(int *)((iVar8 - (int)&local_d0) + (int)piVar15) - (int)local_c0;
+    lVar10 = 2;
     do {
-      dVar21 = dVar23;
-      if (0 < iVar13) {
-        pfVar6 = local_c0;
+      dVar20 = dVar22;
+      if (0 < iVar14) {
+        pfVar7 = local_c0;
         lVar19 = lVar18;
         do {
-          pfVar2 = (float *)(iVar8 + (int)pfVar6);
-          fVar5 = *pfVar6;
-          pfVar6 = pfVar6 + 1;
-          dVar21 = (double)(float)((double)*pfVar2 * (double)fVar5 + dVar21);
+          pfVar3 = (float *)(iVar9 + (int)pfVar7);
+          fVar1 = *pfVar7;
+          pfVar7 = pfVar7 + 1;
+          dVar20 = (double)(float)((double)*pfVar3 * (double)fVar1 + dVar20);
           lVar19 = lVar19 + -1;
         } while (lVar19 != 0);
       }
-      pfVar4 = pfVar4 + 1;
-      *pfVar4 = (float)dVar21;
-      lVar9 = lVar9 + -1;
-      iVar8 = iVar13 + iVar8;
-    } while (lVar9 != 0);
-    fVar5 = *pfVar10;
-    dVar22 = (double)local_e0[0];
-    dVar21 = (double)local_e0[1];
-    *pfVar17 = (float)((double)*pfVar17 - dVar22);
-    *pfVar10 = (float)((double)fVar5 - dVar21);
-    pfVar4 = (float *)lVar16;
-    if (iVar12 < 4) {
-      piVar1 = (int *)*piVar14;
-      RS2StageVQ2Enc((int *)pfVar4,pfVar17,2,*piVar1,(float *)piVar1[1],(float *)piVar1[2],piVar1[3]
-                     ,(float *)piVar1[4],in_stack_fffffeb8,in_stack_fffffebc,in_stack_fffffec0);
+      pfVar6 = pfVar6 + 1;
+      *pfVar6 = (float)dVar20;
+      lVar10 = lVar10 + -1;
+      iVar9 = iVar14 + iVar9;
+    } while (lVar10 != 0);
+    fVar1 = *pfVar11;
+    dVar20 = (double)local_e0;
+    *pfVar17 = (float)((double)*pfVar17 - dVar20);
+    *pfVar11 = fVar1 - local_dc;
+    if (iVar13 < 4) {
+      puVar2 = (undefined4 *)*piVar15;
+      dVar21 = (double)RS2StageVQ2Enc(param_2,pfVar17,2,*puVar2,puVar2[1],puVar2[2],puVar2[3],
+                                      puVar2[4]);
     }
     else {
-      fVar5 = (float)Dim2VectorQuantize(pfVar17,(float *)(*ppfVar15)[1],(int)**ppfVar15);
-      *pfVar4 = fVar5;
-      pfVar4[1] = 0.0;
-      pfVar4 = (float *)((int)(*ppfVar15)[1] +
-                        (-(uint)((uint)fVar5 < (uint)**ppfVar15) & (uint)fVar5) * 8);
-      fVar5 = pfVar4[1];
-      *pfVar17 = *pfVar4;
-      pfVar17[1] = fVar5;
+      uVar5 = Dim2VectorQuantize(pfVar17,*(undefined4 *)((int)*ppuVar16 + 4),
+                                 *(undefined4 *)*ppuVar16);
+      *(uint *)param_2 = uVar5;
+      ((uint *)param_2)[1] = 0;
+      pfVar6 = (float *)(*(uint *)((int)*ppuVar16 + 4) +
+                        (-(uint)(uVar5 < *(uint *)*ppuVar16) & uVar5) * 8);
+      fVar1 = pfVar6[1];
+      *pfVar17 = *pfVar6;
+      pfVar17[1] = fVar1;
+      dVar21 = extraout_f1_00;
     }
-    *pfVar17 = (float)(dVar22 + (double)*pfVar17);
-    ppfVar15 = ppfVar15 + 1;
+    *pfVar17 = (float)(dVar20 + (double)*pfVar17);
+    ppuVar16 = ppuVar16 + 1;
     pfVar17[1] = (float)(dVar21 + (double)pfVar17[1]);
     lVar18 = lVar18 + 2;
-    iVar13 = iVar13 + 8;
-    pfVar10 = pfVar10 + 2;
-    lVar16 = lVar16 + 8;
+    iVar14 = iVar14 + 8;
+    pfVar11 = pfVar11 + 2;
+    param_2 = param_2 + 8;
     pfVar17 = pfVar17 + 2;
-    iVar12 = iVar12 + 1;
-    piVar14 = piVar14 + 1;
-  } while ((int)ppfVar15 < -0x7d6501b8);
-  if (0 < (int)lVar20) {
-    pfVar10 = local_c0;
+    iVar13 = iVar13 + 1;
+    piVar15 = piVar15 + 1;
+  } while ((int)ppuVar16 < -0x7d6501b8);
+  if (0 < (int)param_3) {
+    pfVar11 = local_c0;
     do {
-      *(float *)((iVar3 - (int)local_c0) + (int)pfVar10) =
-           *(float *)(((int)pfVar11 - (int)local_c0) + (int)pfVar10) + *pfVar10;
-      pfVar10 = pfVar10 + 1;
-      lVar20 = lVar20 + -1;
-    } while (lVar20 != 0);
+      *(float *)((iVar4 - (int)local_c0) + (int)pfVar11) =
+           *(float *)(((int)pfVar12 - (int)local_c0) + (int)pfVar11) + *pfVar11;
+      pfVar11 = pfVar11 + 1;
+      param_3 = param_3 + -1;
+    } while (param_3 != 0);
   }
   __restgprlr_16();
   return;
@@ -148,9 +141,8 @@ void NellyMSVQEncPred(float *param_1,int *param_2,int param_3,float param_4)
 
 // 828C7940  RS2StageVQ2Enc  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libquan.c:329)
 
-void RS2StageVQ2Enc(int *param_1,float *param_2,int param_3,int param_4,float *param_5,
-                   float *param_6,int param_7,float *param_8,float *param_9,int param_10,
-                   int *param_11)
+void RS2StageVQ2Enc(undefined8 param_1,float *param_2,ulonglong param_3,uint param_4,
+                   longlong param_5,undefined8 param_6,ulonglong param_7,ulonglong param_8)
 
 {
   float fVar1;
@@ -161,28 +153,23 @@ void RS2StageVQ2Enc(int *param_1,float *param_2,int param_3,int param_4,float *p
   float fVar6;
   uint uVar7;
   int iVar8;
-  uint *puVar9;
-  uint uVar10;
+  uint *puVar10;
+  ulonglong uVar9;
   longlong lVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  longlong lVar14;
-  ulonglong uVar15;
-  float *pfVar17;
-  longlong lVar16;
-  float *pfVar18;
-  uint *puVar19;
-  ulonglong uVar20;
-  uint *puVar21;
-  int iVar22;
-  ulonglong uVar23;
+  float *pfVar13;
+  longlong lVar12;
+  float *pfVar14;
+  uint *puVar15;
+  uint *puVar16;
+  int iVar17;
+  ulonglong uVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
   double dVar24;
-  double dVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
-  double dVar29;
-  float *in_stack_00000054;
+  uint in_stack_00000054;
   int in_stack_0000005c;
   uint *in_stack_00000064;
   float afStack_74 [3];
@@ -190,105 +177,100 @@ void RS2StageVQ2Enc(int *param_1,float *param_2,int param_3,int param_4,float *p
   float local_60;
   float local_5c;
   
-  uVar15 = (ulonglong)param_7;
-  lVar14 = (longlong)(int)param_6;
-  lVar13 = (longlong)(int)param_5;
-  uVar12 = (ulonglong)param_4;
-  uVar20 = (ulonglong)param_3;
-  puVar9 = (uint *)__savegprlr_23(param_1);
-  dVar24 = 3.402820018375656e+38;
-  if (0 < (int)uVar20) {
-    pfVar17 = afStack_74;
-    for (uVar23 = uVar20 & 0x3fffffff; uVar23 != 0; uVar23 = uVar23 - 1) {
-      pfVar17 = pfVar17 + 1;
-      *pfVar17 = 3.40282e+38;
+  puVar10 = (uint *)__savegprlr_23();
+  dVar19 = 3.402820018375656e+38;
+  if (0 < (int)param_3) {
+    pfVar13 = afStack_74;
+    for (uVar18 = param_3 & 0x3fffffff; uVar18 != 0; uVar18 = uVar18 - 1) {
+      pfVar13 = pfVar13 + 1;
+      *pfVar13 = 3.40282e+38;
     }
-    pfVar17 = afStack_74 + 2;
-    for (uVar23 = uVar20 & 0x3fffffff; uVar23 != 0; uVar23 = uVar23 - 1) {
-      pfVar17 = pfVar17 + 1;
-      *pfVar17 = 0.0;
+    pfVar13 = afStack_74 + 2;
+    for (uVar18 = param_3 & 0x3fffffff; uVar18 != 0; uVar18 = uVar18 - 1) {
+      pfVar13 = pfVar13 + 1;
+      *pfVar13 = 0.0;
     }
   }
-  iVar22 = 0;
-  if (0 < (int)uVar12) {
+  iVar17 = 0;
+  if (0 < (int)param_4) {
     fVar1 = *param_2;
     fVar2 = param_2[1];
-    lVar11 = lVar13 + -4;
+    lVar11 = param_5 + -4;
     do {
       fVar3 = fVar1 - *(float *)((int)lVar11 + 4);
       lVar11 = lVar11 + 8;
       fVar6 = fVar2 - *(float *)lVar11;
       fVar3 = fVar6 * fVar6 + fVar3 * fVar3;
-      if (fVar3 < *(float *)((int)afStack_74 + (int)((uVar20 & 0xffffffff) << 2))) {
-        uVar23 = uVar20 - 1;
-        if (0 < (longlong)uVar23) {
-          lVar16 = (uVar23 & 0x3fffffff) << 2;
+      if (fVar3 < *(float *)((int)afStack_74 + (int)((param_3 & 0xffffffff) << 2))) {
+        uVar18 = param_3 - 1;
+        if (0 < (longlong)uVar18) {
+          lVar12 = (uVar18 & 0x3fffffff) << 2;
           do {
-            lVar16 = lVar16 + -4;
-            iVar8 = (int)lVar16;
+            lVar12 = lVar12 + -4;
+            iVar8 = (int)lVar12;
             fVar6 = *(float *)((int)afStack_74 + iVar8 + 4);
             if (fVar6 < fVar3) break;
-            uVar23 = uVar23 - 1;
+            uVar18 = uVar18 - 1;
             *(float *)((int)local_68 + iVar8 + -4) = fVar6;
             *(undefined4 *)((int)local_68 + iVar8 + 4) = *(undefined4 *)((int)local_68 + iVar8);
-          } while (0 < (longlong)uVar23);
+          } while (0 < (longlong)uVar18);
         }
-        iVar8 = (int)((uVar23 & 0xffffffff) << 2);
+        iVar8 = (int)((uVar18 & 0xffffffff) << 2);
         *(float *)((int)afStack_74 + iVar8 + 4) = fVar3;
-        *(int *)((int)local_68 + iVar8) = iVar22;
+        *(int *)((int)local_68 + iVar8) = iVar17;
       }
-      iVar22 = iVar22 + 1;
-    } while (iVar22 < (int)uVar12);
+      iVar17 = iVar17 + 1;
+    } while (iVar17 < (int)param_4);
   }
-  if (0 < (int)uVar20) {
-    puVar21 = local_68;
-    dVar25 = 1.0;
+  if (0 < (int)param_3) {
+    puVar16 = local_68;
+    dVar20 = 1.0;
     do {
-      uVar7 = *puVar21;
-      dVar29 = (double)*param_2;
-      dVar28 = (double)param_2[1];
-      iVar22 = 0;
-      pfVar17 = (float *)(uVar7 * 8 + (int)lVar14);
-      pfVar18 = (float *)((int)((-(ulonglong)(uVar7 < uVar12) & (ulonglong)uVar7) << 3) +
-                         (int)lVar13);
-      dVar27 = (double)*pfVar18;
-      dVar26 = (double)pfVar18[1];
-      local_5c = *pfVar17 * (float)(dVar28 - dVar26) - pfVar17[1] * (float)(dVar29 - dVar27);
-      local_60 = *pfVar17 * (float)(dVar29 - dVar27) + pfVar17[1] * (float)(dVar28 - dVar26);
-      puVar19 = in_stack_00000064;
-      pfVar18 = param_8;
+      uVar7 = *puVar16;
+      dVar24 = (double)*param_2;
+      dVar23 = (double)param_2[1];
+      iVar17 = 0;
+      pfVar13 = (float *)(uVar7 * 8 + (int)param_6);
+      pfVar14 = (float *)((-(uint)(uVar7 < param_4) & uVar7) * 8 + (int)param_5);
+      dVar22 = (double)*pfVar14;
+      dVar21 = (double)pfVar14[1];
+      local_5c = *pfVar13 * (float)(dVar23 - dVar21) - pfVar13[1] * (float)(dVar24 - dVar22);
+      local_60 = *pfVar13 * (float)(dVar24 - dVar22) + pfVar13[1] * (float)(dVar23 - dVar21);
+      uVar18 = param_8;
+      puVar15 = in_stack_00000064;
       if (0 < in_stack_0000005c) {
         do {
-          pfVar18 = in_stack_00000054;
-          if (*puVar19 == uVar7) break;
-          iVar22 = iVar22 + 1;
-          puVar19 = puVar19 + 1;
-          pfVar18 = param_8;
-        } while (iVar22 < in_stack_0000005c);
+          if (*puVar15 == uVar7) {
+            uVar18 = (ulonglong)in_stack_00000054;
+            break;
+          }
+          iVar17 = iVar17 + 1;
+          puVar15 = puVar15 + 1;
+        } while (iVar17 < in_stack_0000005c);
       }
-      uVar10 = Dim2VectorQuantize(&local_60,pfVar18,(int)uVar15);
-      fVar3 = pfVar17[1];
-      fVar6 = *pfVar17;
-      pfVar18 = (float *)((int)((-(ulonglong)((ulonglong)(longlong)(int)uVar10 < uVar15) &
-                                 (longlong)(int)uVar10 & 0xffffffff) << 3) + (int)pfVar18);
-      fVar4 = pfVar18[1];
-      fVar5 = *pfVar18;
-      fVar2 = (float)(dVar25 / (double)(fVar6 * fVar6 + fVar3 * fVar3));
-      fVar1 = (float)((double)((fVar6 * fVar5 - fVar3 * fVar4) * fVar2) + dVar27);
-      fVar2 = (float)((double)((fVar3 * fVar5 + fVar6 * fVar4) * fVar2) + dVar26);
-      fVar3 = (float)(dVar29 - (double)fVar1);
-      fVar6 = (float)(dVar28 - (double)fVar2);
-      dVar26 = (double)(fVar6 * fVar6 + fVar3 * fVar3);
-      if (dVar26 < dVar24) {
-        *puVar9 = uVar7;
-        puVar9[1] = uVar10;
-        dVar24 = dVar26;
+      uVar9 = Dim2VectorQuantize(&local_60,uVar18);
+      fVar3 = pfVar13[1];
+      fVar6 = *pfVar13;
+      pfVar13 = (float *)((int)((-(ulonglong)(uVar9 < param_7) & uVar9 & 0xffffffff) << 3) +
+                         (int)uVar18);
+      fVar4 = pfVar13[1];
+      fVar5 = *pfVar13;
+      fVar2 = (float)(dVar20 / (double)(fVar6 * fVar6 + fVar3 * fVar3));
+      fVar1 = (float)((double)((fVar6 * fVar5 - fVar3 * fVar4) * fVar2) + dVar22);
+      fVar2 = (float)((double)((fVar3 * fVar5 + fVar6 * fVar4) * fVar2) + dVar21);
+      fVar3 = (float)(dVar24 - (double)fVar1);
+      fVar6 = (float)(dVar23 - (double)fVar2);
+      dVar21 = (double)(fVar6 * fVar6 + fVar3 * fVar3);
+      if (dVar21 < dVar19) {
+        *puVar10 = uVar7;
+        puVar10[1] = (uint)uVar9;
+        dVar19 = dVar21;
         afStack_74[1] = fVar1;
         afStack_74[2] = fVar2;
       }
-      uVar20 = uVar20 - 1;
-      puVar21 = puVar21 + 1;
-    } while (uVar20 != 0);
+      param_3 = param_3 - 1;
+      puVar16 = puVar16 + 1;
+    } while (param_3 != 0);
   }
   *param_2 = afStack_74[1];
   param_2[1] = afStack_74[2];
@@ -299,31 +281,31 @@ void RS2StageVQ2Enc(int *param_1,float *param_2,int param_3,int param_4,float *p
 
 // 828C78B0  ScalarLUT  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libquan.c:855)
 
-float ScalarLUT(float *param_1,int param_2,int param_3)
+double ScalarLUT(int param_1,ulonglong param_2,ulonglong param_3)
 
 {
-  return param_1[-((uint)((uint)param_3 < (uint)param_2) - (param_3 >> 0x1f)) - (param_2 >> 0x1f) &
-                 param_3];
+  return (double)*(float *)((int)((((param_2 & 0xffffffff) >> 0x1f) -
+                                   (((param_3 & 0xffffffff) >> 0x1f) +
+                                   (ulonglong)(param_3 < param_2)) & param_3 & 0xffffffff) << 2) +
+                           param_1);
 }
 
 
 // 828C78D0  Dim2VectorQuantize  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libquan.c:901)
 
-int Dim2VectorQuantize(float *param_1,float *param_2,int param_3)
+longlong Dim2VectorQuantize(float *param_1,float *param_2,longlong param_3)
 
 {
   float *pfVar1;
   float fVar2;
-  int iVar3;
+  longlong lVar3;
   float fVar4;
-  int iVar5;
-  longlong lVar6;
+  longlong lVar5;
   
-  lVar6 = (longlong)param_3;
-  iVar3 = 0;
-  iVar5 = 0;
-  if (param_3 < 1) {
-    return 0;
+  lVar3 = 0;
+  lVar5 = 0;
+  if ((int)param_3 < 1) {
+    return lVar3;
   }
   fVar4 = 1e+38;
   do {
@@ -333,12 +315,12 @@ int Dim2VectorQuantize(float *param_1,float *param_2,int param_3)
     fVar2 = (*pfVar1 - param_1[1]) * (*pfVar1 - param_1[1]) +
             (fVar2 - *param_1) * (fVar2 - *param_1);
     if ((int)fVar2 < (int)fVar4) {
+      lVar3 = lVar5;
       fVar4 = fVar2;
-      iVar3 = iVar5;
     }
-    iVar5 = iVar5 + 1;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  return iVar3;
+    lVar5 = lVar5 + 1;
+    param_3 = param_3 + -1;
+  } while (param_3 != 0);
+  return lVar3;
 }
 

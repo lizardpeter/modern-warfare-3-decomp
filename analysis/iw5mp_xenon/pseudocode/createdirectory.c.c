@@ -2,10 +2,10 @@
 
 // 8292B780  CreateDirectoryA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/createdirectory.c:50)
 
-int CreateDirectoryA(char *param_1,void *param_2)
+BOOL CreateDirectoryA(LPCSTR lpPathName,LPSECURITY_ATTRIBUTES lpSecurityAttributes)
 
 {
-  long lVar1;
+  int iVar1;
   undefined4 local_30 [2];
   undefined1 auStack_28 [8];
   undefined1 auStack_20 [8];
@@ -13,17 +13,17 @@ int CreateDirectoryA(char *param_1,void *param_2)
   undefined1 *local_14;
   undefined4 local_10;
   
-  RtlInitAnsiString(auStack_28,param_1);
+  RtlInitAnsiString(auStack_28,lpPathName);
   local_14 = auStack_28;
   local_18 = 0xfffffffd;
   local_10 = 0x40;
-  lVar1 = NtCreateFile(local_30,0x100001,&local_18,auStack_20,0,0x80,3,2);
-  if (lVar1 < 0) {
-    RtlSetLastNTError(lVar1);
+  iVar1 = NtCreateFile(local_30,0x100001,&local_18,auStack_20,0,0x80,3,2);
+  if (iVar1 < 0) {
+    RtlSetLastNTError();
   }
   else {
     NtClose(local_30[0]);
   }
-  return (int)(lVar1 >= 0);
+  return (BOOL)(iVar1 >= 0);
 }
 

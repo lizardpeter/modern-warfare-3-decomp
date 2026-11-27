@@ -2,50 +2,48 @@
 
 // 824C8A68  CM_TraceStaticModel  (qcommon/cm_staticmodel.cpp:53)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void CM_TraceStaticModel(cStaticModel_s *param_1,trace_t *param_2,float *param_3,float *param_4,
-                        int param_5)
+void CM_TraceStaticModel(undefined8 param_1,longlong param_2,float *param_3,float *param_4,
+                        undefined8 param_5)
 
 {
   float fVar1;
   float fVar2;
   undefined4 *puVar3;
   int iVar4;
-  float (*pafVar5) [3];
+  undefined4 *puVar5;
   float local_70;
   float local_6c;
   float local_68;
   float local_60;
   float local_5c;
   float local_58;
-  float afStack_50 [4];
-  float afStack_40 [16];
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [64];
   
-  puVar3 = (undefined4 *)__savegprlr_27(param_1);
-  pafVar5 = (float (*) [3])(puVar3 + 4);
+  puVar3 = (undefined4 *)__savegprlr_27();
+  puVar5 = puVar3 + 4;
   local_70 = *param_3 - (float)puVar3[1];
   local_6c = param_3[1] - (float)puVar3[2];
   local_68 = param_3[2] - (float)puVar3[3];
-  MatrixTransformVector(&local_70,pafVar5,afStack_40);
+  MatrixTransformVector(&local_70,puVar5,auStack_40);
   local_70 = *param_4 - (float)puVar3[1];
   local_6c = param_4[1] - (float)puVar3[2];
   local_68 = param_4[2] - (float)puVar3[3];
-  MatrixTransformVector(&local_70,pafVar5,afStack_50);
-  iVar4 = XModelTraceLine((XModel *)*puVar3,param_2,afStack_40,afStack_50,param_5);
+  MatrixTransformVector(&local_70,puVar5,auStack_50);
+  iVar4 = XModelTraceLine(*puVar3,param_2,auStack_40,auStack_50,param_5);
   if (-1 < iVar4) {
-    Trace_SetHitId(param_2,TRACE_HITTYPE_ENTITY,0x7fe);
-    MatrixTransposeTransformVector(param_2->normal,pafVar5,&local_60);
+    Trace_SetHitId(param_2,1,0x7fe);
+    MatrixTransposeTransformVector(param_2 + 4,puVar5,&local_60);
     fVar2 = SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
     fVar1 = 1.0;
     if (-fVar2 < 0.0) {
       fVar1 = fVar2;
     }
     fVar1 = 1.0 / fVar1;
-    param_2->normal[0] = local_60 * fVar1;
-    param_2->normal[1] = local_5c * fVar1;
-    param_2->normal[2] = local_58 * fVar1;
+    iVar4 = (int)param_2;
+    *(float *)(iVar4 + 4) = local_60 * fVar1;
+    *(float *)(iVar4 + 8) = local_5c * fVar1;
+    *(float *)(iVar4 + 0xc) = local_58 * fVar1;
   }
   __restgprlr_27();
   return;
@@ -54,34 +52,31 @@ void CM_TraceStaticModel(cStaticModel_s *param_1,trace_t *param_2,float *param_3
 
 // 824C8BA0  CM_TraceStaticModelComplete  (qcommon/cm_staticmodel.cpp:93)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int CM_TraceStaticModelComplete(cStaticModel_s *param_1,float *param_2,float *param_3,int param_4)
+void CM_TraceStaticModelComplete
+               (undefined8 param_1,float *param_2,float *param_3,undefined8 param_4)
 
 {
-  undefined4 *puVar1;
-  uint uVar2;
-  int iVar3;
+  undefined4 *puVar2;
+  ulonglong uVar1;
   float local_90;
   float local_8c;
   float local_88;
-  float afStack_80 [4];
-  float afStack_70 [4];
-  trace_t local_60;
+  undefined1 auStack_80 [16];
+  undefined1 auStack_70 [16];
+  undefined4 local_60 [24];
   
-  puVar1 = (undefined4 *)__savegprlr_28(param_1);
-  local_90 = *param_2 - (float)puVar1[1];
-  local_8c = param_2[1] - (float)puVar1[2];
-  local_88 = param_2[2] - (float)puVar1[3];
-  MatrixTransformVector(&local_90,(float (*) [3])(puVar1 + 4),afStack_70);
-  local_90 = *param_3 - (float)puVar1[1];
-  local_8c = param_3[1] - (float)puVar1[2];
-  local_88 = param_3[2] - (float)puVar1[3];
-  MatrixTransformVector(&local_90,(float (*) [3])(puVar1 + 4),afStack_80);
-  local_60.fraction = 1.0;
-  uVar2 = XModelTraceLine((XModel *)*puVar1,&local_60,afStack_70,afStack_80,param_4);
-  iVar3 = __restgprlr_28(uVar2 >> 0x1f);
-  return iVar3;
+  puVar2 = (undefined4 *)__savegprlr_28();
+  local_90 = *param_2 - (float)puVar2[1];
+  local_8c = param_2[1] - (float)puVar2[2];
+  local_88 = param_2[2] - (float)puVar2[3];
+  MatrixTransformVector(&local_90,puVar2 + 4,auStack_70);
+  local_90 = *param_3 - (float)puVar2[1];
+  local_8c = param_3[1] - (float)puVar2[2];
+  local_88 = param_3[2] - (float)puVar2[3];
+  MatrixTransformVector(&local_90,puVar2 + 4,auStack_80);
+  local_60[0] = 0x3f800000;
+  uVar1 = XModelTraceLine(*puVar2,local_60,auStack_70,auStack_80,param_4);
+  __restgprlr_28((uVar1 & 0xffffffff) >> 0x1f);
+  return;
 }
 

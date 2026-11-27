@@ -556,6 +556,9 @@ LAB_82736924:
   82736930  388003B6             li r4,0x3b6
   82736934  7EE3BB78             or r3,r23,r23
   82736938  4BF17A99             bl 0x8264e3d0
+  8273693C  817A3128             lwz r11,0x3128(r26)
+  82736940  2F0B0000             cmpwi cr6,r11,0x0
+  82736944  409AFFE0             bne cr6,0x82736924
 LAB_82736948:
   82736948  19BEE727             vmrghw128 v45,v126,v124
   8273694C  39600020             li r11,0x20
@@ -853,6 +856,9 @@ LAB_82736d9c:
   82736DA8  38800489             li r4,0x489
   82736DAC  7E83A378             or r3,r20,r20
   82736DB0  4BF17621             bl 0x8264e3d0
+  82736DB4  817B3128             lwz r11,0x3128(r27)
+  82736DB8  2F0B0000             cmpwi cr6,r11,0x0
+  82736DBC  409AFFE0             bne cr6,0x82736d9c
 LAB_82736dc0:
   82736DC0  7FE4FB78             or r4,r31,r31
   82736DC4  7FA3EB78             or r3,r29,r29
@@ -884,6 +890,9 @@ LAB_82736e18:
   82736E24  38800491             li r4,0x491
   82736E28  7EA3AB78             or r3,r21,r21
   82736E2C  4BF175A5             bl 0x8264e3d0
+  82736E30  817B3128             lwz r11,0x3128(r27)
+  82736E34  2F0B0000             cmpwi cr6,r11,0x0
+  82736E38  409AFFE0             bne cr6,0x82736e18
 LAB_82736e3c:
   82736E3C  19BEE727             vmrghw128 v45,v126,v124
   82736E40  388100A0             addi r4,r1,0xa0
@@ -1131,6 +1140,9 @@ LAB_827371d4:
   827371E0  3880057A             li r4,0x57a
   827371E4  7E439378             or r3,r18,r18
   827371E8  4BF171E9             bl 0x8264e3d0
+  827371EC  817D3128             lwz r11,0x3128(r29)
+  827371F0  2F0B0000             cmpwi cr6,r11,0x0
+  827371F4  409AFFE0             bne cr6,0x827371d4
 LAB_827371f8:
   827371F8  8161006C             lwz r11,0x6c(r1)
   827371FC  1360F9CF             stvx128 v123,0,r31
@@ -1161,6 +1173,9 @@ LAB_8273724c:
   82737258  38800582             li r4,0x582
   8273725C  7E639B78             or r3,r19,r19
   82737260  4BF17171             bl 0x8264e3d0
+  82737264  817D3128             lwz r11,0x3128(r29)
+  82737268  2F0B0000             cmpwi cr6,r11,0x0
+  8273726C  409AFFE0             bne cr6,0x8273724c
 LAB_82737270:
   82737270  193EE727             vmrghw128 v41,v126,v124
   82737274  38810070             addi r4,r1,0x70
@@ -1198,7 +1213,7 @@ LAB_827372c0:
   827372F0  481E0FFD             bl 0x829182ec
   827372F4  481DF3DC             b 0x829166d0
 
-; 82737A90  Callback  (gfx_d3d/r_draw_staticmodel.cpp:1530)
+; 82737A90  GfxSModelArrayCallback_NoPrepass::Callback  (gfx_d3d/r_draw_staticmodel.cpp:1530)
   82737A90  7D8802A6             mfspr r12,LR
   82737A94  481DEC29             bl 0x829166bc
   82737A98  9421FF90             stwu r1,-0x70(r1)

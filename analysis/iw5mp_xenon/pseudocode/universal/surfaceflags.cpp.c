@@ -2,53 +2,52 @@
 
 // 82612EE8  Com_SurfaceTypeFromName  (universal/surfaceflags.cpp:113)
 
-int Com_SurfaceTypeFromName(char *param_1)
+void Com_SurfaceTypeFromName(void)
 
 {
-  char *pcVar1;
+  undefined8 uVar1;
   int iVar2;
   int iVar3;
-  undefined4 *puVar4;
+  undefined **ppuVar4;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  iVar2 = I_stricmp(pcVar1,"default");
+  uVar1 = __savegprlr_28();
+  iVar2 = I_stricmp(uVar1,0xffffffff8200352c);
   if (iVar2 == 0) {
-    iVar2 = __restgprlr_28();
-    return iVar2;
+    __restgprlr_28();
+    return;
   }
   iVar2 = 0;
-  puVar4 = (undefined4 *)&infoParms;
+  ppuVar4 = &PTR_DAT_82994070;
   do {
-    iVar3 = I_stricmp(pcVar1,(char *)*puVar4);
+    iVar3 = I_stricmp(uVar1,*ppuVar4);
     if (iVar3 == 0) {
-      iVar2 = __restgprlr_28((int)(&DAT_82994078)[iVar2 * 5] >> 0x14 & 0x1f);
-      return iVar2;
+      __restgprlr_28((int)(&DAT_82994078)[iVar2 * 5] >> 0x14 & 0x1f);
+      return;
     }
-    puVar4 = puVar4 + 5;
+    ppuVar4 = ppuVar4 + 5;
     iVar2 = iVar2 + 1;
-  } while ((int)puVar4 < -0x7d66bd38);
-  iVar2 = __restgprlr_28(0xffffffffffffffff);
-  return iVar2;
+  } while ((int)ppuVar4 < -0x7d66bd38);
+  __restgprlr_28(0xffffffffffffffff);
+  return;
 }
 
 
 // 82612F80  Com_SurfaceTypeToName  (universal/surfaceflags.cpp:139)
 
-char * Com_SurfaceTypeToName(int param_1)
+ulonglong Com_SurfaceTypeToName(uint param_1)
 
 {
-  char *pcVar1;
+  ulonglong uVar1;
   
-  if ((param_1 < 1) || (0x1e < param_1)) {
-    pcVar1 = "default";
+  if (((int)param_1 < 1) || (0x1e < (int)param_1)) {
+    uVar1 = 0xffffffff8200352c;
   }
   else {
-    if (((int)demoExeModeNames[param_1 * 5 + 3] >> 0x14 & 0x1fU) != param_1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\surfaceflags.cpp",
-                      0x90,0,"%s");
+    if (((int)(&PTR_caseD_33_82994064)[param_1 * 5] >> 0x14 & 0x1fU) != param_1) {
+      MyAssertHandler(0xffffffff821840c8,0x90,0,0xffffffff82000f98,0xffffffff8202c4e8);
     }
-    pcVar1 = demoExeModeNames[param_1 * 5 + 1];
+    uVar1 = ZEXT48((&PTR_DAT_8299405c)[param_1 * 5]);
   }
-  return pcVar1;
+  return uVar1;
 }
 

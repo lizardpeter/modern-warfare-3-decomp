@@ -2,277 +2,266 @@
 
 // 82816500  vp8_setup_block  (WebM_atvi_opt/vpx/vp8/common/mbpitch.c:33)
 
-void vp8_setup_block(BLOCKD *param_1,int param_2,uchar **param_3,int param_4,int param_5,
-                    BLOCKSET param_6)
+void vp8_setup_block(int param_1,undefined8 param_2,undefined4 param_3,undefined4 param_4,
+                    undefined4 param_5,int param_6)
 
 {
-  if (param_6 == DEST) {
-    param_1->dst_stride = param_4;
-    param_1->dst = param_5;
-    param_1->base_dst = param_3;
+  if (param_6 == 1) {
+    *(undefined4 *)(param_1 + 0x2c) = param_4;
+    *(undefined4 *)(param_1 + 0x28) = param_5;
+    *(undefined4 *)(param_1 + 0x24) = param_3;
     return;
   }
-  param_1->pre_stride = param_4;
-  param_1->pre = param_5;
-  param_1->base_pre = param_3;
+  *(undefined4 *)(param_1 + 0x20) = param_4;
+  *(undefined4 *)(param_1 + 0x1c) = param_5;
+  *(undefined4 *)(param_1 + 0x18) = param_3;
   return;
 }
 
 
 // 82816528  vp8_setup_macroblock  (WebM_atvi_opt/vpx/vp8/common/mbpitch.c:51)
 
-void vp8_setup_macroblock(MACROBLOCKD *param_1,BLOCKSET param_2)
+void vp8_setup_macroblock(int param_1,int param_2)
 
 {
   int iVar1;
-  YV12_BUFFER_CONFIG *pYVar2;
-  YV12_BUFFER_CONFIG *pYVar3;
-  YV12_BUFFER_CONFIG *pYVar4;
-  uchar **ppuVar5;
-  uchar **ppuVar6;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  uint uVar5;
+  int *piVar6;
   int iVar7;
-  uint uVar8;
-  int *piVar9;
-  uchar **ppuVar10;
   
-  if (param_2 == DEST) {
-    pYVar2 = &param_1->dst;
-    pYVar3 = &param_1->dst;
-    pYVar4 = &param_1->dst;
+  if (param_2 == 1) {
+    iVar3 = param_1 + 0x1124;
+    iVar2 = param_1 + 0x1128;
+    iVar7 = param_1 + 0x112c;
   }
   else {
-    pYVar2 = &param_1->pre;
-    pYVar3 = &param_1->pre;
-    pYVar4 = &param_1->pre;
+    iVar3 = param_1 + 0x10f0;
+    iVar2 = param_1 + 0x10f4;
+    iVar7 = param_1 + 0x10f8;
   }
-  ppuVar6 = &pYVar2->y_buffer;
-  ppuVar5 = &pYVar3->u_buffer;
-  ppuVar10 = &pYVar4->v_buffer;
-  piVar9 = &param_1->block[0].dst;
-  uVar8 = 1;
+  piVar6 = (int *)(param_1 + 0xb24);
+  uVar5 = 1;
   do {
-    iVar7 = (param_1->dst).y_stride;
-    iVar1 = (((int)(uVar8 - 1) >> 2) * iVar7 + (uVar8 - 1 & 3)) * 4;
-    if (param_2 == DEST) {
-      piVar9[1] = iVar7;
-      *piVar9 = iVar1;
-      piVar9[-1] = (int)ppuVar6;
+    iVar4 = *(int *)(param_1 + 0x1114);
+    iVar1 = (((int)(uVar5 - 1) >> 2) * iVar4 + (uVar5 - 1 & 3)) * 4;
+    if (param_2 == 1) {
+      piVar6[1] = iVar4;
+      *piVar6 = iVar1;
+      piVar6[-1] = iVar3;
     }
     else {
-      piVar9[-2] = iVar7;
-      piVar9[-3] = iVar1;
-      piVar9[-4] = (int)ppuVar6;
+      piVar6[-2] = iVar4;
+      piVar6[-3] = iVar1;
+      piVar6[-4] = iVar3;
     }
-    iVar7 = (param_1->dst).y_stride;
-    iVar1 = (((int)uVar8 >> 2) * iVar7 + (uVar8 & 3)) * 4;
-    if (param_2 == DEST) {
-      piVar9[0x10] = iVar7;
-      piVar9[0xf] = iVar1;
-      piVar9[0xe] = (int)ppuVar6;
-    }
-    else {
-      piVar9[0xd] = iVar7;
-      piVar9[0xc] = iVar1;
-      piVar9[0xb] = (int)ppuVar6;
-    }
-    iVar7 = (param_1->dst).y_stride;
-    iVar1 = (((int)(uVar8 + 1) >> 2) * iVar7 + (uVar8 + 1 & 3)) * 4;
-    if (param_2 == DEST) {
-      piVar9[0x1f] = iVar7;
-      piVar9[0x1e] = iVar1;
-      piVar9[0x1d] = (int)ppuVar6;
+    iVar4 = *(int *)(param_1 + 0x1114);
+    iVar1 = (((int)uVar5 >> 2) * iVar4 + (uVar5 & 3)) * 4;
+    if (param_2 == 1) {
+      piVar6[0x10] = iVar4;
+      piVar6[0xf] = iVar1;
+      piVar6[0xe] = iVar3;
     }
     else {
-      piVar9[0x1c] = iVar7;
-      piVar9[0x1b] = iVar1;
-      piVar9[0x1a] = (int)ppuVar6;
+      piVar6[0xd] = iVar4;
+      piVar6[0xc] = iVar1;
+      piVar6[0xb] = iVar3;
     }
-    iVar7 = (param_1->dst).y_stride;
-    iVar1 = (((int)(uVar8 + 2) >> 2) * iVar7 + (uVar8 - 2 & 3)) * 4;
-    if (param_2 == DEST) {
-      piVar9[0x2e] = iVar7;
-      piVar9[0x2d] = iVar1;
-      piVar9[0x2c] = (int)ppuVar6;
+    iVar4 = *(int *)(param_1 + 0x1114);
+    iVar1 = (((int)(uVar5 + 1) >> 2) * iVar4 + (uVar5 + 1 & 3)) * 4;
+    if (param_2 == 1) {
+      piVar6[0x1f] = iVar4;
+      piVar6[0x1e] = iVar1;
+      piVar6[0x1d] = iVar3;
     }
     else {
-      piVar9[0x2b] = iVar7;
-      piVar9[0x2a] = iVar1;
-      piVar9[0x29] = (int)ppuVar6;
+      piVar6[0x1c] = iVar4;
+      piVar6[0x1b] = iVar1;
+      piVar6[0x1a] = iVar3;
     }
-    piVar9 = piVar9 + 0x3c;
-    iVar7 = uVar8 + 3;
-    uVar8 = uVar8 + 4;
-  } while (iVar7 < 0x10);
-  iVar7 = (param_1->dst).uv_stride;
-  if (param_2 == DEST) {
-    param_1->block[0x10].dst_stride = iVar7;
-    param_1->block[0x10].base_dst = ppuVar5;
-    param_1->block[0x10].dst = 0;
+    iVar4 = *(int *)(param_1 + 0x1114);
+    iVar1 = (((int)(uVar5 + 2) >> 2) * iVar4 + (uVar5 - 2 & 3)) * 4;
+    if (param_2 == 1) {
+      piVar6[0x2e] = iVar4;
+      piVar6[0x2d] = iVar1;
+      piVar6[0x2c] = iVar3;
+    }
+    else {
+      piVar6[0x2b] = iVar4;
+      piVar6[0x2a] = iVar1;
+      piVar6[0x29] = iVar3;
+    }
+    piVar6 = piVar6 + 0x3c;
+    iVar4 = uVar5 + 3;
+    uVar5 = uVar5 + 4;
+  } while (iVar4 < 0x10);
+  if (param_2 == 1) {
+    *(undefined4 *)(param_1 + 0xee8) = *(undefined4 *)(param_1 + 0x1120);
+    *(int *)(param_1 + 0xee0) = iVar2;
+    *(undefined4 *)(param_1 + 0xee4) = 0;
   }
   else {
-    param_1->block[0x10].pre_stride = iVar7;
-    param_1->block[0x10].base_pre = ppuVar5;
-    param_1->block[0x10].pre = 0;
+    *(undefined4 *)(param_1 + 0xedc) = *(undefined4 *)(param_1 + 0x1120);
+    *(int *)(param_1 + 0xed4) = iVar2;
+    *(undefined4 *)(param_1 + 0xed8) = 0;
   }
-  iVar7 = (param_1->dst).uv_stride;
-  if (param_2 == DEST) {
-    param_1->block[0x14].dst_stride = iVar7;
-    param_1->block[0x14].base_dst = ppuVar10;
-    param_1->block[0x14].dst = 0;
-  }
-  else {
-    param_1->block[0x14].pre_stride = iVar7;
-    param_1->block[0x14].base_pre = ppuVar10;
-    param_1->block[0x14].pre = 0;
-  }
-  iVar7 = (param_1->dst).uv_stride;
-  if (param_2 == DEST) {
-    param_1->block[0x11].dst_stride = iVar7;
-    param_1->block[0x11].dst = 4;
-    param_1->block[0x11].base_dst = ppuVar5;
+  if (param_2 == 1) {
+    *(undefined4 *)(param_1 + 0xfd8) = *(undefined4 *)(param_1 + 0x1120);
+    *(int *)(param_1 + 0xfd0) = iVar7;
+    *(undefined4 *)(param_1 + 0xfd4) = 0;
   }
   else {
-    param_1->block[0x11].pre_stride = iVar7;
-    param_1->block[0x11].pre = 4;
-    param_1->block[0x11].base_pre = ppuVar5;
+    *(undefined4 *)(param_1 + 0xfcc) = *(undefined4 *)(param_1 + 0x1120);
+    *(int *)(param_1 + 0xfc4) = iVar7;
+    *(undefined4 *)(param_1 + 0xfc8) = 0;
   }
-  iVar7 = (param_1->dst).uv_stride;
-  if (param_2 == DEST) {
-    param_1->block[0x15].dst_stride = iVar7;
-    param_1->block[0x15].dst = 4;
-    param_1->block[0x15].base_dst = ppuVar10;
-  }
-  else {
-    param_1->block[0x15].pre_stride = iVar7;
-    param_1->block[0x15].pre = 4;
-    param_1->block[0x15].base_pre = ppuVar10;
-  }
-  iVar7 = (param_1->dst).uv_stride;
-  if (param_2 == DEST) {
-    param_1->block[0x12].dst_stride = iVar7;
-    param_1->block[0x12].dst = iVar7 << 2;
-    param_1->block[0x12].base_dst = ppuVar5;
+  if (param_2 == 1) {
+    *(undefined4 *)(param_1 + 0xf24) = *(undefined4 *)(param_1 + 0x1120);
+    *(undefined4 *)(param_1 + 0xf20) = 4;
+    *(int *)(param_1 + 0xf1c) = iVar2;
   }
   else {
-    param_1->block[0x12].pre_stride = iVar7;
-    param_1->block[0x12].pre = iVar7 << 2;
-    param_1->block[0x12].base_pre = ppuVar5;
+    *(undefined4 *)(param_1 + 0xf18) = *(undefined4 *)(param_1 + 0x1120);
+    *(undefined4 *)(param_1 + 0xf14) = 4;
+    *(int *)(param_1 + 0xf10) = iVar2;
   }
-  iVar7 = (param_1->dst).uv_stride;
-  if (param_2 == DEST) {
-    param_1->block[0x16].dst_stride = iVar7;
-    param_1->block[0x16].dst = iVar7 << 2;
-    param_1->block[0x16].base_dst = ppuVar10;
-  }
-  else {
-    param_1->block[0x16].pre_stride = iVar7;
-    param_1->block[0x16].pre = iVar7 << 2;
-    param_1->block[0x16].base_pre = ppuVar10;
-  }
-  iVar7 = (param_1->dst).uv_stride;
-  iVar1 = (iVar7 + 1) * 4;
-  if (param_2 == DEST) {
-    param_1->block[0x13].dst_stride = iVar7;
-    param_1->block[0x13].dst = iVar1;
-    param_1->block[0x13].base_dst = ppuVar5;
+  if (param_2 == 1) {
+    *(undefined4 *)(param_1 + 0x1014) = *(undefined4 *)(param_1 + 0x1120);
+    *(undefined4 *)(param_1 + 0x1010) = 4;
+    *(int *)(param_1 + 0x100c) = iVar7;
   }
   else {
-    param_1->block[0x13].pre_stride = iVar7;
-    param_1->block[0x13].pre = iVar1;
-    param_1->block[0x13].base_pre = ppuVar5;
+    *(undefined4 *)(param_1 + 0x1008) = *(undefined4 *)(param_1 + 0x1120);
+    *(undefined4 *)(param_1 + 0x1004) = 4;
+    *(int *)(param_1 + 0x1000) = iVar7;
   }
-  iVar7 = (param_1->dst).uv_stride;
-  iVar1 = (iVar7 + 1) * 4;
-  if (param_2 == DEST) {
-    param_1->block[0x17].dst_stride = iVar7;
-    param_1->block[0x17].dst = iVar1;
-    param_1->block[0x17].base_dst = ppuVar10;
+  iVar3 = *(int *)(param_1 + 0x1120);
+  if (param_2 == 1) {
+    *(int *)(param_1 + 0xf60) = iVar3;
+    *(int *)(param_1 + 0xf5c) = iVar3 << 2;
+    *(int *)(param_1 + 0xf58) = iVar2;
+  }
+  else {
+    *(int *)(param_1 + 0xf54) = iVar3;
+    *(int *)(param_1 + 0xf50) = iVar3 << 2;
+    *(int *)(param_1 + 0xf4c) = iVar2;
+  }
+  iVar3 = *(int *)(param_1 + 0x1120);
+  if (param_2 == 1) {
+    *(int *)(param_1 + 0x1050) = iVar3;
+    *(int *)(param_1 + 0x104c) = iVar3 << 2;
+    *(int *)(param_1 + 0x1048) = iVar7;
+  }
+  else {
+    *(int *)(param_1 + 0x1044) = iVar3;
+    *(int *)(param_1 + 0x1040) = iVar3 << 2;
+    *(int *)(param_1 + 0x103c) = iVar7;
+  }
+  iVar3 = *(int *)(param_1 + 0x1120);
+  iVar4 = (iVar3 + 1) * 4;
+  if (param_2 == 1) {
+    *(int *)(param_1 + 0xf9c) = iVar3;
+    *(int *)(param_1 + 0xf98) = iVar4;
+    *(int *)(param_1 + 0xf94) = iVar2;
+  }
+  else {
+    *(int *)(param_1 + 0xf90) = iVar3;
+    *(int *)(param_1 + 0xf8c) = iVar4;
+    *(int *)(param_1 + 0xf88) = iVar2;
+  }
+  iVar2 = *(int *)(param_1 + 0x1120);
+  iVar3 = (iVar2 + 1) * 4;
+  if (param_2 == 1) {
+    *(int *)(param_1 + 0x108c) = iVar2;
+    *(int *)(param_1 + 0x1088) = iVar3;
+    *(int *)(param_1 + 0x1084) = iVar7;
     return;
   }
-  param_1->block[0x17].pre_stride = iVar7;
-  param_1->block[0x17].pre = iVar1;
-  param_1->block[0x17].base_pre = ppuVar10;
+  *(int *)(param_1 + 0x1080) = iVar2;
+  *(int *)(param_1 + 0x107c) = iVar3;
+  *(int *)(param_1 + 0x1078) = iVar7;
   return;
 }
 
 
 // 828167F0  vp8_setup_block_dptrs  (WebM_atvi_opt/vpx/vp8/common/mbpitch.c:86)
 
-void vp8_setup_block_dptrs(MACROBLOCKD *param_1)
+void vp8_setup_block_dptrs(int param_1)
 
 {
-  uchar *puVar1;
-  uchar *puVar2;
-  short **ppsVar3;
-  uchar **ppuVar4;
-  short *psVar5;
-  longlong lVar6;
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  longlong lVar5;
   
-  psVar5 = param_1->diff + 8;
-  puVar2 = param_1->predictor + 4;
-  ppuVar4 = (uchar **)(param_1->dqcoeff + 0x184);
-  lVar6 = 4;
+  iVar2 = param_1 + 0x10;
+  iVar3 = param_1 + 0x324;
+  piVar4 = (int *)(param_1 + 0xac8);
+  lVar5 = 4;
   do {
-    ppuVar4[0x1e] = puVar2;
-    ppuVar4[0x2e] = (uchar *)psVar5;
-    ppuVar4[0x10] = (uchar *)(psVar5 + -8);
-    ppuVar4[0xf] = puVar2 + -4;
-    ppuVar4[0x1f] = (uchar *)(psVar5 + -4);
-    puVar1 = puVar2 + 8;
-    ppuVar4[0x2d] = puVar2 + 4;
-    ppuVar4[0x3d] = (uchar *)(psVar5 + 4);
-    puVar2 = puVar2 + 0x40;
-    ppuVar4 = ppuVar4 + 0x3c;
-    *ppuVar4 = puVar1;
-    psVar5 = psVar5 + 0x40;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  puVar2 = param_1->predictor + 0x104;
-  psVar5 = param_1->diff + 0x104;
-  ppuVar4 = &param_1->block[0xf].predictor;
-  lVar6 = 2;
+    piVar4[0x1e] = iVar3;
+    piVar4[0x2e] = iVar2;
+    piVar4[0x10] = iVar2 + -0x10;
+    piVar4[0xf] = iVar3 + -4;
+    piVar4[0x1f] = iVar2 + -8;
+    iVar1 = iVar3 + 8;
+    piVar4[0x2d] = iVar3 + 4;
+    piVar4[0x3d] = iVar2 + 8;
+    iVar3 = iVar3 + 0x40;
+    piVar4 = piVar4 + 0x3c;
+    *piVar4 = iVar1;
+    iVar2 = iVar2 + 0x80;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  iVar2 = param_1 + 0x424;
+  iVar3 = param_1 + 0x208;
+  piVar4 = (int *)(param_1 + 0xe88);
+  lVar5 = 2;
   do {
-    ppuVar4[0x1f] = (uchar *)psVar5;
-    ppuVar4[0x10] = (uchar *)(psVar5 + -4);
-    psVar5 = psVar5 + 0x20;
-    ppuVar4[0xf] = puVar2 + -4;
-    ppuVar4 = ppuVar4 + 0x1e;
-    *ppuVar4 = puVar2;
-    puVar2 = puVar2 + 0x20;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  puVar2 = param_1->predictor + 0x144;
-  psVar5 = param_1->diff + 0x144;
-  ppuVar4 = &param_1->block[0x13].predictor;
-  lVar6 = 2;
+    piVar4[0x1f] = iVar3;
+    piVar4[0x10] = iVar3 + -8;
+    iVar3 = iVar3 + 0x40;
+    piVar4[0xf] = iVar2 + -4;
+    piVar4 = piVar4 + 0x1e;
+    *piVar4 = iVar2;
+    iVar2 = iVar2 + 0x20;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  iVar2 = param_1 + 0x464;
+  iVar3 = param_1 + 0x288;
+  piVar4 = (int *)(param_1 + 0xf78);
+  lVar5 = 2;
   do {
-    ppuVar4[0x1f] = (uchar *)psVar5;
-    ppuVar4[0x10] = (uchar *)(psVar5 + -4);
-    psVar5 = psVar5 + 0x20;
-    ppuVar4[0xf] = puVar2 + -4;
-    ppuVar4 = ppuVar4 + 0x1e;
-    *ppuVar4 = puVar2;
-    puVar2 = puVar2 + 0x20;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  ppsVar3 = (short **)(param_1->dqcoeff + 0x182);
-  param_1->block[0x18].diff = param_1->diff + 0x180;
-  psVar5 = param_1->dqcoeff;
-  lVar6 = 0x19;
+    piVar4[0x1f] = iVar3;
+    piVar4[0x10] = iVar3 + -8;
+    iVar3 = iVar3 + 0x40;
+    piVar4[0xf] = iVar2 + -4;
+    piVar4 = piVar4 + 0x1e;
+    *piVar4 = iVar2;
+    iVar2 = iVar2 + 0x20;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  piVar4 = (int *)(param_1 + 0xac4);
+  *(int *)(param_1 + 0x10a8) = param_1 + 0x300;
+  param_1 = param_1 + 0x7c0;
+  lVar5 = 0x19;
   do {
-    ((BLOCKD *)(ppsVar3 + 0xe))->qcoeff = psVar5 + -400;
-    ppsVar3 = ppsVar3 + 0xf;
-    *ppsVar3 = psVar5;
-    psVar5 = psVar5 + 0x10;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
+    piVar4[0xe] = param_1 + -800;
+    piVar4 = piVar4 + 0xf;
+    *piVar4 = param_1;
+    param_1 = param_1 + 0x20;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   return;
 }
 
 
 // 828168E8  vp8_build_block_doffsets  (WebM_atvi_opt/vpx/vp8/common/mbpitch.c:128)
 
-void vp8_build_block_doffsets(MACROBLOCKD *param_1)
+void vp8_build_block_doffsets(void)
 
 {
   int iVar1;
@@ -284,7 +273,7 @@ void vp8_build_block_doffsets(MACROBLOCKD *param_1)
   int iVar7;
   int iVar8;
   
-  iVar1 = __savegprlr_17(param_1);
+  iVar1 = __savegprlr_17();
   iVar2 = iVar1 + 0x1124;
   iVar7 = iVar1 + 0x1128;
   iVar6 = iVar1 + 0x112c;

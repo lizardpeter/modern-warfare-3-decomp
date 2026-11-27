@@ -2,46 +2,46 @@
 
 // 8292B3A0  _chsize_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/chsize.c:81)
 
-int _chsize_nolock(int param_1,long64 param_2)
+int _chsize_nolock(int _FileHandle,longlong _Size)
 
 {
-  int iVar3;
-  long64 lVar1;
-  long64 lVar2;
-  void *pvVar4;
+  int _FileHandle_00;
+  longlong lVar1;
+  longlong lVar2;
+  HANDLE pvVar4;
+  longlong lVar3;
   int *piVar5;
   int iVar6;
+  int _Mode;
   int iVar7;
-  int iVar8;
-  ulong *puVar9;
-  void *pvVar10;
-  ulong uVar11;
-  longlong lVar12;
-  uint uVar13;
+  ulong *puVar8;
+  BOOL BVar9;
+  DWORD DVar10;
+  uint _MaxCharCount;
   
-  iVar3 = __savegprlr_26(param_1);
+  _FileHandle_00 = __savegprlr_26(_FileHandle);
   iVar6 = 0;
-  lVar1 = _lseeki64_nolock(iVar3,0,1);
-  if ((lVar1 != -1) && (lVar2 = _lseeki64_nolock(iVar3,0,2), lVar2 != -1)) {
-    lVar12 = param_2 - lVar2;
-    if (lVar12 < 1) {
-      if (lVar12 < 0) {
-        lVar2 = _lseeki64_nolock(iVar3,param_2,0);
+  lVar1 = _lseeki64_nolock(_FileHandle_00,0,1);
+  if ((lVar1 != -1) && (lVar2 = _lseeki64_nolock(_FileHandle_00,0,2), lVar2 != -1)) {
+    lVar2 = _Size - lVar2;
+    if (lVar2 < 1) {
+      if (lVar2 < 0) {
+        lVar2 = _lseeki64_nolock(_FileHandle_00,_Size,0);
         if (lVar2 == -1) goto LAB_8292b418;
-        pvVar4 = (void *)_get_osfhandle(iVar3);
-        iVar6 = SetEndOfFile(pvVar4);
-        if (iVar6 == 0) {
+        pvVar4 = (HANDLE)_get_osfhandle(_FileHandle_00);
+        BVar9 = SetEndOfFile(pvVar4);
+        if (BVar9 == 0) {
           piVar5 = _errno();
           *piVar5 = 0xd;
-          puVar9 = __doserrno();
-          uVar11 = GetLastError();
-          *puVar9 = uVar11;
+          puVar8 = __doserrno();
+          DVar10 = GetLastError();
+          *puVar8 = DVar10;
           iVar6 = -1;
           goto LAB_8292b50c;
         }
       }
 LAB_8292b514:
-      lVar1 = _lseeki64_nolock(iVar3,lVar1,0);
+      lVar1 = _lseeki64_nolock(_FileHandle_00,lVar1,0);
       if (lVar1 != -1) {
         iVar6 = 0;
         goto LAB_8292b420;
@@ -49,33 +49,33 @@ LAB_8292b514:
     }
     else {
       pvVar4 = GetProcessHeap();
-      pvVar4 = RtlAllocateHeap(pvVar4,8,0x1000);
-      if (pvVar4 == (void *)0x0) {
+      lVar3 = RtlAllocateHeap(pvVar4,8,0x1000);
+      if (lVar3 == 0) {
         piVar5 = _errno();
         *piVar5 = 0xc;
       }
       else {
-        iVar7 = _setmode_nolock(iVar3,0x8000);
+        _Mode = _setmode_nolock(_FileHandle_00,0x8000);
         do {
-          uVar13 = 0x1000;
-          if (lVar12 < 0x1000) {
-            uVar13 = (uint)lVar12;
+          _MaxCharCount = 0x1000;
+          if (lVar2 < 0x1000) {
+            _MaxCharCount = (uint)lVar2;
           }
-          iVar8 = _write_nolock(iVar3,pvVar4,uVar13);
-          if (iVar8 == -1) {
-            puVar9 = __doserrno();
-            if (*puVar9 == 5) {
+          iVar7 = _write_nolock(_FileHandle_00,(void *)lVar3,_MaxCharCount);
+          if (iVar7 == -1) {
+            puVar8 = __doserrno();
+            if (*puVar8 == 5) {
               piVar5 = _errno();
               *piVar5 = 0xd;
             }
             iVar6 = -1;
             break;
           }
-          lVar12 = lVar12 - iVar8;
-        } while (0 < lVar12);
-        _setmode_nolock(iVar3,iVar7);
-        pvVar10 = GetProcessHeap();
-        RtlFreeHeap(pvVar10,0,pvVar4);
+          lVar2 = lVar2 - iVar7;
+        } while (0 < lVar2);
+        _setmode_nolock(_FileHandle_00,_Mode);
+        pvVar4 = GetProcessHeap();
+        RtlFreeHeap(pvVar4,0,lVar3);
 LAB_8292b50c:
         if (iVar6 != -1) goto LAB_8292b514;
       }

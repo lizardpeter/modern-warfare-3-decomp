@@ -2,120 +2,96 @@
 
 // 82633FA0  XModelGetStaticBounds  (xanim/xmodel_load_obj.cpp:1290)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-int XModelGetStaticBounds(XModel *param_1,float (*param_2) [3],Bounds *param_3)
+void XModelGetStaticBounds(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  ulonglong uVar4;
-  int iVar6;
-  undefined8 uVar5;
-  float *pfVar7;
+  ulonglong uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  undefined4 *puVar4;
+  longlong lVar5;
+  longlong lVar6;
+  int iVar7;
   longlong lVar8;
-  undefined4 *puVar9;
-  int iVar10;
-  longlong lVar11;
-  ulonglong uVar12;
+  ulonglong uVar9;
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
   undefined1 auVar13 [16];
   undefined1 auVar14 [16];
   undefined1 auVar15 [16];
-  undefined1 auVar16 [16];
-  undefined1 auVar17 [16];
-  undefined1 auVar18 [16];
-  float local_d8;
-  float local_d4;
-  float local_d0;
-  float local_c0;
-  float local_bc;
-  float local_b8;
-  float local_b4;
-  float local_b0;
-  float local_ac;
   
-  lVar8 = (longlong)(int)param_3;
-  uVar4 = ZEXT48(&stack0x00000000);
-  iVar6 = __savegprlr_20(param_1);
-  if (*(int *)(iVar6 + 0xe8) == 0) {
-    puVar9 = (undefined4 *)lVar8;
-    *puVar9 = 0;
-    puVar9[1] = 0;
-    puVar9[2] = 0;
-    puVar9[3] = 0xc8000000;
-    puVar9[4] = 0xc8000000;
-    puVar9[5] = 0xc8000000;
-    if (*(int *)(iVar6 + 0xec) != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_load_obj.cpp",
-                      0x514,0,"%s");
+  uVar1 = ZEXT48(&stack0x00000000);
+  iVar3 = __savegprlr_20();
+  if (*(int *)(iVar3 + 0xe8) == 0) {
+    puVar4 = (undefined4 *)param_3;
+    *puVar4 = 0;
+    puVar4[1] = 0;
+    puVar4[2] = 0;
+    puVar4[3] = 0xc8000000;
+    puVar4[4] = 0xc8000000;
+    puVar4[5] = 0xc8000000;
+    if (*(int *)(iVar3 + 0xec) != 0) {
+      MyAssertHandler(0xffffffff82187a48,0x514,0,0xffffffff82000f98,0xffffffff82187a8c);
     }
-    uVar5 = 0;
+    uVar2 = 0;
   }
   else {
-    auVar18 = vectorSplatImmediateSignedWord(0xff);
-    iVar10 = 0;
-    auVar17 = vectorShiftLeftWord128(auVar18,auVar18);
-    auVar18 = loadVectorLeftIndexed(0xffffffff82004b70);
-    auVar18 = vectorSplatWord(auVar18,0);
-    auVar17 = auVar18 ^ auVar17;
-    if (0 < *(int *)(iVar6 + 0xe8)) {
-      lVar11 = 0;
+    auVar15 = vectorSplatImmediateSignedWord(0xff);
+    iVar7 = 0;
+    auVar14 = vectorShiftLeftWord128(auVar15,auVar15);
+    auVar15 = loadVectorLeftIndexed(0xffffffff82004b70);
+    auVar15 = vectorSplatWord(auVar15,0);
+    auVar14 = auVar15 ^ auVar14;
+    if (0 < *(int *)(iVar3 + 0xe8)) {
+      lVar6 = -0x7df90000;
+      lVar5 = -0x7de80000;
+      lVar8 = 0;
       do {
-        uVar12 = lVar11 + (ulonglong)*(uint *)(iVar6 + 0xe4);
-        if ((uVar4 - 0xc0 & 0xffffffff) == (uVar12 & 0xffffffff)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../universal/bounds_inline.h"
-                          ,0xc6,0,"%s");
+        uVar9 = lVar8 + (ulonglong)*(uint *)(iVar3 + 0xe4);
+        if ((uVar1 - 0xc0 & 0xffffffff) == (uVar9 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff821879f8,0xc6,0,0xffffffff82000f98,0xffffffff8206f2a4,lVar5,
+                          lVar6);
         }
-        pfVar7 = (float *)uVar12;
-        MatrixTransformVector(pfVar7,param_2,&local_d8);
-        fVar1 = pfVar7[5];
-        iVar10 = iVar10 + 1;
-        lVar11 = lVar11 + 0x24;
-        fVar2 = pfVar7[4];
-        fVar3 = pfVar7[3];
-        local_bc = local_d4 + 0.0;
-        local_c0 = local_d8 + 0.0;
-        local_b8 = local_d0 + 0.0;
-        local_b4 = ABS((*param_2)[0]) * fVar3 +
-                   ABS(param_2[1][0]) * fVar2 + ABS(param_2[2][0]) * fVar1;
-        local_ac = ABS(param_2[1][2]) * fVar2 +
-                   ABS((*param_2)[2]) * fVar3 + ABS(param_2[2][2]) * fVar1;
-        local_b0 = ABS(param_2[1][1]) * fVar2 +
-                   ABS((*param_2)[1]) * fVar3 + ABS(param_2[2][1]) * fVar1;
-        auVar14 = loadVectorRightIndexed(uVar4 - 0xa4);
-        auVar13 = loadVectorLeftIndexed(uVar4 - 0xb4);
-        auVar16 = loadVectorRightIndexed(uVar4 - 0xb0);
-        auVar15 = loadVectorLeftIndexed(uVar4 - 0xc0);
-        auVar15 = (auVar15 | auVar16) & (undefined1  [16])g_keepXYZ.field0_0x0;
-        auVar14 = (auVar13 | auVar14) & (undefined1  [16])g_keepXYZ.field0_0x0;
-        auVar13 = vectorSubtractFloatingPoint128(auVar15,auVar14);
-        auVar15 = vectorAddFloatingPoint128(auVar15,auVar14);
-        auVar18 = vectorMinimumFloatingPoint128(auVar13,auVar18);
-        auVar17 = vectorMaximumFloatingPoint128(auVar15,auVar17);
-      } while (iVar10 < *(int *)(iVar6 + 0xe8));
+        MatrixTransformVector(uVar9,param_2,uVar1 - 0xd8);
+        lVar6 = uVar1 - 0xb4;
+        lVar5 = uVar1 - 0xb4;
+        iVar7 = iVar7 + 1;
+        lVar8 = lVar8 + 0x24;
+        auVar11 = loadVectorRightIndexed(uVar1 - 0xa4);
+        auVar10 = loadVectorLeftIndexed(lVar5);
+        auVar13 = loadVectorRightIndexed(uVar1 - 0xb0);
+        auVar12 = loadVectorLeftIndexed(uVar1 - 0xc0);
+        auVar12 = (auVar12 | auVar13) & _DAT_8404f950;
+        auVar11 = (auVar10 | auVar11) & _DAT_8404f950;
+        auVar10 = vectorSubtractFloatingPoint128(auVar12,auVar11);
+        auVar12 = vectorAddFloatingPoint128(auVar12,auVar11);
+        auVar15 = vectorMinimumFloatingPoint128(auVar10,auVar15);
+        auVar14 = vectorMaximumFloatingPoint128(auVar12,auVar14);
+      } while (iVar7 < *(int *)(iVar3 + 0xe8));
     }
-    auVar15 = vectorAddFloatingPoint128(auVar18,auVar17);
-    uVar5 = 1;
-    auVar16 = vectorMultiplyFloatingPoint(auVar15,(undefined1  [16])g_oneHalf.field0_0x0);
-    auVar14 = vectorSubtractFloatingPoint128(auVar17,auVar16);
-    auVar13 = vectorSplatWord(auVar16,0);
-    auVar15 = vectorSubtractFloatingPoint128(auVar16,auVar18);
-    auVar17 = vectorSplatWord(auVar16,1);
-    auVar18 = vectorSplatWord(auVar16,2);
-    storeVectorElementWordIndexed(auVar13,lVar8);
-    storeVectorElementWordIndexed(auVar17,lVar8 + 4);
-    storeVectorElementWordIndexed(auVar18,lVar8 + 8);
-    auVar18 = vectorMaximumFloatingPoint128(auVar15,auVar14);
-    auVar15 = vectorSplatWord(auVar18,0);
-    auVar17 = vectorSplatWord(auVar18,1);
-    auVar18 = vectorSplatWord(auVar18,2);
-    storeVectorElementWordIndexed(auVar15,lVar8 + 0xc);
-    storeVectorElementWordIndexed(auVar17,lVar8 + 0x10);
-    storeVectorElementWordIndexed(auVar18,lVar8 + 0x14);
+    auVar12 = vectorAddFloatingPoint128(auVar15,auVar14);
+    uVar2 = 1;
+    auVar13 = vectorMultiplyFloatingPoint(auVar12,_DAT_8217a060);
+    auVar11 = vectorSubtractFloatingPoint128(auVar14,auVar13);
+    auVar10 = vectorSplatWord(auVar13,0);
+    auVar12 = vectorSubtractFloatingPoint128(auVar13,auVar15);
+    auVar14 = vectorSplatWord(auVar13,1);
+    auVar15 = vectorSplatWord(auVar13,2);
+    storeVectorElementWordIndexed(auVar10,param_3);
+    storeVectorElementWordIndexed(auVar14,param_3 + 4);
+    storeVectorElementWordIndexed(auVar15,param_3 + 8);
+    auVar15 = vectorMaximumFloatingPoint128(auVar12,auVar11);
+    auVar12 = vectorSplatWord(auVar15,0);
+    auVar14 = vectorSplatWord(auVar15,1);
+    auVar15 = vectorSplatWord(auVar15,2);
+    storeVectorElementWordIndexed(auVar12,param_3 + 0xc);
+    storeVectorElementWordIndexed(auVar14,param_3 + 0x10);
+    storeVectorElementWordIndexed(auVar15,param_3 + 0x14);
   }
-  iVar6 = __restgprlr_20(uVar5);
-  return iVar6;
+  __restgprlr_20(uVar2);
+  return;
 }
 

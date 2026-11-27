@@ -2,8 +2,6 @@
 
 // 82916680  __savegprlr  (<external>/bt/278379/vctools/crt/xb/xbox/crtgpr.asm:20)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void __savegprlr(void)
 
 {
@@ -12,8 +10,6 @@ void __savegprlr(void)
 
 
 // 829166D0  __restgprlr  (<external>/bt/278379/vctools/crt/xb/xbox/crtgpr.asm:30)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void __restgprlr(void)
 
@@ -24,13 +20,9 @@ void __restgprlr(void)
 
 // 82916724  $$$00003  (<external>/bt/278379/vctools/crt/xb/xbox/crtgpr.asm:45)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void ___00003(void)
+void ___00003(undefined8 param_1,code *UNRECOVERED_JUMPTABLE)
 
 {
-  code *UNRECOVERED_JUMPTABLE;
-  
                     /* WARNING: Could not recover jumptable at 0x8291672c. Too many branches */
                     /* WARNING: Treating indirect jump as call */
   (*UNRECOVERED_JUMPTABLE)();

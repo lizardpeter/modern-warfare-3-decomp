@@ -3,117 +3,111 @@
 // 82816BE0  vp8_post_proc_down_and_across_c  (WebM_atvi_opt/vpx/vp8/common/postproc.c:144)
 
 void vp8_post_proc_down_and_across_c
-               (uchar *param_1,uchar *param_2,int param_3,int param_4,int param_5,int param_6,
-               int param_7)
+               (undefined8 param_1,longlong param_2,ulonglong param_3,undefined8 param_4,
+               longlong param_5,undefined8 param_6,int param_7)
 
 {
   short sVar1;
   uint uVar2;
   int iVar3;
   longlong lVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  undefined4 uVar5;
+  int iVar6;
+  byte *pbVar8;
   longlong lVar7;
-  int iVar8;
-  byte *pbVar10;
-  longlong lVar9;
-  undefined1 *puVar11;
-  short *psVar12;
+  undefined1 *puVar9;
+  short *psVar10;
+  uint uVar11;
+  longlong lVar12;
   uint uVar13;
   longlong lVar14;
   longlong lVar15;
-  uint uVar16;
-  longlong lVar17;
+  byte bVar17;
+  int iVar16;
   longlong lVar18;
-  byte bVar20;
-  int iVar19;
-  longlong lVar21;
   undefined1 uStack_71;
   byte local_70 [112];
   
-  lVar7 = (longlong)param_6;
-  lVar14 = (longlong)param_5;
-  uVar6 = (ulonglong)param_3;
-  lVar5 = (longlong)(int)param_2;
-  lVar4 = __savegprlr_21(param_1,lVar5,uVar6,param_4);
-  if (0 < (int)lVar14) {
-    lVar15 = -2 - lVar5;
+  iVar6 = (int)param_6;
+  uVar5 = (undefined4)((ulonglong)param_6 >> 0x20);
+  lVar4 = __savegprlr_21();
+  if (0 < (int)param_5) {
+    lVar12 = -2 - param_2;
     do {
-      iVar8 = (int)lVar7;
-      iVar3 = (int)lVar5;
-      if (0 < iVar8) {
-        lVar17 = lVar4 + (uVar6 & 0x7fffffff) * -2;
-        lVar18 = lVar5;
-        lVar21 = lVar7;
+      iVar3 = (int)param_2;
+      if (0 < iVar6) {
+        lVar18 = CONCAT44(uVar5,iVar6);
+        lVar14 = lVar4 + (param_3 & 0x7fffffff) * -2;
+        lVar15 = param_2;
         do {
-          bVar20 = ((byte *)lVar18)[(int)lVar4 - iVar3];
-          iVar19 = 4;
-          lVar9 = lVar17;
-          psVar12 = kernel5;
+          bVar17 = ((byte *)lVar15)[(int)lVar4 - iVar3];
+          iVar16 = 4;
+          lVar7 = lVar14;
+          psVar10 = &DAT_821e9a20;
           do {
-            pbVar10 = (byte *)lVar9;
-            uVar16 = (uint)bVar20 - (uint)*pbVar10;
-            uVar2 = (int)uVar16 >> 0x1f;
-            if (param_7 < (int)((uVar16 ^ uVar2) - uVar2)) goto LAB_82816c74;
-            sVar1 = *psVar12;
-            psVar12 = psVar12 + 1;
-            lVar9 = lVar9 + uVar6;
-            iVar19 = (int)sVar1 * (uint)*pbVar10 + iVar19;
-          } while ((int)psVar12 < -0x7de165d7);
-          bVar20 = (byte)(iVar19 >> 3);
+            pbVar8 = (byte *)lVar7;
+            uVar13 = (uint)bVar17 - (uint)*pbVar8;
+            uVar2 = (int)uVar13 >> 0x1f;
+            if (param_7 < (int)((uVar13 ^ uVar2) - uVar2)) goto LAB_82816c74;
+            sVar1 = *psVar10;
+            psVar10 = psVar10 + 1;
+            lVar7 = lVar7 + param_3;
+            iVar16 = (int)sVar1 * (uint)*pbVar8 + iVar16;
+          } while ((int)psVar10 < -0x7de165d7);
+          bVar17 = (byte)(iVar16 >> 3);
 LAB_82816c74:
-          lVar17 = lVar17 + 1;
-          *(byte *)lVar18 = bVar20;
-          lVar18 = lVar18 + 1;
-          lVar21 = lVar21 + -1;
-        } while (lVar21 != 0);
+          lVar14 = lVar14 + 1;
+          *(byte *)lVar15 = bVar17;
+          lVar15 = lVar15 + 1;
+          lVar18 = lVar18 + -1;
+        } while (lVar18 != 0);
       }
-      puVar11 = &uStack_71;
-      lVar18 = lVar5 + -1;
-      lVar21 = 8;
+      puVar9 = &uStack_71;
+      lVar18 = param_2 + -1;
+      lVar15 = 8;
       do {
         lVar18 = lVar18 + 1;
-        puVar11 = puVar11 + 1;
-        *puVar11 = *(undefined1 *)lVar18;
-        lVar21 = lVar21 + -1;
-      } while (lVar21 != 0);
+        puVar9 = puVar9 + 1;
+        *puVar9 = *(undefined1 *)lVar18;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
       lVar18 = 0;
-      iVar19 = 0;
-      if (0 < iVar8) {
+      iVar16 = 0;
+      if (0 < iVar6) {
         do {
           uVar2 = (uint)lVar18;
-          bVar20 = *(byte *)(uVar2 + iVar3);
-          iVar19 = 4;
-          lVar21 = lVar18 + lVar5 + -2;
-          local_70[uVar2 & 7] = bVar20;
-          psVar12 = kernel5;
+          bVar17 = *(byte *)(uVar2 + iVar3);
+          iVar16 = 4;
+          lVar15 = lVar18 + param_2 + -2;
+          local_70[uVar2 & 7] = bVar17;
+          psVar10 = &DAT_821e9a20;
           do {
-            pbVar10 = (byte *)lVar21;
-            uVar13 = (uint)bVar20 - (uint)*pbVar10;
-            uVar16 = (int)uVar13 >> 0x1f;
-            if (param_7 < (int)((uVar13 ^ uVar16) - uVar16)) goto LAB_82816d18;
-            sVar1 = *psVar12;
-            psVar12 = psVar12 + 1;
-            lVar21 = lVar21 + 1;
-            iVar19 = (int)sVar1 * (uint)*pbVar10 + iVar19;
-          } while ((int)psVar12 < -0x7de165d7);
-          local_70[uVar2 & 7] = (byte)(iVar19 >> 3);
+            pbVar8 = (byte *)lVar15;
+            uVar11 = (uint)bVar17 - (uint)*pbVar8;
+            uVar13 = (int)uVar11 >> 0x1f;
+            if (param_7 < (int)((uVar11 ^ uVar13) - uVar13)) goto LAB_82816d18;
+            sVar1 = *psVar10;
+            psVar10 = psVar10 + 1;
+            lVar15 = lVar15 + 1;
+            iVar16 = (int)sVar1 * (uint)*pbVar8 + iVar16;
+          } while ((int)psVar10 < -0x7de165d7);
+          local_70[uVar2 & 7] = (byte)(iVar16 >> 3);
 LAB_82816d18:
           if (1 < (int)uVar2) {
-            *(byte *)(uVar2 + iVar3 + -2) = local_70[(int)lVar15 + (int)(lVar18 + lVar5) & 7];
+            *(byte *)(uVar2 + iVar3 + -2) = local_70[(int)lVar12 + (int)(lVar18 + param_2) & 7];
           }
           lVar18 = lVar18 + 1;
-          iVar19 = (int)lVar18;
-        } while (iVar19 < iVar8);
+          iVar16 = (int)lVar18;
+        } while (iVar16 < iVar6);
       }
-      lVar14 = lVar14 + -1;
-      lVar4 = lVar4 + uVar6;
-      lVar5 = lVar5 + uVar6;
-      bVar20 = local_70[iVar19 - 1U & 7];
-      lVar15 = lVar15 - uVar6;
-      *(byte *)(iVar19 + iVar3 + -2) = local_70[iVar19 - 2U & 7];
-      *(byte *)(iVar19 + iVar3 + -1) = bVar20;
-    } while (lVar14 != 0);
+      param_5 = param_5 + -1;
+      lVar4 = lVar4 + param_3;
+      param_2 = param_2 + param_3;
+      bVar17 = local_70[iVar16 - 1U & 7];
+      lVar12 = lVar12 - param_3;
+      *(byte *)(iVar16 + iVar3 + -2) = local_70[iVar16 - 2U & 7];
+      *(byte *)(iVar16 + iVar3 + -1) = bVar17;
+    } while (param_5 != 0);
   }
   __restgprlr_21();
   return;
@@ -141,7 +135,8 @@ int vp8_q2mbl(int param_1)
 
 // 82816DC0  vp8_mbpost_proc_across_ip_c  (WebM_atvi_opt/vpx/vp8/common/postproc.c:227)
 
-void vp8_mbpost_proc_across_ip_c(uchar *param_1,int param_2,int param_3,int param_4,int param_5)
+void vp8_mbpost_proc_across_ip_c
+               (undefined8 param_1,longlong param_2,longlong param_3,longlong param_4,int param_5)
 
 {
   byte bVar1;
@@ -149,71 +144,65 @@ void vp8_mbpost_proc_across_ip_c(uchar *param_1,int param_2,int param_3,int para
   byte bVar3;
   int iVar4;
   longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  undefined1 *puVar8;
-  int iVar9;
+  undefined1 *puVar6;
+  int iVar7;
+  int iVar8;
+  uint uVar9;
   int iVar10;
-  uint uVar11;
-  int iVar12;
+  longlong lVar11;
+  byte *pbVar12;
   longlong lVar13;
-  longlong lVar14;
-  byte *pbVar15;
-  longlong lVar16;
   undefined1 uStack_71;
   byte local_70 [112];
   
-  lVar7 = (longlong)param_4;
-  lVar13 = (longlong)param_3;
-  lVar6 = (longlong)param_2;
-  lVar5 = __savegprlr_21(param_1);
-  if (0 < (int)lVar13) {
-    lVar14 = -8 - lVar5;
+  lVar5 = __savegprlr_21();
+  if (0 < (int)param_3) {
+    lVar11 = -8 - lVar5;
     do {
-      puVar8 = &uStack_71;
+      puVar6 = &uStack_71;
+      iVar8 = 0;
       iVar10 = 0;
-      iVar12 = 0;
-      iVar9 = -8;
-      lVar16 = 0xf;
+      iVar7 = -8;
+      lVar13 = 0xf;
       do {
-        puVar8 = puVar8 + 1;
-        *puVar8 = 0;
-        lVar16 = lVar16 + -1;
-      } while (lVar16 != 0);
-      lVar16 = 0xf;
+        puVar6 = puVar6 + 1;
+        *puVar6 = 0;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      lVar13 = 0xf;
       do {
         iVar4 = (int)lVar5;
-        bVar1 = *(byte *)(iVar9 + iVar4);
-        iVar9 = iVar9 + 1;
-        iVar10 = (uint)bVar1 * (uint)bVar1 + iVar10;
-        iVar12 = (uint)bVar1 + iVar12;
-        lVar16 = lVar16 + -1;
-      } while (lVar16 != 0);
-      uVar11 = 0;
-      if (0 < (int)(lVar7 + 8)) {
-        lVar16 = lVar7 + 8;
+        bVar1 = *(byte *)(iVar7 + iVar4);
+        iVar7 = iVar7 + 1;
+        iVar8 = (uint)bVar1 * (uint)bVar1 + iVar8;
+        iVar10 = (uint)bVar1 + iVar10;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      uVar9 = 0;
+      if (0 < (int)(param_4 + 8)) {
+        lVar13 = param_4 + 8;
         do {
-          bVar1 = *(byte *)(iVar4 + -8 + uVar11);
-          bVar2 = *(byte *)(iVar4 + 7 + uVar11);
-          bVar3 = *(byte *)(uVar11 + iVar4);
-          pbVar15 = (byte *)(iVar4 + -8 + uVar11);
-          iVar9 = (uint)bVar2 - (uint)bVar1;
-          iVar12 = iVar9 + iVar12;
-          local_70[uVar11 & 0xf] = bVar3;
-          iVar10 = ((uint)bVar2 + (uint)bVar1) * iVar9 + iVar10;
-          iVar9 = uVar11 + iVar4;
-          if (iVar10 * 0xf - iVar12 * iVar12 < param_5) {
-            local_70[uVar11 & 0xf] = (byte)((int)((uint)bVar3 + iVar12 + 8) >> 4);
+          bVar1 = *(byte *)(iVar4 + -8 + uVar9);
+          bVar2 = *(byte *)(iVar4 + 7 + uVar9);
+          bVar3 = *(byte *)(uVar9 + iVar4);
+          pbVar12 = (byte *)(iVar4 + -8 + uVar9);
+          iVar7 = (uint)bVar2 - (uint)bVar1;
+          iVar10 = iVar7 + iVar10;
+          local_70[uVar9 & 0xf] = bVar3;
+          iVar8 = ((uint)bVar2 + (uint)bVar1) * iVar7 + iVar8;
+          iVar7 = uVar9 + iVar4;
+          if (iVar8 * 0xf - iVar10 * iVar10 < param_5) {
+            local_70[uVar9 & 0xf] = (byte)((int)((uint)bVar3 + iVar10 + 8) >> 4);
           }
-          uVar11 = uVar11 + 1;
-          *pbVar15 = local_70[(int)lVar14 + iVar9 & 0xf];
-          lVar16 = lVar16 + -1;
-        } while (lVar16 != 0);
+          uVar9 = uVar9 + 1;
+          *pbVar12 = local_70[(int)lVar11 + iVar7 & 0xf];
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
       }
-      lVar13 = lVar13 + -1;
-      lVar5 = lVar5 + lVar6;
-      lVar14 = lVar14 - lVar6;
-    } while (lVar13 != 0);
+      param_3 = param_3 + -1;
+      lVar5 = lVar5 + param_2;
+      lVar11 = lVar11 - param_2;
+    } while (param_3 != 0);
   }
   __restgprlr_21();
   return;
@@ -222,16 +211,17 @@ void vp8_mbpost_proc_across_ip_c(uchar *param_1,int param_2,int param_3,int para
 
 // 82816ED0  vp8_mbpost_proc_down_c  (WebM_atvi_opt/vpx/vp8/common/postproc.c:273)
 
-void vp8_mbpost_proc_down_c(uchar *param_1,int param_2,int param_3,int param_4,int param_5)
+void vp8_mbpost_proc_down_c
+               (undefined8 param_1,ulonglong param_2,int param_3,uint param_4,int param_5)
 
 {
   byte bVar1;
   byte bVar2;
   byte bVar3;
   byte *pbVar4;
-  uint uVar5;
-  int iVar6;
-  ulonglong uVar7;
+  longlong lVar5;
+  uint uVar6;
+  int iVar7;
   int iVar8;
   int iVar9;
   int iVar10;
@@ -249,78 +239,75 @@ void vp8_mbpost_proc_down_c(uchar *param_1,int param_2,int param_3,int param_4,i
   longlong lVar22;
   longlong lVar23;
   longlong lVar24;
-  longlong lVar25;
-  int iStack00000034;
   uint local_c0;
   byte local_b0 [176];
   
-  uVar7 = (ulonglong)param_2;
-  lVar21 = (longlong)(int)param_1;
-  __savegprlr();
-  iStack00000034 = param_5;
-  uVar5 = rand();
-  if (0 < param_4) {
-    uVar11 = uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x7fffffff;
+  local_c0 = param_4;
+  lVar5 = __savegprlr();
+  uVar6 = rand();
+  if (0 < (int)local_c0) {
+    uVar11 = param_2 + (param_2 & 0x7fffffff) * 2 & 0x7fffffff;
     lVar20 = uVar11 * 2;
-    lVar19 = (uVar7 & 0x1fffffff) * 8 - uVar7;
-    lVar23 = uVar7 + (uVar7 & 0x7fffffff) * 2;
+    lVar19 = (param_2 & 0x1fffffff) * 8 - param_2;
+    lVar22 = param_2 + (param_2 & 0x7fffffff) * 2;
     uVar18 = 0;
-    lVar21 = lVar21 + uVar11 * -2;
-    local_c0 = param_4;
+    lVar5 = lVar5 + uVar11 * -2;
     do {
-      lVar24 = ((lVar20 + (uVar7 & 0x1fffffff) * -8) - lVar23) + lVar21;
-      lVar25 = 5;
-      lVar22 = lVar21 + lVar20;
+      lVar23 = ((lVar20 + (param_2 & 0x1fffffff) * -8) - lVar22) + lVar5;
+      lVar24 = 5;
+      lVar21 = lVar5 + lVar20;
       iVar15 = 0;
       iVar17 = 0;
       iVar8 = 0;
       iVar10 = 0;
-      iVar6 = 0;
+      iVar7 = 0;
       iVar9 = 0;
-      lVar16 = (lVar20 - lVar19) + lVar21;
-      lVar14 = lVar21;
+      lVar16 = (lVar20 - lVar19) + lVar5;
+      lVar14 = lVar5;
       do {
         bVar1 = *(byte *)lVar16;
-        lVar16 = lVar23 + lVar16;
+        lVar16 = lVar22 + lVar16;
         bVar2 = *(byte *)lVar14;
-        lVar14 = lVar23 + lVar14;
-        lVar24 = lVar24 + lVar23;
-        bVar3 = *(byte *)lVar24;
+        lVar14 = lVar22 + lVar14;
+        lVar23 = lVar23 + lVar22;
+        bVar3 = *(byte *)lVar23;
         iVar15 = (uint)bVar3 * (uint)bVar3 + iVar15;
         iVar17 = (uint)bVar3 + iVar17;
         iVar10 = (uint)bVar1 * (uint)bVar1 + iVar10;
         iVar9 = (uint)bVar1 + iVar9;
         iVar8 = (uint)bVar2 * (uint)bVar2 + iVar8;
-        iVar6 = (uint)bVar2 + iVar6;
-        lVar25 = lVar25 + -1;
-      } while (lVar25 != 0);
+        iVar7 = (uint)bVar2 + iVar7;
+        lVar24 = lVar24 + -1;
+      } while (lVar24 != 0);
       iVar15 = iVar8 + iVar10 + iVar15;
       uVar11 = (ulonglong)(param_3 + 8U);
-      iVar17 = iVar6 + iVar9 + iVar17;
+      iVar17 = iVar7 + iVar9 + iVar17;
       uVar13 = 0;
       if (0 < (int)(param_3 + 8U)) {
         do {
-          pbVar4 = (byte *)lVar22;
+          pbVar4 = (byte *)lVar21;
           bVar3 = pbVar4[(int)lVar19];
           bVar1 = *pbVar4;
-          bVar2 = pbVar4[(int)(uVar7 & 0x1fffffff) * -8];
+          bVar2 = pbVar4[(int)(param_2 & 0x1fffffff) * -8];
           iVar15 = ((uint)bVar3 * (uint)bVar3 - (uint)bVar2 * (uint)bVar2) + iVar15;
           iVar17 = ((uint)bVar3 - (uint)bVar2) + iVar17;
           local_b0[uVar13 & 0xf] = bVar1;
-          if (iVar15 * 0xf - iVar17 * iVar17 < iStack00000034) {
+          if (iVar15 * 0xf - iVar17 * iVar17 < param_5) {
             local_b0[uVar13 & 0xf] =
-                 (byte)((int)((int)vp8_rv[(uVar5 & 0x3f) + (uVar18 & 0x7f) + (uVar13 & 0x7f)] +
-                              (uint)bVar1 + iVar17) >> 4);
+                 (byte)((int)((int)*(short *)(&UNK_821e9a30 +
+                                             (uVar13 & 0x7f) * 2 +
+                                             (uVar18 & 0x7f) * 2 + (uVar6 & 0x3f) * 2) + (uint)bVar1
+                             + iVar17) >> 4);
           }
           uVar12 = uVar13 - 8;
-          lVar22 = lVar22 + uVar7;
+          lVar21 = lVar21 + param_2;
           uVar13 = uVar13 + 1;
-          pbVar4[(int)(uVar7 & 0x1fffffff) * -8] = local_b0[uVar12 & 0xf];
+          pbVar4[(int)(param_2 & 0x1fffffff) * -8] = local_b0[uVar12 & 0xf];
           uVar11 = uVar11 - 1;
         } while (uVar11 != 0);
       }
       uVar11 = (ulonglong)local_c0;
-      lVar21 = lVar21 + 1;
+      lVar5 = lVar5 + 1;
       uVar18 = uVar18 + 0x11;
       local_c0 = (uint)(uVar11 - 1);
     } while (uVar11 - 1 != 0);
@@ -333,8 +320,7 @@ void vp8_mbpost_proc_down_c(uchar *param_1,int param_2,int param_3,int param_4,i
 // 828170B0  vp8_deblock_and_de_macro_block  (WebM_atvi_opt/vpx/vp8/common/postproc.c:315)
 
 void vp8_deblock_and_de_macro_block
-               (YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2,int param_3,int param_4,
-               int param_5,vp8_postproc_rtcd_vtable_t *param_6)
+               (undefined8 param_1,undefined4 *param_2,longlong param_3,undefined4 *param_4)
 
 {
   int iVar1;
@@ -343,44 +329,35 @@ void vp8_deblock_and_de_macro_block
   undefined4 *puVar4;
   ulonglong uVar5;
   longlong lVar6;
+  int iVar7;
   int iVar8;
-  longlong lVar7;
-  int iVar9;
-  double dVar10;
+  double dVar9;
   
-  lVar7 = (longlong)param_3;
-  puVar4 = (undefined4 *)__savegprlr_26(param_1);
-  iVar9 = (int)lVar7;
-  dVar10 = (double)(longlong)iVar9;
-  iVar1 = (int)(dVar10 * 0.306 + (dVar10 * dVar10 * dVar10 * 6e-05 - dVar10 * dVar10 * 0.0067) +
-                0.0065 + 0.5);
-  (**(code **)(param_4 + 8))
-            (puVar4[6],param_2->y_buffer,puVar4[2],param_2->y_stride,puVar4[1],*puVar4,iVar1);
-  lVar6 = lVar7;
-  if (iVar9 < 0x14) {
+  puVar4 = (undefined4 *)__savegprlr_26();
+  iVar8 = (int)param_3;
+  dVar9 = (double)(longlong)iVar8;
+  iVar1 = (int)(dVar9 * 0.306 + (dVar9 * dVar9 * dVar9 * 6e-05 - dVar9 * dVar9 * 0.0067) + 0.0065 +
+               0.5);
+  (*(code *)param_4[2])(puVar4[6],param_2[6],puVar4[2],param_2[2],puVar4[1],*puVar4,iVar1);
+  lVar6 = param_3;
+  if (iVar8 < 0x14) {
     lVar6 = 0x14;
   }
   uVar5 = (lVar6 - 0x32U) + (lVar6 - 0x32U & 0x3fffffff) * 4;
   uVar2 = (uVar5 & 0xffffffff) << 1;
   uVar3 = (uint)uVar2 | (uint)uVar5 >> 0x1f;
-  iVar8 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar2 & 6) != 0) + 0x32;
-  (**(code **)(param_4 + 4))
-            (param_2->y_buffer,param_2->y_stride,param_2->y_height,param_2->y_width,
-             (iVar8 * iVar8) / 3);
-  if (iVar9 < 0x14) {
-    lVar7 = 0x14;
+  iVar7 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar2 & 6) != 0) + 0x32;
+  (*(code *)param_4[1])(param_2[6],param_2[2],param_2[1],*param_2,(iVar7 * iVar7) / 3);
+  if (iVar8 < 0x14) {
+    param_3 = 0x14;
   }
-  uVar5 = (lVar7 - 0x32U) + (lVar7 - 0x32U & 0x3fffffff) * 4;
+  uVar5 = (param_3 - 0x32U) + (param_3 - 0x32U & 0x3fffffff) * 4;
   uVar2 = (uVar5 & 0xffffffff) << 1;
   uVar3 = (uint)uVar2 | (uint)uVar5 >> 0x1f;
-  iVar9 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar2 & 6) != 0) + 0x32;
-  (**(code **)param_4)
-            (param_2->y_buffer,param_2->y_stride,param_2->y_height,param_2->y_width,
-             (iVar9 * iVar9) / 3);
-  (**(code **)(param_4 + 8))
-            (puVar4[7],param_2->u_buffer,puVar4[5],param_2->uv_stride,puVar4[4],puVar4[3],iVar1);
-  (**(code **)(param_4 + 8))
-            (puVar4[8],param_2->v_buffer,puVar4[5],param_2->uv_stride,puVar4[4],puVar4[3],iVar1);
+  iVar8 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar2 & 6) != 0) + 0x32;
+  (*(code *)*param_4)(param_2[6],param_2[2],param_2[1],*param_2,(iVar8 * iVar8) / 3);
+  (*(code *)param_4[2])(puVar4[7],param_2[7],puVar4[5],param_2[5],puVar4[4],puVar4[3],iVar1);
+  (*(code *)param_4[2])(puVar4[8],param_2[8],puVar4[5],param_2[5],puVar4[4],puVar4[3],iVar1);
   __restgprlr_26();
   return;
 }
@@ -388,33 +365,27 @@ void vp8_deblock_and_de_macro_block
 
 // 82817250  vp8_deblock  (WebM_atvi_opt/vpx/vp8/common/postproc.c:336)
 
-void vp8_deblock(YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2,int param_3,int param_4,
-                int param_5,vp8_postproc_rtcd_vtable_t *param_6)
+void vp8_deblock(undefined8 param_1,int param_2,int param_3,undefined8 param_4,undefined8 param_5,
+                int param_6)
 
 {
   int iVar1;
-  int iVar2;
-  int *piVar3;
-  longlong lVar4;
-  longlong lVar5;
-  double dVar6;
+  undefined4 *puVar2;
+  double dVar3;
   
-  lVar5 = (longlong)param_3;
-  lVar4 = (longlong)(int)param_2;
-  piVar3 = (int *)__savegprlr_27(param_1,lVar4,lVar5,param_4,param_5);
-  iVar2 = (int)lVar4;
-  dVar6 = (double)(longlong)(int)lVar5;
-  iVar1 = (int)(dVar6 * 0.306 + (dVar6 * dVar6 * dVar6 * 6e-05 - dVar6 * dVar6 * 0.0067) + 0.0065 +
+  puVar2 = (undefined4 *)__savegprlr_27();
+  dVar3 = (double)(longlong)param_3;
+  iVar1 = (int)(dVar3 * 0.306 + (dVar3 * dVar3 * dVar3 * 6e-05 - dVar3 * dVar3 * 0.0067) + 0.0065 +
                0.5);
-  (*param_6->downacross)
-            ((uchar *)piVar3[6],*(uchar **)(iVar2 + 0x18),piVar3[2],*(int *)(iVar2 + 8),piVar3[1],
-             *piVar3,iVar1);
-  (*param_6->downacross)
-            ((uchar *)piVar3[7],*(uchar **)(iVar2 + 0x1c),piVar3[5],*(int *)(iVar2 + 0x14),piVar3[4]
-             ,piVar3[3],iVar1);
-  (*param_6->downacross)
-            ((uchar *)piVar3[8],*(uchar **)(iVar2 + 0x20),piVar3[5],*(int *)(iVar2 + 0x14),piVar3[4]
-             ,piVar3[3],iVar1);
+  (**(code **)(param_6 + 8))
+            (puVar2[6],*(undefined4 *)(param_2 + 0x18),puVar2[2],*(undefined4 *)(param_2 + 8),
+             puVar2[1],*puVar2,iVar1);
+  (**(code **)(param_6 + 8))
+            (puVar2[7],*(undefined4 *)(param_2 + 0x1c),puVar2[5],*(undefined4 *)(param_2 + 0x14),
+             puVar2[4],puVar2[3],iVar1);
+  (**(code **)(param_6 + 8))
+            (puVar2[8],*(undefined4 *)(param_2 + 0x20),puVar2[5],*(undefined4 *)(param_2 + 0x14),
+             puVar2[4],puVar2[3],iVar1);
   __restgprlr_27();
   return;
 }
@@ -422,31 +393,32 @@ void vp8_deblock(YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2,int par
 
 // 82817348  vp8_de_noise  (WebM_atvi_opt/vpx/vp8/common/postproc.c:353)
 
-void vp8_de_noise(YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2,int param_3,int param_4,
-                 int param_5,vp8_postproc_rtcd_vtable_t *param_6)
+void vp8_de_noise(undefined8 param_1,undefined8 param_2,int param_3,undefined8 param_4,
+                 undefined8 param_5,int param_6)
 
 {
   int iVar1;
-  int iVar2;
-  int *piVar3;
-  uchar *puVar4;
-  longlong lVar5;
-  double dVar6;
+  uint *puVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  double dVar5;
   
-  lVar5 = (longlong)param_3;
-  piVar3 = (int *)__savegprlr_29(param_1,param_2,lVar5,param_4,param_5);
-  iVar2 = piVar3[2];
-  dVar6 = (double)(longlong)(int)lVar5;
-  puVar4 = (uchar *)((iVar2 + 1) * 2 + piVar3[6]);
-  iVar1 = (int)(dVar6 * 0.306 + (dVar6 * dVar6 * dVar6 * 6e-05 - dVar6 * dVar6 * 0.0067) + 0.0065 +
+  puVar2 = (uint *)__savegprlr_29();
+  uVar4 = (ulonglong)puVar2[2];
+  dVar5 = (double)(longlong)param_3;
+  lVar3 = (uVar4 + 1 & 0x7fffffff) * 2 + (ulonglong)puVar2[6];
+  iVar1 = (int)(dVar5 * 0.306 + (dVar5 * dVar5 * dVar5 * 6e-05 - dVar5 * dVar5 * 0.0067) + 0.0065 +
                0.5);
-  (*param_6->downacross)(puVar4,puVar4,iVar2,iVar2,piVar3[1] + -4,*piVar3 + -4,iVar1);
-  iVar2 = piVar3[5];
-  puVar4 = (uchar *)((iVar2 + 1) * 2 + piVar3[7]);
-  (*param_6->downacross)(puVar4,puVar4,iVar2,iVar2,piVar3[4] + -4,piVar3[3] + -4,iVar1);
-  iVar2 = piVar3[5];
-  puVar4 = (uchar *)((iVar2 + 1) * 2 + piVar3[8]);
-  (*param_6->downacross)(puVar4,puVar4,iVar2,iVar2,piVar3[4] + -4,piVar3[3] + -4,iVar1);
+  (**(code **)(param_6 + 8))
+            (lVar3,lVar3,uVar4,uVar4,(ulonglong)puVar2[1] - 4,(ulonglong)*puVar2 - 4,iVar1);
+  uVar4 = (ulonglong)puVar2[5];
+  lVar3 = (uVar4 + 1 & 0x7fffffff) * 2 + (ulonglong)puVar2[7];
+  (**(code **)(param_6 + 8))
+            (lVar3,lVar3,uVar4,uVar4,(ulonglong)puVar2[4] - 4,(ulonglong)puVar2[3] - 4,iVar1);
+  uVar4 = (ulonglong)puVar2[5];
+  lVar3 = (uVar4 + 1 & 0x7fffffff) * 2 + (ulonglong)puVar2[8];
+  (**(code **)(param_6 + 8))
+            (lVar3,lVar3,uVar4,uVar4,(ulonglong)puVar2[4] - 4,(ulonglong)puVar2[3] - 4,iVar1);
   __restgprlr_29();
   return;
 }
@@ -466,7 +438,7 @@ double vp8_gaussian(double param_1,double param_2,double param_3)
 
 // 828174D8  fillrd  (WebM_atvi_opt/vpx/vp8/common/postproc.c:395)
 
-void fillrd(postproc_state *param_1,int param_2,int param_3)
+void fillrd(undefined8 param_1,int param_2,int param_3)
 
 {
   int *piVar1;
@@ -487,7 +459,7 @@ void fillrd(postproc_state *param_1,int param_2,int param_3)
   char cStack_1a9;
   char acStack_1a1 [417];
   
-  __savegprlr_27(param_1);
+  __savegprlr_27();
   piVar1 = (int *)__savefpr_25();
   dVar14 = 0.5;
   dVar15 = -32.0;
@@ -550,45 +522,39 @@ void fillrd(postproc_state *param_1,int param_2,int param_3)
 // 82817698  vp8_plane_add_noise_c  (WebM_atvi_opt/vpx/vp8/common/postproc.c:478)
 
 void vp8_plane_add_noise_c
-               (uchar *param_1,char *param_2,char *param_3,char *param_4,char *param_5,uint param_6,
-               uint param_7,int param_8)
+               (undefined8 param_1,int param_2,byte *param_3,char *param_4,undefined8 param_5,
+               ulonglong param_6,ulonglong param_7,longlong param_8)
 
 {
   longlong lVar1;
   uint uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  byte *pbVar6;
-  longlong lVar5;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  byte *pbVar4;
+  longlong lVar3;
+  ulonglong uVar5;
   
-  lVar4 = (longlong)param_8;
-  uVar7 = (ulonglong)(int)param_7;
-  uVar3 = (ulonglong)(int)param_6;
-  lVar1 = __savegprlr_25(param_1);
-  uVar8 = uVar7 & 0xffffffff;
-  while (uVar8 != 0) {
+  lVar1 = __savegprlr_25();
+  uVar5 = param_7 & 0xffffffff;
+  while (uVar5 != 0) {
     uVar2 = rand();
-    if ((uVar3 & 0xffffffff) != 0) {
-      lVar5 = lVar1;
-      uVar8 = uVar3;
+    if ((param_6 & 0xffffffff) != 0) {
+      lVar3 = lVar1;
+      uVar5 = param_6;
       do {
-        pbVar6 = (byte *)lVar5;
-        if ((int)(uint)*pbVar6 < (int)*param_3) {
-          *pbVar6 = *param_3;
+        pbVar4 = (byte *)lVar3;
+        if ((int)(uint)*pbVar4 < (int)(char)*param_3) {
+          *pbVar4 = *param_3;
         }
-        if (*param_4 + 0xff < (int)(uint)*pbVar6) {
-          *pbVar6 = *param_4 - 1;
+        if (*param_4 + 0xff < (int)(uint)*pbVar4) {
+          *pbVar4 = *param_4 - 1;
         }
-        *pbVar6 = pbVar6[(int)(param_2 + ((uVar2 & 0xff) - (int)lVar1))] + *pbVar6;
-        lVar5 = lVar5 + 1;
-        uVar8 = uVar8 - 1;
-      } while (uVar8 != 0);
+        *pbVar4 = pbVar4[((uVar2 & 0xff) + param_2) - (int)lVar1] + *pbVar4;
+        lVar3 = lVar3 + 1;
+        uVar5 = uVar5 - 1;
+      } while (uVar5 != 0);
     }
-    lVar1 = lVar1 + lVar4;
-    uVar7 = uVar7 - 1;
-    uVar8 = uVar7;
+    lVar1 = lVar1 + param_8;
+    param_7 = param_7 - 1;
+    uVar5 = param_7;
   }
   __restgprlr_25();
   return;
@@ -598,57 +564,55 @@ void vp8_plane_add_noise_c
 // 82817750  vp8_blend_mb_inner_c  (WebM_atvi_opt/vpx/vp8/common/postproc.c:505)
 
 void vp8_blend_mb_inner_c
-               (uchar *param_1,uchar *param_2,uchar *param_3,int param_4,int param_5,int param_6,
-               int param_7,int param_8)
+               (int param_1,int param_2,int param_3,int param_4,int param_5,int param_6,int param_7,
+               int param_8)
 
 {
-  uchar *puVar1;
+  byte *pbVar1;
   int iVar2;
-  int iVar3;
-  byte *pbVar4;
+  byte *pbVar3;
   int iVar5;
-  byte *pbVar6;
-  int iVar8;
-  longlong lVar7;
-  longlong lVar9;
+  longlong lVar4;
+  longlong lVar6;
   
-  iVar8 = 0x10000 - param_7;
-  iVar2 = iVar8 * param_5;
-  iVar3 = iVar8 * param_6;
-  puVar1 = param_1 + (param_8 + 1) * 2;
-  lVar7 = 0xc;
+  iVar5 = 0x10000 - param_7;
+  param_5 = iVar5 * param_5;
+  param_6 = iVar5 * param_6;
+  param_1 = (param_8 + 1) * 2 + param_1;
+  lVar4 = 0xc;
   do {
-    iVar5 = 0;
-    lVar9 = 0xc;
+    iVar2 = 0;
+    lVar6 = 0xc;
     do {
-      puVar1[iVar5] = (uchar)((uint)puVar1[iVar5] * param_7 + iVar8 * param_4 >> 0x10);
-      iVar5 = iVar5 + 1;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    lVar7 = lVar7 + -1;
-    puVar1 = puVar1 + param_8;
-  } while (lVar7 != 0);
-  iVar8 = param_8 >> 1;
-  pbVar6 = param_2 + iVar8 + 1;
-  pbVar4 = param_3 + iVar8 + 1;
-  lVar7 = 6;
+      *(char *)(iVar2 + param_1) =
+           (char)((uint)*(byte *)(iVar2 + param_1) * param_7 + iVar5 * param_4 >> 0x10);
+      iVar2 = iVar2 + 1;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    lVar4 = lVar4 + -1;
+    param_1 = param_1 + param_8;
+  } while (lVar4 != 0);
+  param_8 = param_8 >> 1;
+  pbVar3 = (byte *)(param_2 + param_8 + 1);
+  pbVar1 = (byte *)(param_3 + param_8 + 1);
+  lVar4 = 6;
   do {
-    *pbVar6 = (byte)((uint)*pbVar6 * param_7 + iVar2 >> 0x10);
-    *pbVar4 = (byte)((uint)*pbVar4 * param_7 + iVar3 >> 0x10);
-    pbVar6[1] = (byte)((uint)pbVar6[1] * param_7 + iVar2 >> 0x10);
-    pbVar4[1] = (byte)((uint)pbVar4[1] * param_7 + iVar3 >> 0x10);
-    pbVar6[2] = (byte)((uint)pbVar6[2] * param_7 + iVar2 >> 0x10);
-    pbVar4[2] = (byte)((uint)pbVar4[2] * param_7 + iVar3 >> 0x10);
-    pbVar6[3] = (byte)((uint)pbVar6[3] * param_7 + iVar2 >> 0x10);
-    pbVar4[3] = (byte)((uint)pbVar4[3] * param_7 + iVar3 >> 0x10);
-    pbVar6[4] = (byte)((uint)pbVar6[4] * param_7 + iVar2 >> 0x10);
-    pbVar4[4] = (byte)((uint)pbVar4[4] * param_7 + iVar3 >> 0x10);
-    pbVar6[5] = (byte)((uint)pbVar6[5] * param_7 + iVar2 >> 0x10);
-    pbVar6 = pbVar6 + iVar8;
-    pbVar4[5] = (byte)((uint)pbVar4[5] * param_7 + iVar3 >> 0x10);
-    pbVar4 = pbVar4 + iVar8;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
+    *pbVar3 = (byte)((uint)*pbVar3 * param_7 + param_5 >> 0x10);
+    *pbVar1 = (byte)((uint)*pbVar1 * param_7 + param_6 >> 0x10);
+    pbVar3[1] = (byte)((uint)pbVar3[1] * param_7 + param_5 >> 0x10);
+    pbVar1[1] = (byte)((uint)pbVar1[1] * param_7 + param_6 >> 0x10);
+    pbVar3[2] = (byte)((uint)pbVar3[2] * param_7 + param_5 >> 0x10);
+    pbVar1[2] = (byte)((uint)pbVar1[2] * param_7 + param_6 >> 0x10);
+    pbVar3[3] = (byte)((uint)pbVar3[3] * param_7 + param_5 >> 0x10);
+    pbVar1[3] = (byte)((uint)pbVar1[3] * param_7 + param_6 >> 0x10);
+    pbVar3[4] = (byte)((uint)pbVar3[4] * param_7 + param_5 >> 0x10);
+    pbVar1[4] = (byte)((uint)pbVar1[4] * param_7 + param_6 >> 0x10);
+    pbVar3[5] = (byte)((uint)pbVar3[5] * param_7 + param_5 >> 0x10);
+    pbVar3 = pbVar3 + param_8;
+    pbVar1[5] = (byte)((uint)pbVar1[5] * param_7 + param_6 >> 0x10);
+    pbVar1 = pbVar1 + param_8;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
   return;
 }
 
@@ -656,134 +620,129 @@ void vp8_blend_mb_inner_c
 // 828178E0  vp8_blend_mb_outer_c  (WebM_atvi_opt/vpx/vp8/common/postproc.c:543)
 
 void vp8_blend_mb_outer_c
-               (uchar *param_1,uchar *param_2,uchar *param_3,int param_4,int param_5,int param_6,
-               int param_7,int param_8)
+               (undefined8 param_1,byte *param_2,byte *param_3,int param_4,int param_5,int param_6,
+               int param_7,longlong param_8)
 
 {
-  byte *pbVar1;
-  longlong lVar2;
-  int iVar3;
+  longlong lVar1;
+  int iVar2;
+  longlong lVar3;
   int iVar4;
-  longlong lVar5;
-  int iVar6;
-  longlong lVar7;
-  int iVar8;
-  byte *pbVar9;
-  longlong lVar10;
+  byte *pbVar5;
+  longlong lVar6;
   
-  lVar5 = (longlong)param_8;
-  lVar2 = __savegprlr_28(param_1);
-  lVar7 = 2;
-  iVar8 = 0x10000 - param_7;
-  iVar3 = iVar8 * param_4;
-  iVar6 = iVar8 * param_5;
-  iVar8 = iVar8 * param_6;
+  lVar1 = __savegprlr_28();
+  lVar3 = 2;
+  iVar4 = 0x10000 - param_7;
+  param_4 = iVar4 * param_4;
+  param_5 = iVar4 * param_5;
+  iVar4 = iVar4 * param_6;
   do {
-    iVar4 = 0;
-    lVar10 = 0x10;
+    iVar2 = 0;
+    lVar6 = 0x10;
     do {
-      pbVar9 = (byte *)(iVar4 + (int)lVar2);
-      iVar4 = iVar4 + 1;
-      *pbVar9 = (byte)((uint)*pbVar9 * param_7 + iVar3 >> 0x10);
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    lVar7 = lVar7 + -1;
-    lVar2 = lVar2 + lVar5;
-  } while (lVar7 != 0);
-  lVar7 = 0xc;
+      pbVar5 = (byte *)(iVar2 + (int)lVar1);
+      iVar2 = iVar2 + 1;
+      *pbVar5 = (byte)((uint)*pbVar5 * param_7 + param_4 >> 0x10);
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    lVar3 = lVar3 + -1;
+    lVar1 = lVar1 + param_8;
+  } while (lVar3 != 0);
+  lVar3 = 0xc;
   do {
-    pbVar9 = (byte *)lVar2;
-    *pbVar9 = (byte)((uint)*pbVar9 * param_7 + iVar3 >> 0x10);
-    pbVar9[1] = (byte)((uint)pbVar9[1] * param_7 + iVar3 >> 0x10);
-    pbVar9[0xe] = (byte)((uint)pbVar9[0xe] * param_7 + iVar3 >> 0x10);
-    pbVar9[0xf] = (byte)((uint)pbVar9[0xf] * param_7 + iVar3 >> 0x10);
-    lVar2 = lVar2 + lVar5;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  lVar7 = 2;
+    pbVar5 = (byte *)lVar1;
+    *pbVar5 = (byte)((uint)*pbVar5 * param_7 + param_4 >> 0x10);
+    pbVar5[1] = (byte)((uint)pbVar5[1] * param_7 + param_4 >> 0x10);
+    pbVar5[0xe] = (byte)((uint)pbVar5[0xe] * param_7 + param_4 >> 0x10);
+    pbVar5[0xf] = (byte)((uint)pbVar5[0xf] * param_7 + param_4 >> 0x10);
+    lVar1 = lVar1 + param_8;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  lVar3 = 2;
   do {
-    iVar4 = 0;
-    lVar10 = 0x10;
+    iVar2 = 0;
+    lVar6 = 0x10;
     do {
-      pbVar9 = (byte *)(iVar4 + (int)lVar2);
-      iVar4 = iVar4 + 1;
-      *pbVar9 = (byte)((uint)*pbVar9 * param_7 + iVar3 >> 0x10);
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    lVar7 = lVar7 + -1;
-    lVar2 = lVar2 + lVar5;
-  } while (lVar7 != 0);
-  iVar3 = (int)lVar5 >> 1;
-  *param_2 = (byte)((uint)*param_2 * param_7 + iVar6 >> 0x10);
-  *param_3 = (byte)((uint)*param_3 * param_7 + iVar8 >> 0x10);
-  param_2[1] = (byte)((uint)param_2[1] * param_7 + iVar6 >> 0x10);
-  param_3[1] = (byte)((uint)param_3[1] * param_7 + iVar8 >> 0x10);
-  param_2[2] = (byte)((uint)param_2[2] * param_7 + iVar6 >> 0x10);
-  param_3[2] = (byte)((uint)param_3[2] * param_7 + iVar8 >> 0x10);
-  param_2[3] = (byte)((uint)param_2[3] * param_7 + iVar6 >> 0x10);
-  param_3[3] = (byte)((uint)param_3[3] * param_7 + iVar8 >> 0x10);
-  param_2[4] = (byte)((uint)param_2[4] * param_7 + iVar6 >> 0x10);
-  param_3[4] = (byte)((uint)param_3[4] * param_7 + iVar8 >> 0x10);
-  param_2[5] = (byte)((uint)param_2[5] * param_7 + iVar6 >> 0x10);
-  param_3[5] = (byte)((uint)param_3[5] * param_7 + iVar8 >> 0x10);
-  param_2[6] = (byte)((uint)param_2[6] * param_7 + iVar6 >> 0x10);
-  param_3[6] = (byte)((uint)param_3[6] * param_7 + iVar8 >> 0x10);
-  param_2[7] = (byte)((uint)param_2[7] * param_7 + iVar6 >> 0x10);
-  param_3[7] = (byte)((uint)param_3[7] * param_7 + iVar8 >> 0x10);
-  pbVar9 = param_2 + iVar3;
-  *pbVar9 = (byte)((uint)*pbVar9 * param_7 + iVar6 >> 0x10);
-  pbVar1 = param_3 + iVar3;
-  *pbVar1 = (byte)((uint)*pbVar1 * param_7 + iVar8 >> 0x10);
-  pbVar9[7] = (byte)((uint)pbVar9[7] * param_7 + iVar6 >> 0x10);
-  pbVar1[7] = (byte)((uint)pbVar1[7] * param_7 + iVar8 >> 0x10);
-  pbVar9 = pbVar9 + iVar3;
-  *pbVar9 = (byte)((uint)*pbVar9 * param_7 + iVar6 >> 0x10);
-  pbVar1 = pbVar1 + iVar3;
-  *pbVar1 = (byte)((uint)*pbVar1 * param_7 + iVar8 >> 0x10);
-  pbVar9[7] = (byte)((uint)pbVar9[7] * param_7 + iVar6 >> 0x10);
-  pbVar1[7] = (byte)((uint)pbVar1[7] * param_7 + iVar8 >> 0x10);
-  pbVar9 = pbVar9 + iVar3;
-  *pbVar9 = (byte)((uint)*pbVar9 * param_7 + iVar6 >> 0x10);
-  pbVar1 = pbVar1 + iVar3;
-  *pbVar1 = (byte)((uint)*pbVar1 * param_7 + iVar8 >> 0x10);
-  pbVar9[7] = (byte)((uint)pbVar9[7] * param_7 + iVar6 >> 0x10);
-  pbVar1[7] = (byte)((uint)pbVar1[7] * param_7 + iVar8 >> 0x10);
-  pbVar9 = pbVar9 + iVar3;
-  *pbVar9 = (byte)((uint)*pbVar9 * param_7 + iVar6 >> 0x10);
-  pbVar1 = pbVar1 + iVar3;
-  *pbVar1 = (byte)((uint)*pbVar1 * param_7 + iVar8 >> 0x10);
-  pbVar9[7] = (byte)((uint)pbVar9[7] * param_7 + iVar6 >> 0x10);
-  pbVar1[7] = (byte)((uint)pbVar1[7] * param_7 + iVar8 >> 0x10);
-  pbVar9 = pbVar9 + iVar3;
-  *pbVar9 = (byte)((uint)*pbVar9 * param_7 + iVar6 >> 0x10);
-  pbVar1 = pbVar1 + iVar3;
-  *pbVar1 = (byte)((uint)*pbVar1 * param_7 + iVar8 >> 0x10);
-  pbVar9[7] = (byte)((uint)pbVar9[7] * param_7 + iVar6 >> 0x10);
-  pbVar1[7] = (byte)((uint)pbVar1[7] * param_7 + iVar8 >> 0x10);
-  pbVar9 = pbVar9 + iVar3;
-  *pbVar9 = (byte)((uint)*pbVar9 * param_7 + iVar6 >> 0x10);
-  pbVar1 = pbVar1 + iVar3;
-  *pbVar1 = (byte)((uint)*pbVar1 * param_7 + iVar8 >> 0x10);
-  pbVar9[7] = (byte)((uint)pbVar9[7] * param_7 + iVar6 >> 0x10);
-  pbVar1[7] = (byte)((uint)pbVar1[7] * param_7 + iVar8 >> 0x10);
-  pbVar9 = pbVar9 + iVar3;
-  *pbVar9 = (byte)((uint)*pbVar9 * param_7 + iVar6 >> 0x10);
-  pbVar1 = pbVar1 + iVar3;
-  *pbVar1 = (byte)((uint)*pbVar1 * param_7 + iVar8 >> 0x10);
-  pbVar9[1] = (byte)((uint)pbVar9[1] * param_7 + iVar6 >> 0x10);
-  pbVar1[1] = (byte)((uint)pbVar1[1] * param_7 + iVar8 >> 0x10);
-  pbVar9[2] = (byte)((uint)pbVar9[2] * param_7 + iVar6 >> 0x10);
-  pbVar1[2] = (byte)((uint)pbVar1[2] * param_7 + iVar8 >> 0x10);
-  pbVar9[3] = (byte)((uint)pbVar9[3] * param_7 + iVar6 >> 0x10);
-  pbVar1[3] = (byte)((uint)pbVar1[3] * param_7 + iVar8 >> 0x10);
-  pbVar9[4] = (byte)((uint)pbVar9[4] * param_7 + iVar6 >> 0x10);
-  pbVar1[4] = (byte)((uint)pbVar1[4] * param_7 + iVar8 >> 0x10);
-  pbVar9[5] = (byte)((uint)pbVar9[5] * param_7 + iVar6 >> 0x10);
-  pbVar1[5] = (byte)((uint)pbVar1[5] * param_7 + iVar8 >> 0x10);
-  pbVar9[6] = (byte)((uint)pbVar9[6] * param_7 + iVar6 >> 0x10);
-  pbVar1[6] = (byte)((uint)pbVar1[6] * param_7 + iVar8 >> 0x10);
-  pbVar9[7] = (byte)((uint)pbVar9[7] * param_7 + iVar6 >> 0x10);
-  pbVar1[7] = (byte)((uint)pbVar1[7] * param_7 + iVar8 >> 0x10);
+      pbVar5 = (byte *)(iVar2 + (int)lVar1);
+      iVar2 = iVar2 + 1;
+      *pbVar5 = (byte)((uint)*pbVar5 * param_7 + param_4 >> 0x10);
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    lVar3 = lVar3 + -1;
+    lVar1 = lVar1 + param_8;
+  } while (lVar3 != 0);
+  iVar2 = (int)param_8 >> 1;
+  *param_2 = (byte)((uint)*param_2 * param_7 + param_5 >> 0x10);
+  *param_3 = (byte)((uint)*param_3 * param_7 + iVar4 >> 0x10);
+  param_2[1] = (byte)((uint)param_2[1] * param_7 + param_5 >> 0x10);
+  param_3[1] = (byte)((uint)param_3[1] * param_7 + iVar4 >> 0x10);
+  param_2[2] = (byte)((uint)param_2[2] * param_7 + param_5 >> 0x10);
+  param_3[2] = (byte)((uint)param_3[2] * param_7 + iVar4 >> 0x10);
+  param_2[3] = (byte)((uint)param_2[3] * param_7 + param_5 >> 0x10);
+  param_3[3] = (byte)((uint)param_3[3] * param_7 + iVar4 >> 0x10);
+  param_2[4] = (byte)((uint)param_2[4] * param_7 + param_5 >> 0x10);
+  param_3[4] = (byte)((uint)param_3[4] * param_7 + iVar4 >> 0x10);
+  param_2[5] = (byte)((uint)param_2[5] * param_7 + param_5 >> 0x10);
+  param_3[5] = (byte)((uint)param_3[5] * param_7 + iVar4 >> 0x10);
+  param_2[6] = (byte)((uint)param_2[6] * param_7 + param_5 >> 0x10);
+  param_3[6] = (byte)((uint)param_3[6] * param_7 + iVar4 >> 0x10);
+  param_2[7] = (byte)((uint)param_2[7] * param_7 + param_5 >> 0x10);
+  param_3[7] = (byte)((uint)param_3[7] * param_7 + iVar4 >> 0x10);
+  param_2 = param_2 + iVar2;
+  *param_2 = (byte)((uint)*param_2 * param_7 + param_5 >> 0x10);
+  param_3 = param_3 + iVar2;
+  *param_3 = (byte)((uint)*param_3 * param_7 + iVar4 >> 0x10);
+  param_2[7] = (byte)((uint)param_2[7] * param_7 + param_5 >> 0x10);
+  param_3[7] = (byte)((uint)param_3[7] * param_7 + iVar4 >> 0x10);
+  param_2 = param_2 + iVar2;
+  *param_2 = (byte)((uint)*param_2 * param_7 + param_5 >> 0x10);
+  param_3 = param_3 + iVar2;
+  *param_3 = (byte)((uint)*param_3 * param_7 + iVar4 >> 0x10);
+  param_2[7] = (byte)((uint)param_2[7] * param_7 + param_5 >> 0x10);
+  param_3[7] = (byte)((uint)param_3[7] * param_7 + iVar4 >> 0x10);
+  param_2 = param_2 + iVar2;
+  *param_2 = (byte)((uint)*param_2 * param_7 + param_5 >> 0x10);
+  param_3 = param_3 + iVar2;
+  *param_3 = (byte)((uint)*param_3 * param_7 + iVar4 >> 0x10);
+  param_2[7] = (byte)((uint)param_2[7] * param_7 + param_5 >> 0x10);
+  param_3[7] = (byte)((uint)param_3[7] * param_7 + iVar4 >> 0x10);
+  param_2 = param_2 + iVar2;
+  *param_2 = (byte)((uint)*param_2 * param_7 + param_5 >> 0x10);
+  param_3 = param_3 + iVar2;
+  *param_3 = (byte)((uint)*param_3 * param_7 + iVar4 >> 0x10);
+  param_2[7] = (byte)((uint)param_2[7] * param_7 + param_5 >> 0x10);
+  param_3[7] = (byte)((uint)param_3[7] * param_7 + iVar4 >> 0x10);
+  param_2 = param_2 + iVar2;
+  *param_2 = (byte)((uint)*param_2 * param_7 + param_5 >> 0x10);
+  param_3 = param_3 + iVar2;
+  *param_3 = (byte)((uint)*param_3 * param_7 + iVar4 >> 0x10);
+  param_2[7] = (byte)((uint)param_2[7] * param_7 + param_5 >> 0x10);
+  param_3[7] = (byte)((uint)param_3[7] * param_7 + iVar4 >> 0x10);
+  param_2 = param_2 + iVar2;
+  *param_2 = (byte)((uint)*param_2 * param_7 + param_5 >> 0x10);
+  param_3 = param_3 + iVar2;
+  *param_3 = (byte)((uint)*param_3 * param_7 + iVar4 >> 0x10);
+  param_2[7] = (byte)((uint)param_2[7] * param_7 + param_5 >> 0x10);
+  param_3[7] = (byte)((uint)param_3[7] * param_7 + iVar4 >> 0x10);
+  param_2 = param_2 + iVar2;
+  *param_2 = (byte)((uint)*param_2 * param_7 + param_5 >> 0x10);
+  param_3 = param_3 + iVar2;
+  *param_3 = (byte)((uint)*param_3 * param_7 + iVar4 >> 0x10);
+  param_2[1] = (byte)((uint)param_2[1] * param_7 + param_5 >> 0x10);
+  param_3[1] = (byte)((uint)param_3[1] * param_7 + iVar4 >> 0x10);
+  param_2[2] = (byte)((uint)param_2[2] * param_7 + param_5 >> 0x10);
+  param_3[2] = (byte)((uint)param_3[2] * param_7 + iVar4 >> 0x10);
+  param_2[3] = (byte)((uint)param_2[3] * param_7 + param_5 >> 0x10);
+  param_3[3] = (byte)((uint)param_3[3] * param_7 + iVar4 >> 0x10);
+  param_2[4] = (byte)((uint)param_2[4] * param_7 + param_5 >> 0x10);
+  param_3[4] = (byte)((uint)param_3[4] * param_7 + iVar4 >> 0x10);
+  param_2[5] = (byte)((uint)param_2[5] * param_7 + param_5 >> 0x10);
+  param_3[5] = (byte)((uint)param_3[5] * param_7 + iVar4 >> 0x10);
+  param_2[6] = (byte)((uint)param_2[6] * param_7 + param_5 >> 0x10);
+  param_3[6] = (byte)((uint)param_3[6] * param_7 + iVar4 >> 0x10);
+  param_2[7] = (byte)((uint)param_2[7] * param_7 + param_5 >> 0x10);
+  param_3[7] = (byte)((uint)param_3[7] * param_7 + iVar4 >> 0x10);
   __restgprlr_28();
   return;
 }
@@ -791,50 +750,43 @@ void vp8_blend_mb_outer_c
 
 // 82817E58  vp8_blend_b_c  (WebM_atvi_opt/vpx/vp8/common/postproc.c:607)
 
-void vp8_blend_b_c(uchar *param_1,uchar *param_2,uchar *param_3,int param_4,int param_5,int param_6,
-                  int param_7,int param_8)
+void vp8_blend_b_c(undefined8 param_1,longlong param_2,longlong param_3,int param_4,int param_5,
+                  int param_6,int param_7,longlong param_8)
 
 {
   longlong lVar1;
   int iVar2;
+  byte *pbVar3;
   byte *pbVar4;
-  longlong lVar3;
-  int iVar5;
-  byte *pbVar7;
-  longlong lVar6;
-  longlong lVar8;
-  longlong lVar9;
+  longlong lVar5;
   
-  lVar9 = (longlong)param_8;
-  lVar3 = (longlong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_28(param_1);
+  lVar1 = __savegprlr_28();
   lVar1 = lVar1 + 2;
   iVar2 = 0x10000 - param_7;
-  lVar8 = 4;
-  iVar5 = iVar2 * param_4;
+  lVar5 = 4;
+  param_4 = iVar2 * param_4;
   do {
-    pbVar4 = (byte *)lVar1;
-    pbVar4[-2] = (byte)((uint)pbVar4[-2] * param_7 + iVar5 >> 0x10);
-    pbVar4[-1] = (byte)((uint)pbVar4[-1] * param_7 + iVar5 >> 0x10);
-    *pbVar4 = (byte)((uint)*pbVar4 * param_7 + iVar5 >> 0x10);
-    pbVar4[1] = (byte)((uint)pbVar4[1] * param_7 + iVar5 >> 0x10);
-    lVar1 = lVar1 + lVar9;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  lVar1 = (longlong)((int)lVar9 >> 1);
-  lVar9 = 2;
+    pbVar3 = (byte *)lVar1;
+    pbVar3[-2] = (byte)((uint)pbVar3[-2] * param_7 + param_4 >> 0x10);
+    pbVar3[-1] = (byte)((uint)pbVar3[-1] * param_7 + param_4 >> 0x10);
+    *pbVar3 = (byte)((uint)*pbVar3 * param_7 + param_4 >> 0x10);
+    pbVar3[1] = (byte)((uint)pbVar3[1] * param_7 + param_4 >> 0x10);
+    lVar1 = lVar1 + param_8;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  lVar1 = (longlong)((int)param_8 >> 1);
+  lVar5 = 2;
   do {
-    pbVar7 = (byte *)lVar6;
-    *pbVar7 = (byte)((uint)*pbVar7 * param_7 + iVar2 * param_5 >> 0x10);
-    pbVar4 = (byte *)lVar3;
-    *pbVar4 = (byte)((uint)*pbVar4 * param_7 + iVar2 * param_6 >> 0x10);
-    pbVar7[1] = (byte)((uint)pbVar7[1] * param_7 + iVar2 * param_5 >> 0x10);
-    lVar6 = lVar6 + lVar1;
-    pbVar4[1] = (byte)((uint)pbVar4[1] * param_7 + iVar2 * param_6 >> 0x10);
-    lVar3 = lVar3 + lVar1;
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
+    pbVar4 = (byte *)param_2;
+    *pbVar4 = (byte)((uint)*pbVar4 * param_7 + iVar2 * param_5 >> 0x10);
+    pbVar3 = (byte *)param_3;
+    *pbVar3 = (byte)((uint)*pbVar3 * param_7 + iVar2 * param_6 >> 0x10);
+    pbVar4[1] = (byte)((uint)pbVar4[1] * param_7 + iVar2 * param_5 >> 0x10);
+    param_2 = param_2 + lVar1;
+    pbVar3[1] = (byte)((uint)pbVar3[1] * param_7 + iVar2 * param_6 >> 0x10);
+    param_3 = param_3 + lVar1;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   __restgprlr_28();
   return;
 }
@@ -842,59 +794,63 @@ void vp8_blend_b_c(uchar *param_1,uchar *param_2,uchar *param_3,int param_4,int 
 
 // 82817F60  vp8_post_proc_frame  (WebM_atvi_opt/vpx/vp8/common/postproc.c:687)
 
-int vp8_post_proc_frame(VP8Common *param_1,YV12_BUFFER_CONFIG *param_2,vp8_ppflags_t *param_3)
+void vp8_post_proc_frame(undefined8 param_1,undefined4 *param_2,uint *param_3)
 
 {
-  YV12_BUFFER_CONFIG *pYVar1;
+  int iVar1;
   uint uVar2;
-  int iVar3;
+  uint uVar3;
   int iVar4;
-  int iVar5;
-  YV12_BUFFER_CONFIG *pYVar6;
+  undefined4 *_Src;
+  longlong lVar5;
+  undefined4 *puVar6;
   
-  iVar4 = __savegprlr_26(param_1);
-  pYVar1 = *(YV12_BUFFER_CONFIG **)(iVar4 + 0x35b8);
-  uVar2 = param_3->post_proc_flag;
-  iVar3 = param_3->noise_level;
-  iVar5 = (*(int *)(iVar4 + 0x5f90) * 10) / 6;
-  if (pYVar1 != (YV12_BUFFER_CONFIG *)0x0) {
-    if (0x3f < iVar5) {
-      iVar5 = 0x3f;
+  iVar4 = __savegprlr_26();
+  _Src = *(undefined4 **)(iVar4 + 0x35b8);
+  uVar2 = *param_3;
+  uVar3 = param_3[2];
+  iVar1 = (*(int *)(iVar4 + 0x5f90) * 10) / 6;
+  lVar5 = (longlong)iVar1;
+  if (_Src != (undefined4 *)0x0) {
+    if (0x3f < iVar1) {
+      lVar5 = 0x3f;
     }
     if (uVar2 != 0) {
-      pYVar6 = (YV12_BUFFER_CONFIG *)(iVar4 + 0x36ac);
+      puVar6 = (undefined4 *)(iVar4 + 0x36ac);
       if ((uVar2 & 2) == 0) {
         if ((uVar2 & 1) == 0) {
-          (*vp8_yv12_copy_frame_ptr)(pYVar1,pYVar6);
+          (*DAT_8489734c)(_Src,puVar6);
         }
         else {
-          vp8_deblock(pYVar1,pYVar6,iVar5,1,0,(vp8_postproc_rtcd_vtable_t *)(iVar4 + 0x6cfc));
+          vp8_deblock(_Src,puVar6,lVar5,1,0,iVar4 + 0x6cfc);
         }
       }
       else {
         vp8_deblock_and_de_macro_block
-                  (pYVar1,pYVar6,(param_3->deblocking_level + -5) * 10 + iVar5,iVar4 + 0x6cfc,
-                   *(int *)(iVar4 + 0x5f90) * 5,(vp8_postproc_rtcd_vtable_t *)0x6);
+                  (_Src,puVar6,
+                   (((ulonglong)param_3[1] - 5) + ((ulonglong)param_3[1] - 5 & 0x3fffffff) * 4 &
+                   0x7fffffff) * 2 + lVar5,iVar4 + 0x6cfc);
       }
+      _Src = puVar6;
       if ((uVar2 & 4) != 0) {
-        if ((*(int *)(iVar4 + 0x6d20) != iVar5) || (*(int *)(iVar4 + 0x6d24) != iVar3)) {
-          fillrd((postproc_state *)(iVar4 + 0x6d20),0x3f - iVar5,iVar3);
+        if ((*(int *)(iVar4 + 0x6d20) != (int)lVar5) || (*(uint *)(iVar4 + 0x6d24) != uVar3)) {
+          fillrd(iVar4 + 0x6d20,0x3f - lVar5,uVar3);
         }
         (**(code **)(iVar4 + 0x6d08))
                   (*(undefined4 *)(iVar4 + 0x36c4),iVar4 + 0x6d28,iVar4 + 0x7930,iVar4 + 0x7940,
-                   iVar4 + 0x7950,pYVar6->y_width,*(undefined4 *)(iVar4 + 14000),
+                   iVar4 + 0x7950,*puVar6,*(undefined4 *)(iVar4 + 14000),
                    *(undefined4 *)(iVar4 + 0x36b4));
       }
     }
-    memcpy();
-    param_2->y_width = *(int *)(iVar4 + 0x35a0);
+    memcpy(param_2,_Src,0x34);
+    *param_2 = *(undefined4 *)(iVar4 + 0x35a0);
     uVar2 = *(uint *)(iVar4 + 0x35a4);
-    param_2->y_height = uVar2;
-    param_2->uv_height = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0);
-    iVar5 = __restgprlr_26(0);
-    return iVar5;
+    param_2[1] = uVar2;
+    param_2[4] = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0);
+    __restgprlr_26(0);
+    return;
   }
-  iVar5 = __restgprlr_26(0xffffffffffffffff);
-  return iVar5;
+  __restgprlr_26(0xffffffffffffffff);
+  return;
 }
 

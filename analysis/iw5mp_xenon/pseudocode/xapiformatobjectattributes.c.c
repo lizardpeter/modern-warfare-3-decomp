@@ -2,23 +2,17 @@
 
 // 828B4F00  XapiFormatObjectAttributes  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapiformatobjectattributes.c:47)
 
-_OBJECT_ATTRIBUTES *
-XapiFormatObjectAttributes(_OBJECT_ATTRIBUTES *param_1,_STRING *param_2,uchar *param_3)
+void XapiFormatObjectAttributes(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   undefined4 *puVar1;
-  _OBJECT_ATTRIBUTES *p_Var2;
-  longlong lVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  puVar1 = (undefined4 *)__savegprlr_29(param_1,lVar3,lVar4);
-  RtlInitAnsiString(lVar3,lVar4);
-  puVar1[1] = (int)lVar3;
+  puVar1 = (undefined4 *)__savegprlr_29();
+  RtlInitAnsiString(param_2,param_3);
+  puVar1[1] = (int)param_2;
   *puVar1 = 0xfffffffc;
   puVar1[2] = 0x80;
-  p_Var2 = (_OBJECT_ATTRIBUTES *)__restgprlr_29(puVar1);
-  return p_Var2;
+  __restgprlr_29(puVar1);
+  return;
 }
 

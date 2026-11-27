@@ -2,28 +2,28 @@
 
 // 82928490  _ungetc_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/ungetc_nolock.inl:32)
 
-int _ungetc_nolock(int param_1,_iobuf *param_2)
+int _ungetc_nolock(int _Ch,FILE *_File)
 
 {
   char *pcVar1;
   uint uVar2;
   int *piVar3;
-  ioinfo *piVar4;
-  ioinfo *piVar5;
+  undefined *puVar4;
+  undefined *puVar5;
   char *pcVar6;
   
-  if ((param_2->_flag & 0x40U) == 0) {
-    uVar2 = _fileno(param_2);
-    piVar5 = &__badioinfo;
-    piVar4 = piVar5;
+  if ((_File->_flag & 0x40U) == 0) {
+    uVar2 = _fileno(_File);
+    puVar5 = &DAT_829b0a68;
+    puVar4 = puVar5;
     if ((uVar2 != 0xffffffff) && (uVar2 != 0xfffffffe)) {
-      piVar4 = (ioinfo *)(*(int *)(&__pioinfo + ((int)uVar2 >> 5) * 4) + (uVar2 & 0x1f) * 0x48);
+      puVar4 = (undefined *)((&DAT_84897dc0)[(int)uVar2 >> 5] + (uVar2 & 0x1f) * 0x48);
     }
-    if (((piVar4->field5_0x28).unicode & 0xfe) == 0) {
+    if ((puVar4[0x28] & 0xfe) == 0) {
       if ((uVar2 != 0xffffffff) && (uVar2 != 0xfffffffe)) {
-        piVar5 = (ioinfo *)(*(int *)(&__pioinfo + ((int)uVar2 >> 5) * 4) + (uVar2 & 0x1f) * 0x48);
+        puVar5 = (undefined *)((&DAT_84897dc0)[(int)uVar2 >> 5] + (uVar2 & 0x1f) * 0x48);
       }
-      if (((piVar5->field5_0x28).unicode & 1) == 0) goto LAB_82928574;
+      if ((puVar5[0x28] & 1) == 0) goto LAB_82928574;
     }
     piVar3 = _errno();
     *piVar3 = 0x16;
@@ -31,31 +31,31 @@ int _ungetc_nolock(int param_1,_iobuf *param_2)
   }
   else {
 LAB_82928574:
-    if ((param_1 != -1) &&
-       ((uVar2 = param_2->_flag, (uVar2 & 1) != 0 || (((uVar2 & 0x80) != 0 && ((uVar2 & 2) == 0)))))
-       ) {
-      if (param_2->_base == (char *)0x0) {
-        _getbuf(param_2);
+    if ((_Ch != -1) &&
+       ((uVar2 = _File->_flag, (uVar2 & 1) != 0 || (((uVar2 & 0x80) != 0 && ((uVar2 & 2) == 0))))))
+    {
+      if (_File->_base == (char *)0x0) {
+        _getbuf(_File);
       }
-      if (param_2->_ptr == param_2->_base) {
-        if (param_2->_cnt != 0) {
+      if (_File->_ptr == _File->_base) {
+        if (_File->_cnt != 0) {
           return -1;
         }
-        param_2->_ptr = param_2->_ptr + 1;
+        _File->_ptr = _File->_ptr + 1;
       }
-      pcVar1 = param_2->_ptr;
+      pcVar1 = _File->_ptr;
       pcVar6 = pcVar1 + -1;
-      param_2->_ptr = pcVar6;
-      if ((param_2->_flag & 0x40U) == 0) {
-        *pcVar6 = (char)param_1;
+      _File->_ptr = pcVar6;
+      if ((_File->_flag & 0x40U) == 0) {
+        *pcVar6 = (char)_Ch;
       }
-      else if (*pcVar6 != (char)param_1) {
-        param_2->_ptr = pcVar1;
+      else if (*pcVar6 != (char)_Ch) {
+        _File->_ptr = pcVar1;
         return -1;
       }
-      param_2->_cnt = param_2->_cnt + 1;
-      param_2->_flag = param_2->_flag & 0xffffffeeU | 1;
-      return param_1 & 0xff;
+      _File->_cnt = _File->_cnt + 1;
+      _File->_flag = _File->_flag & 0xffffffeeU | 1;
+      return _Ch & 0xff;
     }
   }
   return -1;

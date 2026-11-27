@@ -2,27 +2,29 @@
 
 // 828A4ED8  FindFirstFileA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/findfirstfile.c:87)
 
-void * FindFirstFileA(char *param_1,_WIN32_FIND_DATAA *param_2)
+HANDLE FindFirstFileA(LPCSTR lpFileName,LPWIN32_FIND_DATAA lpFindFileData)
 
 {
-  long lVar1;
-  void *local_180 [2];
-  _OBJECT_ATTRIBUTES local_178;
-  _STRING _Stack_168;
-  _FILE_DIRECTORY_INFORMATION a_Stack_160 [4];
+  int iVar1;
+  HANDLE local_180 [2];
+  undefined4 local_178;
+  undefined1 *local_174;
+  undefined4 local_170;
+  undefined1 auStack_168 [8];
+  undefined1 auStack_160 [328];
   
-  local_180[0] = (void *)0x0;
-  RtlInitAnsiString(&_Stack_168,param_1);
-  local_178.ObjectName = &_Stack_168;
-  local_178.RootDirectory = (void *)0xfffffffd;
-  local_178.Attributes = 0x40;
-  lVar1 = RtlFindFirstFile(&local_178,a_Stack_160,0x148,local_180);
-  if (lVar1 < 0) {
-    RtlSetLastNTError(lVar1);
-    local_180[0] = (void *)0xffffffff;
+  local_180[0] = (HANDLE)0x0;
+  RtlInitAnsiString(auStack_168,lpFileName);
+  local_174 = auStack_168;
+  local_178 = 0xfffffffd;
+  local_170 = 0x40;
+  iVar1 = RtlFindFirstFile(&local_178,auStack_160,0x148,local_180);
+  if (iVar1 < 0) {
+    RtlSetLastNTError();
+    local_180[0] = (HANDLE)0xffffffff;
   }
   else {
-    XapiDirectoryInformationToFindData(a_Stack_160,param_2);
+    XapiDirectoryInformationToFindData(auStack_160,lpFindFileData);
   }
   return local_180[0];
 }

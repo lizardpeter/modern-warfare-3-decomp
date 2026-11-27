@@ -2,15 +2,15 @@
 
 // 829184D0  toupper  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/toupper.c:102)
 
-int toupper(int param_1)
+int toupper(int _C)
 
 {
-  if (param_1 < 0x61) {
-    return param_1;
+  if (_C < 0x61) {
+    return _C;
   }
-  if (0x7a < param_1) {
-    return param_1;
+  if (0x7a < _C) {
+    return _C;
   }
-  return param_1 + -0x20;
+  return _C + -0x20;
 }
 

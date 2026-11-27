@@ -7,176 +7,183 @@ void read_rle_samples(undefined8 param_1,ulonglong param_2,uint *param_3,longlon
 
 {
   int iVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  uint uVar4;
-  int iVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  ulonglong uVar2;
+  void *pvVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  int iVar6;
+  longlong lVar7;
+  longlong lVar8;
   ulonglong uVar9;
-  uint *puVar10;
-  ulonglong uVar11;
-  uint uVar13;
+  ulonglong uVar10;
+  longlong lVar11;
   ulonglong uVar12;
+  uint *puVar13;
   ulonglong uVar14;
   uint uVar16;
   ulonglong uVar15;
-  double dVar17;
-  double dVar18;
-  double dVar19;
+  ulonglong uVar17;
+  uint uVar19;
+  ulonglong uVar18;
   double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
   
-  lVar2 = __savegprlr_18();
-  dVar18 = 0.0;
-  uVar7 = 0;
-  puVar10 = (uint *)param_3[1];
-  uVar9 = ZEXT48(puVar10);
-  uVar13 = *param_3;
-  uVar11 = (ulonglong)uVar13;
-  uVar16 = param_3[2];
+  uVar2 = __savegprlr_18();
+  dVar21 = 0.0;
+  uVar9 = 0;
+  puVar13 = (uint *)param_3[1];
+  uVar12 = ZEXT48(puVar13);
+  uVar16 = *param_3;
   uVar14 = (ulonglong)uVar16;
+  uVar19 = param_3[2];
+  uVar17 = (ulonglong)uVar19;
   iVar1 = (int)param_4;
-  dVar19 = dVar18;
-  dVar20 = dVar18;
+  dVar22 = dVar21;
+  dVar23 = dVar21;
   if ((uint)(*param_5 << 1) < 2) {
-    lVar6 = 0;
+    lVar7 = 0;
     do {
-      uVar7 = uVar7 + 1;
-      dVar20 = (double)*(float *)((int)lVar6 + iVar1);
-      dVar19 = -dVar20;
-      lVar6 = (uVar7 & 0x3fffffff) << 2;
-    } while ((uint)(*(int *)((int)lVar6 + (int)param_5) << 1) < 2);
+      uVar9 = uVar9 + 1;
+      dVar23 = (double)*(float *)((int)lVar7 + iVar1);
+      dVar22 = -dVar23;
+      lVar7 = (uVar9 & 0x3fffffff) << 2;
+    } while ((uint)(*(int *)((int)lVar7 + (int)param_5) << 1) < 2);
   }
-  lVar2 = lVar2 + 8;
-  uVar3 = 2;
+  lVar7 = uVar2 + 8;
+  uVar4 = 2;
   if (2 < (param_2 & 0xffffffff)) {
     do {
-      puVar10 = (uint *)uVar9;
+      puVar13 = (uint *)uVar12;
+      uVar19 = (uint)uVar17;
       uVar16 = (uint)uVar14;
-      uVar13 = (uint)uVar11;
-      if ((uVar14 & 0xffffffff) == 0) {
-        if ((param_6 & 0xffffffff) <= (uVar9 & 0xffffffff)) break;
-        uVar11 = (ulonglong)*puVar10;
-        uVar14 = 0x20;
-        uVar9 = uVar9 + 4;
+      if ((uVar17 & 0xffffffff) == 0) {
+        if ((param_6 & 0xffffffff) <= (uVar12 & 0xffffffff)) break;
+        uVar14 = (ulonglong)*puVar13;
+        uVar17 = 0x20;
+        uVar12 = uVar12 + 4;
       }
-      puVar10 = (uint *)uVar9;
-      uVar15 = uVar14 - 1;
+      puVar13 = (uint *)uVar12;
+      uVar18 = uVar17 - 1;
+      uVar19 = (uint)uVar18;
+      uVar15 = uVar14 >> 1;
       uVar16 = (uint)uVar15;
-      uVar12 = uVar11 >> 1;
-      uVar13 = (uint)uVar12;
-      if ((uVar11 & 1) == 0) {
-        uVar8 = uVar3 + 8;
+      if ((uVar14 & 1) == 0) {
+        uVar10 = uVar4 + 8;
       }
-      else if ((uVar15 & 0xffffffff) < 4) {
-        if ((param_6 & 0xffffffff) <= (uVar9 & 0xffffffff)) break;
-        uVar9 = uVar9 + 4;
-        uVar15 = uVar14 + 0x1b;
-        uVar12 = (ulonglong)(*puVar10 >> (4 - uVar16 & 0x3f));
-        uVar8 = (ulonglong)(byte)(&DAT_8489bee8)[(*puVar10 << (uVar16 & 0x3f) | uVar13) & 0xf] * 8 +
-                uVar3;
+      else if ((uVar18 & 0xffffffff) < 4) {
+        if ((param_6 & 0xffffffff) <= (uVar12 & 0xffffffff)) break;
+        uVar12 = uVar12 + 4;
+        uVar18 = uVar17 + 0x1b;
+        uVar15 = (ulonglong)(*puVar13 >> (4 - uVar19 & 0x3f));
+        uVar10 = (ulonglong)(byte)(&DAT_8489bee8)[(*puVar13 << (uVar19 & 0x3f) | uVar16) & 0xf] * 8
+                 + uVar4;
       }
       else {
-        uVar12 = uVar11 >> 5;
-        uVar15 = uVar14 - 5;
-        uVar8 = (ulonglong)(byte)(&DAT_8489bee8)[uVar13 & 0xf] * 8 + uVar3;
+        uVar15 = uVar14 >> 5;
+        uVar18 = uVar17 - 5;
+        uVar10 = (ulonglong)(byte)(&DAT_8489bee8)[uVar16 & 0xf] * 8 + uVar4;
       }
-      puVar10 = (uint *)uVar9;
+      puVar13 = (uint *)uVar12;
+      uVar19 = (uint)uVar18;
       uVar16 = (uint)uVar15;
-      uVar13 = (uint)uVar12;
-      if ((param_2 & 0xffffffff) < (uVar8 & 0xffffffff)) {
-        uVar8 = param_2;
+      if ((param_2 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+        uVar10 = param_2;
       }
-      if ((uVar15 & 0xffffffff) < 4) {
-        if ((param_6 & 0xffffffff) <= (uVar9 & 0xffffffff)) break;
-        uVar9 = uVar9 + 4;
-        uVar14 = uVar15 + 0x1c;
-        uVar12 = *puVar10 << (uVar16 & 0x3f) | uVar12;
-        uVar11 = (ulonglong)(*puVar10 >> (4 - uVar16 & 0x3f));
+      if ((uVar18 & 0xffffffff) < 4) {
+        if ((param_6 & 0xffffffff) <= (uVar12 & 0xffffffff)) break;
+        uVar12 = uVar12 + 4;
+        uVar17 = uVar18 + 0x1c;
+        uVar15 = *puVar13 << (uVar19 & 0x3f) | uVar15;
+        uVar14 = (ulonglong)(*puVar13 >> (4 - uVar19 & 0x3f));
       }
       else {
-        uVar11 = uVar12 >> 4;
-        uVar14 = uVar15 - 4;
+        uVar14 = uVar15 >> 4;
+        uVar17 = uVar18 - 4;
       }
-      uVar12 = uVar12 & 0xf;
-      if (uVar12 == 0) {
-        memset();
-        lVar6 = (uVar7 & 0x3fffffff) << 2;
-        lVar2 = (uVar8 - uVar3 & 0x3fffffff) * 4 + lVar2;
-        uVar3 = uVar8;
-        if (((ulonglong)*(uint *)((int)lVar6 + (int)param_5) & 0x7fffffff) << 1 <
-            (uVar8 & 0xffffffff)) {
+      uVar15 = uVar15 & 0xf;
+      if (uVar15 == 0) {
+        lVar11 = (uVar10 - uVar4 & 0x3fffffff) * 4;
+        pvVar3 = memset((void *)lVar7,0,(size_t)lVar11);
+        uVar2 = (ulonglong)(int)pvVar3;
+        lVar8 = (uVar9 & 0x3fffffff) << 2;
+        lVar7 = lVar11 + lVar7;
+        uVar4 = uVar10;
+        if (((ulonglong)*(uint *)((int)lVar8 + (int)param_5) & 0x7fffffff) << 1 <
+            (uVar10 & 0xffffffff)) {
           do {
-            uVar7 = uVar7 + 1;
-            dVar20 = (double)*(float *)((int)lVar6 + iVar1);
-            dVar19 = -dVar20;
-            lVar6 = (uVar7 & 0x3fffffff) << 2;
-          } while (((ulonglong)*(uint *)((int)lVar6 + (int)param_5) & 0x7fffffff) << 1 <
-                   (uVar8 & 0xffffffff));
+            uVar9 = uVar9 + 1;
+            dVar23 = (double)*(float *)((int)lVar8 + iVar1);
+            dVar22 = -dVar23;
+            lVar8 = (uVar9 & 0x3fffffff) << 2;
+          } while (((ulonglong)*(uint *)((int)lVar8 + (int)param_5) & 0x7fffffff) << 1 <
+                   (uVar10 & 0xffffffff));
         }
       }
-      else if ((uVar3 & 0xffffffff) < (uVar8 & 0xffffffff)) {
-        lVar6 = (uVar7 & 0x3fffffff) * 4 + param_4;
+      else if ((uVar4 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+        lVar8 = (uVar9 & 0x3fffffff) * 4 + param_4;
         do {
-          if ((uVar3 & 0xffffffff) ==
-              ((ulonglong)*(uint *)(((int)param_5 - iVar1) + (int)(float *)lVar6) & 0x7fffffff) << 1
+          if ((uVar4 & 0xffffffff) ==
+              ((ulonglong)*(uint *)(((int)param_5 - iVar1) + (int)(float *)lVar8) & 0x7fffffff) << 1
              ) {
-            dVar20 = (double)*(float *)lVar6;
-            uVar7 = uVar7 + 1;
-            lVar6 = lVar6 + 4;
-            dVar19 = -dVar20;
+            dVar23 = (double)*(float *)lVar8;
+            uVar9 = uVar9 + 1;
+            lVar8 = lVar8 + 4;
+            dVar22 = -dVar23;
           }
-          iVar5 = (int)uVar12;
-          uVar13 = (uint)uVar11;
-          if ((uVar14 & 0xffffffff) < uVar12) {
-            if ((param_6 & 0xffffffff) <= (uVar9 & 0xffffffff)) break;
-            puVar10 = (uint *)uVar9;
-            uVar4 = (uint)uVar14;
-            uVar9 = uVar9 + 4;
-            uVar14 = (uVar14 - uVar12) + 0x20;
-            uVar16 = *puVar10 >> (iVar5 - uVar4 & 0x3f);
-            uVar4 = 0xffffffffU >> (0x20U - iVar5 & 0x3f) & (*puVar10 << (uVar4 & 0x3f) | uVar13);
-          }
-          else {
-            uVar14 = uVar14 - uVar12;
-            uVar4 = 0xffffffffU >> (0x20U - iVar5 & 0x3f) & uVar13;
-            uVar16 = uVar13 >> iVar5;
-          }
-          uVar11 = (ulonglong)uVar16;
-          if (uVar4 == 0) {
-            *(float *)lVar2 = (float)dVar18;
+          iVar6 = (int)uVar15;
+          uVar16 = (uint)uVar14;
+          if ((uVar17 & 0xffffffff) < uVar15) {
+            if ((param_6 & 0xffffffff) <= (uVar12 & 0xffffffff)) break;
+            puVar13 = (uint *)uVar12;
+            uVar19 = (uint)uVar17;
+            uVar12 = uVar12 + 4;
+            uVar5 = *puVar13 << (uVar19 & 0x3f);
+            uVar2 = (ulonglong)uVar5;
+            uVar17 = (uVar17 - uVar15) + 0x20;
+            uVar19 = *puVar13 >> (iVar6 - uVar19 & 0x3f);
+            uVar5 = 0xffffffffU >> (0x20U - iVar6 & 0x3f) & (uVar5 | uVar16);
           }
           else {
-            if ((uVar14 & 0xffffffff) == 0) {
-              uVar16 = *(uint *)uVar9;
-              uVar11 = (ulonglong)uVar16;
-              uVar14 = 0x1f;
-              uVar9 = uVar9 + 4;
+            uVar17 = uVar17 - uVar15;
+            uVar5 = 0xffffffffU >> (0x20U - iVar6 & 0x3f) & uVar16;
+            uVar19 = uVar16 >> iVar6;
+          }
+          uVar14 = (ulonglong)uVar19;
+          if (uVar5 == 0) {
+            *(float *)lVar7 = (float)dVar21;
+          }
+          else {
+            if ((uVar17 & 0xffffffff) == 0) {
+              uVar19 = *(uint *)uVar12;
+              uVar14 = (ulonglong)uVar19;
+              uVar17 = 0x1f;
+              uVar12 = uVar12 + 4;
             }
             else {
-              uVar14 = uVar14 - 1;
+              uVar17 = uVar17 - 1;
             }
-            dVar17 = dVar20;
-            if ((uVar11 & 1) != 0) {
-              dVar17 = dVar19;
+            dVar20 = dVar23;
+            if ((uVar14 & 1) != 0) {
+              dVar20 = dVar22;
             }
-            *(float *)lVar2 = (float)((double)(longlong)(int)uVar4 * dVar17);
-            uVar11 = (ulonglong)(uVar16 >> 1);
+            *(float *)lVar7 = (float)((double)(longlong)(int)uVar5 * dVar20);
+            uVar14 = (ulonglong)(uVar19 >> 1);
           }
-          uVar3 = uVar3 + 1;
-          lVar2 = lVar2 + 4;
-        } while ((uVar3 & 0xffffffff) < (uVar8 & 0xffffffff));
+          uVar4 = uVar4 + 1;
+          lVar7 = lVar7 + 4;
+        } while ((uVar4 & 0xffffffff) < (uVar10 & 0xffffffff));
       }
-      puVar10 = (uint *)uVar9;
+      puVar13 = (uint *)uVar12;
+      uVar19 = (uint)uVar17;
       uVar16 = (uint)uVar14;
-      uVar13 = (uint)uVar11;
-    } while ((uVar3 & 0xffffffff) < (param_2 & 0xffffffff));
+    } while ((uVar4 & 0xffffffff) < (param_2 & 0xffffffff));
   }
-  param_3[1] = (uint)puVar10;
-  *param_3 = uVar13;
-  param_3[2] = uVar16;
-  __restgprlr_18();
+  param_3[1] = (uint)puVar13;
+  *param_3 = uVar16;
+  param_3[2] = uVar19;
+  __restgprlr_18(uVar2);
   return;
 }
 
@@ -478,21 +485,21 @@ void BinkAudioDecompressOpen(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
   ulonglong uVar1;
-  undefined4 *puVar2;
-  ulonglong uVar3;
+  undefined4 *_Dst;
+  ulonglong uVar2;
+  uint uVar3;
   uint uVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  uint *puVar7;
-  int iVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  uint uVar11;
+  ulonglong uVar5;
+  uint *puVar6;
+  int iVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
   int iStack_8c;
   undefined4 local_88;
   undefined4 local_84;
@@ -502,108 +509,108 @@ void BinkAudioDecompressOpen(undefined8 param_1,int param_2,ulonglong param_3)
   
   uVar1 = __savegprlr_22();
   if ((uVar1 & 0xffffffff) < 0xac44) {
-    uVar10 = (-(ulonglong)(uVar1 < 0x5622) & 0xfffffe00) + 0x400;
+    uVar9 = (-(ulonglong)(uVar1 < 0x5622) & 0xfffffe00) + 0x400;
   }
   else {
-    uVar10 = 0x800;
+    uVar9 = 0x800;
   }
-  uVar6 = (longlong)(int)uVar10 * (longlong)param_2;
-  lVar9 = (uVar6 & 0x7fffffff) << 1;
+  uVar5 = (longlong)(int)uVar9 * (longlong)param_2;
+  lVar8 = (uVar5 & 0x7fffffff) << 1;
   if ((param_3 & 1) == 0) {
     uVar1 = (longlong)(int)uVar1 * (longlong)param_2;
     param_2 = 1;
-    uVar10 = uVar6;
+    uVar9 = uVar5;
   }
-  uVar3 = (uVar10 & 0xffffffff) >> 1;
-  uVar11 = 0;
+  uVar2 = (uVar9 & 0xffffffff) >> 1;
+  uVar10 = 0;
   uVar1 = (uVar1 + 1 & 0xffffffff) >> 1;
-  puVar7 = &DAT_8489befc;
+  puVar6 = &DAT_8489befc;
   do {
-    if (uVar1 <= puVar7[-1]) break;
-    if (uVar1 <= *puVar7) {
-      uVar11 = uVar11 + 1;
+    if (uVar1 <= puVar6[-1]) break;
+    if (uVar1 <= *puVar6) {
+      uVar10 = uVar10 + 1;
       break;
     }
-    if (uVar1 <= puVar7[1]) {
-      uVar11 = uVar11 + 2;
+    if (uVar1 <= puVar6[1]) {
+      uVar10 = uVar10 + 2;
       break;
     }
-    if (uVar1 <= puVar7[2]) {
-      uVar11 = uVar11 + 3;
+    if (uVar1 <= puVar6[2]) {
+      uVar10 = uVar10 + 3;
       break;
     }
-    if (uVar1 <= puVar7[3]) {
-      uVar11 = uVar11 + 4;
+    if (uVar1 <= puVar6[3]) {
+      uVar10 = uVar10 + 4;
       break;
     }
-    uVar11 = uVar11 + 5;
-    puVar7 = puVar7 + 5;
-  } while (uVar11 < 0x19);
-  pushmalloc(&local_84,uVar11 + 1 & 0x3fffffff);
-  dVar15 = 0.5;
-  dVar14 = 0.0;
-  dVar16 = 3.0;
-  dVar12 = (double)uVar3;
-  if (0.0 < dVar12) {
-    dVar13 = 1.0 / SQRT(dVar12);
-    dVar13 = -(dVar12 * dVar13 * dVar13 - 3.0) * dVar13 * 0.5;
-    dVar13 = -(dVar12 * dVar13 * dVar13 - 3.0) * dVar13 * 0.5;
-    dVar12 = (double)(float)(-(dVar12 * dVar13 * dVar13 - 3.0) * dVar13 * 0.5 * dVar12);
+    uVar10 = uVar10 + 5;
+    puVar6 = puVar6 + 5;
+  } while (uVar10 < 0x19);
+  pushmalloc(&local_84,uVar10 + 1 & 0x3fffffff);
+  dVar14 = 0.5;
+  dVar13 = 0.0;
+  dVar15 = 3.0;
+  dVar11 = (double)uVar2;
+  if (0.0 < dVar11) {
+    dVar12 = 1.0 / SQRT(dVar11);
+    dVar12 = -(dVar11 * dVar12 * dVar12 - 3.0) * dVar12 * 0.5;
+    dVar12 = -(dVar11 * dVar12 * dVar12 - 3.0) * dVar12 * 0.5;
+    dVar11 = (double)(float)(-(dVar11 * dVar12 * dVar12 - 3.0) * dVar12 * 0.5 * dVar11);
   }
-  iStack_8c = (int)uVar3;
-  pushmalloc(&local_80,((ulonglong)(uint)(int)dVar12 + 2 & 0x3fffffff) << 2);
+  iStack_8c = (int)uVar2;
+  pushmalloc(&local_80,((ulonglong)(uint)(int)dVar11 + 2 & 0x3fffffff) << 2);
   if ((param_3 & 1) == 0) {
-    uVar3 = (uVar3 & 0x3fffffff) << 2;
+    uVar2 = (uVar2 & 0x3fffffff) << 2;
   }
   else {
-    uVar3 = uVar10 + (uVar10 & 0x3fffffff) * 4 & 0x3fffffff;
+    uVar2 = uVar9 + (uVar9 & 0x3fffffff) * 4 & 0x3fffffff;
   }
-  pushmalloc(&local_88,uVar3);
-  pushmalloc(&local_7c,uVar6 & 0x7fffffff);
-  pushmalloc(local_78,lVar9);
-  puVar2 = (undefined4 *)popmalloc(0x34);
-  if (puVar2 != (undefined4 *)0x0) {
-    memset();
-    puVar2[8] = local_84;
-    uVar4 = (uint)lVar9;
-    puVar2[9] = local_80;
-    puVar2[10] = local_88;
-    puVar2[0xb] = local_7c;
-    puVar2[0xc] = (int)param_3;
-    puVar2[4] = param_2;
-    puVar2[7] = uVar11;
-    *puVar2 = (int)uVar10;
-    puVar2[5] = local_78[0];
-    puVar2[2] = uVar4;
-    puVar2[3] = uVar4 >> 4;
-    dVar12 = (double)(uVar10 & 0xffffffff);
-    if (dVar14 < dVar12) {
-      dVar14 = 1.0 / SQRT(dVar12);
-      dVar14 = -(dVar12 * dVar14 * dVar14 - dVar16) * dVar14 * dVar15;
-      dVar14 = -(dVar12 * dVar14 * dVar14 - dVar16) * dVar14 * dVar15;
-      dVar12 = (double)(float)(-(dVar12 * dVar14 * dVar14 - dVar16) * dVar14 * dVar15 * dVar12);
+  pushmalloc(&local_88,uVar2);
+  pushmalloc(&local_7c,uVar5 & 0x7fffffff);
+  pushmalloc(local_78,lVar8);
+  _Dst = (undefined4 *)popmalloc(0x34);
+  if (_Dst != (undefined4 *)0x0) {
+    memset(_Dst,0,0x34);
+    _Dst[8] = local_84;
+    uVar3 = (uint)lVar8;
+    _Dst[9] = local_80;
+    _Dst[10] = local_88;
+    _Dst[0xb] = local_7c;
+    _Dst[0xc] = (int)param_3;
+    _Dst[4] = param_2;
+    _Dst[7] = uVar10;
+    *_Dst = (int)uVar9;
+    _Dst[5] = local_78[0];
+    _Dst[2] = uVar3;
+    _Dst[3] = uVar3 >> 4;
+    dVar11 = (double)(uVar9 & 0xffffffff);
+    if (dVar13 < dVar11) {
+      dVar13 = 1.0 / SQRT(dVar11);
+      dVar13 = -(dVar11 * dVar13 * dVar13 - dVar15) * dVar13 * dVar14;
+      dVar13 = -(dVar11 * dVar13 * dVar13 - dVar15) * dVar13 * dVar14;
+      dVar11 = (double)(float)(-(dVar11 * dVar13 * dVar13 - dVar15) * dVar13 * dVar14 * dVar11);
     }
-    puVar2[1] = (float)(2.0 / dVar12);
-    uVar4 = 0;
-    if (uVar11 != 0) {
-      iVar8 = 0;
-      uVar5 = uVar11;
+    _Dst[1] = (float)(2.0 / dVar11);
+    uVar3 = 0;
+    if (uVar10 != 0) {
+      iVar7 = 0;
+      uVar4 = uVar10;
       do {
-        *(int *)(iVar8 + puVar2[8]) =
-             (int)(((longlong)*(int *)((int)&DAT_8489bef8 + iVar8) * (longlong)iStack_8c &
+        *(int *)(iVar7 + _Dst[8]) =
+             (int)(((longlong)*(int *)((int)&DAT_8489bef8 + iVar7) * (longlong)iStack_8c &
                    0xffffffffU) / uVar1);
-        if (*(int *)(iVar8 + puVar2[8]) == 0) {
-          *(undefined4 *)(iVar8 + puVar2[8]) = 1;
+        if (*(int *)(iVar7 + _Dst[8]) == 0) {
+          *(undefined4 *)(iVar7 + _Dst[8]) = 1;
         }
-        uVar5 = uVar5 - 1;
-        iVar8 = iVar8 + 4;
-        uVar4 = uVar11;
-      } while (uVar5 != 0);
+        uVar4 = uVar4 - 1;
+        iVar7 = iVar7 + 4;
+        uVar3 = uVar10;
+      } while (uVar4 != 0);
     }
-    *(int *)(uVar4 * 4 + puVar2[8]) = iStack_8c;
-    *(undefined4 *)puVar2[9] = 0;
-    puVar2[6] = 1;
-    __restgprlr_22(puVar2);
+    *(int *)(uVar3 * 4 + _Dst[8]) = iStack_8c;
+    *(undefined4 *)_Dst[9] = 0;
+    _Dst[6] = 1;
+    __restgprlr_22(_Dst);
     return;
   }
   __restgprlr_22();
@@ -623,36 +630,37 @@ void BinkAudioDecompress(undefined8 param_1,ulonglong param_2,ulonglong param_3,
   short *psVar4;
   undefined4 *puVar5;
   int iVar6;
-  int iVar7;
-  short *psVar8;
-  int iVar9;
-  uint uVar10;
+  void *pvVar7;
+  int iVar8;
+  short *psVar9;
+  int iVar10;
+  uint uVar11;
   
   puVar5 = (undefined4 *)__savegprlr_26();
   iVar6 = Unquant((double)(float)puVar5[1],*puVar5,puVar5[8],puVar5[4],puVar5[0xc],puVar5[9],
                   puVar5[10],puVar5[5],param_4);
-  uVar10 = 0;
+  uVar11 = 0;
   if (puVar5[6] == 0) {
     uVar1 = puVar5[3];
     uVar3 = (ulonglong)(uVar1 >> 1);
     if (uVar3 != 0) {
-      iVar9 = 0;
+      iVar10 = 0;
       do {
-        iVar7 = (uVar1 >> 1) - uVar10;
-        psVar8 = (short *)(puVar5[5] + iVar9);
-        psVar4 = (short *)(puVar5[0xb] + iVar9);
-        iVar9 = iVar9 + 2;
-        lVar2 = (longlong)(int)uVar10;
-        uVar10 = uVar10 + 1;
-        *psVar8 = (short)(((longlong)(int)*psVar4 * (longlong)iVar7 + (int)*psVar8 * lVar2 &
+        iVar8 = (uVar1 >> 1) - uVar11;
+        psVar9 = (short *)(puVar5[5] + iVar10);
+        psVar4 = (short *)(puVar5[0xb] + iVar10);
+        iVar10 = iVar10 + 2;
+        lVar2 = (longlong)(int)uVar11;
+        uVar11 = uVar11 + 1;
+        *psVar9 = (short)(((longlong)(int)*psVar4 * (longlong)iVar8 + (int)*psVar9 * lVar2 &
                           0xffffffffU) / uVar3);
-      } while (uVar10 < uVar3);
+      } while (uVar11 < uVar3);
     }
   }
   else {
     puVar5[6] = 0;
   }
-  memcpy();
+  pvVar7 = memcpy((void *)puVar5[0xb],(void *)((puVar5[5] - puVar5[3]) + puVar5[2]),puVar5[3]);
   if ((param_3 & 0xffffffff) != 0) {
     *(int *)param_3 = puVar5[2] - puVar5[3];
   }
@@ -662,7 +670,7 @@ void BinkAudioDecompress(undefined8 param_1,ulonglong param_2,ulonglong param_3,
   if ((param_5 & 0xffffffff) != 0) {
     *(int *)param_5 = iVar6 + (int)param_4;
   }
-  __restgprlr_26();
+  __restgprlr_26(pvVar7);
   return;
 }
 

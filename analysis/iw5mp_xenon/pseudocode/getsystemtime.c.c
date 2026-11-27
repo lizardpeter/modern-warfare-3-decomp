@@ -2,29 +2,29 @@
 
 // 828AAD80  GetSystemTime  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/getsystemtime.c:58)
 
-void GetSystemTime(_SYSTEMTIME *param_1)
+void GetSystemTime(LPSYSTEMTIME lpSystemTime)
 
 {
   undefined1 auStack_30 [16];
-  ushort local_20;
-  ushort local_1e;
-  ushort local_1c;
-  ushort local_1a;
-  ushort local_18;
-  ushort local_16;
-  ushort local_14;
-  ushort local_12;
+  WORD local_20;
+  WORD local_1e;
+  WORD local_1c;
+  WORD local_1a;
+  WORD local_18;
+  WORD local_16;
+  WORD local_14;
+  WORD local_12;
   
   KeQuerySystemTime(auStack_30);
   RtlTimeToTimeFields(auStack_30,&local_20);
-  param_1->wYear = local_20;
-  param_1->wMonth = local_1e;
-  param_1->wDayOfWeek = local_12;
-  param_1->wDay = local_1c;
-  param_1->wHour = local_1a;
-  param_1->wMinute = local_18;
-  param_1->wSecond = local_16;
-  param_1->wMilliseconds = local_14;
+  lpSystemTime->wYear = local_20;
+  lpSystemTime->wMonth = local_1e;
+  lpSystemTime->wDayOfWeek = local_12;
+  lpSystemTime->wDay = local_1c;
+  lpSystemTime->wHour = local_1a;
+  lpSystemTime->wMinute = local_18;
+  lpSystemTime->wSecond = local_16;
+  lpSystemTime->wMilliseconds = local_14;
   return;
 }
 

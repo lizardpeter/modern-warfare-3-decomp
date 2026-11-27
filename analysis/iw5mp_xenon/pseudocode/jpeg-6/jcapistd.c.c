@@ -2,41 +2,36 @@
 
 // 827B0778  jpeg_start_compress  (jpeg-6/jcapistd.c:39)
 
-void jpeg_start_compress(jpeg_compress_struct *param_1,uchar param_2)
+void jpeg_start_compress(int *param_1,char param_2)
 
 {
-  if (param_1->global_state != 100) {
-    param_1->err->msg_code = 0x14;
-    (param_1->err->msg_parm).i[0] = param_1->global_state;
-    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
+  if (param_1[5] != 100) {
+    *(undefined4 *)(*param_1 + 0x14) = 0x14;
+    *(int *)(*param_1 + 0x18) = param_1[5];
+    (**(code **)*param_1)();
   }
   if (param_2 != '\0') {
-    jpeg_suppress_tables(param_1,'\0');
+    jpeg_suppress_tables(param_1,0);
   }
-  (*param_1->err->reset_error_mgr)((jpeg_common_struct *)param_1);
-  (*param_1->dest->init_destination)(param_1);
+  (**(code **)(*param_1 + 0x10))(param_1);
+  (**(code **)(param_1[8] + 8))(param_1);
   jinit_compress_master(param_1);
-  (*param_1->master->prepare_for_pass)(param_1);
-  param_1->next_scanline = 0;
-  param_1->global_state = ((uint)LZCOUNT((uint)param_1->raw_data_in) >> 5 ^ 1) + 0x65;
+  (**(code **)param_1[0x51])(param_1);
+  param_1[0x36] = 0;
+  param_1[5] = ((uint)LZCOUNT((uint)*(byte *)(param_1 + 0x2e)) >> 5 ^ 1) + 0x65;
   return;
 }
 
 
 // 827B0860  jpeg_write_scanlines  (jpeg-6/jcapistd.c:79)
 
-uint jpeg_write_scanlines(jpeg_compress_struct *param_1,uchar **param_2,uint param_3)
+void jpeg_write_scanlines(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
   int *piVar1;
-  uint uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
   int local_30 [12];
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  piVar1 = (int *)__savegprlr_29(param_1,lVar3);
+  piVar1 = (int *)__savegprlr_29();
   if (piVar1[5] != 0x65) {
     *(undefined4 *)(*piVar1 + 0x14) = 0x14;
     *(int *)(*piVar1 + 0x18) = piVar1[5];
@@ -55,32 +50,27 @@ uint jpeg_write_scanlines(jpeg_compress_struct *param_1,uchar **param_2,uint par
     (**(code **)(piVar1[0x51] + 4))(piVar1);
   }
   if (((ulonglong)(uint)piVar1[10] - (ulonglong)(uint)piVar1[0x36] & 0xffffffff) <
-      (uVar4 & 0xffffffff)) {
-    uVar4 = (ulonglong)(uint)piVar1[10] - (ulonglong)(uint)piVar1[0x36];
+      (param_3 & 0xffffffff)) {
+    param_3 = (ulonglong)(uint)piVar1[10] - (ulonglong)(uint)piVar1[0x36];
   }
   local_30[0] = 0;
-  (**(code **)(piVar1[0x52] + 4))(piVar1,lVar3,local_30,uVar4);
+  (**(code **)(piVar1[0x52] + 4))(piVar1,param_2,local_30,param_3);
   piVar1[0x36] = local_30[0] + piVar1[0x36];
-  uVar2 = __restgprlr_29();
-  return uVar2;
+  __restgprlr_29();
+  return;
 }
 
 
 // 827B0990  jpeg_write_raw_data  (jpeg-6/jcapistd.c:122)
 
-uint jpeg_write_raw_data(jpeg_compress_struct *param_1,uchar ***param_2,uint param_3)
+void jpeg_write_raw_data(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
   int *piVar1;
-  uint uVar2;
-  char cVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  char cVar2;
+  ulonglong uVar3;
   
-  uVar5 = (ulonglong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  piVar1 = (int *)__savegprlr_28(param_1,lVar4);
+  piVar1 = (int *)__savegprlr_28();
   if (piVar1[5] != 0x66) {
     *(undefined4 *)(*piVar1 + 0x14) = 0x14;
     *(int *)(*piVar1 + 0x18) = piVar1[5];
@@ -95,23 +85,23 @@ uint jpeg_write_raw_data(jpeg_compress_struct *param_1,uchar ***param_2,uint par
     if (*(char *)(piVar1[0x51] + 0xc) != '\0') {
       (**(code **)(piVar1[0x51] + 4))(piVar1);
     }
-    uVar6 = ((ulonglong)(uint)piVar1[0x39] & 0x1fffffff) << 3;
-    if ((uVar5 & 0xffffffff) < uVar6) {
+    uVar3 = ((ulonglong)(uint)piVar1[0x39] & 0x1fffffff) << 3;
+    if ((param_3 & 0xffffffff) < uVar3) {
       *(undefined4 *)(*piVar1 + 0x14) = 0x17;
       (**(code **)*piVar1)(piVar1);
     }
-    cVar3 = (**(code **)(piVar1[0x54] + 4))(piVar1,lVar4);
-    if (cVar3 != '\0') {
-      piVar1[0x36] = (int)uVar6 + piVar1[0x36];
-      uVar2 = __restgprlr_28(uVar6);
-      return uVar2;
+    cVar2 = (**(code **)(piVar1[0x54] + 4))(piVar1,param_2);
+    if (cVar2 != '\0') {
+      piVar1[0x36] = (int)uVar3 + piVar1[0x36];
+      __restgprlr_28(uVar3);
+      return;
     }
   }
   else {
     *(undefined4 *)(*piVar1 + 0x14) = 0x7b;
     (**(code **)(*piVar1 + 4))(piVar1,0xffffffffffffffff);
   }
-  uVar2 = __restgprlr_28(0);
-  return uVar2;
+  __restgprlr_28(0);
+  return;
 }
 

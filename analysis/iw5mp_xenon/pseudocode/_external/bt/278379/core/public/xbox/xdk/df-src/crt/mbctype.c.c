@@ -2,14 +2,12 @@
 
 // 829283C8  __initmbctable  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/mbctype.c:183)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int __initmbctable(void)
+undefined8 __initmbctable(void)
 
 {
-  if (__mbctype_initialized == 0) {
-    __mbctype_initialized = 1;
-    __mbcodepage = -3;
+  if (DAT_84897ed0 == 0) {
+    DAT_84897ed0 = 1;
+    DAT_8489608c = 0xfffffffd;
   }
   return 0;
 }

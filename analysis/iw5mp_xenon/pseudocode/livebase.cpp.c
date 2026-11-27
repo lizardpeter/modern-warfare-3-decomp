@@ -2,12 +2,12 @@
 
 // 828B9D00  XUserMuteListQuery  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/livebase.cpp:27)
 
-ulong XUserMuteListQuery(ulong param_1,ulong64 param_2,int *param_3)
+undefined4 XUserMuteListQuery(undefined4 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  ulong local_20 [2];
-  ulong64 local_18;
-  ulong local_10;
+  undefined4 local_20 [2];
+  undefined8 local_18;
+  undefined4 local_10;
   
   local_10 = 0;
   local_20[0] = param_1;

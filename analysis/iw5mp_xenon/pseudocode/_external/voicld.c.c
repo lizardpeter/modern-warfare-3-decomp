@@ -2,7 +2,7 @@
 
 // 828CB908  VoicingLD  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/voicld.c:92)
 
-float VoicingLD(float param_1,float *param_2,float *param_3,int param_4)
+void VoicingLD(undefined8 param_1,longlong param_2,longlong param_3,int param_4)
 
 {
   int iVar1;
@@ -19,103 +19,100 @@ float VoicingLD(float param_1,float *param_2,float *param_3,int param_4)
   float fVar12;
   longlong lVar13;
   longlong lVar14;
-  int in_r6;
-  longlong lVar15;
-  longlong lVar16;
-  float *pfVar17;
-  int iVar18;
-  longlong lVar19;
-  float *pfVar20;
+  float *pfVar15;
+  int iVar16;
+  longlong lVar17;
+  float *pfVar18;
+  ulonglong uVar19;
+  ulonglong uVar20;
   ulonglong uVar21;
-  ulonglong uVar22;
-  ulonglong uVar23;
-  double dVar24;
+  double dVar22;
   
-  lVar14 = (longlong)param_4;
-  lVar13 = (longlong)(int)param_3;
-  dVar24 = (double)__savegprlr_26((double)param_1,param_2);
+  dVar22 = (double)__savegprlr_26();
   fVar10 = 0.0;
-  iVar1 = (int)((float)(512.0 / dVar24) * 32768.0 + 0.5);
-  uVar2 = (uint)((float)(longlong)in_r6 / (float)(512.0 / dVar24));
-  uVar23 = (ulonglong)uVar2;
+  iVar1 = (int)((float)(512.0 / dVar22) * 32768.0 + 0.5);
+  uVar2 = (uint)((float)(longlong)param_4 / (float)(512.0 / dVar22));
+  uVar21 = (ulonglong)uVar2;
   iVar6 = iVar1 >> 1;
   if (0 < (int)uVar2) {
-    iVar18 = 0x4000;
-    uVar22 = (longlong)(iVar6 + 0x4000 >> 0xf);
+    iVar16 = 0x4000;
+    uVar20 = (longlong)(iVar6 + 0x4000 >> 0xf);
     do {
-      iVar18 = iVar18 + iVar1;
-      iVar7 = iVar18 + iVar6 >> 0xf;
-      iVar5 = (iVar18 >> 0xf) * 4;
-      lVar19 = (uVar22 & 0x3fffffff) * 4;
-      uVar21 = (uVar22 & 0x7ffffff) * 0x20 - (longlong)(iVar18 + -0x3e00 >> 10);
-      lVar16 = lVar19 + lVar13;
-      lVar19 = lVar19 + lVar14;
+      iVar16 = iVar16 + iVar1;
+      iVar7 = iVar16 + iVar6 >> 0xf;
+      iVar5 = (iVar16 >> 0xf) * 4;
+      lVar17 = (uVar20 & 0x3fffffff) * 4;
+      uVar19 = (uVar20 & 0x7ffffff) * 0x20 - (longlong)(iVar16 + -0x3e00 >> 10);
+      lVar14 = lVar17 + param_2;
+      lVar17 = lVar17 + param_3;
       fVar11 = 1e-16;
-      if ((int)uVar21 < -0x6f) {
-        lVar15 = ((-uVar21 - 0x70 & 0xffffffff) >> 5) + 1;
-        uVar22 = lVar15 + uVar22;
-        uVar21 = (lVar15 * 0x20 & 0xffffffe0U) + uVar21;
+      if ((int)uVar19 < -0x6f) {
+        lVar13 = ((-uVar19 - 0x70 & 0xffffffff) >> 5) + 1;
+        uVar20 = lVar13 + uVar20;
+        uVar19 = (lVar13 * 0x20 & 0xffffffe0U) + uVar19;
         do {
-          pfVar17 = (float *)lVar16;
-          lVar16 = lVar16 + 4;
-          pfVar20 = (float *)lVar19;
-          lVar19 = lVar19 + 4;
-          fVar11 = *pfVar20 * *pfVar20 + *pfVar17 * *pfVar17 + fVar11;
-          lVar15 = lVar15 + -1;
-        } while (lVar15 != 0);
+          pfVar15 = (float *)lVar14;
+          lVar14 = lVar14 + 4;
+          pfVar18 = (float *)lVar17;
+          lVar17 = lVar17 + 4;
+          fVar11 = *pfVar18 * *pfVar18 + *pfVar15 * *pfVar15 + fVar11;
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
       }
       fVar12 = fVar11;
-      if ((int)uVar21 < 0x70) {
-        lVar15 = (uVar21 & 0x3fffffff) * 4 + -0x7ddf9df0;
+      if ((int)uVar19 < 0x70) {
+        lVar13 = (uVar19 & 0x3fffffff) * 4 + -0x7ddf9df0;
         do {
-          if (iVar7 <= (int)uVar22) goto LAB_828cbab4;
-          fVar3 = *(float *)lVar16;
-          fVar8 = -(*(float *)lVar15 * *(float *)(iVar5 + (int)lVar13) - fVar3);
-          fVar4 = *(float *)lVar19;
-          fVar9 = -(*(float *)lVar15 * *(float *)(iVar5 + (int)lVar14) - fVar4);
-          lVar15 = lVar15 + 0x80;
-          lVar16 = lVar16 + 4;
-          lVar19 = lVar19 + 4;
-          uVar22 = uVar22 + 1;
+          if (iVar7 <= (int)uVar20) goto LAB_828cbab4;
+          fVar3 = *(float *)lVar14;
+          fVar8 = -(*(float *)lVar13 * *(float *)(iVar5 + (int)param_2) - fVar3);
+          fVar4 = *(float *)lVar17;
+          fVar9 = -(*(float *)lVar13 * *(float *)(iVar5 + (int)param_3) - fVar4);
+          lVar13 = lVar13 + 0x80;
+          lVar14 = lVar14 + 4;
+          lVar17 = lVar17 + 4;
+          uVar20 = uVar20 + 1;
           fVar11 = fVar4 * fVar4 + fVar3 * fVar3 + fVar11;
           fVar12 = fVar9 * fVar9 + fVar8 * fVar8 + fVar12;
-        } while ((int)lVar15 < -0x7ddf9c30);
+        } while ((int)lVar13 < -0x7ddf9c30);
       }
-      if ((int)uVar22 < iVar7) {
-        lVar15 = (longlong)iVar7 - uVar22;
-        lVar19 = lVar19 + -4;
-        lVar16 = lVar16 + -4;
+      if ((int)uVar20 < iVar7) {
+        lVar13 = (longlong)iVar7 - uVar20;
+        lVar17 = lVar17 + -4;
+        lVar14 = lVar14 + -4;
         do {
-          lVar16 = lVar16 + 4;
-          lVar19 = lVar19 + 4;
-          fVar3 = *(float *)lVar19 * *(float *)lVar19 + *(float *)lVar16 * *(float *)lVar16;
+          lVar14 = lVar14 + 4;
+          lVar17 = lVar17 + 4;
+          fVar3 = *(float *)lVar17 * *(float *)lVar17 + *(float *)lVar14 * *(float *)lVar14;
           fVar11 = fVar3 + fVar11;
           fVar12 = fVar12 + fVar3;
-          lVar15 = lVar15 + -1;
-        } while (lVar15 != 0);
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
       }
 LAB_828cbab4:
-      uVar23 = uVar23 - 1;
+      uVar21 = uVar21 - 1;
       fVar10 = fVar12 / fVar11 + fVar10;
-      uVar22 = (longlong)iVar7;
-    } while (uVar23 != 0);
+      uVar20 = (longlong)iVar7;
+    } while (uVar21 != 0);
   }
-  dVar24 = (double)__restgprlr_26((double)(1.0 - fVar10 / (float)(longlong)(int)uVar2));
-  return (float)dVar24;
+  __restgprlr_26((double)(1.0 - fVar10 / (float)(longlong)(int)uVar2));
+  return;
 }
 
 
 // 828CBAF0  FindBand4VoicLD  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/voicld.c:232)
 
-int FindBand4VoicLD(int param_1,float param_2)
+ulonglong FindBand4VoicLD(double param_1,ulonglong param_2)
 
 {
-  int iVar1;
+  uint uVar1;
+  ulonglong uVar2;
   
-  iVar1 = (int)((512.0 / param_2) * 3.9 + 0.5);
-  if (param_1 < iVar1) {
-    iVar1 = param_1;
+  uVar1 = (uint)((float)(512.0 / param_1) * 3.9 + 0.5);
+  uVar2 = (ulonglong)uVar1;
+  if ((int)param_2 < (int)uVar1) {
+    uVar2 = param_2;
   }
-  return iVar1;
+  return uVar2;
 }
 

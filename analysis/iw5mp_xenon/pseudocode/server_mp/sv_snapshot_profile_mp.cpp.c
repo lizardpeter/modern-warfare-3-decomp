@@ -2,8 +2,6 @@
 
 // 825850C0  SV_InitPacketAnalysis  (server_mp/sv_snapshot_profile_mp.cpp:162)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SV_InitPacketAnalysis(void)
 
 {
@@ -13,34 +11,21 @@ void SV_InitPacketAnalysis(void)
 
 // 825850C8  SV_ClearPacketAnalysis  (server_mp/sv_snapshot_profile_mp.cpp:173)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void SV_ClearPacketAnalysis(void)
+void * SV_ClearPacketAnalysis(void)
 
 {
-  memset();
-  memset();
-  memset();
-  g_currentSnapshotPlayerStateFields[0] = '\0';
-  g_currentSnapshotPlayerStateFields[1] = '\0';
-  g_currentSnapshotPlayerStateFields[2] = '\0';
-  g_currentSnapshotPlayerStateFields[3] = '\0';
-  g_currentSnapshotPlayerStateFields[4] = '\0';
-  g_currentSnapshotPlayerStateFields[5] = '\0';
-  g_currentSnapshotPlayerStateFields[6] = '\0';
-  g_currentSnapshotPlayerStateFields[7] = '\0';
-  g_currentSnapshotPlayerStateFields[8] = '\0';
-  g_currentSnapshotPlayerStateFields[9] = '\0';
-  g_currentSnapshotPlayerStateFields[10] = '\0';
-  g_currentSnapshotPlayerStateFields[0xb] = '\0';
-  g_currentSnapshotPlayerStateFields[0xc] = '\0';
-  g_currentSnapshotPlayerStateFields[0xd] = '\0';
-  g_currentSnapshotPlayerStateFields[0xe] = '\0';
-  g_currentSnapshotPlayerStateFields[0xf] = '\0';
-  newDataReady = false;
-  g_currentSnapshotPlayerStateFields[0x10] = '\0';
-  g_currentSnapshotPlayerStateFields[0x11] = '\0';
-  return;
+  void *pvVar1;
+  
+  memset(&DAT_83f5d310,0,0x3f0);
+  memset(&DAT_83f1ecb8,0,0x24000);
+  pvVar1 = memset(&DAT_83f541f8,0,0x9000);
+  DAT_83f5d1fc = 0;
+  DAT_83f5d200 = 0;
+  DAT_83f5d204 = 0;
+  DAT_83f5d208 = 0;
+  DAT_83f4abe0 = 0;
+  DAT_83f5d20c = 0;
+  return pvVar1;
 }
 
 
@@ -49,17 +34,16 @@ void SV_ClearPacketAnalysis(void)
 void SV_TrackNumFieldsSkippedInPlayerstate(int param_1)
 
 {
-  if ((!g_archivingSnapshot) && (g_networkBoundData)) {
+  if ((DAT_83f4abe2 == '\0') && (DAT_83f4abe1 != '\0')) {
     if (param_1 < 1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                      ,0xbc,0,"%s");
+      MyAssertHandler(0xffffffff82163190,0xbc,0,0xffffffff82000f98,0xffffffff821631e0);
     }
-    totalFieldsSkipped = totalFieldsSkipped + param_1;
+    DAT_83f541ac = DAT_83f541ac + param_1;
     DAT_83f5d7ac = DAT_83f5d7ac + 1;
     if (0x160 < param_1) {
       param_1 = 0x161;
     }
-    (&s_currentEntNum)[param_1] = (&s_currentEntNum)[param_1] + 1;
+    (&DAT_83f5d7f4)[param_1] = (&DAT_83f5d7f4)[param_1] + 1;
   }
   return;
 }
@@ -70,18 +54,16 @@ void SV_TrackNumFieldsSkippedInPlayerstate(int param_1)
 void SV_TrackNumFieldsSkippedInEntitystate(int param_1)
 
 {
-  if ((!g_archivingSnapshot) && (g_networkBoundData)) {
+  if ((DAT_83f4abe2 == '\0') && (DAT_83f4abe1 != '\0')) {
     if (param_1 < 1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                      ,0xca,0,"%s");
+      MyAssertHandler(0xffffffff82163190,0xca,0,0xffffffff82000f98,0xffffffff821631e0);
     }
-    totalEntityFieldsSkipped = totalEntityFieldsSkipped + param_1;
+    DAT_83f4abe8 = DAT_83f4abe8 + param_1;
     DAT_83f5d1f8 = DAT_83f5d1f8 + 1;
     if (0x3f < param_1) {
       param_1 = 0x40;
     }
-    *(int *)(g_currentSnapshotPlayerStateFields + param_1 * 4 + 0x10) =
-         *(int *)(g_currentSnapshotPlayerStateFields + param_1 * 4 + 0x10) + 1;
+    *(int *)(&DAT_83f5d20c + param_1 * 2) = *(int *)(&DAT_83f5d20c + param_1 * 2) + 1;
   }
   return;
 }
@@ -92,17 +74,16 @@ void SV_TrackNumFieldsSkippedInEntitystate(int param_1)
 void SV_TrackNumFieldsSkippedInHudelem(int param_1)
 
 {
-  if ((!g_archivingSnapshot) && (g_networkBoundData)) {
+  if ((DAT_83f4abe2 == '\0') && (DAT_83f4abe1 != '\0')) {
     if (param_1 < 1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                      ,0xd8,0,"%s");
+      MyAssertHandler(0xffffffff82163190,0xd8,0,0xffffffff82000f98,0xffffffff821631e0);
     }
-    totalHudelemFieldsSkipped = totalHudelemFieldsSkipped + param_1;
-    totalHudelemTimesSkipped = totalHudelemTimesSkipped + 1;
+    DAT_83f4abdc = DAT_83f4abdc + param_1;
+    DAT_83f541f4 = DAT_83f541f4 + 1;
     if (0x3f < param_1) {
       param_1 = 0x40;
     }
-    g_bitsSent[0x11][param_1 + 0xd] = g_bitsSent[0x11][param_1 + 0xd] + 1;
+    *(int *)(&DAT_83f5d6fc + param_1 * 4) = *(int *)(&DAT_83f5d6fc + param_1 * 4) + 1;
   }
   return;
 }
@@ -114,11 +95,10 @@ void SV_TrackETypeBytes(int param_1,int param_2)
 
 {
   if ((param_1 < 0) || (0xcb < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0xe3,0,"%s\n\t(eType) = %i");
+    MyAssertHandler(0xffffffff82163190,0xe3,0,0xffffffff8200a838,0xffffffff821631f8,param_1);
   }
-  if ((g_archivingSnapshot == false) && (g_networkBoundData != false)) {
-    bitsUsedPerEType[param_1] = bitsUsedPerEType[param_1] + param_2;
+  if ((DAT_83f4abe2 == '\0') && (DAT_83f4abe1 != '\0')) {
+    (&DAT_83f535a8)[param_1] = (&DAT_83f535a8)[param_1] + param_2;
   }
   return;
 }
@@ -129,13 +109,13 @@ void SV_TrackETypeBytes(int param_1,int param_2)
 void SV_TrackPSBits(int param_1)
 
 {
-  if (g_archivingSnapshot) {
+  if (DAT_83f4abe2 != '\0') {
     return;
   }
-  if (!g_networkBoundData) {
+  if (DAT_83f4abe1 == '\0') {
     return;
   }
-  bitsUsedForPlayerstates[0] = bitsUsedForPlayerstates[0] + param_1;
+  DAT_83f1ec9c = DAT_83f1ec9c + param_1;
   return;
 }
 
@@ -145,13 +125,13 @@ void SV_TrackPSBits(int param_1)
 void SV_TrackPSFieldDeltasBits(int param_1)
 
 {
-  if (g_archivingSnapshot) {
+  if (DAT_83f4abe2 != '\0') {
     return;
   }
-  if (!g_networkBoundData) {
+  if (DAT_83f4abe1 == '\0') {
     return;
   }
-  bitsUsedForPlayerstates[1] = bitsUsedForPlayerstates[1] + param_1;
+  DAT_83f1eca0 = DAT_83f1eca0 + param_1;
   return;
 }
 
@@ -161,13 +141,13 @@ void SV_TrackPSFieldDeltasBits(int param_1)
 void SV_TrackPSHudelemBits(int param_1)
 
 {
-  if (g_archivingSnapshot) {
+  if (DAT_83f4abe2 != '\0') {
     return;
   }
-  if (!g_networkBoundData) {
+  if (DAT_83f4abe1 == '\0') {
     return;
   }
-  bitsUsedForPlayerstates[5] = bitsUsedForPlayerstates[5] + param_1;
+  DAT_83f1ecb0 = DAT_83f1ecb0 + param_1;
   return;
 }
 
@@ -177,13 +157,13 @@ void SV_TrackPSHudelemBits(int param_1)
 void SV_TrackPSStatsBits(int param_1)
 
 {
-  if (g_archivingSnapshot) {
+  if (DAT_83f4abe2 != '\0') {
     return;
   }
-  if (!g_networkBoundData) {
+  if (DAT_83f4abe1 == '\0') {
     return;
   }
-  bitsUsedForPlayerstates[2] = bitsUsedForPlayerstates[2] + param_1;
+  DAT_83f1eca4 = DAT_83f1eca4 + param_1;
   return;
 }
 
@@ -193,13 +173,13 @@ void SV_TrackPSStatsBits(int param_1)
 void SV_TrackPSAmmoBits(int param_1)
 
 {
-  if (g_archivingSnapshot) {
+  if (DAT_83f4abe2 != '\0') {
     return;
   }
-  if (!g_networkBoundData) {
+  if (DAT_83f4abe1 == '\0') {
     return;
   }
-  bitsUsedForPlayerstates[3] = bitsUsedForPlayerstates[3] + param_1;
+  DAT_83f1eca8 = DAT_83f1eca8 + param_1;
   return;
 }
 
@@ -209,13 +189,13 @@ void SV_TrackPSAmmoBits(int param_1)
 void SV_TrackPSObjectivesBits(int param_1)
 
 {
-  if (g_archivingSnapshot) {
+  if (DAT_83f4abe2 != '\0') {
     return;
   }
-  if (!g_networkBoundData) {
+  if (DAT_83f4abe1 == '\0') {
     return;
   }
-  bitsUsedForPlayerstates[4] = bitsUsedForPlayerstates[4] + param_1;
+  DAT_83f1ecac = DAT_83f1ecac + param_1;
   return;
 }
 
@@ -225,62 +205,58 @@ void SV_TrackPSObjectivesBits(int param_1)
 void SV_TrackFieldsChanged(int param_1)
 
 {
-  if (g_archivingSnapshot) {
+  if (DAT_83f4abe2 != '\0') {
     return;
   }
-  if (!g_networkBoundData) {
+  if (DAT_83f4abe1 == '\0') {
     return;
   }
-  playerStateFieldsChanged[param_1] = playerStateFieldsChanged[param_1] + 1;
+  (&DAT_83f4b138)[param_1] = (&DAT_83f4b138)[param_1] + 1;
   return;
 }
 
 
 // 825855D0  SV_DisablePacketData  (server_mp/sv_snapshot_profile_mp.cpp:283)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SV_DisablePacketData(void)
 
 {
-  s_packetDataEnabled = false;
+  DAT_82990eb4 = 0;
   return;
 }
 
 
 // 825855E0  SV_EnablePacketData  (server_mp/sv_snapshot_profile_mp.cpp:289)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SV_EnablePacketData(void)
 
 {
-  s_packetDataEnabled = true;
+  DAT_82990eb4 = 1;
   return;
 }
 
 
 // 825855F0  SV_PacketIsNetworkBound  (server_mp/sv_snapshot_profile_mp.cpp:295)
 
-void SV_PacketIsNetworkBound(bool param_1)
+void SV_PacketIsNetworkBound(undefined1 param_1)
 
 {
-  g_networkBoundData = param_1;
+  DAT_83f4abe1 = param_1;
   return;
 }
 
 
 // 82585600  SV_IsPacketDataNetworkData  (server_mp/sv_snapshot_profile_mp.cpp:301)
 
-bool SV_IsPacketDataNetworkData(int param_1)
+undefined8 SV_IsPacketDataNetworkData(void)
 
 {
-  bool bVar1;
+  undefined8 uVar1;
   
-  if ((g_archivingSnapshot) || (bVar1 = true, !g_networkBoundData)) {
-    bVar1 = false;
+  if ((DAT_83f4abe2 != '\0') || (uVar1 = 1, DAT_83f4abe1 == '\0')) {
+    uVar1 = 0;
   }
-  return bVar1;
+  return uVar1;
 }
 
 
@@ -290,10 +266,9 @@ void SV_TrackOriginDeltaBits(int param_1)
 
 {
   if (7 < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x134,0,"%s\n\t(bits) = %i");
+    MyAssertHandler(0xffffffff82163190,0x134,0,0xffffffff8215b60c,0xffffffff8216322c,param_1);
   }
-  s_originDeltaBits[param_1] = s_originDeltaBits[param_1] + 1;
+  (&DAT_83f5dd7c)[param_1] = (&DAT_83f5dd7c)[param_1] + 1;
   return;
 }
 
@@ -304,10 +279,9 @@ void SV_TrackOriginZDeltaBits(int param_1)
 
 {
   if (7 < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x13b,0,"%s\n\t(bits) = %i");
+    MyAssertHandler(0xffffffff82163190,0x13b,0,0xffffffff8215b60c,0xffffffff8216322c,param_1);
   }
-  s_originZDeltaBits[param_1] = s_originZDeltaBits[param_1] + 1;
+  (&DAT_83f4b118)[param_1] = (&DAT_83f4b118)[param_1] + 1;
   return;
 }
 
@@ -318,10 +292,9 @@ void SV_TrackOriginZFullBits(int param_1)
 
 {
   if (0x10 < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x142,0,"%s\n\t(bits) = %i");
+    MyAssertHandler(0xffffffff82163190,0x142,0,0xffffffff8215b60c,0xffffffff82163238,param_1);
   }
-  s_originZFullBits[param_1] = s_originZFullBits[param_1] + 1;
+  (&DAT_83f541b0)[param_1] = (&DAT_83f541b0)[param_1] + 1;
   return;
 }
 
@@ -332,10 +305,9 @@ void SV_TrackOriginFullBits(int param_1)
 
 {
   if (0x10 < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x149,0,"%s\n\t(bits) = %i");
+    MyAssertHandler(0xffffffff82163190,0x149,0,0xffffffff8215b60c,0xffffffff82163238,param_1);
   }
-  s_originFullBits[param_1] = s_originFullBits[param_1] + 1;
+  (&DAT_83f5d7b0)[param_1] = (&DAT_83f5d7b0)[param_1] + 1;
   return;
 }
 
@@ -346,185 +318,211 @@ void SV_TrackMovementDirDelta(int param_1)
 
 {
   if ((param_1 < -0x100) || (0x100 < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x150,0,"%s\n\t(delta) = %i");
+    MyAssertHandler(0xffffffff82163190,0x150,0,0xffffffff8208f398,0xffffffff82163248,param_1);
   }
-  s_movementDirDelta[param_1 + 0x100] = s_movementDirDelta[param_1 + 0x100] + 1;
+  *(int *)(&DAT_83f53da8 + param_1 * 4) = *(int *)(&DAT_83f53da8 + param_1 * 4) + 1;
   return;
 }
 
 
 // 82585870  SV_TrackAngleDeltaBits  (server_mp/sv_snapshot_profile_mp.cpp:342)
 
-void SV_TrackAngleDeltaBits(int param_1)
+void SV_TrackAngleDeltaBits(ulonglong param_1)
 
 {
   int iVar1;
   
-  if ((param_1 < -0x8000) || (0x7ffe < param_1)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x159,0,"%s\n\t(value) = %i");
+  iVar1 = (int)param_1;
+  if ((iVar1 < -0x8000) || (0x7ffe < iVar1)) {
+    MyAssertHandler(0xffffffff82163190,0x159,0,0xffffffff82003d00,0xffffffff82163278,param_1);
   }
-  iVar1 = GetMinBitCountForNum((param_1 ^ param_1 >> 0x1f) - (param_1 >> 0x1f));
+  iVar1 = GetMinBitCountForNum((param_1 ^ (longlong)(iVar1 >> 0x1f)) - (longlong)(iVar1 >> 0x1f));
   if (0xc < iVar1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x15c,0,"%s\n\t(bits) = %i");
+    MyAssertHandler(0xffffffff82163190,0x15c,0,0xffffffff8215b60c,0xffffffff82163268,iVar1);
   }
-  s_angleDeltaBits[iVar1] = s_angleDeltaBits[iVar1] + 1;
+  (&DAT_83f42cc0)[iVar1] = (&DAT_83f42cc0)[iVar1] + 1;
   return;
 }
 
 
 // 82585938  SV_TrackAngleFullSend  (server_mp/sv_snapshot_profile_mp.cpp:359)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SV_TrackAngleFullSend(void)
 
 {
-  s_viewDirFullSends = s_viewDirFullSends + 1;
+  DAT_83f5d7a8 = DAT_83f5d7a8 + 1;
   return;
 }
 
 
 // 82585950  SV_TrackEventSeqFullSend  (server_mp/sv_snapshot_profile_mp.cpp:365)
 
-void SV_TrackEventSeqFullSend(int param_1)
+void SV_TrackEventSeqFullSend(void)
 
 {
   int iVar1;
   
-  iVar1 = GetMinBitCountForNum(param_1);
+  iVar1 = GetMinBitCountForNum();
   if (iVar1 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x170,0,"%s");
+    MyAssertHandler(0xffffffff82163190,0x170,0,0xffffffff82000f98,0xffffffff8208f438);
   }
   if (0x18 < iVar1) {
     iVar1 = 0x18;
   }
-  s_eventSeqFull[iVar1] = s_eventSeqFull[iVar1] + 1;
+  (&DAT_83f4abf0)[iVar1] = (&DAT_83f4abf0)[iVar1] + 1;
   return;
 }
 
 
 // 825859D0  SV_TrackEventSeqDeltaSend  (server_mp/sv_snapshot_profile_mp.cpp:375)
 
-void SV_TrackEventSeqDeltaSend(int param_1)
+void SV_TrackEventSeqDeltaSend(void)
 
 {
   int iVar1;
   
-  iVar1 = GetMinBitCountForNum(param_1);
+  iVar1 = GetMinBitCountForNum();
   if (iVar1 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x17a,0,"%s");
+    MyAssertHandler(0xffffffff82163190,0x17a,0,0xffffffff82000f98,0xffffffff8208f438);
   }
   if (0x18 < iVar1) {
     iVar1 = 0x18;
   }
-  s_eventSeqDelta[iVar1] = s_eventSeqDelta[iVar1] + 1;
+  (&DAT_83f5dda0)[iVar1] = (&DAT_83f5dda0)[iVar1] + 1;
   return;
 }
 
 
 // 82585A50  SV_GetEntityTypeString  (server_mp/sv_snapshot_profile_mp.cpp:386)
 
-char * SV_GetEntityTypeString(int param_1)
+undefined * SV_GetEntityTypeString(uint param_1)
 
 {
-  if (0x16 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x183,0,
-                    "packetEntityType doesn\'t index ANALYZE_DATATYPE_ENTITYTYPE_COUNT\n\t%i not in [0, %i)"
-                   );
+  if (0x16 < param_1) {
+    MyAssertHandler(0xffffffff82163190,0x183,0,0xffffffff821632a0,param_1,0x17);
   }
-  return s_analyzeEntityTypeNames[param_1];
+  return (&PTR_s_General_Entity_82990e58)[param_1];
 }
 
 
 // 82585AB8  SV_AnalyzePacketData  (server_mp/sv_snapshot_profile_mp.cpp:393)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-void SV_AnalyzePacketData(int param_1,msg_t *param_2)
+void SV_AnalyzePacketData(undefined8 param_1,undefined8 param_2)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
-  int *piVar3;
-  ulonglong uVar4;
-  int iVar5;
-  uint uVar6;
-  char **ppcVar7;
-  int iVar8;
+  undefined4 uVar1;
+  uint uVar2;
+  int iVar3;
+  int *piVar4;
+  bool bVar5;
+  ulonglong uVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  undefined **ppuVar9;
+  int iVar10;
+  int iVar11;
+  double dVar12;
   
-  uVar2 = (ulonglong)param_1;
-  __savegprlr();
-  if ((ulonglong)(uint)svs._2121360_4_ <= (uVar2 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x193,0,"clientNum doesn\'t index svs.clientCount\n\t%i not in [0, %i)");
+  uVar6 = __savegprlr();
+  if ((ulonglong)DAT_83f11410 <= (uVar6 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82163190,0x193,0,0xffffffff8215b44c,uVar6);
   }
-  if ((1 < (sv_debugPacketContents->current).integer) ||
-     (((600 < param_2->cursize &&
-       (piVar3 = (int *)((int)uVar2 * 0x68b00 + svs._2121364_4_), piVar3[0x8527] < 999)) &&
-      (*piVar3 == 5)))) {
-    Com_Printf(0xf,"Client %s\'s snapshot\n");
+  iVar11 = (int)uVar6;
+  if ((1 < *(int *)(DAT_83f1e168 + 0xc)) ||
+     (((600 < *(int *)((int)param_2 + 0x14) &&
+       (piVar4 = (int *)(iVar11 * 0x68b00 + DAT_83f11414), piVar4[0x8527] < 999)) && (*piVar4 == 5))
+     )) {
+    Com_Printf(0xf,0xffffffff82163524,iVar11 * 0x68b00 + DAT_83f11414 + 0x2141c);
     MSG_GetUsedBitCount(param_2);
-    Com_Printf(0xf,
-               "begin---------------------------------------------------------------------------------------------\n"
-              );
-    Sys_Milliseconds();
-    Com_Printf(0xf,"%i] %i byte snapshot for %s (average snapshot size is %f)\n");
-    uVar4 = 0;
+    uVar8 = 0xffffffff820068af;
+    Com_Printf(0xf,0xffffffff821634c0);
+    iVar10 = iVar11 * 0x68b00 + DAT_83f11414;
+    dVar12 = (double)DAT_83f4abd8;
+    uVar1 = *(undefined4 *)((int)param_2 + 0x14);
+    uVar7 = Sys_Milliseconds();
+    Com_Printf(dVar12,0xf,0xffffffff82163484,uVar7,uVar1,iVar10 + 0x2141c,dVar12);
+    iVar10 = 0;
     do {
-      if (*(int *)((int)g_bitsSent[0] + (int)(((uint)((int)uVar2 * 0xe) + uVar4 & 0xffffffff) << 2))
-          != 0) {
-        if ((uVar4 & 0xffffffff) < 0xe) {
-                    /* WARNING: Field field0_0x0 does not fit in structure entityState_s */
-                    /* WARNING: Treating indirect jump as call */
-          (**(code **)((int)&PTR_LAB_82585cb4 + (int)((uVar4 & 0xffffffff) << 2)))();
-          return;
-        }
-        if (alwaysfails == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                          ,0x1c9,0,
-                          "Unknown field in the snapshot analysis in SV_AnalyzePacketData()!\n");
-        }
-        Com_Printf(0xf,"%s - %i bits (%i bytes)\n");
-      }
-      uVar4 = uVar4 + 1;
-    } while ((int)uVar4 < 0xe);
-    ppcVar7 = s_analyzeEntityTypeNames;
-    uVar6 = 0;
-    iVar5 = 0;
-    do {
-      bVar1 = false;
-      if ((sv_debugPacketContents->current).integer != 0) {
-        iVar8 = 0;
-        do {
-          if (currentSnapshotNetworkEntityFieldsChanged[0][iVar5 + iVar8] != 0) {
-            if (!bVar1) {
-              if (0x16 < uVar6) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                                ,0x183,0,
-                                "packetEntityType doesn\'t index ANALYZE_DATATYPE_ENTITYTYPE_COUNT\n\t%i not in [0, %i)"
-                               );
-              }
-              Com_Printf(0xf,"%s fields changed: (format fieldnum: timeschanged)\n");
-              bVar1 = true;
-            }
-            Com_Printf(0xf,"%i: %u\n");
+      iVar3 = (iVar11 * 0xe + iVar10) * 4;
+      if (*(int *)(&DAT_83f5d310 + iVar3) != 0) {
+        switch(iVar10) {
+        case 0:
+          uVar8 = 0xffffffff82163398;
+          break;
+        case 1:
+          uVar8 = 0xffffffff821633a8;
+          break;
+        case 2:
+          uVar8 = 0xffffffff821633b8;
+          break;
+        case 3:
+        case 5:
+        case 9:
+          goto switchD_82585cb0_caseD_3;
+        case 4:
+          uVar8 = 0xffffffff82014f14;
+          break;
+        case 6:
+          uVar8 = 0xffffffff821633cc;
+          break;
+        case 7:
+          uVar8 = 0xffffffff821633dc;
+          break;
+        case 8:
+          uVar8 = 0xffffffff821633e8;
+          break;
+        case 10:
+          uVar8 = 0xffffffff821633f8;
+          break;
+        case 0xb:
+          uVar8 = 0xffffffff82163470;
+          break;
+        case 0xc:
+          uVar8 = 0xffffffff82014f8c;
+          break;
+        case 0xd:
+          uVar8 = 0xffffffff82014f9c;
+          break;
+        default:
+          if (DAT_84013128 == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
+                            ,0x1c9,0,0xffffffff82163410);
           }
-          iVar8 = iVar8 + 1;
-        } while (iVar8 < 0x161);
+        }
+        uVar2 = *(uint *)(&DAT_83f5d310 + iVar3);
+        Com_Printf(0xf,0xffffffff82163454,uVar8,uVar2,
+                   (longlong)((int)uVar2 >> 3) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 7) != 0));
       }
-      ppcVar7 = ppcVar7 + 1;
+switchD_82585cb0_caseD_3:
+      iVar10 = iVar10 + 1;
+    } while (iVar10 < 0xe);
+    ppuVar9 = &PTR_s_General_Entity_82990e58;
+    uVar6 = 0;
+    iVar11 = 0;
+    do {
+      bVar5 = false;
+      if (*(int *)(DAT_83f1e168 + 0xc) != 0) {
+        iVar10 = 0;
+        do {
+          if ((&DAT_83f42cf8)[iVar11 + iVar10] != 0) {
+            if (!bVar5) {
+              if (0x16 < (uVar6 & 0xffffffff)) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
+                                ,0x183,0,0xffffffff821632a0,uVar6,0x17);
+              }
+              Com_Printf(0xf,0xffffffff8216335c,*ppuVar9);
+              bVar5 = true;
+            }
+            Com_Printf(0xf,0xffffffff82163390,iVar10,(&DAT_83f42cf8)[iVar11 + iVar10]);
+          }
+          iVar10 = iVar10 + 1;
+        } while (iVar10 < 0x161);
+      }
+      ppuVar9 = ppuVar9 + 1;
       uVar6 = uVar6 + 1;
-      iVar5 = iVar5 + 0x161;
-    } while ((int)ppcVar7 < -0x7d66f14c);
-    Com_Printf(0xf,
-               "end-----------------------------------------------------------------------------------------------\n"
-              );
+      iVar11 = iVar11 + 0x161;
+    } while ((int)ppuVar9 < -0x7d66f14c);
+    Com_Printf(0xf,0xffffffff821632f8);
   }
   __restgprlr();
   return;
@@ -533,128 +531,106 @@ void SV_AnalyzePacketData(int param_1,msg_t *param_2)
 
 // 82585E88  SV_TrackPacketData  (server_mp/sv_snapshot_profile_mp.cpp:489)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-
-int SV_TrackPacketData(int param_1,PacketDataType param_2,int param_3,int param_4,int param_5,
-                      msg_t *param_6)
+void SV_TrackPacketData(undefined8 param_1,longlong param_2,undefined8 param_3,longlong param_4,
+                       int param_5,undefined8 param_6)
 
 {
   int iVar1;
   ulonglong uVar2;
   int iVar3;
   int iVar4;
-  longlong lVar5;
-  longlong lVar6;
   
-  lVar6 = (longlong)param_4;
-  lVar5 = (longlong)(int)param_2;
-  uVar2 = __savegprlr_26(param_1,lVar5,param_3);
+  uVar2 = __savegprlr_26();
   if (((int)uVar2 < 0) || (0x11 < (int)uVar2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x1ed,0,"%s\n\t(clientNum) = %i");
+    MyAssertHandler(0xffffffff82163190,0x1ed,0,0xffffffff82037188,0xffffffff82037164,uVar2);
   }
-  iVar4 = (int)lVar5;
+  iVar4 = (int)param_2;
   if ((iVar4 < 0) || (0xd < iVar4)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x1ee,0,"%s\n\t(datatype) = %i");
+    MyAssertHandler(0xffffffff82163190,0x1ee,0,0xffffffff8216353c,0xffffffff82163550,param_2);
   }
   iVar3 = MSG_GetUsedBitCount(param_6);
-  iVar1 = (int)((uVar2 * 0xe + lVar5 & 0xffffffff) << 2);
+  iVar1 = (int)((uVar2 * 0xe + param_2 & 0xffffffff) << 2);
   iVar3 = iVar3 - param_5;
-  *(int *)((int)g_bitsSent[0] + iVar1) = iVar3 + *(int *)((int)g_bitsSent[0] + iVar1);
+  *(int *)(&DAT_83f5d310 + iVar1) = iVar3 + *(int *)(&DAT_83f5d310 + iVar1);
   if (iVar4 == 0) {
-    iVar1 = (int)(((uVar2 & 0x1fffff) * 0x800 + lVar6 & 0xffffffff) << 2);
-    *(int *)((int)g_currentSnapshotPerEntity[0] + iVar1) =
-         iVar3 + *(int *)((int)g_currentSnapshotPerEntity[0] + iVar1);
+    iVar1 = (int)(((uVar2 & 0x1fffff) * 0x800 + param_4 & 0xffffffff) << 2);
+    *(int *)(&DAT_83f1ecb8 + iVar1) = iVar3 + *(int *)(&DAT_83f1ecb8 + iVar1);
   }
-  newDataReady = true;
+  DAT_83f4abe0 = 1;
   if (iVar4 == 0xc) {
-    bitsUsedForServerCommands = bitsUsedForServerCommands + iVar3;
+    DAT_83f4abd4 = DAT_83f4abd4 + iVar3;
   }
-  iVar4 = __restgprlr_26();
-  return iVar4;
+  __restgprlr_26();
+  return;
 }
 
 
 // 82585F98  SV_SetNextEntityStart  (server_mp/sv_snapshot_profile_mp.cpp:519)
 
-void SV_SetNextEntityStart(int param_1,int param_2)
+void SV_SetNextEntityStart(undefined4 param_1,undefined4 param_2)
 
 {
-  s_currentEntType = param_1;
-  s_currentEntNum = param_2;
+  DAT_83f42cf4 = param_1;
+  DAT_83f5d7f4 = param_2;
   return;
 }
 
 
 // 82585FB0  SV_NewPacketAnalysisReady  (server_mp/sv_snapshot_profile_mp.cpp:526)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool SV_NewPacketAnalysisReady(void)
+undefined1 SV_NewPacketAnalysisReady(void)
 
 {
-  return newDataReady;
+  return DAT_83f4abe0;
 }
 
 
 // 82585FC0  SV_TrackFieldChange  (server_mp/sv_snapshot_profile_mp.cpp:531)
 
-void SV_TrackFieldChange(int param_1,int param_2,int param_3)
+void SV_TrackFieldChange(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
   int iVar1;
   char *pcVar2;
-  longlong lVar3;
-  longlong lVar4;
-  int iVar5;
+  int iVar3;
   
-  lVar4 = (longlong)param_3;
-  lVar3 = (longlong)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (((int)lVar4 < 0) || (0x160 < (int)lVar4)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x216,0,"%s\n\t(field) = %i");
+  iVar1 = __savegprlr_27();
+  if (((int)param_3 < 0) || (0x160 < (int)param_3)) {
+    MyAssertHandler(0xffffffff82163190,0x216,0,0xffffffff8201500c,0xffffffff8216368c,param_3);
   }
-  iVar5 = (int)lVar3;
-  if ((iVar5 < 0) || (0x16 < iVar5)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x217,0,"%s\n\t(entityType) = %i");
+  iVar3 = (int)param_2;
+  if ((iVar3 < 0) || (0x16 < iVar3)) {
+    MyAssertHandler(0xffffffff82163190,0x217,0,0xffffffff8216362c,0xffffffff82163648,param_2);
   }
-  if (s_packetDataEnabled == false) {
-    if (g_networkBoundData != false) {
-      iVar5 = (int)((lVar3 * 0x161 + lVar4 & 0x3fffffffU) << 2);
-      iVar1 = *(int *)((int)currentSnapshotNetworkEntityFieldsChanged[0] + iVar5);
-      *(int *)((int)networkEntityFieldsChanged[0] + iVar5) =
-           *(int *)((int)networkEntityFieldsChanged[0] + iVar5) + 1;
-      *(int *)((int)currentSnapshotNetworkEntityFieldsChanged[0] + iVar5) = iVar1 + 1;
+  if (DAT_82990eb4 == '\0') {
+    if (DAT_83f4abe1 != '\0') {
+      iVar1 = (int)((param_2 * 0x161 + param_3 & 0x3fffffffU) << 2);
+      *(int *)((int)&DAT_83f4b6c8 + iVar1) = *(int *)((int)&DAT_83f4b6c8 + iVar1) + 1;
+      *(int *)((int)&DAT_83f42cf8 + iVar1) = *(int *)((int)&DAT_83f42cf8 + iVar1) + 1;
       __restgprlr_27();
       return;
     }
   }
   else {
     Profile_Begin(0x123);
-    if (iVar5 < 0x13) {
-      if (s_currentEntType < 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                        ,0x227,0,"%s\n\t(s_currentEntType) = %i");
+    if (iVar3 < 0x13) {
+      if (DAT_83f42cf4 < 0) {
+        MyAssertHandler(0xffffffff82163190,0x227,0,0xffffffff821635f8,0xffffffff82163614);
       }
-      if ((s_currentEntNum < 0) || (0x7ff < s_currentEntNum)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                        ,0x228,0,"%s\n\t(s_currentEntNum) = %i");
+      if ((DAT_83f5d7f4 < 0) || (0x7ff < DAT_83f5d7f4)) {
+        MyAssertHandler(0xffffffff82163190,0x228,0,0xffffffff821635a8,0xffffffff821635c4);
       }
-      g_currentSnapshotFieldsPerEntity[iVar1][s_currentEntNum] =
-           g_currentSnapshotFieldsPerEntity[iVar1][s_currentEntNum] + '\x01';
+      iVar1 = iVar1 * 0x800 + DAT_83f5d7f4;
+      (&DAT_83f541f8)[iVar1] = (&DAT_83f541f8)[iVar1] + '\x01';
     }
-    else if (iVar5 == 0x15) {
-      g_currentSnapshotPlayerStateFields[iVar1] = g_currentSnapshotPlayerStateFields[iVar1] + '\x01'
-      ;
+    else if (iVar3 == 0x15) {
+      *(char *)((int)&DAT_83f5d1fc + iVar1) = *(char *)((int)&DAT_83f5d1fc + iVar1) + '\x01';
     }
-    if ((2 < (sv_debugPacketContents->current).integer) &&
-       (pcVar2 = SV_GetEntityTypeString(iVar5), *pcVar2 != '\0')) {
-      Com_Printf(0xf,"%s - field %i changed\n");
+    if ((2 < *(int *)(DAT_83f1e168 + 0xc)) &&
+       (pcVar2 = (char *)SV_GetEntityTypeString(param_2), *pcVar2 != '\0')) {
+      Com_Printf(0xf,0xffffffff82163590,pcVar2,param_3);
     }
-    Profile_EndInternal((double *)0x0);
+    Profile_EndInternal(0);
   }
   __restgprlr_27();
   return;
@@ -663,37 +639,36 @@ void SV_TrackFieldChange(int param_1,int param_2,int param_3)
 
 // 825861B0  SV_GetAnalyzeEntityFields  (server_mp/sv_snapshot_profile_mp.cpp:572)
 
-void SV_GetAnalyzeEntityFields(int param_1,NetField **param_2,uint *param_3)
+void SV_GetAnalyzeEntityFields(int param_1,undefined4 *param_2,undefined4 *param_3)
 
 {
-  NetFieldList *pNVar1;
-  uint uVar2;
+  undefined4 *puVar1;
+  undefined4 uVar2;
   
   if (param_1 < 0x13) {
-    pNVar1 = MSG_GetStateFieldListForEntityType(param_1);
-    *param_2 = pNVar1->array;
-    *param_3 = pNVar1->count;
+    puVar1 = (undefined4 *)MSG_GetStateFieldListForEntityType();
+    *param_2 = *puVar1;
+    *param_3 = puVar1[1];
   }
   else {
     if (param_1 == 0x13) {
-      *param_2 = g_netFieldList->array;
-      uVar2 = g_netFieldList->count;
+      *param_2 = *(undefined4 *)PTR_PTR_8296d104;
+      uVar2 = *(undefined4 *)(PTR_PTR_8296d104 + 4);
     }
     else if (param_1 == 0x14) {
-      *param_2 = g_netFieldList[1].array;
-      uVar2 = g_netFieldList[1].count;
+      *param_2 = *(undefined4 *)(PTR_PTR_8296d104 + 8);
+      uVar2 = *(undefined4 *)(PTR_PTR_8296d104 + 0xc);
     }
     else if (param_1 == 0x15) {
-      *param_2 = g_netFieldList[2].array;
-      uVar2 = g_netFieldList[2].count;
+      *param_2 = *(undefined4 *)(PTR_PTR_8296d104 + 0x10);
+      uVar2 = *(undefined4 *)(PTR_PTR_8296d104 + 0x14);
     }
     else {
       if (param_1 != 0x16) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                        ,0x270,0,"%s");
+        MyAssertHandler(0xffffffff82163190,0x270,0,0xffffffff82000f98,0xffffffff821636a8);
       }
-      *param_2 = g_netFieldList[4].array;
-      uVar2 = g_netFieldList[4].count;
+      *param_2 = *(undefined4 *)(PTR_PTR_8296d104 + 0x20);
+      uVar2 = *(undefined4 *)(PTR_PTR_8296d104 + 0x24);
     }
     *param_3 = uVar2;
   }
@@ -703,419 +678,473 @@ void SV_GetAnalyzeEntityFields(int param_1,NetField **param_2,uint *param_3)
 
 // 825862B8  FindHowManyBlocksToJumpNSpaces  (server_mp/sv_snapshot_profile_mp.cpp:633)
 
-int FindHowManyBlocksToJumpNSpaces(int param_1,int param_2)
+longlong FindHowManyBlocksToJumpNSpaces(uint param_1,uint param_2)
 
 {
   ulonglong uVar1;
   
-  uVar1 = (ulonglong)(uint)(1 << (param_1 & 0x3fU)) - 1;
+  uVar1 = (ulonglong)(uint)(1 << (param_1 & 0x3f)) - 1;
   trapWord(6,uVar1,0);
-  trapWord(5,uVar1 & ~((((ulonglong)(uint)param_2 & 0x7fffffff) << 1 |
-                       (ulonglong)((uint)param_2 >> 0x1f)) - 1),0xffff);
-  return param_2 / (int)uVar1 + 1;
+  trapWord(5,uVar1 & ~((((ulonglong)param_2 & 0x7fffffff) << 1 | (ulonglong)(param_2 >> 0x1f)) - 1),
+           0xffff);
+  return (longlong)((int)param_2 / (int)uVar1) + 1;
 }
 
 
 // 825862E8  TotalFieldJumpBitsUsedWithJumpSize  (server_mp/sv_snapshot_profile_mp.cpp:641)
 
-int TotalFieldJumpBitsUsedWithJumpSize(uint *param_1,int param_2,int param_3,bool param_4)
+void TotalFieldJumpBitsUsedWithJumpSize
+               (undefined8 param_1,longlong param_2,undefined8 param_3,ulonglong param_4)
 
 {
   uint uVar1;
   uint *puVar3;
   longlong lVar2;
-  int iVar4;
-  ulonglong uVar5;
+  uint uVar5;
+  ulonglong uVar4;
   ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  longlong lVar9;
+  longlong lVar7;
   
-  uVar6 = (ulonglong)param_4;
-  lVar9 = (longlong)param_2;
-  puVar3 = (uint *)__savegprlr_28(param_1);
-  if (param_3 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x285,0,"%s\n\t(bits) = %i");
+  puVar3 = (uint *)__savegprlr_28();
+  uVar5 = (uint)param_3;
+  if ((int)uVar5 < 1) {
+    MyAssertHandler(0xffffffff82163190,0x285,0,0xffffffff8215b60c,0xffffffff821636e4,param_3);
   }
   lVar2 = 0;
-  lVar8 = 0;
-  if (0 < (int)lVar9) {
+  lVar7 = 0;
+  if (0 < (int)param_2) {
     do {
       uVar1 = *puVar3;
       if (((ulonglong)uVar1 != 0) &&
-         (((uVar6 & 0xff) == 0 || (lVar2 = (ulonglong)uVar1 + lVar2, (int)lVar8 != 0)))) {
-        uVar7 = (ulonglong)(uint)(1 << (param_3 & 0x3fU)) - 1;
-        uVar5 = lVar8 + 1;
-        trapWord(6,uVar7,0);
-        trapWord(5,uVar7 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff)
+         (((param_4 & 0xff) == 0 || (lVar2 = (ulonglong)uVar1 + lVar2, (int)lVar7 != 0)))) {
+        uVar6 = (ulonglong)(uint)(1 << (uVar5 & 0x3f)) - 1;
+        uVar4 = lVar7 + 1;
+        trapWord(6,uVar6,0);
+        trapWord(5,uVar6 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1),0xffff)
         ;
-        lVar2 = (longlong)(int)(((int)uVar5 / (int)uVar7 + 1) * (uVar1 - 1)) * (longlong)param_3 +
-                lVar2;
+        lVar2 = (longlong)(int)(((int)uVar4 / (int)uVar6 + 1) * (uVar1 - 1)) * (longlong)(int)uVar5
+                + lVar2;
       }
-      lVar8 = lVar8 + 1;
+      lVar7 = lVar7 + 1;
       puVar3 = puVar3 + 1;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
   }
-  iVar4 = __restgprlr_28(lVar2);
-  return iVar4;
+  __restgprlr_28(lVar2);
+  return;
 }
 
 
 // 825863C0  SV_WriteEntityFieldNumbers  (server_mp/sv_snapshot_profile_mp.cpp:701)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SV_WriteEntityFieldNumbers(void)
 
 {
   uint uVar1;
-  NetField *pNVar2;
-  void *pvVar3;
-  int iVar4;
-  char *pcVar5;
-  char *pcVar6;
-  longlong lVar7;
-  longlong lVar8;
-  int *piVar9;
-  int iVar10;
-  char **ppcVar11;
-  uint uVar12;
-  uint *puVar13;
-  int iVar15;
-  ulonglong uVar14;
+  uint *puVar2;
+  uint *puVar3;
+  undefined *puVar4;
+  ulonglong uVar5;
+  undefined8 uVar6;
+  int iVar8;
+  undefined8 uVar7;
+  ulonglong uVar9;
+  longlong lVar10;
+  longlong lVar11;
+  ulonglong uVar12;
+  longlong lVar13;
+  undefined **ppuVar14;
+  ulonglong uVar15;
   uint *puVar16;
-  uint uVar17;
-  uchar *puVar18;
-  longlong lVar19;
-  bool local_c0 [4];
-  char *local_bc;
+  ulonglong uVar17;
+  undefined4 *puVar18;
+  int *piVar19;
+  int iVar20;
+  uint *puVar21;
+  char *pcVar22;
+  uint uVar23;
+  longlong lVar24;
+  longlong lVar25;
+  char local_c0 [4];
+  undefined *local_bc;
   char *local_b8;
   char *local_b4;
   uint local_b0;
-  NetField *local_ac;
+  int local_ac;
   ulonglong local_a8;
   ulonglong local_a0;
   
   __savegprlr();
-  pvVar3 = FS_FOpenFileWrite("mp_entityStats.txt");
-  if (pvVar3 != (void *)0x0) {
-    puVar13 = bitsUsedPerEType;
-    lVar8 = 0;
-    lVar7 = 0;
-    piVar9 = &s_uncompressedDataSinceLastPoll;
-    lVar19 = 0x65;
+  uVar5 = FS_FOpenFileWrite(0xffffffff82164050);
+  if ((uVar5 & 0xffffffff) != 0) {
+    puVar16 = &DAT_83f535a8;
+    lVar11 = 0;
+    lVar10 = 0;
+    puVar21 = &DAT_83f535a4;
+    lVar24 = 0x65;
     do {
-      puVar16 = (uint *)(piVar9 + 1);
-      piVar9 = piVar9 + 2;
-      lVar8 = (ulonglong)*puVar16 + lVar8;
-      lVar7 = (ulonglong)(uint)*piVar9 + lVar7;
-      lVar19 = lVar19 + -1;
-    } while (lVar19 != 0);
-    lVar7 = lVar8 + lVar7 +
-            (ulonglong)bitsUsedPerEType[0xca] +
-            (ulonglong)bitsUsedForServerCommands + (ulonglong)bitsUsedForPlayerstates[0];
-    if (lVar7 == 0) {
-      lVar7 = 1;
+      puVar2 = puVar21 + 1;
+      puVar21 = puVar21 + 2;
+      lVar11 = (ulonglong)*puVar2 + lVar11;
+      lVar10 = (ulonglong)*puVar21 + lVar10;
+      lVar24 = lVar24 + -1;
+    } while (lVar24 != 0);
+    lVar10 = lVar11 + lVar10 +
+             (ulonglong)DAT_83f538d0 + (ulonglong)DAT_83f4abd4 + (ulonglong)DAT_83f1ec9c;
+    if (lVar10 == 0) {
+      lVar10 = 1;
     }
-    FS_Printf(pvVar3,"Total data sent: %i\n");
-    FS_Printf(pvVar3,"Bits used per entity type: (format: bitsUsed - entityType)\n");
-    uVar12 = 0;
+    FS_Printf(uVar5,0xffffffff82164038,lVar10);
+    FS_Printf(uVar5,0xffffffff82163ffc);
+    uVar15 = 0;
     do {
-      iVar15 = (int)lVar7;
-      if (*puVar13 != 0) {
-        trapDoubleWordImmediate(6,(longlong)iVar15,0);
-        trapDoubleWordImmediate(5,(longlong)iVar15 & ~((ulonglong)*puVar13 * 200 - 1),0xffff);
-        BG_GetEntityTypeName(uVar12);
-        FS_Printf(pvVar3,"%18u - %s (%i%%)\n");
+      uVar23 = *puVar16;
+      if (uVar23 != 0) {
+        uVar1 = *puVar16;
+        uVar12 = (ulonglong)(int)lVar10;
+        trapDoubleWordImmediate(6,uVar12,0);
+        trapDoubleWordImmediate(5,uVar12 & ~((ulonglong)uVar23 * 200 - 1),0xffff);
+        uVar6 = BG_GetEntityTypeName(uVar15);
+        FS_Printf(uVar5,0xffffffff82163fe8,uVar1,uVar6,
+                  (longlong)((ulonglong)uVar23 * 100) / (longlong)uVar12);
       }
-      uVar12 = uVar12 + 1;
-      puVar13 = puVar13 + 1;
-    } while (uVar12 < 0xcb);
-    uVar14 = (ulonglong)iVar15;
-    trapDoubleWordImmediate(6,uVar14,0);
-    trapDoubleWordImmediate(5,uVar14 & ~((ulonglong)bitsUsedForServerCommands * 200 - 1),0xffff);
-    FS_Printf(pvVar3,"%18u - Server commands (%i%%)\n");
-    trapDoubleWordImmediate(6,uVar14,0);
-    trapDoubleWordImmediate(5,uVar14 & ~((ulonglong)bitsUsedForPlayerstates[0] * 200 - 1),0xffff);
-    FS_Printf(pvVar3,"%18u - Player states (%i%%)\n");
-    trapDoubleWordImmediate(6,uVar14,0);
-    trapDoubleWordImmediate(5,uVar14 & ~((ulonglong)bitsUsedForPlayerstates[1] * 200 - 1),0xffff);
-    FS_Printf(pvVar3,"  * %18u - Player state field deltas (%i%%)\n");
-    trapDoubleWordImmediate(6,uVar14,0);
-    trapDoubleWordImmediate(5,uVar14 & ~((ulonglong)bitsUsedForPlayerstates[2] * 200 - 1),0xffff);
-    FS_Printf(pvVar3,"  * %18u - Player state stats (%i%%)\n");
-    trapDoubleWordImmediate(6,uVar14,0);
-    trapDoubleWordImmediate(5,uVar14 & ~((ulonglong)bitsUsedForPlayerstates[3] * 200 - 1),0xffff);
-    FS_Printf(pvVar3,"  * %18u - Player state ammo (%i%%)\n");
-    trapDoubleWordImmediate(6,uVar14,0);
-    trapDoubleWordImmediate(5,uVar14 & ~((ulonglong)bitsUsedForPlayerstates[4] * 200 - 1),0xffff);
-    FS_Printf(pvVar3,"  * %18u - Player state objectives (%i%%)\n");
-    trapDoubleWordImmediate(6,uVar14,0);
-    trapDoubleWordImmediate(5,uVar14 & ~((ulonglong)bitsUsedForPlayerstates[5] * 200 - 1),0xffff);
-    FS_Printf(pvVar3,"  * %18u - Player state hudelems (%i%%)\n");
-    local_bc = "\n\n";
-    FS_Printf(pvVar3,"\n\n");
-    FS_Printf(pvVar3,"PS origin and velocity sent due to client prediction error: %i\n");
-    FS_Printf(pvVar3,"PS origin and velocity sent due to server time mismatch: %i\n");
-    FS_Printf(pvVar3,"\n\n");
-    local_a0 = CONCAT44(&totalHudelemFieldsSkipped,local_a0._4_4_);
-    local_a8 = (ulonglong)(int)s_avgSnapshotSize;
-    FS_Printf(pvVar3,
-              "Avg Snapshot size: %i bytes, std deviation: %i bytes, max snapshot size: %i bytes\n")
-    ;
-    ppcVar11 = s_analyzeEntityTypeNames;
+      uVar15 = uVar15 + 1;
+      puVar16 = puVar16 + 1;
+    } while ((uVar15 & 0xffffffff) < 0xcb);
+    uVar15 = (ulonglong)DAT_83f4abd4;
+    uVar17 = (ulonglong)(int)lVar10;
+    uVar9 = uVar15 * 200 - 1;
+    uVar12 = uVar17 & ~uVar9;
+    trapDoubleWordImmediate(6,uVar17,0);
+    trapDoubleWordImmediate(5,uVar12,0xffff);
+    FS_Printf(uVar5,0xffffffff82163fc8,uVar15,(longlong)(uVar15 * 100) / (longlong)uVar17,uVar12,
+              uVar9,uVar15 * 100,uVar15);
+    uVar15 = (ulonglong)DAT_83f1ec9c;
+    trapDoubleWordImmediate(6,uVar17,0);
+    trapDoubleWordImmediate(5,uVar17 & ~(uVar15 * 200 - 1),0xffff);
+    FS_Printf(uVar5,0xffffffff82163fa8,uVar15,(longlong)(uVar15 * 100) / (longlong)uVar17);
+    uVar15 = (ulonglong)DAT_83f1eca0;
+    uVar12 = uVar17 & ~(uVar15 * 200 - 1);
+    trapDoubleWordImmediate(6,uVar17,0);
+    trapDoubleWordImmediate(5,uVar12,0xffff);
+    FS_Printf(uVar5,0xffffffff82163f78,uVar15,(longlong)(uVar15 * 100) / (longlong)uVar17,
+              0xffffffff82160000,uVar12);
+    uVar15 = (ulonglong)DAT_83f1eca4;
+    uVar12 = uVar17 & ~(uVar15 * 200 - 1);
+    trapDoubleWordImmediate(6,uVar17,0);
+    trapDoubleWordImmediate(5,uVar12,0xffff);
+    FS_Printf(uVar5,0xffffffff82163f50,uVar15,(longlong)(uVar15 * 100) / (longlong)uVar17,
+              0xffffffff82160000,uVar12);
+    uVar15 = (ulonglong)DAT_83f1eca8;
+    uVar12 = uVar17 & ~(uVar15 * 200 - 1);
+    trapDoubleWordImmediate(6,uVar17,0);
+    trapDoubleWordImmediate(5,uVar12,0xffff);
+    FS_Printf(uVar5,0xffffffff82163f28,uVar15,(longlong)(uVar15 * 100) / (longlong)uVar17,
+              0xffffffff82160000,uVar12);
+    uVar15 = (ulonglong)DAT_83f1ecac;
+    uVar12 = uVar17 & ~(uVar15 * 200 - 1);
+    trapDoubleWordImmediate(6,uVar17,0);
+    trapDoubleWordImmediate(5,uVar12,0xffff);
+    FS_Printf(uVar5,0xffffffff82163efc,uVar15,(longlong)(uVar15 * 100) / (longlong)uVar17,
+              0xffffffff82160000,uVar12);
+    uVar15 = (ulonglong)DAT_83f1ecb0;
+    uVar12 = uVar17 & ~(uVar15 * 200 - 1);
+    trapDoubleWordImmediate(6,uVar17,0);
+    trapDoubleWordImmediate(5,uVar12,0xffff);
+    FS_Printf(uVar5,0xffffffff82163ed0,uVar15,(longlong)(uVar15 * 100) / (longlong)uVar17,
+              0xffffffff82160000,uVar12);
+    local_bc = &DAT_820145f4;
+    FS_Printf(uVar5,0xffffffff820145f4);
+    FS_Printf(uVar5,0xffffffff82163e90,DAT_83f4abe4);
+    FS_Printf(uVar5,0xffffffff82163e4c,DAT_83f4abec);
+    FS_Printf(uVar5,0xffffffff820145f4);
+    local_a0 = CONCAT44(&DAT_83f4abdc,local_a0._4_4_);
+    local_a8 = (ulonglong)(int)DAT_83f4abd8;
+    FS_Printf(uVar5,0xffffffff82163df8,(int)DAT_83f4abd8,(int)DAT_83f42cb8,DAT_83f4b6c0);
+    ppuVar14 = &PTR_s_General_Entity_82990e58;
     local_b4 = 
     "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp";
     local_b8 = 
     "packetEntityType doesn\'t index ANALYZE_DATATYPE_ENTITYTYPE_COUNT\n\t%i not in [0, %i)";
-    uVar12 = 0;
+    uVar15 = 0;
     local_a8 = CONCAT44(" [estimated]",local_a8._4_4_);
-    iVar15 = 0;
+    lVar10 = 0;
     do {
-      if (0x16 < uVar12) {
-        MyAssertHandler(local_b4,0x183,0,local_b8);
+      if (0x16 < (uVar15 & 0xffffffff)) {
+        MyAssertHandler(local_b4,0x183,0,local_b8,uVar15,0x17);
       }
-      FS_Printf(pvVar3,"%s fields changed: (format fieldnum: timeschanged)\n");
-      SV_GetAnalyzeEntityFields(uVar12,&local_ac,&local_b0);
-      pNVar2 = local_ac;
-      uVar1 = local_b0;
-      lVar7 = 0;
-      uVar17 = 0;
+      FS_Printf(uVar5,0xffffffff8216335c,*ppuVar14);
+      SV_GetAnalyzeEntityFields(uVar15,&local_ac,&local_b0);
+      iVar20 = local_ac;
+      uVar23 = local_b0;
+      uVar12 = 0;
+      uVar9 = 0;
       if (local_b0 == 0) {
 LAB_825867e8:
-        lVar7 = 1;
+        uVar12 = 1;
       }
       else {
-        piVar9 = &local_ac[-1].bits;
+        puVar18 = (undefined4 *)(local_ac + -8);
         do {
-          piVar9 = piVar9 + 4;
-          iVar4 = MSG_GetBitCount(*piVar9,local_c0,0,-1);
-          iVar10 = iVar15 + uVar17;
-          uVar17 = uVar17 + 1;
-          lVar7 = (longlong)(int)networkEntityFieldsChanged[0][iVar10] * (longlong)iVar4 + lVar7;
-        } while (uVar17 < uVar1);
-        if ((int)lVar7 == 0) goto LAB_825867e8;
+          puVar18 = puVar18 + 4;
+          iVar8 = MSG_GetBitCount(*puVar18,local_c0,0,0xffffffffffffffff);
+          uVar17 = lVar10 + uVar9;
+          uVar9 = uVar9 + 1;
+          uVar12 = (longlong)*(int *)((int)&DAT_83f4b6c8 + (int)((uVar17 & 0xffffffff) << 2)) *
+                   (longlong)iVar8 + uVar12;
+        } while ((uVar9 & 0xffffffff) < (ulonglong)uVar23);
+        if ((int)uVar12 == 0) goto LAB_825867e8;
       }
-      uVar17 = 0;
-      if (uVar1 != 0) {
-        puVar18 = &pNVar2->changeHints;
+      uVar9 = 0;
+      if (uVar23 != 0) {
+        pcVar22 = (char *)(iVar20 + 0xc);
         do {
-          MSG_GetBitCount(*(int *)(puVar18 + -4),local_c0,0,-1);
-          FS_Printf(pvVar3,"%i (%s): %u");
-          if (networkEntityFieldsChanged[0][iVar15 + uVar17] != 0) {
-            trapWord(6,lVar7,0);
-            FS_Printf(pvVar3," (%i%%%s)");
-            if ((*puVar18 == '\x01') && (uVar17 != 0)) {
-              FS_Printf(pvVar3," (marked as NEVER_CHANGES and it changed!)");
+          iVar8 = MSG_GetBitCount(*(undefined4 *)(pcVar22 + -4),local_c0,0,0xffffffffffffffff);
+          iVar20 = (int)((lVar10 + uVar9 & 0xffffffff) << 2);
+          FS_Printf(uVar5,0xffffffff82163da4,uVar9,*(undefined4 *)(pcVar22 + -0xc),
+                    *(undefined4 *)((int)&DAT_83f4b6c8 + iVar20));
+          iVar20 = *(int *)((int)&DAT_83f4b6c8 + iVar20);
+          if (iVar20 != 0) {
+            uVar17 = local_a8 >> 0x20;
+            if (local_c0[0] == '\0') {
+              uVar17 = 0xffffffff820068af;
+            }
+            trapWord(6,uVar12,0);
+            FS_Printf(uVar5,0xffffffff82163db0,
+                      ((longlong)iVar20 * (longlong)iVar8 * 100 & 0xffffffffU) /
+                      (uVar12 & 0xffffffff),uVar17);
+            if ((*pcVar22 == '\x01') && ((uVar9 & 0xffffffff) != 0)) {
+              FS_Printf(uVar5,0xffffffff82163dbc);
             }
           }
-          FS_Printf(pvVar3,"\n");
-          uVar17 = uVar17 + 1;
-          puVar18 = puVar18 + 0x10;
-        } while (uVar17 < uVar1);
+          FS_Printf(uVar5,0xffffffff820044d8);
+          uVar9 = uVar9 + 1;
+          pcVar22 = pcVar22 + 0x10;
+        } while ((uVar9 & 0xffffffff) < (ulonglong)uVar23);
       }
-      FS_Printf(pvVar3,local_bc);
-      ppcVar11 = ppcVar11 + 1;
-      uVar12 = uVar12 + 1;
-      iVar15 = iVar15 + 0x161;
-    } while ((int)ppcVar11 < -0x7d66f14c);
-    FS_Printf(pvVar3,"\n\nMovement Dir deltas: (delta: times)\n");
-    uVar12 = 0;
-    piVar9 = s_movementDirDelta;
+      FS_Printf(uVar5,local_bc);
+      ppuVar14 = ppuVar14 + 1;
+      uVar15 = uVar15 + 1;
+      lVar10 = lVar10 + 0x161;
+    } while ((int)ppuVar14 < -0x7d66f14c);
+    FS_Printf(uVar5,0xffffffff82163d7c);
+    uVar15 = 0;
+    piVar19 = &DAT_83f539a8;
     do {
-      if (*piVar9 != 0) {
-        FS_Printf(pvVar3,"%i: %i times\n");
+      if (*piVar19 != 0) {
+        FS_Printf(uVar5,0xffffffff82163d6c,uVar15 - 0x100);
       }
-      uVar12 = uVar12 + 1;
-      piVar9 = piVar9 + 1;
-    } while (uVar12 < 0x201);
-    FS_Printf(pvVar3,"\n\nAngle deltas:\n");
-    puVar13 = local_a0._0_4_;
-    uVar12 = 0;
+      uVar15 = uVar15 + 1;
+      piVar19 = piVar19 + 1;
+    } while ((uVar15 & 0xffffffff) < 0x201);
+    FS_Printf(uVar5,0xffffffff82163d58);
+    puVar21 = local_a0._0_4_;
+    uVar15 = 0;
     puVar16 = local_a0._0_4_ + -0x1fc7;
     do {
       if (*puVar16 != 0) {
-        FS_Printf(pvVar3,"%i bits: %i times\n");
+        FS_Printf(uVar5,0xffffffff82163d44,uVar15);
       }
-      uVar12 = uVar12 + 1;
+      uVar15 = uVar15 + 1;
       puVar16 = puVar16 + 1;
-    } while (uVar12 < 0xd);
-    FS_Printf(pvVar3,"Angle full sends: %i\n");
-    lVar7 = 6;
+    } while ((uVar15 & 0xffffffff) < 0xd);
+    FS_Printf(uVar5,0xffffffff82163d2c,DAT_83f5d7a8);
+    lVar13 = 0;
+    lVar10 = 0;
+    lVar11 = 0;
+    lVar25 = 6;
+    lVar24 = 0;
+    puVar16 = puVar21 + 4;
     do {
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    FS_Printf(pvVar3,"\n\nEvent sequence delta sends: %i\n");
-    FS_Printf(pvVar3,"Event sequence full sends: %i\n");
-    FS_Printf(pvVar3,"Event sequence delta send breakdown:\n");
-    uVar12 = 0;
+      puVar2 = puVar16 + 2;
+      puVar3 = puVar16 + 3;
+      lVar13 = (ulonglong)puVar16[1] + lVar13;
+      puVar16 = puVar16 + 4;
+      lVar24 = (ulonglong)*puVar2 + lVar24;
+      lVar11 = (ulonglong)*puVar3 + lVar11;
+      lVar10 = (ulonglong)*puVar16 + lVar10;
+      lVar25 = lVar25 + -1;
+    } while (lVar25 != 0);
+    FS_Printf(uVar5,0xffffffff82163d08,0xffffffff83f5dda0);
+    FS_Printf(uVar5,0xffffffff82163ce8,lVar24 + lVar11 + lVar10 + lVar13);
+    FS_Printf(uVar5,0xffffffff82163cc0);
+    uVar15 = 0;
+    puVar18 = (undefined4 *)0x83f5dd9c;
     do {
-      FS_Printf(pvVar3,"Event sequence delta sends - %i bits needed: %i\n");
-      uVar12 = uVar12 + 1;
-    } while (uVar12 < 0x18);
-    FS_Printf(pvVar3,"Event sequence full send breakdown:\n");
-    uVar12 = 0;
+      puVar18 = puVar18 + 1;
+      FS_Printf(uVar5,0xffffffff82163c8c,uVar15,*puVar18);
+      uVar15 = uVar15 + 1;
+    } while ((uVar15 & 0xffffffff) < 0x18);
+    FS_Printf(uVar5,0xffffffff82163c64);
+    uVar15 = 0;
+    puVar16 = puVar21 + 4;
     do {
-      FS_Printf(pvVar3,"Event sequence full sends - %i bits needed: %i\n");
-      uVar12 = uVar12 + 1;
-    } while (uVar12 < 0x18);
-    FS_Printf(pvVar3,"\n\nX/Y Origin Deltas:\n");
-    piVar9 = s_originDeltaBits;
-    uVar12 = 0;
+      puVar16 = puVar16 + 1;
+      FS_Printf(uVar5,0xffffffff82163c34,uVar15,*puVar16);
+      uVar15 = uVar15 + 1;
+    } while ((uVar15 & 0xffffffff) < 0x18);
+    FS_Printf(uVar5,0xffffffff82163c1c);
+    piVar19 = &DAT_83f5dd7c;
+    uVar15 = 0;
     do {
-      if (*piVar9 != 0) {
-        FS_Printf(pvVar3,"%i bits: %i times\n");
+      if (*piVar19 != 0) {
+        FS_Printf(uVar5,0xffffffff82163d44,uVar15);
       }
-      uVar12 = uVar12 + 1;
-      piVar9 = piVar9 + 1;
-    } while (uVar12 < 8);
-    FS_Printf(pvVar3,"\n\nX/Y Origin Full Sends:\n");
-    piVar9 = s_originFullBits;
-    uVar12 = 0;
+      uVar15 = uVar15 + 1;
+      piVar19 = piVar19 + 1;
+    } while ((uVar15 & 0xffffffff) < 8);
+    FS_Printf(uVar5,0xffffffff82163c00);
+    piVar19 = &DAT_83f5d7b0;
+    uVar15 = 0;
     do {
-      if (*piVar9 != 0) {
-        FS_Printf(pvVar3,"sent as full %i bits, but number only needed %i bits: %i times\n");
+      if (*piVar19 != 0) {
+        FS_Printf(uVar5,0xffffffff82163bc0,0x10,uVar15);
       }
-      uVar12 = uVar12 + 1;
-      piVar9 = piVar9 + 1;
-    } while (uVar12 < 0x11);
-    FS_Printf(pvVar3,"\n\nZ Origin Deltas:\n");
-    puVar16 = puVar13 + 0x14f;
-    uVar12 = 0;
+      uVar15 = uVar15 + 1;
+      piVar19 = piVar19 + 1;
+    } while ((uVar15 & 0xffffffff) < 0x11);
+    FS_Printf(uVar5,0xffffffff82163bac);
+    puVar16 = puVar21 + 0x14f;
+    uVar15 = 0;
     do {
       if (*puVar16 != 0) {
-        FS_Printf(pvVar3,"%i bits: %i times\n");
+        FS_Printf(uVar5,0xffffffff82163d44,uVar15);
       }
-      uVar12 = uVar12 + 1;
+      uVar15 = uVar15 + 1;
       puVar16 = puVar16 + 1;
-    } while (uVar12 < 8);
-    FS_Printf(pvVar3,"\n\nZ Origin Full Sends:\n");
-    piVar9 = s_originZFullBits;
-    uVar12 = 0;
+    } while ((uVar15 & 0xffffffff) < 8);
+    FS_Printf(uVar5,0xffffffff82163b94);
+    piVar19 = &DAT_83f541b0;
+    uVar15 = 0;
     do {
-      if (*piVar9 != 0) {
-        FS_Printf(pvVar3,"sent as full %i bits, but number only needed %i bits: %i times\n");
+      if (*piVar19 != 0) {
+        FS_Printf(uVar5,0xffffffff82163bc0,0x10,uVar15);
       }
-      uVar12 = uVar12 + 1;
-      piVar9 = piVar9 + 1;
-    } while (uVar12 < 0x11);
-    FS_Printf(pvVar3,"Last PS field changed in snapshot:\n");
-    puVar16 = puVar13 + 0x157;
-    uVar12 = 0;
+      uVar15 = uVar15 + 1;
+      piVar19 = piVar19 + 1;
+    } while ((uVar15 & 0xffffffff) < 0x11);
+    FS_Printf(uVar5,0xffffffff82163b70);
+    puVar16 = puVar21 + 0x157;
+    uVar15 = 0;
+    iVar20 = 0;
     do {
       if (*puVar16 != 0) {
-        FS_Printf(pvVar3,"%10i times - field %i [%s]\n");
+        FS_Printf(uVar5,0xffffffff82163b54,*puVar16,uVar15,
+                  *(undefined4 *)(*(int *)(PTR_PTR_8296d104 + 0x10) + iVar20));
       }
-      pcVar6 = local_bc;
-      uVar12 = uVar12 + 1;
+      puVar4 = local_bc;
+      uVar15 = uVar15 + 1;
+      iVar20 = iVar20 + 0x10;
       puVar16 = puVar16 + 1;
-    } while (uVar12 < 0x161);
-    FS_Printf(pvVar3,local_bc);
-    FS_Printf(pvVar3,"Playerstate Fields Skipped Data:\n\n");
-    local_a0 = (ulonglong)totalFieldsSkipped;
-    FS_Printf(pvVar3,"Average number of fields skipped when sending playerstate delta: %f (%i/%i)\n"
-             );
-    FS_Printf(pvVar3,"Breakdown of fields skipped:\n");
-    uVar12 = 0;
+    } while ((uVar15 & 0xffffffff) < 0x161);
+    FS_Printf(uVar5,local_bc);
+    FS_Printf(uVar5,0xffffffff82163b30);
+    local_a0 = (ulonglong)DAT_83f541ac;
+    FS_Printf(uVar5,0xffffffff82163ae0,(double)(float)((double)local_a0 / (double)DAT_83f5d7ac),
+              local_a0,DAT_83f5d7ac,local_a0,DAT_83f5d7ac);
+    FS_Printf(uVar5,0xffffffff82163ac0);
+    uVar23 = 0;
+    uVar6 = 0xffffffff82163a88;
     do {
-      if (numPlayerstateFieldsSkipped[uVar12] != 0) {
-        if (uVar12 == 0x160) {
-          pcVar5 = "%i or more fields skipped:";
+      if ((&DAT_83f5d7f8)[uVar23] != 0) {
+        if (uVar23 == 0x160) {
+          iVar20 = 0x161;
+          uVar7 = uVar6;
         }
         else {
-          pcVar5 = "%i fields skipped:";
+          uVar7 = 0xffffffff82163aa4;
+          iVar20 = uVar23 + 1;
         }
-        FS_Printf(pvVar3,pcVar5);
-        FS_Printf(pvVar3," %i\n");
+        FS_Printf(uVar5,uVar7,iVar20);
+        FS_Printf(uVar5,0xffffffff82163ab8,(&DAT_83f5d7f8)[uVar23]);
       }
-      uVar12 = uVar12 + 1;
-    } while (uVar12 < 0x161);
-    TotalFieldJumpBitsUsedWithJumpSize(numPlayerstateFieldsSkipped,0x161,1,false);
-    FS_Printf(pvVar3,"Total overhead if playerstate used 1 bit skip markers: %i\n");
-    uVar12 = 2;
+      uVar23 = uVar23 + 1;
+    } while (uVar23 < 0x161);
+    uVar7 = TotalFieldJumpBitsUsedWithJumpSize(0xffffffff83f5d7f8,0x161,1,0);
+    FS_Printf(uVar5,0xffffffff82163a4c,uVar7);
+    uVar15 = 2;
     do {
-      TotalFieldJumpBitsUsedWithJumpSize(numPlayerstateFieldsSkipped,0x161,uVar12,false);
-      FS_Printf(pvVar3,"Total overhead if playerstate used %i bit skip markers: %i\n");
-      TotalFieldJumpBitsUsedWithJumpSize(numPlayerstateFieldsSkipped,0x161,uVar12,true);
-      FS_Printf(pvVar3,
-                "Total overhead if playerstate used %i bit skip markers with one bit for a single field jump: %i\n\n"
-               );
-      uVar12 = uVar12 + 1;
-    } while (uVar12 < 8);
-    FS_Printf(pvVar3,pcVar6);
-    FS_Printf(pvVar3,"Entitystate Fields Skipped Data:\n\n");
-    local_a0 = (ulonglong)puVar13[3];
+      uVar7 = TotalFieldJumpBitsUsedWithJumpSize(0xffffffff83f5d7f8,0x161,uVar15,0);
+      FS_Printf(uVar5,0xffffffff821639ac,uVar15,uVar7);
+      uVar7 = TotalFieldJumpBitsUsedWithJumpSize(0xffffffff83f5d7f8,0x161,uVar15,1);
+      FS_Printf(uVar5,0xffffffff821639e8,uVar15,uVar7);
+      uVar15 = uVar15 + 1;
+    } while ((uVar15 & 0xffffffff) < 8);
+    FS_Printf(uVar5,puVar4);
+    FS_Printf(uVar5,0xffffffff82163988);
+    local_a0 = (ulonglong)puVar21[3];
     local_a8 = (ulonglong)DAT_83f5d1f8;
-    FS_Printf(pvVar3,
-              "Average number of fields skipped when sending entity state delta: %f (%i/%i)\n");
-    FS_Printf(pvVar3,"Breakdown of fields skipped:\n");
-    uVar12 = 0;
+    FS_Printf(uVar5,0xffffffff82163938,(double)(float)((double)local_a0 / (double)local_a8),local_a0
+              ,local_a8,local_a0,local_a8);
+    FS_Printf(uVar5,0xffffffff82163ac0);
+    uVar23 = 0;
     do {
-      if (numEntitystateFieldsSkipped[uVar12] != 0) {
-        if (uVar12 == 0x3f) {
-          pcVar5 = "%i or more fields skipped:";
+      if ((&DAT_83f5d210)[uVar23] != 0) {
+        if (uVar23 == 0x3f) {
+          iVar20 = 0x40;
+          uVar7 = uVar6;
         }
         else {
-          pcVar5 = "%i fields skipped:";
+          uVar7 = 0xffffffff82163aa4;
+          iVar20 = uVar23 + 1;
         }
-        FS_Printf(pvVar3,pcVar5);
-        FS_Printf(pvVar3," %i\n");
+        FS_Printf(uVar5,uVar7,iVar20);
+        FS_Printf(uVar5,0xffffffff82163ab8,(&DAT_83f5d210)[uVar23]);
       }
-      uVar12 = uVar12 + 1;
-    } while (uVar12 < 0x40);
-    TotalFieldJumpBitsUsedWithJumpSize(numEntitystateFieldsSkipped,0x40,1,false);
-    FS_Printf(pvVar3,"Total overhead if entity state used 1 bit skip markers: %i\n");
-    uVar12 = 2;
+      uVar23 = uVar23 + 1;
+    } while (uVar23 < 0x40);
+    uVar7 = TotalFieldJumpBitsUsedWithJumpSize(0xffffffff83f5d210,0x40,1,0);
+    FS_Printf(uVar5,0xffffffff821638fc,uVar7);
+    uVar15 = 2;
     do {
-      TotalFieldJumpBitsUsedWithJumpSize(numEntitystateFieldsSkipped,0x40,uVar12,false);
-      FS_Printf(pvVar3,"Total overhead if entity state used %i bit skip markers: %i\n");
-      TotalFieldJumpBitsUsedWithJumpSize(numEntitystateFieldsSkipped,0x40,uVar12,true);
-      FS_Printf(pvVar3,
-                "Total overhead if entity state used %i bit skip markers with one bit for a single field jump: %i\n\n"
-               );
-      uVar12 = uVar12 + 1;
-    } while (uVar12 < 8);
-    FS_Printf(pvVar3,pcVar6);
-    FS_Printf(pvVar3,"Hudelem Fields Skipped Data:\n\n");
-    local_a0 = (ulonglong)*puVar13;
-    local_a8 = (ulonglong)totalHudelemTimesSkipped;
-    FS_Printf(pvVar3,"Average number of fields skipped when sending hud elem delta: %f (%i/%i)\n");
-    FS_Printf(pvVar3,"Breakdown of fields skipped:\n");
-    uVar12 = 0;
+      uVar7 = TotalFieldJumpBitsUsedWithJumpSize(0xffffffff83f5d210,0x40,uVar15,0);
+      FS_Printf(uVar5,0xffffffff82163854,uVar15,uVar7);
+      uVar7 = TotalFieldJumpBitsUsedWithJumpSize(0xffffffff83f5d210,0x40,uVar15,1);
+      FS_Printf(uVar5,0xffffffff82163898,uVar15,uVar7);
+      uVar15 = uVar15 + 1;
+    } while ((uVar15 & 0xffffffff) < 8);
+    FS_Printf(uVar5,puVar4);
+    FS_Printf(uVar5,0xffffffff82163834);
+    local_a0 = (ulonglong)*puVar21;
+    local_a8 = (ulonglong)DAT_83f541f4;
+    FS_Printf(uVar5,0xffffffff821637e8,(double)(float)((double)local_a0 / (double)local_a8),local_a0
+              ,local_a8,local_a0,local_a8);
+    FS_Printf(uVar5,0xffffffff82163ac0);
+    uVar23 = 0;
     do {
-      if (numHudelemFieldsSkipped[uVar12] != 0) {
-        if (uVar12 == 0x29) {
-          pcVar6 = "%i or more fields skipped:";
+      if ((&DAT_83f5d700)[uVar23] != 0) {
+        if (uVar23 == 0x29) {
+          iVar20 = 0x2a;
+          uVar7 = uVar6;
         }
         else {
-          pcVar6 = "%i fields skipped:";
+          uVar7 = 0xffffffff82163aa4;
+          iVar20 = uVar23 + 1;
         }
-        FS_Printf(pvVar3,pcVar6);
-        FS_Printf(pvVar3," %i\n");
+        FS_Printf(uVar5,uVar7,iVar20);
+        FS_Printf(uVar5,0xffffffff82163ab8,(&DAT_83f5d700)[uVar23]);
       }
-      uVar12 = uVar12 + 1;
-    } while (uVar12 < 0x2a);
-    TotalFieldJumpBitsUsedWithJumpSize(numHudelemFieldsSkipped,0x2a,1,false);
-    FS_Printf(pvVar3,"Total overhead if hudelem used 1 bit skip markers: %i\n");
-    uVar12 = 2;
+      uVar23 = uVar23 + 1;
+    } while (uVar23 < 0x2a);
+    uVar6 = TotalFieldJumpBitsUsedWithJumpSize(0xffffffff83f5d700,0x2a,1,0);
+    FS_Printf(uVar5,0xffffffff821637b0,uVar6);
+    uVar15 = 2;
     do {
-      TotalFieldJumpBitsUsedWithJumpSize(numHudelemFieldsSkipped,0x2a,uVar12,false);
-      FS_Printf(pvVar3,"Total overhead if hudelem used %i bit skip markers: %i\n");
-      TotalFieldJumpBitsUsedWithJumpSize(numHudelemFieldsSkipped,0x2a,uVar12,true);
-      FS_Printf(pvVar3,
-                "Total overhead if hudelem used %i bit skip markers with one bit for a single field jump: %i\n\n"
-               );
-      uVar12 = uVar12 + 1;
-    } while (uVar12 < 8);
-    FS_Printf(pvVar3,"\n\nHuffman data:\n");
-    uVar12 = 0;
+      uVar6 = TotalFieldJumpBitsUsedWithJumpSize(0xffffffff83f5d700,0x2a,uVar15,0);
+      FS_Printf(uVar5,0xffffffff82163714,uVar15,uVar6);
+      uVar6 = TotalFieldJumpBitsUsedWithJumpSize(0xffffffff83f5d700,0x2a,uVar15,1);
+      FS_Printf(uVar5,0xffffffff82163750,uVar15,uVar6);
+      uVar15 = uVar15 + 1;
+    } while ((uVar15 & 0xffffffff) < 8);
+    FS_Printf(uVar5,0xffffffff82163700);
+    uVar15 = 0;
+    puVar21 = &DAT_8368c644;
     do {
-      FS_Printf(pvVar3,"\t%i,\t\t// %i\n");
-      uVar12 = uVar12 + 1;
-    } while (uVar12 < 0x100);
-    FS_FCloseFile(pvVar3);
+      puVar21 = puVar21 + 1;
+      FS_Printf(uVar5,0xffffffff821636f0,*puVar21 >> 4,uVar15);
+      uVar15 = uVar15 + 1;
+    } while ((uVar15 & 0xffffffff) < 0x100);
+    FS_FCloseFile(uVar5);
   }
   __restgprlr();
   return;
@@ -1123,25 +1152,47 @@ LAB_825867e8:
 
 
 // 825870C0  SV_GetClientSnapshotPing  (server_mp/sv_snapshot_profile_mp.cpp:1007)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_GetClientSnapshotPing(undefined8 param_1,int param_2)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  int iVar3;
+  
+  uVar2 = __savegprlr_29();
+  if ((ulonglong)DAT_83f11410 <= (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82163190,0x3f3,0,0xffffffff8215b44c,uVar2);
+  }
+  iVar3 = (int)uVar2 * 0x68b00 + DAT_83f11414;
+  iVar3 = (*(int *)(iVar3 + 0x18) + param_2 & DAT_83f1e028) * 0x3380 + iVar3;
+  uVar1 = *(uint *)(iVar3 + 0x38614);
+  if (-1 < (int)uVar1) {
+    __restgprlr_29((ulonglong)uVar1 - (ulonglong)*(uint *)(iVar3 + 0x38610));
+    return;
+  }
+  __restgprlr_29(0xffffffffffffffff);
+  return;
+}
+
 
 // 82587188  SV_GetRecentSnapshotData  (server_mp/sv_snapshot_profile_mp.cpp:1024)
 
-void SV_GetRecentSnapshotData(int *param_1,int *param_2,int *param_3,int *param_4)
+void SV_GetRecentSnapshotData
+               (undefined8 param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
 
 {
-  int *piVar1;
+  undefined4 *puVar1;
   
-  piVar1 = (int *)__savegprlr_29(param_1);
-  *piVar1 = s_numSnapshotsBuiltSinceLastPoll;
-  *param_2 = s_numSnapshotsSentSinceLastPoll;
-  *param_3 = s_uncompressedDataSinceLastPoll;
-  *param_4 = s_compressedDataSinceLastPoll;
-  s_numSnapshotsBuiltSinceLastPoll = 0;
-  s_numSnapshotsSentSinceLastPoll = 0;
-  s_uncompressedDataSinceLastPoll = 0;
-  s_compressedDataSinceLastPoll = 0;
+  puVar1 = (undefined4 *)__savegprlr_29();
+  *puVar1 = DAT_83f1ec98;
+  *param_2 = DAT_83f1ecb4;
+  *param_3 = DAT_83f535a4;
+  *param_4 = DAT_83f42cbc;
+  DAT_83f1ec98 = 0;
+  DAT_83f1ecb4 = 0;
+  DAT_83f535a4 = 0;
+  DAT_83f42cbc = 0;
   __restgprlr_29();
   return;
 }
@@ -1161,34 +1212,33 @@ void SV_TrackSnapshotSize(int param_1)
   lVar2 = (longlong)DAT_83f4b6c4;
   DAT_83f4b6c4 = DAT_83f4b6c4 + 1;
   fVar1 = (float)(longlong)DAT_83f4b6c4;
-  s_numSnapshotsBuiltSinceLastPoll = s_numSnapshotsBuiltSinceLastPoll + 1;
-  s_uncompressedDataSinceLastPoll = s_uncompressedDataSinceLastPoll + param_1;
-  DAT_83f42cb8 = ((float)lVar2 * DAT_83f42cb8 + ((float)(longlong)param_1 - s_avgSnapshotSize)) /
-                 fVar1;
-  s_avgSnapshotSize = ((float)lVar2 * s_avgSnapshotSize + (float)(longlong)param_1) / fVar1;
+  DAT_83f1ec98 = DAT_83f1ec98 + 1;
+  DAT_83f535a4 = DAT_83f535a4 + param_1;
+  DAT_83f42cb8 = ((float)lVar2 * DAT_83f42cb8 + ((float)(longlong)param_1 - DAT_83f4abd8)) / fVar1;
+  DAT_83f4abd8 = ((float)lVar2 * DAT_83f4abd8 + (float)(longlong)param_1) / fVar1;
   return;
 }
 
 
 // 82587290  SV_TrackPacketCompression  (server_mp/sv_snapshot_profile_mp.cpp:1051)
 
-void SV_TrackPacketCompression(int param_1,int param_2,int param_3)
+void SV_TrackPacketCompression(undefined8 param_1,undefined4 param_2,int param_3)
 
 {
-  uint uVar1;
+  int iVar1;
   int iVar2;
   
-  iVar2 = __savegprlr_29(param_1);
+  iVar2 = __savegprlr_29();
   if ((iVar2 < 0) || (0x11 < iVar2)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
-                    ,0x41e,0,"%s\n\t(clientNum) = %i");
+    MyAssertHandler(0xffffffff82163190,0x41e,0,0xffffffff82037188,0xffffffff82037164,iVar2);
   }
-  uVar1 = s_clientSnapshotData[iVar2].index & 7;
-  s_numSnapshotsSentSinceLastPoll = s_numSnapshotsSentSinceLastPoll + 1;
-  s_compressedDataSinceLastPoll = s_compressedDataSinceLastPoll + param_3;
-  s_clientSnapshotData[iVar2].compressedSize[uVar1] = param_3;
-  s_clientSnapshotData[iVar2].snapshotSize[uVar1] = param_2;
-  s_clientSnapshotData[iVar2].index = s_clientSnapshotData[iVar2].index + 1;
+  iVar1 = iVar2 * 0x44;
+  iVar2 = iVar2 * 0x11 + (*(uint *)(&DAT_83f4ac90 + iVar1) & 7);
+  DAT_83f1ecb4 = DAT_83f1ecb4 + 1;
+  DAT_83f42cbc = DAT_83f42cbc + param_3;
+  *(int *)(&DAT_83f4ac70 + iVar2 * 4) = param_3;
+  (&DAT_83f4ac50)[iVar2] = param_2;
+  *(int *)(&DAT_83f4ac90 + iVar1) = *(int *)(&DAT_83f4ac90 + iVar1) + 1;
   __restgprlr_29();
   return;
 }
@@ -1196,72 +1246,365 @@ void SV_TrackPacketCompression(int param_1,int param_2,int param_3)
 
 // 82587348  SV_GetPacketCompressionForClient  (server_mp/sv_snapshot_profile_mp.cpp:1066)
 
-int SV_GetPacketCompressionForClient(int param_1)
+void SV_GetPacketCompressionForClient(void)
 
 {
   int iVar1;
-  ulonglong uVar2;
+  int iVar2;
   ulonglong uVar3;
   ulonglong uVar4;
+  ulonglong uVar5;
   
-  iVar1 = __savegprlr_28(param_1);
-  uVar4 = (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[7] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[6] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[5] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[4] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[3] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[2] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[1] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[0];
-  if (uVar4 == 0) {
-    iVar1 = __restgprlr_28(0);
-    return iVar1;
+  iVar2 = __savegprlr_28();
+  iVar1 = iVar2 * 0x44;
+  uVar5 = (ulonglong)*(uint *)(&DAT_83f4ac6c + iVar1) + (ulonglong)*(uint *)(&DAT_83f4ac68 + iVar1)
+          + (ulonglong)*(uint *)(&DAT_83f4ac64 + iVar1) +
+          (ulonglong)*(uint *)(&DAT_83f4ac60 + iVar1) + (ulonglong)*(uint *)(&DAT_83f4ac5c + iVar1)
+          + (ulonglong)*(uint *)(&DAT_83f4ac58 + iVar1) +
+          (ulonglong)*(uint *)(&DAT_83f4ac54 + iVar1) +
+          (ulonglong)(uint)(&DAT_83f4ac50)[iVar2 * 0x11];
+  if (uVar5 == 0) {
+    __restgprlr_28(0);
+    return;
   }
-  uVar3 = ((ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[7] +
-           (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[6] +
-           (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[5] +
-           (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[4] +
-           (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[3] +
-           (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[2] +
-           (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[1] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[0]) * 100;
-  trapWord(6,uVar4,0);
-  uVar2 = uVar4 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1);
-  trapWord(5,uVar2,0xffff);
-  iVar1 = __restgprlr_28(100 - (longlong)((int)uVar3 / (int)uVar4),0xffffffff83f4ac74,
-                         0xffffffff83f4ac70,uVar2);
-  return iVar1;
+  uVar4 = ((ulonglong)*(uint *)(&DAT_83f4ac8c + iVar1) + (ulonglong)*(uint *)(&DAT_83f4ac88 + iVar1)
+           + (ulonglong)*(uint *)(&DAT_83f4ac84 + iVar1) +
+           (ulonglong)*(uint *)(&DAT_83f4ac80 + iVar1) + (ulonglong)*(uint *)(&DAT_83f4ac7c + iVar1)
+           + (ulonglong)*(uint *)(&DAT_83f4ac78 + iVar1) +
+           (ulonglong)*(uint *)(&DAT_83f4ac74 + iVar1) + (ulonglong)*(uint *)(&DAT_83f4ac70 + iVar1)
+          ) * 100;
+  trapWord(6,uVar5,0);
+  uVar3 = uVar5 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1);
+  trapWord(5,uVar3,0xffff);
+  __restgprlr_28(100 - (longlong)((int)uVar4 / (int)uVar5),0xffffffff83f4ac74,0xffffffff83f4ac70,
+                 uVar3);
+  return;
 }
 
 
 // 82587440  SV_ProfDraw  (server_mp/sv_snapshot_profile_mp.cpp:1102)
 
-void SV_ProfDraw(int param_1,char *param_2,bool param_3)
+void SV_ProfDraw(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  float local_30 [12];
+  undefined8 uVar1;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  undefined4 local_24;
   
-  uVar2 = (ulonglong)param_3;
-  iVar1 = __savegprlr_29(param_1);
-  if ((uVar2 & 0xff) != 0) {
-    local_30[0] = 1.0;
-    local_30[1] = 1.0;
-    local_30[2] = 1.0;
-    local_30[3] = 0.2;
-    CL_DrawRect(0xc,iVar1,0x400,(cl_profileTextHeight->current).integer + -6,local_30);
+  uVar1 = __savegprlr_29();
+  if ((param_3 & 0xff) != 0) {
+    local_30 = 0x3f800000;
+    local_2c = 0x3f800000;
+    local_28 = 0x3f800000;
+    local_24 = 0x3e4ccccd;
+    CL_DrawRect(0xc,uVar1,0x400,(ulonglong)*(uint *)(DAT_82b3eca0 + 0xc) - 6,&local_30);
   }
-  CL_DrawString(0xc,iVar1,param_2,0,(cl_profileTextHeight->current).integer);
+  CL_DrawString(0xc,uVar1,param_2,0,*(undefined4 *)(DAT_82b3eca0 + 0xc));
   __restgprlr_29();
   return;
 }
 
 
 // 825874C8  SV_KeyEvent  (server_mp/sv_snapshot_profile_mp.cpp:1119)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+undefined8 SV_KeyEvent(int param_1,char param_2)
+
+{
+  bool bVar1;
+  int iVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  
+  if (param_2 != '\0') {
+    if (param_1 < 0x9b) {
+      if (param_1 == 0x9a) {
+LAB_82587560:
+        uVar5 = (ulonglong)DAT_83f11410;
+        trapWord(6,uVar5,0);
+        uVar3 = (*(uint *)(DAT_82a3834c + 0xc) + uVar5) - 1;
+        lVar4 = uVar3 - (longlong)((int)uVar3 / (int)DAT_83f11410) * (longlong)(int)DAT_83f11410;
+        trapWord(5,uVar5 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff)
+        ;
+        if (*(int *)((int)lVar4 * 0x68b00 + DAT_83f11414) < 3) {
+          do {
+            uVar3 = (uVar5 - 1) + lVar4;
+            trapWord(6,uVar5,0);
+            lVar4 = uVar3 - (longlong)((int)uVar3 / (int)DAT_83f11410) * (longlong)(int)DAT_83f11410
+            ;
+            trapWord(5,uVar5 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),
+                     0xffff);
+          } while (*(int *)((int)lVar4 * 0x68b00 + DAT_83f11414) < 3);
+        }
+        Dvar_SetInt();
+        return 1;
+      }
+      if (param_1 < 0x15) {
+        if (param_1 != 0x14) {
+          if ((param_1 != 1) && (param_1 != 0xd)) {
+            return 0;
+          }
+          Dvar_SetBool(DAT_83d0b550,1);
+          return 0;
+        }
+        goto LAB_82587560;
+      }
+      bVar1 = param_1 == 0x15;
+    }
+    else {
+      if (param_1 == 0x9b) goto LAB_8258761c;
+      if (param_1 == 0xb7) goto LAB_82587560;
+      bVar1 = param_1 == 0xbd;
+    }
+    if (bVar1) {
+LAB_8258761c:
+      uVar5 = (ulonglong)DAT_83f11410;
+      trapWord(6,uVar5,0);
+      uVar3 = (ulonglong)*(uint *)(DAT_82a3834c + 0xc) + 1;
+      lVar4 = uVar3 - (longlong)((int)uVar3 / (int)DAT_83f11410) * (longlong)(int)DAT_83f11410;
+      iVar2 = *(int *)((int)lVar4 * 0x68b00 + DAT_83f11414);
+      uVar3 = uVar5 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1);
+      trapWord(5,uVar3,0xffff);
+      while (iVar2 < 3) {
+        uVar3 = lVar4 + 1;
+        trapWord(6,uVar5,0);
+        lVar4 = uVar3 - (longlong)((int)uVar3 / (int)DAT_83f11410) * (longlong)(int)DAT_83f11410;
+        iVar2 = *(int *)((int)lVar4 * 0x68b00 + DAT_83f11414);
+        uVar3 = uVar5 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1);
+        trapWord(5,uVar3,0xffff);
+      }
+      Dvar_SetInt(DAT_82a3834c,lVar4,uVar3);
+      return 1;
+    }
+  }
+  return 0;
+}
+
 
 // 825876D0  SV_Netchan_PrintProfileStats  (server_mp/sv_snapshot_profile_mp.cpp:1177)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+void SV_Netchan_PrintProfileStats(void)
+
+{
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  int *piVar4;
+  int iVar6;
+  longlong lVar5;
+  ulonglong uVar7;
+  uint uVar8;
+  uint *puVar9;
+  int *piVar10;
+  ulonglong uVar11;
+  uint uVar12;
+  uint uVar13;
+  uint uVar14;
+  ulonglong uVar15;
+  longlong lVar16;
+  int iVar17;
+  ulonglong uVar18;
+  longlong lVar19;
+  double dVar20;
+  double dVar21;
+  float local_4e0;
+  float local_4dc;
+  float local_4d8;
+  float local_4d4;
+  char acStack_4d0 [16];
+  undefined1 local_4c0;
+  undefined1 auStack_4b0 [1200];
+  
+  iVar2 = __savegprlr();
+  uVar11 = (ulonglong)*(uint *)(DAT_82b3ec94 + 0xc);
+  if (*(int *)(DAT_836b939c + 0xc) == 0) {
+    MyAssertHandler(0xffffffff82163190,0x4bb,0,0xffffffff82000f98,0xffffffff820351a8);
+  }
+  SV_Netchan_UpdateProfileStats();
+  if (*(char *)(DAT_83666174 + 0xc) != '\0') {
+    if (iVar2 != 0) {
+      Com_Printf(0xf,0xffffffff820145f4);
+    }
+    Com_sprintf(auStack_4b0,0x400,0xffffffff82035148);
+    if (iVar2 != 0) {
+      Com_Printf(0xf,0xffffffff82004d30,auStack_4b0);
+    }
+    Com_sprintf(auStack_4b0,0x400,0xffffffff821641cc);
+    if (iVar2 != 0) {
+      Com_Printf(0xf,0xffffffff82035128,auStack_4b0);
+    }
+    Com_sprintf(auStack_4b0,0x400,0xffffffff82164180);
+    if (iVar2 == 0) {
+      uVar11 = uVar11 + 10;
+      SV_ProfDraw(uVar11,auStack_4b0,0);
+    }
+    else {
+      Com_Printf(0xf,0xffffffff82004d30,auStack_4b0);
+    }
+    Com_sprintf(auStack_4b0,0x400,0xffffffff82164130);
+    if (iVar2 == 0) {
+      uVar11 = uVar11 + 10;
+      SV_ProfDraw(uVar11,auStack_4b0,0);
+    }
+    else {
+      Com_Printf(0xf,0xffffffff82004d30,auStack_4b0);
+    }
+    Sys_Milliseconds();
+    iVar17 = DAT_83f1d728;
+    uVar15 = (ulonglong)DAT_83f1d71c;
+    uVar18 = (ulonglong)DAT_83f1d724;
+    uVar14 = 0;
+    if (0 < (int)DAT_83f1d730) {
+      uVar14 = DAT_83f1d730;
+    }
+    uVar12 = 9999;
+    if ((int)DAT_83f1d734 < 9999) {
+      uVar12 = DAT_83f1d734;
+    }
+    uVar8 = 0;
+    if (0 < (int)DAT_83f1da20) {
+      uVar8 = DAT_83f1da20;
+    }
+    uVar13 = 9999;
+    if ((int)DAT_83f1da24 < 9999) {
+      uVar13 = DAT_83f1da24;
+    }
+    if ((int)DAT_83f11410 < *(int *)(DAT_83d0b55c + 0xc)) {
+      MyAssertHandler(0xffffffff82163190,0x4f2,0,0xffffffff82000f98,0xffffffff8215a9fc);
+    }
+    uVar7 = (ulonglong)DAT_83f11410;
+    if (0 < (int)DAT_83f11410) {
+      puVar9 = (uint *)(DAT_83f11414 + 0xce);
+      piVar4 = DAT_83f11414;
+      do {
+        if ((*piVar4 != 0) && (puVar9[-0xc4] != 2)) {
+          uVar15 = puVar9[-2] + uVar15;
+          uVar18 = *puVar9 + uVar18;
+          iVar17 = puVar9[1] + iVar17;
+          if ((int)uVar14 < (int)puVar9[3]) {
+            uVar14 = puVar9[3];
+          }
+          if ((int)puVar9[4] < (int)uVar12) {
+            uVar12 = puVar9[4];
+          }
+          if ((int)uVar8 < (int)puVar9[0xbf]) {
+            uVar8 = puVar9[0xbf];
+          }
+          if ((int)puVar9[0xc0] < (int)uVar13) {
+            uVar13 = puVar9[0xc0];
+          }
+        }
+        piVar4 = piVar4 + 0x1a2c0;
+        puVar9 = puVar9 + 0x1a2c0;
+        uVar7 = uVar7 - 1;
+      } while (uVar7 != 0);
+    }
+    if ((int)uVar18 == 0) {
+      iVar17 = 0;
+    }
+    else {
+      uVar8 = iVar17 * 100;
+      iVar17 = (int)uVar8 / (int)uVar18;
+      trapWord(6,uVar18,0);
+      trapWord(5,uVar18 & ~((((ulonglong)uVar8 & 0x7fffffff) << 1 | (ulonglong)(uVar8 >> 0x1f)) - 1)
+               ,0xffff);
+    }
+    Com_sprintf(auStack_4b0,0x400,0xffffffff821640e8,uVar15,uVar14,uVar12,iVar17,0);
+    if (iVar2 == 0) {
+      uVar11 = uVar11 + 10;
+      SV_ProfDraw(uVar11,auStack_4b0,0);
+    }
+    else {
+      Com_Printf(0xf,&DAT_82004d30,auStack_4b0);
+    }
+    lVar19 = 10;
+    do {
+      lVar19 = lVar19 + -1;
+    } while (lVar19 != 0);
+    Com_sprintf(auStack_4b0,0x400,0xffffffff821640a0,DAT_83f1d71c,DAT_83f1d730,DAT_83f1d734,
+                DAT_83f1d72c,0);
+    if (iVar2 == 0) {
+      uVar11 = uVar11 + 10;
+      CL_DrawString(0xc,uVar11,auStack_4b0,0,*(undefined4 *)(DAT_82b3eca0 + 0xc));
+    }
+    else {
+      Com_Printf(0xf,&DAT_82004d30);
+    }
+    if ((int)DAT_83f11410 < *(int *)(DAT_83d0b55c + 0xc)) {
+      MyAssertHandler(0xffffffff82163190,0x545,0,0xffffffff82000f98,0xffffffff8215a9fc);
+    }
+    lVar19 = 0;
+    if (0 < (int)DAT_83f11410) {
+      dVar20 = 0.20000000298023224;
+      dVar21 = 1.0;
+      piVar4 = DAT_83f11414;
+      do {
+        if (*piVar4 != 0) {
+          strncpy(acStack_4d0,(char *)(piVar4 + 0x8507),0x11);
+          local_4c0 = 0;
+          iVar17 = 0;
+          uVar15 = (ulonglong)DAT_83f1e024;
+          if (0 < (int)DAT_83f1e024) {
+            piVar10 = piVar4 + 0xe184;
+            iVar6 = 0;
+            do {
+              iVar1 = *piVar10;
+              if (iVar1 <= iVar6) break;
+              iVar17 = iVar17 + 1;
+              piVar10 = piVar10 + 0xce0;
+              iVar6 = iVar1;
+            } while (iVar17 < (int)DAT_83f1e024);
+          }
+          lVar3 = 0;
+          lVar5 = 0;
+          lVar16 = 0;
+          iVar6 = 0;
+          if (0 < (int)DAT_83f1e024) {
+            do {
+              if (piVar4[(iVar17 + iVar6 & DAT_83f1e028) * 0xce0 + 0xe185] < 1) {
+                lVar16 = lVar16 + 1;
+              }
+              else {
+                lVar5 = lVar5 + lVar16;
+                lVar16 = 0;
+                lVar3 = lVar3 + 1;
+              }
+              iVar6 = iVar6 + 1;
+              uVar15 = uVar15 - 1;
+            } while (uVar15 != 0);
+            if ((int)lVar3 != 0) {
+              trapWord(6,lVar5 + lVar3,0);
+              trapWord(5,lVar5 + lVar3 &
+                         ~(((lVar5 * 100 & 0x7fffffffU) << 1 | (lVar5 * 100 & 0xffffffffU) >> 0x1f)
+                          - 1),0xffff);
+            }
+          }
+          SV_GetPacketCompressionForClient(lVar19);
+          Com_sprintf(auStack_4b0,0x400,0xffffffff82164064,lVar19,acStack_4d0,piVar4[0xcc],
+                      piVar4[0xd1],piVar4[0xd2]);
+          if (iVar2 == 0) {
+            uVar11 = uVar11 + 10;
+            if ((int)lVar19 == *(int *)(DAT_82a3834c + 0xc)) {
+              local_4dc = (float)dVar21;
+              local_4e0 = (float)dVar21;
+              local_4d8 = (float)dVar21;
+              local_4d4 = (float)dVar20;
+              CL_DrawRect(0xc,uVar11,0x400,(ulonglong)*(uint *)(DAT_82b3eca0 + 0xc) - 6,&local_4e0);
+            }
+            CL_DrawString(0xc,uVar11,auStack_4b0,0,*(undefined4 *)(DAT_82b3eca0 + 0xc));
+          }
+          else {
+            Com_Printf(0xf,&DAT_82004d30,auStack_4b0);
+          }
+        }
+        lVar19 = lVar19 + 1;
+        piVar4 = piVar4 + 0x1a2c0;
+      } while ((int)lVar19 < (int)DAT_83f11410);
+    }
+  }
+  __restgprlr();
+  return;
+}
+

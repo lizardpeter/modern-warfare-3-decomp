@@ -22,23 +22,20 @@ int _alloc_osfhnd(void)
   else {
     _lock(0xb);
     for (uVar4 = 0; (int)uVar4 < 0x40; uVar4 = uVar4 + 1) {
-      iVar2 = uVar4 * 4;
-      puVar3 = *(undefined4 **)(&__pioinfo + iVar2);
+      puVar3 = (undefined4 *)(&DAT_84897dc0)[uVar4];
       if (puVar3 == (undefined4 *)0x0) {
         puVar3 = calloc(0x20,0x48);
         if (puVar3 != (undefined4 *)0x0) {
-          *(undefined4 **)(&__pioinfo + iVar2) = puVar3;
-          _nhandle = _nhandle + 0x20;
-          for (; puVar3 < (undefined4 *)(*(int *)(&__pioinfo + iVar2) + 0x900);
-              puVar3 = puVar3 + 0x12) {
+          (&DAT_84897dc0)[uVar4] = puVar3;
+          DAT_84897db0 = DAT_84897db0 + 0x20;
+          for (; puVar3 < (undefined4 *)((&DAT_84897dc0)[uVar4] + 0x900); puVar3 = puVar3 + 0x12) {
             *(undefined1 *)(puVar3 + 1) = 0;
             *puVar3 = 0xffffffff;
             *(undefined1 *)((int)puVar3 + 5) = 10;
             puVar3[2] = 0;
           }
           local_60 = uVar4 << 5;
-          *(undefined1 *)(*(int *)(&__pioinfo + ((int)(local_60 | uVar4 >> 0x1b) >> 5) * 4) + 4) = 1
-          ;
+          *(undefined1 *)((&DAT_84897dc0)[(int)(local_60 | uVar4 >> 0x1b) >> 5] + 4) = 1;
           iVar2 = __lock_fhandle(local_60);
           if (iVar2 == 0) {
             local_60 = 0xffffffff;
@@ -46,14 +43,12 @@ int _alloc_osfhnd(void)
         }
         break;
       }
-      for (; puVar3 < (undefined4 *)(*(int *)(&__pioinfo + uVar4 * 4) + 0x900);
-          puVar3 = puVar3 + 0x12) {
+      for (; puVar3 < (undefined4 *)((&DAT_84897dc0)[uVar4] + 0x900); puVar3 = puVar3 + 0x12) {
         if ((*(byte *)(puVar3 + 1) & 1) == 0) {
           if (puVar3[2] == 0) {
             _lock(10);
             if ((puVar3[2] == 0) &&
-               (iVar2 = __crtInitCritSecAndSpinCount((_RTL_CRITICAL_SECTION *)(puVar3 + 3),4000),
-               iVar2 != 0)) {
+               (iVar2 = __crtInitCritSecAndSpinCount(puVar3 + 3,4000), iVar2 != 0)) {
               puVar3[2] = puVar3[2] + 1;
             }
             FUN_82929d5c();
@@ -62,7 +57,7 @@ int _alloc_osfhnd(void)
           if ((*(byte *)(puVar3 + 1) & 1) == 0) {
             *(undefined1 *)(puVar3 + 1) = 1;
             *puVar3 = 0xffffffff;
-            local_60 = ((int)puVar3 - *(int *)(&__pioinfo + uVar4 * 4)) / 0x48 + uVar4 * 0x20;
+            local_60 = ((int)puVar3 - (&DAT_84897dc0)[uVar4]) / 0x48 + uVar4 * 0x20;
             break;
           }
           RtlLeaveCriticalSection(puVar3 + 3);
@@ -80,17 +75,17 @@ int _alloc_osfhnd(void)
 
 // 82929810  _set_osfhnd  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/osfinfo.c:214)
 
-int _set_osfhnd(int param_1,int param_2)
+int _set_osfhnd(int param_1,intptr_t param_2)
 
 {
   int *piVar1;
   ulong *puVar2;
   int iVar3;
   
-  if ((-1 < param_1) && ((uint)param_1 < (uint)_nhandle)) {
+  if ((-1 < param_1) && ((uint)param_1 < DAT_84897db0)) {
     iVar3 = (param_1 & 0x1fU) * 0x48;
-    if (*(int *)(*(int *)(&__pioinfo + (param_1 >> 5) * 4) + iVar3) == -1) {
-      *(int *)(*(int *)(&__pioinfo + (param_1 >> 5) * 4) + iVar3) = param_2;
+    if (*(int *)((&DAT_84897dc0)[param_1 >> 5] + iVar3) == -1) {
+      *(intptr_t *)((&DAT_84897dc0)[param_1 >> 5] + iVar3) = param_2;
       return 0;
     }
   }
@@ -112,8 +107,8 @@ int _free_osfhnd(int param_1)
   ulong *puVar3;
   ulong uVar4;
   
-  if ((((param_1 < 0) || ((uint)_nhandle <= (uint)param_1)) ||
-      (puVar3 = (ulong *)(*(int *)(&__pioinfo + (param_1 >> 5) * 4) + (param_1 & 0x1fU) * 0x48),
+  if ((((param_1 < 0) || (DAT_84897db0 <= (uint)param_1)) ||
+      (puVar3 = (ulong *)((&DAT_84897dc0)[param_1 >> 5] + (param_1 & 0x1fU) * 0x48),
       (puVar3[1] & 0x1000000) == 0)) || (*puVar3 == 0xffffffff)) {
     piVar2 = _errno();
     *piVar2 = 9;
@@ -132,23 +127,24 @@ int _free_osfhnd(int param_1)
 
 // 82929930  _get_osfhandle  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/osfinfo.c:287)
 
-int _get_osfhandle(int param_1)
+intptr_t _get_osfhandle(int _FileHandle)
 
 {
   ulong *puVar1;
   int *piVar2;
-  int iVar3;
+  intptr_t iVar3;
+  intptr_t *piVar4;
   
-  if (param_1 == -2) {
+  if (_FileHandle == -2) {
     puVar1 = __doserrno();
     *puVar1 = 0;
     piVar2 = _errno();
     iVar3 = -1;
     *piVar2 = 9;
   }
-  else if (((param_1 < 0) || ((uint)_nhandle <= (uint)param_1)) ||
-          (piVar2 = (int *)(*(int *)(&__pioinfo + (param_1 >> 5) * 4) + (param_1 & 0x1fU) * 0x48),
-          (*(byte *)(piVar2 + 1) & 1) == 0)) {
+  else if (((_FileHandle < 0) || (DAT_84897db0 <= (uint)_FileHandle)) ||
+          (piVar4 = (intptr_t *)((&DAT_84897dc0)[_FileHandle >> 5] + (_FileHandle & 0x1fU) * 0x48),
+          (*(byte *)(piVar4 + 1) & 1) == 0)) {
     puVar1 = __doserrno();
     *puVar1 = 0;
     piVar2 = _errno();
@@ -157,7 +153,7 @@ int _get_osfhandle(int param_1)
     iVar3 = -1;
   }
   else {
-    iVar3 = *piVar2;
+    iVar3 = *piVar4;
   }
   return iVar3;
 }
@@ -165,30 +161,29 @@ int _get_osfhandle(int param_1)
 
 // 829299F0  __lock_fhandle  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/osfinfo.c:395)
 
-int __lock_fhandle(int param_1)
+int __lock_fhandle(int _Filehandle)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   int iVar2;
-  ioinfo___0_ *piVar3;
+  undefined4 *puVar3;
   uint uStack00000014;
   
-  uVar1 = __savegprlr_29(param_1);
-  uStack00000014 = (uint)uVar1;
-  piVar3 = &__pioinfo;
-  iVar2 = *(int *)(&__pioinfo + ((int)uStack00000014 >> 5) * 4) + (uStack00000014 & 0x1f) * 0x48;
+  uStack00000014 = __savegprlr_29(_Filehandle);
+  puVar3 = &DAT_84897dc0;
+  iVar2 = (&DAT_84897dc0)[(int)uStack00000014 >> 5] + (uStack00000014 & 0x1f) * 0x48;
+  uVar1 = uStack00000014;
   if (*(int *)(iVar2 + 8) == 0) {
     _lock(10);
-    piVar3 = *(ioinfo___0_ **)(iVar2 + 8);
-    if (piVar3 == (ioinfo___0_ *)0x0) {
-      __crtInitCritSecAndSpinCount((_RTL_CRITICAL_SECTION *)(iVar2 + 0xc),4000);
-      piVar3 = (ioinfo___0_ *)(*(int *)(iVar2 + 8) + 1);
-      *(ioinfo___0_ **)(iVar2 + 8) = piVar3;
+    puVar3 = *(undefined4 **)(iVar2 + 8);
+    if (puVar3 == (undefined4 *)0x0) {
+      __crtInitCritSecAndSpinCount(iVar2 + 0xc,4000);
+      puVar3 = (undefined4 *)(*(int *)(iVar2 + 8) + 1);
+      *(undefined4 **)(iVar2 + 8) = puVar3;
     }
     uVar1 = FUN_82929ab8();
   }
-  RtlEnterCriticalSection
-            ((ulonglong)*(uint *)(piVar3 + ((int)uVar1 >> 5) * 4) + (uVar1 & 0x1f) * 0x48 + 0xc);
+  RtlEnterCriticalSection(puVar3[(int)uVar1 >> 5] + (uVar1 & 0x1f) * 0x48 + 0xc);
   iVar2 = __restgprlr_29(1);
   return iVar2;
 }
@@ -196,12 +191,12 @@ int __lock_fhandle(int param_1)
 
 // 82929AF0  _unlock_fhandle  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/osfinfo.c:447)
 
-void _unlock_fhandle(int param_1)
+void _unlock_fhandle(int _Filehandle)
 
 {
   RtlLeaveCriticalSection
-            ((ulonglong)*(uint *)(&__pioinfo + (param_1 >> 5) * 4) +
-             ((ulonglong)(uint)param_1 & 0x1f) * 0x48 + 0xc);
+            ((ulonglong)(uint)(&DAT_84897dc0)[_Filehandle >> 5] +
+             ((ulonglong)(uint)_Filehandle & 0x1f) * 0x48 + 0xc);
   return;
 }
 

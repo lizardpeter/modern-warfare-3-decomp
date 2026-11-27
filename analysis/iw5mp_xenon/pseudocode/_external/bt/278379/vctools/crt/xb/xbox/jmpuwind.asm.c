@@ -2,15 +2,10 @@
 
 // 8291C9A0  __jump_unwind  (<external>/bt/278379/vctools/crt/xb/xbox/jmpuwind.asm:70)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void __jump_unwind(void)
+void __jump_unwind(PVOID param_1,PVOID param_2)
 
 {
-  PVOID in_r3;
-  PVOID in_r4;
-  
-  RtlUnwind(in_r3,in_r4,(PEXCEPTION_RECORD)0x0,(PVOID)0x0);
+  RtlUnwind(param_1,param_2,(PEXCEPTION_RECORD)0x0,(PVOID)0x0);
   return;
 }
 

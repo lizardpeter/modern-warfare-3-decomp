@@ -2,116 +2,94 @@
 
 // 82413138  DynEnt_GetEntityProps  (DynEntity/DynEntity_load_obj.cpp:728)
 
-DynEntityProps * DynEnt_GetEntityProps(DynEntityType param_1)
+longlong DynEnt_GetEntityProps(ulonglong param_1)
 
 {
-  if (param_1 == DYNENT_TYPE_INVALID) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\DynEntity_load_obj.cpp"
-                    ,0x2d9,0,"%s");
+  if ((int)param_1 == 0) {
+    MyAssertHandler(0xffffffff82060638,0x2d9,0,0xffffffff82000f98,0xffffffff82060684);
   }
-  else if (DYNENT_TYPE_HINGE < param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\DynEntity_load_obj.cpp"
-                    ,0x2da,0,"dynEntType doesn\'t index DYNENT_TYPE_COUNT\n\t%i not in [0, %i)");
+  else if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82060638,0x2da,0,0xffffffff820605f8,param_1,4);
   }
-  return dynEntProps + param_1;
+  return (param_1 & 0x1fffffff) * 8 + -0x7df9fa28;
 }
 
 
 // 824131D0  DynEnt_GetEntityCount  (DynEntity/DynEntity_load_obj.cpp:740)
 
-/* WARNING: Enum "DynEntityCollType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-uint DynEnt_GetEntityCount(DynEntityCollType param_1)
+undefined2 DynEnt_GetEntityCount(int param_1)
 
 {
-  return (uint)cm.dynEntCount[param_1];
+  return (&DAT_835a2944)[param_1];
 }
 
 
 // 824131E8  DynEnt_GetPoseList  (DynEntity/DynEntity_load_obj.cpp:749)
 
-/* WARNING: Enum "DynEntityCollType": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-DynEntityPose * DynEnt_GetPoseList(DynEntityCollType param_1)
+undefined4 DynEnt_GetPoseList(int param_1)
 
 {
-  return cm.dynEntPoseList[param_1];
+  return (&DAT_835a2950)[param_1];
 }
 
 
 // 82413200  DynEnt_GetClientModelPoseList  (DynEntity/DynEntity_load_obj.cpp:758)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-DynEntityPose * DynEnt_GetClientModelPoseList(void)
+undefined4 DynEnt_GetClientModelPoseList(void)
 
 {
-  return cm.dynEntPoseList[0];
+  return DAT_835a2950;
 }
 
 
 // 82413210  DynEnt_GetClientModelPoseCount  (DynEntity/DynEntity_load_obj.cpp:767)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-uint DynEnt_GetClientModelPoseCount(void)
+undefined2 DynEnt_GetClientModelPoseCount(void)
 
 {
-  return (uint)cm.dynEntCount[0];
+  return DAT_835a2944;
 }
 
 
 // 82413220  DynEnt_SaveEntities  (DynEntity/DynEntity_load_obj.cpp:777)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DynEnt_SaveEntities(MemoryFile *param_1)
+void DynEnt_SaveEntities(void)
 
 {
-  MemoryFile *pMVar1;
+  ulonglong uVar1;
   longlong lVar2;
   uint uVar3;
   ushort *puVar4;
-  DynEntityClient **ppDVar5;
+  int *piVar5;
   int iVar6;
   char local_40;
   char local_3f [63];
   
-  pMVar1 = (MemoryFile *)__savegprlr_26(param_1);
-  if (pMVar1 == (MemoryFile *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\DynEntity_load_obj.cpp"
-                    ,0x310,0,"%s");
+  uVar1 = __savegprlr_26();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82060638,0x310,0,0xffffffff82000f98,0xffffffff82001348);
   }
   lVar2 = 2;
-  puVar4 = cm.dynEntCount;
-  ppDVar5 = cm.dynEntClientList;
+  puVar4 = &DAT_835a2944;
+  piVar5 = &DAT_835a2958;
   do {
-    MemFile_WriteData(pMVar1,2,puVar4);
-    if (*puVar4 != 0) {
-      MemFile_WriteData(pMVar1,(uint)*puVar4 << 5,(DynEntityPose *)ppDVar5[-2]);
-      MemFile_WriteData(pMVar1,(uint)*puVar4 << 4,*ppDVar5);
+    MemFile_WriteData(uVar1,2,puVar4);
+    if ((ulonglong)*puVar4 != 0) {
+      MemFile_WriteData(uVar1,(ulonglong)*puVar4 << 5,piVar5[-2]);
+      MemFile_WriteData(uVar1,(ulonglong)*puVar4 << 4,*piVar5);
       uVar3 = 0;
       if (*puVar4 != 0) {
         iVar6 = 0;
         do {
-          local_40 = '\x01' - (*(int *)((int)&(*ppDVar5)->physObjId + iVar6) == 0);
-          MemFile_WriteData(pMVar1,1,&local_40);
+          local_40 = '\x01' - (*(int *)(*piVar5 + iVar6) == 0);
+          MemFile_WriteData(uVar1,1,&local_40);
           if (local_40 != '\0') {
-            Phys_ObjSave(*(int *)((int)&(*ppDVar5)->physObjId + iVar6),pMVar1);
+            Phys_ObjSave(*(undefined4 *)(*piVar5 + iVar6),uVar1);
           }
-          local_3f[0] = '\x01' - (*(int *)((int)&(*ppDVar5)->hinge + iVar6) == 0);
-          MemFile_WriteData(pMVar1,1,local_3f);
+          local_3f[0] = '\x01' - (*(int *)(*piVar5 + iVar6 + 0xc) == 0);
+          MemFile_WriteData(uVar1,1,local_3f);
           if (local_3f[0] != '\0') {
-            Hinge_Save(*(Hinge **)((int)&(*ppDVar5)->hinge + iVar6),pMVar1);
+            Hinge_Save(*(undefined4 *)(*piVar5 + iVar6 + 0xc),uVar1);
           }
           uVar3 = uVar3 + 1;
           iVar6 = iVar6 + 0x10;
@@ -119,7 +97,7 @@ void DynEnt_SaveEntities(MemoryFile *param_1)
       }
     }
     lVar2 = lVar2 + -1;
-    ppDVar5 = ppDVar5 + 1;
+    piVar5 = piVar5 + 1;
     puVar4 = puVar4 + 1;
   } while (lVar2 != 0);
   __restgprlr_26();
@@ -129,125 +107,105 @@ void DynEnt_SaveEntities(MemoryFile *param_1)
 
 // 82413378  DynEnt_LoadEntities  (DynEntity/DynEntity_load_obj.cpp:828)
 
-/* WARNING: Enum "PhysWorld": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void DynEnt_LoadEntities(MemoryFile *param_1)
+void DynEnt_LoadEntities(void)
 
 {
   ushort uVar1;
   ulonglong uVar2;
-  MemoryFile *pMVar3;
-  int iVar4;
-  Hinge *pHVar5;
-  DynEntityDrawType DVar6;
-  int iVar7;
-  int iVar8;
-  ushort *puVar9;
-  int *piVar10;
-  int iVar11;
-  DynEntityDef *pDVar12;
-  uint uVar13;
+  undefined4 uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  int iVar6;
+  ushort *puVar7;
+  int *piVar8;
+  int iVar9;
+  int iVar10;
+  ulonglong uVar11;
+  undefined8 in_MSR;
   char in_RESERVE;
   byte in_cr0;
   char local_b0;
   char local_af [7];
-  float afStack_a8 [42];
+  undefined1 auStack_a8 [168];
   
-  uVar2 = (ulonglong)(int)param_1;
-  __savegprlr();
+  uVar2 = __savegprlr();
   if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\DynEntity_load_obj.cpp"
-                    ,0x343,0,"%s");
+    MyAssertHandler(0xffffffff82060638,0x343,0,0xffffffff82000f98,0xffffffff82001348);
   }
-  DVar6 = DYNENT_DRAW_MODEL;
-  iVar7 = 0;
-  puVar9 = cm.dynEntCount;
+  uVar4 = 0;
+  iVar5 = 0;
+  puVar7 = &DAT_835a2944;
   do {
-    pMVar3 = (MemoryFile *)uVar2;
-    MemFile_ReadData(pMVar3,2,puVar9);
-    if (*puVar9 != 0) {
-      piVar10 = (int *)((int)cm.dynEntClientList + iVar7);
-      MemFile_ReadData(pMVar3,(uint)*puVar9 << 5,*(void **)((int)cm.dynEntPoseList + iVar7));
-      MemFile_ReadData(pMVar3,(uint)*puVar9 << 4,(void *)*piVar10);
-      uVar13 = 0;
-      if (*puVar9 != 0) {
-        iVar11 = 0;
-        iVar8 = 0;
+    MemFile_ReadData(uVar2,2,puVar7);
+    if ((ulonglong)*puVar7 != 0) {
+      piVar8 = (int *)((int)&DAT_835a2958 + iVar5);
+      MemFile_ReadData(uVar2,(ulonglong)*puVar7 << 5,*(undefined4 *)((int)&DAT_835a2950 + iVar5));
+      MemFile_ReadData(uVar2,(ulonglong)*puVar7 << 4,*piVar8);
+      uVar11 = 0;
+      if (*puVar7 != 0) {
+        iVar9 = 0;
+        iVar6 = 0;
         do {
-          if (*puVar9 <= uVar13) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\dynentity\\DynEntity_load_obj.h"
-                            ,0x4b,0,
-                            "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
-                           );
+          if ((ulonglong)*puVar7 <= (uVar11 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar11);
           }
-          iVar4 = *piVar10;
-          if (*puVar9 <= uVar13) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\dynentity\\DynEntity_load_obj.h"
-                            ,0x3d,0,
-                            "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
-                           );
+          iVar10 = *piVar8;
+          if ((ulonglong)*puVar7 <= (uVar11 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar11);
           }
-          uVar1 = *(ushort *)(iVar11 + iVar4 + 4);
-          pDVar12 = (DynEntityDef *)(iVar8 + *(int *)((int)cm.dynEntDefList + iVar7));
+          uVar1 = *(ushort *)(iVar9 + iVar10 + 4);
+          iVar10 = iVar6 + *(int *)((int)&DAT_835a2948 + iVar5);
           if (((uVar1 & 4) != 0) && ((uVar1 & 2) == 0)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\DynEntity_load_obj.cpp"
-                            ,0x35b,0,"%s");
+            MyAssertHandler(0xffffffff82060638,0x35b,0,0xffffffff82000f98,0xffffffff8205fef8);
           }
-          MemFile_ReadData(pMVar3,1,&local_b0);
+          MemFile_ReadData(uVar2,1,&local_b0);
           if (local_b0 == '\0') {
-            *(undefined4 *)(iVar11 + *piVar10) = 0;
+            *(undefined4 *)(iVar9 + *piVar8) = 0;
           }
           else {
-            iVar4 = Phys_ObjLoad(PHYS_WORLD_DYNENT,pMVar3);
-            *(int *)(iVar11 + *piVar10) = iVar4;
+            uVar3 = Phys_ObjLoad(0,uVar2);
+            *(undefined4 *)(iVar9 + *piVar8) = uVar3;
             do {
               if (in_RESERVE != '\0') {
-                g_dynEntPhysObjCount =
-                     storeWordConditionalIndexed
-                               ((ulonglong)(uint)g_dynEntPhysObjCount + 1,0,0xffffffff8427b8f0);
+                DAT_8427b8f0 = storeWordConditionalIndexed
+                                         ((ulonglong)DAT_8427b8f0 + 1,0,0xffffffff8427b8f0);
                 in_cr0 = 2;
               }
             } while (!(bool)(in_cr0 >> 1 & 1));
-            if (*puVar9 <= uVar13) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\dynentity\\DynEntity_load_obj.h"
-                              ,0x3d,0,
-                              "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
-                             );
+            if ((ulonglong)*puVar7 <= (uVar11 & 0xffffffff)) {
+              MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar11,(ulonglong)*puVar7
+                              ,in_MSR);
             }
             DynEnt_SetPhysObjCollision
-                      ((DynEntityDef *)(iVar8 + *(int *)((int)cm.dynEntDefList + iVar7)),
-                       *(int *)(iVar11 + *piVar10),true);
+                      (iVar6 + *(int *)((int)&DAT_835a2948 + iVar5),*(undefined4 *)(iVar9 + *piVar8)
+                       ,1);
           }
-          MemFile_ReadData(pMVar3,1,local_af);
+          MemFile_ReadData(uVar2,1,local_af);
           if (local_af[0] == '\0') {
-            *(undefined4 *)(iVar11 + *piVar10 + 0xc) = 0;
+            *(undefined4 *)(iVar9 + *piVar8 + 0xc) = 0;
           }
           else {
-            DynEntCl_GetStartingCenterOfMassForHinge(pDVar12,afStack_a8);
-            pHVar5 = Hinge_Load(pMVar3,pDVar12->hinge,pDVar12->physPreset,afStack_a8);
-            *(Hinge **)(iVar11 + *piVar10 + 0xc) = pHVar5;
+            DynEntCl_GetStartingCenterOfMassForHinge(iVar10,auStack_a8);
+            uVar3 = Hinge_Load(uVar2,*(undefined4 *)(iVar10 + 0x34),*(undefined4 *)(iVar10 + 0x2c),
+                               auStack_a8);
+            *(undefined4 *)(iVar9 + *piVar8 + 0xc) = uVar3;
           }
-          if (*puVar9 <= uVar13) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\dynentity\\DynEntity_load_obj.h"
-                            ,0x4b,0,
-                            "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
-                           );
+          if ((ulonglong)*puVar7 <= (uVar11 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar11);
           }
-          if ((*(ushort *)(iVar11 + *piVar10 + 4) & 4) == 0) {
-            DynEntCl_UnlinkEntity(uVar13,DVar6);
+          if ((*(ushort *)(iVar9 + *piVar8 + 4) & 4) == 0) {
+            DynEntCl_UnlinkEntity(uVar11,uVar4);
           }
-          uVar13 = uVar13 + 1;
-          iVar8 = iVar8 + 0x60;
-          iVar11 = iVar11 + 0x10;
-        } while (uVar13 < *puVar9);
+          uVar11 = uVar11 + 1;
+          iVar6 = iVar6 + 0x60;
+          iVar9 = iVar9 + 0x10;
+        } while ((uVar11 & 0xffffffff) < (ulonglong)*puVar7);
       }
     }
-    DVar6 = DVar6 + DYNENT_DRAW_BRUSH;
-    iVar7 = iVar7 + 4;
-    puVar9 = puVar9 + 1;
-  } while (DVar6 < DYNENT_DRAW_COUNT);
+    uVar4 = uVar4 + 1;
+    iVar5 = iVar5 + 4;
+    puVar7 = puVar7 + 1;
+  } while ((uVar4 & 0xffffffff) < 2);
   __restgprlr();
   return;
 }
@@ -255,46 +213,42 @@ void DynEnt_LoadEntities(MemoryFile *param_1)
 
 // 82413650  DynEnt_GetXModelUsageCount  (DynEntity/DynEntity_load_obj.cpp:919)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-int DynEnt_GetXModelUsageCount(XModel *param_1)
+longlong DynEnt_GetXModelUsageCount(int param_1)
 
 {
-  int iVar1;
+  longlong lVar1;
   longlong lVar2;
   ushort *puVar3;
-  DynEntityDef **ppDVar4;
+  int *piVar4;
   ulonglong uVar5;
-  DynEntityDef *pDVar6;
+  int iVar6;
   int iVar7;
   
-  if (param_1 == (XModel *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\DynEntity_load_obj.cpp"
-                    ,0x39c,0,"%s");
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82060638,0x39c,0,0xffffffff82000f98,0xffffffff820606a8);
   }
-  iVar1 = 0;
+  lVar1 = 0;
   lVar2 = 2;
-  ppDVar4 = cm.dynEntDefList;
-  puVar3 = cm.dynEntCount;
+  piVar4 = &DAT_835a2948;
+  puVar3 = &DAT_835a2944;
   do {
     uVar5 = (ulonglong)*puVar3;
     if (uVar5 != 0) {
-      pDVar6 = *ppDVar4;
       iVar7 = 0;
+      iVar6 = *piVar4;
       do {
-        if (pDVar6->xModel == param_1) {
-          iVar1 = iVar1 + 1;
+        if (*(int *)(iVar6 + 0x20) == param_1) {
+          lVar1 = lVar1 + 1;
         }
-        pDVar6 = (DynEntityDef *)((int)(*ppDVar4)[1].pose.quat + iVar7 + -4);
-        uVar5 = uVar5 - 1;
         iVar7 = iVar7 + 0x60;
+        iVar6 = *piVar4 + iVar7;
+        uVar5 = uVar5 - 1;
       } while (uVar5 != 0);
     }
     lVar2 = lVar2 + -1;
     puVar3 = puVar3 + 1;
-    ppDVar4 = ppDVar4 + 1;
+    piVar4 = piVar4 + 1;
   } while (lVar2 != 0);
-  return iVar1;
+  return lVar1;
 }
 

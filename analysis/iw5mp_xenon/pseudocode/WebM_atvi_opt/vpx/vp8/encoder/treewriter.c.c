@@ -2,35 +2,33 @@
 
 // 8283C628  cost  (WebM_atvi_opt/vpx/vp8/encoder/treewriter.c:25)
 
-void cost(int *param_1,char *param_2,uchar *param_3,int param_4,int param_5)
+void cost(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,int param_5)
 
 {
-  byte bVar1;
-  char cVar2;
-  int *piVar3;
-  ulonglong uVar4;
+  char cVar1;
+  int iVar2;
+  ulonglong uVar3;
+  uint uVar4;
   uint uVar5;
-  ulonglong uVar6;
   
-  uVar6 = (ulonglong)param_4;
-  piVar3 = (int *)__savegprlr_25(param_1);
-  bVar1 = param_3[(int)uVar6 >> 1];
-  uVar4 = uVar6 & 1;
+  iVar2 = __savegprlr_25();
+  uVar5 = (uint)*(byte *)(((int)param_4 >> 1) + (int)param_3);
+  uVar3 = param_4 & 1;
   do {
-    cVar2 = param_2[(int)uVar6];
-    uVar5 = 0xff - bVar1;
-    if ((int)uVar4 == 0) {
-      uVar5 = (uint)bVar1;
+    cVar1 = *(char *)((int)param_2 + (int)param_4);
+    uVar4 = 0xff - uVar5;
+    if ((int)uVar3 == 0) {
+      uVar4 = uVar5;
     }
-    if (cVar2 < 1) {
-      piVar3[-(int)cVar2] = vp8_prob_cost[uVar5] + param_5;
+    if (cVar1 < '\x01') {
+      *(int *)(iVar2 + cVar1 * -4) = (&DAT_821ea840)[uVar4] + param_5;
     }
     else {
-      cost(piVar3,param_2,param_3,(int)cVar2,vp8_prob_cost[uVar5] + param_5);
+      cost(iVar2,param_2,param_3);
     }
-    uVar6 = uVar6 + 1;
-    uVar4 = uVar6 & 1;
-  } while ((int)uVar4 != 0);
+    param_4 = param_4 + 1;
+    uVar3 = param_4 & 1;
+  } while ((int)uVar3 != 0);
   __restgprlr_25();
   return;
 }
@@ -38,7 +36,7 @@ void cost(int *param_1,char *param_2,uchar *param_3,int param_4,int param_5)
 
 // 8283C6C0  vp8_cost_tokens  (WebM_atvi_opt/vpx/vp8/encoder/treewriter.c:41)
 
-void vp8_cost_tokens(int *param_1,uchar *param_2,char *param_3)
+void vp8_cost_tokens(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   cost(param_1,param_3,param_2,0,0);

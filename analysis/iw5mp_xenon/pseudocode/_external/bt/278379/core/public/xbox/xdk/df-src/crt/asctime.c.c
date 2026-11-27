@@ -2,12 +2,12 @@
 
 // 8291A0C8  asctime  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/asctime.c:190)
 
-char * asctime(tm *param_1)
+char * asctime(tm *_Tm)
 
 {
   int iVar1;
   int *piVar2;
-  _tiddata *p_Var3;
+  _ptiddata p_Var3;
   char *pcVar4;
   char *pcVar5;
   char *pcVar6;
@@ -16,10 +16,10 @@ char * asctime(tm *param_1)
   int iVar9;
   longlong lVar10;
   
-  piVar2 = (int *)__savegprlr_29(param_1);
-  pcVar5 = buf;
+  piVar2 = (int *)__savegprlr_29(_Tm);
+  pcVar5 = &DAT_84895dcc;
   p_Var3 = _getptd_noexit();
-  if (p_Var3 != (_tiddata *)0x0) {
+  if (p_Var3 != (_ptiddata)0x0) {
     if (p_Var3->_asctimebuf == (char *)0x0) {
       pcVar4 = calloc(0x1a,1);
       p_Var3->_asctimebuf = pcVar4;
@@ -33,7 +33,7 @@ LAB_8291a114:
       ((-1 < piVar2[2] && ((piVar2[2] < 0x18 && (-1 < piVar2[1])))))) &&
      ((piVar2[1] < 0x3c && (((-1 < *piVar2 && (*piVar2 < 0x3c)) && (iVar1 = piVar2[3], 0 < iVar1))))
      )) {
-    if ((&DAT_829b08f8)[iVar7] - *(int *)(&_days + iVar7 * 4) < iVar1) {
+    if ((&DAT_829b08f8)[iVar7] - *(int *)(&DAT_829b08f4 + iVar7 * 4) < iVar1) {
       uVar8 = (ulonglong)(uint)piVar2[5] + 0x76c;
       iVar9 = (int)uVar8;
       if ((((uVar8 != ((longlong)(iVar9 >> 2) + (ulonglong)(iVar9 < 0 && (uVar8 & 3) != 0) &

@@ -2,8 +2,6 @@
 
 // 82701758  SocialConfig_ParseFile  (social/social_config.cpp:185)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SocialConfig_ParseFile(void)
 
 {
@@ -12,93 +10,94 @@ void SocialConfig_ParseFile(void)
   bool bVar3;
   bool bVar4;
   bool bVar5;
-  char *pcVar6;
-  int iVar7;
-  dvar_t *pdVar8;
-  char *local_ac;
+  char *pcVar7;
+  int iVar8;
+  ulonglong uVar6;
+  int iVar9;
+  undefined8 uVar10;
+  longlong lVar11;
+  undefined *local_ac;
   char *local_a8;
   char *local_a4;
   
   __savegprlr();
-  local_ac = g_socialConfigFileBuffer;
-  Com_BeginParseSession("social");
+  local_ac = &DAT_84545cf0;
+  Com_BeginParseSession(0xffffffff821b1338);
   Com_SetSpaceDelimited(1);
   bVar3 = false;
+  lVar11 = 1;
   bVar4 = false;
   bVar5 = false;
-  pcVar6 = Com_ParseOnLine(&local_ac);
-  if (local_ac != (char *)0x0) {
+  pcVar7 = (char *)Com_ParseOnLine(&local_ac);
+  if (local_ac != (undefined *)0x0) {
     local_a4 = "#ifdef";
     local_a8 = "#endif";
     do {
-      if (*pcVar6 != '\0') {
-        iVar7 = I_stricmp(pcVar6,local_a8);
-        if (iVar7 == 0) {
+      if (*pcVar7 != '\0') {
+        iVar8 = I_stricmp(pcVar7,local_a8);
+        if (iVar8 == 0) {
           Com_SkipRestOfLine(&local_ac);
           if (bVar4) {
             bVar4 = false;
             bVar5 = false;
             goto LAB_82701ab8;
           }
-          pcVar6 = "Social Config Fatal Error: Mismatched \'#endif\' on line %d.\n";
+          uVar10 = 0xffffffff821b1130;
         }
         else {
           if (bVar5) goto LAB_82701ab0;
-          iVar7 = I_stricmp(pcVar6,local_a4);
-          if (iVar7 != 0) {
-            iVar7 = I_stricmp(pcVar6,"app_id");
-            if (iVar7 == 0) {
-              pcVar6 = Com_ParseOnLine(&local_ac);
-              if (pcVar6 != (char *)0x0) goto LAB_82701ab0;
-              Com_PrintError(0x10,"Social Config Error: Expecting an app id number on line %d\n");
+          iVar8 = I_stricmp(pcVar7,local_a4);
+          if (iVar8 != 0) {
+            iVar8 = I_stricmp(pcVar7,0xffffffff821b116c);
+            if (iVar8 == 0) {
+              iVar8 = Com_ParseOnLine(&local_ac);
+              if (iVar8 != 0) goto LAB_82701ab0;
+              Com_PrintError(0x10,0xffffffff821b1174,lVar11);
               Com_SkipRestOfLine(&local_ac);
               bVar3 = true;
             }
             else {
-              iVar7 = I_stricmp(pcVar6,"permissions");
-              if (iVar7 == 0) {
-                pcVar6 = Com_ParseOnLine(&local_ac);
-                if (pcVar6 != (char *)0x0) goto LAB_82701ab0;
-                Com_PrintError(0x10,
-                               "Social Config Error: Expecting a permission string on line %d\n");
+              iVar8 = I_stricmp(pcVar7,0xffffffff821b131c);
+              if (iVar8 == 0) {
+                iVar8 = Com_ParseOnLine(&local_ac);
+                if (iVar8 != 0) goto LAB_82701ab0;
+                Com_PrintError(0x10,0xffffffff821b11b0,lVar11);
                 Com_SkipRestOfLine(&local_ac);
                 bVar3 = true;
               }
               else {
-                iVar7 = I_stricmp(pcVar6,"set");
-                if (iVar7 != 0) {
-                  Com_PrintError(0x10,"Social Config Error: Didn\'t recognize \'%s\' on line %d\n");
+                iVar8 = I_stricmp(pcVar7,0xffffffff82003740);
+                if (iVar8 != 0) {
+                  Com_PrintError(0x10,0xffffffff821b12e4,pcVar7,lVar11);
                   bVar3 = true;
                   goto LAB_82701ab0;
                 }
-                pcVar6 = Com_ParseOnLine(&local_ac);
-                if (pcVar6 == (char *)0x0) {
-                  Com_PrintError(0x10,"Social Config Error: Expecting a dvar string on line %d\n");
+                uVar6 = Com_ParseOnLine(&local_ac);
+                if ((uVar6 & 0xffffffff) == 0) {
+                  Com_PrintError(0x10,0xffffffff821b11f0,lVar11);
                   Com_SkipRestOfLine(&local_ac);
                   bVar3 = true;
                 }
                 else {
-                  pdVar8 = Dvar_FindVar(pcVar6);
-                  if (pdVar8 == (dvar_t *)0x0) {
-                    Com_PrintError(0x10,
-                                   "Social Config Error: Cannot set dvar \'%s\' on line %d.  It does not exist.  Your exe may be older than %s\n"
-                                  );
+                  iVar8 = Dvar_FindVar(uVar6);
+                  if (iVar8 == 0) {
+                    Com_PrintError(0x10,0xffffffff821b1240,uVar6,lVar11,0xffffffff821b122c);
                     Com_SkipRestOfLine(&local_ac);
                     bVar3 = true;
                   }
                   else {
-                    pcVar6 = Com_ParseOnLine(&local_ac);
-                    if (pcVar6 != (char *)0x0) {
-                      if (pdVar8->type == '\a') {
-                        Dvar_SetString(pdVar8,pcVar6);
+                    uVar6 = Com_ParseOnLine(&local_ac);
+                    if ((uVar6 & 0xffffffff) != 0) {
+                      if (*(char *)(iVar8 + 10) == '\a') {
+                        Dvar_SetString(iVar8,uVar6);
                       }
                       else {
-                        iVar7 = atoi(pcVar6);
-                        Dvar_SetInt(pdVar8,iVar7);
+                        iVar9 = atoi((char *)uVar6);
+                        Dvar_SetInt(iVar8,iVar9);
                       }
                       goto LAB_82701ab0;
                     }
-                    Com_PrintError(0x10,"Social Config Error: Expecting a dvar value on line %d\n");
+                    Com_PrintError(0x10,0xffffffff821b12ac,lVar11);
                     Com_SkipRestOfLine(&local_ac);
                     bVar3 = true;
                   }
@@ -107,28 +106,28 @@ void SocialConfig_ParseFile(void)
             }
             goto LAB_82701ab8;
           }
-          pcVar6 = Com_ParseOnLine(&local_ac);
-          if (pcVar6 == (char *)0x0) {
+          uVar6 = Com_ParseOnLine(&local_ac);
+          if ((uVar6 & 0xffffffff) == 0) {
 LAB_827018b0:
             bVar1 = false;
           }
           else {
-            iVar7 = I_stricmp(pcVar6,"MP");
+            iVar8 = I_stricmp(uVar6,0xffffffff82033abc);
             bVar1 = true;
-            if (iVar7 != 0) goto LAB_827018b0;
+            if (iVar8 != 0) goto LAB_827018b0;
           }
-          if (pcVar6 == (char *)0x0) {
+          if ((uVar6 & 0xffffffff) == 0) {
 LAB_827018d4:
             bVar2 = false;
           }
           else {
-            iVar7 = I_stricmp(pcVar6,"SP");
+            iVar8 = I_stricmp(uVar6,0xffffffff82033bec);
             bVar2 = true;
-            if (iVar7 != 0) goto LAB_827018d4;
+            if (iVar8 != 0) goto LAB_827018d4;
           }
           Com_SkipRestOfLine(&local_ac);
-          if ((pcVar6 == (char *)0x0) || ((!bVar1 && (!bVar2)))) {
-            pcVar6 = "Social Config Fatal Error: Expecting [\'mp\',\'sp\'] on line %d\n";
+          if (((uVar6 & 0xffffffff) == 0) || ((!bVar1 && (!bVar2)))) {
+            uVar10 = 0xffffffff821b10a4;
           }
           else {
             if (!bVar4) {
@@ -138,28 +137,27 @@ LAB_827018d4:
               bVar4 = true;
               goto LAB_82701ab8;
             }
-            pcVar6 = "Social Config Fatal Error: Missing \'#endif\' before \'#ifdef\' on line %d\n";
+            uVar10 = 0xffffffff821b10e8;
           }
         }
-        Com_PrintError(0x10,pcVar6);
+        Com_PrintError(0x10,uVar10,lVar11);
         bVar3 = true;
         break;
       }
 LAB_82701ab0:
       Com_SkipRestOfLine(&local_ac);
 LAB_82701ab8:
-      pcVar6 = Com_ParseOnLine(&local_ac);
-    } while (local_ac != (char *)0x0);
+      lVar11 = lVar11 + 1;
+      pcVar7 = (char *)Com_ParseOnLine(&local_ac);
+    } while (local_ac != (undefined *)0x0);
   }
   Com_EndParseSession();
   if (bVar4) {
-    Com_PrintError(0x10,
-                   "Social Config Error: Never found matching \'#endif\' before finished parsing\n")
-    ;
+    Com_PrintError(0x10,0xffffffff821b1058);
     bVar3 = true;
   }
   if (bVar3) {
-    Com_PrintError(1,"Error processing the Social config file.\n");
+    Com_PrintError(1,0xffffffff821b1028);
   }
   __restgprlr();
   return;
@@ -168,47 +166,47 @@ LAB_82701ab8:
 
 // 82701B50  SocialConfig_RetryGetFile  (social/social_config.cpp:372)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SocialConfig_RetryGetFile(void)
 
 {
-  uint uVar1;
+  int iVar1;
   int iVar2;
+  ulonglong uVar3;
   
-  DAT_84546d10 = DAT_84546d10 + 1;
-  uVar1 = Live_GenerateTimeToRetryInSeconds(DAT_84546d10,0x1e);
+  uVar3 = (ulonglong)DAT_84546d10;
+  DAT_84546d10 = (uint)(uVar3 + 1);
+  iVar1 = Live_GenerateTimeToRetryInSeconds(uVar3 + 1,0x1e);
   iVar2 = Sys_Milliseconds();
-  g_socialConfigFileRetryTime = iVar2 + uVar1 * 1000;
+  DAT_84545cbc = iVar2 + iVar1 * 1000;
   return;
 }
 
 
 // 82701BA8  SocialConfig_FileDownloaded  (social/social_config.cpp:379)
 
-void SocialConfig_FileDownloaded(int param_1)
+void SocialConfig_FileDownloaded(void)
 
 {
   int iVar1;
-  _func___cdecl_void **pp_Var2;
+  undefined4 *puVar2;
   int iVar3;
   
-  __savegprlr_29(param_1);
-  pp_Var2 = g_configComplete_Callbacks;
-  g_gotSocialConfigFile = true;
+  __savegprlr_29();
+  puVar2 = &DAT_84546d9c;
+  DAT_84546d19 = 1;
   DAT_84546d18 = 0;
-  g_socialConfigFileRetryTime = 0;
+  DAT_84545cbc = 0;
   SocialConfig_ParseFile();
   iVar3 = 0;
   iVar1 = DAT_84545ca8;
   if (0 < DAT_84545ca8) {
     do {
-      if (*pp_Var2 != (_func___cdecl_void *)0x0) {
-        (**pp_Var2)();
+      if ((code *)*puVar2 != (code *)0x0) {
+        (*(code *)*puVar2)();
         iVar1 = DAT_84545ca8;
       }
       iVar3 = iVar3 + 1;
-      pp_Var2 = pp_Var2 + 1;
+      puVar2 = puVar2 + 1;
     } while (iVar3 < iVar1);
   }
   __restgprlr_29();
@@ -218,17 +216,19 @@ void SocialConfig_FileDownloaded(int param_1)
 
 // 82701C20  SocialConfig_FileDownload_Failed  (social/social_config.cpp:403)
 
-void SocialConfig_FileDownload_Failed(int param_1)
+void SocialConfig_FileDownload_Failed(void)
 
 {
-  uint uVar1;
+  int iVar1;
   int iVar2;
+  ulonglong uVar3;
   
-  __savegprlr_29(param_1);
-  DAT_84546d10 = DAT_84546d10 + 1;
-  uVar1 = Live_GenerateTimeToRetryInSeconds(DAT_84546d10,0x1e);
+  __savegprlr_29();
+  uVar3 = (ulonglong)DAT_84546d10;
+  DAT_84546d10 = (uint)(uVar3 + 1);
+  iVar1 = Live_GenerateTimeToRetryInSeconds(uVar3 + 1,0x1e);
   iVar2 = Sys_Milliseconds();
-  g_socialConfigFileRetryTime = iVar2 + uVar1 * 1000;
+  DAT_84545cbc = iVar2 + iVar1 * 1000;
   DAT_84546d18 = 0;
   __restgprlr_29();
   return;
@@ -237,289 +237,128 @@ void SocialConfig_FileDownload_Failed(int param_1)
 
 // 82701C68  SocialConfig_AddCompleteCallback  (social/social_config.cpp:410)
 
-void SocialConfig_AddCompleteCallback(_func___cdecl_void *param_1)
+void SocialConfig_AddCompleteCallback(undefined4 param_1)
 
 {
-  _func___cdecl_void **pp_Var1;
+  undefined4 *puVar1;
   
   if (DAT_84545ca8 < 5) {
-    pp_Var1 = g_configComplete_Callbacks + DAT_84545ca8;
+    puVar1 = &DAT_84546d9c + DAT_84545ca8;
     DAT_84545ca8 = DAT_84545ca8 + 1;
-    *pp_Var1 = param_1;
+    *puVar1 = param_1;
     return;
   }
-  if (alwaysfails != 0) {
+  if (DAT_84013128 != 0) {
     return;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_config.cpp",0x19d,
-                  0,
-                  "Maximum social config callbacks reached, increase MAX_SOCIAL_CONFIG_COMPLETE_CALLBACKS if more are needed"
-                 );
+  MyAssertHandler(0xffffffff821b1340,0x19d,0,0xffffffff821b1388);
   return;
 }
 
 
 // 82701CC0  SocialConfig_Ok  (social/social_config.cpp:423)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-bool SocialConfig_Ok(void)
+byte SocialConfig_Ok(void)
 
 {
-  return (bool)(-(((live_test_onlinedataoff->current).unsignedInt & 0x100) == 0) &
-               g_gotSocialConfigFile);
+  return -((*(uint *)(DAT_84584ed8 + 0xc) & 0x100) == 0) & DAT_84546d19;
 }
 
 
 // 82701CE8  SocialConfig_Init  (social/social_config.cpp:434)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void SocialConfig_Init(void)
 
 {
   __savegprlr_29();
-  g_configComplete_Callbacks[0] = (_func___cdecl_void *)0x0;
-  g_configComplete_Callbacks[1] = (_func___cdecl_void *)0x0;
-  g_configComplete_Callbacks[2] = (_func___cdecl_void *)0x0;
-  g_configComplete_Callbacks[3] = (_func___cdecl_void *)0x0;
-  g_configComplete_Callbacks[4] = (_func___cdecl_void *)0x0;
-  g_socialConfigFileRetryTime = 0;
+  DAT_84546d9c = 0;
+  DAT_84546da0 = 0;
+  DAT_84546da4 = 0;
+  DAT_84546da8 = 0;
+  DAT_84546dac = 0;
+  DAT_84545cbc = 0;
   DAT_84545ca8 = 0;
-  g_gotSocialConfigFile = false;
+  DAT_84546d19 = 0;
   DAT_84546d18 = 0;
   DAT_84546d10 = 0;
-  theater_active =
-       Dvar_RegisterInt("theater_active",0,0,1,0,"Are we allowed to show theater or not.");
-  facebook_active =
-       Dvar_RegisterInt("facebook_active",0,0,1,0,"Are we allowed to show Facebook or not");
-  facebook_delay =
-       Dvar_RegisterInt("facebook_delay",0x2ee,-1,10000,0,
-                        "Delay before the Facebook calls start to Demonware. -1 means On-Demand and it will wait until the \'startfacebook\' menu call"
-                       );
-  facebook_max_retry_time =
-       Dvar_RegisterInt("facebook_max_retry_time",30000,0,300000,0,
-                        "Max time that the Facebook authentication can retry");
-  facebook_retry_step =
-       Dvar_RegisterInt("facebook_retry_step",1000,0,300000,0,
-                        "Step in m/s for the Facebook authentication retry");
-  facebook_friends_max_retry_time =
-       Dvar_RegisterInt("facebook_friends_max_retry_time",30000,0,300000,0,
-                        "Max time that the Facebook friends read can retry");
-  facebook_friends_retry_step =
-       Dvar_RegisterInt("facebook_friends_retry_step",1000,0,300000,0,
-                        "Step in m/s for the Facebook friends read retry");
-  facebook_friends_refresh_time =
-       Dvar_RegisterInt("facebook_friends_refresh_time",0x294,0,0x15180,0,
-                        "Time in seconds between Facebook friend refreshes");
-  facebook_friends_throttle_time =
-       Dvar_RegisterInt("facebook_friends_throttle_time",1000,0,10000,0,
-                        "Throttle time between Facebook friend pages");
-  facebook_friends_active =
-       Dvar_RegisterInt("facebook_friends_active",0,0,1,0,
-                        "Are we allowed to show Facebook Friends or not");
-  facebook_upload_video_active =
-       Dvar_RegisterInt("facebook_upload_video_active",0,0,1,0,
-                        "Are we allowed to Upload Videos to Facebook or not");
-  facebook_upload_photo_active =
-       Dvar_RegisterInt("facebook_upload_photo_active",0,0,1,0,
-                        "Are we allowed to Upload Photos to  Facebook or not");
-  entitlements_delay =
-       Dvar_RegisterInt("entitlements_delay",500,-1,10000,0,
-                        "Delay before the entitlement calls start to Demonware. -1 means On-Demand and it will wait until the \'startentitlements\' menu call"
-                       );
-  entitlements_active =
-       Dvar_RegisterInt("entitlements_active",0,0,1,0,"Are we allowed to show Entitlements or not");
-  entitlements_config_file_max_retry_time =
-       Dvar_RegisterInt("entitlements_config_file_max_retry_time",30000,0,300000,0,
-                        "Max time that the Entitlements config file read can retry");
-  entitlements_config_file_retry_step =
-       Dvar_RegisterInt("entitlements_config_file_retry_step",1000,0,300000,0,
-                        "Step in m/s for the Entitlements config file read retry");
-  entitlements_key_archive_max_retry_time =
-       Dvar_RegisterInt("entitlements_key_archive_max_retry_time",30000,0,300000,0,
-                        "Max time that the Entitlements key archive read can retry");
-  entitlements_key_archive_retry_step =
-       Dvar_RegisterInt("entitlements_key_archive_retry_step",1000,0,300000,0,
-                        "Step in m/s for the Entitlements key archive read retry");
-  entitlements_cool_off_time =
-       Dvar_RegisterInt("entitlements_cool_off_time",60000,0,300000,0,
-                        "Cool off time between calls to fetch the entitlements");
-  userGroup_active =
-       Dvar_RegisterInt("userGroup_active",0,0,1,0,"Are we allowed to show Usergroups or not");
-  userGroup_max_retry_time =
-       Dvar_RegisterInt("userGroup_max_retry_time",30000,0,300000,0,
-                        "Max time that the usergroup read find can retry");
-  userGroup_retry_step =
-       Dvar_RegisterInt("userGroup_retry_step",1000,0,300000,0,
-                        "Step in m/s for the usegroup read retry");
-  userGroup_RetryTime =
-       Dvar_RegisterInt("userGroup_RetryTime",2000,0,0x7fffffff,4,
-                        "Time in ms between sending lobby group data retrys.");
-  userGroup_refresh_time_secs =
-       Dvar_RegisterInt("userGroup_refresh_time_secs",0x4b0,0,0x7fffffff,4,
-                        "Time in seconds between re-sending lobby group data to confirmed users.");
-  userGroup_cool_off_time =
-       Dvar_RegisterInt("userGroup_cool_off_time",60000,0,300000,0,
-                        "Cool off time between calls to fetch the user groups");
-  userGroup_coop_delay =
-       Dvar_RegisterInt("userGroup_coop_delay",2000,0,300000,0,
-                        "Delay between a player joining a coop lobby and the DW user group task starting"
-                       );
-  elite_clan_delay =
-       Dvar_RegisterInt("elite_clan_delay",1000,-1,10000,0,
-                        "Delay before the bdTeams calls start to Demonware. -1 means On-Demand and it will wait until the \'starteliteclan\' menu call"
-                       );
-  elite_clan_active =
-       Dvar_RegisterInt("elite_clan_active",0,0,1,0,"Are we allowed to show Elite Clans or not");
-  elite_clan_get_clan_max_retry_time =
-       Dvar_RegisterInt("elite_clan_get_clan_max_retry_time",30000,0,300000,0,
-                        "Max time that the Elite Clan get clan can retry");
-  elite_clan_get_clan_retry_step =
-       Dvar_RegisterInt("elite_clan_get_clan_retry_step",1000,0,300000,0,
-                        "Step in m/s for the Elite Clan get clan retry");
-  elite_clan_get_members_max_retry_time =
-       Dvar_RegisterInt("elite_clan_get_members_max_retry_time",30000,0,300000,0,
-                        "Max time that the Elite Clan get members can retry");
-  elite_clan_get_members_retry_step =
-       Dvar_RegisterInt("elite_clan_get_members_retry_step",1000,0,300000,0,
-                        "Step in m/s for the Elite Clan get members retry");
-  elite_clan_get_private_profile_max_retry_time =
-       Dvar_RegisterInt("elite_clan_get_private_profile_max_retry_time",30000,0,300000,0,
-                        "Max time that the Elite Clan get private profile can retry");
-  elite_clan_get_private_profile_retry_step =
-       Dvar_RegisterInt("elite_clan_get_private_profile_retry_step",1000,0,300000,0,
-                        "Step in m/s for the Elite Clan get private profile retry");
-  elite_clan_get_public_profile_max_retry_time =
-       Dvar_RegisterInt("elite_clan_get_public_profile_max_retry_time",30000,0,300000,0,
-                        "Max time that the Elite Clan get public profile can retry");
-  elite_clan_get_public_profile_retry_step =
-       Dvar_RegisterInt("elite_clan_get_public_profile_retry_step",1000,0,300000,0,
-                        "Step in m/s for the Elite Clan get public profile retry");
-  elite_clan_cool_off_time =
-       Dvar_RegisterInt("elite_clan_cool_off_time",60000,0,300000,0,
-                        "Cool off time between calls to fetch the elite clan");
-  elite_clan_motd_throttle_time =
-       Dvar_RegisterInt("elite_clan_motd_throttle_time",2000,0,300000,0,
-                        "Throttle time between motd update calls");
-  dw_presence_active =
-       Dvar_RegisterInt("dw_presence_active",0,0,1,0,"Is the demonware presence system enabled");
-  dw_presence_coop_join_active =
-       Dvar_RegisterInt("dw_presence_coop_join_active",1,0,1,0,
-                        "Do we allow players to join on presence for private coop matches (post session to demonware"
-                       );
-  dw_presence_put_delay =
-       Dvar_RegisterInt("dw_presence_put_delay",5000,0,0x7fffffff,0,
-                        "Number of milliseconds to wait in a presence state before sending to demonware"
-                       );
-  dw_presence_put_rate =
-       Dvar_RegisterInt("dw_presence_put_rate",15000,0,0x7fffffff,0,
-                        "Number of milliseconds to wait between sending presence state to demonware"
-                       );
-  dw_presence_get_delay =
-       Dvar_RegisterInt("dw_presence_get_delay",5000,0,0x7fffffff,0,
-                        "Number of milliseconds to wait after booting the game to fetch demonware presence"
-                       );
-  dw_presence_get_rate =
-       Dvar_RegisterInt("dw_presence_get_rate",60000,0,0x7fffffff,0,
-                        "Number of milliseconds to wait between fetching presence state from demonware"
-                       );
-  onlinevault_active =
-       Dvar_RegisterInt("onlinevault_active",0,0,1,0,"Is the online vault system enabled");
-  onlinevault_maxslots[0] =
-       Dvar_RegisterInt("onlinevault_maxslots_sub0",0,0,99,0,
-                        "Number of online vault slots available to sub level 0");
-  onlinevault_maxslots[1] =
-       Dvar_RegisterInt("onlinevault_maxslots_sub1",0,0,99,0,
-                        "Number of online vault slots available to sub level 1");
-  onlinevault_maxslots[2] =
-       Dvar_RegisterInt("onlinevault_maxslots_sub2",0,0,99,0,
-                        "Number of online vault slots available to sub level 2");
-  onlinevault_maxtime[0] =
-       Dvar_RegisterInt("onlinevault_maxtime_sub0",0,0,0x78,0,
-                        "Online vault time available to sub level 0");
-  onlinevault_maxtime[1] =
-       Dvar_RegisterInt("onlinevault_maxtime_sub1",0,0,0x78,0,
-                        "Online vault time available to sub level 1");
-  onlinevault_maxtime[2] =
-       Dvar_RegisterInt("onlinevault_maxtime_sub2",0,0,0x78,0,
-                        "Online vault time available to sub level 2");
-  splitscreen_online_enabled =
-       Dvar_RegisterInt("splitscreen_online_enabled",1,0,1,0,
-                        "Is the online splitscreen system enabled");
-  dw_leaderboard_write_active =
-       Dvar_RegisterInt("dw_leaderboard_write_active",1,0,1,0,"Are leaderboard writes enabled");
-  past_title_data_active =
-       Dvar_RegisterInt("past_title_data_active",0,0,1,0,"Is the past title data system enabled");
-  past_title_data_read_failure_interval_hours =
-       Dvar_RegisterInt("past_title_data_read_failure_interval_hours",0x18,0,0x7fffffff,0,
-                        "default interval in which to try and read past title data if kicked off read failed."
-                       );
-  past_title_data_read_success_interval_hours =
-       Dvar_RegisterInt("past_title_data_read_success_interval_hours",0x48,0,0x7fffffff,0,
-                        "default interval in which to try and read past title data if kicked off read succeeded."
-                       );
-  matchdata_active = Dvar_RegisterInt("matchdata_active",1,0,1,0,"Are match data uploads enabled");
-  playercard_cache_validity_life =
-       Dvar_RegisterInt("playercard_cache_validity_life",1800000,0,3600000,0,
-                        "The life of a cached gamercard (it can be re-downloaded after this)");
-  playercard_cache_upload_max_retry_time =
-       Dvar_RegisterInt("playercard_cache_upload_max_retry_time",30000,0,300000,0,
-                        "Max time that the player cache upload can retry");
-  playercard_cache_upload_retry_step =
-       Dvar_RegisterInt("playercard_cache_upload_retry_step",1000,0,300000,0,
-                        "Step in m/s for the player cache upload retry");
-  playercard_cache_download_max_retry_time =
-       Dvar_RegisterInt("playercard_cache_download_max_retry_time",30000,0,300000,0,
-                        "Max time that the player cache download can retry");
-  playercard_cache_download_retry_step =
-       Dvar_RegisterInt("playercard_cache_download_retry_step",1000,0,300000,0,
-                        "Step in m/s for the player cache download retry");
-  pm_gamesetup_mode_altmodes =
-       Dvar_RegisterInt("pm_gamesetup_mode_altmodes",1,0,1,0,
-                        "Disable menu Option Private Match/Game Setup/Mode/Alternate Modes (whole menu)"
-                       );
-  pm_gamesetup_mode_altmodes_dropzone =
-       Dvar_RegisterInt("pm_gamesetup_mode_altmodes_dropzone",1,0,1,0,
-                        "Disable menu Option Private Match/Game Setup/Mode/Alternate Modes/Drop Zone"
-                       );
-  pm_gamesetup_mode_altmodes_teamjug =
-       Dvar_RegisterInt("pm_gamesetup_mode_altmodes_teamjug",1,0,1,0,
-                        "Disable menu Option Private Match/Game Setup/Mode/Alternate Modes/Team Jug"
-                       );
-  pm_gamesetup_mode_altmodes_jug =
-       Dvar_RegisterInt("pm_gamesetup_mode_altmodes_jug",1,0,1,0,
-                        "Disable menu Option Private Match/Game Setup/Mode/Alternate Modes/Jug");
-  pm_gamesetup_mode_altmodes_gungame =
-       Dvar_RegisterInt("pm_gamesetup_mode_altmodes_gungame",1,0,1,0,
-                        "Disable menu Option Private Match/Game Setup/Mode/Alternate Modes/Gun Game"
-                       );
-  pm_gamesetup_mode_altmodes_infected =
-       Dvar_RegisterInt("pm_gamesetup_mode_altmodes_infected",1,0,1,0,
-                        "Disable menu Option Private Match/Game Setup/Mode/Alternate Modes/Infected"
-                       );
-  pm_gamesetup_mode_altmodes_oneinthechamber =
-       Dvar_RegisterInt("pm_gamesetup_mode_altmodes_oneinthechamber",1,0,1,0,
-                        "Disable menu Option Private Match/Game Setup/Mode/Alternate Modes/One In the Chamber"
-                       );
-  pm_gamesetup_options_createdefaultclass =
-       Dvar_RegisterInt("pm_gamesetup_options_createdefaultclass",1,0,1,0,
-                        "Disable menu Option Private Match/Game Setup/Options/Create Default Class (whole menu)"
-                       );
-  pm_gamesetup_options_customclassrestrictions =
-       Dvar_RegisterInt("pm_gamesetup_options_customclassrestrictions",1,0,1,0,
-                        "Disable menu Option Private Match/Game Setup/Options/Custom Class Restrictions (whole menu)"
-                       );
-  prestige_shop_active =
-       Dvar_RegisterInt("prestige_shop_active",0,0,1,0,
-                        "Are we allowed to show the Prestige Shop or not");
-  elite_app_xenon_id = Dvar_RegisterString("elite_app_xenon_id","",0,"Offer ID for the Elite App");
-  commerce_upload_max_retry_time =
-       Dvar_RegisterInt("commerce_max_retry_time",30000,0,300000,0,
-                        "Max time that the commerce upload can retry");
-  commerce_upload_retry_step =
-       Dvar_RegisterInt("commerce_retry_step",1000,0,300000,0,
-                        "Step in m/s for the commerce upload retry");
+  DAT_84545cc4 = Dvar_RegisterInt(0xffffffff821b2e0c,0,0,1,0,0xffffffff821b2e1c,0,0);
+  DAT_84546d44 = Dvar_RegisterInt(0xffffffff821b2dd4,0,0,1,0,0xffffffff821b2de4);
+  DAT_84545c84 = Dvar_RegisterInt(0xffffffff821b2d44,0x2ee,0xffffffffffffffff,10000,0,
+                                  0xffffffff821b2d58);
+  DAT_84546d80 = Dvar_RegisterInt(0xffffffff821b2cf8,30000,0,300000,0,0xffffffff821b2d10);
+  DAT_84545cd8 = Dvar_RegisterInt(0xffffffff821b2cb0,1000,0,300000,0,0xffffffff821b2cc4);
+  DAT_84545ce4 = Dvar_RegisterInt(0xffffffff821b2c5c,30000,0,300000,0,0xffffffff821b2c7c);
+  DAT_84546d60 = Dvar_RegisterInt(0xffffffff821b2c10,1000,0,300000,0,0xffffffff821b2c2c);
+  DAT_84546d5c = Dvar_RegisterInt(0xffffffff821b2bf0,0x294,0,0x15180,0,0xffffffff821b2bbc);
+  DAT_84545cc0 = Dvar_RegisterInt(0xffffffff821b2b70,1000,0,10000,0,0xffffffff821b2b90);
+  DAT_84545ca4 = Dvar_RegisterInt(0xffffffff821b2b28,0,0,1,0,0xffffffff821b2b40);
+  DAT_84545cb8 = Dvar_RegisterInt(0xffffffff821b2ad4,0,0,1,0,0xffffffff821b2af4);
+  DAT_84545c8c = Dvar_RegisterInt(0xffffffff821b2a80,0,0,1,0,0xffffffff821b2aa0);
+  DAT_84546d38 = Dvar_RegisterInt(0xffffffff821b2a6c,500,0xffffffffffffffff,10000,0,
+                                  0xffffffff821b29e8);
+  DAT_84546d2c = Dvar_RegisterInt(0xffffffff821b29a8,0,0,1,0,0xffffffff821b29bc);
+  DAT_84546d70 = Dvar_RegisterInt(0xffffffff821b2944,30000,0,300000,0,0xffffffff821b296c);
+  DAT_84546d68 = Dvar_RegisterInt(0xffffffff821b28e8,1000,0,300000,0,0xffffffff821b290c);
+  DAT_84546d08 = Dvar_RegisterInt(0xffffffff821b2884,30000,0,300000,0,0xffffffff821b28ac);
+  DAT_84546d58 = Dvar_RegisterInt(0xffffffff821b2860,1000,0,300000,0,0xffffffff821b2828);
+  DAT_84546d78 = Dvar_RegisterInt(0xffffffff821b27d4,60000,0,300000,0,0xffffffff821b27f0);
+  DAT_84546d74 = Dvar_RegisterInt(0xffffffff821b27c0,0,0,1,0,0xffffffff821b2794);
+  DAT_84546dbc = Dvar_RegisterInt(0xffffffff821b2748,30000,0,300000,0,0xffffffff821b2764);
+  DAT_84545c90 = Dvar_RegisterInt(0xffffffff821b2730,1000,0,300000,0,0xffffffff821b2708);
+  DAT_84545cb4 = Dvar_RegisterInt(0xffffffff821b26c0,2000,0,0x7fffffff,4,0xffffffff821b26d4);
+  DAT_84545ce8 = Dvar_RegisterInt(0xffffffff821b2658,0x4b0,0,0x7fffffff,4,0xffffffff821b2678);
+  DAT_84546d4c = Dvar_RegisterInt(0xffffffff821b2608,60000,0,300000,0,0xffffffff821b2620);
+  DAT_84546d7c = Dvar_RegisterInt(0xffffffff821b25a0,2000,0,300000,0,0xffffffff821b25b8);
+  DAT_84545c78 = Dvar_RegisterInt(0xffffffff821b258c,1000,0xffffffffffffffff,10000,0,
+                                  0xffffffff821b2510);
+  DAT_84545ca0 = Dvar_RegisterInt(0xffffffff821b24d0,0,0,1,0,0xffffffff821b24e4);
+  DAT_84546d04 = Dvar_RegisterInt(0xffffffff821b247c,30000,0,300000,0,0xffffffff821b24a0);
+  DAT_84545cac = Dvar_RegisterInt(0xffffffff821b242c,1000,0,300000,0,0xffffffff821b244c);
+  DAT_84546d30 = Dvar_RegisterInt(0xffffffff821b23d0,30000,0,300000,0,0xffffffff821b23f8);
+  DAT_84546d54 = Dvar_RegisterInt(0xffffffff821b23ac,1000,0,300000,0,0xffffffff821b2378);
+  DAT_84546db0 = Dvar_RegisterInt(0xffffffff821b230c,30000,0,300000,0,0xffffffff821b233c);
+  DAT_84545c88 = Dvar_RegisterInt(0xffffffff821b22e0,1000,0,300000,0,0xffffffff821b22a4);
+  DAT_84546cf0 = Dvar_RegisterInt(0xffffffff821b2238,30000,0,300000,0,0xffffffff821b2268);
+  DAT_84545ccc = Dvar_RegisterInt(0xffffffff821b220c,1000,0,300000,0,0xffffffff821b21d4);
+  DAT_84546d34 = Dvar_RegisterInt(0xffffffff821b2184,60000,0,300000,0,0xffffffff821b21a0);
+  DAT_84546cf4 = Dvar_RegisterInt(0xffffffff821b2164,2000,0,300000,0,0xffffffff821b213c);
+  DAT_84546d0c = Dvar_RegisterInt(0xffffffff821b20fc,0,0,1,0,0xffffffff821b2110);
+  DAT_84545c98 = Dvar_RegisterInt(0xffffffff821b20dc,1,0,1,0,0xffffffff821b2080);
+  DAT_84545ce0 = Dvar_RegisterInt(0xffffffff821b2014,5000,0,0x7fffffff,0,0xffffffff821b2030);
+  DAT_84546db8 = Dvar_RegisterInt(0xffffffff821b1ffc,15000,0,0x7fffffff,0,0xffffffff821b1fb0);
+  DAT_84546d1c = Dvar_RegisterInt(0xffffffff821b1f40,5000,0,0x7fffffff,0,0xffffffff821b1f58);
+  DAT_84546d84 = Dvar_RegisterInt(0xffffffff821b1f28,60000,0,0x7fffffff,0,0xffffffff821b1ed8);
+  DAT_84545c9c = Dvar_RegisterInt(0xffffffff821b1e9c,0,0,1,0,0xffffffff821b1eb0);
+  DAT_84546cf8 = Dvar_RegisterInt(0xffffffff821b1e48,0,0,99,0,0xffffffff821b1e64);
+  DAT_84546cfc = Dvar_RegisterInt(0xffffffff821b1e2c,0,0,99,0,0xffffffff821b1df4);
+  DAT_84546d00 = Dvar_RegisterInt(0xffffffff821b1da0,0,0,99,0,0xffffffff821b1dbc);
+  DAT_84546d88 = Dvar_RegisterInt(0xffffffff821b1d58,0,0,0x78,0,0xffffffff821b1d74);
+  DAT_84546d8c = Dvar_RegisterInt(0xffffffff821b1d10,0,0,0x78,0,0xffffffff821b1d2c);
+  DAT_84546d90 = Dvar_RegisterInt(0xffffffff821b1cf4,0,0,0x78,0,0xffffffff821b1cc8);
+  DAT_84546d98 = Dvar_RegisterInt(0xffffffff821b1c80,1,0,1,0,0xffffffff821b1c9c);
+  DAT_84546d28 = Dvar_RegisterInt(0xffffffff821a2d28,1,0,1,0,0xffffffff821b1c60);
+  DAT_84545c80 = Dvar_RegisterInt(0xffffffff821b1c48,0,0,1,0,0xffffffff821b1c20);
+  DAT_84546d40 = Dvar_RegisterInt(0xffffffff821b1b9c,0x18,0,0x7fffffff,0,0xffffffff821b1bc8);
+  DAT_84546d24 = Dvar_RegisterInt(0xffffffff821b1b70,0x48,0,0x7fffffff,0,0xffffffff821b1b18);
+  DAT_84546d20 = Dvar_RegisterInt(0xffffffff820878ac,1,0,1,0,0xffffffff821b1af4);
+  DAT_84545c7c = Dvar_RegisterInt(0xffffffff821b1a8c,1800000,0,3600000,0,0xffffffff821b1ab0);
+  DAT_84545cec = Dvar_RegisterInt(0xffffffff821b1a34,30000,0,300000,0,0xffffffff821b1a5c);
+  DAT_84545c74 = Dvar_RegisterInt(0xffffffff821b19e0,1000,0,300000,0,0xffffffff821b1a04);
+  DAT_84546d14 = Dvar_RegisterInt(0xffffffff821b19b4,30000,0,300000,0,0xffffffff821b1980);
+  DAT_84545cd4 = Dvar_RegisterInt(0xffffffff821b1928,1000,0,300000,0,0xffffffff821b1950);
+  DAT_84545c70 = Dvar_RegisterInt(0xffffffff821b18bc,1,0,1,0,0xffffffff821b18d8);
+  DAT_84545cdc = Dvar_RegisterInt(0xffffffff821b184c,1,0,1,0,0xffffffff821b1870);
+  DAT_84546d64 = Dvar_RegisterInt(0xffffffff821b17d8,1,0,1,0,0xffffffff821b1800);
+  DAT_84546d3c = Dvar_RegisterInt(0xffffffff821b17b8,1,0,1,0,0xffffffff821b1770);
+  DAT_84546d50 = Dvar_RegisterInt(0xffffffff821b16f8,1,0,1,0,0xffffffff821b1720);
+  DAT_84545cc8 = Dvar_RegisterInt(0xffffffff821b16d4,1,0,1,0,0xffffffff821b1688);
+  DAT_84545cd0 = Dvar_RegisterInt(0xffffffff821b1600,1,0,1,0,0xffffffff821b1630);
+  DAT_84546d48 = Dvar_RegisterInt(0xffffffff821b157c,1,0,1,0,0xffffffff821b15a8);
+  DAT_84545c94 = Dvar_RegisterInt(0xffffffff821b14f0,1,0,1,0,0xffffffff821b1520);
+  DAT_84546db4 = Dvar_RegisterInt(0xffffffff821b14a8,0,0,1,0,0xffffffff821b14c0);
+  DAT_84546d94 = Dvar_RegisterString(0xffffffff821b1494,0xffffffff820068af,0,0xffffffff821b1478);
+  DAT_84545cb0 = Dvar_RegisterInt(0xffffffff821b1434,30000,0,300000,0,0xffffffff821b144c);
+  DAT_84546d6c = Dvar_RegisterInt(0xffffffff821b1420,1000,0,300000,0,0xffffffff821b13f4);
   __restgprlr_29();
   return;
 }
@@ -527,26 +366,23 @@ void SocialConfig_Init(void)
 
 // 82702A48  SocialConfig_Update  (social/social_config.cpp:577)
 
-void SocialConfig_Update(int param_1)
+void SocialConfig_Update(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   int iVar2;
-  bool bVar4;
-  bdLobbyService *this;
-  Status SVar3;
+  char cVar4;
+  int iVar3;
   
-  iVar1 = __savegprlr_29(param_1);
+  uVar1 = __savegprlr_29();
   iVar2 = Sys_Milliseconds();
-  if ((((g_gotSocialConfigFile == false) && (bVar4 = Live_IsUserSignedInToLive(iVar1), bVar4)) &&
-      (this = dwGetLobbyService(iVar1), this != (bdLobbyService *)0x0)) &&
-     (((SVar3 = bdLobbyService::getStatus(this), SVar3 == BD_CONNECTED &&
-       (g_gotSocialConfigFile == false)) &&
-      ((DAT_84546d18 == '\0' && (g_socialConfigFileRetryTime < iVar2)))))) {
-    bVar4 = LiveStorage_ReadSocialConfigFile
-                      (iVar1,"social_tu0.cfg",(uchar *)g_socialConfigFileBuffer,0x1000);
-    if (bVar4) {
-      g_gotSocialConfigFile = false;
+  if ((((DAT_84546d19 == '\0') && (cVar4 = Live_IsUserSignedInToLive(uVar1), cVar4 != '\0')) &&
+      (iVar3 = dwGetLobbyService(uVar1), iVar3 != 0)) &&
+     (((iVar3 = bdLobbyService__getStatus(), iVar3 == 2 && (DAT_84546d19 == '\0')) &&
+      ((DAT_84546d18 == '\0' && (DAT_84545cbc < iVar2)))))) {
+    cVar4 = LiveStorage_ReadSocialConfigFile(uVar1,0xffffffff821b122c,0xffffffff84545cf0,0x1000);
+    if (cVar4 != '\0') {
+      DAT_84546d19 = 0;
       DAT_84546d18 = 1;
       __restgprlr_29();
       return;
@@ -560,25 +396,24 @@ void SocialConfig_Update(int param_1)
 
 // 82702B10  SocialConfig_HandleInstantMessage  (social/social_config.cpp:610)
 
-void SocialConfig_HandleInstantMessage(int param_1,char *param_2)
+void SocialConfig_HandleInstantMessage(ulonglong param_1,ulonglong param_2)
 
 {
   int iVar1;
   
-  if (3 < (uint)param_1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_config.cpp",
-                    0x263,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821b1340,0x263,0,0xffffffff82031880,param_1,4);
   }
-  if (param_2 != (char *)0x0) {
-    iVar1 = I_strncmp(param_2,"SOEC:",5);
+  if ((param_2 & 0xffffffff) != 0) {
+    iVar1 = I_strncmp(param_2,0xffffffff821b2e54,5);
     if (iVar1 == 0) {
       EliteClan_Fetch(param_1);
     }
-    iVar1 = I_strncmp(param_2,"SOUG:",5);
+    iVar1 = I_strncmp(param_2,0xffffffff821b2e4c,5);
     if (iVar1 == 0) {
       UserGroups_Fetch(param_1);
     }
-    iVar1 = I_strncmp(param_2,"SOEN:",5);
+    iVar1 = I_strncmp(param_2,0xffffffff821b2e44,5);
     if (iVar1 == 0) {
       Entitlements_Fetch(param_1);
     }

@@ -3,55 +3,38 @@
 ; 82917DF0  __savevmx  (<external>/bt/278379/vctools/crt/xb/xbox/crtvmx.asm:3)
   82917DF0  3960FEE0             li r11,-0x120
   82917DF4  7DCB61CE             stvx v14,r11,r12
-__savevmx_15:
   82917DF8  3960FEF0             li r11,-0x110
   82917DFC  7DEB61CE             stvx v15,r11,r12
-__savevmx_16:
   82917E00  3960FF00             li r11,-0x100
   82917E04  7E0B61CE             stvx v16,r11,r12
-__savevmx_17:
   82917E08  3960FF10             li r11,-0xf0
   82917E0C  7E2B61CE             stvx v17,r11,r12
-__savevmx_18:
   82917E10  3960FF20             li r11,-0xe0
   82917E14  7E4B61CE             stvx v18,r11,r12
-__savevmx_19:
   82917E18  3960FF30             li r11,-0xd0
   82917E1C  7E6B61CE             stvx v19,r11,r12
-__savevmx_20:
   82917E20  3960FF40             li r11,-0xc0
   82917E24  7E8B61CE             stvx v20,r11,r12
-__savevmx_21:
   82917E28  3960FF50             li r11,-0xb0
   82917E2C  7EAB61CE             stvx v21,r11,r12
-__savevmx_22:
   82917E30  3960FF60             li r11,-0xa0
   82917E34  7ECB61CE             stvx v22,r11,r12
-__savevmx_23:
   82917E38  3960FF70             li r11,-0x90
   82917E3C  7EEB61CE             stvx v23,r11,r12
-__savevmx_24:
   82917E40  3960FF80             li r11,-0x80
   82917E44  7F0B61CE             stvx v24,r11,r12
-__savevmx_25:
   82917E48  3960FF90             li r11,-0x70
   82917E4C  7F2B61CE             stvx v25,r11,r12
-__savevmx_26:
   82917E50  3960FFA0             li r11,-0x60
   82917E54  7F4B61CE             stvx v26,r11,r12
-__savevmx_27:
   82917E58  3960FFB0             li r11,-0x50
   82917E5C  7F6B61CE             stvx v27,r11,r12
-__savevmx_28:
   82917E60  3960FFC0             li r11,-0x40
   82917E64  7F8B61CE             stvx v28,r11,r12
-__savevmx_29:
   82917E68  3960FFD0             li r11,-0x30
   82917E6C  7FAB61CE             stvx v29,r11,r12
-__savevmx_30:
   82917E70  3960FFE0             li r11,-0x20
   82917E74  7FCB61CE             stvx v30,r11,r12
-__savevmx_31:
   82917E78  3960FFF0             li r11,-0x10
   82917E7C  7FEB61CE             stvx v31,r11,r12
   82917E80  4E800020             blr
@@ -59,55 +42,38 @@ __savevmx_31:
 ; 82918088  __restvmx  (<external>/bt/278379/vctools/crt/xb/xbox/crtvmx.asm:343)
   82918088  3960FEE0             li r11,-0x120
   8291808C  7DCB60CE             lvx v14,r11,r12
-__restvmx_15:
   82918090  3960FEF0             li r11,-0x110
   82918094  7DEB60CE             lvx v15,r11,r12
-__restvmx_16:
   82918098  3960FF00             li r11,-0x100
   8291809C  7E0B60CE             lvx v16,r11,r12
-__restvmx_17:
   829180A0  3960FF10             li r11,-0xf0
   829180A4  7E2B60CE             lvx v17,r11,r12
-__restvmx_18:
   829180A8  3960FF20             li r11,-0xe0
   829180AC  7E4B60CE             lvx v18,r11,r12
-__restvmx_19:
   829180B0  3960FF30             li r11,-0xd0
   829180B4  7E6B60CE             lvx v19,r11,r12
-__restvmx_20:
   829180B8  3960FF40             li r11,-0xc0
   829180BC  7E8B60CE             lvx v20,r11,r12
-__restvmx_21:
   829180C0  3960FF50             li r11,-0xb0
   829180C4  7EAB60CE             lvx v21,r11,r12
-__restvmx_22:
   829180C8  3960FF60             li r11,-0xa0
   829180CC  7ECB60CE             lvx v22,r11,r12
-__restvmx_23:
   829180D0  3960FF70             li r11,-0x90
   829180D4  7EEB60CE             lvx v23,r11,r12
-__restvmx_24:
   829180D8  3960FF80             li r11,-0x80
   829180DC  7F0B60CE             lvx v24,r11,r12
-__restvmx_25:
   829180E0  3960FF90             li r11,-0x70
   829180E4  7F2B60CE             lvx v25,r11,r12
-__restvmx_26:
   829180E8  3960FFA0             li r11,-0x60
   829180EC  7F4B60CE             lvx v26,r11,r12
-__restvmx_27:
   829180F0  3960FFB0             li r11,-0x50
   829180F4  7F6B60CE             lvx v27,r11,r12
-__restvmx_28:
   829180F8  3960FFC0             li r11,-0x40
   829180FC  7F8B60CE             lvx v28,r11,r12
-__restvmx_29:
   82918100  3960FFD0             li r11,-0x30
   82918104  7FAB60CE             lvx v29,r11,r12
-__restvmx_30:
   82918108  3960FFE0             li r11,-0x20
   8291810C  7FCB60CE             lvx v30,r11,r12
-__restvmx_31:
   82918110  3960FFF0             li r11,-0x10
   82918114  7FEB60CE             lvx v31,r11,r12
   82918118  4E800020             blr

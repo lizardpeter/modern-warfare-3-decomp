@@ -2,66 +2,58 @@
 
 // 82450E48  FxCurve_Interpolate1d  (EffectsCore/fxcurve.h:46)
 
-float FxCurve_Interpolate1d(float *param_1,float param_2)
+void FxCurve_Interpolate1d(void)
 
 {
-  float *pfVar1;
+  float *pfVar2;
+  undefined8 uVar1;
   double extraout_f1;
-  double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
+  double dVar7;
   
-  pfVar1 = (float *)__savefpr_27((double)param_2,param_1);
-  dVar6 = (double)*pfVar1;
-  dVar5 = (double)pfVar1[2];
-  dVar4 = (double)pfVar1[1];
-  dVar3 = (double)pfVar1[3];
-  dVar2 = extraout_f1;
-  if (((extraout_f1 < dVar6) || (dVar5 < extraout_f1)) || (dVar6 == dVar5)) {
-    va("%g, %g, %g");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\FxCurve.h",0x39,0,
-                    "%s\n\t%s");
+  pfVar2 = (float *)__savefpr_27();
+  dVar7 = (double)*pfVar2;
+  dVar5 = (double)pfVar2[2];
+  dVar4 = (double)pfVar2[1];
+  dVar3 = (double)pfVar2[3];
+  dVar6 = extraout_f1;
+  if (((extraout_f1 < dVar7) || (dVar5 < extraout_f1)) || (dVar7 == dVar5)) {
+    uVar1 = va(dVar7,dVar5,extraout_f1,0xffffffff8206af38,dVar7,dVar5,extraout_f1);
+    MyAssertHandler(0xffffffff8206aef8,0x39,0,0xffffffff820011f4,0xffffffff8206aea8,uVar1);
   }
-  dVar2 = (double)__restfpr_27((double)(float)((double)(((float)(dVar3 - dVar4) *
-                                                        (float)(dVar2 - dVar6)) /
-                                                       (float)(dVar5 - dVar6)) + dVar4));
-  return (float)dVar2;
+  __restfpr_27((double)(float)((double)(((float)(dVar3 - dVar4) * (float)(dVar6 - dVar7)) /
+                                       (float)(dVar5 - dVar7)) + dVar4));
+  return;
 }
 
 
 // 82450F18  FxCurveIterator_Create  (EffectsCore/FxCurve.cpp:65)
 
-void FxCurveIterator_Create(FxCurveIterator *param_1,FxCurve *param_2)
+void FxCurveIterator_Create(undefined8 param_1,ulonglong param_2)
 
 {
   int *piVar1;
   undefined4 *puVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  puVar2 = (undefined4 *)__savegprlr_28(param_1);
+  puVar2 = (undefined4 *)__savegprlr_28();
   if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\FxCurve.cpp",0x42,
-                    0,"%s");
+    MyAssertHandler(0xffffffff8206afe0,0x42,0,0xffffffff82000f98,0xffffffff8206afd4);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\FxCurve.cpp",0x44,
-                    0,"%s");
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206afe0,0x44,0,0xffffffff82000f98,0xffffffff8206afcc);
   }
-  piVar1 = (int *)uVar3;
+  piVar1 = (int *)param_2;
   if (piVar1[1] < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\FxCurve.cpp",0x45,
-                    0,"%s\n\t(master->keyCount) = %i");
+    MyAssertHandler(0xffffffff8206afe0,0x45,0,0xffffffff8206af98,0xffffffff8206afb4);
   }
   if (*piVar1 < 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\FxCurve.cpp",0x46,
-                    0,"%s\n\t(master->dimensionCount) = %i");
+    MyAssertHandler(0xffffffff8206afe0,0x46,0,0xffffffff8206af54,0xffffffff8206af78);
   }
-  if (uVar3 == 0xfffffffffffffff8) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\FxCurve.cpp",0x47,
-                    0,"%s");
+  if (param_2 == 0xfffffffffffffff8) {
+    MyAssertHandler(0xffffffff8206afe0,0x47,0,0xffffffff82000f98,0xffffffff8206af44);
   }
   *puVar2 = piVar1;
   puVar2[1] = 0;
@@ -72,19 +64,17 @@ void FxCurveIterator_Create(FxCurveIterator *param_1,FxCurve *param_2)
 
 // 82451018  FxCurveIterator_Release  (EffectsCore/FxCurve.cpp:85)
 
-void FxCurveIterator_Release(FxCurveIterator *param_1)
+void FxCurveIterator_Release(void)
 
 {
   int *piVar1;
   
-  piVar1 = (int *)__savegprlr_29(param_1);
+  piVar1 = (int *)__savegprlr_29();
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\FxCurve.cpp",0x57,
-                    0,"%s");
+    MyAssertHandler(0xffffffff8206afe0,0x57,0,0xffffffff82000f98,0xffffffff8206b038);
   }
   if (*piVar1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\FxCurve.cpp",0x58,
-                    0,"%s");
+    MyAssertHandler(0xffffffff8206afe0,0x58,0,0xffffffff82000f98,0xffffffff8206b024);
     *piVar1 = 0;
     __restgprlr_29();
     return;
@@ -97,20 +87,20 @@ void FxCurveIterator_Release(FxCurveIterator *param_1)
 
 // 824510A8  FxIntegrateLineSegment  (EffectsCore/FxCurve.cpp:99)
 
-float FxIntegrateLineSegment(float param_1,float param_2,float param_3,float param_4)
+double FxIntegrateLineSegment(double param_1,double param_2,double param_3,double param_4)
 
 {
-  return (param_3 + param_4) * 0.5 * (param_2 - param_1);
+  return (double)((float)(param_3 + param_4) * 0.5 * (float)(param_2 - param_1));
 }
 
 
 // 824510C8  FxCurve_Integrate  (EffectsCore/FxCurve.cpp:105)
 
-float FxCurve_Integrate(FxCurve *param_1,float param_2)
+void FxCurve_Integrate(void)
 
 {
-  float *pfVar1;
-  double dVar2;
+  float fVar1;
+  float *pfVar2;
   int *piVar3;
   int iVar4;
   float *pfVar5;
@@ -118,45 +108,40 @@ float FxCurve_Integrate(FxCurve *param_1,float param_2)
   double dVar6;
   double dVar7;
   double dVar8;
-  float fVar9;
+  double dVar9;
   
-  piVar3 = (int *)__savegprlr_28((double)param_2,param_1);
-  dVar6 = extraout_f1;
+  piVar3 = (int *)__savegprlr_28();
+  dVar9 = extraout_f1;
   if (piVar3 == (int *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\FxCurve.cpp",0x6f,
-                    0,"%s");
+    MyAssertHandler(0xffffffff8206afe0,0x6f,0,0xffffffff82000f98,0xffffffff8206b0dc);
   }
   pfVar5 = (float *)(piVar3 + 2);
   if (pfVar5 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\FxCurve.cpp",0x70,
-                    0,"%s");
+    MyAssertHandler(0xffffffff8206afe0,0x70,0,0xffffffff82000f98,0xffffffff8206b0d0);
   }
   if (*piVar3 != 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\FxCurve.cpp",0x71,
-                    0,"%s\n\t(curve->dimensionCount) = %i");
+    MyAssertHandler(0xffffffff8206afe0,0x71,0,0xffffffff8206b08c,0xffffffff8206b0b0);
   }
   dVar8 = 0.0;
-  if ((dVar6 <= 0.0) || (1.0 < dVar6)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\FxCurve.cpp",0x72,
-                    0,"%s\n\t(normDuration) = %g");
+  if ((dVar9 <= 0.0) || (1.0 < dVar9)) {
+    MyAssertHandler(dVar9,0xffffffff8206afe0,0x72,0,0xffffffff8206b044,0xffffffff8206b05c,dVar9);
   }
   iVar4 = *piVar3 + 1;
   dVar7 = 0.5;
-  fVar9 = pfVar5[iVar4];
-  pfVar1 = pfVar5 + iVar4;
+  fVar1 = pfVar5[iVar4];
+  pfVar2 = pfVar5 + iVar4;
   while( true ) {
-    dVar2 = (double)fVar9;
-    if (dVar6 <= dVar2) break;
-    fVar9 = pfVar1[iVar4];
-    dVar8 = (double)(float)((double)((pfVar1[1] + pfVar5[1]) * 0.5) *
-                            (double)(float)(dVar2 - (double)*pfVar5) + dVar8);
-    pfVar5 = pfVar1;
-    pfVar1 = pfVar1 + iVar4;
+    dVar6 = (double)fVar1;
+    if (dVar9 <= dVar6) break;
+    fVar1 = pfVar2[iVar4];
+    dVar8 = (double)(float)((double)((pfVar2[1] + pfVar5[1]) * 0.5) *
+                            (double)(float)(dVar6 - (double)*pfVar5) + dVar8);
+    pfVar5 = pfVar2;
+    pfVar2 = pfVar2 + iVar4;
   }
-  fVar9 = FxCurve_Interpolate1d(pfVar5,(float)dVar6);
-  dVar6 = (double)__restgprlr_28((double)(float)((double)(float)((double)(pfVar5[1] + fVar9) * dVar7
-                                                                ) *
-                                                 (double)(float)(dVar6 - (double)*pfVar5) + dVar8));
-  return (float)dVar6;
+  dVar6 = (double)FxCurve_Interpolate1d(dVar9,pfVar5);
+  __restgprlr_28((double)(float)((double)(float)((double)(float)((double)pfVar5[1] + dVar6) * dVar7)
+                                 * (double)(float)(dVar9 - (double)*pfVar5) + dVar8));
+  return;
 }
 

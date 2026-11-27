@@ -2,158 +2,152 @@
 
 // 8291FE60  strtoxq  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/strtoq.c:80)
 
-ulong64 strtoxq(localeinfo_struct *param_1,char *param_2,char **param_3,int param_4,int param_5)
+void strtoxq(undefined8 param_1,ulonglong param_2,uint param_3,ulonglong param_4)
 
 {
   byte bVar1;
-  byte *pbVar2;
+  ushort uVar2;
+  byte *pbVar3;
   byte *pbVar5;
   int *piVar6;
-  ulonglong uVar3;
+  ulonglong uVar4;
   uint uVar7;
-  ulong64 uVar4;
   ulonglong uVar8;
-  ulonglong uVar9;
-  threadlocaleinfostruct *ptVar10;
-  int iVar11;
-  char **ppcVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  byte *pbVar15;
-  char cVar16;
+  undefined *puVar9;
+  int iVar10;
+  ulonglong uVar11;
+  byte *pbVar12;
+  char cVar13;
   
-  uVar13 = (ulonglong)param_4;
-  uVar8 = (ulonglong)(int)param_2;
-  pbVar5 = (byte *)__savegprlr_24(param_1);
-  if ((uVar8 & 0xffffffff) != 0) {
-    *(undefined4 *)uVar8 = pbVar5;
+  pbVar5 = (byte *)__savegprlr_24();
+  if ((param_2 & 0xffffffff) != 0) {
+    *(undefined4 *)param_2 = pbVar5;
   }
-  if ((pbVar5 == (byte *)0x0) ||
-     ((param_3 != (char **)0x0 && (((int)param_3 < 2 || (0x24 < (int)param_3)))))) {
+  if ((pbVar5 == (byte *)0x0) || ((param_3 != 0 && (((int)param_3 < 2 || (0x24 < (int)param_3))))))
+  {
     piVar6 = _errno();
     *piVar6 = 0x16;
     _invalid_parameter_noinfo();
-    uVar3 = 0;
+    uVar4 = 0;
     goto LAB_82920114;
   }
   bVar1 = *pbVar5;
-  uVar3 = 0;
-  ptVar10 = __initiallocalestructinfo.locinfo;
-  pbVar2 = pbVar5;
+  uVar4 = 0;
+  puVar9 = PTR_DAT_829b07f8;
+  pbVar3 = pbVar5;
   while( true ) {
-    pbVar15 = pbVar2 + 1;
-    if (ptVar10->mb_cur_max < 2) {
-      uVar7 = ptVar10->pctype[bVar1] & 8;
+    pbVar12 = pbVar3 + 1;
+    if (*(int *)(puVar9 + 0xac) < 2) {
+      uVar7 = *(ushort *)((uint)bVar1 * 2 + *(int *)(puVar9 + 200)) & 8;
     }
     else {
-      uVar7 = _isctype_l((uint)bVar1,8,&__initiallocalestructinfo);
-      ptVar10 = __initiallocalestructinfo.locinfo;
+      uVar7 = _isctype_l((uint)bVar1,8,(_locale_t)&PTR_DAT_829b07f8);
+      puVar9 = PTR_DAT_829b07f8;
     }
     if (uVar7 == 0) break;
-    bVar1 = *pbVar15;
-    pbVar2 = pbVar15;
+    bVar1 = *pbVar12;
+    pbVar3 = pbVar12;
   }
   if (bVar1 == 0x2d) {
-    uVar13 = uVar13 | 2;
+    param_4 = param_4 | 2;
 LAB_8291ff3c:
-    bVar1 = *pbVar15;
-    pbVar15 = pbVar2 + 2;
+    bVar1 = *pbVar12;
+    pbVar12 = pbVar3 + 2;
   }
   else if (bVar1 == 0x2b) goto LAB_8291ff3c;
   uVar7 = (uint)bVar1;
-  if (param_3 == (char **)0x0) {
+  if (param_3 == 0) {
     if (bVar1 != 0x30) {
-      param_3 = (char **)0xa;
+      param_3 = 10;
       goto LAB_8291ffb8;
     }
-    if ((*pbVar15 != 0x78) && (*pbVar15 != 0x58)) {
-      param_3 = (char **)&DAT_00000008;
+    if ((*pbVar12 != 0x78) && (*pbVar12 != 0x58)) {
+      param_3 = 8;
       goto LAB_8291ffb8;
     }
-    param_3 = (char **)&DAT_00000010;
+    param_3 = 0x10;
   }
-  if (((param_3 == (char **)&DAT_00000010) && (bVar1 == 0x30)) &&
-     ((*pbVar15 == 0x78 || (*pbVar15 == 0x58)))) {
-    uVar7 = (uint)pbVar15[1];
-    pbVar15 = pbVar15 + 2;
+  if (((param_3 == 0x10) && (bVar1 == 0x30)) && ((*pbVar12 == 0x78 || (*pbVar12 == 0x58)))) {
+    uVar7 = (uint)pbVar12[1];
+    pbVar12 = pbVar12 + 2;
   }
 LAB_8291ffb8:
-  uVar9 = (ulonglong)(int)param_3;
-  trapDoubleWordImmediate(6,uVar9,0);
+  uVar8 = (ulonglong)(int)param_3;
+  trapDoubleWordImmediate(6,uVar8,0);
   do {
-    cVar16 = (char)uVar7;
-    if ((ptVar10->pctype[uVar7] & 4) == 0) {
-      if ((ptVar10->pctype[uVar7] & 0x103) == 0) break;
-      iVar11 = (int)cVar16;
-      if (('`' < cVar16) && (cVar16 < '{')) {
-        iVar11 = iVar11 + -0x20;
+    uVar2 = *(ushort *)(uVar7 * 2 + *(int *)(puVar9 + 200));
+    cVar13 = (char)uVar7;
+    if ((uVar2 & 4) == 0) {
+      if ((uVar2 & 0x103) == 0) break;
+      iVar10 = (int)cVar13;
+      if (('`' < cVar13) && (cVar13 < '{')) {
+        iVar10 = iVar10 + -0x20;
       }
-      ppcVar12 = (char **)(iVar11 + -0x37);
+      uVar7 = iVar10 - 0x37;
     }
     else {
-      ppcVar12 = (char **)(cVar16 + -0x30);
+      uVar7 = (int)cVar13 - 0x30;
     }
-    if (param_3 <= ppcVar12) break;
-    uVar14 = uVar13 | 8;
-    if ((uVar3 < 0xffffffffffffffff / uVar9) ||
-       ((uVar3 == 0xffffffffffffffff / uVar9 &&
-        (trapDoubleWordImmediate(6,uVar9,0),
-        ZEXT48(ppcVar12) <= -((0xffffffffffffffff / uVar9) * uVar9) - 1)))) {
-      uVar3 = uVar9 * uVar3 + ZEXT48(ppcVar12);
+    if (param_3 <= uVar7) break;
+    uVar11 = param_4 | 8;
+    if ((uVar4 < 0xffffffffffffffff / uVar8) ||
+       ((uVar4 == 0xffffffffffffffff / uVar8 &&
+        (trapDoubleWordImmediate(6,uVar8,0),
+        (ulonglong)uVar7 <= -((0xffffffffffffffff / uVar8) * uVar8) - 1)))) {
+      uVar4 = uVar8 * uVar4 + (ulonglong)uVar7;
     }
     else {
-      uVar13 = uVar13 | 0xc;
-      uVar14 = uVar13;
-      if ((uVar8 & 0xffffffff) == 0) break;
+      param_4 = param_4 | 0xc;
+      uVar11 = param_4;
+      if ((param_2 & 0xffffffff) == 0) break;
     }
-    uVar7 = (uint)*pbVar15;
-    pbVar15 = pbVar15 + 1;
-    uVar13 = uVar14;
+    uVar7 = (uint)*pbVar12;
+    pbVar12 = pbVar12 + 1;
+    param_4 = uVar11;
   } while( true );
-  pbVar15 = pbVar15 + -1;
-  if ((uVar13 & 8) == 0) {
-    if ((uVar8 & 0xffffffff) != 0) {
-      pbVar15 = pbVar5;
+  pbVar12 = pbVar12 + -1;
+  if ((param_4 & 8) == 0) {
+    if ((param_2 & 0xffffffff) != 0) {
+      pbVar12 = pbVar5;
     }
-    uVar3 = 0;
+    uVar4 = 0;
   }
-  else if (((uVar13 & 4) != 0) ||
-          (((uVar13 & 1) == 0 &&
-           ((((uVar13 & 2) != 0 && (0x8000000000000000 < uVar3)) ||
-            (((int)(uVar13 & 2) == 0 && (0x7fffffffffffffff < uVar3)))))))) {
+  else if (((param_4 & 4) != 0) ||
+          (((param_4 & 1) == 0 &&
+           ((((param_4 & 2) != 0 && (0x8000000000000000 < uVar4)) ||
+            (((int)(param_4 & 2) == 0 && (0x7fffffffffffffff < uVar4)))))))) {
     piVar6 = _errno();
     *piVar6 = 0x22;
-    if ((uVar13 & 1) == 0) {
-      uVar3 = 0x8000000000000000;
-      if ((uVar13 & 2) == 0) {
-        uVar3 = 0x7fffffffffffffff;
+    if ((param_4 & 1) == 0) {
+      uVar4 = 0x8000000000000000;
+      if ((param_4 & 2) == 0) {
+        uVar4 = 0x7fffffffffffffff;
       }
     }
     else {
-      uVar3 = 0xffffffffffffffff;
+      uVar4 = 0xffffffffffffffff;
     }
   }
-  if ((uVar8 & 0xffffffff) != 0) {
-    *(undefined4 *)uVar8 = pbVar15;
+  if ((param_2 & 0xffffffff) != 0) {
+    *(undefined4 *)param_2 = pbVar12;
   }
-  if ((uVar13 & 2) != 0) {
-    uVar3 = -uVar3;
+  if ((param_4 & 2) != 0) {
+    uVar4 = -uVar4;
   }
 LAB_82920114:
-  uVar4 = __restgprlr_24(uVar3);
-  return uVar4;
+  __restgprlr_24(uVar4);
+  return;
 }
 
 
 // 82920120  _strtoi64  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/strtoq.c:211)
 
-long64 _strtoi64(char *param_1,char **param_2,int param_3)
+longlong _strtoi64(char *_String,char **_EndPtr,int _Radix)
 
 {
-  ulong64 uVar1;
-  int in_r7;
+  longlong lVar1;
   
-  uVar1 = strtoxq((localeinfo_struct *)param_1,(char *)param_2,(char **)param_3,0,in_r7);
-  return uVar1;
+  lVar1 = strtoxq(_String,_EndPtr,_Radix,0);
+  return lVar1;
 }
 

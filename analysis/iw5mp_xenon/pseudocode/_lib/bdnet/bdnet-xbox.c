@@ -7,8 +7,7 @@ void __unwind_78250(void)
 {
   int in_r12;
   
-  bdArray<bdString>::__1__bdArray_VbdString____QAA_XZ
-            ((bdArray<bdString> *)(*(int *)(in_r12 + 0x14) + 8));
+  bdArray<bdString>___bdArray<bdString>((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
   return;
 }
 
@@ -20,7 +19,7 @@ void __unwind_78280(void)
 {
   int in_r12;
   
-  bdNetStartParams::~bdNetStartParams((bdNetStartParams *)(*(int *)(in_r12 + 0x14) + 8));
+  bdNetStartParams___bdNetStartParams((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
   return;
 }
 
@@ -32,7 +31,7 @@ void __unwind_78281(void)
 {
   int in_r12;
   
-  bdConnectionStore::~bdConnectionStore((bdConnectionStore *)(*(int *)(in_r12 + 0x14) + 0x30));
+  bdConnectionStore___bdConnectionStore((ulonglong)*(uint *)(in_r12 + 0x14) + 0x30);
   return;
 }
 
@@ -44,7 +43,7 @@ void __unwind_78305(void)
 {
   int in_r12;
   
-  bdNetStartParams::~bdNetStartParams((bdNetStartParams *)(*(int *)(in_r12 + 0x14) + 8));
+  bdNetStartParams___bdNetStartParams((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
   return;
 }
 
@@ -56,7 +55,7 @@ void __unwind_78306(void)
 {
   int in_r12;
   
-  bdConnectionStore::~bdConnectionStore((bdConnectionStore *)(*(int *)(in_r12 + 0x14) + 0x30));
+  bdConnectionStore___bdConnectionStore((ulonglong)*(uint *)(in_r12 + 0x14) + 0x30);
   return;
 }
 
@@ -68,7 +67,7 @@ void __unwind_78307(void)
 {
   int in_r12;
   
-  bdMutex::~bdMutex((bdMutex *)(*(int *)(in_r12 + 0x14) + 0x184));
+  bdMutex___bdMutex((ulonglong)*(uint *)(in_r12 + 0x14) + 0x184);
   return;
 }
 

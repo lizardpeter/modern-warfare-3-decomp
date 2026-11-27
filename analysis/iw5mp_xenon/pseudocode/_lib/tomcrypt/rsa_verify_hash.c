@@ -6,19 +6,17 @@ void rsa_verify_hash_ex(undefined8 param_1,ulonglong param_2,longlong param_3,ul
                        int param_5,longlong param_6,undefined8 param_7,undefined8 param_8)
 
 {
-  uchar *puVar2;
-  uint uVar3;
-  ulong uVar4;
-  byte *pbVar5;
-  int iVar7;
   undefined8 uVar1;
-  void *pvVar8;
-  longlong lVar9;
-  longlong lVar10;
-  byte *pbVar11;
-  Rsa_key *in_stack_00000054;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  byte *pbVar4;
+  longlong lVar5;
+  longlong lVar6;
+  byte *pbVar7;
+  int iVar8;
+  int in_stack_00000054;
   uint local_150;
-  uint local_14c;
+  int local_14c;
   undefined1 auStack_148 [8];
   undefined4 local_140;
   undefined4 *local_13c;
@@ -37,59 +35,57 @@ void rsa_verify_hash_ex(undefined8 param_1,ulonglong param_2,longlong param_3,ul
   undefined4 local_d8;
   undefined4 local_d4;
   byte abStack_c0 [192];
-  uint uVar6;
   
-  puVar2 = (uchar *)__savegprlr_18();
+  uVar1 = __savegprlr_18();
   *(undefined4 *)param_8 = 0;
   if (param_5 != 1) {
     if (param_5 != 3) {
       __restgprlr_18(0x18);
       return;
     }
-    iVar7 = (int)param_6;
-    if (((iVar7 < 0) || (0x1f < iVar7)) || (*(int *)(&hash_descriptor + iVar7 * 0x68) == 0)) {
+    iVar8 = (int)param_6;
+    if (((iVar8 < 0) || (0x1f < iVar8)) || ((&DAT_84896148)[iVar8 * 0x1a] == 0)) {
       __restgprlr_18(0xb);
       return;
     }
   }
-  uVar3 = (*ltc_mp.count_bits)(in_stack_00000054->N);
-  uVar4 = (*ltc_mp.unsigned_size)(in_stack_00000054->N);
-  if ((ulonglong)uVar4 == (param_2 & 0xffffffff)) {
-    uVar6 = (uint)param_2;
-    pbVar5 = tom_game_malloc(uVar6);
-    if (pbVar5 == (byte *)0x0) {
+  uVar2 = (*DAT_84897f14)(*(undefined4 *)(in_stack_00000054 + 0xc));
+  uVar3 = (*DAT_84897f28)(*(undefined4 *)(in_stack_00000054 + 0xc));
+  if ((uVar3 & 0xffffffff) == (param_2 & 0xffffffff)) {
+    pbVar4 = (byte *)tom_game_malloc(param_2);
+    if (pbVar4 == (byte *)0x0) {
       __restgprlr_18(0xd);
       return;
     }
-    local_150 = uVar6;
-    iVar7 = (*ltc_mp.rsa_me)(puVar2,uVar6,pbVar5,&local_150,0,in_stack_00000054);
-    if (iVar7 != 0) {
-      tom_game_free(pbVar5);
-      __restgprlr_18(iVar7);
+    local_150 = (uint)param_2;
+    uVar1 = (*DAT_84897fa0)(uVar1,param_2,pbVar4,&local_150,0,in_stack_00000054);
+    if ((int)uVar1 != 0) {
+      tom_game_free(pbVar4);
+      __restgprlr_18(uVar1);
       return;
     }
     if ((ulonglong)local_150 == (param_2 & 0xffffffff)) {
       if (param_5 == 3) {
-        uVar1 = pkcs_1_pss_decode(param_3,param_4,pbVar5,(ulonglong)local_150,param_7,param_6,uVar3,
+        uVar1 = pkcs_1_pss_decode(param_3,param_4,pbVar4,(ulonglong)local_150,param_7,param_6,uVar2,
                                   param_8);
-        tom_game_free(pbVar5);
+        tom_game_free(pbVar4);
         __restgprlr_18(uVar1);
         return;
       }
-      iVar7 = (int)(param_6 * 0x68);
-      if (*(int *)(&DAT_84896198 + iVar7) == 0) {
-        tom_game_free(pbVar5);
+      iVar8 = (int)(param_6 * 0x68);
+      if (*(int *)(&DAT_84896198 + iVar8) == 0) {
+        tom_game_free(pbVar4);
         __restgprlr_18(0x10);
         return;
       }
-      local_14c = ((uVar3 >> 3) - (uint)((uVar3 & 7) == 0)) - 2;
-      pvVar8 = tom_game_malloc(local_14c);
-      if (pvVar8 == (void *)0x0) {
-        tom_game_free(pbVar5);
+      local_14c = ((int)((uVar2 & 0xffffffff) >> 3) - (uint)((uVar2 & 7) == 0)) + -2;
+      uVar3 = tom_game_malloc();
+      if ((uVar3 & 0xffffffff) == 0) {
+        tom_game_free(pbVar4);
         __restgprlr_18(0xd);
         return;
       }
-      uVar1 = pkcs_1_v1_5_decode(pbVar5,local_150,uVar3,pvVar8,&local_14c,auStack_148);
+      uVar1 = pkcs_1_v1_5_decode(pbVar4,local_150,uVar2,uVar3,&local_14c,auStack_148);
       if ((int)uVar1 == 0) {
         local_fc = abStack_c0;
         local_100 = 7;
@@ -105,45 +101,45 @@ void rsa_verify_hash_ex(undefined8 param_1,ulonglong param_2,longlong param_3,ul
         local_134 = 0;
         local_120 = 5;
         local_114 = 0;
-        local_11c = pbVar5;
-        local_118 = uVar6;
-        uVar1 = der_decode_sequence_ex(pvVar8,local_14c,&local_140,2,1);
-        if (((int)uVar1 == 0) && (local_f8 == *(int *)(&DAT_84896198 + iVar7))) {
-          iVar7 = *(int *)(&DAT_84896198 + iVar7) * 4;
-          lVar9 = 0;
-          lVar10 = param_6 * 0x68 + -0x7b769ea8;
-          if (iVar7 != 0) {
-            pbVar11 = local_fc;
+        local_11c = pbVar4;
+        local_118 = (uint)param_2;
+        uVar1 = der_decode_sequence_ex(uVar3,local_14c,&local_140,2,1);
+        if (((int)uVar1 == 0) && (local_f8 == *(int *)(&DAT_84896198 + iVar8))) {
+          iVar8 = *(int *)(&DAT_84896198 + iVar8) * 4;
+          lVar5 = 0;
+          lVar6 = param_6 * 0x68 + -0x7b769ea8;
+          if (iVar8 != 0) {
+            pbVar7 = local_fc;
             do {
-              lVar9 = (ulonglong)*pbVar11 - (ulonglong)*(byte *)lVar10;
-              if (lVar9 != 0) break;
-              pbVar11 = pbVar11 + 1;
-              lVar10 = lVar10 + 1;
-            } while (pbVar11 != local_fc + iVar7);
+              lVar5 = (ulonglong)*pbVar7 - (ulonglong)*(byte *)lVar6;
+              if (lVar5 != 0) break;
+              pbVar7 = pbVar7 + 1;
+              lVar6 = lVar6 + 1;
+            } while (pbVar7 != local_fc + iVar8);
           }
-          if (((int)lVar9 == 0) && ((ulonglong)local_118 == (param_4 & 0xffffffff))) {
-            lVar9 = 0;
+          if (((int)lVar5 == 0) && ((ulonglong)local_118 == (param_4 & 0xffffffff))) {
+            lVar5 = 0;
             if ((param_4 & 0xffffffff) != 0) {
-              pbVar11 = local_11c;
+              pbVar7 = local_11c;
               do {
-                lVar9 = (ulonglong)*pbVar11 - (ulonglong)*(byte *)param_3;
-                if (lVar9 != 0) break;
-                pbVar11 = pbVar11 + 1;
+                lVar5 = (ulonglong)*pbVar7 - (ulonglong)*(byte *)param_3;
+                if (lVar5 != 0) break;
+                pbVar7 = pbVar7 + 1;
                 param_3 = param_3 + 1;
-              } while (pbVar11 != local_11c + (int)param_4);
+              } while (pbVar7 != local_11c + (int)param_4);
             }
-            if ((int)lVar9 == 0) {
+            if ((int)lVar5 == 0) {
               *(undefined4 *)param_8 = 1;
             }
           }
         }
       }
-      tom_game_free(pvVar8);
-      tom_game_free(pbVar5);
+      tom_game_free(uVar3);
+      tom_game_free(pbVar4);
       __restgprlr_18(uVar1);
       return;
     }
-    tom_game_free(pbVar5);
+    tom_game_free(pbVar4);
   }
   __restgprlr_18(7);
   return;

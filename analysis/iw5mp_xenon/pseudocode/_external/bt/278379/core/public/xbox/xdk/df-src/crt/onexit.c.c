@@ -2,84 +2,83 @@
 
 // 82918710  _onexit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/onexit.c:82)
 
-_func___cdecl_int * _onexit(_func___cdecl_int *param_1)
+_onexit_t _onexit(_onexit_t _Func)
 
 {
-  _func___cdecl_void **pp_Var1;
-  uint uVar2;
-  _func___cdecl_void **pp_Var3;
-  _func___cdecl_int *p_Var4;
-  uint uVar5;
-  int iVar6;
-  _func___cdecl_void **pp_Var7;
-  _func___cdecl_void *local_60;
+  undefined4 *_Memory;
+  size_t sVar1;
+  undefined4 *puVar2;
+  _onexit_t p_Var3;
+  size_t sVar4;
+  int iVar5;
+  uint uVar6;
+  undefined4 *puVar7;
+  undefined4 local_60;
   
-  local_60 = (_func___cdecl_void *)__savegprlr_23(param_1);
+  local_60 = __savegprlr_23(_Func);
   _lockexit();
-  pp_Var1 = __onexitbegin;
-  pp_Var7 = __onexitend;
-  if (__onexitbegin <= __onexitend) {
-    iVar6 = (int)__onexitend - (int)__onexitbegin;
-    uVar5 = iVar6 + 4;
-    if (3 < uVar5) {
-      uVar2 = _msize(__onexitbegin);
-      if (uVar2 < uVar5) {
-        uVar5 = uVar2;
-        if (0x7ff < uVar2) {
-          uVar5 = 0x800;
+  _Memory = DAT_84897ecc;
+  puVar7 = DAT_84897ec8;
+  if (DAT_84897ecc <= DAT_84897ec8) {
+    iVar5 = (int)DAT_84897ec8 - (int)DAT_84897ecc;
+    uVar6 = iVar5 + 4;
+    if (3 < uVar6) {
+      sVar1 = _msize(DAT_84897ecc);
+      if (sVar1 < uVar6) {
+        sVar4 = sVar1;
+        if (0x7ff < sVar1) {
+          sVar4 = 0x800;
         }
-        if (((uVar5 + uVar2 < uVar2) ||
-            (pp_Var3 = realloc(pp_Var1,uVar5 + uVar2), pp_Var3 == (_func___cdecl_void **)0x0)) &&
-           ((uVar2 + 0x10 < uVar2 ||
-            (pp_Var3 = realloc(pp_Var1,uVar2 + 0x10), pp_Var3 == (_func___cdecl_void **)0x0))))
+        if (((sVar4 + sVar1 < sVar1) ||
+            (puVar2 = realloc(_Memory,sVar4 + sVar1), puVar2 == (undefined4 *)0x0)) &&
+           ((sVar1 + 0x10 < sVar1 ||
+            (puVar2 = realloc(_Memory,sVar1 + 0x10), puVar2 == (undefined4 *)0x0))))
         goto LAB_829187d4;
-        pp_Var7 = pp_Var3 + (iVar6 >> 2);
-        __onexitbegin = pp_Var3;
+        puVar7 = puVar2 + (iVar5 >> 2);
+        DAT_84897ecc = puVar2;
       }
-      __onexitend = pp_Var7 + 1;
-      *pp_Var7 = local_60;
+      DAT_84897ec8 = puVar7 + 1;
+      *puVar7 = local_60;
       goto LAB_829187dc;
     }
   }
 LAB_829187d4:
-  local_60 = (_func___cdecl_void *)0x0;
+  local_60 = 0;
 LAB_829187dc:
   FUN_829187f4();
-  p_Var4 = (_func___cdecl_int *)__restgprlr_23(local_60);
-  return p_Var4;
+  p_Var3 = (_onexit_t)__restgprlr_23(local_60);
+  return p_Var3;
 }
 
 
 // 82918818  atexit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/onexit.c:162)
 
-int atexit(_func___cdecl_void *param_1)
+int atexit(_func_4879 *param_1)
 
 {
-  _func___cdecl_int *p_Var1;
+  _onexit_t p_Var1;
   
-  p_Var1 = _onexit((_func___cdecl_int *)param_1);
-  return -(uint)(p_Var1 == (_func___cdecl_int *)0x0);
+  p_Var1 = _onexit((_onexit_t)param_1);
+  return -(uint)(p_Var1 == (_onexit_t)0x0);
 }
 
 
 // 829186B0  __onexitinit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/onexit.c:202)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-int __onexitinit(void)
+undefined8 __onexitinit(void)
 
 {
-  int iVar1;
+  undefined8 uVar1;
   
-  __onexitend = calloc(0x20,4);
-  __onexitbegin = __onexitend;
-  if (__onexitend == (_func___cdecl_void **)0x0) {
-    iVar1 = 0x18;
+  DAT_84897ec8 = calloc(0x20,4);
+  DAT_84897ecc = DAT_84897ec8;
+  if (DAT_84897ec8 == (undefined4 *)0x0) {
+    uVar1 = 0x18;
   }
   else {
-    iVar1 = 0;
-    *__onexitend = (_func___cdecl_void *)0x0;
+    uVar1 = 0;
+    *DAT_84897ec8 = 0;
   }
-  return iVar1;
+  return uVar1;
 }
 

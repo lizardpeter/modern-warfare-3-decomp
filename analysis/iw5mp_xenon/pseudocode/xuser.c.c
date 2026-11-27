@@ -2,401 +2,352 @@
 
 // 828A2038  XUserWriteAchievements  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:76)
 
-ulong XUserWriteAchievements(ulong param_1,XUSER_ACHIEVEMENT *param_2,_XOVERLAPPED *param_3)
+void XUserWriteAchievements(undefined8 param_1,undefined4 param_2,ulonglong param_3)
 
 {
   int iVar1;
-  long lVar2;
-  ulong uVar3;
-  ulonglong uVar4;
-  uint uVar5;
+  uint uVar2;
   undefined4 local_30;
-  XUSER_ACHIEVEMENT *local_2c;
+  undefined4 local_2c;
   
-  uVar4 = (ulonglong)(int)param_3;
-  local_30 = __savegprlr_29(param_1);
+  local_30 = __savegprlr_29();
   local_2c = param_2;
-  iVar1 = XMsgStartIORequest(0xfb,0xb0008,uVar4,&local_30,8);
+  iVar1 = XMsgStartIORequest(0xfb,0xb0008,param_3,&local_30,8);
   if (iVar1 < 0) {
-    uVar5 = 0x65b;
+    uVar2 = 0x65b;
   }
-  else if ((uVar4 & 0xffffffff) == 0) {
-    lVar2 = RtlGetLastError();
-    uVar5 = lVar2 >> 0x1f & 0x65b;
+  else if ((param_3 & 0xffffffff) == 0) {
+    iVar1 = RtlGetLastError();
+    uVar2 = iVar1 >> 0x1f & 0x65b;
   }
   else {
-    uVar5 = 0x3e5;
+    uVar2 = 0x3e5;
   }
-  uVar3 = __restgprlr_29(uVar5);
-  return uVar3;
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 828A20B8  XUserSetContextEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:188)
 
-ulong XUserSetContextEx(ulong param_1,ulong param_2,ulong param_3,_XOVERLAPPED *param_4)
+void XUserSetContextEx(undefined8 param_1,undefined4 param_2,undefined4 param_3,ulonglong param_4)
 
 {
-  int iVar1;
-  long lVar2;
-  ulong uVar3;
-  ulonglong uVar4;
+  int iVar2;
+  longlong lVar1;
+  ulonglong uVar3;
   undefined4 local_40 [2];
   undefined8 local_38;
-  ulong local_30;
-  ulong local_2c;
+  undefined4 local_30;
+  undefined4 local_2c;
   
-  uVar4 = (ulonglong)(int)param_4;
-  local_40[0] = __savegprlr_28(param_1);
+  local_40[0] = __savegprlr_28();
   local_38 = 0;
   local_30 = param_2;
   local_2c = param_3;
-  iVar1 = XMsgStartIORequest(0xfb,0xb0006,uVar4,local_40,0x18);
-  if (iVar1 < 0) {
-    uVar4 = 0x65b;
+  iVar2 = XMsgStartIORequest(0xfb,0xb0006,param_4,local_40,0x18);
+  if (iVar2 < 0) {
+    uVar3 = 0x65b;
   }
-  else if ((uVar4 & 0xffffffff) == 0) {
-    lVar2 = RtlGetLastError();
-    uVar4 = -(ulonglong)(lVar2 != 0) & 0x65b;
+  else if ((param_4 & 0xffffffff) == 0) {
+    lVar1 = RtlGetLastError();
+    uVar3 = -(ulonglong)(lVar1 != 0) & 0x65b;
   }
   else {
-    uVar4 = 0x3e5;
+    uVar3 = 0x3e5;
   }
-  uVar3 = __restgprlr_28(uVar4);
-  return uVar3;
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
 // 828A2150  XUserSetContext  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:231)
 
-void XUserSetContext(ulong param_1,ulong param_2,ulong param_3)
+void XUserSetContext(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  ulong uVar1;
+  undefined8 uVar1;
   
-  uVar1 = __savegprlr_29(param_1);
-  uVar1 = XUserSetContextEx(uVar1,param_2,param_3,(_XOVERLAPPED *)0x0);
-  __restgprlr_29(uVar1);
+  uVar1 = __savegprlr_29();
+  XUserSetContextEx(uVar1,param_2,param_3,0);
+  __restgprlr_29();
   return;
 }
 
 
 // 828A2190  XUserSetPropertyEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:250)
 
-ulong XUserSetPropertyEx(ulong param_1,ulong param_2,ulong param_3,void *param_4,
-                        _XOVERLAPPED *param_5)
+void XUserSetPropertyEx(undefined8 param_1,ulonglong param_2,undefined4 param_3,undefined4 param_4,
+                       ulonglong param_5)
 
 {
-  int iVar2;
+  int iVar3;
   ulonglong uVar1;
-  long lVar3;
-  ulong uVar4;
-  ulonglong uVar5;
+  longlong lVar2;
   undefined4 local_50 [2];
   undefined8 local_48;
   undefined4 local_40;
-  ulong local_3c;
-  void *local_38;
+  undefined4 local_3c;
+  undefined4 local_38;
   
-  uVar5 = (ulonglong)(int)param_5;
-  uVar1 = (ulonglong)(int)param_2;
-  local_50[0] = __savegprlr_27(param_1);
-  local_40 = (undefined4)uVar1;
+  local_50[0] = __savegprlr_27();
+  local_40 = (undefined4)param_2;
   local_48 = 0;
   local_3c = param_3;
   local_38 = param_4;
-  if (((uVar1 & 0xf0000000) == 0x40000000) &&
-     (iVar2 = XexCheckExecutablePrivilege(0x24), iVar2 == 0)) {
+  if (((param_2 & 0xf0000000) == 0x40000000) &&
+     (iVar3 = XexCheckExecutablePrivilege(0x24), iVar3 == 0)) {
     uVar1 = 5;
   }
   else {
-    iVar2 = XMsgStartIORequest(0xfb,0xb0007,uVar5,local_50,0x20);
-    if (iVar2 < 0) {
+    iVar3 = XMsgStartIORequest(0xfb,0xb0007,param_5,local_50,0x20);
+    if (iVar3 < 0) {
       uVar1 = 0x65b;
     }
-    else if ((uVar5 & 0xffffffff) == 0) {
-      lVar3 = RtlGetLastError();
-      uVar1 = -(ulonglong)(lVar3 != 0) & 0x65b;
+    else if ((param_5 & 0xffffffff) == 0) {
+      lVar2 = RtlGetLastError();
+      uVar1 = -(ulonglong)(lVar2 != 0) & 0x65b;
     }
     else {
       uVar1 = 0x3e5;
     }
   }
-  uVar4 = __restgprlr_27(uVar1);
-  return uVar4;
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
 // 828A2258  XUserSetProperty  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:306)
 
-void XUserSetProperty(ulong param_1,ulong param_2,ulong param_3,void *param_4)
+void XUserSetProperty(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-  ulong uVar1;
+  undefined8 uVar1;
   
-  uVar1 = __savegprlr_28(param_1);
-  uVar1 = XUserSetPropertyEx(uVar1,param_2,param_3,param_4,(_XOVERLAPPED *)0x0);
-  __restgprlr_28(uVar1);
+  uVar1 = __savegprlr_28();
+  XUserSetPropertyEx(uVar1,param_2,param_3,param_4,0);
+  __restgprlr_28();
   return;
 }
 
 
 // 828A26C8  XUserGetXUID  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:326)
 
-ulong XUserGetXUID(ulong param_1,ulong64 *param_2)
+undefined8 XUserGetXUID(undefined8 param_1,undefined8 param_2)
 
 {
-  undefined4 uVar1;
-  ulong uVar2;
+  undefined8 uVar1;
   
-  uVar1 = XamUserGetXUID(param_1,7,param_2);
-  uVar2 = Win32FromHRESULT(uVar1);
-  return uVar2;
+  XamUserGetXUID(param_1,7,param_2);
+  uVar1 = Win32FromHRESULT();
+  return uVar1;
 }
 
 
 // 828A22A0  XUserGetName  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:339)
 
-ulong XUserGetName(ulong param_1,char *param_2,ulong param_3)
+void XUserGetName(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   undefined8 uVar1;
-  ulong uVar2;
-  longlong lVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1,lVar3,lVar4);
-  uVar1 = XamUserGetName(uVar1,lVar3,lVar4);
-  uVar2 = __restgprlr_29(uVar1);
-  return uVar2;
+  uVar1 = __savegprlr_29();
+  uVar1 = XamUserGetName(uVar1,param_2,param_3);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 828A22E0  XUserGetSigninState  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:349)
 
-_XUSER_SIGNIN_STATE XUserGetSigninState(ulong param_1)
+undefined8 XUserGetSigninState(undefined8 param_1)
 
 {
-  _XUSER_SIGNIN_STATE _Var1;
+  undefined8 uVar1;
   
-  _Var1 = XamUserGetSigninState(param_1);
-  return _Var1;
+  uVar1 = XamUserGetSigninState(param_1);
+  return uVar1;
 }
 
 
 // 828A2320  XUserAreUsersFriends  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:368)
 
-ulong XUserAreUsersFriends
-                (ulong param_1,ulong64 *param_2,ulong param_3,int *param_4,_XOVERLAPPED *param_5)
+void XUserAreUsersFriends
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
   undefined8 uVar1;
-  ulong uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
   
-  lVar6 = (longlong)(int)param_5;
-  lVar5 = (longlong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1,lVar3,lVar4,lVar5,lVar6);
-  uVar1 = XamUserAreUsersFriends(uVar1,lVar3,lVar4,lVar5,lVar6);
-  uVar2 = __restgprlr_27(uVar1);
-  return uVar2;
+  uVar1 = __savegprlr_27();
+  uVar1 = XamUserAreUsersFriends(uVar1,param_2,param_3,param_4,param_5);
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
 // 828A2370  XUserCheckPrivilege  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:387)
 
-ulong XUserCheckPrivilege(ulong param_1,_XPRIVILEGE_TYPE param_2,int *param_3)
+void XUserCheckPrivilege(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   ulonglong uVar1;
   uint uVar3;
   int iVar4;
   undefined8 uVar2;
-  ulong uVar5;
-  longlong lVar6;
-  longlong lVar7;
-  ulonglong uVar8;
+  ulonglong uVar5;
   
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)(char)param_2;
-  uVar1 = __savegprlr_28(param_1,lVar6);
+  uVar1 = __savegprlr_28();
   uVar3 = XamGetSystemVersion();
   if (uVar3 < 0x20096b00) {
     if ((uVar1 & 0xffffffff) == 0xff) {
-      uVar8 = 0;
+      uVar5 = 0;
       do {
-        iVar4 = XamUserGetSigninState(uVar8);
+        iVar4 = XamUserGetSigninState(uVar5);
         if (iVar4 == 1) goto LAB_828a23cc;
-        uVar8 = uVar8 + 1;
-      } while ((uVar8 & 0xffffffff) < 4);
+        uVar5 = uVar5 + 1;
+      } while ((uVar5 & 0xffffffff) < 4);
     }
     else {
       iVar4 = XamUserGetSigninState(uVar1);
       if (iVar4 == 1) {
 LAB_828a23cc:
-        *(undefined4 *)lVar7 = 0;
+        *(undefined4 *)param_3 = 0;
         uVar2 = 0x4dd;
         goto LAB_828a240c;
       }
     }
   }
-  uVar2 = XamUserCheckPrivilege(uVar1,lVar6,lVar7);
+  uVar2 = XamUserCheckPrivilege(uVar1,param_2,param_3);
 LAB_828a240c:
-  uVar5 = __restgprlr_28(uVar2);
-  return uVar5;
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
 // 828A2418  XUserResetStatsView  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:444)
 
-ulong XUserResetStatsView(ulong param_1,ulong param_2,_XOVERLAPPED *param_3)
+void XUserResetStatsView(undefined8 param_1,undefined4 param_2,ulonglong param_3)
 
 {
-  int iVar1;
-  long lVar2;
-  ulong uVar3;
-  ulonglong uVar4;
+  int iVar2;
+  longlong lVar1;
+  ulonglong uVar3;
   undefined4 local_30;
-  ulong local_2c;
+  undefined4 local_2c;
   
-  uVar4 = (ulonglong)(int)param_3;
-  local_30 = __savegprlr_29(param_1);
+  local_30 = __savegprlr_29();
   local_2c = param_2;
-  iVar1 = XMsgStartIORequest(0xfb,0xb0020,uVar4,&local_30,8);
-  if (iVar1 < 0) {
-    uVar4 = 0x65b;
+  iVar2 = XMsgStartIORequest(0xfb,0xb0020,param_3,&local_30,8);
+  if (iVar2 < 0) {
+    uVar3 = 0x65b;
   }
-  else if ((uVar4 & 0xffffffff) == 0) {
-    lVar2 = RtlGetLastError();
-    uVar4 = -(ulonglong)(lVar2 != 0) & 0x65b;
+  else if ((param_3 & 0xffffffff) == 0) {
+    lVar1 = RtlGetLastError();
+    uVar3 = -(ulonglong)(lVar1 != 0) & 0x65b;
   }
   else {
-    uVar4 = 0x3e5;
+    uVar3 = 0x3e5;
   }
-  uVar3 = __restgprlr_29(uVar4);
-  return uVar3;
+  __restgprlr_29(uVar3);
+  return;
 }
 
 
 // 828A24A0  XUserResetStatsViewAllUsers  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:484)
 
-ulong XUserResetStatsViewAllUsers(ulong param_1,_XOVERLAPPED *param_2)
+undefined8 XUserResetStatsViewAllUsers(undefined8 param_1,undefined8 param_2)
 
 {
-  ulong uVar1;
+  undefined8 uVar1;
   
-  uVar1 = XUserResetStatsView(0xffffffff,param_1,param_2);
+  uVar1 = XUserResetStatsView(0xffffffffffffffff,param_1,param_2);
   return uVar1;
 }
 
 
 // 828A24F8  XUserReadStats  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:500)
 
-ulong XUserReadStats(ulong param_1,ulong param_2,ulong64 *param_3,ulong param_4,
-                    _XUSER_STATS_SPEC *param_5,ulong *param_6,_XUSER_STATS_READ_RESULTS *param_7,
-                    _XOVERLAPPED *param_8)
+void XUserReadStats(undefined8 param_1,int param_2,undefined4 param_3,ulonglong param_4,
+                   longlong param_5,uint *param_6,undefined4 param_7,ulonglong param_8)
 
 {
   undefined4 uVar1;
   int iVar2;
-  long lVar3;
-  ulong uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  uint uVar8;
-  ulonglong uVar9;
+  longlong lVar3;
+  uint uVar4;
+  ulonglong uVar5;
   undefined4 local_70;
-  ulong local_6c;
-  ulong64 *local_68;
+  int local_6c;
+  undefined4 local_68;
   int local_64;
   undefined4 local_60;
   uint local_5c;
-  _XUSER_STATS_READ_RESULTS *local_58;
+  undefined4 local_58;
   
-  uVar6 = (ulonglong)(int)param_8;
-  lVar5 = (longlong)(int)param_5;
-  uVar9 = (ulonglong)(int)param_4;
-  uVar1 = __savegprlr_24(param_1);
-  iVar2 = (int)uVar9;
-  uVar8 = (param_2 * 0x34 + 0x10) * iVar2 + 8;
-  if ((uVar9 & 0xffffffff) != 0) {
-    lVar7 = lVar5 + -0x84;
+  uVar1 = __savegprlr_24();
+  iVar2 = (int)param_4;
+  uVar4 = (param_2 * 0x34 + 0x10) * iVar2 + 8;
+  if ((param_4 & 0xffffffff) != 0) {
+    lVar3 = param_5 + -0x84;
     do {
-      lVar7 = lVar7 + 0x88;
-      uVar8 = *(int *)lVar7 * param_2 * 0x1c + uVar8;
-      uVar9 = uVar9 - 1;
-    } while (uVar9 != 0);
+      lVar3 = lVar3 + 0x88;
+      uVar4 = *(int *)lVar3 * param_2 * 0x1c + uVar4;
+      param_4 = param_4 - 1;
+    } while (param_4 != 0);
   }
-  if (*param_6 < uVar8) {
-    *param_6 = uVar8;
-    uVar9 = 0x7a;
+  if (*param_6 < uVar4) {
+    *param_6 = uVar4;
+    uVar5 = 0x7a;
   }
   else {
-    local_60 = (undefined4)lVar5;
+    local_60 = (undefined4)param_5;
     local_70 = uVar1;
     local_6c = param_2;
     local_68 = param_3;
     local_64 = iVar2;
     local_5c = *param_6;
     local_58 = param_7;
-    iVar2 = XMsgStartIORequest(0xfb,0xb0021,uVar6,&local_70,0x1c);
+    iVar2 = XMsgStartIORequest(0xfb,0xb0021,param_8,&local_70,0x1c);
     if (iVar2 < 0) {
-      uVar9 = 0x65b;
+      uVar5 = 0x65b;
     }
-    else if ((uVar6 & 0xffffffff) == 0) {
+    else if ((param_8 & 0xffffffff) == 0) {
       lVar3 = RtlGetLastError();
-      uVar9 = -(ulonglong)(lVar3 != 0) & 0x65b;
+      uVar5 = -(ulonglong)(lVar3 != 0) & 0x65b;
     }
     else {
-      uVar9 = 0x3e5;
+      uVar5 = 0x3e5;
     }
   }
-  uVar4 = __restgprlr_24(uVar9);
-  return uVar4;
+  __restgprlr_24(uVar5);
+  return;
 }
 
 
 // 828A25F0  XUserCreateStatsEnumeratorByXuid  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xuser.c:630)
 
-ulong XUserCreateStatsEnumeratorByXuid
-                (ulong param_1,ulong64 param_2,ulong param_3,ulong param_4,
-                _XUSER_STATS_SPEC *param_5,ulong *param_6,void **param_7)
+void XUserCreateStatsEnumeratorByXuid
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7)
 
 {
   undefined8 uVar1;
-  ulong uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
+  longlong lVar2;
   
-  lVar7 = (longlong)(int)param_7;
-  lVar6 = (longlong)(int)param_6;
-  lVar5 = (longlong)(int)param_5;
-  lVar4 = (longlong)(int)param_4;
-  lVar3 = (longlong)(int)param_3;
-  uVar1 = __savegprlr_24(param_1,param_2,lVar3,lVar4,lVar5,lVar6,lVar7);
-  uVar2 = XVerifySameFamily((ulong)uVar1);
-  if (uVar2 == 0) {
-    uVar2 = XamUserCreateStatsEnumerator(uVar1,0,param_2,lVar3,lVar4,lVar5,lVar6,lVar7);
+  uVar1 = __savegprlr_24();
+  lVar2 = XVerifySameFamily(uVar1);
+  if (lVar2 == 0) {
+    lVar2 = XamUserCreateStatsEnumerator(uVar1,0,param_2,param_3,param_4,param_5,param_6,param_7);
   }
-  uVar2 = __restgprlr_24(uVar2);
-  return uVar2;
+  __restgprlr_24(lVar2);
+  return;
 }
 
 
 // 828A2668  Win32FromHRESULT  (<external>/Xenon/XDK-Main-FEB11/core/private/inc/xamp.h:7431)
 
-ulong Win32FromHRESULT(uint param_1)
+uint Win32FromHRESULT(uint param_1)
 
 {
   uint uVar1;

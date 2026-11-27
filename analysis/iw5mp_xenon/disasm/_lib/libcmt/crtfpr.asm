@@ -41,11 +41,8 @@
 
 ; 82916798  __savefpr_28  (line unknown)
   82916798  DB8CFFE0             stfd f28,-0x20(r12)
-__savefpr_29:
   8291679C  DBACFFE8             stfd f29,-0x18(r12)
-__savefpr_30:
   829167A0  DBCCFFF0             stfd f30,-0x10(r12)
-__savefpr_31:
   829167A4  DBECFFF8             stfd f31,-0x8(r12)
   829167A8  4E800020             blr
 
@@ -90,10 +87,7 @@ __savefpr_31:
 
 ; 829167E4  __restfpr_28  (line unknown)
   829167E4  CB8CFFE0             lfd f28,-0x20(r12)
-__restfpr_29:
   829167E8  CBACFFE8             lfd f29,-0x18(r12)
-__restfpr_30:
   829167EC  CBCCFFF0             lfd f30,-0x10(r12)
-__restfpr_31:
   829167F0  CBECFFF8             lfd f31,-0x8(r12)
   829167F4  4E800020             blr

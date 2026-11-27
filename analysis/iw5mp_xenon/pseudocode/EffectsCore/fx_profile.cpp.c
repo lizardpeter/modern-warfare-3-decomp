@@ -2,40 +2,35 @@
 
 // 82438B78  FX_GetProfileEntry  (EffectsCore/fx_profile.cpp:83)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-FxProfileEntry * FX_GetProfileEntry(FxEffectDef *param_1,FxProfileEntry *param_2,int *param_3)
+void FX_GetProfileEntry(undefined8 param_1,longlong param_2,int *param_3)
 
 {
   int iVar1;
   int iVar2;
-  FxProfileEntry *pFVar3;
+  int iVar3;
   longlong lVar4;
-  longlong lVar5;
-  uint uVar6;
+  ulonglong uVar5;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  uVar6 = 0;
-  lVar5 = lVar4;
+  iVar3 = __savegprlr_27();
+  uVar5 = 0;
+  lVar4 = param_2;
   if (0 < *param_3) {
     do {
-      if (*(int *)lVar5 == iVar2) {
-        pFVar3 = (FxProfileEntry *)__restgprlr_27(((ulonglong)uVar6 & 0x7ffffff) * 0x20 + lVar4);
-        return pFVar3;
+      if (*(int *)lVar4 == iVar3) {
+        __restgprlr_27((uVar5 & 0x7ffffff) * 0x20 + param_2);
+        return;
       }
-      uVar6 = uVar6 + 1;
-      lVar5 = lVar5 + 0x20;
-    } while ((int)uVar6 < *param_3);
+      uVar5 = uVar5 + 1;
+      lVar4 = lVar4 + 0x20;
+    } while ((int)uVar5 < *param_3);
   }
-  if (uVar6 != *param_3) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp",
-                    0x5c,0,"entryIndex == *entryCount\n\t%i, %i");
+  if ((int)uVar5 != *param_3) {
+    MyAssertHandler(0xffffffff82066498,0x5c,0,0xffffffff820664e0,uVar5);
   }
-  iVar1 = uVar6 * 0x20 + (int)lVar4;
+  iVar2 = (int)uVar5 * 0x20;
+  iVar1 = iVar2 + (int)param_2;
   *param_3 = *param_3 + 1;
-  *(int *)(uVar6 * 0x20 + (int)lVar4) = iVar2;
+  *(int *)(iVar2 + (int)param_2) = iVar3;
   *(undefined4 *)(iVar1 + 4) = 0;
   *(undefined4 *)(iVar1 + 8) = 0;
   *(undefined4 *)(iVar1 + 0xc) = 0;
@@ -46,136 +41,123 @@ FxProfileEntry * FX_GetProfileEntry(FxEffectDef *param_1,FxProfileEntry *param_2
   *(undefined2 *)(iVar1 + 0x1a) = 0;
   *(undefined2 *)(iVar1 + 0x1c) = 0;
   *(undefined2 *)(iVar1 + 0x1e) = 0;
-  pFVar3 = (FxProfileEntry *)__restgprlr_27();
-  return pFVar3;
+  __restgprlr_27();
+  return;
 }
 
 
 // 8243A0D0  FX_PoolFromHandle_Generic<FxSparkFountain>  (EffectsCore/fx_system_handle.h:83)
 
-FxSparkFountain *
-FX_PoolFromHandle_Generic<FxSparkFountain>(FxPool<FxSparkFountain> *param_1,ushort param_2)
+longlong FX_PoolFromHandle_Generic<FxSparkFountain>(longlong param_1,ulonglong param_2)
 
 {
-  if ((0xfff < param_2) || ((param_2 & 0x3f) != 0)) {
-    va("%p %i");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                    ,0x54,0,"%s\n\t%s");
+  ulonglong uVar1;
+  undefined8 uVar2;
+  
+  uVar1 = param_2 & 0xffff;
+  if ((0xfff < uVar1) || ((param_2 & 0x3f) != 0)) {
+    uVar2 = va(0xffffffff82060820,param_1,uVar1);
+    MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar2);
   }
-  return (FxSparkFountain *)((int)&param_1->field0_0x0 + (uint)param_2);
+  return uVar1 + param_1;
 }
 
 
 // 824395C8  FX_ProfileSingleEffect  (EffectsCore/fx_profile.cpp:112)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_ProfileSingleEffect(FxSystem *param_1,FxEffect *param_2,FxProfileEntry *param_3)
+void FX_ProfileSingleEffect(undefined8 param_1,longlong param_2,int param_3)
 
 {
-  FxPool<FxElem> *pFVar1;
-  FxPool<FxTrail> *pFVar2;
-  FxPool<FxTrailElem> *pFVar3;
-  FxPool<FxSparkFountain> *pFVar4;
-  int iVar5;
-  ushort *puVar6;
-  uint uVar7;
-  FxSystem *pFVar8;
-  ushort uVar9;
-  longlong lVar10;
-  longlong lVar11;
-  uint uVar12;
+  ushort uVar1;
+  int iVar2;
+  int iVar3;
+  ushort *puVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  int iVar8;
+  undefined8 uVar7;
+  longlong lVar9;
+  ulonglong uVar10;
   
-  lVar11 = (longlong)(int)param_2;
-  pFVar8 = (FxSystem *)__savegprlr_18(param_1);
-  param_3->effectCount = param_3->effectCount + 1;
-  iVar5 = (int)lVar11;
-  if (param_3->latestMsecBegin < *(int *)(iVar5 + 0x2c)) {
-    param_3->latestMsecBegin = *(int *)(iVar5 + 0x2c);
+  iVar8 = __savegprlr_18();
+  *(int *)(param_3 + 8) = *(int *)(param_3 + 8) + 1;
+  iVar3 = (int)param_2;
+  if (*(int *)(param_3 + 4) < *(int *)(iVar3 + 0x2c)) {
+    *(int *)(param_3 + 4) = *(int *)(iVar3 + 0x2c);
   }
-  if (*(char *)(iVar5 + 0x26) != -1) {
-    param_3->boltCount = param_3->boltCount + 1;
+  if (*(char *)(iVar3 + 0x26) != -1) {
+    *(short *)(param_3 + 0x14) = *(short *)(param_3 + 0x14) + 1;
   }
-  lVar11 = lVar11 + 8;
-  lVar10 = 3;
+  param_2 = param_2 + 8;
+  lVar9 = 3;
   do {
-    uVar12 = (uint)*(ushort *)lVar11;
-    uVar7 = uVar12;
-    while (uVar7 != 0xffff) {
-      if (pFVar8 == (FxSystem *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                        ,0x62,0,"%s");
+    uVar10 = (ulonglong)*(ushort *)param_2;
+    uVar5 = uVar10;
+    while (uVar5 != 0xffff) {
+      if (iVar8 == 0) {
+        MyAssertHandler(0xffffffff82060828,0x62,0,0xffffffff82000f98,0xffffffff82038694);
       }
-      pFVar1 = pFVar8->elems;
-      if ((0x3fff < uVar7) || ((uVar7 & 7) != 0)) {
-        va("%p %i");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                        ,0x54,0,"%s\n\t%s");
+      iVar2 = *(int *)(iVar8 + 0x3c);
+      if ((0x3fff < uVar5) || ((uVar5 & 7) != 0)) {
+        uVar7 = va(0xffffffff82060820,iVar2,uVar5);
+        MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar7);
       }
-      if (pFVar8->msecNow < *(int *)((int)&pFVar1->field0_0x0 + uVar7 * 4 + 4)) {
-        param_3->pendingElemCount = param_3->pendingElemCount + 1;
+      if (*(int *)(iVar8 + 0x88) < *(int *)(((int)uVar5 + 1) * 4 + iVar2)) {
+        *(int *)(param_3 + 0x10) = *(int *)(param_3 + 0x10) + 1;
       }
       else {
-        param_3->activeElemCount = param_3->activeElemCount + 1;
+        *(int *)(param_3 + 0xc) = *(int *)(param_3 + 0xc) + 1;
       }
-      uVar9 = FX_GetNextElemInEffect(pFVar8,(ushort)uVar12);
-      uVar12 = (uint)(short)uVar9;
-      uVar7 = (uint)uVar9;
+      uVar10 = FX_GetNextElemInEffect(iVar8,uVar10);
+      uVar5 = uVar10 & 0xffff;
     }
-    lVar10 = lVar10 + -1;
-    lVar11 = lVar11 + 2;
-  } while (lVar10 != 0);
-  uVar9 = *(ushort *)(iVar5 + 0x10);
-  while (uVar7 = (uint)uVar9, uVar7 != 0xffff) {
-    if (pFVar8 == (FxSystem *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                      ,0x85,0,"%s");
+    lVar9 = lVar9 + -1;
+    param_2 = param_2 + 2;
+  } while (lVar9 != 0);
+  uVar1 = *(ushort *)(iVar3 + 0x10);
+  while (uVar6 = (uint)uVar1, uVar6 != 0xffff) {
+    if (iVar8 == 0) {
+      MyAssertHandler(0xffffffff82060828,0x85,0,0xffffffff82000f98,0xffffffff82038694);
     }
-    pFVar2 = pFVar8->trails;
-    if ((0x1ff < uVar7) || ((uVar9 & 3) != 0)) {
-      va("%p %i");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                      ,0x54,0,"%s\n\t%s");
+    iVar2 = *(int *)(iVar8 + 0x14);
+    if ((0x1ff < uVar6) || ((uVar1 & 3) != 0)) {
+      uVar7 = va(0xffffffff82060820,iVar2,uVar6);
+      MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar7);
     }
-    puVar6 = (ushort *)((int)&pFVar2->field0_0x0 + uVar7 * 4);
-    param_3->trailCount = param_3->trailCount + 1;
-    uVar9 = puVar6[1];
-    while (uVar7 = (uint)uVar9, uVar7 != 0xffff) {
-      pFVar3 = pFVar8->trailElems;
-      if ((0x3fff < uVar7) || ((uVar9 & 7) != 0)) {
-        va("%p %i");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                        ,0x54,0,"%s\n\t%s");
+    puVar4 = (ushort *)(uVar6 * 4 + iVar2);
+    *(short *)(param_3 + 0x16) = *(short *)(param_3 + 0x16) + 1;
+    uVar1 = puVar4[1];
+    while (uVar6 = (uint)uVar1, uVar6 != 0xffff) {
+      iVar2 = *(int *)(iVar8 + 0x38);
+      if ((0x3fff < uVar6) || ((uVar1 & 7) != 0)) {
+        uVar7 = va(0xffffffff82060820,iVar2,uVar6);
+        MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar7);
       }
-      if (pFVar8->msecNow < *(int *)((int)&pFVar3->field0_0x0 + uVar7 * 4 + 0x10)) {
-        param_3->pendingTrailElemCount = param_3->pendingTrailElemCount + 1;
+      iVar2 = uVar6 * 4 + iVar2;
+      if (*(int *)(iVar8 + 0x88) < *(int *)(iVar2 + 0x10)) {
+        *(short *)(param_3 + 0x1a) = *(short *)(param_3 + 0x1a) + 1;
       }
       else {
-        param_3->activeTrailElemCount = param_3->activeTrailElemCount + 1;
+        *(short *)(param_3 + 0x18) = *(short *)(param_3 + 0x18) + 1;
       }
-      uVar9 = *(ushort *)((int)&pFVar3->field0_0x0 + uVar7 * 4 + 0x14);
+      uVar1 = *(ushort *)(iVar2 + 0x14);
     }
-    uVar9 = *puVar6;
+    uVar1 = *puVar4;
   }
-  uVar9 = *(ushort *)(iVar5 + 0x12);
-  while (uVar7 = (uint)uVar9, uVar7 != 0xffff) {
-    if (pFVar8 == (FxSystem *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                      ,0xbd,0,"%s");
+  uVar1 = *(ushort *)(iVar3 + 0x12);
+  while (uVar6 = (uint)uVar1, uVar6 != 0xffff) {
+    if (iVar8 == 0) {
+      MyAssertHandler(0xffffffff82060828,0xbd,0,0xffffffff82000f98,0xffffffff82038694);
     }
-    pFVar4 = pFVar8->sparkFountains;
-    if ((0xfff < uVar7) || ((uVar9 & 0x3f) != 0)) {
-      va("%p %i");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
-                      ,0x54,0,"%s\n\t%s");
+    iVar3 = *(int *)(iVar8 + 0x1c);
+    if ((0xfff < uVar6) || ((uVar1 & 0x3f) != 0)) {
+      uVar7 = va(0xffffffff82060820,iVar3,uVar6);
+      MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar7);
     }
-    param_3->sparkFountainCount = param_3->sparkFountainCount + 1;
-    param_3->sparkFountainClusterCount =
-         (ushort)*(byte *)((int)&pFVar4->field0_0x0 + uVar7 + 5) +
-         param_3->sparkFountainClusterCount;
-    uVar9 = *(ushort *)((int)&pFVar4->field0_0x0 + uVar7 + 2);
+    iVar3 = uVar6 + iVar3;
+    *(short *)(param_3 + 0x1c) = *(short *)(param_3 + 0x1c) + 1;
+    *(ushort *)(param_3 + 0x1e) = (ushort)*(byte *)(iVar3 + 5) + *(short *)(param_3 + 0x1e);
+    uVar1 = *(ushort *)(iVar3 + 2);
   }
   __restgprlr_18();
   return;
@@ -184,34 +166,32 @@ void FX_ProfileSingleEffect(FxSystem *param_1,FxEffect *param_2,FxProfileEntry *
 
 // 82438C48  FX_GetProfileEntryCost  (EffectsCore/fx_profile.cpp:168)
 
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-float FX_GetProfileEntryCost(FxProfileEntry *param_1)
+double FX_GetProfileEntryCost(int param_1)
 
 {
-  float fVar1;
-  float fVar2;
+  double dVar1;
+  double dVar2;
   
-  fVar1 = (float)(longlong)param_1->effectCount * 0.0009765625;
-  fVar2 = (float)(longlong)(param_1->pendingElemCount + param_1->activeElemCount) * 0.00048828125;
-  if (fVar1 - fVar2 < 0.0) {
-    fVar1 = fVar2;
+  dVar2 = (double)((float)(longlong)*(int *)(param_1 + 8) * 0.0009765625);
+  dVar1 = (double)((float)(longlong)(*(int *)(param_1 + 0x10) + *(int *)(param_1 + 0xc)) *
+                  0.00048828125);
+  if ((float)(dVar2 - dVar1) < 0.0) {
+    dVar2 = dVar1;
   }
-  return fVar1;
+  return dVar2;
 }
 
 
 // 82439578  FX_Compare_Cmp<float>  (EffectsCore/fx_profile.cpp:180)
 
-int FX_Compare_Cmp<float>(float param_1,float param_2)
+undefined8 FX_Compare_Cmp<float>(double param_1,double param_2)
 
 {
   if (param_1 < param_2) {
     return 1;
   }
   if (param_2 < param_1) {
-    return -1;
+    return 0xffffffffffffffff;
   }
   return 0;
 }
@@ -219,19 +199,20 @@ int FX_Compare_Cmp<float>(float param_1,float param_2)
 
 // 824395A0  FX_Compare_Cmp<int>  (EffectsCore/fx_profile.cpp:180)
 
-int FX_Compare_Cmp<int>(int param_1,int param_2)
+longlong FX_Compare_Cmp<int>(ulonglong param_1,ulonglong param_2)
 
 {
-  if (param_1 < param_2) {
+  if ((int)param_1 < (int)(uint)param_2) {
     return 1;
   }
-  return -(param_1 >> 0x1f) - ((uint)((uint)param_2 < (uint)param_1) - (param_2 >> 0x1f));
+  return ((param_1 & 0xffffffff) >> 0x1f) -
+         ((ulonglong)((uint)param_2 >> 0x1f) + (ulonglong)(param_2 < param_1));
 }
 
 
 // 82439900  FX_CompareProfileEntries_Cost  (EffectsCore/fx_profile.cpp:191)
 
-int FX_CompareProfileEntries_Cost(void *param_1,void *param_2)
+undefined8 FX_CompareProfileEntries_Cost(int param_1,int param_2)
 
 {
   float fVar1;
@@ -239,12 +220,10 @@ int FX_CompareProfileEntries_Cost(void *param_1,void *param_2)
   float fVar3;
   float fVar4;
   
-  fVar3 = (float)(longlong)(*(int *)((int)param_2 + 0x10) + *(int *)((int)param_2 + 0xc)) *
-          0.00048828125;
-  fVar1 = (float)(longlong)*(int *)((int)param_2 + 8) * 0.0009765625;
-  fVar2 = (float)(longlong)*(int *)((int)param_1 + 8) * 0.0009765625;
-  fVar4 = (float)(longlong)(*(int *)((int)param_1 + 0x10) + *(int *)((int)param_1 + 0xc)) *
-          0.00048828125;
+  fVar3 = (float)(longlong)(*(int *)(param_2 + 0x10) + *(int *)(param_2 + 0xc)) * 0.00048828125;
+  fVar1 = (float)(longlong)*(int *)(param_2 + 8) * 0.0009765625;
+  fVar2 = (float)(longlong)*(int *)(param_1 + 8) * 0.0009765625;
+  fVar4 = (float)(longlong)(*(int *)(param_1 + 0x10) + *(int *)(param_1 + 0xc)) * 0.00048828125;
   if (fVar1 - fVar3 < 0.0) {
     fVar1 = fVar3;
   }
@@ -255,7 +234,7 @@ int FX_CompareProfileEntries_Cost(void *param_1,void *param_2)
     return 1;
   }
   if (fVar1 < fVar2) {
-    return -1;
+    return 0xffffffffffffffff;
   }
   return 0;
 }
@@ -263,220 +242,245 @@ int FX_CompareProfileEntries_Cost(void *param_1,void *param_2)
 
 // 82438CA8  FX_CompareProfileEntries_Name  (EffectsCore/fx_profile.cpp:202)
 
-int FX_CompareProfileEntries_Name(void *param_1,void *param_2)
+void FX_CompareProfileEntries_Name(undefined4 *param_1,undefined4 *param_2)
 
 {
-  int iVar1;
-  byte *pbVar2;
-  byte *pbVar3;
+  char cVar1;
+  char cVar2;
+  char *pcVar3;
+  char *pcVar4;
   
-  pbVar2 = (byte *)**(undefined4 **)param_2;
-  pbVar3 = (byte *)**(undefined4 **)param_1;
+  pcVar3 = *(char **)*param_2;
+  pcVar4 = *(char **)*param_1;
   do {
-    iVar1 = (uint)*pbVar3 - (uint)*pbVar2;
-    if (*pbVar3 == 0) {
-      return iVar1;
+    cVar1 = *pcVar4;
+    cVar2 = *pcVar3;
+    if (cVar1 == '\0') {
+      return;
     }
-    pbVar3 = pbVar3 + 1;
-    pbVar2 = pbVar2 + 1;
-  } while (iVar1 == 0);
-  return iVar1;
+    pcVar4 = pcVar4 + 1;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 == cVar2);
+  return;
 }
 
 
 // 824399C8  FX_CompareProfileEntries_Age  (EffectsCore/fx_profile.cpp:213)
 
-int FX_CompareProfileEntries_Age(void *param_1,void *param_2)
+longlong FX_CompareProfileEntries_Age(int param_1,int param_2)
 
 {
   uint uVar1;
   uint uVar2;
   
-  uVar1 = *(uint *)((int)param_2 + 4);
-  uVar2 = *(uint *)((int)param_1 + 4);
+  uVar1 = *(uint *)(param_2 + 4);
+  uVar2 = *(uint *)(param_1 + 4);
   if ((int)uVar2 < (int)uVar1) {
     return 1;
   }
-  return -((int)uVar2 >> 0x1f) - ((uint)(uVar1 < uVar2) - ((int)uVar1 >> 0x1f));
+  return (ulonglong)(uVar2 >> 0x1f) - ((ulonglong)(uVar1 >> 0x1f) + (ulonglong)(uVar1 < uVar2));
 }
 
 
 // 824399F8  FX_DrawProfile  (EffectsCore/fx_profile.cpp:224)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
-
-void FX_DrawProfile(LocalClientNum_t param_1,
-                   _func___cdecl_void_LocalClientNum_t_char_ptr_float_ptr *param_2,float *param_3)
+void FX_DrawProfile(undefined8 param_1,code *param_2,undefined8 param_3)
 
 {
   ushort uVar1;
   ushort uVar2;
   ushort uVar3;
-  uint uVar4;
-  undefined4 uVar5;
+  ushort uVar4;
+  ushort uVar5;
   int iVar6;
-  ushort *puVar7;
-  undefined8 uVar8;
-  FxSystem *pFVar9;
-  FxEffect *pFVar10;
-  FxProfileEntry *pFVar11;
-  char *pcVar12;
-  char *pcVar13;
-  code *pcVar14;
-  longlong lVar15;
-  code *pcVar16;
+  uint uVar7;
+  undefined4 uVar8;
+  uint uVar9;
+  int iVar10;
+  ushort *puVar11;
+  undefined8 uVar12;
+  int iVar14;
+  undefined4 *puVar15;
+  undefined8 uVar13;
+  char *pcVar16;
   longlong lVar17;
-  int iVar18;
+  code *_PtFuncCompare;
+  longlong lVar18;
   ulonglong uVar19;
+  char *_SubStr;
   int iVar20;
   double dVar21;
   
-  lVar15 = (longlong)(int)param_3;
-  lVar17 = (longlong)(int)param_2;
-  __savegprlr_21(param_1,lVar17,lVar15);
-  pcVar14 = (code *)lVar17;
-  lVar17 = -0x8100;
-  uVar8 = _RtlCheckStack12();
-  iVar6 = (int)(ZEXT48(&stack0x00000000) + lVar17);
-  *(BADSPACEBASE **)iVar6 = register0x0000000c;
-  pFVar9 = FX_GetSystemConst((int)uVar8);
-  if (pFVar9 == (FxSystem *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp",
-                    0xef,0,"%s");
+  __savegprlr_21();
+  lVar18 = -0x8100;
+  uVar12 = _RtlCheckStack12();
+  lVar18 = ZEXT48(&stack0x00000000) + lVar18;
+  iVar10 = (int)lVar18;
+  *(BADSPACEBASE **)iVar10 = register0x0000000c;
+  iVar14 = FX_GetSystemConst();
+  if (iVar14 == 0) {
+    MyAssertHandler(0xffffffff82066498,0xef,0,0xffffffff82000f98,0xffffffff82038694);
   }
-  FX_WaitEnterReadSystemLock(pFVar9->lock);
-  iVar18 = pFVar9->firstNewEffect;
+  FX_WaitEnterReadSystemLock(*(undefined4 *)(iVar14 + 0xb0));
+  iVar6 = *(int *)(iVar14 + 0x6c);
   uVar19 = 0;
-  *(undefined4 *)(iVar6 + 0x88) = 0;
-  iVar20 = pFVar9->firstActiveEffect;
-  if (iVar20 != iVar18) {
+  *(undefined4 *)(iVar10 + 0x88) = 0;
+  iVar20 = *(int *)(iVar14 + 0x68);
+  if (iVar20 != iVar6) {
     do {
-      *(int *)(iVar6 + 0x80) = iVar20;
-      pFVar10 = FX_EffectFromHandleConst
-                          (pFVar9,pFVar9->allEffectHandles[*(uint *)(iVar6 + 0x80) & 0x3ff]);
-      pFVar11 = FX_GetProfileEntry(pFVar10->def,(FxProfileEntry *)(iVar6 + 0x90),
-                                   (int *)(iVar6 + 0x88));
-      FX_ProfileSingleEffect(pFVar9,pFVar10,pFVar11);
+      *(int *)(iVar10 + 0x80) = iVar20;
+      puVar15 = (undefined4 *)
+                FX_EffectFromHandleConst
+                          (iVar14,*(undefined2 *)
+                                   ((*(uint *)(iVar10 + 0x80) & 0x3ff) * 2 + *(int *)(iVar14 + 0x74)
+                                   ));
+      uVar13 = FX_GetProfileEntry(*puVar15,lVar18 + 0x90,lVar18 + 0x88);
+      FX_ProfileSingleEffect(iVar14,puVar15,uVar13);
       iVar20 = iVar20 + 1;
-    } while (iVar20 != pFVar9->firstNewEffect);
-    uVar19 = (ulonglong)*(uint *)(iVar6 + 0x88);
+    } while (iVar20 != *(int *)(iVar14 + 0x6c));
+    uVar19 = (ulonglong)*(uint *)(iVar10 + 0x88);
   }
-  FX_ExitReadSystemLock(pFVar9->lock);
-  uVar4 = (fx_profileSort->current).unsignedInt;
-  if (uVar4 != 0) {
-    if (uVar4 == 1) {
-      pcVar16 = FX_CompareProfileEntries_Name;
+  FX_ExitReadSystemLock(*(undefined4 *)(iVar14 + 0xb0));
+  uVar7 = *(uint *)(DAT_8332cbd4 + 0xc);
+  if (uVar7 != 0) {
+    if (uVar7 == 1) {
+      _PtFuncCompare = FX_CompareProfileEntries_Name;
       goto LAB_82439b2c;
     }
-    if (uVar4 < 3) {
-      pcVar16 = FX_CompareProfileEntries_Age;
+    if (uVar7 < 3) {
+      _PtFuncCompare = FX_CompareProfileEntries_Age;
       goto LAB_82439b2c;
     }
-    if (alwaysfails == 0) {
-      pcVar12 = va("Impossible fx_profileSort value %i");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp",
-                      0xff,0,pcVar12);
+    if (DAT_84013128 == 0) {
+      uVar13 = va(0xffffffff82066aa0);
+      MyAssertHandler(0xffffffff82066498,0xff,0,uVar13);
     }
   }
-  pcVar16 = FX_CompareProfileEntries_Cost;
+  _PtFuncCompare = FX_CompareProfileEntries_Cost;
 LAB_82439b2c:
-  qsort((void *)(iVar6 + 0x90),(uint)uVar19,0x20,pcVar16);
-  *(longlong *)(iVar6 + 0x80) = (longlong)(pFVar9->firstNewEffect - pFVar9->firstActiveEffect);
-  *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 0.09765625);
-  pcVar12 = va("%4i of %4i effect objects    (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeBoltCount;
-  *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 0.39215687);
-  pcVar12 = va("%4i of %4i bolts             (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeTrailCount;
-  *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 0.78125);
-  pcVar12 = va("%4i of %4i trails            (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeElemCount;
+  qsort((void *)(iVar10 + 0x90),(size_t)uVar19,0x20,_PtFuncCompare);
+  lVar17 = (ulonglong)*(uint *)(iVar14 + 0x6c) - (ulonglong)*(uint *)(iVar14 + 0x68);
+  *(longlong *)(iVar10 + 0x80) = (longlong)(int)lVar17;
+  *(double *)(iVar10 + 0x28) = (double)((float)*(longlong *)(iVar10 + 0x80) * 0.09765625);
+  uVar13 = va(0xffffffff82066a6c,lVar17,0x400,*(undefined8 *)(iVar10 + 0x28),0x400 - lVar17);
+  (*param_2)(uVar12,uVar13,param_3);
+  uVar7 = *(uint *)(iVar14 + 0x238);
+  *(longlong *)(iVar10 + 0x80) = (longlong)(int)uVar7;
+  *(double *)(iVar10 + 0x28) = (double)((float)*(longlong *)(iVar10 + 0x80) * 0.39215687);
+  uVar13 = va(0xffffffff82066a38,(ulonglong)uVar7,0xff,*(undefined8 *)(iVar10 + 0x28),
+              0xff - (ulonglong)uVar7);
+  (*param_2)(uVar12,uVar13,param_3);
+  uVar7 = *(uint *)(iVar14 + 0x234);
+  *(longlong *)(iVar10 + 0x80) = (longlong)(int)uVar7;
+  *(double *)(iVar10 + 0x28) = (double)((float)*(longlong *)(iVar10 + 0x80) * 0.78125);
+  uVar13 = va(0xffffffff82066a04,(ulonglong)uVar7,0x80,*(undefined8 *)(iVar10 + 0x28),
+              0x80 - (ulonglong)uVar7);
+  (*param_2)(uVar12,uVar13,param_3);
+  uVar7 = *(uint *)(iVar14 + 0x244);
+  *(longlong *)(iVar10 + 0x80) = (longlong)(int)uVar7;
   dVar21 = 0.048828125;
-  *(double *)(iVar6 + 0x28) = (double)(float)((double)*(longlong *)(iVar6 + 0x80) * 0.048828125);
-  pcVar12 = va("%4i of %4i effect elements   (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeTrailElemCount;
-  *(double *)(iVar6 + 0x28) = (double)(float)((double)*(longlong *)(iVar6 + 0x80) * dVar21);
-  pcVar12 = va("%4i of %4i trail elements    (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeSparkCloudCount;
-  *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 3.125);
-  pcVar12 = va("%4i of %4i spark clouds      (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeSparkFountainCount;
-  *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 1.5625);
-  pcVar12 = va("%4i of %4i spark fountains   (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeSparkFountainClusterCount;
-  *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 1.0416666);
-  pcVar12 = va("%4i of %4i fountain clusters (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeSpotLightEffectCount;
-  *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 100.0);
-  pcVar12 = va("%4i of %4i spot lights       (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->gfxCloudCount;
-  *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 0.390625);
-  pcVar12 = va("%4i of %4i cloud elements    (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  (*pcVar14)(uVar8,0xffffffff820068af,lVar15);
-  pcVar12 = va("Effects, sorted by %s (fx_profileSort)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  *(char **)(iVar6 + 0x54) = "actv";
-  *(char **)(iVar6 + 0x5c) = "pend";
-  *(char **)(iVar6 + 0x74) = "effectname";
-  *(char **)(iVar6 + 0x6c) = "sf c";
-  *(char **)(iVar6 + 100) = "sf  ";
-  pcVar12 = va("%4s  %4s (%4s/%4s)  %4s  %4s  %4s (%4s/%4s)  %4s  %4s  %s");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  (*pcVar14)(uVar8,0xffffffff82066798,lVar15);
-  pcVar12 = (fx_profileFilter->current).string;
-  iVar18 = (fx_profileSkip->current).integer;
-  if (*pcVar12 == '\0') {
-    pcVar12 = (char *)0x0;
+  *(double *)(iVar10 + 0x28) = (double)(float)((double)*(longlong *)(iVar10 + 0x80) * 0.048828125);
+  uVar13 = va(0xffffffff820669d0,(ulonglong)uVar7,0x800,*(undefined8 *)(iVar10 + 0x28),
+              0x800 - (ulonglong)uVar7);
+  (*param_2)(uVar12,uVar13,param_3);
+  uVar7 = *(uint *)(iVar14 + 0x24c);
+  *(longlong *)(iVar10 + 0x80) = (longlong)(int)uVar7;
+  *(double *)(iVar10 + 0x28) = (double)(float)((double)*(longlong *)(iVar10 + 0x80) * dVar21);
+  uVar13 = va(0xffffffff820669a0,(ulonglong)uVar7,0x800,*(undefined8 *)(iVar10 + 0x28),
+              0x800 - (ulonglong)uVar7);
+  (*param_2)(uVar12,uVar13,param_3);
+  uVar7 = *(uint *)(iVar14 + 0x248);
+  *(longlong *)(iVar10 + 0x80) = (longlong)(int)uVar7;
+  *(double *)(iVar10 + 0x28) = (double)((float)*(longlong *)(iVar10 + 0x80) * 3.125);
+  uVar13 = va(0xffffffff8206696c,(ulonglong)uVar7,0x20,*(undefined8 *)(iVar10 + 0x28),
+              0x20 - (ulonglong)uVar7);
+  (*param_2)(uVar12,uVar13,param_3);
+  uVar7 = *(uint *)(iVar14 + 0x23c);
+  *(longlong *)(iVar10 + 0x80) = (longlong)(int)uVar7;
+  *(double *)(iVar10 + 0x28) = (double)((float)*(longlong *)(iVar10 + 0x80) * 1.5625);
+  uVar13 = va(0xffffffff82066938,(ulonglong)uVar7,0x40,*(undefined8 *)(iVar10 + 0x28),
+              0x40 - (ulonglong)uVar7);
+  (*param_2)(uVar12,uVar13,param_3);
+  uVar7 = *(uint *)(iVar14 + 0x240);
+  *(longlong *)(iVar10 + 0x80) = (longlong)(int)uVar7;
+  *(double *)(iVar10 + 0x28) = (double)((float)*(longlong *)(iVar10 + 0x80) * 1.0416666);
+  uVar13 = va(0xffffffff82066904,(ulonglong)uVar7,0x60,*(undefined8 *)(iVar10 + 0x28),
+              0x60 - (ulonglong)uVar7);
+  (*param_2)(uVar12,uVar13,param_3);
+  uVar7 = *(uint *)(iVar14 + 0x78);
+  *(longlong *)(iVar10 + 0x80) = (longlong)(int)uVar7;
+  *(double *)(iVar10 + 0x28) = (double)((float)*(longlong *)(iVar10 + 0x80) * 100.0);
+  uVar13 = va(0xffffffff820668d4,(ulonglong)uVar7,1,*(undefined8 *)(iVar10 + 0x28),
+              1 - (ulonglong)uVar7);
+  (*param_2)(uVar12,uVar13,param_3);
+  uVar7 = *(uint *)(iVar14 + 0x58);
+  uVar8 = *(undefined4 *)(iVar14 + 0x58);
+  *(longlong *)(iVar10 + 0x80) = (longlong)*(int *)(iVar14 + 0x58);
+  *(double *)(iVar10 + 0x28) = (double)((float)*(longlong *)(iVar10 + 0x80) * 0.390625);
+  uVar13 = va(0xffffffff820668a0,uVar8,0x100,*(undefined8 *)(iVar10 + 0x28),0x100 - (ulonglong)uVar7
+             );
+  (*param_2)(uVar12,uVar13,param_3);
+  (*param_2)(uVar12,0xffffffff820068af,param_3);
+  uVar13 = va(0xffffffff82066878,(&PTR_DAT_829684c0)[*(int *)(DAT_8332cbd4 + 0xc)]);
+  (*param_2)(uVar12,uVar13,param_3);
+  *(undefined **)(iVar10 + 0x54) = &DAT_82066870;
+  *(undefined **)(iVar10 + 0x5c) = &DAT_82066868;
+  *(char **)(iVar10 + 0x74) = "effectname";
+  *(undefined **)(iVar10 + 0x6c) = &DAT_82066854;
+  *(undefined **)(iVar10 + 100) = &DAT_8206684c;
+  uVar13 = va(0xffffffff820667f0,0xffffffff8206682c,0xffffffff820181ac,0xffffffff82066870,
+              0xffffffff82066868,0xffffffff82066834,0xffffffff8206683c,0xffffffff82066844);
+  (*param_2)(uVar12,uVar13,param_3);
+  (*param_2)(uVar12,0xffffffff82066798,param_3);
+  _SubStr = *(char **)(DAT_8332cbc4 + 0xc);
+  iVar14 = *(int *)(DAT_8332cc30 + 0xc);
+  if (*_SubStr == '\0') {
+    _SubStr = (char *)0x0;
   }
   else {
-    pcVar13 = va("FILTERING; SHOWING ONLY EFFECTS WITH \'%s\' IN NAME (fx_profileFilter)");
-    (*pcVar14)(uVar8,pcVar13,lVar15);
+    uVar13 = va(0xffffffff82066750,_SubStr);
+    (*param_2)(uVar12,uVar13,param_3);
   }
-  if (iVar18 != 0) {
-    pcVar13 = va("SKIPPING %i ROWS (fx_profileSkip)");
-    (*pcVar14)(uVar8,pcVar13,lVar15);
+  if (iVar14 != 0) {
+    uVar13 = va(0xffffffff8206672c,iVar14);
+    (*param_2)(uVar12,uVar13,param_3);
   }
-  if (0 < (int)(uint)uVar19) {
-    lVar17 = ZEXT48(&stack0x00000000) + lVar17 + 0xaa;
+  if (0 < (int)(size_t)uVar19) {
+    lVar18 = lVar18 + 0xaa;
     do {
-      puVar7 = (ushort *)lVar17;
-      if (pcVar12 == (char *)0x0) {
+      puVar11 = (ushort *)lVar18;
+      if (_SubStr == (char *)0x0) {
 LAB_8243a040:
-        if (iVar18 == 0) {
-          uVar1 = puVar7[2];
-          uVar2 = puVar7[1];
-          uVar3 = *puVar7;
-          uVar5 = **(undefined4 **)(puVar7 + -0xd);
-          *(uint *)(iVar6 + 0x54) = (uint)puVar7[-1];
-          *(undefined4 *)(iVar6 + 0x74) = uVar5;
-          *(uint *)(iVar6 + 0x6c) = (uint)uVar1;
-          *(uint *)(iVar6 + 100) = (uint)uVar2;
-          *(uint *)(iVar6 + 0x5c) = (uint)uVar3;
-          pcVar13 = va("%4i  %4i (%4i/%4i)  %4i  %4i  %4i (%4i/%4i)  %4i  %4i  %s");
-          (*pcVar14)(uVar8,pcVar13,lVar15);
+        if (iVar14 == 0) {
+          uVar1 = puVar11[-1];
+          uVar2 = puVar11[2];
+          uVar3 = puVar11[1];
+          uVar4 = *puVar11;
+          uVar8 = **(undefined4 **)(puVar11 + -0xd);
+          *(uint *)(iVar10 + 0x54) = (uint)uVar1;
+          uVar7 = *(uint *)(puVar11 + -5);
+          uVar9 = *(uint *)(puVar11 + -7);
+          uVar5 = puVar11[-2];
+          *(undefined4 *)(iVar10 + 0x74) = uVar8;
+          *(uint *)(iVar10 + 0x6c) = (uint)uVar2;
+          *(uint *)(iVar10 + 100) = (uint)uVar3;
+          uVar2 = puVar11[-3];
+          uVar8 = *(undefined4 *)(puVar11 + -9);
+          *(uint *)(iVar10 + 0x5c) = (uint)uVar4;
+          uVar13 = va(0xffffffff820666f0,uVar8,(ulonglong)uVar9 + (ulonglong)uVar7,(ulonglong)uVar9,
+                      (ulonglong)uVar7,uVar2,uVar5,(ulonglong)uVar1 + (ulonglong)uVar4);
+          (*param_2)(uVar12,uVar13,param_3);
         }
         else {
-          iVar18 = iVar18 + -1;
+          iVar14 = iVar14 + -1;
         }
       }
       else {
-        pcVar13 = strstr((char *)**(undefined4 **)(puVar7 + -0xd),pcVar12);
-        if (pcVar13 != (char *)0x0) goto LAB_8243a040;
+        pcVar16 = strstr((char *)**(undefined4 **)(puVar11 + -0xd),_SubStr);
+        if (pcVar16 != (char *)0x0) goto LAB_8243a040;
       }
       uVar19 = uVar19 - 1;
-      lVar17 = lVar17 + 0x20;
+      lVar18 = lVar18 + 0x20;
     } while (uVar19 != 0);
   }
   __restgprlr_21();
@@ -486,127 +490,106 @@ LAB_8243a040:
 
 // 82438CE0  typeAsString  (EffectsCore/fx_profile.cpp:329)
 
-char * typeAsString(uchar param_1)
+undefined8 typeAsString(byte param_1)
 
 {
   if (4 < param_1) {
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp",
-                      0x151,0,"unpossible");
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82066498,0x151,0,0xffffffff8206650c);
     }
-    return "unknown";
+    return 0xffffffff82066504;
   }
-  if (param_1 == '\x01') {
-    return "wmodel";
+  if (param_1 == 1) {
+    return 0xffffffff82066520;
   }
-  if (param_1 == '\x02') {
-    return "ebrush";
+  if (param_1 == 2) {
+    return 0xffffffff82066528;
   }
-  if (param_1 != '\x03') {
-    if (param_1 == '\0') {
-      return "wbrush";
+  if (param_1 != 3) {
+    if (param_1 == 0) {
+      return 0xffffffff82066538;
     }
-    return "glass";
+    return 0xffffffff82066518;
   }
-  return "emodel";
+  return 0xffffffff82066530;
 }
 
 
 // 82438DD0  FX_DrawMarkProfile_MarkPrint  (EffectsCore/fx_profile.cpp:387)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
 void FX_DrawMarkProfile_MarkPrint
-               (LocalClientNum_t param_1,FxMarksSystem *param_2,ushort param_3,char *param_4,
-               int param_5,_func___cdecl_void_LocalClientNum_t_char_ptr_float_ptr *param_6,
-               float *param_7)
+               (undefined8 param_1,int param_2,ulonglong param_3,undefined4 param_4,uint param_5,
+               code *param_6,undefined4 param_7)
 
 {
   ushort *puVar1;
-  FxMarksSystem *pFVar2;
-  ushort uVar4;
-  char *pcVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  int iVar7;
-  ushort uVar8;
-  longlong lVar9;
-  GfxMarkContext *pGVar10;
-  LocalClientNum_t LStack00000014;
-  FxMarksSystem *pFStack0000001c;
-  char *pcStack0000002c;
-  uint uStack00000034;
-  _func___cdecl_void_LocalClientNum_t_char_ptr_float_ptr *p_Stack0000003c;
-  float *pfStack00000044;
-  uchar local_b0;
+  ushort uVar2;
+  undefined4 uVar4;
+  undefined8 uVar3;
+  uint uVar5;
+  undefined2 uVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  ushort uVar9;
+  longlong lVar10;
+  char local_b0;
   ushort local_ae;
+  int local_ac;
+  int local_a8;
   
-  uVar5 = (ulonglong)(short)param_3;
-  __savegprlr();
-  iVar7 = 0;
-  uVar6 = uVar5 & 0xffff;
-  uVar8 = 0xffff;
+  uVar4 = __savegprlr();
+  lVar8 = 0;
+  uVar7 = param_3 & 0xffff;
+  uVar9 = 0xffff;
+  local_a8 = 0;
+  local_ac = 0;
   local_b0 = '\0';
-  LStack00000014 = param_1;
-  pFStack0000001c = param_2;
-  pcStack0000002c = param_4;
-  uStack00000034 = param_5;
-  p_Stack0000003c = param_6;
-  pfStack00000044 = param_7;
-  uVar4 = (ushort)uVar5;
-  if (uVar6 != 0xffff) {
+  uVar2 = (ushort)param_3;
+  if (uVar7 != 0xffff) {
     do {
-      local_ae = uVar4;
-      if (0x1ff < uVar6) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",
-                        0xad,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
+      local_ae = uVar2;
+      if (0x1ff < uVar7) {
+        MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,uVar7,0x200);
       }
-      pFVar2 = pFStack0000001c;
-      if (pFStack0000001c == (FxMarksSystem *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",
-                        0xae,0,"%s");
+      if (param_2 == 0) {
+        MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
       }
-      lVar9 = uVar6 * 0x40 + ZEXT48(pFVar2->marks);
-      puVar1 = (ushort *)lVar9;
+      lVar10 = uVar7 * 0x40 + (ulonglong)*(uint *)(param_2 + 0x101c);
+      puVar1 = (ushort *)lVar10;
       if (*(int *)(puVar1 + 2) == -1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp"
-                        ,0x19c,0,"%s");
+        MyAssertHandler(0xffffffff82066498,0x19c,0,0xffffffff82000f98,
+                        "mark->timeDrawn != FX_MARK_FREE");
       }
-      if (*puVar1 != uVar8) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp"
-                        ,0x19d,0,"%s");
+      if (*puVar1 != uVar9) {
+        MyAssertHandler(0xffffffff82066498,0x19d,0,0xffffffff82000f98,0xffffffff82066560);
       }
-      lVar9 = lVar9 + 0x30;
-      if (lVar9 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
-                        ,0x3b2,0,"%s");
+      lVar10 = lVar10 + 0x30;
+      local_a8 = (uint)*(byte *)(puVar1 + 0x1c) + local_a8;
+      local_ac = (uint)puVar1[0x1d] + local_ac;
+      if (lVar10 == 0) {
+        MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
       }
-      pGVar10 = (GfxMarkContext *)lVar9;
-      if (iVar7 == 0) {
-        local_b0 = pGVar10->modelType;
+      if ((int)lVar8 == 0) {
+        local_b0 = *(char *)lVar10;
       }
-      if (local_b0 != pGVar10->modelType) {
-        va("%i %i");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp"
-                        ,0x1a3,0,"%s\n\t%s");
+      if (local_b0 != *(char *)lVar10) {
+        uVar3 = va(0xffffffff82065950,local_b0);
+        MyAssertHandler(0xffffffff82066498,0x1a3,0,0xffffffff820011f4,0xffffffff82066584,uVar3);
       }
       if (((local_b0 == '\0') || (local_b0 == '\x01')) &&
-         (uVar4 = FX_GetMarkContext_ModelIndex(pGVar10), uVar4 != uStack00000034)) {
-        FX_GetMarkContext_ModelIndex(pGVar10);
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp"
-                        ,0x1a5,0,"FX_GetMarkContext_ModelIndex( &mark->context ) == index\n\t%i, %i"
-                       );
+         (uVar5 = FX_GetMarkContext_ModelIndex(lVar10), (uVar5 & 0xffff) != param_5)) {
+        uVar6 = FX_GetMarkContext_ModelIndex(lVar10);
+        MyAssertHandler(0xffffffff82066498,0x1a5,0,0xffffffff820665a0,uVar6,param_5);
       }
-      uVar6 = (ulonglong)puVar1[1];
-      iVar7 = iVar7 + 1;
-      uVar4 = puVar1[1];
-      uVar8 = local_ae;
-    } while (uVar6 != 0xffff);
-    if (iVar7 != 0) {
-      typeAsString(local_b0);
-      pcVar3 = va("%s%5i %s %i (%i pts, %i tris)");
-      (*p_Stack0000003c)(LStack00000014,pcVar3,pfStack00000044);
+      uVar7 = (ulonglong)puVar1[1];
+      lVar8 = lVar8 + 1;
+      uVar2 = puVar1[1];
+      uVar9 = local_ae;
+    } while (uVar7 != 0xffff);
+    if ((int)lVar8 != 0) {
+      uVar3 = typeAsString(local_b0);
+      uVar3 = va(0xffffffff82066540,param_4,param_5,uVar3,lVar8,local_ac,local_a8);
+      (*param_6)(uVar4,uVar3,param_7);
     }
   }
   __restgprlr();
@@ -616,123 +599,159 @@ void FX_DrawMarkProfile_MarkPrint
 
 // 82439070  FX_DrawMarkProfile  (EffectsCore/fx_profile.cpp:435)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
-
-void FX_DrawMarkProfile(LocalClientNum_t param_1,
-                       _func___cdecl_void_LocalClientNum_t_char_ptr_float_ptr *param_2,
-                       float *param_3)
+void FX_DrawMarkProfile(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  <unnamed_type_typeSpecificIndex> <Var1;
-  FxTriGroupPool *pFVar2;
-  FxPointGroupPool *pFVar3;
-  uint uVar4;
-  FxMarksSystem *pFVar5;
-  char *pcVar6;
-  ushort uVar7;
-  FxMark *pFVar8;
+  byte bVar1;
+  ushort uVar2;
+  undefined2 uVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  uint uVar6;
+  undefined8 uVar7;
   int iVar9;
-  int iVar10;
+  undefined8 uVar8;
+  code *pcVar10;
   ushort *puVar11;
-  GfxMarkContext *pGVar12;
+  char *pcVar12;
+  longlong lVar13;
+  longlong lVar14;
+  longlong lVar15;
+  longlong lVar16;
+  longlong lVar17;
+  longlong lVar18;
+  longlong lVar19;
+  longlong lVar20;
+  longlong lVar21;
+  longlong lVar22;
+  longlong lVar23;
+  undefined2 *puVar24;
+  ushort *puVar26;
+  ulonglong uVar25;
+  char *pcVar27;
   
-  __savegprlr();
-  pFVar5 = FX_GetMarksSystem(param_1);
-  iVar9 = 0;
-  uVar7 = pFVar5->firstFreeMarkHandle;
-  while (uVar4 = (uint)uVar7, uVar4 != 0xffff) {
-    iVar9 = iVar9 + 1;
-    if (0x1ff < uVar4) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
-                      ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
+  uVar7 = __savegprlr();
+  iVar9 = FX_GetMarksSystem();
+  lVar13 = 0;
+  uVar2 = *(ushort *)(iVar9 + 4);
+  while (uVar6 = (uint)uVar2, uVar6 != 0xffff) {
+    lVar13 = lVar13 + 1;
+    if (0x1ff < uVar6) {
+      MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,uVar6,0x200);
     }
-    uVar7 = pFVar5->marks[uVar4].nextMark;
+    uVar2 = *(ushort *)(uVar6 * 0x40 + *(int *)(iVar9 + 0x101c) + 2);
   }
-  for (pFVar2 = pFVar5->firstFreeTriGroup; pFVar2 != (FxTriGroupPool *)0x0;
-      pFVar2 = pFVar2->nextFreeTriGroup) {
+  lVar14 = 0;
+  for (puVar4 = *(undefined4 **)(iVar9 + 0x1014); puVar4 != (undefined4 *)0x0;
+      puVar4 = (undefined4 *)*puVar4) {
+    lVar14 = lVar14 + 1;
   }
-  for (pFVar3 = pFVar5->firstFreePointGroup; pFVar3 != (FxPointGroupPool *)0x0;
-      pFVar3 = (FxPointGroupPool *)(pFVar3->pointGroup).points[0].xyz[0]) {
+  lVar15 = 0;
+  for (puVar4 = *(undefined4 **)(iVar9 + 0x1018); puVar4 != (undefined4 *)0x0;
+      puVar4 = (undefined4 *)*puVar4) {
+    lVar15 = lVar15 + 1;
   }
-  pFVar8 = pFVar5->marks;
-  iVar10 = 0;
-  if (pFVar8 != pFVar8 + 0x200) {
-    iVar10 = 0;
-    puVar11 = &pFVar8->pointCount;
+  iVar5 = *(int *)(iVar9 + 0x101c);
+  lVar16 = 0;
+  lVar17 = 0;
+  lVar18 = 0;
+  lVar19 = 0;
+  lVar20 = 0;
+  lVar21 = 0;
+  lVar23 = 0;
+  lVar22 = 0;
+  if (iVar5 != iVar5 + 0x8000) {
+    puVar26 = (ushort *)(iVar5 + 0x3a);
     do {
-      if (*(int *)(puVar11 + -0x1b) == -1) {
-        iVar10 = iVar10 + 1;
+      if (*(int *)(puVar26 + -0x1b) == -1) {
+        lVar16 = lVar16 + 1;
       }
-      else if (puVar11 == (ushort *)0xa) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
-                        ,0x3b2,0,"%s");
+      else {
+        lVar23 = (ulonglong)*puVar26 + (ulonglong)(uint)((int)(uint)*puVar26 >> 1) * -2 + lVar23;
+        lVar22 = (ulonglong)*(byte *)(puVar26 + -1) +
+                 (ulonglong)(uint)((int)(uint)*(byte *)(puVar26 + -1) >> 1) * -2 + lVar22;
+        if (puVar26 == (ushort *)0xa) {
+          MyAssertHandler(0xffffffff82065378,0x3b2,0,&DAT_82000f98,"context");
+        }
+        bVar1 = *(byte *)(puVar26 + -5);
+        if (bVar1 < 5) {
+          if (bVar1 == 1) {
+            lVar20 = lVar20 + 1;
+          }
+          else if (bVar1 == 2) {
+            lVar19 = lVar19 + 1;
+          }
+          else if (bVar1 == 3) {
+            lVar18 = lVar18 + 1;
+          }
+          else if (bVar1 == 0) {
+            lVar17 = lVar17 + 1;
+          }
+          else {
+            lVar21 = lVar21 + 1;
+          }
+        }
       }
-      pFVar8 = (FxMark *)(puVar11 + 3);
-      puVar11 = puVar11 + 0x20;
-    } while (pFVar8 != pFVar5->marks + 0x200);
+      puVar11 = puVar26 + 3;
+      puVar26 = puVar26 + 0x20;
+    } while (puVar11 != (ushort *)(*(int *)(iVar9 + 0x101c) + 0x8000));
   }
-  if (iVar9 != iVar10) {
-    va("%i %i");
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp",
-                    0x205,0,"%s\n\t%s");
+  if ((int)lVar13 != (int)lVar16) {
+    uVar8 = va(0xffffffff82065950,lVar13,lVar16);
+    MyAssertHandler(0xffffffff82066498,0x205,0,0xffffffff820011f4,0xffffffff820666d8,uVar8);
   }
-  pcVar6 = va("%4i of %4i marks in use (%i alloced, %i freed)");
-  (*param_2)(param_1,pcVar6,param_3);
-  pcVar6 = va("%4i of %4i triGroups in use (%4i wasted)");
-  (*param_2)(param_1,pcVar6,param_3);
-  pcVar6 = va("%4i of %4i pointGroups in use (%4i wasted)");
-  (*param_2)(param_1,pcVar6,param_3);
-  (*param_2)(param_1," ",param_3);
-  pcVar6 = va("%4i World Brush Marks");
-  (*param_2)(param_1,pcVar6,param_3);
-  pcVar6 = va("%4i World Model Marks");
-  (*param_2)(param_1,pcVar6,param_3);
-  pcVar6 = va("%4i Glass Marks");
-  (*param_2)(param_1,pcVar6,param_3);
-  pcVar6 = va("%4i Ent Brush Marks");
-  (*param_2)(param_1,pcVar6,param_3);
-  pcVar6 = va("%4i Ent Model");
-  (*param_2)(param_1,pcVar6,param_3);
+  uVar8 = va(0xffffffff820666a8,0x200 - lVar13,0x200,*(undefined4 *)(iVar9 + 0x1028),
+             *(undefined4 *)(iVar9 + 0x102c));
+  pcVar10 = (code *)param_2;
+  (*pcVar10)(uVar7,uVar8,param_3);
+  uVar8 = va(0xffffffff8206667c,0x800 - lVar14,0x800,lVar22);
+  (*pcVar10)(uVar7,uVar8,param_3);
+  uVar8 = va(0xffffffff82066650,0xc00 - lVar15,0xc00,lVar23);
+  (*pcVar10)(uVar7,uVar8,param_3);
+  (*pcVar10)(uVar7,0xffffffff820034a0,param_3);
+  uVar8 = va(0xffffffff82066638,lVar17);
+  (*pcVar10)(uVar7,uVar8,param_3);
+  uVar8 = va(0xffffffff82066620,lVar20);
+  (*pcVar10)(uVar7,uVar8,param_3);
+  uVar8 = va(0xffffffff82066610,lVar21);
+  (*pcVar10)(uVar7,uVar8,param_3);
+  uVar8 = va(0xffffffff820665fc,lVar19);
+  (*pcVar10)(uVar7,uVar8,param_3);
+  uVar8 = va(0xffffffff820665ec,lVar18);
+  (*pcVar10)(uVar7,uVar8,param_3);
   FX_DrawMarkProfile_MarkPrint
-            (param_1,pFVar5,pFVar5->firstActiveWorldMarkHandle,"world",0,param_2,param_3);
-  iVar9 = 0;
-  puVar11 = &pFVar5->firstGlassMarkHandle;
+            (uVar7,iVar9,*(undefined2 *)(iVar9 + 6),0xffffffff820665e4,0,param_2,param_3);
+  uVar25 = 0;
+  puVar24 = (undefined2 *)(iVar9 + 8);
   do {
-    puVar11 = puVar11 + 1;
-    FX_DrawMarkProfile_MarkPrint(param_1,pFVar5,*puVar11,"ent",iVar9,param_2,param_3);
-    iVar9 = iVar9 + 1;
-  } while (iVar9 != 0x800);
-  pFVar8 = pFVar5->marks;
-  if (pFVar8 != pFVar8 + 0x200) {
-    pGVar12 = &pFVar8->context;
+    puVar24 = puVar24 + 1;
+    FX_DrawMarkProfile_MarkPrint(uVar7,iVar9,*puVar24,0xffffffff82002614,uVar25,param_2,param_3);
+    uVar25 = uVar25 + 1;
+  } while ((uVar25 & 0xffffffff) != 0x800);
+  iVar5 = *(int *)(iVar9 + 0x101c);
+  if (iVar5 != iVar5 + 0x8000) {
+    pcVar27 = (char *)(iVar5 + 0x30);
     do {
-      if ((*(int *)((int)(pGVar12 + -7) + 5) != -1) && (*(short *)((int)(pGVar12 + -7) + 1) == -1))
-      {
-        if (pGVar12 == (GfxMarkContext *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
-                          ,0x3b2,0,"%s");
+      if ((*(int *)(pcVar27 + -0x2c) != -1) && (*(short *)(pcVar27 + -0x30) == -1)) {
+        if (pcVar27 == (char *)0x0) {
+          MyAssertHandler(0xffffffff82065378,0x3b2,0,&DAT_82000f98,"context");
         }
-        if (pGVar12->modelType == '\x01') {
-          if (pGVar12 == (GfxMarkContext *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
-                            ,0x435,0,"%s");
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
-                            ,0x3b2,0,"%s");
+        if (*pcVar27 == '\x01') {
+          if (pcVar27 == (char *)0x0) {
+            MyAssertHandler(0xffffffff82065378,0x435,0,&DAT_82000f98,"context");
+            MyAssertHandler(0xffffffff82065378,0x3b2,0,&DAT_82000f98,"context");
           }
-          if ((pGVar12->modelType != '\0') && (pGVar12->modelType != '\x01')) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
-                            ,0x436,0,"%s");
+          if ((*pcVar27 != '\0') && (*pcVar27 != '\x01')) {
+            MyAssertHandler(0xffffffff82065378,0x436,0,&DAT_82000f98,0xffffffff82065550);
           }
-          <Var1 = pGVar12->typeSpecificIndex;
-          uVar7 = FX_MarkToHandle(pFVar5,(FxMark *)((int)(pGVar12 + -7) + 1));
-          FX_DrawMarkProfile_MarkPrint
-                    (param_1,pFVar5,uVar7,"sm",(uint)(ushort)<Var1,param_2,param_3);
+          uVar3 = *(undefined2 *)(pcVar27 + 2);
+          uVar8 = FX_MarkToHandle(iVar9,pcVar27 + -0x30);
+          FX_DrawMarkProfile_MarkPrint(uVar7,iVar9,uVar8,0xffffffff820665e0,uVar3,param_2,param_3);
         }
       }
-      puVar11 = (ushort *)(pGVar12 + 2);
-      pGVar12 = (GfxMarkContext *)((int)(pGVar12 + 9) + 1);
-    } while ((FxMark *)(puVar11 + 1) != pFVar5->marks + 0x200);
+      pcVar12 = pcVar27 + 0x10;
+      pcVar27 = pcVar27 + 0x40;
+    } while (pcVar12 != (char *)(*(int *)(iVar9 + 0x101c) + 0x8000));
   }
   __restgprlr();
   return;

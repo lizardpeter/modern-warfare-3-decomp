@@ -8,37 +8,38 @@
 void __cdecl fpmath(void)
 
 {
-  _cfltcvt_tab[0] = _cfltcvt;
-  _cfltcvt_tab[1] = _cropzeros;
-  _cfltcvt_tab[2] = _fassign;
-  _cfltcvt_tab[3] = _forcdecpt;
-  _cfltcvt_tab[4] = _positive;
-  _cfltcvt_tab[5] = _cfltcvt;
-  _cfltcvt_tab[6] = _cfltcvt_l;
-  _cfltcvt_tab[7] = _fassign_l;
-  _cfltcvt_tab[8] = _cropzeros_l;
-  _cfltcvt_tab[9] = _forcdecpt_l;
+  PTR__fptrap_829b03f0 = _cfltcvt;
+  PTR__fptrap_829b03f4 = _cropzeros;
+  PTR__fptrap_829b03f8 = _fassign;
+  PTR__fptrap_829b03fc = _forcdecpt;
+  PTR__fptrap_829b0400 = _positive;
+  PTR__fptrap_829b0404 = _cfltcvt;
+  PTR__fptrap_829b0408 = _cfltcvt_l;
+  PTR__fptrap_829b040c = _fassign_l;
+  PTR__fptrap_829b0410 = _cropzeros_l;
+  PTR__fptrap_829b0414 = _forcdecpt_l;
   return;
 }
 
 
-// 829164C0  _cfltcvt_init  (<external>/bt/278379/vctools/crt/src/fpw32/conv/fpinit.c:105)
+// 829164C0  cfltcvt_init  (<external>/bt/278379/vctools/crt/src/fpw32/conv/fpinit.c:105)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Unknown calling convention: __cdecl */
+/* cfltcvt_init */
 
-void _cfltcvt_init(void)
+void __cdecl cfltcvt_init(void)
 
 {
-  _cfltcvt_tab[0] = _cfltcvt;
-  _cfltcvt_tab[1] = _cropzeros;
-  _cfltcvt_tab[2] = _fassign;
-  _cfltcvt_tab[3] = _forcdecpt;
-  _cfltcvt_tab[4] = _positive;
-  _cfltcvt_tab[5] = _cfltcvt;
-  _cfltcvt_tab[6] = _cfltcvt_l;
-  _cfltcvt_tab[7] = _fassign_l;
-  _cfltcvt_tab[8] = _cropzeros_l;
-  _cfltcvt_tab[9] = _forcdecpt_l;
+  PTR__fptrap_829b03f0 = _cfltcvt;
+  PTR__fptrap_829b03f4 = _cropzeros;
+  PTR__fptrap_829b03f8 = _fassign;
+  PTR__fptrap_829b03fc = _forcdecpt;
+  PTR__fptrap_829b0400 = _positive;
+  PTR__fptrap_829b0404 = _cfltcvt;
+  PTR__fptrap_829b0408 = _cfltcvt_l;
+  PTR__fptrap_829b040c = _fassign_l;
+  PTR__fptrap_829b0410 = _cropzeros_l;
+  PTR__fptrap_829b0414 = _forcdecpt_l;
   return;
 }
 

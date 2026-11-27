@@ -2,18 +2,17 @@
 
 // 824DADC0  FileWrapper_OpenWriteReadBinary  (universal/com_files_wrapper_ms.h:17)
 
-void * FileWrapper_OpenWriteReadBinary(char *param_1)
+HANDLE FileWrapper_OpenWriteReadBinary(LPCSTR param_1)
 
 {
-  void *pvVar1;
+  HANDLE pvVar1;
   
-  pvVar1 = CreateFileA(param_1,0xc0000000,0,(void *)0x0,2,0,(void *)0x0);
-  if (pvVar1 == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h"
-                    ,0x15,0,"%s");
+  pvVar1 = CreateFileA(param_1,0xc0000000,0,(LPSECURITY_ATTRIBUTES)0x0,2,0,(HANDLE)0x0);
+  if (pvVar1 == (HANDLE)0x0) {
+    MyAssertHandler(0xffffffff82084db0,0x15,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
-  else if (pvVar1 == (void *)0xffffffff) {
-    return (void *)0x0;
+  else if (pvVar1 == (HANDLE)0xffffffff) {
+    return (HANDLE)0x0;
   }
   return pvVar1;
 }
@@ -21,18 +20,17 @@ void * FileWrapper_OpenWriteReadBinary(char *param_1)
 
 // 824DAE48  FileWrapper_OpenReadWriteBinary  (universal/com_files_wrapper_ms.h:27)
 
-void * FileWrapper_OpenReadWriteBinary(char *param_1)
+HANDLE FileWrapper_OpenReadWriteBinary(LPCSTR param_1)
 
 {
-  void *pvVar1;
+  HANDLE pvVar1;
   
-  pvVar1 = CreateFileA(param_1,0xc0000000,0,(void *)0x0,3,0,(void *)0x0);
-  if (pvVar1 == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h"
-                    ,0x1f,0,"%s");
+  pvVar1 = CreateFileA(param_1,0xc0000000,0,(LPSECURITY_ATTRIBUTES)0x0,3,0,(HANDLE)0x0);
+  if (pvVar1 == (HANDLE)0x0) {
+    MyAssertHandler(0xffffffff82084db0,0x1f,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
-  else if (pvVar1 == (void *)0xffffffff) {
-    return (void *)0x0;
+  else if (pvVar1 == (HANDLE)0xffffffff) {
+    return (HANDLE)0x0;
   }
   return pvVar1;
 }
@@ -40,18 +38,17 @@ void * FileWrapper_OpenReadWriteBinary(char *param_1)
 
 // 824DAED0  FileWrapper_OpenReadBinary_Core  (universal/com_files_wrapper_ms.h:37)
 
-void * FileWrapper_OpenReadBinary_Core(char *param_1,ulong param_2)
+HANDLE FileWrapper_OpenReadBinary_Core(LPCSTR param_1,DWORD param_2)
 
 {
-  void *pvVar1;
+  HANDLE pvVar1;
   
-  pvVar1 = CreateFileA(param_1,0x80000000,0,(void *)0x0,3,param_2,(void *)0x0);
-  if (pvVar1 == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h"
-                    ,0x29,0,"%s");
+  pvVar1 = CreateFileA(param_1,0x80000000,0,(LPSECURITY_ATTRIBUTES)0x0,3,param_2,(HANDLE)0x0);
+  if (pvVar1 == (HANDLE)0x0) {
+    MyAssertHandler(0xffffffff82084db0,0x29,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
-  else if (pvVar1 == (void *)0xffffffff) {
-    return (void *)0x0;
+  else if (pvVar1 == (HANDLE)0xffffffff) {
+    return (HANDLE)0x0;
   }
   return pvVar1;
 }
@@ -59,18 +56,17 @@ void * FileWrapper_OpenReadBinary_Core(char *param_1,ulong param_2)
 
 // 824DAF58  FileWrapper_OpenReadText  (universal/com_files_wrapper_ms.h:59)
 
-void * FileWrapper_OpenReadText(char *param_1)
+HANDLE FileWrapper_OpenReadText(LPCSTR param_1)
 
 {
-  void *pvVar1;
+  HANDLE pvVar1;
   
-  pvVar1 = CreateFileA(param_1,0x80000000,0,(void *)0x0,3,0,(void *)0x0);
-  if (pvVar1 == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h"
-                    ,0x3f,0,"%s");
+  pvVar1 = CreateFileA(param_1,0x80000000,0,(LPSECURITY_ATTRIBUTES)0x0,3,0,(HANDLE)0x0);
+  if (pvVar1 == (HANDLE)0x0) {
+    MyAssertHandler(0xffffffff82084db0,0x3f,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
-  else if (pvVar1 == (void *)0xffffffff) {
-    return (void *)0x0;
+  else if (pvVar1 == (HANDLE)0xffffffff) {
+    return (HANDLE)0x0;
   }
   return pvVar1;
 }
@@ -78,18 +74,17 @@ void * FileWrapper_OpenReadText(char *param_1)
 
 // 824DAFE0  FileWrapper_OpenWriteBinary  (universal/com_files_wrapper_ms.h:69)
 
-void * FileWrapper_OpenWriteBinary(char *param_1)
+HANDLE FileWrapper_OpenWriteBinary(LPCSTR param_1)
 
 {
-  void *pvVar1;
+  HANDLE pvVar1;
   
-  pvVar1 = CreateFileA(param_1,0x40000000,0,(void *)0x0,2,0,(void *)0x0);
-  if (pvVar1 == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h"
-                    ,0x49,0,"%s");
+  pvVar1 = CreateFileA(param_1,0x40000000,0,(LPSECURITY_ATTRIBUTES)0x0,2,0,(HANDLE)0x0);
+  if (pvVar1 == (HANDLE)0x0) {
+    MyAssertHandler(0xffffffff82084db0,0x49,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
-  else if (pvVar1 == (void *)0xffffffff) {
-    return (void *)0x0;
+  else if (pvVar1 == (HANDLE)0xffffffff) {
+    return (HANDLE)0x0;
   }
   return pvVar1;
 }
@@ -97,49 +92,47 @@ void * FileWrapper_OpenWriteBinary(char *param_1)
 
 // 824DB068  FileWrapper_Rotate  (universal/com_files_wrapper_ms.h:81)
 
-void FileWrapper_Rotate(char *param_1)
+void FileWrapper_Rotate(void)
 
 {
-  char *pcVar1;
-  void *pvVar2;
-  long lVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  _FILETIME local_280 [2];
+  undefined8 uVar1;
+  HANDLE pvVar2;
+  LONG LVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  FILETIME local_280 [2];
   char acStack_270 [256];
   _WIN32_FIND_DATAA _Stack_170;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  pvVar2 = FindFirstFileA(pcVar1,&_Stack_170);
-  if (pvVar2 != (void *)0xffffffff) {
+  uVar1 = __savegprlr_28();
+  pvVar2 = FindFirstFileA((LPCSTR)uVar1,&_Stack_170);
+  if (pvVar2 != (HANDLE)0xffffffff) {
     CloseHandle(pvVar2);
-    iVar6 = 0;
-    local_280[0].dwHighDateTime = 0;
+    lVar6 = 0;
+    lVar4 = -1;
     local_280[0].dwLowDateTime = 0;
-    iVar4 = -1;
+    local_280[0].dwHighDateTime = 0;
     do {
-      sprintf(acStack_270,"%s.%03i");
+      sprintf(acStack_270,"%s.%03i",uVar1,lVar6);
       pvVar2 = FindFirstFileA(acStack_270,&_Stack_170);
-      iVar5 = iVar6;
-      if (pvVar2 == (void *)0xffffffff) break;
+      lVar5 = lVar6;
+      if (pvVar2 == (HANDLE)0xffffffff) break;
       CloseHandle(pvVar2);
-      if ((iVar4 == -1) ||
-         (lVar3 = CompareFileTime(local_280,&_Stack_170.ftLastWriteTime), iVar5 = iVar4, 0 < lVar3))
-      {
+      if (((int)lVar4 == -1) ||
+         (LVar3 = CompareFileTime(local_280,&_Stack_170.ftLastWriteTime), 0 < LVar3)) {
         local_280[0] = _Stack_170.ftLastWriteTime;
-        iVar5 = iVar6;
+        lVar4 = lVar6;
       }
-      iVar6 = iVar6 + 1;
-      iVar4 = iVar5;
-    } while (iVar6 < 0x14);
-    if (iVar5 < 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h"
-                      ,0x77,0,"%s");
+      lVar6 = lVar6 + 1;
+      lVar5 = lVar4;
+    } while ((int)lVar6 < 0x14);
+    if ((int)lVar5 < 0) {
+      MyAssertHandler(0xffffffff82084db0,0x77,0,0xffffffff82000f98,0xffffffff82084e08);
     }
-    sprintf(acStack_270,"%s.%03i");
+    sprintf(acStack_270,"%s.%03i",uVar1,lVar5);
     DeleteFileA(acStack_270);
-    pvVar2 = (void *)MoveFileA(pcVar1,acStack_270);
+    pvVar2 = (HANDLE)MoveFileA((LPCSTR)uVar1,acStack_270);
   }
   __restgprlr_28(pvVar2);
   return;
@@ -148,48 +141,46 @@ void FileWrapper_Rotate(char *param_1)
 
 // 824DB350  FS_FileRead  (qcommon/com_fileaccess.cpp:99)
 
-uint FS_FileRead(void *param_1,uint param_2,_iobuf *param_3)
+void FS_FileRead(undefined8 param_1,DWORD param_2,HANDLE param_3)
 
 {
-  void *pvVar1;
-  uint uVar2;
-  ulong local_30 [12];
+  LPVOID lpBuffer;
+  DWORD local_30 [12];
   
-  pvVar1 = (void *)__savegprlr_29(param_1);
-  ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_READ);
-  ReadFile(param_3,pvVar1,param_2,local_30,(_OVERLAPPED *)0x0);
-  ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_READ);
-  uVar2 = __restgprlr_29(local_30[0]);
-  return uVar2;
+  lpBuffer = (LPVOID)__savegprlr_29();
+  ProfLoad_BeginTrackedValue(2);
+  ReadFile(param_3,lpBuffer,param_2,local_30,(LPOVERLAPPED)0x0);
+  ProfLoad_EndTrackedValue(2);
+  __restgprlr_29(local_30[0]);
+  return;
 }
 
 
 // 824DB3A0  FS_FileWrite  (qcommon/com_fileaccess.cpp:117)
 
-uint FS_FileWrite(void *param_1,uint param_2,_iobuf *param_3)
+DWORD FS_FileWrite(LPCVOID param_1,DWORD param_2,HANDLE param_3)
 
 {
-  uint local_10 [4];
+  DWORD local_10 [4];
   
-  WriteFile(param_3,param_1,param_2,local_10,(_OVERLAPPED *)0x0);
+  WriteFile(param_3,param_1,param_2,local_10,(LPOVERLAPPED)0x0);
   return local_10[0];
 }
 
 
 // 824DB168  FileWrapper_OpenWriteText  (universal/com_files_wrapper_ms.h:128)
 
-void * FileWrapper_OpenWriteText(char *param_1)
+HANDLE FileWrapper_OpenWriteText(LPCSTR param_1)
 
 {
-  void *pvVar1;
+  HANDLE pvVar1;
   
-  pvVar1 = CreateFileA(param_1,0x40000000,0,(void *)0x0,2,0,(void *)0x0);
-  if (pvVar1 == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h"
-                    ,0x84,0,"%s");
+  pvVar1 = CreateFileA(param_1,0x40000000,0,(LPSECURITY_ATTRIBUTES)0x0,2,0,(HANDLE)0x0);
+  if (pvVar1 == (HANDLE)0x0) {
+    MyAssertHandler(0xffffffff82084db0,0x84,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
-  else if (pvVar1 == (void *)0xffffffff) {
-    return (void *)0x0;
+  else if (pvVar1 == (HANDLE)0xffffffff) {
+    return (HANDLE)0x0;
   }
   return pvVar1;
 }
@@ -197,265 +188,196 @@ void * FileWrapper_OpenWriteText(char *param_1)
 
 // 824DB3E0  FS_FileOpenWriteReadBinary  (qcommon/com_fileaccess.cpp:133)
 
-_iobuf * FS_FileOpenWriteReadBinary(char *param_1)
+undefined8 FS_FileOpenWriteReadBinary(undefined8 param_1)
 
 {
-  _iobuf *p_Var1;
+  undefined8 uVar1;
   
-  ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_OPEN);
-  p_Var1 = FileWrapper_OpenWriteReadBinary(param_1);
-  ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_OPEN);
-  return p_Var1;
+  ProfLoad_BeginTrackedValue(0);
+  uVar1 = FileWrapper_OpenWriteReadBinary(param_1);
+  ProfLoad_EndTrackedValue(0);
+  return uVar1;
 }
 
 
 // 824DB1F0  FileWrapper_OpenAppendText  (universal/com_files_wrapper_ms.h:138)
 
-void * FileWrapper_OpenAppendText(char *param_1)
+HANDLE FileWrapper_OpenAppendText(LPCSTR param_1)
 
 {
-  void *pvVar1;
+  HANDLE hFile;
   
-  pvVar1 = CreateFileA(param_1,0x40000000,0,(void *)0x0,4,0,(void *)0x0);
-  if (pvVar1 == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h"
-                    ,0x8f,0,"%s");
+  hFile = CreateFileA(param_1,0x40000000,0,(LPSECURITY_ATTRIBUTES)0x0,4,0,(HANDLE)0x0);
+  if (hFile == (HANDLE)0x0) {
+    MyAssertHandler(0xffffffff82084db0,0x8f,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
   else {
-    if (pvVar1 == (void *)0xffffffff) {
-      return (void *)0x0;
+    if (hFile == (HANDLE)0xffffffff) {
+      return (HANDLE)0x0;
     }
-    SetFilePointerEx(pvVar1,(_LARGE_INTEGER)0x0,(_LARGE_INTEGER *)0x0,2);
+    SetFilePointerEx(hFile,(LARGE_INTEGER)0x0,(PLARGE_INTEGER)0x0,2);
   }
-  return pvVar1;
+  return hFile;
 }
 
 
 // 824DB428  FS_FileOpenReadWriteBinary  (qcommon/com_fileaccess.cpp:154)
 
-_iobuf * FS_FileOpenReadWriteBinary(char *param_1)
+undefined8 FS_FileOpenReadWriteBinary(undefined8 param_1)
 
 {
-  _iobuf *p_Var1;
+  undefined8 uVar1;
   
-  ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_OPEN);
-  p_Var1 = FileWrapper_OpenReadWriteBinary(param_1);
-  ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_OPEN);
-  return p_Var1;
+  ProfLoad_BeginTrackedValue(0);
+  uVar1 = FileWrapper_OpenReadWriteBinary(param_1);
+  ProfLoad_EndTrackedValue(0);
+  return uVar1;
 }
 
 
 // 824DB2A0  FileWrapper_Seek  (universal/com_files_wrapper_ms.h:169)
 
-int FileWrapper_Seek(void *param_1,long param_2,long param_3)
+bool FileWrapper_Seek(HANDLE param_1,uint param_2,ulonglong param_3)
 
 {
-  _LARGE_INTEGER _Var1;
-  char *pcVar2;
-  int iVar3;
-  ulong uVar4;
+  LARGE_INTEGER liDistanceToMove;
+  undefined8 uVar1;
+  BOOL BVar2;
+  DWORD dwMoveMethod;
   
-  if (param_3 == 0) {
-    uVar4 = 1;
+  if ((param_3 & 0xffffffff) == 0) {
+    dwMoveMethod = 1;
   }
-  else if (param_3 == 1) {
-    uVar4 = 2;
+  else if ((param_3 & 0xffffffff) == 1) {
+    dwMoveMethod = 2;
   }
   else {
-    if (2 < (uint)param_3) {
-      if (alwaysfails == 0) {
-        pcVar2 = va("Bad origin %i in FS_Seek");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h"
-                        ,0xb9,0,pcVar2);
+    if (2 < (param_3 & 0xffffffff)) {
+      if (DAT_84013128 == 0) {
+        uVar1 = va(0xffffffff82084e24,param_3);
+        MyAssertHandler(0xffffffff82084db0,0xb9,0,uVar1);
       }
-      return 0;
+      return false;
     }
-    uVar4 = 0;
+    dwMoveMethod = 0;
   }
-  _Var1._s_0.HighPart = 0;
-  _Var1._s_0.LowPart = param_2;
-  iVar3 = SetFilePointerEx(param_1,_Var1,(_LARGE_INTEGER *)0x0,uVar4);
-  return (uint)LZCOUNT(iVar3) >> 5;
+  liDistanceToMove.s.LowPart = 0;
+  liDistanceToMove.s.HighPart = param_2;
+  BVar2 = SetFilePointerEx(param_1,liDistanceToMove,(PLARGE_INTEGER)0x0,dwMoveMethod);
+  return BVar2 == 0;
 }
 
 
 // 824DB470  FS_FileOpenReadBinary  (qcommon/com_fileaccess.cpp:175)
 
-_iobuf * FS_FileOpenReadBinary(char *param_1)
+undefined8 FS_FileOpenReadBinary(undefined8 param_1)
 
 {
-  _iobuf *p_Var1;
+  undefined8 uVar1;
   
-  ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_OPEN);
-  p_Var1 = FileWrapper_OpenReadBinary_Core(param_1,0);
-  ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_OPEN);
-  return p_Var1;
+  ProfLoad_BeginTrackedValue(0);
+  uVar1 = FileWrapper_OpenReadBinary_Core(param_1,0);
+  ProfLoad_EndTrackedValue(0);
+  return uVar1;
 }
 
 
 // 824DB4C0  FS_FileOpenReadText  (qcommon/com_fileaccess.cpp:196)
 
-_iobuf * FS_FileOpenReadText(char *param_1)
+undefined8 FS_FileOpenReadText(undefined8 param_1)
 
 {
-  _iobuf *p_Var1;
+  undefined8 uVar1;
   
-  ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_OPEN);
-  p_Var1 = FileWrapper_OpenReadText(param_1);
-  ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_OPEN);
-  return p_Var1;
+  ProfLoad_BeginTrackedValue(0);
+  uVar1 = FileWrapper_OpenReadText(param_1);
+  ProfLoad_EndTrackedValue(0);
+  return uVar1;
 }
 
 
 // 824DB508  FS_FileOpenWriteBinary  (qcommon/com_fileaccess.cpp:217)
 
-_iobuf * FS_FileOpenWriteBinary(char *param_1)
+undefined8 FS_FileOpenWriteBinary(undefined8 param_1)
 
 {
-  _iobuf *p_Var1;
+  undefined8 uVar1;
   
-  ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_OPEN);
-  p_Var1 = FileWrapper_OpenWriteBinary(param_1);
-  ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_OPEN);
-  return p_Var1;
+  ProfLoad_BeginTrackedValue(0);
+  uVar1 = FileWrapper_OpenWriteBinary(param_1);
+  ProfLoad_EndTrackedValue(0);
+  return uVar1;
 }
 
 
 // 824DB550  FS_FileOpenAppendText  (qcommon/com_fileaccess.cpp:242)
 
-_iobuf * FS_FileOpenAppendText(char *param_1)
+undefined8 FS_FileOpenAppendText(undefined8 param_1)
 
 {
-  _iobuf *p_Var1;
+  undefined8 uVar1;
   
-  ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_OPEN);
-  p_Var1 = FileWrapper_OpenAppendText(param_1);
-  ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_OPEN);
-  return p_Var1;
+  ProfLoad_BeginTrackedValue(0);
+  uVar1 = FileWrapper_OpenAppendText(param_1);
+  ProfLoad_EndTrackedValue(0);
+  return uVar1;
 }
 
 
 // 824DB598  FS_FileOpenWriteText  (qcommon/com_fileaccess.cpp:267)
 
-_iobuf * FS_FileOpenWriteText(char *param_1)
+undefined8 FS_FileOpenWriteText(undefined8 param_1)
 
 {
-  _iobuf *p_Var1;
+  undefined8 uVar1;
   
-  ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_OPEN);
-  p_Var1 = FileWrapper_OpenWriteText(param_1);
-  ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_OPEN);
-  return p_Var1;
-}
-
-
-// 824DB5E0  FS_FileRotate  (qcommon/com_fileaccess.cpp:288)
-
-void FS_FileRotate(char *param_1)
-
-{
-  char *pcVar1;
-  void *pvVar2;
-  long lVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  _FILETIME a_Stack_280 [2];
-  char acStack_270 [256];
-  _WIN32_FIND_DATAA _Stack_170;
-  
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  pvVar2 = FindFirstFileA(pcVar1,&_Stack_170);
-  if (pvVar2 != (void *)0xffffffff) {
-    CloseHandle(pvVar2);
-    iVar6 = 0;
-    a_Stack_280[0].dwHighDateTime = 0;
-    a_Stack_280[0].dwLowDateTime = 0;
-    iVar4 = -1;
-    do {
-      sprintf(acStack_270,"%s.%03i");
-      pvVar2 = FindFirstFileA(acStack_270,&_Stack_170);
-      iVar5 = iVar6;
-      if (pvVar2 == (void *)0xffffffff) break;
-      CloseHandle(pvVar2);
-      if ((iVar4 == -1) ||
-         (lVar3 = CompareFileTime(a_Stack_280,&_Stack_170.ftLastWriteTime), iVar5 = iVar4, 0 < lVar3
-         )) {
-        a_Stack_280[0] = _Stack_170.ftLastWriteTime;
-        iVar5 = iVar6;
-      }
-      iVar6 = iVar6 + 1;
-      iVar4 = iVar5;
-    } while (iVar6 < 0x14);
-    if (iVar5 < 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h"
-                      ,0x77,0,"%s");
-    }
-    sprintf(acStack_270,"%s.%03i");
-    DeleteFileA(acStack_270);
-    pvVar2 = (void *)MoveFileA(pcVar1,acStack_270);
-  }
-  __restgprlr_28(pvVar2);
-  return;
-}
-
-
-// 824DB5E8  FS_FileClose  (qcommon/com_fileaccess.cpp:302)
-
-void FS_FileClose(_iobuf *param_1)
-
-{
-  long lVar1;
-  
-  lVar1 = (*_fileIoHooks->NtClose)(param_1);
-  if (lVar1 < 0) {
-    RtlSetLastNTError(lVar1);
-  }
-  return;
+  ProfLoad_BeginTrackedValue(0);
+  uVar1 = FileWrapper_OpenWriteText(param_1);
+  ProfLoad_EndTrackedValue(0);
+  return uVar1;
 }
 
 
 // 824DB5F0  FS_FileSeek  (qcommon/com_fileaccess.cpp:315)
 
-int FS_FileSeek(_iobuf *param_1,long param_2,int param_3)
+void FS_FileSeek(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-  void *pvVar1;
-  int iVar2;
+  undefined8 uVar1;
   
-  pvVar1 = (void *)__savegprlr_29(param_1);
-  ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_SEEK);
-  iVar2 = FileWrapper_Seek(pvVar1,param_2,param_3);
-  ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_SEEK);
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  uVar1 = __savegprlr_29();
+  ProfLoad_BeginTrackedValue(1);
+  uVar1 = FileWrapper_Seek(uVar1,param_2,param_3);
+  ProfLoad_EndTrackedValue(1);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 824DB638  FS_FileTell  (qcommon/com_fileaccess.cpp:326)
 
-int FS_FileTell(_iobuf *param_1)
+LONG FS_FileTell(HANDLE param_1)
 
 {
-  _LARGE_INTEGER local_20 [2];
+  LARGE_INTEGER local_20 [2];
   
-  ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_SEEK);
-  local_20[0]._s_0.LowPart = 0;
-  local_20[0]._s_0.HighPart = 0;
-  SetFilePointerEx(param_1,(_LARGE_INTEGER)0x0,local_20,1);
-  ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_SEEK);
-  return local_20[0]._s_0.LowPart;
+  ProfLoad_BeginTrackedValue(1);
+  local_20[0].s.HighPart = 0;
+  local_20[0].s.LowPart = 0;
+  SetFilePointerEx(param_1,(LARGE_INTEGER)0x0,local_20,1);
+  ProfLoad_EndTrackedValue(1);
+  return local_20[0].s.HighPart;
 }
 
 
 // 824DB698  FS_FileGetFileSize  (qcommon/com_fileaccess.cpp:343)
 
-int FS_FileGetFileSize(_iobuf *param_1)
+DWORD FS_FileGetFileSize(HANDLE param_1)
 
 {
-  ulong uVar1;
+  DWORD DVar1;
   
-  uVar1 = GetFileSize(param_1,(ulong *)0x0);
-  return uVar1;
+  DVar1 = GetFileSize(param_1,(LPDWORD)0x0);
+  return DVar1;
 }
 

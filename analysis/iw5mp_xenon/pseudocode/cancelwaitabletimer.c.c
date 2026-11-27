@@ -2,15 +2,15 @@
 
 // 8292B618  CancelWaitableTimer  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/cancelwaitabletimer.c:20)
 
-int CancelWaitableTimer(void *param_1)
+BOOL CancelWaitableTimer(HANDLE hTimer)
 
 {
-  long lVar1;
+  int iVar1;
   
-  lVar1 = NtCancelTimer(param_1,0);
-  if (-1 >= lVar1) {
-    RtlSetLastNTError(lVar1);
+  iVar1 = NtCancelTimer(hTimer,0);
+  if (-1 >= iVar1) {
+    RtlSetLastNTError();
   }
-  return (int)(-1 < lVar1);
+  return (BOOL)(-1 < iVar1);
 }
 

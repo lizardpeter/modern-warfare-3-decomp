@@ -2,71 +2,70 @@
 
 // 82918DF8  log  (<external>/bt/278379/vctools/crt/src/fpw32/tran/log.c:59)
 
-double log(double param_1)
+double log(double _X)
 
 {
   int iVar1;
-  _dbl _Var2;
+  double dVar2;
   double dVar3;
-  double dVar4;
   ushort uStack00000010;
   undefined8 local_10;
   
-  if (param_1 == 1.0) {
+  if (_X == 1.0) {
     return 0.0;
   }
-  uStack00000010 = (ushort)((ulonglong)param_1 >> 0x30);
+  uStack00000010 = (ushort)((ulonglong)_X >> 0x30);
   if (((ulonglong)uStack00000010 & 0x7ff0) == 0x7ff0) {
-    if (1.79769313486232e+308 < param_1) {
-      return param_1;
+    if (1.79769313486232e+308 < _X) {
+      return _X;
     }
   }
   else {
-    if (0.0 < param_1) {
-      if (2.2250738585072014e-308 <= param_1) {
+    if (0.0 < _X) {
+      if (2.2250738585072014e-308 <= _X) {
         iVar1 = (int)(((ulonglong)uStack00000010 & 0x7ff0) >> 4) + -0x3fe;
       }
       else {
-        param_1 = param_1 * 9007199254740992.0;
-        uStack00000010 = (ushort)((ulonglong)param_1 >> 0x30);
+        _X = _X * 9007199254740992.0;
+        uStack00000010 = (ushort)((ulonglong)_X >> 0x30);
         iVar1 = (uStack00000010 >> 4 & 0x7ff) - 0x433;
       }
-      local_10._2_6_ = SUB86(param_1,0);
+      local_10._2_6_ = SUB86(_X,0);
       local_10 = (double)(CONCAT26(uStack00000010,local_10._2_6_) & 0x800fffffffffffff |
                          0x3fe0000000000000);
       if (local_10 <= 0.7071067811865476) {
         iVar1 = iVar1 + -1;
-        dVar3 = local_10 - 0.5;
-        local_10 = dVar3;
+        dVar2 = local_10 - 0.5;
+        local_10 = dVar2;
       }
       else {
-        dVar3 = (local_10 - 0.5) - 0.5;
+        dVar2 = (local_10 - 0.5) - 0.5;
       }
-      dVar3 = dVar3 / ((local_10 + 1.0) * 0.5);
-      dVar4 = dVar3 * dVar3;
+      dVar2 = dVar2 / ((local_10 + 1.0) * 0.5);
+      dVar3 = dVar2 * dVar2;
       return (double)(longlong)iVar1 * 0.693359375 +
-             ((((-(dVar4 * 0.7895611288749126 - 16.383943563021536) * dVar4 - 64.12494342374558) *
-               dVar4) / (((dVar4 - 35.66797773903465) * dVar4 + 312.03222091924533) * dVar4 -
-                        769.4993210849487) + 1.0) * dVar3 -
+             ((((-(dVar3 * 0.7895611288749126 - 16.383943563021536) * dVar3 - 64.12494342374558) *
+               dVar3) / (((dVar3 - 35.66797773903465) * dVar3 + 312.03222091924533) * dVar3 -
+                        769.4993210849487) + 1.0) * dVar2 -
              (double)(longlong)iVar1 * 0.00021219444005469057);
     }
-    _Var2 = _d_inf;
-    if (param_1 == 0.0) goto LAB_82918e44;
+    dVar2 = DAT_829b0418;
+    if (_X == 0.0) goto LAB_82918e44;
   }
-  _Var2 = _d_ind;
+  dVar2 = DAT_829b0420;
 LAB_82918e44:
-  return -_Var2.dbl;
+  return -dVar2;
 }
 
 
 // 82918F88  log10  (<external>/bt/278379/vctools/crt/src/fpw32/tran/log.c:134)
 
-double log10(double param_1)
+double log10(double _X)
 
 {
   double dVar1;
   
-  dVar1 = log(param_1);
+  dVar1 = log(_X);
   return dVar1 * 0.4342944819032518;
 }
 

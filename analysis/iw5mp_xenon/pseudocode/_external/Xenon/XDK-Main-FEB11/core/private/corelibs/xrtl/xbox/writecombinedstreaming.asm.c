@@ -2,9 +2,8 @@
 
 // 828B3DA0  XMemCpyStreaming128_Writecombined_Helper  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xbox/writecombinedstreaming.asm:34)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void XMemCpyStreaming128_Writecombined_Helper(void)
+longlong XMemCpyStreaming128_Writecombined_Helper
+                   (longlong param_1,longlong param_2,ulonglong param_3)
 
 {
   uint uVar1;
@@ -16,144 +15,140 @@ void XMemCpyStreaming128_Writecombined_Helper(void)
   uint uVar7;
   uint uVar8;
   ulonglong uVar9;
-  longlong in_r3;
-  longlong in_r4;
   longlong lVar10;
-  ulonglong in_r5;
   
-  if (0x3ff < (in_r5 & 0xffffffff)) {
+  if (0x3ff < (param_3 & 0xffffffff)) {
     do {
-      uVar9 = in_r5 - 0x400;
+      uVar9 = param_3 - 0x400;
       if (0x3ff < (uVar9 & 0xffffffff)) {
         uVar9 = 0x400;
       }
-      uVar1 = (uint)in_r4;
-      dataCacheBlockTouch(in_r4 + uVar9);
-      dataCacheBlockFlush(in_r4);
-      lVar10 = in_r4 + 0x80;
+      uVar1 = (uint)param_2;
+      dataCacheBlockTouch(param_2 + uVar9);
+      dataCacheBlockFlush(param_2);
+      lVar10 = param_2 + 0x80;
       uVar2 = (uint)lVar10;
       dataCacheBlockTouch(lVar10 + uVar9);
       dataCacheBlockFlush(lVar10);
-      lVar10 = in_r4 + 0x100;
+      lVar10 = param_2 + 0x100;
       uVar3 = (uint)lVar10;
       dataCacheBlockTouch(lVar10 + uVar9);
       dataCacheBlockFlush(lVar10);
-      lVar10 = in_r4 + 0x180;
+      lVar10 = param_2 + 0x180;
       uVar4 = (uint)lVar10;
       dataCacheBlockTouch(lVar10 + uVar9);
       dataCacheBlockFlush(lVar10);
-      lVar10 = in_r4 + 0x200;
+      lVar10 = param_2 + 0x200;
       uVar5 = (uint)lVar10;
       dataCacheBlockTouch(lVar10 + uVar9);
       dataCacheBlockFlush(lVar10);
-      lVar10 = in_r4 + 0x280;
+      lVar10 = param_2 + 0x280;
       uVar6 = (uint)lVar10;
       dataCacheBlockTouch(lVar10 + uVar9);
       dataCacheBlockFlush(lVar10);
-      lVar10 = in_r4 + 0x300;
+      lVar10 = param_2 + 0x300;
       uVar7 = (uint)lVar10;
       dataCacheBlockTouch(lVar10 + uVar9);
       dataCacheBlockFlush(lVar10);
-      lVar10 = in_r4 + 0x380;
+      lVar10 = param_2 + 0x380;
       uVar8 = (uint)lVar10;
       dataCacheBlockTouch(lVar10 + uVar9);
       dataCacheBlockFlush(lVar10);
-      in_r4 = in_r4 + 0x400;
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 & 0xfffffff0),in_r3);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0),in_r3 + 0x10);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0),in_r3 + 0x20);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0),in_r3 + 0x30);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0),in_r3 + 0x40);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0),in_r3 + 0x50);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0),in_r3 + 0x60);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x70 & 0xfffffff0),in_r3 + 0x70);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),in_r3 + 0x80);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0),in_r3 + 0x90);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0),in_r3 + 0xa0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0),in_r3 + 0xb0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x40 & 0xfffffff0),in_r3 + 0xc0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x50 & 0xfffffff0),in_r3 + 0xd0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x60 & 0xfffffff0),in_r3 + 0xe0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x70 & 0xfffffff0),in_r3 + 0xf0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 & 0xfffffff0),in_r3 + 0x100);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x10 & 0xfffffff0),in_r3 + 0x110);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x20 & 0xfffffff0),in_r3 + 0x120);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x30 & 0xfffffff0),in_r3 + 0x130);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x40 & 0xfffffff0),in_r3 + 0x140);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x50 & 0xfffffff0),in_r3 + 0x150);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x60 & 0xfffffff0),in_r3 + 0x160);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x70 & 0xfffffff0),in_r3 + 0x170);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 & 0xfffffff0),in_r3 + 0x180);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x10 & 0xfffffff0),in_r3 + 400);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x20 & 0xfffffff0),in_r3 + 0x1a0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x30 & 0xfffffff0),in_r3 + 0x1b0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x40 & 0xfffffff0),in_r3 + 0x1c0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x50 & 0xfffffff0),in_r3 + 0x1d0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x60 & 0xfffffff0),in_r3 + 0x1e0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x70 & 0xfffffff0),in_r3 + 0x1f0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 & 0xfffffff0),in_r3 + 0x200);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x10 & 0xfffffff0),in_r3 + 0x210);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x20 & 0xfffffff0),in_r3 + 0x220);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x30 & 0xfffffff0),in_r3 + 0x230);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x40 & 0xfffffff0),in_r3 + 0x240);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x50 & 0xfffffff0),in_r3 + 0x250);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x60 & 0xfffffff0),in_r3 + 0x260);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x70 & 0xfffffff0),in_r3 + 0x270);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 & 0xfffffff0),in_r3 + 0x280);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x10 & 0xfffffff0),in_r3 + 0x290);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x20 & 0xfffffff0),in_r3 + 0x2a0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x30 & 0xfffffff0),in_r3 + 0x2b0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x40 & 0xfffffff0),in_r3 + 0x2c0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x50 & 0xfffffff0),in_r3 + 0x2d0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x60 & 0xfffffff0),in_r3 + 0x2e0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x70 & 0xfffffff0),in_r3 + 0x2f0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 & 0xfffffff0),in_r3 + 0x300);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x10 & 0xfffffff0),in_r3 + 0x310);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x20 & 0xfffffff0),in_r3 + 800);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x30 & 0xfffffff0),in_r3 + 0x330);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x40 & 0xfffffff0),in_r3 + 0x340);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x50 & 0xfffffff0),in_r3 + 0x350);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x60 & 0xfffffff0),in_r3 + 0x360);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x70 & 0xfffffff0),in_r3 + 0x370);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 & 0xfffffff0),in_r3 + 0x380);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x10 & 0xfffffff0),in_r3 + 0x390);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x20 & 0xfffffff0),in_r3 + 0x3a0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x30 & 0xfffffff0),in_r3 + 0x3b0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x40 & 0xfffffff0),in_r3 + 0x3c0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x50 & 0xfffffff0),in_r3 + 0x3d0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x60 & 0xfffffff0),in_r3 + 0x3e0);
-      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x70 & 0xfffffff0),in_r3 + 0x3f0);
-      in_r3 = in_r3 + 0x400;
-      in_r5 = in_r5 - 0x400;
-    } while (0x3ff < (in_r5 & 0xffffffff));
-    if ((in_r5 & 0xffffffff) == 0) {
-      return;
+      param_2 = param_2 + 0x400;
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 & 0xfffffff0),param_1);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0),param_1 + 0x10);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0),param_1 + 0x20);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0),param_1 + 0x30);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0),param_1 + 0x40);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0),param_1 + 0x50);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0),param_1 + 0x60);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x70 & 0xfffffff0),param_1 + 0x70);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),param_1 + 0x80);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0),param_1 + 0x90);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0),param_1 + 0xa0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0),param_1 + 0xb0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x40 & 0xfffffff0),param_1 + 0xc0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x50 & 0xfffffff0),param_1 + 0xd0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x60 & 0xfffffff0),param_1 + 0xe0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar2 + 0x70 & 0xfffffff0),param_1 + 0xf0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 & 0xfffffff0),param_1 + 0x100);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x10 & 0xfffffff0),param_1 + 0x110);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x20 & 0xfffffff0),param_1 + 0x120);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x30 & 0xfffffff0),param_1 + 0x130);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x40 & 0xfffffff0),param_1 + 0x140);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x50 & 0xfffffff0),param_1 + 0x150);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x60 & 0xfffffff0),param_1 + 0x160);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar3 + 0x70 & 0xfffffff0),param_1 + 0x170);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 & 0xfffffff0),param_1 + 0x180);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x10 & 0xfffffff0),param_1 + 400);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x20 & 0xfffffff0),param_1 + 0x1a0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x30 & 0xfffffff0),param_1 + 0x1b0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x40 & 0xfffffff0),param_1 + 0x1c0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x50 & 0xfffffff0),param_1 + 0x1d0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x60 & 0xfffffff0),param_1 + 0x1e0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar4 + 0x70 & 0xfffffff0),param_1 + 0x1f0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 & 0xfffffff0),param_1 + 0x200);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x10 & 0xfffffff0),param_1 + 0x210);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x20 & 0xfffffff0),param_1 + 0x220);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x30 & 0xfffffff0),param_1 + 0x230);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x40 & 0xfffffff0),param_1 + 0x240);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x50 & 0xfffffff0),param_1 + 0x250);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x60 & 0xfffffff0),param_1 + 0x260);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar5 + 0x70 & 0xfffffff0),param_1 + 0x270);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 & 0xfffffff0),param_1 + 0x280);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x10 & 0xfffffff0),param_1 + 0x290);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x20 & 0xfffffff0),param_1 + 0x2a0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x30 & 0xfffffff0),param_1 + 0x2b0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x40 & 0xfffffff0),param_1 + 0x2c0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x50 & 0xfffffff0),param_1 + 0x2d0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x60 & 0xfffffff0),param_1 + 0x2e0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar6 + 0x70 & 0xfffffff0),param_1 + 0x2f0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 & 0xfffffff0),param_1 + 0x300);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x10 & 0xfffffff0),param_1 + 0x310);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x20 & 0xfffffff0),param_1 + 800);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x30 & 0xfffffff0),param_1 + 0x330);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x40 & 0xfffffff0),param_1 + 0x340);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x50 & 0xfffffff0),param_1 + 0x350);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x60 & 0xfffffff0),param_1 + 0x360);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar7 + 0x70 & 0xfffffff0),param_1 + 0x370);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 & 0xfffffff0),param_1 + 0x380);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x10 & 0xfffffff0),param_1 + 0x390);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x20 & 0xfffffff0),param_1 + 0x3a0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x30 & 0xfffffff0),param_1 + 0x3b0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x40 & 0xfffffff0),param_1 + 0x3c0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x50 & 0xfffffff0),param_1 + 0x3d0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x60 & 0xfffffff0),param_1 + 0x3e0);
+      storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar8 + 0x70 & 0xfffffff0),param_1 + 0x3f0);
+      param_1 = param_1 + 0x400;
+      param_3 = param_3 - 0x400;
+    } while (0x3ff < (param_3 & 0xffffffff));
+    if ((param_3 & 0xffffffff) == 0) {
+      return param_1;
     }
   }
   do {
-    uVar1 = (uint)in_r4;
-    dataCacheBlockFlush(in_r4);
-    in_r4 = in_r4 + 0x80;
-    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 & 0xfffffff0),in_r3);
-    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0),in_r3 + 0x10);
-    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0),in_r3 + 0x20);
-    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0),in_r3 + 0x30);
-    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0),in_r3 + 0x40);
-    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0),in_r3 + 0x50);
-    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0),in_r3 + 0x60);
-    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x70 & 0xfffffff0),in_r3 + 0x70);
-    in_r3 = in_r3 + 0x80;
-    in_r5 = in_r5 - 0x80;
-  } while ((in_r5 & 0xffffffff) != 0);
-  return;
+    uVar1 = (uint)param_2;
+    dataCacheBlockFlush(param_2);
+    param_2 = param_2 + 0x80;
+    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 & 0xfffffff0),param_1);
+    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0),param_1 + 0x10);
+    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0),param_1 + 0x20);
+    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0),param_1 + 0x30);
+    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0),param_1 + 0x40);
+    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0),param_1 + 0x50);
+    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0),param_1 + 0x60);
+    storeVectorLeftIndexed(*(undefined1 (*) [16])(uVar1 + 0x70 & 0xfffffff0),param_1 + 0x70);
+    param_1 = param_1 + 0x80;
+    param_3 = param_3 - 0x80;
+  } while ((param_3 & 0xffffffff) != 0);
+  return param_1;
 }
 
 
 // 828B40C4  XMemCpyStreaming_Unaligned_Writecombined_Helper  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xbox/writecombinedstreaming.asm:354)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void XMemCpyStreaming_Unaligned_Writecombined_Helper(void)
+longlong XMemCpyStreaming_Unaligned_Writecombined_Helper
+                   (longlong param_1,longlong param_2,ulonglong param_3)
 
 {
   uint uVar1;
@@ -165,11 +160,8 @@ void XMemCpyStreaming_Unaligned_Writecombined_Helper(void)
   uint uVar7;
   uint uVar8;
   ulonglong uVar9;
-  longlong in_r3;
-  longlong in_r4;
   longlong lVar10;
   longlong lVar11;
-  ulonglong in_r5;
   undefined1 auVar12 [16];
   undefined1 auVar13 [16];
   undefined1 auVar14 [16];
@@ -234,20 +226,20 @@ void XMemCpyStreaming_Unaligned_Writecombined_Helper(void)
   
   storeVectorLeftIndexed(in_v64,ZEXT48(&stack0x00000000) - 0x20);
   storeVectorLeftIndexed(in_v65,ZEXT48(&stack0x00000000) - 0x30);
-  dataCacheBlockTouch(in_r4);
-  auVar69 = *(undefined1 (*) [16])((uint)in_r4 & 0xfffffff0);
-  lVar10 = in_r4 + 0x10;
+  dataCacheBlockTouch(param_2);
+  auVar69 = *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0);
+  lVar10 = param_2 + 0x10;
   auVar12 = loadVectorForShiftLeft(0,lVar10);
-  if (0x3ff < (in_r5 & 0xffffffff)) {
-    dataCacheBlockTouch(in_r4 + 0x90);
-    dataCacheBlockTouch(in_r4 + 0x110);
-    dataCacheBlockTouch(in_r4 + 400);
-    dataCacheBlockTouch(in_r4 + 0x210);
-    dataCacheBlockTouch(in_r4 + 0x290);
-    dataCacheBlockTouch(in_r4 + 0x310);
-    dataCacheBlockTouch(in_r4 + 0x390);
+  if (0x3ff < (param_3 & 0xffffffff)) {
+    dataCacheBlockTouch(param_2 + 0x90);
+    dataCacheBlockTouch(param_2 + 0x110);
+    dataCacheBlockTouch(param_2 + 400);
+    dataCacheBlockTouch(param_2 + 0x210);
+    dataCacheBlockTouch(param_2 + 0x290);
+    dataCacheBlockTouch(param_2 + 0x310);
+    dataCacheBlockTouch(param_2 + 0x390);
     do {
-      uVar9 = in_r5 - 0x400;
+      uVar9 = param_3 - 0x400;
       if (0x3ff < (uVar9 & 0xffffffff)) {
         uVar9 = 0x400;
       }
@@ -347,14 +339,14 @@ void XMemCpyStreaming_Unaligned_Writecombined_Helper(void)
       auVar16 = vectorPermute128(auVar16,auVar17,auVar12);
       auVar17 = vectorPermute128(auVar17,auVar18,auVar12);
       auVar18 = vectorPermute128(auVar18,auVar19,auVar12);
-      storeVectorLeftIndexed(auVar70,in_r3);
-      storeVectorLeftIndexed(auVar69,in_r3 + 0x10);
-      storeVectorLeftIndexed(auVar13,in_r3 + 0x20);
-      storeVectorLeftIndexed(auVar14,in_r3 + 0x30);
-      storeVectorLeftIndexed(auVar15,in_r3 + 0x40);
-      storeVectorLeftIndexed(auVar16,in_r3 + 0x50);
-      storeVectorLeftIndexed(auVar17,in_r3 + 0x60);
-      storeVectorLeftIndexed(auVar18,in_r3 + 0x70);
+      storeVectorLeftIndexed(auVar70,param_1);
+      storeVectorLeftIndexed(auVar69,param_1 + 0x10);
+      storeVectorLeftIndexed(auVar13,param_1 + 0x20);
+      storeVectorLeftIndexed(auVar14,param_1 + 0x30);
+      storeVectorLeftIndexed(auVar15,param_1 + 0x40);
+      storeVectorLeftIndexed(auVar16,param_1 + 0x50);
+      storeVectorLeftIndexed(auVar17,param_1 + 0x60);
+      storeVectorLeftIndexed(auVar18,param_1 + 0x70);
       auVar69 = vectorPermute128(auVar19,*(undefined1 (*) [16])(uVar2 & 0xfffffff0),auVar12);
       auVar13 = vectorPermute128(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),auVar20,auVar12);
       auVar14 = vectorPermute128(auVar20,auVar21,auVar12);
@@ -363,14 +355,14 @@ void XMemCpyStreaming_Unaligned_Writecombined_Helper(void)
       auVar17 = vectorPermute128(auVar23,auVar24,auVar12);
       auVar18 = vectorPermute128(auVar24,auVar25,auVar12);
       auVar19 = vectorPermute128(auVar25,auVar26,auVar12);
-      storeVectorLeftIndexed(auVar69,in_r3 + 0x80);
-      storeVectorLeftIndexed(auVar13,in_r3 + 0x90);
-      storeVectorLeftIndexed(auVar14,in_r3 + 0xa0);
-      storeVectorLeftIndexed(auVar15,in_r3 + 0xb0);
-      storeVectorLeftIndexed(auVar16,in_r3 + 0xc0);
-      storeVectorLeftIndexed(auVar17,in_r3 + 0xd0);
-      storeVectorLeftIndexed(auVar18,in_r3 + 0xe0);
-      storeVectorLeftIndexed(auVar19,in_r3 + 0xf0);
+      storeVectorLeftIndexed(auVar69,param_1 + 0x80);
+      storeVectorLeftIndexed(auVar13,param_1 + 0x90);
+      storeVectorLeftIndexed(auVar14,param_1 + 0xa0);
+      storeVectorLeftIndexed(auVar15,param_1 + 0xb0);
+      storeVectorLeftIndexed(auVar16,param_1 + 0xc0);
+      storeVectorLeftIndexed(auVar17,param_1 + 0xd0);
+      storeVectorLeftIndexed(auVar18,param_1 + 0xe0);
+      storeVectorLeftIndexed(auVar19,param_1 + 0xf0);
       auVar69 = vectorPermute128(auVar26,*(undefined1 (*) [16])(uVar3 & 0xfffffff0),auVar12);
       auVar13 = vectorPermute128(*(undefined1 (*) [16])(uVar3 & 0xfffffff0),auVar27,auVar12);
       auVar14 = vectorPermute128(auVar27,auVar28,auVar12);
@@ -379,14 +371,14 @@ void XMemCpyStreaming_Unaligned_Writecombined_Helper(void)
       auVar17 = vectorPermute128(auVar30,auVar31,auVar12);
       auVar18 = vectorPermute128(auVar31,auVar32,auVar12);
       auVar19 = vectorPermute128(auVar32,auVar33,auVar12);
-      storeVectorLeftIndexed(auVar69,in_r3 + 0x100);
-      storeVectorLeftIndexed(auVar13,in_r3 + 0x110);
-      storeVectorLeftIndexed(auVar14,in_r3 + 0x120);
-      storeVectorLeftIndexed(auVar15,in_r3 + 0x130);
-      storeVectorLeftIndexed(auVar16,in_r3 + 0x140);
-      storeVectorLeftIndexed(auVar17,in_r3 + 0x150);
-      storeVectorLeftIndexed(auVar18,in_r3 + 0x160);
-      storeVectorLeftIndexed(auVar19,in_r3 + 0x170);
+      storeVectorLeftIndexed(auVar69,param_1 + 0x100);
+      storeVectorLeftIndexed(auVar13,param_1 + 0x110);
+      storeVectorLeftIndexed(auVar14,param_1 + 0x120);
+      storeVectorLeftIndexed(auVar15,param_1 + 0x130);
+      storeVectorLeftIndexed(auVar16,param_1 + 0x140);
+      storeVectorLeftIndexed(auVar17,param_1 + 0x150);
+      storeVectorLeftIndexed(auVar18,param_1 + 0x160);
+      storeVectorLeftIndexed(auVar19,param_1 + 0x170);
       auVar69 = vectorPermute128(auVar33,*(undefined1 (*) [16])(uVar4 & 0xfffffff0),auVar12);
       auVar13 = vectorPermute128(*(undefined1 (*) [16])(uVar4 & 0xfffffff0),auVar34,auVar12);
       auVar14 = vectorPermute128(auVar34,auVar35,auVar12);
@@ -395,14 +387,14 @@ void XMemCpyStreaming_Unaligned_Writecombined_Helper(void)
       auVar17 = vectorPermute128(auVar37,auVar38,auVar12);
       auVar18 = vectorPermute128(auVar38,auVar39,auVar12);
       auVar19 = vectorPermute128(auVar39,auVar40,auVar12);
-      storeVectorLeftIndexed(auVar69,in_r3 + 0x180);
-      storeVectorLeftIndexed(auVar13,in_r3 + 400);
-      storeVectorLeftIndexed(auVar14,in_r3 + 0x1a0);
-      storeVectorLeftIndexed(auVar15,in_r3 + 0x1b0);
-      storeVectorLeftIndexed(auVar16,in_r3 + 0x1c0);
-      storeVectorLeftIndexed(auVar17,in_r3 + 0x1d0);
-      storeVectorLeftIndexed(auVar18,in_r3 + 0x1e0);
-      storeVectorLeftIndexed(auVar19,in_r3 + 0x1f0);
+      storeVectorLeftIndexed(auVar69,param_1 + 0x180);
+      storeVectorLeftIndexed(auVar13,param_1 + 400);
+      storeVectorLeftIndexed(auVar14,param_1 + 0x1a0);
+      storeVectorLeftIndexed(auVar15,param_1 + 0x1b0);
+      storeVectorLeftIndexed(auVar16,param_1 + 0x1c0);
+      storeVectorLeftIndexed(auVar17,param_1 + 0x1d0);
+      storeVectorLeftIndexed(auVar18,param_1 + 0x1e0);
+      storeVectorLeftIndexed(auVar19,param_1 + 0x1f0);
       auVar69 = vectorPermute128(auVar40,*(undefined1 (*) [16])(uVar5 & 0xfffffff0),auVar12);
       auVar13 = vectorPermute128(*(undefined1 (*) [16])(uVar5 & 0xfffffff0),auVar41,auVar12);
       auVar14 = vectorPermute128(auVar41,auVar42,auVar12);
@@ -411,14 +403,14 @@ void XMemCpyStreaming_Unaligned_Writecombined_Helper(void)
       auVar17 = vectorPermute128(auVar44,auVar45,auVar12);
       auVar18 = vectorPermute128(auVar45,auVar46,auVar12);
       auVar19 = vectorPermute128(auVar46,auVar47,auVar12);
-      storeVectorLeftIndexed(auVar69,in_r3 + 0x200);
-      storeVectorLeftIndexed(auVar13,in_r3 + 0x210);
-      storeVectorLeftIndexed(auVar14,in_r3 + 0x220);
-      storeVectorLeftIndexed(auVar15,in_r3 + 0x230);
-      storeVectorLeftIndexed(auVar16,in_r3 + 0x240);
-      storeVectorLeftIndexed(auVar17,in_r3 + 0x250);
-      storeVectorLeftIndexed(auVar18,in_r3 + 0x260);
-      storeVectorLeftIndexed(auVar19,in_r3 + 0x270);
+      storeVectorLeftIndexed(auVar69,param_1 + 0x200);
+      storeVectorLeftIndexed(auVar13,param_1 + 0x210);
+      storeVectorLeftIndexed(auVar14,param_1 + 0x220);
+      storeVectorLeftIndexed(auVar15,param_1 + 0x230);
+      storeVectorLeftIndexed(auVar16,param_1 + 0x240);
+      storeVectorLeftIndexed(auVar17,param_1 + 0x250);
+      storeVectorLeftIndexed(auVar18,param_1 + 0x260);
+      storeVectorLeftIndexed(auVar19,param_1 + 0x270);
       auVar69 = vectorPermute128(auVar47,*(undefined1 (*) [16])(uVar6 & 0xfffffff0),auVar12);
       auVar13 = vectorPermute128(*(undefined1 (*) [16])(uVar6 & 0xfffffff0),auVar48,auVar12);
       auVar14 = vectorPermute128(auVar48,auVar49,auVar12);
@@ -427,14 +419,14 @@ void XMemCpyStreaming_Unaligned_Writecombined_Helper(void)
       auVar17 = vectorPermute128(auVar51,auVar52,auVar12);
       auVar18 = vectorPermute128(auVar52,auVar53,auVar12);
       auVar19 = vectorPermute128(auVar53,auVar54,auVar12);
-      storeVectorLeftIndexed(auVar69,in_r3 + 0x280);
-      storeVectorLeftIndexed(auVar13,in_r3 + 0x290);
-      storeVectorLeftIndexed(auVar14,in_r3 + 0x2a0);
-      storeVectorLeftIndexed(auVar15,in_r3 + 0x2b0);
-      storeVectorLeftIndexed(auVar16,in_r3 + 0x2c0);
-      storeVectorLeftIndexed(auVar17,in_r3 + 0x2d0);
-      storeVectorLeftIndexed(auVar18,in_r3 + 0x2e0);
-      storeVectorLeftIndexed(auVar19,in_r3 + 0x2f0);
+      storeVectorLeftIndexed(auVar69,param_1 + 0x280);
+      storeVectorLeftIndexed(auVar13,param_1 + 0x290);
+      storeVectorLeftIndexed(auVar14,param_1 + 0x2a0);
+      storeVectorLeftIndexed(auVar15,param_1 + 0x2b0);
+      storeVectorLeftIndexed(auVar16,param_1 + 0x2c0);
+      storeVectorLeftIndexed(auVar17,param_1 + 0x2d0);
+      storeVectorLeftIndexed(auVar18,param_1 + 0x2e0);
+      storeVectorLeftIndexed(auVar19,param_1 + 0x2f0);
       auVar69 = vectorPermute128(auVar54,*(undefined1 (*) [16])(uVar7 & 0xfffffff0),auVar12);
       auVar13 = vectorPermute128(*(undefined1 (*) [16])(uVar7 & 0xfffffff0),auVar55,auVar12);
       auVar14 = vectorPermute128(auVar55,auVar56,auVar12);
@@ -443,14 +435,14 @@ void XMemCpyStreaming_Unaligned_Writecombined_Helper(void)
       auVar17 = vectorPermute128(auVar58,auVar59,auVar12);
       auVar18 = vectorPermute128(auVar59,auVar60,auVar12);
       auVar19 = vectorPermute128(auVar60,auVar61,auVar12);
-      storeVectorLeftIndexed(auVar69,in_r3 + 0x300);
-      storeVectorLeftIndexed(auVar13,in_r3 + 0x310);
-      storeVectorLeftIndexed(auVar14,in_r3 + 800);
-      storeVectorLeftIndexed(auVar15,in_r3 + 0x330);
-      storeVectorLeftIndexed(auVar16,in_r3 + 0x340);
-      storeVectorLeftIndexed(auVar17,in_r3 + 0x350);
-      storeVectorLeftIndexed(auVar18,in_r3 + 0x360);
-      storeVectorLeftIndexed(auVar19,in_r3 + 0x370);
+      storeVectorLeftIndexed(auVar69,param_1 + 0x300);
+      storeVectorLeftIndexed(auVar13,param_1 + 0x310);
+      storeVectorLeftIndexed(auVar14,param_1 + 800);
+      storeVectorLeftIndexed(auVar15,param_1 + 0x330);
+      storeVectorLeftIndexed(auVar16,param_1 + 0x340);
+      storeVectorLeftIndexed(auVar17,param_1 + 0x350);
+      storeVectorLeftIndexed(auVar18,param_1 + 0x360);
+      storeVectorLeftIndexed(auVar19,param_1 + 0x370);
       auVar69 = vectorPermute128(auVar61,*(undefined1 (*) [16])(uVar8 & 0xfffffff0),auVar12);
       auVar13 = vectorPermute128(*(undefined1 (*) [16])(uVar8 & 0xfffffff0),auVar62,auVar12);
       auVar14 = vectorPermute128(auVar62,auVar63,auVar12);
@@ -459,20 +451,20 @@ void XMemCpyStreaming_Unaligned_Writecombined_Helper(void)
       auVar17 = vectorPermute128(auVar65,auVar66,auVar12);
       auVar18 = vectorPermute128(auVar66,auVar67,auVar12);
       auVar19 = vectorPermute128(auVar67,auVar68,auVar12);
-      storeVectorLeftIndexed(auVar69,in_r3 + 0x380);
-      storeVectorLeftIndexed(auVar13,in_r3 + 0x390);
-      storeVectorLeftIndexed(auVar14,in_r3 + 0x3a0);
-      storeVectorLeftIndexed(auVar15,in_r3 + 0x3b0);
-      storeVectorLeftIndexed(auVar16,in_r3 + 0x3c0);
-      storeVectorLeftIndexed(auVar17,in_r3 + 0x3d0);
-      storeVectorLeftIndexed(auVar18,in_r3 + 0x3e0);
-      storeVectorLeftIndexed(auVar19,in_r3 + 0x3f0);
-      in_r3 = in_r3 + 0x400;
-      in_r5 = in_r5 - 0x400;
+      storeVectorLeftIndexed(auVar69,param_1 + 0x380);
+      storeVectorLeftIndexed(auVar13,param_1 + 0x390);
+      storeVectorLeftIndexed(auVar14,param_1 + 0x3a0);
+      storeVectorLeftIndexed(auVar15,param_1 + 0x3b0);
+      storeVectorLeftIndexed(auVar16,param_1 + 0x3c0);
+      storeVectorLeftIndexed(auVar17,param_1 + 0x3d0);
+      storeVectorLeftIndexed(auVar18,param_1 + 0x3e0);
+      storeVectorLeftIndexed(auVar19,param_1 + 0x3f0);
+      param_1 = param_1 + 0x400;
+      param_3 = param_3 - 0x400;
       auVar69 = auVar68;
-    } while (0x3ff < (in_r5 & 0xffffffff));
-    if ((in_r5 & 0xffffffff) == 0) {
-      return;
+    } while (0x3ff < (param_3 & 0xffffffff));
+    if ((param_3 & 0xffffffff) == 0) {
+      return param_1;
     }
   }
   do {
@@ -494,18 +486,18 @@ void XMemCpyStreaming_Unaligned_Writecombined_Helper(void)
     auVar16 = vectorPermute128(auVar16,auVar17,auVar12);
     auVar17 = vectorPermute128(auVar17,auVar18,auVar12);
     auVar18 = vectorPermute128(auVar18,auVar19,auVar12);
-    storeVectorLeftIndexed(auVar20,in_r3);
-    storeVectorLeftIndexed(auVar69,in_r3 + 0x10);
-    storeVectorLeftIndexed(auVar13,in_r3 + 0x20);
-    storeVectorLeftIndexed(auVar14,in_r3 + 0x30);
-    storeVectorLeftIndexed(auVar15,in_r3 + 0x40);
-    storeVectorLeftIndexed(auVar16,in_r3 + 0x50);
-    storeVectorLeftIndexed(auVar17,in_r3 + 0x60);
-    storeVectorLeftIndexed(auVar18,in_r3 + 0x70);
-    in_r3 = in_r3 + 0x80;
-    in_r5 = in_r5 - 0x80;
+    storeVectorLeftIndexed(auVar20,param_1);
+    storeVectorLeftIndexed(auVar69,param_1 + 0x10);
+    storeVectorLeftIndexed(auVar13,param_1 + 0x20);
+    storeVectorLeftIndexed(auVar14,param_1 + 0x30);
+    storeVectorLeftIndexed(auVar15,param_1 + 0x40);
+    storeVectorLeftIndexed(auVar16,param_1 + 0x50);
+    storeVectorLeftIndexed(auVar17,param_1 + 0x60);
+    storeVectorLeftIndexed(auVar18,param_1 + 0x70);
+    param_1 = param_1 + 0x80;
+    param_3 = param_3 - 0x80;
     auVar69 = auVar19;
-  } while ((in_r5 & 0xffffffff) != 0);
-  return;
+  } while ((param_3 & 0xffffffff) != 0);
+  return param_1;
 }
 

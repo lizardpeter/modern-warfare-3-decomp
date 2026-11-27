@@ -2,101 +2,88 @@
 
 // 8253EBF8  node1_  (script/scr_parsetree.cpp:49)
 
-sval_u node1_(int param_1)
+void node1_(void)
 
 {
-  return (sval_u)param_1;
+  return;
 }
 
 
 // 8253EC00  node_pos  (script/scr_parsetree.cpp:58)
 
-sval_u node_pos(uint param_1)
+void node_pos(void)
 
 {
-  return (sval_u)param_1.type;
+  return;
 }
 
 
 // 8253EC08  Scr_InitAllocNodeUser  (script/scr_parsetree.cpp:67)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Scr_InitAllocNodeUser(void)
 
 {
-  if (g_allocNodeUser != (HunkUser *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",0x44
-                    ,0,"%s");
+  if (DAT_8387b8e8 != 0) {
+    MyAssertHandler(0xffffffff82151d78,0x44,0,0xffffffff82000f98,0xffffffff82151dbc);
   }
-  g_allocNodeUser = Hunk_UserCreate(0x10000,"Scr_InitAllocNode",false,7);
+  DAT_8387b8e8 = Hunk_UserCreate(0x10000,0xffffffff82151d64,0,7);
   return;
 }
 
 
 // 8253EC80  Scr_ShutdownAllocNodeUser  (script/scr_parsetree.cpp:79)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Scr_ShutdownAllocNodeUser(void)
 
 {
-  if (g_allocNodeUser == (HunkUser *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",0x50
-                    ,0,"%s");
+  if (DAT_8387b8e8 == 0) {
+    MyAssertHandler(0xffffffff82151d78,0x50,0,0xffffffff82000f98,0xffffffff82151dd0);
   }
-  Hunk_UserDestroy(g_allocNodeUser);
-  g_allocNodeUser = (HunkUser *)0x0;
+  Hunk_UserDestroy(DAT_8387b8e8);
+  DAT_8387b8e8 = 0;
   return;
 }
 
 
 // 8253ECE8  Scr_InitAllocNode  (script/scr_parsetree.cpp:92)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Scr_InitAllocNode(void)
 
 {
-  if (g_allocNodeUser != (HunkUser *)0x0) {
+  if (DAT_8387b8e8 != 0) {
     return;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",0x5d,0
-                  ,"%s");
+  MyAssertHandler(0xffffffff82151d78,0x5d,0,0xffffffff82000f98,0xffffffff82151dd0);
   return;
 }
 
 
 // 8253ED20  Scr_ShutdownAllocNode  (script/scr_parsetree.cpp:98)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Scr_ShutdownAllocNode(void)
 
 {
-  if (g_allocNodeUser == (HunkUser *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",99,0
-                    ,"%s");
+  if (DAT_8387b8e8 == 0) {
+    MyAssertHandler(0xffffffff82151d78,99,0,0xffffffff82000f98,0xffffffff82151dd0);
   }
-  Hunk_UserReset(g_allocNodeUser);
+  Hunk_UserReset(DAT_8387b8e8);
   return;
 }
 
 
 // 8253ED80  Scr_CheckUsedSize  (script/scr_parsetree.cpp:106)
 
-void Scr_CheckUsedSize(char *param_1)
+void Scr_CheckUsedSize(undefined8 param_1)
 
 {
   int iVar1;
   
-  if (g_allocNodeUser == (HunkUser *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",0x6b
-                    ,0,"%s");
+  if (DAT_8387b8e8 == 0) {
+    MyAssertHandler(0xffffffff82151d78,0x6b,0,0xffffffff82000f98,0xffffffff82151dd0);
   }
-  iVar1 = Hunk_UserUsedSize(g_allocNodeUser);
+  iVar1 = Hunk_UserUsedSize(DAT_8387b8e8);
   if (0x100000 < iVar1) {
-    Com_Error(ERR_FATAL,"ALLOC_NODE_BUFFER_SIZE exceeded for script \'%s\'");
+    Com_Error(0,0xffffffff82151de0,param_1);
   }
   return;
 }
@@ -104,368 +91,365 @@ void Scr_CheckUsedSize(char *param_1)
 
 // 8253EE10  Scr_AllocNode  (script/scr_parsetree.cpp:116)
 
-sval_u * Scr_AllocNode(int param_1)
+void Scr_AllocNode(ulonglong param_1)
 
 {
-  sval_u *psVar1;
-  
-  if (g_allocNodeUser == (HunkUser *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",0x75
-                    ,0,"%s");
+  if (DAT_8387b8e8 == 0) {
+    MyAssertHandler(0xffffffff82151d78,0x75,0,0xffffffff82000f98,0xffffffff82151dd0);
   }
-  psVar1 = Hunk_UserAlloc(g_allocNodeUser,param_1 << 2,4);
-  return psVar1;
+  Hunk_UserAlloc(DAT_8387b8e8,(param_1 & 0x3fffffff) << 2,4);
+  return;
 }
 
 
 // 8253EE88  node0  (script/scr_parsetree.cpp:123)
 
-sval_u node0(int param_1)
+void node0(undefined4 param_1)
 
 {
-  sval_u *psVar1;
+  undefined4 *puVar1;
   
-  psVar1 = Scr_AllocNode(1);
-  psVar1->type = param_1;
-  return (sval_u)psVar1.type;
+  puVar1 = (undefined4 *)Scr_AllocNode(1);
+  *puVar1 = param_1;
+  return;
 }
 
 
 // 8253EEC0  node1  (script/scr_parsetree.cpp:133)
 
-sval_u node1(int param_1,sval_u param_2)
+void node1(undefined4 param_1,undefined4 param_2)
 
 {
-  sval_u *psVar1;
+  undefined4 *puVar1;
   
-  psVar1 = Scr_AllocNode(2);
-  psVar1->type = param_1;
-  psVar1[1] = param_2;
-  return (sval_u)((scr_block_t *)psVar1).type;
+  puVar1 = (undefined4 *)Scr_AllocNode(2);
+  *puVar1 = param_1;
+  puVar1[1] = param_2;
+  return;
 }
 
 
 // 8253EF08  node2  (script/scr_parsetree.cpp:144)
 
-sval_u node2(int param_1,sval_u param_2,sval_u param_3)
+void node2(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  psVar2 = Scr_AllocNode(3);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  iVar1 = __restgprlr_29();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_29();
+  puVar2 = (undefined4 *)Scr_AllocNode(3);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  __restgprlr_29();
+  return;
 }
 
 
 // 8253EF40  node2_  (script/scr_parsetree.cpp:156)
 
-sval_u node2_(sval_u param_1,sval_u param_2)
+void node2_(undefined4 param_1,undefined4 param_2)
 
 {
-  sval_u *psVar1;
+  undefined4 *puVar1;
   
-  psVar1 = Scr_AllocNode(2);
-  *psVar1 = param_1;
-  psVar1[1] = param_2;
-  return (sval_u)psVar1.type;
+  puVar1 = (undefined4 *)Scr_AllocNode(2);
+  *puVar1 = param_1;
+  puVar1[1] = param_2;
+  return;
 }
 
 
 // 8253EF88  node3  (script/scr_parsetree.cpp:167)
 
-sval_u node3(int param_1,sval_u param_2,sval_u param_3,sval_u param_4)
+void node3(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  psVar2 = Scr_AllocNode(4);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  iVar1 = __restgprlr_28();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_28();
+  puVar2 = (undefined4 *)Scr_AllocNode(4);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  puVar2[3] = param_4;
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253EFC8  node3_  (script/scr_parsetree.cpp:180)
 
-sval_u node3_(sval_u param_1,sval_u param_2,sval_u param_3)
+void node3_(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
   
-  iVar1 = __savegprlr_29(param_1.type);
-  psVar2 = Scr_AllocNode(3);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  iVar1 = __restgprlr_29();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_29();
+  puVar2 = (undefined4 *)Scr_AllocNode(3);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  __restgprlr_29();
+  return;
 }
 
 
 // 8253F000  node4  (script/scr_parsetree.cpp:192)
 
-sval_u node4(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5)
+void node4(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+          undefined4 param_5)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
   
-  iVar1 = __savegprlr_27(param_1);
-  psVar2 = Scr_AllocNode(5);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  psVar2[4] = param_5;
-  iVar1 = __restgprlr_27();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_27();
+  puVar2 = (undefined4 *)Scr_AllocNode(5);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  puVar2[3] = param_4;
+  puVar2[4] = param_5;
+  __restgprlr_27();
+  return;
 }
 
 
 // 8253F048  node4_  (script/scr_parsetree.cpp:206)
 
-sval_u node4_(sval_u param_1,sval_u param_2,sval_u param_3,sval_u param_4)
+void node4_(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
   
-  iVar1 = __savegprlr_28(param_1.type);
-  psVar2 = Scr_AllocNode(4);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  iVar1 = __restgprlr_28();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_28();
+  puVar2 = (undefined4 *)Scr_AllocNode(4);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  puVar2[3] = param_4;
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253F088  node5  (script/scr_parsetree.cpp:219)
 
-sval_u node5(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,sval_u param_6)
+void node5(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+          undefined4 param_5,undefined4 param_6)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
   
-  iVar1 = __savegprlr_26(param_1);
-  psVar2 = Scr_AllocNode(6);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  psVar2[4] = param_5;
-  psVar2[5] = param_6;
-  iVar1 = __restgprlr_26();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_26();
+  puVar2 = (undefined4 *)Scr_AllocNode(6);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  puVar2[3] = param_4;
+  puVar2[4] = param_5;
+  puVar2[5] = param_6;
+  __restgprlr_26();
+  return;
 }
 
 
 // 8253F0D8  node6  (script/scr_parsetree.cpp:234)
 
-sval_u node6(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,sval_u param_6,
-            sval_u param_7)
+void node6(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+          undefined4 param_5,undefined4 param_6,undefined4 param_7)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
   
-  iVar1 = __savegprlr_25(param_1);
-  psVar2 = Scr_AllocNode(7);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  psVar2[4] = param_5;
-  psVar2[5] = param_6;
-  psVar2[6] = param_7;
-  iVar1 = __restgprlr_25();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_25();
+  puVar2 = (undefined4 *)Scr_AllocNode(7);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  puVar2[3] = param_4;
+  puVar2[4] = param_5;
+  puVar2[5] = param_6;
+  puVar2[6] = param_7;
+  __restgprlr_25();
+  return;
 }
 
 
 // 8253F130  node7  (script/scr_parsetree.cpp:250)
 
-sval_u node7(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,sval_u param_6,
-            sval_u param_7,sval_u param_8)
+void node7(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+          undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  undefined4 uVar1;
+  undefined4 *puVar2;
   
-  iVar1 = __savegprlr_24(param_1);
-  psVar2 = Scr_AllocNode(8);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  psVar2[4] = param_5;
-  psVar2[5] = param_6;
-  psVar2[6] = param_7;
-  psVar2[7] = param_8;
-  iVar1 = __restgprlr_24();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_24();
+  puVar2 = (undefined4 *)Scr_AllocNode(8);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  puVar2[3] = param_4;
+  puVar2[4] = param_5;
+  puVar2[5] = param_6;
+  puVar2[6] = param_7;
+  puVar2[7] = param_8;
+  __restgprlr_24();
+  return;
 }
 
 
 // 8253F190  node8  (script/scr_parsetree.cpp:267)
 
-sval_u node8(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,sval_u param_6,
-            sval_u param_7,sval_u param_8,sval_u param_9)
+void node8(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+          undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8)
 
 {
-  int iVar1;
-  sval_u *psVar2;
-  sval_u in_stack_00000054;
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  undefined4 in_stack_00000054;
   
-  iVar1 = __savegprlr_24(param_1);
-  psVar2 = Scr_AllocNode(9);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  psVar2[4] = param_5;
-  psVar2[5] = param_6;
-  psVar2[6] = param_7;
-  psVar2[7] = param_8;
-  psVar2[8] = in_stack_00000054;
-  iVar1 = __restgprlr_24();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_24();
+  puVar2 = (undefined4 *)Scr_AllocNode(9);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  puVar2[3] = param_4;
+  puVar2[4] = param_5;
+  puVar2[5] = param_6;
+  puVar2[6] = param_7;
+  puVar2[7] = param_8;
+  puVar2[8] = in_stack_00000054;
+  __restgprlr_24();
+  return;
 }
 
 
 // 8253F1F8  node_reverse_list  (script/scr_parsetree.cpp:285)
 
-sval_u node_reverse_list(sval_u param_1)
+void node_reverse_list(int *param_1)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
   
-  iVar1 = (param_1.block)->abortLevel;
+  iVar1 = *param_1;
   iVar3 = 0;
   while (iVar2 = iVar1, iVar2 != 0) {
     iVar1 = *(int *)(iVar2 + 4);
     *(int *)(iVar2 + 4) = iVar3;
     iVar3 = iVar2;
   }
-  (param_1.block)->abortLevel = iVar3;
-  return (sval_u)param_1.type;
+  *param_1 = iVar3;
+  return;
 }
 
 
 // 8253F228  linked_list_end  (script/scr_parsetree.cpp:305)
 
-sval_u linked_list_end(sval_u param_1)
+void linked_list_end(undefined4 param_1)
 
 {
-  sval_u *psVar1;
-  sval_u *psVar2;
+  undefined4 *puVar1;
+  undefined4 *puVar2;
   
-  psVar1 = Scr_AllocNode(2);
-  *psVar1 = param_1;
-  psVar1[1].type = 0;
-  psVar2 = Scr_AllocNode(2);
-  psVar2->node = psVar1;
-  psVar2[1].node = psVar1;
-  return (sval_u)psVar2.type;
+  puVar1 = (undefined4 *)Scr_AllocNode(2);
+  *puVar1 = param_1;
+  puVar1[1] = 0;
+  puVar2 = (undefined4 *)Scr_AllocNode(2);
+  *puVar2 = puVar1;
+  puVar2[1] = puVar1;
+  return;
 }
 
 
 // 8253F280  prepend_node  (script/scr_parsetree.cpp:320)
 
-sval_u prepend_node(sval_u param_1,sval_u param_2)
+undefined4 * prepend_node(undefined4 param_1,undefined4 *param_2)
 
 {
-  sval_u *psVar1;
+  undefined4 *puVar1;
   
-  psVar1 = Scr_AllocNode(2);
-  *psVar1 = param_1;
-  psVar1[1] = *param_2.node;
-  *(sval_u **)param_2.codePosValue = psVar1;
-  return (sval_u)param_2.type;
+  puVar1 = (undefined4 *)Scr_AllocNode(2);
+  *puVar1 = param_1;
+  puVar1[1] = *param_2;
+  *param_2 = puVar1;
+  return param_2;
 }
 
 
 // 8253F2D0  append_node  (script/scr_parsetree.cpp:332)
 
-sval_u append_node(sval_u param_1,sval_u param_2)
+int append_node(int param_1,undefined4 param_2)
 
 {
-  sval_u *psVar1;
+  undefined4 *puVar1;
   
-  psVar1 = Scr_AllocNode(2);
-  *psVar1 = param_2;
-  psVar1[1].type = 0;
-  *(sval_u **)((param_1.block)->localVarsCreateCount + 4) = psVar1;
-  (param_1.block)->localVarsCreateCount = (int)psVar1;
-  return (sval_u)param_1.type;
+  puVar1 = (undefined4 *)Scr_AllocNode(2);
+  *puVar1 = param_2;
+  puVar1[1] = 0;
+  *(undefined4 **)(*(int *)(param_1 + 4) + 4) = puVar1;
+  *(undefined4 **)(param_1 + 4) = puVar1;
+  return param_1;
 }
 
 
 // 8253F328  append_lists  (script/scr_parsetree.cpp:345)
 
-sval_u append_lists(sval_u param_1,sval_u param_2)
+void append_lists(int param_1,undefined4 *param_2)
 
 {
-  *(sval_u *)((param_1.block)->localVarsCreateCount + 4) = *param_2.node;
-  (param_1.block)->localVarsCreateCount = (param_2.block)->localVarsCreateCount;
-  return (sval_u)param_1.type;
+  *(undefined4 *)(*(int *)(param_1 + 4) + 4) = *param_2;
+  *(undefined4 *)(param_1 + 4) = param_2[1];
+  return;
 }
 
 
 // 8253F340  Scr_InitParseTreeMemory  (script/scr_parsetree.cpp:362)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
 void Scr_InitParseTreeMemory(void)
 
 {
-  if (g_debugExprMem != (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",
-                    0x16c,0,"%s");
+  if (DAT_8387b8dc != (HANDLE)0x0) {
+    MyAssertHandler(0xffffffff82151d78,0x16c,0,0xffffffff82000f98,0xffffffff82151e10);
   }
-  g_debugExprMem = HeapCreate(0,0x10000,0x10000);
+  DAT_8387b8dc = HeapCreate(0,0x10000,0x10000);
   return;
 }
 
 
 // 8253F3B0  Scr_ShutdownParseTreeMemory  (script/scr_parsetree.cpp:377)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-
-void Scr_ShutdownParseTreeMemory(void)
+BOOL Scr_ShutdownParseTreeMemory(void)
 
 {
-  if (g_debugExprMem != (void *)0x0) {
-    HeapDestroy(g_debugExprMem);
-    g_debugExprMem = (void *)0x0;
+  BOOL BVar1;
+  
+  BVar1 = 0;
+  if (DAT_8387b8dc != (HANDLE)0x0) {
+    BVar1 = HeapDestroy(DAT_8387b8dc);
+    DAT_8387b8dc = (HANDLE)0x0;
   }
-  return;
+  return BVar1;
 }
 
 
 // 8253F3F0  Scr_ClearDebugExpr  (script/scr_parsetree.cpp:394)
 
-void Scr_ClearDebugExpr(debugger_sval_s *param_1)
+void Scr_ClearDebugExpr(undefined4 *param_1)
 
 {
-  for (; param_1 != (debugger_sval_s *)0x0; param_1 = param_1->next) {
-    Scr_ClearDebugExprValue((sval_u *)(param_1 + 1));
+  for (; param_1 != (undefined4 *)0x0; param_1 = (undefined4 *)*param_1) {
+    Scr_ClearDebugExprValue(param_1 + 1);
   }
   return;
 }
@@ -473,64 +457,56 @@ void Scr_ClearDebugExpr(debugger_sval_s *param_1)
 
 // 8253F438  Scr_AllocDebugExpr  (script/scr_parsetree.cpp:413)
 
-sval_u Scr_AllocDebugExpr(int param_1,int param_2,char *param_3)
+void Scr_AllocDebugExpr(undefined8 param_1,longlong param_2)
 
 {
-  debugger_sval_s *pdVar1;
-  debugger_sval_s *pdVar2;
-  int iVar3;
-  longlong lVar4;
+  undefined4 uVar1;
+  undefined4 *puVar2;
   
-  lVar4 = (longlong)param_2;
-  pdVar1 = (debugger_sval_s *)__savegprlr_27(param_1,lVar4,param_3);
-  if (g_debugExprMem == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",
-                    0x1a2,0,"%s");
+  uVar1 = __savegprlr_27();
+  if (DAT_8387b8dc == 0) {
+    MyAssertHandler(0xffffffff82151d78,0x1a2,0,0xffffffff82000f98,0xffffffff82151e30);
   }
-  pdVar2 = RtlAllocateHeap(g_debugExprMem,0,(int)lVar4 + 4);
-  if (pdVar2 == (debugger_sval_s *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",
-                    0x1a4,0,"%s");
+  puVar2 = (undefined4 *)RtlAllocateHeap(DAT_8387b8dc,0,param_2 + 4);
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82151d78,0x1a4,0,0xffffffff82000f98,0xffffffff82151e20);
   }
-  pdVar2->next = g_debugExprHead;
-  g_debugExprHead = pdVar2;
-  pdVar2[1].next = pdVar1;
-  iVar3 = __restgprlr_27((longlong)(int)pdVar2 + 4);
-  return (sval_u)iVar3;
+  *puVar2 = DAT_8387b8e4;
+  DAT_8387b8e4 = puVar2;
+  puVar2[1] = uVar1;
+  __restgprlr_27(puVar2 + 1);
+  return;
 }
 
 
 // 8253F4E0  Scr_FreeDebugExpr  (script/scr_parsetree.cpp:441)
 
-void Scr_FreeDebugExpr(ScriptExpression_t *param_1)
+void Scr_FreeDebugExpr(void)
 
 {
   int *piVar1;
   int iVar2;
-  ulong uVar3;
-  int *piVar4;
+  int *piVar3;
   
-  iVar2 = __savegprlr_26(param_1);
+  iVar2 = __savegprlr_26();
   if (*(int *)(iVar2 + 4) != 0) {
-    scrVmDebugPub.checkBreakon = scrVmDebugPub.checkBreakon + -1;
+    DAT_83c734fc = DAT_83c734fc + -1;
   }
-  piVar4 = *(int **)(iVar2 + 8);
-  if (piVar4 != (int *)0x0) {
+  piVar3 = *(int **)(iVar2 + 8);
+  if (piVar3 != (int *)0x0) {
     do {
-      Scr_FreeDebugExprValue((sval_u *)(piVar4 + 1));
-      piVar1 = (int *)*piVar4;
-      if (g_debugExprMem == (void *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",
-                        0x1cb,0,"%s");
+      Scr_FreeDebugExprValue(piVar3 + 1);
+      piVar1 = (int *)*piVar3;
+      if (DAT_8387b8dc == 0) {
+        MyAssertHandler(0xffffffff82151d78,0x1cb,0,0xffffffff82000f98,0xffffffff82151e30);
       }
-      uVar3 = RtlFreeHeap(g_debugExprMem,0,piVar4);
-      piVar4 = piVar1;
+      RtlFreeHeap(DAT_8387b8dc,0,piVar3);
+      piVar3 = piVar1;
     } while (piVar1 != (int *)0x0);
-    __restgprlr_26(uVar3);
+    __restgprlr_26();
     return;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",0x1c2,
-                  0,"%s");
+  MyAssertHandler(0xffffffff82151d78,0x1c2,0,0xffffffff82000f98,0xffffffff82151e20);
   __restgprlr_26();
   return;
 }
@@ -538,11 +514,11 @@ void Scr_FreeDebugExpr(ScriptExpression_t *param_1)
 
 // 8253F5B8  Scr_AddDebugExprRefCount  (script/scr_parsetree.cpp:479)
 
-void Scr_AddDebugExprRefCount(ushort *param_1,debugger_sval_s *param_2)
+void Scr_AddDebugExprRefCount(undefined8 param_1,undefined4 *param_2)
 
 {
-  for (; param_2 != (debugger_sval_s *)0x0; param_2 = param_2->next) {
-    Scr_AddDebugExprValueRefCount(param_1,(sval_u *)(param_2 + 1));
+  for (; param_2 != (undefined4 *)0x0; param_2 = (undefined4 *)*param_2) {
+    Scr_AddDebugExprValueRefCount(param_1,param_2 + 1);
   }
   return;
 }
@@ -550,190 +526,188 @@ void Scr_AddDebugExprRefCount(ushort *param_1,debugger_sval_s *param_2)
 
 // 8253F610  debugger_node0  (script/scr_parsetree.cpp:501)
 
-sval_u debugger_node0(int param_1)
+void debugger_node0(undefined8 param_1)
 
 {
-  sval_u sVar1;
-  
-  sVar1 = Scr_AllocDebugExpr(param_1,4,"debugger_node0");
-  return (sval_u)sVar1.type;
+  Scr_AllocDebugExpr(param_1,4,0xffffffff82151e40);
+  return;
 }
 
 
 // 8253F620  debugger_node1  (script/scr_parsetree.cpp:513)
 
-sval_u debugger_node1(int param_1,sval_u param_2)
+void debugger_node1(undefined8 param_1,undefined4 param_2)
 
 {
-  sval_u sVar1;
+  int iVar1;
   
-  sVar1 = Scr_AllocDebugExpr(param_1,8,"debugger_node1");
-  (sVar1.block)->localVarsCreateCount = (int)param_2;
-  return (sval_u)sVar1.type;
+  iVar1 = Scr_AllocDebugExpr(param_1,8,0xffffffff82151e50);
+  *(undefined4 *)(iVar1 + 4) = param_2;
+  return;
 }
 
 
 // 8253F660  debugger_node2  (script/scr_parsetree.cpp:529)
 
-sval_u debugger_node2(int param_1,sval_u param_2,sval_u param_3)
+void debugger_node2(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 {
-  sval_u sVar1;
+  int iVar1;
   
-  sVar1 = Scr_AllocDebugExpr(param_1,0xc,"debugger_node2");
-  (sVar1.block)->localVarsCreateCount = (int)param_2;
-  (sVar1.block)->localVarsPublicCount = (int)param_3;
-  return (sval_u)sVar1.type;
+  iVar1 = Scr_AllocDebugExpr(param_1,0xc,0xffffffff82151e60);
+  *(undefined4 *)(iVar1 + 4) = param_2;
+  *(undefined4 *)(iVar1 + 8) = param_3;
+  return;
 }
 
 
 // 8253F6B0  debugger_node3  (script/scr_parsetree.cpp:546)
 
-sval_u debugger_node3(int param_1,sval_u param_2,sval_u param_3,sval_u param_4)
+void debugger_node3(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  int iVar1;
-  sval_u sVar2;
+  undefined8 uVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  sVar2 = Scr_AllocDebugExpr(iVar1,0x10,"debugger_node3");
-  (sVar2.block)->localVarsCreateCount = (int)param_2;
-  (sVar2.block)->localVarsPublicCount = (int)param_3;
-  (sVar2.block)->localVarsCount = (int)param_4;
-  iVar1 = __restgprlr_29();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_29();
+  iVar2 = Scr_AllocDebugExpr(uVar1,0x10,0xffffffff82151e70);
+  *(undefined4 *)(iVar2 + 4) = param_2;
+  *(undefined4 *)(iVar2 + 8) = param_3;
+  *(undefined4 *)(iVar2 + 0xc) = param_4;
+  __restgprlr_29();
+  return;
 }
 
 
 // 8253F6F0  debugger_node4  (script/scr_parsetree.cpp:564)
 
-sval_u debugger_node4(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5)
+void debugger_node4(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                   undefined4 param_5)
 
 {
-  int iVar1;
-  sval_u sVar2;
+  undefined8 uVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  sVar2 = Scr_AllocDebugExpr(iVar1,0x14,"debugger_node4");
-  (sVar2.block)->localVarsCreateCount = (int)param_2;
-  (sVar2.block)->localVarsPublicCount = (int)param_3;
-  (sVar2.block)->localVarsCount = (int)param_4;
-  *(sval_u *)(sVar2.block)->localVarsInitBits = param_5;
-  iVar1 = __restgprlr_28();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_28();
+  iVar2 = Scr_AllocDebugExpr(uVar1,0x14,0xffffffff82151e80);
+  *(undefined4 *)(iVar2 + 4) = param_2;
+  *(undefined4 *)(iVar2 + 8) = param_3;
+  *(undefined4 *)(iVar2 + 0xc) = param_4;
+  *(undefined4 *)(iVar2 + 0x10) = param_5;
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253F738  debugger_node5  (script/scr_parsetree.cpp:583)
 
-sval_u debugger_node5(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,
-                     sval_u param_6)
+void debugger_node5(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                   undefined4 param_5,undefined4 param_6)
 
 {
-  int iVar1;
-  sval_u sVar2;
+  undefined8 uVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_27(param_1);
-  sVar2 = Scr_AllocDebugExpr(iVar1,0x18,"debugger_node5");
-  (sVar2.block)->localVarsCreateCount = (int)param_2;
-  (sVar2.block)->localVarsPublicCount = (int)param_3;
-  (sVar2.block)->localVarsCount = (int)param_4;
-  *(sval_u *)(sVar2.block)->localVarsInitBits = param_5;
-  *(sval_u *)((sVar2.block)->localVarsInitBits + 4) = param_6;
-  iVar1 = __restgprlr_27();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_27();
+  iVar2 = Scr_AllocDebugExpr(uVar1,0x18,0xffffffff82151e90);
+  *(undefined4 *)(iVar2 + 4) = param_2;
+  *(undefined4 *)(iVar2 + 8) = param_3;
+  *(undefined4 *)(iVar2 + 0xc) = param_4;
+  *(undefined4 *)(iVar2 + 0x10) = param_5;
+  *(undefined4 *)(iVar2 + 0x14) = param_6;
+  __restgprlr_27();
+  return;
 }
 
 
 // 8253F788  debugger_node6  (script/scr_parsetree.cpp:603)
 
-sval_u debugger_node6(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,
-                     sval_u param_6,sval_u param_7)
+void debugger_node6(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                   undefined4 param_5,undefined4 param_6,undefined4 param_7)
 
 {
-  int iVar1;
-  sval_u sVar2;
+  undefined8 uVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_26(param_1);
-  sVar2 = Scr_AllocDebugExpr(iVar1,0x1c,"debugger_node5");
-  (sVar2.block)->localVarsCreateCount = (int)param_2;
-  (sVar2.block)->localVarsPublicCount = (int)param_3;
-  (sVar2.block)->localVarsCount = (int)param_4;
-  *(sval_u *)(sVar2.block)->localVarsInitBits = param_5;
-  *(sval_u *)((sVar2.block)->localVarsInitBits + 4) = param_6;
-  (sVar2.block)->localVars[0].canonicalStr = (uint)param_7;
-  iVar1 = __restgprlr_26();
-  return (sval_u)iVar1;
+  uVar1 = __savegprlr_26();
+  iVar2 = Scr_AllocDebugExpr(uVar1,0x1c,0xffffffff82151e90);
+  *(undefined4 *)(iVar2 + 4) = param_2;
+  *(undefined4 *)(iVar2 + 8) = param_3;
+  *(undefined4 *)(iVar2 + 0xc) = param_4;
+  *(undefined4 *)(iVar2 + 0x10) = param_5;
+  *(undefined4 *)(iVar2 + 0x14) = param_6;
+  *(undefined4 *)(iVar2 + 0x18) = param_7;
+  __restgprlr_26();
+  return;
 }
 
 
 // 8253F7E0  debugger_prepend_node  (script/scr_parsetree.cpp:624)
 
-sval_u debugger_prepend_node(sval_u param_1,sval_u param_2)
+void debugger_prepend_node(undefined8 param_1,undefined8 param_2)
 
 {
   int iVar1;
-  sval_u sVar2;
+  undefined4 uVar2;
   int iVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)param_2.type;
-  iVar1 = __savegprlr_29(param_1.type);
-  iVar3 = *(int *)lVar4;
-  sVar2 = Scr_AllocDebugExpr(0,0xc,"debugger_node2");
-  (sVar2.block)->localVarsCreateCount = iVar1;
-  (sVar2.block)->localVarsPublicCount = iVar3;
-  *(int *)lVar4 = (int)&(sVar2.block)->localVarsCreateCount;
-  iVar3 = __restgprlr_29(lVar4);
-  return (sval_u)iVar3;
+  uVar2 = __savegprlr_29();
+  iVar1 = *(int *)param_2;
+  iVar3 = Scr_AllocDebugExpr(0,0xc,0xffffffff82151e60);
+  *(undefined4 *)(iVar3 + 4) = uVar2;
+  *(int *)(iVar3 + 8) = iVar1;
+  *(int *)param_2 = iVar3 + 4;
+  __restgprlr_29(param_2);
+  return;
 }
 
 
 // 8253F828  debugger_buffer  (script/scr_parsetree.cpp:645)
 
-sval_u debugger_buffer(int param_1,char *param_2,int param_3,int param_4)
+void debugger_buffer(undefined8 param_1,void *param_2,longlong param_3,longlong param_4)
 
 {
   uint uVar1;
-  int iVar2;
-  sval_u sVar3;
+  undefined8 uVar2;
+  int iVar3;
+  void *_Dst;
   
-  iVar2 = __savegprlr_28(param_1,param_2);
-  uVar1 = param_4 - 1;
-  if ((uVar1 & param_4) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",
-                    0x289,0,"%s");
+  uVar2 = __savegprlr_28();
+  uVar1 = (uint)(param_4 + -1);
+  if ((uVar1 & (uint)param_4) != 0) {
+    MyAssertHandler(0xffffffff82151d78,0x289,0,0xffffffff82000f98,0xffffffff82151eb0);
   }
-  sVar3 = Scr_AllocDebugExpr(iVar2,param_3 + uVar1 + 8,"debugger_buffer");
-  memcpy();
-  (sVar3.block)->localVarsCreateCount = sVar3.stringValue + param_4 + 7U & ~uVar1;
-  iVar2 = __restgprlr_28(sVar3.type);
-  return (sval_u)iVar2;
+  iVar3 = Scr_AllocDebugExpr(uVar2,param_3 + param_4 + -1 + 8,0xffffffff82151ea0);
+  _Dst = (void *)(iVar3 + uVar1 + 8 & ~uVar1);
+  memcpy(_Dst,param_2,(size_t)param_3);
+  *(void **)(iVar3 + 4) = _Dst;
+  __restgprlr_28(iVar3);
+  return;
 }
 
 
 // 8253F8C0  debugger_string  (script/scr_parsetree.cpp:666)
 
-sval_u debugger_string(int param_1,char *param_2)
+void debugger_string(undefined8 param_1,longlong param_2)
 
 {
-  int iVar1;
-  sval_u sVar2;
-  longlong lVar3;
+  undefined8 uVar1;
+  int iVar2;
+  ulonglong uVar3;
   char *pcVar5;
   longlong lVar4;
   
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  lVar4 = lVar3;
+  uVar1 = __savegprlr_29();
+  lVar4 = param_2;
   do {
     pcVar5 = (char *)lVar4;
     lVar4 = lVar4 + 1;
   } while (*pcVar5 != '\0');
-  sVar2 = Scr_AllocDebugExpr(iVar1,((int)lVar4 - (int)lVar3) + 8,"debugger_buffer");
-  memcpy();
-  (sVar2.block)->localVarsCreateCount = (int)&(sVar2.block)->localVarsPublicCount;
-  iVar1 = __restgprlr_29(sVar2.type);
-  return (sval_u)iVar1;
+  uVar3 = (lVar4 - param_2) - 1;
+  iVar2 = Scr_AllocDebugExpr(uVar1,(uVar3 & 0xffffffff) + 9,0xffffffff82151ea0);
+  memcpy((void *)(iVar2 + 8),(void *)param_2,(int)uVar3 + 1);
+  *(void **)(iVar2 + 4) = (void *)(iVar2 + 8);
+  __restgprlr_29(iVar2);
+  return;
 }
 

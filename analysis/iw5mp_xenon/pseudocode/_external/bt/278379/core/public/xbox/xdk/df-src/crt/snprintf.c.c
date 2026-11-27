@@ -2,23 +2,36 @@
 
 // 82918320  _snprintf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/sprintf.c:99)
 
-int _snprintf(char *param_1,uint param_2,char *param_3)
+int _snprintf(char *_Dest,size_t _Count,char *_Format,...)
 
 {
   char *pcVar1;
   int *piVar2;
   int iVar3;
   ulonglong uVar4;
+  undefined8 in_r6;
+  undefined8 in_r7;
+  undefined8 in_r8;
+  undefined8 in_r9;
+  undefined8 in_r10;
   ulonglong uVar5;
-  char *pcStack00000024;
-  _iobuf local_50 [2];
+  undefined8 in_stack_00000028;
+  undefined8 in_stack_00000030;
+  undefined8 in_stack_00000038;
+  undefined8 in_stack_00000040;
+  undefined8 in_stack_00000048;
+  FILE local_50 [2];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
+  uVar4 = (ulonglong)(int)_Format;
+  uVar5 = (ulonglong)(int)_Count;
+  pcVar1 = (char *)__savegprlr_28(_Dest);
   local_50[0]._ptr = (char *)0x0;
-  pcStack00000024 = (char *)uVar4;
-  memset();
+  in_stack_00000028 = in_r6;
+  in_stack_00000030 = in_r7;
+  in_stack_00000038 = in_r8;
+  in_stack_00000040 = in_r9;
+  in_stack_00000048 = in_r10;
+  memset(&local_50[0]._cnt,0,0x1c);
   if (((uVar4 & 0xffffffff) == 0) || (((uVar5 & 0xffffffff) != 0 && (pcVar1 == (char *)0x0)))) {
     piVar2 = _errno();
     *piVar2 = 0x16;
@@ -33,7 +46,7 @@ int _snprintf(char *param_1,uint param_2,char *param_3)
     local_50[0]._flag = 0x42;
     local_50[0]._ptr = pcVar1;
     local_50[0]._base = pcVar1;
-    iVar3 = _output_l(local_50,(char *)uVar4,(localeinfo_struct *)0x0,&stack0x00000028);
+    iVar3 = _output_l(local_50,(char *)uVar4,(_locale_t)0x0,(va_list)&stack0x00000028);
     if (pcVar1 != (char *)0x0) {
       uVar5 = (ulonglong)(uint)local_50[0]._cnt;
       local_50[0]._cnt = (int)(uVar5 - 1);

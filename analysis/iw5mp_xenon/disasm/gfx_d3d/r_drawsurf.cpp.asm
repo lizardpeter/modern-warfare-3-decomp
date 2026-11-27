@@ -1489,7 +1489,7 @@ LAB_8273b408:
   8273B410  382100A0             addi r1,r1,0xa0
   8273B414  481DB2E4             b 0x829166f8
 
-; 8273B418  _Push_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 8273B418  std::_Push_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   8273B418  7D8802A6             mfspr r12,LR
   8273B41C  481DB291             bl 0x829166ac
   8273B420  9421FF70             stwu r1,-0x90(r1)
@@ -1549,7 +1549,7 @@ LAB_8273b4dc:
   8273B4E8  38210090             addi r1,r1,0x90
   8273B4EC  481DB210             b 0x829166fc
 
-; 8273B560  _Adjust_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 8273B560  std::_Adjust_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   8273B560  7D8802A6             mfspr r12,LR
   8273B564  481DB149             bl 0x829166ac
   8273B568  9421FF70             stwu r1,-0x90(r1)
@@ -1670,7 +1670,7 @@ LAB_8273b700:
   8273B70C  38210090             addi r1,r1,0x90
   8273B710  481DAFEC             b 0x829166fc
 
-; 8273B878  _Make_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 8273B878  std::_Make_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   8273B878  7D8802A6             mfspr r12,LR
   8273B87C  481DAE2D             bl 0x829166a8
   8273B880  9421FF50             stwu r1,-0xb0(r1)
@@ -1771,7 +1771,7 @@ LAB_8273b9d8:
   8273B9D8  382100B0             addi r1,r1,0xb0
   8273B9DC  481DAD1C             b 0x829166f8
 
-; 8273C1E8  _Sort_heap<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 8273C1E8  std::_Sort_heap<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   8273C1E8  7D8802A6             mfspr r12,LR
   8273C1EC  481DA4CD             bl 0x829166b8
   8273C1F0  9421FF70             stwu r1,-0x90(r1)
@@ -1817,7 +1817,7 @@ LAB_8273c280:
   8273C280  38210090             addi r1,r1,0x90
   8273C284  481DA484             b 0x82916708
 
-; 8273BC18  _Insertion_sort1<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&),GfxSurface>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 8273BC18  std::_Insertion_sort1<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&),GfxSurface>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   8273BC18  7D8802A6             mfspr r12,LR
   8273BC1C  481DAA91             bl 0x829166ac
   8273BC20  9421FF50             stwu r1,-0xb0(r1)
@@ -1918,7 +1918,7 @@ LAB_8273bd68:
   8273BD68  382100B0             addi r1,r1,0xb0
   8273BD6C  481DA990             b 0x829166fc
 
-; 8273B9E0  _Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 8273B9E0  std::_Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   8273B9E0  7D8802A6             mfspr r12,LR
   8273B9E4  481DACD5             bl 0x829166b8
   8273B9E8  9421FF70             stwu r1,-0x90(r1)
@@ -2025,7 +2025,7 @@ LAB_8273bb4c:
   8273BB4C  38210090             addi r1,r1,0x90
   8273BB50  481DABB8             b 0x82916708
 
-; 8273BB58  _Median<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 8273BB58  std::_Median<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   8273BB58  7D8802A6             mfspr r12,LR
   8273BB5C  481DAB55             bl 0x829166b0
   8273BB60  9421FF70             stwu r1,-0x90(r1)
@@ -2075,7 +2075,7 @@ LAB_8273bc00:
   8273BC0C  38210090             addi r1,r1,0x90
   8273BC10  481DAAF0             b 0x82916700
 
-; 8273BD70  _Unguarded_partition<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 8273BD70  std::_Unguarded_partition<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   8273BD70  7D8802A6             mfspr r12,LR
   8273BD74  481DA931             bl 0x829166a4
   8273BD78  9421FE80             stwu r1,-0x180(r1)
@@ -2401,7 +2401,7 @@ LAB_8273c1d4:
   8273C1E0  38210180             addi r1,r1,0x180
   8273C1E4  481DA510             b 0x829166f4
 
-; 8273C288  _Sort<GfxSurface_*,int,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 8273C288  std::_Sort<GfxSurface_*,int,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   8273C288  7D8802A6             mfspr r12,LR
   8273C28C  481DA421             bl 0x829166ac
   8273C290  9421FF60             stwu r1,-0xa0(r1)

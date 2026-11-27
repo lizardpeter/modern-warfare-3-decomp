@@ -2,7 +2,7 @@
 
 // 82928270  _isatty  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/isatty.c:37)
 
-int _isatty(int param_1)
+int _isatty(int _FileHandle)
 
 {
   return 0;

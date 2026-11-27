@@ -2,99 +2,99 @@
 
 // 8291ED90  _flsbuf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_flsbuf.c:93)
 
-int _flsbuf(int param_1,_iobuf *param_2)
+int _flsbuf(int _Ch,FILE *_File)
 
 {
-  char *pcVar1;
-  uint uVar4;
-  int *piVar6;
-  ulonglong uVar2;
-  _iobuf *p_Var7;
-  int iVar8;
-  long64 lVar3;
-  int iVar9;
-  uint uVar10;
-  ioinfo *piVar11;
-  longlong lVar12;
+  char *_Buf;
+  uint _FileHandle;
+  int *piVar3;
+  ulonglong uVar1;
+  FILE *pFVar4;
+  int iVar5;
+  longlong lVar2;
+  int iVar6;
+  uint uVar7;
+  undefined *puVar8;
+  longlong lVar9;
   uint uStack00000014;
-  _iobuf *p_Var5;
+  FILE *_File_00;
   
-  uVar2 = (ulonglong)(int)param_2;
-  uStack00000014 = __savegprlr_28(param_1);
-  p_Var5 = (_iobuf *)uVar2;
-  uVar4 = _fileno(p_Var5);
-  uVar10 = p_Var5->_flag;
-  if ((uVar10 & 0x82) == 0) {
-    piVar6 = _errno();
-    iVar9 = 9;
+  uVar1 = (ulonglong)(int)_File;
+  uStack00000014 = __savegprlr_28(_Ch);
+  _File_00 = (FILE *)uVar1;
+  _FileHandle = _fileno(_File_00);
+  uVar7 = _File_00->_flag;
+  if ((uVar7 & 0x82) == 0) {
+    piVar3 = _errno();
+    iVar6 = 9;
 LAB_8291edc8:
-    *piVar6 = iVar9;
+    *piVar3 = iVar6;
 LAB_8291edd0:
-    uVar10 = p_Var5->_flag;
+    uVar7 = _File_00->_flag;
   }
   else {
-    if ((uVar10 & 0x40) != 0) {
-      piVar6 = _errno();
-      iVar9 = 0x22;
+    if ((uVar7 & 0x40) != 0) {
+      piVar3 = _errno();
+      iVar6 = 0x22;
       goto LAB_8291edc8;
     }
-    if ((uVar10 & 1) == 0) {
+    if ((uVar7 & 1) == 0) {
 LAB_8291ee20:
-      uVar10 = p_Var5->_flag;
-      iVar9 = 0;
-      p_Var5->_cnt = 0;
-      p_Var5->_flag = uVar10 & 0xffffffef | 2;
-      if (((uVar10 & 0x10c) == 0) &&
-         (((p_Var7 = __iob_func(),
-           (uVar2 & 0xffffffff) != ((longlong)(int)p_Var7 + 0x20U & 0xffffffff) &&
-           (p_Var7 = __iob_func(),
-           (uVar2 & 0xffffffff) != ((longlong)(int)p_Var7 + 0x40U & 0xffffffff))) ||
-          (iVar8 = _isatty(uVar4), iVar8 == 0)))) {
-        _getbuf(p_Var5);
+      uVar7 = _File_00->_flag;
+      iVar6 = 0;
+      _File_00->_cnt = 0;
+      _File_00->_flag = uVar7 & 0xffffffef | 2;
+      if (((uVar7 & 0x10c) == 0) &&
+         (((pFVar4 = __iob_func(),
+           (uVar1 & 0xffffffff) != ((longlong)(int)pFVar4 + 0x20U & 0xffffffff) &&
+           (pFVar4 = __iob_func(),
+           (uVar1 & 0xffffffff) != ((longlong)(int)pFVar4 + 0x40U & 0xffffffff))) ||
+          (iVar5 = _isatty(_FileHandle), iVar5 == 0)))) {
+        _getbuf(_File_00);
       }
-      if ((p_Var5->_flag & 0x108U) == 0) {
-        lVar12 = 1;
-        iVar9 = _write(uVar4,&stack0x00000014,1);
+      if ((_File_00->_flag & 0x108U) == 0) {
+        lVar9 = 1;
+        iVar6 = _write(_FileHandle,&stack0x00000014,1);
 LAB_8291ef4c:
-        if (iVar9 == (int)lVar12) {
-          uVar2 = (ulonglong)uStack00000014 & 0xff;
+        if (iVar6 == (int)lVar9) {
+          uVar1 = (ulonglong)uStack00000014 & 0xff;
           goto LAB_8291ef5c;
         }
       }
       else {
-        pcVar1 = p_Var5->_base;
-        lVar12 = ZEXT48(p_Var5->_ptr) - ZEXT48(pcVar1);
-        p_Var5->_cnt = p_Var5->_bufsiz + -1;
-        p_Var5->_ptr = pcVar1 + 1;
-        if (0 < lVar12) {
-          iVar9 = _write(uVar4,pcVar1,(uint)lVar12);
+        _Buf = _File_00->_base;
+        lVar9 = ZEXT48(_File_00->_ptr) - ZEXT48(_Buf);
+        _File_00->_cnt = _File_00->_bufsiz + -1;
+        _File_00->_ptr = _Buf + 1;
+        if (0 < lVar9) {
+          iVar6 = _write(_FileHandle,_Buf,(uint)lVar9);
 LAB_8291ef24:
-          *p_Var5->_base = (char)uStack00000014;
+          *_File_00->_base = (char)uStack00000014;
           goto LAB_8291ef4c;
         }
-        if ((uVar4 == 0xffffffff) || (uVar4 == 0xfffffffe)) {
-          piVar11 = &__badioinfo;
+        if ((_FileHandle == 0xffffffff) || (_FileHandle == 0xfffffffe)) {
+          puVar8 = &DAT_829b0a68;
         }
         else {
-          piVar11 = (ioinfo *)(*(int *)(&__pioinfo + ((int)uVar4 >> 5) * 4) + (uVar4 & 0x1f) * 0x48)
-          ;
+          puVar8 = (undefined *)
+                   ((&DAT_84897dc0)[(int)_FileHandle >> 5] + (_FileHandle & 0x1f) * 0x48);
         }
-        if (((piVar11->osfile & 0x20U) == 0) || (lVar3 = _lseeki64(uVar4,0,2), lVar3 != -1))
+        if (((puVar8[4] & 0x20) == 0) || (lVar2 = _lseeki64(_FileHandle,0,2), lVar2 != -1))
         goto LAB_8291ef24;
       }
       goto LAB_8291edd0;
     }
-    p_Var5->_cnt = 0;
-    if ((uVar10 & 0x10) != 0) {
-      p_Var5->_flag = uVar10 & 0xfffffffe;
-      p_Var5->_ptr = p_Var5->_base;
+    _File_00->_cnt = 0;
+    if ((uVar7 & 0x10) != 0) {
+      _File_00->_flag = uVar7 & 0xfffffffe;
+      _File_00->_ptr = _File_00->_base;
       goto LAB_8291ee20;
     }
   }
-  uVar2 = 0xffffffffffffffff;
-  p_Var5->_flag = uVar10 | 0x20;
+  uVar1 = 0xffffffffffffffff;
+  _File_00->_flag = uVar7 | 0x20;
 LAB_8291ef5c:
-  iVar9 = __restgprlr_28(uVar2);
-  return iVar9;
+  iVar6 = __restgprlr_28(uVar1);
+  return iVar6;
 }
 

@@ -280,6 +280,7 @@ LAB_82539b8c:
   82539BBC  3D608215             lis r11,-0x7deb
   82539BC0  386B1634             addi r3,r11,0x1634
   82539BC4  4811480D             bl 0x8264e3d0
+  82539BC8  817F0004             lwz r11,0x4(r31)
 LAB_82539bcc:
   82539BCC  815F0000             lwz r10,0x0(r31)
   82539BD0  38A00000             li r5,0x0
@@ -311,6 +312,7 @@ LAB_82539c10:
   82539C34  3D608215             lis r11,-0x7deb
   82539C38  386B15E4             addi r3,r11,0x15e4
   82539C3C  48114795             bl 0x8264e3d0
+  82539C40  817F0010             lwz r11,0x10(r31)
 LAB_82539c44:
   82539C44  815F000C             lwz r10,0xc(r31)
   82539C48  38A00000             li r5,0x0
@@ -1356,6 +1358,7 @@ LAB_8253a9e4:
   8253AA10  3D608215             lis r11,-0x7deb
   8253AA14  386B17AC             addi r3,r11,0x17ac
   8253AA18  481139B9             bl 0x8264e3d0
+  8253AA1C  815E0018             lwz r10,0x18(r30)
 LAB_8253aa20:
   8253AA20  817F0000             lwz r11,0x0(r31)
   8253AA24  38A00000             li r5,0x0
@@ -4329,7 +4332,7 @@ LAB_8253cca0:
   8253CCAC  EBE1FFF0             ld r31,-0x10(r1)
   8253CCB0  4E800020             blr
 
-; 8253D578  _Push_heap<int_*,int,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 8253D578  std::_Push_heap<int_*,int,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   8253D578  7D8802A6             mfspr r12,LR
   8253D57C  483D9131             bl 0x829166ac
   8253D580  9421FF70             stwu r1,-0x90(r1)
@@ -4368,7 +4371,7 @@ LAB_8253d5f0:
   8253D5FC  38210090             addi r1,r1,0x90
   8253D600  483D90FC             b 0x829166fc
 
-; 8253D608  _Push_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 8253D608  std::_Push_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   8253D608  7D8802A6             mfspr r12,LR
   8253D60C  483D90A1             bl 0x829166ac
   8253D610  9421FF70             stwu r1,-0x90(r1)
@@ -4428,7 +4431,7 @@ LAB_8253d6cc:
   8253D6D8  38210090             addi r1,r1,0x90
   8253D6DC  483D9020             b 0x829166fc
 
-; 8253D6E0  _Adjust_heap<int_*,int,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 8253D6E0  std::_Adjust_heap<int_*,int,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   8253D6E0  7D8802A6             mfspr r12,LR
   8253D6E4  483D8FC9             bl 0x829166ac
   8253D6E8  9421FF70             stwu r1,-0x90(r1)
@@ -4504,7 +4507,7 @@ LAB_8253d7dc:
   8253D7E8  38210090             addi r1,r1,0x90
   8253D7EC  483D8F10             b 0x829166fc
 
-; 8253D7F0  _Adjust_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 8253D7F0  std::_Adjust_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   8253D7F0  7D8802A6             mfspr r12,LR
   8253D7F4  483D8EB9             bl 0x829166ac
   8253D7F8  9421FF70             stwu r1,-0x90(r1)
@@ -4625,7 +4628,7 @@ LAB_8253d990:
   8253D99C  38210090             addi r1,r1,0x90
   8253D9A0  483D8D5C             b 0x829166fc
 
-; 8253D9A8  _Make_heap<int_*,int,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 8253D9A8  std::_Make_heap<int_*,int,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   8253D9A8  7D8802A6             mfspr r12,LR
   8253D9AC  483D8CFD             bl 0x829166a8
   8253D9B0  9421FF60             stwu r1,-0xa0(r1)
@@ -4692,7 +4695,7 @@ LAB_8253da8c:
   8253DA8C  382100A0             addi r1,r1,0xa0
   8253DA90  483D8C68             b 0x829166f8
 
-; 8253DB78  _Make_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 8253DB78  std::_Make_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   8253DB78  7D8802A6             mfspr r12,LR
   8253DB7C  483D8B2D             bl 0x829166a8
   8253DB80  9421FF50             stwu r1,-0xb0(r1)
@@ -4793,7 +4796,7 @@ LAB_8253dcd8:
   8253DCD8  382100B0             addi r1,r1,0xb0
   8253DCDC  483D8A1C             b 0x829166f8
 
-; 8253E8A8  _Sort_heap<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 8253E8A8  std::_Sort_heap<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   8253E8A8  7D8802A6             mfspr r12,LR
   8253E8AC  483D7E0D             bl 0x829166b8
   8253E8B0  9421FF80             stwu r1,-0x80(r1)
@@ -4824,7 +4827,7 @@ LAB_8253e90c:
   8253E90C  38210080             addi r1,r1,0x80
   8253E910  483D7DF8             b 0x82916708
 
-; 8253E918  _Sort_heap<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 8253E918  std::_Sort_heap<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   8253E918  7D8802A6             mfspr r12,LR
   8253E91C  483D7D9D             bl 0x829166b8
   8253E920  9421FF70             stwu r1,-0x90(r1)
@@ -4870,7 +4873,7 @@ LAB_8253e9b0:
   8253E9B0  38210090             addi r1,r1,0x90
   8253E9B4  483D7D54             b 0x82916708
 
-; 8253DA98  _Insertion_sort1<int_*,bool_(__cdecl*)(int,int),int>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 8253DA98  std::_Insertion_sort1<int_*,bool_(__cdecl*)(int,int),int>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   8253DA98  7D8802A6             mfspr r12,LR
   8253DA9C  483D8C0D             bl 0x829166a8
   8253DAA0  9421FF60             stwu r1,-0xa0(r1)
@@ -4933,7 +4936,7 @@ LAB_8253db6c:
   8253DB6C  382100A0             addi r1,r1,0xa0
   8253DB70  483D8B88             b 0x829166f8
 
-; 8253E068  _Insertion_sort1<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&),OpcodeLookup>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 8253E068  std::_Insertion_sort1<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&),OpcodeLookup>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   8253E068  7D8802A6             mfspr r12,LR
   8253E06C  483D8641             bl 0x829166ac
   8253E070  9421FF50             stwu r1,-0xb0(r1)
@@ -5034,7 +5037,7 @@ LAB_8253e1b8:
   8253E1B8  382100B0             addi r1,r1,0xb0
   8253E1BC  483D8540             b 0x829166fc
 
-; 8253DCE0  _Med3<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 8253DCE0  std::_Med3<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   8253DCE0  7D8802A6             mfspr r12,LR
   8253DCE4  483D89D5             bl 0x829166b8
   8253DCE8  9421FF80             stwu r1,-0x80(r1)
@@ -5081,7 +5084,7 @@ LAB_8253dd80:
   8253DD80  38210080             addi r1,r1,0x80
   8253DD84  483D8984             b 0x82916708
 
-; 8253DD88  _Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 8253DD88  std::_Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   8253DD88  7D8802A6             mfspr r12,LR
   8253DD8C  483D892D             bl 0x829166b8
   8253DD90  9421FF70             stwu r1,-0x90(r1)
@@ -5188,7 +5191,7 @@ LAB_8253def4:
   8253DEF4  38210090             addi r1,r1,0x90
   8253DEF8  483D8810             b 0x82916708
 
-; 8253DF00  _Median<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 8253DF00  std::_Median<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   8253DF00  7D8802A6             mfspr r12,LR
   8253DF04  483D87AD             bl 0x829166b0
   8253DF08  9421FF70             stwu r1,-0x90(r1)
@@ -5233,7 +5236,7 @@ LAB_8253df94:
   8253DFA0  38210090             addi r1,r1,0x90
   8253DFA4  483D875C             b 0x82916700
 
-; 8253DFA8  _Median<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 8253DFA8  std::_Median<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   8253DFA8  7D8802A6             mfspr r12,LR
   8253DFAC  483D8705             bl 0x829166b0
   8253DFB0  9421FF70             stwu r1,-0x90(r1)
@@ -5283,7 +5286,7 @@ LAB_8253e050:
   8253E05C  38210090             addi r1,r1,0x90
   8253E060  483D86A0             b 0x82916700
 
-; 8253E1C0  _Unguarded_partition<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 8253E1C0  std::_Unguarded_partition<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   8253E1C0  7D8802A6             mfspr r12,LR
   8253E1C4  483D84E1             bl 0x829166a4
   8253E1C8  9421FF60             stwu r1,-0xa0(r1)
@@ -5457,7 +5460,7 @@ LAB_8253e418:
   8253E424  382100A0             addi r1,r1,0xa0
   8253E428  483D82CC             b 0x829166f4
 
-; 8253E430  _Unguarded_partition<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 8253E430  std::_Unguarded_partition<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   8253E430  7D8802A6             mfspr r12,LR
   8253E434  483D8271             bl 0x829166a4
   8253E438  9421FE80             stwu r1,-0x180(r1)
@@ -5783,7 +5786,7 @@ LAB_8253e894:
   8253E8A0  38210180             addi r1,r1,0x180
   8253E8A4  483D7E50             b 0x829166f4
 
-; 8253E9B8  _Sort<int_*,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 8253E9B8  std::_Sort<int_*,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   8253E9B8  7D8802A6             mfspr r12,LR
   8253E9BC  483D7CF5             bl 0x829166b0
   8253E9C0  9421FF70             stwu r1,-0x90(r1)
@@ -5863,7 +5866,7 @@ LAB_8253eabc:
   8253EACC  38210090             addi r1,r1,0x90
   8253EAD0  483D7C30             b 0x82916700
 
-; 8253EAD8  _Sort<OpcodeLookup_*,int,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 8253EAD8  std::_Sort<OpcodeLookup_*,int,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   8253EAD8  7D8802A6             mfspr r12,LR
   8253EADC  483D7BD1             bl 0x829166ac
   8253EAE0  9421FF60             stwu r1,-0xa0(r1)

@@ -2,34 +2,40 @@
 
 // 8265E850  uncompress  (zlib/uncompr.c:32)
 
-int uncompress(uchar *param_1,ulong *param_2,uchar *param_3,ulong param_4)
+undefined8 uncompress(undefined4 param_1,undefined4 *param_2,undefined4 param_3,undefined4 param_4)
 
 {
-  int iVar1;
-  int iVar2;
-  z_stream_s local_50;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_30;
+  undefined4 local_2c;
   
-  local_50.avail_out = *param_2;
-  local_50.zalloc = (_func___cdecl_uchar_ptr_uchar_ptr_uint_uint *)0x0;
-  local_50.zfree = (_func___cdecl_void_uchar_ptr_uchar_ptr *)0x0;
-  local_50.next_in = param_3;
-  local_50.avail_in = param_4;
-  local_50.next_out = param_1;
-  iVar1 = inflateInit_(&local_50,"1.1.4",0x34);
-  if (iVar1 == 0) {
-    iVar2 = inflate(&local_50,4);
-    if (iVar2 == 1) {
-      *param_2 = local_50.total_out;
-      iVar1 = inflateEnd(&local_50);
+  local_40 = *param_2;
+  local_30 = 0;
+  local_2c = 0;
+  local_50 = param_3;
+  local_4c = param_4;
+  local_44 = param_1;
+  uVar1 = inflateInit_(&local_50,0xffffffff820593e8,0x34);
+  if ((int)uVar1 == 0) {
+    uVar2 = inflate(&local_50,4);
+    if ((int)uVar2 == 1) {
+      *param_2 = local_3c;
+      uVar1 = inflateEnd(&local_50);
     }
     else {
       inflateEnd(&local_50);
-      iVar1 = -5;
-      if (iVar2 != 0) {
-        iVar1 = iVar2;
+      uVar1 = 0xfffffffffffffffb;
+      if ((int)uVar2 != 0) {
+        uVar1 = uVar2;
       }
     }
   }
-  return iVar1;
+  return uVar1;
 }
 

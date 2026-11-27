@@ -2,31 +2,31 @@
 
 // 828A32A0  SetFilePointerEx  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/setfilepointerex.c:80)
 
-int SetFilePointerEx(void *param_1,_LARGE_INTEGER param_2,_LARGE_INTEGER *param_3,ulong param_4)
+BOOL SetFilePointerEx(HANDLE hFile,LARGE_INTEGER liDistanceToMove,PLARGE_INTEGER lpNewFilePointer,
+                     DWORD dwMoveMethod)
 
 {
-  void *pvVar2;
-  int iVar3;
   undefined8 uVar1;
+  int iVar2;
+  BOOL BVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  _LARGE_INTEGER local_80;
-  _IO_STATUS_BLOCK _Stack_78;
+  LARGE_INTEGER local_80;
+  undefined1 auStack_78 [8];
   undefined1 auStack_70 [40];
-  _LARGE_INTEGER local_48;
+  LARGE_INTEGER local_48;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  pvVar2 = (void *)__savegprlr_27(param_1);
+  uVar5 = (ulonglong)(int)dwMoveMethod;
+  uVar4 = (ulonglong)(int)lpNewFilePointer;
+  uVar1 = __savegprlr_27(hFile);
   if ((uVar5 & 0xffffffff) == 0) {
 LAB_828a3348:
-    local_80 = param_2;
-    if (-1 < param_2.QuadPart) {
-      iVar3 = (*_fileIoHooks->NtSetInformationFile)
-                        (pvVar2,&_Stack_78,&local_80,8,FilePositionInformation);
-      if (-1 < iVar3) {
+    local_80 = liDistanceToMove;
+    if (-1 < (longlong)liDistanceToMove) {
+      iVar2 = (**(code **)(PTR_DAT_829a8580 + 0x24))(uVar1,auStack_78,&local_80,8,0xe);
+      if (-1 < iVar2) {
         if ((uVar4 & 0xffffffff) != 0) {
-          ((_LARGE_INTEGER *)uVar4)->QuadPart = (long64)local_80;
+          *(LARGE_INTEGER *)uVar4 = local_80;
         }
         uVar1 = 1;
         goto LAB_828a33b4;
@@ -37,24 +37,22 @@ LAB_828a3348:
   }
   else {
     if (((uVar5 & 0xffffffff) == 1) || (2 < (uVar5 & 0xffffffff))) {
-      iVar3 = (*_fileIoHooks->NtQueryInformationFile)
-                        (pvVar2,&_Stack_78,&local_80,8,FilePositionInformation);
+      iVar2 = (**(code **)(PTR_DAT_829a8580 + 0x20))(uVar1,auStack_78,&local_80,8,0xe);
       local_48 = local_80;
     }
     else {
-      iVar3 = (*_fileIoHooks->NtQueryInformationFile)
-                        (pvVar2,&_Stack_78,auStack_70,0x38,FileNetworkOpenInformation);
+      iVar2 = (**(code **)(PTR_DAT_829a8580 + 0x20))(uVar1,auStack_78,auStack_70,0x38,0x22);
     }
-    if (-1 < iVar3) {
-      param_2.QuadPart = local_48.QuadPart + param_2.QuadPart;
+    if (-1 < iVar2) {
+      liDistanceToMove.s = local_48.s + liDistanceToMove.s;
       goto LAB_828a3348;
     }
 LAB_828a33a8:
-    RtlSetLastNTError(iVar3);
+    RtlSetLastNTError();
   }
   uVar1 = 0;
 LAB_828a33b4:
-  iVar3 = __restgprlr_27(uVar1);
-  return iVar3;
+  BVar3 = __restgprlr_27(uVar1);
+  return BVar3;
 }
 

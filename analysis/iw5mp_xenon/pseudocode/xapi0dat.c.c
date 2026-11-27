@@ -5,61 +5,61 @@
 int _cinit(int param_1)
 
 {
-  _func___cdecl_void *p_Var1;
+  code *pcVar1;
   undefined8 uVar2;
   int iVar3;
-  _func___cdecl_int **pp_Var4;
-  _func___cdecl_void **pp_Var5;
+  undefined4 *puVar4;
   
   uVar2 = __savegprlr_29(param_1);
   fpmath(uVar2);
-  pp_Var4 = __xi_a;
-  iVar3 = 0;
+  puVar4 = &DAT_82960314;
+  uVar2 = 0;
   do {
-    if (iVar3 != 0) goto LAB_828b51e0;
-    if (*pp_Var4 != (_func___cdecl_int *)0x0) {
-      iVar3 = (**pp_Var4)();
+    if ((int)uVar2 != 0) goto LAB_828b51e0;
+    if ((code *)*puVar4 != (code *)0x0) {
+      uVar2 = (*(code *)*puVar4)();
     }
-    pp_Var4 = pp_Var4 + 1;
-  } while (pp_Var4 < __xi_z);
-  if (iVar3 == 0) {
-    pp_Var5 = __xc_a;
+    puVar4 = puVar4 + 1;
+  } while (puVar4 < (undefined4 *)0x82960320);
+  if ((int)uVar2 == 0) {
+    puVar4 = &DAT_82960010;
     do {
-      p_Var1 = *pp_Var5;
-      if ((p_Var1 != (_func___cdecl_void *)0x0) && (p_Var1 != (_func___cdecl_void *)0xffffffff)) {
-        (*p_Var1)();
+      pcVar1 = (code *)*puVar4;
+      if ((pcVar1 != (code *)0x0) && (pcVar1 != (code *)0xffffffff)) {
+        (*pcVar1)();
       }
-      pp_Var5 = pp_Var5 + 1;
-    } while (pp_Var5 < __xc_z);
-    iVar3 = 0;
+      puVar4 = puVar4 + 1;
+    } while (puVar4 < (undefined4 *)0x82960310);
+    uVar2 = 0;
   }
 LAB_828b51e0:
-  iVar3 = __restgprlr_29(iVar3);
+  iVar3 = __restgprlr_29(uVar2);
   return iVar3;
 }
 
 
-// 828B51E8  _rtinit  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0dat.c:163)
+// 828B51E8  rtinit  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0dat.c:163)
 
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Unknown calling convention: __cdecl */
+/* rtinit */
 
-int _rtinit(void)
+void __cdecl rtinit(void)
 
 {
-  int iVar1;
-  _func___cdecl_int **pp_Var2;
+  undefined8 uVar1;
+  undefined4 *puVar2;
   
   __savegprlr_29();
-  pp_Var2 = __xri_a;
-  iVar1 = 0;
+  puVar2 = &DAT_82960000;
+  uVar1 = 0;
   do {
-    if (iVar1 != 0) break;
-    if (*pp_Var2 != (_func___cdecl_int *)0x0) {
-      iVar1 = (**pp_Var2)();
+    if ((int)uVar1 != 0) break;
+    if ((code *)*puVar2 != (code *)0x0) {
+      uVar1 = (*(code *)*puVar2)();
     }
-    pp_Var2 = pp_Var2 + 1;
-  } while (pp_Var2 < __xri_z);
-  iVar1 = __restgprlr_29(iVar1);
-  return iVar1;
+    puVar2 = puVar2 + 1;
+  } while (puVar2 < (undefined4 *)0x8296000c);
+  __restgprlr_29(uVar1);
+  return;
 }
 

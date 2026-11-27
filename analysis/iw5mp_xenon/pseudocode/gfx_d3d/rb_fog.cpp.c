@@ -2,10 +2,11 @@
 
 // 827A07A0  R_DecodeFogColor  (gfx_d3d/rb_fog.cpp:17)
 
-void R_DecodeFogColor(uchar *param_1,float *param_2,float *param_3)
+void R_DecodeFogColor(byte *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
+  double dVar2;
   
   fVar1 = (float)param_1[2] * 0.003921569;
   *param_3 = fVar1;
@@ -16,16 +17,135 @@ void R_DecodeFogColor(uchar *param_1,float *param_2,float *param_3)
   param_2[1] = param_3[1];
   param_2[2] = param_3[2];
   param_2[3] = param_3[3];
-  fVar1 = GammaToLinear_Srgb(fVar1);
-  *param_2 = fVar1;
-  fVar1 = GammaToLinear_Srgb(param_2[1]);
-  param_2[1] = fVar1;
-  fVar1 = GammaToLinear_Srgb(param_2[2]);
-  param_2[2] = fVar1;
+  dVar2 = (double)GammaToLinear_Srgb((double)fVar1);
+  *param_2 = (float)dVar2;
+  dVar2 = (double)GammaToLinear_Srgb((double)param_2[1]);
+  param_2[1] = (float)dVar2;
+  dVar2 = (double)GammaToLinear_Srgb((double)param_2[2]);
+  param_2[2] = (float)dVar2;
   return;
 }
 
 
 // 827A0888  R_SetFrameFog  (gfx_d3d/rb_fog.cpp:26)
-// decompile failed: 
-Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
+
+/* WARNING: Removing unreachable block (ram,0x827a0bfc) */
+/* WARNING: Removing unreachable block (ram,0x827a0b7c) */
+/* WARNING: Removing unreachable block (ram,0x827a09dc) */
+/* WARNING: Removing unreachable block (ram,0x827a0994) */
+/* WARNING: Removing unreachable block (ram,0x827a0aa0) */
+/* WARNING: Removing unreachable block (ram,0x827a0bb4) */
+/* WARNING: Removing unreachable block (ram,0x827a0c44) */
+/* WARNING: Removing unreachable block (ram,0x827a08c8) */
+
+void R_SetFrameFog(void)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  int iVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  undefined4 local_a0;
+  undefined4 local_9c;
+  undefined4 local_98;
+  undefined4 local_94;
+  undefined4 local_90;
+  undefined4 local_8c;
+  undefined4 local_88;
+  undefined4 local_84;
+  
+  __savegprlr_25();
+  iVar6 = __savefpr_24();
+  if (*(char *)(DAT_845aa8d0 + 0xc) == '\0') {
+    *(undefined4 *)(iVar6 + 0x290) = 0;
+    *(undefined4 *)(iVar6 + 0x294) = 0x3f800000;
+    *(undefined4 *)(iVar6 + 0x298) = 0;
+    *(undefined4 *)(iVar6 + 0x29c) = 0;
+    __restfpr_24();
+    __restgprlr_25();
+    return;
+  }
+  iVar5 = *(int *)(iVar6 + 0x5ec);
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff821d642c,0x2c,0,0xffffffff82000f98,0xffffffff8201f49c);
+  }
+  R_DecodeFogColor(iVar5 + 0x1588,&local_a0,&local_90);
+  *(undefined4 *)(iVar6 + 0x2a0) = local_a0;
+  *(undefined4 *)(iVar6 + 0x2a4) = local_9c;
+  *(undefined4 *)(iVar6 + 0x2a8) = local_98;
+  *(undefined4 *)(iVar6 + 0x2ac) = local_94;
+  *(undefined4 *)(iVar6 + 0x2b4) = local_8c;
+  dVar9 = 0.0;
+  *(undefined4 *)(iVar6 + 0x2b8) = local_88;
+  *(undefined4 *)(iVar6 + 700) = local_84;
+  *(undefined4 *)(iVar6 + 0x2b0) = local_90;
+  dVar7 = (double)*(float *)(iVar5 + 0x1594);
+  dVar13 = 1.0;
+  if ((dVar7 < 0.0) || (1.0 < dVar7)) {
+    MyAssertHandler(0xffffffff821d642c,0x33,0,0xffffffff821d63f0,dVar7,0,0x3ff0000000000000);
+  }
+  fVar2 = *(float *)(iVar5 + 0x1590);
+  fVar3 = *(float *)(iVar5 + 0x1594);
+  dVar7 = -(double)fVar2;
+  fVar4 = *(float *)(iVar5 + 0x158c);
+  *(float *)(iVar6 + 0x290) = (float)dVar9;
+  *(float *)(iVar6 + 0x294) = (float)(dVar13 - (double)fVar3);
+  *(float *)(iVar6 + 0x298) = (float)dVar7;
+  *(float *)(iVar6 + 0x29c) = (float)((double)fVar4 * (double)fVar2);
+  if (DAT_84618059 != '\0') {
+    dVar11 = 0.01745329238474369;
+    dVar8 = cos((double)(*(float *)(iVar5 + 0x15ac) * 0.017453292));
+    dVar12 = (double)(float)dVar8;
+    dVar8 = cos((double)(float)((double)*(float *)(iVar5 + 0x15b0) * dVar11));
+    dVar8 = (double)(float)dVar8;
+    if (dVar12 <= dVar8) {
+      fVar2 = 100.0;
+    }
+    else {
+      fVar2 = (float)(dVar13 / (double)(float)(dVar12 - dVar8));
+    }
+    dVar10 = (double)fVar2;
+    fVar2 = *(float *)(iVar5 + 0x15a4);
+    fVar3 = *(float *)(iVar5 + 0x15a0);
+    fVar4 = *(float *)(iVar5 + 0x15a8);
+    dVar12 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+    dVar11 = dVar13;
+    if (-dVar12 < 0.0) {
+      dVar11 = dVar12;
+    }
+    fVar1 = (float)(dVar13 / dVar11);
+    dVar12 = (double)(fVar1 * fVar3);
+    dVar11 = (double)(fVar1 * fVar2);
+    dVar13 = (double)(fVar1 * fVar4);
+    R_DecodeFogColor(iVar5 + 0x159c,&local_a0,&local_90);
+    *(float *)(iVar6 + 0x2c0) = (float)((double)*(float *)(iVar5 + 0x15b4) * dVar7);
+    *(float *)(iVar6 + 0x2c4) = (float)dVar8;
+    *(float *)(iVar6 + 0x2c8) = (float)dVar10;
+    *(float *)(iVar6 + 0x2cc) = (float)dVar7;
+    *(undefined4 *)(iVar6 + 0x2d4) = local_9c;
+    *(undefined4 *)(iVar6 + 0x2d8) = local_98;
+    *(undefined4 *)(iVar6 + 0x2dc) = local_94;
+    *(undefined4 *)(iVar6 + 0x2d0) = local_a0;
+    *(undefined4 *)(iVar6 + 0x2e0) = local_90;
+    *(undefined4 *)(iVar6 + 0x2e8) = local_88;
+    *(undefined4 *)(iVar6 + 0x2ec) = local_84;
+    *(undefined4 *)(iVar6 + 0x2e4) = local_8c;
+    *(float *)(iVar6 + 0x2f0) = (float)dVar12;
+    *(float *)(iVar6 + 0x2f4) = (float)dVar11;
+    *(float *)(iVar6 + 0x2f8) = (float)dVar13;
+    *(float *)(iVar6 + 0x2fc) = (float)dVar9;
+  }
+  __restfpr_24();
+  __restgprlr_25();
+  return;
+}
+

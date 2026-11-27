@@ -2,54 +2,54 @@
 
 // 82917648  isalpha  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_ctype.c:66)
 
-int isalpha(int param_1)
+int isalpha(int _C)
 
 {
-  return __initiallocinfo.pctype[param_1] & 0x103;
+  return *(ushort *)(PTR_DAT_829b07e8 + _C * 2) & 0x103;
 }
 
 
 // 82917668  isdigit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_ctype.c:138)
 
-int isdigit(int param_1)
+int isdigit(int _C)
 
 {
-  return __initiallocinfo.pctype[param_1] & 4;
+  return *(ushort *)(PTR_DAT_829b07e8 + _C * 2) & 4;
 }
 
 
 // 82917688  isxdigit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_ctype.c:162)
 
-int isxdigit(int param_1)
+int isxdigit(int _C)
 
 {
-  return __initiallocinfo.pctype[param_1] & 0x80;
+  return *(ushort *)(PTR_DAT_829b07e8 + _C * 2) & 0x80;
 }
 
 
 // 829176A8  isspace  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_ctype.c:186)
 
-int isspace(int param_1)
+int isspace(int _C)
 
 {
-  return __initiallocinfo.pctype[param_1] & 8;
+  return *(ushort *)(PTR_DAT_829b07e8 + _C * 2) & 8;
 }
 
 
 // 829176C8  isalnum  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_ctype.c:234)
 
-int isalnum(int param_1)
+int isalnum(int _C)
 
 {
-  return __initiallocinfo.pctype[param_1] & 0x107;
+  return *(ushort *)(PTR_DAT_829b07e8 + _C * 2) & 0x107;
 }
 
 
 // 829176E8  isprint  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_ctype.c:258)
 
-int isprint(int param_1)
+int isprint(int _C)
 
 {
-  return __initiallocinfo.pctype[param_1] & 0x157;
+  return *(ushort *)(PTR_DAT_829b07e8 + _C * 2) & 0x157;
 }
 

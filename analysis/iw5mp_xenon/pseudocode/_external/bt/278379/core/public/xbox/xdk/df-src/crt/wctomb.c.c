@@ -2,64 +2,65 @@
 
 // 82928278  _wctomb_s_l  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/wctomb.c:56)
 
-int _wctomb_s_l(int *param_1,char *param_2,uint param_3,wchar_t param_4,localeinfo_struct *param_5)
+errno_t _wctomb_s_l(int *_SizeConverted,char *_MbCh,size_t _SizeInBytes,wchar_t _WCh,
+                   _locale_t _Locale)
 
 {
   int *piVar1;
   int iVar2;
   
-  if ((param_2 == (char *)0x0) && (param_3 != 0)) {
-    if (param_1 == (int *)0x0) {
+  if ((_MbCh == (char *)0x0) && (_SizeInBytes != 0)) {
+    if (_SizeConverted == (int *)0x0) {
       return 0;
     }
     iVar2 = 0;
   }
   else {
-    if (param_1 != (int *)0x0) {
-      *param_1 = -1;
+    if (_SizeConverted != (int *)0x0) {
+      *_SizeConverted = -1;
     }
-    if (0x7fffffff < param_3) {
+    if (0x7fffffff < _SizeInBytes) {
       piVar1 = _errno();
       *piVar1 = 0x16;
       _invalid_parameter_noinfo();
       return 0x16;
     }
-    if (0xff < (ushort)param_4) {
-      if ((param_2 != (char *)0x0) && (param_3 != 0)) {
-        memset();
+    if (0xff < (ushort)_WCh) {
+      if ((_MbCh != (char *)0x0) && (_SizeInBytes != 0)) {
+        memset(_MbCh,0,_SizeInBytes);
       }
       piVar1 = _errno();
       *piVar1 = 0x2a;
       piVar1 = _errno();
       return *piVar1;
     }
-    if (param_2 != (char *)0x0) {
-      if (param_3 == 0) {
+    if (_MbCh != (char *)0x0) {
+      if (_SizeInBytes == 0) {
         piVar1 = _errno();
         *piVar1 = 0x22;
         _invalid_parameter_noinfo();
         return 0x22;
       }
-      *param_2 = (char)param_4;
+      *_MbCh = (char)_WCh;
     }
-    if (param_1 == (int *)0x0) {
+    if (_SizeConverted == (int *)0x0) {
       return 0;
     }
     iVar2 = 1;
   }
-  *param_1 = iVar2;
+  *_SizeConverted = iVar2;
   return 0;
 }
 
 
 // 82928370  wctomb_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/wctomb.c:108)
 
-int wctomb_s(int *param_1,char *param_2,uint param_3,wchar_t param_4)
+errno_t wctomb_s(int *_SizeConverted,char *_MbCh,rsize_t _SizeInBytes,wchar_t _WCh)
 
 {
-  int iVar1;
+  errno_t eVar1;
   
-  iVar1 = _wctomb_s_l(param_1,param_2,param_3,param_4,(localeinfo_struct *)0x0);
-  return iVar1;
+  eVar1 = _wctomb_s_l(_SizeConverted,_MbCh,_SizeInBytes,_WCh,(_locale_t)0x0);
+  return eVar1;
 }
 

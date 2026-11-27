@@ -2,7 +2,7 @@
 
 // 829175E8  strncpy  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/strncpy.c:42)
 
-char * strncpy(char *param_1,char *param_2,uint param_3)
+char * strncpy(char *_Dest,char *_Source,size_t _Count)
 
 {
   char cVar1;
@@ -10,21 +10,21 @@ char * strncpy(char *param_1,char *param_2,uint param_3)
   ulonglong uVar3;
   char *pcVar4;
   
-  uVar3 = (ulonglong)(int)param_3;
-  if (param_3 == 0) {
-    return param_1;
+  uVar3 = (ulonglong)(int)_Count;
+  if (_Count == 0) {
+    return _Dest;
   }
-  pcVar2 = param_1;
+  pcVar2 = _Dest;
   do {
     pcVar4 = pcVar2;
-    cVar1 = pcVar4[(int)param_2 - (int)param_1];
+    cVar1 = pcVar4[(int)_Source - (int)_Dest];
     *pcVar4 = cVar1;
     if (cVar1 == '\0') break;
     uVar3 = uVar3 - 1;
     pcVar2 = pcVar4 + 1;
   } while (uVar3 != 0);
   if ((uVar3 & 0xffffffff) == 0) {
-    return param_1;
+    return _Dest;
   }
   uVar3 = uVar3 - 1;
   if (uVar3 != 0) {
@@ -34,10 +34,10 @@ char * strncpy(char *param_1,char *param_2,uint param_3)
         *pcVar4 = '\0';
         uVar3 = uVar3 - 1;
       } while (uVar3 != 0);
-      return param_1;
+      return _Dest;
     }
-    return param_1;
+    return _Dest;
   }
-  return param_1;
+  return _Dest;
 }
 

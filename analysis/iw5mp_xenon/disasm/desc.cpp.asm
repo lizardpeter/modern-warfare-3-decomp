@@ -534,7 +534,7 @@ LAB_8289f764:
   8289F774  7D435838             and r3,r10,r11
   8289F778  4E800020             blr
 
-; 8289F780  GetMipTailLevelOffsetCoords  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/desc.cpp:519)
+; 8289F780  XGRAPHICS::GetMipTailLevelOffsetCoords  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/desc.cpp:519)
   8289F780  7D8802A6             mfspr r12,LR
   8289F784  48076F21             bl 0x829166a4
   8289F788  9421FF30             stwu r1,-0xd0(r1)

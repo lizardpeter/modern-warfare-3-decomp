@@ -836,8 +836,42 @@ LAB_82585c7c:
   82585CA4  398C5CB4             addi r12,r12,0x5cb4
   82585CA8  7C0C002E             lwzx r0,r12,r0
   82585CAC  7C0903A6             mtspr CTR,r0
+switchD:
   82585CB0  4E800420             bctr
-LAB_82585d44:
+caseD_0:
+  82585CEC  7E1A8378             or r26,r16,r16
+  82585CF0  48000074             b 0x82585d64
+caseD_4:
+  82585CF4  7E3A8B78             or r26,r17,r17
+  82585CF8  4800006C             b 0x82585d64
+caseD_1:
+  82585CFC  7E5A9378             or r26,r18,r18
+  82585D00  48000064             b 0x82585d64
+caseD_2:
+  82585D04  7E7A9B78             or r26,r19,r19
+  82585D08  4800005C             b 0x82585d64
+caseD_6:
+  82585D0C  7E9AA378             or r26,r20,r20
+  82585D10  48000054             b 0x82585d64
+caseD_7:
+  82585D14  7EBAAB78             or r26,r21,r21
+  82585D18  4800004C             b 0x82585d64
+caseD_8:
+  82585D1C  7EDAB378             or r26,r22,r22
+  82585D20  48000044             b 0x82585d64
+caseD_a:
+  82585D24  7EFABB78             or r26,r23,r23
+  82585D28  4800003C             b 0x82585d64
+caseD_b:
+  82585D2C  7F1AC378             or r26,r24,r24
+  82585D30  48000034             b 0x82585d64
+caseD_c:
+  82585D34  7F3ACB78             or r26,r25,r25
+  82585D38  4800002C             b 0x82585d64
+caseD_d:
+  82585D3C  7F7ADB78             or r26,r27,r27
+  82585D40  48000024             b 0x82585d64
+default:
   82585D44  816F3128             lwz r11,0x3128(r15)
   82585D48  2F0B0000             cmpwi cr6,r11,0x0
   82585D4C  409A0018             bne cr6,0x82585d64
@@ -854,7 +888,7 @@ LAB_82585d64:
   82585D74  3860000F             li r3,0xf
   82585D78  7CEB0194             addze r7,r11
   82585D7C  4BF70A05             bl 0x824f6780
-LAB_82585d80:
+caseD_3:
   82585D80  39CE0001             addi r14,r14,0x1
   82585D84  2F0E000E             cmpwi cr6,r14,0xe
   82585D88  4198FEF4             blt cr6,0x82585c7c

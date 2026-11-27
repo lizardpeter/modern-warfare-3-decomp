@@ -2,7 +2,7 @@
 
 // 828180D0  vp8_predict_dc  (WebM_atvi_opt/vpx/vp8/common/predictdc.c:21)
 
-void vp8_predict_dc(short *param_1,short *param_2,short param_3,short *param_4)
+void vp8_predict_dc(short *param_1,short *param_2,undefined8 param_3,short *param_4)
 
 {
   short sVar1;

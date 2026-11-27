@@ -13,8 +13,7 @@ void dNormalize3(float *param_1)
   float fVar6;
   
   if (param_1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\odemath.cpp"
-                    ,0x27,0,"%s");
+    MyAssertHandler(0xffffffff8219a2f0,0x27,0,0xffffffff82000f98,0xffffffff8207c288);
   }
   fVar1 = *param_1;
   fVar2 = param_1[1];
@@ -88,8 +87,7 @@ void dNormalize4(float *param_1)
   double dVar6;
   
   if (param_1 == (float *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\odemath.cpp"
-                    ,0x71,0,"%s");
+    MyAssertHandler(0xffffffff8219a2f0,0x71,0,0xffffffff82000f98,0xffffffff8207c288);
   }
   fVar1 = param_1[1];
   fVar2 = *param_1;
@@ -98,7 +96,7 @@ void dNormalize4(float *param_1)
   dVar6 = 0.0;
   fVar5 = fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1;
   if (fVar5 <= 0.0) {
-    Com_PrintWarning(0x14,"ODE: vector has zero size");
+    Com_PrintWarning(0x14,0xffffffff8219a338);
     param_1[1] = (float)dVar6;
     param_1[2] = (float)dVar6;
     param_1[3] = (float)dVar6;
@@ -117,61 +115,55 @@ void dNormalize4(float *param_1)
 
 // 8269CE70  dPlaneSpace  (physics/ode/src/odemath.cpp:138)
 
-void dPlaneSpace(float *param_1,float *param_2,float *param_3)
+void dPlaneSpace(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
   float fVar1;
-  float fVar2;
+  float *pfVar2;
   float *pfVar3;
-  float *pfVar4;
+  float fVar4;
   float *pfVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  double dVar6;
+  double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pfVar5 = (float *)__savegprlr_27(param_1);
-  if (((pfVar5 == (float *)0x0) || ((uVar6 & 0xffffffff) == 0)) || ((uVar7 & 0xffffffff) == 0)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\odemath.cpp"
-                    ,0x8b,0,"%s");
+  pfVar5 = (float *)__savegprlr_27();
+  if (((pfVar5 == (float *)0x0) || ((param_2 & 0xffffffff) == 0)) || ((param_3 & 0xffffffff) == 0))
+  {
+    MyAssertHandler(0xffffffff8219a2f0,0x8b,0,0xffffffff82000f98,0xffffffff8219a378);
   }
-  fVar1 = pfVar5[2];
-  fVar2 = pfVar5[1];
-  pfVar3 = (float *)uVar6;
-  pfVar4 = (float *)uVar7;
-  if (0.70710677 < ABS(fVar1)) {
-    *pfVar3 = 0.0;
-    fVar1 = fVar2 * fVar2 + fVar1 * fVar1;
-    fVar2 = 1.0 / SQRT(fVar1);
-    pfVar3[1] = -(pfVar5[2] * fVar2);
-    pfVar3[2] = pfVar5[1] * fVar2;
-    *pfVar4 = fVar2 * fVar1;
-    pfVar4[1] = -(pfVar3[2] * *pfVar5);
-    pfVar4[2] = *pfVar5 * pfVar3[1];
+  dVar6 = (double)pfVar5[2];
+  fVar1 = pfVar5[1];
+  pfVar2 = (float *)param_2;
+  pfVar3 = (float *)param_3;
+  if (0.7071067690849304 < ABS(dVar6)) {
+    *pfVar2 = 0.0;
+    fVar1 = fVar1 * fVar1 + (float)(dVar6 * dVar6);
+    fVar4 = 1.0 / SQRT(fVar1);
+    pfVar2[1] = -(pfVar5[2] * fVar4);
+    pfVar2[2] = pfVar5[1] * fVar4;
+    *pfVar3 = fVar4 * fVar1;
+    pfVar3[1] = -(pfVar2[2] * *pfVar5);
+    pfVar3[2] = *pfVar5 * pfVar2[1];
     __restgprlr_27();
     return;
   }
-  dVar8 = 0.0;
-  dVar9 = (double)(fVar2 * fVar2 + *pfVar5 * *pfVar5);
-  if (dVar9 <= 0.0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\odemath.cpp"
-                    ,0x9b,0,"%s\n\t(n[2]) = %g");
+  dVar7 = 0.0;
+  dVar8 = (double)(fVar1 * fVar1 + *pfVar5 * *pfVar5);
+  if (dVar8 <= 0.0) {
+    MyAssertHandler(0xffffffff8219a2f0,0x9b,0,0xffffffff8219a360,0xffffffff8219a370,dVar6);
   }
-  dVar10 = (double)(1.0 / (float)SQRT(dVar9));
-  if (((uint)(1.0 / (float)SQRT(dVar9)) & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\odemath.cpp"
-                    ,0x9d,0,"%s");
+  dVar6 = (double)(1.0 / (float)SQRT(dVar8));
+  if (((uint)(1.0 / (float)SQRT(dVar8)) & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff8219a2f0,0x9d,0,0xffffffff82000f98,0xffffffff8219a354);
   }
-  *pfVar3 = -(float)((double)pfVar5[1] * dVar10);
+  *pfVar2 = -(float)((double)pfVar5[1] * dVar6);
   fVar1 = *pfVar5;
-  pfVar3[1] = (float)((double)fVar1 * dVar10);
-  pfVar3[2] = (float)dVar8;
-  *pfVar4 = -(pfVar5[2] * (float)((double)fVar1 * dVar10));
-  pfVar4[1] = pfVar5[2] * *pfVar3;
-  pfVar4[2] = (float)(dVar10 * dVar9);
+  pfVar2[1] = (float)((double)fVar1 * dVar6);
+  pfVar2[2] = (float)dVar7;
+  *pfVar3 = -(pfVar5[2] * (float)((double)fVar1 * dVar6));
+  pfVar3[1] = pfVar5[2] * *pfVar2;
+  pfVar3[2] = (float)(dVar6 * dVar8);
   __restgprlr_27();
   return;
 }

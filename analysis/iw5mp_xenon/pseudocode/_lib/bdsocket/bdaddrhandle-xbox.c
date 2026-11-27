@@ -5,9 +5,9 @@
 void __unwind_71100(void)
 
 {
-  int in_r12;
+  longlong in_r12;
   
-  bdInetAddr::~bdInetAddr((bdInetAddr *)(in_r12 + -0x30));
+  bdInetAddr___bdInetAddr(in_r12 + -0x30);
   return;
 }
 
@@ -21,7 +21,7 @@ void __unwind_71101(void)
   
   if ((*(uint *)(in_r12 + -0x2c) & 1) != 0) {
     *(uint *)(in_r12 + -0x2c) = *(uint *)(in_r12 + -0x2c) & 0xfffffffe;
-    bdAddr::~bdAddr(*(bdAddr **)(in_r12 + 0x14));
+    bdAddr___bdAddr(*(undefined4 *)(in_r12 + 0x14));
   }
   return;
 }

@@ -2,8 +2,8 @@
 
 // 8291CD78  bsearch  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/bsearch.c:71)
 
-void * bsearch(void *param_1,void *param_2,uint param_3,uint param_4,
-              _func___cdecl_int_void_ptr_void_ptr *param_5)
+void * bsearch(void *_Key,void *_Base,size_t _NumOfElements,size_t _SizeOfElements,
+              _PtFuncCompare *_PtFuncCompare)
 
 {
   undefined8 uVar1;
@@ -19,11 +19,11 @@ void * bsearch(void *param_1,void *param_2,uint param_3,uint param_4,
   ulonglong uVar11;
   ulonglong uVar12;
   
-  uVar9 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar12 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_24(param_1);
+  uVar9 = (ulonglong)(int)_PtFuncCompare;
+  uVar8 = (ulonglong)(int)_SizeOfElements;
+  uVar6 = (ulonglong)(int)_NumOfElements;
+  uVar12 = (ulonglong)(int)_Base;
+  uVar1 = __savegprlr_24(_Key);
   uVar11 = (longlong)((int)uVar6 + -1) * (longlong)(int)uVar8 + uVar12;
   if (((((uVar12 & 0xffffffff) == 0) && ((uVar6 & 0xffffffff) != 0)) || ((uVar8 & 0xffffffff) == 0))
      || ((uVar9 & 0xffffffff) == 0)) {
